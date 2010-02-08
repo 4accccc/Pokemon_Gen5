@@ -36,6 +36,8 @@
 #define NUMINPUT_DISIT_MAX (10)
 #define NUMBOX_MARGIN (3)
 #define NUMBOX_CHAR_WIDTH (8)
+#define SKB_PALIDX1 (1)
+#define SKB_PALIDX2 (2)
 
 #define INPUT_VALUE_MAX (0xffffffff)
 
@@ -66,7 +68,7 @@ enum {
   TOUCH_W_ID = 11*8,
   TOUCH_W_NAME = 8*8,
   TOUCH_W_SEX = 2*8,
-  TOUCH_W_COUNTRY = 6*8,
+  TOUCH_W_COUNTRY = 12*8,
   TOUCH_W_RECV = 8*8,
   TOUCH_W_SEND = 8*8,
   TOUCH_W_NUM = 8*8,
@@ -86,12 +88,13 @@ typedef enum {
 }MAIN_CTRL_SEQ;
 
 typedef enum {
-  STR_TYPE_STR,      ///< 入力対応文字列
+  STR_TYPE_STR,      ///< 入力対応文字列（文字列から導かれるインデックスを保存する場合）
   STR_TYPE_NUM,      ///< 入力対応数値
   STR_TYPE_SWITCH,   ///< タッチ対応トグルスイッチ
   STR_TYPE_FIXVAL,   ///< 表示するだけの数値
   STR_TYPE_FIXSTR,   ///< 表示するだけの文字列
   STR_TYPE_BTN,      ///< タッチ反応で特殊処理するためのボタン
+  STR_TYPE_EDITSTR,  ///< 入力対応文字列（文字列自体を保存する場合）
 }STR_TYPE;
 
 typedef enum {
@@ -173,6 +176,22 @@ typedef struct {
   u32  DispNumWork;
 }NUMINPUT_WORK;
 
+//--------------------------------------------------------------
+/**
+ *  入力補完ワーク
+ */
+//--------------------------------------------------------------
+typedef struct {
+  GFL_SKB*      skb;
+  GFL_MSGDATA*  msg;
+  STRBUF*       buf;
+  STRBUF*       subword;
+  STRBUF*       fullword;
+  int           index;
+  int           search_first_index;
+  int           searchingFlag;
+}COMP_SKB_WORK;
+
 typedef struct {
 
   GFL_BMPWIN*     Win;
@@ -194,10 +213,10 @@ typedef struct {
   HEAPID  HeapID;
   MAIN_CTRL_SEQ      Seq;
 
-//  COMP_SKB_WORK   comp;
+  COMP_SKB_WORK   comp;
+  GFL_SKB_SETUP   skbSetup;
   NUMINPUT_WORK   NumInput;
-//  GFL_SKB_SETUP   skbSetup;
-
+  
   WIFI_HISTORY *wh;
   _UNITEDNATIONS_SAVE UNData;
 
@@ -213,15 +232,15 @@ static const STR_PARAM StrParams[] = {
   {STR_TYPE_SWITCH, UND_STR_SEX,  STR_POS_X, STR_SEX_POS_Y,
     TOUCH_X_SEX,STR_SEX_POS_Y,TOUCH_W_SEX,TOUCH_H,
     UND_STR_SEX_MALE,0 },
-  {STR_TYPE_NUM, UND_STR_COUNTRY,  STR_POS_X, STR_COUNTRY_POS_Y,
+  {STR_TYPE_STR, UND_STR_COUNTRY,  STR_POS_X, STR_COUNTRY_POS_Y,
     TOUCH_X_COUNTRY,STR_COUNTRY_POS_Y,TOUCH_W_COUNTRY,TOUCH_H,
-    233,0 },
-  {STR_TYPE_NUM, UND_STR_RECVPOKE,  STR_POS_X, STR_RECV_POS_Y,
+    NARC_message_wifi_place_msg_world_dat,0 },
+  {STR_TYPE_STR, UND_STR_RECVPOKE,  STR_POS_X, STR_RECV_POS_Y,
     TOUCH_X_RECV,STR_RECV_POS_Y,TOUCH_W_RECV,TOUCH_H,
-    255,0 },
-  {STR_TYPE_NUM, UND_STR_SENDPOKE,  STR_POS_X, STR_SEND_POS_Y, 
+    NARC_message_monsname_dat,0 },
+  {STR_TYPE_STR, UND_STR_SENDPOKE,  STR_POS_X, STR_SEND_POS_Y, 
     TOUCH_X_SEND,STR_SEND_POS_Y,TOUCH_W_SEND,TOUCH_H,
-    255,0 },
+    NARC_message_monsname_dat,0 },
   {STR_TYPE_NUM, UND_STR_TRADE,  STR_POS_X, STR_NUM_POS_Y,
     TOUCH_X_NUM,STR_NUM_POS_Y,TOUCH_W_NUM,TOUCH_H,
     234,0 },
@@ -261,6 +280,15 @@ static void DrawNumInput( NUMINPUT_WORK* wk );
 static void SetAryNumInput( NUMINPUT_WORK* wk, u32 value );
 static u32 CalcInputNum( NUMINPUT_WORK* wk );
 
+
+static void COMPSKB_Setup( COMP_SKB_WORK* wk, GFL_SKB* skb, STRBUF* buf, u32 msgDataID, HEAPID heapID );
+static void COMPSKB_Cleanup( COMP_SKB_WORK* wk );
+static BOOL COMPSKB_Main( COMP_SKB_WORK* wk );
+static int COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk );
+static BOOL compskb_strncmp( const STRBUF* str1, const STRBUF* str2, u32 len );
+static u32 compskb_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, int* first_idx );
+static BOOL comskb_is_match( COMP_SKB_WORK* wk, const STRBUF* word, int* match_idx );
+static BOOL is_hiragana( const STRBUF* buf );
 
 static void MakeData(MAKE_WORK *wk);
 static void DumpUNData(MAKE_WORK *wk);
@@ -474,27 +502,25 @@ static BOOL MainCtrl( MAKE_WORK* wk )
         const STR_PARAM* p = &StrParams[ wk->BoxIdx ];
         switch( p->Type ){
         case STR_TYPE_STR:
-          {
-#if 0            
+          {            
             static const GFL_SKB_SETUP setup = {
               STRBUF_LEN, GFL_SKB_STRTYPE_STRBUF,
               GFL_SKB_MODE_KATAKANA, TRUE, 0, PAD_BUTTON_START,
               PRINT_FRAME, SKB_PALIDX1, SKB_PALIDX2,
             };
             wk->skbSetup = setup;
-            box_getstr( wk, wk->boxIdx, wk->strbuf );
-            if( is_hiragana(wk->strbuf) ){
+            GetBoxStr( wk, wk->BoxIdx, wk->StrBuf );
+            if( is_hiragana(wk->StrBuf) ){
               wk->skbSetup.mode = GFL_SKB_MODE_HIRAGANA;
             }
-            wk->skb = GFL_SKB_Create( (void*)(wk->strbuf), &wk->skbSetup, wk->heapID );
-            COMPSKB_Setup( &wk->comp, wk->skb, wk->strbuf, p->arg, wk->heapID );
-            wk->seq = SEQ_INPUT_STR;
-#endif    //@todo            
+            wk->skb = GFL_SKB_Create( (void*)(wk->StrBuf), &wk->skbSetup, wk->HeapID );
+            COMPSKB_Setup( &wk->comp, wk->skb, wk->StrBuf, p->arg, wk->HeapID );
+            wk->Seq = SEQ_INPUT_STR;            
           }
           break;
         case STR_TYPE_NUM:
           NumInput_Setup( &wk->NumInput, wk->StrBuf, wk->Win, wk->Font,
-              &wk->PrintUtil, wk->PrintQue, p, wk->BoxValue[wk->BoxIdx]/*box_getvalue(wk, wk->boxIdx)*/, wk );
+              &wk->PrintUtil, wk->PrintQue, p, wk->BoxValue[wk->BoxIdx], wk );
           wk->Seq = SEQ_INPUT_NUM;
           break;          
         case STR_TYPE_SWITCH:
@@ -556,25 +582,23 @@ static BOOL MainCtrl( MAKE_WORK* wk )
         }
       }
       break;
-    case SEQ_INPUT_STR:
-#if 0      
+    case SEQ_INPUT_STR:      
       if( COMPSKB_Main(&wk->comp) )
       {
         int idx = COMPSKB_GetWordIndex( &wk->comp );
         if( idx < 0 ){
-          if( GFL_STR_GetBufferLength(wk->strbuf) == 0 ){
+          if( GFL_STR_GetBufferLength(wk->StrBuf) == 0 ){
             idx = 0;
           }
         }
         if( idx >= 0 ){
-          box_update( wk, wk->boxIdx, idx );
-          box_relation( wk, wk->boxIdx );
+          UpdateBox( wk, wk->BoxIdx, idx );
+//          box_relation( wk, wk->boxIdx );todo
         }
         COMPSKB_Cleanup( &wk->comp );
         GFL_SKB_Delete( wk->skb );
-        wk->seq = SEQ_WAIT_CTRL;
-      }
-#endif    //@todo      
+        wk->Seq = SEQ_WAIT_CTRL;
+      }      
       break;
     case SEQ_INPUT_NUM:
       if( NumInput_Main(&wk->NumInput) )
@@ -714,7 +738,7 @@ static void GetBoxStr( MAKE_WORK* wk, u32 inBoxID, STRBUF* buf )
 #else
       keta = CalcDisit(p->arg);
 #endif      
-      STRTOOL_SetNumber( wk->StrBuf, value, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+      STRTOOL_SetUnsignedNumber( wk->StrBuf, value, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
     }
     break;
 /**
@@ -930,7 +954,7 @@ static void DrawNumInput( NUMINPUT_WORK* wk )
     {
       col_bg = (i==wk->CurDisit)? wk->ColorCurBg : wk->ColorDefBg;
       color = PRINTSYS_LSB_Make( wk->ColorLetter, 0, col_bg );
-      STRTOOL_SetNumber( wk->Buf, wk->NumAry[i], 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
+      STRTOOL_SetUnsignedNumber( wk->Buf, wk->NumAry[i], 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
       GFL_BMP_Fill( wk->Bmp, xpos, p->TouchY, NUMBOX_CHAR_WIDTH, p->TouchH, col_bg );
       PRINT_UTIL_PrintColor( wk->PrintUtil, wk->PrintQue, xpos, ypos, wk->Buf, wk->Font, color );
       xpos += NUMBOX_CHAR_WIDTH;
@@ -963,6 +987,235 @@ static u32 CalcInputNum( NUMINPUT_WORK* wk )
   }
   return num;
 }
+
+
+
+
+//==============================================================================================
+//  入力補完処理
+//==============================================================================================
+static void COMPSKB_Setup( COMP_SKB_WORK* wk, GFL_SKB* skb, STRBUF* buf, u32 msgDataID, HEAPID heapID )
+{
+  wk->skb = skb;
+  wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, msgDataID, heapID );
+  wk->buf = buf;
+  wk->subword  = GFL_STR_CreateBuffer( 64, heapID );
+  wk->fullword = GFL_STR_CreateBuffer( 64, heapID );
+  wk->index = -1;
+  wk->search_first_index = -1;
+  wk->searchingFlag = FALSE;
+}
+static void COMPSKB_Cleanup( COMP_SKB_WORK* wk )
+{
+  GFL_STR_DeleteBuffer( wk->fullword );
+  GFL_STR_DeleteBuffer( wk->subword );
+  GFL_MSG_Delete( wk->msg );
+}
+
+static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
+{
+  GflSkbReaction reaction = GFL_SKB_Main( wk->skb );
+  BOOL fSearchReq = FALSE;
+
+  if( reaction != GFL_SKB_REACTION_NONE
+  &&  reaction != GFL_SKB_REACTION_PAGE ){
+    wk->searchingFlag = FALSE;
+  }
+
+  switch( reaction ){
+
+  case GFL_SKB_REACTION_QUIT:
+    if( wk->index == -1 )
+    {
+      int idx;
+      GFL_SKB_PickStr( wk->skb );
+      if( comskb_is_match(wk, wk->buf, &idx) ){
+        wk->index = idx;
+      }
+    }
+    return TRUE;
+  case GFL_SKB_REACTION_INPUT:
+    {
+      int idx;
+      GFL_SKB_PickStr( wk->skb );
+      if( compskb_search(wk, wk->buf, -1, &idx) == 1 )
+      {
+        GFL_MSG_GetString( wk->msg, idx, wk->fullword );
+        GFL_SKB_ReloadStr( wk->skb, wk->fullword );
+        wk->index = idx;
+      }
+      else{
+        wk->index = -1;
+      }
+    }
+    break;
+  case GFL_SKB_REACTION_BACKSPACE:
+    {
+      int idx;
+      GFL_SKB_PickStr( wk->skb );
+      if( compskb_search(wk, wk->buf, -1, &idx) == 1 ){
+        wk->index = idx;
+      }else{
+        wk->index = -1;
+      }
+    }
+    break;
+  case GFL_SKB_REACTION_PAGE:
+    fSearchReq = TRUE;
+    break;
+  case GFL_SKB_REACTION_NONE:
+    {
+      u16 key = GFL_UI_KEY_GetTrg();
+      if( key & PAD_BUTTON_SELECT ){
+        fSearchReq = TRUE;
+      }
+    }
+    break;
+  }
+
+  if( fSearchReq )
+  {
+    if( wk->searchingFlag == FALSE ){
+      GFL_SKB_PickStr( wk->skb );
+      GFL_STR_CopyBuffer( wk->subword, wk->buf );
+      wk->search_first_index = -1;
+      wk->index = -1;
+      wk->searchingFlag = TRUE;
+    }
+    {
+      int idx;
+      if( compskb_search(wk, wk->subword, wk->index, &idx) )
+      {
+        wk->index = idx;
+        if( wk->search_first_index == -1 ){
+          wk->search_first_index = idx;
+        }
+      }
+      else
+      {
+        wk->index = wk->search_first_index;
+      }
+
+      if( wk->index != -1 )
+      {
+        GFL_MSG_GetString( wk->msg, wk->index, wk->fullword );
+        GFL_SKB_ReloadStr( wk->skb, wk->fullword );
+      }
+
+    }
+  }
+
+  return FALSE;
+}
+static int COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk )
+{
+  return wk->index;
+}
+static BOOL compskb_strncmp( const STRBUF* str1, const STRBUF* str2, u32 len )
+{
+  if( GFL_STR_GetBufferLength(str1) < len ){
+    return FALSE;
+  }
+  if( GFL_STR_GetBufferLength(str2) < len ){
+    return FALSE;
+  }
+
+  {
+    const STRCODE *p1 = GFL_STR_GetStringCodePointer( str1 );
+    const STRCODE *p2 = GFL_STR_GetStringCodePointer( str2 );
+    u32 i;
+    for(i=0; i<len; ++i){
+      if( *p1++ != *p2++ ){ return FALSE; }
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 前方一致する文字列数をサーチ
+ *
+ * @param   wk
+ * @param   word
+ * @param   org_idx
+ * @param   first_idx   [out] 最初に一致した文字列index
+ *
+ * @retval  u32   前方一致する文字列数
+ */
+//----------------------------------------------------------------------------------
+static u32 compskb_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, int* first_idx )
+{
+  u32 word_len = GFL_STR_GetBufferLength( word );
+  if( word_len )
+  {
+    u32 str_cnt, match_cnt, i;
+
+    *first_idx = -1;
+    match_cnt = 0;
+    str_cnt = GFL_MSG_GetStrCount( wk->msg );
+    i = (org_idx < 0)? 0 : org_idx+1;
+    while( i < str_cnt )
+    {
+      GFL_MSG_GetString( wk->msg, i, wk->fullword );
+      if( compskb_strncmp( word, wk->fullword, GFL_STR_GetBufferLength(word) ) ){
+        if( *first_idx == -1 ){
+          *first_idx = i;
+        }
+        ++match_cnt;
+      }
+      ++i;
+    }
+    return match_cnt;
+  }
+  return 0;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 完全一致する文字列をサーチ
+ *
+ * @param   wk
+ * @param   word
+ * @param   match_idx   [OUT] 完全一致した文字列index
+ *
+ * @retval  BOOL    完全一致が見つかればTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL comskb_is_match( COMP_SKB_WORK* wk, const STRBUF* word, int* match_idx )
+{
+  u32 word_len = GFL_STR_GetBufferLength( word );
+  if( word_len )
+  {
+    u32 str_cnt, i=0;
+
+    str_cnt = GFL_MSG_GetStrCount( wk->msg );
+    while( i < str_cnt )
+    {
+      GFL_MSG_GetString( wk->msg, i, wk->fullword );
+      if( GFL_STR_CompareBuffer(word, wk->fullword) ){
+        *match_idx = i;
+        return TRUE;
+      }
+      ++i;
+    }
+  }
+  return FALSE;
+}
+
+static BOOL is_hiragana( const STRBUF* buf )
+{
+  const STRCODE* ptr;
+  ptr = GFL_STR_GetStringCodePointer( buf );
+  if( (*ptr >= 0x3041) && (*ptr <= 0x3093) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+
+
+
+
 
 
 
@@ -1003,7 +1256,6 @@ static void MakeData(MAKE_WORK *wk)
 
   OS_Printf("UN DATA ADD\n");
 }
-
 
 static void DumpUNData(MAKE_WORK *wk)
 {
