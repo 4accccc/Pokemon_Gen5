@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2010-01-22T14:44:11"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-02-08T20:45:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -300,11 +300,11 @@
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
 		<language name="JPN" width="256">けしき　ウキウキ　しょうぶ　ワクワク
-ヒウンゆうらんせんへ　ようこそ！[BE:00:ページ切り替え（行送り）]
-ゆうらんせんは　はじめてですか？[BE:01:ページ切り替え（クリア）]</language>
+ロイヤルイッシュごうへ　ようこそ！[BE:00:ページ切り替え（行送り）]
+ごじょうせんは　はじめてですか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">景色　ウキウキ　勝負で　ワクワク
-ヒウン遊覧船へ　ようこそ！[BE:00:ページ切り替え（行送り）]
-遊覧船は　初めてですか？[BE:01:ページ切り替え（クリア）]</language>
+ロイヤルイッシュ号へ　ようこそ！[BE:00:ページ切り替え（行送り）]
+ご乗船は　初めてですか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03p16_cabinguide_02">
@@ -314,14 +314,14 @@
 仮OBJです</attribute>
 		<language name="JPN" width="256">イッシュちほうの　おおきな　はし
 スカイアローブリッジを　くぐり[BE:01:ページ切り替え（クリア）]
-５ばんめのはしを　まわり
+ワンダーブリッジを　まわり
 ヒウンシティに　もどる　ふねです[BE:01:ページ切り替え（クリア）]
 じょうせんじかんは
 ぜんぶで　５かい　ボォォォ！と[BE:00:ページ切り替え（行送り）]
 きてきで　おしらせ　いたします[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">イッシュ地方の　大きな橋
 スカイアローブリッジを　くぐり[BE:01:ページ切り替え（クリア）]
-５番目の橋を　まわり
+ワンダーブリッジを　まわり
 ヒウンシティに　戻ります[BE:01:ページ切り替え（クリア）]
 乗船時間は　全部で　５回
 ボォォォォォォォ！　と[BE:00:ページ切り替え（行送り）]
@@ -333,13 +333,13 @@
 ・続けてcabinguide04</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
-		<language name="JPN" width="256">ヒウンゆうらんせん　じまんの
+		<language name="JPN" width="256">ロイヤルイッシュごう　じまんの
 かんぱんでは　けしきを　たのしめます[BE:01:ページ切り替え（クリア）]
 きゃくしつないには　しょうぶずきな
 トレーナーたちが　あつまっております[BE:01:ページ切り替え（クリア）]
 ぜひ　けしきも　しょうぶも
 おたのしみ　ください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヒウン遊覧船　自慢の　甲板では
+		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号　自慢の　甲板では
 景色を　楽しむことが　できます！[BE:01:ページ切り替え（クリア）]
 客室内には　勝負が好きな
 トレーナーたちが　集まって　おります[BE:01:ページ切り替え（クリア）]
@@ -353,9 +353,9 @@
 ・いいえ→cabinguide06</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
-		<language name="JPN" width="256">ヒウンゆうらんせん　に
+		<language name="JPN" width="256">ロイヤルイッシュごう　に
 おのりに　なられますか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヒウン遊覧船に
+		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号に
 お乗りに　なられますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 

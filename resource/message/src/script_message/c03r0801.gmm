@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-03T12:32:36"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-02-08T20:37:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,7 +299,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_bg_c03r0801_lock_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_bg_c03r0801_lock_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>開く予定無し</comment>
 		<attribute name="キャラ指定">ドア</attribute>
 		<language name="JPN" width="256">カギが　かかっていて　あかない</language>
@@ -310,12 +310,12 @@
 		<comment>リタイア受付
 全抜き時はex_2へ</comment>
 		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
-		<language name="JPN" width="256">ほんじつの　ヒウンゆうらんせんには
+		<language name="JPN" width="256">ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは　[2:00:１桁:4]にんに　かちました[BE:01:ページ切り替え（クリア）]
 ふねは　しゅっこうちゅう　です
 ふねから　おりられますか？</language>
-		<language name="JPN_KANJI" width="256">ほんじつの　ヒウンゆうらんせんには
+		<language name="JPN_KANJI" width="256">ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは　[2:00:１桁:4]にんに　かちました[BE:01:ページ切り替え（クリア）]
 ふねは　しゅっこうちゅう　です
@@ -358,10 +358,10 @@ msg_c03r0801_hint_02</comment>
 	<row id="msg_c03r0801_crew_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>甲板部の説明</comment>
 		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
-		<language name="JPN" width="256">このさきは　ゆうらんせん　じまんの
-てんぼうフロアに　なります</language>
-		<language name="JPN_KANJI" width="256">この先は　遊覧船自慢の
-展望フロアに　なります</language>
+		<language name="JPN" width="256">このさきは　ロイヤルイッシュごう
+じまんの　てんぼうフロアに　なります</language>
+		<language name="JPN_KANJI" width="256">このさきは　ロイヤルイッシュごう
+じまんの　てんぼうフロアに　なります</language>
 	</row>
 
 	<row id="msg_c03r0801_crew_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -871,15 +871,19 @@ msg_c03r0801_hint_02</comment>
 	<row id="msg_c03r0801_lady_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">LADY</attribute>
-		<language name="JPN" width="256">トレーナー　です</language>
-		<language name="JPN_KANJI" width="256">トレーナー　です</language>
+		<language name="JPN" width="256">あらあら　かわいい　おきゃくさんね
+ポケモンしょうぶ　しちゃおうかしら</language>
+		<language name="JPN_KANJI" width="256">あらあら　かわいい　おきゃくさんね
+ポケモンしょうぶ　しちゃおうかしら</language>
 	</row>
 
 	<row id="msg_c03r0801_lady_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">LADY</attribute>
-		<language name="JPN" width="256">しょうぶが　おわりました</language>
-		<language name="JPN_KANJI" width="256">勝負が　終わりました</language>
+		<language name="JPN" width="256">かわいいだけ　じゃなく
+ポケモンしょうぶも　つよいのね！</language>
+		<language name="JPN_KANJI" width="256">かわいいだけ　じゃなく
+ポケモンしょうぶも　つよいのね！</language>
 	</row>
 
 	<row id="msg_c03r0801_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -1022,14 +1026,14 @@ msg_c03r0801_hint_02</comment>
 	<row id="msg_c03r0801_ex_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>案内後の受付員のセリフ</comment>
 		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
-		<language name="JPN" width="256">ヒウンゆうらんせんの
+		<language name="JPN" width="256">ロイヤルイッシュごうの
 ごじょうせん　ありがとうございます[BE:01:ページ切り替え（クリア）]
-ほんじつの　ヒウンゆうらんせんには
+ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 ごゆっくり　おたのしみ　くださいませ</language>
-		<language name="JPN_KANJI" width="256">ヒウンゆうらんせんの
+		<language name="JPN_KANJI" width="256">ロイヤルイッシュごうの
 ごじょうせん　ありがとうございます[BE:01:ページ切り替え（クリア）]
-ほんじつの　ヒウンゆうらんせんには
+ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 ごゆっくり　おたのしみ　くださいませ</language>
 	</row>
@@ -1038,14 +1042,14 @@ msg_c03r0801_hint_02</comment>
 		<comment>リタイヤ員
 全抜き時のセリフ</comment>
 		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
-		<language name="JPN" width="256">ほんじつの　ヒウンゆうらんせんには
+		<language name="JPN" width="256">ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは……　おめでとうございます！[BE:01:ページ切り替え（クリア）]
 すべての　トレーナーを
 おたおしに　なられたの　ですね！[BE:01:ページ切り替え（クリア）]
 ふねは　しゅっこうちゅう　ですが
 ふねから　おおりに　なられますか？</language>
-		<language name="JPN_KANJI" width="256">ほんじつの　ヒウンゆうらんせんには
+		<language name="JPN_KANJI" width="256">ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは……　おめでとうございます！[BE:01:ページ切り替え（クリア）]
 すべての　トレーナーを
