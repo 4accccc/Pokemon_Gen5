@@ -2070,7 +2070,7 @@ static void handler_JapoNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     target = BTL_SVFTOOL_GetPokeParam( flowWk, param->pokeID );
     param->damage = BTL_CALC_QuotMaxHP( target, quot );
 
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Damage );
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_DamageOpponent );
     HANDEX_STR_AddArg( &param->exStr, param->pokeID );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
     HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
