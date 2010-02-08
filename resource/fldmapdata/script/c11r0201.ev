@@ -31,6 +31,9 @@ _EVENT_DATA   ev_un_elevator
 _EVENT_DATA   ev_reserve_c11r0201
 _EVENT_DATA_END
 
+//ローカル定義
+DEFINE_LOCAL	DOOR_ANIME_ID
+
 //------------------------------注意--------------------------------//
 //	LOCALWORK0⇒OBJインデックス番号
 //　　　話しかけが終了するまで、値を保証する必要があります
@@ -91,6 +94,18 @@ EVENT_END
 /*		エレベーター	                      									  */
 /**************************************************************/
 EVENT_START		ev_un_elevator
+  //「戻る？」
+  _SYSWIN_MSG_DOWN(msg_un_room_talker_00)   //@todo
+  _YES_NO_WIN( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
+
+  IF $SCWK_ANSWER == 0 THEN     //もどる
+    _CALL player_elev_in
+    //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
+		_RESERVE_SCRIPT( SCRID_RESERVE_C11R0101 )
+    //マップチェンジ
+    _MAP_CHANGE( ZONE_ID_C11R0101, 14, 5, DIR_DOWN )
+  ENDIF
 EVENT_END
 
 /**************************************************************/
@@ -191,14 +206,41 @@ ev_wkobjcommon:
 
 //アニメ
 player_elev_out:
+  //エレベータアニメセットアップ
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 10, 6 )
   //エレベータ開く
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 
   //自機出てくる
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
 	_OBJ_ANIME_WAIT()
-  //エレベータ閉まる
 
+  //エレベータ閉まる
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  //エレベータアニメクリーンアップ
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 _RET
+
+player_elev_in:
+  //エレベータアニメセットアップ
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 10, 6 )
+  //エレベータ開く
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+
+  //自機エレベータへ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in )
+	_OBJ_ANIME_WAIT()
+
+  //エレベータ閉まる
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  //エレベータアニメクリーンアップ
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+_RET
+
 
 //--------------------------------------------------------------------
 //エレベーターからでてくる
@@ -206,3 +248,12 @@ _RET
 _ANIME_LABEL	anm_move_elev_out
 	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//エレベーターに入る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_elev_in
+	_ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0  

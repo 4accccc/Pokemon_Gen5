@@ -31,16 +31,38 @@ _EVENT_DATA     ev_c11r0101_pos01
 _EVENT_DATA     ev_reserve_c11r0101
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//	LOCALWORK1⇒POSイベント発動トリガー
+//　　　POSイベント制御に使用します
+//
+//------------------------------------------------------------------//
+//ローカル定義
+DEFINE_LOCAL	DOOR_ANIME_ID
+
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
-//ev_zone_c11r0101:
-//  _END
+/**
+ev_zone_c11r0101:
+  //エレベータから出てきたか？（国連部屋訪問状態か）
+  IF THEN   //エレベータから出てくる(国連部屋訪問状態ON)
+    //POSイベントをOFF
+    $LOCALWORK1 = 0
+    //受付の人を移動
+
+  ELSE      //入り口から入ってくる
+    //条件判定してPOSイベントをON
+  ENDIF
+  //国連部屋訪問状態をOFF
+
+  _END
+*/
 
 /************************************************************/
 /*			予約スクリプト：エレベータから出てくる					*/
 /************************************************************/
 EVENT_START	ev_reserve_c11r0101
+  _CALL player_out_anm
 EVENT_END
 
 /**************************************************************/
@@ -54,8 +76,11 @@ EVENT_START ev_c11r0101_reception01
   _BALLOONWIN_CLOSE()
 
   IF $SCWK_ANSWER == 0 THEN     //行く
+    //「行き先えらんで」
+    _BALLOONWIN_TALKOBJ_MSG( msg_reception01_01a )
+    _BALLOONWIN_CLOSE()
     //選択アプリ    todo
-    $AppSelectRec = 0   //国コードセット  todo
+    $AppSelectRec = 1   //国コードセット  todo
     //データセット
     _UN_SET_COUNTRY_INFO( AppSelectRec )
     //「こちらへ」
@@ -136,14 +161,42 @@ player_in_anm:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev )
 	_OBJ_ANIME_WAIT()
 
+  //エレベータアニメセットアップ
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 14, 6 )
   //エレベータ開く
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 
-  //自機絵エレベータに入る
+  //自機エレベータに入る
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in )
 	_OBJ_ANIME_WAIT()
 
   //エレベータ閉まる
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  //エレベータアニメクリーンアップ
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+_RET
 
+player_out_anm:
+   //エレベータアニメセットアップ
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 14, 6 )
+  //エレベータ開く
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+
+  //自機エレベータから出てくる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
+	_OBJ_ANIME_WAIT()
+
+  //エレベータ閉まる
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+  //自機エントランスへ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_entrance )
+	_OBJ_ANIME_WAIT()
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  //エレベータアニメクリーンアップ
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 _RET
 
 
@@ -168,5 +221,20 @@ _ANIME_LABEL	anm_move_elev
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_elev_in
 	_ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//エレベーターからでてくる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_elev_out
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//エントランスへ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_entrance
+	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	ACMD_END,0
 
