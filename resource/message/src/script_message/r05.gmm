@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-08T20:15:31"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-02-08T21:05:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1364" top="291" right="2069" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -809,17 +809,24 @@ musician_01</attribute>
 これを　持っていけ！▼</language>
 	</row>
 
-	<row id="msg_r05_add_goods_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_add_goods_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>システム
 ・0＝グッズ名
 ・1＝プレイヤー名</comment>
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">[1:0A:グッズ名:0]を　もらった！▼
-[1:00:トレーナー名:1]は
+		<language name="JPN" width="256">[1:0A:グッズ名:0]を　もらった！</language>
+		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]を　もらった！</language>
+	</row>
+
+	<row id="msg_r05_add_goods_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>システム
+・0＝グッズ名
+・1＝プレイヤー名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
 [1:0A:グッズ名:0]を▽
 グッズケースの　なかに　しまった！</language>
-		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]を　もらった！▼
-[1:00:トレーナー名:1]は
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 [1:0A:グッズ名:0]を▽
 グッズケースの　なかに　しまった！</language>
 	</row>
