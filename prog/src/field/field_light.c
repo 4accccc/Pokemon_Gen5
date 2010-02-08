@@ -56,13 +56,6 @@ static const u32 sc_DEBUG_LIGHT_AUTO_END_TIME[] = {
 #endif
 
 
-#ifdef PM_DEBUG
-#include "field/field_light_status.h"
-
-extern FIELD_LIGHT_STATUS DEBUG_light_data;
-#endif
-
-
 //-----------------------------------------------------------------------------
 /**
  *          ’è”éŒ¾
@@ -1435,14 +1428,6 @@ static void FIELD_LIGHT_ReflectSub( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p
 
     G3X_SetClearColor(cp_sys->reflect_data.bg_color,31,0x7fff,0,FALSE);
 
-
-#ifdef PM_DEBUG
-    DEBUG_light_data.light = cp_sys->reflect_data.light_color[0];
-    DEBUG_light_data.diffuse = cp_sys->reflect_data.diffuse;
-    DEBUG_light_data.ambient = cp_sys->reflect_data.ambient;
-    DEBUG_light_data.specular = cp_sys->reflect_data.specular;
-    DEBUG_light_data.emission = cp_sys->reflect_data.emission;
-#endif
   }
 }
 
