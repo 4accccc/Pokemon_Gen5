@@ -3899,7 +3899,7 @@ static const BtlEventHandlerTable*  ADD_Osioki( u32* numElems )
 static void handler_Osioki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   static const BppValueID  statusTbl[] = {
-    BPP_ATTACK_RANK, BPP_DEFENCE_RANK, BPP_SP_ATTACK_RANK, BPP_SP_DEFENCE_RANK, BPP_AGILITY,
+    BPP_ATTACK_RANK, BPP_DEFENCE_RANK, BPP_SP_ATTACK_RANK, BPP_SP_DEFENCE_RANK, BPP_AGILITY_RANK,
   };
 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -3911,8 +3911,10 @@ static void handler_Osioki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     rankSum = 0;
     for(i=0; i<NELEMS(statusTbl); ++i)
     {
-      rank = BPP_GetValue( bpp, statusTbl[i] ) - BPP_RANK_STATUS_DEFAULT;
-      if( rank > 0 ){ rankSum += rank; }
+      rank = BPP_GetValue( bpp, statusTbl[i] );
+      if( rank > BPP_RANK_STATUS_DEFAULT ){
+        rankSum += (rank - BPP_RANK_STATUS_DEFAULT);
+      }
     }
     pow = 60 + rankSum * 20;
     if( pow > 200 ){
