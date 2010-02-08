@@ -487,6 +487,7 @@ static const struct {
   { ITEM_KOKORONOSIZUKU,    HAND_ADD_ITEM_KokoroNoSizuku    },
   { ITEM_HUTOIHONE,         HAND_ADD_ITEM_FutoiHone         },
   { ITEM_KODAWARIHATIMAKI,  HAND_ADD_ITEM_KodawariHachimaki },
+  { ITEM_KUROIHEDORO,       HAND_ADD_ITEM_KuroiHedoro       },
   { ITEM_KODAWARIMEGANE,    HAND_ADD_ITEM_KodawariMegane },
   { ITEM_KODAWARISUKAAHU,   HAND_ADD_ITEM_KodawariScarf },
   { ITEM_GINNOKONA,         HAND_ADD_ITEM_GinNoKona       },
