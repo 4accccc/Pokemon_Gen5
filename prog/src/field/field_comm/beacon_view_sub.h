@@ -22,4 +22,13 @@ extern int BeaconView_CheckInput( BEACON_VIEW_PTR wk );
  */
 extern BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk );
 
+/*
+ *  @brief  メニューバーアニメセット
+ */
+extern void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state );
+
+/*
+ *  @brief  メニューバーアニメウェイト
+ */
+extern BOOL BeaconView_MenuBarCheckAnm( BEACON_VIEW_PTR wk, MENU_ID id );
 

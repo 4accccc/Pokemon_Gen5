@@ -255,6 +255,7 @@ typedef struct
 typedef struct 
 {
 	GFL_CLUNIT			*p_clunit;
+  GFL_CLSYS_REND* cellRender;
 } GRAPHIC_OBJ_WORK;
 
 //-------------------------------------
@@ -555,7 +556,20 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	//システム作成
 	GFL_CLACT_SYS_Create( &sc_clsys_init, cp_vram_bank, heapID );
 	p_wk->p_clunit	= GFL_CLACT_UNIT_Create( GRAPHIC_OBJ_CLWK_CREATE_MAX, 0, heapID );
-	GFL_CLACT_UNIT_SetDefaultRend( p_wk->p_clunit );
+
+  //自作レンダラー作成
+  {
+    const GFL_REND_SURFACE_INIT renderInitData[2] = {
+      {0,0,256,192,CLSYS_DRAW_MAIN},
+      {0,512,256,192,CLSYS_DRAW_SUB},
+    };
+    
+    p_wk->cellRender = GFL_CLACT_USERREND_Create( renderInitData , 2 , heapID );
+    GFL_CLACT_USERREND_SetOAMAttrCulling( p_wk->cellRender, TRUE );
+    GFL_CLACT_UNIT_SetUserRend( p_wk->p_clunit, p_wk->cellRender );
+  }
+
+//	GFL_CLACT_UNIT_SetDefaultRend( p_wk->p_clunit );
 
 	//表示
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
@@ -573,6 +587,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 {	
 	//システム破棄
+  GFL_CLACT_USERREND_Delete( p_wk->cellRender );
 	GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
 	GFL_CLACT_SYS_Delete();
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_OBJ_WORK) );

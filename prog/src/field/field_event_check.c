@@ -141,6 +141,7 @@ typedef struct {
   const VecFx32 * now_pos;        ///<現在のプレイヤー位置
   u32 mapattr;                  ///<足元のアトリビュート情報
 
+#if 0
   BOOL talkRequest; ///<話しかけキー操作があったかどうか
   BOOL menuRequest; ///<メニューオープン操作があったかどうか
   BOOL moveRequest; ///<一歩移動終了タイミングかどうか
@@ -150,6 +151,19 @@ typedef struct {
   BOOL convRequest; ///<便利ボタン操作があったかどうか
 
   BOOL debugRequest;  ///<デバッグ操作があったかどうか
+#else
+  u32 talkRequest:1; ///<話しかけキー操作があったかどうか
+  u32 menuRequest:1; ///<メニューオープン操作があったかどうか
+  u32 moveRequest:1; ///<一歩移動終了タイミングかどうか
+  u32 stepRequest:1; ///<振り向きor一歩移動終了タイミングかどうか
+  u32 dirPosRequest:1; ///<方向つきPOSイベントのチェックをするタイミングか？
+  u32 pushRequest:1; ///<押し込み操作があったかどうか
+  u32 convRequest:1; ///<便利ボタン操作があったかどうか
+  u32 subscreenRequest:1; ///<サブスクリーンイベントを起動してよいタイミングか？
+  u32 debugRequest:1;  ///<デバッグ操作があったかどうか
+
+
+#endif
 }EV_REQUEST;
 
 //======================================================================
@@ -547,7 +561,14 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     }
   }
 	
-	//サブスクリーンからのイベント起動チェック
+	//新サブスクリーンからのイベント起動チェック
+	if(WIPE_SYS_EndCheck()){
+    event = FIELD_SUBSCREEN_EventCheck( FIELDMAP_GetFieldSubscreenWork(fieldWork), req.subscreenRequest );
+    if(event != NULL){
+      return event;
+    }
+  }
+	//旧サブスクリーンからのイベント起動チェック
 	event = checkSubScreenEvent(gsys, fieldWork);
 	if( event != NULL )
   {
@@ -1073,6 +1094,18 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 
     //作成中だと止まったりするので、一時的に入力不可にします
     req->convRequest = ((req->key_trg & PAD_BUTTON_Y) != 0);
+
+    {
+      //サブスクリーンイベント起動許可チェック
+      u8 input = 0;
+
+      input += req->talkRequest;
+      input += req->menuRequest;
+      input += req->convRequest;
+      if( input == 0 ){
+        req->subscreenRequest = TRUE;
+      }
+    }
   }
   
   req->moveRequest = 0;

@@ -224,6 +224,34 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
 
 
 /*
+ *  @brief  メニューバーアニメセット
+ */
+void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state )
+{
+  if( id & MENU_POWER ){
+    if( wk->my_data.power != 0 ){
+      act_AnmStart( wk->pAct[ACT_POWER], state+ACTANM_POWER_ON );
+    }
+  }
+  if( id & MENU_THANKS ){
+    if( wk->ctrl.max > 0 ){
+      act_AnmStart( wk->pAct[ACT_THANKS], state+ACTANM_THANKS_ON );
+    }
+  }
+  if( id & MENU_RETURN ){
+    act_AnmStart( wk->pAct[ACT_RETURN], state+ACTANM_RETURN_ON );
+  }
+}
+
+/*
+ *  @brief  メニューバーアニメウェイト
+ */
+BOOL BeaconView_MenuBarCheckAnm( BEACON_VIEW_PTR wk, MENU_ID id )
+{
+  return GFL_CLACT_WK_CheckAnmActive( wk->pAct[ACT_POWER+(id>>1)] );
+}
+
+/*
  *  @brief  外積計算
  */
 static int calc_Cross( POINT* a, POINT* b ) 

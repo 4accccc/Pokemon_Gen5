@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "gamesystem/gamesystem.h"
 #include "field/fieldmap_proc.h"  //FIELDMAP_WORKéQè∆
 #include "field/field_menu_item.h"     //FIELD_MENU_ITEM_TYPEéQè∆
 
@@ -91,6 +92,7 @@ extern FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
 extern u8 FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork );
 extern void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork );
 extern void FIELD_SUBSCREEN_Draw( FIELD_SUBSCREEN_WORK* pWork );
+extern GMEVENT* FIELD_SUBSCREEN_EventCheck( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReq );
 extern const BOOL FIELD_SUBSCREEN_CanChange( FIELD_SUBSCREEN_WORK* pWork );
 extern void FIELD_SUBSCREEN_Change( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode);
 extern void FIELD_SUBSCREEN_ChangeForce( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode);

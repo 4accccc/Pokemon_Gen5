@@ -27,6 +27,12 @@ enum{
   SEQ_END,
 };
 
+typedef enum{
+ EV_NONE,
+ EV_RETURN_CGEAR,
+ EV_CALL_DETAIL_VIEW,
+}BEACON_DETAIL_EVENT;
+
 /////////////////////////////////////
 //リテラル
 #define FRM_MENUMSG ( GFL_BG_FRAME0_S )
@@ -87,6 +93,20 @@ enum{
 #define BUFLEN_PANEL_MSG  (10+EOM_SIZE)
 ///トレーナー名バッファ長
 #define BUFLEN_TR_NAME  (PERSON_NAME_SIZE+EOM_SIZE)
+
+///メニュー
+typedef enum{
+ MENU_POWER = 1,
+ MENU_THANKS = 2,
+ MENU_RETURN = 4,
+ MENU_ALL = 7,
+}MENU_ID;
+
+typedef enum{
+ MENU_ST_ON,
+ MENU_ST_ANM,
+ MENU_ST_OFF,
+}MENU_STATE;
 
 ///////////////////////////////////////////////////
 //BMP関連
@@ -412,6 +432,7 @@ typedef struct _MY_DATA{
 typedef struct _BEACON_VIEW{
   GAMESYS_WORK *gsys;
   GAMEDATA* gdata;
+  FIELDMAP_WORK* fieldWork; 
   FIELD_SUBSCREEN_WORK *subscreen;
 
   ////////////////////////////////////////
@@ -424,6 +445,9 @@ typedef struct _BEACON_VIEW{
 
   BOOL      active;
   int       seq;
+  int       sub_seq;
+  int       event_id;
+
   int       io_interval;
   u8        msg_spd;
   LOG_CTRL  ctrl;

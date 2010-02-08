@@ -121,6 +121,8 @@ static void _sub_SystemSetup( BEACON_DETAIL_WORK* wk);
 static void _sub_SystemExit( BEACON_DETAIL_WORK* wk);
 static void _sub_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID );
 static void _sub_BGResRelease( BEACON_DETAIL_WORK* wk );
+static void _sub_ActorCreate(BEACON_DETAIL_WORK* wk);
+static void _sub_ActorDelete(BEACON_DETAIL_WORK* wk);
 static void _sub_BmpWinCreate(BEACON_DETAIL_WORK* wk);
 static void _sub_BmpWinDelete(BEACON_DETAIL_WORK* wk);
 
@@ -203,12 +205,13 @@ static GFL_PROC_RESULT BeaconDetailProc_Init( GFL_PROC *proc, int *seq, void *pw
 	_sub_BGResInit( wk, wk->heapID );
   _sub_BmpWinCreate( wk );
   _sub_ActorResourceLoad( wk, wk->handle);
-
-	//タッチバーの初期化
-	wk->touchbar = _sub_TouchBarInit( BEACON_DETAIL_GRAPHIC_GetClunit( wk->graphic ), wk->heapID );
+  _sub_ActorCreate( wk );
 
   //ウィンドウ初期化
   _sub_BeaconWinInit( wk );
+
+	//タッチバーの初期化
+	wk->touchbar = _sub_TouchBarInit( BEACON_DETAIL_GRAPHIC_GetClunit( wk->graphic ), wk->heapID );
 
   //初期描画
   BeaconDetail_InitialDraw( wk );
@@ -232,8 +235,9 @@ static GFL_PROC_RESULT BeaconDetailProc_Exit( GFL_PROC *proc, int *seq, void *pw
 { 
 	BEACON_DETAIL_WORK* wk = mywk;
 
-  _sub_BeaconWinExit( wk );
 	_sub_TouchBarExit( wk->touchbar );
+  _sub_BeaconWinExit( wk );
+  _sub_ActorDelete( wk );
   _sub_ActorResourceUnload( wk );
   _sub_BmpWinDelete( wk );
 	_sub_BGResRelease( wk );
@@ -883,6 +887,43 @@ static GFL_CLWK* act_Add(
           res->cgr,res->pltt,res->cell, &ini, CLSYS_DEFREND_SUB, wk->heapID );
 
   return obj;
+}
+
+//--------------------------------------------------------------
+/**
+ * システムアクター作成
+ *
+ * @param   view		
+ */
+//--------------------------------------------------------------
+static void _sub_ActorCreate(BEACON_DETAIL_WORK* wk)
+{
+	GFL_CLUNIT	*clunit;
+  
+  clunit = BEACON_DETAIL_GRAPHIC_GetClunit( wk->graphic );
+
+  //初期座標は適当
+  wk->pAct[ACT_ICON_TR] = act_Add( wk, clunit, &wk->objResUnion,
+                    128, 120, 0, 0, ACT_ICON_BGPRI );
+  wk->pAct[ACT_ICON_EV] = act_Add( wk, clunit, &wk->objResNormal,
+                    128-32, 120, 0, 1, ACT_ICON_BGPRI );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムアクター削除
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void _sub_ActorDelete(BEACON_DETAIL_WORK* wk)
+{
+  int i;
+
+  for(i = 0;i < ACT_MAX;i++){
+    GFL_CLACT_WK_SetDrawEnable( wk->pAct[i], FALSE );
+    GFL_CLACT_WK_Remove( wk->pAct[i] );
+  }
 }
 
 //--------------------------------------------------------------

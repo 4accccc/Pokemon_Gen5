@@ -20,6 +20,8 @@
 #include "field/beacon_view.h"
 #include "print\printsys.h"
 #include "message.naix"
+#include "field/event_beacon_detail.h"
+#include "field/event_subscreen.h"
 
 #include "beacon_status.naix"
 #include "wifi_unionobj.naix"
@@ -35,6 +37,9 @@
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
+static void event_Request( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id);
+static void event_RequestReset( BEACON_VIEW_PTR wk );
+
 static int seq_Main( BEACON_VIEW_PTR wk );
 static int seq_ViewUpdate( BEACON_VIEW_PTR wk );
 static int seq_GPowerUse( BEACON_VIEW_PTR wk );
@@ -114,6 +119,7 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
 //  wk = GFL_HEAP_AllocClearMemory(HEAPID_FIELDMAP, sizeof(BEACON_VIEW));
   wk->gsys = gsys;
   wk->gdata = GAMESYSTEM_GetGameData(gsys);
+  wk->fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   wk->subscreen = subscreen;
  
   wk->heapID = HEAPID_FIELDMAP;
@@ -176,9 +182,11 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
 {
   int i;
 
-  //スタックテーブル更新
-  GAMEBEACON_Stack_Update( wk->infoStack );
   GFL_TCBL_Main( wk->pTcbSys );
+
+  if( wk->event_id != EV_NONE ){
+    return; //イベントリクエスト中はメイン処理をスキップ
+  }
 
   if( wk->active != bActive ){
     wk->active = bActive;
@@ -186,6 +194,9 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   if(!bActive){
     return;
   }
+  //スタックテーブル更新
+  GAMEBEACON_Stack_Update( wk->infoStack );
+  
   switch( wk->seq ){
   case SEQ_MAIN:
     wk->seq = seq_Main( wk );
@@ -210,6 +221,36 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     //外部リクエストによる終了待ち
     break;
   }
+}
+
+//==================================================================
+/**
+ * すれ違い参照画面：入力取得
+ *
+ * @param   wk		
+ */
+//==================================================================
+GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bActive, BOOL bEvReq )
+{
+  GMEVENT* event = NULL;
+
+  if( !bActive || !bEvReq ){  //イベント起動していいタイミングを待つ
+    return NULL;
+  }
+
+  switch( wk->event_id ){
+  case EV_RETURN_CGEAR:
+    event = EVENT_ChangeSubScreen( wk->gsys, wk->fieldWork, FIELD_SUBSCREEN_NORMAL);
+//    FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR );
+    break;
+  case EV_CALL_DETAIL_VIEW:
+    event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork );
+    break;
+  default:
+    return NULL;
+  }
+  event_RequestReset( wk );
+  return event; 
 }
 
 //==================================================================
@@ -289,6 +330,22 @@ static void tcb_VInter( GFL_TCB* tcb, void * work)
 }
 
 /*
+ *  @brief  イベントリクエスト
+ */
+static void event_Request( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id)
+{
+  wk->event_id = ev_id;
+}
+
+/*
+ *  @brief  イベントリクエストリセット
+ */
+static void event_RequestReset( BEACON_VIEW_PTR wk )
+{
+  wk->event_id = EV_NONE;
+}
+
+/*
  *  @brief  メイン　待機
  */
 static int seq_Main( BEACON_VIEW_PTR wk )
@@ -339,6 +396,9 @@ static int seq_GPowerUse( BEACON_VIEW_PTR wk )
  */
 static int seq_ThankYou( BEACON_VIEW_PTR wk )
 {
+  switch( wk->sub_seq ){
+  
+  }
   OS_TPrintf("ありがとう ビーコンセット\n");
   GAMEBEACON_Set_Thankyou( wk->gdata, 0x12345678 );
 
@@ -350,7 +410,7 @@ static int seq_ThankYou( BEACON_VIEW_PTR wk )
  */
 static int seq_ReturnCGear( BEACON_VIEW_PTR wk )
 {
-  FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);
+  event_Request( wk , EV_RETURN_CGEAR );
   return SEQ_END;
 }
 
@@ -359,7 +419,7 @@ static int seq_ReturnCGear( BEACON_VIEW_PTR wk )
  */
 static int seq_CallDetailView( BEACON_VIEW_PTR wk )
 {
-  FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_BEACON_DETAIL );
+  event_Request( wk , EV_CALL_DETAIL_VIEW );
   return SEQ_END;
 }
 
@@ -776,7 +836,7 @@ static void _sub_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
  
   //レンダラー作成
   {
-    const GFL_REND_SURFACE_INIT renderInitData = { 8*16,0,256,192,CLSYS_DRAW_SUB};
+    const GFL_REND_SURFACE_INIT renderInitData = { 0,512,256,192,CLSYS_DRAW_SUB};
     
     wk->cellRender = GFL_CLACT_USERREND_Create( &renderInitData , 1 , wk->heapID );
     GFL_CLACT_UNIT_SetUserRend( wk->cellUnit, wk->cellRender );

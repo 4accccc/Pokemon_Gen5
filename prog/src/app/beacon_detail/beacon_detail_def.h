@@ -17,7 +17,6 @@ enum{
  SEQ_EXIT,
 };
 
-
 //-------------------------------------
 ///	フレーム
 //=====================================
@@ -143,6 +142,12 @@ enum
 //////////////////////////////////////////////
 //アクター
 enum{
+ ACT_ICON_TR,
+ ACT_ICON_EV,
+ ACT_MAX
+};
+
+enum{
  ACTANM_ICON_TR,
  ACTANM_ICON_POKE,
  ACTANM_RANK01,
@@ -158,7 +163,7 @@ enum{
 #define ACT_RANK_PY     (12*8)
 #define ACT_TRAINER_BGPRI (0)
 
-
+#define ACT_ICON_BGPRI  (2)
 
 //////////////////////////////////////////
 //エフェクト関連定義値

@@ -82,6 +82,7 @@ struct _FIELD_SUBSCREEN_WORK {
 typedef void INIT_FUNC(FIELD_SUBSCREEN_WORK * , FIELD_SUBSCREEN_MODE prevMode );
 typedef void UPDATE_FUNC(FIELD_SUBSCREEN_WORK *, BOOL bActive);
 typedef void DRAW_FUNC(FIELD_SUBSCREEN_WORK *, BOOL bActive);
+typedef GMEVENT* EVENT_CHECK_FUNC(FIELD_SUBSCREEN_WORK *, BOOL bActive, BOOL bEventOK );
 typedef void EXIT_FUNC(FIELD_SUBSCREEN_WORK *);
 typedef void ACTION_CALLBACK(FIELD_SUBSCREEN_WORK *,FIELD_SUBSCREEN_ACTION actionno);
 
@@ -91,6 +92,7 @@ typedef struct
   INIT_FUNC * init_func;
   UPDATE_FUNC * update_func;
   DRAW_FUNC * draw_func;
+  EVENT_CHECK_FUNC * evcheck_func;
   EXIT_FUNC * exit_func;
   ACTION_CALLBACK * action_callback; ///< アクションによる切り替えが行われる事をサブスクリーンに伝える関数
   
@@ -126,6 +128,7 @@ static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork,FIELD_SUBSCR
 static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void update_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static void draw_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+static GMEVENT* evcheck_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive, BOOL bEvReq );
 
 static void init_nogear_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
@@ -155,6 +158,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     init_normal_subscreen,
     update_normal_subscreen,
     NULL ,
+    NULL ,
     exit_normal_subscreen,
     actioncallback_normal_subscreen,
   },
@@ -163,6 +167,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     init_topmenu_subscreen,
     update_topmenu_subscreen,
     draw_topmenu_subscreen ,
+    NULL ,
     exit_topmenu_subscreen,
     NULL ,
   },
@@ -171,6 +176,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     init_union_subscreen,
     update_union_subscreen,
     draw_union_subscreen ,
+    NULL ,
     exit_union_subscreen,
     NULL ,
   },
@@ -179,6 +185,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     init_intrude_subscreen,
     update_intrude_subscreen,
     draw_intrude_subscreen ,
+    NULL ,
     exit_intrude_subscreen,
     NULL ,
   },
@@ -187,6 +194,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     init_beacon_view_subscreen,
     update_beacon_view_subscreen,
     draw_beacon_view_subscreen ,
+    evcheck_beacon_view_subscreen,
     exit_beacon_view_subscreen,
     NULL ,
   },
@@ -194,6 +202,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     FIELD_SUBSCREEN_NOGEAR,       
     init_nogear_subscreen,
     update_nogear_subscreen,
+    NULL ,
     NULL ,
     exit_nogear_subscreen,
     actioncallback_nogear_subscreen,
@@ -203,6 +212,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     init_light_subscreen,
     update_light_subscreen,
     NULL ,
+    NULL ,
     exit_light_subscreen,
     NULL ,
   },
@@ -211,6 +221,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     init_touchcamera_subscreen,
     update_touchcamera_subscreen,
     NULL ,
+    NULL ,
     exit_touchcamera_subscreen,
     NULL ,
   },
@@ -218,6 +229,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER,  
     init_soundviewer_subscreen,
     update_soundviewer_subscreen,
+    NULL ,
     NULL ,
     exit_soundviewer_subscreen,
     NULL ,
@@ -382,6 +394,29 @@ void FIELD_SUBSCREEN_Draw( FIELD_SUBSCREEN_WORK* pWork )
   case FSS_CHANGE_FADEIN_WAIT:
     break;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  下画面のイベント起動チェック処理
+ * @param pWork   サブスクリーン制御ワークへのポインタ
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* FIELD_SUBSCREEN_EventCheck( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReq )
+{
+  switch( pWork->state )
+  {
+  case FSS_UPDATE:
+    if( funcTable[pWork->mode].evcheck_func != NULL )
+    {
+      return funcTable[pWork->mode].evcheck_func(pWork,
+          (NULL==GAMESYSTEM_GetEvent(FIELDMAP_GetGameSysWork(pWork->fieldmap))), bEvReq );
+    }
+    break;
+  default:
+    break;
+  }
+  return NULL;
 }
 
 
@@ -939,7 +974,7 @@ static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  メニュー画面の初期化
+ *  @brief  すれ違い画面の初期化
  *  @param  heapID  ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
@@ -950,7 +985,7 @@ static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSC
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  メニュー画面の破棄
+ *  @brief  すれ違い画面の破棄
  */
 //-----------------------------------------------------------------------------
 static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork )
@@ -960,7 +995,7 @@ static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  メニュー画面の更新
+ *  @brief  すれ違い画面の更新
  */
 //-----------------------------------------------------------------------------
 static void update_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
@@ -970,12 +1005,22 @@ static void update_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActi
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  メニュー画面の描画
+ *  @brief  すれ違い画面の描画
  */
 //-----------------------------------------------------------------------------
 static void draw_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
   BEACON_VIEW_Draw(pWork->beaconViewWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  すれ違い画面の描画
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* evcheck_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive, BOOL bEvReq )
+{
+  return BEACON_VIEW_EventCheck(pWork->beaconViewWork, bActive, bEvReq );
 }
 
 //=============================================================================
