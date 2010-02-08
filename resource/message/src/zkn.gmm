@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2009-12-18T11:46:50"/>
+	<create user="kawada_koji" host="W00215" date="2010-02-06T17:11:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="190" top="268" right="895" bottom="896" maximized="no" rayout="Vertical2">
+	<dialog left="216" top="126" right="921" bottom="754" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1359,6 +1359,30 @@
 [1:0B:ボックス名:1]に　てんそうされた！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は　ショウロの　パソコンの
 [1:0B:ボックス名:1]に　てんそうされた！</language>
+	</row>
+
+	<row id="ZKN_DETAIL_HEAD_01" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
+		<comment>詳細画面のタイトルバー</comment>
+		<language name="JPN" font=" 1:small" width="216">Information/せつめい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">Information/説明</language>
+	</row>
+
+	<row id="ZKN_DETAIL_HEAD_02" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
+		<comment>詳細画面のタイトルバー</comment>
+		<language name="JPN" font=" 1:small" width="216">Map/ぶんぷ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">Map/分布</language>
+	</row>
+
+	<row id="ZKN_DETAIL_HEAD_03" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
+		<comment>詳細画面のタイトルバー</comment>
+		<language name="JPN" font=" 1:small" width="216">Voice/なきごえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">Voice/鳴き声</language>
+	</row>
+
+	<row id="ZKN_DETAIL_HEAD_04" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
+		<comment>詳細画面のタイトルバー</comment>
+		<language name="JPN" font=" 1:small" width="216">Form/すがた</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">Form/姿</language>
 	</row>
 
 	<flowchart-group-list>

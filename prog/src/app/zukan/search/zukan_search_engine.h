@@ -31,6 +31,7 @@ enum {
 	// 図鑑モード
 	ZKNCOMM_LIST_SORT_MODE_ZENKOKU = 0,
 	ZKNCOMM_LIST_SORT_MODE_LOCAL,
+	ZKNCOMM_LIST_SORT_MODE_MAX,
 
 	// 並び
 	ZKNCOMM_LIST_SORT_ROW_NUMBER = 0,
@@ -39,6 +40,7 @@ enum {
 	ZKNCOMM_LIST_SORT_ROW_WEIGHT_LOW,
 	ZKNCOMM_LIST_SORT_ROW_HEIGHT_HI,
 	ZKNCOMM_LIST_SORT_ROW_HEIGHT_LOW,
+	ZKNCOMM_LIST_SORT_ROW_MAX,
 
 	// 名前
 	// タイプ
@@ -56,8 +58,9 @@ typedef struct {
 	u8	mode;				// 図鑑モード
 	u8	row;				// 並び（６種）
 	u8	name;				// 名前
-	u8	type1;			// タイプ１（１７種）
+	u8	type1;			// タイプ１（１７種）  // prog/include/poke_tool/poketype_def.h
 	u8	type2;			// タイプ２（１７種）
+  u8  color;      // 色（１０種）  // prog/include/poke_tool/poke_personal.h
 	u8	form;				// 形（１４種）
 }ZKNCOMM_LIST_SORT;
 
