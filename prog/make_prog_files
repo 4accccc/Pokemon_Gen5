@@ -240,6 +240,7 @@ SRCS  +=    $(SOUNDSRC) \
 		debug/debug_sd_print.c \
 		system/ds_system.c \
         savedata/undata_update.c \
+        field/event_research_radar.c \
         system/scroll_bar.c
 
 
@@ -1676,6 +1677,14 @@ SRCS_OVERLAY_EGG_DEMO = demo/egg_demo/egg_demo.c \
 SRCS_OVERLAY_BEACON_DETAIL = app/beacon_detail/beacon_detail.c \
 											 app/beacon_detail/beacon_detail_gra.c \
 											 app/beacon_detail/beacon_detail_sub.c
+
+# すれ違い調査レーダー画面
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_RESEARCH_RADAR = app/research_radar/research_main.c \
+                              app/research_radar/research_menu.c \
+                              app/research_radar/research_select.c \
+                              app/research_radar/research_check.c \
+                              app/research_radar/research_test.c
 
 # 国連ビル
 #===> SRCS_OVERLAY_UI_COMMON
