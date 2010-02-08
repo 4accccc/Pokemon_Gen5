@@ -14,6 +14,7 @@
 #include "savedata/save_tbl.h"
 #include "savedata/c_gear_picture.h"
 #include "system/main.h"  //HEAPID
+#include "system/palanm.h"  //HEAPID
 
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
@@ -109,6 +110,13 @@ typedef struct {
   int width;
   int height;
 } _WINDOWPOS;
+
+typedef struct {
+  u8 time;
+  u8 x;
+  u8 y;
+  u8 downtime;
+} _ANIM_DATA;
 
 
 
@@ -212,7 +220,12 @@ struct _C_GEAR_WORK {
 
   //FieldBeaconMessage用
   FIELD_BEACON_MSG_DATA *fbmData;
-  GFL_BMPWIN *fbmArea;
+  GFL_BMPWIN* fbmArea;
+  GFL_TCBSYS* pfade_tcbsys;
+  GFL_TCB*                    vblank_tcb;
+  void* pfade_tcbsys_wk;
+  PALETTE_FADE_PTR            pfade_ptr;
+  u8 startCounter;
 };
 
 
@@ -228,6 +241,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork);
 static void _gearXY2PanelScreen(int x,int y, int* px, int* py);
 
 static BOOL _modeSelectMenuButtonCallback(int bttnid,C_GEAR_WORK* pWork);
+static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type);
 
 static void _timeAnimation(C_GEAR_WORK* pWork);
 static void _typeAnimation(C_GEAR_WORK* pWork);
@@ -631,6 +645,22 @@ static int _gearPanelTypeNum(C_GEAR_WORK* pWork, CGEAR_PANELTYPE_ENUM type)
 }
 
 
+static void _PFadeToWhite( C_GEAR_WORK* pWork )
+{
+  // 黒く
+  PaletteFadeReq(
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, 16, 0x0, pWork->pfade_tcbsys
+  );
+}
+
+static void _PFadeFromWhite( C_GEAR_WORK* pWork )
+{
+  // 黒から戻る
+  static const int time = 1;
+  PaletteFadeReq(
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  time,  16, 0, 0x0, pWork->pfade_tcbsys
+  );
+}
 
 
 
@@ -638,21 +668,80 @@ static int _gearPanelTypeNum(C_GEAR_WORK* pWork, CGEAR_PANELTYPE_ENUM type)
 
 
 
+const static _ANIM_DATA screenTable[]={
+  { 0, 4, 1, 6},
+
+  { 1, 4, 0, 7},
+  { 1, 4, 2, 7},
+
+  { 2, 3, 0, 8},
+  { 2, 3, 1, 8},
+  { 2, 3, 2, 8},
+  { 2, 3, 3, 8},
+  { 2, 5, 0, 8},
+  { 2, 5, 1, 8},
+  { 2, 5, 2, 8},
+  { 2, 5, 3, 8},
+
+  { 3, 2, 0, 9},
+  { 3, 2, 1, 9},
+  { 3, 2, 2, 9},
+  { 3, 6, 0, 9},
+  { 3, 6, 1, 9},
+  { 3, 6, 2, 9},
+
+  { 4, 1, 0, 10},
+  { 4, 1, 1, 10},
+  { 4, 1, 2, 10},
+  { 4, 1, 3, 10},
+  { 4, 7, 0, 10},
+  { 4, 7, 1, 10},
+  { 4, 7, 2, 10},
+  { 4, 7, 3, 10},
+
+  { 5, 0, 0, 11},
+  { 5, 0, 1, 11},
+  { 5, 0, 2, 11},
+  { 5, 8, 0, 11},
+  { 5, 8, 1, 11},
+  { 5, 8, 2, 11},
+
+};
+
+
+static BOOL _IsGearBootMain(C_GEAR_WORK* pWork)
+{
+  if(pWork->startCounter>=20){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+static BOOL _IsGearNormalDisp(C_GEAR_WORK* pWork)
+{
+  if(pWork->startCounter < 5){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 
+static void _gearBootMain(C_GEAR_WORK* pWork)
+{
+  int i;
 
 
 
-
-
-
-
-
-
-
-
-
+  for(i=0;i < elementof(screenTable);i++){
+    if(screenTable[i].time <= pWork->startCounter){
+      if(screenTable[i].downtime >= pWork->startCounter){
+        _gearPanelBgScreenMake(pWork, screenTable[i].x, screenTable[i].y, CGEAR_PANELTYPE_BOOT);
+      }
+    }
+  }
+  pWork->startCounter++;
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -665,9 +754,10 @@ static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANEL
 {
   int ypos[2] = {PANEL_Y1,PANEL_Y2};
   int x,y,i,j;
-  int typepos[] = {0,0x0c,0x10,0x14,0x18};
+  int typepos[] = {0,  0x0c,0x10,0x14,0x18,0x1c};
   int palpos[] =  {0,0x1000,0x2000,0x3000};
   int palpos2[] =  {0x7000,0x6000,0x5000,0x4000,0x4000,0x4000,0x5000,0x6000,0x7000};
+  int palpos3[] =  {0x7000,0x6000,0x5000,0x4000,0xB000,0x4000,0x5000,0x6000,0x7000};
   u16* pScrAddr = GFL_BG_GetScreenBufferAdrs(GEAR_BUTTON_FRAME );
   int xscr;
   int yscr;
@@ -681,7 +771,10 @@ static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANEL
         if(type == CGEAR_PANELTYPE_NONE){
           charpos = 0;
         }
-        if(type==CGEAR_PANELTYPE_BASE){
+        if(type==CGEAR_PANELTYPE_BOOT){
+          pScrAddr[scr] = palpos3[xs] + charpos;
+        }
+        else if(type==CGEAR_PANELTYPE_BASE || _IsGearNormalDisp(pWork)){
           pScrAddr[scr] = palpos2[xs] + charpos;
         }
         else{
@@ -736,6 +829,7 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
       _gearPanelBgScreenMake(pWork, x, y, CGEAR_SV_GetPanelType(pWork->pCGSV,x,y));
     }
   }
+  _gearBootMain(pWork);
   GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
 }
 
@@ -825,7 +919,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
   //    ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_ircbattle_connect_anm_NCLR, pWork->heapID);
   GFL_ARC_CloseDataHandle( p_handle );
 
-  GFL_NET_ChangeIconPosition(240-22,10);
+  GFL_NET_ChangeIconPosition(240-22,14);
   GFL_NET_ReloadIcon();
 
 }
@@ -1190,11 +1284,27 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
                                               &cellInitData ,
                                               CLSYS_DEFREND_SUB,
                                               pWork->heapID );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], FALSE );
   }
   _timeAnimation(pWork);
   _typeAnimation(pWork);
 
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   マーカーの表示許可
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _gearMarkObjDrawEnable(C_GEAR_WORK* pWork)
+{
+  int i;
+  for(i=0;i < _CLACT_TYPE_MAX ;i++)
+  {
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], TRUE );
+  }
 }
 
 
@@ -1264,7 +1374,10 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
 {
   const GAMEBEACON_INFO *beacon_info;
   int i;
-  
+  if(!pWork->cellCross[0]){
+    return ;
+  }
+
   for(i=0;i < _CLACT_CROSS_MAX ;i++)
   {
     GFL_CLWK* cp_wk =  pWork->cellCross[i];
@@ -1350,8 +1463,8 @@ static void _modeInit(C_GEAR_WORK* pWork)
   _gearArcCreate(pWork);  //ARC読み込み BG&OBJ
   _gearPanelBgCreate(pWork);	// パネル作成
 
-  _gearObjCreate(pWork); //CLACT設定
-  _gearCrossObjCreate(pWork);
+ // _gearObjCreate(pWork); //CLACT設定
+ // _gearCrossObjCreate(pWork);
 
 
   pWork->IsIrc=FALSE;
@@ -1525,8 +1638,8 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
     y *= 8;
     //		GFL_CLACT_WK_GetPos( pWork->cellType[i], &pos , CLSYS_DEFREND_SUB);
     //		if((pos.x != x) || (pos.y != y)){
-    pos.x = x+24;  // OBJ表示の為の補正値
-    pos.y = y+6;
+    pos.x = x+24-6;  // OBJ表示の為の補正値
+    pos.y = y+6+6;
     GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CLSYS_DEFREND_SUB);
     //		}
   }
@@ -1541,6 +1654,7 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 {
+ 
   GFL_BMN_Main( pWork->pButton );
   _timeAnimation(pWork);
   _typeAnimation(pWork);
@@ -1558,6 +1672,35 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 #endif
 
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   モードセレクト画面待機１
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
+{
+  if(pWork->startCounter==3){
+    _gearObjCreate(pWork); //CLACT設定
+    _gearCrossObjCreate(pWork);
+  }
+  if(pWork->startCounter==12){
+    _PFadeFromWhite(pWork);
+  }
+  if(pWork->startCounter==16){
+    _gearMarkObjDrawEnable(pWork);
+  }
+  if(_IsGearBootMain(pWork)){
+    _gearPanelBgCreate(pWork);	// パネル作成
+    return;
+  }
+
+  _CHANGE_STATE(pWork, _modeSelectMenuWait);
+}
+
+
 
 static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
 {
@@ -1599,6 +1742,18 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
 }
 
 
+
+//-------------------------------------
+/// VBlank関数
+//=====================================
+static void _VBlankFunc( GFL_TCB* tcb, void* wk )
+{
+  C_GEAR_WORK* pWork = (C_GEAR_WORK*)wk;
+
+  // 白く飛ばす演出のためのパレットフェード
+  if( pWork->pfade_ptr ) PaletteFadeTrans( pWork->pfade_ptr );
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   スタート
@@ -1621,9 +1776,11 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   pWork->pGameSys = pGameSys;
   pWork->bAction = TRUE;
 
-  //	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
-  _CHANGE_STATE(pWork,_modeSelectMenuWait);
+  pWork->pfade_tcbsys_wk = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, GFL_TCB_CalcSystemWorkSize(1) );
+  pWork->pfade_tcbsys = GFL_TCB_Init( 1, pWork->pfade_tcbsys_wk );
 
+  //	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
+  _CHANGE_STATE(pWork,_modeSelectMenuWait1);
 
   _createSubBg(pWork);   //BGVRAM設定
   _modeInit(pWork);
@@ -1632,6 +1789,17 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   }
   _gearDecalScreenArcCreate(pWork,ret);
 
+  pWork->pfade_ptr = PaletteFadeInit( HEAPID_FIELD_SUBSCREEN );
+  PaletteTrans_AutoSet( pWork->pfade_ptr, TRUE );
+  PaletteFadeWorkAllocSet( pWork->pfade_ptr, FADE_SUB_OBJ, 0x20*10, HEAPID_FIELD_SUBSCREEN );
+  // 現在VRAMにあるパレットを壊さないように、VRAMからパレット内容をコピーする
+  PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_OBJ, 0, 0x20*10 );
+
+  {
+    pWork->vblank_tcb = GFUser_VIntr_CreateTCB( _VBlankFunc, pWork, 1 );
+  }
+
+  _PFadeToWhite(pWork);
 //  OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP));  
   
   return pWork;
@@ -1743,7 +1911,8 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
     state(pWork);
   }
   _gearCrossObjMain(pWork);
-    GFL_CLACT_SYS_Main();
+  GFL_CLACT_SYS_Main();
+  if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
 
 }
 
@@ -1786,6 +1955,14 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
 
   GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
   GFL_NET_ReloadIcon();
+
+  // パレットフェード
+  PaletteFadeWorkAllocFree( pWork->pfade_ptr, FADE_SUB_OBJ );
+  PaletteFadeFree( pWork->pfade_ptr );
+  // タスク
+  GFL_TCB_Exit( pWork->pfade_tcbsys );
+  GFL_HEAP_FreeMemory( pWork->pfade_tcbsys_wk );
+  GFL_TCB_DeleteTask( pWork->vblank_tcb );
 
   _workEnd(pWork);
   G2S_BlendNone();
