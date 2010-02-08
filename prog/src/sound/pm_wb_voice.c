@@ -98,6 +98,7 @@ BOOL PMV_CustomVoiceWave(	u32			pokeNo,			// [in]ポケモンナンバー
 			PERAPVOICE_ExpandVoiceData( *wave, PERAPVOICE_GetVoiceData(pmvRef->perapVoice) );
 			*size = PERAP_SAMPLING_SIZE;
 			*rate = PERAP_SAMPLING_RATE;
+			*volume = VOICE_VOLUME_DEFAULT;
 			//ランダムに音程を変える仕様らしい
 			*speed = PERAP_WAVE_SPD + GFUser_GetPublicRand( PERAP_WAVE_SPDRAND );
 			return TRUE;
