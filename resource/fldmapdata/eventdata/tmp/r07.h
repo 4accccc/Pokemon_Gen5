@@ -3,6 +3,7 @@
 #define ZONE_R07_EVD_H
 
 #define DOOR_ID_R07_R07R0101_EXIT01       0
+#define DOOR_ID_R07_R07R0201_EXIT01       1
 
 #endif //ZONE_R07_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
