@@ -184,11 +184,11 @@
 #define WK_OTHER_BSUBWAY_TEST            16689 /* 0x4131 バトルサブウェイ、テスト */
 #define WK_OTHER_BSUBWAY_TRAIN           16690 /* 0x4132 バトルサブウェイ、列車内制御 */
 #define WK_OTHER_BSUBWAY_HOME            16691 /* 0x4133 バトルサブウェイ、ホーム制御 */
-#define WK_OTHER_KASEKI_NUM              16692 /* 0x4134 化石復元イベント用ワーク */
-#define WK_OTHER_PASSENGERBOAT           16693 /* 0x4135 遊覧船イベント用ワーク */
-#define WK_OTHER_STATION_CONNECT         16694 /* 0x4136 C04とギアステーションの接続イベント用ワーク */
+#define WK_OTHER_KASEKI_NUM              16692 /* 0x4134 化石復元イベント用ワーク 化石ポケモン預かり状態か識別するためのワーク。アイテムナンバーを格納。 */
+#define WK_OTHER_PASSENGERBOAT           16693 /* 0x4135 遊覧船イベント用ワーク 遊覧船のイベント状態を保存するワーク。船内案内済みか判定に使用 */
+#define WK_OTHER_STATION_CONNECT         16694 /* 0x4136 C04とギアステーションの接続イベント用ワーク 00 ギアステーション入場アニメ有効（シーンチェンジスクリプト） 01 ギアステーションからC04にでる階段前のPOSイベント有効 */
 #define WK_OTHER_C03R0201_GALLERY        16695 /* 0x4137 日替わりタイプ指定ポケモン見せ用ワーク */
-		/* not used 16696(0x4138) */
+#define WK_OTHER_UN                      16696 /* 0x4138 国連イベント用ワーク 00 参加していない（受付がゲートを塞いでいる） 01 参加状態（受付を通過している→受付をどかした状態にする） */
 		/* not used 16697(0x4139) */
 		/* not used 16698(0x413a) */
 		/* not used 16699(0x413b) */
