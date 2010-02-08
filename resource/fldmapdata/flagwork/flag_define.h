@@ -178,7 +178,7 @@
 #define FE_POKEID_FIRSTTALK                162 /* 0x00a2 ポケモンIDイベント初回会話フラグ */
 #define FE_C03R0303_CLEANINGM              163 /* 0x00a3 ヒウンシティ バトルカンパニー3F：会長と戦った */
 #define FE_C03R0901_ITEMGET                164 /* 0x00a4 ヒウンシティ バー：アイテムを入手した */
-		/* not used   165(0x00a5) */
+#define FE_R05_MUSICIAN_WIN                165 /* 0x00a5 ５番道路のミュージシャンに勝利した（グッズ入手済み） */
 		/* not used   166(0x00a6) */
 		/* not used   167(0x00a7) */
 		/* not used   168(0x00a8) */

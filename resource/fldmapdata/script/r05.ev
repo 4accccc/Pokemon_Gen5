@@ -30,6 +30,7 @@ _EVENT_DATA    ev_bg_r05_board_01
 _EVENT_DATA    ev_bg_r05_board_02
 _EVENT_DATA    ev_bg_r05_board_03
 _EVENT_DATA    ev_init_r05
+_EVENT_DATA    ev_r05_musician_01
 _EVENT_DATA_END
 
 
@@ -736,38 +737,83 @@ _ANIME_LABEL	anm_rival_goaway_01
 /************************************************************/
 /*						H02側ストッパー						*/
 /************************************************************/
+//ゲート係員
 EVENT_START	ev_pos_r05_h02stop_01
-	//ストッパー：！マーク
-	_OBJ_ANIME( R05_MAN2_01, anm_obj_gyoe )
-	_OBJ_ANIME_WAIT()
+	//そこで ストップ！（下を向いて）
+	_OBJ_ANIME( R05_MAN2_01, anm_dir_d )
+	_PLAINWIN_MSG_UP( msg_r05_cameraman_01a )
 
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	
+	//主人公：係員の近くへ（３グリッド以上離れている場合）
+	_PLAYER_POS_GET( SCWK_TEMP0, SCWK_TEMP1 )
+	IF $SCWK_TEMP1 == 433 THEN
+		_CAMERA_MOVE( 9688,0,970752,21790720,0,28217344, 30 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stop_player_move_01a )
+	ELSIF $SCWK_TEMP1 == 434 THEN
+		_CAMERA_MOVE( 9688,0,970752,21790720,0,28217344, 35 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stop_player_move_01b )
+	ELSIF $SCWK_TEMP1 == 435 THEN
+		_CAMERA_MOVE( 9688,0,970752,21790720,0,28217344, 35 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stop_player_move_01c )
+	ELSE
+		//２グリッド以内なら上を向くだけ
+		_CAMERA_MOVE( 9688,0,970752,21790720,0,28217344, 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stop_player_move_01d )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	//カメラマン：橋を渡りたいなら
 	_BALLOONWIN_OBJMSG( msg_r05_cameraman_02 , R05_MAN2_01 )
 	_MSGWIN_CLOSE()
-
-	//主人公：一歩下がる
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
-	_OBJ_ANIME_WAIT()
-
+	
+	_CAMERA_DEF_MOVE( 20 )		//カメラ主人公位置に復帰
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
+	
 EVENT_END
 
 //--------------------------------------------------------------------
-//！マーク
+//ゲート係員：下向き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_obj_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：一歩下がる
+//主人公：係員の近くへ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_back_01
+_ANIME_LABEL	anm_stop_player_move_01a
 	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_player_move_01b
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_player_move_01c
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_player_move_01d
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 
 /************************************************************/
-/*					カメラマン（話しかけ）					*/
+/*					ゲート係員（話しかけ）					*/
 /************************************************************/
 EVENT_START	ev_r05_man2_01
 	_TALK_OBJ_START()
@@ -787,6 +833,71 @@ EVENT_START	ev_r05_man2_01
 	
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
+/************************************************************/
+/*						ミュージシャン						*/
+/************************************************************/
+//トレーナーですが、グッズ入手処理があるためスクリプトで制御しています
+EVENT_START	ev_r05_musician_01
+	_TALK_OBJ_START()
+	
+	//戦闘済みかで分岐
+	IF FLAG_OFF( FE_R05_MUSICIAN_WIN ) THEN
+		//戦闘前なら
+		
+		//びひけっ！おれのメロディー！
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_01a )
+		_MSGWIN_CLOSE()
+		
+		//トレーナー戦呼び出し
+		_TRAINER_BTL_SET( TRID_MUSICIAN_01 , 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+		
+		//勝負をしてわかったよ
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_01 )
+		_MSGWIN_CLOSE()
+		
+		//グッズ入手処理（エレキギター）
+		_ADD_MUSICAL_GOODS( 84 )
+		
+		//文字列を指定タグにセット
+		_MUSICAL_WORD_GOODS_NAME( 0, 84 )	//エレキギター
+		_PLAYER_NAME( 1 )
+		
+		//ＭＥ再生
+		_ME_PLAY( SEQ_ME_ACCE )
+		_SYSWIN_MSG_DOWN( msg_r05_add_goods_01 )
+		_ME_WAIT()
+		_MSGWIN_CLOSE()
+		
+		//～～は～～をグッズケースにしまった
+		_SYSWIN_MSG_DOWN( msg_r05_add_goods_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+		//========================================//
+		//戦闘済みにする
+		_FLAG_SET( FE_R05_MUSICIAN_WIN )
+		//========================================//
+	
+	ELSE
+		//戦闘済みなら
+		
+		//グッズのエレキギターを持たせれば…
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
 	
 EVENT_END
 

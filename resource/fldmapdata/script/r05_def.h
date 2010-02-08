@@ -16,5 +16,6 @@
 #define SCRID_BG_R05_BOARD_02 (9)
 #define SCRID_BG_R05_BOARD_03 (10)
 #define SCRID_INIT_R05 (11)
+#define SCRID_R05_MUSICIAN_01 (12)
 
 #endif //_R05_DEF_H_

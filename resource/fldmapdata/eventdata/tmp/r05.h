@@ -18,7 +18,7 @@
 #define TR_BAKER_01                        5
 #define TR_BACKPACKERM_02                  6
 #define TR_ARTIST_01                       7
-#define TR_MUSICIAN_01                     8
+#define R05_MUSICIAN_01                    8
 #define TR_BACKPACKERW_02                  9
 #define R05_RIVAL_01                      10
 #define R05_CHAMPION_01                   11
