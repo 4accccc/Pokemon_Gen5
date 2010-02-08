@@ -4376,9 +4376,9 @@ static void handler_Hatakiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_MagicCoat( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_MagicCoat },           // 未分類ワザ処理
-    { BTL_EVENT_CHECK_WAZA_ROB,               handler_MagicCoat_CheckRob },  // ワザ乗っ取り判定
-    { BTL_EVENT_WAZASEQ_REFRECT,              handler_MagicCoat_Reflect },   // ワザ乗っ取り確定
+    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_MagicCoat           }, // 未分類ワザ処理
+    { BTL_EVENT_CHECK_WAZA_ROB,               handler_MagicCoat_CheckRob  }, // ワザ乗っ取り判定
+    { BTL_EVENT_WAZASEQ_REFRECT,              handler_MagicCoat_Reflect   }, // ワザ乗っ取り確定
     { BTL_EVENT_TURNCHECK_BEGIN,              handler_MagicCoat_TurnCheck }, // ターンチェック
   };
   *numElems = NELEMS( HandlerTable );
@@ -4416,8 +4416,7 @@ static void handler_MagicCoat_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
               BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, atkPokeID );
             }
             // 跳ね返しフラグ
-            BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
-            work[ 0 ] = 1;
+            work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
             break;
           }
         }
@@ -4434,6 +4433,7 @@ static void handler_MagicCoat_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MagicCoatExe );
     HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) );
     HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
+    work[0] = 0;
   }
 }
 static void handler_MagicCoat_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )

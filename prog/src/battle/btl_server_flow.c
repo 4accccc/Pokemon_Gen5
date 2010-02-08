@@ -3006,7 +3006,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
           // その後、跳ね返し処理
           // ワザパラメータ差し替え
           scEvent_GetWazaParam( wk, actWaza, robPoke, &wk->wazaParam );
-          registerWazaTargets( wk, robPoke, actTargetPos, &wk->wazaParam, &wk->pokesetRobTarget );
+          registerWazaTargets( wk, robPoke, robTargetPos, &wk->wazaParam, &wk->pokesetRobTarget );
 
           BTL_HANDLER_Waza_Add( robPoke, actWaza );
           scproc_Fight_WazaExe( wk, robPoke, actWaza, &wk->pokesetRobTarget );
