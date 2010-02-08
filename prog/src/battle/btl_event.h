@@ -85,6 +85,7 @@ typedef enum {
   BTL_EVENT_WAZA_DMG_DETERMINE,     ///< ダメージワザが当たること確定した（計算前）
   BTL_EVENT_WAZA_DMG_PROC1,         ///< タイプ計算前ダメージ補正ハンドラ
   BTL_EVENT_WAZA_DMG_PROC2,         ///< タイプ計算後ダメージ補正ハンドラ
+  BTL_EVENT_WAZA_DMG_PROC_END,      ///< ダメージ計算最終
   BTL_EVENT_WAZA_DMG_LAST,          ///< 最終ダメージ補正ハンドラ
   BTL_EVENT_WAZA_DMG_REACTION,      ///< ダメージ処理１体ごとの反応
   BTL_EVENT_WAZA_DMG_AFTER,         ///< ダメージを対象全部に与えた後の追加処理（１回のみ）

@@ -5526,14 +5526,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     }
   } /* if( rawDamage == 0 ) */
 
-
-  // Å‚‚ÅŽc‚è‚g‚o‚Ì”ÍˆÍ‚ÉŽû‚Ü‚é‚æ‚¤‚ÉÅI•â³
-  #if 0
-  if( rawDamage > BPP_GetValue(defender, BPP_HP) ){
-    rawDamage = BPP_GetValue( defender, BPP_HP );
-    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_DamageMarume, rawDamage);
-  }
-  #endif
+  BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_PROC_END );
 
   BTL_EVENTVAR_Pop();
 

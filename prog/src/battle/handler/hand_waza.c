@@ -138,7 +138,10 @@ static void handler_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Kiribarai( u32* numElems );
 static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Kawarawari( u32* numElems );
-static void handler_Kawarawari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kawarawari_DmgProc1( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kawarawari_DmgProcEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kawarawari_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BOOL handler_Kawarawari_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static const BtlEventHandlerTable*  ADD_Tobigeri( u32* numElems );
 static void handler_Tobigeri_Avoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tobigeri_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -1317,12 +1320,29 @@ static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Kawarawari( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_DETERMINE, handler_Kawarawari },    // ダメージ確定ハンドラ
+    { BTL_EVENT_WAZA_DMG_PROC1,     handler_Kawarawari_DmgProc1     },  // ダメージ計算ハンドラ
+    { BTL_EVENT_WAZA_DMG_PROC_END,  handler_Kawarawari_DmgProcEnd   },  // ダメージ計算終了ハンドラ
+    { BTL_EVENT_WAZA_DMG_DETERMINE, handler_Kawarawari_DmgDetermine },  // ダメージ確定ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-static void handler_Kawarawari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ダメージ計算ハンドラ
+static void handler_Kawarawari_DmgProc1( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID ){
+    BTL_EVENT_FACTOR_AttachSkipCheckHandler( myHandle, handler_Kawarawari_SkipCheck );
+  }
+}
+// ダメージ計算終了ハンドラ
+static void handler_Kawarawari_DmgProcEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID ){
+    BTL_EVENT_FACTOR_DettachSkipCheckHandler( myHandle );
+  }
+}
+// ダメージ確定ハンドラ
+static void handler_Kawarawari_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
@@ -1346,6 +1366,27 @@ static void handler_Kawarawari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
   }
 }
+// スキップチェックハンドラ
+static BOOL handler_Kawarawari_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 dependID )
+{
+  if( factorType == BTL_EVENT_FACTOR_SIDE )
+  {
+    if( (subID == BTL_SIDEEFF_REFRECTOR)
+    ||  (subID == BTL_SIDEEFF_HIKARINOKABE)
+    ){
+      u8 myPokeID = BTL_EVENT_FACTOR_GetPokeID( myHandle );
+      BtlSide mySide = BTL_MAINUTIL_PokeIDtoSide( myPokeID );
+
+      if( dependID != mySide ){
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+
+
 //----------------------------------------------------------------------------------
 /**
  * とびげり・とびひざげり
@@ -2742,8 +2783,8 @@ static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Daibakuhatsu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_DETERMINE,    handler_Daibakuhatsu_DmgDetermine }, // ダメージ確定ハンドラ
-    { BTL_EVENT_WAZA_EXECUTE_DONE,     handler_Daibakuhatsu_ExeFix },  // ワザ処理終了ハンドラ
+    { BTL_EVENT_WAZA_DMG_DETERMINE,   handler_Daibakuhatsu_DmgDetermine },  // ダメージ確定ハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_DONE,    handler_Daibakuhatsu_ExeFix       },  // ワザ処理終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
