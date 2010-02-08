@@ -466,10 +466,10 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
   case BTL_RULE_ROTATION:
     // ゲーム内トレーナー
     if( competitor != BTL_COMPETITOR_COMM ){
-      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_triple );
+      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
     // 通信対戦
     }else{
-      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_triple );
+      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double );
     }
     break;
   }
