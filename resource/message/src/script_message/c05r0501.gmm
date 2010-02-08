@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T16:15:34"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T13:56:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -306,6 +306,7 @@
 
 	<row id="msg_c05r0501_veteranw_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・はい選択時</comment>
+		<attribute name="キャラ指定">VETERANW</attribute>
 		<language name="JPN" width="256">……なるほど
 そのかんがえも　わからなくもないです</language>
 		<language name="JPN_KANJI" width="256">……なるほど
@@ -314,6 +315,7 @@
 
 	<row id="msg_c05r0501_veteranw_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・いいえ選択時</comment>
+		<attribute name="キャラ指定">VETERANW</attribute>
 		<language name="JPN" width="256">……そうですね
 たしかに　そのとおりかもしれません</language>
 		<language name="JPN_KANJI" width="256">……そうですね
