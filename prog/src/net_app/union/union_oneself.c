@@ -1118,14 +1118,14 @@ static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     UnionMyComm_PartyAdd(&situ->mycomm, situ->mycomm.connect_pc);
 
     //会話関連のワークの初期化をお互いしてから会話が始まるように同期取り
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION);
     (*seq)++;
     break;
   case 1:
     OS_TPrintf("会話開始前の同期待ち・・・親\n");
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION) == TRUE){
       return TRUE;
     }
     break;
@@ -1342,14 +1342,14 @@ static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     UnionMyComm_PartyAdd(&situ->mycomm, situ->mycomm.connect_pc);
 
     //会話関連のワークの初期化をお互いしてから会話が始まるように同期取り
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION);
     (*seq)++;
     break;
   case 1:
     OS_TPrintf("会話開始前の同期待ち・・・子\n");
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION) == TRUE){
       return TRUE;
     }
   }
@@ -2103,8 +2103,8 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     GFL_STD_MemCopy(  //一応何かの事故で受け取れなかった時のケアの為、自分のをコピーしておく
       situ->mycomm.trcard.my_card, situ->mycomm.trcard.target_card, sizeof(TR_CARD_DATA));
     
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM, WB_NET_UNION);
     OS_TPrintf("トレーナーカード前の同期取り開始\n");
 
     //「はい、どうぞ！」
@@ -2115,8 +2115,8 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     (*seq)++;
     break;
   case 1:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード前の同期取り成功\n");
       (*seq)++;
     }
@@ -2138,14 +2138,14 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     }
     break;
   case 4:   //画面切り替え前の同期取り
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_BEFORE);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_BEFORE, WB_NET_UNION);
     OS_TPrintf("トレーナーカード画面切り替え前の同期取り開始\n");
     (*seq)++;
     break;
   case 5:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_BEFORE) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード画面切り替え前の同期取り成功\n");
       (*seq)++;
     }
@@ -2162,8 +2162,8 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     break;
   case 8:   //トレーナーカード画面終了後の同期取り
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_01_02_4);
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER, WB_NET_UNION);
     OS_TPrintf("トレーナーカード終了後の同期取り開始\n");
     (*seq)++;
     break;
@@ -2171,8 +2171,8 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     if(UnionMsg_TalkStream_Check(unisys) == FALSE){
       break;
     }
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード終了後の同期取り成功\n");
     
     #if 0//トレーナーカードのParentWorkはトレーナーカードのProc内で解放されるのでここでは解放しない
@@ -2231,15 +2231,15 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
     break;
   case 3:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      GFL_NET_HANDLE_TimingSyncStart(
-        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE);
+      GFL_NET_HANDLE_TimeSyncStart(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE, WB_NET_UNION);
       OS_TPrintf("ポケモン交換前の同期取り開始\n");
       (*seq)++;
     }
     break;
   case 4:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("ポケモン交換前の同期取り成功\n");
       (*seq)++;
     }
@@ -2274,8 +2274,8 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
     break;
   case 7:
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_01_02_4);
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_AFTER);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_AFTER, WB_NET_UNION);
     OS_TPrintf("ポケモン交換画面終了後の同期取り開始\n");
     (*seq)++;
     break;
@@ -2283,8 +2283,8 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
     if(UnionMsg_TalkStream_Check(unisys) == FALSE){
       break;
     }
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_AFTER) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_AFTER, WB_NET_UNION) == TRUE){
       OS_TPrintf("ポケモン交換画面終了後の同期取り成功\n");
     
       if(GFL_NET_IsParentMachine() == TRUE){
@@ -2426,14 +2426,14 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 
   switch(*seq){
   case 0:
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN, WB_NET_UNION);
     OS_TPrintf("切断前の同期取り：開始\n");
     (*seq)++;
     break;
   case 1:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN, WB_NET_UNION) == TRUE){
       OS_TPrintf("切断前の同期取り：成功\n");
       (*seq)++;
     }
@@ -2490,14 +2490,14 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     }
     break;
   case _SEQ_TIMING_SEND:
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_PROC_BEFORE);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_PROC_BEFORE, WB_NET_UNION);
     OS_TPrintf("ミニゲーム遷移前の同期取り開始\n");
     (*seq)++;
     break;
   case _SEQ_TIMING_WAIT:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_PROC_BEFORE) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("ミニゲーム遷移前の同期取り成功\n");
       (*seq)++;
     }
@@ -2613,14 +2613,14 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     }
     break;
   case 2:
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION);
     OS_TPrintf("コロシアム遷移前の同期取り開始\n");
     (*seq)++;
     break;
   case 3:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("コロシアム遷移前の同期取り成功\n");
       (*seq)++;
     }
@@ -2687,16 +2687,16 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     break;
   case 2:
     if(situ->mycomm.intrude == FALSE){  //乱入の場合は同期取りなし
-      GFL_NET_HANDLE_TimingSyncStart(
-        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE);
+      GFL_NET_HANDLE_TimeSyncStart(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION);
       OS_TPrintf("コロシアム遷移前の同期取り開始\n");
     }
     (*seq)++;
     break;
   case 3:
     if(situ->mycomm.intrude == FALSE){  //乱入の場合は同期取りなし
-  		if(GFL_NET_HANDLE_IsTimingSync(
-  		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE) == TRUE){
+  		if(GFL_NET_HANDLE_IsTimeSync(
+  		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION) == TRUE){
         OS_TPrintf("コロシアム遷移前の同期取り成功\n");
         (*seq)++;
       }
@@ -2796,16 +2796,16 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     }
 
     if(situ->mycomm.intrude == FALSE){
-      GFL_NET_HANDLE_TimingSyncStart(
-        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP);
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), 
+        UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP, WB_NET_UNION);
     }
     
     (*seq)++;
     break;
   case 1:
     if(situ->mycomm.intrude == FALSE){
-  		if(GFL_NET_HANDLE_IsTimingSync(
-  		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP) == TRUE){
+  		if(GFL_NET_HANDLE_IsTimeSync(
+  		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP, WB_NET_UNION) == TRUE){
         (*seq)++;
       }
     }
@@ -2934,14 +2934,14 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
   
   switch(*seq){
   case 0:
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER, WB_NET_UNION);
     OS_TPrintf("最初のデータ共有前の同期取り開始\n");
     (*seq)++;
     break;
   case 1:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER, WB_NET_UNION) == TRUE){
       OS_TPrintf("最初のデータ共有前の同期取り成功\n");
       (*seq)++;
     }
@@ -2949,14 +2949,14 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
   case 2:
     OS_TPrintf("コロシアムの通信テーブルAdd\n");
     Colosseum_AddCommandTable(unisys);
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER, WB_NET_UNION);
     OS_TPrintf("通信テーブルをAddしたので同期取り開始\n");
     (*seq)++;
     break;
   case 3:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER, WB_NET_UNION) == TRUE){
       OS_TPrintf("通信テーブルをAddしたので同期取り成功\n");
       (*seq)++;
     }
@@ -2983,14 +2983,14 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
     }
     break;
   case 6:
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_CARD_BEFORE);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_CARD_BEFORE, WB_NET_UNION);
     OS_TPrintf("トレーナーカード交換前の同期取り開始\n");
     (*seq)++;
     break;
   case 7:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_CARD_BEFORE) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_CARD_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード交換前の同期取り成功\n");
       (*seq)++;
     }
@@ -3540,14 +3540,14 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
     ColosseumTool_Clear_ReceiveStandingPos(clsys);
     ColosseumTool_Clear_ReceivePokeListSelected(clsys);
 
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_LIST_POKEPARTY_BEFORE);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_LIST_POKEPARTY_BEFORE, WB_NET_UNION);
     OS_TPrintf("リスト用のPOKEPARTY送受信前の同期取り開始\n");
     (*seq)++;
     break;
   case 2:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_LIST_POKEPARTY_BEFORE) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_LIST_POKEPARTY_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("リスト用のPOKEPARTY送受信前の同期取り成功\n");
       (*seq)++;
     }
@@ -3565,14 +3565,14 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
     }
     break;
   case 5:
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_STANDINGPOS_BEFORE);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_STANDINGPOS_BEFORE, WB_NET_UNION);
     OS_TPrintf("立ち位置送信前の同期開始\n");
     (*seq)++;
     break;
   case 6:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_STANDINGPOS_BEFORE) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_STANDINGPOS_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("立ち位置送信前の同期成功\n");
       (*seq)++;
     }
@@ -3835,15 +3835,15 @@ static BOOL OneselfSeq_ColosseumBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       ColosseumTool_Clear_ReceivePokeParty(clsys, TRUE);
 
-      GFL_NET_HANDLE_TimingSyncStart(
-        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_POKEPARTY_BEFORE);
+      GFL_NET_HANDLE_TimeSyncStart(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_POKEPARTY_BEFORE, WB_NET_UNION);
       OS_TPrintf("バトル用のPOKEPARTY送受信前の同期取り開始\n");
       (*seq)++;
     }
     break;
   case 1:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_POKEPARTY_BEFORE) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_POKEPARTY_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("バトル用のPOKEPARTY送受信前の同期取り成功\n");
       (*seq)++;
     }
@@ -3950,14 +3950,14 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     }
     break;
   case LEAVE_SEQ_TIMING_START:
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_LEAVE);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_LEAVE, WB_NET_UNION);
     OS_TPrintf("コロシアム切断前の同期取り：開始\n");
     (*seq)++;
     break;
   case LEAVE_SEQ_TIMING_WAIT:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_LEAVE) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_LEAVE, WB_NET_UNION) == TRUE){
       OS_TPrintf("コロシアム切断前の同期取り：成功\n");
       (*seq)++;
     }

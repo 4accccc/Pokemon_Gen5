@@ -348,11 +348,11 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 	case 104:		//タイミングコマンド発行
 //		wk->seq = 6;
 //		break;
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
+		GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15, WB_NET_DEBUG_MATSUDA_SERVICEID);
 		wk->seq++;
 		break;
 	case 105:
-		if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),15) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),15, WB_NET_DEBUG_MATSUDA_SERVICEID) == TRUE){
 			OS_TPrintf("タイミング取り成功\n");
 			OS_TPrintf("接続人数 = %d\n", GFL_NET_GetConnectNum());
 			wk->seq++;

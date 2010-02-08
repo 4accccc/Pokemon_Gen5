@@ -554,13 +554,13 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
   case _SEQ_TIMING:
     //本来ならフェードアウト後の真っ暗な画面で同期取りをしたくないが
     //union_appのオーバーレイ配置がfieldmapと並列の為、ここで通信TblAdd後の同期を行う
-    GFL_NET_HANDLE_TimingSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_SETUP_AFTER);
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_SETUP_AFTER, WB_NET_UNION);
     (*seq)++;
     break;
   case _SEQ_TIMING_WAIT:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_SETUP_AFTER) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_SETUP_AFTER, WB_NET_UNION) == TRUE){
       (*seq)++;
     }
     break;
@@ -593,14 +593,14 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
       }
     }
     else{ //乱入でない場合は同期取り
-      GFL_NET_HANDLE_TimingSyncStart(
-        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_START_BEFORE);
+      GFL_NET_HANDLE_TimeSyncStart(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_START_BEFORE, WB_NET_UNION);
       *seq = _SEQ_START_BEFORE_TIMING_WAIT;
     }
     break;
 	case _SEQ_START_BEFORE_TIMING_WAIT:
-		if(GFL_NET_HANDLE_IsTimingSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_START_BEFORE) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_START_BEFORE, WB_NET_UNION) == TRUE){
       (*seq) = _SEQ_MINIGAME_PROC;
     }
     break;

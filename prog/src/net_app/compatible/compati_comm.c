@@ -147,11 +147,11 @@ BOOL CompatiComm_Connect(COMPATI_CONNECT_SYS *commsys)
 		}
 		break;
 	case 2:		//タイミングコマンド発行
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
+		GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15, WB_NET_COMPATI_CHECK);
 		commsys->seq++;
 		break;
 	case 3:
-		if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),15) == TRUE){
+		if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),15, WB_NET_COMPATI_CHECK) == TRUE){
 			OS_TPrintf("タイミング取り成功\n");
 			OS_TPrintf("接続人数 = %d\n", GFL_NET_GetConnectNum());
 			commsys->seq = 0;
