@@ -4683,18 +4683,22 @@ static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-    const BTL_POKEPARAM* me = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    const BTL_POKEPARAM* attacker = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
-
-    if( (BPP_GetItem(me) == ITEM_DUMMY_DATA) && (BPP_GetItem(attacker) != ITEM_DUMMY_DATA) )
+    WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+    if( WAZADATA_GetFlag(waza, WAZAFLAG_Touch) )
     {
-      BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
-      param->header.tokwin_flag = TRUE;
-      param->pokeID = targetPokeID;
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_WaruiTeguse );
-      HANDEX_STR_AddArg( &param->exStr, targetPokeID );
-      HANDEX_STR_AddArg( &param->exStr, BPP_GetItem(attacker) );
+      u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+      const BTL_POKEPARAM* me = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      const BTL_POKEPARAM* attacker = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+
+      if( (BPP_GetItem(me) == ITEM_DUMMY_DATA) && (BPP_GetItem(attacker) != ITEM_DUMMY_DATA) )
+      {
+        BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
+        param->header.tokwin_flag = TRUE;
+        param->pokeID = targetPokeID;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_WaruiTeguse );
+        HANDEX_STR_AddArg( &param->exStr, targetPokeID );
+        HANDEX_STR_AddArg( &param->exStr, BPP_GetItem(attacker) );
+      }
     }
   }
 }
