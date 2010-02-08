@@ -84,6 +84,7 @@ static void handler_Plus( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Plus( u32* numElems );
 static void handler_Minus( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Minus( u32* numElems );
+static BOOL checkExistTokuseiFriend( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeTokusei tokuseiID );
 static void handler_FlowerGift_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_FlowerGift( u32* numElems );
@@ -263,6 +264,7 @@ static void handler_Simerike( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static void handler_Simerike_Effective( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Simerike_StartSeq( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Simerike_EndSeq( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Simerike_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BOOL handler_Simerike_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Simerike( u32* numElems );
 static void handler_Moraibi_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -277,6 +279,7 @@ static void handler_Katayaburi_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static BOOL handler_Katayaburi_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static void handler_Katayaburi_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Katayaburi_End( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Katayaburi_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Katayaburi( u32* numElems );
 static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tenkiya_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -1381,8 +1384,8 @@ static void handler_Plus( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u
   // 攻撃側が自分で
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    // 場に「マイナス」持ちがいて
-    if( BTL_SVFTOOL_CheckExistTokuseiPokemon(flowWk, POKETOKUSEI_MAINASU) )
+    // 場に「マイナス」持ちの味方がいて
+    if( checkExistTokuseiFriend(flowWk, pokeID, work, POKETOKUSEI_MAINASU) )
     {
       // ダメージタイプが特殊の時
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
@@ -1413,8 +1416,8 @@ static void handler_Minus( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   // 攻撃側が自分で
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    // 場に「プラス」持ちがいて
-    if( BTL_SVFTOOL_CheckExistTokuseiPokemon(flowWk, POKETOKUSEI_PURASU) )
+    // 場に「プラス」持ちの味方がいて
+    if( checkExistTokuseiFriend(flowWk, pokeID, work, POKETOKUSEI_PURASU) )
     {
       // ダメージタイプが特殊の時
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
@@ -1434,6 +1437,32 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Minus( u32* numElems )
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
 }
+
+/**
+ *  場に、指定された「とくせい」を持つ味方が居るか判定（プラス・マイナス共通）
+ */
+static BOOL checkExistTokuseiFriend( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeTokusei tokuseiID )
+{
+  BtlPokePos pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+  if( pos != BTL_POS_NULL )
+  {
+    BtlExPos  exPos = EXPOS_MAKE( BTL_EXPOS_FULL_FRIENDS, pos );
+    u8* pokeIDAry = (u8*)work;
+    u8  cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, pokeIDAry );
+    const BTL_POKEPARAM* bpp;
+    u8 i;
+    for(i=0; i<cnt; ++i)
+    {
+      bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeIDAry[i] );
+      if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == tokuseiID ){
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+
 //------------------------------------------------------------------------------
 /**
  *  とくせい「フラワーギフト」
