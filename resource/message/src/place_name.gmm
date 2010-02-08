@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-08T17:42:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-08T22:39:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -613,7 +613,7 @@
 		<language name="JPN_KANJI" width="256">フキヨセの洞穴</language>
 	</row>
 
-	<row id="MAPNAME_R06R02" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,,">
+	<row id="MAPNAME_R06R02" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>MAPNAME_D15_01
 ポルトス</comment>
 		<language name="JPN" width="256">しれんのむろ</language>
@@ -627,7 +627,7 @@
 		<language name="JPN_KANJI" width="256">思索の原</language>
 	</row>
 
-	<row id="MAPNAME_R07R01" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,,">
+	<row id="MAPNAME_R07R01" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>MAPNAME_D17</comment>
 		<language name="JPN" width="256">タワーオブヘヴン</language>
 		<language name="JPN_KANJI" width="256">タワーオブヘヴン</language>
@@ -650,7 +650,7 @@
 		<language name="JPN_KANJI" width="256">保険洞くつその２</language>
 	</row>
 
-	<row id="MAPNAME_R16R01" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,,">
+	<row id="MAPNAME_R16R01" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>MAPNAME_R15R0301</comment>
 		<language name="JPN" width="256">パルゲート</language>
 		<language name="JPN_KANJI" width="256">パルゲート</language>
@@ -737,6 +737,22 @@
 チャンピオンロード内</comment>
 		<language name="JPN" width="256">しるべのま</language>
 		<language name="JPN_KANJI" width="256">導の間</language>
+	</row>
+
+	<row id="MAPNAME_D15_01" text-color="#0000ff,,,,,,,,,,,,,,,,,">
+		<comment>ポルトス</comment>
+		<language name="JPN" width="256">しれんのむろ</language>
+		<language name="JPN_KANJI" width="256">試練の室</language>
+	</row>
+
+	<row id="MAPNAME_D17" text-color="#0000ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">タワーオブヘヴン</language>
+		<language name="JPN_KANJI" width="256">タワーオブヘヴン</language>
+	</row>
+
+	<row id="MAPNAME_R15R0301" text-color="#0000ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">パルゲート</language>
+		<language name="JPN_KANJI" width="256">パルゲート</language>
 	</row>
 
 	<flowchart-group-list>
