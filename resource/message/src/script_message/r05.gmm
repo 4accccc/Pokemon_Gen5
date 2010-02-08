@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-05T18:30:23"/>
+	<create user="matsumiya" host="W00224" date="2010-02-08T20:15:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1364" top="291" right="2069" bottom="911" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -719,7 +719,16 @@
 もっと　強くなる……　そのために！▼</language>
 	</row>
 
-	<row id="msg_r05_cameraman_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r05_cameraman_01a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・h02が通行不能時
+・pos起動時</comment>
+		<attribute name="キャラ指定">MAN2</attribute>
+		<language name="JPN" width="256">そこで　ストップ！▼</language>
+		<language name="JPN_KANJI" width="256">そこで　ストップ！▼</language>
+	</row>
+
+	<row id="msg_r05_cameraman_01">
 		<comment>♂
 ・h02が通行不能時
 ・会話時</comment>
@@ -740,7 +749,7 @@
 なんとか　してくれるかも</language>
 	</row>
 
-	<row id="msg_r05_cameraman_02" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r05_cameraman_02" text-color=",,,,,#000000,,,,,,,,,,,,,">
 		<comment>♂
 ・h02が通行不能時
 ・posを踏んだとき</comment>
@@ -761,7 +770,7 @@
 なんとか　してくれるかも▼</language>
 	</row>
 
-	<row id="msg_r05_cameraman_03" text-color=",,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r05_cameraman_03" text-color=",,,#ff0000,,#000000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
 ・h02が通行可能時(＝h02のデモ後)</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
@@ -774,7 +783,19 @@
 つなぐ　シンボル　なんだから！</language>
 	</row>
 
-	<row id="msg_r05_musician_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_musician_01a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・戦闘前メッセージ
+</comment>
+		<attribute name="キャラ指定">トレーナー
+musician_01</attribute>
+		<language name="JPN" width="256">ひびけっ！　おれの　メロディー！
+たたかえっ！　おれの　ポケモン！▼</language>
+		<language name="JPN_KANJI" width="256">響けっ！　おれの　メロディー！
+戦えっ！　おれの　ポケモン！▼</language>
+	</row>
+
+	<row id="msg_r05_musician_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・戦闘後、自動で表示
 ・グッズ「エレキギター」入手処理</comment>
@@ -788,7 +809,7 @@ musician_01</attribute>
 これを　持っていけ！▼</language>
 	</row>
 
-	<row id="msg_r05_add_goods_01" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_add_goods_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>システム
 ・0＝グッズ名
 ・1＝プレイヤー名</comment>
@@ -803,7 +824,7 @@ musician_01</attribute>
 グッズケースの　なかに　しまった！</language>
 	</row>
 
-	<row id="msg_r05_musician_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_musician_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・グッズ入手後に話しかけたとき
 　以降繰り返し</comment>
