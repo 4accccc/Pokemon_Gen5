@@ -29,7 +29,7 @@ _EVENT_DATA     ev_c11r0101_dancer01
 _EVENT_DATA     ev_c11r0101_policeman01
 _EVENT_DATA     ev_c11r0101_pos01
 _EVENT_DATA     ev_reserve_c11r0101
-_EVENT_DATA     ev_zone_c11r0101
+_EVENT_DATA     ev_init_c11r0101
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -41,16 +41,16 @@ _EVENT_DATA_END
 DEFINE_LOCAL	DOOR_ANIME_ID
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*            FIELD_INIT_LABEL                               */
 /**************************************************************/
-INIT_EVENT_START ev_zone_c11r0101
+INIT_EVENT_START ev_init_c11r0101
   //POSイベント起動初期化
   $LOCALWORK1 = 0
   //エレベータから出てきたか？（国連部屋訪問状態か）
   IF $WK_OTHER_UN == 1 THEN   //エレベータから出てくる(国連部屋訪問状態ON)
     //受付の人を移動
-    _OBJ_POS_CHANGE( UN_ENTRANCE_RECEPTION_01, 13, 0, 10, DIR_DOWN )
-  ELSE      //入り口から入ってくる
+    _OBJ_POS_CHANGE( UN_ENTRANCE_RECEPTION_01, 13, 0, 10, DIR_RIGHT )
+  ELSE      //入り口から入ってくる or メニュー復帰
     //条件判定してPOSイベントをON
     _CALL check_posevt_start
   ENDIF
@@ -148,6 +148,57 @@ EVENT_END
 /*            ガードマン     POSイベント                      */
 /**************************************************************/
 EVENT_START ev_c11r0101_pos01
+  DEFINE_LOCAL	talk
+  DEFINE_LOCAL	gardman_msg
+  //シーンワークで分岐
+  $talk = TRUE
+
+  SWITCH $WK_SCENE_C11GATE
+  CASE 0 THEN     //初回
+    $gardman_msg = msg_policeman_01_01
+  CASE 1 THEN     //1ヶ国
+    $gardman_msg = msg_policeman_01_02
+  CASE 2 THEN     //3ヶ国
+    $gardman_msg = msg_policeman_01_03
+  CASE 3 THEN     //6ヶ国
+    $gardman_msg = msg_policeman_01_04
+  CASE 4 THEN     //10ヶ国
+    $gardman_msg = msg_policeman_01_05
+  CASE 5 THEN     //15
+    $gardman_msg = msg_policeman_01_06
+  CASE 6 THEN     //20
+    $gardman_msg = msg_policeman_01_07
+  CASE 7 THEN     //30
+    $gardman_msg = msg_policeman_01_08
+  CASE 8 THEN     //40
+    $gardman_msg = msg_policeman_01_09
+  CASE 9 THEN     //50
+    $gardman_msg = msg_policeman_01_10
+  CASE 10 THEN    //60
+    $gardman_msg = msg_policeman_01_11
+  CASE 11 THEN    //70
+    $gardman_msg = msg_policeman_01_12
+  CASE 12 THEN    //80
+    $gardman_msg = msg_policeman_01_13
+  CASE 13 THEN    //90
+    $gardman_msg = msg_policeman_01_14
+  CASE 14 THEN    //100
+    $gardman_msg = msg_policeman_01_15
+  CASE 15 THEN    //150
+    $gardman_msg = msg_policeman_01_16
+  CASE 16 THEN    //233
+    $gardman_msg = msg_policeman_01_17
+  DEFAULT
+    $talk = FALSE
+    //何もしない
+  ENDSWITCH
+
+  IF $talk == TRUE THEN
+    _BALLOONWIN_TALKOBJ_MSG( gardman_msg )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    $WK_SCENE_C11GATE += 1    //シーンワーク更新
+  ENDIF
 EVENT_END
 
 
@@ -253,65 +304,56 @@ _ANIME_LABEL	anm_reception_close
 
 //POSイベント起動判定
 check_posevt_start:
-  DEFINE_LOCAL	total
-  DEFINE_LOCAL	val
-  DEFINE_LOCAL	work_val
+  DEFINE_LOCAL	chk_total
+  DEFINE_LOCAL	chk_val
 
-  IF $WK_SCENE_C11GATE == 0 THEN  //初回
-    $LOCALWORK1 = 1
-    $WK_SCENE_C11GATE += 1    //シーンワーク更新
-    _RET
-  ELSIF $WK_SCENE_C11GATE == 16 THEN  //最後まで到達
-    _RET
-  ENDIF
-
-  $work_val = $WK_SCENE_C11GATE
-  $work_val += 1
   //シーンワークで分岐
-  SWITCH $work_val
+  SWITCH $WK_SCENE_C11GATE
+  CASE 0 THEN     //初回
+    $chk_val = 0
   CASE 1 THEN     //1ヶ国
-    $val = 1
+    $chk_val = 1
   CASE 2 THEN     //3ヶ国
-    $val = 3
+    $chk_val = 3
   CASE 3 THEN     //6ヶ国
-    $val = 6
+    $chk_val = 6
   CASE 4 THEN     //10ヶ国
-    $val = 10
+    $chk_val = 10
   CASE 5 THEN     //15
-    $val = 15
+    $chk_val = 15
   CASE 6 THEN     //20
-    $val = 20
+    $chk_val = 20
   CASE 7 THEN     //30
-    $val = 30
+    $chk_val = 30
   CASE 8 THEN     //40
-    $val = 40
+    $chk_val = 40
   CASE 9 THEN     //50
-    $val = 50
+    $chk_val = 50
   CASE 10 THEN    //60
-    $val = 60
+    $chk_val = 60
   CASE 11 THEN    //70
-    $val = 70
+    $chk_val = 70
   CASE 12 THEN    //80
-    $val = 80
+    $chk_val = 80
   CASE 13 THEN    //90
-    $val = 90
+    $chk_val = 90
   CASE 14 THEN    //100
-    $val = 100
+    $chk_val = 100
   CASE 15 THEN    //150
-    $val = 150
+    $chk_val = 150
   CASE 16 THEN    //233
-    $val = 233
+    $chk_val = 233
   DEFAULT
     //何もしないでリターン
     _RET
   ENDSWITCH
 
   //ヶ国数取得
-  _UN_GET_COUNTRY_NUM( total )
+  _UN_GET_COUNTRY_NUM( chk_total )
   //POS起動条件を満たす国数まで到達したか？
-  IF $total >= $val THEN
+  IF $chk_total >= $chk_val THEN
     $LOCALWORK1 = 1   //POS起動
-    $WK_SCENE_C11GATE += 1    //シーンワーク更新
+//    $WK_SCENE_C11GATE += 1    //シーンワーク更新
   ENDIF
 _RET
 
