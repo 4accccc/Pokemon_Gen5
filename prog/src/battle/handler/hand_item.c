@@ -3514,7 +3514,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_SimettaIwa( u32* numElems )
 // 天候変化ワザのターン数チェック
 static void handler_SimettaIwa( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WazaWeatherTurnUp( myHandle, flowWk, pokeID, BTL_WEATHER_SHINE );
+  common_WazaWeatherTurnUp( myHandle, flowWk, pokeID, BTL_WEATHER_RAIN );
 }
 
 /*
