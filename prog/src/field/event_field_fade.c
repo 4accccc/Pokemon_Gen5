@@ -20,6 +20,7 @@
 #include "field/fieldmap.h"
 
 #include "event_field_fade.h"
+#include "vblank_bg_scale_expand.h"
 
 #include "system/main.h"      // HEAPID_PROC
 
@@ -43,8 +44,8 @@ BOOL DebugBGInitEnd = FALSE;    //BG初期化監視フラグ
 //============================================================================================ 
 typedef struct 
 {
-  GAMESYS_WORK*  gameSystem;
-  FIELDMAP_WORK* fieldmap;
+  GAMESYS_WORK*      gameSystem;
+  FIELDMAP_WORK*     fieldmap;
 
 	FIELD_FADE_TYPE fadeType;  // フェードの種類 ( クロスフェード, 輝度フェードなど )
 
@@ -194,14 +195,19 @@ static GMEVENT_RESULT FieldCrossOutEvent( GMEVENT* event, int* seq, void* wk )
 						{ GX_DISPMODE_GRAPHICS,GX_BGMODE_5,GX_BGMODE_0,GX_BG0_AS_3D };
 			GFL_BG_SetBGMode( &bg_sys_header );
 		}
+
 		//ＢＧセットアップ
 		G2_SetBG2ControlDCBmp
 			(GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000);
 		GX_SetBankForBG(GX_VRAM_BG_128_D);
+
 		//アルファブレンド
 		//G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_BG2, 0,0);
 		GFL_BG_SetPriority(BG_FRAME_CROSS_FADE, 0);
 		GFL_BG_SetVisible( BG_FRAME_CROSS_FADE, VISIBLE_ON );
+
+    // キャプチャ面の拡大開始
+    StartVBlankBGExpand();
 
 		return GMEVENT_RES_FINISH;
 	}
@@ -380,6 +386,10 @@ static GMEVENT_RESULT FieldCrossInEvent( GMEVENT* event, int* seq, void* wk )
 
 			// メインBGへの割り当て復帰(fieldmap.cと整合性をとること)
 			GX_SetBankForBG(GX_VRAM_LCDC_D);	
+
+      // キャプチャBG面の拡大終了
+      EndVBlankBGExpand();
+
       (*seq)++;
 		}
 		break;

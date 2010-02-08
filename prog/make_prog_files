@@ -366,6 +366,7 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         field/scrcmd_pl_boat_init.c \
         field/united_nations_st.c \
         field/scrcmd_un_init.c \
+        field/vblank_bg_scale_expand.c \
         field/event_egg_birth.c \
         app/townmap/townmap_util.c
 
