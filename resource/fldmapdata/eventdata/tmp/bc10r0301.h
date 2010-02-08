@@ -9,6 +9,8 @@
 #ifndef ZONE_BC10R0301_EVC_H
 #define ZONE_BC10R0301_EVC_H
 
+#define BC10R0301_MAN1_01                  0
+#define BC10R0301_MAN3_01                  1
 
 #endif //ZONE_BC10R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/bc10r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
