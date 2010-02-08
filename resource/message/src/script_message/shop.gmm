@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2009-11-09T22:54:12"/>
+	<create user="mori" host="W00155" date="2010-02-08T18:44:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -385,6 +385,15 @@
 [2:01:２桁:1]コで　[2:05:６桁:2]円に　なりますが？</language>
 	</row>
 
+	<row id="mes_shop_02_03_01">
+		<comment>バトルポイントショップで買い物をするときの
+店員の台詞</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]　ですね
+[2:03:４桁:2]ＢＰに　なりますが？</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　ですね
+[2:03:４桁:2]ＢＰに　なりますが？</language>
+	</row>
+
 	<row id="mes_shop_02_04">
 		<comment>買い物をしたときのお礼のメッセージ</comment>
 		<language name="JPN" width="256">はい　どうぞ
@@ -400,9 +409,9 @@
 	<row id="mes_shop_02_05">
 		<comment>道具を買うときに、指定した数がバッグに入らないとき</comment>
 		<language name="JPN" width="256">それ　いじょう
-もちきれないですよ！</language>
+もちきれないですよ！▼</language>
 		<language name="JPN_KANJI" width="256">それ以上
-持ちきれないですよ！</language>
+持ちきれないですよ！▼</language>
 	</row>
 
 	<row id="mes_shop_02_06">
@@ -415,6 +424,18 @@
 		<comment>買い物リストに表示されている商品の値段</comment>
 		<language name="JPN" width="256">[2:03:４桁:1]円</language>
 		<language name="JPN_KANJI" width="256">[2:03:４桁:1]円</language>
+	</row>
+
+	<row id="mes_shop_02_07_01">
+		<comment>BPでリストに値段を表示する時の文字列</comment>
+		<language name="JPN" width="256">[2:01:２桁:1]ＢＰ</language>
+		<language name="JPN_KANJI" width="256">[2:01:２桁:1]ＢＰ</language>
+	</row>
+
+	<row id="mes_shop_02_07_02">
+		<comment>既に技マシンをもっているので値段を表示する必要がない場合</comment>
+		<language name="JPN" width="256">ーーー</language>
+		<language name="JPN_KANJI" width="256">ーーー</language>
 	</row>
 
 	<row id="mes_shop_02_08">
@@ -456,6 +477,12 @@
 		<language name="JPN_KANJI" width="256">[2:05:６桁:0]円</language>
 	</row>
 
+	<row id="mes_shop_05_03">
+		<comment>バトルポイントショップの時に左上に表示する残りBP</comment>
+		<language name="JPN" width="256">[2:03:４桁:0]ＢＰ</language>
+		<language name="JPN_KANJI" width="256">[2:03:４桁:0]ＢＰ</language>
+	</row>
+
 	<row id="mes_shop_06_01">
 		<comment>手持ちの道具の数を、画面左に表示</comment>
 		<language name="JPN" width="256">もってるかず　[2:02:３桁:0]コ</language>
@@ -484,6 +511,13 @@
 		<comment>道具を買うときの「いいえ」</comment>
 		<language name="JPN" width="256">いいえ</language>
 		<language name="JPN_KANJI" width="256">いいえ</language>
+	</row>
+
+	<row id="mes_shop_09_01">
+		<comment>技マシンのリスト表示をするときに番号と技名を
+表示するための文字列</comment>
+		<language name="JPN" width="256">[FF:00:色:1][2:01:２桁:0][FF:00:色:0][1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:1][2:01:２桁:0][FF:00:色:0][1:07:わざ名:1]</language>
 	</row>
 
 	<flowchart-group-list>
