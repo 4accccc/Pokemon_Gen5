@@ -31,6 +31,8 @@
 #define SAVESIZE_EXTRA_BATTLE_EXAMINATION   (SAVE_SECTOR_SIZE * 1)
 ///EXTRA領域でストリーミングが使用するセーブサイズ
 #define SAVESIZE_EXTRA_STREAMING    (SAVE_SECTOR_SIZE * 32)  //128Kbyte
+///EXTRA領域で図鑑壁紙が使用するセーブサイズ
+#define SAVESIZE_EXTRA_ZUKAN_WALLPAPER    (SAVE_SECTOR_SIZE * 7)  //CGX6000 + PLTT1000
 
 
 ///セーブデータ識別ID
@@ -138,6 +140,11 @@ enum{
 ///外部セーブデータ識別ID：ストリーミング
 enum{
   EXGMDATA_ID_STREAMING,
+};
+
+///外部セーブデータ識別ID：図鑑壁紙
+enum{
+  EXGMDATA_ID_ZUKAN_WALLPAPER,
 };
 
 ///外部セーブデータ識別ID：デバッグバトル

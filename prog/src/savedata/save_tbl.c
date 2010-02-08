@@ -88,6 +88,8 @@ enum{
   EXTRA_MM_BATTLE_EXAMINATION = EXTRA_MM_CGEAR + SAVESIZE_EXTRA_CGEAR_PICTURE,
 
   EXTRA_MM_STREAMING = EXTRA_MM_BATTLE_EXAMINATION + SAVESIZE_EXTRA_BATTLE_EXAMINATION,
+
+  EXTRA_MM_ZUKAN_WALLPAPER = EXTRA_MM_STREAMING + SAVESIZE_EXTRA_STREAMING,
 };
 
 
@@ -491,6 +493,14 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Streaming[] = {
     (FUNC_INIT_WORK)MUSICAL_DIST_SAVE_InitWork,
   },
 };
+///図鑑壁紙
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_ZukanWallPaper[] = {
+  {
+    EXGMDATA_ID_ZUKAN_WALLPAPER,
+    (FUNC_GET_SIZE)MUSICAL_DIST_SAVE_GetWorkSize,
+    (FUNC_INIT_WORK)MUSICAL_DIST_SAVE_InitWork,
+  },
+};
 
 
 //==============================================================================
@@ -571,6 +581,14 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_STREAMING,             //バックアップ領域先頭アドレス
     EXTRA_MM_STREAMING,             //ミラーリング領域先頭アドレス ※ミラー無し指定
     SAVESIZE_EXTRA_STREAMING,       //使用するバックアップ領域の大きさ
+    MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：図鑑壁紙
+    SaveDataTbl_Extra_ZukanWallPaper,
+    NELEMS(SaveDataTbl_Extra_ZukanWallPaper),
+    EXTRA_MM_ZUKAN_WALLPAPER,             //バックアップ領域先頭アドレス
+    EXTRA_MM_ZUKAN_WALLPAPER,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_ZUKAN_WALLPAPER,       //使用するバックアップ領域の大きさ
     MAGIC_NUMBER,
   },
 };
