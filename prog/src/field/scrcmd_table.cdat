@@ -854,6 +854,12 @@
   NO_CMD()
   NO_CMD()
 
+  //国連フロア選択アプリ
+  DEF_CMD( EvCmdUn_CallFloorSelApp, EV_SEQ_UN_CALL_FLOOR_SEL_APP )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
 
   //スクリプトコマンドテーブル終了

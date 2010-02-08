@@ -198,5 +198,25 @@ VMCMD_RESULT EvCmdUn_GetRoomObjMsg( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 国連フロア選択アプリコール
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdUn_CallFloorSelApp( VMHANDLE *core, void *wk )
+{
+  u16 *ret;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
+  UNSV_WORK *unsv_work = GAMEDATA_GetUnsvWorkPtr(gdata);
+
+  ret = SCRCMD_GetVMWork( core, work );
+  //@todo
+  return VMCMD_RESULT_CONTINUE;
+}
 
 
