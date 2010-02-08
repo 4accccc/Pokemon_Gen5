@@ -25,6 +25,8 @@
 
 #include "gamesystem/game_data.h"
 #include "gamesystem/msgspeed.h"
+#include "savedata/bsubway_savedata.h"
+#include "savedata/save_tbl.h"
 #include "item/itemsym.h"
 #include "script_local.h"
 //#include "script.h"     // SCRIPT_SetSubProcWorkPointerAdrs
@@ -37,7 +39,8 @@
 #include "field/field_msgbg.h"
 #include "msg/script/msg_shop.h"
 
-#include "shop_data.cdat" // shop_data_table, shop_itemnum_table
+#include "shop_data.cdat" // shop_data_table,    shop_itemnum_table
+#include "bpshop.cdat"    // bp_shop_data_table, bp_shop_itemnum_table
 
 #include "arc/shop_gra.naix"
 
@@ -89,6 +92,14 @@ enum{
 #define SCREEN_SUBMENU_AND_INFOWIN  ( 0 )
 #define SCREEN_SUBMENU_ONLY         ( 1 )
 
+// ショップに並ぶ最大数
+#define SHOP_ITEM_MAX   ( 30 )
+
+#define SHOP_TYPE_NORMAL  ( 0 )   // どうぐを扱う
+#define SHOP_TYPE_WAZA    ( 1 )   // 技マシンを扱う
+#define SHOP_PAYMENT_MONEY    ( 0 )   // お金で払う
+#define SHOP_PAYMENT_BP       ( 1 )   // BPで払う
+
 
 //====================================================================
 // ■構造体宣言１
@@ -106,11 +117,16 @@ typedef struct{
   u8      next;    // 次のシーケンス予約
   u16     wait;    // ウェイト
   HEAPID  heapId;  // ヒープID
-  GFL_FONT *font;
+  GFL_FONT *font;  // 描画用のフォント
   
-  MISC  *misc;
-  MYITEM    *myitem;  
-
+  MISC      *misc;    // 所持金にアクセスするため
+  MYITEM    *myitem;  // 手持ちの道具アクセス
+  BSUBWAY_SCOREDATA *BpData; // バトルポイントにアクセスするため
+  SHOP_ITEM lineup[SHOP_ITEM_MAX];  // ショップで購入できるデータを格納するワーク
+  u16       lineup_num;             // 購入できる商品の数
+  u8        type;                   // ショップのタイプ（通常ショップorBPショップor技ショップ)
+  u8        payment;                // 支払い方法 （お金 or BP）
+  
   GFL_BMPWIN        *win[SHOP_BUY_BMPWIN_MAX];  // BMPWIN
   BMP_MENULIST_DATA *list;            // 買い物リストデータ
   BMPMENU_WORK      *yesnoWork;       // はい・いいえ画面ワーク
@@ -119,6 +135,8 @@ typedef struct{
   WORDSET           *wordSet;         // 文字列展開ワーク
   STRBUF            *priceStr;        // 値段文字列
   STRBUF            *expandBuf;       // expand展開用
+  STRBUF            *wazaStr;         // 技表示用文字列バッファ
+  STRBUF            *HaveStr;         // 「ーーー」
   BMPMENULIST_WORK  *menuList;        // BMPMENULIST
   PRINT_UTIL         printUtil;       // 
   PRINT_QUE         *printQue;        // 
@@ -135,14 +153,14 @@ typedef struct{
   u16               price;            // 選択したどうぐの価格
   u32               buy_max;          // 購入できる最大数
   s16               item_multi;       // 購入する数
-  s16               etc;
+  u16               etc;
 } SHOP_BUY_APP_WORK;
 
 // ショップ買う起動時構造体
 typedef struct {
   u8 seq;       // シーケンス制御ワーク
   u8 wait;      // ウェイト用
-  u8 shopType;  // ショップタイプ(SHOP_TYPE_NORMAL, SHOP_TYPE_FIX, etc..)
+  u8 shopType;  // ショップタイプ(SCR_SHOPID_NULL, SHOP_TYPE_FIX, etc..)
   u8 shopId;    // ショップの場所ID（shop_data.cdat参照。SHOP_TYOE_FIXの際に使用する)
   
   SHOP_BUY_APP_WORK wk; // ショップ画面ワーク
@@ -163,7 +181,7 @@ typedef struct {
 
 static BOOL EvShopBuyWait( VMHANDLE *core, void *wk );
 static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, int id );
-static void init_work( SHOP_BUY_APP_WORK *wk );
+static int  init_work( SHOP_BUY_APP_WORK *wk, int type );
 static void exit_work( SHOP_BUY_APP_WORK *wk );
 static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge );
 static void shop_item_release( SHOP_BUY_APP_WORK *wk );
@@ -180,13 +198,17 @@ static void print_iteminfo( SHOP_BUY_APP_WORK *wk, u16 itemno );
 static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk );
 static void bmpwin_list_exit( SHOP_BUY_APP_WORK *wk );
 static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y );
+static void line_callback_waza(BMPMENULIST_WORK * wk, u32 param, u8 y );
 static void move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
 static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno );
-static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 num );
+static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 price, u16 num );
 static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_price );
 static  int price_key_control( SHOP_BUY_APP_WORK *wk );
 static void submenu_screen_clear( int type );
 static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
+static void bp_item_set( SHOP_BUY_APP_WORK *wk, int type );
+static void ShopTypeDecideMsg( SHOP_BUY_APP_WORK *wk, int type );
+static void string_alloc( SHOP_BUY_APP_WORK *wk, int payment );  
 
 
 // BMPWIN定義テーブル
@@ -204,34 +226,47 @@ static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
 //--------------------------------------------------------------------
 VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
 {
-  SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
-  u16               shop_id = SCRCMD_GetVMWorkValue( core, work );
-  u16*              ret_work = SCRCMD_GetVMWork( core, work );
-  GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*         gamedata = GAMESYSTEM_GetGameData( gsys );
+  SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
+  u16            shop_id  = SCRCMD_GetVMWorkValue( core, work );
+  u16*           ret_work = SCRCMD_GetVMWork( core, work );
+  GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*      gamedata = GAMESYSTEM_GetGameData( gsys );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
   void** scr_subproc_work = SCRIPT_SetSubProcWorkPointerAdrs( sc );
-  FLDMSGBG *fldmsg = FIELDMAP_GetFldMsgBG( fieldmap );
-  
+  FLDMSGBG *     fldmsg   = FIELDMAP_GetFldMsgBG( fieldmap );
 
   // ショップ用ワーク確保
   SHOP_BUY_CALL_WORK* sbw = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(SHOP_BUY_CALL_WORK));
+
+//  shop_id = SCR_SHOPID_BP_WAZA;
+
   *scr_subproc_work = sbw;
   sbw->wk.font      = FLDMSGBG_GetFontHandle( fldmsg );
-  sbw->wk.misc  = GAMEDATA_GetMiscWork( gamedata );
+  sbw->wk.misc      = GAMEDATA_GetMiscWork( gamedata );
   sbw->wk.heapId    = HEAPID_FIELDMAP;
   sbw->wk.myitem    = GAMEDATA_GetMyItem( gamedata );
+  sbw->wk.BpData    = SaveControl_DataPtrGet(GAMEDATA_GetSaveControlWork(gamedata),
+                                                     GMDATA_ID_BSUBWAY_SCOREDATA);
 
-  if(shop_id == SCR_SHOPID_NULL){
-    //変動ショップ呼び出し 
+  // スクリプトからのパラメータで分岐
+  switch(shop_id){
+  case SCR_SHOPID_NULL:       //変動ショップ呼び出し 
     sbw->shopType = shop_id;
-  }else{
-    //固定ショップ呼び出し
+    break;
+  case SCR_SHOPID_BP_ITEM:    // BPアイテムショップ
+    sbw->shopType = shop_id;
+    break;
+  case SCR_SHOPID_BP_WAZA:    // BP技マシンショップ
+    sbw->shopType = shop_id;
+    break;
+  case SCR_SHOPID_BLACK_CITY:  // 通信データから生成されるブラックシティショップ
+    sbw->shopType = shop_id;
+    break;
+  default:                    //固定ショップ呼び出し
     sbw->shopType = shop_id;
     sbw->shopId   = shop_id;
-  }
-
+  } 
   // ショップ呼び出し
   VMCMD_SetWait( core, EvShopBuyWait );
 
@@ -437,9 +472,13 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   MYSTATUS *my       = GAMEDATA_GetMyStatus(gamedata);
 
-  // ワーク初期化
-  init_work( wk );
 
+  // ワーク初期化
+  wk->type = SHOP_TYPE_NORMAL;
+  type     = init_work( wk, type );
+
+  switch(type){
+  case SCR_SHOPID_NULL:
   // 品揃え読み込み
 #ifdef SHOP_DEBUG_COMMAND
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_SELECT){
@@ -450,7 +489,22 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
 #else
     shop_item_set( wk, type, id, MISC_GetBadgeCount(GAMEDATA_GetMiscWork(gamedata)));
 #endif
+  break;
+  case SCR_SHOPID_BP_ITEM:
+    bp_item_set( wk, SHOP_TYPE_NORMAL  );
+    wk->payment = SHOP_PAYMENT_BP;
+    break;
+  case SCR_SHOPID_BP_WAZA:
+    bp_item_set( wk, SHOP_TYPE_WAZA  );
+    wk->payment = SHOP_PAYMENT_BP;
+    wk->type = SHOP_TYPE_WAZA;
+    break;
+  default: 
+    shop_item_set( wk, type, id, 0 );
+    break;
+  }
 
+  string_alloc( wk, wk->payment );
   bg_trans( wk );     // BG転送
   bmpwin_init( wk );  // BMPWIN初期化
   obj_init( wk );     // OAM初期化
@@ -482,6 +536,45 @@ static int get_item_max( int item )
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief 値段表示用文字列確保
+ *
+ * @param   wk    
+ * @param   type    SHOP_PAYMENT_MONEYかSHOP_PAYMENT_BP
+ */
+//----------------------------------------------------------------------------------
+static void string_alloc( SHOP_BUY_APP_WORK *wk, int payment )
+{
+  // ○○○円　か　○○ＢＰ
+  if(payment==SHOP_PAYMENT_BP){
+    wk->priceStr = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_02_07_01 );
+  }else{
+    wk->priceStr = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_02_07 );
+  }
+  // 「ーーー」（購入済のマーク）
+  wk->HaveStr    = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_02_07_02 );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 現在の持っている通貨（お金・BP)を取得する
+ *
+ * @param   wk    
+ *
+ * @retval  int   どっちかの通貨
+ */
+//----------------------------------------------------------------------------------
+static int _get_gold( SHOP_BUY_APP_WORK *wk )
+{
+  // お金か？
+  if(wk->payment==SHOP_PAYMENT_MONEY){
+    return MISC_GetGold(wk->misc);
+  }
+  // BPか
+  return BSUBWAY_SCOREDATA_GetBattlePoint( wk->BpData );
+}
+
+//----------------------------------------------------------------------------------
+/**
  * @brief 道具選択時に何個買えるかで処理を分岐させる
  *        (持ちきれない・買えません・複数個選択へ・１つしか買えないのですぐYESNOへ)
  *
@@ -492,7 +585,7 @@ static int get_item_max( int item )
 //----------------------------------------------------------------------------------
 static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
 {
-  int gold = MISC_GetGold(wk->misc);
+  int gold = _get_gold(wk);
   int num  = MYITEM_GetItemNum( wk->myitem, wk->selectitem, wk->heapId );
 
   // もちきれないですよ！
@@ -512,23 +605,28 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
   // 一つだけ買えるのでそのまま「はい・いいえ」
   }else if(gold>=wk->price && gold<(wk->price*2))
   {
-    ShopDecideMsg(wk,  mes_shop_02_03, wk->selectitem, wk->item_multi );
+    ShopTypeDecideMsg( wk, wk->type );
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_YESNO;
 
   // 複数買えるので個数選択へ
   }else{
-  
-    ShopPrintMsg( wk, mes_shop_02_02, wk->selectitem );
-    wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
-    wk->next = SHOPBUY_SEQ_SELECT;
-    wk->buy_max = gold/wk->price;
-    if(wk->buy_max>99){   // 買える最大数は９９個
-      wk->buy_max = 99;
-     }
-     // 持てる最大数を算出
-    if(wk->buy_max+num > MYITEM_GetItemMax( wk->selectitem ) ){
-      wk->buy_max = MYITEM_GetItemMax( wk->selectitem ) - num;
+    if(wk->type==SHOP_TYPE_NORMAL){
+      ShopPrintMsg( wk, mes_shop_02_02, wk->selectitem );
+      wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
+      wk->next = SHOPBUY_SEQ_SELECT;
+      wk->buy_max = gold/wk->price;
+      if(wk->buy_max>99){   // 買える最大数は９９個
+        wk->buy_max = 99;
+      }
+      // 持てる最大数を算出
+      if(wk->buy_max+num > MYITEM_GetItemMax( wk->selectitem ) ){
+        wk->buy_max = MYITEM_GetItemMax( wk->selectitem ) - num;
+      }
+    }else{
+      ShopTypeDecideMsg( wk, wk->type );
+      wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
+      wk->next = SHOPBUY_SEQ_YESNO;
     }
   }
 }
@@ -551,8 +649,8 @@ static void shop_main( SHOP_BUY_APP_WORK *wk )
     {
       wk->seq = SHOPBUY_SEQ_END;
     } else {
-      wk->selectitem = ret;
-      wk->price      = ITEM_GetParam( ret, ITEM_PRM_PRICE, wk->heapId );
+      wk->selectitem = wk->lineup[ret].id;
+      wk->price      = wk->lineup[ret].price; //ITEM_GetParam( ret, ITEM_PRM_PRICE, wk->heapId );
       wk->item_multi = 1;
       // 購入できるか判定（買えない・一個買える・複数買える）
       can_player_buy_item( wk );
@@ -598,11 +696,31 @@ static int shop_buy_printwait( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief 支払方法で引く対象を替える
+ *
+ * @param   wk    
+ * @param   pay   支払う金額（お金かBP,,個数を掛け算済）
+ */
+//----------------------------------------------------------------------------------
+static void _sub_payment( SHOP_BUY_APP_WORK *wk, int pay )
+{
+  // 支払い方法がお金か？
+  if(wk->payment==SHOP_PAYMENT_MONEY){
+    // お金
+    MISC_SubGold( wk->misc , pay);
+  }else{
+    // BP
+    BSUBWAY_SCOREDATA_SubBattlePoint( wk->BpData, pay );
+  }
+
+}
+//----------------------------------------------------------------------------------
+/**
  * @brief ショップ買うメインルーチン
  *
  * @param   gsys  GAMESYS_WORK
  * @param   wk    SHOP_BUY_APP_WORK
- * @param   type  ショップタイプ(SHOP_TYPE_NORMAL or SHOP_TYPE_FIX)
+ * @param   type  ショップタイプ(SCR_SHOPID_NULL or SHOP_TYPE_FIX)
  * @param   id    固定ショップの際のID（shop_data.cdat参照)
  *
  * @retval  BOOL  継続:FALSE  終了:TRUE
@@ -661,7 +779,8 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
   case SHOPBUY_SEQ_BUY:
     PMSND_PlaySE( SEQ_SE_SYS_22 );
     ShopPrintMsg( wk, mes_shop_02_04, wk->selectitem );
-    MISC_SubGold( wk->misc , wk->price*wk->item_multi);
+    // 支払い方法によって引き算する対象を替える
+    _sub_payment( wk, wk->price*wk->item_multi );
     MYITEM_AddItem( wk->myitem, wk->selectitem, wk->item_multi, wk->heapId);
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_JUDGE_PREMIER_BALL;
@@ -711,6 +830,64 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
 
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief どうぐショップか？技マシンショップか？（混在はできない）
+ *
+ * @param   wk->lineup      SHOP_ITEM構造体の配列
+ * @param   wk->listup_num  登録されてる総数
+ *
+ * @retval  int   SHOP_TYPE_NORMAL, SHOP_TYPE_WAZA
+ */
+//----------------------------------------------------------------------------------
+static int _lineup_check( SHOP_ITEM *list, int num )
+{
+  int i;
+  int flag = ITEM_CheckWazaMachine(list[0].id);   // 商品の０個目はどっち？
+  
+  for(i=0;i<num;i++)
+  {
+    // 途中でどうぐと技マシンのフラグが変わったらアサート
+    if(ITEM_CheckWazaMachine(list[i].id) != flag){
+      GF_ASSERT_MSG(0, "通常のどうぐと技マシンが同じ商品リストに混在して登録されています\n" );
+    }
+  }
+  
+  return SHOP_TYPE_NORMAL+flag;    // SHOP_TYPE_NORMALかSHOP_TYPE_WAZAが返る
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief BMPメニューに単なる道具の時とわざマシンの時で違う文字列に整形して追加する
+ *
+ * @param   wk    
+ * @param   type    
+ * @param   id    
+ */
+//----------------------------------------------------------------------------------
+static void _add_menuitem( SHOP_BUY_APP_WORK *wk, int i, int type, int id, GFL_MSGDATA *itemMsgData )
+{
+
+  // 技マシンショップの場合は技名をセット
+  if(type==SHOP_TYPE_WAZA){
+    WORDSET_RegisterNumber( wk->wordSet, 0, id-ITEM_WAZAMASIN01+1, 2, 
+                            STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU );
+    WORDSET_RegisterWazaName( wk->wordSet, 1, ITEM_GetWazaNo(id) );
+    WORDSET_ExpandStr( wk->wordSet, wk->expandBuf, wk->wazaStr );
+    BmpMenuWork_ListAddString( &wk->list[i], wk->expandBuf, i, wk->heapId  );
+
+  // 通常のどうぐ登録
+  }else{
+    BmpMenuWork_ListAddArchiveString( &wk->list[i], itemMsgData, 
+                                      id,               // アイテムNO=GMMNO
+                                      i,                // 商品テーブルのインデックス
+                                      wk->heapId );
+  }
+
+
+}
+
 // バッジの数でショップを変える為のテーブル
 static const u8 normal_shop_offset[]={
  0,1,1,2,2,3,3,4,5,
@@ -745,18 +922,37 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
     offset = id+FIXSHOP_START_NUMBER;
   }
 
+  // 技マシンが入っているのであればワザショップで登録するための設定に切り替える
+  if(ITEM_CheckWazaMachine(shop_data_table[offset][0])){
+    wk->type = SHOP_TYPE_WAZA;
+  }
+
   // どうぐ名登録・BMPMENULISTデータ作成
   itemnum = shop_itemnum_table[offset];
-  wk->list = BmpMenuWork_ListCreate( itemnum, wk->heapId );
+  wk->list = BmpMenuWork_ListCreate( itemnum+1, wk->heapId );
   OS_Printf("type=%d, offset=%d, badge=%d,itemnum=%d\n", type, offset, badge, itemnum);
-  for(i=0;i<(itemnum-1);i++)
+  for(i=0;i<itemnum;i++)
   {
-      OS_Printf("strId=%d\n", shop_data_table[offset][i]);
-      BmpMenuWork_ListAddArchiveString( &wk->list[i], itemMsgData, 
-                                        shop_data_table[offset][i], 
-                                        shop_data_table[offset][i], 
-                                        wk->heapId );
+      int id = shop_data_table[offset][i];
+      OS_Printf("strId=%d\n", id);
+
+      // 技マシンかどうぐ名かで文字列登録方法が違う
+      _add_menuitem( wk, i, wk->type, id, itemMsgData );
+
+      // メニュー用に文字列登録
+//      BmpMenuWork_ListAddArchiveString( &wk->list[i], itemMsgData, 
+//                                        id,   // アイテムNO=GMMNO
+//                                        i,    // 商品テーブルのインデックス
+//                                        wk->heapId );
+      // 商品ラインナップテーブルにIDと値段を登録
+      wk->lineup[i].id    = id;
+      wk->lineup[i].price = ITEM_GetParam( id, ITEM_PRM_PRICE, wk->heapId );
   }
+  wk->lineup_num = i;
+  
+  // どうぐか？技マシンか？（混在は×）
+  _lineup_check( wk->lineup, wk->lineup_num );
+  
   // 「やめる」登録
   BmpMenuWork_ListAddArchiveString( &wk->list[i], wk->shopMsgData, 
                                     mes_shop_02_06, 
@@ -766,6 +962,55 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
 
   GFL_MSG_Delete( itemMsgData );
 }
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief バトルポイントショップアイテム登録
+ *
+ * @param   wk    SHOP_BUY_APP_WORK
+ * @param   type  ショップタイプ(SCR_SHOPID_BP_ITEM,SCR_SHOPID_BP_WAZA)
+ */
+//----------------------------------------------------------------------------------
+static void bp_item_set( SHOP_BUY_APP_WORK *wk, int type )
+{
+  int i,itemnum;
+  GFL_MSGDATA *itemMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                             NARC_message_itemname_dat, wk->heapId );
+  const  SHOP_ITEM *itemlist;
+
+  // 変動ショップ
+  itemlist = bp_shop_data_table[type];
+
+  // どうぐ名登録・BMPMENULISTデータ作成
+  itemnum = bp_shop_itemnum_table[type];
+
+  wk->list = BmpMenuWork_ListCreate( itemnum+1, wk->heapId );
+  OS_Printf("type=%d, itemnum=%d\n", type, itemnum);
+  for(i=0;i<itemnum;i++)
+  {
+      int id = itemlist[i].id;
+      OS_Printf("strId=%d\n", id);
+      
+      // 技マシンかどうぐ名かで文字列登録方法が違う
+      _add_menuitem( wk, i, wk->type, itemlist[i].id, itemMsgData );
+      
+      // 商品ラインナップテーブルにIDと値段を登録
+      wk->lineup[i].id    = itemlist[i].id;
+      wk->lineup[i].price = itemlist[i].price;
+  }
+  wk->lineup_num = i;
+  
+  // 「やめる」登録
+  BmpMenuWork_ListAddArchiveString( &wk->list[i], wk->shopMsgData, 
+                                    mes_shop_02_06, 
+                                    BMPMENULIST_CANCEL, 
+                                    wk->heapId );
+
+  GFL_MSG_Delete( itemMsgData );
+}
+
+
 
 
 //----------------------------------------------------------------------------------
@@ -790,7 +1035,7 @@ static void shop_item_release( SHOP_BUY_APP_WORK *wk )
  * @param   wk    SHOP_BUY_APP_WORK
  */
 //----------------------------------------------------------------------------------
-static void init_work( SHOP_BUY_APP_WORK *wk )
+static int init_work( SHOP_BUY_APP_WORK *wk, int type )
 {
   // メッセージデータ確保
 
@@ -801,23 +1046,33 @@ static void init_work( SHOP_BUY_APP_WORK *wk )
 
   wk->wordSet   = WORDSET_Create( wk->heapId );
 
-  // ○○○円
-  wk->priceStr = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_02_07 );
-
   // 展開用バッファ
   wk->expandBuf = GFL_STR_CreateBuffer( SHOP_STRING_MAX, wk->heapId );
 
   // 会話ウインドウ用タスク登録
   wk->pMsgTcblSys = GFL_TCBL_Init( wk->heapId, wk->heapId , 32 , 32 );
 
+  // 技表示用文字列バッファ
+  wk->wazaStr = GFL_MSG_CreateString( wk->shopMsgData,  mes_shop_09_01 );
+
+
 #ifdef SHOP_DEBUG_COMMAND
 
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
     MISC_SetGold(wk->misc , 999999);
+    BSUBWAY_SCOREDATA_SetBattlePoint( wk->BpData, 5000 );
+  }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
+    type = SCR_SHOPID_BP_ITEM;
+  }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_Y){
+    type = SCR_SHOPID_BP_WAZA;
+  }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+    type = SCR_SHOPID_BLACK_CITY;
   }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
     MISC_SetGold(wk->misc , 5000);
   }
 #endif
+
+  return type;
 }
 
 
@@ -835,7 +1090,9 @@ static void exit_work( SHOP_BUY_APP_WORK *wk )
 
   WORDSET_Delete(wk->wordSet);
   
+  GFL_STR_DeleteBuffer( wk->wazaStr );
   GFL_STR_DeleteBuffer( wk->expandBuf );
+  GFL_STR_DeleteBuffer( wk->HaveStr );
   GFL_STR_DeleteBuffer( wk->priceStr );
 
   // メッセージデータ解放
@@ -1139,10 +1396,18 @@ static void obj_del( SHOP_BUY_APP_WORK *wk )
 static void bmpwin_init( SHOP_BUY_APP_WORK *wk )
 {
   int i;
+  const BMPWIN_DAT **tbl;
   const BMPWIN_DAT *dat;
 
+  if(wk->payment == SHOP_PAYMENT_BP){
+    tbl = Window1BmpDataTable;
+  }else{
+    tbl = Window0BmpDataTable;
+  
+  }
+
   for(i=0;i<SHOP_BUY_BMPWIN_MAX;i++){
-    dat = Window0BmpDataTable[i];
+    dat = tbl[i];
     wk->win[i] = GFL_BMPWIN_Create( dat->frame, dat->x, dat->y, dat->w, dat->h, 
                         dat->pal, GFL_BMP_CHRAREA_GET_B );
   }
@@ -1160,8 +1425,13 @@ static void bmpwin_init( SHOP_BUY_APP_WORK *wk )
   PRINT_UTIL_Setup( &wk->printUtil, wk->win[SHOP_BUY_BMPWIN_LIST] );
   wk->printQue = PRINTSYS_QUE_Create( wk->heapId );
 
-  GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_OKODUKAI] );
-  GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_MONEY] );
+  if(wk->payment == SHOP_PAYMENT_BP){
+    GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_MONEY] );
+  }else{
+    GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_OKODUKAI] );
+    GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_MONEY] );
+  
+  }
 }
 
 //----------------------------------------------------------------------------------
@@ -1192,12 +1462,26 @@ static void bmpwin_exit( SHOP_BUY_APP_WORK *wk )
 //----------------------------------------------------------------------------------
 static void print_mygold( SHOP_BUY_APP_WORK *wk )
 {
-  STRBUF *str    = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_05_02 );
-  STRBUF *expand = GFL_STR_CreateBuffer( SHOP_MYGOLD_STR_MAX, wk->heapId );
+  STRBUF *str;
+  STRBUF *expand;
+  
+  if(wk->payment == SHOP_PAYMENT_BP){
+    str    = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_05_03 );
+    expand = GFL_STR_CreateBuffer( SHOP_MYGOLD_STR_MAX, wk->heapId );
+  
+    // 残BP取得
+    WORDSET_RegisterNumber( wk->wordSet, 0, BSUBWAY_SCOREDATA_GetBattlePoint(wk->BpData), 4, 
+                            STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+  }else{
+    str    = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_05_02 );
+    expand = GFL_STR_CreateBuffer( SHOP_MYGOLD_STR_MAX, wk->heapId );
+  
+    // 残金取得
+    WORDSET_RegisterNumber( wk->wordSet, 0, MISC_GetGold(wk->misc), 6, 
+                            STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+  }
 
-  // 残金取得
-  WORDSET_RegisterNumber( wk->wordSet, 0, MISC_GetGold(wk->misc), 6, 
-                          STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+  // 表示用文字列に展開
   WORDSET_ExpandStr( wk->wordSet, expand, str );
 
   // 描画
@@ -1213,6 +1497,7 @@ static void print_mygold( SHOP_BUY_APP_WORK *wk )
   GFL_STR_DeleteBuffer( expand );
   GFL_STR_DeleteBuffer( str );
 }
+
 
 
 //----------------------------------------------------------------------------------
@@ -1342,8 +1627,11 @@ static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
                             //カーソル移動ごとのコールバック関数
   header.call_back = move_callback;  // void  (*call_back)(BMPMENULIST_WORK * wk,u32 param,u8 mode);
                             //一列表示ごとのコールバック関数
-  header.icon      = line_callback;  // void  (*icon)(BMPMENULIST_WORK * wk,u32 param,u8 y);
-
+  if(wk->type==SHOP_TYPE_NORMAL){
+    header.icon      = line_callback;  // void  (*icon)(BMPMENULIST_WORK * wk,u32 param,u8 y);
+  }else{
+    header.icon      = line_callback_waza;  // void  (*icon)(BMPMENULIST_WORK * wk,u32 param,u8 y);
+  }
   header.win       = wk->win[SHOP_BUY_BMPWIN_LIST];
   
   header.count     = BmpMenuWork_GetListMax(wk->list);    //リスト項目数
@@ -1393,7 +1681,7 @@ static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y )
   if(param!=BMPMENULIST_CANCEL){
     int length,bmp_w;
     // 値段セット
-    WORDSET_RegisterNumber( sbw->wordSet, 1, ITEM_GetParam( param, ITEM_PRM_PRICE, sbw->heapId ), 
+    WORDSET_RegisterNumber( sbw->wordSet, 1, sbw->lineup[param].price, 
                             4, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
     WORDSET_ExpandStr( sbw->wordSet, sbw->expandBuf, sbw->priceStr );
     
@@ -1404,6 +1692,49 @@ static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y )
     // 値段描画
     PRINTSYS_PrintQueColor( sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
                           bmp_w-length, y, sbw->expandBuf, sbw->font, PRINTSYS_LSB_Make(12,13,0) );
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief １行表示コールバック（主に値段表示処理)
+ *
+ * @param   wk      
+ * @param   param   どうぐNO
+ * @param   y       表示Y座標
+ */
+//----------------------------------------------------------------------------------
+static void line_callback_waza(BMPMENULIST_WORK * wk, u32 param, u8 y )
+{
+  SHOP_BUY_APP_WORK *sbw = BmpMenuList_GetWorkPtr( wk );
+
+  // 「やめる」以外には値段を表示
+  if(param!=BMPMENULIST_CANCEL){
+    // もう持ってる
+    if(MYITEM_CheckItem( sbw->myitem, sbw->lineup[param].id, 1, sbw->heapId )){
+      int length,bmp_w;
+      length = PRINTSYS_GetStrWidth( sbw->HaveStr, sbw->font, 0 );
+      bmp_w  = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]) );
+      // 値段描画
+      PRINTSYS_PrintQueColor( sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
+                            bmp_w-length, y, sbw->HaveStr, sbw->font, PRINTSYS_LSB_Make(12,13,0) );
+    // 持ってない
+    }else{
+      int length,bmp_w;
+      // 値段セット
+      WORDSET_RegisterNumber( sbw->wordSet, 1, sbw->lineup[param].price, 
+                              4, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
+      WORDSET_ExpandStr( sbw->wordSet, sbw->expandBuf, sbw->priceStr );
+      
+      // 右揃え用の数値取得
+      length = PRINTSYS_GetStrWidth( sbw->expandBuf, sbw->font, 0 );
+      bmp_w  = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]) );
+      
+      // 値段描画
+      PRINTSYS_PrintQueColor( sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
+                            bmp_w-length, y, sbw->expandBuf, sbw->font, PRINTSYS_LSB_Make(12,13,0) );
+      
+    }
   }
 }
 
@@ -1425,13 +1756,14 @@ static void move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
   // カーソル位置取得
   BmpMenuList_PosGet( wk, &list, &cursor );
 
-  clpos.x = shop_obj_param[0].pos_x; clpos.y = shop_obj_param[0].pos_y+16*cursor;
+  clpos.x = shop_obj_param[0].pos_x; 
+  clpos.y = shop_obj_param[0].pos_y+16*cursor;
 
   GFL_CLACT_WK_SetPos( sbw->ClactWork[SHOP_OBJ_CURSOR], &clpos, CLSYS_DEFREND_MAIN );
   
   // どうぐ説明書き換え
-  print_iteminfo( sbw, param );
-  itemicon_resource_change( sbw, param );
+  print_iteminfo( sbw, sbw->lineup[param].id );
+  itemicon_resource_change( sbw, sbw->lineup[param].id );
 
 }
 
@@ -1505,13 +1837,34 @@ static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief メッセージ表示
+ * @brief ショップのタイプにあわせて店員のメッセージを変える
  *
  * @param   wk    
- * @param   itemno    
+ * @param   type    
  */
 //----------------------------------------------------------------------------------
-static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 num )
+static void ShopTypeDecideMsg( SHOP_BUY_APP_WORK *wk, int type )
+{
+  if(wk->payment == SHOP_PAYMENT_BP){
+    ShopDecideMsg(wk,  mes_shop_02_03_01, wk->selectitem, wk->price, wk->item_multi );
+  }else{
+    ShopDecideMsg(wk,  mes_shop_02_03, wk->selectitem, wk->price, wk->item_multi );
+  }
+  
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief メッセージ表示
+ *
+ * @param   wk      
+ * @param   strId   「●個で○○円（BP)になります」
+ * @param   itemno  アイテムNO
+ * @param   price   値段（円orBP）
+ * @param   num     個数
+ */
+//----------------------------------------------------------------------------------
+static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 price, u16 num )
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[SHOP_BUY_BMPWIN_TALKMSG]), 15 );
   BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_TALKMSG], WINDOW_TRANS_ON, 
@@ -1521,8 +1874,8 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 num
   WORDSET_RegisterNumber( wk->wordSet, 1, num, 
                             2, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
 
-  WORDSET_RegisterNumber( wk->wordSet, 2, num*ITEM_GetParam( itemno, ITEM_PRM_PRICE, wk->heapId ),
-                            6, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
+  WORDSET_RegisterNumber( wk->wordSet, 2, num*price,
+                          6, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
 
   {
     STRBUF *str    = GFL_MSG_CreateString( wk->shopMsgData, strId );
@@ -1625,7 +1978,8 @@ static int price_key_control( SHOP_BUY_APP_WORK *wk )
   }
   if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
       PMSND_PlaySE( SEQ_SE_DECIDE1 );
-      ShopDecideMsg( wk, mes_shop_02_03, wk->selectitem, wk->item_multi );
+//      ShopDecideMsg(wk,  mes_shop_02_03, wk->selectitem, wk->price, wk->item_multi );
+      ShopTypeDecideMsg( wk, wk->type );
       wk->next = SHOPBUY_SEQ_YESNO;
       return SHOPBUY_SEQ_MSG_WAIT;
   }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){

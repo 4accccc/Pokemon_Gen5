@@ -62,6 +62,14 @@
 #define WINDOW7_WIN_PAL     (11)
 #define WINDOW7_WIN_CHR     (631)
 
+// ？？？？？？ＢＰ
+#define WINDOW8_WIN_X     (2)
+#define WINDOW8_WIN_Y     (2)
+#define WINDOW8_WIN_W     (8)
+#define WINDOW8_WIN_H     (2)
+#define WINDOW8_WIN_PAL     (11)
+#define WINDOW8_WIN_CHR     (38)
+
 
 
 
@@ -115,10 +123,28 @@ const BMPWIN_DAT Window7BmpData={
 };
 
 
+const BMPWIN_DAT Window8BmpData={
+  GFL_BG_FRAME1_M,
+  WINDOW8_WIN_X,  WINDOW8_WIN_Y,
+  WINDOW8_WIN_W,  WINDOW8_WIN_H,
+  WINDOW8_WIN_PAL,  WINDOW8_WIN_CHR,
+};
+
 
 const BMPWIN_DAT* Window0BmpDataTable[]={
   &Window0BmpData,
   &Window1BmpData,
+  &Window2BmpData,
+  &Window3BmpData,
+  &Window5BmpData,
+  &Window6BmpData,
+  &Window7BmpData,
+};
+
+
+const BMPWIN_DAT* Window1BmpDataTable[]={
+  &Window0BmpData,
+  &Window8BmpData,
   &Window2BmpData,
   &Window3BmpData,
   &Window5BmpData,

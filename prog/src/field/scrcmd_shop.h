@@ -11,11 +11,16 @@
 #pragma once
 
 
+typedef struct {
+  u16 id;       // どうぐID
+  u16 price;    // 値段 or BPポイント
+}SHOP_ITEM;
+
 //--------------------------------------------------------------------
 /**
  * @brief 通常ショップ呼び出し 
  *
- * @param	core 仮想マシン制御構造体へのポインタ
+ * @param core 仮想マシン制御構造体へのポインタ
  * @param wk   SCRCMD_WORKへのポインタ
  *
  * @retval VMCMD_RESULT
