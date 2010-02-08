@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T14:51:17"/>
+	<create user="matsumiya" host="W00224" date="2010-02-08T22:34:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,15 +330,15 @@
 		</language>
 	</columns>
 
-	<dialog left="13" top="220" right="718" bottom="840" maximized="no" rayout="Vertical2">
+	<dialog left="1452" top="270" right="2153" bottom="889" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="693"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,84 +359,196 @@
 	</lock>
 
 
-	<row id="msg_d08r0901_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・posを踏むとメッセージ表示
-・表示後、動作モデルのアニメ
-　続けてドラゴン出現デモ（仮称）へつなげる</comment>
+	<row id="msg_d08r0901_boss_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]いにしえの　えいゆうと　ともに
-くにを　つくりだし▽
-おおいなる　ポケモンよ……▼
-ここにめざめ
-われに　ちからを　あたえよ！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]古の　英雄と　ともに
-国を　創りだし▽
-大いなる　ポケモンよ……▼
-ここに目覚め
-我に　力を与えよ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_02w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・ドラゴン出現デモ終了後、マップに復帰
- パッケージポケモンの動作モデル配置済み
-　Nは下向き（＝主人公向き）でメッセージ表示
-・続けて_boss_03</comment>
+	<row id="msg_d08r0901_boss_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂：WHITEver
+・NはGRIDX=16、GRIDZ=12に配置
+・pos（GRIDX=16、GRIDZ=18）起動
+・デモシーンへ
+
+・デモ後、主人公、まっすぐ上
+　GRIDX=16、GRIDZ=14まで移動して
+　このメッセージ表示
+・続けてboss_02w</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]この　しろい　ポケモン
-その　なを　シンと　いう！▼
-さて　これからだ
-プラズマだんの　おう　として▽
-なずべきこと　ばかり　だ！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]この　白い　ポケモン
-その名を　シンと　いう！▼
-さて　これからだ
-プラズマ団の　王として▽
-なずべきこと　ばかり　だ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]どう　[1:00:トレーナー名:0]▼
+せかいを　みちびく　えいゆうのもと
+その　すがたを　あらわし▼
+ともに　たたかう
+ポケモンの　うつくしい　すがたは！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]どう　[1:00:トレーナー名:0]▼
+せかいを　みちびく　えいゆうのもと
+その　すがたを　あらわし▼
+ともに　たたかう
+ポケモンの　うつくしい　すがたは！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_02b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・ドラゴン出現デモ終了後、マップに復帰
- パッケージポケモンの動作モデル配置済み
-　Nは下向き（＝主人公向き）でメッセージ表示
-・続けてboss_03</comment>
+	<row id="msg_d08r0901_boss_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]この　くろい　ポケモン
-その　なを　ムと　いう！▼
-さて　これからだ
-プラズマだんの　おう　として▽
-なずべきこと　ばかり　だ！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]この　黒い　ポケモン
-その名を　ムと　いう！▼
-さて　これからだ
-プラズマ団の　王として▽
-なずべきこと　ばかり　だ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]どう　[1:00:トレーナー名:0]▼
+せかいを　みちびく　えいゆうのもと
+その　すがたを　あらわし▼
+ともに　たたかう
+ポケモンの　ちからづよい　すがたは！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]どう　[1:00:トレーナー名:0]▼
+せかいを　みちびく　えいゆうのもと
+その　すがたを　あらわし▼
+ともに　たたかう
+ポケモンの　ちからづよい　すがたは！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・パッケージポケモンに乗り飛び去る（仮）
-・画面外に消えると階段から
-　ライバルとジムリーダー登場</comment>
+	<row id="msg_d08r0901_boss_02w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂：WHITEver
+・画面上（ポケモン）を見ながらメッセージ
+・続けてboss_03w</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]いまより
-この　イッシュは　うまれかわる！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]今より
-この　イッシュは　生まれ変わる！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]これから　ボクは
+シンと　ともに▽
+さいごの　いってを　うつよ▼
+ポケモンだけの　せかい……
+ようやく　じつげん　する[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]これから　ボクは
+シンと　ともに▽
+さいごの　いってを　うつよ▼
+ポケモンだけの　せかい……
+ようやく　じつげん　する[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08r0901_boss_02b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]これから　ボクは
+ムと　ともに▽
+さいごの　いってを　うつよ▼
+ポケモンだけの　せかい……
+ようやく　じつげん　する[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]これから　ボクは
+ムと　ともに▽
+さいごの　いってを　うつよ▼
+ポケモンだけの　せかい……
+ようやく　じつげん　する[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_d08r0901_boss_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_d08r0901_boss_03w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂：WHITEver
+・N、下向きに
+・このメッセージ表示前に
+　ポケモン羽ばたき画面上に移動
+・続けてboss_04w</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクたちを　とめられるのは
+しんわに　とうじょうした　えいゆう……▽
+ふたごの　もうひとり　だけ▼
+シンと　ついをなす
+ポケモン　ムに　みとめられた▽
+えいゆう　だけが▽
+ボクたちを　そし　できる！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　とめられるのは
+しんわに　とうじょうした　えいゆう……▽
+ふたごの　もうひとり　だけ▼
+シンと　ついをなす
+ポケモン　ムに　みとめられた▽
+えいゆう　だけが▽
+ボクたちを　そし　できる！[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_d08r0901_boss_03b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクたちを　とめられるのは
+しんわに　とうじょうした　えいゆう……▽
+ふたごの　もうひとり　だけ▼
+ムと　ついをなす
+ポケモン　シンに　みとめられた▽
+えいゆう　だけが▽
+ボクたちを　そし　できる！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　とめられるのは
+しんわに　とうじょうした　えいゆう……▽
+ふたごの　もうひとり　だけ▼
+ムと　ついをなす
+ポケモン　シンに　みとめられた▽
+えいゆう　だけが▽
+ボクたちを　そし　できる！[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_d08r0901_boss_04w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂：WHITEver
+・メッセージ表示後、N、3歩上に移動
+・移動すると画面右から左へシンが横切る
+・Nと重なったときに、Nの動作モデル削除
+・飛び去る方向を見る主人公
+・BGM終了で、black_01</comment>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
+ボクの　よそく　では
+キミなら　ムと　であえるだろう▼
+そうすれば　はじめて
+ボクの　けいさんを　くつがえせる▽
+ちょっと　たのしみだね▼
+ポケモンと　ひとの　きずなを
+まもりたいなら　ボクと　おなじ▽
+えいゆうに　なりなよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
+ボクの　よそく　では
+キミなら　ムと　であえるだろう▼
+そうすれば　はじめて
+ボクの　けいさんを　くつがえせる▽
+ちょっと　たのしみだね▼
+ポケモンと　ひとの　きずなを
+まもりたいなら　ボクと　おなじ▽
+えいゆうに　なりなよ[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_d08r0901_boss_04b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・</comment>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
+ボクの　よそく　では
+キミなら　シンと　であえるだろう▼
+そうすれば　はじめて
+ボクの　けいさんを　くつがえせる▽
+ちょっと　たのしみだね▼
+ポケモンと　ひとの　きずなを
+まもりたいなら　ボクと　おなじ▽
+えいゆうに　なりなよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
+ボクの　よそく　では
+キミなら　シンと　であえるだろう▼
+そうすれば　はじめて
+ボクの　けいさんを　くつがえせる▽
+ちょっと　たのしみだね▼
+ポケモンと　ひとの　きずなを
+まもりたいなら　ボクと　おなじ▽
+えいゆうに　なりなよ[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_d08r0901_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・所定のposに到達後、メッセージ表示
+・主人公の2歩下に走ってきてメッセージ
+　このときジムリーダーも来る
 ・続けてleader7_01</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『いま　とびさったのって……▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『いま　飛び去ったのって……▼</language>
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]
+いま　とびさったのって……▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]
+いま　とびさったのって……▼</language>
 	</row>
 
-	<row id="msg_d08r0901_leader7_01">
+	<row id="msg_d08r0901_leader7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">LEADER7
@@ -445,33 +557,36 @@
 		<language name="JPN_KANJI" width="256">ハチク『……なんたること▼</language>
 	</row>
 
-	<row id="msg_d08r0901_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08r0901_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・Ｎが飛び去ったposに到達後、メッセージ表示
 ・続けてleader7_02</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『なんで！
-なんで　Ｎが！▼
-でんせつの　ポケモンを
-めざめさせるんだよ！？▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『なんで！
-なんで　Ｎが！▼
-伝説の　ポケモンを
-目覚めさせるんだよ！？▼</language>
+		<language name="JPN" width="256">チェレン『どうして？▼
+Ｎが　でんせつの　ポケモンと
+いっしょに　いたんだ？▼
+まさか　かれは　ほんとうに
+えいゆうだと　いうのかい！？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『どうして？▼
+Ｎが　でんせつの　ポケモンと
+いっしょに　いたんだ？▼
+まさか　かれは　ほんとうに
+えいゆうだと　いうのかい！？▼</language>
 	</row>
 
-	<row id="msg_d08r0901_leader7_02">
+	<row id="msg_d08r0901_leader7_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面暗転し
 　d08：リュウラセンの塔（外）へ切り替え</comment>
 		<attribute name="キャラ指定">LEADER7
 ハチク</attribute>
 		<language name="JPN" width="256">ハチク『……もどろう▼
-これから　どうするか
-きめなければ　ならない……▼</language>
-		<language name="JPN_KANJI" width="256">ハチク『……戻ろう▼
-これから　どうするか
-決めなければ　ならない……▼</language>
+いま　だいじ　なのは
+おきたことを　かいめい　するより▽
+これから　なにをするか　だ▼</language>
+		<language name="JPN_KANJI" width="256">ハチク『……もどろう▼
+いま　だいじ　なのは
+おきたことを　かいめい　するより▽
+これから　なにをするか　だ▼</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-07T14:51:36"/>
+	<create user="matsumiya" host="W00224" date="2010-02-08T21:39:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="163"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1504" top="303" right="2208" bottom="923" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="208" right="1990" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,70 +292,160 @@
 	</lock>
 
 
-	<row id="msg_d08r0601_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：最上階イベント前
-・pos（詳細未定：中央の階段あたり）
-・プラズマ団多数
-　→
-・続けてeader7_01</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『……まってたよ[BE:01:ページ切り替え（クリア）]
-ぼくも　ハチクさんも
-ざこの　あいてで　ちょっとね……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『……待ってたよ[BE:01:ページ切り替え（クリア）]
-ぼくも　ハチクさんも
-雑魚の　相手で　ちょっとね……[BE:01:ページ切り替え（クリア）]</language>
-	</row>
+	<row id="msg_d08r0601_leader7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・pos（GRIDX=21、GRIDZ=14~16）起動
+　ハチク、上向きのまま、メッセージ表示
+・GRIDX=19、GRIDZ=14、上向き
 
-	<row id="msg_d08r0601_leader7_01">
-		<comment>♂：最上階イベント前
-・続けてblack_02</comment>
+・以下の座標にトレーナープラズマ団配置
+　GRIDX=22、GRIDZ=23
+　GRIDX=10、GRIDZ=13
+　GRIDX=4、GRIDZ=16
+　GRIDX=10、GRIDZ=8</comment>
 		<attribute name="キャラ指定">LEADER7
 ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……わたしは　へいきだ[BE:01:ページ切り替え（クリア）]
-だが　このままでは
-じかんだけが　すぎていく[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ハチク『……わたしは　平気だ[BE:01:ページ切り替え（クリア）]
-だが　このままでは
-時間だけが　過ぎていく[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ハチク『……[1:00:トレーナー名:0]▼
+わたしたちが　こいつらを　くいとめる▼
+だから　きみが　ゆけ！</language>
+		<language name="JPN_KANJI" width="256">ハチク『……[1:00:トレーナー名:0]▼
+わたしたちが　こいつらを　くいとめる▼
+だから　きみが　ゆけ！</language>
 	</row>
 
-	<row id="msg_d08r0601_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：最上階イベント前
-・メッセージ表示後
-　ジムリーダーとライバル、移動
-・応じてプラズマ団も移動して
-　先のフロアに進めるように</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『そこでだよ！　いまから
-ハチクさんと　みちを　ひらくからさ[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]！
-きみが　さきに　すすめ！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『そこでだよ！　今から
-ハチクさんと　道を　開くからさ[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]！
-きみが　先に　進め！！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d08r0601_leader7_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・leader7_01表示後、繰り返し
+・話しかけても振り向かない</comment>
+		<attribute name="キャラ指定">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……わたしは　へいきだ▼
+だが　じかんが　ない</language>
+		<language name="JPN_KANJI" width="256">ハチク『……わたしは　へいきだ▼
+だが　じかんが　ない</language>
 	</row>
 
-	<row id="msg_d08r0601_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：最上階イベント前
-・black_02表示後？？終了まで</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『どいつも　こいつも
-おんなじ　ポケモンばかり　じゃん！</language>
+	<row id="msg_d08r0601_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・pos（GRIDX=20、GRIDZ=14~16）起動
+　チェレン、左向きのまま、メッセージ表示
+・GRIDX=18、GRIDZ=18、左向き</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『ぼくも　だいじょうぶ▼
+だけど　こんなに
+プラズマだんが　いるとね……</language>
+		<language name="JPN_KANJI" width="256">チェレン『ぼくも　だいじょうぶ▼
+だけど　こんなに
+プラズマだんが　いるとね……</language>
+	</row>
+
+	<row id="msg_d08r0601_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・black_01表示後、繰り返し
+・話しかけても振り向かない</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……この　ひとたち
+どうして　こんなに　がんばれるんだ！？</language>
 		<language name="JPN_KANJI" width="256">チェレン『……この　ひとたち
 どうして　こんなに　がんばれるんだ！？</language>
 	</row>
 
-	<row id="msg_d08r0601_leader7_02">
-		<comment>♂：最上階イベント前
-・black_02表示後？？終了まで</comment>
-		<attribute name="キャラ指定">LEADER7
-ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……かずが　おおい
-……これも　ひとつの　つよさか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ハチク『……数が　多い
-……これも　ひとつの　強さか[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d08r0601_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『どいつも　こいつも
+おんなじ　ポケモンばかり　じゃん！</language>
+		<language name="JPN_KANJI" width="256">チェレン『どいつも　こいつも
+おんなじ　ポケモンばかり　じゃん！</language>
+	</row>
+
+	<row id="msg_d08r0601_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・c07ジムバッジ取得で出現
+・d08r0901イベント終了で削除
+・GRIDX=18、GRIDZ=13、左向き</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『これが
+ジムリーダーの　じつりょく！</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『これが
+ジムリーダーの　じつりょく！</language>
+	</row>
+
+	<row id="msg_d08r0601_hakaiw1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・c07ジムバッジ取得で出現
+・d08r0901イベント終了で削除
+・GRIDX=19、GRIDZ=12、下向き</comment>
+		<attribute name="キャラ指定">プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『この　つよさ……
+しちけんじんさまと　おなじ……？</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『この　つよさ……
+しちけんじんさまと　おなじ……？</language>
+	</row>
+
+	<row id="msg_d08r0601_hakaim3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・c07ジムバッジ取得で出現
+・d08r0901イベント終了で削除
+・GRIDX=20、GRIDZ=12、下向き</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『だれにも！
+だれにも　ジャマは　させない！</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『だれにも！
+だれにも　ジャマは　させない！</language>
+	</row>
+
+	<row id="msg_d08r0601_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・c07ジムバッジ取得で出現
+・d08r0901イベント終了で削除
+・GRIDX=18、GRIDZ=16、左向き</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『われわれの　すうこうな
+もくてきを　りかい　できないくせに▲
+どうして　ぼうがい　する！</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『われわれの　すうこうな
+もくてきを　りかい　できないくせに▲
+どうして　ぼうがい　する！</language>
+	</row>
+
+	<row id="msg_d08r0601_hakaiw1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・c07ジムバッジ取得で出現
+・d08r0901イベント終了で削除
+・GRIDX=18、GRIDZ=17、左向き</comment>
+		<attribute name="キャラ指定">プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『コイツ！
+こどもの　くせに！！</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『コイツ！
+こどもの　くせに！！</language>
+	</row>
+
+	<row id="msg_d08r0601_hakaim4_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・c07ジムバッジ取得で出現
+・d08r0901イベント終了で削除
+・GRIDX=15、GRIDZ=15、右向き</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『……そうだよ
+ジムリーダーに　まけたんだよ</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『……そうだよ
+ジムリーダーに　まけたんだよ</language>
+	</row>
+
+	<row id="msg_d08r0601_hakaiw1_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・c07ジムバッジ取得で出現
+・d08r0901イベント終了で削除
+・GRIDX=14、GRIDZ=10、右向き</comment>
+		<attribute name="キャラ指定">プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『いまごろ　うえでは
+われらの　おうさまが……▼
+オマエには　なにも　できないよ！</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『いまごろ　うえでは
+われらの　おうさまが……▼
+オマエには　なにも　できないよ！</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T14:51:02"/>
+	<create user="matsumiya" host="W00224" date="2010-02-08T22:04:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -304,7 +304,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="285"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="142">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="8" top="264" right="713" bottom="884" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="208" right="1990" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,7 +359,43 @@
 	</lock>
 
 
-	<row id="msg_d08r0801_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0801_demo_01w" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,,">
+		<comment>演出
+・WhiteVer
+・pos（GRIDX=22~24、GRIDZ=13）起動
+　画面揺らす
+・主人公に？表示＋左右を１回ずつ見てから
+　シンの鳴き声再生
+・メッセージ表示
+　White→demo_01w
+　Black→demo_01b
+・続けてdemo_02</comment>
+		<attribute name="キャラ指定">演出</attribute>
+		<language name="JPN" width="256">しゅぼわん！！▼</language>
+		<language name="JPN_KANJI" width="256">しゅぼわん！！▼</language>
+	</row>
+
+	<row id="msg_d08r0801_demo_01b" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
+		<comment>・BlackVer
+　ムの鳴き声再生
+・続けてdemo_02</comment>
+		<attribute name="キャラ指定">演出</attribute>
+		<language name="JPN" width="256">バリバリダー！！▼</language>
+		<language name="JPN_KANJI" width="256">バリバリダー！！▼</language>
+	</row>
+
+	<row id="msg_d08r0801_demo_02" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,,">
+		<comment>・メッセージ表示、1回のみ</comment>
+		<attribute name="キャラ指定">演出</attribute>
+		<language name="JPN" width="256">なにかが……▼
+とうの　うえで
+はげしく　あばれている……？</language>
+		<language name="JPN_KANJI" width="256">なにかが……▼
+塔の　上で
+激しく　暴れている……？</language>
+	</row>
+
+	<row id="msg_d08r0801_boss_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・話しかけでイベント開始（暫定）
 ・はい/いいえ選択肢</comment>
@@ -374,7 +410,7 @@
 ボクの　想い　理解できないのか？[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_d08r0801_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0801_boss_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、戦闘に</comment>
@@ -395,7 +431,7 @@
 キミに　みせつけよう！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0801_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0801_boss_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・メッセージ表示後、戦闘に</comment>
@@ -416,7 +452,7 @@
 キミに　みせつけよう！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0801_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0801_boss_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
 ・このときＮと主人公の間に距離がある
@@ -428,18 +464,7 @@
 せっかく　ここまで　きたのに[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_d08r0801_sage2_01">
-		<comment>♂
-・メッセージ表示後、プラズマ団したっぱが
-　主人公に隣接、そのままポケモン勝負へ</comment>
-		<attribute name="キャラ指定">七賢人</attribute>
-		<language name="JPN" width="256">？？？『ええい！
-Ｎさまを　おたすけ　するのだ！▼</language>
-		<language name="JPN_KANJI" width="256">？？？『ええい！
-Ｎさまを　お助け　するのだ！▼</language>
-	</row>
-
-	<row id="msg_d08r0801_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0801_boss_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・sage2_01で開始される
 　ポケモン勝負後、自動でメッセージ表示
@@ -453,44 +478,199 @@
 すごいものを　みせてあげるから[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0801_sage2_02">
+	<row id="msg_d08r0801_sage2_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・Ｎが次フロアに移動後から？？まで</comment>
+・GRIDX=13、GRIDZ=16、右向き
+・pos（GRIDX=14~16、GRIDZ=20）起動
+　上向きのまま、メッセージ表示
+・続けてsage2_02</comment>
 		<attribute name="キャラ指定">七賢人</attribute>
-		<language name="JPN" width="256">あたらしい　くにが　うまれる
+		<language name="JPN" width="256">？？？『いよいよである
+Ｎさまが　えいゆうに　なられる！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『いよいよである
+Ｎさまが　えいゆうに　なられる！▼</language>
+	</row>
+
+	<row id="msg_d08r0801_sage2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・下を向いて！マーク表示後にメッセージ
+・表示後、主人公を
+　GRIDX=15、GRIDZ=20にして
+　四方をプラズマ団が囲む
+・続けてsage2_03</comment>
+		<attribute name="キャラ指定">七賢人</attribute>
+		<language name="JPN" width="256">なんと！
+ここまで　くるものが　いようとは！▼
+ええい！　Ｎさまのため！
+こいつを　あしどめ　せよ！！▼</language>
+		<language name="JPN_KANJI" width="256">なんと！
+ここまで　くるものが　いようとは！▼
+ええい！　Ｎさまのため！
+こいつを　あしどめ　せよ！！▼</language>
+	</row>
+
+	<row id="msg_d08r0801_sage2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてhakaim1_01</comment>
+		<attribute name="キャラ指定">七賢人</attribute>
+		<language name="JPN" width="256">？？？『プラズマだん　いがいは
+すべて　てき！▼
+ぜんりょくで　はいじょ　する▼</language>
+		<language name="JPN_KANJI" width="256">？？？『プラズマだん　いがいは
+すべて　てき！▼
+ぜんりょくで　はいじょ　する▼</language>
+	</row>
+
+	<row id="msg_d08r0801_sage2_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・プラズマ団との戦闘後から
+　最上階イベント終了まで</comment>
+		<attribute name="キャラ指定">七賢人</attribute>
+		<language name="JPN" width="256">？？？『あたらしい　くにが　うまれる
 そのためには　まず　はかい　である！</language>
-		<language name="JPN_KANJI" width="256">新しい　国が　生まれる
-そのためには　まず　破壊である！</language>
+		<language name="JPN_KANJI" width="256">？？？『あたらしい　くにが　うまれる
+そのためには　まず　はかい　である！</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaim1_01">
+	<row id="msg_d08r0801_hakaim1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・Ｎが次フロアに移動後から？？まで</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂その１</attribute>
-		<language name="JPN" width="256">プラズマだん『よかったな
-イッシュの　よあけは　もうすぐだ</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『よかったな
-イッシュの　よあけは　もうすぐだ</language>
+・表示後、トレーナ-戦闘に</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『イッシュの　よあけを
+ジャマさせるわけには　いかない！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『イッシュの　よあけを
+ジャマさせるわけには　いかない！▼</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaim2_01">
+	<row id="msg_d08r0801_hakaim1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・Ｎが次フロアに移動後から？？まで</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂その２</attribute>
+・戦闘後自動で表示
+・続けてhakaim2_01</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『く……
+こんな　こどもに　まけるとは▼
+だが　プラズマだんは
+ひとりでは　ないのだ！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『く……
+こんな　こどもに　まけるとは▼
+だが　プラズマだんは
+ひとりでは　ないのだ！▼</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaim1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『く……
+こんな　こどもに　まけるとは▼
+だが　プラズマだんは
+ひとりでは　ないのだ！</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『く……
+こんな　こどもに　まけるとは▼
+だが　プラズマだんは
+ひとりでは　ないのだ！</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaim2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・表示後、トレーナ-戦闘に</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
 		<language name="JPN" width="256">プラズマだん『われらの
-ねがいが　ようやく　かなう！</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『われらの
-願いが　ようやく　かなう！</language>
+ねがいが　ようやく　かなう！▼
+だれにも　われらを
+とめることなど　できない！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『われらの
+ねがいが　ようやく　かなう！▼
+だれにも　われらを
+とめることなど　できない！▼</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaiw1_01">
+	<row id="msg_d08r0801_hakaim2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・戦闘後自動で表示
+・続けてhakaiw1_01</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『わたしは　とめられた▼
+だが　つぎの　なかまが
+おまえの　うごきを　ふうじるだろう！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『わたしは　とめられた▼
+だが　つぎの　なかまが
+おまえの　うごきを　ふうじるだろう！▼</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaim2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『ポケモンを
+こきつかうことに　なれていやがる</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『ポケモンを
+こきつかうことに　なれていやがる</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaiw1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・Ｎが次フロアに移動後から？？まで</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♀その１</attribute>
+・表示後、トレーナ-戦闘に</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♀</attribute>
+		<language name="JPN" width="256">プラズマだん『いくよ！
+プラ～ズマ～！！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『いくよ！
+プラ～ズマ～！！▼</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaiw1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・戦闘後自動で表示
+・続けてhakaim3_01</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♀</attribute>
 		<language name="JPN" width="256">プラズマだん『わたしたちの　おうが
-あたらしい　くにを　つくります</language>
+あたらしい　くにを　つくります▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『わたしたちの　王が
+あたらしい　国を　創ります▼</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaiw1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♀</attribute>
+		<language name="JPN" width="256">プラズマだん『わたしたちの　おうが
+あたらしい　くにを　つくります▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『わたしたちの　王が
 あたらしい　国を　創ります</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaim3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・表示後、トレーナ-戦闘に</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『ほらほら！
+４にん　つづけて　たたかえるか？▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『ほらほら！
+４にん　つづけて　たたかえるか？▼</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaim3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・戦闘後自動で表示
+・表示後、プラズマ団したっぱが移動
+　主人公先に進める</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『なんて　ヤツ……
+なぜ　そこまで　がんばれるのだ？▼
+とっ　とりあえず
+みちを　あけてやる！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『なんて　ヤツ……
+なぜ　そこまで　がんばれるのだ？▼
+とっ　とりあえず
+みちを　あけてやる！▼</language>
+	</row>
+
+	<row id="msg_d08r0801_hakaim3_03" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『なんて　ヤツ……
+なぜ　そこまで　がんばれるのだ？</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『なんて　ヤツ……
+なぜ　そこまで　がんばれるのだ？</language>
 	</row>
 
 	<flowchart-group-list>
