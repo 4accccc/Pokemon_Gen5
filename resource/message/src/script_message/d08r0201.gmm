@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-10T21:38:48"/>
+	<create user="matsumiya" host="W00224" date="2010-02-08T19:30:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1395" top="350" right="2100" bottom="970" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -291,6 +291,20 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_d08r0201_hakaim_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・c07ジムバッジ取得で出現
+・d08r0901イベント終了で削除
+・GRIDX=23、GRIDZ=46、左向き</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『……さきほど
+ジムリーダーたちが　のぼっていったが▽
+おまえたちには　なにも　できないぜ</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……先ほど
+ジムリーダーたちが　登っていったが▽
+おまえたちには　なにも　できないぜ</language>
+	</row>
 
 	<row id="msg_d08r0201_hakase1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
