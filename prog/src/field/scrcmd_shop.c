@@ -209,6 +209,7 @@ static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
 static void bp_item_set( SHOP_BUY_APP_WORK *wk, int type );
 static void ShopTypeDecideMsg( SHOP_BUY_APP_WORK *wk, int type );
 static void string_alloc( SHOP_BUY_APP_WORK *wk, int payment );  
+static void blackcity_shop_item_set( SHOP_BUY_APP_WORK *wk, int type );
 
 
 // BMPWIN定義テーブル
@@ -498,6 +499,9 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
     bp_item_set( wk, SHOP_TYPE_WAZA  );
     wk->payment = SHOP_PAYMENT_BP;
     wk->type = SHOP_TYPE_WAZA;
+    break;
+  case SCR_SHOPID_BLACK_CITY:
+    blackcity_shop_item_set( wk, type );
     break;
   default: 
     shop_item_set( wk, type, id, 0 );
@@ -1010,6 +1014,46 @@ static void bp_item_set( SHOP_BUY_APP_WORK *wk, int type )
   GFL_MSG_Delete( itemMsgData );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief バトルポイントショップアイテム登録
+ *
+ * @param   wk    SHOP_BUY_APP_WORK
+ * @param   type  ショップタイプ(SCR_SHOPID_BP_ITEM,SCR_SHOPID_BP_WAZA)
+ */
+//----------------------------------------------------------------------------------
+static void blackcity_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
+{
+  int i;
+  GFL_MSGDATA *itemMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                             NARC_message_itemname_dat, wk->heapId );
+  const  SHOP_ITEM *itemlist;
+
+  // BLACKCITY用の商品ラインナップをセット
+  //BLACKCITY_SetShopItem( wk->lineup, &wk->lineup_num );
+
+  GF_ASSERT_MSG( wk->lineup_num, "ショップの品物がひとつもありません\n" );
+
+  wk->list = BmpMenuWork_ListCreate( wk->lineup_num+1, wk->heapId );
+  for(i=0;i<wk->lineup_num;i++)
+  {
+      int id = wk->lineup[i].id;
+      OS_Printf("strId=%d\n", id);
+      
+      // どうぐしか入らないはず
+      _add_menuitem( wk, i, wk->type, wk->lineup[i].id, itemMsgData );
+      
+  }
+  
+  // 「やめる」登録
+  BmpMenuWork_ListAddArchiveString( &wk->list[i], wk->shopMsgData, 
+                                    mes_shop_02_06, 
+                                    BMPMENULIST_CANCEL, 
+                                    wk->heapId );
+
+  GFL_MSG_Delete( itemMsgData );
+}
+
 
 
 
@@ -1065,7 +1109,7 @@ static int init_work( SHOP_BUY_APP_WORK *wk, int type )
     type = SCR_SHOPID_BP_ITEM;
   }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_Y){
     type = SCR_SHOPID_BP_WAZA;
-  }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+  }else if(GFL_UI_KEY_GetCont()&PAD_KEY_UP){
     type = SCR_SHOPID_BLACK_CITY;
   }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
     MISC_SetGold(wk->misc , 5000);
