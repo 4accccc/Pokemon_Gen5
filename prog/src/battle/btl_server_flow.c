@@ -2893,7 +2893,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   actTargetPos = orgTargetPos;
   fWazaEnable = FALSE;
   fWazaExecute = FALSE;
-  fWazaLock = BPP_CheckSick( attacker, WAZASICK_WAZALOCK );
+  fWazaLock = BPP_CheckSick(attacker, WAZASICK_WAZALOCK) || BPP_CheckSick(attacker, WAZASICK_TAMELOCK);
 
   BTL_HANDLER_Waza_Add( attacker, orgWaza );
   scEvent_StartWazaSeq( wk, attacker, orgWaza );
@@ -3002,7 +3002,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
             scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
             Hem_PopState( &wk->HEManager, hem_state );
           }
-
           // その後、跳ね返し処理
           // ワザパラメータ差し替え
           scEvent_GetWazaParam( wk, actWaza, robPoke, &wk->wazaParam );
