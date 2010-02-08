@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03r0501
+_EVENT_DATA		ev_c03r0501_mountain_01
+_EVENT_DATA		ev_c03r0501_poke_01
+_EVENT_DATA		ev_c03r0501_middlewoman2_01
 _EVENT_DATA_END
 
 
@@ -30,9 +32,79 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*			MOUNTAIN	C03R0501							  */
 /**************************************************************/
-ev_c03r0501:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c03r0501_mountain_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_mountain_01 )
+EVENT_END
+
+/**************************************************************/
+/*			POKE	C03R0501								  */
+/**************************************************************/
+EVENT_START		ev_c03r0501_poke_01
+	_EASY_TALK_POKEVOICE( MONSNO_PIKATYUU, msg_c03r0501_poke_01 )
+EVENT_END
+
+/**************************************************************/
+/*			MIDDLEWOMAN2	C03R0501	フィーリング占い師	  */
+/**************************************************************/
+EVENT_START		ev_c03r0501_middlewoman2_01
+_TALK_OBJ_START()
+
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_TOTAL
+	
+	//フィーリングチェックのデータ数を参照
+	_GET_FEELING_COUNT( LWK_TOTAL )
+	
+	//フィーリングチェックをした事が無い場合
+	IF $LWK_TOTAL == 0 THEN
+	
+		//よのなか　Cギアを　つかって
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_middlewoman2_01 )
+		_MSGWIN_CLOSE()
+	
+	//フィーリングチェックをしたことがある場合
+	ELSE
+	
+		//どう　あなた　うらない　してみる？
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_middlewoman2_02 )
+		
+		//YESNO分岐
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+		
+			//ラッキーマンをトレーナー名に格納
+			_FEELING_NAME( 0 )
+		
+			//フィーリングチェックを１人としかやっていない場合
+			IF $LWK_TOTAL == 1 THEN
+			
+				//あら　～さんとしか　フィーリングチェックを　していないのね
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_middlewoman2_05 )
+				_MSGWIN_CLOSE()
+			
+			//複数人データがある場合
+			ELSE
+			
+				//ハッピーに過ごせる人は
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_middlewoman2_03 )
+				_MSGWIN_CLOSE()
+			
+			ENDIF
+		
+		//いいえの場合
+		ELSE
+			//あら　えんりょ　しなくていいのよ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_middlewoman2_04 )
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+	
+	ENDIF
+
+EVENT_END
 

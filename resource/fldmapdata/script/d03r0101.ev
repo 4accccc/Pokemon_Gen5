@@ -25,6 +25,7 @@ _EVENT_DATA		ev_d03r0101_rival_02
 _EVENT_DATA		ev_scene_d03r0101_plasmaevent_01
 _EVENT_DATA		ev_pos_d03r0101_hakase2_01
 _EVENT_DATA		ev_d03r0101_daruma_01
+_EVENT_DATA		ev_d03r0101_backpackerm_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -417,4 +418,11 @@ EVENT_START		ev_d03r0101_daruma_01
 	
 	ENDIF
 
+EVENT_END
+
+/**************************************************************/
+/*			バックパッカー♂	D03R0101イベントスクリプト	  */
+/**************************************************************/
+EVENT_START		ev_d03r0101_backpackerm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_backpackerm_01 )
 EVENT_END

@@ -10,6 +10,9 @@
 #define ZONE_C03R0501_EVC_H
 
 #define C03R0501_OLDMAN1_01                0
+#define C03R0501_MOUNTAIN_01               1
+#define C03R0501_POKE_01                   2
+#define C03R0501_MIDDLEWOMAN2_01           3
 
 #endif //ZONE_C03R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
