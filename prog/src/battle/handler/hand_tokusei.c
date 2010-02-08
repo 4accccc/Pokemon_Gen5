@@ -3228,9 +3228,8 @@ static BOOL _check_kikenyoti_poke( const BTL_POKEPARAM* bppUser, const BTL_POKEP
 
     // 自分に相性バツグンな奴もキケン
     waza_type = WAZADATA_GetType( waza );
-    if( BTL_CALC_TypeAff(waza_type, user_type) > BTL_TYPEAFF_100 ){ return TRUE; }
+    if( BTL_CALC_TypeAffPair(waza_type, user_type) > BTL_TYPEAFF_100 ){ return TRUE; }
 
-    // @@@ まだ自爆系を見ていない
   }
   return FALSE;
 }

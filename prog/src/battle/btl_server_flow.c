@@ -1250,24 +1250,6 @@ static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk )
 }
 //----------------------------------------------------------------------------------
 /**
- * 場にいる全てのポケモン飛行フラグのチェック
- *
- * @param   wk
- */
-//----------------------------------------------------------------------------------
-static void scproc_CheckFlyingAllPoke( BTL_SVFLOW_WORK* wk )
-{
-  FRONT_POKE_SEEK_WORK  fps;
-  BTL_POKEPARAM* bpp;
-
-  FRONT_POKE_SEEK_InitWork( &fps, wk );
-  while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
-  {
-    scproc_CheckFlying( wk, bpp );
-  }
-}
-//----------------------------------------------------------------------------------
-/**
  * ポケモン単体に飛行フラグのチェック
  *
  * @param   wk
