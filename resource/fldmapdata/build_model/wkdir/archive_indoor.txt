@@ -132,3 +132,4 @@
 "nsbmdfiles/door_h5_in.nsbmd"
 "nsbmdfiles/in39_den.nsbmd"
 "nsbmdfiles/in39_hiko.nsbmd"
+"nsbmdfiles/pal01.nsbmd"
