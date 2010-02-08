@@ -91,9 +91,6 @@ typedef enum {
   STR_TYPE_STR,      ///< 入力対応文字列（文字列から導かれるインデックスを保存する場合）
   STR_TYPE_NUM,      ///< 入力対応数値
   STR_TYPE_SWITCH,   ///< タッチ対応トグルスイッチ
-  STR_TYPE_FIXVAL,   ///< 表示するだけの数値
-  STR_TYPE_FIXSTR,   ///< 表示するだけの文字列
-  STR_TYPE_BTN,      ///< タッチ反応で特殊処理するためのボタン
   STR_TYPE_EDITSTR,  ///< 入力対応文字列（文字列自体を保存する場合）
 }STR_TYPE;
 
@@ -220,13 +217,15 @@ typedef struct {
   WIFI_HISTORY *wh;
   _UNITEDNATIONS_SAVE UNData;
 
+  STRBUF*         NameBuf;
+
 }MAKE_WORK;
 
 static const STR_PARAM StrParams[] = {
   {STR_TYPE_NUM, UND_STR_ID,  STR_POS_X, STR_ID_POS_Y,
     TOUCH_X_ID,STR_ID_POS_Y,TOUCH_W_ID,TOUCH_H,
     0xffffffff,0 },
-  {STR_TYPE_STR, UND_STR_NAME,  STR_POS_X, STR_NAME_POS_Y,
+  {STR_TYPE_EDITSTR, UND_STR_NAME,  STR_POS_X, STR_NAME_POS_Y,
     TOUCH_X_NAME,STR_NAME_POS_Y,TOUCH_W_NAME,TOUCH_H,
     0,0 },
   {STR_TYPE_SWITCH, UND_STR_SEX,  STR_POS_X, STR_SEX_POS_Y,
@@ -266,6 +265,7 @@ static BOOL MainCtrl( MAKE_WORK* wk );
 static void PrintCaption( MAKE_WORK* wk, const STR_PARAM* p );
 static int CheckBoxTouch( MAKE_WORK* wk );
 static void UpdateBox( MAKE_WORK* wk, u32 inBoxID, u32 inValue );
+static void UpdateStrBox( MAKE_WORK* wk, u32 inBoxID);
 static PRINTSYS_LSB GetBoxSubBGColor( u8 inType );
 static void GetBoxStr( MAKE_WORK* wk, u32 inBoxID, STRBUF* buf );
 
@@ -432,6 +432,7 @@ static void SetupDisp( MAKE_WORK* wk )
   wk->Font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->HeapID );
   wk->MsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debug_make_undata_dat, wk->HeapID );
   wk->StrBuf = GFL_STR_CreateBuffer( STRBUF_LEN, wk->HeapID );
+  wk->NameBuf = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, wk->HeapID );
   wk->PrintQue = PRINTSYS_QUE_Create( wk->HeapID );
   PRINT_UTIL_Setup( &wk->PrintUtil, wk->Win );
 
@@ -453,6 +454,7 @@ static void SetupDisp( MAKE_WORK* wk )
 static void CleanupDisp( MAKE_WORK* wk )
 {
   PRINTSYS_QUE_Delete( wk->PrintQue );
+  GFL_STR_DeleteBuffer( wk->NameBuf );
   GFL_STR_DeleteBuffer( wk->StrBuf );
   GFL_MSG_Delete( wk->MsgData );
   GFL_FONT_Delete( wk->Font );
@@ -502,6 +504,7 @@ static BOOL MainCtrl( MAKE_WORK* wk )
         const STR_PARAM* p = &StrParams[ wk->BoxIdx ];
         switch( p->Type ){
         case STR_TYPE_STR:
+        case STR_TYPE_EDITSTR:  
           {            
             static const GFL_SKB_SETUP setup = {
               STRBUF_LEN, GFL_SKB_STRTYPE_STRBUF,
@@ -530,39 +533,6 @@ static BOOL MainCtrl( MAKE_WORK* wk )
             UpdateBox( wk, wk->BoxIdx, val );
           }
           break;
-#if 0          
-        case INPUTBOX_TYPE_BTN:
-          {
-            u32 i;
-
-            update_dst( wk );
-
-            switch( wk->boxIdx ){
-            case INPUTBOX_ID_HANERU_BUTTON:   // はねるだけボタン
-              PP_SetWazaPos( wk->dst, WAZANO_HANERU, 0 );
-              for(i=1; i<PTL_WAZA_MAX; ++i){
-                PP_SetWazaPos( wk->dst, WAZANO_NULL, i );
-              }
-              break;
-            case INPUTBOX_ID_HATAKU_BUTTON:   // はたくだけボタン
-              PP_SetWazaPos( wk->dst, WAZANO_HATAKU, 0 );
-              for(i=1; i<PTL_WAZA_MAX; ++i){
-                PP_SetWazaPos( wk->dst, WAZANO_NULL, i );
-              }
-              break;
-            default:                          // デフォルトワザセットボタン
-              PP_SetWazaDefault( wk->dst );
-              break;
-            }
-
-            // わざパラメータを反映
-            for(i=0; i<PTL_WAZA_MAX; ++i){
-              box_setup( wk, INPUTBOX_ID_WAZA1+i, wk->dst );
-              box_setup( wk, INPUTBOX_ID_PPMAX1+i, wk->dst );
-            }
-          }
-          break;
-#endif          
         }       //end switch
         break;
       }
@@ -585,15 +555,29 @@ static BOOL MainCtrl( MAKE_WORK* wk )
     case SEQ_INPUT_STR:      
       if( COMPSKB_Main(&wk->comp) )
       {
-        int idx = COMPSKB_GetWordIndex( &wk->comp );
-        if( idx < 0 ){
+        int idx;
+        const STR_PARAM* p = &StrParams[ wk->BoxIdx ];
+        if ( p->Type == STR_TYPE_EDITSTR)
+        {
+          //@todo
           if( GFL_STR_GetBufferLength(wk->StrBuf) == 0 ){
             idx = 0;
           }
+          GFL_STR_CopyBuffer( wk->NameBuf, wk->StrBuf );
+          idx = 0;
+          UpdateStrBox( wk, wk->BoxIdx);
         }
-        if( idx >= 0 ){
-          UpdateBox( wk, wk->BoxIdx, idx );
-//          box_relation( wk, wk->boxIdx );todo
+        else
+        {
+          idx = COMPSKB_GetWordIndex( &wk->comp );
+          if( idx < 0 ){
+            if( GFL_STR_GetBufferLength(wk->StrBuf) == 0 ){
+              idx = 0;
+            }
+          }
+          if( idx >= 0 ){
+            UpdateBox( wk, wk->BoxIdx, idx );
+          }
         }
         COMPSKB_Cleanup( &wk->comp );
         GFL_SKB_Delete( wk->skb );
@@ -605,7 +589,6 @@ static BOOL MainCtrl( MAKE_WORK* wk )
       {
         u32 num = NumInput_GetNum( &wk->NumInput );
         UpdateBox( wk, wk->BoxIdx, num );
-        //box_relation( wk, wk->boxIdx );
         wk->Seq = SEQ_WAIT_CTRL;
       }      
     }    //end switch
@@ -641,10 +624,6 @@ static int CheckBoxTouch( MAKE_WORK* wk )
       if( 1/*wk->boxEnable[i]*/ )
       {
         const STR_PARAM* p = &StrParams[i];
-
-        if( (p->Type == STR_TYPE_FIXVAL) ||  (p->Type == STR_TYPE_FIXSTR)){
-          continue;
-        }
         if( (x >= p->TouchX) && (x <= (p->TouchX + p->TouchW))
         &&  (y >= p->TouchY) && (y <= (p->TouchY + p->TouchH))
         ){
@@ -664,6 +643,8 @@ static void UpdateBox( MAKE_WORK* wk, u32 inBoxID, u32 inValue )
   PRINTSYS_LSB color = GetBoxSubBGColor( p->Type );
   u8 color_bg = PRINTSYS_LSB_GetB( color );
 
+  if ( p->Type == STR_TYPE_EDITSTR ) return;
+
   GFL_BMP_Fill( wk->Bmp, p->TouchX, p->TouchY, p->TouchW, p->TouchH, color_bg );
 
   wk->BoxValue[ inBoxID ] = inValue;
@@ -676,13 +657,31 @@ static void UpdateBox( MAKE_WORK* wk, u32 inBoxID, u32 inValue )
   }
   str_height = GFL_FONT_GetLineHeight( wk->Font );
   ypos = p->TouchY;
-/**  
-  if( str_height < p->TouchH ){
-    ypos += (p->height - str_height) / 2;
-  }
-*///@todo
+
   PRINT_UTIL_PrintColor( &wk->PrintUtil, wk->PrintQue, xpos, ypos, wk->StrBuf, wk->Font, color );
 }
+
+static void UpdateStrBox( MAKE_WORK* wk, u32 inBoxID)
+{
+  const STR_PARAM* p = &StrParams[ inBoxID ];
+  u32 str_width, str_height, xpos, ypos;
+
+  PRINTSYS_LSB color = GetBoxSubBGColor( p->Type );
+  u8 color_bg = PRINTSYS_LSB_GetB( color );
+
+  GFL_BMP_Fill( wk->Bmp, p->TouchX, p->TouchY, p->TouchW, p->TouchH, color_bg );
+
+  str_width = PRINTSYS_GetStrWidth( wk->StrBuf, wk->Font, 0 );
+  xpos = p->TouchX;
+  if( str_width < p->TouchW ){
+    xpos += (p->TouchW - str_width) / 2;
+  }
+  str_height = GFL_FONT_GetLineHeight( wk->Font );
+  ypos = p->TouchY;
+
+  PRINT_UTIL_PrintColor( &wk->PrintUtil, wk->PrintQue, xpos, ypos, wk->StrBuf, wk->Font, color );
+}
+
 
 static PRINTSYS_LSB GetBoxSubBGColor( u8 inType )
 {
@@ -690,9 +689,7 @@ static PRINTSYS_LSB GetBoxSubBGColor( u8 inType )
   case STR_TYPE_STR:     return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_ORANGE_D );
   case STR_TYPE_NUM:     return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_BLUE_L );
   case STR_TYPE_SWITCH:  return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_GREEN_L );
-  case STR_TYPE_FIXVAL:  return PRINTSYS_LSB_Make( COLIDX_WHITE, 0, COLIDX_GRAY );
-  case STR_TYPE_FIXSTR:  return PRINTSYS_LSB_Make( COLIDX_WHITE, 0, COLIDX_GRAY );
-  case STR_TYPE_BTN:     return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_RED_L );
+  case STR_TYPE_EDITSTR: return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_RED_L );
   }
   return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_WHITE );
 }
@@ -704,22 +701,14 @@ static void GetBoxStr( MAKE_WORK* wk, u32 inBoxID, STRBUF* buf )
 
   switch( p->Type ){
   case STR_TYPE_STR:
-  case STR_TYPE_FIXSTR:
     {
       GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->HeapID) );
       GFL_MSG_GetString( msgdat, value, wk->StrBuf );
       GFL_MSG_Delete( msgdat );
     }
     break;
-/**
-  case INPUTBOX_TYPE_BTN:
-    {
-      GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
-      GFL_MSG_GetString( msgdat, p->arg2, wk->strbuf );
-      GFL_MSG_Delete( msgdat );
-    }
+  case STR_TYPE_EDITSTR:
     break;
-*/
   case STR_TYPE_NUM:
     {
       u8 keta = 1;
@@ -741,23 +730,8 @@ static void GetBoxStr( MAKE_WORK* wk, u32 inBoxID, STRBUF* buf )
       STRTOOL_SetUnsignedNumber( wk->StrBuf, value, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
     }
     break;
-/**
-  case INPUTBOX_TYPE_FIXVAL:
-    STRTOOL_SetNumber( wk->strbuf, value, calc_keta(p->arg), STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
-    break;
-*/
   case STR_TYPE_SWITCH:
     GFL_MSG_GetString( wk->MsgData, p->arg+value, wk->StrBuf );
-/**    
-    if( p->arg2 == SWITCH_STR_DEFAULT ){
-      GFL_MSG_GetString( wk->msgData, p->arg+value, wk->strbuf );
-    }else if( p->arg2 == SWITCH_STR_TOKUSEI ){
-      GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
-      value = personal_get_tokusei( wk->dst, value );
-      GFL_MSG_GetString( msgdat, value, wk->strbuf );
-      GFL_MSG_Delete( msgdat );
-    }
-*/    
     break;    
   } //end switch  
 }
@@ -946,7 +920,7 @@ static void DrawNumInput( NUMINPUT_WORK* wk )
   {
     int i;
     u32 xpos = wk->Draw_ox;
-    u32 ypos = p->TouchY/* + ((p->height - GFL_FONT_GetLineHeight(wk->font)) / 2)*/; //@todo
+    u32 ypos = p->TouchY;
     PRINTSYS_LSB color;
     u8 col_bg;
 
@@ -1232,7 +1206,15 @@ static void MakeData(MAKE_WORK *wk)
     static const STRCODE default_name[] = {
       0x30d6, 0x30e9, 0x30c3, 0x30af, 0xffff,
     };
-    MyStatus_SetMyName(my, default_name);
+    
+    if ( GFL_STR_GetBufferLength(wk->NameBuf) ) 
+    {
+      MyStatus_SetMyNameFromString(my, wk->NameBuf);
+    }
+    else
+    {
+      MyStatus_SetMyName(my, default_name);
+    }
     //ID
     MyStatus_SetID(my, wk->BoxValue[EDITBOX_ID_TRID]);
     //プロファイル※

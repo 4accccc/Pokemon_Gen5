@@ -24,6 +24,10 @@
 static void SetData(WIFI_HISTORY *wh, UNSV_WORK* work, const int inCountryCode);
 static u32 GetMsg(const int inSex, const u32 inTrID, const int inNature, const BOOL inFirst);
 
+#ifdef PM_DEBUG
+int DebugUnCountryCode = 0;
+#endif
+
 //--------------------------------------------------------------
 /**
  * @brief 国連関連データのセット
@@ -33,20 +37,25 @@ static u32 GetMsg(const int inSex, const u32 inTrID, const int inNature, const B
 //--------------------------------------------------------------
 void UN_SetData(GAMESYS_WORK *gsys, const int inCountryCode)
 {
+  int code;
   GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
   UNSV_WORK *work = GAMEDATA_GetUnsvWorkPtr(gdata);
+  code = inCountryCode;
+#ifdef PM_DEBUG
+  if (DebugUnCountryCode != 0) code = DebugUnCountryCode;
+#endif //PM_DEBUG
   
   //国コード上限チェック
-  if (inCountryCode < WIFI_COUNTRY_MAX)
+  if (code < WIFI_COUNTRY_MAX)
   {
     //セーブデータにアクセスして、指定国コードのデータを収集
     SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
     WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
-    SetData(wh, work, inCountryCode);
+    SetData(wh, work, code);
   }
   else
   {
-    GF_ASSERT_MSG(0,"CountryCode = %d",inCountryCode);
+    GF_ASSERT_MSG(0,"CountryCode = %d",code);
     UNSV_Init(work);
   }
 }

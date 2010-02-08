@@ -29,6 +29,7 @@ _EVENT_DATA     ev_c11r0101_dancer01
 _EVENT_DATA     ev_c11r0101_policeman01
 _EVENT_DATA     ev_c11r0101_pos01
 _EVENT_DATA     ev_reserve_c11r0101
+_EVENT_DATA     ev_zone_c11r0101
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -42,21 +43,20 @@ DEFINE_LOCAL	DOOR_ANIME_ID
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
-/**
-ev_zone_c11r0101:
+INIT_EVENT_START ev_zone_c11r0101
+  //POSイベント起動初期化
+  $LOCALWORK1 = 0
   //エレベータから出てきたか？（国連部屋訪問状態か）
-  IF THEN   //エレベータから出てくる(国連部屋訪問状態ON)
-    //POSイベントをOFF
-    $LOCALWORK1 = 0
+  IF $WK_OTHER_UN == 1 THEN   //エレベータから出てくる(国連部屋訪問状態ON)
     //受付の人を移動
-
+    _OBJ_POS_CHANGE( UN_ENTRANCE_RECEPTION_01, 13, 0, 10, DIR_DOWN )
   ELSE      //入り口から入ってくる
     //条件判定してPOSイベントをON
+    _CALL check_posevt_start
   ENDIF
   //国連部屋訪問状態をOFF
-
-  _END
-*/
+  $WK_OTHER_UN = 0
+INIT_EVENT_END
 
 /************************************************************/
 /*			予約スクリプト：エレベータから出てくる					*/
@@ -86,10 +86,10 @@ EVENT_START ev_c11r0101_reception01
     //「こちらへ」
     _BALLOONWIN_TALKOBJ_MSG( msg_reception01_02 )
     _BALLOONWIN_CLOSE()
-    
     //アニメ
     _CALL player_in_anm
-
+    //国連部屋訪問状態をON
+    $WK_OTHER_UN = 1
     //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
 		_RESERVE_SCRIPT( SCRID_RESERVE_C11R0201 )
     //マップチェンジ
@@ -197,6 +197,10 @@ player_out_anm:
 	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
   //エレベータアニメクリーンアップ
 	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+  
+  //受付ふさぐ
+  _OBJ_ANIME( UN_ENTRANCE_RECEPTION_01, anm_reception_close )
+	_OBJ_ANIME_WAIT()
 _RET
 
 
@@ -237,4 +241,77 @@ _ANIME_LABEL	anm_move_elev_out
 _ANIME_LABEL	anm_move_entrance
 	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//受付閉める
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_reception_close
+	_ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//POSイベント起動判定
+check_posevt_start:
+  DEFINE_LOCAL	total
+  DEFINE_LOCAL	val
+  DEFINE_LOCAL	work_val
+
+  IF $WK_SCENE_C11GATE == 0 THEN  //初回
+    $LOCALWORK1 = 1
+    $WK_SCENE_C11GATE += 1    //シーンワーク更新
+    _RET
+  ELSIF $WK_SCENE_C11GATE == 16 THEN  //最後まで到達
+    _RET
+  ENDIF
+
+  $work_val = $WK_SCENE_C11GATE
+  $work_val += 1
+  //シーンワークで分岐
+  SWITCH $work_val
+  CASE 1 THEN     //1ヶ国
+    $val = 1
+  CASE 2 THEN     //3ヶ国
+    $val = 3
+  CASE 3 THEN     //6ヶ国
+    $val = 6
+  CASE 4 THEN     //10ヶ国
+    $val = 10
+  CASE 5 THEN     //15
+    $val = 15
+  CASE 6 THEN     //20
+    $val = 20
+  CASE 7 THEN     //30
+    $val = 30
+  CASE 8 THEN     //40
+    $val = 40
+  CASE 9 THEN     //50
+    $val = 50
+  CASE 10 THEN    //60
+    $val = 60
+  CASE 11 THEN    //70
+    $val = 70
+  CASE 12 THEN    //80
+    $val = 80
+  CASE 13 THEN    //90
+    $val = 90
+  CASE 14 THEN    //100
+    $val = 100
+  CASE 15 THEN    //150
+    $val = 150
+  CASE 16 THEN    //233
+    $val = 233
+  DEFAULT
+    //何もしないでリターン
+    _RET
+  ENDSWITCH
+
+  //ヶ国数取得
+  _UN_GET_COUNTRY_NUM( total )
+  //POS起動条件を満たす国数まで到達したか？
+  IF $total >= $val THEN
+    $LOCALWORK1 = 1   //POS起動
+    $WK_SCENE_C11GATE += 1    //シーンワーク更新
+  ENDIF
+_RET
 
