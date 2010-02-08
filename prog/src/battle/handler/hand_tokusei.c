@@ -1594,9 +1594,9 @@ static void handler_Sutemi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   {
     // îΩìÆÇÃÇ†ÇÈçUåÇÇ»ÇÁà–óÕëùâ¡
     WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_GetParam(waza, WAZAPARAM_DAMAGE_REACTION_RATIO) )
-    {
-      BTL_Printf("ÇÕÇÒÇ«Ç§Ç†ÇÈÇÃÇ≈éÃÇƒêgî≠ê∂\n");
+    if( (WAZADATA_GetParam(waza, WAZAPARAM_DAMAGE_REACTION_RATIO) != 0)
+    ||  ( (waza==WAZANO_TOBIGERI) || (waza==WAZANO_TOBIHIZAGERI) )
+    ){
       BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, BTL_CALC_TOK_SUTEMI_POWRATIO );
     }
   }
