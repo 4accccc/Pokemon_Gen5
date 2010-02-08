@@ -846,6 +846,10 @@ BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL
   BtlPokePos myPos = BTL_MAIN_PokeIDtoPokePos( mainModule, pokeCon, BPP_GetID(bpp) );
   WazaTarget  targetType = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
 
+  if( waza == WAZANO_NOROI ){
+    targetType = (BPP_IsMatchType(bpp, POKETYPE_GHOST))? WAZA_TARGET_OTHER_SELECT : WAZA_TARGET_USER;
+  }
+
   // ƒVƒ“ƒOƒ‹
   if( rule == BTL_RULE_SINGLE )
   {

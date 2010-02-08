@@ -465,11 +465,16 @@ void BTL_SICKEVENT_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKE
  *------------------------------------------------------------*/
 void BTL_SICKEVENT_CheckFlying( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
 {
+  if( BPP_CheckSick(bpp, WAZASICK_NEWOHARU) ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+
   if( BPP_CheckSick(bpp, WAZASICK_TELEKINESIS)
   ||  BPP_CheckSick(bpp, WAZASICK_FLYING)
   ){
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
   }
+
   if( BPP_CheckSick(bpp, WAZASICK_FLYING_CANCEL) ){
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }

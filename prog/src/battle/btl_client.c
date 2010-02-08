@@ -1721,6 +1721,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
   checkPokeCnt = BTL_MAIN_ExpandExistPokeID( wk->mainModule, wk->pokeCon, exPos, pokeIDAry );
   for(i=0; i<checkPokeCnt; ++i)
   {
+    // 相手側とくせい「かげふみ」チェック
     bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeIDAry[i] );
     checkTokusei = BPP_GetValue( bpp, BPP_TOKUSEI_EFFECTIVE );
     checkPokeID = BPP_GetID( bpp );
@@ -1734,7 +1735,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
         return BTL_CANTESC_KAGEFUMI;
       }
     }
-
+    // 相手側とくせい「ありじごく」チェック
     if( checkTokusei == POKETOKUSEI_ARIJIGOKU )
     {
       BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Arijigoku_Chk, checkPokeID );
@@ -1745,11 +1746,11 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
         return BTL_CANTESC_KAGEFUMI;
       }
     }
-
+    // 相手側とくせい「じりょく」チェック
     if( checkTokusei == POKETOKUSEI_JIRYOKU )
     {
       BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk, checkPokeID );
-      if( checkForbitEscapeEffective_Arijigoku(wk, procPoke) ){
+      if( checkForbitEscapeEffective_Jiryoku(wk, procPoke) ){
         BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Jiryoku_Enable );
         *pokeID = BPP_GetID( bpp );
         *tokuseiID = checkTokusei;
@@ -1761,6 +1762,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
   // こちらのポケモン状態異常による逃げ・交換禁止チェック
   if( BPP_CheckSick( procPoke, WAZASICK_TOOSENBOU )
   ||  BPP_CheckSick( procPoke, WAZASICK_BIND )
+  ||  BPP_CheckSick( procPoke, WAZASICK_NEWOHARU )
   ){
      *pokeID = BPP_GetID( procPoke );
      return BTL_CANTESC_TOOSENBOU;
