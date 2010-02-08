@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/26 13:02:40
+#save date:2010/02/08 16:55:56
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05.wms
 #hold event type:
 1
 #hold event number:
-15
+18
 #event number: 0
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-248 0 -488
+248 0 -600
 #event number: 5
 #type
 1
@@ -226,7 +226,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-216 0 -232
+584 0 -88
 #event number: 7
 #type
 1
@@ -257,7 +257,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 0 -216
+600 0 -72
 #event number: 8
 #type
 1
@@ -288,7 +288,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 0 -248
+600 0 -104
 #event number: 9
 #type
 1
@@ -319,7 +319,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 0 -232
+552 0 -88
 #event number: 10
 #type
 1
@@ -336,7 +336,7 @@ FV_C05_SAGE_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -350,7 +350,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -232
+536 0 -88
 #event number: 11
 #type
 1
@@ -367,7 +367,7 @@ FV_C05_GYMLEADER_02
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -381,7 +381,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -248
+536 0 -104
 #event number: 12
 #type
 1
@@ -475,6 +475,99 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 584 0 -24
+#event number: 15
+#type
+1
+#ID name
+C05_BOY2_01
+#OBJ CODE Number
+BOY2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05_BOY2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+4
+#Move Limit Z Number
+4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -216
+#event number: 16
+#type
+1
+#ID name
+C05_RANGERW_01
+#OBJ CODE Number
+RANGERW
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05_RANGERW_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+4
+#Move Limit Z Number
+4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -488
+#event number: 17
+#type
+1
+#ID name
+C05_MOUNTAIN_01
+#OBJ CODE Number
+MOUNTMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05_MOUNTAIN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+360 32 8
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -535,9 +628,9 @@ WK_SCENE_C05
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 0 -200
+504 0 -72
 #size
-1 5
+1 4
 #event number: 1
 #Pos Event Label
 C05_GYMLEADER_01
@@ -732,7 +825,7 @@ EXIT_TYPE_SP8
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-584 0 -8
+584 0 -24
 #size
 1 1
 #event number: 10

@@ -35,6 +35,9 @@
 #define C05_GYMLEADER_01                  12
 #define C05_RIVAL_01                      13
 #define C05_BUSINESSMAN_01                14
+#define C05_BOY2_01                       15
+#define C05_RANGERW_01                    16
+#define C05_MOUNTAIN_01                   17
 
 #endif //ZONE_C05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

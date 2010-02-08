@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_scene_d05r0101_01
 _EVENT_DATA    ev_pos_d05r0101_rival_01
+_EVENT_DATA    ev_d05r0101_workman_01
 _EVENT_DATA_END
 
 
@@ -35,13 +36,13 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_scene_d05r0101_01
 
+	//「？」
+	_OBJ_ANIME(D05R0101_RIVAL_01,anm_d05r0101_rival_01)
+	_OBJ_ANIME_WAIT()
+	
 	//会話
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_01,D05R0101_RIVAL_01)
 	_BALLOONWIN_CLOSE()
-	
-	//うろうろする
-	_OBJ_ANIME(D05R0101_RIVAL_01,anm_d05r0101_rival_01)
-	_OBJ_ANIME_WAIT()
 	
 	//会話
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_02,D05R0101_RIVAL_01)
@@ -148,24 +149,18 @@ ev_d05r0101_rival_02:
 	
     ENDSWITCH
 	
-	//【仮】シーン切り替え
+	//シーン切り替え
 	_MAP_CHANGE( ZONE_ID_D05R0201, 4, 17, DIR_UP )
 	
 _RET
 
 
 //--------------------------------------------------------------
-//	D05R0101：ライバル、うろうろした後主人公を見る
+//	D05R0101：ライバル「？」
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0101_rival_01
-	_ANIME_DATA	AC_WALK_L_16F,1
-	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_R_16F,2
-	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_L_16F,1
-	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_HATENA,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -252,3 +247,10 @@ _ANIME_LABEL	anm_player_room_z11
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  R03 OLDWOMAN1の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_d05r0101_workman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d05r0101_workman2_01)
+EVENT_END

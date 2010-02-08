@@ -33,6 +33,9 @@ _EVENT_DATA_END
 /*初回入室時発動イベント：プラズマ団と戦闘                     */
 /**************************************************************/
 EVENT_START   ev_scene_d05r0201_01
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
 	
 	//ライバル入室してプラズマ団に気づく
 	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_gyoe)
@@ -125,7 +128,7 @@ EVENT_START   ev_scene_d05r0201_01
 	//======================================//
 	
 	//【仮】シーン切り替え
-	_MAP_CHANGE( ZONE_ID_D05, 164, 474, DIR_DOWN )
+	_MAP_CHANGE( ZONE_ID_D05, 165, 474, DIR_RIGHT )
 
 EVENT_END
 

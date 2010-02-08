@@ -309,6 +309,9 @@ EVENT_START   ev_pos_r03_rival_01
 	//洞窟前のRIVALを表示
 	_FLAG_SET(FV_R03_RIVAL_03)
 	
+	//夢の跡地のSUPPORTを非表示
+	_FLAG_SET(FV_D01R0101_SUPPORT_01)
+	
 	//***フラグ操作：ストッパーを有効にする***
 	$WK_SCENE_R03_PLASMA = 1
 	

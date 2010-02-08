@@ -11,6 +11,8 @@
 
 #define D05_RIVAL_01                       0
 #define D05_WORKMAN_01                     1
+#define D05_WORKMAN_02                     2
+#define D05_WORKMAN_03                     3
 
 #endif //ZONE_D05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

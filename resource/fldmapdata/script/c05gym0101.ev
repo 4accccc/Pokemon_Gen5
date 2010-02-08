@@ -148,6 +148,9 @@ EVENT_START		ev_c05gym0101_leader
 		
 		//ジム内ストッパーOBJ非表示に
 		_FLAG_SET( FV_C05GYM0101_CORN )
+		
+		//R05のチャンピオンを非表示に
+		_FLAG_SET( FV_R05_CHAMPION )
 
 		//========================================//
 		

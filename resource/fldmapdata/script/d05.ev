@@ -22,6 +22,8 @@
 _EVENT_DATA    ev_pos_d05_rival_01
 _EVENT_DATA    ev_d05_workman_01
 _EVENT_DATA    ev_scene_d05_02
+_EVENT_DATA    ev_d05_workman_02
+_EVENT_DATA    ev_d05_workman_03
 _EVENT_DATA_END
 
 
@@ -81,6 +83,8 @@ EVENT_START   ev_scene_d05_02
 	//ライバル喋った後C05へ
 	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_02)
 	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d05_player_down)
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG(msg_d05_black_02,D05_RIVAL_01)
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_03)
@@ -103,6 +107,9 @@ EVENT_START   ev_scene_d05_02
 	//***C05のジム前イベントのキャラを表示する***
 	_FLAG_RESET(FV_C05_SAGE_01)
 	_FLAG_RESET(FV_C05_GYMLEADER_02)
+	
+	//ジム前ストッパー削除
+	_FLAG_SET(FV_C05_BUSINESSMAN_01)
 	
 	//======================================//
 
@@ -130,8 +137,17 @@ _ANIME_LABEL	anm_d05_rivalpos_02
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05_rival_02
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05：主人公ライバルのほうを見る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_player_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //	C05：ライバルC05へ去ってゆく
@@ -143,3 +159,17 @@ _ANIME_LABEL	anm_d05_rival_03
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*workman02一言メッセージ							          */
+/**************************************************************/
+EVENT_START   ev_d05_workman_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_workman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*workman03一言メッセージ							          */
+/**************************************************************/
+EVENT_START   ev_d05_workman_03
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_trainerm_02 )
+EVENT_END
