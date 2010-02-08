@@ -44,12 +44,6 @@ ev_egg_birth:
 
   // @todo 孵化デモ画面呼び出し
   _PARTY_POKE_EGG_BIRTH( ret )
-
-  //「～が生まれた！」
-  _TEMOTI_MONS_NAME( 0, ret )
-  _SYSWIN_MSG_DOWN( egg_evemt_02 )
-  _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
 } 
 _END
 

@@ -365,7 +365,8 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         field/pleasure_boat_st.c \
         field/scrcmd_pl_boat_init.c \
         field/united_nations_st.c \
-        field/scrcmd_un_init.c  \
+        field/scrcmd_un_init.c \
+        field/event_egg_birth.c \
         app/townmap/townmap_util.c
 
 
@@ -1679,4 +1680,3 @@ SRCS_OVERLAY_BEACON_DETAIL = app/beacon_detail/beacon_detail.c \
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_UN_SELECT = app/un_select/un_select.c \
                  app/un_select/un_select_graphic.c
-

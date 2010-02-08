@@ -31,7 +31,8 @@
 
 #include "savedata/box_savedata.h"
 
-#include "event_name_input.h" // EVENT_PartyPokeNameInput
+#include "event_name_input.h" // for EVENT_PartyPokeNameInput
+#include "event_egg_birth.h"  // for EVENT_EggBirth
 
 #include "savedata/sodateya_work.h"
 #include "sodateya.h" // for POKEMON_EGG_Birth
@@ -893,18 +894,21 @@ extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk )
   POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
   int          poke_count = PokeParty_GetPokeCount( party );
 
+
   for( i=0; i<poke_count; i++ )
   {
     POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, i );
     u32      tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
-    if( tamago_flag == TRUE )
+
+    if( tamago_flag )
     {
-      POKEMON_EGG_Birth( param, my, heap_id );
+      // ›z‰»ƒCƒxƒ“ƒg
+      SCRIPT_CallEvent( scw, EVENT_EggBirth( gsys, fieldmap, param ) );
       *ret_wk = i;
-      break;
+      return VMCMD_RESULT_SUSPEND;
     }
-  } 
-  return VMCMD_RESULT_CONTINUE;
+  }
+  return VMCMD_RESULT_CONTINUE; 
 }
 
 
