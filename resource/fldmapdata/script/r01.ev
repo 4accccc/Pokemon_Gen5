@@ -324,10 +324,11 @@ IF $SCWK_ANSWER == SCR_YES THEN
 	_BALLOONWIN_OBJMSG_POS(msg_r01_black_11,R01_RIVEL_02 , WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	
-	//コール音再生
+	//TVT着信音を再生
 	_SE_PLAY( SEQ_SE_SYS_35 )
-	//間を作る為のウェイト
-	_TIME_WAIT  ( 40 )
+	_SE_WAIT()
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
 	
 	//ライバル話す
 	_BALLOONWIN_OBJMSG_POS(msg_r01_black_11a,R01_RIVEL_02 , WIN_DOWN )
@@ -340,8 +341,6 @@ IF $SCWK_ANSWER == SCR_YES THEN
 	_SYSWIN_MSG_DOWN( msg_r01_tvt_01 )
 	_SYSWIN_CLOSE()
 	
-	//コール音停止
-	_SE_STOP()
 	
 	//TVトランシーバー起動
 	_CALL_TVT_DEMO( 0 )

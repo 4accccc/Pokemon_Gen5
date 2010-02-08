@@ -38,6 +38,13 @@
 #define C05_BOY2_01                       15
 #define C05_RANGERW_01                    16
 #define C05_MOUNTAIN_01                   17
+#define C05_HAKAI_03                      18
+#define C05_HAKAI_04                      19
+#define C05_HAKAI_05                      20
+#define C05_HAKAI_06                      21
+#define C05_HAKAI_07                      22
+#define C05_HAKAI_08                      23
+#define C05_HAKAI_09                      24
 
 #endif //ZONE_C05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

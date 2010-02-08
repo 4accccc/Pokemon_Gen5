@@ -125,7 +125,7 @@ EVENT_START   ev_pos_r03_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_RIVAL )
 	
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_00)
 	_OBJ_ANIME_WAIT()
@@ -210,9 +210,6 @@ EVENT_START   ev_pos_r03_rival_01
 		ENDIF
 		
 	ENDIF
-	
-	//専用曲止まる
-	_END_EVENT_BGM()
 	
 	//戦闘後会話
 	_BALLOONWIN_OBJMSG(msg_r03_black_02,R03_RIVAL_01)

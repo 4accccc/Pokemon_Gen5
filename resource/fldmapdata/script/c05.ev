@@ -139,35 +139,13 @@ EVENT_END
 
 EVENT_START   ev_pos_c05_gymleader_02
 
-	//自機座標取得
-	DEFINE_LOCAL  LCW_POSX
-    DEFINE_LOCAL  LCW_POSZ
-    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-    
-    //プレイヤーが通る4グリッド分を用意
-    SWITCH $LCW_POSZ
-	CASE 404 THEN //デフォルト処理
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_sage_x404 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 405 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_sage_x405 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 406 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_sage_x406 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 407 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_sage_x407 )
-	_OBJ_ANIME_WAIT()
-	
-    DEFAULT
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_sage_x404 )
-	_OBJ_ANIME_WAIT()
-	
-    ENDSWITCH
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
 
+	//カメラ操作　サポートの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,13918208,0,26509312,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	//ゲーヂスとジムリーダー会話
 	_BALLOONWIN_OBJMSG(msg_c05_sage1_01,C05_SAGE_01)
 	_BALLOONWIN_CLOSE()
@@ -189,12 +167,11 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_OBJ_ANIME(C05_SAGE_01,anm_c05_sage1_01)
 	_OBJ_ANIME_WAIT()
 	
-	//ライバル、七賢人の側をどく
-	_OBJ_ANIME(C05_RIVAL_02,anm_c05_rival_01)
-	_OBJ_ANIME_WAIT()
 	
 	//七賢人ゲーヂスの側に行って礼を言う
 	_OBJ_ANIME(C05_SAGE_02,anm_c05_sage2_01)
+	_OBJ_ANIME(C05_HAKAI_08,anm_c05_hakai_01)
+	_OBJ_ANIME(C05_HAKAI_09,anm_c05_hakai_01)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG(msg_c05_sage2_01,C05_SAGE_02)
 	_BALLOONWIN_CLOSE()
@@ -203,25 +180,38 @@ EVENT_START   ev_pos_c05_gymleader_02
 	
 	//画面暗転・プラズマ団OB削除
 	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
 	
 	_OBJ_DEL(C05_HAKAI_01)
 	_OBJ_DEL(C05_HAKAI_02)
+	_OBJ_DEL(C05_HAKAI_03)
+	_OBJ_DEL(C05_HAKAI_04)
+	_OBJ_DEL(C05_HAKAI_05)
+	_OBJ_DEL(C05_HAKAI_06)
+	_OBJ_DEL(C05_HAKAI_07)
+	_OBJ_DEL(C05_HAKAI_08)
+	_OBJ_DEL(C05_HAKAI_09)
 	_OBJ_DEL(C05_SAGE_01)
 	_OBJ_DEL(C05_SAGE_02)
-
-	_FLAG_SET(FV_C05_SAGE_01)
+	
+		//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 	
 	//OBJの配置を変更して画面復帰
-	_OBJ_POS_CHANGE(C05_GYMLEADER_02,213,0,405,DIR_LEFT)
-	_OBJ_POS_CHANGE(C05_RIVAL_02,210,0,406,DIR_RIGHT)
-	_OBJ_POS_CHANGE(MMDL_ID_PLAYER,210,0,405,DIR_RIGHT)
+	_OBJ_POS_CHANGE(C05_RIVAL_02,211,0,404,DIR_UP)
+	_OBJ_POS_CHANGE(MMDL_ID_PLAYER,212,0,404,DIR_UP)
+
 	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
 	
 	//ジムリーダー一言残してジムの中へ
 	_BALLOONWIN_OBJMSG(msg_c05_leader_07,C05_GYMLEADER_02)
 	_BALLOONWIN_CLOSE()
 	
-	//ポケセンへ消えてゆくジムリーダー
+	//ジムへ消えてゆくジムリーダー
 	_OBJ_ANIME(C05_GYMLEADER_02,anm_c05_gymleader_01)
 	_OBJ_ANIME_WAIT()
 	_OBJ_DEL(C05_GYMLEADER_02)
@@ -239,6 +229,7 @@ EVENT_START   ev_pos_c05_gymleader_02
 	
 	//ジムリーダーとライバルのフラグをSETして以降非表示に
 	_FLAG_SET(FV_C05_GYMLEADER_02)
+	_FLAG_SET(FV_C05_SAGE_01)
 	
 	//***フラグ操作：C05の全てのイベントを起動しなくする***
 	$WK_SCENE_C05 = 3
@@ -247,75 +238,41 @@ EVENT_START   ev_pos_c05_gymleader_02
 
 EVENT_END
 
-//--------------------------------------------------------------
-//	C05ゲーヂスとジムリーダー：主人公加わるx404
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_player_to_sage_x404
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C05ゲーヂスとジムリーダー：主人公加わるx405
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_player_to_sage_x405
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C05ゲーヂスとジムリーダー：主人公加わるx406
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_player_to_sage_x406
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C05ゲーヂスとジムリーダー：主人公加わるx407
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_player_to_sage_x407
-	_ANIME_DATA	AC_WALK_U_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------
-//	C05ゲーヂスとジムリーダー：ライバル一歩どく
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c05_rival_01
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	C05ゲーヂスとジムリーダー：ゲーヂス一歩前に出る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_sage1_01
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	C05ゲーヂスとジムリーダー：七賢人ゲーヂスのもとへ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_sage2_01
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ゲーヂスとジムリーダー：したっぱゲーヂスのもとへ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_hakai_01
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	C05ゲーヂスとジムリーダー：ジムリーダー、ジムの中へ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_gymleader_01
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	C05ゲーヂスとジムリーダー：ライバル町の見学へ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_rival_02
-	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_WALK_L_8F,9
 	_ANIME_DATA	ACMD_END,0
 

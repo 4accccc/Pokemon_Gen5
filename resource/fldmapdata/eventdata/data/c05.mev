@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/08 16:55:56
+#save date:2010/02/08 18:25:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05.wms
 #hold event type:
 1
 #hold event number:
-18
+25
 #event number: 0
 #type
 1
@@ -212,7 +212,7 @@ FV_C05_SAGE_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -243,7 +243,7 @@ FV_C05_SAGE_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -257,7 +257,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-600 0 -72
+536 0 -120
 #event number: 8
 #type
 1
@@ -274,7 +274,7 @@ FV_C05_SAGE_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -288,7 +288,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-600 0 -104
+552 0 -120
 #event number: 9
 #type
 1
@@ -305,7 +305,7 @@ FV_C05_GYMLEADER_02
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -319,7 +319,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-552 0 -88
+584 0 -40
 #event number: 10
 #type
 1
@@ -336,7 +336,7 @@ FV_C05_SAGE_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -350,7 +350,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-536 0 -88
+568 0 -40
 #event number: 11
 #type
 1
@@ -381,7 +381,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-536 0 -104
+504 0 -88
 #event number: 12
 #type
 1
@@ -568,6 +568,223 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 360 32 8
+#event number: 18
+#type
+1
+#ID name
+C05_HAKAI_03
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C05_SAGE_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+568 0 -120
+#event number: 19
+#type
+1
+#ID name
+C05_HAKAI_04
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C05_SAGE_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+584 0 -120
+#event number: 20
+#type
+1
+#ID name
+C05_HAKAI_05
+#OBJ CODE Number
+HAKAIW
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C05_SAGE_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+600 0 -120
+#event number: 21
+#type
+1
+#ID name
+C05_HAKAI_06
+#OBJ CODE Number
+HAKAIW
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C05_SAGE_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+616 0 -120
+#event number: 22
+#type
+1
+#ID name
+C05_HAKAI_07
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C05_SAGE_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+632 0 -120
+#event number: 23
+#type
+1
+#ID name
+C05_HAKAI_08
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C05_SAGE_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+600 0 -24
+#event number: 24
+#type
+1
+#ID name
+C05_HAKAI_09
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C05_SAGE_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+600 0 -40
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -628,7 +845,7 @@ WK_SCENE_C05
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-504 0 -72
+488 0 -72
 #size
 1 4
 #event number: 1
