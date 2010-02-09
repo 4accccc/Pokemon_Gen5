@@ -701,6 +701,10 @@ extern u32 POKETOOL_GetMezaPa_Power( const POKEMON_PARAM* pp );
 extern  BOOL  PP_CheckWazaMachine( const POKEMON_PARAM *pp, int machine_no );
 extern  BOOL  PPP_CheckWazaMachine( const POKEMON_PASO_PARAM *ppp, int machine_no );
 extern  BOOL  POKETOOL_CheckWazaMachine( u16 mons_no, u16 form_no, int machine_no );
+// 技教えで技を覚えるかチェック
+extern BOOL PP_CheckWazaOshie( const POKEMON_PARAM * pp, int waza_oshie_no );
+extern BOOL  POKETOOL_CheckWazaOshie( u16 mons_no, u16 form_no, int waza_oshie_no );
+
 
 //ポケモンの好みの味かチェック
 extern  PtlTasteJudge PP_CheckDesiredTaste( const POKEMON_PARAM *pp, PtlTaste taste );

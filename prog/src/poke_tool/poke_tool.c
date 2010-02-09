@@ -1881,6 +1881,50 @@ BOOL  POKETOOL_CheckWazaMachine( u16 mons_no, u16 form_no, int machine_no )
 
 //=============================================================================================
 /**
+ * 技教えで技を覚えるかチェック
+ *
+ * @param[in] pp          ポケモンパラメータ構造体
+ * @param[in] waza_oshie_no  チェックするわざ教え指定ナンバー
+ *
+ * @retval  FALSE:覚えない　TRUE:覚える
+ */
+//=============================================================================================
+BOOL PP_CheckWazaOshie( const POKEMON_PARAM * pp, int waza_oshie_no )
+{
+  u16 mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+  u16 form_no = PP_Get( pp, ID_PARA_form_no, NULL );
+
+  return POKETOOL_CheckWazaOshie( mons_no, form_no, waza_oshie_no );
+}
+
+//=============================================================================================
+/**
+ * 技教えで技を覚えるかチェック
+ *
+ * @param[in] mons_no        チェックするポケモンナンバー
+ * @param[in] form_no        チェックするポケモンのフォルムナンバー
+ * @param[in] waza_oshie_no  チェックするわざ教え指定ナンバー
+ *
+ * @retval  FALSE:覚えない　TRUE:覚える
+ */
+//=============================================================================================
+BOOL  POKETOOL_CheckWazaOshie( u16 mons_no, u16 form_no, int waza_oshie_no )
+{
+  PokePersonalParamID perID;
+  u32 waza_oshie_bit;
+
+  if( mons_no == MONSNO_TAMAGO )
+  {
+    return FALSE;
+  }
+
+  waza_oshie_bit = ( 1 << ( waza_oshie_no % 32 ) );
+  perID = POKEPER_ID_waza_oshie1;
+
+  return ( ( POKETOOL_GetPersonalParam( mons_no, form_no, perID ) & waza_oshie_bit ) != 0 );
+}
+//=============================================================================================
+/**
  * ポケモンの好みの味かチェック
  *
  * @param[in] pp     ポケモンパラメータ構造体
