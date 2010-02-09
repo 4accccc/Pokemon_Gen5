@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T19:38:02"/>
+	<create user="matsumiya" host="W00224" date="2010-02-09T17:44:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="52" top="195" right="720" bottom="817" maximized="no" rayout="Vertical2">
+	<dialog left="1557" top="231" right="2225" bottom="853" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="493"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="506"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="660"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,37 +292,35 @@
 	</lock>
 
 
-	<row id="msg_t02r0101_middlewoman1_01">
+	<row id="msg_t02r0101_middlewoman1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">おばさん１</attribute>
-		<language name="JPN" width="256">ポケモンを　たたかわせて
-つよく　そだてる……[BE:00:ページ切り替え（行送り）]
-それが　ポケモントレーナーなの！[BE:01:ページ切り替え（クリア）]
-だけど　むりしちゃ　ダメね[BE:01:ページ切り替え（クリア）]
-よわった　ポケモンは
-ポケモンセンターで　こまめに[BE:00:ページ切り替え（行送り）]
-たいりょくを　かいふく　させないとね</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　戦わせて　強く育てる
-それが　ポケモントレーナーなの！[BE:01:ページ切り替え（クリア）]
-だけど　無理しちゃ　ダメね[BE:01:ページ切り替え（クリア）]
-弱った　ポケモンは
-ポケモンセンターで　こまめに[BE:00:ページ切り替え（行送り）]
-体力を　回復させないとね</language>
+		<language name="JPN" width="256">おや　トレーナーさん▼
+ポケモンを　そだてるため
+たたかわせるのも　だいじだけど▼
+たいりょくが　へったときは
+ポケモンセンターに　つれていきなよ</language>
+		<language name="JPN_KANJI" width="256">おや　トレーナーさん▼
+ポケモンを　育てるため
+戦わせるのも　大事だけど▼
+体力が　減ったときは
+ポケモンセンターに　連れて行きなよ</language>
 	</row>
 
-	<row id="msg_t02r0101_woman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_t02r0101_woman1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">女性１</attribute>
-		<language name="JPN" width="256">[FF:00:色:2]Ｃギア[FF:00:色:0]って　ごぞんじ？[BE:01:ページ切り替え（クリア）]
-つうしんに　ついての　じょうほうが
-まとまった　べんりな　どうぐ　よね</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:2]Ｃギア[FF:00:色:0]って　ご存知？[BE:01:ページ切り替え（クリア）]
-通信に　関する　情報が
-まとまった　便利な　道具よね</language>
+		<language name="JPN" width="256">あら！
+かわいい　ポケモン！▼
+なんだか　あなたたち
+おにあいって　かんじね！</language>
+		<language name="JPN_KANJI" width="256">あら！
+かわいい　ポケモン！▼
+なんだか　あなたたち
+お似合いって　感じね！</language>
 	</row>
 
-	<row id="msg_t02r0101_babyboy1_01">
+	<row id="msg_t02r0101_babyboy1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">男の子１</attribute>
 		<language name="JPN" width="256">あっ！　ポケモンだ！
