@@ -95,7 +95,10 @@
 #include "../../../prog/src/field/map_replace.h"
 
 //固定アイテムショップ指定用定義
-#include "../../shopdata/shop_data_index.h"       
+#include "../../shopdata/shop_data_index.h"
+
+//フィールドからコールされる簡易会話
+#include "../../../prog/src/field/easytalk_mode_def.h"
 
 
 

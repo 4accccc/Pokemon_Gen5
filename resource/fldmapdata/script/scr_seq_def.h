@@ -7598,3 +7598,22 @@
     .short  \gz
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 簡易会話アプリコール
+ * @param mode
+ * @param word1
+ * @param word2
+ * @param ret       結果　編集をやめた場合FALSE 編集した場合TRUE
+ */
+//--------------------------------------------------------------
+#define _CALL_EASY_TALK_APP( mode, word1, word2, ret ) \
+      _ASM_CALL_EASY_TALK_APP mode, word1, word2, ret
+
+  .macro _ASM_CALL_EASY_TALK_APP mode, word1, word2, ret
+  .short EV_SEQ_CALL_EASY_TALK_APP
+  .short \mode
+  .short \word1
+  .short \word2
+  .short \ret
+  .endm

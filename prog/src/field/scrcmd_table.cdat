@@ -860,6 +860,12 @@
   NO_CMD()
   NO_CMD()
 
+  //簡易会話
+  DEF_CMD( EvCmdCallEasyTalkApp, EV_SEQ_CALL_EASY_TALK_APP )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
 
   //スクリプトコマンドテーブル終了

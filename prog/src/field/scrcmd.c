@@ -81,6 +81,7 @@
 #include "scrcmd_feeling_check.h"
 #include "scrcmd_un.h"
 #include "scrcmd_sxy.h"
+#include "scrcmd_easytalk.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
