@@ -259,7 +259,11 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
   //タマゴチェック
   if( egg )
   { 
-    if( form_no > 2 )
+    if( mons_no == MONSNO_MANAFI )
+    { 
+      form_no = 1;
+    }
+    else
     { 
       form_no = 0;
     }
