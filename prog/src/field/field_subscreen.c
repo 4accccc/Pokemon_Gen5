@@ -82,7 +82,7 @@ struct _FIELD_SUBSCREEN_WORK {
 typedef void INIT_FUNC(FIELD_SUBSCREEN_WORK * , FIELD_SUBSCREEN_MODE prevMode );
 typedef void UPDATE_FUNC(FIELD_SUBSCREEN_WORK *, BOOL bActive);
 typedef void DRAW_FUNC(FIELD_SUBSCREEN_WORK *, BOOL bActive);
-typedef GMEVENT* EVENT_CHECK_FUNC(FIELD_SUBSCREEN_WORK *, BOOL bActive, BOOL bEventOK );
+typedef GMEVENT* EVENT_CHECK_FUNC(FIELD_SUBSCREEN_WORK *, BOOL bEvReqOK );
 typedef void EXIT_FUNC(FIELD_SUBSCREEN_WORK *);
 typedef void ACTION_CALLBACK(FIELD_SUBSCREEN_WORK *,FIELD_SUBSCREEN_ACTION actionno);
 
@@ -128,7 +128,7 @@ static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork,FIELD_SUBSCR
 static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void update_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static void draw_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
-static GMEVENT* evcheck_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive, BOOL bEvReq );
+static GMEVENT* evcheck_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK );
 
 static void init_nogear_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
@@ -402,15 +402,14 @@ void FIELD_SUBSCREEN_Draw( FIELD_SUBSCREEN_WORK* pWork )
  * @param pWork   サブスクリーン制御ワークへのポインタ
  */
 //-----------------------------------------------------------------------------
-GMEVENT* FIELD_SUBSCREEN_EventCheck( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReq )
+GMEVENT* FIELD_SUBSCREEN_EventCheck( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK )
 {
   switch( pWork->state )
   {
   case FSS_UPDATE:
     if( funcTable[pWork->mode].evcheck_func != NULL )
     {
-      return funcTable[pWork->mode].evcheck_func(pWork,
-          (NULL==GAMESYSTEM_GetEvent(FIELDMAP_GetGameSysWork(pWork->fieldmap))), bEvReq );
+      return funcTable[pWork->mode].evcheck_func( pWork, bEvReqOK );
     }
     break;
   default:
@@ -1018,9 +1017,9 @@ static void draw_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive
  *  @brief  すれ違い画面の描画
  */
 //-----------------------------------------------------------------------------
-static GMEVENT* evcheck_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive, BOOL bEvReq )
+static GMEVENT* evcheck_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK )
 {
-  return BEACON_VIEW_EventCheck(pWork->beaconViewWork, bActive, bEvReq );
+  return BEACON_VIEW_EventCheck(pWork->beaconViewWork, bEvReqOK );
 }
 
 //=============================================================================

@@ -18,9 +18,24 @@ extern void BeaconView_InitialDraw( BEACON_VIEW_PTR wk );
 extern int BeaconView_CheckInput( BEACON_VIEW_PTR wk );
 
 /*
+ *  @brief  御礼対象選択ループ内での入力チェック
+ */
+extern int BeaconView_CheckInputThanks( BEACON_VIEW_PTR wk );
+
+/*
  *  @brief  スタックからログを一件取り出し
  */
 extern BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk );
+
+/*
+ *  @brief  サブシーケンス　GPower使用メイン
+ */
+extern BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk );
+
+/*
+ *  @brief  サブシーケンス　御礼メイン
+ */
+extern BOOL BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk );
 
 /*
  *  @brief  メニューバーアニメセット

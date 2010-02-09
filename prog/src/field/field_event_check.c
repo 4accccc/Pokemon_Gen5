@@ -568,7 +568,12 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
   }
-	//旧サブスクリーンからのイベント起動チェック
+	/*
+   * 旧サブスクリーンからのイベント起動チェック
+   *
+   * @todo
+   * 新サブスクリーンからのイベント起動チェックが全て完成したら消す予定です
+   */
 	event = checkSubScreenEvent(gsys, fieldWork);
 	if( event != NULL )
   {
@@ -995,8 +1000,19 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
       return event;
     }
   }
-
-	//サブスクリーンからのイベント起動チェック
+	//新サブスクリーンからのイベント起動チェック
+	if(WIPE_SYS_EndCheck()){
+    event = FIELD_SUBSCREEN_EventCheck( FIELDMAP_GetFieldSubscreenWork(fieldWork), req.subscreenRequest );
+    if(event != NULL){
+      return event;
+    }
+  }
+	/*
+   * 旧サブスクリーンからのイベント起動チェック
+   *
+   * @todo
+   * 新サブスクリーンからのイベント起動チェックが全て完成したら消す予定です
+   */
 	event = checkSubScreenEvent(gsys, fieldWork);
 	if( event != NULL )
   {

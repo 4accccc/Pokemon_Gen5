@@ -230,11 +230,11 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
  * @param   wk		
  */
 //==================================================================
-GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bActive, BOOL bEvReq )
+GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
 {
   GMEVENT* event = NULL;
 
-  if( !bActive || !bEvReq ){  //イベント起動していいタイミングを待つ
+  if( !bEvReqOK ){  //イベント起動していいタイミングを待つ
     return NULL;
   }
 
@@ -262,8 +262,8 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bActive, BOOL bEvReq )
 //==================================================================
 void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 {
-#if 0
   BEACON_VIEW_TouchUpdata( wk );
+#if 0
   const GAMEBEACON_INFO *info;
   u32 old_log_count;
   s32 new_log_num, copy_src, copy_dest, write_start;
@@ -385,10 +385,10 @@ static int seq_ViewUpdate( BEACON_VIEW_PTR wk )
  */
 static int seq_GPowerUse( BEACON_VIEW_PTR wk )
 {
-  OS_TPrintf("Gパワー ビーコンセット\n");
-  GAMEBEACON_Set_GPower( 1 );
-
-  return SEQ_MAIN;
+  if( BeaconView_SubSeqGPower( wk )){
+    return SEQ_MAIN;
+  }
+  return SEQ_GPOWER_USE;
 }
 
 /*
@@ -396,13 +396,11 @@ static int seq_GPowerUse( BEACON_VIEW_PTR wk )
  */
 static int seq_ThankYou( BEACON_VIEW_PTR wk )
 {
-  switch( wk->sub_seq ){
-  
+  if( BeaconView_SubSeqThanks( wk )){
+    wk->sub_seq = 0;
+    return SEQ_MAIN;
   }
-  OS_TPrintf("ありがとう ビーコンセット\n");
-  GAMEBEACON_Set_Thankyou( wk->gdata, 0x12345678 );
-
-  return SEQ_MAIN;
+  return SEQ_THANK_YOU;
 }
 
 /*
@@ -410,8 +408,20 @@ static int seq_ThankYou( BEACON_VIEW_PTR wk )
  */
 static int seq_ReturnCGear( BEACON_VIEW_PTR wk )
 {
-  event_Request( wk , EV_RETURN_CGEAR );
-  return SEQ_END;
+  switch( wk->sub_seq ){
+  case 0:
+    BeaconView_MenuBarViewSet( wk, MENU_RETURN, MENU_ST_ANM );
+    wk->sub_seq++;
+    break;
+  case 1:
+    if( BeaconView_MenuBarCheckAnm( wk, MENU_RETURN )){
+      break;
+    }
+    event_Request( wk , EV_RETURN_CGEAR );
+    wk->sub_seq = 0;
+    return SEQ_END;
+  }
+  return SEQ_RETURN_CGEAR;
 }
 
 /*
@@ -451,7 +461,7 @@ static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR wk)
 //    GAMEBEACON_Set_Congratulations();
     break;
   case 2: //戻る
-    FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);
+//    FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);
     break;
   }
 }
@@ -1036,6 +1046,7 @@ static GFL_CLWK* obj_ObjAdd(
   obj = GFL_CLACT_WK_Create( wk->cellUnit,
           cgrNo,palNo,cellNo,
           &ini, ACT_RENDER_ID, wk->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( obj, TRUE );
 
   return obj;
 }

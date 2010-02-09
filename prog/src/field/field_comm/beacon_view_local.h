@@ -27,6 +27,16 @@ enum{
   SEQ_END,
 };
 
+enum{
+ SSEQ_THANKS_ICON_ANM,
+ SSEQ_THANKS_ICON_ANM_WAIT,
+ SSEQ_THANKS_MAIN,
+ SSEQ_THANKS_VIEW_UPDATE,
+ SSEQ_THANKS_DECIDE,
+ SSEQ_THANKS_DECIDE_WAIT,
+ SSEQ_THANKS_END,
+};
+
 typedef enum{
  EV_NONE,
  EV_RETURN_CGEAR,
@@ -388,6 +398,8 @@ typedef struct _PANEL_WORK{
 
   u8  n_line; //現在のライン
   u8  rank; //ランク
+  u8  sex;  //性別
+  u32 tr_id;  //トレーナーID
   s16 px;
   s16 py;
   GFL_CLWK* cPanel;

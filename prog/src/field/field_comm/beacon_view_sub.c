@@ -66,12 +66,15 @@ static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str );
 static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
 
+static void list_UpDownReq( BEACON_VIEW_PTR wk, u8 dir );
 static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 ofs, u8 idx, u8 dir, BOOL new_f );
 
 static void effReq_PanelScroll( BEACON_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, PANEL_WORK* ignore_pp );
 static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp );
 static void effReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
+static void effReq_PopupMsgSys( BEACON_VIEW_PTR wk, u8 msg_id );
 static void effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
+static void effReq_PopupMsgGPowerMine( BEACON_VIEW_PTR wk );
 
 static BOOL list_IsView( BEACON_VIEW_PTR wk, u8 idx );
 
@@ -155,6 +158,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   return SEQ_MAIN;
 }
 
+
 /*
  *  @brief  スタックからログを一件取り出し
  */
@@ -222,6 +226,139 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   return TRUE;
 }
 
+////////////////////////////////////////////////////////////////////////////
+//サブシーケンス
+
+///////////////////////////////////////////////////////////////////
+/*
+ *  @brief  サブシーケンス　GPower
+ */
+///////////////////////////////////////////////////////////////////
+static int sseq_gpower_CheckInput( BEACON_VIEW_PTR wk );
+
+/*
+ *  @brief  サブシーケンス　GPower使用メイン
+ */
+BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk )
+{
+  switch( wk->sub_seq ){
+  case 0:
+    BeaconView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_ANM );
+    effReq_PopupMsgGPowerMine( wk );
+    wk->sub_seq++;
+    break;
+  case 1:
+    if( wk->eff_task_ct ){
+      break;
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+static int sseq_gpower_CheckInput( BEACON_VIEW_PTR wk )
+{
+  return 0;
+}
+
+///////////////////////////////////////////////////////////////////
+/*
+ *  @brief  サブシーケンス　御礼
+ */
+///////////////////////////////////////////////////////////////////
+static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk );
+
+/*
+ *  @brief  サブシーケンス　御礼メイン
+ */
+BOOL BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
+{
+  switch( wk->sub_seq ){
+  case SSEQ_THANKS_ICON_ANM:
+    BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_ANM );
+    wk->sub_seq++;
+    break;
+  case SSEQ_THANKS_ICON_ANM_WAIT:
+    if( BeaconView_MenuBarCheckAnm( wk, MENU_THANKS )){
+      break;
+    }
+    BeaconView_MenuBarViewSet( wk, MENU_POWER|MENU_RETURN, MENU_ST_OFF );
+    draw_MenuWindow( wk, msg_sys_thanks );
+    wk->sub_seq++;
+    break;
+  case SSEQ_THANKS_MAIN:
+    wk->sub_seq = sseq_thanks_CheckInput( wk );
+    break;
+  case SSEQ_THANKS_DECIDE:
+    {
+      u8 idx;
+      PANEL_WORK* pp;
+      
+      idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, wk->ctrl.target+wk->ctrl.view_top );
+      pp = panel_GetPanelFromDataIndex( wk, idx ); 
+
+      //プレイヤー名展開
+      WORDSET_RegisterWord( wk->wordset, 0, pp->name, pp->sex, TRUE, PM_LANG );
+      effReq_PopupMsgSys( wk, msg_sys_thanks_send );
+ 
+      OS_TPrintf("ありがとう ビーコンセット\n");
+      GAMEBEACON_Set_Thankyou( wk->gdata, pp->tr_id );
+    }
+    wk->sub_seq = SSEQ_THANKS_DECIDE_WAIT;
+    break;
+  case SSEQ_THANKS_DECIDE_WAIT:
+    if( wk->eff_task_ct == 0 ){
+      wk->sub_seq = SSEQ_THANKS_END;
+    }
+    break;
+    break;
+  case SSEQ_THANKS_VIEW_UPDATE:
+    if( wk->eff_task_ct == 0 ){
+      wk->sub_seq = SSEQ_THANKS_MAIN;
+    }
+    break;
+  case SSEQ_THANKS_END:
+    BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
+    draw_MenuWindow( wk, msg_sys_now_record );
+    wk->sub_seq = 0;
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/*
+ *  @brief  御礼対象選択ループ内での入力チェック
+ */
+static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk )
+{
+  int ret;
+  POINT tp;
+
+  if( !GFL_UI_TP_GetPointTrg( (u32*)&tp.x, (u32*)&tp.y )){
+    return SSEQ_THANKS_MAIN;
+  }
+  
+  //メニューあたり判定
+  ret = touchin_CheckMenu( wk, &tp );
+  if(ret == (MENU_THANKS>>1)){
+    return SSEQ_THANKS_END;  //キャンセル
+  }
+
+  //パネルあたり判定
+  ret = touchin_CheckPanel( wk, &tp );
+  if(ret != GFL_UI_TP_HIT_NONE){
+    wk->ctrl.target = ret;
+    return SSEQ_THANKS_DECIDE;
+  }
+
+  //上下矢印あたり判定
+  ret = touchin_CheckUpDown( wk, &tp );
+  if(ret != GFL_UI_TP_HIT_NONE){
+    list_UpDownReq( wk, ret );
+    return SSEQ_THANKS_VIEW_UPDATE;
+  }
+  return SSEQ_THANKS_MAIN;
+}
 
 /*
  *  @brief  メニューバーアニメセット
@@ -250,6 +387,7 @@ BOOL BeaconView_MenuBarCheckAnm( BEACON_VIEW_PTR wk, MENU_ID id )
 {
   return GFL_CLACT_WK_CheckAnmActive( wk->pAct[ACT_POWER+(id>>1)] );
 }
+
 
 /*
  *  @brief  外積計算
@@ -793,6 +931,10 @@ static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* 
  */
 static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
 {
+  //トレーナーID取得
+  pp->tr_id = GAMEBEACON_Get_TrainerID( info );
+  pp->sex = GAMEBEACON_Get_Sex( info );
+
   //プレイヤー名取得
   GAMEBEACON_Get_PlayerNameToBuf( info, pp->name );
   //メッセージバッファ初期化
@@ -823,9 +965,27 @@ static void  panel_SetPos( PANEL_WORK* pp, s16 x, s16 y )
   BmpOam_ActorSetPos( pp->msgOam.oam, x+ACT_MSG_OX, y+ACT_MSG_OY);
 }
 
+/*
+ *  @brief  リストアップダウンリクエスト
+ */
+static void list_UpDownReq( BEACON_VIEW_PTR wk, u8 dir )
+{
+  u8 ofs,idx;
+
+  if( dir == SCROLL_UP ){
+    ofs = wk->ctrl.view_top+wk->ctrl.view_max+1;
+  }else{
+    ofs = wk->ctrl.view_top-1;
+  }
+  GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, ofs );
+  idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );
+  
+  //スクロールリクエスト
+  list_ScrollReq( wk, wk->tmpInfo, ofs, idx, dir, FALSE);
+}
 
 /*
- *  @brief  ビュー スクロールリクエスト
+ *  @brief  ビュー スクロール処理リクエスト
  */
 static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 ofs, u8 idx, u8 dir, BOOL new_f )
 {
@@ -1189,6 +1349,12 @@ static void effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
       GAMEBEACON_Get_TrainerID( info ), GPOWER_USE_BEACON, &wk->eff_task_ct);
 }
 
+static void effReq_PopupMsgGPowerMine( BEACON_VIEW_PTR wk )
+{
+  taskAdd_WinGPower( wk,
+      wk->my_data.power, wk->my_data.tr_id, GPOWER_USE_MINE, &wk->eff_task_ct );
+}
+
 /*
  *  @brief  メッセージウィンドウ Gパワー使用確認タスク登録
  */
@@ -1258,6 +1424,7 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
     }else{
       print_GetMsgToBuf( bvp, msg_sys_gpower_use02 );
       print_PopupWindow( bvp, bvp->str_expand, bvp->msg_spd );
+
       twk->seq++;
     }
     return;
