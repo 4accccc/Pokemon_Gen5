@@ -123,6 +123,10 @@ class ScrOfsData
         unless FileTest.exist?(SCRIPT_PATH + scrfile) then
           raiseError("指定されたscriptファイル#{scrfile}が存在しません", linecount)
         end
+        if File.basename( scrfile, ".*" ).upcase != areaname then
+          raiseError(
+            "管理領域名#{areaname}とscriptファイル#{scrfile}の名前に不整合があります", linecount )
+        end
       else
         scrfile = nil
       end

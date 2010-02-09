@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 02/05 (Fri) 16:24
+ * @date  2010 02/09 (Tue) 19:51
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -34,8 +34,8 @@
 #define ID_POKE_WAZA_OFFSET              (2260) //ポケモンわざ忘れなど用
 #define ID_POKE_WAZA_OFFSET_END          (2279)
 
-#define ID_POKE_WAZA_OBOE_OFFSET         (2280) //ポケモンわざおぼえ用
-#define ID_POKE_WAZA_OBOE_OFFSET_END     (2299)
+#define ID_SKILL_TEACH_SCR_OFFSET        (2280) //ポケモンわざおぼえ用
+#define ID_SKILL_TEACH_SCR_OFFSET_END    (2299)
 
 #define ID_BG_ATTR_OFFSET                (2500) //BGアトリビュート話かけスクリプト
 #define ID_BG_ATTR_OFFSET_END            (2799)
@@ -115,8 +115,8 @@
 #define ID_HYOUKA_SCR_OFFSET             (10380) //ずかん評価スクリプト
 #define ID_HYOUKA_SCR_OFFSET_END         (10389)
 
-#define ID_FURNITURE_STORE_SCR_OFFSET    (10390) //家具屋（PDW)用スクリプト
-#define ID_FURNITURE_STORE_SCR_OFFSET_END (10394)
+#define ID_FURNITURE_STORE_OFFSET        (10390) //家具屋（PDW)用スクリプト
+#define ID_FURNITURE_STORE_OFFSET_END    (10394)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)
