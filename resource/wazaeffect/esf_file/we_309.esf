@@ -9,9 +9,8 @@ BGのパレットフェード	すべて	0	12	3	0:0:0
 エフェクト終了待ち	すべて
 制御モード変更	継続
 SE再生	SEQ_SE_FLD_16	SE1	0	0	50	0	0
-SE再生	SEQ_SE_FLD_16	SE2	3	-50	30	0	0
+SE再生	SEQ_SE_W234_HIKARI	SE2	0	0	100	0	0
 SE再生	SEQ_SE_DUMMY5	SE1	50	0	127	0	0
-SE再生	SEQ_SE_W028_02	SE2	10	0	120	0	0
 SE再生	SEQ_SE_W001_01	SE2	40	0	120	0	0
 SEパン	SE1	追従	防御側	防御側	0	60:0:0
 SEパン	SE2	追従	防御側	防御側	0	60:0:0

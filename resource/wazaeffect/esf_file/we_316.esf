@@ -6,8 +6,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
 %00
 制御モード変更	継続
 SE再生	SEQ_SE_W002_01	SE1	10	700	120	0	0
-SE再生	SEQ_SE_W002_01	SE1	20	500	60	0	0
-SE再生	SEQ_SE_W002_01	SE1	30	400	30	0	0
+SE再生	SEQ_SE_W002_01	SE1	20	700	60	0	0
 SEパン	SE1	追従	防御側	防御側	0	70:0:0
 制御モード変更	逐次
 制御モード変更	継続

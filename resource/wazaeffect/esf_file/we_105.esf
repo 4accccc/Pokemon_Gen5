@@ -4,6 +4,14 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_105.spa
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
+制御モード変更	継続
+SE再生	SEQ_SE_W445_YUUWAKU	SE1	36	0	127	0	0
+SE再生	SEQ_SE_DECIDE3	SE2	75	0	127	0	0
+SE再生	SEQ_SE_DECIDE3	SE2	90	0	60	0	0
+SE再生	SEQ_SE_DECIDE3	SE2	105	0	20	0	0
+SEパン	SE1	追従	攻撃側	攻撃側	0	110:0:0
+SEパン	SE2	追従	攻撃側	攻撃側	0	110:0:0
+制御モード変更	逐次
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_105
 パーティクル再生	w_105	W_105_105_JIKO_BALL	攻撃側	方向無し	2:0:0	1:1:1	1
