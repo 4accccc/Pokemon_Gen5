@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-02-09T16:05:13"/>
+	<create user="matsushima" host="W00181" date="2010-02-09T16:31:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="319" top="221" right="1024" bottom="841" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -302,16 +302,16 @@
 		<language name="JPN_KANJI" width="256">ぐるるおおーっ！</language>
 	</row>
 
-	<row id="msg_d06r0203_legend2_02">
+	<row id="msg_d06r0203_legend2_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>・戦闘後
 ・ポケモンを倒した場合のメッセージ
 
 ●殿堂入り後に復活</comment>
 		<attribute name="キャラ指定">メッセージ</attribute>
-		<language name="JPN" width="256">ポケモンは　もりの　おくへ
-はしりさってしまった…</language>
-		<language name="JPN_KANJI" width="256">ポケモンは　森の奥へ
-走り去ってしまった…</language>
+		<language name="JPN" width="256">ポケモンは　ほらあなの　くらがりに
+まぎれて　きえてしまった…</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　洞穴の　暗がりに
+まぎれて　消えてしまった…</language>
 	</row>
 
 	<row id="msg_d06r0203_guide_01">
