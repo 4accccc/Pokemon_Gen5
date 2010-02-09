@@ -222,6 +222,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
   if( newFactor )
   {
     newFactor->priority = calcFactorPriority( factorType, priority );
+    OS_TPrintf("FactorType=%x, subPri=%x, TotalPriority=%x\n", factorType, priority, newFactor->priority);
     newFactor->factorType = factorType;
     newFactor->prev = NULL;
     newFactor->next = NULL;
@@ -648,6 +649,7 @@ static void clearFactorWork( BTL_EVENT_FACTOR* factor )
 
 static inline u32 calcFactorPriority( BtlEventFactorType factorType, u16 subPri )
 {
+  factorType = BTL_EVENT_FACTOR_MAX - factorType - 1;
   return (factorType << 16) | subPri;
 }
 

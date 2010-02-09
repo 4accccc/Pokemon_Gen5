@@ -412,6 +412,7 @@ typedef struct {
 typedef enum {
 
   // 以下はタイプごとの実行プライオリティ順になっているため順番を入れ替えるのは慎重に。
+  // （0が最も高プライオリティ）
 
   BTL_EVENT_FACTOR_WAZA,
   BTL_EVENT_FACTOR_POS,
@@ -419,6 +420,8 @@ typedef enum {
   BTL_EVENT_FACTOR_FIELD,
   BTL_EVENT_FACTOR_TOKUSEI,
   BTL_EVENT_FACTOR_ITEM,
+
+  BTL_EVENT_FACTOR_MAX,
 
 }BtlEventFactorType;
 
