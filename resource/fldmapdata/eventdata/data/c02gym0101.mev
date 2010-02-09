@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/09 13:14:13
+#save date:2010/02/09 17:34:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -363,7 +363,7 @@ MV_UP
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C02GYM0101_HAKAI
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -394,7 +394,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C02GYM0101_HAKAI
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -425,7 +425,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C02GYM0101_HAKAI
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -456,7 +456,7 @@ MV_UP
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C02GYM0101_HAKAI
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -487,7 +487,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C02GYM0101_HAKAI
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -518,7 +518,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C02GYM0101_HAKAI
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number

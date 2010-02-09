@@ -447,7 +447,7 @@ _ANIME_LABEL	anm_ad_turn
 /*     ジムリーダーアロエが博物館を出て行く					*/
 /**************************************************************/
 EVENT_START		ev_pos_c02gym0101_leader_01
-
+	
 	//主人公が、アロエ気づく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_idu_tounan )
 	_OBJ_ANIME_WAIT()
@@ -483,22 +483,22 @@ EVENT_START		ev_pos_c02gym0101_leader_01
     //【仮】煙幕の処理が後から入る予定
 	_WHITE_OUT()
 	_TIME_WAIT  ( 45 )
+
+	//==============フラグワーク操作==============//
 	
+	_FLAG_SET( FV_C02GYM0101_HAKAI )  //プラズマ団を非表示にする
 	_OBJ_DEL( C02GYM0101_HAKAIM_01 )
 	_OBJ_DEL( C02GYM0101_HAKAIM_02 )
 	_OBJ_DEL( C02GYM0101_HAKAIM_03 )
 	_OBJ_DEL( C02GYM0101_HAKAIM_04 )
 	_OBJ_DEL( C02GYM0101_HAKAIM_05 )
 	_OBJ_DEL( C02GYM0101_HAKAIM_06 )
-
-	//==============フラグワーク操作==============//
 	
 	_FLAG_SET( FV_MUSEUM_TOUNAN )  //博物館内の骨がなくなる
 	_OBJ_DEL( C02GYM0101_BONE_01 )
 	
 	_FLAG_SET( FV_MUSEUM_STONE )	//博物館内の石がなくなる
 	_OBJ_DEL( C02GYM0101_BLACKSTONE_01 )
-
 	
 	//============================================//
 	

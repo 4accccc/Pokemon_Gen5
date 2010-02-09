@@ -56,6 +56,9 @@ init_flags:
 	//C02：サポート・ライバル・アーティ・アロエを盗難事件が起きるまで非表示
 	_FLAG_SET( FV_C02_LEADER2)
 	
+	//C02：博物館内のプラズマ団を盗難事件が起きるまで非表示
+	_FLAG_SET( FV_C02GYM0101_HAKAI)
+	
 	//C02：博物館内のサポート・ライバルを盗難事件イベントまで非表示
 	_FLAG_SET( FV_C02GYM0101_FRIENDS)
 
