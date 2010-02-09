@@ -267,15 +267,15 @@ u32 GPOWER_Calc_Sale(u32 price)
 /**
  * Gパワー計算：大量発生
  *
- * @retval  u32		大量発生ID　※check 大量発生の仕様が固まってから要検討
+ * @retval  s32		大量発生ID (発生していない場合はGPOWER_OCCUR_NONE)
  */
 //==================================================================
-u32 GPOWER_Calc_LargeAmountHappen(void)
+s32 GPOWER_Calc_LargeAmountHappen(void)
 {
   if(GPowerSys.occur_power[GPOWER_TYPE_HAPPEN] != GPOWER_ID_NULL){
     return GPowerSys.powerdata_data[GPOWER_TYPE_HAPPEN];
   }
-  return 0;
+  return GPOWER_OCCUR_NONE;
 }
 
 //==================================================================
@@ -284,7 +284,7 @@ u32 GPOWER_Calc_LargeAmountHappen(void)
  *
  * @param   party		手持ちパーティへのポインタ
  *
- * @retval  s32		回復したポケモンの手持ち位置(パワーが発動しなかった場合は0xff)
+ * @retval  s32		回復したポケモンの手持ち位置(パワーが発動しなかった場合はGPOWER_OCCUR_NONE)
  */
 //==================================================================
 s32 GPOWER_Calc_HPRestore(POKEPARTY *party)
@@ -311,7 +311,7 @@ s32 GPOWER_Calc_HPRestore(POKEPARTY *party)
     GPowerSys.occur_power[GPOWER_TYPE_HP_RESTORE] = GPOWER_ID_NULL; //効果は一度なのでクリア
     return pos;
   }
-  return 0xff;
+  return GPOWER_OCCUR_NONE;
 }
 
 //==================================================================
@@ -320,7 +320,7 @@ s32 GPOWER_Calc_HPRestore(POKEPARTY *party)
  *
  * @param   party		手持ちパーティへのポインタ
  *
- * @retval  s32		回復したポケモンの手持ち位置(パワーが発動しなかった場合は0xff)
+ * @retval  s32		回復したポケモンの手持ち位置(パワーが発動しなかった場合はGPOWER_OCCUR_NONE)
  */
 //==================================================================
 s32 GPOWER_Calc_PPRestore(POKEPARTY *party)
@@ -328,7 +328,6 @@ s32 GPOWER_Calc_PPRestore(POKEPARTY *party)
   int pos;
   POKEMON_PARAM *pp;
   
-  //※check　先頭が既にHPいっぱいの場合は2匹目？
   if(GPowerSys.occur_power[GPOWER_TYPE_PP_RESTORE] != GPOWER_ID_NULL){
     pos = PokeParty_GetMemberTopIdxBattleEnable( party );
     pp = PokeParty_GetMemberPointer(party, pos);
@@ -357,7 +356,7 @@ s32 GPOWER_Calc_PPRestore(POKEPARTY *party)
     GPowerSys.occur_power[GPOWER_TYPE_PP_RESTORE] = GPOWER_ID_NULL; //効果は一度なのでクリア
     return pos;
   }
-  return 0xff;
+  return GPOWER_OCCUR_NONE;
 }
 
 //==================================================================
