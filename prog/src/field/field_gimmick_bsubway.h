@@ -11,6 +11,8 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
+#include "fldeff_btrain.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -25,3 +27,6 @@
 extern void BSUBWAY_GIMMICK_Setup( FIELDMAP_WORK *fieldmap );
 extern void BSUBWAY_GIMMICK_End( FIELDMAP_WORK *fieldmap );
 extern void BSUBWAY_GIMMICK_Move( FIELDMAP_WORK *fieldmap );
+
+extern void BSUBWAY_GIMMICK_SetTrain(
+    FIELDMAP_WORK *fieldmap, FLDEFF_BTRAIN_TYPE type, const VecFx32 *pos );
