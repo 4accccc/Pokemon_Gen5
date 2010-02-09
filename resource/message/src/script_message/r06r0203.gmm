@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsushima" host="W00181" date="2010-02-09T15:42:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,12 +235,12 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="233"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="81">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="247"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="223"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -292,11 +292,87 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d06r0203_legend2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●ポルトス初期位置（GRIDX=7 GRIDZ=4）
+
+・話し掛けたとき
+・戦闘開始前</comment>
+		<attribute name="キャラ指定">伝説ポルトス</attribute>
+		<language name="JPN" width="256">ぐるるおおーっ！</language>
+		<language name="JPN_KANJI" width="256">ぐるるおおーっ！</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_01">
+		<comment>●ポルトスに勝利した場合
+・ポルトス戦闘後、事情通老人が歩み寄る。
+・主人公の左隣まで進む。
+（GRIDX=5 GRIDZ=4）
+
+
+・セリフ後、msg_d06r0203_guide_03へ。</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">おぬしが　ポケモンと　こころを　かよわせ
+はっきした　つよさは▽
+ポルトスにも　つうじたじゃろう▼
+また　いつか…　おぬしと　たたかうため
+ここに　もどってくるかも　しれんのう▼</language>
+		<language name="JPN_KANJI" width="256">おぬしが　ポケモンと　心を　通わせて
+発揮した　強さは▽
+ポルトスにも　通じたじゃろう▼
+また　いつか…　おぬしと　戦うため
+ここに　戻ってくるかも　しれんのう▼</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_02">
+		<comment>●ポルトスを捕獲した場合
+・戦闘終了後、事情通老人が歩み寄る。
+
+・セリフ後、msg_d06r0203_guide_03へ。</comment>
+		<language name="JPN" width="256">わしの　めに　くるいは　なかったのう
+ポルトスは　おぬしの　ちからを　みとめ▽
+ともに　いきることを　のぞんだようじゃ▼</language>
+		<language name="JPN_KANJI" width="256">わしの　目に　くるいは　なかったのう
+ポルトスは　おぬしの　力を　認め▽
+ともに　生きることを　望んだようじゃ▼</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_03">
+		<comment>・喋ったあと、来た道を戻っていく。
+
+●アトス（D09R1501）とアラミス（D02R0201）を
+塞ぐ岩が外れます。</comment>
+		<language name="JPN" width="256">ポルトスが　おぬしと　たたかったことは
+すぐに　アトスと　アラミスにも▽
+つたわる　はずじゃ▼
+つよい　きずなで　むすばれた　３ひきじゃ
+あとの　２ひきも　おぬしと　であい▽
+おぬしの　ちから…　おぬしの　こころを▽
+みきわめたいと　おもっている　ことじゃろう▼
+ひとが　ちかよらないように　するための
+しょうがいぶつは　はずされるじゃろうな▼</language>
+		<language name="JPN_KANJI" width="256">ポルトスが　おぬしと　戦ったことは
+すぐに　アトスと　アラミスにも▽
+伝わる　はずじゃ▼
+強い　きずなで　結ばれた　3匹じゃ
+あとの　２匹も　おぬしと　出会い▽
+おぬしの　力…　おぬしの　心を▽
+見極めたいと　思っている　ことじゃろう▼
+人が　近寄らないように　するための
+障害物は　はずされるじゃろうな▼</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_04">
+		<comment>・数歩、歩いたところで主人公を見て、セリフ。
+
+・喋り終えると、帰っていく。</comment>
+		<language name="JPN" width="256">アトスと　アラミスを　さがすか　どうかは
+おぬし　しだいじゃがな…▼
+かれらは　まちがいなく
+おぬしを　まっているぞ…▼</language>
+		<language name="JPN_KANJI" width="256">アトスと　アラミスを　探すか　どうかは
+おぬし　しだいじゃがな…▼
+かれらは　間違いなく
+おぬしを　待っているぞ…▼</language>
 	</row>
 
 	<flowchart-group-list>

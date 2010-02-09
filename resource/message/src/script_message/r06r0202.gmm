@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsushima" host="W00181" date="2010-02-09T10:18:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,12 +235,12 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="236"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="87">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="239"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="227"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -292,11 +292,228 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d06r0202_guide_01">
+		<comment>・pos起動（GRIDX=17~19 GRIDZ=15）
+※r0203へ通じる階段の手前。
+
+※老人の初期配置はGRIDX=19 GRIDZ=13
+
+・主人公に歩み寄り、1グリッド押し戻す。
+・その後、喋り始める。
+
+・はい／いいえ選択肢</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">おぬし…　まだ　こどもじゃと　いうのに
+なかなかの　うでを　もっているようじゃ▼
+おぬしなら　もしかしたら…
+ううむ…▽
+ありえるかも　しれんのう…▼
+どうじゃ？
+じじいの　むかしばなしに▽
+みみを　かたむけてみんか？</language>
+		<language name="JPN_KANJI" width="256">おぬし…　まだ　子供じゃと　いうのに
+なかなかの　腕を　持っているようじゃ▼
+おぬしなら　もしかしたら…
+ううむ…▽
+ありえるかも　しれんのう…▼
+どうじゃ？
+じじいの　昔話に▽
+耳を　傾けてみんか？</language>
+	</row>
+
+	<row id="msg_d06r0202_guide_02">
+		<comment>●「はい」
+
+・戦争と大火事と伝説ポケモンの昔話　その１
+
+・喋り終えると、間を置くために、1グリッド右へ移動。</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">ひとと　ポケモンが　べつべつの　せかいで
+くらしていた　おおむかしの　はなしじゃ▼
+ひとが　はじめた　おおきな　いくさが
+げんいんで　ポケモンたちの　くらす　もりが▽
+はげしい　ほのおに　つつまれたのじゃ▼
+ポケモンたちは　けむりを　さけて
+ほのおの　ねっきから　のがれようとしたが▽
+あたり　いちめん　ひのうみ▽
+ぜったいぜつめいの　ピンチに　おちいった▼
+そこに　あらわれたのが　でんせつの　３ひき
+アトス▽
+ポルトス▽
+アラミス　じゃった▼
+ポルトスは　もちまえの　かいりきで
+にげみちを　ふさぐ　おおいわを　こわした▼
+アラミスは　すばやい　みのこなしで
+ひのこから　ポケモンを　まもった▼
+そして　アトスは　つよい　リーダーシップで
+おびえる　ポケモンたちを　はげまし▽
+ほのおから　ポケモンたちを　すくったのじゃ▼</language>
+		<language name="JPN_KANJI" width="256">人と　ポケモンが　別々の　世界で
+暮らしていた　大昔の　話じゃ▼
+人が　始めた　大きな　戦が
+原因で　ポケモンたちの　暮らす　森が▽
+激しい　炎に　包まれたのじゃ▼
+ポケモンたちは　煙を　避けて
+炎の　熱気から　逃れようとしたが▽
+あたり　一面　火の海▽
+絶体絶命の　ピンチに　陥った▼
+そこに　現れたのが　伝説の　３匹
+アトス▽
+ポルトス▽
+アラミス　じゃった▼
+ポルトスは　持ち前の　怪力で
+逃げ道を　ふさぐ　大岩を　壊した▼
+アラミスは　すばやい　身のこなしで
+火の粉から　ポケモンを　守った▼
+そして　アトスは　強い　リーダーシップで
+おびえる　ポケモンたちを　はげまし▽
+炎から　ポケモンたちを　救ったのじゃ▼</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_03">
+		<comment>・戦争と大火事と伝説ポケモンの昔話　その２
+
+・正面を向いてから、セリフ。
+
+</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">ポケモンたちを　すくいだした　３ひきは
+いくさを　つづける　れんちゅうを▽
+あっとうてきな　ちからで　けちらした▼
+３ひきの　ちからに　おそれ　おののいた
+ひとびとは　いくさを　やめたのじゃ▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンたちを　救い出した　３匹は
+戦を　続ける　連中を▽
+圧倒的な　力で　けちらした▼
+３匹の　力に　おそれ　おののいた
+人々は　戦を　ようやく　やめたのじゃ▼</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_04">
+		<comment>・戦争と大火事と伝説ポケモンの昔話　その３
+
+・再び主人公の正面に戻ってきてから、セリフ。
+</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">アトス　ポルトス　アラミスは
+ひとが　たたかいを　やめない　かぎり▽
+ポケモンたちは　へいわに　くらすことが▽
+できない　ことを　しっておったのじゃろう▼
+ひとの　おこないに　よって
+おおくの　ポケモンたちが　しんでしまうと▽
+いのちの　バランスが　くずれてしまい▽
+もっと　おおくの　いのちが　うしなわれる…▼
+でんせつの　３ひきは　それを　とめたのじゃ▼</language>
+		<language name="JPN_KANJI" width="256">アトス　ポルトス　アラミスは
+人が　戦いを　やめない　かぎりは▽
+ポケモンたちは　平和に　暮らすことが▽
+できない　ことを　知っておったのじゃろう▼
+人の　おこないに　よって
+多くの　ポケモンたちが　死んでしまうと▽
+命の　バランスが　崩れてしまい▽
+もっと　多くの　命が　失われる…▼
+伝説の　３匹は　それを　止めたのじゃ▼</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_05">
+		<comment>・戦争と大火事と伝説ポケモンの昔話　その４
+
+・段差を上り、背中を向けたまま、セリフ。</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">ひとの　いくさが　おわると
+ポケモンの　いのちを　おびやかす▽
+ひとを　きらった　３ひきは▽
+どこかへ　すがたを　けしたのじゃ…▼</language>
+		<language name="JPN_KANJI" width="256">人の　戦が　終わると
+ポケモンの　命を　おびやかす▽
+人を　嫌った　３匹は▽
+どこかへ　姿を　消したのじゃ…▼</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_06">
+		<comment>・戦争と大火事と伝説ポケモンの昔話　その５
+
+・正面を向いて、セリフ。</comment>
+		<language name="JPN" width="256">なんびゃくねんもの　あいだ
+どこへ　きえたのか　なぞじゃったが▽
+つきとめることが　できたのじゃ！▼
+もう　わかるじゃろう…？▼
+そう　この　どうくつの　おくじゃ！▼
+この　さきに　すすめば
+アトス　ポルトス　アラミスの　だれかが▽
+おぬしを　でむかえることじゃろう…！</language>
+		<language name="JPN_KANJI" width="256">何百年もの　あいだ
+どこへ　消えたのか　なぞじゃったが▽
+つきとめることが　できたのじゃ！▼
+もう　わかるじゃろう…？▼
+そう　この　洞くつの　奥じゃ！▼
+この　さきに　進めば
+アトス　ポルトス　アラミスの　だれかが▽
+おぬしを　出迎えることじゃろう…！</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_07">
+		<comment>・戦争と大火事と伝説ポケモンの昔話　その６
+
+・段差の途中で、セリフ。</comment>
+		<language name="JPN" width="256">しかし　かれらは　ひとと　あわずに
+ひっそりと　くらしてきた…▼
+ひとと　ポケモンが　おたがいに　たすけあい
+いっしょに　くらす　いまの　せかいを▽
+かれらは　しらないでいるんじゃ▼</language>
+		<language name="JPN_KANJI" width="256">しかし　かれらは　人と　会わずに
+ひっそりと　暮らしてきた…▼
+人と　ポケモンが　おたがいに　助け合い
+一緒に　暮らす　いまの　世界を▽
+かれらは　知らないでいるんじゃ▼</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_08">
+		<comment>・戦争と大火事と伝説ポケモンの昔話　その７
+
+・もう1歩進み、主人公の前に立ち、セリフ。</comment>
+		<language name="JPN" width="256">おぬしなら…
+ひとと　ポケモンが　しんらい　しあい▽
+ともに　いきている　すがたを▽
+かれらに　みせることが　できるじゃろう▼
+ひとを　みなおし　みとめれば
+かれらも　ひとと　ともに　いきることを▽
+えらぶじゃろう…▼</language>
+		<language name="JPN_KANJI" width="256">おぬしなら…
+人と　ポケモンが　信頼しあい▽
+ともに　生きている　姿を▽
+かれらに　見せることが　できるじゃろう▼
+人を　見直し　認めれば
+かれらも　人と　ともに　生きることを▽
+選ぶじゃろう…▼</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_09">
+		<comment>・繰り返しのセリフ</comment>
+		<language name="JPN" width="256">ひとと　ポケモン　だけではない…
+いきものは　おたがいに　みとめあい▽
+しんらいしあって　いきていくことが▽
+いちばん　なんじゃ…</language>
+		<language name="JPN_KANJI" width="256">人と　ポケモン　だけではない…
+生き物は　おたがいに　認め合い▽
+信頼しあって　生きていくことが▽
+一番なんじゃ…</language>
+	</row>
+
+	<row id="msg_d06r0203_guide_10">
+		<comment>●「いいえ」のセリフ
+
+・喋り終えると、初期グリッドへ戻る。</comment>
+		<language name="JPN" width="256">としよりの　はなしを
+すなおに　きけないような　わかものには▽
+なにも　きたい　できないのう…▼
+おぬしの　くる　ばしょではない！
+たちさるのじゃ！▼</language>
+		<language name="JPN_KANJI" width="256">年寄りの　話を
+素直に　聞けないような　若者には▽
+なにも　期待できないのう…▼
+おぬしの　来る　場所ではない！
+立ち去るのじゃ！▼</language>
 	</row>
 
 	<flowchart-group-list>
