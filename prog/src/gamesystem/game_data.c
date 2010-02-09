@@ -43,6 +43,7 @@
 #include "savedata/shortcut.h"    //SHORTCUT_SetRegister
 #include "savedata/wifilist.h"
 #include "gamesystem/comm_player_support.h"
+#include "gamesystem/pm_weather.h"
 #include "net/wih_dwc.h"
 
 #include "field/fldmmdl.h"      //MMDLSYS

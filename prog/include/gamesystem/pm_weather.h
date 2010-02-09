@@ -26,6 +26,7 @@ extern "C"{
 //-----------------------------------------------------------------------------
 // ¡‚ÌWeatherNo‚ğæ“¾
 extern u32 GAMEDATA_GetWeatherNo( const GAMEDATA* cp_data );
+extern void GAMEDATA_SetWeatherNo( GAMEDATA* p_data, u8 weather_no );
 
 
 // ¡‚Ìw’èZONE‚Ì“V‹C‚ğæ“¾‚·‚é
