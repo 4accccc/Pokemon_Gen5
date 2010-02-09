@@ -100,7 +100,7 @@ def GetZoneID( zoneName )
 
   # w’è‚³‚ê‚½ƒ][ƒ“ID‚ğŒŸõ
   file.each do |line|
-		if line.index(/#define.*#{zoneName}\s*\((\d*)\)\s*/) != nil then 
+		if line.index(/#define.*#{zoneName}\s*\(\s*(\d*)\)\s*/) != nil then 
 			return $1.to_i
 		end
   end
