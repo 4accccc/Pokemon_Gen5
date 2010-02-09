@@ -27,6 +27,8 @@
 #include "scrcmd_encount.h"
 #include "effect_encount.h"
 
+#include "event_field_fade.h" //EVENT_FieldFadeIn_Black
+
 //--------------------------------------------------------------
 /**
  * ñÏê∂êÌì¨åƒÇ—èoÇµ
@@ -68,6 +70,14 @@ VMCMD_RESULT EvCmdWildBattleSet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWildWin( VMHANDLE * core, void *wk )
 {
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  GMEVENT* fade_event;
+  fade_event = EVENT_FieldFadeIn_Black(gsys, fieldmap, FIELD_FADE_WAIT);
+  SCRIPT_CallEvent( sc, fade_event );
   return VMCMD_RESULT_SUSPEND;
 }
 

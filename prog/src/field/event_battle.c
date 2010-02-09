@@ -360,6 +360,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq) ++;
     break;
   case 8:
+    if ( bew->is_sub_event == FALSE )
     {
       GMEVENT* fade_event;
       fade_event = EVENT_FieldFadeIn_Black(gsys, fieldmap, FIELD_FADE_WAIT);

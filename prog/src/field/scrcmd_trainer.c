@@ -35,6 +35,7 @@
 
 #include "field_event_check.h"
 
+#include "event_field_fade.h" //EVENT_FieldFadeIn_Black
 #if 0
 #include "battle/battle_common.h"	//↓インクルードに必要
 #include "ev_trainer.h"				//EvTrainer
@@ -540,6 +541,14 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTrainerWin( VMHANDLE * core, void *wk )
 {
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  GMEVENT* fade_event;
+  fade_event = EVENT_FieldFadeIn_Black(gsys, fieldmap, FIELD_FADE_WAIT);
+  SCRIPT_CallEvent( sc, fade_event );
   return VMCMD_RESULT_SUSPEND;
 }
 
