@@ -37,7 +37,7 @@
 #pragma mark [> define
 
 #define COMM_TVT_PAL_ANM_NUM (10)   //パレット10本使う
-#define COMM_TVT_PAL_ANM_SPD (0x100)
+#define COMM_TVT_PAL_ANM_SPD (0x200)
 
 #define COMM_TVT_NAME_WIDTH (12)
 //======================================================================

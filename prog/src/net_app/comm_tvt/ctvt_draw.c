@@ -41,10 +41,11 @@
 #define CTVT_DRAW_RETURN_X (224)
 
 #define CTVT_DRAW_EXP_ICON_X      (56)
-#define CTVT_DRAW_EXP_PEN_Y       (116)
-#define CTVT_DRAW_EXP_SPOITO_Y    (136)
-#define CTVT_DRAW_EXP_KESHIGOMU_Y (156)
-#define CTVT_DRAW_EXP_RETURN_Y    (176-12)
+#define CTVT_DRAW_EXP_PEN_Y       ( 72)
+#define CTVT_DRAW_EXP_SPOITO_Y    ( 92)
+#define CTVT_DRAW_EXP_KESHIGOMU_Y (112)
+#define CTVT_DRAW_EXP_STAMP_Y     (132)
+#define CTVT_DRAW_EXP_RETURN_Y    (152-12)
 
 #define CTVT_DRAW_PEN_SIZE_X (CTVT_DRAW_PEN_X)
 #define CTVT_DRAW_PEN_SIZE_Y (192-32)
@@ -78,6 +79,7 @@ typedef enum
   CDEX_PEN,
   CDEX_SPOITO,
   CDEX_KESHIGOMU,
+  CDEX_STAMP,
   CDEX_RETURN,
 
   CDEX_MAX,
@@ -142,8 +144,11 @@ struct _CTVT_DRAW_WORK
 
   
   BOOL isUpdateInfo;    //上画面用
+  BOOL isUpdateInfoEdit;//上画面用の更新がEditモードか？
+  BOOL isUpdateTitle;    //上画面用
   BOOL isUpdateMsgWin;  //下画面用
   GFL_BMPWIN *infoWin;  //上画面用
+  GFL_BMPWIN *titleWin; //上画面用
   GFL_BMPWIN *msgWin;   //下画面用
   
   //セル関係
@@ -322,6 +327,14 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
               &cellInitData ,CLSYS_DRAW_SUB , heapId );
     
+    cellInitData.pos_y = CTVT_DRAW_EXP_STAMP_Y;
+    cellInitData.anmseq = CTOAS_STAMP;
+    drawWork->clwkExplainButton[CDED_STAMP] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    
     cellInitData.pos_x = CTVT_DRAW_EXP_ICON_X-12;
     cellInitData.pos_y = CTVT_DRAW_EXP_RETURN_Y;
     cellInitData.anmseq = APP_COMMON_BARICON_RETURN;
@@ -361,20 +374,31 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   }
   CTVT_DRAW_UpdateEditButton( work , drawWork );
   
-  drawWork->infoWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
-                                        2 , 13 , 28 , 10 ,
-                                        CTVT_PAL_BG_SUB_FONT ,
-                                        GFL_BMP_CHRAREA_GET_B );
-  
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 0x0 );
-  GFL_BMPWIN_MakeScreen( drawWork->infoWin );
-  GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
+  drawWork->infoWin = NULL;
 
   //MakeScreenは文字表示の時
   drawWork->msgWin = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
                                         1 , 1 , 30 , 4 ,
                                         CTVT_PAL_BG_SUB_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
+  
+  {
+    GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
+    GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    STRBUF *str;
+    drawWork->titleWin = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                          3 , 1 , 28 , 2 ,
+                                          CTVT_PAL_BG_SUB_FONT ,
+                                          GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->titleWin) , 0x0 );
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_012 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->titleWin ) , 
+            0 , 0 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
+    GFL_STR_DeleteBuffer( str );
+    drawWork->isUpdateTitle = TRUE;
+  }
+  
   
   drawWork->state = CDS_FADEIN;
   drawWork->barScroll = 24;
@@ -412,8 +436,11 @@ void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , heapId );
   GFL_NET_ReloadIcon();
 
+  BmpWinFrame_Clear( drawWork->infoWin , WINDOW_TRANS_ON );
   GFL_BMPWIN_ClearTransWindow( drawWork->infoWin );
   GFL_BMPWIN_Delete( drawWork->infoWin );
+  GFL_BMPWIN_ClearTransWindow( drawWork->titleWin );
+  GFL_BMPWIN_Delete( drawWork->titleWin );
   GFL_BMPWIN_ClearTransWindow( drawWork->msgWin );
   GFL_BMPWIN_Delete( drawWork->msgWin );
   
@@ -593,7 +620,28 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
     if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin )) == FALSE )
     {
       GFL_BMPWIN_TransVramCharacter( drawWork->infoWin );
+      GFL_BMPWIN_MakeScreen( drawWork->infoWin );
+      GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
       drawWork->isUpdateInfo = FALSE;
+      
+      if( drawWork->isUpdateInfoEdit == TRUE )
+      {
+        u8 i;
+        for( i=0;i<CDEX_MAX;i++ )
+        {
+          GFL_CLACT_WK_SetDrawEnable( drawWork->clwkExplainButton[i] , TRUE );
+        }
+      }
+    }
+  }
+  
+  if( drawWork->isUpdateTitle == TRUE )
+  {
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( drawWork->titleWin )) == FALSE )
+    {
+      GFL_BMPWIN_TransVramCharacter( drawWork->titleWin );
+      drawWork->isUpdateTitle = FALSE;
     }
   }
   
@@ -1087,68 +1135,92 @@ static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
   GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
   PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
 
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 0x0 );
+  if( drawWork->infoWin != NULL )
+  {
+    PRINTSYS_QUE_Clear( printQue );
+    BmpWinFrame_Clear( drawWork->infoWin , WINDOW_TRANS_ON );
+    GFL_BMPWIN_ClearTransWindow( drawWork->infoWin );
+    GFL_BMPWIN_Delete( drawWork->infoWin );
+  }
 
+  drawWork->isUpdateInfoEdit = isEditMode;
   if( isEditMode == TRUE )
   {
     u8 i;
-    STRBUF *str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_007 );
+    STRBUF *str;
+
+    drawWork->infoWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
+                                      2 ,  8 , 28 , 13 ,
+                                      CTVT_PAL_BG_SUB_FONT ,
+                                      GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 0xF );
+    
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_007 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
-            CTVT_DRAW_INFO_EDIT_X , 4 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+            CTVT_DRAW_INFO_EDIT_X , 4 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
     
     str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_008 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
-            CTVT_DRAW_INFO_EDIT_X , 24 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+            CTVT_DRAW_INFO_EDIT_X , 24 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
     
     str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_009 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
-            CTVT_DRAW_INFO_EDIT_X , 44 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+            CTVT_DRAW_INFO_EDIT_X , 44 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
+    GFL_STR_DeleteBuffer( str );
+    
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_011 );
+    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
+            CTVT_DRAW_INFO_EDIT_X , 64 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
     
     str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_010 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
-            CTVT_DRAW_INFO_EDIT_X , 64 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+            CTVT_DRAW_INFO_EDIT_X , 84 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
     
-    for( i=0;i<CDEX_MAX;i++ )
-    {
-      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkExplainButton[i] , TRUE );
-    }
   }
   else
   {
     u8 i;
 
-    STRBUF *str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_001 );
+    STRBUF *str;
+    
+    drawWork->infoWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
+                                      2 , 16 , 28 ,  6 ,
+                                      CTVT_PAL_BG_SUB_FONT ,
+                                      GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 0xF );
+
+    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_001 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
-            CTVT_DRAW_INFO_DRAW_X1 , 16 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+            CTVT_DRAW_INFO_DRAW_X1 , 0 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
     
     str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_002 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
-            CTVT_DRAW_INFO_DRAW_X1 , 32 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+            CTVT_DRAW_INFO_DRAW_X1 , 16 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
 
     str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_003 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
-            CTVT_DRAW_INFO_DRAW_X1 , 48 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+            CTVT_DRAW_INFO_DRAW_X1 , 32 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
 
     str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_004 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
-            CTVT_DRAW_INFO_DRAW_X2 , 16 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+            CTVT_DRAW_INFO_DRAW_X2 , 0 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
 
     str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_005 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
-            CTVT_DRAW_INFO_DRAW_X2 , 32 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+            CTVT_DRAW_INFO_DRAW_X2 , 16 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
 
     str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_006 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
-            CTVT_DRAW_INFO_DRAW_X2 , 48 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+            CTVT_DRAW_INFO_DRAW_X2 , 32 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
 
     for( i=0;i<CDEX_MAX;i++ )
@@ -1156,6 +1228,8 @@ static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
       GFL_CLACT_WK_SetDrawEnable( drawWork->clwkExplainButton[i] , FALSE );
     }
   }
+  BmpWinFrame_Write( drawWork->infoWin , WINDOW_TRANS_OFF , 
+                      CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME );
   drawWork->isUpdateInfo = TRUE;
 }
 

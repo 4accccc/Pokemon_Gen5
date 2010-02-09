@@ -44,13 +44,12 @@
 #define CTVT_TALK_PAUSE_X (192)
 #define CTVT_TALK_RETURN_X (232)
 
-//形が矩形で括れないので
 #define CTVT_TALK_REC_BUTTON_LEFT (7)
 #define CTVT_TALK_REC_BUTTON_TOP  (12)
 #define CTVT_TALK_REC_BUTTON_WIDTH (18)
 #define CTVT_TALK_REC_BUTTON_HEIGHT (9)
 
-#define CTVT_TALK_WAVE_DRAW_WIDTH   (14)
+#define CTVT_TALK_WAVE_DRAW_WIDTH   (16)
 #define CTVT_TALK_WAVE_DRAW_HEIGHT  (8)
 
 //======================================================================
@@ -246,7 +245,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
                     CTVT_FRAME_SUB_MISC ,  0 , 0, FALSE , heapId );
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
-                    CTVT_FRAME_SUB_BAR , 0 , 0, FALSE , heapId );
+                    CTVT_FRAME_SUB_BAR , 0 , 0x5000, FALSE , heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_cur_bg_NSCR , 
                     CTVT_FRAME_SUB_BAR ,  0 , 0, FALSE , heapId );
 
@@ -326,7 +325,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   talkWork->befRecButtonState = CRBT_MAX;
 
   talkWork->waveWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
-                                        9 , 3 , 
+                                        8 , 3 , 
                                         CTVT_TALK_WAVE_DRAW_WIDTH , 
                                         CTVT_TALK_WAVE_DRAW_HEIGHT ,
                                         CTVT_PAL_BG_SUB_FONT ,
@@ -784,7 +783,7 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
         talkWork->reqSendWave = FALSE;
         ENC_ADPCM_ResetParam();
 
-        talkWork->wavePosX = 0;
+        talkWork->wavePosX = 3;
         talkWork->wavePosY = CTVT_TALK_WAVE_DRAW_HEIGHT*8/2;
         GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0x0 );
       }
@@ -805,16 +804,33 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     {
       const u32 recSize = CTVT_MIC_GetRecSize( talkWork->micWork );
       void* recBuffer = CTVT_MIC_GetRecBuffer( talkWork->micWork );
-      const u32 waveLen = recSize * ((CTVT_TALK_WAVE_DRAW_WIDTH*8)) / CTVT_SEND_WAVE_SIZE;
+      const u32 waveLen = recSize * ((CTVT_TALK_WAVE_DRAW_WIDTH*8)-5) / CTVT_SEND_WAVE_SIZE;
       GFL_BMP_DATA*	bmpData = GFL_BMPWIN_GetBmp( talkWork->waveWin );
       u8 *charaBuf = GFL_BMP_GetCharacterAdrs( bmpData );
       BOOL isUpdate = FALSE;
       while( talkWork->wavePosX < waveLen )
       {
+        //高さ補正用
+        static const u8 maxHeight[9] = {3,7,11,14,17,21,24,32,32};
         const u32 bufOfs = (talkWork->wavePosX+1) * CTVT_SEND_WAVE_SIZE / (CTVT_TALK_WAVE_DRAW_WIDTH*8) /2; //u16の配列で取るから/2
         const s16 *buf = recBuffer;
         const s16 vol = buf[bufOfs];
-        const u32 posY = (vol+0x8000)*(CTVT_TALK_WAVE_DRAW_HEIGHT*8)/0x10000;
+        u32 posY = (vol+0x8000)*(CTVT_TALK_WAVE_DRAW_HEIGHT*8)/0x10000;
+        if( talkWork->wavePosX < 3+8 )
+        {
+          if( posY < (CTVT_TALK_WAVE_DRAW_HEIGHT*4) - maxHeight[talkWork->wavePosX-3] )
+          {
+            posY = (CTVT_TALK_WAVE_DRAW_HEIGHT*4) - maxHeight[talkWork->wavePosX-3];
+          }
+        }
+        if( talkWork->wavePosX > (CTVT_TALK_WAVE_DRAW_WIDTH*8)-6-8 )
+        {
+          const u8 idx = (CTVT_TALK_WAVE_DRAW_WIDTH*8)-6 - talkWork->wavePosX;
+          if( posY < (CTVT_TALK_WAVE_DRAW_HEIGHT*4) - maxHeight[idx] )
+          {
+            posY = (CTVT_TALK_WAVE_DRAW_HEIGHT*4) - maxHeight[idx];
+          }
+        }
         CTVT_TALK_DrawLine( work , talkWork , charaBuf , 
                             talkWork->wavePosX , talkWork->wavePosY ,
                             talkWork->wavePosX +1 , posY );
