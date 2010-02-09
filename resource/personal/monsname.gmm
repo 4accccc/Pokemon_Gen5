@@ -2344,15 +2344,15 @@
 	</row>
 
 	<row id="MONSNAME_497">
-		<language name="JPN" width="216">ホットン</language>
+		<language name="JPN" width="216">ポカブ</language>
 	</row>
 
 	<row id="MONSNAME_498">
-		<language name="JPN" width="216">ヒートン</language>
+		<language name="JPN" width="216">チャオブー</language>
 	</row>
 
 	<row id="MONSNAME_499">
-		<language name="JPN" width="216">ヤキブート</language>
+		<language name="JPN" width="216">エンブオー</language>
 	</row>
 
 	<row id="MONSNAME_500">
@@ -2504,23 +2504,23 @@
 	</row>
 
 	<row id="MONSNAME_537">
-		<language name="JPN" width="216">タニス</language>
+		<language name="JPN" width="216">オタマロ</language>
 	</row>
 
 	<row id="MONSNAME_538">
-		<language name="JPN" width="216">タニーノ</language>
+		<language name="JPN" width="216">ガマガル</language>
 	</row>
 
 	<row id="MONSNAME_539">
-		<language name="JPN" width="216">タニキング</language>
+		<language name="JPN" width="216">ガマゲロゲ</language>
 	</row>
 
 	<row id="MONSNAME_540">
-		<language name="JPN" width="216">セイヤー</language>
+		<language name="JPN" width="216">チェストー</language>
 	</row>
 
 	<row id="MONSNAME_541">
-		<language name="JPN" width="216">チェストー</language>
+		<language name="JPN" width="216">セイヤー</language>
 	</row>
 
 	<row id="MONSNAME_542">
@@ -2556,11 +2556,11 @@
 	</row>
 
 	<row id="MONSNAME_550">
-		<language name="JPN" width="216">ヒダルマ</language>
+		<language name="JPN" width="216">ダルマッカ</language>
 	</row>
 
 	<row id="MONSNAME_551">
-		<language name="JPN" width="216">ゴリダルマ</language>
+		<language name="JPN" width="216">ヒヒダルマ</language>
 	</row>
 
 	<row id="MONSNAME_552">
@@ -2576,7 +2576,7 @@
 	</row>
 
 	<row id="MONSNAME_555">
-		<language name="JPN" width="216">サボッテン</language>
+		<language name="JPN" width="216">マラカッチ</language>
 	</row>
 
 	<row id="MONSNAME_556">
@@ -2616,7 +2616,7 @@
 	</row>
 
 	<row id="MONSNAME_565">
-		<language name="JPN" width="216">ムカシドリ</language>
+		<language name="JPN" width="216">アーケン</language>
 	</row>
 
 	<row id="MONSNAME_566">
@@ -2640,207 +2640,207 @@
 	</row>
 
 	<row id="MONSNAME_571">
-		<language name="JPN" width="216">ゴスロ</language>
-	</row>
-
-	<row id="MONSNAME_572">
-		<language name="JPN" width="216">ゴスロス</language>
-	</row>
-
-	<row id="MONSNAME_573">
-		<language name="JPN" width="216">ゴスローゼ</language>
-	</row>
-
-	<row id="MONSNAME_574">
-		<language name="JPN" width="216">ユニラン</language>
-	</row>
-
-	<row id="MONSNAME_575">
-		<language name="JPN" width="216">ダブラン</language>
-	</row>
-
-	<row id="MONSNAME_576">
-		<language name="JPN" width="216">ランクルス</language>
-	</row>
-
-	<row id="MONSNAME_577">
-		<language name="JPN" width="216">バチュル</language>
-	</row>
-
-	<row id="MONSNAME_578">
-		<language name="JPN" width="216">デンチュラ</language>
-	</row>
-
-	<row id="MONSNAME_579">
-		<language name="JPN" width="216">トビッチュ</language>
-	</row>
-
-	<row id="MONSNAME_580">
-		<language name="JPN" width="216">シーバー</language>
-	</row>
-
-	<row id="MONSNAME_581">
-		<language name="JPN" width="216">シーイング</language>
-	</row>
-
-	<row id="MONSNAME_582">
-		<language name="JPN" width="216">ツルリ</language>
-	</row>
-
-	<row id="MONSNAME_583">
-		<language name="JPN" width="216">ツルット</language>
-	</row>
-
-	<row id="MONSNAME_584">
-		<language name="JPN" width="216">ツルツルダ</language>
-	</row>
-
-	<row id="MONSNAME_585">
-		<language name="JPN" width="216">バンビーナ</language>
-	</row>
-
-	<row id="MONSNAME_586">
-		<language name="JPN" width="216">シキジカ</language>
-	</row>
-
-	<row id="MONSNAME_587">
-		<language name="JPN" width="216">カブリン</language>
-	</row>
-
-	<row id="MONSNAME_588">
-		<language name="JPN" width="216">カブリオン</language>
-	</row>
-
-	<row id="MONSNAME_589">
-		<language name="JPN" width="216">キノタマ</language>
-	</row>
-
-	<row id="MONSNAME_590">
-		<language name="JPN" width="216">キノボール</language>
-	</row>
-
-	<row id="MONSNAME_591">
-		<language name="JPN" width="216">ハッチェ</language>
-	</row>
-
-	<row id="MONSNAME_592">
-		<language name="JPN" width="216">オノドン</language>
-	</row>
-
-	<row id="MONSNAME_593">
-		<language name="JPN" width="216">オノックス</language>
-	</row>
-
-	<row id="MONSNAME_594">
-		<language name="JPN" width="216">プルンス</language>
-	</row>
-
-	<row id="MONSNAME_595">
-		<language name="JPN" width="216">プルキング</language>
-	</row>
-
-	<row id="MONSNAME_596">
-		<language name="JPN" width="216">ママンボウ</language>
-	</row>
-
-	<row id="MONSNAME_597">
-		<language name="JPN" width="216">エレス</language>
-	</row>
-
-	<row id="MONSNAME_598">
-		<language name="JPN" width="216">エレクス</language>
-	</row>
-
-	<row id="MONSNAME_599">
-		<language name="JPN" width="216">エレキテス</language>
-	</row>
-
-	<row id="MONSNAME_600">
-		<language name="JPN" width="216">テッパン</language>
-	</row>
-
-	<row id="MONSNAME_601">
-		<language name="JPN" width="216">ゴウキーン</language>
-	</row>
-
-	<row id="MONSNAME_602">
-		<language name="JPN" width="216">ギアル</language>
-	</row>
-
-	<row id="MONSNAME_603">
-		<language name="JPN" width="216">ギギアル</language>
-	</row>
-
-	<row id="MONSNAME_604">
-		<language name="JPN" width="216">ギギギアル</language>
-	</row>
-
-	<row id="MONSNAME_605">
-		<language name="JPN" width="216">テレス</language>
-	</row>
-
-	<row id="MONSNAME_606">
-		<language name="JPN" width="216">テレパス</language>
-	</row>
-
-	<row id="MONSNAME_607">
-		<language name="JPN" width="216">ローソクン</language>
-	</row>
-
-	<row id="MONSNAME_608">
-		<language name="JPN" width="216">ランプラー</language>
-	</row>
-
-	<row id="MONSNAME_609">
-		<language name="JPN" width="216">シャンドル</language>
-	</row>
-
-	<row id="MONSNAME_610">
-		<language name="JPN" width="216">ゾロア</language>
-	</row>
-
-	<row id="MONSNAME_611">
-		<language name="JPN" width="216">ゾロアーク</language>
-	</row>
-
-	<row id="MONSNAME_612">
-		<language name="JPN" width="216">シロベア</language>
-	</row>
-
-	<row id="MONSNAME_613">
-		<language name="JPN" width="216">シャーベア</language>
-	</row>
-
-	<row id="MONSNAME_614">
-		<language name="JPN" width="216">アイスゴン</language>
-	</row>
-
-	<row id="MONSNAME_615">
-		<language name="JPN" width="216">カッチュ</language>
-	</row>
-
-	<row id="MONSNAME_616">
-		<language name="JPN" width="216">カチュード</language>
-	</row>
-
-	<row id="MONSNAME_617">
-		<language name="JPN" width="216">オニソコ</language>
-	</row>
-
-	<row id="MONSNAME_618">
-		<language name="JPN" width="216">グラップ</language>
-	</row>
-
-	<row id="MONSNAME_619">
-		<language name="JPN" width="216">グラッパー</language>
-	</row>
-
-	<row id="MONSNAME_620">
 		<language name="JPN" width="216">スンドメー</language>
 	</row>
 
-	<row id="MONSNAME_621">
+	<row id="MONSNAME_572">
 		<language name="JPN" width="216">フルコング</language>
+	</row>
+
+	<row id="MONSNAME_573">
+		<language name="JPN" width="216">ゴスロ</language>
+	</row>
+
+	<row id="MONSNAME_574">
+		<language name="JPN" width="216">ゴスロス</language>
+	</row>
+
+	<row id="MONSNAME_575">
+		<language name="JPN" width="216">ゴスローゼ</language>
+	</row>
+
+	<row id="MONSNAME_576">
+		<language name="JPN" width="216">ユニラン</language>
+	</row>
+
+	<row id="MONSNAME_577">
+		<language name="JPN" width="216">ダブラン</language>
+	</row>
+
+	<row id="MONSNAME_578">
+		<language name="JPN" width="216">ランクルス</language>
+	</row>
+
+	<row id="MONSNAME_579">
+		<language name="JPN" width="216">バチュル</language>
+	</row>
+
+	<row id="MONSNAME_580">
+		<language name="JPN" width="216">デンチュラ</language>
+	</row>
+
+	<row id="MONSNAME_581">
+		<language name="JPN" width="216">トビッチュ</language>
+	</row>
+
+	<row id="MONSNAME_582">
+		<language name="JPN" width="216">シーバー</language>
+	</row>
+
+	<row id="MONSNAME_583">
+		<language name="JPN" width="216">シーイング</language>
+	</row>
+
+	<row id="MONSNAME_584">
+		<language name="JPN" width="216">ツルリ</language>
+	</row>
+
+	<row id="MONSNAME_585">
+		<language name="JPN" width="216">ツルット</language>
+	</row>
+
+	<row id="MONSNAME_586">
+		<language name="JPN" width="216">ツルツルダ</language>
+	</row>
+
+	<row id="MONSNAME_587">
+		<language name="JPN" width="216">バンビーナ</language>
+	</row>
+
+	<row id="MONSNAME_588">
+		<language name="JPN" width="216">シキジカ</language>
+	</row>
+
+	<row id="MONSNAME_589">
+		<language name="JPN" width="216">カブリン</language>
+	</row>
+
+	<row id="MONSNAME_590">
+		<language name="JPN" width="216">カブリオン</language>
+	</row>
+
+	<row id="MONSNAME_591">
+		<language name="JPN" width="216">タマゲタケ</language>
+	</row>
+
+	<row id="MONSNAME_592">
+		<language name="JPN" width="216">モロバレル</language>
+	</row>
+
+	<row id="MONSNAME_593">
+		<language name="JPN" width="216">ハッチェ</language>
+	</row>
+
+	<row id="MONSNAME_594">
+		<language name="JPN" width="216">オノドン</language>
+	</row>
+
+	<row id="MONSNAME_595">
+		<language name="JPN" width="216">オノックス</language>
+	</row>
+
+	<row id="MONSNAME_596">
+		<language name="JPN" width="216">プルンス</language>
+	</row>
+
+	<row id="MONSNAME_597">
+		<language name="JPN" width="216">プルキング</language>
+	</row>
+
+	<row id="MONSNAME_598">
+		<language name="JPN" width="216">ママンボウ</language>
+	</row>
+
+	<row id="MONSNAME_599">
+		<language name="JPN" width="216">エレス</language>
+	</row>
+
+	<row id="MONSNAME_600">
+		<language name="JPN" width="216">エレクス</language>
+	</row>
+
+	<row id="MONSNAME_601">
+		<language name="JPN" width="216">エレキテス</language>
+	</row>
+
+	<row id="MONSNAME_602">
+		<language name="JPN" width="216">テッパン</language>
+	</row>
+
+	<row id="MONSNAME_603">
+		<language name="JPN" width="216">ゴウキーン</language>
+	</row>
+
+	<row id="MONSNAME_604">
+		<language name="JPN" width="216">ギアル</language>
+	</row>
+
+	<row id="MONSNAME_605">
+		<language name="JPN" width="216">ギギアル</language>
+	</row>
+
+	<row id="MONSNAME_606">
+		<language name="JPN" width="216">ギギギアル</language>
+	</row>
+
+	<row id="MONSNAME_607">
+		<language name="JPN" width="216">テレス</language>
+	</row>
+
+	<row id="MONSNAME_608">
+		<language name="JPN" width="216">テレパス</language>
+	</row>
+
+	<row id="MONSNAME_609">
+		<language name="JPN" width="216">ローソクン</language>
+	</row>
+
+	<row id="MONSNAME_610">
+		<language name="JPN" width="216">ランプラー</language>
+	</row>
+
+	<row id="MONSNAME_611">
+		<language name="JPN" width="216">シャンドル</language>
+	</row>
+
+	<row id="MONSNAME_612">
+		<language name="JPN" width="216">ゾロア</language>
+	</row>
+
+	<row id="MONSNAME_613">
+		<language name="JPN" width="216">ゾロアーク</language>
+	</row>
+
+	<row id="MONSNAME_614">
+		<language name="JPN" width="216">シロベア</language>
+	</row>
+
+	<row id="MONSNAME_615">
+		<language name="JPN" width="216">シャーベア</language>
+	</row>
+
+	<row id="MONSNAME_616">
+		<language name="JPN" width="216">アイスゴン</language>
+	</row>
+
+	<row id="MONSNAME_617">
+		<language name="JPN" width="216">カッチュ</language>
+	</row>
+
+	<row id="MONSNAME_618">
+		<language name="JPN" width="216">カチュード</language>
+	</row>
+
+	<row id="MONSNAME_619">
+		<language name="JPN" width="216">オニソコ</language>
+	</row>
+
+	<row id="MONSNAME_620">
+		<language name="JPN" width="216">グラップ</language>
+	</row>
+
+	<row id="MONSNAME_621">
+		<language name="JPN" width="216">グラッパー</language>
 	</row>
 
 	<row id="MONSNAME_622">
@@ -2856,15 +2856,15 @@
 	</row>
 
 	<row id="MONSNAME_625">
-		<language name="JPN" width="216">アウトン</language>
+		<language name="JPN" width="216">バッフロン</language>
 	</row>
 
 	<row id="MONSNAME_626">
-		<language name="JPN" width="216">アウトロン</language>
+		<language name="JPN" width="216">アウトン</language>
 	</row>
 
 	<row id="MONSNAME_627">
-		<language name="JPN" width="216">バッフロー</language>
+		<language name="JPN" width="216">アウトロン</language>
 	</row>
 
 	<row id="MONSNAME_628">
