@@ -1438,13 +1438,16 @@ static void _gearCrossObjDelete(C_GEAR_WORK* pWork)
 {
   int i;
 
-  for(i=0;i < _CLACT_CROSS_MAX ;i++)
-  {
-    GFL_CLACT_WK_Remove(pWork->cellCross[i]);
-    pWork->cellCross[i] = NULL;
+  for(i=0;i < _CLACT_CROSS_MAX ;i++) {
+    if(pWork->cellCross[i]){
+      GFL_CLACT_WK_Remove(pWork->cellCross[i]);
+      pWork->cellCross[i] = NULL;
+    }
   }
+  if(pWork->cellRadar){
     GFL_CLACT_WK_Remove(  pWork->cellRadar);
-  pWork->cellRadar=NULL;
+    pWork->cellRadar=NULL;
+  }
   
 }
 
@@ -1839,7 +1842,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   }
   pWork->bAction = bAction;
 
-  if(state != NULL && GFL_NET_IsInit())
+  if(GFL_NET_IsInit())
   {
     GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
     {
@@ -1908,6 +1911,8 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 
       }
     }
+  }
+  if(state != NULL){
     state(pWork);
   }
   _gearCrossObjMain(pWork);
