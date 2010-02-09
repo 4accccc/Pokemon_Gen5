@@ -17,7 +17,7 @@
 #include "net_app/union/union_beacon_tool.h"
 
 #include "msg/script/msg_c11r0201.h"
-
+#include "fieldmap/fldmmdl_objcode.h"
 
 #define UNDATA_MAX  (UNITEDNATIONS_PEOPLE_MAX)
 
@@ -94,6 +94,12 @@ static void SetData(WIFI_HISTORY *wh, UNSV_WORK* work, const int inCountryCode)
         {
           u8 tr_view;
           tr_view = MyStatus_GetTrainerView( my );
+          if (tr_view > UNION_VIEW_INDEX_MAX)
+          {
+            GF_ASSERT_MSG(0,"tr_view = %d",tr_view);
+            if ( MyStatus_GetMySex(my) ) tr_view = GIRL2;
+            else tr_view = BOY2;
+          }
           work->UnIdx[work->ObjNum] = i;            //インデックス格納
           work->UnObjCode[work->ObjNum] = UnionView_GetObjCode(tr_view);  //表示OBJコード格納
           work->ObjNum++;                           //表示OBJ数加算

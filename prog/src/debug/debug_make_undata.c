@@ -24,6 +24,7 @@
 #include "savedata/wifihistory_local.h"
 #include "savedata/wifihistory.h"
 #include "savedata/undata_update.h"
+#include "net_app/union/union_beacon_tool.h"
 
 #define PROC_HEAP_SIZE  (0x20000)
 #define PRINT_FRAME (GFL_BG_FRAME1_M)
@@ -251,7 +252,7 @@ static const STR_PARAM StrParams[] = {
     5,0 },
   {STR_TYPE_NUM, UND_STR_OBJIDX,  STR_POS_X, STR_IDX_POS_Y,
     TOUCH_X_IDX,STR_IDX_POS_Y,TOUCH_W_IDX,TOUCH_H,
-    8*2,0 },  //<<8Ží—Þ*«•Ê2
+    UNION_VIEW_INDEX_MAX,0 },  //<<8Ží—Þ*«•Ê2
 };
 
 
