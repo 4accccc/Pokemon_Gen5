@@ -13,8 +13,8 @@
 static const GFL_G3D_UTIL_RES res_c_cruiser_unit01[] = {
 	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_01_nsbmd, GFL_G3D_UTIL_RESARC },
 	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_01_nsbca, GFL_G3D_UTIL_RESARC },
-	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_01_nsbma, GFL_G3D_UTIL_RESARC },
 	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_01_nsbta, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_01_nsbtp, GFL_G3D_UTIL_RESARC },
 };
 //ANM
 static const GFL_G3D_UTIL_ANM anm_c_cruiser_unit01[] = {
@@ -54,9 +54,36 @@ static const GFL_G3D_UTIL_OBJ obj_c_cruiser_unit03[] = {
 //UNIT
 static const GFL_G3D_UTIL_RES res_c_cruiser_unit04[] = {
 	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_04_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_04_nsbtp, GFL_G3D_UTIL_RESARC },
+};
+//ANM
+static const GFL_G3D_UTIL_ANM anm_c_cruiser_unit04[] = {
+	{ 1, 0 },
 };
 //OBJ
 static const GFL_G3D_UTIL_OBJ obj_c_cruiser_unit04[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		anm_c_cruiser_unit04, NELEMS(anm_c_cruiser_unit04), // AnmTbl, AnmTblNum
+	}
+};
+//UNIT
+static const GFL_G3D_UTIL_RES res_c_cruiser_unit05[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_05_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_c_cruiser_unit05[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//UNIT
+static const GFL_G3D_UTIL_RES res_c_cruiser_unit06[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_cdemo_06_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_c_cruiser_unit06[] = {
 	{
 		0, 0, 0, // MdlResID, MdlDataID, TexResID
 		NULL, 0, // AnmTbl, AnmTblNum
@@ -68,6 +95,8 @@ static const GFL_G3D_UTIL_SETUP c_cruiser_setup[] = {
 	{ res_c_cruiser_unit02, NELEMS(res_c_cruiser_unit02), obj_c_cruiser_unit02, NELEMS(obj_c_cruiser_unit02) },
 	{ res_c_cruiser_unit03, NELEMS(res_c_cruiser_unit03), obj_c_cruiser_unit03, NELEMS(obj_c_cruiser_unit03) },
 	{ res_c_cruiser_unit04, NELEMS(res_c_cruiser_unit04), obj_c_cruiser_unit04, NELEMS(obj_c_cruiser_unit04) },
+	{ res_c_cruiser_unit05, NELEMS(res_c_cruiser_unit05), obj_c_cruiser_unit05, NELEMS(obj_c_cruiser_unit05) },
+	{ res_c_cruiser_unit06, NELEMS(res_c_cruiser_unit06), obj_c_cruiser_unit06, NELEMS(obj_c_cruiser_unit06) },
 };
 //=========================================================================
 // DEMO3D_ID_C_CRUISER_PORT
