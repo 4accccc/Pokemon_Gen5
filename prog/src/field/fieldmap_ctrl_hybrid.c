@@ -14,8 +14,6 @@
 #include "fieldmap_ctrl_hybrid.h"
 
 #include "field_player.h"
-#include "field_player_grid.h"
-#include "field_player_nogrid.h"
 
 #include "field/zonedata.h"
 
@@ -44,9 +42,6 @@ struct _FIELDMAP_CTRL_HYBRID
   FLDMAP_BASESYS_TYPE base_type;
 
   FIELD_PLAYER*         p_player;
-	FIELD_PLAYER_GRID*    p_player_grid;
-	FIELD_PLAYER_NOGRID*  p_player_nogrid;
-
 
   PLAYER_MOVE_VALUE last_move;
 };
@@ -96,23 +91,6 @@ const DEPEND_FUNCTIONS FieldMapCtrl_HybridFunctions =
 };
 
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  フィールドグリッドプレイヤーの取得
- *
- *	@param	cp_wk   ワーク
- *
- *	@return フィールドグリッドプレイヤーワーク
- */
-//-----------------------------------------------------------------------------
-FIELD_PLAYER_GRID* FIELDMAP_CTRL_HYBRID_GetFieldPlayerGrid( const FIELDMAP_CTRL_HYBRID* cp_wk )
-{
-  GF_ASSERT( cp_wk );
-
-  return cp_wk->p_player_grid;
-}
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  フィールドベースシステムタイプの取得
@@ -127,23 +105,6 @@ FLDMAP_BASESYS_TYPE FIELDMAP_CTRL_HYBRID_GetBaseSystemType( const FIELDMAP_CTRL_
   GF_ASSERT( cp_wk );
   return  cp_wk->base_type;
 }
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  フィールドノーグリッドプレイヤーの取得
- *
- *	@param	cp_wk   ワーク
- *
- *	@return フィールドノーグリッドプレイヤーワーク
- */
-//-----------------------------------------------------------------------------
-FIELD_PLAYER_NOGRID* FIELDMAP_CTRL_HYBRID_GetFieldPlayerNoGrid( const FIELDMAP_CTRL_HYBRID* cp_wk )
-{
-  GF_ASSERT( cp_wk );
-
-  return cp_wk->p_player_nogrid;
-}
-
 
 //----------------------------------------------------------------------------
 /**
@@ -170,7 +131,7 @@ void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP
     if( result )
     {
       // 動作チェンジ
-      FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, 0, 0 );
+      FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0 );
       mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, dir, &location );
     }
   }
@@ -184,7 +145,7 @@ void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP
     if( result )
     {
       // 動作チェンジ
-      FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, 0, 0 );
+      FIELD_PLAYER_MoveNoGrid( p_wk->p_player, 0, 0 );
       mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, dir, &pos );
     }
   }
@@ -225,10 +186,10 @@ static void mapCtrlHybrid_Create( FIELDMAP_WORK* p_fieldmap, VecFx32* p_pos, u16
     p_wk->p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
     
     // レールプレイヤー生成
-		p_wk->p_player_nogrid = FIELD_PLAYER_NOGRID_Create( p_wk->p_player, heapID );
+    FIELD_PLAYER_SetUpNoGrid( p_wk->p_player, heapID );
     
     // グリッドプレイヤー生成
-		p_wk->p_player_grid = FIELD_PLAYER_GRID_Init( p_wk->p_player, heapID );
+    FIELD_PLAYER_SetUpGrid( p_wk->p_player, heapID );
 
     // 初期動作をどちらにするかPLAYER_WORKから取得
     base_type = PLAYERWORK_getPosType( cp_playerwk );
@@ -267,8 +228,6 @@ static void mapCtrlHybrid_Delete( FIELDMAP_WORK* p_fieldmap )
 	FIELDMAP_CTRL_HYBRID* p_wk;
 
 	p_wk = FIELDMAP_GetMapCtrlWork( p_fieldmap );
-	FIELD_PLAYER_GRID_Delete( p_wk->p_player_grid );
-	FIELD_PLAYER_NOGRID_Delete( p_wk->p_player_nogrid );
 
 	GFL_HEAP_FreeMemory( p_wk );
 }
@@ -374,7 +333,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
         if( result )
         {
           // 動作チェンジ
-          FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, 0, 0 );
+          FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0 );
 
           // 描画方向を求める
           if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK){
@@ -394,7 +353,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   // 1つ前の状態を取得
   p_wk->last_move = FIELD_PLAYER_GetMoveValue( p_wk->p_player );
 
-	FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, key_trg, key_cont );
+	FIELD_PLAYER_MoveGrid( p_wk->p_player, key_trg, key_cont );
 }
 
 //----------------------------------------------------------------------------
@@ -446,7 +405,7 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
         if( result )
         {
           // 動作チェンジ
-          FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, 0, 0 );
+          FIELD_PLAYER_MoveNoGrid( p_wk->p_player, 0, 0 );
 
           // 描画方向を求める
           if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK){
@@ -467,7 +426,7 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   p_wk->last_move = FIELD_PLAYER_GetMoveValue( p_wk->p_player );
 
 
-  FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, key_trg, key_cont );
+  FIELD_PLAYER_MoveNoGrid( p_wk->p_player, key_trg, key_cont );
 }
 
 //----------------------------------------------------------------------------
@@ -627,7 +586,7 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
     VecFx32 pos = *((VecFx32*)cp_pos);
     
     // 動作変更
-    FIELD_PLAYER_NOGRID_Stop( p_wk->p_player_nogrid );
+    FIELD_PLAYER_StopNoGrid( p_wk->p_player );
     MMDL_ChangeMoveParam( p_mmdl, &data_MMdlHeader );
 
     //  座標を設定
@@ -648,10 +607,10 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
   }
   else
   {
-    FIELD_PLAYER_NOGRID_Restart( p_wk->p_player_nogrid, cp_pos );
+    FIELD_PLAYER_RestartNoGrid( p_wk->p_player, cp_pos );
 
     // カメラ設定
-    FLDNOGRID_MAPPER_BindCameraWork( p_mapper, FIELD_PLAYER_NOGRID_GetRailWork( p_wk->p_player_nogrid ) );
+    FLDNOGRID_MAPPER_BindCameraWork( p_mapper, FIELD_PLAYER_GetNoGridRailWork( p_wk->p_player ) );
 
   }
 

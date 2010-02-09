@@ -15,7 +15,7 @@
 #include "fieldmap.h"
 #include "field_g3d_mapper.h"
 #include "fldmmdl.h"
-#include "field_player.h"
+#include "field_player_core.h"
 #include "field_camera.h"
 #include "fldeff_shadow.h"
 #include "field_rail.h"
@@ -148,28 +148,17 @@ struct _FIELD_PLAYER_NOGRID
   FIELD_PLAYER_NOGRID_MOVEBIT move_bit;
   KURUKURU_WORK kurukuru;
   
-  FIELD_PLAYER* p_player;
+  FIELD_PLAYER_CORE* p_player_core;
 	FIELDMAP_WORK* p_fieldwork;
   MMDL* p_mmdl;
   
   FIELD_RAIL_WORK* p_railwork;
-
-  u16 form_change_req;
-  u16 form_change;
 } ;
 
 //======================================================================
 //	proto
 //======================================================================
-static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
-		FIELDMAP_WORK *fieldWork, u16 key, VecFx32 *vec );
-static BOOL nogridPC_Move_CalcSetGroundMove(
-		const FLDMAPPER *g3Dmapper,
-		FLDMAPPER_GRIDINFODATA* gridInfoData,
-		VecFx32* pos, VecFx32* vecMove, fx32 speed );
 
-
-static void updateFormChange( FIELD_PLAYER_NOGRID* p_player );
 static PLAYER_SET nogridGetMoveStartSet( FIELD_PLAYER_NOGRID* p_player, int dir, int key_trg, int key_cont, BOOL debug );
 static void nogridSetMove( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set, int dir, int key_trg, int key_cont, BOOL debug );
 static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set );
@@ -330,16 +319,16 @@ static void playerCycle_SetMove_Jump(
  *	@return ノーグリッド用ワーク
  */
 //-----------------------------------------------------------------------------
-FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER* p_player, HEAPID heapID )
+FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER_CORE* p_player_core, HEAPID heapID )
 {
   FIELD_PLAYER_NOGRID* p_wk;
 
   p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER_NOGRID) );
 
   // ワークに保存
-  p_wk->p_player      = p_player;
-  p_wk->p_fieldwork   = FIELD_PLAYER_GetFieldMapWork( p_player );
-  p_wk->p_mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
+  p_wk->p_player_core = p_player_core;
+  p_wk->p_fieldwork   = FIELD_PLAYER_CORE_GetFieldMapWork( p_player_core );
+  p_wk->p_mmdl = FIELD_PLAYER_CORE_GetMMdl( p_wk->p_player_core );
 
   // 動作コードをレール動作に変更
   if( MMDL_GetMoveCode( p_wk->p_mmdl ) != MV_RAIL_DMY )
@@ -444,9 +433,6 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 
   GF_ASSERT( p_player->p_railwork );
 
-  // FORM変更処理
-  updateFormChange( p_player );
-  
 	dir = DIR_NOT;
 	if( (key_cont&PAD_KEY_UP) ){
 		dir = DIR_UP;
@@ -559,22 +545,6 @@ FIELD_RAIL_WORK* FIELD_PLAYER_NOGRID_GetRailWork( const FIELD_PLAYER_NOGRID* cp_
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  自機  FORM　変更
- *
- *	@param	p_player
- *	@param	form 
- */
-//-----------------------------------------------------------------------------
-void FIELD_PLAYER_NOGRID_ChangeForm( FIELD_PLAYER_NOGRID* p_player, PLAYER_MOVE_FORM form )
-{
-  GF_ASSERT( form < PLAYER_MOVE_FORM_MAX );
-  
-  p_player->form_change_req = TRUE;
-  p_player->form_change     = form;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  自機　強制停止　ノーグリッドマップ用
  *
  *	@param	p_player  プレイヤーワーク
@@ -585,72 +555,12 @@ void FIELD_PLAYER_NOGRID_ForceStop( FIELD_PLAYER_NOGRID* p_player )
   // 長いアクションコマンドなどが出来てきたら必要
   if( p_player->move_state == PLAYER_MOVE_HITCH )
   {
-    MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+    MMDL *mmdl = p_player->p_mmdl;
     u16 dir = MMDL_GetDirDisp( mmdl );
     MMDL_FreeAcmd( mmdl );
     MMDL_SetDirDisp( mmdl, dir );
     MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
-    FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_STOP );
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  NOGRID　見た目変更リクエスト設定
- *
- *	@param	p_player
- *	@param	req_bit 
- */
-//-----------------------------------------------------------------------------
-void FIELD_PLAYER_NOGRID_SetRequestBit( FIELD_PLAYER_NOGRID* p_player, u32 req_bit )
-{
-  int i;
-  static const u32 sc_REQ_FORM[ FIELD_PLAYER_REQBIT_MAX ] = 
-  {
-    PLAYER_MOVE_FORM_NORMAL,
-    PLAYER_MOVE_FORM_CYCLE,
-    PLAYER_MOVE_FORM_SWIM,
-    0,
-    PLAYER_DRAW_FORM_ITEMGET,
-    PLAYER_DRAW_FORM_SAVEHERO,
-    PLAYER_DRAW_FORM_PCHERO,
-  };
-  enum
-  {
-    SETUP_MOVE_FORM,
-    SETUP_DRAW_FORM,
-    SETUP_RESET_MOVE_FORM,
-  };
-  static const u32 sc_REQ_SETUP[ FIELD_PLAYER_REQBIT_MAX ] = 
-  {
-    SETUP_MOVE_FORM,
-    SETUP_MOVE_FORM,
-    SETUP_MOVE_FORM,
-    SETUP_RESET_MOVE_FORM,
-    SETUP_DRAW_FORM,
-    SETUP_DRAW_FORM,
-    SETUP_DRAW_FORM,
-  };
-
-  for( i=0; i<FIELD_PLAYER_REQBIT_MAX; i++ )
-  {
-    if( req_bit & 0x1 )
-    {
-      if( sc_REQ_SETUP[i] == SETUP_MOVE_FORM )
-      {
-        FIELD_PLAYER_SetMoveForm( p_player->p_player, sc_REQ_FORM[i] );
-      }
-      else if( sc_REQ_SETUP[i] == SETUP_DRAW_FORM )
-      {
-        FIELD_PLAYER_ChangeDrawForm( p_player->p_player, sc_REQ_FORM[i] );
-      }
-      else
-      {
-        FIELD_PLAYER_ResetMoveForm( p_player->p_player );
-      }
-      
-    }
-    req_bit >>= 1;
+    FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_STOP );
   }
 }
 
@@ -658,6 +568,16 @@ void FIELD_PLAYER_NOGRID_SetRequestBit( FIELD_PLAYER_NOGRID* p_player, u32 req_b
 
 
 
+#ifdef PM_DEBUG
+
+static FLDMAPPER_GRIDINFODATA DEBUG_gridInfoData;
+
+static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
+		FIELDMAP_WORK *fieldWork, u16 key, VecFx32 *vec );
+static BOOL nogridPC_Move_CalcSetGroundMove(
+		const FLDMAPPER *g3Dmapper,
+		FLDMAPPER_GRIDINFODATA* gridInfoData,
+		VecFx32* pos, VecFx32* vecMove, fx32 speed );
 
 
 //======================================================================
@@ -695,7 +615,7 @@ void FIELD_PLAYER_NOGRID_Free_Move( FIELD_PLAYER *fld_player, int key, fx32 oned
 		fx32 diff;
 		nogridPC_Move_CalcSetGroundMove(
 				FIELDMAP_GetFieldG3Dmapper(fieldWork),
-				FIELD_PLAYER_GetGridInfoData(fld_player),
+				&DEBUG_gridInfoData,
 				&pos, &vecMove, MV_SPEED );
 
     pos.x = FX_Floor( pos.x );  
@@ -719,6 +639,7 @@ void FIELD_PLAYER_C3_Move( FIELD_PLAYER *fld_player, int key, u16 angle )
 	FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
 	nogridPC_Move_SetValue( fld_player, fieldWork, key, &vecMove );
 }
+
 
 
 //======================================================================
@@ -899,28 +820,12 @@ static BOOL nogridPC_Move_CalcSetGroundMove(
 	}
 	return TRUE;
 }
+#endif // PM_DEBUG  フリームーブ
 
 
 
 
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  フォルムの変更
- *
- *	@param	p_player 
- */
-//-----------------------------------------------------------------------------
-static void updateFormChange( FIELD_PLAYER_NOGRID* p_player )
-{
-  if( p_player->form_change_req )
-  {
-    FIELD_PLAYER_ChangeMoveForm( p_player->p_player, p_player->form_change );
-
-    p_player->form_change_req = FALSE;
-  }
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -940,7 +845,7 @@ static PLAYER_SET nogridGetMoveStartSet( FIELD_PLAYER_NOGRID* p_player, int dir,
   PLAYER_MOVE_FORM form;
   PLAYER_SET set;
 
-  form = FIELD_PLAYER_GetMoveForm( p_player->p_player );
+  form = FIELD_PLAYER_CORE_GetMoveForm( p_player->p_player_core );
   switch( form ){
   case PLAYER_MOVE_FORM_NORMAL:
     set = jikiMove_Normal_GetSet( p_player, key_trg, key_cont, dir, debug );
@@ -973,7 +878,7 @@ static void nogridSetMove( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set, int di
 {
   PLAYER_MOVE_FORM form;
 
-  form = FIELD_PLAYER_GetMoveForm( p_player->p_player );
+  form = FIELD_PLAYER_CORE_GetMoveForm( p_player->p_player_core );
   switch( form ){
   case PLAYER_MOVE_FORM_NORMAL:
     jikiMove_Normal( p_player, set, key_trg, key_cont, dir, debug );
@@ -1057,7 +962,7 @@ static void nogrid_KuruKuruMain( FIELD_PLAYER_NOGRID* p_player )
   }
 
   // メイン動作
-  nogrid_KuruKuru_Main( &p_player->kurukuru, FIELD_PLAYER_GetMMdl( p_player->p_player ) );
+  nogrid_KuruKuru_Main( &p_player->kurukuru, p_player->p_mmdl );
 }
 
 
@@ -1081,7 +986,7 @@ static void jikiMove_Normal(
 		FIELD_PLAYER_NOGRID *p_player, PLAYER_SET set, int key_trg, int key_cont,
     u16 dir, BOOL debug_flag )
 {
-	MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+	MMDL *mmdl = p_player->p_mmdl;
    
 	switch( set ){
 	case PLAYER_SET_NON:
@@ -1121,7 +1026,7 @@ static PLAYER_SET jikiMove_Normal_GetSet(
     u16 dir, BOOL debug_flag )
 {
 	PLAYER_SET set;
-	MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+	MMDL *mmdl = p_player->p_mmdl;
 
 	set = PLAYER_SET_NON;
 	switch( p_player->move_state ){
@@ -1375,7 +1280,7 @@ static void player_SetMove_Stop(
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_STOP;
 	
-  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_STOP );
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_STOP );
 }
 
 //--------------------------------------------------------------
@@ -1410,7 +1315,7 @@ static void player_SetMove_Walk(
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_WALK;
 
-  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_WALK );
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_WALK );
 }
 
 //--------------------------------------------------------------
@@ -1436,7 +1341,7 @@ static void player_SetMove_Turn(
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_TURN;
 	
-  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_TURN );
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_TURN );
 }
 
 //--------------------------------------------------------------
@@ -1462,7 +1367,7 @@ static void player_SetMove_Hitch(
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_HITCH;
 	
-  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_STOP );
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_STOP );
   PMSND_PlaySE( SEQ_SE_WALL_HIT );
 }
 
@@ -1490,7 +1395,7 @@ static void player_SetMove_Jump(
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_WALK;
   
-  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_WALK );
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_WALK );
 }
 
 
@@ -1512,7 +1417,7 @@ static void jikiMove_Cycle(
 		FIELD_PLAYER_NOGRID *p_player, PLAYER_SET set, int key_trg, int key_cont,
     u16 dir, BOOL debug_flag )
 {
-	MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+	MMDL *mmdl = p_player->p_mmdl;
    
 	
 	switch( set ){
@@ -1553,7 +1458,7 @@ static PLAYER_SET jikiMove_Cycle_GetSet(
     u16 dir, BOOL debug_flag )
 {
 	PLAYER_SET set;
-	MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+	MMDL *mmdl = p_player->p_mmdl;
 
 	set = PLAYER_SET_NON;
 	switch( p_player->move_state ){
@@ -1807,7 +1712,7 @@ static void playerCycle_SetMove_Stop(
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_STOP;
 	
-  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_STOP );
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_STOP );
 }
 
 //--------------------------------------------------------------
@@ -1840,7 +1745,7 @@ static void playerCycle_SetMove_Walk(
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_WALK;
 
-  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_WALK );
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_WALK );
 }
 
 //--------------------------------------------------------------
@@ -1866,7 +1771,7 @@ static void playerCycle_SetMove_Turn(
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_TURN;
 	
-  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_TURN );
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_TURN );
 }
 
 //--------------------------------------------------------------
@@ -1892,7 +1797,7 @@ static void playerCycle_SetMove_Hitch(
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_HITCH;
 	
-  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_STOP );
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_STOP );
   PMSND_PlaySE( SEQ_SE_WALL_HIT );
 }
 
@@ -1920,7 +1825,7 @@ static void playerCycle_SetMove_Jump(
 	MMDL_SetAcmd( mmdl, code );
 	p_player->move_state = PLAYER_MOVE_WALK;
   
-  FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_WALK );
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_WALK );
 }
 
 
@@ -2148,7 +2053,7 @@ static void nogrid_OffMoveBitTurnR( FIELD_PLAYER_NOGRID *nogrid )
 //--------------------------------------------------------------
 static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir )
 {
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+  MMDL *mmdl = nogrid->p_mmdl;
   MAPATTR attr = MMDL_GetMapAttr( mmdl );
   
   if( nogrid_CheckMoveBit(
@@ -2196,7 +2101,7 @@ static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir )
 static u16 nogrid_ControlUnder(
     FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
 {
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+  MMDL *mmdl = nogrid->p_mmdl;
 
   // 移動完了しているか？
   if(MMDL_CheckPossibleAcmd(mmdl) == FALSE)
@@ -2229,7 +2134,7 @@ static u16 nogrid_ControlUnder(
 //-----------------------------------------------------------------------------
 static void nogrid_ControlUnder_Clear( FIELD_PLAYER_NOGRID *nogrid )
 {
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+  MMDL *mmdl = nogrid->p_mmdl;
 
 
   // Pause情報のクリア
@@ -2243,7 +2148,7 @@ static void nogrid_ControlUnder_Clear( FIELD_PLAYER_NOGRID *nogrid )
   {
     nogrid_OffMoveBitForce( nogrid );
     nogrid_OnMoveBitUnderOff( nogrid ); // 歩き出すまで強制移動はなし
-    FIELD_PLAYER_SetMoveValue( nogrid->p_player, PLAYER_MOVE_VALUE_STOP );
+    FIELD_PLAYER_CORE_SetMoveValue( nogrid->p_player_core, PLAYER_MOVE_VALUE_STOP );
   }
 
   // 回転OFF
@@ -2284,7 +2189,7 @@ static void nogrid_ControlUnder_Clear( FIELD_PLAYER_NOGRID *nogrid )
 static u16 nogrid_ControlUnderIce( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
 {
   MAPATTR attr;
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+  MMDL *mmdl = nogrid->p_mmdl;
   u16 jiki_dir = MMDL_GetDirMove( mmdl );
   u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir );
 	
@@ -2309,7 +2214,7 @@ static u16 nogrid_ControlUnderIce( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL de
     MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
     
     nogrid->move_state = PLAYER_MOVE_WALK;
-    FIELD_PLAYER_SetMoveValue( nogrid->p_player, PLAYER_MOVE_VALUE_WALK );
+    FIELD_PLAYER_CORE_SetMoveValue( nogrid->p_player_core, PLAYER_MOVE_VALUE_WALK );
 	  return( jiki_dir );
   }
 }
@@ -2326,7 +2231,7 @@ static u16 nogrid_ControlUnderIce( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL de
 static u16 nogrid_ControlUnderIceSpinL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
 {
   MAPATTR attr;
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+  MMDL *mmdl = nogrid->p_mmdl;
   u16 jiki_dir = MMDL_GetDirMove( mmdl );
   u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir );
 	
@@ -2347,7 +2252,7 @@ static u16 nogrid_ControlUnderIceSpinL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
     MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
     
     nogrid->move_state = PLAYER_MOVE_WALK;
-    FIELD_PLAYER_SetMoveValue( nogrid->p_player, PLAYER_MOVE_VALUE_WALK );
+    FIELD_PLAYER_CORE_SetMoveValue( nogrid->p_player_core, PLAYER_MOVE_VALUE_WALK );
 	  return( jiki_dir );
   }
 }
@@ -2366,7 +2271,7 @@ static u16 nogrid_ControlUnderIceSpinL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
 static u16 nogrid_ControlUnderIceSpinR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
 {
   MAPATTR attr;
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+  MMDL *mmdl = nogrid->p_mmdl;
   u16 jiki_dir = MMDL_GetDirMove( mmdl );
   u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir );
 	
@@ -2387,7 +2292,7 @@ static u16 nogrid_ControlUnderIceSpinR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
     MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
     
     nogrid->move_state = PLAYER_MOVE_WALK;
-    FIELD_PLAYER_SetMoveValue( nogrid->p_player, PLAYER_MOVE_VALUE_WALK );
+    FIELD_PLAYER_CORE_SetMoveValue( nogrid->p_player_core, PLAYER_MOVE_VALUE_WALK );
 	  return( jiki_dir );
   }
 }

@@ -118,22 +118,9 @@ void FLDSKILL_InitCheckWork(
   fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
   scwk->moveform = FIELD_PLAYER_GetMoveForm( fld_player );
   
-  if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_GRID )
-  {
-    FIELD_PLAYER_GetFrontGridPos( fld_player, &gx, &gy, &gz );
-    
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( scwk->gsys );
-      MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys( gdata );
-      mmdl = MMDLSYS_SearchGridPos( mmdlsys, gx, gz, FALSE );
-      scwk->front_mmdl = mmdl;
-    }
-  }
-  else
-  {
-    mmdl = NULL;
-    scwk->front_mmdl = NULL;
-  }
+  // –Ú‚Ì‘O‚Ìƒ‚ƒfƒ‹‚ðŽæ“¾
+  mmdl = FIELD_PLAYER_GetFrontMMdl( fld_player );
+  scwk->front_mmdl = mmdl;
   
   if( mmdl != NULL ){
     switch( MMDL_GetOBJCode(mmdl) ){

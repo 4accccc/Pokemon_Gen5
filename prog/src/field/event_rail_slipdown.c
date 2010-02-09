@@ -23,7 +23,6 @@
 #include "event_rail_slipdown.h"
 
 #include "field_nogrid_mapper.h"
-#include "fieldmap_ctrl.h"
 
 #include "fldeff_kemuri.h"
 
@@ -74,7 +73,6 @@ enum
 typedef struct 
 {
   FLDNOGRID_MAPPER* p_mapper;
-  FIELD_PLAYER_NOGRID* p_nogrid_player;
   FIELD_RAIL_WORK* p_player_rail;
   FIELD_PLAYER* p_player;
   FLDEFF_CTRL*  p_effctrl;
@@ -128,13 +126,12 @@ GMEVENT* EVENT_RailSlipDown(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
   p_slipdown = GMEVENT_GetEventWork(event);
 
   p_slipdown->p_mapper          = FIELDMAP_GetFldNoGridMapper( fieldmap );
-  p_slipdown->p_nogrid_player   = FIELDMAP_GetPlayerNoGrid( fieldmap );
-  p_slipdown->p_player_rail     = FIELD_PLAYER_NOGRID_GetRailWork( p_slipdown->p_nogrid_player );
   p_slipdown->p_player          = FIELDMAP_GetFieldPlayer( fieldmap );
+  p_slipdown->p_player_rail     = FIELD_PLAYER_GetNoGridRailWork( p_slipdown->p_player );
   p_slipdown->p_effctrl         = FIELDMAP_GetFldEffCtrl( fieldmap );
 
   // 自機の強制停止
-  FIELD_PLAYER_NOGRID_ForceStop( p_slipdown->p_nogrid_player );
+  FIELD_PLAYER_ForceStop( p_slipdown->p_player );
   
   return event;
 }
@@ -318,8 +315,8 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
       TOMOYA_Printf( "width_grid %d\n", p_slipdown->target_location.width_grid );
       
       // レールロケーションを設定
-      FIELD_PLAYER_NOGRID_SetLocation( p_slipdown->p_nogrid_player, &p_slipdown->target_location );
-      FIELD_PLAYER_NOGRID_GetPos( p_slipdown->p_nogrid_player, &pos );
+      FIELD_PLAYER_SetNoGridLocation( p_slipdown->p_player, &p_slipdown->target_location );
+      FIELD_PLAYER_GetNoGridPos( p_slipdown->p_player, &pos );
       // 座標をプレイヤーに設定
       FIELD_PLAYER_SetPos( p_slipdown->p_player, &pos );    
     }

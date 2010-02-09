@@ -63,7 +63,6 @@
 
 #include "field_effect.h"
 
-#include "field_player_grid.h"
 
 #include "fieldskill_mapeff.h"
 
@@ -89,7 +88,6 @@
 
 #include "field_sound.h"
 
-#include "fieldmap_ctrl.h"
 #include "fieldmap_ctrl_grid.h"
 #include "fieldmap_ctrl_nogrid_work.h"
 #include "fieldmap_ctrl_hybrid.h"
@@ -1300,50 +1298,22 @@ const BOOL FIELDMAP_IsReady( const FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork )
 {
-  FLDMAP_BASESYS_TYPE type;
-  
-  type = FIELDMAP_GetBaseSystemType( fieldWork );
-  
-  if( type == FLDMAP_BASESYS_GRID )
+  PLAYER_MOVE_FORM form;
+    
+  form = FIELD_PLAYER_GetMoveForm( fieldWork->field_player );
+
+  if( form == PLAYER_MOVE_FORM_CYCLE )
   {
-    PLAYER_MOVE_FORM form;
-    FIELD_PLAYER_GRID *gjiki;
-    
-    form = FIELD_PLAYER_GetMoveForm( fieldWork->field_player );
-    gjiki = FIELDMAP_GetPlayerGrid( fieldWork );
-    
-    if( form == PLAYER_MOVE_FORM_CYCLE )
-    {
-      FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_NORMAL );
-      return( TRUE );
-    }
-    else if( form == PLAYER_MOVE_FORM_NORMAL )
-    {
-      PMSND_PlaySE( SEQ_SE_BICYCLE );
-      FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_CYCLE );
-      return( TRUE );
-    }
+    FIELD_PLAYER_SetRequest( fieldWork->field_player, FIELD_PLAYER_REQBIT_NORMAL );
+    return( TRUE );
   }
-  else
+  else if( form == PLAYER_MOVE_FORM_NORMAL )
   {
-    PLAYER_MOVE_FORM form;
-    FIELD_PLAYER_NOGRID *gjiki;
-    
-    form = FIELD_PLAYER_GetMoveForm( fieldWork->field_player );
-    gjiki = FIELDMAP_GetPlayerNoGrid( fieldWork );
-    
-    
-    if( form == PLAYER_MOVE_FORM_CYCLE )
-    {
-      FIELD_PLAYER_NOGRID_ChangeForm( gjiki, PLAYER_MOVE_FORM_NORMAL );
-      return( TRUE );
-    }
-    else if( form == PLAYER_MOVE_FORM_NORMAL )
-    {
-      FIELD_PLAYER_NOGRID_ChangeForm( gjiki, PLAYER_MOVE_FORM_CYCLE );
-      return( TRUE );
-    }
+    PMSND_PlaySE( SEQ_SE_BICYCLE );
+    FIELD_PLAYER_SetRequest( fieldWork->field_player, FIELD_PLAYER_REQBIT_CYCLE );
+    return( TRUE );
   }
+
   
   return( FALSE );
 }
@@ -1679,70 +1649,6 @@ FLDMAP_CTRLTYPE FIELDMAP_GetMapControlType( FIELDMAP_WORK *fieldWork )
   GF_ASSERT( fieldWork );
   GF_ASSERT( fieldWork->func_tbl );
   return fieldWork->func_tbl->type;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  グリッドプレイヤーワークの取得
- *
- *	@param	fieldWork ワーク
- *
- *	@retval グリッドプレイヤーワーク
- *	@retval NULL  ないばあい
- */
-//-----------------------------------------------------------------------------
-FIELD_PLAYER_GRID* FIELDMAP_GetPlayerGrid( const FIELDMAP_WORK *fieldWork )
-{
-  GF_ASSERT( fieldWork );
-  GF_ASSERT( fieldWork->func_tbl );
-
-  if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID )
-  {
-    FIELDMAP_CTRL_GRID* p_gridwk = fieldWork->mapCtrlWork;
-    return FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( p_gridwk );
-  }
-  else if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_HYBRID )
-  {
-    FIELDMAP_CTRL_HYBRID* p_hybridwk = fieldWork->mapCtrlWork;
-    return FIELDMAP_CTRL_HYBRID_GetFieldPlayerGrid( p_hybridwk );
-  }
-  else
-  {
-    GF_ASSERT( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID );
-  }
-  return NULL;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ノングリッドプレイヤーワークの取得
- *
- *	@param	fieldWork   ワーク
- *
- *	@retval ノングリッドプレイヤーワーク
- *	@retval NULL  ない場合
- */
-//-----------------------------------------------------------------------------
-FIELD_PLAYER_NOGRID* FIELDMAP_GetPlayerNoGrid( const FIELDMAP_WORK *fieldWork )
-{
-  GF_ASSERT( fieldWork );
-  GF_ASSERT( fieldWork->func_tbl );
-
-  if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_NOGRID )
-  {
-    FIELDMAP_CTRL_NOGRID_WORK* p_nogridwk = fieldWork->mapCtrlWork;
-    return FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_nogridwk );
-  }
-  else if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_HYBRID )
-  {
-    FIELDMAP_CTRL_HYBRID* p_hybridwk = fieldWork->mapCtrlWork;
-    return FIELDMAP_CTRL_HYBRID_GetFieldPlayerNoGrid( p_hybridwk );
-  }
-  else
-  {
-    GF_ASSERT( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_NOGRID );
-  }
-  return NULL;
 }
 
 //----------------------------------------------------------------------------

@@ -14,7 +14,6 @@
 
 #include "fldmmdl.h"
 #include "fieldmap.h"
-#include "field_player_grid.h"
 
 #include "fieldmap_ctrl_grid.h"
 
@@ -63,8 +62,6 @@ struct _TAG_FIELDMAP_CTRL_GRID
 	u8 padding1;
 
 	BOOL jikiMovePause;
-
-	FIELD_PLAYER_GRID *gridPlayer;
 };
 
 //======================================================================
@@ -147,7 +144,7 @@ static void mapCtrlGrid_Create(
 #endif
     MMDL_SetDirDisp( fmmdl, dir4 );
 //    KAGAYA_Printf( "わたされた方向 %xH, %d\n", dir, dir4 );
-		gridWork->gridPlayer = FIELD_PLAYER_GRID_Init( fld_player, heapID );
+		FIELD_PLAYER_SetUpGrid( fld_player, heapID );
     
     { //カメラ座標セット
       const VecFx32 *pos = MMDL_GetVectorPosAddress( fmmdl );
@@ -169,7 +166,6 @@ static void mapCtrlGrid_Delete( FIELDMAP_WORK *fieldWork )
 {
 	FIELDMAP_CTRL_GRID *gridWork;
 	gridWork = FIELDMAP_GetMapCtrlWork( fieldWork );
-	FIELD_PLAYER_GRID_Delete( gridWork->gridPlayer );
 	GFL_HEAP_FreeMemory( gridWork );
 }
 
@@ -183,7 +179,7 @@ static void mapCtrlGrid_Delete( FIELDMAP_WORK *fieldWork )
 static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 {
 	FIELDMAP_CTRL_GRID *gridWork = FIELDMAP_GetMapCtrlWork( fieldWork );
-	FIELD_PLAYER_GRID *gridPlayer = gridWork->gridPlayer;
+	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	
   if( gridWork->jikiMovePause == FALSE )
 	{	//自機移動
@@ -205,24 +201,7 @@ static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     }
 #endif  //PM_DEBUG
 
-		FIELD_PLAYER_GRID_Move( gridPlayer, key_trg, key_cont );
-		
-		{
-			GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
-			GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-			PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
-			FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-			MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
-			u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xc000 };
-			int dir = MMDL_GetDirDisp( fmmdl );
-#if 0
-			MMDL_GetVectorPos( fmmdl, pos );
-			PLAYERWORK_setDirection( player, tbl[dir] );
-			PLAYERWORK_setPosition( player, pos );
-			FIELD_PLAYER_SetDir( fld_player, tbl[dir] );
-			FIELD_PLAYER_SetPos( fld_player, pos );
-#endif
-		}
+		FIELD_PLAYER_MoveGrid( fld_player, key_trg, key_cont );
 	}
 }
 
@@ -263,20 +242,6 @@ static u16 grid_ChangeFourDir( u16 dir )
 		dir = DIR_UP;
 	}
 	return( dir );
-}
-
-
-//--------------------------------------------------------------
-/**
- *
- * @param
- * @retval
- *
- */
-//--------------------------------------------------------------
-FIELD_PLAYER_GRID * FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( FIELDMAP_CTRL_GRID *gridWork )
-{
-  return( gridWork->gridPlayer );
 }
 
 //--------------------------------------------------------------

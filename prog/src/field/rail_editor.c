@@ -26,9 +26,9 @@
 
 #include "field/fieldmap.h"
 #include "event_fieldmap_control.h"
-#include "field_player_nogrid.h"
 
 #include "fieldmap_func.h"
+#include "field_player_nogrid.h"
 
 
 #include "debug/gf_mcs.h"
@@ -408,8 +408,9 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
     // ƒŒ[ƒ‹“®ìƒ[ƒN‚Ìæ“¾
     {
       FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+      FIELD_PLAYER* p_player  =  FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
       
-      p_wk->p_railplayer = FIELD_PLAYER_NOGRID_Create( FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap ), FIELDMAP_GetHeapID(p_wk->p_fieldmap) );
+      p_wk->p_railplayer = FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER_GetCoreWk( p_player ), FIELDMAP_GetHeapID(p_wk->p_fieldmap) );
       
       p_wk->cp_default_railwork = FIELD_RAIL_MAN_DEBUG_GetBindWork( FLDNOGRID_MAPPER_GetRailMan( p_mapper ) );
       FLDNOGRID_MAPPER_BindCameraWork( p_mapper, FIELD_PLAYER_NOGRID_GetRailWork( p_wk->p_railplayer ) );

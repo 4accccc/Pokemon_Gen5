@@ -14,7 +14,6 @@
 #include "sound/pm_sndsys.h"
 #include "sound/wb_sound_data.sadl"
 
-#include "fieldmap_ctrl.h"
 #include "fieldmap_ctrl_grid.h"
 #include "field_player_grid.h"
 #include "map_attr.h"
@@ -59,20 +58,18 @@ static MMDL * gjiki_SearchDirMMdl( FIELD_PLAYER_GRID *gjiki, u16 dir );
  * @retval BOOL TRUE=自機イベント移動発生
  */
 //--------------------------------------------------------------
-GMEVENT * FIELD_PLAYER_GRID_CheckMoveEvent( FIELD_PLAYER *fld_player,
+GMEVENT * FIELD_PLAYER_GRID_CheckMoveEvent( FIELD_PLAYER_GRID *gjiki,
     int key_trg, int key_cont, PLAYER_EVENTBIT evbit )
 {
   u16 dir;
   MMDL *mmdl;
   GMEVENT *event;
   FIELDMAP_WORK *fieldmap;
-  FIELD_PLAYER_GRID *gjiki;
+  FIELD_PLAYER_CORE* player_core = FIELD_PLAYER_GRID_GetFieldPlayerCore( gjiki );
   
   event = NULL;
-  fieldmap = FIELD_PLAYER_GetFieldMapWork( fld_player );
-  gjiki = FIELDMAP_GetPlayerGrid( fieldmap );
-  mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-  dir = FIELD_PLAYER_GRID_GetKeyDir( gjiki, key_cont );
+  mmdl = FIELD_PLAYER_GRID_GetMMdl( gjiki );
+  dir = FIELD_PLAYER_CORE_GetKeyDir( player_core, key_cont );
   
 #if 0 //強制移動イベント
  	if( Player_MoveBitCheck_Force(jiki) == TRUE ){
@@ -232,13 +229,13 @@ static GMEVENT * gjiki_CheckEventKairiki(
         u32 ret;
         int ana;
         FIELDMAP_WORK *fieldmap;
-        FIELD_PLAYER *fld_player;
+        FIELD_PLAYER_CORE *fld_player_core;
         FLDMAPPER *mapper;
           
         KAGAYA_Printf( "怪力岩ヒット\n" );
         
-        fld_player = FIELD_PLAYER_GRID_GetFieldPlayer( gjiki );
-        fieldmap = FIELD_PLAYER_GetFieldMapWork( fld_player );
+        fld_player_core = FIELD_PLAYER_GRID_GetFieldPlayerCore( gjiki );
+        fieldmap = FIELD_PLAYER_CORE_GetFieldMapWork( fld_player_core );
         mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
         
         ana = kairiki_CheckAna( mmdl, dir, mapper );
@@ -308,11 +305,11 @@ static GMEVENT * gjiki_SetEventKairiki(
 {
   GMEVENT *event;
   GAMESYS_WORK *gsys;
-  FIELD_PLAYER *fld_player;
+  FIELD_PLAYER_CORE *fld_player_core;
   EVENT_KAIRIKI_WORK *work;
   
-  fld_player = FIELD_PLAYER_GRID_GetFieldPlayer( gjiki );
-  gsys = FIELD_PLAYER_GetGameSysWork( fld_player );
+  fld_player_core = FIELD_PLAYER_GRID_GetFieldPlayerCore( gjiki );
+  gsys = FIELD_PLAYER_CORE_GetGameSysWork( fld_player_core );
   
   event = GMEVENT_Create( gsys, NULL,
       event_Kairki, sizeof(EVENT_KAIRIKI_WORK) );
@@ -324,7 +321,7 @@ static GMEVENT * gjiki_SetEventKairiki(
   work->dir = dir;
   work->ana_flag = ana_flag;
   work->mmdl = mmdl;
-  work->mmdl_jiki = FIELD_PLAYER_GetMMdl( fld_player );
+  work->mmdl_jiki = FIELD_PLAYER_CORE_GetMMdl( fld_player_core );
   
   return( event );
 }
@@ -491,7 +488,7 @@ GFL_TCB * FIELD_PLAYER_GRID_SetEventNaminoriStart(
   work->fld_player = fld_player;
   
   {
-    work->gjiki = FIELDMAP_GetPlayerGrid( work->fieldmap );
+    work->gjiki = FIELD_PLAYER_GetGridWk( work->fld_player );
   }
   
   {
@@ -586,7 +583,7 @@ static void evtcb_NaminoriStart( GFL_TCB *tcb, void *wk )
         fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );
         task = FLDEFF_NAMIPOKE_SetMMdl(
             fectrl, dir, &pos, mmdl, NAMIPOKE_JOINT_OFF );
-        FIELD_PLAYER_GRID_SetEffectTaskWork( work->gjiki, task );
+        FIELD_PLAYER_SetEffectTaskWork( work->fld_player, task );
       }
     }
     
@@ -614,9 +611,9 @@ static void evtcb_NaminoriStart( GFL_TCB *tcb, void *wk )
   case 3:
     if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
       MMDL_EndAcmd( mmdl );
-      task = FIELD_PLAYER_GRID_GetEffectTaskWork( work->gjiki );
+      task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
       FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ON );
-      FIELD_PLAYER_SetNaminori( work->gjiki );
+      FIELD_PLAYER_SetNaminori( work->fld_player );
       
       work->end_flag = TRUE;
       work->seq++;
@@ -696,8 +693,7 @@ GFL_TCB * FIELD_PLAYER_GRID_SetEventTakinobori(
   }
   
   {
-    FIELDMAP_CTRL_GRID *gridMap = FIELDMAP_GetMapCtrlWork( work->fieldmap );
-    work->gjiki = FIELDMAP_GetPlayerGrid( work->fieldmap );
+    work->gjiki = FIELD_PLAYER_GetGridWk( work->fld_player );
   }
   
   {
@@ -798,7 +794,7 @@ static BOOL ev_Takinobori_0( TAKINOBORI_WORK *work )
   {
     FLDEFF_TASK *task;
     
-    task = FIELD_PLAYER_GRID_GetEffectTaskWork( work->gjiki );
+    task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
     FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ONLY );
     
     {
@@ -862,7 +858,7 @@ static BOOL ev_Takinobori_1( TAKINOBORI_WORK *work )
     
     {
       FLDEFF_TASK *task;
-      task = FIELD_PLAYER_GRID_GetEffectTaskWork( work->gjiki );
+      task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
       
       {
         FLDEFF_CTRL *fectrl;
@@ -1002,7 +998,7 @@ static BOOL ev_Takinobori_4( TAKINOBORI_WORK *work )
   MMDL_SetStatusBitHeightGetOFF( mmdl, FALSE );
   MMDL_InitPosition( mmdl, &work->target_pos, work->dir );
   
-  task = FIELD_PLAYER_GRID_GetEffectTaskWork( work->gjiki );
+  task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
   FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ON );
   
   {
@@ -1101,7 +1097,7 @@ static void ev_Takikudari( TAKINOBORI_WORK *work )
       {
         FLDEFF_TASK *task;
     
-        task = FIELD_PLAYER_GRID_GetEffectTaskWork( work->gjiki );
+        task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
         FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ONLY );
         
         {
@@ -1148,7 +1144,7 @@ static void ev_Takikudari( TAKINOBORI_WORK *work )
     
       {
         FLDEFF_TASK *task;
-        task = FIELD_PLAYER_GRID_GetEffectTaskWork( work->gjiki );
+        task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
       
         {
           FLDEFF_CTRL *fectrl;
@@ -1193,7 +1189,7 @@ static void ev_Takikudari( TAKINOBORI_WORK *work )
         FLDEFF_TASK *task;
         NAMIPOKE_EFFECT_TYPE type = NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH;
         
-        task = FIELD_PLAYER_GRID_GetEffectTaskWork( work->gjiki );
+        task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
         FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ON );
 
         fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );

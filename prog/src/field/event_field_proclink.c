@@ -23,9 +23,6 @@
 #include "field/map_attr.h"
 #include "field/itemuse_event.h"
 #include "field/zonedata.h"
-#include "fieldmap_ctrl.h"      //  レポートのイベント用
-#include "fieldmap_ctrl_grid.h" //  レポートのイベント用
-#include "field_player_grid.h"  //
 
 //各プロセス
 #include "event_fieldmap_control.h" //EVENT_FieldSubProc
@@ -2028,10 +2025,9 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
           
           if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
             MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-            FIELD_PLAYER_GRID *gjiki = FIELDMAP_GetPlayerGrid( work->fieldWork );
 
-            FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_REPORT );
-            FIELD_PLAYER_GRID_UpdateRequest( gjiki );
+            FIELD_PLAYER_SetRequest( fld_player, FIELD_PLAYER_REQBIT_REPORT );
+            FIELD_PLAYER_UpdateRequest( fld_player );
   
             //ポーズを解除しアニメするように
             MMDL_OffMoveBitMoveProcPause( mmdl );
@@ -2076,12 +2072,10 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
         FIELDMAP_GetFieldPlayer( work->fieldWork );
 
       if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
-        FIELDMAP_CTRL_GRID *gridmap =
-          FIELDMAP_GetMapCtrlWork( work->fieldWork );
-        FIELD_PLAYER_GRID *gjiki = FIELDMAP_GetPlayerGrid( work->fieldWork );
-        FIELD_PLAYER_GRID_SetRequest(
-            gjiki, FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM );
-        FIELD_PLAYER_GRID_UpdateRequest( gjiki );
+
+        FIELD_PLAYER_SetRequest(
+            fld_player, FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM );
+        FIELD_PLAYER_UpdateRequest( fld_player );
       }
     }
 

@@ -17,6 +17,7 @@
 #include "map_attr.h"
 
 #include "field_player_code.h"
+#include "field_effect.h"
 
 //======================================================================
 //	define
@@ -93,6 +94,9 @@ typedef u32 FIELD_PLAYER_REQBIT;
 //======================================================================
 //	extern
 //======================================================================
+//======================================================================
+//	Grid Rail Hybrid共通処理
+//======================================================================
 //作成、削除、更新
 extern FIELD_PLAYER * FIELD_PLAYER_Create(
     PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
@@ -103,6 +107,35 @@ extern void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player );
 extern GMEVENT * FIELD_PLAYER_CheckMoveEvent( FIELD_PLAYER *fld_player,
     int key_trg, int key_cont, PLAYER_EVENTBIT evbit );
 
+// プレイヤー動作変更 REQBIT 
+extern void FIELD_PLAYER_SetRequest(
+  FIELD_PLAYER * fld_player, FIELD_PLAYER_REQBIT req_bit );
+extern void FIELD_PLAYER_UpdateRequest( FIELD_PLAYER * fld_player );
+
+// 自機オーダーチェック
+extern BOOL FIELD_PLAYER_CheckStartMove(
+    FIELD_PLAYER * fld_player, u16 dir );
+
+// 強制停止
+extern void FIELD_PLAYER_ForceStop( FIELD_PLAYER * fld_player );
+extern void FIELD_PLAYER_SetMoveStop( FIELD_PLAYER * fld_player );
+
+// EffectTask 波乗りのポケモンなど
+extern void FIELD_PLAYER_SetEffectTaskWork(
+    FIELD_PLAYER * fld_player, FLDEFF_TASK *task );
+extern FLDEFF_TASK * FIELD_PLAYER_GetEffectTaskWork(
+    FIELD_PLAYER * fld_player );
+
+// 指定方向を自機に渡すとどうなるか
+extern PLAYER_MOVE_VALUE FIELD_PLAYER_GetDirMoveValue(
+    FIELD_PLAYER * fld_player, u16 dir );
+
+// キー入力方向
+extern u16 FIELD_PLAYER_GetKeyDir( const FIELD_PLAYER* fld_player, int key );
+
+// 波乗り
+extern void FIELD_PLAYER_SetNaminori( FIELD_PLAYER * fld_player );
+extern void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER * fld_player );
 
 //参照、設定
 extern void FIELD_PLAYER_GetPos(
@@ -111,11 +144,10 @@ extern void FIELD_PLAYER_SetPos(
 		FIELD_PLAYER *fld_player, const VecFx32 *pos );
 extern u16 FIELD_PLAYER_GetDir( const FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_SetDir( FIELD_PLAYER *fld_player, u16 dir );
+
 extern FIELDMAP_WORK * FIELD_PLAYER_GetFieldMapWork(
 		FIELD_PLAYER *fld_player );
 extern MMDL * FIELD_PLAYER_GetMMdl( const FIELD_PLAYER *fld_player );
-extern FLDMAPPER_GRIDINFODATA * FIELD_PLAYER_GetGridInfoData(
-		FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_SetMoveValue(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_VALUE val );
 extern PLAYER_MOVE_VALUE FIELD_PLAYER_GetMoveValue(
@@ -128,6 +160,7 @@ extern void FIELD_PLAYER_SetMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
 extern int FIELD_PLAYER_GetSex( const FIELD_PLAYER *fld_player );
 extern GAMESYS_WORK * FIELD_PLAYER_GetGameSysWork( FIELD_PLAYER *fld_player );
+
 extern MAPATTR FIELD_PLAYER_GetMapAttr( const FIELD_PLAYER *fld_player );
 extern MAPATTR FIELD_PLAYER_GetDirMapAttr( const FIELD_PLAYER *fld_player, u16 dir );
 
@@ -140,15 +173,13 @@ extern u16 FIELD_PLAYER_GetMoveFormToOBJCode(
     int sex, PLAYER_MOVE_FORM form );
 extern PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm(
     int sex, u16 code );
+extern PLAYER_DRAW_FORM FIELD_PLAYER_CheckOBJCodeToDrawForm(
+    u16 code );
 extern BOOL FIELD_PLAYER_CheckChangeEventDrawForm( FIELD_PLAYER *fld_player );
 
 //ツール
-extern void FIELD_PLAYER_GetDirGridPos(
-		const FIELD_PLAYER *fld_player, u16 dir, s16 *gx, s16 *gy, s16 *gz );
 extern void FIELD_PLAYER_GetDirPos(
 		const FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos );
-extern void FIELD_PLAYER_GetFrontGridPos(
-		const FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz );
 extern void FIELD_PLAYER_GetDirWay( 
     const FIELD_PLAYER *fld_player, u16 dir, VecFx32* way );
 extern BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player );
@@ -167,4 +198,48 @@ extern void FIELD_PLAYER_CheckSpecialDrawForm(
 extern void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code );
 extern void FIELD_PLAYER_ClearOBJCodeFix( FIELD_PLAYER *fld_player );
 extern BOOL FIELD_PLAYER_CheckIllegalOBJCode( FIELD_PLAYER *fld_player );
+
+// モデル検索
+extern MMDL * FIELD_PLAYER_GetFrontMMdl( const FIELD_PLAYER *fld_player );
+
+
+//======================================================================
+//	Grid 専用処理
+//======================================================================
+// GRIDワークのセットアップ
+extern void FIELD_PLAYER_SetUpGrid( FIELD_PLAYER *fld_player, HEAPID heapID );
+// GRIDワークの動作処理
+extern void FIELD_PLAYER_MoveGrid( FIELD_PLAYER *fld_player, int key_trg, int key_cont );
+
+//TOOL
+extern void FIELD_PLAYER_GetDirGridPos(
+		const FIELD_PLAYER *fld_player, u16 dir, s16 *gx, s16 *gy, s16 *gz );
+extern void FIELD_PLAYER_GetFrontGridPos(
+		const FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz );
+
+
+
+
+//======================================================================
+//	NoGrid 専用処理
+//======================================================================
+// NOGRIDワークのセットアップ
+extern void FIELD_PLAYER_SetUpNoGrid( FIELD_PLAYER *fld_player, HEAPID heapID );
+// NOGRIDワークの動作処理
+extern void FIELD_PLAYER_MoveNoGrid( FIELD_PLAYER *fld_player, int key_trg, int key_cont );
+
+// NOGRID リスタート
+extern void FIELD_PLAYER_RestartNoGrid( FIELD_PLAYER *fld_player, const RAIL_LOCATION* cp_pos );
+// NOGRID　停止
+extern void FIELD_PLAYER_StopNoGrid( FIELD_PLAYER *fld_player );
+
+// RAILWKの取得
+extern FIELD_RAIL_WORK* FIELD_PLAYER_GetNoGridRailWork( const FIELD_PLAYER *fld_player );
+
+// Location
+extern void FIELD_PLAYER_SetNoGridLocation( FIELD_PLAYER* p_player, const RAIL_LOCATION* cp_location );
+extern void FIELD_PLAYER_GetNoGridLocation( const FIELD_PLAYER* cp_player, RAIL_LOCATION* p_location );
+
+// RailPos
+extern void FIELD_PLAYER_GetNoGridPos( const FIELD_PLAYER* cp_player, VecFx32* p_pos );
 

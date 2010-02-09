@@ -51,10 +51,8 @@
 #include "field_encount.h"      //FIELD_ENCOUNT_CheckEncount
 #include "effect_encount.h"
 
-#include "fieldmap_ctrl.h"
 #include "fieldmap_ctrl_grid.h"
 #include "fieldmap_ctrl_nogrid_work.h"
-#include "field_player_grid.h"
 
 #include "map_attr.h"
 
@@ -427,18 +425,18 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION && intcomm != NULL){
       //話しかけられていないかチェック
       if(IntrudeField_CheckTalkedTo(intcomm, &talk_netid) == TRUE){
-        FIELD_PLAYER_GRID_ForceStop( req.field_player );
+        FIELD_PLAYER_ForceStop( req.field_player );
         return EVENT_CommWasTalkedTo(gsys, fieldWork, intcomm, fmmdl_player, talk_netid, req.heapID);
       }
       //ミッション結果を受信していないかチェック
       if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
-        FIELD_PLAYER_GRID_ForceStop( req.field_player );
+        FIELD_PLAYER_ForceStop( req.field_player );
         return EVENT_CommMissionResult(gsys, fieldWork, intcomm, fmmdl_player, req.heapID);
       }
       //話しかける
       if( req.talkRequest ){
         if(IntrudeField_CheckTalk(intcomm, req.field_player, &talk_netid) == TRUE){
-          FIELD_PLAYER_GRID_ForceStop( req.field_player );
+          FIELD_PLAYER_ForceStop( req.field_player );
           return EVENT_CommTalk(gsys, fieldWork, intcomm, fmmdl_player, talk_netid, req.heapID);
         }
       }
@@ -456,7 +454,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         if ( SCRIPT_IsValidScriptID( scr_id ) == TRUE )
         {
           MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
-          FIELD_PLAYER_GRID_ForceStop( req.field_player );
+          FIELD_PLAYER_ForceStop( req.field_player );
           *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
           return EVENT_FieldTalk( gsys, fieldWork,
             scr_id, fmmdl_player, fmmdl_talk, req.heapID );
@@ -915,10 +913,9 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
         u32 scr_id = MMDL_GetEventID( fmmdl_talk );
         if ( SCRIPT_IsValidScriptID( scr_id ) == TRUE )
         {
-          FIELD_PLAYER_NOGRID* player_nogrid = FIELDMAP_GetPlayerNoGrid( fieldWork );
           MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
           
-          FIELD_PLAYER_NOGRID_ForceStop( player_nogrid );
+          FIELD_PLAYER_ForceStop( req.field_player );
           return EVENT_FieldTalk( gsys, fieldWork,
             scr_id, fmmdl_player, fmmdl_talk, req.heapID );
         }
@@ -1302,7 +1299,6 @@ static GMEVENT* checkPosEvent_core( EV_REQUEST * req, u16 dir )
 static GMEVENT * checkPosEvent_OnlyDirection( EV_REQUEST * req )
 {
   GMEVENT * event;
-  FIELD_PLAYER_GRID * fpg;
   u16 next_dir;
 
   //現在の向きに適合するイベントの有無をチェック
@@ -1312,13 +1308,7 @@ static GMEVENT * checkPosEvent_OnlyDirection( EV_REQUEST * req )
     return event;
   }
 
-  //fpg = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( FIELDMAP_GetMapCtrlWork( req->fieldWork ) );
-  fpg = FIELDMAP_GetPlayerGrid( req->fieldWork );
-  if ( fpg == NULL )
-  {
-    return NULL;
-  }
-  next_dir = FIELD_PLAYER_GRID_GetKeyDir( fpg, req->key_cont );
+  next_dir = FIELD_PLAYER_GetKeyDir( req->field_player, req->key_cont );
   if ( next_dir == req->player_dir )
   {
     return NULL;
@@ -1338,7 +1328,6 @@ static GMEVENT * checkPosEvent_OnlyDirection( EV_REQUEST * req )
 static GMEVENT * checkPosEvent_prefetchDirection( EV_REQUEST * req )
 {
   GMEVENT * event;
-  FIELD_PLAYER_GRID * fpg;
   u16 key_dir = DIR_NOT;
   int st = req->player_state;
   int val = req->player_value;
@@ -1381,11 +1370,6 @@ static GMEVENT * checkPosEvent_prefetchDirection( EV_REQUEST * req )
   //case PLAYER_MOVE_STATE_END:
   }
 
-  fpg = FIELDMAP_GetPlayerGrid( req->fieldWork );
-  if ( fpg == NULL )
-  {
-    return NULL;
-  }
 #if 0
   if ( FIELD_PLAYER_GRID_GetMoveValue( fpg, key_dir ) == PLAYER_MOVE_VALUE_STOP )
   {
@@ -2045,18 +2029,17 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
   RAIL_LOCATION pos;
   int * firstID = FIELDMAP_GetFirstConnectID(fieldWork);
   FLDNOGRID_MAPPER* nogridMapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
-  FIELD_PLAYER_NOGRID* p_nogrid_player = FIELDMAP_GetPlayerNoGrid( fieldWork );
   const CONNECT_DATA* cnct;
 
   // @TODO ３D座標のイベントとレール座標のイベントを併用しているため複雑
   {
     VecFx32 pos_3d;
-    FIELD_PLAYER_NOGRID_GetPos( p_nogrid_player , &pos_3d );
+    FIELD_PLAYER_GetNoGridPos( req->field_player, &pos_3d );
     idx = EVENTDATA_SearchConnectIDBySphere(req->evdata, &pos_3d);
   }
   if( idx == EXIT_ID_NONE )
   {
-    FIELD_PLAYER_NOGRID_GetLocation( p_nogrid_player , &pos );
+    FIELD_PLAYER_GetNoGridLocation( req->field_player, &pos );
     idx = EVENTDATA_SearchConnectIDByRailLocation(req->evdata, &pos);
   }
 
@@ -2457,8 +2440,6 @@ static GMEVENT_RESULT event_NaminoriStart(
 
   FIELD_PLAYER *fld_player =
     FIELDMAP_GetFieldPlayer( work->fieldWork );
-  FIELD_PLAYER_GRID *gjiki =
-    FIELDMAP_GetPlayerGrid( work->fieldWork );
   PLAYER_MOVE_FORM form =
     FIELD_PLAYER_GetMoveForm( fld_player );
   MMDL *mmdl =
@@ -2501,7 +2482,7 @@ static GMEVENT_RESULT event_NaminoriStart(
         task = FLDEFF_NAMIPOKE_SetMMdl(
             fectrl, dir, &pos, mmdl, NAMIPOKE_JOINT_OFF );
         
-        FIELD_PLAYER_GRID_SetEffectTaskWork( gjiki, task );
+        FIELD_PLAYER_SetEffectTaskWork( fld_player, task );
       }
     }
     
@@ -2529,9 +2510,9 @@ static GMEVENT_RESULT event_NaminoriStart(
   case 3:
     if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
       MMDL_EndAcmd( mmdl );
-      task = FIELD_PLAYER_GRID_GetEffectTaskWork( gjiki );
+      task = FIELD_PLAYER_GetEffectTaskWork( fld_player );
       FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ON );
-      FIELD_PLAYER_SetNaminori( gjiki );
+      FIELD_PLAYER_SetNaminori( fld_player );
       (*seq)++;
     }
     break;
@@ -2602,8 +2583,6 @@ static GMEVENT_RESULT event_NaminoriEnd(
 
   FIELD_PLAYER *fld_player =
     FIELDMAP_GetFieldPlayer( work->fieldWork );
-  FIELD_PLAYER_GRID *gjiki =
-    FIELDMAP_GetPlayerGrid( work->fieldWork );
   PLAYER_MOVE_FORM form =
     FIELD_PLAYER_GetMoveForm( fld_player );
   MMDL *mmdl =
@@ -2618,10 +2597,10 @@ static GMEVENT_RESULT event_NaminoriEnd(
     (*seq)++;
     break;
   case 1: //波乗りポケモン切り離し
-    task = FIELD_PLAYER_GRID_GetEffectTaskWork( gjiki );
+    task = FIELD_PLAYER_GetEffectTaskWork( fld_player );
     FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_OFF );
-    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_NORMAL );
-    FIELD_PLAYER_GRID_UpdateRequest( gjiki );
+    FIELD_PLAYER_SetRequest( fld_player, FIELD_PLAYER_REQBIT_NORMAL );
+    FIELD_PLAYER_UpdateRequest( fld_player );
     {
       u16 ac = MMDL_ChangeDirAcmdCode( work->dir, AC_JUMP_U_1G_8F );
       if( work->attr_kishi_flag == TRUE ){
@@ -2633,7 +2612,7 @@ static GMEVENT_RESULT event_NaminoriEnd(
     break;
   case 2:
     if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
-      FIELD_PLAYER_SetNaminoriEnd( gjiki );
+      FIELD_PLAYER_SetNaminoriEnd( fld_player );
       (*seq)++;
     }
     break;
@@ -2681,9 +2660,7 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
     MAPATTR_FLAG attr_flag;
     MAPATTR_VALUE attr_value;
     FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
-    FIELD_PLAYER_GRID *gjiki =
-      FIELDMAP_GetPlayerGrid( fieldWork );
-    u16 dir = FIELD_PLAYER_GRID_GetKeyDir( gjiki, req->key_cont );
+    u16 dir = FIELD_PLAYER_GetKeyDir( req->field_player, req->key_cont );
     
     if( dir != DIR_NOT )
     {

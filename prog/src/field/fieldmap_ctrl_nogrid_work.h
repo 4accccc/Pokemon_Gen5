@@ -20,7 +20,6 @@
 extern "C"{
 #endif
 
-#include "field_player_nogrid.h"
 #include "fieldmap.h"
 
 //-----------------------------------------------------------------------------
@@ -56,9 +55,6 @@ extern void FIELDMAP_CTRL_NOGRID_WORK_Main( FIELDMAP_CTRL_NOGRID_WORK* p_wk );
 extern void* FIELDMAP_CTRL_NOGRID_WORK_AllocLocalWork( FIELDMAP_CTRL_NOGRID_WORK* p_wk, HEAPID heapID, u32 size );
 extern void FIELDMAP_CTRL_NOGRID_WORK_FreeLocalWork( FIELDMAP_CTRL_NOGRID_WORK* p_wk );
 extern void* FIELDMAP_CTRL_NOGRID_WORK_GetLocalWork( const FIELDMAP_CTRL_NOGRID_WORK* cp_wk );
-
-// èÓïÒéÊìæ
-extern FIELD_PLAYER_NOGRID* FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( const FIELDMAP_CTRL_NOGRID_WORK* cp_wk );
 
 #ifdef _cplusplus
 }	// extern "C"{

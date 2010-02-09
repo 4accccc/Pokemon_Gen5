@@ -18,8 +18,6 @@
 #include "fldmmdl_code.h"
 #include "map_attr_def.h"  // for MATTR_xxxx
 #include "fldeff_namipoke.h"  // for NAMIPOKE_
-#include "field_player_grid.h"  // for FIELD_PLAYER_GRID
-#include "fieldmap_ctrl.h"  // for FIELDMAP_GetPlayerGrid
 
 
 //=============================================================================================
@@ -205,10 +203,8 @@ static GMEVENT_RESULT AutoMove( GMEVENT* event, int* seq, void* wk )
     }
     // 波ポケ後部の水飛沫エフェクトOFF
     {
-      FIELD_PLAYER_GRID* player;
       FLDEFF_TASK* task;
-      player = FIELDMAP_GetPlayerGrid( work->fieldmap );
-      task   = FIELD_PLAYER_GRID_GetEffectTaskWork( player );
+      task   = FIELD_PLAYER_GetEffectTaskWork( work->player );
       FLDEFF_NAMIPOKE_SetRippleEffect( task, FALSE );
     }
     *seq = SEQ_MAIN;
@@ -490,10 +486,8 @@ static void ExitEvent( EVENT_WORK* work )
 {
   // 波ポケ後部の水飛沫エフェクトON
   {
-    FIELD_PLAYER_GRID* player;
     FLDEFF_TASK* task;
-    player = FIELDMAP_GetPlayerGrid( work->fieldmap );
-    task   = FIELD_PLAYER_GRID_GetEffectTaskWork( player );
+    task   = FIELD_PLAYER_GetEffectTaskWork( work->player );
     FLDEFF_NAMIPOKE_SetRippleEffect( task, TRUE );
   }
 }

@@ -25,9 +25,7 @@
 #include "eventdata_local.h"
 #include "field/eventdata_sxy.h"
 
-#include "fieldmap_ctrl.h"
 #include "fieldmap_ctrl_grid.h"
-#include "field_player_grid.h"
 
 #include "field_task_player_drawoffset.h"
 
@@ -798,17 +796,10 @@ VMCMD_RESULT EvCmdPlayerRequest( VMHANDLE *core, void *wk )
   SCRIPT_FLDPARAM *fldparam = SCRIPT_GetFieldParam( sc );
   u16 req = VMGetU16( core );
   FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
+  FIELD_PLAYER* fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
   
-  if( FIELDMAP_GetMapControlType(fieldmap) == FLDMAP_CTRLTYPE_GRID ){
-    FIELD_PLAYER_GRID *gjiki =
-      FIELDMAP_GetPlayerGrid( fieldmap );
-    FIELD_PLAYER_GRID_SetRequest( gjiki, req );
-    FIELD_PLAYER_GRID_UpdateRequest( gjiki );
-  }else{
-    FIELD_PLAYER_NOGRID *gjiki = FIELDMAP_GetPlayerNoGrid( fieldmap );
-
-    FIELD_PLAYER_NOGRID_SetRequestBit( gjiki, req );
-  }
+  FIELD_PLAYER_SetRequest( fld_player, req );
+  FIELD_PLAYER_UpdateRequest( fld_player );
 
   return VMCMD_RESULT_CONTINUE;
 }

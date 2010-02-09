@@ -19,9 +19,6 @@ extern "C"{
 #include <gflib.h>
 #include "fieldmap.h"
 
-#include "field_player_grid.h"
-#include "field_player_nogrid.h"
-
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -51,8 +48,6 @@ extern const DEPEND_FUNCTIONS FieldMapCtrl_HybridFunctions;
 
 // 情報の取得
 extern FLDMAP_BASESYS_TYPE FIELDMAP_CTRL_HYBRID_GetBaseSystemType( const FIELDMAP_CTRL_HYBRID* cp_wk );
-extern FIELD_PLAYER_GRID* FIELDMAP_CTRL_HYBRID_GetFieldPlayerGrid( const FIELDMAP_CTRL_HYBRID* cp_wk );
-extern FIELD_PLAYER_NOGRID* FIELDMAP_CTRL_HYBRID_GetFieldPlayerNoGrid( const FIELDMAP_CTRL_HYBRID* cp_wk );
 
 // その場で、レールとグリッドを切り替える
 extern void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP_WORK* p_fieldmap );

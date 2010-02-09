@@ -13,9 +13,12 @@
 #include "field_sound.h"
 #include "field_player.h"
 
+#include "field_player_core.h"
 #include "field_player_grid.h"
+#include "field_player_nogrid.h"
 
 #include "field/field_const.h"
+
 
 //======================================================================
 //	define
@@ -38,37 +41,19 @@ typedef struct
 //--------------------------------------------------------------
 struct _FIELD_PLAYER
 {
-	HEAPID heapID;
-  GAMESYS_WORK *gsys;
-	FIELDMAP_WORK *fieldWork;
-  PLAYER_WORK *playerWork;
-   
-#if 0 //PLAYER_WORKへ移動
-  PLAYER_MOVE_FORM move_form;
-#endif
-  
-  PLAYER_MOVE_STATE move_state;
-  PLAYER_MOVE_VALUE move_value;
-	
-  int sex; //性別
-  
-	u16 dir;
-	u16 padding0;
-	
-  VecFx32 pos;
-  
-	MMDL *fldmmdl;
-	FLDMAPPER_GRIDINFODATA gridInfoData;
+  FIELDMAP_WORK * fieldWork;
+  FIELD_PLAYER_CORE * corewk;   // field_player_core
+  FIELD_PLAYER_GRID * gridwk;   // field_player_grid
+  FIELD_PLAYER_NOGRID * nogridwk; // field_player_nogrid
 };
 
 //======================================================================
 //	proto
 //======================================================================
-static void fldplayer_ChangeMoveForm(
-    FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
-
-static const MMDL_HEADER data_MMdlHeader;
 static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX];
+
+
+
 
 //======================================================================
 //	フィールドプレイヤー
@@ -88,81 +73,16 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
     PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
 		const VecFx32 *pos, int sex, HEAPID heapID )
 {
-  u16 fixcode;
-	MMDLSYS *fmmdlsys;
-	FIELD_PLAYER *fld_player;
-	
-	fld_player = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER) );
-  fld_player->playerWork = playerWork;
-	fld_player->fieldWork = fieldWork;
-  fld_player->gsys = FIELDMAP_GetGameSysWork( fieldWork );
-	fld_player->pos = *pos;
+  FIELD_PLAYER* fld_player;
 
-	FLDMAPPER_GRIDINFODATA_Init( &fld_player->gridInfoData );
-	
-	//MMDLセットアップ
-	fmmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
-	
-	fld_player->fldmmdl =
-		MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
-  
-  fld_player->sex = sex;
-  
-  fixcode = PLAYERWORK_GetOBJCodeFix( fld_player->playerWork );
+  fld_player = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER) );
 
-	if( fld_player->fldmmdl == NULL )	//新規
-	{
-		MMDL_HEADER head;
-    MMDL_HEADER_GRIDPOS *gridpos;
-		head = data_MMdlHeader;
-    gridpos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;
-		gridpos->gx = SIZE_GRID_FX32( pos->x );
-		gridpos->gz = SIZE_GRID_FX32( pos->z );
-		gridpos->y = pos->y;
-    
-    if( fixcode == OBJCODEMAX )
-    {
-      head.obj_code = FIELD_PLAYER_GetMoveFormToOBJCode(
-          sex, PLAYER_MOVE_FORM_NORMAL ); 
-    }
-    else
-    {
-      head.obj_code = fixcode;
-    }
+  fld_player->fieldWork = fieldWork;
 
-		fld_player->fldmmdl = MMDLSYS_AddMMdl( fmmdlsys, &head, 0 );
-	}
-	else //復帰
-	{
-		int gx = SIZE_GRID_FX32( pos->x );
-		int gy = SIZE_GRID_FX32( pos->y );
-		int gz = SIZE_GRID_FX32( pos->z );
-		MMDL *fmmdl = fld_player->fldmmdl;
-		
-		MMDL_SetGridPosX( fmmdl, gx );
-		MMDL_SetGridPosY( fmmdl, gy );
-		MMDL_SetGridPosZ( fmmdl, gz );
-		MMDL_SetVectorPos( fmmdl, pos );
-    
-    //レポート等のイベント用OBJの場合、動作フォームに合わせて復帰
-    if( fixcode == OBJCODEMAX ){
-      FIELD_PLAYER_ResetMoveForm( fld_player );
-    }
-	}
-	
-  //OBJコードから動作フォームを設定
-  if( fixcode == OBJCODEMAX ){
-    u16 code = MMDL_GetOBJCode( fld_player->fldmmdl );
-    PLAYER_MOVE_FORM form = FIELD_PLAYER_GetOBJCodeToMoveForm( sex, code );
-#if 0
-    fld_player->move_form = form;
-#else
-    PLAYERWORK_SetMoveForm( fld_player->playerWork, form );
-#endif
-  }
-  
-	MMDL_SetStatusBitNotZoneDelete( fld_player->fldmmdl, TRUE );
-	return( fld_player );
+  // COREWK生成
+  fld_player->corewk = FIELD_PLAYER_CORE_Create( playerWork, fieldWork, pos, sex, heapID );
+
+  return fld_player;
 }
 
 //--------------------------------------------------------------
@@ -174,6 +94,20 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 //--------------------------------------------------------------
 void FIELD_PLAYER_Delete( FIELD_PLAYER *fld_player )
 {
+  // GRID
+  if( fld_player->gridwk ){
+    FIELD_PLAYER_GRID_Delete( fld_player->gridwk );
+  }
+  
+
+  // NOGRID
+  if( fld_player->nogridwk ){
+    FIELD_PLAYER_NOGRID_Delete( fld_player->nogridwk );
+  }
+  
+  // CORE
+  FIELD_PLAYER_CORE_Delete( fld_player->corewk );
+  
 	//動作モデルの削除はフィールドメイン側で
 	GFL_HEAP_FreeMemory( fld_player );
 }
@@ -189,28 +123,36 @@ void FIELD_PLAYER_Delete( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
 {
-  //プレイヤー座標をPLAYERWORKへ反映
-  VecFx32 pos;
-  FIELD_PLAYER_GetPos( fld_player, &pos );
-	PLAYERWORK_setPosition( fld_player->playerWork, &pos );
   
-  //方向をPLAYERWORKへ反映
-  {
-    u16 dir = FIELD_PLAYER_GetDir( fld_player );
-    PLAYERWORK_setDirection_Type( fld_player->playerWork, dir );
-  }
-  
-  // レール独自の更新処理
-  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
-  {
-	  PLAYERWORK_setPosType( fld_player->playerWork, LOCATION_POS_TYPE_3D );
-  }
-  else
-  {
-    RAIL_LOCATION location;
-    MMDL_GetRailLocation( fld_player->fldmmdl, &location );
-	  PLAYERWORK_setRailPosition( fld_player->playerWork, &location );
-	  PLAYERWORK_setPosType( fld_player->playerWork, LOCATION_POS_TYPE_RAIL );
+  // コアアップデート
+  FIELD_PLAYER_CORE_Update( fld_player->corewk );
+  { 
+    //プレイヤー座標をPLAYERWORKへ反映
+    VecFx32 pos;
+    PLAYER_WORK* playerWork = FIELD_PLAYER_CORE_GetPlayerWork( fld_player->corewk );
+    MMDL* fldmmdl = FIELD_PLAYER_CORE_GetMMdl( fld_player->corewk );
+    
+    MMDL_GetVectorPos( fldmmdl, &pos );
+    PLAYERWORK_setPosition( playerWork, &pos );
+    
+    //方向をPLAYERWORKへ反映
+    {
+      u16 dir = MMDL_GetDirDisp(fldmmdl);
+      PLAYERWORK_setDirection_Type( playerWork, dir );
+    }
+    
+    // レール独自の更新処理
+    if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
+    {
+      PLAYERWORK_setPosType( playerWork, LOCATION_POS_TYPE_3D );
+    }
+    else
+    {
+      RAIL_LOCATION location;
+      MMDL_GetRailLocation( fldmmdl, &location );
+      PLAYERWORK_setRailPosition( playerWork, &location );
+      PLAYERWORK_setPosType( playerWork, LOCATION_POS_TYPE_RAIL );
+    }
   }
 }
 
@@ -232,11 +174,189 @@ GMEVENT * FIELD_PLAYER_CheckMoveEvent( FIELD_PLAYER *fld_player,
   if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
     event = FIELD_PLAYER_GRID_CheckMoveEvent(
-        fld_player, key_trg, key_cont, evbit );
+        fld_player->gridwk, key_trg, key_cont, evbit );
+  }
+  else
+  {
+    OS_TPrintf( "Check Move Event rail not support\n" );
   }
   
   return( event );
 }
+
+
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト 
+ * @param fld_player FIELD_PLAYER
+ * @param reqbit FIELD_PLAYER_REQBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_SetRequest(
+  FIELD_PLAYER * fld_player, FIELD_PLAYER_REQBIT req_bit )
+{
+  FIELD_PLAYER_CORE_SetRequest( fld_player->corewk, req_bit );
+}
+
+//--------------------------------------------------------------
+/**
+ * リクエストを更新
+ * @param fld_player FIELD_PLAYER
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_UpdateRequest( FIELD_PLAYER * fld_player )
+{
+  FIELD_PLAYER_CORE_UpdateRequest( fld_player->corewk );
+}
+
+
+//======================================================================
+//  移動チェック
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機オーダーチェック
+ * @param gjiki FIELD_PLAYER_GRID
+ * @param dir 移動方向。DIR_UP等
+ * @retval BOOL TRUE=移動可能 FALSE=移動不可
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_CheckStartMove(
+    FIELD_PLAYER * fld_player, u16 dir )
+{
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
+    return FIELD_PLAYER_GRID_CheckStartMove( fld_player->gridwk, dir );
+  }
+  return FIELD_PLAYER_CORE_CheckStartMove( fld_player->corewk, dir );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自機を強制停止させる
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_ForceStop( FIELD_PLAYER * fld_player )
+{
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
+    FIELD_PLAYER_GRID_ForceStop( fld_player->gridwk );
+  }else{
+    FIELD_PLAYER_NOGRID_ForceStop( fld_player->nogridwk );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機　動作停止
+ * @param fld_player
+ * @retval BOOL TRUE=停止完了。FALSE=移動中につき停止出来ない。
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_SetMoveStop( FIELD_PLAYER * fld_player )
+{
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
+    FIELD_PLAYER_GRID_SetMoveStop( fld_player->gridwk );
+  }else{
+    //FIELD_PLAYER_NOGRID_ForceStop( fld_player->nogridwk );
+    OS_Printf( "rail not support\n" );
+    GF_ASSERT( 0 );
+  }
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 自機に波乗りポケモンのタスクポインタをセット
+ * @param gjiki FIELD_PLAYER
+ * @param task セットするFLDEFF_TASK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_SetEffectTaskWork(
+    FIELD_PLAYER * fld_player, FLDEFF_TASK *task )
+{
+  FIELD_PLAYER_CORE_SetEffectTaskWork( fld_player->corewk, task );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機が持っているエフェクトタスクのポインタを取得
+ * @param   gjiki FIELD_PLAYER
+ * @retval FLDEFF_TASK*
+ */
+//--------------------------------------------------------------
+FLDEFF_TASK * FIELD_PLAYER_GetEffectTaskWork(
+    FIELD_PLAYER * fld_player )
+{
+  return FIELD_PLAYER_CORE_GetEffectTaskWork( fld_player->corewk );
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定方向を自機に渡すとPLAYER_MOVE_VALUEはどうなるかチェック
+ * @param fld_player FIELD_PLAYER
+ * @param dir キー入力方向
+ * @retval PLAYER_MOVE_VALUE
+ */
+//--------------------------------------------------------------
+PLAYER_MOVE_VALUE FIELD_PLAYER_GetDirMoveValue(
+    FIELD_PLAYER * fld_player, u16 dir )
+{
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
+    return FIELD_PLAYER_GRID_GetMoveValue( fld_player->gridwk, dir );
+  }else{
+    //FIELD_PLAYER_NOGRID_ForceStop( fld_player->nogridwk );
+    OS_Printf( "rail not support\n" );
+    GF_ASSERT( 0 );
+  }
+  return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機　入力キーから移動する方向を返す
+ * @param gjiki FIELD_PLAYER
+ * @param key キー情報
+ * @retval u16 移動方向 DIR_UP等
+ */
+//--------------------------------------------------------------
+u16 FIELD_PLAYER_GetKeyDir( const FIELD_PLAYER* fld_player, int key )
+{
+  return FIELD_PLAYER_CORE_GetKeyDir( fld_player->corewk, key );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 自機を波乗り状態にする
+ * @param gjiki FIELD_PLAYER
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_SetNaminori( FIELD_PLAYER * fld_player )
+{
+  FIELD_PLAYER_CORE_SetRequest( fld_player->corewk, FIELD_PLAYER_REQBIT_SWIM );
+  FIELD_PLAYER_CORE_UpdateRequest( fld_player->corewk );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機波乗り状態を終了する
+ * @param gjiki FIELD_PLAYER
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER * fld_player )
+{
+  FIELD_PLAYER_CORE_SetRequest( fld_player->corewk, FIELD_PLAYER_REQBIT_NORMAL );
+  FIELD_PLAYER_CORE_UpdateRequest( fld_player->corewk );
+}
+
+
+
+
+
 
 //======================================================================
 //  FIELD_PLAYER 動作ステータス
@@ -250,87 +370,27 @@ GMEVENT * FIELD_PLAYER_CheckMoveEvent( FIELD_PLAYER *fld_player,
 //--------------------------------------------------------------
 void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
 {
-  MMDL *fmmdl = fld_player->fldmmdl;
-  PLAYER_MOVE_VALUE value = fld_player->move_value;
-  PLAYER_MOVE_STATE state = fld_player->move_state;
-  
-  fld_player->move_state = PLAYER_MOVE_STATE_OFF;
   
   //グリッド限定　各種強制移動チェック
   if( FIELDMAP_GetBaseSystemType(
         fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
     //足元強制移動チェック
-    if( FIELD_PLAYER_GRID_CheckUnderForceMove(fld_player) == TRUE )
+    if( FIELD_PLAYER_GRID_CheckUnderForceMove(fld_player->gridwk) == TRUE )
     {
-      fld_player->move_state = PLAYER_MOVE_STATE_ON;
+      FIELD_PLAYER_CORE_SetMoveState( fld_player->corewk, PLAYER_MOVE_STATE_ON );
       return;
     }
     
     //尾瀬落下チェック
-    if( FIELD_PLAYER_GRID_CheckOzeFallOut(fld_player) == TRUE )
+    if( FIELD_PLAYER_GRID_CheckOzeFallOut(fld_player->gridwk) == TRUE )
     {
-      fld_player->move_state = PLAYER_MOVE_STATE_ON;
+      FIELD_PLAYER_CORE_SetMoveState( fld_player->corewk, PLAYER_MOVE_STATE_ON );
       return;
     }
   }
 
-  if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ) //動作中
-  {
-    switch( value )
-    {
-    case PLAYER_MOVE_VALUE_STOP:
-      break;
-    case PLAYER_MOVE_VALUE_WALK:
-      if( state == PLAYER_MOVE_STATE_OFF || state == PLAYER_MOVE_STATE_END )
-      {
-        fld_player->move_state = PLAYER_MOVE_STATE_START;
-      }
-      else
-      {
-        fld_player->move_state = PLAYER_MOVE_STATE_ON;
-      }
-      break;
-    case PLAYER_MOVE_VALUE_TURN:
-      fld_player->move_state = PLAYER_MOVE_STATE_ON;
-      break;
-    }
-    return;
-  }
-  
-  if( MMDL_CheckEndAcmd(fmmdl) == TRUE ) //動作終了
-  {
-    switch( value )
-    {
-    case PLAYER_MOVE_VALUE_STOP:
-      break;
-    case PLAYER_MOVE_VALUE_WALK:
-      switch( state )
-      {
-      case PLAYER_MOVE_STATE_OFF:
-        break;
-      case PLAYER_MOVE_STATE_END:
-        fld_player->move_state = PLAYER_MOVE_STATE_OFF;
-        break;
-      default:
-        fld_player->move_state = PLAYER_MOVE_STATE_END;
-      }
-      break;
-    case PLAYER_MOVE_VALUE_TURN:
-      switch( state )
-      {
-      case PLAYER_MOVE_STATE_OFF:
-        break;
-      case PLAYER_MOVE_STATE_END:
-        fld_player->move_state = PLAYER_MOVE_STATE_OFF;
-        break;
-      default:
-        fld_player->move_state = PLAYER_MOVE_STATE_END;
-      }
-      break;
-    }
-    return;
-  }
+  FIELD_PLAYER_CORE_UpdateMoveStatus( fld_player->corewk );
 }
 
 //======================================================================
@@ -346,11 +406,7 @@ void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 void FIELD_PLAYER_GetPos( const FIELD_PLAYER *fld_player, VecFx32 *pos )
 {
-#if 0
-	*pos = fld_player->pos;
-#else //表示座標となるアクターから直に取得
-  MMDL_GetVectorPos( fld_player->fldmmdl, pos );
-#endif
+  FIELD_PLAYER_CORE_GetPos( fld_player->corewk, pos );
 }
 
 //--------------------------------------------------------------
@@ -363,20 +419,7 @@ void FIELD_PLAYER_GetPos( const FIELD_PLAYER *fld_player, VecFx32 *pos )
 //--------------------------------------------------------------
 void FIELD_PLAYER_SetPos( FIELD_PLAYER *fld_player, const VecFx32 *pos )
 {
-	int gx = SIZE_GRID_FX32( pos->x );
-	int gy = SIZE_GRID_FX32( pos->y );
-	int gz = SIZE_GRID_FX32( pos->z );
-	MMDL *fmmdl = fld_player->fldmmdl;
-	
-	MMDL_SetOldGridPosX( fmmdl, MMDL_GetGridPosX(fmmdl) );
-	MMDL_SetOldGridPosY( fmmdl, MMDL_GetGridPosY(fmmdl) );
-	MMDL_SetOldGridPosZ( fmmdl, MMDL_GetGridPosZ(fmmdl) );
-	MMDL_SetGridPosX( fmmdl, gx );
-	MMDL_SetGridPosY( fmmdl, gy );
-	MMDL_SetGridPosZ( fmmdl, gz );
-	MMDL_SetVectorPos( fmmdl, pos );
-	
-	fld_player->pos = *pos;
+  FIELD_PLAYER_CORE_SetPos( fld_player->corewk, pos );
 }
 
 //--------------------------------------------------------------
@@ -388,11 +431,7 @@ void FIELD_PLAYER_SetPos( FIELD_PLAYER *fld_player, const VecFx32 *pos )
 //--------------------------------------------------------------
 u16 FIELD_PLAYER_GetDir( const FIELD_PLAYER *fld_player )
 {
-#if 0
-	return( fld_player->dir );
-#else //表示するアクターから直に取得
-  return( MMDL_GetDirDisp(fld_player->fldmmdl) );
-#endif
+  return FIELD_PLAYER_CORE_GetDir( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -405,11 +444,7 @@ u16 FIELD_PLAYER_GetDir( const FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 void FIELD_PLAYER_SetDir( FIELD_PLAYER *fld_player, u16 dir )
 {
-#if 0
-	fld_player->dir = dir;
-#else //表示するアクターへ直にセット
-  MMDL_SetDirDisp( fld_player->fldmmdl, dir );
-#endif
+  FIELD_PLAYER_CORE_SetDir( fld_player->corewk, dir );
 }
 
 //--------------------------------------------------------------
@@ -421,7 +456,7 @@ void FIELD_PLAYER_SetDir( FIELD_PLAYER *fld_player, u16 dir )
 //--------------------------------------------------------------
 FIELDMAP_WORK * FIELD_PLAYER_GetFieldMapWork( FIELD_PLAYER *fld_player )
 {
-	return( fld_player->fieldWork );
+	return FIELD_PLAYER_CORE_GetFieldMapWork( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -433,20 +468,7 @@ FIELDMAP_WORK * FIELD_PLAYER_GetFieldMapWork( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 MMDL * FIELD_PLAYER_GetMMdl( const FIELD_PLAYER *fld_player )
 {
-	return( fld_player->fldmmdl );
-}
-
-//--------------------------------------------------------------
-/**
- * FIELD_PLAYER FLDMAPPER_GRIDINFODATA取得
- * @param fld_player* FIELD_PLAYER
- * @retval FLDMAPPER_GRIDINFODATA*
- */
-//--------------------------------------------------------------
-FLDMAPPER_GRIDINFODATA * FIELD_PLAYER_GetGridInfoData(
-		FIELD_PLAYER *fld_player )
-{
-	return( &fld_player->gridInfoData );
+	return FIELD_PLAYER_CORE_GetMMdl( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -459,7 +481,7 @@ FLDMAPPER_GRIDINFODATA * FIELD_PLAYER_GetGridInfoData(
 void FIELD_PLAYER_SetMoveValue(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_VALUE val )
 {
-  fld_player->move_value = val;
+  FIELD_PLAYER_CORE_SetMoveValue( fld_player->corewk, val );
 }
 
 //--------------------------------------------------------------
@@ -472,7 +494,7 @@ void FIELD_PLAYER_SetMoveValue(
 PLAYER_MOVE_VALUE FIELD_PLAYER_GetMoveValue(
     const FIELD_PLAYER *fld_player )
 {
-  return( fld_player->move_value );
+  return FIELD_PLAYER_CORE_GetMoveValue( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -485,7 +507,7 @@ PLAYER_MOVE_VALUE FIELD_PLAYER_GetMoveValue(
 PLAYER_MOVE_STATE FIELD_PLAYER_GetMoveState(
     const FIELD_PLAYER *fld_player )
 {
-  return( fld_player->move_state );
+  return FIELD_PLAYER_CORE_GetMoveState( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -498,8 +520,7 @@ PLAYER_MOVE_STATE FIELD_PLAYER_GetMoveState(
 PLAYER_MOVE_FORM FIELD_PLAYER_GetMoveForm(
     const FIELD_PLAYER *fld_player )
 {
-  PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( fld_player->playerWork );
-  return( form );
+  return FIELD_PLAYER_CORE_GetMoveForm( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -512,7 +533,7 @@ PLAYER_MOVE_FORM FIELD_PLAYER_GetMoveForm(
 void FIELD_PLAYER_SetMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form )
 {
-  PLAYERWORK_SetMoveForm( fld_player->playerWork, form );
+  FIELD_PLAYER_CORE_SetMoveForm( fld_player->corewk, form );
 }
 
 //--------------------------------------------------------------
@@ -524,7 +545,7 @@ void FIELD_PLAYER_SetMoveForm(
 //--------------------------------------------------------------
 int FIELD_PLAYER_GetSex( const FIELD_PLAYER *fld_player )
 {
-  return( fld_player->sex );
+  return FIELD_PLAYER_CORE_GetSex( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -536,7 +557,7 @@ int FIELD_PLAYER_GetSex( const FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 GAMESYS_WORK * FIELD_PLAYER_GetGameSysWork( FIELD_PLAYER *fld_player )
 {
-  return( fld_player->gsys );
+  return FIELD_PLAYER_CORE_GetGameSysWork( fld_player->corewk );
 }
 
 //----------------------------------------------------------------------------
@@ -682,35 +703,6 @@ u16 FIELD_PLAYER_GetMoveFormToOBJCode( int sex, PLAYER_MOVE_FORM form )
 
 //--------------------------------------------------------------
 /**
- * OBJコードからPLAYER_DRAW_FORM取得　チェック用
- * @param sex PM_MALE,PM_FEMALE
- * @param code OBJコード
- * @retval PLAYER_DRAW_FORM
- */
-//--------------------------------------------------------------
-static PLAYER_DRAW_FORM fld_player_CheckOBJCodeToDrawForm( u16 code )
-{
-  int sex,i;
-  const OBJCODE_FORM *tbl;
-  
-  for( sex = 0; sex < 2; sex++ )
-  {
-    const OBJCODE_FORM *tbl = dataOBJCodeForm[sex];
-    
-    for( i = 0; i < PLAYER_DRAW_FORM_MAX; i++, tbl++ )
-    {
-      if( tbl->code == code )
-      {
-        return( i );
-      }
-    }
-  }
-  
-  return( PLAYER_DRAW_FORM_MAX );
-}
-
-//--------------------------------------------------------------
-/**
  * BJコードがからPLAYER_DRAW_FORM取得
  * @param sex PM_MALE,PM_FEMALE
  * @param code OBJコード
@@ -734,6 +726,35 @@ PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm( int sex, u16 code )
 
 //--------------------------------------------------------------
 /**
+ * OBJコードからPLAYER_DRAW_FORM取得　チェック用
+ * @param sex PM_MALE,PM_FEMALE
+ * @param code OBJコード
+ * @retval PLAYER_DRAW_FORM
+ */
+//--------------------------------------------------------------
+PLAYER_DRAW_FORM FIELD_PLAYER_CheckOBJCodeToDrawForm( u16 code )
+{
+  int sex,i;
+
+  for( sex = 0; sex < 2; sex++ )
+  {
+    const OBJCODE_FORM *tbl = dataOBJCodeForm[sex];
+    
+    for( i = 0; i < PLAYER_DRAW_FORM_MAX; i++, tbl++ )
+    {
+      if( tbl->code == code )
+      {
+        return( i );
+      }
+    }
+  }
+  
+  return( PLAYER_DRAW_FORM_MAX );
+}
+
+
+//--------------------------------------------------------------
+/**
  * 自機をレポートやアイテムゲットなどイベント用表示に変えても問題ないか
  * @param fld_player FIELD_PLAYER
  * @retval  BOOL TRUE=OK
@@ -742,11 +763,6 @@ PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm( int sex, u16 code )
 BOOL FIELD_PLAYER_CheckChangeEventDrawForm( FIELD_PLAYER *fld_player )
 {
   PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( fld_player );
-  
-  if( FLDMAP_BASESYS_RAIL ==
-      FIELDMAP_GetBaseSystemType(fld_player->fieldWork) ){
-    return( FALSE );
-  }
   
   switch( form ){
   case PLAYER_MOVE_FORM_SWIM:
@@ -766,9 +782,7 @@ BOOL FIELD_PLAYER_CheckChangeEventDrawForm( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code )
 {
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-  MMDL_ChangeOBJCode( mmdl, code );
-  PLAYERWORK_SetOBJCodeFix( fld_player->playerWork, code );
+  FIELD_PLAYER_CORE_ChangeOBJCode( fld_player->corewk, code );
 }
 
 //--------------------------------------------------------------
@@ -781,7 +795,7 @@ void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code )
 //--------------------------------------------------------------
 void FIELD_PLAYER_ClearOBJCodeFix( FIELD_PLAYER *fld_player )
 {
-  PLAYERWORK_SetOBJCodeFix( fld_player->playerWork, OBJCODEMAX );
+  FIELD_PLAYER_CORE_ClearOBJCodeFix( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -793,12 +807,41 @@ void FIELD_PLAYER_ClearOBJCodeFix( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 BOOL FIELD_PLAYER_CheckIllegalOBJCode( FIELD_PLAYER *fld_player )
 {
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-  u16 code = MMDL_GetOBJCode( mmdl );
-  if( fld_player_CheckOBJCodeToDrawForm(code) != PLAYER_DRAW_FORM_MAX ){
-    return( TRUE );
+  return FIELD_PLAYER_CORE_CheckIllegalOBJCode( fld_player->corewk );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  目の前にいるモデルを検索
+ *
+ *	@param	fld_player  フィールドプレイヤー
+ *
+ *	@return 目の前にいるモデル
+ */
+//-----------------------------------------------------------------------------
+MMDL * FIELD_PLAYER_GetFrontMMdl( const FIELD_PLAYER *fld_player )
+{
+  MMDL* mmdl = NULL;
+  MMDLSYS* mmdlsys = FIELDMAP_GetMMdlSys( fld_player->fieldWork );
+  
+  if( FIELDMAP_GetBaseSystemType( fld_player->fieldWork ) == FLDMAP_BASESYS_GRID )
+  {
+    s16 gx,gy,gz;
+    
+    FIELD_PLAYER_GetFrontGridPos( fld_player, &gx, &gy, &gz );
+    mmdl = MMDLSYS_SearchGridPos( mmdlsys, gx, gz, FALSE );
   }
-  return( FALSE );
+  else
+  {
+    MMDL* mymmdl = FIELD_PLAYER_CORE_GetMMdl( fld_player->corewk );
+    RAIL_LOCATION location;
+    
+    MMDL_GetRailFrontLocation( mymmdl, &location );
+    mmdl = MMDLSYS_SearchRailLocation( mmdlsys, &location, TRUE );
+  }
+  
+  return mmdl;
 }
 
 //======================================================================
@@ -844,6 +887,8 @@ void FIELD_PLAYER_GetDirGridPos(
 void FIELD_PLAYER_GetDirPos(
 		const FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos )
 {
+  MMDL* fldmmdl = FIELD_PLAYER_CORE_GetMMdl( fld_player->corewk );
+
   if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
     s16 gx,gy,gz;
@@ -861,9 +906,9 @@ void FIELD_PLAYER_GetDirPos(
     FIELD_RAIL_MAN* p_railman = FLDNOGRID_MAPPER_DEBUG_GetRailMan( p_mapper );
 
     // 今の位置と、DIRキーの３D方向取得
-    MMDL_GetRailLocation( fld_player->fldmmdl, &location );
+    MMDL_GetRailLocation( fldmmdl, &location );
     FIELD_RAIL_MAN_GetLocationPosition( p_railman, &location, &now_pos );
-    MMDL_Rail_GetDirLineWay( fld_player->fldmmdl, dir, &way );
+    MMDL_Rail_GetDirLineWay( fldmmdl, dir, &way );
 
     // now_posからwayに１グリッド分進んだ先が次のポジション
     grid_size = FIELD_RAIL_MAN_GetRailGridSize( p_railman );
@@ -903,6 +948,7 @@ void FIELD_PLAYER_GetFrontGridPos(
 void FIELD_PLAYER_GetDirWay( 
     const FIELD_PLAYER *fld_player, u16 dir, VecFx32* way )
 {
+  MMDL* fldmmdl = FIELD_PLAYER_CORE_GetMMdl( fld_player->corewk );
   if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
     way->y = 0;
@@ -917,7 +963,7 @@ void FIELD_PLAYER_GetDirWay(
   {
     VecFx16 way16;
 
-    MMDL_Rail_GetDirLineWay( fld_player->fldmmdl, dir, &way16 );
+    MMDL_Rail_GetDirLineWay( fldmmdl, dir, &way16 );
     VEC_Set( way, way16.x, way16.y, way16.z );
   }
 }
@@ -931,45 +977,8 @@ void FIELD_PLAYER_GetDirWay(
 //--------------------------------------------------------------
 BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player )
 {
-  const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
-  
-  if( fmmdl == NULL ){
-    return( FALSE );
-  }
-   
-  if( MMDL_CheckStatusBitUse(fmmdl) == FALSE ){
-    return( FALSE );
-  }
-  
-  if( MMDL_GetOBJID(fmmdl) != MMDL_ID_PLAYER ){
-    return( FALSE );
-  }
-  
-  return( TRUE );
+  return FIELD_PLAYER_CORE_CheckLiveMMdl( fld_player->corewk );
 }
-
-//--------------------------------------------------------------
-/**
- * 自機の動作形態を変更
- * @param fld_player FIELD_PLAYER
- * @param form PLAYER_MOVE_FORM
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void fldplayer_ChangeMoveForm(
-    FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form )
-{
-  int sex = FIELD_PLAYER_GetSex( fld_player );
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-  u16 code = FIELD_PLAYER_GetMoveFormToOBJCode( sex, form );
-  
-  if( MMDL_GetOBJCode(mmdl) != code ){
-    MMDL_ChangeOBJCode( mmdl, code );
-  }
-  
-  FIELD_PLAYER_SetMoveForm( fld_player, form );
-}
-
 //--------------------------------------------------------------
 /**
  * 自機の動作形態を変更 BGM変更あり
@@ -981,15 +990,7 @@ static void fldplayer_ChangeMoveForm(
 void FIELD_PLAYER_ChangeMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form )
 {
-  fldplayer_ChangeMoveForm( fld_player, form );
-  
-  {
-    FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
-    GAMEDATA *gdata = GAMESYSTEM_GetGameData( fld_player->gsys );
-    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gdata );
-    u32 zone_id = FIELDMAP_GetZoneID( fieldWork );
-    FSND_ChangeBGM_byPlayerFormChange( fsnd, gdata, zone_id );
-  }
+  FIELD_PLAYER_CORE_ChangeMoveForm( fld_player->corewk, form );
 }
 
 //--------------------------------------------------------------
@@ -1002,8 +1003,7 @@ void FIELD_PLAYER_ChangeMoveForm(
 //--------------------------------------------------------------
 void FIELD_PLAYER_ResetMoveForm( FIELD_PLAYER *fld_player )
 {
-  PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( fld_player );
-  fldplayer_ChangeMoveForm( fld_player, form );
+  FIELD_PLAYER_CORE_ResetMoveForm( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -1017,13 +1017,7 @@ void FIELD_PLAYER_ResetMoveForm( FIELD_PLAYER *fld_player )
 void FIELD_PLAYER_ChangeDrawForm(
     FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form )
 {
-  int sex = FIELD_PLAYER_GetSex( fld_player );
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-  u16 code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, form );
-  
-  if( MMDL_GetOBJCode(mmdl) != code ){
-    MMDL_ChangeOBJCode( mmdl, code );
-  }
+  FIELD_PLAYER_CORE_ChangeDrawForm( fld_player->corewk, form );
 }
 
 //--------------------------------------------------------------
@@ -1035,8 +1029,7 @@ void FIELD_PLAYER_ChangeDrawForm(
 //--------------------------------------------------------------
 PLAYER_DRAW_FORM FIELD_PLAYER_GetDrawForm( FIELD_PLAYER *fld_player )
 {
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-  return fld_player_CheckOBJCodeToDrawForm( MMDL_GetOBJCode( mmdl ));
+  return FIELD_PLAYER_CORE_GetDrawForm( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -1051,19 +1044,7 @@ PLAYER_DRAW_FORM FIELD_PLAYER_GetDrawForm( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 void FIELD_PLAYER_ChangeFormRequest( FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form )
 {
-  u16 code;
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-
-  FIELD_PLAYER_ChangeDrawForm( fld_player, form );
-
-  switch(form){
-  case PLAYER_DRAW_FORM_CUTIN:
-    code = AC_HERO_CUTIN;
-    break;
-  default:
-    return;
-  }
-  MMDL_SetAcmd( mmdl, code );
+  FIELD_PLAYER_CORE_ChangeFormRequest( fld_player->corewk, form );
 }
 
 //--------------------------------------------------------------
@@ -1078,8 +1059,7 @@ void FIELD_PLAYER_ChangeFormRequest( FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM 
 //--------------------------------------------------------------
 BOOL FIELD_PLAYER_ChangeFormWait( FIELD_PLAYER *fld_player )
 {
-  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-  return MMDL_CheckEndAcmd( mmdl );
+  return FIELD_PLAYER_CORE_ChangeFormWait( fld_player->corewk );
 }
 
 //--------------------------------------------------------------
@@ -1119,32 +1099,204 @@ void FIELD_PLAYER_CheckSpecialDrawForm(
 {
   if( FIELDMAP_GetBaseSystemType(
         fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
-    FIELD_PLAYER_GRID_CheckSpecialDrawForm( fld_player, menu_open_flag );
+    FIELD_PLAYER_GRID_CheckSpecialDrawForm( fld_player->gridwk, menu_open_flag );
+  }
+  else
+  {
+    OS_Printf( "rail not support\n" );
+    GF_ASSERT(0);
   }
 }
+
+
+//======================================================================
+//	Grid 専用処理
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GRIDワークをセットアップする
+ *
+ *	@param	fld_player  フィールドワーク
+ *	@param	heapID      ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_SetUpGrid( FIELD_PLAYER *fld_player, HEAPID heapID )
+{
+  GF_ASSERT( fld_player->gridwk == NULL );
+  fld_player->gridwk = FIELD_PLAYER_GRID_Init( fld_player->corewk, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GRIDワークの更新処理
+ *
+ *	@param	fld_player  フィールドワーク
+ *	@param	key_trg     トリガ
+ *	@param	key_cont    コント
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_MoveGrid( FIELD_PLAYER *fld_player, int key_trg, int key_cont )
+{
+  GF_ASSERT( fld_player->gridwk );
+  FIELD_PLAYER_GRID_Move( fld_player->gridwk, key_trg, key_cont );
+}
+
+
+//======================================================================
+//	NOGrid 専用処理
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NOGRIDワークをセットアップする
+ *
+ *	@param	fld_player  フィールドワーク
+ *	@param	heapID      ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_SetUpNoGrid( FIELD_PLAYER *fld_player, HEAPID heapID )
+{
+  GF_ASSERT( fld_player->nogridwk == NULL );
+  fld_player->nogridwk = FIELD_PLAYER_NOGRID_Create( fld_player->corewk, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NOGRIDワークの更新処理
+ *
+ *	@param	fld_player  フィールドワーク
+ *	@param	key_trg     トリガ
+ *	@param	key_cont    コント
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_MoveNoGrid( FIELD_PLAYER *fld_player, int key_trg, int key_cont )
+{
+  GF_ASSERT( fld_player->nogridwk );
+  FIELD_PLAYER_NOGRID_Move( fld_player->nogridwk, key_trg, key_cont );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NOGRIDワーク動作再始動
+ *
+ *	@param	fld_player  フィールドワーク
+ *	@param	heapID      ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_RestartNoGrid( FIELD_PLAYER *fld_player, const RAIL_LOCATION* cp_pos )
+{
+  GF_ASSERT( fld_player->nogridwk );
+  FIELD_PLAYER_NOGRID_Restart( fld_player->nogridwk, cp_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NOGRIDワーク動作停止
+ *
+ *	@param	fld_player    フィールドワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_StopNoGrid( FIELD_PLAYER *fld_player )
+{
+  GF_ASSERT( fld_player->nogridwk );
+  FIELD_PLAYER_NOGRID_Stop( fld_player->nogridwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NOGRIDワーク　レールワークの取得
+ *
+ *	@param	fld_player  フィールドプレイヤー
+ *
+ *	@return レールワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_RAIL_WORK* FIELD_PLAYER_GetNoGridRailWork( const FIELD_PLAYER *fld_player )
+{
+  GF_ASSERT( fld_player->nogridwk );
+  return FIELD_PLAYER_NOGRID_GetRailWork( fld_player->nogridwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NOGRID　レールロケーションを設定
+ *
+ *	@param	p_player
+ *	@param	cp_location 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_SetNoGridLocation( FIELD_PLAYER* p_player, const RAIL_LOCATION* cp_location )
+{
+  GF_ASSERT( p_player->nogridwk );
+  FIELD_PLAYER_NOGRID_SetLocation( p_player->nogridwk, cp_location );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NOGRID　レールロケーションを取得
+ *
+ *	@param	cp_player     プレイヤー
+ *	@param	p_location    ロケーション格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_GetNoGridLocation( const FIELD_PLAYER* cp_player, RAIL_LOCATION* p_location )
+{
+  GF_ASSERT( cp_player->nogridwk );
+  FIELD_PLAYER_NOGRID_GetLocation( cp_player->nogridwk, p_location );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NOGRIDワーク  レールワークの座標を取得
+ *
+ *	@param	cp_player プレイヤーワーク
+ *	@param	p_pos     座標格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_GetNoGridPos( const FIELD_PLAYER* cp_player, VecFx32* p_pos )
+{
+  GF_ASSERT( cp_player->nogridwk );
+  FIELD_PLAYER_NOGRID_GetPos( cp_player->nogridwk, p_pos );
+}
+
+//-----------------------------------------------------------------------------
+// コアワークの取得
+//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドプレイヤーからコアワークを取得
+ *
+ *	@param	p_player    フィールドプレイヤー
+ *
+ *	@return コアワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_PLAYER_CORE * FIELD_PLAYER_GetCoreWk( FIELD_PLAYER* p_player )
+{
+  return p_player->corewk;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドプレイヤーからグリッドプレイヤーワーク
+ *
+ *	@param	fld_player  フィールドプレイヤー 
+ *
+ *	@return グリッドプレイヤーワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_PLAYER_GRID* FIELD_PLAYER_GetGridWk( FIELD_PLAYER* fld_player )
+{
+  return fld_player->gridwk;
+}
+
+
+
+
+
 
 //======================================================================
 //	data
 //======================================================================
-//--------------------------------------------------------------
-/// 自機動作モデルヘッダー
-//--------------------------------------------------------------
-static const MMDL_HEADER data_MMdlHeader =
-{
-	MMDL_ID_PLAYER,	///<識別ID
-	HERO,	///<表示するOBJコード
-	MV_DMY,	///<動作コード
-	0,	///<イベントタイプ
-	0,	///<イベントフラグ
-	0,	///<イベントID
-	0,	///<指定方向
-	0,	///<指定パラメタ 0
-	0,	///<指定パラメタ 1
-	0,	///<指定パラメタ 2
-	MOVE_LIMIT_NOT,	///<X方向移動制限
-	MOVE_LIMIT_NOT,	///<Z方向移動制限
-  MMDL_HEADER_POSTYPE_GRID,
-};
 
 //--------------------------------------------------------------
 /// 性別、OBJコード、各フォーム

@@ -12,7 +12,6 @@
 #include "arc/fieldmap/zone_id.h"
 
 #include "fieldmap.h"
-#include "field_player_nogrid.h"
 #include "fldeff_shadow.h"
 #include "field/zonedata.h"
 
@@ -84,13 +83,11 @@ static void mapCtrlNoGrid_Create(
   FIELD_CAMERA * camera = FIELDMAP_GetFieldCamera(fieldWork);
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
 	FIELDMAP_CTRL_NOGRID_WORK *work;
-  FIELD_PLAYER_NOGRID* p_ngrid_player;
 
   // レールマップ用プレイヤーワーク作成
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	work = FIELDMAP_CTRL_NOGRID_WORK_Create( fieldWork, FIELDMAP_GetHeapID( fieldWork ) );
 	FIELDMAP_SetMapCtrlWork( fieldWork, work );
-  p_ngrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( work );
 
   //カメラ座標セット
   {
@@ -104,8 +101,8 @@ static void mapCtrlNoGrid_Create(
         GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
     const RAIL_LOCATION * railLoc = PLAYERWORK_getRailPosition( player );
     // プレイヤーワークからロケーションを設定
-    FIELD_PLAYER_NOGRID_SetLocation( p_ngrid_player, railLoc );
-    FIELD_PLAYER_NOGRID_GetPos( p_ngrid_player, pos );
+    FIELD_PLAYER_SetNoGridLocation( fld_player, railLoc );
+    FIELD_PLAYER_GetNoGridPos( fld_player, pos );
   }
 //
 	
