@@ -1531,7 +1531,7 @@ static const BtlEventHandlerTable*  ADD_KonoyubiTomare( u32* numElems )
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_KonoyubiTomare_ExeCheck  },  // ワザ出し成否チェック
     { BTL_EVENT_UNCATEGORIZE_WAZA,      handler_KonoyubiTomare_Exe       },  // 未分類ワザ実行
     { BTL_EVENT_DECIDE_TARGET,          handler_KonoyubiTomare_Target    },  // ターゲット決定
-    { BTL_EVENT_TAME_START,             handler_KonoyubiTomare_TurnCheck },  // ターンチェック
+    { BTL_EVENT_TURNCHECK_BEGIN,        handler_KonoyubiTomare_TurnCheck },  // ターンチェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
