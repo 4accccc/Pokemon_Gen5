@@ -44,7 +44,7 @@ obj_init:=$(wildcard ./*/init.txt)
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	makedir subdir $(TARGETDIR)/$(targetname).narc
+do-build:	makedir subdir $(TARGETDIR)/$(targetname).narc $(PROJECT_PROGDIR)include/demo/demo3d_demoid.h $(PROJECT_PROGDIR)src/demo/demo3d/demo3d_resdata.cdat
 
 makedir:
 	ruby make_dir.rb
@@ -69,8 +69,12 @@ $(targetname).narc: $(obj_imd) $(obj_ica) $(obj_ita) $(obj_ima) $(obj_itp) $(obj
 	ruby make_header.rb
 endif
 
-	#生成ファイルをprogにコピー
+# ヘッダ のコピー
+$(PROJECT_PROGDIR)include/demo/demo3d_demoid.h: demo3d_demoid.h
 	$(COPY) demo3d_demoid.h $(PROJECT_PROGDIR)include/demo
+
+# リソースのコピー
+$(PROJECT_PROGDIR)src/demo/demo3d/demo3d_resdata.cdat: demo3d_resdata.cdat
 	$(COPY) demo3d_resdata.cdat $(PROJECT_PROGDIR)src/demo/demo3d
 
 #------------------------------------------------------------------------------
@@ -85,6 +89,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif
+	rm -f $(PROJECT_PROGDIR)include/demo/demo3d_demoid.h
+	rm -f $(PROJECT_PROGDIR)src/demo/demo3d/demo3d_resdata.cdat
 	rm -f $(TARGETDIR)$(targetname).narc
 	rm -f $(TARGETDIR)$(targetname).naix
 
