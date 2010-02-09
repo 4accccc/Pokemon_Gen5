@@ -67,10 +67,11 @@ $(targetname).narc: $(obj_imd) $(obj_ica) $(obj_ita) $(obj_ima) $(obj_itp) $(obj
 	$(NAIXCUT) $(targetname).naix 
 	ruby make_demoid.rb
 	ruby make_header.rb
+endif
+
+	#生成ファイルをprogにコピー
 	$(COPY) demo3d_demoid.h $(PROJECT_PROGDIR)include/demo
 	$(COPY) demo3d_resdata.cdat $(PROJECT_PROGDIR)src/demo/demo3d
-
-endif
 
 #------------------------------------------------------------------------------
 #	make clean ルール
