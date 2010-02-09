@@ -26,6 +26,7 @@
 #include "savedata/mystatus.h"  //MyStatus_～
 #include "savedata/c_gear_data.h" //
 #include "savedata/config.h" // CONFIG
+#include "savedata/box_savedata.h"  //BOX_MANAGER
 
 #include "savedata/save_control.h"
 #include "savedata/zukan_savedata.h"
@@ -655,4 +656,29 @@ VMCMD_RESULT EvCmdGetShoes( VMHANDLE *core, void *wk )
   EVENTWORK_SetEventFlag( evwork, SYS_FLAG_RUNNINGSHOES );
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief ボックス追加壁紙をセットする
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetBoxWallPaper( VMHANDLE * core, void * wk )
+{
+  u16 flag = SCRCMD_GetVMWorkValue( core, wk );
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
+  BOX_MANAGER * box = GAMEDATA_GetBoxManager( gamedata );
+  if ( flag == SCR_BOX_EX_WALLPAPER1 || flag == SCR_BOX_EX_WALLPAPER2 )
+  {
+    BOXDAT_SetExWallPaperFlag( box, flag );
+  }
+  else
+  {
+    GF_ASSERT( 0 );
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+SDK_COMPILER_ASSERT( SCR_BOX_EX_WALLPAPER1 == BOX_EX_WALLPAPER_SET_FLAG_1 );
+SDK_COMPILER_ASSERT( SCR_BOX_EX_WALLPAPER2 == BOX_EX_WALLPAPER_SET_FLAG_2 );
+
+
 
