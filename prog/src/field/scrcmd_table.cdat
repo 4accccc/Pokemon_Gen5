@@ -427,7 +427,7 @@
   DEF_CMD( EvCmdGetWirelessSaveMode, EV_SEQ_GET_WIRELESS_SAVEMODE ) 
   DEF_CMD( EvCmdGetShoes, EV_SEQ_GET_SHOES )
 
-  NO_CMD()
+  DEF_CMD( EvCmdGetBoxWallPaper, EV_SEQ_GET_BOX_WALLPAPER )
   NO_CMD()
   NO_CMD()
   NO_CMD()
@@ -842,6 +842,12 @@
   DEF_CMD( EvCmdUn_GetRoomObjNum, EV_SEQ_UN_GET_ROOM_OBJ_NUM )
   DEF_CMD( EvCmdUn_GetRoomObjMsg, EV_SEQ_UN_GET_ROOM_OBJ_MSG )
 
+  //国連フロア選択アプリ
+  DEF_CMD( EvCmdUn_CallFloorSelApp, EV_SEQ_UN_CALL_FLOOR_SEL_APP )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   //技教え関連
   DEF_CMD( EvCmdSkillTeachCheckParty, EV_SEQ_SKILLTEACH_CHECK_PARTY )
   DEF_CMD( EvCmdSkillTeachCheckPokemon, EV_SEQ_SKILLTEACH_CHECK_POKEMON )
@@ -851,12 +857,6 @@
   //イベントデータ操作関連
   DEF_CMD( EvCmdMoveBgEventPos, EV_SEQ_MOVE_BG_EVENT_POS )
   DEF_CMD( EvCmdMoveExitEventPos, EV_SEQ_MOVE_EXIT_EVENT_POS )
-  NO_CMD()
-  NO_CMD()
-
-  //国連フロア選択アプリ
-  DEF_CMD( EvCmdUn_CallFloorSelApp, EV_SEQ_UN_CALL_FLOOR_SEL_APP )
-  NO_CMD()
   NO_CMD()
   NO_CMD()
 

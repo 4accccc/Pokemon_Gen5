@@ -3919,6 +3919,21 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_BOX_WALLPAPER
+ * @brief ボックスの追加壁紙取得
+ * @param wallpaper_flag  script_def.hのSCR_BOX_EX_WALLPAPER?を使用
+ */
+//--------------------------------------------------------------
+#define _GET_BOX_WALLPAPER( flag )  \
+    _ASM_GET_BOX_WALLPAPER flag
+
+    .macro  _ASM_GET_BOX_WALLPAPER flag
+    .short  EV_SEQ_GET_BOX_WALLPAPER
+    .short  \flag
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _SET_GYM_VICTORY_INFO
  * @brief ジムリーダー戦勝利時の情報セット
  * @param gym_id  BADGE_ID_??を指定してください
@@ -7528,7 +7543,7 @@
     _ASM_SXY_MOVE_BG_EVENT bg_id, gx, gy, gz
 
     .macro  _ASM_SXY_MOVE_BG_EVENT bg_id, gx, gy, gz
-    .short  EV_SEQ_MOVE_BG_EVENT
+    .short  EV_SEQ_MOVE_BG_EVENT_POS
     .short  \bg_id
     .short  \gx
     .short  \gy
@@ -7549,7 +7564,7 @@
     _ASM_SXY_MOVE_EXIT_EVENT exit_id, gx, gy, gz
 
     .macro  _ASM_SXY_MOVE_EXIT_EVENT exit_id, gx, gy, gz
-    .short  EV_SEQ_MOVE_EXIT_EVENT
+    .short  EV_SEQ_MOVE_EXIT_EVENT_POS
     .short  \exit_id
     .short  \gx
     .short  \gy
