@@ -774,7 +774,7 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, 
       wk->heapID = HEAPID_DEBUG_MAKEPOKE;
       wk->dst = proc_param->dst;
       if( PP_Get(wk->dst, ID_PARA_monsno, NULL) == 0 ){
-        PP_Setup( wk->dst, MONSNO_GORIDARUMA, 5, PTL_SETUP_ID_NOT_RARE );
+        PP_Setup( wk->dst, MONSNO_HIHIDARUMA, 5, PTL_SETUP_ID_NOT_RARE );
       }
       wk->pokeID = PP_Get( wk->dst, ID_PARA_id_no, NULL );
       UpdatePokeExpMinMax( wk, wk->dst );
