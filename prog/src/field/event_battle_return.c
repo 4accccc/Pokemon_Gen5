@@ -280,7 +280,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         if( wk->shinka_poke_bit & 1 )
         {
           POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, wk->shinka_poke_pos );
-          after_mons_no = SHINKA_Check( party, pp, SHINKA_TYPE_LEVELUP, 0, &cond, wk->heapID );
+          after_mons_no = SHINKA_Check( party, pp, SHINKA_TYPE_LEVELUP, param->btlResult->fieldSituation.zoneID, &cond, wk->heapID );
           pos = wk->shinka_poke_pos;
         }
         wk->shinka_poke_bit = wk->shinka_poke_bit >> 1;
