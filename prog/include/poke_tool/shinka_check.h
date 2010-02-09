@@ -44,6 +44,7 @@ typedef enum
   SHINKA_COND_LEVELUP,
   SHINKA_COND_TUUSHIN,
   SHINKA_COND_TUUSHIN_ITEM,
+  SHINKA_COND_TUUSHIN_YUUGOU,
   SHINKA_COND_ITEM,
   SHINKA_COND_SPECIAL_POW,
   SHINKA_COND_SPECIAL_EVEN,
@@ -64,12 +65,13 @@ typedef enum
   SHINKA_COND_PLACE_TENGANZAN,
   SHINKA_COND_PLACE_KOKE,
   SHINKA_COND_PLACE_ICE,
+  SHINKA_COND_PLACE_DENKIDOUKUTSU,
 }SHINKA_COND;
 
 #define	SHINKA_MAX	    ( 7 )	  //進化分岐のMAX
 #define SHINKA_FRIEND   ( 220 ) //進化に必要ななつき度
 
-extern  u16         SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param,
+extern  u16         SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param,
                                   SHINKA_COND *cond, HEAPID heapID );
 extern  ARCHANDLE*  SHINKA_GetArcHandle( HEAPID heapID );
 extern  u16         SHINKA_GetParamByHandle( ARCHANDLE* handle, int mons_no, int index, SHINKA_PARAM param );
