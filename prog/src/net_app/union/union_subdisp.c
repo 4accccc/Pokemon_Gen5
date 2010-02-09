@@ -277,6 +277,7 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
   unisub->pmsdraw = PMS_DRAW_Init(unisub->clunit, CLSYS_DRAW_SUB, 
     unisub->printQue, unisub->font_handle, UNION_SUBOBJ_PAL_PMSWORD_START, 
     UNION_CHAT_VIEW_LOG_NUM, HEAPID_FIELDMAP);
+  PMS_DRAW_SetNullColorPallet( unisub->pmsdraw, 0 );
   
   {//メニューから画面復帰の場合用に全体描画
     UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
