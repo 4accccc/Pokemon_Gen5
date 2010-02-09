@@ -49,7 +49,7 @@ typedef struct {
 //-----------------------------------------------------------------------------
 
 // ライトカラーの取得
-extern void FIELD_LIGHT_STATUS_Get( u32 zone_id, int time, int weather_id, int season, FIELD_LIGHT_STATUS* p_status, HEAPID heapID );
+extern void FIELD_LIGHT_STATUS_Get( u32 zone_id, int hour, int minute, int weather_id, int season, FIELD_LIGHT_STATUS* p_status, HEAPID heapID );
 // 天気NOからライトデータのアーカイブインデックス取得
 extern u16 FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( int weather_id );
 

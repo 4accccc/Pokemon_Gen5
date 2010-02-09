@@ -57,14 +57,18 @@ static void LIGHT_STATUS_GetTimeColor( LIGHT_DATA* p_wk, u32 num, int time, FIEL
  *	@param	p_status      状態パラメータ
  */
 //-----------------------------------------------------------------------------
-void FIELD_LIGHT_STATUS_Get( u32 zone_id, int time, int weather_id, int season, FIELD_LIGHT_STATUS* p_status, HEAPID heapID )
+void FIELD_LIGHT_STATUS_Get( u32 zone_id, int hour, int minute, int weather_id, int season, FIELD_LIGHT_STATUS* p_status, HEAPID heapID )
 {
   u32 zone_light_idx;
-  LIGHT_DATA* p_data;
+  LIGHT_DATA* p_data = NULL;
   u32 data_num;
+  int time;
   
   GF_ASSERT( weather_id < WEATHER_NO_NUM );
   GF_ASSERT( season < PMSEASON_TOTAL );
+
+  // 秒に変換 
+  time = (hour * 60 * 60) + minute * 60;
   
   // 天気
   if( weather_id != WEATHER_NO_SUNNY )
@@ -74,14 +78,18 @@ void FIELD_LIGHT_STATUS_Get( u32 zone_id, int time, int weather_id, int season, 
   }
 
   // フォグZONE
-  zone_light_idx = ZONEDATA_GetLight( zone_id );
-  if( zone_light_idx != FIELD_ZONEFOGLIGHT_DATA_NONE )
+  if( p_data == NULL )
   {
-    // ゾーン用ライトを取得
-    p_data = LIGHT_STATUS_LoadData( ARCID_ZONELIGHT_TABLE, zone_light_idx, &data_num, GFL_HEAP_LOWID(heapID) );
+    zone_light_idx = ZONEDATA_GetLight( zone_id );
+    if( zone_light_idx != FIELD_ZONEFOGLIGHT_DATA_NONE )
+    {
+      // ゾーン用ライトを取得
+      p_data = LIGHT_STATUS_LoadData( ARCID_ZONELIGHT_TABLE, zone_light_idx, &data_num, GFL_HEAP_LOWID(heapID) );
+    }
   }
 
   //　通常テーブル
+  if( p_data == NULL )
   {
     AREADATA* p_area = AREADATA_Create( GFL_HEAP_LOWID(heapID), ZONEDATA_GetAreaID(zone_id), season );
       
