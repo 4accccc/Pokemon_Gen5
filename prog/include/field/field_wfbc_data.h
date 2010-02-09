@@ -18,6 +18,8 @@ extern "C"{
 
 #include <net.h>
 
+#include "system/vm.h"
+
 #include "gamesystem/gamedata_def.h"  //GAMEDATA
 #include "field/intrude_common.h"
 #include "field/field_wfbc_people_def.h"
@@ -25,6 +27,8 @@ extern "C"{
 #include "field/intrude_common.h"
 
 #include "field/field_status_local.h"
+#include "field/scrcmd_shop.h"
+
 
 #include "savedata/mystatus.h"
 
@@ -126,6 +130,11 @@ typedef enum
 #define FIELD_WFBC_MOOD_SUB_DAY_MAX ( FIELD_WFBC_MOOD_MAX / MATH_ABS(FIELD_WFBC_MOOD_SUB) + 1 ) // 引く日にちの最大値 + 1は割り切れないときの予備
 
 
+//-------------------------------------
+///	Shop数
+//=====================================
+#define FIELD_WFBC_SHOP_MAX ( 5 )
+#define FIELD_WFBC_SHOP_ONE_PEOPLE ( 2 )  // 1ショップで参照する人物数
 
 //-------------------------------------
 ///	配置アイテム　不定値
@@ -234,6 +243,9 @@ extern BOOL FIELD_WFBC_CORE_IsOnNpcIDPeople( const FIELD_WFBC_CORE* cp_wk, u32 n
 // mapmode == field_status_local.h MAPMODE
 // 戻り値は、GFL_HEAP_Freeをしてください。
 extern MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_wk, MAPMODE mapmode, HEAPID heapID );
+
+// データからショップ情報を生成
+extern void FIELD_WFBC_CORE_SetShopData( const FIELD_WFBC_CORE* cp_wk, SHOP_ITEM* p_buff, u16* p_num, u32 shop_idx, HEAPID heapID );
 
 
 #ifdef PM_DEBUG

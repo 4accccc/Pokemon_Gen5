@@ -672,6 +672,74 @@ MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_w
   return p_buff;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BCショップ情報を設定
+ *
+ *	@param	cp_wk     WFBC情報
+ *	@param	p_buff    バッファ
+ *	@param	p_num     個数格納先
+ *	@param  shop_idx  ショップインデックス(0～4)
+ *	@param  heapID    ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_SetShopData( const FIELD_WFBC_CORE* cp_wk, SHOP_ITEM* p_buff, u16* p_num, u32 shop_idx, HEAPID heapID )
+{
+  int i;
+  u32 people_num;
+  int start_idx;
+  int end_idx;
+  int roop_num;
+  FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_load;
+  const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+  
+  GF_ASSERT( cp_wk );
+  GF_ASSERT( p_buff );
+  GF_ASSERT( p_num );
+  GF_ASSERT( shop_idx < FIELD_WFBC_SHOP_MAX );
+
+  people_num = FIELD_WFBC_CORE_GetPeopleNum( cp_wk, MAPMODE_NORMAL );
+
+  // アイテム設定開始と終了設定
+  {
+    start_idx = shop_idx * FIELD_WFBC_SHOP_ONE_PEOPLE;
+
+    // shop_idx分の人物がいるのか？
+    GF_ASSERT( start_idx <= people_num );
+
+    end_idx   = start_idx + FIELD_WFBC_SHOP_ONE_PEOPLE;
+    if( end_idx > people_num ){
+      end_idx = people_num;
+    }
+    roop_num = end_idx - start_idx;
+
+    GF_ASSERT( roop_num < SHOP_ITEM_MAX );
+  }
+
+  p_people_load = FIELD_WFBC_PEOPLE_DATA_Create( 0, heapID );
+  cp_people_data  = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_load );
+  
+  // アイテム情報の設定
+  (*p_num) = 0;
+  for( i=0; i<roop_num; i++ )
+  {
+    // 情報があるか？
+    GF_ASSERT( FIELD_WFBC_CORE_PEOPLE_IsInData( &cp_wk->people[start_idx + i] ) == TRUE );
+    
+    // 読み込み
+    FIELD_WFBC_PEOPLE_DATA_Load( p_people_load, cp_wk->people[start_idx + i].npc_id );
+
+    // アイテムと値段設定
+    p_buff[(*p_num)].id     = cp_people_data->goods_bc;
+    p_buff[(*p_num)].price  = cp_people_data->goods_bc_money;
+
+    (*p_num)++;
+  }
+
+  FIELD_WFBC_PEOPLE_DATA_Delete( p_people_load );
+}
+
+
 
 
 
