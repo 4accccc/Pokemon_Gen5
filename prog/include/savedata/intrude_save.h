@@ -11,6 +11,7 @@
 #include "gamesystem/gamedata_def.h"  //GAMEDATA
 #include "field/intrude_common.h"
 #include "buflen.h"
+#include "field/gpower_id.h"
 
 
 //==============================================================================
@@ -107,3 +108,9 @@ extern u32 OccupyInfo_GetIntrudeLevel(const OCCUPY_INFO *occupy);
 //  隠しアイテム
 //--------------------------------------------------------------
 extern void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE *src);
+
+//--------------------------------------------------------------
+//  Gパワー
+//--------------------------------------------------------------
+extern void ISC_SAVE_SetGPowerID(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id);
+extern GPOWER_ID ISC_SAVE_GetGPowerID(INTRUDE_SAVE_WORK *intsave);

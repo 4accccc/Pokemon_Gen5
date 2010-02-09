@@ -45,6 +45,7 @@ void IntrudeSave_WorkInit(void *work)
   
   GFL_STD_MemClear(intsave, sizeof(INTRUDE_SAVE_WORK));
   OccupyInfo_WorkInit(&intsave->occupy);
+  intsave->gpower_id = GPOWER_ID_NULL;
 }
 
 
@@ -171,4 +172,31 @@ void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE
     intsave->secret_item[i - 1] = intsave->secret_item[i];
   }
   intsave->secret_item[INTRUDE_SECRET_ITEM_SAVE_MAX - 1] = *src;
+}
+
+//==================================================================
+/**
+ * 自身が装備するGパワーIDをセット
+ *
+ * @param   intsave		  
+ * @param   gpower_id		GパワーID
+ */
+//==================================================================
+void ISC_SAVE_SetGPowerID(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id)
+{
+  intsave->gpower_id = gpower_id;
+}
+
+//==================================================================
+/**
+ * 自身が装備しているGパワーIDを取得
+ *
+ * @param   intsave		
+ *
+ * @retval  GPOWER_ID		GパワーID (何も装備していない場合はGPOWER_ID_NULL)
+ */
+//==================================================================
+GPOWER_ID ISC_SAVE_GetGPowerID(INTRUDE_SAVE_WORK *intsave)
+{
+  return intsave->gpower_id;
 }

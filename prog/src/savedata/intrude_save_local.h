@@ -21,4 +21,6 @@
 struct _INTRUDE_SAVE_WORK{
   OCCUPY_INFO occupy;
   INTRUDE_SECRET_ITEM_SAVE secret_item[INTRUDE_SECRET_ITEM_SAVE_MAX]; ///<侵入隠しアイテム
+  u8 gpower_id;           ///<自身が装備しているGパワーID(セットしていない場合はGPOWER_ID_NULL)
+  u8 padding[3];
 };
