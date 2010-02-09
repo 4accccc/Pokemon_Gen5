@@ -1334,8 +1334,8 @@ static void common_hpborder_powerup( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeTyp
       // 使うのが指定タイプワザなら
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == wazaType )
       {
-        // 威力２倍
-        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+        // 威力1.5倍
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
       }
     }
   }
