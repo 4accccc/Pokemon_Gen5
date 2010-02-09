@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-04T16:36:43"/>
+	<create user="matsumiya" host="W00224" date="2010-02-09T18:24:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="266" right="2002" bottom="894" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="208" right="1990" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -306,10 +306,10 @@
 		<comment>♀
 ・盗難イベント発生時
 ・仮メッセージ</comment>
-		<language name="JPN" width="256">ドロボウは　すうにんで
-てんじひんを　うばっていきました……</language>
-		<language name="JPN_KANJI" width="256">ドロボウは　数人で
-展示品を　奪っていきました……</language>
+		<language name="JPN" width="256">あの　ドロボウって……
+いったい　なにもの　ですか？</language>
+		<language name="JPN_KANJI" width="256">あの　ドロボウって……
+いったい　なにもの　ですか？</language>
 	</row>
 
 	<row id="msg_c02gym0101_counter2_01">
@@ -326,10 +326,10 @@
 		<comment>♀
 ・盗難イベント発生時
 ・仮メッセージ</comment>
-		<language name="JPN" width="256">いきなり　ポケモンで　おどろかされて……
-なにも　できなかったんです……</language>
-		<language name="JPN_KANJI" width="256">いきなり　ポケモンで　驚かされて……
-なにも　できなかったんです……</language>
+		<language name="JPN" width="256">ホネを　うばって
+どうする　つもりでしょう？</language>
+		<language name="JPN_KANJI" width="256">ホネを　うばって
+どうする　つもりでしょう？</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
