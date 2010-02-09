@@ -150,7 +150,7 @@ typedef union {
 // 保存するデータ
 typedef struct{
   GIFT_PRESENT data;
-  STRCODE event_name[GIFT_DATA_CARD_TITLE_MAX];	// イベントタイトル
+  STRCODE event_name[GIFT_DATA_CARD_TITLE_MAX+EOM_SIZE];	// イベントタイトル
   s32 recv_date;				// 受信した時間
   u16 event_id;					// イベントＩＤ(最大2048件まで)
   u8 card_message;      //  カードのメッセージタイプ
@@ -167,7 +167,7 @@ typedef struct{
 typedef struct{
   GIFT_PACK_DATA data;
   u32 version;					// 対象バージョン(０の場合は制限無しで配布)
-  STRCODE event_text[GIFT_DATA_CARD_TEXT_MAX];	// 説明テキスト
+  STRCODE event_text[GIFT_DATA_CARD_TEXT_MAX+EOM_SIZE];	// 説明テキスト
 } DOWNLOAD_GIFT_DATA;
 
 
@@ -262,6 +262,12 @@ inline s32 MYSTERYDATA_GetDay( s32 recv_date )
 //	 指定のカードを入れ替える
 //------------------------------------------------------------------
 extern void MYSTERYDATA_SwapCard( MYSTERY_DATA * fd, u32 cardindex1, u32 cardindex2 );
+
+//------------------------------------------------------------------
+/// 不正修正関数  (現在名前のEOMチェックとEVENT_IDの範囲チェックのみです)
+//------------------------------------------------------------------
+extern u32 MYSTERYDATA_ModifyDownloadData( DOWNLOAD_GIFT_DATA *p_data );
+extern u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data );
 
 //------------------------------------------------------------------
 /// デバッグ用にポケモンデータをセットする関数

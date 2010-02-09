@@ -16,7 +16,6 @@
 
 #define MYSTERY_DATA_NO_USED		0x00000000
 #define MYSTERY_DATA_MAX_EVENT		2048
-
 #define MYSTERY_MENU_FLAG		(MYSTERY_DATA_MAX_EVENT - 1)
 
 //------------------------------------------------------------------
@@ -316,6 +315,94 @@ static void MYSTERYDATA_FillSpaceCard( MYSTERY_DATA * fd, u32 cardindex )
     }
     GFL_STD_MemClear( &fd->card[i], sizeof(GIFT_PACK_DATA) );
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正を見つけたら修正する関数
+ *
+ *	@param	DOWNLOAD_GIFT_DATA *p_data  修正するデータ
+ *
+ *	@return 不正カウンタ（不正無しなら０  内部の不正を見つけるたびに＋１）
+ */
+//-----------------------------------------------------------------------------
+u32 MYSTERYDATA_ModifyDownloadData( DOWNLOAD_GIFT_DATA *p_data )
+{ 
+  u32 dirty = 0;
+
+  //説明テキストが不正
+  { 
+    int i;
+    BOOL is_darty = TRUE;
+    //EOMが入っていれば正常とみなす
+    for( i = 0; i < GIFT_DATA_CARD_TEXT_MAX+EOM_SIZE; i++ )
+    { 
+      if( p_data->event_text[i] == GFL_STR_GetEOMCode() )
+      { 
+        is_darty  = FALSE;
+      }
+    }
+
+    if( is_darty )
+    { 
+      dirty++;
+      p_data->event_text[0] = L'　';
+      p_data->event_text[1] = GFL_STR_GetEOMCode();
+      OS_TPrintf( "DOWNLOAD_GIFT_DATA:説明テキストが不正のため空文字にしました\n" );
+    }
+  }
+
+  //付属データもチェック
+  dirty += MYSTERYDATA_ModifyGiftData( &p_data->data );
+
+  return dirty;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正を見つけたら修正する関数
+ *
+ *	@param	GIFT_PACK_DATA *p_data  修正するデータ
+ *
+ *	@return 不正カウンタ（不正無しなら０  内部の不正を見つけるたびに＋１）
+ */
+//-----------------------------------------------------------------------------
+u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data )
+{ 
+  u32 dirty = 0;
+
+  //イベントタイトルが不正
+  { 
+    int i;
+    BOOL is_darty = TRUE;
+    //EOMが入っていれば正常とみなす
+    for( i = 0; i < GIFT_DATA_CARD_TITLE_MAX+EOM_SIZE; i++ )
+    { 
+      if( p_data->event_name[i] == GFL_STR_GetEOMCode() )
+      { 
+        is_darty  = FALSE;
+      }
+    }
+
+    if( is_darty )
+    { 
+      dirty++;
+      p_data->event_name[0] = L'　';
+      p_data->event_name[1] = GFL_STR_GetEOMCode();
+      OS_TPrintf( "GIFT_PACK_DATA:イベントタイトルが不正のため空文字にしました\n" );
+    }
+  }
+
+  //イベントID
+  { 
+    if( !(0 <= p_data->event_id && p_data->event_id < MYSTERY_DATA_MAX_EVENT ) )
+    { 
+      p_data->event_id  = 0;
+      dirty++;
+      OS_TPrintf( "GIFT_PACK_DATA:イベントIDが不正のため０にしました\n" );
+    }
+  }
+
+  return dirty;
 }
 
 //------------------------------------------------------------------

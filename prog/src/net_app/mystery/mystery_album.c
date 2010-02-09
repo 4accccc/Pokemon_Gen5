@@ -1415,7 +1415,7 @@ static void MYSTERY_CARD_DATA_Init( MYSTERY_CARD_DATA *p_wk, GIFT_PACK_DATA *p_d
   { 
     p_wk->is_exist  = TRUE;
     p_wk->p_data    = p_data;
-
+    MYSTERYDATA_ModifyGiftData( p_wk->p_data );
 
     p_wk->p_bmp     = GFL_BMP_Create( MYSTERY_ALBUM_THUMBNAIL_DATE_W, MYSTERY_ALBUM_THUMBNAIL_DATE_H,
                       GFL_BMP_16_COLOR, heapID);

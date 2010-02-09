@@ -1519,6 +1519,12 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         ret = MYSTERY_NET_GetDownloadData( p_wk->p_net, &p_wk->data, sizeof(DOWNLOAD_GIFT_DATA) );
         if( ret )
         { 
+          u32 dirty;
+
+          dirty = MYSTERYDATA_ModifyDownloadData( &p_wk->data );
+
+#ifdef PM_DEBUG
+          { 
           static char title_buff[GIFT_DATA_CARD_TITLE_MAX];
           static char text_buff[GIFT_DATA_CARD_TEXT_MAX];
           DEB_STR_CONV_StrcodeToSjis( p_wk->data.data.event_name, title_buff, GIFT_DATA_CARD_TITLE_MAX );
@@ -1530,6 +1536,9 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           NAGI_Printf( "EV_ID: %d\n", p_wk->data.data.event_id );
           NAGI_Printf( "TYPE : %d\n",   p_wk->data.data.gift_type );
           NAGI_Printf( "ONLYONE : %d\n",   p_wk->data.data.only_one_flag );
+          NAGI_Printf( "ïsê≥ : %d\n", dirty );
+          }
+#endif //PM_DEBUG
 
           *p_seq  = SEQ_SELECT_GIFT_MSG;
         }
