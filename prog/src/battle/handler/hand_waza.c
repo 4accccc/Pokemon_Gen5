@@ -8986,13 +8986,9 @@ static void handler_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     else
     {
       BTL_HANDEX_PARAM_REMOVE_FLDEFF* param;
-      BTL_HANDEX_PARAM_MESSAGE*  msg_param;
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_REMOVE_FLDEFF, pokeID );
       param->effect = BTL_FLDEFF_WONDERROOM;
-
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, BTL_STRID_STD_WonderRoom_End );
     }
   }
 }
