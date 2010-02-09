@@ -28,6 +28,9 @@ _EVENT_DATA    ev_scene_c04r0101_entry
 _EVENT_DATA    ev_c04r0101_boy1_btltalk
 _EVENT_DATA_END
 
+//簡易会話用ワーク
+DEFINE_LOCAL easy_talk_word1
+DEFINE_LOCAL easy_talk_word2
 
 /************************************************************/
 /*		予約スクリプト：入った時の主人公アニメ				*/
@@ -117,9 +120,100 @@ EVENT_END
 /************************************************************/
 //バトルサブウェイで通信時に話すメッセージの登録イベント
 EVENT_START	ev_c04r0101_boy1_btltalk
+  DEFINE_LOCAL last_msg
 
+  _TALK_OBJ_START()
+  //「教えて」
+  _BALLOONWIN_TALKOBJ_MSG( msg_touroku_01 )
+  _BALLOONWIN_CLOSE()
+
+  _CALL easy_talk_loop
+
+  IF $SCWK_ANSWER == FALSE THEN
+    //「残念」
+    $last_msg = msg_touroku_06
+  ELSE
+    _EASY_TALK_WORD_NAME(0,easy_talk_word1) //始めの単語をセットする
+    //「ありがとう」
+    $last_msg = msg_touroku_05
+  ENDIF
+
+  _BALLOONWIN_TALKOBJ_MSG( last_msg )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 
 EVENT_END
 
+easy_talk_loop:
+  DEFINE_LOCAL exit
+  DEFINE_LOCAL list_ret
 
+  $exit = FALSE
 
+  WHILE $exit == FALSE
+    //リスト作成
+    _BMPMENU_INIT_EX( 1,1,0,1,list_ret )
+    _BMPMENU_MAKE_LIST( msg_touroku__win_01, 1 )  //自己紹介
+    _BMPMENU_MAKE_LIST( msg_touroku__win_02, 2 )  //勝ったとき
+    _BMPMENU_MAKE_LIST( msg_touroku__win_03, 3 )  //負けたとき
+    _BMPMENU_MAKE_LIST( msg_touroku__win_04, 0 )  //おしえない
+
+    _BMPMENU_START()
+    //キャンセルチェック
+    IF $list_ret != EV_WIN_B_CANCEL THEN
+      IF $list_ret != 0 THEN
+        DEFINE_LOCAL easy_talk_mode
+        DEFINE_LOCAL msg
+
+        //分岐
+        SWITCH $list_ret
+        CASE 1 THEN
+          $msg = msg_touroku_02     //自己紹介
+          $easy_talk_mode = EASYTALK_MODE_READY
+        CASE 2 THEN
+          $msg = msg_touroku_04     //勝ったとき
+          $easy_talk_mode = EASYTALK_MODE_WIN
+        CASE 3 THEN
+          $msg = msg_touroku_03     //負けたとき
+          $easy_talk_mode = EASYTALK_MODE_LOSE
+        ENDSWITCH
+
+        _BALLOONWIN_TALKOBJ_MSG( msg )
+        _BALLOONWIN_CLOSE()
+        //簡易会話アプリ
+        {
+          _MAP_FADE_BLACK_OUT()
+          _MAP_FADE_END_CHECK()
+          _FIELD_CLOSE()
+          _CALL_EASY_TALK_APP( easy_talk_mode, easy_talk_word1, easy_talk_word2, SCWK_ANSWER )
+          _FIELD_OPEN()
+          _MAP_FADE_BLACK_IN()
+          _MAP_FADE_END_CHECK()
+        }
+
+        IF $SCWK_ANSWER == TRUE THEN
+          //「他にも教えて」
+          _BALLOONWIN_TALKOBJ_MSG( msg_touroku_07 )
+          _YES_NO_WIN( SCWK_ANSWER )
+          _BALLOONWIN_CLOSE()
+          IF $SCWK_ANSWER != 0 THEN   //教えない。終了
+            $SCWK_ANSWER = TRUE
+            $exit = TRUE    //終了
+          ENDIF
+        ELSE
+          //アプリキャンセル
+          $SCWK_ANSWER = FALSE
+          $exit = TRUE    //終了
+        ENDIF  
+      ELSE
+        //おしえない
+        $SCWK_ANSWER = FALSE
+        $exit = TRUE    //終了
+      ENDIF
+    ELSE
+      //リストキャンセル
+      $SCWK_ANSWER = FALSE
+      $exit = TRUE    //終了
+    ENDIF
+  ENDWHILE
+_RET

@@ -187,7 +187,7 @@
   DEF_CMD( EvCmdPokeTypeName, EV_SEQ_POKETYPE_NAME )
   DEF_CMD( EvCmdMonsName, EV_SEQ_MONS_NAME )
   DEF_CMD( EvCmdMonsName, EV_SEQ_PLACE_NAME )
-  NO_CMD()
+  DEF_CMD( EvCmdEasyTalkWordName, EV_SEQ_EASY_TALK_WORD_NAME )
 
   DEF_CMD( EvCmdSodateyaPokeNickName, EV_SEQ_SODATEYA_NICK_NAME )
   DEF_CMD( EvCmdNumber, EV_SEQ_NUMBER )

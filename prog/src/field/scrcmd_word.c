@@ -351,3 +351,23 @@ VMCMD_RESULT EvCmdPlaceName( VMHANDLE *core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 簡易会話単語をバッファに登録
+ * @param  core  仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//------------------------------------------------------------------------------------------
+VMCMD_RESULT EvCmdEasyTalkWordName( VMHANDLE *core, void *wk )
+{ 
+  SCRCMD_WORK* work = wk;
+  SCRIPT_WORK*   sc = SCRCMD_WORK_GetScriptWork( work );
+	WORDSET*  wordset = SCRIPT_GetWordSet( sc );
+	u8           idx = VMGetU8( core );  // 第一引数
+  PMS_WORD      word = SCRCMD_GetVMWorkValue( core, work );  // 第二引数
+
+  WORDSET_RegisterPMSWord( wordset, idx, word );
+
+	return VMCMD_RESULT_CONTINUE;
+}
+

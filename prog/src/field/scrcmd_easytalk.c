@@ -108,7 +108,16 @@ VMCMD_RESULT EvCmdCallEasyTalkApp( VMHANDLE *core, void *wk )
 
     save_ctrl = GAMEDATA_GetSaveControlWork( gdata );
     evt_work->pmsi = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, guidance, NULL, FALSE, save_ctrl, GFL_HEAPID_APP );
-
+    //起動時の単語セット
+    {
+      MYPMS_DATA *my_pms;
+      PMS_DATA  pms;
+      SAVE_CONTROL_WORK* sv;
+      sv = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
+      my_pms = SaveData_GetMyPmsData( sv);
+      MYPMS_GetPms( my_pms, evt_work->PmsType, &pms );
+      PMSI_PARAM_SetInitializeDataSentence( evt_work->pmsi, &pms );
+    }
     SCRIPT_CallEvent( sc, event );
 
   }
