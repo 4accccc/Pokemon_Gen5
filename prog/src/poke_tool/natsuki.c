@@ -27,7 +27,7 @@ static	const	s8	CalcNatsukiTable[][3]={
 	{  3,  2,  1 },		//ミュージカルに参加
 };
 
-static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, u16 placeID, HEAPID heapID );
+static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, ZONEID zoneID, HEAPID heapID );
 
 //============================================================================================
 /**
@@ -35,13 +35,13 @@ static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, u16 pl
  *
  * @param[in]	pp		        なつき度を計算するポケモン構造体のポインタ
  * @param[in]	calcID	      計算するためのID
- * @param[in]	placeID	      現在地ID
+ * @param[in]	zoneID	      現在地ID
  * @param[in]	heapID	      ヒープID
  */
 //============================================================================================
-void  NATSUKI_Calc( POKEMON_PARAM* pp, CALC_NATSUKI calcID, u16 placeID, HEAPID heapID )
+void  NATSUKI_Calc( POKEMON_PARAM* pp, CALC_NATSUKI calcID, ZONEID zoneID, HEAPID heapID )
 { 
-  NATSUKI_CalcAct( pp, CalcNatsukiTable[ calcID ], placeID, heapID );
+  NATSUKI_CalcAct( pp, CalcNatsukiTable[ calcID ], zoneID, heapID );
 }
 
 //============================================================================================
@@ -50,11 +50,11 @@ void  NATSUKI_Calc( POKEMON_PARAM* pp, CALC_NATSUKI calcID, u16 placeID, HEAPID 
  *
  * @param[in]	pp		        なつき度を計算するポケモン構造体のポインタ
  * @param[in]	item_no	      使用したアイテム
- * @param[in]	placeID	      現在地ID
+ * @param[in]	zoneID	      現在地ID
  * @param[in]	heapID	      ヒープID
  */
 //============================================================================================
-void  NATSUKI_CalcUseItem( POKEMON_PARAM* pp, u16 item_no, u16 placeID, HEAPID heapID )
+void  NATSUKI_CalcUseItem( POKEMON_PARAM* pp, u16 item_no, ZONEID zoneID, HEAPID heapID )
 { 
   int i;
   s8  natsuki_table[ 3 ];
@@ -64,7 +64,7 @@ void  NATSUKI_CalcUseItem( POKEMON_PARAM* pp, u16 item_no, u16 placeID, HEAPID h
     natsuki_table[ i ] = ITEM_GetParam( item_no, ITEM_PRM_FRIEND1 + i, heapID );
   }
 
-  NATSUKI_CalcAct( pp, natsuki_table, placeID, heapID );
+  NATSUKI_CalcAct( pp, natsuki_table, zoneID, heapID );
 }
 
 //============================================================================================
@@ -72,11 +72,11 @@ void  NATSUKI_CalcUseItem( POKEMON_PARAM* pp, u16 item_no, u16 placeID, HEAPID h
  *	なつき度計算（連れ歩き）
  *
  * @param[in]	pp		        なつき度を計算するポケモン構造体のポインタ
- * @param[in]	placeID	      現在地ID
+ * @param[in]	zoneID	      現在地ID
  * @param[in]	heapID	      ヒープID
  */
 //============================================================================================
-void  NATSUKI_CalcTsurearuki( POKEMON_PARAM* pp, u16 placeID, HEAPID heapID )
+void  NATSUKI_CalcTsurearuki( POKEMON_PARAM* pp, ZONEID zoneID, HEAPID heapID )
 { 
 	//連れ歩きのなつき度計算の確率は1/2
 	if( GFL_STD_MtRand( 2 ) & 1 )
@@ -84,7 +84,7 @@ void  NATSUKI_CalcTsurearuki( POKEMON_PARAM* pp, u16 placeID, HEAPID heapID )
   	return;
 	}
 
-  NATSUKI_CalcAct( pp, CalcNatsukiTable[ CALC_NATSUKI_TSUREARUKI ], placeID, heapID );
+  NATSUKI_CalcAct( pp, CalcNatsukiTable[ CALC_NATSUKI_TSUREARUKI ], zoneID, heapID );
 }
 
 //============================================================================================
@@ -92,11 +92,11 @@ void  NATSUKI_CalcTsurearuki( POKEMON_PARAM* pp, u16 placeID, HEAPID heapID )
  *	なつき度計算（ボス戦に参加）
  *
  * @param[in]	ppt		        なつき度を計算するポケパーティ構造体のポインタ
- * @param[in]	placeID	      現在地ID
+ * @param[in]	zoneID	      現在地ID
  * @param[in]	heapID	      ヒープID
  */
 //============================================================================================
-void  NATSUKI_CalcBossBattle( POKEPARTY* ppt, u16 placeID, HEAPID heapID )
+void  NATSUKI_CalcBossBattle( POKEPARTY* ppt, ZONEID zoneID, HEAPID heapID )
 { 
   int i;
   POKEMON_PARAM* pp;
@@ -104,7 +104,7 @@ void  NATSUKI_CalcBossBattle( POKEPARTY* ppt, u16 placeID, HEAPID heapID )
   for( i = 0 ; i < PokeParty_GetPokeCount( ppt ) ; i++ )
   { 
     pp = PokeParty_GetMemberPointer( ppt, i );
-    NATSUKI_CalcAct( pp, CalcNatsukiTable[ CALC_NATSUKI_BOSS_BATTLE ], placeID, heapID );
+    NATSUKI_CalcAct( pp, CalcNatsukiTable[ CALC_NATSUKI_BOSS_BATTLE ], zoneID, heapID );
   }
 }
 
@@ -114,11 +114,11 @@ void  NATSUKI_CalcBossBattle( POKEPARTY* ppt, u16 placeID, HEAPID heapID )
  *
  * @param[in]	pp		        なつき度を計算するポケモン構造体のポインタ
  * @param[in]	natsuki_table なつき度計算テーブル
- * @param[in]	placeID	      現在地ID
+ * @param[in]	zoneID	      現在地ID
  * @param[in]	heapID	      ヒープID
  */
 //============================================================================================
-static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, u16 placeID, HEAPID heapID )
+static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, ZONEID zoneID, HEAPID heapID )
 {
 	u16	monsno;
 	u16	itemno;
@@ -157,9 +157,9 @@ static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, u16 pl
 	}
 
 	// 自分が捕獲された場所だともう１上がる
-  if( placeID )
+  if( zoneID )
   { 
-	  if( ( natsukitmp > 0 ) && ( PP_Get( pp, ID_PARA_get_place, NULL ) == placeID ) )
+	  if( ( natsukitmp > 0 ) && ( PP_Get( pp, ID_PARA_get_place, NULL ) == zoneID ) )
     {
 		  natsukitmp++;
 	  }
