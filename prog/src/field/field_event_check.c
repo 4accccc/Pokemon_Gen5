@@ -101,6 +101,7 @@
 #include "scrcmd_intrude.h"
 
 #include "savedata/situation.h"
+#include "gamesystem/g_power.h" //GPOWER_Calc_Hatch
 
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
@@ -1513,6 +1514,10 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
 //--------------------------------------------------------------
 static void updatePartyEgg( POKEPARTY* party )
 {
+  enum {
+    ONE_STEP_COUNT = 0x00100, ///<一歩あたりの増分
+    MAX_STEP_COUNT = 0x10000, ///<カウント最大値
+  };
   SAVE_CONTROL_WORK* saveData;
   SITUATION* situation;
   u32 count;
@@ -1523,10 +1528,10 @@ static void updatePartyEgg( POKEPARTY* party )
 
   // タマゴ孵化カウンタを更新
   SaveData_SituationLoadEggStepCount( situation, &count );
-  count += 0x0100;
+  count += GPOWER_Calc_Hatch( ONE_STEP_COUNT );
 
   // 手持ちのタマゴに反映
-  if( 0x10000 < count )
+  if( MAX_STEP_COUNT < count )
   {
     int i;
     int partyCount;
