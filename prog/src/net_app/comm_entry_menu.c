@@ -291,7 +291,7 @@ static const FLDMENUFUNC_HEADER ParentSearchMenuListHeader = {
   16,                     //リスト項目数
   5,                      //表示最大項目数
   0,                      //ラベル表示Ｘ座標
-  0,                      //項目表示Ｘ座標
+  13,                     //項目表示Ｘ座標
   0,                      //カーソル表示Ｘ座標
   0,                      //表示Ｙ座標
   1,                      //表示文字色
@@ -332,6 +332,7 @@ COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fie
   FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
   int i;
   
+  OS_TPrintf("CommEntryMenu_Setup\n");
   GF_ASSERT(max_num <= COMM_ENTRY_USER_MAX);
   
   em = GFL_HEAP_AllocClearMemory(heap_id, sizeof(COMM_ENTRY_MENU_SYSTEM));
@@ -474,6 +475,9 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
 {
   enum{
     _SEQ_INIT,
+    _SEQ_INIT_SERVER,
+    _SEQ_FIRST_CONNECT_WAIT,
+    _SEQ_FIRST_NEGO_WAIT,
     _SEQ_ENTRY_SEND,
     _SEQ_ENTRY,
     _SEQ_FINAL_CHECK,
@@ -496,6 +500,27 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     //最初のメッセージ描画
     _StreamMsgSet(em, msg_connect_02_01);
     em->seq++;
+    break;
+  case _SEQ_INIT_SERVER:
+    if(em->game_type == COMM_ENTRY_GAMETYPE_COLOSSEUM){
+      em->seq = _SEQ_ENTRY_SEND;
+    }
+    else{
+      GFL_NET_InitServer();
+      em->seq++;
+    }
+    break;
+  case _SEQ_FIRST_CONNECT_WAIT:
+    if(GFL_NET_SystemGetConnectNum() > 1){
+      if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
+        em->seq++;
+      }
+    }
+    break;
+  case _SEQ_FIRST_NEGO_WAIT:
+    if( GFL_NET_HANDLE_IsNegotiation( GFL_NET_HANDLE_GetCurrentHandle() ) == TRUE ){
+      em->seq = _SEQ_ENTRY_SEND;
+    }
     break;
   case _SEQ_ENTRY_SEND:
     if(CemSend_Entry(&em->mine_mystatus, TRUE) == TRUE){
@@ -611,6 +636,7 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
 
     em->parentsearch.connect_parent = NULL;
     _ParentSearchList_Setup(em);
+    GFL_NET_StartBeaconScan();
     em->seq++;
     break;
   case _SEQ_PARENT_LIST_MAIN:   //親機探索
@@ -620,7 +646,7 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
       switch(list_select){
       case PARENT_SEARCH_LIST_SELECT_OK:
         _ParentSearchList_Exit(em);
-        em->seq = _SEQ_MEMBER_WAIT;
+        em->seq = _SEQ_MEMBER_INIT;
         break;
       case PARENT_SEARCH_LIST_SELECT_NG:
         _ParentSearchList_Exit(em);
@@ -1781,6 +1807,7 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
       }
       
       if(em->parentsearch.list_update_req == TRUE){
+        _ParentSearchList_SetListString(em);
         FLDMENUFUNC_Rewrite( em->parentsearch.menufunc );
         em->parentsearch.list_update_req = FALSE;
       }
@@ -1803,15 +1830,18 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
       em->entry_parent_answer = ENTRY_PARENT_ANSWER_NULL;
       if(CemSend_Entry(&em->mine_mystatus, FALSE) == TRUE){
         psl->local_seq = _SEQ_PARENT_ANSWER_WAIT;
+        OS_TPrintf("親にエントリーを送信\n");
       }
     }
     break;
   case _SEQ_PARENT_ANSWER_WAIT: 
     if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_OK){
+      OS_TPrintf("親からのエントリー返事：OK\n");
       psl->final_select = PARENT_SEARCH_LIST_SELECT_OK;
       psl->local_seq = _SEQ_FINISH;
     }
     else if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_NG){
+      OS_TPrintf("親からのエントリー返事：NG\n");
       psl->final_select = PARENT_SEARCH_LIST_SELECT_NG;
       psl->local_seq = _SEQ_FINISH;
     }
@@ -1966,8 +1996,8 @@ static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em)
     FLDMENUFUNC_ListSTRBUFDelete(em->parentsearch.fldmenu_listdata);
   }
   
-  strbuf_src = GFL_STR_CreateBuffer(32, em->heap_id);
-  strbuf_expand = GFL_STR_CreateBuffer(32, em->heap_id);
+  strbuf_src = GFL_STR_CreateBuffer(64, em->heap_id);
+  strbuf_expand = GFL_STR_CreateBuffer(64, em->heap_id);
   strbuf_eom = GFL_STR_CreateBuffer(4, em->heap_id);
 	
   GFL_MSG_GetString( em->msgdata, msg_connect_search_000, strbuf_src );
@@ -1982,7 +2012,7 @@ static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em)
     else{
     	GFL_STR_SetStringCode(strbuf_eom, &str_eom);
     	WORDSET_RegisterWord( em->wordset, 1, strbuf_eom, 0, TRUE, PM_LANG );
-    	WORDSET_RegisterWord( em->wordset, 1, strbuf_eom, 0, TRUE, PM_LANG );
+    	WORDSET_RegisterWord( em->wordset, 2, strbuf_eom, 0, TRUE, PM_LANG );
     }
     WORDSET_ExpandStr( em->wordset, strbuf_expand, strbuf_src );
     FLDMENUFUNC_AddStringListData( em->parentsearch.fldmenu_listdata,

@@ -125,6 +125,7 @@ static void _CemRecv_Entry(const int netID, const int size, const void* pData, v
   COMM_ENTRY_MENU_PTR em = pWork;
   const CEM_SEND_ENTRY *recv_entry = pData;
   
+  OS_TPrintf("エントリー受信：net_id=%d\n", netID);
   CommEntryMenu_Entry(
     em, netID, &recv_entry->mystatus, recv_entry->force_entry, recv_entry->mac_address);
 }
