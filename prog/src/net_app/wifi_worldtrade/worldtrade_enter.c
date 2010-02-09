@@ -27,6 +27,7 @@
 //#include "savedata/zukanwork.h"
 //TODO
 #include "net_app/wifi_login.h"
+#include "net_app/wifi_logout.h"
 
 
 #include "net_app/worldtrade.h"
@@ -85,6 +86,8 @@ static int Enter_DwcErrorPrint( WORLDTRADE_WORK *wk );
 static int Enter_ErrorPadWait( WORLDTRADE_WORK *wk );
 static int Enter_Wifilogin_start( WORLDTRADE_WORK *wk );
 static int Enter_Wifilogin_wait( WORLDTRADE_WORK *wk );
+static int Enter_Wifilogout_start( WORLDTRADE_WORK *wk );
+static int Enter_Wifilogout_wait( WORLDTRADE_WORK *wk );
 
 
 static int printCommonFunc( GFL_BMPWIN *win, STRBUF *strbuf, int x, int flag, PRINTSYS_LSB color, int font, WT_PRINT *print );
@@ -120,6 +123,8 @@ enum{
 
   ENTER_WIFILOGIN_PROC_START,
 	ENTER_WIFILOGIN_PROC_WAIT,
+  ENTER_WIFILOGOUT_PROC_START,
+	ENTER_WIFILOGOUT_PROC_WAIT,
 };
 
 static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
@@ -153,6 +158,8 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
   Enter_Wifilogin_start, //ENTER_WIFILOGIN_PROC_START,
 	Enter_Wifilogin_wait, //ENTER_WIFILOGIN_PROC_WAIT,
+  Enter_Wifilogout_start, //ENTER_WIFILOGOUT_PROC_START,
+	Enter_Wifilogout_wait, //ENTER_WIFILOGOUT_PROC_WAIT,
 };
 
 
@@ -208,38 +215,25 @@ int WorldTrade_Enter_Init(WORLDTRADE_WORK *wk, int seq)
 //	WorldTrade_WifiIconAdd( wk );  //2768
 	
 
-  //@todo
-#if 0
-	if(!DWC_CheckInet()){
-		// 初回wifi接続の際は無条件で接続に
-		if(wk->param->connect){
-		    // 通信エラー管理のために通信ルーチンをON
-		    //CommStateWifiDPWStart( wk->param->savedata );
-			// WIFIせつぞくを開始
-			//Enter_MessagePrint( wk, wk->LobbyMsgManager, msg_wifilobby_002, 1, 0x0f0f );
-			wk->subprocess_seq  = ENTER_INTERNET_CONNECT;
-			WorldTrade_TimeIconAdd(wk);
-		}else{
-			//sys_SleepOK(SLEEPTYPE_COMM);// スリープ禁止を解除。実際に通信する時にこちら側でNGにする
-			wk->subprocess_seq = ENTER_START;
-		}
-	}else{
-	    // 通信エラー管理のために通信ルーチンをON
-	    //CommStateWifiDPWStart( wk->param->savedata );
-		wk->subprocess_seq = ENTER_FORCE_END_START;
-	}
-#else
-  if( !GFL_NET_IsInit() )
+  //モード別起動へ変更
+  switch( wk->sub_process_mode )
   { 
+  case MODE_WIFILOGIN:     ///< WIFIログイン
     wk->subprocess_seq = ENTER_WIFILOGIN_PROC_START;
+    break;
+  case MODE_CONNECT:       ///< GTSサーバー接続をする
+    wk->subprocess_seq = ENTER_START;
+    break;
+  case MODE_DISCONNECT:   ///< GTSサーバー切断をする
+    wk->subprocess_seq = ENTER_FORCE_END_START;
+    break;
+  case MODE_WIFILOGOUT:    ///< WIFIログアウト
+    wk->subprocess_seq = ENTER_WIFILOGOUT_PROC_START;
+    break;
   }
-  else
-  { 
-    wk->subprocess_seq = ENTER_INTERNET_CONNECT;
-  }
-#endif
 	return SEQ_FADEIN;
 }
+
 //==============================================================================
 /**
  * @brief   世界交換入り口画面メイン
@@ -347,7 +341,13 @@ static void FreeWork( WORLDTRADE_WORK *wk )
 static int Enter_Start( WORLDTRADE_WORK *wk)
 {
 	// WIFIコネクションに接続しますか？
-  wk->subprocess_seq  = ENTER_INTERNET_CONNECT; //YES
+  //
+  //
+  //  WIFILOGINでインターネット接続をするのでいらない
+//  wk->subprocess_seq  = ENTER_INTERNET_CONNECT; //YES
+  wk->subprocess_seq  = ENTER_WIFI_CONNECTION_LOGIN; //YES
+
+
 #if 0 //NO
 			WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
 			wk->subprocess_seq  = ENTER_END;
@@ -387,7 +387,6 @@ static int Enter_Start( WORLDTRADE_WORK *wk)
  * @retval  int		サブシーケンス
  */
 //------------------------------------------------------------------
-//@delete
 static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
 {
 //	int ret = BmpYesNoSelectMain( wk->YesNoMenuWork, HEAPID_WORLDTRADE );
@@ -407,6 +406,7 @@ static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
 #else
 			//GFL_NET_Exit(NULL);
 #endif
+      GF_ASSERT(0);
 			WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
 			wk->subprocess_seq  = ENTER_END;
 	}
@@ -424,7 +424,6 @@ static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
  * @retval  int		サブシーケンス
  */
 //------------------------------------------------------------------
-//@todo
 static int Enter_EndStart( WORLDTRADE_WORK *wk ) 
 {
 
@@ -454,6 +453,7 @@ static int Enter_EndStart( WORLDTRADE_WORK *wk )
     }
     // 通信エラー管理のために通信ルーチンをOFF
     //CommStateWifiDPWEnd();
+    GF_ASSERT(0);
     WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
     wk->subprocess_seq  = ENTER_END;
   }
@@ -470,10 +470,8 @@ static int Enter_EndStart( WORLDTRADE_WORK *wk )
  * @retval  int		サブシーケンス
  */
 //------------------------------------------------------------------
-//@delete
 static int Enter_EndYesNoSelect( WORLDTRADE_WORK *wk )
 {
-#if 1
 	u32 ret = WorldTrade_TouchSwMain(wk);
 	if(ret==TOUCH_SW_RET_YES){
 		if(!DWC_CheckInet()){		
@@ -495,44 +493,15 @@ static int Enter_EndYesNoSelect( WORLDTRADE_WORK *wk )
 		if(DWC_CheckInet()){		
 			DWC_CleanupInet();
 		}
+
+    GF_ASSERT(0);
 		// 通信エラー管理のために通信ルーチンをOFF
 		//CommStateWifiDPWEnd();
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
 		wk->subprocess_seq  = ENTER_END;
 	}
 	
-#else
-	int ret = BmpYesNoSelectMain( wk->YesNoMenuWork, HEAPID_WORLDTRADE );
 
-	if(ret!=BMPMENU_NULL){
-		if(ret==BMPMENU_CANCEL){
-			if(!DWC_CheckInet()){		
-				// 接続を開始しますか？
-				wk->subprocess_seq  = ENTER_START;
-			}else{
-//				 WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
-//				wk->subprocess_seq  = ENTER_END;
-
-				// 既に接続済みなら
-				// サーバーチェックの後タイトルメニューへ
-				WorldTrade_SubProcessChange( wk, WORLDTRADE_UPLOAD, MODE_SERVER_CHECK );
-				wk->sub_returnprocess = WORLDTRADE_TITLE;
-				wk->subprocess_seq    = ENTER_END;
-
-			}
-		}else{
-			// WIFIせつぞくを終了
-			if(DWC_CheckInet()){		
-			    DWC_CleanupInet();
-			}
-		    // 通信エラー管理のために通信ルーチンをOFF
-		    //CommStateWifiDPWEnd();
-				//TODO
-			WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
-			wk->subprocess_seq  = ENTER_END;
-		}
-	}
-#endif
 	return SEQ_MAIN;
 	
 }
@@ -552,7 +521,10 @@ static int Enter_EndYesNoSelect( WORLDTRADE_WORK *wk )
 static int Enter_ForceEndStart( WORLDTRADE_WORK *wk ) 
 {
 	// 接続を終了します
-  wk->subprocess_seq  = ENTER_FORCE_END;
+  //wk->subprocess_seq  = ENTER_FORCE_END;
+  //
+  //WIFILOGINの中でインターネット切断をするのでいらない↑
+  wk->subprocess_seq  = ENTER_WIFILOGOUT_PROC_START;
 	return SEQ_MAIN;
 }
 
@@ -572,8 +544,8 @@ static int Enter_ForceEnd( WORLDTRADE_WORK *wk )
 		//TODO
 	// WIFIせつぞくを終了
     DWC_CleanupInet();
-	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
-	wk->subprocess_seq  = ENTER_FORCE_END_MESSAGE;
+
+    wk->subprocess_seq  = ENTER_WIFILOGOUT_PROC_START;
 
 	return SEQ_MAIN;
 	
@@ -1162,9 +1134,74 @@ static int Enter_Wifilogin_start( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_Wifilogin_wait( WORLDTRADE_WORK *wk )
 { 
+  WIFILOGIN_PARAM *param  = wk->sub_proc_wk;
+
   if( GFL_PROC_MAIN_NULL == GFL_PROC_LOCAL_Main( wk->procsys ) )
   { 
-    wk->subprocess_seq = ENTER_START;
+    switch( param->result )
+    { 
+    case WIFILOGIN_RESULT_LOGIN:
+      wk->subprocess_seq = ENTER_START;
+      break;
+
+    case WIFILOGIN_RESULT_CANCEL:
+      //次のシーケンスがENTERだったら終了
+      WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
+      wk->subprocess_seq  = ENTER_END;
+      break;
+    }
+
+    GFL_HEAP_FreeMemory(wk->sub_proc_wk);
+  }
+
+	return SEQ_MAIN;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   WIFILOGOUTのPROCを呼ぶ
+ *
+ * @param   wk		GTS画面ワーク
+ *
+ * @retval  int		サブシーケンス
+ */
+//------------------------------------------------------------------
+static int Enter_Wifilogout_start( WORLDTRADE_WORK *wk )
+{ 
+  WIFILOGOUT_PARAM *param;
+  wk->sub_proc_wk = GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, sizeof(WIFILOGOUT_PARAM) );
+  GFL_STD_MemClear( wk->sub_proc_wk, sizeof(WIFILOGOUT_PARAM) );
+  param = wk->sub_proc_wk;
+  param->gamedata     = GAMESYSTEM_GetGameData(wk->param->gamesys);
+  param->bg           = WIFILOGIN_BG_NORMAL;
+  param->display      = WIFILOGIN_DISPLAY_UP;
+
+  GFL_PROC_LOCAL_CallProc( wk->procsys, FS_OVERLAY_ID(wifi_login), 
+      &WiFiLogout_ProcData, wk->sub_proc_wk );
+
+  wk->subprocess_seq = ENTER_WIFILOGOUT_PROC_WAIT;
+
+	return SEQ_MAIN;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   WIFILOGOUTのPROC待ち
+ *
+ * @param   wk		GTS画面ワーク
+ *
+ * @retval  int		サブシーケンス
+ */
+//------------------------------------------------------------------
+static int Enter_Wifilogout_wait( WORLDTRADE_WORK *wk )
+{ 
+  if( GFL_PROC_MAIN_NULL == GFL_PROC_LOCAL_Main( wk->procsys ) )
+  { 
+    GFL_HEAP_FreeMemory(wk->sub_proc_wk);
+
+    //次のシーケンスがENTERだったら終了
+    WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
+    wk->subprocess_seq  = ENTER_END;
   }
 
 	return SEQ_MAIN;
@@ -1211,11 +1248,12 @@ static int Enter_YesNoSelect( WORLDTRADE_WORK *wk)
 {
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-	if(ret==TOUCH_SW_RET_YES){
-			// WIFIせつぞくを終了
-			TOUCH_SW_FreeWork( wk->tss );
-			WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
-			wk->subprocess_seq = ENTER_END;
+  if(ret==TOUCH_SW_RET_YES){
+    // WIFIせつぞくを終了
+
+    TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
+    wk->subprocess_seq = ENTER_END;
 	}else if(ret==TOUCH_SW_RET_NO){
 			// もういっかいトライ
 			TOUCH_SW_FreeWork( wk->tss );
@@ -1354,7 +1392,6 @@ static int Enter_ServerServiceEnd( WORLDTRADE_WORK *wk )
  * @retval  int		サブシーケンス
  */
 //------------------------------------------------------------------
-//@delete
 static int Enter_MessageWait( WORLDTRADE_WORK *wk )
 {
 	if( GF_MSG_PrintEndCheck( &wk->print )==0){

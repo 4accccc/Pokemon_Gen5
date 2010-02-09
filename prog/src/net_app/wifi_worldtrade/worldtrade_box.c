@@ -748,6 +748,8 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void BmpWinDelete( WORLDTRADE_WORK *wk )
 {
+  //BMPを消す前に残ったストリームを消去
+  WT_PRINT_ClearBuffer( &wk->print );
 	
 	GFL_BMPWIN_Delete( wk->ExplainWin );
 	GFL_BMPWIN_Delete( wk->TalkWin );
@@ -1549,7 +1551,11 @@ static int SubSeq_YesNo( WORLDTRADE_WORK *wk)
 static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 {
 
+  //@おそらくつかっていない
+
 	u32 ret = WorldTrade_TouchSwMain(wk);
+
+  GF_ASSERT( 0 );
 
 	if(ret==TOUCH_SW_RET_YES){
 		// タイトルメニューを終了
@@ -1562,20 +1568,6 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 		wk->subprocess_seq = SUBSEQ_START;
 	}
 
-/*
-	int ret = BmpYesNoSelectMain( wk->YesNoMenuWork, HEAPID_WORLDTRADE );
-
-	if(ret!=BMPMENU_NULL){
-		if(ret==BMPMENU_CANCEL){
-			// もういっかいトライ
-			wk->subprocess_seq = SUBSEQ_START;
-		}else{
-			// タイトルメニューを終了
-			wk->subprocess_seq  = SUBSEQ_END;
-			 WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
-		}
-	}
-*/
 	return SEQ_MAIN;
 	
 }

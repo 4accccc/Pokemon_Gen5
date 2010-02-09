@@ -2620,8 +2620,7 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
   GAMEDATA *p_gamedata      = GAMESYSTEM_GetGameData(p_gamesys);
   DEBUG_WIFIGTS_EVENT_WORK  *p_gts;
 
-  if( WifiList_CheckMyGSID( GAMEDATA_GetWiFiList(p_gamedata)) )
-  { 
+
     //イヴェント
     GMEVENT_Change( p_event, debugMenuWifiGts, sizeof(DEBUG_WIFIGTS_EVENT_WORK) );
     p_gts = GMEVENT_GetEventWork( p_event );
@@ -2664,13 +2663,6 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
   
     OS_Printf( "GTS Start\n" );
     return TRUE;
-  }
-  else
-  { 
-    OS_Printf( "GameSpyIDが不正なので、GTSを開始しなかった\n" );
-    return FALSE;
-  }
-
 }
 
 //----------------------------------------------------------------------------
@@ -2699,11 +2691,17 @@ static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk
   switch(*p_seq )
   { 
   case SEQ_CALL_WIFI:
+    if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(p_wk->wifi.gsys))){
+      GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(p_wk->wifi.gsys));
+    }
     *p_seq  = SEQ_PROC_END;
     break;
 
   case SEQ_PROC_END:
-    *p_seq  = SEQ_CALL_GTS;
+    if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(p_wk->wifi.gsys)))
+    { 
+      *p_seq  = SEQ_CALL_GTS;
+    }
     break;
 
   case SEQ_CALL_GTS:

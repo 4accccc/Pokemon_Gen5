@@ -29,9 +29,6 @@
  *          構造体宣言
 */
 //=============================================================================
-#define POKEMON_DATA_SIZE   (236)
-//POKETOOL_GetWorkSize()
-//savedata\worldtrade\worldtrade_data.c  15
 
 //=============================================================================
 /**
@@ -65,7 +62,7 @@ void WT_WORDSET_RegisterPokeNickNamePPP( WORDSET* wordset, u32 bufID, const POKE
 //-----------------------------------------------------------------------------
 POKEMON_PARAM *PokemonParam_AllocWork( HEAPID heapID )
 {
-  return GFL_HEAP_AllocMemory( heapID, POKEMON_DATA_SIZE );
+  return GFL_HEAP_AllocMemory( heapID, POKETOOL_GetWorkSize() );
 }
 //----------------------------------------------------------------------------
 /**
@@ -77,7 +74,7 @@ POKEMON_PARAM *PokemonParam_AllocWork( HEAPID heapID )
 //-----------------------------------------------------------------------------
 void WT_PokeCopyPPtoPP( const POKEMON_PARAM *pp_src, POKEMON_PARAM *pp_dest )
 {
-  GFL_STD_MemCopy( pp_src, pp_dest, POKEMON_DATA_SIZE );
+  GFL_STD_MemCopy( pp_src, pp_dest, POKETOOL_GetWorkSize() );
 }
 
 //----------------------------------------------------------------------------
@@ -236,6 +233,7 @@ void WT_PRINT_Init( WT_PRINT *wk, const CONFIG *cfg )
   wk->tcbsys  = GFL_TCBL_Init( HEAPID_WORLDTRADE, HEAPID_WORLDTRADE, 32, 32 );
   wk->cfg     = cfg;
   wk->font    = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WORLDTRADE );
+  wk->que     = PRINTSYS_QUE_Create( HEAPID_WORLDTRADE );
 
 
   {
@@ -244,7 +242,6 @@ void WT_PRINT_Init( WT_PRINT *wk, const CONFIG *cfg )
     for( i = 0; i < WT_PRINT_BUFF_MAX; i++ )
     {
       p_one = &wk->one[i];
-      p_one->que    = PRINTSYS_QUE_Create( HEAPID_WORLDTRADE );
       GFL_STD_MemClear( &p_one->util, sizeof(PRINT_UTIL) );
       p_one->use    = FALSE;
     }
@@ -261,18 +258,11 @@ void WT_PRINT_Init( WT_PRINT *wk, const CONFIG *cfg )
 //-----------------------------------------------------------------------------
 void WT_PRINT_Exit( WT_PRINT *wk )
 {
-  {
-    int i;
-    WT_PRINT_QUE  *p_one;
-    for( i = 0; i < WT_PRINT_BUFF_MAX; i++ )
-    {
-      p_one = &wk->one[i];
-      PRINTSYS_QUE_Delete( p_one->que );
-    }
-  }
-
+  PRINTSYS_QUE_Delete( wk->que );
   GFL_FONT_Delete( wk->font );
   GFL_TCBL_Exit( wk->tcbsys );
+
+  GFL_STD_MemClear( wk, sizeof(WT_PRINT) );
 }
 
 //----------------------------------------------------------------------------
@@ -292,12 +282,16 @@ void WT_PRINT_Main( WT_PRINT *wk )
       p_one = &wk->one[i];
       if( p_one->use )
       {
-        if( PRINT_UTIL_Trans( &p_one->util, p_one->que ) )
+        if( PRINT_UTIL_Trans( &p_one->util, wk->que ) )
         {
           p_one->use  = FALSE;
         }
       }
 
+    }
+
+    for( i = 0; i < WT_PRINT_STREAM_MAX; i++ )
+    {
       if( wk->stream[i] != NULL )
       {
         if( PRINTSYS_PrintStreamGetState(wk->stream[i]) == PRINTSTREAM_STATE_DONE )
@@ -310,6 +304,7 @@ void WT_PRINT_Main( WT_PRINT *wk )
   }
 
 
+  PRINTSYS_QUE_Main( wk->que );
   GFL_TCBL_Main( wk->tcbsys );
 }
 
@@ -327,7 +322,7 @@ BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup )
   int i;
   BOOL ret = TRUE;
 
-  for( i = 0; i < WT_PRINT_BUFF_MAX; i++ )
+  for( i = 0; i < WT_PRINT_STREAM_MAX; i++ )
   {
 
     if( setup->stream[i] )
@@ -359,10 +354,11 @@ BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup )
  *  @return プリントストリーム
  */
 //-----------------------------------------------------------------------------
-void GF_STR_PrintSimple( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, WT_PRINT *setup )
+void GF_STR_PrintSimple2( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, WT_PRINT *setup, const char *cp_file, int line )
 {
   int i;
-  {
+  OS_TFPrintf( 3, "!!PRINT!! %s %d\n", cp_file, line );
+ /* {
     for( i = 0; i < WT_PRINT_BUFF_MAX; i++ )
     {
       if( setup->stream[i] == NULL )
@@ -372,10 +368,16 @@ void GF_STR_PrintSimple( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, in
     }
     GF_ASSERT( i < WT_PRINT_BUFF_MAX );
   }
+*/
+  if( setup->stream[0] )
+  { 
+    PRINTSYS_PrintStreamDelete( setup->stream[0] );
+    setup->stream[0] = NULL;
+  }
 
-  setup->stream[i]  = PRINTSYS_PrintStream(
-    bmpwin, x, y, str, setup->font,
-    MSGSPEED_GetWait(), setup->tcbsys, 0, HEAPID_WORLDTRADE, 0x0f );
+  setup->stream[0]  = PRINTSYS_PrintStream(
+        bmpwin, x, y, str, setup->font,
+        MSGSPEED_GetWait(), setup->tcbsys, 0, HEAPID_WORLDTRADE, 0x0f );
 
 }
 //----------------------------------------------------------------------------
@@ -408,7 +410,7 @@ void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int
   GF_ASSERT( p_one != NULL );
 
   PRINT_UTIL_Setup( &p_one->util, bmpwin );
-  PRINT_UTIL_PrintColor( &p_one->util, p_one->que, x, y, str, setup->font, color );
+  PRINT_UTIL_PrintColor( &p_one->util, setup->que, x, y, str, setup->font, color );
 
   p_one->use  = TRUE;
 }
@@ -433,6 +435,10 @@ void WT_PRINT_ClearBuffer( WT_PRINT *wk )
         p_one->use  = FALSE;
       }
 
+    }
+
+    for( i = 0; i < WT_PRINT_STREAM_MAX; i++ )
+    {
       if( wk->stream[i] != NULL )
       {
         PRINTSYS_PrintStreamDelete( wk->stream[i] );

@@ -1111,7 +1111,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 		GFL_BMPWIN_ClearTransWindow( wk->ExplainWin );
 		GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
 		GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 0 );
-		WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
+		WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_DISCONNECT );
 		wk->subprocess_seq  = SUBSEQ_END_DEMO;
 
 	}else if(ret==TOUCH_SW_RET_NO){

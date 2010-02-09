@@ -1330,9 +1330,24 @@ SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
         test/matsuda/palace_block.c \
         test/matsuda/palace_block2.c
 
+
+#ポケモンステータス
+#===> SRCS_OVERLAY_DPW_COMMON
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
+        app/p_status/p_status.c \
+		app/p_status/p_sta_sub.c \
+		app/p_status/p_sta_info.c \
+		app/p_status/p_sta_ribbon.c \
+		app/p_status/p_sta_skill.c \
+		app/p_status/p_sta_oam.c \
+		app/p_status/ribbon.c
+
 #wifiGTS
 #===> SRCS_OVERLAY_DPW_COMMON
 #===> SRCS_OVERLAY_WIFI_LOGIN
+#===> SRCS_OVERLAY_POKE_STATUS
 SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 													net_app/wifi_worldtrade/worldtrade_box.c \
 													net_app/wifi_worldtrade/worldtrade_demo.c \
@@ -1347,20 +1362,6 @@ SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 													net_app/wifi_worldtrade/worldtrade_title.c \
 													net_app/wifi_worldtrade/worldtrade_upload.c \
 													net_app/wifi_worldtrade/worldtrade_adapter.c
-
-
-#ポケモンステータス
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
-SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
-        app/p_status/p_status.c \
-		app/p_status/p_sta_sub.c \
-		app/p_status/p_sta_info.c \
-		app/p_status/p_sta_ribbon.c \
-		app/p_status/p_sta_skill.c \
-		app/p_status/p_sta_oam.c \
-		app/p_status/ribbon.c
 
 # ぐるぐる交換（ユニオンルーム）
 #===> SRCS_OVERLAY_POKE_STATUS

@@ -223,7 +223,7 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
 
 	Subseq_ServerTradeCheck,		// SUBSEQ_SERVER_TRADE_CHECK,	
-	Subseq_ServerTradeCheckResult,	// 
+	Subseq_ServerTradeCheckResult,	// SUBSEQ_SERVER_TRADECHECK_RESULT
 	Subseq_ServerDownload,			// 
 	Subseq_ServerDownloadResult,		// 
 	Subseq_ServerTradeCheckEnd,		// SUBSEQ_SERVER_TRADE_CHECK_END,	
@@ -548,9 +548,9 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void BmpWinDelete( WORLDTRADE_WORK *wk )
 {
-	
+  //BMPを消す前に残ったストリームを消去
+  WT_PRINT_ClearBuffer( &wk->print );	
 	GFL_BMPWIN_Delete( wk->MsgWin );
-
 }
 
 //------------------------------------------------------------------
@@ -1410,7 +1410,6 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 				// 預けてあるフラグを解除
 				WorldTradeData_SetFlag(wk->param->worldtrade_data, 0);
 				GFL_HEAP_FreeMemory(pp);
-/*↑[GS_CONVERT_TAG]*/
 			}else{
 				// サーバー確認処理終了後の行き先を設定
 				AfterTradeCheck_ProcessControl( wk );
@@ -1438,7 +1437,6 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 				WorldTradeData_SetFlag(wk->param->worldtrade_data, 0);
 
 				GFL_HEAP_FreeMemory(pp);
-/*↑[GS_CONVERT_TAG]*/
 			}
 			break;
 	// -----------------------------------------
@@ -2132,7 +2130,7 @@ static int Subseq_ErrorMessage( WORLDTRADE_WORK *wk )
 	// エラーに対応したプリント
 	PrintError(wk);
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_END );
-	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
+	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_DISCONNECT );
 	
 	// 時間アイコン消去(２重解放になるのを気をつける）
 	WorldTrade_TimeIconDel(wk);
@@ -2200,9 +2198,6 @@ static int SubSeq_NowSaveMessage( WORLDTRADE_WORK *wk )
 static int SubSeq_Save( WORLDTRADE_WORK *wk )
 {
 
-	// 必ず全体セーブにする
-	SaveData_RequestTotalSave();
-	
 	// セーブ初期化
   { 
     GAMEDATA  *gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
@@ -2309,12 +2304,6 @@ static int SubSeq_SaveLast( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_TimeoutSave( WORLDTRADE_WORK *wk )
 {
-
-	// 必ず全体セーブにする
-	SaveData_RequestTotalSave();
-
-	
-	// セーブ初期化
 	// セーブ初期化
   { 
     GAMEDATA  *gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
@@ -2449,7 +2438,6 @@ static void UploadPokemonDataDelete( WORLDTRADE_WORK *wk, int flag )
 		OS_Printf("box %d, %d のポケモンを削った\n", wk->BoxTrayNo, wk->BoxCursorPos);
 
 		GFL_HEAP_FreeMemory(pp);
-/*↑[GS_CONVERT_TAG]*/
 	}else{
 	// てもち
 

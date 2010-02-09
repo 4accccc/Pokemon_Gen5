@@ -54,6 +54,8 @@ struct _WIFILOGOUT_WORK
   SEQ_FUNCTION            seq_funcion;  //シーケンス
   WIFILOGOUT_PARAM        *p_param;     //引数
   HEAPID                  heapID;       //ヒープID
+
+  BOOL                    is_end_net;
 } ;
 
 //=============================================================================
@@ -100,6 +102,11 @@ static void SEQFUNCTION_WaitEndMessage( WIFILOGOUT_WORK *p_wk );
 
 static void SEQFUNCTION_StartFadeOut( WIFILOGOUT_WORK *p_wk );
 static void SEQFUNCTION_WaitFadeOut( WIFILOGOUT_WORK *p_wk );
+
+//-------------------------------------
+///	通信コールバック
+//=====================================
+static void NETCALLBACK_End( void* p_wk_adrs );   ///< 通信終了時に呼ばれるコールバック
 
 //=============================================================================
 /**
@@ -330,10 +337,7 @@ static void SEQFUNCTION_WaitDisConnectMessage( WIFILOGOUT_WORK *p_wk )
 { 
   if(WIFILOGIN_MESSAGE_InfoMessageEndCheck( p_wk->p_message ))
   {
-    if( GFL_UI_KEY_GetTrg() )
-    {
-      SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartEndMessage );
-    }
+    SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartDisConnect );
   }
 }
 
@@ -346,18 +350,20 @@ static void SEQFUNCTION_WaitDisConnectMessage( WIFILOGOUT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNCTION_StartDisConnect( WIFILOGOUT_WORK *p_wk )
 { 
-  if( GFL_NET_IsInit() )
-  { 
-    //初期化されていたら解放
-    if( GFL_NET_Exit( NULL ) )
-    { 
-      SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_WaitDisConnect );
-    }
-  }
-  else
+  if( GFL_NET_IsExit() )
   { 
     //解放されていたら何もしない
     SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartEndMessage );
+    OS_TPrintf( "WIFILOGOUT 既にネットは解放されていた\n" );
+  }
+  else
+  { 
+    //初期化されていたら解放
+    if( GFL_NET_Exit( NETCALLBACK_End ) )
+    { 
+      SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_WaitDisConnect );
+      OS_TPrintf( "WIFILOGOUT ネット解放開始\n" );
+    }
   }
 }
 
@@ -370,7 +376,7 @@ static void SEQFUNCTION_StartDisConnect( WIFILOGOUT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNCTION_WaitDisConnect( WIFILOGOUT_WORK *p_wk )
 { 
-  if( !GFL_NET_IsInit() )
+  if( p_wk->is_end_net )
   {
     SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartEndMessage );
   }
@@ -400,10 +406,7 @@ static void SEQFUNCTION_WaitEndMessage( WIFILOGOUT_WORK *p_wk )
 { 
   if(WIFILOGIN_MESSAGE_InfoMessageEndCheck( p_wk->p_message ))
   {
-    if( GFL_UI_KEY_GetTrg() )
-    {
-      SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartFadeOut );
-    }
+    SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartFadeOut );
   }
 }
 
@@ -434,4 +437,22 @@ static void SEQFUNCTION_WaitFadeOut( WIFILOGOUT_WORK *p_wk )
   {
     SEQ_CHANGE_STATE( p_wk, NULL ); //終了
   }
+}
+
+//=============================================================================
+/**
+ *    通信コールバック
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信終了時に呼ばれるコールバック
+ *
+ *	@param	void* p_wk_adrs ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void NETCALLBACK_End( void* p_wk_adrs )
+{ 
+  WIFILOGOUT_WORK *p_wk = p_wk_adrs;
+  p_wk->is_end_net  = TRUE;
 }

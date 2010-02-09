@@ -91,6 +91,11 @@ enum{
 	MODE_FROM_BOX,				///< BOX画面からきた
 	MODE_TO_BOX,				///< BOX画面に行く
 	
+  // worldtrade_enter.c
+  MODE_WIFILOGIN,     ///< WIFIログイン
+  MODE_CONNECT,       ///< GTSサーバー接続をする
+  MODE_DISCONNECT,   ///< GTSサーバー切断をする
+  MODE_WIFILOGOUT,    ///< WIFIログアウト
 };
 
 ///< CLACTで定義しているセルが大きすぎてサブ画面に影響がでてしまうので離してみる
@@ -534,6 +539,8 @@ typedef struct _WORLDTRADE_WORK{
 	MCSS_WORK     *pokeMcss;							///< 一匹分
   void * sub_proc_wk;                   ///< WIFILOGINやデモなどサブプロセスのワーク
 
+  BOOL is_wifilogin;                    ///< WIFIログイン
+
 #ifdef PM_DEBUG
 	int 					frame;									//
 	int						framenum[9][2];							//
@@ -560,8 +567,6 @@ typedef struct _WORLDTRADE_WORK{
 // extern宣言
 //============================================================================================
 // worldtrade.c
-extern void WorldTrade_MakeCLACT(CLACT_ADD *add, WORLDTRADE_WORK *wk, CLACT_HEADER *header, int param);
-extern BMPMENU_WORK *WorldTrade_BmpWinYesNoMake( int y, int yesno_bmp_cgx );
 extern TOUCH_SW_SYS *WorldTrade_TouchWinYesNoMake( int y, int yesno_bmp_cgx, int pltt, u8 inPassive );
 extern TOUCH_SW_SYS *WorldTrade_TouchWinYesNoMakeEx( int y, int yesno_bmp_cgx, int pltt, int frame, u8 inPassive );
 

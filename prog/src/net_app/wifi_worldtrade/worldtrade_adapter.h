@@ -198,7 +198,6 @@ static inline void NUMFONT_WriteMark( NUMFONT *wk, int a, GFL_BMPWIN *bmpwin, in
 //各種セーブデータ　PHC　ペラップ　イベント 図鑑登録
 static inline PHC_SVDATA * SaveData_GetPhcSaveData( SAVE_CONTROL_WORK *sv ){	return NULL; }
 static inline void PhcSvData_SetCourseOpenFlag( PHC_SVDATA *sv, int a ){}
-static inline void SaveData_RequestTotalSave( void ){}
 static inline EVENTWORK* SaveData_GetEventWork( SAVE_CONTROL_WORK *sv ){ return NULL; }
 
 //アルセウスイベント
@@ -266,12 +265,9 @@ static inline void WirelessIconEasyEnd( void )
 
 
 //通信エラー
-//
-//	090828現在、通信エラーの分岐処理は行っていません。
-//	今は、エラーになると、エラー画面が出るのみの置き換えになっています
-//
 static inline void CommStateSetError( int error )
 {	
+  GFL_NET_StateSetError( error );
 	NetErr_ErrorSet();
 }
 static inline void CommFatalErrorFunc_NoNumber( void )
@@ -280,6 +276,7 @@ static inline void CommFatalErrorFunc_NoNumber( void )
 }
 static inline void ComErrorWarningResetCall( int heapID, int type, int code )
 {
+  //@todo
 	NetErr_ErrorSet();
 }
 static inline void Comm_WifiHistoryDataSet( WIFI_HISTORY *wifiHistory, int Nation, int Area, int langCode )
@@ -360,10 +357,10 @@ extern void BGWINFRM_FrameOff( BGWINFRM_WORK *wk, int index );
 */
 //=============================================================================
 #define WT_PRINT_BUFF_MAX	(24)
+#define WT_PRINT_STREAM_MAX	(1)
 
 typedef struct 
 {
-	PRINT_QUE			*que;
 	PRINT_UTIL		util;
 	BOOL					use;
 } WT_PRINT_QUE;
@@ -374,7 +371,8 @@ typedef struct
 	GFL_FONT			*font;
 	GFL_TCBLSYS		*tcbsys;
 	const CONFIG	*cfg;
-	PRINT_STREAM	*stream[WT_PRINT_BUFF_MAX];
+	PRINT_QUE			*que;
+	PRINT_STREAM	*stream[WT_PRINT_STREAM_MAX];
 	WT_PRINT_QUE	one[WT_PRINT_BUFF_MAX];
 }WT_PRINT;
 
@@ -387,7 +385,9 @@ extern void WT_PRINT_Main( WT_PRINT *wk );
 
 extern BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup );
 
-extern void GF_STR_PrintSimple( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, WT_PRINT *setup );
+extern void GF_STR_PrintSimple2( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, WT_PRINT *setup, const char *cp_file, int line );
+
+#define GF_STR_PrintSimple(a,b,c,d,e,f) GF_STR_PrintSimple2(a,b,c,d,e,f,__FILE__,__LINE__)
 extern void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, int put_type, PRINTSYS_LSB color, WT_PRINT *setup );
 
 

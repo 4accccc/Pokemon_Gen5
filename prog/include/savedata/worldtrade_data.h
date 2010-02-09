@@ -16,6 +16,9 @@
 
 #define RETURN_POSITION_TEMOTI	( 18 )
 
+//@todo size
+#define WORLDTRADE_POKEMON_DATA_SIZE  (236)
+
 //----------------------------------------------------------
 /**
  * @brief	WORLDTRADE_DATA ‚Ö‚Ì•sŠ®‘SŒ^’è‹`

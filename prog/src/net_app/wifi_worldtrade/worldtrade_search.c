@@ -775,6 +775,8 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void BmpWinDelete( WORLDTRADE_WORK *wk )
 {
+  //BMPを消す前に残ったストリームを消去
+  WT_PRINT_ClearBuffer( &wk->print );
 	
 	GFL_BMPWIN_Delete( wk->ExplainWin );
 	GFL_BMPWIN_Delete( wk->MsgWin );
@@ -1397,7 +1399,7 @@ static int SubSeq_SearchErrorDisconnectMessage2( WORLDTRADE_WORK *wk )
 	// うけつけにもどります
 	SubSeq_MessagePrint( wk, msg_gtc_error_006_02, 4, 0, 0x0f0f );
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT_1MIN, SUBSEQ_END );
-	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
+	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_CONNECT );
 	PMSND_PlaySE(SE_GTC_NG);
 
 	return SEQ_MAIN;

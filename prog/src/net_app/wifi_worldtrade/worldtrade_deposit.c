@@ -775,6 +775,9 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 static void BmpWinDelete( WORLDTRADE_WORK *wk )
 {
 	int i;
+
+  //BMPを消す前に残ったストリームを消去
+  WT_PRINT_ClearBuffer( &wk->print );
 	
 	GFL_BMPWIN_Delete( wk->ExplainWin );
 	for(i=0;i<6;i++){

@@ -649,8 +649,17 @@ void FreeFieldObjData( WORLDTRADE_WORK *wk )
 {
 	if(wk->demo_end)
 	{
-		GFL_HEAP_FreeMemory( wk->FieldObjPalBuf  );
-		GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf );
+    if( wk->FieldObjPalBuf )
+    { 
+      GFL_HEAP_FreeMemory( wk->FieldObjPalBuf  );
+      wk->FieldObjPalBuf  = NULL;
+    }
+    if( wk->FieldObjCharaBuf )
+    { 
+      GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf );
+      wk->FieldObjCharaBuf  = NULL;
+    }
+    OS_TPrintf( "FreeFieldObjData!	\n" );
 	}
 	OS_TPrintf( "palbuff	%x\n", wk->FieldObjPalBuf );
 	OS_TPrintf( "charbuff	%x\n", wk->FieldObjCharaBuf );
@@ -685,7 +694,10 @@ void WorldTrade_SetPartnerExchangePos( WORLDTRADE_WORK *wk )
     int i;
     
     for(i = 0; i < SUB_OBJ_NUM; i++){
+      if( wk->SubActWork[i] )
+      { 
         WorldTrade_CLACT_PosChangeSub( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1] );
+      }
     }
 }
 
@@ -701,7 +713,10 @@ void WorldTrade_SetPartnerExchangePosIsReturns( WORLDTRADE_WORK *wk )
     int i;
     
 	for(i=0;i<SUB_OBJ_NUM;i++){
-		WorldTrade_CLACT_PosChangeSub( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1]+32 );
+    if( wk->SubActWork[i] )
+    { 
+      WorldTrade_CLACT_PosChangeSub( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1]+32 );
     }
+  }
 }
 

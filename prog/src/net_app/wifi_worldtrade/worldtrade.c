@@ -45,7 +45,9 @@
 #include "poke_icon.naix"
 
 #define BRIGHT_VAL  (-7)          ///< パッシブ状態のための半透明率
-FS_EXTERN_OVERLAY(dpw_common);
+
+FS_EXTERN_OVERLAY( dpw_common );
+
 //============================================================================================
 //  定数定義
 //============================================================================================
@@ -67,14 +69,8 @@ static void VBlankFunc( GFL_TCB *, void *work );
 static void VramBankSet( const GFL_DISP_VRAM * vram );
 static void InitWork( WORLDTRADE_WORK *wk, WORLDTRADE_PARAM *param );
 static void FreeWork( WORLDTRADE_WORK *wk );
-static void char_pltt_manager_init(void);
 static void InitCellActor(WORLDTRADE_WORK *wk, const GFL_DISP_VRAM * vram );
 static void SetCellActor(WORLDTRADE_WORK *wk);
-static void CursorAppearUpDate(WORLDTRADE_WORK *wk, int arrow);
-static void SetCursor_Pos( GFL_CLWK* act, int x, int y );
-static void RecordMessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait );
-static void FreeFunc(DWCAllocType name, void* ptr,  u32 size);
-static void *AllocFunc( DWCAllocType name, u32   size, int align );
 static void InitCLACT( WORLDTRADE_WORK *wk );
 static void FreeCLACT( WORLDTRADE_WORK *wk );
 static void ServerWaitTimeFunc( WORLDTRADE_WORK *wk );
@@ -130,28 +126,18 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 {
   WORLDTRADE_WORK * wk;
 
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common) );
-
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( dpw_common ) );
 
 #ifdef PM_DEBUG
     GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_SYSTEM );
     GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP );
 #endif
 
-
-    // レコードコーナー用ヒープ作成
+    // ヒープ作成
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0x80000 );
 
-
-
-#if PL_G292_090323_FIX
-    DwcOverlayStart();
-    DpwCommonOverlayStart();
-        mydwc_initdwc(HEAPID_WORLDTRADE);
-#endif
-
     wk = GFL_PROC_AllocWork( proc, sizeof(WORLDTRADE_WORK), HEAPID_WORLDTRADE );
-    GFL_STD_MemFill( wk, 0, sizeof(WORLDTRADE_WORK) );
+    GFL_STD_MemClear( wk, sizeof(WORLDTRADE_WORK) );
 
     debug_worldtrade = wk;
 
@@ -178,7 +164,6 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
     wk->MonsNameManager  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, HEAPID_WORLDTRADE );
     wk->CountryNameManager  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_place_msg_world_dat, HEAPID_WORLDTRADE );
 
-  //  sys_KeyRepeatSpeedSet( SYS_KEYREPEAT_SPEED_DEF, SYS_KEYREPEAT_WAIT_DEF );
 
 /* ＧＴＳとWifiバトルタワー接続画面の最初にWIPE_ResetBrightnessを呼んでしまっているために
    バックドロップ面が見えてしまう事があるバグを対処 */
@@ -226,7 +211,6 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
 {
   WORLDTRADE_WORK * wk  = work;
 
-  //EXITして内部でオーバーレイが解放されるまで呼べる
   if( GFL_NET_IsInit() )
   {
     // 受信強度リンクを反映させる
@@ -297,6 +281,8 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
     GFL_CLACT_SYS_Main();
   }
 
+  GF_ASSERT( GFL_HEAP_CheckHeapSafe(HEAPID_WORLDTRADE) );
+
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -320,27 +306,14 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 {
   WORLDTRADE_WORK  *wk    = work;
   int i;
-
-  GFL_HEAP_FreeMemory( wk->heapPtr );
-
-#if 0
-  DpwCommonOverlayEnd();
-  DwcOverlayEnd();
-#else
-  //GFL_NET_Exit(NULL);
-#endif
-
-  // セルアクターリソース解放
-  //WirelessIconEasyEnd();
+  GF_ASSERT( GFL_HEAP_CheckHeapSafe(HEAPID_WORLDTRADE) );
 
 
-
-  // タッチパネルシステム終了
-//  GFL_UI_TP_Exit();
-
+  WirelessIconEasyEnd();
+  WorldTrade_ExitSystem( wk );
+  FreeWork( wk );
 
   // メッセージマネージャー・ワードセットマネージャー解放
-
   GFL_MSG_Delete( wk->MonsNameManager );
   GFL_MSG_Delete( wk->SystemMsgManager );
   GFL_MSG_Delete( wk->LobbyMsgManager );
@@ -348,34 +321,18 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
   GFL_MSG_Delete( wk->CountryNameManager );
   WORDSET_Delete( wk->WordSet );
 
-  WorldTrade_ExitSystem( wk );
-
-  // ワーク解放
-  FreeWork( wk );
-
-  // イクニューモン解放
-  //CommVRAMDFinalize();
-
   // メッセージウインドウのタッチOFF
   MsgPrintTouchPanelFlagSet( MSG_TP_OFF );
-
-  // 世界交換パラメータ解放
-  GFL_HEAP_FreeMemory( wk->param );
-
-
-  GFL_PROC_FreeWork( proc );        // GFL_PROCワーク開放
-
   GFL_TCB_Exit( wk->tcbsys );
   GFL_HEAP_FreeMemory( wk->task_wk_area );
 
   // タッチフォントアンロード
-//  FontProc_UnloadFont( FONT_TOUCH );
   WT_PRINT_Exit( &wk->print );
-
+  GFL_PROC_FreeWork( proc );        // GFL_PROCワーク開放
 
   GFL_HEAP_DeleteHeap( HEAPID_WORLDTRADE );
 
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( dpw_common ) );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -404,16 +361,8 @@ static void VBlankFunc( GFL_TCB *, void *work )
   GFL_BG_VBlankFunc();
 
   // セルアクターVram転送マネージャー実行
-  //DoVramTransferManager();
   GFL_CLACT_SYS_VBlankFunc();
 
-  // レンダラ共有OAMマネージャVram転送
-  //REND_OAMTrans();
-
-  //ConnectBGPalAnm_VBlank(&wk->cbp);
-  //InitでVTask読んでるのでなくなった？
-
-//  OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
 
 
@@ -466,7 +415,8 @@ static void InitWork( WORLDTRADE_WORK *wk, WORLDTRADE_PARAM *param )
   wk->param = param;
 
   wk->sub_process   = WORLDTRADE_ENTER;
-    WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
+  WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_WIFILOGIN );
+
   wk->TitleCursorPos  = 0;
 
   wk->Search.characterNo     = 0;
@@ -521,43 +471,6 @@ static void WorldTrade_WndSetting(void)
 }
 
 
-
-
-//** CharManager PlttManager用 **//
-#define RECORD_CHAR_CONT_NUM        (20)
-#define RECORD_CHAR_VRAMTRANS_MAIN_SIZE   (2048)
-#define RECORD_CHAR_VRAMTRANS_SUB_SIZE    (2048)
-#define RECORD_PLTT_CONT_NUM        (20)
-
-//-------------------------------------
-//
-//  キャラクタマネージャー
-//  パレットマネージャーの初期化
-//
-//=====================================
-static void char_pltt_manager_init(void)
-{
-#if 0
-  // キャラクタマネージャー初期化
-  {
-    CHAR_MANAGER_MAKE cm = {
-      RECORD_CHAR_CONT_NUM,
-      RECORD_CHAR_VRAMTRANS_MAIN_SIZE,
-      RECORD_CHAR_VRAMTRANS_SUB_SIZE,
-      HEAPID_WORLDTRADE
-    };
-    InitCharManager(&cm);
-  }
-  // パレットマネージャー初期化
-  InitPlttManager(RECORD_PLTT_CONT_NUM, HEAPID_WORLDTRADE);
-
-  // 読み込み開始位置を初期化
-  CharLoadStartAll();
-  PlttLoadStartAll();
-#endif
-}
-
-
 #define TRANS_POKEICON_COLOR_NUM  ( 3*16 )
 //------------------------------------------------------------------
 /**
@@ -596,7 +509,6 @@ static void InitCellActor(WORLDTRADE_WORK *wk, const GFL_DISP_VRAM * vram )
   // セルアクター初期化
   wk->clactSet = GFL_CLACT_UNIT_Create( 72+12, 0, HEAPID_WORLDTRADE );
 
-  //CLACT_U_SetSubSurfaceMatrix( &wk->renddata, 0, NAMEIN_SUB_ACTOR_DISTANCE );
 
 
   //---------上画面用-------------------
@@ -670,33 +582,6 @@ static const u16 obj_pos_tbl[][2]={
   {224,120},
 };
 
-//=============================================================================================
-/**
- * @brief セルアクターヘッダ作成ルーチン
- *
- * @param   add   セルアクターヘッダデータの書き込み先
- * @param   wk    GTS画面ワーク
- * @param   header  ヘッダーデータ
- * @param   param 描画エリア（MAIN/SUB)
- */
-//=============================================================================================
-void WorldTrade_MakeCLACT( CLACT_ADD *add, WORLDTRADE_WORK *wk, CLACT_HEADER *header, int param)
-{
-#if 0 //新clactではヘッダはいらない
-  add->ClActSet   = wk->clactSet;
-  add->ClActHeader  = header;
-
-  add->mat.z    = 0;
-  add->sca.x    = FX32_ONE;
-  add->sca.y    = FX32_ONE;
-  add->sca.z    = FX32_ONE;
-  add->rot    = 0;
-  add->pri    = 1;
-  add->DrawArea = param;
-  add->heap   = HEAPID_WORLDTRADE;
-#endif
-}
-
 //------------------------------------------------------------------
 /**
  * @brief   セルアクター登録
@@ -708,27 +593,6 @@ void WorldTrade_MakeCLACT( CLACT_ADD *add, WORLDTRADE_WORK *wk, CLACT_HEADER *he
 //------------------------------------------------------------------
 static void SetCellActor(WORLDTRADE_WORK *wk)
 {
-#if 0 //新clactではヘッダはいらない
-  int i;
-  // セルアクターヘッダ作成
-  GFL_CLACT_WK_SetCellResData or GFL_CLACT_WK_SetTrCellResData or GFL_CLACT_WK_SetMCellResData(&wk->clActHeader_main, 0, 0, 0, 0, CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
-  0, 0,
-  wk->resMan[CLACT_U_CHAR_RES],
-  wk->resMan[CLACT_U_PLTT_RES],
-  wk->resMan[CLACT_U_CELL_RES],
-  wk->resMan[CLACT_U_CELLANM_RES],
-  NULL,NULL);
-  //まだ何も転送していないから
-
-  // セルアクターヘッダ作成
-  GFL_CLACT_WK_SetCellResData or GFL_CLACT_WK_SetTrCellResData or GFL_CLACT_WK_SetMCellResData(&wk->clActHeader_sub, 1, 1, 1, 1, CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
-  0, 0,
-  wk->resMan[CLACT_U_CHAR_RES],
-  wk->resMan[CLACT_U_PLTT_RES],
-  wk->resMan[CLACT_U_CELL_RES],
-  wk->resMan[CLACT_U_CELLANM_RES],
-  NULL,NULL);
-#endif
   GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON ); //メイン画面OBJ面ＯＮ
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON ); //サブ画面OBJ面ＯＮ
 }
@@ -743,30 +607,6 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 #define BMP_YESNO_SY  ( 4 )
 #define BMP_YESNO_PAL ( 13 )
 
-#if 0
-// はい・いいえ(ウインドウ用）
-static const BMPWIN_DAT YesNoBmpWin = {
-  GFL_BG_FRAME0_M, BMP_YESNO_PX, BMP_YESNO_PY,
-  BMP_YESNO_SX, BMP_YESNO_SY, BMP_YESNO_PAL,
-  0, //後で指定する
-};
-#endif //使っていないらしい
-
-
-BMPMENU_WORK *WorldTrade_BmpWinYesNoMake( int y, int yesno_bmp_cgx )
-{
-#if 0
-  BMPWIN_DAT yesnowin;
-
-  yesnowin        = YesNoBmpWin;
-  yesnowin.pos_y  = y;
-  yesnowin.chrnum = yesno_bmp_cgx;
-
-  return BmpYesNoSelectInit( &yesnowin, WORLDTRADE_MENUFRAME_CHR, WORLDTRADE_MENUFRAME_PAL, HEAPID_WORLDTRADE );
-#endif
-  //使っていないらしい
-  return NULL;
-}
 //==============================================================================
 /**
  * @brief   タッチ対応YESNOウインドウ（メインのみ）
@@ -1077,17 +917,6 @@ WINTYPE WorldTrade_GetMesWinType( WORLDTRADE_WORK *wk )
   return CONFIG_GetWindowType( wk->param->config );
 }
 
-
-
-
-
-
-
-
-
-
-
-
 //------------------------------------------------------------------
 /**
  * @brief   セルアクター初期化
@@ -1128,10 +957,6 @@ static void InitCLACT( WORLDTRADE_WORK *wk )
   // CellActro表示登録
   SetCellActor(wk);
 
-
-  // VBlank関数セット
-  wk->vblank_task = GFUser_VIntr_CreateTCB(VBlankFunc, wk, 0);
-
 }
 
 //------------------------------------------------------------------
@@ -1146,7 +971,6 @@ static void InitCLACT( WORLDTRADE_WORK *wk )
 static void FreeCLACT( WORLDTRADE_WORK *wk )
 {
   int i;
-  GFL_TCB_DeleteTask( wk->vblank_task );
 
   // ユニオンＯＢＪグラフィックデータ解放
   FreeFieldObjData( wk );
@@ -1371,6 +1195,11 @@ void WorldTrade_InitSystem( WORLDTRADE_WORK *wk )
 
   WorldTrade_WndSetting();
 
+  // VBlank関数セット
+  if( wk->vblank_task == NULL )
+  { 
+    wk->vblank_task = GFUser_VIntr_CreateTCB(VBlankFunc, wk, 0);
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1382,6 +1211,16 @@ void WorldTrade_InitSystem( WORLDTRADE_WORK *wk )
 //-----------------------------------------------------------------------------
 void WorldTrade_ExitSystem( WORLDTRADE_WORK *wk )
 {
+  // VBlank関数セット
+  if( wk->vblank_task )
+  { 
+    GFL_TCB_DeleteTask( wk->vblank_task );
+    wk->vblank_task = NULL;
+  }
+
+  G2_BlendNone();
+  G2S_BlendNone();
+
   FreeCLACT( wk );
 
   GFL_BMPWIN_Exit();

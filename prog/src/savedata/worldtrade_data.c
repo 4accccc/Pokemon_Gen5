@@ -12,14 +12,11 @@
 #include "savedata/worldtrade_data.h"
 #include "savedata/save_tbl.h"
 
-#define POKEMON_DATA_SIZE		(236)
-//POKETOOL_GetWorkSize()
-
 //============================================================================================
 //============================================================================================
 
 struct WORLDTRADE_DATA{
-	u8 PokemonData[POKEMON_DATA_SIZE];	// 預けたポケモンのデータ
+	u8 PokemonData[WORLDTRADE_POKEMON_DATA_SIZE];	// 預けたポケモンのデータ
 	u16 		flag;					// 預けているかフラグ
 	u16 		toBox;					// ボックスＮＯ（手持ちの場合はRETURN_POSITION_TEMOTI）
 	GFDATE		lastExchangeDate_Deposit;		// 最終交換日付(預けて成立した日付)
@@ -107,7 +104,7 @@ void  WorldTradeData_SetFlag( WORLDTRADE_DATA* WorldTradeData, int flag )
 //==============================================================================
 void  WorldTradeData_GetPokemonData( WORLDTRADE_DATA* WorldTradeData, POKEMON_PARAM *poke )
 {
-	GFL_STD_MemCopy( WorldTradeData->PokemonData, (void*)poke, POKEMON_DATA_SIZE );
+	GFL_STD_MemCopy( WorldTradeData->PokemonData, (void*)poke, POKETOOL_GetWorkSize() );
 }
 
 //==============================================================================
@@ -122,7 +119,7 @@ void  WorldTradeData_GetPokemonData( WORLDTRADE_DATA* WorldTradeData, POKEMON_PA
 //==============================================================================
 void  WorldTradeData_SetPokemonData( WORLDTRADE_DATA* WorldTradeData, POKEMON_PARAM *poke, int boxno )
 {
-	GFL_STD_MemCopy( (void*)poke, WorldTradeData->PokemonData, POKEMON_DATA_SIZE );
+	GFL_STD_MemCopy( (void*)poke, WorldTradeData->PokemonData, POKETOOL_GetWorkSize() );
 }
 
 
