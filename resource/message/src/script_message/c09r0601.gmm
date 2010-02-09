@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-06T14:27:08"/>
+	<create user="matsumiya" host="W00224" date="2010-02-09T20:16:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="247"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,96 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c09r0601_champion_01">
+		<comment>♂
+・初回
+・続けて、主人公のほうを向いて
+　主人公♂→champion_02
+　主人公♀→champion_03</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">アデク『……ここが
+でんどういりの　へや▼
+まことの　つよさ
+こころからの　やさしさを　もつ▽
+トレーナーと　ポケモンを▽
+れきしに　のこすための　ばしょ▼</language>
+		<language name="JPN_KANJI" width="256">アデク『……ここが
+殿堂入りの　部屋▼
+真の　強さ
+心からの　優しさを　もつ▽
+トレーナーと　ポケモンを▽
+歴史に　残すための　場所▼</language>
+	</row>
+
+	<row id="msg_c09r0601_champion_02">
+		<comment>♂
+・2回目以降
+・続けて、主人公のほうを向いて
+　主人公♂→champion_02
+　主人公♀→champion_03</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">アデク『……なんど　きても
+きざまれた　なまえの　かずかずに▽
+みが　ひきしまるな▼</language>
+		<language name="JPN_KANJI" width="256">アデク『……何度　来ても
+刻まれた　名前の数々に▽
+身が　引き締まるな▼</language>
+	</row>
+
+	<row id="msg_c09r0601_champion_03">
+		<comment>♂
+・続けてchampion_05
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">さてと
+[1:03:ポケモンタイプ:0]くん▼</language>
+		<language name="JPN_KANJI" width="256">さてと
+[1:03:ポケモンタイプ:0]くん▼</language>
+	</row>
+
+	<row id="msg_c09r0601_champion_04">
+		<comment>♂
+・続けてchampion_05
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">さてと
+[1:03:ポケモンタイプ:0]さん▼</language>
+		<language name="JPN_KANJI" width="256">さてと
+[1:03:ポケモンタイプ:0]さん▼</language>
+	</row>
+
+	<row id="msg_c09r0601_champion_05">
+		<comment>♂
+・メッセージ後、殿堂入りの演出
+・そしてスタッフロールへ</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">この　でんどういりの　へやに
+きみたちの　なまえを　きざもう！▼
+なまえと　ともに　のこす
+たびの　おもいで▽
+たたかいの　れきし！▼
+すべてが　これからの　きみを　より
+つよくする　ささえと　なるように！▼
+では　きみと！▼
+ともに　たたかった
+パートナーの　ポケモンを！▽
+この　マシンに　きろく　する！▼</language>
+		<language name="JPN_KANJI" width="256">この　殿堂入りの　部屋に
+君たちの　名前を　きざもう！▼
+名前と　共に　残す
+旅の　思い出▽
+戦いの　歴史！▼
+すべてが　これからの　君を　より
+強くする　支えと　なるように！▼
+では　君と！▼
+共に　戦った
+パートナーの　ポケモンを！▽
+この　マシンに　記録する！▼</language>
 	</row>
 
 	<flowchart-group-list>
