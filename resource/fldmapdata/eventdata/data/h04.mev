@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/27 19:03:19
+#save date:2010/02/09 12:00:14
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04.wms
 #SECTION START:OBJ_EVENT
@@ -163,6 +163,142 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+8
+#event number: 0
+#Door Event Label
+DOOR_ID_H04_H04R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0101
+#Next Door ID Name
+DOOR_ID_H04R0101_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 32 -168
+#size
+1 1
+#event number: 1
+#Door Event Label
+DOOR_ID_H04_H04R0201_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0201
+#Next Door ID Name
+DOOR_ID_H04R0201_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+520 64 -168
+#size
+1 1
+#event number: 2
+#Door Event Label
+DOOR_ID_H04_H04R0301_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0301
+#Next Door ID Name
+DOOR_ID_H04R0301_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+632 96 -168
+#size
+1 1
+#event number: 3
+#Door Event Label
+DOOR_ID_H04_H04R0401_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0401
+#Next Door ID Name
+DOOR_ID_H04R0401_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1416 96 -168
+#size
+1 1
+#event number: 4
+#Door Event Label
+DOOR_ID_H04_H04R0501_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0501
+#Next Door ID Name
+DOOR_ID_H04R0501_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1528 64 -168
+#size
+1 1
+#event number: 5
+#Door Event Label
+DOOR_ID_H04_H04R0601_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0601
+#Next Door ID Name
+DOOR_ID_H04R0601_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1640 32 -168
+#size
+1 1
+#event number: 6
+#Door Event Label
+DOOR_ID_H04_R11R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_R11R0101
+#Next Door ID Name
+DOOR_ID_R11R0101_H04_EXIT01
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+248 0 -232
+#size
+1 3
+#event number: 7
+#Door Event Label
+DOOR_ID_H04_R12R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_R12R0101
+#Next Door ID Name
+DOOR_ID_R12R0101_H04_EXIT01
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1800 0 -248
+#size
+1 3
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

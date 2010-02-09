@@ -1,5 +1,5 @@
 #WorldMap SaveData 
-#save date:2010/01/21 12:37:36
+#save date:2010/02/09 11:48:09
 #Width
 5
 #Height
@@ -11,12 +11,12 @@
 #3dp file names
 C:\home\wb_data3d\field\out16\h04_a00_00.3dp
 C:\home\wb_data3d\field\out16\h04_a00_01.3dp
-C:\home\wb_data3d\field\out16\h04_a01_00.3dp
-C:\home\wb_data3d\field\out16\h04_a01_01.3dp
-C:\home\wb_data3d\field\out16\h04_a02_00.3dp
-C:\home\wb_data3d\field\out16\h04_a02_01.3dp
-C:\home\wb_data3d\field\out16\h04_a03_00.3dp
-C:\home\wb_data3d\field\out16\h04_a03_01.3dp
+C:\home\wb_data3d\field\out16\h04_a01_00_ex.3dp
+C:\home\wb_data3d\field\out16\h04_a01_01_ex.3dp
+C:\home\wb_data3d\field\out16\h04_a02_00_ex.3dp
+C:\home\wb_data3d\field\out16\h04_a02_01_ex.3dp
+C:\home\wb_data3d\field\out16\h04_a03_00_ex.3dp
+C:\home\wb_data3d\field\out16\h04_a03_01_ex.3dp
 C:\home\wb_data3d\field\out16\h04_a04_00.3dp
 C:\home\wb_data3d\field\out16\h04_a04_01.3dp
 #block size

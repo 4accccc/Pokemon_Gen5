@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/08 12:17:35
+#save date:2010/02/09 11:57:29
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r11.wms
 #SECTION START:OBJ_EVENT
@@ -39,76 +39,25 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r11.wms
 #hold event type:
 1
 #hold event number:
-5
+2
 #event number: 0
 #Door Event Label
-DOOR_ID_R11_R12_EXIT01
+DOOR_ID_R11_R11R0101_EXIT01
 #Next Zone ID Name
-ZONE_ID_R12
+ZONE_ID_R11R0101
 #Next Door ID Name
-DOOR_ID_R12_R11_EXIT01
+DOOR_ID_R11R0101_R11_EXIT01
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-616 0 24
+632 0 24
 #size
-1 1
+1 3
 #event number: 1
-#Door Event Label
-DOOR_ID_R11_R12_EXIT04
-#Next Zone ID Name
-ZONE_ID_R12
-#Next Door ID Name
-DOOR_ID_R12_R11_EXIT04
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_NONE
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-616 0 -24
-#size
-1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_R11_R12_EXIT03
-#Next Zone ID Name
-ZONE_ID_R12
-#Next Door ID Name
-DOOR_ID_R12_R11_EXIT03
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_NONE
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-616 0 -8
-#size
-1 1
-#event number: 3
-#Door Event Label
-DOOR_ID_R11_R12_EXIT02
-#Next Zone ID Name
-ZONE_ID_R12
-#Next Door ID Name
-DOOR_ID_R12_R11_EXIT02
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_NONE
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-616 0 8
-#size
-1 1
-#event number: 4
 #Door Event Label
 DOOR_ID_R11_C08R0701_EXIT01
 #Next Zone ID Name
@@ -122,8 +71,8 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 24
+-152 0 24
 #size
-1 4
+1 3
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

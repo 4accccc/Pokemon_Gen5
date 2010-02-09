@@ -245,7 +245,11 @@ EVENT_START		ev_scene_d03r0101_plasmaevent_01
 	_BALLOONWIN_OBJMSG( msg_d03r0101_champion_01 , D03R0101_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//【仮】TVトランシーバー受信音
+	//TVT着信音を再生
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
 	
 	//ライバル：自機のほうに向く
 	

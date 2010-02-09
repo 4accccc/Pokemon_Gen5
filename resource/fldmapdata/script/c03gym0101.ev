@@ -186,11 +186,11 @@ EVENT_START	ev_c03gym0101_leader3_01
 		//トランシーバーを持っているかどうかで分岐
 		//持っている
 		IF FLAG_ON( FH_01) THEN
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_leader_06 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_leader_06 )
 		
 		//持っていない
 		ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_leader_07 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_leader_07 )
 		
 		ENDIF
 	ENDIF

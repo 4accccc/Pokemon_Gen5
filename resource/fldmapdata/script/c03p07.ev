@@ -49,6 +49,13 @@ EVENT_END
 /*		トランシーバー	C03P07								  */
 /**************************************************************/
 EVENT_START		ev_scene_c03p07_tvt_01
+
+	//TVT着信音を再生
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
+
 	_PLAYER_NAME(0)
 	_PLAINWIN_MSG_DOWN( msg_c03p07_tvt_01 )
 	_PLAINWIN_CLOSE()
