@@ -1001,8 +1001,12 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
     }
   }
 	//新サブスクリーンからのイベント起動チェック
-	if(WIPE_SYS_EndCheck()){
-    event = FIELD_SUBSCREEN_EventCheck( FIELDMAP_GetFieldSubscreenWork(fieldWork), req.subscreenRequest );
+  {
+    u8 ev_ok = FALSE;
+    if( req.subscreenRequest && WIPE_SYS_EndCheck() ){
+      ev_ok = TRUE;
+    }
+    event = FIELD_SUBSCREEN_EventCheck( FIELDMAP_GetFieldSubscreenWork(fieldWork), ev_ok );
     if(event != NULL){
       return event;
     }
