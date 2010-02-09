@@ -421,11 +421,16 @@
 	</row>
 
 	<row id="search_abc_13">
+		<language name="JPN" width="216">もろはれる</language>
+		<language name="JPN_KANJI" width="216">もろはれる</language>
+	</row>
+
+	<row id="search_abc_14">
 		<language name="JPN" width="216">もんしやら</language>
 		<language name="JPN_KANJI" width="216">もんしやら</language>
 	</row>
 
-	<row id="search_abc_14">
+	<row id="search_abc_15">
 		<language name="JPN" width="216">もんめん</language>
 		<language name="JPN_KANJI" width="216">もんめん</language>
 	</row>

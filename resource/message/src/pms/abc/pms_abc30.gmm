@@ -546,61 +546,66 @@
 	</row>
 
 	<row id="search_abc_38">
+		<language name="JPN" width="216">まらかつち</language>
+		<language name="JPN_KANJI" width="216">まらかつち</language>
+	</row>
+
+	<row id="search_abc_39">
 		<language name="JPN" width="216">まりる</language>
 		<language name="JPN_KANJI" width="216">まりる</language>
 	</row>
 
-	<row id="search_abc_39">
+	<row id="search_abc_40">
 		<language name="JPN" width="216">まりるり</language>
 		<language name="JPN_KANJI" width="216">まりるり</language>
 	</row>
 
-	<row id="search_abc_40">
+	<row id="search_abc_41">
 		<language name="JPN" width="216">まるくなる</language>
 		<language name="JPN_KANJI" width="216">まるくなる</language>
 	</row>
 
-	<row id="search_abc_41">
+	<row id="search_abc_42">
 		<language name="JPN" width="216">まるちすけいる</language>
 		<language name="JPN_KANJI" width="216">まるちすけいる</language>
 	</row>
 
-	<row id="search_abc_42">
+	<row id="search_abc_43">
 		<language name="JPN" width="216">まるちはとる</language>
 		<language name="JPN_KANJI" width="216">まるちはとる</language>
 	</row>
 
-	<row id="search_abc_43">
+	<row id="search_abc_44">
 		<language name="JPN" width="216">まるのーむ</language>
 		<language name="JPN_KANJI" width="216">まるのーむ</language>
 	</row>
 
-	<row id="search_abc_44">
+	<row id="search_abc_45">
 		<language name="JPN" width="216">まるまいん</language>
 		<language name="JPN_KANJI" width="216">まるまいん</language>
 	</row>
 
-	<row id="search_abc_45">
+	<row id="search_abc_46">
 		<language name="JPN" width="216">まわしけり</language>
 		<language name="JPN_KANJI" width="216">まわしけり</language>
 	</row>
 
-	<row id="search_abc_46">
+	<row id="search_abc_47">
 		<language name="JPN" width="216">まんか</language>
 		<language name="JPN_KANJI" width="216">まんか</language>
 	</row>
 
-	<row id="search_abc_47">
+	<row id="search_abc_48">
 		<language name="JPN" width="216">まんきー</language>
 		<language name="JPN_KANJI" width="216">まんきー</language>
 	</row>
 
-	<row id="search_abc_48">
+	<row id="search_abc_49">
 		<language name="JPN" width="216">まんたいん</language>
 		<language name="JPN_KANJI" width="216">まんたいん</language>
 	</row>
 
-	<row id="search_abc_49">
+	<row id="search_abc_50">
 		<language name="JPN" width="216">まんむー</language>
 		<language name="JPN_KANJI" width="216">まんむー</language>
 	</row>

@@ -451,171 +451,161 @@
 	</row>
 
 	<row id="search_abc_19">
-		<language name="JPN" width="216">きのたま</language>
-		<language name="JPN_KANJI" width="216">きのたま</language>
-	</row>
-
-	<row id="search_abc_20">
-		<language name="JPN" width="216">きのほーる</language>
-		<language name="JPN_KANJI" width="216">きのほーる</language>
-	</row>
-
-	<row id="search_abc_21">
 		<language name="JPN" width="216">きはにあ</language>
 		<language name="JPN_KANJI" width="216">きはにあ</language>
 	</row>
 
-	<row id="search_abc_22">
+	<row id="search_abc_20">
 		<language name="JPN" width="216">きふとはす</language>
 		<language name="JPN_KANJI" width="216">きふとはす</language>
 	</row>
 
-	<row id="search_abc_23">
+	<row id="search_abc_21">
 		<language name="JPN" width="216">きまわり</language>
 		<language name="JPN_KANJI" width="216">きまわり</language>
 	</row>
 
-	<row id="search_abc_24">
+	<row id="search_abc_22">
 		<language name="JPN" width="216">きみ</language>
 		<language name="JPN_KANJI" width="216">きみ</language>
 	</row>
 
-	<row id="search_abc_25">
+	<row id="search_abc_23">
 		<language name="JPN" width="216">きむきよういく</language>
 		<language name="JPN_KANJI" width="216">きむきよういく</language>
 	</row>
 
-	<row id="search_abc_26">
+	<row id="search_abc_24">
 		<language name="JPN" width="216">きもつたま</language>
 		<language name="JPN_KANJI" width="216">きもつたま</language>
 	</row>
 
-	<row id="search_abc_27">
+	<row id="search_abc_25">
 		<language name="JPN" width="216">きもり</language>
 		<language name="JPN_KANJI" width="216">きもり</language>
 	</row>
 
+	<row id="search_abc_26">
+		<language name="JPN" width="216">きやー</language>
+		<language name="JPN_KANJI" width="216">きやー</language>
+	</row>
+
+	<row id="search_abc_27">
+		<language name="JPN" width="216">きやー</language>
+		<language name="JPN_KANJI" width="216">きやー</language>
+	</row>
+
 	<row id="search_abc_28">
-		<language name="JPN" width="216">きやー</language>
-		<language name="JPN_KANJI" width="216">きやー</language>
-	</row>
-
-	<row id="search_abc_29">
-		<language name="JPN" width="216">きやー</language>
-		<language name="JPN_KANJI" width="216">きやー</language>
-	</row>
-
-	<row id="search_abc_30">
 		<language name="JPN" width="216">きやたひー</language>
 		<language name="JPN_KANJI" width="216">きやたひー</language>
 	</row>
 
-	<row id="search_abc_31">
+	<row id="search_abc_29">
 		<language name="JPN" width="216">きやもめ</language>
 		<language name="JPN_KANJI" width="216">きやもめ</language>
 	</row>
 
-	<row id="search_abc_32">
+	<row id="search_abc_30">
 		<language name="JPN" width="216">きやらとす</language>
 		<language name="JPN_KANJI" width="216">きやらとす</language>
 	</row>
 
-	<row id="search_abc_33">
+	<row id="search_abc_31">
 		<language name="JPN" width="216">きやろつふ</language>
 		<language name="JPN_KANJI" width="216">きやろつふ</language>
 	</row>
 
-	<row id="search_abc_34">
+	<row id="search_abc_32">
 		<language name="JPN" width="216">きゆうけつ</language>
 		<language name="JPN_KANJI" width="216">きゆうけつ</language>
 	</row>
 
-	<row id="search_abc_35">
+	<row id="search_abc_33">
 		<language name="JPN" width="216">きゆうこん</language>
 		<language name="JPN_KANJI" width="216">きゆうこん</language>
 	</row>
 
-	<row id="search_abc_36">
+	<row id="search_abc_34">
 		<language name="JPN" width="216">きゆうはん</language>
 		<language name="JPN_KANJI" width="216">きゆうはん</language>
 	</row>
 
-	<row id="search_abc_37">
+	<row id="search_abc_35">
 		<language name="JPN" width="216">きゆひすむ</language>
 		<language name="JPN_KANJI" width="216">きゆひすむ</language>
 	</row>
 
-	<row id="search_abc_38">
+	<row id="search_abc_36">
 		<language name="JPN" width="216">きよう</language>
 		<language name="JPN_KANJI" width="216">きよう</language>
 	</row>
 
-	<row id="search_abc_39">
+	<row id="search_abc_37">
 		<language name="JPN" width="216">きよううん</language>
 		<language name="JPN_KANJI" width="216">きよううん</language>
 	</row>
 
-	<row id="search_abc_40">
+	<row id="search_abc_38">
 		<language name="JPN" width="216">きようたい</language>
 		<language name="JPN_KANJI" width="216">きようたい</language>
 	</row>
 
-	<row id="search_abc_41">
+	<row id="search_abc_39">
 		<language name="JPN" width="216">きらていな</language>
 		<language name="JPN_KANJI" width="216">きらていな</language>
 	</row>
 
-	<row id="search_abc_42">
+	<row id="search_abc_40">
 		<language name="JPN" width="216">きりさく</language>
 		<language name="JPN_KANJI" width="216">きりさく</language>
 	</row>
 
-	<row id="search_abc_43">
+	<row id="search_abc_41">
 		<language name="JPN" width="216">きりはらい</language>
 		<language name="JPN_KANJI" width="216">きりはらい</language>
 	</row>
 
-	<row id="search_abc_44">
+	<row id="search_abc_42">
 		<language name="JPN" width="216">きりふた</language>
 		<language name="JPN_KANJI" width="216">きりふた</language>
 	</row>
 
-	<row id="search_abc_45">
+	<row id="search_abc_43">
 		<language name="JPN" width="216">きりんりき</language>
 		<language name="JPN_KANJI" width="216">きりんりき</language>
 	</row>
 
-	<row id="search_abc_46">
+	<row id="search_abc_44">
 		<language name="JPN" width="216">きるりあ</language>
 		<language name="JPN_KANJI" width="216">きるりあ</language>
 	</row>
 
-	<row id="search_abc_47">
+	<row id="search_abc_45">
 		<language name="JPN" width="216">きれいはな</language>
 		<language name="JPN_KANJI" width="216">きれいはな</language>
 	</row>
 
-	<row id="search_abc_48">
+	<row id="search_abc_46">
 		<language name="JPN" width="216">きんいろのかせ</language>
 		<language name="JPN_KANJI" width="216">きんいろのかせ</language>
 	</row>
 
-	<row id="search_abc_49">
+	<row id="search_abc_47">
 		<language name="JPN" width="216">きんくとら</language>
 		<language name="JPN_KANJI" width="216">きんくとら</language>
 	</row>
 
-	<row id="search_abc_50">
+	<row id="search_abc_48">
 		<language name="JPN" width="216">きんくらー</language>
 		<language name="JPN_KANJI" width="216">きんくらー</language>
 	</row>
 
-	<row id="search_abc_51">
+	<row id="search_abc_49">
 		<language name="JPN" width="216">きんそくおん</language>
 		<language name="JPN_KANJI" width="216">きんそくおん</language>
 	</row>
 
-	<row id="search_abc_52">
+	<row id="search_abc_50">
 		<language name="JPN" width="216">きんちようかん</language>
 		<language name="JPN_KANJI" width="216">きんちようかん</language>
 	</row>
