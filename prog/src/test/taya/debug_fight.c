@@ -1041,10 +1041,10 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   }
 
   pp = savework_GetPokeParaArea( saveData, POKEIDX_SELF_1 );
-  PP_Setup( pp, MONSNO_GORIDARUMA, 5, 0 );
+  PP_Setup( pp, MONSNO_HIHIDARUMA, 5, 0 );
 
   pp = savework_GetPokeParaArea( saveData, POKEIDX_ENEMY1_1 );
-  PP_Setup( pp, MONSNO_GORIDARUMA, 5, 0 );
+  PP_Setup( pp, MONSNO_HIHIDARUMA, 5, 0 );
 
   pp = savework_GetPokeParaArea( saveData, POKEIDX_FRIEND_1 );
   PP_Setup( pp, MONSNO_MAMANBOU, 5, 0 );
