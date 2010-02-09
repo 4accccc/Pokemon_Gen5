@@ -16,8 +16,8 @@
 //============================================================================================
 
 // ポケモンアイコン表示数
-#define	ZKNLISTOBJ_MAIN_POKEICON_MAX		( ZKNLIST_ITEM_MAX*2+1 )		// ポケモンアイコン表示数（メイン画面）
-#define	ZKNLISTOBJ_SUB_POKEICON_MAX			( ZKNLIST_ITEM_MAX*2+1 )		// ポケモンアイコン表示数（サブ画面）
+#define	ZKNLISTOBJ_MAIN_POKEICON_MAX		( ZKNLIST_ITEM_MAX*2+2 )		// ポケモンアイコン表示数（メイン画面）
+#define	ZKNLISTOBJ_SUB_POKEICON_MAX			( ZKNLIST_ITEM_MAX*2+2 )		// ポケモンアイコン表示数（サブ画面）
 #define	ZKNLISTOBJ_POKEICON_MAX		( ZKNLISTOBJ_MAIN_POKEICON_MAX+ZKNLISTOBJ_SUB_POKEICON_MAX )
 
 // OBJ Index

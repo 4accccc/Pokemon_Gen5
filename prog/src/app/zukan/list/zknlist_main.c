@@ -547,7 +547,7 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 		hed = ListHeader;
 		hed.itemMax    = MONSNO_END;
 		hed.initPos    = 0;
-		hed.initScroll = 4;
+		hed.initScroll = 0;
 		hed.cbWork     = wk;
 
 		wk->lwk = FRAMELIST_Create( &hed, HEAPID_ZUKAN_LIST );
@@ -563,32 +563,27 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 
 	{	// リストパラメータ設定
-		u32	i;
+		u16	max;
+		u16	i;
 
-//		for( i=1; i<=MONSNO_END; i++ ){
-		for( i=1; i<=3; i++ ){
-			if( ( i % 3 ) == 0 ){
-				FRAMELIST_AddItem( wk->lwk, 1, SET_LIST_PARAM(LIST_INFO_MONS_NONE,i) );
-			}else{
-				FRAMELIST_AddItem( wk->lwk, 0, SET_LIST_PARAM(i%3,i) );
+		for( i=0; i<MONSNO_END; i++ ){
+			if( wk->dat->list[i] != ZUKAN_LIST_MONS_NONE ){
+				max = i;
 			}
 		}
-	}
 
-	{	// 名前文字列取得
-		u32	i;
-
-		for( i=1; i<=MONSNO_END; i++ ){
-			if( ( i % 3 ) == 0 ){
-				wk->name[i-1] = GFL_MSG_CreateString( wk->mman, str_name_01 );
+		for( i=0; i<=max; i++ ){
+			FRAMELIST_AddItem( wk->lwk, 0, SET_LIST_PARAM(wk->dat->list[i],i+1) );
+			// 文字列設定
+			if( wk->dat->list[i] == ZUKAN_LIST_MONS_NONE ){
+				wk->name[i] = GFL_MSG_CreateString( wk->mman, str_name_01 );
 			}else{
-				STRBUF * srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, i );
-				wk->name[i-1] = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
+				STRBUF * srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, i+1 );
+				wk->name[i] = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
 				GFL_STR_DeleteBuffer( srcStr );
 			}
 		}
 	}
-
 /*
 	// 見つけた数
 	wk->seeNum = ;

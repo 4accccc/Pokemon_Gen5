@@ -13,6 +13,7 @@
 #include "system/main.h"
 #include "app/zukan.h"
 
+#include "zukan_common.h"
 #include "list/zukanlist.h"
 
 
@@ -39,6 +40,8 @@ enum {
 
 typedef struct {
 	ZUKAN_PARAM * prm;
+	u16	defaultList[MONSNO_END];
+	u16 * list;
 	int	seq;
 	void * work;
 }ZUKAN_MAIN_WORK;
@@ -53,8 +56,11 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 static GFL_PROC_RESULT ZukanProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT ZukanProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
+static void MakeDefaultList( ZUKAN_MAIN_WORK * wk );
+
 static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk );
 static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk );
+
 
 
 //============================================================================================
@@ -111,7 +117,10 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 
 	wk->prm = pwk;
 
+	ZKNCOMM_MakeDefaultList( wk->prm->savedata, wk->defaultList );
+
 	if( wk->prm->callMode == ZUKAN_MODE_LIST ){
+		wk->list = wk->defaultList;
 		wk->seq = SEQ_LIST_CALL;
 	}else if( wk->prm->callMode == ZUKAN_MODE_INFO ){
 		wk->seq = SEQ_INFO_CALL;
@@ -186,6 +195,7 @@ static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk )
 
 	list->gamedata = wk->prm->gamedata;
 	list->savedata = wk->prm->savedata;
+	list->list = wk->list;
 
 	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_list), &ZUKANLIST_ProcData, wk->work );
 
@@ -231,4 +241,3 @@ static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
 
 	return ret;
 }
-

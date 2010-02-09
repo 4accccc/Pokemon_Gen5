@@ -10,6 +10,8 @@
 //============================================================================================
 #pragma	once
 
+#include "savedata/zukan_savedata.h"
+
 
 //============================================================================================
 //	定数定義
@@ -31,6 +33,15 @@ typedef struct {
 
 }ZKNCOMM_CLWK_DATA;
 
+// リストデータ
+enum {
+	ZUKAN_LIST_MONS_NONE = 0,		// 未確認
+	ZUKAN_LIST_MONS_SEE,				// 見た
+	ZUKAN_LIST_MONS_GET,				// 捕獲した
+};
+
+
+extern void ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 * list );
 
 extern void ZKNCOMM_SetFadeIn( HEAPID heapID );
 

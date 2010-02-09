@@ -109,6 +109,9 @@ static void BgExit(void);
 static void TopMenuInit( NAKAHIRO_MAIN_WORK * wk );
 static void TopMenuExit( NAKAHIRO_MAIN_WORK * wk );
 
+static void SetZukanDataOne( NAKAHIRO_MAIN_WORK * wk, u16 mons, u32 mode );
+static void SetZukanData( NAKAHIRO_MAIN_WORK * wk, u32 mode );
+
 
 //============================================================================================
 //	ƒOƒ[ƒoƒ‹
@@ -340,6 +343,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
 
 	case MAIN_SEQ_ZUKAN_CALL:
+		SetZukanData( wk, 0 );
 		wk->zkn_data.gamedata = wk->gamedata;
 		wk->zkn_data.savedata = GAMEDATA_GetZukanSave( wk->gamedata );
 		wk->zkn_data.callMode = ZUKAN_MODE_LIST;
@@ -348,6 +352,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		break;
 
 	case MAIN_SEQ_ZKNLIST_CALL:
+		SetZukanData( wk, 1 );
 		wk->zkn_data.gamedata = wk->gamedata;
 		wk->zkn_data.savedata = GAMEDATA_GetZukanSave( wk->gamedata );
 		wk->zkn_data.callMode = ZUKAN_MODE_LIST;
@@ -620,4 +625,32 @@ static void SetPokeParty( NAKAHIRO_MAIN_WORK * wk, POKEPARTY * party, const u16 
 
   GFL_STR_DeleteBuffer( str );
 	GFL_MSG_Delete( man );
+}
+
+
+static void SetZukanDataOne( NAKAHIRO_MAIN_WORK * wk, u16 mons, u32 mode )
+{
+	ZUKAN_SAVEDATA * sv;
+	POKEMON_PARAM * pp;
+
+	sv = GAMEDATA_GetZukanSave( wk->gamedata );
+	pp = PP_Create( mons, 50, 0, wk->heapID );
+
+	if( mode == 0 ){
+		ZUKANSAVE_SetPokeGet( sv, pp );
+	}else{
+		ZUKANSAVE_SetPokeSee( sv, pp );
+	}
+
+	GFL_HEAP_FreeMemory( pp );
+}
+
+static void SetZukanData( NAKAHIRO_MAIN_WORK * wk, u32 mode )
+{
+	u32	i;
+
+//	for( i=1; i<=MONSNO_END; i++ ){
+	for( i=1; i<=151; i++ ){
+		SetZukanDataOne( wk, i, 0 );
+	}
 }
