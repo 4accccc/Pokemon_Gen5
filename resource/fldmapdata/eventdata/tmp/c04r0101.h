@@ -20,6 +20,7 @@
 #define C04R0101_FIGHTERM_01               0
 #define C04R0101_RAILMAN_01                1
 #define C04R0101_RAILMAN_02                2
+#define C04R0101_BOY1_BTLTALK              3
 
 #endif //ZONE_C04R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

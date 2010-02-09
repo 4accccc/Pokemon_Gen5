@@ -25,6 +25,7 @@ _EVENT_DATA    ev_c04r0101_railman_02
 _EVENT_DATA    ev_c04r0101_fighterm_01
 _EVENT_DATA    ev_pos_c04r0101_connect_c04
 _EVENT_DATA    ev_scene_c04r0101_entry
+_EVENT_DATA    ev_c04r0101_boy1_btltalk
 _EVENT_DATA_END
 
 
@@ -109,5 +110,16 @@ EVENT_START	ev_c04r0101_fighterm_01
 	_BALLOONWIN_CLOSE()
 
 EVENT_END
+
+
+/************************************************************/
+/*				少年１ ※戦闘会話の登録NPC					*/
+/************************************************************/
+//バトルサブウェイで通信時に話すメッセージの登録イベント
+EVENT_START	ev_c04r0101_boy1_btltalk
+
+
+EVENT_END
+
 
 
