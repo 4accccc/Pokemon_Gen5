@@ -228,6 +228,7 @@ void	MCSS_SetCallBackWork( MCSS_SYS_WORK *mcss_sys, void* work )
 void	MCSS_ReloadResource( MCSS_SYS_WORK *mcss_sys, MCSS_WORK* mcss, MCSS_ADD_WORK* maw )
 { 
   MCSS_FreeResource( mcss );
+	mcss->maw = *maw;
   MCSS_LoadResource( mcss_sys, mcss->index, maw );
 }
 
