@@ -127,6 +127,8 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
   WORLDTRADE_WORK * wk;
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( dpw_common ) );
+  
+  GFL_NET_DebugPrintOn();
 
 #ifdef PM_DEBUG
     GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_SYSTEM );

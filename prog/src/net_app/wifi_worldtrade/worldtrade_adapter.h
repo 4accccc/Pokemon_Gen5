@@ -204,9 +204,6 @@ static inline EVENTWORK* SaveData_GetEventWork( SAVE_CONTROL_WORK *sv ){ return 
 static inline int SysWork_AruseusuEventGet( EVENTWORK *ev ){	return 0;}
 static inline void SysWork_AruseusuEventSet( EVENTWORK *ev, int a ){}
 
-//カスタムボール
-static inline void PokePara_CustomBallDataInit( POKEMON_PARAM *wk ){}
-
 
 //図鑑
 static inline BOOL ZukanWork_GetZenkokuZukanFlag( ZUKAN_WORK *wk ){return TRUE;}

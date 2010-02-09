@@ -73,6 +73,12 @@ static void SetSaveNextSequence( WORLDTRADE_WORK *wk, int nextSeq1st, int nextSe
 
 
 static int Subseq_Start( WORLDTRADE_WORK *wk);
+
+static int Subseq_SvlStart( WORLDTRADE_WORK *wk );
+static int Subseq_SvlResult( WORLDTRADE_WORK *wk );
+static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk );
+static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk );
+
 static int Subseq_UploadStart( WORLDTRADE_WORK *wk );
 static int Subseq_UploadResult( WORLDTRADE_WORK *wk );
 static int Subseq_UploadFinish( WORLDTRADE_WORK *wk );
@@ -131,6 +137,12 @@ static int DupulicateCheck( WORLDTRADE_WORK *wk );
 enum{
 	SUBSEQ_START=0,
 	SUBSEQ_MAIN,
+  
+  SUBSEQ_SVL_START,
+  SUBSEQ_SVL_RESULT,
+  SUBSEQ_EVILCHECK_START,
+  SUBSEQ_EVILCHECK_RESULT,
+
 	SUBSEQ_UPLOAD_START,
 	SUBSEQ_UPLOAD_RESULT,
 	SUBSEQ_UPLOAD_FINISH,
@@ -187,10 +199,19 @@ enum{
 };
 
 
+  
+  
+  
+  
 
 static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 	Subseq_Start,				// SUBSEQ_START=0,
 	Subseq_Main,             	// SUBSEQ_MAIN,
+
+  Subseq_SvlStart,          //SUBSEQ_SVL_START,
+  Subseq_SvlResult,         //SUBSEQ_SVL_RESULT,
+  Subseq_EvilCheckStart,    //SUBSEQ_EVILCHECK_START,
+  Subseq_EvilCheckResult,   //SUBSEQ_EVILCHECK_RESULT,
 	Subseq_UploadStart,			// SUBSEQ_UPLOAD_START,
 	Subseq_UploadResult,		// SUBSEQ_UPLOAD_RESULT,
 	Subseq_UploadFinish,		// SUBSEQ_UPLOAD_FINISH,
@@ -617,7 +638,7 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 	case MODE_UPLOAD:
 		// おくっています
 		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_025, 1, 0x0f0f );
-		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_UPLOAD_START );
+		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SVL_START );
 		break;
 	case MODE_DOWNLOAD:
 		// うけとっています。
@@ -662,10 +683,101 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  UPLOAD前に認証キーを任天堂サーバーから貰う  開始
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static int Subseq_SvlStart( WORLDTRADE_WORK *wk )
+{
+  BOOL ret;
+  wk->nhttp = NHTTP_RAP_Init(HEAPID_WORLDTRADE ,MyStatus_GetProfileID( wk->param->mystatus ) );
+  ret = NHTTP_RAP_SvlGetTokenStart(wk->nhttp);
 
+  GF_ASSERT( ret );
 
+  wk->subprocess_seq = SUBSEQ_SVL_RESULT;
+  OS_TPrintf( "サービスロケータ取得開始\n" );
 
+	return SEQ_MAIN;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  UPLOAD前に認証キーを任天堂サーバーから貰う  終了
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static int Subseq_SvlResult( WORLDTRADE_WORK *wk )
+{ 
+  if( NHTTP_RAP_SvlGetTokenMain(wk->nhttp) )
+  { 
+    OS_TPrintf( "サービスロケータ取得\n" );
+    wk->subprocess_seq = SUBSEQ_EVILCHECK_START;
+  }
 
+	return SEQ_MAIN;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン不正検査を行う  開始
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
+{ 
+  BOOL ret;
+  
+  POKEMON_PASO_PARAM  *pp = PPPPointerGet( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
+
+  NHTTP_RAP_PokemonEvilCheckCreate( wk->nhttp, HEAPID_WORLDTRADE, NHTTP_RAP_EVILCHECK_BUFF_SIZE, NHTTP_POKECHK_GTS);
+  NHTTP_RAP_PokemonEvilCheckAdd( wk->nhttp, pp, POKETOOL_GetPPPWorkSize() );
+
+  ret = NHTTP_RAP_PokemonEvilCheckConectionCreate( wk->nhttp );
+  GF_ASSERT( ret );
+
+  OS_TPrintf( "不正検査開始\n" );
+  wk->subprocess_seq = SUBSEQ_EVILCHECK_RESULT;
+
+	return SEQ_MAIN;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン不正検査を行う  終了
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
+{ 
+  if( NHTTP_ERROR_NONE == NHTTP_RAP_Process( wk->nhttp ) )
+  { 
+    NHTTP_RAP_EVILCHECK_RESPONSE_DATA *p_data;
+    p_data  = NHTTP_RAP_GetRecvBuffer(wk->nhttp);
+
+    GFL_STD_MemCopy( p_data, &wk->evilcheck_data, sizeof(NHTTP_RAP_EVILCHECK_RESPONSE_DATA) );
+
+    //NHTTP_RAP_PokemonEvilCheckDelete(wk->nhttp, HEAPID_WORLDTRADE, NHTTP_RAP_EVILCHECK_BUFF_SIZE, NHTTP_POKECHK_GTS);
+    NHTTP_RAP_End(wk->nhttp);
+
+    if( wk->evilcheck_data.status_code == 0 )
+    { 
+      OS_TPrintf( "不正検査終了\n" );
+      wk->subprocess_seq = SUBSEQ_UPLOAD_START;
+    }
+    else
+    { 
+      //@todo
+      GF_ASSERT( 0);
+      wk->subprocess_seq = SUBSEQ_UPLOAD_START;
+    }
+  }
+
+	return SEQ_MAIN;
+}
 
 //------------------------------------------------------------------
 /**
@@ -679,12 +791,8 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 static int Subseq_UploadStart( WORLDTRADE_WORK *wk )
 {
 	
-	// カスタムボール領域をクリア
-	PokePara_CustomBallDataInit( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
-	
-	// ポケモンデータアップロード開始  @todo  不正検査のハッシュキーが必要
-//	Dpw_Tr_UploadAsync( &wk->UploadPokemonData );
-  GF_ASSERT(0);
+	// ポケモンデータアップロード開始  
+	Dpw_Tr_UploadAsync( &wk->UploadPokemonData, wk->evilcheck_data.sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
 
 	OS_TPrintf("Dpw Trade データアップロード開始\n");
 
@@ -710,13 +818,9 @@ static int Subseq_UploadStart( WORLDTRADE_WORK *wk )
 static int Subseq_UploadResult( WORLDTRADE_WORK *wk )
 {
 	int result;
-#if 0 //origin
-	if ((result=Dpw_Tr_IsAsyncEnd())){
-#else
-		//ワーニングがでるので
-	result=Dpw_Tr_IsAsyncEnd();
+
+  result =Dpw_Tr_IsAsyncEnd();
 	if (result){
-#endif
 		s32 result = Dpw_Tr_GetAsyncResult();
 		wk->timeout_count = 0;
 		switch (result){
@@ -1090,9 +1194,6 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Subseq_ExchangeStart( WORLDTRADE_WORK *wk )
 {
-
-	// カスタムボール領域をクリア
-	PokePara_CustomBallDataInit( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
 
 	
 	// ポケモンデータ交換開始 @todo  不正検査のハッシュキーが必要
@@ -2444,8 +2545,6 @@ static void UploadPokemonDataDelete( WORLDTRADE_WORK *wk, int flag )
 		POKEMON_PARAM *pp = PokeParty_GetMemberPointer(wk->param->myparty, wk->BoxCursorPos);
 		OS_Printf("てもちから消去 pos = %d\n", wk->BoxCursorPos);
 
-		// カスタムボール領域をクリア
-		PokePara_CustomBallDataInit( pp );
 
 		// セーブ領域に保存
 		WorldTradeData_SetPokemonData( wk->param->worldtrade_data, pp, wk->BoxTrayNo );

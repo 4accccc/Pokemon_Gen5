@@ -265,7 +265,7 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
 {
   int     result;
   NHTTPError              err;
-  u32                     receivedCurrent = 0;
+  u32                     receivedCurrent = 1;
   u32                     contentLength;
 
   if(pWork->handle==NULL){
@@ -288,7 +288,6 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
   
   {
     NHTTPConnectionStatus   status = NHTTPGetConnectionStatus(pWork->handle);
-    OSTick tickNow;
 
     if ( NHTTP_ERROR_NONE == NHTTPGetConnectionProgress(pWork->handle, &receivedCurrent, &contentLength))
     {
@@ -410,10 +409,8 @@ void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, void* pData, int size)
 
 BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 {
-
 //POKECHK_URL
-
-  int     result;
+  int                     result;
   NHTTPRAP_URL_ENUM urlno = NHTTPRAP_URL_POKECHK;
   NHTTPConnectionHandle   handle;
   NHTTPError              err;
@@ -421,7 +418,6 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
   u32                     receivedCurrent = 0, receivedPrevious = 0;
   u32                     contentLength;
   u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
-  char pidbuff[_URL_BUFFER];
 
   if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
     GF_ASSERT(0);
@@ -431,12 +427,7 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 
 
   GFL_STD_MemClear(pWork->urlbuff,sizeof(_URL_BUFFER));
-  GFL_STD_MemClear(pidbuff,_URL_BUFFER);
-
-  STD_StrCpy(pidbuff, urltable[urlno].url );
-
-//  STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, pidbuff, pWork->profileid, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER);
- // GFL_STD_StrCat(pWork->urlbuff,pidbuff,sizeof(_URL_BUFFER));
+  STD_StrCpy(pWork->urlbuff, urltable[urlno].url );
 
   
   NET_PRINT(" Target URL: %s\n", pWork->urlbuff);
@@ -444,8 +435,9 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
                                   urltable[urlno].type,
                                   pWork->getbuffer, _GET_MAXSIZE,
                                   ConnectionCallback, pWork);
-  GF_ASSERT(handle);
   if(handle==NULL){
+    NHTTPError  error = NHTTP_GetError();
+    GF_ASSERT_MSG( handle, "Connection‚ªNULL!, error=%d\n", error );
     return FALSE;
   }
   pWork->handle = handle;

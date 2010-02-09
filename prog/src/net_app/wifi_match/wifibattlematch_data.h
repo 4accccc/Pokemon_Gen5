@@ -98,12 +98,12 @@ static inline u32 WIFIBATTLEMATCH_DATA_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDAT
       if( p_mystatus->name[i] == GFL_STR_GetEOMCode() )
       { 
         is_darty  = FALSE;
-        dirty++;
       }
     }
 
     if( is_darty )
     { 
+      dirty++;
       WIFIBATTLEMATCH_DATA_ModifiName( p_data, heapID );
     }
   }
