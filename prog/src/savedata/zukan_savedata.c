@@ -116,10 +116,11 @@ static const u16 FormTable[][2] =
 struct ZUKAN_SAVEDATA {
   u32 zukan_magic;			///< マジックナンバー
 
-  u8 zukan_get;					///< ずかん取得フラグ
-  u8 zenkoku_flag;			///< 全国図鑑保持フラグ
-  u8 ver_up_flg;				///< バーションアップフラグ
-  u8 zukan_mode;				///< 全国図鑑保持フラグ
+	u8	zukan_get:1;			///< ずかん取得フラグ
+	u8	zenkoku_flag:1;		///< 全国図鑑保持フラグ
+	u8	ver_up_flg:6;			///< バーションアップフラグ
+	u8	zukan_mode;				///< 閲覧中の図鑑モード
+	u16	defaultMonsNo;		///< 閲覧中のポケモン番号
 
   u32 get_flag[POKEZUKAN_ARRAY_LEN];    ///< 捕まえたフラグ用ワーク
 
@@ -1619,8 +1620,68 @@ BOOL ZUKANSAVE_GetGraphicVersionUpFlag( const ZUKAN_SAVEDATA * zw )
   return zw->ver_up_flg;
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief		閲覧中の図鑑モードを設定
+ *
+ * @param		zw		ずかんワークへのポインタ
+ * @param		mode	図鑑モード TRUE = 全国, FALSE = 地方
+ *
+ * @return	none
+ */
+//-----------------------------------------------------------------------------
+void ZUKANSAVE_SetZukanMode( ZUKAN_SAVEDATA * zw, BOOL mode )
+{
+  zukan_incorrect(zw);
+	zw->zukan_mode = mode;
+}
 
+//----------------------------------------------------------------------------
+/**
+ * @brief		閲覧中の図鑑モードを取得
+ *
+ * @param		zw		ずかんワークへのポインタ
+ *
+ * @retval	"TRUE = 全国"
+ * @retval	"FALSE = 地方"
+ */
+//-----------------------------------------------------------------------------
+BOOL ZUKANSAVE_GetZukanMode( const ZUKAN_SAVEDATA * zw )
+{
+  zukan_incorrect(zw);
+	return zw->zukan_mode;
+}
 
+//----------------------------------------------------------------------------
+/**
+ * @brief		閲覧中のポケモン番号を設定
+ *
+ * @param		zw		ずかんワークへのポインタ
+ * @param		mons	ポケモン番号
+ *
+ * @return	none
+ */
+//-----------------------------------------------------------------------------
+void ZUKANSAVE_SetDefaultMons( ZUKAN_SAVEDATA * zw, u16 mons )
+{
+  zukan_incorrect(zw);
+	zw->defaultMonsNo = mons;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief		閲覧中のポケモン番号を取得
+ *
+ * @param		zw		ずかんワークへのポインタ
+ *
+ * @return	ポケモン番号
+ */
+//-----------------------------------------------------------------------------
+u16 ZUKANSAVE_GetDefaultMons( const ZUKAN_SAVEDATA * zw )
+{
+  zukan_incorrect(zw);
+	return zw->defaultMonsNo;
+}
 
 
 
@@ -2161,12 +2222,29 @@ static void SetNormalSeeFlag( ZUKAN_SAVEDATA * zw, u32 mons, u32 sex, BOOL rare 
 static void SetFormSeeFlag( ZUKAN_SAVEDATA * zw, u32 mons, u32 sex, BOOL rare, u32 form )
 {
 	s32	pos = GetPokeFormBit( mons );
+
 	if( pos != -1 ){
-		form = GetPityuuForm( mons, sex, form );
-		if( rare == TRUE ){
-			set_bit( zw->form_flag[COLOR_RARE], pos+form );
+		u16	max;
+		u16	i;
+		// ポワルンとチェリムは全てのフォルムをONにする
+		if( mons == MONSNO_POWARUN ){
+			form = 0;
+			max  = FORM_MAX_POWARUN;
+		}else if( mons == MONSNO_THERIMU ){
+			form = 0;
+			max  = FORM_MAX_THERIMU;
 		}else{
-			set_bit( zw->form_flag[COLOR_NORMAL], pos+form );
+			form = GetPityuuForm( mons, sex, form );
+			max  = 1;
+		}
+		if( rare == TRUE ){
+			for( i=0; i<max; i++ ){
+				set_bit( zw->form_flag[COLOR_RARE], pos+form+i );
+			}
+		}else{
+			for( i=0; i<max; i++ ){
+				set_bit( zw->form_flag[COLOR_NORMAL], pos+form+i );
+			}
 		}
 	}
 }
@@ -2202,8 +2280,13 @@ void ZUKANSAVE_SetPokeSee( ZUKAN_SAVEDATA * zw, POKEMON_PARAM * pp )
     return;
   }
 
-	SetZukanRandom( zw, mons, rand );		// 固体乱数
+	// 見たことない場合
+	if( ZUKANSAVE_GetPokeSeeFlag( zw, mons ) == FALSE ){
+		ZUKANSAVE_SetDrawData( zw, mons, sex, rare, form );
+	}
 
+	// 固体乱数
+	SetZukanRandom( zw, mons, rand );
 	// 通常
 	SetNormalSeeFlag( zw, mons, sex, rare );
 	// フォルムあり
@@ -2322,7 +2405,6 @@ void ZUKANSAVE_SetPokeGet( ZUKAN_SAVEDATA * zw, POKEMON_PARAM * pp )
 	SetFormSeeFlag( zw, mons, sex, rare, form );
 	// 国コードセット
 	SetZukanTextVersionUp( zw, mons, lang );
-
 	// 捕獲フラグセット
   set_get_bit( zw, mons );
 }

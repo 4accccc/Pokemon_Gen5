@@ -54,7 +54,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/questionnaire_save.c \
 				savedata/battle_examination.c \
         savedata/my_pms_data.c \
-        savedata/un_savedata.c
+        savedata/un_savedata.c \
+        savedata/zukan_wp_savedata.c
 
 
 #’ÊM‚Ìí’“

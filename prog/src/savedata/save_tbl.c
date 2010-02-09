@@ -54,6 +54,7 @@
 #include "savedata/battle_examination.h"
 #include "savedata/questionnaire_save.h"
 #include "savedata/un_savedata.h"
+#include "savedata/zukan_wp_savedata.h"
 
 //==============================================================================
 //  íËêîíËã`
@@ -497,8 +498,8 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Streaming[] = {
 static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_ZukanWallPaper[] = {
   {
     EXGMDATA_ID_ZUKAN_WALLPAPER,
-    (FUNC_GET_SIZE)MUSICAL_DIST_SAVE_GetWorkSize,
-    (FUNC_INIT_WORK)MUSICAL_DIST_SAVE_InitWork,
+    (FUNC_GET_SIZE)ZUKANWP_SAVEDATA_GetWorkSize,
+    (FUNC_INIT_WORK)ZUKANWP_SAVEDATA_InitWork,
   },
 };
 

@@ -49,7 +49,7 @@ enum{
   ZUKANSAVE_LOCAL_COMP_NUM  = ZUKANSAVE_LOCAL_MONSMAX - ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM,
 
 
-
+/*
   // シーウシ　シードルゴ シェイミ　ギラティナの形状数
   ZUKANSAVE_UMIUSHI_FORM_NUM = 2, //(ここを変えただけではセーブ領域の方式やワークサイズは変わらないので、形状数が変わったときは内部も変更すること)
 
@@ -69,6 +69,7 @@ enum{
 
   // チェリムの形状数（セーブデータには関係ありません）
   ZUKANSAVE_CHERIMU_FORM_NUM = 2,
+*/
 };
 
 //----------------------------------------------------------
@@ -155,6 +156,10 @@ extern BOOL ZUKANSAVE_GetTextVersionUpMasterFlag(const ZUKAN_SAVEDATA * zs);
 extern void ZUKANSAVE_Copy(const ZUKAN_SAVEDATA * from, ZUKAN_SAVEDATA * to);
 
 
+extern void ZUKANSAVE_SetZukanMode( ZUKAN_SAVEDATA * zw, BOOL mode );
+extern BOOL ZUKANSAVE_GetZukanMode( const ZUKAN_SAVEDATA * zw );
+extern void ZUKANSAVE_SetDefaultMons( ZUKAN_SAVEDATA * zw, u16 mons );
+extern u16 ZUKANSAVE_GetDefaultMons( const ZUKAN_SAVEDATA * zw );
 extern u32	ZUKANSAVE_GetFormMax( u16 mons );
 extern BOOL ZUKANSAVE_CheckPokeSeeForm( const ZUKAN_SAVEDATA * zw, u16 monsno, int sex, int rare, int form );
 extern void ZUKANSAVE_SetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u32 form );
