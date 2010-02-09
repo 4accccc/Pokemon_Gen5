@@ -1,0 +1,4814 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="shimoyamada" host="W00184" date="2010-02-09T12:10:30"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="202"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="100"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="ZKN_COMMENT_FRA_00_000">
+		<language name="JPN">\[4:09:null\]</language>
+		<language name="JPN_KANJI">\[4:09:null\]</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_001">
+		<language name="JPN">Au matin de sa vie, la graine sur
+son dos lui fournit les éléments
+dont il a besoin pour grandir.</language>
+		<language name="JPN_KANJI">Au matin de sa vie, la graine sur
+son dos lui fournit les éléments
+dont il a besoin pour grandir.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_002">
+		<language name="JPN">Lorsque le bourgeon sur son dos
+éclot, il répand un doux parfum
+pour célébrer sa floraison.</language>
+		<language name="JPN_KANJI">Lorsque le bourgeon sur son dos
+éclot, il répand un doux parfum
+pour célébrer sa floraison.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_003">
+		<language name="JPN">Le parfum de sa fleur se fait plus
+pénétrant les lendemains de pluie.
+Cela appâte les autres Pokémon.</language>
+		<language name="JPN_KANJI">Le parfum de sa fleur se fait plus
+pénétrant les lendemains de pluie.
+Cela appâte les autres Pokémon.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_004">
+		<language name="JPN">La flamme de sa queue symbolise sa
+vitalité. Elle est intense quand il
+est en bonne santé.</language>
+		<language name="JPN_KANJI">La flamme de sa queue symbolise sa
+vitalité. Elle est intense quand il
+est en bonne santé.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_005">
+		<language name="JPN">La nuit, la queue ardente du
+REPTINCEL brille comme une étoile
+dans son repaire montagneux.</language>
+		<language name="JPN_KANJI">La nuit, la queue ardente du
+REPTINCEL brille comme une étoile
+dans son repaire montagneux.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_006">
+		<language name="JPN">On raconte que la flamme du
+DRACAUFEU s&apos;intensifie après
+un combat difficile.</language>
+		<language name="JPN_KANJI">On raconte que la flamme du
+DRACAUFEU s&apos;intensifie après
+un combat difficile.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_007">
+		<language name="JPN">Il se réfugie dans sa carapace
+et réplique en éclaboussant
+l&apos;ennemi à la première occasion.</language>
+		<language name="JPN_KANJI">Il se réfugie dans sa carapace
+et réplique en éclaboussant
+l&apos;ennemi à la première occasion.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_008">
+		<language name="JPN">On prétend qu&apos;il vit 10 000 ans.
+Sa queue duveteuse est un
+symbole de longévité populaire.</language>
+		<language name="JPN_KANJI">On prétend qu&apos;il vit 10 000 ans.
+Sa queue duveteuse est un
+symbole de longévité populaire.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_009">
+		<language name="JPN">Les trombes d&apos;eau projetées par
+les canons de sa carapace peuvent
+percer le métal le plus résistant.</language>
+		<language name="JPN_KANJI">Les trombes d&apos;eau projetées par
+les canons de sa carapace peuvent
+percer le métal le plus résistant.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_010">
+		<language name="JPN">Ses antennes rouges libèrent une
+puanteur qui repousse l&apos;ennemi. Il
+grandit par mues régulières.</language>
+		<language name="JPN_KANJI">Ses antennes rouges libèrent une
+puanteur qui repousse l&apos;ennemi. Il
+grandit par mues régulières.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_011">
+		<language name="JPN">Son corps frêle est protégé par sa
+carapace d&apos;acier. Il encaisse les
+coups durs en attendant d&apos;évoluer.</language>
+		<language name="JPN_KANJI">Son corps frêle est protégé par sa
+carapace d&apos;acier. Il encaisse les
+coups durs en attendant d&apos;évoluer.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_012">
+		<language name="JPN">Il raffole du nectar des fleurs. Il
+est capable de repérer la plus
+petite quantité de pollen.</language>
+		<language name="JPN_KANJI">Il raffole du nectar des fleurs. Il
+est capable de repérer la plus
+petite quantité de pollen.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_013">
+		<language name="JPN">Il mange chaque jour son poids en
+feuilles. Il utilise l&apos;aiguillon sur sa
+tête pour repousser l&apos;ennemi.</language>
+		<language name="JPN_KANJI">Il mange chaque jour son poids en
+feuilles. Il utilise l&apos;aiguillon sur sa
+tête pour repousser l&apos;ennemi.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_014">
+		<language name="JPN">Il se cache sous les feuilles et les
+branches pour fuir les prédateurs
+en attendant d&apos;évoluer.</language>
+		<language name="JPN_KANJI">Il se cache sous les feuilles et les
+branches pour fuir les prédateurs
+en attendant d&apos;évoluer.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_015">
+		<language name="JPN">Il virevolte rapidement autour de
+l&apos;ennemi et frappe de son dard
+empoisonné avant de décamper.</language>
+		<language name="JPN_KANJI">Il virevolte rapidement autour de
+l&apos;ennemi et frappe de son dard
+empoisonné avant de décamper.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_016">
+		<language name="JPN">Ce Pokémon docile préfère éviter
+le combat. Toutefois, il se montre
+très féroce quand on l&apos;agresse.</language>
+		<language name="JPN_KANJI">Ce Pokémon docile préfère éviter
+le combat. Toutefois, il se montre
+très féroce quand on l&apos;agresse.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_017">
+		<language name="JPN">Il survole son vaste territoire en
+quête d&apos;une proie avant de fondre
+sur elle toutes griffes en avant.</language>
+		<language name="JPN_KANJI">Il survole son vaste territoire en
+quête d&apos;une proie avant de fondre
+sur elle toutes griffes en avant.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_018">
+		<language name="JPN">En battant des ailes de toutes ses
+forces, ROUCARNAGE génère une
+rafale à en déraciner les arbres.</language>
+		<language name="JPN_KANJI">En battant des ailes de toutes ses
+forces, ROUCARNAGE génère une
+rafale à en déraciner les arbres.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_019">
+		<language name="JPN">D&apos;une prudence extrême, sa nature
+robuste lui permet de s&apos;adapter
+à tous les terrains.</language>
+		<language name="JPN_KANJI">D&apos;une prudence extrême, sa nature
+robuste lui permet de s&apos;adapter
+à tous les terrains.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_020">
+		<language name="JPN">Il grignote sans cesse pour apaiser
+la poussée de ses crocs. Il peut
+transpercer un mur de parpaings.</language>
+		<language name="JPN_KANJI">Il grignote sans cesse pour apaiser
+la poussée de ses crocs. Il peut
+transpercer un mur de parpaings.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_021">
+		<language name="JPN">Il fait battre vigoureusement ses
+petites ailes pour voler et cherche
+à manger dans l&apos;herbe avec le bec.</language>
+		<language name="JPN_KANJI">Il fait battre vigoureusement ses
+petites ailes pour voler et cherche
+à manger dans l&apos;herbe avec le bec.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_022">
+		<language name="JPN">Il a assez d&apos;énergie pour voler 
+toute la journée avec ses grandes 
+ailes. Il frappe de son bec acéré.</language>
+		<language name="JPN_KANJI">Il a assez d&apos;énergie pour voler 
+toute la journée avec ses grandes 
+ailes. Il frappe de son bec acéré.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_023">
+		<language name="JPN">Il se faufile dans l&apos;herbe sans un
+bruit et frappe dans le dos quand
+sa proie s&apos;y attend le moins. </language>
+		<language name="JPN_KANJI">Il se faufile dans l&apos;herbe sans un
+bruit et frappe dans le dos quand
+sa proie s&apos;y attend le moins. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_024">
+		<language name="JPN">Il utilise la marque sur son ventre
+pour intimider l&apos;ennemi. Il étouffe
+l&apos;ennemi pétrifié par la peur.</language>
+		<language name="JPN_KANJI">Il utilise la marque sur son ventre
+pour intimider l&apos;ennemi. Il étouffe
+l&apos;ennemi pétrifié par la peur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_025">
+		<language name="JPN">Il lui arrive de remettre d&apos;aplomb
+un PIKACHU allié en lui envoyant
+une décharge électrique.</language>
+		<language name="JPN_KANJI">Il lui arrive de remettre d&apos;aplomb
+un PIKACHU allié en lui envoyant
+une décharge électrique.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_026">
+		<language name="JPN">Il se protège des décharges grâce
+à sa queue qui dissipe l&apos;électricité
+dans le sol.</language>
+		<language name="JPN_KANJI">Il se protège des décharges grâce
+à sa queue qui dissipe l&apos;électricité
+dans le sol.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_027">
+		<language name="JPN">Il vit sur des terres arides
+épargnées par la pluie. Il se roule
+en boule pour se protéger.</language>
+		<language name="JPN_KANJI">Il vit sur des terres arides
+épargnées par la pluie. Il se roule
+en boule pour se protéger.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_028">
+		<language name="JPN">Il se met en boule pour percuter
+l&apos;ennemi. Ses épines aiguisées
+font beaucoup de dégâts.</language>
+		<language name="JPN_KANJI">Il se met en boule pour percuter
+l&apos;ennemi. Ses épines aiguisées
+font beaucoup de dégâts.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_029">
+		<language name="JPN">Bien qu&apos;il rechigne à se battre,
+une goutte du poison sécrété par
+ses piquants peut s&apos;avérer fatale.</language>
+		<language name="JPN_KANJI">Bien qu&apos;il rechigne à se battre,
+une goutte du poison sécrété par
+ses piquants peut s&apos;avérer fatale.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_030">
+		<language name="JPN">Ce Pokémon dresse ses piquants
+en cas de danger. Ils poussent
+moins vite que ceux de NIDORINO.</language>
+		<language name="JPN_KANJI">Ce Pokémon dresse ses piquants
+en cas de danger. Ils poussent
+moins vite que ceux de NIDORINO.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_031">
+		<language name="JPN">Son corps est recouvert d&apos;écailles
+solides. Il donnera sa vie pour
+secourir les petits de son terrier. </language>
+		<language name="JPN_KANJI">Son corps est recouvert d&apos;écailles
+solides. Il donnera sa vie pour
+secourir les petits de son terrier. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_032">
+		<language name="JPN">Il jauge le terrain en laissant
+ses oreilles dépasser de l&apos;herbe.
+Il se défend avec sa corne toxique.</language>
+		<language name="JPN_KANJI">Il jauge le terrain en laissant
+ses oreilles dépasser de l&apos;herbe.
+Il se défend avec sa corne toxique.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_033">
+		<language name="JPN">D&apos;un tempérament violent, il
+empale l&apos;ennemi sur sa corne qui
+distille un poison puissant.</language>
+		<language name="JPN_KANJI">D&apos;un tempérament violent, il
+empale l&apos;ennemi sur sa corne qui
+distille un poison puissant.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_034">
+		<language name="JPN">Un coup de sa puissante queue
+peut briser un poteau téléphonique
+comme une allumette.</language>
+		<language name="JPN_KANJI">Un coup de sa puissante queue
+peut briser un poteau téléphonique
+comme une allumette.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_035">
+		<language name="JPN">On dit que ceux qui voient danser
+un groupe de MELOFEE sous la pleine
+lune connaîtront un grand bonheur.</language>
+		<language name="JPN_KANJI">On dit que ceux qui voient danser
+un groupe de MELOFEE sous la pleine
+lune connaîtront un grand bonheur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_036">
+		<language name="JPN">Il est très farouche et se laisse
+rarement approcher. De plus, il
+détecte les sons à plus d&apos;1 km.</language>
+		<language name="JPN_KANJI">Il est très farouche et se laisse
+rarement approcher. De plus, il
+détecte les sons à plus d&apos;1 km.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_037">
+		<language name="JPN">Il envoie des boules de feu. Avec
+l&apos;âge, ses six queues en forment de
+nouvelles. </language>
+		<language name="JPN_KANJI">Il envoie des boules de feu. Avec
+l&apos;âge, ses six queues en forment de
+nouvelles. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_038">
+		<language name="JPN">On raconte que ses neuf queues
+détiennent un pouvoir mystique.
+Il peut vivre pendant mille ans.</language>
+		<language name="JPN_KANJI">On raconte que ses neuf queues
+détiennent un pouvoir mystique.
+Il peut vivre pendant mille ans.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_039">
+		<language name="JPN">Lorsqu&apos;il roule ses grands yeux
+ronds, il entonne une berceuse
+qui endort son auditoire.</language>
+		<language name="JPN_KANJI">Lorsqu&apos;il roule ses grands yeux
+ronds, il entonne une berceuse
+qui endort son auditoire.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_040">
+		<language name="JPN">Sa fourrure est d&apos;une douceur
+incomparable au toucher. Il 
+peut gonfler en aspirant de l&apos;air.</language>
+		<language name="JPN_KANJI">Sa fourrure est d&apos;une douceur
+incomparable au toucher. Il 
+peut gonfler en aspirant de l&apos;air.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_041">
+		<language name="JPN">Il se repère dans l&apos;espace grâce
+aux ultrasons émis par sa gueule.</language>
+		<language name="JPN_KANJI">Il se repère dans l&apos;espace grâce
+aux ultrasons émis par sa gueule.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_042">
+		<language name="JPN">Ses crocs acérés et creux peuvent
+pénétrer la plus épaisse des peaux
+et sucer le sang de la victime.</language>
+		<language name="JPN_KANJI">Ses crocs acérés et creux peuvent
+pénétrer la plus épaisse des peaux
+et sucer le sang de la victime.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_043">
+		<language name="JPN">En journée, il plante ses pieds-
+racines dans le sol. La nuit, il se 
+promène en semant des graines.</language>
+		<language name="JPN_KANJI">En journée, il plante ses pieds-
+racines dans le sol. La nuit, il se 
+promène en semant des graines.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_044">
+		<language name="JPN">L&apos;odeur du nectar de sa bouche 
+est si répugnante qu&apos;elle agresse
+les narines à deux kilomètres.</language>
+		<language name="JPN_KANJI">L&apos;odeur du nectar de sa bouche 
+est si répugnante qu&apos;elle agresse
+les narines à deux kilomètres.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_045">
+		<language name="JPN">Ses pétales sont les plus grands
+du monde. Il marche en répandant
+un pollen extrêmement allergène.</language>
+		<language name="JPN_KANJI">Ses pétales sont les plus grands
+du monde. Il marche en répandant
+un pollen extrêmement allergène.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_046">
+		<language name="JPN">Des champignons appelés
+\[4:07:L_DoubleQuot.\]tochukaso&quot; poussent sur son dos.
+Ils évoluent avec le PARAS hôte.</language>
+		<language name="JPN_KANJI">Des champignons appelés
+\[4:07:L_DoubleQuot.\]tochukaso&quot; poussent sur son dos.
+Ils évoluent avec le PARAS hôte.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_047">
+		<language name="JPN">Un champignon parasite plus gros
+que PARASECT contrôle son corps.
+Il répand des spores empoisonnées.</language>
+		<language name="JPN_KANJI">Un champignon parasite plus gros
+que PARASECT contrôle son corps.
+Il répand des spores empoisonnées.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_048">
+		<language name="JPN">Ses grands yeux sont en fait
+des amas d&apos;yeux minuscules. La
+nuit, il est attiré par la lumière.</language>
+		<language name="JPN_KANJI">Ses grands yeux sont en fait
+des amas d&apos;yeux minuscules. La
+nuit, il est attiré par la lumière.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_049">
+		<language name="JPN">Il répand ses écailles poudreuses
+en battant des ailes. Elles sont
+toxiques au toucher.</language>
+		<language name="JPN_KANJI">Il répand ses écailles poudreuses
+en battant des ailes. Elles sont
+toxiques au toucher.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_050">
+		<language name="JPN">Un Pokémon qui vit sous terre.
+Habitué aux souterrains, il fuit la
+lumière du jour.</language>
+		<language name="JPN_KANJI">Un Pokémon qui vit sous terre.
+Habitué aux souterrains, il fuit la
+lumière du jour.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_051">
+		<language name="JPN">Ses trois têtes creusent le sol à
+tour de rôle. Il peut atteindre des
+profondeurs de 100 kilomètres.</language>
+		<language name="JPN_KANJI">Ses trois têtes creusent le sol à
+tour de rôle. Il peut atteindre des
+profondeurs de 100 kilomètres.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_052">
+		<language name="JPN">Son regard s&apos;anime à la vue
+d&apos;un objet brillant. C&apos;est un
+Pokémon nocturne.</language>
+		<language name="JPN_KANJI">Son regard s&apos;anime à la vue
+d&apos;un objet brillant. C&apos;est un
+Pokémon nocturne.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_053">
+		<language name="JPN">Un Pokémon très snob. La taille du
+joyau qui orne son front alimente
+bien des débats parmi ses fans.</language>
+		<language name="JPN_KANJI">Un Pokémon très snob. La taille du
+joyau qui orne son front alimente
+bien des débats parmi ses fans.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_054">
+		<language name="JPN">Ses pouvoirs déconcertants et
+mystérieux lui font subir de
+constantes migraines.</language>
+		<language name="JPN_KANJI">Ses pouvoirs déconcertants et
+mystérieux lui font subir de
+constantes migraines.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_055">
+		<language name="JPN">Ses membres palmés et son corps
+parfaitement adapté font de lui
+un nageur exceptionnel.</language>
+		<language name="JPN_KANJI">Ses membres palmés et son corps
+parfaitement adapté font de lui
+un nageur exceptionnel.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_056">
+		<language name="JPN">Ils vivent en colonies sylvestres.
+Quand un FEROSINGE s&apos;énerve,
+toute la colonie suit son exemple.</language>
+		<language name="JPN_KANJI">Ils vivent en colonies sylvestres.
+Quand un FEROSINGE s&apos;énerve,
+toute la colonie suit son exemple.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_057">
+		<language name="JPN">Il grogne quand on le toise,
+rugit quand on s&apos;enfuit et devient
+fou de rage quand on le frappe.</language>
+		<language name="JPN_KANJI">Il grogne quand on le toise,
+rugit quand on s&apos;enfuit et devient
+fou de rage quand on le frappe.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_058">
+		<language name="JPN">Un Pokémon très loyal. Il
+restera immobile jusqu&apos;à ce que
+son Dresseur lui donne un ordre.</language>
+		<language name="JPN_KANJI">Un Pokémon très loyal. Il
+restera immobile jusqu&apos;à ce que
+son Dresseur lui donne un ordre.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_059">
+		<language name="JPN">Son port altier et son attitude 
+fière ont depuis longtemps conquis
+le cœur des hommes.</language>
+		<language name="JPN_KANJI">Son port altier et son attitude 
+fière ont depuis longtemps conquis
+le cœur des hommes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_060">
+		<language name="JPN">Sa peau est si mince qu&apos;on
+voit ses organes internes. Il tient
+à peine sur ses nouveaux pieds.</language>
+		<language name="JPN_KANJI">Sa peau est si mince qu&apos;on
+voit ses organes internes. Il tient
+à peine sur ses nouveaux pieds.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_061">
+		<language name="JPN">La spirale qui orne son ventre
+ondule doucement. Celui qui la fixe
+est saisi d&apos;une étrange torpeur. </language>
+		<language name="JPN_KANJI">La spirale qui orne son ventre
+ondule doucement. Celui qui la fixe
+est saisi d&apos;une étrange torpeur. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_062">
+		<language name="JPN">Il possède de sacrés biscoteaux.
+Il peut parcourir sans relâche
+l&apos;Océan Pacifique.</language>
+		<language name="JPN_KANJI">Il possède de sacrés biscoteaux.
+Il peut parcourir sans relâche
+l&apos;Océan Pacifique.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_063">
+		<language name="JPN">L&apos;utilisation de ses pouvoirs
+mentaux le fatigue tellement
+qu&apos;il dort 18 heures par jour.</language>
+		<language name="JPN_KANJI">L&apos;utilisation de ses pouvoirs
+mentaux le fatigue tellement
+qu&apos;il dort 18 heures par jour.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_064">
+		<language name="JPN">Il fixe sa cuillère d&apos;argent afin de
+concentrer son esprit et d&apos;émettre
+un maximum d&apos;ondes alpha.</language>
+		<language name="JPN_KANJI">Il fixe sa cuillère d&apos;argent afin de
+concentrer son esprit et d&apos;émettre
+un maximum d&apos;ondes alpha.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_065">
+		<language name="JPN">On dit que les cuillères qu&apos;il tient
+en permanence ont été créées
+par la puissance de son esprit.</language>
+		<language name="JPN_KANJI">On dit que les cuillères qu&apos;il tient
+en permanence ont été créées
+par la puissance de son esprit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_066">
+		<language name="JPN">Malgré sa petite taille, sa force lui
+permet de soulever plusieurs
+RACAILLOU à la fois.</language>
+		<language name="JPN_KANJI">Malgré sa petite taille, sa force lui
+permet de soulever plusieurs
+RACAILLOU à la fois.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_067">
+		<language name="JPN">Il soulève les plus lourdes charges
+avec plaisir et facilité. Il donne un
+coup de main tout en s&apos;entraînant!</language>
+		<language name="JPN_KANJI">Il soulève les plus lourdes charges
+avec plaisir et facilité. Il donne un
+coup de main tout en s&apos;entraînant!</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_068">
+		<language name="JPN">La puissance et la rapidité de ses
+quatre bras puissants font des
+ravages sur ses adversaires.</language>
+		<language name="JPN_KANJI">La puissance et la rapidité de ses
+quatre bras puissants font des
+ravages sur ses adversaires.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_069">
+		<language name="JPN">Il préfère les climats chauds et
+humides. Ses lianes peuvent
+capturer une proie en un clin d&apos;œil.</language>
+		<language name="JPN_KANJI">Il préfère les climats chauds et
+humides. Ses lianes peuvent
+capturer une proie en un clin d&apos;œil.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_070">
+		<language name="JPN">Un Pokémon végétal. Il capture les
+proies étourdies en les endormant
+à l&apos;aide d&apos;une poudre toxique.</language>
+		<language name="JPN_KANJI">Un Pokémon végétal. Il capture les
+proies étourdies en les endormant
+à l&apos;aide d&apos;une poudre toxique.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_071">
+		<language name="JPN">Sa bouche sécrète un fluide à
+l&apos;odeur de miel, qui s&apos;avère être
+un acide extrêmement corrosif.</language>
+		<language name="JPN_KANJI">Sa bouche sécrète un fluide à
+l&apos;odeur de miel, qui s&apos;avère être
+un acide extrêmement corrosif.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_072">
+		<language name="JPN">Presque entièrement composé
+d&apos;eau, son corps a tendance à se
+dessécher sur la terre ferme.</language>
+		<language name="JPN_KANJI">Presque entièrement composé
+d&apos;eau, son corps a tendance à se
+dessécher sur la terre ferme.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_073">
+		<language name="JPN">Ses 80 tentacules lui permettent
+d&apos;emprisonner ses adversaires
+dans un redoutable filet venimeux.</language>
+		<language name="JPN_KANJI">Ses 80 tentacules lui permettent
+d&apos;emprisonner ses adversaires
+dans un redoutable filet venimeux.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_074">
+		<language name="JPN">Au repos, rien ne le distingue d&apos;un
+vulgaire caillou. Malheur à ceux qui
+lui marchent dessus par mégarde!</language>
+		<language name="JPN_KANJI">Au repos, rien ne le distingue d&apos;un
+vulgaire caillou. Malheur à ceux qui
+lui marchent dessus par mégarde!</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_075">
+		<language name="JPN">Il dévale les montagnes pour se
+déplacer. Une fois qu&apos;il a pris tout
+son élan, dur dur de l&apos;arrêter!</language>
+		<language name="JPN_KANJI">Il dévale les montagnes pour se
+déplacer. Une fois qu&apos;il a pris tout
+son élan, dur dur de l&apos;arrêter!</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_076">
+		<language name="JPN">Aucun explosif ne pourrait entamer
+sa carapace de pierre. Il mue une
+fois par an.</language>
+		<language name="JPN_KANJI">Aucun explosif ne pourrait entamer
+sa carapace de pierre. Il mue une
+fois par an.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_077">
+		<language name="JPN">Chancelantes à la naissance, ses
+pattes deviennent très vite sûres
+et solides à force de galoper.</language>
+		<language name="JPN_KANJI">Chancelantes à la naissance, ses
+pattes deviennent très vite sûres
+et solides à force de galoper.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_078">
+		<language name="JPN">Au grand galop, sa crinière de feu
+disperse au vent une myriade
+d&apos;étincelles ardentes.</language>
+		<language name="JPN_KANJI">Au grand galop, sa crinière de feu
+disperse au vent une myriade
+d&apos;étincelles ardentes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_079">
+		<language name="JPN">Bien que lent, c&apos;est un pêcheur
+adroit qui utilise sa queue. Elle
+est insensible aux morsures.</language>
+		<language name="JPN_KANJI">Bien que lent, c&apos;est un pêcheur
+adroit qui utilise sa queue. Elle
+est insensible aux morsures.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_080">
+		<language name="JPN">Ce grand benêt connaît des éclairs
+de lucidité lorsque le KOKIYAS de sa
+queue se met à mordre.</language>
+		<language name="JPN_KANJI">Ce grand benêt connaît des éclairs
+de lucidité lorsque le KOKIYAS de sa
+queue se met à mordre.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_081">
+		<language name="JPN">Plus la rotation de ses extrémités
+est rapide, plus la force du champ
+magnétique qu&apos;il génère est grande.</language>
+		<language name="JPN_KANJI">Plus la rotation de ses extrémités
+est rapide, plus la force du champ
+magnétique qu&apos;il génère est grande.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_082">
+		<language name="JPN">Des groupes apparaissent si des
+taches solaires couvrent le soleil.
+Ils brouillent les télévisions.</language>
+		<language name="JPN_KANJI">Des groupes apparaissent si des
+taches solaires couvrent le soleil.
+Ils brouillent les télévisions.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_083">
+		<language name="JPN">Il ne peut pas vivre sans son
+légume, c&apos;est pourquoi il le
+protégera au péril de sa vie.</language>
+		<language name="JPN_KANJI">Il ne peut pas vivre sans son
+légume, c&apos;est pourquoi il le
+protégera au péril de sa vie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_084">
+		<language name="JPN">Ses deux cerveaux semblent
+communiquer leurs émotions
+grâce à un lien télépathique.</language>
+		<language name="JPN_KANJI">Ses deux cerveaux semblent
+communiquer leurs émotions
+grâce à un lien télépathique.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_085">
+		<language name="JPN">Quand DODUO connaît cette étrange
+évolution, l&apos;une de ses têtes se 
+dédouble. Il atteint les 60 km/h.</language>
+		<language name="JPN_KANJI">Quand DODUO connaît cette étrange
+évolution, l&apos;une de ses têtes se 
+dédouble. Il atteint les 60 km/h.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_086">
+		<language name="JPN">Un habitant des icebergs. 
+En mer, il utilise la corne sur 
+sa tête pour briser la banquise.</language>
+		<language name="JPN_KANJI">Un habitant des icebergs. 
+En mer, il utilise la corne sur 
+sa tête pour briser la banquise.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_087">
+		<language name="JPN">Son corps est couvert d&apos;un grand
+manteau blanc qui, dans la neige, le
+dissimule aux yeux des prédateurs.</language>
+		<language name="JPN_KANJI">Son corps est couvert d&apos;un grand
+manteau blanc qui, dans la neige, le
+dissimule aux yeux des prédateurs.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_088">
+		<language name="JPN">Il est né d&apos;un torrent de boue
+exposé aux rayons X de la lune.
+Il vit dans les ordures.</language>
+		<language name="JPN_KANJI">Il est né d&apos;un torrent de boue
+exposé aux rayons X de la lune.
+Il vit dans les ordures.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_089">
+		<language name="JPN">Son corps exsude un fluide toxique
+qui tue instantanément les plantes
+et les arbres au contact.</language>
+		<language name="JPN_KANJI">Son corps exsude un fluide toxique
+qui tue instantanément les plantes
+et les arbres au contact.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_090">
+		<language name="JPN">Il nage à reculons en ouvrant et en
+refermant ses deux coquilles. Il
+laisse traîner sa large langue.</language>
+		<language name="JPN_KANJI">Il nage à reculons en ouvrant et en
+refermant ses deux coquilles. Il
+laisse traîner sa large langue.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_091">
+		<language name="JPN">Il se défend en fermant sa coquille
+et projette des piquants qui
+repoussent ses agresseurs.</language>
+		<language name="JPN_KANJI">Il se défend en fermant sa coquille
+et projette des piquants qui
+repoussent ses agresseurs.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_092">
+		<language name="JPN">Son corps composé de gaz toxique
+pourrait asphyxier n&apos;importe qui
+en quelques secondes.</language>
+		<language name="JPN_KANJI">Son corps composé de gaz toxique
+pourrait asphyxier n&apos;importe qui
+en quelques secondes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_093">
+		<language name="JPN">Il adore se tapir dans l&apos;ombre et
+faire frissonner ses proies en leur
+touchant l&apos;épaule.</language>
+		<language name="JPN_KANJI">Il adore se tapir dans l&apos;ombre et
+faire frissonner ses proies en leur
+touchant l&apos;épaule.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_094">
+		<language name="JPN">Si vous croisez un regard
+inquiétant qui perce la nuit,
+c&apos;est sûrement un ECTOPLASMA.</language>
+		<language name="JPN_KANJI">Si vous croisez un regard
+inquiétant qui perce la nuit,
+c&apos;est sûrement un ECTOPLASMA.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_095">
+		<language name="JPN">Il se nourrit des pierres qu&apos;il
+rencontre en creusant le sol.
+Il peut creuser à 80 km/h!</language>
+		<language name="JPN_KANJI">Il se nourrit des pierres qu&apos;il
+rencontre en creusant le sol.
+Il peut creuser à 80 km/h!</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_096">
+		<language name="JPN">Son grand nez lui permet de lire
+les rêves d&apos;autrui. Il adore les
+songes amusants.</language>
+		<language name="JPN_KANJI">Son grand nez lui permet de lire
+les rêves d&apos;autrui. Il adore les
+songes amusants.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_097">
+		<language name="JPN">La vue de son pendule oscillant
+endort en trois secondes, même
+quand on vient de se réveiller. </language>
+		<language name="JPN_KANJI">La vue de son pendule oscillant
+endort en trois secondes, même
+quand on vient de se réveiller. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_098">
+		<language name="JPN">Il creuse son terrier sur des 
+plages sablonneuses. Ses 
+pinces repoussent si on les brise.</language>
+		<language name="JPN_KANJI">Il creuse son terrier sur des 
+plages sablonneuses. Ses 
+pinces repoussent si on les brise.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_099">
+		<language name="JPN">Sa grande pince possède une
+puissance de 10 000 chevaux. Son
+poids la rend difficile à manier.</language>
+		<language name="JPN_KANJI">Sa grande pince possède une
+puissance de 10 000 chevaux. Son
+poids la rend difficile à manier.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_100">
+		<language name="JPN">Il ressemble à une Poké Ball. Ce
+Pokémon dangereux peut exploser
+ou s&apos;électrifier au toucher.</language>
+		<language name="JPN_KANJI">Il ressemble à une Poké Ball. Ce
+Pokémon dangereux peut exploser
+ou s&apos;électrifier au toucher.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_101">
+		<language name="JPN">Il se laisse porter par les vents
+lorsque son corps est gonflé
+d&apos;électricité à en éclater.</language>
+		<language name="JPN_KANJI">Il se laisse porter par les vents
+lorsque son corps est gonflé
+d&apos;électricité à en éclater.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_102">
+		<language name="JPN">Ces six œufs communiquent par
+télépathie. Ils peuvent se réunir
+rapidement si on les sépare.</language>
+		<language name="JPN_KANJI">Ces six œufs communiquent par
+télépathie. Ils peuvent se réunir
+rapidement si on les sépare.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_103">
+		<language name="JPN">On l&apos;appelle \[4:07:L_DoubleQuot.\]jungle sur pattes&quot;.
+Si une tête devient trop grosse,
+elle tombe et produit un NOEUNOEUF.</language>
+		<language name="JPN_KANJI">On l&apos;appelle \[4:07:L_DoubleQuot.\]jungle sur pattes&quot;.
+Si une tête devient trop grosse,
+elle tombe et produit un NOEUNOEUF.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_104">
+		<language name="JPN">Il pleure en pensant à sa mère
+disparue, et ses larmes résonnent
+dans son crâne creux.</language>
+		<language name="JPN_KANJI">Il pleure en pensant à sa mère
+disparue, et ses larmes résonnent
+dans son crâne creux.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_105">
+		<language name="JPN">Ce Pokémon sauvage possède des os
+depuis sa naissance. Il s&apos;en sert
+pour combattre avec dextérité.</language>
+		<language name="JPN_KANJI">Ce Pokémon sauvage possède des os
+depuis sa naissance. Il s&apos;en sert
+pour combattre avec dextérité.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_106">
+		<language name="JPN">Ses pattes élastiques s&apos;allongent,
+ce qui ne manque jamais de
+surprendre au premier combat.</language>
+		<language name="JPN_KANJI">Ses pattes élastiques s&apos;allongent,
+ce qui ne manque jamais de
+surprendre au premier combat.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_107">
+		<language name="JPN">Même le béton cède sous ses 
+poings dévastateurs. Au combat, il
+s&apos;essouffle au bout de 3 minutes.</language>
+		<language name="JPN_KANJI">Même le béton cède sous ses 
+poings dévastateurs. Au combat, il
+s&apos;essouffle au bout de 3 minutes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_108">
+		<language name="JPN">Quand il déploie sa langue de près
+de deux mètres, sa queue s&apos;agite.
+Elles seraient reliées entre elles.</language>
+		<language name="JPN_KANJI">Quand il déploie sa langue de près
+de deux mètres, sa queue s&apos;agite.
+Elles seraient reliées entre elles.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_109">
+		<language name="JPN">Il flotte en retenant des gaz plus
+légers que l&apos;air. Ceux-ci sont
+explosifs, en plus d&apos;être fétides.</language>
+		<language name="JPN_KANJI">Il flotte en retenant des gaz plus
+légers que l&apos;air. Ceux-ci sont
+explosifs, en plus d&apos;être fétides.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_110">
+		<language name="JPN">Il grandit en absorbant les gaz des
+détritus. Des triplés existent, bien
+qu&apos;ils soient fort rares.</language>
+		<language name="JPN_KANJI">Il grandit en absorbant les gaz des
+détritus. Des triplés existent, bien
+qu&apos;ils soient fort rares.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_111">
+		<language name="JPN">Ses puissantes charges pourraient
+démolir n&apos;importe quel bâtiment.
+Dommage qu&apos;il soit stupide.</language>
+		<language name="JPN_KANJI">Ses puissantes charges pourraient
+démolir n&apos;importe quel bâtiment.
+Dommage qu&apos;il soit stupide.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_112">
+		<language name="JPN">La station debout a libéré ses
+pattes avant et l&apos;a rendu plus
+intelligent, mais il est distrait.</language>
+		<language name="JPN_KANJI">La station debout a libéré ses
+pattes avant et l&apos;a rendu plus
+intelligent, mais il est distrait.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_113">
+		<language name="JPN">Ce Pokémon très serviable distribue
+ses œufs hautement nutritifs aux
+humains et Pokémon blessés.</language>
+		<language name="JPN_KANJI">Ce Pokémon très serviable distribue
+ses œufs hautement nutritifs aux
+humains et Pokémon blessés.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_114">
+		<language name="JPN">Il se cache derrière des lianes
+bleues recouvertes d&apos;un fin
+duvet. Il est chatouilleux.</language>
+		<language name="JPN_KANJI">Il se cache derrière des lianes
+bleues recouvertes d&apos;un fin
+duvet. Il est chatouilleux.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_115">
+		<language name="JPN">Il élève ses petits dans sa poche
+ventrale. Il attend d&apos;être en lieu
+sûr pour les laisser jouer dehors.</language>
+		<language name="JPN_KANJI">Il élève ses petits dans sa poche
+ventrale. Il attend d&apos;être en lieu
+sûr pour les laisser jouer dehors.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_116">
+		<language name="JPN">Il niche à l&apos;ombre du corail. Quand
+il se sent menacé, il disparaît
+dans un nuage d&apos;encre opaque.</language>
+		<language name="JPN_KANJI">Il niche à l&apos;ombre du corail. Quand
+il se sent menacé, il disparaît
+dans un nuage d&apos;encre opaque.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_117">
+		<language name="JPN">Son épine dorsale le protège.
+Ses os et ses nageoires sont très
+prisés en médecine traditionnelle.</language>
+		<language name="JPN_KANJI">Son épine dorsale le protège.
+Ses os et ses nageoires sont très
+prisés en médecine traditionnelle.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_118">
+		<language name="JPN">Malgré son élégance quand il
+nage, ses coups de corne sont
+redoutables. </language>
+		<language name="JPN_KANJI">Malgré son élégance quand il
+nage, ses coups de corne sont
+redoutables. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_119">
+		<language name="JPN">En automne, à la saison des amours,
+il fait des réserves de graisse et
+arbore des couleurs chatoyantes.</language>
+		<language name="JPN_KANJI">En automne, à la saison des amours,
+il fait des réserves de graisse et
+arbore des couleurs chatoyantes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_120">
+		<language name="JPN">Même amoché, son corps se régé-
+nère tant que le noyau rouge est
+intact. Le noyau s&apos;illumine à minuit.</language>
+		<language name="JPN_KANJI">Même amoché, son corps se régé-
+nère tant que le noyau rouge est
+intact. Le noyau s&apos;illumine à minuit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_121">
+		<language name="JPN">Un noyau rouge trône en son
+centre. Il envoie des signaux radio
+mystérieux vers le ciel nocturne.</language>
+		<language name="JPN_KANJI">Un noyau rouge trône en son
+centre. Il envoie des signaux radio
+mystérieux vers le ciel nocturne.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_122">
+		<language name="JPN">En modifiant les molécules de l&apos;air
+du bout de ses doigts, il parvient
+à créer un mur invisible devant lui.</language>
+		<language name="JPN_KANJI">En modifiant les molécules de l&apos;air
+du bout de ses doigts, il parvient
+à créer un mur invisible devant lui.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_123">
+		<language name="JPN">A force de trancher des objets
+solides, les faux de ses bras
+sont très aiguisées.</language>
+		<language name="JPN_KANJI">A force de trancher des objets
+solides, les faux de ses bras
+sont très aiguisées.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_124">
+		<language name="JPN">Son cri ressemble à des paroles
+humaines. Mais nul n&apos;est jamais
+parvenu à les comprendre. </language>
+		<language name="JPN_KANJI">Son cri ressemble à des paroles
+humaines. Mais nul n&apos;est jamais
+parvenu à les comprendre. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_125">
+		<language name="JPN">Il fait tournoyer ses bras pour
+donner de la force à ses coups.
+Profitez-en pour filer!</language>
+		<language name="JPN_KANJI">Il fait tournoyer ses bras pour
+donner de la force à ses coups.
+Profitez-en pour filer!</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_126">
+		<language name="JPN">Quand il respire profondément, des
+vagues de chaleur émanent de son
+corps et le rendent difficile à voir.</language>
+		<language name="JPN_KANJI">Quand il respire profondément, des
+vagues de chaleur émanent de son
+corps et le rendent difficile à voir.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_127">
+		<language name="JPN">Il serre les proies dans ses pinces
+pour les trancher en deux. S&apos;il n&apos;y
+arrive pas, il les jette au loin.</language>
+		<language name="JPN_KANJI">Il serre les proies dans ses pinces
+pour les trancher en deux. S&apos;il n&apos;y
+arrive pas, il les jette au loin.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_128">
+		<language name="JPN">Après avoir choisi sa cible, il fonce
+dessus tête baissée. Il est réputé
+pour sa nature violente.</language>
+		<language name="JPN_KANJI">Après avoir choisi sa cible, il fonce
+dessus tête baissée. Il est réputé
+pour sa nature violente.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_129">
+		<language name="JPN">Un vénérable MAGICARPE peut
+franchir une montagne en utilisant
+Trempette. Mais c&apos;est tout...</language>
+		<language name="JPN_KANJI">Un vénérable MAGICARPE peut
+franchir une montagne en utilisant
+Trempette. Mais c&apos;est tout...</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_130">
+		<language name="JPN">Quand il se laisse emporter par la
+rage, il ne se calme qu&apos;après avoir
+détruit tout ce qui l&apos;entoure.</language>
+		<language name="JPN_KANJI">Quand il se laisse emporter par la
+rage, il ne se calme qu&apos;après avoir
+détruit tout ce qui l&apos;entoure.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_131">
+		<language name="JPN">Il aime naviguer en portant des
+humains et des Pokémon sur son
+dos. Il comprend le langage humain.</language>
+		<language name="JPN_KANJI">Il aime naviguer en portant des
+humains et des Pokémon sur son
+dos. Il comprend le langage humain.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_132">
+		<language name="JPN">Il a la capacité de modifier sa
+structure cellulaire pour prendre
+l&apos;apparence de ce qu&apos;il voit.</language>
+		<language name="JPN_KANJI">Il a la capacité de modifier sa
+structure cellulaire pour prendre
+l&apos;apparence de ce qu&apos;il voit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_133">
+		<language name="JPN">Son ADN particulier lui permet de
+s&apos;adapter très rapidement à son
+environnement.</language>
+		<language name="JPN_KANJI">Son ADN particulier lui permet de
+s&apos;adapter très rapidement à son
+environnement.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_134">
+		<language name="JPN">Sa composition moléculaire est
+proche de celle de l&apos;eau, ce qui
+lui permet de se liquéfier.</language>
+		<language name="JPN_KANJI">Sa composition moléculaire est
+proche de celle de l&apos;eau, ce qui
+lui permet de se liquéfier.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_135">
+		<language name="JPN">Face au danger, il fait appel à
+l&apos;électricité pour dresser ses
+poils et lancer des décharges.</language>
+		<language name="JPN_KANJI">Face au danger, il fait appel à
+l&apos;électricité pour dresser ses
+poils et lancer des décharges.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_136">
+		<language name="JPN">L&apos;air qu&apos;il inspire est chauffé par
+la glande enflammée de son corps,
+atteignant les 1 700 °C.</language>
+		<language name="JPN_KANJI">L&apos;air qu&apos;il inspire est chauffé par
+la glande enflammée de son corps,
+atteignant les 1 700 °C.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_137">
+		<language name="JPN">Ce Pokémon créé par des
+scientifiques peut arpenter
+librement le cyberespace.</language>
+		<language name="JPN_KANJI">Ce Pokémon créé par des
+scientifiques peut arpenter
+librement le cyberespace.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_138">
+		<language name="JPN">Un Pokémon ramené à la vie par
+la science à partir d&apos;un fossile. Il
+peuplait autrefois les mers.</language>
+		<language name="JPN_KANJI">Un Pokémon ramené à la vie par
+la science à partir d&apos;un fossile. Il
+peuplait autrefois les mers.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_139">
+		<language name="JPN">On pense que ce Pokémon a
+disparu parce que sa coquille en
+spirale était devenue trop grosse.</language>
+		<language name="JPN_KANJI">On pense que ce Pokémon a
+disparu parce que sa coquille en
+spirale était devenue trop grosse.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_140">
+		<language name="JPN">On pense qu&apos;il peuplait les plages
+il y a 300 millions d&apos;années. Il est
+protégé par une coquille robuste.</language>
+		<language name="JPN_KANJI">On pense qu&apos;il peuplait les plages
+il y a 300 millions d&apos;années. Il est
+protégé par une coquille robuste.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_141">
+		<language name="JPN">On pense que ce Pokémon est
+venu sur la terre ferme pour
+suivre l&apos;évolution de ses proies.</language>
+		<language name="JPN_KANJI">On pense que ce Pokémon est
+venu sur la terre ferme pour
+suivre l&apos;évolution de ses proies.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_142">
+		<language name="JPN">Un Pokémon qui arpentait le ciel
+au temps des dinosaures. Ses 
+crocs sont pareils à des scies.</language>
+		<language name="JPN_KANJI">Un Pokémon qui arpentait le ciel
+au temps des dinosaures. Ses 
+crocs sont pareils à des scies.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_143">
+		<language name="JPN">Une fois le ventre plein, il est trop
+amorphe pour lever le petit doigt.
+Sautez sur son ventre!</language>
+		<language name="JPN_KANJI">Une fois le ventre plein, il est trop
+amorphe pour lever le petit doigt.
+Sautez sur son ventre!</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_144">
+		<language name="JPN">Un Pokémon Oiseau légendaire.
+Il peut provoquer des blizzards
+en gelant l&apos;humidité de l&apos;air.</language>
+		<language name="JPN_KANJI">Un Pokémon Oiseau légendaire.
+Il peut provoquer des blizzards
+en gelant l&apos;humidité de l&apos;air.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_145">
+		<language name="JPN">Un Pokémon Oiseau légendaire dont
+on dit qu&apos;il vit dans les nuages 
+d&apos;orage. Il contrôle la foudre.</language>
+		<language name="JPN_KANJI">Un Pokémon Oiseau légendaire dont
+on dit qu&apos;il vit dans les nuages 
+d&apos;orage. Il contrôle la foudre.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_146">
+		<language name="JPN">L&apos;un des Pokémon Oiseaux
+légendaires. On dit que sa venue
+annonce l&apos;arrivée du printemps.</language>
+		<language name="JPN_KANJI">L&apos;un des Pokémon Oiseaux
+légendaires. On dit que sa venue
+annonce l&apos;arrivée du printemps.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_147">
+		<language name="JPN">On l&apos;appelle \[4:07:L_DoubleQuot.\]Pokémon mirage&quot;
+en raison de sa rareté. On a
+découvert sa mue.</language>
+		<language name="JPN_KANJI">On l&apos;appelle \[4:07:L_DoubleQuot.\]Pokémon mirage&quot;
+en raison de sa rareté. On a
+découvert sa mue.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_148">
+		<language name="JPN">La météo change brusquement quand
+il est entouré d&apos;une aura. On dit
+qu&apos;il peuple les mers et les lacs.</language>
+		<language name="JPN_KANJI">La météo change brusquement quand
+il est entouré d&apos;une aura. On dit
+qu&apos;il peuple les mers et les lacs.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_149">
+		<language name="JPN">On raconte qu&apos;il vit quelque part
+en mer. Il guide les équipages
+naufragés jusqu&apos;à la terre ferme.</language>
+		<language name="JPN_KANJI">On raconte qu&apos;il vit quelque part
+en mer. Il guide les équipages
+naufragés jusqu&apos;à la terre ferme.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_150">
+		<language name="JPN">Un Pokémon conçu en réorganisant
+les gènes de MEW. On raconte qu&apos;il
+s&apos;agit du Pokémon le plus féroce.</language>
+		<language name="JPN_KANJI">Un Pokémon conçu en réorganisant
+les gènes de MEW. On raconte qu&apos;il
+s&apos;agit du Pokémon le plus féroce.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_151">
+		<language name="JPN">Nombre de scientifiques voient en
+lui l&apos;ancêtre des Pokémon car il
+maîtrise toutes leurs capacités.</language>
+		<language name="JPN_KANJI">Nombre de scientifiques voient en
+lui l&apos;ancêtre des Pokémon car il
+maîtrise toutes leurs capacités.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_152">
+		<language name="JPN">Il jauge la température et
+l&apos;humidité grâce à la feuille sur sa
+tête. Il raffole des bains de soleil.</language>
+		<language name="JPN_KANJI">Il jauge la température et
+l&apos;humidité grâce à la feuille sur sa
+tête. Il raffole des bains de soleil.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_153">
+		<language name="JPN">Le collier de bourgeons à son cou
+répand un arôme épicé qui vous
+donne du tonus.</language>
+		<language name="JPN_KANJI">Le collier de bourgeons à son cou
+répand un arôme épicé qui vous
+donne du tonus.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_154">
+		<language name="JPN">Son souffle a l&apos;incroyable capacité
+de ranimer les plantes et les 
+fleurs flétries.</language>
+		<language name="JPN_KANJI">Son souffle a l&apos;incroyable capacité
+de ranimer les plantes et les 
+fleurs flétries.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_155">
+		<language name="JPN">Ce Pokémon est un grand timide.
+Les flammes sur son dos 
+s&apos;intensifient lorsqu&apos;il prend peur.</language>
+		<language name="JPN_KANJI">Ce Pokémon est un grand timide.
+Les flammes sur son dos 
+s&apos;intensifient lorsqu&apos;il prend peur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_156">
+		<language name="JPN">La chaleur de ses flammes intimide
+l&apos;ennemi. Elles s&apos;intensifient
+lorsqu&apos;il se prépare à combattre.</language>
+		<language name="JPN_KANJI">La chaleur de ses flammes intimide
+l&apos;ennemi. Elles s&apos;intensifient
+lorsqu&apos;il se prépare à combattre.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_157">
+		<language name="JPN">Il attaque en projetant des
+flammes. Il se dissimule derrière
+les vagues de chaleur qu&apos;il produit.</language>
+		<language name="JPN_KANJI">Il attaque en projetant des
+flammes. Il se dissimule derrière
+les vagues de chaleur qu&apos;il produit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_158">
+		<language name="JPN">Il broie tout ce qu&apos;il trouve avec
+ses mâchoires puissantes. Même
+son Dresseur doit s&apos;en méfier.</language>
+		<language name="JPN_KANJI">Il broie tout ce qu&apos;il trouve avec
+ses mâchoires puissantes. Même
+son Dresseur doit s&apos;en méfier.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_159">
+		<language name="JPN">Quand il mord, il ne lâche pas prise
+avant que ses crocs se brisent.
+Ils repoussent par la suite.</language>
+		<language name="JPN_KANJI">Quand il mord, il ne lâche pas prise
+avant que ses crocs se brisent.
+Ils repoussent par la suite.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_160">
+		<language name="JPN">Ce Pokémon à l&apos;air pataud est
+capable d&apos;attaquer à la vitesse
+de l&apos;éclair pour mordre sa proie.</language>
+		<language name="JPN_KANJI">Ce Pokémon à l&apos;air pataud est
+capable d&apos;attaquer à la vitesse
+de l&apos;éclair pour mordre sa proie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_161">
+		<language name="JPN">Ce Pokémon très nerveux
+prend appui sur sa queue pour
+observer ses alentours.</language>
+		<language name="JPN_KANJI">Ce Pokémon très nerveux
+prend appui sur sa queue pour
+observer ses alentours.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_162">
+		<language name="JPN">La femelle s&apos;enroule autour des
+petits pour les bercer. Il accule
+l&apos;ennemi grâce à sa vitesse.</language>
+		<language name="JPN_KANJI">La femelle s&apos;enroule autour des
+petits pour les bercer. Il accule
+l&apos;ennemi grâce à sa vitesse.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_163">
+		<language name="JPN">Il hulule chaque jour à la même
+heure. Dans certaines cultures,
+il incarne la sagesse.</language>
+		<language name="JPN_KANJI">Il hulule chaque jour à la même
+heure. Dans certaines cultures,
+il incarne la sagesse.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_164">
+		<language name="JPN">Ses yeux sont capables de voir
+distinctement même quand il fait
+très sombre.</language>
+		<language name="JPN_KANJI">Ses yeux sont capables de voir
+distinctement même quand il fait
+très sombre.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_165">
+		<language name="JPN">Il est si timide qu&apos;il ne se déplace
+qu&apos;au milieu d&apos;un essaim. Il exprime
+ses émotions par l&apos;odeur.</language>
+		<language name="JPN_KANJI">Il est si timide qu&apos;il ne se déplace
+qu&apos;au milieu d&apos;un essaim. Il exprime
+ses émotions par l&apos;odeur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_166">
+		<language name="JPN">Il tire sa force de la lumière des
+étoiles. Plus il y en a et plus ses
+motifs dorsaux sont grands.</language>
+		<language name="JPN_KANJI">Il tire sa force de la lumière des
+étoiles. Plus il y en a et plus ses
+motifs dorsaux sont grands.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_167">
+		<language name="JPN">Il tisse une toile fine mais solide
+pour poser des pièges et se poste
+dans l&apos;attente d&apos;une proie.</language>
+		<language name="JPN_KANJI">Il tisse une toile fine mais solide
+pour poser des pièges et se poste
+dans l&apos;attente d&apos;une proie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_168">
+		<language name="JPN">Il attache un fil à sa proie avant
+de la libérer. Il s&apos;en servira pour
+la retrouver, elle et ses amis.</language>
+		<language name="JPN_KANJI">Il attache un fil à sa proie avant
+de la libérer. Il s&apos;en servira pour
+la retrouver, elle et ses amis.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_169">
+		<language name="JPN">La transformation de ses pattes en
+ailes a certes amélioré sa capacité
+à voler, mais pas à marcher.</language>
+		<language name="JPN_KANJI">La transformation de ses pattes en
+ailes a certes amélioré sa capacité
+à voler, mais pas à marcher.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_170">
+		<language name="JPN">Il envoie des décharges électriques
+positives et négatives du bout des
+antennes pour paralyser sa proie.</language>
+		<language name="JPN_KANJI">Il envoie des décharges électriques
+positives et négatives du bout des
+antennes pour paralyser sa proie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_171">
+		<language name="JPN">La lumière de LANTURN surgit des
+profondeurs. On le surnomme
+\[4:07:L_DoubleQuot.\]étoile des profondeurs&quot;.</language>
+		<language name="JPN_KANJI">La lumière de LANTURN surgit des
+profondeurs. On le surnomme
+\[4:07:L_DoubleQuot.\]étoile des profondeurs&quot;.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_172">
+		<language name="JPN">Les poches électriques de ses
+joues sont encore petites, mais
+risquent de l&apos;électrocuter.</language>
+		<language name="JPN_KANJI">Les poches électriques de ses
+joues sont encore petites, mais
+risquent de l&apos;électrocuter.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_173">
+		<language name="JPN">On dit qu&apos;il se déplace à dos
+d&apos;étoile filante. Il se montre
+souvent quand on en voit.</language>
+		<language name="JPN_KANJI">On dit qu&apos;il se déplace à dos
+d&apos;étoile filante. Il se montre
+souvent quand on en voit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_174">
+		<language name="JPN">Son corps est doux et élastique.
+Quand il commence à rebondir,
+on ne peut plus l&apos;arrêter.</language>
+		<language name="JPN_KANJI">Son corps est doux et élastique.
+Quand il commence à rebondir,
+on ne peut plus l&apos;arrêter.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_175">
+		<language name="JPN">Il transforme les émotions
+positives des autres en bonheur
+qu&apos;il stocke dans sa coquille.</language>
+		<language name="JPN_KANJI">Il transforme les émotions
+positives des autres en bonheur
+qu&apos;il stocke dans sa coquille.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_176">
+		<language name="JPN">Il parcourt le monde pour
+distribuer de la joie aux
+êtres bons.</language>
+		<language name="JPN_KANJI">Il parcourt le monde pour
+distribuer de la joie aux
+êtres bons.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_177">
+		<language name="JPN">Il mange des cactus en prenant
+soin d&apos;éviter les bourgeons et les
+épines. Il ne tient pas en place. </language>
+		<language name="JPN_KANJI">Il mange des cactus en prenant
+soin d&apos;éviter les bourgeons et les
+épines. Il ne tient pas en place. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_178">
+		<language name="JPN">Cet étrange Pokémon peut voir
+l&apos;avenir et le passé. Il guette 
+sans cesse la course du soleil.</language>
+		<language name="JPN_KANJI">Cet étrange Pokémon peut voir
+l&apos;avenir et le passé. Il guette 
+sans cesse la course du soleil.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_179">
+		<language name="JPN">Sa laine fournie enfle lorsqu&apos;il
+accumule de l&apos;électricité statique.
+Son contact peut choquer. </language>
+		<language name="JPN_KANJI">Sa laine fournie enfle lorsqu&apos;il
+accumule de l&apos;électricité statique.
+Son contact peut choquer. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_180">
+		<language name="JPN">Sa queue s&apos;allume lorsque sa
+laine se charge d&apos;électricité.
+Il projette des poils électrifiés.</language>
+		<language name="JPN_KANJI">Sa queue s&apos;allume lorsque sa
+laine se charge d&apos;électricité.
+Il projette des poils électrifiés.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_181">
+		<language name="JPN">Le bout de sa queue brille avec
+intensité. Jadis, on s&apos;en servait
+pour envoyer des signaux.</language>
+		<language name="JPN_KANJI">Le bout de sa queue brille avec
+intensité. Jadis, on s&apos;en servait
+pour envoyer des signaux.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_182">
+		<language name="JPN">A la fin de la saison des pluies,
+il sort danser en plein air,
+attiré par la chaleur du soleil.</language>
+		<language name="JPN_KANJI">A la fin de la saison des pluies,
+il sort danser en plein air,
+attiré par la chaleur du soleil.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_183">
+		<language name="JPN">Sa queue à l&apos;extrémité remplie
+d&apos;huile fait office de flotteur et
+lui permet de ne pas couler.</language>
+		<language name="JPN_KANJI">Sa queue à l&apos;extrémité remplie
+d&apos;huile fait office de flotteur et
+lui permet de ne pas couler.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_184">
+		<language name="JPN">Ses poumons peuvent contenir
+assez d&apos;air pour lui permettre de
+passer une journée sous l&apos;eau.</language>
+		<language name="JPN_KANJI">Ses poumons peuvent contenir
+assez d&apos;air pour lui permettre de
+passer une journée sous l&apos;eau.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_185">
+		<language name="JPN">Il prend l&apos;apparence d&apos;un arbre
+pour éviter les attaques, mais il
+déteste l&apos;eau et fuit la pluie.</language>
+		<language name="JPN_KANJI">Il prend l&apos;apparence d&apos;un arbre
+pour éviter les attaques, mais il
+déteste l&apos;eau et fuit la pluie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_186">
+		<language name="JPN">Il rassemble ses pairs pour les
+commander. Il utilise son cri 
+pour diriger PTITARD.</language>
+		<language name="JPN_KANJI">Il rassemble ses pairs pour les
+commander. Il utilise son cri 
+pour diriger PTITARD.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_187">
+		<language name="JPN">Il dérive avec le vent. Sa présence
+en nombre dans les champs et les
+montagnes annonce le printemps.</language>
+		<language name="JPN_KANJI">Il dérive avec le vent. Sa présence
+en nombre dans les champs et les
+montagnes annonce le printemps.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_188">
+		<language name="JPN">Il fleurit lorsque les températures
+remontent. Il flotte dans le ciel 
+pour absorber les rayons du soleil.</language>
+		<language name="JPN_KANJI">Il fleurit lorsque les températures
+remontent. Il flotte dans le ciel 
+pour absorber les rayons du soleil.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_189">
+		<language name="JPN">Poussé par les vents saisonniers,
+il fait le tour du globe en semant
+des spores de coton.</language>
+		<language name="JPN_KANJI">Poussé par les vents saisonniers,
+il fait le tour du globe en semant
+des spores de coton.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_190">
+		<language name="JPN">Sa queue est aussi agile que ses
+mains. Il vit en haut des grands
+arbres.</language>
+		<language name="JPN_KANJI">Sa queue est aussi agile que ses
+mains. Il vit en haut des grands
+arbres.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_191">
+		<language name="JPN">Il tombe du ciel sans crier gare en
+matinée. On en croise énormément 
+l&apos;année suivant un été froid.</language>
+		<language name="JPN_KANJI">Il tombe du ciel sans crier gare en
+matinée. On en croise énormément 
+l&apos;année suivant un été froid.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_192">
+		<language name="JPN">Les rayons du soleil lui donnent de
+l&apos;énergie. Il est connu pour migrer
+vers les régions ensoleillées.</language>
+		<language name="JPN_KANJI">Les rayons du soleil lui donnent de
+l&apos;énergie. Il est connu pour migrer
+vers les régions ensoleillées.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_193">
+		<language name="JPN">La vitesse de ses ailes lui permet
+un vol stationnaire. Il surveille
+ainsi tout son territoire.</language>
+		<language name="JPN_KANJI">La vitesse de ses ailes lui permet
+un vol stationnaire. Il surveille
+ainsi tout son territoire.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_194">
+		<language name="JPN">Sur la terre ferme, il couvre son
+corps d&apos;un fluide toxique qui le
+protège de la déshydratation.</language>
+		<language name="JPN_KANJI">Sur la terre ferme, il couvre son
+corps d&apos;un fluide toxique qui le
+protège de la déshydratation.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_195">
+		<language name="JPN">De nature placide, il a tendance à
+se cogner la tête contre les récifs
+et autres bateaux de passage.</language>
+		<language name="JPN_KANJI">De nature placide, il a tendance à
+se cogner la tête contre les récifs
+et autres bateaux de passage.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_196">
+		<language name="JPN">Sa fourrure est si sensible qu&apos;il
+peut détecter les vibrations de
+l&apos;air et prédire le temps qu&apos;il fera.</language>
+		<language name="JPN_KANJI">Sa fourrure est si sensible qu&apos;il
+peut détecter les vibrations de
+l&apos;air et prédire le temps qu&apos;il fera.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_197">
+		<language name="JPN">Quand il s&apos;expose à la lumière de la
+lune, ses anneaux brillent et il
+obtient un mystérieux pouvoir.</language>
+		<language name="JPN_KANJI">Quand il s&apos;expose à la lumière de la
+lune, ses anneaux brillent et il
+obtient un mystérieux pouvoir.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_198">
+		<language name="JPN">Quand il est en danger, il tente de
+semer ses poursuivants dans les
+chemins montagneux.</language>
+		<language name="JPN_KANJI">Quand il est en danger, il tente de
+semer ses poursuivants dans les
+chemins montagneux.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_199">
+		<language name="JPN">La morsure de KOKIYAS a fait
+de lui un génie dont l&apos;intelligence
+rivalise avec celle d&apos;un prix Nobel.</language>
+		<language name="JPN_KANJI">La morsure de KOKIYAS a fait
+de lui un génie dont l&apos;intelligence
+rivalise avec celle d&apos;un prix Nobel.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_200">
+		<language name="JPN">Il fait peur aux aventuriers en
+pleine nuit et se nourrit de leur
+frayeur.</language>
+		<language name="JPN_KANJI">Il fait peur aux aventuriers en
+pleine nuit et se nourrit de leur
+frayeur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_201">
+		<language name="JPN">Quand il est seul, il ne se passe
+rien... Mais en groupe, il semble
+habité par un mystérieux pouvoir.</language>
+		<language name="JPN_KANJI">Quand il est seul, il ne se passe
+rien... Mais en groupe, il semble
+habité par un mystérieux pouvoir.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_202">
+		<language name="JPN">Il cherche désespérément à cacher
+sa queue noire. Certains pensent
+qu&apos;elle renferme un secret. </language>
+		<language name="JPN_KANJI">Il cherche désespérément à cacher
+sa queue noire. Certains pensent
+qu&apos;elle renferme un secret. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_203">
+		<language name="JPN">La tête qu&apos;il a sur la queue dispose
+de son propre cerveau et lui
+permet de couvrir ses arrières.</language>
+		<language name="JPN_KANJI">La tête qu&apos;il a sur la queue dispose
+de son propre cerveau et lui
+permet de couvrir ses arrières.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_204">
+		<language name="JPN">Il ressemble à une pomme de pin.
+Sa carapace le protège des Pokémon
+Oiseau qui le picorent par erreur.</language>
+		<language name="JPN_KANJI">Il ressemble à une pomme de pin.
+Sa carapace le protège des Pokémon
+Oiseau qui le picorent par erreur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_205">
+		<language name="JPN">Il est prisonnier d&apos;une coquille 
+d&apos;acier. Ses yeux vigilants sont la
+seule partie visible de son corps.</language>
+		<language name="JPN_KANJI">Il est prisonnier d&apos;une coquille 
+d&apos;acier. Ses yeux vigilants sont la
+seule partie visible de son corps.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_206">
+		<language name="JPN">Son nid est un véritable labyrinthe
+qu&apos;il creuse à l&apos;aide de sa queue.
+Il sait à peine voler.</language>
+		<language name="JPN_KANJI">Son nid est un véritable labyrinthe
+qu&apos;il creuse à l&apos;aide de sa queue.
+Il sait à peine voler.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_207">
+		<language name="JPN">Il fend l&apos;air et fond sur sa proie
+pour s&apos;agripper à son visage et
+la frapper avec son dard.</language>
+		<language name="JPN_KANJI">Il fend l&apos;air et fond sur sa proie
+pour s&apos;agripper à son visage et
+la frapper avec son dard.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_208">
+		<language name="JPN">On pense que son corps s&apos;est
+transformé à cause du fer contenu
+dans la terre dont il se nourrit.</language>
+		<language name="JPN_KANJI">On pense que son corps s&apos;est
+transformé à cause du fer contenu
+dans la terre dont il se nourrit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_209">
+		<language name="JPN">Son visage horrible fait fuir les
+petits Pokémon. Par contre, les
+femmes le trouvent mignon.</language>
+		<language name="JPN_KANJI">Son visage horrible fait fuir les
+petits Pokémon. Par contre, les
+femmes le trouvent mignon.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_210">
+		<language name="JPN">En dépit des apparences, c&apos;est un
+grand timide. Quand il s&apos;énerve, il
+mord de ses énormes crocs.</language>
+		<language name="JPN_KANJI">En dépit des apparences, c&apos;est un
+grand timide. Quand il s&apos;énerve, il
+mord de ses énormes crocs.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_211">
+		<language name="JPN">Il envoie ses piquants empoisonnés
+à la ronde. Sa forme sphérique en
+fait un piètre nageur.</language>
+		<language name="JPN_KANJI">Il envoie ses piquants empoisonnés
+à la ronde. Sa forme sphérique en
+fait un piètre nageur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_212">
+		<language name="JPN">Les yeux sur ses pinces servent à
+intimider l&apos;ennemi avant de passer
+à l&apos;attaque.</language>
+		<language name="JPN_KANJI">Les yeux sur ses pinces servent à
+intimider l&apos;ennemi avant de passer
+à l&apos;attaque.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_213">
+		<language name="JPN">Il stocke des Baies sous sa
+carapace. Elles fermentent et
+produisent des jus délicieux.</language>
+		<language name="JPN_KANJI">Il stocke des Baies sous sa
+carapace. Elles fermentent et
+produisent des jus délicieux.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_214">
+		<language name="JPN">Il défend vaillamment sa réserve
+de miel personnelle à grand renfort
+de coups de corne.</language>
+		<language name="JPN_KANJI">Il défend vaillamment sa réserve
+de miel personnelle à grand renfort
+de coups de corne.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_215">
+		<language name="JPN">Ce Pokémon rusé agit parfois en
+équipe pour voler des œufs, l&apos;un
+d&apos;entre eux faisant diversion.</language>
+		<language name="JPN_KANJI">Ce Pokémon rusé agit parfois en
+équipe pour voler des œufs, l&apos;un
+d&apos;entre eux faisant diversion.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_216">
+		<language name="JPN">Il baigne ses griffes dans le miel 
+pour les lécher. Chaque paire
+de pattes a un goût unique.</language>
+		<language name="JPN_KANJI">Il baigne ses griffes dans le miel 
+pour les lécher. Chaque paire
+de pattes a un goût unique.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_217">
+		<language name="JPN">Il marque de ses griffes les
+arbres de son territoire qui
+portent des Baies ou des fruits.</language>
+		<language name="JPN_KANJI">Il marque de ses griffes les
+arbres de son territoire qui
+portent des Baies ou des fruits.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_218">
+		<language name="JPN">Son corps est fait de magma.
+S&apos;il cesse de bouger, il refroidit
+et durcit.</language>
+		<language name="JPN_KANJI">Son corps est fait de magma.
+S&apos;il cesse de bouger, il refroidit
+et durcit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_219">
+		<language name="JPN">Sa température corporelle avoisine
+les 10 000 °C. Des flammes 
+fusent des fissures de sa coquille.</language>
+		<language name="JPN_KANJI">Sa température corporelle avoisine
+les 10 000 °C. Des flammes 
+fusent des fissures de sa coquille.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_220">
+		<language name="JPN">Son nez très sensible détecte
+champignons, Baies et sources
+chaudes enfouis sous la glace.</language>
+		<language name="JPN_KANJI">Son nez très sensible détecte
+champignons, Baies et sources
+chaudes enfouis sous la glace.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_221">
+		<language name="JPN">Il est protégé du froid mordant par
+son épais manteau de fourrure. Ses
+cornes sont formées de glace.</language>
+		<language name="JPN_KANJI">Il est protégé du froid mordant par
+son épais manteau de fourrure. Ses
+cornes sont formées de glace.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_222">
+		<language name="JPN">On en trouve beaucoup dans les
+mers claires du sud. On dirait qu&apos;il
+ne peut pas vivre en eau polluée.</language>
+		<language name="JPN_KANJI">On en trouve beaucoup dans les
+mers claires du sud. On dirait qu&apos;il
+ne peut pas vivre en eau polluée.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_223">
+		<language name="JPN">Son puissant jet d&apos;eau ne manque
+jamais sa cible, même quand il est
+au fond de l&apos;eau.</language>
+		<language name="JPN_KANJI">Son puissant jet d&apos;eau ne manque
+jamais sa cible, même quand il est
+au fond de l&apos;eau.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_224">
+		<language name="JPN">Il adore se cacher dans les
+fissures de la roche. Il crache
+parfois de l&apos;encre sur ses proies.</language>
+		<language name="JPN_KANJI">Il adore se cacher dans les
+fissures de la roche. Il crache
+parfois de l&apos;encre sur ses proies.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_225">
+		<language name="JPN">Il dépose sa nourriture dans sa
+queue enroulée. Il l&apos;offre souvent
+aux gens égarés en montagne.</language>
+		<language name="JPN_KANJI">Il dépose sa nourriture dans sa
+queue enroulée. Il l&apos;offre souvent
+aux gens égarés en montagne.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_226">
+		<language name="JPN">Il ignore royalement les REMORAID
+qui s&apos;accrochent à ses nageoires
+pour manger les restes qu&apos;il sème.</language>
+		<language name="JPN_KANJI">Il ignore royalement les REMORAID
+qui s&apos;accrochent à ses nageoires
+pour manger les restes qu&apos;il sème.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_227">
+		<language name="JPN">Son corps est prisonnier d&apos;une
+armure dure comme l&apos;acier, mais il
+vole à plus de 300 km/h.</language>
+		<language name="JPN_KANJI">Son corps est prisonnier d&apos;une
+armure dure comme l&apos;acier, mais il
+vole à plus de 300 km/h.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_228">
+		<language name="JPN">Il est assez évolué pour chasser
+en meute et communiquer par
+des séries de cris modulés.</language>
+		<language name="JPN_KANJI">Il est assez évolué pour chasser
+en meute et communiquer par
+des séries de cris modulés.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_229">
+		<language name="JPN">En colère, il crache des flammes
+contenant une toxine qui peut
+causer des dégâts irréversibles.</language>
+		<language name="JPN_KANJI">En colère, il crache des flammes
+contenant une toxine qui peut
+causer des dégâts irréversibles.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_230">
+		<language name="JPN">Chacun de ses déplacements
+provoque des tourbillons. Il vit
+dans les grottes sous-marines.</language>
+		<language name="JPN_KANJI">Chacun de ses déplacements
+provoque des tourbillons. Il vit
+dans les grottes sous-marines.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_231">
+		<language name="JPN">Il est fort malgré son aspect
+ramassé. Il n&apos;a aucun mal à porter
+un humain adulte sur son dos.</language>
+		<language name="JPN_KANJI">Il est fort malgré son aspect
+ramassé. Il n&apos;a aucun mal à porter
+un humain adulte sur son dos.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_232">
+		<language name="JPN">Il attaque en se roulant en boule
+pour percuter l&apos;ennemi. Il peut
+abattre une maison d&apos;un seul coup.</language>
+		<language name="JPN_KANJI">Il attaque en se roulant en boule
+pour percuter l&apos;ennemi. Il peut
+abattre une maison d&apos;un seul coup.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_233">
+		<language name="JPN">Il a subi une mise à jour censée lui
+permettre d&apos;explorer d&apos;autres
+planètes... C&apos;est un échec.</language>
+		<language name="JPN_KANJI">Il a subi une mise à jour censée lui
+permettre d&apos;explorer d&apos;autres
+planètes... C&apos;est un échec.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_234">
+		<language name="JPN">Quiconque observe ses antennes
+ressent une sensation étrange,
+comme si leur centre l&apos;attirait.</language>
+		<language name="JPN_KANJI">Quiconque observe ses antennes
+ressent une sensation étrange,
+comme si leur centre l&apos;attirait.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_235">
+		<language name="JPN">Il marque son territoire en maniant
+sa queue comme un pinceau. On
+dénombre plus de 5 000 marques.</language>
+		<language name="JPN_KANJI">Il marque son territoire en maniant
+sa queue comme un pinceau. On
+dénombre plus de 5 000 marques.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_236">
+		<language name="JPN">Il est réputé pour sa combativité.
+Il se blesse toujours en défiant
+des ennemis plus grands.</language>
+		<language name="JPN_KANJI">Il est réputé pour sa combativité.
+Il se blesse toujours en défiant
+des ennemis plus grands.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_237">
+		<language name="JPN">Il combat en tournoyant comme une
+toupie. La force centrifuge décuple
+sa puissance destructrice.</language>
+		<language name="JPN_KANJI">Il combat en tournoyant comme une
+toupie. La force centrifuge décuple
+sa puissance destructrice.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_238">
+		<language name="JPN">Il goûte à tout du bout des lèvres.
+Elles gardent en mémoire ses
+goûts et ses dégoûts.</language>
+		<language name="JPN_KANJI">Il goûte à tout du bout des lèvres.
+Elles gardent en mémoire ses
+goûts et ses dégoûts.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_239">
+		<language name="JPN">Un faible courant électrique circule
+entre ses cornes. Attention à ne
+pas y mettre la main!</language>
+		<language name="JPN_KANJI">Un faible courant électrique circule
+entre ses cornes. Attention à ne
+pas y mettre la main!</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_240">
+		<language name="JPN">Son sang est chaud comme du magma
+et la température de son corps
+peut atteindre 600 °C.</language>
+		<language name="JPN_KANJI">Son sang est chaud comme du magma
+et la température de son corps
+peut atteindre 600 °C.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_241">
+		<language name="JPN">On raconte que les enfants élevés
+au lait d&apos;ECREMEUH deviennent des
+adultes braves et robustes.</language>
+		<language name="JPN_KANJI">On raconte que les enfants élevés
+au lait d&apos;ECREMEUH deviennent des
+adultes braves et robustes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_242">
+		<language name="JPN">Les œufs que pond LEUPHORIE sont
+un concentré de bonheur dont une
+bouchée suffit à apporter la joie.</language>
+		<language name="JPN_KANJI">Les œufs que pond LEUPHORIE sont
+un concentré de bonheur dont une
+bouchée suffit à apporter la joie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_243">
+		<language name="JPN">On prétend qu&apos;il est tombé avec la
+foudre. Il peut lancer des éclairs
+grâce aux nuages sur son dos.</language>
+		<language name="JPN_KANJI">On prétend qu&apos;il est tombé avec la
+foudre. Il peut lancer des éclairs
+grâce aux nuages sur son dos.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_244">
+		<language name="JPN">On raconte qu&apos;à chaque fois qu&apos;il
+rugit, un volcan entre en éruption
+quelque part.</language>
+		<language name="JPN_KANJI">On raconte qu&apos;à chaque fois qu&apos;il
+rugit, un volcan entre en éruption
+quelque part.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_245">
+		<language name="JPN">Il parcourt le vaste monde pour
+purifier les eaux polluées. Il
+accompagne le vent du nord.</language>
+		<language name="JPN_KANJI">Il parcourt le vaste monde pour
+purifier les eaux polluées. Il
+accompagne le vent du nord.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_246">
+		<language name="JPN">Un Pokémon qui se nourrit de terre.
+Après avoir dévoré une montagne,
+il s&apos;endort pour grandir.</language>
+		<language name="JPN_KANJI">Un Pokémon qui se nourrit de terre.
+Après avoir dévoré une montagne,
+il s&apos;endort pour grandir.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_247">
+		<language name="JPN">Son corps est dur comme la pierre
+souterraine. Il file comme une
+fusée en expulsant des gaz.</language>
+		<language name="JPN_KANJI">Son corps est dur comme la pierre
+souterraine. Il file comme une
+fusée en expulsant des gaz.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_248">
+		<language name="JPN">Lorsqu&apos;il est en colère, il abat des
+montagnes et enterre des fleuves.
+On doit alors modifier les cartes.</language>
+		<language name="JPN_KANJI">Lorsqu&apos;il est en colère, il abat des
+montagnes et enterre des fleuves.
+On doit alors modifier les cartes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_249">
+		<language name="JPN">Il dort dans une faille des grands
+fonds. Ses battements d&apos;ailes
+génèrent une tempête de 40 jours.</language>
+		<language name="JPN_KANJI">Il dort dans une faille des grands
+fonds. Ses battements d&apos;ailes
+génèrent une tempête de 40 jours.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_250">
+		<language name="JPN">Ses plumes possèdent sept 
+couleurs. On prétend que sa vue
+apporte la joie éternelle.</language>
+		<language name="JPN_KANJI">Ses plumes possèdent sept 
+couleurs. On prétend que sa vue
+apporte la joie éternelle.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_251">
+		<language name="JPN">Il a le pouvoir de voyager dans le
+temps. Cependant, on dit qu&apos;il
+n&apos;apparaît qu&apos;en temps de paix.</language>
+		<language name="JPN_KANJI">Il a le pouvoir de voyager dans le
+temps. Cependant, on dit qu&apos;il
+n&apos;apparaît qu&apos;en temps de paix.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_252">
+		<language name="JPN">Ses plantes de pieds sont
+couvertes d&apos;épines lui permettant
+de marcher au mur et au plafond.</language>
+		<language name="JPN_KANJI">Ses plantes de pieds sont
+couvertes d&apos;épines lui permettant
+de marcher au mur et au plafond.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_253">
+		<language name="JPN">Il vit dans les jungles denses. 
+Il saute de branche en branche
+pour approcher de sa proie.</language>
+		<language name="JPN_KANJI">Il vit dans les jungles denses. 
+Il saute de branche en branche
+pour approcher de sa proie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_254">
+		<language name="JPN">Les feuilles sur ses bras peuvent
+trancher des troncs épais. C&apos;est
+le meilleur combattant des jungles.</language>
+		<language name="JPN_KANJI">Les feuilles sur ses bras peuvent
+trancher des troncs épais. C&apos;est
+le meilleur combattant des jungles.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_255">
+		<language name="JPN">Ses câlins réchauffent car il
+renferme une fournaise. Il envoie
+des boules de feu à 1 000 °C.</language>
+		<language name="JPN_KANJI">Ses câlins réchauffent car il
+renferme une fournaise. Il envoie
+des boules de feu à 1 000 °C.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_256">
+		<language name="JPN">Ce maître du coup de pied peut
+donner 10 coups par seconde. Ses
+cris aigus intimident l&apos;ennemi.</language>
+		<language name="JPN_KANJI">Ce maître du coup de pied peut
+donner 10 coups par seconde. Ses
+cris aigus intimident l&apos;ennemi.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_257">
+		<language name="JPN">Des flammes fusent de ses
+poignets et ses coups brûlent
+l&apos;ennemi.</language>
+		<language name="JPN_KANJI">Des flammes fusent de ses
+poignets et ses coups brûlent
+l&apos;ennemi.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_258">
+		<language name="JPN">Il analyse le courant grâce à la
+nageoire sur sa tête. Il est assez
+fort pour soulever des rochers.</language>
+		<language name="JPN_KANJI">Il analyse le courant grâce à la
+nageoire sur sa tête. Il est assez
+fort pour soulever des rochers.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_259">
+		<language name="JPN">Ses jambes robustes lui donnent
+un bon appui, même dans la boue.
+Il dort enfoui dans la saleté.</language>
+		<language name="JPN_KANJI">Ses jambes robustes lui donnent
+un bon appui, même dans la boue.
+Il dort enfoui dans la saleté.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_260">
+		<language name="JPN">Il peut traîner un grand bateau en
+nageant. Il assomme l&apos;ennemi d&apos;un
+grand coup de ses bras épais.</language>
+		<language name="JPN_KANJI">Il peut traîner un grand bateau en
+nageant. Il assomme l&apos;ennemi d&apos;un
+grand coup de ses bras épais.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_261">
+		<language name="JPN">Un Pokémon très obstiné qui
+poursuit sa proie jusqu&apos;à ce
+qu&apos;elle soit épuisée.</language>
+		<language name="JPN_KANJI">Un Pokémon très obstiné qui
+poursuit sa proie jusqu&apos;à ce
+qu&apos;elle soit épuisée.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_262">
+		<language name="JPN">Il traque ses proies en groupe.
+Il ne désobéira jamais aux
+ordres d&apos;un bon Dresseur.</language>
+		<language name="JPN_KANJI">Il traque ses proies en groupe.
+Il ne désobéira jamais aux
+ordres d&apos;un bon Dresseur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_263">
+		<language name="JPN">Il marche en zigzaguant et n&apos;a
+pas son pareil pour trouver des
+objets dans l&apos;herbe ou sous terre.</language>
+		<language name="JPN_KANJI">Il marche en zigzaguant et n&apos;a
+pas son pareil pour trouver des
+objets dans l&apos;herbe ou sous terre.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_264">
+		<language name="JPN">Il fonce sur sa proie à plus de 100
+km/h. Mais il ne peut pas dévier sa
+course et loupe souvent sa cible.</language>
+		<language name="JPN_KANJI">Il fonce sur sa proie à plus de 100
+km/h. Mais il ne peut pas dévier sa
+course et loupe souvent sa cible.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_265">
+		<language name="JPN">Cible favorite des Pokémon Oiseaux,
+il tente de se protéger avec ses
+épines venimeuses.</language>
+		<language name="JPN_KANJI">Cible favorite des Pokémon Oiseaux,
+il tente de se protéger avec ses
+épines venimeuses.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_266">
+		<language name="JPN">Il attend d&apos;évoluer dans son cocon
+de soie accroché aux branches et
+se nourrit d&apos;eau de pluie.</language>
+		<language name="JPN_KANJI">Il attend d&apos;évoluer dans son cocon
+de soie accroché aux branches et
+se nourrit d&apos;eau de pluie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_267">
+		<language name="JPN">Malgré les apparences, il est très
+agressif et attaque avec sa trompe
+quand on le dérange.</language>
+		<language name="JPN_KANJI">Malgré les apparences, il est très
+agressif et attaque avec sa trompe
+quand on le dérange.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_268">
+		<language name="JPN">Rancunier, il n&apos;oublie aucune des
+attaques subies dans le cocon et
+se venge une fois qu&apos;il a évolué.</language>
+		<language name="JPN_KANJI">Rancunier, il n&apos;oublie aucune des
+attaques subies dans le cocon et
+se venge une fois qu&apos;il a évolué.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_269">
+		<language name="JPN">Il disperse un nuage de poudre
+toxique à chaque coup d&apos;aile. Il
+aime les feuilles d&apos;arbres urbains.</language>
+		<language name="JPN_KANJI">Il disperse un nuage de poudre
+toxique à chaque coup d&apos;aile. Il
+aime les feuilles d&apos;arbres urbains.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_270">
+		<language name="JPN">Il ressemble à une plante aquatique
+et fait la navette pour les
+Pokémon qui ne savent pas nager.</language>
+		<language name="JPN_KANJI">Il ressemble à une plante aquatique
+et fait la navette pour les
+Pokémon qui ne savent pas nager.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_271">
+		<language name="JPN">C&apos;est un mauvais plaisantin. Quand
+il repère un pêcheur, il tire sur sa
+ligne pour le déranger. </language>
+		<language name="JPN_KANJI">C&apos;est un mauvais plaisantin. Quand
+il repère un pêcheur, il tire sur sa
+ligne pour le déranger. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_272">
+		<language name="JPN">Ses muscles se tonifient au son
+d&apos;une musique entraînante. Il ne
+peut pas s&apos;empêcher de danser.</language>
+		<language name="JPN_KANJI">Ses muscles se tonifient au son
+d&apos;une musique entraînante. Il ne
+peut pas s&apos;empêcher de danser.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_273">
+		<language name="JPN">Il ressemble à un gland pendu
+à une branche. Il adore effrayer
+les autres Pokémon.</language>
+		<language name="JPN_KANJI">Il ressemble à un gland pendu
+à une branche. Il adore effrayer
+les autres Pokémon.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_274">
+		<language name="JPN">Le son de sa flûte d&apos;herbe
+déstabilise l&apos;auditeur. Il vit au 
+plus profond des forêts.</language>
+		<language name="JPN_KANJI">Le son de sa flûte d&apos;herbe
+déstabilise l&apos;auditeur. Il vit au 
+plus profond des forêts.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_275">
+		<language name="JPN">D&apos;un coup de sa feuille éventail, il
+génère des bourrasques de 30 m/s
+capables de souffler une maison. </language>
+		<language name="JPN_KANJI">D&apos;un coup de sa feuille éventail, il
+génère des bourrasques de 30 m/s
+capables de souffler une maison. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_276">
+		<language name="JPN">Ce Pokémon téméraire n&apos;a pas peur
+d&apos;affronter des ennemis puissants.
+Il vole en quête de climats chauds.</language>
+		<language name="JPN_KANJI">Ce Pokémon téméraire n&apos;a pas peur
+d&apos;affronter des ennemis puissants.
+Il vole en quête de climats chauds.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_277">
+		<language name="JPN">Il vole en cercle en quête d&apos;une
+proie. Dès qu&apos;il l&apos;a repérée, il fond
+sur elle en un éclair.</language>
+		<language name="JPN_KANJI">Il vole en cercle en quête d&apos;une
+proie. Dès qu&apos;il l&apos;a repérée, il fond
+sur elle en un éclair.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_278">
+		<language name="JPN">Il utilise les courants ascendants
+pour planer en altitude. Son bec lui
+sert à transporter la nourriture.</language>
+		<language name="JPN_KANJI">Il utilise les courants ascendants
+pour planer en altitude. Son bec lui
+sert à transporter la nourriture.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_279">
+		<language name="JPN">Ce messager du ciel transporte
+petits Pokémon et œufs dans son
+bec en toute sécurité.</language>
+		<language name="JPN_KANJI">Ce messager du ciel transporte
+petits Pokémon et œufs dans son
+bec en toute sécurité.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_280">
+		<language name="JPN">Quand ses cornes captent les ondes
+positives d&apos;un Pokémon ou d&apos;un
+humain, son corps se réchauffe.</language>
+		<language name="JPN_KANJI">Quand ses cornes captent les ondes
+positives d&apos;un Pokémon ou d&apos;un
+humain, son corps se réchauffe.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_281">
+		<language name="JPN">Quand il sent la joie de son
+Dresseur, il se met à danser,
+débordant d&apos;énergie.</language>
+		<language name="JPN_KANJI">Quand il sent la joie de son
+Dresseur, il se met à danser,
+débordant d&apos;énergie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_282">
+		<language name="JPN">Prêt à tout pour protéger son
+Dresseur, il peut créer un mini trou
+noir par sa seule force mentale.</language>
+		<language name="JPN_KANJI">Prêt à tout pour protéger son
+Dresseur, il peut créer un mini trou
+noir par sa seule force mentale.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_283">
+		<language name="JPN">Il semble patiner sur l&apos;eau. Le
+parfum diffusé par le sommet de
+sa tête sert à attirer ses proies.</language>
+		<language name="JPN_KANJI">Il semble patiner sur l&apos;eau. Le
+parfum diffusé par le sommet de
+sa tête sert à attirer ses proies.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_284">
+		<language name="JPN">Des motifs en forme d&apos;yeux ornent
+ses antennes. Ses 4 ailes l&apos;aident
+à voler dans toutes les directions.</language>
+		<language name="JPN_KANJI">Des motifs en forme d&apos;yeux ornent
+ses antennes. Ses 4 ailes l&apos;aident
+à voler dans toutes les directions.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_285">
+		<language name="JPN">Le sommet de sa tête libère des
+spores empoisonnées. Il est
+dangereux de les inhaler.</language>
+		<language name="JPN_KANJI">Le sommet de sa tête libère des
+spores empoisonnées. Il est
+dangereux de les inhaler.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_286">
+		<language name="JPN">Ses petits bras s&apos;étendent quand il
+donne un coup de poing. Son talent
+égale celui d&apos;un boxeur pro.</language>
+		<language name="JPN_KANJI">Ses petits bras s&apos;étendent quand il
+donne un coup de poing. Son talent
+égale celui d&apos;un boxeur pro.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_287">
+		<language name="JPN">Il passe le plus clair de son temps
+affalé. Rien qu&apos;à le voir, on a
+envie de bâiller.</language>
+		<language name="JPN_KANJI">Il passe le plus clair de son temps
+affalé. Rien qu&apos;à le voir, on a
+envie de bâiller.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_288">
+		<language name="JPN">Son cœur bat dix fois plus vite que
+la normale, c&apos;est pourquoi il ne
+tient pas en place.</language>
+		<language name="JPN_KANJI">Son cœur bat dix fois plus vite que
+la normale, c&apos;est pourquoi il ne
+tient pas en place.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_289">
+		<language name="JPN">Le Pokémon le plus fainéant du
+monde. Il s&apos;allonge pour économiser
+ses forces et contre-attaquer.</language>
+		<language name="JPN_KANJI">Le Pokémon le plus fainéant du
+monde. Il s&apos;allonge pour économiser
+ses forces et contre-attaquer.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_290">
+		<language name="JPN">Il grandit sous terre et se repère
+grâce à ses antennes car ses
+yeux sont quasiment aveugles.</language>
+		<language name="JPN_KANJI">Il grandit sous terre et se repère
+grâce à ses antennes car ses
+yeux sont quasiment aveugles.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_291">
+		<language name="JPN">Il bouge si vite que l&apos;œil a parfois
+du mal à le suivre. Ils se regrou-
+pent près de la sève des arbres.</language>
+		<language name="JPN_KANJI">Il bouge si vite que l&apos;œil a parfois
+du mal à le suivre. Ils se regrou-
+pent près de la sève des arbres.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_292">
+		<language name="JPN">Une carapace d&apos;insecte laissée à
+l&apos;abandon. On dit qu&apos;il vole l&apos;âme
+de celui qui regarde à l&apos;intérieur. </language>
+		<language name="JPN_KANJI">Une carapace d&apos;insecte laissée à
+l&apos;abandon. On dit qu&apos;il vole l&apos;âme
+de celui qui regarde à l&apos;intérieur. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_293">
+		<language name="JPN">En temps normal, son cri est pareil
+à un murmure. Effrayé, il atteint le
+volume d&apos;un avion à réaction.</language>
+		<language name="JPN_KANJI">En temps normal, son cri est pareil
+à un murmure. Effrayé, il atteint le
+volume d&apos;un avion à réaction.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_294">
+		<language name="JPN">L&apos;onde de choc provoquée par son
+cri peut renverser un camion. Il
+trépigne pour augmenter sa force.</language>
+		<language name="JPN_KANJI">L&apos;onde de choc provoquée par son
+cri peut renverser un camion. Il
+trépigne pour augmenter sa force.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_295">
+		<language name="JPN">Son hurlement s&apos;entend à 10 km
+à la ronde. Ses orifices
+émettent toutes sortes de bruits.</language>
+		<language name="JPN_KANJI">Son hurlement s&apos;entend à 10 km
+à la ronde. Ses orifices
+émettent toutes sortes de bruits.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_296">
+		<language name="JPN">Il fortifie son corps en fonçant
+sur des arbres épais. Son nid est
+entouré d&apos;arbres abattus.</language>
+		<language name="JPN_KANJI">Il fortifie son corps en fonçant
+sur des arbres épais. Son nid est
+entouré d&apos;arbres abattus.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_297">
+		<language name="JPN">Il aime mesurer sa force à celle des
+plus grands Pokémon. Ses coups de
+paume peuvent projeter un camion.</language>
+		<language name="JPN_KANJI">Il aime mesurer sa force à celle des
+plus grands Pokémon. Ses coups de
+paume peuvent projeter un camion.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_298">
+		<language name="JPN">Sa queue est plus rebondissante
+qu&apos;une balle du même nom. C&apos;est
+aussi une massue très puissante.</language>
+		<language name="JPN_KANJI">Sa queue est plus rebondissante
+qu&apos;une balle du même nom. C&apos;est
+aussi une massue très puissante.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_299">
+		<language name="JPN">Face au danger, il se protège en
+augmentant son magnétisme et en
+attirant tout objet métallique.</language>
+		<language name="JPN_KANJI">Face au danger, il se protège en
+augmentant son magnétisme et en
+attirant tout objet métallique.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_300">
+		<language name="JPN">Il poursuit tout ce qui bouge. On
+le voit parfois courir en cercle,
+chassant sa propre queue.</language>
+		<language name="JPN_KANJI">Il poursuit tout ce qui bouge. On
+le voit parfois courir en cercle,
+chassant sa propre queue.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_301">
+		<language name="JPN">Les femmes Dresseurs raffolent
+de sa sublime fourrure. Il ne
+possède pas de nid.</language>
+		<language name="JPN_KANJI">Les femmes Dresseurs raffolent
+de sa sublime fourrure. Il ne
+possède pas de nid.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_302">
+		<language name="JPN">A force de manger des gemmes, 
+les yeux de ce Pokémon des grottes
+obscures sont devenus des joyaux.</language>
+		<language name="JPN_KANJI">A force de manger des gemmes, 
+les yeux de ce Pokémon des grottes
+obscures sont devenus des joyaux.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_303">
+		<language name="JPN">Ses cornes forment une grande
+mâchoire attachée à sa tête. Elle
+peut broyer des barres de fer. </language>
+		<language name="JPN_KANJI">Ses cornes forment une grande
+mâchoire attachée à sa tête. Elle
+peut broyer des barres de fer. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_304">
+		<language name="JPN">Il vit habituellement au cœur des
+montagnes. Affamé, il dévore
+parfois des rails et des voitures.</language>
+		<language name="JPN_KANJI">Il vit habituellement au cœur des
+montagnes. Affamé, il dévore
+parfois des rails et des voitures.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_305">
+		<language name="JPN">Il se nourrit du minerai de fer qu&apos;il
+fore. Il défend son territoire en
+chargeant avec son corps d&apos;acier.</language>
+		<language name="JPN_KANJI">Il se nourrit du minerai de fer qu&apos;il
+fore. Il défend son territoire en
+chargeant avec son corps d&apos;acier.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_306">
+		<language name="JPN">Il creuse des galeries à travers la
+pierre avec ses cornes d&apos;acier
+pour trouver le fer qu&apos;il apprécie. </language>
+		<language name="JPN_KANJI">Il creuse des galeries à travers la
+pierre avec ses cornes d&apos;acier
+pour trouver le fer qu&apos;il apprécie. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_307">
+		<language name="JPN">Son entraînement d&apos;ermite lui
+permet de léviter par le seul
+pouvoir de la méditation.</language>
+		<language name="JPN_KANJI">Son entraînement d&apos;ermite lui
+permet de léviter par le seul
+pouvoir de la méditation.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_308">
+		<language name="JPN">Le jeûne lui permet de concentrer
+son esprit au point de déceler
+l&apos;aura de ses adversaires.</language>
+		<language name="JPN_KANJI">Le jeûne lui permet de concentrer
+son esprit au point de déceler
+l&apos;aura de ses adversaires.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_309">
+		<language name="JPN">Il améliore ses réflexes en
+stimulant ses muscles grâce à 
+l&apos;électricité dans sa fourrure.</language>
+		<language name="JPN_KANJI">Il améliore ses réflexes en
+stimulant ses muscles grâce à 
+l&apos;électricité dans sa fourrure.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_310">
+		<language name="JPN">Il libère l&apos;électricité par sa
+crinière. Il crée un nuage d&apos;orage
+pour appeler la foudre.</language>
+		<language name="JPN_KANJI">Il libère l&apos;électricité par sa
+crinière. Il crée un nuage d&apos;orage
+pour appeler la foudre.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_311">
+		<language name="JPN">Il absorbe l&apos;énergie des poteaux
+électriques et encourage ses amis
+avec des pompons d&apos;étincelles. </language>
+		<language name="JPN_KANJI">Il absorbe l&apos;énergie des poteaux
+électriques et encourage ses amis
+avec des pompons d&apos;étincelles. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_312">
+		<language name="JPN">Il encourage ses amis. Son corps
+produit plus d&apos;étincelles quand il
+est en mauvaise posture.</language>
+		<language name="JPN_KANJI">Il encourage ses amis. Son corps
+produit plus d&apos;étincelles quand il
+est en mauvaise posture.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_313">
+		<language name="JPN">Il communique avec ses pairs en
+allumant son postérieur la nuit. Il
+adore le doux parfum de LUMIVOLE.</language>
+		<language name="JPN_KANJI">Il communique avec ses pairs en
+allumant son postérieur la nuit. Il
+adore le doux parfum de LUMIVOLE.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_314">
+		<language name="JPN">Il utilise son doux parfum pour
+aider MUCIOLE à décrire des
+arabesques dans le ciel nocturne.</language>
+		<language name="JPN_KANJI">Il utilise son doux parfum pour
+aider MUCIOLE à décrire des
+arabesques dans le ciel nocturne.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_315">
+		<language name="JPN">Plus le ROSELIA est en bonne santé
+et plus son parfum est agréable et
+relaxant pour son entourage.</language>
+		<language name="JPN_KANJI">Plus le ROSELIA est en bonne santé
+et plus son parfum est agréable et
+relaxant pour son entourage.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_316">
+		<language name="JPN">Il est principalement composé d&apos;un
+estomac dont les sucs digestifs
+dissolvent tout ce qu&apos;il avale.</language>
+		<language name="JPN_KANJI">Il est principalement composé d&apos;un
+estomac dont les sucs digestifs
+dissolvent tout ce qu&apos;il avale.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_317">
+		<language name="JPN">Il avale tout en une bouchée. Ses
+follicules sécrètent des fluides
+toxiques qui endorment l&apos;ennemi.</language>
+		<language name="JPN_KANJI">Il avale tout en une bouchée. Ses
+follicules sécrètent des fluides
+toxiques qui endorment l&apos;ennemi.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_318">
+		<language name="JPN">Il attaque en banc quand on
+menace son territoire. Ses dents
+aiguisées peuvent couler un navire.</language>
+		<language name="JPN_KANJI">Il attaque en banc quand on
+menace son territoire. Ses dents
+aiguisées peuvent couler un navire.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_319">
+		<language name="JPN">Ses crocs lacèrent des feuilles
+d&apos;acier. Il nage à 120 km/h. On
+l&apos;appelle \[4:07:L_DoubleQuot.\]tyran des mers&quot;.</language>
+		<language name="JPN_KANJI">Ses crocs lacèrent des feuilles
+d&apos;acier. Il nage à 120 km/h. On
+l&apos;appelle \[4:07:L_DoubleQuot.\]tyran des mers&quot;.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_320">
+		<language name="JPN">Par beau temps, il se pose sur les
+plages pour jouer et rebondir. Il
+expulse de l&apos;eau par son évent.</language>
+		<language name="JPN_KANJI">Par beau temps, il se pose sur les
+plages pour jouer et rebondir. Il
+expulse de l&apos;eau par son évent.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_321">
+		<language name="JPN">Le plus grand des Pokémon. Il peut
+plonger à une profondeur de 
+3 000 m en retenant son souffle.</language>
+		<language name="JPN_KANJI">Le plus grand des Pokémon. Il peut
+plonger à une profondeur de 
+3 000 m en retenant son souffle.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_322">
+		<language name="JPN">Son dos bossu renferme une lave
+bouillonnante. Elle refroidit par 
+temps de pluie, ce qui le ralentit.</language>
+		<language name="JPN_KANJI">Son dos bossu renferme une lave
+bouillonnante. Elle refroidit par 
+temps de pluie, ce qui le ralentit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_323">
+		<language name="JPN">Il porte des volcans sur son dos.
+Quand le magma remonte, il
+frissonne et entre en éruption.</language>
+		<language name="JPN_KANJI">Il porte des volcans sur son dos.
+Quand le magma remonte, il
+frissonne et entre en éruption.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_324">
+		<language name="JPN">Il tire son énergie du charbon qu&apos;il
+brûle dans sa carapace et crache
+de la suie noire en cas de danger.</language>
+		<language name="JPN_KANJI">Il tire son énergie du charbon qu&apos;il
+brûle dans sa carapace et crache
+de la suie noire en cas de danger.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_325">
+		<language name="JPN">Il utilise sa queue comme un 
+ressort et bondit partout. Chaque
+nouveau choc fait battre son cœur.</language>
+		<language name="JPN_KANJI">Il utilise sa queue comme un 
+ressort et bondit partout. Chaque
+nouveau choc fait battre son cœur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_326">
+		<language name="JPN">Les perles noires amplifient ses 
+pouvoirs psy. Sa danse étrange lui
+permet de contrôler ses ennemis.</language>
+		<language name="JPN_KANJI">Les perles noires amplifient ses 
+pouvoirs psy. Sa danse étrange lui
+permet de contrôler ses ennemis.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_327">
+		<language name="JPN">Les motifs sur leur fourrure sont
+propres à chaque SPINDA. Son pas
+chancelant le rend difficile à viser.</language>
+		<language name="JPN_KANJI">Les motifs sur leur fourrure sont
+propres à chaque SPINDA. Son pas
+chancelant le rend difficile à viser.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_328">
+		<language name="JPN">Il creuse un trou conique dans le
+sable du désert et se terre en
+attendant qu&apos;une proie trébuche.</language>
+		<language name="JPN_KANJI">Il creuse un trou conique dans le
+sable du désert et se terre en
+attendant qu&apos;une proie trébuche.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_329">
+		<language name="JPN">Ses violents battements d&apos;ailes
+génèrent des vagues d&apos;ultrasons
+qui donnent mal au crâne.</language>
+		<language name="JPN_KANJI">Ses violents battements d&apos;ailes
+génèrent des vagues d&apos;ultrasons
+qui donnent mal au crâne.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_330">
+		<language name="JPN">Son puissant battement d&apos;ailes
+provoque des tempêtes de sable.
+On l&apos;appelle \[4:07:L_DoubleQuot.\]esprit du désert&quot;.</language>
+		<language name="JPN_KANJI">Son puissant battement d&apos;ailes
+provoque des tempêtes de sable.
+On l&apos;appelle \[4:07:L_DoubleQuot.\]esprit du désert&quot;.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_331">
+		<language name="JPN">En stockant l&apos;eau dans son corps,
+cet habitant du désert peut 
+survivre 30 jours sans boire.</language>
+		<language name="JPN_KANJI">En stockant l&apos;eau dans son corps,
+cet habitant du désert peut 
+survivre 30 jours sans boire.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_332">
+		<language name="JPN">Il sort la nuit pour chasser. Il
+traque les proies épuisées après
+une journée dans le désert.</language>
+		<language name="JPN_KANJI">Il sort la nuit pour chasser. Il
+traque les proies épuisées après
+une journée dans le désert.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_333">
+		<language name="JPN">Il ne se sent à l&apos;aise que dans un
+milieu propre et repousse la
+poussière avec ses ailes.</language>
+		<language name="JPN_KANJI">Il ne se sent à l&apos;aise que dans un
+milieu propre et repousse la
+poussière avec ses ailes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_334">
+		<language name="JPN">Il aime enlacer ses amis dans ses
+ailes cotonneuses et ronronner.</language>
+		<language name="JPN_KANJI">Il aime enlacer ses amis dans ses
+ailes cotonneuses et ronronner.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_335">
+		<language name="JPN">C&apos;est le rival de SEVIPER depuis
+des générations. Ses griffes
+aiguisées sont son meilleur atout.</language>
+		<language name="JPN_KANJI">C&apos;est le rival de SEVIPER depuis
+des générations. Ses griffes
+aiguisées sont son meilleur atout.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_336">
+		<language name="JPN">Le rival historique de MANGRIFF.
+Il affûte la lame de sa queue 
+sur les rochers avant le combat.</language>
+		<language name="JPN_KANJI">Le rival historique de MANGRIFF.
+Il affûte la lame de sa queue 
+sur les rochers avant le combat.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_337">
+		<language name="JPN">On suppose qu&apos;il est lié au cycle
+lunaire, car il ne sort que les
+soirs de pleine lune.</language>
+		<language name="JPN_KANJI">On suppose qu&apos;il est lié au cycle
+lunaire, car il ne sort que les
+soirs de pleine lune.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_338">
+		<language name="JPN">Le bruit court que cette nouvelle
+espèce vient du soleil. Il produit
+de la lumière en tournoyant.</language>
+		<language name="JPN_KANJI">Le bruit court que cette nouvelle
+espèce vient du soleil. Il produit
+de la lumière en tournoyant.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_339">
+		<language name="JPN">Son corps glissant est difficile à
+attraper. On dit qu&apos;il a été créé
+dans de la boue solidifiée.</language>
+		<language name="JPN_KANJI">Son corps glissant est difficile à
+attraper. On dit qu&apos;il a été créé
+dans de la boue solidifiée.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_340">
+		<language name="JPN">Il défend férocement son territoire
+en déclenchant des secousses
+terribles.</language>
+		<language name="JPN_KANJI">Il défend férocement son territoire
+en déclenchant des secousses
+terribles.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_341">
+		<language name="JPN">Sa nature robuste lui permet de
+vivre sur n&apos;importe quel terrain. 
+Ses pinces ne lâchent jamais prise.</language>
+		<language name="JPN_KANJI">Sa nature robuste lui permet de
+vivre sur n&apos;importe quel terrain. 
+Ses pinces ne lâchent jamais prise.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_342">
+		<language name="JPN">C&apos;est un voyou qui utilise ses
+pinces pour chasser les autres
+Pokémon hors de sa mare.</language>
+		<language name="JPN_KANJI">C&apos;est un voyou qui utilise ses
+pinces pour chasser les autres
+Pokémon hors de sa mare.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_343">
+		<language name="JPN">Il se déplace en tournoyant sur
+son pied. Ce Pokémon rare fut
+découvert dans de vieilles ruines.</language>
+		<language name="JPN_KANJI">Il se déplace en tournoyant sur
+son pied. Ce Pokémon rare fut
+découvert dans de vieilles ruines.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_344">
+		<language name="JPN">Une ancienne figurine d&apos;argile qui 
+s&apos;est animée suite à son exposition
+à un rayon de lumière étrange.</language>
+		<language name="JPN_KANJI">Une ancienne figurine d&apos;argile qui 
+s&apos;est animée suite à son exposition
+à un rayon de lumière étrange.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_345">
+		<language name="JPN">Il vivait au fond de la mer il y a
+100 millions d&apos;années. La science
+a permis de le ressusciter.</language>
+		<language name="JPN_KANJI">Il vivait au fond de la mer il y a
+100 millions d&apos;années. La science
+a permis de le ressusciter.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_346">
+		<language name="JPN">Vit dans les hauts-fonds des mers
+chaudes. Il déterre sa proie du
+sable quand la marée se retire.</language>
+		<language name="JPN_KANJI">Vit dans les hauts-fonds des mers
+chaudes. Il déterre sa proie du
+sable quand la marée se retire.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_347">
+		<language name="JPN">Un ancêtre Pokémon réanimé 
+à partir d&apos;un fossile. Il vivait en
+mer et chassait avec ses pinces.</language>
+		<language name="JPN_KANJI">Un ancêtre Pokémon réanimé 
+à partir d&apos;un fossile. Il vivait en
+mer et chassait avec ses pinces.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_348">
+		<language name="JPN">Il a gagné la côte après son 
+évolution. Une armure robuste
+recouvre son corps.</language>
+		<language name="JPN_KANJI">Il a gagné la côte après son 
+évolution. Une armure robuste
+recouvre son corps.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_349">
+		<language name="JPN">Ce Pokémon a peut-être un physique
+disgracieux, mais il est robuste et
+peut survivre dans très peu d&apos;eau.</language>
+		<language name="JPN_KANJI">Ce Pokémon a peut-être un physique
+disgracieux, mais il est robuste et
+peut survivre dans très peu d&apos;eau.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_350">
+		<language name="JPN">Ses splendides écailles aux
+couleurs de l&apos;arc-en-ciel changent
+de teinte selon l&apos;angle de vue.</language>
+		<language name="JPN_KANJI">Ses splendides écailles aux
+couleurs de l&apos;arc-en-ciel changent
+de teinte selon l&apos;angle de vue.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_351">
+		<language name="JPN">Son aspect change avec la météo.
+On a récemment découvert que ses
+molécules étaient pareilles à l&apos;eau.</language>
+		<language name="JPN_KANJI">Son aspect change avec la météo.
+On a récemment découvert que ses
+molécules étaient pareilles à l&apos;eau.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_352">
+		<language name="JPN">Il change de couleur à volonté,
+mais le motif en zigzag qui
+orne son ventre reste le même.</language>
+		<language name="JPN_KANJI">Il change de couleur à volonté,
+mais le motif en zigzag qui
+orne son ventre reste le même.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_353">
+		<language name="JPN">Il aime le goût de la vengeance.
+Ils vivent en rangs sous les 
+gouttières des gens vindicatifs.</language>
+		<language name="JPN_KANJI">Il aime le goût de la vengeance.
+Ils vivent en rangs sous les 
+gouttières des gens vindicatifs.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_354">
+		<language name="JPN">Une poupée mue par la tristesse qui
+la ronge depuis qu&apos;on l&apos;a délaissée.
+Elle recherche son propriétaire.</language>
+		<language name="JPN_KANJI">Une poupée mue par la tristesse qui
+la ronge depuis qu&apos;on l&apos;a délaissée.
+Elle recherche son propriétaire.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_355">
+		<language name="JPN">Les cris des enfants l&apos;amusent.
+Il effraie les moins sages d&apos;entre
+eux en traversant les murs.</language>
+		<language name="JPN_KANJI">Les cris des enfants l&apos;amusent.
+Il effraie les moins sages d&apos;entre
+eux en traversant les murs.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_356">
+		<language name="JPN">Il cherche des feux follets pour
+les avaler. Ce qui se passe alors
+dans son corps est un mystère.</language>
+		<language name="JPN_KANJI">Il cherche des feux follets pour
+les avaler. Ce qui se passe alors
+dans son corps est un mystère.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_357">
+		<language name="JPN">A force de toujours manger le même
+fruit succulent, il en pousse à la
+base de son cou.</language>
+		<language name="JPN_KANJI">A force de toujours manger le même
+fruit succulent, il en pousse à la
+base de son cou.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_358">
+		<language name="JPN">Ses cris se répercutent dans son
+corps creux avant d&apos;exploser en
+notes mélodieuses et saisissantes.</language>
+		<language name="JPN_KANJI">Ses cris se répercutent dans son
+corps creux avant d&apos;exploser en
+notes mélodieuses et saisissantes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_359">
+		<language name="JPN">La capacité de sa corne à sentir
+les catastrophes ayant trop attiré
+l&apos;attention sur lui, il vit reclus.</language>
+		<language name="JPN_KANJI">La capacité de sa corne à sentir
+les catastrophes ayant trop attiré
+l&apos;attention sur lui, il vit reclus.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_360">
+		<language name="JPN">Il se muscle en bousculant ses
+semblables lors de mêlées. Il
+raffole des fruits sucrés.</language>
+		<language name="JPN_KANJI">Il se muscle en bousculant ses
+semblables lors de mêlées. Il
+raffole des fruits sucrés.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_361">
+		<language name="JPN">On dit que des groupes entiers de
+STALGAMIN vivent en harmonie
+sous des feuilles gigantesques.</language>
+		<language name="JPN_KANJI">On dit que des groupes entiers de
+STALGAMIN vivent en harmonie
+sous des feuilles gigantesques.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_362">
+		<language name="JPN">Il empêche ses proies de prendre
+la fuite en gelant instantanément
+l&apos;humidité de l&apos;air.</language>
+		<language name="JPN_KANJI">Il empêche ses proies de prendre
+la fuite en gelant instantanément
+l&apos;humidité de l&apos;air.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_363">
+		<language name="JPN">Il gagne la côte en roulant sur les
+blocs de glace car sa morphologie
+n&apos;est pas adaptée à la nage.</language>
+		<language name="JPN_KANJI">Il gagne la côte en roulant sur les
+blocs de glace car sa morphologie
+n&apos;est pas adaptée à la nage.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_364">
+		<language name="JPN">Il fait souvent tourner des objets
+sur son museau pour connaître
+leur odeur et leur texture.</language>
+		<language name="JPN_KANJI">Il fait souvent tourner des objets
+sur son museau pour connaître
+leur odeur et leur texture.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_365">
+		<language name="JPN">Il brise la glace avec ses grosses
+défenses. Sa graisse le protège du 
+froid, mais aussi des attaques.</language>
+		<language name="JPN_KANJI">Il brise la glace avec ses grosses
+défenses. Sa graisse le protège du 
+froid, mais aussi des attaques.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_366">
+		<language name="JPN">Il ne produit qu&apos;une perle durant
+son existence. On raconte qu&apos;elle
+amplifie les pouvoirs psychiques.</language>
+		<language name="JPN_KANJI">Il ne produit qu&apos;une perle durant
+son existence. On raconte qu&apos;elle
+amplifie les pouvoirs psychiques.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_367">
+		<language name="JPN">Il vit loin sous la mer. Il appâte
+les proies crédules avec sa
+queue qui rappelle un petit poisson.</language>
+		<language name="JPN_KANJI">Il vit loin sous la mer. Il appâte
+les proies crédules avec sa
+queue qui rappelle un petit poisson.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_368">
+		<language name="JPN">Au printemps, son corps rose se
+fait plus vif sans que l&apos;on sache
+pourquoi. Il vit au fond de la mer. </language>
+		<language name="JPN_KANJI">Au printemps, son corps rose se
+fait plus vif sans que l&apos;on sache
+pourquoi. Il vit au fond de la mer. </language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_369">
+		<language name="JPN">Un Pokémon rare aperçu lors d&apos;une
+exploration sous-marine. Il n&apos;a pas
+évolué depuis 100 millions d&apos;années.</language>
+		<language name="JPN_KANJI">Un Pokémon rare aperçu lors d&apos;une
+exploration sous-marine. Il n&apos;a pas
+évolué depuis 100 millions d&apos;années.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_370">
+		<language name="JPN">Un habitant des mers chaudes. On
+dit que le couple qui tombe sur ce
+Pokémon connaîtra l&apos;amour éternel.</language>
+		<language name="JPN_KANJI">Un habitant des mers chaudes. On
+dit que le couple qui tombe sur ce
+Pokémon connaîtra l&apos;amour éternel.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_371">
+		<language name="JPN">Il rêve de pouvoir voler un jour. 
+Pour l&apos;heure, il s&apos;entraîne en
+sautant du haut des falaises.</language>
+		<language name="JPN_KANJI">Il rêve de pouvoir voler un jour. 
+Pour l&apos;heure, il s&apos;entraîne en
+sautant du haut des falaises.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_372">
+		<language name="JPN">Ses cellules ont commencé à
+changer dans sa robuste coquille.
+Il la perd en évoluant.</language>
+		<language name="JPN_KANJI">Ses cellules ont commencé à
+changer dans sa robuste coquille.
+Il la perd en évoluant.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_373">
+		<language name="JPN">A force de rêver de pouvoir voler,
+sa structure cellulaire a évolué
+et il s&apos;est vu pousser des ailes.</language>
+		<language name="JPN_KANJI">A force de rêver de pouvoir voler,
+sa structure cellulaire a évolué
+et il s&apos;est vu pousser des ailes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_374">
+		<language name="JPN">Il dialogue avec les siens par 
+impulsions magnétiques. En bande,
+ils se déplacent à l&apos;unisson.</language>
+		<language name="JPN_KANJI">Il dialogue avec les siens par 
+impulsions magnétiques. En bande,
+ils se déplacent à l&apos;unisson.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_375">
+		<language name="JPN">Il est formé de deux TERHAL
+soudés. Son corps de fer résiste à
+un choc avec un avion à réaction.</language>
+		<language name="JPN_KANJI">Il est formé de deux TERHAL
+soudés. Son corps de fer résiste à
+un choc avec un avion à réaction.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_376">
+		<language name="JPN">Il est né de la fusion de plusieurs
+METANG. Ses quatre cerveaux en
+font l&apos;égal d&apos;un superordinateur.</language>
+		<language name="JPN_KANJI">Il est né de la fusion de plusieurs
+METANG. Ses quatre cerveaux en
+font l&apos;égal d&apos;un superordinateur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_377">
+		<language name="JPN">Tout son corps est fait de roche.
+S&apos;il s&apos;ébrèche au combat, il utilise
+des pierres pour le réparer.</language>
+		<language name="JPN_KANJI">Tout son corps est fait de roche.
+S&apos;il s&apos;ébrèche au combat, il utilise
+des pierres pour le réparer.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_378">
+		<language name="JPN">Son corps est fait de glace datant
+de l&apos;ère glaciaire. Il contrôle un
+air gelé de -200 °C.</language>
+		<language name="JPN_KANJI">Son corps est fait de glace datant
+de l&apos;ère glaciaire. Il contrôle un
+air gelé de -200 °C.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_379">
+		<language name="JPN">Son corps invulnérable fut forgé
+par la pression souterraine durant
+des dizaines de milliers d&apos;années.</language>
+		<language name="JPN_KANJI">Son corps invulnérable fut forgé
+par la pression souterraine durant
+des dizaines de milliers d&apos;années.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_380">
+		<language name="JPN">Son corps est recouvert d&apos;un 
+duvet qui reflète la lumière
+et le rend invisible.</language>
+		<language name="JPN_KANJI">Son corps est recouvert d&apos;un 
+duvet qui reflète la lumière
+et le rend invisible.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_381">
+		<language name="JPN">Un Pokémon très intelligent. Il
+peut voler plus vite qu&apos;un avion à
+réaction en repliant ses ailes.</language>
+		<language name="JPN_KANJI">Un Pokémon très intelligent. Il
+peut voler plus vite qu&apos;un avion à
+réaction en repliant ses ailes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_382">
+		<language name="JPN">On dit qu&apos;il a fait monter les eaux
+en causant des pluies diluviennes.
+Il somnolait dans une fosse marine.</language>
+		<language name="JPN_KANJI">On dit qu&apos;il a fait monter les eaux
+en causant des pluies diluviennes.
+Il somnolait dans une fosse marine.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_383">
+		<language name="JPN">Il dormait dans le magma souterrain
+depuis sa lutte féroce contre
+KYOGRE, il y a longtemps de cela.</language>
+		<language name="JPN_KANJI">Il dormait dans le magma souterrain
+depuis sa lutte féroce contre
+KYOGRE, il y a longtemps de cela.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_384">
+		<language name="JPN">Il vit dans la couche d&apos;ozone, au
+dessus des nuages. Il est invisible
+depuis le sol.</language>
+		<language name="JPN_KANJI">Il vit dans la couche d&apos;ozone, au
+dessus des nuages. Il est invisible
+depuis le sol.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_385">
+		<language name="JPN">On raconte qu&apos;une fois tous les
+mille ans, il a la capacité d&apos;exaucer
+tous les vœux durant une semaine.</language>
+		<language name="JPN_KANJI">On raconte qu&apos;une fois tous les
+mille ans, il a la capacité d&apos;exaucer
+tous les vœux durant une semaine.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_386">
+		<language name="JPN">Il vient d&apos;un virus extraterrestre
+arrivé avec une météorite et ayant
+subi une mutation génétique.</language>
+		<language name="JPN_KANJI">Il vient d&apos;un virus extraterrestre
+arrivé avec une météorite et ayant
+subi une mutation génétique.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_387">
+		<language name="JPN">La coquille sur son dos est faite de
+terre. Plus il est en bonne santé,
+plus elle est humide.</language>
+		<language name="JPN_KANJI">La coquille sur son dos est faite de
+terre. Plus il est en bonne santé,
+plus elle est humide.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_388">
+		<language name="JPN">Il sait d&apos;instinct où trouver une
+source d&apos;eau pure. Il y transporte
+d&apos;autres Pokémon sur son dos.</language>
+		<language name="JPN_KANJI">Il sait d&apos;instinct où trouver une
+source d&apos;eau pure. Il y transporte
+d&apos;autres Pokémon sur son dos.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_389">
+		<language name="JPN">Certains petits Pokémon peuvent
+naître sur son dos et y passer
+toute leur vie.</language>
+		<language name="JPN_KANJI">Certains petits Pokémon peuvent
+naître sur son dos et y passer
+toute leur vie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_390">
+		<language name="JPN">Il est très agile. Il fait toujours
+attention d&apos;éteindre la flamme de
+sa queue avant de se coucher.</language>
+		<language name="JPN_KANJI">Il est très agile. Il fait toujours
+attention d&apos;éteindre la flamme de
+sa queue avant de se coucher.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_391">
+		<language name="JPN">Il contrôle habilement l&apos;intensité
+de la flamme de sa queue pour tenir
+ses adversaires à distance.</language>
+		<language name="JPN_KANJI">Il contrôle habilement l&apos;intensité
+de la flamme de sa queue pour tenir
+ses adversaires à distance.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_392">
+		<language name="JPN">Ses techniques de combat inédites
+à base de pieds et poings enflammés
+sont redoutables.</language>
+		<language name="JPN_KANJI">Ses techniques de combat inédites
+à base de pieds et poings enflammés
+sont redoutables.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_393">
+		<language name="JPN">Malgré sa démarche maladroite
+et ses pertes d&apos;équilibre, il bombe
+toujours fièrement le torse.</language>
+		<language name="JPN_KANJI">Malgré sa démarche maladroite
+et ses pertes d&apos;équilibre, il bombe
+toujours fièrement le torse.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_394">
+		<language name="JPN">La fierté du PRINPLOUF est si
+grande qu&apos;il lui est impossible
+de vivre en groupe.</language>
+		<language name="JPN_KANJI">La fierté du PRINPLOUF est si
+grande qu&apos;il lui est impossible
+de vivre en groupe.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_395">
+		<language name="JPN">S&apos;il voit son honneur bafoué, il
+est capable de faire des ravages
+avec ses ailes tranchantes.</language>
+		<language name="JPN_KANJI">S&apos;il voit son honneur bafoué, il
+est capable de faire des ravages
+avec ses ailes tranchantes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_396">
+		<language name="JPN">La faiblesse des ETOURMI les force
+à vivre en groupe, mais ils se
+chamaillent souvent.</language>
+		<language name="JPN_KANJI">La faiblesse des ETOURMI les force
+à vivre en groupe, mais ils se
+chamaillent souvent.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_397">
+		<language name="JPN">Conscient de sa propre faiblesse,
+il vit toujours en groupe, piaillant
+bruyamment quand il est seul.</language>
+		<language name="JPN_KANJI">Conscient de sa propre faiblesse,
+il vit toujours en groupe, piaillant
+bruyamment quand il est seul.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_398">
+		<language name="JPN">Il combattra sans relâche, même
+blessé. Il prend grand soin de sa
+mèche.</language>
+		<language name="JPN_KANJI">Il combattra sans relâche, même
+blessé. Il prend grand soin de sa
+mèche.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_399">
+		<language name="JPN">Une étude a montré que les dents
+du KEUNOTOR poussaient aussi
+vite que celles du RATTATA.</language>
+		<language name="JPN_KANJI">Une étude a montré que les dents
+du KEUNOTOR poussaient aussi
+vite que celles du RATTATA.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_400">
+		<language name="JPN">Les digues insubmersibles qu&apos;il
+construit font le bonheur des
+habitants proches.</language>
+		<language name="JPN_KANJI">Les digues insubmersibles qu&apos;il
+construit font le bonheur des
+habitants proches.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_401">
+		<language name="JPN">Quand il tombe du haut de ses
+petites pattes, ses antennes
+font un bruit de xylophone.</language>
+		<language name="JPN_KANJI">Quand il tombe du haut de ses
+petites pattes, ses antennes
+font un bruit de xylophone.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_402">
+		<language name="JPN">Ses cris sont tellement variés qu&apos;il
+existe un village où on organise
+des concours en leur honneur.</language>
+		<language name="JPN_KANJI">Ses cris sont tellement variés qu&apos;il
+existe un village où on organise
+des concours en leur honneur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_403">
+		<language name="JPN">Ses muscles génèrent un courant
+électrique lorsqu&apos;ils travaillent.
+Il s&apos;illumine en cas de danger.</language>
+		<language name="JPN_KANJI">Ses muscles génèrent un courant
+électrique lorsqu&apos;ils travaillent.
+Il s&apos;illumine en cas de danger.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_404">
+		<language name="JPN">Le courant qui circule à la pointe
+de ses griffes est capable de faire
+perdre connaissance à ses proies.</language>
+		<language name="JPN_KANJI">Le courant qui circule à la pointe
+de ses griffes est capable de faire
+perdre connaissance à ses proies.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_405">
+		<language name="JPN">Il est capable de voir à travers
+les murs pour chasser des proies
+ou retrouver ses petits égarés.</language>
+		<language name="JPN_KANJI">Il est capable de voir à travers
+les murs pour chasser des proies
+ou retrouver ses petits égarés.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_406">
+		<language name="JPN">Il est sensible aux variations de
+température et on dit qu&apos;il fleurit
+quand il sent la chaleur du soleil.</language>
+		<language name="JPN_KANJI">Il est sensible aux variations de
+température et on dit qu&apos;il fleurit
+quand il sent la chaleur du soleil.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_407">
+		<language name="JPN">Ses mains contenant chacune des
+toxines différentes sont capables
+d&apos;asséner de puissants coups.</language>
+		<language name="JPN_KANJI">Ses mains contenant chacune des
+toxines différentes sont capables
+d&apos;asséner de puissants coups.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_408">
+		<language name="JPN">Il vivait dans la jungle il y a
+100 millions d&apos;années. Il abat
+un arbre d&apos;un coup de tête.</language>
+		<language name="JPN_KANJI">Il vivait dans la jungle il y a
+100 millions d&apos;années. Il abat
+un arbre d&apos;un coup de tête.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_409">
+		<language name="JPN">Quand deux CHARKOS se rentrent
+dedans, leur crâne extrêmement
+épais les empêche de s&apos;assommer.</language>
+		<language name="JPN_KANJI">Quand deux CHARKOS se rentrent
+dedans, leur crâne extrêmement
+épais les empêche de s&apos;assommer.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_410">
+		<language name="JPN">Il est si bien protégé qu&apos;il peut
+déguster Baies et herbe fraîche
+sans craindre de prédateurs.</language>
+		<language name="JPN_KANJI">Il est si bien protégé qu&apos;il peut
+déguster Baies et herbe fraîche
+sans craindre de prédateurs.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_411">
+		<language name="JPN">En groupe, ils protègent leurs
+petits en formant autour d&apos;eux
+une impénétrable muraille.</language>
+		<language name="JPN_KANJI">En groupe, ils protègent leurs
+petits en formant autour d&apos;eux
+une impénétrable muraille.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_412">
+		<language name="JPN">Nul ne sait comment il y parvient,
+mais il arrive toujours à se former
+une cape, où qu&apos;il soit.</language>
+		<language name="JPN_KANJI">Nul ne sait comment il y parvient,
+mais il arrive toujours à se former
+une cape, où qu&apos;il soit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_413">
+		<language name="JPN">A l&apos;évolution, son corps absorbe
+les matériaux à proximité et peut
+ainsi présenter divers aspects.</language>
+		<language name="JPN_KANJI">A l&apos;évolution, son corps absorbe
+les matériaux à proximité et peut
+ainsi présenter divers aspects.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_414">
+		<language name="JPN">Il adore le nectar des fleurs mais
+n&apos;en récolte pas lui-même.
+Il préfère en voler à un APITRINI.</language>
+		<language name="JPN_KANJI">Il adore le nectar des fleurs mais
+n&apos;en récolte pas lui-même.
+Il préfère en voler à un APITRINI.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_415">
+		<language name="JPN">Ce trio inséparable depuis la
+naissance récolte du miel
+pour satisfaire APIREINE.</language>
+		<language name="JPN_KANJI">Ce trio inséparable depuis la
+naissance récolte du miel
+pour satisfaire APIREINE.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_416">
+		<language name="JPN">Ce Pokémon utilise des phéromones
+pour donner des ordres de combat
+aux larves dans son abdomen.</language>
+		<language name="JPN_KANJI">Ce Pokémon utilise des phéromones
+pour donner des ordres de combat
+aux larves dans son abdomen.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_417">
+		<language name="JPN">Il arrive que deux PACHIRISU se
+frottent les joues pour partager
+l&apos;électricité qu&apos;ils ont accumulée.</language>
+		<language name="JPN_KANJI">Il arrive que deux PACHIRISU se
+frottent les joues pour partager
+l&apos;électricité qu&apos;ils ont accumulée.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_418">
+		<language name="JPN">Il utilise ses deux queues comme
+une hélice pour se propulser sous
+l&apos;eau et trancher les algues.</language>
+		<language name="JPN_KANJI">Il utilise ses deux queues comme
+une hélice pour se propulser sous
+l&apos;eau et trancher les algues.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_419">
+		<language name="JPN">Il chasse souvent près des ports
+de pêche où il sauve parfois les
+gens tombés à la mer.</language>
+		<language name="JPN_KANJI">Il chasse souvent près des ports
+de pêche où il sauve parfois les
+gens tombés à la mer.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_420">
+		<language name="JPN">Sa petite boule rose est nutritive
+et délicieuse. Les ETOURMI en
+raffolent.</language>
+		<language name="JPN_KANJI">Sa petite boule rose est nutritive
+et délicieuse. Les ETOURMI en
+raffolent.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_421">
+		<language name="JPN">Sous un grand soleil, il ouvre
+ses pétales pour en absorber
+les rayons.</language>
+		<language name="JPN_KANJI">Sous un grand soleil, il ouvre
+ses pétales pour en absorber
+les rayons.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_422">
+		<language name="JPN">Un étrange liquide mauve s&apos;échappe
+de son corps, ne lui appuyez pas
+dessus.</language>
+		<language name="JPN_KANJI">Un étrange liquide mauve s&apos;échappe
+de son corps, ne lui appuyez pas
+dessus.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_423">
+		<language name="JPN">Ses gènes ont démontré qu&apos;il avait
+jadis une carapace couvrant la
+totalité de son dos.</language>
+		<language name="JPN_KANJI">Ses gènes ont démontré qu&apos;il avait
+jadis une carapace couvrant la
+totalité de son dos.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_424">
+		<language name="JPN">Ses queues jumelles sont si agiles
+et efficaces qu&apos;il ne se sert que
+très rarement de ses bras.</language>
+		<language name="JPN_KANJI">Ses queues jumelles sont si agiles
+et efficaces qu&apos;il ne se sert que
+très rarement de ses bras.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_425">
+		<language name="JPN">Sa façon de flotter sans but au
+gré du vent lui a valu le surnom
+de \[4:07:L_DoubleQuot.\]bouée des esprits égarés&quot;.</language>
+		<language name="JPN_KANJI">Sa façon de flotter sans but au
+gré du vent lui a valu le surnom
+de \[4:07:L_DoubleQuot.\]bouée des esprits égarés&quot;.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_426">
+		<language name="JPN">Des nuées de GRODRIVE dérivent
+dans le ciel au crépuscule. Ils
+disparaissent dès qu&apos;on les voit.</language>
+		<language name="JPN_KANJI">Des nuées de GRODRIVE dérivent
+dans le ciel au crépuscule. Ils
+disparaissent dès qu&apos;on les voit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_427">
+		<language name="JPN">Ses oreilles repliées se déroulent
+avec une force capable de briser
+un gros rocher.</language>
+		<language name="JPN_KANJI">Ses oreilles repliées se déroulent
+avec une force capable de briser
+un gros rocher.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_428">
+		<language name="JPN">Il est capable de décocher de
+puissants coups de pied si on
+touche à ses délicates oreilles.</language>
+		<language name="JPN_KANJI">Il est capable de décocher de
+puissants coups de pied si on
+touche à ses délicates oreilles.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_429">
+		<language name="JPN">Pareil à une incantation magique,
+son cri n&apos;est que très rarement
+source de joie.</language>
+		<language name="JPN_KANJI">Pareil à une incantation magique,
+son cri n&apos;est que très rarement
+source de joie.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_430">
+		<language name="JPN">Son cri profond peut invoquer une
+meute de CORNEBRE. On l&apos;appelle
+\[4:07:L_DoubleQuot.\]le crieur de mauvais augure&quot;.</language>
+		<language name="JPN_KANJI">Son cri profond peut invoquer une
+meute de CORNEBRE. On l&apos;appelle
+\[4:07:L_DoubleQuot.\]le crieur de mauvais augure&quot;.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_431">
+		<language name="JPN">Il a tendance à planter ses griffes
+dans le nez de son Dresseur s&apos;il
+n&apos;a pas été nourri à temps.</language>
+		<language name="JPN_KANJI">Il a tendance à planter ses griffes
+dans le nez de son Dresseur s&apos;il
+n&apos;a pas été nourri à temps.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_432">
+		<language name="JPN">Il plaque ses queues contre son
+dos pour paraître plus grand.
+Il soutient un regard des heures.</language>
+		<language name="JPN_KANJI">Il plaque ses queues contre son
+dos pour paraître plus grand.
+Il soutient un regard des heures.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_433">
+		<language name="JPN">Quand il sautille, l&apos;orbe qu&apos;il a
+dans la bouche s&apos;agite et tinte
+comme une cloche.</language>
+		<language name="JPN_KANJI">Quand il sautille, l&apos;orbe qu&apos;il a
+dans la bouche s&apos;agite et tinte
+comme une cloche.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_434">
+		<language name="JPN">Son derrière propulse un fluide
+nauséabond qui peut faire fuir les
+Pokémon dans un rayon de 2 km.</language>
+		<language name="JPN_KANJI">Son derrière propulse un fluide
+nauséabond qui peut faire fuir les
+Pokémon dans un rayon de 2 km.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_435">
+		<language name="JPN">Il attaque en projetant un liquide
+fétide du bout de sa queue. Mieux
+vaut l&apos;attaquer par les airs.</language>
+		<language name="JPN_KANJI">Il attaque en projetant un liquide
+fétide du bout de sa queue. Mieux
+vaut l&apos;attaquer par les airs.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_436">
+		<language name="JPN">Certains scientifiques soutiennent
+que ce Pokémon était jadis aussi
+réfléchissant qu&apos;un miroir.</language>
+		<language name="JPN_KANJI">Certains scientifiques soutiennent
+que ce Pokémon était jadis aussi
+réfléchissant qu&apos;un miroir.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_437">
+		<language name="JPN">Il apportait la pluie en créant un
+portail vers une autre dimension.
+Il était synonyme de bonne récolte.</language>
+		<language name="JPN_KANJI">Il apportait la pluie en créant un
+portail vers une autre dimension.
+Il était synonyme de bonne récolte.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_438">
+		<language name="JPN">Adepte des climats secs, il régule
+son humidité en laissant couler ce
+qui ressemble à des larmes.</language>
+		<language name="JPN_KANJI">Adepte des climats secs, il régule
+son humidité en laissant couler ce
+qui ressemble à des larmes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_439">
+		<language name="JPN">Il imite les mouvements et les
+expressions des autres pour
+comprendre leurs sentiments.</language>
+		<language name="JPN_KANJI">Il imite les mouvements et les
+expressions des autres pour
+comprendre leurs sentiments.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_440">
+		<language name="JPN">Ce Pokémon ne se sépare jamais de
+son petit caillou et a tendance à
+traîner dans les pieds des gens.</language>
+		<language name="JPN_KANJI">Ce Pokémon ne se sépare jamais de
+son petit caillou et a tendance à
+traîner dans les pieds des gens.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_441">
+		<language name="JPN">Sa langue comparable à celle
+de l&apos;homme lui permet d&apos;imiter
+habilement le langage humain.</language>
+		<language name="JPN_KANJI">Sa langue comparable à celle
+de l&apos;homme lui permet d&apos;imiter
+habilement le langage humain.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_442">
+		<language name="JPN">Son mauvais comportement lui a valu
+d&apos;être enchaîné à une Clé de Voûte
+par un mystérieux sortilège.</language>
+		<language name="JPN_KANJI">Son mauvais comportement lui a valu
+d&apos;être enchaîné à une Clé de Voûte
+par un mystérieux sortilège.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_443">
+		<language name="JPN">Malgré sa maladresse, son énorme
+gueule lui permet de lancer des
+attaques puissantes.</language>
+		<language name="JPN_KANJI">Malgré sa maladresse, son énorme
+gueule lui permet de lancer des
+attaques puissantes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_444">
+		<language name="JPN">Toujours à la recherche d&apos;objets
+brillants, il arpente les grottes
+pour constituer son butin.</language>
+		<language name="JPN_KANJI">Toujours à la recherche d&apos;objets
+brillants, il arpente les grottes
+pour constituer son butin.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_445">
+		<language name="JPN">On dit que lancé à pleine vitesse,
+il crée des lames de vent avec ses
+ailes pouvant trancher un arbre.</language>
+		<language name="JPN_KANJI">On dit que lancé à pleine vitesse,
+il crée des lames de vent avec ses
+ailes pouvant trancher un arbre.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_446">
+		<language name="JPN">Obnubilé par sa quête incessante
+de nourriture, il oublie parfois
+qu&apos;il en a caché dans sa fourrure.</language>
+		<language name="JPN_KANJI">Obnubilé par sa quête incessante
+de nourriture, il oublie parfois
+qu&apos;il en a caché dans sa fourrure.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_447">
+		<language name="JPN">Il a la faculté unique de visualiser
+les émotions telles que la joie ou
+la colère sous forme d&apos;ondes.</language>
+		<language name="JPN_KANJI">Il a la faculté unique de visualiser
+les émotions telles que la joie ou
+la colère sous forme d&apos;ondes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_448">
+		<language name="JPN">Un spécimen bien entraîné peut
+sentir et identifier les émotions de
+quelqu&apos;un à plus d&apos;un kilomètre.</language>
+		<language name="JPN_KANJI">Un spécimen bien entraîné peut
+sentir et identifier les émotions de
+quelqu&apos;un à plus d&apos;un kilomètre.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_449">
+		<language name="JPN">Il peut obturer ses narines et
+traverser le sable comme un ver.
+Il vit en colonies de 10 individus.</language>
+		<language name="JPN_KANJI">Il peut obturer ses narines et
+traverser le sable comme un ver.
+Il vit en colonies de 10 individus.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_450">
+		<language name="JPN">Facilement irritable, il ouvre ses
+mâchoires au maximum pour intimider
+ses adversaires.</language>
+		<language name="JPN_KANJI">Facilement irritable, il ouvre ses
+mâchoires au maximum pour intimider
+ses adversaires.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_451">
+		<language name="JPN">Il saisit sa proie avec les pinces de
+sa queue et lui injecte un poison.
+Il peut survivre un an sans manger.</language>
+		<language name="JPN_KANJI">Il saisit sa proie avec les pinces de
+sa queue et lui injecte un poison.
+Il peut survivre un an sans manger.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_452">
+		<language name="JPN">Fier et robuste, il met un point
+d&apos;honneur à battre ses adversaires
+sans utiliser de poison.</language>
+		<language name="JPN_KANJI">Fier et robuste, il met un point
+d&apos;honneur à battre ses adversaires
+sans utiliser de poison.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_453">
+		<language name="JPN">Son instinct de survie le pousse à
+ne pas se battre dans les règles.
+C&apos;est une mascotte populaire.</language>
+		<language name="JPN_KANJI">Son instinct de survie le pousse à
+ne pas se battre dans les règles.
+C&apos;est une mascotte populaire.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_454">
+		<language name="JPN">Quand il coasse, le poison stocké
+sous sa gorge est secoué, le
+rendant ainsi plus efficace.</language>
+		<language name="JPN_KANJI">Quand il coasse, le poison stocké
+sous sa gorge est secoué, le
+rendant ainsi plus efficace.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_455">
+		<language name="JPN">Il s&apos;accroche aux arbres des
+marais et attire ses proies avec
+sa salive à l&apos;odeur enivrante.</language>
+		<language name="JPN_KANJI">Il s&apos;accroche aux arbres des
+marais et attire ses proies avec
+sa salive à l&apos;odeur enivrante.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_456">
+		<language name="JPN">La ligne qui fait le tour de son
+corps stocke l&apos;énergie solaire
+et brille dans la nuit.</language>
+		<language name="JPN_KANJI">La ligne qui fait le tour de son
+corps stocke l&apos;énergie solaire
+et brille dans la nuit.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_457">
+		<language name="JPN">Il rampe au fond de l&apos;océan grâce
+aux nageoires de son torse.
+Le LANTURN est son rival.</language>
+		<language name="JPN_KANJI">Il rampe au fond de l&apos;océan grâce
+aux nageoires de son torse.
+Le LANTURN est son rival.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_458">
+		<language name="JPN">On organise des excursions pour le
+voir surfer sur les vagues au côté
+des REMORAID.</language>
+		<language name="JPN_KANJI">On organise des excursions pour le
+voir surfer sur les vagues au côté
+des REMORAID.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_459">
+		<language name="JPN">Curieux de rencontrer des gens, ils
+se rassemblent autour des traces
+de pas trouvées dans la montagne.</language>
+		<language name="JPN_KANJI">Curieux de rencontrer des gens, ils
+se rassemblent autour des traces
+de pas trouvées dans la montagne.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_460">
+		<language name="JPN">Il apparaît quand les fleurs des
+terres enneigées fleurissent et
+se retire quand elles se fanent.</language>
+		<language name="JPN_KANJI">Il apparaît quand les fleurs des
+terres enneigées fleurissent et
+se retire quand elles se fanent.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_461">
+		<language name="JPN">L&apos;évolution l&apos;a rendu encore plus
+retors. Il communique en griffant
+des signes dans les pierres.</language>
+		<language name="JPN_KANJI">L&apos;évolution l&apos;a rendu encore plus
+retors. Il communique en griffant
+des signes dans les pierres.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_462">
+		<language name="JPN">Des scientifiques ont essayé de
+faire évoluer un MAGNEZONE en
+laboratoire, mais ce fut un échec.</language>
+		<language name="JPN_KANJI">Des scientifiques ont essayé de
+faire évoluer un MAGNEZONE en
+laboratoire, mais ce fut un échec.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_463">
+		<language name="JPN">Sa longue langue est couverte en
+permanence d&apos;une épaisse couche
+de bave anesthésiante.</language>
+		<language name="JPN_KANJI">Sa longue langue est couverte en
+permanence d&apos;une épaisse couche
+de bave anesthésiante.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_464">
+		<language name="JPN">Il peut lancer des pierres à une
+vitesse saisissante en bandant et
+relâchant ses muscles en un éclair.</language>
+		<language name="JPN_KANJI">Il peut lancer des pierres à une
+vitesse saisissante en bandant et
+relâchant ses muscles en un éclair.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_465">
+		<language name="JPN">Ses bras sont en fait des plantes
+qui s&apos;attachent à tout ce qu&apos;elles
+touchent et peuvent repousser.</language>
+		<language name="JPN_KANJI">Ses bras sont en fait des plantes
+qui s&apos;attachent à tout ce qu&apos;elles
+touchent et peuvent repousser.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_466">
+		<language name="JPN">Encaissant les attaques, il vient
+toucher l&apos;ennemi de ses queues
+et lui inflige une forte décharge.</language>
+		<language name="JPN_KANJI">Encaissant les attaques, il vient
+toucher l&apos;ennemi de ses queues
+et lui inflige une forte décharge.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_467">
+		<language name="JPN">Quand il lance des boules de feu
+à plus de 2 000 °C, son corps
+est comme chauffé à blanc.</language>
+		<language name="JPN_KANJI">Quand il lance des boules de feu
+à plus de 2 000 °C, son corps
+est comme chauffé à blanc.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_468">
+		<language name="JPN">Il apprécie particulièrement les
+gens qui respectent les autres
+et évitent les conflits inutiles.</language>
+		<language name="JPN_KANJI">Il apprécie particulièrement les
+gens qui respectent les autres
+et évitent les conflits inutiles.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_469">
+		<language name="JPN">Doté de mandibules à la force
+colossale, il excelle pour mordre
+ses ennemis en plein vol.</language>
+		<language name="JPN_KANJI">Doté de mandibules à la force
+colossale, il excelle pour mordre
+ses ennemis en plein vol.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_470">
+		<language name="JPN">Il utilise la photosynthèse comme
+une plante et a aussi tendance à
+éviter le combat à tout prix.</language>
+		<language name="JPN_KANJI">Il utilise la photosynthèse comme
+une plante et a aussi tendance à
+éviter le combat à tout prix.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_471">
+		<language name="JPN">Il ajuste la température de son
+corps pour créer un vent de glace
+en gelant l&apos;air qui l&apos;entoure.</language>
+		<language name="JPN_KANJI">Il ajuste la température de son
+corps pour créer un vent de glace
+en gelant l&apos;air qui l&apos;entoure.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_472">
+		<language name="JPN">Le plus petit courant d&apos;air peut lui
+donner assez d&apos;élan pour faire le
+tour du monde sans un coup d&apos;aile.</language>
+		<language name="JPN_KANJI">Le plus petit courant d&apos;air peut lui
+donner assez d&apos;élan pour faire le
+tour du monde sans un coup d&apos;aile.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_473">
+		<language name="JPN">On a libéré un spécimen de sa prison
+glacée au bout de 10 000 ans.
+Il n&apos;en revenait pas.</language>
+		<language name="JPN_KANJI">On a libéré un spécimen de sa prison
+glacée au bout de 10 000 ans.
+Il n&apos;en revenait pas.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_474">
+		<language name="JPN">Il a été modifié pour être capable
+de travailler dans des dimensions
+parallèles, mais c&apos;est un échec.</language>
+		<language name="JPN_KANJI">Il a été modifié pour être capable
+de travailler dans des dimensions
+parallèles, mais c&apos;est un échec.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_475">
+		<language name="JPN">Toujours prêt à protéger son
+prochain, il se bat férocement
+avec ses coudes en forme d&apos;épées.</language>
+		<language name="JPN_KANJI">Toujours prêt à protéger son
+prochain, il se bat férocement
+avec ses coudes en forme d&apos;épées.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_476">
+		<language name="JPN">Il utilise sa force magnétique pour
+diriger trois petites unités
+appelées Mini-nez.</language>
+		<language name="JPN_KANJI">Il utilise sa force magnétique pour
+diriger trois petites unités
+appelées Mini-nez.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_477">
+		<language name="JPN">Son corps se replie sur lui-même
+pour emprisonner les esprits
+perdus et les ramener chez eux.</language>
+		<language name="JPN_KANJI">Son corps se replie sur lui-même
+pour emprisonner les esprits
+perdus et les ramener chez eux.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_478">
+		<language name="JPN">On dit que MOMARTIK gèle ses proies
+grâce à son souffle à -50 °C avant
+de les exposer dans sa tanière.</language>
+		<language name="JPN_KANJI">On dit que MOMARTIK gèle ses proies
+grâce à son souffle à -50 °C avant
+de les exposer dans sa tanière.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_479">
+		<language name="JPN">Son corps parcouru d&apos;électricité
+lui permet de prendre le contrôle
+de certains appareils ménagers.</language>
+		<language name="JPN_KANJI">Son corps parcouru d&apos;électricité
+lui permet de prendre le contrôle
+de certains appareils ménagers.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_480">
+		<language name="JPN">Quand il prit son envol, les
+hommes apprirent à résoudre les
+problèmes. Le savoir était né.</language>
+		<language name="JPN_KANJI">Quand il prit son envol, les
+hommes apprirent à résoudre les
+problèmes. Le savoir était né.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_481">
+		<language name="JPN">Quand il prit son envol, les hommes
+apprirent à ressentir la joie et la
+peine. L&apos;émotion était née.</language>
+		<language name="JPN_KANJI">Quand il prit son envol, les hommes
+apprirent à ressentir la joie et la
+peine. L&apos;émotion était née.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_482">
+		<language name="JPN">Quand il prit son envol, les hommes
+acquirent la détermination.
+La volonté était née.</language>
+		<language name="JPN_KANJI">Quand il prit son envol, les hommes
+acquirent la détermination.
+La volonté était née.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_483">
+		<language name="JPN">On dit que le temps s&apos;écoule au
+rythme des battements de cœur de
+ce Pokémon légendaire de Sinnoh.</language>
+		<language name="JPN_KANJI">On dit que le temps s&apos;écoule au
+rythme des battements de cœur de
+ce Pokémon légendaire de Sinnoh.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_484">
+		<language name="JPN">On dit que la stabilité de l&apos;espace
+est maintenue par le souffle de ce
+Pokémon légendaire de Sinnoh.</language>
+		<language name="JPN_KANJI">On dit que la stabilité de l&apos;espace
+est maintenue par le souffle de ce
+Pokémon légendaire de Sinnoh.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_485">
+		<language name="JPN">Son corps est composé d&apos;acier brut
+dont certaines parties ont fondu
+à cause de sa propre chaleur.</language>
+		<language name="JPN_KANJI">Son corps est composé d&apos;acier brut
+dont certaines parties ont fondu
+à cause de sa propre chaleur.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_486">
+		<language name="JPN">On dit qu&apos;il a créé des Pokémon
+à son image à partir de glace,
+de roche et de magma.</language>
+		<language name="JPN_KANJI">On dit qu&apos;il a créé des Pokémon
+à son image à partir de glace,
+de roche et de magma.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_487" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ギラティナ
+・シンオウ図鑑ＤＰ版</comment>
+		<language name="JPN">Une légende tenace veut que ce
+Pokémon ait traîné les continents
+en les attachant à des cordes.</language>
+		<language name="JPN_KANJI">Une légende tenace veut que ce
+Pokémon ait traîné les continents
+en les attachant à des cordes.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_488">
+		<language name="JPN">Les nuits où le premier croissant
+de lune est visible, l&apos;arc de sa
+queue se déploie de façon superbe.</language>
+		<language name="JPN_KANJI">Les nuits où le premier croissant
+de lune est visible, l&apos;arc de sa
+queue se déploie de façon superbe.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_489">
+		<language name="JPN">Ce Pokémon des mers chaudes
+revient toujours à son lieu de
+naissance, peu importe la distance.</language>
+		<language name="JPN_KANJI">Ce Pokémon des mers chaudes
+revient toujours à son lieu de
+naissance, peu importe la distance.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_490">
+		<language name="JPN">Il est né avec le pouvoir incroyable
+de créer des liens avec n&apos;importe
+quel Pokémon.</language>
+		<language name="JPN_KANJI">Il est né avec le pouvoir incroyable
+de créer des liens avec n&apos;importe
+quel Pokémon.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_491">
+		<language name="JPN">Menacé, ce Pokémon se protège
+en créant des cauchemars dans
+l&apos;esprit de ses ennemis.</language>
+		<language name="JPN_KANJI">Menacé, ce Pokémon se protège
+en créant des cauchemars dans
+l&apos;esprit de ses ennemis.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_492">
+		<language name="JPN">Les fleurs qui couvrent son corps
+s&apos;ouvrent quand il est câliné avec
+amour et perçoit de la gratitude.</language>
+		<language name="JPN_KANJI">Les fleurs qui couvrent son corps
+s&apos;ouvrent quand il est câliné avec
+amour et perçoit de la gratitude.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_493">
+		<language name="JPN">On dit que son œuf a éclos dans
+le néant et qu&apos;il est à l&apos;origine
+de la création du monde.</language>
+		<language name="JPN_KANJI">On dit que son œuf a éclos dans
+le néant et qu&apos;il est à l&apos;origine
+de la création du monde.</language>
+	</row>
+
+	<row id="ZKN_COMMENT_FRA_00_487_GIRA" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ギラティナ
+・シンオウ図鑑プラチナ版</comment>
+		<language name="JPN">Sa grande violence lui a valu d&apos;être
+banni. Il observe les hommes en
+silence depuis le Monde Distorsion.</language>
+		<language name="JPN_KANJI">Sa grande violence lui a valu d&apos;être
+banni. Il observe les hommes en
+silence depuis le Monde Distorsion.</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>
