@@ -466,9 +466,6 @@ sub ITEMDEF_GetIdx
   my( $name ) = @_;
   my( $code, @codeline );
 
-  #‘å•¶Žš‰»
-  $name = uc( $name );
-
   foreach $code (@ITEM_DEF)
   {
     $code =~ s/ +/ /g;
