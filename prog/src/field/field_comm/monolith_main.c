@@ -85,17 +85,13 @@ static const struct{
     &MonolithAppProc_Up_MissionExplain,
     &MonolithAppProc_Down_MissionSelect,
   },
-  {//MONOLITH_MENU_STATUS
-    &MonolithAppProc_Up_PalaceMap,
-    &MonolithAppProc_Down_Status,
-  },
-  {//MONOLITH_MENU_RECORD
-    &MonolithAppProc_Up_PalaceMap, //MonolithAppProc_Up_PalaceMap,
-    &MonolithAppProc_Down_Status, //MonolithAppProc_Down_Record,
-  },
   {//MONOLITH_MENU_POWER
     &MonolithAppProc_Up_PalaceMap, //MonolithAppProc_Up_PowerExplain,
     &MonolithAppProc_Down_Status, //MonolithAppProc_Down_PowerSelect,
+  },
+  {//MONOLITH_MENU_STATUS
+    &MonolithAppProc_Up_PalaceMap,
+    &MonolithAppProc_Down_Status,
   },
 };
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-15T16:48:25"/>
+	<create user="matsuda" host="W00142" date="2010-02-09T20:41:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,26 +302,14 @@
 
 	<row id="msg_mono_title_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>タイトルメニュー項目</comment>
-		<language name="JPN" width="256">じょうたいを　みる</language>
-		<language name="JPN_KANJI" width="256">じょうたいを　みる</language>
+		<language name="JPN" width="256">ふしぎなパワーを　もらう</language>
+		<language name="JPN_KANJI" width="256">ふしぎなパワーを　もらう</language>
 	</row>
 
 	<row id="msg_mono_title_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>タイトルメニュー項目</comment>
-		<language name="JPN" width="256">りれきを　みる</language>
-		<language name="JPN_KANJI" width="256">りれきを　みる</language>
-	</row>
-
-	<row id="msg_mono_title_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>タイトルメニュー項目</comment>
-		<language name="JPN" width="256">モノリスパワーを　つかう</language>
-		<language name="JPN_KANJI" width="256">モノリスパワーを　つかう</language>
-	</row>
-
-	<row id="msg_mono_title_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>タイトルメニュー項目</comment>
-		<language name="JPN" width="256">もどる</language>
-		<language name="JPN_KANJI" width="256">もどる</language>
+		<language name="JPN" width="256">じょうたいを　みる</language>
+		<language name="JPN_KANJI" width="256">じょうたいを　みる</language>
 	</row>
 
 	<row id="msg_mono_st_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">

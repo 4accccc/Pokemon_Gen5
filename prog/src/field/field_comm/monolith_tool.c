@@ -74,7 +74,7 @@ enum{
   PANEL_COLOR_END = 4,        ///<パネルカラーアニメ終端位置
   PANEL_COLOR_NUM = PANEL_COLOR_END - PANEL_COLOR_START + 1,  ///<パネルカラーアニメのカラー数
   
-  PANEL_FADEDATA_PALNO = 3,   ///<パネルフェードデータ(変更後の色)が入っているパレット位置
+  PANEL_FADEDATA_PALNO = 2,   ///<パネルフェードデータ(変更後の色)が入っているパレット位置
   
   PANEL_COLOR_FADE_ADD_EVY = 0x0080,    ///<EVY加算値(下位8ビット小数)
   
