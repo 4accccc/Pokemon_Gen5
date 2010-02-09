@@ -170,6 +170,7 @@
 #define SCR_BMID_PCEV_FLOOR     (6)       ///<配置モデル分類：ポケセンエレベーター：フロア
 #define SCR_BMID_WARP           (7)       ///<配置モデル分類：ワープ
 #define SCR_BMID_EVENT          (8)       ///<配置モデル分類：ワープ
+#define SCR_BMID_PPMACHINE      (9)       ///<配置モデル分類：パルパークマシン
 
 #define  SCR_BMANM_DOOR_OPEN    (0)       ///<ドアアニメ：開く
 #define  SCR_BMANM_DOOR_CLOSE   (1)       ///<ドアアニメ：閉じる
@@ -179,6 +180,9 @@
 
 #define  SCR_BMANM_PCEV_UP      (0)       ///<ポケセンエレベータアニメ：上がる
 #define  SCR_BMANM_PCEV_DOWN    (1)       ///<ポケセンエレベータアニメ：下がる
+
+#define  SCR_BMANM_PPM_MOV    (0)       ///<パルパークマシンアニメ：起動
+
 //--------------------------------------------------------------
 /// メッセージウィンドウ上下指定
 //--------------------------------------------------------------
