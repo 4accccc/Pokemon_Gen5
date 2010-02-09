@@ -7883,9 +7883,9 @@
 		<language name="JPN" width="256">FLD-119</language>
 		<language name="JPN_KANJI" width="256">FLD-119</language>
 	</row>
-	<row id="msg_seq_se_dmy_215">
-		<language name="JPN" width="256">DMY-215</language>
-		<language name="JPN_KANJI" width="256">DMY-215</language>
+	<row id="msg_seq_se_w448_onpu">
+		<language name="JPN" width="256">W448-ONPU</language>
+		<language name="JPN_KANJI" width="256">W448-ONPU</language>
 	</row>
 	<row id="msg_seq_se_dmy_216">
 		<language name="JPN" width="256">DMY-216</language>
