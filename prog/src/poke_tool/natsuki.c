@@ -11,6 +11,7 @@
 #include  "poke_tool/natsuki.h"
 #include  "item/item.h"
 #include  "poke_tool/monsno_def.h"
+#include  "gamesystem/g_power.h"
 
 //============================================================================================
 /**
@@ -170,6 +171,9 @@ static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, ZONEID
   {
 	  natsukitmp = natsukitmp * 150 / 100;
 	}
+
+  //Gƒpƒ[ŒvZˆ—
+  natsukitmp = GPOWER_Calc_Natsuki( natsukitmp );
 
 	// 0ˆÈ‰º‚É‚à255ˆÈã‚É‚à‚µ‚È‚¢
 	natsuki += natsukitmp;
