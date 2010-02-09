@@ -669,7 +669,7 @@
 #define FV_UN_GTSFRIEND_03                 645 /* 0x0285 国連(内部）：GTSで交換した相手４ */
 #define FV_UN_GTSFRIEND_04                 646 /* 0x0286 国連(内部）：GTSで交換した相手５ */
 #define FV_C03R0301_CLEANINGM_01           647 /* 0x0287 バトルカンパニー１F：会長 */
-		/* not used   648(0x0288) */
+#define FV_C02GYM0101_HAKAI                648 /* 0x0288 C02博物館のプラズマ団（６人） */
 		/* not used   649(0x0289) */
 		/* not used   650(0x028a) */
 		/* not used   651(0x028b) */
