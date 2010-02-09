@@ -49,7 +49,6 @@ extern FIELD_PLAYER_CORE * FIELD_PLAYER_CORE_Create(
     PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
 		const VecFx32 *pos, int sex, HEAPID heapID );
 extern void FIELD_PLAYER_CORE_Delete( FIELD_PLAYER_CORE *player_core );
-extern void FIELD_PLAYER_CORE_Update( FIELD_PLAYER_CORE *player_core );
 extern void FIELD_PLAYER_CORE_UpdateMoveStatus( FIELD_PLAYER_CORE *player_core );
 
 

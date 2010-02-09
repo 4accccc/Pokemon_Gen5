@@ -124,8 +124,6 @@ void FIELD_PLAYER_Delete( FIELD_PLAYER *fld_player )
 void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
 {
   
-  // コアアップデート
-  FIELD_PLAYER_CORE_Update( fld_player->corewk );
   { 
     //プレイヤー座標をPLAYERWORKへ反映
     VecFx32 pos;

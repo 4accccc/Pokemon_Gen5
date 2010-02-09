@@ -225,19 +225,6 @@ void FIELD_PLAYER_CORE_Delete( FIELD_PLAYER_CORE *player_core )
 	GFL_HEAP_FreeMemory( player_core );
 }
 
-//----------------------------------------------------------------------------
-/**
- * フィールドプレイヤー　更新
- * @param player_core FIELD_PLAYER_CORE
- * @param dir 方向
- * @param pos 座標
- * @retval nothing
- */
-//-----------------------------------------------------------------------------
-void FIELD_PLAYER_CORE_Update( FIELD_PLAYER_CORE *player_core )
-{
-}
-
 //--------------------------------------------------------------
 /**
  * フィールドプレイヤー　動作ステータス更新

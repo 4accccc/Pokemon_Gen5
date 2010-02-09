@@ -161,7 +161,7 @@ struct _FIELD_PLAYER_NOGRID
 
 static PLAYER_SET nogridGetMoveStartSet( FIELD_PLAYER_NOGRID* p_player, int dir, int key_trg, int key_cont, BOOL debug );
 static void nogridSetMove( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set, int dir, int key_trg, int key_cont, BOOL debug );
-static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set );
+static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, int key_cont, PLAYER_SET set );
 
 static u32 nogrid_HitCheckMove( FIELD_PLAYER_NOGRID* p_player, MMDL *mmdl, u16 dir );
 
@@ -349,18 +349,16 @@ FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER_CORE* p_player_cor
 
   // 状態の復帰
   {
-    /*
     PLAYER_MOVE_FORM form;
-    form = FIELD_PLAYER_GetMoveForm( gjiki->fld_player );
+    form = FIELD_PLAYER_CORE_GetMoveForm( p_wk->p_player_core );
     
     switch( form ){
     case PLAYER_MOVE_FORM_SWIM:
-      FIELD_PLAYER_NOGRID_SetRequest(
-          gjiki, FIELD_PLAYER_NOGRID_REQBIT_SWIM );
-      FIELD_PLAYER_NOGRID_UpdateRequest( gjiki );
+      FIELD_PLAYER_CORE_SetRequest(
+          p_wk->p_player_core, FIELD_PLAYER_REQBIT_SWIM );
+      FIELD_PLAYER_CORE_UpdateRequest( p_wk->p_player_core );
       break;
     }
-    //*/
   }
 
   return p_wk;
@@ -433,16 +431,8 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 
   GF_ASSERT( p_player->p_railwork );
 
-	dir = DIR_NOT;
-	if( (key_cont&PAD_KEY_UP) ){
-		dir = DIR_UP;
-	}else if( (key_cont&PAD_KEY_DOWN) ){
-		dir = DIR_DOWN;
-	}else if( (key_cont&PAD_KEY_LEFT) ){
-		dir = DIR_LEFT;
-	}else if( (key_cont&PAD_KEY_RIGHT) ){
-		dir = DIR_RIGHT;
-	}
+  // キーから方向を取得
+  dir = FIELD_PLAYER_CORE_GetKeyDir( p_player->p_player_core, key_cont );
 	
 	debug_flag = FALSE;
 #ifdef PM_DEBUG
@@ -451,6 +441,8 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 	}
 #endif
 
+  FIELD_PLAYER_CORE_UpdateRequest( p_player->p_player_core );
+
   // 強制移動制御
   dir = nogrid_ControlUnder( p_player, dir, debug_flag );
 
@@ -458,7 +450,7 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
   set = nogridGetMoveStartSet( p_player, dir, key_trg, key_cont, debug_flag );
 
   // 移動開始、ビット管理
-  nogridMoveStartControl( p_player, set );
+  nogridMoveStartControl( p_player, key_cont, set );
   
   // dir方向に移動
   nogridSetMove( p_player, set, dir, key_trg, key_cont, debug_flag );
@@ -911,8 +903,9 @@ static void nogridSetMove( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set, int di
  *	@param	set         自機動作情報
  */
 //-----------------------------------------------------------------------------
-static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set )
+static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, int key_cont, PLAYER_SET set )
 {
+  FIELD_PLAYER_CORE_SetMoveStartKeyDir( p_player->p_player_core, key_cont );
   nogrid_OffMoveBitStep( p_player );
   
   if( set == PLAYER_SET_WALK ){
