@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-04T19:40:16"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-09T16:18:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="174" top="101" right="879" bottom="721" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -683,6 +683,19 @@
 		<attribute name="キャラ指定">おっとり女</attribute>
 		<language name="JPN" width="256">おっとり♀5</language>
 		<language name="JPN_KANJI" width="256">おっとり♀5</language>
+	</row>
+
+	<row id="msg_un_elevator_00">
+		<attribute name="キャラ指定">エレベーターアナウンス</attribute>
+		<language name="JPN" width="256">エントランスへ　もどりますか？▼</language>
+		<language name="JPN_KANJI" width="256">エントランスへ　戻りますか？▼</language>
+	</row>
+
+	<row id="msg_un_elevator_01">
+		<comment>予備</comment>
+		<attribute name="キャラ指定">エレベーターアナウンス</attribute>
+		<language name="JPN" width="256">べつの　フロアに　いどうしますか？▼</language>
+		<language name="JPN_KANJI" width="256">別の　フロアに　移動しますか？▼</language>
 	</row>
 
 	<flowchart-group-list>
