@@ -5838,13 +5838,40 @@
 
 //--------------------------------------------------------------
 /**
- * @def _SHOP_CALL
+ * @def _FIX_SHOP_CALL
  * @brief 簡易イベントコマンド：固定ショップイベント呼び出し
  * @param shop_id
  */
 //--------------------------------------------------------------
 #define _FIX_SHOP_CALL( shop_id ) _ASM_SHOP_CALL shop_id,TRUE
 #define _FIX_SHOP_CALL_GREETING_LESS( shop_id ) _ASM_SHOP_CALL shop_id,FALSE
+
+//--------------------------------------------------------------
+/**
+ * @def _BP_ITEM_SHOP_CALL
+ * @brief 簡易イベントコマンド：固定ショップイベント呼び出し
+ */
+//--------------------------------------------------------------
+#define _BP_ITEM_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,TRUE
+#define _BP_ITEM_SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,FALSE
+
+//--------------------------------------------------------------
+/**
+ * @def _BP_WAZA_SHOP_CALL
+ * @brief 簡易イベントコマンド：固定ショップイベント呼び出し
+ */
+//--------------------------------------------------------------
+#define _BP_WAZA_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BP_WAZA,TRUE
+#define _BP_WAZA_SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BP_WAZA,FALSE
+
+//--------------------------------------------------------------
+/**
+ * @def _BP_ITEM_SHOP_CALL
+ * @brief 簡易イベントコマンド：固定ショップイベント呼び出し
+ */
+//--------------------------------------------------------------
+#define _BP_ITEM_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,TRUE
+#define _BP_ITEM_SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,FALSE
 
 //--------------------------------------------------------------
 /**
