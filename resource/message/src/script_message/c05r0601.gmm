@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:35:20"/>
+	<create user="matsumiya" host="W00224" date="2010-02-09T21:45:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1310" top="227" right="2015" bottom="847" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="146" right="1996" bottom="774" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,31 +292,29 @@
 	</lock>
 
 
-	<row id="msg_c05r0601_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05r0601_man3_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・仮メッセージ
 ・売り子その１
 　続けて、道具屋の処理へ</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
 		<language name="JPN" width="256">ポケモンを　げんきにする
-ふしぎな　かんぽうやくは　どうだい？</language>
+ふしぎな　かんぽうやく　あるよ▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　元気にする
-不思議な　漢方薬は　どうだい？</language>
+不思議な　かんぽうやく　あるよ▼</language>
 	</row>
 
-	<row id="msg_c05r0601_woman3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_woman3_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
-・仮メッセージ
 ・上記OBJに隣接</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
-		<language name="JPN" width="256">うちの　かんぽうやくは　わざわざ
-がいこくから　しいれた　すぐれもの[BE:01:ページ切り替え（クリア）]
-ききめは　すごいが　ちょっと　にがい！
-ポケモンも　ちょっと　にがてにしてるよ</language>
-		<language name="JPN_KANJI" width="256">うちの　漢方薬は　わざわざ
-外国から　仕入れた　優れもの[BE:01:ページ切り替え（クリア）]
-効き目は　すごいが　ちょっと　苦い！
-ポケモンも　ちょっと　苦手にしてるよ</language>
+		<language name="JPN" width="256">がいこくから　とりよせた
+かんぽうやくは　ききめ　バッチリ！▼
+だけど　ちょっぴり　にがいから
+ポケモン　いやがっちゃうみたいなの</language>
+		<language name="JPN_KANJI" width="256">外国から　取り寄せた
+かんぽうやくは　効き目　バッチリ！▼
+だけど　ちょっぴり　苦いから
+ポケモン　嫌がっちゃうみたいなの</language>
 	</row>
 
 	<row id="msg_c05r0601_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
