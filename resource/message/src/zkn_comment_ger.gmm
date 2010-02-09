@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-09T12:12:10"/>
+	<create user="shimoyamada" host="W00184" date="2010-02-09T18:42:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -4732,13 +4732,13 @@ nach seinem Abbild geschaffen.</language>
 
 	<row id="ZKN_COMMENT_GER_00_487" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ギラティナ
-・シンオウ図鑑ＤＰ版</comment>
-		<language name="JPN">Ein PKMN, von dem man sagt, es lebt
-in der Spiegelwelt unserer Welt.
-Es erscheint auf alten Friedhöfen.</language>
-		<language name="JPN_KANJI">Ein PKMN, von dem man sagt, es lebt
-in der Spiegelwelt unserer Welt.
-Es erscheint auf alten Friedhöfen.</language>
+・シンオウ図鑑プラチナ版</comment>
+		<language name="JPN">In Nächten mit zunehmendem Mond
+streckt sich das Licht von seinem
+Schweif und wellt sich wunderschön.</language>
+		<language name="JPN_KANJI">In Nächten mit zunehmendem Mond
+streckt sich das Licht von seinem
+Schweif und wellt sich wunderschön.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_GER_00_488">
@@ -4798,12 +4798,12 @@ dann die Welt geformt.</language>
 	<row id="ZKN_COMMENT_GER_00_487_GIRA" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ギラティナ
 ・シンオウ図鑑プラチナ版</comment>
-		<language name="JPN">Es wurde aufgrund seines Verhal-
-tens verbannt. Aus der Zerrwelt
-schaut es auf die alte Welt.</language>
-		<language name="JPN_KANJI">Es wurde aufgrund seines Verhal-
-tens verbannt. Aus der Zerrwelt
-schaut es auf die alte Welt.</language>
+		<language name="JPN">In Nächten mit zunehmendem Mond
+streckt sich das Licht von seinem
+Schweif und wellt sich wunderschön.</language>
+		<language name="JPN_KANJI">In Nächten mit zunehmendem Mond
+streckt sich das Licht von seinem
+Schweif und wellt sich wunderschön.</language>
 	</row>
 
 	<flowchart-group-list>
