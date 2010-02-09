@@ -10,7 +10,7 @@
 
 #include "message.naix"
 
-#define PMS_ABC_GMMROW_MAX (94) // €–ÚÅ‘å”
+#define PMS_ABC_GMMROW_MAX (96) // €–ÚÅ‘å”
 
 #define PMS_ABC_GMMTBL_MAX (45) // ƒtƒ@ƒCƒ‹Å‘å”
 
