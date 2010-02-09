@@ -300,6 +300,8 @@ void FRAMELIST_Exit( FRAMELIST_WORK * wk )
 {
 	u32	i;
 
+  GF_ASSERT( wk );
+
 	// タッチデータ削除
 	GFL_HEAP_FreeMemory( wk->touch );
 
@@ -345,9 +347,14 @@ void FRAMELIST_Exit( FRAMELIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void FRAMELIST_AddItem( FRAMELIST_WORK * wk, u32 type, u32 param )
 {
+  GF_ASSERT( wk );
+  GF_ASSERT( wk->hed.itemMax > wk->listMax );
+  GF_ASSERT( wk->hed.graMax > type );
+
 	wk->item[wk->listMax].type  = type;
 	wk->item[wk->listMax].param = param;
 	wk->listMax++;
+
 }
 
 //--------------------------------------------------------------------------------------------
@@ -367,6 +374,9 @@ void FRAMELIST_LoadFrameGraphicAH( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 data
 {
 	NNSG2dScreenData * scrn;
 	void * buf;
+
+  GF_ASSERT( wk );
+  GF_ASSERT( wk->hed.graMax > frameNum );
 
 	buf = GFL_ARCHDL_UTIL_LoadScreen( ah, dataIdx, comp, &scrn, wk->heapID );
 
@@ -393,6 +403,8 @@ void FRAMELIST_LoadFrameGraphicAH( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 data
 //--------------------------------------------------------------------------------------------
 void FRAMELIST_LoadBlinkPalette( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataIdx, u32 startPal, u32 endPal )
 {
+  GF_ASSERT( wk );
+
 	BLINKPALANM_SetPalBufferArcHDL( wk->blink, ah, dataIdx, startPal*16, endPal*16 );
 }
 
@@ -402,11 +414,13 @@ void FRAMELIST_LoadBlinkPalette( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataId
  *
  * @param		wk		ワーク
  *
- * @return	none
+ * @return	TRUE:初期化中, FALSE:初期化終了
  */
 //--------------------------------------------------------------------------------------------
 BOOL FRAMELIST_Init( FRAMELIST_WORK * wk )
 {
+  GF_ASSERT( wk );
+
 	switch( wk->mainSeq ){
 	case 0:
 		InitListData( wk );
@@ -420,6 +434,8 @@ BOOL FRAMELIST_Init( FRAMELIST_WORK * wk )
 			return FALSE;
 		}
 		break;
+
+  default: GF_ASSERT(0);
 	}
 
 	PrintTransMain( wk );
@@ -440,6 +456,8 @@ u32 FRAMELIST_Main( FRAMELIST_WORK * wk )
 {
 	u32	ret;
 	u32	x;
+  
+  GF_ASSERT( wk );
 	
 	ret = FRAMELIST_RET_NONE;
 
@@ -477,6 +495,8 @@ u32 FRAMELIST_Main( FRAMELIST_WORK * wk )
 			wk->listWait--;
 		}
 		break;
+
+  default : GF_ASSERT(0);
 	}
 
 	wk->oldTpy = wk->nowTpy;
@@ -698,6 +718,8 @@ static int MoveListTouch( FRAMELIST_WORK * wk )
 			return COMMAND_LIST_BOTTOM;		// リスト一番下まで移動
 		}
 		break;
+
+  default : GF_ASSERT(0);
 	}
 
 	return COMMAND_NONE;
@@ -904,6 +926,8 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 	case COMMAND_ERROR:						// コマンド無効
 	case COMMAND_NONE:						// 動作なし
 		break;
+  
+  default : GF_ASSERT(0);
 	}
 
 	return FRAMELIST_RET_NONE;
