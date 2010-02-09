@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/09 12:12:42
+#save date:2010/02/09 19:26:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0101.wms
 #SECTION START:OBJ_EVENT
@@ -111,7 +111,7 @@ C04R0101_BOY1_BTLTALK
 #OBJ CODE Number
 BOY1
 #MOVE CODE Number
-MV_DMY
+MV_RAIL_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
