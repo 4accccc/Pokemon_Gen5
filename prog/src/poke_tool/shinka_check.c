@@ -13,6 +13,7 @@
 
 #include "poke_tool/shinka_check.h"
 #include "shinka_def.h"
+#include "shinka_check.cdat"
 
 #include "arc_def.h"
 
@@ -42,20 +43,21 @@ static  BOOL  PokeWazaHaveCheck( POKEMON_PARAM* pp, WazaID waza_no );
  *	@param[in]	pp			    チェックするポケモンの構造体のポインタ
  *	@param[in]	type		    進化タイプ
  *	@param[in]	param		    アイテム進化チェック時は使用アイテム
- *	                        場所進化の場合は、shinka_place_mode
+ *	                        場所進化の場合は、ZONEID
+ *	                        通信融合進化の場合は、交換相手のPOKEMON_PARAMのアドレス
  *	@param[out]	cond        進化条件格納ワークへのポインタ
  *	@param[in]	heapID      ヒープID
  *
  *	@retval	0 進化せず 0以外 進化したポケモンナンバー
  */
 //============================================================================================
-u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param, SHINKA_COND *cond, HEAPID heapID )
+u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param, SHINKA_COND *cond, HEAPID heapID )
 {
 	POKEMON_SHINKA_TABLE	*pst;
 	u16	mons_no;
 	u16	item_no;
 	u8	level;
-	int	i;
+	int	i, j;
 	u16	ret=0;
 	u16	friend;
 	u32	personal_rnd;
@@ -108,28 +110,24 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 				if( SHINKA_FRIEND <= friend )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_FRIEND_HIGH;
 				}
 				break;
 			case SHINKA_COND_FRIEND_HIGH_NOON:
 				if( ( GFL_RTC_IsNightTime() == FALSE ) && ( SHINKA_FRIEND <= friend ) )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_FRIEND_HIGH_NOON;
 				}
 				break;
 			case SHINKA_COND_FRIEND_HIGH_NIGHT:
 				if( ( GFL_RTC_IsNightTime() == TRUE ) && ( SHINKA_FRIEND <= friend ) )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_FRIEND_HIGH_NIGHT;
 				}
 				break;
 			case SHINKA_COND_LEVELUP:
 				if( pst->psd[ i ].ShinkaData <= level )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_LEVELUP;
 				}
 				break;
 			case SHINKA_COND_SPECIAL_POW:
@@ -138,7 +136,6 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 					if( ( PP_Get( pp, ID_PARA_pow, NULL ) ) > ( PP_Get( pp, ID_PARA_def, NULL ) ) )
           {
 						ret = pst->psd[ i ].ShinkaMons;
-						(*cond) = SHINKA_COND_SPECIAL_POW;
 					}
 				}
 				break;
@@ -148,7 +145,6 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 					if( ( PP_Get( pp, ID_PARA_pow, NULL ) ) == ( PP_Get ( pp, ID_PARA_def, NULL ) ) )
           {
 						ret = pst->psd[ i ].ShinkaMons;
-						(*cond) = SHINKA_COND_SPECIAL_EVEN;
 					}
 				}
 				break;
@@ -158,7 +154,6 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 					if( ( PP_Get( pp, ID_PARA_pow, NULL ) ) < ( PP_Get( pp, ID_PARA_def, NULL ) ) )
           {
 						ret = pst->psd[ i ].ShinkaMons;
-						(*cond) = SHINKA_COND_SPECIAL_DEF;
 					}
 				}
 				break;
@@ -168,7 +163,6 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 					if( ( rnd % 10 ) < 5 )
           {
 						ret = pst->psd[ i ].ShinkaMons;
-						(*cond) = SHINKA_COND_SPECIAL_RND_EVEN;
 					}
 				}
 				break;
@@ -178,7 +172,6 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 					if( ( rnd % 10 ) >= 5 )
           {
 						ret = pst->psd[ i ].ShinkaMons;
-						(*cond) = SHINKA_COND_SPECIAL_RND_ODD;
 					}
 				}
 				break;
@@ -186,7 +179,6 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 				if( pst->psd[ i ].ShinkaData <= level )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_SPECIAL_LEVELUP;
 				}
 				break;
 			case SHINKA_COND_SPECIAL_NUKENIN:		//手持ちに空きがあれば
@@ -196,28 +188,24 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 				if( pst->psd[ i ].ShinkaData <= beautiful )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_SPECIAL_BEAUTIFUL;
 				}
 				break;
 			case SHINKA_COND_SOUBI_NOON:
 				if( ( GFL_RTC_IsNightTime() == FALSE ) && ( pst->psd[ i ].ShinkaData == item_no ) )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_SOUBI_NOON;
 				}
 				break;
 			case SHINKA_COND_SOUBI_NIGHT:
 				if( ( GFL_RTC_IsNightTime() == TRUE ) && ( pst->psd[ i ].ShinkaData == item_no ) )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_SOUBI_NIGHT;
 				}
 				break;
 			case SHINKA_COND_WAZA:
 				if( PokeWazaHaveCheck( pp, pst->psd[ i ].ShinkaData ) == TRUE )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_WAZA;
 				}
 				break;
 			case SHINKA_COND_POKEMON:
@@ -226,7 +214,6 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 					if( PokeParty_PokemonCheck( ppt, pst->psd[ i ].ShinkaData ) == TRUE )
           {
 						ret = pst->psd[ i ].ShinkaMons;
-						(*cond) = SHINKA_COND_POKEMON;
 					}
 				}
 				break;
@@ -234,40 +221,58 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 				if( ( PP_Get( pp, ID_PARA_sex, NULL ) == PTL_SEX_MALE ) && ( pst->psd[ i ].ShinkaData <= level ) )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_MALE;
 				}
 				break;
 			case SHINKA_COND_FEMALE:
 				if( ( PP_Get( pp, ID_PARA_sex, NULL ) == PTL_SEX_FEMALE ) && ( pst->psd[ i ].ShinkaData <= level ) )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_FEMALE;
 				}
 				break;
 			case SHINKA_COND_PLACE_TENGANZAN:
-				if( pst->psd[ i ].ShinkaCond ==param)
-        {
-					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_PLACE_TENGANZAN;
-				}
-				break;
+        for( j = 0 ; j < NELEMS( TenganzanShinkaPlaceTable ) ; j++ )
+        { 
+          if( TenganzanShinkaPlaceTable[ j ] == param )
+          { 
+					  ret = pst->psd[ i ].ShinkaMons;
+            break;
+          }
+        }
+        break;
 			case SHINKA_COND_PLACE_KOKE:
-				if( pst->psd[ i ].ShinkaCond == param )
-        {
-					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_PLACE_KOKE;
-				}
-				break;
+        for( j = 0 ; j < NELEMS( KokeShinkaPlaceTable ) ; j++ )
+        { 
+          if( KokeShinkaPlaceTable[ j ] == param )
+          { 
+					  ret = pst->psd[ i ].ShinkaMons;
+            break;
+          }
+        }
+        break;
 			case SHINKA_COND_PLACE_ICE:
-				if( pst->psd[ i ].ShinkaCond == param )
-        {
-					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_PLACE_ICE;
-				}
+        for( j = 0 ; j < NELEMS( IceShinkaPlaceTable ) ; j++ )
+        { 
+          if( IceShinkaPlaceTable[ j ] == param )
+          { 
+					  ret = pst->psd[ i ].ShinkaMons;
+            break;
+          }
+        }
+        break;
+			case SHINKA_COND_PLACE_DENKIDOUKUTSU:
+        for( j = 0 ; j < NELEMS( DenkidoukutsuShinkaPlaceTable ) ; j++ )
+        { 
+          if( DenkidoukutsuShinkaPlaceTable[ j ] == param )
+          { 
+					  ret = pst->psd[ i ].ShinkaMons;
+            break;
+          }
+        }
 				break;
 			}
 			//進化条件が見つかったら、抜ける
 			if(ret){
+				(*cond) = pst->psd[ i ].ShinkaCond;
 				break;
 			}
 		}
@@ -278,19 +283,37 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 			switch( pst->psd[ i ].ShinkaCond ){
 			case SHINKA_COND_TUUSHIN:
 				ret = pst->psd[ i ].ShinkaMons;
-				(*cond) = SHINKA_COND_TUUSHIN;
 				break;
 			case SHINKA_COND_TUUSHIN_ITEM:
 				if( pst->psd[ i ].ShinkaData == item_no )
         {
 					ret = pst->psd[ i ].ShinkaMons;
-					(*cond) = SHINKA_COND_TUUSHIN_ITEM;
 				}
 				break;
+			case SHINKA_COND_TUUSHIN_YUUGOU:
+        { 
+          POKEMON_PARAM*  pp_e = ( POKEMON_PARAM* )param;
+          int item_no_e = PP_Get( pp_e, ID_PARA_item, NULL );
+          int eqp_e = ITEM_GetParam( item_no_e, ITEM_PRM_EQUIP, heapID );
+
+		      //アイテムで進化しない装備効果は進化しない
+		      if( eqp_e == SOUBI_SINKASINAI )
+          {
+			      break;
+		      }
+          //お互いのポケモンがカブリン、カッチュなら進化
+          if( ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_KABURIN ) &&
+              ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_KATTYU ) )
+          { 
+					  ret = pst->psd[ i ].ShinkaMons;
+          }
+        }
+        break;
 			}
 			//進化条件が見つかったら、抜ける
 			if( ret )
       {
+				(*cond) = pst->psd[ i ].ShinkaCond;
 				break;
 			}
 		}
@@ -302,7 +325,6 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 			if( ( pst->psd[ i ].ShinkaCond == SHINKA_COND_ITEM ) && ( pst->psd[ i ].ShinkaData == param ) )
       {
 				ret = pst->psd[ i ].ShinkaMons;
-				(*cond) = 0;
 				break;
 			}
 			if( ( pst->psd[ i ].ShinkaCond == SHINKA_COND_ITEM_MALE ) &&
@@ -310,7 +332,6 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 			    ( pst->psd[ i ].ShinkaData == param ) )
       {
 				ret = pst->psd[ i ].ShinkaMons;
-				(*cond) = 0;
 				break;
 			}
 			if( ( pst->psd[ i ].ShinkaCond == SHINKA_COND_ITEM_FEMALE ) &&
@@ -318,12 +339,12 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u16 param
 			    ( pst->psd[ i ].ShinkaData == param ) )
       {
 				ret = pst->psd[ i ].ShinkaMons;
-				(*cond) = 0;
 				break;
 			}
 			//進化条件が見つかったら、抜ける
 			if( ret )
       {
+				(*cond) = 0;
 				break;
 			}
 		}
