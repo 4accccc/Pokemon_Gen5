@@ -3170,28 +3170,84 @@ static void handler_Yotimu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
+    typedef struct {
+      u8      pokeID;
+      WazaID  wazaID;
+    }MAX_PRIORITY_PARAM;
+
     const BTL_POKEPARAM* bpp;
+    MAX_PRIORITY_PARAM*  maxPriParam;
+    WazaID waza;
     u8 ePokeID[BTL_POSIDX_MAX];
     u8 pokeCnt = BTL_SVFTOOL_GetAllOpponentFrontPokeID( flowWk, pokeID, ePokeID );
-    u8 pokeIdx = BTL_CALC_GetRand( pokeCnt );
-    bpp = BTL_SVFTOOL_GetPokeParam( flowWk, ePokeID[pokeIdx] );
+    u8 wazaCnt, i, w;
+    u8 pri, maxPri, maxPriCnt;
 
+    maxPri = 0;
+    maxPriCnt = 0;
+    maxPriParam = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(MAX_PRIORITY_PARAM) * BTL_POSIDX_MAX );
+
+    for(i=0; i<pokeCnt; ++i)
     {
-      u8 wazaCnt = BPP_WAZA_GetCount( bpp );
-      u8 wazaIdx = BTL_CALC_GetRand( wazaCnt );
-      WazaID waza = BPP_WAZA_GetID( bpp, wazaIdx );
+      bpp = BTL_SVFTOOL_GetPokeParam( flowWk, ePokeID[i] );
+      wazaCnt = BPP_WAZA_GetCount( bpp );
+      for(w=0; w<wazaCnt; ++w)
+      {
+        waza = BPP_WAZA_GetID( bpp, w );
+        // ダメージワザ
+        if( WAZADATA_GetDamageType(waza) != WAZADATA_DMG_NONE )
+        {
+          pri = WAZADATA_GetPower( waza );
+          if( pri == 1 )
+          {
+            if( WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_ICHIGEKI ){
+              pri = 150;
+            }else {
+
+              switch( waza ){
+              case WAZANO_KAUNTAA:
+              case WAZANO_MIRAAKOOTO:
+              case WAZANO_METARUBAASUTO:
+                pri = 120;
+                break;
+              default:
+                pri = 80;
+              }
+            }
+          }
+        }
+        // 非ダメージワザ
+        else
+        {
+          pri = 1;
+        }
+
+        if( pri >= maxPri )
+        {
+          if( pri > maxPri ){
+            maxPri = pri;
+            maxPriCnt = 0;
+          }
+          maxPriParam[ maxPriCnt ].pokeID = BPP_GetID( bpp );
+          maxPriParam[ maxPriCnt ].wazaID = waza;
+          ++maxPriCnt;
+        }
+      }
+    }
+
+    if( maxPriCnt )
+    {
+      i = BTL_CALC_GetRand( maxPriCnt );
 
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
       {
         BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+
         HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_YotimuExe );
-        HANDEX_STR_AddArg( &param->str, pokeID );
-        HANDEX_STR_AddArg( &param->str, waza );
+        HANDEX_STR_AddArg( &param->str, maxPriParam[i].pokeID );
+        HANDEX_STR_AddArg( &param->str, maxPriParam[i].wazaID );
       }
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
-
-
-      BTL_EVENT_FACTOR_Remove( myHandle );
     }
   }
 }
