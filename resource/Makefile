@@ -23,6 +23,7 @@ endif
 
 
 SUBDIRS	=	wmi \
+			demo3d \
 			tokusei\
 			waza_tbl\
 			itemconv\
@@ -127,7 +128,6 @@ SUBDIRS	=	wmi \
 			mail \
 			season_display \
 			zukan_gra \
-			demo3d \
 			fld_trade \
 			intro \
 			regulation_card \
