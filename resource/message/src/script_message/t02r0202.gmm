@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T19:39:06"/>
+	<create user="matsumiya" host="W00224" date="2010-02-09T17:55:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="265" top="216" right="970" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="1433" top="277" right="2138" bottom="897" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,28 +296,28 @@
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">青年１</attribute>
-		<language name="JPN" width="256">しろ　くろ　つける　というけれど
-それいがいの　こたえを　さがす……[BE:00:ページ切り替え（行送り）]
-そんな　やりかたも　あるんじゃないの</language>
-		<language name="JPN_KANJI" width="256">白黒つける　というけれど
-それいがいの　答えを　探す……[BE:00:ページ切り替え（行送り）]
-そんな　やりかたも　あるんじゃないの</language>
+		<language name="JPN" width="256">わかき　トレーナーに
+だいじな　だいじな　アドバイス！▼
+モンスターボールは　おおめに
+もっていたほうが　いいよ！</language>
+		<language name="JPN_KANJI" width="256">若き　トレーナーに
+大事な　大事な　アドバイス！▼
+モンスターボールは　多めに
+持っていたほうが　いいよ！</language>
 	</row>
 
 	<row id="msg_t02r0202_woman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">女性１</attribute>
-		<language name="JPN" width="256">つよい　ポケモンが　すき……[BE:01:ページ切り替え（クリア）]
-それでいて
-よわい　ポケモンが　すき　という[BE:00:ページ切り替え（行送り）]
-きもちも　どうじに　そんざいする[BE:00:ページ切り替え（行送り）]
-ひとって　ふしぎ　よね</language>
-		<language name="JPN_KANJI" width="256">強い　ポケモンが　好き……[BE:01:ページ切り替え（クリア）]
-それでいて
-弱い　ポケモンが　好きという[BE:00:ページ切り替え（行送り）]
-気持ちも　同時に　存在する[BE:00:ページ切り替え（行送り）]
-人って　矛盾しているのよね</language>
+		<language name="JPN" width="256">よわいポケモン　つよいポケモン
+かっこいいポケモン　かわいいポケモン▼
+たくさんの　ポケモンが
+あなたと　であうのを　まってるのね！</language>
+		<language name="JPN_KANJI" width="256">弱いポケモン　強いポケモン
+かっこいいポケモン　かわいいポケモン▼
+たくさんの　ポケモンが
+あなたと　出会うのを　待ってるのね！</language>
 	</row>
 
 	<flowchart-group-list>
