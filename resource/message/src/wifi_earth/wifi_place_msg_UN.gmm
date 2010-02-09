@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-09T12:05:55"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-09T21:09:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="82" top="121" right="787" bottom="741" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="668" top="162" right="1141" bottom="560" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -1512,10 +1512,34 @@
 
 	<row id="un_reception_msg_01">
 		<comment>専用画面メッセージ</comment>
-		<language name="JPN">●●
+		<language name="JPN">[1:24:国名:0]
 のフロアに　いどう　しますか？</language>
-		<language name="JPN_KANJI">●●
+		<language name="JPN_KANJI">[1:24:国名:0]
 のフロアに　移動　しますか？</language>
+	</row>
+
+	<row id="un_reception_msg_02">
+		<comment>専用画面メッセージ</comment>
+		<language name="JPN">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="un_reception_msg_03">
+		<comment>専用画面メッセージ</comment>
+		<language name="JPN">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="un_reception_msg_04">
+		<comment>専用画面メッセージ</comment>
+		<language name="JPN">[2:02:３桁:9]F</language>
+		<language name="JPN_KANJI">[2:02:３桁:9]F</language>
+	</row>
+
+	<row id="un_reception_msg_05">
+		<comment>専用画面メッセージ</comment>
+		<language name="JPN">？</language>
+		<language name="JPN_KANJI">？</language>
 	</row>
 
 	<flowchart-group-list>
