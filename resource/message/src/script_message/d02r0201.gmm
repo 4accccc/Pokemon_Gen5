@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-14T17:39:23"/>
+	<create user="matsushima" host="W00181" date="2010-02-09T16:10:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,12 +235,12 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="248"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="227"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="199"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="148" top="189" right="853" bottom="809" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,26 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>三銃士イベント</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d02r0201_legend3_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●アラミス初期位置（GRIDX=15 GRIDZ=11）
+
+・話し掛けたとき
+・戦闘開始前</comment>
+		<attribute name="キャラ指定">伝説アラミス</attribute>
+		<language name="JPN" width="256">ききゅああああーっ！</language>
+		<language name="JPN_KANJI" width="256">ききゅああああーっ！</language>
+	</row>
+
+	<row id="msg_d02r0201_legend3_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>・戦闘後
+・ポケモンを倒した場合のメッセージ
+
+●殿堂入り後に復活</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">ポケモンは　もりの　おくへ
+はしりさってしまった…</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　森の奥へ
+走り去ってしまった…</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsushima" host="W00181" date="2010-02-09T16:17:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,12 +235,12 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="236"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="203"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="184"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="261" top="212" right="966" bottom="832" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,26 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d09r1501_legend1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●アトス初期位置（GRIDX=5 GRIDZ=4）
+
+・話し掛けたとき
+・戦闘開始前</comment>
+		<attribute name="キャラ指定">伝説アトス</attribute>
+		<language name="JPN" width="256">こふおおおおーっ！</language>
+		<language name="JPN_KANJI" width="256">こふおおおおーっ！</language>
+	</row>
+
+	<row id="msg_d09r1501_legend1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>・戦闘後
+・ポケモンを倒した場合のメッセージ
+
+●殿堂入り後に復活</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">ポケモンは　いわかべを　かけあがり
+ほらあなの　どこかへ　きえてしまった…</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　岩壁を　駆け上がり
+洞穴の　どこかへ　消えてしまった…</language>
 	</row>
 
 	<flowchart-group-list>
