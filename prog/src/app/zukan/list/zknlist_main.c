@@ -506,9 +506,9 @@ static void ListCallBack_Move( void * work, u32 listPos, BOOL flg )
 //	OS_Printf( "info = %d, mons = %d\n", GET_LIST_INFO(prm), GET_LIST_MONS(prm) );
 
 	if( GET_LIST_INFO(prm) != 0 ){
-		ZKNLISTOBJ_SetPokeGra( wk, GET_LIST_MONS(prm), 0, 0, 0 );
+		ZKNLISTOBJ_SetPokeGra( wk, GET_LIST_MONS(prm) );
 	}else{
-		ZKNLISTOBJ_SetPokeGra( wk, 0, 0, 0, 0 );
+		ZKNLISTOBJ_SetPokeGra( wk, 0 );
 	}
 	ZKNLISTOBJ_ChangePokeIconAnime( wk, listPos-FRAMELIST_GetScrollCount(wk->lwk) );
 	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );

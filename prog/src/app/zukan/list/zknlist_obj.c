@@ -608,13 +608,16 @@ static void DelClactAll( ZKNLISTMAIN_WORK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons, u8 form, u8 sex, u8 rare )
+void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons )
 {
 	ARCHANDLE * ah;
+	POKEMON_PERSONAL_DATA * ppd;
 	ZKNCOMM_CLWK_DATA	prm;
 	u32	nowID, newID;
 	u32	pal;
-
+	u32	sex, form;
+	BOOL	rare;
+	
 	prm = PokeClactParam;
 
 	if( wk->pokeGraFlag == 0 ){
@@ -660,6 +663,8 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons, u8 form, u8 sex, u8
 															HEAPID_ZUKAN_LIST );
 		GFL_ARC_CloseDataHandle( ah );
 	}else{
+		ZUKANSAVE_GetDrawData( wk->dat->savedata, mons, &sex, &rare, &form, HEAPID_ZUKAN_LIST_L );
+
 		ah = POKE2DGRA_OpenHandle( HEAPID_ZUKAN_LIST_L );
 		wk->chrRes[prm.chrRes] = POKE2DGRA_OBJ_CGR_Register(
 															ah, mons, form, sex, rare, POKEGRA_DIR_FRONT,
@@ -678,9 +683,13 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons, u8 form, u8 sex, u8
 	prm.celRes = wk->celRes[prm.celRes];
 	wk->clwk[newID] = ZKNCOMM_CreateClact( wk->clunit, &prm, HEAPID_ZUKAN_LIST );
 
+	ppd = POKE_PERSONAL_OpenHandle( mons, form, HEAPID_ZUKAN_LIST_L );
 	if( mons != 0 ){
-		GFL_CLACT_WK_SetFlip( wk->clwk[newID], CLWK_FLIP_H, TRUE );
+		if( POKE_PERSONAL_GetParam( ppd, POKEPER_ID_reverse ) == 0 ){
+			GFL_CLACT_WK_SetFlip( wk->clwk[newID], CLWK_FLIP_H, TRUE );
+		}
 	}
+	POKE_PERSONAL_CloseHandle( ppd );
 
 	// ‹Œ‚n‚a‚i‚ð”ñ•\Ž¦
 	ZKNLISTOBJ_SetVanish( wk, nowID, FALSE );
@@ -905,9 +914,15 @@ u32 ZKNLISTOBJ_GetChgPokeIconIndex( ZKNLISTMAIN_WORK * wk, BOOL disp )
 
 void ZKNLISTOBJ_PutPokeList2( ZKNLISTMAIN_WORK * wk, u16 mons, s16 py, BOOL disp )
 {
-	u32	obj = ZKNLISTOBJ_GetChgPokeIconIndex( wk, disp );
+	u32	obj;
+	u32	sex, form;
+	BOOL	rare;
+	
+	ZUKANSAVE_GetDrawData( wk->dat->savedata, mons, &sex, &rare, &form, HEAPID_ZUKAN_LIST_L );
 
-	ZKNLISTOBJ_ChgPokeIcon( wk, obj, mons, 0, disp );
+	obj = ZKNLISTOBJ_GetChgPokeIconIndex( wk, disp );
+
+	ZKNLISTOBJ_ChgPokeIcon( wk, obj, mons, form, disp );
 	ZKNLISTOBJ_SetVanish( wk, obj, TRUE );
 	ZKNLISTOBJ_SetAutoAnm( wk, obj, POKEICON_ANM_DEATH );
 

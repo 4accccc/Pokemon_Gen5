@@ -207,14 +207,11 @@ extern void ZKNLISTOBJ_ChgPltt( ZKNLISTMAIN_WORK * wk, u32 id, u32 pal );
  *
  * @param		wk			図鑑リストワーク
  * @param		mons		ポケモン番号
- * @param		form		フォルム
- * @param		sex			性別
- * @param		rare		レアかどうか
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons, u8 form, u8 sex, u8 rare );
+extern void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons );
 
 extern void ZKNLISTOBJ_PutListPosPokeGra( ZKNLISTMAIN_WORK * wk, s16 pos );
 
