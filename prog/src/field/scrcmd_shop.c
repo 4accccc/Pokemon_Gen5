@@ -22,6 +22,7 @@
 #include "message.naix"
 #include "message.naix"
 #include "script_message.naix"
+#include "gamesystem/g_power.h"  //  GPOWER_Calc_Sale
 
 #include "gamesystem/game_data.h"
 #include "gamesystem/msgspeed.h"
@@ -950,7 +951,9 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
 //                                        wk->heapId );
       // 商品ラインナップテーブルにIDと値段を登録
       wk->lineup[i].id    = id;
-      wk->lineup[i].price = ITEM_GetParam( id, ITEM_PRM_PRICE, wk->heapId );
+
+      // Gパワー係数を掛けてから値段を代入する
+      wk->lineup[i].price =  GPOWER_Calc_Sale(ITEM_GetParam( id, ITEM_PRM_PRICE, wk->heapId ));
   }
   wk->lineup_num = i;
   
