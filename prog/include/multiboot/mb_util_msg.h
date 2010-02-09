@@ -75,7 +75,7 @@ typedef enum
 
 typedef enum
 {
-  MMYT_UP,
+  MMYT_UP,   //ã2s‚É‘Î‰‚µ‚½ˆÊ’u
   MMYT_MID,
   MMYT_DOWN,
   

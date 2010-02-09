@@ -41,6 +41,8 @@
 #define MB_PARENT_FRAME_SUB_MSG  (GFL_BG_FRAME1_S)
 #define MB_PARENT_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
 
+#define MB_PARENT_FIRST_TIMEOUT (60*15) //通常5秒以内で接続するのができなかった。
+
 //======================================================================
 //  enum
 //======================================================================
@@ -77,6 +79,8 @@ typedef enum
   MPS_EXIT_COMM,
   MPS_WAIT_EXIT_COMM,
 
+  MPS_FAIL_FIRST_CONNECT,
+  MPS_WAIT_FAIL_FIRST_CONNECT,
 }MB_PARENT_STATE;
 
 typedef enum
@@ -133,6 +137,7 @@ typedef struct
   u8              subState;
   u8              confirmState;
   u8              saveWaitCnt;
+  u16             timeOutCnt;   //初期のROM接続時にタイムアウトをチェックする
   BOOL            isSendGameData;
   BOOL            isSendRom;
   
@@ -302,6 +307,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     {
       //起動成功
       work->state = MPS_SEND_INIT_NET;
+      work->timeOutCnt = 0;
       MB_COMM_InitComm( work->commWork );
     }
     else
@@ -321,6 +327,12 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     break;
     
   case MPS_SEND_INIT_DATA:
+    work->timeOutCnt++;
+    if( work->timeOutCnt >= MB_PARENT_FIRST_TIMEOUT )
+    {
+      work->state = MPS_FAIL_FIRST_CONNECT;
+    }
+    else
     if( MB_COMM_IsSendEnable( work->commWork ) == TRUE )
     {
       work->initData.msgSpeed = MSGSPEED_GetWait();
@@ -453,6 +465,19 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       work->state = MPS_FADEOUT;
     }
     break;
+    
+  //初回接続失敗
+  case MPS_FAIL_FIRST_CONNECT:
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_11 , MSGSPEED_GetWait() );
+    MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+    work->state = MPS_WAIT_FAIL_FIRST_CONNECT;
+    break;
+  
+  case MPS_WAIT_FAIL_FIRST_CONNECT:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      work->state = MPS_EXIT_COMM;
+    }
   }
   
   MB_MSG_MessageMain( work->msgWork );
@@ -903,6 +928,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
     break;
   }
   
+  //Bキャンセルの確認処理
   switch( work->confirmState )
   {
   case MPCS_INIT:

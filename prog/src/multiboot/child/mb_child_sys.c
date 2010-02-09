@@ -155,6 +155,7 @@ typedef struct
 static void MB_CHILD_Init( MB_CHILD_WORK *work );
 static void MB_CHILD_Term( MB_CHILD_WORK *work );
 static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work );
+static void MB_CHILD_VBlank( void );
 
 static void MB_CHILD_InitGraphic( MB_CHILD_WORK *work );
 static void MB_CHILD_TermGraphic( MB_CHILD_WORK *work );
@@ -196,7 +197,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 
   MB_CHILD_InitGraphic( work );
   MB_CHILD_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   
@@ -219,6 +220,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
     }
     work->boxName[i] = GFL_HEAP_AllocClearMemory( work->heapId , 20 );  //8文字+EOM
   }
+  GFUser_SetVIntrFunc( MB_CHILD_VBlank );
 }
 
 //--------------------------------------------------------------
@@ -227,6 +229,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 static void MB_CHILD_Term( MB_CHILD_WORK *work )
 {
   u8 i,j;
+  GFUser_ResetVIntrFunc();
 
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
@@ -398,6 +401,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     if( WIPE_SYS_EndCheck() == TRUE )
     {
       u8 i,j;
+      GFUser_ResetVIntrFunc();
       MB_MSG_MessageTerm( work->msgWork );
       MB_CHILD_TermGraphic( work );
       work->msgWork = NULL;
@@ -439,10 +443,11 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
 
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
     MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
     MB_CHILD_ErrCheck( work , TRUE );
+    GFUser_SetVIntrFunc( MB_CHILD_VBlank );
     break;
     
   case MCS_SELECT_FADEIN:
@@ -490,6 +495,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       u8 i;
       MB_COMM_INIT_DATA *commInit = MB_COMM_GetInitData( work->commWork );
+      GFUser_ResetVIntrFunc();
       MB_MSG_MessageTerm( work->msgWork );
       MB_CHILD_TermGraphic( work );
       PMSND_Exit();
@@ -502,7 +508,6 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
                                               GFL_NET_LDATA_GetPostData( 0 ) ,
                                               GFL_NET_LDATA_GetPostDataSize( 0 ) ,
                                               work->heapId );
-      MB_TPrintf("fileNum[%d]\n",GFL_ARC_GetDataFileCntByHandle(work->capInitWork.arcHandle));
       for( i=0;i<MB_CAP_POKE_NUM;i++ )
       {
         const u8 tray = work->selInitWork.selectPoke[i][0];
@@ -537,9 +542,10 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     PMSND_InitMultiBoot( work->sndData );
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
 
+    GFUser_SetVIntrFunc( MB_CHILD_VBlank );
     MB_CHILD_ErrCheck( work , TRUE );
     break;
     
@@ -638,12 +644,12 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_SAVE_FINISH_WAIT:
     if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
     {
-      if( GFL_UI_TP_GetTrg() == TRUE )
-      {
-        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_06 , work->initData->msgSpeed );
-        MB_COMM_SetChildState( work->commWork , MCCS_NEXT_GAME );
-        work->state = MCS_DIPS_NEXT_GAME_CONFIRM;
-      }
+      MB_MSG_MessageHide( work->msgWork );
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
+
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_06 , work->initData->msgSpeed );
+      MB_COMM_SetChildState( work->commWork , MCCS_NEXT_GAME );
+      work->state = MCS_DIPS_NEXT_GAME_CONFIRM;
     }
     break;
   
@@ -669,6 +675,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       if( ret == MMYR_RET2 )
       {
         MB_COMM_SetChildState( work->commWork , MCCS_END_GAME );
+        MB_MSG_MessageHide( work->msgWork );
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , work->initData->msgSpeed );
         work->state = MCS_WAIT_EXIT_COMM;
         MB_MSG_ClearYesNo( work->msgWork );
@@ -700,6 +708,22 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   return FALSE;
 }
 
+static void MB_CHILD_VBlank( void )
+{
+  static u8 cnt = 0;
+  if( cnt > 1 )
+  {
+    cnt = 0;
+    GFL_BG_SetScroll( MB_CHILD_FRAME_BG , GFL_BG_SCROLL_X_DEC , 1 );
+    GFL_BG_SetScroll( MB_CHILD_FRAME_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+    GFL_BG_SetScroll( MB_CHILD_FRAME_SUB_BG , GFL_BG_SCROLL_X_DEC , 1 );
+    GFL_BG_SetScroll( MB_CHILD_FRAME_SUB_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+  }
+  else
+  {
+    cnt++;
+  }
+}
 
 //--------------------------------------------------------------
 //  グラフィック系初期化
@@ -889,6 +913,7 @@ static void MB_CHILD_SaveInit( MB_CHILD_WORK *work )
 static void MB_CHILD_SaveTerm( MB_CHILD_WORK *work )
 {
   MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_05 , work->initData->msgSpeed );
+  MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
   work->state = MCS_SAVE_FINISH_WAIT;
 }
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-05T13:29:08"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-09T12:23:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="33" top="194" right="738" bottom="822" maximized="no" rayout="Vertical2">
+	<dialog left="243" top="193" right="948" bottom="821" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -396,6 +396,13 @@
 	<row id="MSG_MB_PAERNT_10">
 		<language name="JPN" width="208">パルパークを　ちゅうししますか？</language>
 		<language name="JPN_KANJI" width="208">パルパークを　中止しますか？</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_11">
+		<comment>初回接続時、子機落ち
+(ROM転送後・NET接続前)</comment>
+		<language name="JPN" width="208">こきの　せつぞくに　しっぱいしました。▼</language>
+		<language name="JPN_KANJI" width="208">子機の　接続に　失敗しました。▼</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_ROM_TITLE">
