@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2010-02-09T10:54:49" source="c_cruiser40.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="5401"
+	tool_start_frame="0"
+	tool_end_frame="5400"
+	compress_material="on" material_size="5 5"
+/>
+
+<tex_pattern_list_data image_size="11" palette_size="11">
+	<image_name index="0" name="build01.1"/>
+	<image_name index="1" name="build01.2"/>
+	<image_name index="2" name="build02.1"/>
+	<image_name index="3" name="build02.2"/>
+	<image_name index="4" name="build03.1"/>
+	<image_name index="5" name="build03.2"/>
+	<image_name index="6" name="sea_mizu1.1"/>
+	<image_name index="7" name="sea_mizu1.2"/>
+	<image_name index="8" name="sea_mizu1.3"/>
+	<image_name index="9" name="sea_mizu1.4"/>
+	<image_name index="10" name="sea_mizu1.5"/>
+	<palette_name index="0" name="build01.1_pl"/>
+	<palette_name index="1" name="build01.2_pl"/>
+	<palette_name index="2" name="build02.1_pl"/>
+	<palette_name index="3" name="build02.2_pl"/>
+	<palette_name index="4" name="build03.1_pl"/>
+	<palette_name index="5" name="build03.2_pl"/>
+	<palette_name index="6" name="sea_mizu1.1_pl"/>
+	<palette_name index="7" name="sea_mizu1.2_pl"/>
+	<palette_name index="8" name="sea_mizu1.3_pl"/>
+	<palette_name index="9" name="sea_mizu1.4_pl"/>
+	<palette_name index="10" name="sea_mizu1.5_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="11">
+		0 2503 2506 2509 2512 0 2400 0 2400 0
+		2400
+	</frame_idx>
+	<image_idx size="11">
+		6 7 8 9 10 1 0 3 2 5
+		4
+	</image_idx>
+	<palette_idx size="11">
+		6 7 8 9 10 1 0 3 2 5
+		4
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="4">
+	<tex_pattern_anm index="0" material_name="haikei04" data_size="5" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="lambert13" data_size="2" data_head="5"/>
+	<tex_pattern_anm index="2" material_name="lambert14" data_size="2" data_head="7"/>
+	<tex_pattern_anm index="3" material_name="lambert15" data_size="2" data_head="9"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
