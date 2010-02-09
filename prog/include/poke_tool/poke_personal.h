@@ -66,7 +66,9 @@ typedef enum {
   POKEPER_ID_machine1,        //技マシンフラグ１
   POKEPER_ID_machine2,        //技マシンフラグ２
   POKEPER_ID_machine3,        //技マシンフラグ３
-  POKEPER_ID_machine4         //技マシンフラグ４
+  POKEPER_ID_machine4,        //技マシンフラグ４
+
+  POKEPER_ID_waza_oshie1,     //技教え１
 
 }PokePersonalParamID;
 
