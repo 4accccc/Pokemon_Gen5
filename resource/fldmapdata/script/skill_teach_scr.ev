@@ -20,6 +20,8 @@
 //----------------------------------------------------------------------
 _EVENT_DATA   ev_waza_teacher_dragon
 _EVENT_DATA   ev_waza_teacher_powerful
+_EVENT_DATA   ev_waza_teacher_coalescence
+_EVENT_DATA   ev_bg_waza_teacher_coalescence
 _EVENT_DATA_END
 
 //----------------------------------------------------------------------
@@ -158,7 +160,7 @@ sub_waza_teacher_powerful:
         _RET
     ENDIF
 
-    _SKILLTEACH_CHECK_PARTY( SCR_SKILLTEACH_MODE_DRAGON, SCWK_ANSWER )
+    _SKILLTEACH_CHECK_PARTY( SCR_SKILLTEACH_MODE_STRONGEST, SCWK_ANSWER )
     IF $SCWK_ANSWER == SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG THEN
         //手持ちポケモンでは覚えられない
         _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_03 )
@@ -174,7 +176,7 @@ sub_waza_teacher_powerful:
     ENDIF
 
     //ポケモン選択
-    _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_DRAGON, SCWK_ANSWER, select_pos )
+    _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_STRONGEST, SCWK_ANSWER, select_pos )
     IF $SCWK_ANSWER == FALSE THEN
         _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_04 )
         _LAST_KEYWAIT()
@@ -192,7 +194,7 @@ sub_waza_teacher_powerful:
         _RET
     ENDIF
 
-    _SKILLTEACH_CHECK_POKEMON( SCR_SKILLTEACH_MODE_DRAGON, select_pos, SCWK_ANSWER )
+    _SKILLTEACH_CHECK_POKEMON( SCR_SKILLTEACH_MODE_STRONGEST, select_pos, SCWK_ANSWER )
 
     SWITCH  $SCWK_ANSWER
     CASE SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG THEN
@@ -218,17 +220,130 @@ sub_waza_teacher_powerful:
 
     ENDSWITCH
 
-    _SKILLTEACH_GET_WAZAID( SCR_SKILLTEACH_MODE_DRAGON, select_pos, teach_waza_id )
+    _SKILLTEACH_GET_WAZAID( SCR_SKILLTEACH_MODE_STRONGEST, select_pos, teach_waza_id )
     //$teach_waza_id = WAZANO_RYUUSEIGUN
     _CALL sub_skillteacher_system
 
     IF $SCWK_ANSWER == TRUE THEN
-        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_dragon_09b )
-        _LAST_KEYWAIT()
-        _BALLOONWIN_CLOSE()
+        //_BALLOONWIN_TALKOBJ_MSG( msg_skillteach_dragon_09b )
+        //_LAST_KEYWAIT()
+        //_BALLOONWIN_CLOSE()
     ENDIF
 
     _RET
+
+
+//======================================================================
+//======================================================================
+/**************************************************************/
+/* 合体技を教えてくれる人                                     */
+/**************************************************************/
+EVENT_START   ev_waza_teacher_coalescence
+  _TALK_OBJ_START()
+
+  _CALL sub_waza_teacher_coalescence
+
+EVENT_END
+
+/**************************************************************/
+/**************************************************************/
+sub_waza_teacher_coalescence:
+    IF FLAG_OFF( FH_01 ) THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_01 )
+        _FLAG_SET( FH_01 )
+    ELSE
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_02 )
+    ENDIF
+    _YES_NO_WIN( SCWK_ANSWER )
+    _BALLOONWIN_CLOSE()
+
+    IF $SCWK_ANSWER == SCR_NO THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_04 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    _SKILLTEACH_CHECK_PARTY( SCR_SKILLTEACH_MODE_COALESCENCE, SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG THEN
+        //手持ちポケモンでは覚えられない
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_03 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ELSIF $SCWK_ANSWER == SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG THEN
+        //そのポケモンはなつきが足りない
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_08 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    //ポケモン選択
+    _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_COALESCENCE, SCWK_ANSWER, select_pos )
+    IF $SCWK_ANSWER == FALSE THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_04 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    //タマゴチェック
+    _CHECK_TEMOTI_EGG( SCWK_ANSWER, select_pos )
+    IF $SCWK_ANSWER == TRUE THEN
+        //タマゴには教えられない
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_07 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    _SKILLTEACH_CHECK_POKEMON( SCR_SKILLTEACH_MODE_COALESCENCE, select_pos, SCWK_ANSWER )
+
+    SWITCH  $SCWK_ANSWER
+    CASE SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG THEN
+        //そのポケモンはなつきが足りない
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_08 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+
+    CASE SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG THEN
+        //そのポケモンは覚えられない
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_06 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+
+    CASE SCR_SKILLTEACH_CHECK_RESULT_ALREADY_NG THEN
+        //すでに覚えている
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_09 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+
+    ENDSWITCH
+
+    _SKILLTEACH_GET_WAZAID( SCR_SKILLTEACH_MODE_COALESCENCE, select_pos, teach_waza_id )
+    //$teach_waza_id = WAZANO_RYUUSEIGUN
+    _CALL sub_skillteacher_system
+
+    IF $SCWK_ANSWER == TRUE THEN
+        //_BALLOONWIN_TALKOBJ_MSG( msg_skillteach_dragon_09b )
+        //_LAST_KEYWAIT()
+        //_BALLOONWIN_CLOSE()
+    ENDIF
+
+    _RET
+
+
+/**************************************************************/
+/*  合体技教えの人のところの張り紙                            */
+/**************************************************************/
+EVENT_START   ev_bg_waza_teacher_coalescence
+	_EASY_BGWIN_MSG( msg_skillteach_coalescence_11, TYPE_TOWN )
+EVENT_END
+
 
 
 //======================================================================
