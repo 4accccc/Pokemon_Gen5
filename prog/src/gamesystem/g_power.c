@@ -10,6 +10,8 @@
 #include "field/gpower_id.h"
 #include "gamesystem/g_power.h"
 #include "waza_tool/wazano_def.h"
+#include "arc_def.h"
+#include "power.naix"
 
 
 //==============================================================================
@@ -182,6 +184,52 @@ static void _OccurPowerClear(GPOWER_TYPE type)
   OS_TPrintf("GPower Clear type=%d\n", type);
 }
 
+//==================================================================
+/**
+ * パワーデータをAllocしたワークに読み込む
+ *
+ * @param   heap_id		ヒープID
+ * @retval  POWER_CONV_DATA		パワーデータへのポインタ
+ */
+//==================================================================
+POWER_CONV_DATA * GPOWER_PowerData_LoadAlloc(HEAPID heap_id)
+{
+  return GFL_ARC_LoadDataAlloc(ARCID_POWER, NARC_power_power_data_bin, heap_id);
+}
+
+//==================================================================
+/**
+ * パワーデータをUnloadする
+ *
+ * @param   powerdata		パワーデータへのポインタ
+ */
+//==================================================================
+void GPOWER_PowerData_Unload(POWER_CONV_DATA *powerdata)
+{
+  GFL_HEAP_FreeMemory(powerdata);
+}
+
+//==================================================================
+/**
+ * GパワーIDからGパワータイプを取り出す
+ *
+ * @param   powerdata		パワーデータへのポインタ
+ * @param   gpower_id		GパワーID
+ *
+ * @retval  GPOWER_TYPE		Gパワータイプ
+ */
+//==================================================================
+GPOWER_TYPE GPOWER_ID_to_Type(const POWER_CONV_DATA *powerdata, GPOWER_ID gpower_id)
+{
+  return powerdata[gpower_id].type;
+}
+
+
+//==============================================================================
+//
+//  
+//
+//==============================================================================
 //==================================================================
 /**
  * Gパワー計算：エンカウント率

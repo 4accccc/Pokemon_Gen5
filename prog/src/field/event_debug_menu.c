@@ -4675,9 +4675,7 @@ static BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk )
 //======================================================================
 //  デバッグメニュー　Gパワー
 //======================================================================
-#include "power.naix"
 #include "gamesystem/g_power.h"
-#include "field/gpower_id.h"
 #include "msg/msg_d_matsu.h"
 //--------------------------------------------------------------
 /// DEBUG_GPOWER_EVENT_WORK
@@ -4779,7 +4777,7 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugGPowerMenuListData );
-    work->powerdata = GFL_ARC_LoadDataAlloc(ARCID_POWER, NARC_power_power_data_bin, work->heapID);
+    work->powerdata = GPOWER_PowerData_LoadAlloc(work->heapID);
     (*seq)++;
     break;
   case 1:
@@ -4805,7 +4803,7 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
     break;
   case 2:
     FLDMENUFUNC_DeleteMenu( work->menuFunc );
-    GFL_HEAP_FreeMemory(work->powerdata);
+    GPOWER_PowerData_Unload(work->powerdata);
     return( GMEVENT_RES_FINISH );
   }
   

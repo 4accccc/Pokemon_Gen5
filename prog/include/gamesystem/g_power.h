@@ -38,6 +38,9 @@ extern void GPOWER_Clear_AllPower(void);
 extern void GPOWER_Set_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata);
 extern GPOWER_ID GPOWER_Get_FinishWaitID(void);
 extern void GPOWER_Set_Finish(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata);
+extern POWER_CONV_DATA * GPOWER_PowerData_LoadAlloc(HEAPID heap_id);
+extern void GPOWER_PowerData_Unload(POWER_CONV_DATA *powerdata);
+extern GPOWER_TYPE GPOWER_ID_to_Type(const POWER_CONV_DATA *powerdata, GPOWER_ID gpower_id);
 
 //--------------------------------------------------------------
 //  ‰e‹¿‚ÌŒvŽZ
