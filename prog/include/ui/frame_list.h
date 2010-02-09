@@ -101,7 +101,7 @@ typedef struct {
 	u8	bmpSizY;							// フレーム内に表示するBMPWINの表示Ｙサイズ
 	u8	bmpPal;								// フレーム内に表示するBMPWINのパレット
 
-	u8	scrollSpeed[FRAMELIST_SPEED_MAX];		// スクロール速度 [0] = 最速 ※itemSizYを割り切れる値であること！
+	u8	scrollSpeed[FRAMELIST_SPEED_MAX];		// スクロール速度 [0] = 最速 ※itemSizY*8を割り切れる値であること！
 
 	u8	selPal;								// 選択項目のパレット
 
