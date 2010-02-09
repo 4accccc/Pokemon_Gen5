@@ -22,3 +22,14 @@ static const DEBUG_NUMINPUT_LIST DNI_EffectEncountList[] = {
  { dni_effenc_pos_ofsz, EFFENC_DNI_OFSZ, &ofs_param },
 };
 
+#ifdef PM_DEBUG
+static const DEBUG_NUMINPUT_PARAM country_param = {
+ 0, 233, DebugGetUnCouontry, DebugSetUnCouontry,
+};
+
+static const DEBUG_NUMINPUT_LIST DNI_UnitedNationsList[] = {
+  //gmm_id, param, dni_param
+ { dni_country_code, 0, &country_param },
+};
+#endif  //PM_DEBUG
+

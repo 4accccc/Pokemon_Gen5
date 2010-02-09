@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-12-10T17:24:22"/>
+	<create user="saitou" host="W00158" date="2010-02-08T21:06:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -347,6 +347,11 @@
 		<language name="JPN_KANJI" width="240">ダミーシナリオ</language>
 	</row>
 
+	<row id="dni_top_united_nations">
+		<language name="JPN" width="240">こくれん　いきさき</language>
+		<language name="JPN_KANJI" width="240">国連　行き先</language>
+	</row>
+
 	<row id="dni_effenc_interval" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>エフェクトエンカウント関連メニュー
 　エフェクトチェックインターバル</comment>
@@ -427,6 +432,11 @@
 		<comment>スクリプト用ワーク操作メニュー：その他</comment>
 		<language name="JPN" width="240">そのたワーク</language>
 		<language name="JPN_KANJI" width="240">その他ワーク</language>
+	</row>
+
+	<row id="dni_country_code" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="240">くにコード</language>
+		<language name="JPN_KANJI" width="240">国コード</language>
 	</row>
 
 	<flowchart-group-list>

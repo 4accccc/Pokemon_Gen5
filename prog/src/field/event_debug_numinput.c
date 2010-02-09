@@ -41,6 +41,8 @@
 
 #include "effect_encount.h"
 
+#include "united_nations.h" 
+
 //======================================================================
 //======================================================================
 ///項目選択用データの定義
@@ -141,6 +143,9 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_Initializer[D_NUMINPUT_MODE_MAX] = 
   { D_NINPUT_DATA_LIST,   NELEMS( DNI_EffectEncountList ), DNI_EffectEncountList, },
 };
 
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_un = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_UnitedNationsList ), DNI_UnitedNationsList, };
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -176,6 +181,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_other_work, (void*)&DATA_other_work },
   { dni_top_effect_encount, (void*)&DATA_eff_enc },
   { dni_top_scenario, (void*)NULL },
+  { dni_top_united_nations, (void*)&DATA_un },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {

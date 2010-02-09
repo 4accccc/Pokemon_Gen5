@@ -219,4 +219,14 @@ static u32 GetMsg(const int inSex, const u32 inTrID, const int inNature, const B
 
   return msg;
 }
+#ifdef PM_DEBUG
+u32 DebugGetUnCouontry(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return DebugUnCountryCode;
+}
 
+void DebugSetUnCouontry(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  DebugUnCountryCode = value;
+}
+#endif
