@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/15 21:32:37
+#save date:2010/02/09 15:01:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02gym0201.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02gym0201.wms
 #hold event type:
 1
 #hold event number:
-20
+5
 #event number: 0
 #type
 1
@@ -107,9 +107,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C02GYM0201_BOOK_01D
+C02GYM0201_STOPPER_01
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -117,13 +117,13 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C02GYM0201_BOOK_01D
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-0
+4
 #Parameter 1 Number
-0
+4
 #Parameter 2 Number
 0
 #Move Limit X Number
@@ -135,471 +135,6 @@ EVENTDATA_POSTYPE_GRID
 #position
 -72 0 88
 #event number: 4
-#type
-1
-#ID name
-C02GYM0201_BOOK_01P
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C02GYM0201_BOOK_01P
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 0 88
-#event number: 5
-#type
-1
-#ID name
-C02GYM0201_BOOK_01H
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C02GYM0201_BOOK_01H
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 88
-#event number: 6
-#type
-1
-#ID name
-C02GYM0201_BOOK_01L
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C02GYM0201_BOOK_01L
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 88
-#event number: 7
-#type
-1
-#ID name
-C02GYM0201_BOOK_01E
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 136
-#event number: 8
-#type
-1
-#ID name
-C02GYM0201_BOOK_01I
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 136
-#event number: 9
-#type
-1
-#ID name
-C02GYM0201_BOOK_01M
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 0 136
-#event number: 10
-#type
-1
-#ID name
-C02GYM0201_BOOK_01F
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 120
-#event number: 11
-#type
-1
-#ID name
-C02GYM0201_BOOK_01J
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 120
-#event number: 12
-#type
-1
-#ID name
-C02GYM0201_BOOK_01N
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 0 120
-#event number: 13
-#type
-1
-#ID name
-C02GYM0201_BOOK_01G
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 104
-#event number: 14
-#type
-1
-#ID name
-C02GYM0201_BOOK_01K
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 104
-#event number: 15
-#type
-1
-#ID name
-C02GYM0201_BOOK_01O
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 0 104
-#event number: 16
-#type
-1
-#ID name
-C02GYM0201_BOOK_01C
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 104
-#event number: 17
-#type
-1
-#ID name
-C02GYM0201_BOOK_01B
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 120
-#event number: 18
-#type
-1
-#ID name
-C02GYM0201_BOOK_01A
-#OBJ CODE Number
-NONDRAW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 136
-#event number: 19
 #type
 1
 #ID name
@@ -639,7 +174,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-22
+26
 #event number: 0
 #Bg Event Label
 BG_C02GYM0201_STATUE_02
@@ -926,6 +461,58 @@ SCRID_BG_C02GYM0201_CATEGORY_01
 EVENTDATA_POSTYPE_GRID
 #position
 -184 0 216
+#event number: 22
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_17
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_17
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 88
+#event number: 23
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_18
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_18
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 88
+#event number: 24
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_19
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_19
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 8 88
+#event number: 25
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_20
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_20
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 88
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

@@ -13,23 +13,8 @@
 #define C02GYM0201_ASSITANTW_01            0
 #define C02GYM0201_DANPEI_01               1
 #define C02GYM0201_GIRL3_01                2
-#define C02GYM0201_BOOK_01D                3
-#define C02GYM0201_BOOK_01P                4
-#define C02GYM0201_BOOK_01H                5
-#define C02GYM0201_BOOK_01L                6
-#define C02GYM0201_BOOK_01E                7
-#define C02GYM0201_BOOK_01I                8
-#define C02GYM0201_BOOK_01M                9
-#define C02GYM0201_BOOK_01F               10
-#define C02GYM0201_BOOK_01J               11
-#define C02GYM0201_BOOK_01N               12
-#define C02GYM0201_BOOK_01G               13
-#define C02GYM0201_BOOK_01K               14
-#define C02GYM0201_BOOK_01O               15
-#define C02GYM0201_BOOK_01C               16
-#define C02GYM0201_BOOK_01B               17
-#define C02GYM0201_BOOK_01A               18
-#define TR_SCHOOLB_04                     19
+#define C02GYM0201_STOPPER_01              3
+#define TR_SCHOOLB_04                      4
 
 #endif //ZONE_C02GYM0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02gym0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -58,5 +43,9 @@
 #define BG_C02GYM0201_CATEGORY_22        19
 #define BG_C02GYM0201_CATEGORY_23        20
 #define BG_C02GYM0201_CATEGORY_01        21
+#define BG_C02GYM0201_CATEGORY_17        22
+#define BG_C02GYM0201_CATEGORY_18        23
+#define BG_C02GYM0201_CATEGORY_19        24
+#define BG_C02GYM0201_CATEGORY_20        25
 
 #endif //ZONE_C02GYM0201_EVB_H

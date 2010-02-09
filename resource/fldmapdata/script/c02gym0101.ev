@@ -67,8 +67,8 @@ INIT_EVENT_START	ev_init_c02gym0101
 		IF $WK_SCENE_C02GYM0101 == 2  THEN 
 
 			//アロエと、ジムリーダー夫を配置する
-			_OBJ_ADD_EX( 10, 11, DIR_DOWN, MMDL_ID_EVENTOBJ_00, LEADER2, MV_DOWN )
-			_OBJ_POS_CHANGE( C02GYM0101_AD_01, 14, 0, 13, DIR_DOWN )
+			_OBJ_ADD_EX( 12, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00, LEADER2, MV_DOWN )
+			_OBJ_POS_CHANGE( C02GYM0101_AD_01, 13, 0, 10, DIR_DOWN )
 			
 		ENDIF
 	ENDIF
@@ -447,18 +447,76 @@ _ANIME_LABEL	anm_ad_turn
 /*     ジムリーダーアロエが博物館を出て行く					*/
 /**************************************************************/
 EVENT_START		ev_pos_c02gym0101_leader_01
-	
-	//主人公が、アロエの元まで歩く
+
+	//主人公が、アロエ気づく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_idu_tounan )
 	_OBJ_ANIME_WAIT()
 	
-	//アロエが退場
+	//ハカイ団がしゃべる
+	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim1_01 , C02GYM0101_HAKAIM_01, WIN_UP ) 
+	_MSGWIN_CLOSE()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim2_01 , C02GYM0101_HAKAIM_02, WIN_UP ) 
+	_MSGWIN_CLOSE()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim1_02 , C02GYM0101_HAKAIM_01, WIN_UP ) 
+	
+	//サブウィンで、ハカイ団がしゃべる
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_c02gym0101_hakaim1_03 , 3 , 12 , 1 ) 
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_c02gym0101_hakaim1_04 , 21 , 17 , 2 )
+
+	//20フレーム待機した後ウィンドウを消す
+	_TIME_WAIT( 20 )
+	_BALLOONWIN_CLOSE()
+	_SUBWIN_CLOSE( 1 )
+	_SUBWIN_CLOSE( 2 )
+	
+	//盗まれる化石を中心としたカメラに移動する
+	_CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+ 
+	_CAMERA_MOVE(9688,0,970752,823296,139183,1093632,30)
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+    
+    //【仮】煙幕の処理が後から入る予定
+	_WHITE_OUT()
+	_TIME_WAIT  ( 45 )
+	
+	_OBJ_DEL( C02GYM0101_HAKAIM_01 )
+	_OBJ_DEL( C02GYM0101_HAKAIM_02 )
+	_OBJ_DEL( C02GYM0101_HAKAIM_03 )
+	_OBJ_DEL( C02GYM0101_HAKAIM_04 )
+	_OBJ_DEL( C02GYM0101_HAKAIM_05 )
+	_OBJ_DEL( C02GYM0101_HAKAIM_06 )
+
+	//==============フラグワーク操作==============//
+	
+	_FLAG_SET( FV_MUSEUM_TOUNAN )  //博物館内の骨がなくなる
+	_OBJ_DEL( C02GYM0101_BONE_01 )
+	
+	_FLAG_SET( FV_MUSEUM_STONE )	//博物館内の石がなくなる
+	_OBJ_DEL( C02GYM0101_BLACKSTONE_01 )
+
+	
+	//============================================//
+	
+	_WHITE_IN()
+	
+	_TIME_WAIT  ( 40 )
+   	_CAMERA_RECV_MOVE( 50 )
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
+	//アロエが化石まで移動
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00, anm_leader_idou_tounan_a )
 	_OBJ_ANIME_WAIT()
 	
 	//アロエが喋る
 	//なんてこったい……
-	_BALLOONWIN_OBJMSG( msg_c02gym0101_leader_01, MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader_01 , MMDL_ID_EVENTOBJ_00, WIN_UP )
 	_MSGWIN_CLOSE()
 
 	//アロエが退場
@@ -489,21 +547,13 @@ _ANIME_LABEL	anm_player_idu_tounan
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader_idou_tounan_a
 	_ANIME_DATA	AC_WALK_D_32F,2,1
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WAIT_32F,1
-	_ANIME_DATA	AC_WALK_U_16F,1,1
-	_ANIME_DATA	AC_WALK_L_16F,4,1
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA	AC_WALK_U_32F,1,1
-	_ANIME_DATA AC_WAIT_32F,1
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA	AC_WALK_D_32F,1,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //アロエ:博物館の外に退場                              
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader_idou_tounan_b
+	_ANIME_DATA	AC_WALK_L_2F,6,1
 	_ANIME_DATA	AC_WALK_D_2F,10,1
 	_ANIME_DATA	ACMD_END,0
 	

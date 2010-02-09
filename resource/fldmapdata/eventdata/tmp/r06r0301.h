@@ -9,6 +9,7 @@
 #ifndef ZONE_R06R0301_EVC_H
 #define ZONE_R06R0301_EVC_H
 
+#define R06R0301_OLDMAN1_01                0
 
 #endif //ZONE_R06R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r06r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

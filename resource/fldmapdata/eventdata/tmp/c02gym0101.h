@@ -21,6 +21,12 @@
 #define C02GYM0101_BONE_01                 8
 #define C02GYM0101_BLACKSTONE_01           9
 #define C02GYM0101_FOSSIL                 10
+#define C02GYM0101_HAKAIM_01              11
+#define C02GYM0101_HAKAIM_04              12
+#define C02GYM0101_HAKAIM_03              13
+#define C02GYM0101_HAKAIM_02              14
+#define C02GYM0101_HAKAIM_05              15
+#define C02GYM0101_HAKAIM_06              16
 
 #endif //ZONE_C02GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

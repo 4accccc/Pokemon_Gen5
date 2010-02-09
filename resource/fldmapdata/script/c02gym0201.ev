@@ -48,11 +48,13 @@ _EVENT_DATA    ev_bg_c02gym0201_category_21
 _EVENT_DATA    ev_bg_c02gym0201_category_22
 _EVENT_DATA    ev_bg_c02gym0201_category_23
 _EVENT_DATA    ev_bg_c02gym0201_category_24
-_EVENT_DATA  ev_c02gym0201_book_01d
-_EVENT_DATA  ev_c02gym0201_book_01h
-_EVENT_DATA  ev_c02gym0201_book_01l
-_EVENT_DATA  ev_c02gym0201_book_01p
+
+_EVENT_DATA  ev_bg_c02gym0201_category_17
+_EVENT_DATA  ev_bg_c02gym0201_category_18
+_EVENT_DATA  ev_bg_c02gym0201_category_19
+_EVENT_DATA  ev_bg_c02gym0201_category_20
 _EVENT_DATA  ev_init_c02gym0201
+
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -66,7 +68,6 @@ ev_zone_c02gym0201:
 /*            FIELD_INIT_LABEL                              　 */
 /**************************************************************/
 INIT_EVENT_START	ev_init_c02gym0201
-//ev_init_c02gym0201:
 
 	DEFINE_LOCAL  LWK_POSX_INIT   /* ローカル変数定義 */
     DEFINE_LOCAL  LWK_POSZ_INIT    /* {}で囲う場合は連続して書かなければならない */
@@ -97,22 +98,11 @@ INIT_EVENT_START	ev_init_c02gym0201
 	IF $WK_SCENE_C02GYM0201 == 7 THEN 
 		
 		//仕掛け本棚の当たり判定を持った、透明OBJの位置
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01A, 14, 0, 7 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01B, 14, 0, 8 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01C, 14, 0, 9 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01D, 14, 0, 10 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01E, 15, 0, 7 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01F, 15, 0, 8 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01G, 15, 0, 9 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01H, 15, 0, 10 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01I, 16, 0, 7 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01J, 16, 0, 8 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01K, 16, 0, 9 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01L, 16, 0, 10 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01M, 17, 0, 7 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01N, 17, 0, 8 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01O, 17, 0, 9 , DIR_UP)
-    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01P, 17, 0, 10 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_STOPPER_01, 14, 0, 10 , DIR_UP)
+		_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_17, 14, 1, 10 )
+		_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_18, 15, 0, 10 )
+		_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_19, 16, 0, 10 )
+		_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_20, 17, 0, 10 )
 
    ENDIF
 
@@ -1157,7 +1147,7 @@ EVENT_END
 /*     本棚ジャンル17               　　　　　　　　　　　　　*/
 //
 /**************************************************************/
-EVENT_START		 ev_c02gym0201_book_01d	
+EVENT_START		 ev_bg_c02gym0201_category_17	
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_MSGWIN_CLOSE()
@@ -1181,7 +1171,7 @@ EVENT_END
 /*     本棚ジャンル18               　　　　　　　　　　　　　*/
 //なぞなぞのある本棚前の、ストッパーを動かす本棚
 /**************************************************************/
-EVENT_START		 ev_c02gym0201_book_01h
+EVENT_START		 ev_bg_c02gym0201_category_18
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_MSGWIN_CLOSE()
@@ -1200,12 +1190,11 @@ EVENT_START		 ev_c02gym0201_book_01h
 	ENDIF
 	
 EVENT_END
-
 /**************************************************************/
 /*     本棚ジャンル 19   　          　　　　　　　　　　　　*/
 //	隠し扉が動く本がある本棚
 /**************************************************************/
-EVENT_START		 ev_c02gym0201_book_01l	
+EVENT_START		 ev_bg_c02gym0201_category_19
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_MSGWIN_CLOSE()
@@ -1228,11 +1217,11 @@ EVENT_START		 ev_c02gym0201_book_01l
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe )
     		_OBJ_ANIME_WAIT() 
     		
-    	    		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
+    	    _PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
     		_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
-					_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_switch_03)
+			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_switch_03)
 			_MSGWIN_CLOSE()
 			
 			//ギミック発動。本棚が横に移動する
@@ -1244,32 +1233,16 @@ EVENT_START		 ev_c02gym0201_book_01l
 			_GYM_NORMAL_MOVE_WALL(0)
 			_SE_STOP()	
 	
-			_OBJ_ANIME( C02GYM0201_BOOK_01A, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01B, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01C, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01D, anm_book_open )
-			_OBJ_ANIME_WAIT()
-
-			_OBJ_ANIME( C02GYM0201_BOOK_01E, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01F, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01G, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01H, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_STOPPER_01, anm_book_open )
 			_OBJ_ANIME_WAIT()
 			
-			_OBJ_ANIME( C02GYM0201_BOOK_01I, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01J, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01K, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01L, anm_book_open )
-			_OBJ_ANIME_WAIT()
-			
-			_OBJ_ANIME( C02GYM0201_BOOK_01M, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01N, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01O, anm_book_open )
-			_OBJ_ANIME( C02GYM0201_BOOK_01P, anm_book_open )
-			_OBJ_ANIME_WAIT()
+			_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_17, 14, 1, 10 )
+			_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_18, 15, 0, 10 )
+			_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_19, 16, 0, 10 )
+			_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_20, 17, 0, 10 )
 			
 			//かいだんが　　あらわれた
-					_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_switch_04)
+			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_switch_04)
 			_LAST_KEYWAIT()
     		_MSGWIN_CLOSE()
 			
@@ -1278,11 +1251,11 @@ EVENT_START		 ev_c02gym0201_book_01l
 		ELSE
     		
     		_MSGWIN_CLOSE()
-					_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_08)
+			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_08)
 			_LAST_KEYWAIT()
     		_MSGWIN_CLOSE()
     		
-    	    		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
+    	    _PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
     		_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
     		
@@ -1291,7 +1264,6 @@ EVENT_START		 ev_c02gym0201_book_01l
 	ENDIF
 	
 EVENT_END
-
 //--------------------------------------------------------------
 //		本棚が動く
 //--------------------------------------------------------------
@@ -1302,7 +1274,7 @@ _ANIME_LABEL	anm_book_open
 /**************************************************************/
 /*     本棚ジャンル20               　　　　　　　　　　　　　*/
 /**************************************************************/
-EVENT_START		 ev_c02gym0201_book_01p	
+EVENT_START		 ev_bg_c02gym0201_category_20
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_MSGWIN_CLOSE()
@@ -1321,7 +1293,6 @@ EVENT_START		 ev_c02gym0201_book_01p
 	ENDIF
 	
 EVENT_END
-
 /**************************************************************/
 /*     本棚ジャンル21              　　　　　　　　　　　　　*/
 /**************************************************************/
