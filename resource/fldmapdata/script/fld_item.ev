@@ -37,6 +37,36 @@ _EVENT_DATA ev_fld_item_18
 _EVENT_DATA ev_fld_item_19
 _EVENT_DATA ev_fld_item_20
 _EVENT_DATA ev_fld_item_21
+_EVENT_DATA ev_fld_item_225
+_EVENT_DATA ev_fld_item_226
+_EVENT_DATA ev_fld_item_227
+_EVENT_DATA ev_fld_item_228
+_EVENT_DATA ev_fld_item_229
+_EVENT_DATA ev_fld_item_230
+_EVENT_DATA ev_fld_item_231
+_EVENT_DATA ev_fld_item_232
+_EVENT_DATA ev_fld_item_233
+_EVENT_DATA ev_fld_item_234
+_EVENT_DATA ev_fld_item_235
+_EVENT_DATA ev_fld_item_236
+_EVENT_DATA ev_fld_item_237
+_EVENT_DATA ev_fld_item_238
+_EVENT_DATA ev_fld_item_239
+_EVENT_DATA ev_fld_item_240
+_EVENT_DATA ev_fld_item_241
+_EVENT_DATA ev_fld_item_242
+_EVENT_DATA ev_fld_item_243
+_EVENT_DATA ev_fld_item_244
+_EVENT_DATA ev_fld_item_245
+_EVENT_DATA ev_fld_item_246
+_EVENT_DATA ev_fld_item_247
+_EVENT_DATA ev_fld_item_248
+_EVENT_DATA ev_fld_item_249
+_EVENT_DATA ev_fld_item_250
+_EVENT_DATA ev_fld_item_251
+_EVENT_DATA ev_fld_item_252
+_EVENT_DATA ev_fld_item_253
+_EVENT_DATA ev_fld_item_254
 _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
@@ -192,6 +222,216 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_21
   _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=225
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_225
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=226
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_226
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=227
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_227
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=228
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_228
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=229
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_229
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=230
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_230
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=231
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_231
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=232
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_232
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=233
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_233
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=234
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_234
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=235
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_235
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=236
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_236
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=237
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_237
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=238
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_238
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=239
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_239
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=240
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_240
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=241
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_241
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=242
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_242
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=243
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_243
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=244
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_244
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=245
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_245
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=246
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_246
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=247
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_247
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=248
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_248
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=249
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_249
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=250
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_250
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=251
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_251
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=252
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_252
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=253
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_253
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=WC10 X=0 Y=0 ITEM=‚«‚Ì‚Ý FLAG=254
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_254
+  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
 EVENT_END
 
 
