@@ -1648,14 +1648,20 @@ SRCS_OVERLAY_ZUKAN_LIST = app/zukan/list/zukanlist.c \
 
 # }ŠÓŒŸõ
 #===> SRCS_OVERLAY_ZUKAN_LIST
-SRCS_OVERLAY_ZUKAN_SEARCH = app/zukan/search/zukan_search_engine.c
+SRCS_OVERLAY_ZUKAN_SEARCH = app/zukan/search/zukansearch.c \
+                            app/zukan/search/zknsearch_main.c \
+                            app/zukan/search/zknsearch_seq.c \
+                            app/zukan/search/zknsearch_bmp.c \
+                            app/zukan/search/zknsearch_obj.c \
+                            app/zukan/search/zknsearch_ui.c
 
 # }ŠÓ
 #===> SRCS_OVERLAY_ZUKAN_TOROKU
 #===> SRCS_OVERLAY_ZUKAN_LIST
+#===> SRCS_OVERLAY_ZUKAN_SEARCH
 SRCS_OVERLAY_ZUKAN = app/zukan/zukan.c \
-                     app/zukan/zukan_common.c
-
+                     app/zukan/zukan_common.c \
+                     app/zukan/search/zukan_search_engine.c
 
 # ƒoƒgƒ‹Ú‘±ƒfƒ‚
 #===> SRCS_OVERLAY_UI_COMMON
