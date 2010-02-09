@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-05T19:09:08"/>
+	<create user="taya" host="W00146" date="2010-02-09T15:35:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -427,7 +427,7 @@
 		<band id="2" index="3" style="0000" width="494"/>
 		<band id="3" index="4" style="0000" width="175"/>
 		<band id="4" index="0" style="0000" width="671"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2610,21 +2610,21 @@
 
 	<row id="BTL_STRID_SET_YotimuExe">
 		<comment>よちむ</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]　を　よみとった！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]　を　読み取った！</language>
 	</row>
 	<row id="BTL_STRID_SET_YotimuExe_Y">
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]　を　よみとった！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]　を　読み取った！</language>
 	</row>
 	<row id="BTL_STRID_SET_YotimuExe_E">
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]　を　よみとった！</language>
-		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]　を　読み取った！</language>
 	</row>
 
