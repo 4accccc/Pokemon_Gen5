@@ -16,6 +16,19 @@
 #include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 
 #include "sound/pm_wb_voice.h"
+#include "arc_def.h"
+
+//==============================================================================================
+//
+//	構造体定義
+//
+//==============================================================================================
+
+typedef struct
+{ 
+  u16 frequency;
+  u16 volume;
+}POKEMON_VOICE_PARAM;
 
 //==============================================================================================
 //
@@ -81,10 +94,14 @@ BOOL PMV_CustomVoiceWave(	u32			pokeNo,			// [in]ポケモンナンバー
 													s8*			volume)			// [out]再生ボリューム
 {
 	PMV_REF* pmvRef;
+  POKEMON_VOICE_PARAM  pvp;
 
 	//ボリューム＆サンプリングレート設定
-	*volume = VOICE_VOLUME_DEFAULT;
-	*rate		= VOICE_RATE_DEFAULT;
+//	*volume = VOICE_VOLUME_DEFAULT;
+//	*rate		= VOICE_RATE_DEFAULT;
+  GFL_ARC_LoadData( &pvp, ARCID_POKEVOICE_PARAM, pokeNo );
+  *volume = pvp.volume;
+  *rate   = pvp.frequency;
 
 	if( userParam == NULL ){ return FALSE; }	// 既存waveのみ使用
 
