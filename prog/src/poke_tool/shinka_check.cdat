@@ -1,0 +1,33 @@
+//============================================================================================
+/**
+ * @file    shinka_check.cdat
+ * @bfief   場所進化チェック用テーブル
+ * @author  HisashiSogabe
+ * @date    10.02.08
+ */
+//============================================================================================
+
+#pragma once
+
+#include  "fieldmap/zone_id.h"
+#include  "gamesystem/playerwork.h"
+
+static  ZONEID  TenganzanShinkaPlaceTable[] = { 
+  ZONE_ID_D06R0101,
+  ZONE_ID_D06R0201,
+  ZONE_ID_D06R0301,
+};
+
+static  ZONEID  KokeShinkaPlaceTable[] = { 
+  ZONE_ID_D02R0101,
+};
+
+static  ZONEID  IceShinkaPlaceTable[] = { 
+  ZONE_ID_D07R0501,
+};
+
+static  ZONEID  DenkidoukutsuShinkaPlaceTable[] = { 
+  ZONE_ID_D06R0101,
+  ZONE_ID_D06R0201,
+  ZONE_ID_D06R0301,
+};
