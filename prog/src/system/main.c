@@ -28,6 +28,7 @@
 #include "system/brightness.h"
 #include "gamesystem\msgspeed.h"
 #include "gamesystem\game_beacon.h"
+#include "gamesystem/g_power.h"
 
 #include "sound\pm_sndsys.h"
 #include "sound\pm_voice.h"
@@ -256,6 +257,8 @@ static	void	GameInit(void)
 	//ゲーム中ビーコンスキャン制御
   GAMEBEACON_Init(GFL_HEAPID_APP);
   
+  //Gパワー
+  GPower_SYSTEM_Init();
 }
 
 //------------------------------------------------------------------
@@ -278,6 +281,7 @@ static	void	GameMain(void)
 	PMVOICE_Main();
 	
 	GAMEBEACON_Update();
+	GPOWER_SYSTEM_Update();
 }
 
 //------------------------------------------------------------------
