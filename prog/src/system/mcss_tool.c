@@ -63,7 +63,7 @@ void	MCSS_TOOL_MakeMAWPP( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int dir )
 //============================================================================================
 void	MCSS_TOOL_MakeMAWPPP( const POKEMON_PASO_PARAM *ppp, MCSS_ADD_WORK *maw, int dir )
 {
-	int	mons_no = PPP_Get( ppp, ID_PARA_monsno_egg,	NULL );
+	int	mons_no = PPP_Get( ppp, ID_PARA_monsno,	NULL );
 	int	form_no = PPP_Get( ppp, ID_PARA_form_no,NULL );
 	int	sex		= PPP_Get( ppp, ID_PARA_sex,	NULL );
 	int	rare	= PPP_CheckRare( ppp );
