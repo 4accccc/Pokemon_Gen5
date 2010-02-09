@@ -3134,7 +3134,8 @@ static void handler_Download( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       }
 
       // 相手のぼうぎょ・とくぼうを比較して、弱い方に対応した自分のこうげき・とくこうをアップ
-      if( sumDef > sumSpDef ){
+      //（同じなら とくこう をアップ
+      if( sumDef >= sumSpDef ){
         valueID = BPP_SP_ATTACK;
       }else{
         valueID = BPP_ATTACK;
