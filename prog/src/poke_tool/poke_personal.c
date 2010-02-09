@@ -273,6 +273,9 @@ u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID para
 	case POKEPER_ID_machine4:		      //‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚S
 		ret = ppd->machine4;
 		break;
+  case POKEPER_ID_waza_oshie1:		  //‹Z‹³‚¦‚P
+		ret = ppd->waza_oshie1;
+		break;
 	default:
 		GF_ASSERT(0);
 		ret = 0;

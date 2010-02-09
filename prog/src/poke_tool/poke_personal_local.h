@@ -74,6 +74,8 @@ struct  pokemon_personal_data
   u32   machine2;       //技マシンフラグ２
   u32   machine3;       //技マシンフラグ２
   u32   machine4;       //技マシンフラグ２
+
+  u32   waza_oshie1;    //技教え１
 };
 
 
