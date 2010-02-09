@@ -140,7 +140,7 @@
 #define		TOKUSYU_MAKENKI							( 128 )		//まけんき
 #define		TOKUSYU_YOWAKI							( 129 )		//よわき
 #define		TOKUSYU_NOROWAREBODHI				( 130 )		//のろわれボディ
-#define		TOKUSYU_MORATERAPII					( 131 )		//モラテラピー
+#define		TOKUSYU_IYASINOKOKORO				( 131 )		//いやしのこころ
 #define		TOKUSYU_HURENDOGAADO				( 132 )		//フレンドガード
 #define		TOKUSYU_KUDAKERUYOROI				( 133 )		//くだけるよろい
 #define		TOKUSYU_HHIMETARU						( 134 )		//ヘヴィメタル
@@ -149,7 +149,7 @@
 #define		TOKUSYU_DOKUBOUSOU					( 137 )		//どくぼうそう
 #define		TOKUSYU_NETUBOUSOU					( 138 )		//ねつぼうそう
 #define		TOKUSYU_SYUUKAKU						( 139 )		//しゅうかく
-#define		TOKUSYU_AUNNOIKI						( 140 )		//あうんのいき
+#define		TOKUSYU_TEREPASII						( 140 )		//テレパシー
 #define		TOKUSYU_MURAKKE							( 141 )		//ムラっけ
 #define		TOKUSYU_BOUZIN							( 142 )		//ぼうじん
 #define		TOKUSYU_DOKUSYU							( 143 )		//どくしゅ
@@ -157,9 +157,9 @@
 #define		TOKUSYU_HATOMUNE						( 145 )		//はとむね
 #define		TOKUSYU_SUNAKAKI						( 146 )		//すなかき
 #define		TOKUSYU_MIRAKURUSUKIN				( 147 )		//ミラクルスキン
-#define		TOKUSYU_SINUTI							( 148 )		//しんうち
+#define		TOKUSYU_ANARAIZU						( 148 )		//アナライズ
 #define		TOKUSYU_IRYUUZYON						( 149 )		//イリュージョン
-#define		TOKUSYU_HENSIN							( 150 )		//へんしん
+#define		TOKUSYU_KAWARIMONO					( 150 )		//かわりもの
 #define		TOKUSYU_SURINUKE						( 151 )		//すりぬけ
 #define		TOKUSYU_MIIRA								( 152 )		//ミイラ
 #define		TOKUSYU_ZISINKAZYOU					( 153 )		//じしんかじょう
@@ -169,4 +169,5 @@
 #define		TOKUSYU_SOUSYOKU						( 157 )		//そうしょく
 #define		TOKUSYU_ITAZURAGOKORO				( 158 )		//いたずらごころ
 #define		TOKUSYU_SUNANOTIKARA				( 159 )		//すなのちから
-#define		TOKUSYU_MAX						( 159 )
+#define		TOKUSYU_TETUNOTOGE					( 160 )		//てつのトゲ
+#define		TOKUSYU_MAX						( 160 )
