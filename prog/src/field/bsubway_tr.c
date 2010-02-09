@@ -338,23 +338,45 @@ static BSP_TRAINER_DATA * create_BSP_TRAINER_DATA( HEAPID heapID )
 BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
+  u16 play_mode;
   BATTLE_SETUP_PARAM *dst;
   BTL_FIELD_SITUATION sit;
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( gsys );
-
+  
+  play_mode = wk->play_mode;
   dst = BATTLE_PARAM_Create( HEAPID_PROC );
-
+  
   {
     BTL_FIELD_SITUATION_Init( &sit );
-
+    
+//  dst->netID = 0;
     dst->netHandle = NULL;
     dst->commMode = BTL_COMM_NONE;
     dst->commPos = 0;
-//  dst->netID = 0;
+    
     dst->multiMode = 0;
     dst->recBuffer = NULL;
     dst->fRecordPlay = FALSE;
-
+    
+    switch( play_mode ){
+    case BSWAY_PLAYMODE_MULTI:
+    case BSWAY_PLAYMODE_S_MULTI:
+      dst->multiMode = 1;
+      break;
+    case BSWAY_PLAYMODE_COMM_MULTI:
+    case BSWAY_PLAYMODE_S_COMM_MULTI:
+      dst->multiMode = 1;
+      dst->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      dst->commMode = BTL_COMM_DS;
+      
+      if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){
+        dst->commPos = 0;
+      }else{
+        dst->commPos = 1;
+      }
+      break;
+    }
+    
     dst->party[BTL_CLIENT_PLAYER] = NULL;
     dst->party[BTL_CLIENT_ENEMY1] = NULL;
     dst->party[BTL_CLIENT_PARTNER] = NULL;
@@ -384,18 +406,22 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     dst->musicPinch = SEQ_BGM_BATTLEPINCH;
     dst->result = BTL_RESULT_WIN;
   }
-
+  
   BTL_SETUP_SetSubwayMode( dst );
 
-  switch( wk->play_mode )
+  switch( play_mode )
   {
   case BSWAY_MODE_SINGLE:
   case BSWAY_MODE_WIFI:
+  case BSWAY_MODE_S_SINGLE:
     dst->rule = BTL_RULE_SINGLE;
     break;
   case BSWAY_MODE_DOUBLE:
   case BSWAY_MODE_MULTI:
   case BSWAY_MODE_COMM_MULTI:
+  case BSWAY_MODE_S_DOUBLE:
+  case BSWAY_MODE_S_MULTI:
+  case BSWAY_MODE_S_COMM_MULTI:
     dst->rule = BTL_RULE_DOUBLE;
     break;
   default:
@@ -787,9 +813,9 @@ static BSUBWAY_TRAINER_ROM_DATA * alloc_TrainerRomData(
   msgdata =  GFL_MSG_Create(
       GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
       NARC_message_btdtrname_dat, heapID );
-
+  
   MI_CpuClear8(tr_data, sizeof(BSUBWAY_PARTNER_DATA));
-  trd=get_TrainerRomData(tr_no,heapID);
+  trd = get_TrainerRomData(tr_no,heapID);
 
   //トレーナーIDをセット
   tr_data->bt_trd.player_id=tr_no;
@@ -797,10 +823,10 @@ static BSUBWAY_TRAINER_ROM_DATA * alloc_TrainerRomData(
   //トレーナー出現メッセージ
   tr_data->bt_trd.appear_word[0] = 0xFFFF;
   tr_data->bt_trd.appear_word[1] = tr_no*3;
-
+  
   //トレーナーデータをセット
   tr_data->bt_trd.tr_type=trd->tr_type;
-
+  
   //GSデータからの移植による処理
   //wbでは存在していないタイプを書き換え
   #if 1
@@ -808,7 +834,7 @@ static BSUBWAY_TRAINER_ROM_DATA * alloc_TrainerRomData(
     tr_data->bt_trd.tr_type = TRTYPE_TANPAN;
   }
   #endif
-
+  
   name = GFL_MSG_CreateString( msgdata, tr_no );
   GFL_STR_GetStringCode( name,
       &tr_data->bt_trd.name[0], BUFLEN_PERSON_NAME );
@@ -1239,6 +1265,9 @@ static BOOL set_BSWayPokemonParam(
 //--------------------------------------------------------------
 static void * get_TrainerRomData( u16 tr_no, HEAPID heapID )
 {
+#ifdef DEBUG_ONLY_FOR_kagaya
+  OS_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
+#endif
   //AIマルチ限定なのでプラチナ！
   return GFL_ARC_UTIL_Load( ARCID_PL_BTD_TR, tr_no, 0, heapID );
 }

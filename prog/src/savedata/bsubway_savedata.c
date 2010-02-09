@@ -316,7 +316,7 @@ void BSUBWAY_PLAYDATA_AddWifiRecord(
 //--------------------------------------------------------------
 void BSUBWAY_PLAYDATA_ResetRoundNo( BSUBWAY_PLAYDATA *bsw_play )
 {
-  u8 buf = 1;
+  u8 buf = 0;
   BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_round, &buf );
 }
 

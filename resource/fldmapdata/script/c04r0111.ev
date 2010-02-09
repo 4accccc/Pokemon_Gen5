@@ -126,6 +126,10 @@ EVENT_START ev_c04r0111_home
   //ホーム制御　無しに
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
   
+  //マップフェードイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
   //戻り先を無効に
   _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSW_NULL, BSW_NULL,BSW_NULL )
   
@@ -196,7 +200,7 @@ EVENT_START ev_c04r0111_home
   ELSE //倒していない
     _SYSWIN_MSG_DOWN( 0 ) //おめでとうございます
     _AB_KEYWAIT()
-
+    
     //レポート
     _SYSWIN_MSG_DOWN( 0 )
     _REPORT_CALL( SCWK_ANSWER )

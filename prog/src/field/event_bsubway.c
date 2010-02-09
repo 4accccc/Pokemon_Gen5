@@ -152,10 +152,12 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
     
     switch( bsw_scr->play_mode ){
     case BSWAY_MODE_DOUBLE:
+    case BSWAY_MODE_S_DOUBLE:
       reg = REG_SUBWAY_DOUBLE;
       type = PL_TYPE_DOUBLE;
       break;
     case BSWAY_MODE_MULTI:
+    case BSWAY_MODE_S_MULTI:
       reg = REG_SUBWAY_MALTI;
       type = PL_TYPE_MULTI;
       break;

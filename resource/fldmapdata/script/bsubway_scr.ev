@@ -337,10 +337,13 @@ sub_receipt_challenge_multi_ai:
   SWITCH $SCWK_ANSWER
   CASE 0 THEN //攻撃
     _SYSWIN_MSG_DOWN( msg_bsw_scr_66 )  //性別切り替えが必要
+    _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 0, BSW_NULL, BSW_NULL )
   CASE 1 THEN //防御
     _SYSWIN_MSG_DOWN( msg_bsw_scr_67 )  //性別切り替えが必要
+    _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 0, BSW_NULL, BSW_NULL )
   CASE 2 THEN //バランス
     _SYSWIN_MSG_DOWN( msg_bsw_scr_68 )  //性別切り替えが必要
+    _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 0, BSW_NULL, BSW_NULL )
   CASE 3 THEN //やめる
     _SYSWIN_MSG_DOWN( msg_bsw_scr_72 ) //さよなら
     _AB_KEYWAIT()
@@ -351,6 +354,9 @@ sub_receipt_challenge_multi_ai:
   
   _AB_KEYWAIT()
   
+  //トレーナー抽選
+  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
+
   //乗車メッセージ
   _CALL sub_receipt_msg_geton_train
   
@@ -374,7 +380,7 @@ sub_receipt_challenge_multi_comm:
   DEFINE_LOCAL ret
   
   //ワイヤレス通信開始しますか
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_76 )
   _YES_NO_WIN( ret )
   
   IF $ret == SCR_NO THEN //やめる
@@ -389,9 +395,12 @@ sub_receipt_challenge_multi_comm:
     $ret = FALSE
   ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
     $ret = FALSE
+  ELSE
+    $ret = TRUE
   ENDIF
   
   IF $ret == FALSE THEN //切断失敗
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_77 )
     _CALL sub_receipt_common_exit
     _RET
   ENDIF
@@ -432,8 +441,8 @@ sub_receipt_challenge_multi_comm:
     _CALL sub_receipt_common_comm_exit
     _RET
   ENDIF
-
-  //互いの参加ポケモンチェック
+  
+	//通信同期(お友達の選択を待っています)
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_POKE_SELECT, BSW_NULL, BSW_NULL )
   
   //受信バッファクリア
@@ -463,14 +472,35 @@ sub_receipt_challenge_multi_comm:
   //親機なら対戦トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_COMM_GET_CURRENT_ID, BSW_NULL, BSW_NULL, ret )
   
-  IF $ret == 0 THEN //親
-    _NOP    
+  IF $ret == 0 THEN //親機なら対戦トレーナーセット
+    //トレーナー抽選
+    _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
+    //受信バッファクリア
+    _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+    //子機に選んだデータを送信
+    $ret = 0
+    
+    WHILE $ret == 0
+      _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, ret )
+    ENDWHILE
   ELSE //子機は親からデータを受け取る
-    _NOP
+    _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, LOCALWORK0 ) 
   ENDIF
+  
+  //現在位置セーブ
+  _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //回復
+  _TEMOTI_POKEMON_KAIFUKU()
+  
+  //オートセーブ
+  _CALL sub_receipt_common_auto_save
   
   //乗車メッセージ
   _CALL sub_receipt_msg_geton_train
+  
+  //通信同期待ち
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_AUTO_SAVE, BSW_NULL, BSW_NULL )
   
   //乗車アニメ
   _CALL sub_receipt_anm_geton_train
@@ -721,12 +751,14 @@ sub_receipt_msg_greet:
     _SYSWIN_MSG_DOWN( msg_bsw_scr_01 )
   CASE BSWAY_MODE_MULTI THEN
     _SYSWIN_MSG_DOWN( msg_bsw_scr_02 )
+  CASE BSWAY_MODE_WIFI THEN
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_03 )
   CASE BSWAY_MODE_S_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_00 )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_04 )
   CASE BSWAY_MODE_S_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_01 )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_05 )
   CASE BSWAY_MODE_S_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_02 )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_06 )
   ENDSWITCH
   
   _AB_KEYWAIT()
@@ -953,7 +985,7 @@ sub_receipt_common_map_change_train:
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   _OBJ_ANIME_WAIT()
-  _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 10, 0, 4, DIR_UP )
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
   _RET
 }
 
@@ -1042,6 +1074,19 @@ sub_receipt_common_save:
   IF $SCWK_ANSWER == 1 THEN //キャンセル
     _CALL sub_receipt_common_exit
   ENDIF
+  
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付　オートセーブ
+//--------------------------------------------------------------
+sub_receipt_common_auto_save:
+{
+  DEFINE_LOCAL ret
+  
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_78 )
+  _REPORT_CALL( ret )
   
   _RET
 }

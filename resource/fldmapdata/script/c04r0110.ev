@@ -27,39 +27,41 @@ _EVENT_DATA_END
 //--------------------------------------------------------------
 INIT_EVENT_START ev_init_c04r0110
 {
-  //自機非表示
-  _BSUBWAY_TOOL( BSWTOOL_PLAYER_VANISH, BSW_NULL, BSW_NULL, BSW_NULL )
+  IF $WK_OTHER_BSUBWAY_TRAIN != BSWAY_SCENE_TRAIN_NON THEN
+    //自機非表示
+    _BSUBWAY_TOOL( BSWTOOL_PLAYER_VANISH, BSW_NULL, BSW_NULL, BSW_NULL )
   
-  //ダミー自機出現
-  _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSWAY_PTCODE_MINE, BSW_NULL, LOCALWORK0 )
-  $OBJCHRWORK0 = $LOCALWORK0
-  _FLAG_RESET( FV_C04R0110_PLAYER )
-  _OBJ_ADD( C04R0110_HERO )
+    //ダミー自機出現
+    _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSWAY_PTCODE_MINE, BSW_NULL, LOCALWORK0 )
+    $OBJCHRWORK0 = $LOCALWORK0
+    _FLAG_RESET( FV_C04R0110_PLAYER )
+    _OBJ_ADD( C04R0110_HERO )
+    
+    IF $WK_OTHER_BSUBWAY_TRAIN == BSWAY_SCENE_TRAIN_FIRST THEN
+      _OBJ_POS_CHANGE( C04R0110_HERO, 4, 0, 8, DIR_UP ) //初回　入り口から
+    ELSE
+      _OBJ_POS_CHANGE( C04R0110_HERO, 1, 0, 4, DIR_UP ) //続き　車両から
+    ENDIF
+    
+    //トレーナー抽選
+    _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_PARTNER, BSW_NULL, BSW_NULL, BSW_NULL )
+    
+    //ボス戦闘の場合は特殊コード
+    _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER == LEADER_SET_1ST THEN
+      $OBJCHRWORK1 = OBJCODE_TRAINBOSS
+    ELSIF $SCWK_ANSWER == LEADER_SET_2ND THEN
+      $OBJCHRWORK1 = OBJCODE_TRAINBOSS
+    ELSE
+      _BSUBWAY_TOOL( BSWSUB_GET_ENEMY_OBJ, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+      $OBJCHRWORK1 = $SCWK_ANSWER
+    ENDIF
   
-  IF $WK_OTHER_BSUBWAY_TRAIN == BSWAY_SCENE_TRAIN_FIRST THEN
-    _OBJ_POS_CHANGE( C04R0110_HERO, 4, 0, 8, DIR_UP ) //初回　入り口から
-  ELSE
-    _OBJ_POS_CHANGE( C04R0110_HERO, 1, 0, 4, DIR_UP ) //続き　車両から
+    _FLAG_RESET( FV_C04R0110_TRAINER )
+    _OBJ_ADD( C04R0110_TRAINER )
+    _OBJ_POS_CHANGE( C04R0110_TRAINER, 12, 0, 4, DIR_LEFT )
   ENDIF
-  
-  //トレーナー抽選
-  _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_PARTNER, BSW_NULL, BSW_NULL, BSW_NULL )
-  
-  //ボス戦闘の場合は特殊コード
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  
-  IF $SCWK_ANSWER == LEADER_SET_1ST THEN
-    $OBJCHRWORK1 = OBJCODE_TRAINBOSS
-  ELSIF $SCWK_ANSWER == LEADER_SET_2ND THEN
-    $OBJCHRWORK1 = OBJCODE_TRAINBOSS
-  ELSE
-    _BSUBWAY_TOOL( BSWSUB_GET_ENEMY_OBJ, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-    $OBJCHRWORK1 = $SCWK_ANSWER
-  ENDIF
-  
-  _FLAG_RESET( FV_C04R0110_TRAINER )
-  _OBJ_ADD( C04R0110_TRAINER )
-  _OBJ_POS_CHANGE( C04R0110_TRAINER, 12, 0, 4, DIR_LEFT )
 }
 INIT_EVENT_END
 
@@ -157,11 +159,19 @@ sub_train_battle:
   CASE BSWAY_MODE_DOUBLE THEN
     _CALL sub_battle_single_double
   CASE BSWAY_MODE_MULTI THEN
-    _NOP
+    _CALL sub_battle_multi
   CASE BSWAY_MODE_COMM_MULTI THEN
-    _NOP
+    _CALL sub_battle_comm_multi
   CASE BSWAY_MODE_WIFI THEN
-    _NOP
+    _CALL sub_battle_single_double
+  CASE BSWAY_MODE_S_SINGLE THEN
+    _CALL sub_battle_single_double
+  CASE BSWAY_MODE_S_DOUBLE THEN
+    _CALL sub_battle_single_double
+  CASE BSWAY_MODE_S_MULTI THEN
+    _CALL sub_battle_multi
+  CASE BSWAY_MODE_S_COMM_MULTI THEN
+    _CALL sub_battle_comm_multi
   ENDSWITCH
   
   //回復
@@ -202,14 +212,21 @@ sub_train_battle_win:
 //--------------------------------------------------------------
 sub_train_battle_win_clear:
 {
+  DEFINE_LOCAL play_mode
+  
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+
   //退場アニメ
   _CALL sub_anm_train_battle_win_clear
   
   //連勝数チェック
   _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-//_IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_1ST,ev_train_rooms_common_clear_ret1
-//_IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_2ND,ev_train_rooms_common_clear_ret1
-//_JUMP ev_train_rooms_common_clear_ret2
+  
+  IF $SCWK_ANSWER == LEADER_SET_1ST THEN
+	  _BSUBWAY_TOOL( BSWSUB_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
+  ELSIF $SCWK_ANSWER == LEADER_SET_2ND THEN
+	  _BSUBWAY_TOOL( BSWSUB_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
+  ENDIF
   
   //クリアした状況を反映
   _BSUBWAY_TOOL( BSWSUB_SET_CLEAR_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -232,8 +249,8 @@ sub_train_battle_win_clear:
 //--------------------------------------------------------------
 sub_anm_train_battle_win_clear:
 {
-  _OBJ_ANIME( C04R0110_TRAINER, anm_train_battle_win_clear_jiki )
-  _OBJ_ANIME( C04R0110_HERO, anm_train_battle_win_clear_trainer )
+  _OBJ_ANIME( C04R0110_HERO, anm_train_battle_win_clear_jiki )
+  _OBJ_ANIME( C04R0110_TRAINER, anm_train_battle_win_clear_trainer )
   _OBJ_ANIME_WAIT()
   _RET
 }
@@ -257,7 +274,11 @@ _ANIME_LABEL  anm_train_battle_win_clear_jiki
 //--------------------------------------------------------------
 sub_train_battle_win_next:
 {
+  DEFINE_LOCAL play_mode
   DEFINE_LOCAL loop
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
 
   //敵下がる、自機回復マシンへ
   _CALL ev_anm_train_battle_win_heal
@@ -269,8 +290,8 @@ sub_train_battle_win_next:
   $loop = 1
   
   WHILE $loop == 1
-    //ただいま？連勝…対戦を続けますか
-    _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+    //ただいま？連勝…次は？両目　対戦を続けますか
+    _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
     _NUMBER( 0, SCWK_ANSWER, 4 )
     _BSUBWAY_TOOL( BSWTOOL_GET_NEXT_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     _NUMBER( 1, SCWK_ANSWER, 1 )
@@ -285,6 +306,8 @@ sub_train_battle_win_next:
     
     SWITCH $SCWK_ANSWER
     CASE 0 THEN //続ける
+      //ウィンドウ消す
+      _SYSWIN_CLOSE()
       //自機移動アニメ
       _CALL sub_anm_jiki_next_car
       //フェードアウト
@@ -295,7 +318,7 @@ sub_train_battle_win_next:
       //シーン制御を継続に
       $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_CONTINUE
       //マップチェンジ
-      _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 10, 0, 4, DIR_UP )
+      _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
       $loop = 0
     CASE 1 THEN //記録する
       _SYSWIN_MSG_DOWN( msg_c04r0110_09 )
@@ -381,10 +404,10 @@ _ANIME_LABEL anm_jiki_next_car
   _ANIME_DATA ACMD_END,0
 
 //======================================================================
-//  列車内　シングル　ダブル対戦
+//  列車内　対戦
 //======================================================================
 //--------------------------------------------------------------
-//  シングル、ダブル対戦　バトル
+//  シングル、ダブルバトル
 //--------------------------------------------------------------
 sub_battle_single_double:
 {
@@ -399,6 +422,33 @@ sub_battle_single_double:
   
   //結果をSCWK_ANSWERへ
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  _RET
+}
+
+//--------------------------------------------------------------
+//  マルチバトル
+//--------------------------------------------------------------
+sub_battle_multi:
+{
+  //対戦前台詞
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //互いに近づく
+  _CALL sub_anm_battle_start
+  
+  //バトル呼び出し
+  _BSUBWAY_TOOL( BSWSUB_LOCAL_BTL_CALL, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //結果をSCWK_ANSWERへ
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  _RET
+}
+
+//--------------------------------------------------------------
+//  通信マルチバトル
+//--------------------------------------------------------------
+sub_battle_comm_multi:
+{
   _RET
 }
 

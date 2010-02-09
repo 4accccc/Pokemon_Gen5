@@ -38,7 +38,7 @@
 //======================================================================
 //  proto
 //======================================================================
-static void CloseWin(SCRCMD_WORK *work);
+static void CloseSysWin(SCRCMD_WORK *work);
 static void CloseBalloonWin(VMHANDLE *core, SCRCMD_WORK *work);
 static void DeleteBalloonWin(SCRCMD_WORK *work);
 
@@ -48,37 +48,6 @@ static void setBalloonWindow( SCRCMD_WORK *work,
 
 static STRBUF * SetExpandWord(
     SCRCMD_WORK *work, SCRIPT_WORK *sc, u32 msg_id );
-
-//======================================================================
-//  スクリプトチェック
-//======================================================================
-//--------------------------------------------------------------
-/**
- * スクリプト終了時ウィンドウ終了チェック
- * @param   end_chk     チェック構造体
- * @param   seq     サブシーケンサ
- * @retval  BOOL    TRUEでチェック終了
- */
-//--------------------------------------------------------------
-BOOL SCREND_CheckEndWin(SCREND_CHECK *end_check , int *seq)
-{
-  CloseWin(end_check->ScrCmdWk);
-  return  TRUE;
-}
-
-//--------------------------------------------------------------
-/**
- * スクリプト終了時吹きだしウィンドウ終了チェック
- * @param   end_chk     チェック構造体
- * @param   seq     サブシーケンサ
- * @retval  BOOL    TRUEでチェック終了
- */
-//--------------------------------------------------------------
-BOOL SCREND_CheckEndBallonWin(SCREND_CHECK *end_check , int *seq)
-{
-  DeleteBalloonWin(end_check->ScrCmdWk);
-  return  TRUE;
-}
 
 //======================================================================
 //  はい、いいえ　処理
@@ -487,8 +456,22 @@ VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdSysWinClose( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  CloseWin(work);   //<<内部で既閉チェックをしています
+  CloseSysWin(work);   //<<内部で既閉チェックをしています
   return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプト終了時システムウィンドウ終了チェック
+ * @param   end_chk     チェック構造体
+ * @param   seq     サブシーケンサ
+ * @retval  BOOL    TRUEでチェック終了
+ */
+//--------------------------------------------------------------
+BOOL SCREND_CheckEndWin(SCREND_CHECK *end_check , int *seq)
+{
+  CloseSysWin(end_check->ScrCmdWk);
+  return  TRUE;
 }
 
 //======================================================================
@@ -895,6 +878,20 @@ VMCMD_RESULT EvCmdBalloonWinClose( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   CloseBalloonWin(core,work);       //<<内部で既閉チェックをしています
   return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプト終了時吹きだしウィンドウ終了チェック
+ * @param   end_chk     チェック構造体
+ * @param   seq     サブシーケンサ
+ * @retval  BOOL    TRUEでチェック終了
+ */
+//--------------------------------------------------------------
+BOOL SCREND_CheckEndBallonWin(SCREND_CHECK *end_check , int *seq)
+{
+  DeleteBalloonWin(end_check->ScrCmdWk);
+  return  TRUE;
 }
 
 //======================================================================
@@ -1448,7 +1445,7 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
-    CloseWin( work );
+    CloseSysWin( work );
   }
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){
@@ -1475,12 +1472,12 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  ウィンドウ終了
+ * システムウィンドウ終了
  * @param   work    スクリプトコマンドワークポインタ
  * @retval  none
  */
 //--------------------------------------------------------------
-static void CloseWin( SCRCMD_WORK *work )
+static void CloseSysWin( SCRCMD_WORK *work )
 {
   FLDSYSWIN_STREAM *sysWin;
   

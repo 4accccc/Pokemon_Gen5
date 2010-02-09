@@ -30,6 +30,9 @@
 //======================================================================
 //  define
 //======================================================================
+#ifdef DEBUG_ONLY_FOR_kagaya
+#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
+#endif
 
 //======================================================================
 //  struct
@@ -87,9 +90,15 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
   bsw_scr->playData = SaveControl_DataPtrGet(
       save, GMDATA_ID_BSUBWAY_PLAYDATA );
   
+  bsw_scr->scoreData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_SCOREDATA );
+
   BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, FALSE ); //セーブなしに
   
   GF_ASSERT( GAMEDATA_GetBSubwayScrWork(gdata) == NULL );
+  GF_ASSERT( bsw_scr->playData != NULL );
+  GF_ASSERT( bsw_scr->scoreData != NULL );
+  
   GAMEDATA_SetBSubwayScrWork( gdata, bsw_scr );
   
   if( init == BSWAY_PLAY_NEW ){ //新規
@@ -560,23 +569,32 @@ void BSUBWAY_SCRWORK_SetBtlTrainerNo( BSUBWAY_SCRWORK *bsw_scr )
   play_mode = bsw_scr->play_mode;
   stage = BSUBWAY_SCOREDATA_GetStageNo( bsw_scr->scoreData, play_mode );
   
-  if( play_mode == BSWAY_MODE_MULTI || play_mode == BSWAY_MODE_COMM_MULTI ){
-    if( play_mode == BSWAY_MODE_COMM_MULTI ){
-      if( stage < bsw_scr->pare_stage_no ){
-        stage = bsw_scr->pare_stage_no;  //通信時には周回数の多いほうで抽選
-      }
+  if( play_mode == BSWAY_MODE_MULTI ||
+      play_mode == BSWAY_MODE_COMM_MULTI ||
+      play_mode == BSWAY_MODE_S_MULTI ||
+      play_mode == BSWAY_MODE_S_COMM_MULTI )
+  {
+    if( stage < bsw_scr->pare_stage_no )
+    {
+      stage = bsw_scr->pare_stage_no;  //通信時には周回数の多いほうで抽選
     }
     
-    for( i = 0; i < BSUBWAY_STOCK_TRAINER_MAX; i++ ){
-      do{
+    for( i = 0; i < BSUBWAY_STOCK_TRAINER_MAX; i++ )
+    {
+      do
+      {
         no = BSUBWAY_SCRWORK_GetTrainerNo( bsw_scr, stage, i/2, play_mode );
       }while( is_ConflictTrainer(bsw_scr->trainer,no,i) );
       
       bsw_scr->trainer[i] = no;
     }
-  }else{
-    for( i = 0; i < (BSUBWAY_STOCK_TRAINER_MAX/2); i++ ){
-      do{
+  }
+  else
+  {
+    for( i = 0; i < (BSUBWAY_STOCK_TRAINER_MAX/2); i++ )
+    {
+      do
+      {
         no = BSUBWAY_SCRWORK_GetTrainerNo(
             bsw_scr, stage, i, bsw_scr->play_mode );
       }while( is_ConflictTrainer(bsw_scr->trainer,no,i) );
@@ -637,10 +655,16 @@ BOOL BSUBWAY_SCRWORK_IsClear( BSUBWAY_SCRWORK *bsw_scr )
 {
   if( bsw_scr->clear_f == FALSE ){
     u32 round = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData );
-    
+
+#ifdef DEBUG_BSW_CLEAR_1
+    if( round < 1 ){
+      return( FALSE );
+    }
+#else
     if( round < BSWAY_CLEAR_WINCNT ){
       return( FALSE );
     }
+#endif
     
     bsw_scr->clear_f = 1; //クリアフラグon
   }
@@ -697,6 +721,9 @@ void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr )
     #endif
     break;
   case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_S_MULTI:
+  case BSWAY_MODE_COMM_MULTI:
+  case BSWAY_MODE_S_COMM_MULTI:
     BSUBWAY_SCRWORK_MakeRomTrainerData(
         bsw_scr, &(bsw_scr->tr_data[0]),
         bsw_scr->trainer[round*2+0],
@@ -712,8 +739,10 @@ void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr )
         bsw_scr->trainer[round*2+1],
         bsw_scr->member_num, monsno, itemno, NULL, bsw_scr->heapID );
     break;
-  case BSWAY_MODE_DOUBLE:
   case BSWAY_MODE_SINGLE:
+  case BSWAY_MODE_DOUBLE:
+  case BSWAY_MODE_S_SINGLE:
+  case BSWAY_MODE_S_DOUBLE:
   default:
     BSUBWAY_SCRWORK_MakeRomTrainerData(
       bsw_scr, &(bsw_scr->tr_data[0]),

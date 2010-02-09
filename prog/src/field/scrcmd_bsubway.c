@@ -150,10 +150,40 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   u16 param1 = SCRCMD_GetVMWorkValue( core, work );
   u16 retwk_id = VMGetU16( core );
   u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, retwk_id );
-  
+   
+#ifdef DEBUG_ONLY_FOR_kagaya  
+  if( com_id < BSWTOOL_END_NO )
+  {
+    KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWTOOL : cmd No %d\n",
+        com_id );
+  }
+  else if(
+      com_id >= BSWTOOL_WIFI_START_NO && com_id < BSWTOOL_WIFI_END_NO )
+  {
+    KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWTOOL_WIFI : cmd No %d\n",
+        com_id - BSWTOOL_WIFI_START_NO );
+  }
+  else if(
+      com_id >= BSWSUB_START_NO && com_id < BSWSUB_END_NO )
+  {
+    KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWSUB : cmd No %d\n",
+        com_id - BSWSUB_START_NO );
+  }
+  else if(
+      com_id >= BSWSUB_COMM_START_NO && com_id < BSWSUB_COMM_END_NO )
+  {
+    KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWSUB_COMM : cmd No %d\n",
+        com_id - BSWSUB_COMM_START_NO );
+  }
+  else
+  {
+    GF_ASSERT( 0 );
+  }
+#endif
+ 
   if( bsw_scr == NULL && //バグチェック　ワーク依存コマンド
-      (com_id >= BSWSUB_START_NO && com_id < BSWSUB_END_NO) ||
-      (com_id >= BSWSUB_COMM_START_NO && com_id < BSWSUB_COMM_END_NO) ){
+      ((com_id >= BSWSUB_START_NO && com_id < BSWSUB_END_NO) ||
+      (com_id >= BSWSUB_COMM_START_NO && com_id < BSWSUB_COMM_END_NO)) ){
     GF_ASSERT( 0 );
     return( VMCMD_RESULT_CONTINUE );
   }
@@ -224,6 +254,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           FIELD_PLAYER_GetDir(fld_player), pos.x, pos.y, pos.z );
       GAMEDATA_SetSpecialLocation( gdata, &loc );
       EVENTWORK_SetEventFlag( event, SYS_FLAG_SPEXIT_REQUEST );
+      
+      KAGAYA_Printf("復帰位置　方向=%d\n",FIELD_PLAYER_GetDir(fld_player));
     }
     break;
   //復帰位置無効
@@ -282,8 +314,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //次のラウンド数取得
   case BSWTOOL_GET_NEXT_ROUND:
-    *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData ) + 1;
-    (*ret_wk) += 1;
+    *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData );
+    (*ret_wk) += 1; //0 org
     break;
   //ボスクリア済みフラグ取得
   case BSWTOOL_GET_BOSS_CLEAR_FLAG:
@@ -317,7 +349,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //サポート遭遇フラグセット
   case BSWTOOL_SET_SUPPORT_ENCOUNT_END:
-    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
+    BSUBWAY_SCOREDATA_SetFlag( scoreData,
         BSWAY_SCOREDATA_FLAG_SUPPORT_ENCOUNT_END,
         BSWAY_SETMODE_set );
     break;
@@ -360,8 +392,9 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         LOCATION_SetDirect( &loc, ZONE_ID_C04R0102, DIR_RIGHT, 13, 0, 13 );
         break;
       case BSWAY_MODE_DOUBLE:
-      default:
         LOCATION_SetDirect( &loc, ZONE_ID_C04R0104, DIR_RIGHT, 13, 0, 13 );
+      default:
+        GF_ASSERT( 0 );
         break;
       }
       

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-02-07T18:41:11"/>
+	<create user="kagaya" host="W00143" date="2010-02-08T21:04:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="548"/>
 		<band id="3" index="4" style="0000" width="147"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -832,9 +832,9 @@
 
 	<row id="msg_bsw_scr_68">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうしね！
+		<language name="JPN" width="256">わかったわ　バランスじゅうしね！
 じゃ　はじめましょ！</language>
-		<language name="JPN_KANJI" width="256">わかったわ　ぼうぎょじゅうしね！
+		<language name="JPN_KANJI" width="256">わかったわ　バランスじゅうしね！
 じゃ　はじめましょ！</language>
 	</row>
 
@@ -856,9 +856,9 @@
 
 	<row id="msg_bsw_scr_71">
 		<comment>マルチ　パートナー女</comment>
-		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうしね！
+		<language name="JPN" width="256">わかったわ　バランスじゅうしね！
 じゃ　はじめましょ！</language>
-		<language name="JPN_KANJI" width="256">わかったわ　ぼうぎょじゅうしね！
+		<language name="JPN_KANJI" width="256">わかったわ　バランスじゅうしね！
 じゃ　はじめましょ！</language>
 	</row>
 
@@ -891,6 +891,30 @@
 	</row>
 
 	<row id="msg_bsw_scr_76">
+		<language name="JPN" width="256">ワイヤレスつうしん　を
+かいし　しますか？</language>
+		<language name="JPN_KANJI" width="256">ワイヤレスつうしん　を
+かいし　しますか？</language>
+	</row>
+
+	<row id="msg_bsw_scr_77">
+		<language name="JPN" width="256">つうしんの　せつだんに
+しっぱいしました</language>
+		<language name="JPN_KANJI" width="256">つうしんの　せつだんに
+しっぱいしました</language>
+	</row>
+
+	<row id="msg_bsw_scr_78">
+		<language name="JPN" width="256">セーブしています</language>
+		<language name="JPN_KANJI" width="256">セーブしています</language>
+	</row>
+
+	<row id="msg_bsw_scr_79">
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
+	</row>
+
+	<row id="msg_bsw_scr_80">
 		<language name="JPN" width="256">test</language>
 		<language name="JPN_KANJI" width="256">test</language>
 	</row>
