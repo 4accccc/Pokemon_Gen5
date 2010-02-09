@@ -23,7 +23,7 @@ typedef enum
 	SHORTCUT_ID_TOWNMAP,			//タウンマップ
 	SHORTCUT_ID_PALACEGO,			//パレスへゴー
 	SHORTCUT_ID_BTLRECORDER,	//バトルレコーダー
-	SHORTCUT_ID_FRIENDNOTE,		//友達手賞
+	SHORTCUT_ID_FRIENDNOTE,		//友達手帳
 	SHORTCUT_ID_TURIZAO,			//つりざお
 
 	SHORTCUT_ID_PSTATUS_STATUS,		//ポケモン情報＞ステータス
@@ -34,9 +34,12 @@ typedef enum
 	SHORTCUT_ID_BAG_WAZAMACHINE,	//バッグ＞技マシン
 	SHORTCUT_ID_BAG_NUTS,					//バッグ＞きのみ
 	SHORTCUT_ID_BAG_IMPORTANT,		//バッグ＞たいせつなもの
-	SHORTCUT_ID_ZUKAN_MENU,				//ずかん＞メニュー
-	SHORTCUT_ID_ZUKAN_BUNPU,			//ずかん＞分布
-	SHORTCUT_ID_ZUKAN_CRY,				//ずかん＞なぎごえ
+	SHORTCUT_ID_ZUKAN_LIST,				//ずかん＞リスト
+	SHORTCUT_ID_ZUKAN_SEARCH,			//ずかん＞検索
+	SHORTCUT_ID_ZUKAN_INFO,		  	//ずかん＞詳細・説明
+	SHORTCUT_ID_ZUKAN_MAP,	  		//ずかん＞詳細・分布
+	SHORTCUT_ID_ZUKAN_VOICE,			//ずかん＞詳細・鳴き声
+	SHORTCUT_ID_ZUKAN_FORM,				//ずかん＞詳細・姿
 	SHORTCUT_ID_TRCARD_FRONT,			//トレーナーカード＞ぜんめん
 	SHORTCUT_ID_TRCARD_BACK,			//トレーナーカード＞うらめん
 	SHORTCUT_ID_CONFIG,						//せってい

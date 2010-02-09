@@ -1021,10 +1021,21 @@ static void FMenuEvent_Zukan( PROCLINK_WORK* wk, u32 param )
 static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
 {
   ZUKAN_PARAM * prm = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(ZUKAN_PARAM) );
+  GFL_STD_MemClear( prm, sizeof(ZUKAN_PARAM) );
 
 	prm->gamedata = GAMESYSTEM_GetGameData( wk->param->gsys );
 	prm->savedata = GAMEDATA_GetZukanSave( prm->gamedata );
-  prm->callMode = ZUKAN_MODE_LIST;
+
+  if( param != EVENT_PROCLINK_DATA_NONE )
+  { 
+    //Yボタンメニューからきたときは起動モードを渡す
+    prm->callMode = param;
+  }
+  else
+  { 
+    //メニューから呼ばれたときはリストモード
+    prm->callMode = ZUKAN_MODE_LIST;
+  }
 
   return prm;
 }

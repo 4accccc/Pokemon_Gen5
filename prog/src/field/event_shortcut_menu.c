@@ -28,6 +28,9 @@
 //アーカイブ
 #include "arc_def.h"
 
+//プロセス（主に起動時モードのため）
+#include "app/zukan.h"
+
 //セーブデータ
 #include "savedata/shortcut.h"
 
@@ -561,14 +564,29 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 		p_param->call = EVENT_PROCLINK_CALL_BAG;
 		p_param->data	= ITEMPOCKET_EVENT;
 		return CALLTYPE_PROC;
-	case SHORTCUT_ID_ZUKAN_MENU:				//ずかん＞メニュー
+  case SHORTCUT_ID_ZUKAN_LIST:				//ずかん＞リスト
 		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
+		p_param->data	= ZUKAN_MODE_LIST;
 		return CALLTYPE_PROC;
-	case SHORTCUT_ID_ZUKAN_BUNPU:			//ずかん＞分布
+  case SHORTCUT_ID_ZUKAN_SEARCH:			//ずかん＞検索
 		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
+		p_param->data	= ZUKAN_MODE_SEARCH;
 		return CALLTYPE_PROC;
-	case SHORTCUT_ID_ZUKAN_CRY:				//ずかん＞なぎごえ
+  case SHORTCUT_ID_ZUKAN_INFO:		  	//ずかん＞詳細・説明
 		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
+		p_param->data	= ZUKAN_MODE_INFO;
+		return CALLTYPE_PROC;
+  case SHORTCUT_ID_ZUKAN_MAP:			//ずかん＞詳細・分布
+		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
+		p_param->data	= ZUKAN_MODE_MAP;
+		return CALLTYPE_PROC;
+  case SHORTCUT_ID_ZUKAN_VOICE:				//ずかん＞詳細・鳴き声
+		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
+		p_param->data	= ZUKAN_MODE_VOICE;
+		return CALLTYPE_PROC;
+  case SHORTCUT_ID_ZUKAN_FORM:				//ずかん＞詳細・姿
+		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
+		p_param->data	= ZUKAN_MODE_FORM;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_TRCARD_FRONT:			//トレーナーカード＞ぜんめん
 		p_param->call = EVENT_PROCLINK_CALL_TRAINERCARD;
