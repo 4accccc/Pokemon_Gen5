@@ -97,6 +97,7 @@ static void _recvThreePokemon2(const int netID, const int size, const void* pDat
 static void _recvThreePokemon3(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvThreePokemonEnd(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvThreePokemonCancel(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _scrollResetAndIconReset(POKEMON_TRADE_WORK* pWork);
 
 
 ///通信コマンドテーブル
@@ -1218,12 +1219,12 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     bExit=TRUE;
   }
   if(bExit){
-    if(selectno==0){
+    if(selectno==0){         //相手に見せる
       pWork->selectIndex = pWork->underSelectIndex;
       pWork->selectBoxno = pWork->underSelectBoxno;
       if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
-        //相手に見せる
-        GFL_CLACT_WK_SetDrawEnable( pWork->pSelectCLWK, FALSE);
+        POKMEONTRADE2D_IconGray(pWork, pWork->pSelectCLWK, TRUE);
+        
         _CHANGE_STATE(pWork, _changeMenuOpen);
       }
       else{
@@ -1232,8 +1233,9 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       }
     }
     else{
-      _CHANGE_STATE(pWork, _touchState);
-      GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
+      //やめる
+      _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+      _scrollResetAndIconReset(pWork);
     }
     IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
     IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
@@ -1963,7 +1965,26 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
 
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief スクロールリセットとアイコンのリセット
+ * @param POKEMON_TRADE_WORK* ワーク
+ */
+//--------------------------------------------------------------------------------------------
 
+static void _scrollResetAndIconReset(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
+  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
+  pWork->oldLine++;
+  pWork->bgscrollRenew = TRUE;
+  _scrollMainFunc(pWork,FALSE,FALSE);
+}
 
 //--------------------------------------------------------------------------------------------
 /**
