@@ -47,7 +47,8 @@
 #define BSWAY_MODE_S_DOUBLE (6)
 #define BSWAY_MODE_S_MULTI (7)
 #define BSWAY_MODE_S_COMM_MULTI (8)
-#define BSWAY_MODE_NULL (9)
+#define BSWAY_MODE_MAX (9)
+#define BSWAY_MODE_NULL (10)
 
 ///バトルサブウェイ　パートナーコード
 #define BSWAY_PTCODE_OBJ    (2)
@@ -153,7 +154,11 @@
 #define BSWTOOL_SET_S_BOSS_CLEAR_FLAG (20)
 #define BSWTOOL_GET_SUPPORT_ENCOUNT_END (21)
 #define BSWTOOL_SET_SUPPORT_ENCOUNT_END (22)
-#define BSWTOOL_END_NO (23)
+#define BSWTOOL_SET_TRAIN (23)
+#define BSWTOOL_SET_TRAIN_ANM (24)
+#define BSWTOOL_SET_TRAIN_VANISH (25)
+#define BSWTOOL_GET_DATA_PLAY_MODE (26)
+#define BSWTOOL_END_NO (27)
 
 #define BSWTOOL_WIFI_START_NO (40)
 #define BSWTOOL_SET_WIFI_UPLOAD_FLAG (BSWTOOL_WIFI_START_NO+0)
@@ -284,5 +289,31 @@
 #define TRAINER_OBJ (2)
 //kari
 #define OBJCODE_TRAINBOSS (TBOSS)
+
+//--------------------------------------------------------------
+//  列車種類 FLDEFF_BTRAIN_TYPEと同一である事
+//--------------------------------------------------------------
+#define BTRAIN_TYPE_01 //シングルトレイン
+#define BTRAIN_TYPE_02 //スーパーシングルトレイン
+#define BTRAIN_TYPE_03 //ダブルトレイン
+#define BTRAIN_TYPE_04 //スーパーダブルトレイン
+#define BTRAIN_TYPE_05 //マルチトレイン
+#define BTRAIN_TYPE_06 //スーパーマルチトレイン
+#define BTRAIN_TYPE_07 //WiFiトレイン
+
+//--------------------------------------------------------------
+//  列車アニメ FLDEFF_BTRAIN_ANIME_TYPEと同一である事
+//--------------------------------------------------------------
+#define BTRAIN_ANIME_TYPE_START_GEAR, //ギアステ出発アニメ　扉締り、発車
+#define BTRAIN_ANIME_TYPE_ARRIVAL, //途中駅電車進入アニメ
+#define BTRAIN_ANIME_TYPE_ARRIVAL_HOME, //ホーム進入、電車開くアニメ
+#define BTRAIN_ANIME_TYPE_START_HOME,  //ホーム出発アニメ 扉締り、発車
+
+//--------------------------------------------------------------
+//  列車座標種類
+//--------------------------------------------------------------
+#define BTRAIN_POS_RECEIPT (0) //受付ホーム
+#define BTRAIN_POS_HOME (1) //途中駅、終点
+#define BTRAIN_POS_MAX (2) //最大
 
 #endif //__SUBWAY_SCR_DEF_H__

@@ -37,6 +37,8 @@
 
 #include "fldmmdl.h"
 
+#include "field_gimmick_bsubway.h"
+
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 
 //======================================================================
@@ -45,6 +47,10 @@
 
 //======================================================================
 //  struct
+//======================================================================
+
+//======================================================================
+//  proto
 //======================================================================
 static BOOL evCommTimingSync( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk );
@@ -55,9 +61,9 @@ static BOOL bsway_CheckEntryPokeNum(
     u16 num, GAMESYS_WORK *gsys, BOOL item_flag );
 static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys );
 
-//======================================================================
-//  proto
-//======================================================================
+static const FLDEFF_BTRAIN_TYPE data_TrainModeType[BSWAY_MODE_MAX];
+static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX];
+
 
 //======================================================================
 //  バトルサブウェイ　スクリプト関連
@@ -180,7 +186,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     GF_ASSERT( 0 );
   }
 #endif
- 
+  
   if( bsw_scr == NULL && //バグチェック　ワーク依存コマンド
       ((com_id >= BSWSUB_START_NO && com_id < BSWSUB_END_NO) ||
       (com_id >= BSWSUB_COMM_START_NO && com_id < BSWSUB_COMM_END_NO)) ){
@@ -353,6 +359,38 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         BSWAY_SCOREDATA_FLAG_SUPPORT_ENCOUNT_END,
         BSWAY_SETMODE_set );
     break;
+  //列車配置 param0 = 種類(modeから変換) param1 = 座標種類
+  case BSWTOOL_SET_TRAIN:
+    {
+      const VecFx32 *pos;
+      FLDEFF_BTRAIN_TYPE type;
+      type = data_TrainModeType[param0];
+      pos = &data_TrainPosTbl[param1];
+      BSUBWAY_GIMMICK_SetTrain( fieldmap, type, pos );
+    }
+    break;
+  //列車アニメ
+  case BSWTOOL_SET_TRAIN_ANM:
+    {
+      FLDEFF_TASK *task = BSUBWAY_GIMMICK_GetTrainTask( fieldmap );
+      FLDEFF_BTRAIN_SetAnime( task, param0 );
+    }
+    break;
+  //列車非表示
+  case BSWTOOL_SET_TRAIN_VANISH:
+    {
+      FLDEFF_TASK *task = BSUBWAY_GIMMICK_GetTrainTask( fieldmap );
+      FLDEFF_BTRAIN_SetVanishFlag( task, param0 );
+    }
+    break;
+  //BSUBWAY_PLAYDATAからプレイモード取得
+  case BSWTOOL_GET_DATA_PLAY_MODE:
+    {
+      *ret_wk = (u16)BSUBWAY_PLAYDATA_GetData(
+        playData, BSWAY_PLAYDATA_ID_playmode, NULL );
+    }
+    break;
+  //----TOOL Wifi関連
   //Wifiアップロードフラグをセット
   case BSWTOOL_SET_WIFI_UPLOAD_FLAG:
     if( param0 == 0 ){ //リセット
@@ -668,12 +706,9 @@ static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk )
   case COMM_ENTRY_RESULT_CANCEL:       //キャンセルして終了
     (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_CANCEL;
     return( TRUE );
-    break;
   case COMM_ENTRY_RESULT_ERROR:        //エラーで終了
     (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_ERROR;
     return( TRUE );
-  default:
-    GF_ASSERT( 0 );
   }
    
   if( entry_ret != COMM_ENTRY_RESULT_NULL ){
@@ -719,9 +754,6 @@ static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk )
   case ENTRY_PARENT_ANSWER_NG:    //エントリーNG
     (*bsw_scr->pCommEntryResult) = BSWAY_COMM_CHILD_ENTRY_NG ;
     return( TRUE );
-    break;
-  default:
-    GF_ASSERT( 0 );
   }
   
   if( entry_ret != COMM_ENTRY_RESULT_NULL ){
@@ -820,3 +852,41 @@ static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys )
   
   return( FALSE );
 }
+
+//======================================================================
+//  data
+//======================================================================
+//--------------------------------------------------------------
+/// バトルサブウェイ　プレイモード別　列車種類
+//--------------------------------------------------------------
+static const FLDEFF_BTRAIN_TYPE data_TrainModeType[BSWAY_MODE_MAX] =
+{
+  FLDEFF_BTRAIN_TYPE_01,
+  FLDEFF_BTRAIN_TYPE_03,
+  FLDEFF_BTRAIN_TYPE_05,
+  FLDEFF_BTRAIN_TYPE_05,
+  FLDEFF_BTRAIN_TYPE_07,
+
+  FLDEFF_BTRAIN_TYPE_02,
+  FLDEFF_BTRAIN_TYPE_04,
+  FLDEFF_BTRAIN_TYPE_06,
+  FLDEFF_BTRAIN_TYPE_06,
+};
+
+//--------------------------------------------------------------
+/// バトルサブウェイ　列車位置テーブル
+//--------------------------------------------------------------
+static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX] =
+{
+  {
+    GRID_SIZE_FX32(43),
+    GRID_SIZE_FX32(-2),
+    GRID_SIZE_FX32(11) + GRID_HALF_FX32,
+  },
+  {
+    GRID_SIZE_FX32(47),
+    GRID_SIZE_FX32(-3),
+    GRID_SIZE_FX32(9) + GRID_HALF_FX32,
+  },
+};
+

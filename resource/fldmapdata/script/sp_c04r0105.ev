@@ -11,10 +11,13 @@
   .include  "scr_seq_def.h"
   .include  "c04r0105_def.h"
   .include "../../../prog/src/field/bsubway_scr_def.h"
+  .include "bsubway_scr_def.h
 
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_FIELD_INIT_LABEL SCRID_INIT_BSW_RECEIPT
+_FIELD_RECOVER_LABEL SCRID_RECOVER_BSW_RECEIPT
 _SCENE_CHANGE_LABEL sp_c04r0105_tbl
 _SP_EVENT_DATA_END
 

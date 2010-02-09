@@ -78,7 +78,7 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  int dmy;
+  FLDEFF_TASK *train_task;
 }SUBWAY_WORK;
 
 //--------------------------------------------------------------
@@ -86,7 +86,7 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  int dmy;
+  int shake_stop;
 }SHAKE_WORK;
 
 //======================================================================
@@ -184,6 +184,65 @@ void BSUBWAY_GIMMICK_Move( FIELDMAP_WORK *fieldmap )
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * 駅処理　電車配置
+ * @param fieldmap FILEDMAP_WORK
+ * @param type FLDEFF_BTRAIN_TYPE
+ * @param pos 配置座標
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_GIMMICK_SetTrain(
+    FIELDMAP_WORK *fieldmap, FLDEFF_BTRAIN_TYPE type, const VecFx32 *pos )
+{
+  int no,id;
+  BSW_GMK *bsw_gmk;
+  SUBWAY_WORK *work;
+  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK *gmk_work = GAMEDATA_GetGimmickWork( gdata );
+  u32 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  
+  get_ZoneID_To_GmkID( zone_id, &id, &no );
+  bsw_gmk = GIMMICKWORK_Get( gmk_work, id );
+  work = bsw_gmk->bsw_work;
+  
+  GF_ASSERT( work->train_task == NULL );
+  
+  {
+    FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
+    work->train_task = FLDEFF_BTRAIN_SetTrain( fectrl, type, pos );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 駅処理　電車表示を行っているFLDEFF_TASK取得
+ * @param fieldmap FIELDMAP_WORK
+ * @retval FLDEFF_TASK*
+ */
+//--------------------------------------------------------------
+FLDEFF_TASK * BSUBWAY_GIMMICK_GetTrainTask( FIELDMAP_WORK *fieldmap )
+{
+  int no,id;
+  BSW_GMK *bsw_gmk;
+  SUBWAY_WORK *work;
+  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK *gmk_work = GAMEDATA_GetGimmickWork( gdata );
+  u32 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  
+  get_ZoneID_To_GmkID( zone_id, &id, &no );
+  bsw_gmk = GIMMICKWORK_Get( gmk_work, id );
+  work = bsw_gmk->bsw_work;
+  
+  GF_ASSERT( work->train_task != NULL );
+  return( work->train_task );
+}
+
+//--------------------------------------------------------------
+/**
  * 駅処理　初期化
  * @param bsw_gmk BSW_GMK*
  * @param fldmap FIELDMAP_WORK
@@ -215,20 +274,6 @@ static void initProc_Subway( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
 static void delProc_Subway( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
 {
   GFL_HEAP_FreeMemory( bsw_gmk->bsw_work );
-}
-
-//--------------------------------------------------------------
-/**
- * 駅処理　電車配置
- * @param fieldmap FILEDMAP_WORK
- * @param type FLDEFF_BTRAIN_TYPE
- * @param pos 配置座標
- * @retval nothing
- */
-//--------------------------------------------------------------
-void BSUBWAY_GIMMICK_SetTrain(
-    FIELDMAP_WORK *fieldmap, FLDEFF_BTRAIN_TYPE type, const VecFx32 *pos )
-{
 }
 
 //======================================================================

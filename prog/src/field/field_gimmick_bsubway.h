@@ -30,3 +30,4 @@ extern void BSUBWAY_GIMMICK_Move( FIELDMAP_WORK *fieldmap );
 
 extern void BSUBWAY_GIMMICK_SetTrain(
     FIELDMAP_WORK *fieldmap, FLDEFF_BTRAIN_TYPE type, const VecFx32 *pos );
+extern FLDEFF_TASK * BSUBWAY_GIMMICK_GetTrainTask( FIELDMAP_WORK *fieldmap );

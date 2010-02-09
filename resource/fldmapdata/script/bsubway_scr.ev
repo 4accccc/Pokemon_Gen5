@@ -11,6 +11,8 @@
 //--------------------------------------------------------------
 //  スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA ev_init_bsw_receipt
+_EVENT_DATA ev_recover_bsw_receipt
 _EVENT_DATA ev_bsw_receipt_talk
 _EVENT_DATA ev_bsw_game_continue
 _EVENT_DATA ev_bsw_report_error
@@ -18,6 +20,33 @@ _EVENT_DATA ev_bsw_game_cancel
 _EVENT_DATA ev_bsw_game_after
 _EVENT_DATA ev_bsw_retmap_receipt
 _EVENT_DATA_END
+
+//======================================================================
+//  バトルサブウェイ　受付初期化
+//======================================================================
+//--------------------------------------------------------------
+//  受付　初期化
+//--------------------------------------------------------------
+INIT_EVENT_START ev_init_bsw_receipt
+{
+  DEFINE_LOCAL play_mode
+  
+  _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_RECEIPT, BSW_NULL )
+}
+INIT_EVENT_END
+
+//--------------------------------------------------------------
+//  受付　復帰
+//--------------------------------------------------------------
+INIT_EVENT_START ev_recover_bsw_receipt
+{
+  DEFINE_LOCAL play_mode
+  
+  _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_RECEIPT, BSW_NULL )
+}
+INIT_EVENT_END
 
 //======================================================================
 //  バトルサブウェイ　受付話し掛け

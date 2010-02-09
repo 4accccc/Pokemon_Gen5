@@ -14,9 +14,36 @@
 //--------------------------------------------------------------
 //  スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA ev_init_c04r0111_home //初期化
+_EVENT_DATA ev_recover_c04r0111_home //復帰
 _EVENT_DATA ev_c04r0111_receipt_talk  //受付話し掛け
 _EVENT_DATA ev_c04r0111_home  //ゲームクリア後のホーム
 _EVENT_DATA_END
+
+//======================================================================
+//  バトルサブウェイ　ホーム　初期化、復帰
+//======================================================================
+//--------------------------------------------------------------
+//  ホーム　初期化
+//--------------------------------------------------------------
+INIT_EVENT_START ev_init_c04r0111_home
+{
+  DEFINE_LOCAL play_mode
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_HOME, BSW_NULL )
+}
+INIT_EVENT_END
+
+//--------------------------------------------------------------
+//  ホーム　復帰
+//--------------------------------------------------------------
+INIT_EVENT_START ev_recover_c04r0111_home
+{
+  DEFINE_LOCAL play_mode
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_HOME, BSW_NULL )
+}
+INIT_EVENT_END
 
 //======================================================================
 //  バトルサブウェイ　ホーム　受付話し掛け

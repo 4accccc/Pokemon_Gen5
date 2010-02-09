@@ -50,7 +50,11 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  int seq_no;
+  u8 seq_no;
+  u8 vanish;
+  u8 anm_type;
+  u8 anm_end;
+  
   TASKHEADER_BTRAIN head;
   
   GFL_G3D_OBJ *obj;
@@ -123,20 +127,19 @@ static void btrain_InitResource( FLDEFF_BTRAIN *btrain )
   
   handle = FLDEFF_CTRL_GetArcHandleEffect( btrain->fectrl );
   
-  i = 0;
   tbl = data_ArcIdxBTrainMdl;
   
-  for( ; i < FLDEFF_BTRAIN_TYPE_MAX; i++, tbl++ ){
+  for( i = 0; i < FLDEFF_BTRAIN_TYPE_MAX; i++, tbl++ ){
     btrain->g3d_res_mdl[i] = GFL_G3D_CreateResourceHandle( handle, *tbl );
+    GFL_G3D_TransVramTexture( btrain->g3d_res_mdl[i] );
     
     btrain->g3d_rnd[i] = GFL_G3D_RENDER_Create(
         btrain->g3d_res_mdl[i], 0, btrain->g3d_res_mdl[i] );
   }
   
-  i = 0;
   tbl = data_ArcIdxBTrainAnm;
 
-  for( ; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++, tbl++ ){
+  for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++, tbl++ ){
     btrain->g3d_res_anm[i] = GFL_G3D_CreateResourceHandle( handle, *tbl );
   }
 }
@@ -153,8 +156,9 @@ static void btrain_DeleteResource( FLDEFF_BTRAIN *btrain )
   int i;
   
   for( i = 0; i < FLDEFF_BTRAIN_TYPE_MAX; i++ ){
-    GFL_G3D_DeleteResource( btrain->g3d_res_mdl[i] );
 	  GFL_G3D_RENDER_Delete( btrain->g3d_rnd[i] );
+    GFL_G3D_FreeVramTexture( btrain->g3d_res_mdl[i] );
+    GFL_G3D_DeleteResource( btrain->g3d_res_mdl[i] );
   }
   
   for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++ ){
@@ -167,14 +171,15 @@ static void btrain_DeleteResource( FLDEFF_BTRAIN *btrain )
 //======================================================================
 //--------------------------------------------------------------
 /**
- *
- * @param
- * @retval
- *
+ * バトルトレイン　セット
+ * @param fectrl FLDEFF_CTRL
+ * @param type FLDEFF_BTRAIN_TYPE
+ * @param pos 配置する座標
+ * @retval nothing
  */
 //--------------------------------------------------------------
 FLDEFF_TASK * FLDEFF_BTRAIN_SetTrain(
-    FLDEFF_CTRL *fectrl, const VecFx32 *pos, FLDEFF_BTRAIN_TYPE type )
+    FLDEFF_CTRL *fectrl, FLDEFF_BTRAIN_TYPE type, const VecFx32 *pos )
 {
   int i;
   FLDEFF_TASK *task;
@@ -191,9 +196,67 @@ FLDEFF_TASK * FLDEFF_BTRAIN_SetTrain(
 
 //--------------------------------------------------------------
 /**
- * 
- * @param
- * @retval
+ * バトルトレイン　アニメ設定
+ * @param task FLDEFF_TASK
+ * @param type FLDEFF_BTRAIN_ANIME_TYPE
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDEFF_BTRAIN_SetAnime(
+    FLDEFF_TASK *task, FLDEFF_BTRAIN_ANIME_TYPE type )
+{
+  int i;
+  TASKWORK_BTRAIN *work = FLDEFF_TASK_GetWork( task );
+  
+  GF_ASSERT( type < FLDEFF_BTRAIN_ANIME_TYPE_MAX );
+  
+  for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++ ){
+    if( i == type ){
+	    GFL_G3D_OBJECT_ResetAnimeFrame( work->obj, type );
+      GFL_G3D_OBJECT_EnableAnime( work->obj, type );
+    }else{
+	    GFL_G3D_OBJECT_ResetAnimeFrame( work->obj, type );
+      GFL_G3D_OBJECT_DisableAnime( work->obj, type );
+    }
+  }
+
+  work->anm_end = FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルトレイン　アニメ終了取得
+ * @param task FLDEFF_TASK
+ * @param type FLDEFF_BTRAIN_ANIME_TYPE
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+BOOL FLDEFF_BTRAIN_CheckAnimeEnd( FLDEFF_TASK *task )
+{
+  TASKWORK_BTRAIN *work = FLDEFF_TASK_GetWork( task );
+  return( work->anm_end );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルトレイン　非表示フラグセット
+ * @param task FLDEFF_TASK
+ * @param flag TRUE=非表示、FALSE=表示
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDEFF_BTRAIN_SetVanishFlag( FLDEFF_TASK *task, BOOL flag )
+{
+  TASKWORK_BTRAIN *work = FLDEFF_TASK_GetWork( task );
+  work->vanish = flag;
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルトレイン　初期化
+ * @param task FLDEFF_TASK
+ * @param wk task work
+ * @retval nothing
  */
 //--------------------------------------------------------------
 static void btrainTask_Init( FLDEFF_TASK *task, void *wk )
@@ -215,37 +278,96 @@ static void btrainTask_Init( FLDEFF_TASK *task, void *wk )
       eff_btrain->g3d_rnd[type], eff_btrain->g3d_res_anm[i], 0 );
   }
   
+  work->anm_type = FLDEFF_BTRAIN_ANIME_TYPE_MAX;
+  
   work->obj = GFL_G3D_OBJECT_Create(
       eff_btrain->g3d_rnd[type], work->anm, FLDEFF_BTRAIN_ANIME_TYPE_MAX );
-  
-//  GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
-//  GFL_G3D_OBJECT_EnableAnime( work->obj, 1 );
+#if 0 
+  for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++ ){
+    GFL_G3D_OBJECT_EnableAnime( work->obj, i );
+  }
+#endif
 }
 
+//--------------------------------------------------------------
+/**
+ * バトルトレイン　削除
+ * @param task FLDEFF_TASK
+ * @param wk task work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
 static void btrainTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   int i;
   TASKWORK_BTRAIN *work = wk;
   
   GFL_G3D_OBJECT_Delete( work->obj );
-
+  
   for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++ ){
     GFL_G3D_ANIME_Delete( work->anm[i] );
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * バトルトレイン　更新
+ * @param task FLDEFF_TASK
+ * @param wk task work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
 static void btrainTask_Update( FLDEFF_TASK *task, void *wk )
 {
+  TASKWORK_BTRAIN *work = wk;
+
+#ifdef DEBUG_ONLY_FOR_kagaya
+  {
+    int cont = GFL_UI_KEY_GetCont();
+    int trg = GFL_UI_KEY_GetTrg();
+    
+    if( (cont & PAD_BUTTON_R) && (trg & PAD_BUTTON_A) ){
+      work->anm_type++;
+
+      if( work->anm_type >= FLDEFF_BTRAIN_ANIME_TYPE_MAX ){
+        work->anm_type = 0;
+      }
+      
+      OS_Printf( "トレインアニメ %d\n", work->anm_type );
+      FLDEFF_BTRAIN_SetAnime( task, work->anm_type );
+    }
+  }
+#endif
+  
+  if( work->anm_type != FLDEFF_BTRAIN_ANIME_TYPE_MAX ){
+     work->anm_end = FALSE;
+    
+	  if( GFL_G3D_OBJECT_IncAnimeFrame(
+          work->obj,work->anm_type,FX32_ONE) == FALSE ){
+      work->anm_end = TRUE;
+    }
+  }
 }
 
+//--------------------------------------------------------------
+/**
+ * バトルトレイン　描画
+ * @param task FLDEFF_TASK
+ * @param wk task work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
 static void btrainTask_Draw( FLDEFF_TASK *task, void *wk )
 {
-  VecFx32 pos;
   TASKWORK_BTRAIN *work = wk;
-  GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
 
-  FLDEFF_TASK_GetPos( task, &status.trans );
-  GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+  if( work->vanish == FALSE ){
+    VecFx32 pos;
+    GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
+    MTX_Identity33( &status.rotate );
+    FLDEFF_TASK_GetPos( task, &status.trans );
+    GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+  }
 }
 
 //--------------------------------------------------------------
