@@ -313,6 +313,7 @@ static void scproc_WazaExe_Decide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 static void scEvent_WazaExeDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
 static BOOL scEvent_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BtlPokePos targetPos );
+static void scproc_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* robPoke, const BTL_POKEPARAM* orgAtkPoke, WazaID waza );
@@ -2896,7 +2897,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   fWazaLock = BPP_CheckSick(attacker, WAZASICK_WAZALOCK) || BPP_CheckSick(attacker, WAZASICK_TAMELOCK);
 
   BTL_HANDLER_Waza_Add( attacker, orgWaza );
-  scEvent_StartWazaSeq( wk, attacker, orgWaza );
+  scproc_StartWazaSeq( wk, attacker, orgWaza );
 
   do {
     // ワザ出し失敗判定１（ポケモン系状態異常＆こんらん、メロメロ、ひるみ）
@@ -3133,7 +3134,22 @@ static BOOL scEvent_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 
   return result;
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * ワザシーケンス開始処理
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   waza
+ */
+//----------------------------------------------------------------------------------
+static void scproc_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+  scEvent_StartWazaSeq( wk, attacker, waza );
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  Hem_PopState( &wk->HEManager, hem_state );
+}
 //----------------------------------------------------------------------------------
 /**
  * [Event] ワザシーケンス開始

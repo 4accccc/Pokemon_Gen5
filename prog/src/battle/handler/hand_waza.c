@@ -373,9 +373,11 @@ static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static void handler_Koraeru_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Koraeru_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Mamoru( u32* numElems );
+static void handler_Mamoru_StartSeq( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Mamoru_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void IncrementMamoruCounter( BTL_SVFLOW_WORK* flowWk, u8 pokeID );
 static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems );
 static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_WazaMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -4798,7 +4800,11 @@ static void handler_Mineuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static const BtlEventHandlerTable*  ADD_Koraeru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Koraeru_ExeCheck },  // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_WAZASEQ_START,           handler_Mamoru_StartSeq }, // ワザ処理開始
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Mamoru_ExeCheck }, // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_FAIL,       handler_Mamoru_ExeFail  }, // ワザだし失敗確定
+
+//    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Koraeru_ExeCheck },  // ワザ出し成否チェックハンドラ
     { BTL_EVENT_UNCATEGORIZE_WAZA,       handler_Koraeru },           // 未分類ワザハンドラ
     { BTL_EVENT_KORAERU_CHECK,           handler_Koraeru_Check },     // こらえるチェックハンドラ
     { BTL_EVENT_TURNCHECK_BEGIN,         handler_Koraeru_TurnCheck }, // ターンチェックハンドラ
@@ -4843,6 +4849,8 @@ static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Koraeru_Ready );
     HANDEX_STR_AddArg( &param->str, pokeID );
     work[ WORKIDX_STICK ] = 1;
+
+    IncrementMamoruCounter( flowWk, pokeID );
   }
 }
 // こらえるチェックハンドラ
@@ -4877,12 +4885,43 @@ static void handler_Koraeru_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable*  ADD_Mamoru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZASEQ_START,           handler_Mamoru_StartSeq }, // ワザ処理開始
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Mamoru_ExeCheck }, // ワザ出し成否チェックハンドラ
     { BTL_EVENT_WAZA_EXECUTE_FAIL,       handler_Mamoru_ExeFail  }, // ワザだし失敗確定
-    { BTL_EVENT_UNCATEGORIZE_WAZA,       handler_Mamoru },          // 未分類ワザハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,       handler_Mamoru          }, // 未分類ワザハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
+}
+// ワザ処理開始ハンドラ
+static void handler_Mamoru_StartSeq( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  static const WazaID checkWazaTbl[] = {
+    WAZANO_MAMORU, WAZANO_MIKIRI, WAZANO_KORAERU,
+    WAZANO_KARI_WAIDOGAADO, WAZANO_KARI_FASTOGAADO,
+  };
+
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    WazaID  waza = BPP_GetPrevWazaID( bpp );
+    u32 i;
+    for(i=0; i<NELEMS(checkWazaTbl); ++i){
+      if( checkWazaTbl[i] == waza ){
+        return;
+      }
+    }
+
+    // ワザ初出 or カウンタ共有ワザ以外のワザを直前に出していたらリセット
+    {
+
+      BTL_HANDEX_PARAM_COUNTER*  counterParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
+
+      counterParam->pokeID = pokeID;
+      counterParam->counterID = BPP_COUNTER_MAMORU;
+      counterParam->value = 0;
+    }
+  }
 }
 // ワザ出し成否チェックハンドラ
 static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -4932,19 +4971,31 @@ static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BTL_HANDEX_PARAM_TURNFLAG* flagParam;
-    BTL_HANDEX_PARAM_COUNTER*  counterParam;
 
     flagParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_TURNFLAG, pokeID );
     flagParam->pokeID = pokeID;
     flagParam->flag = BPP_TURNFLG_MAMORU;
 
     // 守る効果発動したらカウンタをインクリメント
-    counterParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
-    counterParam->pokeID = pokeID;
-    counterParam->counterID = BPP_COUNTER_MAMORU;
-    counterParam->value = BPP_COUNTER_Get( bpp, BPP_COUNTER_MAMORU ) + 1;
+    IncrementMamoruCounter( flowWk, pokeID );
   }
 }
+/**
+ *  「まもる」カウンタをインクリメント
+ */
+static void IncrementMamoruCounter( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
+{
+  BTL_HANDEX_PARAM_COUNTER*  param;
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+
+  param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
+  param->value = BPP_COUNTER_Get( bpp, BPP_COUNTER_MAMORU ) + 1;
+  param->pokeID = pokeID;
+  param->counterID = BPP_COUNTER_MAMORU;
+
+
+}
+
 //----------------------------------------------------------------------------------
 /**
  * がまん
@@ -6302,14 +6353,9 @@ static const BtlEventHandlerTable*  ADD_SinpiNoMamori( u32* numElems )
 static void handler_SinpiNoMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
-#if 1
+
   BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 5 );
   common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_SINPINOMAMORI, cont, BTL_STRID_STD_SinpiNoMamori );
-#else
-// @todo ワイドガードを試すための一時的措置
-  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 1 );
-  common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_WIDEGUARD, cont, BTL_STRID_STD_WideGuard );
-#endif
 
 }
 //----------------------------------------------------------------------------------
@@ -6434,6 +6480,9 @@ static void handler_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_WideGuard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZASEQ_START,            handler_Mamoru_StartSeq }, // ワザ処理開始
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,   handler_Mamoru_ExeCheck }, // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_FAIL,        handler_Mamoru_ExeFail  }, // ワザだし失敗確定
     { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_WideGuard   },  // 未分類ワザ
   };
   *numElems = NELEMS( HandlerTable );
@@ -6444,6 +6493,8 @@ static void handler_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 1 );
   BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
   common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_WIDEGUARD, cont, BTL_STRID_STD_WideGuard );
+
+  IncrementMamoruCounter( flowWk, pokeID );
 }
 
 //-------------------------------------
@@ -9278,6 +9329,9 @@ static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_FastGuard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZASEQ_START,           handler_Mamoru_StartSeq }, // ワザ処理開始
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Mamoru_ExeCheck }, // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_FAIL,       handler_Mamoru_ExeFail  }, // ワザだし失敗確定
     { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_FastGuard   },  // 未分類ワザ
   };
   *numElems = NELEMS( HandlerTable );
@@ -9288,6 +9342,7 @@ static void handler_FastGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 1 );
   BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
   common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_FASTGUARD, cont, BTL_STRID_STD_FastGuard );
+  IncrementMamoruCounter( flowWk, pokeID );
 }
 //----------------------------------------------------------------------------------
 /**
