@@ -30,6 +30,7 @@ struct _SITUATION {
   u8  season_id;          ///<季節
   u8  weather_id;         ///<天気
   u8  pad[3];             ///<padding
+  u32 egg_step_count;     ///<タマゴ孵化カウンタ
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
 	PLAYERWORK_SAVE plsv;
@@ -238,7 +239,7 @@ void SaveData_SituationDataLoadStatus(const SITUATION * st, FIELD_STATUS* status
  *	@param	u8
  */
 //-----------------------------------------------------------------------------
-void SaveData_SituationUpdateSeasonID(SITUATION * st, const u8 season)
+void SaveData_SituationUpdateSeasonID(SITUATION * st, u8 season)
 {
   st->season_id = season;
 }
@@ -279,4 +280,28 @@ void SaveData_SituationLoadWeatherID(SITUATION * st, u8 * weather)
   *weather = st->weather_id;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brieif タマゴ孵化カウンタを保存
+ *
+ *	@param	st        セーブワーク
+ *	@param	count     カウンタの値
+ */
+//-----------------------------------------------------------------------------
+void SaveData_SituationUpdateEggStepCount(SITUATION * st, u32 count)
+{
+  st->egg_step_count = count;
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brieif タマゴ孵化カウンタを取得
+ *
+ *	@param	st        セーブワーク
+ *	@param	count     カウンタの値の格納先
+ */
+//-----------------------------------------------------------------------------
+void SaveData_SituationLoadEggStepCount(SITUATION * st, u32 * count)
+{
+  *count = st->egg_step_count;
+}

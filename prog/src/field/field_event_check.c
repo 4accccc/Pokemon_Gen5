@@ -102,6 +102,8 @@
 #include "scrcmd.h"
 #include "scrcmd_intrude.h"
 
+#include "savedata/situation.h"
+
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
 extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
@@ -1507,7 +1509,7 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   if( event != NULL) return event;
 
   //育て屋チェック
-  event  = CheckSodateya( fieldWork, gsys, gdata );
+  event = CheckSodateya( fieldWork, gsys, gdata );
   if( event != NULL) return event;
 
   //虫除けスプレーチェック
@@ -1521,25 +1523,55 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
 /**
  * @brief 手持ちタマゴの孵化カウント更新
  * @param party 更新対象のポケパーティー
+ *
+ * ※なつき度(タマゴの場合は孵化までの残り歩数)
  */
 //--------------------------------------------------------------
 static void updatePartyEgg( POKEPARTY* party )
 {
-  int i;
-  int poke_count = PokeParty_GetPokeCount( party );
+  SAVE_CONTROL_WORK* saveData;
+  SITUATION* situation;
+  u32 count;
 
-  for( i=0; i<poke_count; i++ )
+  // 状況データ取得
+  saveData  = SaveControl_GetPointer();
+  situation = SaveData_GetSituation( saveData );
+
+  // タマゴ孵化カウンタを更新
+  SaveData_SituationLoadEggStepCount( situation, &count );
+  count += 0x0100;
+
+  // 手持ちのタマゴに反映
+  if( 0x10000 < count )
   {
-    POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, i );
-    u32      tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
-    u32           friend = PP_Get( param, ID_PARA_friend, NULL ); // なつき度(タマゴの場合は孵化までの残り歩数)
+    int i;
+    int partyCount;
 
-    if( tamago_flag == TRUE ) // タマゴなら
-    { 
-      // 残り歩数をデクリメント
-      if( 0 < friend ) PP_Put( param, ID_PARA_friend, --friend );
+    partyCount = PokeParty_GetPokeCount( party );
+
+    // 手持ちタマゴの残り歩数を減らす
+    for( i=0; i<partyCount; i++ )
+    {
+      POKEMON_PARAM* param;
+      u32 tamagoFlag, friend;
+
+      param      = PokeParty_GetMemberPointer( party, i );
+      tamagoFlag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+      friend     = PP_Get( param, ID_PARA_friend, NULL ); 
+
+      if( tamagoFlag == TRUE ) 
+      { 
+        if( 0 < friend ){ PP_Put( param, ID_PARA_friend, friend -1 ); }
+      }
     }
+
+    // 孵化カウンタ初期化
+    count = 0;
   }
+
+  // セーブデータに反映
+  SaveData_SituationUpdateEggStepCount( situation, count );
+
 }
 //--------------------------------------------------------------
 /**
@@ -1553,9 +1585,9 @@ static void updatePartyEgg( POKEPARTY* party )
 static BOOL checkPartyEgg( POKEPARTY* party )
 {
   int i;
-  int poke_count = PokeParty_GetPokeCount( party );
+  int pokeCount = PokeParty_GetPokeCount( party );
 
-  for( i=0; i<poke_count; i++ )
+  for( i=0; i<pokeCount; i++ )
   {
     POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, i );
     u32      tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
@@ -1569,14 +1601,17 @@ static BOOL checkPartyEgg( POKEPARTY* party )
   return FALSE;
 }
 
+//--------------------------------------------------------------
 /*
  *  @brief  育て屋イベントチェック
  */
-static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
+//--------------------------------------------------------------
+static GMEVENT* CheckSodateya( 
+    FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gameSystem, GAMEDATA* gameData )
 {
-  HEAPID       heap_id = FIELDMAP_GetHeapID( fieldWork );
-  POKEPARTY*   party = GAMEDATA_GetMyPokemon( gdata );
-  SODATEYA*    sodateya = FIELDMAP_GetSodateya( fieldWork );
+  HEAPID     heapID   = FIELDMAP_GetHeapID( fieldmap );
+  POKEPARTY* party    = GAMEDATA_GetMyPokemon( gameData );
+  SODATEYA*  sodateya = FIELDMAP_GetSodateya( fieldmap );
 
   // 育て屋: 経験値加算, 子作り判定など1歩分の処理
   SODATEYA_BreedPokemon( sodateya ); 
@@ -1587,7 +1622,7 @@ static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GA
   // 手持ちタマゴ: 孵化チェック
   if( checkPartyEgg( party ) )
   {
-    return SCRIPT_SetEventScript( gsys, SCRID_EGG_BIRTH, NULL, heap_id );
+    return SCRIPT_SetEventScript( gameSystem, SCRID_EGG_BIRTH, NULL, heapID );
   }
   return NULL;
 }

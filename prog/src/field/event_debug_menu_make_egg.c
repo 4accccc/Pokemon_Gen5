@@ -116,7 +116,7 @@ static GMEVENT_RESULT debugMenuMakeEggEvent( GMEVENT *event, int *seq, void *wk 
       else if( work->select == STR_OLDBORN )
       { //「もうすぐ孵化」
         egg = CreateEgg( work->gameData, work->heapID, 1 );
-        PP_Put( egg, ID_PARA_friend, 10 );  // 孵化歩数
+        PP_Put( egg, ID_PARA_friend, 1 );  // 孵化歩数
       }
       else if( work->select == STR_ILLEGAL_EGG )
       { //「だめタマゴ」
