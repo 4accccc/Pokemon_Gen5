@@ -242,7 +242,8 @@ SRCS  +=    $(SOUNDSRC) \
 		system/ds_system.c \
         savedata/undata_update.c \
         field/event_research_radar.c \
-        system/scroll_bar.c
+        system/scroll_bar.c \
+        gamesystem/g_power.c
 
 
 #================================================

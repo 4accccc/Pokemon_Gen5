@@ -115,7 +115,8 @@ def DataConv()
   for i in 0..PowerData.size-1
     if(PowerData[i].type == "ENCOUNT_UP" || PowerData[i].type == "ENCOUNT_DOWN" \
         || PowerData[i].type == "HATCH_UP" || PowerData[i].type == "EXP_UP" \
-        || PowerData[i].type == "EXP_DOWN" || PowerData[i].type == "MONEY_UP")
+        || PowerData[i].type == "EXP_DOWN" || PowerData[i].type == "MONEY_UP" \
+        || PowerData[i].type == "SALE" || PowerData[i].type == "CAPTURE_UP")
       num = PowerData[i].data.to_f;
       num *= 100; #¬”‚ğ®”‚É•ÏŠ·‚·‚é(100”{‚ÌŒÅ’è¬”)
       PowerData[i].data = (0x100 * num / 100).to_i;  #‰ºˆÊ8bitŒÅ’è¬”‚É‚³‚ç‚É•ÏŠ·
