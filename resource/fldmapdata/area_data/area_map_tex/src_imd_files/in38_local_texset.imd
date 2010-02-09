@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-02-05T17:16:45"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-02-08T19:38:16"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
 
-<tex_image_array size="27">
+<tex_image_array size="33">
 	<tex_image index="0" name="c09_iriguti"
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
@@ -1165,7 +1165,98 @@
 			0017 0000 5417 5555 a917 aaaa fd17 ffff
 		</bitmap>
 	</tex_image>
-	<tex_image index="26" name="shin_ishi2"
+	<tex_image index="26" name="pc_kage"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="pc_kage_pl"
+		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_kage.tga"
+	>
+		<bitmap size="8">
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="27" name="pc_meka01"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="pc_meka01_pl"
+		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka01.tga"
+	>
+		<bitmap size="128">
+			0000 0000 dddf dddd 0000 0000 bbbe bbbb
+			ccc0 0000 aaad aaaa 11c0 0009 aaad aaaa
+			9900 0009 aaad aaaa 0000 0000 9999 9999
+			0000 0000 9999 aaa9 ccc0 0000 4444 4444
+			33c0 0009 4444 4444 9900 0009 4444 4444
+			0000 0000 4444 4444 0000 0000 4444 4444
+			ccc0 0000 4444 4444 33c0 0009 8455 5554
+			9900 0009 8455 5554 0000 0000 4455 5554
+			0000 0000 5555 5555 ccc0 0000 6666 6666
+			33c0 0009 6666 6666 9990 0009 6666 6666
+			0000 0000 6666 6666 2222 2222 2222 aaa2
+			bbbb bbbb bbbb aaab aaab aaaa aaaa 999b
+			99ab 9999 a999 999b d7ab dddd a7dd 999b
+			d7ab dddd a7dd 999b d7bb 7777 b7d7 999b
+			d7bb bbbb b7db 999b d7bb bbbb b7db 999b
+			a7bb aaaa b7aa 999b bbbb bbbb bbbb 999b
+		</bitmap>
+	</tex_image>
+	<tex_image index="28" name="pc_meka02"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette256"
+		color0_mode="color"
+		palette_name="pc_meka02_pl"
+		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka02.tga"
+	>
+		<bitmap size="64">
+			0808 0808 0808 0808 1a1a 1a1a 1717 1717
+			1919 1919 1616 1616 1818 1818 1515 1515
+			1414 1414 1212 1212 1010 1010 0b0b 0b0b
+			0c0c 0c0c 0909 0909 0505 0505 1313 1313
+			0101 0101 0707 0707 0000 0000 0606 0606
+			0404 0404 0f0f 0f0f 0303 0303 0e0e 0e0e
+			0202 0202 0d0d 0d0d 1111 1111 1111 1111
+			0a0a 0a0a 0a0a 0a0a 0808 0808 0808 0808
+		</bitmap>
+	</tex_image>
+	<tex_image index="29" name="pc_meka03.1"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette16"
+		color0_mode="color"
+		palette_name="pc_meka03"
+		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka03.1.tga"
+	>
+		<bitmap size="16">
+			bbbb bbbb bbbb bbbb aaaa aaaa aaaa aaaa
+			9999 9999 9999 9999 9999 9999 9999 9999
+		</bitmap>
+	</tex_image>
+	<tex_image index="30" name="pc_meka03.2"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette16"
+		color0_mode="color"
+		palette_name="pc_meka03"
+		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka03.2.tga"
+	>
+		<bitmap size="16">
+			8888 8888 8888 8888 6666 6666 6666 6666
+			7777 7777 7777 7777 7777 7777 7777 7777
+		</bitmap>
+	</tex_image>
+	<tex_image index="31" name="pc_meka03.3"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette16"
+		color0_mode="color"
+		palette_name="pc_meka03"
+		path="C:/home/wb_data3d/build_model/indoor/pcmachine01/tex/pc_meka03.3.tga"
+	>
+		<bitmap size="16">
+			3333 3333 3333 3333 4444 4444 4444 4444
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="32" name="shin_ishi2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette256"
 		color0_mode="color"
@@ -1241,7 +1332,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="27">
+<tex_palette_array size="31">
 	<tex_palette index="0" name="c09_iriguti_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -1330,7 +1421,24 @@
 	<tex_palette index="25" name="n_bridge_pl" color_size="4">
 		1084 18c6 1ce7 2528
 	</tex_palette>
-	<tex_palette index="26" name="shin_ishi2_pl" color_size="24">
+	<tex_palette index="26" name="pc_kage_pl" color_size="4">
+		0000 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="27" name="pc_meka01_pl" color_size="16">
+		7fff 5dbf 6685 7f45 6ae8 7328 7b68 4e72
+		6bff 6f7b 5ef7 56b5 5294 4631 318c 18c6
+	</tex_palette>
+	<tex_palette index="28" name="pc_meka02_pl" color_size="32">
+		1a7f 1b1e 2d7f 2dff 2e3f 375f 3a57 3a97
+		3def 426b 4631 46ad 4725 4a59 4a79 4a99
+		4b48 4e73 4eef 4efa 4fa9 5ecd 6710 6b52
+		7fa5 7fe9 7fec 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="29" name="pc_meka03" color_size="16">
+		0f9f 035e 3fbf 027a 0aff 171f 3275 3697
+		25f1 5ef7 56b5 4631 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="30" name="shin_ishi2_pl" color_size="24">
 		10e8 10e9 14e8 18e8 256c 296c 2d8e 2dae
 		2dcf 2dd0 318e 31cf 35cf 3611 3a11 3e11
 		3e32 3e33 4233 4632 4674 4675 4a74 4e74
@@ -1442,7 +1550,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="V‹KƒV[ƒ“" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="27">
+	<ex_tex_image_array size="33">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -1470,8 +1578,14 @@
 		<ex_tex_image index="24" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="25" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="26" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="27" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="28" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="29" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="30" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="31" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="32" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="27">
+	<ex_tex_palette_array size="31">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -1499,6 +1613,10 @@
 		<ex_tex_palette index="24" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="25" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="26" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="27" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="28" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="29" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="30" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>
