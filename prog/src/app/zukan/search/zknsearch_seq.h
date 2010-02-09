@@ -9,3 +9,6 @@
  */
 //============================================================================================
 #pragma	once
+
+
+extern BOOL ZKNSEARCHSEQ_MainSeq( ZKNSEARCHMAIN_WORK * wk );

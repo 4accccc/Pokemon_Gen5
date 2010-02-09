@@ -16,6 +16,11 @@
 #include "zukan_common.h"
 
 
+#define	BASEBG_SCROLL_WAIT	( 4 )			// ＢＧスクロールウェイト
+#define	BASEBG_SCROLL_VAL		( 1 )
+
+
+
 // デフォルトリスト作成
 void ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 * list )
 {
@@ -46,6 +51,18 @@ void ZKNCOMM_SetFadeOut( HEAPID heapID )
 		WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
 		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapID );
 }
+
+// 背景スクロール
+void ZKNCOMM_ScrollBaseBG( u8 mainBG, u8 subBG, u32 * cnt )
+{
+	*cnt += 1;
+	if( *cnt == BASEBG_SCROLL_WAIT ){
+		GFL_BG_SetScrollReq( mainBG, GFL_BG_SCROLL_X_INC, BASEBG_SCROLL_VAL );
+		GFL_BG_SetScrollReq( subBG, GFL_BG_SCROLL_X_INC, BASEBG_SCROLL_VAL );
+		*cnt = 0;
+	}
+}
+
 
 GFL_CLWK * ZKNCOMM_CreateClact( GFL_CLUNIT * unit, const ZKNCOMM_CLWK_DATA * prm, HEAPID heapID )
 {

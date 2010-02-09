@@ -650,7 +650,7 @@ static void SetZukanData( NAKAHIRO_MAIN_WORK * wk, u32 mode )
 	u32	i;
 
 //	for( i=1; i<=MONSNO_END; i++ ){
-	for( i=1; i<=151; i++ ){
+	for( i=200; i<=208; i++ ){
 		SetZukanDataOne( wk, i, 0 );
 	}
 }

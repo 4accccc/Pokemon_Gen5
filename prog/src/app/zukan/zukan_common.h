@@ -17,9 +17,6 @@
 //	定数定義
 //============================================================================================
 
-#define	ZKNCOMM_BG_SCROLL_WAIT		( 4 )			// ＢＧスクロールウェイト
-
-
 // セルアクターデータ
 typedef struct {
 	GFL_CLWK_DATA	dat;
@@ -46,5 +43,8 @@ extern void ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 * list );
 extern void ZKNCOMM_SetFadeIn( HEAPID heapID );
 
 extern void ZKNCOMM_SetFadeOut( HEAPID heapID );
+
+extern void ZKNCOMM_ScrollBaseBG( u8 mainBG, u8 subBG, u32 * cnt );
+
 
 extern GFL_CLWK * ZKNCOMM_CreateClact( GFL_CLUNIT * unit, const ZKNCOMM_CLWK_DATA * prm, HEAPID heapID );

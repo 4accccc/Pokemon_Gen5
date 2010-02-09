@@ -15,6 +15,7 @@
 
 #include "zukan_common.h"
 #include "list/zukanlist.h"
+#include "search/zukansearch.h"
 
 
 //============================================================================================
@@ -40,8 +41,12 @@ enum {
 
 typedef struct {
 	ZUKAN_PARAM * prm;
+
 	u16	defaultList[MONSNO_END];
 	u16 * list;
+
+	ZKNCOMM_LIST_SORT	sort;		// ソートデータ
+
 	int	seq;
 	void * work;
 }ZUKAN_MAIN_WORK;
@@ -56,11 +61,11 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 static GFL_PROC_RESULT ZukanProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT ZukanProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
-static void MakeDefaultList( ZUKAN_MAIN_WORK * wk );
-
 static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk );
 static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk );
 
+static int MainSeq_CallSearch( ZUKAN_MAIN_WORK * wk );
+static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk );
 
 
 //============================================================================================
@@ -87,8 +92,9 @@ static const pZUKAN_FUNC MainSeq[] = {
 	NULL,	// 鳴き声終了後
 	NULL,	// 姿呼び出し
 	NULL,	// 姿終了後
-	NULL,	// 検索呼び出し
-	NULL,	// 検索終了後
+
+	MainSeq_CallSearch,		// 検索呼び出し
+	MainSeq_EndSearch,		// 検索終了後
 };
 
 
@@ -227,14 +233,54 @@ static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
 		break;
 
 	case ZKNLIST_RET_SEARCH:	// 検索画面へ
-//		ret = SEQ_SEARCH_CALL;
-		wk->prm->retMode = ZUKAN_RET_NORMAL;
-		ret = SEQ_PROC_FINISH;
+		ret = SEQ_SEARCH_CALL;
 		break;
 
 	default:
 		wk->prm->retMode = ZUKAN_RET_NORMAL;
 		ret = SEQ_PROC_FINISH;
+	}
+
+	GFL_HEAP_FreeMemory( wk->work );
+
+	return ret;
+}
+
+static int MainSeq_CallSearch( ZUKAN_MAIN_WORK * wk )
+{
+	ZUKANSEARCH_DATA * search;
+
+	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANSEARCH_DATA) );
+	search = wk->work;
+
+	search->sort = &wk->sort;
+
+	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_search), &ZUKANSEARCH_ProcData, wk->work );
+
+	return SEQ_LIST_END;
+}
+
+static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )
+{
+	ZUKANSEARCH_DATA * search;
+	int	ret;
+
+	search = wk->work;
+
+	switch( search->retMode ){
+	case ZKNSEARCH_RET_START:		// 検索実行
+		ret = SEQ_LIST_CALL;
+		break;
+	
+	case ZKNSEARCH_RET_CANCEL:	// キャンセル
+		ret = SEQ_LIST_CALL;
+		break;
+
+	case ZKNSEARCH_RET_EXIT_X:	// 図鑑を終了してメニューを閉じる
+	default:
+		wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+		ret = SEQ_PROC_FINISH;
+		break;
 	}
 
 	GFL_HEAP_FreeMemory( wk->work );

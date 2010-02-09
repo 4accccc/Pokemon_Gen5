@@ -17,7 +17,7 @@
 
 
 // オーバーレイ
-FS_EXTERN_OVERLAY(zukan_search);
+//FS_EXTERN_OVERLAY(zukan_search);
 
 
 //=============================================================================

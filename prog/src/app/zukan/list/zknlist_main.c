@@ -617,8 +617,10 @@ void ZKNLISTMAIN_FreeList( ZKNLISTMAIN_WORK * wk )
 	FRAMELIST_Exit( wk->lwk );
 
 	// –¼‘Oíœ
-	for( i=1; i<=MONSNO_END; i++ ){
-		GFL_STR_DeleteBuffer( wk->name[i-1] );
+	for( i=0; i<MONSNO_END; i++ ){
+		if( wk->name[i] != NULL ){
+			GFL_STR_DeleteBuffer( wk->name[i] );
+		}
 	}
 
 //	BLINKPALANM_Exit( wk->blink );

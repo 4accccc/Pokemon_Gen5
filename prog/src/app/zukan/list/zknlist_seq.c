@@ -98,7 +98,6 @@ static int SetListMoveTouch( ZKNLISTMAIN_WORK * wk );
 static u32 GetTouchPos( u32 tpy );
 */
 
-static void ScrollBaseBg( ZKNLISTMAIN_WORK * wk );
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -149,7 +148,7 @@ BOOL ZKNLISTSEQ_MainSeq( ZKNLISTMAIN_WORK * wk )
 	ZKNLISTOBJ_AnmMain( wk );
 	ZKNLISTBMP_PrintUtilTrans( wk );
 //	BGWINFRM_MoveMain( wk->wfrm );
-	ScrollBaseBg( wk );
+	ZKNCOMM_ScrollBaseBG( GFL_BG_FRAME3_M, GFL_BG_FRAME3_S, &wk->BaseScroll );
 
 	return TRUE;
 }
@@ -897,15 +896,4 @@ static u32 GetTouchPos( u32 tpy )
 */
 
 
-#define	BASEBG_SCROLL_VAL		( 1 )
-
-static void ScrollBaseBg( ZKNLISTMAIN_WORK * wk )
-{
-	wk->BaseScroll++;
-	if( wk->BaseScroll == ZKNCOMM_BG_SCROLL_WAIT ){
-		GFL_BG_SetScrollReq( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_INC, BASEBG_SCROLL_VAL );
-		GFL_BG_SetScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_X_INC, BASEBG_SCROLL_VAL );
-		wk->BaseScroll = 0;
-	}
-}
 
