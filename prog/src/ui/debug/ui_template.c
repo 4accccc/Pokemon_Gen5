@@ -720,6 +720,7 @@ static GFL_PROC_RESULT UITemplateProc_Main( GFL_PROC *proc, int *seq, void *pwk,
 static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heapID )
 {
   //@TODO とりあえずマイクテストのリソース
+  //@TODO 複数枚ロードできるようにして切り離す？
   enum
   {
     RES_ARC = ARCID_MICTEST_GRA,
