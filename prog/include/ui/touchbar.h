@@ -186,6 +186,7 @@ extern TOUCHBAR_ICON TOUCHBAR_GetTouch( const TOUCHBAR_WORK *cp_wk );
 extern void TOUCHBAR_SetActiveAll( TOUCHBAR_WORK *p_wk, BOOL is_active );
 extern void TOUCHBAR_SetVisibleAll( TOUCHBAR_WORK *p_wk, BOOL is_visible );
 extern void TOUCHBAR_SetBGPriorityAll( TOUCHBAR_WORK* p_wk, u8 bg_prio );
+extern void TOUCHBAR_SetSoftPriorityAll( TOUCHBAR_WORK* p_wk, u8 pri );
 
 //=============================================================================
 /**
@@ -221,3 +222,10 @@ extern u32 TOUCHBAR_GetUseKey( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
 extern void TOUCHBAR_SetFlip( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, BOOL is_flip );
 extern BOOL TOUCHBAR_GetFlip( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
 
+//-------------------------------------
+///	óDêÊìxê›íË
+//=====================================
+extern void TOUCHBAR_SetSoftPriority( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u8 pri );
+extern u8 TOUCHBAR_GetSoftPriority( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
+extern void TOUCHBAR_SetBgPriority( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u8 pri );
+extern u8 TOUCHBAR_GetBgPriority( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );

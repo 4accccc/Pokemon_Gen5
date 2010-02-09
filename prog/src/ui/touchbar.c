@@ -132,6 +132,8 @@ static void ICON_SetKey( ICON_WORK *p_wk, u32 key );
 static u32 ICON_GetKey( const ICON_WORK *cp_wk );
 static void ICON_SetFlip( ICON_WORK *p_wk, BOOL is_flip );
 static BOOL ICON_GetFlip( const ICON_WORK *cp_wk );
+static void ICON_SetSoftPriority( ICON_WORK *p_wk, u8 pri );
+static u8 ICON_GetSoftPriority( const ICON_WORK *p_wk );
 static void ICON_SetBGPriority( ICON_WORK *p_wk, u8 bg_prio );
 static u8 ICON_GetBGPriority( const ICON_WORK *p_wk );
 static void Icon_PushFuncNormal( ICON_WORK *p_wk );
@@ -454,6 +456,23 @@ void TOUCHBAR_SetBGPriorityAll( TOUCHBAR_WORK* p_wk, u8 bg_prio )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	TOUCHBAR	全てのアイコンのOBJプライオリティを設定
+ *
+ *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	pri						OBJプライオリティ
+ */
+//-----------------------------------------------------------------------------
+void TOUCHBAR_SetSoftPriorityAll( TOUCHBAR_WORK* p_wk, u8 pri )
+{
+	int i;
+	for( i = 0; i < p_wk->tbl_len; i++ )
+	{	
+		ICON_SetSoftPriority( &p_wk->icon[ i ], pri );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	TOUCHBAR	アイコンのアクティブ設定
  *
  *	@param	TOUCHBAR_WORK *p_wk	ワーク
@@ -612,6 +631,83 @@ u32 TOUCHBAR_GetUseKey( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
 
 	//取得
 	return ICON_GetKey( cp_icon );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJプライオリティ設定
+ *
+ *	@param	TOUCHBAR_WORK *p_wk ワーク
+ *	@param	icon                アイコン
+ *	@param	pri                 優先順位
+ */
+//-----------------------------------------------------------------------------
+void TOUCHBAR_SetSoftPriority( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u8 pri )
+{ 
+
+	ICON_WORK * p_icon;
+		
+	//指定アイコンを検索
+	p_icon	= Touchbar_Search( p_wk, icon );
+
+	//設定
+	ICON_SetSoftPriority( p_icon, pri );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJプライオリティ設定
+ *
+ *	@param	TOUCHBAR_WORK *p_wk ワーク
+ *	@param	icon                アイコン
+ *	@param	pri                 優先順位
+ */
+//-----------------------------------------------------------------------------
+u8 TOUCHBAR_GetSoftPriority( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
+{ 
+	const ICON_WORK * cp_icon;
+		
+	//指定アイコンを検索
+	cp_icon	= Touchbar_SearchConst( cp_wk, icon );
+
+	//設定
+	return ICON_GetSoftPriority( cp_icon );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGプライオリティ設定
+ *
+ *	@param	TOUCHBAR_WORK *p_wk ワーク
+ *	@param	icon                アイコン
+ *	@param	pri                 優先順位
+ */
+//-----------------------------------------------------------------------------
+void TOUCHBAR_SetBgPriority( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u8 pri )
+{ 
+	ICON_WORK * p_icon;
+		
+	//指定アイコンを検索
+	p_icon	= Touchbar_Search( p_wk, icon );
+
+	//設定
+	ICON_SetBGPriority( p_icon, pri );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJプライオリティ設定
+ *
+ *	@param	TOUCHBAR_WORK *p_wk ワーク
+ *	@param	icon                アイコン
+ *	@param	pri                 優先順位
+ */
+//-----------------------------------------------------------------------------
+u8 TOUCHBAR_GetBgPriority( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
+{ 
+	const ICON_WORK * cp_icon;
+		
+	//指定アイコンを検索
+	cp_icon	= Touchbar_SearchConst( cp_wk, icon );
+
+	//設定
+	return ICON_GetBGPriority( cp_icon );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1186,6 +1282,34 @@ static void ICON_SetFlip( ICON_WORK *p_wk, BOOL is_flip )
 static BOOL ICON_GetFlip( const ICON_WORK *cp_wk )
 {	
 	return cp_wk->now_anmseq	== cp_wk->data.push_anmseq;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	OBJプライオリティ設定
+ *
+ *	@param	ICON_WORK *p_wk	ワーク
+ *	@param	pri					OBJプライオリティ
+ *
+ */
+//-----------------------------------------------------------------------------
+static void ICON_SetSoftPriority( ICON_WORK *p_wk, u8 pri )
+{
+  GF_ASSERT(p_wk);
+  GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk, pri );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	OBJプライオリティ取得
+ *
+ *	@param	const ICON_WORK *cp_wk ワーク
+ *
+ *	@return	OBJプライオリティ
+ */
+//-----------------------------------------------------------------------------
+static u8 ICON_GetSoftPriority( const ICON_WORK *p_wk )
+{
+  GF_ASSERT(p_wk);
+  return GFL_CLACT_WK_GetSoftPri( p_wk->p_clwk );
 }
 //----------------------------------------------------------------------------
 /**
