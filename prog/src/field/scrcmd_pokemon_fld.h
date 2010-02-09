@@ -20,3 +20,9 @@ extern VMCMD_RESULT EvCmdSetGymVictoryInfo( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetGymVictoryInfo( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetBreederJudgeResult( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk );
+
+extern VMCMD_RESULT EvCmdSkillTeachCheckParty( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdSkillTeachCheckPokemon( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdSkillTeachSelectPokemon( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdSkillTeachGetWazaID( VMHANDLE * core, void * wk );
+

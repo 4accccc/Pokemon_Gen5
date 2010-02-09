@@ -29,6 +29,8 @@
 #include "savedata/misc.h"
 #include "pm_define.h"  //TEMOTI_POKEMAX
 
+#include "waza_tool/wazano_def.h" // for WAZANO_xxxx
+#include "event_poke_status.h" // for EvCmdPartyPokeSelect
 //======================================================================
 //  define
 //======================================================================
@@ -69,7 +71,7 @@ VMCMD_RESULT EvCmdSetFavoritePoke( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * @brief
+ * @brief ジムリーダー戦勝利情報のセット
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSetGymVictoryInfo( VMHANDLE * core, void *wk )
@@ -98,7 +100,7 @@ VMCMD_RESULT EvCmdSetGymVictoryInfo( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * @brief
+ * @brief ジムリーダー戦勝利情報の取得
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetGymVictoryInfo( VMHANDLE * core, void *wk )
@@ -130,7 +132,7 @@ VMCMD_RESULT EvCmdGetGymVictoryInfo( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * @brief
+ * @brief   ジャッジイベントの判定データ取得コマンド
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetBreederJudgeResult( VMHANDLE * core, void *wk )
@@ -356,6 +358,341 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
   
   return VMCMD_RESULT_CONTINUE;
 }
+
+//======================================================================
+//
+//    技覚え関連
+//
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+enum {
+  SKILLTEACH_ID_COALESCENCE_KUSA = 0,
+  SKILLTEACH_ID_COALESCENCE_HONOO,
+  SKILLTEACH_ID_COALESCENCE_MIZU,
+
+  SKILLTEACH_ID_STRONGEST_KUSA,
+  SKILLTEACH_ID_STRONGEST_HONOO,
+  SKILLTEACH_ID_STRONGEST_MIZU,
+
+  SKILLTEACH_ID_DRAGON,
+
+  SKILLTEACH_ID_MAX,
+};
+
+//--------------------------------------------------------------
+/**
+ * @brief 教える技ナンバーを取得する
+ * @param pp    対象となるポケモン
+ * @param mode  技覚えモード指定
+ * @return  u16 技ナンバー
+ */
+//--------------------------------------------------------------
+static u16 get_teach_waza( const POKEMON_PARAM * pp, u16 mode )
+{
+  int i;
+  u16 monsno;
+
+  switch ( mode )
+  {
+  case SCR_SKILLTEACH_MODE_STRONGEST:
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_STRONGEST_KUSA ) )
+    {
+      return WAZANO_HAADOPURANTO;
+    }
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_STRONGEST_HONOO ) )
+    {
+      return WAZANO_BURASUTOBAAN;
+    }
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_STRONGEST_MIZU ) )
+    {
+      return WAZANO_HAIDOROKANON;
+    }
+    GF_ASSERT(0);
+    break;
+
+  case SCR_SKILLTEACH_MODE_DRAGON:
+    return WAZANO_RYUUSEIGUN;
+
+  case SCR_SKILLTEACH_MODE_COALESCENCE:
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_COALESCENCE_KUSA ) )
+    {
+      return WAZANO_KUSANOTIKAI;
+    }
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_COALESCENCE_HONOO ) )
+    {
+      return WAZANO_HONOONOTIKAI;
+    }
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_COALESCENCE_MIZU ) )
+    {
+      return WAZANO_MIZUNOTIKAI;
+    }
+    GF_ASSERT(0);
+    break;
+
+  default:
+    GF_ASSERT(0);
+  }
+  return WAZANO_BURASUTOBAAN;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static u16 get_teach_limit_friendly( u16 mode )
+{
+  /* とりあえず、現状は最大値必要としている */
+  return PTL_FRIEND_MAX;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 技を教えられるかどうかのチェック
+ * @param pp    対象となるポケモン
+ * @param mode  技覚えモード指定
+ * @return  BOOL  TRUEの時＝教えられる、FALSEの時＝教えられない
+ */
+//--------------------------------------------------------------
+static BOOL check_teach_mons( const POKEMON_PARAM * pp, u16 mode )
+{
+  int i;
+
+  switch ( mode )
+  {
+  case SCR_SKILLTEACH_MODE_STRONGEST:
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_STRONGEST_KUSA ) )
+    {
+      return TRUE;
+    }
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_STRONGEST_HONOO ) )
+    {
+      return TRUE;
+    }
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_STRONGEST_MIZU ) )
+    {
+      return TRUE;
+    }
+    return FALSE;
+
+  case SCR_SKILLTEACH_MODE_DRAGON:
+#if 1
+    {
+      u16 type1 = PP_Get( pp, ID_PARA_type1, NULL );
+      u16 type2 = PP_Get( pp, ID_PARA_type2, NULL );
+      if ( type1 == POKETYPE_DRAGON && type2 == POKETYPE_DRAGON )
+      {
+        return TRUE;
+      }
+    }
+#else
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_DRAGON ) )
+    {
+      return TRUE;
+    }
+#endif
+    return FALSE;
+
+  case SCR_SKILLTEACH_MODE_COALESCENCE:
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_COALESCENCE_KUSA ) )
+    {
+      return TRUE;
+    }
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_COALESCENCE_HONOO ) )
+    {
+      return TRUE;
+    }
+    if ( PP_CheckWazaOshie( pp, SKILLTEACH_ID_COALESCENCE_MIZU ) )
+    {
+      return TRUE;
+    }
+    return FALSE;
+  }
+  GF_ASSERT(0);
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちに技教えが可能かどうかの判定
+ * @param core
+ * @param wk
+ * @param mode    技教えモード指定
+ * @param oboeBit ビット単位でどのポケモンに教えられるか？を返すためのワーク
+ *
+ * @retval  SCR_SKILLTEACH_CHECK_RESULT_OK  教えられる
+ * @retval  SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG  対象ポケモンがいない
+ * @retval  SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG  なつきが足りない
+ */
+//--------------------------------------------------------------
+static u32 checkSkillTeach( VMHANDLE * core, void * wk, u16 mode, u8 * oboeBit )
+{
+  GAMEDATA*           gdata = SCRCMD_WORK_GetGameData( wk );
+  POKEPARTY*          party = GAMEDATA_GetMyPokemon( gdata );
+  int                   max = PokeParty_GetPokeCount( party );
+  BOOL     has_pokemon_flag = FALSE;
+  BOOL  enough_natsuki_flag = FALSE;
+
+  int pos;
+
+  * oboeBit = 0;
+  for ( pos = 0; pos < max; pos++ )
+  {
+    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, pos );
+    if ( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == TRUE)
+    {
+      continue;
+    }
+    if ( check_teach_mons( pp, mode ) == FALSE )
+    {
+      continue;
+    }
+    has_pokemon_flag = TRUE;
+    if ( PP_Get( pp, ID_PARA_friend, NULL ) >= get_teach_limit_friendly( mode ) )
+    {
+      enough_natsuki_flag = TRUE;
+      *oboeBit |= ( 1 << pos );
+    }
+  }
+
+  if ( has_pokemon_flag == FALSE )
+  {
+    return SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG;
+  }
+  if ( enough_natsuki_flag == FALSE )
+  {
+    return SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG;
+  }
+  return SCR_SKILLTEACH_CHECK_RESULT_OK;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちに技を教える対象がいるか？のチェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSkillTeachCheckParty( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16 mode = SCRCMD_GetVMWorkValue( core, work );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+  u8 oboeBit;
+
+  *ret_wk = checkSkillTeach( core, wk, mode, &oboeBit );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 教える技IDを取得する
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSkillTeachGetWazaID( VMHANDLE * core, void* wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16 mode = SCRCMD_GetVMWorkValue( core, work );
+  u16 pos = SCRCMD_GetVMWorkValue( core, work );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+  POKEMON_PARAM * pp;
+
+  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
+  {
+    *ret_wk = get_teach_waza( pp, mode );
+  }
+  else
+  {
+    *ret_wk = 0;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSkillTeachCheckPokemon( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16 mode = SCRCMD_GetVMWorkValue( core, work );
+  u16 pos = SCRCMD_GetVMWorkValue( core, work );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+  POKEMON_PARAM * pp;
+  
+  *ret_wk = SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG; //エラー対処用
+
+  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == FALSE )
+  { //エラー対処
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  if ( check_teach_mons( pp, mode ) == FALSE )
+  {
+    //対象となるポケモンでない
+    *ret_wk = SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG;
+  }
+  else if ( SCRCMD_CheckTemotiWaza( pp, get_teach_waza( pp, mode ) ) == TRUE )
+  {
+    //すでに覚えている
+    *ret_wk = SCR_SKILLTEACH_CHECK_RESULT_ALREADY_NG;
+  }
+  else if ( PP_Get( pp, ID_PARA_friend, NULL ) < get_teach_limit_friendly( mode ) )
+  {
+    //なつきが足りない
+    *ret_wk = SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG;
+  }
+  else
+  {
+    //教えることができる！
+    *ret_wk = SCR_SKILLTEACH_CHECK_RESULT_OK;
+  }
+
+  return  VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   技教え対象のポケモンを選択する
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSkillTeachSelectPokemon( VMHANDLE * core, void * wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16                mode = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  u16*         ret_decide = SCRCMD_GetVMWork( core, work );       // コマンド第2引数
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第3引数
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  u8 learnBit;
+  if ( checkSkillTeach( core, wk, mode, &learnBit ) != SCR_SKILLTEACH_CHECK_RESULT_OK )
+  {
+    *ret_decide = FALSE;
+  }
+  else
+  {
+    GMEVENT *event = EVENT_CreatePokeSelect( gsys , ret_decide , ret_wk );
+    //GMEVENT *event = EVENT_CreatePokeSelectWazaOboe( gsys , ret_decide , ret_wk, learnBit );
+    SCRIPT_CallEvent( scw, event );
+  }
+  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+
+
+
+
 
 
 

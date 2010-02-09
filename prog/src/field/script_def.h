@@ -239,6 +239,7 @@
 //--------------------------------------------------------------
 #define SCR_SKILLTEACH_MODE_DRAGON    (0)
 #define SCR_SKILLTEACH_MODE_STRONGEST (1)
+#define SCR_SKILLTEACH_MODE_COALESCENCE (2)
 
 #define SCR_SKILLTEACH_CHECK_RESULT_OK         (0)
 #define SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG (1)
