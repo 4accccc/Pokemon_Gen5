@@ -43,7 +43,3 @@ typedef struct {
 
 extern const GFL_PROC_DATA ProcData_PMSSelect;
 
-extern GFL_PROC_RESULT PMSSelect_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT PMSSelect_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT PMSSelect_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
-
