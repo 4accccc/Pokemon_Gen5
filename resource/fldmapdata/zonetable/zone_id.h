@@ -470,6 +470,7 @@
 #define ZONE_ID_PALACE08         (466)
 #define ZONE_ID_PALACE09         (467)
 #define ZONE_ID_PALACE10         (468)
-#define ZONE_ID_MAX	(469)
+#define ZONE_ID_R07R0301         (469)
+#define ZONE_ID_MAX	(470)
 #endif // __ZONE_ID_H__
 

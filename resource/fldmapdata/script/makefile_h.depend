@@ -1512,3 +1512,6 @@ palace09_def.h: palace09.ev
 palace10_def.h: palace10.ev
 	$(EV_DEF) palace10.ev $(SCR_OFFS_ID_H)
 
+r07r0301_def.h: r07r0301.ev
+	$(EV_DEF) r07r0301.ev $(SCR_OFFS_ID_H)
+
