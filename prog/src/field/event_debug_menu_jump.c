@@ -183,7 +183,7 @@ static const u16 JumpZoneID_ListTbl[] = {
   ZONE_ID_GT,
   ZONE_ID_D09,
   
-#if defined(DEBUG_ONLY_FOR_matsuda) | defined(DEBUG_ONLY_FOR_lee_hyunjung)
+#if defined(DEBUG_ONLY_FOR_matsuda) | defined(DEBUG_ONLY_FOR_lee_hyunjung) | defined(DEBUG_ONLY_FOR_nakatsui) | defined(DEBUG_ONLY_FOR_suginaka_katsunori)
   ZONE_ID_CLOSSEUM,
   ZONE_ID_CLOSSEUM02,
 #endif
