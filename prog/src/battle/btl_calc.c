@@ -827,6 +827,19 @@ s32 BTL_CALC_ITEM_GetParam( u16 item, u16 paramID )
 
 
 
+//=============================================================================================
+/**
+ * 「のろい」の選択対象タイプを返す
+ *
+ * @param   attacker
+ *
+ * @retval  WazaTarget
+ */
+//=============================================================================================
+WazaTarget BTL_CALC_GetNoroiTargetType( const BTL_POKEPARAM* attacker )
+{
+  return BPP_IsMatchType(attacker, POKETYPE_GHOST)? WAZA_TARGET_OTHER_SELECT : WAZA_TARGET_USER;
+}
 
 //=============================================================================================
 /**
@@ -847,7 +860,7 @@ BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL
   WazaTarget  targetType = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
 
   if( waza == WAZANO_NOROI ){
-    targetType = (BPP_IsMatchType(bpp, POKETYPE_GHOST))? WAZA_TARGET_OTHER_SELECT : WAZA_TARGET_USER;
+    targetType = BTL_CALC_GetNoroiTargetType( bpp );
   }
 
   // シングル

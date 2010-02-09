@@ -146,6 +146,7 @@ extern u32 BTL_CALC_CalcBaseExp( const BTL_POKEPARAM* bpp );
 extern u8 BTL_RULE_GetNumFrontPos( BtlRule rule );
 extern BOOL BTL_RULE_IsNeedSelectTarget( BtlRule rule );
 extern u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos );
+extern WazaTarget BTL_CALC_GetNoroiTargetType( const BTL_POKEPARAM* attacker );
 
 //=============================================================================================
 /**

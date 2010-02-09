@@ -3367,10 +3367,9 @@ static u8 registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Btl
 static u8 registerTarget_single( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, BTL_POKESET* rec )
 {
-  WazaTarget  targetType = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_TARGET );
   BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
 
-  switch( targetType ){
+  switch( wazaParam->targetType ){
   case WAZA_TARGET_OTHER_SELECT:  ///< 自分以外の１体（選択）
   case WAZA_TARGET_ENEMY_SELECT:  ///< 敵１体（選択）
   case WAZA_TARGET_ENEMY_RANDOM:  ///< 敵ランダム
@@ -3416,12 +3415,11 @@ static u8 registerTarget_single( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
 static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, BTL_POKESET* rec )
 {
-  WazaTarget  targetType = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_TARGET );
   BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
 
   BTL_POKEPARAM* bpp = NULL;
 
-  switch( targetType ){
+  switch( wazaParam->targetType ){
   case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
     bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
     break;
@@ -3493,14 +3491,13 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
 static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, BTL_POKESET* rec )
 {
-  WazaTarget  targetType = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_TARGET );
   BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
   const BTL_TRIPLE_ATTACK_AREA* area = BTL_MAINUTIL_GetTripleAttackArea( atPos );
   u32 i, cnt;
 
   BTL_POKEPARAM* bpp = NULL;
 
-  switch( targetType ){
+  switch( wazaParam->targetType ){
   case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
     bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
     break;
@@ -8765,6 +8762,11 @@ static void scEvent_GetWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
     param->userType    = BTL_EVENTVAR_GetValue( BTL_EVAR_USER_TYPE );
     param->damageType  = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE_TYPE );
     param->fTypeFlat   = BTL_EVENTVAR_GetValue( BTL_EVAR_FLAT_FLAG );
+    if( waza != WAZANO_NOROI ){
+      param->targetType = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+    }else{
+      param->targetType = BTL_CALC_GetNoroiTargetType( attacker );
+    }
   BTL_EVENTVAR_Pop();
 }
 //----------------------------------------------------------------------------------
@@ -10068,17 +10070,20 @@ static void scEvent_AfterChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather 
 //----------------------------------------------------------------------------------
 static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp )
 {
-  u32 ratio = WAZADATA_GetParam( waza, WAZAPARAM_HP_RECOVER_RATIO );
+  fx32 ratio = WAZADATA_GetParam( waza, WAZAPARAM_HP_RECOVER_RATIO );
+  ratio = FX32_CONST( ratio );
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, ratio );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_RECOVER_HP_RATIO );
     ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
   BTL_EVENTVAR_Pop();
 
   {
-    u32 volume = (BPP_GetValue(bpp, BPP_MAX_HP) * ratio) / 100;
+    u32 maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
+    u32 volume = BTL_CALC_MulRatio( maxHP, ratio );
+    OS_TPrintf("MaxHP=%d, ratio=%08x, value=%d\n", maxHP, ratio, volume);
     return volume;
   }
 }

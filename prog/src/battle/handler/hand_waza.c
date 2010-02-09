@@ -2387,15 +2387,16 @@ static void handler_Nomikomu_Ratio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 cnt = BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU );
-    u8 ratio;
+    fx32 ratio;
     switch( cnt ){
     case 1:
     default:
-      ratio = 25;
+      ratio = FX32_CONST( 0.25 );
       break;
-    case 2:   ratio =  50; break;
-    case 3:   ratio = 100; break;
+    case 2:   ratio = FX32_CONST( 0.5 ); break;
+    case 3:   ratio = FX32_CONST( 1 ); break;
     }
+
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, ratio );
   }
 }
@@ -7112,16 +7113,22 @@ static void handler_AsaNoHizasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BtlWeather w = BTL_SVFTOOL_GetWeather(flowWk);
-    u8 ratio = 50;
+    BtlWeather w = BTL_SVFTOOL_GetWeather( flowWk );
+    fx32 ratio;
     switch( w ){
-    case BTL_WEATHER_SHINE:  ratio = 66; break;
+    case BTL_WEATHER_SHINE:
+      ratio = FX32_CONST( 0.667 );
+      break;
     case BTL_WEATHER_RAIN:
     case BTL_WEATHER_SAND:
     case BTL_WEATHER_SNOW:
-      ratio = 25;
+      ratio = FX32_CONST( 0.25 );
       break;
+    default:
+      ratio = FX32_CONST( 0.5 );
     }
+    OS_TPrintf("‚±‚¤‚²‚¤‚¹‚¢RATIO=%08x\n", ratio);
+
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, ratio );
   }
 }
