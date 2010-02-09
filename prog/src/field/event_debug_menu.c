@@ -198,6 +198,12 @@ static BOOL debugMenuCallProc_DebugMakeUNData( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL debugMenuCallProc_GPowerList( DEBUG_MENU_EVENT_WORK *wk );
+static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *wk );
+static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, 
+  HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
+static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work );
+
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -218,6 +224,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR04, debugMenuCallProc_GameEnd },
   { DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },
   { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},
+  { DEBUG_FIELD_GPOWER, debugMenuCallProc_GPowerList},
   { DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },
   { DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },
   { DEBUG_FIELD_STR60, debugMenuCallProc_ForceSave },
@@ -4666,3 +4673,184 @@ static BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk )
   work->fieldWork = fieldWork;
   return( TRUE );
 }
+
+//======================================================================
+//  デバッグメニュー　Gパワー
+//======================================================================
+#include "power.naix"
+#include "gamesystem/g_power.h"
+#include "field/gpower_id.h"
+#include "msg/msg_d_matsu.h"
+//--------------------------------------------------------------
+/// DEBUG_GPOWER_EVENT_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  int seq_no;
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  GFL_MSGDATA *msgData;
+  FLDMENUFUNC *menuFunc;
+  
+  POWER_CONV_DATA *powerdata;
+}DEBUG_GPOWER_EVENT_WORK;
+
+
+//--------------------------------------------------------------
+/// proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuGPowerListEvent(
+    GMEVENT *event, int *seq, void *work );
+
+///テストカメラリスト メニューヘッダー
+static const FLDMENUFUNC_HEADER DATA_DebugMenuList_GPowerList =
+{
+  1,    //リスト項目数
+  9,    //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+  0,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  16,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
+};
+
+static const DEBUG_MENU_INITIALIZER DebugGPowerMenuListData = {
+  NARC_message_power_dat,
+  NULL,
+  NULL,
+  &DATA_DebugMenuList_GPowerList,
+  1, 1, 24, 19,
+  DEBUG_SetMenuWorkGPower,
+  DEBUG_GetGPowerMax,
+};
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　天気リスト
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_GPowerList( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_GPOWER_EVENT_WORK *work;
+  
+  GMEVENT_Change( event,
+    debugMenuGPowerListEvent, sizeof(DEBUG_GPOWER_EVENT_WORK) );
+  
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_GPOWER_EVENT_WORK) );
+  
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->heapID = heapID;
+  work->fieldWork = fieldWork;
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：Gパワーリスト
+ * @param event GMEVENT
+ * @param seq   シーケンス
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_GPOWER_EVENT_WORK *work = wk;
+  
+  switch( (*seq) ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugGPowerMenuListData );
+    work->powerdata = GFL_ARC_LoadDataAlloc(ARCID_POWER, NARC_power_power_data_bin, work->heapID);
+    (*seq)++;
+    break;
+  case 1:
+    {
+      u32 ret;
+      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_NULL ){  //操作無し
+        break;
+      }
+      if(ret == FLDMENUFUNC_CANCEL){
+        (*seq)++;
+        break;
+      }
+      
+      if(ret < GPOWER_ID_MAX){
+        GPOWER_Set_OccurID(ret, work->powerdata);
+      }
+      else{
+        GPOWER_Clear_AllPower();
+      }
+    }
+    break;
+  case 2:
+    FLDMENUFUNC_DeleteMenu( work->menuFunc );
+    GFL_HEAP_FreeMemory(work->powerdata);
+    return( GMEVENT_RES_FINISH );
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * Gパワー用BMP_MENULIST_DATAセット
+ * @param list  セット先BMP_MENULIST_DATA
+ * @param heapID  文字列バッファ確保用HEAPID
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, 
+  HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
+{
+  int id;
+  STRBUF *strBuf = GFL_STR_CreateBuffer( 64, heapID );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMSGBG * msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
+  GFL_MSGDATA * pMsgDataDMatsu = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_matsu_dat );
+  
+  for( id = 0; id < GPOWER_ID_MAX; id++ ){
+    GFL_MSG_GetString( msgData,  id, strBuf );
+    FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+  }
+  GFL_MSG_GetString(pMsgDataDMatsu, DM_MSG_POWER_RESET, strBuf);
+  FLDMENUFUNC_AddStringListData( list, strBuf, GPOWER_ID_MAX, heapID );
+  
+  GFL_MSG_Delete( pMsgDataDMatsu );
+  GFL_HEAP_FreeMemory( strBuf );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief Gパワー用リスト最大値取得関数
+ * @param fieldmap
+ * @return  マップ最大数
+ */
+//--------------------------------------------------------------
+static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work )
+{
+  return GPOWER_ID_MAX + 1; // +1 = 「全てリセット」
+}
+
