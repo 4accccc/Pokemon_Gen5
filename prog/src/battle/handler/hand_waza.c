@@ -913,6 +913,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_TOMOENAGE,        ADD_TomoeNage       },
     { WAZANO_KARI_DORAGONTEERU,     ADD_TomoeNage       },  // ドラゴンテール=ともえなげ
     { WAZANO_KARI_KATAKIUTI,        ADD_Katakiuti       },
+    { WAZANO_KARI_IKASAMA,          ADD_Ikasama         },
     { WAZANO_KARI_UTIOTOSU,         ADD_Utiotosu        },
     { WAZANO_KARI_INOTIGAKE,        ADD_Inotigake       },
     { WAZANO_KARI_OSAKINIDOUZO,     ADD_OsakiniDouzo    },
@@ -8547,7 +8548,7 @@ static void handler_Katakiuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 }
 //----------------------------------------------------------------------------------
 /**
- * いかさま
+ * イカサマ
  */
 //----------------------------------------------------------------------------------
 static const BtlEventHandlerTable*  ADD_Ikasama( u32* numElems )
