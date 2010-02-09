@@ -216,24 +216,6 @@ EVENT_START   ev_pos_t02_hakai_stop
 
 	ENDIF
 
-	//ライバル：一歩前へ
-	_OBJ_ANIME( T02_RIVAL_01, anm_rival_front )
-	_OBJ_ANIME_WAIT()
-
-	//自機ライバルの方へ向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_right )
-	_OBJ_ANIME_WAIT()
-
-	_PLAYER_NAME(0)
-
-	//おい　ポケモンセンターの　まえで
-	_BALLOONWIN_OBJMSG( msg_t02_black_01 , T02_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
-	//ライバル：持ち場に戻る
-	_OBJ_ANIME( T02_RIVAL_01, anm_rival_back )
-	_OBJ_ANIME_WAIT()
-
 EVENT_END
 
 //共通：メッセージ、自機一歩後ろへ

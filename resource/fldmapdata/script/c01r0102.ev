@@ -66,20 +66,18 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	
 	IF $SCWK_ANSWER == SCR_YES THEN
 	
-		//ÇÕÇ¢ëIëéû
-		_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_friend_03 , C01R0102_INVENTOR_01 )
 		//çƒéøñ‚Ç…Ç¢Ç¢Ç¶Ç∆ìöÇ¶ÇÈÇ‹Ç≈ÉãÅ[Év
 		DEFINE_LOCAL	ans_no
 		$ans_no = SCR_YES
 			
 		WHILE $ans_no == SCR_YES
 		
-			_MSGWIN_CLOSE()
 			_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_friend_03 , C01R0102_INVENTOR_01 )
 			_YES_NO_WIN( ans_no )
+			_MSGWIN_CLOSE()
 			
 			IF $ans_no == SCR_NO THEN
-				_MSGWIN_CLOSE()
+				
 			ENDIF
 			
 		ENDWHILE
@@ -317,6 +315,8 @@ EVENT_START   ev_c01r0102_girl3_01
 
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+	
+	_FLAG_SET( SYS_FLAG_PCNAME )
 
 EVENT_END
 
