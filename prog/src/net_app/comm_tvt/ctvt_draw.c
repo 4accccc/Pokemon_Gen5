@@ -36,6 +36,7 @@
 #define CTVT_DRAW_PEN_X (16)
 #define CTVT_DRAW_SPOITO_X (64)
 #define CTVT_DRAW_KESHIGOMU_X (112)
+#define CTVT_DRAW_STAMP_X (160)
 #define CTVT_DRAW_PAUSE_X (192)
 #define CTVT_DRAW_RETURN_X (224)
 
@@ -46,7 +47,9 @@
 #define CTVT_DRAW_EXP_RETURN_Y    (176-12)
 
 #define CTVT_DRAW_PEN_SIZE_X (CTVT_DRAW_PEN_X)
-#define CTVT_DRAW_PEN_SIZE_Y (192-24)
+#define CTVT_DRAW_PEN_SIZE_Y (192-32)
+#define CTVT_DRAW_STAMP_TYPE_X (CTVT_DRAW_STAMP_X)
+#define CTVT_DRAW_STAMP_TYPE_Y (192-32)
 
 //文字位置
 #define CTVT_DRAW_INFO_DRAW_X1 (8)
@@ -63,13 +66,11 @@ typedef enum
   CDED_PEN,
   CDED_SPOITO,
   CDED_KESHIGOMU,
+  CDED_STAMP,
   CDED_PAUSE,
   CDED_RETURN,
 
   CDED_MAX,
-
-  CDED_STAMP,
-
 }CTVT_DRAW_EDTI_BUTTON_TYPE;
 //説明ボタン種類
 typedef enum
@@ -124,6 +125,7 @@ struct _CTVT_DRAW_WORK
   BOOL isTouch; //落書ききのTrgをはじくフラグ
   BOOL isHold;
   BOOL isDispPenSize;
+  BOOL isDispStampType;
   BOOL canDraw;
   BOOL isFinish;
   CTVT_DRAW_EDTI_BUTTON_TYPE editMode;
@@ -133,6 +135,7 @@ struct _CTVT_DRAW_WORK
   
   u16 penCol;
   u8  penSize;
+  u8  stampType;
 
   u32 samplingRes;
   TP_ONE_DATA	tpData;
@@ -147,6 +150,7 @@ struct _CTVT_DRAW_WORK
   GFL_CLWK    *clwkEditButton[CDED_MAX];
   GFL_CLWK    *clwkExplainButton[CDEX_MAX];
   GFL_CLWK    *clwkPenSize;
+  GFL_CLWK    *clwkStampType;
   
 };
 
@@ -167,6 +171,8 @@ static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
 static const BOOL CTVT_DRAW_CheckFinishReq( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
 static void CTVT_DRAW_DispMessage( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork , const u16 msgId );
 
+static void CTVT_DRAW_EreseSubWindow( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
+
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
@@ -175,7 +181,15 @@ CTVT_DRAW_WORK* CTVT_DRAW_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   u8 i;
   CTVT_DRAW_WORK* drawWork = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_DRAW_WORK) );
 
+  drawWork->penSize = DSPS_CIRCLE_1;
+  drawWork->stampType = DSPS_STAMP_HEART;
+
+  //バージョンで白黒を変える
+#if (PM_VERSION == VERSION_WHITE )
   drawWork->penCol = 0x7FFF+0x8000;  //最上位ビットがα
+#else
+  drawWork->penCol = 0x0000+0x8000;  //最上位ビットがα
+#endif
   return drawWork;
 }
 
@@ -194,9 +208,9 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   ARCHANDLE* arcHandle = COMM_TVT_GetArcHandle( work );
 
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_oekaki_win_NSCR , 
-                    CTVT_FRAME_SUB_MISC ,  0 , 0, FALSE , heapId );
-  GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_paint_bg_NSCR , 
+                    CTVT_FRAME_SUB_BG ,  0 , 0, FALSE , heapId );
+  GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_BG );
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , -24 );
   GFL_BG_SetVisible( CTVT_FRAME_SUB_BAR , FALSE );
   GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
@@ -211,6 +225,7 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
     GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_MSG );
     
     GFL_BG_SetScroll( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , -24 );
+
     GFL_ARC_CloseDataHandle( commonArcHandle );
   }
   {
@@ -245,9 +260,23 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
               &cellInitData ,CLSYS_DRAW_MAIN , heapId );
     
-    //TODO 一時停止対応
+    cellInitData.pos_x = CTVT_DRAW_STAMP_X;
+    cellInitData.anmseq = CTOAM_STAMP;
+    drawWork->clwkEditButton[CDED_STAMP] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
+              &cellInitData ,CLSYS_DRAW_MAIN , heapId );
+    
     cellInitData.pos_x = CTVT_DRAW_PAUSE_X;
-    cellInitData.anmseq = CTOAM_PAUSE;
+    if( COMM_TVT_GetPause( work ) == TRUE )
+    {
+      cellInitData.anmseq = CTOAM_PAUSE;
+    }
+    else
+    {
+      cellInitData.anmseq = CTOAM_PLAY;
+    }
     drawWork->clwkEditButton[CDED_PAUSE] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
@@ -309,13 +338,25 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
     //ペンサイズ
     cellInitData.pos_x = CTVT_DRAW_PEN_SIZE_X;
     cellInitData.pos_y = CTVT_DRAW_PEN_SIZE_Y;
-    cellInitData.anmseq = CTOAM_PEN_SELECT;
+    cellInitData.anmseq = CTOAM_PEN_SELECT_ANIME;
     drawWork->clwkPenSize = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
               &cellInitData ,CLSYS_DRAW_MAIN , heapId );
     GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+
+    //スタンプ種類
+    cellInitData.pos_x = CTVT_DRAW_STAMP_TYPE_X;
+    cellInitData.pos_y = CTVT_DRAW_STAMP_TYPE_Y;
+    cellInitData.anmseq = CTOAM_STAMP_SELECT_ANIME;
+    drawWork->clwkStampType = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
+              &cellInitData ,CLSYS_DRAW_MAIN , heapId );
+    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , FALSE );
+
 
   }
   CTVT_DRAW_UpdateEditButton( work , drawWork );
@@ -342,6 +383,7 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   drawWork->isTouch = FALSE;
   drawWork->editMode = CDED_PEN;
   drawWork->isDispPenSize = FALSE;
+  drawWork->isDispStampType = FALSE;
   drawWork->isUpdateInfo = FALSE;
   drawWork->isUpdateMsgWin = FALSE;
   drawWork->canDraw = FALSE;
@@ -383,6 +425,8 @@ void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   {
     GFL_CLACT_WK_Remove( drawWork->clwkEditButton[i] );
   }
+  GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , FALSE );
+  GFL_CLACT_WK_Remove( drawWork->clwkStampType );
   GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
   GFL_CLACT_WK_Remove( drawWork->clwkPenSize );
 
@@ -564,12 +608,6 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
       drawWork->isUpdateMsgWin = FALSE;
     }
   }
-#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-  {
-    drawWork->editMode = CDED_STAMP;
-  }
-#endif
   return CTM_DRAW;
 }
 
@@ -620,6 +658,10 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     },
     {
       CTVT_DRAW_BAR_ICON_Y-12, CTVT_DRAW_BAR_ICON_Y+12,
+      CTVT_DRAW_STAMP_X-12,CTVT_DRAW_STAMP_X+12,
+    },
+    {
+      CTVT_DRAW_BAR_ICON_Y-12, CTVT_DRAW_BAR_ICON_Y+12,
       CTVT_DRAW_PAUSE_X-12,    CTVT_DRAW_PAUSE_X+12,
     },
     {
@@ -637,6 +679,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->isTouch = TRUE;
     drawWork->isDispPenSize = TRUE;
     GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkPenSize , TRUE );
     PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     CTVT_TPrintf("PenMode\n");
   }
@@ -656,6 +699,17 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     CTVT_TPrintf("KeshigomuMode\n");
   }
+  if( ret == CDED_STAMP )
+  {
+    drawWork->editMode = CDED_STAMP;
+    CTVT_DRAW_UpdateEditButton( work , drawWork );
+    drawWork->isTouch = TRUE;
+    drawWork->isDispStampType = TRUE;
+    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkStampType , TRUE );
+    PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+    CTVT_TPrintf("StampMode\n");
+  }
   if( ret == CDED_PAUSE )
   {
     COMM_TVT_FlipPause( work );
@@ -671,16 +725,16 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     static const GFL_UI_TP_HITTBL penHitTbl[CDED_MAX+1] = 
     {
       {
-        CTVT_DRAW_PEN_SIZE_Y-8, CTVT_DRAW_PEN_SIZE_Y,
-        CTVT_DRAW_PEN_X-12,     CTVT_DRAW_PEN_X+12,
+        CTVT_DRAW_PEN_SIZE_Y-8, CTVT_DRAW_PEN_SIZE_Y+8,
+        CTVT_DRAW_PEN_SIZE_X-8,     CTVT_DRAW_PEN_SIZE_X+8,
       },
       {
-        CTVT_DRAW_PEN_SIZE_Y-16, CTVT_DRAW_PEN_SIZE_Y-8,
-        CTVT_DRAW_PEN_X-12,     CTVT_DRAW_PEN_X+12,
+        CTVT_DRAW_PEN_SIZE_Y-8, CTVT_DRAW_PEN_SIZE_Y+8,
+        CTVT_DRAW_PEN_SIZE_X-8+16,     CTVT_DRAW_PEN_SIZE_X+8+16,
       },
       {
-        CTVT_DRAW_PEN_SIZE_Y-24, CTVT_DRAW_PEN_SIZE_Y-16,
-        CTVT_DRAW_PEN_X-12,     CTVT_DRAW_PEN_X+12,
+        CTVT_DRAW_PEN_SIZE_Y-8, CTVT_DRAW_PEN_SIZE_Y+8,
+        CTVT_DRAW_PEN_SIZE_X-8+32,     CTVT_DRAW_PEN_SIZE_X+8+32,
       },
       {GFL_UI_TP_HIT_END,0,0,0}
     };
@@ -690,9 +744,52 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     {
       drawWork->penSize = penSizeArr[retPen];
       drawWork->isTouch = TRUE;
+  
+      CTVT_DRAW_EreseSubWindow( work , drawWork );
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+    }
+  }
+  
+  //スタンプタイプ
+  if( drawWork->isDispStampType == TRUE )
+  {
+    static const GFL_UI_TP_HITTBL penHitTbl[CDED_MAX+1] = 
+    {
+      {
+        CTVT_DRAW_STAMP_TYPE_Y-8, CTVT_DRAW_STAMP_TYPE_Y+8,
+        CTVT_DRAW_STAMP_TYPE_X-8-32,     CTVT_DRAW_STAMP_TYPE_X+8-32,
+      },
+      {
+        CTVT_DRAW_STAMP_TYPE_Y-8, CTVT_DRAW_STAMP_TYPE_Y+8,
+        CTVT_DRAW_STAMP_TYPE_X-8-16,     CTVT_DRAW_STAMP_TYPE_X+8-16,
+      },
+      {
+        CTVT_DRAW_STAMP_TYPE_Y-8, CTVT_DRAW_STAMP_TYPE_Y+8,
+        CTVT_DRAW_STAMP_TYPE_X-8,     CTVT_DRAW_STAMP_TYPE_X+8,
+      },
+      {
+        CTVT_DRAW_STAMP_TYPE_Y-8, CTVT_DRAW_STAMP_TYPE_Y+8,
+        CTVT_DRAW_STAMP_TYPE_X-8+16,     CTVT_DRAW_STAMP_TYPE_X+8+16,
+      },
+      {
+        CTVT_DRAW_STAMP_TYPE_Y-8, CTVT_DRAW_STAMP_TYPE_Y+8,
+        CTVT_DRAW_STAMP_TYPE_X-8+32,     CTVT_DRAW_STAMP_TYPE_X+8+32,
+      },
+      {GFL_UI_TP_HIT_END,0,0,0}
+    };
+    static const stampTypeArr[5] = {DSPS_STAMP_HEART,
+                                    DSPS_STAMP_EXUS,
+                                    DSPS_STAMP_QUES,
+                                    DSPS_STAMP_STAR,
+                                    DSPS_STAMP_DROP};
+    const int retPen = GFL_UI_TP_HitTrg( penHitTbl );
+    if( retPen != GFL_UI_TP_HIT_NONE )
+    {
+      drawWork->stampType = stampTypeArr[retPen];
+      drawWork->isTouch = TRUE;
 
-      drawWork->isDispPenSize = FALSE;
-      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+      drawWork->isDispStampType = FALSE;
+      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , FALSE );
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
   }
@@ -705,7 +802,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->barScroll = 24;
     drawWork->isTouch = TRUE;
     CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
-    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+    CTVT_DRAW_EreseSubWindow( work , drawWork );
     PMSND_PlaySystemSE( CTVT_SND_CANCEL );
   }
   if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_PAUSE )
@@ -738,10 +835,9 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
       drawWork->editMode = CDED_PEN;
       CTVT_DRAW_UpdateEditButton( work , drawWork );
     }
-    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+    CTVT_DRAW_EreseSubWindow( work , drawWork );
     return;
   }
-#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
   if( drawWork->state == CDS_EDIT &&
       GFL_UI_TP_GetTrg() == TRUE &&
       drawWork->isTouch == FALSE &&
@@ -757,7 +853,7 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
     info->startY = tpy;
     info->endX = tpx;
     info->endY = tpy;
-    info->penType = DSPS_STAMP_TRI;
+    info->penType = drawWork->stampType;
     info->col  = drawWork->penCol;
     
     if( connectNum == 1 )
@@ -769,14 +865,13 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
       CTVT_COMM_AddDrawBuf( work , commWork );
     }
   }
-#endif      
   
   if( GFL_UI_TP_GetTrg() == TRUE &&
       drawWork->isTouch == FALSE )
   {
     if( drawWork->editMode == CDED_SPOITO )
     {
-      u16* spoitColAdr = (u16*)(HW_OBJ_PLTT + 3*32 + 2*0xf);
+      u16* spoitColAdr = (u16*)(HW_OBJ_PLTT + 0*32 + 2*0xd);
       //BG2と3のアドレス
       u16* adr2 = (u16*)((u32)G2_GetBG2ScrPtr() + tpx*2 + tpy*256*2);
       u16* adr3 = (u16*)((u32)G2_GetBG3ScrPtr() + tpx*2 + tpy*256*2);
@@ -819,7 +914,7 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
       drawWork->isHold = TRUE;
       drawWork->befPenX = 0xFFFF;
       drawWork->befPenY = 0xFFFF;
-      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+      CTVT_DRAW_EreseSubWindow( work , drawWork );
     }
   }
   
@@ -966,6 +1061,19 @@ static void CTVT_DRAW_UpdateEditButton( COMM_TVT_WORK *work , CTVT_DRAW_WORK *dr
   {
     drawWork->isDispPenSize = FALSE;
     GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+    GFL_CLACT_WK_ResetAnm( drawWork->clwkPenSize );
+    GFL_CLACT_WK_SetAnmFrame( drawWork->clwkPenSize , 0 );
+    GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkPenSize , FALSE );
+  }
+  
+  if( drawWork->editMode != CDED_STAMP &&
+      drawWork->isDispStampType == TRUE ) 
+  {
+    drawWork->isDispStampType = FALSE;
+    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , FALSE );
+    GFL_CLACT_WK_ResetAnm( drawWork->clwkStampType );
+    GFL_CLACT_WK_SetAnmFrame( drawWork->clwkStampType , 0 );
+    GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkStampType , FALSE );
   }
 
 }
@@ -1095,4 +1203,22 @@ static void CTVT_DRAW_DispMessage( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
                       CTVT_BMPWIN_CGX , CTVT_PAL_BG_MAIN_WINFRAME );
   drawWork->isUpdateMsgWin = TRUE;
 
+}
+
+//--------------------------------------------------------------
+//  ペンサイズ、スタンプタイプ非表示
+//--------------------------------------------------------------
+static void CTVT_DRAW_EreseSubWindow( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  //UpdateEditButtonにも単独で消しているところがあるので注意
+  drawWork->isDispPenSize = FALSE;
+  drawWork->isDispStampType = FALSE;
+  GFL_CLACT_WK_ResetAnm( drawWork->clwkPenSize );
+  GFL_CLACT_WK_ResetAnm( drawWork->clwkStampType );
+  GFL_CLACT_WK_SetAnmFrame( drawWork->clwkPenSize , 0 );
+  GFL_CLACT_WK_SetAnmFrame( drawWork->clwkStampType , 0 );
+  GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkPenSize , FALSE );
+  GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkStampType , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , FALSE );
 }

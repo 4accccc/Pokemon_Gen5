@@ -36,10 +36,7 @@
 //======================================================================
 #pragma mark [> define
 
-#define COMM_TVT_PAL_ANM_R (0)
-#define COMM_TVT_PAL_ANM_G (1)
-#define COMM_TVT_PAL_ANM_SB (3)
-#define COMM_TVT_PAL_ANM_EB (20)
+#define COMM_TVT_PAL_ANM_NUM (10)   //パレット10本使う
 #define COMM_TVT_PAL_ANM_SPD (0x100)
 
 #define COMM_TVT_NAME_WIDTH (12)
@@ -70,8 +67,9 @@ struct _COMM_TVT_WORK
   BOOL isPause;
   BOOL isSusspendDraw;  //お絵描きログ受信中の待機
   BOOL isReqFinish; //親からの終了通知
-  u16 palAnmBuf;
   u16 palAnmCnt;
+  u16 palAnmIdx;
+  u16 palAnmData[COMM_TVT_PAL_ANM_NUM][16];
   
   ARCHANDLE *arcHandle;
   //セル系
@@ -188,6 +186,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
 
   work->mode = CTM_NONE;
   work->palAnmCnt = 0;
+  work->palAnmIdx = 0;
 
   work->isUpperFade = TRUE;
   work->isSusspend = FALSE;
@@ -343,15 +342,22 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
     work->palAnmCnt += COMM_TVT_PAL_ANM_SPD-0x10000;
   }
   {
-    const u8 sub = COMM_TVT_PAL_ANM_EB-COMM_TVT_PAL_ANM_SB;
     const fx32 sin = (FX_SinIdx( work->palAnmCnt )+FX32_ONE)/2;
-    u8 b = COMM_TVT_PAL_ANM_SB + FX_FX32_TO_F32(sub*sin);
-    work->palAnmBuf = GX_RGB(COMM_TVT_PAL_ANM_R,COMM_TVT_PAL_ANM_G,b);
-    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
-                                        CTVT_PAL_BG_SUB_BG * 32 + 15*2,
-                                        &work->palAnmBuf , 2 );
+    u8 anmIdx = FX_FX32_TO_F32(COMM_TVT_PAL_ANM_NUM*sin);
+    if( anmIdx >= COMM_TVT_PAL_ANM_NUM )
+    {
+      anmIdx = COMM_TVT_PAL_ANM_NUM-1;
+    }
+    if( anmIdx != work->palAnmIdx )
+    {
+      work->palAnmIdx = anmIdx;
+      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                          (CTVT_PAL_BG_SUB_BG+2) * 32,
+                                          &work->palAnmData[anmIdx] , 32 );
+    }
   }
 
+  //上画面ノイズ
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , GFUser_GetPublicRand0(256) );
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_SET , GFUser_GetPublicRand0(256) );
 
@@ -518,7 +524,7 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
   //下画面
   GFL_ARCHDL_UTIL_TransVramPalette( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCLR , 
                     PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BG*32 , 32*6 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_common_bg_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
                     CTVT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_comm_tvt_tv_t_common_bg_NSCR , 
                     CTVT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
@@ -614,6 +620,16 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
               &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
     GFL_CLACT_WK_SetDrawEnable( work->clwkRec , FALSE );
+  }
+
+  //パレットアニメデータの取得
+  {
+    NNSG2dPaletteData* palData;
+    void *resData = GFL_ARCHDL_UTIL_LoadPalette(work->arcHandle,NARC_comm_tvt_tv_t_tuuwa_bg_NCLR, &palData, work->heapId );
+    
+    GFL_STD_MemCopy32( (void*)((u32)palData->pRawData+32*(16-COMM_TVT_PAL_ANM_NUM)) ,
+                       work->palAnmData , 32*COMM_TVT_PAL_ANM_NUM );
+    GFL_HEAP_FreeMemory( resData );
   }
 
 }

@@ -1227,7 +1227,8 @@ static void CTVT_COMM_Post_WaveData( const int netID, const int size , const voi
 
     if( header->isLast == TRUE )
     {
-      commWork->waveSpeed = 0x8000 - (header->pitch*0x4000/CTVT_TALK_SLIDER_MOVE_Y);
+      const u16 playSpeedArr[CTVT_PITCH_NUM] = { 0x4000 , 0x5000 , 0x6000 , 0x7000 , 0x8000 , 0x9000 , 0xa000 , 0xb000 , 0xc000 }; 
+      commWork->waveSpeed = playSpeedArr[header->pitch];
       commWork->isFinishPostWave = TRUE;
       commWork->waveSize = header->recSize;
     }

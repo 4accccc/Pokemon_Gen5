@@ -70,7 +70,7 @@ typedef struct
   u16 recSize;
   u8  isLast;
   u8  dataNo;
-  s8  pitch;
+  u8  pitch;
   u8  pad;
 }CTVT_COMM_WAVE_HEADER;
 

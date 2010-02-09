@@ -42,25 +42,16 @@
 #define CTVT_TALK_BAR_ICON_Y (192-12)
 #define CTVT_TALK_YOBIDASHI_X (152)
 #define CTVT_TALK_PAUSE_X (192)
-#define CTVT_TALK_RETURN_X (224)
+#define CTVT_TALK_RETURN_X (232)
 
 //形が矩形で括れないので
-#define CTVT_TALK_REC_BUTTON_LEFT (4)
-#define CTVT_TALK_REC_BUTTON_TOP (1)
-#define CTVT_TALK_REC_BUTTON_WIDTH (24)
-#define CTVT_TALK_REC_BUTTON_HEIGHT (10)
-#define CTVT_TALK_REC_BUTTON_LEFT2 (5)
-#define CTVT_TALK_REC_BUTTON_TOP2  (11)
-#define CTVT_TALK_REC_BUTTON_WIDTH2 (22)
-#define CTVT_TALK_REC_BUTTON_HEIGHT2 (3)
+#define CTVT_TALK_REC_BUTTON_LEFT (7)
+#define CTVT_TALK_REC_BUTTON_TOP  (12)
+#define CTVT_TALK_REC_BUTTON_WIDTH (18)
+#define CTVT_TALK_REC_BUTTON_HEIGHT (9)
 
-#define CTVT_TALK_DRAW_BUTTON_LEFT   (4)
-#define CTVT_TALK_DRAW_BUTTON_TOP    (15)
-#define CTVT_TALK_DRAW_BUTTON_WIDTH  (23)
-#define CTVT_TALK_DRAW_BUTTON_HEIGHT (6)
-
-#define CTVT_TALK_WAVE_DRAW_WIDTH   (17)
-#define CTVT_TALK_WAVE_DRAW_HEIGHT  (7)
+#define CTVT_TALK_WAVE_DRAW_WIDTH   (14)
+#define CTVT_TALK_WAVE_DRAW_HEIGHT  (8)
 
 //======================================================================
 //	enum
@@ -135,8 +126,7 @@ struct _CTVT_TALK_WORK
   CTVT_TALK_SUB_STATE subState;
   
   //スライダー系
-  s16         sliderPos;
-  BOOL        isHoldSlider;
+  u8          sliderPos;
   
   //録音関係  
   CTVT_MIC_WORK *micWork;
@@ -147,11 +137,7 @@ struct _CTVT_TALK_WORK
   CTVT_COMM_WAVE_HEADER *sendWaveData;
   void *sendWaveBufTop;
   
-  BOOL isUpdateMsgRec;
-  BOOL isUpdateMsgDraw;
   BOOL isUpdateMsgWin;
-  GFL_BMPWIN *recWin;
-  GFL_BMPWIN *drawWin;
   GFL_BMPWIN *waveWin;  //波形を描く
   u8  wavePosX;
   u8  wavePosY;
@@ -166,9 +152,10 @@ struct _CTVT_TALK_WORK
   
   //セル関係
   GFL_CLWK    *clwkSlider;
-  GFL_CLWK    *clwkYobidasi;
   GFL_CLWK    *clwkPause;
   GFL_CLWK    *clwkReturn;
+  GFL_CLWK    *clwkDraw;
+  GFL_CLWK    *clwkTalk;
 
   CTVT_REC_BUTTON_TYPE recButtonState;
   CTVT_REC_BUTTON_TYPE befRecButtonState;
@@ -203,14 +190,11 @@ static const GFL_UI_TP_HITTBL CTVT_TALK_HitRecButton[2] =
   {GFL_UI_TP_HIT_END,0,0,0}
 };
 
-static const GFL_UI_TP_HITTBL CTVT_TALK_HitDrawButton[2] = 
+//形が矩形ではないので2個判定
+static const GFL_UI_TP_HITTBL CTVT_TALK_HitDrawButton[3] = 
 {
-  {
-    CTVT_TALK_DRAW_BUTTON_TOP*8,
-    (CTVT_TALK_DRAW_BUTTON_TOP+CTVT_TALK_DRAW_BUTTON_HEIGHT)*8,
-    CTVT_TALK_DRAW_BUTTON_LEFT*8,
-    (CTVT_TALK_DRAW_BUTTON_LEFT+CTVT_TALK_DRAW_BUTTON_WIDTH)*8,
-  },
+  {   8, 88 ,184, 240 },
+  {  40,104 ,208, 255 },
   {GFL_UI_TP_HIT_END,0,0,0}
 };
 //--------------------------------------------------------------
@@ -225,7 +209,7 @@ CTVT_TALK_WORK* CTVT_TALK_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   talkWork->sendWaveBuf = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_COMM_WAVE_HEADER)+CTVT_SEND_WAVE_SIZE_ONE );
   talkWork->sendWaveData = talkWork->sendWaveBuf;
   talkWork->sendWaveBufTop = (void*)((u32)talkWork->sendWaveBuf+sizeof(CTVT_COMM_WAVE_HEADER));
-  talkWork->sliderPos = 0;
+  talkWork->sliderPos = 4;
   
   //アニメ用に、パレットを退避
   GFL_STD_MemCopy16( (void*)(HW_DB_BG_PLTT+CTVT_PAL_BG_BUTTON_NONE*32) , talkWork->blinkButtonBuf , 16*2 );
@@ -260,16 +244,25 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
                     CTVT_FRAME_SUB_MISC , 0 , 0, FALSE , heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NSCR , 
                     CTVT_FRAME_SUB_MISC ,  0 , 0, FALSE , heapId );
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
+                    CTVT_FRAME_SUB_BAR , 0 , 0, FALSE , heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_cur_bg_NSCR , 
+                    CTVT_FRAME_SUB_BAR ,  0 , 0, FALSE , heapId );
+
+  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 , GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 5 , 15 );
+
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
+  GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_BAR );
   
   {
     //スライダー
     GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = CTVT_TALK_SLIDER_X;
-    cellInitData.pos_y = CTVT_TALK_SLIDER_Y + talkWork->sliderPos;
-    cellInitData.anmseq = CTOAS_SLIDER;
+    cellInitData.pos_x = 128;
+    cellInitData.pos_y = 96;
+    cellInitData.anmseq = CTOAS_PITCH_1 + talkWork->sliderPos;
     cellInitData.softpri = 0;
-    cellInitData.bgpri = 0;
+    cellInitData.bgpri = 2;
     
     talkWork->clwkSlider = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
@@ -278,34 +271,15 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
               &cellInitData ,CLSYS_DRAW_SUB , heapId );
     GFL_CLACT_WK_SetDrawEnable( talkWork->clwkSlider , TRUE );
 
-    //呼び出しボタン
-    cellInitData.pos_x = CTVT_TALK_YOBIDASHI_X;
-    cellInitData.pos_y = CTVT_TALK_BAR_ICON_Y;
-    cellInitData.anmseq = CTOAS_YOBIDASHI;
-    cellInitData.softpri = 0;
-    cellInitData.bgpri = 0;
-    
-    talkWork->clwkYobidasi = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
-              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
-              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
-              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
-              &cellInitData ,CLSYS_DRAW_SUB , heapId );
-    GFL_CLACT_WK_SetDrawEnable( talkWork->clwkYobidasi , FALSE );
-
     //一時停止ボタン
-    cellInitData.pos_x = CTVT_TALK_PAUSE_X;
-    cellInitData.pos_y = CTVT_TALK_BAR_ICON_Y;
-    
     if( COMM_TVT_GetPause( work ) == TRUE )
     {
-      cellInitData.anmseq = CTOAS_PAUSE;
+      cellInitData.anmseq = CTOAS_TALK_PAUSE_ON;
     }
     else
     {
-      cellInitData.anmseq = CTOAS_PLAY;
+      cellInitData.anmseq = CTOAS_TALK_PAUSE_OFF;
     }
-    cellInitData.softpri = 0;
-    cellInitData.bgpri = 0;
     
     talkWork->clwkPause = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
@@ -313,6 +287,24 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
               &cellInitData ,CLSYS_DRAW_SUB , heapId );
     GFL_CLACT_WK_SetDrawEnable( talkWork->clwkPause , TRUE );
+
+    //お絵描きボタン
+    cellInitData.anmseq = CTOAS_GO_DRAW;
+    talkWork->clwkDraw = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    GFL_CLACT_WK_SetDrawEnable( talkWork->clwkDraw , TRUE );
+
+    //通話ボタン
+    cellInitData.anmseq = CTOAS_TALK_OFF;
+    talkWork->clwkTalk = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    GFL_CLACT_WK_SetDrawEnable( talkWork->clwkTalk , TRUE );
 
     //戻るボタン
     cellInitData.pos_x = CTVT_TALK_RETURN_X;
@@ -332,18 +324,9 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   talkWork->state = CTS_FADEIN;
   talkWork->recButtonState = CRBT_NONE;
   talkWork->befRecButtonState = CRBT_MAX;
-  talkWork->isHoldSlider = FALSE;
 
-  talkWork->recWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
-                                        7 , 10 , 17 , 2 ,
-                                        CTVT_PAL_BG_SUB_FONT ,
-                                        GFL_BMP_CHRAREA_GET_B );
-  talkWork->drawWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
-                                        7 , 17 , 17 , 2 ,
-                                        CTVT_PAL_BG_SUB_FONT ,
-                                        GFL_BMP_CHRAREA_GET_B );
   talkWork->waveWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
-                                        7 , 2 , 
+                                        9 , 3 , 
                                         CTVT_TALK_WAVE_DRAW_WIDTH , 
                                         CTVT_TALK_WAVE_DRAW_HEIGHT ,
                                         CTVT_PAL_BG_SUB_FONT ,
@@ -353,36 +336,11 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
                                         1 , 1 , 30 , 4 ,
                                         CTVT_PAL_BG_SUB_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->recWin ) , 0x0 );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->drawWin) , 0x0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0x0 );
-  GFL_BMPWIN_MakeScreen( talkWork->recWin );
-  GFL_BMPWIN_MakeScreen( talkWork->drawWin );
   GFL_BMPWIN_MakeScreen( talkWork->waveWin );
   GFL_BMPWIN_TransVramCharacter( talkWork->waveWin );
 
-  {
-    GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
-    GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
-    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
-    STRBUF *str;
-    u16 len;
-    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_TALK_01 );
-    len = PRINTSYS_GetStrWidth( str , fontHandle , 0 );
-    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( talkWork->recWin ) , 
-            (17*8-len)/2 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
-    GFL_STR_DeleteBuffer( str );
-    
-    str = GFL_MSG_CreateString( msgHandle , COMM_TVT_TALK_02 );
-    len = PRINTSYS_GetStrWidth( str , fontHandle , 0 );
-    PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( talkWork->drawWin ) , 
-            (17*8-len)/2 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
-    GFL_STR_DeleteBuffer( str );
-    
-  }
   talkWork->yesNoWork = NULL;
-  talkWork->isUpdateMsgRec = TRUE;
-  talkWork->isUpdateMsgDraw = TRUE;
   talkWork->isUpdateMsgWin = FALSE;
   GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
 
@@ -402,21 +360,20 @@ void CTVT_TALK_TermMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
     APP_TASKMENU_CloseMenu( talkWork->yesNoWork );
   }
 
-  GFL_BMPWIN_ClearTransWindow( talkWork->recWin );
-  GFL_BMPWIN_ClearTransWindow( talkWork->drawWin );
   GFL_BMPWIN_ClearTransWindow( talkWork->waveWin );
   GFL_BMPWIN_ClearTransWindow( talkWork->msgWin );
-  GFL_BMPWIN_Delete( talkWork->recWin );
-  GFL_BMPWIN_Delete( talkWork->drawWin );
   GFL_BMPWIN_Delete( talkWork->waveWin );
   GFL_BMPWIN_Delete( talkWork->msgWin );
   
   GFL_CLACT_WK_Remove( talkWork->clwkReturn );
+  GFL_CLACT_WK_Remove( talkWork->clwkTalk );
+  GFL_CLACT_WK_Remove( talkWork->clwkDraw );
   GFL_CLACT_WK_Remove( talkWork->clwkPause );
-  GFL_CLACT_WK_Remove( talkWork->clwkYobidasi );
   GFL_CLACT_WK_Remove( talkWork->clwkSlider );
   GFL_BG_ClearScreen( CTVT_FRAME_SUB_MISC );
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
+
+  G2S_BlendNone();
 }
 
 //--------------------------------------------------------------
@@ -454,6 +411,12 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     talkWork->state = CTS_FADEOUT_WAIT;
     break;
   case CTS_FADEOUT_BOTH:
+    if( talkWork->subState == CTSS_GO_DRAW &&
+        GFL_CLACT_WK_CheckAnmActive( talkWork->clwkDraw ) == TRUE )
+    {
+      break;
+    }
+        
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                 WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
     COMM_TVT_SetUpperFade( work , TRUE );
@@ -638,24 +601,6 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
   CTVT_TALK_UpdateButton( work , talkWork );
   CTVT_MIC_Main( talkWork->micWork );
 
-  if( talkWork->isUpdateMsgRec == TRUE )
-  {
-    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
-    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( talkWork->recWin )) == FALSE )
-    {
-      GFL_BMPWIN_TransVramCharacter( talkWork->recWin );
-      talkWork->isUpdateMsgRec = FALSE;
-    }
-  }
-  if( talkWork->isUpdateMsgDraw == TRUE )
-  {
-    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
-    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( talkWork->drawWin )) == FALSE )
-    {
-      GFL_BMPWIN_TransVramCharacter( talkWork->drawWin );
-      talkWork->isUpdateMsgDraw = FALSE;
-    }
-  }
   if( talkWork->isUpdateMsgWin == TRUE )
   {
     PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
@@ -761,10 +706,12 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   {
     if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW ||
         GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ||
-        (GFL_UI_TP_HitTrg( CTVT_TALK_HitDrawButton ) == 0) )
+        (GFL_UI_TP_HitTrg( CTVT_TALK_HitDrawButton ) != GFL_UI_TP_HIT_NONE ) )
     {
       talkWork->state = CTS_FADEOUT_BOTH;
       talkWork->subState = CTSS_GO_DRAW;
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkDraw , CTOAS_GO_DRAW );
+      GFL_CLACT_WK_SetAutoAnmFlag( talkWork->clwkDraw , TRUE );
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
   }
@@ -772,14 +719,13 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   {
     static const GFL_UI_TP_HITTBL hitTbl[3] = 
     {
+      //戻る
       {
         CTVT_TALK_BAR_ICON_Y-12 , CTVT_TALK_BAR_ICON_Y+12 ,
         CTVT_TALK_RETURN_X , CTVT_TALK_RETURN_X+24 ,
       },
-      {
-        CTVT_TALK_BAR_ICON_Y-12 , CTVT_TALK_BAR_ICON_Y+12 ,
-        CTVT_TALK_PAUSE_X-12 , CTVT_TALK_PAUSE_X+12 ,
-      },
+      //一時停止
+      { 104, 160, 216, 255 },
       {GFL_UI_TP_HIT_END,0,0,0}
     };
     const int ret = GFL_UI_TP_HitTrg( hitTbl );
@@ -797,11 +743,11 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
       PMSND_PlaySystemSE( CTVT_SND_PAUSE );
       if( COMM_TVT_GetPause( work ) == TRUE )
       {
-        GFL_CLACT_WK_SetAnmSeq( talkWork->clwkPause , CTOAS_PAUSE );
+        GFL_CLACT_WK_SetAnmSeq( talkWork->clwkPause , CTOAS_TALK_PAUSE_ON );
       }
       else
       {
-        GFL_CLACT_WK_SetAnmSeq( talkWork->clwkPause , CTOAS_PLAY );
+        GFL_CLACT_WK_SetAnmSeq( talkWork->clwkPause , CTOAS_TALK_PAUSE_OFF );
       }
     }
   }
@@ -859,7 +805,7 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     {
       const u32 recSize = CTVT_MIC_GetRecSize( talkWork->micWork );
       void* recBuffer = CTVT_MIC_GetRecBuffer( talkWork->micWork );
-      const u32 waveLen = recSize * (CTVT_TALK_WAVE_DRAW_WIDTH*8) / CTVT_SEND_WAVE_SIZE;
+      const u32 waveLen = recSize * ((CTVT_TALK_WAVE_DRAW_WIDTH*8)) / CTVT_SEND_WAVE_SIZE;
       GFL_BMP_DATA*	bmpData = GFL_BMPWIN_GetBmp( talkWork->waveWin );
       u8 *charaBuf = GFL_BMP_GetCharacterAdrs( bmpData );
       BOOL isUpdate = FALSE;
@@ -868,7 +814,7 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
         const u32 bufOfs = (talkWork->wavePosX+1) * CTVT_SEND_WAVE_SIZE / (CTVT_TALK_WAVE_DRAW_WIDTH*8) /2; //u16の配列で取るから/2
         const s16 *buf = recBuffer;
         const s16 vol = buf[bufOfs];
-        const u32 posY = (vol+0x8000)*((CTVT_TALK_WAVE_DRAW_HEIGHT-1)*8)/0x10000 +4;//上下に若干隙間を出すためサイズを-1して4ピクセル補填
+        const u32 posY = (vol+0x8000)*(CTVT_TALK_WAVE_DRAW_HEIGHT*8)/0x10000;
         CTVT_TALK_DrawLine( work , talkWork , charaBuf , 
                             talkWork->wavePosX , talkWork->wavePosY ,
                             talkWork->wavePosX +1 , posY );
@@ -962,6 +908,24 @@ static void CTVT_TALK_UpdateButton( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
 {
   if( talkWork->recButtonState != talkWork->befRecButtonState )
   {
+    if( talkWork->recButtonState == CRBT_TALKING )
+    {
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkTalk , CTOAS_TALK_ON );
+    }
+    else
+    if( talkWork->recButtonState == CRBT_DISALE )
+    {
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkTalk , CTOAS_TALK_OFF );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkTalk , CTOAS_TALK_OFF );
+    }
+  }
+
+  /*
+  if( talkWork->recButtonState != talkWork->befRecButtonState )
+  {
     u8 palNo;
     if( talkWork->recButtonState == CRBT_TALKING )
     {
@@ -992,71 +956,37 @@ static void CTVT_TALK_UpdateButton( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     GFL_BG_LoadScreenV_Req( CTVT_FRAME_SUB_MISC );
     talkWork->befRecButtonState = talkWork->recButtonState;
   }
-  
+  */
 }
 
 static void CTVT_TALK_UpdateVoiceBar( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
-  if( talkWork->isHoldSlider == FALSE )
+  static const GFL_UI_TP_HITTBL hitTbl[4] = 
   {
-    GFL_UI_TP_HITTBL hitTbl[2] = 
+    {  8,  40 ,16 , 72 }, //上１
+    { 32,  77 , 0 , 64 }, //上２
+    { 77, 160 , 0 , 48 }, //下
+    {GFL_UI_TP_HIT_END,0,0,0}
+  };
+  const u8 ret = GFL_UI_TP_HitTrg( hitTbl );
+  
+  if( ret == 0 || ret == 1 )
+  {
+    if( talkWork->sliderPos < CTVT_PITCH_MAX )
     {
-      {
-        0,  //計算で出すので外で
-        0,
-        CTVT_TALK_SLIDER_X-CTVT_TALK_SLIDER_WIDTH_H,
-        CTVT_TALK_SLIDER_X+CTVT_TALK_SLIDER_WIDTH_H,
-      },
-      {GFL_UI_TP_HIT_END,0,0,0}
-    };
-    
-    hitTbl[0].rect.top    = CTVT_TALK_SLIDER_Y + talkWork->sliderPos - CTVT_TALK_SLIDER_HEIGHT_H;
-    hitTbl[0].rect.bottom = CTVT_TALK_SLIDER_Y + talkWork->sliderPos + CTVT_TALK_SLIDER_HEIGHT_H;
-    if( GFL_UI_TP_HitTrg( hitTbl ) == 0 )
-    {
-      talkWork->isHoldSlider = TRUE;
-      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_SLIDER_ACTIVE );
-      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+      talkWork->sliderPos++;
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_PITCH_1+talkWork->sliderPos );
     }
   }
   else
+  if( ret  == 2 )
   {
-    GFL_UI_TP_HITTBL hitTbl[2] = 
+    if( talkWork->sliderPos > CTVT_PITCH_MIN )
     {
-      {
-        CTVT_TALK_SLIDER_Y - CTVT_TALK_SLIDER_MOVE_Y - CTVT_TALK_SLIDER_HEIGHT_H,
-        CTVT_TALK_SLIDER_Y + CTVT_TALK_SLIDER_MOVE_Y + CTVT_TALK_SLIDER_HEIGHT_H,
-        CTVT_TALK_SLIDER_X-CTVT_TALK_SLIDER_WIDTH_H,
-        CTVT_TALK_SLIDER_X+CTVT_TALK_SLIDER_WIDTH_H,
-      },
-      {GFL_UI_TP_HIT_END,0,0,0}
-    };
-    if( GFL_UI_TP_HitCont( hitTbl ) == 0 )
-    {
-      u32 tpx,tpy;
-      GFL_CLACTPOS cellPos;
-      GFL_UI_TP_GetPointCont(&tpx,&tpy);
-      
-      talkWork->sliderPos = tpy-CTVT_TALK_SLIDER_Y;
-      if( talkWork->sliderPos > CTVT_TALK_SLIDER_MOVE_Y )
-      {
-        talkWork->sliderPos = CTVT_TALK_SLIDER_MOVE_Y;
-      }
-      if( talkWork->sliderPos < -CTVT_TALK_SLIDER_MOVE_Y )
-      {
-        talkWork->sliderPos = -CTVT_TALK_SLIDER_MOVE_Y;
-      }
-      cellPos.x = CTVT_TALK_SLIDER_X;
-      cellPos.y = CTVT_TALK_SLIDER_Y+talkWork->sliderPos;
-      GFL_CLACT_WK_SetPos( talkWork->clwkSlider , &cellPos , CLSYS_DRAW_SUB );
-    }
-    else
-    {
-      talkWork->isHoldSlider = FALSE;
-      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_SLIDER );
+      talkWork->sliderPos--;
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_PITCH_1+talkWork->sliderPos );
     }
   }
-
 }
 
 static void CTVT_TALK_DrawLine( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , u8 *charBuf , u8 x1 , u8 y1 , u8 x2 , u8 y2 )
@@ -1198,8 +1128,6 @@ static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *ta
       BmpWinFrame_Clear( talkWork->msgWin , WINDOW_TRANS_ON_V );
 
       GFL_BMPWIN_ClearScreen( talkWork->msgWin );
-      GFL_BMPWIN_MakeScreen( talkWork->recWin );
-      GFL_BMPWIN_MakeScreen( talkWork->drawWin );
       GFL_BMPWIN_MakeScreen( talkWork->waveWin );
       GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
 

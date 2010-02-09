@@ -58,8 +58,8 @@
 
 #define CTVT_PAL_OBJ_MAIN_COMMON (0) //5本
 
-#define CTVT_PAL_OBJ_SUB_COMMON  (0) //5本
-#define CTVT_PAL_OBJ_SUB_BARICON  (5) //3本
+#define CTVT_PAL_OBJ_SUB_COMMON  (0) //6本
+#define CTVT_PAL_OBJ_SUB_BARICON  (6) //3本
 
 #define CTVT_BUTTON_TALK (PAD_BUTTON_A|PAD_BUTTON_R)
 #define CTVT_BUTTON_DRAW (PAD_BUTTON_X)
@@ -80,7 +80,9 @@
 #define CTVT_BUFFER_SCR_SIZE (256*192*2)  //0x18000
 
 //音声再生速度の上限・下限
-#define CTVT_TALK_SLIDER_MOVE_Y (32)  //上にも下にも32
+#define CTVT_PITCH_MAX (8)
+#define CTVT_PITCH_MIN (0)
+#define CTVT_PITCH_NUM (9)
 
 //======================================================================
 //	enum
@@ -152,8 +154,24 @@ typedef enum
   CTOAS_PEN,
   CTOAS_SUPOITO,
   CTOAS_KESHIGOMU,
+  CTOAS_SUTANPU,
   CTOAS_CAMERA_ON,
   CTOAS_CAMERA_OFF,
+  CTOAS_GO_DRAW,
+  CTOAS_TALK_PAUSE_ON,  //会話画面用一時停止
+  CTOAS_TALK_PAUSE_OFF,
+  CTOAS_TALK_ON,
+  CTOAS_TALK_OFF,
+  CTOAS_PITCH_1,
+  CTOAS_PITCH_2,
+  CTOAS_PITCH_3,
+  CTOAS_PITCH_4,
+  CTOAS_PITCH_5,
+  CTOAS_PITCH_6,
+  CTOAS_PITCH_7,
+  CTOAS_PITCH_8,
+  CTOAS_PITCH_9,
+  
 }COMM_TVT_OBJ_ANM_SUB;
 
 typedef enum
@@ -165,11 +183,16 @@ typedef enum
   CTOAM_SUPOITO_ACTIVE,
   CTOAM_KESHIGOMU,
   CTOAM_KESHIGOMU_ACTIVE,
+  CTOAM_STAMP,
+  CTOAM_STAMP_ACTIVE,
   CTOAM_PEN_SELECT,
   CTOAM_PAUSE,
   CTOAM_PAUSE_ACTIVE,
   CTOAM_PLAY,
   CTOAM_PLAY_ACTIVE,
+  CTOAM_STAMP_SELECT,
+  CTOAM_PEN_SELECT_ANIME,
+  CTOAM_STAMP_SELECT_ANIME,
 }COMM_TVT_OBJ_ANM_MAIN;
 
 //======================================================================
