@@ -42,6 +42,11 @@ extern const GFL_PROC_DATA UNSelectProcData;
 //=====================================
 typedef struct
 {	
+  //[IN]
+
+  //[OUT]
+
 	GAMESYS_WORK				*gamesys;	//[in]ゲームシステム
-}UN_SELECT_PARAM;
+
+} UN_SELECT_PARAM;
 

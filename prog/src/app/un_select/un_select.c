@@ -39,6 +39,9 @@
 //タッチバー
 #include "ui/touchbar.h"
 
+// BGフレームリスト
+#include "ui/frame_list.h"
+
 // シーンコントローラー
 #include "ui/ui_scene.h"
 
@@ -78,11 +81,13 @@ FS_EXTERN_OVERLAY(ui_common);
 enum
 { 
   UN_SELECT_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
+
+  UN_LIST_MAX = 20, ///< 項目数
 };
 
 // パッシブ定数
 #define YESNO_MASK_DISP ( MASK_DOUBLE_DISPLAY )
-#define YESNO_MASK_PLANE ( PLANEMASK_BG2 | PLANEMASK_BG3 | PLANEMASK_OBJ | PLANEMASK_BD )
+#define YESNO_MASK_PLANE ( PLANEMASK_BG3 | PLANEMASK_OBJ | PLANEMASK_BD )
 #define BRIGHT_PASSIVE_SYNC (8)
 #define BRIGHT_PASSIVE_VOL (-8)
 
@@ -104,8 +109,9 @@ enum
 	BG_FRAME_LIST_M	= GFL_BG_FRAME2_M,
 	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
 
-	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
   BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
+  BG_FRAME_LIST_S = GFL_BG_FRAME1_S,
+	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
 };
 //-------------------------------------
 ///	パレット
@@ -204,6 +210,9 @@ typedef struct
 
   UN_SELECT_MSG_CNT_WORK* cnt_msg;
 
+  FRAMELIST_WORK* lwk;
+  
+
 } UN_SELECT_MAIN_WORK;
 
 //=============================================================================
@@ -211,6 +220,9 @@ typedef struct
  *							シーン定義
  */
 //=============================================================================
+
+// リスト生成
+static BOOL SceneListMake( UI_SCENE_CNT_PTR cnt, void* work );
 
 // フロア選択
 static BOOL SceneSelectFloor_Init( UI_SCENE_CNT_PTR cnt, void* work );
@@ -227,8 +239,9 @@ static BOOL SceneConfirm_End( UI_SCENE_CNT_PTR cnt, void* work );
 //==============================================================
 typedef enum
 { 
-  UNS_SCENE_ID_SELECT_FLOOR = 0,  ///< フロア選択
-  UNS_SCENE_ID_CONFIRM,           ///< 確認画面
+  UNS_SCENE_ID_LIST_MAKE = 0, ///< リスト生成
+  UNS_SCENE_ID_SELECT_FLOOR,  ///< フロア選択
+  UNS_SCENE_ID_CONFIRM,       ///< 確認画面
 
   UNS_SCENE_ID_MAX,
 } UNS_SCENE_ID;
@@ -238,6 +251,14 @@ typedef enum
 //==============================================================
 static const UI_SCENE_FUNC_SET c_scene_func_tbl[ UNS_SCENE_ID_MAX ] = 
 {
+  // UNS_SCENE_ID_LIST_MAKE
+  {
+    NULL,
+    NULL,
+    SceneListMake,
+    NULL,
+    NULL,
+  },
   // UNS_SCENE_ID_SELECT_FLOOR
   {
     SceneSelectFloor_Init,
@@ -390,14 +411,16 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
      return GFL_PROC_RES_CONTINUE;
   }
   
+  // フレームリスト 開放
+  FRAMELIST_Exit( wk->lwk );
+
   // シーンコントーラ削除
   UI_SCENE_CNT_Delete( wk->cnt_scene );
 
   // メッセージ消去
   MSG_CNT_Delete( wk->cnt_msg );
 
-	//TASKMENUシステム＆リソース破棄
-	UNSelect_TASKMENU_Exit( wk->menu );
+	//TASKMENU リソース破棄
 	APP_TASKMENU_RES_Delete( wk->menu_res );	
 
 #ifdef UN_SELECT_TOUCHBAR
@@ -413,7 +436,7 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
   GFL_HEAP_DeleteHeap( wk->heap_id );
 
 	//オーバーレイ破棄
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
   HOSAKA_Printf(" PROC終了！ \n");
 
@@ -476,20 +499,26 @@ static void UNSelect_BG_LoadResource( UN_SELECT_BG_WORK* wk, HEAPID heap_id )
 	handle	= GFL_ARC_OpenDataHandle( ARCID_UN_SELECT_GRA, heap_id );
 
 	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heap_id );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0, heap_id );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0, heap_id );
 	
   //	----- 下画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_un_select_gra_kokuren_bg_NCGR,
 						BG_FRAME_BACK_S, 0, 0, 0, heap_id );
 	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_un_select_gra_kokuren_bgu_NSCR,
 						BG_FRAME_BACK_S, 0, 0, 0, heap_id );	
-
+	
 	//	----- 上画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_un_select_gra_kokuren_bg_NCGR,
 						BG_FRAME_BACK_M, 0, 0, 0, heap_id );
 	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_un_select_gra_kokuren_bgd_NSCR,
 						BG_FRAME_BACK_M, 0, 0, 0, heap_id );		
+  
+  // ----- リストバー -----
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_un_select_gra_kokuren_bg_listframe_NCGR,
+						BG_FRAME_LIST_M, 0, 0, 0, heap_id );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_un_select_gra_kokuren_bg_listframe_NCGR,
+						BG_FRAME_LIST_S, 0, 0, 0, heap_id );
 
 	GFL_ARC_CloseDataHandle( handle );
 }
@@ -720,8 +749,7 @@ static UN_SELECT_MSG_CNT_WORK* MSG_CNT_Create( HEAPID heap_id )
 
 	//メッセージ
 	wk->msghandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-			NARC_message_mictest_dat, heap_id );
-  //@TODO マイクテスト
+			NARC_message_wifi_place_msg_UN_dat, heap_id );
 
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( heap_id );
@@ -762,6 +790,7 @@ static void MSG_CNT_Delete( UN_SELECT_MSG_CNT_WORK* wk )
 
   // BMPWIN 破棄
   GFL_BMPWIN_Delete( wk->win_talk );
+
   // STRBUF 破棄
   GFL_STR_DeleteBuffer( wk->strbuf );
   GFL_STR_DeleteBuffer( wk->exp_strbuf );
@@ -965,6 +994,192 @@ static GFL_MSGDATA* MSG_CNT_GetMsgData( UN_SELECT_MSG_CNT_WORK* wk )
   return wk->msghandle;
 }
 
+
+
+//=============================================================================
+//
+//
+// リスト管理クラス
+//
+//
+//=============================================================================
+static void ListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp );
+static void ListCallBack_Move( void * work, u32 listPos, BOOL flg );
+static void ListCallBack_Scroll( void * work, s8 mv );
+
+//--------------------------------------------------------------
+///	
+//==============================================================
+static const FRAMELIST_CALLBACK	FRMListCallBack = {
+	ListCallBack_Draw,    // 描画処理
+	ListCallBack_Move,    // 移動処理
+	ListCallBack_Scroll,  // スクロール
+};
+
+//--------------------------------------------------------------
+///	
+//==============================================================
+static const FRAMELIST_TOUCH_DATA TouchHitTbl[] =
+{
+	{ {   0,  23, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 00: ポケモンアイコン
+	{ {  24,  47, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 01: ポケモンアイコン
+	{ {  48,  71, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 02: ポケモンアイコン
+	{ {  72,  95, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 03: ポケモンアイコン
+	{ {  96, 119, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 04: ポケモンアイコン
+	{ { 120, 143, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 05: ポケモンアイコン
+	{ { 144, 167, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 06: ポケモンアイコン
+
+	{ {   8, 159, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },					// 07: レール
+
+	{ { 168, 191, 136, 159 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },			// 08: 左
+	{ { 168, 191, 160, 183 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },		// 09: 右
+
+	{ { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
+};
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	void * work
+ *	@param	itemNum
+ *	@param	* util
+ *	@param	py
+ *	@param	disp 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp )
+{ 
+  UN_SELECT_MAIN_WORK* wk = work;
+  HOSAKA_Printf("draw!\n");
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	void * work
+ *	@param	listPos
+ *	@param	flg 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ListCallBack_Move( void * work, u32 listPos, BOOL flg )
+{ 
+  UN_SELECT_MAIN_WORK* wk = work;
+  HOSAKA_Printf("move!\n");
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	void * work
+ *	@param	mv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ListCallBack_Scroll( void * work, s8 mv )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+  HOSAKA_Printf("scroll!\n");
+}
+
+static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
+{
+  ARCHANDLE* ah;
+
+  static FRAMELIST_HEADER header = {
+    BG_FRAME_LIST_M,
+    BG_FRAME_LIST_S,
+
+    12,					// 項目フレーム表示開始Ｘ座標
+    0,					// 項目フレーム表示開始Ｙ座標
+    18,					// 項目フレーム表示Ｘサイズ
+    5,					// 項目フレーム表示Ｙサイズ
+
+    3,							// フレーム内に表示するBMPWINの表示Ｘ座標
+    1,							// フレーム内に表示するBMPWINの表示Ｙ座標
+    11,							// フレーム内に表示するBMPWINの表示Ｘサイズ
+    3,							// フレーム内に表示するBMPWINの表示Ｙサイズ
+    1,							// フレーム内に表示するBMPWINのパレット
+
+    { 40, 20, 10, 8, 5, 4 },		// スクロール速度 [0] = 最速 ※itemSizYを割り切れる値であること！
+
+    3,							// 選択項目のパレット
+
+    8,							// スクロールバーのＹサイズ
+
+    UN_LIST_MAX,		// 項目登録数
+    2,							// 背景登録数
+
+    0,							// 初期位置
+    4,							// カーソル移動範囲
+    0,							// 初期スクロール値
+
+    TouchHitTbl,			// タッチデータ
+
+    &FRMListCallBack,	// コールバック関数
+    NULL,
+  };
+
+  //@TODO
+//  header.initPos = 0;
+//  header.initScroll = 4;
+  header.cbWork = wk;
+
+  wk->lwk = FRAMELIST_Create( &header, wk->heap_id );
+
+  // アーカイブ オープン
+  ah = GFL_ARC_OpenDataHandle( ARCID_UN_SELECT_GRA, wk->heap_id );
+
+  // 項目背景設定
+  FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_un_select_gra_kokuren_bg_listframe_NSCR, FALSE, 0 );
+  FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_un_select_gra_kokuren_bg_listframe2_NSCR, FALSE, 1 );
+
+	// 点滅アニメパレット設定
+	FRAMELIST_LoadBlinkPalette( wk->lwk, ah, NARC_un_select_gra_kokuren_bg_NCLR, 2, 3 );
+
+  // アーカイブ クローズ
+  GFL_ARC_CloseDataHandle( ah );
+				
+  // リスト項目生成
+  {
+    int i;
+    for( i=0; i<UN_LIST_MAX; i++)
+    {
+      int type;
+
+      //@TODO 条件、項目の存在
+      type = GFUser_GetPublicRand0( 2 );
+
+      // パラメータは純粋に順列ID
+      FRAMELIST_AddItem( wk->lwk, type, i );
+    }
+  }
+  
+#if 0
+	{	// 名前文字列取得
+		u32	i;
+
+		for( i=1; i<=MONSNO_END; i++ ){
+			if( ( i % 3 ) == 0 ){
+				wk->name[i-1] = GFL_MSG_CreateString( wk->mman, str_name_01 );
+			}else{
+				STRBUF * srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, i );
+				wk->name[i-1] = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
+				GFL_STR_DeleteBuffer( srcStr );
+			}
+		}
+	}
+#endif
+}
+
+  
 //-----------------------------------------------------------------------------
 /**
  *	@brief  PROC 初期化
@@ -1000,7 +1215,7 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
   // シーンコントローラ作成
   wk->cnt_scene = UI_SCENE_CNT_Create( 
       wk->heap_id, c_scene_func_tbl, UNS_SCENE_ID_MAX, 
-      UNS_SCENE_ID_SELECT_FLOOR, wk );
+      UNS_SCENE_ID_LIST_MAKE, wk );
 
 	//BGリソース読み込み
 	UNSelect_BG_LoadResource( &wk->wk_bg, wk->heap_id );
@@ -1018,6 +1233,9 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
       MSG_CNT_GetFont( wk->cnt_msg ),
       MSG_CNT_GetPrintQue( wk->cnt_msg ),
       wk->heap_id );
+  
+  // リスト生成
+  LIST_Make( wk );
 
   return wk;
 }
@@ -1048,6 +1266,42 @@ static void app_end( UN_SELECT_MAIN_WORK* wk, END_MODE end_mode )
   
   // フェードアウト リクエスト
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SCENE リスト生成 主処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneListMake( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+  u8 seq = UI_SCENE_CNT_GetSubSeq( cnt );
+
+  switch( seq )
+  {
+  case 0:
+    // リスト初期化
+    if( FRAMELIST_Init( wk->lwk ) == FALSE )
+    {
+      UI_SCENE_CNT_IncSubSeq( cnt );
+    }
+    break;
+  case 1:
+    // フロア選択へ
+    UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_SELECT_FLOOR );
+    HOSAKA_Printf("リスト生成完了\n");
+    return TRUE;
+  default : GF_ASSERT(0);
+  }
+
+  return FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -1089,6 +1343,8 @@ static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
     return TRUE;
   }
 
+  FRAMELIST_Main( wk->lwk );
+
 #ifdef UN_SELECT_TOUCHBAR
 	//タッチバーメイン処理
 	UNSelect_TOUCHBAR_Main( wk->touchbar );
@@ -1110,7 +1366,7 @@ static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
     // 終了
     app_end( wk, END_MODE_CANCEL ); 
     UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
-    break;
+    return TRUE;
 
   case TOUCHBAR_SELECT_NONE : // 選択なし
     break;
@@ -1220,6 +1476,7 @@ static BOOL SceneConfirm_Main( UI_SCENE_CNT_PTR cnt, void* work )
       app_end( wk, END_MODE_DECIDE );
       UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
       break;
+
     case 1 :
       // 選択画面に戻る
       PASSIVE_Reset();
@@ -1227,6 +1484,7 @@ static BOOL SceneConfirm_Main( UI_SCENE_CNT_PTR cnt, void* work )
       UNSelect_TASKMENU_Exit( wk->menu );
       UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_SELECT_FLOOR );
       break;
+
     default : GF_ASSERT(0);
     }
 

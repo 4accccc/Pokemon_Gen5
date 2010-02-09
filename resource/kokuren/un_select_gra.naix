@@ -13,13 +13,16 @@
 enum {
 	NARC_un_select_gra_kokuren_bg_NCGR = 0,
 	NARC_un_select_gra_kokuren_bg_NCLR = 1,
-	NARC_un_select_gra_kokuren_bgd_NSCR = 2,
-	NARC_un_select_gra_kokuren_bgu_NSCR = 3,
-	NARC_un_select_gra_kokuren_list_NSCR = 4,
-	NARC_un_select_gra_kokuren_obj_NANR = 5,
-	NARC_un_select_gra_kokuren_obj_NCER = 6,
-	NARC_un_select_gra_kokuren_obj_NCGR = 7,
-	NARC_un_select_gra_kokuren_obj_NCLR = 8
+	NARC_un_select_gra_kokuren_bg_listframe_NCGR = 2,
+	NARC_un_select_gra_kokuren_bg_listframe_NSCR = 3,
+	NARC_un_select_gra_kokuren_bg_listframe2_NSCR = 4,
+	NARC_un_select_gra_kokuren_bgd_NSCR = 5,
+	NARC_un_select_gra_kokuren_bgu_NSCR = 6,
+	NARC_un_select_gra_kokuren_list_NSCR = 7,
+	NARC_un_select_gra_kokuren_obj_NANR = 8,
+	NARC_un_select_gra_kokuren_obj_NCER = 9,
+	NARC_un_select_gra_kokuren_obj_NCGR = 10,
+	NARC_un_select_gra_kokuren_obj_NCLR = 11
 };
 
 /* NARC_UN_SELECT_GRA_NAIX_ */
