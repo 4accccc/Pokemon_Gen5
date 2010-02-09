@@ -62,6 +62,8 @@
   u32   machine2;       //技マシンフラグ２
   u32   machine3;       //技マシンフラグ２
   u32   machine4;       //技マシンフラグ２
+
+  u32   waza_oshie;     //技教え
 =end
 
 class PARA
@@ -173,6 +175,7 @@ class PARA
     PLTT_ONLY
     HEIGHT
     WEIGHT
+    WAZA_OSHIE
     MAX
   ]
 end
@@ -324,6 +327,42 @@ def write_lst_file( fp_lst, gra_no, form_name )
    fp_lst.printf( "issyu/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
    fp_lst.printf( "issyu/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
   end
+end
+
+def get_waza( waza )
+  result = $wazano_hash[ waza ]
+  
+  if result == nil
+    printf( "技がみつかりません：%s\n", waza )
+    print( "技データのコンバートをしてください\n" )
+    exit( 1 )
+  end
+
+  return result
+end
+
+def get_item( item )
+  result = $item_hash[ item ]
+  
+  if result == nil
+    printf( "アイテムがみつかりません：%s\n", item )
+    print( "アイテムデータのコンバートをしてください\n" )
+    exit( 1 )
+  end
+
+  return result
+end
+
+def get_tokusei( tokusei )
+  result = $tokusei_hash[ tokusei ]
+  
+  if result == nil
+    printf( "特性がみつかりません：%s\n", tokusei )
+    print( "特性データのコンバートをしてください\n" )
+    exit( 1 )
+  end
+
+  return result
 end
 
 #データテーブル
@@ -482,6 +521,7 @@ end
   monsname = []
   form = []
   machine = []
+  oshie = []
   pokelist = []
   
   form[ 0 ] = FORM::new
@@ -948,17 +988,17 @@ end
       if split_data[ PARA::ITEM1 ] == ""
         item1 = 0
       else
-        item1 = $item_hash[ split_data[ PARA::ITEM1 ] ]
+        item1 = get_item( split_data[ PARA::ITEM1 ] )
       end
       if split_data[ PARA::ITEM2 ] == ""
         item2 = 0
       else
-        item2 = $item_hash[ split_data[ PARA::ITEM2 ] ]
+        item2 = get_item( split_data[ PARA::ITEM2 ] )
       end
       if split_data[ PARA::ITEM3 ] == ""
         item3 = 0
       else
-        item3 = $item_hash[ split_data[ PARA::ITEM3 ] ]
+        item3 = get_item( split_data[ PARA::ITEM3 ] )
       end
 
       gender  = split_data[ PARA::GENDER ].to_i
@@ -971,17 +1011,17 @@ end
       if split_data[ PARA::SPEABI1 ] == ""
         speabi1 = 0
       else
-        speabi1 = $tokusei_hash[ split_data[ PARA::SPEABI1 ] ]
+        speabi1 = get_tokusei( split_data[ PARA::SPEABI1 ] )
       end
       if split_data[ PARA::SPEABI2 ] == ""
         speabi2 = 0
       else
-        speabi2 = $tokusei_hash[ split_data[ PARA::SPEABI2 ] ]
+        speabi2 = get_tokusei( split_data[ PARA::SPEABI2 ] )
       end
       if split_data[ PARA::SPEABI3 ] == ""
         speabi3 = 0
       else
-        speabi3 = $tokusei_hash[ split_data[ PARA::SPEABI3 ] ]
+        speabi3 = get_tokusei( split_data[ PARA::SPEABI3 ] )
       end
 
       escape  = split_data[ PARA::ESCAPE ].to_i
@@ -1046,7 +1086,27 @@ end
         end
       }
 
-      data = [ hp,pow,defe,agi,spepow,spedef,type1,type2,get,rank,exp_value,item1,item2,item3,gender,birth,friend,grow,egg1,egg2,speabi1,speabi2,speabi3,escape,form_per_start,form_gra_start,form_max,col_rev,exp,height,weight,machine[0],machine[1],machine[2],machine[3] ].pack( "C10 S4 C10 S2 C2 S3 L4" )
+      waza_oshie = split_data[ PARA::WAZA_OSHIE ].split(//)
+      oshie[ 0 ] = 0
+
+      flag = 1
+      flag_cnt = 32
+      oshie_index = 0
+
+      waza_oshie.size.times {|i|
+        if waza_oshie[ i ] == "●"
+          oshie[ oshie_index ] |= flag
+        end
+        flag = flag << 1
+        flag_cnt -= 1
+        if flag_cnt == 0
+          flag = 1
+          flag_cnt = 32
+          oshie_index += 1
+        end
+      }
+
+      data = [ hp,pow,defe,agi,spepow,spedef,type1,type2,get,rank,exp_value,item1,item2,item3,gender,birth,friend,grow,egg1,egg2,speabi1,speabi2,speabi3,escape,form_per_start,form_gra_start,form_max,col_rev,exp,height,weight,machine[0],machine[1],machine[2],machine[3],oshie[0] ].pack( "C10 S4 C10 S2 C2 S3 L5" )
 
 	    data.size.times{ |c|
 		    fp_per.printf("%c",data[ c ])
@@ -1060,7 +1120,7 @@ end
       fp_wot = open( str, "wb" )
       waza_cnt = 0
       while split_data[ PARA::WAZA1 + waza_cnt ] != ""
-        waza_no = $wazano_hash[ split_data[ PARA::WAZA1 + waza_cnt ] ]
+        waza_no = get_waza( split_data[ PARA::WAZA1 + waza_cnt ] )
         waza_lv = split_data[ PARA::WAZA_LV1 + waza_cnt ].to_i
 
         data = [ waza_no, waza_lv ].pack("S2")
@@ -1105,9 +1165,9 @@ end
         when SHINKA_PARAM::LEVEL
           evo_param = split_data[ PARA::SHINKA_LEVEL ].to_i
         when SHINKA_PARAM::ITEM
-          evo_param = $item_hash[ shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] ]
+          evo_param = get_item( shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] )
         when SHINKA_PARAM::WAZA
-          evo_param = $wazano_hash[ shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] ]
+          evo_param = get_waza( shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] )
         when SHINKA_PARAM::POKEMON
           evo_param = monsno[ shinka_table[ split_data[ PARA::SHINKA_COND1 + evo_cnt ] ][ 1 ] ]
         end
