@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T20:42:00"/>
+	<create user="matsumiya" host="W00224" date="2010-02-09T18:28:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="40" top="312" right="745" bottom="932" maximized="no" rayout="Vertical2">
+	<dialog left="1350" top="280" right="2055" bottom="900" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,116 +292,58 @@
 	</lock>
 
 
-	<row id="msg_c02r0101_furn_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀：PDW用の家具入手
-・初回の会話
-・POSを踏むと！マーク表示後
-　隣接してメッセージ表示</comment>
+	<row id="msg_c02r0101_furn_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+		<comment>♀
+・furniture_store.gmm</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN" width="256">そこの　トレーナー！
-ちょっと　まって！！</language>
-		<language name="JPN_KANJI" width="256">そこの　トレーナー！
-ちょっと　待って！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02r0101_furn_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀：PDW用の家具入手
-・はい/いいえ
-・はい→msg_c02r0101_furn_03
-　いいえ→msg_c02r0101_furn_04</comment>
+	<row id="msg_c02r0101_furn_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN" width="256">その　ポケモン……[BE:00:ページ切り替え（行送り）]
-なかなかの　センスの　もちぬし[BE:00:ページ切り替え（行送り）]
-ツウごのみの　ステキな　かんじ！！[BE:01:ページ切り替え（クリア）]
-その　ステキセンスを　みこんで
-おねがいが　あるの！！　きいてね！[BE:01:ページ切り替え（クリア）]
-うちは　みてのとおりの
-インテリアショップ　なんだけど[BE:00:ページ切り替え（行送り）]
-にゅうかする　かぐに　なやんでるの……[BE:01:ページ切り替え（クリア）]
-そこで！　この　カタログから
-これは　さいこう！　っていうのを[BE:00:ページ切り替え（行送り）]
-１つ　えらんでほしいんだ[BE:01:ページ切り替え（クリア）]
-アナタの　ステキセンスを　しんじるので
-アドバイスを　おねがいします！</language>
-		<language name="JPN_KANJI" width="256">その　ポケモン……[BE:00:ページ切り替え（行送り）]
-なかなかの　センスの　持ち主[BE:00:ページ切り替え（行送り）]
-通好みの　ステキな　感じ！！[BE:01:ページ切り替え（クリア）]
-その　ステキセンスを　見込んで
-お願いが　あるの！！　聞いてね！[BE:01:ページ切り替え（クリア）]
-うちは　見てのとおりの
-インテリアショップ　なんだけど[BE:00:ページ切り替え（行送り）]
-入荷する　家具に　悩んでるの……[BE:01:ページ切り替え（クリア）]
-そこで！　この　カタログから
-これは最高！　っていうのを[BE:00:ページ切り替え（行送り）]
-１つ　選んでほしいんだ[BE:01:ページ切り替え（クリア）]
-アナタの　ステキセンスを　信じるので
-アドバイスを　お願いします！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02r0101_furn_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀：PDW用の家具入手
-・はい選択時
-・メッセージ表示後
-　カタログメニューが開く</comment>
+	<row id="msg_c02r0101_furn_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN" width="256">この　カタログから　さいこうの
-かぐを　１つ　えらんでほしいの！</language>
-		<language name="JPN_KANJI" width="256">この　カタログから
-最高の家具を　１つ　選んでほしいの！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02r0101_furn_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀：PDW用の家具入手
-・いいえ選択時
-・カタログでやめる選択時も同様</comment>
+	<row id="msg_c02r0101_furn_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN" width="256">そそそそんなあああッ……！
-アタシを　みすてないで　くださああい</language>
-		<language name="JPN_KANJI" width="256">そそそそんなあああッ……！
-アタシを　見捨てないで　くださああい</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02r0101_furn_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀：PDW用の家具入手
-・家具選択時
-・PDWに行くと、選んだ家具が
-　追加されている（予定）</comment>
+	<row id="msg_c02r0101_furn_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN" width="256">なるほど！　こんなに　ステキなら
-ゆめにも　でてきそうですよね！</language>
-		<language name="JPN_KANJI" width="256">なるほど！　こんなに　ステキなら
-夢にも　でてきそうですよね！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02r0101_furn_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀：PDW用の家具入手
-・新規のカタログがないとき
-　＝家具選択後も</comment>
+	<row id="msg_c02r0101_furn_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN" width="256">あたらしい　カタログが　とどいたら
-また　えらんでください！！</language>
-		<language name="JPN_KANJI" width="256">新しい　カタログが　届いたら
-また　選んでください！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02r0101_furn_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀：PDW用の家具入手
-・1度でも家具を選択し
-　新規のカタログがある場合
-・メッセージ表示後
-　カタログメニューが開く</comment>
+	<row id="msg_c02r0101_furn_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN" width="256">アナタの　ステキセンスを　みこんで
-またまた　おねがいしたいのです！[BE:01:ページ切り替え（クリア）]
-この　カタログから　さいこうの
-かぐを　１つ　えらんでほしいの！</language>
-		<language name="JPN_KANJI" width="256">アナタの　ステキセンスを　見込んで
-またまた　お願いしたいのです！[BE:01:ページ切り替え（クリア）]
-この　カタログから
-最高の家具を　１つ　選んでほしいの！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02r0101_badman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c02r0101_badman_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
