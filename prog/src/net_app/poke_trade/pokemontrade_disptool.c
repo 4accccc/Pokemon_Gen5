@@ -65,11 +65,11 @@ void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork)
     },
     {
       TOUCHBAR_ICON_CUTSOM1,
-      { TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
+      { TOUCHBAR_ICON_X_00+8+4, TOUCHBAR_ICON_Y },
     },
     {
       TOUCHBAR_ICON_CUTSOM2,
-      { TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
+      { TOUCHBAR_ICON_X_06+4, TOUCHBAR_ICON_Y },
     },
   };
 
@@ -79,7 +79,7 @@ void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork)
   touchbar_setup.p_item   = touchbar_icon_tbl;        //ã‚Ì‘‹î•ñ
   touchbar_setup.item_num = NELEMS(touchbar_icon_tbl);//‚¢‚­‚Â‘‹‚ª‚ ‚é‚©
   touchbar_setup.p_unit   = pWork->cellUnit;                    //OBJ“Ç‚Ýž‚Ý‚Ì‚½‚ß‚ÌCLUNIT
-  touchbar_setup.is_notload_bg =FALSE;  //BG‚Í‚È‚µ
+  touchbar_setup.is_notload_bg = TRUE;  //BG‚Í‚È‚µ
   touchbar_setup.bar_frm  = GFL_BG_FRAME0_S;            //BG“Ç‚Ýž‚Ý‚Ì‚½‚ß‚ÌBG–Êã‰º‰æ–Ê”»’è‚É‚à•K—v
   touchbar_setup.bg_plt   = _TOUCHBAR_BG_PALPOS;      //BGÊßÚ¯Ä
   touchbar_setup.obj_plt  = 0;      //OBJÊßÚ¯Ä
@@ -107,7 +107,9 @@ void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork)
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE);
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE);
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+  TOUCHBAR_SetSoftPriorityAll( pWork->pTouchWork, 2 );
 
+  
 }
 
 

@@ -565,7 +565,7 @@ extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const u16
 /**
  * @brief 送信開始
  * @param[in,out]  pNet  通信ハンドル
- * @param[in]   sendID                     送信相手 全員へ送信する場合 NET_SENDID_ALLUSER
+ * @param[in]   sendID                     送信相手 全員へ送信する場合 GFL_NET_SENDID_ALLUSER
  * @param[in]   sendCommand                送信するコマンド
  * @param[in]   size                       送信データサイズ
  * @param[in]   data                       送信データポインタ

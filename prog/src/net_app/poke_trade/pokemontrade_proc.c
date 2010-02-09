@@ -257,6 +257,9 @@ static void _CatchPokemonMoveFunc(POKEMON_TRADE_WORK *pWork)
       GFL_CLACT_WK_GetPos( pWork->pCatchCLWK, &pWork->aVecPos, CLSYS_DRAW_SUB);
       pos.x = x + pWork->aDifferencePos.x;
       pos.y = y + pWork->aDifferencePos.y;
+      if(pos.y>150){
+        pos.y=150;
+      }
       GFL_CLACT_WK_SetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
     }
   }
@@ -1617,6 +1620,7 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
 
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ, 8 );
 
+  
   if(1){
     G2S_SetWnd0InsidePlane(
       GX_WND_PLANEMASK_BG0|
@@ -1633,26 +1637,6 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
     GXS_SetVisibleWnd( GX_WNDMASK_W0 );
   }
 
-   if(0){
-      G2S_SetWnd1InsidePlane(
-        GX_WND_PLANEMASK_OBJ,
-        FALSE );
-      G2S_SetWnd1Position( 128-8*10, 0, 128+8*10, 32 );
-      G2S_SetWnd0InsidePlane(
-        GX_WND_PLANEMASK_BG0|
-        GX_WND_PLANEMASK_OBJ,
-        FALSE );
-      G2S_SetWnd0Position( 224, 169, 255, 192 );
-      G2S_SetWndOutsidePlane(
-        GX_WND_PLANEMASK_BG0|
-        GX_WND_PLANEMASK_BG1|
-        GX_WND_PLANEMASK_BG2|
-        GX_WND_PLANEMASK_BG3|
-        GX_WND_PLANEMASK_OBJ,
-        TRUE );
-      GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
-     // GXS_SetVisibleWnd( GX_WNDMASK_W1 );
-    }
 
 
   
@@ -2116,7 +2100,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
 
   if( !GFL_UI_TP_GetCont() ){
     if(pWork->touchON && pWork->bUpVec && pWork->pCatchCLWK){
-      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
+//      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
       TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
       TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
       pWork->touchON = FALSE;

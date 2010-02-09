@@ -1687,7 +1687,7 @@ void IRC_POKETRADE_InitBoxCursor(POKEMON_TRADE_WORK* pWork)
 
   {
     GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = 128;
+    cellInitData.pos_x = 128+8;
     cellInitData.pos_y = CONTROL_PANEL_Y;
     cellInitData.anmseq = 2;
     cellInitData.softpri = _CLACT_SOFTPRI_SCROLL_BAR;
@@ -1915,16 +1915,21 @@ static MojiTableStruct mojitbl[]={
 
 void IRC_POKETRADE_InitSubMojiBG(POKEMON_TRADE_WORK* pWork)
 {
-int i;
+  int i;
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 NARC_trade_wb_trade_bg04_NSCR,
 																				 GFL_BG_FRAME0_S, 0,
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
 																				 pWork->heapID);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME0_S);
   GFL_BG_SetVisible( GFL_BG_FRAME0_S , TRUE );
 	GFL_ARC_CloseDataHandle( p_handle );
 
+/*  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+    GFL_ARC_CloseDataHandle( p_handle );
+  }*/
 
 
 
