@@ -8356,6 +8356,11 @@ static const BtlEventHandlerTable*  ADD_AsistPower( u32* numElems )
 }
 static void handler_AsistPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  static const u8 RankValue[] = {
+    BPP_ATTACK, BPP_DEFENCE, BPP_AGILITY, BPP_SP_ATTACK, BPP_SP_DEFENCE,
+    BPP_HIT_RATIO, BPP_AVOID_RATIO,
+  };
+
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // é©ï™ÇÃî\óÕïœâªè„è∏ílçáåv*20Çà–óÕÇ…â¡éZ
@@ -8364,9 +8369,9 @@ static void handler_AsistPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     int  rank;
     int i;
 
-    for(i=BPP_RANKVALUE_START; i<=BPP_RANKVALUE_END; ++i)
+    for(i=0; i<NELEMS(RankValue); ++i)
     {
-      rank = BPP_GetValue( bpp, i ) - BPP_RANK_STATUS_DEFAULT;
+      rank = BPP_GetValue( bpp, RankValue[i] ) - BPP_RANK_STATUS_DEFAULT;
       if( rank > 0 ){
         upSum += rank;
       }
