@@ -534,7 +534,7 @@ static void delResource( FLD_G3DOBJ_RES *res )
   if( flag == TEX_TRANS_SET ){
     if( res->pResTex != NULL ){
       GFL_G3D_FreeVramTexture( res->pResTex );
-    }else{
+    }else if( res->pResMdl != NULL ){
       GFL_G3D_FreeVramTexture( res->pResMdl );
     }
   }
