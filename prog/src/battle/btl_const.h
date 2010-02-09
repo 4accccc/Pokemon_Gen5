@@ -63,7 +63,7 @@ enum {
   BTL_WEATHER_TURN_PERMANENT = 0xff,    ///< 天候継続ターン無制限
 
   // とくせい関連
-  BTL_CALC_TOK_CHIDORI_HITRATIO = FX32_CONST(0.8f),     /// 「ちどりあし」の減衰命中率
+  BTL_CALC_TOK_CHIDORI_HITRATIO = FX32_CONST(0.5f),     /// 「ちどりあし」の減衰命中率
   BTL_CALC_TOK_HARIKIRI_HITRATIO = FX32_CONST(0.8f),    /// 「はりきり」の命中率変化率
   BTL_CALC_TOK_FUKUGAN_HITRATIO = FX32_CONST(1.3f),     /// 「ふくがん」の命中変化率
   BTL_CALC_TOK_SUNAGAKURE_HITRATIO = FX32_CONST(0.8f),  /// 「すながくれ」の命中率変化率
