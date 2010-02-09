@@ -761,20 +761,22 @@ EVENT_START		ev_reserve_c03r0801_cabinguide_01
 }
 	//出港デモ再生・暗転⇒デモ再生⇒復帰
 
+	/*
+
 	_MAP_FADE_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 	
 	//【仮】デモ=============================
 	
 	//デモコール
-	/*
 	_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
-	*/
 	//【仮】デモ=============================
 	
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
-
+	
+	*/
+	
 	//乗船アニメ終了
 	$WK_OTHER_PASSENGERBOAT = 1
 
