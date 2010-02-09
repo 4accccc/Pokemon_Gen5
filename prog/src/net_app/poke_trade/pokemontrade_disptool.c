@@ -79,9 +79,9 @@ void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork)
   touchbar_setup.p_item   = touchbar_icon_tbl;        //上の窓情報
   touchbar_setup.item_num = NELEMS(touchbar_icon_tbl);//いくつ窓があるか
   touchbar_setup.p_unit   = pWork->cellUnit;                    //OBJ読み込みのためのCLUNIT
-  touchbar_setup.is_notload_bg =TRUE;  //BGはなし
+  touchbar_setup.is_notload_bg =FALSE;  //BGはなし
   touchbar_setup.bar_frm  = GFL_BG_FRAME0_S;            //BG読み込みのためのBG面上下画面判定にも必要
-  touchbar_setup.bg_plt   = 0;      //BGﾊﾟﾚｯﾄ
+  touchbar_setup.bg_plt   = _TOUCHBAR_BG_PALPOS;      //BGﾊﾟﾚｯﾄ
   touchbar_setup.obj_plt  = 0;      //OBJﾊﾟﾚｯﾄ
   touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
 

@@ -213,13 +213,13 @@ static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
 //          pWork->bUpVec = FALSE;
         }
         if(GFL_STD_Abs(pWork->aCatchOldPos.x - pWork->aDifferencePos.x - x) > 2){
-          NET_PRINT("POSNOX %d %d %d\n",pWork->aCatchOldPos.x , pWork->aDifferencePos.x , x);
+//          NET_PRINT("POSNOX %d %d %d\n",pWork->aCatchOldPos.x , pWork->aDifferencePos.x , x);
           
           pWork->bUpVec = TRUE;
           //pWork->aPanWork.bAreaOver = TRUE;
         }
         if(GFL_STD_Abs(pWork->aCatchOldPos.y - pWork->aDifferencePos.y - y) > 2){
-          NET_PRINT("POSNOY %d %d %d \n",pWork->aCatchOldPos.y , pWork->aDifferencePos.y , y);
+  //        NET_PRINT("POSNOY %d %d %d \n",pWork->aCatchOldPos.y , pWork->aDifferencePos.y , y);
           pWork->bUpVec = TRUE;
           //pWork->aPanWork.bAreaOver = TRUE;
         }
@@ -294,6 +294,8 @@ static void _CatchPokemonPositionRewind(POKEMON_TRADE_WORK *pWork)
     GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
     GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, TRUE);
     
+    pWork->workPokeIndex = -1;
+    pWork->workBoxno = -1;
 
     _CatchPokemonRelease(pWork);
     GFL_STD_MemClear(&pWork->aPanWork,sizeof(PENMOVE_WORK));
@@ -1106,24 +1108,20 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
     int line,index;
     if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
       GFL_CLWK* pCL = IRC_POKETRADE_GetCLACT(pWork,x+12,y+12, &pWork->workBoxno, &pWork->workPokeIndex, &line, &index);
+
       if(pCL){
         POKEMON_PASO_PARAM* ppp =
           IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->workBoxno, pWork->workPokeIndex,pWork);
         _CatchPokemonPositionRewind(pWork);          //今のつかんでる物を元の位置に戻す
         if(ppp && PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) != 0 ){
+
           _CatchPokemonPositionActive(pWork,pCL, line, index, ppp);
+
           IRC_POKETRADE_CursorEnable(pWork,line, index);  //OAMカーソル移動
           OS_TPrintf("GET %d %d\n",pWork->workBoxno,pWork->workPokeIndex);
           if(bCatch){
             pWork->underSelectBoxno  = pWork->workBoxno;
             pWork->underSelectIndex = pWork->workPokeIndex;
-            pWork->workPokeIndex = 0;
-            pWork->workBoxno = 0;
-          }
-          else{
-           // NET_PRINT("つかみその１\n");
-//            void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x,int y)
-         //   pWork->pCatchCLWK=pCL;
           }
           pWork->oldLine++;
           pWork->bgscrollRenew = TRUE;
@@ -1516,7 +1514,7 @@ static void _recvEndReqFunc(POKEMON_TRADE_WORK *pWork)
 
   {
     int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
-    POKETRADE_MESSAGE_AppMenuOpenCustom(pWork,msg,elementof(msg),32,11);
+    POKETRADE_MESSAGE_AppMenuOpenCustom(pWork,msg,elementof(msg),32,12);
   }
 
   pWork->bTouchReset=TRUE;
@@ -1617,13 +1615,14 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
 
 //  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
 
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ, 8 );
 
-  {
+  if(1){
     G2S_SetWnd0InsidePlane(
       GX_WND_PLANEMASK_BG0|
       GX_WND_PLANEMASK_OBJ,
       FALSE );
+    G2S_SetWnd0Position( 224, 169, 255, 192 );
     G2S_SetWndOutsidePlane(
       GX_WND_PLANEMASK_BG0|
       GX_WND_PLANEMASK_BG1|
@@ -1631,11 +1630,31 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
       GX_WND_PLANEMASK_BG3|
       GX_WND_PLANEMASK_OBJ,
       TRUE );
-
-
-    G2S_SetWnd0Position( 0, 8*20, 0xff, 192 );
     GXS_SetVisibleWnd( GX_WNDMASK_W0 );
   }
+
+   if(0){
+      G2S_SetWnd1InsidePlane(
+        GX_WND_PLANEMASK_OBJ,
+        FALSE );
+      G2S_SetWnd1Position( 128-8*10, 0, 128+8*10, 32 );
+      G2S_SetWnd0InsidePlane(
+        GX_WND_PLANEMASK_BG0|
+        GX_WND_PLANEMASK_OBJ,
+        FALSE );
+      G2S_SetWnd0Position( 224, 169, 255, 192 );
+      G2S_SetWndOutsidePlane(
+        GX_WND_PLANEMASK_BG0|
+        GX_WND_PLANEMASK_BG1|
+        GX_WND_PLANEMASK_BG2|
+        GX_WND_PLANEMASK_BG3|
+        GX_WND_PLANEMASK_OBJ,
+        TRUE );
+      GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
+     // GXS_SetVisibleWnd( GX_WNDMASK_W1 );
+    }
+
+
   
   _CHANGE_STATE(pWork,_loopSearchMojiState);
 }
@@ -1955,7 +1974,6 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
   _scrollMainFunc(pWork,FALSE,FALSE);
 
 //  _userNetCommandClear(pWork);
-
   
   _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
 
@@ -2014,6 +2032,10 @@ static void _POKE_SetAndSendData(POKEMON_TRADE_WORK* pWork)
 
   if(POKEMONTRADE_SuckedMain(pWork)){
     _PokemonsetAndSendData(pWork);
+
+    pWork->workPokeIndex = -1;
+    pWork->workBoxno = -1;
+    
     _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
   }
 }
@@ -2048,11 +2070,9 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
     pWork->underSelectIndex = -1;
   }
   
-  _vectorUpMath(pWork);   //上向きかどうか判定
-  _CatchPokemonMoveFunc(pWork); //タッチ中のポケモン移動処理
-
-  //スクロールキー処理
-  _padUDLRFunc(pWork);
+  _vectorUpMath(pWork);         // 上にポケモンを登録するかどうかの判定
+  _CatchPokemonMoveFunc(pWork); // タッチ中のポケモン移動処理
+  _padUDLRFunc(pWork);   //スクロールキー処理
 
   //決定処理
   if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_DECIDE){
@@ -2098,6 +2118,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
     if(pWork->touchON && pWork->bUpVec && pWork->pCatchCLWK){
       TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
       TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
+      TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
       pWork->touchON = FALSE;
       pWork->bUpVec = FALSE;
       PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
@@ -2305,7 +2326,7 @@ static void _dispInit(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_GraphicInitMainDisp(pWork);
 
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
-  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
@@ -2599,6 +2620,8 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->pCatchCLWK = NULL;
   pWork->selectIndex = -1;
   pWork->modelno = -1;
+  pWork->workPokeIndex = -1;
+  pWork->workBoxno = -1;
 
   
   IRC_POKETRADEDEMO_Init(pWork);

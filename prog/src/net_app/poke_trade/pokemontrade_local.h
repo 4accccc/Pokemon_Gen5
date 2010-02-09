@@ -99,17 +99,22 @@ typedef enum
 #define _OBJPLT_GTS_POKEICON_OFFSET_M (0)
 
 
-#define _OBJPLT_POKEICON_GRAY_OFFSET (0) ///< グレー用ポケモンアイコンパレット
-#define _OBJPLT_POKEICON_GRAY  (3)  //ポケモンアイコングレイ 3本
-#define _OBJPLT_POKEICON_OFFSET (_OBJPLT_POKEICON_GRAY*32)
-#define _OBJPLT_POKEICON  (3)  //ポケモンアイコン 3本
-#define _OBJPLT_COMMON_OFFSET (_OBJPLT_POKEICON_OFFSET + _OBJPLT_POKEICON*32)
+//#define _OBJPLT_POKEICON_GRAY_OFFSET (0) ///< グレー用ポケモンアイコンパレット
+//#define _OBJPLT_POKEICON_GRAY  (3)  //ポケモンアイコングレイ 3本
+#define _OBJPLT_COMMON_OFFSET (0)
 #define _OBJPLT_COMMON  (2)  //サブ画面OBJパレット下画面バー 2本
-#define _OBJPLT_BOX_OFFSET (_OBJPLT_COMMON_OFFSET+_OBJPLT_COMMON*32)
+#define PLTID_OBJ_POKEITEM_S (2) //12本目
+
+#define _OBJPLT_POKEICON_OFFSET (3*0x20)
+#define _OBJPLT_POKEICON  (3)  //ポケモンアイコン 3本
+#define _OBJPLT_BOX_OFFSET (_OBJPLT_POKEICON_OFFSET+_OBJPLT_POKEICON*32)
 #define _OBJPLT_BOX  (6)  //サブ画面OBJパレット基本  5本
 
-#define PLTID_OBJ_POKEITEM_S (_OBJPLT_POKEICON_GRAY+_OBJPLT_COMMON+_OBJPLT_BOX+_OBJPLT_POKEICON+1) //15本目
 
+
+
+#define _TRADE_BG_PALLETE_NUM (5)  //交換BGのパレットの本数   0-4
+#define _TOUCHBAR_BG_PALPOS (5)     //タッチバーの色     TOUCHBAR_BG_PLT_NUM （１）本
 
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット ef0
 #define _STATUS_MSG_PAL   (11)  // メッセージフォント
@@ -468,21 +473,21 @@ struct _POKEMON_TRADE_WORK{
   int MainObjCursorLine;   //OBJカーソルライン
   int MainObjCursorIndex;  //OBJカーソルインデックス
 
-  int workPokeIndex;  // マウス操作でにぎったポケモン
-  int workBoxno;  //マウス操作でにぎったポケモン
+  int workPokeIndex;       // マウス操作でにぎったポケモン
+  int workBoxno;           // マウス操作でにぎったポケモン
+  int selectIndex;  //候補のポケモンIndex   上に表示しているポケモン
+  int selectBoxno;  //候補のポケモンBox     上に表示しているポケモン
 
-
-  int selectIndex;  //候補のポケモンIndex
-  int selectBoxno;  //候補のポケモンBox
-
-  int underSelectIndex;  //まだ相手に見せてないポケモンIndex
-  int underSelectBoxno;  //まだ相手に見せてないポケモンBox
+  int underSelectIndex;  //まだ相手に見せてないポケモンIndex ステータス表示のポケモン
+  int underSelectBoxno;  //まだ相手に見せてないポケモンBox   ステータス表示のポケモン
   int pokemonsetCall;
   int userNetCommand[2];
 
   //GTS用
   int GTSSelectIndex[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];  //候補のポケモンIndex
   int GTSSelectBoxno[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];  //候補のポケモンBox
+
+
   POKEMON_PARAM* GTSSelectPP[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
   GFL_CLWK* pokeIconGTS[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
   u32 pokeIconNcgResGTS[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
@@ -754,4 +759,4 @@ extern void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_RemovePokemonCursor(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_2D_AlphaSet(POKEMON_TRADE_WORK* pWork);
-
+extern void POKETRADE2D_IconAllGray(POKEMON_TRADE_WORK* pWork,BOOL bGray);

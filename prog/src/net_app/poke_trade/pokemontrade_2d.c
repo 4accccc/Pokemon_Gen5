@@ -35,7 +35,6 @@
 
 
 
-#define _TRADE_BG_PALLETE_NUM (5)  //交換BGのパレットの本数
 #define _SUCKEDCOUNT_NUM (21)  //吸い込みまでにかかる回数
 
 
@@ -599,13 +598,15 @@ void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork)
     pWork->cellRes[PLT_POKEICON] =
       GFL_CLGRP_PLTT_RegisterComp( arcHandlePoke ,
                                    POKEICON_GetPalArcIndex() , CLSYS_DRAW_SUB ,
-                                   _OBJPLT_POKEICON_OFFSET , pWork->heapID  );
+                                   _OBJPLT_POKEICON_OFFSET ,
+                                   pWork->heapID  );
 
-    pWork->cellRes[PLT_POKEICON_GRAY] =
-      GFL_CLGRP_PLTT_RegisterComp( arcHandlePoke ,
-                                   POKEICON_GetPalArcIndex() , CLSYS_DRAW_SUB ,
-                                   _OBJPLT_POKEICON_GRAY_OFFSET , pWork->heapID  );
+//    pWork->cellRes[PLT_POKEICON_GRAY] =
+  //    GFL_CLGRP_PLTT_RegisterComp( arcHandlePoke ,
+    //                               POKEICON_GetPalArcIndex() , CLSYS_DRAW_SUB ,
+      //                             _OBJPLT_POKEICON_GRAY_OFFSET , pWork->heapID  );
 
+#if 0
     {
       PALETTE_FADE_PTR pP = PaletteFadeInit(pWork->heapID);
 
@@ -617,7 +618,7 @@ void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork)
       PaletteFadeWorkAllocFree(pP,FADE_SUB_OBJ);
       PaletteFadeFree(pP);
     }
-
+#endif
     
     
     pWork->cellRes[ANM_POKEICON] =
@@ -719,10 +720,10 @@ void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork)
     GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKEICON] );
     pWork->cellRes[PLT_POKEICON]=0;
   }
-  if(pWork->cellRes[PLT_POKEICON_GRAY]!=0){
-    GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKEICON_GRAY]);
-    pWork->cellRes[PLT_POKEICON_GRAY]=0;
-  }
+//  if(pWork->cellRes[PLT_POKEICON_GRAY]!=0){
+  //  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKEICON_GRAY]);
+  //  pWork->cellRes[PLT_POKEICON_GRAY]=0;
+//  }
   if(pWork->cellRes[ANM_POKEICON]!=0){
     GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_POKEICON] );
     pWork->cellRes[ANM_POKEICON]=0;
@@ -882,21 +883,6 @@ void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BOOL bGra
   
   GFL_CLACT_WK_SetObjMode(pCL,mode);
 
-  
-#if 0
-  if(bGray){
-    res = pWork->cellRes[PLT_POKEICON_GRAY];
-  }
-  else{
-    res = pWork->cellRes[PLT_POKEICON];
-  }
-  GFL_CLGRP_PLTT_GetProxy(res , &proxy);
-  GFL_CLACT_WK_SetPlttProxy( pCL , &proxy);
-
-  GFL_CLACT_WK_SetAutoAnmFlag( pCL , FALSE );
-  GFL_CLACT_WK_SetDrawEnable( pCL, TRUE );
-#endif
-  
 }
 
 
@@ -967,7 +953,7 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
           
         pWork->pokeIconNo[k][i] = monsno;
         
-        pltNum = POKEICON_GetPalNumGetByPPP( ppp );
+//        pltNum = POKEICON_GetPalNumGetByPPP( ppp );
         _calcPokeIconPos(line, i, &pos);
 
         GFL_CLACT_WK_GetImgProxy( pWork->pokeIcon[k][i], &aproxy );
@@ -976,7 +962,7 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
 
         _pokeIconPaletteGray(pWork, line, i, ppp,bTemoti,k);
 
-        GFL_CLACT_WK_SetPlttOffs( pWork->pokeIcon[k][i] , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
+        GFL_CLACT_WK_SetPlttOffs( pWork->pokeIcon[k][i] , POKEICON_GetPalNumGetByPPP( ppp ) , CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
         GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[k][i] , FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
@@ -1031,7 +1017,7 @@ BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
   int linest = POKETRADE_boxScrollNum2Line(pWork);
   int lineend = linest + 10;
 
-  *line = linest+2;
+  *line = linest + 2;
   if(*line > pWork->TRADEBOX_LINEMAX){
     *line = linest + 2 - pWork->TRADEBOX_LINEMAX;
   }
@@ -1216,6 +1202,32 @@ static void _iconAllDrawDisable(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * アイコン表示を全部グレーにする
+ *
+ * @param	appwk	ボックス画面アプリワーク
+ * @param	ppp		POKEMON_PASO_PARAM
+ * @param	chr		NNSG2dCharacterData
+ *
+ * @return	buf
+ */
+//--------------------------------------------------------------------------------------------
+
+
+void POKETRADE2D_IconAllGray(POKEMON_TRADE_WORK* pWork,BOOL bGray)
+{
+  int line,i;
+  
+  for(line =0 ;line < _LING_LINENO_MAX; line++)
+  {
+    for(i = 0;i < BOX_VERTICAL_NUM; i++)
+    {
+//      GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[line][i], FALSE );
+      POKMEONTRADE2D_IconGray(pWork, pWork->pokeIcon[line][i], bGray);
+    }
+  }
+}
 
 
 
@@ -2608,7 +2620,6 @@ BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
       PROGVAL_CATMULLROM_Main( &pWork->aCutMullRom );
       pos.x = pWork->aCutMullRom.now_val.x/FX32_ONE;
       pos.y = pWork->aCutMullRom.now_val.y/FX32_ONE;
-      OS_Printf("spline %d %d \n",pos.x,pos.y);
       GFL_CLACT_WK_SetPos(  pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
     }
   }

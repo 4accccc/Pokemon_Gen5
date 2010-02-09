@@ -793,11 +793,18 @@ BOOL POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height)
   }
   else{
     if((pWork->selectIndex==index) && (pWork->selectBoxno==boxno)){
-      return TRUE;
+      if((pWork->workPokeIndex==-1) && (pWork->workBoxno==-1)){
+        OS_TPrintf("selectIndex %d %d\n",boxno, index);
+        return TRUE;
+      }
+    }
+    if((pWork->selectIndex==-1) && (pWork->selectBoxno==-1)){
+      if((pWork->workPokeIndex==index) && (pWork->workBoxno==boxno)){
+        OS_TPrintf("workPokeIndex %d %d\n",boxno, index);
+        return TRUE;
+      }
     }
   }
-
-  
   return FALSE;
 }
 
