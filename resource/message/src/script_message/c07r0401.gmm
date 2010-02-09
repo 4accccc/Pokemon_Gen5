@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-04T18:54:50"/>
+	<create user="matsumiya" host="W00224" date="2010-02-09T17:11:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="162"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="281" right="1999" bottom="909" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="166" right="1998" bottom="794" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,20 +294,200 @@
 
 	<row id="msg_c07r0401_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ
-・サブイベント追加予定</comment>
+・初回
+　続けてgentleman_02
+・2回目以降の話しかけは
+　gentleman_02から</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 紳士</attribute>
 		<language name="JPN" width="256">ウォッホン！[BE:01:ページ切り替え（クリア）]
 わたくし　せかいかっこくに　ある
 ポケモンだいすきクラブの　なかでも[BE:00:ページ切り替え（行送り）]
 いちばん　ポケモンが　すきな[BE:00:ページ切り替え（行送り）]
-かいちょう　なのであります！</language>
+かいちょう　なのであります！▼</language>
 		<language name="JPN_KANJI" width="256">ウォッホン！[BE:01:ページ切り替え（クリア）]
 わたくし　世界各国に　ある
 ポケモンだいすきクラブの　中でも[BE:00:ページ切り替え（行送り）]
 一番　ポケモンが　好きな[BE:00:ページ切り替え（行送り）]
-会長なので　あります！</language>
+会長なので　あります！▼</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・はい/いいえ
+　はい→gentleman_04
+　いいえ→gentleman_03</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">きみも　トレーナーなら
+どれだけ　あいじょうを　もって▼
+ポケモンを　そだてているか
+わたしに　みせてくれないかい？</language>
+		<language name="JPN_KANJI" width="256">きみも　トレーナーなら
+どれだけ　あいじょうを　もって▼
+ポケモンを　そだてているか
+わたしに　みせてくれないかい？</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">なるほど　わかった！
+きみは　シャイな　トレーナーだな！</language>
+		<language name="JPN_KANJI" width="256">なるほど　わかった！
+きみは　シャイな　トレーナーだな！</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・はい選択時
+　リスト画面へ</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">おお！
+どの　ポケモンだい？▼</language>
+		<language name="JPN_KANJI" width="256">おお！
+どの　ポケモンだい？▼</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・キャンセルなどの場合
+　終了</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">おや？
+やめるのかね</language>
+		<language name="JPN_KANJI" width="256">おや？
+やめるのかね</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・データ取得不可能
+　終了</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">……うーむ
+ちょっと　わからないねえ</language>
+		<language name="JPN_KANJI" width="256">……うーむ
+ちょっと　わからないねえ</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・タマゴ選択</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">むむ？　タマゴの　そだちぐあいは
+ちょっと　はんだんが　むずかしいね</language>
+		<language name="JPN_KANJI" width="256">むむ？　タマゴの　そだちぐあいは
+ちょっと　はんだんが　むずかしいね</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・ポケモン選択
+・選択後にレベル差を算出
+　現在のレベルーであったときのレベル
+　９９→gentleman_09
+　５０～９８→gentleman_10
+　２５～４９→gentleman_11
+　０～２４→gentleman_12</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">おお！　この　[1:02:ポケモンニックネーム:0]
+であったときは　レベル[2:02:３桁:1]　だったのに▽
+いまでは　レベル[2:02:３桁:2]　なのかい！▼</language>
+		<language name="JPN_KANJI" width="256">おお！　この　[1:02:ポケモンニックネーム:0]
+であったときは　レベル[2:02:３桁:1]　だったのに▽
+いまでは　レベル[2:02:３桁:2]　なのかい！▼</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_09" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・レベル差が９９
+・アイテムが
+　もらえる→オボンの実入手（仮）→gentleman_13
+　　　この条件でもらえるのは1回のみ
+　もらえない→gentleman_14</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">すごく　そだてたんだねえ
+あいじょう　たっぷりだねえ▼</language>
+		<language name="JPN_KANJI" width="256">すごく　そだてたんだねえ
+あいじょう　たっぷりだねえ▼</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・レベル差が５０～９８
+・アイテムが
+　もらえる→オボンの実入手（仮）→gentleman_13
+　　　この条件でもらえるのは1回のみ
+　もらえない→gentleman_14</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">かなり　そだてたんだねえ
+あいじょう　かんじるねえ▼</language>
+		<language name="JPN_KANJI" width="256">かなり　そだてたんだねえ
+あいじょう　かんじるねえ▼</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・レベル差が２５～４９
+・アイテムが
+　もらえる→オボンの実入手（仮）→gentleman_13
+　　　この条件でもらえるのは1回のみ
+　もらえない→gentleman_14</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">けっこう　そだてたんだねえ
+あいじょう　あるねえ▼</language>
+		<language name="JPN_KANJI" width="256">けっこう　そだてたんだねえ
+あいじょう　あるねえ▼</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・レベル差が０～２４
+・終了</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">なるほど！　わずかながらも
+きみの　あいじょうを　かんじられるね！</language>
+		<language name="JPN_KANJI" width="256">なるほど！　わずかながらも
+きみの　あいじょうを　かんじられるね！</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_13" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・アイテム入手後（共通）</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">それは　すばらしい　あいじょうを
+みせてくれた　おれい　だよ！</language>
+		<language name="JPN_KANJI" width="256">それは　すばらしい　あいじょうを
+みせてくれた　おれい　だよ！</language>
+	</row>
+
+	<row id="msg_c07r0401_gentleman_14" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・あげるアイテムがない
+・終了</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">いやー　きみには
+いいものを　みせてもらった！▼
+これからも　あいじょう　こめて
+ポケモンを　そだててほしいね！</language>
+		<language name="JPN_KANJI" width="256">いやー　きみには
+いいものを　みせてもらった！▼
+これからも　あいじょう　こめて
+ポケモンを　そだててほしいね！</language>
 	</row>
 
 	<row id="msg_c07r0401_woman1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
