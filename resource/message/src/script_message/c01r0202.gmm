@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T15:11:12"/>
+	<create user="matsumiya" host="W00224" date="2010-02-09T18:09:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1527" top="175" right="2230" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="208" right="1990" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,52 +292,40 @@
 	</lock>
 
 
-	<row id="msg_c01r0202_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c01r0202_gentleman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 紳士</attribute>
-		<language name="JPN" width="256">イッシュちほうの　ひとびとはね
-こころの　おくそこに[BE:00:ページ切り替え（行送り）]
-ドラゴンポケモンへの　おもいを[BE:00:ページ切り替え（行送り）]
-ひめているんだよ[BE:01:ページ切り替え（クリア）]
-なにしろ　えいゆうと　ともに
-この　ちほうを　つくりあげた[BE:00:ページ切り替え（行送り）]
-すごい　ポケモンだからね</language>
-		<language name="JPN_KANJI" width="256">イッシュ地方の　人々はね
-だれでも　心の　奥底に[BE:00:ページ切り替え（行送り）]
-ドラゴンポケモンへの　想いを[BE:00:ページ切り替え（行送り）]
-秘めているんだよ[BE:01:ページ切り替え（クリア）]
-なにしろ　英雄と　ともに
-この　地方を　つくりあげた[BE:00:ページ切り替え（行送り）]
-すごい　ポケモンだからね</language>
+		<language name="JPN" width="256">きみの　ポケモンは
+どんな　ニックネームだい？▼
+ニックネームを　つけると
+あいちゃく　わいちゃうよね</language>
+		<language name="JPN_KANJI" width="256">きみの　ポケモンは
+どんな　ニックネームだい？▼
+ニックネームを　つけると
+愛着　わいちゃうよね</language>
 	</row>
 
-	<row id="msg_c01r0202_dancer_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c01r0202_dancer_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">DANCER
 ダンサー</attribute>
-		<language name="JPN" width="256">ダンスは　ことばが　なくても
-たのしめて　すごいだろ？[BE:01:ページ切り替え（クリア）]
-ポケモンも　ことばが　つうじない
-あいてとも　たのしめて　すごいよな</language>
-		<language name="JPN_KANJI" width="256">ダンスは　言葉が　なくても
-楽しめて　すごいだろ？[BE:01:ページ切り替え（クリア）]
-ポケモンも　言葉が　通じない
-相手とも　楽しめて　すごいよな</language>
+		<language name="JPN" width="256">オレさ　がいこくに　いってさ
+ポケモンしょうぶ　してきたんだぜ！</language>
+		<language name="JPN_KANJI" width="256">オレさ　外国に　行ってさ
+ポケモン勝負　してきたんだぜ！</language>
 	</row>
 
-	<row id="msg_c01r0202_woman3_01">
+	<row id="msg_c01r0202_woman3_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN3
 エプロン</attribute>
 		<language name="JPN" width="256">たびの　トレーナーさん
-あなたの　おとうさん　おかあさんは[BE:01:ページ切り替え（クリア）]
+あなたの　かぞくは[BE:01:ページ切り替え（クリア）]
 きっと　いまごろ
 あなたの　はなしを　しているわね</language>
 		<language name="JPN_KANJI" width="256">旅の　トレーナーさん
-あなたの　お父さん　お母さんは[BE:01:ページ切り替え（クリア）]
+あなたの　家族は[BE:01:ページ切り替え（クリア）]
 きっと　いまごろ
 あなたの　話を　しているわね</language>
 	</row>
