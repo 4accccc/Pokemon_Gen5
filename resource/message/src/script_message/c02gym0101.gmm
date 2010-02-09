@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-09T18:24:55"/>
+	<create user="matsumiya" host="W00224" date="2010-02-09T19:58:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="208" right="1990" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="209" right="1989" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -660,58 +660,72 @@ OLDMAN1</attribute>
 
 	<row id="msg_c02gym0101_plate_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・仮メッセージ</comment>
+・カイリューの骨格標本</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
-		<language name="JPN" width="256">てんじぶつの　かいせつ　その１</language>
-		<language name="JPN_KANJI" width="256">展示物の　解説その１</language>
+		<language name="JPN" width="256">せかいじゅうを　とびまわっていた
+ポケモンの　こっかくひょうほん</language>
+		<language name="JPN_KANJI" width="256">せかいじゅうを　とびまわっていた
+ポケモンの　こっかくひょうほん</language>
 	</row>
 
 	<row id="msg_c02gym0101_plate_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・仮メッセージ</comment>
+・アーマルドのカセキ</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
-		<language name="JPN" width="256">てんじぶつの　かいせつ　その２</language>
-		<language name="JPN_KANJI" width="256">展示物の　解説その２</language>
+		<language name="JPN" width="256">とても　がんじょうな　コウラで
+まもっていた　ポケモンのカセキ</language>
+		<language name="JPN_KANJI" width="256">とても　がんじょうな　コウラで
+まもっていた　ポケモンのカセキ</language>
 	</row>
 
 	<row id="msg_c02gym0101_plate_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・仮メッセージ</comment>
+・デオキシス用の隕石</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
-		<language name="JPN" width="256">てんじぶつの　かいせつ　その３</language>
-		<language name="JPN_KANJI" width="256">展示物の　解説その３</language>
+		<language name="JPN" width="256">うちゅうウイルスが
+ふちゃくしていた　いんせき</language>
+		<language name="JPN_KANJI" width="256">うちゅうウイルスが
+ふちゃくしていた　いんせき</language>
 	</row>
 
 	<row id="msg_c02gym0101_plate_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・仮メッセージ</comment>
+・ライトストーン/ダークストーン</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
-		<language name="JPN" width="256">てんじぶつの　かいせつ　その４</language>
-		<language name="JPN_KANJI" width="256">展示物の　解説その４</language>
+		<language name="JPN" width="256">さばくに　うもれていた
+こだいの　まるい　いし</language>
+		<language name="JPN_KANJI" width="256">さばくに　うもれていた
+こだいの　まるい　いし</language>
 	</row>
 
 	<row id="msg_c02gym0101_plate_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・仮メッセージ</comment>
+・石版</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
-		<language name="JPN" width="256">てんじぶつの　かいせつ　その５</language>
-		<language name="JPN_KANJI" width="256">展示物の　解説その５</language>
+		<language name="JPN" width="256">まだ　かいどく　されていない
+もじが　きざまれた　せきばん</language>
+		<language name="JPN_KANJI" width="256">まだ　かいどく　されていない
+もじが　きざまれた　せきばん</language>
 	</row>
 
 	<row id="msg_c02gym0101_plate_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・仮メッセージ</comment>
+・木の仮面</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
-		<language name="JPN" width="256">てんじぶつの　かいせつ　その６</language>
-		<language name="JPN_KANJI" width="256">展示物の　解説その６</language>
+		<language name="JPN" width="256">むかしの　ひとびとが
+まつりのときに　つけた　かめん</language>
+		<language name="JPN_KANJI" width="256">むかしの　ひとびとが
+まつりのときに　つけた　かめん</language>
 	</row>
 
 	<row id="msg_c02gym0101_plate_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・仮メッセージ</comment>
+・ガラガラの骨</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
-		<language name="JPN" width="256">てんじぶつの　かいせつ　その７</language>
-		<language name="JPN_KANJI" width="256">展示物の　解説その７</language>
+		<language name="JPN" width="256">とある　ポケモンが
+ぶきとして　もっていた　ホネ</language>
+		<language name="JPN_KANJI" width="256">とある　ポケモンが
+ぶきとして　もっていた　ホネ</language>
 	</row>
 
 	<flowchart-group-list>
