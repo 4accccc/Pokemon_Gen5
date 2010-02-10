@@ -131,6 +131,7 @@ typedef struct _UI_SYS UISYS;  ///< UISYS 型宣言
 typedef struct _UI_TPSYS UI_TPSYS; ///< UIタッチパネルSYS型宣言
 typedef void (GFL_UI_SLEEPRELEASE_FUNC)(void* pWork);  ///< リセット復帰時に呼ばれる関数
 
+
 //==============================================================================
 /**
  * @brief UI起動処理(UIには初期化がboot時に行うものしかありません)
@@ -195,6 +196,17 @@ extern BOOL GFL_UI_CheckSleepDisable(const u8 sleepTypeBit);
 //------------------------------------------------------------------
 extern void GFL_UI_SleepReleaseSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork);
 
+
+//------------------------------------------------------------------
+/**
+ * @brief   スリープ直前時に呼ばれる関数をセットする
+ * @param   pFunc   スリープ直前時に呼ばれる関数
+ * @param   pWork   呼ばれる際に渡すワーク
+ * @return  none
+ */
+//------------------------------------------------------------------
+extern void GFL_UI_SleepGoSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork);
+
 //------------------------------------------------------------------
 /**
  * @brief   ソフトウエアリセット状態を禁止する
@@ -212,6 +224,14 @@ extern void GFL_UI_SoftResetDisable(const u8 softResetBit);
  */
 //------------------------------------------------------------------
 extern void GFL_UI_SoftResetEnable( const u8 softResetBit);
+//----------------------------------------------------------------------------
+/**
+ * @brief	  ふたが開いたかどうか
+ * @param	  GFL_UI_FRAMERATE_ENUM  定義のフレーム
+ * @retval	none
+ */
+//-----------------------------------------------------------------------------
+extern BOOL GFL_UI_GetOpenTrg(void);
 
 
 //----------------------------------------------------------------------------
