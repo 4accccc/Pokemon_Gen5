@@ -38,17 +38,18 @@ DEFINE_LOCAL teach_waza_id
 /**************************************************************/
 /*  ÇËÇ„Ç§ÇπÇ¢ÇÆÇÒÇã≥Ç¶ÇƒÇ≠ÇÍÇÈêl                            */
 /**************************************************************/
-EVENT_START ev_waza_teacher_dragon
+//EVENT_START ev_waza_teacher_dragon
 
-  _TALK_OBJ_START()
+//  _TALK_OBJ_START()
 
-  _CALL sub_waza_teacher_dragon
+//  _CALL sub_waza_teacher_dragon
 
-EVENT_END
+//EVENT_END
 
 /**************************************************************/
 /**************************************************************/
-sub_waza_teacher_dragon:
+//sub_waza_teacher_dragon:
+ev_waza_teacher_dragon:
 {
     _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_01w, msg_skillteach_dragon_01b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
     _YES_NO_WIN( SCWK_ANSWER )
