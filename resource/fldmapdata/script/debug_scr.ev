@@ -15,6 +15,7 @@
   .include  "pokecen_scr_def.h"
 
   .include  "debug_scr_local_iwasawa.h"
+   .include  "c02.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -395,15 +396,51 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_murakami
 
-			_SE_PLAY( SEQ_SE_FLD_36)		
+		//メニュー作成
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( msg_debug_01, 1 )	//テスト01
+		_BMPMENU_MAKE_LIST( msg_debug_02, 2 )	//テスト02
+		_BMPMENU_MAKE_LIST( msg_debug_03, 3 )	//テスト03
+		_BMPMENU_MAKE_LIST( msg_debug_05, 4 )	//イベントＯＦＦ
+		_BMPMENU_MAKE_LIST( msg_debug_07, 5 )	//マップ差し替え
+		_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+		
+		IF $SCWK_TEMP1 == 1 THEN
+
+			//C02の博士（父、娘）、チャンピオン、ジムリーダー,、サポートを表示
+			_FLAG_RESET(FV_C02_STONEEVENT_01)
 			
+			_OBJ_ADD( C02_CHAMPION_01 ) 
+			_OBJ_ADD( C02_HAKASE1_01 ) 
+			_OBJ_ADD( C02_HAKASE2_01 ) 
+			_OBJ_ADD( C02_SUPPORT_02 ) 
+			_OBJ_ADD( C02_LEADER02_01 ) 
+	
+			//C02でのライトストーン、ダークストーンのイベント有効
+			$WK_SCENE_C02 = 6
+			  
+			_MAP_CHANGE( ZONE_ID_C02, 644, 587, DIR_UP )
+	  
+		ELSIF $SCWK_TEMP1 == 2 THEN
+		
+			$WK_SCENE_D06 = 1
+		
+		ELSIF $SCWK_TEMP1 == 3 THEN
+		
+			_SE_PLAY( SEQ_SE_FLD_36)		
 			//本棚が動くアニメーション
 			_GYM_NORMAL_MOVE_WALL(0)
-
 			_SE_STOP()	
-
-//			_ADD_GOLD( 10000 )
-			
+		
+		ELSIF $SCWK_TEMP1 == 4 THEN
+		
+		ELSIF $SCWK_TEMP1 == 5 THEN
+		
+		ENDIF
+		
 EVENT_END
 /**************************************************************/
 /*                                                            */
