@@ -664,6 +664,8 @@ static const BtlEventHandlerTable*  ADD_FreeFall( u32* numElems );
 static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable*  ADD_InisieNoUta( u32* numElems );
+static void handler_InisieNoUta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_MiracleEye( u32* numElems );
 static void handler_MiracleEye( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Seityou( u32* numElems );
@@ -941,6 +943,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_BOUHUU,           ADD_Kaminari        },  // ぼうふう=かみなり
     { WAZANO_KARI_TEKUNOBASUTAA,    ADD_SabakiNoTubute  },  // テクノバスター=さばきのつぶて
     { WAZANO_KARI_KISEKINOTURUGI,   ADD_PsycoShock      },  // きせきのつるぎ=サイコショック
+    { WAZANO_KARI_INISIENOUTA,      ADD_InisieNoUta     },
   };
 
   int i;
@@ -9509,6 +9512,41 @@ static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * いにしえのうた
+ */
+//----------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  ADD_InisieNoUta( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_REACTION,    handler_InisieNoUta   },   // ダメージ反応ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+// ダメージ反応ハンドラ
+static void handler_InisieNoUta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+
+// @todo アンのーんでチェックするために一時的に条件をハズす
+//  if( BPP_GetMonsNo(bpp) == MONSNO_MERODHIA )
+  {
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK)==pokeID )
+    {
+      if( BPP_GetValue(bpp, BPP_FORM) == FORMNO_MERODHIA_VOICE )
+      {
+        BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
+        param->pokeID = pokeID;
+        param->formNo = FORMNO_MERODHIA_STEP;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
+      }
+    }
+  }
+}
+
 
 //----------------------------------------------------------------------------------
 /**
