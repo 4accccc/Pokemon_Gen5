@@ -140,30 +140,6 @@ VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * @brief 野生戦　再戦コードチェック
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWildBattleRevengeCheck( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  BtlResult res = GAMEDATA_GetLastBattleResult(gdata);
-
-  if (FIELD_BATTLE_IsLoseResult(res, BTL_COMPETITOR_WILD) == TRUE)
-  {
-    *ret_wk = SCR_BATTLE_RESULT_LOSE;
-  } else {
-    *ret_wk = SCR_BATTLE_RESULT_WIN;
-  }
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
  * @brief トレーナー敗北処理
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	VMCMD_RESULT_SUSPEND

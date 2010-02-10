@@ -1,9 +1,11 @@
+//======================================================================
 /*
  *  @file scrcmd_encount.c
  *  @brief  スクリプト　野生戦エンカウント他
  *  @author Miyuki Iwasawa
  *  @date   09.10.28
  */
+//======================================================================
 
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -28,6 +30,10 @@
 #include "effect_encount.h"
 
 #include "event_field_fade.h" //EVENT_FieldFadeIn_Black
+
+
+//======================================================================
+//======================================================================
 
 //--------------------------------------------------------------
 /**
@@ -62,10 +68,6 @@ VMCMD_RESULT EvCmdWildBattleSet( VMHANDLE *core, void *wk )
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	VMCMD_RESULT_SUSPEND
  *
- * @todo
- * 現状はこれが呼ばれなくても正常動作している。
- * 勝利時にスクリプトからOBJ操作などを行い、その後フェードインする。
- * その際のフェードイン処理などが実装される予定。
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWildWin( VMHANDLE * core, void *wk )
@@ -85,7 +87,6 @@ VMCMD_RESULT EvCmdWildWin( VMHANDLE * core, void *wk )
 /**
  * 野生戦闘 再戦コードチェック
  * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"1"
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWildBattleRetryCheck( VMHANDLE *core, void *wk )
