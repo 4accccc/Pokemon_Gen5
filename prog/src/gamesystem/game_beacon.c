@@ -16,6 +16,7 @@
 #include "net/net_whpipe.h"
 #include "savedata/my_pms_data.h"
 #include "app/townmap_util.h"
+#include "net_app\union\union_beacon_tool.h"
 
 
 //==============================================================================
@@ -554,8 +555,13 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   info->g_power_id = GPOWER_ID_NULL;
   info->trainer_id = MyStatus_GetID_Low(myst);
   info->favorite_color_index = owner_info.favoriteColor;
-  info->trainer_view = MyStatus_GetTrainerView(myst);
   info->sex = MyStatus_GetMySex( myst );
+  if(info->sex == PM_MALE){
+    info->trainer_view = MyStatus_GetTrainerView(myst);
+  }
+  else{ //3bit‚ÉŽû‚ß‚é
+    info->trainer_view = MyStatus_GetTrainerView(myst) - UNION_VIEW_INDEX_WOMAN_START;
+  }
   info->pm_version = PM_VERSION;
   info->language = PM_LANG;
   info->nation = MyStatus_GetMyNation(myst);

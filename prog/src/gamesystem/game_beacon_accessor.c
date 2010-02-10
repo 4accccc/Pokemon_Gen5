@@ -14,6 +14,7 @@
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_accessor.h"
 #include "gamesystem/game_beacon_types.h"
+#include "net_app\union\union_beacon_tool.h"
 
 
 
@@ -454,7 +455,10 @@ u32 GAMEBEACON_Get_TrainerID(const GAMEBEACON_INFO *info)
 //==================================================================
 u8 GAMEBEACON_Get_TrainerView(const GAMEBEACON_INFO *info)
 {
-  return info->trainer_view;
+  if(info->sex == PM_MALE){
+    return info->trainer_view;
+  }
+  return info->trainer_view + UNION_VIEW_INDEX_WOMAN_START;
 }
 
 //==================================================================
