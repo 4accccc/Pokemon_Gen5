@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T15:07:53"/>
+	<create user="matsumiya" host="W00224" date="2010-02-10T17:55:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1298" top="283" right="2003" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="177" right="2021" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -312,7 +312,7 @@
 ちょっと　ついてきて！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01_glasses_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01_glasses_01" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・初期状態で配置済み
 ・c01r0501の友達♂と会話すれば
@@ -330,22 +330,6 @@
 トレーナーズスクール　ですかね▼
 わるいですけど　挑戦するなら
 探してきて　ほしいんすよね</language>
-	</row>
-
-	<row id="msg_c01_glasses_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・c01､ｄ01のジムリーダーと
-　c01r0501の友達♂と会話後
-　</comment>
-		<attribute name="キャラ指定">ダンペイ</attribute>
-		<language name="JPN" width="256">ジムリーダー　ですか？
-まだ　もどってきて　ないんすよね[BE:01:ページ切り替え（クリア）]
-いつもだと　ゆめのあとち　か
-トレーナーズスクールに　いるんすけど</language>
-		<language name="JPN_KANJI" width="256">ジムリーダー　ですか？
-まだ　戻ってきてないんすよね[BE:01:ページ切り替え（クリア）]
-いつもだと　夢の跡地か
-トレーナーズスクールに　いるんすけど</language>
 	</row>
 
 	<row id="msg_c01_leader1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
