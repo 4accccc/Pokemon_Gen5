@@ -48,10 +48,10 @@ palpark_main:
     //初回話しかけフラグＯＮ
     _FLAG_SET(FE_PALPARK_FIRSTTALK)
     //初回メッセージ「というわけで、やってみる」
-    _BALLOONWIN_TALKOBJ_MSG( msg_palpark_first_09 )
+    _BALLOONWIN_OBJMSG( msg_palpark_first_09, R15R0301_PARK )
   ELSE
     //「やってみる？」
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_02 )
+  _BALLOONWIN_OBJMSG( msg_palpark_02, R15R0301_PARK )
   ENDIF
 
   _YES_NO_WIN( SCWK_ANSWER )
@@ -62,7 +62,7 @@ palpark_main:
     _GET_BOX_POKE_COUNT( box_empty_num, POKECOUNT_MODE_EMPTY )
     IF $box_empty_num >= 6 THEN          //6以上空きがある
       //「ＤＳある？」
-      _BALLOONWIN_TALKOBJ_MSG( msg_palpark_05 )
+      _BALLOONWIN_OBJMSG( msg_palpark_05, R15R0301_PARK )
       _YES_NO_WIN( SCWK_ANSWER )
       _BALLOONWIN_CLOSE()
       IF $SCWK_ANSWER == 0 THEN          //ＤＳある
@@ -88,7 +88,7 @@ _RET
 
 //最終メッセージ共通
 end_msg:
-  _BALLOONWIN_TALKOBJ_MSG( EndMsg )
+  _BALLOONWIN_OBJMSG( EndMsg, R15R0301_PARK )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 _RET
@@ -130,7 +130,7 @@ play_palpark:
   ENDIF
 
   //「そこにたって」
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_08 )
+  _BALLOONWIN_OBJMSG( msg_palpark_08, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
 
   //主人公マシンインアニメ+フェードアウト
@@ -154,7 +154,7 @@ play_palpark:
   ELSE
     DEFINE_LOCAL result_msg
     //「おつかれ」
-    _BALLOONWIN_TALKOBJ_MSG( msg_palpark_10 )
+    _BALLOONWIN_OBJMSG( msg_palpark_10, R15R0301_PARK )
     _BALLOONWIN_CLOSE()
 
     IF $palpark_retval == PALPARK_FINISH_HIGHSOCRE THEN   //ハイスコア？
@@ -172,7 +172,7 @@ play_palpark:
       $result_msg = msg_palpark_12    //「ざんねん」メッセージをいれとく todo
     ENDIF
 
-    _BALLOONWIN_TALKOBJ_MSG( result_msg )
+    _BALLOONWIN_OBJMSG( result_msg, R15R0301_PARK )
     _BALLOONWIN_CLOSE()
   ENDIF
 
@@ -181,7 +181,7 @@ _RET
 
 connect_error:
   //通信エラーのときのメッセージ
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_13 )
+  _BALLOONWIN_OBJMSG( msg_palpark_13, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
 _RET
 
@@ -207,7 +207,7 @@ score_msg:
   ENDIF
 
   //「レベル○○」
-  _BALLOONWIN_TALKOBJ_MSG( score_msg )
+  _BALLOONWIN_OBJMSG( score_msg, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
 
 _RET
@@ -235,7 +235,7 @@ player_in_anm:
   _OBJ_ANIME( R15R0301_PARK, anm_doc_work2 )
 	_OBJ_ANIME_WAIT()  
   //「はじめるよ」
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_09 )
+  _BALLOONWIN_OBJMSG( msg_palpark_09, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
 
   //ブラックアウト
@@ -324,22 +324,86 @@ _ANIME_LABEL	anm_player_turn
 
 //初回アニメイベント
 first_anime_evt:
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_first_01 )
+  DEFINE_LOCAL pos_x
+  DEFINE_LOCAL pos_z
+  //自機のX座標を取得
+  _PLAYER_POS_GET( pos_x, pos_z )
+
+  //助手に「！」
+
+  //助手が自機に近づく
+  IF $pos_x == 9 THEN       //左
+    _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_contact_start1 )
+  ELSIF $pos_x == 11 THEN   //右
+    _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_contact_start2 )
+  ELSE                      //中央
+    _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_contact_start3 )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+
+  //助手「こんちわ」
+  _BALLOONWIN_OBJMSG( msg_palpark_first_01, R15R0301_ASSISTANTW_01 )
   _BALLOONWIN_CLOSE()
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_first_02 )
+  //助手「！」
+  _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_gyoe )
+  _OBJ_ANIME_WAIT()
+  //助手「ついてこいや」
+  _BALLOONWIN_OBJMSG( msg_palpark_first_02, R15R0301_ASSISTANTW_01 )
   _BALLOONWIN_CLOSE()
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_first_03 )
+  //つれてく
+  IF $pos_x == 9 THEN       //左
+    _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_start1 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_start1 )
+  ELSIF $pos_x == 11 THEN   //右
+    _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_start2 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_start2 )
+  ELSE                      //中央
+    _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_start3 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_start3 )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+
+  //助手「こいつ殿堂入りしとるで！」
+  _BALLOONWIN_OBJMSG( msg_palpark_first_03, R15R0301_ASSISTANTW_01 )
   _BALLOONWIN_CLOSE()
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_first_04 )
+
+  //自機を博士の前に助手はける
+  _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_back )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_front )
+  _OBJ_ANIME_WAIT()
+
+  //博士「なんどもいっとる・・」
+  _BALLOONWIN_OBJMSG( msg_palpark_first_04, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_first_05 )
+  //博士「！」
+  _OBJ_ANIME( R15R0301_PARK, anm_gyoe )
+  _OBJ_ANIME_WAIT()
+  //博士「グーレイト」
+  _BALLOONWIN_OBJMSG( msg_palpark_first_05, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_first_06 )
+  
+  //プレーヤー名をタグ0番にセット
+  _PLAYER_NAME( 0 )
+  //助手「○○や」
+  _BALLOONWIN_OBJMSG( msg_palpark_first_06, R15R0301_ASSISTANTW_01 )
   _BALLOONWIN_CLOSE()
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_first_07 )
+  //博士「○○くん」
+  _BALLOONWIN_OBJMSG( msg_palpark_first_07, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_first_08 )
+  //助手と会話するため自機右向く
+  _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_dir_left )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_dir_right )
+  _OBJ_ANIME_WAIT() 
+  //助手「手ぶらサイコー」
+  _BALLOONWIN_OBJMSG( msg_palpark_first_08, R15R0301_ASSISTANTW_01 )
   _BALLOONWIN_CLOSE()
+  //自機、助手を上向き
+  _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_dir_up )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_up )
+  _OBJ_ANIME_WAIT()
+
 _RET
 
 /************************************************************/
@@ -366,5 +430,132 @@ EVENT_START   ev_palpark_assistantm_03
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_palpark_17 )
 EVENT_END
 
+
+//--------------------------------------------------------------------
+//助手が自機に近づく（自機が左にいる）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_asis_contact_start1
+  _ANIME_DATA	AC_MARK_GYOE,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,4
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//助手が自機に近づく（自機が右にいる）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_asis_contact_start2
+  _ANIME_DATA	AC_MARK_GYOE,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//助手が自機に近づく（自機が中央にいる）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_asis_contact_start3
+  _ANIME_DATA	AC_MARK_GYOE,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,3
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//自機が助手についていく（自機が左にいる）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_mov_start1
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機が助手についていく（自機が右にいる）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_mov_start2
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機が助手についていく（自機が中央にいる）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_mov_start3
+  _ANIME_DATA	AC_WALK_U_8F,13
+	_ANIME_DATA	ACMD_END,0
+  
+//--------------------------------------------------------------------
+//助手が主人公をついていく（自機が左にいる）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_asis_mov_start1
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,13
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//助手が主人公をついていく（自機が右にいる）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_asis_mov_start2
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,13
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//助手が主人公をついていく（自機が中央にいる）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_asis_mov_start3
+  _ANIME_DATA	AC_WALK_U_8F,13
+	_ANIME_DATA	ACMD_END,0
+  
+//--------------------------------------------------------------------
+//助手がはける
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_asis_mov_back
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA AC_DIR_PAUSE_ON, 1
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA AC_DIR_PAUSE_OFF, 1
+  _ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+  
+//--------------------------------------------------------------------
+//自機一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_mov_front
+  _ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機助手の方を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_asis_dir_left
+  _ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機助手の方を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_dir_right
+  _ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士の方を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_up
+  _ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+  
+//--------------------------------------------------------------------
+//「！」マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+  _ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+  
+  
 
 
