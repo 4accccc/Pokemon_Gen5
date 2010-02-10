@@ -256,6 +256,8 @@ typedef enum {
   POKETOKUSEI_SOUSYOKU,           // そうしょく
   POKETOKUSEI_ITAZURAGOKORO,      // いたずらごころ
   POKETOKUSEI_SUNANOTIKARA,       // すなのちから
+  POKETOKUSEI_TETUNOTOGE,         // てつのとげ
+  POKETOKUSEI_DARUMAMOODO,        // ダルマモード
 
 
   POKETOKUSEI_MAX,
