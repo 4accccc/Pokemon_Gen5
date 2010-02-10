@@ -248,6 +248,16 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
     work->cellRes[i] = PCR_NONE;
   }
 
+  if( work->plData->mode == PL_MODE_SET_WAZA )
+  {
+    work->plData->mode = PL_MODE_SET;
+    work->isSetWazaMode = TRUE;
+  }
+  else
+  {
+    work->isSetWazaMode = FALSE;
+  }
+
   if( work->plData->mode == PL_MODE_WAZASET )
   {
     if( work->plData->waza == 0 )
@@ -357,6 +367,12 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
   PLIST_TermCell( work );
   PLIST_ReleaseResource( work );
   PLIST_TermGraphic( work );
+
+  if( work->isSetWazaMode == TRUE )
+  {
+    work->plData->mode = PL_MODE_SET_WAZA;
+  }
+
 
   GFL_UI_SetTouchOrKey( work->ktst );
   
@@ -3049,13 +3065,7 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
     }
   }
 
-#if PM_DEBUG
-  OS_TPrintf("-------------------------------------------------------\n");
-  OS_TPrintf("wazaLearnBitが0ですが、未使用時は0xFFを入れてください。\n");
-  OS_TPrintf("-------------------------------------------------------\n");
-#endif
-
-  if( work->plData->wazaLearnBit != 0xFF )
+  if( work->isSetWazaMode == TRUE )
   {
     //イベントなど特殊な技覚え(外からBitでもらう)
     if( work->plData->wazaLearnBit & 1<<idx )

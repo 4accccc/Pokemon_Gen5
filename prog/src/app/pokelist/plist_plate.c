@@ -532,7 +532,8 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
   }
   else
-  if( work->plData->mode == PL_MODE_WAZASET )
+  if( work->plData->mode == PL_MODE_WAZASET ||
+      work->isSetWazaMode == TRUE )
   {
     u32 strId;
     const PLIST_SKILL_CAN_LEARN learnType = PLIST_UTIL_CheckLearnSkill( work , plateWork->pp , plateWork->idx );

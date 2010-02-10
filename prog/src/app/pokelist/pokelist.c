@@ -203,7 +203,9 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
       {
         //plData->mode = PL_MODE_SODATEYA;
-        plData->mode = PL_MODE_GURU2;
+        //plData->mode = PL_MODE_GURU2;
+        plData->mode = PL_MODE_SET_WAZA;
+        plData->wazaLearnBit = 0x2A;
         
         //plData->mode = PL_MODE_WAZASET;
         //plData->item = 328; //技マシン気合パンチ

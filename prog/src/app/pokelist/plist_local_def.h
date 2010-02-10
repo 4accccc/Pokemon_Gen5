@@ -216,6 +216,7 @@ struct _PLIST_WORK
   u8  selectState;
   BOOL isActiveWindowMask;  //メニュー出たときのWndMaskのON/OFFのVBlank切り替えよう
   BOOL canExit;   //Xボタンが効くか？
+  BOOL isSetWazaMode;  //技用のMODE_SELECTか？
   
   PL_SELECT_POS pokeCursor;
   PL_SELECT_POS changeTarget;

@@ -57,6 +57,11 @@ typedef enum
   PL_MODE_BATTLE_STAGE,   // バトルステージ参加選択用
   PL_MODE_BATTLE_CASTLE,  // バトルキャッスル参加選択用
   PL_MODE_BATTLE_ROULETTE = (PL_MODE_BATTLE_CASTLE),  // バトルルーレット参加選択用
+
+  PL_MODE_SET_WAZA,       // 内部でPL_MODE_SETに置き換わります。
+                          // 終了時にはPL_MODE_SET_WAZAに戻します。
+                          // wazaLearnBitの設定を忘れないでください。
+
 }PL_MODE_TYPE;
 
 #define PL_MODE_NO_CANCEL ( 0x80 )  // キャンセル禁止
@@ -189,7 +194,7 @@ typedef struct
   
   //WBより追加
   u8  wazaLearnBit; //イベントなど特殊な技覚えで外から覚えられるやつのbitをもらう
-                    //未使用時は0xFF
+                    // PL_MODE_SELECT_WAZAの時のみ有効
   
   //通信時相手見せ系
   PL_COMM_TYPE comm_type;
