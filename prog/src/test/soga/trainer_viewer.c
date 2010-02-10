@@ -19,6 +19,8 @@
 #include "tr_tool/tr_tool.h"
 #include "tr_tool/trtype_def.h"
 
+#include "field/zonedata.h"
+
 #include "debug/gf_mcs.h"
 
 #include "print/printsys.h"
@@ -326,10 +328,11 @@ static GFL_PROC_RESULT TrainerViewerProcInit( GFL_PROC * proc, int * seq, void *
   //戦闘エフェクト初期化
   {
     BTL_FIELD_SITUATION bfs = { 
-      0, 0, 0, 0, 0
+      0, 0, 0, 0, 0, 0, 0,
     };
 
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, tvw->heapID );
+    ZONEDATA_Open( tvw->heapID );
     BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, tvw->small_font, tvw->heapID );
   }
 
@@ -550,6 +553,7 @@ static GFL_PROC_RESULT TrainerViewerProcExit( GFL_PROC * proc, int * seq, void *
   GFL_UI_KEY_SetRepeatSpeed( tvw->key_repeat_speed, tvw->key_repeat_wait );
 
   BTLV_EFFECT_Exit();
+  ZONEDATA_Close();
 
   GFL_CLACT_SYS_Delete();
 

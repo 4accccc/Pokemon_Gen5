@@ -20,6 +20,8 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
+#include "field/zonedata.h"
+
 #include "debug/gf_mcs.h"
 
 #include "print/printsys.h"
@@ -386,10 +388,11 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
   //戦闘エフェクト初期化
   {
     BTL_FIELD_SITUATION bfs = { 
-      0, 0, 0, 0, 0
+      0, 0, 0, 0, 0, 0, 0,
     };
 
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, pvw->heapID );
+    ZONEDATA_Open( pvw->heapID );
     BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, pvw->small_font, pvw->heapID );
   }
 
@@ -710,6 +713,8 @@ static GFL_PROC_RESULT PokemonViewerProcExit( GFL_PROC * proc, int * seq, void *
   GFL_HEAP_FreeMemory( pvw->pp );
 
   BTLV_EFFECT_Exit();
+
+  ZONEDATA_Close();
 
   GFL_CLACT_SYS_Delete();
 

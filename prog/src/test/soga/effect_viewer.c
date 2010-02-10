@@ -22,6 +22,8 @@
 
 #include "sound/pm_sndsys.h"
 
+#include "field/zonedata.h"
+
 #include "debug/gf_mcs.h"
 
 #include "font/font.naix"
@@ -276,9 +278,10 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
   //戦闘エフェクト初期化
   {
     BTL_FIELD_SITUATION bfs = { 
-      0, 0, 0, 0, 0
+      0, 0, 0, 0, 0, 0, 0,
     };
 
+    ZONEDATA_Open( evw->heapID );
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, evw->heapID );
     BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, evw->small_font, evw->heapID );
   }
@@ -470,6 +473,7 @@ static GFL_PROC_RESULT EffectViewerProcExit( GFL_PROC * proc, int * seq, void * 
   GFL_UI_KEY_SetRepeatSpeed( evw->key_repeat_speed, evw->key_repeat_wait );
 
   BTLV_EFFECT_Exit();
+  ZONEDATA_Close();
 
   GFL_CLACT_SYS_Delete();
 
