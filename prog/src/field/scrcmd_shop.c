@@ -123,6 +123,8 @@ typedef struct{
   MISC      *misc;    // 所持金にアクセスするため
   MYITEM    *myitem;  // 手持ちの道具アクセス
   BSUBWAY_SCOREDATA *BpData; // バトルポイントにアクセスするため
+  FIELD_WFBC_CORE   *wfbc;    // WFBCワークへのポインタ
+  
   SHOP_ITEM lineup[SHOP_ITEM_MAX];  // ショップで購入できるデータを格納するワーク
   u16       lineup_num;             // 購入できる商品の数
   u8        type;                   // ショップのタイプ（通常ショップorBPショップor技ショップ)
@@ -237,6 +239,7 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
   void** scr_subproc_work = SCRIPT_SetSubProcWorkPointerAdrs( sc );
   FLDMSGBG *     fldmsg   = FIELDMAP_GetFldMsgBG( fieldmap );
+  FIELD_WFBC_CORE *wfbc   = GAMEDATA_GetMyWFBCCoreData( gamedata );
 
   // ショップ用ワーク確保
   SHOP_BUY_CALL_WORK* sbw = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(SHOP_BUY_CALL_WORK));
@@ -262,7 +265,9 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   case SCR_SHOPID_BP_WAZA:    // BP技マシンショップ
     sbw->shopType = shop_id;
     break;
-  case SCR_SHOPID_BLACK_CITY:  // 通信データから生成されるブラックシティショップ
+                              // 通信データから生成されるブラックシティショップ
+  case SCR_SHOPID_BLACK_CITY0:  case SCR_SHOPID_BLACK_CITY1:  case SCR_SHOPID_BLACK_CITY2:  
+  case SCR_SHOPID_BLACK_CITY3:  case SCR_SHOPID_BLACK_CITY4:  
     sbw->shopType = shop_id;
     break;
   default:                    //固定ショップ呼び出し
@@ -501,7 +506,8 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
     wk->payment = SHOP_PAYMENT_BP;
     wk->type = SHOP_TYPE_WAZA;
     break;
-  case SCR_SHOPID_BLACK_CITY:
+  case SCR_SHOPID_BLACK_CITY0:  case SCR_SHOPID_BLACK_CITY1:  case SCR_SHOPID_BLACK_CITY2:
+  case SCR_SHOPID_BLACK_CITY3:  case SCR_SHOPID_BLACK_CITY4:
     blackcity_shop_item_set( wk, type );
     break;
   default: 
@@ -1030,10 +1036,14 @@ static void blackcity_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
   int i;
   GFL_MSGDATA *itemMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                              NARC_message_itemname_dat, wk->heapId );
-  const  SHOP_ITEM *itemlist;
+  GF_ASSERT_MSG( type>=SCR_SHOPID_BLACK_CITY0 && type<=SCR_SHOPID_BLACK_CITY4, 
+             "BLACKCITYショップ指定0-4(0xf7-0xfb)の値になっていません\n");
 
   // BLACKCITY用の商品ラインナップをセット
   //BLACKCITY_SetShopItem( wk->lineup, &wk->lineup_num );
+  FIELD_WFBC_CORE_SetShopData( wk->wfbc, wk->lineup, &wk->lineup_num, 
+                               type-SCR_SHOPID_BLACK_CITY0, wk->heapId );
+
 
   GF_ASSERT_MSG( wk->lineup_num, "ショップの品物がひとつもありません\n" );
 
@@ -1113,7 +1123,7 @@ static int init_work( SHOP_BUY_APP_WORK *wk, int type )
   }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_Y){
     type = SCR_SHOPID_BP_WAZA;
   }else if(GFL_UI_KEY_GetCont()&PAD_KEY_UP){
-    type = SCR_SHOPID_BLACK_CITY;
+    type = SCR_SHOPID_BLACK_CITY0;
   }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
     MISC_SetGold(wk->misc , 5000);
   }

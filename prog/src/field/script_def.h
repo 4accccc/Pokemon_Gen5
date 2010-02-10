@@ -68,10 +68,15 @@
 #define SCR_NO    (1) //YES_NO_WINの戻り値 「いいえ」を返した
 
 //ショップのID定義
-#define SCR_SHOPID_NULL       ( 0xFF )  //変動ショップ呼び出しID
-#define SCR_SHOPID_BP_ITEM    ( 0xFE )  //BPアイテムショップ呼び出しID
-#define SCR_SHOPID_BP_WAZA    ( 0xFD )  //BP技マシンショップ呼び出しID
-#define SCR_SHOPID_BLACK_CITY ( 0xFC )  //ブラックシティショップ呼び出しID
+#define SCR_SHOPID_NULL        ( 0xFF )  //変動ショップ呼び出しID
+#define SCR_SHOPID_BP_ITEM     ( 0xFE )  //BPアイテムショップ呼び出しID
+#define SCR_SHOPID_BP_WAZA     ( 0xFD )  //BP技マシンショップ呼び出しID
+#define SCR_SHOPID_BLACK_CITY  ( 0xFC )  //ブラックシティショップ <---未使用になります
+#define SCR_SHOPID_BLACK_CITY4 ( 0xFB )  //ブラックシティショップ呼び出しID:0
+#define SCR_SHOPID_BLACK_CITY3 ( 0xFA )  //ブラックシティショップ呼び出しID:1
+#define SCR_SHOPID_BLACK_CITY2 ( 0xF9 )  //ブラックシティショップ呼び出しID:2
+#define SCR_SHOPID_BLACK_CITY1 ( 0xF8 )  //ブラックシティショップ呼び出しID:3
+#define SCR_SHOPID_BLACK_CITY0 ( 0xF7 )  //ブラックシティショップ呼び出しID:4
 
 //サブプロセス(アプリ)の終了コード定義
 #define SCR_PROC_RETMODE_EXIT    (0) //一発終了
