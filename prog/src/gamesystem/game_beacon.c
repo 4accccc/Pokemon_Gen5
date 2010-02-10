@@ -31,9 +31,59 @@
 ///配信用マジックキー：その他
 #define MAGIC_KEY_DISTRIBUTION_ETC     (0x701ddc92)
 
+///ビーコン内容wordset用テンポラリバッファ長定義
+#define BUFLEN_BEACON_WORDSET_TMP (16*2+EOM_SIZE)
+
+enum{
+ BEACON_WSET_DEFAULT,   //デフォルト(トレーナー名)  
+ BEACON_WSET_TRNAME,    //対戦相手名
+ BEACON_WSET_MONSNAME,  //ポケモン種族名
+ BEACON_WSET_NICKNAME,  //ポケモンニックネーム
+ BEACON_WSET_POKE_W,  //ポケモンニックネーム
+ BEACON_WSET_ITEM,      //アイテム名
+ BEACON_WSET_PTIME,     //プレイタイム
+ BEACON_WSET_THANKS,    //御礼回数
+ BEACON_WSET_HAIHU_MONS, //配布モンスター名
+ BEACON_WSET_HAIHU_ITEM, //配布アイテム名
+};
+
 //ここのASSERTにひっかかったらupdate_logをbit管理ではなく配列管理に変更する
 SDK_COMPILER_ASSERT(GAMEBEACON_SYSTEM_LOG_MAX < 32);
 
+/*
+ *  @brief  GAMEBEACON_ACTION型の並びと同一である必要があります
+ */
+static const u8 DATA_BeaconWordsetType[GAMEBEACON_ACTION_MAX] = {
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_NULL,                     ///<データ無し
+  
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_SEARCH,                   ///<「ｘｘｘさんをサーチしました！」      1
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_WILD_POKE_START,   ///<野生のポケモンと対戦を開始しました！  2
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY, ///<野生のポケモンに勝利しました！        3
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_SP_POKE_START,     ///<特別なポケモンと対戦を開始しました！  4
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY,   ///<特別なポケモンに勝利しました！        5
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_TRAINER_START,     ///<トレーナーと対戦を開始しました！      6
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY,   ///<トレーナーに勝利しました！            7
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_LEADER_START,      ///<ジムリーダーと対戦を開始しました！    8
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY,    ///<ジムリーダーに勝利しました！          9
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_BIGFOUR_START,     ///<四天王と対戦を開始しました！          10
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY,   ///<四天王に勝利しました！                11
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_CHAMPION_START,    ///<チャンピオンと対戦を開始しました！    12
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY,  ///<チャンピオンに勝利しました！          13
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_POKE_GET,                 ///<ポケモン捕獲                          14
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_SP_POKE_GET,              ///<特別なポケモン捕獲                    15
+  BEACON_WSET_NICKNAME,	///<GAMEBEACON_ACTION_POKE_LVUP,                ///<ポケモンレベルアップ                  16
+  BEACON_WSET_POKE_W,	///<GAMEBEACON_ACTION_POKE_EVOLUTION,           ///<ポケモン進化                          17
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_GPOWER,                   ///<Gパワー発動                           18
+  BEACON_WSET_ITEM,	  ///<GAMEBEACON_ACTION_SP_ITEM_GET,              ///<貴重品ゲット                          19
+  BEACON_WSET_PTIME,	///<GAMEBEACON_ACTION_PLAYTIME,                 ///<一定のプレイ時間を越えた              20
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_ZUKAN_COMPLETE,           ///<図鑑完成                              21
+  BEACON_WSET_THANKS,	///<GAMEBEACON_ACTION_THANKYOU_OVER,            ///<お礼を受けた回数が規定数を超えた      22
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_UNION_IN,                 ///<ユニオンルームに入った                23
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_THANKYOU,                 ///<「ありがとう！」                      24
+  BEACON_WSET_HAIHU_MONS,	///<GAMEBEACON_ACTION_DISTRIBUTION_POKE,        ///<ポケモン配布中                        25
+  BEACON_WSET_HAIHU_ITEM,	///<GAMEBEACON_ACTION_DISTRIBUTION_ITEM,        ///<アイテム配布中                        26
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_DISTRIBUTION_ETC,         ///<その他配布中                          27
+};
 
 //==============================================================================
 //  構造体定義
@@ -574,23 +624,47 @@ static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send)
 //==================================================================
 void GAMEBEACON_Wordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id)
 {
-  STRBUF *name_strbuf = GFL_STR_CreateBuffer(BUFLEN_PERSON_NAME, temp_heap_id);
-  STRBUF *nickname_strbuf = GFL_STR_CreateBuffer(BUFLEN_POKEMON_NAME, temp_heap_id);
+  u8 type;
+  STRBUF *strbuf = GFL_STR_CreateBuffer( BUFLEN_BEACON_WORDSET_TMP , temp_heap_id);
 
-	GFL_STR_SetStringCodeOrderLength(name_strbuf, info->name, BUFLEN_PERSON_NAME);
-  WORDSET_RegisterWord(wordset, 0, name_strbuf, 0, TRUE, PM_LANG);
+  //トレーナー名展開(デフォルト)
+	GFL_STR_SetStringCodeOrderLength(strbuf, info->name, PERSON_NAME_SIZE+EOM_SIZE);
+  WORDSET_RegisterWord( wordset, 0, strbuf, 0, TRUE, PM_LANG);
 
-  switch(info->action.action_no){
-  case GAMEBEACON_ACTION_POKE_EVOLUTION:       ///<ポケモン進化
-  case GAMEBEACON_ACTION_POKE_LVUP:            ///<ポケモンレベルアップ
-  case GAMEBEACON_ACTION_POKE_GET:             ///<ポケモン捕獲
-  	GFL_STR_SetStringCodeOrderLength(name_strbuf, info->action.normal.nickname, BUFLEN_POKEMON_NAME);
-    WORDSET_RegisterWord(wordset, 1, name_strbuf, 0, TRUE, PM_LANG);
+  type = DATA_BeaconWordsetType[ info->action.action_no ];
+
+  switch( type ){
+  case BEACON_WSET_TRNAME:
+    WORDSET_RegisterTrainerName( wordset, 1, info->action.tr_no );
+    break;
+  case BEACON_WSET_MONSNAME:
+  case BEACON_WSET_POKE_W:
+    WORDSET_RegisterPokeMonsNameNo( wordset, 1, info->action.monsno );
+    if( type == BEACON_WSET_MONSNAME ){
+      break;
+    }
+    //ブレイクスルー
+  case BEACON_WSET_NICKNAME:
+  	GFL_STR_SetStringCodeOrderLength(strbuf, info->action.normal.nickname, MONS_NAME_SIZE+EOM_SIZE);
+    WORDSET_RegisterWord(wordset, 2, strbuf, 0, TRUE, PM_LANG);
+    break;
+  case BEACON_WSET_ITEM:
+    WORDSET_RegisterItemName( wordset, 1, info->action.itemno );
+    break;
+  case BEACON_WSET_PTIME:
+    WORDSET_RegisterNumber( wordset, 1, info->action.hour, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    break;
+  case BEACON_WSET_THANKS:
+    WORDSET_RegisterNumber( wordset, 1, info->action.thankyou_count, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    break;
+  case BEACON_WSET_HAIHU_MONS:
+    WORDSET_RegisterItemName( wordset, 1, info->action.distribution.monsno );
+    break;
+  case BEACON_WSET_HAIHU_ITEM:
+    WORDSET_RegisterItemName( wordset, 1, info->action.distribution.itemno );
     break;
   }
-
-  GFL_STR_DeleteBuffer(name_strbuf);
-  GFL_STR_DeleteBuffer(nickname_strbuf);
+  GFL_STR_DeleteBuffer(strbuf);
 }
 
 //==================================================================

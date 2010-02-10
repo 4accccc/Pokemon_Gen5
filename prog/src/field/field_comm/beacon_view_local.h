@@ -153,6 +153,9 @@ enum{
  WIN_MAX,
 };
 
+///アイコンポップタイム
+#define ICON_POP_TIME (30*3)
+
 ///ポップアップスクロール
 #define POPUP_HEIGHT  (8*8)
 #define POPUP_DIFF    (8)
@@ -236,6 +239,25 @@ enum{
  ACTANM_DOWN_ANM,
  ACTANM_DOWN_OFF,
 };
+
+//アイコン種類定義
+enum{
+ ICON_HELLO,
+ ICON_BTL_START,
+ ICON_BTL_WIN,
+ ICON_POKE_GET,
+ ICON_POKE_LVUP,
+ ICON_POKE_SHINKA,
+ ICON_GPOWER,
+ ICON_ITEM_GET,
+ ICON_SPECIAL,
+ ICON_UNION,
+ ICON_THANKS,
+ ICON_INFO,
+ ICON_MAX,
+};
+
+
 #define ACT_ANM_SET (3)
 
 #define ACT_PANEL_OX  (13)
@@ -266,24 +288,6 @@ enum{
 #define ACT_UP_PY (1*8)
 #define ACT_DOWN_PX (27*8)
 #define ACT_DOWN_PY (5*8)
-
-
-///アイコンパターン数
-enum{
-  ICON_HELLO,
-  ICON_BTL_START,
-  ICON_BTL_WIN,
-  ICON_POKE_GET,
-  ICON_LV_UP,
-  ICON_SHINKA,
-  ICON_GPOWER,
-  ICON_ITEM_GET,
-  ICON_SPATIAL,
-  ICON_UNION,
-  ICON_CM,
-  ICON_THANKS,
-  ICON_MAX,
-};
 
 //スクロール方向定義
 enum{
@@ -410,8 +414,7 @@ typedef struct _PANEL_WORK{
 	STRBUF* str;
 	STRBUF* name;
 
-  struct _PANEL_WORK* next;
-  struct _PANEL_WORK* prev;
+  GFL_TCBL* tcb;
 }PANEL_WORK;
 
 /*

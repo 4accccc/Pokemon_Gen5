@@ -350,13 +350,7 @@ BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Get_PlayerNameToBuf(const GAMEBEACON_INFO *info, STRBUF* strbuf)
 {
-  STRCODE temp_name[BUFLEN_PERSON_NAME];
-  
-  //文字数がFullの場合はEOMがついていないので一時バッファにコピーして終端にEOMをつける
-  GFL_STD_MemCopy16(info->name, temp_name, PERSON_NAME_SIZE*2);
-  temp_name[PERSON_NAME_SIZE] = GFL_STR_GetEOMCode();
-  
-  GFL_STR_SetStringCode( strbuf, temp_name );
+  GFL_STR_SetStringCodeOrderLength( strbuf, info->name, PERSON_NAME_SIZE+EOM_SIZE );
 }
 
 //==================================================================
@@ -560,13 +554,8 @@ u32 GAMEBEACON_Get_SuretigaiCount(const GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Get_SelfIntroduction(const GAMEBEACON_INFO *info, STRBUF *dest)
 {
-  STRCODE temp_self[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN + EOM_SIZE];
-  
-  //文字数がFullの場合はEOMがついていないので一時バッファにコピーして終端にEOMをつける
-  GFL_STD_MemCopy16(info->self_introduction, temp_self, GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN*2);
-  temp_self[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN] = GFL_STR_GetEOMCode();
-  
-  GFL_STR_SetStringCode( dest, temp_self );
+  GFL_STR_SetStringCodeOrderLength( dest,
+    info->self_introduction, GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE );
 }
 
 //==================================================================
@@ -718,13 +707,8 @@ u16 GAMEBEACON_Get_Action_DistributionItemNo(const GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info, STRBUF *dest)
 {
-  STRCODE temp_name[BUFLEN_POKEMON_NAME];
-
-  //文字数がFullの場合はEOMがついていないので一時バッファにコピーして終端にEOMをつける
-  GFL_STD_MemCopy16(info->name, temp_name, MONS_NAME_SIZE*2);
-  temp_name[MONS_NAME_SIZE] = GFL_STR_GetEOMCode();
-
-  GFL_STR_SetStringCode( dest, temp_name );
+  GFL_STR_SetStringCodeOrderLength( dest,
+    info->action.normal.nickname, MONS_NAME_SIZE+EOM_SIZE );
 
   switch(info->action.action_no){
   case GAMEBEACON_ACTION_POKE_EVOLUTION:

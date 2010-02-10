@@ -36,6 +36,39 @@ typedef struct _TRIANGLE{
   POINT p[3];
 }TRIANGLE;
 
+
+static const u8 DATA_ActionIconTable[GAMEBEACON_ACTION_MAX] = {
+  ICON_HELLO,    ///<データ無し
+  
+  ICON_HELLO,     ///<「ｘｘｘさんをサーチしました！」      1
+  ICON_BTL_START, ///<野生のポケモンと対戦を開始しました！  2
+  ICON_BTL_WIN,   ///<野生のポケモンに勝利しました！        3
+  ICON_BTL_START, ///<特別なポケモンと対戦を開始しました！  4
+  ICON_BTL_WIN,   ///<特別なポケモンに勝利しました！        5
+  ICON_BTL_START, ///<トレーナーと対戦を開始しました！      6
+  ICON_BTL_WIN,   ///<トレーナーに勝利しました！            7
+  ICON_BTL_START, ///<ジムリーダーと対戦を開始しました！    8
+  ICON_BTL_WIN,   ///<ジムリーダーに勝利しました！          9
+  ICON_BTL_START, ///<四天王と対戦を開始しました！          10
+  ICON_BTL_WIN,   ///<四天王に勝利しました！                11
+  ICON_BTL_START, ///<チャンピオンと対戦を開始しました！    12
+  ICON_BTL_WIN,   ///<チャンピオンに勝利しました！          13
+  ICON_POKE_GET,  ///<ポケモン捕獲                          14
+  ICON_POKE_GET,  ///<特別なポケモン捕獲                    15
+  ICON_POKE_LVUP, ///<ポケモンレベルアップ                  16
+  ICON_POKE_SHINKA,   ///<ポケモン進化                          17
+  ICON_GPOWER,    ///<Gパワー発動                           18
+  ICON_ITEM_GET,  ///<貴重品ゲット                          19
+  ICON_SPECIAL,   ///<一定のプレイ時間を越えた              20
+  ICON_SPECIAL,   ///<図鑑完成                              21
+  ICON_SPECIAL,   ///<お礼を受けた回数が規定数を超えた      22
+  ICON_UNION,     ///<ユニオンルームに入った                23
+  ICON_THANKS,    ///<「ありがとう！」                      24
+  ICON_INFO,      ///<ポケモン配布中                        25
+  ICON_INFO,      ///<アイテム配布中                        26
+  ICON_INFO,      ///<その他配布中                          27
+};
+
 //////////////////////////////////////////////////////////////////
 static int calc_Cross( POINT* a, POINT* b ) ;
 static void calc_PointMinus( POINT* a, POINT* b, POINT* out );
@@ -61,6 +94,7 @@ static void panel_Clear( PANEL_WORK* pp );
 static void panel_Entry( PANEL_WORK* pp, u8 data_ofs, u8 data_idx );
 static PANEL_WORK* panel_GetPanelFromDataIndex( BEACON_VIEW_PTR wk, u8 data_idx );
 static void panel_UnionObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info);
+static void panel_IconObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 icon);
 static u8 panel_FrameColorGet( GAMEBEACON_INFO* info );
 static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str );
@@ -71,12 +105,13 @@ static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 ofs, u
 
 static void effReq_PanelScroll( BEACON_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, PANEL_WORK* ignore_pp );
 static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp );
+static void effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new_f );
 static void effReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
 static void effReq_PopupMsgSys( BEACON_VIEW_PTR wk, u8 msg_id );
 static void effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
 static void effReq_PopupMsgGPowerMine( BEACON_VIEW_PTR wk );
-
-static BOOL list_IsView( BEACON_VIEW_PTR wk, u8 idx );
+static void effReq_SetIconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, BOOL new_f );
+static void effReq_SetPanelFlash( BEACON_VIEW_PTR wk, u8 target_ofs );
 
 //////////////////////////////////////////////////////////////////
 
@@ -135,6 +170,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   ret = touchin_CheckPanel( wk, &tp );
   if(ret != GFL_UI_TP_HIT_NONE){
     wk->ctrl.target = ret;
+    effReq_SetPanelFlash( wk, ret );
     return SEQ_CALL_DETAIL_VIEW;
   }
 
@@ -185,14 +221,15 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     }
   }
   //ポップアップリクエスト
-//  effReq_PopupMsgFromInfo( wk, wk->tmpInfo);
-  effReq_PopupMsgGPower( wk, wk->tmpInfo );
+  effReq_PopupMsg( wk, wk->tmpInfo, new_f );
+//  effReq_PopupMsgGPower( wk, wk->tmpInfo );
 
   //新規でない時はスクロール無し
   if( !new_f ){
     pp = panel_GetPanelFromDataIndex( wk, idx );
     if(pp != NULL){ //ターゲットパネル書換え
       panel_Draw( wk, pp, wk->tmpInfo );
+      effReq_SetIconEffect( wk, pp, wk->tmpInfo, FALSE );
     }
     return TRUE;
   }
@@ -204,25 +241,6 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   }
   //スクロールリクエスト
   list_ScrollReq( wk, wk->tmpInfo, ofs, idx, SCROLL_DOWN, (wk->ctrl.view_top == 0));
-#if 0
-  //空きパネル検索
-  pp = panel_GetPanelFromDataIndex( wk, PANEL_DATA_BLANK );
-  if( pp == NULL){
-    return TRUE;  //万一のためのチェック(正しい挙動ならNULLはない)
-  }
-
-  panel_Entry( pp, ofs, idx );  //パネル新規登録
-  panel_Draw( wk, pp, wk->tmpInfo );   //パネル描画
-  panel_VisibleSet( pp, TRUE );   //パネル描画
-  
-  //スクロールパターン
-  if( wk->ctrl.view_top == 0){  //スライドイン
-    effReq_PanelSlideIn( wk, pp );
-  }else{
-    effReq_PanelScroll( wk, SCROLL_DOWN, pp, NULL );
-  }
-  wk->ctrl.view_top = pp->data_ofs;
-#endif
   return TRUE;
 }
 
@@ -348,6 +366,7 @@ static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk )
   ret = touchin_CheckPanel( wk, &tp );
   if(ret != GFL_UI_TP_HIT_NONE){
     wk->ctrl.target = ret;
+    effReq_SetPanelFlash( wk, ret );
     return SSEQ_THANKS_DECIDE;
   }
 
@@ -788,6 +807,9 @@ static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
   if(pp->rank > 0){
     GFL_CLACT_WK_SetDrawEnable( pp->cRank, visible_f );
   }
+  if( !visible_f ){ //隠したい時だけ強制
+    panel_IconVisibleSet( pp, visible_f );
+  }
 }
 
 /*
@@ -814,6 +836,11 @@ static void panel_Clear( PANEL_WORK* pp )
   pp->data_idx = PANEL_DATA_BLANK;
   pp->data_ofs = 0;
   pp->n_line = 0;
+
+  if( pp->tcb != NULL ){
+    GFL_TCBL_Delete( pp->tcb );
+    pp->tcb = NULL;
+  }
 }
 
 /*
@@ -860,6 +887,18 @@ static void panel_UnionObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON
   //パレット転送
   p_ofs = 16*sc_wifi_unionobj_plt[char_no];
   PaletteWorkSet( wk->pfd, &wk->resPlttUnion.dat[p_ofs], FADE_SUB_OBJ, (ACT_PAL_UNION+pp->id)*16, 0x20 );
+}
+
+/*
+ *  @brief  パネル　アイコンアクター更新
+ */
+static void panel_IconObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 icon)
+{
+  u8 sex, char_no, p_ofs;
+ 
+  //キャラクタ転送
+  GFL_CLGRP_CGR_Replace(  wk->objResIcon.res[ OBJ_RES_CGR ].tbl[ pp->id ],
+                          wk->resCharIcon[ icon ].p_char );
 }
 
 /*
@@ -1002,6 +1041,7 @@ static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 ofs, u
   
   //スクロールパターン
   if( new_f ){  //スライドイン
+    effReq_SetIconEffect( wk, pp, info, TRUE );
     effReq_PanelSlideIn( wk, pp );
   }else{
     effReq_PanelScroll( wk, dir, pp, NULL );
@@ -1243,6 +1283,24 @@ typedef struct _TASKWK_WIN_POPUP{
 static void taskAdd_WinPopup( BEACON_VIEW_PTR wk, STRBUF* str, int* task_ct );
 static void tcb_WinPopup( GFL_TCBL *tcb , void* work);
 
+static void effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new_f )
+{
+  GAMEBEACON_ACTION action = GAMEBEACON_Get_Action_ActionNo( info );
+
+  if( new_f ){
+    effReq_PopupMsgSys( wk, msg_beacon_001 );
+    return;
+  }
+  switch( action ){
+  case GAMEBEACON_ACTION_GPOWER:
+    effReq_PopupMsgGPower( wk, info );
+    break;
+  default:
+    effReq_PopupMsgFromInfo( wk, info );
+    break;
+  }
+}
+
 static void effReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
 {
   GAMEBEACON_Wordset( info, wk->wordset, wk->tmpHeapID );
@@ -1443,6 +1501,152 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
     }
   }
   --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  パネルアイコン表示 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_ICON_EFF{
+  u8  seq;
+  u8  wait;
+  int child_task;
+
+  PANEL_WORK* pp;
+  GAMEBEACON_ACTION action;
+  BEACON_VIEW_PTR bvp;
+  int* task_ct;
+}TASKWK_ICON_EFF;
+
+static void taskAdd_IconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, BOOL new_f );
+static void tcb_IconEffect( GFL_TCBL *tcb , void* work);
+
+static void effReq_SetIconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, BOOL new_f )
+{
+  taskAdd_IconEffect( wk, pp, info, new_f );
+}
+
+/*
+ *  @brief  メッセージウィンドウ ポップアップタスク登録
+ */
+static void taskAdd_IconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, BOOL new_f )
+{
+  GFL_TCBL* tcb;
+  TASKWK_ICON_EFF* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_IconEffect, sizeof(TASKWK_ICON_EFF), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_ICON_EFF ));
+
+  twk->bvp = wk;
+  twk->pp = pp;
+  twk->wait = ICON_POP_TIME;
+
+  if( new_f ){
+    twk->action = GAMEBEACON_ACTION_SEARCH;
+  }else{
+    twk->action = GAMEBEACON_Get_Action_ActionNo( info );
+  }
+
+  if( twk->action == GAMEBEACON_ACTION_SEARCH ){
+    panel_MsgPrint( wk, pp, pp->str ); 
+  }else if( twk->action == GAMEBEACON_ACTION_THANKYOU ){
+    GAMEBEACON_Get_ThankyouMessage(info, wk->str_tmp );
+    panel_MsgPrint( wk, pp, wk->str_tmp ); 
+  }
+  panel_IconObjUpdate( wk, pp, DATA_ActionIconTable[twk->action] );
+  panel_IconVisibleSet( pp, TRUE );
+}
+
+static void tcb_IconEffect( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_ICON_EFF* twk = (TASKWK_ICON_EFF*)tcb_wk;
+
+  if( twk->wait-- > 0 ){
+    return;
+  }
+  panel_MsgPrint( twk->bvp, twk->pp, twk->pp->name ); 
+  panel_IconVisibleSet( twk->pp, FALSE );
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  パネル 点滅表示 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_PANEL_FLASH{
+  u8  ct;
+  u8  wait;
+  u8  interval;
+  u8  pal_pos;
+  int child_task;
+
+  PANEL_WORK* pp;
+  BEACON_VIEW_PTR bvp;
+  int* task_ct;
+}TASKWK_PANEL_FLASH;
+
+static void taskAdd_PanelFlash( BEACON_VIEW_PTR wk, PANEL_WORK* pp, int* task_ct );
+static void tcb_PanelFlash( GFL_TCBL *tcb , void* work);
+
+static void effReq_SetPanelFlash( BEACON_VIEW_PTR wk, u8 target_ofs )
+{
+  PANEL_WORK* pp;
+  u8 idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, target_ofs+wk->ctrl.view_top );
+  
+  pp = panel_GetPanelFromDataIndex( wk, idx );
+  taskAdd_PanelFlash( wk, pp, &wk->eff_task_ct );
+}
+
+/*
+ *  @brief  メッセージウィンドウ ポップアップタスク登録
+ */
+static void taskAdd_PanelFlash( BEACON_VIEW_PTR wk, PANEL_WORK* pp, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_PANEL_FLASH* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_PanelFlash, sizeof(TASKWK_PANEL_FLASH), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_PANEL_FLASH ));
+
+  twk->bvp = wk;
+  twk->pp = pp;
+  twk->interval = 2;
+  twk->pal_pos = (ACT_PAL_PANEL+twk->pp->id)*16;
+  
+  SoftFadePfd( twk->bvp->pfd, FADE_SUB_OBJ, twk->pal_pos, 16, 4, 0x7FFF );
+
+  if( task_ct != NULL ){
+    twk->task_ct = task_ct;
+    (*twk->task_ct)++;
+  }
+}
+
+static void tcb_PanelFlash( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_PANEL_FLASH* twk = (TASKWK_PANEL_FLASH*)tcb_wk;
+
+  if( twk->ct < 4 ){
+    if( twk->wait++ < twk->interval ){
+      return;
+    }
+    SoftFadePfd( twk->bvp->pfd, FADE_SUB_OBJ, twk->pal_pos, 16, 4*(twk->ct%2), 0x7FFF );
+
+    twk->ct++;
+    twk->wait = 0;
+    return;
+  }
+  SoftFadePfd( twk->bvp->pfd, FADE_SUB_OBJ, twk->pal_pos, 16, 0, 0x7FFF );
+  if( twk->task_ct != NULL ){
+    (*twk->task_ct)--;
+  }
   GFL_TCBL_Delete(tcb);
 }
 

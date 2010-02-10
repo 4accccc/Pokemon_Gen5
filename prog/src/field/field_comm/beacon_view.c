@@ -429,6 +429,9 @@ static int seq_ReturnCGear( BEACON_VIEW_PTR wk )
  */
 static int seq_CallDetailView( BEACON_VIEW_PTR wk )
 {
+  if( wk->eff_task_ct ){
+    return SEQ_CALL_DETAIL_VIEW;
+  }
   event_Request( wk , EV_CALL_DETAIL_VIEW );
   return SEQ_END;
 }
