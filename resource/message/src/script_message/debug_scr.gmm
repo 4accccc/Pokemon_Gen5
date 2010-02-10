@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-10T12:45:47"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-02-10T19:17:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -442,6 +442,11 @@
 	<row id="msg_debug_suginaka_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="256">Ｔ０２演説イベントフラグ</language>
 		<language name="JPN_KANJI" width="256">Ｔ０２演説イベントフラグ</language>
+	</row>
+
+	<row id="msg_debug_suginaka_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">Ｄ０３Ｒ０１０１イベント</language>
+		<language name="JPN_KANJI" width="256">Ｄ０３Ｒ０１０１イベント</language>
 	</row>
 
 	<flowchart-group-list>
