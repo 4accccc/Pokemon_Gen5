@@ -34,4 +34,5 @@ extern  void          	  BTLV_STAGE_SetPaletteFade( BTLV_STAGE_WORK *bsw, u8 sta
 extern  BOOL              BTLV_STAGE_CheckExecutePaletteFade( BTLV_STAGE_WORK* bsw );
 extern  void              BTLV_STAGE_SetVanishFlag( BTLV_STAGE_WORK* bsw, BTLV_STAGE_VANISH flag );
 extern  void	            BTLV_STAGE_SetAnmReq( BTLV_STAGE_WORK* bsw, int side, int index, fx32 speed, int distance );
+extern  BOOL	            BTLV_STAGE_CheckExecuteAnmReq( BTLV_STAGE_WORK* bsw );
 

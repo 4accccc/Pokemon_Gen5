@@ -11,10 +11,11 @@
 #pragma once
 
 //タスクの種類
-#define	EFFTOOL_CALCTYPE_DIRECT		    	( 0 )	//直接値を代入
-#define	EFFTOOL_CALCTYPE_INTERPOLATION	( 1 )	//指定値までを補間しながら計算
-#define	EFFTOOL_CALCTYPE_ROUNDTRIP	  	( 2 )	//指定した区間を往復計算（スタート地点とゴール地点の往復）
-#define	EFFTOOL_CALCTYPE_ROUNDTRIP_LONG	( 3 )	//指定した区間を往復計算（スタート地点を基準に＋－方向の往復）
+#define	EFFTOOL_CALCTYPE_DIRECT		    	      ( 0 )	//直接値を代入
+#define	EFFTOOL_CALCTYPE_INTERPOLATION	      ( 1 )	//指定値までを補間しながら計算（到達点は移動量）
+#define	EFFTOOL_CALCTYPE_ROUNDTRIP	  	      ( 2 )	//指定した区間を往復計算（スタート地点とゴール地点の往復）
+#define	EFFTOOL_CALCTYPE_ROUNDTRIP_LONG	      ( 3 )	//指定した区間を往復計算（スタート地点を基準に＋－方向の往復）
+#define	EFFTOOL_CALCTYPE_INTERPOLATION_DIRECT	( 4 )	//指定値までを補間しながら計算（到達点は直値）
 
 #define BTLV_EFFTOOL_POS2BIT_XOR  ( 0xffffffff )  //ビット反転する時にXORマスクする値
 

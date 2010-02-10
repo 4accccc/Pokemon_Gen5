@@ -155,7 +155,8 @@ BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value )
 		now_value->y = emw->end_value.y;
 		now_value->z = emw->end_value.z;
 		break;
-	case EFFTOOL_CALCTYPE_INTERPOLATION:	//指定値までを補間しながら計算
+	case EFFTOOL_CALCTYPE_INTERPOLATION:	      //指定値までを補間しながら計算
+	case EFFTOOL_CALCTYPE_INTERPOLATION_DIRECT:	//指定値までを補間しながら計算
 		if( emw->wait == 0 ){
 			emw->wait = emw->wait_tmp;
 			BTLV_EFFTOOL_CheckMove( &now_value->x, &emw->vector.x, &emw->end_value.x, &ret );

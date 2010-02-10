@@ -435,3 +435,27 @@ void	BTLV_STAGE_SetAnmReq( BTLV_STAGE_WORK* bsw, int side, int index, fx32 speed
   }
 }
 
+//============================================================================================
+/**
+ *	リクエストしたアニメが実行中かチェックする
+ *
+ * @param[in]	bsw  BTLV_STAGE管理ワークへのポインタ
+ *
+ * @retval  TRUE:実行中　FALSE:終了
+ */
+//============================================================================================
+BOOL	BTLV_STAGE_CheckExecuteAnmReq( BTLV_STAGE_WORK* bsw )
+{ 
+  int i;
+
+  for( i = 0 ; i < bsw->anm_count ; i++ )
+  { 
+    if( ( bsw->stage_anm_work[ BTLV_STAGE_MINE ][ i ].anm_req_flag == TRUE ) ||
+        ( bsw->stage_anm_work[ BTLV_STAGE_ENEMY ][ i ].anm_req_flag == TRUE ) )
+    { 
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+

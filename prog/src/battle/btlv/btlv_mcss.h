@@ -13,6 +13,7 @@
 #include "system/mcss.h"
 #include "poke_tool/poke_tool.h"
 #include "battle/battle.h"
+#include "battle/btl_common.h"
 
 //ポケモンの立ち位置定義
 // 1vs1
@@ -130,6 +131,7 @@ extern  void            BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOV
 extern  void            BTLV_MCSS_MoveMosaic( BTLV_MCSS_WORK *bmw, int position, int type,
                                               int mosaic, int frame, int wait, int count );
 extern  BOOL            BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
+extern  BOOL            BTLV_MCSS_CheckTCBExecuteAllPos( BTLV_MCSS_WORK *bmw );
 extern  BOOL            BTLV_MCSS_CheckExist( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position,
                                                   u8 start_evy, u8 end_evy, u8 wait, u32 rgb );
@@ -141,6 +143,7 @@ extern  void            BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK *bmw, int position
 extern  void            BTLV_MCSS_SetMosaic( BTLV_MCSS_WORK *bmw, int position, int mosaic );
 extern  void            BTLV_MCSS_CopyMAW( BTLV_MCSS_WORK *bmw, int src, int dst );
 extern  void            BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int pos );
+extern  void            BTLV_MCSS_SetRotation( BTLV_MCSS_WORK* bmw, int side, int dir );
 
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
