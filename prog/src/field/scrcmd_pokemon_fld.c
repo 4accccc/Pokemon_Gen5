@@ -680,8 +680,8 @@ VMCMD_RESULT EvCmdSkillTeachSelectPokemon( VMHANDLE * core, void * wk )
   }
   else
   {
-    GMEVENT *event = EVENT_CreatePokeSelect( gsys , ret_decide , ret_wk );
-    //GMEVENT *event = EVENT_CreatePokeSelectWazaOboe( gsys , ret_decide , ret_wk, learnBit );
+    //GMEVENT *event = EVENT_CreatePokeSelect( gsys , ret_decide , ret_wk );
+    GMEVENT *event = EVENT_CreatePokeSelectWazaOboe( gsys , ret_decide , ret_wk, learnBit );
     SCRIPT_CallEvent( scw, event );
   }
   

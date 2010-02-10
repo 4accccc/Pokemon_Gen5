@@ -99,7 +99,7 @@ GMEVENT * EVENT_CreatePokeSelectWazaOboe(
   // ポケモンリスト生成
   pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
   pl_data->pp = party;
-  pl_data->mode = PL_MODE_WAZASET;
+  pl_data->mode = PL_MODE_SET_WAZA;
   pl_data->type = PL_TYPE_SINGLE;
   pl_data->ret_sel = 0;
   pl_data->wazaLearnBit = learnBit;
