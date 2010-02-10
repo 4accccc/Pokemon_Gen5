@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-02-09T16:31:17"/>
+	<create user="matsumiya" host="W00224" date="2010-02-10T15:27:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d06r0203_legend2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r06r0203_legend2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>●ポルトス初期位置（GRIDX=7 GRIDZ=4）
 
 ・話し掛けたとき
@@ -302,7 +302,7 @@
 		<language name="JPN_KANJI" width="256">ぐるるおおーっ！</language>
 	</row>
 
-	<row id="msg_d06r0203_legend2_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r06r0203_legend2_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>・戦闘後
 ・ポケモンを倒した場合のメッセージ
 
@@ -314,7 +314,7 @@
 まぎれて　消えてしまった…</language>
 	</row>
 
-	<row id="msg_d06r0203_guide_01">
+	<row id="msg_r06r0203_guide_01">
 		<comment>●ポルトスに勝利した場合
 ・ポルトス戦闘後、事情通老人が歩み寄る。
 ・主人公の左隣まで進む。
@@ -335,7 +335,7 @@
 ここに　戻ってくるかも　しれんのう▼</language>
 	</row>
 
-	<row id="msg_d06r0203_guide_02">
+	<row id="msg_r06r0203_guide_02">
 		<comment>●ポルトスを捕獲した場合
 ・戦闘終了後、事情通老人が歩み寄る。
 
@@ -348,7 +348,7 @@
 ともに　生きることを　望んだようじゃ▼</language>
 	</row>
 
-	<row id="msg_d06r0203_guide_03">
+	<row id="msg_r06r0203_guide_03">
 		<comment>・喋ったあと、来た道を戻っていく。
 
 ●アトス（D09R1501）とアラミス（D02R0201）を
@@ -373,7 +373,7 @@
 障害物は　はずされるじゃろうな▼</language>
 	</row>
 
-	<row id="msg_d06r0203_guide_04">
+	<row id="msg_r06r0203_guide_04">
 		<comment>・数歩、歩いたところで主人公を見て、セリフ。
 
 ・喋り終えると、帰っていく。</comment>

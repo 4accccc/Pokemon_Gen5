@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-02-09T10:18:03"/>
+	<create user="matsumiya" host="W00224" date="2010-02-10T15:27:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d06r0202_guide_01">
+	<row id="msg_ｒ06r0202_guide_01">
 		<comment>・pos起動（GRIDX=17~19 GRIDZ=15）
 ※r0203へ通じる階段の手前。
 
@@ -321,7 +321,7 @@
 耳を　傾けてみんか？</language>
 	</row>
 
-	<row id="msg_d06r0202_guide_02">
+	<row id="msg_ｒ06r0202_guide_02">
 		<comment>●「はい」
 
 ・戦争と大火事と伝説ポケモンの昔話　その１
