@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-08-18T18:04:33"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-10T16:26:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1476" top="178" right="2181" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1022,35 +1022,35 @@
 やってきた。</language>
 	</row>
 
-	<row id="mes_status_03_04_01">
+	<row id="mes_status_03_04_01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>メモ6行目
 辛い味好き</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">[FF:00:色:2]からい[FF:00:色:0]ものが　すき。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">[FF:00:色:2]からい[FF:00:色:0]ものが　すき。</language>
 	</row>
 
-	<row id="mes_status_03_04_02">
+	<row id="mes_status_03_04_02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>メモ6行目
 渋い味好き</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">[FF:00:色:2]しぶい[FF:00:色:0]ものが　すき。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">[FF:00:色:2]しぶい[FF:00:色:0]ものが　すき。</language>
 	</row>
 
-	<row id="mes_status_03_04_03">
+	<row id="mes_status_03_04_03" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>メモ6行目
 甘い味好き</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">[FF:00:色:2]あまい[FF:00:色:0]ものが　すき。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">[FF:00:色:2]あまい[FF:00:色:0]ものが　すき。</language>
 	</row>
 
-	<row id="mes_status_03_04_04">
+	<row id="mes_status_03_04_04" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>メモ6行目
 苦い味好き</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">[FF:00:色:2]にがい[FF:00:色:0]ものが　すき。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">[FF:00:色:2]にがい[FF:00:色:0]ものが　すき。</language>
 	</row>
 
-	<row id="mes_status_03_04_05">
+	<row id="mes_status_03_04_05" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>メモ6行目
 酸っぱい味好き</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">[FF:00:色:2]すっぱい[FF:00:色:0]ものが　すき。</language>
@@ -1574,13 +1574,13 @@
 		<language name="JPN_KANJI" font=" 1:small" width="84">[1:06:とくせい名:0]</language>
 	</row>
 
-	<row id="mes_status_05_01">
+	<row id="mes_status_05_01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>コンディションページの項目名</comment>
 		<language name="JPN" font=" 1:small" width="84">コンディション</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">コンディション</language>
 	</row>
 
-	<row id="mes_status_05_02">
+	<row id="mes_status_05_02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>コンディションページの項目名</comment>
 		<language name="JPN" font=" 1:small" width="36">けづや</language>
 		<language name="JPN_KANJI" font=" 1:small" width="36">けづや</language>
@@ -1755,14 +1755,14 @@
 
 	<row id="mes_status_06_27">
 		<comment>技がないときのＰＰ値の表記</comment>
-		<language name="JPN" font=" 1:small" width="16">ーー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="16">ーー</language>
+		<language name="JPN" font=" 1:small" width="16">―</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">―</language>
 	</row>
 
 	<row id="mes_status_06_28">
 		<comment>威力or命中率がないときの表記</comment>
-		<language name="JPN" font=" 1:small" width="24">ーーー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="24">ーーー</language>
+		<language name="JPN" font=" 1:small" width="24">―</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">―</language>
 	</row>
 
 	<row id="mes_status_06_29">
@@ -1772,7 +1772,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="48">けってい</language>
 	</row>
 
-	<row id="mes_status_06_30">
+	<row id="mes_status_06_30" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>戦う技ページ
 レベルアップの技覚えで秘伝技を忘れさせようとするときの
 警告メッセージ</comment>
@@ -1784,26 +1784,26 @@
 できません！</language>
 	</row>
 
-	<row id="mes_status_07_01">
+	<row id="mes_status_07_01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>コンテスト技ページの項目名</comment>
 		<language name="JPN" font=" 1:small" width="84">パフォーマンス</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">パフォーマンス</language>
 	</row>
 
-	<row id="mes_status_07_02">
+	<row id="mes_status_07_02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>画面右上コンテスト技ページのガイドメッセージ</comment>
 		<language name="JPN" font=" 1:small" width="16">くわしく</language>
 		<language name="JPN_KANJI" font=" 1:small" width="16">くわしく</language>
 	</row>
 
-	<row id="mes_status_07_03">
+	<row id="mes_status_07_03" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>コンテスト技ページ
 技忘れ時のガイドメッセージ</comment>
 		<language name="JPN" font=" 1:small" width="16">けってい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="16">けってい</language>
 	</row>
 
-	<row id="mes_status_07_04" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="mes_status_07_04" back-color="#808080,,,#808080,,#808080,#808080,#ffff00,,#808080,#ffff00,#808080,#808080,,,#808080,,">
 		<comment>コンテスト技ページ
 技詳細説明時の項目名</comment>
 		<language name="JPN" font=" 1:small" width="96">アピールポイント</language>
@@ -1822,112 +1822,112 @@
 		<language name="JPN_KANJI" font=" 1:small" width="60">もどります</language>
 	</row>
 
-	<row id="mes_status_09_01">
+	<row id="mes_status_09_01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面ガイドメッセージ
 Ａけってい</comment>
 		<language name="JPN" font=" 1:small" width="48">けってい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="48">けってい</language>
 	</row>
 
-	<row id="mes_status_09_02">
+	<row id="mes_status_09_02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面ガイドメッセージ
 Ｂもどる</comment>
 		<language name="JPN" font=" 1:small" width="48">もどる</language>
 		<language name="JPN_KANJI" font=" 1:small" width="48">もどる</language>
 	</row>
 
-	<row id="mes_status_09_03">
+	<row id="mes_status_09_03" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面ガイドメッセージ
 すきなたべもの</comment>
 		<language name="JPN" font=" 1:small" width="96">すきなたべもの</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">すきなたべもの</language>
 	</row>
 
-	<row id="mes_status_09_04">
+	<row id="mes_status_09_04" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面ガイドメッセージ
 からいのがすき</comment>
 		<language name="JPN" font=" 1:small" width="96">[FF:00:色:2]からい[FF:00:色:0]のがすき</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">[FF:00:色:2]からい[FF:00:色:0]のがすき</language>
 	</row>
 
-	<row id="mes_status_09_05">
+	<row id="mes_status_09_05" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面ガイドメッセージ
 しぶいのがすき</comment>
 		<language name="JPN" font=" 1:small" width="96">[FF:00:色:2]しぶい[FF:00:色:0]のがすき</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">[FF:00:色:2]しぶい[FF:00:色:0]のがすき</language>
 	</row>
 
-	<row id="mes_status_09_06">
+	<row id="mes_status_09_06" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面ガイドメッセージ
 あまいのがすき</comment>
 		<language name="JPN" font=" 1:small" width="96">[FF:00:色:2]あまい[FF:00:色:0]のがすき</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">[FF:00:色:2]あまい[FF:00:色:0]のがすき</language>
 	</row>
 
-	<row id="mes_status_09_07">
+	<row id="mes_status_09_07" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面ガイドメッセージ
 にがいのがすき</comment>
 		<language name="JPN" font=" 1:small" width="96">[FF:00:色:2]にがい[FF:00:色:0]のがすき</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">[FF:00:色:2]にがい[FF:00:色:0]のがすき</language>
 	</row>
 
-	<row id="mes_status_09_08">
+	<row id="mes_status_09_08" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面ガイドメッセージ
 すっぱいのがすき</comment>
 		<language name="JPN" font=" 1:small" width="96">[FF:00:色:2]すっぱい[FF:00:色:0]のがすき</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">[FF:00:色:2]すっぱい[FF:00:色:0]のがすき</language>
 	</row>
 
-	<row id="mes_status_09_09">
+	<row id="mes_status_09_09" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面ガイドメッセージ
 味の好き嫌いがない</comment>
 		<language name="JPN" font=" 1:small" width="96">すききらいなし</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">すききらいなし</language>
 	</row>
 
-	<row id="mes_status_09_09_01">
+	<row id="mes_status_09_09_01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面の会話メッセージ
 かっこよさを上げた</comment>
 		<language name="JPN" width="216">かっこよさに　みがきが　かかった！</language>
 		<language name="JPN_KANJI" width="216">かっこよさに　みがきが　かかった！</language>
 	</row>
 
-	<row id="mes_status_09_09_02">
+	<row id="mes_status_09_09_02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面の会話メッセージ
 たくましさを上げた</comment>
 		<language name="JPN" width="216">たくましさに　みがきが　かかった！</language>
 		<language name="JPN_KANJI" width="216">たくましさに　みがきが　かかった！</language>
 	</row>
 
-	<row id="mes_status_09_09_03">
+	<row id="mes_status_09_09_03" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面の会話メッセージ
 うつしさを上げた</comment>
 		<language name="JPN" width="216">うつくしさに　みがきが　かかった！</language>
 		<language name="JPN_KANJI" width="216">うつくしさに　みがきが　かかった！</language>
 	</row>
 
-	<row id="mes_status_09_09_04">
+	<row id="mes_status_09_09_04" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面の会話メッセージ
 かわいさを上げた</comment>
 		<language name="JPN" width="216">かわいさに　みがきが　かかった！</language>
 		<language name="JPN_KANJI" width="216">かわいさに　みがきが　かかった！</language>
 	</row>
 
-	<row id="mes_status_09_09_05">
+	<row id="mes_status_09_09_05" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面の会話メッセージ
 かしこさを上げた</comment>
 		<language name="JPN" width="216">かしこさに　みがきが　かかった！</language>
 		<language name="JPN_KANJI" width="216">かしこさに　みがきが　かかった！</language>
 	</row>
 
-	<row id="mes_status_09_09_06">
+	<row id="mes_status_09_09_06" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面の会話メッセージ
 コンディションに変化なし</comment>
 		<language name="JPN" width="216">なにも　かわらなかった！</language>
 		<language name="JPN_KANJI" width="216">なにも　かわらなかった！</language>
 	</row>
 
-	<row id="mes_status_09_09_07">
+	<row id="mes_status_09_09_07" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトをあげる画面の会話メッセージ
 けづやがＭＡＸのとき</comment>
 		<language name="JPN" width="216">もう　これいじょう　たべない　みたい</language>
@@ -1996,31 +1996,31 @@
 		<language name="JPN_KANJI" width="32">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_status_11_01" back-color=",,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="mes_status_11_01" back-color="#808080,,,#808080,,#808080,#808080,#ffff00,,#808080,#ffff00,#808080,#808080,,,#808080,,">
 		<comment>ポケスロンパフォーマンス用文字列</comment>
 		<language name="JPN" width="80">スピード</language>
 		<language name="JPN_KANJI" width="80">スピード</language>
 	</row>
 
-	<row id="mes_status_11_02" back-color=",,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="mes_status_11_02" back-color="#808080,,,#808080,,#808080,#808080,#ffff00,,#808080,#ffff00,#808080,#808080,,,#808080,,">
 		<comment>ポケスロンパフォーマンス用文字列</comment>
 		<language name="JPN" width="80">パワー</language>
 		<language name="JPN_KANJI" width="80">パワー</language>
 	</row>
 
-	<row id="mes_status_11_03" back-color=",,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="mes_status_11_03" back-color="#808080,,,#808080,,#808080,#808080,#ffff00,,#808080,#ffff00,#808080,#808080,,,#808080,,">
 		<comment>ポケスロンパフォーマンス用文字列</comment>
 		<language name="JPN" width="80">テクニック</language>
 		<language name="JPN_KANJI" width="80">テクニック</language>
 	</row>
 
-	<row id="mes_status_11_04" back-color=",,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="mes_status_11_04" back-color="#808080,,,#808080,,#808080,#808080,#ffff00,,#808080,#ffff00,#808080,#808080,,,#808080,,">
 		<comment>ポケスロンパフォーマンス用文字列</comment>
 		<language name="JPN" width="80">スタミナ</language>
 		<language name="JPN_KANJI" width="80">スタミナ</language>
 	</row>
 
-	<row id="mes_status_11_05" back-color=",,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="mes_status_11_05" back-color="#808080,,,#808080,,#808080,#808080,#ffff00,,#808080,#ffff00,#808080,#808080,,,#808080,,">
 		<comment>ポケスロンパフォーマンス用文字列</comment>
 		<language name="JPN" width="80">ジャンプ</language>
 		<language name="JPN_KANJI" width="80">ジャンプ</language>
