@@ -836,11 +836,48 @@ MMDL * FIELD_PLAYER_GetFrontMMdl( const FIELD_PLAYER *fld_player )
     RAIL_LOCATION location;
     
     MMDL_GetRailFrontLocation( mymmdl, &location );
-    mmdl = MMDLSYS_SearchRailLocation( mmdlsys, &location, TRUE );
+    mmdl = MMDLSYS_SearchRailLocation( mmdlsys, &location, FALSE );
   }
   
   return mmdl;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  目の前のモデルを取得  高さ判定あり
+ *
+ *	@param	fld_player    プレイヤーワーク
+ *	@param	y_diff        高さ許容範囲
+ *
+ *	@return　目の前のモデル
+ */
+//-----------------------------------------------------------------------------
+MMDL * FIELD_PLAYER_GetFrontMMdlEx( const FIELD_PLAYER *fld_player, fx32 y_diff )
+{
+  MMDL* mmdl = NULL;
+  MMDLSYS* mmdlsys = FIELDMAP_GetMMdlSys( fld_player->fieldWork );
+  
+  if( FIELDMAP_GetBaseSystemType( fld_player->fieldWork ) == FLDMAP_BASESYS_GRID )
+  {
+    s16 gx,gy,gz;
+    fx32 y;
+    
+    FIELD_PLAYER_GetFrontGridPos( fld_player, &gx, &gy, &gz );
+    y = GRID_TO_FX32( gy );
+    mmdl = MMDLSYS_SearchGridPosEx( mmdlsys, gx, gz, y, y_diff, FALSE );
+  }
+  else
+  {
+    MMDL* mymmdl = FIELD_PLAYER_CORE_GetMMdl( fld_player->corewk );
+    RAIL_LOCATION location;
+    
+    MMDL_GetRailFrontLocation( mymmdl, &location );
+    mmdl = MMDLSYS_SearchRailLocation( mmdlsys, &location, FALSE );
+  }
+  
+  return mmdl;
+}
+
 
 //======================================================================
 //	FILED_PLAYER　ツール

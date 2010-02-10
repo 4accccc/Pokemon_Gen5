@@ -50,8 +50,8 @@ INIT_EVENT_START	ev_init_c09r0101
 		
 	ENDIF
 
-  // ゴースト　雷音開始
-  _FOURKINGS_SET_GHOST_SPARK_SOUND()
+  // ゴースト　音開始
+  _FOURKINGS_SET_SOUND_SYSTEM( 1 )
 
 INIT_EVENT_END
 
@@ -76,8 +76,8 @@ INIT_EVENT_START	ev_recover_c09r0101
 		
 	ENDIF
 
-  // ゴースト　雷音開始
-  _FOURKINGS_SET_GHOST_SPARK_SOUND()
+  // ゴースト　音開始
+  _FOURKINGS_SET_SOUND_SYSTEM( 1 )
 
 INIT_EVENT_END
 

@@ -201,6 +201,7 @@ extern BOOL FIELD_PLAYER_CheckIllegalOBJCode( FIELD_PLAYER *fld_player );
 
 // モデル検索
 extern MMDL * FIELD_PLAYER_GetFrontMMdl( const FIELD_PLAYER *fld_player );
+extern MMDL * FIELD_PLAYER_GetFrontMMdlEx( const FIELD_PLAYER *fld_player, fx32 y_diff ); // 高さチェックあり
 
 
 //======================================================================

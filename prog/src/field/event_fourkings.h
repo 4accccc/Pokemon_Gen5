@@ -49,7 +49,9 @@ extern GMEVENT* EVENT_FourKings_CircleWalk(
 extern u32 EVENT_FourKings_GetCameraID( u32 fourkins_no );
 
 // ゴースト部屋の雷音管理システム発動
-extern void FIELDMAPFUNC_FourkingsGhostSparkSound( FIELDMAP_WORK* p_fieldmap );
+extern void FIELDMAPFUNC_FourkingsGhostSound( FIELDMAP_WORK* p_fieldmap );
+extern void FIELDMAPFUNC_FourkingsEspertSound( FIELDMAP_WORK* p_fieldmap );
+extern void FIELDMAPFUNC_FourkingsBadSound( FIELDMAP_WORK* p_fieldmap );
 
 #ifdef _cplusplus
 }	// extern "C"{

@@ -216,8 +216,8 @@
   DEF_CMD( EvCmdGetFrontObjID, EV_SEQ_GET_FRONT_OBJID )
   
   DEF_CMD( EvCmdGetObjID, EV_SEQ_GET_OBJID )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdPlayerRailLocationGet, EV_SEQ_GET_PLAYER_RAIL_LOC )
+  DEF_CMD( EvCmdObjRailLocationGet, EV_SEQ_GET_OBJ_RAIL_LOC )
   NO_CMD()
 
   //動作モデル　イベント関連
@@ -695,7 +695,7 @@
   // 四天王関連
   DEF_CMD( EvCmdFourKings_WalkEvent, EV_SEQ_FOURKINGS_WALKEVENT )
   DEF_CMD( EvCmdFourKings_SetCameraParam, EV_SEQ_FOURKINGS_SET_TOP_CAMERA )
-  DEF_CMD( EvCmdFourKings_SetGhostSparkSound, EV_SEQ_FOURKINGS_SET_GHOST_SPARK_SOUND )
+  DEF_CMD( EvCmdFourKings_SetSoundSystem, EV_SEQ_FOURKINGS_SET_SOUND_SYSTEM )
   NO_CMD()
 
   // 遊覧船関連

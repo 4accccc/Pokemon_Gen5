@@ -520,19 +520,22 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 	}
 
   { // ƒŒ[ƒ‹À•W‚Ì•\Ž¦
-    RAIL_LOCATION location = {0};
+    FIELD_PLAYER* fld_player = FIELDMAP_GetFieldPlayer( work->pFieldMainWork );
 
     
     if( PLAYERWORK_getPosType(player) == LOCATION_POS_TYPE_RAIL )
     {
-      location = *PLAYERWORK_getRailPosition( player );
+      FIELD_RAIL_WORK* railWork = FIELD_PLAYER_GetNoGridRailWork( fld_player );
+      u16 index, ofs, w_ofs;
+
+      FIELD_RAIL_WORK_GetNotMinusRailParam( railWork, &index, &ofs, &w_ofs );
+
       sprintf( str, "RAIL INDEX %d FRONT %d SIDE %d",
-        location.rail_index, location.line_grid, location.width_grid );
+        index, ofs, w_ofs );
     }
     else
     {
-      sprintf( str, "RAIL DATA NONE",
-        location.rail_index, location.line_grid, location.width_grid );
+      sprintf( str, "RAIL DATA NONE" );
     }
 		DebugFont_ClearLine( work, 9 );
 		DebugFont_Print( work, 0, 9, str );

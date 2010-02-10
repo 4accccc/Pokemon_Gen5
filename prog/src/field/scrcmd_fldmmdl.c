@@ -753,19 +753,13 @@ VMCMD_RESULT EvCmdGetFrontObjID( VMHANDLE *core, void *wk )
   SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  MMDLSYS*       mmdl_sys = FIELDMAP_GetMMdlSys( fieldmap );
   FIELD_PLAYER*    player = FIELDMAP_GetFieldPlayer( fieldmap );
   u16*             ret_id = SCRCMD_GetVMWork( core, work );  // コマンド第一引数(オブジェIDの格納先)
   u16*          ret_valid = SCRCMD_GetVMWork( core, work );  // コマンド第二引数(オブジェの有無)
   MMDL* mmdl;
-  s16 gx, gy, gz;
-  fx32 fy;
 
-  // 自機の前方のグリッド座標を取得
-  FIELD_PLAYER_GetFrontGridPos( player, &gx, &gy, &gz );
-  fy = GRID_TO_FX32( gy );
   // 前方にある動作モデルを取得
-  mmdl = MMDLSYS_SearchGridPosEx( mmdl_sys, gx, gz, fy, GRID_HALF_FX32, FALSE );
+  mmdl = FIELD_PLAYER_GetFrontMMdlEx( player, GRID_HALF_FX32 );
   // 結果を格納
   if( mmdl )
   {
@@ -930,4 +924,71 @@ VMCMD_RESULT EvCmdPosPlayerTurn( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+
+
+
+
+
+//======================================================================
+//  railマップ専用
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤーのレール位置情報を取得
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPlayerRailLocationGet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  MMDL* mmdl = scmd_GetMMdlPlayer( work );
+  RAIL_LOCATION rail_location;
+  FIELD_RAIL_WORK* p_railWork;
+  u16 *index, *ofs, *w_ofs;
+
+
+  // レールのオブジェか？
+  GF_ASSERT( MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) );
+
+  // ロケーションを返す
+  index = SCRCMD_GetVMWork( core, work );
+  ofs = SCRCMD_GetVMWork( core, work );
+  w_ofs = SCRCMD_GetVMWork( core, work );
+
+  p_railWork = MMDL_GetRailWork( mmdl );
+
+  FIELD_RAIL_WORK_GetNotMinusRailParam( p_railWork, index, ofs, w_ofs );
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作モデルのレール位置情報を取得
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdObjRailLocationGet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  MMDL *mmdl = MMDLSYS_SearchOBJID(
+      mmdlsys, SCRCMD_GetVMWorkValue(core,work) );
+  RAIL_LOCATION rail_location;
+  FIELD_RAIL_WORK* p_railWork;
+  u16 *index, *ofs, *w_ofs;
+
+
+  // レールのオブジェか？
+  GF_ASSERT( MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) );
+
+  // ロケーションを返す
+  index = SCRCMD_GetVMWork( core, work );
+  ofs = SCRCMD_GetVMWork( core, work );
+  w_ofs = SCRCMD_GetVMWork( core, work );
+
+  p_railWork = MMDL_GetRailWork( mmdl );
+
+  FIELD_RAIL_WORK_GetNotMinusRailParam( p_railWork, index, ofs, w_ofs );
+  
+  return VMCMD_RESULT_CONTINUE;
+}
 

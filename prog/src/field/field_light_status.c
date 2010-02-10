@@ -68,8 +68,10 @@ void FIELD_LIGHT_STATUS_Get( u32 zone_id, int hour, int minute, int weather_id, 
   GF_ASSERT( season < PMSEASON_TOTAL );
 
   // 秒に変換 
-  time = (hour * 60 * 60) + minute * 60;
-  
+  time = (hour * 60 * 60) + (minute * 60);
+  time /= 2;
+
+
   // 天気
   if( weather_id != WEATHER_NO_SUNNY )
   {
@@ -185,21 +187,26 @@ static LIGHT_DATA* LIGHT_STATUS_LoadData( u32 arcID, u32 dataIdx, u32* p_num, HE
 static void LIGHT_STATUS_GetTimeColor( LIGHT_DATA* p_wk, u32 num, int time, FIELD_LIGHT_STATUS* p_color )
 {
   int i;
+  int start_time;
   
   GF_ASSERT( num > 0 );
 
+  
+  start_time = 0;
   for( i=0; i<num; i++ )
   {
-    if( p_wk[i].endtime > time )
+    if( (start_time <= time) && (p_wk[i].endtime > time) )
     {
       // この色を設定
-      p_color->light = p_wk->light_color[0];
-      p_color->diffuse = p_wk->diffuse;
-      p_color->ambient = p_wk->ambient;
-      p_color->specular = p_wk->specular;
-      p_color->emission = p_wk->emission;
+      p_color->light = p_wk[i].light_color[0];
+      p_color->diffuse = p_wk[i].diffuse;
+      p_color->ambient = p_wk[i].ambient;
+      p_color->specular = p_wk[i].specular;
+      p_color->emission = p_wk[i].emission;
       return;
     }
+
+    start_time = p_wk[i].endtime;
   }
 
   // 時間の色がみつからない

@@ -40,4 +40,11 @@ extern VMCMD_RESULT EvCmdPlayerUpDown( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPosPlayerTurn( VMHANDLE *core, void *wk );
 
 
+//======================================================================
+//  railマップ専用
+//======================================================================
+extern VMCMD_RESULT EvCmdPlayerRailLocationGet( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdObjRailLocationGet( VMHANDLE *core, void *wk );
+
+
 

@@ -1620,6 +1620,44 @@
   .macro  _ASM_POS_PLAYER_TURN
   .short  EV_SEQ_POS_PLAYER_TURN
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @def   自機のスクリプト用レールロケーション取得　！レールマップ専用！
+ * @param index   戻り値１　インデックス
+ * @param front   戻り値２  フロントインデックス
+ * @param side    戻り値３  サイドインデックス
+ */
+//--------------------------------------------------------------
+#define _GET_PLAYER_RAIL_LOC( index, front, side ) \
+  _ASM_GET_PLAYER_RAIL_LOC index, front, side
+
+  .macro  _ASM_GET_PLAYER_RAIL_LOC index, front, side
+  .short  EV_SEQ_GET_PLAYER_RAIL_LOC
+  .short  \index
+  .short  \front
+  .short  \side
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def   動作モデルのスクリプト用レールロケーション取得　！レールマップ専用！
+ * @param id 座標変更するOBJ ID
+ * @param index   戻り値１　インデックス
+ * @param front   戻り値２  フロントインデックス
+ * @param side    戻り値３  サイドインデックス
+ */
+//--------------------------------------------------------------
+#define _GET_OBJ_RAIL_LOC( id, index, front, side ) \
+  _ASM_GET_OBJ_RAIL_LOC id, index, front, side
+
+  .macro  _ASM_GET_OBJ_RAIL_LOC id, index, front, side
+  .short  EV_SEQ_GET_OBJ_RAIL_LOC
+  .short  \id
+  .short  \index
+  .short  \front
+  .short  \side
+  .endm
   
 //======================================================================
 //  動作モデル　イベント関連
@@ -6582,14 +6620,16 @@
 
 //--------------------------------------------------------------
 /**
- * @def _FOURKINGS_SET_GHOST_SPARK_SOUND
- * @brief 四天王　ゴースト部屋　雷音
+ * @def _FOURKINGS_SET_SOUND_SYSTEM
+ * @brief 四天王　部屋　音システム設定
+ * @param fourking_id 1～4  ゾーンIDの数値　ZONE_ID_C09R[fourking_id]01
  */
 //--------------------------------------------------------------
-#define _FOURKINGS_SET_GHOST_SPARK_SOUND() _ASM_FOURKINGS_SET_GHOST_SPARK_SOUND
+#define _FOURKINGS_SET_SOUND_SYSTEM( fourking_id ) _ASM_FOURKINGS_SET_SOUND_SYSTEM fourking_id
 
-  .macro  _ASM_FOURKINGS_SET_GHOST_SPARK_SOUND
-  .short  EV_SEQ_FOURKINGS_SET_GHOST_SPARK_SOUND
+  .macro  _ASM_FOURKINGS_SET_SOUND_SYSTEM fourking_id
+  .short  EV_SEQ_FOURKINGS_SET_SOUND_SYSTEM
+  .short  \fourking_id
   .endm
 
 

@@ -383,7 +383,13 @@ extern BOOL FIELD_RAIL_WORK_IsActive( const FIELD_RAIL_WORK * work );
 //------------------------------------------------------------------
 extern BOOL FIELD_RAIL_TOOL_HitCheckSphere( const VecFx32* person, const VecFx32* check, fx32 r );
 
- 
+//------------------------------------------------------------------
+// パラメータ設定用の、マイナスのないレール座標の取得
+// side_ofsの値を0～幅Maxの値に変換したもの。RAIL_LOCATIONの値とは違う。
+// スクリプトなどマイナスを扱えないものに使用
+//------------------------------------------------------------------
+extern void FIELD_RAIL_WORK_GetNotMinusRailParam( const FIELD_RAIL_WORK* cp_work, u16* p_index, u16* p_front, u16* p_side ); 
+
 #ifdef PM_DEBUG
 // レールグリッドデバック出力
 extern void FIELD_RAIL_WORK_DEBUG_PrintRailGrid( const FIELD_RAIL_WORK * work );

@@ -205,9 +205,6 @@ static const FIELD_FK_SOUND_ANIME_DATA EV_DEMO_SE_DATA[ FIELD_EVENT_FOURKINGS_MA
   },
 };
 
-// SEアニメーションの起動ナンバー
-#define EV_DEMO_SE_ANIME_CHECK_NUM  (FX32_ONE)
-
 
 // 頂上カメラID
 static const u32 sc_EV_DEMO_CAMERA_ID_TBL[ FIELD_EVENT_FOURKINGS_MAX ] = 
@@ -1342,7 +1339,7 @@ static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_GHOST_SPARK_SOUND =
  *	@param	p_fieldmap 
  */
 //-----------------------------------------------------------------------------
-void FIELDMAPFUNC_FourkingsGhostSparkSound( FIELDMAP_WORK* p_fieldmap )
+void FIELDMAPFUNC_FourkingsGhostSound( FIELDMAP_WORK* p_fieldmap )
 {
   FLDMAPFUNC_WORK * p_funcwk;
   FLDMAPFUNC_SYS* p_funcsys = FIELDMAP_GetFldmapFuncSys( p_fieldmap );
@@ -1387,6 +1384,10 @@ static void GHOST_SPARK_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p
       break;
     }
   }
+
+  // ループ再生開始
+  PMSND_PlaySE( SEQ_SE_FLD_111 );
+  PMSND_PlaySE( SEQ_SE_FLD_112 );
 }
 
 //----------------------------------------------------------------------------
@@ -1396,6 +1397,9 @@ static void GHOST_SPARK_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p
 //-----------------------------------------------------------------------------
 static void GHOST_SPARK_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
 {
+  // ループSEの停止
+  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_111) );
+  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_112) );
 }
 
 //----------------------------------------------------------------------------
@@ -1437,4 +1441,190 @@ static void GHOST_SPARK_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p
 
 
 
+
+//-----------------------------------------------------------------------------
+/**
+ *    えすぱー部屋
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	ESPERT SOUND
+//=====================================
+typedef struct 
+{
+  FIELD_BMODEL_MAN* p_man;
+  const G3DMAPOBJST* cp_obj;
+} ESPERT_SOUND;
+
+// エスパー部屋星の位置
+static const VecFx32 sc_ESPERT_STAR_SARCH_POS = 
+{
+  FX32_CONST(128), 0, FX32_CONST(255)
+};
+
+#define ESPERT_SE_START_TIMING_MAX  (2)
+static const sc_ESPERT_SE_START_TIMING[ ESPERT_SE_START_TIMING_MAX ] = 
+{
+  FX32_CONST(1), FX32_CONST(10),
+};
+#define ESPERT_BMODEL_ANIME_IDX  ( 0 )
+
+
+static void ESPERT_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+static void ESPERT_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+static void ESPERT_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+
+
+static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_ESPERT_SOUND = 
+{
+  128,
+  sizeof(ESPERT_SOUND),
+  ESPERT_SOUND_Create,
+  ESPERT_SOUND_Delete,
+  ESPERT_SOUND_Update,
+  NULL,
+};
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エスパー部屋のサウンドシステム開始
+ *
+ *	@param	p_fieldmap 
+ */
+//-----------------------------------------------------------------------------
+void FIELDMAPFUNC_FourkingsEspertSound( FIELDMAP_WORK* p_fieldmap )
+{
+  FLDMAPFUNC_WORK * p_funcwk;
+  FLDMAPFUNC_SYS* p_funcsys = FIELDMAP_GetFldmapFuncSys( p_fieldmap );
+
+  // 
+  p_funcwk = FLDMAPFUNC_Create(p_funcsys, &sc_FLDMAPFUNC_ESPERT_SOUND);
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  えすぱーSEシステム  生成
+ */
+//-----------------------------------------------------------------------------
+static void ESPERT_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+  ESPERT_SOUND* p_wk = p_work;
+  FLDMAPPER* p_mapper = FIELDMAP_GetFieldG3Dmapper( p_fieldmap );
+  FIELD_BMODEL_MAN* p_model_man = FLDMAPPER_GetBuildModelManager( p_mapper );
+  fx32 start_frame;
+  int  i;
+
+  // 動作配置オブジェ
+  p_wk->cp_obj  = FIELD_BMODEL_MAN_SearchObjStatusPos( p_model_man, BM_SEARCH_ID_NULL, &sc_ESPERT_STAR_SARCH_POS );
+  p_wk->p_man         = p_model_man;
+
+  GF_ASSERT(p_wk->cp_obj);
+  GF_ASSERT(p_wk->p_man);
+  
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  えすぱーSEシステム  破棄
+ */
+//-----------------------------------------------------------------------------
+static void ESPERT_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+  ESPERT_SOUND* p_wk = p_work;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  えすぱーSEシステム  更新
+ */
+//-----------------------------------------------------------------------------
+static void ESPERT_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+  ESPERT_SOUND* p_wk = p_work;
+  fx32 frame;
+  int i;
+
+  frame = G3DMAPOBJST_getAnimeFrame( p_wk->p_man, p_wk->cp_obj, ESPERT_BMODEL_ANIME_IDX );
+
+  for( i=0; i<ESPERT_SE_START_TIMING_MAX; i++ )
+  {
+    if(frame == sc_ESPERT_SE_START_TIMING[i])
+    {
+      PMSND_PlaySE( SEQ_SE_FLD_108 );
+      break;
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *    悪部屋
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	BAD SOUND
+//=====================================
+typedef struct 
+{
+  int dummy;
+} BAD_SOUND;
+
+
+static void BAD_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+static void BAD_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+
+
+static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_BAD_SOUND = 
+{
+  128,
+  sizeof(BAD_SOUND),
+  BAD_SOUND_Create,
+  BAD_SOUND_Delete,
+  NULL,
+  NULL,
+};
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  悪部屋のサウンドシステム開始
+ *
+ *	@param	p_fieldmap 
+ */
+//-----------------------------------------------------------------------------
+void FIELDMAPFUNC_FourkingsBadSound( FIELDMAP_WORK* p_fieldmap )
+{
+  FLDMAPFUNC_WORK * p_funcwk;
+  FLDMAPFUNC_SYS* p_funcsys = FIELDMAP_GetFldmapFuncSys( p_fieldmap );
+
+  // 
+  p_funcwk = FLDMAPFUNC_Create(p_funcsys, &sc_FLDMAPFUNC_BAD_SOUND);
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  悪SEシステム  生成
+ */
+//-----------------------------------------------------------------------------
+static void BAD_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+  // ループ再生開始
+  PMSND_PlaySE( SEQ_SE_FLD_116 );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  悪SEシステム  破棄
+ */
+//-----------------------------------------------------------------------------
+static void BAD_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+  // ループSEの停止
+  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_116) );
+}
 

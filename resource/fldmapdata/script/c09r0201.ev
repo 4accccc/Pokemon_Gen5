@@ -50,6 +50,9 @@ INIT_EVENT_START	ev_init_c09r0201
 		
 	ENDIF
 
+  // あく　音開始
+  _FOURKINGS_SET_SOUND_SYSTEM( 2 )
+
 INIT_EVENT_END
 
 
@@ -78,6 +81,8 @@ INIT_EVENT_START	ev_recover_c09r0201
 		
 	ENDIF
 
+  // あく　音開始
+  _FOURKINGS_SET_SOUND_SYSTEM( 2 )
 
 INIT_EVENT_END
 

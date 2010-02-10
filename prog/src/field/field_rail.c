@@ -1916,6 +1916,57 @@ BOOL FIELD_RAIL_TOOL_HitCheckSphere( const VecFx32* person, const VecFx32* check
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パラメータ設定用の、マイナスのないレール座標の取得
+// side_ofsの値を0～幅Maxの値に変換したもの。RAIL_LOCATIONの値とは違う。
+// スクリプトなどマイナスを扱えないものに使用
+ *
+ *	@param	work      ワーク
+ *	@param	index     インデックス格納先
+ *	@param	front     フロントグリッド格納先
+ *	@param	side      サイドグリッド（０～に変換後）格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_WORK_GetNotMinusRailParam( const FIELD_RAIL_WORK* cp_work, u16* p_index, u16* p_front, u16* p_side )
+{
+  GF_ASSERT( cp_work->type == FIELD_RAIL_TYPE_LINE );
+  
+  {
+    s32 width_ofs_max_s, width_ofs_max_e;
+    s32 width_ofs_max;
+    int index;
+    int i;
+
+    width_ofs_max_s = getLineWidthOfsMax( cp_work->line, 0, cp_work->line_ofs_max, cp_work->rail_dat );
+    width_ofs_max_e = getLineWidthOfsMax( cp_work->line, cp_work->line_ofs_max, cp_work->line_ofs_max, cp_work->rail_dat );
+    
+    if( width_ofs_max_s >= width_ofs_max_e )
+    {
+      width_ofs_max = width_ofs_max_s;
+    }
+    else
+    {
+      width_ofs_max = width_ofs_max_e;
+    }
+
+    // ラインインデックスを求める
+    index = 0;
+    for( i=0; i<cp_work->rail_dat->line_count; i++ )
+    {
+      if( (u32)&cp_work->rail_dat->line_table[i] == (u32)cp_work->line )
+      {
+        index = i;
+      }
+    }
+
+    *p_index = index;
+    *p_front = RAIL_OFS_TO_GRID(cp_work->line_ofs);
+    *p_side = RAIL_OFS_TO_GRID(cp_work->width_ofs) + RAIL_OFS_TO_GRID(width_ofs_max);
+  }
+}
+
+
 
 #ifdef PM_DEBUG
 // レールグリッドデバック出力
@@ -1957,12 +2008,6 @@ void FIELD_RAIL_WORK_DEBUG_PrintRailGrid( const FIELD_RAIL_WORK * work )
         work->line->name, 
         RAIL_OFS_TO_GRID(work->line_ofs), 
         RAIL_OFS_TO_GRID(work->width_ofs) + RAIL_OFS_TO_GRID(width_ofs_max) );
-
-    OS_TPrintf("イベント用のデータ\n" );
-    OS_TPrintf("RAIL:%s Index:%d front_grid=%d side_grid=%d \n",
-        work->line->name, index,
-        RAIL_OFS_TO_GRID(work->line_ofs), 
-        RAIL_OFS_TO_GRID(work->width_ofs) );
   }
 
 }
