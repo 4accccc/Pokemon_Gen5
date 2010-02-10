@@ -182,8 +182,8 @@ EVENT_START ev_debug_masafumi
 			
 			//R05ライバルPOSイベント有効
 			$WK_SCENE_R05 = 1
-			_FLAG_SET( FV_R05_RIVAL )
-			_FLAG_SET( FV_R05_LEADER4 )
+			_FLAG_RESET( FV_R05_RIVAL )
+			_FLAG_RESET( FV_R05_LEADER4 )
 			_MAP_CHANGE( ZONE_ID_R05, 374, 438, DIR_DOWN )
 			
 		ELSIF $SCWK_TEMP1 == 4 THEN
@@ -271,6 +271,7 @@ ev_event_off:
 	//メニュー作成
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_06, 2 )	//Ｎの城
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_08, 0 )	//チャンピオン部屋
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_09, 1 )	//Ｔ01全イベント
 	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
@@ -305,6 +306,12 @@ ev_event_off:
 		_FLAG_SET( FV_T01R0102_RIVAL )
 		_FLAG_SET( FV_T01R0102_SUPPORT )
 		
+	ELSIF $SCWK_ANSWER == 2 THEN
+		//Ｎの城１Ｆの初回イベント無効
+		$WK_SCENE_N01R0101 = 2
+		//Ｎの城２Ｆのダークトリニティイベント無効
+		$WK_SCENE_N01R0201 = 1
+		_MAP_CHANGE( ZONE_ID_N01R0101, 20, 20, DIR_UP )
 	ENDIF
 	
 _RET

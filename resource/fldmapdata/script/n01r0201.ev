@@ -64,6 +64,9 @@ EVENT_START	ev_pos_n01r0201_guide_01
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 	
+	//========================================//
+	$WK_SCENE_N01R0201 = 1
+	//========================================//
 	
 EVENT_END
 
