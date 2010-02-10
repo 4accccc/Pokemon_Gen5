@@ -41,6 +41,7 @@ typedef struct
   //戻り値用
   //(0:ボックス番号 1:インデックス(0xFF不正値
   u8   selectPoke[MB_CAP_POKE_NUM][2];
+  BOOL isCancel;
 }MB_SELECT_INIT_WORK;
 
 

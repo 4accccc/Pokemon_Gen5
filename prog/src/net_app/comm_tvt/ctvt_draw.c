@@ -387,7 +387,7 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
     GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
     PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
     STRBUF *str;
-    drawWork->titleWin = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+    drawWork->titleWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
                                           3 , 1 , 28 , 2 ,
                                           CTVT_PAL_BG_SUB_FONT ,
                                           GFL_BMP_CHRAREA_GET_B );
@@ -641,6 +641,8 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
     if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( drawWork->titleWin )) == FALSE )
     {
       GFL_BMPWIN_TransVramCharacter( drawWork->titleWin );
+      GFL_BMPWIN_MakeScreen( drawWork->titleWin );
+      GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
       drawWork->isUpdateTitle = FALSE;
     }
   }

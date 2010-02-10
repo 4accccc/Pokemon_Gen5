@@ -90,6 +90,7 @@ typedef enum
   MCS_SAVE_FINISH_WAIT,
   MCS_DIPS_NEXT_GAME_CONFIRM,
   MCS_WAIT_NEXT_GAME_CONFIRM,
+  MCS_SELECT_NEXT_GAME_CONFIRM,
 
   MCS_WAIT_EXIT_COMM,
   MCS_EXIT_GAME,
@@ -459,14 +460,28 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_SELECT_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      if( MB_COMM_IsPostGameData( work->commWork ) == TRUE )
+      if( work->selInitWork.isCancel == TRUE )
       {
-        work->state = MCS_CAPTURE_FADEOUT;
+        //ƒLƒƒƒ“ƒZƒ‹‚³‚ê‚½
+        MB_MSG_MessageHide( work->msgWork );
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , work->initData->msgSpeed );
+
+        MB_COMM_SetChildState( work->commWork , MCCS_CANCEL_BOX );
+        MB_COMM_ReqDisconnect( work->commWork );
+        work->state = MCS_WAIT_EXIT_COMM;
       }
       else
       {
-        work->state = MCS_WAIT_GAME_DATA;
-        MB_COMM_SetChildState( work->commWork , MCCS_WAIT_GAME_DATA );
+        if( MB_COMM_IsPostGameData( work->commWork ) == TRUE )
+        {
+          work->state = MCS_CAPTURE_FADEOUT;
+        }
+        else
+        {
+          work->state = MCS_WAIT_GAME_DATA;
+          MB_COMM_SetChildState( work->commWork , MCCS_WAIT_GAME_DATA );
+        }
       }
     }
     break;
@@ -543,7 +558,6 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
     work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
-    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
 
     GFUser_SetVIntrFunc( MB_CHILD_VBlank );
     MB_CHILD_ErrCheck( work , TRUE );
@@ -645,23 +659,29 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
     {
       MB_MSG_MessageHide( work->msgWork );
-      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
-
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_06 , work->initData->msgSpeed );
-      MB_COMM_SetChildState( work->commWork , MCCS_NEXT_GAME );
       work->state = MCS_DIPS_NEXT_GAME_CONFIRM;
     }
     break;
   
   case MCS_DIPS_NEXT_GAME_CONFIRM:
+    {
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
+
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_06 , work->initData->msgSpeed );
+      MB_COMM_SetChildState( work->commWork , MCCS_NEXT_GAME );
+      work->state = MCS_WAIT_NEXT_GAME_CONFIRM;
+    }
+    break;
+  case MCS_WAIT_NEXT_GAME_CONFIRM:
     if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
     {
       MB_MSG_DispYesNo( work->msgWork , MMYT_UP );
-      work->state = MCS_WAIT_NEXT_GAME_CONFIRM;
+      work->state = MCS_SELECT_NEXT_GAME_CONFIRM;
     }
     MB_CHILD_ErrCheck( work , FALSE );
     break;
-  case MCS_WAIT_NEXT_GAME_CONFIRM:
+  
+  case MCS_SELECT_NEXT_GAME_CONFIRM:
     {
       const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNo( work->msgWork );
       if( ret == MMYR_RET1 )
@@ -675,18 +695,22 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       if( ret == MMYR_RET2 )
       {
         MB_COMM_SetChildState( work->commWork , MCCS_END_GAME );
+        MB_MSG_ClearYesNo( work->msgWork );
         MB_MSG_MessageHide( work->msgWork );
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , work->initData->msgSpeed );
+        MB_COMM_ReqDisconnect( work->commWork );
         work->state = MCS_WAIT_EXIT_COMM;
-        MB_MSG_ClearYesNo( work->msgWork );
       }
     }
     MB_CHILD_ErrCheck( work , FALSE );
     break;
   
   case MCS_WAIT_EXIT_COMM:
-    work->state = MCS_EXIT_GAME;
+    if( MB_COMM_IsDisconnect( work->commWork ) == TRUE )
+    {
+      work->state = MCS_EXIT_GAME;
+    }
     break;
 
   case MCS_EXIT_GAME:
@@ -903,6 +927,7 @@ static const BOOL MB_CHILD_ErrCheck( MB_CHILD_WORK *work , const BOOL noFade )
 static void MB_CHILD_SaveInit( MB_CHILD_WORK *work )
 {
   MB_DATA_ResetSaveLoad( work->dataWork );
+  MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_04 );
 
 }

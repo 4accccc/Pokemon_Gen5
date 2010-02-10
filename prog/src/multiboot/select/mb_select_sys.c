@@ -271,6 +271,8 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
     work->initWork->selectPoke[i][0] = 0xFF;
     work->initWork->selectPoke[i][1] = 0xFF;
   }
+  work->initWork->isCancel = FALSE;
+
   work->isNetErr = FALSE;
   work->state = MSS_FADEIN;
   work->pageMoveDir = MSD_NONE;
@@ -884,10 +886,11 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
         GFL_CLACT_WK_SetAutoAnmFlag( work->clwkRetIcon , TRUE );
         work->state = MSS_FADEOUT;
         work->exitWaitCell = work->clwkRetIcon;
+        //TODO Šm”FMSGH
+        work->initWork->isCancel = TRUE;
       }
       work->befTpx = tpx;
       work->befTpy = tpy;
-
     }
     else
     {

@@ -36,6 +36,8 @@
 #endif//デバッグ出力切り替え
 
 #define MB_COMM_PPP_PACK_SIZE (POKETOOL_GetPPPWorkSize()*MB_CAP_POKE_NUM + sizeof(MB_COMM_PPP_PACK_HEADER))
+
+#define MB_COMM_TIMMING_EXIT (64)
 //======================================================================
 //  enum
 //======================================================================
@@ -46,6 +48,9 @@ typedef enum
   MCS_REQ_NEGOTIATION,
   MCS_WAIT_NEGOTIATION,
   MCS_WAIT_CAN_SEND,
+
+  MCS_WAIT_DISCONNECT,
+  MCS_DISCONNECT,
   
   //ココから下はつながっている状態のSTATEとする
   MCS_CONNECT,
@@ -206,6 +211,21 @@ void MB_COMM_UpdateSystem( MB_COMM_WORK* commWork )
       }
     }
     break;
+  
+  case MCS_WAIT_DISCONNECT:
+    {
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_HANDLE_IsTimeSync( selfHandle , MB_COMM_TIMMING_EXIT , WB_NET_MULTIBOOT_SERVICEID ) == TRUE )
+      {
+        commWork->state = MCS_DISCONNECT;
+        GFL_NET_SetNoChildErrorCheck( FALSE );
+      }
+    }
+    break;
+  case MCS_DISCONNECT:
+    //None
+    break;
+  
   case MCS_CONNECT:
     //この状態をMB_COMM_IsSendEnableのチェックに使ってる。
     break;
@@ -297,6 +317,8 @@ void MB_COMM_ExitComm( MB_COMM_WORK* commWork )
   GFL_NET_Exit(NULL);
   GFL_NET_LDATA_ExitSystem();
   commWork->isInitLowerData = FALSE;
+  
+  commWork->state = MCS_NONE;
 }
 
 //--------------------------------------------------------------
@@ -334,6 +356,25 @@ void MB_COMM_InitChild( MB_COMM_WORK* commWork , u8 *macAddress )
   commWork->state = MCS_REQ_NEGOTIATION;
 
   GFL_NET_LDATA_CreatePostBuffer( 0x78000 , 0 , HEAPID_MULTIBOOT_DATA );
+}
+
+//--------------------------------------------------------------
+// 終了リクエスト
+//--------------------------------------------------------------
+void MB_COMM_ReqDisconnect( MB_COMM_WORK* commWork )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  GFL_NET_HANDLE_TimeSyncStart( selfHandle , MB_COMM_TIMMING_EXIT , WB_NET_MULTIBOOT_SERVICEID );
+
+  commWork->state = MCS_WAIT_DISCONNECT;
+}
+const BOOL MB_COMM_IsDisconnect( MB_COMM_WORK* commWork )
+{
+  if( commWork->state == MCS_DISCONNECT )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 #pragma mark [>Afetr Connect

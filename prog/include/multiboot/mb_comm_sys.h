@@ -51,6 +51,7 @@ typedef enum
   MCCS_NEXT_GAME,
 
   MCCS_END_GAME,
+  MCCS_CANCEL_BOX,
 
 }MB_COMM_CHILD_STATE;
 
@@ -82,6 +83,9 @@ extern const BOOL MB_COMM_IsFinishComm( MB_COMM_WORK* commWork );
 
 extern void MB_COMM_InitParent( MB_COMM_WORK* commWork );
 extern void MB_COMM_InitChild( MB_COMM_WORK* commWork , u8 *macAddress );
+
+extern void MB_COMM_ReqDisconnect( MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsDisconnect( MB_COMM_WORK* commWork );
 
 //í êMämóßå„
 extern MB_COMM_INIT_DATA* MB_COMM_GetInitData( MB_COMM_WORK* commWork );

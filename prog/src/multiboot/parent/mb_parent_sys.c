@@ -254,6 +254,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       work->state != MPS_WAIT_FADEOUT )
   {
     work->state = MPS_FADEOUT;
+    MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_ERROR );
   }
 
   switch( work->state )
@@ -387,6 +388,15 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_04 , MSGSPEED_GetWait() );
       work->state = MPS_WAIT_POST_GAMEDATA;
     }
+    else
+    if( MB_COMM_GetChildState(work->commWork) == MCCS_CANCEL_BOX )
+    {
+      MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
+
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
+      MB_COMM_ReqDisconnect( work->commWork );
+      work->state = MPS_EXIT_COMM;
+    }
   
   //break;  //MCCS_WAIT_GAME_DATAを経由しないこともあるのでスルー！！
   case MPS_WAIT_POST_GAMEDATA:
@@ -451,13 +461,17 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME )
     {
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
+      MB_COMM_ReqDisconnect( work->commWork );
       work->state = MPS_EXIT_COMM;
     }
     break;
   
   case MPS_EXIT_COMM:
-    MB_COMM_ExitComm( work->commWork );
-    work->state = MPS_WAIT_EXIT_COMM;
+    if( MB_COMM_IsDisconnect( work->commWork ) == TRUE )
+    {
+      MB_COMM_ExitComm( work->commWork );
+      work->state = MPS_WAIT_EXIT_COMM;
+    }
     break;
   case MPS_WAIT_EXIT_COMM:
     if( MB_COMM_IsFinishComm( work->commWork ) == TRUE )
