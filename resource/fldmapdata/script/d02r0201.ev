@@ -19,20 +19,47 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d02r0201
+_EVENT_DATA    ev_d02r0201_legend3
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d02r0201:
-//  _END
-
-/**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_d02r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START ev_d02r0201_legend3
+   _TALK_OBJ_START()
+
+    _PLAINWIN_MSG_DOWN( msg_d02r0201_legend3_01 )
+    _AB_KEYWAIT()
+    _PLAINWIN_CLOSE()
+
+    _WILD_BTL_SET_LEGEND( MONSNO_647 , 50 ) //アラミス
+
+    _WILD_LOSE_CHECK( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+        _FLAG_SET( FV_D02R0201_LEGEND3 )
+        _OBJ_DEL( SCWK_TARGET_OBJID )
+        _WILD_WIN()
+    ELSE
+        _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+    ENDIF
+
+    _WILD_RETRY_CHECK( SCWK_ANSWER )
+
+    SWITCH $SCWK_ANSWER
+    CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
+    //勝利した場合、あるいは逃げた場合
+        _SYSWIN_MSG_DOWN( msg_d02r0201_legend3_02 )
+        _AB_KEYWAIT()
+        _SYSWIN_CLOSE()
+        
+    CASE SCR_WILD_BTL_RET_CAPTURE THEN
+    //捕まえた場合
+
+        _FLAG_SET( FE_LEGEND3_GET )
+
+    ENDSWITCH
+
+EVENT_END
 

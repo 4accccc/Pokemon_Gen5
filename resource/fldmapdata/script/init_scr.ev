@@ -165,6 +165,8 @@ init_flags:
 	_FLAG_SET( FV_C04R0111_PARTNER )
   //バトルサブウェイ　ホーム、NPC
   _FLAG_SET( FV_C04R0111_NPC )
+
+
 }  
 _RET
 
@@ -209,5 +211,22 @@ INIT_EVENT_START  ev_init_gameclear_script
   _SET_SP_LOCATION_DIRECT( ZONE_ID_T01, DIR_DOWN, 782, 0, 749 )
   //↑で設定した特殊接続先からゲームを開始するリクエスト
   _FLAG_SET( SYS_FLAG_SPEXIT_REQUEST )
+
+
+  //伝説３体の復活処理
+  IF FLAG_ON( FV_R06R0203_LEGEND1 ) && FLAG_OFF( FE_LEGEND1_GET ) THEN
+      //OBJを消していて、捕まえていなければ復活させる
+      _FLAG_RESET( FV_R06R0203_LEGEND1 )
+  ENDIF
+  IF FLAG_ON( FV_D09R1501_LEGEND2 ) && FLAG_OFF( FE_LEGEND2_GET ) THEN
+      //OBJを消していて、捕まえていなければ復活させる
+      _FLAG_RESET( FV_D09R1501_LEGEND2 )
+  ENDIF
+  IF FLAG_ON( FV_D02R0201_LEGEND3 ) && FLAG_OFF( FE_LEGEND2_GET ) THEN
+      //OBJを消していて、捕まえていなければ復活させる
+      _FLAG_RESET( FV_D02R0201_LEGEND3 )
+  ENDIF
+
 }
 INIT_EVENT_END
+
