@@ -162,7 +162,7 @@ extern  BOOL              BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYP
 extern  void              BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
 extern  BOOL              BTLV_EFFECT_CheckExecutePaletteFade( int model );
 extern  void              BTLV_EFFECT_SetVanishFlag( int model, int flag );
-extern  void              BTLV_EFFECT_SetRotateEffect( BTLV_EFFECT_ROTATE_DIR dir, int side );
+extern  void              BTLV_EFFECT_SetRotateEffect( BtlRotateDir dir, int side );
 extern  int               BTLV_EFFECT_GetTrainerIndex( int position );
 extern  void              BTLV_EFFECT_CreateTimer( int game_time, int command_time );
 extern  void              BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE type, BOOL enable, BOOL init );
