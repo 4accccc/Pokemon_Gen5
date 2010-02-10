@@ -737,6 +737,9 @@ t02_speech:
 	//NのBGM再生
 	_START_EVENT_BGM( SEQ_BGM_E_N )
 
+	//Ｎのアップ絵表示
+	_START_FACEUP( 0, 0 )
+
 	//キミの　ポケモンかな？　今　トレーナーへの
 	_BALLOONWIN_OBJMSG( msg_t02_boss_01 , T02_N_01 )
 	_BALLOONWIN_CLOSE()
@@ -766,6 +769,9 @@ t02_speech:
 
 	//BGM終了
 	_END_EVENT_BGM()
+
+	//Ｎのアップ絵終了
+	_END_FACEUP()
 
 	//Ｎとポケモンしょうぶ。
 	_TRAINER_BTL_SET( TRID_BOSS_01, 0 )
