@@ -160,8 +160,3 @@ extern BOOL GAMEBEACON_Get_NewEntry(void);
 extern void DEBUG_GAMEBEACON_Set_NewEntry(void);
 #endif
 
-//--------------------------------------------------------------
-//  çÌèúó\íË
-//--------------------------------------------------------------
-extern u32 GAMEBEACON_GetMsgID(const GAMEBEACON_INFO *info);
-extern void GAMEBEACON_Wordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id);

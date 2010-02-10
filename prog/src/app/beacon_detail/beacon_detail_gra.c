@@ -43,6 +43,7 @@
 
 //外部公開
 #include "beacon_detail_gra.h"
+#include "beacon_detail_def.h"
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_
 //
@@ -559,12 +560,12 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 
   //自作レンダラー作成
   {
-    const GFL_REND_SURFACE_INIT renderInitData[2] = {
+    const GFL_REND_SURFACE_INIT renderInitData[ACT_SF_MAX] = {
       {0,0,256,192,CLSYS_DRAW_MAIN},
       {0,512,256,192,CLSYS_DRAW_SUB},
     };
     
-    p_wk->cellRender = GFL_CLACT_USERREND_Create( renderInitData , 2 , heapID );
+    p_wk->cellRender = GFL_CLACT_USERREND_Create( renderInitData , ACT_SF_MAX , heapID );
     GFL_CLACT_USERREND_SetOAMAttrCulling( p_wk->cellRender, TRUE );
     GFL_CLACT_UNIT_SetUserRend( p_wk->p_clunit, p_wk->cellRender );
   }

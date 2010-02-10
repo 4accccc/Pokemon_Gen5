@@ -481,6 +481,8 @@ static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR wk)
 //--------------------------------------------------------------
 static void _sub_DataSetup(BEACON_VIEW_PTR wk)
 {
+  SAVE_CONTROL_WORK* save;
+
   wk->b_status = GAMEDATA_GetBeaconStatus( wk->gdata );
   wk->infoLog = BEACON_STATUS_GetInfoTbl( wk->b_status );
 
@@ -496,9 +498,21 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
 
   //メッセージスピード取得
   wk->msg_spd  = MSGSPEED_GetWait();
+ 
+  //セーブデータ取得
+  save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
+  {
+    INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(save);
+    wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv);
+    wk->my_data.power = 1;
+  }
+  {
+    MYSTATUS* my = SaveData_GetMyStatus(save);
+    wk->my_data.tr_id = MyStatus_GetID( my ) & 0xFFFF;  //下位2byte
+    wk->my_data.sex = MyStatus_GetMySex( my );
+    wk->my_data.union_char = MyStatus_GetTrainerView( my );
+  }
   
-  wk->my_data.power = 1;
-
   //スタックワーク領域取得
   wk->infoStack = GAMEBEACON_InfoTbl_Alloc( wk->heapID );
   wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );

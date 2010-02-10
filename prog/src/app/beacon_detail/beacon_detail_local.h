@@ -18,7 +18,10 @@
 #include "gamesystem/msgspeed.h"
 #include "tr_tool/trtype_def.h"
 #include "system/tr2dgra.h"
+#include "savedata/intrude_save.h"
 #include "net_app/union/union_beacon_tool.h"
+#include "app/townmap_data_sys.h"
+#include "app/townmap_util.h"
 
 #include "beacon_detail_def.h"
 
@@ -66,8 +69,9 @@ typedef struct{
 
 typedef struct _BEACON_WIN{
   BMP_WIN prof[BEACON_PROF_MAX];
-  BMP_WIN record;
-  GFL_BMPWIN* pms;
+  BMP_WIN home[BEACON_HOME_MAX];
+  BMP_WIN record;   ///
+  GFL_BMPWIN* pms;  ///簡易会話
   GFL_CLWK* cRank;
   GFL_CLWK* cTrainer;
   u8  union_char;
@@ -88,7 +92,8 @@ typedef struct
 
   BEACON_DETAIL_PARAM*  param;
   GFL_TCBLSYS*  pTcbSys;
-  
+  TOWNMAP_DATA* tmap; ///タウンマップデータアーカイブ
+
   BEACON_STATUS* b_status;
   GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
   GAMEBEACON_INFO*      tmpInfo;
@@ -121,6 +126,7 @@ typedef struct
 	//プリントキュー
 	PRINT_QUE									*print_que;
 	GFL_MSGDATA								*msg;
+	GFL_MSGDATA								*msg_area;
   WORDSET                   *wset;
   STRBUF *str_tmp;
   STRBUF *str_expand;

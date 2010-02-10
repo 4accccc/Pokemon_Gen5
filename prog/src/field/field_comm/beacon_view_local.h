@@ -13,6 +13,7 @@
 #include "gamesystem/beacon_status.h"
 #include "system/palanm.h"
 #include "system/gfl_use.h"
+#include "savedata/intrude_save.h"
 #include "app/app_taskmenu.h"
 #include "app/app_keycursor.h"
 #include "msg/msg_beacon_status.h"

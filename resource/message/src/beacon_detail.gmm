@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-02-04T20:56:23"/>
+	<create user="iwasawa" host="W00157" date="2010-02-10T19:09:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,40 +294,47 @@
 	</row>
 
 	<row id="msg_prof02">
-		<language name="JPN" width="256">しゅっしん</language>
-		<language name="JPN_KANJI" width="256">しゅっしん</language>
-	</row>
-
-	<row id="msg_prof03">
 		<language name="JPN" width="256">しごと</language>
 		<language name="JPN_KANJI" width="256">しごと</language>
 	</row>
 
-	<row id="msg_prof04">
+	<row id="msg_prof03">
 		<language name="JPN" width="256">しゅみ</language>
 		<language name="JPN_KANJI" width="256">しゅみ</language>
 	</row>
 
+	<row id="msg_prof04">
+		<language name="JPN" width="256">プレイじかん</language>
+		<language name="JPN_KANJI" width="256">プレイじかん</language>
+	</row>
+
+	<row id="msg_prof_ptime">
+		<comment>2：プレイ時間（時）&lt;0-999&gt;
+3：プレイ時間（分）&lt;0-59&gt;</comment>
+		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:0][2:02:３桁:2]:[2:01:２桁:3]</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0][2:02:３桁:2]:[2:01:２桁:3]</language>
+	</row>
+
+	<row id="msg_home_town">
+		<language name="JPN" width="256">しゅっしん</language>
+		<language name="JPN_KANJI" width="256">しゅっしん</language>
+	</row>
+
 	<row id="msg_record">
 		<language name="JPN" width="256">おれいをうけたかいすう
-すれちがったにんずう
-プレイじかん</language>
+すれちがったにんずう</language>
 		<language name="JPN_KANJI" width="256">おれいをうけたかいすう
-すれちがったにんずう
-プレイじかん</language>
+すれちがったにんずう</language>
 	</row>
 
 	<row id="msg_record_num">
 		<comment>0：御礼を受けた回数&lt;0-99999&gt;
 1：すれ違った人数&lt;0-99999&gt;
-2：プレイ時間（時）&lt;0-999&gt;
-3：プレイ時間（分）&lt;0-59&gt;</comment>
+</comment>
 		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:0][2:04:５桁:0]かい
-[BD:03:Ｘ右寄せ:0][2:04:５桁:1]にん
-[BD:03:Ｘ右寄せ:0][2:02:３桁:2]:[2:01:２桁:3]</language>
+[BD:03:Ｘ右寄せ:0][2:04:５桁:1]にん</language>
 		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0][2:04:５桁:0]かい
-[BD:03:Ｘ右寄せ:0][2:04:５桁:1]にん
-[BD:03:Ｘ右寄せ:0][2:02:３桁:2]:[2:01:２桁:3]</language>
+[BD:03:Ｘ右寄せ:0][2:04:５桁:1]にん</language>
 	</row>
 
 	<row id="msg_record_num02">
@@ -355,6 +362,13 @@
 2：すれ違った時間(分)&lt;0-59&gt;</comment>
 		<language name="JPN" width="256">すれちがったじかん　ＰＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
 		<language name="JPN_KANJI" width="256">すれちがったじかん　ＰＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
+	</row>
+
+	<row id="msg_beacon_000" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<language name="JPN" width="256">[1:05:マップ名:0]を
+いどうちゅうです</language>
+		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]を
+いどうちゅうです</language>
 	</row>
 
 	<row id="msg_beacon_001" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -397,13 +411,6 @@
 たいせんちゅうです</language>
 		<language name="JPN_KANJI" width="256">チャンピオン[1:00:トレーナー名:0]と
 たいせんちゅうです</language>
-	</row>
-
-	<row id="msg_beacon_007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:05:マップ名:0]を
-いどうちゅうです</language>
-		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]を
-いどうちゅうです</language>
 	</row>
 
 	<flowchart-group-list>

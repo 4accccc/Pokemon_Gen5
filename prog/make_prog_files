@@ -1687,7 +1687,7 @@ SRCS_OVERLAY_EGG_DEMO = demo/egg_demo/egg_demo.c \
                         demo/egg_demo/egg_demo_view.c
 
 # ‚·‚êˆá‚¢Ú×‰æ–Ê
-#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_TOWNMAP
 SRCS_OVERLAY_BEACON_DETAIL = app/beacon_detail/beacon_detail.c \
 											 app/beacon_detail/beacon_detail_gra.c \
 											 app/beacon_detail/beacon_detail_sub.c

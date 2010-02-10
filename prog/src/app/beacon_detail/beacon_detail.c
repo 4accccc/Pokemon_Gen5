@@ -73,6 +73,7 @@
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
 FS_EXTERN_OVERLAY(ui_common);
+FS_EXTERN_OVERLAY(townmap);
 
 //=============================================================================
 /**
@@ -184,6 +185,7 @@ static GFL_PROC_RESULT BeaconDetailProc_Init( GFL_PROC *proc, int *seq, void *pw
 
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(townmap));
 	
 	//ヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BEACON_DETAIL, BEACON_DETAIL_HEAP_SIZE );
@@ -252,6 +254,7 @@ static GFL_PROC_RESULT BeaconDetailProc_Exit( GFL_PROC *proc, int *seq, void *pw
   GFL_HEAP_DeleteHeap( wk->heapID );
 
 	//オーバーレイ破棄
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(townmap));
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 
   return GFL_PROC_RES_FINISH;
@@ -413,6 +416,9 @@ static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
 
   //メッセージスピード取得
   wk->msg_spd  = MSGSPEED_GetWait();
+
+	//メモリ上にタウンマップデータ展開
+	wk->tmap = TOWNMAP_DATA_Alloc( wk->heapID );
 }
 
 //--------------------------------------------------------------
@@ -424,6 +430,9 @@ static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
 //--------------------------------------------------------------
 static void _sub_DataExit(BEACON_DETAIL_WORK* wk)
 {
+	//メモリ上のデータ破棄
+	TOWNMAP_DATA_Free( wk->tmap );
+  
   GFL_HEAP_FreeMemory( wk->tmpInfo );
 }
 
@@ -453,6 +462,8 @@ static void _sub_SystemSetup( BEACON_DETAIL_WORK* wk)
   //メッセージデータ
 	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
 			        NARC_message_beacon_detail_dat, wk->heapID );
+	wk->msg_area = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+			            NARC_message_wifi_place_msg_world_dat, wk->heapID );
 
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
   wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
@@ -472,6 +483,7 @@ static void _sub_SystemExit( BEACON_DETAIL_WORK* wk)
   GFL_STR_DeleteBuffer(wk->str_expand);
   GFL_STR_DeleteBuffer(wk->str_tmp);
 
+  GFL_MSG_Delete(wk->msg_area);
   GFL_MSG_Delete(wk->msg);
 	WORDSET_Delete(wk->wset);
   
@@ -760,98 +772,6 @@ static void _sub_ActorResourceUnload( BEACON_DETAIL_WORK* wk )
   GFL_ARC_CloseDataHandle( wk->h_trgra );
 }
 
-#ifdef	BEACON_DETAIL_PRINT_TOOL
-//=============================================================================
-/**
- *	PRINT_TOOL
- */
-//=============================================================================
-/*
-		・「HP ??/??」を表示するサンプルです
-		・BMPWINのサイズは 20 x 2 です
-		・現在のHP = 618, 最大HP = 999 とします
-		・サンプルメインが FALSE を返すと終了です
-*/
-
-// サンプルメイン
-static BOOL PrintTool_MainFunc( BEACON_DETAIL_WORK * wk )
-{
-	switch( wk->sub_seq ){
-	case 0:
-		PrintTool_AddBmpWin( wk );			// BMPWIN作成
-		PrintTool_PrintHP( wk );				// ＨＰ表示
-		PrintTool_ScreenTrans( wk );		// スクリーン転送
-		wk->sub_seq = 1;
-		break;
-
-	case 1:
-		// プリント終了待ち
-		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
-			wk->sub_seq = 2;
-		}
-		break;
-
-	case 2:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			PrintTool_DelBmpWin( wk );		// BMPWIN削除
-			return FALSE;
-		}
-	}
-
-	PRINT_UTIL_Trans( &wk->print_util, wk->que );
-	return TRUE;
-}
-
-// BMPWIN作成
-static void PrintTool_AddBmpWin( BEACON_DETAIL_WORK * wk )
-{
-	wk->print_util.win = GFL_BMPWIN_Create(
-													GFL_BG_FRAME0_M,					// ＢＧフレーム
-													1, 1,											// 表示座標
-													20, 2,										// 表示サイズ
-													15,												// パレット
-													GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
-}
-
-// BMPWIN削除
-static void PrintTool_DelBmpWin( BEACON_DETAIL_WORK * wk )
-{
-		GFL_BMPWIN_Delete( wk->print_util.win );
-}
-
-// BMPWINスクリーン転送
-static void PrintTool_ScreenTrans( BEACON_DETAIL_WORK * wk )
-{
-	GFL_BMPWIN_MakeScreen( wk->print_util.win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->print_util.win) );
-}
-
-// ＨＰ表示
-static void PrintTool_PrintHP( BEACON_DETAIL_WORK * wk )
-{
-	STRBUF * strbuf;
-
-	// BMPWIN内の座標(32,0)を基準に右詰めで「ＨＰ」と表示
-	PRINTTOOL_Print(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				32, 0,									// 表示基準座標
-				strbuf,									// 文字列（すでに「ＨＰ」が展開されているものとする）
-				wk->font,								// フォント
-				PRINTTOOL_MODE_RIGHT );	// 右詰
-
-	// BMPWIN内の座標(100,0)を「／」の中心にしてＨＰを表示 ( hp / mhp )
-	PRINTTOOL_PrintFraction(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				wk->font,								// フォント
-				100, 0,									// 表示基準座標
-				618,										// hp
-				999,										// mhp
-				wk->heapID );						// ヒープＩＤ
-}
-#endif	//BEACON_DETAIL_PRINT_TOOL
-
 //-----------------------------------------------------------------------------
 /*
  *  @brief  BmpWin個別追加
@@ -871,7 +791,7 @@ static void bmpwin_Add( BMP_WIN* win, u8 frm, u8 pal, u8 px, u8 py, u8 sx, u8 sy
  */
 static GFL_CLWK* act_Add(
    BEACON_DETAIL_WORK* wk, GFL_CLUNIT* unit, OBJ_RES_TBL* res,
-  s16 x, s16 y, u8 anm, u8 spri, u8 bg_pri)
+  s16 x, s16 y, u8 anm, u8 spri, u8 bg_pri, u16 surface )
 {
   GFL_CLWK_DATA ini;
   GFL_CLWK* obj;
@@ -884,7 +804,7 @@ static GFL_CLWK* act_Add(
   ini.softpri = spri;
   
   obj = GFL_CLACT_WK_Create( unit,
-          res->cgr,res->pltt,res->cell, &ini, CLSYS_DEFREND_SUB, wk->heapID );
+          res->cgr,res->pltt,res->cell, &ini, surface, wk->heapID );
 
   return obj;
 }
@@ -904,9 +824,9 @@ static void _sub_ActorCreate(BEACON_DETAIL_WORK* wk)
 
   //初期座標は適当
   wk->pAct[ACT_ICON_TR] = act_Add( wk, clunit, &wk->objResUnion,
-                    128, 120, 0, 0, ACT_ICON_BGPRI );
+                    128, 120, 0, 0, ACT_ICON_BGPRI, ACT_SF_MAIN );
   wk->pAct[ACT_ICON_EV] = act_Add( wk, clunit, &wk->objResNormal,
-                    128-32, 120, 0, 1, ACT_ICON_BGPRI );
+                    128-32, 120, 0, 1, ACT_ICON_BGPRI, ACT_SF_MAIN );
 }
 
 //--------------------------------------------------------------
@@ -973,37 +893,44 @@ static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
   PMS_DRAW_SetCLWKAutoScrollFlag( wk->pms_draw, TRUE ); 
 
   {
-    int i,j;
+    int i,j,frm,pal;
     PMS_DATA pms;
     BEACON_WIN* bp;
     
     // PMS表示用BMPWIN生成
     for( i=0; i < BEACON_WIN_MAX; i++ )
     {
+      frm = BMP_BEACON_FRM+i;
+      
       bp = &wk->beacon_win[i];
       bp->frame = BG_FRAME_WIN01_S+i;
 
       bp->pms = GFL_BMPWIN_Create(
-                  BMP_BEACON_FRM+i, BMP_PMS_PX, BMP_PMS_PY, BMP_PMS_SX, BMP_PMS_SY,
+                  frm, BMP_PMS_PX, BMP_PMS_PY, BMP_PMS_SX, BMP_PMS_SY,
                   BMP_PMS_PAL+i, GFL_BMP_CHRAREA_GET_B );
 
-      PMSDAT_SetDebugRandom( &pms );
+      PMSDAT_SetSentence( &pms, 0, 0 );
       PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO+i );
       PMS_DRAW_Print( wk->pms_draw, bp->pms, &pms , i );
 
       for(j = 0;j < BEACON_PROF_MAX;j++){
-        bmpwin_Add( &bp->prof[j], BMP_BEACON_FRM+i,
-            BMP_PROF_PAL+i, BMP_PROF_PX, BMP_PROF_PY+BMP_PROF_OY*j, BMP_PROF_SX, BMP_PROF_SY );
+        bmpwin_Add( &bp->prof[j], frm,
+            BMP_PROF_PAL+i, BMP_PROF_PX, BMP_PROF_PY+BMP_PROF_SY*j, BMP_PROF_SX, BMP_PROF_SY );
       }
-      bmpwin_Add( &bp->record, BMP_BEACON_FRM+i,
+      bmpwin_Add( &bp->home[0], frm,
+        BMP_HOME01_PAL+i, BMP_HOME01_PX, BMP_HOME01_PY, BMP_HOME01_SX, BMP_HOME01_SY );
+      bmpwin_Add( &bp->home[1], frm,
+        BMP_HOME02_PAL+i, BMP_HOME02_PX, BMP_HOME02_PY, BMP_HOME02_SX, BMP_HOME02_SY );
+
+      bmpwin_Add( &bp->record, frm,
           BMP_RECORD_PAL+i, BMP_RECORD_PX, BMP_RECORD_PY, BMP_RECORD_SX, BMP_RECORD_SY );
     
       bp->cTrainer = act_Add( wk, clunit, &wk->objResTrainer[i],
-                        ACT_TRAINER_PX, ACT_TRAINER_PY, 0, 1, ACT_TRAINER_BGPRI+i );
+                        ACT_TRAINER_PX, ACT_TRAINER_PY, 0, 1, ACT_TRAINER_BGPRI+i, ACT_SF_SUB );
       GFL_CLACT_WK_SetObjMode( bp->cTrainer, GX_OAM_MODE_XLU );
       GFL_CLACT_WK_SetDrawEnable( bp->cTrainer, FALSE );
       bp->cRank = act_Add( wk, clunit, &wk->objResNormal,
-                        ACT_RANK_PX, ACT_RANK_PY, ACTANM_RANK05, 0, ACT_TRAINER_BGPRI+i );
+                        ACT_RANK_PX, ACT_RANK_PY, ACTANM_RANK05, 0, ACT_TRAINER_BGPRI+i, ACT_SF_SUB );
       GFL_CLACT_WK_SetObjMode( bp->cRank, GX_OAM_MODE_XLU );
       GFL_CLACT_WK_SetDrawEnable( bp->cRank, FALSE );
     }
@@ -1034,6 +961,9 @@ static void _sub_BeaconWinExit( BEACON_DETAIL_WORK* wk )
     GFL_CLACT_WK_Remove( bp->cRank);
 
     GFL_BMPWIN_Delete( bp->record.win );
+    for(j = 0;j < BEACON_HOME_MAX;j++){
+      GFL_BMPWIN_Delete( bp->home[j].win );
+    }
     for(j = 0;j < BEACON_PROF_MAX;j++){
       GFL_BMPWIN_Delete( bp->prof[j].win );
     }

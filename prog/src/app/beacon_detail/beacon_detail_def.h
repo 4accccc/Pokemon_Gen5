@@ -65,21 +65,21 @@ enum
 
 #define BUFLEN_TMP_MSG  (18*3*2+EOM_SIZE)
 
-#define	FCOL_FNTOAM   ( PRINTSYS_LSB_Make(1,2,0) )	 ///<OAMフォント黒抜
-#define FCOL_FNTOAM_W ( PRINTSYS_LSB_Make(15,3,0))  ///<Oam白抜き
-#define FCOL_WHITE_N  ( PRINTSYS_LSB_Make(15,2,0) ) ///<BG白抜き
+#define	FCOL_FNTOAM   ( PRINTSYS_MACRO_LSB(1,2,0) )	 ///<OAMフォント黒抜
+#define FCOL_FNTOAM_W ( PRINTSYS_MACRO_LSB(15,3,0))  ///<Oam白抜き
+#define FCOL_WHITE_N  ( PRINTSYS_MACRO_LSB(15,2,0) ) ///<BG白抜き
 #define FCOL_POPUP_BASE (15)
 #define FCOL_POPUP_MAIN (7)
 #define FCOL_POPUP_SDW  (8)
-#define FCOL_POPUP      ( PRINTSYS_LSB_Make(FCOL_POPUP_MAIN,FCOL_POPUP_SDW,FCOL_POPUP_BASE))  //BGポップアップ
+#define FCOL_POPUP      ( PRINTSYS_MACRO_LSB(FCOL_POPUP_MAIN,FCOL_POPUP_SDW,FCOL_POPUP_BASE))  //BGポップアップ
 
 #define FCOL_WIN_BASE1  (3)
 #define FCOL_WIN_BASE2  (4)
 #define FCOL_WIN_MAIN   (15)
 #define FCOL_WIN_SDW    (14)
 
-#define FCOL_WIN01 ( PRINTSYS_LSB_Make(FCOL_WIN_MAIN,FCOL_WIN_SDW,FCOL_WIN_BASE1))  //ビーコンウィンドウ1
-#define FCOL_WIN02 ( PRINTSYS_LSB_Make(FCOL_WIN_MAIN,FCOL_WIN_SDW,FCOL_WIN_BASE2))  //ビーコンウィンドウ2
+#define FCOL_WIN01 ( PRINTSYS_MACRO_LSB(FCOL_WIN_MAIN,FCOL_WIN_SDW,FCOL_WIN_BASE1))  //ビーコンウィンドウ1
+#define FCOL_WIN02 ( PRINTSYS_MACRO_LSB(FCOL_WIN_MAIN,FCOL_WIN_SDW,FCOL_WIN_BASE2))  //ビーコンウィンドウ2
 
 //BGアルファ設定
 #define ALPHA_1ST_M (GX_BLEND_PLANEMASK_BG1)
@@ -92,33 +92,49 @@ enum
 
 //ビーコンウィンドウの数
 #define BEACON_WIN_MAX    (2)
-#define BEACON_PROF_MAX   (4)
-#define BEACON_RECORD_MAX (3)
 
 #define UNION_CHAR_MAX  (16)
 
 ///////////////////////////////////////////////////
 //BMP関連
+
+/////////////////////////////////
+//ビーコンウィンドウ
+#define BEACON_PROF_MAX   (4)
+#define BEACON_HOME_MAX   (2)
+#define BEACON_RECORD_MAX (2)
+
 #define BMP_BEACON_FRM  (BG_FRAME_WIN01_S)
 
 #define BMP_PROF_PX (2)
 #define BMP_PROF_PY (1)
 #define BMP_PROF_SX (19)
 #define BMP_PROF_SY (2)
-#define BMP_PROF_OY (3)
 #define BMP_PROF_PAL ( PLTID_BG_WIN01_S )
 
-#define BMP_RECORD_PX (BMP_PROF_PX)
-#define BMP_RECORD_PY (13)
-#define BMP_RECORD_SX (28)
-#define BMP_RECORD_SY (6)
-#define BMP_RECORD_PAL ( PLTID_BG_WIN01_S )
+#define BMP_HOME01_PX (2)
+#define BMP_HOME01_PY (9)
+#define BMP_HOME01_SX (19)
+#define BMP_HOME01_SY (2)
+#define BMP_HOME01_PAL ( PLTID_BG_WIN01_S )
 
-#define BMP_PMS_PX (BMP_PROF_PX)
-#define BMP_PMS_PY (19)
+#define BMP_HOME02_PX (BMP_HOME01_PX+1)
+#define BMP_HOME02_PY (BMP_HOME01_PY+BMP_HOME01_SY)
+#define BMP_HOME02_SX (28)
+#define BMP_HOME02_SY (4)
+#define BMP_HOME02_PAL ( PLTID_BG_WIN01_S )
+
+#define BMP_PMS_PX (2)
+#define BMP_PMS_PY (15)
 #define BMP_PMS_SX (28)
 #define BMP_PMS_SY (4)
 #define BMP_PMS_PAL ( PLTID_BG_WIN01_S )
+
+#define BMP_RECORD_PX (4)
+#define BMP_RECORD_PY (19)
+#define BMP_RECORD_SX (27)
+#define BMP_RECORD_SY (4)
+#define BMP_RECORD_PAL ( PLTID_BG_WIN01_S )
 
 //ポップアップウィンドウ
 #define BMP_POPUP_PX (2)
@@ -131,9 +147,13 @@ enum
 ///////////////////////////////////////////
 //ウィンドウレイアウト
 
-#define BMP_PROF_DAT_PX  (8)
-#define BMP_PROF_DAT_SX  (BMP_PROF_SX-BMP_PROF_DAT_PX)
-#define BMP_PROF_DAT_SY  (BMP_PROF_SY)
+#define BMP_PROF01_DAT_PX  (6)
+#define BMP_PROF01_DAT_SX  (BMP_PROF_SX-BMP_PROF01_DAT_PX)
+#define BMP_PROF01_DAT_SY  (BMP_PROF_SY)
+
+#define BMP_PROF02_DAT_PX  (9)
+#define BMP_PROF02_DAT_SX  (BMP_PROF_SX-BMP_PROF02_DAT_PX)
+#define BMP_PROF02_DAT_SY  (BMP_PROF_SY)
 
 #define BMP_RECORD_DAT_PX  (17)
 #define BMP_RECORD_DAT_SX  (BMP_RECORD_SX-BMP_RECORD_DAT_PX)
@@ -148,6 +168,12 @@ enum{
 };
 
 enum{
+ ACT_SF_MAIN,
+ ACT_SF_SUB,
+ ACT_SF_MAX,
+};
+
+enum{
  ACTANM_ICON_TR,
  ACTANM_ICON_POKE,
  ACTANM_RANK01,
@@ -158,9 +184,9 @@ enum{
 };
 
 #define ACT_TRAINER_PX  (27*8+4)
-#define ACT_TRAINER_PY  (7*8+4)
+#define ACT_TRAINER_PY  (5*8+4)
 #define ACT_RANK_PX     (25*8+4)
-#define ACT_RANK_PY     (12*8)
+#define ACT_RANK_PY     (10*8)
 #define ACT_TRAINER_BGPRI (0)
 
 #define ACT_ICON_BGPRI  (2)

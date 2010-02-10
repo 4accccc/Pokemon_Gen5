@@ -54,9 +54,6 @@
 //外部公開
 #include "app/beacon_detail.h"
 
-
-
-//@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
 #include "msg/msg_beacon_detail.h"  // GMM
 #include "beacon_status.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
@@ -70,22 +67,59 @@
 
 #include "arc/wifi_unionobj_plt.cdat" //ユニオンキャラパレット参照テーブル
 
+//////////////////////////////////////////////////////////////
+//定数定義
 
-static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk );
+typedef struct BEACON_WIN_COLOR{
+ PRINTSYS_LSB color;
+ u8           base;
+}BEACON_WIN_COLOR;
 
-static void sub_PlttVramTrans( u16* p_data, u16 pos, u16 num );
+static const BEACON_WIN_COLOR DATA_BeaconWinColor[] = {
+  { FCOL_WIN01, FCOL_WIN_BASE1 }, 
+  { FCOL_WIN02, FCOL_WIN_BASE2 }, 
+};
+
+#define FCOL_BEACON_BASE( n ) ( DATA_BeaconWinColor[n].base ) 
+#define FCOL_BEACON_COL( n )  ( DATA_BeaconWinColor[n].color )
+
+typedef struct _BEACON_DETAIL{
+  u8  action;
+  u8  msg_id;
+  u8  icon;
+}BEACON_DETAIL;
+
+static const BEACON_DETAIL DATA_BeaconDetail[] = {
+  { GAMEBEACON_ACTION_SEARCH, msg_beacon_000, 0 },
+  { GAMEBEACON_ACTION_BATTLE_WILD_POKE_START, msg_beacon_001, 1 },
+  { GAMEBEACON_ACTION_BATTLE_SP_POKE_START, msg_beacon_002, 1 },
+  { GAMEBEACON_ACTION_BATTLE_TRAINER_START, msg_beacon_003, 2 },
+  { GAMEBEACON_ACTION_BATTLE_LEADER_START, msg_beacon_004, 2 },
+  { GAMEBEACON_ACTION_BATTLE_BIGFOUR_START, msg_beacon_005, 2 },
+  { GAMEBEACON_ACTION_BATTLE_CHAMPION_START, msg_beacon_006, 2 },
+};
+
+#define BEACON_DETAIL_PARAM_NUM (NELEMS(DATA_BeaconDetail))
+
+//////////////////////////////////////////////////////////////
+//プロトタイプ
+static void sub_PlttVramTrans( u16* p_data, u8 target, u16 pos, u16 num );
 static void sub_UpDownButtonActiveControl( BEACON_DETAIL_WORK* wk );
+static const BEACON_DETAIL* sub_GetBeaconDetailParam( GAMEBEACON_ACTION action );
+static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset );
+
 static void act_AnmStart( GFL_CLWK* act, u8 anm_no );
-static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y );
+static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y, u16 setsf );
 static void print_GetMsgToBuf( BEACON_DETAIL_WORK* wk, u8 msg_id );
 
 
 static void draw_UnionObjUpdate( BEACON_DETAIL_WORK* wk, u8 char_no );
 static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk );
-static void draw_BeaconData( BEACON_DETAIL_WORK* wk, BMP_WIN* win, STRBUF* str, u8 px, u8 fx, u8 sx, u8 sy );
+static void draw_BeaconData( BEACON_DETAIL_WORK* wk, BMP_WIN* win, STRBUF* str, u8 px, u8 fx, u8 sx, u8 sy, u8 col_idx );
 static void draw_BeaconWindowScroll( BEACON_WIN* bp, s16 py );
 static void draw_BeaconWindowVisibleSet( BEACON_DETAIL_WORK* wk, u8 idx, BOOL visible_f );
 static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u16 time, u8 idx );
+static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk );
 
 static void effReq_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir );
 
@@ -102,6 +136,7 @@ void BeaconDetail_InitialDraw( BEACON_DETAIL_WORK* wk )
   draw_BeaconWindow( wk, wk->tmpInfo, wk->tmpTime, wk->flip_sw );
   draw_BeaconWindowVisibleSet( wk, wk->flip_sw, TRUE );
   draw_BeaconWindowVisibleSet( wk, wk->flip_sw^1, FALSE );
+  draw_UpdateUnderView( wk );
 
   sub_UpDownButtonActiveControl( wk );
 }
@@ -135,13 +170,27 @@ int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
 /*
  *  @パレット転送
  */
-static void sub_PlttVramTrans( u16* p_data, u16 pos, u16 num )
+static void sub_PlttVramTrans( u16* p_data, u8 target, u16 pos, u16 num  )
 {
   u32 adrs = pos*2;
   u32 siz = num*2;
 
   DC_FlushRange( p_data, siz );
-  GXS_LoadOBJPltt( p_data, adrs, siz );
+
+  switch( target ){
+  case FADE_MAIN_BG:
+    GX_LoadBGPltt( p_data, adrs, siz );
+    break;
+  case FADE_SUB_BG:
+    GXS_LoadBGPltt( p_data, adrs, siz );
+    break;
+  case FADE_MAIN_OBJ:
+    GX_LoadOBJPltt( p_data, adrs, siz );
+    break;
+  case FADE_SUB_OBJ:
+    GXS_LoadOBJPltt( p_data, adrs, siz );
+    break;
+  }
 }
 
 /*
@@ -162,6 +211,52 @@ static void sub_UpDownButtonActiveControl( BEACON_DETAIL_WORK* wk )
 }
 
 /*
+ *  @brief  アクションナンバーから詳細描画タイプを取得
+ */
+static const BEACON_DETAIL* sub_GetBeaconDetailParam( GAMEBEACON_ACTION action )
+{
+  int i;
+
+  for(i = 0;i < BEACON_DETAIL_PARAM_NUM; i++){
+    if( action == DATA_BeaconDetail[i].action ){
+      return &DATA_BeaconDetail[i];
+    }
+  }
+  return &DATA_BeaconDetail[0];
+}
+
+//==================================================================
+/**
+ * ビーコン詳細情報の内容をWORDSETする
+ *
+ * @param   info		        対象のビーコン情報へのポインタ
+ * @param   wordset		
+ * @param   temp_heap_id		内部でテンポラリとして使用するヒープID
+ */
+//==================================================================
+static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset )
+{
+  GAMEBEACON_ACTION action = GAMEBEACON_Get_Action_ActionNo(info);
+
+  switch( action ){
+  case GAMEBEACON_ACTION_BATTLE_WILD_POKE_START:
+  case GAMEBEACON_ACTION_BATTLE_SP_POKE_START:
+    WORDSET_RegisterPokeMonsNameNo( wordset, 1,GAMEBEACON_Get_Action_Monsno(info));
+    break;
+  case GAMEBEACON_ACTION_BATTLE_TRAINER_START:
+  case GAMEBEACON_ACTION_BATTLE_LEADER_START:
+  case GAMEBEACON_ACTION_BATTLE_BIGFOUR_START:
+  case GAMEBEACON_ACTION_BATTLE_CHAMPION_START:
+    WORDSET_RegisterTrainerName( wordset, 0, GAMEBEACON_Get_Action_TrNo(info) );
+    break;
+  default:
+    WORDSET_RegisterPlaceName( wordset, 0, GAMEBEACON_Get_ZoneID( info ) );
+    break;
+  }
+}
+
+
+/*
  *  @brief  アクター アニメスタート
  */
 static void act_AnmStart( GFL_CLWK* act, u8 anm_no )
@@ -173,13 +268,13 @@ static void act_AnmStart( GFL_CLWK* act, u8 anm_no )
 /*
  *  @brief  アクター　座標セット
  */
-static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y )
+static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y, u16 setsf )
 {
   GFL_CLACTPOS pos;
   pos.x = x;
   pos.y = y;
   
-  GFL_CLACT_WK_SetPos( act, &pos, CLSYS_DEFREND_SUB );
+  GFL_CLACT_WK_SetPos( act, &pos, setsf );
 }
 
 /*
@@ -207,7 +302,7 @@ static void draw_UnionObjUpdate( BEACON_DETAIL_WORK* wk, u8 char_no )
   //パレット転送
   p_ofs = 16*sc_wifi_unionobj_plt[char_no];
 //  PaletteWorkSet( wk->pfd, &wk->resPlttUnion.dat[p_ofs], FADE_SUB_OBJ, (ACT_PAL_UNION+pp->id)*16, 0x20 );
-  sub_PlttVramTrans( &wk->resPlttUnion.dat[p_ofs], PLTID_OBJ_UNION_M*16, 16 );
+  sub_PlttVramTrans( &wk->resPlttUnion.dat[p_ofs], FADE_MAIN_OBJ, PLTID_OBJ_UNION_M*16, 16 );
 }
 
 
@@ -218,27 +313,42 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk )
 {
   int i,j;
   BEACON_WIN* bp;
-
+  
   //プロフィール見出し
   for(i = 0;i < BEACON_PROF_MAX;i++){
-    GFL_MSG_GetString( wk->msg, msg_prof01+i, wk->str_tmp);
+    GFL_MSG_GetString( wk->msg, msg_prof01+i, wk->str_tmp );
   
     for(j = 0;j < BEACON_WIN_MAX;j++){
       bp = &wk->beacon_win[j];
+  
+      GFL_BMP_Clear( bp->prof[i].bmp, FCOL_BEACON_BASE(i%2) );
 
       PRINT_UTIL_PrintColor( &bp->prof[i].putil, wk->print_que,
-          0, 0, wk->str_tmp, wk->font, FCOL_WIN01 );
+          0, 0, wk->str_tmp, wk->font, FCOL_BEACON_COL(i%2) );
       GFL_BMPWIN_MakeTransWindow( bp->prof[i].win );
     }
   }
+  //出身地見出し
+  GFL_MSG_GetString( wk->msg, msg_home_town, wk->str_tmp );
+  for(j = 0;j < BEACON_WIN_MAX;j++){
+    bp = &wk->beacon_win[j];
+
+    GFL_BMP_Clear( bp->home[0].bmp, FCOL_BEACON_BASE(0) );
+
+    PRINT_UTIL_PrintColor( &bp->home[0].putil, wk->print_que,
+          0, 0, wk->str_tmp, wk->font, FCOL_BEACON_COL(0) );
+    GFL_BMPWIN_MakeTransWindow( bp->home[0].win );
+  }
+
   //レコード見出し
   GFL_MSG_GetString( wk->msg, msg_record, wk->str_tmp);
   
   for(i = 0;i < BEACON_WIN_MAX;i++){
     bp = &wk->beacon_win[i];
-
+    
+    GFL_BMP_Clear( bp->record.bmp, FCOL_BEACON_BASE(0) );
     PRINT_UTIL_PrintColor( &bp->record.putil, wk->print_que,
-          0, 0, wk->str_tmp, wk->font, FCOL_WIN01 );
+          0, 0, wk->str_tmp, wk->font, FCOL_BEACON_COL(0) );
     GFL_BMPWIN_MakeTransWindow( bp->record.win );
   }
 }
@@ -246,11 +356,11 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk )
 /*
  *  @brief  ビーコンウィンドウ描画 サブ
  */
-static void draw_BeaconData( BEACON_DETAIL_WORK* wk, BMP_WIN* win, STRBUF* str, u8 px, u8 fx, u8 sx, u8 sy )
+static void draw_BeaconData( BEACON_DETAIL_WORK* wk, BMP_WIN* win, STRBUF* str, u8 px, u8 fx, u8 sx, u8 sy, u8 col_idx)
 {
-  GFL_BMP_Fill( win->bmp, px*8, 0, sx*8, sy*8, FCOL_WIN_BASE1 );
+  GFL_BMP_Fill( win->bmp, px*8, 0, sx*8, sy*8, FCOL_BEACON_BASE(col_idx) );
   PRINT_UTIL_PrintColor( &win->putil, wk->print_que,
-      fx, 0, str, wk->font, FCOL_WIN01 );
+      fx, 0, str, wk->font, FCOL_BEACON_COL(col_idx) );
   GFL_BMPWIN_MakeTransWindow( win->win );
 }
 
@@ -276,8 +386,8 @@ static void draw_BeaconWindowScroll( BEACON_WIN* bp, s16 py )
 {
   GFL_BG_SetScroll( bp->frame, GFL_BG_SCROLL_Y_SET, -py );
  
-  act_SetPosition( bp->cTrainer, ACT_TRAINER_PX, ACT_TRAINER_PY+py );
-  act_SetPosition( bp->cRank, ACT_RANK_PX, ACT_RANK_PY+py );
+  act_SetPosition( bp->cTrainer, ACT_TRAINER_PX, ACT_TRAINER_PY+py, ACT_SF_SUB );
+  act_SetPosition( bp->cRank, ACT_RANK_PX, ACT_RANK_PY+py, ACT_SF_SUB );
 }
 
 /*
@@ -293,27 +403,20 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
     GAMEBEACON_Get_FavoriteColor((GXRgb*)&pal[0], info);
     SoftFade(&pal[0], &pal[1], 1, 3, 0x0000); //補色を作成
  
-    sub_PlttVramTrans( pal, 16*idx+1, 2);
+    sub_PlttVramTrans( pal, FADE_SUB_BG, 16*idx+1, 2);
   }
 
   //プレイヤー名
   GAMEBEACON_Get_PlayerNameToBuf( info, wk->str_tmp );
   draw_BeaconData( wk, &bp->prof[0], wk->str_tmp,
-      BMP_PROF_DAT_PX, BMP_PROF_DAT_PX*8, BMP_PROF_DAT_SX, BMP_PROF_DAT_SY );
+      BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 0 );
+  //仕事
   draw_BeaconData( wk, &bp->prof[1], wk->str_tmp,
-      BMP_PROF_DAT_PX, BMP_PROF_DAT_PX*8, BMP_PROF_DAT_SX, BMP_PROF_DAT_SY );
+      BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 1 );
+  //趣味
   draw_BeaconData( wk, &bp->prof[2], wk->str_tmp,
-      BMP_PROF_DAT_PX, BMP_PROF_DAT_PX*8, BMP_PROF_DAT_SX, BMP_PROF_DAT_SY );
-  draw_BeaconData( wk, &bp->prof[3], wk->str_tmp,
-      BMP_PROF_DAT_PX, BMP_PROF_DAT_PX*8, BMP_PROF_DAT_SX, BMP_PROF_DAT_SY );
-
-  //レコード
-//  GFL_BMP_Fill( bp->record.bmp, BMP_RECORD_DAT_PX*8, 0, BMP_RECORD_DAT_PY*8, BMP_RECORD_DAT_SY*8, FCOL_WIN_BASE1 );
-  WORDSET_RegisterNumber( wk->wset, 0,
-      GAMEBEACON_Get_ThanksRecvCount(info), 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 1,
-      GAMEBEACON_Get_SuretigaiCount(info), 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-
+      BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 0 );
+  //プレイ時間
   {
     u16 hour,min;
     GAMEBEACON_Get_PlayTime( info, &hour, &min );
@@ -322,10 +425,25 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
         hour, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterNumber( wk->wset, 3,
         min, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+  
+    print_GetMsgToBuf( wk, msg_prof_ptime );
+    draw_BeaconData( wk, &bp->prof[3], wk->str_expand,
+        BMP_PROF02_DAT_PX, 0, BMP_PROF02_DAT_SX, BMP_PROF02_DAT_SY, 1);
   }
- 
+  //出身地
+  GFL_MSG_GetString( wk->msg_area, GAMEBEACON_Get_Area(info) , wk->str_tmp);
+  draw_BeaconData( wk, &bp->home[1], wk->str_tmp,
+      0, 0, BMP_HOME02_SX, BMP_HOME02_SY, 0 );
+
+  //レコード
+  WORDSET_RegisterNumber( wk->wset, 0,
+      /*GAMEBEACON_Get_ThanksRecvCount(info)*/99999, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 1,
+      GAMEBEACON_Get_SuretigaiCount(info), 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  
   print_GetMsgToBuf( wk, msg_record_num );
-  draw_BeaconData( wk, &bp->record, wk->str_expand, BMP_RECORD_DAT_PX, 0, BMP_RECORD_DAT_SX, BMP_RECORD_DAT_SY);
+  draw_BeaconData( wk, &bp->record, wk->str_expand,
+      BMP_RECORD_DAT_PX, 0, BMP_RECORD_DAT_SX, BMP_RECORD_DAT_SY, 0);
 
   //簡易会話
   {
@@ -356,6 +474,48 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
     }
   }
 
+}
+
+/*
+ *  @brief  下画面カレントビーコン情報プリント
+ */
+static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
+{
+  u16 zone;
+  GAMEBEACON_ACTION action;
+  const BEACON_DETAIL* pd;
+
+  GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[wk->list_top]);
+  action = GAMEBEACON_Get_Action_ActionNo( wk->tmpInfo );
+  pd = sub_GetBeaconDetailParam( action );
+
+  draw_UnionObjUpdate( wk, GAMEBEACON_Get_TrainerView( wk->tmpInfo ) );
+  zone = GAMEBEACON_Get_ZoneID( wk->tmpInfo );
+
+	//プレイヤーの場所から、データインデックスを取得
+  {
+    s16 x,y;
+	  u16 dataIndex = TOWNMAP_DATA_SearchRootZoneID( wk->tmap, GAMEBEACON_Get_TownmapRootZoneID( wk->tmpInfo ) );
+
+	  //タウンマップ上の座標取得
+	  x = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_X );
+	  y = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_Y );
+
+    act_SetPosition( wk->pAct[ACT_ICON_TR], x, y, ACT_SF_MAIN );
+
+    if( pd->icon != 0 ){
+      act_SetPosition( wk->pAct[ACT_ICON_EV], x-24, y, ACT_SF_MAIN );
+      act_AnmStart( wk->pAct[ACT_ICON_EV], ACTANM_ICON_TR + (pd->icon-1) );
+    }
+    GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_EV], (pd->icon != 0) );
+  }
+  //ポップアップメッセージ描画
+  sub_DetailWordset( wk->tmpInfo, wk->wset );
+  print_GetMsgToBuf( wk, pd->msg_id );
+
+  GFL_BMP_Clear( wk->win_popup.bmp, FCOL_POPUP_BASE );
+  PRINT_UTIL_PrintColor( &wk->win_popup.putil, wk->print_que, 0, 0, wk->str_expand, wk->font, FCOL_POPUP );
+  GFL_BMPWIN_MakeTransWindow( wk->win_popup.win );
 }
 
 
@@ -655,6 +815,7 @@ static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
   }
   twk->bdw->flip_sw ^= 1;
   twk->bdw->list_top = twk->next;
+  draw_UpdateUnderView( twk->bdw );
   sub_UpDownButtonActiveControl( twk->bdw );
 
   --(*twk->task_ct);
