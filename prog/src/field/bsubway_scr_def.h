@@ -293,21 +293,23 @@
 //--------------------------------------------------------------
 //  列車種類 FLDEFF_BTRAIN_TYPEと同一である事
 //--------------------------------------------------------------
-#define BTRAIN_TYPE_01 //シングルトレイン
-#define BTRAIN_TYPE_02 //スーパーシングルトレイン
-#define BTRAIN_TYPE_03 //ダブルトレイン
-#define BTRAIN_TYPE_04 //スーパーダブルトレイン
-#define BTRAIN_TYPE_05 //マルチトレイン
-#define BTRAIN_TYPE_06 //スーパーマルチトレイン
-#define BTRAIN_TYPE_07 //WiFiトレイン
+#if 0
+#define BTRAIN_TYPE_01 (0) //シングルトレイン
+#define BTRAIN_TYPE_02 (1) //スーパーシングルトレイン
+#define BTRAIN_TYPE_03 (2) //ダブルトレイン
+#define BTRAIN_TYPE_04 (3) //スーパーダブルトレイン
+#define BTRAIN_TYPE_05 (4) //マルチトレイン
+#define BTRAIN_TYPE_06 (5) //スーパーマルチトレイン
+#define BTRAIN_TYPE_07 (6) //WiFiトレイン
+#endif
 
 //--------------------------------------------------------------
 //  列車アニメ FLDEFF_BTRAIN_ANIME_TYPEと同一である事
 //--------------------------------------------------------------
-#define BTRAIN_ANIME_TYPE_START_GEAR, //ギアステ出発アニメ　扉締り、発車
-#define BTRAIN_ANIME_TYPE_ARRIVAL, //途中駅電車進入アニメ
-#define BTRAIN_ANIME_TYPE_ARRIVAL_HOME, //ホーム進入、電車開くアニメ
-#define BTRAIN_ANIME_TYPE_START_HOME,  //ホーム出発アニメ 扉締り、発車
+#define BTRAIN_ANIME_TYPE_START_GEAR (0) //ギアステ出発アニメ　扉締り、発車
+#define BTRAIN_ANIME_TYPE_ARRIVAL (1)  //途中駅電車進入アニメ
+#define BTRAIN_ANIME_TYPE_ARRIVAL_HOME (2) //ホーム進入、電車開くアニメ
+#define BTRAIN_ANIME_TYPE_START_HOME (3)  //ホーム出発アニメ 扉締り、発車
 
 //--------------------------------------------------------------
 //  列車座標種類
@@ -315,5 +317,13 @@
 #define BTRAIN_POS_RECEIPT (0) //受付ホーム
 #define BTRAIN_POS_HOME (1) //途中駅、終点
 #define BTRAIN_POS_MAX (2) //最大
+
+//--------------------------------------------------------------
+///
+//--------------------------------------------------------------
+#define BSW_TRAIN_OBJID_JIKI (0xe0)
+#define BSW_TRAIN_OBJID_PARTNER (0xe1)
+#define BSW_TRAIN_OBJID_TRAINER_0 (0xe0)
+#define BSW_TRAIN_OBJID_TRAINER_1 (0xe0)
 
 #endif //__SUBWAY_SCR_DEF_H__

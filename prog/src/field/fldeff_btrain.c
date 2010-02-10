@@ -138,7 +138,7 @@ static void btrain_InitResource( FLDEFF_BTRAIN *btrain )
   }
   
   tbl = data_ArcIdxBTrainAnm;
-
+  
   for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++, tbl++ ){
     btrain->g3d_res_anm[i] = GFL_G3D_CreateResourceHandle( handle, *tbl );
   }
@@ -211,15 +211,16 @@ void FLDEFF_BTRAIN_SetAnime(
   GF_ASSERT( type < FLDEFF_BTRAIN_ANIME_TYPE_MAX );
   
   for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++ ){
+	  GFL_G3D_OBJECT_ResetAnimeFrame( work->obj, i ); //–³ðŒƒŠƒZƒbƒg
+    
     if( i == type ){
-	    GFL_G3D_OBJECT_ResetAnimeFrame( work->obj, type );
-      GFL_G3D_OBJECT_EnableAnime( work->obj, type );
+      GFL_G3D_OBJECT_EnableAnime( work->obj, i );
     }else{
-	    GFL_G3D_OBJECT_ResetAnimeFrame( work->obj, type );
-      GFL_G3D_OBJECT_DisableAnime( work->obj, type );
+      GFL_G3D_OBJECT_DisableAnime( work->obj, i );
     }
   }
-
+  
+  work->anm_type = type;
   work->anm_end = FALSE;
 }
 
@@ -282,11 +283,10 @@ static void btrainTask_Init( FLDEFF_TASK *task, void *wk )
   
   work->obj = GFL_G3D_OBJECT_Create(
       eff_btrain->g3d_rnd[type], work->anm, FLDEFF_BTRAIN_ANIME_TYPE_MAX );
-#if 0 
+  
   for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++ ){
-    GFL_G3D_OBJECT_EnableAnime( work->obj, i );
+    GFL_G3D_OBJECT_DisableAnime( work->obj, i );
   }
-#endif
 }
 
 //--------------------------------------------------------------
@@ -328,7 +328,7 @@ static void btrainTask_Update( FLDEFF_TASK *task, void *wk )
     
     if( (cont & PAD_BUTTON_R) && (trg & PAD_BUTTON_A) ){
       work->anm_type++;
-
+      
       if( work->anm_type >= FLDEFF_BTRAIN_ANIME_TYPE_MAX ){
         work->anm_type = 0;
       }
