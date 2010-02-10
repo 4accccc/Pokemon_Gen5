@@ -555,7 +555,19 @@ enum {
 	NARC_waza_tbl_waza541_bin = 541,
 	NARC_waza_tbl_waza542_bin = 542,
 	NARC_waza_tbl_waza543_bin = 543,
-	NARC_waza_tbl_waza544_bin = 544
+	NARC_waza_tbl_waza544_bin = 544,
+	NARC_waza_tbl_waza545_bin = 545,
+	NARC_waza_tbl_waza546_bin = 546,
+	NARC_waza_tbl_waza547_bin = 547,
+	NARC_waza_tbl_waza548_bin = 548,
+	NARC_waza_tbl_waza549_bin = 549,
+	NARC_waza_tbl_waza550_bin = 550,
+	NARC_waza_tbl_waza551_bin = 551,
+	NARC_waza_tbl_waza552_bin = 552,
+	NARC_waza_tbl_waza553_bin = 553,
+	NARC_waza_tbl_waza554_bin = 554,
+	NARC_waza_tbl_waza555_bin = 555,
+	NARC_waza_tbl_waza556_bin = 556
 };
 
 /* NARC_WAZA_TBL_NAIX_ */

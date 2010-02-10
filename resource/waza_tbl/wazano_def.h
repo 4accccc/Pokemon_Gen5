@@ -554,4 +554,16 @@
 #define		WAZANO_BOUHUU					( 542 )		//ぼうふう
 #define		WAZANO_AHUROBUREIKU		( 543 )		//アフロブレイク
 #define		WAZANO_GIASOOSAA			( 544 )		//ギアソーサー
-#define		WAZANO_MAX						( 545 )
+#define		WAZANO_KAENDAN				( 545 )		//かえんだん
+#define		WAZANO_TEKUNOBASUTAA	( 546 )		//テクノバスター
+#define		WAZANO_INISIENOUTA		( 547 )		//いにしえのうた
+#define		WAZANO_KISEKINOTURUGI	( 548 )		//きせきのつるぎ
+#define		WAZANO_KOGOERUSEKAI		( 549 )		//こごえるせかい
+#define		WAZANO_RAIGEKI				( 550 )		//らいげき
+#define		WAZANO_AOIHONOO				( 551 )		//あおいほのお
+#define		WAZANO_HONOONOMAI			( 552 )		//ほのおのまい
+#define		WAZANO_HURIIZUBORUTO	( 553 )		//フリーズボルト
+#define		WAZANO_KOORUDOHUREA		( 554 )		//コールドフレア
+#define		WAZANO_DONARITUKERU		( 555 )		//どなりつける
+#define		WAZANO_TURARAOTOSI		( 556 )		//つららおとし
+#define		WAZANO_MAX						( 557 )

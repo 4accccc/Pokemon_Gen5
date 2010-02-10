@@ -2535,6 +2535,54 @@
 		<language name="JPN" width="216">ギアソーサー</language>
 	</row>
 
+	<row id="WAZANAME_545">
+		<language name="JPN" width="216">かえんだん</language>
+	</row>
+
+	<row id="WAZANAME_546">
+		<language name="JPN" width="216">テクノバスター</language>
+	</row>
+
+	<row id="WAZANAME_547">
+		<language name="JPN" width="216">いにしえのうた</language>
+	</row>
+
+	<row id="WAZANAME_548">
+		<language name="JPN" width="216">きせきのつるぎ</language>
+	</row>
+
+	<row id="WAZANAME_549">
+		<language name="JPN" width="216">こごえるせかい</language>
+	</row>
+
+	<row id="WAZANAME_550">
+		<language name="JPN" width="216">らいげき</language>
+	</row>
+
+	<row id="WAZANAME_551">
+		<language name="JPN" width="216">あおいほのお</language>
+	</row>
+
+	<row id="WAZANAME_552">
+		<language name="JPN" width="216">ほのおのまい</language>
+	</row>
+
+	<row id="WAZANAME_553">
+		<language name="JPN" width="216">フリーズボルト</language>
+	</row>
+
+	<row id="WAZANAME_554">
+		<language name="JPN" width="216">コールドフレア</language>
+	</row>
+
+	<row id="WAZANAME_555">
+		<language name="JPN" width="216">どなりつける</language>
+	</row>
+
+	<row id="WAZANAME_556">
+		<language name="JPN" width="216">つららおとし</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

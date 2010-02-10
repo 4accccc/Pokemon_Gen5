@@ -8527,6 +8527,186 @@
 ギアソーサー！</language>
 	</row>
 
+	<row id="ATKMSG_M_545">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+かえんだん！</language>
+	</row>
+
+	<row id="ATKMSG_Y_545">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+かえんだん！</language>
+	</row>
+
+	<row id="ATKMSG_E_545">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+かえんだん！</language>
+	</row>
+
+	<row id="ATKMSG_M_546">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+テクノバスター！</language>
+	</row>
+
+	<row id="ATKMSG_Y_546">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+テクノバスター！</language>
+	</row>
+
+	<row id="ATKMSG_E_546">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+テクノバスター！</language>
+	</row>
+
+	<row id="ATKMSG_M_547">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+いにしえのうた！</language>
+	</row>
+
+	<row id="ATKMSG_Y_547">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+いにしえのうた！</language>
+	</row>
+
+	<row id="ATKMSG_E_547">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+いにしえのうた！</language>
+	</row>
+
+	<row id="ATKMSG_M_548">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+きせきのつるぎ！</language>
+	</row>
+
+	<row id="ATKMSG_Y_548">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+きせきのつるぎ！</language>
+	</row>
+
+	<row id="ATKMSG_E_548">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+きせきのつるぎ！</language>
+	</row>
+
+	<row id="ATKMSG_M_549">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+こごえるせかい！</language>
+	</row>
+
+	<row id="ATKMSG_Y_549">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+こごえるせかい！</language>
+	</row>
+
+	<row id="ATKMSG_E_549">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+こごえるせかい！</language>
+	</row>
+
+	<row id="ATKMSG_M_550">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+らいげき！</language>
+	</row>
+
+	<row id="ATKMSG_Y_550">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+らいげき！</language>
+	</row>
+
+	<row id="ATKMSG_E_550">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+らいげき！</language>
+	</row>
+
+	<row id="ATKMSG_M_551">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+あおいほのお！</language>
+	</row>
+
+	<row id="ATKMSG_Y_551">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+あおいほのお！</language>
+	</row>
+
+	<row id="ATKMSG_E_551">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+あおいほのお！</language>
+	</row>
+
+	<row id="ATKMSG_M_552">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+ほのおのまい！</language>
+	</row>
+
+	<row id="ATKMSG_Y_552">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+ほのおのまい！</language>
+	</row>
+
+	<row id="ATKMSG_E_552">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+ほのおのまい！</language>
+	</row>
+
+	<row id="ATKMSG_M_553">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+フリーズボルト！</language>
+	</row>
+
+	<row id="ATKMSG_Y_553">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+フリーズボルト！</language>
+	</row>
+
+	<row id="ATKMSG_E_553">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+フリーズボルト！</language>
+	</row>
+
+	<row id="ATKMSG_M_554">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+コールドフレア！</language>
+	</row>
+
+	<row id="ATKMSG_Y_554">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+コールドフレア！</language>
+	</row>
+
+	<row id="ATKMSG_E_554">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+コールドフレア！</language>
+	</row>
+
+	<row id="ATKMSG_M_555">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+どなりつける！</language>
+	</row>
+
+	<row id="ATKMSG_Y_555">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+どなりつける！</language>
+	</row>
+
+	<row id="ATKMSG_E_555">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+どなりつける！</language>
+	</row>
+
+	<row id="ATKMSG_M_556">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+つららおとし！</language>
+	</row>
+
+	<row id="ATKMSG_Y_556">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+つららおとし！</language>
+	</row>
+
+	<row id="ATKMSG_E_556">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+つららおとし！</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
