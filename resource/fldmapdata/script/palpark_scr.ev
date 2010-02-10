@@ -347,24 +347,46 @@ first_anime_evt:
   //助手「！」
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_gyoe )
   _OBJ_ANIME_WAIT()
-  //助手「ついてこいや」
+  //助手「はかせーーー」
   _BALLOONWIN_OBJMSG( msg_palpark_first_02, R15R0301_ASSISTANTW_01 )
   _BALLOONWIN_CLOSE()
-  //つれてく
+  //助手先行つれてく
   IF $pos_x == 9 THEN       //左
     _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_start1 )
+    _OBJ_ANIME_WAIT()
+    //「ついてこいや」
+    _BALLOONWIN_OBJMSG( msg_palpark_first_18, R15R0301_ASSISTANTW_01 )
+    _BALLOONWIN_CLOSE()
+    _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_restart )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_start1 )
   ELSIF $pos_x == 11 THEN   //右
     _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_start2 )
+    _OBJ_ANIME_WAIT()
+    //「ついてこいや」
+    _BALLOONWIN_OBJMSG( msg_palpark_first_18, R15R0301_ASSISTANTW_01 )
+    _BALLOONWIN_CLOSE()
+    _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_restart )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_start2 )
   ELSE                      //中央
     _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_start3 )
+    _OBJ_ANIME_WAIT()
+    //「ついてこいや」
+    _BALLOONWIN_OBJMSG( msg_palpark_first_18, R15R0301_ASSISTANTW_01 )
+    _BALLOONWIN_CLOSE()
+    _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_restart )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_start3 )
   ENDIF
   _OBJ_ANIME_WAIT()
 
-  //助手「こいつ殿堂入りしとるで！」
+  //助手「きたか」
   _BALLOONWIN_OBJMSG( msg_palpark_first_03, R15R0301_ASSISTANTW_01 )
+  _BALLOONWIN_CLOSE()
+
+  _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_dir_up )
+  _OBJ_ANIME_WAIT()
+
+  //助手「こいつ殿堂入りしとるで！」
+  _BALLOONWIN_OBJMSG( msg_palpark_first_19, R15R0301_ASSISTANTW_01 )
   _BALLOONWIN_CLOSE()
 
   //自機を博士の前に助手はける
@@ -382,6 +404,14 @@ first_anime_evt:
   //博士「グーレイト」
   _BALLOONWIN_OBJMSG( msg_palpark_first_05, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
+
+  //博士乱舞
+  _OBJ_ANIME( R15R0301_PARK, anm_spin)
+  _OBJ_ANIME_WAIT()
+
+  //博士「えーと」
+  _BALLOONWIN_OBJMSG( msg_palpark_first_21, R15R0301_PARK )
+  _BALLOONWIN_CLOSE()
   
   //プレーヤー名をタグ0番にセット
   _PLAYER_NAME( 0 )
@@ -392,9 +422,9 @@ first_anime_evt:
   _BALLOONWIN_OBJMSG( msg_palpark_first_07, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
   //助手と会話するため自機右向く
-  _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_dir_left )
+  _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_dir_left )
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_dir_right )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_right )
   _OBJ_ANIME_WAIT() 
   //助手「手ぶらサイコー」
   _BALLOONWIN_OBJMSG( msg_palpark_first_08, R15R0301_ASSISTANTW_01 )
@@ -491,24 +521,39 @@ _ANIME_LABEL	anm_player_mov_start3
 //助手が主人公をついていく（自機が左にいる）
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_asis_mov_start1
-  _ANIME_DATA	AC_WALK_R_8F,1
-  _ANIME_DATA	AC_WALK_U_8F,13
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_U_4F,3
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA	AC_STAY_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //助手が主人公をついていく（自機が右にいる）
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_asis_mov_start2
-  _ANIME_DATA	AC_WALK_L_8F,1
-  _ANIME_DATA	AC_WALK_U_8F,13
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_WALK_U_4F,3
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA	AC_STAY_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //助手が主人公をついていく（自機が中央にいる）
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_asis_mov_start3
-  _ANIME_DATA	AC_WALK_U_8F,13
+  _ANIME_DATA	AC_WALK_U_4F,3
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA	AC_STAY_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//助手再移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_asis_mov_restart
+  _ANIME_DATA	AC_WALK_U_4F,10
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
   
 //--------------------------------------------------------------------
 //助手がはける
@@ -529,32 +574,71 @@ _ANIME_LABEL	anm_player_mov_front
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//自機助手の方を向く
+//左向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_asis_dir_left
+_ANIME_LABEL	anm_dir_left
   _ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//自機助手の方を向く
+//右向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_dir_right
+_ANIME_LABEL	anm_dir_right
   _ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//博士の方を向く
+//上向く
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_dir_up
   _ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
-  
+
 //--------------------------------------------------------------------
 //「！」マーク
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_gyoe
   _ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//スピン
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_spin
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+  
   
   
 
