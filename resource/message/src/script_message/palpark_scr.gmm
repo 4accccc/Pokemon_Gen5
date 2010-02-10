@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-10T20:18:25"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-10T20:45:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -693,33 +693,6 @@ msg_palpark_first_21へ続く</comment>
 モニターを　しているんだ▼
 ポケモンに　なにか　あったら
 いけないからね！</language>
-	</row>
-
-	<row id="msg_palpark_first_18">
-		<comment>助手
-上の階にいるので、ふきだしだけ</comment>
-		<language name="JPN" width="256">ちょっと　あなた！
-こっちへ　きてくれるかしら！</language>
-		<language name="JPN_KANJI" width="256">ちょっと　あなた！
-こっちへ　来てくれるかしら！</language>
-	</row>
-
-	<row id="msg_palpark_first_19">
-		<comment>助手
-上の階にいるので、ふきだしだけ</comment>
-		<language name="JPN" width="256">ちょっと！　すごく　たのしいのよ！
-えんりょせずに　こっちへきてよぉ</language>
-		<language name="JPN_KANJI" width="256">ちょっと！　すごく　楽しいのよ！
-遠慮せずに　こっちへ来てよぉ</language>
-	</row>
-
-	<row id="msg_palpark_first_20">
-		<comment>助手
-上の階にいるので、ふきだしだけ</comment>
-		<language name="JPN" width="256">こっちよ　こっちー！
-はやく　はやくー！</language>
-		<language name="JPN_KANJI" width="256">こっちよ　こっちー！
-早く　早くー！</language>
 	</row>
 
 	<row id="msg_palpark_first_21">
