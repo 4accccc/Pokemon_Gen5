@@ -598,7 +598,7 @@ end
   fp_lst.printf( "kanto/000/pmwb_000_n.ncl\n" )
   fp_lst.printf( "kanto/000/pmwb_000_r.ncl\n" )
 
-  gmm.make_row_index( "MONSNAME_", 0, "Å[Å[Å[Å[Å[" )
+  gmm.make_row_index( "MONSNAME_", 0, "Å|Å|Å|Å|Å|" )
 
   pokelist << "Å|Å|Å|Å|Å|\t999\tÉmÅ[É}Éã\tÉmÅ[É}Éã\tÅ|\tÅ|\n"
 

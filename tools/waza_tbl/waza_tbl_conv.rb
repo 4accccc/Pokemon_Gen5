@@ -125,10 +125,10 @@ end
   #GMM
   wazaname_gmm = GMM::new
   wazaname_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "wazaname.gmm" )
-  wazaname_gmm.make_row_index( "WAZANAME_", 0, "Å[Å[Å[Å[Å[" )
+  wazaname_gmm.make_row_index( "WAZANAME_", 0, "Å|Å|Å|Å|Å|" )
   wazainfo_gmm = GMM::new
   wazainfo_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "wazainfo.gmm" )
-  wazainfo_gmm.make_row_index_kanji( "WAZAINFO_", 0, "Å[\rÅ[\rÅ[\rÅ[\rÅ[", "Å[\rÅ[\rÅ[\rÅ[\rÅ[" )
+  wazainfo_gmm.make_row_index_kanji( "WAZAINFO_", 0, "Å|\rÅ|\rÅ|\rÅ|\rÅ|", "Å|\rÅ|\rÅ|\rÅ|\rÅ|" )
   atkmsg_gmm = GMM::new
   atkmsg_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "btl_attack.gmm" )
   atkmsg_gmm.make_row_index( "ATKMSG_M_", 0, "ÅI" )
