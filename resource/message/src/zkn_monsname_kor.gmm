@@ -1,0 +1,3333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="shimoyamada" host="W00184" date="2010-02-10T17:55:18"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="117"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="100"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="ZKN_MONSNAME_KOR_000">
+		<comment>ーーーーー</comment>
+		<language name="JPN" width="216">-----</language>
+		<language name="JPN_KANJI">-----</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_001">
+		<comment>フシギダネ</comment>
+		<language name="JPN" width="216">이상해씨</language>
+		<language name="JPN_KANJI">이상해씨</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_002">
+		<comment>フシギソウ</comment>
+		<language name="JPN" width="216">이상해풀</language>
+		<language name="JPN_KANJI">이상해풀</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_003">
+		<comment>フシギバナ</comment>
+		<language name="JPN" width="216">이상해꽃</language>
+		<language name="JPN_KANJI">이상해꽃</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_004">
+		<comment>ヒトカゲ</comment>
+		<language name="JPN" width="216">파이리</language>
+		<language name="JPN_KANJI">파이리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_005">
+		<comment>リザード</comment>
+		<language name="JPN" width="216">리자드</language>
+		<language name="JPN_KANJI">리자드</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_006">
+		<comment>リザードン</comment>
+		<language name="JPN" width="216">리자몽</language>
+		<language name="JPN_KANJI">리자몽</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_007">
+		<comment>ゼニガメ</comment>
+		<language name="JPN" width="216">꼬부기</language>
+		<language name="JPN_KANJI">꼬부기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_008">
+		<comment>カメール</comment>
+		<language name="JPN" width="216">어니부기</language>
+		<language name="JPN_KANJI">어니부기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_009">
+		<comment>カメックス</comment>
+		<language name="JPN" width="216">거북왕</language>
+		<language name="JPN_KANJI">거북왕</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_010">
+		<comment>キャタピー</comment>
+		<language name="JPN" width="216">캐터피</language>
+		<language name="JPN_KANJI">캐터피</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_011">
+		<comment>トランセル</comment>
+		<language name="JPN" width="216">단데기</language>
+		<language name="JPN_KANJI">단데기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_012">
+		<comment>バタフリー</comment>
+		<language name="JPN" width="216">버터플</language>
+		<language name="JPN_KANJI">버터플</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_013">
+		<comment>ビードル</comment>
+		<language name="JPN" width="216">뿔충이</language>
+		<language name="JPN_KANJI">뿔충이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_014">
+		<comment>コクーン</comment>
+		<language name="JPN" width="216">딱충이</language>
+		<language name="JPN_KANJI">딱충이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_015">
+		<comment>スピアー</comment>
+		<language name="JPN" width="216">독침붕</language>
+		<language name="JPN_KANJI">독침붕</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_016">
+		<comment>ポッポ</comment>
+		<language name="JPN" width="216">구구</language>
+		<language name="JPN_KANJI">구구</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_017">
+		<comment>ピジョン</comment>
+		<language name="JPN" width="216">피죤</language>
+		<language name="JPN_KANJI">피죤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_018">
+		<comment>ピジョット</comment>
+		<language name="JPN" width="216">피죤투</language>
+		<language name="JPN_KANJI">피죤투</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_019">
+		<comment>コラッタ</comment>
+		<language name="JPN" width="216">꼬렛</language>
+		<language name="JPN_KANJI">꼬렛</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_020">
+		<comment>ラッタ</comment>
+		<language name="JPN" width="216">레트라</language>
+		<language name="JPN_KANJI">레트라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_021">
+		<comment>オニスズメ</comment>
+		<language name="JPN" width="216">깨비참</language>
+		<language name="JPN_KANJI">깨비참</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_022">
+		<comment>オニドリル</comment>
+		<language name="JPN" width="216">깨비드릴조</language>
+		<language name="JPN_KANJI">깨비드릴조</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_023">
+		<comment>アーボ</comment>
+		<language name="JPN" width="216">아보</language>
+		<language name="JPN_KANJI">아보</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_024">
+		<comment>アーボック</comment>
+		<language name="JPN" width="216">아보크</language>
+		<language name="JPN_KANJI">아보크</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_025">
+		<comment>ピカチュウ</comment>
+		<language name="JPN" width="216">피카츄</language>
+		<language name="JPN_KANJI">피카츄</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_026">
+		<comment>ライチュウ</comment>
+		<language name="JPN" width="216">라이츄</language>
+		<language name="JPN_KANJI">라이츄</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_027">
+		<comment>サンド</comment>
+		<language name="JPN" width="216">모래두지</language>
+		<language name="JPN_KANJI">모래두지</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_028">
+		<comment>サンドパン</comment>
+		<language name="JPN" width="216">고지</language>
+		<language name="JPN_KANJI">고지</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_029">
+		<comment>ニドラン♀</comment>
+		<language name="JPN" width="216">니드런\[32:0E:female\]</language>
+		<language name="JPN_KANJI">니드런\[32:0E:female\]</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_030">
+		<comment>ニドリーナ</comment>
+		<language name="JPN" width="216">니드리나</language>
+		<language name="JPN_KANJI">니드리나</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_031">
+		<comment>ニドクイン</comment>
+		<language name="JPN" width="216">니드퀸</language>
+		<language name="JPN_KANJI">니드퀸</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_032">
+		<comment>ニドラン♂</comment>
+		<language name="JPN" width="216">니드런\[32:0D:male\]</language>
+		<language name="JPN_KANJI">니드런\[32:0D:male\]</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_033">
+		<comment>ニドリーノ</comment>
+		<language name="JPN" width="216">니드리노</language>
+		<language name="JPN_KANJI">니드리노</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_034">
+		<comment>ニドキング</comment>
+		<language name="JPN" width="216">니드킹</language>
+		<language name="JPN_KANJI">니드킹</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_035">
+		<comment>ピッピ</comment>
+		<language name="JPN" width="216">삐삐</language>
+		<language name="JPN_KANJI">삐삐</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_036">
+		<comment>ピクシー</comment>
+		<language name="JPN" width="216">픽시</language>
+		<language name="JPN_KANJI">픽시</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_037">
+		<comment>ロコン</comment>
+		<language name="JPN" width="216">식스테일</language>
+		<language name="JPN_KANJI">식스테일</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_038">
+		<comment>キュウコン</comment>
+		<language name="JPN" width="216">나인테일</language>
+		<language name="JPN_KANJI">나인테일</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_039">
+		<comment>プリン</comment>
+		<language name="JPN" width="216">푸린</language>
+		<language name="JPN_KANJI">푸린</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_040">
+		<comment>プクリン</comment>
+		<language name="JPN" width="216">푸크린</language>
+		<language name="JPN_KANJI">푸크린</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_041">
+		<comment>ズバット</comment>
+		<language name="JPN" width="216">주뱃</language>
+		<language name="JPN_KANJI">주뱃</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_042">
+		<comment>ゴルバット</comment>
+		<language name="JPN" width="216">골뱃</language>
+		<language name="JPN_KANJI">골뱃</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_043">
+		<comment>ナゾノクサ</comment>
+		<language name="JPN" width="216">뚜벅쵸</language>
+		<language name="JPN_KANJI">뚜벅쵸</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_044">
+		<comment>クサイハナ</comment>
+		<language name="JPN" width="216">냄새꼬</language>
+		<language name="JPN_KANJI">냄새꼬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_045">
+		<comment>ラフレシア</comment>
+		<language name="JPN" width="216">라플레시아</language>
+		<language name="JPN_KANJI">라플레시아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_046">
+		<comment>パラス</comment>
+		<language name="JPN" width="216">파라스</language>
+		<language name="JPN_KANJI">파라스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_047">
+		<comment>パラセクト</comment>
+		<language name="JPN" width="216">파라섹트</language>
+		<language name="JPN_KANJI">파라섹트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_048">
+		<comment>コンパン</comment>
+		<language name="JPN" width="216">콘팡</language>
+		<language name="JPN_KANJI">콘팡</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_049">
+		<comment>モルフォン</comment>
+		<language name="JPN" width="216">도나리</language>
+		<language name="JPN_KANJI">도나리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_050">
+		<comment>ディグダ</comment>
+		<language name="JPN" width="216">디그다</language>
+		<language name="JPN_KANJI">디그다</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_051">
+		<comment>ダグトリオ</comment>
+		<language name="JPN" width="216">닥트리오</language>
+		<language name="JPN_KANJI">닥트리오</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_052">
+		<comment>ニャース</comment>
+		<language name="JPN" width="216">나옹</language>
+		<language name="JPN_KANJI">나옹</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_053">
+		<comment>ペルシアン</comment>
+		<language name="JPN" width="216">페르시온</language>
+		<language name="JPN_KANJI">페르시온</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_054">
+		<comment>コダック</comment>
+		<language name="JPN" width="216">고라파덕</language>
+		<language name="JPN_KANJI">고라파덕</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_055">
+		<comment>ゴルダック</comment>
+		<language name="JPN" width="216">골덕</language>
+		<language name="JPN_KANJI">골덕</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_056">
+		<comment>マンキー</comment>
+		<language name="JPN" width="216">망키</language>
+		<language name="JPN_KANJI">망키</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_057">
+		<comment>オコリザル</comment>
+		<language name="JPN" width="216">성원숭</language>
+		<language name="JPN_KANJI">성원숭</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_058">
+		<comment>ガーディ</comment>
+		<language name="JPN" width="216">가디</language>
+		<language name="JPN_KANJI">가디</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_059">
+		<comment>ウインディ</comment>
+		<language name="JPN" width="216">윈디</language>
+		<language name="JPN_KANJI">윈디</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_060">
+		<comment>ニョロモ</comment>
+		<language name="JPN" width="216">발챙이</language>
+		<language name="JPN_KANJI">발챙이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_061">
+		<comment>ニョロゾ</comment>
+		<language name="JPN" width="216">슈륙챙이</language>
+		<language name="JPN_KANJI">슈륙챙이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_062">
+		<comment>ニョロボン</comment>
+		<language name="JPN" width="216">강챙이</language>
+		<language name="JPN_KANJI">강챙이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_063">
+		<comment>ケーシィ</comment>
+		<language name="JPN" width="216">캐이시</language>
+		<language name="JPN_KANJI">캐이시</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_064">
+		<comment>ユンゲラー</comment>
+		<language name="JPN" width="216">윤겔라</language>
+		<language name="JPN_KANJI">윤겔라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_065">
+		<comment>フーディン</comment>
+		<language name="JPN" width="216">후딘</language>
+		<language name="JPN_KANJI">후딘</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_066">
+		<comment>ワンリキー</comment>
+		<language name="JPN" width="216">알통몬</language>
+		<language name="JPN_KANJI">알통몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_067">
+		<comment>ゴーリキー</comment>
+		<language name="JPN" width="216">근육몬</language>
+		<language name="JPN_KANJI">근육몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_068">
+		<comment>カイリキー</comment>
+		<language name="JPN" width="216">괴력몬</language>
+		<language name="JPN_KANJI">괴력몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_069">
+		<comment>マダツボミ</comment>
+		<language name="JPN" width="216">모다피</language>
+		<language name="JPN_KANJI">모다피</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_070">
+		<comment>ウツドン</comment>
+		<language name="JPN" width="216">우츠동</language>
+		<language name="JPN_KANJI">우츠동</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_071">
+		<comment>ウツボット</comment>
+		<language name="JPN" width="216">우츠보트</language>
+		<language name="JPN_KANJI">우츠보트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_072">
+		<comment>メノクラゲ</comment>
+		<language name="JPN" width="216">왕눈해</language>
+		<language name="JPN_KANJI">왕눈해</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_073">
+		<comment>ドククラゲ</comment>
+		<language name="JPN" width="216">독파리</language>
+		<language name="JPN_KANJI">독파리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_074">
+		<comment>イシツブテ</comment>
+		<language name="JPN" width="216">꼬마돌</language>
+		<language name="JPN_KANJI">꼬마돌</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_075">
+		<comment>ゴローン</comment>
+		<language name="JPN" width="216">데구리</language>
+		<language name="JPN_KANJI">데구리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_076">
+		<comment>ゴローニャ</comment>
+		<language name="JPN" width="216">딱구리</language>
+		<language name="JPN_KANJI">딱구리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_077">
+		<comment>ポニータ</comment>
+		<language name="JPN" width="216">포니타</language>
+		<language name="JPN_KANJI">포니타</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_078">
+		<comment>ギャロップ</comment>
+		<language name="JPN" width="216">날쌩마</language>
+		<language name="JPN_KANJI">날쌩마</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_079">
+		<comment>ヤドン</comment>
+		<language name="JPN" width="216">야돈</language>
+		<language name="JPN_KANJI">야돈</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_080">
+		<comment>ヤドラン</comment>
+		<language name="JPN" width="216">야도란</language>
+		<language name="JPN_KANJI">야도란</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_081">
+		<comment>コイル</comment>
+		<language name="JPN" width="216">코일</language>
+		<language name="JPN_KANJI">코일</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_082">
+		<comment>レアコイル</comment>
+		<language name="JPN" width="216">레어코일</language>
+		<language name="JPN_KANJI">레어코일</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_083">
+		<comment>カモネギ</comment>
+		<language name="JPN" width="216">파오리</language>
+		<language name="JPN_KANJI">파오리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_084">
+		<comment>ドードー</comment>
+		<language name="JPN" width="216">두두</language>
+		<language name="JPN_KANJI">두두</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_085">
+		<comment>ドードリオ</comment>
+		<language name="JPN" width="216">두트리오</language>
+		<language name="JPN_KANJI">두트리오</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_086">
+		<comment>パウワウ</comment>
+		<language name="JPN" width="216">쥬쥬</language>
+		<language name="JPN_KANJI">쥬쥬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_087">
+		<comment>ジュゴン</comment>
+		<language name="JPN" width="216">쥬레곤</language>
+		<language name="JPN_KANJI">쥬레곤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_088">
+		<comment>ベトベター</comment>
+		<language name="JPN" width="216">질퍽이</language>
+		<language name="JPN_KANJI">질퍽이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_089">
+		<comment>ベトベトン</comment>
+		<language name="JPN" width="216">질뻐기</language>
+		<language name="JPN_KANJI">질뻐기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_090">
+		<comment>シェルダー</comment>
+		<language name="JPN" width="216">셀러</language>
+		<language name="JPN_KANJI">셀러</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_091">
+		<comment>パルシェン</comment>
+		<language name="JPN" width="216">파르셀</language>
+		<language name="JPN_KANJI">파르셀</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_092">
+		<comment>ゴース</comment>
+		<language name="JPN" width="216">고오스</language>
+		<language name="JPN_KANJI">고오스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_093">
+		<comment>ゴースト</comment>
+		<language name="JPN" width="216">고우스트</language>
+		<language name="JPN_KANJI">고우스트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_094">
+		<comment>ゲンガー</comment>
+		<language name="JPN" width="216">팬텀</language>
+		<language name="JPN_KANJI">팬텀</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_095">
+		<comment>イワーク</comment>
+		<language name="JPN" width="216">롱스톤</language>
+		<language name="JPN_KANJI">롱스톤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_096">
+		<comment>スリープ</comment>
+		<language name="JPN" width="216">슬리프</language>
+		<language name="JPN_KANJI">슬리프</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_097">
+		<comment>スリーパー</comment>
+		<language name="JPN" width="216">슬리퍼</language>
+		<language name="JPN_KANJI">슬리퍼</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_098">
+		<comment>クラブ</comment>
+		<language name="JPN" width="216">크랩</language>
+		<language name="JPN_KANJI">크랩</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_099">
+		<comment>キングラー</comment>
+		<language name="JPN" width="216">킹크랩</language>
+		<language name="JPN_KANJI">킹크랩</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_100">
+		<comment>ビリリダマ</comment>
+		<language name="JPN" width="216">찌리리공</language>
+		<language name="JPN_KANJI">찌리리공</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_101">
+		<comment>マルマイン</comment>
+		<language name="JPN" width="216">붐볼</language>
+		<language name="JPN_KANJI">붐볼</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_102">
+		<comment>タマタマ</comment>
+		<language name="JPN" width="216">아라리</language>
+		<language name="JPN_KANJI">아라리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_103">
+		<comment>ナッシー</comment>
+		<language name="JPN" width="216">나시</language>
+		<language name="JPN_KANJI">나시</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_104">
+		<comment>カラカラ</comment>
+		<language name="JPN" width="216">탕구리</language>
+		<language name="JPN_KANJI">탕구리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_105">
+		<comment>ガラガラ</comment>
+		<language name="JPN" width="216">텅구리</language>
+		<language name="JPN_KANJI">텅구리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_106">
+		<comment>サワムラー</comment>
+		<language name="JPN" width="216">시라소몬</language>
+		<language name="JPN_KANJI">시라소몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_107">
+		<comment>エビワラー</comment>
+		<language name="JPN" width="216">홍수몬</language>
+		<language name="JPN_KANJI">홍수몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_108">
+		<comment>ベロリンガ</comment>
+		<language name="JPN" width="216">내루미</language>
+		<language name="JPN_KANJI">내루미</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_109">
+		<comment>ドガース</comment>
+		<language name="JPN" width="216">또가스</language>
+		<language name="JPN_KANJI">또가스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_110">
+		<comment>マタドガス</comment>
+		<language name="JPN" width="216">또도가스</language>
+		<language name="JPN_KANJI">또도가스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_111">
+		<comment>サイホーン</comment>
+		<language name="JPN" width="216">뿔카노</language>
+		<language name="JPN_KANJI">뿔카노</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_112">
+		<comment>サイドン</comment>
+		<language name="JPN" width="216">코뿌리</language>
+		<language name="JPN_KANJI">코뿌리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_113">
+		<comment>ラッキー</comment>
+		<language name="JPN" width="216">럭키</language>
+		<language name="JPN_KANJI">럭키</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_114">
+		<comment>モンジャラ</comment>
+		<language name="JPN" width="216">덩쿠리</language>
+		<language name="JPN_KANJI">덩쿠리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_115">
+		<comment>ガルーラ</comment>
+		<language name="JPN" width="216">캥카</language>
+		<language name="JPN_KANJI">캥카</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_116">
+		<comment>タッツー</comment>
+		<language name="JPN" width="216">쏘드라</language>
+		<language name="JPN_KANJI">쏘드라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_117">
+		<comment>シードラ</comment>
+		<language name="JPN" width="216">시드라</language>
+		<language name="JPN_KANJI">시드라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_118">
+		<comment>トサキント</comment>
+		<language name="JPN" width="216">콘치</language>
+		<language name="JPN_KANJI">콘치</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_119">
+		<comment>アズマオウ</comment>
+		<language name="JPN" width="216">왕콘치</language>
+		<language name="JPN_KANJI">왕콘치</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_120">
+		<comment>ヒトデマン</comment>
+		<language name="JPN" width="216">별가사리</language>
+		<language name="JPN_KANJI">별가사리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_121">
+		<comment>スターミー</comment>
+		<language name="JPN" width="216">아쿠스타</language>
+		<language name="JPN_KANJI">아쿠스타</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_122">
+		<comment>バリヤード</comment>
+		<language name="JPN" width="216">마임맨</language>
+		<language name="JPN_KANJI">마임맨</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_123">
+		<comment>ストライク</comment>
+		<language name="JPN" width="216">스라크</language>
+		<language name="JPN_KANJI">스라크</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_124">
+		<comment>ルージュラ</comment>
+		<language name="JPN" width="216">루주라</language>
+		<language name="JPN_KANJI">루주라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_125">
+		<comment>エレブー</comment>
+		<language name="JPN" width="216">에레브</language>
+		<language name="JPN_KANJI">에레브</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_126">
+		<comment>ブーバー</comment>
+		<language name="JPN" width="216">마그마</language>
+		<language name="JPN_KANJI">마그마</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_127">
+		<comment>カイロス</comment>
+		<language name="JPN" width="216">쁘사이저</language>
+		<language name="JPN_KANJI">쁘사이저</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_128">
+		<comment>ケンタロス</comment>
+		<language name="JPN" width="216">켄타로스</language>
+		<language name="JPN_KANJI">켄타로스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_129">
+		<comment>コイキング</comment>
+		<language name="JPN" width="216">잉어킹</language>
+		<language name="JPN_KANJI">잉어킹</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_130">
+		<comment>ギャラドス</comment>
+		<language name="JPN" width="216">갸라도스</language>
+		<language name="JPN_KANJI">갸라도스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_131">
+		<comment>ラプラス</comment>
+		<language name="JPN" width="216">라프라스</language>
+		<language name="JPN_KANJI">라프라스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_132">
+		<comment>メタモン</comment>
+		<language name="JPN" width="216">메타몽</language>
+		<language name="JPN_KANJI">메타몽</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_133">
+		<comment>イーブイ</comment>
+		<language name="JPN" width="216">이브이</language>
+		<language name="JPN_KANJI">이브이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_134">
+		<comment>シャワーズ</comment>
+		<language name="JPN" width="216">샤미드</language>
+		<language name="JPN_KANJI">샤미드</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_135">
+		<comment>サンダース</comment>
+		<language name="JPN" width="216">쥬피썬더</language>
+		<language name="JPN_KANJI">쥬피썬더</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_136">
+		<comment>ブースター</comment>
+		<language name="JPN" width="216">부스터</language>
+		<language name="JPN_KANJI">부스터</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_137">
+		<comment>ポリゴン</comment>
+		<language name="JPN" width="216">폴리곤</language>
+		<language name="JPN_KANJI">폴리곤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_138">
+		<comment>オムナイト</comment>
+		<language name="JPN" width="216">암나이트</language>
+		<language name="JPN_KANJI">암나이트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_139">
+		<comment>オムスター</comment>
+		<language name="JPN" width="216">암스타</language>
+		<language name="JPN_KANJI">암스타</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_140">
+		<comment>カブト</comment>
+		<language name="JPN" width="216">투구</language>
+		<language name="JPN_KANJI">투구</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_141">
+		<comment>カブトプス</comment>
+		<language name="JPN" width="216">투구푸스</language>
+		<language name="JPN_KANJI">투구푸스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_142">
+		<comment>プテラ</comment>
+		<language name="JPN" width="216">프테라</language>
+		<language name="JPN_KANJI">프테라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_143">
+		<comment>カビゴン</comment>
+		<language name="JPN" width="216">잠만보</language>
+		<language name="JPN_KANJI">잠만보</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_144">
+		<comment>フリーザー</comment>
+		<language name="JPN" width="216">프리져</language>
+		<language name="JPN_KANJI">프리져</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_145">
+		<comment>サンダー</comment>
+		<language name="JPN" width="216">썬더</language>
+		<language name="JPN_KANJI">썬더</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_146">
+		<comment>ファイヤー</comment>
+		<language name="JPN" width="216">파이어</language>
+		<language name="JPN_KANJI">파이어</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_147">
+		<comment>ミニリュウ</comment>
+		<language name="JPN" width="216">미뇽</language>
+		<language name="JPN_KANJI">미뇽</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_148">
+		<comment>ハクリュー</comment>
+		<language name="JPN" width="216">신뇽</language>
+		<language name="JPN_KANJI">신뇽</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_149">
+		<comment>カイリュー</comment>
+		<language name="JPN" width="216">망나뇽</language>
+		<language name="JPN_KANJI">망나뇽</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_150">
+		<comment>ミュウツー</comment>
+		<language name="JPN" width="216">뮤츠</language>
+		<language name="JPN_KANJI">뮤츠</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_151">
+		<comment>ミュウ</comment>
+		<language name="JPN" width="216">뮤</language>
+		<language name="JPN_KANJI">뮤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_152">
+		<comment>チコリータ</comment>
+		<language name="JPN" width="216">치코리타</language>
+		<language name="JPN_KANJI">치코리타</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_153">
+		<comment>ベイリーフ</comment>
+		<language name="JPN" width="216">베이리프</language>
+		<language name="JPN_KANJI">베이리프</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_154">
+		<comment>メガニウム</comment>
+		<language name="JPN" width="216">메가니움</language>
+		<language name="JPN_KANJI">메가니움</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_155">
+		<comment>ヒノアラシ</comment>
+		<language name="JPN" width="216">브케인</language>
+		<language name="JPN_KANJI">브케인</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_156">
+		<comment>マグマラシ</comment>
+		<language name="JPN" width="216">마그케인</language>
+		<language name="JPN_KANJI">마그케인</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_157">
+		<comment>バクフーン</comment>
+		<language name="JPN" width="216">블레이범</language>
+		<language name="JPN_KANJI">블레이범</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_158">
+		<comment>ワニノコ</comment>
+		<language name="JPN" width="216">리아코</language>
+		<language name="JPN_KANJI">리아코</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_159">
+		<comment>アリゲイツ</comment>
+		<language name="JPN" width="216">엘리게이</language>
+		<language name="JPN_KANJI">엘리게이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_160">
+		<comment>オーダイル</comment>
+		<language name="JPN" width="216">장크로다일</language>
+		<language name="JPN_KANJI">장크로다일</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_161">
+		<comment>オタチ</comment>
+		<language name="JPN" width="216">꼬리선</language>
+		<language name="JPN_KANJI">꼬리선</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_162">
+		<comment>オオタチ</comment>
+		<language name="JPN" width="216">다꼬리</language>
+		<language name="JPN_KANJI">다꼬리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_163">
+		<comment>ホーホー</comment>
+		<language name="JPN" width="216">부우부</language>
+		<language name="JPN_KANJI">부우부</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_164">
+		<comment>ヨルノズク</comment>
+		<language name="JPN" width="216">야부엉</language>
+		<language name="JPN_KANJI">야부엉</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_165">
+		<comment>レディバ</comment>
+		<language name="JPN" width="216">레디바</language>
+		<language name="JPN_KANJI">레디바</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_166">
+		<comment>レディアン</comment>
+		<language name="JPN" width="216">레디안</language>
+		<language name="JPN_KANJI">레디안</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_167">
+		<comment>イトマル</comment>
+		<language name="JPN" width="216">페이검</language>
+		<language name="JPN_KANJI">페이검</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_168">
+		<comment>アリアドス</comment>
+		<language name="JPN" width="216">아리아도스</language>
+		<language name="JPN_KANJI">아리아도스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_169">
+		<comment>クロバット</comment>
+		<language name="JPN" width="216">크로뱃</language>
+		<language name="JPN_KANJI">크로뱃</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_170">
+		<comment>チョンチー</comment>
+		<language name="JPN" width="216">초라기</language>
+		<language name="JPN_KANJI">초라기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_171">
+		<comment>ランターン</comment>
+		<language name="JPN" width="216">랜턴</language>
+		<language name="JPN_KANJI">랜턴</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_172">
+		<comment>ピチュー</comment>
+		<language name="JPN" width="216">피츄</language>
+		<language name="JPN_KANJI">피츄</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_173">
+		<comment>ピィ</comment>
+		<language name="JPN" width="216">삐</language>
+		<language name="JPN_KANJI">삐</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_174">
+		<comment>ププリン</comment>
+		<language name="JPN" width="216">푸푸린</language>
+		<language name="JPN_KANJI">푸푸린</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_175">
+		<comment>トゲピー</comment>
+		<language name="JPN" width="216">토게피</language>
+		<language name="JPN_KANJI">토게피</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_176">
+		<comment>トゲチック</comment>
+		<language name="JPN" width="216">토게틱</language>
+		<language name="JPN_KANJI">토게틱</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_177">
+		<comment>ネイティ</comment>
+		<language name="JPN" width="216">네이티</language>
+		<language name="JPN_KANJI">네이티</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_178">
+		<comment>ネイティオ</comment>
+		<language name="JPN" width="216">네이티오</language>
+		<language name="JPN_KANJI">네이티오</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_179">
+		<comment>メリープ</comment>
+		<language name="JPN" width="216">메리프</language>
+		<language name="JPN_KANJI">메리프</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_180">
+		<comment>モココ</comment>
+		<language name="JPN" width="216">보송송</language>
+		<language name="JPN_KANJI">보송송</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_181">
+		<comment>デンリュウ</comment>
+		<language name="JPN" width="216">전룡</language>
+		<language name="JPN_KANJI">전룡</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_182">
+		<comment>キレイハナ</comment>
+		<language name="JPN" width="216">아르코</language>
+		<language name="JPN_KANJI">아르코</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_183">
+		<comment>マリル</comment>
+		<language name="JPN" width="216">마릴</language>
+		<language name="JPN_KANJI">마릴</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_184">
+		<comment>マリルリ</comment>
+		<language name="JPN" width="216">마릴리</language>
+		<language name="JPN_KANJI">마릴리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_185">
+		<comment>ウソッキー</comment>
+		<language name="JPN" width="216">꼬지모</language>
+		<language name="JPN_KANJI">꼬지모</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_186">
+		<comment>ニョロトノ</comment>
+		<language name="JPN" width="216">왕구리</language>
+		<language name="JPN_KANJI">왕구리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_187">
+		<comment>ハネッコ</comment>
+		<language name="JPN" width="216">통통코</language>
+		<language name="JPN_KANJI">통통코</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_188">
+		<comment>ポポッコ</comment>
+		<language name="JPN" width="216">두코</language>
+		<language name="JPN_KANJI">두코</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_189">
+		<comment>ワタッコ</comment>
+		<language name="JPN" width="216">솜솜코</language>
+		<language name="JPN_KANJI">솜솜코</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_190">
+		<comment>エイパム</comment>
+		<language name="JPN" width="216">에이팜</language>
+		<language name="JPN_KANJI">에이팜</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_191">
+		<comment>ヒマナッツ</comment>
+		<language name="JPN" width="216">해너츠</language>
+		<language name="JPN_KANJI">해너츠</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_192">
+		<comment>キマワリ</comment>
+		<language name="JPN" width="216">해루미</language>
+		<language name="JPN_KANJI">해루미</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_193">
+		<comment>ヤンヤンマ</comment>
+		<language name="JPN" width="216">왕자리</language>
+		<language name="JPN_KANJI">왕자리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_194">
+		<comment>ウパー</comment>
+		<language name="JPN" width="216">우파</language>
+		<language name="JPN_KANJI">우파</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_195">
+		<comment>ヌオー</comment>
+		<language name="JPN" width="216">누오</language>
+		<language name="JPN_KANJI">누오</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_196">
+		<comment>エーフィ</comment>
+		<language name="JPN" width="216">에브이</language>
+		<language name="JPN_KANJI">에브이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_197">
+		<comment>ブラッキー</comment>
+		<language name="JPN" width="216">블래키</language>
+		<language name="JPN_KANJI">블래키</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_198">
+		<comment>ヤミカラス</comment>
+		<language name="JPN" width="216">니로우</language>
+		<language name="JPN_KANJI">니로우</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_199">
+		<comment>ヤドキング</comment>
+		<language name="JPN" width="216">야도킹</language>
+		<language name="JPN_KANJI">야도킹</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_200">
+		<comment>ムウマ</comment>
+		<language name="JPN" width="216">무우마</language>
+		<language name="JPN_KANJI">무우마</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_201">
+		<comment>アンノーン</comment>
+		<language name="JPN" width="216">안농</language>
+		<language name="JPN_KANJI">안농</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_202">
+		<comment>ソーナンス</comment>
+		<language name="JPN" width="216">마자용</language>
+		<language name="JPN_KANJI">마자용</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_203">
+		<comment>キリンリキ</comment>
+		<language name="JPN" width="216">키링키</language>
+		<language name="JPN_KANJI">키링키</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_204">
+		<comment>クヌギダマ</comment>
+		<language name="JPN" width="216">피콘</language>
+		<language name="JPN_KANJI">피콘</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_205">
+		<comment>フォレトス</comment>
+		<language name="JPN" width="216">쏘콘</language>
+		<language name="JPN_KANJI">쏘콘</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_206">
+		<comment>ノコッチ</comment>
+		<language name="JPN" width="216">노고치</language>
+		<language name="JPN_KANJI">노고치</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_207">
+		<comment>グライガー</comment>
+		<language name="JPN" width="216">글라이거</language>
+		<language name="JPN_KANJI">글라이거</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_208">
+		<comment>ハガネール</comment>
+		<language name="JPN" width="216">강철톤</language>
+		<language name="JPN_KANJI">강철톤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_209">
+		<comment>ブルー</comment>
+		<language name="JPN" width="216">블루</language>
+		<language name="JPN_KANJI">블루</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_210">
+		<comment>グランブル</comment>
+		<language name="JPN" width="216">그랑블루</language>
+		<language name="JPN_KANJI">그랑블루</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_211">
+		<comment>ハリーセン</comment>
+		<language name="JPN" width="216">침바루</language>
+		<language name="JPN_KANJI">침바루</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_212">
+		<comment>ハッサム</comment>
+		<language name="JPN" width="216">핫삼</language>
+		<language name="JPN_KANJI">핫삼</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_213">
+		<comment>ツボツボ</comment>
+		<language name="JPN" width="216">단단지</language>
+		<language name="JPN_KANJI">단단지</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_214">
+		<comment>ヘラクロス</comment>
+		<language name="JPN" width="216">헤라크로스</language>
+		<language name="JPN_KANJI">헤라크로스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_215">
+		<comment>ニューラ</comment>
+		<language name="JPN" width="216">포푸니</language>
+		<language name="JPN_KANJI">포푸니</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_216">
+		<comment>ヒメグマ</comment>
+		<language name="JPN" width="216">깜지곰</language>
+		<language name="JPN_KANJI">깜지곰</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_217">
+		<comment>リングマ</comment>
+		<language name="JPN" width="216">링곰</language>
+		<language name="JPN_KANJI">링곰</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_218">
+		<comment>マグマッグ</comment>
+		<language name="JPN" width="216">마그마그</language>
+		<language name="JPN_KANJI">마그마그</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_219">
+		<comment>マグカルゴ</comment>
+		<language name="JPN" width="216">마그카르고</language>
+		<language name="JPN_KANJI">마그카르고</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_220">
+		<comment>ウリムー</comment>
+		<language name="JPN" width="216">꾸꾸리</language>
+		<language name="JPN_KANJI">꾸꾸리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_221">
+		<comment>イノムー</comment>
+		<language name="JPN" width="216">메꾸리</language>
+		<language name="JPN_KANJI">메꾸리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_222">
+		<comment>サニーゴ</comment>
+		<language name="JPN" width="216">코산호</language>
+		<language name="JPN_KANJI">코산호</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_223">
+		<comment>テッポウオ</comment>
+		<language name="JPN" width="216">총어</language>
+		<language name="JPN_KANJI">총어</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_224">
+		<comment>オクタン</comment>
+		<language name="JPN" width="216">대포무노</language>
+		<language name="JPN_KANJI">대포무노</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_225">
+		<comment>デリバード</comment>
+		<language name="JPN" width="216">딜리버드</language>
+		<language name="JPN_KANJI">딜리버드</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_226">
+		<comment>マンタイン</comment>
+		<language name="JPN" width="216">만타인</language>
+		<language name="JPN_KANJI">만타인</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_227">
+		<comment>エアームド</comment>
+		<language name="JPN" width="216">무장조</language>
+		<language name="JPN_KANJI">무장조</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_228">
+		<comment>デルビル</comment>
+		<language name="JPN" width="216">델빌</language>
+		<language name="JPN_KANJI">델빌</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_229">
+		<comment>ヘルガー</comment>
+		<language name="JPN" width="216">헬가</language>
+		<language name="JPN_KANJI">헬가</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_230">
+		<comment>キングドラ</comment>
+		<language name="JPN" width="216">킹드라</language>
+		<language name="JPN_KANJI">킹드라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_231">
+		<comment>ゴマゾウ</comment>
+		<language name="JPN" width="216">코코리</language>
+		<language name="JPN_KANJI">코코리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_232">
+		<comment>ドンファン</comment>
+		<language name="JPN" width="216">코리갑</language>
+		<language name="JPN_KANJI">코리갑</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_233">
+		<comment>ポリゴン２</comment>
+		<language name="JPN" width="216">폴리곤2</language>
+		<language name="JPN_KANJI">폴리곤2</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_234">
+		<comment>オドシシ</comment>
+		<language name="JPN" width="216">노라키</language>
+		<language name="JPN_KANJI">노라키</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_235">
+		<comment>ドーブル</comment>
+		<language name="JPN" width="216">루브도</language>
+		<language name="JPN_KANJI">루브도</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_236">
+		<comment>バルキー</comment>
+		<language name="JPN" width="216">배루키</language>
+		<language name="JPN_KANJI">배루키</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_237">
+		<comment>カポエラー</comment>
+		<language name="JPN" width="216">카포에라</language>
+		<language name="JPN_KANJI">카포에라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_238">
+		<comment>ムチュール</comment>
+		<language name="JPN" width="216">뽀뽀라</language>
+		<language name="JPN_KANJI">뽀뽀라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_239">
+		<comment>エレキッド</comment>
+		<language name="JPN" width="216">에레키드</language>
+		<language name="JPN_KANJI">에레키드</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_240">
+		<comment>ブビィ</comment>
+		<language name="JPN" width="216">마그비</language>
+		<language name="JPN_KANJI">마그비</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_241">
+		<comment>ミルタンク</comment>
+		<language name="JPN" width="216">밀탱크</language>
+		<language name="JPN_KANJI">밀탱크</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_242">
+		<comment>ハピナス</comment>
+		<language name="JPN" width="216">해피너스</language>
+		<language name="JPN_KANJI">해피너스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_243">
+		<comment>ライコウ</comment>
+		<language name="JPN" width="216">라이코</language>
+		<language name="JPN_KANJI">라이코</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_244">
+		<comment>エンテイ</comment>
+		<language name="JPN" width="216">앤테이</language>
+		<language name="JPN_KANJI">앤테이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_245">
+		<comment>スイクン</comment>
+		<language name="JPN" width="216">스이쿤</language>
+		<language name="JPN_KANJI">스이쿤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_246">
+		<comment>ヨーギラス</comment>
+		<language name="JPN" width="216">애버라스</language>
+		<language name="JPN_KANJI">애버라스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_247">
+		<comment>サナギラス</comment>
+		<language name="JPN" width="216">데기라스</language>
+		<language name="JPN_KANJI">데기라스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_248">
+		<comment>バンギラス</comment>
+		<language name="JPN" width="216">마기라스</language>
+		<language name="JPN_KANJI">마기라스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_249">
+		<comment>ルギア</comment>
+		<language name="JPN" width="216">루기아</language>
+		<language name="JPN_KANJI">루기아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_250">
+		<comment>ホウオウ</comment>
+		<language name="JPN" width="216">칠색조</language>
+		<language name="JPN_KANJI">칠색조</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_251">
+		<comment>セレビィ</comment>
+		<language name="JPN" width="216">세레비</language>
+		<language name="JPN_KANJI">세레비</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_252">
+		<comment>キモリ</comment>
+		<language name="JPN" width="216">나무지기</language>
+		<language name="JPN_KANJI">나무지기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_253">
+		<comment>ジュプトル</comment>
+		<language name="JPN" width="216">나무돌이</language>
+		<language name="JPN_KANJI">나무돌이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_254">
+		<comment>ジュカイン</comment>
+		<language name="JPN" width="216">나무킹</language>
+		<language name="JPN_KANJI">나무킹</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_255">
+		<comment>アチャモ</comment>
+		<language name="JPN" width="216">아차모</language>
+		<language name="JPN_KANJI">아차모</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_256">
+		<comment>ワカシャモ</comment>
+		<language name="JPN" width="216">영치코</language>
+		<language name="JPN_KANJI">영치코</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_257">
+		<comment>バシャーモ</comment>
+		<language name="JPN" width="216">번치코</language>
+		<language name="JPN_KANJI">번치코</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_258">
+		<comment>ミズゴロウ</comment>
+		<language name="JPN" width="216">물짱이</language>
+		<language name="JPN_KANJI">물짱이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_259">
+		<comment>ヌマクロー</comment>
+		<language name="JPN" width="216">늪짱이</language>
+		<language name="JPN_KANJI">늪짱이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_260">
+		<comment>ラグラージ</comment>
+		<language name="JPN" width="216">대짱이</language>
+		<language name="JPN_KANJI">대짱이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_261">
+		<comment>ポチエナ</comment>
+		<language name="JPN" width="216">포챠나</language>
+		<language name="JPN_KANJI">포챠나</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_262">
+		<comment>グラエナ</comment>
+		<language name="JPN" width="216">그라에나</language>
+		<language name="JPN_KANJI">그라에나</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_263">
+		<comment>ジグザグマ</comment>
+		<language name="JPN" width="216">지그제구리</language>
+		<language name="JPN_KANJI">지그제구리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_264">
+		<comment>マッスグマ</comment>
+		<language name="JPN" width="216">직구리</language>
+		<language name="JPN_KANJI">직구리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_265">
+		<comment>ケムッソ</comment>
+		<language name="JPN" width="216">개무소</language>
+		<language name="JPN_KANJI">개무소</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_266">
+		<comment>カラサリス</comment>
+		<language name="JPN" width="216">실쿤</language>
+		<language name="JPN_KANJI">실쿤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_267">
+		<comment>アゲハント</comment>
+		<language name="JPN" width="216">뷰티플라이</language>
+		<language name="JPN_KANJI">뷰티플라이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_268">
+		<comment>マユルド</comment>
+		<language name="JPN" width="216">카스쿤</language>
+		<language name="JPN_KANJI">카스쿤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_269">
+		<comment>ドクケイル</comment>
+		<language name="JPN" width="216">독케일</language>
+		<language name="JPN_KANJI">독케일</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_270">
+		<comment>ハスボー</comment>
+		<language name="JPN" width="216">연꽃몬</language>
+		<language name="JPN_KANJI">연꽃몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_271">
+		<comment>ハスブレロ</comment>
+		<language name="JPN" width="216">로토스</language>
+		<language name="JPN_KANJI">로토스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_272">
+		<comment>ルンパッパ</comment>
+		<language name="JPN" width="216">로파파</language>
+		<language name="JPN_KANJI">로파파</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_273">
+		<comment>タネボー</comment>
+		<language name="JPN" width="216">도토링</language>
+		<language name="JPN_KANJI">도토링</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_274">
+		<comment>コノハナ</comment>
+		<language name="JPN" width="216">잎새코</language>
+		<language name="JPN_KANJI">잎새코</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_275">
+		<comment>ダーテング</comment>
+		<language name="JPN" width="216">다탱구</language>
+		<language name="JPN_KANJI">다탱구</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_276">
+		<comment>スバメ</comment>
+		<language name="JPN" width="216">테일로</language>
+		<language name="JPN_KANJI">테일로</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_277">
+		<comment>オオスバメ</comment>
+		<language name="JPN" width="216">스왈로</language>
+		<language name="JPN_KANJI">스왈로</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_278">
+		<comment>キャモメ</comment>
+		<language name="JPN" width="216">갈모매</language>
+		<language name="JPN_KANJI">갈모매</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_279">
+		<comment>ペリッパー</comment>
+		<language name="JPN" width="216">패리퍼</language>
+		<language name="JPN_KANJI">패리퍼</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_280">
+		<comment>ラルトス</comment>
+		<language name="JPN" width="216">랄토스</language>
+		<language name="JPN_KANJI">랄토스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_281">
+		<comment>キルリア</comment>
+		<language name="JPN" width="216">킬리아</language>
+		<language name="JPN_KANJI">킬리아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_282">
+		<comment>サーナイト</comment>
+		<language name="JPN" width="216">가디안</language>
+		<language name="JPN_KANJI">가디안</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_283">
+		<comment>アメタマ</comment>
+		<language name="JPN" width="216">비구술</language>
+		<language name="JPN_KANJI">비구술</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_284">
+		<comment>アメモース</comment>
+		<language name="JPN" width="216">비나방</language>
+		<language name="JPN_KANJI">비나방</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_285">
+		<comment>キノココ</comment>
+		<language name="JPN" width="216">버섯꼬</language>
+		<language name="JPN_KANJI">버섯꼬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_286">
+		<comment>キノガッサ</comment>
+		<language name="JPN" width="216">버섯모</language>
+		<language name="JPN_KANJI">버섯모</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_287">
+		<comment>ナマケロ</comment>
+		<language name="JPN" width="216">게을로</language>
+		<language name="JPN_KANJI">게을로</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_288">
+		<comment>ヤルキモノ</comment>
+		<language name="JPN" width="216">발바로</language>
+		<language name="JPN_KANJI">발바로</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_289">
+		<comment>ケッキング</comment>
+		<language name="JPN" width="216">게을킹</language>
+		<language name="JPN_KANJI">게을킹</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_290">
+		<comment>ツチニン</comment>
+		<language name="JPN" width="216">토중몬</language>
+		<language name="JPN_KANJI">토중몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_291">
+		<comment>テッカニン</comment>
+		<language name="JPN" width="216">아이스크</language>
+		<language name="JPN_KANJI">아이스크</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_292">
+		<comment>ヌケニン</comment>
+		<language name="JPN" width="216">껍질몬</language>
+		<language name="JPN_KANJI">껍질몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_293">
+		<comment>ゴニョニョ</comment>
+		<language name="JPN" width="216">소곤룡</language>
+		<language name="JPN_KANJI">소곤룡</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_294">
+		<comment>ドゴーム</comment>
+		<language name="JPN" width="216">노공룡</language>
+		<language name="JPN_KANJI">노공룡</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_295">
+		<comment>バクオング</comment>
+		<language name="JPN" width="216">폭음룡</language>
+		<language name="JPN_KANJI">폭음룡</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_296">
+		<comment>マクノシタ</comment>
+		<language name="JPN" width="216">마크탕</language>
+		<language name="JPN_KANJI">마크탕</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_297">
+		<comment>ハリテヤマ</comment>
+		<language name="JPN" width="216">하리뭉</language>
+		<language name="JPN_KANJI">하리뭉</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_298">
+		<comment>ルリリ</comment>
+		<language name="JPN" width="216">루리리</language>
+		<language name="JPN_KANJI">루리리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_299">
+		<comment>ノズパス</comment>
+		<language name="JPN" width="216">코코파스</language>
+		<language name="JPN_KANJI">코코파스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_300">
+		<comment>エネコ</comment>
+		<language name="JPN" width="216">에나비</language>
+		<language name="JPN_KANJI">에나비</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_301">
+		<comment>エネコロロ</comment>
+		<language name="JPN" width="216">델케티</language>
+		<language name="JPN_KANJI">델케티</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_302">
+		<comment>ヤミラミ</comment>
+		<language name="JPN" width="216">깜까미</language>
+		<language name="JPN_KANJI">깜까미</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_303">
+		<comment>クチート</comment>
+		<language name="JPN" width="216">입치트</language>
+		<language name="JPN_KANJI">입치트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_304">
+		<comment>ココドラ</comment>
+		<language name="JPN" width="216">가보리</language>
+		<language name="JPN_KANJI">가보리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_305">
+		<comment>コドラ</comment>
+		<language name="JPN" width="216">갱도라</language>
+		<language name="JPN_KANJI">갱도라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_306">
+		<comment>ボスゴドラ</comment>
+		<language name="JPN" width="216">보스로라</language>
+		<language name="JPN_KANJI">보스로라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_307">
+		<comment>アサナン</comment>
+		<language name="JPN" width="216">요가랑</language>
+		<language name="JPN_KANJI">요가랑</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_308">
+		<comment>チャーレム</comment>
+		<language name="JPN" width="216">요가램</language>
+		<language name="JPN_KANJI">요가램</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_309">
+		<comment>ラクライ</comment>
+		<language name="JPN" width="216">썬더라이</language>
+		<language name="JPN_KANJI">썬더라이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_310">
+		<comment>ライボルト</comment>
+		<language name="JPN" width="216">썬더볼트</language>
+		<language name="JPN_KANJI">썬더볼트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_311">
+		<comment>プラスル</comment>
+		<language name="JPN" width="216">플러시</language>
+		<language name="JPN_KANJI">플러시</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_312">
+		<comment>マイナン</comment>
+		<language name="JPN" width="216">마이농</language>
+		<language name="JPN_KANJI">마이농</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_313">
+		<comment>バルビート</comment>
+		<language name="JPN" width="216">볼비트</language>
+		<language name="JPN_KANJI">볼비트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_314">
+		<comment>イルミーゼ</comment>
+		<language name="JPN" width="216">네오비트</language>
+		<language name="JPN_KANJI">네오비트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_315">
+		<comment>ロゼリア</comment>
+		<language name="JPN" width="216">로젤리아</language>
+		<language name="JPN_KANJI">로젤리아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_316">
+		<comment>ゴクリン</comment>
+		<language name="JPN" width="216">꼴깍몬</language>
+		<language name="JPN_KANJI">꼴깍몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_317">
+		<comment>マルノーム</comment>
+		<language name="JPN" width="216">꿀꺽몬</language>
+		<language name="JPN_KANJI">꿀꺽몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_318">
+		<comment>キバニア</comment>
+		<language name="JPN" width="216">샤프니아</language>
+		<language name="JPN_KANJI">샤프니아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_319">
+		<comment>サメハダー</comment>
+		<language name="JPN" width="216">샤크니아</language>
+		<language name="JPN_KANJI">샤크니아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_320">
+		<comment>ホエルコ</comment>
+		<language name="JPN" width="216">고래왕자</language>
+		<language name="JPN_KANJI">고래왕자</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_321">
+		<comment>ホエルオー</comment>
+		<language name="JPN" width="216">고래왕</language>
+		<language name="JPN_KANJI">고래왕</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_322">
+		<comment>ドンメル</comment>
+		<language name="JPN" width="216">둔타</language>
+		<language name="JPN_KANJI">둔타</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_323">
+		<comment>バクーダ</comment>
+		<language name="JPN" width="216">폭타</language>
+		<language name="JPN_KANJI">폭타</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_324">
+		<comment>コータス</comment>
+		<language name="JPN" width="216">코터스</language>
+		<language name="JPN_KANJI">코터스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_325">
+		<comment>バネブー</comment>
+		<language name="JPN" width="216">피그점프</language>
+		<language name="JPN_KANJI">피그점프</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_326">
+		<comment>ブーピッグ</comment>
+		<language name="JPN" width="216">피그킹</language>
+		<language name="JPN_KANJI">피그킹</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_327">
+		<comment>パッチール</comment>
+		<language name="JPN" width="216">얼루기</language>
+		<language name="JPN_KANJI">얼루기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_328">
+		<comment>ナックラー</comment>
+		<language name="JPN" width="216">톱치</language>
+		<language name="JPN_KANJI">톱치</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_329">
+		<comment>ビブラーバ</comment>
+		<language name="JPN" width="216">비브라바</language>
+		<language name="JPN_KANJI">비브라바</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_330">
+		<comment>フライゴン</comment>
+		<language name="JPN" width="216">플라이곤</language>
+		<language name="JPN_KANJI">플라이곤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_331">
+		<comment>サボネア</comment>
+		<language name="JPN" width="216">선인왕</language>
+		<language name="JPN_KANJI">선인왕</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_332">
+		<comment>ノクタス</comment>
+		<language name="JPN" width="216">밤선인</language>
+		<language name="JPN_KANJI">밤선인</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_333">
+		<comment>チルット</comment>
+		<language name="JPN" width="216">파비코</language>
+		<language name="JPN_KANJI">파비코</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_334">
+		<comment>チルタリス</comment>
+		<language name="JPN" width="216">파비코리</language>
+		<language name="JPN_KANJI">파비코리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_335">
+		<comment>ザングース</comment>
+		<language name="JPN" width="216">쟝고</language>
+		<language name="JPN_KANJI">쟝고</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_336">
+		<comment>ハブネーク</comment>
+		<language name="JPN" width="216">세비퍼</language>
+		<language name="JPN_KANJI">세비퍼</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_337">
+		<comment>ルナトーン</comment>
+		<language name="JPN" width="216">루나톤</language>
+		<language name="JPN_KANJI">루나톤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_338">
+		<comment>ソルロック</comment>
+		<language name="JPN" width="216">솔록</language>
+		<language name="JPN_KANJI">솔록</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_339">
+		<comment>ドジョッチ</comment>
+		<language name="JPN" width="216">미꾸리</language>
+		<language name="JPN_KANJI">미꾸리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_340">
+		<comment>ナマズン</comment>
+		<language name="JPN" width="216">메깅</language>
+		<language name="JPN_KANJI">메깅</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_341">
+		<comment>ヘイガニ</comment>
+		<language name="JPN" width="216">가재군</language>
+		<language name="JPN_KANJI">가재군</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_342">
+		<comment>シザリガー</comment>
+		<language name="JPN" width="216">가재장군</language>
+		<language name="JPN_KANJI">가재장군</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_343">
+		<comment>ヤジロン</comment>
+		<language name="JPN" width="216">오뚝군</language>
+		<language name="JPN_KANJI">오뚝군</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_344">
+		<comment>ネンドール</comment>
+		<language name="JPN" width="216">점토도리</language>
+		<language name="JPN_KANJI">점토도리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_345">
+		<comment>リリーラ</comment>
+		<language name="JPN" width="216">릴링</language>
+		<language name="JPN_KANJI">릴링</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_346">
+		<comment>ユレイドル</comment>
+		<language name="JPN" width="216">릴리요</language>
+		<language name="JPN_KANJI">릴리요</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_347">
+		<comment>アノプス</comment>
+		<language name="JPN" width="216">아노딥스</language>
+		<language name="JPN_KANJI">아노딥스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_348">
+		<comment>アーマルド</comment>
+		<language name="JPN" width="216">아말도</language>
+		<language name="JPN_KANJI">아말도</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_349">
+		<comment>ヒンバス</comment>
+		<language name="JPN" width="216">빈티나</language>
+		<language name="JPN_KANJI">빈티나</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_350">
+		<comment>ミロカロス</comment>
+		<language name="JPN" width="216">밀로틱</language>
+		<language name="JPN_KANJI">밀로틱</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_351">
+		<comment>ポワルン</comment>
+		<language name="JPN" width="216">캐스퐁</language>
+		<language name="JPN_KANJI">캐스퐁</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_352">
+		<comment>カクレオン</comment>
+		<language name="JPN" width="216">켈리몬</language>
+		<language name="JPN_KANJI">켈리몬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_353">
+		<comment>カゲボウズ</comment>
+		<language name="JPN" width="216">어둠대신</language>
+		<language name="JPN_KANJI">어둠대신</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_354">
+		<comment>ジュペッタ</comment>
+		<language name="JPN" width="216">다크펫</language>
+		<language name="JPN_KANJI">다크펫</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_355">
+		<comment>ヨマワル</comment>
+		<language name="JPN" width="216">해골몽</language>
+		<language name="JPN_KANJI">해골몽</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_356">
+		<comment>サマヨール</comment>
+		<language name="JPN" width="216">미라몽</language>
+		<language name="JPN_KANJI">미라몽</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_357">
+		<comment>トロピウス</comment>
+		<language name="JPN" width="216">트로피우스</language>
+		<language name="JPN_KANJI">트로피우스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_358">
+		<comment>チリーン</comment>
+		<language name="JPN" width="216">치렁</language>
+		<language name="JPN_KANJI">치렁</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_359">
+		<comment>アブソル</comment>
+		<language name="JPN" width="216">앱솔</language>
+		<language name="JPN_KANJI">앱솔</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_360">
+		<comment>ソーナノ</comment>
+		<language name="JPN" width="216">마자</language>
+		<language name="JPN_KANJI">마자</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_361">
+		<comment>ユキワラシ</comment>
+		<language name="JPN" width="216">눈꼬마</language>
+		<language name="JPN_KANJI">눈꼬마</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_362">
+		<comment>オニゴーリ</comment>
+		<language name="JPN" width="216">얼음귀신</language>
+		<language name="JPN_KANJI">얼음귀신</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_363">
+		<comment>タマザラシ</comment>
+		<language name="JPN" width="216">대굴레오</language>
+		<language name="JPN_KANJI">대굴레오</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_364">
+		<comment>トドグラー</comment>
+		<language name="JPN" width="216">씨레오</language>
+		<language name="JPN_KANJI">씨레오</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_365">
+		<comment>トドゼルガ</comment>
+		<language name="JPN" width="216">씨카이저</language>
+		<language name="JPN_KANJI">씨카이저</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_366">
+		<comment>パールル</comment>
+		<language name="JPN" width="216">진주몽</language>
+		<language name="JPN_KANJI">진주몽</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_367">
+		<comment>ハンテール</comment>
+		<language name="JPN" width="216">헌테일</language>
+		<language name="JPN_KANJI">헌테일</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_368">
+		<comment>サクラビス</comment>
+		<language name="JPN" width="216">분홍장이</language>
+		<language name="JPN_KANJI">분홍장이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_369">
+		<comment>ジーランス</comment>
+		<language name="JPN" width="216">시라칸</language>
+		<language name="JPN_KANJI">시라칸</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_370">
+		<comment>ラブカス</comment>
+		<language name="JPN" width="216">사랑동이</language>
+		<language name="JPN_KANJI">사랑동이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_371">
+		<comment>タツベイ</comment>
+		<language name="JPN" width="216">아공이</language>
+		<language name="JPN_KANJI">아공이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_372">
+		<comment>コモルー</comment>
+		<language name="JPN" width="216">쉘곤</language>
+		<language name="JPN_KANJI">쉘곤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_373">
+		<comment>ボーマンダ</comment>
+		<language name="JPN" width="216">보만다</language>
+		<language name="JPN_KANJI">보만다</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_374">
+		<comment>ダンバル</comment>
+		<language name="JPN" width="216">메탕</language>
+		<language name="JPN_KANJI">메탕</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_375">
+		<comment>メタング</comment>
+		<language name="JPN" width="216">메탕구</language>
+		<language name="JPN_KANJI">메탕구</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_376">
+		<comment>メタグロス</comment>
+		<language name="JPN" width="216">메타그로스</language>
+		<language name="JPN_KANJI">메타그로스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_377">
+		<comment>レジロック</comment>
+		<language name="JPN" width="216">레지락</language>
+		<language name="JPN_KANJI">레지락</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_378">
+		<comment>レジアイス</comment>
+		<language name="JPN" width="216">레지아이스</language>
+		<language name="JPN_KANJI">레지아이스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_379">
+		<comment>レジスチル</comment>
+		<language name="JPN" width="216">레지스틸</language>
+		<language name="JPN_KANJI">레지스틸</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_380">
+		<comment>ラティアス</comment>
+		<language name="JPN" width="216">라티아스</language>
+		<language name="JPN_KANJI">라티아스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_381">
+		<comment>ラティオス</comment>
+		<language name="JPN" width="216">라티오스</language>
+		<language name="JPN_KANJI">라티오스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_382">
+		<comment>カイオーガ</comment>
+		<language name="JPN" width="216">가이오가</language>
+		<language name="JPN_KANJI">가이오가</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_383">
+		<comment>グラードン</comment>
+		<language name="JPN" width="216">그란돈</language>
+		<language name="JPN_KANJI">그란돈</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_384">
+		<comment>レックウザ</comment>
+		<language name="JPN" width="216">레쿠쟈</language>
+		<language name="JPN_KANJI">레쿠쟈</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_385">
+		<comment>ジラーチ</comment>
+		<language name="JPN" width="216">지라치</language>
+		<language name="JPN_KANJI">지라치</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_386">
+		<comment>デオキシス</comment>
+		<language name="JPN" width="216">테오키스</language>
+		<language name="JPN_KANJI">테오키스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_387">
+		<comment>ナエトル</comment>
+		<language name="JPN" width="216">모부기</language>
+		<language name="JPN_KANJI">모부기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_388">
+		<comment>ハヤシガメ</comment>
+		<language name="JPN" width="216">수풀부기</language>
+		<language name="JPN_KANJI">수풀부기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_389">
+		<comment>ドダイトス</comment>
+		<language name="JPN" width="216">토대부기</language>
+		<language name="JPN_KANJI">토대부기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_390">
+		<comment>ヒコザル</comment>
+		<language name="JPN" width="216">불꽃숭이</language>
+		<language name="JPN_KANJI">불꽃숭이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_391">
+		<comment>モウカザル</comment>
+		<language name="JPN" width="216">파이숭이</language>
+		<language name="JPN_KANJI">파이숭이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_392">
+		<comment>ゴウカザル</comment>
+		<language name="JPN" width="216">초염몽</language>
+		<language name="JPN_KANJI">초염몽</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_393">
+		<comment>ポッチャマ</comment>
+		<language name="JPN" width="216">팽도리</language>
+		<language name="JPN_KANJI">팽도리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_394">
+		<comment>ポッタイシ</comment>
+		<language name="JPN" width="216">팽태자</language>
+		<language name="JPN_KANJI">팽태자</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_395">
+		<comment>エンペルト</comment>
+		<language name="JPN" width="216">엠페르트</language>
+		<language name="JPN_KANJI">엠페르트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_396">
+		<comment>ムックル</comment>
+		<language name="JPN" width="216">찌르꼬</language>
+		<language name="JPN_KANJI">찌르꼬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_397">
+		<comment>ムクバード</comment>
+		<language name="JPN" width="216">찌르버드</language>
+		<language name="JPN_KANJI">찌르버드</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_398">
+		<comment>ムクホーク</comment>
+		<language name="JPN" width="216">찌르호크</language>
+		<language name="JPN_KANJI">찌르호크</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_399">
+		<comment>ビッパ</comment>
+		<language name="JPN" width="216">비버니</language>
+		<language name="JPN_KANJI">비버니</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_400">
+		<comment>ビーダル</comment>
+		<language name="JPN" width="216">비버통</language>
+		<language name="JPN_KANJI">비버통</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_401">
+		<comment>コロボーシ</comment>
+		<language name="JPN" width="216">귀뚤뚜기</language>
+		<language name="JPN_KANJI">귀뚤뚜기</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_402">
+		<comment>コロトック</comment>
+		<language name="JPN" width="216">귀뚤톡크</language>
+		<language name="JPN_KANJI">귀뚤톡크</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_403">
+		<comment>コリンク</comment>
+		<language name="JPN" width="216">꼬링크</language>
+		<language name="JPN_KANJI">꼬링크</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_404">
+		<comment>ルクシオ</comment>
+		<language name="JPN" width="216">럭시오</language>
+		<language name="JPN_KANJI">럭시오</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_405">
+		<comment>レントラー</comment>
+		<language name="JPN" width="216">렌트라</language>
+		<language name="JPN_KANJI">렌트라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_406">
+		<comment>スボミー</comment>
+		<language name="JPN" width="216">꼬몽울</language>
+		<language name="JPN_KANJI">꼬몽울</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_407">
+		<comment>ロズレイド</comment>
+		<language name="JPN" width="216">로즈레이드</language>
+		<language name="JPN_KANJI">로즈레이드</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_408">
+		<comment>ズガイドス</comment>
+		<language name="JPN" width="216">두개도스</language>
+		<language name="JPN_KANJI">두개도스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_409">
+		<comment>ラムパルド</comment>
+		<language name="JPN" width="216">램펄드</language>
+		<language name="JPN_KANJI">램펄드</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_410">
+		<comment>タテトプス</comment>
+		<language name="JPN" width="216">방패톱스</language>
+		<language name="JPN_KANJI">방패톱스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_411">
+		<comment>トリデプス</comment>
+		<language name="JPN" width="216">바리톱스</language>
+		<language name="JPN_KANJI">바리톱스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_412">
+		<comment>ミノムッチ</comment>
+		<language name="JPN" width="216">도롱충이</language>
+		<language name="JPN_KANJI">도롱충이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_413">
+		<comment>ミノマダム</comment>
+		<language name="JPN" width="216">도롱마담</language>
+		<language name="JPN_KANJI">도롱마담</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_414">
+		<comment>ガーメイル</comment>
+		<language name="JPN" width="216">나메일</language>
+		<language name="JPN_KANJI">나메일</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_415">
+		<comment>ミツハニー</comment>
+		<language name="JPN" width="216">세꿀버리</language>
+		<language name="JPN_KANJI">세꿀버리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_416">
+		<comment>ビークイン</comment>
+		<language name="JPN" width="216">비퀸</language>
+		<language name="JPN_KANJI">비퀸</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_417">
+		<comment>パチリス</comment>
+		<language name="JPN" width="216">파치리스</language>
+		<language name="JPN_KANJI">파치리스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_418">
+		<comment>ブイゼル</comment>
+		<language name="JPN" width="216">브이젤</language>
+		<language name="JPN_KANJI">브이젤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_419">
+		<comment>フローゼル</comment>
+		<language name="JPN" width="216">플로젤</language>
+		<language name="JPN_KANJI">플로젤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_420">
+		<comment>チェリンボ</comment>
+		<language name="JPN" width="216">체리버</language>
+		<language name="JPN_KANJI">체리버</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_421">
+		<comment>チェリム</comment>
+		<language name="JPN" width="216">체리꼬</language>
+		<language name="JPN_KANJI">체리꼬</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_422">
+		<comment>カラナクシ</comment>
+		<language name="JPN" width="216">깝질무</language>
+		<language name="JPN_KANJI">깝질무</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_423">
+		<comment>トリトドン</comment>
+		<language name="JPN" width="216">트리토돈</language>
+		<language name="JPN_KANJI">트리토돈</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_424">
+		<comment>エテボース</comment>
+		<language name="JPN" width="216">겟핸보숭</language>
+		<language name="JPN_KANJI">겟핸보숭</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_425">
+		<comment>フワンテ</comment>
+		<language name="JPN" width="216">흔들풍손</language>
+		<language name="JPN_KANJI">흔들풍손</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_426">
+		<comment>フワライド</comment>
+		<language name="JPN" width="216">둥실라이드</language>
+		<language name="JPN_KANJI">둥실라이드</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_427">
+		<comment>ミミロル</comment>
+		<language name="JPN" width="216">이어롤</language>
+		<language name="JPN_KANJI">이어롤</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_428">
+		<comment>ミミロップ</comment>
+		<language name="JPN" width="216">이어롭</language>
+		<language name="JPN_KANJI">이어롭</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_429">
+		<comment>ムウマージ</comment>
+		<language name="JPN" width="216">무우마직</language>
+		<language name="JPN_KANJI">무우마직</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_430">
+		<comment>ドンカラス</comment>
+		<language name="JPN" width="216">돈크로우</language>
+		<language name="JPN_KANJI">돈크로우</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_431">
+		<comment>ニャルマー</comment>
+		<language name="JPN" width="216">나옹마</language>
+		<language name="JPN_KANJI">나옹마</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_432">
+		<comment>ブニャット</comment>
+		<language name="JPN" width="216">몬냥이</language>
+		<language name="JPN_KANJI">몬냥이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_433">
+		<comment>リーシャン</comment>
+		<language name="JPN" width="216">랑딸랑</language>
+		<language name="JPN_KANJI">랑딸랑</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_434">
+		<comment>スカンプー</comment>
+		<language name="JPN" width="216">스컹뿡</language>
+		<language name="JPN_KANJI">스컹뿡</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_435">
+		<comment>スカタンク</comment>
+		<language name="JPN" width="216">스컹탱크</language>
+		<language name="JPN_KANJI">스컹탱크</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_436">
+		<comment>ドーミラー</comment>
+		<language name="JPN" width="216">동미러</language>
+		<language name="JPN_KANJI">동미러</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_437">
+		<comment>ドータクン</comment>
+		<language name="JPN" width="216">동탁군</language>
+		<language name="JPN_KANJI">동탁군</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_438">
+		<comment>ウソハチ</comment>
+		<language name="JPN" width="216">꼬지지</language>
+		<language name="JPN_KANJI">꼬지지</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_439">
+		<comment>マネネ</comment>
+		<language name="JPN" width="216">흉내내</language>
+		<language name="JPN_KANJI">흉내내</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_440">
+		<comment>ピンプク</comment>
+		<language name="JPN" width="216">핑복</language>
+		<language name="JPN_KANJI">핑복</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_441">
+		<comment>ペラップ</comment>
+		<language name="JPN" width="216">페라페</language>
+		<language name="JPN_KANJI">페라페</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_442">
+		<comment>ミカルゲ</comment>
+		<language name="JPN" width="216">화강돌</language>
+		<language name="JPN_KANJI">화강돌</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_443">
+		<comment>フカマル</comment>
+		<language name="JPN" width="216">딥상어동</language>
+		<language name="JPN_KANJI">딥상어동</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_444">
+		<comment>ガバイト</comment>
+		<language name="JPN" width="216">한바이트</language>
+		<language name="JPN_KANJI">한바이트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_445">
+		<comment>ガブリアス</comment>
+		<language name="JPN" width="216">한카리아스</language>
+		<language name="JPN_KANJI">한카리아스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_446">
+		<comment>ゴンベ</comment>
+		<language name="JPN" width="216">먹고자</language>
+		<language name="JPN_KANJI">먹고자</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_447">
+		<comment>リオル</comment>
+		<language name="JPN" width="216">리오르</language>
+		<language name="JPN_KANJI">리오르</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_448">
+		<comment>ルカリオ</comment>
+		<language name="JPN" width="216">루카리오</language>
+		<language name="JPN_KANJI">루카리오</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_449">
+		<comment>ヒポポタス</comment>
+		<language name="JPN" width="216">히포포타스</language>
+		<language name="JPN_KANJI">히포포타스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_450">
+		<comment>カバルドン</comment>
+		<language name="JPN" width="216">하마돈</language>
+		<language name="JPN_KANJI">하마돈</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_451">
+		<comment>スコルピ</comment>
+		<language name="JPN" width="216">스콜피</language>
+		<language name="JPN_KANJI">스콜피</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_452">
+		<comment>ドラピオン</comment>
+		<language name="JPN" width="216">드래피온</language>
+		<language name="JPN_KANJI">드래피온</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_453">
+		<comment>グレッグル</comment>
+		<language name="JPN" width="216">삐딱구리</language>
+		<language name="JPN_KANJI">삐딱구리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_454">
+		<comment>ドクロッグ</comment>
+		<language name="JPN" width="216">독개굴</language>
+		<language name="JPN_KANJI">독개굴</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_455">
+		<comment>マスキッパ</comment>
+		<language name="JPN" width="216">무스틈니</language>
+		<language name="JPN_KANJI">무스틈니</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_456">
+		<comment>ケイコウオ</comment>
+		<language name="JPN" width="216">형광어</language>
+		<language name="JPN_KANJI">형광어</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_457">
+		<comment>ネオラント</comment>
+		<language name="JPN" width="216">네오라이트</language>
+		<language name="JPN_KANJI">네오라이트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_458">
+		<comment>タマンタ</comment>
+		<language name="JPN" width="216">타만타</language>
+		<language name="JPN_KANJI">타만타</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_459">
+		<comment>ユキカブリ</comment>
+		<language name="JPN" width="216">눈쓰개</language>
+		<language name="JPN_KANJI">눈쓰개</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_460">
+		<comment>ユキノオー</comment>
+		<language name="JPN" width="216">눈설왕</language>
+		<language name="JPN_KANJI">눈설왕</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_461">
+		<comment>マニューラ</comment>
+		<language name="JPN" width="216">포푸니라</language>
+		<language name="JPN_KANJI">포푸니라</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_462">
+		<comment>ジバコイル</comment>
+		<language name="JPN" width="216">자포코일</language>
+		<language name="JPN_KANJI">자포코일</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_463">
+		<comment>ベロベルト</comment>
+		<language name="JPN" width="216">내룸벨트</language>
+		<language name="JPN_KANJI">내룸벨트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_464">
+		<comment>ドサイドン</comment>
+		<language name="JPN" width="216">거대코뿌리</language>
+		<language name="JPN_KANJI">거대코뿌리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_465">
+		<comment>モジャンボ</comment>
+		<language name="JPN" width="216">덩쿠림보</language>
+		<language name="JPN_KANJI">덩쿠림보</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_466">
+		<comment>エレキブル</comment>
+		<language name="JPN" width="216">에레키블</language>
+		<language name="JPN_KANJI">에레키블</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_467">
+		<comment>ブーバーン</comment>
+		<language name="JPN" width="216">마그마번</language>
+		<language name="JPN_KANJI">마그마번</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_468">
+		<comment>トゲキッス</comment>
+		<language name="JPN" width="216">토게키스</language>
+		<language name="JPN_KANJI">토게키스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_469">
+		<comment>メガヤンマ</comment>
+		<language name="JPN" width="216">메가자리</language>
+		<language name="JPN_KANJI">메가자리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_470">
+		<comment>リーフィア</comment>
+		<language name="JPN" width="216">리피아</language>
+		<language name="JPN_KANJI">리피아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_471">
+		<comment>グレイシア</comment>
+		<language name="JPN" width="216">글레이시아</language>
+		<language name="JPN_KANJI">글레이시아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_472">
+		<comment>グライオン</comment>
+		<language name="JPN" width="216">글라이온</language>
+		<language name="JPN_KANJI">글라이온</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_473">
+		<comment>マンムー</comment>
+		<language name="JPN" width="216">맘모꾸리</language>
+		<language name="JPN_KANJI">맘모꾸리</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_474">
+		<comment>ポリゴンＺ</comment>
+		<language name="JPN" width="216">폴리곤Z</language>
+		<language name="JPN_KANJI">폴리곤Z</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_475">
+		<comment>エルレイド</comment>
+		<language name="JPN" width="216">엘레이드</language>
+		<language name="JPN_KANJI">엘레이드</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_476">
+		<comment>ダイノーズ</comment>
+		<language name="JPN" width="216">대코파스</language>
+		<language name="JPN_KANJI">대코파스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_477">
+		<comment>ヨノワール</comment>
+		<language name="JPN" width="216">야느와르몽</language>
+		<language name="JPN_KANJI">야느와르몽</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_478">
+		<comment>ユキメノコ</comment>
+		<language name="JPN" width="216">눈여아</language>
+		<language name="JPN_KANJI">눈여아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_479">
+		<comment>ロトム</comment>
+		<language name="JPN" width="216">로토무</language>
+		<language name="JPN_KANJI">로토무</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_480">
+		<comment>ユクシー</comment>
+		<language name="JPN" width="216">유크시</language>
+		<language name="JPN_KANJI">유크시</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_481">
+		<comment>エムリット</comment>
+		<language name="JPN" width="216">엠라이트</language>
+		<language name="JPN_KANJI">엠라이트</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_482">
+		<comment>アグノム</comment>
+		<language name="JPN" width="216">아그놈</language>
+		<language name="JPN_KANJI">아그놈</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_483">
+		<comment>ディアルガ</comment>
+		<language name="JPN" width="216">디아루가</language>
+		<language name="JPN_KANJI">디아루가</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_484">
+		<comment>パルキア</comment>
+		<language name="JPN" width="216">펄기아</language>
+		<language name="JPN_KANJI">펄기아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_485">
+		<comment>ヒードラン</comment>
+		<language name="JPN" width="216">히드런</language>
+		<language name="JPN_KANJI">히드런</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_486">
+		<comment>レジギガス</comment>
+		<language name="JPN" width="216">레지기가스</language>
+		<language name="JPN_KANJI">레지기가스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_487" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ギラティナ</comment>
+		<language name="JPN" width="216">기라티나</language>
+		<language name="JPN_KANJI">기라티나</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_488">
+		<comment>クレセリア</comment>
+		<language name="JPN" width="216">크레세리아</language>
+		<language name="JPN_KANJI">크레세리아</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_489">
+		<comment>フィオネ</comment>
+		<language name="JPN" width="216">피오네</language>
+		<language name="JPN_KANJI">피오네</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_490">
+		<comment>マナフィ</comment>
+		<language name="JPN" width="216">마나피</language>
+		<language name="JPN_KANJI">마나피</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_491">
+		<comment>ダークライ</comment>
+		<language name="JPN" width="216">다크라이</language>
+		<language name="JPN_KANJI">다크라이</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_492">
+		<comment>シェイミ</comment>
+		<language name="JPN" width="216">쉐이미</language>
+		<language name="JPN_KANJI">쉐이미</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_493">
+		<comment>アルセウス</comment>
+		<language name="JPN" width="216">아르세우스</language>
+		<language name="JPN_KANJI">아르세우스</language>
+	</row>
+
+	<row id="ZKN_MONSNAME_KOR_487_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ギラティナ</comment>
+		<language name="JPN" width="216">기라티나</language>
+		<language name="JPN_KANJI">기라티나</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>

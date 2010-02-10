@@ -1,0 +1,3323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="shimoyamada" host="W00184" date="2010-02-10T17:27:26"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="150"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="168"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="ZKN_HRIGHT_E_000_000">
+		<comment>ーーーーー</comment>
+		<language name="JPN">???&apos;??&quot;</language>
+		<language name="JPN_KANJI">???&apos;??&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_001_000">
+		<comment>フシギダネ</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_002_000">
+		<comment>フシギソウ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_003_000">
+		<comment>フシギバナ</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_004_000">
+		<comment>ヒトカゲ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_005_000">
+		<comment>リザード</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_006_000">
+		<comment>リザードン</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_007_000">
+		<comment>ゼニガメ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_008_000">
+		<comment>カメール</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_009_000">
+		<comment>カメックス</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_010_000">
+		<comment>キャタピー</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_011_000">
+		<comment>トランセル</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_012_000">
+		<comment>バタフリー</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_013_000">
+		<comment>ビードル</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_014_000">
+		<comment>コクーン</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_015_000">
+		<comment>スピアー</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_016_000">
+		<comment>ポッポ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_017_000">
+		<comment>ピジョン</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_018_000">
+		<comment>ピジョット</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_019_000">
+		<comment>コラッタ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_020_000">
+		<comment>ラッタ</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_021_000">
+		<comment>オニスズメ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_022_000">
+		<comment>オニドリル</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_023_000">
+		<comment>アーボ</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_024_000">
+		<comment>アーボック</comment>
+		<language name="JPN">11&apos;06&quot;</language>
+		<language name="JPN_KANJI">11&apos;06&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_025_000">
+		<comment>ピカチュウ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_026_000">
+		<comment>ライチュウ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_027_000">
+		<comment>サンド</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_028_000">
+		<comment>サンドパン</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_029_000">
+		<comment>ニドラン♀</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_030_000">
+		<comment>ニドリーナ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_031_000">
+		<comment>ニドクイン</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_032_000">
+		<comment>ニドラン♂</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_033_000">
+		<comment>ニドリーノ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_034_000">
+		<comment>ニドキング</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_035_000">
+		<comment>ピッピ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_036_000">
+		<comment>ピクシー</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_037_000">
+		<comment>ロコン</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_038_000">
+		<comment>キュウコン</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_039_000">
+		<comment>プリン</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_040_000">
+		<comment>プクリン</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_041_000">
+		<comment>ズバット</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_042_000">
+		<comment>ゴルバット</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_043_000">
+		<comment>ナゾノクサ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_044_000">
+		<comment>クサイハナ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_045_000">
+		<comment>ラフレシア</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_046_000">
+		<comment>パラス</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_047_000">
+		<comment>パラセクト</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_048_000">
+		<comment>コンパン</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_049_000">
+		<comment>モルフォン</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_050_000">
+		<comment>ディグダ</comment>
+		<language name="JPN">0&apos;08&quot;</language>
+		<language name="JPN_KANJI">0&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_051_000">
+		<comment>ダグトリオ</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_052_000">
+		<comment>ニャース</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_053_000">
+		<comment>ペルシアン</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_054_000">
+		<comment>コダック</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_055_000">
+		<comment>ゴルダック</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_056_000">
+		<comment>マンキー</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_057_000">
+		<comment>オコリザル</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_058_000">
+		<comment>ガーディ</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_059_000">
+		<comment>ウインディ</comment>
+		<language name="JPN">6&apos;03&quot;</language>
+		<language name="JPN_KANJI">6&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_060_000">
+		<comment>ニョロモ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_061_000">
+		<comment>ニョロゾ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_062_000">
+		<comment>ニョロボン</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_063_000">
+		<comment>ケーシィ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_064_000">
+		<comment>ユンゲラー</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_065_000">
+		<comment>フーディン</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_066_000">
+		<comment>ワンリキー</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_067_000">
+		<comment>ゴーリキー</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_068_000">
+		<comment>カイリキー</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_069_000">
+		<comment>マダツボミ</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_070_000">
+		<comment>ウツドン</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_071_000">
+		<comment>ウツボット</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_072_000">
+		<comment>メノクラゲ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_073_000">
+		<comment>ドククラゲ</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_074_000">
+		<comment>イシツブテ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_075_000">
+		<comment>ゴローン</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_076_000">
+		<comment>ゴローニャ</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_077_000">
+		<comment>ポニータ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_078_000">
+		<comment>ギャロップ</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_079_000">
+		<comment>ヤドン</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_080_000">
+		<comment>ヤドラン</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_081_000">
+		<comment>コイル</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_082_000">
+		<comment>レアコイル</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_083_000">
+		<comment>カモネギ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_084_000">
+		<comment>ドードー</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_085_000">
+		<comment>ドードリオ</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_086_000">
+		<comment>パウワウ</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_087_000">
+		<comment>ジュゴン</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_088_000">
+		<comment>ベトベター</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_089_000">
+		<comment>ベトベトン</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_090_000">
+		<comment>シェルダー</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_091_000">
+		<comment>パルシェン</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_092_000">
+		<comment>ゴース</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_093_000">
+		<comment>ゴースト</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_094_000">
+		<comment>ゲンガー</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_095_000">
+		<comment>イワーク</comment>
+		<language name="JPN">28&apos;10&quot;</language>
+		<language name="JPN_KANJI">28&apos;10&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_096_000">
+		<comment>スリープ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_097_000">
+		<comment>スリーパー</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_098_000">
+		<comment>クラブ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_099_000">
+		<comment>キングラー</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_100_000">
+		<comment>ビリリダマ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_101_000">
+		<comment>マルマイン</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_102_000">
+		<comment>タマタマ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_103_000">
+		<comment>ナッシー</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_104_000">
+		<comment>カラカラ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_105_000">
+		<comment>ガラガラ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_106_000">
+		<comment>サワムラー</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_107_000">
+		<comment>エビワラー</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_108_000">
+		<comment>ベロリンガ</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_109_000">
+		<comment>ドガース</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_110_000">
+		<comment>マタドガス</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_111_000">
+		<comment>サイホーン</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_112_000">
+		<comment>サイドン</comment>
+		<language name="JPN">6&apos;03&quot;</language>
+		<language name="JPN_KANJI">6&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_113_000">
+		<comment>ラッキー</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_114_000">
+		<comment>モンジャラ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_115_000">
+		<comment>ガルーラ</comment>
+		<language name="JPN">7&apos;03&quot;</language>
+		<language name="JPN_KANJI">7&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_116_000">
+		<comment>タッツー</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_117_000">
+		<comment>シードラ</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_118_000">
+		<comment>トサキント</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_119_000">
+		<comment>アズマオウ</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_120_000">
+		<comment>ヒトデマン</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_121_000">
+		<comment>スターミー</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_122_000">
+		<comment>バリヤード</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_123_000">
+		<comment>ストライク</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_124_000">
+		<comment>ルージュラ</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_125_000">
+		<comment>エレブー</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_126_000">
+		<comment>ブーバー</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_127_000">
+		<comment>カイロス</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_128_000">
+		<comment>ケンタロス</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_129_000">
+		<comment>コイキング</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_130_000">
+		<comment>ギャラドス</comment>
+		<language name="JPN">21&apos;04&quot;</language>
+		<language name="JPN_KANJI">21&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_131_000">
+		<comment>ラプラス</comment>
+		<language name="JPN">8&apos;02&quot;</language>
+		<language name="JPN_KANJI">8&apos;02&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_132_000">
+		<comment>メタモン</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_133_000">
+		<comment>イーブイ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_134_000">
+		<comment>シャワーズ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_135_000">
+		<comment>サンダース</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_136_000">
+		<comment>ブースター</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_137_000">
+		<comment>ポリゴン</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_138_000">
+		<comment>オムナイト</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_139_000">
+		<comment>オムスター</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_140_000">
+		<comment>カブト</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_141_000">
+		<comment>カブトプス</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_142_000">
+		<comment>プテラ</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_143_000">
+		<comment>カビゴン</comment>
+		<language name="JPN">6&apos;11&quot;</language>
+		<language name="JPN_KANJI">6&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_144_000">
+		<comment>フリーザー</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_145_000">
+		<comment>サンダー</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_146_000">
+		<comment>ファイヤー</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_147_000">
+		<comment>ミニリュウ</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_148_000">
+		<comment>ハクリュー</comment>
+		<language name="JPN">13&apos;01&quot;</language>
+		<language name="JPN_KANJI">13&apos;01&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_149_000">
+		<comment>カイリュー</comment>
+		<language name="JPN">7&apos;03&quot;</language>
+		<language name="JPN_KANJI">7&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_150_000">
+		<comment>ミュウツー</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_151_000">
+		<comment>ミュウ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_152_000">
+		<comment>チコリータ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_153_000">
+		<comment>ベイリーフ</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_154_000">
+		<comment>メガニウム</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_155_000">
+		<comment>ヒノアラシ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_156_000">
+		<comment>マグマラシ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_157_000">
+		<comment>バクフーン</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_158_000">
+		<comment>ワニノコ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_159_000">
+		<comment>アリゲイツ</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_160_000">
+		<comment>オーダイル</comment>
+		<language name="JPN">7&apos;07&quot;</language>
+		<language name="JPN_KANJI">7&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_161_000">
+		<comment>オタチ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_162_000">
+		<comment>オオタチ</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_163_000">
+		<comment>ホーホー</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_164_000">
+		<comment>ヨルノズク</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_165_000">
+		<comment>レディバ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_166_000">
+		<comment>レディアン</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_167_000">
+		<comment>イトマル</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_168_000">
+		<comment>アリアドス</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_169_000">
+		<comment>クロバット</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_170_000">
+		<comment>チョンチー</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_171_000">
+		<comment>ランターン</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_172_000">
+		<comment>ピチュー</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_173_000">
+		<comment>ピィ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_174_000">
+		<comment>ププリン</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_175_000">
+		<comment>トゲピー</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_176_000">
+		<comment>トゲチック</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_177_000">
+		<comment>ネイティ</comment>
+		<language name="JPN">0&apos;08&quot;</language>
+		<language name="JPN_KANJI">0&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_178_000">
+		<comment>ネイティオ</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_179_000">
+		<comment>メリープ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_180_000">
+		<comment>モココ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_181_000">
+		<comment>デンリュウ</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_182_000">
+		<comment>キレイハナ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_183_000">
+		<comment>マリル</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_184_000">
+		<comment>マリルリ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_185_000">
+		<comment>ウソッキー</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_186_000">
+		<comment>ニョロトノ</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_187_000">
+		<comment>ハネッコ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_188_000">
+		<comment>ポポッコ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_189_000">
+		<comment>ワタッコ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_190_000">
+		<comment>エイパム</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_191_000">
+		<comment>ヒマナッツ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_192_000">
+		<comment>キマワリ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_193_000">
+		<comment>ヤンヤンマ</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_194_000">
+		<comment>ウパー</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_195_000">
+		<comment>ヌオー</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_196_000">
+		<comment>エーフィ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_197_000">
+		<comment>ブラッキー</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_198_000">
+		<comment>ヤミカラス</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_199_000">
+		<comment>ヤドキング</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_200_000">
+		<comment>ムウマ</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_201_000">
+		<comment>アンノーン</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_202_000">
+		<comment>ソーナンス</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_203_000">
+		<comment>キリンリキ</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_204_000">
+		<comment>クヌギダマ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_205_000">
+		<comment>フォレトス</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_206_000">
+		<comment>ノコッチ</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_207_000">
+		<comment>グライガー</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_208_000">
+		<comment>ハガネール</comment>
+		<language name="JPN">30&apos;02&quot;</language>
+		<language name="JPN_KANJI">30&apos;02&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_209_000">
+		<comment>ブルー</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_210_000">
+		<comment>グランブル</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_211_000">
+		<comment>ハリーセン</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_212_000">
+		<comment>ハッサム</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_213_000">
+		<comment>ツボツボ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_214_000">
+		<comment>ヘラクロス</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_215_000">
+		<comment>ニューラ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_216_000">
+		<comment>ヒメグマ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_217_000">
+		<comment>リングマ</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_218_000">
+		<comment>マグマッグ</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_219_000">
+		<comment>マグカルゴ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_220_000">
+		<comment>ウリムー</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_221_000">
+		<comment>イノムー</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_222_000">
+		<comment>サニーゴ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_223_000">
+		<comment>テッポウオ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_224_000">
+		<comment>オクタン</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_225_000">
+		<comment>デリバード</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_226_000">
+		<comment>マンタイン</comment>
+		<language name="JPN">6&apos;11&quot;</language>
+		<language name="JPN_KANJI">6&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_227_000">
+		<comment>エアームド</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_228_000">
+		<comment>デルビル</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_229_000">
+		<comment>ヘルガー</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_230_000">
+		<comment>キングドラ</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_231_000">
+		<comment>ゴマゾウ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_232_000">
+		<comment>ドンファン</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_233_000">
+		<comment>ポリゴン２</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_234_000">
+		<comment>オドシシ</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_235_000">
+		<comment>ドーブル</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_236_000">
+		<comment>バルキー</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_237_000">
+		<comment>カポエラー</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_238_000">
+		<comment>ムチュール</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_239_000">
+		<comment>エレキッド</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_240_000">
+		<comment>ブビィ</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_241_000">
+		<comment>ミルタンク</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_242_000">
+		<comment>ハピナス</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_243_000">
+		<comment>ライコウ</comment>
+		<language name="JPN">6&apos;03&quot;</language>
+		<language name="JPN_KANJI">6&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_244_000">
+		<comment>エンテイ</comment>
+		<language name="JPN">6&apos;11&quot;</language>
+		<language name="JPN_KANJI">6&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_245_000">
+		<comment>スイクン</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_246_000">
+		<comment>ヨーギラス</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_247_000">
+		<comment>サナギラス</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_248_000">
+		<comment>バンギラス</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_249_000">
+		<comment>ルギア</comment>
+		<language name="JPN">17&apos;01&quot;</language>
+		<language name="JPN_KANJI">17&apos;01&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_250_000">
+		<comment>ホウオウ</comment>
+		<language name="JPN">12&apos;06&quot;</language>
+		<language name="JPN_KANJI">12&apos;06&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_251_000">
+		<comment>セレビィ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_252_000">
+		<comment>キモリ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_253_000">
+		<comment>ジュプトル</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_254_000">
+		<comment>ジュカイン</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_255_000">
+		<comment>アチャモ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_256_000">
+		<comment>ワカシャモ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_257_000">
+		<comment>バシャーモ</comment>
+		<language name="JPN">6&apos;03&quot;</language>
+		<language name="JPN_KANJI">6&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_258_000">
+		<comment>ミズゴロウ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_259_000">
+		<comment>ヌマクロー</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_260_000">
+		<comment>ラグラージ</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_261_000">
+		<comment>ポチエナ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_262_000">
+		<comment>グラエナ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_263_000">
+		<comment>ジグザグマ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_264_000">
+		<comment>マッスグマ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_265_000">
+		<comment>ケムッソ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_266_000">
+		<comment>カラサリス</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_267_000">
+		<comment>アゲハント</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_268_000">
+		<comment>マユルド</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_269_000">
+		<comment>ドクケイル</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_270_000">
+		<comment>ハスボー</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_271_000">
+		<comment>ハスブレロ</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_272_000">
+		<comment>ルンパッパ</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_273_000">
+		<comment>タネボー</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_274_000">
+		<comment>コノハナ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_275_000">
+		<comment>ダーテング</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_276_000">
+		<comment>スバメ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_277_000">
+		<comment>オオスバメ</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_278_000">
+		<comment>キャモメ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_279_000">
+		<comment>ペリッパー</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_280_000">
+		<comment>ラルトス</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_281_000">
+		<comment>キルリア</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_282_000">
+		<comment>サーナイト</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_283_000">
+		<comment>アメタマ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_284_000">
+		<comment>アメモース</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_285_000">
+		<comment>キノココ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_286_000">
+		<comment>キノガッサ</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_287_000">
+		<comment>ナマケロ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_288_000">
+		<comment>ヤルキモノ</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_289_000">
+		<comment>ケッキング</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_290_000">
+		<comment>ツチニン</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_291_000">
+		<comment>テッカニン</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_292_000">
+		<comment>ヌケニン</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_293_000">
+		<comment>ゴニョニョ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_294_000">
+		<comment>ドゴーム</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_295_000">
+		<comment>バクオング</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_296_000">
+		<comment>マクノシタ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_297_000">
+		<comment>ハリテヤマ</comment>
+		<language name="JPN">7&apos;07&quot;</language>
+		<language name="JPN_KANJI">7&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_298_000">
+		<comment>ルリリ</comment>
+		<language name="JPN">0&apos;08&quot;</language>
+		<language name="JPN_KANJI">0&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_299_000">
+		<comment>ノズパス</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_300_000">
+		<comment>エネコ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_301_000">
+		<comment>エネコロロ</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_302_000">
+		<comment>ヤミラミ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_303_000">
+		<comment>クチート</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_304_000">
+		<comment>ココドラ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_305_000">
+		<comment>コドラ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_306_000">
+		<comment>ボスゴドラ</comment>
+		<language name="JPN">6&apos;11&quot;</language>
+		<language name="JPN_KANJI">6&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_307_000">
+		<comment>アサナン</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_308_000">
+		<comment>チャーレム</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_309_000">
+		<comment>ラクライ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_310_000">
+		<comment>ライボルト</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_311_000">
+		<comment>プラスル</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_312_000">
+		<comment>マイナン</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_313_000">
+		<comment>バルビート</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_314_000">
+		<comment>イルミーゼ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_315_000">
+		<comment>ロゼリア</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_316_000">
+		<comment>ゴクリン</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_317_000">
+		<comment>マルノーム</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_318_000">
+		<comment>キバニア</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_319_000">
+		<comment>サメハダー</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_320_000">
+		<comment>ホエルコ</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_321_000">
+		<comment>ホエルオー</comment>
+		<language name="JPN">47&apos;07&quot;</language>
+		<language name="JPN_KANJI">47&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_322_000">
+		<comment>ドンメル</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_323_000">
+		<comment>バクーダ</comment>
+		<language name="JPN">6&apos;03&quot;</language>
+		<language name="JPN_KANJI">6&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_324_000">
+		<comment>コータス</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_325_000">
+		<comment>バネブー</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_326_000">
+		<comment>ブーピッグ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_327_000">
+		<comment>パッチール</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_328_000">
+		<comment>ナックラー</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_329_000">
+		<comment>ビブラーバ</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_330_000">
+		<comment>フライゴン</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_331_000">
+		<comment>サボネア</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_332_000">
+		<comment>ノクタス</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_333_000">
+		<comment>チルット</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_334_000">
+		<comment>チルタリス</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_335_000">
+		<comment>ザングース</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_336_000">
+		<comment>ハブネーク</comment>
+		<language name="JPN">8&apos;10&quot;</language>
+		<language name="JPN_KANJI">8&apos;10&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_337_000">
+		<comment>ルナトーン</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_338_000">
+		<comment>ソルロック</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_339_000">
+		<comment>ドジョッチ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_340_000">
+		<comment>ナマズン</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_341_000">
+		<comment>ヘイガニ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_342_000">
+		<comment>シザリガー</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_343_000">
+		<comment>ヤジロン</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_344_000">
+		<comment>ネンドール</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_345_000">
+		<comment>リリーラ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_346_000">
+		<comment>ユレイドル</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_347_000">
+		<comment>アノプス</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_348_000">
+		<comment>アーマルド</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_349_000">
+		<comment>ヒンバス</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_350_000">
+		<comment>ミロカロス</comment>
+		<language name="JPN">20&apos;04&quot;</language>
+		<language name="JPN_KANJI">20&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_351_000">
+		<comment>ポワルン</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_352_000">
+		<comment>カクレオン</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_353_000">
+		<comment>カゲボウズ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_354_000">
+		<comment>ジュペッタ</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_355_000">
+		<comment>ヨマワル</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_356_000">
+		<comment>サマヨール</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_357_000">
+		<comment>トロピウス</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_358_000">
+		<comment>チリーン</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_359_000">
+		<comment>アブソル</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_360_000">
+		<comment>ソーナノ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_361_000">
+		<comment>ユキワラシ</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_362_000">
+		<comment>オニゴーリ</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_363_000">
+		<comment>タマザラシ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_364_000">
+		<comment>トドグラー</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_365_000">
+		<comment>トドゼルガ</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_366_000">
+		<comment>パールル</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_367_000">
+		<comment>ハンテール</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_368_000">
+		<comment>サクラビス</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_369_000">
+		<comment>ジーランス</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_370_000">
+		<comment>ラブカス</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_371_000">
+		<comment>タツベイ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_372_000">
+		<comment>コモルー</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_373_000">
+		<comment>ボーマンダ</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_374_000">
+		<comment>ダンバル</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_375_000">
+		<comment>メタング</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_376_000">
+		<comment>メタグロス</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_377_000">
+		<comment>レジロック</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_378_000">
+		<comment>レジアイス</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_379_000">
+		<comment>レジスチル</comment>
+		<language name="JPN">6&apos;03&quot;</language>
+		<language name="JPN_KANJI">6&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_380_000">
+		<comment>ラティアス</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_381_000">
+		<comment>ラティオス</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_382_000">
+		<comment>カイオーガ</comment>
+		<language name="JPN">14&apos;09&quot;</language>
+		<language name="JPN_KANJI">14&apos;09&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_383_000">
+		<comment>グラードン</comment>
+		<language name="JPN">11&apos;06&quot;</language>
+		<language name="JPN_KANJI">11&apos;06&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_384_000">
+		<comment>レックウザ</comment>
+		<language name="JPN">23&apos;00&quot;</language>
+		<language name="JPN_KANJI">23&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_385_000">
+		<comment>ジラーチ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_386_000">
+		<comment>デオキシス</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_387_000">
+		<comment>ナエトル</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_388_000">
+		<comment>ハヤシガメ</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_389_000">
+		<comment>ドダイトス</comment>
+		<language name="JPN">7&apos;03&quot;</language>
+		<language name="JPN_KANJI">7&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_390_000">
+		<comment>ヒコザル</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_391_000">
+		<comment>モウカザル</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_392_000">
+		<comment>ゴウカザル</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_393_000">
+		<comment>ポッチャマ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_394_000">
+		<comment>ポッタイシ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_395_000">
+		<comment>エンペルト</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_396_000">
+		<comment>ムックル</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_397_000">
+		<comment>ムクバード</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_398_000">
+		<comment>ムクホーク</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_399_000">
+		<comment>ビッパ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_400_000">
+		<comment>ビーダル</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_401_000">
+		<comment>コロボーシ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_402_000">
+		<comment>コロトック</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_403_000">
+		<comment>コリンク</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_404_000">
+		<comment>ルクシオ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_405_000">
+		<comment>レントラー</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_406_000">
+		<comment>スボミー</comment>
+		<language name="JPN">0&apos;08&quot;</language>
+		<language name="JPN_KANJI">0&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_407_000">
+		<comment>ロズレイド</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_408_000">
+		<comment>ズガイドス</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_409_000">
+		<comment>ラムパルド</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_410_000">
+		<comment>タテトプス</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_411_000">
+		<comment>トリデプス</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_412_000">
+		<comment>ミノムッチ</comment>
+		<language name="JPN">0&apos;08&quot;</language>
+		<language name="JPN_KANJI">0&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_413_000">
+		<comment>ミノマダム</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_414_000">
+		<comment>ガーメイル</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_415_000">
+		<comment>ミツハニー</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_416_000">
+		<comment>ビークイン</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_417_000">
+		<comment>パチリス</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_418_000">
+		<comment>ブイゼル</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_419_000">
+		<comment>フローゼル</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_420_000">
+		<comment>チェリンボ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_421_000">
+		<comment>チェリム</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_422_000">
+		<comment>カラナクシ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_423_000">
+		<comment>トリトドン</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_424_000">
+		<comment>エテボース</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_425_000">
+		<comment>フワンテ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_426_000">
+		<comment>フワライド</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_427_000">
+		<comment>ミミロル</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_428_000">
+		<comment>ミミロップ</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_429_000">
+		<comment>ムウマージ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_430_000">
+		<comment>ドンカラス</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_431_000">
+		<comment>ニャルマー</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_432_000">
+		<comment>ブニャット</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_433_000">
+		<comment>リーシャン</comment>
+		<language name="JPN">0&apos;08&quot;</language>
+		<language name="JPN_KANJI">0&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_434_000">
+		<comment>スカンプー</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_435_000">
+		<comment>スカタンク</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_436_000">
+		<comment>ドーミラー</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_437_000">
+		<comment>ドータクン</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_438_000">
+		<comment>ウソハチ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_439_000">
+		<comment>マネネ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_440_000">
+		<comment>ピンプク</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_441_000">
+		<comment>ペラップ</comment>
+		<language name="JPN">1&apos;08&quot;</language>
+		<language name="JPN_KANJI">1&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_442_000">
+		<comment>ミカルゲ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_443_000">
+		<comment>フカマル</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_444_000">
+		<comment>ガバイト</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_445_000">
+		<comment>ガブリアス</comment>
+		<language name="JPN">6&apos;03&quot;</language>
+		<language name="JPN_KANJI">6&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_446_000">
+		<comment>ゴンベ</comment>
+		<language name="JPN">2&apos;00&quot;</language>
+		<language name="JPN_KANJI">2&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_447_000">
+		<comment>リオル</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_448_000">
+		<comment>ルカリオ</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_449_000">
+		<comment>ヒポポタス</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_450_000">
+		<comment>カバルドン</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_451_000">
+		<comment>スコルピ</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_452_000">
+		<comment>ドラピオン</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_453_000">
+		<comment>グレッグル</comment>
+		<language name="JPN">2&apos;04&quot;</language>
+		<language name="JPN_KANJI">2&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_454_000">
+		<comment>ドクロッグ</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_455_000">
+		<comment>マスキッパ</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_456_000">
+		<comment>ケイコウオ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_457_000">
+		<comment>ネオラント</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_458_000">
+		<comment>タマンタ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_459_000">
+		<comment>ユキカブリ</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_460_000">
+		<comment>ユキノオー</comment>
+		<language name="JPN">7&apos;03&quot;</language>
+		<language name="JPN_KANJI">7&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_461_000">
+		<comment>マニューラ</comment>
+		<language name="JPN">3&apos;07&quot;</language>
+		<language name="JPN_KANJI">3&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_462_000">
+		<comment>ジバコイル</comment>
+		<language name="JPN">3&apos;11&quot;</language>
+		<language name="JPN_KANJI">3&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_463_000">
+		<comment>ベロベルト</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_464_000">
+		<comment>ドサイドン</comment>
+		<language name="JPN">7&apos;10&quot;</language>
+		<language name="JPN_KANJI">7&apos;10&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_465_000">
+		<comment>モジャンボ</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_466_000">
+		<comment>エレキブル</comment>
+		<language name="JPN">5&apos;11&quot;</language>
+		<language name="JPN_KANJI">5&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_467_000">
+		<comment>ブーバーン</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_468_000">
+		<comment>トゲキッス</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_469_000">
+		<comment>メガヤンマ</comment>
+		<language name="JPN">6&apos;03&quot;</language>
+		<language name="JPN_KANJI">6&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_470_000">
+		<comment>リーフィア</comment>
+		<language name="JPN">3&apos;03&quot;</language>
+		<language name="JPN_KANJI">3&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_471_000">
+		<comment>グレイシア</comment>
+		<language name="JPN">2&apos;07&quot;</language>
+		<language name="JPN_KANJI">2&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_472_000">
+		<comment>グライオン</comment>
+		<language name="JPN">6&apos;07&quot;</language>
+		<language name="JPN_KANJI">6&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_473_000">
+		<comment>マンムー</comment>
+		<language name="JPN">8&apos;02&quot;</language>
+		<language name="JPN_KANJI">8&apos;02&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_474_000">
+		<comment>ポリゴンＺ</comment>
+		<language name="JPN">2&apos;11&quot;</language>
+		<language name="JPN_KANJI">2&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_475_000">
+		<comment>エルレイド</comment>
+		<language name="JPN">5&apos;03&quot;</language>
+		<language name="JPN_KANJI">5&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_476_000">
+		<comment>ダイノーズ</comment>
+		<language name="JPN">4&apos;07&quot;</language>
+		<language name="JPN_KANJI">4&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_477_000">
+		<comment>ヨノワール</comment>
+		<language name="JPN">7&apos;03&quot;</language>
+		<language name="JPN_KANJI">7&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_478_000">
+		<comment>ユキメノコ</comment>
+		<language name="JPN">4&apos;03&quot;</language>
+		<language name="JPN_KANJI">4&apos;03&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_479_000">
+		<comment>ロトム</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_480_000">
+		<comment>ユクシー</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_481_000">
+		<comment>エムリット</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_482_000">
+		<comment>アグノム</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_483_000">
+		<comment>ディアルガ</comment>
+		<language name="JPN">17&apos;09&quot;</language>
+		<language name="JPN_KANJI">17&apos;09&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_484_000">
+		<comment>パルキア</comment>
+		<language name="JPN">13&apos;09&quot;</language>
+		<language name="JPN_KANJI">13&apos;09&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_485_000">
+		<comment>ヒードラン</comment>
+		<language name="JPN">5&apos;07&quot;</language>
+		<language name="JPN_KANJI">5&apos;07&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_486_000">
+		<comment>レジギガス</comment>
+		<language name="JPN">12&apos;02&quot;</language>
+		<language name="JPN_KANJI">12&apos;02&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_487_000" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ギラティナ：アナザー</comment>
+		<language name="JPN">22&apos;08&quot;</language>
+		<language name="JPN_KANJI">22&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_488_000">
+		<comment>クレセリア</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_489_000">
+		<comment>フィオネ</comment>
+		<language name="JPN">1&apos;04&quot;</language>
+		<language name="JPN_KANJI">1&apos;04&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_490_000">
+		<comment>マナフィ</comment>
+		<language name="JPN">1&apos;00&quot;</language>
+		<language name="JPN_KANJI">1&apos;00&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_491_000">
+		<comment>ダークライ</comment>
+		<language name="JPN">4&apos;11&quot;</language>
+		<language name="JPN_KANJI">4&apos;11&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_492_000">
+		<comment>シェイミ</comment>
+		<language name="JPN">0&apos;08&quot;</language>
+		<language name="JPN_KANJI">0&apos;08&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_493_000">
+		<comment>アルセウス</comment>
+		<language name="JPN">10&apos;06&quot;</language>
+		<language name="JPN_KANJI">10&apos;06&quot;</language>
+	</row>
+
+	<row id="ZKN_HRIGHT_E_487_001" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ギラティナ：オリジン</comment>
+		<language name="JPN">14&apos;09&quot;</language>
+		<language name="JPN_KANJI">14&apos;09&quot;</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>

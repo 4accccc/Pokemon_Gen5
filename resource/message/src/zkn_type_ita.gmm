@@ -1,0 +1,3323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="shimoyamada" host="W00184" date="2010-02-10T17:51:02"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="170"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="153"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="ZKN_TYPE_ITA_000">
+		<comment>？？？？？ポケモン</comment>
+		<language name="JPN">Pokémon ?????</language>
+		<language name="JPN_KANJI">Pokémon ?????</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_001">
+		<comment>たねポケモン</comment>
+		<language name="JPN">Pokémon Seme</language>
+		<language name="JPN_KANJI">Pokémon Seme</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_002">
+		<comment>たねポケモン</comment>
+		<language name="JPN">Pokémon Seme</language>
+		<language name="JPN_KANJI">Pokémon Seme</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_003">
+		<comment>たねポケモン</comment>
+		<language name="JPN">Pokémon Seme</language>
+		<language name="JPN_KANJI">Pokémon Seme</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_004">
+		<comment>とかげポケモン</comment>
+		<language name="JPN">Pokémon Lucertola</language>
+		<language name="JPN_KANJI">Pokémon Lucertola</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_005">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">Pokémon Fiamma</language>
+		<language name="JPN_KANJI">Pokémon Fiamma</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_006">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">Pokémon Fiamma</language>
+		<language name="JPN_KANJI">Pokémon Fiamma</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_007">
+		<comment>かめのこポケモン</comment>
+		<language name="JPN">Pokémon Tartaghina</language>
+		<language name="JPN_KANJI">Pokémon Tartaghina</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_008">
+		<comment>かめポケモン</comment>
+		<language name="JPN">Pokémon Tartaruga</language>
+		<language name="JPN_KANJI">Pokémon Tartaruga</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_009">
+		<comment>こうらポケモン</comment>
+		<language name="JPN">Pokémon Crostaceo</language>
+		<language name="JPN_KANJI">Pokémon Crostaceo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_010">
+		<comment>いもむしポケモン</comment>
+		<language name="JPN">Pokémon Baco</language>
+		<language name="JPN_KANJI">Pokémon Baco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_011">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">Pokémon Bozzolo</language>
+		<language name="JPN_KANJI">Pokémon Bozzolo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_012">
+		<comment>ちょうちょポケモン</comment>
+		<language name="JPN">Pokémon Farfalla</language>
+		<language name="JPN_KANJI">Pokémon Farfalla</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_013">
+		<comment>けむしポケモン</comment>
+		<language name="JPN">Pokémon Millepiedi</language>
+		<language name="JPN_KANJI">Pokémon Millepiedi</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_014">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">Pokémon Bozzolo</language>
+		<language name="JPN_KANJI">Pokémon Bozzolo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_015">
+		<comment>どくばちポケモン</comment>
+		<language name="JPN">Pokémon Velenape</language>
+		<language name="JPN_KANJI">Pokémon Velenape</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_016">
+		<comment>ことりポケモン</comment>
+		<language name="JPN">Pokémon Uccellino</language>
+		<language name="JPN_KANJI">Pokémon Uccellino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_017">
+		<comment>とりポケモン</comment>
+		<language name="JPN">Pokémon Uccello</language>
+		<language name="JPN_KANJI">Pokémon Uccello</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_018">
+		<comment>とりポケモン</comment>
+		<language name="JPN">Pokémon Uccello</language>
+		<language name="JPN_KANJI">Pokémon Uccello</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_019">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Pokémon Topo</language>
+		<language name="JPN_KANJI">Pokémon Topo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_020">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Pokémon Topo</language>
+		<language name="JPN_KANJI">Pokémon Topo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_021">
+		<comment>ことりポケモン</comment>
+		<language name="JPN">Pokémon Uccellino</language>
+		<language name="JPN_KANJI">Pokémon Uccellino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_022">
+		<comment>くちばしポケモン</comment>
+		<language name="JPN">Pokémon Becco</language>
+		<language name="JPN_KANJI">Pokémon Becco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_023">
+		<comment>へびポケモン</comment>
+		<language name="JPN">Pokémon Serpente</language>
+		<language name="JPN_KANJI">Pokémon Serpente</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_024">
+		<comment>コブラポケモン</comment>
+		<language name="JPN">Pokémon Cobra</language>
+		<language name="JPN_KANJI">Pokémon Cobra</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_025">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Pokémon Topo</language>
+		<language name="JPN_KANJI">Pokémon Topo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_026">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Pokémon Topo</language>
+		<language name="JPN_KANJI">Pokémon Topo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_027">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Pokémon Topo</language>
+		<language name="JPN_KANJI">Pokémon Topo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_028">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Pokémon Topo</language>
+		<language name="JPN_KANJI">Pokémon Topo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_029">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">Pokémon Velenago</language>
+		<language name="JPN_KANJI">Pokémon Velenago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_030">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">Pokémon Velenago</language>
+		<language name="JPN_KANJI">Pokémon Velenago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_031">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">Pokémon Trapano</language>
+		<language name="JPN_KANJI">Pokémon Trapano</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_032">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">Pokémon Velenago</language>
+		<language name="JPN_KANJI">Pokémon Velenago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_033">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">Pokémon Velenago</language>
+		<language name="JPN_KANJI">Pokémon Velenago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_034">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">Pokémon Trapano</language>
+		<language name="JPN_KANJI">Pokémon Trapano</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_035">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">Pokémon Fata</language>
+		<language name="JPN_KANJI">Pokémon Fata</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_036">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">Pokémon Fata</language>
+		<language name="JPN_KANJI">Pokémon Fata</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_037">
+		<comment>きつねポケモン</comment>
+		<language name="JPN">Pokémon Volpe</language>
+		<language name="JPN_KANJI">Pokémon Volpe</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_038">
+		<comment>きつねポケモン</comment>
+		<language name="JPN">Pokémon Volpe</language>
+		<language name="JPN_KANJI">Pokémon Volpe</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_039">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">Pokémon Pallone</language>
+		<language name="JPN_KANJI">Pokémon Pallone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_040">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">Pokémon Pallone</language>
+		<language name="JPN_KANJI">Pokémon Pallone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_041">
+		<comment>こうもりポケモン</comment>
+		<language name="JPN">Pokémon Pipistrello</language>
+		<language name="JPN_KANJI">Pokémon Pipistrello</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_042">
+		<comment>こうもりポケモン</comment>
+		<language name="JPN">Pokémon Pipistrello</language>
+		<language name="JPN_KANJI">Pokémon Pipistrello</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_043">
+		<comment>ざっそうポケモン</comment>
+		<language name="JPN">Pokémon Malerba</language>
+		<language name="JPN_KANJI">Pokémon Malerba</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_044">
+		<comment>ざっそうポケモン</comment>
+		<language name="JPN">Pokémon Malerba</language>
+		<language name="JPN_KANJI">Pokémon Malerba</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_045">
+		<comment>フラワーポケモン</comment>
+		<language name="JPN">Pokémon Fiore</language>
+		<language name="JPN_KANJI">Pokémon Fiore</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_046">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">Pokémon Fungo</language>
+		<language name="JPN_KANJI">Pokémon Fungo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_047">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">Pokémon Fungo</language>
+		<language name="JPN_KANJI">Pokémon Fungo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_048">
+		<comment>こんちゅうポケモン</comment>
+		<language name="JPN">Pokémon Insetto</language>
+		<language name="JPN_KANJI">Pokémon Insetto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_049">
+		<comment>どくがポケモン</comment>
+		<language name="JPN">Pokémon Velentarma</language>
+		<language name="JPN_KANJI">Pokémon Velentarma</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_050">
+		<comment>もぐらポケモン</comment>
+		<language name="JPN">Pokémon Talpa</language>
+		<language name="JPN_KANJI">Pokémon Talpa</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_051">
+		<comment>もぐらポケモン</comment>
+		<language name="JPN">Pokémon Talpa</language>
+		<language name="JPN_KANJI">Pokémon Talpa</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_052">
+		<comment>ばけねこポケモン</comment>
+		<language name="JPN">Pokémon Graffimiao</language>
+		<language name="JPN_KANJI">Pokémon Graffimiao</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_053">
+		<comment>シャムネコポケモン</comment>
+		<language name="JPN">Pokémon Nobilgatto</language>
+		<language name="JPN_KANJI">Pokémon Nobilgatto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_054">
+		<comment>あひるポケモン</comment>
+		<language name="JPN">Pokémon Papero</language>
+		<language name="JPN_KANJI">Pokémon Papero</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_055">
+		<comment>あひるポケモン</comment>
+		<language name="JPN">Pokémon Papero</language>
+		<language name="JPN_KANJI">Pokémon Papero</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_056">
+		<comment>ぶたざるポケモン</comment>
+		<language name="JPN">Pokémon Suinpanzé</language>
+		<language name="JPN_KANJI">Pokémon Suinpanzé</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_057">
+		<comment>ぶたざるポケモン</comment>
+		<language name="JPN">Pokémon Suinpanzé</language>
+		<language name="JPN_KANJI">Pokémon Suinpanzé</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_058">
+		<comment>こいぬポケモン</comment>
+		<language name="JPN">Pokémon Cagnolino</language>
+		<language name="JPN_KANJI">Pokémon Cagnolino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_059">
+		<comment>でんせつポケモン</comment>
+		<language name="JPN">Pokémon Leggenda</language>
+		<language name="JPN_KANJI">Pokémon Leggenda</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_060">
+		<comment>おたまポケモン</comment>
+		<language name="JPN">Pokémon Girino</language>
+		<language name="JPN_KANJI">Pokémon Girino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_061">
+		<comment>おたまポケモン</comment>
+		<language name="JPN">Pokémon Girino</language>
+		<language name="JPN_KANJI">Pokémon Girino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_062">
+		<comment>おたまポケモン</comment>
+		<language name="JPN">Pokémon Girino</language>
+		<language name="JPN_KANJI">Pokémon Girino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_063">
+		<comment>ねんりきポケモン</comment>
+		<language name="JPN">Pokémon Psico</language>
+		<language name="JPN_KANJI">Pokémon Psico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_064">
+		<comment>ねんりきポケモン</comment>
+		<language name="JPN">Pokémon Psico</language>
+		<language name="JPN_KANJI">Pokémon Psico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_065">
+		<comment>ねんりきポケモン</comment>
+		<language name="JPN">Pokémon Psico</language>
+		<language name="JPN_KANJI">Pokémon Psico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_066">
+		<comment>かいりきポケモン</comment>
+		<language name="JPN">Pokémon Megaforza</language>
+		<language name="JPN_KANJI">Pokémon Megaforza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_067">
+		<comment>かいりきポケモン</comment>
+		<language name="JPN">Pokémon Megaforza</language>
+		<language name="JPN_KANJI">Pokémon Megaforza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_068">
+		<comment>かいりきポケモン</comment>
+		<language name="JPN">Pokémon Megaforza</language>
+		<language name="JPN_KANJI">Pokémon Megaforza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_069">
+		<comment>フラワーポケモン</comment>
+		<language name="JPN">Pokémon Fiore</language>
+		<language name="JPN_KANJI">Pokémon Fiore</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_070">
+		<comment>ハエとりポケモン</comment>
+		<language name="JPN">Pokémon Moschivoro</language>
+		<language name="JPN_KANJI">Pokémon Moschivoro</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_071">
+		<comment>ハエとりポケモン</comment>
+		<language name="JPN">Pokémon Moschivoro</language>
+		<language name="JPN_KANJI">Pokémon Moschivoro</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_072">
+		<comment>くらげポケモン</comment>
+		<language name="JPN">Pokémon Medusa</language>
+		<language name="JPN_KANJI">Pokémon Medusa</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_073">
+		<comment>くらげポケモン</comment>
+		<language name="JPN">Pokémon Medusa</language>
+		<language name="JPN_KANJI">Pokémon Medusa</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_074">
+		<comment>がんせきポケモン</comment>
+		<language name="JPN">Pokémon Roccia</language>
+		<language name="JPN_KANJI">Pokémon Roccia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_075">
+		<comment>がんせきポケモン</comment>
+		<language name="JPN">Pokémon Roccia</language>
+		<language name="JPN_KANJI">Pokémon Roccia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_076">
+		<comment>メガトンポケモン</comment>
+		<language name="JPN">Pokémon Megatone</language>
+		<language name="JPN_KANJI">Pokémon Megatone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_077">
+		<comment>ひのうまポケモン</comment>
+		<language name="JPN">Pokémon Cavalfuoco</language>
+		<language name="JPN_KANJI">Pokémon Cavalfuoco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_078">
+		<comment>ひのうまポケモン</comment>
+		<language name="JPN">Pokémon Cavalfuoco</language>
+		<language name="JPN_KANJI">Pokémon Cavalfuoco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_079">
+		<comment>まぬけポケモン</comment>
+		<language name="JPN">Pokémon Ronfone</language>
+		<language name="JPN_KANJI">Pokémon Ronfone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_080">
+		<comment>やどかりポケモン</comment>
+		<language name="JPN">Pokémon Paguro</language>
+		<language name="JPN_KANJI">Pokémon Paguro</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_081">
+		<comment>じしゃくポケモン</comment>
+		<language name="JPN">Pokémon Calamita</language>
+		<language name="JPN_KANJI">Pokémon Calamita</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_082">
+		<comment>じしゃくポケモン</comment>
+		<language name="JPN">Pokémon Calamita</language>
+		<language name="JPN_KANJI">Pokémon Calamita</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_083">
+		<comment>かるがもポケモン</comment>
+		<language name="JPN">Pokémon Selvanatra</language>
+		<language name="JPN_KANJI">Pokémon Selvanatra</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_084">
+		<comment>ふたごどりポケモン</comment>
+		<language name="JPN">Pokémon Biuccello</language>
+		<language name="JPN_KANJI">Pokémon Biuccello</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_085">
+		<comment>みつごどりポケモン</comment>
+		<language name="JPN">Pokémon Triuccello</language>
+		<language name="JPN_KANJI">Pokémon Triuccello</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_086">
+		<comment>あしかポケモン</comment>
+		<language name="JPN">Pokémon Otaria</language>
+		<language name="JPN_KANJI">Pokémon Otaria</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_087">
+		<comment>あしかポケモン</comment>
+		<language name="JPN">Pokémon Otaria</language>
+		<language name="JPN_KANJI">Pokémon Otaria</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_088">
+		<comment>ヘドロポケモン</comment>
+		<language name="JPN">Pokémon Melma</language>
+		<language name="JPN_KANJI">Pokémon Melma</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_089">
+		<comment>ヘドロポケモン</comment>
+		<language name="JPN">Pokémon Melma</language>
+		<language name="JPN_KANJI">Pokémon Melma</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_090">
+		<comment>２まいがいポケモン</comment>
+		<language name="JPN">Pokémon Bivalve</language>
+		<language name="JPN_KANJI">Pokémon Bivalve</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_091">
+		<comment>２まいがいポケモン</comment>
+		<language name="JPN">Pokémon Bivalve</language>
+		<language name="JPN_KANJI">Pokémon Bivalve</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_092">
+		<comment>ガスじょうポケモン</comment>
+		<language name="JPN">Pokémon Gas</language>
+		<language name="JPN_KANJI">Pokémon Gas</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_093">
+		<comment>ガスじょうポケモン</comment>
+		<language name="JPN">Pokémon Gas</language>
+		<language name="JPN_KANJI">Pokémon Gas</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_094">
+		<comment>シャドーポケモン</comment>
+		<language name="JPN">Pokémon Ombra</language>
+		<language name="JPN_KANJI">Pokémon Ombra</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_095">
+		<comment>いわへびポケモン</comment>
+		<language name="JPN">Pokémon Serpesasso</language>
+		<language name="JPN_KANJI">Pokémon Serpesasso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_096">
+		<comment>さいみんポケモン</comment>
+		<language name="JPN">Pokémon Ipnosi</language>
+		<language name="JPN_KANJI">Pokémon Ipnosi</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_097">
+		<comment>さいみんポケモン</comment>
+		<language name="JPN">Pokémon Ipnosi</language>
+		<language name="JPN_KANJI">Pokémon Ipnosi</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_098">
+		<comment>さわがにポケモン</comment>
+		<language name="JPN">Pokémon Granchio</language>
+		<language name="JPN_KANJI">Pokémon Granchio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_099">
+		<comment>はさみポケモン</comment>
+		<language name="JPN">Pokémon Chela</language>
+		<language name="JPN_KANJI">Pokémon Chela</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_100">
+		<comment>ボールポケモン</comment>
+		<language name="JPN">Pokémon Ball</language>
+		<language name="JPN_KANJI">Pokémon Ball</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_101">
+		<comment>ボールポケモン</comment>
+		<language name="JPN">Pokémon Ball</language>
+		<language name="JPN_KANJI">Pokémon Ball</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_102">
+		<comment>たまごポケモン</comment>
+		<language name="JPN">Pokémon Uovo</language>
+		<language name="JPN_KANJI">Pokémon Uovo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_103">
+		<comment>やしのみポケモン</comment>
+		<language name="JPN">Pokémon Nocecocco</language>
+		<language name="JPN_KANJI">Pokémon Nocecocco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_104">
+		<comment>こどくポケモン</comment>
+		<language name="JPN">Pokémon Solitario</language>
+		<language name="JPN_KANJI">Pokémon Solitario</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_105">
+		<comment>ほねずきポケモン</comment>
+		<language name="JPN">Pokémon Guardaossi</language>
+		<language name="JPN_KANJI">Pokémon Guardaossi</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_106">
+		<comment>キックポケモン</comment>
+		<language name="JPN">Pokémon Tiracalci</language>
+		<language name="JPN_KANJI">Pokémon Tiracalci</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_107">
+		<comment>パンチポケモン</comment>
+		<language name="JPN">Pokémon Tirapugni</language>
+		<language name="JPN_KANJI">Pokémon Tirapugni</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_108">
+		<comment>なめまわしポケモン</comment>
+		<language name="JPN">Pokémon Linguaccia</language>
+		<language name="JPN_KANJI">Pokémon Linguaccia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_109">
+		<comment>どくガスポケモン</comment>
+		<language name="JPN">Pokémon Velenuvola</language>
+		<language name="JPN_KANJI">Pokémon Velenuvola</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_110">
+		<comment>どくガスポケモン</comment>
+		<language name="JPN">Pokémon Velenuvola</language>
+		<language name="JPN_KANJI">Pokémon Velenuvola</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_111">
+		<comment>とげとげポケモン</comment>
+		<language name="JPN">Pokémon Punzoni</language>
+		<language name="JPN_KANJI">Pokémon Punzoni</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_112">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">Pokémon Trapano</language>
+		<language name="JPN_KANJI">Pokémon Trapano</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_113">
+		<comment>たまごポケモン</comment>
+		<language name="JPN">Pokémon Uovo</language>
+		<language name="JPN_KANJI">Pokémon Uovo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_114">
+		<comment>ツルじょうポケモン</comment>
+		<language name="JPN">Pokémon Liana</language>
+		<language name="JPN_KANJI">Pokémon Liana</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_115">
+		<comment>おやこポケモン</comment>
+		<language name="JPN">Pokémon Genitore</language>
+		<language name="JPN_KANJI">Pokémon Genitore</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_116">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Pokémon Drago</language>
+		<language name="JPN_KANJI">Pokémon Drago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_117">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Pokémon Drago</language>
+		<language name="JPN_KANJI">Pokémon Drago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_118">
+		<comment>きんぎょポケモン</comment>
+		<language name="JPN">Pokémon Pescerosso</language>
+		<language name="JPN_KANJI">Pokémon Pescerosso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_119">
+		<comment>きんぎょポケモン</comment>
+		<language name="JPN">Pokémon Pescerosso</language>
+		<language name="JPN_KANJI">Pokémon Pescerosso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_120">
+		<comment>ほしがたポケモン</comment>
+		<language name="JPN">Pokémon Stella</language>
+		<language name="JPN_KANJI">Pokémon Stella</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_121">
+		<comment>なぞのポケモン</comment>
+		<language name="JPN">Pokémon Misterioso</language>
+		<language name="JPN_KANJI">Pokémon Misterioso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_122">
+		<comment>バリアーポケモン</comment>
+		<language name="JPN">Pokémon Barriera</language>
+		<language name="JPN_KANJI">Pokémon Barriera</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_123">
+		<comment>かまきりポケモン</comment>
+		<language name="JPN">Pokémon Mantide</language>
+		<language name="JPN_KANJI">Pokémon Mantide</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_124">
+		<comment>ひとがたポケモン</comment>
+		<language name="JPN">Pokémon Umanoide</language>
+		<language name="JPN_KANJI">Pokémon Umanoide</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_125">
+		<comment>でんげきポケモン</comment>
+		<language name="JPN">Pokémon Elettrico</language>
+		<language name="JPN_KANJI">Pokémon Elettrico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_126">
+		<comment>ひふきポケモン</comment>
+		<language name="JPN">Pokémon Sputafuoco</language>
+		<language name="JPN_KANJI">Pokémon Sputafuoco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_127">
+		<comment>くわがたポケモン</comment>
+		<language name="JPN">Pokémon Cervolante</language>
+		<language name="JPN_KANJI">Pokémon Cervolante</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_128">
+		<comment>あばれうしポケモン</comment>
+		<language name="JPN">Pokémon Torobrado</language>
+		<language name="JPN_KANJI">Pokémon Torobrado</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_129">
+		<comment>さかなポケモン</comment>
+		<language name="JPN">Pokémon Pesce</language>
+		<language name="JPN_KANJI">Pokémon Pesce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_130">
+		<comment>きょうあくポケモン</comment>
+		<language name="JPN">Pokémon Atroce</language>
+		<language name="JPN_KANJI">Pokémon Atroce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_131">
+		<comment>のりものポケモン</comment>
+		<language name="JPN">Pokémon Trasporto</language>
+		<language name="JPN_KANJI">Pokémon Trasporto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_132">
+		<comment>へんしんポケモン</comment>
+		<language name="JPN">Pokémon Mutante</language>
+		<language name="JPN_KANJI">Pokémon Mutante</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_133">
+		<comment>しんかポケモン</comment>
+		<language name="JPN">Pokémon Evoluzione</language>
+		<language name="JPN_KANJI">Pokémon Evoluzione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_134">
+		<comment>あわはきポケモン</comment>
+		<language name="JPN">Pokémon Bollajet</language>
+		<language name="JPN_KANJI">Pokémon Bollajet</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_135">
+		<comment>かみなりポケモン</comment>
+		<language name="JPN">Pokémon Luminoso</language>
+		<language name="JPN_KANJI">Pokémon Luminoso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_136">
+		<comment>ほのおポケモン</comment>
+		<language name="JPN">Pokémon Fiamma</language>
+		<language name="JPN_KANJI">Pokémon Fiamma</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_137">
+		<comment>バーチャルポケモン</comment>
+		<language name="JPN">Pokémon Virtuale</language>
+		<language name="JPN_KANJI">Pokémon Virtuale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_138">
+		<comment>うずまきポケモン</comment>
+		<language name="JPN">Pokémon Spirale</language>
+		<language name="JPN_KANJI">Pokémon Spirale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_139">
+		<comment>うずまきポケモン</comment>
+		<language name="JPN">Pokémon Spirale</language>
+		<language name="JPN_KANJI">Pokémon Spirale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_140">
+		<comment>こうらポケモン</comment>
+		<language name="JPN">Pokémon Crostaceo</language>
+		<language name="JPN_KANJI">Pokémon Crostaceo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_141">
+		<comment>こうらポケモン</comment>
+		<language name="JPN">Pokémon Crostaceo</language>
+		<language name="JPN_KANJI">Pokémon Crostaceo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_142">
+		<comment>かせきポケモン</comment>
+		<language name="JPN">Pokémon Fossile</language>
+		<language name="JPN_KANJI">Pokémon Fossile</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_143">
+		<comment>いねむりポケモン</comment>
+		<language name="JPN">Pokémon Sonno</language>
+		<language name="JPN_KANJI">Pokémon Sonno</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_144">
+		<comment>れいとうポケモン</comment>
+		<language name="JPN">Pokémon Gelo</language>
+		<language name="JPN_KANJI">Pokémon Gelo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_145">
+		<comment>でんげきポケモン</comment>
+		<language name="JPN">Pokémon Elettrico</language>
+		<language name="JPN_KANJI">Pokémon Elettrico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_146">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">Pokémon Fiamma</language>
+		<language name="JPN_KANJI">Pokémon Fiamma</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_147">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Pokémon Drago</language>
+		<language name="JPN_KANJI">Pokémon Drago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_148">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Pokémon Drago</language>
+		<language name="JPN_KANJI">Pokémon Drago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_149">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Pokémon Drago</language>
+		<language name="JPN_KANJI">Pokémon Drago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_150">
+		<comment>いでんしポケモン</comment>
+		<language name="JPN">Pokémon Genetico</language>
+		<language name="JPN_KANJI">Pokémon Genetico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_151">
+		<comment>しんしゅポケモン</comment>
+		<language name="JPN">Pokémon Novaspecie</language>
+		<language name="JPN_KANJI">Pokémon Novaspecie</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_152">
+		<comment>はっぱポケモン</comment>
+		<language name="JPN">Pokémon Foglia</language>
+		<language name="JPN_KANJI">Pokémon Foglia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_153">
+		<comment>はっぱポケモン</comment>
+		<language name="JPN">Pokémon Foglia</language>
+		<language name="JPN_KANJI">Pokémon Foglia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_154">
+		<comment>ハーブポケモン</comment>
+		<language name="JPN">Pokémon Erbe</language>
+		<language name="JPN_KANJI">Pokémon Erbe</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_155">
+		<comment>ひねずみポケモン</comment>
+		<language name="JPN">Pokémon Fuocotopo</language>
+		<language name="JPN_KANJI">Pokémon Fuocotopo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_156">
+		<comment>かざんポケモン</comment>
+		<language name="JPN">Pokémon Vulcano</language>
+		<language name="JPN_KANJI">Pokémon Vulcano</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_157">
+		<comment>かざんポケモン</comment>
+		<language name="JPN">Pokémon Vulcano</language>
+		<language name="JPN_KANJI">Pokémon Vulcano</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_158">
+		<comment>おおあごポケモン</comment>
+		<language name="JPN">Pokémon Mascellone</language>
+		<language name="JPN_KANJI">Pokémon Mascellone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_159">
+		<comment>おおあごポケモン</comment>
+		<language name="JPN">Pokémon Mascellone</language>
+		<language name="JPN_KANJI">Pokémon Mascellone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_160">
+		<comment>おおあごポケモン</comment>
+		<language name="JPN">Pokémon Mascellone</language>
+		<language name="JPN_KANJI">Pokémon Mascellone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_161">
+		<comment>みはりポケモン</comment>
+		<language name="JPN">Pokémon Esplorante</language>
+		<language name="JPN_KANJI">Pokémon Esplorante</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_162">
+		<comment>どうながポケモン</comment>
+		<language name="JPN">Pokémon Lungocorpo</language>
+		<language name="JPN_KANJI">Pokémon Lungocorpo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_163">
+		<comment>ふくろうポケモン</comment>
+		<language name="JPN">Pokémon Gufo</language>
+		<language name="JPN_KANJI">Pokémon Gufo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_164">
+		<comment>ふくろうポケモン</comment>
+		<language name="JPN">Pokémon Gufo</language>
+		<language name="JPN_KANJI">Pokémon Gufo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_165">
+		<comment>いつつぼしポケモン</comment>
+		<language name="JPN">Pokémon Pentastra</language>
+		<language name="JPN_KANJI">Pokémon Pentastra</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_166">
+		<comment>いつつぼしポケモン</comment>
+		<language name="JPN">Pokémon Pentastra</language>
+		<language name="JPN_KANJI">Pokémon Pentastra</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_167">
+		<comment>いとはきポケモン</comment>
+		<language name="JPN">Pokémon Tela</language>
+		<language name="JPN_KANJI">Pokémon Tela</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_168">
+		<comment>あしながポケモン</comment>
+		<language name="JPN">Pokémon Lungazampa</language>
+		<language name="JPN_KANJI">Pokémon Lungazampa</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_169">
+		<comment>こうもりポケモン</comment>
+		<language name="JPN">Pokémon Pipistrello</language>
+		<language name="JPN_KANJI">Pokémon Pipistrello</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_170">
+		<comment>あんこうポケモン</comment>
+		<language name="JPN">Pokémon Pescatore</language>
+		<language name="JPN_KANJI">Pokémon Pescatore</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_171">
+		<comment>ライトポケモン</comment>
+		<language name="JPN">Pokémon Luce</language>
+		<language name="JPN_KANJI">Pokémon Luce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_172">
+		<comment>こねずみポケモン</comment>
+		<language name="JPN">Pokémon Topino</language>
+		<language name="JPN_KANJI">Pokémon Topino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_173">
+		<comment>ほしがたポケモン</comment>
+		<language name="JPN">Pokémon Stella</language>
+		<language name="JPN_KANJI">Pokémon Stella</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_174">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">Pokémon Pallone</language>
+		<language name="JPN_KANJI">Pokémon Pallone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_175">
+		<comment>はりたまポケモン</comment>
+		<language name="JPN">Pokémon Pallapunte</language>
+		<language name="JPN_KANJI">Pokémon Pallapunte</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_176">
+		<comment>しあわせポケモン</comment>
+		<language name="JPN">Pokémon Felicità</language>
+		<language name="JPN_KANJI">Pokémon Felicità</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_177">
+		<comment>ことりポケモン</comment>
+		<language name="JPN">Pokémon Uccellino</language>
+		<language name="JPN_KANJI">Pokémon Uccellino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_178">
+		<comment>せいれいポケモン</comment>
+		<language name="JPN">Pokémon Magico</language>
+		<language name="JPN_KANJI">Pokémon Magico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_179">
+		<comment>わたげポケモン</comment>
+		<language name="JPN">Pokémon Lana</language>
+		<language name="JPN_KANJI">Pokémon Lana</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_180">
+		<comment>わたげポケモン</comment>
+		<language name="JPN">Pokémon Lana</language>
+		<language name="JPN_KANJI">Pokémon Lana</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_181">
+		<comment>ライトポケモン</comment>
+		<language name="JPN">Pokémon Luce</language>
+		<language name="JPN_KANJI">Pokémon Luce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_182">
+		<comment>フラワーポケモン</comment>
+		<language name="JPN">Pokémon Fiore</language>
+		<language name="JPN_KANJI">Pokémon Fiore</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_183">
+		<comment>みずねずみポケモン</comment>
+		<language name="JPN">Pokémon Acquatopo</language>
+		<language name="JPN_KANJI">Pokémon Acquatopo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_184">
+		<comment>みずうさぎポケモン</comment>
+		<language name="JPN">Pokémon Acquniglio</language>
+		<language name="JPN_KANJI">Pokémon Acquniglio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_185">
+		<comment>まねポケモン</comment>
+		<language name="JPN">Pokémon Imitazione</language>
+		<language name="JPN_KANJI">Pokémon Imitazione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_186">
+		<comment>かえるポケモン</comment>
+		<language name="JPN">Pokémon Rana</language>
+		<language name="JPN_KANJI">Pokémon Rana</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_187">
+		<comment>わたくさポケモン</comment>
+		<language name="JPN">Pokémon Gramigna</language>
+		<language name="JPN_KANJI">Pokémon Gramigna</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_188">
+		<comment>わたくさポケモン</comment>
+		<language name="JPN">Pokémon Gramigna</language>
+		<language name="JPN_KANJI">Pokémon Gramigna</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_189">
+		<comment>わたくさポケモン</comment>
+		<language name="JPN">Pokémon Gramigna</language>
+		<language name="JPN_KANJI">Pokémon Gramigna</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_190">
+		<comment>おながポケモン</comment>
+		<language name="JPN">Pokémon Lungacoda</language>
+		<language name="JPN_KANJI">Pokémon Lungacoda</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_191">
+		<comment>たねポケモン</comment>
+		<language name="JPN">Pokémon Seme</language>
+		<language name="JPN_KANJI">Pokémon Seme</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_192">
+		<comment>たいようポケモン</comment>
+		<language name="JPN">Pokémon Sole</language>
+		<language name="JPN_KANJI">Pokémon Sole</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_193">
+		<comment>うすばねポケモン</comment>
+		<language name="JPN">Pokémon Alachiara</language>
+		<language name="JPN_KANJI">Pokémon Alachiara</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_194">
+		<comment>みずうおポケモン</comment>
+		<language name="JPN">Pokémon Acquapesce</language>
+		<language name="JPN_KANJI">Pokémon Acquapesce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_195">
+		<comment>みずうおポケモン</comment>
+		<language name="JPN">Pokémon Acquapesce</language>
+		<language name="JPN_KANJI">Pokémon Acquapesce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_196">
+		<comment>たいようポケモン</comment>
+		<language name="JPN">Pokémon Sole</language>
+		<language name="JPN_KANJI">Pokémon Sole</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_197">
+		<comment>げっこうポケモン</comment>
+		<language name="JPN">Pokémon Lucelunare</language>
+		<language name="JPN_KANJI">Pokémon Lucelunare</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_198">
+		<comment>くらやみポケモン</comment>
+		<language name="JPN">Pokémon Oscurità</language>
+		<language name="JPN_KANJI">Pokémon Oscurità</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_199">
+		<comment>おうじゃポケモン</comment>
+		<language name="JPN">Pokémon Reale</language>
+		<language name="JPN_KANJI">Pokémon Reale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_200">
+		<comment>よなきポケモン</comment>
+		<language name="JPN">Pokémon Strido</language>
+		<language name="JPN_KANJI">Pokémon Strido</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_201">
+		<comment>シンボルポケモン</comment>
+		<language name="JPN">Pokémon Simbolo</language>
+		<language name="JPN_KANJI">Pokémon Simbolo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_202">
+		<comment>がまんポケモン</comment>
+		<language name="JPN">Pokémon Pazienza</language>
+		<language name="JPN_KANJI">Pokémon Pazienza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_203">
+		<comment>くびながポケモン</comment>
+		<language name="JPN">Pokémon Lungocollo</language>
+		<language name="JPN_KANJI">Pokémon Lungocollo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_204">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">Pokémon Larva</language>
+		<language name="JPN_KANJI">Pokémon Larva</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_205">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">Pokémon Larva</language>
+		<language name="JPN_KANJI">Pokémon Larva</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_206">
+		<comment>つちへびポケモン</comment>
+		<language name="JPN">Pokémon Terraserpe</language>
+		<language name="JPN_KANJI">Pokémon Terraserpe</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_207">
+		<comment>とびさそりポケモン</comment>
+		<language name="JPN">Pokémon Aliscorpio</language>
+		<language name="JPN_KANJI">Pokémon Aliscorpio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_208">
+		<comment>てつへびポケモン</comment>
+		<language name="JPN">Pokémon Ferroserpe</language>
+		<language name="JPN_KANJI">Pokémon Ferroserpe</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_209">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">Pokémon Fata</language>
+		<language name="JPN_KANJI">Pokémon Fata</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_210">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">Pokémon Fata</language>
+		<language name="JPN_KANJI">Pokémon Fata</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_211">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">Pokémon Pallone</language>
+		<language name="JPN_KANJI">Pokémon Pallone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_212">
+		<comment>はさみポケモン</comment>
+		<language name="JPN">Pokémon Chela</language>
+		<language name="JPN_KANJI">Pokémon Chela</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_213">
+		<comment>はっこうポケモン</comment>
+		<language name="JPN">Pokémon Muffa</language>
+		<language name="JPN_KANJI">Pokémon Muffa</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_214">
+		<comment>１ぽんヅノポケモン</comment>
+		<language name="JPN">Pokémon Monocorno</language>
+		<language name="JPN_KANJI">Pokémon Monocorno</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_215">
+		<comment>かぎづめポケモン</comment>
+		<language name="JPN">Pokémon Lamartigli</language>
+		<language name="JPN_KANJI">Pokémon Lamartigli</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_216">
+		<comment>こぐまポケモン</comment>
+		<language name="JPN">Pokémon Orsetto</language>
+		<language name="JPN_KANJI">Pokémon Orsetto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_217">
+		<comment>とうみんポケモン</comment>
+		<language name="JPN">Pokémon Letargo</language>
+		<language name="JPN_KANJI">Pokémon Letargo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_218">
+		<comment>ようがんポケモン</comment>
+		<language name="JPN">Pokémon Lava</language>
+		<language name="JPN_KANJI">Pokémon Lava</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_219">
+		<comment>ようがんポケモン</comment>
+		<language name="JPN">Pokémon Lava</language>
+		<language name="JPN_KANJI">Pokémon Lava</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_220">
+		<comment>いのぶたポケモン</comment>
+		<language name="JPN">Pokémon Maiale</language>
+		<language name="JPN_KANJI">Pokémon Maiale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_221">
+		<comment>いのししポケモン</comment>
+		<language name="JPN">Pokémon Suino</language>
+		<language name="JPN_KANJI">Pokémon Suino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_222">
+		<comment>さんごポケモン</comment>
+		<language name="JPN">Pokémon Corallo</language>
+		<language name="JPN_KANJI">Pokémon Corallo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_223">
+		<comment>ふんしゃポケモン</comment>
+		<language name="JPN">Pokémon Jet</language>
+		<language name="JPN_KANJI">Pokémon Jet</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_224">
+		<comment>ふんしゃポケモン</comment>
+		<language name="JPN">Pokémon Jet</language>
+		<language name="JPN_KANJI">Pokémon Jet</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_225">
+		<comment>はこびやポケモン</comment>
+		<language name="JPN">Pokémon Consegna</language>
+		<language name="JPN_KANJI">Pokémon Consegna</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_226">
+		<comment>カイトポケモン</comment>
+		<language name="JPN">Pokémon Aquilone</language>
+		<language name="JPN_KANJI">Pokémon Aquilone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_227">
+		<comment>よろいどりポケモン</comment>
+		<language name="JPN">Pokémon Armuccello</language>
+		<language name="JPN_KANJI">Pokémon Armuccello</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_228">
+		<comment>ダークポケモン</comment>
+		<language name="JPN">Pokémon Buio</language>
+		<language name="JPN_KANJI">Pokémon Buio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_229">
+		<comment>ダークポケモン</comment>
+		<language name="JPN">Pokémon Buio</language>
+		<language name="JPN_KANJI">Pokémon Buio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_230">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Pokémon Drago</language>
+		<language name="JPN_KANJI">Pokémon Drago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_231">
+		<comment>ながはなポケモン</comment>
+		<language name="JPN">Pokémon Nasone</language>
+		<language name="JPN_KANJI">Pokémon Nasone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_232">
+		<comment>よろいポケモン</comment>
+		<language name="JPN">Pokémon Armatura</language>
+		<language name="JPN_KANJI">Pokémon Armatura</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_233">
+		<comment>バーチャルポケモン</comment>
+		<language name="JPN">Pokémon Virtuale</language>
+		<language name="JPN_KANJI">Pokémon Virtuale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_234">
+		<comment>おおツノポケモン</comment>
+		<language name="JPN">Pokémon Grancorno</language>
+		<language name="JPN_KANJI">Pokémon Grancorno</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_235">
+		<comment>えかきポケモン</comment>
+		<language name="JPN">Pokémon Pittore</language>
+		<language name="JPN_KANJI">Pokémon Pittore</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_236">
+		<comment>けんかポケモン</comment>
+		<language name="JPN">Pokémon Baruffa</language>
+		<language name="JPN_KANJI">Pokémon Baruffa</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_237">
+		<comment>さかだちポケモン</comment>
+		<language name="JPN">Pokémon Verticale</language>
+		<language name="JPN_KANJI">Pokémon Verticale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_238">
+		<comment>くちづけポケモン</comment>
+		<language name="JPN">Pokémon Bacio</language>
+		<language name="JPN_KANJI">Pokémon Bacio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_239">
+		<comment>でんきポケモン</comment>
+		<language name="JPN">Pokémon Elettrico</language>
+		<language name="JPN_KANJI">Pokémon Elettrico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_240">
+		<comment>ひだねポケモン</comment>
+		<language name="JPN">Pokémon Carbonvivo</language>
+		<language name="JPN_KANJI">Pokémon Carbonvivo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_241">
+		<comment>ちちうしポケモン</comment>
+		<language name="JPN">Pokémon Bovino</language>
+		<language name="JPN_KANJI">Pokémon Bovino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_242">
+		<comment>しあわせポケモン</comment>
+		<language name="JPN">Pokémon Felicità</language>
+		<language name="JPN_KANJI">Pokémon Felicità</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_243">
+		<comment>いかずちポケモン</comment>
+		<language name="JPN">Pokémon Tuono</language>
+		<language name="JPN_KANJI">Pokémon Tuono</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_244">
+		<comment>かざんポケモン</comment>
+		<language name="JPN">Pokémon Vulcano</language>
+		<language name="JPN_KANJI">Pokémon Vulcano</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_245">
+		<comment>オーロラポケモン</comment>
+		<language name="JPN">Pokémon Aurora</language>
+		<language name="JPN_KANJI">Pokémon Aurora</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_246">
+		<comment>いわはだポケモン</comment>
+		<language name="JPN">Pokémon Peldisasso</language>
+		<language name="JPN_KANJI">Pokémon Peldisasso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_247">
+		<comment>だんがんポケモン</comment>
+		<language name="JPN">Pokémon Guscioduro</language>
+		<language name="JPN_KANJI">Pokémon Guscioduro</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_248">
+		<comment>よろいポケモン</comment>
+		<language name="JPN">Pokémon Armatura</language>
+		<language name="JPN_KANJI">Pokémon Armatura</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_249">
+		<comment>せんすいポケモン</comment>
+		<language name="JPN">Pokémon Immersione</language>
+		<language name="JPN_KANJI">Pokémon Immersione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_250">
+		<comment>にじいろポケモン</comment>
+		<language name="JPN">Pokémon Arcobaleno</language>
+		<language name="JPN_KANJI">Pokémon Arcobaleno</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_251">
+		<comment>ときわたりポケモン</comment>
+		<language name="JPN">Pokémon Tempovia</language>
+		<language name="JPN_KANJI">Pokémon Tempovia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_252">
+		<comment>もりトカゲポケモン</comment>
+		<language name="JPN">Pokémon Legnogeco</language>
+		<language name="JPN_KANJI">Pokémon Legnogeco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_253">
+		<comment>もりトカゲポケモン</comment>
+		<language name="JPN">Pokémon Legnogeco</language>
+		<language name="JPN_KANJI">Pokémon Legnogeco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_254">
+		<comment>みつりんポケモン</comment>
+		<language name="JPN">Pokémon Foresta</language>
+		<language name="JPN_KANJI">Pokémon Foresta</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_255">
+		<comment>ひよこポケモン</comment>
+		<language name="JPN">Pokémon Pulcino</language>
+		<language name="JPN_KANJI">Pokémon Pulcino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_256">
+		<comment>わかどりポケモン</comment>
+		<language name="JPN">Pokémon Rampollo</language>
+		<language name="JPN_KANJI">Pokémon Rampollo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_257">
+		<comment>もうかポケモン</comment>
+		<language name="JPN">Pokémon Vampe</language>
+		<language name="JPN_KANJI">Pokémon Vampe</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_258">
+		<comment>ぬまうおポケモン</comment>
+		<language name="JPN">Pokémon Fango Pesce</language>
+		<language name="JPN_KANJI">Pokémon Fango Pesce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_259">
+		<comment>ぬまうおポケモン</comment>
+		<language name="JPN">Pokémon Fango Pesce</language>
+		<language name="JPN_KANJI">Pokémon Fango Pesce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_260">
+		<comment>ぬまうおポケモン</comment>
+		<language name="JPN">Pokémon Fango Pesce</language>
+		<language name="JPN_KANJI">Pokémon Fango Pesce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_261">
+		<comment>かみつきポケモン</comment>
+		<language name="JPN">Pokémon Morso</language>
+		<language name="JPN_KANJI">Pokémon Morso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_262">
+		<comment>かみつきポケモン</comment>
+		<language name="JPN">Pokémon Morso</language>
+		<language name="JPN_KANJI">Pokémon Morso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_263">
+		<comment>まめだぬきポケモン</comment>
+		<language name="JPN">Pokémon Procione</language>
+		<language name="JPN_KANJI">Pokémon Procione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_264">
+		<comment>とっしんポケモン</comment>
+		<language name="JPN">Pokémon Sfrecciante</language>
+		<language name="JPN_KANJI">Pokémon Sfrecciante</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_265">
+		<comment>いもむしポケモン</comment>
+		<language name="JPN">Pokémon Baco</language>
+		<language name="JPN_KANJI">Pokémon Baco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_266">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">Pokémon Bozzolo</language>
+		<language name="JPN_KANJI">Pokémon Bozzolo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_267">
+		<comment>ちょうちょポケモン</comment>
+		<language name="JPN">Pokémon Farfalla</language>
+		<language name="JPN_KANJI">Pokémon Farfalla</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_268">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">Pokémon Bozzolo</language>
+		<language name="JPN_KANJI">Pokémon Bozzolo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_269">
+		<comment>どくがポケモン</comment>
+		<language name="JPN">Pokémon Velentarma</language>
+		<language name="JPN_KANJI">Pokémon Velentarma</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_270">
+		<comment>うきくさポケモン</comment>
+		<language name="JPN">Pokémon Alga</language>
+		<language name="JPN_KANJI">Pokémon Alga</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_271">
+		<comment>ようきポケモン</comment>
+		<language name="JPN">Pokémon Giocoso</language>
+		<language name="JPN_KANJI">Pokémon Giocoso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_272">
+		<comment>のうてんきポケモン</comment>
+		<language name="JPN">Pokémon Spensierato</language>
+		<language name="JPN_KANJI">Pokémon Spensierato</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_273">
+		<comment>どんぐりポケモン</comment>
+		<language name="JPN">Pokémon Ghianda</language>
+		<language name="JPN_KANJI">Pokémon Ghianda</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_274">
+		<comment>いじわるポケモン</comment>
+		<language name="JPN">Pokémon Scaltro</language>
+		<language name="JPN_KANJI">Pokémon Scaltro</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_275">
+		<comment>よこしまポケモン</comment>
+		<language name="JPN">Pokémon Burbero</language>
+		<language name="JPN_KANJI">Pokémon Burbero</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_276">
+		<comment>こツバメポケモン</comment>
+		<language name="JPN">Pokémon Rondinella</language>
+		<language name="JPN_KANJI">Pokémon Rondinella</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_277">
+		<comment>ツバメポケモン</comment>
+		<language name="JPN">Pokémon Rondine</language>
+		<language name="JPN_KANJI">Pokémon Rondine</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_278">
+		<comment>うみねこポケモン</comment>
+		<language name="JPN">Pokémon Gabbiano</language>
+		<language name="JPN_KANJI">Pokémon Gabbiano</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_279">
+		<comment>みずどりポケモン</comment>
+		<language name="JPN">Pokémon Alacquatico</language>
+		<language name="JPN_KANJI">Pokémon Alacquatico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_280">
+		<comment>きもちポケモン</comment>
+		<language name="JPN">Pokémon Sensazione</language>
+		<language name="JPN_KANJI">Pokémon Sensazione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_281">
+		<comment>かんじょうポケモン</comment>
+		<language name="JPN">Pokémon Emozione</language>
+		<language name="JPN_KANJI">Pokémon Emozione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_282">
+		<comment>ほうようポケモン</comment>
+		<language name="JPN">Pokémon Abbraccio</language>
+		<language name="JPN_KANJI">Pokémon Abbraccio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_283">
+		<comment>あめんぼポケモン</comment>
+		<language name="JPN">Pokémon Sfiorapozze</language>
+		<language name="JPN_KANJI">Pokémon Sfiorapozze</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_284">
+		<comment>めだまポケモン</comment>
+		<language name="JPN">Pokémon Occhi</language>
+		<language name="JPN_KANJI">Pokémon Occhi</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_285">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">Pokémon Fungo</language>
+		<language name="JPN_KANJI">Pokémon Fungo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_286">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">Pokémon Fungo</language>
+		<language name="JPN_KANJI">Pokémon Fungo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_287">
+		<comment>なまけものポケモン</comment>
+		<language name="JPN">Pokémon Ozioso</language>
+		<language name="JPN_KANJI">Pokémon Ozioso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_288">
+		<comment>あばれザルポケモン</comment>
+		<language name="JPN">Pokémon Indocile</language>
+		<language name="JPN_KANJI">Pokémon Indocile</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_289">
+		<comment>ものぐさポケモン</comment>
+		<language name="JPN">Pokémon Pigrizia</language>
+		<language name="JPN_KANJI">Pokémon Pigrizia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_290">
+		<comment>したづみポケモン</comment>
+		<language name="JPN">Pokémon Novizio</language>
+		<language name="JPN_KANJI">Pokémon Novizio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_291">
+		<comment>しのびポケモン</comment>
+		<language name="JPN">Pokémon Ninja</language>
+		<language name="JPN_KANJI">Pokémon Ninja</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_292">
+		<comment>ぬけがらポケモン</comment>
+		<language name="JPN">Pokémon Cambiapelle</language>
+		<language name="JPN_KANJI">Pokémon Cambiapelle</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_293">
+		<comment>ささやきポケモン</comment>
+		<language name="JPN">Pokémon Sussurro</language>
+		<language name="JPN_KANJI">Pokémon Sussurro</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_294">
+		<comment>おおごえポケモン</comment>
+		<language name="JPN">Pokémon Vocione</language>
+		<language name="JPN_KANJI">Pokémon Vocione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_295">
+		<comment>そうおんポケモン</comment>
+		<language name="JPN">Pokémon Fragore</language>
+		<language name="JPN_KANJI">Pokémon Fragore</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_296">
+		<comment>こんじょうポケモン</comment>
+		<language name="JPN">Pokémon Coraggio</language>
+		<language name="JPN_KANJI">Pokémon Coraggio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_297">
+		<comment>つっぱりポケモン</comment>
+		<language name="JPN">Pokémon Sberletese</language>
+		<language name="JPN_KANJI">Pokémon Sberletese</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_298">
+		<comment>みずたまポケモン</comment>
+		<language name="JPN">Pokémon Pois</language>
+		<language name="JPN_KANJI">Pokémon Pois</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_299">
+		<comment>コンパスポケモン</comment>
+		<language name="JPN">Pokémon Bussola</language>
+		<language name="JPN_KANJI">Pokémon Bussola</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_300">
+		<comment>こねこポケモン</comment>
+		<language name="JPN">Pokémon Micio</language>
+		<language name="JPN_KANJI">Pokémon Micio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_301">
+		<comment>おすましポケモン</comment>
+		<language name="JPN">Pokémon Finezza</language>
+		<language name="JPN_KANJI">Pokémon Finezza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_302">
+		<comment>くらやみポケモン</comment>
+		<language name="JPN">Pokémon Oscurità</language>
+		<language name="JPN_KANJI">Pokémon Oscurità</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_303">
+		<comment>あざむきポケモン</comment>
+		<language name="JPN">Pokémon Inganno</language>
+		<language name="JPN_KANJI">Pokémon Inganno</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_304">
+		<comment>てつヨロイポケモン</comment>
+		<language name="JPN">Pokémon Corazza</language>
+		<language name="JPN_KANJI">Pokémon Corazza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_305">
+		<comment>てつヨロイポケモン</comment>
+		<language name="JPN">Pokémon Corazza</language>
+		<language name="JPN_KANJI">Pokémon Corazza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_306">
+		<comment>てつヨロイポケモン</comment>
+		<language name="JPN">Pokémon Corazza</language>
+		<language name="JPN_KANJI">Pokémon Corazza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_307">
+		<comment>めいそうポケモン</comment>
+		<language name="JPN">Pokémon Meditazione</language>
+		<language name="JPN_KANJI">Pokémon Meditazione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_308">
+		<comment>めいそうポケモン</comment>
+		<language name="JPN">Pokémon Meditazione</language>
+		<language name="JPN_KANJI">Pokémon Meditazione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_309">
+		<comment>いなずまポケモン</comment>
+		<language name="JPN">Pokémon Lampo</language>
+		<language name="JPN_KANJI">Pokémon Lampo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_310">
+		<comment>ほうでんポケモン</comment>
+		<language name="JPN">Pokémon Scossa</language>
+		<language name="JPN_KANJI">Pokémon Scossa</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_311">
+		<comment>おうえんポケモン</comment>
+		<language name="JPN">Pokémon Incitamento</language>
+		<language name="JPN_KANJI">Pokémon Incitamento</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_312">
+		<comment>おうえんポケモン</comment>
+		<language name="JPN">Pokémon Incitamento</language>
+		<language name="JPN_KANJI">Pokémon Incitamento</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_313">
+		<comment>ほたるポケモン</comment>
+		<language name="JPN">Pokémon Lucciola</language>
+		<language name="JPN_KANJI">Pokémon Lucciola</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_314">
+		<comment>ほたるポケモン</comment>
+		<language name="JPN">Pokémon Lucciola</language>
+		<language name="JPN_KANJI">Pokémon Lucciola</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_315">
+		<comment>いばらポケモン</comment>
+		<language name="JPN">Pokémon Spina</language>
+		<language name="JPN_KANJI">Pokémon Spina</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_316">
+		<comment>いぶくろポケモン</comment>
+		<language name="JPN">Pokémon Stomaco</language>
+		<language name="JPN_KANJI">Pokémon Stomaco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_317">
+		<comment>どくぶくろポケモン</comment>
+		<language name="JPN">Pokémon Velenosacco</language>
+		<language name="JPN_KANJI">Pokémon Velenosacco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_318">
+		<comment>どうもうポケモン</comment>
+		<language name="JPN">Pokémon Feroce</language>
+		<language name="JPN_KANJI">Pokémon Feroce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_319">
+		<comment>きょうぼうポケモン</comment>
+		<language name="JPN">Pokémon Brutale</language>
+		<language name="JPN_KANJI">Pokémon Brutale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_320">
+		<comment>たまくじらポケモン</comment>
+		<language name="JPN">Pokémon Balenottero</language>
+		<language name="JPN_KANJI">Pokémon Balenottero</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_321">
+		<comment>うきくじらポケモン</comment>
+		<language name="JPN">Pokémon Megabalena</language>
+		<language name="JPN_KANJI">Pokémon Megabalena</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_322">
+		<comment>どんかんポケモン</comment>
+		<language name="JPN">Pokémon Torpore</language>
+		<language name="JPN_KANJI">Pokémon Torpore</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_323">
+		<comment>ふんかポケモン</comment>
+		<language name="JPN">Pokémon Eruzione</language>
+		<language name="JPN_KANJI">Pokémon Eruzione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_324">
+		<comment>せきたんポケモン</comment>
+		<language name="JPN">Pokémon Carbone</language>
+		<language name="JPN_KANJI">Pokémon Carbone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_325">
+		<comment>とびはねポケモン</comment>
+		<language name="JPN">Pokémon Molla</language>
+		<language name="JPN_KANJI">Pokémon Molla</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_326">
+		<comment>あやつりポケモン</comment>
+		<language name="JPN">Pokémon Raggiro</language>
+		<language name="JPN_KANJI">Pokémon Raggiro</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_327">
+		<comment>ぶちパンダポケモン</comment>
+		<language name="JPN">Pokémon Macchipanda</language>
+		<language name="JPN_KANJI">Pokémon Macchipanda</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_328">
+		<comment>ありじごくポケモン</comment>
+		<language name="JPN">Pokémon Trappola</language>
+		<language name="JPN_KANJI">Pokémon Trappola</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_329">
+		<comment>しんどうポケモン</comment>
+		<language name="JPN">Pokémon Vibrazione</language>
+		<language name="JPN_KANJI">Pokémon Vibrazione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_330">
+		<comment>せいれいポケモン</comment>
+		<language name="JPN">Pokémon Magico</language>
+		<language name="JPN_KANJI">Pokémon Magico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_331">
+		<comment>サボテンポケモン</comment>
+		<language name="JPN">Pokémon Cactus</language>
+		<language name="JPN_KANJI">Pokémon Cactus</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_332">
+		<comment>カカシぐさポケモン</comment>
+		<language name="JPN">Pokémon Spavento</language>
+		<language name="JPN_KANJI">Pokémon Spavento</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_333">
+		<comment>わたどりポケモン</comment>
+		<language name="JPN">Pokémon Alidicotone</language>
+		<language name="JPN_KANJI">Pokémon Alidicotone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_334">
+		<comment>ハミングポケモン</comment>
+		<language name="JPN">Pokémon Canterino</language>
+		<language name="JPN_KANJI">Pokémon Canterino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_335">
+		<comment>ネコイタチポケモン</comment>
+		<language name="JPN">Pokémon Furogatto</language>
+		<language name="JPN_KANJI">Pokémon Furogatto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_336">
+		<comment>キバへびポケモン</comment>
+		<language name="JPN">Pokémon Zannaserpe</language>
+		<language name="JPN_KANJI">Pokémon Zannaserpe</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_337">
+		<comment>いんせきポケモン</comment>
+		<language name="JPN">Pokémon Meteorite</language>
+		<language name="JPN_KANJI">Pokémon Meteorite</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_338">
+		<comment>いんせきポケモン</comment>
+		<language name="JPN">Pokémon Meteorite</language>
+		<language name="JPN_KANJI">Pokémon Meteorite</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_339">
+		<comment>ひげうおポケモン</comment>
+		<language name="JPN">Pokémon Baffetti</language>
+		<language name="JPN_KANJI">Pokémon Baffetti</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_340">
+		<comment>ひげうおポケモン</comment>
+		<language name="JPN">Pokémon Baffetti</language>
+		<language name="JPN_KANJI">Pokémon Baffetti</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_341">
+		<comment>ごろつきポケモン</comment>
+		<language name="JPN">Pokémon Birbone</language>
+		<language name="JPN_KANJI">Pokémon Birbone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_342">
+		<comment>ならずものポケモン</comment>
+		<language name="JPN">Pokémon Canaglia</language>
+		<language name="JPN_KANJI">Pokémon Canaglia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_343">
+		<comment>どぐうポケモン</comment>
+		<language name="JPN">Pokémon Argilla</language>
+		<language name="JPN_KANJI">Pokémon Argilla</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_344">
+		<comment>どぐうポケモン</comment>
+		<language name="JPN">Pokémon Argilla</language>
+		<language name="JPN_KANJI">Pokémon Argilla</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_345">
+		<comment>ウミユリポケモン</comment>
+		<language name="JPN">Pokémon Fiordimare</language>
+		<language name="JPN_KANJI">Pokémon Fiordimare</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_346">
+		<comment>いわつぼポケモン</comment>
+		<language name="JPN">Pokémon Lepade</language>
+		<language name="JPN_KANJI">Pokémon Lepade</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_347">
+		<comment>むかしエビポケモン</comment>
+		<language name="JPN">Pokémon Primaceo</language>
+		<language name="JPN_KANJI">Pokémon Primaceo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_348">
+		<comment>かっちゅうポケモン</comment>
+		<language name="JPN">Pokémon Piastre</language>
+		<language name="JPN_KANJI">Pokémon Piastre</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_349">
+		<comment>さかなポケモン</comment>
+		<language name="JPN">Pokémon Pesce</language>
+		<language name="JPN_KANJI">Pokémon Pesce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_350">
+		<comment>いつくしみポケモン</comment>
+		<language name="JPN">Pokémon Tenerezza</language>
+		<language name="JPN_KANJI">Pokémon Tenerezza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_351">
+		<comment>てんきポケモン</comment>
+		<language name="JPN">Pokémon Meteo</language>
+		<language name="JPN_KANJI">Pokémon Meteo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_352">
+		<comment>いろへんげポケモン</comment>
+		<language name="JPN">Pokémon Mutacolore</language>
+		<language name="JPN_KANJI">Pokémon Mutacolore</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_353">
+		<comment>にんぎょうポケモン</comment>
+		<language name="JPN">Pokémon Pupazzo</language>
+		<language name="JPN_KANJI">Pokémon Pupazzo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_354">
+		<comment>ぬいぐるみポケモン</comment>
+		<language name="JPN">Pokémon Marionetta</language>
+		<language name="JPN_KANJI">Pokémon Marionetta</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_355">
+		<comment>おむかえポケモン</comment>
+		<language name="JPN">Pokémon Requiem</language>
+		<language name="JPN_KANJI">Pokémon Requiem</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_356">
+		<comment>てまねきポケモン</comment>
+		<language name="JPN">Pokémon Ipnosguardo</language>
+		<language name="JPN_KANJI">Pokémon Ipnosguardo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_357">
+		<comment>フルーツポケモン</comment>
+		<language name="JPN">Pokémon Frutto</language>
+		<language name="JPN_KANJI">Pokémon Frutto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_358">
+		<comment>ふうりんポケモン</comment>
+		<language name="JPN">Pokémon Vencampana</language>
+		<language name="JPN_KANJI">Pokémon Vencampana</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_359">
+		<comment>わざわいポケモン</comment>
+		<language name="JPN">Pokémon Catastrofe</language>
+		<language name="JPN_KANJI">Pokémon Catastrofe</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_360">
+		<comment>ほがらかポケモン</comment>
+		<language name="JPN">Pokémon Brillante</language>
+		<language name="JPN_KANJI">Pokémon Brillante</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_361">
+		<comment>ゆきかさポケモン</comment>
+		<language name="JPN">Pokémon Cappelneve</language>
+		<language name="JPN_KANJI">Pokémon Cappelneve</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_362">
+		<comment>がんめんポケモン</comment>
+		<language name="JPN">Pokémon Tuttomuso</language>
+		<language name="JPN_KANJI">Pokémon Tuttomuso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_363">
+		<comment>てたたきポケモン</comment>
+		<language name="JPN">Pokémon Rotolante</language>
+		<language name="JPN_KANJI">Pokémon Rotolante</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_364">
+		<comment>たままわしポケモン</comment>
+		<language name="JPN">Pokémon Rotapalla</language>
+		<language name="JPN_KANJI">Pokémon Rotapalla</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_365">
+		<comment>こおりわりポケモン</comment>
+		<language name="JPN">Pokémon Spaccagelo</language>
+		<language name="JPN_KANJI">Pokémon Spaccagelo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_366">
+		<comment>２まいがいポケモン</comment>
+		<language name="JPN">Pokémon Bivalve</language>
+		<language name="JPN_KANJI">Pokémon Bivalve</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_367">
+		<comment>しんかいポケモン</comment>
+		<language name="JPN">Pokémon Abissi</language>
+		<language name="JPN_KANJI">Pokémon Abissi</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_368">
+		<comment>なんかいポケモン</comment>
+		<language name="JPN">Pokémon Sudmarino</language>
+		<language name="JPN_KANJI">Pokémon Sudmarino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_369">
+		<comment>ちょうじゅポケモン</comment>
+		<language name="JPN">Pokémon Longevità</language>
+		<language name="JPN_KANJI">Pokémon Longevità</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_370">
+		<comment>ランデブーポケモン</comment>
+		<language name="JPN">Pokémon Rendezvous</language>
+		<language name="JPN_KANJI">Pokémon Rendezvous</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_371">
+		<comment>いしあたまポケモン</comment>
+		<language name="JPN">Pokémon Rocciotesta</language>
+		<language name="JPN_KANJI">Pokémon Rocciotesta</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_372">
+		<comment>にんたいポケモン</comment>
+		<language name="JPN">Pokémon Resistenza</language>
+		<language name="JPN_KANJI">Pokémon Resistenza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_373">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Pokémon Drago</language>
+		<language name="JPN_KANJI">Pokémon Drago</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_374">
+		<comment>てっきゅうポケモン</comment>
+		<language name="JPN">Pokémon Ferrosfera</language>
+		<language name="JPN_KANJI">Pokémon Ferrosfera</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_375">
+		<comment>てつツメポケモン</comment>
+		<language name="JPN">Pokémon Ferrunghia</language>
+		<language name="JPN_KANJI">Pokémon Ferrunghia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_376">
+		<comment>てつあしポケモン</comment>
+		<language name="JPN">Pokémon Ferrarto</language>
+		<language name="JPN_KANJI">Pokémon Ferrarto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_377">
+		<comment>いわやまポケモン</comment>
+		<language name="JPN">Pokémon Picco</language>
+		<language name="JPN_KANJI">Pokémon Picco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_378">
+		<comment>ひょうざんポケモン</comment>
+		<language name="JPN">Pokémon Iceberg</language>
+		<language name="JPN_KANJI">Pokémon Iceberg</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_379">
+		<comment>くろがねポケモン</comment>
+		<language name="JPN">Pokémon Ferro</language>
+		<language name="JPN_KANJI">Pokémon Ferro</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_380">
+		<comment>むげんポケモン</comment>
+		<language name="JPN">Pokémon Eone</language>
+		<language name="JPN_KANJI">Pokémon Eone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_381">
+		<comment>むげんポケモン</comment>
+		<language name="JPN">Pokémon Eone</language>
+		<language name="JPN_KANJI">Pokémon Eone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_382">
+		<comment>かいていポケモン</comment>
+		<language name="JPN">Pokémon Oceano</language>
+		<language name="JPN_KANJI">Pokémon Oceano</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_383">
+		<comment>たいりくポケモン</comment>
+		<language name="JPN">Pokémon Continente</language>
+		<language name="JPN_KANJI">Pokémon Continente</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_384">
+		<comment>てんくうポケモン</comment>
+		<language name="JPN">Pokémon Stratosfera</language>
+		<language name="JPN_KANJI">Pokémon Stratosfera</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_385">
+		<comment>ねがいごとポケモン</comment>
+		<language name="JPN">Pokémon Desiderio</language>
+		<language name="JPN_KANJI">Pokémon Desiderio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_386">
+		<comment>ＤＮＡポケモン</comment>
+		<language name="JPN">Pokémon DNA</language>
+		<language name="JPN_KANJI">Pokémon DNA</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_387">
+		<comment>わかばポケモン</comment>
+		<language name="JPN">Pokémon Fogliolina</language>
+		<language name="JPN_KANJI">Pokémon Fogliolina</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_388">
+		<comment>こだちポケモン</comment>
+		<language name="JPN">Pokémon Boschetto</language>
+		<language name="JPN_KANJI">Pokémon Boschetto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_389">
+		<comment>たいりくポケモン</comment>
+		<language name="JPN">Pokémon Continente</language>
+		<language name="JPN_KANJI">Pokémon Continente</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_390">
+		<comment>こざるポケモン</comment>
+		<language name="JPN">Pokémon Scimpanzé</language>
+		<language name="JPN_KANJI">Pokémon Scimpanzé</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_391">
+		<comment>やんちゃポケモン</comment>
+		<language name="JPN">Pokémon Briccone</language>
+		<language name="JPN_KANJI">Pokémon Briccone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_392">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">Pokémon Fiamma</language>
+		<language name="JPN_KANJI">Pokémon Fiamma</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_393">
+		<comment>ペンギンポケモン</comment>
+		<language name="JPN">Pokémon Pinguino</language>
+		<language name="JPN_KANJI">Pokémon Pinguino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_394">
+		<comment>ペンギンポケモン</comment>
+		<language name="JPN">Pokémon Pinguino</language>
+		<language name="JPN_KANJI">Pokémon Pinguino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_395">
+		<comment>こうていポケモン</comment>
+		<language name="JPN">Pokémon Imperatore</language>
+		<language name="JPN_KANJI">Pokémon Imperatore</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_396">
+		<comment>むくどりポケモン</comment>
+		<language name="JPN">Pokémon Storno</language>
+		<language name="JPN_KANJI">Pokémon Storno</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_397">
+		<comment>むくどりポケモン</comment>
+		<language name="JPN">Pokémon Storno</language>
+		<language name="JPN_KANJI">Pokémon Storno</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_398">
+		<comment>もうきんポケモン</comment>
+		<language name="JPN">Pokémon Rapace</language>
+		<language name="JPN_KANJI">Pokémon Rapace</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_399">
+		<comment>まるねずみポケモン</comment>
+		<language name="JPN">Pokémon Topaffuto</language>
+		<language name="JPN_KANJI">Pokémon Topaffuto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_400">
+		<comment>ビーバーポケモン</comment>
+		<language name="JPN">Pokémon Castoro</language>
+		<language name="JPN_KANJI">Pokémon Castoro</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_401">
+		<comment>こおろぎポケモン</comment>
+		<language name="JPN">Pokémon Grillo</language>
+		<language name="JPN_KANJI">Pokémon Grillo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_402">
+		<comment>こおろぎポケモン</comment>
+		<language name="JPN">Pokémon Grillo</language>
+		<language name="JPN_KANJI">Pokémon Grillo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_403">
+		<comment>せんこうポケモン</comment>
+		<language name="JPN">Pokémon Baleno</language>
+		<language name="JPN_KANJI">Pokémon Baleno</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_404">
+		<comment>でんこうポケモン</comment>
+		<language name="JPN">Pokémon Favilla</language>
+		<language name="JPN_KANJI">Pokémon Favilla</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_405">
+		<comment>がんこうポケモン</comment>
+		<language name="JPN">Pokémon Occhiluce</language>
+		<language name="JPN_KANJI">Pokémon Occhiluce</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_406">
+		<comment>つぼみポケモン</comment>
+		<language name="JPN">Pokémon Germoglio</language>
+		<language name="JPN_KANJI">Pokémon Germoglio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_407">
+		<comment>ブーケポケモン</comment>
+		<language name="JPN">Pokémon Floreale</language>
+		<language name="JPN_KANJI">Pokémon Floreale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_408">
+		<comment>ずつきポケモン</comment>
+		<language name="JPN">Pokémon Cranioso</language>
+		<language name="JPN_KANJI">Pokémon Cranioso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_409">
+		<comment>ずつきポケモン</comment>
+		<language name="JPN">Pokémon Cranioso</language>
+		<language name="JPN_KANJI">Pokémon Cranioso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_410">
+		<comment>シールドポケモン</comment>
+		<language name="JPN">Pokémon Schermo</language>
+		<language name="JPN_KANJI">Pokémon Schermo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_411">
+		<comment>シールドポケモン</comment>
+		<language name="JPN">Pokémon Schermo</language>
+		<language name="JPN_KANJI">Pokémon Schermo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_412">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">Pokémon Larva</language>
+		<language name="JPN_KANJI">Pokémon Larva</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_413">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">Pokémon Larva</language>
+		<language name="JPN_KANJI">Pokémon Larva</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_414">
+		<comment>ミノガポケモン</comment>
+		<language name="JPN">Pokémon Falena</language>
+		<language name="JPN_KANJI">Pokémon Falena</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_415">
+		<comment>はちのこポケモン</comment>
+		<language name="JPN">Pokémon Apetta</language>
+		<language name="JPN_KANJI">Pokémon Apetta</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_416">
+		<comment>はちのすポケモン</comment>
+		<language name="JPN">Pokémon Alveare</language>
+		<language name="JPN_KANJI">Pokémon Alveare</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_417">
+		<comment>でんきりすポケモン</comment>
+		<language name="JPN">Pokémon Elescoiatto</language>
+		<language name="JPN_KANJI">Pokémon Elescoiatto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_418">
+		<comment>うみイタチポケモン</comment>
+		<language name="JPN">Pokémon Maridonnola</language>
+		<language name="JPN_KANJI">Pokémon Maridonnola</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_419">
+		<comment>うみイタチポケモン</comment>
+		<language name="JPN">Pokémon Maridonnola</language>
+		<language name="JPN_KANJI">Pokémon Maridonnola</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_420">
+		<comment>さくらんぼポケモン</comment>
+		<language name="JPN">Pokémon Ciliegia</language>
+		<language name="JPN_KANJI">Pokémon Ciliegia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_421">
+		<comment>サクラポケモン</comment>
+		<language name="JPN">Pokémon Bocciolo</language>
+		<language name="JPN_KANJI">Pokémon Bocciolo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_422">
+		<comment>ウミウシポケモン</comment>
+		<language name="JPN">Pokémon Lumacomare</language>
+		<language name="JPN_KANJI">Pokémon Lumacomare</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_423">
+		<comment>ウミウシポケモン</comment>
+		<language name="JPN">Pokémon Lumacomare</language>
+		<language name="JPN_KANJI">Pokémon Lumacomare</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_424">
+		<comment>おながポケモン</comment>
+		<language name="JPN">Pokémon Lungacoda</language>
+		<language name="JPN_KANJI">Pokémon Lungacoda</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_425">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">Pokémon Pallone</language>
+		<language name="JPN_KANJI">Pokémon Pallone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_426">
+		<comment>ききゅうポケモン</comment>
+		<language name="JPN">Pokémon Dirigibile</language>
+		<language name="JPN_KANJI">Pokémon Dirigibile</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_427">
+		<comment>うさぎポケモン</comment>
+		<language name="JPN">Pokémon Coniglio</language>
+		<language name="JPN_KANJI">Pokémon Coniglio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_428">
+		<comment>うさぎポケモン</comment>
+		<language name="JPN">Pokémon Coniglio</language>
+		<language name="JPN_KANJI">Pokémon Coniglio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_429">
+		<comment>マジカルポケモン</comment>
+		<language name="JPN">Pokémon Stregone</language>
+		<language name="JPN_KANJI">Pokémon Stregone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_430">
+		<comment>おおボスポケモン</comment>
+		<language name="JPN">Pokémon Grancapo</language>
+		<language name="JPN_KANJI">Pokémon Grancapo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_431">
+		<comment>ねこかぶりポケモン</comment>
+		<language name="JPN">Pokémon Felide</language>
+		<language name="JPN_KANJI">Pokémon Felide</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_432">
+		<comment>とらねこポケモン</comment>
+		<language name="JPN">Pokémon Gattotigre</language>
+		<language name="JPN_KANJI">Pokémon Gattotigre</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_433">
+		<comment>すずポケモン</comment>
+		<language name="JPN">Pokémon Sonaglio</language>
+		<language name="JPN_KANJI">Pokémon Sonaglio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_434">
+		<comment>スカンクポケモン</comment>
+		<language name="JPN">Pokémon Moffetta</language>
+		<language name="JPN_KANJI">Pokémon Moffetta</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_435">
+		<comment>スカンクポケモン</comment>
+		<language name="JPN">Pokémon Moffetta</language>
+		<language name="JPN_KANJI">Pokémon Moffetta</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_436">
+		<comment>せいどうポケモン</comment>
+		<language name="JPN">Pokémon Bronzo</language>
+		<language name="JPN_KANJI">Pokémon Bronzo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_437">
+		<comment>どうたくポケモン</comment>
+		<language name="JPN">Pokémon Squibronzo</language>
+		<language name="JPN_KANJI">Pokémon Squibronzo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_438">
+		<comment>ぼんさいポケモン</comment>
+		<language name="JPN">Pokémon Bonsai</language>
+		<language name="JPN_KANJI">Pokémon Bonsai</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_439">
+		<comment>マイムポケモン</comment>
+		<language name="JPN">Pokémon Mimo</language>
+		<language name="JPN_KANJI">Pokémon Mimo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_440">
+		<comment>ままごとポケモン</comment>
+		<language name="JPN">Pokémon Ovettino</language>
+		<language name="JPN_KANJI">Pokémon Ovettino</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_441">
+		<comment>おんぷポケモン</comment>
+		<language name="JPN">Pokémon Musicale</language>
+		<language name="JPN_KANJI">Pokémon Musicale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_442">
+		<comment>ふういんポケモン</comment>
+		<language name="JPN">Pokémon Proibito</language>
+		<language name="JPN_KANJI">Pokémon Proibito</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_443">
+		<comment>りくザメポケモン</comment>
+		<language name="JPN">Pokémon Squaloterra</language>
+		<language name="JPN_KANJI">Pokémon Squaloterra</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_444">
+		<comment>ほらあなポケモン</comment>
+		<language name="JPN">Pokémon Grotta</language>
+		<language name="JPN_KANJI">Pokémon Grotta</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_445">
+		<comment>マッハポケモン</comment>
+		<language name="JPN">Pokémon Mach</language>
+		<language name="JPN_KANJI">Pokémon Mach</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_446">
+		<comment>おおぐいポケモン</comment>
+		<language name="JPN">Pokémon Ghiottone</language>
+		<language name="JPN_KANJI">Pokémon Ghiottone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_447">
+		<comment>はもんポケモン</comment>
+		<language name="JPN">Pokémon Emanazione</language>
+		<language name="JPN_KANJI">Pokémon Emanazione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_448">
+		<comment>はどうポケモン</comment>
+		<language name="JPN">Pokémon Aura</language>
+		<language name="JPN_KANJI">Pokémon Aura</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_449">
+		<comment>カバポケモン</comment>
+		<language name="JPN">Pokémon Ippo</language>
+		<language name="JPN_KANJI">Pokémon Ippo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_450">
+		<comment>じゅうりょうポケモン</comment>
+		<language name="JPN">Pokémon Grandepeso</language>
+		<language name="JPN_KANJI">Pokémon Grandepeso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_451">
+		<comment>さそりポケモン</comment>
+		<language name="JPN">Pokémon Scorpione</language>
+		<language name="JPN_KANJI">Pokémon Scorpione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_452">
+		<comment>ばけさそりポケモン</comment>
+		<language name="JPN">Pokémon Scorpiaccio</language>
+		<language name="JPN_KANJI">Pokémon Scorpiaccio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_453">
+		<comment>どくづきポケモン</comment>
+		<language name="JPN">Pokémon Inveieleno</language>
+		<language name="JPN_KANJI">Pokémon Inveieleno</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_454">
+		<comment>どくづきポケモン</comment>
+		<language name="JPN">Pokémon Inveieleno</language>
+		<language name="JPN_KANJI">Pokémon Inveieleno</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_455">
+		<comment>むしとりポケモン</comment>
+		<language name="JPN">Pokémon Insettivoro</language>
+		<language name="JPN_KANJI">Pokémon Insettivoro</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_456">
+		<comment>はねうおポケモン</comment>
+		<language name="JPN">Pokémon Pescealato</language>
+		<language name="JPN_KANJI">Pokémon Pescealato</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_457">
+		<comment>ネオンポケモン</comment>
+		<language name="JPN">Pokémon Neon</language>
+		<language name="JPN_KANJI">Pokémon Neon</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_458">
+		<comment>カイトポケモン</comment>
+		<language name="JPN">Pokémon Aquilone</language>
+		<language name="JPN_KANJI">Pokémon Aquilone</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_459">
+		<comment>じゅひょうポケモン</comment>
+		<language name="JPN">Pokémon Albergelo</language>
+		<language name="JPN_KANJI">Pokémon Albergelo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_460">
+		<comment>じゅひょうポケモン</comment>
+		<language name="JPN">Pokémon Albergelo</language>
+		<language name="JPN_KANJI">Pokémon Albergelo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_461">
+		<comment>かぎづめポケモン</comment>
+		<language name="JPN">Pokémon Lamartigli</language>
+		<language name="JPN_KANJI">Pokémon Lamartigli</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_462">
+		<comment>じばポケモン</comment>
+		<language name="JPN">Pokémon Magnetico</language>
+		<language name="JPN_KANJI">Pokémon Magnetico</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_463">
+		<comment>なめまわしポケモン</comment>
+		<language name="JPN">Pokémon Linguaccia</language>
+		<language name="JPN_KANJI">Pokémon Linguaccia</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_464">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">Pokémon Trapano</language>
+		<language name="JPN_KANJI">Pokémon Trapano</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_465">
+		<comment>ツルじょうポケモン</comment>
+		<language name="JPN">Pokémon Liana</language>
+		<language name="JPN_KANJI">Pokémon Liana</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_466">
+		<comment>らいでんポケモン</comment>
+		<language name="JPN">Pokémon Saetta</language>
+		<language name="JPN_KANJI">Pokémon Saetta</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_467">
+		<comment>ばくえんポケモン</comment>
+		<language name="JPN">Pokémon Esplosivo</language>
+		<language name="JPN_KANJI">Pokémon Esplosivo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_468">
+		<comment>しゅくふくポケモン</comment>
+		<language name="JPN">Pokémon Festa</language>
+		<language name="JPN_KANJI">Pokémon Festa</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_469">
+		<comment>オニトンボポケモン</comment>
+		<language name="JPN">Pokémon Libellorco</language>
+		<language name="JPN_KANJI">Pokémon Libellorco</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_470">
+		<comment>しんりょくポケモン</comment>
+		<language name="JPN">Pokémon Rigoglioso</language>
+		<language name="JPN_KANJI">Pokémon Rigoglioso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_471">
+		<comment>しんせつポケモン</comment>
+		<language name="JPN">Pokémon Nevefresca</language>
+		<language name="JPN_KANJI">Pokémon Nevefresca</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_472">
+		<comment>キバさそりポケモン</comment>
+		<language name="JPN">Pokémon Scorpidente</language>
+		<language name="JPN_KANJI">Pokémon Scorpidente</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_473">
+		<comment>２ほんキバポケモン</comment>
+		<language name="JPN">Pokémon Duezanne</language>
+		<language name="JPN_KANJI">Pokémon Duezanne</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_474">
+		<comment>バーチャルポケモン</comment>
+		<language name="JPN">Pokémon Virtuale</language>
+		<language name="JPN_KANJI">Pokémon Virtuale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_475">
+		<comment>やいばポケモン</comment>
+		<language name="JPN">Pokémon Lama</language>
+		<language name="JPN_KANJI">Pokémon Lama</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_476">
+		<comment>コンパスポケモン</comment>
+		<language name="JPN">Pokémon Bussola</language>
+		<language name="JPN_KANJI">Pokémon Bussola</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_477">
+		<comment>てづかみポケモン</comment>
+		<language name="JPN">Pokémon Pinza</language>
+		<language name="JPN_KANJI">Pokémon Pinza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_478">
+		<comment>ゆきぐにポケモン</comment>
+		<language name="JPN">Pokémon Suolnevoso</language>
+		<language name="JPN_KANJI">Pokémon Suolnevoso</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_479">
+		<comment>プラズマポケモン</comment>
+		<language name="JPN">Pokémon Plasma</language>
+		<language name="JPN_KANJI">Pokémon Plasma</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_480">
+		<comment>ちしきポケモン</comment>
+		<language name="JPN">Pokémon Sapienza</language>
+		<language name="JPN_KANJI">Pokémon Sapienza</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_481">
+		<comment>かんじょうポケモン</comment>
+		<language name="JPN">Pokémon Emozione</language>
+		<language name="JPN_KANJI">Pokémon Emozione</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_482">
+		<comment>いしポケモン</comment>
+		<language name="JPN">Pokémon Volontà</language>
+		<language name="JPN_KANJI">Pokémon Volontà</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_483">
+		<comment>じかんポケモン</comment>
+		<language name="JPN">Pokémon Tempo</language>
+		<language name="JPN_KANJI">Pokémon Tempo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_484">
+		<comment>くうかんポケモン</comment>
+		<language name="JPN">Pokémon Spazio</language>
+		<language name="JPN_KANJI">Pokémon Spazio</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_485">
+		<comment>かこうポケモン</comment>
+		<language name="JPN">Pokémon Cratere</language>
+		<language name="JPN_KANJI">Pokémon Cratere</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_486">
+		<comment>きょだいポケモン</comment>
+		<language name="JPN">Pokémon Colossale</language>
+		<language name="JPN_KANJI">Pokémon Colossale</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_487" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>はんこつポケモン：アナザー</comment>
+		<language name="JPN">Pokémon Ribelle</language>
+		<language name="JPN_KANJI">Pokémon Ribelle</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_488">
+		<comment>みかづきポケモン</comment>
+		<language name="JPN">Pokémon Falcato</language>
+		<language name="JPN_KANJI">Pokémon Falcato</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_489">
+		<comment>かいようポケモン</comment>
+		<language name="JPN">Pokémon Oceanbondo</language>
+		<language name="JPN_KANJI">Pokémon Oceanbondo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_490">
+		<comment>かいゆうポケモン</comment>
+		<language name="JPN">Pokémon Oceandante</language>
+		<language name="JPN_KANJI">Pokémon Oceandante</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_491">
+		<comment>あんこくポケモン</comment>
+		<language name="JPN">Pokémon Neropesto</language>
+		<language name="JPN_KANJI">Pokémon Neropesto</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_492">
+		<comment>かんしゃポケモン</comment>
+		<language name="JPN">Pokémon Gratitudine</language>
+		<language name="JPN_KANJI">Pokémon Gratitudine</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_493">
+		<comment>そうぞうポケモン</comment>
+		<language name="JPN">Pokémon Primevo</language>
+		<language name="JPN_KANJI">Pokémon Primevo</language>
+	</row>
+
+	<row id="ZKN_TYPE_ITA_487_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>はんこつポケモン：オリジン</comment>
+		<language name="JPN">Pokémon Ribelle</language>
+		<language name="JPN_KANJI">Pokémon Ribelle</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>

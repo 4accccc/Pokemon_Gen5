@@ -1,0 +1,3323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="shimoyamada" host="W00184" date="2010-02-10T16:45:40"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="179"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="153"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="ZKN_TYPE_KOR_000">
+		<comment>？？？？？ポケモン</comment>
+		<language name="JPN">?????포켓몬</language>
+		<language name="JPN_KANJI">?????포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_001">
+		<comment>たねポケモン</comment>
+		<language name="JPN">씨앗포켓몬</language>
+		<language name="JPN_KANJI">씨앗포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_002">
+		<comment>たねポケモン</comment>
+		<language name="JPN">씨앗포켓몬</language>
+		<language name="JPN_KANJI">씨앗포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_003">
+		<comment>たねポケモン</comment>
+		<language name="JPN">씨앗포켓몬</language>
+		<language name="JPN_KANJI">씨앗포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_004">
+		<comment>とかげポケモン</comment>
+		<language name="JPN">도롱뇽포켓몬</language>
+		<language name="JPN_KANJI">도롱뇽포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_005">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">화염포켓몬</language>
+		<language name="JPN_KANJI">화염포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_006">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">화염포켓몬</language>
+		<language name="JPN_KANJI">화염포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_007">
+		<comment>かめのこポケモン</comment>
+		<language name="JPN">꼬마거북포켓몬</language>
+		<language name="JPN_KANJI">꼬마거북포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_008">
+		<comment>かめポケモン</comment>
+		<language name="JPN">거북포켓몬</language>
+		<language name="JPN_KANJI">거북포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_009">
+		<comment>こうらポケモン</comment>
+		<language name="JPN">껍질포켓몬</language>
+		<language name="JPN_KANJI">껍질포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_010">
+		<comment>いもむしポケモン</comment>
+		<language name="JPN">애벌레포켓몬</language>
+		<language name="JPN_KANJI">애벌레포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_011">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">번데기포켓몬</language>
+		<language name="JPN_KANJI">번데기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_012">
+		<comment>ちょうちょポケモン</comment>
+		<language name="JPN">나비포켓몬</language>
+		<language name="JPN_KANJI">나비포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_013">
+		<comment>けむしポケモン</comment>
+		<language name="JPN">송충이포켓몬</language>
+		<language name="JPN_KANJI">송충이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_014">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">번데기포켓몬</language>
+		<language name="JPN_KANJI">번데기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_015">
+		<comment>どくばちポケモン</comment>
+		<language name="JPN">독벌포켓몬</language>
+		<language name="JPN_KANJI">독벌포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_016">
+		<comment>ことりポケモン</comment>
+		<language name="JPN">아기새포켓몬</language>
+		<language name="JPN_KANJI">아기새포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_017">
+		<comment>とりポケモン</comment>
+		<language name="JPN">새포켓몬</language>
+		<language name="JPN_KANJI">새포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_018">
+		<comment>とりポケモン</comment>
+		<language name="JPN">새포켓몬</language>
+		<language name="JPN_KANJI">새포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_019">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">쥐포켓몬</language>
+		<language name="JPN_KANJI">쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_020">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">쥐포켓몬</language>
+		<language name="JPN_KANJI">쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_021">
+		<comment>ことりポケモン</comment>
+		<language name="JPN">아기새포켓몬</language>
+		<language name="JPN_KANJI">아기새포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_022">
+		<comment>くちばしポケモン</comment>
+		<language name="JPN">부리포켓몬</language>
+		<language name="JPN_KANJI">부리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_023">
+		<comment>へびポケモン</comment>
+		<language name="JPN">뱀포켓몬</language>
+		<language name="JPN_KANJI">뱀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_024">
+		<comment>コブラポケモン</comment>
+		<language name="JPN">코브라포켓몬</language>
+		<language name="JPN_KANJI">코브라포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_025">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">쥐포켓몬</language>
+		<language name="JPN_KANJI">쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_026">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">쥐포켓몬</language>
+		<language name="JPN_KANJI">쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_027">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">쥐포켓몬</language>
+		<language name="JPN_KANJI">쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_028">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">쥐포켓몬</language>
+		<language name="JPN_KANJI">쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_029">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">독침포켓몬</language>
+		<language name="JPN_KANJI">독침포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_030">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">독침포켓몬</language>
+		<language name="JPN_KANJI">독침포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_031">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">드릴포켓몬</language>
+		<language name="JPN_KANJI">드릴포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_032">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">독침포켓몬</language>
+		<language name="JPN_KANJI">독침포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_033">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">독침포켓몬</language>
+		<language name="JPN_KANJI">독침포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_034">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">드릴포켓몬</language>
+		<language name="JPN_KANJI">드릴포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_035">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">요정포켓몬</language>
+		<language name="JPN_KANJI">요정포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_036">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">요정포켓몬</language>
+		<language name="JPN_KANJI">요정포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_037">
+		<comment>きつねポケモン</comment>
+		<language name="JPN">여우포켓몬</language>
+		<language name="JPN_KANJI">여우포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_038">
+		<comment>きつねポケモン</comment>
+		<language name="JPN">여우포켓몬</language>
+		<language name="JPN_KANJI">여우포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_039">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">풍선포켓몬</language>
+		<language name="JPN_KANJI">풍선포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_040">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">풍선포켓몬</language>
+		<language name="JPN_KANJI">풍선포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_041">
+		<comment>こうもりポケモン</comment>
+		<language name="JPN">박쥐포켓몬</language>
+		<language name="JPN_KANJI">박쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_042">
+		<comment>こうもりポケモン</comment>
+		<language name="JPN">박쥐포켓몬</language>
+		<language name="JPN_KANJI">박쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_043">
+		<comment>ざっそうポケモン</comment>
+		<language name="JPN">잡초포켓몬</language>
+		<language name="JPN_KANJI">잡초포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_044">
+		<comment>ざっそうポケモン</comment>
+		<language name="JPN">잡초포켓몬</language>
+		<language name="JPN_KANJI">잡초포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_045">
+		<comment>フラワーポケモン</comment>
+		<language name="JPN">꽃포켓몬</language>
+		<language name="JPN_KANJI">꽃포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_046">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">버섯포켓몬</language>
+		<language name="JPN_KANJI">버섯포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_047">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">버섯포켓몬</language>
+		<language name="JPN_KANJI">버섯포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_048">
+		<comment>こんちゅうポケモン</comment>
+		<language name="JPN">곤충포켓몬</language>
+		<language name="JPN_KANJI">곤충포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_049">
+		<comment>どくがポケモン</comment>
+		<language name="JPN">독나방포켓몬</language>
+		<language name="JPN_KANJI">독나방포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_050">
+		<comment>もぐらポケモン</comment>
+		<language name="JPN">두더지포켓몬</language>
+		<language name="JPN_KANJI">두더지포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_051">
+		<comment>もぐらポケモン</comment>
+		<language name="JPN">두더지포켓몬</language>
+		<language name="JPN_KANJI">두더지포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_052">
+		<comment>ばけねこポケモン</comment>
+		<language name="JPN">요괴고양이포켓몬</language>
+		<language name="JPN_KANJI">요괴고양이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_053">
+		<comment>シャムネコポケモン</comment>
+		<language name="JPN">샴고양이포켓몬</language>
+		<language name="JPN_KANJI">샴고양이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_054">
+		<comment>あひるポケモン</comment>
+		<language name="JPN">오리포켓몬</language>
+		<language name="JPN_KANJI">오리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_055">
+		<comment>あひるポケモン</comment>
+		<language name="JPN">오리포켓몬</language>
+		<language name="JPN_KANJI">오리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_056">
+		<comment>ぶたざるポケモン</comment>
+		<language name="JPN">돈숭이포켓몬</language>
+		<language name="JPN_KANJI">돈숭이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_057">
+		<comment>ぶたざるポケモン</comment>
+		<language name="JPN">돈숭이포켓몬</language>
+		<language name="JPN_KANJI">돈숭이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_058">
+		<comment>こいぬポケモン</comment>
+		<language name="JPN">강아지포켓몬</language>
+		<language name="JPN_KANJI">강아지포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_059">
+		<comment>でんせつポケモン</comment>
+		<language name="JPN">전설포켓몬</language>
+		<language name="JPN_KANJI">전설포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_060">
+		<comment>おたまポケモン</comment>
+		<language name="JPN">올챙이포켓몬</language>
+		<language name="JPN_KANJI">올챙이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_061">
+		<comment>おたまポケモン</comment>
+		<language name="JPN">올챙이포켓몬</language>
+		<language name="JPN_KANJI">올챙이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_062">
+		<comment>おたまポケモン</comment>
+		<language name="JPN">올챙이포켓몬</language>
+		<language name="JPN_KANJI">올챙이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_063">
+		<comment>ねんりきポケモン</comment>
+		<language name="JPN">초능력포켓몬</language>
+		<language name="JPN_KANJI">초능력포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_064">
+		<comment>ねんりきポケモン</comment>
+		<language name="JPN">초능력포켓몬</language>
+		<language name="JPN_KANJI">초능력포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_065">
+		<comment>ねんりきポケモン</comment>
+		<language name="JPN">초능력포켓몬</language>
+		<language name="JPN_KANJI">초능력포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_066">
+		<comment>かいりきポケモン</comment>
+		<language name="JPN">괴력포켓몬</language>
+		<language name="JPN_KANJI">괴력포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_067">
+		<comment>かいりきポケモン</comment>
+		<language name="JPN">괴력포켓몬</language>
+		<language name="JPN_KANJI">괴력포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_068">
+		<comment>かいりきポケモン</comment>
+		<language name="JPN">괴력포켓몬</language>
+		<language name="JPN_KANJI">괴력포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_069">
+		<comment>フラワーポケモン</comment>
+		<language name="JPN">꽃포켓몬</language>
+		<language name="JPN_KANJI">꽃포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_070">
+		<comment>ハエとりポケモン</comment>
+		<language name="JPN">파리잡이포켓몬</language>
+		<language name="JPN_KANJI">파리잡이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_071">
+		<comment>ハエとりポケモン</comment>
+		<language name="JPN">파리잡이포켓몬</language>
+		<language name="JPN_KANJI">파리잡이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_072">
+		<comment>くらげポケモン</comment>
+		<language name="JPN">해파리포켓몬</language>
+		<language name="JPN_KANJI">해파리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_073">
+		<comment>くらげポケモン</comment>
+		<language name="JPN">해파리포켓몬</language>
+		<language name="JPN_KANJI">해파리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_074">
+		<comment>がんせきポケモン</comment>
+		<language name="JPN">암석포켓몬</language>
+		<language name="JPN_KANJI">암석포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_075">
+		<comment>がんせきポケモン</comment>
+		<language name="JPN">암석포켓몬</language>
+		<language name="JPN_KANJI">암석포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_076">
+		<comment>メガトンポケモン</comment>
+		<language name="JPN">메가톤포켓몬</language>
+		<language name="JPN_KANJI">메가톤포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_077">
+		<comment>ひのうまポケモン</comment>
+		<language name="JPN">불의말포켓몬</language>
+		<language name="JPN_KANJI">불의말포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_078">
+		<comment>ひのうまポケモン</comment>
+		<language name="JPN">불의말포켓몬</language>
+		<language name="JPN_KANJI">불의말포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_079">
+		<comment>まぬけポケモン</comment>
+		<language name="JPN">얼간이포켓몬</language>
+		<language name="JPN_KANJI">얼간이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_080">
+		<comment>やどかりポケモン</comment>
+		<language name="JPN">기생포켓몬</language>
+		<language name="JPN_KANJI">기생포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_081">
+		<comment>じしゃくポケモン</comment>
+		<language name="JPN">자석포켓몬</language>
+		<language name="JPN_KANJI">자석포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_082">
+		<comment>じしゃくポケモン</comment>
+		<language name="JPN">자석포켓몬</language>
+		<language name="JPN_KANJI">자석포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_083">
+		<comment>かるがもポケモン</comment>
+		<language name="JPN">천둥오리포켓몬</language>
+		<language name="JPN_KANJI">천둥오리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_084">
+		<comment>ふたごどりポケモン</comment>
+		<language name="JPN">쌍둥이새포켓몬</language>
+		<language name="JPN_KANJI">쌍둥이새포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_085">
+		<comment>みつごどりポケモン</comment>
+		<language name="JPN">세쌍둥이새포켓몬</language>
+		<language name="JPN_KANJI">세쌍둥이새포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_086">
+		<comment>あしかポケモン</comment>
+		<language name="JPN">강치포켓몬</language>
+		<language name="JPN_KANJI">강치포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_087">
+		<comment>あしかポケモン</comment>
+		<language name="JPN">강치포켓몬</language>
+		<language name="JPN_KANJI">강치포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_088">
+		<comment>ヘドロポケモン</comment>
+		<language name="JPN">진흙포켓몬</language>
+		<language name="JPN_KANJI">진흙포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_089">
+		<comment>ヘドロポケモン</comment>
+		<language name="JPN">진흙포켓몬</language>
+		<language name="JPN_KANJI">진흙포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_090">
+		<comment>２まいがいポケモン</comment>
+		<language name="JPN">두조개포켓몬</language>
+		<language name="JPN_KANJI">두조개포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_091">
+		<comment>２まいがいポケモン</comment>
+		<language name="JPN">두조개포켓몬</language>
+		<language name="JPN_KANJI">두조개포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_092">
+		<comment>ガスじょうポケモン</comment>
+		<language name="JPN">가스포켓몬</language>
+		<language name="JPN_KANJI">가스포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_093">
+		<comment>ガスじょうポケモン</comment>
+		<language name="JPN">가스포켓몬</language>
+		<language name="JPN_KANJI">가스포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_094">
+		<comment>シャドーポケモン</comment>
+		<language name="JPN">그림자포켓몬</language>
+		<language name="JPN_KANJI">그림자포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_095">
+		<comment>いわへびポケモン</comment>
+		<language name="JPN">돌뱀포켓몬</language>
+		<language name="JPN_KANJI">돌뱀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_096">
+		<comment>さいみんポケモン</comment>
+		<language name="JPN">최면포켓몬</language>
+		<language name="JPN_KANJI">최면포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_097">
+		<comment>さいみんポケモン</comment>
+		<language name="JPN">최면포켓몬</language>
+		<language name="JPN_KANJI">최면포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_098">
+		<comment>さわがにポケモン</comment>
+		<language name="JPN">게포켓몬</language>
+		<language name="JPN_KANJI">게포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_099">
+		<comment>はさみポケモン</comment>
+		<language name="JPN">집게포켓몬</language>
+		<language name="JPN_KANJI">집게포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_100">
+		<comment>ボールポケモン</comment>
+		<language name="JPN">볼포켓몬</language>
+		<language name="JPN_KANJI">볼포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_101">
+		<comment>ボールポケモン</comment>
+		<language name="JPN">볼포켓몬</language>
+		<language name="JPN_KANJI">볼포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_102">
+		<comment>たまごポケモン</comment>
+		<language name="JPN">알포켓몬</language>
+		<language name="JPN_KANJI">알포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_103">
+		<comment>やしのみポケモン</comment>
+		<language name="JPN">야자열매포켓몬</language>
+		<language name="JPN_KANJI">야자열매포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_104">
+		<comment>こどくポケモン</comment>
+		<language name="JPN">고독포켓몬</language>
+		<language name="JPN_KANJI">고독포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_105">
+		<comment>ほねずきポケモン</comment>
+		<language name="JPN">뼈다귀포켓몬</language>
+		<language name="JPN_KANJI">뼈다귀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_106">
+		<comment>キックポケモン</comment>
+		<language name="JPN">킥포켓몬</language>
+		<language name="JPN_KANJI">킥포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_107">
+		<comment>パンチポケモン</comment>
+		<language name="JPN">펀치포켓몬</language>
+		<language name="JPN_KANJI">펀치포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_108">
+		<comment>なめまわしポケモン</comment>
+		<language name="JPN">핥기포켓몬</language>
+		<language name="JPN_KANJI">핥기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_109">
+		<comment>どくガスポケモン</comment>
+		<language name="JPN">독가스포켓몬</language>
+		<language name="JPN_KANJI">독가스포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_110">
+		<comment>どくガスポケモン</comment>
+		<language name="JPN">독가스포켓몬</language>
+		<language name="JPN_KANJI">독가스포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_111">
+		<comment>とげとげポケモン</comment>
+		<language name="JPN">뿔포켓몬</language>
+		<language name="JPN_KANJI">뿔포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_112">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">드릴포켓몬</language>
+		<language name="JPN_KANJI">드릴포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_113">
+		<comment>たまごポケモン</comment>
+		<language name="JPN">알포켓몬</language>
+		<language name="JPN_KANJI">알포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_114">
+		<comment>ツルじょうポケモン</comment>
+		<language name="JPN">넝쿨포켓몬</language>
+		<language name="JPN_KANJI">넝쿨포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_115">
+		<comment>おやこポケモン</comment>
+		<language name="JPN">가족포켓몬</language>
+		<language name="JPN_KANJI">가족포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_116">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">드래곤포켓몬</language>
+		<language name="JPN_KANJI">드래곤포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_117">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">드래곤포켓몬</language>
+		<language name="JPN_KANJI">드래곤포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_118">
+		<comment>きんぎょポケモン</comment>
+		<language name="JPN">금붕어포켓몬</language>
+		<language name="JPN_KANJI">금붕어포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_119">
+		<comment>きんぎょポケモン</comment>
+		<language name="JPN">금붕어포켓몬</language>
+		<language name="JPN_KANJI">금붕어포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_120">
+		<comment>ほしがたポケモン</comment>
+		<language name="JPN">별포켓몬</language>
+		<language name="JPN_KANJI">별포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_121">
+		<comment>なぞのポケモン</comment>
+		<language name="JPN">수수께끼포켓몬</language>
+		<language name="JPN_KANJI">수수께끼포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_122">
+		<comment>バリアーポケモン</comment>
+		<language name="JPN">배리어포켓몬</language>
+		<language name="JPN_KANJI">배리어포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_123">
+		<comment>かまきりポケモン</comment>
+		<language name="JPN">버마재비포켓몬</language>
+		<language name="JPN_KANJI">버마재비포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_124">
+		<comment>ひとがたポケモン</comment>
+		<language name="JPN">인간형태포켓몬</language>
+		<language name="JPN_KANJI">인간형태포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_125">
+		<comment>でんげきポケモン</comment>
+		<language name="JPN">전기포켓몬</language>
+		<language name="JPN_KANJI">전기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_126">
+		<comment>ひふきポケモン</comment>
+		<language name="JPN">불뿜기포켓몬</language>
+		<language name="JPN_KANJI">불뿜기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_127">
+		<comment>くわがたポケモン</comment>
+		<language name="JPN">뿔집게포켓몬</language>
+		<language name="JPN_KANJI">뿔집게포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_128">
+		<comment>あばれうしポケモン</comment>
+		<language name="JPN">성난소포켓몬</language>
+		<language name="JPN_KANJI">성난소포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_129">
+		<comment>さかなポケモン</comment>
+		<language name="JPN">물고기포켓몬</language>
+		<language name="JPN_KANJI">물고기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_130">
+		<comment>きょうあくポケモン</comment>
+		<language name="JPN">흉악포켓몬</language>
+		<language name="JPN_KANJI">흉악포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_131">
+		<comment>のりものポケモン</comment>
+		<language name="JPN">탈것포켓몬</language>
+		<language name="JPN_KANJI">탈것포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_132">
+		<comment>へんしんポケモン</comment>
+		<language name="JPN">변신포켓몬</language>
+		<language name="JPN_KANJI">변신포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_133">
+		<comment>しんかポケモン</comment>
+		<language name="JPN">진화포켓몬</language>
+		<language name="JPN_KANJI">진화포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_134">
+		<comment>あわはきポケモン</comment>
+		<language name="JPN">거품뿜기포켓몬</language>
+		<language name="JPN_KANJI">거품뿜기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_135">
+		<comment>かみなりポケモン</comment>
+		<language name="JPN">번개포켓몬</language>
+		<language name="JPN_KANJI">번개포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_136">
+		<comment>ほのおポケモン</comment>
+		<language name="JPN">불꽃포켓몬</language>
+		<language name="JPN_KANJI">불꽃포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_137">
+		<comment>バーチャルポケモン</comment>
+		<language name="JPN">가상포켓몬</language>
+		<language name="JPN_KANJI">가상포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_138">
+		<comment>うずまきポケモン</comment>
+		<language name="JPN">소용돌이포켓몬</language>
+		<language name="JPN_KANJI">소용돌이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_139">
+		<comment>うずまきポケモン</comment>
+		<language name="JPN">소용돌이포켓몬</language>
+		<language name="JPN_KANJI">소용돌이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_140">
+		<comment>こうらポケモン</comment>
+		<language name="JPN">껍질포켓몬</language>
+		<language name="JPN_KANJI">껍질포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_141">
+		<comment>こうらポケモン</comment>
+		<language name="JPN">껍질포켓몬</language>
+		<language name="JPN_KANJI">껍질포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_142">
+		<comment>かせきポケモン</comment>
+		<language name="JPN">화석포켓몬</language>
+		<language name="JPN_KANJI">화석포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_143">
+		<comment>いねむりポケモン</comment>
+		<language name="JPN">졸음포켓몬</language>
+		<language name="JPN_KANJI">졸음포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_144">
+		<comment>れいとうポケモン</comment>
+		<language name="JPN">냉동포켓몬</language>
+		<language name="JPN_KANJI">냉동포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_145">
+		<comment>でんげきポケモン</comment>
+		<language name="JPN">전기포켓몬</language>
+		<language name="JPN_KANJI">전기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_146">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">화염포켓몬</language>
+		<language name="JPN_KANJI">화염포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_147">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">드래곤포켓몬</language>
+		<language name="JPN_KANJI">드래곤포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_148">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">드래곤포켓몬</language>
+		<language name="JPN_KANJI">드래곤포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_149">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">드래곤포켓몬</language>
+		<language name="JPN_KANJI">드래곤포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_150">
+		<comment>いでんしポケモン</comment>
+		<language name="JPN">유전포켓몬</language>
+		<language name="JPN_KANJI">유전포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_151">
+		<comment>しんしゅポケモン</comment>
+		<language name="JPN">신종포켓몬</language>
+		<language name="JPN_KANJI">신종포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_152">
+		<comment>はっぱポケモン</comment>
+		<language name="JPN">잎사귀포켓몬</language>
+		<language name="JPN_KANJI">잎사귀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_153">
+		<comment>はっぱポケモン</comment>
+		<language name="JPN">잎사귀포켓몬</language>
+		<language name="JPN_KANJI">잎사귀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_154">
+		<comment>ハーブポケモン</comment>
+		<language name="JPN">허브포켓몬</language>
+		<language name="JPN_KANJI">허브포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_155">
+		<comment>ひねずみポケモン</comment>
+		<language name="JPN">불쥐포켓몬</language>
+		<language name="JPN_KANJI">불쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_156">
+		<comment>かざんポケモン</comment>
+		<language name="JPN">화산포켓몬</language>
+		<language name="JPN_KANJI">화산포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_157">
+		<comment>かざんポケモン</comment>
+		<language name="JPN">화산포켓몬</language>
+		<language name="JPN_KANJI">화산포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_158">
+		<comment>おおあごポケモン</comment>
+		<language name="JPN">큰턱포켓몬</language>
+		<language name="JPN_KANJI">큰턱포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_159">
+		<comment>おおあごポケモン</comment>
+		<language name="JPN">큰턱포켓몬</language>
+		<language name="JPN_KANJI">큰턱포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_160">
+		<comment>おおあごポケモン</comment>
+		<language name="JPN">큰턱포켓몬</language>
+		<language name="JPN_KANJI">큰턱포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_161">
+		<comment>みはりポケモン</comment>
+		<language name="JPN">망보기포켓몬</language>
+		<language name="JPN_KANJI">망보기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_162">
+		<comment>どうながポケモン</comment>
+		<language name="JPN">긴몸통포켓몬</language>
+		<language name="JPN_KANJI">긴몸통포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_163">
+		<comment>ふくろうポケモン</comment>
+		<language name="JPN">부엉이포켓몬</language>
+		<language name="JPN_KANJI">부엉이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_164">
+		<comment>ふくろうポケモン</comment>
+		<language name="JPN">부엉이포켓몬</language>
+		<language name="JPN_KANJI">부엉이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_165">
+		<comment>いつつぼしポケモン</comment>
+		<language name="JPN">별다섯포켓몬</language>
+		<language name="JPN_KANJI">별다섯포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_166">
+		<comment>いつつぼしポケモン</comment>
+		<language name="JPN">별다섯포켓몬</language>
+		<language name="JPN_KANJI">별다섯포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_167">
+		<comment>いとはきポケモン</comment>
+		<language name="JPN">실뿜기포켓몬</language>
+		<language name="JPN_KANJI">실뿜기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_168">
+		<comment>あしながポケモン</comment>
+		<language name="JPN">롱다리포켓몬</language>
+		<language name="JPN_KANJI">롱다리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_169">
+		<comment>こうもりポケモン</comment>
+		<language name="JPN">박쥐포켓몬</language>
+		<language name="JPN_KANJI">박쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_170">
+		<comment>あんこうポケモン</comment>
+		<language name="JPN">아귀포켓몬</language>
+		<language name="JPN_KANJI">아귀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_171">
+		<comment>ライトポケモン</comment>
+		<language name="JPN">라이트포켓몬</language>
+		<language name="JPN_KANJI">라이트포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_172">
+		<comment>こねずみポケモン</comment>
+		<language name="JPN">아기쥐포켓몬</language>
+		<language name="JPN_KANJI">아기쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_173">
+		<comment>ほしがたポケモン</comment>
+		<language name="JPN">별포켓몬</language>
+		<language name="JPN_KANJI">별포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_174">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">풍선포켓몬</language>
+		<language name="JPN_KANJI">풍선포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_175">
+		<comment>はりたまポケモン</comment>
+		<language name="JPN">바늘알포켓몬</language>
+		<language name="JPN_KANJI">바늘알포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_176">
+		<comment>しあわせポケモン</comment>
+		<language name="JPN">행복포켓몬</language>
+		<language name="JPN_KANJI">행복포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_177">
+		<comment>ことりポケモン</comment>
+		<language name="JPN">아기새포켓몬</language>
+		<language name="JPN_KANJI">아기새포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_178">
+		<comment>せいれいポケモン</comment>
+		<language name="JPN">정령포켓몬</language>
+		<language name="JPN_KANJI">정령포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_179">
+		<comment>わたげポケモン</comment>
+		<language name="JPN">솜털포켓몬</language>
+		<language name="JPN_KANJI">솜털포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_180">
+		<comment>わたげポケモン</comment>
+		<language name="JPN">솜털포켓몬</language>
+		<language name="JPN_KANJI">솜털포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_181">
+		<comment>ライトポケモン</comment>
+		<language name="JPN">라이트포켓몬</language>
+		<language name="JPN_KANJI">라이트포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_182">
+		<comment>フラワーポケモン</comment>
+		<language name="JPN">꽃포켓몬</language>
+		<language name="JPN_KANJI">꽃포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_183">
+		<comment>みずねずみポケモン</comment>
+		<language name="JPN">물쥐포켓몬</language>
+		<language name="JPN_KANJI">물쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_184">
+		<comment>みずうさぎポケモン</comment>
+		<language name="JPN">물토끼포켓몬</language>
+		<language name="JPN_KANJI">물토끼포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_185">
+		<comment>まねポケモン</comment>
+		<language name="JPN">흉내포켓몬</language>
+		<language name="JPN_KANJI">흉내포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_186">
+		<comment>かえるポケモン</comment>
+		<language name="JPN">개구리포켓몬</language>
+		<language name="JPN_KANJI">개구리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_187">
+		<comment>わたくさポケモン</comment>
+		<language name="JPN">솜풀포켓몬</language>
+		<language name="JPN_KANJI">솜풀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_188">
+		<comment>わたくさポケモン</comment>
+		<language name="JPN">솜풀포켓몬</language>
+		<language name="JPN_KANJI">솜풀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_189">
+		<comment>わたくさポケモン</comment>
+		<language name="JPN">솜풀포켓몬</language>
+		<language name="JPN_KANJI">솜풀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_190">
+		<comment>おながポケモン</comment>
+		<language name="JPN">긴꼬리포켓몬</language>
+		<language name="JPN_KANJI">긴꼬리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_191">
+		<comment>たねポケモン</comment>
+		<language name="JPN">씨앗포켓몬</language>
+		<language name="JPN_KANJI">씨앗포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_192">
+		<comment>たいようポケモン</comment>
+		<language name="JPN">태양포켓몬</language>
+		<language name="JPN_KANJI">태양포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_193">
+		<comment>うすばねポケモン</comment>
+		<language name="JPN">얇은날개포켓몬</language>
+		<language name="JPN_KANJI">얇은날개포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_194">
+		<comment>みずうおポケモン</comment>
+		<language name="JPN">수어포켓몬</language>
+		<language name="JPN_KANJI">수어포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_195">
+		<comment>みずうおポケモン</comment>
+		<language name="JPN">수어포켓몬</language>
+		<language name="JPN_KANJI">수어포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_196">
+		<comment>たいようポケモン</comment>
+		<language name="JPN">태양포켓몬</language>
+		<language name="JPN_KANJI">태양포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_197">
+		<comment>げっこうポケモン</comment>
+		<language name="JPN">달빛포켓몬</language>
+		<language name="JPN_KANJI">달빛포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_198">
+		<comment>くらやみポケモン</comment>
+		<language name="JPN">어둠포켓몬</language>
+		<language name="JPN_KANJI">어둠포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_199">
+		<comment>おうじゃポケモン</comment>
+		<language name="JPN">임금포켓몬</language>
+		<language name="JPN_KANJI">임금포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_200">
+		<comment>よなきポケモン</comment>
+		<language name="JPN">야명포켓몬</language>
+		<language name="JPN_KANJI">야명포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_201">
+		<comment>シンボルポケモン</comment>
+		<language name="JPN">심볼포켓몬</language>
+		<language name="JPN_KANJI">심볼포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_202">
+		<comment>がまんポケモン</comment>
+		<language name="JPN">참기포켓몬</language>
+		<language name="JPN_KANJI">참기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_203">
+		<comment>くびながポケモン</comment>
+		<language name="JPN">긴목포켓몬</language>
+		<language name="JPN_KANJI">긴목포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_204">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">도롱이벌레포켓몬</language>
+		<language name="JPN_KANJI">도롱이벌레포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_205">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">도롱이벌레포켓몬</language>
+		<language name="JPN_KANJI">도롱이벌레포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_206">
+		<comment>つちへびポケモン</comment>
+		<language name="JPN">땅뱀포켓몬</language>
+		<language name="JPN_KANJI">땅뱀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_207">
+		<comment>とびさそりポケモン</comment>
+		<language name="JPN">날전갈포켓몬</language>
+		<language name="JPN_KANJI">날전갈포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_208">
+		<comment>てつへびポケモン</comment>
+		<language name="JPN">철뱀포켓몬</language>
+		<language name="JPN_KANJI">철뱀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_209">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">요정포켓몬</language>
+		<language name="JPN_KANJI">요정포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_210">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">요정포켓몬</language>
+		<language name="JPN_KANJI">요정포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_211">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">풍선포켓몬</language>
+		<language name="JPN_KANJI">풍선포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_212">
+		<comment>はさみポケモン</comment>
+		<language name="JPN">집게포켓몬</language>
+		<language name="JPN_KANJI">집게포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_213">
+		<comment>はっこうポケモン</comment>
+		<language name="JPN">발효포켓몬</language>
+		<language name="JPN_KANJI">발효포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_214">
+		<comment>１ぽんヅノポケモン</comment>
+		<language name="JPN">외뿔포켓몬</language>
+		<language name="JPN_KANJI">외뿔포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_215">
+		<comment>かぎづめポケモン</comment>
+		<language name="JPN">갈고리손톱포켓몬</language>
+		<language name="JPN_KANJI">갈고리손톱포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_216">
+		<comment>こぐまポケモン</comment>
+		<language name="JPN">아기곰포켓몬</language>
+		<language name="JPN_KANJI">아기곰포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_217">
+		<comment>とうみんポケモン</comment>
+		<language name="JPN">동면포켓몬</language>
+		<language name="JPN_KANJI">동면포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_218">
+		<comment>ようがんポケモン</comment>
+		<language name="JPN">용암포켓몬</language>
+		<language name="JPN_KANJI">용암포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_219">
+		<comment>ようがんポケモン</comment>
+		<language name="JPN">용암포켓몬</language>
+		<language name="JPN_KANJI">용암포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_220">
+		<comment>いのぶたポケモン</comment>
+		<language name="JPN">산돼지포켓몬</language>
+		<language name="JPN_KANJI">산돼지포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_221">
+		<comment>いのししポケモン</comment>
+		<language name="JPN">멧돼지포켓몬</language>
+		<language name="JPN_KANJI">멧돼지포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_222">
+		<comment>さんごポケモン</comment>
+		<language name="JPN">산호포켓몬</language>
+		<language name="JPN_KANJI">산호포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_223">
+		<comment>ふんしゃポケモン</comment>
+		<language name="JPN">분사포켓몬</language>
+		<language name="JPN_KANJI">분사포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_224">
+		<comment>ふんしゃポケモン</comment>
+		<language name="JPN">분사포켓몬</language>
+		<language name="JPN_KANJI">분사포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_225">
+		<comment>はこびやポケモン</comment>
+		<language name="JPN">배달포켓몬</language>
+		<language name="JPN_KANJI">배달포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_226">
+		<comment>カイトポケモン</comment>
+		<language name="JPN">연포켓몬</language>
+		<language name="JPN_KANJI">연포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_227">
+		<comment>よろいどりポケモン</comment>
+		<language name="JPN">갑옷새포켓몬</language>
+		<language name="JPN_KANJI">갑옷새포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_228">
+		<comment>ダークポケモン</comment>
+		<language name="JPN">다크포켓몬</language>
+		<language name="JPN_KANJI">다크포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_229">
+		<comment>ダークポケモン</comment>
+		<language name="JPN">다크포켓몬</language>
+		<language name="JPN_KANJI">다크포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_230">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">드래곤포켓몬</language>
+		<language name="JPN_KANJI">드래곤포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_231">
+		<comment>ながはなポケモン</comment>
+		<language name="JPN">긴코포켓몬</language>
+		<language name="JPN_KANJI">긴코포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_232">
+		<comment>よろいポケモン</comment>
+		<language name="JPN">갑옷포켓몬</language>
+		<language name="JPN_KANJI">갑옷포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_233">
+		<comment>バーチャルポケモン</comment>
+		<language name="JPN">가상포켓몬</language>
+		<language name="JPN_KANJI">가상포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_234">
+		<comment>おおツノポケモン</comment>
+		<language name="JPN">큰뿔포켓몬</language>
+		<language name="JPN_KANJI">큰뿔포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_235">
+		<comment>えかきポケモン</comment>
+		<language name="JPN">그림장이포켓몬</language>
+		<language name="JPN_KANJI">그림장이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_236">
+		<comment>けんかポケモン</comment>
+		<language name="JPN">싸움포켓몬</language>
+		<language name="JPN_KANJI">싸움포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_237">
+		<comment>さかだちポケモン</comment>
+		<language name="JPN">물구나무포켓몬</language>
+		<language name="JPN_KANJI">물구나무포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_238">
+		<comment>くちづけポケモン</comment>
+		<language name="JPN">뽀뽀포켓몬</language>
+		<language name="JPN_KANJI">뽀뽀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_239">
+		<comment>でんきポケモン</comment>
+		<language name="JPN">전류포켓몬</language>
+		<language name="JPN_KANJI">전류포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_240">
+		<comment>ひだねポケモン</comment>
+		<language name="JPN">불씨포켓몬</language>
+		<language name="JPN_KANJI">불씨포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_241">
+		<comment>ちちうしポケモン</comment>
+		<language name="JPN">젖소포켓몬</language>
+		<language name="JPN_KANJI">젖소포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_242">
+		<comment>しあわせポケモン</comment>
+		<language name="JPN">행복포켓몬</language>
+		<language name="JPN_KANJI">행복포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_243">
+		<comment>いかずちポケモン</comment>
+		<language name="JPN">우뢰포켓몬</language>
+		<language name="JPN_KANJI">우뢰포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_244">
+		<comment>かざんポケモン</comment>
+		<language name="JPN">화산포켓몬</language>
+		<language name="JPN_KANJI">화산포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_245">
+		<comment>オーロラポケモン</comment>
+		<language name="JPN">오로라포켓몬</language>
+		<language name="JPN_KANJI">오로라포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_246">
+		<comment>いわはだポケモン</comment>
+		<language name="JPN">바위표면포켓몬</language>
+		<language name="JPN_KANJI">바위표면포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_247">
+		<comment>だんがんポケモン</comment>
+		<language name="JPN">탄환포켓몬</language>
+		<language name="JPN_KANJI">탄환포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_248">
+		<comment>よろいポケモン</comment>
+		<language name="JPN">갑옷포켓몬</language>
+		<language name="JPN_KANJI">갑옷포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_249">
+		<comment>せんすいポケモン</comment>
+		<language name="JPN">잠수포켓몬</language>
+		<language name="JPN_KANJI">잠수포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_250">
+		<comment>にじいろポケモン</comment>
+		<language name="JPN">무지개색포켓몬</language>
+		<language name="JPN_KANJI">무지개색포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_251">
+		<comment>ときわたりポケモン</comment>
+		<language name="JPN">시간이동포켓몬</language>
+		<language name="JPN_KANJI">시간이동포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_252">
+		<comment>もりトカゲポケモン</comment>
+		<language name="JPN">숲도마뱀포켓몬</language>
+		<language name="JPN_KANJI">숲도마뱀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_253">
+		<comment>もりトカゲポケモン</comment>
+		<language name="JPN">숲도마뱀포켓몬</language>
+		<language name="JPN_KANJI">숲도마뱀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_254">
+		<comment>みつりんポケモン</comment>
+		<language name="JPN">밀림포켓몬</language>
+		<language name="JPN_KANJI">밀림포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_255">
+		<comment>ひよこポケモン</comment>
+		<language name="JPN">풋내기포켓몬</language>
+		<language name="JPN_KANJI">풋내기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_256">
+		<comment>わかどりポケモン</comment>
+		<language name="JPN">꼬마닭포켓몬</language>
+		<language name="JPN_KANJI">꼬마닭포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_257">
+		<comment>もうかポケモン</comment>
+		<language name="JPN">맹화포켓몬</language>
+		<language name="JPN_KANJI">맹화포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_258">
+		<comment>ぬまうおポケモン</comment>
+		<language name="JPN">늪물고기포켓몬</language>
+		<language name="JPN_KANJI">늪물고기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_259">
+		<comment>ぬまうおポケモン</comment>
+		<language name="JPN">늪물고기포켓몬</language>
+		<language name="JPN_KANJI">늪물고기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_260">
+		<comment>ぬまうおポケモン</comment>
+		<language name="JPN">늪물고기포켓몬</language>
+		<language name="JPN_KANJI">늪물고기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_261">
+		<comment>かみつきポケモン</comment>
+		<language name="JPN">물어뜯기포켓몬</language>
+		<language name="JPN_KANJI">물어뜯기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_262">
+		<comment>かみつきポケモン</comment>
+		<language name="JPN">물어뜯기포켓몬</language>
+		<language name="JPN_KANJI">물어뜯기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_263">
+		<comment>まめだぬきポケモン</comment>
+		<language name="JPN">앙증너구리포켓몬</language>
+		<language name="JPN_KANJI">앙증너구리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_264">
+		<comment>とっしんポケモン</comment>
+		<language name="JPN">돌진포켓몬</language>
+		<language name="JPN_KANJI">돌진포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_265">
+		<comment>いもむしポケモン</comment>
+		<language name="JPN">애벌레포켓몬</language>
+		<language name="JPN_KANJI">애벌레포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_266">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">번데기포켓몬</language>
+		<language name="JPN_KANJI">번데기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_267">
+		<comment>ちょうちょポケモン</comment>
+		<language name="JPN">나비포켓몬</language>
+		<language name="JPN_KANJI">나비포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_268">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">번데기포켓몬</language>
+		<language name="JPN_KANJI">번데기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_269">
+		<comment>どくがポケモン</comment>
+		<language name="JPN">독나방포켓몬</language>
+		<language name="JPN_KANJI">독나방포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_270">
+		<comment>うきくさポケモン</comment>
+		<language name="JPN">개구리밥포켓몬</language>
+		<language name="JPN_KANJI">개구리밥포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_271">
+		<comment>ようきポケモン</comment>
+		<language name="JPN">명랑함포켓몬</language>
+		<language name="JPN_KANJI">명랑함포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_272">
+		<comment>のうてんきポケモン</comment>
+		<language name="JPN">행복하기포켓몬</language>
+		<language name="JPN_KANJI">행복하기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_273">
+		<comment>どんぐりポケモン</comment>
+		<language name="JPN">도토리포켓몬</language>
+		<language name="JPN_KANJI">도토리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_274">
+		<comment>いじわるポケモン</comment>
+		<language name="JPN">꾀부리기포켓몬</language>
+		<language name="JPN_KANJI">꾀부리기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_275">
+		<comment>よこしまポケモン</comment>
+		<language name="JPN">부정하기포켓몬</language>
+		<language name="JPN_KANJI">부정하기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_276">
+		<comment>こツバメポケモン</comment>
+		<language name="JPN">아기제비포켓몬</language>
+		<language name="JPN_KANJI">아기제비포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_277">
+		<comment>ツバメポケモン</comment>
+		<language name="JPN">제비포켓몬</language>
+		<language name="JPN_KANJI">제비포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_278">
+		<comment>うみねこポケモン</comment>
+		<language name="JPN">괭이갈매기포켓몬</language>
+		<language name="JPN_KANJI">괭이갈매기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_279">
+		<comment>みずどりポケモン</comment>
+		<language name="JPN">물새포켓몬</language>
+		<language name="JPN_KANJI">물새포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_280">
+		<comment>きもちポケモン</comment>
+		<language name="JPN">느낌포켓몬</language>
+		<language name="JPN_KANJI">느낌포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_281">
+		<comment>かんじょうポケモン</comment>
+		<language name="JPN">감정포켓몬</language>
+		<language name="JPN_KANJI">감정포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_282">
+		<comment>ほうようポケモン</comment>
+		<language name="JPN">포용포켓몬</language>
+		<language name="JPN_KANJI">포용포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_283">
+		<comment>あめんぼポケモン</comment>
+		<language name="JPN">소금쟁이포켓몬</language>
+		<language name="JPN_KANJI">소금쟁이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_284">
+		<comment>めだまポケモン</comment>
+		<language name="JPN">안구포켓몬</language>
+		<language name="JPN_KANJI">안구포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_285">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">버섯포켓몬</language>
+		<language name="JPN_KANJI">버섯포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_286">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">버섯포켓몬</language>
+		<language name="JPN_KANJI">버섯포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_287">
+		<comment>なまけものポケモン</comment>
+		<language name="JPN">게으름뱅이포켓몬</language>
+		<language name="JPN_KANJI">게으름뱅이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_288">
+		<comment>あばれザルポケモン</comment>
+		<language name="JPN">성난원숭이포켓몬</language>
+		<language name="JPN_KANJI">성난원숭이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_289">
+		<comment>ものぐさポケモン</comment>
+		<language name="JPN">나태함포켓몬</language>
+		<language name="JPN_KANJI">나태함포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_290">
+		<comment>したづみポケモン</comment>
+		<language name="JPN">신참포켓몬</language>
+		<language name="JPN_KANJI">신참포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_291">
+		<comment>しのびポケモン</comment>
+		<language name="JPN">시노비포켓몬</language>
+		<language name="JPN_KANJI">시노비포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_292">
+		<comment>ぬけがらポケモン</comment>
+		<language name="JPN">허물포켓몬</language>
+		<language name="JPN_KANJI">허물포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_293">
+		<comment>ささやきポケモン</comment>
+		<language name="JPN">속삭임포켓몬</language>
+		<language name="JPN_KANJI">속삭임포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_294">
+		<comment>おおごえポケモン</comment>
+		<language name="JPN">큰목소리포켓몬</language>
+		<language name="JPN_KANJI">큰목소리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_295">
+		<comment>そうおんポケモン</comment>
+		<language name="JPN">소음포켓몬</language>
+		<language name="JPN_KANJI">소음포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_296">
+		<comment>こんじょうポケモン</comment>
+		<language name="JPN">근성포켓몬</language>
+		<language name="JPN_KANJI">근성포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_297">
+		<comment>つっぱりポケモン</comment>
+		<language name="JPN">손바닥치기포켓몬</language>
+		<language name="JPN_KANJI">손바닥치기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_298">
+		<comment>みずたまポケモン</comment>
+		<language name="JPN">물방울포켓몬</language>
+		<language name="JPN_KANJI">물방울포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_299">
+		<comment>コンパスポケモン</comment>
+		<language name="JPN">콤파스포켓몬</language>
+		<language name="JPN_KANJI">콤파스포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_300">
+		<comment>こねこポケモン</comment>
+		<language name="JPN">작은고양이포켓몬</language>
+		<language name="JPN_KANJI">작은고양이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_301">
+		<comment>おすましポケモン</comment>
+		<language name="JPN">새침떼기포켓몬</language>
+		<language name="JPN_KANJI">새침떼기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_302">
+		<comment>くらやみポケモン</comment>
+		<language name="JPN">어둠포켓몬</language>
+		<language name="JPN_KANJI">어둠포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_303">
+		<comment>あざむきポケモン</comment>
+		<language name="JPN">배반포켓몬</language>
+		<language name="JPN_KANJI">배반포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_304">
+		<comment>てつヨロイポケモン</comment>
+		<language name="JPN">철갑옷포켓몬</language>
+		<language name="JPN_KANJI">철갑옷포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_305">
+		<comment>てつヨロイポケモン</comment>
+		<language name="JPN">철갑옷포켓몬</language>
+		<language name="JPN_KANJI">철갑옷포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_306">
+		<comment>てつヨロイポケモン</comment>
+		<language name="JPN">철갑옷포켓몬</language>
+		<language name="JPN_KANJI">철갑옷포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_307">
+		<comment>めいそうポケモン</comment>
+		<language name="JPN">명상포켓몬</language>
+		<language name="JPN_KANJI">명상포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_308">
+		<comment>めいそうポケモン</comment>
+		<language name="JPN">명상포켓몬</language>
+		<language name="JPN_KANJI">명상포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_309">
+		<comment>いなずまポケモン</comment>
+		<language name="JPN">천둥번개포켓몬</language>
+		<language name="JPN_KANJI">천둥번개포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_310">
+		<comment>ほうでんポケモン</comment>
+		<language name="JPN">방전포켓몬</language>
+		<language name="JPN_KANJI">방전포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_311">
+		<comment>おうえんポケモン</comment>
+		<language name="JPN">응원포켓몬</language>
+		<language name="JPN_KANJI">응원포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_312">
+		<comment>おうえんポケモン</comment>
+		<language name="JPN">응원포켓몬</language>
+		<language name="JPN_KANJI">응원포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_313">
+		<comment>ほたるポケモン</comment>
+		<language name="JPN">반딧불포켓몬</language>
+		<language name="JPN_KANJI">반딧불포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_314">
+		<comment>ほたるポケモン</comment>
+		<language name="JPN">반딧불포켓몬</language>
+		<language name="JPN_KANJI">반딧불포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_315">
+		<comment>いばらポケモン</comment>
+		<language name="JPN">가시포켓몬</language>
+		<language name="JPN_KANJI">가시포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_316">
+		<comment>いぶくろポケモン</comment>
+		<language name="JPN">밥통포켓몬</language>
+		<language name="JPN_KANJI">밥통포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_317">
+		<comment>どくぶくろポケモン</comment>
+		<language name="JPN">독봉지포켓몬</language>
+		<language name="JPN_KANJI">독봉지포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_318">
+		<comment>どうもうポケモン</comment>
+		<language name="JPN">사나움포켓몬</language>
+		<language name="JPN_KANJI">사나움포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_319">
+		<comment>きょうぼうポケモン</comment>
+		<language name="JPN">난폭포켓몬</language>
+		<language name="JPN_KANJI">난폭포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_320">
+		<comment>たまくじらポケモン</comment>
+		<language name="JPN">둥근고래포켓몬</language>
+		<language name="JPN_KANJI">둥근고래포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_321">
+		<comment>うきくじらポケモン</comment>
+		<language name="JPN">뜸고래포켓몬</language>
+		<language name="JPN_KANJI">뜸고래포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_322">
+		<comment>どんかんポケモン</comment>
+		<language name="JPN">둔감포켓몬</language>
+		<language name="JPN_KANJI">둔감포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_323">
+		<comment>ふんかポケモン</comment>
+		<language name="JPN">분화포켓몬</language>
+		<language name="JPN_KANJI">분화포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_324">
+		<comment>せきたんポケモン</comment>
+		<language name="JPN">석탄포켓몬</language>
+		<language name="JPN_KANJI">석탄포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_325">
+		<comment>とびはねポケモン</comment>
+		<language name="JPN">튀다포켓몬</language>
+		<language name="JPN_KANJI">튀다포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_326">
+		<comment>あやつりポケモン</comment>
+		<language name="JPN">조작포켓몬</language>
+		<language name="JPN_KANJI">조작포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_327">
+		<comment>ぶちパンダポケモン</comment>
+		<language name="JPN">얼룩팬더포켓몬</language>
+		<language name="JPN_KANJI">얼룩팬더포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_328">
+		<comment>ありじごくポケモン</comment>
+		<language name="JPN">개미지옥포켓몬</language>
+		<language name="JPN_KANJI">개미지옥포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_329">
+		<comment>しんどうポケモン</comment>
+		<language name="JPN">진동포켓몬</language>
+		<language name="JPN_KANJI">진동포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_330">
+		<comment>せいれいポケモン</comment>
+		<language name="JPN">혼령포켓몬</language>
+		<language name="JPN_KANJI">혼령포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_331">
+		<comment>サボテンポケモン</comment>
+		<language name="JPN">선인장포켓몬</language>
+		<language name="JPN_KANJI">선인장포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_332">
+		<comment>カカシぐさポケモン</comment>
+		<language name="JPN">허수아비포켓몬</language>
+		<language name="JPN_KANJI">허수아비포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_333">
+		<comment>わたどりポケモン</comment>
+		<language name="JPN">솜새포켓몬</language>
+		<language name="JPN_KANJI">솜새포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_334">
+		<comment>ハミングポケモン</comment>
+		<language name="JPN">허밍포켓몬</language>
+		<language name="JPN_KANJI">허밍포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_335">
+		<comment>ネコイタチポケモン</comment>
+		<language name="JPN">고양이족제비포켓몬</language>
+		<language name="JPN_KANJI">고양이족제비포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_336">
+		<comment>キバへびポケモン</comment>
+		<language name="JPN">송곳뱀포켓몬</language>
+		<language name="JPN_KANJI">송곳뱀포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_337">
+		<comment>いんせきポケモン</comment>
+		<language name="JPN">별똥별포켓몬</language>
+		<language name="JPN_KANJI">별똥별포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_338">
+		<comment>いんせきポケモン</comment>
+		<language name="JPN">별똥별포켓몬</language>
+		<language name="JPN_KANJI">별똥별포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_339">
+		<comment>ひげうおポケモン</comment>
+		<language name="JPN">수염물고기포켓몬</language>
+		<language name="JPN_KANJI">수염물고기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_340">
+		<comment>ひげうおポケモン</comment>
+		<language name="JPN">수염물고기포켓몬</language>
+		<language name="JPN_KANJI">수염물고기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_341">
+		<comment>ごろつきポケモン</comment>
+		<language name="JPN">건달포켓몬</language>
+		<language name="JPN_KANJI">건달포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_342">
+		<comment>ならずものポケモン</comment>
+		<language name="JPN">불량배포켓몬</language>
+		<language name="JPN_KANJI">불량배포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_343">
+		<comment>どぐうポケモン</comment>
+		<language name="JPN">토우포켓몬</language>
+		<language name="JPN_KANJI">토우포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_344">
+		<comment>どぐうポケモン</comment>
+		<language name="JPN">토우포켓몬</language>
+		<language name="JPN_KANJI">토우포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_345">
+		<comment>ウミユリポケモン</comment>
+		<language name="JPN">바다나리포켓몬</language>
+		<language name="JPN_KANJI">바다나리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_346">
+		<comment>いわつぼポケモン</comment>
+		<language name="JPN">바위단지포켓몬</language>
+		<language name="JPN_KANJI">바위단지포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_347">
+		<comment>むかしエビポケモン</comment>
+		<language name="JPN">고대새우포켓몬</language>
+		<language name="JPN_KANJI">고대새우포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_348">
+		<comment>かっちゅうポケモン</comment>
+		<language name="JPN">갑주포켓몬</language>
+		<language name="JPN_KANJI">갑주포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_349">
+		<comment>さかなポケモン</comment>
+		<language name="JPN">물고기포켓몬</language>
+		<language name="JPN_KANJI">물고기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_350">
+		<comment>いつくしみポケモン</comment>
+		<language name="JPN">사랑포켓몬</language>
+		<language name="JPN_KANJI">사랑포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_351">
+		<comment>てんきポケモン</comment>
+		<language name="JPN">날씨포켓몬</language>
+		<language name="JPN_KANJI">날씨포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_352">
+		<comment>いろへんげポケモン</comment>
+		<language name="JPN">색변화포켓몬</language>
+		<language name="JPN_KANJI">색변화포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_353">
+		<comment>にんぎょうポケモン</comment>
+		<language name="JPN">인형포켓몬</language>
+		<language name="JPN_KANJI">인형포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_354">
+		<comment>ぬいぐるみポケモン</comment>
+		<language name="JPN">봉제인형포켓몬</language>
+		<language name="JPN_KANJI">봉제인형포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_355">
+		<comment>おむかえポケモン</comment>
+		<language name="JPN">마중포켓몬</language>
+		<language name="JPN_KANJI">마중포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_356">
+		<comment>てまねきポケモン</comment>
+		<language name="JPN">손짓포켓몬</language>
+		<language name="JPN_KANJI">손짓포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_357">
+		<comment>フルーツポケモン</comment>
+		<language name="JPN">후르츠포켓몬</language>
+		<language name="JPN_KANJI">후르츠포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_358">
+		<comment>ふうりんポケモン</comment>
+		<language name="JPN">풍경포켓몬</language>
+		<language name="JPN_KANJI">풍경포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_359">
+		<comment>わざわいポケモン</comment>
+		<language name="JPN">재난포켓몬</language>
+		<language name="JPN_KANJI">재난포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_360">
+		<comment>ほがらかポケモン</comment>
+		<language name="JPN">명랑포켓몬</language>
+		<language name="JPN_KANJI">명랑포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_361">
+		<comment>ゆきかさポケモン</comment>
+		<language name="JPN">눈우산포켓몬</language>
+		<language name="JPN_KANJI">눈우산포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_362">
+		<comment>がんめんポケモン</comment>
+		<language name="JPN">얼굴포켓몬</language>
+		<language name="JPN_KANJI">얼굴포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_363">
+		<comment>てたたきポケモン</comment>
+		<language name="JPN">손뼉포켓몬</language>
+		<language name="JPN_KANJI">손뼉포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_364">
+		<comment>たままわしポケモン</comment>
+		<language name="JPN">공돌리기포켓몬</language>
+		<language name="JPN_KANJI">공돌리기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_365">
+		<comment>こおりわりポケモン</comment>
+		<language name="JPN">얼음깨기포켓몬</language>
+		<language name="JPN_KANJI">얼음깨기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_366">
+		<comment>２まいがいポケモン</comment>
+		<language name="JPN">쌍각포켓몬</language>
+		<language name="JPN_KANJI">쌍각포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_367">
+		<comment>しんかいポケモン</comment>
+		<language name="JPN">깊은바다포켓몬</language>
+		<language name="JPN_KANJI">깊은바다포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_368">
+		<comment>なんかいポケモン</comment>
+		<language name="JPN">남해포켓몬</language>
+		<language name="JPN_KANJI">남해포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_369">
+		<comment>ちょうじゅポケモン</comment>
+		<language name="JPN">장수포켓몬</language>
+		<language name="JPN_KANJI">장수포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_370">
+		<comment>ランデブーポケモン</comment>
+		<language name="JPN">랑데부포켓몬</language>
+		<language name="JPN_KANJI">랑데부포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_371">
+		<comment>いしあたまポケモン</comment>
+		<language name="JPN">돌머리포켓몬</language>
+		<language name="JPN_KANJI">돌머리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_372">
+		<comment>にんたいポケモン</comment>
+		<language name="JPN">인내포켓몬</language>
+		<language name="JPN_KANJI">인내포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_373">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">드래곤포켓몬</language>
+		<language name="JPN_KANJI">드래곤포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_374">
+		<comment>てっきゅうポケモン</comment>
+		<language name="JPN">철공포켓몬</language>
+		<language name="JPN_KANJI">철공포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_375">
+		<comment>てつツメポケモン</comment>
+		<language name="JPN">철발톱포켓몬</language>
+		<language name="JPN_KANJI">철발톱포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_376">
+		<comment>てつあしポケモン</comment>
+		<language name="JPN">무쇠다리포켓몬</language>
+		<language name="JPN_KANJI">무쇠다리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_377">
+		<comment>いわやまポケモン</comment>
+		<language name="JPN">바위산포켓몬</language>
+		<language name="JPN_KANJI">바위산포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_378">
+		<comment>ひょうざんポケモン</comment>
+		<language name="JPN">빙산포켓몬</language>
+		<language name="JPN_KANJI">빙산포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_379">
+		<comment>くろがねポケモン</comment>
+		<language name="JPN">쇠철포켓몬</language>
+		<language name="JPN_KANJI">쇠철포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_380">
+		<comment>むげんポケモン</comment>
+		<language name="JPN">무한포켓몬</language>
+		<language name="JPN_KANJI">무한포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_381">
+		<comment>むげんポケモン</comment>
+		<language name="JPN">무한포켓몬</language>
+		<language name="JPN_KANJI">무한포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_382">
+		<comment>かいていポケモン</comment>
+		<language name="JPN">해저포켓몬</language>
+		<language name="JPN_KANJI">해저포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_383">
+		<comment>たいりくポケモン</comment>
+		<language name="JPN">대륙포켓몬</language>
+		<language name="JPN_KANJI">대륙포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_384">
+		<comment>てんくうポケモン</comment>
+		<language name="JPN">천공포켓몬</language>
+		<language name="JPN_KANJI">천공포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_385">
+		<comment>ねがいごとポケモン</comment>
+		<language name="JPN">희망사항포켓몬</language>
+		<language name="JPN_KANJI">희망사항포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_386">
+		<comment>ＤＮＡポケモン</comment>
+		<language name="JPN">DNA포켓몬</language>
+		<language name="JPN_KANJI">DNA포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_387">
+		<comment>わかばポケモン</comment>
+		<language name="JPN">어린잎포켓몬</language>
+		<language name="JPN_KANJI">어린잎포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_388">
+		<comment>こだちポケモン</comment>
+		<language name="JPN">나무숲포켓몬</language>
+		<language name="JPN_KANJI">나무숲포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_389">
+		<comment>たいりくポケモン</comment>
+		<language name="JPN">대륙포켓몬</language>
+		<language name="JPN_KANJI">대륙포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_390">
+		<comment>こざるポケモン</comment>
+		<language name="JPN">꼬마원숭이포켓몬</language>
+		<language name="JPN_KANJI">꼬마원숭이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_391">
+		<comment>やんちゃポケモン</comment>
+		<language name="JPN">개구쟁이포켓몬</language>
+		<language name="JPN_KANJI">개구쟁이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_392">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">화염포켓몬</language>
+		<language name="JPN_KANJI">화염포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_393">
+		<comment>ペンギンポケモン</comment>
+		<language name="JPN">펭귄포켓몬</language>
+		<language name="JPN_KANJI">펭귄포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_394">
+		<comment>ペンギンポケモン</comment>
+		<language name="JPN">펭귄포켓몬</language>
+		<language name="JPN_KANJI">펭귄포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_395">
+		<comment>こうていポケモン</comment>
+		<language name="JPN">황제포켓몬</language>
+		<language name="JPN_KANJI">황제포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_396">
+		<comment>むくどりポケモン</comment>
+		<language name="JPN">찌르레기포켓몬</language>
+		<language name="JPN_KANJI">찌르레기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_397">
+		<comment>むくどりポケモン</comment>
+		<language name="JPN">찌르레기포켓몬</language>
+		<language name="JPN_KANJI">찌르레기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_398">
+		<comment>もうきんポケモン</comment>
+		<language name="JPN">맹금포켓몬</language>
+		<language name="JPN_KANJI">맹금포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_399">
+		<comment>まるねずみポケモン</comment>
+		<language name="JPN">둥글쥐포켓몬</language>
+		<language name="JPN_KANJI">둥글쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_400">
+		<comment>ビーバーポケモン</comment>
+		<language name="JPN">비버포켓몬</language>
+		<language name="JPN_KANJI">비버포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_401">
+		<comment>こおろぎポケモン</comment>
+		<language name="JPN">귀뚜라미포켓몬</language>
+		<language name="JPN_KANJI">귀뚜라미포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_402">
+		<comment>こおろぎポケモン</comment>
+		<language name="JPN">귀뚜라미포켓몬</language>
+		<language name="JPN_KANJI">귀뚜라미포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_403">
+		<comment>せんこうポケモン</comment>
+		<language name="JPN">섬광포켓몬</language>
+		<language name="JPN_KANJI">섬광포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_404">
+		<comment>でんこうポケモン</comment>
+		<language name="JPN">전광포켓몬</language>
+		<language name="JPN_KANJI">전광포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_405">
+		<comment>がんこうポケモン</comment>
+		<language name="JPN">안광포켓몬</language>
+		<language name="JPN_KANJI">안광포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_406">
+		<comment>つぼみポケモン</comment>
+		<language name="JPN">꽃봉오리포켓몬</language>
+		<language name="JPN_KANJI">꽃봉오리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_407">
+		<comment>ブーケポケモン</comment>
+		<language name="JPN">부케포켓몬</language>
+		<language name="JPN_KANJI">부케포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_408">
+		<comment>ずつきポケモン</comment>
+		<language name="JPN">박치기포켓몬</language>
+		<language name="JPN_KANJI">박치기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_409">
+		<comment>ずつきポケモン</comment>
+		<language name="JPN">박치기포켓몬</language>
+		<language name="JPN_KANJI">박치기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_410">
+		<comment>シールドポケモン</comment>
+		<language name="JPN">실드포켓몬</language>
+		<language name="JPN_KANJI">실드포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_411">
+		<comment>シールドポケモン</comment>
+		<language name="JPN">실드포켓몬</language>
+		<language name="JPN_KANJI">실드포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_412">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">도롱이벌레포켓몬</language>
+		<language name="JPN_KANJI">도롱이벌레포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_413">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">도롱이벌레포켓몬</language>
+		<language name="JPN_KANJI">도롱이벌레포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_414">
+		<comment>ミノガポケモン</comment>
+		<language name="JPN">나방포켓몬</language>
+		<language name="JPN_KANJI">나방포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_415">
+		<comment>はちのこポケモン</comment>
+		<language name="JPN">꼬마벌포켓몬</language>
+		<language name="JPN_KANJI">꼬마벌포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_416">
+		<comment>はちのすポケモン</comment>
+		<language name="JPN">벌집포켓몬</language>
+		<language name="JPN_KANJI">벌집포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_417">
+		<comment>でんきりすポケモン</comment>
+		<language name="JPN">전기다람쥐포켓몬</language>
+		<language name="JPN_KANJI">전기다람쥐포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_418">
+		<comment>うみイタチポケモン</comment>
+		<language name="JPN">바다족제비포켓몬</language>
+		<language name="JPN_KANJI">바다족제비포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_419">
+		<comment>うみイタチポケモン</comment>
+		<language name="JPN">바다족제비포켓몬</language>
+		<language name="JPN_KANJI">바다족제비포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_420">
+		<comment>さくらんぼポケモン</comment>
+		<language name="JPN">버찌포켓몬</language>
+		<language name="JPN_KANJI">버찌포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_421">
+		<comment>サクラポケモン</comment>
+		<language name="JPN">벚꽃포켓몬</language>
+		<language name="JPN_KANJI">벚꽃포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_422">
+		<comment>ウミウシポケモン</comment>
+		<language name="JPN">갯민숭달팽이포켓몬</language>
+		<language name="JPN_KANJI">갯민숭달팽이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_423">
+		<comment>ウミウシポケモン</comment>
+		<language name="JPN">갯민숭달팽이포켓몬</language>
+		<language name="JPN_KANJI">갯민숭달팽이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_424">
+		<comment>おながポケモン</comment>
+		<language name="JPN">긴꼬리포켓몬</language>
+		<language name="JPN_KANJI">긴꼬리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_425">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">풍선포켓몬</language>
+		<language name="JPN_KANJI">풍선포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_426">
+		<comment>ききゅうポケモン</comment>
+		<language name="JPN">기구포켓몬</language>
+		<language name="JPN_KANJI">기구포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_427">
+		<comment>うさぎポケモン</comment>
+		<language name="JPN">토끼포켓몬</language>
+		<language name="JPN_KANJI">토끼포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_428">
+		<comment>うさぎポケモン</comment>
+		<language name="JPN">토끼포켓몬</language>
+		<language name="JPN_KANJI">토끼포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_429">
+		<comment>マジカルポケモン</comment>
+		<language name="JPN">매지컬포켓몬</language>
+		<language name="JPN_KANJI">매지컬포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_430">
+		<comment>おおボスポケモン</comment>
+		<language name="JPN">큰형님포켓몬</language>
+		<language name="JPN_KANJI">큰형님포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_431">
+		<comment>ねこかぶりポケモン</comment>
+		<language name="JPN">내숭포켓몬</language>
+		<language name="JPN_KANJI">내숭포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_432">
+		<comment>とらねこポケモン</comment>
+		<language name="JPN">얼룩고양이포켓몬</language>
+		<language name="JPN_KANJI">얼룩고양이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_433">
+		<comment>すずポケモン</comment>
+		<language name="JPN">방울포켓몬</language>
+		<language name="JPN_KANJI">방울포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_434">
+		<comment>スカンクポケモン</comment>
+		<language name="JPN">스컹크포켓몬</language>
+		<language name="JPN_KANJI">스컹크포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_435">
+		<comment>スカンクポケモン</comment>
+		<language name="JPN">스컹크포켓몬</language>
+		<language name="JPN_KANJI">스컹크포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_436">
+		<comment>せいどうポケモン</comment>
+		<language name="JPN">청동포켓몬</language>
+		<language name="JPN_KANJI">청동포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_437">
+		<comment>どうたくポケモン</comment>
+		<language name="JPN">동탁포켓몬</language>
+		<language name="JPN_KANJI">동탁포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_438">
+		<comment>ぼんさいポケモン</comment>
+		<language name="JPN">분재포켓몬</language>
+		<language name="JPN_KANJI">분재포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_439">
+		<comment>マイムポケモン</comment>
+		<language name="JPN">따라하기포켓몬</language>
+		<language name="JPN_KANJI">따라하기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_440">
+		<comment>ままごとポケモン</comment>
+		<language name="JPN">소꿉놀이포켓몬</language>
+		<language name="JPN_KANJI">소꿉놀이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_441">
+		<comment>おんぷポケモン</comment>
+		<language name="JPN">음표포켓몬</language>
+		<language name="JPN_KANJI">음표포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_442">
+		<comment>ふういんポケモン</comment>
+		<language name="JPN">봉인포켓몬</language>
+		<language name="JPN_KANJI">봉인포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_443">
+		<comment>りくザメポケモン</comment>
+		<language name="JPN">육지상어포켓몬</language>
+		<language name="JPN_KANJI">육지상어포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_444">
+		<comment>ほらあなポケモン</comment>
+		<language name="JPN">동굴포켓몬</language>
+		<language name="JPN_KANJI">동굴포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_445">
+		<comment>マッハポケモン</comment>
+		<language name="JPN">마하포켓몬</language>
+		<language name="JPN_KANJI">마하포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_446">
+		<comment>おおぐいポケモン</comment>
+		<language name="JPN">대식가포켓몬</language>
+		<language name="JPN_KANJI">대식가포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_447">
+		<comment>はもんポケモン</comment>
+		<language name="JPN">파문포켓몬</language>
+		<language name="JPN_KANJI">파문포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_448">
+		<comment>はどうポケモン</comment>
+		<language name="JPN">파동포켓몬</language>
+		<language name="JPN_KANJI">파동포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_449">
+		<comment>カバポケモン</comment>
+		<language name="JPN">하마포켓몬</language>
+		<language name="JPN_KANJI">하마포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_450">
+		<comment>じゅうりょうポケモン</comment>
+		<language name="JPN">중량포켓몬</language>
+		<language name="JPN_KANJI">중량포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_451">
+		<comment>さそりポケモン</comment>
+		<language name="JPN">전갈포켓몬</language>
+		<language name="JPN_KANJI">전갈포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_452">
+		<comment>ばけさそりポケモン</comment>
+		<language name="JPN">요괴전갈포켓몬</language>
+		<language name="JPN_KANJI">요괴전갈포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_453">
+		<comment>どくづきポケモン</comment>
+		<language name="JPN">독설포켓몬</language>
+		<language name="JPN_KANJI">독설포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_454">
+		<comment>どくづきポケモン</comment>
+		<language name="JPN">독설포켓몬</language>
+		<language name="JPN_KANJI">독설포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_455">
+		<comment>むしとりポケモン</comment>
+		<language name="JPN">벌레잡이포켓몬</language>
+		<language name="JPN_KANJI">벌레잡이포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_456">
+		<comment>はねうおポケモン</comment>
+		<language name="JPN">비어포켓몬</language>
+		<language name="JPN_KANJI">비어포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_457">
+		<comment>ネオンポケモン</comment>
+		<language name="JPN">네온포켓몬</language>
+		<language name="JPN_KANJI">네온포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_458">
+		<comment>カイトポケモン</comment>
+		<language name="JPN">연포켓몬</language>
+		<language name="JPN_KANJI">연포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_459">
+		<comment>じゅひょうポケモン</comment>
+		<language name="JPN">얼음나무포켓몬</language>
+		<language name="JPN_KANJI">얼음나무포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_460">
+		<comment>じゅひょうポケモン</comment>
+		<language name="JPN">얼음나무포켓몬</language>
+		<language name="JPN_KANJI">얼음나무포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_461">
+		<comment>かぎづめポケモン</comment>
+		<language name="JPN">갈고리손톱포켓몬</language>
+		<language name="JPN_KANJI">갈고리손톱포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_462">
+		<comment>じばポケモン</comment>
+		<language name="JPN">자기장포켓몬</language>
+		<language name="JPN_KANJI">자기장포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_463">
+		<comment>なめまわしポケモン</comment>
+		<language name="JPN">핥기포켓몬</language>
+		<language name="JPN_KANJI">핥기포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_464">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">드릴포켓몬</language>
+		<language name="JPN_KANJI">드릴포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_465">
+		<comment>ツルじょうポケモン</comment>
+		<language name="JPN">넝쿨포켓몬</language>
+		<language name="JPN_KANJI">넝쿨포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_466">
+		<comment>らいでんポケモン</comment>
+		<language name="JPN">뇌전포켓몬</language>
+		<language name="JPN_KANJI">뇌전포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_467">
+		<comment>ばくえんポケモン</comment>
+		<language name="JPN">폭염포켓몬</language>
+		<language name="JPN_KANJI">폭염포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_468">
+		<comment>しゅくふくポケモン</comment>
+		<language name="JPN">축복포켓몬</language>
+		<language name="JPN_KANJI">축복포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_469">
+		<comment>オニトンボポケモン</comment>
+		<language name="JPN">깨비잠자리포켓몬</language>
+		<language name="JPN_KANJI">깨비잠자리포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_470">
+		<comment>しんりょくポケモン</comment>
+		<language name="JPN">심록포켓몬</language>
+		<language name="JPN_KANJI">심록포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_471">
+		<comment>しんせつポケモン</comment>
+		<language name="JPN">신설포켓몬</language>
+		<language name="JPN_KANJI">신설포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_472">
+		<comment>キバさそりポケモン</comment>
+		<language name="JPN">송곳니전갈포켓몬</language>
+		<language name="JPN_KANJI">송곳니전갈포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_473">
+		<comment>２ほんキバポケモン</comment>
+		<language name="JPN">2개송곳니포켓몬</language>
+		<language name="JPN_KANJI">2개송곳니포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_474">
+		<comment>バーチャルポケモン</comment>
+		<language name="JPN">가상포켓몬</language>
+		<language name="JPN_KANJI">가상포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_475">
+		<comment>やいばポケモン</comment>
+		<language name="JPN">검포켓몬</language>
+		<language name="JPN_KANJI">검포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_476">
+		<comment>コンパスポケモン</comment>
+		<language name="JPN">콤파스포켓몬</language>
+		<language name="JPN_KANJI">콤파스포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_477">
+		<comment>てづかみポケモン</comment>
+		<language name="JPN">움켜쥠포켓몬</language>
+		<language name="JPN_KANJI">움켜쥠포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_478">
+		<comment>ゆきぐにポケモン</comment>
+		<language name="JPN">설국포켓몬</language>
+		<language name="JPN_KANJI">설국포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_479">
+		<comment>プラズマポケモン</comment>
+		<language name="JPN">플라스마포켓몬</language>
+		<language name="JPN_KANJI">플라스마포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_480">
+		<comment>ちしきポケモン</comment>
+		<language name="JPN">지식포켓몬</language>
+		<language name="JPN_KANJI">지식포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_481">
+		<comment>かんじょうポケモン</comment>
+		<language name="JPN">감정포켓몬</language>
+		<language name="JPN_KANJI">감정포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_482">
+		<comment>いしポケモン</comment>
+		<language name="JPN">의지포켓몬</language>
+		<language name="JPN_KANJI">의지포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_483">
+		<comment>じかんポケモン</comment>
+		<language name="JPN">시간포켓몬</language>
+		<language name="JPN_KANJI">시간포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_484">
+		<comment>くうかんポケモン</comment>
+		<language name="JPN">공간포켓몬</language>
+		<language name="JPN_KANJI">공간포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_485">
+		<comment>かこうポケモン</comment>
+		<language name="JPN">화구포켓몬</language>
+		<language name="JPN_KANJI">화구포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_486">
+		<comment>きょだいポケモン</comment>
+		<language name="JPN">거대포켓몬</language>
+		<language name="JPN_KANJI">거대포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_487" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>はんこつポケモン：アナザー</comment>
+		<language name="JPN">반골포켓몬</language>
+		<language name="JPN_KANJI">반골포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_488">
+		<comment>みかづきポケモン</comment>
+		<language name="JPN">초승달포켓몬</language>
+		<language name="JPN_KANJI">초승달포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_489">
+		<comment>かいようポケモン</comment>
+		<language name="JPN">해양포켓몬</language>
+		<language name="JPN_KANJI">해양포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_490">
+		<comment>かいゆうポケモン</comment>
+		<language name="JPN">회유포켓몬</language>
+		<language name="JPN_KANJI">회유포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_491">
+		<comment>あんこくポケモン</comment>
+		<language name="JPN">암흑포켓몬</language>
+		<language name="JPN_KANJI">암흑포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_492">
+		<comment>かんしゃポケモン</comment>
+		<language name="JPN">감사포켓몬</language>
+		<language name="JPN_KANJI">감사포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_493">
+		<comment>そうぞうポケモン</comment>
+		<language name="JPN">창조포켓몬</language>
+		<language name="JPN_KANJI">창조포켓몬</language>
+	</row>
+
+	<row id="ZKN_TYPE_KOR_487_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>はんこつポケモン：オリジン</comment>
+		<language name="JPN">반골포켓몬</language>
+		<language name="JPN_KANJI">반골포켓몬</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>

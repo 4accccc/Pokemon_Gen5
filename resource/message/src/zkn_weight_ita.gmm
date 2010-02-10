@@ -1,0 +1,3323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="shimoyamada" host="W00184" date="2010-02-10T17:30:08"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="167"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="100"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="ZKN_WEIGHT_ITA_000_000">
+		<comment>ーーーーー</comment>
+		<language name="JPN">???,?kg</language>
+		<language name="JPN_KANJI">???,?kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_001_000">
+		<comment>フシギダネ</comment>
+		<language name="JPN">6,9kg</language>
+		<language name="JPN_KANJI">6,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_002_000">
+		<comment>フシギソウ</comment>
+		<language name="JPN">13,0kg</language>
+		<language name="JPN_KANJI">13,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_003_000">
+		<comment>フシギバナ</comment>
+		<language name="JPN">100,0kg</language>
+		<language name="JPN_KANJI">100,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_004_000">
+		<comment>ヒトカゲ</comment>
+		<language name="JPN">8,5kg</language>
+		<language name="JPN_KANJI">8,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_005_000">
+		<comment>リザード</comment>
+		<language name="JPN">19,0kg</language>
+		<language name="JPN_KANJI">19,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_006_000">
+		<comment>リザードン</comment>
+		<language name="JPN">90,5kg</language>
+		<language name="JPN_KANJI">90,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_007_000">
+		<comment>ゼニガメ</comment>
+		<language name="JPN">9,0kg</language>
+		<language name="JPN_KANJI">9,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_008_000">
+		<comment>カメール</comment>
+		<language name="JPN">22,5kg</language>
+		<language name="JPN_KANJI">22,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_009_000">
+		<comment>カメックス</comment>
+		<language name="JPN">85,5kg</language>
+		<language name="JPN_KANJI">85,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_010_000">
+		<comment>キャタピー</comment>
+		<language name="JPN">2,9kg</language>
+		<language name="JPN_KANJI">2,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_011_000">
+		<comment>トランセル</comment>
+		<language name="JPN">9,9kg</language>
+		<language name="JPN_KANJI">9,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_012_000">
+		<comment>バタフリー</comment>
+		<language name="JPN">32,0kg</language>
+		<language name="JPN_KANJI">32,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_013_000">
+		<comment>ビードル</comment>
+		<language name="JPN">3,2kg</language>
+		<language name="JPN_KANJI">3,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_014_000">
+		<comment>コクーン</comment>
+		<language name="JPN">10,0kg</language>
+		<language name="JPN_KANJI">10,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_015_000">
+		<comment>スピアー</comment>
+		<language name="JPN">29,5kg</language>
+		<language name="JPN_KANJI">29,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_016_000">
+		<comment>ポッポ</comment>
+		<language name="JPN">1,8kg</language>
+		<language name="JPN_KANJI">1,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_017_000">
+		<comment>ピジョン</comment>
+		<language name="JPN">30,0kg</language>
+		<language name="JPN_KANJI">30,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_018_000">
+		<comment>ピジョット</comment>
+		<language name="JPN">39,5kg</language>
+		<language name="JPN_KANJI">39,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_019_000">
+		<comment>コラッタ</comment>
+		<language name="JPN">3,5kg</language>
+		<language name="JPN_KANJI">3,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_020_000">
+		<comment>ラッタ</comment>
+		<language name="JPN">18,5kg</language>
+		<language name="JPN_KANJI">18,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_021_000">
+		<comment>オニスズメ</comment>
+		<language name="JPN">2,0kg</language>
+		<language name="JPN_KANJI">2,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_022_000">
+		<comment>オニドリル</comment>
+		<language name="JPN">38,0kg</language>
+		<language name="JPN_KANJI">38,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_023_000">
+		<comment>アーボ</comment>
+		<language name="JPN">6,9kg</language>
+		<language name="JPN_KANJI">6,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_024_000">
+		<comment>アーボック</comment>
+		<language name="JPN">65,0kg</language>
+		<language name="JPN_KANJI">65,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_025_000">
+		<comment>ピカチュウ</comment>
+		<language name="JPN">6,0kg</language>
+		<language name="JPN_KANJI">6,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_026_000">
+		<comment>ライチュウ</comment>
+		<language name="JPN">30,0kg</language>
+		<language name="JPN_KANJI">30,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_027_000">
+		<comment>サンド</comment>
+		<language name="JPN">12,0kg</language>
+		<language name="JPN_KANJI">12,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_028_000">
+		<comment>サンドパン</comment>
+		<language name="JPN">29,5kg</language>
+		<language name="JPN_KANJI">29,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_029_000">
+		<comment>ニドラン♀</comment>
+		<language name="JPN">7,0kg</language>
+		<language name="JPN_KANJI">7,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_030_000">
+		<comment>ニドリーナ</comment>
+		<language name="JPN">20,0kg</language>
+		<language name="JPN_KANJI">20,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_031_000">
+		<comment>ニドクイン</comment>
+		<language name="JPN">60,0kg</language>
+		<language name="JPN_KANJI">60,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_032_000">
+		<comment>ニドラン♂</comment>
+		<language name="JPN">9,0kg</language>
+		<language name="JPN_KANJI">9,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_033_000">
+		<comment>ニドリーノ</comment>
+		<language name="JPN">19,5kg</language>
+		<language name="JPN_KANJI">19,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_034_000">
+		<comment>ニドキング</comment>
+		<language name="JPN">62,0kg</language>
+		<language name="JPN_KANJI">62,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_035_000">
+		<comment>ピッピ</comment>
+		<language name="JPN">7,5kg</language>
+		<language name="JPN_KANJI">7,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_036_000">
+		<comment>ピクシー</comment>
+		<language name="JPN">40,0kg</language>
+		<language name="JPN_KANJI">40,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_037_000">
+		<comment>ロコン</comment>
+		<language name="JPN">9,9kg</language>
+		<language name="JPN_KANJI">9,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_038_000">
+		<comment>キュウコン</comment>
+		<language name="JPN">19,9kg</language>
+		<language name="JPN_KANJI">19,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_039_000">
+		<comment>プリン</comment>
+		<language name="JPN">5,5kg</language>
+		<language name="JPN_KANJI">5,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_040_000">
+		<comment>プクリン</comment>
+		<language name="JPN">12,0kg</language>
+		<language name="JPN_KANJI">12,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_041_000">
+		<comment>ズバット</comment>
+		<language name="JPN">7,5kg</language>
+		<language name="JPN_KANJI">7,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_042_000">
+		<comment>ゴルバット</comment>
+		<language name="JPN">55,0kg</language>
+		<language name="JPN_KANJI">55,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_043_000">
+		<comment>ナゾノクサ</comment>
+		<language name="JPN">5,4kg</language>
+		<language name="JPN_KANJI">5,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_044_000">
+		<comment>クサイハナ</comment>
+		<language name="JPN">8,6kg</language>
+		<language name="JPN_KANJI">8,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_045_000">
+		<comment>ラフレシア</comment>
+		<language name="JPN">18,6kg</language>
+		<language name="JPN_KANJI">18,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_046_000">
+		<comment>パラス</comment>
+		<language name="JPN">5,4kg</language>
+		<language name="JPN_KANJI">5,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_047_000">
+		<comment>パラセクト</comment>
+		<language name="JPN">29,5kg</language>
+		<language name="JPN_KANJI">29,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_048_000">
+		<comment>コンパン</comment>
+		<language name="JPN">30,0kg</language>
+		<language name="JPN_KANJI">30,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_049_000">
+		<comment>モルフォン</comment>
+		<language name="JPN">12,5kg</language>
+		<language name="JPN_KANJI">12,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_050_000">
+		<comment>ディグダ</comment>
+		<language name="JPN">0,8kg</language>
+		<language name="JPN_KANJI">0,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_051_000">
+		<comment>ダグトリオ</comment>
+		<language name="JPN">33,3kg</language>
+		<language name="JPN_KANJI">33,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_052_000">
+		<comment>ニャース</comment>
+		<language name="JPN">4,2kg</language>
+		<language name="JPN_KANJI">4,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_053_000">
+		<comment>ペルシアン</comment>
+		<language name="JPN">32,0kg</language>
+		<language name="JPN_KANJI">32,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_054_000">
+		<comment>コダック</comment>
+		<language name="JPN">19,6kg</language>
+		<language name="JPN_KANJI">19,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_055_000">
+		<comment>ゴルダック</comment>
+		<language name="JPN">76,6kg</language>
+		<language name="JPN_KANJI">76,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_056_000">
+		<comment>マンキー</comment>
+		<language name="JPN">28,0kg</language>
+		<language name="JPN_KANJI">28,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_057_000">
+		<comment>オコリザル</comment>
+		<language name="JPN">32,0kg</language>
+		<language name="JPN_KANJI">32,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_058_000">
+		<comment>ガーディ</comment>
+		<language name="JPN">19,0kg</language>
+		<language name="JPN_KANJI">19,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_059_000">
+		<comment>ウインディ</comment>
+		<language name="JPN">155,0kg</language>
+		<language name="JPN_KANJI">155,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_060_000">
+		<comment>ニョロモ</comment>
+		<language name="JPN">12,4kg</language>
+		<language name="JPN_KANJI">12,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_061_000">
+		<comment>ニョロゾ</comment>
+		<language name="JPN">20,0kg</language>
+		<language name="JPN_KANJI">20,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_062_000">
+		<comment>ニョロボン</comment>
+		<language name="JPN">54,0kg</language>
+		<language name="JPN_KANJI">54,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_063_000">
+		<comment>ケーシィ</comment>
+		<language name="JPN">19,5kg</language>
+		<language name="JPN_KANJI">19,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_064_000">
+		<comment>ユンゲラー</comment>
+		<language name="JPN">56,5kg</language>
+		<language name="JPN_KANJI">56,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_065_000">
+		<comment>フーディン</comment>
+		<language name="JPN">48,0kg</language>
+		<language name="JPN_KANJI">48,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_066_000">
+		<comment>ワンリキー</comment>
+		<language name="JPN">19,5kg</language>
+		<language name="JPN_KANJI">19,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_067_000">
+		<comment>ゴーリキー</comment>
+		<language name="JPN">70,5kg</language>
+		<language name="JPN_KANJI">70,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_068_000">
+		<comment>カイリキー</comment>
+		<language name="JPN">130,0kg</language>
+		<language name="JPN_KANJI">130,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_069_000">
+		<comment>マダツボミ</comment>
+		<language name="JPN">4,0kg</language>
+		<language name="JPN_KANJI">4,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_070_000">
+		<comment>ウツドン</comment>
+		<language name="JPN">6,4kg</language>
+		<language name="JPN_KANJI">6,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_071_000">
+		<comment>ウツボット</comment>
+		<language name="JPN">15,5kg</language>
+		<language name="JPN_KANJI">15,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_072_000">
+		<comment>メノクラゲ</comment>
+		<language name="JPN">45,5kg</language>
+		<language name="JPN_KANJI">45,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_073_000">
+		<comment>ドククラゲ</comment>
+		<language name="JPN">55,0kg</language>
+		<language name="JPN_KANJI">55,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_074_000">
+		<comment>イシツブテ</comment>
+		<language name="JPN">20,0kg</language>
+		<language name="JPN_KANJI">20,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_075_000">
+		<comment>ゴローン</comment>
+		<language name="JPN">105,0kg</language>
+		<language name="JPN_KANJI">105,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_076_000">
+		<comment>ゴローニャ</comment>
+		<language name="JPN">300,0kg</language>
+		<language name="JPN_KANJI">300,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_077_000">
+		<comment>ポニータ</comment>
+		<language name="JPN">30,0kg</language>
+		<language name="JPN_KANJI">30,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_078_000">
+		<comment>ギャロップ</comment>
+		<language name="JPN">95,0kg</language>
+		<language name="JPN_KANJI">95,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_079_000">
+		<comment>ヤドン</comment>
+		<language name="JPN">36,0kg</language>
+		<language name="JPN_KANJI">36,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_080_000">
+		<comment>ヤドラン</comment>
+		<language name="JPN">78,5kg</language>
+		<language name="JPN_KANJI">78,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_081_000">
+		<comment>コイル</comment>
+		<language name="JPN">6,0kg</language>
+		<language name="JPN_KANJI">6,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_082_000">
+		<comment>レアコイル</comment>
+		<language name="JPN">60,0kg</language>
+		<language name="JPN_KANJI">60,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_083_000">
+		<comment>カモネギ</comment>
+		<language name="JPN">15,0kg</language>
+		<language name="JPN_KANJI">15,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_084_000">
+		<comment>ドードー</comment>
+		<language name="JPN">39,2kg</language>
+		<language name="JPN_KANJI">39,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_085_000">
+		<comment>ドードリオ</comment>
+		<language name="JPN">85,2kg</language>
+		<language name="JPN_KANJI">85,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_086_000">
+		<comment>パウワウ</comment>
+		<language name="JPN">90,0kg</language>
+		<language name="JPN_KANJI">90,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_087_000">
+		<comment>ジュゴン</comment>
+		<language name="JPN">120,0kg</language>
+		<language name="JPN_KANJI">120,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_088_000">
+		<comment>ベトベター</comment>
+		<language name="JPN">30,0kg</language>
+		<language name="JPN_KANJI">30,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_089_000">
+		<comment>ベトベトン</comment>
+		<language name="JPN">30,0kg</language>
+		<language name="JPN_KANJI">30,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_090_000">
+		<comment>シェルダー</comment>
+		<language name="JPN">4,0kg</language>
+		<language name="JPN_KANJI">4,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_091_000">
+		<comment>パルシェン</comment>
+		<language name="JPN">132,5kg</language>
+		<language name="JPN_KANJI">132,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_092_000">
+		<comment>ゴース</comment>
+		<language name="JPN">0,1kg</language>
+		<language name="JPN_KANJI">0,1kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_093_000">
+		<comment>ゴースト</comment>
+		<language name="JPN">0,1kg</language>
+		<language name="JPN_KANJI">0,1kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_094_000">
+		<comment>ゲンガー</comment>
+		<language name="JPN">40,5kg</language>
+		<language name="JPN_KANJI">40,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_095_000">
+		<comment>イワーク</comment>
+		<language name="JPN">210,0kg</language>
+		<language name="JPN_KANJI">210,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_096_000">
+		<comment>スリープ</comment>
+		<language name="JPN">32,4kg</language>
+		<language name="JPN_KANJI">32,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_097_000">
+		<comment>スリーパー</comment>
+		<language name="JPN">75,6kg</language>
+		<language name="JPN_KANJI">75,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_098_000">
+		<comment>クラブ</comment>
+		<language name="JPN">6,5kg</language>
+		<language name="JPN_KANJI">6,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_099_000">
+		<comment>キングラー</comment>
+		<language name="JPN">60,0kg</language>
+		<language name="JPN_KANJI">60,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_100_000">
+		<comment>ビリリダマ</comment>
+		<language name="JPN">10,4kg</language>
+		<language name="JPN_KANJI">10,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_101_000">
+		<comment>マルマイン</comment>
+		<language name="JPN">66,6kg</language>
+		<language name="JPN_KANJI">66,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_102_000">
+		<comment>タマタマ</comment>
+		<language name="JPN">2,5kg</language>
+		<language name="JPN_KANJI">2,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_103_000">
+		<comment>ナッシー</comment>
+		<language name="JPN">120,0kg</language>
+		<language name="JPN_KANJI">120,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_104_000">
+		<comment>カラカラ</comment>
+		<language name="JPN">6,5kg</language>
+		<language name="JPN_KANJI">6,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_105_000">
+		<comment>ガラガラ</comment>
+		<language name="JPN">45,0kg</language>
+		<language name="JPN_KANJI">45,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_106_000">
+		<comment>サワムラー</comment>
+		<language name="JPN">49,8kg</language>
+		<language name="JPN_KANJI">49,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_107_000">
+		<comment>エビワラー</comment>
+		<language name="JPN">50,2kg</language>
+		<language name="JPN_KANJI">50,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_108_000">
+		<comment>ベロリンガ</comment>
+		<language name="JPN">65,5kg</language>
+		<language name="JPN_KANJI">65,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_109_000">
+		<comment>ドガース</comment>
+		<language name="JPN">1,0kg</language>
+		<language name="JPN_KANJI">1,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_110_000">
+		<comment>マタドガス</comment>
+		<language name="JPN">9,5kg</language>
+		<language name="JPN_KANJI">9,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_111_000">
+		<comment>サイホーン</comment>
+		<language name="JPN">115,0kg</language>
+		<language name="JPN_KANJI">115,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_112_000">
+		<comment>サイドン</comment>
+		<language name="JPN">120,0kg</language>
+		<language name="JPN_KANJI">120,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_113_000">
+		<comment>ラッキー</comment>
+		<language name="JPN">34,6kg</language>
+		<language name="JPN_KANJI">34,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_114_000">
+		<comment>モンジャラ</comment>
+		<language name="JPN">35,0kg</language>
+		<language name="JPN_KANJI">35,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_115_000">
+		<comment>ガルーラ</comment>
+		<language name="JPN">80,0kg</language>
+		<language name="JPN_KANJI">80,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_116_000">
+		<comment>タッツー</comment>
+		<language name="JPN">8,0kg</language>
+		<language name="JPN_KANJI">8,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_117_000">
+		<comment>シードラ</comment>
+		<language name="JPN">25,0kg</language>
+		<language name="JPN_KANJI">25,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_118_000">
+		<comment>トサキント</comment>
+		<language name="JPN">15,0kg</language>
+		<language name="JPN_KANJI">15,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_119_000">
+		<comment>アズマオウ</comment>
+		<language name="JPN">39,0kg</language>
+		<language name="JPN_KANJI">39,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_120_000">
+		<comment>ヒトデマン</comment>
+		<language name="JPN">34,5kg</language>
+		<language name="JPN_KANJI">34,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_121_000">
+		<comment>スターミー</comment>
+		<language name="JPN">80,0kg</language>
+		<language name="JPN_KANJI">80,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_122_000">
+		<comment>バリヤード</comment>
+		<language name="JPN">54,5kg</language>
+		<language name="JPN_KANJI">54,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_123_000">
+		<comment>ストライク</comment>
+		<language name="JPN">56,0kg</language>
+		<language name="JPN_KANJI">56,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_124_000">
+		<comment>ルージュラ</comment>
+		<language name="JPN">40,6kg</language>
+		<language name="JPN_KANJI">40,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_125_000">
+		<comment>エレブー</comment>
+		<language name="JPN">30,0kg</language>
+		<language name="JPN_KANJI">30,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_126_000">
+		<comment>ブーバー</comment>
+		<language name="JPN">44,5kg</language>
+		<language name="JPN_KANJI">44,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_127_000">
+		<comment>カイロス</comment>
+		<language name="JPN">55,0kg</language>
+		<language name="JPN_KANJI">55,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_128_000">
+		<comment>ケンタロス</comment>
+		<language name="JPN">88,4kg</language>
+		<language name="JPN_KANJI">88,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_129_000">
+		<comment>コイキング</comment>
+		<language name="JPN">10,0kg</language>
+		<language name="JPN_KANJI">10,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_130_000">
+		<comment>ギャラドス</comment>
+		<language name="JPN">235,0kg</language>
+		<language name="JPN_KANJI">235,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_131_000">
+		<comment>ラプラス</comment>
+		<language name="JPN">220,0kg</language>
+		<language name="JPN_KANJI">220,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_132_000">
+		<comment>メタモン</comment>
+		<language name="JPN">4,0kg</language>
+		<language name="JPN_KANJI">4,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_133_000">
+		<comment>イーブイ</comment>
+		<language name="JPN">6,5kg</language>
+		<language name="JPN_KANJI">6,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_134_000">
+		<comment>シャワーズ</comment>
+		<language name="JPN">29,0kg</language>
+		<language name="JPN_KANJI">29,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_135_000">
+		<comment>サンダース</comment>
+		<language name="JPN">24,5kg</language>
+		<language name="JPN_KANJI">24,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_136_000">
+		<comment>ブースター</comment>
+		<language name="JPN">25,0kg</language>
+		<language name="JPN_KANJI">25,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_137_000">
+		<comment>ポリゴン</comment>
+		<language name="JPN">36,5kg</language>
+		<language name="JPN_KANJI">36,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_138_000">
+		<comment>オムナイト</comment>
+		<language name="JPN">7,5kg</language>
+		<language name="JPN_KANJI">7,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_139_000">
+		<comment>オムスター</comment>
+		<language name="JPN">35,0kg</language>
+		<language name="JPN_KANJI">35,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_140_000">
+		<comment>カブト</comment>
+		<language name="JPN">11,5kg</language>
+		<language name="JPN_KANJI">11,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_141_000">
+		<comment>カブトプス</comment>
+		<language name="JPN">40,5kg</language>
+		<language name="JPN_KANJI">40,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_142_000">
+		<comment>プテラ</comment>
+		<language name="JPN">59,0kg</language>
+		<language name="JPN_KANJI">59,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_143_000">
+		<comment>カビゴン</comment>
+		<language name="JPN">460,0kg</language>
+		<language name="JPN_KANJI">460,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_144_000">
+		<comment>フリーザー</comment>
+		<language name="JPN">55,4kg</language>
+		<language name="JPN_KANJI">55,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_145_000">
+		<comment>サンダー</comment>
+		<language name="JPN">52,6kg</language>
+		<language name="JPN_KANJI">52,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_146_000">
+		<comment>ファイヤー</comment>
+		<language name="JPN">60,0kg</language>
+		<language name="JPN_KANJI">60,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_147_000">
+		<comment>ミニリュウ</comment>
+		<language name="JPN">3,3kg</language>
+		<language name="JPN_KANJI">3,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_148_000">
+		<comment>ハクリュー</comment>
+		<language name="JPN">16,5kg</language>
+		<language name="JPN_KANJI">16,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_149_000">
+		<comment>カイリュー</comment>
+		<language name="JPN">210,0kg</language>
+		<language name="JPN_KANJI">210,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_150_000">
+		<comment>ミュウツー</comment>
+		<language name="JPN">122,0kg</language>
+		<language name="JPN_KANJI">122,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_151_000">
+		<comment>ミュウ</comment>
+		<language name="JPN">4,0kg</language>
+		<language name="JPN_KANJI">4,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_152_000">
+		<comment>チコリータ</comment>
+		<language name="JPN">6,4kg</language>
+		<language name="JPN_KANJI">6,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_153_000">
+		<comment>ベイリーフ</comment>
+		<language name="JPN">15,8kg</language>
+		<language name="JPN_KANJI">15,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_154_000">
+		<comment>メガニウム</comment>
+		<language name="JPN">100,5kg</language>
+		<language name="JPN_KANJI">100,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_155_000">
+		<comment>ヒノアラシ</comment>
+		<language name="JPN">7,9kg</language>
+		<language name="JPN_KANJI">7,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_156_000">
+		<comment>マグマラシ</comment>
+		<language name="JPN">19,0kg</language>
+		<language name="JPN_KANJI">19,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_157_000">
+		<comment>バクフーン</comment>
+		<language name="JPN">79,5kg</language>
+		<language name="JPN_KANJI">79,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_158_000">
+		<comment>ワニノコ</comment>
+		<language name="JPN">9,5kg</language>
+		<language name="JPN_KANJI">9,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_159_000">
+		<comment>アリゲイツ</comment>
+		<language name="JPN">25,0kg</language>
+		<language name="JPN_KANJI">25,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_160_000">
+		<comment>オーダイル</comment>
+		<language name="JPN">88,8kg</language>
+		<language name="JPN_KANJI">88,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_161_000">
+		<comment>オタチ</comment>
+		<language name="JPN">6,0kg</language>
+		<language name="JPN_KANJI">6,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_162_000">
+		<comment>オオタチ</comment>
+		<language name="JPN">32,5kg</language>
+		<language name="JPN_KANJI">32,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_163_000">
+		<comment>ホーホー</comment>
+		<language name="JPN">21,2kg</language>
+		<language name="JPN_KANJI">21,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_164_000">
+		<comment>ヨルノズク</comment>
+		<language name="JPN">40,8kg</language>
+		<language name="JPN_KANJI">40,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_165_000">
+		<comment>レディバ</comment>
+		<language name="JPN">10,8kg</language>
+		<language name="JPN_KANJI">10,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_166_000">
+		<comment>レディアン</comment>
+		<language name="JPN">35,6kg</language>
+		<language name="JPN_KANJI">35,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_167_000">
+		<comment>イトマル</comment>
+		<language name="JPN">8,5kg</language>
+		<language name="JPN_KANJI">8,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_168_000">
+		<comment>アリアドス</comment>
+		<language name="JPN">33,5kg</language>
+		<language name="JPN_KANJI">33,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_169_000">
+		<comment>クロバット</comment>
+		<language name="JPN">75,0kg</language>
+		<language name="JPN_KANJI">75,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_170_000">
+		<comment>チョンチー</comment>
+		<language name="JPN">12,0kg</language>
+		<language name="JPN_KANJI">12,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_171_000">
+		<comment>ランターン</comment>
+		<language name="JPN">22,5kg</language>
+		<language name="JPN_KANJI">22,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_172_000">
+		<comment>ピチュー</comment>
+		<language name="JPN">2,0kg</language>
+		<language name="JPN_KANJI">2,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_173_000">
+		<comment>ピィ</comment>
+		<language name="JPN">3,0kg</language>
+		<language name="JPN_KANJI">3,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_174_000">
+		<comment>ププリン</comment>
+		<language name="JPN">1,0kg</language>
+		<language name="JPN_KANJI">1,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_175_000">
+		<comment>トゲピー</comment>
+		<language name="JPN">1,5kg</language>
+		<language name="JPN_KANJI">1,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_176_000">
+		<comment>トゲチック</comment>
+		<language name="JPN">3,2kg</language>
+		<language name="JPN_KANJI">3,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_177_000">
+		<comment>ネイティ</comment>
+		<language name="JPN">2,0kg</language>
+		<language name="JPN_KANJI">2,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_178_000">
+		<comment>ネイティオ</comment>
+		<language name="JPN">15,0kg</language>
+		<language name="JPN_KANJI">15,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_179_000">
+		<comment>メリープ</comment>
+		<language name="JPN">7,8kg</language>
+		<language name="JPN_KANJI">7,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_180_000">
+		<comment>モココ</comment>
+		<language name="JPN">13,3kg</language>
+		<language name="JPN_KANJI">13,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_181_000">
+		<comment>デンリュウ</comment>
+		<language name="JPN">61,5kg</language>
+		<language name="JPN_KANJI">61,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_182_000">
+		<comment>キレイハナ</comment>
+		<language name="JPN">5,8kg</language>
+		<language name="JPN_KANJI">5,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_183_000">
+		<comment>マリル</comment>
+		<language name="JPN">8,5kg</language>
+		<language name="JPN_KANJI">8,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_184_000">
+		<comment>マリルリ</comment>
+		<language name="JPN">28,5kg</language>
+		<language name="JPN_KANJI">28,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_185_000">
+		<comment>ウソッキー</comment>
+		<language name="JPN">38,0kg</language>
+		<language name="JPN_KANJI">38,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_186_000">
+		<comment>ニョロトノ</comment>
+		<language name="JPN">33,9kg</language>
+		<language name="JPN_KANJI">33,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_187_000">
+		<comment>ハネッコ</comment>
+		<language name="JPN">0,5kg</language>
+		<language name="JPN_KANJI">0,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_188_000">
+		<comment>ポポッコ</comment>
+		<language name="JPN">1,0kg</language>
+		<language name="JPN_KANJI">1,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_189_000">
+		<comment>ワタッコ</comment>
+		<language name="JPN">3,0kg</language>
+		<language name="JPN_KANJI">3,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_190_000">
+		<comment>エイパム</comment>
+		<language name="JPN">11,5kg</language>
+		<language name="JPN_KANJI">11,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_191_000">
+		<comment>ヒマナッツ</comment>
+		<language name="JPN">1,8kg</language>
+		<language name="JPN_KANJI">1,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_192_000">
+		<comment>キマワリ</comment>
+		<language name="JPN">8,5kg</language>
+		<language name="JPN_KANJI">8,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_193_000">
+		<comment>ヤンヤンマ</comment>
+		<language name="JPN">38,0kg</language>
+		<language name="JPN_KANJI">38,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_194_000">
+		<comment>ウパー</comment>
+		<language name="JPN">8,5kg</language>
+		<language name="JPN_KANJI">8,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_195_000">
+		<comment>ヌオー</comment>
+		<language name="JPN">75,0kg</language>
+		<language name="JPN_KANJI">75,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_196_000">
+		<comment>エーフィ</comment>
+		<language name="JPN">26,5kg</language>
+		<language name="JPN_KANJI">26,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_197_000">
+		<comment>ブラッキー</comment>
+		<language name="JPN">27,0kg</language>
+		<language name="JPN_KANJI">27,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_198_000">
+		<comment>ヤミカラス</comment>
+		<language name="JPN">2,1kg</language>
+		<language name="JPN_KANJI">2,1kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_199_000">
+		<comment>ヤドキング</comment>
+		<language name="JPN">79,5kg</language>
+		<language name="JPN_KANJI">79,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_200_000">
+		<comment>ムウマ</comment>
+		<language name="JPN">1,0kg</language>
+		<language name="JPN_KANJI">1,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_201_000">
+		<comment>アンノーン</comment>
+		<language name="JPN">5,0kg</language>
+		<language name="JPN_KANJI">5,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_202_000">
+		<comment>ソーナンス</comment>
+		<language name="JPN">28,5kg</language>
+		<language name="JPN_KANJI">28,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_203_000">
+		<comment>キリンリキ</comment>
+		<language name="JPN">41,5kg</language>
+		<language name="JPN_KANJI">41,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_204_000">
+		<comment>クヌギダマ</comment>
+		<language name="JPN">7,2kg</language>
+		<language name="JPN_KANJI">7,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_205_000">
+		<comment>フォレトス</comment>
+		<language name="JPN">125,8kg</language>
+		<language name="JPN_KANJI">125,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_206_000">
+		<comment>ノコッチ</comment>
+		<language name="JPN">14,0kg</language>
+		<language name="JPN_KANJI">14,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_207_000">
+		<comment>グライガー</comment>
+		<language name="JPN">64,8kg</language>
+		<language name="JPN_KANJI">64,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_208_000">
+		<comment>ハガネール</comment>
+		<language name="JPN">400,0kg</language>
+		<language name="JPN_KANJI">400,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_209_000">
+		<comment>ブルー</comment>
+		<language name="JPN">7,8kg</language>
+		<language name="JPN_KANJI">7,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_210_000">
+		<comment>グランブル</comment>
+		<language name="JPN">48,7kg</language>
+		<language name="JPN_KANJI">48,7kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_211_000">
+		<comment>ハリーセン</comment>
+		<language name="JPN">3,9kg</language>
+		<language name="JPN_KANJI">3,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_212_000">
+		<comment>ハッサム</comment>
+		<language name="JPN">118,0kg</language>
+		<language name="JPN_KANJI">118,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_213_000">
+		<comment>ツボツボ</comment>
+		<language name="JPN">20,5kg</language>
+		<language name="JPN_KANJI">20,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_214_000">
+		<comment>ヘラクロス</comment>
+		<language name="JPN">54,0kg</language>
+		<language name="JPN_KANJI">54,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_215_000">
+		<comment>ニューラ</comment>
+		<language name="JPN">28,0kg</language>
+		<language name="JPN_KANJI">28,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_216_000">
+		<comment>ヒメグマ</comment>
+		<language name="JPN">8,8kg</language>
+		<language name="JPN_KANJI">8,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_217_000">
+		<comment>リングマ</comment>
+		<language name="JPN">125,8kg</language>
+		<language name="JPN_KANJI">125,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_218_000">
+		<comment>マグマッグ</comment>
+		<language name="JPN">35,0kg</language>
+		<language name="JPN_KANJI">35,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_219_000">
+		<comment>マグカルゴ</comment>
+		<language name="JPN">55,0kg</language>
+		<language name="JPN_KANJI">55,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_220_000">
+		<comment>ウリムー</comment>
+		<language name="JPN">6,5kg</language>
+		<language name="JPN_KANJI">6,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_221_000">
+		<comment>イノムー</comment>
+		<language name="JPN">55,8kg</language>
+		<language name="JPN_KANJI">55,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_222_000">
+		<comment>サニーゴ</comment>
+		<language name="JPN">5,0kg</language>
+		<language name="JPN_KANJI">5,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_223_000">
+		<comment>テッポウオ</comment>
+		<language name="JPN">12,0kg</language>
+		<language name="JPN_KANJI">12,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_224_000">
+		<comment>オクタン</comment>
+		<language name="JPN">28,5kg</language>
+		<language name="JPN_KANJI">28,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_225_000">
+		<comment>デリバード</comment>
+		<language name="JPN">16,0kg</language>
+		<language name="JPN_KANJI">16,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_226_000">
+		<comment>マンタイン</comment>
+		<language name="JPN">220,0kg</language>
+		<language name="JPN_KANJI">220,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_227_000">
+		<comment>エアームド</comment>
+		<language name="JPN">50,5kg</language>
+		<language name="JPN_KANJI">50,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_228_000">
+		<comment>デルビル</comment>
+		<language name="JPN">10,8kg</language>
+		<language name="JPN_KANJI">10,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_229_000">
+		<comment>ヘルガー</comment>
+		<language name="JPN">35,0kg</language>
+		<language name="JPN_KANJI">35,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_230_000">
+		<comment>キングドラ</comment>
+		<language name="JPN">152,0kg</language>
+		<language name="JPN_KANJI">152,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_231_000">
+		<comment>ゴマゾウ</comment>
+		<language name="JPN">33,5kg</language>
+		<language name="JPN_KANJI">33,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_232_000">
+		<comment>ドンファン</comment>
+		<language name="JPN">120,0kg</language>
+		<language name="JPN_KANJI">120,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_233_000">
+		<comment>ポリゴン２</comment>
+		<language name="JPN">32,5kg</language>
+		<language name="JPN_KANJI">32,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_234_000">
+		<comment>オドシシ</comment>
+		<language name="JPN">71,2kg</language>
+		<language name="JPN_KANJI">71,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_235_000">
+		<comment>ドーブル</comment>
+		<language name="JPN">58,0kg</language>
+		<language name="JPN_KANJI">58,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_236_000">
+		<comment>バルキー</comment>
+		<language name="JPN">21,0kg</language>
+		<language name="JPN_KANJI">21,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_237_000">
+		<comment>カポエラー</comment>
+		<language name="JPN">48,0kg</language>
+		<language name="JPN_KANJI">48,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_238_000">
+		<comment>ムチュール</comment>
+		<language name="JPN">6,0kg</language>
+		<language name="JPN_KANJI">6,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_239_000">
+		<comment>エレキッド</comment>
+		<language name="JPN">23,5kg</language>
+		<language name="JPN_KANJI">23,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_240_000">
+		<comment>ブビィ</comment>
+		<language name="JPN">21,4kg</language>
+		<language name="JPN_KANJI">21,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_241_000">
+		<comment>ミルタンク</comment>
+		<language name="JPN">75,5kg</language>
+		<language name="JPN_KANJI">75,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_242_000">
+		<comment>ハピナス</comment>
+		<language name="JPN">46,8kg</language>
+		<language name="JPN_KANJI">46,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_243_000">
+		<comment>ライコウ</comment>
+		<language name="JPN">178,0kg</language>
+		<language name="JPN_KANJI">178,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_244_000">
+		<comment>エンテイ</comment>
+		<language name="JPN">198,0kg</language>
+		<language name="JPN_KANJI">198,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_245_000">
+		<comment>スイクン</comment>
+		<language name="JPN">187,0kg</language>
+		<language name="JPN_KANJI">187,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_246_000">
+		<comment>ヨーギラス</comment>
+		<language name="JPN">72,0kg</language>
+		<language name="JPN_KANJI">72,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_247_000">
+		<comment>サナギラス</comment>
+		<language name="JPN">152,0kg</language>
+		<language name="JPN_KANJI">152,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_248_000">
+		<comment>バンギラス</comment>
+		<language name="JPN">202,0kg</language>
+		<language name="JPN_KANJI">202,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_249_000">
+		<comment>ルギア</comment>
+		<language name="JPN">216,0kg</language>
+		<language name="JPN_KANJI">216,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_250_000">
+		<comment>ホウオウ</comment>
+		<language name="JPN">199,0kg</language>
+		<language name="JPN_KANJI">199,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_251_000">
+		<comment>セレビィ</comment>
+		<language name="JPN">5,0kg</language>
+		<language name="JPN_KANJI">5,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_252_000">
+		<comment>キモリ</comment>
+		<language name="JPN">5,0kg</language>
+		<language name="JPN_KANJI">5,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_253_000">
+		<comment>ジュプトル</comment>
+		<language name="JPN">21,6kg</language>
+		<language name="JPN_KANJI">21,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_254_000">
+		<comment>ジュカイン</comment>
+		<language name="JPN">52,2kg</language>
+		<language name="JPN_KANJI">52,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_255_000">
+		<comment>アチャモ</comment>
+		<language name="JPN">2,5kg</language>
+		<language name="JPN_KANJI">2,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_256_000">
+		<comment>ワカシャモ</comment>
+		<language name="JPN">19,5kg</language>
+		<language name="JPN_KANJI">19,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_257_000">
+		<comment>バシャーモ</comment>
+		<language name="JPN">52,0kg</language>
+		<language name="JPN_KANJI">52,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_258_000">
+		<comment>ミズゴロウ</comment>
+		<language name="JPN">7,6kg</language>
+		<language name="JPN_KANJI">7,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_259_000">
+		<comment>ヌマクロー</comment>
+		<language name="JPN">28,0kg</language>
+		<language name="JPN_KANJI">28,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_260_000">
+		<comment>ラグラージ</comment>
+		<language name="JPN">81,9kg</language>
+		<language name="JPN_KANJI">81,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_261_000">
+		<comment>ポチエナ</comment>
+		<language name="JPN">13,6kg</language>
+		<language name="JPN_KANJI">13,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_262_000">
+		<comment>グラエナ</comment>
+		<language name="JPN">37,0kg</language>
+		<language name="JPN_KANJI">37,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_263_000">
+		<comment>ジグザグマ</comment>
+		<language name="JPN">17,5kg</language>
+		<language name="JPN_KANJI">17,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_264_000">
+		<comment>マッスグマ</comment>
+		<language name="JPN">32,5kg</language>
+		<language name="JPN_KANJI">32,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_265_000">
+		<comment>ケムッソ</comment>
+		<language name="JPN">3,6kg</language>
+		<language name="JPN_KANJI">3,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_266_000">
+		<comment>カラサリス</comment>
+		<language name="JPN">10,0kg</language>
+		<language name="JPN_KANJI">10,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_267_000">
+		<comment>アゲハント</comment>
+		<language name="JPN">28,4kg</language>
+		<language name="JPN_KANJI">28,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_268_000">
+		<comment>マユルド</comment>
+		<language name="JPN">11,5kg</language>
+		<language name="JPN_KANJI">11,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_269_000">
+		<comment>ドクケイル</comment>
+		<language name="JPN">31,6kg</language>
+		<language name="JPN_KANJI">31,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_270_000">
+		<comment>ハスボー</comment>
+		<language name="JPN">2,6kg</language>
+		<language name="JPN_KANJI">2,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_271_000">
+		<comment>ハスブレロ</comment>
+		<language name="JPN">32,5kg</language>
+		<language name="JPN_KANJI">32,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_272_000">
+		<comment>ルンパッパ</comment>
+		<language name="JPN">55,0kg</language>
+		<language name="JPN_KANJI">55,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_273_000">
+		<comment>タネボー</comment>
+		<language name="JPN">4,0kg</language>
+		<language name="JPN_KANJI">4,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_274_000">
+		<comment>コノハナ</comment>
+		<language name="JPN">28,0kg</language>
+		<language name="JPN_KANJI">28,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_275_000">
+		<comment>ダーテング</comment>
+		<language name="JPN">59,6kg</language>
+		<language name="JPN_KANJI">59,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_276_000">
+		<comment>スバメ</comment>
+		<language name="JPN">2,3kg</language>
+		<language name="JPN_KANJI">2,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_277_000">
+		<comment>オオスバメ</comment>
+		<language name="JPN">19,8kg</language>
+		<language name="JPN_KANJI">19,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_278_000">
+		<comment>キャモメ</comment>
+		<language name="JPN">9,5kg</language>
+		<language name="JPN_KANJI">9,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_279_000">
+		<comment>ペリッパー</comment>
+		<language name="JPN">28,0kg</language>
+		<language name="JPN_KANJI">28,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_280_000">
+		<comment>ラルトス</comment>
+		<language name="JPN">6,6kg</language>
+		<language name="JPN_KANJI">6,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_281_000">
+		<comment>キルリア</comment>
+		<language name="JPN">20,2kg</language>
+		<language name="JPN_KANJI">20,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_282_000">
+		<comment>サーナイト</comment>
+		<language name="JPN">48,4kg</language>
+		<language name="JPN_KANJI">48,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_283_000">
+		<comment>アメタマ</comment>
+		<language name="JPN">1,7kg</language>
+		<language name="JPN_KANJI">1,7kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_284_000">
+		<comment>アメモース</comment>
+		<language name="JPN">3,6kg</language>
+		<language name="JPN_KANJI">3,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_285_000">
+		<comment>キノココ</comment>
+		<language name="JPN">4,5kg</language>
+		<language name="JPN_KANJI">4,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_286_000">
+		<comment>キノガッサ</comment>
+		<language name="JPN">39,2kg</language>
+		<language name="JPN_KANJI">39,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_287_000">
+		<comment>ナマケロ</comment>
+		<language name="JPN">24,0kg</language>
+		<language name="JPN_KANJI">24,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_288_000">
+		<comment>ヤルキモノ</comment>
+		<language name="JPN">46,5kg</language>
+		<language name="JPN_KANJI">46,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_289_000">
+		<comment>ケッキング</comment>
+		<language name="JPN">130,5kg</language>
+		<language name="JPN_KANJI">130,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_290_000">
+		<comment>ツチニン</comment>
+		<language name="JPN">5,5kg</language>
+		<language name="JPN_KANJI">5,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_291_000">
+		<comment>テッカニン</comment>
+		<language name="JPN">12,0kg</language>
+		<language name="JPN_KANJI">12,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_292_000">
+		<comment>ヌケニン</comment>
+		<language name="JPN">1,2kg</language>
+		<language name="JPN_KANJI">1,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_293_000">
+		<comment>ゴニョニョ</comment>
+		<language name="JPN">16,3kg</language>
+		<language name="JPN_KANJI">16,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_294_000">
+		<comment>ドゴーム</comment>
+		<language name="JPN">40,5kg</language>
+		<language name="JPN_KANJI">40,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_295_000">
+		<comment>バクオング</comment>
+		<language name="JPN">84,0kg</language>
+		<language name="JPN_KANJI">84,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_296_000">
+		<comment>マクノシタ</comment>
+		<language name="JPN">86,4kg</language>
+		<language name="JPN_KANJI">86,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_297_000">
+		<comment>ハリテヤマ</comment>
+		<language name="JPN">253,8kg</language>
+		<language name="JPN_KANJI">253,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_298_000">
+		<comment>ルリリ</comment>
+		<language name="JPN">2,0kg</language>
+		<language name="JPN_KANJI">2,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_299_000">
+		<comment>ノズパス</comment>
+		<language name="JPN">97,0kg</language>
+		<language name="JPN_KANJI">97,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_300_000">
+		<comment>エネコ</comment>
+		<language name="JPN">11,0kg</language>
+		<language name="JPN_KANJI">11,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_301_000">
+		<comment>エネコロロ</comment>
+		<language name="JPN">32,6kg</language>
+		<language name="JPN_KANJI">32,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_302_000">
+		<comment>ヤミラミ</comment>
+		<language name="JPN">11,0kg</language>
+		<language name="JPN_KANJI">11,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_303_000">
+		<comment>クチート</comment>
+		<language name="JPN">11,5kg</language>
+		<language name="JPN_KANJI">11,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_304_000">
+		<comment>ココドラ</comment>
+		<language name="JPN">60,0kg</language>
+		<language name="JPN_KANJI">60,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_305_000">
+		<comment>コドラ</comment>
+		<language name="JPN">120,0kg</language>
+		<language name="JPN_KANJI">120,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_306_000">
+		<comment>ボスゴドラ</comment>
+		<language name="JPN">360,0kg</language>
+		<language name="JPN_KANJI">360,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_307_000">
+		<comment>アサナン</comment>
+		<language name="JPN">11,2kg</language>
+		<language name="JPN_KANJI">11,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_308_000">
+		<comment>チャーレム</comment>
+		<language name="JPN">31,5kg</language>
+		<language name="JPN_KANJI">31,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_309_000">
+		<comment>ラクライ</comment>
+		<language name="JPN">15,2kg</language>
+		<language name="JPN_KANJI">15,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_310_000">
+		<comment>ライボルト</comment>
+		<language name="JPN">40,2kg</language>
+		<language name="JPN_KANJI">40,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_311_000">
+		<comment>プラスル</comment>
+		<language name="JPN">4,2kg</language>
+		<language name="JPN_KANJI">4,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_312_000">
+		<comment>マイナン</comment>
+		<language name="JPN">4,2kg</language>
+		<language name="JPN_KANJI">4,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_313_000">
+		<comment>バルビート</comment>
+		<language name="JPN">17,7kg</language>
+		<language name="JPN_KANJI">17,7kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_314_000">
+		<comment>イルミーゼ</comment>
+		<language name="JPN">17,7kg</language>
+		<language name="JPN_KANJI">17,7kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_315_000">
+		<comment>ロゼリア</comment>
+		<language name="JPN">2,0kg</language>
+		<language name="JPN_KANJI">2,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_316_000">
+		<comment>ゴクリン</comment>
+		<language name="JPN">10,3kg</language>
+		<language name="JPN_KANJI">10,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_317_000">
+		<comment>マルノーム</comment>
+		<language name="JPN">80,0kg</language>
+		<language name="JPN_KANJI">80,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_318_000">
+		<comment>キバニア</comment>
+		<language name="JPN">20,8kg</language>
+		<language name="JPN_KANJI">20,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_319_000">
+		<comment>サメハダー</comment>
+		<language name="JPN">88,8kg</language>
+		<language name="JPN_KANJI">88,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_320_000">
+		<comment>ホエルコ</comment>
+		<language name="JPN">130,0kg</language>
+		<language name="JPN_KANJI">130,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_321_000">
+		<comment>ホエルオー</comment>
+		<language name="JPN">398,0kg</language>
+		<language name="JPN_KANJI">398,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_322_000">
+		<comment>ドンメル</comment>
+		<language name="JPN">24,0kg</language>
+		<language name="JPN_KANJI">24,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_323_000">
+		<comment>バクーダ</comment>
+		<language name="JPN">220,0kg</language>
+		<language name="JPN_KANJI">220,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_324_000">
+		<comment>コータス</comment>
+		<language name="JPN">80,4kg</language>
+		<language name="JPN_KANJI">80,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_325_000">
+		<comment>バネブー</comment>
+		<language name="JPN">30,6kg</language>
+		<language name="JPN_KANJI">30,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_326_000">
+		<comment>ブーピッグ</comment>
+		<language name="JPN">71,5kg</language>
+		<language name="JPN_KANJI">71,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_327_000">
+		<comment>パッチール</comment>
+		<language name="JPN">5,0kg</language>
+		<language name="JPN_KANJI">5,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_328_000">
+		<comment>ナックラー</comment>
+		<language name="JPN">15,0kg</language>
+		<language name="JPN_KANJI">15,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_329_000">
+		<comment>ビブラーバ</comment>
+		<language name="JPN">15,3kg</language>
+		<language name="JPN_KANJI">15,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_330_000">
+		<comment>フライゴン</comment>
+		<language name="JPN">82,0kg</language>
+		<language name="JPN_KANJI">82,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_331_000">
+		<comment>サボネア</comment>
+		<language name="JPN">51,3kg</language>
+		<language name="JPN_KANJI">51,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_332_000">
+		<comment>ノクタス</comment>
+		<language name="JPN">77,4kg</language>
+		<language name="JPN_KANJI">77,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_333_000">
+		<comment>チルット</comment>
+		<language name="JPN">1,2kg</language>
+		<language name="JPN_KANJI">1,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_334_000">
+		<comment>チルタリス</comment>
+		<language name="JPN">20,6kg</language>
+		<language name="JPN_KANJI">20,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_335_000">
+		<comment>ザングース</comment>
+		<language name="JPN">40,3kg</language>
+		<language name="JPN_KANJI">40,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_336_000">
+		<comment>ハブネーク</comment>
+		<language name="JPN">52,5kg</language>
+		<language name="JPN_KANJI">52,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_337_000">
+		<comment>ルナトーン</comment>
+		<language name="JPN">168,0kg</language>
+		<language name="JPN_KANJI">168,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_338_000">
+		<comment>ソルロック</comment>
+		<language name="JPN">154,0kg</language>
+		<language name="JPN_KANJI">154,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_339_000">
+		<comment>ドジョッチ</comment>
+		<language name="JPN">1,9kg</language>
+		<language name="JPN_KANJI">1,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_340_000">
+		<comment>ナマズン</comment>
+		<language name="JPN">23,6kg</language>
+		<language name="JPN_KANJI">23,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_341_000">
+		<comment>ヘイガニ</comment>
+		<language name="JPN">11,5kg</language>
+		<language name="JPN_KANJI">11,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_342_000">
+		<comment>シザリガー</comment>
+		<language name="JPN">32,8kg</language>
+		<language name="JPN_KANJI">32,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_343_000">
+		<comment>ヤジロン</comment>
+		<language name="JPN">21,5kg</language>
+		<language name="JPN_KANJI">21,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_344_000">
+		<comment>ネンドール</comment>
+		<language name="JPN">108,0kg</language>
+		<language name="JPN_KANJI">108,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_345_000">
+		<comment>リリーラ</comment>
+		<language name="JPN">23,8kg</language>
+		<language name="JPN_KANJI">23,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_346_000">
+		<comment>ユレイドル</comment>
+		<language name="JPN">60,4kg</language>
+		<language name="JPN_KANJI">60,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_347_000">
+		<comment>アノプス</comment>
+		<language name="JPN">12,5kg</language>
+		<language name="JPN_KANJI">12,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_348_000">
+		<comment>アーマルド</comment>
+		<language name="JPN">68,2kg</language>
+		<language name="JPN_KANJI">68,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_349_000">
+		<comment>ヒンバス</comment>
+		<language name="JPN">7,4kg</language>
+		<language name="JPN_KANJI">7,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_350_000">
+		<comment>ミロカロス</comment>
+		<language name="JPN">162,0kg</language>
+		<language name="JPN_KANJI">162,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_351_000">
+		<comment>ポワルン</comment>
+		<language name="JPN">0,8kg</language>
+		<language name="JPN_KANJI">0,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_352_000">
+		<comment>カクレオン</comment>
+		<language name="JPN">22,0kg</language>
+		<language name="JPN_KANJI">22,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_353_000">
+		<comment>カゲボウズ</comment>
+		<language name="JPN">2,3kg</language>
+		<language name="JPN_KANJI">2,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_354_000">
+		<comment>ジュペッタ</comment>
+		<language name="JPN">12,5kg</language>
+		<language name="JPN_KANJI">12,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_355_000">
+		<comment>ヨマワル</comment>
+		<language name="JPN">15,0kg</language>
+		<language name="JPN_KANJI">15,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_356_000">
+		<comment>サマヨール</comment>
+		<language name="JPN">30,6kg</language>
+		<language name="JPN_KANJI">30,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_357_000">
+		<comment>トロピウス</comment>
+		<language name="JPN">100,0kg</language>
+		<language name="JPN_KANJI">100,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_358_000">
+		<comment>チリーン</comment>
+		<language name="JPN">1,0kg</language>
+		<language name="JPN_KANJI">1,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_359_000">
+		<comment>アブソル</comment>
+		<language name="JPN">47,0kg</language>
+		<language name="JPN_KANJI">47,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_360_000">
+		<comment>ソーナノ</comment>
+		<language name="JPN">14,0kg</language>
+		<language name="JPN_KANJI">14,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_361_000">
+		<comment>ユキワラシ</comment>
+		<language name="JPN">16,8kg</language>
+		<language name="JPN_KANJI">16,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_362_000">
+		<comment>オニゴーリ</comment>
+		<language name="JPN">256,5kg</language>
+		<language name="JPN_KANJI">256,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_363_000">
+		<comment>タマザラシ</comment>
+		<language name="JPN">39,5kg</language>
+		<language name="JPN_KANJI">39,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_364_000">
+		<comment>トドグラー</comment>
+		<language name="JPN">87,6kg</language>
+		<language name="JPN_KANJI">87,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_365_000">
+		<comment>トドゼルガ</comment>
+		<language name="JPN">150,6kg</language>
+		<language name="JPN_KANJI">150,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_366_000">
+		<comment>パールル</comment>
+		<language name="JPN">52,5kg</language>
+		<language name="JPN_KANJI">52,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_367_000">
+		<comment>ハンテール</comment>
+		<language name="JPN">27,0kg</language>
+		<language name="JPN_KANJI">27,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_368_000">
+		<comment>サクラビス</comment>
+		<language name="JPN">22,6kg</language>
+		<language name="JPN_KANJI">22,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_369_000">
+		<comment>ジーランス</comment>
+		<language name="JPN">23,4kg</language>
+		<language name="JPN_KANJI">23,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_370_000">
+		<comment>ラブカス</comment>
+		<language name="JPN">8,7kg</language>
+		<language name="JPN_KANJI">8,7kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_371_000">
+		<comment>タツベイ</comment>
+		<language name="JPN">42,1kg</language>
+		<language name="JPN_KANJI">42,1kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_372_000">
+		<comment>コモルー</comment>
+		<language name="JPN">110,5kg</language>
+		<language name="JPN_KANJI">110,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_373_000">
+		<comment>ボーマンダ</comment>
+		<language name="JPN">102,6kg</language>
+		<language name="JPN_KANJI">102,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_374_000">
+		<comment>ダンバル</comment>
+		<language name="JPN">95,2kg</language>
+		<language name="JPN_KANJI">95,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_375_000">
+		<comment>メタング</comment>
+		<language name="JPN">202,5kg</language>
+		<language name="JPN_KANJI">202,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_376_000">
+		<comment>メタグロス</comment>
+		<language name="JPN">550,0kg</language>
+		<language name="JPN_KANJI">550,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_377_000">
+		<comment>レジロック</comment>
+		<language name="JPN">230,0kg</language>
+		<language name="JPN_KANJI">230,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_378_000">
+		<comment>レジアイス</comment>
+		<language name="JPN">175,0kg</language>
+		<language name="JPN_KANJI">175,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_379_000">
+		<comment>レジスチル</comment>
+		<language name="JPN">205,0kg</language>
+		<language name="JPN_KANJI">205,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_380_000">
+		<comment>ラティアス</comment>
+		<language name="JPN">40,0kg</language>
+		<language name="JPN_KANJI">40,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_381_000">
+		<comment>ラティオス</comment>
+		<language name="JPN">60,0kg</language>
+		<language name="JPN_KANJI">60,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_382_000">
+		<comment>カイオーガ</comment>
+		<language name="JPN">352,0kg</language>
+		<language name="JPN_KANJI">352,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_383_000">
+		<comment>グラードン</comment>
+		<language name="JPN">950,0kg</language>
+		<language name="JPN_KANJI">950,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_384_000">
+		<comment>レックウザ</comment>
+		<language name="JPN">206,5kg</language>
+		<language name="JPN_KANJI">206,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_385_000">
+		<comment>ジラーチ</comment>
+		<language name="JPN">1,1kg</language>
+		<language name="JPN_KANJI">1,1kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_386_000">
+		<comment>デオキシス</comment>
+		<language name="JPN">60,8kg</language>
+		<language name="JPN_KANJI">60,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_387_000">
+		<comment>ナエトル</comment>
+		<language name="JPN">10,2kg</language>
+		<language name="JPN_KANJI">10,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_388_000">
+		<comment>ハヤシガメ</comment>
+		<language name="JPN">97,0kg</language>
+		<language name="JPN_KANJI">97,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_389_000">
+		<comment>ドダイトス</comment>
+		<language name="JPN">310,0kg</language>
+		<language name="JPN_KANJI">310,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_390_000">
+		<comment>ヒコザル</comment>
+		<language name="JPN">6,2kg</language>
+		<language name="JPN_KANJI">6,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_391_000">
+		<comment>モウカザル</comment>
+		<language name="JPN">22,0kg</language>
+		<language name="JPN_KANJI">22,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_392_000">
+		<comment>ゴウカザル</comment>
+		<language name="JPN">55,0kg</language>
+		<language name="JPN_KANJI">55,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_393_000">
+		<comment>ポッチャマ</comment>
+		<language name="JPN">5,2kg</language>
+		<language name="JPN_KANJI">5,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_394_000">
+		<comment>ポッタイシ</comment>
+		<language name="JPN">23,0kg</language>
+		<language name="JPN_KANJI">23,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_395_000">
+		<comment>エンペルト</comment>
+		<language name="JPN">84,5kg</language>
+		<language name="JPN_KANJI">84,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_396_000">
+		<comment>ムックル</comment>
+		<language name="JPN">2,0kg</language>
+		<language name="JPN_KANJI">2,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_397_000">
+		<comment>ムクバード</comment>
+		<language name="JPN">15,5kg</language>
+		<language name="JPN_KANJI">15,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_398_000">
+		<comment>ムクホーク</comment>
+		<language name="JPN">24,9kg</language>
+		<language name="JPN_KANJI">24,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_399_000">
+		<comment>ビッパ</comment>
+		<language name="JPN">20,0kg</language>
+		<language name="JPN_KANJI">20,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_400_000">
+		<comment>ビーダル</comment>
+		<language name="JPN">31,5kg</language>
+		<language name="JPN_KANJI">31,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_401_000">
+		<comment>コロボーシ</comment>
+		<language name="JPN">2,2kg</language>
+		<language name="JPN_KANJI">2,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_402_000">
+		<comment>コロトック</comment>
+		<language name="JPN">25,5kg</language>
+		<language name="JPN_KANJI">25,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_403_000">
+		<comment>コリンク</comment>
+		<language name="JPN">9,5kg</language>
+		<language name="JPN_KANJI">9,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_404_000">
+		<comment>ルクシオ</comment>
+		<language name="JPN">30,5kg</language>
+		<language name="JPN_KANJI">30,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_405_000">
+		<comment>レントラー</comment>
+		<language name="JPN">42,0kg</language>
+		<language name="JPN_KANJI">42,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_406_000">
+		<comment>スボミー</comment>
+		<language name="JPN">1,2kg</language>
+		<language name="JPN_KANJI">1,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_407_000">
+		<comment>ロズレイド</comment>
+		<language name="JPN">14,5kg</language>
+		<language name="JPN_KANJI">14,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_408_000">
+		<comment>ズガイドス</comment>
+		<language name="JPN">31,5kg</language>
+		<language name="JPN_KANJI">31,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_409_000">
+		<comment>ラムパルド</comment>
+		<language name="JPN">102,5kg</language>
+		<language name="JPN_KANJI">102,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_410_000">
+		<comment>タテトプス</comment>
+		<language name="JPN">57,0kg</language>
+		<language name="JPN_KANJI">57,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_411_000">
+		<comment>トリデプス</comment>
+		<language name="JPN">149,5kg</language>
+		<language name="JPN_KANJI">149,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_412_000">
+		<comment>ミノムッチ</comment>
+		<language name="JPN">3,4kg</language>
+		<language name="JPN_KANJI">3,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_413_000">
+		<comment>ミノマダム</comment>
+		<language name="JPN">6,5kg</language>
+		<language name="JPN_KANJI">6,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_414_000">
+		<comment>ガーメイル</comment>
+		<language name="JPN">23,3kg</language>
+		<language name="JPN_KANJI">23,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_415_000">
+		<comment>ミツハニー</comment>
+		<language name="JPN">5,5kg</language>
+		<language name="JPN_KANJI">5,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_416_000">
+		<comment>ビークイン</comment>
+		<language name="JPN">38,5kg</language>
+		<language name="JPN_KANJI">38,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_417_000">
+		<comment>パチリス</comment>
+		<language name="JPN">3,9kg</language>
+		<language name="JPN_KANJI">3,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_418_000">
+		<comment>ブイゼル</comment>
+		<language name="JPN">29,5kg</language>
+		<language name="JPN_KANJI">29,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_419_000">
+		<comment>フローゼル</comment>
+		<language name="JPN">33,5kg</language>
+		<language name="JPN_KANJI">33,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_420_000">
+		<comment>チェリンボ</comment>
+		<language name="JPN">3,3kg</language>
+		<language name="JPN_KANJI">3,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_421_000">
+		<comment>チェリム</comment>
+		<language name="JPN">9,3kg</language>
+		<language name="JPN_KANJI">9,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_422_000">
+		<comment>カラナクシ</comment>
+		<language name="JPN">6,3kg</language>
+		<language name="JPN_KANJI">6,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_423_000">
+		<comment>トリトドン</comment>
+		<language name="JPN">29,9kg</language>
+		<language name="JPN_KANJI">29,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_424_000">
+		<comment>エテボース</comment>
+		<language name="JPN">20,3kg</language>
+		<language name="JPN_KANJI">20,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_425_000">
+		<comment>フワンテ</comment>
+		<language name="JPN">1,2kg</language>
+		<language name="JPN_KANJI">1,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_426_000">
+		<comment>フワライド</comment>
+		<language name="JPN">15,0kg</language>
+		<language name="JPN_KANJI">15,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_427_000">
+		<comment>ミミロル</comment>
+		<language name="JPN">5,5kg</language>
+		<language name="JPN_KANJI">5,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_428_000">
+		<comment>ミミロップ</comment>
+		<language name="JPN">33,3kg</language>
+		<language name="JPN_KANJI">33,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_429_000">
+		<comment>ムウマージ</comment>
+		<language name="JPN">4,4kg</language>
+		<language name="JPN_KANJI">4,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_430_000">
+		<comment>ドンカラス</comment>
+		<language name="JPN">27,3kg</language>
+		<language name="JPN_KANJI">27,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_431_000">
+		<comment>ニャルマー</comment>
+		<language name="JPN">3,9kg</language>
+		<language name="JPN_KANJI">3,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_432_000">
+		<comment>ブニャット</comment>
+		<language name="JPN">43,8kg</language>
+		<language name="JPN_KANJI">43,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_433_000">
+		<comment>リーシャン</comment>
+		<language name="JPN">0,6kg</language>
+		<language name="JPN_KANJI">0,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_434_000">
+		<comment>スカンプー</comment>
+		<language name="JPN">19,2kg</language>
+		<language name="JPN_KANJI">19,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_435_000">
+		<comment>スカタンク</comment>
+		<language name="JPN">38,0kg</language>
+		<language name="JPN_KANJI">38,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_436_000">
+		<comment>ドーミラー</comment>
+		<language name="JPN">60,5kg</language>
+		<language name="JPN_KANJI">60,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_437_000">
+		<comment>ドータクン</comment>
+		<language name="JPN">187,0kg</language>
+		<language name="JPN_KANJI">187,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_438_000">
+		<comment>ウソハチ</comment>
+		<language name="JPN">15,0kg</language>
+		<language name="JPN_KANJI">15,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_439_000">
+		<comment>マネネ</comment>
+		<language name="JPN">13,0kg</language>
+		<language name="JPN_KANJI">13,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_440_000">
+		<comment>ピンプク</comment>
+		<language name="JPN">24,4kg</language>
+		<language name="JPN_KANJI">24,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_441_000">
+		<comment>ペラップ</comment>
+		<language name="JPN">1,9kg</language>
+		<language name="JPN_KANJI">1,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_442_000">
+		<comment>ミカルゲ</comment>
+		<language name="JPN">108,0kg</language>
+		<language name="JPN_KANJI">108,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_443_000">
+		<comment>フカマル</comment>
+		<language name="JPN">20,5kg</language>
+		<language name="JPN_KANJI">20,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_444_000">
+		<comment>ガバイト</comment>
+		<language name="JPN">56,0kg</language>
+		<language name="JPN_KANJI">56,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_445_000">
+		<comment>ガブリアス</comment>
+		<language name="JPN">95,0kg</language>
+		<language name="JPN_KANJI">95,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_446_000">
+		<comment>ゴンベ</comment>
+		<language name="JPN">105,0kg</language>
+		<language name="JPN_KANJI">105,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_447_000">
+		<comment>リオル</comment>
+		<language name="JPN">20,2kg</language>
+		<language name="JPN_KANJI">20,2kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_448_000">
+		<comment>ルカリオ</comment>
+		<language name="JPN">54,0kg</language>
+		<language name="JPN_KANJI">54,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_449_000">
+		<comment>ヒポポタス</comment>
+		<language name="JPN">49,5kg</language>
+		<language name="JPN_KANJI">49,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_450_000">
+		<comment>カバルドン</comment>
+		<language name="JPN">300,0kg</language>
+		<language name="JPN_KANJI">300,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_451_000">
+		<comment>スコルピ</comment>
+		<language name="JPN">12,0kg</language>
+		<language name="JPN_KANJI">12,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_452_000">
+		<comment>ドラピオン</comment>
+		<language name="JPN">61,5kg</language>
+		<language name="JPN_KANJI">61,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_453_000">
+		<comment>グレッグル</comment>
+		<language name="JPN">23,0kg</language>
+		<language name="JPN_KANJI">23,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_454_000">
+		<comment>ドクロッグ</comment>
+		<language name="JPN">44,4kg</language>
+		<language name="JPN_KANJI">44,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_455_000">
+		<comment>マスキッパ</comment>
+		<language name="JPN">27,0kg</language>
+		<language name="JPN_KANJI">27,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_456_000">
+		<comment>ケイコウオ</comment>
+		<language name="JPN">7,0kg</language>
+		<language name="JPN_KANJI">7,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_457_000">
+		<comment>ネオラント</comment>
+		<language name="JPN">24,0kg</language>
+		<language name="JPN_KANJI">24,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_458_000">
+		<comment>タマンタ</comment>
+		<language name="JPN">65,0kg</language>
+		<language name="JPN_KANJI">65,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_459_000">
+		<comment>ユキカブリ</comment>
+		<language name="JPN">50,5kg</language>
+		<language name="JPN_KANJI">50,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_460_000">
+		<comment>ユキノオー</comment>
+		<language name="JPN">135,5kg</language>
+		<language name="JPN_KANJI">135,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_461_000">
+		<comment>マニューラ</comment>
+		<language name="JPN">34,0kg</language>
+		<language name="JPN_KANJI">34,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_462_000">
+		<comment>ジバコイル</comment>
+		<language name="JPN">180,0kg</language>
+		<language name="JPN_KANJI">180,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_463_000">
+		<comment>ベロベルト</comment>
+		<language name="JPN">140,0kg</language>
+		<language name="JPN_KANJI">140,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_464_000">
+		<comment>ドサイドン</comment>
+		<language name="JPN">282,8kg</language>
+		<language name="JPN_KANJI">282,8kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_465_000">
+		<comment>モジャンボ</comment>
+		<language name="JPN">128,6kg</language>
+		<language name="JPN_KANJI">128,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_466_000">
+		<comment>エレキブル</comment>
+		<language name="JPN">138,6kg</language>
+		<language name="JPN_KANJI">138,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_467_000">
+		<comment>ブーバーン</comment>
+		<language name="JPN">68,0kg</language>
+		<language name="JPN_KANJI">68,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_468_000">
+		<comment>トゲキッス</comment>
+		<language name="JPN">38,0kg</language>
+		<language name="JPN_KANJI">38,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_469_000">
+		<comment>メガヤンマ</comment>
+		<language name="JPN">51,5kg</language>
+		<language name="JPN_KANJI">51,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_470_000">
+		<comment>リーフィア</comment>
+		<language name="JPN">25,5kg</language>
+		<language name="JPN_KANJI">25,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_471_000">
+		<comment>グレイシア</comment>
+		<language name="JPN">25,9kg</language>
+		<language name="JPN_KANJI">25,9kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_472_000">
+		<comment>グライオン</comment>
+		<language name="JPN">42,5kg</language>
+		<language name="JPN_KANJI">42,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_473_000">
+		<comment>マンムー</comment>
+		<language name="JPN">291,0kg</language>
+		<language name="JPN_KANJI">291,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_474_000">
+		<comment>ポリゴンＺ</comment>
+		<language name="JPN">34,0kg</language>
+		<language name="JPN_KANJI">34,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_475_000">
+		<comment>エルレイド</comment>
+		<language name="JPN">52,0kg</language>
+		<language name="JPN_KANJI">52,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_476_000">
+		<comment>ダイノーズ</comment>
+		<language name="JPN">340,0kg</language>
+		<language name="JPN_KANJI">340,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_477_000">
+		<comment>ヨノワール</comment>
+		<language name="JPN">106,6kg</language>
+		<language name="JPN_KANJI">106,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_478_000">
+		<comment>ユキメノコ</comment>
+		<language name="JPN">26,6kg</language>
+		<language name="JPN_KANJI">26,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_479_000">
+		<comment>ロトム</comment>
+		<language name="JPN">0,3kg</language>
+		<language name="JPN_KANJI">0,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_480_000">
+		<comment>ユクシー</comment>
+		<language name="JPN">0,3kg</language>
+		<language name="JPN_KANJI">0,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_481_000">
+		<comment>エムリット</comment>
+		<language name="JPN">0,3kg</language>
+		<language name="JPN_KANJI">0,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_482_000">
+		<comment>アグノム</comment>
+		<language name="JPN">0,3kg</language>
+		<language name="JPN_KANJI">0,3kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_483_000">
+		<comment>ディアルガ</comment>
+		<language name="JPN">683,0kg</language>
+		<language name="JPN_KANJI">683,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_484_000">
+		<comment>パルキア</comment>
+		<language name="JPN">336,0kg</language>
+		<language name="JPN_KANJI">336,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_485_000">
+		<comment>ヒードラン</comment>
+		<language name="JPN">430,0kg</language>
+		<language name="JPN_KANJI">430,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_486_000">
+		<comment>レジギガス</comment>
+		<language name="JPN">420,0kg</language>
+		<language name="JPN_KANJI">420,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_487_000" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ギラティナ：アナザー</comment>
+		<language name="JPN">750,0kg</language>
+		<language name="JPN_KANJI">750,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_488_000">
+		<comment>クレセリア</comment>
+		<language name="JPN">85,6kg</language>
+		<language name="JPN_KANJI">85,6kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_489_000">
+		<comment>フィオネ</comment>
+		<language name="JPN">3,1kg</language>
+		<language name="JPN_KANJI">3,1kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_490_000">
+		<comment>マナフィ</comment>
+		<language name="JPN">1,4kg</language>
+		<language name="JPN_KANJI">1,4kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_491_000">
+		<comment>ダークライ</comment>
+		<language name="JPN">50,5kg</language>
+		<language name="JPN_KANJI">50,5kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_492_000">
+		<comment>シェイミ</comment>
+		<language name="JPN">2,1kg</language>
+		<language name="JPN_KANJI">2,1kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_493_000">
+		<comment>アルセウス</comment>
+		<language name="JPN">320,0kg</language>
+		<language name="JPN_KANJI">320,0kg</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_ITA_487_001" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ギラティナ：オリジン</comment>
+		<language name="JPN">650,0 kg</language>
+		<language name="JPN_KANJI">650,0 kg</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>

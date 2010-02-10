@@ -1,0 +1,3323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="shimoyamada" host="W00184" date="2010-02-10T17:50:26"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="117"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="153"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="ZKN_TYPE_GER_000">
+		<comment>？？？？？ポケモン</comment>
+		<language name="JPN">?????</language>
+		<language name="JPN_KANJI">?????</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_001">
+		<comment>たねポケモン</comment>
+		<language name="JPN">Samen</language>
+		<language name="JPN_KANJI">Samen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_002">
+		<comment>たねポケモン</comment>
+		<language name="JPN">Samen</language>
+		<language name="JPN_KANJI">Samen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_003">
+		<comment>たねポケモン</comment>
+		<language name="JPN">Samen</language>
+		<language name="JPN_KANJI">Samen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_004">
+		<comment>とかげポケモン</comment>
+		<language name="JPN">Echse</language>
+		<language name="JPN_KANJI">Echse</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_005">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">Flamme</language>
+		<language name="JPN_KANJI">Flamme</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_006">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">Flamme</language>
+		<language name="JPN_KANJI">Flamme</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_007">
+		<comment>かめのこポケモン</comment>
+		<language name="JPN">Minikröte</language>
+		<language name="JPN_KANJI">Minikröte</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_008">
+		<comment>かめポケモン</comment>
+		<language name="JPN">Kröte</language>
+		<language name="JPN_KANJI">Kröte</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_009">
+		<comment>こうらポケモン</comment>
+		<language name="JPN">Panzer</language>
+		<language name="JPN_KANJI">Panzer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_010">
+		<comment>いもむしポケモン</comment>
+		<language name="JPN">Wurm</language>
+		<language name="JPN_KANJI">Wurm</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_011">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">Kokon</language>
+		<language name="JPN_KANJI">Kokon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_012">
+		<comment>ちょうちょポケモン</comment>
+		<language name="JPN">Falter</language>
+		<language name="JPN_KANJI">Falter</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_013">
+		<comment>けむしポケモン</comment>
+		<language name="JPN">Raupe</language>
+		<language name="JPN_KANJI">Raupe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_014">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">Kokon</language>
+		<language name="JPN_KANJI">Kokon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_015">
+		<comment>どくばちポケモン</comment>
+		<language name="JPN">Giftbiene</language>
+		<language name="JPN_KANJI">Giftbiene</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_016">
+		<comment>ことりポケモン</comment>
+		<language name="JPN">Kleinvogel</language>
+		<language name="JPN_KANJI">Kleinvogel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_017">
+		<comment>とりポケモン</comment>
+		<language name="JPN">Vogel</language>
+		<language name="JPN_KANJI">Vogel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_018">
+		<comment>とりポケモン</comment>
+		<language name="JPN">Vogel</language>
+		<language name="JPN_KANJI">Vogel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_019">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Maus</language>
+		<language name="JPN_KANJI">Maus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_020">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Maus</language>
+		<language name="JPN_KANJI">Maus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_021">
+		<comment>ことりポケモン</comment>
+		<language name="JPN">Kleinvogel</language>
+		<language name="JPN_KANJI">Kleinvogel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_022">
+		<comment>くちばしポケモン</comment>
+		<language name="JPN">Pickvogel</language>
+		<language name="JPN_KANJI">Pickvogel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_023">
+		<comment>へびポケモン</comment>
+		<language name="JPN">Schlange</language>
+		<language name="JPN_KANJI">Schlange</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_024">
+		<comment>コブラポケモン</comment>
+		<language name="JPN">Kobra</language>
+		<language name="JPN_KANJI">Kobra</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_025">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Maus</language>
+		<language name="JPN_KANJI">Maus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_026">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Maus</language>
+		<language name="JPN_KANJI">Maus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_027">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Maus</language>
+		<language name="JPN_KANJI">Maus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_028">
+		<comment>ねずみポケモン</comment>
+		<language name="JPN">Maus</language>
+		<language name="JPN_KANJI">Maus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_029">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">Giftdorn</language>
+		<language name="JPN_KANJI">Giftdorn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_030">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">Giftdorn</language>
+		<language name="JPN_KANJI">Giftdorn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_031">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">Bohrer</language>
+		<language name="JPN_KANJI">Bohrer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_032">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">Giftdorn</language>
+		<language name="JPN_KANJI">Giftdorn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_033">
+		<comment>どくばりポケモン</comment>
+		<language name="JPN">Giftdorn</language>
+		<language name="JPN_KANJI">Giftdorn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_034">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">Bohrer</language>
+		<language name="JPN_KANJI">Bohrer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_035">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">Fee</language>
+		<language name="JPN_KANJI">Fee</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_036">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">Fee</language>
+		<language name="JPN_KANJI">Fee</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_037">
+		<comment>きつねポケモン</comment>
+		<language name="JPN">Fuchs</language>
+		<language name="JPN_KANJI">Fuchs</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_038">
+		<comment>きつねポケモン</comment>
+		<language name="JPN">Fuchs</language>
+		<language name="JPN_KANJI">Fuchs</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_039">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">Ballon</language>
+		<language name="JPN_KANJI">Ballon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_040">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">Ballon</language>
+		<language name="JPN_KANJI">Ballon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_041">
+		<comment>こうもりポケモン</comment>
+		<language name="JPN">Fledermaus</language>
+		<language name="JPN_KANJI">Fledermaus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_042">
+		<comment>こうもりポケモン</comment>
+		<language name="JPN">Fledermaus</language>
+		<language name="JPN_KANJI">Fledermaus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_043">
+		<comment>ざっそうポケモン</comment>
+		<language name="JPN">Unkraut</language>
+		<language name="JPN_KANJI">Unkraut</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_044">
+		<comment>ざっそうポケモン</comment>
+		<language name="JPN">Unkraut</language>
+		<language name="JPN_KANJI">Unkraut</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_045">
+		<comment>フラワーポケモン</comment>
+		<language name="JPN">Blume</language>
+		<language name="JPN_KANJI">Blume</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_046">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">Pilz</language>
+		<language name="JPN_KANJI">Pilz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_047">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">Pilz</language>
+		<language name="JPN_KANJI">Pilz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_048">
+		<comment>こんちゅうポケモン</comment>
+		<language name="JPN">Insekt</language>
+		<language name="JPN_KANJI">Insekt</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_049">
+		<comment>どくがポケモン</comment>
+		<language name="JPN">Giftmotte</language>
+		<language name="JPN_KANJI">Giftmotte</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_050">
+		<comment>もぐらポケモン</comment>
+		<language name="JPN">Maulwurf</language>
+		<language name="JPN_KANJI">Maulwurf</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_051">
+		<comment>もぐらポケモン</comment>
+		<language name="JPN">Maulwurf</language>
+		<language name="JPN_KANJI">Maulwurf</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_052">
+		<comment>ばけねこポケモン</comment>
+		<language name="JPN">Katze</language>
+		<language name="JPN_KANJI">Katze</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_053">
+		<comment>シャムネコポケモン</comment>
+		<language name="JPN">Rassekatze</language>
+		<language name="JPN_KANJI">Rassekatze</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_054">
+		<comment>あひるポケモン</comment>
+		<language name="JPN">Ente</language>
+		<language name="JPN_KANJI">Ente</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_055">
+		<comment>あひるポケモン</comment>
+		<language name="JPN">Ente</language>
+		<language name="JPN_KANJI">Ente</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_056">
+		<comment>ぶたざるポケモン</comment>
+		<language name="JPN">Schw./ Affe</language>
+		<language name="JPN_KANJI">Schw./ Affe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_057">
+		<comment>ぶたざるポケモン</comment>
+		<language name="JPN">Schw./ Affe</language>
+		<language name="JPN_KANJI">Schw./ Affe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_058">
+		<comment>こいぬポケモン</comment>
+		<language name="JPN">Hund</language>
+		<language name="JPN_KANJI">Hund</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_059">
+		<comment>でんせつポケモン</comment>
+		<language name="JPN">Legendär</language>
+		<language name="JPN_KANJI">Legendär</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_060">
+		<comment>おたまポケモン</comment>
+		<language name="JPN">Kaulquappe</language>
+		<language name="JPN_KANJI">Kaulquappe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_061">
+		<comment>おたまポケモン</comment>
+		<language name="JPN">Kaulquappe</language>
+		<language name="JPN_KANJI">Kaulquappe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_062">
+		<comment>おたまポケモン</comment>
+		<language name="JPN">Kaulquappe</language>
+		<language name="JPN_KANJI">Kaulquappe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_063">
+		<comment>ねんりきポケモン</comment>
+		<language name="JPN">Psi</language>
+		<language name="JPN_KANJI">Psi</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_064">
+		<comment>ねんりきポケモン</comment>
+		<language name="JPN">Psi</language>
+		<language name="JPN_KANJI">Psi</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_065">
+		<comment>ねんりきポケモン</comment>
+		<language name="JPN">Psi</language>
+		<language name="JPN_KANJI">Psi</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_066">
+		<comment>かいりきポケモン</comment>
+		<language name="JPN">Kraftprotz</language>
+		<language name="JPN_KANJI">Kraftprotz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_067">
+		<comment>かいりきポケモン</comment>
+		<language name="JPN">Kraftprotz</language>
+		<language name="JPN_KANJI">Kraftprotz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_068">
+		<comment>かいりきポケモン</comment>
+		<language name="JPN">Kraftprotz</language>
+		<language name="JPN_KANJI">Kraftprotz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_069">
+		<comment>フラワーポケモン</comment>
+		<language name="JPN">Blume</language>
+		<language name="JPN_KANJI">Blume</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_070">
+		<comment>ハエとりポケモン</comment>
+		<language name="JPN">Fliegentot</language>
+		<language name="JPN_KANJI">Fliegentot</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_071">
+		<comment>ハエとりポケモン</comment>
+		<language name="JPN">Fliegentot</language>
+		<language name="JPN_KANJI">Fliegentot</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_072">
+		<comment>くらげポケモン</comment>
+		<language name="JPN">Qualle</language>
+		<language name="JPN_KANJI">Qualle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_073">
+		<comment>くらげポケモン</comment>
+		<language name="JPN">Qualle</language>
+		<language name="JPN_KANJI">Qualle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_074">
+		<comment>がんせきポケモン</comment>
+		<language name="JPN">Gestein</language>
+		<language name="JPN_KANJI">Gestein</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_075">
+		<comment>がんせきポケモン</comment>
+		<language name="JPN">Gestein</language>
+		<language name="JPN_KANJI">Gestein</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_076">
+		<comment>メガトンポケモン</comment>
+		<language name="JPN">Urgestein</language>
+		<language name="JPN_KANJI">Urgestein</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_077">
+		<comment>ひのうまポケモン</comment>
+		<language name="JPN">Feuerpferd</language>
+		<language name="JPN_KANJI">Feuerpferd</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_078">
+		<comment>ひのうまポケモン</comment>
+		<language name="JPN">Feuerpferd</language>
+		<language name="JPN_KANJI">Feuerpferd</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_079">
+		<comment>まぬけポケモン</comment>
+		<language name="JPN">Schnarcher</language>
+		<language name="JPN_KANJI">Schnarcher</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_080">
+		<comment>やどかりポケモン</comment>
+		<language name="JPN">Symbiose</language>
+		<language name="JPN_KANJI">Symbiose</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_081">
+		<comment>じしゃくポケモン</comment>
+		<language name="JPN">Magnet</language>
+		<language name="JPN_KANJI">Magnet</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_082">
+		<comment>じしゃくポケモン</comment>
+		<language name="JPN">Magnet</language>
+		<language name="JPN_KANJI">Magnet</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_083">
+		<comment>かるがもポケモン</comment>
+		<language name="JPN">Wildente</language>
+		<language name="JPN_KANJI">Wildente</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_084">
+		<comment>ふたごどりポケモン</comment>
+		<language name="JPN">Duovogel</language>
+		<language name="JPN_KANJI">Duovogel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_085">
+		<comment>みつごどりポケモン</comment>
+		<language name="JPN">Trivogel</language>
+		<language name="JPN_KANJI">Trivogel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_086">
+		<comment>あしかポケモン</comment>
+		<language name="JPN">Seehund</language>
+		<language name="JPN_KANJI">Seehund</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_087">
+		<comment>あしかポケモン</comment>
+		<language name="JPN">Seehund</language>
+		<language name="JPN_KANJI">Seehund</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_088">
+		<comment>ヘドロポケモン</comment>
+		<language name="JPN">Schlamm</language>
+		<language name="JPN_KANJI">Schlamm</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_089">
+		<comment>ヘドロポケモン</comment>
+		<language name="JPN">Schlamm</language>
+		<language name="JPN_KANJI">Schlamm</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_090">
+		<comment>２まいがいポケモン</comment>
+		<language name="JPN">Muschel</language>
+		<language name="JPN_KANJI">Muschel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_091">
+		<comment>２まいがいポケモン</comment>
+		<language name="JPN">Muschel</language>
+		<language name="JPN_KANJI">Muschel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_092">
+		<comment>ガスじょうポケモン</comment>
+		<language name="JPN">Gas</language>
+		<language name="JPN_KANJI">Gas</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_093">
+		<comment>ガスじょうポケモン</comment>
+		<language name="JPN">Gas</language>
+		<language name="JPN_KANJI">Gas</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_094">
+		<comment>シャドーポケモン</comment>
+		<language name="JPN">Schatten</language>
+		<language name="JPN_KANJI">Schatten</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_095">
+		<comment>いわへびポケモン</comment>
+		<language name="JPN">Felsnatter</language>
+		<language name="JPN_KANJI">Felsnatter</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_096">
+		<comment>さいみんポケモン</comment>
+		<language name="JPN">Hypnose</language>
+		<language name="JPN_KANJI">Hypnose</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_097">
+		<comment>さいみんポケモン</comment>
+		<language name="JPN">Hypnose</language>
+		<language name="JPN_KANJI">Hypnose</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_098">
+		<comment>さわがにポケモン</comment>
+		<language name="JPN">Krabbe</language>
+		<language name="JPN_KANJI">Krabbe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_099">
+		<comment>はさみポケモン</comment>
+		<language name="JPN">Kneifer</language>
+		<language name="JPN_KANJI">Kneifer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_100">
+		<comment>ボールポケモン</comment>
+		<language name="JPN">Ball</language>
+		<language name="JPN_KANJI">Ball</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_101">
+		<comment>ボールポケモン</comment>
+		<language name="JPN">Ball</language>
+		<language name="JPN_KANJI">Ball</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_102">
+		<comment>たまごポケモン</comment>
+		<language name="JPN">Ei</language>
+		<language name="JPN_KANJI">Ei</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_103">
+		<comment>やしのみポケモン</comment>
+		<language name="JPN">Palmfrucht</language>
+		<language name="JPN_KANJI">Palmfrucht</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_104">
+		<comment>こどくポケモン</comment>
+		<language name="JPN">Einsam</language>
+		<language name="JPN_KANJI">Einsam</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_105">
+		<comment>ほねずきポケモン</comment>
+		<language name="JPN">Knochenfan</language>
+		<language name="JPN_KANJI">Knochenfan</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_106">
+		<comment>キックポケモン</comment>
+		<language name="JPN">Kicker</language>
+		<language name="JPN_KANJI">Kicker</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_107">
+		<comment>パンチポケモン</comment>
+		<language name="JPN">Puncher</language>
+		<language name="JPN_KANJI">Puncher</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_108">
+		<comment>なめまわしポケモン</comment>
+		<language name="JPN">Schlecker</language>
+		<language name="JPN_KANJI">Schlecker</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_109">
+		<comment>どくガスポケモン</comment>
+		<language name="JPN">Giftwolke</language>
+		<language name="JPN_KANJI">Giftwolke</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_110">
+		<comment>どくガスポケモン</comment>
+		<language name="JPN">Giftwolke</language>
+		<language name="JPN_KANJI">Giftwolke</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_111">
+		<comment>とげとげポケモン</comment>
+		<language name="JPN">Stachler</language>
+		<language name="JPN_KANJI">Stachler</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_112">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">Bohrer</language>
+		<language name="JPN_KANJI">Bohrer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_113">
+		<comment>たまごポケモン</comment>
+		<language name="JPN">Ei</language>
+		<language name="JPN_KANJI">Ei</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_114">
+		<comment>ツルじょうポケモン</comment>
+		<language name="JPN">Ranke</language>
+		<language name="JPN_KANJI">Ranke</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_115">
+		<comment>おやこポケモン</comment>
+		<language name="JPN">Muttertier</language>
+		<language name="JPN_KANJI">Muttertier</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_116">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Drache</language>
+		<language name="JPN_KANJI">Drache</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_117">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Drache</language>
+		<language name="JPN_KANJI">Drache</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_118">
+		<comment>きんぎょポケモン</comment>
+		<language name="JPN">Goldfisch</language>
+		<language name="JPN_KANJI">Goldfisch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_119">
+		<comment>きんぎょポケモン</comment>
+		<language name="JPN">Goldfisch</language>
+		<language name="JPN_KANJI">Goldfisch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_120">
+		<comment>ほしがたポケモン</comment>
+		<language name="JPN">Sternform</language>
+		<language name="JPN_KANJI">Sternform</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_121">
+		<comment>なぞのポケモン</comment>
+		<language name="JPN">Mysteriös</language>
+		<language name="JPN_KANJI">Mysteriös</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_122">
+		<comment>バリアーポケモン</comment>
+		<language name="JPN">Sperre</language>
+		<language name="JPN_KANJI">Sperre</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_123">
+		<comment>かまきりポケモン</comment>
+		<language name="JPN">Mantis</language>
+		<language name="JPN_KANJI">Mantis</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_124">
+		<comment>ひとがたポケモン</comment>
+		<language name="JPN">Humanotyp</language>
+		<language name="JPN_KANJI">Humanotyp</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_125">
+		<comment>でんげきポケモン</comment>
+		<language name="JPN">Elektro</language>
+		<language name="JPN_KANJI">Elektro</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_126">
+		<comment>ひふきポケモン</comment>
+		<language name="JPN">Brenner</language>
+		<language name="JPN_KANJI">Brenner</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_127">
+		<comment>くわがたポケモン</comment>
+		<language name="JPN">Kneifkäfer</language>
+		<language name="JPN_KANJI">Kneifkäfer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_128">
+		<comment>あばれうしポケモン</comment>
+		<language name="JPN">Wildbulle</language>
+		<language name="JPN_KANJI">Wildbulle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_129">
+		<comment>さかなポケモン</comment>
+		<language name="JPN">Fisch</language>
+		<language name="JPN_KANJI">Fisch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_130">
+		<comment>きょうあくポケモン</comment>
+		<language name="JPN">Grausam</language>
+		<language name="JPN_KANJI">Grausam</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_131">
+		<comment>のりものポケモン</comment>
+		<language name="JPN">Transport</language>
+		<language name="JPN_KANJI">Transport</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_132">
+		<comment>へんしんポケモン</comment>
+		<language name="JPN">Transform</language>
+		<language name="JPN_KANJI">Transform</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_133">
+		<comment>しんかポケモン</comment>
+		<language name="JPN">Evolution</language>
+		<language name="JPN_KANJI">Evolution</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_134">
+		<comment>あわはきポケモン</comment>
+		<language name="JPN">Blubblase</language>
+		<language name="JPN_KANJI">Blubblase</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_135">
+		<comment>かみなりポケモン</comment>
+		<language name="JPN">Blitz</language>
+		<language name="JPN_KANJI">Blitz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_136">
+		<comment>ほのおポケモン</comment>
+		<language name="JPN">Feuer</language>
+		<language name="JPN_KANJI">Feuer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_137">
+		<comment>バーチャルポケモン</comment>
+		<language name="JPN">Virtuell</language>
+		<language name="JPN_KANJI">Virtuell</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_138">
+		<comment>うずまきポケモン</comment>
+		<language name="JPN">Spirale</language>
+		<language name="JPN_KANJI">Spirale</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_139">
+		<comment>うずまきポケモン</comment>
+		<language name="JPN">Spirale</language>
+		<language name="JPN_KANJI">Spirale</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_140">
+		<comment>こうらポケモン</comment>
+		<language name="JPN">Schaltier</language>
+		<language name="JPN_KANJI">Schaltier</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_141">
+		<comment>こうらポケモン</comment>
+		<language name="JPN">Schaltier</language>
+		<language name="JPN_KANJI">Schaltier</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_142">
+		<comment>かせきポケモン</comment>
+		<language name="JPN">Fossil</language>
+		<language name="JPN_KANJI">Fossil</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_143">
+		<comment>いねむりポケモン</comment>
+		<language name="JPN">Tagträumer</language>
+		<language name="JPN_KANJI">Tagträumer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_144">
+		<comment>れいとうポケモン</comment>
+		<language name="JPN">Eis</language>
+		<language name="JPN_KANJI">Eis</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_145">
+		<comment>でんげきポケモン</comment>
+		<language name="JPN">Elektro</language>
+		<language name="JPN_KANJI">Elektro</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_146">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">Flamme</language>
+		<language name="JPN_KANJI">Flamme</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_147">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Drache</language>
+		<language name="JPN_KANJI">Drache</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_148">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Drache</language>
+		<language name="JPN_KANJI">Drache</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_149">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Drache</language>
+		<language name="JPN_KANJI">Drache</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_150">
+		<comment>いでんしポケモン</comment>
+		<language name="JPN">Genmutant</language>
+		<language name="JPN_KANJI">Genmutant</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_151">
+		<comment>しんしゅポケモン</comment>
+		<language name="JPN">Neue Art</language>
+		<language name="JPN_KANJI">Neue Art</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_152">
+		<comment>はっぱポケモン</comment>
+		<language name="JPN">Laub</language>
+		<language name="JPN_KANJI">Laub</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_153">
+		<comment>はっぱポケモン</comment>
+		<language name="JPN">Laub</language>
+		<language name="JPN_KANJI">Laub</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_154">
+		<comment>ハーブポケモン</comment>
+		<language name="JPN">Kräuter</language>
+		<language name="JPN_KANJI">Kräuter</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_155">
+		<comment>ひねずみポケモン</comment>
+		<language name="JPN">Feuermaus</language>
+		<language name="JPN_KANJI">Feuermaus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_156">
+		<comment>かざんポケモン</comment>
+		<language name="JPN">Vulkan</language>
+		<language name="JPN_KANJI">Vulkan</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_157">
+		<comment>かざんポケモン</comment>
+		<language name="JPN">Vulkan</language>
+		<language name="JPN_KANJI">Vulkan</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_158">
+		<comment>おおあごポケモン</comment>
+		<language name="JPN">Großmaul</language>
+		<language name="JPN_KANJI">Großmaul</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_159">
+		<comment>おおあごポケモン</comment>
+		<language name="JPN">Großmaul</language>
+		<language name="JPN_KANJI">Großmaul</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_160">
+		<comment>おおあごポケモン</comment>
+		<language name="JPN">Großmaul</language>
+		<language name="JPN_KANJI">Großmaul</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_161">
+		<comment>みはりポケモン</comment>
+		<language name="JPN">Späher</language>
+		<language name="JPN_KANJI">Späher</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_162">
+		<comment>どうながポケモン</comment>
+		<language name="JPN">Langleib</language>
+		<language name="JPN_KANJI">Langleib</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_163">
+		<comment>ふくろうポケモン</comment>
+		<language name="JPN">Eule</language>
+		<language name="JPN_KANJI">Eule</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_164">
+		<comment>ふくろうポケモン</comment>
+		<language name="JPN">Eule</language>
+		<language name="JPN_KANJI">Eule</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_165">
+		<comment>いつつぼしポケモン</comment>
+		<language name="JPN">Fünf-Punkt</language>
+		<language name="JPN_KANJI">Fünf-Punkt</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_166">
+		<comment>いつつぼしポケモン</comment>
+		<language name="JPN">Fünf-Punkt</language>
+		<language name="JPN_KANJI">Fünf-Punkt</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_167">
+		<comment>いとはきポケモン</comment>
+		<language name="JPN">Fadenwurf</language>
+		<language name="JPN_KANJI">Fadenwurf</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_168">
+		<comment>あしながポケモン</comment>
+		<language name="JPN">Langbein</language>
+		<language name="JPN_KANJI">Langbein</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_169">
+		<comment>こうもりポケモン</comment>
+		<language name="JPN">Fledermaus</language>
+		<language name="JPN_KANJI">Fledermaus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_170">
+		<comment>あんこうポケモン</comment>
+		<language name="JPN">Angler</language>
+		<language name="JPN_KANJI">Angler</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_171">
+		<comment>ライトポケモン</comment>
+		<language name="JPN">Leuchte</language>
+		<language name="JPN_KANJI">Leuchte</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_172">
+		<comment>こねずみポケモン</comment>
+		<language name="JPN">Babymaus</language>
+		<language name="JPN_KANJI">Babymaus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_173">
+		<comment>ほしがたポケモン</comment>
+		<language name="JPN">Sternform</language>
+		<language name="JPN_KANJI">Sternform</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_174">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">Ballon</language>
+		<language name="JPN_KANJI">Ballon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_175">
+		<comment>はりたまポケモン</comment>
+		<language name="JPN">Zackenball</language>
+		<language name="JPN_KANJI">Zackenball</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_176">
+		<comment>しあわせポケモン</comment>
+		<language name="JPN">Freude</language>
+		<language name="JPN_KANJI">Freude</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_177">
+		<comment>ことりポケモン</comment>
+		<language name="JPN">Kleinvogel</language>
+		<language name="JPN_KANJI">Kleinvogel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_178">
+		<comment>せいれいポケモン</comment>
+		<language name="JPN">Mystik</language>
+		<language name="JPN_KANJI">Mystik</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_179">
+		<comment>わたげポケモン</comment>
+		<language name="JPN">Wolle</language>
+		<language name="JPN_KANJI">Wolle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_180">
+		<comment>わたげポケモン</comment>
+		<language name="JPN">Wolle</language>
+		<language name="JPN_KANJI">Wolle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_181">
+		<comment>ライトポケモン</comment>
+		<language name="JPN">Leuchte</language>
+		<language name="JPN_KANJI">Leuchte</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_182">
+		<comment>フラワーポケモン</comment>
+		<language name="JPN">Blume</language>
+		<language name="JPN_KANJI">Blume</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_183">
+		<comment>みずねずみポケモン</comment>
+		<language name="JPN">Aquamaus</language>
+		<language name="JPN_KANJI">Aquamaus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_184">
+		<comment>みずうさぎポケモン</comment>
+		<language name="JPN">Aquahase</language>
+		<language name="JPN_KANJI">Aquahase</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_185">
+		<comment>まねポケモン</comment>
+		<language name="JPN">Imitation</language>
+		<language name="JPN_KANJI">Imitation</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_186">
+		<comment>かえるポケモン</comment>
+		<language name="JPN">Frosch</language>
+		<language name="JPN_KANJI">Frosch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_187">
+		<comment>わたくさポケモン</comment>
+		<language name="JPN">Löwenzahn</language>
+		<language name="JPN_KANJI">Löwenzahn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_188">
+		<comment>わたくさポケモン</comment>
+		<language name="JPN">Löwenzahn</language>
+		<language name="JPN_KANJI">Löwenzahn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_189">
+		<comment>わたくさポケモン</comment>
+		<language name="JPN">Löwenzahn</language>
+		<language name="JPN_KANJI">Löwenzahn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_190">
+		<comment>おながポケモン</comment>
+		<language name="JPN">Langschweif</language>
+		<language name="JPN_KANJI">Langschweif</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_191">
+		<comment>たねポケモン</comment>
+		<language name="JPN">Samen</language>
+		<language name="JPN_KANJI">Samen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_192">
+		<comment>たいようポケモン</comment>
+		<language name="JPN">Sonne</language>
+		<language name="JPN_KANJI">Sonne</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_193">
+		<comment>うすばねポケモン</comment>
+		<language name="JPN">Libelle</language>
+		<language name="JPN_KANJI">Libelle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_194">
+		<comment>みずうおポケモン</comment>
+		<language name="JPN">Fisch</language>
+		<language name="JPN_KANJI">Fisch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_195">
+		<comment>みずうおポケモン</comment>
+		<language name="JPN">Fisch</language>
+		<language name="JPN_KANJI">Fisch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_196">
+		<comment>たいようポケモン</comment>
+		<language name="JPN">Sonne</language>
+		<language name="JPN_KANJI">Sonne</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_197">
+		<comment>げっこうポケモン</comment>
+		<language name="JPN">Mondschein</language>
+		<language name="JPN_KANJI">Mondschein</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_198">
+		<comment>くらやみポケモン</comment>
+		<language name="JPN">Finsternis</language>
+		<language name="JPN_KANJI">Finsternis</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_199">
+		<comment>おうじゃポケモン</comment>
+		<language name="JPN">Monarch</language>
+		<language name="JPN_KANJI">Monarch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_200">
+		<comment>よなきポケモン</comment>
+		<language name="JPN">Kreischer</language>
+		<language name="JPN_KANJI">Kreischer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_201">
+		<comment>シンボルポケモン</comment>
+		<language name="JPN">Symbol</language>
+		<language name="JPN_KANJI">Symbol</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_202">
+		<comment>がまんポケモン</comment>
+		<language name="JPN">Geduld</language>
+		<language name="JPN_KANJI">Geduld</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_203">
+		<comment>くびながポケモン</comment>
+		<language name="JPN">Langhals</language>
+		<language name="JPN_KANJI">Langhals</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_204">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">Beutelwurm</language>
+		<language name="JPN_KANJI">Beutelwurm</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_205">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">Beutelwurm</language>
+		<language name="JPN_KANJI">Beutelwurm</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_206">
+		<comment>つちへびポケモン</comment>
+		<language name="JPN">Schlange</language>
+		<language name="JPN_KANJI">Schlange</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_207">
+		<comment>とびさそりポケモン</comment>
+		<language name="JPN">Flugskorpi</language>
+		<language name="JPN_KANJI">Flugskorpi</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_208">
+		<comment>てつへびポケモン</comment>
+		<language name="JPN">Stahlboa</language>
+		<language name="JPN_KANJI">Stahlboa</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_209">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">Fee</language>
+		<language name="JPN_KANJI">Fee</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_210">
+		<comment>ようせいポケモン</comment>
+		<language name="JPN">Fee</language>
+		<language name="JPN_KANJI">Fee</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_211">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">Ballon</language>
+		<language name="JPN_KANJI">Ballon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_212">
+		<comment>はさみポケモン</comment>
+		<language name="JPN">Kneifer</language>
+		<language name="JPN_KANJI">Kneifer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_213">
+		<comment>はっこうポケモン</comment>
+		<language name="JPN">Schimmel</language>
+		<language name="JPN_KANJI">Schimmel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_214">
+		<comment>１ぽんヅノポケモン</comment>
+		<language name="JPN">Einzelhorn</language>
+		<language name="JPN_KANJI">Einzelhorn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_215">
+		<comment>かぎづめポケモン</comment>
+		<language name="JPN">Stichklaue</language>
+		<language name="JPN_KANJI">Stichklaue</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_216">
+		<comment>こぐまポケモン</comment>
+		<language name="JPN">Kleinbär</language>
+		<language name="JPN_KANJI">Kleinbär</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_217">
+		<comment>とうみんポケモン</comment>
+		<language name="JPN">Schläfer</language>
+		<language name="JPN_KANJI">Schläfer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_218">
+		<comment>ようがんポケモン</comment>
+		<language name="JPN">Lava</language>
+		<language name="JPN_KANJI">Lava</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_219">
+		<comment>ようがんポケモン</comment>
+		<language name="JPN">Lava</language>
+		<language name="JPN_KANJI">Lava</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_220">
+		<comment>いのぶたポケモン</comment>
+		<language name="JPN">Ferkel</language>
+		<language name="JPN_KANJI">Ferkel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_221">
+		<comment>いのししポケモン</comment>
+		<language name="JPN">Schwein</language>
+		<language name="JPN_KANJI">Schwein</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_222">
+		<comment>さんごポケモン</comment>
+		<language name="JPN">Koralle</language>
+		<language name="JPN_KANJI">Koralle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_223">
+		<comment>ふんしゃポケモン</comment>
+		<language name="JPN">Hochdruck</language>
+		<language name="JPN_KANJI">Hochdruck</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_224">
+		<comment>ふんしゃポケモン</comment>
+		<language name="JPN">Hochdruck</language>
+		<language name="JPN_KANJI">Hochdruck</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_225">
+		<comment>はこびやポケモン</comment>
+		<language name="JPN">Lieferant</language>
+		<language name="JPN_KANJI">Lieferant</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_226">
+		<comment>カイトポケモン</comment>
+		<language name="JPN">Flugrochen</language>
+		<language name="JPN_KANJI">Flugrochen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_227">
+		<comment>よろいどりポケモン</comment>
+		<language name="JPN">Flugstahl</language>
+		<language name="JPN_KANJI">Flugstahl</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_228">
+		<comment>ダークポケモン</comment>
+		<language name="JPN">Hades</language>
+		<language name="JPN_KANJI">Hades</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_229">
+		<comment>ダークポケモン</comment>
+		<language name="JPN">Hades</language>
+		<language name="JPN_KANJI">Hades</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_230">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Drache</language>
+		<language name="JPN_KANJI">Drache</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_231">
+		<comment>ながはなポケモン</comment>
+		<language name="JPN">Langrüssel</language>
+		<language name="JPN_KANJI">Langrüssel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_232">
+		<comment>よろいポケモン</comment>
+		<language name="JPN">Panzer</language>
+		<language name="JPN_KANJI">Panzer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_233">
+		<comment>バーチャルポケモン</comment>
+		<language name="JPN">Virtuell</language>
+		<language name="JPN_KANJI">Virtuell</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_234">
+		<comment>おおツノポケモン</comment>
+		<language name="JPN">Vielender</language>
+		<language name="JPN_KANJI">Vielender</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_235">
+		<comment>えかきポケモン</comment>
+		<language name="JPN">Maler</language>
+		<language name="JPN_KANJI">Maler</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_236">
+		<comment>けんかポケモン</comment>
+		<language name="JPN">Racker</language>
+		<language name="JPN_KANJI">Racker</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_237">
+		<comment>さかだちポケモン</comment>
+		<language name="JPN">Kopfstand</language>
+		<language name="JPN_KANJI">Kopfstand</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_238">
+		<comment>くちづけポケモン</comment>
+		<language name="JPN">Kuss</language>
+		<language name="JPN_KANJI">Kuss</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_239">
+		<comment>でんきポケモン</comment>
+		<language name="JPN">Elektro</language>
+		<language name="JPN_KANJI">Elektro</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_240">
+		<comment>ひだねポケモン</comment>
+		<language name="JPN">Glutherd</language>
+		<language name="JPN_KANJI">Glutherd</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_241">
+		<comment>ちちうしポケモン</comment>
+		<language name="JPN">Milchkuh</language>
+		<language name="JPN_KANJI">Milchkuh</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_242">
+		<comment>しあわせポケモン</comment>
+		<language name="JPN">Freude</language>
+		<language name="JPN_KANJI">Freude</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_243">
+		<comment>いかずちポケモン</comment>
+		<language name="JPN">Donner</language>
+		<language name="JPN_KANJI">Donner</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_244">
+		<comment>かざんポケモン</comment>
+		<language name="JPN">Vulkan</language>
+		<language name="JPN_KANJI">Vulkan</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_245">
+		<comment>オーロラポケモン</comment>
+		<language name="JPN">Polarlicht</language>
+		<language name="JPN_KANJI">Polarlicht</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_246">
+		<comment>いわはだポケモン</comment>
+		<language name="JPN">Felshaut</language>
+		<language name="JPN_KANJI">Felshaut</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_247">
+		<comment>だんがんポケモン</comment>
+		<language name="JPN">Hartschale</language>
+		<language name="JPN_KANJI">Hartschale</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_248">
+		<comment>よろいポケモン</comment>
+		<language name="JPN">Panzer</language>
+		<language name="JPN_KANJI">Panzer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_249">
+		<comment>せんすいポケモン</comment>
+		<language name="JPN">Taucher</language>
+		<language name="JPN_KANJI">Taucher</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_250">
+		<comment>にじいろポケモン</comment>
+		<language name="JPN">Regenbogen</language>
+		<language name="JPN_KANJI">Regenbogen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_251">
+		<comment>ときわたりポケモン</comment>
+		<language name="JPN">Zeitreise</language>
+		<language name="JPN_KANJI">Zeitreise</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_252">
+		<comment>もりトカゲポケモン</comment>
+		<language name="JPN">Waldgecko</language>
+		<language name="JPN_KANJI">Waldgecko</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_253">
+		<comment>もりトカゲポケモン</comment>
+		<language name="JPN">Waldgecko</language>
+		<language name="JPN_KANJI">Waldgecko</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_254">
+		<comment>みつりんポケモン</comment>
+		<language name="JPN">Dschungel</language>
+		<language name="JPN_KANJI">Dschungel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_255">
+		<comment>ひよこポケモン</comment>
+		<language name="JPN">Küken</language>
+		<language name="JPN_KANJI">Küken</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_256">
+		<comment>わかどりポケモン</comment>
+		<language name="JPN">Kleinhahn</language>
+		<language name="JPN_KANJI">Kleinhahn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_257">
+		<comment>もうかポケモン</comment>
+		<language name="JPN">Großbrand</language>
+		<language name="JPN_KANJI">Großbrand</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_258">
+		<comment>ぬまうおポケモン</comment>
+		<language name="JPN">Lehmhüpfer</language>
+		<language name="JPN_KANJI">Lehmhüpfer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_259">
+		<comment>ぬまうおポケモン</comment>
+		<language name="JPN">Lehmhüpfer</language>
+		<language name="JPN_KANJI">Lehmhüpfer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_260">
+		<comment>ぬまうおポケモン</comment>
+		<language name="JPN">Lehmhüpfer</language>
+		<language name="JPN_KANJI">Lehmhüpfer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_261">
+		<comment>かみつきポケモン</comment>
+		<language name="JPN">Biss</language>
+		<language name="JPN_KANJI">Biss</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_262">
+		<comment>かみつきポケモン</comment>
+		<language name="JPN">Biss</language>
+		<language name="JPN_KANJI">Biss</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_263">
+		<comment>まめだぬきポケモン</comment>
+		<language name="JPN">Kleindachs</language>
+		<language name="JPN_KANJI">Kleindachs</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_264">
+		<comment>とっしんポケモン</comment>
+		<language name="JPN">Sprinter</language>
+		<language name="JPN_KANJI">Sprinter</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_265">
+		<comment>いもむしポケモン</comment>
+		<language name="JPN">Wurm</language>
+		<language name="JPN_KANJI">Wurm</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_266">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">Kokon</language>
+		<language name="JPN_KANJI">Kokon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_267">
+		<comment>ちょうちょポケモン</comment>
+		<language name="JPN">Falter</language>
+		<language name="JPN_KANJI">Falter</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_268">
+		<comment>さなぎポケモン</comment>
+		<language name="JPN">Kokon</language>
+		<language name="JPN_KANJI">Kokon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_269">
+		<comment>どくがポケモン</comment>
+		<language name="JPN">Giftmotte</language>
+		<language name="JPN_KANJI">Giftmotte</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_270">
+		<comment>うきくさポケモン</comment>
+		<language name="JPN">Wasserlinse</language>
+		<language name="JPN_KANJI">Wasserlinse</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_271">
+		<comment>ようきポケモン</comment>
+		<language name="JPN">Frohmut</language>
+		<language name="JPN_KANJI">Frohmut</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_272">
+		<comment>のうてんきポケモン</comment>
+		<language name="JPN">Sorglos</language>
+		<language name="JPN_KANJI">Sorglos</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_273">
+		<comment>どんぐりポケモン</comment>
+		<language name="JPN">Eichelnuss</language>
+		<language name="JPN_KANJI">Eichelnuss</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_274">
+		<comment>いじわるポケモン</comment>
+		<language name="JPN">Hinterlist</language>
+		<language name="JPN_KANJI">Hinterlist</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_275">
+		<comment>よこしまポケモン</comment>
+		<language name="JPN">Verschlagen</language>
+		<language name="JPN_KANJI">Verschlagen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_276">
+		<comment>こツバメポケモン</comment>
+		<language name="JPN">Schwälblein</language>
+		<language name="JPN_KANJI">Schwälblein</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_277">
+		<comment>ツバメポケモン</comment>
+		<language name="JPN">Schwalbe</language>
+		<language name="JPN_KANJI">Schwalbe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_278">
+		<comment>うみねこポケモン</comment>
+		<language name="JPN">Seemöwe</language>
+		<language name="JPN_KANJI">Seemöwe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_279">
+		<comment>みずどりポケモン</comment>
+		<language name="JPN">Wasservogel</language>
+		<language name="JPN_KANJI">Wasservogel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_280">
+		<comment>きもちポケモン</comment>
+		<language name="JPN">Gefühl</language>
+		<language name="JPN_KANJI">Gefühl</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_281">
+		<comment>かんじょうポケモン</comment>
+		<language name="JPN">Emotion</language>
+		<language name="JPN_KANJI">Emotion</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_282">
+		<comment>ほうようポケモン</comment>
+		<language name="JPN">Umarmung</language>
+		<language name="JPN_KANJI">Umarmung</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_283">
+		<comment>あめんぼポケモン</comment>
+		<language name="JPN">Wassergeher</language>
+		<language name="JPN_KANJI">Wassergeher</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_284">
+		<comment>めだまポケモン</comment>
+		<language name="JPN">Auge</language>
+		<language name="JPN_KANJI">Auge</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_285">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">Pilz</language>
+		<language name="JPN_KANJI">Pilz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_286">
+		<comment>きのこポケモン</comment>
+		<language name="JPN">Pilz</language>
+		<language name="JPN_KANJI">Pilz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_287">
+		<comment>なまけものポケモン</comment>
+		<language name="JPN">Faulpelz</language>
+		<language name="JPN_KANJI">Faulpelz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_288">
+		<comment>あばれザルポケモン</comment>
+		<language name="JPN">Wildaffe</language>
+		<language name="JPN_KANJI">Wildaffe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_289">
+		<comment>ものぐさポケモン</comment>
+		<language name="JPN">Müßig</language>
+		<language name="JPN_KANJI">Müßig</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_290">
+		<comment>したづみポケモン</comment>
+		<language name="JPN">Vorbereiter</language>
+		<language name="JPN_KANJI">Vorbereiter</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_291">
+		<comment>しのびポケモン</comment>
+		<language name="JPN">Ninja</language>
+		<language name="JPN_KANJI">Ninja</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_292">
+		<comment>ぬけがらポケモン</comment>
+		<language name="JPN">Häutung</language>
+		<language name="JPN_KANJI">Häutung</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_293">
+		<comment>ささやきポケモン</comment>
+		<language name="JPN">Flüster</language>
+		<language name="JPN_KANJI">Flüster</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_294">
+		<comment>おおごえポケモン</comment>
+		<language name="JPN">Lauthals</language>
+		<language name="JPN_KANJI">Lauthals</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_295">
+		<comment>そうおんポケモン</comment>
+		<language name="JPN">Krach</language>
+		<language name="JPN_KANJI">Krach</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_296">
+		<comment>こんじょうポケモン</comment>
+		<language name="JPN">Courage</language>
+		<language name="JPN_KANJI">Courage</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_297">
+		<comment>つっぱりポケモン</comment>
+		<language name="JPN">Armwurf</language>
+		<language name="JPN_KANJI">Armwurf</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_298">
+		<comment>みずたまポケモン</comment>
+		<language name="JPN">Gepunktet</language>
+		<language name="JPN_KANJI">Gepunktet</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_299">
+		<comment>コンパスポケモン</comment>
+		<language name="JPN">Kompass</language>
+		<language name="JPN_KANJI">Kompass</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_300">
+		<comment>こねこポケモン</comment>
+		<language name="JPN">Kätzchen</language>
+		<language name="JPN_KANJI">Kätzchen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_301">
+		<comment>おすましポケモン</comment>
+		<language name="JPN">Eingebildet</language>
+		<language name="JPN_KANJI">Eingebildet</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_302">
+		<comment>くらやみポケモン</comment>
+		<language name="JPN">Finsternis</language>
+		<language name="JPN_KANJI">Finsternis</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_303">
+		<comment>あざむきポケモン</comment>
+		<language name="JPN">Schwindler</language>
+		<language name="JPN_KANJI">Schwindler</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_304">
+		<comment>てつヨロイポケモン</comment>
+		<language name="JPN">Eisenpanzer</language>
+		<language name="JPN_KANJI">Eisenpanzer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_305">
+		<comment>てつヨロイポケモン</comment>
+		<language name="JPN">Eisenpanzer</language>
+		<language name="JPN_KANJI">Eisenpanzer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_306">
+		<comment>てつヨロイポケモン</comment>
+		<language name="JPN">Eisenpanzer</language>
+		<language name="JPN_KANJI">Eisenpanzer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_307">
+		<comment>めいそうポケモン</comment>
+		<language name="JPN">Meditation</language>
+		<language name="JPN_KANJI">Meditation</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_308">
+		<comment>めいそうポケモン</comment>
+		<language name="JPN">Meditation</language>
+		<language name="JPN_KANJI">Meditation</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_309">
+		<comment>いなずまポケモン</comment>
+		<language name="JPN">Gewitter</language>
+		<language name="JPN_KANJI">Gewitter</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_310">
+		<comment>ほうでんポケモン</comment>
+		<language name="JPN">Entladung</language>
+		<language name="JPN_KANJI">Entladung</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_311">
+		<comment>おうえんポケモン</comment>
+		<language name="JPN">Jubel</language>
+		<language name="JPN_KANJI">Jubel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_312">
+		<comment>おうえんポケモン</comment>
+		<language name="JPN">Jubel</language>
+		<language name="JPN_KANJI">Jubel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_313">
+		<comment>ほたるポケモン</comment>
+		<language name="JPN">Libelle</language>
+		<language name="JPN_KANJI">Libelle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_314">
+		<comment>ほたるポケモン</comment>
+		<language name="JPN">Libelle</language>
+		<language name="JPN_KANJI">Libelle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_315">
+		<comment>いばらポケモン</comment>
+		<language name="JPN">Dorn</language>
+		<language name="JPN_KANJI">Dorn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_316">
+		<comment>いぶくろポケモン</comment>
+		<language name="JPN">Magen</language>
+		<language name="JPN_KANJI">Magen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_317">
+		<comment>どくぶくろポケモン</comment>
+		<language name="JPN">Giftbeutel</language>
+		<language name="JPN_KANJI">Giftbeutel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_318">
+		<comment>どうもうポケモン</comment>
+		<language name="JPN">Gnadenlos</language>
+		<language name="JPN_KANJI">Gnadenlos</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_319">
+		<comment>きょうぼうポケモン</comment>
+		<language name="JPN">Brutal</language>
+		<language name="JPN_KANJI">Brutal</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_320">
+		<comment>たまくじらポケモン</comment>
+		<language name="JPN">Kugelwal</language>
+		<language name="JPN_KANJI">Kugelwal</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_321">
+		<comment>うきくじらポケモン</comment>
+		<language name="JPN">Flutwal</language>
+		<language name="JPN_KANJI">Flutwal</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_322">
+		<comment>どんかんポケモン</comment>
+		<language name="JPN">Taubheit</language>
+		<language name="JPN_KANJI">Taubheit</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_323">
+		<comment>ふんかポケモン</comment>
+		<language name="JPN">Ausbruch</language>
+		<language name="JPN_KANJI">Ausbruch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_324">
+		<comment>せきたんポケモン</comment>
+		<language name="JPN">Kohle</language>
+		<language name="JPN_KANJI">Kohle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_325">
+		<comment>とびはねポケモン</comment>
+		<language name="JPN">Sprungfeder</language>
+		<language name="JPN_KANJI">Sprungfeder</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_326">
+		<comment>あやつりポケモン</comment>
+		<language name="JPN">Manipulator</language>
+		<language name="JPN_KANJI">Manipulator</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_327">
+		<comment>ぶちパンダポケモン</comment>
+		<language name="JPN">Punkt-Panda</language>
+		<language name="JPN_KANJI">Punkt-Panda</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_328">
+		<comment>ありじごくポケモン</comment>
+		<language name="JPN">Ameisenlöwe</language>
+		<language name="JPN_KANJI">Ameisenlöwe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_329">
+		<comment>しんどうポケモン</comment>
+		<language name="JPN">Vibration</language>
+		<language name="JPN_KANJI">Vibration</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_330">
+		<comment>せいれいポケモン</comment>
+		<language name="JPN">Mystik</language>
+		<language name="JPN_KANJI">Mystik</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_331">
+		<comment>サボテンポケモン</comment>
+		<language name="JPN">Kaktus</language>
+		<language name="JPN_KANJI">Kaktus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_332">
+		<comment>カカシぐさポケモン</comment>
+		<language name="JPN">Vogelschock</language>
+		<language name="JPN_KANJI">Vogelschock</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_333">
+		<comment>わたどりポケモン</comment>
+		<language name="JPN">Wollvogel</language>
+		<language name="JPN_KANJI">Wollvogel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_334">
+		<comment>ハミングポケモン</comment>
+		<language name="JPN">Summsel</language>
+		<language name="JPN_KANJI">Summsel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_335">
+		<comment>ネコイタチポケモン</comment>
+		<language name="JPN">Frettkatz</language>
+		<language name="JPN_KANJI">Frettkatz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_336">
+		<comment>キバへびポケモン</comment>
+		<language name="JPN">Reißzahn</language>
+		<language name="JPN_KANJI">Reißzahn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_337">
+		<comment>いんせきポケモン</comment>
+		<language name="JPN">Meteorit</language>
+		<language name="JPN_KANJI">Meteorit</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_338">
+		<comment>いんせきポケモン</comment>
+		<language name="JPN">Meteorit</language>
+		<language name="JPN_KANJI">Meteorit</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_339">
+		<comment>ひげうおポケモン</comment>
+		<language name="JPN">Barthaar</language>
+		<language name="JPN_KANJI">Barthaar</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_340">
+		<comment>ひげうおポケモン</comment>
+		<language name="JPN">Barthaar</language>
+		<language name="JPN_KANJI">Barthaar</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_341">
+		<comment>ごろつきポケモン</comment>
+		<language name="JPN">Grobian</language>
+		<language name="JPN_KANJI">Grobian</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_342">
+		<comment>ならずものポケモン</comment>
+		<language name="JPN">Schlingel</language>
+		<language name="JPN_KANJI">Schlingel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_343">
+		<comment>どぐうポケモン</comment>
+		<language name="JPN">Lehmpuppe</language>
+		<language name="JPN_KANJI">Lehmpuppe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_344">
+		<comment>どぐうポケモン</comment>
+		<language name="JPN">Lehmpuppe</language>
+		<language name="JPN_KANJI">Lehmpuppe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_345">
+		<comment>ウミユリポケモン</comment>
+		<language name="JPN">Seeanemone</language>
+		<language name="JPN_KANJI">Seeanemone</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_346">
+		<comment>いわつぼポケモン</comment>
+		<language name="JPN">Rankfüßer</language>
+		<language name="JPN_KANJI">Rankfüßer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_347">
+		<comment>むかしエビポケモン</comment>
+		<language name="JPN">Krebssenior</language>
+		<language name="JPN_KANJI">Krebssenior</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_348">
+		<comment>かっちゅうポケモン</comment>
+		<language name="JPN">Schild</language>
+		<language name="JPN_KANJI">Schild</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_349">
+		<comment>さかなポケモン</comment>
+		<language name="JPN">Fisch</language>
+		<language name="JPN_KANJI">Fisch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_350">
+		<comment>いつくしみポケモン</comment>
+		<language name="JPN">Zartheit</language>
+		<language name="JPN_KANJI">Zartheit</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_351">
+		<comment>てんきポケモン</comment>
+		<language name="JPN">Wetter</language>
+		<language name="JPN_KANJI">Wetter</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_352">
+		<comment>いろへんげポケモン</comment>
+		<language name="JPN">Farbenspiel</language>
+		<language name="JPN_KANJI">Farbenspiel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_353">
+		<comment>にんぎょうポケモン</comment>
+		<language name="JPN">Puppe</language>
+		<language name="JPN_KANJI">Puppe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_354">
+		<comment>ぬいぐるみポケモン</comment>
+		<language name="JPN">Marionette</language>
+		<language name="JPN_KANJI">Marionette</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_355">
+		<comment>おむかえポケモン</comment>
+		<language name="JPN">Requiem</language>
+		<language name="JPN_KANJI">Requiem</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_356">
+		<comment>てまねきポケモン</comment>
+		<language name="JPN">Wink</language>
+		<language name="JPN_KANJI">Wink</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_357">
+		<comment>フルーツポケモン</comment>
+		<language name="JPN">Obst</language>
+		<language name="JPN_KANJI">Obst</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_358">
+		<comment>ふうりんポケモン</comment>
+		<language name="JPN">Windspiel</language>
+		<language name="JPN_KANJI">Windspiel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_359">
+		<comment>わざわいポケモン</comment>
+		<language name="JPN">Desaster</language>
+		<language name="JPN_KANJI">Desaster</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_360">
+		<comment>ほがらかポケモン</comment>
+		<language name="JPN">Strahlekind</language>
+		<language name="JPN_KANJI">Strahlekind</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_361">
+		<comment>ゆきかさポケモン</comment>
+		<language name="JPN">Schneehut</language>
+		<language name="JPN_KANJI">Schneehut</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_362">
+		<comment>がんめんポケモン</comment>
+		<language name="JPN">Antlitz</language>
+		<language name="JPN_KANJI">Antlitz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_363">
+		<comment>てたたきポケモン</comment>
+		<language name="JPN">Applaus</language>
+		<language name="JPN_KANJI">Applaus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_364">
+		<comment>たままわしポケモン</comment>
+		<language name="JPN">Spielball</language>
+		<language name="JPN_KANJI">Spielball</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_365">
+		<comment>こおりわりポケモン</comment>
+		<language name="JPN">Eisbrecher</language>
+		<language name="JPN_KANJI">Eisbrecher</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_366">
+		<comment>２まいがいポケモン</comment>
+		<language name="JPN">Muschel</language>
+		<language name="JPN_KANJI">Muschel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_367">
+		<comment>しんかいポケモン</comment>
+		<language name="JPN">Tiefsee</language>
+		<language name="JPN_KANJI">Tiefsee</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_368">
+		<comment>なんかいポケモン</comment>
+		<language name="JPN">Südsee</language>
+		<language name="JPN_KANJI">Südsee</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_369">
+		<comment>ちょうじゅポケモン</comment>
+		<language name="JPN">Bestand</language>
+		<language name="JPN_KANJI">Bestand</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_370">
+		<comment>ランデブーポケモン</comment>
+		<language name="JPN">Rendezvous</language>
+		<language name="JPN_KANJI">Rendezvous</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_371">
+		<comment>いしあたまポケモン</comment>
+		<language name="JPN">Steinhaupt</language>
+		<language name="JPN_KANJI">Steinhaupt</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_372">
+		<comment>にんたいポケモン</comment>
+		<language name="JPN">Durchsteher</language>
+		<language name="JPN_KANJI">Durchsteher</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_373">
+		<comment>ドラゴンポケモン</comment>
+		<language name="JPN">Drache</language>
+		<language name="JPN_KANJI">Drache</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_374">
+		<comment>てっきゅうポケモン</comment>
+		<language name="JPN">Eisenkugel</language>
+		<language name="JPN_KANJI">Eisenkugel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_375">
+		<comment>てつツメポケモン</comment>
+		<language name="JPN">Eisenklaue</language>
+		<language name="JPN_KANJI">Eisenklaue</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_376">
+		<comment>てつあしポケモン</comment>
+		<language name="JPN">Eisenfuß</language>
+		<language name="JPN_KANJI">Eisenfuß</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_377">
+		<comment>いわやまポケモン</comment>
+		<language name="JPN">Steingipfel</language>
+		<language name="JPN_KANJI">Steingipfel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_378">
+		<comment>ひょうざんポケモン</comment>
+		<language name="JPN">Eisberg</language>
+		<language name="JPN_KANJI">Eisberg</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_379">
+		<comment>くろがねポケモン</comment>
+		<language name="JPN">Eisen</language>
+		<language name="JPN_KANJI">Eisen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_380">
+		<comment>むげんポケモン</comment>
+		<language name="JPN">Äon</language>
+		<language name="JPN_KANJI">Äon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_381">
+		<comment>むげんポケモン</comment>
+		<language name="JPN">Äon</language>
+		<language name="JPN_KANJI">Äon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_382">
+		<comment>かいていポケモン</comment>
+		<language name="JPN">Seegründler</language>
+		<language name="JPN_KANJI">Seegründler</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_383">
+		<comment>たいりくポケモン</comment>
+		<language name="JPN">Kontinent</language>
+		<language name="JPN_KANJI">Kontinent</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_384">
+		<comment>てんくうポケモン</comment>
+		<language name="JPN">Himmelhoch</language>
+		<language name="JPN_KANJI">Himmelhoch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_385">
+		<comment>ねがいごとポケモン</comment>
+		<language name="JPN">Wünscher</language>
+		<language name="JPN_KANJI">Wünscher</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_386">
+		<comment>ＤＮＡポケモン</comment>
+		<language name="JPN">DNS</language>
+		<language name="JPN_KANJI">DNS</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_387">
+		<comment>わかばポケモン</comment>
+		<language name="JPN">Winziglaub</language>
+		<language name="JPN_KANJI">Winziglaub</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_388">
+		<comment>こだちポケモン</comment>
+		<language name="JPN">Hain</language>
+		<language name="JPN_KANJI">Hain</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_389">
+		<comment>たいりくポケモン</comment>
+		<language name="JPN">Kontinent</language>
+		<language name="JPN_KANJI">Kontinent</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_390">
+		<comment>こざるポケモン</comment>
+		<language name="JPN">Schimpanse</language>
+		<language name="JPN_KANJI">Schimpanse</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_391">
+		<comment>やんちゃポケモン</comment>
+		<language name="JPN">Verspielt</language>
+		<language name="JPN_KANJI">Verspielt</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_392">
+		<comment>かえんポケモン</comment>
+		<language name="JPN">Flamme</language>
+		<language name="JPN_KANJI">Flamme</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_393">
+		<comment>ペンギンポケモン</comment>
+		<language name="JPN">Pinguin</language>
+		<language name="JPN_KANJI">Pinguin</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_394">
+		<comment>ペンギンポケモン</comment>
+		<language name="JPN">Pinguin</language>
+		<language name="JPN_KANJI">Pinguin</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_395">
+		<comment>こうていポケモン</comment>
+		<language name="JPN">Kaiser</language>
+		<language name="JPN_KANJI">Kaiser</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_396">
+		<comment>むくどりポケモン</comment>
+		<language name="JPN">Star</language>
+		<language name="JPN_KANJI">Star</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_397">
+		<comment>むくどりポケモン</comment>
+		<language name="JPN">Star</language>
+		<language name="JPN_KANJI">Star</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_398">
+		<comment>もうきんポケモン</comment>
+		<language name="JPN">Raubtier</language>
+		<language name="JPN_KANJI">Raubtier</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_399">
+		<comment>まるねずみポケモン</comment>
+		<language name="JPN">Dickmaus</language>
+		<language name="JPN_KANJI">Dickmaus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_400">
+		<comment>ビーバーポケモン</comment>
+		<language name="JPN">Biber</language>
+		<language name="JPN_KANJI">Biber</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_401">
+		<comment>こおろぎポケモン</comment>
+		<language name="JPN">Zirper</language>
+		<language name="JPN_KANJI">Zirper</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_402">
+		<comment>こおろぎポケモン</comment>
+		<language name="JPN">Zirper</language>
+		<language name="JPN_KANJI">Zirper</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_403">
+		<comment>せんこうポケモン</comment>
+		<language name="JPN">Flacker</language>
+		<language name="JPN_KANJI">Flacker</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_404">
+		<comment>でんこうポケモン</comment>
+		<language name="JPN">Funken</language>
+		<language name="JPN_KANJI">Funken</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_405">
+		<comment>がんこうポケモン</comment>
+		<language name="JPN">Glühauge</language>
+		<language name="JPN_KANJI">Glühauge</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_406">
+		<comment>つぼみポケモン</comment>
+		<language name="JPN">Knospe</language>
+		<language name="JPN_KANJI">Knospe</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_407">
+		<comment>ブーケポケモン</comment>
+		<language name="JPN">Blumenstrauß</language>
+		<language name="JPN_KANJI">Blumenstrauß</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_408">
+		<comment>ずつきポケモン</comment>
+		<language name="JPN">Kopfstoß</language>
+		<language name="JPN_KANJI">Kopfstoß</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_409">
+		<comment>ずつきポケモン</comment>
+		<language name="JPN">Kopfstoß</language>
+		<language name="JPN_KANJI">Kopfstoß</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_410">
+		<comment>シールドポケモン</comment>
+		<language name="JPN">Schutzschild</language>
+		<language name="JPN_KANJI">Schutzschild</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_411">
+		<comment>シールドポケモン</comment>
+		<language name="JPN">Schutzschild</language>
+		<language name="JPN_KANJI">Schutzschild</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_412">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">Beutelwurm</language>
+		<language name="JPN_KANJI">Beutelwurm</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_413">
+		<comment>みのむしポケモン</comment>
+		<language name="JPN">Beutelwurm</language>
+		<language name="JPN_KANJI">Beutelwurm</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_414">
+		<comment>ミノガポケモン</comment>
+		<language name="JPN">Motte</language>
+		<language name="JPN_KANJI">Motte</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_415">
+		<comment>はちのこポケモン</comment>
+		<language name="JPN">Kleinbiene</language>
+		<language name="JPN_KANJI">Kleinbiene</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_416">
+		<comment>はちのすポケモン</comment>
+		<language name="JPN">Bienenstock</language>
+		<language name="JPN_KANJI">Bienenstock</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_417">
+		<comment>でんきりすポケモン</comment>
+		<language name="JPN">Elektrohörnchen</language>
+		<language name="JPN_KANJI">Elektrohörnchen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_418">
+		<comment>うみイタチポケモン</comment>
+		<language name="JPN">Meereswiesel</language>
+		<language name="JPN_KANJI">Meereswiesel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_419">
+		<comment>うみイタチポケモン</comment>
+		<language name="JPN">Meereswiesel</language>
+		<language name="JPN_KANJI">Meereswiesel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_420">
+		<comment>さくらんぼポケモン</comment>
+		<language name="JPN">Kirsche</language>
+		<language name="JPN_KANJI">Kirsche</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_421">
+		<comment>サクラポケモン</comment>
+		<language name="JPN">Blüte</language>
+		<language name="JPN_KANJI">Blüte</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_422">
+		<comment>ウミウシポケモン</comment>
+		<language name="JPN">Seeschnecke</language>
+		<language name="JPN_KANJI">Seeschnecke</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_423">
+		<comment>ウミウシポケモン</comment>
+		<language name="JPN">Seeschnecke</language>
+		<language name="JPN_KANJI">Seeschnecke</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_424">
+		<comment>おながポケモン</comment>
+		<language name="JPN">Langschweif</language>
+		<language name="JPN_KANJI">Langschweif</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_425">
+		<comment>ふうせんポケモン</comment>
+		<language name="JPN">Ballon</language>
+		<language name="JPN_KANJI">Ballon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_426">
+		<comment>ききゅうポケモン</comment>
+		<language name="JPN">Luftschiff</language>
+		<language name="JPN_KANJI">Luftschiff</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_427">
+		<comment>うさぎポケモン</comment>
+		<language name="JPN">Hase</language>
+		<language name="JPN_KANJI">Hase</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_428">
+		<comment>うさぎポケモン</comment>
+		<language name="JPN">Hase</language>
+		<language name="JPN_KANJI">Hase</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_429">
+		<comment>マジカルポケモン</comment>
+		<language name="JPN">Magisch</language>
+		<language name="JPN_KANJI">Magisch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_430">
+		<comment>おおボスポケモン</comment>
+		<language name="JPN">Anführer</language>
+		<language name="JPN_KANJI">Anführer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_431">
+		<comment>ねこかぶりポケモン</comment>
+		<language name="JPN">Fies</language>
+		<language name="JPN_KANJI">Fies</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_432">
+		<comment>とらねこポケモン</comment>
+		<language name="JPN">Tigerkatze</language>
+		<language name="JPN_KANJI">Tigerkatze</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_433">
+		<comment>すずポケモン</comment>
+		<language name="JPN">Glöckchen</language>
+		<language name="JPN_KANJI">Glöckchen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_434">
+		<comment>スカンクポケモン</comment>
+		<language name="JPN">Stinktier</language>
+		<language name="JPN_KANJI">Stinktier</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_435">
+		<comment>スカンクポケモン</comment>
+		<language name="JPN">Stinktier</language>
+		<language name="JPN_KANJI">Stinktier</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_436">
+		<comment>せいどうポケモン</comment>
+		<language name="JPN">Bronze</language>
+		<language name="JPN_KANJI">Bronze</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_437">
+		<comment>どうたくポケモン</comment>
+		<language name="JPN">Bronzeglocke</language>
+		<language name="JPN_KANJI">Bronzeglocke</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_438">
+		<comment>ぼんさいポケモン</comment>
+		<language name="JPN">Bonsai</language>
+		<language name="JPN_KANJI">Bonsai</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_439">
+		<comment>マイムポケモン</comment>
+		<language name="JPN">Mime</language>
+		<language name="JPN_KANJI">Mime</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_440">
+		<comment>ままごとポケモン</comment>
+		<language name="JPN">Spielhaus</language>
+		<language name="JPN_KANJI">Spielhaus</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_441">
+		<comment>おんぷポケモン</comment>
+		<language name="JPN">Musiknote</language>
+		<language name="JPN_KANJI">Musiknote</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_442">
+		<comment>ふういんポケモン</comment>
+		<language name="JPN">Verboten</language>
+		<language name="JPN_KANJI">Verboten</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_443">
+		<comment>りくザメポケモン</comment>
+		<language name="JPN">Landhai</language>
+		<language name="JPN_KANJI">Landhai</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_444">
+		<comment>ほらあなポケモン</comment>
+		<language name="JPN">Höhle</language>
+		<language name="JPN_KANJI">Höhle</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_445">
+		<comment>マッハポケモン</comment>
+		<language name="JPN">Rasanz</language>
+		<language name="JPN_KANJI">Rasanz</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_446">
+		<comment>おおぐいポケモン</comment>
+		<language name="JPN">Nimmersatt</language>
+		<language name="JPN_KANJI">Nimmersatt</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_447">
+		<comment>はもんポケモン</comment>
+		<language name="JPN">Wellenspiel</language>
+		<language name="JPN_KANJI">Wellenspiel</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_448">
+		<comment>はどうポケモン</comment>
+		<language name="JPN">Aura</language>
+		<language name="JPN_KANJI">Aura</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_449">
+		<comment>カバポケモン</comment>
+		<language name="JPN">Flusspferd</language>
+		<language name="JPN_KANJI">Flusspferd</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_450">
+		<comment>じゅうりょうポケモン</comment>
+		<language name="JPN">Schwergewicht</language>
+		<language name="JPN_KANJI">Schwergewicht</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_451">
+		<comment>さそりポケモン</comment>
+		<language name="JPN">Skorpion</language>
+		<language name="JPN_KANJI">Skorpion</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_452">
+		<comment>ばけさそりポケモン</comment>
+		<language name="JPN">Ogerskorpion</language>
+		<language name="JPN_KANJI">Ogerskorpion</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_453">
+		<comment>どくづきポケモン</comment>
+		<language name="JPN">Giftmund</language>
+		<language name="JPN_KANJI">Giftmund</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_454">
+		<comment>どくづきポケモン</comment>
+		<language name="JPN">Giftmund</language>
+		<language name="JPN_KANJI">Giftmund</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_455">
+		<comment>むしとりポケモン</comment>
+		<language name="JPN">Käfertot</language>
+		<language name="JPN_KANJI">Käfertot</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_456">
+		<comment>はねうおポケモン</comment>
+		<language name="JPN">Flügelfisch</language>
+		<language name="JPN_KANJI">Flügelfisch</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_457">
+		<comment>ネオンポケモン</comment>
+		<language name="JPN">Neon</language>
+		<language name="JPN_KANJI">Neon</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_458">
+		<comment>カイトポケモン</comment>
+		<language name="JPN">Flugrochen</language>
+		<language name="JPN_KANJI">Flugrochen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_459">
+		<comment>じゅひょうポケモン</comment>
+		<language name="JPN">Frostbaum</language>
+		<language name="JPN_KANJI">Frostbaum</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_460">
+		<comment>じゅひょうポケモン</comment>
+		<language name="JPN">Frostbaum</language>
+		<language name="JPN_KANJI">Frostbaum</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_461">
+		<comment>かぎづめポケモン</comment>
+		<language name="JPN">Stichklaue</language>
+		<language name="JPN_KANJI">Stichklaue</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_462">
+		<comment>じばポケモン</comment>
+		<language name="JPN">Magnetgebiet</language>
+		<language name="JPN_KANJI">Magnetgebiet</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_463">
+		<comment>なめまわしポケモン</comment>
+		<language name="JPN">Schlecker</language>
+		<language name="JPN_KANJI">Schlecker</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_464">
+		<comment>ドリルポケモン</comment>
+		<language name="JPN">Bohrer</language>
+		<language name="JPN_KANJI">Bohrer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_465">
+		<comment>ツルじょうポケモン</comment>
+		<language name="JPN">Ranke</language>
+		<language name="JPN_KANJI">Ranke</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_466">
+		<comment>らいでんポケモン</comment>
+		<language name="JPN">Donnerkeil</language>
+		<language name="JPN_KANJI">Donnerkeil</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_467">
+		<comment>ばくえんポケモン</comment>
+		<language name="JPN">Detonation</language>
+		<language name="JPN_KANJI">Detonation</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_468">
+		<comment>しゅくふくポケモン</comment>
+		<language name="JPN">Jubilierer</language>
+		<language name="JPN_KANJI">Jubilierer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_469">
+		<comment>オニトンボポケモン</comment>
+		<language name="JPN">Agrion</language>
+		<language name="JPN_KANJI">Agrion</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_470">
+		<comment>しんりょくポケモン</comment>
+		<language name="JPN">Unreif</language>
+		<language name="JPN_KANJI">Unreif</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_471">
+		<comment>しんせつポケモン</comment>
+		<language name="JPN">Neuschnee</language>
+		<language name="JPN_KANJI">Neuschnee</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_472">
+		<comment>キバさそりポケモン</comment>
+		<language name="JPN">Zahnskorpi</language>
+		<language name="JPN_KANJI">Zahnskorpi</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_473">
+		<comment>２ほんキバポケモン</comment>
+		<language name="JPN">Doppelstoßzahn</language>
+		<language name="JPN_KANJI">Doppelstoßzahn</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_474">
+		<comment>バーチャルポケモン</comment>
+		<language name="JPN">Virtuell</language>
+		<language name="JPN_KANJI">Virtuell</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_475">
+		<comment>やいばポケモン</comment>
+		<language name="JPN">Klinge</language>
+		<language name="JPN_KANJI">Klinge</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_476">
+		<comment>コンパスポケモン</comment>
+		<language name="JPN">Kompass</language>
+		<language name="JPN_KANJI">Kompass</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_477">
+		<comment>てづかみポケモン</comment>
+		<language name="JPN">Greifer</language>
+		<language name="JPN_KANJI">Greifer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_478">
+		<comment>ゆきぐにポケモン</comment>
+		<language name="JPN">Schneegebiet</language>
+		<language name="JPN_KANJI">Schneegebiet</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_479">
+		<comment>プラズマポケモン</comment>
+		<language name="JPN">Plasma</language>
+		<language name="JPN_KANJI">Plasma</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_480">
+		<comment>ちしきポケモン</comment>
+		<language name="JPN">Wissen</language>
+		<language name="JPN_KANJI">Wissen</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_481">
+		<comment>かんじょうポケモン</comment>
+		<language name="JPN">Emotion</language>
+		<language name="JPN_KANJI">Emotion</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_482">
+		<comment>いしポケモン</comment>
+		<language name="JPN">Willenskraft</language>
+		<language name="JPN_KANJI">Willenskraft</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_483">
+		<comment>じかんポケモン</comment>
+		<language name="JPN">Zeitweilig</language>
+		<language name="JPN_KANJI">Zeitweilig</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_484">
+		<comment>くうかんポケモン</comment>
+		<language name="JPN">Räumlich</language>
+		<language name="JPN_KANJI">Räumlich</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_485">
+		<comment>かこうポケモン</comment>
+		<language name="JPN">Lavadom</language>
+		<language name="JPN_KANJI">Lavadom</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_486">
+		<comment>きょだいポケモン</comment>
+		<language name="JPN">Kolossal</language>
+		<language name="JPN_KANJI">Kolossal</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_487" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>はんこつポケモン</comment>
+		<language name="JPN">Rebell</language>
+		<language name="JPN_KANJI">Rebell</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_488">
+		<comment>みかづきポケモン</comment>
+		<language name="JPN">Lunar</language>
+		<language name="JPN_KANJI">Lunar</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_489">
+		<comment>かいようポケモン</comment>
+		<language name="JPN">Seedrift</language>
+		<language name="JPN_KANJI">Seedrift</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_490">
+		<comment>かいゆうポケモン</comment>
+		<language name="JPN">Seefahrer</language>
+		<language name="JPN_KANJI">Seefahrer</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_491">
+		<comment>あんこくポケモン</comment>
+		<language name="JPN">Dunkelnacht</language>
+		<language name="JPN_KANJI">Dunkelnacht</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_492">
+		<comment>かんしゃポケモン</comment>
+		<language name="JPN">Dankbarkeit</language>
+		<language name="JPN_KANJI">Dankbarkeit</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_493">
+		<comment>そうぞうポケモン</comment>
+		<language name="JPN">Alpha</language>
+		<language name="JPN_KANJI">Alpha</language>
+	</row>
+
+	<row id="ZKN_TYPE_GER_487_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>はんこつポケモン</comment>
+		<language name="JPN">Rebell</language>
+		<language name="JPN_KANJI">Rebell</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>
