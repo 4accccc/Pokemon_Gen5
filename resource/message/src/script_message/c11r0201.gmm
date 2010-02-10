@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-09T16:18:22"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-10T16:49:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="174" top="101" right="879" bottom="721" maximized="no" rayout="Vertical2">
+	<dialog left="45" top="361" right="750" bottom="981" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="837" top="51" right="1310" bottom="449" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -295,28 +295,46 @@
 	<row id="msg_un_room_talker_00">
 		<comment>ＮＰＣがいる場合</comment>
 		<attribute name="キャラ指定">スタッフ</attribute>
-		<language name="JPN" width="256">ここは　なになにこく　の
-フロアですよ</language>
-		<language name="JPN_KANJI" width="256">ここは　なになに国　の
-フロアですよ</language>
+		<language name="JPN" width="256">[2:02:３桁:2]F　[1:24:国名:12]
+の　フロアですよ</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]F　[1:24:国名:12]
+の　フロアですよ</language>
 	</row>
 
 	<row id="msg_un_room_talker_01">
 		<comment>ＮＰＣがいない場合</comment>
 		<attribute name="キャラ指定">スタッフ</attribute>
-		<language name="JPN" width="256">ここは　なになにこくの
-フロアですよ▼
+		<language name="JPN" width="256">[2:02:３桁:2]F　[1:24:国名:12]
+のフロアです▼
 おきゃくさんは　もう　かえられましたよ</language>
-		<language name="JPN_KANJI" width="256">ここは　何々国の
-フロアですよ▼
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]F　[1:24:国名:12]
+のフロアです▼
 お客さんは　もう　帰られましたよ</language>
 	</row>
 
 	<row id="msg_un_default_man_00">
 		<comment>初回メッセージ</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
-		<language name="JPN" width="256">はじめまして　ぼく　ふつうです</language>
-		<language name="JPN_KANJI" width="256">初めまして　僕　普通です</language>
+		<language name="JPN" width="256">やあ　[1:00:トレーナー名:3]！
+ぼくのこと　おぼえてる？▼
+[1:24:国名:0]
+[1:25:地域名:1]▽
+からきた　[1:00:トレーナー名:7]　だよ！▼
+[1:02:ポケモンニックネーム:9]は　げんき？▽
+きみが　くれた　[1:02:ポケモンニックネーム:5]は
+とっても　げんきだよ▼
+よかったら　また　ポケモン　こうかん
+しようよ</language>
+		<language name="JPN_KANJI" width="256">やあ　[1:00:トレーナー名:3]！
+僕のこと　覚えてる？▼
+[1:24:国名:0]
+[1:25:地域名:1]▽
+からきた　[1:00:トレーナー名:7]だよ！
+[1:02:ポケモンニックネーム:9]は　元気？▽
+君が　くれた　[1:02:ポケモンニックネーム:5]は▽
+とっても　元気だよ▼
+良かったら　また　ポケモン　交換
+しようよ</language>
 	</row>
 
 	<row id="msg_un_default_man_01">
@@ -686,16 +704,31 @@
 	</row>
 
 	<row id="msg_un_elevator_00">
+		<comment>ボタンに話しかけた時のメッセージ</comment>
 		<attribute name="キャラ指定">エレベーターアナウンス</attribute>
-		<language name="JPN" width="256">エントランスへ　もどりますか？▼</language>
-		<language name="JPN_KANJI" width="256">エントランスへ　戻りますか？▼</language>
+		<language name="JPN" width="256">いどうさきの　フロアを　えらんでください▼</language>
+		<language name="JPN_KANJI" width="256">移動先の　フロアを　選んでください▼</language>
 	</row>
 
 	<row id="msg_un_elevator_01">
-		<comment>予備</comment>
+		<comment>msg_un_elevator_00の選択肢１</comment>
 		<attribute name="キャラ指定">エレベーターアナウンス</attribute>
-		<language name="JPN" width="256">べつの　フロアに　いどうしますか？▼</language>
-		<language name="JPN_KANJI" width="256">別の　フロアに　移動しますか？▼</language>
+		<language name="JPN" width="256">エントランスへ　もどる</language>
+		<language name="JPN_KANJI" width="256">エントランスへ　戻る</language>
+	</row>
+
+	<row id="msg_un_elevator_02">
+		<comment>msg_un_elevator_00の選択肢２</comment>
+		<attribute name="キャラ指定">エレベーターアナウンス</attribute>
+		<language name="JPN" width="256">ほかの　フロアへ　いどうする</language>
+		<language name="JPN_KANJI" width="256">他の　フロアへ　移動する</language>
+	</row>
+
+	<row id="msg_un_elevator_03">
+		<comment>msg_un_elevator_00の選択肢３</comment>
+		<attribute name="キャラ指定">エレベーターアナウンス</attribute>
+		<language name="JPN" width="256">もどる</language>
+		<language name="JPN_KANJI" width="256">戻る</language>
 	</row>
 
 	<flowchart-group-list>
