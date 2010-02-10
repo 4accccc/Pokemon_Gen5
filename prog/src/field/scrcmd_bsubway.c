@@ -293,7 +293,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     {
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
       MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-      MMDL_SetStatusBitVanish( mmdl, TRUE );
+      MMDL_SetStatusBitVanish( mmdl, param0 );
     }
     break;
   //レギュレーションチェック
@@ -388,6 +388,18 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     {
       *ret_wk = (u16)BSUBWAY_PLAYDATA_GetData(
         playData, BSWAY_PLAYDATA_ID_playmode, NULL );
+    }
+    break;
+  //指定モードがマルチかどうか
+  case BSWTOOL_CHK_MODE_MULTI:
+    *ret_wk = FALSE;
+    switch( param0 ){
+    case BSWAY_MODE_MULTI:
+    case BSWAY_MODE_COMM_MULTI:
+    case BSWAY_MODE_S_MULTI:
+    case BSWAY_MODE_S_COMM_MULTI:
+      *ret_wk = TRUE;
+      break;
     }
     break;
   //----TOOL Wifi関連

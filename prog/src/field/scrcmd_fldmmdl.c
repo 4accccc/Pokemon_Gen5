@@ -295,7 +295,10 @@ VMCMD_RESULT EvCmdObjAdd( VMHANDLE *core, void *wk )
   u16 move = VMGetU16( core );
   int zone_id = FIELDMAP_GetZoneID( fparam->fieldMap );
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
   
+  code = MMDL_TOOL_GetWorkOBJCode( evwork, code );
   mmdl = MMDLSYS_AddMMdlParam(
       mmdlsys, gx, gz, dir, id, code, move, zone_id );
   return VMCMD_RESULT_CONTINUE;

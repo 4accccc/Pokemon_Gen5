@@ -4735,6 +4735,20 @@ const OBJCODE_PARAM_BUF_MDL * MMDL_GetOBJCodeParamBufMDL(
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * 指定されたOBJコードがワーク参照型ならばワーク内OBJコードにして変更
+ * 違う場合はそのままで返す。
+ * @param  fsys  FIELDSYS_WORK *
+ * @param  code  OBJコード。HERO等
+ * @retval  int    チェックされたOBJコード
+ */
+//--------------------------------------------------------------
+u16 MMDL_TOOL_GetWorkOBJCode( const EVENTWORK *ev, u16 code )
+{
+  return( WorkOBJCode_GetOBJCode(ev,code) );
+}
+
+//--------------------------------------------------------------
+/**
  * 指定されたOBJコードがワーク参照型ならばワーク内OBJコードに変更。
  * 違う場合はそのままで返す。
  * @param  fsys  FIELDSYS_WORK *

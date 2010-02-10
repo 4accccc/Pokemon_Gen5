@@ -977,6 +977,8 @@ extern const OBJCODE_PARAM_BUF_BBD * MMDL_GetOBJCodeParamBufBBD(
 extern const OBJCODE_PARAM_BUF_MDL * MMDL_GetOBJCodeParamBufMDL(
     const OBJCODE_PARAM *param );
 
+extern u16 MMDL_TOOL_GetWorkOBJCode( const EVENTWORK *ev, u16 code );
+
 extern void MMDL_MoveInitProcDummy( MMDL * mmdl );
 extern void MMDL_MoveProcDummy( MMDL * mmdl );
 extern void MMDL_MoveDeleteProcDummy( MMDL * mmdl );

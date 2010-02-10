@@ -636,8 +636,8 @@
 #define FV_D08R0901_BOSS_01                612 /* 0x0264 リュウラセンの塔７：N */
 #define FV_D08R0901_EVENT_01               613 /* 0x0265 リュウラセンの塔７：ライバル、C07ジムリーダー（ハチク） */
 #define FV_C02_STONEEVENT_01               614 /* 0x0266 C02フィールド：ライト/ダークストーン入手イベント 博士（父・娘）、チャンピオン、サポート、C02ジムリーダー（アロエ） */
-#define FV_C04R0110_PLAYER                 615 /* 0x0267 バトルサブウェイ、列車内プレイヤー */
-#define FV_C04R0110_TRAINER                616 /* 0x0268 バトルサブウェイ、列車内トレイナー */
+#define FV_C04R0111_PARTNER                615 /* 0x0267 バトルサブウェイ、ホーム：パートナー */
+#define FV_C04R0111_NPC                    616 /* 0x0268 バトルサブウェイ、ホーム：NPC */
 #define FV_N01R0502_EVENT_01               617 /* 0x0269 N城謁見の間：ゲーチス、ライバル、チャンピオン */
 #define FV_D04R0101_SUNGLASSES_01          618 /* 0x026a D04遺跡のサングラス */
 #define FV_C08_SAGE1_01                    619 /* 0x026b ソウリュウシティ：ゲーヂス・ジムリーダー・チャンピオン・聴衆 */
@@ -675,7 +675,7 @@
 #define FV_D09R1501_LEGEND1                651 /* 0x028b 伝説ポケモン：アトス */
 		/* not used   652(0x028c) */
 		/* not used   653(0x028d) */
-		/* not used   654(0x028e) */
+#define FV_BSUBWAY_RECEIPT_PARTNER         654 /* 0x028e バトルサブウェイ、受付：パートナー */
 		/* not used   655(0x028f) */
 		/* not used   656(0x0290) */
 		/* not used   657(0x0291) */

@@ -10,6 +10,7 @@
 #define ZONE_C04R0107_EVC_H
 
 #define C04R0107_RECEIPT                   0
+#define C04R0107_PARTNER                   1
 
 #endif //ZONE_C04R0107_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0107.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
