@@ -253,6 +253,7 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   sbw->wk.myitem    = GAMEDATA_GetMyItem( gamedata );
   sbw->wk.BpData    = SaveControl_DataPtrGet(GAMEDATA_GetSaveControlWork(gamedata),
                                                      GMDATA_ID_BSUBWAY_SCOREDATA);
+  sbw->wk.wfbc         = wfbc;
 
   // スクリプトからのパラメータで分岐
   switch(shop_id){
@@ -1739,7 +1740,7 @@ static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y )
     int length,bmp_w;
     // 値段セット
     WORDSET_RegisterNumber( sbw->wordSet, 1, sbw->lineup[param].price, 
-                            4, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
+                            5, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
     WORDSET_ExpandStr( sbw->wordSet, sbw->expandBuf, sbw->priceStr );
     
     // 右揃え用の数値取得

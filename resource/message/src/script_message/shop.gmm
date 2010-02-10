@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-02-08T18:44:33"/>
+	<create user="mori" host="W00155" date="2010-02-10T17:52:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -422,8 +422,8 @@
 
 	<row id="mes_shop_02_07">
 		<comment>買い物リストに表示されている商品の値段</comment>
-		<language name="JPN" width="256">[2:03:４桁:1]円</language>
-		<language name="JPN_KANJI" width="256">[2:03:４桁:1]円</language>
+		<language name="JPN" width="256">[2:04:５桁:1]円</language>
+		<language name="JPN_KANJI" width="256">[2:04:５桁:1]円</language>
 	</row>
 
 	<row id="mes_shop_02_07_01">
