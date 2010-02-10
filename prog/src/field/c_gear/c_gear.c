@@ -174,16 +174,7 @@ struct _C_GEAR_WORK {
   int selectType;   // 接続タイプ
   HEAPID heapID;
   GFL_BUTTON_MAN* pButton;
-  GFL_MSGDATA *pMsgData;  //
-  WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
-  STRBUF* pStrBuf;
-  STRBUF* pStrBufOrg;
-  u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
-  //    BMPWINFRAME_AREAMANAGER_POS aPos;
-  GFL_FONT* pFontHandle;
   GFL_ARCUTIL_TRANSINFO subchar;
-  int windowNum;
-  BOOL IsIrc;
   FIELD_SUBSCREEN_WORK* subscreen;
   GAMESYS_WORK* pGameSys;
   CGEAR_SAVEDATA* pCGSV;
@@ -199,7 +190,11 @@ struct _C_GEAR_WORK {
 
   GFL_CLWK  *cellMove;
 
-  int msgCountDown;
+  GFL_TCBSYS* pfade_tcbsys;
+  GFL_TCB*                    vblank_tcb;
+  void* pfade_tcbsys_wk;
+  PALETTE_FADE_PTR            pfade_ptr;
+
   u16 palBase[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
   u16 palChange[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
   u16 palTrans[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
@@ -208,6 +203,7 @@ struct _C_GEAR_WORK {
 
   u8 typeAnim[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
 
+  u8 GetOpenTrg;
   u8 plt_counter;  //パレットアニメカウンタ
   u8 beacon_bit;   //ビーコンbit
   u8 touchx;    //タッチされた場所
@@ -216,16 +212,9 @@ struct _C_GEAR_WORK {
   u8 bAction;
   u8 cellMoveCreateCount;
   u8 cellMoveType;
-  BOOL bPanelEdit;
-
-  //FieldBeaconMessage用
-  FIELD_BEACON_MSG_DATA *fbmData;
-  GFL_BMPWIN* fbmArea;
-  GFL_TCBSYS* pfade_tcbsys;
-  GFL_TCB*                    vblank_tcb;
-  void* pfade_tcbsys_wk;
-  PALETTE_FADE_PTR            pfade_ptr;
   u8 startCounter;
+  u8 bPanelEdit;
+  u8 dummy;
 };
 
 
@@ -241,7 +230,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork);
 static void _gearXY2PanelScreen(int x,int y, int* px, int* py);
 
 static BOOL _modeSelectMenuButtonCallback(int bttnid,C_GEAR_WORK* pWork);
-static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type);
+static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type,BOOL bNoneWrite);
 
 static void _timeAnimation(C_GEAR_WORK* pWork);
 static void _typeAnimation(C_GEAR_WORK* pWork);
@@ -650,7 +639,7 @@ static void _PFadeToWhite( C_GEAR_WORK* pWork )
   // 黒く
   PaletteFadeReq(
     pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, 16, 0x0, pWork->pfade_tcbsys
-  );
+    );
 }
 
 static void _PFadeFromWhite( C_GEAR_WORK* pWork )
@@ -659,59 +648,59 @@ static void _PFadeFromWhite( C_GEAR_WORK* pWork )
   static const int time = 1;
   PaletteFadeReq(
     pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  time,  16, 0, 0x0, pWork->pfade_tcbsys
-  );
+    );
 }
 
 
 
 
-
+#define _WAIT (3)
 
 
 const static _ANIM_DATA screenTable[]={
-  { 0, 4, 1, 6},
+  { 0+_WAIT, 4, 1, 6+_WAIT},
 
-  { 1, 4, 0, 7},
-  { 1, 4, 2, 7},
+  { 1+_WAIT, 4, 0, 7+_WAIT},
+  { 1+_WAIT, 4, 2, 7+_WAIT},
 
-  { 2, 3, 0, 8},
-  { 2, 3, 1, 8},
-  { 2, 3, 2, 8},
-  { 2, 3, 3, 8},
-  { 2, 5, 0, 8},
-  { 2, 5, 1, 8},
-  { 2, 5, 2, 8},
-  { 2, 5, 3, 8},
+  { 2+_WAIT, 3, 0, 8+_WAIT},
+  { 2+_WAIT, 3, 1, 8+_WAIT},
+  { 2+_WAIT, 3, 2, 8+_WAIT},
+  { 2+_WAIT, 3, 3, 8+_WAIT},
+  { 2+_WAIT, 5, 0, 8+_WAIT},
+  { 2+_WAIT, 5, 1, 8+_WAIT},
+  { 2+_WAIT, 5, 2, 8+_WAIT},
+  { 2+_WAIT, 5, 3, 8+_WAIT},
 
-  { 3, 2, 0, 9},
-  { 3, 2, 1, 9},
-  { 3, 2, 2, 9},
-  { 3, 6, 0, 9},
-  { 3, 6, 1, 9},
-  { 3, 6, 2, 9},
+  { 3+_WAIT, 2, 0, 9+_WAIT},
+  { 3+_WAIT, 2, 1, 9+_WAIT},
+  { 3+_WAIT, 2, 2, 9+_WAIT},
+  { 3+_WAIT, 6, 0, 9+_WAIT},
+  { 3+_WAIT, 6, 1, 9+_WAIT},
+  { 3+_WAIT, 6, 2, 9+_WAIT},
 
-  { 4, 1, 0, 10},
-  { 4, 1, 1, 10},
-  { 4, 1, 2, 10},
-  { 4, 1, 3, 10},
-  { 4, 7, 0, 10},
-  { 4, 7, 1, 10},
-  { 4, 7, 2, 10},
-  { 4, 7, 3, 10},
+  { 4+_WAIT, 1, 0, 10+_WAIT},
+  { 4+_WAIT, 1, 1, 10+_WAIT},
+  { 4+_WAIT, 1, 2, 10+_WAIT},
+  { 4+_WAIT, 1, 3, 10+_WAIT},
+  { 4+_WAIT, 7, 0, 10+_WAIT},
+  { 4+_WAIT, 7, 1, 10+_WAIT},
+  { 4+_WAIT, 7, 2, 10+_WAIT},
+  { 4+_WAIT, 7, 3, 10+_WAIT},
 
-  { 5, 0, 0, 11},
-  { 5, 0, 1, 11},
-  { 5, 0, 2, 11},
-  { 5, 8, 0, 11},
-  { 5, 8, 1, 11},
-  { 5, 8, 2, 11},
+  { 5+_WAIT, 0, 0, 11+_WAIT},
+  { 5+_WAIT, 0, 1, 11+_WAIT},
+  { 5+_WAIT, 0, 2, 11+_WAIT},
+  { 5+_WAIT, 8, 0, 11+_WAIT},
+  { 5+_WAIT, 8, 1, 11+_WAIT},
+  { 5+_WAIT, 8, 2, 11+_WAIT},
 
 };
 
 
 static BOOL _IsGearBootMain(C_GEAR_WORK* pWork)
 {
-  if(pWork->startCounter>=20){
+  if(pWork->startCounter>=20+_WAIT){
     return FALSE;
   }
   return TRUE;
@@ -719,7 +708,7 @@ static BOOL _IsGearBootMain(C_GEAR_WORK* pWork)
 
 static BOOL _IsGearNormalDisp(C_GEAR_WORK* pWork)
 {
-  if(pWork->startCounter < 5){
+  if(pWork->startCounter < 5+_WAIT){
     return TRUE;
   }
   return FALSE;
@@ -730,17 +719,31 @@ static BOOL _IsGearNormalDisp(C_GEAR_WORK* pWork)
 static void _gearBootMain(C_GEAR_WORK* pWork)
 {
   int i;
+  int x , y;
+  int yloop[2] = {PANEL_HEIDHT1,PANEL_HEIGHT2};
 
-
+  for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
+    for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
+      if(_IsGearNormalDisp(pWork)){
+        _gearPanelBgScreenMake(pWork, x, y, CGEAR_PANELTYPE_NONE, TRUE);
+      }
+      else{
+        _gearPanelBgScreenMake(pWork, x, y, CGEAR_SV_GetPanelType(pWork->pCGSV,x,y), FALSE);
+      }
+    }
+  }
 
   for(i=0;i < elementof(screenTable);i++){
-    if(screenTable[i].time <= pWork->startCounter){
-      if(screenTable[i].downtime >= pWork->startCounter){
-        _gearPanelBgScreenMake(pWork, screenTable[i].x, screenTable[i].y, CGEAR_PANELTYPE_BOOT);
+    if(screenTable[i].time <= pWork->startCounter+_WAIT){
+      if(screenTable[i].downtime >= pWork->startCounter+_WAIT){
+        _gearPanelBgScreenMake(pWork, screenTable[i].x, screenTable[i].y, CGEAR_PANELTYPE_BOOT, FALSE);
       }
     }
   }
   pWork->startCounter++;
+
+  GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+
 }
 
 //------------------------------------------------------------------------------
@@ -750,7 +753,7 @@ static void _gearBootMain(C_GEAR_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type)
+static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type,BOOL bNoneWrite)
 {
   int ypos[2] = {PANEL_Y1,PANEL_Y2};
   int x,y,i,j;
@@ -770,11 +773,14 @@ static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANEL
         int scr = x + (y * 32);
         if(type == CGEAR_PANELTYPE_NONE){
           charpos = 0;
+          if(bNoneWrite){
+            pScrAddr[scr]=0;
+          }
         }
         if(type==CGEAR_PANELTYPE_BOOT){
           pScrAddr[scr] = palpos3[xs] + charpos;
         }
-        else if(type==CGEAR_PANELTYPE_BASE || _IsGearNormalDisp(pWork)){
+        else if(type==CGEAR_PANELTYPE_BASE){
           pScrAddr[scr] = palpos2[xs] + charpos;
         }
         else{
@@ -826,10 +832,9 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
 
   for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
     for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
-      _gearPanelBgScreenMake(pWork, x, y, CGEAR_SV_GetPanelType(pWork->pCGSV,x,y));
+      _gearPanelBgScreenMake(pWork, x, y, CGEAR_SV_GetPanelType(pWork->pCGSV,x,y),FALSE);
     }
   }
-  _gearBootMain(pWork);
   GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
 }
 
@@ -862,8 +867,8 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
       OS_TPrintf("xxxx NARC = %x\n",  GFL_ARC_GetDataSizeByHandle(p_handle, i));
     }
   }
-     */
-  
+   */
+
   GFL_ARCHDL_UTIL_TransVramPalette( p_handle, _bgpal[ sex ],
                                     PALTYPE_SUB_BG, 0, 0,  HEAPID_FIELDMAP);
 
@@ -1134,7 +1139,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       {
         type = pWork->cellMoveType;
         CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,type);
-        _gearPanelBgScreenMake(pWork, xp, yp,type);
+        _gearPanelBgScreenMake(pWork, xp, yp,type, FALSE);
         GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
       }
       return;
@@ -1147,7 +1152,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       {
         type = (type+1) % CGEAR_PANELTYPE_MAX;
         CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,type);
-        _gearPanelBgScreenMake(pWork, xp, yp,type);
+        _gearPanelBgScreenMake(pWork, xp, yp,type, FALSE);
         GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
       }
     }
@@ -1298,12 +1303,12 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-static void _gearMarkObjDrawEnable(C_GEAR_WORK* pWork)
+static void _gearMarkObjDrawEnable(C_GEAR_WORK* pWork,BOOL bFlg)
 {
   int i;
   for(i=0;i < _CLACT_TYPE_MAX ;i++)
   {
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], bFlg );
   }
 }
 
@@ -1352,12 +1357,12 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
     pWork->cellRadar = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                               pWork->objRes[_CLACT_CHR],
-                                               pWork->objRes[_CLACT_PLT],
-                                               pWork->objRes[_CLACT_ANM],
-                                               &cellInitData ,
-                                               CLSYS_DEFREND_SUB,
-                                               pWork->heapID );
+                                            pWork->objRes[_CLACT_CHR],
+                                            pWork->objRes[_CLACT_PLT],
+                                            pWork->objRes[_CLACT_ANM],
+                                            &cellInitData ,
+                                            CLSYS_DEFREND_SUB,
+                                            pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellRadar, TRUE );
   }
 }
@@ -1448,7 +1453,7 @@ static void _gearCrossObjDelete(C_GEAR_WORK* pWork)
     GFL_CLACT_WK_Remove(  pWork->cellRadar);
     pWork->cellRadar=NULL;
   }
-  
+
 }
 
 
@@ -1461,17 +1466,18 @@ static void _gearCrossObjDelete(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 //#define _NUKI_FONT_PALNO  (13)
 
-static void _modeInit(C_GEAR_WORK* pWork)
+static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
 {
   _gearArcCreate(pWork);  //ARC読み込み BG&OBJ
-  _gearPanelBgCreate(pWork);	// パネル作成
-
- // _gearObjCreate(pWork); //CLACT設定
- // _gearCrossObjCreate(pWork);
-
-
-  pWork->IsIrc=FALSE;
-
+  if(bBoot){
+    _gearBootMain(pWork);
+  }
+  else{
+    _gearPanelBgCreate(pWork);	// パネル作成
+  }
+  _gearObjCreate(pWork); //CLACT設定
+  _gearCrossObjCreate(pWork);
+  _gearMarkObjDrawEnable(pWork,TRUE);
   pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
 
 }
@@ -1657,7 +1663,7 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 {
- 
+
   GFL_BMN_Main( pWork->pButton );
   _timeAnimation(pWork);
   _typeAnimation(pWork);
@@ -1685,21 +1691,26 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 
 static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
 {
-  if(pWork->startCounter==3){
-    _gearObjCreate(pWork); //CLACT設定
-    _gearCrossObjCreate(pWork);
+  if(pWork->startCounter==0){
+    _PFadeToWhite(pWork);
+    _gearMarkObjDrawEnable(pWork,FALSE);
   }
-  if(pWork->startCounter==12){
+  if(pWork->startCounter==3){
+    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    //_gearCrossObjCreate(pWork);
+  }
+  if(pWork->startCounter==12+_WAIT){
     _PFadeFromWhite(pWork);
   }
-  if(pWork->startCounter==16){
-    _gearMarkObjDrawEnable(pWork);
+  if(pWork->startCounter==16+_WAIT){
+    _gearMarkObjDrawEnable(pWork,TRUE);
   }
   if(_IsGearBootMain(pWork)){
-    _gearPanelBgCreate(pWork);	// パネル作成
+    _gearBootMain(pWork);	// パネル作成
     return;
   }
-
+  pWork->startCounter=0;
   _CHANGE_STATE(pWork, _modeSelectMenuWait);
 }
 
@@ -1746,6 +1757,22 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
 
 
 
+///< スリープ起動時に呼ばれる関数
+static void _SLEEPGO_FUNC(void* pWk)
+{
+  C_GEAR_WORK* pWork = pWk;
+
+  WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+}
+
+///< スリープ復帰時に呼ばれる関数
+static void _SLEEPRELEASE_FUNC(void* pWk)
+{
+  C_GEAR_WORK* pWork = pWk;
+
+  pWork->GetOpenTrg=TRUE;
+}
+
 //-------------------------------------
 /// VBlank関数
 //=====================================
@@ -1770,7 +1797,7 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 
   //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CGEAR, 0x8000 );
 
- // OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP));  
+  // OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP));
 
   pWork = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, sizeof( C_GEAR_WORK ) );
   pWork->heapID = HEAPID_FIELD_SUBSCREEN;
@@ -1783,10 +1810,10 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   pWork->pfade_tcbsys = GFL_TCB_Init( 1, pWork->pfade_tcbsys_wk );
 
   //	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
-  _CHANGE_STATE(pWork,_modeSelectMenuWait1);
+  _CHANGE_STATE(pWork,_modeSelectMenuWait);
 
   _createSubBg(pWork);   //BGVRAM設定
-  _modeInit(pWork);
+  _modeInit(pWork, FALSE);
   if(CGEAR_SV_GetCGearPictureONOFF(pWork->pCGSV)){
     ret = _loadExData(pWork,pGameSys);  //デカール読み込み
   }
@@ -1802,9 +1829,14 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
     pWork->vblank_tcb = GFUser_VIntr_CreateTCB( _VBlankFunc, pWork, 1 );
   }
 
-  _PFadeToWhite(pWork);
-//  OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP));  
-  
+
+  GFL_UI_SleepGoSetFunc(&_SLEEPGO_FUNC,  pWork);
+  GFL_UI_SleepReleaseSetFunc(&_SLEEPRELEASE_FUNC,  pWork);
+
+
+  //  _PFadeToWhite(pWork);
+  //  OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP));
+
   return pWork;
 }
 
@@ -1855,15 +1887,15 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
       }
       if(!pWork->beacon_bit){
         u32 bit = WIH_DWC_GetAllBeaconTypeBit();
-          if(bit & GAME_COMM_SBIT_IRC_ALL){
-            pWork->beacon_bit |= _CGEAR_NET_BIT_IR;
-          }
-          if(bit & GAME_COMM_SBIT_WIRELESS_ALL){
-            pWork->beacon_bit |= _CGEAR_NET_BIT_WIRELESS;
-          }
-          if(bit & GAME_COMM_SBIT_WIFI_ALL){
-            pWork->beacon_bit |= _CGEAR_NET_BIT_WIFI;
-          }
+        if(bit & GAME_COMM_SBIT_IRC_ALL){
+          pWork->beacon_bit |= _CGEAR_NET_BIT_IR;
+        }
+        if(bit & GAME_COMM_SBIT_WIRELESS_ALL){
+          pWork->beacon_bit |= _CGEAR_NET_BIT_WIRELESS;
+        }
+        if(bit & GAME_COMM_SBIT_WIFI_ALL){
+          pWork->beacon_bit |= _CGEAR_NET_BIT_WIFI;
+        }
         if(bit & GAME_COMM_STATUS_BIT_IRC){
           st = GAME_COMM_STATUS_IRC;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 0);
@@ -1884,14 +1916,14 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
           st = GAME_COMM_STATUS_WIFI_LOCK;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 2);
         }
-        
+
         if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){
           PMSND_PlaySE( SEQ_SE_SYS_35 );
           st = GAME_COMM_STATUS_WIRELESS_TR;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
         }
         else if(bit & GAME_COMM_STATUS_BIT_WIRELESS){
-           st = GAME_COMM_STATUS_WIRELESS;
+          st = GAME_COMM_STATUS_WIRELESS;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
         }
         else if(bit & GAME_COMM_STATUS_BIT_WIRELESS_UN){
@@ -1912,6 +1944,12 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
       }
     }
   }
+
+  if( pWork->GetOpenTrg ){
+    pWork->GetOpenTrg=FALSE;
+    _CHANGE_STATE(pWork,_modeSelectMenuWait1);
+  }
+
   if(state != NULL){
     state(pWork);
   }
@@ -1957,7 +1995,9 @@ void CGEAR_ActionCallback( C_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
 //------------------------------------------------------------------------------
 void CGEAR_Exit( C_GEAR_WORK* pWork )
 {
-
+  GFL_UI_SleepGoSetFunc(NULL,  NULL);
+  GFL_UI_SleepReleaseSetFunc(NULL,  NULL);
+  
   GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
   GFL_NET_ReloadIcon();
 
