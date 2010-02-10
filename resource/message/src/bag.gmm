@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="genya_hosaka" host="W00159" date="2010-01-12T19:52:42"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-10T22:09:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="-988" top="311" right="-283" bottom="932" maximized="no" rayout="Vertical2">
+	<dialog left="507" top="162" right="1212" bottom="790" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="189" top="231" right="662" bottom="629" visible="yes"/>
+		<tag-palette left="737" top="230" right="1210" bottom="628" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -469,48 +469,48 @@ const u8 str_kaizyo[]</comment>
 	<row id="msg_bag_020">
 		<comment>汎用的に使われると思われる文字列
 const u8 str_hate3[]</comment>
-		<language name="JPN" font=" 1:small">???</language>
-		<language name="JPN_KANJI" font=" 1:small">???</language>
+		<language name="JPN" font=" 1:small">？？？</language>
+		<language name="JPN_KANJI" font=" 1:small">？？？</language>
 	</row>
 
 	<row id="msg_bag_021">
 		<comment>汎用的に使われると思われる文字列
 const u8 str_hate5[]</comment>
-		<language name="JPN" font=" 1:small">?????</language>
-		<language name="JPN_KANJI" font=" 1:small">?????</language>
+		<language name="JPN" font=" 1:small">？？？？？</language>
+		<language name="JPN_KANJI" font=" 1:small">？？？？？</language>
 	</row>
 
 	<row id="msg_bag_022">
 		<comment>汎用的に使われると思われる文字列
 const u8 str_surassyu[]</comment>
-		<language name="JPN" font=" 1:small">/</language>
-		<language name="JPN_KANJI" font=" 1:small">/</language>
+		<language name="JPN" font=" 1:small">／</language>
+		<language name="JPN_KANJI" font=" 1:small">／</language>
 	</row>
 
 	<row id="msg_bag_022_01">
-		<language name="JPN" font=" 1:small">[2:01:２桁:0]/[2:01:２桁:1]</language>
-		<language name="JPN_KANJI" font=" 1:small">[2:01:２桁:0]/[2:01:２桁:1]</language>
+		<language name="JPN" font=" 1:small">[2:01:２桁:0]／[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" font=" 1:small">[2:01:２桁:0]／[2:01:２桁:1]</language>
 	</row>
 
 	<row id="msg_bag_023">
 		<comment>汎用的に使われると思われる文字列
 const u8 str_bou1[]</comment>
-		<language name="JPN" font=" 1:small">-</language>
-		<language name="JPN_KANJI" font=" 1:small">-</language>
+		<language name="JPN" font=" 1:small">―</language>
+		<language name="JPN_KANJI" font=" 1:small">―</language>
 	</row>
 
 	<row id="msg_bag_024">
 		<comment>汎用的に使われると思われる文字列
 const u8 str_bou2[]</comment>
-		<language name="JPN" font=" 1:small">--</language>
-		<language name="JPN_KANJI" font=" 1:small">--</language>
+		<language name="JPN" font=" 1:small">――</language>
+		<language name="JPN_KANJI" font=" 1:small">――</language>
 	</row>
 
 	<row id="msg_bag_025">
 		<comment>汎用的に使われると思われる文字列
 const u8 str_bou3[]</comment>
-		<language name="JPN" font=" 1:small">---</language>
-		<language name="JPN_KANJI" font=" 1:small">---</language>
+		<language name="JPN" font=" 1:small">―――</language>
+		<language name="JPN_KANJI" font=" 1:small">―――</language>
 	</row>
 
 	<row id="msg_bag_026">
@@ -530,22 +530,22 @@ const u8 str_mesu[]</comment>
 	<row id="msg_bag_028">
 		<comment>汎用的に使われると思われる文字列
 const u8 str_Lv[]</comment>
-		<language name="JPN" font=" 1:small">Lv</language>
-		<language name="JPN_KANJI" font=" 1:small">Lv</language>
+		<language name="JPN" font=" 1:small">Ｌｖ．</language>
+		<language name="JPN_KANJI" font=" 1:small">Ｌｖ．</language>
 	</row>
 
 	<row id="msg_bag_029">
 		<comment>汎用的に使われると思われる文字列
 const u8 str_No[]</comment>
-		<language name="JPN" font=" 1:small">No</language>
-		<language name="JPN_KANJI" font=" 1:small">No</language>
+		<language name="JPN" font=" 1:small">Ｎｏ</language>
+		<language name="JPN_KANJI" font=" 1:small">Ｎｏ</language>
 	</row>
 
 	<row id="msg_bag_030">
 		<comment>汎用的に使われると思われる文字列
 const u8 str_plus[]</comment>
-		<language name="JPN" font=" 1:small">+</language>
-		<language name="JPN_KANJI" font=" 1:small">+</language>
+		<language name="JPN" font=" 1:small">＋</language>
+		<language name="JPN_KANJI" font=" 1:small">＋</language>
 	</row>
 
 	<row id="msg_bag_031">
@@ -558,8 +558,8 @@ const u8 str_arrow_r[]</comment>
 	<row id="msg_bag_032">
 		<comment>汎用的に使われると思われる文字列
 const u8 str_IDNo[]</comment>
-		<language name="JPN" font=" 1:small">IDNo</language>
-		<language name="JPN_KANJI" font=" 1:small">IDNo</language>
+		<language name="JPN" font=" 1:small">ＩＤＮｏ</language>
+		<language name="JPN_KANJI" font=" 1:small">ＩＤＮｏ</language>
 	</row>
 
 	<row id="msg_bag_033">
@@ -607,8 +607,8 @@ const u8 str_batu[]
 
 	<row id="msg_bag_093">
 		<comment>バッグ / アイテム関連</comment>
-		<language name="JPN" font=" 1:small">x</language>
-		<language name="JPN_KANJI" font=" 1:small">x</language>
+		<language name="JPN" font=" 1:small">×</language>
+		<language name="JPN_KANJI" font=" 1:small">×</language>
 	</row>
 
 	<row id="msg_bag_039">
@@ -889,8 +889,8 @@ const u8 str_konanoryou[]
 		<comment>const u8 str_bag_NoXX[]
 ０＝数字（ナンバー、２桁）
 １＝わざ名</comment>
-		<language name="JPN" font=" 1:small">[BD:02:Ｘセンタリング]No[2:01:２桁:0][1:07:わざ名:1]</language>
-		<language name="JPN_KANJI" font=" 1:small">[BD:02:Ｘセンタリング]No[2:01:２桁:0][1:07:わざ名:1]</language>
+		<language name="JPN" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ[2:01:２桁:0][1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ[2:01:２桁:0][1:07:わざ名:1]</language>
 	</row>
 
 	<row id="msg_bag_087">
@@ -899,8 +899,8 @@ const u8 str_konanoryou[]
 １＝木の実名
 
 ※木の実名のタグは未対応</comment>
-		<language name="JPN" font=" 1:small">No[2:01:２桁:0][1:07:わざ名:1]</language>
-		<language name="JPN_KANJI" font=" 1:small">No[2:01:２桁:0][1:07:わざ名:1]</language>
+		<language name="JPN" font=" 1:small">Ｎｏ[2:01:２桁:0][1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small">Ｎｏ[2:01:２桁:0][1:07:わざ名:1]</language>
 	</row>
 
 	<row id="msg_bag_088">
@@ -1000,8 +1000,8 @@ const u8 str_konanoryou[]
 
 	<row id="mes_shop_099">
 		<comment>売る数を画面右に表示。</comment>
-		<language name="JPN" font=" 1:small" width="24">x[2:01:２桁:0]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="24">x[2:01:２桁:0]</language>
+		<language name="JPN" font=" 1:small" width="24">×[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">×[2:01:２桁:0]</language>
 	</row>
 
 	<row id="mes_shop_100">
@@ -1031,8 +1031,8 @@ const u8 str_konanoryou[]
 
 	<row id="mes_bag_093">
 		<comment>個数選択</comment>
-		<language name="JPN" font=" 1:small" width="36">x[2:02:３桁:0]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="36">x[2:02:３桁:0]</language>
+		<language name="JPN" font=" 1:small" width="36">×[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="36">×[2:02:３桁:0]</language>
 	</row>
 
 	<row id="mes_bag_094" back-color="#808080,,,#808080,,#808080,,,,,,,,,,,,">
