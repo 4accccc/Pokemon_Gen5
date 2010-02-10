@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-09T17:27:20"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-10T12:10:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -314,7 +314,7 @@
 
 	<dialog left="18" top="283" right="722" bottom="903" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="606" top="232" right="1079" bottom="630" visible="no"/>
 		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="696"/>
@@ -578,8 +578,8 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_first_06">
 		<comment>助手</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]　よ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　よ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]　さん　よ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　さん　よ！</language>
 	</row>
 
 	<row id="msg_palpark_first_07">
