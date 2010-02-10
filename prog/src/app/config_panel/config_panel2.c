@@ -2035,6 +2035,10 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
     GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk[CLWKID_DOWNBAR], CONFIG_OBJ_PAL_M_06, CLWK_PLTTOFFS_MODE_PLTT_TOP );
   }
 
+  if( GFL_NET_IsInit() )
+  { 
+    GFL_NET_ReloadIcon();
+  }
 
 }
 //----------------------------------------------------------------------------
