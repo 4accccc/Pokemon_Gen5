@@ -745,10 +745,10 @@ void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power 
   
   if( g_power >= GPOWER_ID_MAX ){
     GF_ASSERT( g_power < GPOWER_ID_MAX );
-    g_power = 1;
+    g_power = 0;
   }
   msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-      ARCID_MESSAGE, NARC_message_power_name_dat, wordset->heapID );
+      ARCID_MESSAGE, NARC_message_power_dat, wordset->heapID );
 
   if( msg )
   {
