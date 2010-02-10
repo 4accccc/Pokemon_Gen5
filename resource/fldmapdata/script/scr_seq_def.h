@@ -5866,7 +5866,7 @@
 //--------------------------------------------------------------
 /**
  * @def _BP_ITEM_SHOP_CALL
- * @brief 簡易イベントコマンド：固定ショップイベント呼び出し
+ * @brief 簡易イベントコマンド：BPショップイベント呼び出し
  */
 //--------------------------------------------------------------
 #define _BP_ITEM_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,TRUE
@@ -5875,7 +5875,7 @@
 //--------------------------------------------------------------
 /**
  * @def _BP_WAZA_SHOP_CALL
- * @brief 簡易イベントコマンド：固定ショップイベント呼び出し
+ * @brief 簡易イベントコマンド：BPワザショップイベント呼び出し
  */
 //--------------------------------------------------------------
 #define _BP_WAZA_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BP_WAZA,TRUE
@@ -5883,12 +5883,20 @@
 
 //--------------------------------------------------------------
 /**
- * @def _BP_ITEM_SHOP_CALL
- * @brief 簡易イベントコマンド：固定ショップイベント呼び出し
+ * @def _BLACK_CITY_SHOP_CALL
+ * @brief 簡易イベントコマンド：ブラックシティショップイベント呼び出し
  */
 //--------------------------------------------------------------
-#define _BP_ITEM_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,TRUE
-#define _BP_ITEM_SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,FALSE
+#define _BLACK_CITY_SHOP0_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY0,TRUE
+#define _BLACK_CITY_SHOP0_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY0,FALSE
+#define _BLACK_CITY_SHOP1_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY1,TRUE
+#define _BLACK_CITY_SHOP1_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY1,FALSE
+#define _BLACK_CITY_SHOP2_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY2,TRUE
+#define _BLACK_CITY_SHOP2_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY2,FALSE
+#define _BLACK_CITY_SHOP3_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY3,TRUE
+#define _BLACK_CITY_SHOP3_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY3,FALSE
+#define _BLACK_CITY_SHOP4_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY4,TRUE
+#define _BLACK_CITY_SHOP4_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY4,FALSE
 
 //--------------------------------------------------------------
 /**
