@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 13:10:27
+#save date:2010/02/10 15:51:38
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r06r0203.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r06r0203.wms
 #hold event type:
 1
 #hold event number:
-4
+5
 #event number: 0
 #type
 1
@@ -134,6 +134,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -8 -16 -56
+#event number: 4
+#type
+1
+#ID name
+R06R0203_POKE4_01
+#OBJ CODE Number
+POKE4
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R06R0203_LEGEND1
+#Event Script Name
+SCRID_R06R0203_LEGEND1
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

@@ -17,6 +17,8 @@
   .include  "debug_scr_local_iwasawa.h"
    .include  "c02.h"
 
+  .include "c08r0401_def.h"
+  .include "t01.h"
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -38,6 +40,7 @@ _EVENT_DATA   ev_debug_obata
 _EVENT_DATA   ev_debug_hosaka
 _EVENT_DATA   ev_debug_ariizumi
 _EVENT_DATA   ev_debug_ohkubo
+_EVENT_DATA   ev_debug_matsushima
 _EVENT_DATA   ev_debug_common
 _EVENT_DATA_END
 
@@ -47,46 +50,17 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START ev_debug_test
 {
-  DEFINE_LOCAL  BASEX
-  DEFINE_LOCAL  BASEZ
-  DEFINE_LOCAL  LWK_BM_DOOR_ID
-  DEFINE_LOCAL  LWK_BM_FLOOR_ID
-
-  $BASEX = 7
-  $BASEZ = 1
-
-  _BMODEL_DIRECT_ANIME_SET_LOOP( SCR_BMID_PCEV_DOOR, BASEX, BASEZ )
-  //_BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_PCEV_DOOR, BASEX, BASEZ )
-  _BMODEL_ANIME_CREATE( LWK_BM_FLOOR_ID, SCR_BMID_PCEV_FLOOR, BASEX, BASEZ )
-
-//エレベータードア開く
-  //_BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_PCEV_OPEN )
-  //_BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
-
-//エレベーター下降アニメ
-  _SE_PLAY( SEQ_SE_FLD_23 )
-  _PLAYER_UPDOWN_EFFECT( 0, 40, 64 )
-  _BMODEL_ANIME_SET( LWK_BM_FLOOR_ID, SCR_BMANM_PCEV_DOWN )
-  _BMODEL_ANIME_WAIT( LWK_BM_FLOOR_ID )
-  _SE_STOP()
-
-
-  _SE_PLAY( SEQ_SE_MESSAGE )
-  _SE_WAIT()
-  _AB_KEYWAIT()
-
-  _PLAYER_UPDOWN_EFFECT( 1, 40, 64 )
-
-  _SE_PLAY( SEQ_SE_FLD_23 )
-  _BMODEL_ANIME_SET( LWK_BM_FLOOR_ID, SCR_BMANM_PCEV_UP )
-  _BMODEL_ANIME_WAIT( LWK_BM_FLOOR_ID )
-  _SE_STOP()
-
-  //_BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_PCEV_CLOSE )
-  //_BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
-
-  //_BMODEL_ANIME_DELETE( LWK_BM_DOOR_ID )
-  //_BMODEL_ANIME_DELETE( LWK_BM_FLOOR_ID )
+  _MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
+  //_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_HUSIGIDANE, 0, TOKUSYU_NULL, 10, 0 )
+  //$SCWK_ANSWER = 255
+  //_DEBUG_PRINT_WK( SCWK_ANSWER )
+  //_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_RIZAADON, 0, TOKUSYU_NULL, 10, 0 )
+  //_SET_TEMOTI_NATSUKI( 1, 255 )
+  //_GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
+  //_SXY_MOVE_EXIT_EVENT( DOOR_ID_T01_EXIT03, 786, 0, 757 )
+  //_SXY_MOVE_BG_EVENT( BG_T01_BOARD_01, 787, 0, 753 )
+  //_SET_BADGE_FLAG( BADGE_ID_03 )
+  //_SET_GYM_VICTORY_INFO( BADGE_ID_03 )
 }
 EVENT_END
 
@@ -103,6 +77,8 @@ EVENT_START ev_debug_tamada
   ELSE
     _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   ENDIF
+  _SET_GYM_VICTORY_INFO( BADGE_ID_01 )
+  _SET_FAVORITE_POKEMON( 0 )
   //DEFINE_LOCAL  LWK_X
   //DEFINE_LOCAL  LWK_Z
 
@@ -333,6 +309,7 @@ _RET
 /*                                                            */
 /**************************************************************/
 EVENT_START   ev_debug_ando
+  _MAP_CHANGE( ZONE_ID_T03R0401, 5, 5, DIR_DOWN )
 EVENT_END
 
 /**************************************************************/
@@ -628,6 +605,12 @@ EVENT_START   ev_debug_ohkubo
   _MAP_CHANGE( ZONE_ID_R10R0101, 15, 19, DIR_UP )
 EVENT_END
 
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_matsushima
+  _MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
+EVENT_END
 
 /************************************************************/
 /*				一般向けデバッグメニュー					*/

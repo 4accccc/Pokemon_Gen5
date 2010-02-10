@@ -9,7 +9,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_r06r0203.h"
+  .include  "msg_r06r0203.h"
   //.include  "r06r0203.h"
 
 //--------------------------------------------------------------
@@ -19,20 +19,123 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r06r0203
+_EVENT_DATA    ev_r06r0203_legend1
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_r06r0203_flag_change:
-//  _END
-
-/**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_r06r0203:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START ev_r06r0203_legend1
+    _TALK_OBJ_START()
+
+    _PLAINWIN_MSG_DOWN( msg_r06r0203_legend1_01 )
+    _AB_KEYWAIT()
+    _PLAINWIN_CLOSE()
+
+    _WILD_BTL_SET_LEGEND( MONSNO_645 , 50 ) //アトス
+
+    _WILD_LOSE_CHECK( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+        _FLAG_SET( FV_R06R0203_LEGEND1 )
+        _OBJ_DEL( SCWK_TARGET_OBJID )
+        _WILD_WIN()
+    ELSE
+        _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+    ENDIF
+
+    _WILD_RETRY_CHECK( SCWK_ANSWER )
+
+    SWITCH $SCWK_ANSWER
+    CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
+    //勝利した場合、あるいは逃げた場合
+        _CALL sub_legend1_escaped
+
+        
+    CASE SCR_WILD_BTL_RET_CAPTURE THEN
+    //捕まえた場合
+        _CALL sub_legend1_captured
+
+        _FLAG_SET( FE_LEGEND1_GET )
+        //_FLAG_SET( FV_D09_ROCK1 )
+        //_FLAG_SET( FV_D02_ROCK1 )
+
+    ENDSWITCH
+
+EVENT_END
+
+/**************************************************************/
+/*  捕まえそこなったとき                                      */
+/**************************************************************/
+sub_legend1_escaped:
+    _SYSWIN_MSG_DOWN( msg_r06r0203_legend1_02 )
+    _AB_KEYWAIT()
+    _SYSWIN_CLOSE()
+
+    _CALL   sub_guide_appear
+
+    _BALLOONWIN_OBJMSG( msg_r06r0203_guide_01, MMDL_ID_EVENTOBJ_00 )
+    _BALLOONWIN_CLOSE()
+
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_disappear_01 )
+    _OBJ_ANIME_WAIT()
+    _OBJ_DEL_EX( MMDL_ID_EVENTOBJ_00 )
+    _RET
+
+/**************************************************************/
+/*　捕まえたとき                                              */
+/**************************************************************/
+sub_legend1_captured:
+    _CALL   sub_guide_appear
+
+    _BALLOONWIN_OBJMSG( msg_r06r0203_guide_02, MMDL_ID_EVENTOBJ_00 )
+    _BALLOONWIN_CLOSE()
+    _BALLOONWIN_OBJMSG( msg_r06r0203_guide_03, MMDL_ID_EVENTOBJ_00 )
+    _BALLOONWIN_CLOSE()
+
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_disappear_02 )
+    _OBJ_ANIME_WAIT()
+
+    _BALLOONWIN_OBJMSG( msg_r06r0203_guide_04, MMDL_ID_EVENTOBJ_00 )
+    _BALLOONWIN_CLOSE()
+
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_disappear_03 )
+    _OBJ_ANIME_WAIT()
+    _OBJ_DEL_EX( MMDL_ID_EVENTOBJ_00 )
+    _RET
+
+/**************************************************************/
+/**************************************************************/
+sub_guide_appear:
+    _OBJ_ADD_EX( 2, 11, DIR_UP, MMDL_ID_EVENTOBJ_00, OLDMAN1, MV_DOWN )
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_appear_01 )
+    _OBJ_ANIME_WAIT()
+    _RET
+
+
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_guide_appear_01
+    _ANIME_DATA AC_WALK_U_16F, 7
+    _ANIME_DATA AC_WALK_R_16F, 3
+    _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL	anm_guide_disappear_01
+    _ANIME_DATA AC_WALK_L_16F, 3
+    _ANIME_DATA AC_WALK_D_16F, 7
+    _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL	anm_guide_disappear_02
+    _ANIME_DATA AC_WALK_L_16F, 3
+    _ANIME_DATA AC_WAIT_8F, 1
+    _ANIME_DATA AC_DIR_R, 1
+    _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL	anm_guide_disappear_03
+    _ANIME_DATA AC_DIR_L, 1
+    _ANIME_DATA AC_WALK_D_16F, 7
+    _ANIME_DATA ACMD_END, 0
+
+
 
