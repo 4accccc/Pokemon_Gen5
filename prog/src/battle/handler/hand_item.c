@@ -2527,7 +2527,6 @@ static void handler_NonkiNoOkou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   {
     u16 ratio = 100 - common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
     fx32 fx_ratio = FX32_CONST(ratio) / 100;
-    OS_TPrintf("‚¤‚µ‚¨ ratio=%d (%08x)\n", ratio, fx_ratio);
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, fx_ratio );
   }
 }
