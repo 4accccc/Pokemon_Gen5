@@ -53,6 +53,7 @@ typedef struct {
   u16   item;
   u16   usedItem;
   u8    myID;
+  u8    defaultFormNo;
   u8    fHensin;
   u8    fFakeEnable;
 }BPP_CORE_PARAM;
@@ -155,15 +156,17 @@ struct _BTL_POKEPARAM {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
+static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
 static void clearUsedWazaFlag( BTL_POKEPARAM* bpp );
 static void clearCounter( BTL_POKEPARAM* bpp );
 static void Effrank_Init( BPP_VARIABLE_PARAM* rank );
 static void Effrank_Reset( BPP_VARIABLE_PARAM* rank );
 static BOOL Effrank_Recover( BPP_VARIABLE_PARAM* rank );
+static void splitTypeCore( const BTL_POKEPARAM* bpp, PokeType* type1, PokeType* type2 );
 static BppValueID ConvertValueID( const BTL_POKEPARAM* bpp, BppValueID vid );
-static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
+static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* bpp, BppValueID type, s8* min, s8* max );
 static s8* getRankVaryStatus( BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
-static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID );
+static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID  );
 static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude );
 static void dmgrecClearWork( BTL_POKEPARAM* bpp );
 static void dmgrecFwdTurn( BTL_POKEPARAM* bpp );
@@ -201,6 +204,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.fHensin = FALSE;
   bpp->coreParam.ppFake = NULL;
   bpp->coreParam.fFakeEnable = NULL;
+  bpp->coreParam.defaultFormNo = PP_Get( pp, ID_PARA_form_no, NULL );
 
   setupBySrcData( bpp, pp );
 
@@ -253,17 +257,7 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   int i;
 
   // 基本パラメタ初期化
-  bpp->baseParam.type1 = PP_Get( srcPP, ID_PARA_type1, 0 );
-  bpp->baseParam.type2 = PP_Get( srcPP, ID_PARA_type2, 0 );
-  bpp->baseParam.sex = PP_GetSex( srcPP );
-  bpp->baseParam.level = PP_Get( srcPP, ID_PARA_level, 0 );
-  bpp->baseParam.hpMax = PP_Get( srcPP, ID_PARA_hpmax, 0 );
-  bpp->baseParam.attack = PP_Get( srcPP, ID_PARA_pow, 0 );
-  bpp->baseParam.defence = PP_Get( srcPP, ID_PARA_def, 0 );
-  bpp->baseParam.sp_attack = PP_Get( srcPP, ID_PARA_spepow, 0 );
-  bpp->baseParam.sp_defence = PP_Get( srcPP, ID_PARA_spedef, 0 );
-  bpp->baseParam.agility = PP_Get( srcPP, ID_PARA_agi, 0 );
-
+  setupBySrcDataBase( bpp, srcPP );
 
   // 所有ワザデータ初期化
   bpp->wazaCnt = 0;
@@ -293,6 +287,28 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
     bpp->weight = BTL_POKE_WEIGHT_MIN;
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * 元になるポケモンパラメータ構造体からバトルパラメータ部分のみ構築
+ *
+ * @param   bpp
+ * @param   srcPP
+ */
+//----------------------------------------------------------------------------------
+static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
+{
+  bpp->baseParam.type1 = PP_Get( srcPP, ID_PARA_type1, 0 );
+  bpp->baseParam.type2 = PP_Get( srcPP, ID_PARA_type2, 0 );
+  bpp->baseParam.sex = PP_GetSex( srcPP );
+  bpp->baseParam.level = PP_Get( srcPP, ID_PARA_level, 0 );
+  bpp->baseParam.hpMax = PP_Get( srcPP, ID_PARA_hpmax, 0 );
+  bpp->baseParam.attack = PP_Get( srcPP, ID_PARA_pow, 0 );
+  bpp->baseParam.defence = PP_Get( srcPP, ID_PARA_def, 0 );
+  bpp->baseParam.sp_attack = PP_Get( srcPP, ID_PARA_spepow, 0 );
+  bpp->baseParam.sp_defence = PP_Get( srcPP, ID_PARA_spedef, 0 );
+  bpp->baseParam.agility = PP_Get( srcPP, ID_PARA_agi, 0 );
+}
+
 //----------------------------------------------------------------------------------
 /**
  * ワザ使用フラグのクリア
@@ -1938,6 +1954,7 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
   if( bpp->coreParam.ppFake ){
     bpp->coreParam.fFakeEnable = TRUE;
   }
+  bpp->formNo = bpp->coreParam.defaultFormNo;
 }
 //=============================================================================================
 /**
@@ -1960,6 +1977,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
   if( bpp->coreParam.ppFake ){
     bpp->coreParam.fFakeEnable = TRUE;
   }
+  bpp->formNo = bpp->coreParam.defaultFormNo;
 }
 //=============================================================================================
 /**
@@ -2044,21 +2062,9 @@ void BPP_ChangeTokusei( BTL_POKEPARAM* bpp, PokeTokusei tok )
 }
 //=============================================================================================
 /**
- * フォルム変更（サーバ処理用：ソースデータは書き換えない）
+ * フォルム変更（サーバ処理用：ソースデータ書き換え・パラメータ変更対応）
  *
  * @param   pp
- * @param   formNo
- */
-//=============================================================================================
-void BPP_ChangeForm( BTL_POKEPARAM* bpp, u8 formNo )
-{
-  bpp->formNo = formNo;
-}
-//=============================================================================================
-/**
- * フォルム変更（サーバ処理用：ソースデータは書き換えない）
- *
- * @param   bpp
  * @param   formNo
  */
 //=============================================================================================
@@ -2066,8 +2072,21 @@ void BPP_ChangeFormPutSrcData( BTL_POKEPARAM* bpp, u8 formNo )
 {
   bpp->formNo = formNo;
   PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, formNo );
+  setupBySrcDataBase( bpp, bpp->coreParam.ppSrc );
 }
 
+//=============================================================================================
+/**
+ * フォルム変更（クライアント処理用：ソースデータは書き換えない）
+ *
+ * @param   bpp
+ * @param   formNo
+ */
+//=============================================================================================
+void BPP_ChangeForm( BTL_POKEPARAM* bpp, u8 formNo )
+{
+  bpp->formNo = formNo;
+}
 
 
 //=============================================================================================

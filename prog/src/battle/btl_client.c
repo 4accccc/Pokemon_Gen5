@@ -249,7 +249,6 @@ static BOOL scProc_OP_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_EscapeCodeAdd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_EscapeCodeSub( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ChangePokeType( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_OP_ChangePokeForm( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ConsumeItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args );
@@ -3767,7 +3766,7 @@ static BOOL scProc_ACT_ChangeForm( BTL_CLIENT* wk, int* seq, const int* args )
       BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 
-      BPP_ChangeFormPutSrcData( bpp, args[1] );
+      BPP_ChangeForm( bpp, args[1] );
       BTLV_ChangeForm_Start( wk->viewCore, vpos );
       (*seq)++;
     }
@@ -3968,12 +3967,6 @@ static BOOL scProc_OP_ChangePokeType( BTL_CLIENT* wk, int* seq, const int* args 
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BPP_ChangePokeType( pp, args[1] );
-  return TRUE;
-}
-static BOOL scProc_OP_ChangePokeForm( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_ChangeForm( pp, args[1] );
   return TRUE;
 }
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args )

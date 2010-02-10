@@ -12392,10 +12392,22 @@ static u8 scproc_HandEx_changeForm( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   if( !BPP_IsDead(bpp) )
   {
-    BPP_ChangeForm( bpp, param->formNo );
-    SCQUE_PUT_ACT_ChangeForm( wk->que, param->pokeID, param->formNo );
-    handexSub_putString( wk, &param->exStr );
-    return 1;
+    u8 currentForm = BPP_GetValue( bpp, BPP_FORM );
+    if( currentForm != param->formNo )
+    {
+      if( param_header->tokwin_flag ){
+        scPut_TokWin_In( wk, bpp );
+      }
+      BPP_ChangeFormPutSrcData( bpp, param->formNo );
+      SCQUE_PUT_ACT_ChangeForm( wk->que, param->pokeID, param->formNo );
+      handexSub_putString( wk, &param->exStr );
+
+      if( param_header->tokwin_flag ){
+        scPut_TokWin_Out( wk, bpp );
+      }
+
+      return 1;
+    }
   }
   return 0;
 }

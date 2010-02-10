@@ -83,6 +83,8 @@ enum {
 typedef enum {
 
   TASKTYPE_DEFAULT = 0,
+  TASKTYPE_MEMBER_IN,
+  TASKTYPE_MEMBER_OUT,
   TASKTYPE_WAZA_DAMAGE,
   TASKTYPE_HP_GAUGE,
   TASKTYPE_MAX,
@@ -2191,7 +2193,7 @@ typedef struct {
   STATUS_WIN*  statWin;
   u16     seq;
   u16     viewpos;
-  u8*     endFlag;
+  u8*     taskCounter;
 
 }POKEOUT_ACT_WORK;
 
@@ -2203,29 +2205,29 @@ void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos )
 
   twk->viewpos = vpos;
   twk->statWin = &wk->statusWin[ vpos ];
-  twk->endFlag = &wk->taskCounter[TASKTYPE_DEFAULT];
+  twk->taskCounter = &wk->taskCounter[TASKTYPE_MEMBER_OUT];
   twk->seq = 0;
 
 
-  *(twk->endFlag) = FALSE;
+  (*(twk->taskCounter))++;
 }
 BOOL BTLV_SCU_WaitMemberOutAct( BTLV_SCU* wk )
 {
-  return wk->taskCounter[TASKTYPE_DEFAULT];
+  return wk->taskCounter[TASKTYPE_MEMBER_OUT];
 }
 
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
 {
-  POKEOUT_ACT_WORK* wk = wk_adrs;
+  POKEOUT_ACT_WORK* twk = wk_adrs;
 
-  switch( wk->seq ){
+  switch( twk->seq ){
   case 0:
-    BTLV_EFFECT_DelGauge( wk->viewpos );
-    BTLV_EFFECT_DelPokemon( wk->viewpos );
-    wk->seq++;
+    BTLV_EFFECT_DelGauge( twk->viewpos );
+    BTLV_EFFECT_DelPokemon( twk->viewpos );
+    twk->seq++;
     break;
   case 1:
-    *(wk->endFlag) = TRUE;
+    (*(twk->taskCounter))--;
     GFL_TCBL_Delete( tcbl );
   }
 }
@@ -2238,7 +2240,7 @@ typedef struct {
   STATUS_WIN*  statWin;
   u16     seq;
   u16     line;
-  u8*     endFlag;
+  u8*     taskCounter;
 
 }POKEIN_ACT_WORK;
 
@@ -2258,10 +2260,10 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
   POKEIN_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
   twk->statWin = &wk->statusWin[ pos ];
-  twk->endFlag = &wk->taskCounter[TASKTYPE_DEFAULT];
+  twk->taskCounter = &wk->taskCounter[TASKTYPE_MEMBER_IN];
   twk->seq = 0;
 
-  *(twk->endFlag) = FALSE;
+  (*(twk->taskCounter))++;
 
   //soga
   {
@@ -2279,20 +2281,20 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
 
 BOOL BTLV_SCU_WaitPokeIn( BTLV_SCU* wk )
 {
-  return wk->taskCounter[TASKTYPE_DEFAULT];
+  return (wk->taskCounter[TASKTYPE_MEMBER_IN] == 0 );
 }
 
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs )
 {
-  POKEIN_ACT_WORK* wk = wk_adrs;
+  POKEIN_ACT_WORK* twk = wk_adrs;
 
-  switch( wk->seq ){
+  switch( twk->seq ){
   case 0:
-    statwin_disp_start( wk->statWin );
-    wk->seq++;
+    statwin_disp_start( twk->statWin );
+    twk->seq++;
     break;
   case 1:
-    *(wk->endFlag) = TRUE;
+    (*(twk->taskCounter))--;
     GFL_TCBL_Delete( tcbl );
   }
 }
@@ -2514,6 +2516,7 @@ typedef struct {
   BtlPokePos   pos;
   BtlvMcssPos  vpos;
   u32          seq;
+  u8           taskCounterDefault;
   u8*          pTaskCounter;
 
 }CHANGEFORM_ACT_WORK;
@@ -2534,6 +2537,7 @@ void BTLV_SCU_ChangeForm_Start( BTLV_SCU* wk, BtlvMcssPos vpos )
   twk->seq = 0;
 
   (*(twk->pTaskCounter))++;
+  OS_TPrintf("フォルムチェンジカウンタ Inc:%d\n", (*(twk->pTaskCounter)));
 }
 /**
  *  フォルムチェンジ 動作終了待ち
@@ -2566,6 +2570,7 @@ static void taskChangeForm( GFL_TCBL* tcbl, void* wk_adrs )
   case 2:
     if( !BTLV_EFFECT_CheckExecute() ){
       (*(wk->pTaskCounter))--;
+      OS_TPrintf("フォルムチェンジカウンタ Dec:%d\n", (*(wk->pTaskCounter)));
       GFL_TCBL_Delete( tcbl );
     }
     break;

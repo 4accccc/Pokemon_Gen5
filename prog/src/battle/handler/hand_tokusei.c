@@ -85,6 +85,9 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Plus( u32* numElems );
 static void handler_Minus( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Minus( u32* numElems );
 static BOOL checkExistTokuseiFriend( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeTokusei tokuseiID );
+static BOOL checkFlowerGiftEnablePokemon( BTL_SVFLOW_WORK* flowWk, u8 pokeID );
+static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_FlowerGift_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_FlowerGift( u32* numElems );
@@ -357,6 +360,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sinuti( u32* numElems );
 static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SunanoTikara( u32* numElems );
 static void handler_SunanoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DarumaMode( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_DarumaMode( u32* numElems );
 static BOOL handler_Surinuke_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static void handler_Surinuke_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Surinuke_End( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -566,6 +571,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_SOUSYOKU,         HAND_TOK_ADD_Sousyoku      }, // そうしょく
     { POKETOKUSEI_ITAZURAGOKORO,    HAND_TOK_ADD_ItazuraGokoro }, // いたずらごころ
     { POKETOKUSEI_SUNANOTIKARA,     HAND_TOK_ADD_SunanoTikara  }, // すなのちから
+    { POKETOKUSEI_TETUNOTOGE,       HAND_TOK_ADD_Samehada      }, // てつのとげ = さめはだ
+    { POKETOKUSEI_DARUMAMOODO,      HAND_TOK_ADD_DarumaMode    }, // ダルマモード
   };
 
 //  if( !BPP_CheckSick(pp, WAZASICK_IEKI) )
@@ -1468,21 +1475,82 @@ static BOOL checkExistTokuseiFriend( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* wo
  *  とくせい「フラワーギフト」
  */
 //------------------------------------------------------------------------------
+/**
+ *  フラワーギフト有効ポケモンかどうか判定
+ */
+static BOOL checkFlowerGiftEnablePokemon( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  if( BPP_GetMonsNo(bpp) == MONSNO_THERIMU ){
+    return TRUE;
+  }
+  return FALSE;
+}
+static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  u8  nextForm;
+
+  nextForm = (BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE)?  FORMNO_THERIMU_POSI : FORMNO_THERIMU_NEGA;
+
+  if( nextForm != BPP_GetValue(bpp, BPP_FORM) )
+  {
+    BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
+    param->pokeID = pokeID;
+    param->formNo = nextForm;
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+  }
+}
+// ポケ入場ハンドラ
+static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
+  {
+    common_FlowerGift_FormChange( myHandle, flowWk, pokeID, work );
+  }
+}
+// 天候変化ハンドラ
+static void handler_FlowerGift_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
+  {
+    common_FlowerGift_FormChange( myHandle, flowWk, pokeID, work );
+  }
+}
+// とくせい書き換え直前ハンドラ
+static void handler_FlowerGift_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
+  {
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+    {
+      BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
+      param->pokeID = pokeID;
+      param->formNo = FORMNO_THERIMU_NEGA;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+    }
+  }
+}
 // 攻撃威力決定のハンドラ
 static void handler_FlowerGift_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // 天気「はれ」で
-  if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
+  if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
   {
-    // 攻撃側が自分か味方のとき
-    u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-    if( BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) )
+    // 天気「はれ」で
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
     {
-      // こうげき1.5倍
-      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
+      // 攻撃側が自分か味方のとき
+      u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+      if( BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) )
       {
-        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FLOWERGIFT_POWRATIO );
+        // こうげき1.5倍
+        WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+        if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
+        {
+          BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FLOWERGIFT_POWRATIO );
+        }
       }
     }
   }
@@ -1490,18 +1558,21 @@ static void handler_FlowerGift_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 // 防御力決定のハンドラ
 static void handler_FlowerGift_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // 天気「はれ」で
-  if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
+  if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
   {
-    // 防御側が自分か味方のとき
-    u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    if( BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) )
+    // 天気「はれ」で
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
     {
-      // とくぼう1.5倍
-      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
+      // 防御側が自分か味方のとき
+      u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+      if( BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) )
       {
-        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FLOWERGIFT_GUARDRATIO );
+        // とくぼう1.5倍
+        WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+        if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
+        {
+          BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FLOWERGIFT_GUARDRATIO );
+        }
       }
     }
   }
@@ -1509,8 +1580,14 @@ static void handler_FlowerGift_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_FlowerGift( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ATTACKER_POWER, handler_FlowerGift_Power }, // 攻撃力決定のハンドラ
-    { BTL_EVENT_DEFENDER_GUARD, handler_FlowerGift_Guard }, // 防御力決定のハンドラ
+    { BTL_EVENT_MEMBER_IN,            handler_FlowerGift_MemberIn }, // ポケ入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_FlowerGift_MemberIn }, // とくせい書き換えハンドラ
+    { BTL_EVENT_WEATHER_CHANGE_AFTER, handler_FlowerGift_Weather  }, // 天候変化後ハンドラ
+//    { BTL_EVENT_IEKI_FIXED,           handler_FlowerGift_TokOff   }, // いえき確定ハンドラ
+    { BTL_EVENT_ACTPROC_END,          handler_FlowerGift_Weather },
+    { BTL_EVENT_CHANGE_TOKUSEI_BEFORE,handler_FlowerGift_TokOff   }, // とくせい書き換え直前ハンドラ
+    { BTL_EVENT_ATTACKER_POWER,       handler_FlowerGift_Power    }, // 攻撃力決定のハンドラ
+    { BTL_EVENT_DEFENDER_GUARD,       handler_FlowerGift_Guard    }, // 防御力決定のハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -2299,7 +2376,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_AirLock( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WEATHER_CHECK,  handler_AirLock_ChangeWeather },  // 天候チェックハンドラ
-    { BTL_EVENT_WEATHER_CHANGE, handler_AirLock_ChangeWeather },  // 天候変化ハンドラ
+//    { BTL_EVENT_WEATHER_CHANGE, handler_AirLock_ChangeWeather },  // 天候変化ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -2824,7 +2901,7 @@ static void common_touchAddSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick si
 }
 //------------------------------------------------------------------------------
 /**
- *  とくせい「さめはだ」
+ *  とくせい「さめはだ」「てつのとげ」
  */
 //------------------------------------------------------------------------------
 // ダメージ直後ハンドラ
@@ -2842,7 +2919,7 @@ static void handler_Samehada( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       {
         BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
         param->pokeID = attackerPokeID;
-        param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+        param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
       }
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
@@ -4272,18 +4349,47 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Katayaburi( u32* numElems )
 // ポケ入場ハンドラ
 static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  /*
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BtlWeather weather = BTL_SVFTOOL_GetWeather(flowWk);
+    BtlWeather weather = BTL_SVFTOOL_GetWeather( flowWk );
     common_TenkiFormChange( flowWk, pokeID, weather );
   }
+  */
+  /*
+   * エアロック対応として、自分以外が出たタイミングでもフォルムが変わる可能性がある
+   */
+  BtlWeather weather = BTL_SVFTOOL_GetWeather( flowWk );
+  common_TenkiFormChange( flowWk, pokeID, weather );
 }
 // 天候変化ハンドラ
 static void handler_Tenkiya_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BtlWeather weather = BTL_EVENTVAR_GetValue( BTL_EVAR_WEATHER );
+  BtlWeather weather = BTL_SVFTOOL_GetWeather( flowWk );
   common_TenkiFormChange( flowWk, pokeID, weather );
 }
+// とくせい書き換え直前ハンドラ
+static void handler_Tenkiya_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_GetMonsNo(bpp) == MONSNO_POWARUN )
+    {
+      // 「てんきや」以外のとくせいに書き換わる時、フォルムをノーマルに戻す
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_TOKUSEI) != BTL_EVENT_FACTOR_GetSubID(myHandle) )
+      {
+        BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
+        param->header.tokwin_flag = TRUE;
+        param->pokeID = pokeID;
+        param->formNo = FORMNO_POWARUN_NORMAL;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
+      }
+    }
+  }
+}
+
 static void common_TenkiFormChange( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather )
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
@@ -4303,22 +4409,25 @@ static void common_TenkiFormChange( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
 
     if( form_next != form_now )
     {
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-      {
-        BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MoraibiExe );
-        HANDEX_STR_AddArg( &param->str, pokeID );
-      }
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+      BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
+      param->header.tokwin_flag = TRUE;
+      param->pokeID = pokeID;
+      param->formNo = form_next;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
     }
   }
 }
+
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,            handler_Tenkiya_MemberIn  },  // ポケ入場ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Tenkiya_MemberIn  },  // とくせい書き換えハンドラ
-    { BTL_EVENT_WEATHER_CHANGE_AFTER, handler_Tenkiya_Weather   },  // 天候変化後ハンドラ
+    { BTL_EVENT_MEMBER_IN,             handler_Tenkiya_MemberIn  },  // ポケ入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Tenkiya_MemberIn  },  // とくせい書き換え直後ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Tenkiya_ChangeTok },  // とくせい書き換え直前ハンドラ
+    { BTL_EVENT_IEKI_FIXED,            handler_Tenkiya_ChangeTok },  // いえき確定ハンドラ
+    { BTL_EVENT_ACTPROC_END,           handler_Tenkiya_Weather   },
+    { BTL_EVENT_WEATHER_CHANGE_AFTER,  handler_Tenkiya_Weather   },  // 天候変化後ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -5593,6 +5702,53 @@ static void handler_SunanoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     }
   }
 }
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「ダルマモード」
+ *
+ * 【ヒヒダルマの場合のみ有効】
+ *  ターンチェック終了時、HPが半分以下ならフォルム１に、HPが半分超ならデフォルトフォルムに変化する
+ */
+//------------------------------------------------------------------------------
+// ターンチェック終了ハンドラ
+static void handler_DarumaMode( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+
+  if( BPP_GetMonsNo(bpp) == MONSNO_HIHIDARUMA )
+  {
+    u32 hp, hp_border;
+    u8  form_next;
+
+    hp = BPP_GetValue( bpp, BPP_HP );
+    hp_border = BTL_CALC_QuotMaxHP( bpp, 2 );
+
+    form_next = (hp <= hp_border)? FORMNO_HIHIDARUMA_MEDITATION : FORMNO_HIHIDARUMA_ACTION;
+    if( BPP_GetValue(bpp, BPP_FORM) != form_next )
+    {
+      BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
+
+      param->header.tokwin_flag = TRUE;
+      param->pokeID = pokeID;
+      param->formNo = form_next;
+
+      {
+        u16 strID = (form_next == FORMNO_HIHIDARUMA_MEDITATION)? BTL_STRID_STD_DarumaOn : BTL_STRID_STD_DarumaOff;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_STD, strID );
+      }
+    }
+  }
+}
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_DarumaMode( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_TURNCHECK_END, handler_DarumaMode   },    // ターンチェック終了ハンドラ
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
+}
+
+
 //------------------------------------------------------------------------------
 /**
  *  とくせい「すりぬけ」
