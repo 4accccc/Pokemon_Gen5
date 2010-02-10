@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-02-09T16:17:23"/>
+	<create user="matsushima" host="W00181" date="2010-02-10T19:48:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,26 +292,26 @@
 	</lock>
 
 
-	<row id="msg_d09r1501_legend1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>●アトス初期位置（GRIDX=5 GRIDZ=4）
+	<row id="msg_d09r1501_legend2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●ポルトス初期位置（GRIDX=5 GRIDZ=4）
 
 ・話し掛けたとき
 ・戦闘開始前</comment>
-		<attribute name="キャラ指定">伝説アトス</attribute>
-		<language name="JPN" width="256">こふおおおおーっ！</language>
-		<language name="JPN_KANJI" width="256">こふおおおおーっ！</language>
+		<attribute name="キャラ指定">伝説ポルトス</attribute>
+		<language name="JPN" width="256">ぐるるおおーっ！</language>
+		<language name="JPN_KANJI" width="256">ぐるるおおーっ！</language>
 	</row>
 
-	<row id="msg_d09r1501_legend1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_d09r1501_legend2_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>・戦闘後
 ・ポケモンを倒した場合のメッセージ
 
 ●殿堂入り後に復活</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
-		<language name="JPN" width="256">ポケモンは　いわかべを　かけあがり
-ほらあなの　どこかへ　きえてしまった…</language>
-		<language name="JPN_KANJI" width="256">ポケモンは　岩壁を　駆け上がり
-洞穴の　どこかへ　消えてしまった…</language>
+		<language name="JPN" width="256">ポケモンは　ほらあなの　くらがりに
+まぎれて　きえてしまった…</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　洞穴の　暗がりに
+まぎれて　消えてしまった…</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-10T15:27:51"/>
+	<create user="matsushima" host="W00181" date="2010-02-10T19:48:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,31 +292,31 @@
 	</lock>
 
 
-	<row id="msg_r06r0203_legend2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>●ポルトス初期位置（GRIDX=7 GRIDZ=4）
+	<row id="msg_r06r0203_legend1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●アトス初期位置（GRIDX=7 GRIDZ=4）
 
 ・話し掛けたとき
 ・戦闘開始前</comment>
-		<attribute name="キャラ指定">伝説ポルトス</attribute>
-		<language name="JPN" width="256">ぐるるおおーっ！</language>
-		<language name="JPN_KANJI" width="256">ぐるるおおーっ！</language>
+		<attribute name="キャラ指定">伝説アトス</attribute>
+		<language name="JPN" width="256">こふおおおおーっ！</language>
+		<language name="JPN_KANJI" width="256">こふおおおおーっ！</language>
 	</row>
 
-	<row id="msg_r06r0203_legend2_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r06r0203_legend1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>・戦闘後
 ・ポケモンを倒した場合のメッセージ
 
 ●殿堂入り後に復活</comment>
 		<attribute name="キャラ指定">メッセージ</attribute>
-		<language name="JPN" width="256">ポケモンは　ほらあなの　くらがりに
-まぎれて　きえてしまった…</language>
-		<language name="JPN_KANJI" width="256">ポケモンは　洞穴の　暗がりに
-まぎれて　消えてしまった…</language>
+		<language name="JPN" width="256">ポケモンは　いわかべを　かけあがり
+ほらあなの　どこかへ　きえてしまった…</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　岩壁を　駆け上がり
+洞穴の　どこかへ　消えてしまった…</language>
 	</row>
 
 	<row id="msg_r06r0203_guide_01">
-		<comment>●ポルトスに勝利した場合
-・ポルトス戦闘後、事情通老人が歩み寄る。
+		<comment>●アトスに勝利した場合
+・アトス戦闘後、事情通老人が歩み寄る。
 ・主人公の左隣まで進む。
 （GRIDX=5 GRIDZ=4）
 
@@ -336,7 +336,7 @@
 	</row>
 
 	<row id="msg_r06r0203_guide_02">
-		<comment>●ポルトスを捕獲した場合
+		<comment>●アトスを捕獲した場合
 ・戦闘終了後、事情通老人が歩み寄る。
 
 ・セリフ後、msg_d06r0203_guide_03へ。</comment>
@@ -351,10 +351,10 @@
 	<row id="msg_r06r0203_guide_03">
 		<comment>・喋ったあと、来た道を戻っていく。
 
-●アトス（D09R1501）とアラミス（D02R0201）を
+●ポルトス（D09R1501）とアラミス（D02R0201）を
 塞ぐ岩が外れます。</comment>
-		<language name="JPN" width="256">ポルトスが　おぬしと　たたかったことは
-すぐに　アトスと　アラミスにも▽
+		<language name="JPN" width="256">アトスが　おぬしと　たたかったことは
+すぐに　ポルトスと　アラミスにも▽
 つたわる　はずじゃ▼
 つよい　きずなで　むすばれた　３ひきじゃ
 あとの　２ひきも　おぬしと　であい▽
@@ -362,8 +362,8 @@
 みきわめたいと　おもっている　ことじゃろう▼
 ひとが　ちかよらないように　するための
 しょうがいぶつは　はずされるじゃろうな▼</language>
-		<language name="JPN_KANJI" width="256">ポルトスが　おぬしと　戦ったことは
-すぐに　アトスと　アラミスにも▽
+		<language name="JPN_KANJI" width="256">アトスが　おぬしと　戦ったことは
+すぐに　ポルトスと　アラミスにも▽
 伝わる　はずじゃ▼
 強い　きずなで　結ばれた　3匹じゃ
 あとの　２匹も　おぬしと　出会い▽
@@ -377,11 +377,11 @@
 		<comment>・数歩、歩いたところで主人公を見て、セリフ。
 
 ・喋り終えると、帰っていく。</comment>
-		<language name="JPN" width="256">アトスと　アラミスを　さがすか　どうかは
+		<language name="JPN" width="256">ポルトスと　アラミスを　さがすか　どうかは
 おぬし　しだいじゃがな…▼
 かれらは　まちがいなく
 おぬしを　まっているぞ…▼</language>
-		<language name="JPN_KANJI" width="256">アトスと　アラミスを　探すか　どうかは
+		<language name="JPN_KANJI" width="256">ポルトスと　アラミスを　探すか　どうかは
 おぬし　しだいじゃがな…▼
 かれらは　間違いなく
 おぬしを　待っているぞ…▼</language>
