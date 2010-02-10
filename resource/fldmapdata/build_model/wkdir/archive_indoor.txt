@@ -133,3 +133,6 @@
 "nsbmdfiles/in39_den.nsbmd"
 "nsbmdfiles/in39_hiko.nsbmd"
 "nsbmdfiles/pal01.nsbmd"
+"nsbmdfiles/d5ktmr_001.nsbmd"
+"nsbmdfiles/d5ktmr_002.nsbmd"
+"nsbmdfiles/d5ktmr_003.nsbmd"

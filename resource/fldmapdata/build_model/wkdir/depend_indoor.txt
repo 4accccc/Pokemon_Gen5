@@ -134,4 +134,7 @@ DEP_INDOOR	=	\
 	$(RESDIR)/in39_den.nsbmd \
 	$(RESDIR)/in39_hiko.nsbmd \
 	$(RESDIR)/pal01.nsbmd \
+	$(RESDIR)/d5ktmr_001.nsbmd \
+	$(RESDIR)/d5ktmr_002.nsbmd \
+	$(RESDIR)/d5ktmr_003.nsbmd \
 
