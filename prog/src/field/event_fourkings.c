@@ -1465,7 +1465,7 @@ static const VecFx32 sc_ESPERT_STAR_SARCH_POS =
 #define ESPERT_SE_START_TIMING_MAX  (2)
 static const sc_ESPERT_SE_START_TIMING[ ESPERT_SE_START_TIMING_MAX ] = 
 {
-  FX32_CONST(1), FX32_CONST(10),
+  FX32_CONST(90), FX32_CONST(213),
 };
 #define ESPERT_BMODEL_ANIME_IDX  ( 0 )
 
@@ -1557,6 +1557,30 @@ static void ESPERT_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fiel
       break;
     }
   }
+
+#if 0
+  if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A )
+  {
+    sc_ESPERT_SE_START_TIMING[0] += FX32_HALF;
+    TOMOYA_Printf( "start timing 0 0x%x\n", sc_ESPERT_SE_START_TIMING[0] );
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_B )
+  {
+    sc_ESPERT_SE_START_TIMING[0] -= FX32_HALF;
+    TOMOYA_Printf( "start timing 0 0x%x\n", sc_ESPERT_SE_START_TIMING[0] );
+  }
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_X )
+  {
+    sc_ESPERT_SE_START_TIMING[1] += FX32_HALF;
+    TOMOYA_Printf( "start timing 1 0x%x\n", sc_ESPERT_SE_START_TIMING[1] );
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_Y )
+  {
+    sc_ESPERT_SE_START_TIMING[1] -= FX32_HALF;
+    TOMOYA_Printf( "start timing 1 0x%x\n", sc_ESPERT_SE_START_TIMING[1] );
+  }
+#endif
 }
 
 //-----------------------------------------------------------------------------
