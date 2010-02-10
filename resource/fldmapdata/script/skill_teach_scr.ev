@@ -220,7 +220,20 @@ sub_waza_teacher_powerful:
 
     ENDSWITCH
 
+    //Å`Ç…Å`ÇäoÇ¶Ç≥ÇπÇÈÅH
     _SKILLTEACH_GET_WAZAID( SCR_SKILLTEACH_MODE_STRONGEST, select_pos, teach_waza_id )
+    _TEMOTI_NICK_NAME( 0, select_pos )
+    _WAZA_NAME( 1, teach_waza_id )
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_10 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _BALLOONWIN_CLOSE()
+    IF $SCWK_ANSWER == SCR_NO THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_04 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
     //$teach_waza_id = WAZANO_RYUUSEIGUN
     _CALL sub_skillteacher_system
 
@@ -324,7 +337,20 @@ sub_waza_teacher_coalescence:
 
     ENDSWITCH
 
+    //Å`Ç…Å`ÇäoÇ¶Ç≥ÇπÇÈÅH
     _SKILLTEACH_GET_WAZAID( SCR_SKILLTEACH_MODE_COALESCENCE, select_pos, teach_waza_id )
+    _TEMOTI_NICK_NAME( 0, select_pos )
+    _WAZA_NAME( 1, teach_waza_id )
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_10 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _BALLOONWIN_CLOSE()
+    IF $SCWK_ANSWER == SCR_NO THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_04 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
     //$teach_waza_id = WAZANO_RYUUSEIGUN
     _CALL sub_skillteacher_system
 
