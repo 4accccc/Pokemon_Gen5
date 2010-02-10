@@ -116,6 +116,18 @@ enum {
   WAZANO_KARI_BOUHUU,
   WAZANO_KARI_AHUROBUREIKU,
   WAZANO_KARI_GIASOOSAA,
+  WAZANO_KARI_KAENDAN,
+  WAZANO_KARI_TEKUNOBASUTAA,
+  WAZANO_KARI_INISIENOUTA,
+  WAZANO_KARI_KISEKINOTURUGI,
+  WAZANO_KARI_KOGOERUSEKAI,
+  WAZANO_KARI_RAIGEKI,
+  WAZANO_KARI_AOIHONOO,
+  WAZANO_KARI_HONOONOMAI,
+  WAZANO_KARI_HURIIZUBORUTO,
+  WAZANO_KARI_KOORUDOHUREA,
+  WAZANO_KARI_DONARITUKERU,
+  WAZANO_KARI_TURARAOTOSI,
 };
 
 /*--------------------------------------------------------------------------*/
@@ -927,6 +939,8 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_FURIIFOORU,       ADD_FreeFall        },
     { WAZANO_KARI_HAADOROORAA,      ADD_Fumituke        },  // ハードローラー=ふみつけ
     { WAZANO_KARI_BOUHUU,           ADD_Kaminari        },  // ぼうふう=かみなり
+    { WAZANO_KARI_TEKUNOBASUTAA,    ADD_SabakiNoTubute  },  // テクノバスター=さばきのつぶて
+    { WAZANO_KARI_KISEKINOTURUGI,   ADD_PsycoShock      },  // きせきのつるぎ=サイコショック
   };
 
   int i;
@@ -4240,12 +4254,6 @@ static const BtlEventHandlerTable*  ADD_SabakiNoTubute( u32* numElems )
 }
 static void handler_SabakiNoTubute( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  static const u8 typeTbl[] = {
-    POKETYPE_KAKUTOU, POKETYPE_HIKOU, POKETYPE_DOKU,   POKETYPE_JIMEN,
-    POKETYPE_IWA,     POKETYPE_MUSHI, POKETYPE_GHOST,  POKETYPE_HAGANE,
-    POKETYPE_HONOO,   POKETYPE_MIZU,  POKETYPE_KUSA,   POKETYPE_DENKI,
-    POKETYPE_ESPER,   POKETYPE_KOORI, POKETYPE_DRAGON, POKETYPE_AKU,
-  };
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
