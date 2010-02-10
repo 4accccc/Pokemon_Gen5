@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T22:34:46"/>
+	<create user="matsumiya" host="W00224" date="2010-02-10T12:23:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="190"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1494" top="345" right="2199" bottom="965" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="146" right="1996" bottom="774" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,26 +294,140 @@
 
 	<row id="msg_c08r0201_veteranm_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・WhiteVer</comment>
+・WHITEver
+・初回
+・はい/いいえ
+　はい
+　いいえ</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">きたな！　ここでは
-とくべつな　ルールでの▽
-ポケモンしょうぶを　たのしんでいる</language>
-		<language name="JPN_KANJI" width="256">きたな！　ここでは
-とくべつな　ルールでの▽
-ポケモンしょうぶを　たのしんでいる</language>
+		<language name="JPN" width="256">ようこそ！
+トリプルバトルの　やかたへ▼
+ここでは　そのなのとおり
+トリプルバトルを　たのしめる▼
+トリプルバトルが　どんなものか
+かいせつ　しても　いいかね？</language>
+		<language name="JPN_KANJI" width="256">ようこそ！
+トリプルバトルの　やかたへ▼
+ここでは　そのなのとおり
+トリプルバトルを　たのしめる▼
+トリプルバトルが　どんなものか
+かいせつ　しても　いいかね？</language>
 	</row>
 
-	<row id="msg_c08r0201_veteranm_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0201_veteranm_02w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・BlackVer</comment>
+・WHITEver
+・2回目以降
+・はい/いいえ
+　はい
+　いいえ</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">きたな！　ここでは
-とくべつな　ルールでの▽
-ポケモンしょうぶを　たのしんでいる</language>
-		<language name="JPN_KANJI" width="256">きたな！　ここでは
-とくべつな　ルールでの▽
-ポケモンしょうぶを　たのしんでいる</language>
+		<language name="JPN" width="256">トリプルバトルが　どんなものか
+かいせつ　しても　いいかね？</language>
+		<language name="JPN_KANJI" width="256">トリプルバトルが　どんなものか
+かいせつ　しても　いいかね？</language>
+	</row>
+
+	<row id="msg_c08r0201_veteranm_03w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・WHITEver
+・はい選択時</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">トリプルバトルとは
+ポケモンを　３びきずつ　だして▽
+たたかう　たいせんけいしき！▼
+あいての　ポケモンを　すべて
+ひんしにした　トレーナーの　かちだ！</language>
+		<language name="JPN_KANJI" width="256">トリプルバトルとは
+ポケモンを　３びきずつ　だして▽
+たたかう　たいせんけいしき！▼
+あいての　ポケモンを　すべて
+ひんしにした　トレーナーの　かちだ！</language>
+	</row>
+
+	<row id="msg_c08r0201_veteranm_04w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・WHITEver
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">きょうみ　ないのか？▼
+たのしいから　まず
+かいせつを　きいてみてくれ！</language>
+		<language name="JPN_KANJI" width="256">きょうみ　ないのか？▼
+たのしいから　まず
+かいせつを　きいてみてくれ！</language>
+	</row>
+
+	<row id="msg_c08r0201_veteranm_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・BLACKver
+・初回
+・はい/いいえ
+　はい
+　いいえ</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">ようこそ！
+ローテーションバトルの　やかたへ▼
+ここでは　そのなのとおり
+ローテーションバトルを　たのしめる▼
+ローテーションバトルが　どんなものか
+かいせつ　しても　いいかね？</language>
+		<language name="JPN_KANJI" width="256">ようこそ！
+ローテーションバトルの　やかたへ▼
+ここでは　そのなのとおり
+ローテーションバトルを　たのしめる▼
+ローテーションバトルが　どんなものか
+かいせつ　しても　いいかね？</language>
+	</row>
+
+	<row id="msg_c08r0201_veteranm_02b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・BLACKver
+・2回目以降
+・はい/いいえ
+　はい
+　いいえ</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">ローテーションバトルが　どんなものか
+かいせつ　しても　いいかね？</language>
+		<language name="JPN_KANJI" width="256">ローテーションバトルが　どんなものか
+かいせつ　しても　いいかね？</language>
+	</row>
+
+	<row id="msg_c08r0201_veteranm_03b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・BLACKver
+・はい選択時</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">ローテーションバトルとは
+ポケモンを　３びきずつ　だして▽
+たたかう　たいせんけいしき！▼
+そして　だした　ポケモンは
+まえに２ひき！　うしろに１ひきの▽
+ポジションに　セットされる▼
+この　ポジションは　１ターンごとに
+かわるというのが　ポイントだ！</language>
+		<language name="JPN_KANJI" width="256">ローテーションバトルとは
+ポケモンを　３びきずつ　だして▽
+たたかう　たいせんけいしき！▼
+そして　だした　ポケモンは
+まえに２ひき！　うしろに１ひきの▽
+ポジションに　セットされる▼
+この　ポジションは　１ターンごとに
+かわるというのが　ポイントだ！</language>
+	</row>
+
+	<row id="msg_c08r0201_veteranm_04b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・BLACKver
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">きょうみ　ないのか？▼
+たのしいから　まず
+かいせつを　きいてみてくれ！</language>
+		<language name="JPN_KANJI" width="256">きょうみ　ないのか？▼
+たのしいから　まず
+かいせつを　きいてみてくれ！</language>
 	</row>
 
 	<flowchart-group-list>
