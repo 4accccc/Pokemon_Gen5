@@ -670,9 +670,9 @@
 #define FV_UN_GTSFRIEND_04                 646 /* 0x0286 国連(内部）：GTSで交換した相手５ */
 #define FV_C03R0301_CLEANINGM_01           647 /* 0x0287 バトルカンパニー１F：会長 */
 #define FV_C02GYM0101_HAKAI                648 /* 0x0288 C02博物館のプラズマ団（６人） */
-		/* not used   649(0x0289) */
-		/* not used   650(0x028a) */
-		/* not used   651(0x028b) */
+#define FV_R06R0202_LEGEND2                649 /* 0x0289 伝説ポケモン：ポルトス */
+#define FV_D02R0201_LEGEND3                650 /* 0x028a 伝説ポケモン：アラミス */
+#define FV_D09R1501_LEGEND1                651 /* 0x028b 伝説ポケモン：アトス */
 		/* not used   652(0x028c) */
 		/* not used   653(0x028d) */
 		/* not used   654(0x028e) */
