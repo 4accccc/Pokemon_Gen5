@@ -179,9 +179,9 @@
 #define FE_C03R0303_CLEANINGM              163 /* 0x00a3 ヒウンシティ バトルカンパニー3F：会長と戦った */
 #define FE_C03R0901_ITEMGET                164 /* 0x00a4 ヒウンシティ バー：アイテムを入手した */
 #define FE_R05_MUSICIAN_WIN                165 /* 0x00a5 ５番道路のミュージシャンに勝利した（グッズ入手済み） */
-		/* not used   166(0x00a6) */
-		/* not used   167(0x00a7) */
-		/* not used   168(0x00a8) */
+#define FE_LEGEND1_GET                     166 /* 0x00a6 伝説ポケモン：アトスをつかまえた */
+#define FE_LEGEND2_GET                     167 /* 0x00a7 伝説ポケモン：ポルトスを捕まえた */
+#define FE_LEGEND3_GET                     168 /* 0x00a8 伝説ポケモン：アラミスを捕まえた */
 		/* not used   169(0x00a9) */
 		/* not used   170(0x00aa) */
 		/* not used   171(0x00ab) */
@@ -670,9 +670,9 @@
 #define FV_UN_GTSFRIEND_04                 646 /* 0x0286 国連(内部）：GTSで交換した相手５ */
 #define FV_C03R0301_CLEANINGM_01           647 /* 0x0287 バトルカンパニー１F：会長 */
 #define FV_C02GYM0101_HAKAI                648 /* 0x0288 C02博物館のプラズマ団（６人） */
-#define FV_R06R0202_LEGEND2                649 /* 0x0289 伝説ポケモン：ポルトス */
-#define FV_D02R0201_LEGEND3                650 /* 0x028a 伝説ポケモン：アラミス */
-#define FV_D09R1501_LEGEND1                651 /* 0x028b 伝説ポケモン：アトス */
+#define FV_R06R0203_LEGEND1                649 /* 0x0289 伝説ポケモン：アトス */
+#define FV_D09R1501_LEGEND2                650 /* 0x028a 伝説ポケモン：ポルトス */
+#define FV_D02R0201_LEGEND3                651 /* 0x028b 伝説ポケモン：アラミス */
 		/* not used   652(0x028c) */
 		/* not used   653(0x028d) */
 #define FV_BSUBWAY_RECEIPT_PARTNER         654 /* 0x028e バトルサブウェイ、受付：パートナー */
