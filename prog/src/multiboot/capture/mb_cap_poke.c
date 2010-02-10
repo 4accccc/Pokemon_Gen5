@@ -611,7 +611,8 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
       else
       if( pokeWork->posYidx == -1 )
       {
-        objIdx = MB_CAP_OBJ_SUB_U_START+pokeWork->posXidx;
+        //—ˆ‚Í—h‚ç‚³‚È‚¢
+        objIdx = 0xFF;
       }
       else
       if( pokeWork->posYidx == MB_CAP_OBJ_Y_NUM )
@@ -622,10 +623,13 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
       {
         objIdx = pokeWork->posXidx + pokeWork->posYidx*MB_CAP_OBJ_X_NUM;
       }
-      objWork = MB_CAPTURE_GetObjWork( capWork , objIdx );
-      if( objWork != NULL )
+      if( objIdx != 0xFF )
       {
-        MB_CAP_OBJ_StartAnime( objWork );
+        objWork = MB_CAPTURE_GetObjWork( capWork , objIdx );
+        if( objWork != NULL )
+        {
+          MB_CAP_OBJ_StartAnime( objWork );
+        }
       }
     }
   

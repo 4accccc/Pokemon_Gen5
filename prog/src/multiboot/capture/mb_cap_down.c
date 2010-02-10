@@ -15,6 +15,7 @@
 #include "mb_capture_gra.naix"
 
 #include "multiboot/mb_poke_icon.h"
+#include "multiboot/mb_local_def.h"
 
 #include "./mb_cap_down.h"
 #include "./mb_cap_snd_def.h"
@@ -54,6 +55,11 @@
 #define MB_CAP_DOWN_SCORE_POS_X (256-24)
 #define MB_CAP_DOWN_SCORE_POS_Y (192-24)
 #define MB_CAP_DOWN_SCORE_POS_WIDTH (16)
+
+//ポケ・ボールの表示位置
+#define MB_CAP_DOWN_POKE_POS_X (20)
+#define MB_CAP_DOWN_POKE_POS_Y (172)
+#define MB_CAP_DOWN_POKE_POS_WIDTH (24)
 
 //======================================================================
 //	enum
@@ -96,10 +102,15 @@ struct _MB_CAP_DOWN
   MB_CAP_DOWN_STATE state;
   
   u32 cellRes[MCDO_MAX];
+  u32 cellResPokePlt;
+  u32 cellResPokeAnm;
+  u32 cellResPokeNcg[MB_CAP_POKE_NUM];
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkBall;
   GFL_CLWK    *clwkPen;
   GFL_CLWK    *clwkScore[MB_CAP_DOWN_SCORE_DIGIT];
+  GFL_CLWK    *clwkCapBall[MB_CAP_POKE_NUM];
+  GFL_CLWK    *clwkPoke[MB_CAP_POKE_NUM];
   
   u16 dispScore;
   
@@ -180,8 +191,40 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
     //TODO 個数は適当
     downWork->cellUnit  = GFL_CLACT_UNIT_Create( 96 , 0, heapId );
     GFL_CLACT_UNIT_SetDefaultRend( downWork->cellUnit );
+  }
+  //ポケ系リソース
+  {
+    u8 i;
+    const DLPLAY_CARD_TYPE cardType = MB_CAPTURE_GetCardType( capWork );
+    ARCHANDLE* pokeArc = MB_CAPTURE_GetPokeArcHandle( capWork );
+
+    if( cardType == CARD_TYPE_DUMMY )
+    {
+      downWork->cellResPokePlt = GFL_CLGRP_PLTT_RegisterComp( pokeArc , 
+            MB_ICON_GetPltResId( cardType ) , CLSYS_DRAW_SUB , 
+            MB_CAPTURE_PAL_SUB_OBJ_POKE*32 , heapId  );
+    }
+    else
+    {
+      downWork->cellResPokePlt = GFL_CLGRP_PLTT_RegisterEx( pokeArc , 
+            MB_ICON_GetPltResId( cardType ) , CLSYS_DRAW_SUB , 
+            MB_CAPTURE_PAL_SUB_OBJ_POKE*32 , 0 , MB_CAPTURE_PAL_SUB_OBJ_POKE_NUM+1 , heapId  );
+    }
+
+    downWork->cellResPokeAnm = GFL_CLGRP_CELLANIM_Register( pokeArc , 
+          MB_ICON_GetCellResId( cardType ) , MB_ICON_GetAnmResId( cardType ) , heapId  );
+
+    for( i=0;i<MB_CAP_POKE_NUM;i++ )
+    {
+      POKEMON_PASO_PARAM *ppp = MB_CAPTURE_GetPPP( capWork , i );
+
+      downWork->cellResPokeNcg[i] = GFL_CLGRP_CGR_Register( pokeArc , 
+            MB_ICON_GetCharResId( ppp , cardType ) , FALSE , CLSYS_DRAW_SUB , heapId  );
+    }
+    GFL_ARC_CloseDataHandle( pokeArc );
 
   }
+  
   {
     GFL_CLWK_DATA cellInitData;
     u8 i;
@@ -224,10 +267,45 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
                 &cellInitData ,CLSYS_DEFREND_SUB , heapId );
       GFL_CLACT_WK_SetDrawEnable( downWork->clwkScore[i] , FALSE );
     }
-
+    
+    //ボール
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    cellInitData.pos_y = MB_CAP_DOWN_POKE_POS_Y;
+    cellInitData.anmseq = MCDA_BALL_GET;
+    for( i=0;i<MB_CAP_POKE_NUM;i++ )
+    {
+      cellInitData.pos_x = MB_CAP_DOWN_POKE_POS_X+MB_CAP_DOWN_POKE_POS_WIDTH*i;
+      downWork->clwkCapBall[i] = GFL_CLACT_WK_Create( downWork->cellUnit ,
+                downWork->cellRes[MCDO_NCG],
+                downWork->cellRes[MCDO_PLT],
+                downWork->cellRes[MCDO_ANM],
+                &cellInitData ,CLSYS_DEFREND_SUB , heapId );
+      GFL_CLACT_WK_SetDrawEnable( downWork->clwkCapBall[i] , FALSE );
+    }
+    
+    //ポケ
+    {
+      cellInitData.pos_y = MB_CAP_DOWN_POKE_POS_Y-4;
+      for( i=0;i<MB_CAP_POKE_NUM;i++ )
+      {
+        POKEMON_PASO_PARAM *ppp = MB_CAPTURE_GetPPP( capWork , i );
+        cellInitData.pos_x = MB_CAP_DOWN_POKE_POS_X+MB_CAP_DOWN_POKE_POS_WIDTH*i;
+        downWork->clwkPoke[i] = GFL_CLACT_WK_Create( downWork->cellUnit ,
+                  downWork->cellResPokeNcg[i],
+                  downWork->cellResPokePlt,
+                  downWork->cellResPokeAnm,
+                  &cellInitData ,CLSYS_DEFREND_SUB , heapId );
+        GFL_CLACT_WK_SetDrawEnable( downWork->clwkPoke[i] , TRUE );
+        GFL_CLACT_WK_SetPlttOffs( downWork->clwkPoke[i] , 
+                                  MB_ICON_GetPalNumber(ppp) ,
+                                  CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      }
+    }
+    
   }
   
-  downWork->dispScore = 65536;  //初回更新のため
+  downWork->dispScore = 65535;  //初回更新のため
   downWork->pullBow = 0;
   downWork->state = MCDS_INIT;
   downWork->ballPosX = MB_CAP_DOWN_BALL_X;
@@ -260,12 +338,24 @@ void MB_CAP_DOWN_DeleteSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork 
   u8 i;
   GFL_BMP_Delete( downWork->lineBmp );
   
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    GFL_CLACT_WK_Remove( downWork->clwkCapBall[i] );
+    GFL_CLACT_WK_Remove( downWork->clwkPoke[i] );
+  }
   for( i=0;i<MB_CAP_DOWN_SCORE_DIGIT;i++ )
   {
     GFL_CLACT_WK_Remove( downWork->clwkScore[i] );
   }
   GFL_CLACT_WK_Remove( downWork->clwkPen );
   GFL_CLACT_WK_Remove( downWork->clwkBall );
+
+  GFL_CLGRP_PLTT_Release( downWork->cellResPokePlt );
+  GFL_CLGRP_CELLANIM_Release( downWork->cellResPokeAnm );
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    GFL_CLGRP_CGR_Release( downWork->cellResPokeNcg[i] );
+  }
   GFL_CLGRP_PLTT_Release( downWork->cellRes[MCDO_PLT] );
   GFL_CLGRP_CGR_Release( downWork->cellRes[MCDO_NCG] );
   GFL_CLGRP_CELLANIM_Release( downWork->cellRes[MCDO_ANM] );
@@ -283,7 +373,11 @@ void MB_CAP_DOWN_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork 
   u32 tpx,tpy;
   const BOOL isTrg = GFL_UI_TP_GetTrg();
   const BOOL isTouch = GFL_UI_TP_GetPointCont( &tpx,&tpy );
-
+  
+  if( tpy < MB_CAP_DOWN_BALL_Y )
+  {
+    tpy = MB_CAP_DOWN_BALL_Y;
+  }
   MB_CAP_DOWN_UpdateSystem_Core( capWork , downWork , isTrg , isTouch , tpx , tpy );
 
 }
@@ -522,7 +616,7 @@ static void MB_CAP_DOWN_UpdateBow_DrawLine_Func( const u8* vramAdr , const int x
   fx32 subX = 0;
   fx32 subY = 0;
   
-  u8 i;
+  int i;
   
   for( i=0;i<loopNum;i++ )
   {
@@ -540,25 +634,28 @@ static void MB_CAP_DOWN_UpdateBow_DrawLine_Func( const u8* vramAdr , const int x
 
 static void MB_CAP_DOWN_UpdateBow_DrawDot( const u8* vramAdr , const int x , const int y )
 {
-  const u8 drawCol = 1;
-
-  const int charX = x/8;
-  const int charY = y/8;
-  const u16 charNo = charX+charY*32;
-  const u8 ofsX = x%8;
-  const u8 ofsY = y%8;
-  const u8 ofsXmod = ofsX%4;
-  const u32 ofsAdr = (ofsX/4) + ofsY*2;
-  u16 *trgAdr = (u16*)((u32)vramAdr + charNo*0x20 + ofsAdr*2);
-
-  static const u16 shiftArr[4]={0x0001*drawCol,
-                                0x0010*drawCol,
-                                0x0100*drawCol,
-                                0x1000*drawCol};
-  if( (u32)trgAdr <  (u32)vramAdr+0x6000 &&
-      (u32)trgAdr >= (u32)vramAdr )
+  if( x >= 0 && x < 256 && y >= 0 && y < 192 )
   {
-    *trgAdr |= shiftArr[ofsXmod];
+    const u8 drawCol = 1;
+
+    const int charX = x/8;
+    const int charY = y/8;
+    const u16 charNo = charX+charY*32;
+    const u8 ofsX = x%8;
+    const u8 ofsY = y%8;
+    const u8 ofsXmod = ofsX%4;
+    const u32 ofsAdr = (ofsX/4) + ofsY*2;
+    u16 *trgAdr = (u16*)((u32)vramAdr + charNo*0x20 + ofsAdr*2);
+
+    static const u16 shiftArr[4]={0x0001*drawCol,
+                                  0x0010*drawCol,
+                                  0x0100*drawCol,
+                                  0x1000*drawCol};
+    if( (u32)trgAdr <  (u32)vramAdr+0x6000 &&
+        (u32)trgAdr >= (u32)vramAdr )
+    {
+      *trgAdr |= shiftArr[ofsXmod];
+    }
   }
 }
 //--------------------------------------------------------------
@@ -676,7 +773,7 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
         const fx32 len_sub = len_fx - FX32_CONST(MB_CAP_DOWN_DEF_BALL_LEN);
         
         downWork->pullLen = len_sub;
-        downWork->rotAngle = FX_Atan2Idx(FX32_CONST(-subX), FX32_CONST(subY));;
+        downWork->rotAngle = FX_Atan2Idx(FX32_CONST(-subX), FX32_CONST(subY));
       }
       if( downWork->pullLen > (MB_CAP_DOWN_BOW_PULL_LEN_MAX/4) &&
           downWork->isPlayBowPullSnd == FALSE )
@@ -684,7 +781,20 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
         PMSND_PlaySE( MB_SND_BOW_PULL );
         downWork->isPlayBowPullSnd = TRUE;
       }
-      //TODOここで範囲外の角度・距離があった場合は、補正をかけて修正する
+      if( downWork->pullLen < 0 )
+      {
+        downWork->pullLen = 0;
+      }
+      if( downWork->rotAngle < 0x8000 &&
+          downWork->rotAngle > 0x3000 )
+      {
+        downWork->rotAngle = 0x3000;
+      }
+      if( downWork->rotAngle >= 0x8000 &&
+          downWork->rotAngle <  0xd000 )
+      {
+        downWork->rotAngle = 0xd000;
+      }
     }
     else
     {
@@ -753,3 +863,9 @@ void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork , const BOOL isBonus )
   GFL_CLACT_WK_SetDrawEnable( downWork->clwkBall , TRUE );
 }
 
+void MB_CAP_DOWN_GetPoke( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork , const u8 idx )
+{
+  GFL_CLACT_WK_SetDrawEnable( downWork->clwkCapBall[idx] , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( downWork->clwkPoke[idx] , FALSE );
+  
+}

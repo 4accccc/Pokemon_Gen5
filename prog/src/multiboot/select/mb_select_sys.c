@@ -237,7 +237,7 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
     work->boxHoldPoke = MB_SEL_POKE_CreateWork( work , &initWork );
   }
 
-  work->msgBoxName = GFL_BMPWIN_Create( MB_SELECT_FRAME_MSG , 
+  work->msgBoxName = GFL_BMPWIN_Create( MB_SELECT_FRAME_BAR , 
                                 MB_SEL_MSG_BOXNAME_LEFT , 
                                 MB_SEL_MSG_BOXNAME_TOP ,
                                 MB_SEL_MSG_BOXNAME_WIDTH , 
@@ -255,6 +255,7 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
                                 GFL_BMP_CHRAREA_GET_B );
   GFL_BMPWIN_TransVramCharacter( work->msgPokeInfo );
   GFL_BMPWIN_MakeScreen( work->msgPokeInfo );
+  GFL_BG_LoadScreenReq(MB_SELECT_FRAME_BAR);
   GFL_BG_LoadScreenReq(MB_SELECT_FRAME_MSG);
   work->isUpdateBoxName = FALSE;
   work->isUpdatePokeInfo = FALSE;

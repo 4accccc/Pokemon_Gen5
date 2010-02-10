@@ -11,6 +11,7 @@
 #pragma once
 #include "multiboot/mb_data_def.h"
 #include "print/printsys.h"
+#include "poke_tool/poke_tool.h"
 
 //======================================================================
 //	define
@@ -48,6 +49,8 @@
 
 #define MB_CAPTURE_PAL_SUB_OBJ_MAIN (0) //4本
 #define MB_CAPTURE_PAL_SUB_OBJ_MAIN_NUM (4) //4本
+#define MB_CAPTURE_PAL_SUB_OBJ_POKE (4)     //3本
+#define MB_CAPTURE_PAL_SUB_OBJ_POKE_NUM (3) //3本
 
 //------------------------------------------------------
 //OBJ系
@@ -258,6 +261,7 @@ typedef struct
 extern const HEAPID MB_CAPTURE_GetHeapId( const MB_CAPTURE_WORK *work );
 extern GFL_BBD_SYS* MB_CAPTURE_GetBbdSys( MB_CAPTURE_WORK *work );
 extern ARCHANDLE* MB_CAPTURE_GetArcHandle( MB_CAPTURE_WORK *work );
+extern ARCHANDLE* MB_CAPTURE_GetPokeArcHandle( MB_CAPTURE_WORK *work );
 extern const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( const MB_CAPTURE_WORK *work );
 extern const int MB_CAPTURE_GetBbdResIdx( const MB_CAPTURE_WORK *work , const MB_CAP_BBD_RES resType );
 extern MB_CAP_OBJ* MB_CAPTURE_GetObjWork( MB_CAPTURE_WORK *work , const u8 idx );
@@ -267,6 +271,7 @@ extern const BOOL MB_CAPTURE_IsBonusTime( MB_CAPTURE_WORK *work );
 extern const u16 MB_CAPTURE_GetScore( MB_CAPTURE_WORK *work );
 extern void MB_CAPTURE_AddScore( MB_CAPTURE_WORK *work , const u16 addScore , const BOOL isAddTime );
 extern void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork );
+extern POKEMON_PASO_PARAM* MB_CAPTURE_GetPPP( MB_CAPTURE_WORK *work , const u8 idx );
 
 extern void MB_CAPTURE_GetPokeFunc( MB_CAPTURE_WORK *work , MB_CAP_BALL *ballWork , const u8 pokeIdx );
 extern MB_CAP_EFFECT* MB_CAPTURE_CreateEffect( MB_CAPTURE_WORK *work , VecFx32 *pos , const MB_CAP_EFFECT_TYPE type );

@@ -301,6 +301,8 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
         MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
         PMSND_PlaySE( MB_SND_GRASS_SHAKE );
       }
+      
+      break;
     }
   }
   if( isHitAny == FALSE )
@@ -431,6 +433,7 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
           MB_TPrintf("[ 50]\n");
         }
       }
+      break;
     }
   }
 }

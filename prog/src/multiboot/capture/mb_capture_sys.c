@@ -1513,6 +1513,10 @@ ARCHANDLE* MB_CAPTURE_GetArcHandle( MB_CAPTURE_WORK *work )
 {
   return work->initWork->arcHandle;
 }
+ARCHANDLE* MB_CAPTURE_GetPokeArcHandle( MB_CAPTURE_WORK *work )
+{
+  return MB_ICON_GetArcHandle(GFL_HEAP_LOWID(work->heapId),work->initWork->cardType);
+}
 const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( const MB_CAPTURE_WORK *work )
 {
   return work->initWork->cardType;
@@ -1566,6 +1570,7 @@ void MB_CAPTURE_GetPokeFunc( MB_CAPTURE_WORK *work , MB_CAP_BALL *ballWork , con
   MB_CAP_POKE *pokeWork = work->pokeWork[pokeIdx];
   
   MB_CAP_POKE_SetCapture( work , pokeWork );
+  MB_CAP_DOWN_GetPoke( work , work->downWork , pokeIdx );
 }
 
 //--------------------------------------------------------------
@@ -1589,7 +1594,10 @@ MB_CAP_EFFECT* MB_CAPTURE_CreateEffect( MB_CAPTURE_WORK *work , VecFx32 *pos , c
   }
   return NULL;
 }
-
+POKEMON_PASO_PARAM* MB_CAPTURE_GetPPP( MB_CAPTURE_WORK *work , const u8 idx )
+{
+  return work->initWork->ppp[idx];
+}
 
 #pragma mark [>outer func
 //--------------------------------------------------------------

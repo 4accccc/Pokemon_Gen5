@@ -59,4 +59,5 @@ extern const BOOL MB_CAP_DOWN_GetIsBonusBall( const MB_CAP_DOWN *downWork );
 
 //É{Å[ÉãÇÃï‚è[
 extern void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork , const BOOL isBonus );
+extern void MB_CAP_DOWN_GetPoke( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork , const u8 idx );
 

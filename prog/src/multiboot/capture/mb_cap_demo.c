@@ -125,12 +125,17 @@ MB_CAP_DEMO* MB_CAP_DEMO_InitSystem( MB_CAPTURE_WORK *capWork )
     //3D設定の関係で反転させる・・・
     GFL_BBD_SetObjectFlipT( bbdSys , demoWork->objIdx[i] , &isFlip );
   }
+  demoWork->msgWin = NULL;
   
   return demoWork;
 }
 
 void MB_CAP_DEMO_DeleteSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork )
 {
+  if( demoWork->msgWin != NULL )
+  {
+    GFL_BMPWIN_Delete( demoWork->msgWin );
+  }
   
   GFL_HEAP_FreeMemory( demoWork );
 }
@@ -165,6 +170,7 @@ void MC_CAP_DEMO_StartDemoInit( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork
 void MC_CAP_DEMO_StartDemoTerm( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork )
 {
   GFL_BMPWIN_Delete( demoWork->msgWin );
+  demoWork->msgWin = NULL;
 }
 
 //--------------------------------------------------------------
@@ -472,6 +478,7 @@ void MC_CAP_DEMO_FinishDemoTerm( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWor
 const BOOL MC_CAP_DEMO_FinishDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork )
 {
   GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+  MB_CAP_DOWN *downWork = MB_CAPTURE_GetDownWork( capWork );
   const u8 strIdx = (demoWork->isTimeUp == TRUE ? CDOI_TIMEUP : CDOI_FINISH);
   
   switch( demoWork->state )
@@ -618,5 +625,7 @@ const BOOL MC_CAP_DEMO_FinishDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *d
     break;
   }
   
+  //スコア更新のため置いておく
+  MB_CAP_DOWN_UpdateSystem_Demo( capWork , downWork , FALSE , FALSE , 0 , 0);
   return FALSE;
 }
