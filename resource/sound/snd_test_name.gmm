@@ -7887,9 +7887,9 @@
 		<language name="JPN" width="256">W448-ONPU</language>
 		<language name="JPN_KANJI" width="256">W448-ONPU</language>
 	</row>
-	<row id="msg_seq_se_dmy_216">
-		<language name="JPN" width="256">DMY-216</language>
-		<language name="JPN_KANJI" width="256">DMY-216</language>
+	<row id="msg_seq_se_w065_dododo">
+		<language name="JPN" width="256">W065-DODODO</language>
+		<language name="JPN_KANJI" width="256">W065-DODODO</language>
 	</row>
 	<row id="msg_seq_se_dmy_217">
 		<language name="JPN" width="256">DMY-217</language>
