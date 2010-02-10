@@ -317,6 +317,21 @@ enum {
   LX_HANERU_BTN = LX_DEFAULT_BTN,
   LY_HANERU_BTN = LY_LV6+8,
 
+  LX_SICK_CAP = 156,
+  LY_SICK_CAP = LY_LV9,
+  LX_SICK_BOX = LX_SICK_CAP + CALC_STRBOX_WIDTH(4),
+  LY_SICK_BOX = LY_SICK_CAP,
+
+  LX_NATSUKI_CAP = LX_SICK_CAP,
+  LY_NATSUKI_CAP = LY_LV10,
+  LX_NATSUKI_BOX = LX_NATSUKI_CAP + CALC_STRBOX_WIDTH(4),
+  LY_NATSUKI_BOX = LY_NATSUKI_CAP,
+
+  LX_FORM_CAP = LX_SICK_CAP,
+  LY_FORM_CAP = LY_LV11,
+  LX_FORM_BOX = LX_FORM_CAP + CALC_STRBOX_WIDTH(4),
+  LY_FORM_BOX = LY_FORM_CAP,
+
   LX_TAMAGO_CAP = 192,
   LY_TAMAGO_CAP = LY_LV12+6,
   LX_TAMAGO_BOX = LX_TAMAGO_CAP + CALC_STRBOX_WIDTH(3),
@@ -393,6 +408,9 @@ typedef enum {
   INPUTBOX_ID_HATAKU_BUTTON,
   INPUTBOX_ID_HANERU_BUTTON,
 
+  INPUTBOX_ID_SICK,
+  INPUTBOX_ID_NATSUKI,
+  INPUTBOX_ID_FORM,
   INPUTBOX_ID_TAMAGO,
 
   INPUTBOX_ID_MAX,
@@ -401,9 +419,9 @@ typedef enum {
 }InputBoxID;
 
 typedef enum {
-  SWITCH_STR_DEFAULT,
-  SWITCH_STR_TOKUSEI,
-}SwitchBoxStrType;
+  SWITCH_STRNUM_DEFAULT = 2,
+  SWITCH_STRNUM_SICK = 6,
+}SwitchBoxStrNum;
 
 //--------------------------------------------------------------
 /**
@@ -460,7 +478,7 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
 
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_SEX,   LX_SEX_CAP,  LY_SEX_CAP,
     LX_SEX_BOX,   LY_SEX_BOX,  CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_sex, DMPSTR_SEX_MALE, SWITCH_STR_DEFAULT },
+    ID_PARA_sex, DMPSTR_SEX_MALE, SWITCH_STRNUM_DEFAULT },
 
   { INPUTBOX_TYPE_STR,  DMPSTR_SEIKAKU,    LX_SEIKAKU_CAP,    LY_SEIKAKU_CAP,
     LX_SEIKAKU_BOX,    LY_SEIKAKU_BOX,    CALC_STRBOX_WIDTH(5),   LINE_HEIGHT,
@@ -468,7 +486,7 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
 
   { INPUTBOX_TYPE_STR,  DMPSTR_TOKUSEI,    LX_TOKUSEI_CAP,    LY_TOKUSEI_CAP,
     LX_TOKUSEI_BOX,    LY_TOKUSEI_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
-    ID_PARA_speabino,  NARC_message_tokusei_dat, SWITCH_STR_TOKUSEI },
+    ID_PARA_speabino,  NARC_message_tokusei_dat, 0 },
 
   { INPUTBOX_TYPE_STR,  DMPSTR_ITEM,    LX_ITEM_CAP,    LY_ITEM_CAP,
     LX_ITEM_BOX,    LY_ITEM_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
@@ -640,9 +658,24 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
     LX_HANERU_BTN,  LY_HANERU_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
     ID_PARA_type2,  NARC_message_debug_makepoke_dat,  DMPSTR_HANERUDAKE },
 
+  { INPUTBOX_TYPE_SWITCH,  DMPSTR_JOUTAI, LX_SICK_CAP,  LY_SICK_CAP,
+    LX_SICK_BOX,    LY_SICK_BOX,  CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
+    ID_PARA_condition, DMPSTR_SICK_NULL, SWITCH_STRNUM_SICK,
+  },
+
+  { INPUTBOX_TYPE_NUM,  DMPSTR_NATUKI,  LX_NATSUKI_CAP,  LY_NATSUKI_CAP,
+    LX_NATSUKI_BOX,     LY_NATSUKI_BOX, CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
+    ID_PARA_friend,     255, 0,
+  },
+
+  { INPUTBOX_TYPE_NUM,  DMPSTR_FORM,  LX_FORM_CAP,  LY_FORM_CAP,
+    LX_FORM_BOX,        LY_FORM_BOX, CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
+    ID_PARA_form_no,    31, 0,
+  },
+
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_TAMAGO, LX_TAMAGO_CAP,  LY_TAMAGO_CAP,
     LX_TAMAGO_BOX,       LY_TAMAGO_BOX,  CALC_NUMBOX_WIDTH(2), LINE_HEIGHT+8,
-    ID_PARA_tamago_flag, DMPSTR_TAMAGO_OFF, SWITCH_STR_DEFAULT
+    ID_PARA_tamago_flag, DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
   },
 
 };
@@ -1004,8 +1037,10 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
           break;
         case INPUTBOX_TYPE_SWITCH:
           {
-            u8 val = box_getvalue( wk, wk->boxIdx );
-            val = !val;
+            u8 val = box_getvalue( wk, wk->boxIdx ) + 1;
+            if( val >= p->arg2 ){
+              val = 0;
+            }
             box_update( wk, wk->boxIdx, val );
           }
           break;
@@ -1223,6 +1258,10 @@ static void update_dst( DMP_MAINWORK* wk )
     u8 tamago_flg = box_getvalue( wk, INPUTBOX_ID_TAMAGO );
     PP_Put( wk->dst, ID_PARA_tamago_flag, tamago_flg );
   }
+
+  PP_Put( wk->dst, ID_PARA_condition, box_getvalue(wk, INPUTBOX_ID_SICK) );
+  PP_Put( wk->dst, ID_PARA_friend,    box_getvalue(wk, INPUTBOX_ID_NATSUKI) );
+  PP_Put( wk->dst, ID_PARA_form_no,   box_getvalue(wk, INPUTBOX_ID_FORM) );
 }
 
 //----------------------------------------------------------------------------------
@@ -1449,14 +1488,7 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
     STRTOOL_SetNumber( wk->strbuf, value, calc_keta(p->arg), STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
     break;
   case INPUTBOX_TYPE_SWITCH:
-    if( p->arg2 == SWITCH_STR_DEFAULT ){
-      GFL_MSG_GetString( wk->msgData, p->arg+value, wk->strbuf );
-    }else if( p->arg2 == SWITCH_STR_TOKUSEI ){
-      GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
-      value = personal_get_tokusei( wk->dst, value );
-      GFL_MSG_GetString( msgdat, value, wk->strbuf );
-      GFL_MSG_Delete( msgdat );
-    }
+    GFL_MSG_GetString( wk->msgData, p->arg+value, wk->strbuf );
     break;
   }
 }
