@@ -7429,6 +7429,20 @@
   .short EV_SEQ_SEATEMPLE_START
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 天気変更
+ * @param weather_id  WEATHER_NO_RAIKAMI：ライカミ  WEATHER_NO_KAZAKAMI：カザカミ 
+ */
+//--------------------------------------------------------------
+#define _WEATHER_CHANGE( weather_id ) \
+    _ASM_WEATHER_CHANGE weather_id
+
+  .macro  _ASM_WEATHER_CHANGE weather_id
+  .short EV_SEQ_WEATHER_CHANGE
+  .short \weather_id
+  .endm
+
 
 //--------------------------------------------------------------
 /**

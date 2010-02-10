@@ -100,7 +100,8 @@
 //フィールドからコールされる簡易会話
 #include "../../../prog/src/field/easytalk_mode_def.h"
 
-
+//天候ナンバー
+#include "../../../prog/include/field/weather_no.h"    
 
 //スクリプト内共通定義ヘッダファイル
 //最初の3体タイプわけなど
@@ -111,7 +112,6 @@
 //--------------------------------------------------------------
 #if 0
 //include/field
-#include "../../../include/field/weather_no.h"    //天候ナンバー
 
 #include "../../../include/system/brightness.h"   //輝度
 #include "../../../include/system/window.h"     //ウィンドウ

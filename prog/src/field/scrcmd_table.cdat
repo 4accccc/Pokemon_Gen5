@@ -550,7 +550,7 @@
   DEF_CMD( EvCmdC03Center_ControlPlayerWay, EV_SEQ_C03CENTER_PLAYERWAY )
   DEF_CMD( EvCmdCrowdPeople, EV_SEQ_CROWD_PEOPLE_START )
   DEF_CMD( EvCmdSeaTempleStart, EV_SEQ_SEATEMPLE_START )
-  NO_CMD()
+  DEF_CMD( EvCmdWeatherChange, EV_SEQ_WEATHER_CHANGE )
 
   //レポート関連
   DEF_CMD( EvCmdReportCall,   EV_SEQ_REPORT_CALL )

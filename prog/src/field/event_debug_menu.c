@@ -90,6 +90,8 @@
 
 #include "fog_light_test.h"
 
+#include "gamesystem/pm_weather.h"
+
 FS_EXTERN_OVERLAY( d_iwasawa );
 
 //======================================================================
@@ -1990,7 +1992,9 @@ static GMEVENT_RESULT debugMenuWeatherListEvent(
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       
       if( ret != FLDMENUFUNC_CANCEL ){  //Œˆ’è
+        GAMEDATA* gdata = GAMESYSTEM_GetGameData( work->gmSys );
         FIELD_WEATHER_Change( FIELDMAP_GetFieldWeather( work->fieldWork ), ret );
+        GAMEDATA_SetWeatherNo( gdata, ret );
       }
       
       return( GMEVENT_RES_FINISH );

@@ -372,7 +372,8 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         field/vblank_bg_scale_expand.c \
         field/event_egg_birth.c \
         app/townmap/townmap_util.c \
-        field/scrcmd_easytalk.c
+        field/scrcmd_easytalk.c \
+        field/scrcmd_weather.c
 
 
 # wifiƒvƒƒOƒ‰ƒ€

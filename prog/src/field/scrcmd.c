@@ -82,6 +82,7 @@
 #include "scrcmd_un.h"
 #include "scrcmd_sxy.h"
 #include "scrcmd_easytalk.h"
+#include "scrcmd_weather.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
