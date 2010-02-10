@@ -68,7 +68,7 @@ VMCMD_RESULT EvCmdPalparkCall( VMHANDLE *core, void *wk )
   param = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(MB_PARENT_INIT_WORK) ); 
   param->gameData    = gdata;
 
-  event = EVENT_FieldSubProc( gsys, fieldmap, 
+  event = EVENT_FieldSubProcNoFade( gsys, fieldmap, 
                               FS_OVERLAY_ID(multiboot), &MultiBoot_ProcData, param );
 
   SCRIPT_CallEvent( sc, event );
