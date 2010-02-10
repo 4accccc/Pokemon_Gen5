@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-10T20:45:36"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-10T21:33:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -712,6 +712,23 @@ msg_palpark_first_21へ続く</comment>
 アンドリュー・パーク博士！▼
 きみ！
 えーと……</language>
+	</row>
+
+	<row id="msg_palpark_first_18">
+		<language name="JPN" width="256">はやく　はやく！</language>
+		<language name="JPN_KANJI" width="256">早く　早く！</language>
+	</row>
+
+	<row id="msg_palpark_first_19">
+		<language name="JPN" width="256">ちょっ　おもしろいから！
+こっち　きてみてよ！</language>
+		<language name="JPN_KANJI" width="256">ちょっ　面白いから！
+こっち　来てみてよ！</language>
+	</row>
+
+	<row id="msg_palpark_first_20">
+		<language name="JPN" width="256">そっちじゃないわ</language>
+		<language name="JPN_KANJI" width="256">そっちじゃないわ</language>
 	</row>
 
 	<flowchart-group-list>
