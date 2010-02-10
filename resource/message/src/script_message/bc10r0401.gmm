@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-12T18:44:43"/>
+	<create user="ohmori" host="W00223" date="2010-02-10T14:40:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -394,9 +394,13 @@
 
 	<row id="msg_bc10r0401_boy4_01">
 		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">うう……
+		<language name="JPN" width="256">わあー
+ねだんが　たかいから▽
+きっと　すごいもの　なんだろう……▽
 あれもほしい　これもほしい</language>
-		<language name="JPN_KANJI" width="256">うう……
+		<language name="JPN_KANJI" width="256">わあー
+値段が　高いから▽
+きっと　すごいもの　なんだろう……▽
 あれも欲しい　これも欲しい</language>
 	</row>
 

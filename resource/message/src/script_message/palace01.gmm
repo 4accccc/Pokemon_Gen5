@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2009-12-22T17:11:16"/>
+	<create user="ohmori" host="W00223" date="2010-02-10T20:30:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="37" top="316" right="705" bottom="1141" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="493"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="3" style="0000" width="511"/>
+		<band id="3" index="4" style="0000" width="147"/>
+		<band id="4" index="0" style="0000" width="660"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -307,6 +307,350 @@
 すがたが　へんかした！</language>
 		<language name="JPN_KANJI" width="256">パレスの　ちからで
 すがたが　へんかした！</language>
+	</row>
+
+	<row id="plc_oldman1_01_01">
+		<comment>パレスの老人：初回メッセージ</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">……いつみても
+このばしょは　うつくしいな▼
+ひると　よるが　めぐり
+かぜが　うずをなして▽
+きせつが　まわっていく▼
+おおいなるちから　は
+すべて　えんを　えがくのだ▼
+……ここは　イッシュの
+ちゅうしんにある　パレス▽
+かつて　おおいなるちからを　あやつる▽
+ぶんめいが　さかえていた　ばしょ▼</language>
+		<language name="JPN_KANJI" width="256">……いつみても
+このばしょは　うつくしいな▼
+ひると　よるが　めぐり
+かぜが　うずをなして▽
+きせつが　まわっていく▼
+おおいなるちから　は
+すべて　えんを　えがくのだ▼
+……ここは　イッシュの
+ちゅうしんにある　パレス▽
+かつて　おおいなるちからを　あやつる▽
+ぶんめいが　さかえていた　ばしょ▼</language>
+	</row>
+
+	<row id="plc_oldman1_01_02">
+		<comment>パレスの老人：分岐メッセージ
+選択肢表示、plc_oldman1_01_07,8,9</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">こどもよ　パレスについて
+きょうみが　あるのか？</language>
+		<language name="JPN_KANJI" width="256">こどもよ　パレスについて
+きょうみが　あるのか？</language>
+	</row>
+
+	<row id="plc_oldman1_01_03">
+		<comment>パレスの老人：会話終了</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">……
+わしも　こどもも　ポケモンたちも▼
+すべては　ひとつの　うずのなかで
+いきていることを　かんじるのだ</language>
+		<language name="JPN_KANJI" width="256">……
+わしも　こどもも　ポケモンたちも▼
+すべては　ひとつの　うずのなかで
+いきていることを　かんじるのだ</language>
+	</row>
+
+	<row id="plc_oldman1_01_04">
+		<comment>パレスの老人：２回目メッセージ</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">イッシュに　めぐる
+おおいなるちからを　かんじるか？▼</language>
+		<language name="JPN_KANJI" width="256">イッシュに　めぐる
+おおいなるちからを　かんじるか？▼</language>
+	</row>
+
+	<row id="plc_oldman1_01_05">
+		<comment>パレスの老人：パレスとは？</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">イッシュの　えんをえがく
+ふしぎな　みちと　ちけい▽
+その　ちゅうしんにあるのが　「パレス」だ▼
+ここに　くらしていた　ひとびとは
+えんや　うずの　ちゅうしんに▽
+エネルギーが　たまると　しんじていた▼
+そして　そのエネルギーを　あやつり
+はんえいを　きずいていた　のだよ▼
+……
+もしかしたら　せんぞたちは▽
+めぐる　ほしぞらを　ながめながら▽
+イッシュに　えんのような　みちを▽
+つくったのかも　しれないな▼</language>
+		<language name="JPN_KANJI" width="256">イッシュの　えんをえがく
+ふしぎな　みちと　ちけい▽
+その　ちゅうしんにあるのが　「パレス」だ▼
+ここに　くらしていた　ひとびとは
+えんや　うずの　ちゅうしんに▽
+エネルギーが　たまると　しんじていた▼
+そして　そのエネルギーを　あやつり
+はんえいを　きずいていた　のだよ▼
+……
+もしかしたら　せんぞたちは▽
+めぐる　ほしぞらを　ながめながら▽
+イッシュに　えんのような　みちを▽
+つくったのかも　しれないな▼</language>
+	</row>
+
+	<row id="plc_oldman1_01_06">
+		<comment>パレスの老人：アクセスとは？</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">せかいは　めぐり
+すべては　えんで　つながっている▼
+このせかいも　えんのように
+べつのせかいへ　つながっているのだ▼
+パレスにある　はしをわたり
+もうひとつの　せかいへいく　ほうほう▽
+それが　「アクセス」だ▼
+……こどもよ　もし　もうひとつせかいを
+かんじることが　できたら▼
+そのはしをわたり　そのせかいへ
+アクセス　してみるといい▼</language>
+		<language name="JPN_KANJI" width="256">せかいは　めぐり
+すべては　えんで　つながっている▼
+このせかいも　えんのように
+べつのせかいへ　つながっているのだ▼
+パレスにある　はしをわたり
+もうひとつの　せかいへいく　ほうほう▽
+それが　「アクセス」だ▼
+……こどもよ　もし　もうひとつせかいを
+かんじることが　できたら▼
+そのはしをわたり　そのせかいへ
+アクセス　してみるといい▼</language>
+	</row>
+
+	<row id="plc_oldman1_01_07">
+		<comment>パレスの老人：パレスとは？選択肢</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">パレスとは？</language>
+		<language name="JPN_KANJI" width="256">パレスとは？</language>
+	</row>
+
+	<row id="plc_oldman1_01_08">
+		<comment>パレスの老人：アクセスとは？選択肢</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">アクセスとは？</language>
+		<language name="JPN_KANJI" width="256">アクセスとは？</language>
+	</row>
+
+	<row id="plc_oldman1_01_09">
+		<comment>パレスの老人：やめる、選択肢</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="plc_girl4_01_01">
+		<comment>双子娘１：初期メッセージ</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">わたしたちは
+この　パレスを　みまもるもの▼</language>
+		<language name="JPN_KANJI" width="256">わたしたちは
+この　パレスを　みまもるもの▼</language>
+	</row>
+
+	<row id="plc_girl4_01_02">
+		<comment>双子娘１：分岐メッセージ
+plc_girl4_01_06,7,8</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">パレスについて　なにか
+しりたいことは　ありませんか？</language>
+		<language name="JPN_KANJI" width="256">パレスについて　なにか
+しりたいことは　ありませんか？</language>
+	</row>
+
+	<row id="plc_girl4_01_03">
+		<comment>双子娘１：会話終了</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">パレスの　ちゅうしんにある　きが
+「パレスツリー」　です▼
+この　パレスツリーには
+イッシュの　エネルギーが▽
+うずのように　あつまり▽
+その　エネルギーを　たくわえ▽
+せいちょうすると　いわれています▼
+われわれの　せんぞたちは
+その　エネルギーを　あやつり▼
+おおいなるちから　で
+きせきを　おこしたと　いわれています▼</language>
+		<language name="JPN_KANJI" width="256">パレスの　ちゅうしんにある　きが
+「パレスツリー」　です▼
+この　パレスツリーには
+イッシュの　エネルギーが▽
+うずのように　あつまり▽
+その　エネルギーを　たくわえ▽
+せいちょうすると　いわれています▼
+われわれの　せんぞたちは
+その　エネルギーを　あやつり▼
+おおいなるちから　で
+きせきを　おこしたと　いわれています▼</language>
+	</row>
+
+	<row id="plc_girl4_01_04">
+		<comment>双子娘１：モノリスとは？</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">われわれの　せんぞたちは
+エネルギーを　あつめるほうほうを▽
+「ミッション」という　かたちで▽
+のこして　くれました▼
+この　イッシュには　いたるところに
+とどまっている　エネルギーがあります▼
+ミッションは　そのエネルギーを
+じゅんかん　させ▽
+パレスツリーに　エネルギーを▽
+あつめることが　できるのです▼</language>
+		<language name="JPN_KANJI" width="256">われわれの　せんぞたちは
+エネルギーを　あつめるほうほうを▽
+「ミッション」という　かたちで▽
+のこして　くれました▼
+この　イッシュには　いたるところに
+とどまっている　エネルギーがあります▼
+ミッションは　そのエネルギーを
+じゅんかん　させ▽
+パレスツリーに　エネルギーを▽
+あつめることが　できるのです▼</language>
+	</row>
+
+	<row id="plc_girl4_01_05">
+		<comment>双子娘１：ミッションとは？</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">そうですか
+ではまた　おあいしましょう</language>
+		<language name="JPN_KANJI" width="256">そうですか
+ではまた　おあいしましょう</language>
+	</row>
+
+	<row id="plc_girl4_01_06">
+		<comment>双子娘１：モノリスとは？選択肢</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">ツリーとは？</language>
+		<language name="JPN_KANJI" width="256">モノリスとは？</language>
+	</row>
+
+	<row id="plc_girl4_01_07">
+		<comment>双子娘１：ミッションとは？選択肢</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">ミッションとは？</language>
+		<language name="JPN_KANJI" width="256">ミッションとは？</language>
+	</row>
+
+	<row id="plc_girl4_01_08">
+		<comment>双子娘１：やめる、選択肢</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="plc_girl4_02_01">
+		<comment>双子娘2：初期メッセージ</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">わたしたちは
+この　パレスを　みまもるもの▼</language>
+		<language name="JPN_KANJI" width="256">私たちは
+このパレスを　見守る者▼</language>
+	</row>
+
+	<row id="plc_girl4_02_02">
+		<comment>双子娘2：分岐メッセージ
+plc_girl4_02_06,7,8</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">おおいなるちから　について
+しりたいことは　ありませんか？</language>
+		<language name="JPN_KANJI" width="256">大いなる力　について
+知りたいこと　ありませんか？</language>
+	</row>
+
+	<row id="plc_girl4_02_03">
+		<comment>双子娘2：会話終了</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">「Ｇパワー」とは　パレスツリーの
+おおいなるちから　のことです▼
+Ｇパワーは　イッシュに
+さまざまな　きせきを　おこし▽
+はんえいを　もたらしてくれたと▽
+いわれています▼
+Ｇパワーは　パレスツリーの
+せいちょうと　ともに　おおきくなり▼
+イッシュに　すむ
+ひとびとと　ポケモンたちに▼
+たくさんの　きせきを
+おこしたと　いわれています▼</language>
+		<language name="JPN_KANJI" width="256">「Ｇパワー」とは　パレスツリーの
+大いなる力　のことです▼
+Ｇパワーは　イッシュに
+様々な　奇跡を　起こし▽
+繁栄を　もたらしてくれたと▽
+言われています▼
+Ｇパワーは　パレスツリーの
+生長と　共に　大きいなり▼
+イッシュに　住む
+人々と　ポケモンたちに▼
+たくさんの　奇跡を
+起こしたと　言われています▼</language>
+	</row>
+
+	<row id="plc_girl4_02_04">
+		<comment>双子娘2：Gパワーとは？</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">われわれの　せんぞは
+パレスツリー　から▽
+なにかの　どうぐをつかい▼
+Ｇパワーを　もらっていたと
+いわれています▼
+その　どうぐが　なんなのか
+きろくには　のこっていません▼
+パレスに　えらばれたもの　のみが
+そのどうぐを　つかい▼
+Ｇパワーを　あつかうことが
+できたと　いわれています▼</language>
+		<language name="JPN_KANJI" width="256">われわれの　せんぞは
+パレスツリー　から▽
+なにかの　どうぐをつかい▼
+Ｇパワーを　もらっていたと
+いわれています▼
+その　どうぐが　なんなのか
+きろくには　のこっていません▼
+パレスに　えらばれたもの　のみが
+そのどうぐを　つかい▼
+Ｇパワーを　あつかうことが
+できたと　いわれています▼</language>
+	</row>
+
+	<row id="plc_girl4_02_05">
+		<comment>双子娘2：Gパワーをもらうには？</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">そうですか
+ではまた　おあいしましょう</language>
+		<language name="JPN_KANJI" width="256">そうですか
+ではまた　お会いしましょう</language>
+	</row>
+
+	<row id="plc_girl4_02_06">
+		<comment>双子娘2：Gパワーとは？選択肢</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">Ｇパワーとは？</language>
+		<language name="JPN_KANJI" width="256">Ｇパワーとは？</language>
+	</row>
+
+	<row id="plc_girl4_02_07">
+		<comment>双子娘2：Gパワーをもらうには？選択肢</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">Ｇパワーをもらうには？</language>
+		<language name="JPN_KANJI" width="256">Ｇパワーをもらうには？</language>
+	</row>
+
+	<row id="plc_girl4_02_08">
+		<comment>双子娘2：やめる、選択肢</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<flowchart-group-list>
