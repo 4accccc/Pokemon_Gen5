@@ -38,6 +38,7 @@
 #include "poke_tool\monsno_def.h"
 #include "savedata\battle_rec.h"
 #include "battle\battle.h"
+#include "field\zonedata.h"
 #include "fieldmap\zone_id.h"
 
 // local includes ---------------------
@@ -733,7 +734,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
     PMSND_PauseBGM(TRUE);
     PMSND_PushBGM();
   }
-
+  ZONEDATA_Open( HEAPID_BTL_DEBUG_SYS );
 
   setMainProc( wk, mainProc_Setup );
 
@@ -747,6 +748,8 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
 static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   DEBUG_BTL_WORK* wk = mywk;
+
+  ZONEDATA_Close();
 
   // 仮想フィールドBGMスタック復帰
   {
