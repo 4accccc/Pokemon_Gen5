@@ -133,17 +133,13 @@ play_palpark:
   _BALLOONWIN_TALKOBJ_MSG( msg_palpark_08 )
   _BALLOONWIN_CLOSE()
 
-  //主人公マシンインアニメ
+  //主人公マシンインアニメ+フェードアウト
   _CALL player_in_anm
 
-  //「はじめるよ」
-  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_09 )
-  _BALLOONWIN_CLOSE()
-
-  //パルパークコール (内部でフェードアウト＞アプリフェードインまでやる)
+  //パルパークコール
   _PALPARK_CALL()
 
-  //主人公マシンアウトアニメ
+  //主人公マシンアウトアニメ+フェードイン
   _CALL player_out_anm
 
   //終了状態取得
@@ -218,19 +214,43 @@ _RET
 
 //主人公マシンイン
 player_in_anm:
+  DEFINE_LOCAL anmID
   //博士はける
   _OBJ_ANIME( R15R0301_PARK, anm_doc_in )
 	_OBJ_ANIME_WAIT()
   //自機移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
 	_OBJ_ANIME_WAIT()
-  //博士マシンいじるアニメ
-  _OBJ_ANIME( R15R0301_PARK, anm_doc_work )
+  //博士マシンいじるアニメ1
+  _OBJ_ANIME( R15R0301_PARK, anm_doc_work1 )
 	_OBJ_ANIME_WAIT()
+
+  //マシン起動SE
+  //アニメセットアップ
+  _BMODEL_ANIME_CREATE( anmID, SCR_BMID_PPMACHINE, 10, 3 )
+  //マシンアニメ
+	_BMODEL_ANIME_SET( anmID, SCR_BMANM_PPM_MOV )
+	_BMODEL_ANIME_WAIT( anmID )
+  //博士所定位置に戻るアニメ
+  _OBJ_ANIME( R15R0301_PARK, anm_doc_work2 )
+	_OBJ_ANIME_WAIT()  
+  //「はじめるよ」
+  _BALLOONWIN_TALKOBJ_MSG( msg_palpark_09 )
+  _BALLOONWIN_CLOSE()
+
+  //ブラックアウト
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+
+  //アニメ解放
+  _BMODEL_ANIME_DELETE( anmID )
 _RET
 
 //主人公マシンアウト
 player_out_anm:
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
   //自機移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
 	_OBJ_ANIME_WAIT()
@@ -255,27 +275,34 @@ _ANIME_LABEL	anm_doc_in
 //自機マシンイン
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_in
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //博士マシン起動
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_doc_work
-	_ANIME_DATA	AC_WALK_U_8F,1
-  _ANIME_DATA	AC_WALK_D_8F,1
-  _ANIME_DATA	AC_WALK_R_8F,2
-  _ANIME_DATA	AC_WALK_U_8F,1
-  _ANIME_DATA	AC_WALK_D_8F,1
-  _ANIME_DATA	AC_WALK_L_8F,2
-  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+_ANIME_LABEL	anm_doc_work1
+	_ANIME_DATA	AC_WALK_U_4F,1
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_STAY_WALK_U_4F,1
+  _ANIME_DATA	AC_WALK_R_4F,4
+  _ANIME_DATA	AC_STAY_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士マシン起動後戻るアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_doc_work2
+  _ANIME_DATA	AC_WALK_L_4F,3
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_STAY_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //自機マシンアウト
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_out
-	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
