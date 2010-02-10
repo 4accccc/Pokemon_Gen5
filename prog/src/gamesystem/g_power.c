@@ -135,6 +135,38 @@ void GPOWER_Set_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata)
 
 //==================================================================
 /**
+ * 指定したGパワーIDが発動しているかチェック
+ *
+ * @param   gpower_id		GパワーID
+ * @param   powerdata		パワーデータへのポインタ
+ *
+ * @retval  GPOWER_ID		GPOWER_ID_NULLが戻ってきた場合：パワーは発動していない
+ * @retval  GPOWER_ID		指定IDと同じIDが戻ってきた場合：指定IDのパワーが発動している
+ * @retval  GPOWER_ID		指定IDと違うIDが戻ってきた場合：指定IDと同じタイプの別パワーが発動している
+ */
+//==================================================================
+GPOWER_ID GPOWER_Check_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata)
+{
+  return GPowerSys.occur_power[powerdata[gpower_id].type];
+}
+
+//==================================================================
+/**
+ * 指定したタイプのパワーが発動しているかチェック
+ *
+ * @param   type		    Gパワータイプ
+ * @param   powerdata		パワーデータへのポインタ
+ *
+ * @retval  GPOWER_ID		発動しているGパワーID (発動していない場合はGPOWER_ID_NULL)
+ */
+//==================================================================
+GPOWER_ID GPOWER_Check_OccurType(GPOWER_TYPE type, const POWER_CONV_DATA *powerdata)
+{
+  return GPowerSys.occur_power[type];
+}
+
+//==================================================================
+/**
  * Finish待ちになっているGパワーIDを取得する
  *
  * @retval  GPOWER_ID		GパワーID(Finish待ちが1つも無い場合はGPOWER_ID_NULL)
