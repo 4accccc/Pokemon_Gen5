@@ -246,33 +246,38 @@ EVENT_END
 /* 人口A：ショップA                                           */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+	_TALK_OBJ_START()
+	_BLACK_CITY_SHOP0_CALL( )
 EVENT_END
 
 /**************************************************************/
 /* 人口B：ショップB                                           */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_02
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+	_TALK_OBJ_START()
+	_BLACK_CITY_SHOP1_CALL( )
 EVENT_END
 
 /**************************************************************/
 /* 人口C：ショップC                                           */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_03
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+	_TALK_OBJ_START()
+	_BLACK_CITY_SHOP2_CALL( )
 EVENT_END
 
 /**************************************************************/
 /* 人口D：ショップD                                          */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_04
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+	_TALK_OBJ_START()
+	_BLACK_CITY_SHOP3_CALL( )
 EVENT_END
 
 /**************************************************************/
 /* 人口E：ショップE                                           */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_05
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+	_TALK_OBJ_START()
+	_BLACK_CITY_SHOP4_CALL( )
 EVENT_END
