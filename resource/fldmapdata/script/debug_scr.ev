@@ -350,6 +350,7 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_02, 1 )	//みず
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_03, 2 )	//ほのお
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 3 )	//演説イベント
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 4 )	//D03R0101のイベント
 		_BMPMENU_MAKE_LIST( msg_debug_00, 4 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -383,6 +384,38 @@ EVENT_START   ev_debug_suginaka
 			_FLAG_SET( FV_T02_SPEECH_AFTER )
 
 			//===================================//
+		
+		ELSIF $SCWK_ANSWER == 4 THEN
+			
+			//========================================/
+	
+			//D04遺跡イベント終了
+			$WK_SCENE_D04R0601 = 1
+		
+			//D04遺跡イベントバニシュフラグ
+			_FLAG_SET( FV_D04R0601_EVENT_01 )
+
+			//D03R0101のイベント開始
+			$WK_SCENE_D03R0101 = 4
+	
+			//D03R0101のバニシュフラグリセット
+			_FLAG_RESET( FV_D03R0101_RIVAL_02 )
+			_FLAG_RESET( FV_D03R0101_CHAMPION_01 )
+	
+			//C02の博士（父、娘）、チャンピオン、ジムリーダー,、サポートを表示
+			_FLAG_RESET(FV_C02_STONEEVENT_01)	
+
+			//D08のサポートを消す
+			_FLAG_SET(FV_D08_SUPORT_01)	
+
+			//C02でのライトストーン、ダークストーンのイベント有効
+			$WK_SCENE_C02 = 6
+	
+			//========================================/
+			
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_D03R0101, 61, 32, DIR_DOWN )
+			
 		ELSE
 			$SCWK_TEMP0 = 428
 		ENDIF
