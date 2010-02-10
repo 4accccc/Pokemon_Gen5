@@ -2040,6 +2040,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
     GFL_NET_ReloadIcon();
   }
 
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -3610,7 +3611,6 @@ static void CONFIRM_Init( CONFIRM_WORK *p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_
     p_wk->init.w        = APP_TASKMENU_PLATE_WIDTH;
     p_wk->init.h        = APP_TASKMENU_PLATE_HEIGHT;
   }
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -3692,6 +3692,13 @@ static void CONFIRM_Start( CONFIRM_WORK *p_wk, int wait )
   GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), TRUE );
 
   MSGWND_Print( &p_wk->msg, mes_config_comment20, wait );
+
+  if( GFL_NET_IsInit() )
+  { 
+    //通信アイコンがBGにかぶるので位置を変える
+    GFL_NET_ChangeIconPosition(-16,-16);
+    GFL_NET_ReloadIcon();
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -4131,19 +4138,34 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     APPBAR_WIN_LIST select;
     if( APPBAR_IsDecide( &p_wk->appbar, &select ) )
     {
-      if( APPBAR_IsWaitEffect( &p_wk->appbar ) )
-      { 
-
         switch( select )
         {
         case APPBAR_WIN_DECIDE:
-          SEQ_SetNext( p_seqwk, SEQFUNC_SetNowConfig );
+          if( APPBAR_IsWaitEffect( &p_wk->appbar ) )
+          { 
+            SEQ_SetNext( p_seqwk, SEQFUNC_SetNowConfig );
+          }
           break;
 
         case APPBAR_WIN_EXIT:
-          p_wk->p_param->is_exit  = TRUE;
-          /* fallthrough */
+          { 
+            CONFIG_PARAM  now;
+            p_wk->p_param->is_exit  = TRUE;
+            SCROLL_GetConfigParam( &p_wk->scroll, &now );
+            //今の設定が前の設定と違うならば、最終確認画面を出す
+            if( CONFIGPARAM_Compare( &p_wk->pre, &now ) )
+            {
+              SEQ_SetNext( p_seqwk, SEQFUNC_SetPreConfig );
+            }
+            else
+            {
+              APPBAR_StopEffect( &p_wk->appbar );
+              SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
+            }
+          }
+          break;
         case APPBAR_WIN_CANCEL:
+          if( APPBAR_IsWaitEffect( &p_wk->appbar ) )
           {
             CONFIG_PARAM  now;
             SCROLL_GetConfigParam( &p_wk->scroll, &now );
@@ -4160,7 +4182,6 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
           }
           break;
         }
-      }
     }
   }
 }
