@@ -363,6 +363,7 @@ extern void BPP_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok );
 extern void BPP_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );
 extern void BPP_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type );
 extern void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
+extern void BPP_ChangeFormPutSrcData( BTL_POKEPARAM* bpp, u8 formNo );
 
 extern u32 BPP_GetItem( const BTL_POKEPARAM* pp );
 extern void BPP_RemoveItem( BTL_POKEPARAM* pp );

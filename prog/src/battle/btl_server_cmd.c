@@ -109,7 +109,6 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_53bit,            // SC_OP_CANTESCAPE_ADD
   SC_ARGFMT_53bit,            // SC_OP_CANTESCAPE_SUB
   SC_ARGFMT_12byte,           // SC_OP_CHANGE_POKETYPE
-  SC_ARGFMT_11byte,           // SC_OP_CHANGE_POKEFORM
   SC_ARGFMT_1byte,            // SC_OP_CONSUME_ITEM
   SC_ARGFMT_555bit_22byte,    // SC_OP_UPDATE_USE_WAZA,
   SC_ARGFMT_11byte,           // SC_OP_SET_CONTFLAG
@@ -157,6 +156,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_ACT_FAKE_DISABLE
   SC_ARGFMT_12byte,           // SC_ACT_EFFECT_BYPOS
   SC_ARGFMT_112byte,          // SC_ACT_EFFECT_BYVECTOR
+  SC_ARGFMT_11byte,           // SC_ACT_CHANGE_FORM
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
   SC_ARGFMT_12byte, // SC_MSG_WAZA

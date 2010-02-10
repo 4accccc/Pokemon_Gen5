@@ -228,6 +228,7 @@ static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args 
 static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByVector( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_ChangeForm( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -2373,7 +2374,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_CANTESCAPE_ADD,     scProc_OP_EscapeCodeAdd   },
     { SC_OP_CANTESCAPE_SUB,     scProc_OP_EscapeCodeSub   },
     { SC_OP_CHANGE_POKETYPE,    scProc_OP_ChangePokeType  },
-    { SC_OP_CHANGE_POKEFORM,    scProc_OP_ChangePokeForm  },
     { SC_OP_WAZASICK_TURNCHECK, scProc_OP_WSTurnCheck     },
     { SC_OP_CONSUME_ITEM,       scProc_OP_ConsumeItem     },
     { SC_OP_UPDATE_USE_WAZA,    scProc_OP_UpdateUseWaza   },
@@ -2404,6 +2404,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_FAKE_DISABLE,      scProc_ACT_FakeDisable    },
     { SC_ACT_EFFECT_BYPOS,      scProc_ACT_EffectByPos    },
     { SC_ACT_EFFECT_BYVECTOR,   scProc_ACT_EffectByVector },
+    { SC_ACT_CHANGE_FORM,       scProc_ACT_ChangeForm     },
   };
 
 restart:
@@ -3751,7 +3752,38 @@ static BOOL scProc_ACT_EffectByVector( BTL_CLIENT* wk, int* seq, const int* args
   }
   return FALSE;
 }
+//---------------------------------------------------------------------------------------
+/**
+ *  指定ポケモンのフォルムナンバーチェンジ
+ *  args .. [0]:pokeID  [1]:formNo
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_ChangeForm( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+      BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 
+      BPP_ChangeFormPutSrcData( bpp, args[1] );
+      BTLV_ChangeForm_Start( wk->viewCore, vpos );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( BTLV_ChangeForm_Wait(wk->viewCore) )
+    {
+      (*seq)++;
+    }
+    break;
+  default:
+    return TRUE;
+
+  }
+  return FALSE;
+}
 
 
 

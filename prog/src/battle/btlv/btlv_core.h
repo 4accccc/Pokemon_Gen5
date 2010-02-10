@@ -296,6 +296,9 @@ extern BOOL BTLV_KinomiAct_Wait( BTLV_CORE* wk, BtlPokePos pos );
 extern void BTLV_FakeDisable_Start( BTLV_CORE* wk, BtlPokePos pos );
 extern BOOL BTLV_FakeDisable_Wait( BTLV_CORE* wk );
 
+extern void BTLV_ChangeForm_Start( BTLV_CORE* wk, BtlvMcssPos vpos );
+extern BOOL BTLV_ChangeForm_Wait( BTLV_CORE* wk );
+
 extern void BTLV_ACT_MoveMember_Start( BTLV_CORE* wk, u8 clientID, u8 vpos1, u8 vpos2, u8 posIdx1, u8 posIdx2 );
 extern BOOL BTLV_ACT_MoveMember_Wait( BTLV_CORE* wk );
 

@@ -202,6 +202,12 @@ struct _BTLV_SCU {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static inline void* Scu_GetProcWork( BTLV_SCU* wk, u32 size );
+static void btlin_startFade( int wait );
+static inline void btlinTool_vpos_exchange( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos* vposDst, BtlPokePos* posDst, const BTL_POKEPARAM** bppDst );
+static BOOL btlin_skip_core( BTLV_SCU* wk, int* seq, const u8* vposAry, u8 vposCount );
+static BOOL btlin_skip_single( BTLV_SCU* wk, int* seq );
+static BOOL btlin_skip_double( BTLV_SCU* wk, int* seq );
+static BOOL btlin_skip_triple( BTLV_SCU* wk, int* seq );
 static BOOL btlin_wild_single( int* seq, void* wk_adrs );
 static BOOL btlin_trainer_single( int* seq, void* wk_adrs );
 static BOOL btlin_comm_single( int* seq, void* wk_adrs );
@@ -222,6 +228,7 @@ static u16 btlfinEffsub_getOpponentPokeInStrID( BTLV_SCU* wk, u8 pokeCount );
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs );
+static void taskChangeForm( GFL_TCBL* tcbl, void* wk_adrs );
 static void msgWinVisible_Init( MSGWIN_VISIBLE* wk, GFL_BMPWIN* win );
 static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk );
 static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk );
@@ -2423,7 +2430,7 @@ BOOL BTLV_SCU_KinomiAct_Wait( BTLV_SCU* wk, BtlvMcssPos pos )
 //==============================================================================================
 
 //--------------------------------------------------------
-// ポケモン入場アクション
+// イリュージョン解除動作タスクワーク
 //--------------------------------------------------------
 typedef struct {
 
@@ -2494,6 +2501,77 @@ static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs )
     break;
   }
 }
+//==============================================================================================
+// フォルムチェンジ動作
+//==============================================================================================
+
+//--------------------------------------------------------
+// フォルムチェンジ動作タスクワーク
+//--------------------------------------------------------
+typedef struct {
+
+  BTLV_SCU*    parentWork;
+  BtlPokePos   pos;
+  BtlvMcssPos  vpos;
+  u32          seq;
+  u8*          pTaskCounter;
+
+}CHANGEFORM_ACT_WORK;
+
+
+/**
+ *  フォルムチェンジ 動作開始
+ */
+void BTLV_SCU_ChangeForm_Start( BTLV_SCU* wk, BtlvMcssPos vpos )
+{
+  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskChangeForm, sizeof(CHANGEFORM_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+  CHANGEFORM_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
+
+  twk->parentWork = wk;
+  twk->vpos = vpos;
+  twk->pos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, vpos );
+  twk->pTaskCounter = &wk->taskCounter[TASKTYPE_DEFAULT];
+  twk->seq = 0;
+
+  (*(twk->pTaskCounter))++;
+}
+/**
+ *  フォルムチェンジ 動作終了待ち
+ */
+BOOL BTLV_SCU_ChangeForm_Wait( BTLV_SCU* wk )
+{
+  return ( wk->taskCounter[ TASKTYPE_DEFAULT ] == 0 );
+}
+
+/**
+ *  フォルムチェンジ：実行タスク
+ */
+static void taskChangeForm( GFL_TCBL* tcbl, void* wk_adrs )
+{
+  CHANGEFORM_ACT_WORK* wk = wk_adrs;
+
+  // @todo 今はただ消して, 出してるだけです
+  switch( wk->seq ){
+  case 0:
+    BTLV_EFFECT_DelPokemon( wk->vpos );
+    wk->seq++;
+    break;
+  case 1:
+    {
+      const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
+      const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
+      BTLV_EFFECT_SetPokemon( pp, wk->vpos );
+      wk->seq++;
+    }
+  case 2:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      (*(wk->pTaskCounter))--;
+      GFL_TCBL_Delete( tcbl );
+    }
+    break;
+  }
+}
+
 
 //==============================================================================================
 // メッセージウィンドウ表示・消去処理

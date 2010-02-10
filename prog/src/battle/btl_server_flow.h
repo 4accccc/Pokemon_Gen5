@@ -259,6 +259,7 @@ typedef enum {
   BTL_HANDEX_FAKE_BREAK,          ///< イリュージョン解除
   BTL_HANDEX_JURYOKU_CHECK,       ///< じゅうりょく発動時のチェック処理
   BTL_HANDEX_EFFECT_BY_POS,       ///< 位置指定してエフェクト発動
+  BTL_HANDEX_CHANGE_FORM,         ///< フォルムナンバーチェンジ
 
   BTL_HANDEX_MAX,
 
@@ -793,6 +794,16 @@ typedef struct {
   u16  reservedQuePos;                ///< Que予約領域
   u8   fQueReserve;                   ///< Que予約フラグ
 }BTL_HANDEX_PARAM_EFFECT_BY_POS;
+
+/**
+ * フォルムナンバーチェンジ
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8   pokeID;                   ///< ポケモンID
+  u8   formNo;                   ///< フォルムナンバー
+  BTL_HANDEX_STR_PARAMS    exStr;    ///< 成功時メッセージ
+}BTL_HANDEX_PARAM_CHANGE_FORM;
 
 
 extern void* BTL_SVF_HANDEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );

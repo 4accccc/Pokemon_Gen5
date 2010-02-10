@@ -77,7 +77,6 @@ typedef struct {
   u8  type1;        ///< タイプ１
   u8  type2;        ///< タイプ２
   u8  sex;          ///< 性別
-  u8  formno;       ///< フォルムナンバー
 
 }BPP_BASE_PARAM;
 
@@ -2039,23 +2038,35 @@ void BPP_ChangePokeType( BTL_POKEPARAM* bpp, PokeTypePair type )
  * @param   tok
  */
 //=============================================================================================
-void BPP_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok )
+void BPP_ChangeTokusei( BTL_POKEPARAM* bpp, PokeTokusei tok )
 {
-  pp->tokusei = tok;
+  bpp->tokusei = tok;
 }
 //=============================================================================================
 /**
- * フォルム変更
+ * フォルム変更（サーバ処理用：ソースデータは書き換えない）
  *
  * @param   pp
  * @param   formNo
  */
 //=============================================================================================
-void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo )
+void BPP_ChangeForm( BTL_POKEPARAM* bpp, u8 formNo )
 {
-  pp->formNo = formNo;
+  bpp->formNo = formNo;
 }
-
+//=============================================================================================
+/**
+ * フォルム変更（サーバ処理用：ソースデータは書き換えない）
+ *
+ * @param   bpp
+ * @param   formNo
+ */
+//=============================================================================================
+void BPP_ChangeFormPutSrcData( BTL_POKEPARAM* bpp, u8 formNo )
+{
+  bpp->formNo = formNo;
+  PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, formNo );
+}
 
 
 
@@ -2528,6 +2539,7 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
   }
 
   PP_Put( pp, ID_PARA_item, bpp->coreParam.item );
+  PP_Put( pp, ID_PARA_form_no, bpp->formNo );
 }
 //=============================================================================================
 /**
