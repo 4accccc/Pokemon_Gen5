@@ -933,8 +933,8 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   wk->posCoverClientID[BTL_POS_2ND_0] = 1;
   wk->posCoverClientID[BTL_POS_1ST_1] = 0;
   wk->posCoverClientID[BTL_POS_2ND_1] = 1;
-//  wk->posCoverClientID[BTL_POS_1ST_2] = 0;
-//  wk->posCoverClientID[BTL_POS_2ND_2] = 1;
+  wk->posCoverClientID[BTL_POS_1ST_2] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_2] = 1;
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
@@ -1095,6 +1095,8 @@ static BOOL setup_comm_rotation( int* seq, void* work )
     wk->posCoverClientID[BTL_POS_2ND_0] = 1;
     wk->posCoverClientID[BTL_POS_1ST_1] = 0;
     wk->posCoverClientID[BTL_POS_2ND_1] = 1;
+    wk->posCoverClientID[BTL_POS_1ST_2] = 0;
+    wk->posCoverClientID[BTL_POS_2ND_2] = 1;
     wk->myClientID = wk->setupParam->commPos;
     wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
     (*seq)++;
@@ -2580,7 +2582,7 @@ BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos )
       BTLV_MCSS_POS_F,
     #endif
 
-    u8 org_pos = (wk->myOrgPos & 1);
+    u8 org_pos = ( wk->myOrgPos & 1 );
     u8 result;
 
     if( isFarSide )

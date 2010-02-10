@@ -466,10 +466,10 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
   case BTL_RULE_ROTATION:
     // ゲーム内トレーナー
     if( competitor != BTL_COMPETITOR_COMM ){
-      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
+      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_triple );
     // 通信対戦
     }else{
-      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double );
+      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_triple );
     }
     break;
   }
@@ -2584,6 +2584,9 @@ static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk )
 }
 //----------------------------
 
+//==============================================================================================
+// HP・STATUSゲージ
+//==============================================================================================
 static void statwin_setupAll( BTLV_SCU* wk )
 {
   u32 pos_end;
@@ -2595,7 +2598,11 @@ static void statwin_setupAll( BTLV_SCU* wk )
     wk->statusWin[i].bpp = NULL;
   }
 
-  pos_end = BTL_MAIN_GetEnablePosEnd( wk->mainModule );
+  if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_ROTATION ){
+    pos_end = BTL_MAIN_GetEnablePosEnd( wk->mainModule );
+  }else{
+    pos_end = BTL_POS_2ND_2;
+  }
   for(i=0; i<=pos_end; ++i){
     statwin_setup( &wk->statusWin[ i ], wk, i );
   }
