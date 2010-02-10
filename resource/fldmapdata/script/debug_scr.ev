@@ -348,7 +348,8 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_01, 0 )	//くさ
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_02, 1 )	//みず
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_03, 2 )	//ほのお
-		_BMPMENU_MAKE_LIST( msg_debug_00, 3 )	//やめる
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 3 )	//演説イベント
+		_BMPMENU_MAKE_LIST( msg_debug_00, 4 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 	
@@ -358,6 +359,29 @@ EVENT_START   ev_debug_suginaka
 			$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
 		ELSIF $SCWK_ANSWER == 2 THEN
 			$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_HONOO
+		ELSIF $SCWK_ANSWER == 3 THEN
+			//=========フラグワーク操作==========//
+	
+			//博士案内イベント終了
+			$WK_SCENE_T02PC0101 = 3
+	
+			//ライバルストッパー終了
+			$WK_SCENE_T02 = 1	
+	
+			//ライバルストッパー解除
+			_FLAG_SET( FV_T02_RIVAL )
+			_FLAG_SET( FV_T02_HAKASE )
+
+			//演説イベントフラグ開始
+			_FLAG_RESET( FV_T02_SAGE )
+			_FLAG_RESET( FV_T02_HAKAI )
+			_FLAG_RESET( FV_T02_NNN )
+			_FLAG_RESET( FV_T02_RIVAL_02 )
+			_FLAG_RESET( FV_T02_MAN )
+			_FLAG_RESET( FV_T02_SPEECH_BEFORE )
+			_FLAG_SET( FV_T02_SPEECH_AFTER )
+
+			//===================================//
 		ELSE
 			$SCWK_TEMP0 = 428
 		ENDIF
