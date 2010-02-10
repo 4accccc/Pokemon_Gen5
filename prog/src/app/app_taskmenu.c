@@ -248,31 +248,6 @@ void APP_TASKMENU_UpdateMenu( APP_TASKMENU_WORK *work )
   }
   
   APP_TASKMENU_UpdatePalletAnime( &work->transAnmCnt , &work->transCol , work->res->frame , work->res->plt );
-  
-  //プレートアニメ
-  /*
-  if( work->transAnmCnt + APP_TASKMENU_ANIME_VALUE >= 0x10000 )
-  {
-    work->transAnmCnt = work->transAnmCnt+APP_TASKMENU_ANIME_VALUE-0x10000;
-  }
-  else
-  {
-    work->transAnmCnt += APP_TASKMENU_ANIME_VALUE;
-  }
-  {
-    //1～0に変換
-    const fx16 cos = (FX_CosIdx(work->transAnmCnt)+FX16_ONE)/2;
-    const u8 r = APP_TASKMENU_ANIME_S_R + (((APP_TASKMENU_ANIME_E_R-APP_TASKMENU_ANIME_S_R)*cos)>>FX16_SHIFT);
-    const u8 g = APP_TASKMENU_ANIME_S_G + (((APP_TASKMENU_ANIME_E_G-APP_TASKMENU_ANIME_S_G)*cos)>>FX16_SHIFT);
-    const u8 b = APP_TASKMENU_ANIME_S_B + (((APP_TASKMENU_ANIME_E_B-APP_TASKMENU_ANIME_S_B)*cos)>>FX16_SHIFT);
-    
-    work->transCol = GX_RGB(r, g, b);
-    
-    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
-                                        work->initWork.palNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
-                                        &work->transCol , 2 );
-  }
-  */
 }
 
 //--------------------------------------------------------------
@@ -298,6 +273,13 @@ const u8 APP_TASKMENU_GetCursorPos( APP_TASKMENU_WORK *work )
   return work->cursorPos;
 }
 
+//--------------------------------------------------------------
+//	アクティブの設定
+//--------------------------------------------------------------
+const void APP_TASKMENU_SetActive( APP_TASKMENU_WORK *work, BOOL isActive )
+{ 
+  APP_TASKMENU_SetActiveItem( work->menuWin[work->cursorPos], work->res, isActive );
+}
 //--------------------------------------------------------------
 //	メニューのBmpWinと文字を作る
 //--------------------------------------------------------------
@@ -424,7 +406,7 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
 
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
   {
-    if( trg != 0 )
+    if( trg & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_A|PAD_BUTTON_B) )
     {
       APP_TASKMENU_SetActiveItem( work->menuWin[work->cursorPos], work->res, TRUE );
       GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
