@@ -17,6 +17,8 @@
 #include "print/global_msg.h"
 #include "app/app_menu_common.h"
 
+#include "arc_def.h"
+#include "zukan_data.naix"
 #include "p_status_gra.naix"
 
 #include "p_sta_sys.h"
@@ -119,6 +121,8 @@ struct _PSTATUS_INFO_WORK
   BOOL isUpdateStr;
   BOOL isDisp;
 
+  u16 *localZukanNoList;
+
   GFL_BMPWIN  *bmpWin[SIB_MAX];
   GFL_BMPWIN  *bmpWinUp;
 
@@ -156,12 +160,21 @@ static const u8 winPos[SIB_MAX][4] =
 //--------------------------------------------------------------
 PSTATUS_INFO_WORK* PSTATUS_INFO_Init( PSTATUS_WORK *work )
 {
+  u32 size;
   PSTATUS_INFO_WORK* infoWork;
   
   infoWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PSTATUS_INFO_WORK) );
   infoWork->isUpdateStr = FALSE;
   infoWork->isDisp = FALSE;
+  infoWork->localZukanNoList = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_chihou_no_dat, FALSE, work->heapId, &size );
 
+//  {
+//    int i;
+//    for( i=0;i<size/2;i++ )
+//    {
+//      OS_TPrintf("[%3d->%3d]\n",i,infoWork->localZukanNoList[i]);
+//    }
+//  }
 
   return infoWork;
 }
@@ -171,6 +184,7 @@ PSTATUS_INFO_WORK* PSTATUS_INFO_Init( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 void PSTATUS_INFO_Term( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork )
 {
+  GFL_HEAP_FreeMemory( infoWork->localZukanNoList );
   GFL_HEAP_FreeMemory( infoWork );
 }
 
@@ -363,14 +377,23 @@ static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *info
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
     u32 no = PPP_Get( ppp , ID_PARA_monsno , NULL );
-    //FIXME :ƒ[ƒJƒ‹}ŠÓˆ—
-//    if( work->psData->zukan_mode ==  )
-//    {
-//    }
-    WORDSET_RegisterNumber( wordSet , 0 , no , 3 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
-    PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , wordSet , mes_status_02_03 , 
-                                   PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , PSTATUS_STR_COL_VALUE );
-    WORDSET_Delete( wordSet );
+    if( work->psData->zukan_mode == FALSE )
+    {
+      no = infoWork->localZukanNoList[no];
+    }
+    
+    if( no == 0 )
+    {
+      PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , wordSet , mes_status_02_16 , 
+                                     PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , PSTATUS_STR_COL_VALUE );
+    }
+    else
+    {
+      WORDSET_RegisterNumber( wordSet , 0 , no , 3 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+      PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , wordSet , mes_status_02_03 , 
+                                     PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , PSTATUS_STR_COL_VALUE );
+      WORDSET_Delete( wordSet );
+    }
   }
 
   //–¼‘O

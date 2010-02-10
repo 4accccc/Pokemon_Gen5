@@ -1080,10 +1080,12 @@ static void * FMenuCallProc_PokeStatus(PROCLINK_WORK* wk, u32 param, EVENT_PROCL
   PSTATUS_DATA *psData = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(PSTATUS_DATA) );
   GAMEDATA *gmData = GAMESYSTEM_GetGameData(wk->param->gsys);
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gmData );
+  ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( gmData );
 
   psData->ppt = PST_PP_TYPE_POKEPARTY;
   psData->game_data = gmData;
   psData->isExitRequest = FALSE;
+  psData->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
 
   if( pre == EVENT_PROCLINK_CALL_POKELIST )
   { 

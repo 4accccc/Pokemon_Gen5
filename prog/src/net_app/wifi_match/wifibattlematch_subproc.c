@@ -367,6 +367,7 @@ static void WIFIBATTLEMATCH_SUBPROC_InitStatusData( WIFIBATTLEMATCH_SUBPROC_PARA
 {
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(p_param->gameData);
   MYSTATUS *myStatus = GAMEDATA_GetMyStatus( p_param->gameData );
+  ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( p_param->gameData );
 
   psData->ppd = procWork->pokeParty;
   psData->game_data = p_param->gameData;
@@ -385,6 +386,8 @@ static void WIFIBATTLEMATCH_SUBPROC_InitStatusData( WIFIBATTLEMATCH_SUBPROC_PARA
   psData->ret_sel = 0;
   psData->ret_mode = 0;
   psData->waza = 0;
+
+  psData->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
   
   psData->canExitButton = FALSE;
   psData->isExitRequest = FALSE;

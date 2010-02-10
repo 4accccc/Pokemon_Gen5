@@ -309,6 +309,7 @@ static BOOL _seq_PokeSelect( GURU2_CALL_WORK *g2call )
     if( g2call->plist->ret_mode == PL_RET_STATUS ){ //ƒXƒe[ƒ^ƒX‰{——
 //      g2call->psd = PSTATUS_Temoti_Create( g2call->fsys, HEAPID_BASE_APP, PST_MODE_NORMAL );
       MYSTATUS *mystatus = GAMEDATA_GetMyStatus( g2call->gamedata );
+      ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( g2call->gamedata );
 
       g2call->psd = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(PSTATUS_DATA) );
       GFL_STD_MemFill( g2call->psd, 0, sizeof(PSTATUS_DATA));
@@ -325,7 +326,8 @@ static BOOL _seq_PokeSelect( GURU2_CALL_WORK *g2call )
       g2call->psd->mode = PST_MODE_NO_WAZACHG; // ‹Z“ü‚ê‘Ö‚¦‹ÖŽ~‚É‚·‚é
       g2call->psd->waza = 0;
       g2call->psd->page = PPT_INFO;
-
+      
+      g2call->psd->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
       
       g2call->psel_pos = ret;
       g2call->psd->pos = ret;

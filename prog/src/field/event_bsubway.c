@@ -182,12 +182,15 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
   
   {
     PSTATUS_DATA *st = &work->status_data;
+    ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( gdata );
     MI_CpuClear8( st, sizeof(PSTATUS_DATA) );
     st->ppd = pp;
     st->ppt = PST_PP_TYPE_POKEPARTY;
     st->max = PokeParty_GetPokeCount( pp );
     st->mode = PST_MODE_NORMAL;
     st->page = PPT_INFO;
+
+    st->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
   }
    
   return( event );

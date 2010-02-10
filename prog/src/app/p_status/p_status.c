@@ -67,23 +67,23 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
   {
   case 0:
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_POKE_STATUS, 0x40000 );
-    
+
     psWork = GFL_PROC_AllocWork( proc, sizeof(PSTATUS_WORK), HEAPID_POKE_STATUS );
     psWork->heapId = HEAPID_POKE_STATUS;
     DEBUG_PerformanceSetActive( FALSE );
     //ƒfƒoƒO
     if( pwk == NULL )
     {
-      psData = GFL_HEAP_AllocMemory( HEAPID_POKE_STATUS , sizeof(PSTATUS_DATA) );
+      psData = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof(PSTATUS_DATA) );
       if( !(GFL_UI_KEY_GetCont() & PAD_BUTTON_X) )
       {
         u8 i;
         POKEPARTY *pokeParty;
-        pokeParty = PokeParty_AllocPartyWork(HEAPID_POKE_STATUS);
+        pokeParty = PokeParty_AllocPartyWork(GFL_HEAPID_APP);
         PokeParty_Init( pokeParty , 6 );
         for( i=0;i<5;i++ )
         {
-          POKEMON_PARAM *pPara = PP_Create( i+3 , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKE_STATUS );
+          POKEMON_PARAM *pPara = PP_Create( i+3 , 10 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
   #if DEB_ARI
           switch( i )
           {
@@ -126,7 +126,7 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
       else
       {
         u8 i;
-        psData->ppd = GFL_HEAP_AllocClearMemory( HEAPID_POKE_STATUS , POKETOOL_GetPPPWorkSize()*30 );
+        psData->ppd = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP , POKETOOL_GetPPPWorkSize()*30 );
         psData->ppt = PST_PP_TYPE_POKEPASO;
         psData->max = 30;
         psData->pos = 0xFF;
@@ -158,7 +158,8 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
       psData->mode = PST_MODE_NORMAL;
       psData->page = PPT_INFO;
       psData->canExitButton = TRUE;
-      psData->game_data = GAMEDATA_Create( HEAPID_POKE_STATUS );
+      psData->zukan_mode = 0;
+      psData->game_data = GAMEDATA_Create( GFL_HEAPID_APP );
       
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
       {

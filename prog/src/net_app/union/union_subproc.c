@@ -828,6 +828,8 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     pstatus->pos = plist->ret_sel;
     pstatus->page = PPT_INFO;
     
+    pstatus->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( GAMEDATA_GetZukanSave(pstatus->game_data) );
+
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, pstatus);
 		(*seq) ++;
 		break;

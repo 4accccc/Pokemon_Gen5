@@ -481,6 +481,7 @@ static GMEVENT * EVENT_SodatePokeSelect(
   PSTATUS_DATA* ps_data;
   GAMEDATA*  gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
+  ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( gdata );
 
   // ポケモンリスト生成
   pl_data    = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
@@ -499,6 +500,7 @@ static GMEVENT * EVENT_SodatePokeSelect(
   ps_data->mode = PST_MODE_NORMAL;
   ps_data->page = PPT_INFO;
   ps_data->pos = 0;
+  ps_data->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
 
   // イベント生成
   event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_SodatePokeSelect, sizeof(POKE_SELECT_WORK));

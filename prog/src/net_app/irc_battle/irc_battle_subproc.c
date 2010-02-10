@@ -287,6 +287,7 @@ static void IRC_BATTLE_SUBPROC_InitStatusData( IRC_BATTLE_WORK *work , IRC_BATTL
 {
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(work->initWork->gameData);
   MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->initWork->gameData );
+  ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( work->initWork->gameData );
 
   psData->ppd = procWork->pokeParty;
   psData->game_data = work->initWork->gameData;
@@ -305,6 +306,8 @@ static void IRC_BATTLE_SUBPROC_InitStatusData( IRC_BATTLE_WORK *work , IRC_BATTL
   psData->ret_sel = 0;
   psData->ret_mode = 0;
   psData->waza = 0;
+
+  psData->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
   
   psData->canExitButton = FALSE;
   psData->isExitRequest = FALSE;
