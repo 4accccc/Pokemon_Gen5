@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-08T18:58:29"/>
+	<create user="matsumiya" host="W00224" date="2010-02-10T18:04:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="219" right="1997" bottom="847" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="177" right="2021" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_c05_leader_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・橋を渡ったところにpos設定
 ・続けてblack_01</comment>
@@ -360,7 +360,7 @@
 逃げられて　しまったからな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_black_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてleader_02</comment>
 		<attribute name="キャラクター">友達♂（ライバル）</attribute>
@@ -374,7 +374,7 @@
 それとは　無関係ですよね▼</language>
 	</row>
 
-	<row id="msg_c05_leader_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面左に移動
 　数歩移動後、振り向き、続けてleader_03</comment>
@@ -394,7 +394,7 @@
 すごうでの　トレーナー　なんだろ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_leader_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面左に移動
 　画面外に消えると続けてblack_03</comment>
@@ -408,7 +408,7 @@
 人生は　ギブ　アンド　テイク！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_black_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、主人公を見る
 ・続けてblack_03a</comment>
@@ -425,18 +425,18 @@
 放っておけないし……▼</language>
 	</row>
 
-	<row id="msg_c05_black_03a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
+	<row id="msg_c05_black_03a" text-color="#ff0000,,,#000000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、ライバル、画面左に移動
 ・画面外に消えると、主人公操作可能</comment>
 		<attribute name="キャラクター">友達♂（ライバル）</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！
-ぼく　先に　行くよ[BE:01:ページ切り替え（クリア）]</language>
+さきに　いくよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！
-ぼく　先に　行くよ[BE:01:ページ切り替え（クリア）]</language>
+先に　行くよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_sage1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・コンテナ内でプラズマ団に勝利すると
 　ジム前にゲーチスたちを配置
@@ -458,7 +458,7 @@
 配下を　引き取りに　来ました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_leader_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてsage1_02</comment>
 		<attribute name="キャラクター">LEADER5
@@ -471,7 +471,7 @@
 ポケモンを　奪おうとしていたんでね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_sage1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader_05</comment>
 		<attribute name="キャラクター">七賢人ゲーチス</attribute>
@@ -485,7 +485,7 @@
 人のポケモンを　奪ったりしませんよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_leader_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてsage1_03</comment>
 		<attribute name="キャラクター">LEADER5
@@ -496,7 +496,7 @@
 で　なんだと　いうんだ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_sage1_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader_06</comment>
 		<attribute name="キャラクター">七賢人ゲーチス</attribute>
@@ -511,7 +511,7 @@
 たくさんの　部下が　いるのですよ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_leader_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_06" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてsage1_04</comment>
 		<attribute name="キャラクター">LEADER5
@@ -522,7 +522,7 @@
 こいつらを　連れて　帰りな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_sage1_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、七賢人のOBJ
 　ヤーコンのほうに移動</comment>
@@ -540,7 +540,7 @@
 引き取らせて　いただきます……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage2_01">
+	<row id="msg_c05_sage2_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
 ･七賢人、ゲーチスのそばで
 　このメッセージ表示
@@ -552,7 +552,7 @@
 ありがとう　ございます……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_sage1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_sage1_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・その後、画面暗転し
 　プラズマ団のOBJ削除</comment>
@@ -569,7 +569,7 @@
 お会いすることも　あるでしょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_leader_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_leader_07" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・画面暗転し、プラズマ団の動作も出る削除後
 ・主人公に隣接してメッセージ表示
@@ -588,7 +588,7 @@
 あんまり　ワシを　待たせるなよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_black_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面左に移動</comment>
 		<attribute name="キャラクター">友達♂（ライバル）</attribute>
@@ -610,7 +610,7 @@
 まだ　冷凍コンテナしか　知らないし▼</language>
 	</row>
 
-	<row id="msg_c05_workman1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c05_workman1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・h02付近に配置
 ・c05ジムバッジ入手のタイミングで削除</comment>
@@ -624,7 +624,7 @@
 ……で　プラズマ団に　逃げられたのさ</language>
 	</row>
 
-	<row id="msg_c05_businessman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05_businessman_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c05ジムストッパー
 ・d05r0101イベントクリアで削除</comment>
