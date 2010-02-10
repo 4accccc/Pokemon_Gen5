@@ -2289,7 +2289,7 @@
 
 //--------------------------------------------------------------
 /**
- * _WILD_BTL_SET_REGEND  野生戦呼び出し(伝説系)
+ * _WILD_BTL_SET_LEGEND  野生戦呼び出し(伝説系)
  * @param mons_no エンカウントさせたいモンスターNo 
  * @param mons_lv エンカウントさせたいモンスターレベル
  *
@@ -2297,8 +2297,8 @@
  * 伝説系「○○が現れた」 メッセージ変化は091029時点で未実装
  */
 //--------------------------------------------------------------
-#define _WILD_BTL_SET_REGEND( mons_no, mons_lv ) \
-    _ASM_WILD_BTL_SET mons_no, mons_lv, SCR_WILD_BTL_FLAG_REGEND
+#define _WILD_BTL_SET_LEGEND( mons_no, mons_lv ) \
+    _ASM_WILD_BTL_SET mons_no, mons_lv, SCR_WILD_BTL_FLAG_LEGEND
 
   .macro  _ASM_WILD_BTL_SET mons_no, mons_lv, flags
   .short  EV_SEQ_WILD_BTL_SET
