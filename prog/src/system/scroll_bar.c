@@ -36,13 +36,14 @@ u32 SCROLLBAR_GetCount( u32 scrollMax, u32 py, u32 railTop, u32 railBottom, u32 
 	railBottom -= barSize;
 
 	if( py < railTop ){
-		py = railTop;
+		return 0;
 	}else if( py > railBottom ){
-		py = railBottom;
+		return scrollMax;
 	}
 	py -= railTop;
 
-	cnt = ( ( (scrollMax+1) << 8 ) / ( railBottom - railTop ) * py ) >> 8;
+//	cnt = ( ( (scrollMax+1) << 8 ) / ( railBottom - railTop ) * py ) >> 8;
+	cnt = ( ( (scrollMax) << 8 ) / ( railBottom - railTop ) * py ) >> 8;
 
 	return cnt;
 }
@@ -64,9 +65,16 @@ u32 SCROLLBAR_GetPosY( u32 scrollMax, u32 scrollCount, u32 railTop, u32 railBott
 {
 	u32	py;
 
+	py = railBottom - railTop - barSize;
+//	py = ( ( py << 8 ) / ( scrollMax + 1 ) * scrollCount ) >> 8;
+	py = ( ( py << 8 ) / ( scrollMax ) * scrollCount ) >> 8;
+
+	return ( railTop + py + barSize/2 );
+/*
 	barSize /= 2;
 	py = railBottom - railTop - barSize;
 	py = ( ( py << 8 ) / ( scrollMax + 1 ) * scrollCount ) >> 8;
 
 	return ( railTop + py + barSize );
+*/
 }
