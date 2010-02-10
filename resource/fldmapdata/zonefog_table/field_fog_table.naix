@@ -17,8 +17,9 @@ enum {
 	NARC_field_fog_table_zonefog_h01_dat = 3,
 	NARC_field_fog_table_zonefog_h03_dat = 4,
 	NARC_field_fog_table_zonefog_h05_dat = 5,
-	NARC_field_fog_table_zonefog_in54_shiten_dat = 6,
-	NARC_field_fog_table_zonefog_table_bin = 7
+	NARC_field_fog_table_zonefog_in11_reizou_dat = 6,
+	NARC_field_fog_table_zonefog_in54_shiten_dat = 7,
+	NARC_field_fog_table_zonefog_table_bin = 8
 };
 
 /* NARC_FIELD_FOG_TABLE_NAIX_ */
