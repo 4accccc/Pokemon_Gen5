@@ -107,7 +107,7 @@
 
 ///野生ポケモン戦闘呼び出し時に指定できるフラグ
 #define SCR_WILD_BTL_FLAG_NONE    (0x0000)  //フラグ無し
-#define SCR_WILD_BTL_FLAG_REGEND  (0x0001)  //伝説戦闘(エンカウントメッセージが変化する)
+#define SCR_WILD_BTL_FLAG_LEGEND  (0x0001)  //伝説戦闘(エンカウントメッセージが変化する)
 #define SCR_WILD_BTL_FLAG_RARE    (0x0002)  //強制レアポケ戦闘
 #define SCR_WILD_BTL_FLAG_ITEMNONE  (0x0004)  //所持アイテム強制無し
 
