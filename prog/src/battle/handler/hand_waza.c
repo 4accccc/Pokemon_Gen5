@@ -9530,8 +9530,7 @@ static void handler_InisieNoUta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
-// @todo アンのーんでチェックするために一時的に条件をハズす
-//  if( BPP_GetMonsNo(bpp) == MONSNO_MERODHIA )
+  if( BPP_GetMonsNo(bpp) == MONSNO_MERODHIA )
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK)==pokeID )
     {
