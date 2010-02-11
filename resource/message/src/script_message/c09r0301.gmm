@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T14:21:54"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T20:09:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1462" top="141" right="2165" bottom="761" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -388,25 +388,25 @@
 		<language name="JPN" width="256">……また　こうして
 こぶしを　まじえられること▽
 こころより　かんしゃする▼
-かくとうの　つよさを
-もとめる　この　レンブ▼
+かくとうの　つよさを　もとめる
+この　レンブ▼
 こわすのは　よわき　おのれ▼
 つらぬくのは　つよき　しんねん▼
 そして
-のぞむのは　あっとうてき　しょうり！▼
+のぞむは　あっとうてき　しょうり！▼
 たくましき　ちょうせんしゃ　よ！
 いざ　まいる！▼</language>
 		<language name="JPN_KANJI" width="256">……また　こうして
-こぶしを　まじえられること▽
-こころより　かんしゃする▼
-かくとうの　つよさを
-もとめる　この　レンブ▼
-こわすのは　よわき　おのれ▼
-つらぬくのは　つよき　しんねん▼
+こぶしを　交えられること▽
+心より　感謝する▼
+格闘の　強さを　求める
+この　レンブ▼
+砕くのは　弱き　己▼
+貫くのは　強き　信念▼
 そして
-のぞむのは　あっとうてき　しょうり！▼
-たくましき　ちょうせんしゃ　よ！
-いざ　まいる！▼</language>
+望むは　圧倒的　勝利！▼
+たくましき　挑戦者よ！
+いざ　参る！▼</language>
 	</row>
 
 	<row id="msg_c09r0301_bigfour3_06">
@@ -416,12 +416,12 @@
 まだまだ　つよい　トレーナーがいる▼
 きみは　かれらと　たたかうことで
 ポケモンとの　きずな▽
-さらに　つよめるが　いい</language>
+さらに　ふかめるが　いい</language>
 		<language name="JPN_KANJI" width="256">この　ポケモンリーグには
-まだまだ　つよい　トレーナーがいる▼
-きみは　かれらと　たたかうことで
+まだまだ　強い　トレーナーがいる▼
+きみは　彼らと　戦うことで
 ポケモンとの　きずな▽
-さらに　つよめるが　いい</language>
+さらに　深めるが　いい</language>
 	</row>
 
 	<row id="msg_c09r0301_bigfour3_07">
@@ -431,20 +431,20 @@
 ただ　ひたすらに▽
 つよさを　おいもとめた　ひび……▼
 アデクさまと　であい
-しんの　つよさを　おそわり
+つよさをのみこむ　おおきさをしり▼
 ここで　してんのうに　なると
 きめた　あのひ……▼
 きみとの　たたかいで
 なぜか　そんなことを　おもいだしたよ</language>
-		<language name="JPN_KANJI" width="256">……せかいかっこくを　めぐり
+		<language name="JPN_KANJI" width="256">……世界各国を　めぐり
 ただ　ひたすらに▽
-つよさを　おいもとめた　ひび……▼
-アデクさまと　であい
-しんの　つよさを　おそわり
-ここで　してんのうに　なると
-きめた　あのひ……▼
-きみとの　たたかいで
-なぜか　そんなことを　おもいだしたよ</language>
+強さを　追い求めた　日々……▼
+アデクさまと　出会い
+強さを飲み込む　大きさを教わり▼
+ここで　四天王に　なると
+誓った　あの日……▼
+きみとの　戦いで
+なぜか　そんなことを　思い出したよ</language>
 	</row>
 
 	<row id="msg_c09r0301_bigfour3_08">
@@ -453,17 +453,17 @@
 　戦闘後フィールド復帰時に自動で表示
 ・チャンピオン部屋に行くまで繰り返し</comment>
 		<language name="JPN" width="256">きみたちの　つよさ
-ぞんぶんに　おそわった……▼
-つぎの　へやに　いき
+こころに　きざみこんだ……▼
+つぎの　へやに　すすみ
 そこで　イッシュちほう▽
 さいきょうの　トレーナーと▽
 たたかいたまえ……！！</language>
-		<language name="JPN_KANJI" width="256">きみたちの　つよさ
-ぞんぶんに　おそわった……▼
-つぎの　へやに　いき
-そこで　イッシュちほう▽
-さいきょうの　トレーナーと▽
-たたかいたまえ……！！</language>
+		<language name="JPN_KANJI" width="256">きみたちの　強さ
+心に　刻み込んだ……▼
+次の　部屋に　進み
+そこで　イッシュ地方▽
+最強の　トレーナーと▽
+戦いたまえ……！！</language>
 	</row>
 
 	<flowchart-group-list>

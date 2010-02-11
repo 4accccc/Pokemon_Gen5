@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-30T19:07:48"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T20:02:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -308,6 +308,7 @@
 		<comment>♂
 ・続けてveteranm2_01
 ・このメッセージ表示以降、veteranm1_03繰り返し</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ポケモンリーグは
 ４にんいる　してんのう[BE:00:ページ切り替え（行送り）]
 だれからでも　　ちょうせん　できる[BE:01:ページ切り替え（クリア）]
@@ -329,6 +330,7 @@
 
 	<row id="msg_c09_veteranm1_03">
 		<comment>♂</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ポケモンリーグは
 ４にんいる　してんのう[BE:00:ページ切り替え（行送り）]
 だれからでも　　ちょうせん　できる[BE:01:ページ切り替え（クリア）]
@@ -367,6 +369,7 @@
 	<row id="msg_c09_veteranm2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・このとき画面左を向く</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">こちらで　じゅんびを　しておくがいい[BE:01:ページ切り替え（クリア）]
 いちどでも　まけると
 さいしょから　やりなおし　だからな！</language>
@@ -379,6 +382,7 @@
 		<comment>♂
 ・veteranm2_02表示以降
 　このメッセージを繰り返し表示</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ポケモンリーグは
 すべての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
 さいだいの　なんかん！[BE:01:ページ切り替え（クリア）]
