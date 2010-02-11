@@ -541,11 +541,25 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
     GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_EV], (pd->icon != 0) );
   }
   //ポップアップメッセージ描画
+  GFL_BMP_Clear( wk->win_popup.bmp, FCOL_POPUP_BASE );
+  
+  //すれ違った時間
+  {
+    u8 hour = (wk->tmpTime>>8);
+    WORDSET_RegisterNumber( wk->wset, 0,
+      hour%12, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wk->wset, 1,
+      (wk->tmpTime&0xFF), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  
+    print_GetMsgToBuf( wk, msg_receive_time01+(hour/12) );
+    PRINTSYS_PrintColor( wk->win_popup.bmp, 0, 0, wk->str_expand, wk->font, FCOL_POPUP );
+  }
+  //ビーコン詳細情報
   sub_DetailWordset( wk->tmpInfo, wk->wset );
   print_GetMsgToBuf( wk, pd->msg_id );
+//  PRINT_UTIL_PrintColor( &wk->win_popup.putil, wk->print_que, 0, 0, wk->str_expand, wk->font, FCOL_POPUP );
+  PRINTSYS_PrintColor( wk->win_popup.bmp, 0, 16, wk->str_expand, wk->font, FCOL_POPUP );
 
-  GFL_BMP_Clear( wk->win_popup.bmp, FCOL_POPUP_BASE );
-  PRINT_UTIL_PrintColor( &wk->win_popup.putil, wk->print_que, 0, 0, wk->str_expand, wk->font, FCOL_POPUP );
   GFL_BMPWIN_MakeTransWindow( wk->win_popup.win );
 }
 
