@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T13:31:46"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T14:53:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="30" top="272" right="735" bottom="892" maximized="no" rayout="Vertical2">
+	<dialog left="1394" top="297" right="2099" bottom="917" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,12 +301,12 @@
 ・研究所前まで移動したら
 　msg_t01_black_02表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 ポケモンと　いっしょに
 どこかに　いきたい　きもち[BE:00:ページ切り替え（行送り）]
 わかるけどさ……[BE:01:ページ切り替え（クリア）]
 まず　アララギはかせに　あおう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 ポケモンと　一緒に
 どこかに　行きたい　気持ち[BE:00:ページ切り替え（行送り）]
 よくわかるけど[BE:01:ページ切り替え（クリア）]
@@ -318,12 +318,12 @@
 ・話しかけたとき
 （図鑑入手まで繰り返し）</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『わるいけど　ホワイティの
+		<language name="JPN" width="256">チェレン『わるいけど　ベルの
 いえまで　いってくれないか？[BE:01:ページ切り替え（クリア）]
 あいつ……　きっと
 いえで　のんびり　しているからさ▽
 なんか　おじょうさま　っぽいんだよな</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『悪いけど　ホワイティの
+		<language name="JPN_KANJI" width="256">チェレン『悪いけど　ベルの
 家まで　行ってくれないか？[BE:01:ページ切り替え（クリア）]
 あいつ……　きっと
 家で　のんびり　しているからさ▽
@@ -335,8 +335,8 @@
 ・t01r0301でのイベント後
 　友達♂の隣に配置</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『……さっきのは　ヒミツだよ</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『……さっきのは　秘密だよ</language>
+		<language name="JPN" width="256">ベル『……さっきのは　ヒミツだよ</language>
+		<language name="JPN_KANJI" width="256">ベル『……さっきのは　秘密だよ</language>
 	</row>
 
 	<row id="msg_t01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -345,18 +345,19 @@
 　主人公と向き合ってこのメッセージ表示
 ・画面切り替えで研究所内へ</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ん……
+		<language name="JPN" width="256">チェレン『ん……
 なんか　あったか？[BE:01:ページ切り替え（クリア）]
 まあ　いいか
 さ！　はかせに　あおう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ん……
+		<language name="JPN_KANJI" width="256">チェレン『ん……
 なんか　あったか？[BE:01:ページ切り替え（クリア）]
 まあ　いいか
 さ！　博士に　会おう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01_bigman_01">
-		<comment>♂</comment>
+	<row id="msg_t01_bigman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った青年</attribute>
 		<language name="JPN" width="256">かがくの　ちからって　すげー！▼
@@ -399,26 +400,7 @@
 あなたは　漢字が　好きなのね</language>
 	</row>
 
-	<row id="msg_t01_testmsg02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">woman01</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_t01_testmsg02_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_t01_testmsg02_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_t01_babygirl1_01">
+	<row id="msg_t01_babygirl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">babygirl1</attribute>
@@ -443,26 +425,26 @@
 
 	<row id="msg_t01_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-0＝主人公の名前</comment>
+・0＝主人公の名前</comment>
 		<attribute name="キャラ指定">看板：主人公</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　いえ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　家</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の家</language>
 	</row>
 
 	<row id="msg_t01_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・友達♂の名前は固定？</comment>
+・友達♂の家</comment>
 		<attribute name="キャラ指定">看板：友達１</attribute>
-		<language name="JPN" width="256">ブラッカーの　いえ</language>
-		<language name="JPN_KANJI" width="256">ブラッカーの　家</language>
+		<language name="JPN" width="256">チェレンの　いえ</language>
+		<language name="JPN_KANJI" width="256">チェレンの家</language>
 	</row>
 
 	<row id="msg_t01_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・友達♀の名前は固定？</comment>
+・友達♀の家</comment>
 		<attribute name="キャラ指定">看板：友達２</attribute>
-		<language name="JPN" width="256">ホワイティの　いえ</language>
-		<language name="JPN_KANJI" width="256">ホワイティの　家</language>
+		<language name="JPN" width="256">ベルの　いえ</language>
+		<language name="JPN_KANJI" width="256">ベルの家</language>
 	</row>
 
 	<row id="msg_t01_sign5_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
