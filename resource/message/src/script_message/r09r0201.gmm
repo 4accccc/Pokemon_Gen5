@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-18T12:51:56"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T14:26:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -306,7 +306,7 @@
 道具とか　売っているからね！</language>
 	</row>
 
-	<row id="msg_r09r0201_boy3_01">
+	<row id="msg_r09r0201_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BOY3
@@ -411,21 +411,21 @@
 
 	<row id="msg_r09r0201_waitress_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・msg_r210ar0101_waitress_01表示後の選択肢</comment>
+・waitress_01表示後の選択肢</comment>
 		<language name="JPN" width="256">１ほん</language>
 		<language name="JPN_KANJI" width="256">１ほん</language>
 	</row>
 
 	<row id="msg_r09r0201_waitress_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・msg_r210ar0101_waitress_01表示後の選択肢</comment>
+・waitress_01表示後の選択肢</comment>
 		<language name="JPN" width="256">１ダース</language>
 		<language name="JPN_KANJI" width="256">１ダース</language>
 	</row>
 
 	<row id="msg_r09r0201_waitress_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・msg_r210ar0101_waitress_01表示後の選択肢</comment>
+・waitress_01表示後の選択肢</comment>
 		<language name="JPN" width="256">いらない</language>
 		<language name="JPN_KANJI" width="256">いらない</language>
 	</row>

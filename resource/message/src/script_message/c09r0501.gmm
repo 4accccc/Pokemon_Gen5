@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-06T15:35:52"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T14:46:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="223" right="1997" bottom="902" maximized="no" rayout="Vertical2">
+	<dialog left="1409" top="235" right="2114" bottom="863" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -548,10 +548,10 @@
 ・チャンピオンの隣の来るとメッセージ表示
 ・続けてchampion_02</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『じいさん　ボロボロだな
-……チャンピオン　らしくないぜ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『じいさん　ボロボロだな
-……チャンピオン　らしくないぜ▼</language>
+		<language name="JPN" width="256">チェレン『アデクさん　ボロボロですね
+……チャンピオンらしく　ないよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『アデクさん　ボロボロですね
+……チャンピオンらしく　ないよ▼</language>
 	</row>
 
 	<row id="msg_c09r0501_champion_02">
@@ -567,12 +567,12 @@
 		<comment>♂
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『まあな▼
-ポケモンリーグを　かちぬいたんだよ
-なかなか　タフ　だったけどさ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『まあな▼
-ポケモンリーグを　勝ち抜いたんだよ
-なかなか　タフ　だったけどさ▼</language>
+		<language name="JPN" width="256">チェレン『まあね▼
+ポケモンリーグを　かちぬいたよ
+なかなか　タフ　だったけど▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『まあね▼
+ポケモンリーグを　勝ち抜いたよ
+なかなか　タフ　だったけど▼</language>
 	</row>
 
 	<row id="msg_c09r0501_champion_03">
@@ -589,16 +589,22 @@
 ・主人公を見てメッセージ表示
 ・主人公、操作可能に</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！▼
+		<language name="JPN" width="256">チェレン『……じぶんの　やることが
+わかったから　つよくなれたんだ　きっと▼
+[1:00:トレーナー名:0]！▼
 Ｎのこと
-ぶっとばしてくれッ！！▼
-きみと！
-きみの　ポケモンで！！</language>
-		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！▼
+ぶっとばしてよッ！！▼
+それが　きみと！
+きみの　ポケモンの！▽
+やるべきこと　だろ</language>
+		<language name="JPN_KANJI" width="256">チェレン『……じぶんの　やることが
+わかったから　つよくなれたんだ　きっと▼
+[1:00:トレーナー名:0]！▼
 Ｎのこと
-ぶっとばしてくれッ！！▼
-きみと！
-きみの　ポケモンで！！</language>
+ぶっとばしてよッ！！▼
+それが　きみと！
+きみの　ポケモンの！▽
+やるべきこと　だろ</language>
 	</row>
 
 	<row id="msg_c09r0501_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -616,20 +622,30 @@
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">チャンピオン
 アデク</attribute>
-		<language name="JPN" width="256">アデク『……たのむ
-Ｎに　おしえてやってくれ！▼
-ポケモンも　ひとも
-たがいに　ないものを　おぎないあい▽
-それぞれ　かがやきを　ます……　と▼
-それを　おしえてくれたのが
-わしの　ポケモンだと……</language>
-		<language name="JPN_KANJI" width="256">アデク『……たのむ
-Ｎに　教えてやってくれ！▼
-ポケモンも　人も
-互いに　ないものを　補いあい▽
-それぞれ　輝きを　増す……　と▼
-それを　教えてくれたのが
-わしの　ポケモンだと……</language>
+		<language name="JPN" width="256">アデク『……まけたわ▼
+すうしき　すうしきと
+うるさい　こぞうを　だまらせるほどの▼
+ポケモンとの　きずなを
+みせてやるはず　だったがな……▼
+あいつの　しんねんも
+また　ほんもの　ということか▼
+たのむ
+[1:00:トレーナー名:0]！▼
+ポケモンと　ひとを　きりはなしても
+なにも　うまれん……▽
+それを　おしえてやってくれい</language>
+		<language name="JPN_KANJI" width="256">アデク『……まけたわ▼
+すうしき　すうしきと
+うるさい　こぞうを　だまらせるほどの▼
+ポケモンとの　きずなを
+みせてやるはず　だったがな……▼
+あいつの　しんねんも
+また　ほんもの　ということか▼
+たのむ
+[1:00:トレーナー名:0]！▼
+ポケモンと　ひとを　きりはなしても
+なにも　うまれん……▽
+それを　おしえてやってくれい</language>
 	</row>
 
 	<row id="msg_c09r0501_champion_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
