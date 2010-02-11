@@ -87,7 +87,7 @@ static const struct{
   },
   {//MONOLITH_MENU_POWER
     &MonolithAppProc_Up_PalaceMap, //MonolithAppProc_Up_PowerExplain,
-    &MonolithAppProc_Down_Status, //MonolithAppProc_Down_PowerSelect,
+    &MonolithAppProc_Down_PowerSelect,
   },
   {//MONOLITH_MENU_STATUS
     &MonolithAppProc_Up_PalaceMap,
@@ -189,7 +189,7 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
   monosys->procsys_down = GFL_PROC_LOCAL_boot(HEAPID_MONOLITH);
   
 	//Vƒuƒ‰ƒ“ƒNTCB“o˜^
-	monosys->vintr_tcb = GFUser_VIntr_CreateTCB(_VblankFunc, monosys, 5);
+	monosys->vintr_tcb = GFUser_VIntr_CreateTCB(_VblankFunc, monosys, MONOLITH_VINTR_TCB_PRI_MAIN);
 
   monosys->app_parent.parent = parent;
   monosys->app_parent.setup = &monosys->setup;
@@ -593,10 +593,11 @@ static void _Setup_ActorSetting(MONOLITH_SETUP *setup)
 	clsys_init.oamnum_main = 128-GFL_CLSYS_OAMMAN_INTERVAL;
 	clsys_init.oamst_sub = GFL_CLSYS_OAMMAN_INTERVAL;	//’ÊMƒAƒCƒRƒ“‚Ì•ª
 	clsys_init.oamnum_sub = 128-GFL_CLSYS_OAMMAN_INTERVAL;
-	clsys_init.CGR_RegisterMax = 64;  //BMPOAM‚Å‘å—Ê‚ÉƒŠƒ\[ƒX“o˜^‚·‚éˆ×
+	clsys_init.CGR_RegisterMax = 96;  //BMPOAM‚Å‘å—Ê‚ÉƒŠƒ\[ƒX“o˜^‚·‚éˆ×
+	clsys_init.CELL_RegisterMax = 64; //BMPOAM‚Å‘å—Ê‚ÉƒŠƒ\[ƒX“o˜^‚·‚éˆ×
 	GFL_CLACT_SYS_Create(&clsys_init, &MonolithVramBank, HEAPID_MONOLITH);
 	
-	setup->clunit = GFL_CLACT_UNIT_Create(64, 0, HEAPID_MONOLITH);
+	setup->clunit = GFL_CLACT_UNIT_Create(96, 0, HEAPID_MONOLITH);
 	GFL_CLACT_UNIT_SetDefaultRend(setup->clunit);
 
 	//OBJ•\Ž¦ON

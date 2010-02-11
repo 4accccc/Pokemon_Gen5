@@ -783,7 +783,8 @@ SRCS_OVERLAY_MONOLITH = field/field_comm/monolith_main.c \
 									 field/field_comm/monolith_palacemap.c \
 									 field/field_comm/monolith_title.c \
 									 field/field_comm/monolith_mission_explain.c \
-									 field/field_comm/monolith_status.c
+									 field/field_comm/monolith_status.c \
+									 field/field_comm/monolith_power.c
 
 
 # タウンマップ画面

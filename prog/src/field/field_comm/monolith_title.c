@@ -279,7 +279,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
     break;
   case 2:
     if(mtw->select_panel != TITLE_PANEL_CANCEL){
-      if(MonolithTool_PanelColor_GetMode(appwk) == PANEL_COLORMODE_NONE){
+      if(MonolithTool_PanelColor_GetMode(appwk) != PANEL_COLORMODE_FLASH){
         appwk->next_menu_index = MONOLITH_MENU_MISSION + mtw->select_panel;
         return GFL_PROC_RES_FINISH;
       }

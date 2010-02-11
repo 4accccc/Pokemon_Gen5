@@ -93,6 +93,13 @@ typedef enum{
 #define SELECT_TOWN_ENFORCEMENT   (INTRUDE_TOWN_MAX)
 
 
+///モノリスVINTR TCBのプライオリティ
+enum{
+  MONOLITH_VINTR_TCB_PRI_POWER = 3,     ///<パワー画面
+  MONOLITH_VINTR_TCB_PRI_MAIN = 10,     ///<モノリス画面全体で使用しているVINTR TCB
+};
+
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -166,3 +173,4 @@ extern const GFL_PROC_DATA MonolithAppProc_Down_Title;
 extern const GFL_PROC_DATA MonolithAppProc_Down_MissionSelect;
 extern const GFL_PROC_DATA MonolithAppProc_Up_MissionExplain;
 extern const GFL_PROC_DATA MonolithAppProc_Down_Status;
+extern const GFL_PROC_DATA MonolithAppProc_Down_PowerSelect;
