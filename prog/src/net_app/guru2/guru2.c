@@ -61,9 +61,18 @@ static BOOL (* const DATA_SeqTbl[SEQNO_G2P_MAX])(GURU2_CALL_WORK*);
 static const GFL_PROC_DATA Guru2Receipt_Proc;
 static const GFL_PROC_DATA Guru2Main_Proc;
 
-//==============================================================================
-//  ぐるぐる交換
-//==============================================================================
+//=============================================================================================
+/**
+ * @brief ぐるぐる交換システム初期化PROC
+ *
+ * @param   proc  
+ * @param   seq   シーケンス管理ワーク
+ * @param   pwk   GURUGURU_PARENT_WORK* (union_app.h)
+ * @param   mywk  GURU2_CALL_WORK*を確保する
+ *
+ * @retval  GFL_PROC_RESULT   
+ */
+//=============================================================================================
 GFL_PROC_RESULT Guru2Proc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   GURU2_CALL_WORK *work;
@@ -83,6 +92,18 @@ GFL_PROC_RESULT Guru2Proc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk
 }
 
 
+//=============================================================================================
+/**
+ * @brief ぐるぐる交換システムメインループPROC
+ *
+ * @param   proc    
+ * @param   seq   シーケンス管理ワーク
+ * @param   pwk   GURUGURU_PARENT_WORK* (union_app.h)
+ * @param   mywk  GURU2_CALL_WORK*を確保する  
+ *
+ * @retval  GFL_PROC_RESULT   
+ */
+//=============================================================================================
 GFL_PROC_RESULT Guru2Proc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
 
@@ -96,6 +117,19 @@ GFL_PROC_RESULT Guru2Proc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk
 
   return GFL_PROC_RES_CONTINUE;
 }
+
+//=============================================================================================
+/**
+ * @brief ぐるぐる交換システム終了PROC
+ *
+ * @param   proc    
+ * @param   seq   シーケンス管理ワーク
+ * @param   pwk   GURUGURU_PARENT_WORK* (union_app.h)
+ * @param   mywk  GURU2_CALL_WORK*を確保する    
+ *
+ * @retval  GFL_PROC_RESULT   
+ */
+//=============================================================================================
 GFL_PROC_RESULT Guru2Proc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   OS_Printf("ぐるぐるプロセス終了\n");
@@ -303,22 +337,25 @@ static BOOL _seq_Receipt( GURU2_CALL_WORK *g2call )
 //--------------------------------------------------------------
 static BOOL _seq_PokeSelect( GURU2_CALL_WORK *g2call )
 {
-    int ret = g2call->plist->ret_sel;
+    int ret      = g2call->plist->ret_sel;
+    int ret_mode = g2call->plist->ret_mode;
     GFL_HEAP_FreeMemory( g2call->plist );
     
-    if( g2call->plist->ret_mode == PL_RET_STATUS ){ //ステータス閲覧
+    if( ret_mode == PL_RET_STATUS ){ //ステータス閲覧
 //      g2call->psd = PSTATUS_Temoti_Create( g2call->fsys, HEAPID_BASE_APP, PST_MODE_NORMAL );
+      POKEPARTY *party;
       MYSTATUS *mystatus = GAMEDATA_GetMyStatus( g2call->gamedata );
       ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( g2call->gamedata );
 
       g2call->psd = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(PSTATUS_DATA) );
       GFL_STD_MemFill( g2call->psd, 0, sizeof(PSTATUS_DATA));
-      g2call->psd->ppd        = GAMEDATA_GetMyPokemon( g2call->gamedata );
+      party = GAMEDATA_GetMyPokemon( g2call->gamedata );
+      g2call->psd->ppd        = PokeParty_GetMemberPointer(party, ret);
       g2call->psd->game_data  = g2call->gamedata;
       
       g2call->psd->player_name = MyStatus_GetMyName( mystatus );
       g2call->psd->player_id   = MyStatus_GetID( mystatus );
-      g2call->psd->player_sex  =  MyStatus_GetMySex( mystatus );
+      g2call->psd->player_sex  = MyStatus_GetMySex( mystatus );
       g2call->psd->ppt  =PST_PP_TYPE_POKEPARAM;
 
       g2call->psd->max  = 1;
@@ -332,7 +369,8 @@ static BOOL _seq_PokeSelect( GURU2_CALL_WORK *g2call )
       g2call->psel_pos = ret;
       g2call->psd->pos = ret;
 //      FieldPokeStatus_SetProc( g2call->fsys, g2call->psd ); 
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, &g2call->psd );
+      OS_Printf("pokestatus start\n");
+      GFL_PROC_SysCallProc( FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, g2call->psd );
 
       g2call->seq_no = SEQNO_G2P_POKE_STATUS;
     }else{                      //ゲームへ
@@ -426,12 +464,9 @@ static const GFL_PROC_DATA Guru2Receipt_Proc = {
 /// ぐるぐるメインプロセスデータ
 //--------------------------------------------------------------
 static const GFL_PROC_DATA Guru2Main_Proc = {
-  Guru2ReceiptProc_Init,
-  Guru2ReceiptProc_Main,
-  Guru2ReceiptProc_End,
-//  Guru2MainProc_Init,
-//  Guru2MainProc_Main,
-//  Guru2MainProc_End,
+  Guru2MainProc_Init,
+  Guru2MainProc_Main,
+  Guru2MainProc_End,
 };
 
 //--------------------------------------------------------------

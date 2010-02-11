@@ -294,7 +294,7 @@ enum              ///<ネームウィンドウ
 //--------------------------------------------------------------
 /// 3Dリソース定義
 //--------------------------------------------------------------
-#define GURU2_3DRES_NUM (  7 )    // 読み込みリソース数
+#define GURU2_3DRES_NUM ( 20 )    // 読み込みリソース数
 #define GURU2_3DOBJ_MAX ( 11 )    // RENDEROBJ数
 
 
@@ -1188,6 +1188,8 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   g2m->g2p = g2p;
   g2m->g2c = g2p->g2c;
   
+  OS_Printf("g2m=%08x, g2p=%08x, g2c=%08x\n", (u32)g2m, (u32)g2p, (u32)g2p->g2c);
+  
   //ポケモンパーティ
   g2m->my_poke_party = GAMEDATA_GetMyPokemon( g2m->g2p->param.gamedata );
   
@@ -1196,6 +1198,7 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   
   //グラフィック初期化
   guru2_DrawInit( g2m );
+  OS_Printf("g2m=%08x, g2p=%08x, g2c=%08x\n", (u32)g2m, (u32)g2p, (u32)g2p->g2c);
   
   //VBlankセット
   //  sys_VBlankFuncChange( guru2_VBlankFunc, g2m );
@@ -1207,6 +1210,7 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   //アクター初期化
   Disc_Init( g2m );
   Egg_Init( g2m );
+  OS_Printf("g2m=%08x, g2p=%08x, g2c=%08x\n", (u32)g2m, (u32)g2p, (u32)g2p->g2c);
   
   { //現在のIDと参加人数でディスク角度セット
     int id = 0, count = 0;
@@ -1228,6 +1232,7 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
     disc->rotate_offs_fx = NUM_FX32(
       DATA_DiscOffsetAngle[g2m->g2p->receipt_num][count] );
   }
+  OS_Printf("g2m=%08x, g2p=%08x, g2c=%08x\n", (u32)g2m, (u32)g2p, (u32)g2p->g2c);
   
   //タスク初期化
   {
@@ -1242,6 +1247,7 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   EggDiscJumpTcb_Init( g2m );
   BtnAnmTcb_Init( g2m );
   OmakeEggJumpTcb_Init( g2m );
+  OS_Printf("g2m=%08x, g2p=%08x, g2c=%08x\n", (u32)g2m, (u32)g2p, (u32)g2p->g2c);
   
   //デバッグ
   #ifdef GURU2_DEBUG_ON
@@ -1252,6 +1258,7 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   WIPE_SYS_Start( WIPE_PATTERN_WMS,
     WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
     WIPE_FADE_BLACK, 8, 1, HEAPID_GURU2 );
+  OS_Printf("g2m=%08x, g2p=%08x, g2c=%08x\n", (u32)g2m, (u32)g2p, (u32)g2p->g2c);
   
   return( GFL_PROC_RES_FINISH );
 }
@@ -1266,7 +1273,7 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
 //--------------------------------------------------------------
 GFL_PROC_RESULT Guru2MainProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
-  GURU2MAIN_WORK *g2m = (GURU2MAIN_WORK *)pwk;
+  GURU2MAIN_WORK *g2m = (GURU2MAIN_WORK *)mywk;
   
   // プリントキュー削除
   PRINTSYS_QUE_Delete( g2m->msgwork.printQue );
@@ -1320,7 +1327,7 @@ GFL_PROC_RESULT Guru2MainProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
 GFL_PROC_RESULT Guru2MainProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   RET ret;
-  GURU2MAIN_WORK *g2m = (GURU2MAIN_WORK *)pwk;
+  GURU2MAIN_WORK *g2m = (GURU2MAIN_WORK *)mywk;
   
   
   do{
@@ -1428,7 +1435,7 @@ static RET Guru2Subproc_OyaSendJoinClose( GURU2MAIN_WORK *g2m )
 {
   u16 bit = G2COMM_GMSBIT_JOIN_CLOSE;
   
-  if( Guru2Comm_SendData(g2m->g2c,G2COMM_GM_SIGNAL,&bit,2) == TRUE ){
+  if( Guru2Comm_SendData( g2m->g2c, G2COMM_GM_SIGNAL,&bit,2) == TRUE ){
     #ifdef DEBUG_GURU2_PRINTF
     OS_Printf( "ぐるぐる 親 参加締め切り\n" );
     #endif
@@ -3136,6 +3143,11 @@ static void guru2_DrawDelete( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void guru2_DrawProc( GURU2MAIN_WORK *g2m )
 {
+  {
+    fx32 far = FX32_ONE * 4096;
+    GFL_G3D_CAMERA_SetFar( g2m->camera.gf_camera, &far );
+  }
+  
   //----3D描画
   GFL_G3D_DRAW_Start();
   
@@ -3197,6 +3209,7 @@ static void guru2_DispInit( GURU2MAIN_WORK *g2m )
 {
     
   GFL_DISP_SetBank( &Guru2DispVramDat );
+  GFL_BMPWIN_Init( HEAPID_GURU2 );
 }
 
 //--------------------------------------------------------------
@@ -3510,6 +3523,8 @@ static void guru2_BGResLoad( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void guru2_BGDelete( GURU2MAIN_WORK *g2m )
 {
+  GFL_BMPWIN_Exit();
+
   GFL_BG_FreeBGControl(  GFL_BG_FRAME1_M );
   GFL_BG_FreeBGControl(  GFL_BG_FRAME2_M );
   GFL_BG_FreeBGControl(  GFL_BG_FRAME3_M );
@@ -4398,11 +4413,11 @@ static const GFL_G3D_UTIL_OBJ obj_table_cursor[] =
 
 static const GFL_G3D_UTIL_SETUP setupCursor[] =
 {
-  { res_table_cursor1, 1, obj_table_cursor, 1 },
-  { res_table_cursor2, 1, obj_table_cursor, 1 },
-  { res_table_cursor3, 1, obj_table_cursor, 1 },
-  { res_table_cursor4, 1, obj_table_cursor, 1 },
-  { res_table_cursor5, 1, obj_table_cursor, 1 },
+  { res_table_cursor1, NELEMS(res_table_cursor1), obj_table_cursor, NELEMS(obj_table_cursor) },
+  { res_table_cursor2, NELEMS(res_table_cursor2), obj_table_cursor, NELEMS(obj_table_cursor) },
+  { res_table_cursor3, NELEMS(res_table_cursor3), obj_table_cursor, NELEMS(obj_table_cursor) },
+  { res_table_cursor4, NELEMS(res_table_cursor4), obj_table_cursor, NELEMS(obj_table_cursor) },
+  { res_table_cursor5, NELEMS(res_table_cursor5), obj_table_cursor, NELEMS(obj_table_cursor) },
 };
 
 //--------------------------------------------------------------

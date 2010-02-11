@@ -225,7 +225,7 @@ static BOOL guru2Comm_WideUseSendWorkSend(
     GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
     BOOL ret;
     WUSE_SENDWORK *work = (void *)g2c->wideuse_sendwork;
-    work->cmd = cmd;
+//    work->cmd = cmd;
     GFL_STD_MemCopy( buf, work->buf, size );
 //    ret = ( CG_GURU2_CMD, work, GURU2_WIDEUSE_SENDWORK_SIZE );
     ret=GFL_NET_SendData( pNet, cmd, GURU2_WIDEUSE_SENDWORK_SIZE, work->buf);
@@ -258,11 +258,13 @@ static BOOL guru2Comm_WideUseSendWorkSend(
 BOOL Guru2Comm_SendData(
   GURU2COMM_WORK *g2c, u32 code, const void *data, u32 size )
 {
-  if( g2c->send_stop_flag == TRUE ){  //‘—M’â~
-    return( FALSE );
-  }
-  
-  return( guru2Comm_WideUseSendWorkSend(g2c,code,data,size) );
+  GF_ASSERT( g2c );
+//  if( g2c->send_stop_flag == TRUE ){  //‘—M’â~
+//    return( FALSE );
+//  }
+
+  OS_Printf("g2c=%08x\n", (u32)g2c);  
+  return guru2Comm_WideUseSendWorkSend(g2c,code,data,size) ;
 }
 
 //==============================================================================
