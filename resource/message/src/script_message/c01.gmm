@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-10T17:55:04"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T14:19:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="177" right="2021" bottom="805" maximized="no" rayout="Vertical2">
+	<dialog left="1287" top="186" right="1992" bottom="814" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -579,7 +579,7 @@
 サンヨウとは　３つ並ぶ　星のこと</language>
 	</row>
 
-	<row id="msg_c01_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>d01の案内看板
 ・仮</comment>
 		<language name="JPN" width="256">このさき　ゆめのあとち</language>

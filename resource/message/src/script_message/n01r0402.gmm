@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-03T12:17:34"/>
+	<create user="matsumiya" host="W00224" date="2010-02-09T17:24:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="147"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -293,6 +293,42 @@
 
 
 	<row id="msg_n01r0402_bg_01">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">BGメッセージ</attribute>
+		<language name="JPN" width="256">キッズサイズの
+スケボーが　おかれている……</language>
+		<language name="JPN_KANJI" width="256">キッズサイズの
+スケボーが　置かれている……</language>
+	</row>
+
+	<row id="msg_n01r0402_bg_02">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">BGメッセージ</attribute>
+		<language name="JPN" width="256">キッズサイズの
+スケボーが　おかれている……</language>
+		<language name="JPN_KANJI" width="256">キッズサイズの
+スケボーが　置かれている……</language>
+	</row>
+
+	<row id="msg_n01r0402_bg_03">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">BGメッセージ</attribute>
+		<language name="JPN" width="256">キッズサイズの
+スケボーが　おかれている……</language>
+		<language name="JPN_KANJI" width="256">キッズサイズの
+スケボーが　置かれている……</language>
+	</row>
+
+	<row id="msg_n01r0402_bg_04">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">BGメッセージ</attribute>
+		<language name="JPN" width="256">キッズサイズの
+スケボーが　おかれている……</language>
+		<language name="JPN_KANJI" width="256">キッズサイズの
+スケボーが　置かれている……</language>
+	</row>
+
+	<row id="msg_n01r0402_bg_05">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">BGメッセージ</attribute>
 		<language name="JPN" width="256">キッズサイズの

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-10T16:07:24"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T14:19:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r07r0201_mountain_01">
+	<row id="msg_r07r0201_mountain_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
 ・</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
@@ -300,7 +300,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_r07r0201_girl2_01">
+	<row id="msg_r07r0201_girl2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♀
 ・</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>

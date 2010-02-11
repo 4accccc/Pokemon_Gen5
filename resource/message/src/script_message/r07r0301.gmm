@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-10T16:05:45"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T14:19:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1404" top="326" right="2109" bottom="946" maximized="no" rayout="Vertical2">
+	<dialog left="1287" top="186" right="1992" bottom="814" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r07r0301_middlewoman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0301_middlewoman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：回復処理
 ・はい／いいえの選択肢表示
 　はい　→middlewoman1_02
@@ -304,7 +304,7 @@
 すこし　やすんで　いきなさい</language>
 	</row>
 
-	<row id="msg_r07r0301_middlewoman1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0301_middlewoman1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：回復処理
 ・はい選択
 　回復処理実行後にこのメッセージを表示</comment>
@@ -315,7 +315,7 @@
 すっかり　げんきに　なったわね！</language>
 	</row>
 
-	<row id="msg_r07r0301_middlewoman1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0301_middlewoman1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：回復処理
 ・いいえ選択</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1</attribute>
@@ -325,7 +325,7 @@
 やすめるときには　やすみなさい</language>
 	</row>
 
-	<row id="msg_r07r0301_pokemon_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07r0301_pokemon_01">
 		<comment>ポケモン
 ・メッセージ表示とともに鳴き声再生</comment>
 		<attribute name="キャラ指定">POKEMON
