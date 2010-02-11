@@ -737,12 +737,9 @@ t02_speech:
 	//NのBGM再生
 	_START_EVENT_BGM( SEQ_BGM_E_N )
 
-	//Ｎのアップ絵表示
-	_START_FACEUP( 0, 0 )
-
 	//キミの　ポケモンかな？　今　トレーナーへの
-	_PLAINWIN_MSG_DOWN( msg_t02_boss_01 )
-	_PLAINWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_t02_boss_01 , T02_N_01 )
+	_BALLOONWIN_CLOSE()
 
 	//自機・ライバル：Nの方へ向く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
@@ -754,8 +751,8 @@ t02_speech:
 	_BALLOONWIN_CLOSE()
 	
 	//ああ　話しているよ　そうか　キミたちにも　聞こえないのか
-	_PLAINWIN_MSG_DOWN( msg_t02_boss_02 )
-	_PLAINWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_t02_boss_02 , T02_N_01 )
+	_BALLOONWIN_CLOSE()
 
 	//オレは　クロックで　こちらは　自機　です
 	_PLAYER_NAME( 0 )
@@ -764,7 +761,17 @@ t02_speech:
 
 	//ポケモン図鑑……！？　がっかりだな
 	_PLAYER_NAME( 0 )
-	_PLAINWIN_MSG_DOWN( msg_t02_boss_03 )
+	_BALLOONWIN_OBJMSG( msg_t02_boss_03 , T02_N_01 )
+	_BALLOONWIN_CLOSE()
+
+	//Ｎ一歩前へ
+	_OBJ_ANIME( T02_N_01, anm_n_ippo )
+	_OBJ_ANIME_WAIT()
+
+	//Ｎのアップ絵表示
+	_START_FACEUP( 0, 0 )
+
+	_PLAINWIN_MSG_DOWN( msg_t02_boss_03a )
 	_PLAINWIN_CLOSE()
 
 	//BGM終了
@@ -938,21 +945,25 @@ _ANIME_LABEL anm_sage1_leave
 	_ANIME_DATA		ACMD_END,0
 	
 _ANIME_LABEL anm_hakai_leave1
+	_ANIME_DATA		AC_WAIT_8F,2
 	_ANIME_DATA		AC_WALK_U_8F,4
 	_ANIME_DATA		AC_WALK_L_8F,8
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_hakai_leave2
+	_ANIME_DATA		AC_WAIT_8F,2
 	_ANIME_DATA		AC_WALK_U_8F,5
 	_ANIME_DATA		AC_WALK_L_8F,8
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_hakai_leave3
+	_ANIME_DATA		AC_WAIT_8F,2
 	_ANIME_DATA		AC_WALK_U_8F,6
 	_ANIME_DATA		AC_WALK_L_8F,8
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_hakai_leave4
+	_ANIME_DATA		AC_WAIT_8F,2
 	_ANIME_DATA		AC_WALK_U_8F,7
 	_ANIME_DATA		AC_WALK_L_8F,8
 	_ANIME_DATA		ACMD_END,0
@@ -1026,6 +1037,10 @@ _ANIME_LABEL anm_n_come
 	_ANIME_DATA		AC_STAY_WALK_D_8F,1
 	_ANIME_DATA		ACMD_END,0
 
+_ANIME_LABEL anm_n_ippo
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+	
 //--------------------------------------------------------------
 //	Ｎ	２番道路へ
 //--------------------------------------------------------------
