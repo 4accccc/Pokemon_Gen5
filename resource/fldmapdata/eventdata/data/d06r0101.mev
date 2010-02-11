@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 19:46:42
+#save date:2010/02/11 21:35:55
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0101.wms
 #hold event type:
 1
 #hold event number:
-2
+6
 #event number: 0
 #type
 1
@@ -18,7 +18,7 @@ D06R0101_HEROINE_01
 #OBJ CODE Number
 SUPPORT
 #MOVE CODE Number
-MV_DMY
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -49,7 +49,7 @@ D06R0101_HAKASE2_01
 #OBJ CODE Number
 HAKASE2
 #MOVE CODE Number
-MV_DMY
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -72,6 +72,130 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -664
+#event number: 2
+#type
+1
+#ID name
+D06R0101_NINJA_01
+#OBJ CODE Number
+NINJA
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-248 0 248
+#event number: 3
+#type
+1
+#ID name
+D06R0101_NINJA_02
+#OBJ CODE Number
+NINJA
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 0 248
+#event number: 4
+#type
+1
+#ID name
+D06R0101_BOSS_01
+#OBJ CODE Number
+BOSS
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 -552
+#event number: 5
+#type
+1
+#ID name
+D06R0101_NINJA_03
+#OBJ CODE Number
+NINJA
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 248
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -91,7 +215,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+5
 #event number: 0
 #Pos Event Label
 POS_D06R0101_DENKI_01
@@ -102,13 +226,13 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_D06R0101
 #Event Trigger Work Value
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 -520
+-72 0 -472
 #size
-3 1
+1 3
 #event number: 1
 #Pos Event Label
 POS_D06R0101_DENKI_02
@@ -119,14 +243,48 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_D06R0101
 #Event Trigger Work Value
-1
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-680 0 -392
+264 0 -136
 #size
-3 1
+1 3
 #event number: 2
+#Pos Event Label
+POS_D06R0101_DENKI_04
+#Pos Script Name
+SCRID_POS_D06R0101_DENKI_04
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D06R0101
+#Event Trigger Work Value
+4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+824 16 56
+#size
+1 3
+#event number: 3
+#Pos Event Label
+POS_D06R0101_N_01
+#Pos Script Name
+SCRID_POS_D06R0101_N_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D06R0101
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 -616
+#size
+4 1
+#event number: 4
 #Pos Event Label
 POS_D06R0101_DENKI_03
 #Pos Script Name
@@ -136,13 +294,13 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_D06R0101
 #Event Trigger Work Value
-2
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-840 16 72
+360 0 -408
 #size
-3 1
+1 2
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

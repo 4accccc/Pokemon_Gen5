@@ -21,7 +21,49 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_d06_stopper_01
 _EVENT_DATA    ev_pos_d06_leader5_01
+_EVENT_DATA    ev_init_d06
+_EVENT_DATA    ev_recover_d06
+_EVENT_DATA    ev_zone_d06
 _EVENT_DATA_END
+
+/**************************************************************/
+/*            ZONE_CHANGE_LABEL                               */
+/**************************************************************/
+INIT_EVENT_START	ev_zone_d06
+
+	IF $WK_SCENE_D06 < 1 THEN  
+	
+		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D06_D06R0101_EXIT01, 107, 1, 337 )
+	
+	ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*            FIELD_INIT_LABEL                              　 */
+/**************************************************************/
+INIT_EVENT_START	ev_init_d06
+
+	IF $WK_SCENE_D06 < 1 THEN  
+	
+		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D06_D06R0101_EXIT01, 107, 1, 337 )
+	
+	ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*            FIELD_RECOVER_LABEL                              　 */
+/**************************************************************/
+INIT_EVENT_START	ev_recover_d06
+	
+	IF $WK_SCENE_D06 < 2 THEN 
+	
+		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D06_D06R0101_EXIT01, 107, 1, 337 )
+
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*  D06 ストッパー（デンチュラ）イベントスクリプト            */
@@ -45,6 +87,10 @@ EVENT_START    ev_pos_d06_leader5_01
 	_OBJ_ADD( D06_LEADER5_01 )
 //========================================//
 	
+	DEFINE_LOCAL	LWK_HERO_POSX
+	DEFINE_LOCAL	LWK_HERO_POSZ
+	_PLAYER_POS_GET(LWK_HERO_POSX, LWK_HERO_POSZ)
+	
 	//主人公がヤーコンに気づく
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 	_OBJ_ANIME_WAIT()
@@ -54,12 +100,19 @@ EVENT_START    ev_pos_d06_leader5_01
 	_OBJ_ANIME_WAIT()
 	
 	//ヤーコンがやってくる
-	_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01)
-	_OBJ_ANIME_WAIT()
-
-	//主人公が振り向く
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02)
-	_OBJ_ANIME_WAIT()
+	IF $LWK_HERO_POSX == 105 THEN 
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_a)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 106 THEN
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_b)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 107 THEN
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_c)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 108 THEN
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_d)
+		_OBJ_ANIME_WAIT()
+	ENDIF
 	
 	//ヤーコンが喋る
 	//ヤーコン:またせたな
@@ -70,9 +123,22 @@ EVENT_START    ev_pos_d06_leader5_01
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_03)
 	_OBJ_ANIME_WAIT()
 	
-	//ヤーコンが振り向く
-	_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01)
 	_OBJ_ANIME_WAIT()
+
+	//ヤーコンが振り向く
+	IF $LWK_HERO_POSX == 105 THEN 
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_a)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 106 THEN
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_b)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 107 THEN
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_c)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 108 THEN
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_d)
+		_OBJ_ANIME_WAIT()
+	ENDIF
 	
 	//ヤーコンが喋る
 	//ヤーコン:これは　デンチュラという
@@ -80,7 +146,7 @@ EVENT_START    ev_pos_d06_leader5_01
 	_BALLOONWIN_CLOSE()
 	
 	//ヤーコンのポケモンが出現
-	_OBJ_ADD_EX( 106, 344, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE2, MV_DMY )
+	_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE2, MV_DMY )
 	
 	//ポケモンが巣に向かう
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_kuru_01)
@@ -99,13 +165,39 @@ EVENT_START    ev_pos_d06_leader5_01
 //===============フラグ操作===============//
 //デンチュラの巣を消す
 	_OBJ_DEL( D06_STOPPER_01 )
- 	_FLAG_SET(FV_D06_STOPPER_01)
+	_FLAG_SET(FV_D06_STOPPER_01)
 //========================================// 
 
-	//ヤーコンが振り向く
-	_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02)
-	_OBJ_ANIME_WAIT()
-	
+	IF $LWK_HERO_POSX == 105 THEN 
+		//ヤーコンが振り向く
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_a)
+		_OBJ_ANIME_WAIT()
+		//主人公が振り向く
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_a)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 106 THEN
+		//ヤーコンが振り向く
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_a)
+		_OBJ_ANIME_WAIT()
+		//主人公が振り向く
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_a)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 107 THEN
+		//ヤーコンが振り向く
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_b)
+		_OBJ_ANIME_WAIT()
+		//主人公が振り向く
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_b)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 108 THEN
+		//ヤーコンが振り向く
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_b)
+		_OBJ_ANIME_WAIT()
+		//主人公が振り向く
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_b)
+		_OBJ_ANIME_WAIT()
+	ENDIF
+
 	//ヤーコンが喋る
 	//ヤーコン:ほらよ！　このわざマシンを　くれてやる
 	//ヤーコンがアイテムをくれる
@@ -124,12 +216,29 @@ EVENT_START    ev_pos_d06_leader5_01
 	//ヤーコン:オレには　おまえさんの　さいのうが　どれほどのものか
 	_BALLOONWIN_OBJMSG( msg_d06_leader_06, D06_LEADER5_01)
 	_BALLOONWIN_CLOSE()
-	
+
+	IF $LWK_HERO_POSX == 105 THEN 
 	//ヤーコンが立ち去る
-	_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01)
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01)
-	_OBJ_ANIME_WAIT()
-	
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_a)
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_a)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 106 THEN
+	//ヤーコンが立ち去る
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_b)
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_b)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 107 THEN
+	//ヤーコンが立ち去る
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_c)
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_c)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_HERO_POSX == 108 THEN
+		//ヤーコンが立ち去る
+		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_d)
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_d)
+		_OBJ_ANIME_WAIT()
+	ENDIF
+
 //===============フラグ操作===============//
 	//【仮】フラグが無い為、仮
 	//POSイベントを無効に
@@ -140,7 +249,7 @@ EVENT_START    ev_pos_d06_leader5_01
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	_OBJ_DEL(  D06_LEADER5_01 )
 	_FLAG_SET( FV_D06_LEADER5_01 )
-	
+
 //========================================//
 
 //ENDIF
@@ -162,9 +271,16 @@ _ANIME_LABEL	anm_player_muku_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-// 主人公:ヤーコンを向く2                   
+// 主人公:ヤーコンを向く2A                   
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_muku_02
+_ANIME_LABEL	anm_player_muku_02_a
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 主人公:ヤーコンを向く2B                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_muku_02_b
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -178,31 +294,119 @@ _ANIME_LABEL	anm_player_muku_03
 //--------------------------------------------------------------------
 // ヤーコン:巣を向く1                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_leader5_muku_01
-	_ANIME_DATA AC_DIR_U,1
+_ANIME_LABEL	anm_leader5_muku_01_a
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-// ヤーコン:主人公を向く2                   
+// ヤーコン:巣を向く1                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_leader5_muku_02
+_ANIME_LABEL	anm_leader5_muku_01_b
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ヤーコン:巣を向く1                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader5_muku_01_c
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ヤーコン:巣を向く1                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader5_muku_01_d
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ヤーコン:主人公を向く2A                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader5_muku_02_a
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ヤーコン:主人公を向く2B                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader5_muku_02_b
 	_ANIME_DATA AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-// ヤーコン: やってくる                   
+// ヤーコン: やってくるA                   
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_leader5_kuru_01
-	_ANIME_DATA AC_WALK_U_8F,8
-	_ANIME_DATA AC_WALK_R_8F,3
+_ANIME_LABEL	anm_leader5_kuru_01_a
+	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-// ヤーコン: たちさる              
+// ヤーコン: やってくるB                   
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_leader5_saru_01
+_ANIME_LABEL	anm_leader5_kuru_01_b
+	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_WALK_R_8F,3
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ヤーコン: やってくるC                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader5_kuru_01_c
+	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ヤーコン: やってくるD                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader5_kuru_01_d
+	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_WALK_R_8F,5
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ヤーコン: たちさるA              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader5_saru_01_a
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA AC_WALK_L_8F,2
-	_ANIME_DATA AC_WALK_D_8F,7
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// ヤーコン: たちさるB              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader5_saru_01_b
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// ヤーコン: たちさるC              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader5_saru_01_c
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ヤーコン: たちさるD              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader5_saru_01_d
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -229,9 +433,40 @@ _ANIME_LABEL	anm_poke2_waza_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-// ポケモン: 立ち去る                    
+// ポケモン: 立ち去るA                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_poke2_saru_01
-	_ANIME_DATA AC_WALK_L_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,9
+_ANIME_LABEL	anm_poke2_saru_01_a
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ポケモン: 立ち去るB                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke2_saru_01_b
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ポケモン: 立ち去るC                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke2_saru_01_c
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ポケモン: 立ち去るD                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke2_saru_01_d
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+	

@@ -22,9 +22,239 @@
 _EVENT_DATA    ev_pos_d06r0101_denki_01
 _EVENT_DATA    ev_pos_d06r0101_denki_02
 _EVENT_DATA    ev_pos_d06r0101_denki_03
+_EVENT_DATA    ev_pos_d06r0101_denki_04
 _EVENT_DATA    ev_d06r0101_heroine_01
 _EVENT_DATA    ev_d06r0101_hakase2_01
-_EVENT_DATA_END
+_EVENT_DATA    ev_pos_d06r0101_n_01
+_EVENT_DATA    ev_init_d06r0101
+
+_EVENT_DATA_END 
+
+/**************************************************************/
+/*            FIELD_INIT_LABEL                              　 */
+/**************************************************************/
+INIT_EVENT_START	ev_init_d06r0101
+
+	IF $WK_SCENE_D06R0101 > 0 && $WK_SCENE_D06R0101 < 5 THEN
+		//Nを次のイベントの位置に移動
+		_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)
+	
+	ENDIF
+	
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  D06R0101 ダークトリニティと、Nのイベント            */
+/**************************************************************/
+EVENT_START    ev_pos_d06r0101_n_01
+
+	DEFINE_LOCAL	LWK_HERO_POSX
+	DEFINE_LOCAL	LWK_HERO_POSZ
+	_PLAYER_POS_GET(LWK_HERO_POSX, LWK_HERO_POSZ)
+	
+	//ダークトリニティが現れる
+	IF $LWK_HERO_POSX == 6 THEN			
+		_OBJ_POS_CHANGE( D06R0101_NINJA_01, 6, 0, 53, DIR_UP )
+		_OBJ_POS_CHANGE( D06R0101_NINJA_02, 6, 0, 55, DIR_UP )
+	
+	ELSIF $LWK_HERO_POSX == 7 THEN
+		_OBJ_POS_CHANGE( D06R0101_NINJA_01, 7, 0, 53, DIR_UP )
+		_OBJ_POS_CHANGE( D06R0101_NINJA_02, 7, 0, 55, DIR_UP )
+
+	ELSIF $LWK_HERO_POSX == 8 THEN
+		_OBJ_POS_CHANGE( D06R0101_NINJA_01, 8, 0, 53, DIR_UP )
+		_OBJ_POS_CHANGE( D06R0101_NINJA_02, 8, 0, 55, DIR_UP )
+	
+	ENDIF
+	
+	//主人公びっくりする
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
+	_OBJ_ANIME_WAIT()
+	
+	//主人公連れて行かれる
+	//ダークトリニティも移動する 
+	IF $LWK_HERO_POSX == 6 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_a)	
+		_OBJ_ANIME( D06R0101_NINJA_01,anm_ninja_01_idou_01_a)
+		_OBJ_ANIME( D06R0101_NINJA_02,anm_ninja_02_idou_01_a)
+		_OBJ_ANIME_WAIT()
+	
+	ELSIF $LWK_HERO_POSX == 7 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_b)	
+		_OBJ_ANIME( D06R0101_NINJA_01,anm_ninja_01_idou_01_b)
+		_OBJ_ANIME( D06R0101_NINJA_02,anm_ninja_02_idou_01_b)
+		_OBJ_ANIME_WAIT()
+
+	ELSIF $LWK_HERO_POSX == 8 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_c)	
+		_OBJ_ANIME( D06R0101_NINJA_01,anm_ninja_01_idou_01_c)
+		_OBJ_ANIME( D06R0101_NINJA_02,anm_ninja_02_idou_01_c)
+		_OBJ_ANIME_WAIT()
+	
+	ENDIF
+	
+	_TIME_WAIT(10)
+	
+	//ダークトリニティが消える
+	_OBJ_DEL( D06R0101_NINJA_01 )
+	_OBJ_DEL( D06R0101_NINJA_02 )
+	
+	_TIME_WAIT(15)
+	
+	//Nが振り向く
+	_OBJ_ANIME( D06R0101_BOSS_01, anm_common_turn_down )
+	_OBJ_ANIME_WAIT()
+	
+	//Nがしゃべる
+	//Nがはい・いいえの会話をする
+	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_10,D06R0101_BOSS_01 ) 
+	_YES_NO_WIN( SCWK_ANSWER )
+	_MSGWIN_CLOSE()
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_11,D06R0101_BOSS_01 )
+		_MSGWIN_CLOSE()
+	
+	ELSE
+		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_12,D06R0101_BOSS_01 )
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+	
+	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_13,D06R0101_BOSS_01 )
+	_MSGWIN_CLOSE()
+	
+ 	//Nが移動する
+ 	_OBJ_ANIME( D06R0101_BOSS_01, anm_boss_saru_01 )
+ 	
+	_CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	_CAMERA_MOVE(9688,0,970752,819200,0,3047424,75)
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+ 	
+    _OBJ_ANIME_WAIT()
+    
+ 	//Nが石を押す
+	//Nが退場する
+	
+ 	_OBJ_ANIME( D06R0101_BOSS_01, anm_boss_saru_02 )
+     _OBJ_ANIME_WAIT()
+     
+	//カメラが戻る
+   	_CAMERA_RECV_MOVE( 50 )
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
+//===============フラグ操作===============//
+//【仮】ワークが無い為、仮
+	//POSイベントを無効に
+	$WK_SCENE_D06R0101 = 1
+	
+	//Nを次のイベントの位置に移動
+	_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)
+	
+//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公:ダークトリニティに囲まれて移動                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_01_a
+	_ANIME_DATA AC_WALK_U_4F,2
+	_ANIME_DATA AC_WALK_R_4F,4
+	_ANIME_DATA AC_STAY_WALK_U_4F,1	
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公:ダークトリニティに囲まれて移動                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_01_b
+	_ANIME_DATA AC_WALK_U_4F,2
+	_ANIME_DATA AC_WALK_R_4F,3
+	_ANIME_DATA AC_STAY_WALK_U_4F,1	
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公:ダークトリニティに囲まれて移動                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_01_c
+	_ANIME_DATA AC_WALK_U_4F,2
+	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_STAY_WALK_U_4F,1	
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//N: 立ち去る1                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_saru_01
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//N: 立ち去る2                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_saru_02
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//ダークトリニティ:移動（上側の人）A                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_01_idou_01_a
+	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_WALK_R_4F,5
+	_ANIME_DATA AC_STAY_WALK_U_4F,1	
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダークトリニティ:移動（上側の人）B                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_01_idou_01_b
+	_ANIME_DATA AC_WALK_U_4F,1	
+	_ANIME_DATA AC_WALK_R_4F,4
+	_ANIME_DATA AC_STAY_WALK_U_4F,1	
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダークトリニティ:移動（上側の人）C                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_01_idou_01_c
+	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_WALK_R_4F,3
+	_ANIME_DATA AC_STAY_WALK_U_4F,1	
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダークトリニティ:移動（下側の人）A                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_02_idou_01_a
+	_ANIME_DATA AC_WALK_U_4F,3
+	_ANIME_DATA AC_WALK_R_4F,3
+	_ANIME_DATA AC_STAY_WALK_U_4F,1		
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//ダークトリニティ:移動（下側の人）B                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_02_idou_01_b
+	_ANIME_DATA AC_WALK_U_4F,3
+	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_STAY_WALK_U_4F,1		
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダークトリニティ:移動（下側の人）C                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_02_idou_01_c
+	_ANIME_DATA AC_WALK_U_4F,3
+	_ANIME_DATA AC_WALK_R_4F,1
+	_ANIME_DATA AC_STAY_WALK_U_4F,1		
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*  D06R0101 博士とホワイトのPOSイベントスクリプト            */
@@ -43,29 +273,24 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 	_OBJ_ANIME_WAIT()
 	
-	//主人公が下を向く
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_01)
+	//主人公がよこを向く
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_left)
 	_OBJ_ANIME_WAIT()
 	
 	//ホワイトがやってくる
 	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_kuru_01)
 	_OBJ_ANIME_WAIT()
 	
-	//主人公が上に移動する
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01)
-	_OBJ_ANIME_WAIT()
-	
 	//主人公の名前を格納
 	_PLAYER_NAME(0)
 	
-	//ホワイトが喋る
-	//ホワイト:もう！　ったら　あぶなかったよ
+	//ホワイト:おーい　しってる？
 	//ホワイトが喋る
 	_BALLOONWIN_OBJMSG( msg_d06r0101_white_01, D06R0101_HEROINE_01)
 	_BALLOONWIN_CLOSE()
 	
 	//ホワイト、博士の方をむく
-	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_muku_01)
+	_OBJ_ANIME( D06R0101_HEROINE_01,anm_common_turn_down)
 	_OBJ_ANIME_WAIT()
 	
 	//ホワイトが喋る
@@ -84,18 +309,16 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	
 	//博士2移動して、きょろきょろする
 	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kyorokyoro_01)
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02)
-	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_muku_02)
 	_OBJ_ANIME_WAIT()
 	
 	//博士2が喋る
-	//博士2:……それにしても　今日は
+	//博士2:あいかわらず　ここ　ポケモン
 	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_02, D06R0101_HAKASE2_01)
 	_BALLOONWIN_CLOSE()
 	
 	//博士2がもとの位置に移動
 	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kuru_02)
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_01)
+	_OBJ_ANIME( D06R0101_HEROINE_01,anm_common_turn_right)
 	_OBJ_ANIME_WAIT()
 
 	//博士2が喋る
@@ -103,101 +326,55 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_03, D06R0101_HAKASE2_01)
 	_BALLOONWIN_CLOSE()
 	
-	//ホワイトが主人公を向く
-	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_muku_02)
-	_OBJ_ANIME_WAIT()
-	
-	//ホワイトが喋る
-	//ホワイト:アタシはね
-	_BALLOONWIN_OBJMSG( msg_d06r0101_white_03, D06R0101_HEROINE_01)
-	_BALLOONWIN_CLOSE()
-
 //===============フラグ操作===============//
 //【仮】ワークが無い為、仮
 	//POSイベントを無効に
-	$WK_SCENE_D06R0101 = 1
+	$WK_SCENE_D06R0101 = 2
 //========================================//
 
-EVENT_END
+EVENT_END  
 
 //--------------------------------------------------------------------
 //主人公:びっくりマーク                         
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+	_ANIME_DATA	ACMD_END,0 
 
 //--------------------------------------------------------------------
-//主人公:ホワイトを向く                         
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_muku_01
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//主人公:博士を向く                         
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_muku_02
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------------
-//主人公: ホワイトに押されて、上に                     
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_idou_01
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_ANM_PAUSE_ON,1	
-	_ANIME_DATA AC_JUMP_U_2G_16F,1		
-	_ANIME_DATA AC_ANM_PAUSE_OFF,1
-	_ANIME_DATA AC_DIR_D,1	
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//ホワイト: 博士の方を向く1                     
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_heroine_muku_01
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//ホワイト: 博士の方を向く2                     
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_heroine_muku_02
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//ホワイト: 慌てて、やってくる                     
+//ホワイト: やってくる                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_heroine_kuru_01
-	_ANIME_DATA	AC_WALK_U_4F,8
-	_ANIME_DATA	ACMD_END,0
+	_ANIME_DATA	AC_WALK_U_8F,11
+	_ANIME_DATA AC_WALK_R_8F,1 
+	_ANIME_DATA	ACMD_END,0  
 
 //--------------------------------------------------------------------
 //博士2: やってくる                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kuru_01
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
-
+	
 //--------------------------------------------------------------------
-//博士2: 元の位置に戻る                        
+//博士2: やってくる2                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kuru_02
-	_ANIME_DATA	AC_WALK_D_8F,5
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //博士2:  少し上できょろきょろ                       
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kyorokyoro_01
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,7
-	_ANIME_DATA	AC_WALK_R_16F,2
-	_ANIME_DATA	AC_WALK_L_16F,2
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
@@ -207,15 +384,15 @@ EVENT_START    ev_pos_d06r0101_denki_02
 	
 	//博士2の場所を移動
 	//ホワイトの場所を移動
-	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 50, 0, 41, DIR_RIGHT )
-	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 48, 0, 42, DIR_RIGHT )
+	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 24, 1, 14, DIR_DOWN )
+	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 24, 1, 13, DIR_DOWN )
 	
 	//主人公がびっくり
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 	_OBJ_ANIME_WAIT()
 
-	//主人公がは博士を向く
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_03)
+	//主人公が博士を向く
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_left)
 	_OBJ_ANIME_WAIT()
 	
 	//博士2がやってくる
@@ -229,98 +406,160 @@ EVENT_START    ev_pos_d06r0101_denki_02
 	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_05, D06R0101_HAKASE2_01)
 	_BALLOONWIN_CLOSE()
 	
+	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_common_turn_left)
+	_OBJ_ANIME_WAIT()
+	
 	//博士2:この　どうくつは　1000ねんも
 	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_06, D06R0101_HAKASE2_01)
 	_BALLOONWIN_CLOSE()
 	
+	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
+	_OBJ_ANIME_WAIT()
+		
 	//博士2:ポケモンたちが　どこから　きたのか
 	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_07, D06R0101_HAKASE2_01)
 	_BALLOONWIN_CLOSE()
 	
-	//ホワイトが主人公に隣接
-	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_kuru_03)
-	_OBJ_ANIME_WAIT()
-
-	//主人公にホワイトを向く
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_01)
-	_OBJ_ANIME_WAIT()
-	
 	//ホワイトが喋る
-	//ホワイト:ねえねえ　その　グローブ　なあに？
+	//ホワイト:ねえねえ　ポケモンって
 	_BALLOONWIN_OBJMSG( msg_d06r0101_white_04, D06R0101_HEROINE_01)
 	_BALLOONWIN_CLOSE()
+/*		
+	//博士2:ポケモンたちがどこから来たのか
+	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_07, D06R0101_HAKASE2_01)
+	_BALLOONWIN_CLOSE()
+*/
 	
 //===============フラグ操作===============//
 //【仮】ワークが無い為、仮
 	//POSイベントを無効に
-	$WK_SCENE_D06R0101 = 2
+	$WK_SCENE_D06R0101 = 3
 //========================================//
 
 EVENT_END
 
 //--------------------------------------------------------------------
-//主人公:博士を向く３                         
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_muku_03
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------------
 //ホワイト: やってくる２                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_heroine_kuru_02
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//ホワイト: やってくる３                   
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_heroine_kuru_03
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_D_8F,9
+	_ANIME_DATA AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //博士2: やってくる３                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kuru_03
-	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*  D06R0101 博士とホワイトとNのPOSイベントスクリプト         */
+/*  D06R0101 ダークトリニティのPOSイベントスクリプト2         */
 /**************************************************************/
-EVENT_START    ev_pos_d06r0101_denki_03
-
-	//博士2の場所を移動
-	//ホワイトの場所を移動
-	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 56, 0, 13, DIR_RIGHT )
-	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 58, 0, 14, DIR_RIGHT )
-	_OBJ_ADD_EX( 60, 13, DIR_DOWN, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
+EVENT_START    ev_pos_d06r0101_denki_03	
+	
+	_OBJ_ADD(D06R0101_NINJA_01)
+	_OBJ_ADD(D06R0101_NINJA_02)
+	
+	_PLAYER_POS_GET(LWK_HERO_POSX, LWK_HERO_POSZ)
+	
+	IF $LWK_HERO_POSZ == 41 THEN			
+		//ダークトリニティを移動
+		_OBJ_POS_CHANGE( D06R0101_NINJA_01, 37, 0, 41, DIR_RIGHT )
+		_OBJ_POS_CHANGE( D06R0101_NINJA_02, 38, 0, 42, DIR_RIGHT )
+		_OBJ_POS_CHANGE( D06R0101_NINJA_03, 39, 0, 41, DIR_RIGHT )
+	
+	ELSIF $LWK_HERO_POSZ == 42 THEN
+		//ダークトリニティを移動
+		_OBJ_POS_CHANGE( D06R0101_NINJA_01, 37, 0, 42, DIR_RIGHT )
+		_OBJ_POS_CHANGE( D06R0101_NINJA_02, 38, 0, 41, DIR_RIGHT )
+		_OBJ_POS_CHANGE( D06R0101_NINJA_03, 39, 0, 42, DIR_RIGHT )
+	
+	ENDIF
 	
 	//主人公がびっくり
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 	_OBJ_ANIME_WAIT()
 	
-	//主人公が左を向く
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_04)
+	//主人公が移動
+	//ダークトリニティが移動
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_02_a)
+	_OBJ_ANIME(D06R0101_NINJA_01,anm_ninja_01_idou_02_a)
+	_OBJ_ANIME(D06R0101_NINJA_02,anm_ninja_02_idou_02_a)
+	_OBJ_ANIME(D06R0101_NINJA_03,anm_ninja_03_idou_02_a)
 	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(10)
+	
+	_OBJ_DEL(D06R0101_NINJA_01)
+	_OBJ_DEL(D06R0101_NINJA_02)
+	_OBJ_DEL(D06R0101_NINJA_03)
+	
+//===============フラグ操作===============//
+//【仮】ワークが無い為、仮
+	//POSイベントを無効に
+	$WK_SCENE_D06R0101 = 4
+//========================================//
 
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公: 移動させられる2                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_02_a
+	_ANIME_DATA AC_WALK_R_4F,20
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士2: やってくる３                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_01_idou_02_a
+	_ANIME_DATA AC_WALK_R_4F,20
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士2: やってくる３                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_02_idou_02_a
+	_ANIME_DATA AC_WALK_R_4F,20
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士2: やってくる３                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_03_idou_02_a
+	_ANIME_DATA AC_WALK_R_4F,20
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/*  D06R0101 博士とホワイトとNのPOSイベントスクリプト         */
+/**************************************************************/
+EVENT_START    ev_pos_d06r0101_denki_04
+	
+	_PLAYER_POS_GET(LWK_HERO_POSX, LWK_HERO_POSZ)
+	
+	//博士2の場所を移動
+	//ホワイトの場所を移動
+	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 56, 0, 13, DIR_RIGHT )
+	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 58, 0, 14, DIR_RIGHT )
+	
 	//NのBGM再生
 	_START_EVENT_BGM( SEQ_BGM_E_N )
 	
 	//Nがやってくる
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_boss_kuru_01)
-	_OBJ_ANIME_WAIT()
-
-	//主人公が下を向く
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_05)
+	_OBJ_ANIME( D06R0101_BOSS_01,anm_boss_kuru_01)
 	_OBJ_ANIME_WAIT()
 	
 	//Nが喋る
 	//はい・いいえの選択
 	//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
-	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_01, MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_01, D06R0101_BOSS_01)
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 	
@@ -329,14 +568,14 @@ EVENT_START    ev_pos_d06r0101_denki_03
 		//はい
 		//Nが喋る
 		//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
-		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_02, MMDL_ID_EVENTOBJ_00)
+		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_02, D06R0101_BOSS_01)
 		_BALLOONWIN_CLOSE()
 	
 	ELSE
 		//いいえ
 		//Nが喋る
 		//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
-		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_03, MMDL_ID_EVENTOBJ_00)
+		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_03, D06R0101_BOSS_01)
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
@@ -352,16 +591,18 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	
 	//Nが喋る
 	//Ｎ『……ふしぎだな　なぜ　キミのような　にんげんが
-	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_04, MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_04, D06R0101_BOSS_01)
 	_BALLOONWIN_CLOSE()
 	
 	//プレイヤーの名前を格納
 	_PLAYER_NAME(0)
-	
 	//ホワイトが喋る
 	//ホワイト:主人公の名前！
 	_BALLOONWIN_OBJMSG( msg_d06r0101_white_06, D06R0101_HEROINE_01)
 	_BALLOONWIN_CLOSE()
+	
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_left)
+	_OBJ_ANIME_WAIT()
 	
 	//ホワイトがやってくる
 	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_kuru_04)
@@ -380,20 +621,25 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	//博士2:･･････ホワイティは　みみが　いいのね
 	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_09, D06R0101_HAKASE2_01)
 	_BALLOONWIN_CLOSE()
+	
+	IF $LWK_HERO_POSZ == 12 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_doku_a)
+		_OBJ_ANIME_WAIT()
+	
+	ELSIF $LWK_HERO_POSZ == 13 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_doku_b)
+		_OBJ_ANIME_WAIT()
+	
+	ELSIF $LWK_HERO_POSZ == 14 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_doku_c)
+		_OBJ_ANIME_WAIT()
 
-	//Nが博士を向く
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_boss_muku_01)
-	_OBJ_ANIME_WAIT()
+	ENDIF
 	
 	//Nが喋る
 	//Ｎ『……アララギか　はじめまして
-	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_05, MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_05, D06R0101_BOSS_01)
 	_BALLOONWIN_CLOSE()
-	
-	//ホワイトが両者を向く
-	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_muku_02)
-	_OBJ_ANIME_WAIT()
-	
 	
 	//博士2が喋る
 	//博士2:あら……　ずいぶんと　きらわれているのね
@@ -402,21 +648,26 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	
 	//Nが喋る
 	//Ｎ『……それでは　まちがった　にんげんが
-	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_06, MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_06, D06R0101_BOSS_01)
 	_BALLOONWIN_CLOSE()
 	
 	//Nが画面外に移動
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_boss_saru_01)
+	_OBJ_ANIME( D06R0101_BOSS_01,anm_boss_saru_03)
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_right)
 	_OBJ_ANIME_WAIT()
 
 	//BGM終了
 	_END_EVENT_BGM()
 	
-	//博士2がNの方を向く
-	//ホワイトがNの方を向く
-	//主人公がNの方を向く
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_04)
-	_OBJ_ANIME_WAIT()
+	IF $LWK_HERO_POSZ == 12 || $LWK_HERO_POSZ == 13 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou3_a)
+		_OBJ_ANIME_WAIT()
+	
+	ELSIF $LWK_HERO_POSZ == 14 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou3_c)
+		_OBJ_ANIME_WAIT()
+
+	ENDIF
 	
 	//博士2が喋る
 	//博士2:……　まあ　いきなり　わかってもらえるとは
@@ -444,12 +695,12 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	//博士とホワイト、Nを非表示にする
 	_OBJ_DEL( D06R0101_HEROINE_01 )
 	_OBJ_DEL( D06R0101_HAKASE2_01 )
-	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	_OBJ_DEL( D06R0101_BOSS_01 )
 	
 //===============フラグ操作===============//
 //【仮】フラグが無い為、仮
 	//POSイベントを無効にする
-	$WK_SCENE_D06R0101 = 3
+	$WK_SCENE_D06R0101 = 5
 	
 	//博士とホワイト、Nを消す
 	_FLAG_SET(FV_D06R0101_FRIENDS)
@@ -477,19 +728,52 @@ _RET
 EVENT_END
 
 //--------------------------------------------------------------------
-//主人公:Nを向く4                         
+//主人公:上に退くA                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_muku_04
-	_ANIME_DATA AC_DIR_L,1
+_ANIME_LABEL	anm_player_doku_a
+	_ANIME_DATA AC_STAY_WALK_D_8F,1	
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//主人公:上に退くB                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_doku_b
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1	
+	_ANIME_DATA	ACMD_END,0
+	
+
+//--------------------------------------------------------------------
+//主人公:上に退くC                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_doku_c
+	_ANIME_DATA AC_STAY_WALK_U_8F,1	
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公:Nを向く5                         
+//主人公:移動3A                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_muku_05
-	_ANIME_DATA AC_DIR_D,1
+_ANIME_LABEL	anm_player_idou3_a
+	_ANIME_DATA AC_WALK_D_8F,1	
+	_ANIME_DATA AC_STAY_WALK_L_8F,1	
 	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//主人公:移動3B                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou3_b
+	_ANIME_DATA AC_STAY_WALK_L_8F,1	
+	_ANIME_DATA	ACMD_END,0
+	
 
+//--------------------------------------------------------------------
+//主人公:移動3C                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou3_c
+	_ANIME_DATA AC_WALK_U_8F,1	
+	_ANIME_DATA AC_STAY_WALK_L_8F,1	
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------------
 //ホワイト: 両者を向く2                    
 //--------------------------------------------------------------------
@@ -501,7 +785,7 @@ _ANIME_LABEL	anm_heroine_muku_04
 //ホワイト: やってくる4                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_heroine_kuru_04
-	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -536,14 +820,13 @@ _ANIME_LABEL	anm_boss_muku_01
 //N: やってくる1                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_boss_kuru_01
-	_ANIME_DATA	AC_WALK_R_8F,9
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //N: 立ち去る1                   
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_boss_saru_01
+_ANIME_LABEL	anm_boss_saru_03
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	AC_WALK_R_8F,5
@@ -555,10 +838,10 @@ _ANIME_LABEL	anm_boss_saru_01
 /**************************************************************/
 EVENT_START    ev_d06r0101_hakase2_01
 	
-	IF $WK_SCENE_D06R0101 == 1 THEN 
+	IF $WK_SCENE_D06R0101 == 2 THEN 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_hakase2_04 )
 	
-	ELSIF $WK_SCENE_D06R0101 == 2 THEN 
+	ELSIF $WK_SCENE_D06R0101 == 3 THEN 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_hakase2_08 )
 	ENDIF
 
@@ -569,11 +852,40 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_d06r0101_heroine_01
 	
-	IF $WK_SCENE_D06R0101 == 1 THEN 
+	IF $WK_SCENE_D06R0101 == 2 THEN 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_white_03 )
 	
-	ELSIF $WK_SCENE_D06R0101 == 2 THEN 
+	ELSIF $WK_SCENE_D06R0101 == 3 THEN 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_white_05 )
 	ENDIF
-	
+
 EVENT_END
+
+//--------------------------------------------------------------------
+//共通スクリプト：上を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：下を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：右を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：左を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+

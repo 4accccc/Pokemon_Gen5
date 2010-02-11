@@ -19,66 +19,84 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d06r0201_boss_01
+_EVENT_DATA    ev_d06r0201_middleman1_01
+_EVENT_DATA    ev_d06r0201_middleman1_02
 _EVENT_DATA_END
 
 /**************************************************************/
-/*  D06R0201 Nとのイベントスクリプト            */
+/*  D06R0201 きんたまおじさん（兄）のイベントスクリプト       */
 /**************************************************************/
-EVENT_START    ev_d06r0201_boss_01
+EVENT_START    ev_d06r0201_middleman1_01
+    
+	//アイテムを貰っていなかったら、こっち
+	IF FLAG_OFF(FH_01) THEN 
 	
-	_TALK_OBJ_START()
+	    //兄がしゃべる
+	    _TURN_HERO_SITE()
+	    _BALLOONWIN_OBJMSG(msg_d06r0201_gold1_01,D06R0201_MIDDLEMAN1_01)
+	    _MSGWIN_CLOSE()
+	    
+	    //おとうとがしゃべる
+	    _BALLOONWIN_OBJMSG(msg_d06r0201_gold2_01,D06R0201_MIDDLEMAN1_02)
+	    _MSGWIN_CLOSE()
+	   
+	    //兄が移動するかも 
+	    //兄からアイテムをもらう
+		_BALLOONWIN_OBJMSG(msg_d06r0201_gold1_02,D06R0201_MIDDLEMAN1_01)
+	    _MSGWIN_CLOSE()
+	    _ITEM_EVENT_KEYWAIT(ITEM_KINNOTAMA,1)
+	    
+	    //おとうとが移動するかも
+	    //おとうとからアイテムを貰う
+	    _BALLOONWIN_OBJMSG(msg_d06r0201_gold2_02,D06R0201_MIDDLEMAN1_02)
+	    _MSGWIN_CLOSE()
+	    _ITEM_EVENT_KEYWAIT(ITEM_KINNOTAMA,1)
+	    
+	    _FLAG_SET(FH_01)
 	
-	IF FLAG_OFF( FH_01) THEN	
-		//Nが喋る
-		//Ｎ『･･････かれは　なにを思って
-		_BALLOONWIN_TALKOBJ_MSG(msg_d06r0201_boss_01)
-		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
-		
-		IF $SCWK_ANSWER ==  SCR_YES THEN
-		
-			//Nが喋る・はいの場合
-			//Ｎ『･･････そう　しんじていないと
-			_BALLOONWIN_TALKOBJ_MSG(msg_d06r0201_boss_02)
-	    	_BALLOONWIN_CLOSE()
-			
-		ELSE
-			//Nが喋る・いいえの場合
-			//Ｎ『そうか･･････　いがいと
-	    	_BALLOONWIN_TALKOBJ_MSG(msg_d06r0201_boss_03)
-	    	_BALLOONWIN_CLOSE()
-	    	
-		ENDIF
-			
-			//Ｎ『･･････まあいい　キミは　
-			_BALLOONWIN_TALKOBJ_MSG(msg_d06r0201_boss_04)
-	    	_BALLOONWIN_CLOSE()
-			
-			//Nがアイテムをくれる
-			_ITEM_EVENT_KEYWAIT(ITEM_ZYUUDENTI, 1)
-			
-			//Nが喋る
-			//Ｎ『ボクに　ここで待つよう
-	    	_BALLOONWIN_TALKOBJ_MSG(msg_d06r0201_boss_05)
-	    	_LAST_KEYWAIT()
-	    	_BALLOONWIN_CLOSE()
-	    	
-	    	
-			//===============フラグ操作===============//
-			//【仮】フラグが無い為、仮
-			//アイテム入手フラグをセット
-				_FLAG_SET(FH_01)
-			//========================================//
-		    	
-    ELSE	
-    		
-   			//Nが喋る
-			//Ｎ『ボクに　ここで待つよう
-	    	_BALLOONWIN_TALKOBJ_MSG(msg_d06r0201_boss_05)
-	    	_LAST_KEYWAIT()
-	    	_BALLOONWIN_CLOSE()
-	    	
+	//アイテムを貰っていたらこっち
+	ELSE    
+
+	    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d06r0201_gold1_03)
+    
+    ENDIF
+    
+EVENT_END
+
+/**************************************************************/
+/*  D06R0201 きんたまおじさん（おとうと）のイベントスクリプト */
+/**************************************************************/
+EVENT_START    ev_d06r0201_middleman1_02
+    
+	//アイテムを貰っていなかったら、こっち
+	IF FLAG_OFF(FH_01) THEN 
+	
+	    //兄がしゃべる
+	    _TURN_HERO_SITE()
+	    _BALLOONWIN_OBJMSG(msg_d06r0201_gold1_01,D06R0201_MIDDLEMAN1_01)
+	    _MSGWIN_CLOSE()
+	    
+	    //おとうとがしゃべる
+	    _BALLOONWIN_OBJMSG(msg_d06r0201_gold2_01,D06R0201_MIDDLEMAN1_02)
+	    _MSGWIN_CLOSE()
+	   
+	    //兄からアイテムをもらう
+		_BALLOONWIN_OBJMSG(msg_d06r0201_gold1_02,D06R0201_MIDDLEMAN1_01)
+	    _MSGWIN_CLOSE()
+	    _ITEM_EVENT_KEYWAIT(ITEM_KINNOTAMA,1)
+	    
+	    //おとうとからアイテムを貰う
+	    _BALLOONWIN_OBJMSG(msg_d06r0201_gold2_02,D06R0201_MIDDLEMAN1_02)
+	    _MSGWIN_CLOSE()
+	    _ITEM_EVENT_KEYWAIT(ITEM_KINNOTAMA,1)
+	    
+	    _FLAG_SET(FH_01)
+	
+	//アイテムを貰っていたらこっち	    	    
+	ELSE    
+
+	    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d06r0201_gold2_03)
+    
     ENDIF
     
 EVENT_END

@@ -15,6 +15,10 @@
 
 #define D06R0101_HEROINE_01                0
 #define D06R0101_HAKASE2_01                1
+#define D06R0101_NINJA_01                  2
+#define D06R0101_NINJA_02                  3
+#define D06R0101_BOSS_01                   4
+#define D06R0101_NINJA_03                  5
 
 #endif //ZONE_D06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

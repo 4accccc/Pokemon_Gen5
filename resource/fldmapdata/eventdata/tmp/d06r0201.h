@@ -12,7 +12,8 @@
 #ifndef ZONE_D06R0201_EVC_H
 #define ZONE_D06R0201_EVC_H
 
-#define D06R0201_BOSS_01                   0
+#define D06R0201_MIDDLEMAN1_02             0
+#define D06R0201_MIDDLEMAN1_01             1
 
 #endif //ZONE_D06R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
