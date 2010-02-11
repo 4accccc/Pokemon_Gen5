@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T19:43:31"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T14:54:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -771,6 +771,7 @@
 	</row>
 
 	<row id="msg_t01r0102_bed_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">ベッド</attribute>
 		<language name="JPN" width="256">ベッドが　ある……！[BE:01:ページ切り替え（クリア）]
 おかあさんが　せんたくしてくれた
@@ -780,7 +781,7 @@
 シーツが　いい　香り！</language>
 	</row>
 
-	<row id="msg_t01r0102_pc_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t01r0102_pc_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ＢＧメッセージ
 （仮：プラチナと同じ）
 0＝主人公名</comment>

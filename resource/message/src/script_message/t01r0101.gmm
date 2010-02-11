@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T13:32:01"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T14:54:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,9 +296,9 @@
 		<comment>♂
 ・続けてmsg_t01r0101_white_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『おばさん
+		<language name="JPN" width="256">チェレン『おばさん
 それでは　しつれいします[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『おばさん
+		<language name="JPN_KANJI" width="256">チェレン『おばさん
 それでは　失礼します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -308,9 +308,9 @@
 ・続けて主人公ママ、主人公に隣接して
 　msg_t01r0101_mama_01表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『おじゃま　しました
+		<language name="JPN" width="256">ベル『おじゃま　しました
 また　あそびに　きますね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『おじゃま　しました
+		<language name="JPN_KANJI" width="256">ベル『おじゃま　しました
 また　遊びに　来ますね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
