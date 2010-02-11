@@ -118,6 +118,8 @@ typedef enum
 
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット ef0
 #define _STATUS_MSG_PAL   (11)  // メッセージフォント
+
+#define _MAINBG_APP_MSG_PAL (13)
 //メッセージ系は上下共通 BG
 #define _BUTTON_MSG_PAL   (14)  // メッセージフォント
 #define _BUTTON_WIN_PAL   (15)  // ウインドウ
@@ -679,6 +681,7 @@ extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 #define _CLACT_SOFTPRI_SCROLL_BAR  (14)
 #define _CLACT_SOFTPRI_SELECT (15)
 #define _CLACT_SOFTPRI_POKELIST  (16)
+#define _CLACT_SOFTPRI_MARK (19)
 
 
 ///通信コマンド
@@ -714,6 +717,7 @@ extern int POKE_GTS_IsSelect(POKEMON_TRADE_WORK* pWork,int boxno,int index);
 
 //メッセージ関連
 extern void POKETRADE_MESSAGE_WindowOpen(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_WindowOpenSpeed(POKEMON_TRADE_WORK* pWork,BOOL bFast);
 extern void POKETRADE_MESSAGE_WindowClose(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_WindowClear(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKETRADE_MESSAGE_EndCheck(POKEMON_TRADE_WORK* pWork);
@@ -742,6 +746,7 @@ extern void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork);
 //ポケモンネゴシエーション用
 extern void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork);
 extern int POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height);
+extern BOOL POKETRADE_NEGO_IsStatusLookAt(POKEMON_TRADE_WORK* pWork,int line , int height);
 
 extern void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork);

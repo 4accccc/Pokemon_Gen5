@@ -187,6 +187,22 @@ int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex)
   return -1;
 }
 
+
+//------------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコンを再描画
+ * @param   POKEMON_TRADE_WORK
+ * @retval  void
+ */
+//------------------------------------------------------------------
+
+static void _PokemonIconRenew(POKEMON_TRADE_WORK *pWork)
+{
+  pWork->oldLine++;
+  pWork->bgscrollRenew = TRUE;
+  _scrollMainFunc(pWork,FALSE,FALSE);
+}
+
 //------------------------------------------------------------------
 /**
  * @brief   ベクトル計算
@@ -1096,9 +1112,8 @@ static void IRC_POKETRADE_CursorEnable(POKEMON_TRADE_WORK* pWork,int line,int in
 
   pWork->MainObjCursorLine = line;   //OBJカーソルライン
   pWork->MainObjCursorIndex = index;  //OBJカーソルインデックス
-  pWork->oldLine++;
-  pWork->bgscrollRenew = TRUE;
-  _scrollMainFunc(pWork,FALSE,FALSE);
+
+  _PokemonIconRenew(pWork);
 
 }
 
@@ -1127,9 +1142,7 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
             pWork->underSelectBoxno  = pWork->workBoxno;
             pWork->underSelectIndex = pWork->workPokeIndex;
           }
-          pWork->oldLine++;
-          pWork->bgscrollRenew = TRUE;
-          _scrollMainFunc(pWork,FALSE,FALSE);
+          _PokemonIconRenew(pWork);
           bChange = TRUE;
         }
       }
@@ -1156,6 +1169,14 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
 
   
   TOUCHBAR_Main(pWork->pTouchWork);
+  switch( TOUCHBAR_GetTouch(pWork->pTouchWork )){
+  case TOUCHBAR_ICON_CUR_L:
+  case TOUCHBAR_ICON_CUR_R:
+    if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+      APP_TASKMENU_SetActive(pWork->pAppTask,FALSE);
+    }
+    break;
+  }
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
   case TOUCHBAR_ICON_CUR_L:
   case TOUCHBAR_ICON_CUR_R:
@@ -1163,8 +1184,6 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       pWork->pokemonselectno = 1 - pWork->pokemonselectno;
       bChange=TRUE;
     }
-    break;
-  default:
     break;
   }
 
@@ -1235,8 +1254,10 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     else{
       //やめる
       _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
-      _scrollResetAndIconReset(pWork);
     }
+    pWork->underSelectBoxno = -1;
+    pWork->underSelectIndex = -1;
+    _scrollResetAndIconReset(pWork);
     IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
     IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
     POKETRADE_MESSAGE_ResetPokemonMyStDisp(pWork);
@@ -1275,6 +1296,9 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
 
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
   _CatchPokemonPositionRewind(pWork);
+
+  _PokemonIconRenew(pWork);
+  
   _CHANGE_STATE(pWork,_dispSubStateWait);
 }
 
@@ -1616,7 +1640,7 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_InitSubMojiBG(pWork);
 
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_52, pWork->pMessageStrBuf );
-  POKETRADE_MESSAGE_WindowOpen(pWork);
+  POKETRADE_MESSAGE_WindowOpenSpeed(pWork,TRUE);
 
 //  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
 
@@ -1683,7 +1707,6 @@ static int _boxScrollLine2Num(int line)
 static BOOL _isCursorInScreen(POKEMON_TRADE_WORK* pWork, int line)
 {
   int i=_boxScrollLine2Num(line);
-
 
   if((pWork->BoxScrollNum < i) && ((pWork->BoxScrollNum + 224) > i)){
     return TRUE;  //範囲内
@@ -1785,11 +1808,14 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
   }
   else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_LEFT ){   //ベクトルを監視
     pWork->padMode=TRUE;
-    if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
+    if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){  //移動するカーソルが画面内にいるかどうか
       pWork->MainObjCursorLine=line;
     }
     else{
       pWork->MainObjCursorLine--;
+      if(pWork->MainObjCursorLine < 0){
+        pWork->MainObjCursorLine = pWork->TRADEBOX_LINEMAX-1;
+      }
       if(FALSE == _isCursorInScreen(pWork,pWork->MainObjCursorLine )){
         pWork->BoxScrollNum = _boxScrollLine2Num(pWork->MainObjCursorLine);
       }
@@ -1921,13 +1947,9 @@ static void _DeletePokemonState(POKEMON_TRADE_WORK* pWork)
   }
   pWork->selectIndex = -1;
   pWork->selectBoxno = -1;
-  pWork->selectIndex = -1;
-  pWork->selectBoxno = -1;
   _PokemonReset(pWork,0);
 
-          pWork->oldLine++;
-          pWork->bgscrollRenew = TRUE;
-          _scrollMainFunc(pWork,FALSE,FALSE);
+  _PokemonIconRenew(pWork);
   
   _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
 }
@@ -1980,10 +2002,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
   POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
 
-  pWork->oldLine++;
-  pWork->bgscrollRenew = TRUE;
-
-  _scrollMainFunc(pWork,FALSE,FALSE);
+  _PokemonIconRenew(pWork);
 
 //  _userNetCommandClear(pWork);
   
@@ -2007,9 +2026,7 @@ static void _scrollResetAndIconReset(POKEMON_TRADE_WORK* pWork)
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
-  pWork->oldLine++;
-  pWork->bgscrollRenew = TRUE;
-  _scrollMainFunc(pWork,FALSE,FALSE);
+  _PokemonIconRenew(pWork);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2048,10 +2065,7 @@ static void _touchStateGTS(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
   POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
 
-  pWork->oldLine++;
-  pWork->bgscrollRenew = TRUE;
-
-  _scrollMainFunc(pWork,FALSE,FALSE);
+  _PokemonIconRenew(pWork);
 
   _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
 
@@ -2090,6 +2104,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
   GFL_CLACTPOS pos;
   BOOL bDecided=FALSE;
   int backBoxNo = pWork->nowBoxno;
+  POKEMON_PASO_PARAM* ppp;
 
   // 監視処理
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){  //速度リセット
@@ -2111,34 +2126,38 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
     if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
       pWork->MainObjCursorLine=line;
     }
-    i = IRC_TRADE_LINE2POKEINDEX(pWork->MainObjCursorLine,pWork->MainObjCursorIndex);  //カーソル下のポケモンを探す
-    if(i!=-1){//ポケモンがいた場合
-      pWork->padMode=TRUE;
-      pWork->underSelectBoxno = IRC_TRADE_LINE2TRAY(pWork->MainObjCursorLine,pWork);
-      pWork->underSelectIndex = IRC_TRADE_LINE2POKEINDEX(pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
+    {
+      ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, IRC_TRADE_LINE2TRAY(pWork->MainObjCursorLine,pWork),
+                                               IRC_TRADE_LINE2POKEINDEX(pWork->MainObjCursorLine,pWork->MainObjCursorIndex),pWork);
+//    i = IRC_TRADE_LINE2POKEINDEX(pWork->MainObjCursorLine,pWork->MainObjCursorIndex);  //カーソル下のポケモンを探す
+      //ポケモンがいた場合
+      if(ppp && PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) != 0 ){
 
-      if((POKEMONTRADEPROC_IsTriSelect(pWork)) &&  //GTSの場合 選択してあるポケモンだと動作が違う
-        (-1 != POKE_GTS_IsSelect(pWork,pWork->underSelectBoxno,pWork->underSelectIndex ))){
+        pWork->padMode=TRUE;
+        pWork->underSelectBoxno = IRC_TRADE_LINE2TRAY(pWork->MainObjCursorLine,pWork);
+        pWork->underSelectIndex = IRC_TRADE_LINE2POKEINDEX(pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
 
-        _CHANGE_STATE(pWork, POKE_GTS_DeletePokemonState);
-        return;
-        
-      }
-      else{
-        POKEMON_PASO_PARAM* ppp =
-          IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
-
-        _CatchPokemonPositionRewind(pWork);
-        _CatchPokemonPositionActive(pWork,
-                                    pWork->pokeIcon[POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine)][pWork->MainObjCursorIndex],
-                                    pWork->MainObjCursorLine,pWork->MainObjCursorIndex,ppp);
-        IRC_POKETRADE_SetCursorXY(pWork);
-        IRC_POKETRADE_CursorEnable(pWork,pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
-        bDecided=TRUE;
+        if((POKEMONTRADEPROC_IsTriSelect(pWork)) &&  //GTSの場合 選択してあるポケモンだと動作が違う
+           (-1 != POKE_GTS_IsSelect(pWork,pWork->underSelectBoxno,pWork->underSelectIndex ))){
+          
+          _CHANGE_STATE(pWork, POKE_GTS_DeletePokemonState);
+          return;
+          
+        }
+        else{
+          ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
+          
+          _CatchPokemonPositionRewind(pWork);
+          _CatchPokemonPositionActive(pWork,
+                                      pWork->pokeIcon[POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine)][pWork->MainObjCursorIndex],
+                                      pWork->MainObjCursorLine,pWork->MainObjCursorIndex,ppp);
+          IRC_POKETRADE_SetCursorXY(pWork);
+          IRC_POKETRADE_CursorEnable(pWork,pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
+          bDecided=TRUE;
+        }
       }
     }
   }
-  
 
   if(IsTouchCLACTPosition(pWork,FALSE)){
     pWork->bStatusDisp=TRUE;
@@ -2653,6 +2672,8 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->modelno = -1;
   pWork->workPokeIndex = -1;
   pWork->workBoxno = -1;
+  pWork->underSelectBoxno = -1;
+  pWork->underSelectIndex = -1;
 
   
   IRC_POKETRADEDEMO_Init(pWork);
@@ -2843,6 +2864,16 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
     PRINTSYS_QUE_Main(pWork->SysMsgQue);
   }
 
+  {
+    static int backup;
+
+    if(backup !=pWork->BoxScrollNum){
+      OS_TPrintf("pWork->BoxScrollNum %d \n",pWork->BoxScrollNum);
+    }
+    backup = pWork->BoxScrollNum;
+  }
+
+  
   GFL_G3D_DRAW_Start();
   GFL_G3D_CAMERA_Switching( pWork->pCamera );
 

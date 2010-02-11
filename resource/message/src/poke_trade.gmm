@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-10T21:50:47"/>
+	<create user="ohno" host="W00141" date="2010-02-11T12:00:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="390" top="183" right="1088" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="532" visible="no"/>
 		<band id="0" index="0" style="0000" width="523"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="690"/>
@@ -359,16 +359,6 @@
 	</row>
 
 	<row id="POKETRADE_STR_06">
-		<language name="JPN" width="256">やめる</language>
-		<language name="JPN_KANJI" width="256">やめる</language>
-	</row>
-
-	<row id="POKETRADE_STR_07">
-		<language name="JPN" width="256">やめる</language>
-		<language name="JPN_KANJI" width="256">やめる</language>
-	</row>
-
-	<row id="POKETRADE_STR_08">
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>

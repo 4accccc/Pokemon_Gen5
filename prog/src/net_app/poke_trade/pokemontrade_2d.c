@@ -140,11 +140,13 @@ void IRC_POKETRADE_GraphicInitMainDisp(POKEMON_TRADE_WORK* pWork)
     GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
                                                  GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
 
+  /*
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 NARC_trade_wb_trade_bg01_NSCR,
 																				 GFL_BG_FRAME1_M, 0,
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
 																				 pWork->heapID);
+     */
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 nscr,
 																				 GFL_BG_FRAME2_M, 0,
@@ -190,12 +192,19 @@ void IRC_POKETRADE_GraphicInitSubDispStatusDisp(POKEMON_TRADE_WORK* pWork)
 
 
 	// サブ画面BGキャラ転送
-  pWork->subcharMain =
-    GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
-                                                 GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
+//  pWork->subcharMain =
+  //  GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
+    //                                             GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
 
-  GFL_ARCHDL_UTIL_TransVramScreen(p_handle,NARC_trade_wb_trade_bg01_touch_NSCR,GFL_BG_FRAME0_S, 0,0,0,pWork->heapID);
+//  GFL_ARCHDL_UTIL_TransVramScreen(p_handle,NARC_trade_wb_trade_bg01_touch_NSCR,GFL_BG_FRAME0_S, 0,0,0,pWork->heapID);
 
+	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_trade_bg01_touch_NSCR,
+																				 GFL_BG_FRAME0_S, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+																				 pWork->heapID);
+
+  
 	GFL_ARC_CloseDataHandle( p_handle );
 
 }
@@ -210,13 +219,13 @@ void IRC_POKETRADE_GraphicInitSubDispStatusDisp(POKEMON_TRADE_WORK* pWork)
 
 void IRC_POKETRADE_GraphicEndSubDispStatusDisp(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->subcharMain){
-    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subcharMain),
-                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subcharMain ));
+//  if(pWork->subcharMain){
+  //  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subcharMain),
+    //                         GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subcharMain ));
     
-  }
+//  }
 
-  pWork->subcharMain = 0;
+  //pWork->subcharMain = 0;
 }
 
 
@@ -324,10 +333,12 @@ void IRC_POKETRADE_SubStatusInit(POKEMON_TRADE_WORK* pWork,int pokeposx, int bgt
 {
   int nscr[]={NARC_trade_wb_trade_stbg01_NSCR,NARC_trade_wb_trade_stbg02_NSCR};
   int frame = GFL_BG_FRAME0_S;
-  
-  
+
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
-	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+
+  OS_TPrintf("%d \n",pWork->subchar1);
+
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 nscr[bgtype],
 																				 frame, 0,
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
@@ -485,7 +496,7 @@ void IRC_POKETRADE_SendVramBoxNameChar(POKEMON_TRADE_WORK* pWork)
     else{
       BOXDAT_GetBoxName(pWork->pBox, i, pWork->pStrBuf);
     }
-    GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
+    GFL_FONTSYS_SetColor( 0xf, 0x2, 0 );
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->BoxNameWin[i]), 0 );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->BoxNameWin[i]), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
     GFL_BMPWIN_TransVramCharacter(pWork->BoxNameWin[i]);
@@ -652,7 +663,7 @@ void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork)
                                                         pWork->cellRes[ANM_SCROLLBAR],
                                                         &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
         cellInitData.anmseq = 10;
-        cellInitData.softpri = _CLACT_SOFTPRI_SELECT;
+        cellInitData.softpri = _CLACT_SOFTPRI_MARK;
         pWork->searchIcon[line][i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                         pWork->cellRes[CHAR_SCROLLBAR],
                                                         pWork->cellRes[PAL_SCROLLBAR],
@@ -966,6 +977,10 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
 
         GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[k][i] , FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
+
+     //   OS_TPrintf("create\n");
+
+        
       }
       if(!PPP_Get(ppp,ID_PARA_tamago_flag,NULL) && _IsPokeLanguageMark(pWork,monsno)){
         GFL_CLACT_WK_SetDrawEnable( pWork->searchIcon[k][i], TRUE );
@@ -1022,7 +1037,6 @@ BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
     *line = linest + 2 - pWork->TRADEBOX_LINEMAX;
   }
 
-  
   if(lineend > pWork->TRADEBOX_LINEMAX){
     if(linest <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= pWork->TRADEBOX_LINEMAX){
       return TRUE;
@@ -1121,6 +1135,14 @@ static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork)
       apos.y = y;
 
 
+      if(POKETRADE_NEGO_IsStatusLookAt(pWork,line,i) &&  !pWork->padMode){
+        apos.y -= 8;
+        GFL_CLACT_WK_SetSoftPri(pWork->pokeIcon[no][i],_CLACT_SOFTPRI_POKESEL);
+      }
+      else{
+        GFL_CLACT_WK_SetSoftPri(pWork->pokeIcon[no][i],_CLACT_SOFTPRI_POKELIST);
+      }
+      
       GFL_CLACT_WK_SetPos(pWork->pokeIcon[no][i], &apos, CLSYS_DRAW_SUB);
       apos.y = y + 3;
       GFL_CLACT_WK_SetPos(pWork->markIcon[no][i], &apos, CLSYS_DRAW_SUB);
@@ -1687,7 +1709,7 @@ void IRC_POKETRADE_InitBoxCursor(POKEMON_TRADE_WORK* pWork)
 
   {
     GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = 128+8;
+    cellInitData.pos_x = 128;
     cellInitData.pos_y = CONTROL_PANEL_Y;
     cellInitData.anmseq = 2;
     cellInitData.softpri = _CLACT_SOFTPRI_SCROLL_BAR;
@@ -2037,7 +2059,7 @@ void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARA
     // ※位置調整はとりあえずの値です。
     pIM->clwk_poke_item =
       UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,
-                               2 * 8 + side * 16 * 8 + 4, 17*8, type, pWork->heapID );
+                               2 * 8 + side * 16 * 8 + 4, 17*8-4, type, pWork->heapID );
   }
 }
 
@@ -2317,195 +2339,6 @@ void POKETRADE_2D_GTSPokemonIconResetAll(POKEMON_TRADE_WORK* pWork)
   }
 }
 
-#if 0
-
-#define N (4)
-
-static double ap[N];
-static double aa[N];
-static double ab[N];
-static double ax[N];
-static double ay[N];
-
-
-
-void maketable(double x[], double y[], double z[])
-{
-	int i;
-	double t;
-	static double h[N], d[N];
-
-	z[0] = 0;  z[N - 1] = 0;  /* 両端点での y''(x) / 6 */
-    for (i = 0; i < N - 1; i++) {
-		h[i    ] =  x[i + 1] - x[i];
-		d[i + 1] = (y[i + 1] - y[i]) / h[i];
-	}
-	z[1] = d[2] - d[1] - h[0] * z[0];
-	d[1] = 2 * (x[2] - x[0]);
-	for (i = 1; i < N - 2; i++) {
-		t = h[i] / d[i];
-		z[i + 1] = d[i + 2] - d[i + 1] - z[i] * t;
-		d[i + 1] = 2 * (x[i + 2] - x[i]) - h[i] * t;
-	}
-	z[N - 2] -= h[N - 2] * z[N - 1];
-	for (i = N - 2; i > 0; i--)
-		z[i] = (z[i] - h[i] * z[i + 1]) / d[i];
-}
-
-double spline(double t, double x[], double y[], double z[])
-{
-	int i, j, k;
-	double d, h;
-
-	i = 0;  j = N - 1;
-	while (i < j) {
-		k = (i + j) / 2;
-		if (x[k] < t) i = k + 1;  else j = k;
-	}
-	if (i > 0) i--;
-	h = x[i + 1] - x[i];  d = t - x[i];
-	return (((z[i + 1] - z[i]) * d / h + z[i] * 3) * d
-		+ ((y[i + 1] - y[i]) / h
-		- (z[i] * 2 + z[i + 1]) * h)) * d + y[i];
-}
-
-void maketable2(double p[], double x[], double y[],
-		double a[], double b[])
-{
-	int i;
-	double t1, t2;
-
-	p[0] = 0;
-	for (i = 1; i < N; i++) {
-		t1 = x[i] - x[i - 1];
-		t2 = y[i] - y[i - 1];
-
-    {
-      fx32 fxret;
-      double fret;
-
-      fret = t1*t1 + t2*t2;
-      fxret = FX_F32_TO_FX32((float)fret);
-      fxret = FX_Sqrt(fxret);
-      fret = (double)FX_FX32_TO_F32(fxret);
-      p[i] = p[i-1] + fret;
-    }
-
-//		p[i] = p[i - 1] + sqrt(t1 * t1 + t2 * t2);
-	}
-	for (i = 1; i < N; i++) p[i] /= p[N - 1];
-	maketable(p, x, a);
-	maketable(p, y, b);
-}
-
-void spline2(double t, double *px, double *py,
-		double p[], double x[], double  y[], 
-		double a[], double b[])
-{
-	*px = spline(t, p, x, a);
-	*py = spline(t, p, y, b);
-}
-
-
-
-static void maketable(double *x,double *y, double *z)
-{
-  int i;
-  double t;
-  static double h[N] ,d[N];
-
-  z[0]=0;
-  z[N-1]=0;
-  
-  for(i=0;i<N-1;i++){
-    h[i]=x[i+1]-x[i];
-    d[i+1]=(y[i+1]-y[i]) / h[i];
-  }
-  z[1]=d[2]-d[1]-(h[0]*z[0]);
-  d[1]=2.0*(x[2]-x[0]);
-  for(i=1;i<N-2;i++){
-    t = h[i]/d[i];
-    z[i+1] = d[i+2] - d[i+1] - z[i] * t;
-    d[i+1] = 2.0 * (x[i+2]-x[i]) - h[i] * t;
-  }
-  z[N-2]-=h[N-2]*z[N-1];
-  for(i=N-2;i>0;i--){
-    z[i]=(z[i]-h[i]*z[i+1])/d[i];
-  }
-}
-
-static double spline(double t,double *x,double *y,double *z)
-{
-  int i,j,k;
-  double d, h;
-
-  
-  i=0;
-  j=N-1;
-  while(i<j){
-    k=(i+j)/2;
-    if(x[k]<t){
-      i=k+1;
-    }
-    else{
-      j=k;
-    }
-  }
-  if(i>0){
-    i--;
-  }
-  h = x[i+1] -x[i];
-  d = t - x[i];
-  return (((z[i+1]-z[i])*d/h+z[i]*3)*d+((y[i+1]-y[i])/h - (z[i]*2.0+z[i+1])*h))*d+y[i];
-}
-
-
-
-static void maketable2(double *p, double *x, double *y, double *a,double *b)
-{
-  int i;
-  double t1,t2;
-
-  p[0]=0;
-  for(i=1;i<N;i++){
-    t1 = x[i] - x[i-1];
-    t2 = y[i] - y[i-1];
-
-    {
-      fx32 fxret;
-      double fret;
-
-      fret = t1*t1 + t2*t2;
-      fxret = FX_F32_TO_FX32((float)fret);
-      OS_Printf("%d \n",fxret / FX32_ONE);
-
-      fxret = FX_Sqrt(fxret);
-      OS_Printf("%d \n",fxret / FX32_ONE);
-
-
-      
-      fret = (double)FX_FX32_TO_F32(fxret);
-      p[i] = p[i-1] + fret;
-    }
-  }
-
-  for(i=1;i<N;i++){
-    p[i]/=p[N-1];
-  }
-  maketable( p, x, a);
-  maketable( p, y, b);
-}
-
-
-static void spline2(double t, double *px, double *py,double *p, double *x,double *y,double *a,double *b)
-{
-  *px = spline( t, p, x, a);
-  *py = spline( t, p, y, b);
-}
-#endif
-
-
-
 //------------------------------------------------------------------------------
 /**
  * @brief   ぽけもんのつかみ処理開始
@@ -2554,19 +2387,7 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
 
   GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
 
-#if 0
 
-  ax[0] = pos.x;
-  ay[0] = pos.y;
-  ax[1] = pos.x - (pWork->aVecPos.x-pos.x);
-  ay[1] = pos.y - (pWork->aVecPos.y-pos.y);
-  ax[2] = 28;
-  ay[2] = 8;
-  ax[3] = 28;
-  ay[3] = 0;
-
-  maketable2(ap,ax,ay,aa,ab);
-#endif
   {
     VecFx32 mullpos[4];
 

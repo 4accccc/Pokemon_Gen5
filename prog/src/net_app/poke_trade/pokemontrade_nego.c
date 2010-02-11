@@ -266,14 +266,14 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
     
   GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId() , 
                                  NARC_app_menu_common_task_menu_NCLR ,
-                                 PALTYPE_MAIN_BG , _BUTTON_MSG_PAL*32 , 32*1 , pWork->heapID );	
+                                 PALTYPE_MAIN_BG , _MAINBG_APP_MSG_PAL*32 , 32*1 , pWork->heapID );	
 //  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
   //                              0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
   
   if(pWork->GTSInfoWindow){
     GFL_BMPWIN_Delete(pWork->GTSInfoWindow);
   }
-  pWork->GTSInfoWindow = GFL_BMPWIN_Create(frame,	0, 0, 32, 10,	_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  pWork->GTSInfoWindow = GFL_BMPWIN_Create(frame,	0, 0, 32, 10,	_MAINBG_APP_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
   pWin = pWork->GTSInfoWindow;
   GFL_FONTSYS_SetColor( 0xe, 0xf, 0x0 );
@@ -324,14 +324,14 @@ void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL 
     
   GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId() , 
                                  NARC_app_menu_common_task_menu_NCLR ,
-                                 PALTYPE_MAIN_BG , _BUTTON_MSG_PAL*32 , 32*1 , pWork->heapID );	
+                                 PALTYPE_MAIN_BG , _MAINBG_APP_MSG_PAL*32 , 32*1 , pWork->heapID );	
 //  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
   //                              0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
   
   if(pWork->StatusWin[side]){
     GFL_BMPWIN_Delete(pWork->StatusWin[side]);
   }
-  pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 15, 14, 2,	_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 15, 14, 2,	_MAINBG_APP_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
   pWin = pWork->StatusWin[side];
   GFL_FONTSYS_SetColor( 4, 1, 0x0 );
@@ -802,6 +802,29 @@ BOOL POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height)
       OS_TPrintf("workPokeIndex %d %d\n",boxno, index);
       return TRUE;
     }
+  }
+  return FALSE;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ステータスを見ているかどうか調べる
+ * @param   line       横順番
+ * @param   height     縦順番
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+BOOL POKETRADE_NEGO_IsStatusLookAt(POKEMON_TRADE_WORK* pWork,int line , int height)
+{
+  int l,m;
+  int boxno = IRC_TRADE_LINE2TRAY(line,pWork);
+  int index = IRC_TRADE_LINE2POKEINDEX(line, height);
+
+  if((pWork->underSelectIndex==index) && (pWork->underSelectBoxno==boxno)){
+    OS_TPrintf("selectIndex %d %d\n",boxno, index);
+    return TRUE;
   }
   return FALSE;
 }

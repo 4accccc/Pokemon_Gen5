@@ -190,7 +190,7 @@ static void UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
 //------------------------------------------------------------------------------
 
 
-void POKETRADE_MESSAGE_WindowOpen(POKEMON_TRADE_WORK* pWork)
+void POKETRADE_MESSAGE_WindowOpenSpeed(POKEMON_TRADE_WORK* pWork,BOOL bFast)
 {
   GFL_BMPWIN* pwin;
 
@@ -206,16 +206,34 @@ void POKETRADE_MESSAGE_WindowOpen(POKEMON_TRADE_WORK* pWork)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
 
   GFL_FONTSYS_SetColor(FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 15);
-  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pMessageStrBuf, pWork->pFontHandle,
-                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15 );
-
-//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pMessageStrBuf, pWork->pFontHandle);
+  if(!bFast){
+    pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pMessageStrBuf, pWork->pFontHandle,
+                                          MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15 );
+  }
+  else{
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pMessageStrBuf, pWork->pFontHandle);
+  }
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
 
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   メッセージウインドウ開く 下画面
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+void POKETRADE_MESSAGE_WindowOpen(POKEMON_TRADE_WORK* pWork)
+{
+  POKETRADE_MESSAGE_WindowOpenSpeed(pWork,FALSE);
 }
 
 
@@ -391,6 +409,12 @@ void POKETRADE_MESSAGE_AppMenuOpenCustom(POKEMON_TRADE_WORK* pWork, int *menustr
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->pMsgData, menustr[i], pWork->appitem[i].str);
     pWork->appitem[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+    if(menustr[i] == POKETRADE_STR_06){
+      pWork->appitem[i].type = APP_TASKMENU_WIN_TYPE_RETURN;
+    }
+    else{
+      pWork->appitem[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+    }
   }
   pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   for(i=0;i<num;i++){
@@ -494,9 +518,11 @@ static void _pokePocketItemMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int 
 
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_44, pWork->pExStrBuf );
   num=	PP_Get(pp, ID_PARA_item, NULL);
-  WORDSET_RegisterItemName( pWork->pWordSet, 0,  num );
-  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), x, y, pWork->pStrBuf, pWork->pFontHandle);
+  if(num!=0){
+    WORDSET_RegisterItemName( pWork->pWordSet, 0,  num );
+    WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), x, y, pWork->pStrBuf, pWork->pFontHandle);
+  }
 }
 
 //HP HPMax
@@ -741,14 +767,14 @@ void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pagen
     IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
     IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
     if(bEgg==FALSE){
-      _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 2*8,0, pWork);
+      _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 8,0, pWork);
 
       _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 2*8,2*8, pWork);
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_37, pWork->pStrBuf );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 2*8, 10*8, pWork->pStrBuf, pWork->pFontHandle);
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 8, 10*8, pWork->pStrBuf, pWork->pFontHandle);
       _pokePersonalMsgDisp(pp, pWork->MyInfoWin, 2*8, 12*8, pWork);
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_38, pWork->pStrBuf );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 2*8, 14*8, pWork->pStrBuf, pWork->pFontHandle);
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 8, 14*8, pWork->pStrBuf, pWork->pFontHandle);
       _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 2*8, 16*8, pWork);
     }
   }
@@ -786,7 +812,7 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
   if(pWork->MyInfoWin){
     GFL_BMPWIN_Delete(pWork->MyInfoWin);
   }
-  GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
+  GFL_FONTSYS_SetColor( 0xf, 0x2, 0 );
   pWork->MyInfoWin =
     GFL_BMPWIN_Create(GFL_BG_FRAME3_M,
                       1, 1, 31 , 24, _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
