@@ -328,6 +328,7 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_03, 2 )	//ほのお
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 3 )	//演説イベント
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 4 )	//D03R0101のイベント
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 5 )	//C03の誘導イベント
 		_BMPMENU_MAKE_LIST( msg_debug_00, 4 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -361,6 +362,11 @@ EVENT_START   ev_debug_suginaka
 			_FLAG_SET( FV_T02_SPEECH_AFTER )
 
 			//===================================//
+
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_T02, 796, 658, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
 		
 		ELSIF $SCWK_ANSWER == 4 THEN
 			
@@ -393,6 +399,21 @@ EVENT_START   ev_debug_suginaka
 			//マップチェンジ
 			_MAP_CHANGE( ZONE_ID_D03R0101, 61, 32, DIR_DOWN )
 			
+			$SCWK_TEMP0 = 428
+			
+		ELSIF $SCWK_ANSWER == 5 THEN
+		
+			//アーティ・ライバル削除
+			_FLAG_RESET( FV_C03_GUIDE_01 )
+		
+			//ワークの値を0
+			$WK_SCENE_C03 = 0
+
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_H01R0201, 2, 4, DIR_LEFT )
+			
+			$SCWK_TEMP0 = 428
+
 		ELSE
 			$SCWK_TEMP0 = 428
 		ENDIF
