@@ -134,6 +134,7 @@ static int FakeEndYesNoSelect( OEKAKI_WORK  *wk );
 static void SetTouchpanelData( TOUCH_INFO *touchResult, TP_ONE_DATA *tpData, int brush_color, int brush );
 static int _get_connect_bit( OEKAKI_WORK *wk );
 static int _get_connect_num( OEKAKI_WORK *wk );
+static void _disp_on( void );
 
 
 typedef struct{
@@ -211,7 +212,8 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
   case 0:
     GFL_DISP_GX_InitVisibleControl();
     GFL_DISP_GXS_InitVisibleControl();
-
+  
+    OS_Printf("OEKAKI_HEAP Cretae, before remain = %08x\n", GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OEKAKI, 0x40000 );
 
     wk = GFL_PROC_AllocWork( proc, sizeof(OEKAKI_WORK), HEAPID_OEKAKI );
@@ -266,8 +268,8 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
     // BMPWIN登録・描画
     BmpWinInit(wk,proc);
 
-    // 画面出力を上下入れ替える
-    GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
+    // 画面ON（出力の上下入れ替えも）
+    _disp_on();
 
     // 通信コマンドをおえかきボード用に変更
     OEKAKIBOARD_CommandInitialize( wk );
@@ -330,12 +332,12 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
 
       // 自分が子機で接続台数が２台以上だった場合はもう絵が描かれている
       if(GFL_NET_SystemGetCurrentID()!=0){
-        if( (MyStatusGetNum(wk)>=2) ){
+        if( (MyStatusGetNum(wk)>2) ){
           // 子機乱入リクエスト
           GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(),CO_OEKAKI_CHILD_JOIN, NULL, 0);
           OS_Printf("乱入します\n");
-          *seq = SEQ_MAIN;
         }
+        *seq = SEQ_MAIN;
         break;
       }else{
         //親はメインへ
@@ -378,6 +380,13 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
     break;
   }
   GFL_CLACT_SYS_Main();             // セルアクター常駐関数
+  GFL_TCBL_Main( wk->pMsgTcblSys );
+  PRINTSYS_QUE_Main( wk->printQue );
+  {
+    int i;
+    for(i=0;i<OEKAKI_PRINT_UTIL_END+1;i++)
+    PRINT_UTIL_Trans( &wk->printUtil[i], wk->printQue );
+  }
   
   return GFL_PROC_RES_CONTINUE;
 }
@@ -578,7 +587,7 @@ static void BgInit( void )
       GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
       GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
     };
-    GFL_BG_SetBGControl(  GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearScreen(  GFL_BG_FRAME1_M );
   }
 
@@ -722,7 +731,6 @@ static void BgExit( void )
 
   GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
   GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
-  GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
   GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
   GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
   GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
@@ -756,18 +764,18 @@ static void BgGraphicSet( OEKAKI_WORK * wk, ARCHANDLE* p_handle )
                                  TALKFONT_PAL_OFFSET, 32, HEAPID_OEKAKI );
 
   // メイン画面BG2キャラ転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_oekaki_oekaki_m_NCGR, GFL_BG_FRAME2_M, 0, 32*8*0x20, 1, HEAPID_OEKAKI);
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_oekaki_oekaki_m_NCGR, GFL_BG_FRAME2_M, 0, 32*8*0x20, 0, HEAPID_OEKAKI);
 
   // メイン画面BG2スクリーン転送
-  GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_oekaki_oekaki_m_NSCR, GFL_BG_FRAME2_M, 0, 32*24*2, 1, HEAPID_OEKAKI);
+  GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_oekaki_oekaki_m_NSCR, GFL_BG_FRAME2_M, 0, 32*24*2, 0, HEAPID_OEKAKI);
 
 
 
   // サブ画面BG1キャラ転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_oekaki_oekaki_s_NCGR, GFL_BG_FRAME1_S, 0, 32*8*0x20, 1, HEAPID_OEKAKI);
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_oekaki_oekaki_s_NCGR, GFL_BG_FRAME1_S, 0, 32*8*0x20, 0, HEAPID_OEKAKI);
 
   // サブ画面BG1スクリーン転送
-  GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_oekaki_oekaki_s_NSCR, GFL_BG_FRAME1_S, 0, 32*24*2, 1, HEAPID_OEKAKI);
+  GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_oekaki_oekaki_s_NSCR, GFL_BG_FRAME1_S, 0, 32*24*2, 0, HEAPID_OEKAKI);
 
   // サブ画面会話ウインドウグラフィック転送
   BmpWinFrame_GraphicSet(
@@ -1004,15 +1012,18 @@ static void BmpWinInit( OEKAKI_WORK *wk, GFL_PROC* proc )
                               OEKAKI_END_BMP_W, OEKAKI_END_BMP_H, 13,  GFL_BMP_CHRAREA_GET_B );
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->EndWin), 0x0000 );
-  
-  PRINT_UTIL_Setup( &wk->printUtil[OEKAKI_PRINT_UTIL_END], wk->EndWin );
-//  GF_STR_PrintColor( wk->EndWin, FONT_TALK, wk->EndString, 0, 0, MSG_ALLPUT, STRING_COL_END ,NULL);
-  PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_END], wk->printQue, 
-                         0, 0, wk->EndString, wk->font, STRING_COL_END );
 
   // メッセージ表示システム用初期化 
   wk->pMsgTcblSys = GFL_TCBL_Init( HEAPID_OEKAKI, HEAPID_OEKAKI, 32 , 32 );
   wk->printQue    = PRINTSYS_QUE_Create( HEAPID_OEKAKI );
+
+  // 描画
+  PRINT_UTIL_Setup( &wk->printUtil[OEKAKI_PRINT_UTIL_END], wk->EndWin );
+//  GF_STR_PrintColor( wk->EndWin, FONT_TALK, wk->EndString, 0, 0, MSG_ALLPUT, STRING_COL_END ,NULL);
+  PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_END], wk->printQue, 
+                         0, 0, wk->EndString, wk->font, STRING_COL_END );
+  // 表示
+  GFL_BMPWIN_MakeTransWindow( wk->EndWin );
   
   // ----------- サブ画面名前表示BMP確保 ------------------
   {
@@ -1022,12 +1033,14 @@ static void BmpWinInit( OEKAKI_WORK *wk, GFL_PROC* proc )
                                              TRAINER_NAME_POS_X/8+2, TRAINER_NAME_POS_Y/8+i*4-1, 
                                              10, 2, 13,  GFL_BMP_CHRAREA_GET_B);
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->TrainerNameWin[i] ), 0 );
+      PRINT_UTIL_Setup( &wk->printUtil[OEKAKI_PRINT_UTIL_NAME_WIN0+i], wk->TrainerNameWin[i] );
+      GFL_BMPWIN_MakeTransWindow( wk->TrainerNameWin[i] );
     }
 
     //最初に見えている面なので文字パネル描画と転送も行う
     NameCheckPrint( wk->TrainerNameWin, NAME_COL_NORMAL, wk );
   }
-
+  
 } 
 
 // はい・いいえ用定義（下画面）
@@ -1883,7 +1896,7 @@ static int Oekaki_ForceEndWait( OEKAKI_WORK *wk, int seq )
   if( EndMessageWait( wk->printStream ) ){
     SetNextSequence( wk, OEKAKI_MODE_FORCE_END_SYNCHRONIZE );
     GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),
-                                  OEKAKI_SYNCHRONIZE_END, WB_NET_GURUGURU);
+                                  OEKAKI_SYNCHRONIZE_END, WB_NET_PICTURE);
     OS_Printf("同期開始\n");
     
   }
@@ -1906,7 +1919,7 @@ static int Oekaki_ForceEndWait( OEKAKI_WORK *wk, int seq )
 static int Oekaki_ForceEndSynchronize( OEKAKI_WORK *wk, int seq )
 {
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  if(GFL_NET_HANDLE_IsTimeSync( pNet,OEKAKI_SYNCHRONIZE_END, WB_NET_GURUGURU) || _get_connect_num(wk) == 1){
+  if(GFL_NET_HANDLE_IsTimeSync( pNet,OEKAKI_SYNCHRONIZE_END, WB_NET_PICTURE) || _get_connect_num(wk) == 1){
     OS_Printf("終了時同期成功  seq = %d\n", seq);
     OS_Printf("コネクト人数%d\n",_get_connect_num(wk));
 //    wk->seq = OEKAKI_MODE_FORCE_END_WAIT_NOP;
@@ -2292,8 +2305,8 @@ static void _BmpWinPrint_Rap(
   }
 
 //  GFL_BMPWINPrint( win, src, src_x, src_y, src_dx, src_dy, win_x, win_y, win_dx, win_dy );
-  src_win =  GFL_BMP_CreateWithData( src, 8, 8, 0, HEAPID_OEKAKI );
-  GFL_BMP_Print( src, GFL_BMPWIN_GetBmp(win), src_x, src_y, win_x, win_y, src_dx, src_dy, 0 );
+  src_win =  GFL_BMP_CreateWithData( src, 8, 8, GFL_BMP_16_COLOR, HEAPID_OEKAKI );
+  GFL_BMP_Print( src_win, GFL_BMPWIN_GetBmp(win), src_x, src_y, win_x, win_y, src_dx, src_dy, 0 );
   GFL_BMP_Delete( src_win );
 }
 
@@ -2764,7 +2777,7 @@ static void EndMessagePrint( OEKAKI_WORK *wk, int msgno, int wait )
 
   // 文字列描画開始
 //  wk->MsgIndex = GF_STR_PrintSimple( &wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, wait, NULL);
-
+  GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 }
 
 //------------------------------------------------------------------
@@ -3108,4 +3121,26 @@ static int _get_connect_num( OEKAKI_WORK *wk )
 static int _get_connect_bit( OEKAKI_WORK *wk )
 {
   return Union_App_GetMemberNetBit( wk->param->uniapp );
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 画面表示ON、上下入れ替え設定
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void _disp_on( void )
+{
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON );   // メイン画面OBJ面ＯＮ
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );   // サブ画面OBJ面OFF
+
+  GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+  
+  GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
 }
