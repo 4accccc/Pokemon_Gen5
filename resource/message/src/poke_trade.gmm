@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-02-11T12:00:24"/>
+	<create user="ohno" host="W00141" date="2010-02-11T20:03:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -581,16 +581,11 @@
 
 	<row id="POKETRADE_STR_49">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]から[1:02:ポケモンニックネーム:1]が
-おくられてきた</language>
+おくられてきた[BE:02:ウェイト変更（単発）:60][BE:00:ページ切り替え（行送り）]
+[1:02:ポケモンニックネーム:1]をかわいがって あげてね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]から[1:02:ポケモンニックネーム:1]が
-おくられてきた</language>
-	</row>
-
-	<row id="POKETRADE_STR_50">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:1]をかわいがって
-あげてね</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:1]をかわいがって
-あげてね</language>
+おくられてきた[BE:02:ウェイト変更（単発）:60][BE:00:ページ切り替え（行送り）]
+[1:02:ポケモンニックネーム:1]をかわいがって あげてね！</language>
 	</row>
 
 	<row id="POKETRADE_STR_51">
@@ -999,29 +994,26 @@
 	</row>
 
 	<row id="POKETRADE_STR2_28">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]を[1:00:トレーナー名:1]へ　おくります！！
-バイバイ　[1:01:ポケモン種族名:0]！</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]を[1:00:トレーナー名:1]へ　おくります！！
-バイバイ　[1:01:ポケモン種族名:0]！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を[1:00:トレーナー名:1]へ　おくります！！
+バイバイ　[1:02:ポケモンニックネーム:0]！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を[1:00:トレーナー名:1]へ　おくります！！
+バイバイ　[1:02:ポケモンニックネーム:0]！</language>
 	</row>
 
 	<row id="POKETRADE_STR2_29">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]を [1:00:トレーナー名:1]に　かえします！
-ありがとう　[1:01:ポケモン種族名:0]！</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]を [1:00:トレーナー名:1]に　かえします！
-ありがとう　[1:01:ポケモン種族名:0]！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を [1:00:トレーナー名:1]に　かえします！
+ありがとう　[1:02:ポケモンニックネーム:0]！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を [1:00:トレーナー名:1]に　かえします！
+ありがとう　[1:02:ポケモンニックネーム:0]！</language>
 	</row>
 
 	<row id="POKETRADE_STR2_30">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ところから
-[1:02:ポケモンニックネーム:1]が　もどってきた！</language>
+[1:02:ポケモンニックネーム:1]が　もどってきた！[BE:02:ウェイト変更（単発）:60][BE:00:ページ切り替え（行送り）]
+おかえり [1:02:ポケモンニックネーム:1]！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ところから
-[1:02:ポケモンニックネーム:1]が　もどってきた！</language>
-	</row>
-
-	<row id="POKETRADE_STR2_31">
-		<language name="JPN" width="256">おかえり [1:02:ポケモンニックネーム:1]！</language>
-		<language name="JPN_KANJI" width="256">おかえり [1:02:ポケモンニックネーム:1]！</language>
+[1:02:ポケモンニックネーム:1]が　もどってきた！[BE:02:ウェイト変更（単発）:60][BE:00:ページ切り替え（行送り）]
+おかえり [1:02:ポケモンニックネーム:1]！</language>
 	</row>
 
 	<flowchart-group-list>

@@ -106,7 +106,12 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
   POKETRADE_MESSAGE_HeapInit(pWork);
 
-  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_49, pWork->pMessageStrBufEx );
+  if(pWork->bEncountMessageEach){
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_30, pWork->pMessageStrBufEx );
+  }
+  else{
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_49, pWork->pMessageStrBufEx );
+  }
   {
     POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
     WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
@@ -124,7 +129,7 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
 
 
-  _CHANGE_STATE(pWork,_changeDemo_ModelTrade21);
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
 
 }
 
@@ -137,7 +142,7 @@ static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
-  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_50, pWork->pMessageStrBufEx );
+//  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_50, pWork->pMessageStrBufEx );
   {
     POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
     WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );

@@ -1117,6 +1117,27 @@ static void IRC_POKETRADE_CursorEnable(POKEMON_TRADE_WORK* pWork,int line,int in
 
 }
 
+//タッチした場所にいるかどうか
+static BOOL _SerchTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, int* boxno,int* boxindex)
+{
+  BOOL bChange=FALSE;
+  {
+    u32 x,y;
+    int line,index;
+
+    if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
+      GFL_CLWK* pCL = IRC_POKETRADE_GetCLACT(pWork,x+12,y+12, boxno, boxindex, &line, &index);
+      if(pCL){
+        POKEMON_PASO_PARAM* ppp =
+          IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, *boxno, *boxindex, pWork);
+        if(ppp && PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) != 0 ){
+          return TRUE;
+        }
+      }
+    }
+  }
+  return FALSE;
+}
 
 
 static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
@@ -1125,6 +1146,7 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
   {
     u32 x,y;
     int line,index;
+
     if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
       GFL_CLWK* pCL = IRC_POKETRADE_GetCLACT(pWork,x+12,y+12, &pWork->workBoxno, &pWork->workPokeIndex, &line, &index);
 
@@ -1160,6 +1182,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
   BOOL bChange=FALSE;
   int selectno=-1;
   u32 x,y;
+  int boxindex,boxno;
 
   if(GFL_UI_TP_GetTrg()){
     _CatchPokemonPositionRewind(pWork);
@@ -1187,10 +1210,11 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     break;
   }
 
-  _CatchPokemonMoveFunc(pWork);
-  
+ // _CatchPokemonMoveFunc(pWork);
+
   if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
-    if(IsTouchCLACTPosition(pWork,TRUE)){
+    //if(IsTouchCLACTPosition(pWork,TRUE)){
+    if(_SerchTouchCLACTPosition(pWork,&pWork->underSelectBoxno,&pWork->underSelectIndex)){
       pWork->x = x;
       pWork->y = y;
       PMSND_PlaySystemSE(POKETRADESE_CUR);
@@ -1211,6 +1235,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
     POKETRADE_MESSAGE_ResetPokemonMyStDisp(pWork);
     POKETRADE_MESSAGE_ChangePokemonMyStDisp(pWork, pWork->pokemonselectno , (pWork->x < 128), pp);
+    _PokemonIconRenew(pWork);
     GFL_HEAP_FreeMemory(pp);
     return;
   }
@@ -1488,7 +1513,10 @@ static void _endWaitState(POKEMON_TRADE_WORK* pWork)
       break;
     case 1:
       POKETRADE_MESSAGE_WindowClear(pWork);
-      _CHANGE_STATE(pWork,_touchState);
+      _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
+      TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
+      
+      //_CHANGE_STATE(pWork,_touchState);
       break;
     }
   }
@@ -1640,7 +1668,7 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_InitSubMojiBG(pWork);
 
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_52, pWork->pMessageStrBuf );
-  POKETRADE_MESSAGE_WindowOpenSpeed(pWork,TRUE);
+  POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
 
 //  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
 
@@ -2002,6 +2030,9 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
   POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
 
+  pWork->selectIndex=-1;
+  pWork->selectBoxno=-1;
+  
   _PokemonIconRenew(pWork);
 
 //  _userNetCommandClear(pWork);

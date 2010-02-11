@@ -528,7 +528,10 @@ struct _POKEMON_TRADE_WORK{
   s16 SuckedCount;
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
-
+  u8 bByebyeMessageEach;  //送り先IDと送信ポケモン一致
+  u8 bEncountMessageEach; //受け取りIDと受信ポケモン一致
+  u8 bByebyeNoJump;
+  u8 bEncountNoJump;
 } ;
 
 
@@ -717,7 +720,7 @@ extern int POKE_GTS_IsSelect(POKEMON_TRADE_WORK* pWork,int boxno,int index);
 
 //メッセージ関連
 extern void POKETRADE_MESSAGE_WindowOpen(POKEMON_TRADE_WORK* pWork);
-extern void POKETRADE_MESSAGE_WindowOpenSpeed(POKEMON_TRADE_WORK* pWork,BOOL bFast);
+extern void POKETRADE_MESSAGE_WindowOpenCustom(POKEMON_TRADE_WORK* pWork,BOOL bFast, BOOL bUnderPos);
 extern void POKETRADE_MESSAGE_WindowClose(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_WindowClear(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKETRADE_MESSAGE_EndCheck(POKEMON_TRADE_WORK* pWork);
