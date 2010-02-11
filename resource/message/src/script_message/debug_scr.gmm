@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-10T19:17:30"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-02-11T12:46:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -440,13 +440,18 @@
 	</row>
 
 	<row id="msg_debug_suginaka_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｔ０２演説イベントフラグ</language>
-		<language name="JPN_KANJI" width="256">Ｔ０２演説イベントフラグ</language>
+		<language name="JPN" width="256">Ｔ０２ゲーチス演説イベント</language>
+		<language name="JPN_KANJI" width="256">Ｔ０２ゲーチス演説イベント</language>
 	</row>
 
 	<row id="msg_debug_suginaka_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｄ０３Ｒ０１０１イベント</language>
-		<language name="JPN_KANJI" width="256">Ｄ０３Ｒ０１０１イベント</language>
+		<language name="JPN" width="256">Ｄ０３Ｒ０１０１チャンピオンイベント</language>
+		<language name="JPN_KANJI" width="256">Ｄ０３Ｒ０１０１チャンピオンイベント</language>
+	</row>
+
+	<row id="msg_debug_suginaka_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">Ｃ０３ライバル誘導イベント</language>
+		<language name="JPN_KANJI" width="256">Ｃ０３ライバル誘導イベント</language>
 	</row>
 
 	<flowchart-group-list>
