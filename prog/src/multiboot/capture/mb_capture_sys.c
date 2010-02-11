@@ -1261,7 +1261,10 @@ static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work )
       G3X_SetFogColor( MB_CAP_BONUS_FOG_COLOR , work->fogAlpha );
       if( work->fogAlpha == 0 )
       {
+        BOOL flg = TRUE;
         G3X_SetFog( FALSE , GX_FOGBLEND_COLOR_ALPHA , GX_FOGSLOPE_0x0800 , 0 );
+        GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->bbdObjBgMask[0] , &flg );
+        GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->bbdObjBgMask[1] , &flg );
       }
     }
   
@@ -1370,7 +1373,12 @@ void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork )
     G3X_SetFog( TRUE , GX_FOGBLEND_COLOR_ALPHA , GX_FOGSLOPE_0x0800 , 0 );
     G3X_SetFogTable( fogTable );
   }
-
+  
+  {
+    BOOL flg = FALSE;
+    GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->bbdObjBgMask[0] , &flg );
+    GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->bbdObjBgMask[1] , &flg );
+  }
 //  PMSND_SetStatusBGM( 256 , 0 , PMSND_NOEFFECT );
 //  PMSND_PlayBGM( SEQ_BGM_PALPARK_BONUS );
 }

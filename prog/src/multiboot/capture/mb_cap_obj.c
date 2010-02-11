@@ -107,7 +107,7 @@ MB_CAP_OBJ* MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_
     objWork->rad[0] = GFUser_GetPublicRand0(0x10000);
     objWork->rad[1] = GFUser_GetPublicRand0(0x10000);
     objWork->rad[2] = GFUser_GetPublicRand0(0x10000);
-    objWork->baseY = FX32_CONST( GFUser_GetPublicRand0(40)-20 );
+    objWork->baseY = FX32_CONST( GFUser_GetPublicRand0(40)-20.0f );
   }
   
   return objWork;
@@ -189,7 +189,6 @@ void MB_CAP_OBJ_UpdateObject_Star( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWor
   }
   objWork->pos.y = FX32_CONST(96)+(posY)+objWork->baseY;
   pos.y = objWork->pos.y+objWork->height;
-  
   
   GFL_BBD_SetObjectTrans( bbdSys , objWork->objIdx , &pos );
 }

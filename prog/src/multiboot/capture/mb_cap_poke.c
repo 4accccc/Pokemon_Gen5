@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "poke_tool/monsno_def.h"
 
 #include "mb_capture_gra.naix"
 
@@ -75,6 +76,9 @@ struct _MB_CAP_POKE
   int objEdgeIdx;
   
   MB_CAP_EFFECT *downEff;
+  
+  BOOL isGround;  //ディグダ
+  BOOL isNoFlip;  //反転不可
 };
 
 
@@ -198,6 +202,20 @@ MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
   pokeWork->height = 0;
   
   pokeWork->downEff = NULL;
+  
+  pokeWork->isGround = FALSE;
+  pokeWork->isNoFlip = FALSE;
+  
+  //ディグダ・反転チェック
+  {
+    const u32 monsno = PPP_Get( initWork->ppp , ID_PARA_monsno , NULL );
+    if( monsno == MONSNO_DHIGUDA ||
+        monsno == MONSNO_DAGUTORIO )
+    {
+      pokeWork->isGround = TRUE;
+    }
+  }
+  
 
   return pokeWork;
 }
@@ -452,7 +470,7 @@ static void MB_CAP_POKE_StateHide(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
   {
     //右に出る
     const BOOL flg = TRUE;
-    const BOOL flipFlg = TRUE;
+    const BOOL flipFlg = ( pokeWork->isNoFlip == FALSE ? TRUE : FALSE );
     MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx , &pokeWork->pos );
     pokeWork->pos.x += FX32_CONST( MB_CAP_POKE_HIDE_LOOK_OFS );
     pokeWork->pos.y -= FX32_CONST( MB_CAP_POKE_OFS_Y );
@@ -494,7 +512,8 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
   if( pokeWork->cnt < MB_CAP_POKE_RUN_LOOK_TIME )
   {
     //飛ぶ
-    const BOOL flg = TRUE;
+    const BOOL isDisp = TRUE;
+    const BOOL isDispShadow = (pokeWork->isGround==FALSE?TRUE:FALSE);
     BOOL flipFlg = FALSE;
     VecFx32 dispPos;
     
@@ -521,7 +540,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
         pokeWork->pos.x = pokeWork->startPos.x + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
         pokeWork->pos.y = pokeWork->startPos.y;
         pokeWork->pos.z = pokeWork->startPos.z;
-        flipFlg = TRUE;
+        flipFlg = ( pokeWork->isNoFlip == FALSE ? TRUE : FALSE );
         break;
       case MCPD_UP:
         MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx-1 , &nextPos );
@@ -544,7 +563,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
         {
           pokeWork->pos.z = pokeWork->startPos.z;
         }
-        flipFlg = TRUE;
+        flipFlg = ( pokeWork->isNoFlip == FALSE ? TRUE : FALSE );
         break;
       case MCPD_DOWN:
         MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx+1 , &nextPos );
@@ -556,15 +575,31 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
         pokeWork->pos.z += FX32_CONST( MB_CAP_OBJ_LINEOFS_Z );
         break;
       }
+      //ディグダ
+      if( pokeWork->isGround == TRUE )
+      {
+        if( pokeWork->dir == MCPD_UP && 
+            pokeWork->posYidx <= 0 )
+        {
+          //最上段補正(影を消しているので上移動に見せかける
+          pokeWork->height = FX_SinIdx( rot ) * (MB_CAP_POKE_JUMP_HEIGHT-8);
+        }
+        else
+        {
+          pokeWork->height = 0;
+        }
+      }
     
-      GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objShadowIdx , &flg );
-      GFL_BBD_SetObjectTrans( bbdSys , pokeWork->objShadowIdx , &pokeWork->pos );
-      
       dispPos.x = pokeWork->pos.x;
-      dispPos.y = pokeWork->pos.y-pokeWork->height;
+      dispPos.y = pokeWork->pos.y+FX32_CONST(6.0f);
       dispPos.z = pokeWork->pos.z;
 
-      GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objIdx , &flg );
+      GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objShadowIdx , &isDispShadow );
+      GFL_BBD_SetObjectTrans( bbdSys , pokeWork->objShadowIdx , &dispPos );
+      
+      dispPos.y = pokeWork->pos.y-pokeWork->height;
+
+      GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objIdx , &isDisp );
       GFL_BBD_SetObjectTrans( bbdSys , pokeWork->objIdx , &dispPos );
       GFL_BBD_SetObjectFlipS( bbdSys , pokeWork->objIdx , &flipFlg );
     }
@@ -611,7 +646,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
       else
       if( pokeWork->posYidx == -1 )
       {
-        //来は揺らさない
+        //木は揺らさない
         objIdx = 0xFF;
       }
       else
