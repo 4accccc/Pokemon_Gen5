@@ -45,6 +45,7 @@
 #include "gamesystem/comm_player_support.h"
 #include "gamesystem/pm_weather.h"
 #include "net/wih_dwc.h"
+#include "sound/pm_sndsys.h"
 
 #include "field/fldmmdl.h"      //MMDLSYS
 #include "gamesystem/beacon_status.h"
@@ -1451,6 +1452,10 @@ void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata)
 SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata)
 {
   SAVE_RESULT sr;
+
+  if(PMSND_IsLoading() == TRUE){
+    return SAVE_RESULT_CONTINUE;
+  }
 
   sr = SaveControl_SaveAsyncMain(gamedata->sv_control_ptr);
 
