@@ -62,7 +62,7 @@
 #define	WEATHER_STORM_FOG_TIMING_END	(90)							// に１回フォグテーブルを操作
 #define WEATHER_STORM_FOG_START			(1)							// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STORM_FOG_START_END		(31)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_STORM_FOG_OFS	( -8 )
+#define WEATHER_STORM_FOG_OFS	( 30 )
 #define WEATHER_STORM_FOG_SLOPE	( 9 )
 
 

@@ -82,7 +82,7 @@ static void dumpAreaData(const AREADATA * areadata)
  * @return  AREADATA
  */
 //------------------------------------------------------------------
-AREADATA * AREADATA_Create(u16 heapID, u16 area_id, u32 season_id)
+AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 season_id)
 {
   AREADATA * areadata;
   if (AREADATA_HasSeason(area_id))

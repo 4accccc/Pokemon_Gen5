@@ -120,7 +120,7 @@ BOOL FIELD_FK_SOUND_ANIME_Update( FIELD_FK_SOUND_ANIME* p_wk )
   max_frame = ICA_ANIME_GetMaxFrame( p_wk->p_anime )<<FX32_SHIFT;
 
   // ‚·‚Å‚ÉŠ®—¹‚µ‚Ä‚¢‚È‚¢‚©H
-  if( max_frame <= (p_wk->frame + FIELD_FK_SOUND_ANIME_SPEED) )
+  if( max_frame <= p_wk->frame )
   {
     result = TRUE;
     p_wk->frame = max_frame - FX32_ONE;
@@ -128,7 +128,6 @@ BOOL FIELD_FK_SOUND_ANIME_Update( FIELD_FK_SOUND_ANIME* p_wk )
   else
   {
     result = FALSE;
-    p_wk->frame += FIELD_FK_SOUND_ANIME_SPEED;
   }
 
 
@@ -149,53 +148,73 @@ BOOL FIELD_FK_SOUND_ANIME_Update( FIELD_FK_SOUND_ANIME* p_wk )
     GF_ASSERT( result );
 
     if( trans.x == FIELD_FK_SOUND_ANIME_SE_PLAY_ID ){
+      TOMOYA_Printf( "trans x play\n" );
       FK_SOUND_ANIME_PlaySE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_TRANS_X );
     }else if( trans.x == FIELD_FK_SOUND_ANIME_SE_STOP_ID ){
+      TOMOYA_Printf( "trans x stop\n" );
       FK_SOUND_ANIME_StopSE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_TRANS_X );
     }
     if( trans.y == FIELD_FK_SOUND_ANIME_SE_PLAY_ID ){
+      TOMOYA_Printf( "trans y play\n" );
       FK_SOUND_ANIME_PlaySE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_TRANS_Y );
     }else if( trans.y == FIELD_FK_SOUND_ANIME_SE_STOP_ID ){
+      TOMOYA_Printf( "trans y stop\n" );
       FK_SOUND_ANIME_StopSE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_TRANS_Y );
     }
     if( trans.z == FIELD_FK_SOUND_ANIME_SE_PLAY_ID ){
+      TOMOYA_Printf( "trans z play\n" );
       FK_SOUND_ANIME_PlaySE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_TRANS_Z );
     }else if( trans.z == FIELD_FK_SOUND_ANIME_SE_STOP_ID ){
+      TOMOYA_Printf( "trans z stop\n" );
       FK_SOUND_ANIME_StopSE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_TRANS_Z );
     }
 
     if( scale.x == FIELD_FK_SOUND_ANIME_SE_PLAY_ID ){
+      TOMOYA_Printf( "scale x play\n" );
       FK_SOUND_ANIME_PlaySE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_SCALE_X );
     }else if( scale.x == FIELD_FK_SOUND_ANIME_SE_STOP_ID ){
+      TOMOYA_Printf( "scale x stop\n" );
       FK_SOUND_ANIME_StopSE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_SCALE_X );
     }
     if( scale.y == FIELD_FK_SOUND_ANIME_SE_PLAY_ID ){
+      TOMOYA_Printf( "scale y play\n" );
       FK_SOUND_ANIME_PlaySE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_SCALE_Y );
     }else if( scale.y == FIELD_FK_SOUND_ANIME_SE_STOP_ID ){
+      TOMOYA_Printf( "scale y stop\n" );
       FK_SOUND_ANIME_StopSE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_SCALE_Y );
     }
     if( scale.z == FIELD_FK_SOUND_ANIME_SE_PLAY_ID ){
+      TOMOYA_Printf( "scale z play\n" );
       FK_SOUND_ANIME_PlaySE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_SCALE_Z );
     }else if( scale.z == FIELD_FK_SOUND_ANIME_SE_STOP_ID ){
+      TOMOYA_Printf( "scale z stop\n" );
       FK_SOUND_ANIME_StopSE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_SCALE_Z );
     }
 
     if( rotate.x == FIELD_FK_SOUND_ANIME_SE_PLAY_ID ){
+      TOMOYA_Printf( "rotate x play\n" );
       FK_SOUND_ANIME_PlaySE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_ROTATE_X );
     }else if( rotate.x == FIELD_FK_SOUND_ANIME_SE_STOP_ID ){
+      TOMOYA_Printf( "rotate x stop\n" );
       FK_SOUND_ANIME_StopSE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_ROTATE_X );
     }
     if( rotate.y == FIELD_FK_SOUND_ANIME_SE_PLAY_ID ){
+      TOMOYA_Printf( "rotate y play\n" );
       FK_SOUND_ANIME_PlaySE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_ROTATE_Y );
     }else if( rotate.y == FIELD_FK_SOUND_ANIME_SE_STOP_ID ){
+      TOMOYA_Printf( "rotate y stop\n" );
       FK_SOUND_ANIME_StopSE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_ROTATE_Y );
     }
     if( rotate.z == FIELD_FK_SOUND_ANIME_SE_PLAY_ID ){
+      TOMOYA_Printf( "rotate z play\n" );
       FK_SOUND_ANIME_PlaySE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_ROTATE_Z );
     }else if( rotate.z == FIELD_FK_SOUND_ANIME_SE_STOP_ID ){
+      TOMOYA_Printf( "rotate z stop\n" );
       FK_SOUND_ANIME_StopSE( p_wk, FIELD_FK_SOUND_ANIME_SE_IDX_ROTATE_Z );
     }
   }
+
+  p_wk->frame += FIELD_FK_SOUND_ANIME_SPEED;
   
   return result;
 }
