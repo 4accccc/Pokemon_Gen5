@@ -18,5 +18,5 @@
 #include "app/box_mode.h"
 #include "net_app/comm_tvt_sys.h"  //TVトランシーバ
 
-extern GMEVENT* EVENT_BeaconDetail( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
+extern GMEVENT* EVENT_BeaconDetail( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u8 target );
 

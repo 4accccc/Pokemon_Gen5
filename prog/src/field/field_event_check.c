@@ -2212,10 +2212,6 @@ static GMEVENT * checkSubScreenEvent(
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_INTRUDE:
     event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_INTRUDE);
     break;
-  case FIELD_SUBSCREEN_ACTION_BEACON_DETAIL:
-    event = EVENT_BeaconDetail( gsys, fieldWork );
-    break;
-    
 #if 0
   case FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP:
 		event = DEBUG_PalaceJamp(fieldWork , gsys, FIELDMAP_GetFieldPlayer(fieldWork));

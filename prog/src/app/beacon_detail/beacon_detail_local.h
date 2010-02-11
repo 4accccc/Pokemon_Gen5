@@ -140,7 +140,8 @@ typedef struct
   BMP_WIN         win_popup;
   PMS_DRAW_WORK*  pms_draw;
   BEACON_WIN      beacon_win[BEACON_WIN_MAX];
-  
+ 
+  s16   icon_x,icon_y;
   GFL_CLWK* pAct[ACT_MAX];
 
 } BEACON_DETAIL_WORK;

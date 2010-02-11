@@ -103,6 +103,8 @@ static const BEACON_DETAIL DATA_BeaconDetail[] = {
 
 //////////////////////////////////////////////////////////////
 //プロトタイプ
+static BOOL input_CheckHitTrIcon( BEACON_DETAIL_WORK* wk );
+
 static void sub_PlttVramTrans( u16* p_data, u8 target, u16 pos, u16 num );
 static void sub_UpDownButtonActiveControl( BEACON_DETAIL_WORK* wk );
 static const BEACON_DETAIL* sub_GetBeaconDetailParam( GAMEBEACON_ACTION action );
@@ -121,6 +123,7 @@ static void draw_BeaconWindowVisibleSet( BEACON_DETAIL_WORK* wk, u8 idx, BOOL vi
 static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u16 time, u8 idx );
 static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk );
 
+static void effReq_PopupMsg( BEACON_DETAIL_WORK* wk );
 static void effReq_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir );
 
 /*
@@ -148,14 +151,9 @@ int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
 {
   TOUCHBAR_ICON icon = TOUCHBAR_GetTrg( wk->touchbar );
 	
-  if( icon == TOUCHBAR_SELECT_NONE ){
-    return SEQ_MAIN;
-  }
-
   if( icon == TOUCHBAR_ICON_RETURN || icon == TOUCHBAR_ICON_CLOSE ){
     return SEQ_FADEOUT;
   }
-
   if( icon == TOUCHBAR_ICON_CUR_U && wk->list_top > 0 ){
     effReq_PageScroll( wk, SCROLL_DOWN );
     return SEQ_EFF_WAIT;
@@ -164,7 +162,31 @@ int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
     effReq_PageScroll( wk, SCROLL_UP );
     return SEQ_EFF_WAIT;
   }
+
+  //キャラアイコンあたり判定
+  if( input_CheckHitTrIcon(wk) ){
+    effReq_PopupMsg( wk );
+    return SEQ_EFF_WAIT; 
+  }
+
   return SEQ_MAIN;
+}
+
+/*
+ *  @brief  キャラアイコンあたり判定
+ */
+static BOOL input_CheckHitTrIcon( BEACON_DETAIL_WORK* wk )
+{
+  u32 x,y;
+  if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+  {
+    if( ((u32)( x - (wk->icon_x-ACT_ICON_SXH)) <= (u32)(ACT_ICON_SX))
+			&	((u32)( y - (wk->icon_y-ACT_ICON_SYH)) <= (u32)(ACT_ICON_SY)))
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 /*
@@ -494,17 +516,26 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
 
 	//プレイヤーの場所から、データインデックスを取得
   {
-    s16 x,y;
 	  u16 dataIndex = TOWNMAP_DATA_SearchRootZoneID( wk->tmap, GAMEBEACON_Get_TownmapRootZoneID( wk->tmpInfo ) );
 
 	  //タウンマップ上の座標取得
-	  x = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_X );
-	  y = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_Y );
+	  wk->icon_x = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_X );
+	  wk->icon_y = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_Y );
 
-    act_SetPosition( wk->pAct[ACT_ICON_TR], x, y, ACT_SF_MAIN );
+    if( wk->icon_y < 16 ){
+      wk->icon_y = 16;
+    }else if( wk->icon_y > 152 ){
+      wk->icon_y = 152;
+    }
+    if( wk->icon_x < 16){
+      wk->icon_x = 16;
+    }else if( wk->icon_x > 240 ){
+      wk->icon_x = 240;
+    }
+    act_SetPosition( wk->pAct[ACT_ICON_TR], wk->icon_x, wk->icon_y, ACT_SF_MAIN );
 
     if( pd->icon != 0 ){
-      act_SetPosition( wk->pAct[ACT_ICON_EV], x-24, y, ACT_SF_MAIN );
+      act_SetPosition( wk->pAct[ACT_ICON_EV], wk->icon_x-24, wk->icon_y, ACT_SF_MAIN );
       act_AnmStart( wk->pAct[ACT_ICON_EV], ACTANM_ICON_TR + (pd->icon-1) );
     }
     GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_EV], (pd->icon != 0) );
@@ -593,19 +624,18 @@ typedef struct _TASKWK_WIN_POPUP{
   int* task_ct;
 }TASKWK_WIN_POPUP;
 
-static void taskAdd_WinPopup( BEACON_DETAIL_WORK* wk, STRBUF* str, int* task_ct );
+static void taskAdd_WinPopup( BEACON_DETAIL_WORK* wk, int* task_ct );
 static void tcb_WinPopup( GFL_TCBL *tcb , void* work);
 
-static void effReq_PopupMsgSys( BEACON_DETAIL_WORK* wk, u8 msg_id )
+static void effReq_PopupMsg( BEACON_DETAIL_WORK* wk )
 {
-  print_GetMsgToBuf( wk, msg_id );
-  taskAdd_WinPopup( wk, wk->str_expand, &wk->eff_task_ct);
+  taskAdd_WinPopup( wk, &wk->eff_task_ct);
 }
 
 /*
  *  @brief  メッセージウィンドウ ポップアップタスク登録
  */
-static void taskAdd_WinPopup( BEACON_DETAIL_WORK* wk, STRBUF* str, int* task_ct )
+static void taskAdd_WinPopup( BEACON_DETAIL_WORK* wk, int* task_ct )
 {
   GFL_TCBL* tcb;
   TASKWK_WIN_POPUP* twk;
@@ -615,10 +645,10 @@ static void taskAdd_WinPopup( BEACON_DETAIL_WORK* wk, STRBUF* str, int* task_ct 
   twk = GFL_TCBL_GetWork(tcb);
   MI_CpuClear8( twk, sizeof( TASKWK_WIN_POPUP ));
 
-  GFL_STR_CopyBuffer( wk->str_popup, str );
-  
   twk->bdw = wk;
   twk->wait = POPUP_WAIT;
+
+  TOUCHBAR_SetActiveAll( wk->touchbar, FALSE );
 
   twk->task_ct = task_ct;
   (*task_ct)++;
@@ -630,33 +660,28 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
 
   switch( twk->seq ){
   case 0:
-//    print_PopupWindow( twk->bdw, twk->bdw->str_popup, 0 );
-//    PRINT_UTIL_PrintColor( &wk->win[WIN_POPUP].putil, wk->print_que, 0, 0, str, wk->font, FCOL_POPUP );
-//    GFL_BMPWIN_MakeTransWindow( wk->win[WIN_POPUP].win );
-    twk->seq++;
-    return;
-  case 1:
     taskAdd_MsgUpdown( twk->bdw, SCROLL_UP, &twk->child_task );
     twk->seq++;
     return;
-  case 2:
+  case 1:
     if( twk->child_task ){
       return;
     }
     twk->seq++;
     return;
-  case 3:
+  case 2:
     if( twk->wait-- > 0 ){
       return;
     }
     taskAdd_MsgUpdown( twk->bdw, SCROLL_DOWN, &twk->child_task );
     twk->seq++;
     return;
-  case 4:
+  case 3:
     if( twk->child_task ){
       return;
     }
   }
+  TOUCHBAR_SetActiveAll( twk->bdw->touchbar, TRUE );
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
@@ -791,6 +816,8 @@ static void taskAdd_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir, int* task_ct )
   GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[twk->next]);
   draw_BeaconWindow( wk, wk->tmpInfo, wk->tmpTime, wk->flip_sw^1 );
 
+  TOUCHBAR_SetActiveAll( wk->touchbar, FALSE );
+
   twk->bdw = wk;
   twk->task_ct = task_ct;
   (*task_ct)++;
@@ -817,6 +844,7 @@ static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
   twk->bdw->list_top = twk->next;
   draw_UpdateUnderView( twk->bdw );
   sub_UpDownButtonActiveControl( twk->bdw );
+  TOUCHBAR_SetActiveAll( twk->bdw->touchbar, TRUE );
 
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);

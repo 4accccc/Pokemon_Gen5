@@ -13,6 +13,7 @@ enum{
  SEQ_FADEIN,
  SEQ_MAIN,
  SEQ_EFF_WAIT,
+ SEQ_POPUP,
  SEQ_FADEOUT,
  SEQ_EXIT,
 };
@@ -87,8 +88,10 @@ enum
 #define ALPHA_1ST_S (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_OBJ)
 #define ALPHA_2ND_S (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ)
 
-#define ALPHA_EV2  (5)
-#define ALPHA_EV1  (16-ALPHA_EV2)
+#define ALPHA_EV2_M  (5)
+#define ALPHA_EV1_M  (16-ALPHA_EV2_M)
+#define ALPHA_EV2_S  (3)
+#define ALPHA_EV1_S  (16-ALPHA_EV2_S)
 
 //ビーコンウィンドウの数
 #define BEACON_WIN_MAX    (2)
@@ -190,6 +193,10 @@ enum{
 #define ACT_TRAINER_BGPRI (0)
 
 #define ACT_ICON_BGPRI  (2)
+#define ACT_ICON_SX   (24)
+#define ACT_ICON_SY   (32)
+#define ACT_ICON_SXH  (ACT_ICON_SX/2)
+#define ACT_ICON_SYH  (ACT_ICON_SY/2)
 
 //////////////////////////////////////////
 //エフェクト関連定義値

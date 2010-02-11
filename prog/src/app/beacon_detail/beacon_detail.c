@@ -110,6 +110,7 @@ static GFL_PROC_RESULT BeaconDetailProc_Exit( GFL_PROC *proc, int *seq, void *pw
 
 static int seq_Main( BEACON_DETAIL_WORK* wk );
 static int seq_EffWait( BEACON_DETAIL_WORK* wk );
+static int seq_Popup( BEACON_DETAIL_WORK* wk );
 static int seq_FadeIn( BEACON_DETAIL_WORK* wk );
 static int seq_FadeOut( BEACON_DETAIL_WORK* wk );
 
@@ -288,6 +289,9 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
   case SEQ_EFF_WAIT:
     *seq = seq_EffWait( wk );
     break;
+  case SEQ_POPUP:
+    *seq = seq_Popup( wk );
+    break;
   case SEQ_FADEOUT:
     *seq = seq_FadeOut( wk );
     break;
@@ -316,14 +320,6 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
  */
 static int seq_Main( BEACON_DETAIL_WORK* wk )
 {
-#if 0
-  // デバッグボタンでアプリ終了
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-  {
-    return SEQ_FADEOUT;
-  }
-#endif
-
   return BeaconDetail_InputCheck( wk );
 }
 
@@ -336,6 +332,14 @@ static int seq_EffWait( BEACON_DETAIL_WORK* wk )
     return SEQ_EFF_WAIT;
   }
   return SEQ_MAIN;
+}
+
+/*
+ *  @brief  ポップアップ
+ */
+static int seq_Popup( BEACON_DETAIL_WORK* wk )
+{
+  return BeaconDetail_InputCheck( wk );
 }
 
 /*
@@ -392,7 +396,7 @@ static int seq_FadeOut( BEACON_DETAIL_WORK* wk )
 //--------------------------------------------------------------
 static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
 {
-  int i,max,target;
+  int i,max;
 
   //テンポラリを作成
   wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
@@ -400,7 +404,6 @@ static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
   wk->b_status = GAMEDATA_GetBeaconStatus( wk->param->gdata );
   wk->infoLog = BEACON_STATUS_GetInfoTbl( wk->b_status );
 
-  target = BEACON_STATUS_GetViewTopOffset( wk->b_status );
   max = GAMEBEACON_InfoTblRing_GetEntryNum( wk->infoLog );
 
   //詳細が有効なデータindexを取得
@@ -408,7 +411,7 @@ static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
     if( GAMEBEACON_Check_NPC( wk->tmpInfo )){
       continue;
     }
-    if( target == i ){
+    if( wk->param->target == i ){
       wk->list_top = wk->list_max;
     }
     wk->list[wk->list_max++] = i;
@@ -549,8 +552,8 @@ static void _sub_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID )
 
   GFL_ARC_CloseDataHandle( tmap_h );
 
-  G2_SetBlendAlpha( ALPHA_1ST_M, ALPHA_2ND_M, ALPHA_EV1, ALPHA_EV2);
-  G2S_SetBlendAlpha( ALPHA_1ST_S, ALPHA_2ND_S, ALPHA_EV1, ALPHA_EV2);
+  G2_SetBlendAlpha( ALPHA_1ST_M, ALPHA_2ND_M, ALPHA_EV1_M, ALPHA_EV2_M);
+  G2S_SetBlendAlpha( ALPHA_1ST_S, ALPHA_2ND_S, ALPHA_EV1_S, ALPHA_EV2_S);
 }
 
 //-----------------------------------------------------------------------------
@@ -825,6 +828,8 @@ static void _sub_ActorCreate(BEACON_DETAIL_WORK* wk)
   //初期座標は適当
   wk->pAct[ACT_ICON_TR] = act_Add( wk, clunit, &wk->objResUnion,
                     128, 120, 0, 0, ACT_ICON_BGPRI, ACT_SF_MAIN );
+  GFL_CLACT_WK_SetPlttOffs( wk->pAct[ACT_ICON_TR], 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
   wk->pAct[ACT_ICON_EV] = act_Add( wk, clunit, &wk->objResNormal,
                     128-32, 120, 0, 1, ACT_ICON_BGPRI, ACT_SF_MAIN );
 }

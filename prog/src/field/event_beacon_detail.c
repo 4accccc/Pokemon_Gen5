@@ -49,6 +49,7 @@ typedef struct {
   GAMEDATA * gdata;
   SAVE_CONTROL_WORK *save;
   BEACON_DETAIL_PARAM prm;
+  u8 target;
 } EVENT_BEACON_DETAIL_WORK;
 
 //============================================================================================
@@ -84,6 +85,7 @@ static GMEVENT_RESULT EVENT_BeaconDetailMain(GMEVENT * event, int *  seq, void *
     MI_CpuClear8(&bdw->prm,sizeof(BEACON_DETAIL_PARAM));
     bdw->prm.gsys = bdw->gsys;
     bdw->prm.gdata = bdw->gdata;
+    bdw->prm.target = bdw->target;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(beacon_detail), &BeaconDetailProcData, &bdw->prm);
     (*seq)++;
     break;
@@ -127,7 +129,7 @@ static GMEVENT_RESULT EVENT_BeaconDetailMain(GMEVENT * event, int *  seq, void *
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT* EVENT_BeaconDetail(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+GMEVENT* EVENT_BeaconDetail(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u8 target )
 {
   GMEVENT* event;
   EVENT_BEACON_DETAIL_WORK * bdw;
@@ -138,6 +140,7 @@ GMEVENT* EVENT_BeaconDetail(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
   bdw->gdata = GAMESYSTEM_GetGameData(gsys);
   bdw->save = GAMEDATA_GetSaveControlWork(bdw->gdata);
   bdw->gsys = gsys;
+  bdw->target = target;
   return event;
 }
 

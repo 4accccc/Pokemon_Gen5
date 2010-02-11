@@ -244,7 +244,7 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
 //    FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR );
     break;
   case EV_CALL_DETAIL_VIEW:
-    event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork );
+    event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
     break;
   default:
     return NULL;

@@ -39,5 +39,6 @@ typedef struct
 {	
 	GAMESYS_WORK		*gsys;	//[in]ゲームシステム
 	GAMEDATA				*gdata;	//[in]ゲームシステム
+  u8              target; //リストのトップに表示する
 }BEACON_DETAIL_PARAM;
 
