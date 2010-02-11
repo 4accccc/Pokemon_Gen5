@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T19:36:15"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T15:11:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,14 +330,14 @@
 		</language>
 	</columns>
 
-	<dialog left="13" top="210" right="707" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1507" top="209" right="2196" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="519"/>
+		<band id="0" index="1" style="0000" width="514"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="532"/>
+		<band id="2" index="3" style="0000" width="527"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="686"/>
+		<band id="4" index="0" style="0000" width="681"/>
 		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -723,16 +723,16 @@
 感謝の　言葉が　聞こえたけれど……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_t02_black_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t02_black_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t02_boss_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ポケモンが
 はなした……　ですか？▽
-おかしなことを　いうんだな▼</language>
+おかしなことを　いうんですね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ポケモンが
 話した……　ですか？▽
-おかしなことを　いうんだな▼</language>
+おかしなことを　いうんですね▼</language>
 	</row>
 
 	<row id="msg_t02_boss_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -751,28 +751,31 @@
 ボクの　名前は　Ｎ（エヌ）[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_t02_black_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t02_black_04" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t02_boss_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……オレは　チェレン
+		<language name="JPN" width="256">チェレン『……ぼくは　チェレン
 こちらは　[1:00:トレーナー名:0]▼
 たのまれて　ポケモンずかんを
-かんせい　させるための　たびにでた▼
-もっとも　オレの　もくひょうは
+かんせい　させるための▽
+たびに　でたところ　です▼
+もっとも　ぼくの　もくひょうは
 チャンピオン　だけど……▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……オレは　チェレン
 こちらは　[1:00:トレーナー名:0]▼
 頼まれて　ポケモン図鑑を
-完成させるための　旅にでた▼
-もっとも　オレの　目標は
+完成させるための▽
+旅に　でたところです▼
+もっとも　ボクの　目標は
 チャンピオン　だけど……▼</language>
 	</row>
 
-	<row id="msg_t02_boss_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t02_boss_03" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・メッセージ表示後
-　ポケモン勝負へ</comment>
+・表示後、一歩移動
+・N専用カットインを呼び出し
+　続けてboss_03a表示</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ポケモンずかん……！？▼
 がっかりだ▼
@@ -783,11 +786,7 @@
 にんげんから　じゆうに　なるべきだ▼
 キミたちの　ような
 トレーナーに　ポケモンが▽
-かんしゃの　きもちを　のべるわけない▼
-そうだな　[1:00:トレーナー名:0]だったか▼
-キミの　ポケモンの　こえを
-ポケモンしょうぶで▽
-きかせて　もらおうか[BE:09:速度コントロール:0]▼</language>
+かんしゃの　きもちを　のべるわけない[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ポケモン図鑑……！？▼
 がっかりだ▼
 人間が　勝手な　ルールで
@@ -797,10 +796,22 @@
 人間から　解放されるべきだ▼
 キミたちの　ような
 トレーナーに　ポケモンが▽
-感謝の　気持ちを　述べるわけない▼
-そうだな　[1:00:トレーナー名:0]だったか▼
+感謝の　気持ちを　述べるわけない[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_t02_boss_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　ポケモン勝負へ</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]そうだな　[1:00:トレーナー名:0]だったか▼
+キミの　ポケモンの　こえを
+ポケモンしょうぶで▽
+きかせて　もらおうか[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]そうだな　[1:00:トレーナー名:0]だったか▼
 キミの　ポケモンの声を
-ポケモン勝負で　聞かせてもらおうか[BE:09:速度コントロール:0]▼</language>
+ポケモン勝負で▽
+聞かせて　もらおうか[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_t02_boss_04" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -841,30 +852,30 @@
 何を　思っているか　知りたいね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_t02_black_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t02_black_05" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　動作モデル、2番道路のほうへ移動
 ・画面外に消えると主人公、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『チッ！　オレのせいで
-おかしなことに　なったな▼
-まあ　きにするなよ
-トレーナーと　ポケモンは▽
+		<language name="JPN" width="256">チェレン『……ぼくのせいで
+おかしなことに　なったね▽
+だけど　きにしないでよ▼
+トレーナーと　ポケモンは
 おたがい　たすけあっているし▼
 ポケモンずかんを　かんせいさせるのは
 ポケモンと　トレーナーが▽
-もっと　なかよくなる　ためだろ▼
-じゃあな▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『チッ！　オレのせいで
-おかしなことに　なったな▼
-まあ　気にするなよ
-トレーナーと　ポケモンは▽
-お互い　助け合っているし▼
+もっと　なかよくなるため　だから▼
+じゃあね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……ぼくのせいで
+おかしなことに　なったね▽
+だけど　気にしないでよ▼
+トレーナーと　ポケモンは
+おたがい　助け合っているし▼
 ポケモン図鑑を　完成させるのは
 ポケモンと　トレーナーが▽
-もっと　仲良くなる　ためだろ▼
-じゃあな▼</language>
+もっと　仲良くなるため　だから▼
+じゃあね▼</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
