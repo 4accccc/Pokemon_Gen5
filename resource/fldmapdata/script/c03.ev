@@ -114,6 +114,46 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_pos_c03_rivalevent_01
 
+	DEFINE_LOCAL	LWK_INDEX
+	DEFINE_LOCAL	LWK_FRONT
+	DEFINE_LOCAL	LWK_SIDE
+	
+	 _GET_PLAYER_RAIL_LOC( LWK_INDEX, LWK_FRONT, LWK_SIDE )
+
+	IF $LWK_FRONT == 3 THEN
+	
+		//1.3.8の場合
+		IF $LWK_SIDE == 8 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come8 )
+		
+		//1.3.12の場合
+		ELSIF $LWK_SIDE == 12 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come12 )
+		
+		ENDIF
+		
+	ELSIF $LWK_FRONT == 4 THEN
+	
+		//1.4.9の場合
+		IF $LWK_SIDE == 9 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come9 )
+		
+		//1.4.10の場合
+		ELSIF $LWK_SIDE == 10 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come10 )
+
+		//1.4.11の場合
+		ELSIF $LWK_SIDE == 11 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come11 )
+		
+		ENDIF
+	
+	ENDIF
+	
+	//ライバル：自機に近づく
+	_OBJ_ANIME( C03_RIVAL_01, anm_rival_come )
+	_OBJ_ANIME_WAIT()
+
 	//やあ
 	_PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG( msg_c03_black_01 , C03_RIVAL_01 )
@@ -152,12 +192,8 @@ EVENT_START		ev_pos_c03_rivalevent_01
 			
 		ENDIF
 	//ライバル・自機：連れ歩き
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
-	_OBJ_ANIME( C03_RIVAL_01, anm_dir_l )
-	_OBJ_ANIME_WAIT()
-
-	//ライバル：自機の方を見る
-	_OBJ_ANIME( C03_RIVAL_01, anm_dir_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo1 )
+	_OBJ_ANIME( C03_RIVAL_01, anm_rival_yudo1 )
 	_OBJ_ANIME_WAIT()
 
 	//ほら　ポケモンセンターがあるだろ？
@@ -165,24 +201,36 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_MSGWIN_CLOSE()
 
 	//ライバル：上向き
-	_OBJ_ANIME( C03_RIVAL_01, anm_dir_u )
+	_OBJ_ANIME( C03_RIVAL_01, anm_stay_u )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
 	_OBJ_ANIME_WAIT()
 	
 	//あちらには　ポケモンセンターの
 	_BALLOONWIN_OBJMSG( msg_c03_black_07 , C03_RIVAL_01 )
 	_MSGWIN_CLOSE()
 
+	//ライバル：向かいあう
+	_OBJ_ANIME( C03_RIVAL_01, anm_stay_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME_WAIT()
+
 	//ついでだから　ポケモンジムも
 	_BALLOONWIN_OBJMSG( msg_c03_black_08 , C03_RIVAL_01 )
 	_MSGWIN_CLOSE()
 
 	//ライバル・自機：連れ歩き
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
-	_OBJ_ANIME( C03_RIVAL_01, anm_dir_l )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo2 )
+	_OBJ_ANIME( C03_RIVAL_01, anm_rival_yudo2 )
 	_OBJ_ANIME_WAIT()
 
+	//【仮】使い方解んない・ドアアニメ再生
+
 	//ジムリーダー：登場
-	_OBJ_ANIME( C03_LEADER3_01, anm_dir_r )
+	_OBJ_ANIME( C03_LEADER3_01, anm_leader_come )
+	_OBJ_ANIME_WAIT()
+
+	//自機：移動
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo2_1 )
 	_OBJ_ANIME_WAIT()
 
 	//んうん？　ああ　きみ！
@@ -191,7 +239,7 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_MSGWIN_CLOSE()
 
 	//ジムリーダー：下向き
-	_OBJ_ANIME( C03_LEADER3_01, anm_dir_d )
+	_OBJ_ANIME( C03_LEADER3_01, anm_stay_d )
 	_OBJ_ANIME_WAIT()
 
 	//ヒウンシティにも　プラズマだんが　いたんだ
@@ -199,7 +247,7 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_MSGWIN_CLOSE()
 
 	//ジムリーダー：右向き
-	_OBJ_ANIME( C03_LEADER3_01, anm_dir_r )
+	_OBJ_ANIME( C03_LEADER3_01, anm_stay_r )
 	_OBJ_ANIME_WAIT()
 
 	//もちろん　おっぱったけどね
@@ -214,8 +262,9 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_BALLOONWIN_OBJMSG( msg_c03_black_09 , C03_RIVAL_01 )
 	_MSGWIN_CLOSE()
 
-	//ライバル：右向き
-	_OBJ_ANIME( C03_RIVAL_01, anm_dir_r )
+	//ライバル：下向き
+	_OBJ_ANIME( C03_RIVAL_01, anm_stay_d )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
 	_OBJ_ANIME_WAIT()
 
 	//バトルカンパニーと　いうのは
@@ -223,13 +272,23 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_MSGWIN_CLOSE()
 
 	//ライバル・自機：連れ歩き
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
-	_OBJ_ANIME( C03_RIVAL_01, anm_dir_l )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo3 )
+	_OBJ_ANIME( C03_RIVAL_01, anm_rival_yudo3 )
+	_OBJ_ANIME_WAIT()
+
+	//ライバル：上向き
+	_OBJ_ANIME( C03_RIVAL_01, anm_stay_u )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
 	_OBJ_ANIME_WAIT()
 
 	//こっちの　ろめんには
 	_BALLOONWIN_OBJMSG( msg_c03_black_11 , C03_RIVAL_01 )
 	_MSGWIN_CLOSE()
+
+	//ライバル：向かいあう
+	_OBJ_ANIME( C03_RIVAL_01, anm_stay_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME_WAIT()
 
 	//ボクは　いちど　ポケモンセンターに　もどる
 	_BALLOONWIN_OBJMSG( msg_c03_black_12 , C03_RIVAL_01 )
@@ -291,11 +350,97 @@ _ANIME_LABEL anm_stay_l
 //	仮アニメ
 //--------------------------------------------------------------
 _ANIME_LABEL anm_leader_leave
-	/*_ANIME_DATA		AC_WALK_L_8F,10*/
+	_ANIME_DATA		AC_WALK_L_8F,10
 	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_rival_leave
-	/*_ANIME_DATA		AC_WALK_R_8F,10*/
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_WALK_R_8F,15
+	_ANIME_DATA		AC_VANISH_ON, 1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_come
+	_ANIME_DATA		AC_WALK_R_8F,8
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_R_8F,3
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL anm_player_come8
+	_ANIME_DATA		AC_WAIT_8F,12
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,2
 	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_come9
+	_ANIME_DATA		AC_WAIT_8F,12
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_come10
+	_ANIME_DATA		AC_WAIT_8F,12
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_come11
+	_ANIME_DATA		AC_WAIT_8F,12
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_come12
+	_ANIME_DATA		AC_WAIT_8F,12
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------------
+//		ライバル連れ歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL anm_rival_yudo1
+	_ANIME_DATA		AC_WALK_L_8F,30
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_yudo1
+	_ANIME_DATA		AC_WAIT_4F,1
+	_ANIME_DATA		AC_WALK_L_8F,30
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_yudo2
+	_ANIME_DATA		AC_WALK_L_8F,36
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_yudo2
+	_ANIME_DATA		AC_WAIT_4F,1
+	_ANIME_DATA		AC_WALK_L_8F,36
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_yudo2_1
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_yudo3
+	_ANIME_DATA		AC_WAIT_4F,1
+	_ANIME_DATA		AC_WALK_L_8F,50
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_yudo3
+	_ANIME_DATA		AC_WAIT_4F,1
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,49
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------------
+//		リーダーあにめ
+//--------------------------------------------------------------------
+_ANIME_LABEL anm_leader_come
+	_ANIME_DATA		AC_WALK_D_8F,5
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
 	_ANIME_DATA		ACMD_END,0

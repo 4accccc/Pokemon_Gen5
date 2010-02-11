@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/05 18:58:25
+#save date:2010/02/09 16:28:38
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-5 15 0
+4 4 -2
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-3 16 0
+3 17 -2
 #event number: 2
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-4 20 0
+4 20 -2
 #event number: 4
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-3 6 0
+3 6 -2
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 9 0
+2 9 -2
 #event number: 6
 #type
 1
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-3 20 2
+3 20 5
 #event number: 7
 #type
 1
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-5 17 2
+5 18 4
 #event number: 8
 #type
 1
@@ -288,7 +288,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-5 12 3
+5 17 -2
 #event number: 9
 #type
 1
@@ -319,7 +319,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-4 10 2
+4 10 3
 #event number: 10
 #type
 1
@@ -350,7 +350,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 6 0
+2 11 1
 #event number: 11
 #type
 1
@@ -381,7 +381,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 7 2
+5 9 5
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -401,7 +401,7 @@ EVENTDATA_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
-1
+3
 #event number: 0
 #Pos Event Label
 C03_RIVALEVENT_01
@@ -416,7 +416,41 @@ WK_SCENE_C03
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 5 0
+1 4 0
+#size
+1 3
+#event number: 1
+#Pos Event Label
+C03_RIVALEVENT_02
+#Pos Script Name
+SCRID_POS_C03_RIVALEVENT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C03
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+1 3 -1
+#size
+1 1
+#event number: 2
+#Pos Event Label
+C03_RIVALEVENT_03
+#Pos Script Name
+SCRID_POS_C03_RIVALEVENT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C03
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+1 3 3
 #size
 1 1
 #Map Event List Data End
@@ -428,7 +462,7 @@ EVENTDATA_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
-24
+23
 #event number: 0
 #Door Event Label
 DOOR_ID_C03_C03P09_EXIT01
@@ -443,9 +477,9 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-1 1 7
+1 2 7
 #size
-4 1
+3 1
 #rail way
 DIR_LEFT
 #event number: 1
@@ -477,7 +511,7 @@ DOOR_ID_C03P10_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -496,7 +530,7 @@ DOOR_ID_C03P16_C03_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -515,7 +549,7 @@ DOOR_ID_C03P11_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -534,7 +568,7 @@ DOOR_ID_C03P15_C03_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -553,7 +587,7 @@ DOOR_ID_C03P12_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -572,7 +606,7 @@ DOOR_ID_C03P14_C03_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -591,7 +625,7 @@ DOOR_ID_C03P07_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -610,7 +644,7 @@ DOOR_ID_C03P13_C03_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -629,7 +663,7 @@ DOOR_ID_H01R0201_C03_EXIT01
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -659,25 +693,6 @@ EVENTDATA_POSTYPE_RAIL
 DIR_LEFT
 #event number: 12
 #Door Event Label
-DOOR_ID_C03_H01R0201_EXIT02
-#Next Zone ID Name
-ZONE_ID_H01R0201
-#Next Door ID Name
-DOOR_ID_H01R0201_C03_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-2 22 9
-#size
-1 3
-#rail way
-DIR_LEFT
-#event number: 13
-#Door Event Label
 DOOR_ID_C03_C03R0301_EXIT01
 #Next Zone ID Name
 ZONE_ID_C03R0301
@@ -695,7 +710,7 @@ EVENTDATA_POSTYPE_RAIL
 3 1
 #rail way
 DIR_LEFT
-#event number: 14
+#event number: 13
 #Door Event Label
 DOOR_ID_C03_C03R0101_EXIT01
 #Next Zone ID Name
@@ -714,7 +729,7 @@ EVENTDATA_POSTYPE_RAIL
 2 1
 #rail way
 DIR_LEFT
-#event number: 15
+#event number: 14
 #Door Event Label
 DOOR_ID_C03_C03R0701_EXIT01
 #Next Zone ID Name
@@ -733,7 +748,7 @@ EVENTDATA_POSTYPE_RAIL
 1 1
 #rail way
 DIR_LEFT
-#event number: 16
+#event number: 15
 #Door Event Label
 DOOR_ID_C03_C03P09_EXIT02
 #Next Zone ID Name
@@ -752,7 +767,7 @@ EVENTDATA_POSTYPE_RAIL
 5 1
 #rail way
 DIR_LEFT
-#event number: 17
+#event number: 16
 #Door Event Label
 DOOR_ID_C03_C03P17_EXIT01
 #Next Zone ID Name
@@ -771,7 +786,7 @@ EVENTDATA_POSTYPE_RAIL
 1 1
 #rail way
 DIR_LEFT
-#event number: 18
+#event number: 17
 #Door Event Label
 DOOR_ID_C03_C03P10_EXIT02
 #Next Zone ID Name
@@ -781,7 +796,7 @@ DOOR_ID_C03P10_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -790,7 +805,7 @@ EVENTDATA_POSTYPE_RAIL
 5 1
 #rail way
 DIR_LEFT
-#event number: 19
+#event number: 18
 #Door Event Label
 DOOR_ID_C03_C03P16_EXIT02
 #Next Zone ID Name
@@ -800,7 +815,7 @@ DOOR_ID_C03P16_C03_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -809,7 +824,7 @@ EVENTDATA_POSTYPE_RAIL
 6 1
 #rail way
 DIR_LEFT
-#event number: 20
+#event number: 19
 #Door Event Label
 DOOR_ID_C03_C03P11_EXIT02
 #Next Zone ID Name
@@ -819,7 +834,7 @@ DOOR_ID_C03P11_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -828,7 +843,7 @@ EVENTDATA_POSTYPE_RAIL
 3 1
 #rail way
 DIR_LEFT
-#event number: 21
+#event number: 20
 #Door Event Label
 DOOR_ID_C03_C03P15_EXIT02
 #Next Zone ID Name
@@ -838,7 +853,7 @@ DOOR_ID_C03P15_C03_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -847,7 +862,7 @@ EVENTDATA_POSTYPE_RAIL
 5 1
 #rail way
 DIR_LEFT
-#event number: 22
+#event number: 21
 #Door Event Label
 DOOR_ID_C03_C03P12_EXIT02
 #Next Zone ID Name
@@ -857,7 +872,7 @@ DOOR_ID_C03P12_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
@@ -866,7 +881,7 @@ EVENTDATA_POSTYPE_RAIL
 4 1
 #rail way
 DIR_LEFT
-#event number: 23
+#event number: 22
 #Door Event Label
 DOOR_ID_C03_C03P14_EXIT02
 #Next Zone ID Name
@@ -876,7 +891,7 @@ DOOR_ID_C03P14_C03_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
