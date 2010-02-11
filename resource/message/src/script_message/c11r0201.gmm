@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-10T23:06:46"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T14:05:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1563" top="63" right="2261" bottom="683" maximized="no" rayout="Vertical2">
+	<dialog left="1287" top="186" right="1992" bottom="814" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="754" top="61" right="1227" bottom="459" visible="yes"/>
-		<band id="0" index="1" style="0000" width="523"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="536"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="690"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -305,10 +305,10 @@
 		<comment>ＮＰＣがいない場合</comment>
 		<attribute name="キャラ指定">スタッフ</attribute>
 		<language name="JPN" width="256">[2:02:３桁:2]F　[1:24:国名:0]
-のフロアです▼
+の　フロアです▼
 おきゃくさんは　もう　かえられましたよ</language>
 		<language name="JPN_KANJI" width="256">[2:02:３桁:2]F　[1:24:国名:0]
-のフロアです▼
+の　フロアです▼
 お客さんは　もう　帰られましたよ</language>
 	</row>
 
@@ -321,7 +321,7 @@
 [1:24:国名:0] の
 [1:25:地域名:1]▽
 からきた　[1:00:トレーナー名:7]　だよ！▼
-[1:02:ポケモンニックネーム:9]は　げんき？▽
+[1:02:ポケモンニックネーム:9]は　げんき？▼
 きみが　くれた　[1:02:ポケモンニックネーム:5]は
 とっても　げんきだよ▼
 よかったら　また
@@ -331,8 +331,8 @@
 [1:24:国名:0]
 [1:25:地域名:1]▽
 から来た　[1:00:トレーナー名:7]だよ！
-[1:02:ポケモンニックネーム:9]は　元気？▽
-君が　くれた　[1:02:ポケモンニックネーム:5]は▽
+[1:02:ポケモンニックネーム:9]は　元気？▼
+君が　くれた　[1:02:ポケモンニックネーム:5]は
 とっても　元気だよ▼
 良かったら　また　
 ポケモン　交換　しようよ</language>
@@ -1472,8 +1472,8 @@
 	<row id="msg_un_elevator_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>msg_un_elevator_00の選択肢２</comment>
 		<attribute name="キャラ指定">エレベーターアナウンス</attribute>
-		<language name="JPN" width="256">ほかの　フロアへ　いどうする</language>
-		<language name="JPN_KANJI" width="256">他の　フロアへ　移動する</language>
+		<language name="JPN" width="256">ほかのフロアへ　いどうする</language>
+		<language name="JPN_KANJI" width="256">他のフロアへ　移動する</language>
 	</row>
 
 	<row id="msg_un_elevator_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
