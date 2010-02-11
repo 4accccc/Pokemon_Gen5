@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T14:20:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T20:12:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1387" top="290" right="2092" bottom="910" maximized="no" rayout="Vertical2">
+	<dialog left="1287" top="186" right="1992" bottom="814" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,10 +301,10 @@
 
 	<row id="msg_reception01_01">
 		<attribute name="キャラ指定">受付嬢１</attribute>
-		<language name="JPN" width="256">こんにちわ！
+		<language name="JPN" width="256">こんにちは！
 こくれんへ　ようこそ！▼
 フロアに　いどうしますか？▼</language>
-		<language name="JPN_KANJI" width="256">こんにちわ！
+		<language name="JPN_KANJI" width="256">こんにちは！
 国連へ　ようこそ！▼
 フロアに　移動しますか？▼</language>
 	</row>
@@ -329,9 +329,9 @@
 
 	<row id="msg_reception03_01">
 		<attribute name="キャラ指定">受付男性３</attribute>
-		<language name="JPN" width="256">いまは　これくらいのひとが
+		<language name="JPN" width="256">いまは　これぐらいのひとが
 こくれんに　きているよ</language>
-		<language name="JPN_KANJI" width="256">今は　これくらいの人が
+		<language name="JPN_KANJI" width="256">今は　これぐらいの人が
 国連に　来ているよ</language>
 	</row>
 
