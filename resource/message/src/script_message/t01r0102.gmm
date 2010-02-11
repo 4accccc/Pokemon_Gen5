@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T14:54:33"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T14:55:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -783,8 +783,8 @@
 
 	<row id="msg_t01r0102_pc_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ＢＧメッセージ
-（仮：プラチナと同じ）
-0＝主人公名</comment>
+・仮：プラチナと同じ
+・0＝主人公名</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 パソコンを　チェックした！[BE:01:ページ切り替え（クリア）]
