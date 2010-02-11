@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2010-02-02T18:57:43" source="sea_test.mb"/>
+	<create user="unno" host="W00199" date="2010-02-11T15:37:54"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,15 +22,410 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="9 9"
 	compress_material="on" material_size="5 5"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="8" xyz="-2.000000 0.000000 -2.000000" whd="4.000000 1.335205 4.000000"/>
 
-<tex_image_array size="5">
-	<tex_image index="0" name="sea00"
+<tex_image_array size="9">
+	<tex_image index="0" name="in59_bg_a"
+		width="64" height="64" original_width="64" original_height="64"
+		format="a5i3"
+		palette_name="in59_bg_a_pl"
+		path="C:/home/wb_data3d/field/in59/chip/tex/in59_bg_a.tga"
+	>
+		<bitmap size="2048">
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 f9f9 f9f9 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 f902 f9f9 f9f9 02f9
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 f902 02f9 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 f9f9 f9f9 f9f9 f9f9
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 f902 f9f9 f9f9 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 f9f9 f9f9 f9f9 f9f9
+			02f9 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 f9f9 f9f9 f9f9 02f9
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 f902 f9f9 f9f9 f9f9 f9f9
+			02f9 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 f902 f9f9 f9f9 f9f9 02f9
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 f9f9 f9f9 f9f9 f9f9 f9f9
+			f9f9 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 f902 f9f9 f9f9 f9f9 f9f9 f9f9
+			02f9 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 f902 f9f9 f9f9 f9f9 f9f9 f9f9
+			f9f9 f9f9 0202 0202 0202 0202 0202 0202
+			0202 0202 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
+			f9f9 02f9 0202 0202 0202 0202 0202 0202
+			0202 f902 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 02f9 0202 0202 0202 0202
+			0202 f902 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
+			f9f9 f9f9 0202 0202 0202 0202 0202 0202
+			0202 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 0202 0202 0202 0202
+			0202 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
+			f9f9 f9f9 02f9 0202 0202 f902 02f9 0202
+			0202 f9f9 f9f9 f9f9 f8f8 f8f8 f9f8 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 02f9 0202 0202
+			f902 f9f9 f9f9 f9f9 f8f9 f8f8 f9f9 f9f9
+			f8f8 f9f8 02f9 0202 0202 f9f9 f9f9 0202
+			f9f9 f9f9 f9f9 f8f9 f8f8 f8f8 f8f8 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 f8f8 f8f9
+			f8f8 f8f8 f9f9 0202 0202 f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f8f8 f8f8 f8f8 f8f8 f9f8
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f8f8 f9f9
+			f9f9 f9f9 f9f9 f8f9 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f9f9 02f9 f902 f9f9 f9f9 f9f9
+			f9f9 f9f9 f8f9 f8f8 f8f8 f8f8 f8f8 f8f8
+			f9f9 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 f9f8
+			f9f9 f9f9 f9f9 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f9f8 f9f9 f9f9 f9f9 f9f9 f9f9
+			f9f9 f8f9 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f9f9 f9f9 f9f9 f8f8 f8f8 f8f8 f8f8
+			f9f9 f9f9 f8f9 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f9f8 f9f9 f9f9 f9f9 f9f9 f9f9
+			f9f9 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f9f8 f9f9 f8f9 f8f8 f8f8 f8f8 f8f8
+			f9f9 f9f9 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f9f9 f9f9 f9f9 f9f9 f9f9
+			f8f9 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f9f9 f8f9 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f9f9 f9f9 f8f8 f9f8 f9f9
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f9f9 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f9f8 f8f9 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="in59_bg_b"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="in59_bg_b_pl"
+		path="C:/home/wb_data3d/field/in59/chip/tex/in59_bg_b.bmp"
+	>
+		<bitmap size="32">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="in59_sand"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette4"
+		color0_mode="color"
+		palette_name="in59_sand_pl"
+		path="C:/home/wb_data3d/field/in59/chip/tex/in59_sand.bmp"
+	>
+		<bitmap size="512">
+			56aa a155 aaaa aaaa aaaa 0aaa aaa0 aaaa
+			5aaa 8555 aaaa aaaa aaaa 0aaa aaa0 aaaa
+			aaaa 5555 aaaa aaa5 aaaa 0aaa aa80 aaaa
+			aaaa 555a aaa9 a956 aaaa 0aaa aa00 aaaa
+			aaaa 556a aaa1 a956 aaaa 2aaa a800 aaaa
+			aaaa 56aa aaa5 a556 aaaa aaaa a000 aaaa
+			aaaa 56aa aa95 9556 956a aaaa 8002 aaaa
+			aaaa 5aaa aa95 555a 5555 aaa9 000a aaaa
+			aaaa 5aaa aa55 556a 5555 aa95 002a aaa8
+			aaaa 5aaa aa55 55aa 5555 a955 00aa aaa0
+			aaaa 6aaa aa55 56aa 5655 a555 02aa aa00
+			aaaa 6aaa aa55 aaaa aaaa 9555 0aaa 8000
+			aaaa 6aaa a955 aaaa aaaa 555a 2aaa 0000
+			aaaa 6aaa a955 aaaa aaaa 556a aaa9 0000
+			a800 6aaa a955 aaaa aaaa 556a 9555 000a
+			a000 6aaa a555 aaaa aaaa 54aa 5555 02aa
+			8000 aaaa a555 aaaa aaaa 52aa 5555 aaa9
+			0000 aaaa a555 aaaa aaaa 6aaa 5555 aaa1
+			002a aaa8 5556 aaa9 aaaa aaaa 556a aaa1
+			00aa aaa8 5556 02a5 0000 aaaa 56aa aaa5
+			02aa aaa0 555a 0005 0000 a800 56aa aa85
+			02aa aa80 556a 0001 0000 8000 5aaa aa95
+			0aaa aa80 0aaa 0000 0000 0000 6aaa aa55
+			2aaa aa00 2aaa 0000 0000 0000 6aa0 a955
+			2aaa a540 aaaa 555a 5555 0001 aa80 a955
+			aaaa 9550 aaaa aaaa 5aaa 5555 aa00 a556
+			aaaa 5552 aaa9 aaaa aaaa 5556 aa01 a556
+			aaaa 554a aaa5 aaaa aaaa 555a aa05 a55a
+			aaaa 552a aa55 aaaa aaaa 55aa a815 a55a
+			aaaa 56aa 5555 aa95 aaaa 5aaa a055 a55a
+			aaaa 4aaa 5555 1555 aaaa 6aaa 8055 a96a
+			aaaa aaaa 5555 5555 aaa9 aaaa 0055 aaaa
+			aaaa aaaa 555a 5555 a965 aaaa 0155 aaaa
+			aaaa aaaa 0aaa 5550 a555 aaaa 0155 aaa8
+			aaaa aaaa aaaa 56aa 9555 aaaa 0156 aa80
+			aaaa aaaa aaaa 46aa 9555 aaaa 025a aa00
+			aaaa aaaa aaaa 26aa 5555 aaaa 0aaa a800
+			aaaa aaaa aaaa a6aa 5554 aaa8 0aaa 8000
+			a800 aaaa aaaa aaaa 554a aaa9 0aaa 0000
+			5000 5555 aaaa aaaa 556a aaa5 2aaa 0000
+			5400 5555 a815 aaaa 55aa aa95 aaaa 0000
+			5400 5555 8555 aaaa 56aa aa55 aaaa 0002
+			5000 5555 5555 aaaa 5aaa aa55 aaaa 002a
+			0000 5554 5555 aaa1 6aaa a855 aaaa 0aaa
+			aaaa 5556 5555 aa85 aaaa aa96 aaaa aaaa
+			aaaa 555a 5555 aa95 aaaa aaaa aaaa aaaa
+			aaaa 6aaa 5555 aa15 aaaa aaaa aaaa aaaa
+			aaaa aaaa 555a a855 aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa a855 aaaa aaaa aaaa aaaa
+			aaaa aaaa 56aa a055 aaaa 6aaa a555 aaaa
+			aaaa aaaa 56aa a155 aaaa 5aaa 5555 aaa9
+			aaaa aaaa 5aaa a155 5aaa 5555 5555 aaa5
+			aaaa aaaa 5aaa a155 6aaa 5555 5555 aa95
+			aaaa aaaa 56aa a955 aaaa aaaa 556a aa15
+			aaaa aaaa 56aa a855 aaaa aaaa 55aa aa15
+			aaaa aaaa 555a aa55 aaaa aaaa 56aa a815
+			aaaa 6aaa 5555 aaa5 aaaa aaaa 56aa a805
+			aaaa 55aa 5555 aaaa aaaa aaaa 56aa a800
+			aaaa 5556 9555 aaaa aaaa aaaa 56aa a800
+			aaaa 5555 a555 aaaa aaaa aaaa 15aa aa00
+			5aaa 5555 aaa9 aaaa aaaa aaaa 016a aa80
+			56aa a555 aaaa aaaa aaaa aaaa 000a aaa8
+			56aa aa55 aaaa aaaa aaaa 2aaa 8000 aaaa
+			56aa aa95 aaaa aaaa aaaa 2aaa a000 aaaa
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="in59_slop01"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in59_slop01_pl"
+		path="C:/home/wb_data3d/field/in59/chip/tex/in59_slop01.tga"
+	>
+		<bitmap size="256">
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			3322 2222 2233 3322 2222 2233 3322 2222
+			3352 2222 2233 3322 2222 2233 3322 2222
+			5553 2332 3222 2223 5332 3255 2223 2332
+			5553 2332 3222 2223 5332 3255 2223 2332
+			3355 2222 2233 3322 2222 5533 3325 2222
+			3355 2222 2233 3322 2222 5533 3325 2222
+			2223 2332 3552 2223 2332 3552 2553 2332
+			2223 2332 3552 2223 2332 3552 2553 2332
+			3322 2222 5533 3325 2222 2233 3322 2222
+			3322 2222 5533 3325 2222 2233 3322 2222
+			2223 2332 3222 2223 5332 3225 2223 2332
+			2223 5332 3225 2223 5332 3225 2223 2332
+			3322 4444 2233 3322 2222 2233 3322 2222
+			3322 5544 4433 3344 5444 2233 3322 2222
+			4423 5334 2442 4442 5334 3222 2223 2332
+			5443 5335 2555 4552 4334 3222 2223 2332
+			3345 5225 5533 3355 4455 2233 3322 2222
+			3355 5555 5533 3355 5552 4433 3344 5544
+			2252 2332 2555 5552 5332 2445 4442 5334
+			5552 2335 2555 5552 5332 2555 5552 5335
+			2255 5555 5522 3355 5552 5522 2255 5555
+			2255 5555 5522 3355 5552 5522 2255 5555
+			6666 6666 6666 6666 6666 6666 6666 6666
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 8888 8888 8888 8888 8888 8888 8888
+			7777 7777 7777 7777 7777 7777 7777 7777
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="sea00"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette4"
 		color0_mode="color"
@@ -104,7 +499,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="sea01"
+	<tex_image index="5" name="sea01"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette4"
 		color0_mode="color"
@@ -178,7 +573,7 @@
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="sea02"
+	<tex_image index="6" name="sea02"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette4"
 		color0_mode="color"
@@ -252,7 +647,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="sea_build"
+	<tex_image index="7" name="sea_build"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -278,7 +673,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="sea_ground"
+	<tex_image index="8" name="sea_ground"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -306,20 +701,33 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="5">
-	<tex_palette index="0" name="sea00_pl" color_size="4">
+<tex_palette_array size="9">
+	<tex_palette index="0" name="in59_bg_a_pl" color_size="8">
+		28e0 2d00 3120 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="in59_bg_b_pl" color_size="4">
+		7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="in59_sand_pl" color_size="4">
+		5b5c 5f7d 639e 7fff
+	</tex_palette>
+	<tex_palette index="3" name="in59_slop01_pl" color_size="16">
+		2daf 3e33 4a96 4eb7 4254 4675 5af9 56b6
+		673a 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="4" name="sea00_pl" color_size="4">
 		6188 65a9 69ca 69ec
 	</tex_palette>
-	<tex_palette index="1" name="sea01_pl" color_size="4">
+	<tex_palette index="5" name="sea01_pl" color_size="4">
 		6d6b 718c 75ad 75ce
 	</tex_palette>
-	<tex_palette index="2" name="sea02_pl" color_size="4">
+	<tex_palette index="6" name="sea02_pl" color_size="4">
 		48c6 4ce7 5108 554a
 	</tex_palette>
-	<tex_palette index="3" name="sea_build_pl" color_size="4">
+	<tex_palette index="7" name="sea_build_pl" color_size="4">
 		198e 498e 7fff 7fff
 	</tex_palette>
-	<tex_palette index="4" name="sea_ground_pl" color_size="4">
+	<tex_palette index="8" name="sea_ground_pl" color_size="4">
 		28a9 4845 610c 7fff
 	</tex_palette>
 </tex_palette_array>
@@ -342,7 +750,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
+		tex_image_idx="8" tex_palette_idx="8"
 		tex_tiling="repeat repeat"
 		tex_scale="8.000000 8.000000"
 		tex_rotate="0.000000"
@@ -366,7 +774,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
+		tex_image_idx="7" tex_palette_idx="7"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -390,7 +798,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="4" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -414,7 +822,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
+		tex_image_idx="5" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -438,7 +846,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="6" tex_palette_idx="6"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3340,6 +3748,60 @@
 
 <output_info vertex_size="1152" polygon_size="512"
 	triangle_size="24" quad_size="488"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="9">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="180.000000 360.000000"/>
+		<ex_tex_image index="5" disp_pos="300.000000 360.000000"/>
+		<ex_tex_image index="6" disp_pos="420.000000 360.000000"/>
+		<ex_tex_image index="7" disp_pos="-420.000000 360.000000"/>
+		<ex_tex_image index="8" disp_pos="-300.000000 360.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="9">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="180.000000 420.000000"/>
+		<ex_tex_palette index="5" disp_pos="300.000000 420.000000"/>
+		<ex_tex_palette index="6" disp_pos="420.000000 420.000000"/>
+		<ex_tex_palette index="7" disp_pos="-420.000000 420.000000"/>
+		<ex_tex_palette index="8" disp_pos="-300.000000 420.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="5">
+		<ex_material index="0" disp_pos="-300.000000 300.000000"/>
+		<ex_material index="1" disp_pos="-420.000000 300.000000"/>
+		<ex_material index="2" disp_pos="180.000000 300.000000"/>
+		<ex_material index="3" disp_pos="300.000000 300.000000"/>
+		<ex_material index="4" disp_pos="420.000000 300.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="8">
+		<ex_polygon index="0" disp_pos="-420.000000 240.000000"/>
+		<ex_polygon index="1" disp_pos="-300.000000 240.000000"/>
+		<ex_polygon index="2" disp_pos="-180.000000 240.000000"/>
+		<ex_polygon index="3" disp_pos="-60.000000 240.000000"/>
+		<ex_polygon index="4" disp_pos="60.000000 240.000000"/>
+		<ex_polygon index="5" disp_pos="180.000000 240.000000"/>
+		<ex_polygon index="6" disp_pos="300.000000 240.000000"/>
+		<ex_polygon index="7" disp_pos="420.000000 240.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="9">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+		<ex_node index="1" disp_pos="-420.000000 180.000000"/>
+		<ex_node index="2" disp_pos="-300.000000 180.000000"/>
+		<ex_node index="3" disp_pos="-180.000000 180.000000"/>
+		<ex_node index="4" disp_pos="-60.000000 180.000000"/>
+		<ex_node index="5" disp_pos="60.000000 180.000000"/>
+		<ex_node index="6" disp_pos="180.000000 180.000000"/>
+		<ex_node index="7" disp_pos="300.000000 180.000000"/>
+		<ex_node index="8" disp_pos="420.000000 180.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
