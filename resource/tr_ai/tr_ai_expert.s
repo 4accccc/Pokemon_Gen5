@@ -210,6 +210,67 @@ ExpertAISeq:
 	IF_WAZA_SEQNO_JUMP	269,ExpertAI_269	// もろはのずつき	2006.6.14 
 	IF_WAZA_SEQNO_JUMP	270,ExpertAI_270	// みかづきのまい	2006.6.14 
 	IF_WAZA_SEQNO_JUMP	272,ExpertAI_272	// シャドーダイブ	2006.6.14 
+
+	//追加2010.2.9
+
+  IF_WAZA_SEQNO_JUMP	277,ExpertAI_277	// 	つめとぎ
+	IF_WAZA_SEQNO_JUMP	278,ExpertAI_278	// 	ワイドガード
+	IF_WAZA_SEQNO_JUMP	279,ExpertAI_279	// 	ガードシェア
+	IF_WAZA_SEQNO_JUMP	280,ExpertAI_280	// 	パワーシェア
+	IF_WAZA_SEQNO_JUMP	281,ExpertAI_281	// 	ワンダールーム
+	IF_WAZA_SEQNO_JUMP	282,ExpertAI_282	// 	サイコショック
+	IF_WAZA_SEQNO_JUMP	283,ExpertAI_283	// 	ベノムショック
+	IF_WAZA_SEQNO_JUMP	284,ExpertAI_284	//	ボディパージ 	
+	IF_WAZA_SEQNO_JUMP	285,ExpertAI_285	// 	テレキネシス
+	IF_WAZA_SEQNO_JUMP	286,ExpertAI_286	// 	マジックルーム
+	IF_WAZA_SEQNO_JUMP	287,ExpertAI_287	// 	うちおとす
+	IF_WAZA_SEQNO_JUMP	288,ExpertAI_288	// 	やまあらし
+	IF_WAZA_SEQNO_JUMP	289,ExpertAI_289	// 	はじけるほのお
+	IF_WAZA_SEQNO_JUMP	290,ExpertAI_290	// 	ちょうのまい
+	IF_WAZA_SEQNO_JUMP	291,ExpertAI_291	// 	ヘビーボンバー
+	IF_WAZA_SEQNO_JUMP	292,ExpertAI_292	// 	シンクロノイズ
+	IF_WAZA_SEQNO_JUMP	293,ExpertAI_293	// 	エレクトボール
+	IF_WAZA_SEQNO_JUMP	294,ExpertAI_294	// 	みずびたし
+	IF_WAZA_SEQNO_JUMP	295,ExpertAI_295	// 	ニトロチャージ
+	IF_WAZA_SEQNO_JUMP	296,ExpertAI_296	// 	アシッドボム
+	IF_WAZA_SEQNO_JUMP	297,ExpertAI_297	// 	イカサマ
+	IF_WAZA_SEQNO_JUMP	298,ExpertAI_298	// 	シンプルビーム
+	IF_WAZA_SEQNO_JUMP	299,ExpertAI_299	// 	なかまづくり
+	IF_WAZA_SEQNO_JUMP	300,ExpertAI_300	// 	おさきにどうぞ
+	IF_WAZA_SEQNO_JUMP	301,ExpertAI_301	// 	りんしょう
+	IF_WAZA_SEQNO_JUMP	302,ExpertAI_302	// 	エコーボイス
+	IF_WAZA_SEQNO_JUMP	303,ExpertAI_303	// 	なしくずし
+	IF_WAZA_SEQNO_JUMP	304,ExpertAI_304	// 	クリアスモッグ
+	IF_WAZA_SEQNO_JUMP	305,ExpertAI_305	// 	アシストパワー
+	IF_WAZA_SEQNO_JUMP	306,ExpertAI_306	// 	ファストガード
+	IF_WAZA_SEQNO_JUMP	307,ExpertAI_307	// 	サイドチェンジ
+	IF_WAZA_SEQNO_JUMP	308,ExpertAI_308	// 	からをやぶる
+	IF_WAZA_SEQNO_JUMP	309,ExpertAI_309	// 	いやしのはどう
+	IF_WAZA_SEQNO_JUMP	310,ExpertAI_310	// 	たたりめ
+	IF_WAZA_SEQNO_JUMP	311,ExpertAI_311	// 	フリーフォール
+	IF_WAZA_SEQNO_JUMP	312,ExpertAI_312	// 	ギアチェンジ
+	IF_WAZA_SEQNO_JUMP	313,ExpertAI_313	// 	ともえなげ
+	IF_WAZA_SEQNO_JUMP	314,ExpertAI_314	// 	やきつくす
+	IF_WAZA_SEQNO_JUMP	315,ExpertAI_315	// 	さきおくり
+	IF_WAZA_SEQNO_JUMP	316,ExpertAI_316	// 	せいちょう
+	IF_WAZA_SEQNO_JUMP	317,ExpertAI_317	// 	アクロバット
+	IF_WAZA_SEQNO_JUMP	318,ExpertAI_318	// 	ミラータイプ
+	IF_WAZA_SEQNO_JUMP	319,ExpertAI_319	// 	かたきうち
+	IF_WAZA_SEQNO_JUMP	320,ExpertAI_320	// 	いのちがけ
+	IF_WAZA_SEQNO_JUMP	321,ExpertAI_321	// 	ほたるび
+	IF_WAZA_SEQNO_JUMP	322,ExpertAI_322	// 	とぐろをまく
+	IF_WAZA_SEQNO_JUMP	323,ExpertAI_323	// 	ギフトパス
+	IF_WAZA_SEQNO_JUMP	324,ExpertAI_324	// 	みずのちかい
+	IF_WAZA_SEQNO_JUMP	325,ExpertAI_325	// 	ほのおのちかい
+	IF_WAZA_SEQNO_JUMP	326,ExpertAI_326	// 	くさのちかい
+	IF_WAZA_SEQNO_JUMP	327,ExpertAI_327	// 	ふるいたてる
+	IF_WAZA_SEQNO_JUMP	328,ExpertAI_328	// 	コットンガード
+	IF_WAZA_SEQNO_JUMP	329,ExpertAI_329	// 	いにしえのうた
+	IF_WAZA_SEQNO_JUMP	330,ExpertAI_330	// 	こごえるせかい
+	IF_WAZA_SEQNO_JUMP	331,ExpertAI_331	// 	フリーズボルト
+	IF_WAZA_SEQNO_JUMP	332,ExpertAI_332	// 	コールドフレア
+	IF_WAZA_SEQNO_JUMP	333,ExpertAI_333	// 	どなりつける
+
 ExpertAISeq_end:
 	AIEND
 
@@ -4053,6 +4114,71 @@ ExpertAI_270_4:
 	INCDEC		-1
 ExpertAI_270_5:
 	AIEND
+
+ExpertAI_277:			// 	つめとぎ
+ExpertAI_278:			// 	ワイドガード
+ExpertAI_279:			// 	ガードシェア
+ExpertAI_280:			// 	パワーシェア
+ExpertAI_281:			// 	ワンダールーム
+ExpertAI_282:			// 	サイコショック
+ExpertAI_283:			// 	ベノムショック
+ExpertAI_284:			//	ボディパージ 	
+ExpertAI_285:			// 	テレキネシス
+ExpertAI_286:			// 	マジックルーム
+ExpertAI_287:			// 	うちおとす
+ExpertAI_288:			// 	やまあらし
+ExpertAI_289:			// 	はじけるほのお
+ExpertAI_290:			// 	ちょうのまい
+ExpertAI_291:			// 	ヘビーボンバー
+ExpertAI_292:			// 	シンクロノイズ
+ExpertAI_293:			// 	エレクトボール
+ExpertAI_294:			// 	みずびたし
+ExpertAI_295:			// 	ニトロチャージ
+ExpertAI_296:			// 	アシッドボム
+ExpertAI_297:			// 	イカサマ
+ExpertAI_298:			// 	シンプルビーム
+ExpertAI_299:			// 	なかまづくり
+ExpertAI_300:			// 	おさきにどうぞ
+ExpertAI_301:			// 	りんしょう
+ExpertAI_302:			// 	エコーボイス
+ExpertAI_303:			// 	なしくずし
+ExpertAI_304:			// 	クリアスモッグ
+ExpertAI_305:			// 	アシストパワー
+ExpertAI_306:			// 	ファストガード
+ExpertAI_307:			// 	サイドチェンジ
+ExpertAI_308:			// 	からをやぶる
+ExpertAI_309:			// 	いやしのはどう
+ExpertAI_310:			// 	たたりめ
+ExpertAI_311:			// 	フリーフォール
+ExpertAI_312:			// 	ギアチェンジ
+ExpertAI_313:			// 	ともえなげ
+ExpertAI_314:			// 	やきつくす
+ExpertAI_315:			// 	さきおくり
+ExpertAI_316:			// 	せいちょう
+ExpertAI_317:			// 	アクロバット
+ExpertAI_318:			// 	ミラータイプ
+ExpertAI_319:			// 	かたきうち
+ExpertAI_320:			// 	いのちがけ
+ExpertAI_321:			// 	ほたるび
+ExpertAI_322:			// 	とぐろをまく
+ExpertAI_323:			// 	ギフトパス
+ExpertAI_324:			// 	みずのちかい
+ExpertAI_325:			// 	ほのおのちかい
+ExpertAI_326:			// 	くさのちかい
+ExpertAI_327:			// 	ふるいたてる
+ExpertAI_328:			// 	コットンガード
+	AIEND
+ExpertAI_329:	// 	いにしえのうた
+	AIEND
+ExpertAI_330:	// 	こごえるせかい
+	AIEND
+ExpertAI_331:	// 	フリーズボルト
+	AIEND
+ExpertAI_332:	// 	コールドフレア
+	AIEND
+ExpertAI_333:	// 	どなりつける
+	AIEND
+
 
 AI_DEC1:
 	INCDEC		-1	
