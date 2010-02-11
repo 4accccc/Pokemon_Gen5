@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-17T12:39:19"/>
+	<create user="matsushima" host="W00181" date="2010-02-11T19:52:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="246"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="232" top="218" right="937" bottom="838" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="843" top="294" right="1252" bottom="692" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,285 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>未使用ファイル</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_r08r0101_narrator_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●コンテ２
+POSを踏んだとき
+「！」マーク表示後に、メッセージ
+
+０：ダルタニスのニックネーム
+
+・「はい／いいえ」選択肢
+　いいえ→msg_r08r0101_narrator_02</comment>
+		<attribute name="キャラ指定">ナレーター</attribute>
+		<language name="JPN" width="256">モンスターボールに　はいっている
+[1:02:ポケモンニックネーム:0]が[BE:00:ページ切り替え（行送り）]
+でたがっている　ようだ…！[BE:01:ページ切り替え（クリア）]
+そとに　だして　あげますか？</language>
+		<language name="JPN_KANJI" width="256">モンスターボールに　はいっている
+[1:02:ポケモンニックネーム:0]が[BE:00:ページ切り替え（行送り）]
+でたがっている　ようだ…！[BE:01:ページ切り替え（クリア）]
+そとに　だして　あげますか？</language>
+	</row>
+
+	<row id="msg_r08r0101_narrator_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●コンテ２
+イベント進行をキャンセルした場合のメッセージ</comment>
+		<attribute name="キャラ指定">ナレーター</attribute>
+		<language name="JPN" width="256">モンスターボールの　うごきが
+とまったようだ…</language>
+		<language name="JPN_KANJI" width="256">モンスターボールの　うごきが
+とまったようだ…</language>
+	</row>
+
+	<row id="msg_r08r0101_narrator_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●コンテ５
+
+０：ダルタニスのニックネーム</comment>
+		<attribute name="キャラ指定">ナレーター</attribute>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]が
+とびだしてきた！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が
+とびだしてきた！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_guide_01">
+		<comment>●コンテ６
+老人の昔語り　１
+
+1：ダルタニス</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">おぬしは　いつぞやの…[BE:01:ページ切り替え（クリア）]
+そのポケモンは…
+ダルタニスではないか…！？[BE:01:ページ切り替え（クリア）]
+おぬしが　さがしていた
+でんせつの　ポケモンたちと[BE:00:ページ切り替え（行送り）]
+たいそう　ふかい　かんけいのある[BE:00:ページ切り替え（行送り）]
+ポケモンなんじゃよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おぬしは　いつぞやの…[BE:01:ページ切り替え（クリア）]
+そのポケモンは…
+ダルタニスではないか…！？[BE:01:ページ切り替え（クリア）]
+おぬしが　さがしていた
+でんせつの　ポケモンたちと[BE:00:ページ切り替え（行送り）]
+たいそう　ふかい　かんけいのある[BE:00:ページ切り替え（行送り）]
+ポケモンなんじゃよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_guide_02">
+		<comment>●コンテ６
+老人の昔語り　２
+
+・数歩歩いて、喋る。</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">ひとの　いくさが　げんいんで
+ポケモンたちの　もりが[BE:00:ページ切り替え（行送り）]
+やけてしまったとき[BE:00:ページ切り替え（行送り）]
+１ひきの　おさない　ポケモンが[BE:00:ページ切り替え（行送り）]
+おやと　はなればなれになってしまった…[BE:01:ページ切り替え（クリア）]
+アトス　ポルトス　アラミスの　３ひきは
+その　おさない　ポケモンの[BE:00:ページ切り替え（行送り）]
+おやがわりと　なったのじゃ[BE:01:ページ切り替え（クリア）]
+３ひきは　じぶんたちの　もっている
+いきるための　ちしきや　わざを[BE:00:ページ切り替え（行送り）]
+その　ポケモンに　つたえたという…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ひとの　いくさが　げんいんで
+ポケモンたちの　もりが[BE:00:ページ切り替え（行送り）]
+やけてしまったとき[BE:00:ページ切り替え（行送り）]
+１ひきの　おさない　ポケモンが[BE:00:ページ切り替え（行送り）]
+おやと　はなればなれになってしまった…[BE:01:ページ切り替え（クリア）]
+アトス　ポルトス　アラミスの　３ひきは
+その　おさない　ポケモンの[BE:00:ページ切り替え（行送り）]
+おやがわりと　なったのじゃ[BE:01:ページ切り替え（クリア）]
+３ひきは　じぶんたちの　もっている
+いきるための　ちしきや　わざを[BE:00:ページ切り替え（行送り）]
+その　ポケモンに　つたえたという…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_guide_03">
+		<comment>●コンテ６
+老人の昔語り　３
+
+・老人、周囲を見回したあとにこのセリフ。</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">でんせつの　３ひきと
+おさない　ポケモンが　くらした　すみかは[BE:00:ページ切り替え（行送り）]
+まさに　このばしょ　だったのじゃよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">でんせつの　３ひきと
+おさない　ポケモンが　くらした　すみかは[BE:00:ページ切り替え（行送り）]
+まさに　このばしょ　だったのじゃよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_guide_04">
+		<comment>●コンテ６
+老人の昔語り　４
+
+・元の位置に戻ってから喋る。
+
+●老人のセリフの後、手持ちチェック</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">やがて　おさなかった　ポケモンは
+すくすくと　せいちょうし[BE:00:ページ切り替え（行送り）]
+３ひきをも　しのぐほどの　ちからを[BE:00:ページ切り替え（行送り）]
+みにつけたと　いわれるほどになった[BE:01:ページ切り替え（クリア）]
+ところが…　あるとき　その　ポケモンは
+３ひきの　もとから　はなれてしまった…[BE:01:ページ切り替え（クリア）]
+りゆうは　だれにも　わからなかった[BE:01:ページ切り替え（クリア）]
+わしが　おもうに…[BE:01:ページ切り替え（クリア）]
+わかものは　いつでも　むてっぽうで
+ぼうけんに　あこがれるものじゃ…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">やがて　おさなかった　ポケモンは
+すくすくと　せいちょうし[BE:00:ページ切り替え（行送り）]
+３ひきをも　しのぐほどの　ちからを[BE:00:ページ切り替え（行送り）]
+みにつけたと　いわれるほどになった[BE:01:ページ切り替え（クリア）]
+ところが…　あるとき　その　ポケモンは
+３ひきの　もとから　はなれてしまった…[BE:01:ページ切り替え（クリア）]
+りゆうは　だれにも　わからなかった[BE:01:ページ切り替え（クリア）]
+わしが　おもうに…[BE:01:ページ切り替え（クリア）]
+わかものは　いつでも　むてっぽうで
+ぼうけんに　あこがれるものじゃ…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_guide_05">
+		<comment>●コンテ９
+・イベント進行を確認</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">しばらくぶりの　さいかいを
+よろこんでいるように　みえるが…[BE:01:ページ切り替え（クリア）]
+３ひきが　ダルタニスに
+なにかを　つたえようと[BE:00:ページ切り替え（行送り）]
+しておるのかのう…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">しばらくぶりの　さいかいを
+よろこんでいるように　みえるが…[BE:01:ページ切り替え（クリア）]
+３ひきが　ダルタニスに
+なにかを　つたえようと[BE:00:ページ切り替え（行送り）]
+しておるのかのう…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_narrator_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●コンテ１０
+・新技を習得させるか確認
+
+０：ダルタニスのニックネーム
+
+・「はい／いいえ」選択肢
+　はい→技の空きチェック
+　いいえ→msg_r08r0101_guide_07</comment>
+		<attribute name="キャラ指定">ナレーター</attribute>
+		<language name="JPN" width="256">アトス　ポルトス　アラミスは
+[1:02:ポケモンニックネーム:0]に[BE:00:ページ切り替え（行送り）]
+あたらしい　わざ　きせきのつるぎを[BE:00:ページ切り替え（行送り）]
+おしえようとしている！[BE:01:ページ切り替え（クリア）]
+[1:02:ポケモンニックネーム:0]に　きせきのつるぎを
+おぼえさせますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アトス　ポルトス　アラミスは
+[1:02:ポケモンニックネーム:0]に[BE:00:ページ切り替え（行送り）]
+あたらしい　わざ　きせきのつるぎを[BE:00:ページ切り替え（行送り）]
+おしえようとしている！[BE:01:ページ切り替え（クリア）]
+[1:02:ポケモンニックネーム:0]に　きせきのつるぎを
+おぼえさせますか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_narrator_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>・技に空きが無い場合
+
+・「わすれさせる／あきらめる」選択肢
+　わすれさせる→技リスト画面へ
+　あきらめる→msg_r08r0101_guide_07</comment>
+		<attribute name="キャラ指定">ナレーター</attribute>
+		<language name="JPN" width="256">わざに　あきが　ありません！
+わざを　わすれさせますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わざに　あきが　ありません！
+わざを　わすれさせますか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_narrator_06_1" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">わすれさせる</language>
+		<language name="JPN_KANJI" width="256">わすれさせる</language>
+	</row>
+
+	<row id="msg_r08r0101_narrator_06_2" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">あきらめる</language>
+		<language name="JPN_KANJI" width="256">あきらめる</language>
+	</row>
+
+	<row id="msg_r08r0101_guide_06">
+		<comment>・老人は喋ったあと、来た道を引き返していきます。
+
+・ダルタニスもボールに戻り、イベント終了。</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">おぬしの　おかげで
+ながねん　やりのこしていた　ことを[BE:00:ページ切り替え（行送り）]
+ようやく　やりおえた　ようじゃな[BE:01:ページ切り替え（クリア）]
+でんせつの　３ひきたちも
+ダルタニスも[BE:00:ページ切り替え（行送り）]
+おぬしの　ような　なかまとの　きずなを[BE:00:ページ切り替え（行送り）]
+だいじにする　トレーナーと[BE:00:ページ切り替え（行送り）]
+であえたことを　よろこんでおるじゃろう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おぬしの　おかげで
+ながねん　やりのこしていた　ことを[BE:00:ページ切り替え（行送り）]
+ようやく　やりおえた　ようじゃな[BE:01:ページ切り替え（クリア）]
+でんせつの　３ひきたちも
+ダルタニスも[BE:00:ページ切り替え（行送り）]
+おぬしの　ような　なかまとの　きずなを[BE:00:ページ切り替え（行送り）]
+だいじにする　トレーナーと[BE:00:ページ切り替え（行送り）]
+であえたことを　よろこんでおるじゃろう[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_guide_07">
+		<comment>●コンテ１５
+・伝説３匹が手持ちに揃っていない場合のセリフ
+
+・喋り終えるとダルタニスが手持ちに戻り、
+老人も立ち去る。
+
+→イベント終了</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">じぶんの　おやがわりだった
+３ひきを　さがしているようじゃ[BE:01:ページ切り替え（クリア）]
+アトス　ポルトス　アラミス
+かれらを　つれて　ここに　くると[BE:00:ページ切り替え（行送り）]
+なにかが　おこるかも　しれんのう…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じぶんの　おやがわりだった
+３ひきを　さがしているようじゃ[BE:01:ページ切り替え（クリア）]
+アトス　ポルトス　アラミス
+かれらを　つれて　ここに　くると[BE:00:ページ切り替え（行送り）]
+なにかが　おこるかも　しれんのう…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_guide_08">
+		<comment>●コンテ１６
+・新技習得をさせない場合のセリフ
+
+・喋り終えたあと、ポケモンたちは手持ちに戻り、
+老人も立ち去る。
+
+→イベント終了</comment>
+		<attribute name="キャラ指定">事情通老人</attribute>
+		<language name="JPN" width="256">ダルタニスを　どのように
+そだてるかは　おぬし　しだいじゃ[BE:01:ページ切り替え（クリア）]
+いっときの　かんじょうに　ながされず
+じっくり　かんがえる　ことも[BE:00:ページ切り替え（行送り）]
+ときには　ひつようじゃな…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ダルタニスを　どのように
+そだてるかは　おぬし　しだいじゃ[BE:01:ページ切り替え（クリア）]
+いっときの　かんじょうに　ながされず
+じっくり　かんがえる　ことも[BE:00:ページ切り替え（行送り）]
+ときには　ひつようじゃな…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r08r0101_narrator_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●コンテ２３
+※２回目以降のながれ
+伝説３匹が手持ちにいない場合のメッセージ。
+ボールに戻るアクション後に表示。
+
+０：ダルタニスのニックネーム</comment>
+		<attribute name="キャラ指定">ナレーター</attribute>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　さみしそうに
+モンスターボールに　もどった…</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　さみしそうに
+モンスターボールに　もどった…</language>
 	</row>
 
 	<flowchart-group-list>
