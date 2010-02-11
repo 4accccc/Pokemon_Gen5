@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="fuchino" host="W00152" date="2010-02-11T17:50:39" source="waterfall_itp.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="fuchino" host="W00152" date="2010-02-11T17:50:39" source="waterfall_itp.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="3"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="4" xyz="-2.875000 0.000000 0.000000" whd="5.750000 2.500000 1.000000"/>
+
+<tex_image_array size="4">
+	<tex_image index="0" name="taki_shibu.1"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="taki_shibu.1_pl"
+		path="C:/home/wb_data3d/field/out00/chip/tex/taki_shibu.1.tga"
+	>
+		<bitmap size="32">
+			0000 0000 0030 0008 0200 080c 0b88 2e0b
+			afee beff ebff febf bfef ffae febe bfea
+			bebd 6faf aff9 5a6f 5be6 955a a6fb 56f5
+			6aff bea5 5aaf be55 a82a aaaf 8002 a82a
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="taki_shibu.2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="taki_shibu.2_pl"
+		path="C:/home/wb_data3d/field/out00/chip/tex/taki_shibu.2.tga"
+	>
+		<bitmap size="32">
+			0280 0000 0be0 0808 2eae 2e00 aebf be80
+			affe bfaf bffe 6faf aafa 9a9a 95fa 9555
+			55e6 69f9 5697 69fa 5bdb 55aa 96ef 6a6f
+			a6ff beaf a5aa beaa a968 2aa0 0280 0200
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="taki_shibu.3"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="taki_shibu.3_pl"
+		path="C:/home/wb_data3d/field/out00/chip/tex/taki_shibu.3.tga"
+	>
+		<bitmap size="32">
+			0200 000a 8b88 082e afee 2e2b abff beff
+			efef feff fefe ffbb eefd bfff aff9 6fbf
+			abe6 56af aa96 5669 6bda 55f5 5ffa a7f9
+			56fe abd6 5aae afa5 a82a beaf 8002 a82a
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="taki_shibu.4"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="taki_shibu.4_pl"
+		path="C:/home/wb_data3d/field/out00/chip/tex/taki_shibu.4.tga"
+	>
+		<bitmap size="32">
+			0000 8008 8280 0000 0b88 0828 0a8e 282e
+			afbf 2e2b affe bebf 9afa bfaf 95fa 6faf
+			55e6 9aaa 9697 956a 9bdb 69fa a6ff 69fa
+			a5aa beaf a96a aaaf 8a82 aa2a 0280 2a0a
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="4">
+	<tex_palette index="0" name="taki_shibu.1_pl" color_size="4">
+		7c1f 6f96 73b8 77db
+	</tex_palette>
+	<tex_palette index="1" name="taki_shibu.2_pl" color_size="4">
+		7c1f 6f96 73b8 77db
+	</tex_palette>
+	<tex_palette index="2" name="taki_shibu.3_pl" color_size="4">
+		7c1f 6f96 73b8 77db
+	</tex_palette>
+	<tex_palette index="3" name="taki_shibu.4_pl" color_size="4">
+		7c1f 6f96 73b8 77db
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="taki_shibu_1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="8" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-5.750000 0.000000 0.000000"
+		volume_max="5.750000 5.000000 2.000000"
+		volume_r="7.619873"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="8">
+					<mtx idx="0"/>
+					<tex st="16.000000 0.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="5.750000 5.000000 0.000000"/>
+					<tex st="-64.000000 0.000000"/>
+					<pos_xy xy="-5.750000 5.000000"/>
+					<tex st="-64.000000 16.000000"/>
+					<pos_yz yz="4.000000 2.000000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="5.750000 4.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_yz yz="1.000000 0.000000"/>
+					<tex st="-64.000000 0.000000"/>
+					<pos_xy xy="-5.750000 1.000000"/>
+					<tex st="-64.000000 16.000000"/>
+					<pos_yz yz="0.000000 2.000000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="5.750000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="polySurface1" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="8" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-5.750000 0.000000 0.000000"
+		volume_max="5.750000 5.000000 2.000000"
+		volume_r="7.619873"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="8" polygon_size="2"
+	triangle_size="0" quad_size="2"/>
+
+</body>
+
+</imd>
