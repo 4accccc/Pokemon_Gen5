@@ -626,6 +626,9 @@ SRCS_OVERLAY_FIELD_WEATHER_RAIN = field/weather_rain.c
 SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
                   field/weather_mirage.c
 
+#===> SRCS_OVERLAY_FIELDMAP
+SRCS_OVERLAY_FIELD_WEATHER_MIST = field/weather_mist.c
+
 # フィールドマップ上でのみ使用する侵入関連のソース
 #===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
 #===> SRCS_OVERLAY_FIELD_WEATHER_SNOW

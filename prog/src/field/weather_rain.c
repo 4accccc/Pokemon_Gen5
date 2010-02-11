@@ -55,11 +55,11 @@
 #define	WEATHER_RAIN_NOFADE_OBJ_START_DUST_MOVE	( 1 )			// ずらして動作させる値
 
 /*== フォグ ==*/
-#define	WEATHER_RAIN_FOG_TIMING		(150)							// に１回フォグテーブルを操作
+#define	WEATHER_RAIN_FOG_TIMING		(90)							// に１回フォグテーブルを操作
 #define	WEATHER_RAIN_FOG_TIMING_END	(50)							// に１回フォグテーブルを操作
 #define WEATHER_RAIN_FOG_START		(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_RAIN_FOG_START_END	(1)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_RAIN_FOG_OFS		(0x300)
+#define WEATHER_RAIN_FOG_OFS		(0)
 
 /*== 雨オブジェクト ==*/
 #define WEATHER_RAIN_SPEED_X		(8)						// 横に進むスピード
@@ -94,11 +94,11 @@
 #define	WEATHER_STRAIN_NOFADE_OBJ_START_DUST_MOVE	( 1 )		// ずらす動作数の値
 
 /*== フォグ ==*/
-#define	WEATHER_STRAIN_FOG_TIMING		(150)						// に１回フォグテーブルを操作
+#define	WEATHER_STRAIN_FOG_TIMING		(90)						// に１回フォグテーブルを操作
 #define	WEATHER_STRAIN_FOG_TIMING_END	(50)						// に１回フォグテーブルを操作
 #define WEATHER_STRAIN_FOG_START		(1)					// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STRAIN_FOG_START_END	(1)					// このカウント動いてからフォグテーブルを操作
-#define WEATHER_STRAIN_FOG_OFS			(0x200)
+#define WEATHER_STRAIN_FOG_OFS			(0x0)
 
 
 /*== 雨オブジェクト ==*/
@@ -252,7 +252,7 @@ static const u8 sc_WEATHER_SPARK_FLASHOUT_SYNC[32] = {
 #define	WEATHER_RAIKAMI_FOG_TIMING		(80)						// に１回フォグテーブルを操作
 #define	WEATHER_RAIKAMI_FOG_TIMING_END	(50)						// に１回フォグテーブルを操作
 #define WEATHER_RAIKAMI_FOG_START_END	(1)					// このカウント動いてからフォグテーブルを操作
-#define WEATHER_RAIKAMI_FOG_OFS			(0x300)
+#define WEATHER_RAIKAMI_FOG_OFS			(0x0)
 
 /*== 雨オブジェクト ==*/
 #define WEATHER_RAIKAMI_SPPED_RND (16)
@@ -329,8 +329,8 @@ enum
 /*== フォグ ==*/
 #define	WEATHER_KAZAKAMI_FOG_TIMING		(10)						// に１回フォグテーブルを操作
 #define	WEATHER_KAZAKAMI_FOG_TIMING_END	(50)						// に１回フォグテーブルを操作
-#define WEATHER_KAZAKAMI_FOG_OFS			(0x180)
-#define WEATHER_KAZAKAMI_FOG_OFS_NORMAL			(0x300)
+#define WEATHER_KAZAKAMI_FOG_OFS			(-16)
+#define WEATHER_KAZAKAMI_FOG_OFS_NORMAL			(0x0)
 
 enum
 {

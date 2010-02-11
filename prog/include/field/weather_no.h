@@ -47,10 +47,12 @@ typedef u16 WEATHER_NO;
 #define		WEATHER_NO_ARARE			(6)				// 吹雪
 #define		WEATHER_NO_RAIKAMI			(7)				// ライカミ
 #define		WEATHER_NO_KAZAKAMI			(8)				// カザカミ
+#define		WEATHER_NO_DIAMONDDUST	(9)				// ダイヤモンドダスト
+#define		WEATHER_NO_MIST	        (10)		// 霧
 
-#define		WEATHER_NO_MIRAGE			(9)				// 蜃気楼
+#define		WEATHER_NO_MIRAGE			(11)				// 蜃気楼
 
-#define		WEATHER_NO_NUM				(10)			// 天気数
+#define		WEATHER_NO_NUM				(12)			// 天気数
 
 	// 戦闘フィールド状態していよう
 	// バトルファクトリーのルーレット施設で

@@ -126,9 +126,11 @@ u16 FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( int weather_id )
     NARC_field_weather_light_light_storm_dat,
     NARC_field_weather_light_light_rain_dat,
     NARC_field_weather_light_light_show_dat,
-    NARC_field_weather_light_light_rain_dat,
+    NARC_field_weather_light_light_show_dat,
     NARC_field_weather_light_light_raikami_dat,
     NARC_field_weather_light_light_kazakami_dat,
+    NARC_field_weather_light_light_show_dat,
+    NARC_field_weather_light_light_mist_dat,
     FIELD_LIGHT_STATUS_WEATHER_LIGHT_DAT_NONE,
   };
   GF_ASSERT( weather_id < WEATHER_NO_NUM );

@@ -11,12 +11,13 @@
 #define NARC_FIELD_SEA_TEMPLE_NAIX_
 
 enum {
-	NARC_field_sea_temple_sea_obon_a_nsbmd = 0,
-	NARC_field_sea_temple_sea_obon_a_nsbta = 1,
-	NARC_field_sea_temple_sea_obon_b_nsbmd = 2,
-	NARC_field_sea_temple_sea_obon_b_nsbta = 3,
-	NARC_field_sea_temple_sea_obon_c_nsbmd = 4,
-	NARC_field_sea_temple_sea_obon_c_nsbta = 5
+	NARC_field_sea_temple_sea_obon_a_nsbma = 0,
+	NARC_field_sea_temple_sea_obon_a_nsbmd = 1,
+	NARC_field_sea_temple_sea_obon_a_nsbta = 2,
+	NARC_field_sea_temple_sea_obon_b_nsbmd = 3,
+	NARC_field_sea_temple_sea_obon_b_nsbta = 4,
+	NARC_field_sea_temple_sea_obon_c_nsbmd = 5,
+	NARC_field_sea_temple_sea_obon_c_nsbta = 6
 };
 
 /* NARC_FIELD_SEA_TEMPLE_NAIX_ */

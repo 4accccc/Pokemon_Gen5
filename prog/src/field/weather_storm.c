@@ -58,12 +58,12 @@
 #define	WEATHER_STORM_NOFADE_OBJ_START_DUST_MOVE	( 2 )			// １ずつずらして動作させる
 
 /*== フォグ ==*/
-#define	WEATHER_STORM_FOG_TIMING		(200)							// に１回フォグテーブルを操作
-#define	WEATHER_STORM_FOG_TIMING_END	(200)							// に１回フォグテーブルを操作
+#define	WEATHER_STORM_FOG_TIMING		(90)							// に１回フォグテーブルを操作
+#define	WEATHER_STORM_FOG_TIMING_END	(90)							// に１回フォグテーブルを操作
 #define WEATHER_STORM_FOG_START			(1)							// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STORM_FOG_START_END		(31)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_STORM_FOG_OFS	( 0x100 )
-#define WEATHER_STORM_FOG_SLOPE	( 4 )
+#define WEATHER_STORM_FOG_OFS	( -8 )
+#define WEATHER_STORM_FOG_SLOPE	( 9 )
 
 
 /*== BG ==*/

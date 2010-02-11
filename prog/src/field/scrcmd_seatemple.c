@@ -53,6 +53,7 @@ enum {
   MODEL_RES_OBON_ITA_A,
   MODEL_RES_OBON_ITA_B,
   MODEL_RES_OBON_ITA_C,
+  MODEL_RES_OBON_IMA_A,
   MODEL_RES_MAX,
 
   // モデル数
@@ -65,6 +66,7 @@ enum {
   MODEL_ANIME_OBON_A = 0,
   MODEL_ANIME_OBON_B,
   MODEL_ANIME_OBON_C,
+  MODEL_ANIME_OBON_A_IMA,
   MODEL_ANIME_MAX,
 } ;
 
@@ -76,6 +78,7 @@ static const u32 sc_MODEL_RES_TBL[MODEL_RES_MAX] =
   NARC_field_sea_temple_sea_obon_a_nsbta,
   NARC_field_sea_temple_sea_obon_b_nsbta,
   NARC_field_sea_temple_sea_obon_c_nsbta,
+  NARC_field_sea_temple_sea_obon_a_nsbma,
 };
 
 static const u32 sc_MODEL_MODEL_RES[MODEL_MODEL_MAX] = 
@@ -91,6 +94,7 @@ static const u32 sc_MODEL_ANM_RES[MODEL_ANIME_MAX] =
   MODEL_RES_OBON_ITA_A,
   MODEL_RES_OBON_ITA_B,
   MODEL_RES_OBON_ITA_C,
+  MODEL_RES_OBON_IMA_A,
 };
 
 static const u32 sc_MODEL_ANM_RND[MODEL_ANIME_MAX] = 
@@ -98,6 +102,7 @@ static const u32 sc_MODEL_ANM_RND[MODEL_ANIME_MAX] =
   MODEL_MODEL_OBON_A,
   MODEL_MODEL_OBON_B,
   MODEL_MODEL_OBON_C,
+  MODEL_MODEL_OBON_A,
 };
 
 
@@ -241,6 +246,7 @@ static void SEATEMPLE_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
 
   // ライトモデルのほうだけ、アニメーションON
   GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj[ MODEL_MODEL_OBON_A ], MODEL_ANIME_OBON_A );
+  GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj[ MODEL_MODEL_OBON_A ], MODEL_ANIME_OBON_A_IMA );
   GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj[ MODEL_MODEL_OBON_B ], MODEL_ANIME_OBON_B );
   GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj[ MODEL_MODEL_OBON_C ], MODEL_ANIME_OBON_C );
 
@@ -312,6 +318,7 @@ static void SEATEMPLE_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
 
   // 
   GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_A ], MODEL_ANIME_OBON_A, FX32_ONE );
+  GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_A ], MODEL_ANIME_OBON_A_IMA, FX32_ONE );
   GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_B ], MODEL_ANIME_OBON_B, FX32_ONE );
   GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_C ], MODEL_ANIME_OBON_C, FX32_ONE );
 

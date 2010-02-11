@@ -26,6 +26,7 @@
 #include "weather_rain.h"
 #include "weather_storm.h"
 #include "weather_mirage.h"
+#include "weather_mist.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -226,6 +227,18 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 	{
 		&c_WEATHER_TASK_DATA_KAZAKAMI,
 		FS_OVERLAY_ID(field_weather_rain)
+	},
+
+	// ダイヤモンドダスト
+	{
+		&c_WEATHER_TASK_DATA_DIAMONDDUST,
+		FS_OVERLAY_ID(field_weather_snow)
+	},
+
+	// 霧
+	{
+		&c_WEATHER_TASK_DATA_MIST,
+		FS_OVERLAY_ID(field_weather_mist)
 	},
 
 	// 蜃気楼

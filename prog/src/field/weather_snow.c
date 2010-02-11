@@ -55,11 +55,11 @@
 #define	WEATHER_SNOW_NOFADE_OBJ_START_DUST_MOVE	( 24 )			// ずらして動作させる値
 
 /*== フォグ ==*/
-#define	WEATHER_SNOW_FOG_TIMING		(200)							// に１回フォグテーブルを操作
-#define	WEATHER_SNOW_FOG_TIMING_END	(150)							// に１回フォグテーブルを操作
+#define	WEATHER_SNOW_FOG_TIMING		(90)							// に１回フォグテーブルを操作
+#define	WEATHER_SNOW_FOG_TIMING_END	(90)							// に１回フォグテーブルを操作
 #define WEATHER_SNOW_FOG_START		(8)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_SNOW_FOG_START_END	(16)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_SNOW_FOG_OFS		(0x300)
+#define WEATHER_SNOW_FOG_OFS		(0)
 
 /*== 雪オブジェクト ==*/
 #define	WEATHER_SNOW_ADD_TMG_X_BASE	(2)					// 雪のスピードを足すタイミング
@@ -128,10 +128,11 @@
 #define	WEATHER_SNOW_S_TIMING_MIN		(2)							// 雪を出すタイミング最小
 #define WEATHER_SNOW_S_TIMING_MAX		(3)						// 雪を出すタイミング最大
 #define WEATHER_SNOW_S_TIMING_ADD		(2)							// タイミングを減らす数
+#define WEATHER_SNOW_S_TIMING_ADD_END	(1)							// タイミングを減らす数
 #define WEATHER_SNOW_S_ADD_START		(1)							// 最初の同時に雪を登録する数
 #define WEATHER_SNOW_S_ADD_TIMING		(2)							// 雪のタイミングをこれ回変更したら１回増やす
 #define WEATHER_SNOW_S_ADD				(1)							// 登録する数を増やす数
-#define WEATHER_SNOW_S_ADD_END			(-2)						// 登録する数を増やす数
+#define WEATHER_SNOW_S_ADD_END			(-1)						// 登録する数を増やす数
 #define	WEATHER_SNOW_S_ADD_MAIN			(1)						// メインシーケンスでの登録する数
 
 /*== フェード無し開始の時 ==*/
@@ -140,11 +141,11 @@
 #define	WEATHER_SNOW_S_NOFADE_OBJ_START_DUST_MOVE	( 2 )		// １ずつずらして動作させる
 
 /*== フォグ ==*/
-#define	WEATHER_SNOW_S_FOG_TIMING		(200)							// に１回フォグテーブルを操作
-#define	WEATHER_SNOW_S_FOG_TIMING_END	(150)							// に１回フォグテーブルを操作
+#define	WEATHER_SNOW_S_FOG_TIMING		(90)							// に１回フォグテーブルを操作
+#define	WEATHER_SNOW_S_FOG_TIMING_END	(60)							// に１回フォグテーブルを操作
 #define WEATHER_SNOW_S_FOG_START		(8)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_SNOW_S_FOG_START_END	(10)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_SNOW_S_FOG_OFS			(0x100)
+#define WEATHER_SNOW_S_FOG_OFS		      	(-8)
 
 /*== BG ==*/
 #define WEATHER_SNOW_S_BG_ALP_TIM_S	(6)		// アルファを１上げるタイミング
@@ -186,11 +187,11 @@ static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6
 #define	WEATHER_ARARE_NOFADE_OBJ_START_DUST_MOVE	( 1 )			// ずらして動作させる値
 
 /*== フォグ ==*/
-#define	WEATHER_ARARE_FOG_TIMING		(150)							// に１回フォグテーブルを操作
-#define	WEATHER_ARARE_FOG_TIMING_END	(50)							// に１回フォグテーブルを操作
+#define	WEATHER_ARARE_FOG_TIMING		(60)							// に１回フォグテーブルを操作
+#define	WEATHER_ARARE_FOG_TIMING_END	(60)							// に１回フォグテーブルを操作
 #define WEATHER_ARARE_FOG_START		(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_ARARE_FOG_START_END	(1)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_ARARE_FOG_OFS		(0x300)
+#define WEATHER_ARARE_FOG_OFS		(0x0)
 
 /*== あられオブジェクト ==*/
 #define WEATHER_ARARE_SPEED_X		(4)						// 横に進むスピード
@@ -214,6 +215,49 @@ static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6
 #define WEATHER_ARARE_RAND_SMALL	(30)
 #define WEATHER_ARARE_RAND_MIDDLE	(95)
 #define WEATHER_ARARE_RAND_BIG		(100)
+
+
+//-------------------------------------
+//	スノーダスト関係
+//====================================
+#define	WEATHER_DIAMONDDUST_TIMING_MIN		(2)							// 出すタイミング最小
+#define WEATHER_DIAMONDDUST_TIMING_MAX		(16)						// 出すタイミング最大
+#define WEATHER_DIAMONDDUST_TIMING_ADD		(2)							// タイミングを減らす数
+#define WEATHER_DIAMONDDUST_TIMING_ADD_END	(6)							// タイミングを減らす数
+#define WEATHER_DIAMONDDUST_ADD_START		(2)							// 最初の同時に登録する数
+#define WEATHER_DIAMONDDUST_ADD_TIMING		(4)							// タイミングをこれ回変更したら１回増やす
+#define WEATHER_DIAMONDDUST_ADD				(2)							// 登録する数を増やす数
+#define WEATHER_DIAMONDDUST_ADD_END			(10)							// 登録する数を増やす数
+#define	WEATHER_DIAMONDDUST_ADD_MAIN			(20)						// メインシーケンスでの登録する数
+
+/*== フェード無し開始の時 ==*/
+#define WEATHER_DIAMONDDUST_NOFADE_OBJ_START_NUM	( 20 )				// 開始時の散布するオブジェクトの数
+#define	WEATHER_DIAMONDDUST_NOFADE_OBJ_START_DUST_NUM	( 10 )		// 何個ずつ動作数をかえるか
+#define	WEATHER_DIAMONDDUST_NOFADE_OBJ_START_DUST_MOVE	( 1 )		// ずらして動作させる値
+
+
+/*== フォグ ==*/
+#define	WEATHER_DIAMONDDUST_FOG_FADEOUT_TIMING	(100)							// に１回フォグテーブルを操作
+#define	WEATHER_DIAMONDDUST_FOG_TIMING		(90)							// に１回フォグテーブルを操作
+#define	WEATHER_DIAMONDDUST_FOG_TIMING_END	(120)							// に１回フォグテーブルを操作
+#define WEATHER_DIAMONDDUST_FOG_OFS_START	 (32767)
+#define WEATHER_DIAMONDDUST_FOG_OFS		     (32599)
+#define WEATHER_DIAMONDDUST_FOG_SLOPE		   (8)
+
+// オブジェクト
+#define WEATHER_DIAMONDDUST_START_X_MIN		(-64)					// 開始座標
+#define	WEATHER_DIAMONDDUST_START_X_DIS		(384)					// 乱数で求める開始座標の値
+#define WEATHER_DIAMONDDUST_START_Y			(-8)					// ここから出す
+#define WEATHER_DIAMONDDUST_START_Y_MAX		(256)					// ここから出す
+#define WEATHER_DIAMONDDUST_SPARK_NUM_MIN	(7)						// これだけ出てる最小
+#define WEATHER_DIAMONDDUST_SPARK_NUM_RAN	(5)						// 乱数で求める値
+#define WEATHER_DIAMONDDUST_SPARK_NO			(0x14)					// 光の数
+
+#define WEATHER_DIAMONDDUST_SP_ADD_TMG_X_MIN	(3)						//　オブジェクトのスピードを足すタイミング
+#define WEATHER_DIAMONDDUST_SP_ADD_TMG_X_MAX	(6)					//　オブジェクトのスピードを足すタイミング
+#define WEATHER_DIAMONDDUST_SP_ADD_TMG_Y_MIN	(4)						// オブジェクトのスピードを足すタイミング
+#define WEATHER_DIAMONDDUST_SP_ADD_TMG_Y_MAX	(5)					// オブジェクトのスピードを足すタイミング	
+
 
 
 //-----------------------------------------------------------------------------
@@ -250,6 +294,15 @@ typedef struct {
 typedef struct {
 	s32 work[10];
 } WEATHER_ARARE_WORK;
+
+
+
+//-------------------------------------
+///	ダイアモンドダストワーク
+//=====================================
+typedef struct {
+	s32 work[10];
+} WEATHER_DIAMONDDUST_WORK;
 
 //-----------------------------------------------------------------------------
 /**
@@ -318,6 +371,20 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_Exit( WEATHER_TASK* p_wk, WEATHER_
 static void WEATHER_ARARE_OBJ_Move( WEATHER_OBJ_WORK* p_wk ); 
 static void WEATHER_ARARE_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID ); 
 
+
+//-------------------------------------
+///	ダイヤモンドダスト
+//=====================================
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static void WEATHER_DIAMONDDUST_OBJ_Move( WEATHER_OBJ_WORK* p_wk ); 
+static void WEATHER_DIAMONDDUST_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID ); 
+
 //-----------------------------------------------------------------------------
 /**
  *			天気データ
@@ -373,8 +440,6 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOW = {
 
 
 // 吹雪
-#if 1
-
 WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOWSTORM = {
 	//	グラフィック情報
 	ARCID_FIELD_WEATHER,			// アークID
@@ -420,56 +485,6 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOWSTORM = {
 	// オブジェ動作関数
 	WEATHER_SNOW_S_OBJ_Move,
 };
-
-#else
-
-WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOWSTORM = {
-	//	グラフィック情報
-	ARCID_FIELD_WEATHER,			// アークID
-	TRUE,		// OAMを使用するか？
-	WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
-	NARC_field_weather_snow_s_NCGR,			// OAM CG
-	NARC_field_weather_snow_NCLR,			// OAM PLTT
-	NARC_field_weather_snow_s_NCER,			// OAM CELL
-	NARC_field_weather_snow_s_NANR,			// OAM CELLANM
-  {
-    {
-      0,		// BGTEX
-      0,		// GXTexSizeS
-      0,		// GXTexSizeT
-      0,		// GXTexRepeat
-      0,		// GXTexFlip
-      0,		// GXTexFmt
-      0,		// GXTexPlttColor0
-    },
-    {
-      0,		// BGTEX
-      0,		// GXTexSizeS
-      0,		// GXTexSizeT
-      0,		// GXTexRepeat
-      0,		// GXTexFlip
-      0,		// GXTexFmt
-      0,		// GXTexPlttColor0
-    },
-  },
-
-	// ワークサイズ
-	sizeof(WEATHER_SNOW_WORK),
-
-	// 管理関数
-	WEATHER_SSNOW_Init,		// 初期化
-	WEATHER_SSNOW_FadeIn,		// フェードイン
-	WEATHER_SSNOW_NoFade,		// フェードなし
-	WEATHER_SSNOW_Main,		// メイン処理
-	WEATHER_SSNOW_InitFadeOut,	// フェードアウト
-	WEATHER_SSNOW_FadeOut,		// フェードアウト
-	WEATHER_SSNOW_Exit,		// 破棄
-
-	// オブジェ動作関数
-	WEATHER_SSNOW_OBJ_Move,
-};
-
-#endif
 
 
 // あられ
@@ -519,6 +534,54 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_ARARE = {
 	WEATHER_ARARE_OBJ_Move,
 };
 
+
+
+// ダイアモンドダスト
+WEATHER_TASK_DATA c_WEATHER_TASK_DATA_DIAMONDDUST = {
+	//	グラフィック情報
+	ARCID_FIELD_WEATHER,			// アークID
+	TRUE,		// OAMを使用するか？
+	WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
+	NARC_field_weather_snow_d_NCGR,			// OAM CG
+	NARC_field_weather_snow_d_NCLR,			// OAM PLTT
+	NARC_field_weather_snow_d_NCER,			// OAM CELL
+	NARC_field_weather_snow_d_NANR,			// OAM CELLANM
+  {
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+  },
+
+	// ワークサイズ
+	sizeof(WEATHER_DIAMONDDUST_WORK),
+
+	// 管理関数
+	WEATHER_DIAMONDDUST_Init,		// 初期化
+	WEATHER_DIAMONDDUST_FadeIn,		// フェードイン
+	WEATHER_DIAMONDDUST_NoFade,		// フェードなし
+	WEATHER_DIAMONDDUST_Main,		// メイン処理
+	WEATHER_DIAMONDDUST_InitFadeOut,	// フェードアウト
+	WEATHER_DIAMONDDUST_FadeOut,		// フェードアウト
+	WEATHER_DIAMONDDUST_Exit,		// 破棄
+
+	// オブジェ動作関数
+	WEATHER_DIAMONDDUST_OBJ_Move,
+};
 
 
 
@@ -1548,7 +1611,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_InitFadeOut( WEATHER_TASK* p_wk, 
 	WEATHER_TASK_ObjFade_SetOut( p_wk,
 			0,
 			WEATHER_SNOW_S_TIMING_MAX,
-			WEATHER_SNOW_S_TIMING_ADD,
+			WEATHER_SNOW_S_TIMING_ADD_END,
 			WEATHER_SNOW_S_ADD_END );
 	
 	// fog
@@ -2179,5 +2242,366 @@ static void WEATHER_ARARE_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 
 		obj_w[6] = rand;			// 乱数保存
 	}
+}
+
+
+
+
+
+
+//-------------------------------------
+///	ダイヤモンドダスト
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダイヤモンドダスト  初期化
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	WEATHER_DIAMONDDUST_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  // 作業領域の初期化
+  WEATHER_TASK_ObjFade_Init( p_wk,
+    WEATHER_DIAMONDDUST_ADD_START,	// obj登録数
+    WEATHER_DIAMONDDUST_TIMING_MAX,// 登録タイミング
+    WEATHER_DIAMONDDUST_ADD_MAIN,
+    WEATHER_DIAMONDDUST_TIMING_MIN,
+    -WEATHER_DIAMONDDUST_TIMING_ADD,
+    WEATHER_DIAMONDDUST_ADD_TIMING,
+    WEATHER_DIAMONDDUST_ADD,
+    WEATHER_DIAMONDDUST_OBJ_Add );
+  
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, WEATHER_DIAMONDDUST_FOG_SLOPE, WEATHER_DIAMONDDUST_FOG_OFS_START, fog_cont );
+
+  p_local_wk->work[0] = 0;	// 同じくフォグ用
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダイヤモンドダスト  フェードイン
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  BOOL result;
+  BOOL fog_result;
+	WEATHER_DIAMONDDUST_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  // オブジェクトフェード
+  result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行	
+  
+
+  if(p_local_wk->work[0] == 0){
+      p_local_wk->work[0]--;			// ワーク6が０になったらフォグを動かす
+
+			WEATHER_TASK_FogFadeIn_Init( p_wk,
+			WEATHER_DIAMONDDUST_FOG_SLOPE, 
+			WEATHER_DIAMONDDUST_FOG_OFS, 
+			WEATHER_DIAMONDDUST_FOG_TIMING,
+			fog_cont );
+
+      // ライト変更
+      WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
+
+  }else{
+    fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
+    
+    // タイミングが最小になったらメインへ
+    if(fog_result && result){		// フェードリザルトが完了ならばメインへ
+			return WEATHER_TASK_FUNC_RESULT_FINISH;
+    }
+  }
+
+  {
+    int x, y;
+    WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
+    WEATHER_TASK_ScrollObj( p_wk, x, y );
+  }
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダイヤモンドダスト  フェードなし
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	WEATHER_DIAMONDDUST_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// 作業領域の初期化
+	// オブジェクトフェード用
+	WEATHER_TASK_ObjFade_Init( p_wk,
+		WEATHER_DIAMONDDUST_ADD_MAIN,
+		WEATHER_DIAMONDDUST_TIMING_MIN,
+		WEATHER_DIAMONDDUST_ADD_MAIN,
+		WEATHER_DIAMONDDUST_TIMING_MIN,
+		-WEATHER_DIAMONDDUST_TIMING_ADD,
+		WEATHER_DIAMONDDUST_ADD_TIMING,
+		WEATHER_DIAMONDDUST_ADD,
+		WEATHER_DIAMONDDUST_OBJ_Add );
+
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, WEATHER_DIAMONDDUST_FOG_SLOPE, WEATHER_DIAMONDDUST_FOG_OFS, fog_cont );
+
+	// オブジェクトを散らばす
+	WEATHER_TASK_DustObj( p_wk, WEATHER_DIAMONDDUST_OBJ_Add, WEATHER_DIAMONDDUST_NOFADE_OBJ_START_NUM, WEATHER_DIAMONDDUST_NOFADE_OBJ_START_DUST_NUM, WEATHER_DIAMONDDUST_NOFADE_OBJ_START_DUST_MOVE, heapID );
+
+  // ライト変更
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダイヤモンドダスト  メイン
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	WEATHER_DIAMONDDUST_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	WEATHER_TASK_ObjFade_NoFadeMain( p_wk, heapID );
+
+  {
+    int x, y;
+    WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
+    WEATHER_TASK_ScrollObj( p_wk, x, y );
+  }
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダイヤモンドダスト  フェードアウト初期化
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	WEATHER_DIAMONDDUST_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// obj
+	// フェードアウト設定
+	WEATHER_TASK_ObjFade_SetOut( p_wk,
+			0,
+			WEATHER_DIAMONDDUST_TIMING_MAX,
+			WEATHER_DIAMONDDUST_TIMING_ADD,
+			-WEATHER_DIAMONDDUST_ADD );
+	
+	// フォグ
+	p_local_wk->work[0] = WEATHER_DIAMONDDUST_FOG_FADEOUT_TIMING;	// 同じくフォグ用
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダイヤモンドダスト  フェードアウト
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	WEATHER_DIAMONDDUST_WORK* p_local_wk;
+	BOOL result;
+	BOOL fog_result;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// オブジェクトフェード
+	result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
+
+	// フォグ操作
+	if(p_local_wk->work[0] > 0){
+
+		p_local_wk->work[0]--;			// ワークが０になったらフォグを動かす
+    if( p_local_wk->work[0] == 0 ){
+      WEATHER_TASK_FogFadeOut_Init( p_wk,
+          WEATHER_DIAMONDDUST_FOG_OFS_START, 
+          WEATHER_DIAMONDDUST_FOG_TIMING_END, fog_cont );
+    }
+	}else{
+	
+		if( fog_cont ){
+			fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
+		}else{
+			fog_result = TRUE;
+		}
+	
+		if( fog_result && result ){
+			// 登録数が０になったら終了するかチェック
+			// 自分の管理するあめが全て破棄されたら終了
+			if( WEATHER_TASK_GetActiveObjNum( p_wk ) == 0 ){//*/
+				
+				return WEATHER_TASK_FUNC_RESULT_FINISH;
+			}
+		}
+	}
+
+  {
+    int x, y;
+    WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
+    WEATHER_TASK_ScrollObj( p_wk, x, y );
+  }
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダイヤモンドダスト  破棄
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	WEATHER_DIAMONDDUST_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// FOG終了
+	WEATHER_TASK_FogClear( p_wk, fog_cont );
+
+	// ライト元に
+	WEATHER_TASK_LIGHT_Back( p_wk );
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダイヤモンドダスト  動き
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_DIAMONDDUST_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
+{
+	int		rand;
+	s32* obj_w;
+	GFL_CLACTPOS mat;
+	GFL_CLWK* p_clwk;
+
+	obj_w = WEATHER_OBJ_WORK_GetWork( p_wk );
+	p_clwk = WEATHER_OBJ_WORK_GetClWk( p_wk );
+
+	WEATHER_OBJ_WORK_GetPos( p_wk, &mat );
+
+	// ぶれる
+	obj_w[0]++;
+	
+	if((obj_w[0] % obj_w[4]) == 0){
+		mat.x += obj_w[2];
+	}
+	
+	if((obj_w[0] % obj_w[5]) == 0){
+		mat.y += obj_w[3];
+	}
+	
+	// 破棄するかチェック
+	if(obj_w[0] >= obj_w[1]){
+		WEATHER_TASK_DeleteObj( p_wk );
+		return ;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダイヤモンドダスト  オブジェ登録
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_DIAMONDDUST_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
+{
+	int i;		// ループ用
+	WEATHER_OBJ_WORK* add_obj;		// 登録オブジェ
+	WEATHER_DIAMONDDUST_WORK*	p_local_wk;	// システムワーク
+	int	rand;
+	int sum_y;	// y座標計算
+	int	big_d;	// 大きいダイヤモンドダストにするかチェック
+	int frame;	// フレーム数
+	GFL_CLACTPOS mat;	// 設定座標
+	GFL_CLWK* p_clwk;
+	s32* obj_w;	// オブジェクトワーク
+
+	// ユーザワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+	
+	// num分オブジェクトを登録
+	for(i=0;i<num;i++){
+
+		add_obj = WEATHER_TASK_CreateObj( p_wk, heapID );		// 登録
+		if(add_obj == NULL){			// 失敗したら終了
+			break;
+		}
+
+		obj_w = WEATHER_OBJ_WORK_GetWork( add_obj );		// オブジェワーク作成
+		p_clwk	= WEATHER_OBJ_WORK_GetClWk( add_obj );
+		
+		obj_w[0] = 0;		// カウンタ
+		obj_w[1] = WEATHER_DIAMONDDUST_SPARK_NUM_MIN + GFUser_GetPublicRand(WEATHER_DIAMONDDUST_SPARK_NUM_RAN);
+		rand = GFUser_GetPublicRand(1000);
+
+		
+		if((rand % 2) == 0){			// 横の移動のプラスマイナス
+			obj_w[2] = 1;
+		}else{
+			obj_w[2] = -1;
+		}
+		obj_w[3] = 1;
+		
+
+		obj_w[4] = WEATHER_DIAMONDDUST_SP_ADD_TMG_X_MIN + GFUser_GetPublicRand(WEATHER_DIAMONDDUST_SP_ADD_TMG_X_MAX);
+		obj_w[5] = WEATHER_DIAMONDDUST_SP_ADD_TMG_Y_MIN + GFUser_GetPublicRand(WEATHER_DIAMONDDUST_SP_ADD_TMG_Y_MAX);
+		
+	
+		// 小さい光を出す
+		frame = GFUser_GetPublicRand(WEATHER_DIAMONDDUST_SPARK_NO);
+		
+		// 座標
+		{
+			mat.x = WEATHER_DIAMONDDUST_START_X_MIN + GFUser_GetPublicRand(WEATHER_DIAMONDDUST_START_X_DIS);
+			mat.y = WEATHER_DIAMONDDUST_START_Y + GFUser_GetPublicRand(WEATHER_DIAMONDDUST_START_Y_MAX);
+		  WEATHER_OBJ_WORK_SetPos( add_obj, &mat );
+		}
+		
+		
+		// Xの値から方程式で求める
+		sum_y = 50 - (mat.x/3);
+		rand = 206 - (mat.x/3);
+		if(rand < 0){
+			rand*=-1;
+			big_d = sum_y - (GFUser_GetPublicRand(rand));		
+		}else{
+			big_d = sum_y + (GFUser_GetPublicRand(rand));		
+		}
+		if((sum_y <= mat.y) &&
+			(big_d >= mat.y)){
+			
+			obj_w[1] *= 2;
+//			obj_w[6] = 4;		// おそ点滅
+		}else{
+			// 小さい光にする
+			frame = GFUser_GetPublicRand(4);
+//			obj_w[6] = 1;		// 半透明
+		}
+		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );
+	}
+
 }
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2010-01-11T19:50:02"/>
+	<create user="tomoya_takahashi" host="W00148" date="2010-02-11T15:25:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -430,6 +430,16 @@
 	<row id="D_TOMOYA_WEATEHR10">
 		<language name="JPN" width="256">カザカミ</language>
 		<language name="JPN_KANJI" width="256">カザカミ</language>
+	</row>
+
+	<row id="D_TOMOYA_WEATEHR11">
+		<language name="JPN" width="256">ダイアモンドダスト</language>
+		<language name="JPN_KANJI" width="256">ダイアモンドダスト</language>
+	</row>
+
+	<row id="D_TOMOYA_WEATEHR12">
+		<language name="JPN" width="256">きり</language>
+		<language name="JPN_KANJI" width="256">きり</language>
 	</row>
 
 	<row id="D_TOMOYA_FOG_OFFSET">

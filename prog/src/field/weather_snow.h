@@ -43,6 +43,13 @@ extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOWSTORM;
 //-----------------------------------------------------------------------------
 extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_ARARE;
 
+//-----------------------------------------------------------------------------
+/**
+ *		ダイヤモンドダスト
+*/
+//-----------------------------------------------------------------------------
+extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_DIAMONDDUST;
+
 
 #ifdef _cplusplus
 }	// extern "C"{
