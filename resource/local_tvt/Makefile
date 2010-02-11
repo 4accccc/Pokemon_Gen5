@@ -18,6 +18,8 @@ targetname = local_tvt
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
 
+SCRIPTDATA_XLS = tvt_script.xls
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
@@ -68,6 +70,9 @@ do-build:	subdir $(TARGETDIR)/$(targetname).narc
 subdir:
 	@$(MAKE_SUBDIR)
 
+tvt_script_01.bin:
+	ruby tvt_script_conv.rb
+
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
@@ -75,8 +80,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
-	nnsarc -r -l -n -i $(targetname) $^
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) tvt_script_01.bin
+	nnsarc -r -l -n -i $(targetname) -S tvt_script_list.lst
 	$(NAIXCUT) $(targetname).naix
 endif
 
@@ -90,6 +95,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NSCR
 	rm -f *.NCGR
 	rm -f *.NCLR
+	rm -f *.NCER
+	rm -f *.NANR
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
