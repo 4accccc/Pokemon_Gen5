@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T14:28:04"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T20:15:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,8 +292,9 @@
 	</lock>
 
 
-	<row id="msg_d02_girl1_01">
-		<comment>♀</comment>
+	<row id="msg_d02_girl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
 		<language name="JPN" width="256">もりと　いっても
 つぎのまちへの　とおりみち　だから[BE:00:ページ切り替え（行送り）]
@@ -335,7 +336,7 @@ C03ジムリーダー</attribute>
 こわさせて　みますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d02_rock_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d02_rock_02" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・アイテム入手処理
 　No000「ほしのかけら」（仮）
