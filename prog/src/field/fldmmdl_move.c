@@ -2041,7 +2041,6 @@ MAPATTR MMDL_GetMapDirAttr( MMDL * mmdl, u16 dir )
 {
   MAPATTR attr = MAPATTR_ERROR;
   VecFx32 pos;
-  const FLDMAPPER *pG3DMapper;
   
   MMDL_GetVectorPos( mmdl, &pos );
   MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );

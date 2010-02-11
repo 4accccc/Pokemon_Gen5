@@ -4135,6 +4135,20 @@ MMDL * MMDLSYS_SearchOBJID( const MMDLSYS *fos, u16 id )
 
 //--------------------------------------------------------------
 /**
+ * MMDLSYS 自機OBJを探す
+ * @param fos MMDLSYS*
+ * @retval MMDL* NULL=存在しない
+ */
+//--------------------------------------------------------------
+MMDL * MMDLSYS_SearchMMdlPlayer( MMDLSYS *mmdlsys )
+{
+  MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, MMDL_ID_PLAYER );
+  GF_ASSERT( mmdl != NULL );
+  return( mmdl );
+}
+
+//--------------------------------------------------------------
+/**
  * MMDLSYS フィールド動作モデルの空きを探す
  * @param  sys      MMDLSYS *
  * @retval  MMDL  空きのMMDL*　空きが無い場合はNULL
@@ -4233,7 +4247,7 @@ static void mmdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys )
   code = MMDL_GetMoveCode( mmdl );
   
   if( code == MV_PAIR || code == MV_TR_PAIR ){
-    pri += MMDL_TCBPRI_OFFS_AFTER;
+    pri += MMDL_TCBPRI_OFFS_PAIR;
   }
   
   tcb = GFL_TCB_AddTask( MMDLSYS_GetTCBSYS((MMDLSYS*)sys),

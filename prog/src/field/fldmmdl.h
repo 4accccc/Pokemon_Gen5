@@ -480,6 +480,7 @@ typedef struct {
   s16 gx;			///<グリッドX
   s16 gy;			///<グリッドY
   s16 gz;			///<グリッドZ
+  s16 dmy;    ///<4byte余り
 } MMDL_GRIDPOS;
 
 //--------------------------------------------------------------
@@ -952,6 +953,7 @@ extern MMDL * MMDLSYS_SearchGridPosEx(
 extern MMDL * MMDLSYS_SearchMoveCode(
 	const MMDLSYS *fos, u16 mv_code );
 extern MMDL * MMDLSYS_SearchOBJID( const MMDLSYS *fos, u16 id );
+extern MMDL * MMDLSYS_SearchMMdlPlayer( MMDLSYS *mmdlsys );
 extern void MMDLSYS_DeleteZoneUpdateMMdl( MMDLSYS *fos );
 
 extern BOOL MMDL_SearchUseOBJCode( const MMDL *mmdl, u16 code );

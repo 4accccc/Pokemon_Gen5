@@ -23,8 +23,6 @@
 //======================================================================
 //  define
 //======================================================================
-#define EYE_CHECK_NOHIT (-1) ///<視線範囲チェック ヒット無し
-
 #define EYE_MEET_GYOE_END_WAIT (30) ///<!マーク出現後の間　フレーム単位
 #define EYE_MEET_MOVE_END_WAIT (8) ///<視線移動後の間　フレーム単位
 
@@ -70,22 +68,22 @@ typedef struct
 }EYEMEET_HITDATA;
 
 //--------------------------------------------------------------
-//	視線ヒット移動処理用ワーク
+//  視線ヒット移動処理用ワーク
 //--------------------------------------------------------------
 typedef struct
 {
-	int seq_no;				///<処理番号
-	BOOL end_flag;			///<終了フラグ
+  int seq_no;        ///<処理番号
+  BOOL end_flag;      ///<終了フラグ
    
-	int dir;					///<移動方向
-	int range;				///<移動距離
-	int gyoe_type;		///<!タイプ
-	int tr_type;			///<トレーナータイプ
-	int sisen_no;			///<視線番号
-	int count;				///<移動カウント
+  int dir;          ///<移動方向
+  int range;        ///<移動距離
+  int gyoe_type;    ///<!タイプ
+  int tr_type;      ///<トレーナータイプ
+  int sisen_no;      ///<視線番号
+  int count;        ///<移動カウント
    
   FLDEFF_TASK *task_gyoe;   ////<ギョエータスク
-	MMDL *mmdl;								///<移動を行うMMDL*
+  MMDL *mmdl;                ///<移動を行うMMDL*
   FIELDMAP_WORK *fieldMap;  ///<FILEDMAP_WORK*
   FIELD_PLAYER *fieldPlayer; ///<FIELD_PLAYER*
 }EV_EYEMEET_MOVE_WORK;
@@ -183,6 +181,48 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
   }
   
   return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * トレーナー視線範囲チェック　グローバル　引数指定
+ * @param  mmdl FIELD_OBJ_PTR
+ * @param  jiki    PLAYER_STATE_PTR
+ * @param  eye_dir    視線方向
+ * @param  eye_range  視線距離
+ * @param enc FIELD_ENCOUNT NULL=エフェクトエンカウントチェック無し
+ * @retval  int 視線ヒット時の自機までのグリッド距離。EYE_CHECK_NOHIT=エラー
+ */
+//--------------------------------------------------------------
+int EVENT_CheckTrainerEyeRange(
+    const MMDL *mmdl, u16 eye_dir, int eye_range, const FIELD_ENCOUNT *enc )
+{
+  int ret;
+  MMDL_GRIDPOS pt,pj;
+  const MMDL *jiki;
+  const MMDLSYS *mmdlsys;
+  
+  mmdlsys = MMDL_GetMMdlSys( mmdl );
+  jiki = MMDLSYS_SearchOBJID( mmdlsys, MMDL_ID_PLAYER );
+  
+  if( jiki == NULL ){
+    GF_ASSERT( 0 );
+    return( EYE_CHECK_NOHIT );
+  }
+  
+  MMDL_GetGridPos( mmdl, &pj );
+  MMDL_GetGridPos( mmdl, &pt );
+  
+  ret = treye_CheckEyeLine( eye_dir, eye_range, 
+      pt.gx, pt.gy, pt.gz, pj.gx, pj.gy, pj.gz );
+  
+  if( ret != EYE_CHECK_NOHIT ){
+    if( tr_HitCheckEyeLine(mmdl,eye_dir,ret,enc) == TRUE ){
+      ret = EYE_CHECK_NOHIT;
+    }
+  }
+  
+  return( ret );
 }
 
 //======================================================================
@@ -920,21 +960,30 @@ static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range, const FIEL
       if( hit ){ //移動制限以外でヒット
         return( TRUE );
       }
-      if( EFFECT_ENC_CheckEffectPos( enc, &pos )){  //エフェクトエンカウント座標チェック
-        return( TRUE );
+      
+      if( enc != NULL ){ //エフェクトエンカウント座標チェック
+        if( EFFECT_ENC_CheckEffectPos( enc, &pos )){
+          return( TRUE );
+        }
       }
+      
       pos.gx += dx;
       pos.gz += dz;
     }
     
-    hit = MMDL_HitCheckMoveCurrent( mmdl, pos.gx, pos.gy, pos.gz, dir ); //最後
+    hit = MMDL_HitCheckMoveCurrent( //最後
+        mmdl, pos.gx, pos.gy, pos.gz, dir );
+    
     hit &= ~MMDL_MOVEHITBIT_LIM; //移動制限を無視する
     
     if( hit != MMDL_MOVEHITBIT_OBJ ){ //OBJ衝突(自機)のみ
       return( TRUE );
     }
-    if( EFFECT_ENC_CheckEffectPos( enc, &pos )){  //エフェクトエンカウント座標チェック
-      return( TRUE );
+    
+    if( enc != NULL ){ //エフェクトエンカウント座標チェック
+      if( EFFECT_ENC_CheckEffectPos(enc,&pos) ){
+        return( TRUE );
+      }
     }
   }
   
@@ -952,6 +1001,18 @@ static u16 tr_GetTrainerID( const MMDL *mmdl )
 {
   u16 scr_id = MMDL_GetEventID( mmdl );
   return( SCRIPT_GetTrainerID_ByScriptID(scr_id) );
+}
+
+//--------------------------------------------------------------
+/**
+ * 動作モデルからトレーナーID取得　グローバル
+ * @param mmdl MMDL*
+ * @retval u16 トレーナーID
+ */
+//--------------------------------------------------------------
+u16 EVENT_GetTrainerEyeTrainerID( const MMDL *mmdl )
+{
+  return( tr_GetTrainerID(mmdl) );
 }
 
 //--------------------------------------------------------------
