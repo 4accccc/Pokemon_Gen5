@@ -62,8 +62,14 @@ enum{
   BGPRI_BMPOAM_NAME = 2,
 };
 
+enum{
+  _PANEL_LEFT_POS = 3,      ///<パネル左端X位置(キャラクタ単位)
+  _PANEL_RIGHT_POS = 0x1c,  ///<パネル右端X位置(キャラクタ単位)
+  _PANEL_SIZE_Y = 4,        ///<パネルYサイズ(キャラクタ単位)
+};
+
 ///パワー名のリスト間の幅(ドット数)
-#define POWER_LIST_SPACE    (4*8)
+#define POWER_LIST_SPACE    (_PANEL_SIZE_Y*8)
 
 ///BMPOAMのパワー名 X座標
 #define _BMPOAM_POWER_NAME_X    (4*8)
@@ -72,6 +78,22 @@ enum{
 
 ///スクロールの減速力(下位8ビット小数)
 #define _SCROLL_SLOW_DOWN   (0x00c0)
+
+enum{
+  _TOUCH_DECIDE_RANGE = 4,    ///<決定チェック：最初にタッチパネルを押した状態から決定と判定する許容のずれ
+  _TOUCH_DECIDE_NONE = 0xffff,  ///<決定チェック：最初のタッチからずれすぎた為、無効を示す値
+};
+
+///無効な項目No
+#define _LIST_NO_NONE     (0xffff)
+///無効なカーソル位置
+#define _CURSOR_POS_NONE  (0xffff)
+
+typedef enum{
+  _SET_CURSOR_MODE_INIT,  ///<初期化用
+  _SET_CURSOR_MODE_KEY,   ///<キーで操作
+  _SET_CURSOR_MODE_TP,    ///<タッチパネルで操作
+}_SET_CURSOR_MODE;
 
 
 //==============================================================================
@@ -98,11 +120,16 @@ typedef struct{
   
   s32 list_y;    ///<下位8ビット小数
   
-  BOOL tp_continue;       ///<TRUE:タッチパネル押しっぱなしの状態
+  u32 tp_cont_frame;     ///<TRUE:タッチパネル押しっぱなしにしているフレーム数
   s32 speed;              ///<スクロール速度(下位8ビット小数。マイナス有)
   u32 tp_backup_y;        ///<1フレーム前のTP_Y値
+  u32 tp_first_hit_y;     ///<最初にタッチした時のY値
   
   BOOL scroll_update;     ///<TRUE:スクロール座標に整数レベルで変化があった
+  
+  u16 cursor_pos;         ///<カーソル位置(項目No)
+  u16 backup_cursor_pos;  ///<1つ前のカーソル位置
+  u16 decide_cursor_pos;  ///<決定時のカーソル位置
 }MONOLITH_PWSELECT_WORK;
 
 //==============================================================================
@@ -131,11 +158,16 @@ static _USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id);
 static void _Setup_PowerNameBMPCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static void _Setup_PowerNameBMPDelete(MONOLITH_PWSELECT_WORK *mpw);
 static BOOL _PowerNameBMPDraw(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
-static s32 _ScrollSpeedUpdate(MONOLITH_PWSELECT_WORK *mpw);
+static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
 static BOOL _ScrollPosUpdate(MONOLITH_PWSELECT_WORK *mpw, s32 add_y);
 static void _ScrollPos_BGReflection(MONOLITH_PWSELECT_WORK *mpw);
 static void _ScrollPos_NameOamReflection(MONOLITH_PWSELECT_WORK *mpw);
 static void _PowerSelect_VBlank(GFL_TCB *tcb, void *work);
+static s32 _GetTouchListNo(MONOLITH_PWSELECT_WORK *mpw, u32 tp_y);
+static void _SetCursorPos(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURSOR_MODE mode);
+static void _CursorPos_PanelScreenChange(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, int palno);
+static void _CursorPos_PanelFocus(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos);
+static void _CursorPos_NotFocus(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos);
 
 
 //==============================================================================
@@ -189,7 +221,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
   case 0:
     mpw = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_PWSELECT_WORK), HEAPID_MONOLITH);
     GFL_STD_MemClear(mpw, sizeof(MONOLITH_PWSELECT_WORK));
-
+    mpw->decide_cursor_pos = _CURSOR_POS_NONE;
+    
   	mpw->mm_power = GFL_MSG_Create(
   		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_power_dat, HEAPID_MONOLITH);
 
@@ -201,6 +234,14 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
     _CancelIconCreate(appwk, mpw);
     _BmpOamCreate(mpw, appwk->setup);
 
+    MonolithTool_Panel_Init(appwk);
+    if(GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY){
+      _SetCursorPos(appwk, mpw, 0, _SET_CURSOR_MODE_INIT);
+    }
+    else{
+      _SetCursorPos(appwk, mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
+    }
+    
     mpw->vintr_tcb = GFUser_VIntr_CreateTCB(
       _PowerSelect_VBlank, mpw, MONOLITH_VINTR_TCB_PRI_POWER);
 
@@ -242,6 +283,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     SEQ_FINISH,
   };
   
+  MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_BG);
   _CancelIconUpdate(mpw);
 
   if(appwk->force_finish == TRUE){
@@ -263,7 +305,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
         (*seq) = SEQ_FINISH;
       }
       
-      _ScrollSpeedUpdate(mpw);
+      _ScrollSpeedUpdate(appwk, mpw);
       if(_ScrollPosUpdate(mpw, mpw->speed) == TRUE){
         _ScrollPos_BGReflection(mpw);
         _ScrollPos_NameOamReflection(mpw);
@@ -689,20 +731,22 @@ static void _CancelIconUpdate(MONOLITH_PWSELECT_WORK *mpw)
  *
  * @param   mpw		
  *
- * @retval  s32		スクロール速度(下位8ビット小数。マイナス有)
+ * @retval  BOOL		TRUE:決定キーを押した　FALSE:決定キーを押していない
  */
 //--------------------------------------------------------------
-static s32 _ScrollSpeedUpdate(MONOLITH_PWSELECT_WORK *mpw)
+static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw)
 {
   BOOL tp_cont;
   u32 tp_x, tp_y;
+  BOOL decide_on = FALSE;
+  u16 cursor_pos = _CURSOR_POS_NONE;
   
   tp_cont = GFL_UI_TP_GetPointCont( &tp_x, &tp_y );
-  if(mpw->tp_continue == FALSE && (tp_x < 24 || tp_x > 224)){
+  if(mpw->tp_cont_frame == 0 && (tp_x < 24 || tp_x > 224)){
     tp_cont = FALSE;
   }
   
-  if(mpw->tp_continue == FALSE){
+  if(mpw->tp_cont_frame == 0){
     //慣性力で進んでいる場合に新たな入力があれば停止する
     if(mpw->speed != 0){
       if(tp_cont == TRUE 
@@ -712,8 +756,10 @@ static s32 _ScrollSpeedUpdate(MONOLITH_PWSELECT_WORK *mpw)
     }
 
     if(tp_cont == TRUE){
-      mpw->tp_continue = TRUE;
+      mpw->tp_cont_frame = 1;
       mpw->tp_backup_y = tp_y;
+      mpw->tp_first_hit_y = tp_y;
+      _SetCursorPos(appwk, mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
     }
     else if(mpw->speed != 0){ //減速
       if(mpw->speed > 0){
@@ -732,15 +778,124 @@ static s32 _ScrollSpeedUpdate(MONOLITH_PWSELECT_WORK *mpw)
   }
   else{ //タッチパネル押しっぱなしの場合の続き
     if(tp_cont == FALSE){
-      mpw->tp_continue = FALSE;
+      mpw->tp_cont_frame = 0;
+      if(mpw->tp_first_hit_y != _TOUCH_DECIDE_NONE){
+        if(MATH_ABS((s32)mpw->tp_backup_y - (s32)mpw->tp_first_hit_y) < _TOUCH_DECIDE_RANGE){
+          s32 list_no = _GetTouchListNo(mpw, mpw->tp_backup_y);
+          if(list_no != _LIST_NO_NONE){
+            decide_on = TRUE;
+            cursor_pos = list_no;
+          }
+        }
+      }
     }
     else{
       mpw->speed = (mpw->tp_backup_y - (s32)tp_y) * 0x100;  //マイナス有の為SHIFTではなく掛け算
       mpw->tp_backup_y = tp_y;
+      mpw->tp_cont_frame++;
+      if(mpw->tp_first_hit_y != _TOUCH_DECIDE_NONE){
+        if(MATH_ABS((s32)tp_y - (s32)mpw->tp_first_hit_y) > _TOUCH_DECIDE_RANGE){
+          mpw->tp_first_hit_y = _TOUCH_DECIDE_NONE;
+        }
+      }
     }
   }
   
-  return mpw->speed;
+  if(decide_on == TRUE){
+    mpw->speed = 0;
+    _SetCursorPos(appwk, mpw, cursor_pos, _SET_CURSOR_MODE_TP);
+  }
+  
+  return decide_on;
+}
+
+//--------------------------------------------------------------
+/**
+ * カーソル位置変更処理
+ *
+ * @param   mpw		
+ * @param   cursor_pos		カーソル位置(項目番号) ※未選択にするには _CURSOR_POS_NONE
+ */
+//--------------------------------------------------------------
+static void _SetCursorPos(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURSOR_MODE mode)
+{
+  //昔のカーソル位置のBGスクリーンをフェード無しのカラーNoに変更する
+  _CursorPos_NotFocus(mpw, mpw->cursor_pos);
+  
+  //今のカーソル位置のBGスクリーンをフェード有のカラーNoに変更する
+  _CursorPos_PanelFocus(mpw, cursor_pos);
+  
+  if(cursor_pos == _CURSOR_POS_NONE){
+    MonolithTool_PanelBG_Focus(appwk, FALSE, FADE_SUB_BG);
+  }
+  else if((mode == _SET_CURSOR_MODE_TP 
+      && (cursor_pos == mpw->cursor_pos || cursor_pos == mpw->backup_cursor_pos))
+      || (mode == _SET_CURSOR_MODE_KEY && cursor_pos == mpw->cursor_pos)){
+    mpw->decide_cursor_pos = cursor_pos;
+    MonolithTool_PanelBG_Flash(appwk, FADE_SUB_BG);
+  }
+  else{
+    MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
+  }
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+
+  mpw->backup_cursor_pos = mpw->cursor_pos;
+  mpw->cursor_pos = cursor_pos;
+}
+
+//--------------------------------------------------------------
+/**
+ * カーソル位置のパネルのスクリーンを指定パレットNoに変更する
+ *
+ * @param   cursor_pos		
+ * @param   palno		
+ */
+//--------------------------------------------------------------
+static void _CursorPos_PanelScreenChange(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, int palno)
+{
+  s32 list_top_no, list_space_pos, scr_y, item_offset, target_bg_y;
+  
+  if(cursor_pos == _CURSOR_POS_NONE){
+    return;
+  }
+  
+  //先頭の項目番号
+  list_top_no = (mpw->list_y >> 8) / POWER_LIST_SPACE;
+  list_space_pos = (mpw->list_y >> 8) % POWER_LIST_SPACE;
+  scr_y = (mpw->list_y >> 8) % (256-192);
+  item_offset = cursor_pos - list_top_no;
+  
+  if(item_offset < 0 || item_offset >= list_top_no + POWER_ITEM_DISP_NUM){
+    return; //画面外
+  }
+  
+  target_bg_y = (scr_y + POWER_LIST_SPACE * item_offset - list_space_pos ) % 256;
+  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, _PANEL_LEFT_POS, target_bg_y/8, 
+    _PANEL_RIGHT_POS - _PANEL_LEFT_POS, _PANEL_SIZE_Y, palno );
+}
+
+//--------------------------------------------------------------
+/**
+ * カーソル位置のパネルをフォーカス状態にする
+ *
+ * @param   cursor_pos		
+ */
+//--------------------------------------------------------------
+static void _CursorPos_PanelFocus(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos)
+{
+  _CursorPos_PanelScreenChange(mpw, cursor_pos, COMMON_PALBG_PANEL_FOCUS);
+}
+
+//--------------------------------------------------------------
+/**
+ * カーソル位置のパネルをフォーカス無し状態にする
+ *
+ * @param   cursor_pos		
+ */
+//--------------------------------------------------------------
+static void _CursorPos_NotFocus(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos)
+{
+  _CursorPos_PanelScreenChange(mpw, cursor_pos, COMMON_PALBG_PANEL);
 }
 
 //--------------------------------------------------------------
@@ -845,3 +1000,23 @@ static void _PowerSelect_VBlank(GFL_TCB *tcb, void *work)
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * タッチ座標とリスト座標からタッチした項目Noを取得する
+ *
+ * @param   mpw		
+ * @param   tp_y		タッチ座標Y
+ *
+ * @retval  s32		項目No(無効な場合は_LIST_NO_NONE)
+ */
+//--------------------------------------------------------------
+static s32 _GetTouchListNo(MONOLITH_PWSELECT_WORK *mpw, u32 tp_y)
+{
+  s32 list_no;
+  
+  list_no = ((mpw->list_y >> 8) + tp_y) / POWER_LIST_SPACE;
+  if(list_no >= mpw->power_list_num){
+    return _LIST_NO_NONE;
+  }
+  return list_no;
+}

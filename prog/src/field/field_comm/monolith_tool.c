@@ -38,6 +38,15 @@ enum{
 
 
 //==============================================================================
+//  プロトタイプ宣言
+//==============================================================================
+static void _PanelColor_SetMode(MONOLITH_APP_PARENT *appwk, PANEL_COLORMODE mode, FADEREQ req);
+static int _PanelColor_GetStartColorPos(FADEREQ req);
+static int _PanelColor_GetChangeDataColorPos(FADEREQ req);
+static int _PanelColor_GetChangeColorNum(FADEREQ req);
+
+
+//==============================================================================
 //  データ
 //==============================================================================
 //--------------------------------------------------------------
@@ -74,7 +83,10 @@ enum{
   PANEL_COLOR_END = 4,        ///<パネルカラーアニメ終端位置
   PANEL_COLOR_NUM = PANEL_COLOR_END - PANEL_COLOR_START + 1,  ///<パネルカラーアニメのカラー数
   
-  PANEL_FADEDATA_PALNO = 2,   ///<パネルフェードデータ(変更後の色)が入っているパレット位置
+  PANEL_FADEDATA_PALNO_OBJ = 2,    ///<パネルフェードデータ(変更後の色)が入っているパレット位置
+
+  PANEL_START_PALNO_BG_D = COMMON_PALBG_PANEL_FOCUS,      ///<パネルフェード開始パレットNo
+  PANEL_FADEDATA_PALNO_BG_D = 4,   ///<パネルフェードデータ(変更後の色)が入っているパレット位置
   
   PANEL_COLOR_FADE_ADD_EVY = 0x0080,    ///<EVY加算値(下位8ビット小数)
   
@@ -122,7 +134,7 @@ static const BMPOAM_ACT_DATA BmpOamHead_Str = {
  * WORDSETが必要な場合は外側であらかじめWORDSETをしてください
  */
 //==================================================================
-void MonolithTool_Panel_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int y, u32 msg_id, WORDSET *wordset)
+void MonolithTool_PanelOBJ_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int y, u32 msg_id, WORDSET *wordset)
 {
   CLSYS_DEFREND_TYPE defrend_type;
   GFL_CLWK_DATA head = ActHead_Panel;
@@ -184,7 +196,7 @@ void MonolithTool_Panel_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_
  * @param   panel		パネルアクターへのポインタ
  */
 //==================================================================
-void MonolithTool_Panel_Delete(PANEL_ACTOR *panel)
+void MonolithTool_PanelOBJ_Delete(PANEL_ACTOR *panel)
 {
   GFL_CLACT_WK_Remove(panel->cap);
   BmpOam_ActorDel(panel->bmpoam);
@@ -202,7 +214,7 @@ void MonolithTool_Panel_Delete(PANEL_ACTOR *panel)
  * @param   on_off		TRUE:表示ON、　FALSE:表示OFF
  */
 //==================================================================
-void MonolithTool_Panel_SetEnable(PANEL_ACTOR *panel, BOOL on_off)
+void MonolithTool_PanelOBJ_SetEnable(PANEL_ACTOR *panel, BOOL on_off)
 {
   GFL_CLACT_WK_SetDrawEnable( panel->cap, on_off );
   BmpOam_ActorSetDrawEnable( panel->bmpoam, on_off );
@@ -218,7 +230,7 @@ void MonolithTool_Panel_SetEnable(PANEL_ACTOR *panel, BOOL on_off)
  * @retval  BOOL		TRUE:BMP転送を行った
  */
 //==================================================================
-BOOL MonolithTool_Panel_TransUpdate(MONOLITH_SETUP *setup, PANEL_ACTOR *panel)
+BOOL MonolithTool_PanelOBJ_TransUpdate(MONOLITH_SETUP *setup, PANEL_ACTOR *panel)
 {
   if( panel->trans_flag == TRUE 
       && PRINTSYS_QUE_IsExistTarget(setup->printQue, panel->bmp) == FALSE ){
@@ -231,23 +243,108 @@ BOOL MonolithTool_Panel_TransUpdate(MONOLITH_SETUP *setup, PANEL_ACTOR *panel)
 
 //==================================================================
 /**
- * パネルカラーアニメ：モード設定
+ * パネルに対してフォーカスを設定する
  *
- * @param   appwk		
- * @param   mode		
- * @param   req		  
+ * @param   appwk
+ * @param   panel[]		  パネルアクターの配列へのポインタ
+ * @param   panel_max		パネルアクター配列の要素数
+ * @param   focus_no		フォーカスされるパネル番号(何もフォーカスしない場合はPANEL_NO_FOCUS)
+ * @param   req         FADE_SUB_OBJ等
  */
 //==================================================================
-static void MonolithTool_PanelColor_SetMode(MONOLITH_APP_PARENT *appwk, PANEL_COLORMODE mode, FADEREQ req)
+void MonolithTool_PanelOBJ_Focus(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR panel[], int panel_max, int focus_no, FADEREQ req)
 {
-  PANEL_COLOR_CONTROL *pcc = &appwk->tool.panel_color;
+  int i;
   
-  GFL_STD_MemClear(pcc, sizeof(PANEL_COLOR_CONTROL));
-  pcc->mode = mode;
+  for(i = 0; i < panel_max; i++){
+    if(i == focus_no){
+      GFL_CLACT_WK_SetPlttOffs(panel[i].cap, COMMON_PAL_PANEL_FOCUS, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+      _PanelColor_SetMode(appwk, PANEL_COLORMODE_FOCUS, req);
+    }
+    else{
+      GFL_CLACT_WK_SetPlttOffs(panel[i].cap, COMMON_PAL_PANEL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+    }
+  }
   
-  //カラー初期化
-  SoftFadePfd(appwk->setup->pfd, req, COMMON_PAL_PANEL_FOCUS * 16 + PANEL_COLOR_START, 
-    PANEL_COLOR_NUM, 0, 0x0000);
+  if(focus_no == PANEL_NO_FOCUS){
+    _PanelColor_SetMode(appwk, PANEL_COLORMODE_NONE, req);
+  }
+}
+
+//==================================================================
+/**
+ * パネルに対してフラッシュを行う
+ *
+ * @param   appwk
+ * @param   panel[]		  パネルアクターの配列へのポインタ
+ * @param   panel_max		パネルアクター配列の要素数
+ * @param   focus_no		フラッシュするパネル番号(何もフォーカスしない場合はPANEL_NO_FOCUS)
+ * @param   req         FADE_SUB_OBJ等
+ */
+//==================================================================
+void MonolithTool_PanelOBJ_Flash(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR panel[], int panel_max, int focus_no, FADEREQ req)
+{
+  int i;
+  
+  for(i = 0; i < panel_max; i++){
+    if(i == focus_no){
+      GFL_CLACT_WK_SetPlttOffs(panel[i].cap, COMMON_PAL_PANEL_FOCUS, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+      _PanelColor_SetMode(appwk, PANEL_COLORMODE_FLASH, req);
+    }
+    else{
+      GFL_CLACT_WK_SetPlttOffs(panel[i].cap, COMMON_PAL_PANEL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+    }
+  }
+}
+
+//==================================================================
+/**
+ * パネルBGに対してフォーカスを設定する
+ *
+ * @param   appwk
+ * @param   focus_use		TRUE:フォーカスアニメ開始。　FALSE:フォーカスアニメ停止
+ * @param   req         FADE_SUB_OBJ等
+ *
+ * PanelOBJと違いフォーカス対象のスクリーンは外側で独自に編集する必要がある
+ * この関数で行うのはフォーカスアニメの開始と停止の制御のみ
+ */
+//==================================================================
+void MonolithTool_PanelBG_Focus(MONOLITH_APP_PARENT *appwk, BOOL focus_use, FADEREQ req)
+{
+  if(focus_use == TRUE){
+    _PanelColor_SetMode(appwk, PANEL_COLORMODE_FOCUS, req);
+  }
+  else{
+    _PanelColor_SetMode(appwk, PANEL_COLORMODE_NONE, req);
+  }
+}
+
+//==================================================================
+/**
+ * パネルBGに対してフラッシュを行う
+ *
+ * @param   appwk
+ * @param   req         FADE_SUB_OBJ等
+ *
+ * PanelOBJと違いフォーカス対象のスクリーンは外側で独自に編集する必要がある
+ * この関数で行うのはフラッシュアニメの開始スイッチを入れるだけ
+ */
+//==================================================================
+void MonolithTool_PanelBG_Flash(MONOLITH_APP_PARENT *appwk, FADEREQ req)
+{
+  _PanelColor_SetMode(appwk, PANEL_COLORMODE_FLASH, req);
+}
+
+//==================================================================
+/**
+ * パネルシステム初期化
+ *
+ * @param   appwk		
+ */
+//==================================================================
+void MonolithTool_Panel_Init(MONOLITH_APP_PARENT *appwk)
+{
+  GFL_STD_MemClear(&appwk->tool.panel_color, sizeof(PANEL_COLOR_CONTROL));
 }
 
 //==================================================================
@@ -273,6 +370,11 @@ PANEL_COLORMODE MonolithTool_PanelColor_GetMode(MONOLITH_APP_PARENT *appwk)
 void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
 {
   PANEL_COLOR_CONTROL *pcc = &appwk->tool.panel_color;
+  int start_colpos, change_colpos, color_num;
+  
+  start_colpos = _PanelColor_GetStartColorPos(req);
+  change_colpos = _PanelColor_GetChangeDataColorPos(req);
+  color_num = _PanelColor_GetChangeColorNum(req);
   
   switch(pcc->mode){
   case PANEL_COLORMODE_FOCUS:
@@ -297,11 +399,11 @@ void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
       }
       pcc->evy = evy;
       evy >>= 8;
-      for(i = 0; i < PANEL_COLOR_NUM; i++){
-        SoftFadePfd(appwk->setup->pfd, req, COMMON_PAL_PANEL_FOCUS * 16 + PANEL_COLOR_START + i,
+      for(i = 0; i < color_num; i++){
+        SoftFadePfd(appwk->setup->pfd, req, start_colpos + i,
           1, evy, 
-          PaletteWork_ColorGet(appwk->setup->pfd, FADE_SUB_BG, FADEBUF_SRC, 
-          PANEL_FADEDATA_PALNO*16+PANEL_COLOR_START+i));
+          PaletteWork_ColorGet(appwk->setup->pfd, req, FADEBUF_SRC, 
+          change_colpos + i));
       }
     }
     break;
@@ -318,14 +420,14 @@ void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
           pcc->evy = 0;
           pcc->count++;
           if(pcc->count > PANEL_COLOR_FLASH_COUNT){
-            MonolithTool_PanelColor_SetMode(appwk, PANEL_COLORMODE_NONE, req);
+            _PanelColor_SetMode(appwk, PANEL_COLORMODE_NONE, req);
           }
         }
-        for(i = 0; i < PANEL_COLOR_NUM; i++){
-          SoftFadePfd(appwk->setup->pfd, req, COMMON_PAL_PANEL_FOCUS * 16 + PANEL_COLOR_START + i,
+        for(i = 0; i < color_num; i++){
+          SoftFadePfd(appwk->setup->pfd, req, start_colpos + i,
             1, pcc->evy >> 8, 
-            PaletteWork_ColorGet(appwk->setup->pfd, FADE_SUB_BG, FADEBUF_SRC, 
-            PANEL_FADEDATA_PALNO*16+PANEL_COLOR_START+i));
+            PaletteWork_ColorGet(appwk->setup->pfd, req, FADEBUF_SRC, 
+            change_colpos + i));
         }
       }
       else{
@@ -336,63 +438,83 @@ void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
   }
 }
 
-//==================================================================
+//--------------------------------------------------------------
 /**
- * パネルに対してフォーカスを設定する
+ * パネルカラーアニメ：モード設定
  *
- * @param   appwk
- * @param   panel[]		  パネルアクターの配列へのポインタ
- * @param   panel_max		パネルアクター配列の要素数
- * @param   focus_no		フォーカスされるパネル番号(何もフォーカスしない場合はPANEL_NO_FOCUS)
- * @param   req         FADE_SUB_OBJ等
+ * @param   appwk		
+ * @param   mode		
+ * @param   req		
  */
-//==================================================================
-void MonolithTool_Panel_Focus(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR panel[], int panel_max, int focus_no, FADEREQ req)
+//--------------------------------------------------------------
+static void _PanelColor_SetMode(MONOLITH_APP_PARENT *appwk, PANEL_COLORMODE mode, FADEREQ req)
 {
-  int i;
+  PANEL_COLOR_CONTROL *pcc = &appwk->tool.panel_color;
   
-  for(i = 0; i < panel_max; i++){
-    if(i == focus_no){
-      GFL_CLACT_WK_SetPlttOffs(panel[i].cap, COMMON_PAL_PANEL_FOCUS, CLWK_PLTTOFFS_MODE_PLTT_TOP);
-      MonolithTool_PanelColor_SetMode(appwk, PANEL_COLORMODE_FOCUS, req);
-    }
-    else{
-      GFL_CLACT_WK_SetPlttOffs(panel[i].cap, COMMON_PAL_PANEL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
-    }
+  GFL_STD_MemClear(pcc, sizeof(PANEL_COLOR_CONTROL));
+  pcc->mode = mode;
+  
+  //カラー初期化
+  SoftFadePfd(appwk->setup->pfd, req, _PanelColor_GetStartColorPos(req), 
+    _PanelColor_GetChangeColorNum(req), 0, 0x0000);
+}
+
+//--------------------------------------------------------------
+/**
+ * パネルフェード開始カラー位置を取得する
+ * @param   req		
+ * @retval  int		カラー位置
+ */
+//--------------------------------------------------------------
+static int _PanelColor_GetStartColorPos(FADEREQ req)
+{
+  if(req == FADE_MAIN_BG || req == FADE_SUB_BG){
+    return PANEL_START_PALNO_BG_D * 16 + PANEL_COLOR_START;
   }
-  
-  if(focus_no == PANEL_NO_FOCUS){
-    MonolithTool_PanelColor_SetMode(appwk, PANEL_COLORMODE_NONE, req);
+  else{
+    return COMMON_PAL_PANEL_FOCUS * 16 + PANEL_COLOR_START;
   }
 }
 
-//==================================================================
+//--------------------------------------------------------------
 /**
- * パネルに対してフラッシュを行う
- *
- * @param   appwk
- * @param   panel[]		  パネルアクターの配列へのポインタ
- * @param   panel_max		パネルアクター配列の要素数
- * @param   focus_no		フラッシュするパネル番号(何もフォーカスしない場合はPANEL_NO_FOCUS)
- * @param   req         FADE_SUB_OBJ等
+ * パネルフェードの変化先の色が入っているカラー位置を取得する
+ * @param   req		
+ * @retval  int		変化先のカラーが入っているカラー位置
  */
-//==================================================================
-void MonolithTool_Panel_Flash(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR panel[], int panel_max, int focus_no, FADEREQ req)
+//--------------------------------------------------------------
+static int _PanelColor_GetChangeDataColorPos(FADEREQ req)
 {
-  int i;
-  
-  for(i = 0; i < panel_max; i++){
-    if(i == focus_no){
-      GFL_CLACT_WK_SetPlttOffs(panel[i].cap, COMMON_PAL_PANEL_FOCUS, CLWK_PLTTOFFS_MODE_PLTT_TOP);
-      MonolithTool_PanelColor_SetMode(appwk, PANEL_COLORMODE_FLASH, req);
-    }
-    else{
-      GFL_CLACT_WK_SetPlttOffs(panel[i].cap, COMMON_PAL_PANEL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
-    }
+  if(req == FADE_MAIN_BG || req == FADE_SUB_BG){
+    return PANEL_FADEDATA_PALNO_BG_D * 16 + PANEL_COLOR_START;
+  }
+  else{
+    return PANEL_FADEDATA_PALNO_OBJ * 16 + PANEL_COLOR_START;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * パネルフェードするカラー数を取得する
+ * @param   req		
+ * @retval  int		カラー数
+ */
+//--------------------------------------------------------------
+static int _PanelColor_GetChangeColorNum(FADEREQ req)
+{
+  if(req == FADE_MAIN_BG || req == FADE_SUB_BG){
+    return PANEL_COLOR_NUM;
+  }
+  else{
+    return PANEL_COLOR_NUM;
   }
 }
 
 
+
+//==============================================================================
+//  
+//==============================================================================
 //==================================================================
 /**
  * BMPOAMアクター生成

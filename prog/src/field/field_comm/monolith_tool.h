@@ -70,18 +70,34 @@ typedef struct{
 //==============================================================================
 //  外部関数宣言
 //==============================================================================
-extern void MonolithTool_Panel_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int y, u32 msg_id, WORDSET *wordset);
-extern void MonolithTool_Panel_Delete(PANEL_ACTOR *panel);
-extern void MonolithTool_Panel_SetEnable(PANEL_ACTOR *panel, BOOL on_off);
-extern BOOL MonolithTool_Panel_TransUpdate(MONOLITH_SETUP *setup, PANEL_ACTOR *panel);
+//--------------------------------------------------------------
+//  パネルOBJ
+//--------------------------------------------------------------
+extern void MonolithTool_PanelOBJ_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int y, u32 msg_id, WORDSET *wordset);
+extern void MonolithTool_PanelOBJ_Delete(PANEL_ACTOR *panel);
+extern void MonolithTool_PanelOBJ_SetEnable(PANEL_ACTOR *panel, BOOL on_off);
+extern BOOL MonolithTool_PanelOBJ_TransUpdate(MONOLITH_SETUP *setup, PANEL_ACTOR *panel);
+extern void MonolithTool_PanelOBJ_Focus(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR panel[], 
+  int panel_max, int focus_no, FADEREQ req);
+extern void MonolithTool_PanelOBJ_Flash(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR panel[], 
+  int panel_max, int focus_no, FADEREQ req);
 
+//--------------------------------------------------------------
+//  パネルBG
+//--------------------------------------------------------------
+extern void MonolithTool_PanelBG_Focus(MONOLITH_APP_PARENT *appwk, BOOL focus_use, FADEREQ req);
+extern void MonolithTool_PanelBG_Flash(MONOLITH_APP_PARENT *appwk, FADEREQ req);
+
+//--------------------------------------------------------------
+//  パネル共通処理
+//--------------------------------------------------------------
+extern void MonolithTool_Panel_Init(MONOLITH_APP_PARENT *appwk);
 extern PANEL_COLORMODE MonolithTool_PanelColor_GetMode(MONOLITH_APP_PARENT *appwk);
 extern void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req);
-extern void MonolithTool_Panel_Focus(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR panel[], 
-  int panel_max, int focus_no, FADEREQ req);
-extern void MonolithTool_Panel_Flash(MONOLITH_APP_PARENT *appwk, PANEL_ACTOR panel[], 
-  int panel_max, int focus_no, FADEREQ req);
 
+//--------------------------------------------------------------
+//  BMPOAM
+//--------------------------------------------------------------
 extern void MonolithTool_Bmpoam_Create(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *dest, COMMON_RESOURCE_INDEX res_index, int act_x, int act_y, int bmp_size_x, int bmp_size_y, u32 msg_id, WORDSET *wordset);
 extern void MonolithTool_Bmpoam_Delete(MONOLITH_BMPSTR *bmpstr);
 extern BOOL MonolithTool_Bmpoam_TransUpdate(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmpstr);

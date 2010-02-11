@@ -69,7 +69,7 @@ typedef enum{
   COMMON_ANMSEQ_RETURN,
 }COMMON_ANMSEQ;
 
-///共通素材パレットの割り当て
+///共通素材パレットの割り当て(OBJ)
 typedef enum{
   COMMON_PAL_PANEL = 0,       ///<パレット(未選択)
   COMMON_PAL_PANEL_FOCUS,     ///<パレット(選択されている)
@@ -81,6 +81,12 @@ typedef enum{
   
   COMMON_PAL_RETURN = 0,      ///<戻るアイコン
 }COMMON_PAL;
+
+///共通素材パレットの割り当て(BG)
+typedef enum{
+  COMMON_PALBG_PANEL = 0,           ///<パレット(未選択)
+  COMMON_PALBG_PANEL_FOCUS = 3,     ///<パレット(選択されている)
+}COMMON_PALBG;
 
 ///パネルカラーモード
 typedef enum{

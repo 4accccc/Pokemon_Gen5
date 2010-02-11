@@ -321,7 +321,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       }
       else if(tp_ret == TOUCH_RECEIVE || (trg & PAD_BUTTON_DECIDE)){
         OS_TPrintf("uŽó‚¯‚év‘I‘ð\n");
-        MonolithTool_Panel_Flash(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+        MonolithTool_PanelOBJ_Flash(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
         *seq = SEQ_ORDER;
       }
       else if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
@@ -665,14 +665,16 @@ static void _TownIcon_AllUpdate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_APP_PARENT
 //==================================================================
 static void _Msselect_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw)
 {
-  MonolithTool_Panel_Create(appwk->setup, &mmw->panel[_PANEL_ORDER], 
+  MonolithTool_Panel_Init(appwk);
+  
+  MonolithTool_PanelOBJ_Create(appwk->setup, &mmw->panel[_PANEL_ORDER], 
     COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_RECEIVE_Y, msg_mono_mis_000, NULL);
-  MonolithTool_Panel_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+  MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
 
-  MonolithTool_Panel_Create(appwk->setup, &mmw->panel[_PANEL_ENFORCEMENT], 
+  MonolithTool_PanelOBJ_Create(appwk->setup, &mmw->panel[_PANEL_ENFORCEMENT], 
     COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_RECEIVE_Y, msg_mono_mis_001, NULL);
-  MonolithTool_Panel_Focus(appwk, &mmw->panel[_PANEL_ENFORCEMENT], 1, 0, FADE_SUB_OBJ);
-  MonolithTool_Panel_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], FALSE);
+  MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ENFORCEMENT], 1, 0, FADE_SUB_OBJ);
+  MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], FALSE);
 }
 
 //==================================================================
@@ -687,7 +689,7 @@ static void _Msselect_PanelDelete(MONOLITH_MSSELECT_WORK *mmw)
   int i;
   
   for(i = 0; i < _PANEL_MAX; i++){
-    MonolithTool_Panel_Delete(&mmw->panel[i]);
+    MonolithTool_PanelOBJ_Delete(&mmw->panel[i]);
   }
 }
 
@@ -704,7 +706,7 @@ static void _Msselect_PanelUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_
   
   MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_OBJ);
   for(i = 0; i < _PANEL_MAX; i++){
-    MonolithTool_Panel_TransUpdate(appwk->setup, &mmw->panel[i]);
+    MonolithTool_PanelOBJ_TransUpdate(appwk->setup, &mmw->panel[i]);
   }
 }
 
@@ -757,12 +759,12 @@ static void _Msselect_CancelIconUpdate(MONOLITH_MSSELECT_WORK *mmw)
 static void _Msselect_ViewChange(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw, int view_mode)
 {
   if(view_mode == VIEW_ORDER){
-    MonolithTool_Panel_SetEnable(&mmw->panel[_PANEL_ORDER], TRUE);
-    MonolithTool_Panel_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], FALSE);
+    MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ORDER], TRUE);
+    MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], FALSE);
   }
   else{
     appwk->common->mission_select_town = SELECT_TOWN_ENFORCEMENT;
-    MonolithTool_Panel_SetEnable(&mmw->panel[_PANEL_ORDER], FALSE);
-    MonolithTool_Panel_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], TRUE);
+    MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ORDER], FALSE);
+    MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], TRUE);
   }
 }
