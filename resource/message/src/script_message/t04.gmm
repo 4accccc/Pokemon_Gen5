@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-04T21:49:50"/>
+	<create user="matsumiya" host="W00224" date="2010-02-11T20:43:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1420" top="316" right="2125" bottom="936" maximized="no" rayout="Vertical2">
+	<dialog left="1287" top="184" right="1992" bottom="812" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,7 +296,7 @@
 		<comment>♂
 ・いつもいる
 ・ヒンバス進化アイテムをくれる
-　条件を満たせば何個でも？</comment>
+　条件を満たせば何個でも？（仮）</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
