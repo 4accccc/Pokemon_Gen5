@@ -182,7 +182,7 @@
 #define FE_LEGEND1_GET                     166 /* 0x00a6 伝説ポケモン：アトスをつかまえた */
 #define FE_LEGEND2_GET                     167 /* 0x00a7 伝説ポケモン：ポルトスを捕まえた */
 #define FE_LEGEND3_GET                     168 /* 0x00a8 伝説ポケモン：アラミスを捕まえた */
-		/* not used   169(0x00a9) */
+#define FE_D06R0201_GOLDGET                169 /* 0x00a9 電気洞窟内：きんのたま入手フラグ */
 		/* not used   170(0x00aa) */
 		/* not used   171(0x00ab) */
 		/* not used   172(0x00ac) */
@@ -676,7 +676,7 @@
 		/* not used   652(0x028c) */
 		/* not used   653(0x028d) */
 #define FV_BSUBWAY_RECEIPT_PARTNER         654 /* 0x028e バトルサブウェイ、受付：パートナー */
-		/* not used   655(0x028f) */
+#define FV_D06R0101_HAKAI                  655 /* 0x028f 電気洞窟内のダークトリニティ３人 */
 		/* not used   656(0x0290) */
 		/* not used   657(0x0291) */
 		/* not used   658(0x0292) */
