@@ -8,6 +8,7 @@
 //=============================================================================
 
 #include "gflib.h"
+#include "system\ds_system.h"
 
 #include "net/dwc_rap.h"
 #include "net/dwc_rapcommon.h"
@@ -31,7 +32,7 @@
 
 // デバッグ出力を大量に吐き出す場合定義
 #if defined(DEBUG_ONLY_FOR_ohno)
-#define DEBUGPRINT_ON (0)
+#define DEBUGPRINT_ON (1)
 #else
 #define DEBUGPRINT_ON (0)
 #endif
@@ -188,11 +189,30 @@ static void SndCallback(NNSSndStrmCallbackStatus sts,
 		return;
 	}
 
-	if (_vWork->firstCallback) {
-		GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StartAutoSamplingAsync( &(_vWork->micParam), micCallback, NULL));
-		_vWork->firstCallback = 0;
-	}
+#if (defined(SDK_TWL))  //こちらが本番
 
+  if(!DS_SYSTEM_IsRunOnTwl()){
+    if (_vWork->firstCallback) {
+      GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StartAutoSamplingAsync( &(_vWork->micParam), micCallback, NULL));
+      _vWork->firstCallback = 0;
+    }
+  }
+  else{
+    if (_vWork->firstCallback) {
+      GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StartLimitedSamplingAsync( &(_vWork->micParam), micCallback, NULL));
+      _vWork->firstCallback = 0;
+    }
+  }
+#else
+
+  if (_vWork->firstCallback) {
+    GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StartAutoSamplingAsync( &(_vWork->micParam), micCallback, NULL));
+    _vWork->firstCallback = 0;
+  }
+
+#endif
+
+  
 	micAddr = MIC_GetLastSamplingAddress();
 	offset  = (u32)((u8*)micAddr - micSrc);
 
@@ -539,8 +559,17 @@ void myvct_init( int heapID, int codec,int maxEntry )
 		_vWork->micParam.type   = MIC_SAMPLING_TYPE_SIGNED_12BIT;
 		_vWork->micParam.buffer = _vWork->sRecBuffer;
 		_vWork->micParam.size   = length * 2;
-		_vWork->micParam.rate = (u32)((NNS_SND_STRM_TIMER_CLOCK / VCHAT_SAMPLING_RATE) * 64);
-		_vWork->micParam.loop_enable = TRUE;
+    if( !DS_SYSTEM_IsRunOnTwl() ){//DSIなら
+      _vWork->micParam.rate = (u32)((NNS_SND_STRM_TIMER_CLOCK / VCHAT_SAMPLING_RATE) * 64);
+    }
+    else{
+#if (defined(SDK_TWL))  //こちらが本番
+      _vWork->micParam.rate = (u32)MIC_SAMPLING_RATE_8180;
+#else
+      _vWork->micParam.rate = (u32)((NNS_SND_STRM_TIMER_CLOCK / VCHAT_SAMPLING_RATE) * 64);
+#endif
+    }
+    _vWork->micParam.loop_enable = TRUE;
 		_vWork->micParam.full_callback = NULL;
 		_vWork->micParam.full_arg = NULL;
 		_vWork->firstCallback = 1;
@@ -551,15 +580,28 @@ void myvct_init( int heapID, int codec,int maxEntry )
 	NNS_SndStrmSetVolume(&_vWork->sSndStream, 0);
 
   VCT_PRINT("NNS_SndStrmSetup\n");
-	ret = NNS_SndStrmSetup(&_vWork->sSndStream,
-												 NNS_SND_STRM_FORMAT_PCM16,
-												 _vWork->sPlayBuffer,
-												 length * 2 * 1,
-												 NNS_SND_STRM_TIMER_CLOCK / VCHAT_SAMPLING_RATE,
-												 2,
-												 SndCallback,
-												 _vWork->sRecBuffer);
-  GF_ASSERT(ret);
+
+  {
+    u32 num;
+
+    if( DS_SYSTEM_IsRunOnTwl() ){//DSIなら
+      num = NNS_SND_STRM_TIMER_CLOCK / 8180;
+    }
+    else{
+      num = NNS_SND_STRM_TIMER_CLOCK / VCHAT_SAMPLING_RATE;
+    }
+
+  
+    ret = NNS_SndStrmSetup(&_vWork->sSndStream,
+                           NNS_SND_STRM_FORMAT_PCM16,
+                           _vWork->sPlayBuffer,
+                           length * 2 * 1,
+                           num,
+                           2,
+                           SndCallback,
+                           _vWork->sRecBuffer);
+    GF_ASSERT(ret);
+  }
 
 	_vWork->state = VCTSTATE_INIT;
 	_vWork->session = NULL;
