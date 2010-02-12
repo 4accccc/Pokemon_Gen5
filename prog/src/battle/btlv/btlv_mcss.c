@@ -426,6 +426,9 @@ void  BTLV_MCSS_AddTrainer( BTLV_MCSS_WORK *bmw, int tr_type, int position )
   GF_ASSERT( index < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT_MSG( BTLV_MCSS_GetIndex( bmw, position ) == BTLV_MCSS_NO_INDEX, "pos=%d", position );
 
+  //—§‚¿ˆÊ’u‚ð•Û‘¶
+  bmw->btlv_mcss[ index ].position = position;
+
   BTLV_MCSS_MakeMAWTrainer( tr_type, &maw, position );
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
   bmw->btlv_mcss[ index ].mcss = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &maw );
