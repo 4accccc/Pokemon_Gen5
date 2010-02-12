@@ -183,6 +183,7 @@ end
 # 列インデックス
 COLUMN_HOBBY_JPN       = 1  # 趣味文字列 (かな)
 COLUMN_HOBBY_JPN_KANJI = 2  # 趣味文字列 (漢字)
+COLUMN_HOBBY_ID_LAVEL  = 3  # 趣味IOラベル名
 # 行インデックス
 ROW_FIRST_HOBBY = 2  # 先頭データ
 
@@ -191,10 +192,11 @@ fileReader = TabSeparatedFileReader.new
 fileReader.ReadFile( FILENAME_HOBBY_DATA )
 ROW_FIRST_HOBBY.upto( fileReader.GetRowNum - 1 ) do |rowIdx|
   id              = rowIdx - ROW_FIRST_HOBBY
-  stringJPN       = fileReader.GetCell( rowIdx, COLUMN_HOBBY_JPN )
-  stringJPN_KANJI = fileReader.GetCell( rowIdx, COLUMN_HOBBY_JPN_KANJI )
+  stringJPN       = fileReader.GetCell( rowIdx, COLUMN_HOBBY_JPN ).strip
+  stringJPN_KANJI = fileReader.GetCell( rowIdx, COLUMN_HOBBY_JPN_KANJI ).strip
+  idLavel         = fileReader.GetCell( rowIdx, COLUMN_HOBBY_ID_LAVEL ).strip
   hobby = Hobby.new
-  hobby.SetID( id )
+  hobby.SetID( id, idLavel )
   hobby.SetString( stringJPN, stringJPN_KANJI )
   hobby.OutputDebug( DEBUG_OUTPUT_DEST )
   hobbies << hobby
@@ -300,3 +302,20 @@ end
 
 # gmm 生成
 GenerateGMM( directory, fileName, stringLavel, stringJPN, stringJPN_KANJI )
+
+
+#=================================================================================== 
+# ■main
+# □趣味ID ファイル出力
+#=================================================================================== 
+# 出力データ作成
+outData = Array.new
+outData << "// コンバータにより生成"
+hobbies.each do |hobby|
+  outData << "#define #{hobby.ID_lavel} (#{hobby.ID})"
+end
+
+# 出力
+file = File.open( "hobby_id.h", "w" )
+file.puts( outData )
+file.close

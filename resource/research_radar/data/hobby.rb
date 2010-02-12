@@ -15,17 +15,20 @@ class Hobby
 
   def initialize
     @ID              = 0    # ID
+    @ID_lavel        = nil  # ID (ラベル名)
     @stringJPN       = nil  # 趣味名 (かな)
     @stringJPN_KANJI = nil  # 趣味名 (漢字)
   end
 
-  attr_reader :ID, :stringJPN, :stringJPN_KANJI
+  attr_reader :ID, :ID_lavel, :stringJPN, :stringJPN_KANJI
 
-  #-----------------------
+  #-----------------------------
   # □brief: IDを設定する
-  # □param: id ID
-  def SetID( id )
-    @ID = id
+  # □param: id    ID
+  # □param: lavel ID (ラベル名)
+  def SetID( id, lavel )
+    @ID       = id
+    @ID_lavel = lavel
   end
 
   #-------------------------------
@@ -43,6 +46,8 @@ class Hobby
   def OutputDebug( directory )
     # 出力データ作成
     outData = Array.new
+    outData << "ID              = #{@ID}"
+    outData << "ID_lavel        = #{@ID_lavel}"
     outData << "stringJPN       = #{@stringJPN}"
     outData << "stringJPN_KANJI = #{@stringJPN_KANJI}"
     # 出力

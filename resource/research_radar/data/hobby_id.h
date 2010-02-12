@@ -1,0 +1,10 @@
+// コンバータにより生成
+#define HOBBY_ID_NULL (0)
+#define HOBBY_ID_SPORT (1)
+#define HOBBY_ID_READING (2)
+#define HOBBY_ID_MUSIC (3)
+#define HOBBY_ID_MOVIE (4)
+#define HOBBY_ID_TRAVEL (5)
+#define HOBBY_ID_COOKING (6)
+#define HOBBY_ID_FISHING (7)
+#define HOBBY_ID_GAME (8)
