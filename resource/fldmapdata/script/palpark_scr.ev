@@ -401,6 +401,11 @@ first_anime_evt:
   //博士「！」
   _OBJ_ANIME( R15R0301_PARK, anm_gyoe )
   _OBJ_ANIME_WAIT()
+
+  //博士振り向く
+  _OBJ_ANIME( R15R0301_PARK, anm_turn )
+  _OBJ_ANIME_WAIT()
+
   //博士「グーレイト」
   _BALLOONWIN_OBJMSG( msg_palpark_first_05, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
@@ -600,6 +605,13 @@ _ANIME_LABEL	anm_dir_up
 _ANIME_LABEL	anm_gyoe
   _ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ターン
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn
+  _ANIME_DATA	AC_STAY_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0  
 
 //--------------------------------------------------------------------
 //スピン
