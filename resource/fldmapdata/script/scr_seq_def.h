@@ -996,7 +996,7 @@
  *  @brief  吹き出しウィンドウ描画　位置指定あり
  *  @param msg_id 表示するメッセージID
  *  @param obj_id 吹き出しを出す対象OBJ ID
- *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
+ *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DOWN,WIN_NONE
  */
 //--------------------------------------------------------------
 #define _BALLOONWIN_OBJMSG_POS( msg_id , obj_id, pos ) \
@@ -1018,7 +1018,7 @@
  *  @param msg_id_m 表示するメッセージID　男性
  *  @param msg_id_f 表示するメッセージID　女性
  *  @param obj_id 吹き出しを出す対象OBJ ID
- *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
+ *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DOWN,WIN_NONE
  */
 //--------------------------------------------------------------
 #define _BALLOONWIN_OBJMSG_MF( msg_id_m, msg_id_f, obj_id, pos ) \
@@ -1041,7 +1041,7 @@
  *  @param msg_id_w 表示するメッセージID、ホワイト版
  *  @param msg_id_b 表示するメッセージID、ブラック版
  *  @param obj_id 吹き出しを出す対象OBJ ID
- *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
+ *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DOWN,WIN_NONE
  */
 //--------------------------------------------------------------
 #define _BALLOONWIN_OBJMSG_WB( msg_id_w, msg_id_b, obj_id, pos ) \
@@ -1063,7 +1063,7 @@
  *  @brief  吹き出しウィンドウ描画　ギザギザ　位置指定あり
  *  @param msg_id 表示するメッセージID
  *  @param obj_id 吹き出しを出す対象OBJ ID
- *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
+ *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DOWN,WIN_NONE
  */
 //--------------------------------------------------------------
 #define _GIZAWIN_OBJMSG_POS( msg_id , obj_id, pos ) \
@@ -5470,6 +5470,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _BMODEL_ANIME_LOOP_SET
+ * @brief 配置モデルループアニメのセット
+ * @param anm_id    配置モデルを指定するためのID
+ * @param anm_type  アニメーションの種類指定
+ */
+//--------------------------------------------------------------
+#define _BMODEL_ANIME_LOOP_SET( anm_id, anm_type ) \
+    _ASM_BMODEL_ANIME_LOOP_SET anm_id, anm_type
+
+    .macro _ASM_BMODEL_ANIME_LOOP_SET anm_id, anm_type
+    .short  EV_SEQ_BMODEL_ANIME_LOOP_SET
+    .short  \anm_id
+    .short  \anm_type
+    .endm    
+
+//--------------------------------------------------------------
+/**
  * @def _BMODEL_ANIME_STOP
  * @brief 配置モデルアニメの停止
  * @param anm_id  配置モデルを指定するためのID
@@ -7534,6 +7551,19 @@
 
   .macro  _ASM_UN_GET_COUNTRY_NUM ret
   .short EV_SEQ_UN_GET_COUNTRY_NUM
+  .short \ret
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 有効データ数
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _UN_GET_VALID_DATA_NUM( ret ) _ASM_UN_GET_VALID_DATA_NUM ret
+
+  .macro  _ASM_UN_GET_VALID_DATA_NUM ret
+  .short EV_SEQ_UN_GET_VALID_DATA_NUM
   .short \ret
   .endm
 
