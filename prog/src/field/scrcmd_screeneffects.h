@@ -35,6 +35,7 @@ extern VMCMD_RESULT EvCmdBModelDirectChangeViewFlag( VMHANDLE * core, void *wk )
 extern VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdBModelAnimeDelete( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdBModelAnimeLoopSet( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdBModelAnimeStop( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk );
 

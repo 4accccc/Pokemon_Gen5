@@ -612,6 +612,31 @@ VMCMD_RESULT EvCmdBModelAnimeSet( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief 配置モデルアニメ制御：ループアニメセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBModelAnimeLoopSet( VMHANDLE * core, void *wk )
+{
+  u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
+  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( wk );
+  FIELD_BMODEL * bmodel;
+
+  bmodel = FIELD_BMODEL_MAN_GetBModelByUniqKey( bmodel_man, anime_id );
+  if (bmodel != NULL)
+  {
+    FIELD_BMODEL_SetAnime( bmodel, anime_type, BMANM_REQ_LOOP );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief 配置モデルアニメ制御：アニメセット
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
