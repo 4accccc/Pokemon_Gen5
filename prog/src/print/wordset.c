@@ -12,6 +12,7 @@
 #include "print/wordset.h"
 #include "print/global_msg.h"
 #include "str_tool_local.h"
+#include "../../../resource/research_radar/data/hobby_id.h"  // for HOBBY_ID_xxxx
 
 #include "arc_def.h"
 #include "message.naix"
@@ -755,6 +756,34 @@ void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power 
     GFL_MSG_GetString( msg, g_power, wordset->tmpBuf );
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete(msg);
+  }
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファに趣味名を登録
+ *
+ * @param bufID   バッファID
+ * @param hobbyID 趣味ID
+ */
+//------------------------------------------------------------------
+extern void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID )
+{
+  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+      ARCID_MESSAGE, NARC_message_hobby_dat, wordset->heapID );
+
+  // 趣味IDエラー
+  if( HOBBY_ID_MAX < hobbyID )
+  {
+    GF_ASSERT(0);
+    return;
+  }
+
+  if( msg )
+  {
+    GFL_MSG_GetString( msg, hobbyID, wordset->tmpBuf );
+    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+    GFL_MSG_Delete( msg );
   }
 }
 

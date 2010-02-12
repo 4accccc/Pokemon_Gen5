@@ -1985,6 +1985,24 @@
   .byte \idx
   .short \code
   .endm
+
+//--------------------------------------------------------------
+/**
+ * 趣味名をバッファにセット
+ * @param idx     セットするタグナンバー
+ * @param hobbyID 趣味ID ( HOBBY_ID_xxxx )
+ *  
+ * ◆趣味ID は resource/research_radar/data/hobby_id.h で定義
+ */
+//--------------------------------------------------------------
+#define _HOBBY_NAME( idx, hobbyID ) \
+    _ASM_HOBBY_NAME idx, hobbyID
+
+  .macro _ASM_HOBBY_NAME idx, hobbyID
+  .short EV_SEQ_HOBBY_NAME
+  .byte  \idx
+  .short \hobbyID
+  .endm
   
   
 

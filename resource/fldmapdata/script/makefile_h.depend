@@ -1515,3 +1515,15 @@ palace10_def.h: palace10.ev
 r07r0301_def.h: r07r0301.ev
 	$(EV_DEF) r07r0301.ev $(SCR_OFFS_ID_H)
 
+d20r0701_def.h: d20r0701.ev
+	$(EV_DEF) d20r0701.ev $(SCR_OFFS_ID_H)
+
+d20r0801_def.h: d20r0801.ev
+	$(EV_DEF) d20r0801.ev $(SCR_OFFS_ID_H)
+
+d20r0901_def.h: d20r0901.ev
+	$(EV_DEF) d20r0901.ev $(SCR_OFFS_ID_H)
+
+d20r1001_def.h: d20r1001.ev
+	$(EV_DEF) d20r1001.ev $(SCR_OFFS_ID_H)
+

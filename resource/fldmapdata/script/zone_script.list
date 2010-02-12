@@ -940,5 +940,13 @@ SCRIPTFILES += \
 	sp_palace10.ev \
 	r07r0301.ev \
 	sp_r07r0301.ev \
+	d20r0701.ev \
+	sp_d20r0701.ev \
+	d20r0801.ev \
+	sp_d20r0801.ev \
+	d20r0901.ev \
+	sp_d20r0901.ev \
+	d20r1001.ev \
+	sp_d20r1001.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö

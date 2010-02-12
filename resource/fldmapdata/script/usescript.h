@@ -106,10 +106,13 @@
 //国連部屋情報タイプ定義
 #include "../../../prog/src/field/un_roominfo_def.h"
 
+// 趣味ID
+#include "../../research_radar/data/hobby_id.h"
 
 //スクリプト内共通定義ヘッダファイル
 //最初の3体タイプわけなど
 #include "user_define.h"
+
 
 //--------------------------------------------------------------
 //  wb_null

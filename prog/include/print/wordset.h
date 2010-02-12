@@ -60,6 +60,7 @@ extern void WORDSET_RegisterItemPocketName( WORDSET* wordset, u32 bufID, u32 poc
 extern void WORDSET_RegisterPlaceName( WORDSET* wordset, u32 bufID, u32 zoneID );
 extern void WORDSET_RegisterBoxName( WORDSET* wordset, u32 bufID, const BOX_MANAGER* box, u32 trayNumber );
 extern void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power );
+extern void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID );
 extern void WORDSET_ExpandStr( const WORDSET* wordset, STRBUF* dstbuf, const STRBUF* srcbuf );
 extern void WORDSET_ClearAllBuffer( WORDSET* wordset );
 

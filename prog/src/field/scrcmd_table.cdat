@@ -194,7 +194,7 @@
   DEF_CMD( EvCmdMusicalWord , EV_SEQ_MUSICAL_WORD )
   DEF_CMD( EvCmdCountryName , EV_SEQ_COUNTRY_NAME )
   
-  NO_CMD()
+  DEF_CMD( EvCmdHobbyName , EV_SEQ_HOBBY_NAME )
   NO_CMD()
   NO_CMD()
   NO_CMD()
