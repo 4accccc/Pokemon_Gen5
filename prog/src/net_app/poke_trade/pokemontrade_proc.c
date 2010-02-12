@@ -1337,7 +1337,16 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
     POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox,
                                                                  pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
     POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
+
     pWork->pokemonselectno = 0;
+
+    if(GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY){  // キーの時は位置を補正
+      IRC_POKETRADE_SetCursorXY(pWork);
+      NET_PRINT("キーの時 %d\n",pWork->x);
+    }
+    else{
+      NET_PRINT("PAD時 %d\n",pWork->x);
+    }
     POKETRADE_MESSAGE_ChangePokemonMyStDisp(pWork, pWork->pokemonselectno , (pWork->x < 128), pp);
     GFL_HEAP_FreeMemory(pp);
   }
@@ -1890,6 +1899,8 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
     bChange=TRUE;
   }
 
+ // NET_PRINT("MainObjCursorIndex %d MainObjCursorLine %d  \n",pWork->MainObjCursorIndex,pWork->MainObjCursorLine);
+  
   if(bChange){
     pWork->bgscrollRenew = TRUE;
     PMSND_PlaySystemSE(POKETRADESE_CUR);
@@ -2005,6 +2016,10 @@ static void _DeletePokemonState(POKEMON_TRADE_WORK* pWork)
   }
   pWork->selectIndex = -1;
   pWork->selectBoxno = -1;
+  pWork->workPokeIndex = -1;
+  pWork->workBoxno = -1;
+  pWork->underSelectIndex = -1;
+  pWork->underSelectBoxno = -1;
   _PokemonReset(pWork,0);
 
   _PokemonIconRenew(pWork);

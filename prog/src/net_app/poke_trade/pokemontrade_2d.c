@@ -812,16 +812,19 @@ static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno
 //カーソルの位置をセットする
 void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork)
 {
-  int k;
+  int i,j;
   GFL_CLACTPOS apos;
 
-  k =  POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine);
-  GFL_CLACT_WK_GetPos( pWork->markIcon[k][pWork->MainObjCursorIndex],&apos,CLSYS_DRAW_SUB);
-  pWork->x = apos.x;
-  pWork->y = apos.y;
+  for(j = 0; j < BOX_VERTICAL_NUM;j++){
+    for(i = 0; i < _LING_LINENO_MAX;i++){
+      if(GFL_CLACT_WK_GetDrawEnable( pWork->markIcon[i][j])){
+        GFL_CLACT_WK_GetPos( pWork->markIcon[i][j],&apos,CLSYS_DRAW_SUB);
+        pWork->x = apos.x;
+        pWork->y = apos.y;
+      }
+    }
+  }
 }
-
-
 
 #if 1
 #include "tradehead.cdat"
