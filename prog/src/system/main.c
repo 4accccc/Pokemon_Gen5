@@ -215,7 +215,7 @@ static	void	GameInit(void)
 	// 通信のデバッグプリントを行う定義
 #ifdef PM_DEBUG
 #if defined(DEBUG_ONLY_FOR_ohno)||defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-	//GFL_NET_DebugPrintOn();
+	GFL_NET_DebugPrintOn();
 #endif
 #endif  //PM_DEBUG
 	// 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
