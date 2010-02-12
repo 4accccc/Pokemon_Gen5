@@ -18,6 +18,7 @@
 #include "print/wordset.h"
 #include "system/wipe.h"
 #include "savedata/misc.h"
+#include "app/app_menu_common.h"
 
 #include "arc_def.h"
 #include "mb_parent.naix"
@@ -39,7 +40,13 @@
 #define MB_PARENT_FRAME_BG  (GFL_BG_FRAME3_M)
 
 #define MB_PARENT_FRAME_SUB_MSG  (GFL_BG_FRAME1_S)
+#define MB_PARENT_FRAME_SUB_BAR  (GFL_BG_FRAME2_S)
 #define MB_PARENT_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
+
+#define MB_PARENT_PLT_SUB_OBJ_APP  (0)
+
+#define MB_PARENT_PLT_SUB_BG  (0)
+#define MB_PARENT_PLT_SUB_BAR (3)
 
 #define MB_PARENT_FIRST_TIMEOUT (60*15) //通常5秒以内で接続するのができなかった。
 
@@ -121,6 +128,15 @@ typedef enum
   MPCS_END,
 }MB_PARENT_CONFIRM_STATE;
 
+typedef enum
+{
+  MPCR_PLT_APP,
+  MPCR_NCG_APP,
+  MPCR_ANM_APP,
+
+  MPCR_MAX,
+  
+}MB_PARENT_CELL_RES;
 
 //======================================================================
 //  typedef struct
@@ -129,6 +145,7 @@ typedef enum
 typedef struct
 {
   HEAPID heapId;
+  GFL_TCB *vBlankTcb;
   MB_PARENT_INIT_WORK *initWork;
   MB_COMM_WORK *commWork;
   BOOL         isNetErr;
@@ -152,6 +169,10 @@ typedef struct
   u32   gameDataSize;
   //メッセージ用
   MB_MSG_WORK *msgWork;
+
+  GFL_CLUNIT  *cellUnit;
+  u32         cellResIdx[MPCR_MAX];
+  GFL_CLWK    *clwkReturn;
   
 }MB_PARENT_WORK;
 
@@ -172,15 +193,16 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
   GX_VRAM_TEX_NONE,             // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_NONE,         // テクスチャパレットスロット
-  GX_OBJVRAMMODE_CHAR_1D_32K,
-  GX_OBJVRAMMODE_CHAR_1D_32K
+  GX_OBJVRAMMODE_CHAR_1D_128K,
+  GX_OBJVRAMMODE_CHAR_1D_128K
 };
 
 
 static void MB_PARENT_Init( MB_PARENT_WORK *work );
 static void MB_PARENT_Term( MB_PARENT_WORK *work );
 static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work );
-static void MB_PARENT_VBlank( void );
+static void MB_PARENT_VBlankFunc(GFL_TCB *tcb, void *wk );
+static void MB_PARENT_VSync( void );
 
 static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work );
 static void MB_PARENT_TermGraphic( MB_PARENT_WORK *work );
@@ -221,7 +243,8 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
     MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_NORMAL );
   }
   
-  GFUser_SetVIntrFunc( MB_PARENT_VBlank );
+  work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_PARENT_VBlankFunc , work , 8 );
+  GFUser_SetVIntrFunc( MB_PARENT_VSync );
 }
 
 //--------------------------------------------------------------
@@ -229,7 +252,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
-
+  GFL_TCB_DeleteTask( work->vBlankTcb );
   GFUser_ResetVIntrFunc();
 
   if( work->gameData != NULL )
@@ -490,16 +513,29 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
   case MPS_WAIT_FAIL_FIRST_CONNECT:
     if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
     {
-      work->state = MPS_EXIT_COMM;
+      MB_COMM_ExitComm( work->commWork );
+      work->state = MPS_WAIT_EXIT_COMM;
     }
   }
   
   MB_MSG_MessageMain( work->msgWork );
   
+  //OBJの更新
+  GFL_CLACT_SYS_Main();
+  
   return FALSE;
 }
 
-static void MB_PARENT_VBlank( void )
+//--------------------------------------------------------------
+//	VBlankTcb
+//--------------------------------------------------------------
+static void MB_PARENT_VBlankFunc(GFL_TCB *tcb, void *wk )
+{
+  //OBJの更新
+  GFL_CLACT_SYS_VBlankFunc();
+}
+
+static void MB_PARENT_VSync( void )
 {
   static u8 cnt = 0;
   if( cnt > 1 )
@@ -571,6 +607,13 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
       GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x06000,
       GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
+    // BG2 SUB (バー
+    static const GFL_BG_BGCNT_HEADER header_sub2 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x08000,
+      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG3 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
@@ -584,17 +627,34 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
     //MB_PARENT_SetupBgFunc( &header_main2 , LTVT_FRAME_CHARA , GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_main3 , MB_PARENT_FRAME_BG , GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_sub1  , MB_PARENT_FRAME_SUB_MSG, GFL_BG_MODE_TEXT );
+    MB_PARENT_SetupBgFunc( &header_sub2  , MB_PARENT_FRAME_SUB_BAR, GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_sub3  , MB_PARENT_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
     
+  }
+
+  //OBJ系の初期化
+  {
+    GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
+    cellSysInitData.CGR_RegisterMax = 64;
+    GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
+    
+    work->cellUnit = GFL_CLACT_UNIT_Create( 8 , 0, work->heapId );
+    GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
+
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
   
 }
 
 static void MB_PARENT_TermGraphic( MB_PARENT_WORK *work )
 {
+  GFL_CLACT_WK_Remove( work->clwkReturn );
+  GFL_CLACT_UNIT_Delete( work->cellUnit );
+  GFL_CLACT_SYS_Delete();
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_MSG );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_BG );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_BG );
+  GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_BAR );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_MSG );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
@@ -637,6 +697,52 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
                     MB_PARENT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
   
   GFL_ARC_CloseDataHandle( arcHandle );
+
+  
+  //共通素材
+  {
+    ARCHANDLE *commonArcHandle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , work->heapId );
+    
+    //バー
+    GFL_ARCHDL_UTIL_TransVramPalette( commonArcHandle , APP_COMMON_GetBarPltArcIdx() , 
+                      PALTYPE_SUB_BG , MB_PARENT_PLT_SUB_BAR*32 , 32 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( commonArcHandle , APP_COMMON_GetBarCharArcIdx() ,
+                      MB_PARENT_FRAME_SUB_BAR , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
+                      MB_PARENT_FRAME_SUB_BAR , 0 , 0, FALSE , work->heapId );
+    GFL_BG_ChangeScreenPalette( MB_PARENT_FRAME_SUB_BAR , 0 , 21 , 32 , 3 , MB_PARENT_PLT_SUB_BAR );
+    GFL_BG_LoadScreenReq( MB_PARENT_FRAME_SUB_BAR );
+
+    //バーアイコン
+    work->cellResIdx[MPCR_PLT_APP] = GFL_CLGRP_PLTT_RegisterEx( commonArcHandle , 
+          APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_SUB , 
+          MB_PARENT_PLT_SUB_OBJ_APP*32 , 0 , 
+          APP_COMMON_BARICON_PLT_NUM , work->heapId  );
+    work->cellResIdx[MPCR_NCG_APP] = GFL_CLGRP_CGR_Register( commonArcHandle , 
+          APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+    work->cellResIdx[MPCR_ANM_APP] = GFL_CLGRP_CELLANIM_Register( commonArcHandle , 
+          APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K), 
+          work->heapId  );
+
+    GFL_ARC_CloseDataHandle( commonArcHandle );
+  }
+  
+  {
+    //OBJの作成
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 256-24;
+    cellInitData.pos_y = 192-24;
+    cellInitData.anmseq = APP_COMMON_BARICON_RETURN;
+    cellInitData.bgpri = 0;
+    cellInitData.softpri = 0;
+
+    work->clwkReturn = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellResIdx[MPCR_NCG_APP],
+              work->cellResIdx[MPCR_PLT_APP],
+              work->cellResIdx[MPCR_ANM_APP],
+              &cellInitData ,CLSYS_DRAW_SUB , work->heapId );
+  }
 }
 
 
@@ -754,6 +860,7 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
 
   case MPSS_SEND_IMAGE_WAIT_BOOT_INIT:
     MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_02 , MSGSPEED_GetWait() );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
     work->subState = MPSS_SEND_IMAGE_WAIT_BOOT;
     break;
     
@@ -811,6 +918,13 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
 {
   static u16 befState = 0;
   const u16 mbpState = MBP_GetState();
+  static const GFL_UI_TP_HITTBL hitTbl[2] = 
+  {
+    { 192-24 , 192 ,
+      256-24 , 255 },
+    { GFL_UI_TP_HIT_END ,0,0,0 },
+  };
+
 
   if( befState != mbpState )
   {
@@ -831,13 +945,16 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
   case MBP_STATE_ENTRY:
     {
       if( work->confirmState == MPCS_NONE )
-      {
-        if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
+      {    
+        const int ret = GFL_UI_TP_HitTrg( hitTbl );
+        if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B ||
+            ret == 0 )
         {
           // Bボタンでマルチブートキャンセル
           work->confirmState = MPCS_INIT;
-          //MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
-          //MBP_Cancel();
+          GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN_ON );
+          GFL_CLACT_WK_SetAutoAnmFlag( work->clwkReturn , TRUE );
+
           break;
         }
         //子機がくれば自動でDLが始まる。キャンセル時ステート移行で再接続が
@@ -876,8 +993,9 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
       if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
       {
         // Bボタンでマルチブートキャンセル
-        MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
-        MBP_Cancel();
+        work->confirmState = MPCS_INIT;
+        GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN_ON );
+        GFL_CLACT_WK_SetAutoAnmFlag( work->clwkReturn , TRUE );
         break;
       }
       // 全員がダウンロード完了しているならばスタート可能.

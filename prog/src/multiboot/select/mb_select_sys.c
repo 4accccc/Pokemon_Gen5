@@ -736,7 +736,7 @@ static void MB_SELECT_InitCell( MB_SELECT_WORK *work )
   
   cellInitData.pos_x = 256-24;
   cellInitData.pos_y = 192-24;
-  cellInitData.anmseq = APP_COMMON_BARICON_EXIT;
+  cellInitData.anmseq = APP_COMMON_BARICON_RETURN;
   cellInitData.bgpri = 2;
 
   work->clwkRetIcon = GFL_CLACT_WK_Create( work->cellUnit ,
@@ -883,7 +883,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
       if( ret == 3 )
       {
         //キャンセルボタン
-        GFL_CLACT_WK_SetAnmSeq( work->clwkRetIcon , APP_COMMON_BARICON_EXIT_ON );
+        GFL_CLACT_WK_SetAnmSeq( work->clwkRetIcon , APP_COMMON_BARICON_RETURN_ON );
         GFL_CLACT_WK_SetAutoAnmFlag( work->clwkRetIcon , TRUE );
         work->state = MSS_FADEOUT;
         work->exitWaitCell = work->clwkRetIcon;
