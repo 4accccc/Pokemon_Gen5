@@ -261,6 +261,13 @@ static void handler_AkaiIto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KuttukiBari( u32* numElems );
 static void handler_KuttukiBari_DamageReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_KuttukiBari_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerWrist( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerBelt( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerLens( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerBand( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerAnkle( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerWeight( u32* numElems );
+static void handler_PowerXXX_CalcAgility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_TumetaiIwa( u32* numElems );
 static void handler_TumetaiIwa( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SarasaraIwa( u32* numElems );
@@ -534,6 +541,12 @@ static const struct {
   { ITEM_ATUIIWA,           HAND_ADD_ITEM_AtuiIwa         },
   { ITEM_SIMETTAIWA,        HAND_ADD_ITEM_SimettaIwa      },
   { ITEM_KUTTUKIBARI,       HAND_ADD_ITEM_KuttukiBari     },
+  { ITEM_PAWAARISUTO,       HAND_ADD_ITEM_PowerWrist      },
+  { ITEM_PAWAABERUTO,       HAND_ADD_ITEM_PowerBelt       },
+  { ITEM_PAWAARENZU,        HAND_ADD_ITEM_PowerLens       },
+  { ITEM_PAWAABANDO,        HAND_ADD_ITEM_PowerBand       },
+  { ITEM_PAWAAANKURU,       HAND_ADD_ITEM_PowerAnkle      },
+  { ITEM_PAWAAUEITO,        HAND_ADD_ITEM_PowerWeight     },
 
   { ITEM_SINKANOKISEKI,     HAND_ADD_ITEM_SinkanoKiseki   },  // しんかのきせき
   { ITEM_GOTUGOTUMETTO,     HAND_ADD_ITEM_GotugotuMet     },  // ゴツゴツメット
@@ -3452,6 +3465,95 @@ static void handler_KuttukiBari_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
   }
 }
 
+//------------------------------------------------------------------------------
+/**
+ *  パワーリスト
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerWrist( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CALC_AGILITY,      handler_PowerXXX_CalcAgility  },  // すばやさ計算ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  パワーベルト
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerBelt( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CALC_AGILITY,      handler_PowerXXX_CalcAgility  },  // すばやさ計算ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  パワーレンズ
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerLens( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CALC_AGILITY,      handler_PowerXXX_CalcAgility  },  // すばやさ計算ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  パワーバンド
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerBand( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CALC_AGILITY,      handler_PowerXXX_CalcAgility  },  // すばやさ計算ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  パワーアンクル
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerAnkle( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CALC_AGILITY,      handler_PowerXXX_CalcAgility  },  // すばやさ計算ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  パワーウェイト
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerWeight( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CALC_AGILITY,      handler_PowerXXX_CalcAgility  },  // すばやさ計算ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+
+/**
+ *  パワー○○○（努力値アップアイテム）共通：すばやさ計算ハンドラ
+ */
+static void handler_PowerXXX_CalcAgility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
+  }
+}
 
 //------------------------------------------------------------------------------
 /**
