@@ -21,6 +21,7 @@ extern VMCMD_RESULT EvCmdCamera_MoveByID( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdCamera_RecoverMove( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdCamera_DefaultCamMove( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdCamera_WaitMove( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdCamera_Shake( VMHANDLE *core, void *wk );
 
 extern BOOL SCREND_CheckEndCamera(SCREND_CHECK *end_check, int *seq);
 

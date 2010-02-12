@@ -6481,6 +6481,22 @@
   .short EV_SEQ_CAMERA_WAIT_MOVE
   .endm
 
+//--------------------------------------------------------------
+/**
+ * ÉJÉÅÉâóhÇÍ
+ */
+//--------------------------------------------------------------
+#define _SHAKE_CAMERA(w, h, sp, time) _ASM_SHAKE_CAMERA w, h, sp, time
+  
+  .macro _ASM_SHAKE_CAMERA w, h, sp, time
+  .short EV_SEQ_SHAKE_CAMERA
+  .short \w
+  .short \h
+  .short \sp
+  .short \time
+  .endm
+  
+
 //======================================================================
 //
 //

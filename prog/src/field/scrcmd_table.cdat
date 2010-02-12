@@ -581,7 +581,7 @@
   DEF_CMD( EvCmdCamera_MoveByID,   EV_SEQ_CAMERA_MOVE_BY_ID )
 
   DEF_CMD( EvCmdCamera_DefaultCamMove,   EV_SEQ_CAMERA_DEF_MOVE )
-  NO_CMD()
+  DEF_CMD( EvCmdCamera_Shake,   EV_SEQ_SHAKE_CAMERA )
   NO_CMD()
   NO_CMD()
   

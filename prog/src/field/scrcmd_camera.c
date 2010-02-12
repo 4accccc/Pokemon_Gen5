@@ -33,6 +33,8 @@ static GMEVENT_RESULT WaitTraceStopForCamMvEvt( GMEVENT* event, int* seq, void* 
 static GMEVENT_RESULT WaitCamMovEvt( GMEVENT* event, int* seq, void* work );
 static void EndCamera(FIELD_CAMERA *camera);
 
+static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work );
+
 typedef struct CAM_PARAM_tag
 {
   u16 Pitch;
@@ -41,6 +43,19 @@ typedef struct CAM_PARAM_tag
   VecFx32 Pos;
   FLD_CAM_MV_PARAM_CHK Chk;
 }CAM_PARAM;
+
+typedef struct CAM_SHAKE_WORK_tag
+{
+  u16 Width;
+  u16 Height;
+  u16 SpRad;
+  u16 Time;
+
+  u32 NowRad;
+
+  const VecFx32 *WatchTarget;
+}CAM_SHAKE_WORK;
+
 
 // 構造体が想定のサイズとなっているかチェック
 #ifdef PM_DEBUG
@@ -339,6 +354,46 @@ VMCMD_RESULT EvCmdCamera_WaitMove( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * カメラ揺れ
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCamera_Shake( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+
+  u16 width = SCRCMD_GetVMWorkValue( core, work );
+  u16 height = SCRCMD_GetVMWorkValue( core, work );
+  u16 rad = SCRCMD_GetVMWorkValue( core, work );
+  u16 time = SCRCMD_GetVMWorkValue( core, work );
+
+  //カメラ揺らすイベントをコール
+  {
+    GMEVENT *call_event;
+    CAM_SHAKE_WORK *wk;
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+    int size = sizeof(CAM_SHAKE_WORK);
+    call_event = GMEVENT_Create( gsys, NULL, CameraShakeEvt, size );
+    wk = GMEVENT_GetEventWork(call_event);
+
+    wk->Width = width;
+    wk->Height = height;
+    wk->SpRad = rad;
+    wk->Time = time;
+    wk->NowRad = 0;
+
+    SCRIPT_CallEvent( sc, call_event );
+  }
+
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
 #if 0
 //--------------------------------------------------------------
 /**
@@ -419,3 +474,106 @@ static GMEVENT_RESULT WaitCamMovEvt( GMEVENT* event, int* seq, void* work )
 
   return GMEVENT_RES_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * カメラ揺れイベント
+ * @param   event　　　       イベントポインタ
+ * @param   seq　　　　       シーケンス
+ * @param   work　　　　      ワークポインタ
+ * @return  GMEVENT_RESULT    GMEVENT_RES_FINISHでイベント終了
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work )
+{
+
+  FIELD_CAMERA * camera;
+  BOOL end = FALSE;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  CAM_SHAKE_WORK *wk = GMEVENT_GetEventWork(event);
+
+  camera = FIELDMAP_GetFieldCamera( fieldmap );
+  switch(*seq){
+  case 0:
+    //トレース終了
+    FIELD_CAMERA_StopTraceRequest(camera);
+    (*seq)++;
+    break;
+  case 1:
+    if ( !FIELD_CAMERA_CheckTrace(camera) )
+    {
+      //カメラのターゲットを取得
+      wk->WatchTarget = FIELD_CAMERA_GetWatchTarget(camera);
+      //バインド解除
+      FIELD_CAMERA_FreeTarget(camera);
+      
+      (*seq)++;
+    }
+    break;
+  case 2:
+    //ターゲットを動かす
+    wk->NowRad += wk->SpRad;
+    if (wk->NowRad >= 0x10000)
+    {
+      wk->Time--;
+      wk->NowRad -= 0x10000;
+    }
+    if (wk->Time == 0)
+    {
+      wk->NowRad = 0;
+      end = TRUE;
+    }
+
+    {
+      fx32 w, h;
+      VecFx32 target;
+      w = wk->Width * FX_SinIdx(wk->NowRad);
+      h = wk->Height * FX_SinIdx(wk->NowRad);
+      target = *wk->WatchTarget;
+      target.x += w;
+      target.y += h;
+      //座標セット
+      FIELD_CAMERA_SetTargetPos( camera, &target );
+    }
+
+    if (end)
+    {
+      //際バインド
+      FIELD_CAMERA_BindTarget(camera, wk->WatchTarget);
+      //トレース再開
+      FIELD_CAMERA_RestartTrace(camera);
+      (*seq)++;
+    }
+    break;
+  case 3:
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+
+}
+
+#ifdef PM_DEBUG
+
+void DEBUG_CreateCamShakeEvt(GAMESYS_WORK *gsys, u16 width, u16 height, u16 rad, u16 time)
+{
+  GMEVENT *event;
+  //カメラ揺らすイベントをコール
+  {
+    CAM_SHAKE_WORK *wk;
+    int size = sizeof(CAM_SHAKE_WORK);
+    event = GMEVENT_Create( gsys, NULL, CameraShakeEvt, size );
+    wk = GMEVENT_GetEventWork(event);
+
+    wk->Width = width;
+    wk->Height = height;
+    wk->SpRad = rad;
+    wk->Time = time;
+    wk->NowRad = 0;
+  }
+
+  GAMESYSTEM_SetEvent(gsys, event);
+}
+#endif
+
