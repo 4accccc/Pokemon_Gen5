@@ -1054,9 +1054,11 @@ void EVENTDATA_MoveConnectData( EVENTDATA_SYSTEM * evdata, u16 exit_id, u16 gx, 
   {
     CONNECT_DATA_GPOS * p_gpos;
     p_gpos = (CONNECT_DATA_GPOS *)p_data->pos_buf; 
-    p_gpos->x = gx * FIELD_CONST_GRID_SIZE;
+    OS_Printf( "x,y,z = %08x,%08x,%08x\n", p_gpos->x, p_gpos->y, p_gpos->z );
+    p_gpos->x = gx * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_SIZE / 2;
     p_gpos->y = gy * FIELD_CONST_GRID_SIZE;
-    p_gpos->z = gz * FIELD_CONST_GRID_SIZE;
+    p_gpos->z = gz * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_SIZE / 2;
+    OS_Printf( "x,y,z = %08x,%08x,%08x\n", p_gpos->x, p_gpos->y, p_gpos->z );
   }
   else
   {
@@ -2312,9 +2314,9 @@ static void debugPrint_Connect( const CONNECT_DATA* cp_data )
   if( cp_data->pos_type == EVENTDATA_POSTYPE_GRID )
   {
     const CONNECT_DATA_GPOS* cp_pos = (const CONNECT_DATA_GPOS*)cp_data->pos_buf;
-    OS_TPrintf( "x=%d\n", cp_pos->x );
-    OS_TPrintf( "y=%d\n", cp_pos->y );
-    OS_TPrintf( "z=%d\n", cp_pos->z );
+    OS_TPrintf( "x=%x\n", cp_pos->x );
+    OS_TPrintf( "y=%x\n", cp_pos->y );
+    OS_TPrintf( "z=%x\n", cp_pos->z );
     OS_TPrintf( "sizex=%d\n", cp_pos->sizex );
     OS_TPrintf( "sizez=%d\n", cp_pos->sizez );
   }
