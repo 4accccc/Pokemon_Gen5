@@ -41,8 +41,8 @@ enum {
 	NARC_local_tvt_dummy_NCGR = 27,
 	NARC_local_tvt_local_tvt_scr_2_NSCR = 28,
 	NARC_local_tvt_local_tvt_scr_4_NSCR = 29,
-	NARC_local_tvt_tvt_script_00_bin = 30,
-	NARC_local_tvt_tvt_script_01_bin = 31
+	NARC_local_tvt_tvt_script_01_bin = 30,
+	NARC_local_tvt_tvt_script_02_bin = 31
 };
 
 /* NARC_LOCAL_TVT_NAIX_ */

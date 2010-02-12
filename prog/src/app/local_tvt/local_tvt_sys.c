@@ -440,7 +440,7 @@ static void LOCAL_TVT_LoadScript( LOCAL_TVT_WORK *work )
   OS_TPrintf("Load local tvt script[%d]\n",work->initWork->scriptId);
   
   work->scriptRes = GFL_ARCHDL_UTIL_Load( work->arcHandle , 
-                                          NARC_local_tvt_tvt_script_00_bin + work->initWork->scriptId ,
+                                          NARC_local_tvt_tvt_script_01_bin + (work->initWork->scriptId-1) ,
                                           FALSE , work->heapId );
   work->scriptHead = work->scriptRes;
   work->scriptData = (void*)((u32)work->scriptRes + sizeof(LOCAL_TVT_SCRIPT_HEADER) );
@@ -875,10 +875,10 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
     initWork = GFL_HEAP_AllocMemory( HEAPID_LOCAL_TVT , sizeof( LOCAL_TVT_INIT_WORK ));
     initWork->gameData = GAMEDATA_Create( GFL_HEAPID_APP );
     
-    initWork->scriptId = 0;
+    initWork->scriptId = 1;
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
     {
-      initWork->scriptId = 1;
+      initWork->scriptId = 2;
     }
   }
   else
