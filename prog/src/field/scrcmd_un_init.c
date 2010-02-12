@@ -56,23 +56,26 @@ VMCMD_RESULT EvCmdUn_GetRoomObjCode( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 部屋の人数を取得
+ * 部屋の情報取得
  * ゾーンチェンジ時に呼ぶので常駐に置く
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdUn_GetRoomObjNum( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdUn_GetRoomInfo( VMHANDLE *core, void *wk )
 {
-  u16 *obj_num;
+  u16 *val;
+  u16 info_type;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
   UNSV_WORK *unsv_work = GAMEDATA_GetUnsvWorkPtr(gdata);
 
-  obj_num = SCRCMD_GetVMWork( core, work );
-  *obj_num = UN_GetRoomObjNum(unsv_work);
+  info_type = SCRCMD_GetVMWorkValue( core, work );
+  val = SCRCMD_GetVMWork( core, work );
+  
+  *val = UN_GetRoomInfo(unsv_work, info_type);
 
   return VMCMD_RESULT_CONTINUE;
 }

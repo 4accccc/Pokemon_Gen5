@@ -371,3 +371,25 @@ VMCMD_RESULT EvCmdEasyTalkWordName( VMHANDLE *core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 国名をバッファに登録
+ * @param  core  仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//------------------------------------------------------------------------------------------
+VMCMD_RESULT EvCmdCountryName( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK* work = wk;
+  SCRIPT_WORK*   sc = SCRCMD_WORK_GetScriptWork( work );
+	WORDSET*  wordset = SCRIPT_GetWordSet( sc );
+  u8 idx;
+  u16 country;
+
+  idx = VMGetU8( core );  // 第一引数
+  country = SCRCMD_GetVMWorkValue( core, work );  // 第二引数
+
+  WORDSET_RegisterCountryName( wordset, idx, country );
+
+  return VMCMD_RESULT_CONTINUE;
+}

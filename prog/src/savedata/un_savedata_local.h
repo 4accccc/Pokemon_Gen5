@@ -22,6 +22,8 @@
 struct _UNSV_WORK {
 	u8 TargetCountryCode;
   u8 ObjNum;      //0Å`UN_ROOM_OBJ_MAX
+  u8 Floor;
   u8 UnObjCode[UN_ROOM_OBJ_MAX];
   u8 UnIdx[UN_ROOM_OBJ_MAX];
-};
+  u8 padding[3];
+};    //16byte

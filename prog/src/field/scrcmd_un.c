@@ -162,13 +162,15 @@ VMCMD_RESULT EvCmdUn_SetPlayerNature( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdUn_SetCountryInfo( VMHANDLE *core, void *wk )
 {
   u16 country_code;
+  u16 floor;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
   country_code = SCRCMD_GetVMWorkValue( core, work );
+  floor = SCRCMD_GetVMWorkValue( core, work );
 
-  UN_SetData(gsys, country_code);
+  UN_SetData(gsys, country_code, floor);
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -190,11 +192,12 @@ VMCMD_RESULT EvCmdUn_GetRoomObjMsg( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
   UNSV_WORK *unsv_work = GAMEDATA_GetUnsvWorkPtr(gdata);
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
 
   obj_idx = SCRCMD_GetVMWorkValue( core, work );
   first = VMGetU16( core );
   msg = SCRCMD_GetVMWork( core, work );
-  *msg = UN_GetRoomObjMsg(gsys, unsv_work, obj_idx, first);
+  *msg = UN_GetRoomObjMsg(wordset, gsys, unsv_work, obj_idx, first);
   return VMCMD_RESULT_CONTINUE;
 }
 

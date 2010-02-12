@@ -192,7 +192,7 @@
   DEF_CMD( EvCmdSodateyaPokeNickName, EV_SEQ_SODATEYA_NICK_NAME )
   DEF_CMD( EvCmdNumber, EV_SEQ_NUMBER )
   DEF_CMD( EvCmdMusicalWord , EV_SEQ_MUSICAL_WORD )
-  NO_CMD()
+  DEF_CMD( EvCmdCountryName , EV_SEQ_COUNTRY_NAME )
   
   NO_CMD()
   NO_CMD()
@@ -839,7 +839,7 @@
 
   DEF_CMD( EvCmdUn_SetCountryInfo, EV_SEQ_UN_SET_COUNTRY_INFO )
   DEF_CMD( EvCmdUn_GetRoomObjCode, EV_SEQ_UN_GET_ROOM_OBJ_CODE )
-  DEF_CMD( EvCmdUn_GetRoomObjNum, EV_SEQ_UN_GET_ROOM_OBJ_NUM )
+  DEF_CMD( EvCmdUn_GetRoomInfo, EV_SEQ_UN_GET_ROOM_INFO )
   DEF_CMD( EvCmdUn_GetRoomObjMsg, EV_SEQ_UN_GET_ROOM_OBJ_MSG )
 
   //国連フロア選択アプリ
