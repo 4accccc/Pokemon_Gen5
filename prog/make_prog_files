@@ -1603,8 +1603,7 @@ SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c
 
 
 #	名木橋デバッグ
-#===> SRCS_OVERLAY_BATTLE_RECORDER
-#===> SRCS_OVERLAY_NAMEIN
+#===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_irc_name.c \
 																test/nagihashi/debug_template.c \
