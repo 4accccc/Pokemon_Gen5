@@ -70,6 +70,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_c11r0101_reception01
   DEFINE_LOCAL AppSelectRec
+  DEFINE_LOCAL Floor
   //「国連行く？」
   _BALLOONWIN_TALKOBJ_MSG( msg_reception01_01 )
   _YES_NO_WIN( SCWK_ANSWER )
@@ -80,9 +81,10 @@ EVENT_START ev_c11r0101_reception01
     _BALLOONWIN_TALKOBJ_MSG( msg_reception01_01a )
     _BALLOONWIN_CLOSE()
     //選択アプリ    todo
-    $AppSelectRec = 1   //国コードセット  todo
+    $AppSelectRec = 1   //国コードセット  @todo
+    $Floor = 1          //フロアセット　@todo
     //データセット
-    _UN_SET_COUNTRY_INFO( AppSelectRec )
+    _UN_SET_COUNTRY_INFO( AppSelectRec, Floor )
     //「こちらへ」
     _BALLOONWIN_TALKOBJ_MSG( msg_reception01_02 )
     _BALLOONWIN_CLOSE()

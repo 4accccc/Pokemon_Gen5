@@ -62,7 +62,7 @@ ev_zone_c11r0201:
   _FLAG_SET( FV_UN_GTSFRIEND_04 )
 
   //OBJ数取得
-  _UN_GET_ROOM_OBJ_NUM( GTSFriendNum )
+  _UN_GET_ROOM_INFO( UN_ROOMINFO_TYPE_OBJNUM, GTSFriendNum )
 
   //必要な人数だけ表示状態を回復
   IF $GTSFriendNum > 0 THEN           //1人はいる
@@ -94,18 +94,35 @@ EVENT_END
 /*		エレベーター	                      									  */
 /**************************************************************/
 EVENT_START		ev_un_elevator
+  DEFINE_LOCAL	EleList
   //「戻る？」
-  _SYSWIN_MSG_DOWN(msg_un_room_talker_00)   //@todo
-  _YES_NO_WIN( SCWK_ANSWER )
+  _SYSWIN_MSG_DOWN(msg_un_elevator_00)
+
+  _BMPMENU_INIT_EX( 1,1,0,1,EleList )
+  _BMPMENU_MAKE_LIST( msg_un_elevator_01, 0 )
+  _BMPMENU_MAKE_LIST( msg_un_elevator_02, 1 )
+  _BMPMENU_MAKE_LIST( msg_un_elevator_03, 2 )
+  _BMPMENU_START()
+
   _SYSWIN_CLOSE()
 
-  IF $SCWK_ANSWER == 0 THEN     //もどる
-    _CALL player_elev_in
-    //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
-		_RESERVE_SCRIPT( SCRID_RESERVE_C11R0101 )
-    //マップチェンジ
-    _MAP_CHANGE( ZONE_ID_C11R0101, 14, 5, DIR_DOWN )
-  ENDIF
+  //キャンセルチェック
+  IF $EleList != EV_WIN_B_CANCEL THEN
+    SWITCH $EleList
+    CASE 0 THEN
+      //エントランスへ
+      _CALL player_elev_in
+      //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
+		  _RESERVE_SCRIPT( SCRID_RESERVE_C11R0101 )
+      //マップチェンジ
+      _MAP_CHANGE( ZONE_ID_C11R0101, 14, 5, DIR_DOWN )
+    CASE 1 THEN
+      //他のフロアへ
+      
+    DEFAULT
+      //そのほかは何もしない
+    ENDSWITCH
+  ENDIF  
 EVENT_END
 
 /**************************************************************/
@@ -114,11 +131,19 @@ EVENT_END
 EVENT_START		ev_un_room_talker
   DEFINE_LOCAL	NpcNum
   DEFINE_LOCAL	TalkerMsg
+  DEFINE_LOCAL	Floor
+  DEFINE_LOCAL	CountryCode
 
   _TALK_OBJ_START()
   
   //部屋の人数を取得
-  _UN_GET_ROOM_OBJ_NUM( NpcNum )
+  _UN_GET_ROOM_INFO( UN_ROOMINFO_TYPE_OBJNUM, NpcNum )
+  //フロア数取得
+  _UN_GET_ROOM_INFO( UN_ROOMINFO_TYPE_FLOOR, Floor )
+  _NUMBER( 2, Floor, 3 )      //フロア数をタグ番号2にセット（3桁）
+  //国コード取得
+  _UN_GET_ROOM_INFO( UN_ROOMINFO_TYPE_COUNTRY, CountryCode )
+  _COUNTRY_NAME( 0, CountryCode )   //国コードをタグ番号0にセット
   //お客いるか？
   IF $NpcNum != 0 THEN
     //「客おるで」
