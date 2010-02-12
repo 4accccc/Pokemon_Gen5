@@ -30,10 +30,9 @@ typedef struct
 //--------------------------------------------------------------
 struct _TAG_MMDL_G3DOBJCONT
 {
-  
   MMDLSYS *mmdlsys;
   FLD_G3DOBJ_CTRL *g3dobj_ctrl;
-
+  
   u16 max;
   RESCODE *restbl;
 };
@@ -231,64 +230,42 @@ static u16 rescode_GetOBJCode( MMDL_G3DOBJCONT *objcont, u16 r_idx )
 static u16 rescode_AddResource(
     MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont, const u16 code )
 {
-  u32 anmtbl[3];
-  ARCHANDLE *handle = MMDLSYS_GetResArcHandle( mmdlsys );
-  FLD_G3DMDL_ARCIDX mdl;
-  FLD_G3DTEX_ARCIDX tex;
-  FLD_G3DANM_ARCIDX anm;
-  FLD_G3DTEX_ARCIDX *p_tex = NULL;
-  FLD_G3DANM_ARCIDX *p_anm = NULL;
+  u16 res_idx;
   const OBJCODE_PARAM *prm;
   const OBJCODE_PARAM_BUF_MDL *prm_mdl;
+  FLD_G3DOBJ_RES_HEADER head;
+  ARCHANDLE *handle = MMDLSYS_GetResArcHandle( mmdlsys );
   
   prm = MMDLSYS_GetOBJCodeParam( objcont->mmdlsys, code );
   prm_mdl = MMDL_GetOBJCodeParamBufMDL( prm );
   
-  mdl.handle = handle;
-  mdl.arcIdx = prm_mdl->res_idx_mdl;
+  FLD_G3DOBJ_RES_HEADER_Init( &head );
+  
+  if( prm_mdl->res_idx_mdl != 0xffff ){
+    FLD_G3DOBJ_RES_HEADER_SetMdl( &head, handle, prm_mdl->res_idx_mdl );
+  }
   
   if( prm_mdl->res_idx_tex != 0xffff ){
-    p_tex = &tex;
-    tex.handle = handle;
-    tex.arcIdx = prm_mdl->res_idx_tex;
+    FLD_G3DOBJ_RES_HEADER_SetMdl( &head, handle, prm_mdl->res_idx_tex );
   }
   
-  if( prm_mdl->res_idx_anm0 != 0xffff ){
-    p_anm = &anm;
-    anm.arcIdxTbl = anmtbl;
-    anm.handle = handle;
+  if( prm_mdl->res_idx_anm[0] != 0xffff ){
+    int i;
+    FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
     
-    anm.count = 1;
-    anmtbl[0] = prm_mdl->res_idx_anm0;
-
-    if( prm_mdl->res_idx_anm1 != 0xffff ){
-      anm.count++;
-      anmtbl[1] = prm_mdl->res_idx_anm1;
-    }
-    
-    if( prm_mdl->res_idx_anm2 != 0xffff ){
-      anm.count++;
-      anmtbl[2] = prm_mdl->res_idx_anm2;
+    for( i = 0; prm_mdl->res_idx_anm[i] != 0xffff; i++ ){
+      FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx( &head, prm_mdl->res_idx_anm[i] );
     }
   }
   
-  {
-    int count = 0;
-    if( p_anm != NULL ){
-      count = anm.count;
-    }
-    
-    KAGAYA_Printf(
-        "“®ìƒ‚ƒfƒ‹ G3DObject’Ç‰Á code=%dH, mdl idx = %d, anm count =%xH\n",
-        code, mdl.arcIdx, count );
-  }
+  KAGAYA_Printf(
+      "“®ìƒ‚ƒfƒ‹ G3DObject’Ç‰Á code=%dH, mdl idx = %d, anm count =%xH\n",
+      code, head.arcIdxMdl, head.anmCount );
 
-  {
-    u16 idx = FLD_G3DOBJ_CTRL_CreateResource(
-      objcont->g3dobj_ctrl, &mdl, p_tex, p_anm, FALSE );
-    rescode_RegCodeIdx( objcont, code, idx );
-    return( idx );
-  }
+  res_idx = FLD_G3DOBJ_CTRL_CreateResource(
+      objcont->g3dobj_ctrl, &head, FALSE );
+  rescode_RegCodeIdx( objcont, code, res_idx );
+  return( res_idx );
 }
 
 //--------------------------------------------------------------

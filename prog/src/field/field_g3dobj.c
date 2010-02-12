@@ -38,9 +38,10 @@ typedef struct
 {
   GFL_G3D_RES *pResMdl;
   GFL_G3D_RES *pResTex; //NULL=pResMdlからテクスチャを取得
-  GFL_G3D_RES **pResAnmTbl;
-  u16 anm_count;
-  u16 tex_trans_flag;
+  GFL_G3D_RES *pResAnmTbl[FLD_G3DOBJ_ANM_MAX];
+  u8 anm_count;
+  u8 tex_trans_flag;
+  u8 padding[2]; //byte rest
 }FLD_G3DOBJ_RES;
 
 //--------------------------------------------------------------
@@ -58,8 +59,8 @@ typedef struct
     
   GFL_G3D_OBJSTATUS status;
   
-  GFL_G3D_ANM **pAnmTbl;
   GFL_G3D_OBJ *pObj;
+  GFL_G3D_ANM *pAnmTbl[FLD_G3DOBJ_ANM_MAX];
 }FLD_G3DOBJ;
 
 //--------------------------------------------------------------
@@ -80,18 +81,13 @@ struct _TAG_FLD_G3DOBJ_CTRL
 //======================================================================
 static void transTexture( FLD_G3DOBJ_RES *res );
 static void setResource(
-    FLD_G3DOBJ_RES *res,
-    HEAPID heapID,
-    const FLD_G3DMDL_ARCIDX *mdl,
-    const FLD_G3DTEX_ARCIDX *tex,
-    const FLD_G3DANM_ARCIDX *anm,
-    BOOL transFlag );
+    FLD_G3DOBJ_RES *res, HEAPID heapID,
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag );
 static void delResource( FLD_G3DOBJ_RES *res );
 static void setObject( FLD_G3DOBJ *obj,
     FLD_G3DOBJ_RES *res, u32 resIdx, u32 mdlIdx, HEAPID heapID,
     BOOL init_status );
 static void delObject( FLD_G3DOBJ *obj, const FLD_G3DOBJ_RES *res );
-
 
 //======================================================================
 //  FLD_G3DOBJ_CTRL  
@@ -241,19 +237,15 @@ void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl )
  * @retval u16 登録されたリソースインデックス
  */
 //--------------------------------------------------------------
-u16 FLD_G3DOBJ_CTRL_CreateResource(
-    FLD_G3DOBJ_CTRL *ctrl, 
-    const FLD_G3DMDL_ARCIDX *mdl,
-    const FLD_G3DTEX_ARCIDX *tex,
-    const FLD_G3DANM_ARCIDX *anm,
-    BOOL transFlag )
+u16 FLD_G3DOBJ_CTRL_CreateResource( FLD_G3DOBJ_CTRL *ctrl,
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag )
 {
   u16 i;
   FLD_G3DOBJ_RES *res = ctrl->pResTbl;
   
   for( i = 0; i < ctrl->res_max; i++, res++ ){
     if( res->pResMdl == NULL ){
-      setResource( res, ctrl->heapID, mdl, tex, anm, transFlag );
+      setResource( res, ctrl->heapID, head, transFlag );
       return( i );
     }
   }
@@ -482,22 +474,20 @@ static void transTexture( FLD_G3DOBJ_RES *res )
  */
 //--------------------------------------------------------------
 static void setResource(
-    FLD_G3DOBJ_RES *res,
-    HEAPID heapID,
-    const FLD_G3DMDL_ARCIDX *mdl,
-    const FLD_G3DTEX_ARCIDX *tex,
-    const FLD_G3DANM_ARCIDX *anm,
-    BOOL transFlag )
+    FLD_G3DOBJ_RES *res, HEAPID heapID,
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag )
 {
-  if( mdl != NULL ){
-    res->pResMdl = GFL_G3D_CreateResourceHandle( mdl->handle, mdl->arcIdx );
-  }
-
-  if( tex != NULL ){
-    res->pResTex = GFL_G3D_CreateResourceHandle( tex->handle, tex->arcIdx );
+  if( head->arcHandleMdl != NULL ){
+    res->pResMdl = GFL_G3D_CreateResourceHandle(
+        head->arcHandleMdl, head->arcIdxMdl );
   }
   
-  if( mdl != NULL || tex != NULL ){
+  if( head->arcHandleTex != NULL ){
+    res->pResTex = GFL_G3D_CreateResourceHandle(
+        head->arcHandleTex, head->arcIdxTex );
+  }
+  
+  if( res->pResMdl != NULL || res->pResTex != NULL ){
     if( transFlag == TRUE ){ //即転送
       transTexture( res );
     }else{
@@ -505,15 +495,18 @@ static void setResource(
     }
   }
   
-  if( anm != NULL ){
+  if( head->arcHandleAnm != NULL ){
     int i;
-    res->anm_count = anm->count;
-    res->pResAnmTbl = GFL_HEAP_AllocClearMemory(
-        heapID, sizeof(GFL_G3D_RES*)*anm->count );
+    res->anm_count = head->anmCount;
+    GF_ASSERT( res->anm_count );
+    GF_ASSERT( res->anm_count < FLD_G3DOBJ_ANM_MAX );
     
-    for( i = 0; i < anm->count; i++ ){
+    MI_CpuClear32( res->pResAnmTbl,
+        sizeof(GFL_G3D_RES*)*FLD_G3DOBJ_ANM_MAX );
+    
+    for( i = 0; i < res->anm_count; i++ ){
       res->pResAnmTbl[i] = GFL_G3D_CreateResourceHandle(
-          anm->handle, anm->arcIdxTbl[i] );
+          head->arcHandleAnm, head->arcIdxAnmTbl[i] );
     }
   }
 }
@@ -552,7 +545,6 @@ static void delResource( FLD_G3DOBJ_RES *res )
     for( i = 0; i < res->anm_count; i++ ){
       GFL_G3D_DeleteResource( res->pResAnmTbl[i] );
     }
-    GFL_HEAP_FreeMemory( res->pResAnmTbl );
   }
   
   MI_CpuClear( res, sizeof(FLD_G3DOBJ_RES) );
@@ -595,7 +587,7 @@ static void setObject( FLD_G3DOBJ *obj,
   pRnd = GFL_G3D_RENDER_Create( res->pResMdl, mdlIdx, pResTex );
   
   if( res->anm_count ){
-    obj->pAnmTbl = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_ANM*) );
+    MI_CpuClear32( obj->pAnmTbl, sizeof(GFL_G3D_ANM*)*FLD_G3DOBJ_ANM_MAX );
     
     for( i = 0; i < res->anm_count; i++ ){
       obj->pAnmTbl[i] = GFL_G3D_ANIME_Create( pRnd, res->pResAnmTbl[i], 0 );
@@ -633,7 +625,6 @@ static void delObject( FLD_G3DOBJ *obj, const FLD_G3DOBJ_RES *res )
     for( i = 0; i < res->anm_count; i++ ){
       GFL_G3D_ANIME_Delete( obj->pAnmTbl[i] );
     }
-    GFL_HEAP_FreeMemory( obj->pAnmTbl );
   }
   
   if( obj->pObj != NULL ){
@@ -646,3 +637,84 @@ static void delObject( FLD_G3DOBJ *obj, const FLD_G3DOBJ_RES *res )
   MI_CpuClear( obj, sizeof(FLD_G3DOBJ) );
 }
 
+//======================================================================
+//  FLD_G3DOBJ_RES_HEADER
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * FLD_G3DOBJ_RES_HEADER 初期化
+ * @param head FLD_G3OBJ_RES_HEADER
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLD_G3DOBJ_RES_HEADER_Init( FLD_G3DOBJ_RES_HEADER *head )
+{
+  MI_CpuClear32( head, sizeof(FLD_G3DOBJ_RES_HEADER) );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLD_G3DOBJ_RES_HEADER モデルセット
+ * @param head FLD_G3DOBJ_RES_HEADER
+ * @param handle ロード先ARCHANDLE*
+ * @param idx handleからロードするデータインデックス
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLD_G3DOBJ_RES_HEADER_SetMdl(
+    FLD_G3DOBJ_RES_HEADER *head, ARCHANDLE *handle, u16 idx )
+{
+  GF_ASSERT( head->arcHandleMdl == NULL );
+  head->arcHandleMdl = handle;
+  head->arcIdxMdl = idx;
+}
+
+//--------------------------------------------------------------
+/**
+ * FLD_G3DOBJ_RES_HEADER テクスチャセット
+ * @param head FLD_G3DOBJ_RES_HEADER
+ * @param handle ロード先ARCHANDLE*
+ * @param idx handleからロードするデータインデックス
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLD_G3DOBJ_RES_HEADER_SetTex(
+    FLD_G3DOBJ_RES_HEADER *head, ARCHANDLE *handle, u16 idx )
+{
+  GF_ASSERT( head->arcHandleTex == NULL );
+  head->arcHandleTex = handle;
+  head->arcIdxTex = idx;
+}
+
+//--------------------------------------------------------------
+/**
+ * FLD_G3DOBJ_RES_HEADER アニメアーカイブハンドルセット
+ * @param head FLD_G3DOBJ_RES_HEADER
+ * @param handle ロード先ARCHANDLE*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle(
+    FLD_G3DOBJ_RES_HEADER *head, ARCHANDLE *handle )
+{
+  GF_ASSERT( head->arcHandleAnm == NULL );
+  head->arcHandleAnm = handle;
+}
+
+//--------------------------------------------------------------
+/**
+ * FLD_G3DOBJ_RES_HEADER アニメセット
+ * @param head FLD_G3DOBJ_RES_HEADER
+ * @param handle ロード先ARCHANDLE*
+ * @retval nothing
+ * @attention 続けてこの関数を呼ぶ事で複数登録が可能。
+ * 最大登録数はFLD_G3DOBJ_ANM_MAX。
+ */
+//--------------------------------------------------------------
+void FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+    FLD_G3DOBJ_RES_HEADER *head, u16 idx )
+{
+  GF_ASSERT( head->anmCount < FLD_G3DOBJ_ANM_MAX );
+  head->arcIdxAnmTbl[head->anmCount] = idx;
+  head->anmCount++;
+}

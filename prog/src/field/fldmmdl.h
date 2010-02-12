@@ -621,9 +621,7 @@ typedef struct
 {
   u16 res_idx_mdl;
   u16 res_idx_tex;
-  u16 res_idx_anm0;
-  u16 res_idx_anm1;
-  u16 res_idx_anm2;
+  u16 res_idx_anm[3];
   u8 padding[2];
 }OBJCODE_PARAM_BUF_MDL;
 
