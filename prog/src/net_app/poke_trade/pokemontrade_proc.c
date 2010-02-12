@@ -1166,6 +1166,7 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
           }
           _PokemonIconRenew(pWork);
           bChange = TRUE;
+//          pWork->bTouch=TRUE;
         }
       }
     }
@@ -1323,7 +1324,14 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
   _CatchPokemonPositionRewind(pWork);
 
   _PokemonIconRenew(pWork);
-  
+
+  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+    APP_TASKMENU_SetActive(pWork->pAppTask,FALSE);
+  }
+  else{
+    APP_TASKMENU_SetActive(pWork->pAppTask,TRUE);
+  }
+
   _CHANGE_STATE(pWork,_dispSubStateWait);
 }
 
@@ -2167,6 +2175,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
         pWork->padMode=TRUE;
         pWork->underSelectBoxno = IRC_TRADE_LINE2TRAY(pWork->MainObjCursorLine,pWork);
         pWork->underSelectIndex = IRC_TRADE_LINE2POKEINDEX(pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
+        GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
 
         if((POKEMONTRADEPROC_IsTriSelect(pWork)) &&  //GTS‚Ìê‡ ‘I‘ð‚µ‚Ä‚ ‚éƒ|ƒPƒ‚ƒ“‚¾‚Æ“®ì‚ªˆá‚¤
            (-1 != POKE_GTS_IsSelect(pWork,pWork->underSelectBoxno,pWork->underSelectIndex ))){
@@ -2191,6 +2200,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
   }
 
   if(IsTouchCLACTPosition(pWork,FALSE)){
+    GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
     pWork->bStatusDisp=TRUE;
   }
 
