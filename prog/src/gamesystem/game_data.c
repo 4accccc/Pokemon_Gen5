@@ -100,6 +100,9 @@ struct _GAMEDATA{
   u8 intrude_my_id;       ///<侵入している自分のNetID
   u8 intrude_reverse_area;  ///<TRUE:裏フィールド侵入中
   
+  u8 is_save;             ///<TRUE:セーブ実行中
+  u8 padding[2];
+  
   OCCUPY_INFO occupy[OCCUPY_ID_MAX];    ///<占拠情報
   FIELD_WFBC_CORE wfbc[GAMEDATA_WFBC_ID_MAX];  ///<WhiteForest BlackCity
   
@@ -1435,6 +1438,9 @@ void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata)
   //ビーコンのスキャンを即時停止
   WIH_DWC_Stop();
 
+  //セーブ中フラグON
+  gamedata->is_save = TRUE;
+  
   //セーブ開始
   SaveControl_SaveAsyncInit(gamedata->sv_control_ptr);
 }
@@ -1462,9 +1468,25 @@ SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata)
   if(sr==SAVE_RESULT_OK){
     //ビーコンのスキャンを再開
     WIH_DWC_Restart();
+    //セーブ中フラグOFF
+    gamedata->is_save = FALSE;
   }
 
   return sr;
+}
+
+//==================================================================
+/**
+ * セーブ実行中か調べる
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ *
+ * @retval  BOOL		    TRUE:セーブ実行中　　FALSE:セーブしていない
+ */
+//==================================================================
+BOOL GAMEDATA_GetIsSave(const GAMEDATA *gamedata)
+{
+  return gamedata->is_save;
 }
 
 //--------------------------------------------------------------

@@ -875,6 +875,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
   if (fieldWork->MainHookFlg) return MAINSEQ_RESULT_CONTINUE;
+  if (GAMEDATA_GetIsSave( fieldWork->gamedata )) return MAINSEQ_RESULT_CONTINUE;
 
 
 	//キーの分割取得カウンタをリセット
@@ -964,6 +965,11 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   OSTick debug_fieldmap_start_tick = OS_GetTick(); 
   OSTick debug_fieldmap_end_tick;
 #endif
+
+  if(GAMEDATA_GetIsSave( fieldWork->gamedata )){
+     GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
+     return MAINSEQ_RESULT_CONTINUE;
+  }
 
   GFL_G3D_ClearG3dInfo();
   
