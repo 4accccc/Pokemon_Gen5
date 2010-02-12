@@ -676,7 +676,7 @@ static void SubBG_BackGround_Setup( HEAPID heapID )
       void* src;
       ARCDATID datID;
       NNSG2dPaletteData* data;
-      datID = NARC_research_radar_bgu_NCLR;
+      datID = NARC_research_radar_graphic_bgu_NCLR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedPaletteData( src, &data );
       GFL_BG_LoadPalette( SUB_BG_BACK_GROUND, data->pRawData, FULL_PALETTE_SIZE, 0 );
@@ -687,7 +687,7 @@ static void SubBG_BackGround_Setup( HEAPID heapID )
       void* src;
       ARCDATID datID;
       NNSG2dCharacterData* data;
-      datID = NARC_research_radar_bgu_NCGR;
+      datID = NARC_research_radar_graphic_bgu_NCGR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedBGCharacterData( src, &data );
       GFL_BG_LoadCharacter( SUB_BG_BACK_GROUND, data->pRawData, data->szByte, 0 );
@@ -698,7 +698,7 @@ static void SubBG_BackGround_Setup( HEAPID heapID )
       void* src;
       ARCDATID datID;
       NNSG2dScreenData* data;
-      datID = NARC_research_radar_bgu_base_NSCR;
+      datID = NARC_research_radar_graphic_bgu_base_NSCR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedScreenData( src, &data );
       GFL_BG_WriteScreen( SUB_BG_BACK_GROUND, data->rawData, 0, 0, 32, 24 );
@@ -758,7 +758,7 @@ static void MainBG_BackGround_Setup( HEAPID heapID )
       void* src;
       ARCDATID datID;
       NNSG2dPaletteData* data;
-      datID = NARC_research_radar_bgd_NCLR;
+      datID = NARC_research_radar_graphic_bgd_NCLR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedPaletteData( src, &data );
       GFL_BG_LoadPalette( MAIN_BG_BACK_GROUND, data->pRawData, FULL_PALETTE_SIZE, 0 );
@@ -769,7 +769,7 @@ static void MainBG_BackGround_Setup( HEAPID heapID )
       void* src;
       ARCDATID datID;
       NNSG2dCharacterData* data;
-      datID = NARC_research_radar_bgd_NCGR;
+      datID = NARC_research_radar_graphic_bgd_NCGR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedBGCharacterData( src, &data );
       GFL_BG_LoadCharacter( MAIN_BG_BACK_GROUND, data->pRawData, data->szByte, 0 );
@@ -780,7 +780,7 @@ static void MainBG_BackGround_Setup( HEAPID heapID )
       void* src;
       ARCDATID datID;
       NNSG2dScreenData* data;
-      datID = NARC_research_radar_bgd_base_NSCR;
+      datID = NARC_research_radar_graphic_bgd_base_NSCR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedScreenData( src, &data );
       GFL_BG_WriteScreen( MAIN_BG_BACK_GROUND, data->rawData, 0, 0, 32, 24 );

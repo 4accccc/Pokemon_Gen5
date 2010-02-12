@@ -818,7 +818,7 @@ static void SetupSubBG_window( RESEARCH_MENU_WORK* work )
       void* src;
       ARCDATID datID;
       NNSG2dScreenData* data;
-      datID = NARC_research_radar_bgu_win1_NSCR;
+      datID = NARC_research_radar_graphic_bgu_win1_NSCR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
       NNS_G2dGetUnpackedScreenData( src, &data );
       GFL_BG_WriteScreen( SUB_BG_WINDOW, data->rawData, 0, 0, 32, 24 );
@@ -956,7 +956,7 @@ static void SetupMainBG_window( RESEARCH_MENU_WORK* work )
       void* src;
       ARCDATID datID;
       NNSG2dScreenData* data;
-      datID = NARC_research_radar_bgd_topbtn_NSCR;
+      datID = NARC_research_radar_graphic_bgd_topbtn_NSCR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
       NNS_G2dGetUnpackedScreenData( src, &data );
       GFL_BG_WriteScreen( MAIN_BG_WINDOW, data->rawData, 0, 0, 32, 24 );
