@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-12T20:32:26"/>
+	<create user="taya" host="W00146" date="2010-02-10T17:07:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -81,6 +81,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
 				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -266,7 +269,7 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
-			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP">
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
 				<parameter number="0" japanese="モード" english="モード" type="int8"/>
 				<comment language="japanese">ユーザConfig設定に応じて
 相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
@@ -356,7 +359,7 @@
 
 
 	<row id="WAZANAME_000">
-		<language name="JPN" width="216">ーーーーー</language>
+		<language name="JPN" width="216">−−−−−</language>
 	</row>
 
 	<row id="WAZANAME_001">
@@ -2320,7 +2323,7 @@
 	</row>
 
 	<row id="WAZANAME_491">
-		<language name="JPN" width="216">アッシドボム</language>
+		<language name="JPN" width="216">アシッドボム</language>
 	</row>
 
 	<row id="WAZANAME_492">

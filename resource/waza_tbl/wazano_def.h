@@ -500,7 +500,7 @@
 #define		WAZANO_NITOROTYAAZI		( 488 )		//ニトロチャージ
 #define		WAZANO_TOGUROWOMAKU		( 489 )		//とぐろをまく
 #define		WAZANO_ROOKIKKU				( 490 )		//ローキック
-#define		WAZANO_ASSIDOBOMU			( 491 )		//アッシドボム
+#define		WAZANO_ASIDDOBOMU			( 491 )		//アシッドボム
 #define		WAZANO_IKASAMA				( 492 )		//イカサマ
 #define		WAZANO_SINPURUBIIMU		( 493 )		//シンプルビーム
 #define		WAZANO_NAKAMADUKURI		( 494 )		//なかまづくり
