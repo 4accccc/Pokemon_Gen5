@@ -5984,7 +5984,7 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
     return BTL_ADDSICK_FAIL_ALREADY;
   }
 
-  // すでにポケモン系状態異常になっているなら、新たにポケモン系状態異常にはならない
+  // すでに基本状態異常になっているなら、他の基本状態異常にはならない
   if( sick < POKESICK_MAX )
   {
     if( BPP_GetPokeSick(target) != POKESICK_NULL ){
@@ -6017,6 +6017,14 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
   {
     PokeTypePair type = BPP_GetPokeType( target );
     if( PokeTypePair_IsMatch(type, POKETYPE_KUSA) ){
+      return BTL_ADDSICK_FAIL_OTHER;
+    }
+  }
+
+  // 「ねむり」状態の時には「あくび」にならない
+  if( sick == WAZASICK_AKUBI )
+  {
+    if( BPP_CheckSick(target, WAZASICK_NEMURI) ){
       return BTL_ADDSICK_FAIL_OTHER;
     }
   }
