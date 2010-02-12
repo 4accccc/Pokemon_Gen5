@@ -177,6 +177,8 @@ static const BtlEventHandlerTable*  ADD_Haneru( u32* numElems );
 static void handler_Haneru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Noroi( u32* numElems );
 static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable*  ADD_Denjiha( u32* numElems );
+static void handler_Denjiha_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_NayamiNoTane( u32* numElems );
 static void handler_NayamiNoTane_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_NayamiNoTane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -812,6 +814,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_ITAMIWAKE,       ADD_Itamiwake     },
     { WAZANO_KONOYUBITOMARE,  ADD_KonoyubiTomare},
     { WAZANO_NAYAMINOTANE,    ADD_NayamiNoTane  },
+    { WAZANO_DENZIHA,         ADD_Denjiha       },
     { WAZANO_ZIKOANZI,        ADD_JikoAnji      },
     { WAZANO_HAATOSUWAPPU,    ADD_HeartSwap     },
     { WAZANO_PAWAASUWAPPU,    ADD_PowerSwap     },
@@ -1790,6 +1793,35 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     }
   }
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * でんじは
+ */
+//----------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  ADD_Denjiha( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_NOEFFECT_CHECK_L2,   handler_Denjiha_NoEff },    // 無効化チェックレベル２ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+static void handler_Denjiha_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+
+    // 「じめん」タイプには効かない
+    if( BPP_IsMatchType(target, POKETYPE_JIMEN) )
+    {
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+    }
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * なやみのタネ
