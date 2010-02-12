@@ -225,213 +225,213 @@ EVENT_START ev_fld_item_21
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=225
+// MAP=WC10 X=0 Y=0 ITEM=キズぐすり FLAG=225
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_225
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=226
+// MAP=WC10 X=0 Y=0 ITEM=モンスターボール FLAG=226
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_226
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_MONSUTAABOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=227
+// MAP=WC10 X=0 Y=0 ITEM=ちいさなキノコ FLAG=227
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_227
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_TIISANAKINOKO,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=228
+// MAP=WC10 X=0 Y=0 ITEM=きちょうなホネ FLAG=228
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_228
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_KITYOUNAHONE,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=229
+// MAP=WC10 X=0 Y=0 ITEM=スーパーボール FLAG=229
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_229
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_SUUPAABOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=230
+// MAP=WC10 X=0 Y=0 ITEM=げんきのかけら FLAG=230
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_230
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=231
+// MAP=WC10 X=0 Y=0 ITEM=クイックボール FLAG=231
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_231
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_KUIKKUBOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=232
+// MAP=WC10 X=0 Y=0 ITEM=リーフのいし FLAG=232
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_232
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_RIIHUNOISI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=233
+// MAP=WC10 X=0 Y=0 ITEM=あかいかけら FLAG=233
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_233
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_AKAIKAKERA,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=234
+// MAP=WC10 X=0 Y=0 ITEM=ほのおのいし FLAG=234
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_234
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_HONOONOISI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=235
+// MAP=WC10 X=0 Y=0 ITEM=みどりのかけら FLAG=235
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_235
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_MIDORINOKAKERA,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=236
+// MAP=WC10 X=0 Y=0 ITEM=たいようのいし FLAG=236
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_236
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_TAIYOUNOISI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=237
+// MAP=WC10 X=0 Y=0 ITEM=リピートボール FLAG=237
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_237
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_RIPIITOBOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=238
+// MAP=WC10 X=0 Y=0 ITEM=ひかりのいし FLAG=238
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_238
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_HIKARINOISI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=239
+// MAP=WC10 X=0 Y=0 ITEM=あまいミツ FLAG=239
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_239
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_AMAIMITU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=240
+// MAP=WC10 X=0 Y=0 ITEM=ハートのウロコ FLAG=240
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_240
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_HAATONOUROKO,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=241
+// MAP=WC10 X=0 Y=0 ITEM=モンスターボール FLAG=241
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_241
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_MONSUTAABOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=242
+// MAP=WC10 X=0 Y=0 ITEM=おおきなキノコ FLAG=242
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_242
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_OOKINAKINOKO,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=243
+// MAP=WC10 X=0 Y=0 ITEM=ネストボール FLAG=243
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_243
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_NESUTOBOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=244
+// MAP=WC10 X=0 Y=0 ITEM=ハイパーボール FLAG=244
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_244
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_HAIPAABOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=245
+// MAP=WC10 X=0 Y=0 ITEM=ネットボール FLAG=245
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_245
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_NETTOBOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=246
+// MAP=WC10 X=0 Y=0 ITEM=みずのいし FLAG=246
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_246
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_MIZUNOISI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=247
+// MAP=WC10 X=0 Y=0 ITEM=あおいかけら FLAG=247
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_247
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_AOIKAKERA,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=248
+// MAP=WC10 X=0 Y=0 ITEM=きいろいかけら FLAG=248
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_248
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_KIIROIKAKERA,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=249
+// MAP=WC10 X=0 Y=0 ITEM=かみなりのいし FLAG=249
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_249
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_KAMINARINOISI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=250
+// MAP=WC10 X=0 Y=0 ITEM=ダイブボール FLAG=250
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_250
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_DAIBUBOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=251
+// MAP=WC10 X=0 Y=0 ITEM=つきのいし FLAG=251
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_251
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_TUKINOISI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=252
+// MAP=WC10 X=0 Y=0 ITEM=やみのいし FLAG=252
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_252
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_YAMINOISI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=253
+// MAP=WC10 X=0 Y=0 ITEM=タイマーボール FLAG=253
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_253
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_TAIMAABOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=きのみ FLAG=254
+// MAP=WC10 X=0 Y=0 ITEM=ふしぎなアメ FLAG=254
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_254
-  _FLD_ITEM_EVENT ITEM_KINOMIZYUUSU,1
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
 EVENT_END
 
 
