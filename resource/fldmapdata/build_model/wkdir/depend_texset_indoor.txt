@@ -1781,7 +1781,8 @@ DEP_TEXSET_IMD_INDOOR038 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd
+	$(SRCDIR)/shelf06.imd \
+	$(SRCDIR)/c09_dendo.imd
 
 texset/indoor038.imd: $(DEP_TEXSET_IMD_INDOOR038) texset/tmp/indoor038.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor038.list
