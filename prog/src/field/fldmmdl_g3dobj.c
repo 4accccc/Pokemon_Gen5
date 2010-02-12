@@ -205,14 +205,14 @@ static u16 rescode_GetResIdx( MMDL_G3DOBJCONT *objcont, u16 code )
  * @retval u16 リソースインデックス FLD_G3DOBJ_IDX_ERROR=未登録
  */
 //--------------------------------------------------------------
-static u16 rescode_GetOBJCode( MMDL_G3DOBJCONT *objcont, u16 idx )
+static u16 rescode_GetOBJCode( MMDL_G3DOBJCONT *objcont, u16 r_idx )
 {
   int i;
   RESCODE *tbl = objcont->restbl;
   
   for( i = 0; i < objcont->max; i++, tbl++ ){
     if( tbl->code != OBJCODEMAX ){
-      if( tbl->residx == idx ){
+      if( tbl->residx == r_idx ){
         return( tbl->code );
       }
     }
@@ -332,7 +332,7 @@ FLD_G3DOBJ_OBJIDX MMDL_G3DOBJCONT_AddObject( MMDL *mmdl, u16 code )
   MMDL_G3DOBJCONT *objcont;
   FLD_G3DOBJ_RESIDX residx;
   FLD_G3DOBJ_OBJIDX objidx;
-
+  
   mmdlsys = MMDL_GetMMdlSys( mmdl );
   objcont = MMDLSYS_GetG3dObjCont( mmdlsys );
   residx = rescode_GetResIdx( objcont, code );
@@ -349,11 +349,11 @@ FLD_G3DOBJ_OBJIDX MMDL_G3DOBJCONT_AddObject( MMDL *mmdl, u16 code )
 /**
  * OBJ削除
  * @param mmdl MMDL*
- * @param idx 削除するオブジェインデックス
+ * @param o_idx 削除するオブジェインデックス
  * @retval nothing
  */
 //--------------------------------------------------------------
-void MMDL_G3DOBJCONT_DeleteObject( MMDL *mmdl, FLD_G3DOBJ_OBJIDX idx )
+void MMDL_G3DOBJCONT_DeleteObject( MMDL *mmdl, FLD_G3DOBJ_OBJIDX o_idx )
 {
   u16 code;
   MMDLSYS *mmdlsys;
@@ -361,12 +361,17 @@ void MMDL_G3DOBJCONT_DeleteObject( MMDL *mmdl, FLD_G3DOBJ_OBJIDX idx )
   
   mmdlsys = MMDL_GetMMdlSys( mmdl );
   objcont = MMDLSYS_GetG3dObjCont( mmdlsys );
-  code = rescode_GetOBJCode( objcont, idx );
+#if 0
+  code = rescode_GetOBJCode( objcont, r_idx );
   GF_ASSERT( code != OBJCODEMAX );
+#else
+  code = MMDL_GetOBJCode( mmdl );
+#endif
   
-  FLD_G3DOBJ_DeleteObject( objcont->g3dobj_ctrl, idx );
+  FLD_G3DOBJ_DeleteObject( objcont->g3dobj_ctrl, o_idx );
   
   if( MMDL_SearchUseOBJCode(mmdl,code) == FALSE ){
-    rescode_DeleteResource( objcont, code ); //他に利用無ければリソースも削除
+    KAGAYA_Printf( "FLDMMDL MDL code(%d) delete resource\n", code );
+    rescode_DeleteResource( objcont, code ); //他が未使用ならリソース削除
   }
 }

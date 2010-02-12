@@ -15,6 +15,7 @@
 //  define 
 //======================================================================
 #define FLD_G3DOBJ_IDX_ERROR (0xffff)
+#define FLD_G3DOBJ_ANM_MAX (8)
 
 //======================================================================
 //  struct
@@ -58,6 +59,21 @@ typedef struct
   u32 count;
 }FLD_G3DANM_ARCIDX;
 
+//--------------------------------------------------------------
+/// FLD_G3DOBJ_RES_HEADER
+//--------------------------------------------------------------
+typedef struct
+{
+  ARCHANDLE *arcHandleMdl;
+  ARCHANDLE *arcHandleTex;
+  ARCHANDLE *arcHandleAnm;
+  u16 arcIdxMdl;
+  u16 arcIdxTex;
+  u16 arcIdxAnm[FLD_G3DOBJ_ANM_MAX];
+  u8 arcIdxAnmCount;
+  u8 padding[3]; //byte rest
+}FLD_G3DOBJ_RES_HEADER;
+  
 //======================================================================
 //  extern
 //======================================================================

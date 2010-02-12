@@ -55,7 +55,7 @@ typedef struct
 
   u16 resIdx; //使用するリソースインデックス
   u16 mdlIdx; //使用するモデルインデックス
-  
+    
   GFL_G3D_OBJSTATUS status;
   
   GFL_G3D_ANM **pAnmTbl;
@@ -293,7 +293,7 @@ u16 FLD_G3DOBJ_CTRL_AddObject(
   FLD_G3DOBJ *obj = ctrl->pObjTbl;
   
   for( i = 0; i < ctrl->obj_max; i++, obj++ ){
-    if( obj->pObj == NULL ){
+    if( obj->useFlag == OBJ_USE_FALSE && obj->pObj == NULL ){
       FLD_G3DOBJ_RES *res = &ctrl->pResTbl[resIdx];
       GF_ASSERT( res->tex_trans_flag != TEX_TRANS_NON );
       
@@ -301,7 +301,7 @@ u16 FLD_G3DOBJ_CTRL_AddObject(
         obj->resIdx = resIdx;
         obj->mdlIdx = mdlIdx;
         obj->useFlag = OBJ_USE_RES_WAIT;
-
+        
         obj->status.scale.x = FX32_ONE;
         obj->status.scale.y = FX32_ONE;
         obj->status.scale.z = FX32_ONE;
