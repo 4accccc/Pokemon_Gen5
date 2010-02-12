@@ -268,6 +268,22 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerBand( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerAnkle( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_PowerWeight( u32* numElems );
 static void handler_PowerXXX_CalcAgility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_HinotamaPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_SizukuPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_IkazutiPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_MirodinoPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_TuraranoPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_KobusinoPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_MoudokuPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_DaitinoPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_AozoraPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_HusiginoPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_TamamusiPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_GansekiPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_MononokePlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_RyuunoPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_KowamotePlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_KoutetsuPlate( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_TumetaiIwa( u32* numElems );
 static void handler_TumetaiIwa( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SarasaraIwa( u32* numElems );
@@ -547,6 +563,23 @@ static const struct {
   { ITEM_PAWAABANDO,        HAND_ADD_ITEM_PowerBand       },
   { ITEM_PAWAAANKURU,       HAND_ADD_ITEM_PowerAnkle      },
   { ITEM_PAWAAUEITO,        HAND_ADD_ITEM_PowerWeight     },
+  { ITEM_HINOTAMAPUREETO,   HAND_ADD_ITEM_HinotamaPlate   },
+  { ITEM_SIZUKUPUREETO,     HAND_ADD_ITEM_SizukuPlate     },
+  { ITEM_IKAZUTIPUREETO,    HAND_ADD_ITEM_IkazutiPlate    },
+  { ITEM_MIDORINOPUREETO,   HAND_ADD_ITEM_MirodinoPlate   },
+  { ITEM_TURARANOPUREETO,   HAND_ADD_ITEM_TuraranoPlate   },
+  { ITEM_KOBUSINOPUREETO,   HAND_ADD_ITEM_KobusinoPlate   },
+  { ITEM_MOUDOKUPUREETO,    HAND_ADD_ITEM_MoudokuPlate    },
+  { ITEM_DAITINOPUREETO,    HAND_ADD_ITEM_DaitinoPlate    },
+  { ITEM_AOZORAPUREETO,     HAND_ADD_ITEM_AozoraPlate     },
+  { ITEM_HUSIGINOPUREETO,   HAND_ADD_ITEM_HusiginoPlate   },
+  { ITEM_TAMAMUSIPUREETO,   HAND_ADD_ITEM_TamamusiPlate   },
+  { ITEM_GANSEKIPUREETO,    HAND_ADD_ITEM_GansekiPlate    },
+  { ITEM_MONONOKEPUREETO,   HAND_ADD_ITEM_MononokePlate   },
+  { ITEM_RYUUNOPUREETO,     HAND_ADD_ITEM_RyuunoPlate     },
+  { ITEM_KOWAMOTEPUREETO,   HAND_ADD_ITEM_KowamotePlate   },
+  { ITEM_KOUTETUPUREETO,    HAND_ADD_ITEM_KoutetsuPlate   },
+
 
   { ITEM_SINKANOKISEKI,     HAND_ADD_ITEM_SinkanoKiseki   },  // しんかのきせき
   { ITEM_GOTUGOTUMETTO,     HAND_ADD_ITEM_GotugotuMet     },  // ゴツゴツメット
@@ -3554,6 +3587,216 @@ static void handler_PowerXXX_CalcAgility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
   }
 }
+
+//------------------------------------------------------------------------------
+/**
+ *  ひのたまプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_HinotamaPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_Mokutan },  // ワザ威力ハンドラ：「もくたん」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  しずくプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_SizukuPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_SinpiNoSizuku },  // ワザ威力ハンドラ：「しんぴのしずく」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  いかずちプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_IkazutiPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_Zisyaku },  // ワザ威力ハンドラ：「じしゃく」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  みどりのプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_MirodinoPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_KisekiNoTane },  // ワザ威力ハンドラ：「きせきのたね」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  つららのプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_TuraranoPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_TokenaiKoori },  // ワザ威力ハンドラ：「とけないこおり」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  こぶしのプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_KobusinoPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_Kuroobi },  // ワザ威力ハンドラ：「くろおび」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  もうどくプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_MoudokuPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_Dokubari },  // ワザ威力ハンドラ：「どくばり」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  だいちのプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_DaitinoPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_YawarakaiSuna },  // ワザ威力ハンドラ：「やわらかいすな」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  あおぞらプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_AozoraPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_SurudoiKutibasi },  // ワザ威力ハンドラ：「するどいくちばし」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  ふしぎのプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_HusiginoPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_MagattaSupuun },  // ワザ威力ハンドラ：「まがったスプーン」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  たまむしプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_TamamusiPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_GinNoKona },  // ワザ威力ハンドラ：「ぎんのこな」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  がんせきプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_GansekiPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_KataiIsi },  // ワザ威力ハンドラ：「かたいいし」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  もののけプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_MononokePlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_NoroiNoOfuda },  // ワザ威力ハンドラ：「のろいのおふだ」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  りゅうのプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_RyuunoPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_RyuunoKiba },  // ワザ威力ハンドラ：「りゅうのキバ」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  こわもてプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_KowamotePlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_KuroiMegane },  // ワザ威力ハンドラ：「くろいめがね」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+//------------------------------------------------------------------------------
+/**
+ *  こうてつプレート
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_KoutetsuPlate( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_MetalCoat },  // ワザ威力ハンドラ：「メタルコート」と等価
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+
 
 //------------------------------------------------------------------------------
 /**
