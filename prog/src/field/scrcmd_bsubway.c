@@ -891,7 +891,7 @@ static const FLDEFF_BTRAIN_TYPE data_TrainModeType[BSWAY_MODE_MAX] =
 static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX] =
 {
   {
-    GRID_SIZE_FX32(43),
+    GRID_SIZE_FX32(45),
     GRID_SIZE_FX32(-2),
     GRID_SIZE_FX32(11) + GRID_HALF_FX32,
   },
