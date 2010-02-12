@@ -16,6 +16,7 @@
 #include "zukan_common.h"
 #include "list/zukanlist.h"
 #include "search/zukansearch.h"
+#include "detail/zukan_detail.h"
 
 
 //============================================================================================
@@ -67,6 +68,9 @@ static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk );
 static int MainSeq_CallSearch( ZUKAN_MAIN_WORK * wk );
 static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk );
 
+static int MainSeq_CallDetail( ZUKAN_MAIN_WORK * wk );
+static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk );
+
 
 //============================================================================================
 //	グローバル
@@ -84,8 +88,9 @@ static const pZUKAN_FUNC MainSeq[] = {
 	MainSeq_CallList,			// リスト呼び出し
 	MainSeq_EndList,			// リスト終了後
 
-	NULL,	// 情報呼び出し
-	NULL,	// 情報終了後
+	MainSeq_CallDetail,	// 情報呼び出し
+	MainSeq_EndDetail,	// 情報終了後
+
 	NULL,	// 分布呼び出し
 	NULL,	// 分布終了後
 	NULL,	// 鳴き声呼び出し
@@ -228,9 +233,9 @@ static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
 		break;
 
 	case ZKNLIST_RET_INFO:		// 詳細画面へ
-//		ret = SEQ_INFO_CALL;
+		ret = SEQ_INFO_CALL;
 		wk->prm->retMode = ZUKAN_RET_NORMAL;
-		ret = SEQ_PROC_FINISH;
+//		ret = SEQ_PROC_FINISH;
 		break;
 
 	case ZKNLIST_RET_SEARCH:	// 検索画面へ
@@ -288,3 +293,60 @@ static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )
 
 	return ret;
 }
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		図鑑詳細画面
+ *
+ * @param		wk     ZUKAN_MAIN_WORK
+ *
+ * @return	次のメインシーケンス
+ */
+//--------------------------------------------------------------------------------------------
+#define test_num (6)
+static u16 test_list[test_num] = { 1, 2, 3, 4, 5, 201 };
+static int MainSeq_CallDetail( ZUKAN_MAIN_WORK * wk )
+{
+  ZUKAN_DETAIL_PARAM* detail;
+	detail = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKAN_DETAIL_PARAM) );
+  
+  detail->gamedata = wk->prm->gamedata;
+  detail->type     = ZUKAN_DETAIL_TYPE_INFO;
+  detail->list     = test_list;
+  detail->num      = test_num;
+  detail->no       = 0;
+
+	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_detail), &ZUKAN_DETAIL_ProcData, detail );
+  wk->work = detail;	
+  return SEQ_INFO_END;
+}
+
+static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
+{
+	ZUKAN_DETAIL_PARAM* detail;
+	int	ret;
+
+	detail = wk->work;
+
+  switch( detail->ret )
+  {
+  case ZUKAN_DETAIL_RET_CLOSE:
+    {
+		  wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+      ret = SEQ_PROC_FINISH;
+    }
+    break;
+  case ZUKAN_DETAIL_RET_RETURN:
+    {
+      wk->prm->retMode = ZUKAN_RET_NORMAL;
+      ret = SEQ_LIST_CALL;
+    }
+    break;
+  }
+		
+	GFL_HEAP_FreeMemory( wk->work );
+
+	return ret;
+}
+
