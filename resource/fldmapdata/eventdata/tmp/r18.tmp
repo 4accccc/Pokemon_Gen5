@@ -1,5 +1,5 @@
 #../data/r18.mev
-../tmp/r18.bin:../data/r18.mev $(UNIQ_SCRIPTHEADER) ../tmp/r18.h 
+../tmp/r18.bin:../data/r18.mev $(UNIQ_SCRIPTHEADER) ../tmp/r18.h ../../zonetable/zone_id.h ../tmp/r18r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/R18_def.h 
 	@echo ../data/r18.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r18.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r18.h ../../zonetable/zone_id.h ../tmp/r18r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/R18_def.h 
 

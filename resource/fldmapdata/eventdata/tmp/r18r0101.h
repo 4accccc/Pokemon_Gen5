@@ -2,6 +2,7 @@
 #ifndef ZONE_R18R0101_EVD_H
 #define ZONE_R18R0101_EVD_H
 
+#define DOOR_ID_R18R0101_R18_EXIT01       0
 
 #endif //ZONE_R18R0101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r18r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
