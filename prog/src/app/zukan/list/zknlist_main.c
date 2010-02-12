@@ -436,7 +436,7 @@ static const FRAMELIST_TOUCH_DATA TouchHitTbl[] =
 	{ { 120, 143, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 05: ポケモンアイコン
 	{ { 144, 167, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 06: ポケモンアイコン
 
-	{ {   8, 159, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },					// 07: レール
+	{ {   8, 160, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },					// 07: レール
 
 	{ { 168, 191, 136, 159 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },			// 08: 左
 	{ { 168, 191, 160, 183 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },		// 09: 右
@@ -573,14 +573,18 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 		}
 
 		for( i=0; i<=max; i++ ){
-			FRAMELIST_AddItem( wk->lwk, 0, SET_LIST_PARAM(wk->dat->list[i],i+1) );
-			// 文字列設定
 			if( wk->dat->list[i] == ZUKAN_LIST_MONS_NONE ){
 				wk->name[i] = GFL_MSG_CreateString( wk->mman, str_name_01 );
+				FRAMELIST_AddItem( wk->lwk, 1, SET_LIST_PARAM(wk->dat->list[i],i+1) );
 			}else{
 				STRBUF * srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, i+1 );
 				wk->name[i] = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
 				GFL_STR_DeleteBuffer( srcStr );
+				if( wk->dat->list[i] == ZUKAN_LIST_MONS_SEE ){
+					FRAMELIST_AddItem( wk->lwk, 1, SET_LIST_PARAM(wk->dat->list[i],i+1) );
+				}else{
+					FRAMELIST_AddItem( wk->lwk, 0, SET_LIST_PARAM(wk->dat->list[i],i+1) );
+				}
 			}
 		}
 	}

@@ -10,6 +10,8 @@
 //============================================================================================
 #include <gflib.h>
 
+#include "ui/touchbar.h"
+
 #include "zknlist_main.h"
 #include "zknlist_ui.h"
 
@@ -43,9 +45,9 @@ static const GFL_UI_TP_HITTBL TouchHitTbl[] =
 	{ 168, 191,  72, 135 },		// 11: ÉZÉåÉNÉg
 //	{ 168, 191, 136, 159 },		// 12: ç∂
 //	{ 168, 191, 160, 183 },		// 13: âE
-	{ 168, 191, 184, 207 },		// 14: Çx
-	{ 168, 191, 208, 231 },		// 15: Çw
-	{ 168, 191, 232, 255 },		// 16: ñﬂÇÈ
+	{ TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 },		// 14: Çx
+	{ TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 },		// 15: Çw
+	{ TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 },		// 16: ñﬂÇÈ
 
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
@@ -66,6 +68,7 @@ int ZKNLISUI_ListMain( ZKNLISTMAIN_WORK * wk )
 	ret = GFL_UI_TP_HitTrg( TouchHitTbl );
 	
 	if( ret != GFL_UI_TP_HIT_NONE ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 		return ret;
 	}
 
@@ -76,22 +79,27 @@ int ZKNLISUI_ListMain( ZKNLISTMAIN_WORK * wk )
 */
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return ZKNLISTUI_ID_RETURN;
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return ZKNLISTUI_ID_X;
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return ZKNLISTUI_ID_Y;
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return ZKNLISTUI_ID_START;
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return ZKNLISTUI_ID_SELECT;
 	}
 

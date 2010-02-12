@@ -78,7 +78,7 @@ static void PutTitleStr( ZKNLISTMAIN_WORK * wk );
 //	グローバル
 //============================================================================================
 
-static const u8	BoxBmpWinData[][6] =
+static const u8	BmpWinData[][6] =
 {
 /*
 	{	// ポケモン名（メイン画面）
@@ -179,7 +179,7 @@ void ZKNLISTBMP_Init( ZKNLISTMAIN_WORK * wk )
 	GFL_BMPWIN_Init( HEAPID_ZUKAN_LIST );
 
 	for( i=0; i<ZKNLISTBMP_WINIDX_MAX; i++ ){
-		const u8 * dat = BoxBmpWinData[i];
+		const u8 * dat = BmpWinData[i];
 		wk->win[i].win = GFL_BMPWIN_Create(
 											dat[0], dat[1], dat[2], dat[3], dat[4], dat[5], GFL_BMP_CHRAREA_GET_B );
 	}

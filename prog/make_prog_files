@@ -1664,7 +1664,8 @@ SRCS_OVERLAY_ZUKAN_SEARCH = app/zukan/search/zukansearch.c \
                             app/zukan/search/zknsearch_seq.c \
                             app/zukan/search/zknsearch_bmp.c \
                             app/zukan/search/zknsearch_obj.c \
-                            app/zukan/search/zknsearch_ui.c
+                            app/zukan/search/zknsearch_ui.c \
+                            app/zukan/search/zknsearch_list.c
 
 # }ŠÓ
 #===> SRCS_OVERLAY_ZUKAN_TOROKU

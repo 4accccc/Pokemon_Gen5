@@ -156,7 +156,7 @@ extern BOOL ZKNLISTOBJ_CheckVanish( ZKNLISTMAIN_WORK * wk, u32 id );
  * @li	flg : TRUE = ON, FALSE = OFF
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_SetBlendMode( ZKNLISTMAIN_WORK * wk, u32 id, BOOL flg );
+extern void ZKNLISTOBJ_SetBlendMode( ZKNLISTMAIN_WORK * wk, u32 id, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**

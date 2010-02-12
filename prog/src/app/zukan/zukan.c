@@ -124,6 +124,7 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 	wk->prm = pwk;
 
 	ZKNCOMM_MakeDefaultList( wk->prm->savedata, wk->defaultList );
+	ZKNCOMM_ResetSortData( &wk->sort );
 
 	if( wk->prm->callMode == ZUKAN_MODE_LIST ){
 		wk->list = wk->defaultList;
@@ -257,7 +258,7 @@ static int MainSeq_CallSearch( ZUKAN_MAIN_WORK * wk )
 
 	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_search), &ZUKANSEARCH_ProcData, wk->work );
 
-	return SEQ_LIST_END;
+	return SEQ_SEARCH_END;
 }
 
 static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )

@@ -62,6 +62,8 @@ struct _FRAMELIST_WORK {
 	u8	putFrameMaxMain;					// 実際に配置したフレーム数（メイン）
 	u8	putFrameMaxSub;						// 実際に配置したフレーム数（サブ）
 
+	s8	subFramePy;				// サブ画面に配置するフレームのＹ補正値
+
 	u16	listMax;					// リスト登録数
 
 	u16	mainSeq;					// メインシーケンス
@@ -256,6 +258,14 @@ FRAMELIST_WORK * FRAMELIST_Create( FRAMELIST_HEADER * hed, HEAPID heapID )
 																		wk->hed.bmpPosX, wk->hed.bmpPosY,
 																		wk->hed.bmpSizX, wk->hed.bmpSizY,
 																		wk->hed.bmpPal, GFL_BMP_CHRAREA_GET_B );
+		}
+	}
+
+	wk->subFramePy = BGSCRN_CHR_SIZE_Y;
+	while( 1 ){
+		wk->subFramePy -= wk->hed.itemSizY;
+		if( wk->subFramePy <= 0 ){
+			break;
 		}
 	}
 
@@ -1476,6 +1486,8 @@ static BOOL DrawListItemMain( FRAMELIST_WORK * wk, s32 pos, s8 py )
 
 static BOOL DrawListItemSub( FRAMELIST_WORK * wk, s32 pos, s8 py )
 {
+	py += wk->subFramePy;
+
 	if( wk->hed.subBG != FRAMELIST_SUB_BG_NONE ){
 		if( pos >= 0 ){
 			u32	subFrame = wk->putFrameSub + wk->printSubPos;

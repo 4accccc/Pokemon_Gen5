@@ -11,6 +11,7 @@
 #pragma	once
 
 #include "savedata/zukan_savedata.h"
+#include "search/zukan_search_engine.h"
 
 
 //============================================================================================
@@ -39,6 +40,8 @@ enum {
 
 
 extern void ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 * list );
+
+extern void ZKNCOMM_ResetSortData( ZKNCOMM_LIST_SORT * sort );
 
 extern void ZKNCOMM_SetFadeIn( HEAPID heapID );
 

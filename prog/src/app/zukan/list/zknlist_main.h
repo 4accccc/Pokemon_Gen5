@@ -81,7 +81,7 @@ typedef struct {
 //	u16 * nameBG[2];
 
 	PRINT_UTIL	win[ZKNLISTBMP_WINIDX_MAX];		// BMPWIN
-	u8 * nameBmp;
+//	u8 * nameBmp;
 
 	GFL_FONT * font;						// 通常フォント
 	GFL_MSGDATA * mman;					// メッセージデータマネージャ

@@ -340,7 +340,7 @@ void ZKNLISTOBJ_ChgObjPriority( ZKNLISTMAIN_WORK * wk, u32 id, int pri )
  * @li	flg : TRUE = ON, FALSE = OFF
  */
 //--------------------------------------------------------------------------------------------
-void BOX2OBJ_SetBlendMode( ZKNLISTMAIN_WORK * wk, u32 id, BOOL flg )
+void ZKNLISTOBJ_SetBlendMode( ZKNLISTMAIN_WORK * wk, u32 id, BOOL flg )
 {
 	if( flg == TRUE ){
 		GFL_CLACT_WK_SetObjMode( wk->clwk[id], GX_OAM_MODE_XLU );
@@ -749,7 +749,7 @@ static void AddPokeIcon( ZKNLISTMAIN_WORK * wk )
 		prm.chrRes = wk->chrRes[ZKNLISTOBJ_CHRRES_POKEICON_S+i];
 		prm.disp = CLSYS_DRAW_SUB;
 		wk->clwk[ZKNLISTOBJ_IDX_POKEICON_S+i] = ZKNCOMM_CreateClact( wk->clunit, &prm, HEAPID_ZUKAN_LIST );
-		BOX2OBJ_SetBlendMode( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, TRUE );
+		ZKNLISTOBJ_SetBlendMode( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, TRUE );
 	}
 
 
