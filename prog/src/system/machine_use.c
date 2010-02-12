@@ -52,8 +52,15 @@ void MachineSystem_Init(void)
 	// 固定小数点API初期化
 	FX_Init();
 	
-	SCFG_SetCpuSpeed( SCFG_CPU_SPEED_1X );
-	
+#if (defined(SDK_TWL))
+  if( OS_GetConsoleType() & (OS_CONSOLE_TWL|OS_CONSOLE_TWLDEBUGGER) )
+  {
+    //TWL拡張機能のOFF
+  	SCFG_SetCpuSpeed( SCFG_CPU_SPEED_1X );
+  	SCFG_SetVramExpanded( FALSE );
+  }
+#endif
+
 	// ファイルシステム初期化
 #ifndef MULTI_BOOT_MAKE
 	{
