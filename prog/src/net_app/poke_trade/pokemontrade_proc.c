@@ -340,13 +340,7 @@ static void _CatchPokemonPositionActive(POKEMON_TRADE_WORK *pWork,GFL_CLWK* pCL,
   pWork->pSelectCLWK = pCL;
   GFL_CLACT_WK_GetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
 
- // pltNum = POKEICON_GetPalNumGetByPPP( ppp );
   POKMEONTRADE2D_IconGray(pWork, pWork->pCatchCLWK, TRUE);
-  //GFL_CLACT_WK_SetPlttOffs( pWork->pCatchCLWK , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
-
-
-  //  GFL_CLACT_WK_SetSoftPri(pWork->pCatchCLWK,_CLACT_SOFTPRI_CATCHPOKE);
-//  GFL_CLACT_WK_SetBgPri(pWork->pCatchCLWK,0);
 
   {
     u32 x,y;
@@ -881,19 +875,35 @@ static void _changePokemonStatusDispAuto(POKEMON_TRADE_WORK* pWork,int sel)
 }
 
 
+const static GFL_UI_TP_HITTBL _tp_data[]={
+  {_POKEMON_SELECT1_CELLY-8,_POKEMON_SELECT1_CELLY+16,_POKEMON_SELECT1_CELLX-8, _POKEMON_SELECT1_CELLX+16},
+  {_POKEMON_SELECT2_CELLY-8,_POKEMON_SELECT2_CELLY+16,_POKEMON_SELECT2_CELLX-8, _POKEMON_SELECT2_CELLX+16},
+  {GFL_UI_TP_HIT_END,0,0,0},
+};
+
 
 // ポケモンのステータス表示待ち
 static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
 {
   BOOL bReturn=FALSE;
-  GFL_UI_TP_HITTBL tp_data[]={
-    {_POKEMON_SELECT1_CELLY-8,_POKEMON_SELECT1_CELLY+16,_POKEMON_SELECT1_CELLX-8, _POKEMON_SELECT1_CELLX+16},
-    {_POKEMON_SELECT2_CELLY-8,_POKEMON_SELECT2_CELLY+16,_POKEMON_SELECT2_CELLX-8, _POKEMON_SELECT2_CELLX+16},
-    {GFL_UI_TP_HIT_END,0,0,0},
-  };
+  int line;
+
+  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){  // 最初にキーが入った場合
+    if(GFL_UI_KEY_GetTrg()){
+      pWork->padMode=TRUE;
+      if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
+        pWork->MainObjCursorLine=line;
+      }
+      GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT] , TRUE );
+      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+      _PokemonIconRenew(pWork);
+      return;
+    }
+  }
+
   GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
 
-  switch(GFL_UI_TP_HitTrg(tp_data)){
+  switch(GFL_UI_TP_HitTrg(_tp_data)){
   case 0:
     if(pWork->pokemonselectno!=0){
       pWork->pokemonselectno = 0;
@@ -1290,6 +1300,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       pWork->selectIndex = pWork->underSelectIndex;
       pWork->selectBoxno = pWork->underSelectBoxno;
       if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+        
         POKMEONTRADE2D_IconGray(pWork, pWork->pSelectCLWK, TRUE);
         
         _CHANGE_STATE(pWork, _changeMenuOpen);
@@ -1340,13 +1351,13 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
 
     pWork->pokemonselectno = 0;
 
-    if(GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY){  // キーの時は位置を補正
-      IRC_POKETRADE_SetCursorXY(pWork);
-      NET_PRINT("キーの時 %d\n",pWork->x);
-    }
-    else{
-      NET_PRINT("PAD時 %d\n",pWork->x);
-    }
+//    if(GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY){  // キーの時は位置を補正
+  //    IRC_POKETRADE_SetCursorXY(pWork);
+    //  NET_PRINT("キーの時 %d\n",pWork->x);
+//    }
+  //  else{
+    //  NET_PRINT("PAD時 %d\n",pWork->x);
+//    }
     POKETRADE_MESSAGE_ChangePokemonMyStDisp(pWork, pWork->pokemonselectno , (pWork->x < 128), pp);
     GFL_HEAP_FreeMemory(pp);
   }
@@ -2014,6 +2025,7 @@ static void _DeletePokemonState(POKEMON_TRADE_WORK* pWork)
       return;
     }
   }
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
   pWork->selectIndex = -1;
   pWork->selectBoxno = -1;
   pWork->workPokeIndex = -1;
@@ -2181,7 +2193,21 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
   BOOL bDecided=FALSE;
   int backBoxNo = pWork->nowBoxno;
   POKEMON_PASO_PARAM* ppp;
+  int line;
 
+  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){  // 最初にキーが入った場合
+    if(GFL_UI_KEY_GetTrg()){
+      pWork->padMode=TRUE;
+      if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
+        pWork->MainObjCursorLine=line;
+      }
+      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+      _PokemonIconRenew(pWork);
+      return;
+    }
+  }
+
+  
   // 監視処理
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){  //速度リセット
     pWork->speed=0;
@@ -2198,7 +2224,6 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
 
   //決定処理
   if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_DECIDE){
-    int line;
     if(POKETRADE_IsMainCursorDispIn(pWork, &line)==FALSE){
       pWork->MainObjCursorLine=line;
     }
@@ -2225,11 +2250,15 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
           ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
           
           _CatchPokemonPositionRewind(pWork);
-          _CatchPokemonPositionActive(pWork,
-                                      pWork->pokeIcon[POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine)][pWork->MainObjCursorIndex],
-                                      pWork->MainObjCursorLine,pWork->MainObjCursorIndex,ppp);
+
+          pWork->pSelectCLWK=pWork->pokeIcon[POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine)][pWork->MainObjCursorIndex];
+
+          
+//          _CatchPokemonPositionActive(pWork,
+//                                      pWork->pokeIcon[POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine)][pWork->MainObjCursorIndex],
+ //                                     pWork->MainObjCursorLine,pWork->MainObjCursorIndex,ppp);
           IRC_POKETRADE_SetCursorXY(pWork);
-          IRC_POKETRADE_CursorEnable(pWork,pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
+//          IRC_POKETRADE_CursorEnable(pWork,pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
           bDecided=TRUE;
         }
       }
