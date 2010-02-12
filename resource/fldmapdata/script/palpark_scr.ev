@@ -231,6 +231,9 @@ player_in_anm:
   //マシンアニメ
 	_BMODEL_ANIME_SET( anmID, SCR_BMANM_PPM_MOV )
 	_BMODEL_ANIME_WAIT( anmID )
+  //マシンループアニメ
+	_BMODEL_ANIME_LOOP_SET( anmID, SCR_BMANM_PPM_LOOP )
+
   //博士所定位置に戻るアニメ
   _OBJ_ANIME( R15R0301_PARK, anm_doc_work2 )
 	_OBJ_ANIME_WAIT()  
@@ -241,6 +244,9 @@ player_in_anm:
   //ブラックアウト
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
+
+  //マシンループアニメストップ  
+	_BMODEL_ANIME_STOP( anmID )
 
   //アニメ解放
   _BMODEL_ANIME_DELETE( anmID )
