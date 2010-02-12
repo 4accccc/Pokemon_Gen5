@@ -444,6 +444,10 @@ end
 						end
 						str += format("0x%08x",angle)
 					when "FILE_DIALOG"
+						if split_data[ param_num ] == "　"
+							printf( "%s:ファイルが正しく指定されていません\n", ARGV[ ARGV_ESF_FILE ] )
+							exit( 1 )
+						end
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ) 
             if( File::extname( file_dialog ) == ".spa" )
 						  inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
@@ -458,6 +462,10 @@ end
 						file_dialog = file_dialog.sub( ".", "_" ).upcase
 						str += file_dialog
 					when "FILE_DIALOG_WITH_ADD"
+						if split_data[ param_num ] == "　"
+							printf( "%s:ファイルが正しく指定されていません\n", ARGV[ ARGV_ESF_FILE ] )
+							exit( 1 )
+						end
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ) 
             if( File::extname( file_dialog ) == ".spa" )
 						  inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
@@ -472,6 +480,10 @@ end
 						file_dialog = file_dialog.sub( ".", "_" ).upcase
 						str += file_dialog
 					when "FILE_DIALOG_COMBOBOX"
+						if split_data[ param_num ] == "　"
+							printf( "%s:ファイルが正しく指定されていません\n", ARGV[ ARGV_ESF_FILE ] )
+							exit( 1 )
+						end
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fdc_ext( param_num -1 ) 
             if( File::extname( file_dialog ) == ".spa" )
 						  inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fdc_ext( param_num -1 ), ".h" )
