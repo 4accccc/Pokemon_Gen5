@@ -39,6 +39,7 @@ SUBDIRS	=	wmi \
 			field_weather_light \
 			field_light \
 			zukan_data \
+			research_radar \
 			message\
 			fldmmdl \
 			encount \
@@ -146,7 +147,6 @@ SUBDIRS	=	wmi \
 			batt_rec_gra \
 			sea_temple \
 			egg_demo \
-			research_radar \
 			kokuren \
 			pokevoice
 
