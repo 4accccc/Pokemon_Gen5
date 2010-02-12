@@ -78,10 +78,10 @@ enum {
 /// カラーフェード
 //=====================================
 enum {
+  COLOR_FADE_SEQ_END,
   COLOR_FADE_SEQ_INIT,
   COLOR_FADE_SEQ_IN,
   COLOR_FADE_SEQ_OUT,
-  COLOR_FADE_SEQ_END,
 } ;
 #define COLOR_FADE_OUT_SKIP   (0xffff)
 

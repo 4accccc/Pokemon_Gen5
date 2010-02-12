@@ -132,6 +132,7 @@ enum{
 // 雷モード
 enum
 {
+  WEATHER_SPARK_MODE_EASY,
   WEATHER_SPARK_MODE_NORMAL,
   WEATHER_SPARK_MODE_RAIKAMI,
   WEATHER_SPARK_MODE_MAX,
@@ -473,16 +474,88 @@ static const fx32 KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_TBL[] =
 
 //-------------------------------------
 //	夕立
+//
+//	時間帯により、動きを変える。
+//
+//	夕立発生5分前　雷音が鳴り始める。
+//	夕立発生      　豪雨
+//	夕立後～夜まで　きらきら水滴が光る
 //=====================================
+
+#define EVENING_RAIN_TIME_SPARKSOUND_AREA ( EVENING_RAIN_TIME_AREA + 40 )
 #define EVENING_RAIN_TIME_AREA_MIN  ( 10 )  // 夕立が起きる時間　（夕方までの時間）
-#define EVENING_RAIN_TIME_AREA  ( 7200 )  // 夕立が起きる時間　（夕方までの時間）
+#define EVENING_RAIN_TIME_AREA  ( 1800 )  // 夕立が起きる時間　（夕方までの時間）
+#define EVENING_RAIN_TIME_KIRAKIRA_AREA     ( -7200 )  // きらきらが終わるまでの定義 夕方になってから1時間
 enum
 {
-  EVENING_RAIN_SEA_NONE,
-  EVENING_RAIN_SEA_FADEIN,
-  EVENING_RAIN_SEA_ON,
-  EVENING_RAIN_SEA_FADEOUT,
+  /* 天気種類郡 */
+  EVENING_RAIN_TYPE_NONE = 0,
+  EVENING_RAIN_TYPE_SPARK_SOUND,
+  EVENING_RAIN_TYPE_RAIN,
+  EVENING_RAIN_TYPE_KIRAKIRA,
+  EVENING_RAIN_TYPE_MAX,
+
+  
+  /* シーケンス郡 */
+  EVENING_RAIN_SEQ_NONE = 0,
+  
+  // 雷シーケンス
+  EVENING_RAIN_SEQ_SPARKSOUND_FADEIN,
+  EVENING_RAIN_SEQ_SPARKSOUND_ON,
+  EVENING_RAIN_SEQ_SPARKSOUND_FADEOUT,
+  
+  // 豪雨シーケンス
+  EVENING_RAIN_SEQ_FADEIN,
+  EVENING_RAIN_SEQ_ON,
+  EVENING_RAIN_SEQ_FADEOUT,
+
+  // きらきらシーケンス
+  EVENING_RAIN_SEQ_KIRAKIRA_FADEIN,
+  EVENING_RAIN_SEQ_KIRAKIRA_ON,
+  EVENING_RAIN_SEQ_KIRAKIRA_FADEOUT,
+
+
+  /* 動作オブジェタイプ */
+  EVENING_RAIN_OBJ_TYPE_NORMAL = 0,
+  EVENING_RAIN_OBJ_TYPE_KIRAKIRA,
+
+  /* きらきら動作オブジェパラメータ */
+  EVENING_RAIN_OBJ_KIRAKIRA_MOVE_TIME_MIN = 4,
+  EVENING_RAIN_OBJ_KIRAKIRA_MOVE_TIME_RAND = 32,
+  EVENING_RAIN_OBJ_KIRAKIRA_MOVE_POS_X_MIN = -64,
+  EVENING_RAIN_OBJ_KIRAKIRA_MOVE_POS_X_RAND = 384,
+  EVENING_RAIN_OBJ_KIRAKIRA_MOVE_POS_Y_MIN = -32,
+  EVENING_RAIN_OBJ_KIRAKIRA_MOVE_POS_Y_RAND = 256,
 };
+
+
+#define	EVENING_RAIN_TIMING_MIN		(0)					// 雨を出すタイミング最小
+#define EVENING_RAIN_TIMING_MAX		(6)				// 雨を出すタイミング最大
+#define EVENING_RAIN_TIMING_ADD		(3)					// タイミングを減らす数
+#define EVENING_RAIN_ADD_START		(1)					// 最初の同時に雨を登録する数
+#define EVENING_RAIN_ADD_TIMING		(2)					// 雨のタイミングをこれ回変更したら１回増やす
+#define EVENING_RAIN_ADD			(1)						// 登録する数を増やす数
+#define EVENING_RAIN_ADD_END		(-1)					// 登録する数を増やす数
+#define	EVENING_RAIN_ADD_MAIN		(1)					// メインシーケンスでの登録する数
+
+
+#define	EVENING_RAIN_KIRAKIRA_TIMING_MIN		(4)					// 雨を出すタイミング最小
+#define EVENING_RAIN_KIRAKIRA_TIMING_MAX		(10)				// 雨を出すタイミング最大
+#define EVENING_RAIN_KIRAKIRA_TIMING_ADD		(3)					// タイミングを減らす数
+#define EVENING_RAIN_KIRAKIRA_ADD_START		(1)					// 最初の同時に雨を登録する数
+#define EVENING_RAIN_KIRAKIRA_ADD_TIMING		(2)					// 雨のタイミングをこれ回変更したら１回増やす
+#define EVENING_RAIN_KIRAKIRA_ADD			(1)						// 登録する数を増やす数
+#define EVENING_RAIN_KIRAKIRA_ADD_END		(-1)					// 登録する数を増やす数
+#define	EVENING_RAIN_KIRAKIRA_ADD_MAIN		(1)					// メインシーケンスでの登録する数
+
+
+/*== フォグ ==*/
+#define	EVENING_RAIN_KIRAKIRA_FOG_TIMING		(90)						// に１回フォグテーブルを操作
+#define	EVENING_RAIN_KIRAKIRA_FOG_TIMING_END	(50)						// に１回フォグテーブルを操作
+#define EVENING_RAIN_KIRAKIRA_FOG_START		(1)					// このカウント動いてからフォグテーブルを操作
+#define EVENING_RAIN_KIRAKIRA_FOG_START_END	(1)					// このカウント動いてからフォグテーブルを操作
+#define EVENING_RAIN_KIRAKIRA_FOG_OFS			(32576)
+#define EVENING_RAIN_KIRAKIRA_FOG_SLOPE			(8)
 
 //-----------------------------------------------------------------------------
 /**
@@ -642,8 +715,12 @@ typedef struct
 typedef struct {
 	s32 work[10];
 
-  u16 time_in;
+  u16 time_in;  // EVENING_RAIN_TYPE_
   s16 seq;
+
+  s32 scroll;
+
+	WEATHER_SPARK_WORK	spark;
   
 } WEATHER_EVENING_RAIN_WORK;
 
@@ -753,7 +830,79 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_FadeOut( WEATHER_TASK* p_wk
 static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
 static void WEATHER_EVENING_RAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk ); 
 static void WEATHER_EVENING_RAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapID ); 
+static void WEATHER_EVENING_RAIN_OBJ_AddKirakira( WEATHER_TASK* p_wk, int num, HEAPID heapID ); 
 
+static void WEATHER_EVENING_RAIN_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_EVENING_RAIN_WORK* p_wk );
+
+static u32 WEATHER_EVENING_RAIN_CheckTimeType( WEATHER_TASK* p_wk );
+
+// 夕立　雷音
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+
+// 夕立　雨
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+
+// 夕立　きらきら
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+
+
+static WEATHER_TASK_FUNC_RESULT (*pEVENING_RAIN_TYPE_Init[ EVENING_RAIN_TYPE_MAX ])( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ) = 
+{
+  NULL,
+  WEATHER_EVENING_RAIN_SPARK_Init,
+  WEATHER_EVENING_RAIN_RAIN_Init,
+  WEATHER_EVENING_RAIN_KIRAKIRA_Init,
+};
+static WEATHER_TASK_FUNC_RESULT (*pEVENING_RAIN_TYPE_FadeIn[ EVENING_RAIN_TYPE_MAX ])( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ) = 
+{
+  NULL,
+  WEATHER_EVENING_RAIN_SPARK_FadeIn,
+  WEATHER_EVENING_RAIN_RAIN_FadeIn,
+  WEATHER_EVENING_RAIN_KIRAKIRA_FadeIn,
+};
+static WEATHER_TASK_FUNC_RESULT (*pEVENING_RAIN_TYPE_NoFade[ EVENING_RAIN_TYPE_MAX ])( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ) = 
+{
+  NULL,
+  WEATHER_EVENING_RAIN_SPARK_NoFade,
+  WEATHER_EVENING_RAIN_RAIN_NoFade,
+  WEATHER_EVENING_RAIN_KIRAKIRA_NoFade,
+};
+static WEATHER_TASK_FUNC_RESULT (*pEVENING_RAIN_TYPE_Main[ EVENING_RAIN_TYPE_MAX ])( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ) = 
+{
+  NULL,
+  WEATHER_EVENING_RAIN_SPARK_Main,
+  WEATHER_EVENING_RAIN_RAIN_Main,
+  WEATHER_EVENING_RAIN_KIRAKIRA_Main,
+};
+static WEATHER_TASK_FUNC_RESULT (*pEVENING_RAIN_TYPE_InitFadeOut[ EVENING_RAIN_TYPE_MAX ])( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ) = 
+{
+  NULL,
+  WEATHER_EVENING_RAIN_SPARK_InitFadeOut,
+  WEATHER_EVENING_RAIN_RAIN_InitFadeOut,
+  WEATHER_EVENING_RAIN_KIRAKIRA_InitFadeOut,
+};
+static WEATHER_TASK_FUNC_RESULT (*pEVENING_RAIN_TYPE_FadeOut[ EVENING_RAIN_TYPE_MAX ])( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ) = 
+{
+  NULL,
+  WEATHER_EVENING_RAIN_SPARK_FadeOut,
+  WEATHER_EVENING_RAIN_RAIN_FadeOut,
+  WEATHER_EVENING_RAIN_KIRAKIRA_FadeOut,
+};
 
 
 //-----------------------------------------------------------------------------
@@ -956,20 +1105,20 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_EVENING_RAIN = {
 	//	グラフィック情報
 	ARCID_FIELD_WEATHER,			// アークID
 	TRUE,		// OAMを使用するか？
-	WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
+	WEATHER_TASK_3DBG_USE_FRONT,		// BGを使用するか？
 	NARC_field_weather_rain_st_NCGR,			// OAM CG
 	NARC_field_weather_rain_NCLR,			// OAM PLTT
 	NARC_field_weather_rain_st_NCER,			// OAM CELL
 	NARC_field_weather_rain_st_NANR,			// OAM CELLANM
   {
     {
-      0,		// BGTEX
-      0,		// GXTexSizeS
-      0,		// GXTexSizeT
-      0,		// GXTexRepeat
-      0,		// GXTexFlip
-      0,		// GXTexFmt
-      0,		// GXTexPlttColor0
+      NARC_field_weather_rain_bg_nsbtx,		// BGTEX
+      GX_TEXSIZE_S32,		// GXTexSizeS
+      GX_TEXSIZE_T32,		// GXTexSizeT
+      GX_TEXREPEAT_ST,		// GXTexRepeat
+      GX_TEXFLIP_NONE,		// GXTexFlip
+      GX_TEXFMT_PLTT4,		// GXTexFmt
+      GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
     },
     {
       0,		// BGTEX
@@ -3129,44 +3278,15 @@ static void WEATHER_KAZAKAMI_WINDRAIN_SCENE_WindSePlay( WEATHER_KAZAKAMI_WORK* p
 static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+  
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
-	// 作業領域の初期化
-	WEATHER_TASK_ObjFade_Init( p_wk, 
-		WEATHER_STRAIN_ADD_START,	// obj登録数
-		WEATHER_STRAIN_TIMING_MAX,// 登録タイミング
-		WEATHER_STRAIN_ADD_MAIN,
-		WEATHER_STRAIN_TIMING_MIN,
-		-WEATHER_STRAIN_TIMING_ADD,
-		WEATHER_STRAIN_ADD_TIMING,
-		WEATHER_STRAIN_ADD,
-		WEATHER_EVENING_RAIN_OBJ_Add );
-	
-
-	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
-
-	p_local_wk->work[0] = WEATHER_STRAIN_FOG_START;	// 同じくフォグ用
-	p_local_wk->work[1] = 0;
-	p_local_wk->work[2] = 0;							// 風カウンタ
-
-	p_local_wk->work[4] = 39;							// 音カウンタ
-
-	// スクロール処理の初期化
-	WEATHER_TASK_InitScrollDist( p_wk );
-
   // 初期化時の時間内チェック
-  {
-    int time_zone_change_time;
-    time_zone_change_time = WEATHER_TASK_GetTimeZoneChangeTime( p_wk, TIMEZONE_EVENING );
-    if( (time_zone_change_time > EVENING_RAIN_TIME_AREA_MIN) && (time_zone_change_time < EVENING_RAIN_TIME_AREA) ){
-      p_local_wk->time_in = TRUE;
-      p_local_wk->seq     = EVENING_RAIN_SEA_FADEIN;
-    }else{
-      p_local_wk->time_in = FALSE;
-    }
+  p_local_wk->time_in = WEATHER_EVENING_RAIN_CheckTimeType( p_wk );
 
+  if( pEVENING_RAIN_TYPE_Init[ p_local_wk->time_in ] ){
+    return pEVENING_RAIN_TYPE_Init[ p_local_wk->time_in ]( p_wk, fog_cont, heapID );
   }
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
@@ -3184,65 +3304,12 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_FadeIn( WEATHER_TASK* p_wk,
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
-  
-  // まだ夕立じゃない
-  if( p_local_wk->time_in == FALSE ){
-	  return WEATHER_TASK_FUNC_RESULT_FINISH;
+  // フェードイン
+  if( pEVENING_RAIN_TYPE_FadeIn[ p_local_wk->time_in ] ){
+    return pEVENING_RAIN_TYPE_FadeIn[ p_local_wk->time_in ]( p_wk, fog_cont, heapID );
   }
 
-  // もし、時間内なら、フェードイン
-  {
-    BOOL result;
-    BOOL fog_result;
-
-    // オブジェクトフェード
-    result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
-
-    if( p_local_wk->work[4] > 0 )
-    {
-      p_local_wk->work[4]--;
-      if( p_local_wk->work[4] == 0 )
-      {
-        // 音
-        WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
-      }
-    }
-
-    if(p_local_wk->work[0] > 0){
-      p_local_wk->work[0]--;			// ワーク6が０になったらフォグを動かす
-      if( p_local_wk->work[0] == 0 ){
-        WEATHER_TASK_FogFadeIn_Init( p_wk,
-        WEATHER_FOG_SLOPE_DEFAULT, 
-        WEATHER_FOG_DEPTH_DEFAULT + WEATHER_STRAIN_FOG_OFS, 
-        WEATHER_STRAIN_FOG_TIMING,
-        fog_cont );
-
-        // ライト変更
-        WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_SPARK ) );
-
-      }
-    }else{
-      fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
-      
-
-      // タイミングが最小になったらメインへ
-      if( fog_result && result ){		// フェードリザルトが完了ならばメインへ
-
-        // シーケンス変更
-        p_local_wk->seq     = EVENING_RAIN_SEA_ON;
-        return WEATHER_TASK_FUNC_RESULT_FINISH;
-      }
-    }
-
-    // スクロール処理
-    {
-      int x, y;
-      WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
-      WEATHER_TASK_ScrollObj( p_wk, x, y );
-    }
-  }
-
-	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
 
 }
 
@@ -3258,45 +3325,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_NoFade( WEATHER_TASK* p_wk,
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
-  
-  // まだ夕立じゃない
-  if( p_local_wk->time_in == FALSE ){
-	  return WEATHER_TASK_FUNC_RESULT_FINISH;
-  }
-
-  // もし、時間内なら、設定
-  {
-
-    // 作業領域の初期化
-    WEATHER_TASK_ObjFade_Init( p_wk,
-      WEATHER_STRAIN_ADD_MAIN,	// obj登録数
-      WEATHER_STRAIN_TIMING_MIN,// 登録タイミング
-      WEATHER_STRAIN_ADD_MAIN,
-      WEATHER_STRAIN_TIMING_MIN,
-      -WEATHER_STRAIN_TIMING_ADD,
-      WEATHER_STRAIN_ADD_TIMING,
-      WEATHER_STRAIN_ADD,
-      WEATHER_EVENING_RAIN_OBJ_Add );
-    
-
-    // フォグの設定
-    WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT, fog_cont );
-
-    // オブジェクトを散らばす
-    WEATHER_TASK_DustObj( p_wk, WEATHER_EVENING_RAIN_OBJ_Add, WEATHER_STRAIN_NOFADE_OBJ_START_NUM, WEATHER_STRAIN_NOFADE_OBJ_START_DUST_NUM, WEATHER_STRAIN_NOFADE_OBJ_START_DUST_MOVE, heapID );
-
-    p_local_wk->work[1] = 0;
-    p_local_wk->work[2] = 0;							// 風カウンタ
-
-    // 音
-    WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
-
-    // ライト変更
-    WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
-
-    // 夕立開始
-    p_local_wk->seq     = EVENING_RAIN_SEA_ON;
-
+  if( pEVENING_RAIN_TYPE_NoFade[ p_local_wk->time_in ] ){
+    return pEVENING_RAIN_TYPE_NoFade[ p_local_wk->time_in ]( p_wk, fog_cont, heapID );
   }
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
@@ -3310,76 +3340,41 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_NoFade( WEATHER_TASK* p_wk,
 static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_EVENING_RAIN_WORK* p_local_wk;
-  int time;
+  int time_type;
 
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
-  // 夕方までの時間を求める
-  time = WEATHER_TASK_GetTimeZoneChangeTime( p_wk, TIMEZONE_EVENING );
-  
-  // もし、夕立時間に入ったら、フェードインする。
-  if( p_local_wk->time_in == FALSE )
-  {
-    if( (time > EVENING_RAIN_TIME_AREA_MIN) && 
-        (time < EVENING_RAIN_TIME_AREA) ){
+  // 時間帯の変化チェック
+  time_type = WEATHER_EVENING_RAIN_CheckTimeType( p_wk );
 
-      WEATHER_EVENING_RAIN_Init( p_wk, fog_cont, heapID );
-      p_local_wk->time_in = TRUE; // 一応
+  if( p_local_wk->time_in != time_type ){
+    // まず、今のものを終わらせる。
+    if( (p_local_wk->seq == EVENING_RAIN_SEQ_SPARKSOUND_ON) || 
+        (p_local_wk->seq == EVENING_RAIN_SEQ_ON) ||
+        (p_local_wk->seq == EVENING_RAIN_SEQ_KIRAKIRA_ON) ){
+      if( pEVENING_RAIN_TYPE_InitFadeOut[p_local_wk->time_in] ){
+        pEVENING_RAIN_TYPE_InitFadeOut[p_local_wk->time_in]( p_wk, fog_cont, heapID );
+        TOMOYA_Printf( "evening rain fade out %d\n", p_local_wk->time_in );
+      }
     }
-  }
 
-
-  // フェードイン・ＭＡＩＮ・フェードアウト
-  if( p_local_wk->time_in == TRUE )
-  {
-    WEATHER_TASK_FUNC_RESULT  result;
+    // 終わっていたら、次の時間帯天気にする
+    if( p_local_wk->seq == EVENING_RAIN_SEQ_NONE ){
+      p_local_wk->time_in = time_type;
     
-    switch( p_local_wk->seq ){
-    case EVENING_RAIN_SEA_NONE:
-      // 終了
-      p_local_wk->time_in = FALSE;
-      break;
-      
-    case EVENING_RAIN_SEA_FADEIN:
-      WEATHER_EVENING_RAIN_FadeIn( p_wk, fog_cont, heapID );
-      break;
-      
-    case EVENING_RAIN_SEA_ON:
-
-      //メイン処理
-      {
-        p_local_wk->work[2] = (p_local_wk->work[2] + 1) % (WEATHER_STRAIN_OBJ_MUL_CHG*WEATHER_STRAIN_OBJ_MUL_NUM);		// 雨登録料変更カウンタ
-        // カウンタが0いかになったら雨登録
-        WEATHER_TASK_ObjFade_NoFadeMain( p_wk, heapID );
-
-        // スクロール処理
-        {
-          int x, y;
-          WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
-          WEATHER_TASK_ScrollObj( p_wk, x, y );
-        }
+      if( pEVENING_RAIN_TYPE_Init[p_local_wk->time_in] ){
+        pEVENING_RAIN_TYPE_Init[p_local_wk->time_in]( p_wk, fog_cont, heapID );
+        TOMOYA_Printf( "evening rain init %d\n", p_local_wk->time_in );
       }
-      
-      {
-        if( (time <= EVENING_RAIN_TIME_AREA_MIN) || 
-            (time >= EVENING_RAIN_TIME_AREA) ){
-
-          // フェードアウトへ
-          WEATHER_EVENING_RAIN_InitFadeOut( p_wk, fog_cont, heapID );
-        }
-      }
-      break;
-      
-    case EVENING_RAIN_SEA_FADEOUT:
-      WEATHER_EVENING_RAIN_FadeOut( p_wk, fog_cont, heapID );
-      break;
-
-    default:
-      GF_ASSERT(0);
-      break;
     }
   }
+
+  // その時間帯のメインを回す。
+  if( pEVENING_RAIN_TYPE_Main[ p_local_wk->time_in ] ){
+    pEVENING_RAIN_TYPE_Main[ p_local_wk->time_in ]( p_wk, fog_cont, heapID );
+  }
+  
 	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
 }
 
@@ -3395,34 +3390,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_InitFadeOut( WEATHER_TASK* 
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
-  // まだ夕立じゃない
-  if( p_local_wk->time_in == FALSE ){
-	  return WEATHER_TASK_FUNC_RESULT_FINISH;
+  if( pEVENING_RAIN_TYPE_InitFadeOut[ p_local_wk->time_in ] ){
+    return pEVENING_RAIN_TYPE_InitFadeOut[ p_local_wk->time_in ]( p_wk, fog_cont, heapID );
   }
-
-  // すでにフェードあうと中チェック
-  if( p_local_wk->seq != EVENING_RAIN_SEA_ON ){
-	  return WEATHER_TASK_FUNC_RESULT_FINISH;
-  }
-  
-	// obj
-	// フェードアウト設定
-  {
-    WEATHER_TASK_ObjFade_SetOut( p_wk,
-        0,
-        WEATHER_STRAIN_TIMING_MAX,
-        WEATHER_STRAIN_TIMING_ADD,
-        WEATHER_STRAIN_ADD_END );
-    
-    p_local_wk->work[0] = WEATHER_STRAIN_FOG_START_END;	// 同じくフォグ用
-
-
-    // 音
-    WEATHER_TASK_StopLoopSnd( p_wk );	
-
-    p_local_wk->seq = EVENING_RAIN_SEA_FADEOUT;
-  }
-  
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 
@@ -3438,56 +3408,10 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_FadeOut( WEATHER_TASK* p_wk
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
-  // まだ夕立じゃない
-  if( p_local_wk->time_in == FALSE ){
-	  return WEATHER_TASK_FUNC_RESULT_FINISH;
+  if( pEVENING_RAIN_TYPE_FadeOut[ p_local_wk->time_in ] ){
+    return pEVENING_RAIN_TYPE_FadeOut[ p_local_wk->time_in ]( p_wk, fog_cont, heapID );
   }
-
-  {
-    BOOL result;
-    BOOL fog_result;
-
-    // オブジェクトフェード
-    result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
-
-    // フォグ操作
-    if(p_local_wk->work[0] > 0){
-      p_local_wk->work[0]--;			// ワークが０になったらフォグを動かす
-      if( p_local_wk->work[0] == 0 ){
-
-        WEATHER_TASK_FogFadeOut_Init( p_wk,
-            WEATHER_FOG_DEPTH_DEFAULT_START, 
-            WEATHER_STRAIN_FOG_TIMING_END, fog_cont );
-      }
-    }else{
-    
-      if( fog_cont ){
-        fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
-      }else{
-        fog_result = TRUE;
-      }
-    
-      if( fog_result && result ){
-        // 登録数が０になったら終了するかチェック
-        // 自分の管理するあめが全て破棄されたら終了
-        if( WEATHER_TASK_GetActiveObjNum( p_wk ) == 0 ){//*/
-
-          p_local_wk->seq = EVENING_RAIN_SEA_NONE;
-          
-          return WEATHER_TASK_FUNC_RESULT_FINISH;
-        }
-      }
-    }
-
-    // スクロール処理
-    {
-      int x, y;
-      WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
-      WEATHER_TASK_ScrollObj( p_wk, x, y );
-    }
-  }
-  
-	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 
 //----------------------------------------------------------------------------
@@ -3506,6 +3430,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_Exit( WEATHER_TASK* p_wk, W
 
 	// ライト元に
 	WEATHER_TASK_LIGHT_Back( p_wk );
+
+	// スパーク初期化
+	WEATHER_PARK_Exit( &p_local_wk->spark );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -3526,42 +3453,53 @@ static void WEATHER_EVENING_RAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	p_clwk = WEATHER_OBJ_WORK_GetClWk( p_wk );
 
 	WEATHER_OBJ_WORK_GetPos( p_wk, &mat );
-	
-	// 動作フラグをチェック
-	switch(obj_w[3]){
-	case 0:		// 動作
-		// 動かす
-		mat.x += (obj_w[4]*2);
-		mat.y += (obj_w[2]*2);
-	
-		// 破棄するかチェック
-		obj_w[0] += 2;
-		if(obj_w[0] > obj_w[1]){
-			// アニメーションさせるかチェック
-			if(GFUser_GetPublicRand(10) < 5){		// 7/10は破棄
-				// 破棄
-				obj_w[3] = 2;
-			}else{
-			
-				// 破棄アニメ
-				obj_w[3] = 1;		
-				obj_w[0] = 4;			// 破棄アニメカウンタ
-				GFL_CLACT_WK_SetAnmIndex( p_clwk, 3 );
-			}
-		}
-		// 座標設定
-		WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &mat );
-		break;
-	case 1:		// 破棄アニメ
-		if(obj_w[0]-- <= 0){
-			obj_w[3] = 2;		// 破棄
-		}
-		break;
 
-	case 2:		// 破棄
-		WEATHER_TASK_DeleteObj( p_wk );
-		break;
-	}		
+  if(obj_w[5] == EVENING_RAIN_OBJ_TYPE_NORMAL){
+    
+    // 動作フラグをチェック
+    switch(obj_w[3]){
+    case 0:		// 動作
+      // 動かす
+      mat.x += (obj_w[4]*2);
+      mat.y += (obj_w[2]*2);
+    
+      // 破棄するかチェック
+      obj_w[0] += 2;
+      if(obj_w[0] > obj_w[1]){
+        // アニメーションさせるかチェック
+        if(GFUser_GetPublicRand(10) < 5){		// 7/10は破棄
+          // 破棄
+          obj_w[3] = 2;
+        }else{
+        
+          // 破棄アニメ
+          obj_w[3] = 1;		
+          obj_w[0] = 4;			// 破棄アニメカウンタ
+          GFL_CLACT_WK_SetAnmIndex( p_clwk, 3 );
+        }
+      }
+      // 座標設定
+      WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &mat );
+      break;
+    case 1:		// 破棄アニメ
+      if(obj_w[0]-- <= 0){
+        obj_w[3] = 2;		// 破棄
+      }
+      break;
+
+    case 2:		// 破棄
+      WEATHER_TASK_DeleteObj( p_wk );
+      break;
+    }		
+  }
+  else
+  {
+    // 時間分生きたら消滅
+    obj_w[0]--;
+    if(obj_w[0] <= 0){
+      WEATHER_TASK_DeleteObj( p_wk );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -3622,9 +3560,685 @@ static void WEATHER_EVENING_RAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID he
 
 			WEATHER_OBJ_WORK_SetPosNoTurn( add_obj, &mat );
 		}
+
+    // オブジェタイプ
+    obj_w[5] = EVENING_RAIN_OBJ_TYPE_NORMAL;
 		
 	}
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  きらきらオブジェの登録
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_EVENING_RAIN_OBJ_AddKirakira( WEATHER_TASK* p_wk, int num, HEAPID heapID )
+{
+	int i;		// ループ用
+	WEATHER_OBJ_WORK* add_obj;		// 登録オブジェ
+	WEATHER_EVENING_RAIN_WORK*	p_local_wk;	// システムワーク
+	s32* obj_w;	// オブジェクトワーク
+	GFL_CLACTPOS mat;	// 設定座標
+	GFL_CLWK* p_clwk;
+
+	// ユーザワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+	
+	// num分オブジェクトを登録
+	for(i=0;i<num;i++){
+
+		add_obj = WEATHER_TASK_CreateObj( p_wk, heapID );		// 登録
+		if(add_obj == NULL){			// 失敗したら終了
+			break;
+		}
+		obj_w = WEATHER_OBJ_WORK_GetWork( add_obj );		// オブジェワーク作成
+		p_clwk	= WEATHER_OBJ_WORK_GetClWk( add_obj );
+
+		GFL_CLACT_WK_SetAnmSeq( p_clwk, 1 );
+    GFL_CLACT_WK_SetAutoAnmFlag( p_clwk, TRUE );
+		// 座標を設定
+		{
+			mat.x = EVENING_RAIN_OBJ_KIRAKIRA_MOVE_POS_X_MIN + GFUser_GetPublicRand(EVENING_RAIN_OBJ_KIRAKIRA_MOVE_POS_X_RAND);
+			mat.y = EVENING_RAIN_OBJ_KIRAKIRA_MOVE_POS_Y_MIN + GFUser_GetPublicRand(EVENING_RAIN_OBJ_KIRAKIRA_MOVE_POS_Y_RAND);
+
+			WEATHER_OBJ_WORK_SetPosNoTurn( add_obj, &mat );
+		}
+
+    // 消滅時間
+    obj_w[0] = EVENING_RAIN_OBJ_KIRAKIRA_MOVE_TIME_MIN + GFUser_GetPublicRand(EVENING_RAIN_OBJ_KIRAKIRA_MOVE_TIME_RAND);
+
+    // オブジェタイプ
+    obj_w[5] = EVENING_RAIN_OBJ_TYPE_KIRAKIRA;
+		
+	}
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  夕立スクロール
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_EVENING_RAIN_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_EVENING_RAIN_WORK* p_wk )
+{
+	int x, y;
+	WEATHER_TASK_GetScrollDist( p_sys, &x, &y );
+	WEATHER_TASK_ScrollObj( p_sys, x, y );
+
+	// BG面を斜め上に動かす
+	p_wk->scroll = (p_wk->scroll + 9) % 256;
+	WEATHER_TASK_3DBG_SetScrollX( p_sys, (-p_wk->scroll) - x, WEATHER_TASK_3DBG_FRONT );
+	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->scroll) + y, WEATHER_TASK_3DBG_FRONT );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  時間から今の動作タイプを取得
+ *
+ *	@param	p_wk  天気タスクワーク
+ */
+//-----------------------------------------------------------------------------
+static u32 WEATHER_EVENING_RAIN_CheckTimeType( WEATHER_TASK* p_wk )
+{
+  int time_zone_change_time;
+  int time_zone_change_time_night;
+  time_zone_change_time = WEATHER_TASK_GetTimeZoneChangeTime( p_wk, TIMEZONE_EVENING );
+
+  
+  // 雷ゾーン
+  if( (time_zone_change_time < EVENING_RAIN_TIME_SPARKSOUND_AREA) && 
+      (time_zone_change_time >= EVENING_RAIN_TIME_AREA) ){
+    return EVENING_RAIN_TYPE_SPARK_SOUND;
+  }
+
+  // 豪雨ゾーン
+  if( (time_zone_change_time > EVENING_RAIN_TIME_AREA_MIN) && 
+      (time_zone_change_time < EVENING_RAIN_TIME_AREA) ){
+    return EVENING_RAIN_TYPE_RAIN;
+  }
+
+
+  if( (time_zone_change_time <= EVENING_RAIN_TIME_AREA_MIN) && 
+      (time_zone_change_time > EVENING_RAIN_TIME_KIRAKIRA_AREA) ){
+    return EVENING_RAIN_TYPE_KIRAKIRA;
+  }
+
+  return EVENING_RAIN_TYPE_NONE;
+}
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief 夕立　雷音
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// スパーク初期化
+	WEATHER_PARK_Init( &p_local_wk->spark, WEATHER_SPARK_MODE_EASY );
+
+  p_local_wk->seq = EVENING_RAIN_SEQ_SPARKSOUND_FADEIN;
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+  
+  p_local_wk->seq = EVENING_RAIN_SEQ_SPARKSOUND_ON;
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+  
+  p_local_wk->seq = EVENING_RAIN_SEQ_SPARKSOUND_ON;
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+  
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  switch( p_local_wk->seq ){
+  // 終了
+  case EVENING_RAIN_SEQ_NONE:
+    break;
+    
+  case EVENING_RAIN_SEQ_SPARKSOUND_FADEIN:
+    WEATHER_EVENING_RAIN_SPARK_FadeIn( p_wk, fog_cont, heapID );
+    break;
+    
+  case EVENING_RAIN_SEQ_SPARKSOUND_ON:
+    // スパークメイン
+    WEATHER_PARK_Main( &p_local_wk->spark, p_wk );
+    break;
+
+  case EVENING_RAIN_SEQ_SPARKSOUND_FADEOUT:
+    WEATHER_EVENING_RAIN_SPARK_FadeOut( p_wk, fog_cont, heapID );
+    break;
+
+  default:
+    break;
+  }
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+  
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  p_local_wk->seq = EVENING_RAIN_SEQ_SPARKSOUND_FADEOUT;
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_SPARK_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+  
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  p_local_wk->seq = EVENING_RAIN_SEQ_NONE;
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief 夕立　雨
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+
+	// スパーク初期化
+	WEATHER_PARK_Init( &p_local_wk->spark, WEATHER_SPARK_MODE_NORMAL );
+
+	// 作業領域の初期化
+	WEATHER_TASK_ObjFade_Init( p_wk, 
+		EVENING_RAIN_ADD_START,	// obj登録数
+		EVENING_RAIN_TIMING_MAX,// 登録タイミング
+		EVENING_RAIN_ADD_MAIN,
+		EVENING_RAIN_TIMING_MIN,
+		-EVENING_RAIN_TIMING_ADD,
+		EVENING_RAIN_ADD_TIMING,
+		EVENING_RAIN_ADD,
+		WEATHER_EVENING_RAIN_OBJ_Add );
+	
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, EVENING_RAIN_KIRAKIRA_FOG_SLOPE, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
+
+	p_local_wk->work[0] = WEATHER_STRAIN_FOG_START;	// 同じくフォグ用
+	p_local_wk->work[1] = 0;
+	p_local_wk->work[2] = 0;							// 風カウンタ
+
+	p_local_wk->work[4] = 39;							// 音カウンタ
+
+	// スクロール処理の初期化
+	WEATHER_TASK_InitScrollDist( p_wk );
+
+
+  p_local_wk->seq     = EVENING_RAIN_SEQ_FADEIN;
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  // もし、時間内なら、フェードイン
+  {
+    BOOL result;
+    BOOL fog_result;
+
+    // オブジェクトフェード
+    result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
+
+    if( p_local_wk->work[4] > 0 )
+    {
+      p_local_wk->work[4]--;
+      if( p_local_wk->work[4] == 0 )
+      {
+        // 音
+        WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+        // BGON
+        WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+      }
+    }
+
+    if(p_local_wk->work[0] > 0){
+      p_local_wk->work[0]--;			// ワーク6が０になったらフォグを動かす
+      if( p_local_wk->work[0] == 0 ){
+        WEATHER_TASK_FogFadeIn_Init( p_wk,
+        EVENING_RAIN_KIRAKIRA_FOG_SLOPE, 
+        EVENING_RAIN_KIRAKIRA_FOG_OFS, 
+        EVENING_RAIN_KIRAKIRA_FOG_TIMING,
+        fog_cont );
+
+        // ライト変更
+        WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_SPARK ) );
+
+      }
+    }else{
+      fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
+      
+
+      // タイミングが最小になったらメインへ
+      if( fog_result && result ){		// フェードリザルトが完了ならばメインへ
+
+        // シーケンス変更
+        p_local_wk->seq     = EVENING_RAIN_SEQ_ON;
+        return WEATHER_TASK_FUNC_RESULT_FINISH;
+      }
+    }
+
+    // スクロール処理
+    WEATHER_EVENING_RAIN_SCROLL_Main( p_wk, p_local_wk );
+  }
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  
+  // もし、時間内なら、設定
+  {
+
+    // 作業領域の初期化
+    WEATHER_TASK_ObjFade_Init( p_wk,
+      EVENING_RAIN_ADD_MAIN,	// obj登録数
+      EVENING_RAIN_TIMING_MIN,// 登録タイミング
+      EVENING_RAIN_ADD_MAIN,
+      EVENING_RAIN_TIMING_MIN,
+      -EVENING_RAIN_TIMING_ADD,
+      EVENING_RAIN_ADD_TIMING,
+      EVENING_RAIN_ADD,
+      WEATHER_EVENING_RAIN_OBJ_Add );
+    
+
+    // フォグの設定
+    WEATHER_TASK_FogSet( p_wk, EVENING_RAIN_KIRAKIRA_FOG_SLOPE, EVENING_RAIN_KIRAKIRA_FOG_OFS, fog_cont );
+
+    // オブジェクトを散らばす
+    WEATHER_TASK_DustObj( p_wk, WEATHER_EVENING_RAIN_OBJ_Add, WEATHER_STRAIN_NOFADE_OBJ_START_NUM, WEATHER_STRAIN_NOFADE_OBJ_START_DUST_NUM, WEATHER_STRAIN_NOFADE_OBJ_START_DUST_MOVE, heapID );
+
+    p_local_wk->work[1] = 0;
+    p_local_wk->work[2] = 0;							// 風カウンタ
+
+    // 音
+    WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+
+    // BGON
+    WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+
+    // ライト変更
+    WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
+
+    // 夕立開始
+    p_local_wk->seq     = EVENING_RAIN_SEQ_ON;
+
+  }
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+  int time;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  // フェードイン・ＭＡＩＮ・フェードアウト
+  {
+    WEATHER_TASK_FUNC_RESULT  result;
+    
+    switch( p_local_wk->seq ){
+    case EVENING_RAIN_SEQ_NONE:
+      // 終了
+      break;
+      
+    case EVENING_RAIN_SEQ_FADEIN:
+      WEATHER_EVENING_RAIN_RAIN_FadeIn( p_wk, fog_cont, heapID );
+      break;
+      
+    case EVENING_RAIN_SEQ_ON:
+
+      //メイン処理
+      {
+        p_local_wk->work[2] = (p_local_wk->work[2] + 1) % (WEATHER_STRAIN_OBJ_MUL_CHG*WEATHER_STRAIN_OBJ_MUL_NUM);		// 雨登録料変更カウンタ
+        // カウンタが0いかになったら雨登録
+        WEATHER_TASK_ObjFade_NoFadeMain( p_wk, heapID );
+
+        // スパークメイン
+        WEATHER_PARK_Main( &p_local_wk->spark, p_wk );
+
+        // スクロール処理
+        WEATHER_EVENING_RAIN_SCROLL_Main( p_wk, p_local_wk );
+      }
+      break;
+      
+    case EVENING_RAIN_SEQ_FADEOUT:
+      WEATHER_EVENING_RAIN_RAIN_FadeOut( p_wk, fog_cont, heapID );
+      break;
+
+    default:
+      GF_ASSERT(0);
+      break;
+    }
+  }
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  // すでにフェードあうと中チェック
+  if( p_local_wk->seq == EVENING_RAIN_SEQ_FADEOUT ){
+	  return WEATHER_TASK_FUNC_RESULT_FINISH;
+  }
+  
+	// obj
+	// フェードアウト設定
+  {
+    WEATHER_TASK_ObjFade_SetOut( p_wk,
+        0,
+        EVENING_RAIN_TIMING_MAX,
+        EVENING_RAIN_TIMING_ADD,
+        EVENING_RAIN_ADD_END );
+    
+    p_local_wk->work[0] = WEATHER_STRAIN_FOG_START_END;	// 同じくフォグ用
+
+
+    // 音
+    WEATHER_TASK_StopLoopSnd( p_wk );	
+    // BGOFF
+    WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
+
+    p_local_wk->seq = EVENING_RAIN_SEQ_FADEOUT;
+  }
+  
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_RAIN_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  {
+    BOOL result;
+    BOOL fog_result;
+
+    // オブジェクトフェード
+    result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
+
+    // フォグ操作
+    if(p_local_wk->work[0] > 0){
+      p_local_wk->work[0]--;			// ワークが０になったらフォグを動かす
+      if( p_local_wk->work[0] == 0 ){
+
+        WEATHER_TASK_FogFadeOut_Init( p_wk,
+            WEATHER_FOG_DEPTH_DEFAULT_START, 
+            EVENING_RAIN_KIRAKIRA_FOG_TIMING_END, fog_cont );
+      }
+    }else{
+    
+      if( fog_cont ){
+        fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
+      }else{
+        fog_result = TRUE;
+      }
+    
+      if( fog_result && result ){
+        // 登録数が０になったら終了するかチェック
+        // 自分の管理するあめが全て破棄されたら終了
+        if( WEATHER_TASK_GetActiveObjNum( p_wk ) == 0 ){//*/
+
+          p_local_wk->seq = EVENING_RAIN_SEQ_NONE;
+          
+          return WEATHER_TASK_FUNC_RESULT_FINISH;
+        }
+      }
+    }
+
+    // スクロール処理
+    WEATHER_EVENING_RAIN_SCROLL_Main( p_wk, p_local_wk );
+  }
+  
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+
+// 夕立　きらきら
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+
+	// 作業領域の初期化
+	WEATHER_TASK_ObjFade_Init( p_wk, 
+		EVENING_RAIN_KIRAKIRA_ADD_START,	// obj登録数
+		EVENING_RAIN_KIRAKIRA_TIMING_MAX,// 登録タイミング
+		EVENING_RAIN_KIRAKIRA_ADD_MAIN,
+		EVENING_RAIN_KIRAKIRA_TIMING_MIN,
+		-EVENING_RAIN_KIRAKIRA_TIMING_ADD,
+		EVENING_RAIN_KIRAKIRA_ADD_TIMING,
+		EVENING_RAIN_KIRAKIRA_ADD,
+		WEATHER_EVENING_RAIN_OBJ_AddKirakira );
+	
+
+  p_local_wk->seq     = EVENING_RAIN_SEQ_KIRAKIRA_FADEIN;
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  // もし、時間内なら、フェードイン
+  {
+    BOOL result;
+
+    // オブジェクトフェード
+    result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
+    // タイミングが最小になったらメインへ
+    if( result ){		// フェードリザルトが完了ならばメインへ
+      // シーケンス変更
+      p_local_wk->seq     = EVENING_RAIN_SEQ_KIRAKIRA_ON;
+      return WEATHER_TASK_FUNC_RESULT_FINISH;
+    }
+
+    // スクロール処理
+    WEATHER_EVENING_RAIN_SCROLL_Main( p_wk, p_local_wk );
+  }
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  
+  // もし、時間内なら、設定
+  {
+
+    // 作業領域の初期化
+    WEATHER_TASK_ObjFade_Init( p_wk,
+      EVENING_RAIN_KIRAKIRA_ADD_MAIN,	// obj登録数
+      EVENING_RAIN_KIRAKIRA_TIMING_MIN,// 登録タイミング
+      EVENING_RAIN_KIRAKIRA_ADD_MAIN,
+      EVENING_RAIN_KIRAKIRA_TIMING_MIN,
+      -EVENING_RAIN_KIRAKIRA_TIMING_ADD,
+      EVENING_RAIN_KIRAKIRA_ADD_TIMING,
+      EVENING_RAIN_KIRAKIRA_ADD,
+      WEATHER_EVENING_RAIN_OBJ_AddKirakira );
+    
+
+    // オブジェクトを散らばす
+    WEATHER_TASK_DustObj( p_wk, WEATHER_EVENING_RAIN_OBJ_AddKirakira, WEATHER_STRAIN_NOFADE_OBJ_START_NUM, WEATHER_STRAIN_NOFADE_OBJ_START_DUST_NUM, WEATHER_STRAIN_NOFADE_OBJ_START_DUST_MOVE, heapID );
+
+    // 夕立開始
+    p_local_wk->seq     = EVENING_RAIN_SEQ_KIRAKIRA_ON;
+
+  }
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+  int time;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  // フェードイン・ＭＡＩＮ・フェードアウト
+  {
+    WEATHER_TASK_FUNC_RESULT  result;
+    
+    switch( p_local_wk->seq ){
+    case EVENING_RAIN_SEQ_NONE:
+      // 終了
+      break;
+      
+    case EVENING_RAIN_SEQ_KIRAKIRA_FADEIN:
+      WEATHER_EVENING_RAIN_KIRAKIRA_FadeIn( p_wk, fog_cont, heapID );
+      break;
+      
+    case EVENING_RAIN_SEQ_KIRAKIRA_ON:
+
+      //メイン処理
+      {
+        // カウンタが0いかになったら雨登録
+        WEATHER_TASK_ObjFade_NoFadeMain( p_wk, heapID );
+
+        // スクロール処理
+        WEATHER_EVENING_RAIN_SCROLL_Main( p_wk, p_local_wk );
+      }
+      break;
+      
+    case EVENING_RAIN_SEQ_KIRAKIRA_FADEOUT:
+      WEATHER_EVENING_RAIN_KIRAKIRA_FadeOut( p_wk, fog_cont, heapID );
+      break;
+
+    default:
+      GF_ASSERT(0);
+      break;
+    }
+  }
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  // すでにフェードあうと中チェック
+  if( p_local_wk->seq == EVENING_RAIN_SEQ_KIRAKIRA_FADEOUT ){
+	  return WEATHER_TASK_FUNC_RESULT_FINISH;
+  }
+  
+	// obj
+	// フェードアウト設定
+  {
+    WEATHER_TASK_ObjFade_SetOut( p_wk,
+        0,
+        EVENING_RAIN_KIRAKIRA_TIMING_MAX,
+        EVENING_RAIN_KIRAKIRA_TIMING_ADD,
+        EVENING_RAIN_KIRAKIRA_ADD_END );
+    
+    p_local_wk->seq = EVENING_RAIN_SEQ_KIRAKIRA_FADEOUT;
+  }
+  
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_KIRAKIRA_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_EVENING_RAIN_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  {
+    BOOL result;
+
+    // オブジェクトフェード
+    result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
+
+    if( result ){
+      // 登録数が０になったら終了するかチェック
+      // 自分の管理するあめが全て破棄されたら終了
+      if( WEATHER_TASK_GetActiveObjNum( p_wk ) == 0 ){//*/
+
+        p_local_wk->seq = EVENING_RAIN_SEQ_NONE;
+        
+        return WEATHER_TASK_FUNC_RESULT_FINISH;
+      }
+    }
+
+    // スクロール処理
+    WEATHER_EVENING_RAIN_SCROLL_Main( p_wk, p_local_wk );
+  }
+  
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
 }
 
 
@@ -3665,6 +4279,10 @@ static void WEATHER_PARK_Exit( WEATHER_SPARK_WORK* p_wk )
  *
  *	@param	p_wk	ワーク
  *	@param	p_sys	天気システムワーク
+ *
+ *	EASY    音のみ表現
+ *	NORMAL  通常
+ *	RAIKAMI lightな雷なし
  */
 //-----------------------------------------------------------------------------
 static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
@@ -3706,21 +4324,28 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
 //			OS_TPrintf( "spark_type %d\n", i );
 
 			// それぞれのタイプごとに初期化
-			switch( i ){
-			case WEATHER_SPARK_TYPE_LIGHT:
-        if( p_wk->mode == WEATHER_SPARK_MODE_NORMAL ){
-				  WEATEHR_SPARK_SetUp_Light( p_wk );
-        }else{
-				  WEATEHR_SPARK_SetUp_Hard( p_wk );
+      if( p_wk->mode == WEATHER_SPARK_MODE_EASY )
+      {
+        WEATEHR_SPARK_SetUp_Light( p_wk );
+      }
+      else
+      {
+        switch( i ){
+        case WEATHER_SPARK_TYPE_LIGHT:
+          if( p_wk->mode == WEATHER_SPARK_MODE_NORMAL ){
+            WEATEHR_SPARK_SetUp_Light( p_wk );
+          }else{
+            WEATEHR_SPARK_SetUp_Hard( p_wk );
+          }
+          break;
+        case WEATHER_SPARK_TYPE_HARD:
+          WEATEHR_SPARK_SetUp_Hard( p_wk );
+          break;
+        case WEATHER_SPARK_TYPE_LIGHT_HARD:
+          WEATEHR_SPARK_SetUp_LightAndHard( p_wk );
+          break;
         }
-				break;
-			case WEATHER_SPARK_TYPE_HARD:
-				WEATEHR_SPARK_SetUp_Hard( p_wk );
-				break;
-			case WEATHER_SPARK_TYPE_LIGHT_HARD:
-				WEATEHR_SPARK_SetUp_LightAndHard( p_wk );
-				break;
-			}
+      }
 
 			p_wk->spark_tbl_count	= 0;
 			p_wk->seq				= WEATHER_SPARK_SPARK_DARK;
@@ -3750,7 +4375,13 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
     break;
 
 	case WEATHER_SPARK_SPARK:	// 雷
-		WEATHER_TASK_LIGHT_StartColorFade( p_sys, WEATHER_SPARK_GetColor(p_wk), p_wk->spark_data[ p_wk->spark_tbl_count ].insync, p_wk->spark_data[ p_wk->spark_tbl_count ].outsync );
+    
+    if( p_wk->mode != WEATHER_SPARK_MODE_EASY ) //Easyは音のみ
+    {
+		  WEATHER_TASK_LIGHT_StartColorFade( p_sys, WEATHER_SPARK_GetColor(p_wk), p_wk->spark_data[ p_wk->spark_tbl_count ].insync, p_wk->spark_data[ p_wk->spark_tbl_count ].outsync );
+    }
+
+    
 		// LIGHT->HARDの場合、フェード中に、雷発射してしまう
 		if( p_wk->spark_type == WEATHER_SPARK_TYPE_LIGHT_HARD ){
 			p_wk->wait = (p_wk->spark_data[ p_wk->spark_tbl_count ].insync/2) + GFUser_GetPublicRand( p_wk->spark_data[ p_wk->spark_tbl_count ].outsync );
@@ -3768,6 +4399,11 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
       {
         p_wk->spark_data[ p_wk->spark_tbl_count ].wait = (p_wk->spark_data[ p_wk->spark_tbl_count ].wait * 1) / 3;
       }
+    }
+    // EASYなら、ウエイトの数を2倍にする
+    else if( p_wk->mode == WEATHER_SPARK_MODE_EASY )
+    {
+      p_wk->spark_data[ p_wk->spark_tbl_count ].wait = (p_wk->spark_data[ p_wk->spark_tbl_count ].wait * 2);
     }
     
 //		OS_TPrintf( "color %d\n", p_wk->spark_data[ p_wk->spark_tbl_count ].spark_power );

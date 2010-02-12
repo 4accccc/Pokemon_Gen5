@@ -193,7 +193,7 @@ static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6
 #define	WEATHER_ARARE_FOG_TIMING_END	(60)							// に１回フォグテーブルを操作
 #define WEATHER_ARARE_FOG_START		(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_ARARE_FOG_START_END	(1)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_ARARE_FOG_OFS		(0x0)
+#define WEATHER_ARARE_FOG_OFS		(0)
 
 /*== あられオブジェクト ==*/
 #define WEATHER_ARARE_SPEED_X		(4)						// 横に進むスピード
