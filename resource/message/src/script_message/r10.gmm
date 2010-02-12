@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T22:21:03"/>
+	<create user="matsumiya" host="W00224" date="2010-02-12T18:22:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1462" top="302" right="2167" bottom="922" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="297" right="1999" bottom="925" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,17 +296,19 @@
 		<comment>♂
 ・全てのジムバッジ取得後に
 　pos（GRIDX=489~493、GRIDZ=113）を踏むとイベント発動
-・画面左からライバル登場し、隣接してメッセージ表示
+・画面左からライバル登場
+　遅れてサポートも登場
+・ライバル、主人公に隣接してメッセージ表示
 ・はい/いいえの選択肢表示
 　はい→black_02
 　いいえ→black_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-アデクさん……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]！▼
+アデクさん……▼
 チャンピオンが　Ｎを　おいかけ
 ポケモンリーグに　むかったんだって？</language>
-		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-アデクさん……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]！▼
+アデクさん……▼
 チャンピオンが　Ｎを　追いかけ
 ポケモンリーグに　向かったんだって？</language>
 	</row>
@@ -316,8 +318,8 @@
 ・はい選択時
 ・続けてblack_04</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……やはり[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『……やはり[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『……やはり▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……やはり▼</language>
 	</row>
 
 	<row id="msg_r10_black_03">
@@ -325,37 +327,156 @@
 ・いいえ選択時
 ・続けてblack_04</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……かくさないでよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『……隠さないでよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『……かくさないでよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……隠さないでよ▼</language>
 	</row>
 
-	<row id="msg_r10_black_04">
-		<comment>♂
-・メッセージ表示後、画面左に戻っていく
-・画面外に消えると主人公、操作可能に</comment>
+	<row id="msg_r10_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・続けてwhite_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">……ぼくは　まだ
-そこまで　つよくない……[BE:01:ページ切り替え（クリア）]
-だから　おねがいだ！[BE:01:ページ切り替え（クリア）]
-きみが　アデクさんのこと
-たすけてくれ！[BE:01:ページ切り替え（クリア）]
-チャンピオンだからって　ひとりで
-ぜんぶ　しょいこむこと　ないのに！[BE:01:ページ切り替え（クリア）]
-ぼくも　ソウリュウシティの
-ジムリーダーに　リベンジしたら[BE:00:ページ切り替え（行送り）]
-すぐに　おいかけるから！[BE:01:ページ切り替え（クリア）]
-じゃあ　たのんだよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……ぼくは　まだ
-そこまで　強くない……[BE:01:ページ切り替え（クリア）]
-だから　お願いだ！[BE:01:ページ切り替え（クリア）]
-きみが　アデクさんのこと
-たすけてくれ！[BE:01:ページ切り替え（クリア）]
-チャンピオンだからって　ひとりで
-ぜんぶ　しょいこむこと　ないのに！[BE:01:ページ切り替え（クリア）]
-ぼくも　ソウリュウシティの
-ジムリーダーに　リベンジしたら[BE:00:ページ切り替え（行送り）]
-すぐに　追いかけるから！[BE:01:ページ切り替え（クリア）]
-じゃあ　頼んだよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『……ぼくは▼
+つよくなりたかった　くせに
+こんなとき　なにもできないのか▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……ぼくは▼
+つよくなりたかった　くせに
+こんなとき　なにもできないのか▼</language>
+	</row>
+
+	<row id="msg_r10_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・アイテム入手処理
+　No023「かいふくのくすり」（仮）×２
+・続けてwhite_02
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]！▼
+こんなことしか　できないけれど
+あたしからは　これ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]！▼
+こんなことしか　できないけれど
+あたしからは　これ！▼</language>
+	</row>
+
+	<row id="msg_r10_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてblack_05
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『それにしても　おもしろいね
+みんな　ばらばらで▼</language>
+		<language name="JPN_KANJI" width="256">ベル『それにしても　おもしろいね
+みんな　ばらばらで▼</language>
+	</row>
+
+	<row id="msg_r10_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・続けてwhite_03</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『おもしろい？
+こんなときに　きみは……▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『おもしろい？
+こんなときに　きみは……▼</language>
+	</row>
+
+	<row id="msg_r10_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてblack_06</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『はい　チェレンは
+すこしは　わらいなさいよ▼
+しんこくな　かお　するだけじゃ
+なんにも　かわらないんだから▼
+えーっとね　あたしたち
+ポケモンと　であってから▽
+いろんなことが　あって……▽
+みんな　けっこう　かわっちゃって▼
+でも　それって
+それぞれの　りそうが　ちがったんだ！▽
+って　なんか　うれしくなったの▼</language>
+		<language name="JPN_KANJI" width="256">ベル『はい　チェレンは
+すこしは　わらいなさいよ▼
+しんこくな　かお　するだけじゃ
+なんにも　かわらないんだから▼
+えーっとね　あたしたち
+ポケモンと　であってから▽
+いろんなことが　あって……▽
+みんな　けっこう　かわっちゃって▼
+でも　それって
+それぞれの　りそうが　ちがったんだ！▽
+って　なんか　うれしくなったの▼</language>
+	</row>
+
+	<row id="msg_r10_black_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・サポートを向いて
+・続けてblack_07</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……そういうことか▼
+……たしかに　ぼくたちは　みんな
+ちがうわけだし　それぞれの▽
+できることを　すれば　いいんだよね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……そういうことか▼
+……たしかに　ぼくたちは　みんな
+ちがうわけだし　それぞれの▽
+できることを　すれば　いいんだよね▼</language>
+	</row>
+
+	<row id="msg_r10_black_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・主人公を向いて
+・出現した方向に戻る（ダッシュ?）
+・続けてwhite_04
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！　ぼくも
+すぐに　つよくなって　おいつく▼
+だから……
+いまは　きみに　たくすよ▼
+アデクさん　ひとりに
+むちゃを　させないでほしい▽
+たのんだよ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！　ぼくも
+すぐに　つよくなって　おいつく▼
+だから……
+いまは　きみに　たくすよ▼
+アデクさん　ひとりに
+むちゃを　させないでほしい▽
+たのんだよ▼</language>
+	</row>
+
+	<row id="msg_r10_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ライバルの去ったほうをみながら（主人公も）
+・続けてwhite_05
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『いっちゃった！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『いっちゃった！▼</language>
+	</row>
+
+	<row id="msg_r10_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後、サポートも出現してきた方向に去る
+・画面外に消えると主人公、操作可能に
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！▼
+あたしも
+あたしに　できること　するね▼
+だから……　えーっと……
+こういうとき　かっこいいこと▽
+いえたら　いいのに……▼
+えーっと！
+おたがい　がんばろうね！！▼</language>
+		<language name="JPN_KANJI" width="256">主人公！
+あたしも
+あたしに　できること　するよ▼
+だから……　えーっと……
+こういうとき　いいこと▽
+いえたら　いいんだけどなあ……▼
+えーっと！
+おたがい　がんばろうね！！▼</language>
 	</row>
 
 	<row id="msg_r10_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T14:18:50"/>
+	<create user="matsumiya" host="W00224" date="2010-02-12T18:14:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="186" right="1992" bottom="814" maximized="no" rayout="Vertical2">
+	<dialog left="1304" top="227" right="2009" bottom="855" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -635,6 +635,107 @@
 		<language name="JPN_KANJI" width="256">ジムリーダーの　ヤーコン様ですが
 ただいま　取り込み中　でして[BE:00:ページ切り替え（行送り）]
 また　のちほど　いらしてください</language>
+	</row>
+
+	<row id="msg_c05_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・c05ジムバッジ入手後に発動
+・pos起動（GRIDX=179、GRIDZ=404~407）
+　メッセージのみ表示
+・続けてwhite_02
+・0＝主人公名前</comment>
+		<attribute name="キャラクター">友達♀</attribute>
+		<language name="JPN" width="256">ベル『おう～い！
+[1:00:トレーナー名:0]！！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『おう～い！
+[1:00:トレーナー名:0]！！▼</language>
+	</row>
+
+	<row id="msg_c05_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・主人公に隣接してメッセージ表示
+・続けてwhite_03</comment>
+		<attribute name="キャラクター">友達♀</attribute>
+		<language name="JPN" width="256">ねえねえ
+ひょっとして　ジムに　いってた？▼
+うわああ～！
+これが　ホドモエの　ジムバッジ▽
+いいなあ！　すごいなあ！！▼</language>
+		<language name="JPN_KANJI" width="256">ねえねえ
+ひょっとして　ジムに　いってた？▼
+うわああ～！
+これが　ホドモエの　ジムバッジ▽
+いいなあ！　すごいなあ！！▼</language>
+	</row>
+
+	<row id="msg_c05_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・サポート頭上に「！」マーク表示後
+　メッセージ表示、続けてトレーナー戦闘に</comment>
+		<attribute name="キャラクター">友達♀</attribute>
+		<language name="JPN" width="256">ダメダメ！
+かんしん　してばかりじゃ▼
+あたしも　トレーナーだもの
+こういうときは　しょうぶ　よね！▼</language>
+		<language name="JPN_KANJI" width="256">ダメダメ！
+かんしん　してばかりじゃ▼
+あたしも　トレーナーだもの
+こういうときは　しょうぶ　よね！▼</language>
+	</row>
+
+	<row id="msg_c05_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・戦闘後、フィールド復帰時に自動で表示
+・続けてwhite_05
+・0＝主人公名前</comment>
+		<attribute name="キャラクター">友達♀</attribute>
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]とは　ひさびさの
+ポケモンしょうぶ　だったけど▽
+ものすごーく　つよくなってるのね！▼
+あたし　つよくないから
+じょうずに　いえないけれど▼
+[1:00:トレーナー名:0]は　ポケモンのこと
+よく　しっていると　おもう！▼
+[1:00:トレーナー名:0]は　ぜったい
+つよくなるよ！　バイバイ！！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]とは　ひさびさの
+ポケモンしょうぶ　だったけど▽
+ものすごーく　つよくなってるのね！▼
+あたし　つよくないから
+じょうずに　いえないけれど▼
+[1:00:トレーナー名:0]は　ポケモンのこと
+よく　しっていると　おもう！▼
+[1:00:トレーナー名:0]は　ぜったい
+つよくなるよ！　バイバイ！！▼</language>
+	</row>
+
+	<row id="msg_c05_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ポケモンセンター方向へ数歩移動
+　「！」マーク表示後、主人公のほうを振り向き
+　メッセージ表示
+・その後画面外（ポケセン方向）へ移動
+・画面外に消えると主人公、操作可能に
+・0＝主人公名前</comment>
+		<attribute name="キャラクター">友達♀</attribute>
+		<language name="JPN" width="256">ベル『あのね！▼
+[1:00:トレーナー名:0]が　しっていたら
+おせっかいに　なっちゃうんだけど▼
+３ばんどうろの　そだてやさんに
+ポケモンを　２ひき　あずけていたら▽
+タマゴが　みつかるんだって！▼
+なので　アタシも　ポケモンを
+あずけにいこうと　おもうのでした▼
+もういちど　バイバイ！！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あのね！▼
+[1:00:トレーナー名:0]が　しっていたら
+おせっかいに　なっちゃうんだけど▼
+３ばんどうろの　そだてやさんに
+ポケモンを　２ひき　あずけていたら▽
+タマゴが　みつかるんだって！▼
+なので　アタシも　ポケモンを
+あずけにいこうと　おもうのでした▼
+もういちど　バイバイ！！▼</language>
 	</row>
 
 	<row id="msg_c05_woman2_01">

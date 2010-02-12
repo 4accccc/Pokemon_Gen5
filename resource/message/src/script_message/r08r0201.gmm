@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-17T21:45:20"/>
+	<create user="matsumiya" host="W00224" date="2010-02-12T16:02:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,15 +229,15 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="175"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="214"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="119">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="178" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1508" top="355" right="2213" bottom="973" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -303,6 +303,39 @@
 		<language name="JPN_KANJI" width="256">なんちゅーの？　足裏に
 伝わる　あの　振動？[BE:00:ページ切り替え（行送り）]
 最強に　クールだよな！</language>
+	</row>
+
+	<row id="msg_r08r0201_backpackerm_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・GRIDX=7、GRIDZ=3、下向き
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BACKPACKERM
+バックパッカー♂</attribute>
+		<language name="JPN" width="256">てつどうマニアに　とって
+しかも　ボクのような　とりてつには▼
+シリンダーブリッジと
+カナワタウンは　かっこうの▽
+さつえいポイント　さ！</language>
+		<language name="JPN_KANJI" width="256">鉄道マニアに　とって
+しかも　ボクのような　撮り鉄には▼
+シリンダーブリッジと
+カナワタウンは　格好の▽
+撮影ポイント　さ！</language>
+	</row>
+
+	<row id="msg_r08r0201_assistantm_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・GRIDX=8、GRIDZ=3、下向き
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">ゆくてに　そびえる
+きょだいな　てつのはし……▼
+この　シリンダーブリッジの
+もけいを　みているだけで　もえるっす</language>
+		<language name="JPN_KANJI" width="256">行く手に　そびえる
+巨大な　鉄の橋……▼
+この　シリンダーブリッジの
+模型を　みているだけで　燃えるっす</language>
 	</row>
 
 	<flowchart-group-list>
