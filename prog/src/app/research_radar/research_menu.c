@@ -14,11 +14,11 @@
 #include "print/gf_font.h"   // for GFL_FONT_xxxx
 #include "print/printsys.h"  // for PRINTSYS_xxxx
 
-#include "system/main.h"            // for HEAPID_xxxx
-#include "arc/arc_def.h"            // for ARCID_xxxx
-#include "arc/research_radar.naix"  // for NARC_research_radar_xxxx
-#include "arc/font/font.naix"       // for NARC_font_xxxx
-#include "arc/message.naix"         // for NARC_message_xxxx
+#include "system/main.h"                    // for HEAPID_xxxx
+#include "arc/arc_def.h"                    // for ARCID_xxxx
+#include "arc/research_radar_graphic.naix"  // for NARC_research_radar_xxxx
+#include "arc/font/font.naix"               // for NARC_font_xxxx
+#include "arc/message.naix"                 // for NARC_message_xxxx
 
 
 //===============================================================================
@@ -780,7 +780,7 @@ static void SetupSubBG_window( RESEARCH_MENU_WORK* work )
     ARCHANDLE* handle;
 
     // ハンドルオープン
-    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR, work->heapID ); 
+    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
 
     // パレットデータ
     // ※背景BG面と同じデータを参照
@@ -918,7 +918,7 @@ static void SetupMainBG_window( RESEARCH_MENU_WORK* work )
     ARCHANDLE* handle;
 
     // ハンドルオープン
-    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR, work->heapID ); 
+    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
 
     // パレットデータ
     // ※背景BG面と同じデータを参照

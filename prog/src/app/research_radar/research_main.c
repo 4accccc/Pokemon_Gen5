@@ -13,9 +13,9 @@
 #include "research_select.h"
 #include "research_check.h"
 
-#include "system/main.h"            // for HEAPID_xxxx
-#include "arc/arc_def.h"            // for ARCID_xxxx
-#include "arc/research_radar.naix"  // for NARC_xxxx
+#include "system/main.h"                    // for HEAPID_xxxx
+#include "arc/arc_def.h"                    // for ARCID_xxxx
+#include "arc/research_radar_graphic.naix"  // for NARC_xxxx
 
 
 //===============================================================================
@@ -669,7 +669,7 @@ static void SubBG_BackGround_Setup( HEAPID heapID )
     ARCHANDLE* handle;
 
     // ハンドルオープン
-    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR, heapID ); 
+    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, heapID ); 
 
     // パレットデータ
     {
@@ -751,7 +751,7 @@ static void MainBG_BackGround_Setup( HEAPID heapID )
     ARCHANDLE* handle;
 
     // ハンドルオープン
-    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR, heapID ); 
+    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, heapID ); 
 
     // パレットデータ
     {
