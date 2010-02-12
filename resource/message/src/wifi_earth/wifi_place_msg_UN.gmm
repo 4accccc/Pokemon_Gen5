@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-12T17:55:45"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-12T18:03:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1545,9 +1545,9 @@
 	<row id="un_reception_msg_01">
 		<comment>専用画面メッセージ</comment>
 		<language name="JPN">[1:24:国名:0]
-のフロアに　いどう　しますか？</language>
+のフロアに　いどう　しますか？▼</language>
 		<language name="JPN_KANJI">[1:24:国名:0]
-のフロアに　移動　しますか？</language>
+のフロアに　移動　しますか？▼</language>
 	</row>
 
 	<row id="un_reception_msg_02">
@@ -1572,6 +1572,12 @@
 		<comment>専用画面メッセージ</comment>
 		<language name="JPN">？</language>
 		<language name="JPN_KANJI">？</language>
+	</row>
+
+	<row id="un_reception_msg_06">
+		<comment>専用画面メッセージ</comment>
+		<language name="JPN">いどうさきが　かわっていません</language>
+		<language name="JPN_KANJI">移動先が　変わっていません</language>
 	</row>
 
 	<flowchart-group-list>
