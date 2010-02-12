@@ -42,23 +42,30 @@
 
 #define INPUT_VALUE_MAX (0xffffffff)
 
+//名前
+static const STRCODE default_name[] = {
+  0x30d6, 0x30e9, 0x30c3, 0x30af, 0xffff,
+};
+
 enum {
   STR_POS_X = 0,
   STR_ID_POS_Y = 0,
   STR_NAME_POS_Y = 2*8,
   STR_SEX_POS_Y = 4*8,
   STR_COUNTRY_POS_Y = 6*8,
-  STR_RECV_POS_Y = 8*8,
-  STR_SEND_POS_Y = 10*8,
-  STR_NUM_POS_Y = 12*8,
-  STR_NATURE_POS_Y = 14*8,
-  STR_FAVORITE_POS_Y = 16*8,
-  STR_IDX_POS_Y = 18*8,
+  STR_PLACE_POS_Y = 8*8,
+  STR_RECV_POS_Y = 10*8,
+  STR_SEND_POS_Y = 12*8,
+  STR_NUM_POS_Y = 14*8,
+  STR_NATURE_POS_Y = 16*8,
+  STR_FAVORITE_POS_Y = 18*8,
+  STR_IDX_POS_Y = 20*8,
 
   TOUCH_X_ID = 12*8,
   TOUCH_X_NAME = 12*8,
   TOUCH_X_SEX = 12*8,
   TOUCH_X_COUNTRY = 12*8,
+  TOUCH_X_PLACE = 12*8,
   TOUCH_X_RECV = 12*8,
   TOUCH_X_SEND = 12*8,
   TOUCH_X_NUM = 18*8,
@@ -70,6 +77,7 @@ enum {
   TOUCH_W_NAME = 8*8,
   TOUCH_W_SEX = 2*8,
   TOUCH_W_COUNTRY = 12*8,
+  TOUCH_W_PLACE = 8*8,
   TOUCH_W_RECV = 8*8,
   TOUCH_W_SEND = 8*8,
   TOUCH_W_NUM = 8*8,
@@ -85,7 +93,6 @@ typedef enum {
   SEQ_INPUT_STR,
   SEQ_INPUT_NUM,
 
-  SEQ_LOOP,
 }MAIN_CTRL_SEQ;
 
 typedef enum {
@@ -100,6 +107,7 @@ typedef enum {
   EDITBOX_ID_NAME,
   EDITBOX_ID_SEX,
   EDITBOX_ID_COUNTRY,
+  EDITBOX_ID_PLACE,
   EDITBOX_ID_RECV,
   EDITBOX_ID_SEND,
   EDITBOX_ID_NUM,
@@ -235,6 +243,9 @@ static const STR_PARAM StrParams[] = {
   {STR_TYPE_STR, UND_STR_COUNTRY,  STR_POS_X, STR_COUNTRY_POS_Y,
     TOUCH_X_COUNTRY,STR_COUNTRY_POS_Y,TOUCH_W_COUNTRY,TOUCH_H,
     NARC_message_wifi_place_msg_world_dat,0 },
+  {STR_TYPE_NUM, UND_STR_PLACE,  STR_POS_X, STR_PLACE_POS_Y,
+    TOUCH_X_ID,STR_PLACE_POS_Y,TOUCH_W_PLACE,TOUCH_H,
+    255,0 },
   {STR_TYPE_STR, UND_STR_RECVPOKE,  STR_POS_X, STR_RECV_POS_Y,
     TOUCH_X_RECV,STR_RECV_POS_Y,TOUCH_W_RECV,TOUCH_H,
     NARC_message_monsname_dat,0 },
@@ -444,6 +455,13 @@ static void SetupDisp( MAKE_WORK* wk )
   GFL_BG_LoadScreenReq( PRINT_FRAME );
 
   GFL_BMPWIN_TransVramCharacter( wk->Win );
+
+
+  //デフォルト名前セット
+  {
+    GFL_STR_SetStringCode( wk->NameBuf, default_name );
+  }
+
 }
 //----------------------------------------------------------------------------------
 /**
@@ -478,8 +496,6 @@ static BOOL MainCtrl( MAKE_WORK* wk )
   if( PRINT_UTIL_Trans(&wk->PrintUtil, wk->PrintQue) )
   {
     switch( wk->Seq ){
-    case SEQ_LOOP:
-      break;
     case SEQ_DRAW_CAPTION:
       {
         int i;
@@ -495,6 +511,7 @@ static BOOL MainCtrl( MAKE_WORK* wk )
         for(i=0; i<NELEMS(StrParams); ++i){
           UpdateBox( wk, i, 0 );
         }
+        UpdateStrBox( wk, EDITBOX_ID_NAME);
         wk->Seq = SEQ_WAIT_CTRL;
       }
       break;      
@@ -672,7 +689,7 @@ static void UpdateStrBox( MAKE_WORK* wk, u32 inBoxID)
 
   GFL_BMP_Fill( wk->Bmp, p->TouchX, p->TouchY, p->TouchW, p->TouchH, color_bg );
 
-  str_width = PRINTSYS_GetStrWidth( wk->StrBuf, wk->Font, 0 );
+  str_width = PRINTSYS_GetStrWidth( wk->NameBuf, wk->Font, 0 );
   xpos = p->TouchX;
   if( str_width < p->TouchW ){
     xpos += (p->TouchW - str_width) / 2;
@@ -680,7 +697,7 @@ static void UpdateStrBox( MAKE_WORK* wk, u32 inBoxID)
   str_height = GFL_FONT_GetLineHeight( wk->Font );
   ypos = p->TouchY;
 
-  PRINT_UTIL_PrintColor( &wk->PrintUtil, wk->PrintQue, xpos, ypos, wk->StrBuf, wk->Font, color );
+  PRINT_UTIL_PrintColor( &wk->PrintUtil, wk->PrintQue, xpos, ypos, wk->NameBuf, wk->Font, color );
 }
 
 
@@ -709,6 +726,7 @@ static void GetBoxStr( MAKE_WORK* wk, u32 inBoxID, STRBUF* buf )
     }
     break;
   case STR_TYPE_EDITSTR:
+    GFL_STR_CopyBuffer( wk->StrBuf, wk->NameBuf );
     break;
   case STR_TYPE_NUM:
     {
@@ -1203,11 +1221,6 @@ static void MakeData(MAKE_WORK *wk)
   //マイステータス作成
   MyStatus_Init(my);
   {
-    //名前
-    static const STRCODE default_name[] = {
-      0x30d6, 0x30e9, 0x30c3, 0x30af, 0xffff,
-    };
-    
     if ( GFL_STR_GetBufferLength(wk->NameBuf) ) 
     {
       MyStatus_SetMyNameFromString(my, wk->NameBuf);
@@ -1220,7 +1233,27 @@ static void MakeData(MAKE_WORK *wk)
     MyStatus_SetID(my, wk->BoxValue[EDITBOX_ID_TRID]);
     //プロファイル※
     //国(地域※)
-    MyStatus_SetMyNationArea(my, wk->BoxValue[EDITBOX_ID_COUNTRY], 0);
+    {
+      u32 place;
+      u32 count;
+      place = wk->BoxValue[EDITBOX_ID_PLACE];
+      //指定した国の地域数を取得
+      count = WIFI_COUNTRY_CountryCodeToPlaceIndexMax( wk->BoxValue[EDITBOX_ID_COUNTRY] );
+      if (count > 0)    //地域あり
+      {
+        if ( place == 0 )
+        {
+          GF_ASSERT_MSG(0,"ERROR placeidx is 0 place_num=%d",count);
+        }
+      }
+
+      if ( place > count )
+      {
+        GF_ASSERT_MSG(0,"ERROR placeidx over idx=%d max_idx=%d",place, count);
+        place = 0;
+      }
+      MyStatus_SetMyNationArea(my, wk->BoxValue[EDITBOX_ID_COUNTRY], place);
+    }
     //リージョン※
     //ロムコード※
     //ビュー
