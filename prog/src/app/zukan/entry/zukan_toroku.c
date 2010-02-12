@@ -552,10 +552,10 @@ static void Zukan_Toroku_CreateBG( ZUKAN_TOROKU_WORK* work )
   {
     work->bg_visible_off = TRUE;
 
-    GFL_BG_ClearScreen( GFL_BG_FRAME3_M );  // GFL_BG_FRAME0_Mはこれから使用する。
-                                            // GFL_BG_FRAME1_M, GFL_BG_FRAME2_MについてはZukan_Toroku_VBlankFuncで。
+    GFL_BG_ClearScreen( GFL_BG_FRAME3_M );  // GFL_BG_FRAME1_Mはこれから使用する。
+                                            // GFL_BG_FRAME0_M, GFL_BG_FRAME2_MについてはZukan_Toroku_VBlankFuncで。
 
-    GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );  // 最背面
+    GFL_BG_SetPriority( GFL_BG_FRAME1_M, 3 );  // 最背面
     GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );  // 最前面
   }
 
@@ -567,19 +567,19 @@ static void Zukan_Toroku_CreateBG( ZUKAN_TOROKU_WORK* work )
                                       work->heap_id );
     work->bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle,
                                                                        NARC_zukan_gra_info_name_bgu_NCGR,
-                                                                       GFL_BG_FRAME0_M,
+                                                                       GFL_BG_FRAME1_M,
                                                                        32*1*GFL_BG_1CHRDATASIZ,  // その後、必要なキャラ領域が増えたらここを修正
                                                                        FALSE, work->heap_id );
     GF_ASSERT_MSG( work->bg_chara_info != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_TOROKU : BGキャラ領域が足りませんでした。\n" );
     GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_zukan_gra_info_name_bgu_NSCR,
-                                     GFL_BG_FRAME0_M,
+                                     GFL_BG_FRAME1_M,
                                      GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ),
                                      32*24*GFL_BG_1SCRDATASIZ,
                                      FALSE, work->heap_id );
     GFL_ARC_CloseDataHandle( handle );
   }
 
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
 }
 
 //-------------------------------------
@@ -589,7 +589,7 @@ static void Zukan_Toroku_DeleteBG( ZUKAN_TOROKU_WORK* work )
 {
   // 読み込んだリソースの破棄
   {
-    GFL_BG_FreeCharacterArea( GFL_BG_FRAME0_M,
+    GFL_BG_FreeCharacterArea( GFL_BG_FRAME1_M,
                               GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_chara_info ),
                               GFL_ARCUTIL_TRANSINFO_GetSize( work->bg_chara_info ) );
   }
@@ -604,7 +604,7 @@ static void Zukan_Toroku_VBlankFunc( GFL_TCB* tcb, void* wk )
 
   if( work->bg_visible_off )
   {
-    GFL_BG_SetVisible( GFL_BG_FRAME1_M, FALSE );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, FALSE );
     GFL_BG_SetVisible( GFL_BG_FRAME2_M, FALSE );
     work->bg_visible_off = FALSE;
   }

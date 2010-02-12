@@ -13,9 +13,14 @@
 
 // lib
 #include <gflib.h>
+#include "system/gfl_use.h"
+#include "system/main.h"
 
 // system
 #include "gamesystem/gamesystem.h"
+#include "print/printsys.h"
+#include "print/gf_font.h"
+
 
 //=============================================================================
 /**
@@ -43,6 +48,24 @@ typedef enum
 }
 ZUKAN_INFO_LAUNCH;
 
+//-------------------------------------
+/// 言語
+//=====================================
+typedef enum
+{
+  ZUKAN_INFO_LANG_E,
+  ZUKAN_INFO_LANG_FRA,
+  ZUKAN_INFO_LANG_GER,
+  ZUKAN_INFO_LANG_ITA,
+  ZUKAN_INFO_LANG_SPA,
+  ZUKAN_INFO_LANG_KOR,
+  ZUKAN_INFO_LANG_MAX,
+
+  ZUKAN_INFO_LANG_NONE   = ZUKAN_INFO_LANG_MAX,  // 日本語のひらがなか漢字
+}
+ZUKAN_INFO_LANG;
+
+
 //=============================================================================
 /**
 *  構造体宣言
@@ -69,6 +92,19 @@ extern ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id,
                                          GFL_CLUNIT* a_clunit,
                                          GFL_FONT* a_font,
                                          PRINT_QUE* a_print_que );
+
+extern ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
+                            HEAPID                 a_heap_id,
+                            u16                    a_monsno,
+                            u16                    a_formno,
+                            BOOL                   a_get_flag,
+                            ZUKAN_INFO_LAUNCH      a_launch,
+                            ZUKAN_INFO_DISP        a_disp,
+                            u8                     a_bg_priority,
+                            GFL_CLUNIT*            a_clunit,
+                            GFL_FONT*              a_font,
+                            PRINT_QUE*             a_print_que );
+
 
 //-------------------------------------
 /// 終了処理
@@ -109,3 +145,23 @@ extern BOOL ZUKAN_INFO_IsCenterStill( ZUKAN_INFO_WORK* work );
 /// 処理を開始させる
 //=====================================
 extern void ZUKAN_INFO_Start( ZUKAN_INFO_WORK* work );
+
+//-------------------------------------
+/// ポケモンを変更する
+//=====================================
+extern void ZUKAN_INFO_ChangePoke( ZUKAN_INFO_WORK* work,
+                u16 monsno, u16 formno, BOOL get_flag );
+
+//-------------------------------------
+/// 言語を変更する
+//=====================================
+extern void ZUKAN_INFO_ChangeLang( ZUKAN_INFO_WORK* work,
+                ZUKAN_INFO_LANG lang );
+
+//-------------------------------------
+/// ポケモンと言語を変更する
+//=====================================
+extern void ZUKAN_INFO_ChangePokeAndLang( ZUKAN_INFO_WORK* work,
+                u16 monsno, u16 formno, BOOL get_flag,
+                ZUKAN_INFO_LANG lang );
+
