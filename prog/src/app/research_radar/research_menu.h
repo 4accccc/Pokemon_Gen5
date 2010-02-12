@@ -13,8 +13,9 @@
 //===============================================================================
 // □定数
 //=============================================================================== 
-// メイン関数 戻り値
+// メイン関数 終了結果
 typedef enum {
+  RESEARCH_MENU_RESULT_NONE,       // ダミー
   RESEARCH_MENU_RESULT_CONTINUE,   // 画面継続
   RESEARCH_MENU_RESULT_TO_SELECT,  // 調査内容変更画面へ
   RESEARCH_MENU_RESULT_TO_CHECK,   // 調査報告確認画面へ
@@ -35,5 +36,5 @@ typedef struct _RESEARCH_MENU_WORK RESEARCH_MENU_WORK;
 RESEARCH_MENU_WORK* CreateResearchMenuWork( HEAPID heapID );
 void                DeleteResearchMenuWork( RESEARCH_MENU_WORK* work );
 
-// メイン関数
+// メイン動作
 RESEARCH_MENU_RESULT ResearchMenuMain( RESEARCH_MENU_WORK* work );

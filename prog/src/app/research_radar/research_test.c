@@ -53,7 +53,7 @@ static const GFL_BG_BGCNT_HEADER BGCnt3M =
   GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
   GX_BG_COLORMODE_16,			// カラーモード
   GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
-  GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
+  GX_BG_CHARBASE_0x10000,	// キャラクタベースブロック
   GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
   GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
   1,							        // 表示プライオリティー
@@ -331,6 +331,7 @@ static void SetupBG( RESEARCH_TEST_WORK* work )
 //-------------------------------------------------------------------------------
 static void CleanUpBG( RESEARCH_TEST_WORK* work )
 {
+  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF ); 
   GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
   GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
 }
