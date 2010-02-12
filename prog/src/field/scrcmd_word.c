@@ -409,6 +409,6 @@ VMCMD_RESULT EvCmdHobbyName( VMHANDLE *core, void *wk )
   u8           bufIdx  = VMGetU8( core );                      // ‘æˆêˆø”
   u16          hobbyID = SCRCMD_GetVMWorkValue( core, work );  // ‘æ“ñˆø”
 
-  WORDSET_RegisterCountryName( wordset, bufIdx, hobbyID ); 
+  WORDSET_RegisterHobbyName( wordset, bufIdx, hobbyID ); 
   return VMCMD_RESULT_CONTINUE;
 }
