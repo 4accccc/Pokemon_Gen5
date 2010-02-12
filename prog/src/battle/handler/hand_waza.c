@@ -1420,7 +1420,7 @@ static BOOL handler_Kawarawari_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFa
 static const BtlEventHandlerTable*  ADD_Tobigeri( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_AVOID,             handler_Tobigeri_Avoid     }, // ワザはずれたハンドラ
+//    { BTL_EVENT_WAZA_AVOID,             handler_Tobigeri_Avoid     }, // ワザはずれたハンドラ
     { BTL_EVENT_WAZA_EXECUTE_NO_EFFECT, handler_Tobigeri_NoEffect  }, // 効果なかったハンドラ
   };
   *numElems = NELEMS( HandlerTable );
