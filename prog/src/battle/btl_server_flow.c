@@ -6003,15 +6003,6 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
     }
   }
 
-  // じめんタイプは、「まひ」にならない
-  if( sick==WAZASICK_MAHI )
-  {
-    PokeTypePair type = BPP_GetPokeType( target );
-    if( PokeTypePair_IsMatch(type, POKETYPE_JIMEN) ){
-      return BTL_ADDSICK_FAIL_OTHER;
-    }
-  }
-
   // ほのおタイプは、「やけど」にならない
   if( sick==WAZASICK_YAKEDO )
   {
