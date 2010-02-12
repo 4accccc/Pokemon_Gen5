@@ -3135,13 +3135,13 @@ static void handler_TatsujinNoObi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static const BtlEventHandlerTable* HAND_ADD_ITEM_InochiNoTama( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,  handler_InochiNoTama_Reaction },   // ダメージ反応ハンドラ
-    { BTL_EVENT_WAZA_DMG_PROC2,     handler_InochiNoTama_Damage   },
+    { BTL_EVENT_DAMAGEPROC_END_INFO,    handler_InochiNoTama_Reaction },   // ダメージ処理後ハンドラ
+    { BTL_EVENT_WAZA_DMG_PROC2,         handler_InochiNoTama_Damage   },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-// ダメージ反応ハンドラ
+// ダメージ処理後ハンドラ
 static void handler_InochiNoTama_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -3151,6 +3151,9 @@ static void handler_InochiNoTama_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 
     param->pokeID = pokeID;
     param->damage = BTL_CALC_QuotMaxHP( bpp, 10 );
+
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ReactionDmg );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
 }
 static void handler_InochiNoTama_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
