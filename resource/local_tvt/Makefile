@@ -70,7 +70,7 @@ do-build:	subdir $(TARGETDIR)/$(targetname).narc
 subdir:
 	@$(MAKE_SUBDIR)
 
-tvt_script_01.bin:
+tvt_script_01.bin:tvt_script.xls
 	ruby tvt_script_conv.rb
 
 # narc のコピーだけ実行する
@@ -97,6 +97,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCLR
 	rm -f *.NCER
 	rm -f *.NANR
+	rm -f *.bin
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc

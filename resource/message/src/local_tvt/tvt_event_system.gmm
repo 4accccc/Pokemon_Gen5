@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-12T19:29:32"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-11T20:31:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -281,7 +281,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="293"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="161">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-117" top="259" right="588" bottom="879" maximized="no" rayout="Vertical2">
+	<dialog left="1571" top="190" right="2159" bottom="810" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="580"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="540"/>
-		<band id="3" index="4" style="0000" width="155"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="259"/>
+		<band id="3" index="4" style="0000" width="152"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -343,9 +343,8 @@
 	</row>
 
 	<row id="LOCAL_TVT_CHARA_01">
-		<attribute name="キャラ指定">主人公女</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">ライバル</language>
+		<language name="JPN_KANJI" width="256">ライバル</language>
 	</row>
 
 	<row id="LOCAL_TVT_CHARA_02">
@@ -354,13 +353,15 @@
 	</row>
 
 	<row id="LOCAL_TVT_CHARA_03">
-		<language name="JPN" width="256">ライバル</language>
-		<language name="JPN_KANJI" width="256">ライバル</language>
-	</row>
-
-	<row id="LOCAL_TVT_CHARA_04">
 		<language name="JPN" width="256">博士(娘)</language>
 		<language name="JPN_KANJI" width="256">博士(娘)</language>
+	</row>
+
+	<row id="LOCAL_TVT_CHARA_99">
+		<attribute name="キャラ指定">主人公女(一番最後)
+キャラの追加はこの上に！！</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]</language>
 	</row>
 
 	<flowchart-group-list>

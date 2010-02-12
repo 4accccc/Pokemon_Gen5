@@ -14,9 +14,9 @@
 #include "system/wipe.h"
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
-
 #include "arc_def.h"
 #include "local_tvt.naix"
+#include "comm_tvt.naix"
 #include "message.naix"
 #include "font/font.naix"
 
@@ -81,6 +81,7 @@ static void LOCAL_TVT_Term( LOCAL_TVT_WORK *work );
 static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_VBlankFunc(GFL_TCB *tcb, void *wk );
 
+static void LOCAL_TVT_LoadScript( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_TermGraphic( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
@@ -93,7 +94,10 @@ static void LOCAL_TVT_MSG_TermMessage( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_MSG_UpdateMessage( LOCAL_TVT_WORK *work );
 static const BOOL LOCAL_TVT_MSG_IsFinishMsg( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_MSG_OpenWindow( LOCAL_TVT_WORK *work , LOCAL_TVT_MSG_POS pos );
+static void LOCAL_TVT_MSG_CloseWindow( LOCAL_TVT_WORK *work );
 static void LOCAL_TVT_MSG_DispMessage( LOCAL_TVT_WORK *work , const u16 msgId );
+
+static void LOCAL_TVT_ScriptMain( LOCAL_TVT_WORK *work );
 
 //--------------------------------------------------------------
 //  初期化
@@ -103,7 +107,11 @@ static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work )
   u8 i;
   LOCAL_TVT_InitGraphic( work );
   
-  work->archandle = GFL_ARC_OpenDataHandle( ARCID_LOCAL_TVT , work->heapId );
+ 
+  work->arcHandle = GFL_ARC_OpenDataHandle( ARCID_LOCAL_TVT , work->heapId );
+
+  LOCAL_TVT_LoadScript( work );
+
   LOCAL_TVT_LoadResource( work );
   LOCAL_TVT_MSG_InitMessage( work );
 
@@ -122,7 +130,7 @@ static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work )
   
   work->state = LTS_FADEIN;
 
-  //---仮処理---
+  work->isFirstCommand = TRUE;
   work->scriptIdx = 0;
   
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
@@ -153,9 +161,11 @@ static void LOCAL_TVT_Term( LOCAL_TVT_WORK *work )
     LOCAL_TVT_CHARA_Term( work , work->charaWork[i] );
   }
   
-  GFL_ARC_CloseDataHandle( work->archandle );
+  GFL_ARC_CloseDataHandle( work->arcHandle );
   
   LOCAL_TVT_TermGraphic( work );
+  
+  GFL_HEAP_FreeMemory( work->scriptRes );
 }
 
 //--------------------------------------------------------------
@@ -191,29 +201,28 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
     break;
 
   case LTS_MAIN:
+    LOCAL_TVT_ScriptMain( work );
+/*
     //---仮処理---
     {
       if( LOCAL_TVT_MSG_IsFinishMsg(work) == TRUE )
       {
-        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
-            work->scriptIdx == 0 )
+        if( work->scriptIdx < 5 )
         {
-          if( work->scriptIdx < 5 )
-          {
-            LOCAL_TVT_DispRecIcon( work , work->scriptIdx%2 );
-            LOCAL_TVT_MSG_OpenWindow( work , LTMP_DOWN );
-            LOCAL_TVT_MSG_DispMessage( work , work->scriptIdx );
-          }
-          else
-          {
-            LOCAL_TVT_HideRecIcon( work );
-            work->state = LTS_FADEOUT;
-          }
-          work->scriptIdx++;
+          LOCAL_TVT_DispRecIcon( work , work->scriptIdx%2 );
+          LOCAL_TVT_MSG_OpenWindow( work , LTMP_DOWN );
+          LOCAL_TVT_MSG_DispMessage( work , work->scriptIdx );
         }
+        else
+        {
+          LOCAL_TVT_HideRecIcon( work );
+          work->state = LTS_FADEOUT;
+        }
+        work->scriptIdx++;
       }
     }
     //---仮処理---
+*/
     break;
   }
   
@@ -369,12 +378,21 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
       GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x28000,0x0C000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
+    // BG3 SUB (背景
+    static const GFL_BG_BGCNT_HEADER header_sub3 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+
     GFL_BG_SetBGMode( &sys_data );
 
     LOCAL_TVT_SetupBgFunc( &header_main0 , LTVT_FRAME_MESSAGE , GFL_BG_MODE_TEXT );
     LOCAL_TVT_SetupBgFunc( &header_main1 , LTVT_FRAME_NAME    , GFL_BG_MODE_TEXT );
     LOCAL_TVT_SetupBgFunc( &header_main2 , LTVT_FRAME_CHARA   , GFL_BG_MODE_256X16 );
     LOCAL_TVT_SetupBgFunc( &header_main3 , LTVT_FRAME_BG      , GFL_BG_MODE_256X16 );
+    LOCAL_TVT_SetupBgFunc( &header_sub3  , LTVT_FRAME_SUB_BG  , GFL_BG_MODE_TEXT );
     
   }
   //OBJ系の初期化
@@ -393,6 +411,7 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
 static void LOCAL_TVT_TermGraphic( LOCAL_TVT_WORK *work )
 {
   GFL_CLACT_SYS_Delete();
+  GFL_BG_FreeBGControl( LTVT_FRAME_SUB_BG );
   GFL_BG_FreeBGControl( LTVT_FRAME_BG );
   GFL_BG_FreeBGControl( LTVT_FRAME_CHARA );
   GFL_BG_FreeBGControl( LTVT_FRAME_NAME );
@@ -413,6 +432,38 @@ static void LOCAL_TVT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlan
   GFL_BG_LoadScreenReq( bgPlane );
 }
 
+//--------------------------------------------------------------
+//  スクリプト読み込み
+//--------------------------------------------------------------
+static void LOCAL_TVT_LoadScript( LOCAL_TVT_WORK *work )
+{
+  OS_TPrintf("Load local tvt script[%d]\n",work->initWork->scriptId);
+  
+  work->scriptRes = GFL_ARCHDL_UTIL_Load( work->arcHandle , 
+                                          NARC_local_tvt_tvt_script_00_bin + work->initWork->scriptId ,
+                                          FALSE , work->heapId );
+  work->scriptHead = work->scriptRes;
+  work->scriptData = (void*)((u32)work->scriptRes + sizeof(LOCAL_TVT_SCRIPT_HEADER) );
+
+  /*
+  {
+    u8 i;
+    for( i=0;i<4;i++ )
+    {
+      OS_TPrintf("[%d][%d:%d]\n",i,work->scriptHead->chara[i],work->scriptHead->back[i]);
+    }
+  }
+  */
+  if( work->scriptHead->chara[2] == LTCT_NONE &&
+      work->scriptHead->chara[3] == LTCT_NONE )
+  {
+    work->mode = LTM_2_MEMBER;
+  }
+  else
+  {
+    work->mode = LTM_4_MEMBER;
+  }
+}
 
 //--------------------------------------------------------------
 //  リソース読み込み
@@ -429,25 +480,43 @@ static void LOCAL_TVT_LoadResource( LOCAL_TVT_WORK *work )
     datId = NARC_local_tvt_local_tvt_scr_4_NSCR;
   }
   
-  GFL_ARCHDL_UTIL_TransVramScreen( work->archandle , 
+  GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , 
                                    datId ,
                                    LTVT_FRAME_CHARA ,
                                    0,0,FALSE,work->heapId );
   
-  GFL_ARCHDL_UTIL_TransVramScreen( work->archandle , 
+  GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , 
                                    datId ,
                                    LTVT_FRAME_BG ,
                                    0,0,FALSE,work->heapId );
   //セル
   {
-    work->cellRes[LTCR_PLT] = GFL_CLGRP_PLTT_RegisterEx( work->archandle , 
-          NARC_local_tvt_local_tvt_obj_NCLR , CLSYS_DRAW_MAIN , 
-          LTVT_PLT_OBJ_MAIN*32 , 0 , 1 , work->heapId  );
-    work->cellRes[LTCR_NCG] = GFL_CLGRP_CGR_Register( work->archandle , 
-          NARC_local_tvt_local_tvt_obj_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-    work->cellRes[LTCR_ANM] = GFL_CLGRP_CELLANIM_Register( work->archandle , 
-          NARC_local_tvt_local_tvt_obj_NCER , NARC_local_tvt_local_tvt_obj_NANR, work->heapId  );
   }
+  
+  //通信TVTからもらう
+  {
+    ARCHANDLE *ctvtArcHandle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA , work->heapId );
+    
+    work->cellRes[LTCR_PLT] = GFL_CLGRP_PLTT_RegisterComp( ctvtArcHandle , 
+          NARC_comm_tvt_tv_t_obj_NCLR , CLSYS_DRAW_MAIN , 
+          LTVT_PLT_OBJ_MAIN*32 , work->heapId  );
+    work->cellRes[LTCR_NCG] = GFL_CLGRP_CGR_Register( ctvtArcHandle , 
+          NARC_comm_tvt_tv_t_upper_obj_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[LTCR_ANM] = GFL_CLGRP_CELLANIM_Register( ctvtArcHandle , 
+          NARC_comm_tvt_tv_t_upper_obj_NCER , NARC_comm_tvt_tv_t_upper_obj_NANR, work->heapId  );
+    
+    GFL_ARCHDL_UTIL_TransVramPalette( ctvtArcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCLR , 
+                      PALTYPE_SUB_BG , 0*32 , 32*3 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( ctvtArcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
+                      LTVT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( ctvtArcHandle , NARC_comm_tvt_tv_t_common_bg_NSCR , 
+                      LTVT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+    GFL_BG_LoadScreenReq( LTVT_FRAME_SUB_BG );
+
+    GFL_ARC_CloseDataHandle( ctvtArcHandle );
+  }
+  
+  
   {
     GFL_CLWK_DATA cellInitData;
     cellInitData.softpri = 10;
@@ -489,7 +558,7 @@ static void LOCAL_TVT_MSG_InitMessage( LOCAL_TVT_WORK *work )
   
   //メッセージ
   work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_tvt_event_system_dat , work->heapId );
-  work->talkMsgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_tvt_event_01_dat , work->heapId );
+  work->talkMsgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_tvt_event_00_dat , work->heapId );
   
   BmpWinFrame_GraphicSet( LTVT_FRAME_MESSAGE , LTVT_MSG_MSGWIN_CGX , LTVT_PLT_MAIN_WINFRAME , 0 , work->heapId );
 
@@ -503,12 +572,15 @@ static void LOCAL_TVT_MSG_InitMessage( LOCAL_TVT_WORK *work )
   work->wordSet = NULL;
   work->printQue = PRINTSYS_QUE_Create( work->heapId );
 
+  work->cursorWork = APP_KEYCURSOR_Create( 0x0f , TRUE , TRUE , work->heapId );
+
   GFL_FONTSYS_SetColor( 1,2,0xf );
   
 }
 
 static void LOCAL_TVT_MSG_TermMessage( LOCAL_TVT_WORK *work )
 {
+  APP_KEYCURSOR_Delete( work->cursorWork );
   PRINTSYS_QUE_Delete( work->printQue );
   if( work->printHandle != NULL )
   {
@@ -539,6 +611,7 @@ static void LOCAL_TVT_MSG_UpdateMessage( LOCAL_TVT_WORK *work )
   GFL_TCBL_Main( work->tcblSys );
   if( work->printHandle != NULL  )
   {
+    APP_KEYCURSOR_Main( work->cursorWork , work->printHandle , work->msgWin );
     if( PRINTSYS_PrintStreamGetState( work->printHandle ) == PRINTSTREAM_STATE_DONE )
     {
       PRINTSYS_PrintStreamDelete( work->printHandle );
@@ -553,6 +626,14 @@ static void LOCAL_TVT_MSG_UpdateMessage( LOCAL_TVT_WORK *work )
           GFL_UI_TP_GetTrg() == TRUE )
       {
         PRINTSYS_PrintStreamReleasePause( work->printHandle );
+      }
+    }
+    else
+    {
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ||
+          GFL_UI_KEY_GetCont() == TRUE )
+      {
+        PRINTSYS_PrintStreamShortWait( work->printHandle , 0 );
       }
     }
   }
@@ -572,6 +653,8 @@ static void LOCAL_TVT_MSG_OpenWindow( LOCAL_TVT_WORK *work , LOCAL_TVT_MSG_POS p
 {
   if( work->msgWin != NULL )
   {
+    BmpWinFrame_Clear( work->msgWin , WINDOW_TRANS_ON_V );
+    GFL_BMPWIN_ClearTransWindow_VBlank( work->msgWin );
     GFL_BMPWIN_Delete( work->msgWin );
     work->msgWin = NULL;
   }
@@ -592,10 +675,32 @@ static void LOCAL_TVT_MSG_OpenWindow( LOCAL_TVT_WORK *work , LOCAL_TVT_MSG_POS p
                                       GFL_BMP_CHRAREA_GET_B );
   }
   
+  BmpWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , LTVT_MSG_MSGWIN_CGX , LTVT_PLT_MAIN_WINFRAME );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0x0F );
   GFL_BMPWIN_TransVramCharacter( work->msgWin );
   GFL_BMPWIN_MakeScreen( work->msgWin );
   GFL_BG_LoadScreenReq( LTVT_FRAME_MESSAGE );
+}
+
+static void LOCAL_TVT_MSG_CloseWindow( LOCAL_TVT_WORK *work )
+{
+  if( work->msgWin != NULL )
+  {
+    BmpWinFrame_Clear( work->msgWin , WINDOW_TRANS_ON_V );
+    GFL_BMPWIN_ClearTransWindow_VBlank( work->msgWin );
+    GFL_BMPWIN_Delete( work->msgWin );
+    work->msgWin = NULL;
+  }
+  if( work->printHandle != NULL )
+  {
+    PRINTSYS_PrintStreamDelete( work->printHandle );
+    work->printHandle = NULL;
+  }
+  if( work->msgStr != NULL )
+  {
+    GFL_STR_DeleteBuffer( work->msgStr );
+    work->msgStr = NULL;
+  }
 }
 
 //--------------------------------------------------------------------------
@@ -631,7 +736,114 @@ static void LOCAL_TVT_MSG_DispMessage( LOCAL_TVT_WORK *work , const u16 msgId )
     work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, work->msgStr ,work->fontHandle ,
                         MSGSPEED_GetWait() , work->tcblSys , 2 , work->heapId , 0x0f );
   }
-  BmpWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , LTVT_MSG_MSGWIN_CGX , LTVT_PLT_MAIN_WINFRAME );
+}
+
+#pragma mark [>script func
+
+static void LTVT_SCRIPT_DispMessageInit( LOCAL_TVT_WORK *work );
+static const BOOL LTVT_SCRIPT_DispMessageMain( LOCAL_TVT_WORK *work );
+static void LTVT_SCRIPT_WaitInit( LOCAL_TVT_WORK *work );
+static const BOOL LTVT_SCRIPT_WaitMain( LOCAL_TVT_WORK *work );
+
+
+
+static const LTVT_SCRIPT_COMMAND_TABLE commandTable[LCL_MAX] = 
+{
+  { NULL , NULL },  //終了コマンド
+  { LTVT_SCRIPT_DispMessageInit , LTVT_SCRIPT_DispMessageMain },
+  { LTVT_SCRIPT_WaitInit , LTVT_SCRIPT_WaitMain },
+};
+
+//--------------------------------------------------------------
+//  スクリプトメイン
+//--------------------------------------------------------------
+static void LOCAL_TVT_ScriptMain( LOCAL_TVT_WORK *work )
+{
+  const u8 comNo = work->scriptData[work->scriptIdx].comNo;
+  if( work->isFirstCommand == TRUE )
+  {
+    //最初のコマンドの初期化を呼ぶ
+    work->isFirstCommand = FALSE;
+    commandTable[ comNo ].initFunc(work);
+  }
+  {
+    const BOOL ret = commandTable[comNo].mainFunc(work);
+    if( ret == TRUE )
+    {
+      u8 nextComNo;
+      work->scriptIdx++;
+      nextComNo = work->scriptData[work->scriptIdx].comNo;
+      if( nextComNo != LCL_FINISH )
+      {
+        commandTable[ nextComNo ].initFunc(work);
+      }
+      else
+      {
+        work->state = LTS_FADEOUT;
+      }
+    }
+  }
+  
+}
+
+
+//--------------------------------------------------------------
+//  コマンド：メッセージ表示
+//--------------------------------------------------------------
+static void LTVT_SCRIPT_DispMessageInit( LOCAL_TVT_WORK *work )
+{
+  const u8 comNo = work->scriptData[work->scriptIdx].comNo;
+  const u8 charaNo = work->scriptData[work->scriptIdx].charaNo;
+  const u8 option = work->scriptData[work->scriptIdx].option;
+  OS_TPrintf("CommandInit DispMessage[%d][%d]\n",charaNo,option);
+  
+  LOCAL_TVT_DispRecIcon( work , charaNo );
+  if( charaNo < 2 )
+  {
+    LOCAL_TVT_MSG_OpenWindow( work , LTMP_DOWN );
+  }
+  else
+  {
+    LOCAL_TVT_MSG_OpenWindow( work , LTMP_UP );
+  }
+  LOCAL_TVT_MSG_DispMessage( work , option );
+  
+}
+
+static const BOOL LTVT_SCRIPT_DispMessageMain( LOCAL_TVT_WORK *work )
+{
+  if( LOCAL_TVT_MSG_IsFinishMsg(work) == TRUE )
+  {
+    LOCAL_TVT_HideRecIcon( work );
+    LOCAL_TVT_MSG_CloseWindow( work );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+//  コマンド：ウェイト
+//--------------------------------------------------------------
+static void LTVT_SCRIPT_WaitInit( LOCAL_TVT_WORK *work )
+{
+  const u8 comNo = work->scriptData[work->scriptIdx].comNo;
+  const u8 charaNo = work->scriptData[work->scriptIdx].charaNo;
+  const u8 option = work->scriptData[work->scriptIdx].option;
+  OS_TPrintf("CommandInit Wait[%d][%d]\n",charaNo,option);
+  
+  work->waitCnt = 0;
+}
+
+static const BOOL LTVT_SCRIPT_WaitMain( LOCAL_TVT_WORK *work )
+{
+  const u8 option = work->scriptData[work->scriptIdx].option;
+
+  work->waitCnt++;
+  if( work->waitCnt > option )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 
@@ -662,29 +874,17 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   {
     initWork = GFL_HEAP_AllocMemory( HEAPID_LOCAL_TVT , sizeof( LOCAL_TVT_INIT_WORK ));
     initWork->gameData = GAMEDATA_Create( GFL_HEAPID_APP );
+    
+    initWork->scriptId = 0;
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      initWork->scriptId = 1;
+    }
   }
   else
   {
     initWork = pwk;
   }
-
-  work->charaType[0] = LTCT_DOCTOR_D;
-  work->charaType[1] = LTCT_SUPPORT;
-  work->charaType[2] = LTCT_RIVAL;
-  work->charaType[3] = LTCT_PLAYER_M;
-  work->bgType[0] = 1;
-  work->bgType[1] = 0;
-  work->bgType[2] = 0;
-  work->bgType[3] = 0;
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-  {
-    work->mode = LTM_2_MEMBER;
-  }
-  else
-  {
-    work->mode = LTM_4_MEMBER;
-  }
-
   work->heapId = HEAPID_LOCAL_TVT;
   work->initWork = initWork;
   

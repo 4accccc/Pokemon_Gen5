@@ -70,10 +70,12 @@ struct _LOCAL_TVT_CHARA
 
 static const u8 charaResList[LTCT_MAX][2] = {
     { NARC_local_tvt_chara_player_m_NCLR , NARC_local_tvt_chara_player_m_1_NCGR },
-    { NARC_local_tvt_chara_player_f_NCLR , NARC_local_tvt_chara_player_f_1_NCGR },
-    { NARC_local_tvt_chara_support_NCLR  , NARC_local_tvt_chara_support_1_NCGR },
     { NARC_local_tvt_chara_rival_NCLR    , NARC_local_tvt_chara_rival_1_NCGR },
+    { NARC_local_tvt_chara_support_NCLR  , NARC_local_tvt_chara_support_1_NCGR },
     { NARC_local_tvt_chara_doctor_d_NCLR , NARC_local_tvt_chara_doctor_d_1_NCGR },
+    
+    //主人公分岐用・主人公(女)素材
+    { NARC_local_tvt_chara_player_f_NCLR , NARC_local_tvt_chara_player_f_1_NCGR },
 };
 
 
@@ -103,11 +105,13 @@ LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx 
   LOCAL_TVT_CHARA *charaWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( LOCAL_TVT_CHARA ) );
   
   charaWork->charaIdx = charaIdx;
-  charaWork->charaType = work->charaType[charaIdx];
-  charaWork->bgType = work->bgType[charaIdx];
+  charaWork->charaType = work->scriptHead->chara[charaIdx];
+  charaWork->bgType = work->scriptHead->back[charaIdx];
   charaWork->charaAnmIdx = 0;
   charaWork->bgAnmIdx = 0;
   charaWork->isUpdateQue = FALSE;
+
+  OS_TPrintf("[%d][%d:%d]\n",charaWork->charaIdx,charaWork->charaType,charaWork->bgType);
   
   LOCAL_TVT_CHARA_LoadCharaResource( work , charaWork );
   LOCAL_TVT_CHARA_LoadCommonResource( work , charaWork );
@@ -243,14 +247,14 @@ static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT
     screenHeight = LTVT_CHARA_SCREEN_HEIGHT/2;
   }
   
-  GFL_ARCHDL_UTIL_TransVramPaletteEx( work->archandle , 
+  GFL_ARCHDL_UTIL_TransVramPaletteEx( work->arcHandle , 
                                       charaResList[charaWork->charaType][0] ,
                                       PALTYPE_MAIN_BG_EX ,
                                       0 ,
                                       (2*16*16) * charaWork->charaIdx + 0x4000 ,
                                       (2*16*16) ,
                                       work->heapId );
-  GFL_ARCHDL_UTIL_TransVramPaletteEx( work->archandle , 
+  GFL_ARCHDL_UTIL_TransVramPaletteEx( work->arcHandle , 
                                       bgResList[charaWork->bgType][0] ,
                                       PALTYPE_MAIN_BG_EX ,
                                       0 ,
@@ -309,7 +313,7 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_
 static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork , ARCDATID datId )
 {
   //OS_TPrintf("[%d]L\n",charaWork->charaIdx);
-  charaWork->resData = GFL_ARCHDL_UTIL_LoadBGCharacter( work->archandle , 
+  charaWork->resData = GFL_ARCHDL_UTIL_LoadBGCharacter( work->arcHandle , 
                                    datId ,
                                    FALSE ,
                                    &charaWork->charaData ,

@@ -17,7 +17,6 @@
 "chara_player_m.NCLR"
 "chara_rival.NCLR"
 "chara_support.NCLR"
-"local_tvt_obj.NCLR"
 "chara_doctor_d_1.NCGR"
 "chara_doctor_d_2.NCGR"
 "chara_player_f_1.NCGR"
@@ -30,11 +29,8 @@
 "chara_support_2.NCGR"
 
 "dummy.NCGR"
-
-"local_tvt_obj.NCGR"
 "local_tvt_scr_2.NSCR"
 "local_tvt_scr_4.NSCR"
-"local_tvt_obj.NCER"
-"local_tvt_obj.NANR"
 
+"tvt_script_00.bin"
 "tvt_script_01.bin"

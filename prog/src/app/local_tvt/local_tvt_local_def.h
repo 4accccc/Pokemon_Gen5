@@ -12,8 +12,10 @@
 
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "app/app_keycursor.h"
 
 #include "app/local_tvt_sys.h"
+
 #include "local_tvt_type_def.h"
 //======================================================================
 //	define
@@ -24,6 +26,8 @@
 #define LTVT_FRAME_NAME    (GFL_BG_FRAME1_M)
 #define LTVT_FRAME_CHARA   (GFL_BG_FRAME2_M)
 #define LTVT_FRAME_BG      (GFL_BG_FRAME3_M)
+
+#define LTVT_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
 
 #define LTVT_CHARA_SCREEN_WIDTH (16)
 #define LTVT_CHARA_SCREEN_HEIGHT (24)
@@ -68,6 +72,7 @@ typedef enum
   LTCR_MAX,
   
 }LOCAL_TVT_CELL_RES;
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -77,12 +82,22 @@ typedef struct _LOCAL_TVT_CHARA LOCAL_TVT_CHARA;
 
 typedef struct
 {
+  u8 chara[LOCAL_TVT_MEMBER_MAX];
+  u8 back[LOCAL_TVT_MEMBER_MAX];
+}LOCAL_TVT_SCRIPT_HEADER;
+typedef struct
+{
+  u8  comNo;
+  u8  charaNo;
+  u16 option;
+}LOCAL_TVT_SCRIPT_DATA;
+
+struct _LOCAL_TVT_WORK
+{
   HEAPID heapId;
   GFL_TCB *vBlankTcb;
 
   LOCAL_TVT_MODE mode;
-  u8             charaType[LOCAL_TVT_MEMBER_MAX];
-  u8             bgType[LOCAL_TVT_MEMBER_MAX];
   
   u8 state;
   u8 bufNo;
@@ -90,13 +105,17 @@ typedef struct
   
   LOCAL_TVT_TRANS_STATE transState;
   
-  ARCHANDLE *archandle;
+  ARCHANDLE *arcHandle;
   LOCAL_TVT_CHARA *charaWork[LOCAL_TVT_MEMBER_MAX];
   LOCAL_TVT_CHARA *transChara;
   
   LOCAL_TVT_INIT_WORK *initWork;
   
-
+  BOOL isFirstCommand;
+  void *scriptRes;
+  LOCAL_TVT_SCRIPT_HEADER *scriptHead;
+  LOCAL_TVT_SCRIPT_DATA *scriptData;
+  
   u32 cellRes[LTCR_MAX];
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkRecIcon;
@@ -110,11 +129,12 @@ typedef struct
   GFL_MSGDATA     *talkMsgHandle;
   STRBUF          *msgStr;
   WORDSET         *wordSet;
-  PRINT_QUE       *printQue;  
-  //---âºèàóù---
+  PRINT_QUE       *printQue;
+  APP_KEYCURSOR_WORK *cursorWork;
+
   u8 scriptIdx;
-  
-}LOCAL_TVT_WORK;
+  u16 waitCnt;
+};
 
 
 //======================================================================
