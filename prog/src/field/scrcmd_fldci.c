@@ -85,3 +85,32 @@ VMCMD_RESULT EvCmdFldCi_CallPokeCutin( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * NPC空を飛ぶカットイン
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdFldCi_CallNpcFlyCutin( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*    work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD3D_CI_PTR ptr = FIELDMAP_GetFld3dCiPtr(fieldWork);
+
+  u16 obj_id = SCRCMD_GetVMWorkValue( core, work );
+  
+  //カットインイベントをコール
+  {
+    GMEVENT *call_event;
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    call_event = FLD3D_CI_CreateNpcFlyCutInEvt( gsys, ptr, obj_id );
+    SCRIPT_CallEvent( sc, call_event );
+  }
+  
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+

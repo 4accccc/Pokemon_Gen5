@@ -58,6 +58,11 @@
 typedef GMEVENT_RESULT (*SETUP_CALLBACK)( GMEVENT* event, int* seq, void* work );
 typedef BOOL (*MAIN_SEQ_FUNC)( GMEVENT* event, FLD3D_CI_PTR ptr );
 
+typedef struct NPC_FLY_WORK_tag
+{
+  int ObjID;
+}NPC_FLY_WORK;
+
 typedef struct POKE_WORK_tag
 {
   int MonsNo;
@@ -203,6 +208,7 @@ static BOOL EncFadeMain(GMEVENT* event, FLD3D_CI_PTR ptr);
 
 static GMEVENT_RESULT WhiteOutEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WhiteInEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT WhiteOutEvtNpc( GMEVENT* event, int* seq, void* work );
 
 static BOOL IsFlySkyOut(const int inCutinNo);
 static BOOL IsFlySkyIn(const int inCutinNo);
@@ -608,7 +614,14 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     if ( IsFlySkyOut(ptr->CutInNo) )
     {
       GMEVENT* fade_event;
-      fade_event = GMEVENT_Create(gsys, event, WhiteOutEvt, 0);
+      if ( ptr->CutInNo == FLDCIID_FLY_OUT )
+      {
+        fade_event = GMEVENT_Create(gsys, event, WhiteOutEvt, 0);
+      }
+      else
+      {
+        fade_event = GMEVENT_Create(gsys, event, WhiteOutEvtNpc, 0);
+      }
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq)++;
@@ -1755,6 +1768,62 @@ static GMEVENT_RESULT WhiteOutEvt( GMEVENT* event, int* seq, void* work )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * ホワイトアウトイベントNPCそらをとぶ用
+ *
+ * @param   event       イベントポインタ
+ * @param   *seq        シーケンサ
+ * @param   work        ワークポインタ
+ *
+ * @return	GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------------------------------------
+static GMEVENT_RESULT WhiteOutEvtNpc( GMEVENT* event, int* seq, void* work )
+{
+  FLD3D_CI_EVENT_WORK *evt_work;
+  FIELDMAP_WORK * fieldmap;
+  NPC_FLY_WORK *fly_work;
+  {
+    GAMESYS_WORK *gsys;
+    gsys = GMEVENT_GetGameSysWork(event);
+    fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  }
+
+  //親イベントからワークポインタを取得
+  {
+    FLD3D_CI_PTR ptr;
+    GMEVENT * parent = GMEVENT_GetParentEvent(event);
+    evt_work = GMEVENT_GetEventWork(parent);
+    ptr = evt_work->CiPtr;
+    fly_work = (NPC_FLY_WORK*)ptr->Work;
+  }
+
+  switch(*seq){
+  case 0:
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLYSKY_WHITE_FADE_SPD );
+    (*seq)++;
+    break;
+  case 1:
+    if ( GFL_FADE_CheckFade() == FALSE )
+    {
+      //指定OBJを消す
+       MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+       u16 id = fly_work->ObjID;
+       MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+       if ( mmdl != NULL ) MMDL_Delete( mmdl );
+       else GF_ASSERT_MSG( 0,"OBJ DEL 対象のOBJが居ません  %d\n",id );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * ホワイトインイベント
  *
  * @param   event       イベントポインタ
@@ -1797,7 +1866,7 @@ static GMEVENT_RESULT WhiteInEvt( GMEVENT* event, int* seq, void* work )
 //--------------------------------------------------------------------------------------------
 static BOOL IsFlySkyOut(const int inCutinNo)
 {
-  if (inCutinNo == FLDCIID_FLY_OUT) return TRUE;
+  if ( (inCutinNo == FLDCIID_FLY_OUT) || (inCutinNo == FLDCIID_CHAMP_OUT)) return TRUE;
 
   return FALSE;
 }
@@ -2114,3 +2183,29 @@ static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexN
   GFL_MSG_Delete( msg );
 
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * NPCそらをとぶカットインイベント作成
+ *
+ * @param   gsys        ゲームシステムポインタ
+ * @param   ptr         カットイン管理ポインタ
+ * @apram   inObjID     OBJID
+ * @return	event       イベントポインタ
+ */
+//--------------------------------------------------------------------------------------------
+GMEVENT *FLD3D_CI_CreateNpcFlyCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const int inObjID )
+{
+  GMEVENT * event;
+  int no = FLDCIID_CHAMP_OUT;
+  event = FLD3D_CI_CreateCutInEvt(gsys, ptr, no);
+  //NPCそらをとぶカットイン用変数セット
+  {
+    NPC_FLY_WORK *fly_work;
+    fly_work = (NPC_FLY_WORK*)ptr->Work;
+    fly_work->ObjID = inObjID;
+  }
+
+  return event;
+}
+

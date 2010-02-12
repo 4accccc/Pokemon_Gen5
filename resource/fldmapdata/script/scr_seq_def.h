@@ -6620,6 +6620,19 @@
   .short  EV_SEQ_CALL_POKE_CUTIN
   .short  \pos
   .endm
+
+//--------------------------------------------------------------
+/**
+ * NPCそらをとぶカットイン
+ * @param obj_id         対象OBJID
+ */
+//--------------------------------------------------------------
+#define _CALL_NPCFLY_CUTIN(obj_id) _ASM_CALL_NPCFLY_CUTIN obj_id
+
+  .macro  _ASM_CALL_NPCFLY_CUTIN obj_id
+  .short  EV_SEQ_CALL_NPCFLY_CUTIN
+  .short  \obj_id
+  .endm  
   
 //======================================================================
 // 四天王関連

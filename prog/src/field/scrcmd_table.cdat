@@ -689,7 +689,7 @@
   //フィールドカットイン関連
   DEF_CMD( EvCmdFldCi_CallCutin, EV_SEQ_CALL_FLD3D_CUTIN )
   DEF_CMD( EvCmdFldCi_CallPokeCutin, EV_SEQ_CALL_POKE_CUTIN )
-  NO_CMD()
+  DEF_CMD( EvCmdFldCi_CallNpcFlyCutin, EV_SEQ_CALL_NPCFLY_CUTIN )
   NO_CMD()
 
   // 四天王関連
