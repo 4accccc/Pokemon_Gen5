@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-02-11T15:37:54"/>
+	<create user="unno" host="W00199" date="2010-02-12T10:46:00"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -273,26 +273,26 @@
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			fbfb fbfb fbfb fbfb fbfb fbfb fbfb fbfb
+			fbfb fbfb fbfb fbfb fbfb fbfb fbfb fbfb
+			fbfb fbfb fbfb fbfb fbfb fbfb fbfb fbfb
+			fbfb fbfb fbfb fbfb fbfb fbfb fbfb fbfb
+			fcfc fcfc fcfc fcfc fcfc fcfc fcfc fcfc
+			fcfc fcfc fcfc fcfc fcfc fcfc fcfc fcfc
+			fcfc fcfc fcfc fcfc fcfc fcfc fcfc fcfc
+			fcfc fcfc fcfc fcfc fcfc fcfc fcfc fcfc
+			fdfd fdfd fdfd fdfd fdfd fdfd fdfd fdfd
+			fdfd fdfd fdfd fdfd fdfd fdfd fdfd fdfd
+			fdfd fdfd fdfd fdfd fdfd fdfd fdfd fdfd
+			fdfd fdfd fdfd fdfd fdfd fdfd fdfd fdfd
+			fefe fefe fefe fefe fefe fefe fefe fefe
+			fefe fefe fefe fefe fefe fefe fefe fefe
+			fefe fefe fefe fefe fefe fefe fefe fefe
+			fefe fefe fefe fefe fefe fefe fefe fefe
+			fefe fefe fefe fefe fefe fefe fefe fefe
+			fefe fefe fefe fefe fefe fefe fefe fefe
+			fefe fefe fefe fefe fefe fefe fefe fefe
+			fefe fefe fefe fefe fefe fefe fefe fefe
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="in59_bg_b"
@@ -314,73 +314,73 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="in59_sand_pl"
-		path="C:/home/wb_data3d/field/in59/chip/tex/in59_sand.bmp"
+		path="C:/home/wb_data3d/field/in59/chip/tex/in59_sand.tga"
 	>
 		<bitmap size="512">
-			56aa a155 aaaa aaaa aaaa 0aaa aaa0 aaaa
-			5aaa 8555 aaaa aaaa aaaa 0aaa aaa0 aaaa
+			56aa a555 aaaa aaaa aaaa 0aaa aaa0 aaaa
+			5aaa 9555 aaaa aaaa aaaa 0aaa aaa0 aaaa
 			aaaa 5555 aaaa aaa5 aaaa 0aaa aa80 aaaa
 			aaaa 555a aaa9 a956 aaaa 0aaa aa00 aaaa
-			aaaa 556a aaa1 a956 aaaa 2aaa a800 aaaa
-			aaaa 56aa aaa5 a556 aaaa aaaa a000 aaaa
-			aaaa 56aa aa95 9556 956a aaaa 8002 aaaa
-			aaaa 5aaa aa95 555a 5555 aaa9 000a aaaa
-			aaaa 5aaa aa55 556a 5555 aa95 002a aaa8
-			aaaa 5aaa aa55 55aa 5555 a955 00aa aaa0
-			aaaa 6aaa aa55 56aa 5655 a555 02aa aa00
-			aaaa 6aaa aa55 aaaa aaaa 9555 0aaa 8000
-			aaaa 6aaa a955 aaaa aaaa 555a 2aaa 0000
+			aaaa 556a aaa5 a956 aaaa 2aaa a800 aaaa
+			aaaa 56aa aaa5 a556 aaaa 2aaa a000 aaaa
+			aaaa 56aa aa95 9556 956a aaaa 8000 aaaa
+			aaaa 5aaa aa95 555a 5555 aaa9 0002 aaaa
+			aaaa 5aaa aa55 556a 5555 aa95 000a aaa8
+			aaaa 5aaa aa55 55aa 5555 a955 002a aaa0
+			aaaa 6aaa aa55 56aa 5655 a555 00aa aa00
+			aaaa 6aaa aa55 aaaa aaaa 9555 02aa 8000
+			aaaa 6aaa a955 aaaa aaaa 555a 0aaa 0000
 			aaaa 6aaa a955 aaaa aaaa 556a aaa9 0000
-			a800 6aaa a955 aaaa aaaa 556a 9555 000a
-			a000 6aaa a555 aaaa aaaa 54aa 5555 02aa
-			8000 aaaa a555 aaaa aaaa 52aa 5555 aaa9
-			0000 aaaa a555 aaaa aaaa 6aaa 5555 aaa1
-			002a aaa8 5556 aaa9 aaaa aaaa 556a aaa1
-			00aa aaa8 5556 02a5 0000 aaaa 56aa aaa5
-			02aa aaa0 555a 0005 0000 a800 56aa aa85
-			02aa aa80 556a 0001 0000 8000 5aaa aa95
+			a800 6aaa a955 aaaa aaaa 556a a955 000a
+			a000 6aaa a555 aaaa aaaa 55aa 5555 02aa
+			8000 aaaa a555 aaaa aaaa 56aa 5555 aaa9
+			0000 aaaa a555 aaaa aaaa 6aaa 5555 aaa5
+			002a aaa8 5556 aaa9 aaaa aaaa 556a aaa5
+			00aa aaa8 5556 02a5 0000 aaaa 56aa aa95
+			02aa aaa0 555a 0005 0000 a800 56aa aa95
+			02aa aa80 556a 0001 0000 8000 5aaa aa55
 			0aaa aa80 0aaa 0000 0000 0000 6aaa aa55
 			2aaa aa00 2aaa 0000 0000 0000 6aa0 a955
-			2aaa a540 aaaa 555a 5555 0001 aa80 a955
-			aaaa 9550 aaaa aaaa 5aaa 5555 aa00 a556
-			aaaa 5552 aaa9 aaaa aaaa 5556 aa01 a556
-			aaaa 554a aaa5 aaaa aaaa 555a aa05 a55a
-			aaaa 552a aa55 aaaa aaaa 55aa a815 a55a
-			aaaa 56aa 5555 aa95 aaaa 5aaa a055 a55a
-			aaaa 4aaa 5555 1555 aaaa 6aaa 8055 a96a
-			aaaa aaaa 5555 5555 aaa9 aaaa 0055 aaaa
-			aaaa aaaa 555a 5555 a965 aaaa 0155 aaaa
-			aaaa aaaa 0aaa 5550 a555 aaaa 0155 aaa8
-			aaaa aaaa aaaa 56aa 9555 aaaa 0156 aa80
-			aaaa aaaa aaaa 46aa 9555 aaaa 025a aa00
-			aaaa aaaa aaaa 26aa 5555 aaaa 0aaa a800
-			aaaa aaaa aaaa a6aa 5554 aaa8 0aaa 8000
-			a800 aaaa aaaa aaaa 554a aaa9 0aaa 0000
-			5000 5555 aaaa aaaa 556a aaa5 2aaa 0000
-			5400 5555 a815 aaaa 55aa aa95 aaaa 0000
-			5400 5555 8555 aaaa 56aa aa55 aaaa 0002
-			5000 5555 5555 aaaa 5aaa aa55 aaaa 002a
-			0000 5554 5555 aaa1 6aaa a855 aaaa 0aaa
-			aaaa 5556 5555 aa85 aaaa aa96 aaaa aaaa
-			aaaa 555a 5555 aa95 aaaa aaaa aaaa aaaa
-			aaaa 6aaa 5555 aa15 aaaa aaaa aaaa aaaa
-			aaaa aaaa 555a a855 aaaa aaaa aaaa aaaa
-			aaaa aaaa 55aa a855 aaaa aaaa aaaa aaaa
-			aaaa aaaa 56aa a055 aaaa 6aaa a555 aaaa
-			aaaa aaaa 56aa a155 aaaa 5aaa 5555 aaa9
-			aaaa aaaa 5aaa a155 5aaa 5555 5555 aaa5
-			aaaa aaaa 5aaa a155 6aaa 5555 5555 aa95
+			2aaa a500 aaaa 555a 5555 0001 aa80 a955
+			aaaa 9540 aaaa aaaa 5aaa 1555 aa00 a556
+			aaaa 5542 aaa9 aaaa aaaa 5556 aa01 a556
+			aaaa 550a aaa5 aaaa aaaa 555a aa05 a55a
+			aaaa 542a aa55 aaaa aaaa 55aa a815 a55a
+			aaaa 50aa 5555 aa95 aaaa 5aaa a015 a56a
+			aaaa 42aa 5555 5555 aaaa 6aaa 8055 a96a
+			aaaa aaaa 5555 5555 aaa9 6aaa 0055 aaaa
+			aaaa aaaa 555a 5555 aaa5 aaaa 0155 aaaa
+			aaaa aaaa 5aaa 5555 aa55 aaaa 0155 aaa8
+			aaaa aaaa aaaa 56aa a955 aaaa 0156 aa80
+			aaaa aaaa aaaa 6aaa a555 aaaa 015a aa00
+			aaaa aaaa aaaa aaaa 9555 aaaa 05aa a800
+			aaaa aaaa aaaa aaaa 5556 aaaa 06aa 8000
+			a800 aaaa aaaa aaaa 555a aaa9 0aaa 0000
+			4000 5555 aaaa aaaa 556a aaa9 2aaa 0000
+			1000 5555 a955 aaaa 55aa a665 aaaa 0000
+			4400 5554 9555 aaaa 56aa 9999 aaaa 0002
+			1000 5551 5555 aaa9 5aaa 6665 aaaa 002a
+			0000 5544 5555 aaa5 6aaa 9555 aaaa 0aaa
+			aaaa 5556 5555 aa95 aaaa a956 aaaa aaaa
+			aaaa 555a 5555 aa55 aaaa aaaa aaaa aaaa
+			aaaa 6aaa 5555 aa55 aaaa aaaa aaaa aaaa
+			aaaa aaaa 555a a955 aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa a955 aaaa aaaa aaaa aaaa
+			aaaa aaaa 56aa a555 aaaa 6aaa a555 aaaa
+			aaaa aaaa 56aa a555 aaaa 5666 5555 aaa9
+			aaaa aaaa 5aaa a555 9aaa 5599 5555 aaa5
+			aaaa aaaa 5aaa a555 6aaa 5666 5555 aa95
 			aaaa aaaa 56aa a955 aaaa aaaa 556a aa15
-			aaaa aaaa 56aa a855 aaaa aaaa 55aa aa15
+			aaaa aaaa 56aa a955 aaaa aaaa 55aa aa15
 			aaaa aaaa 555a aa55 aaaa aaaa 56aa a815
-			aaaa 6aaa 5555 aaa5 aaaa aaaa 56aa a805
-			aaaa 55aa 5555 aaaa aaaa aaaa 56aa a800
-			aaaa 5556 9555 aaaa aaaa aaaa 56aa a800
+			aaaa 6aaa 5555 aa95 aaaa aaaa 56aa a805
+			aaaa 55aa 5555 aaa5 aaaa aaaa 56aa a801
+			aaaa 5556 5555 aaaa aaaa aaaa 56aa a800
 			aaaa 5555 a555 aaaa aaaa aaaa 15aa aa00
 			5aaa 5555 aaa9 aaaa aaaa aaaa 016a aa80
 			56aa a555 aaaa aaaa aaaa aaaa 000a aaa8
 			56aa aa55 aaaa aaaa aaaa 2aaa 8000 aaaa
-			56aa aa95 aaaa aaaa aaaa 2aaa a000 aaaa
+			56aa aa95 aaaa aaaa aaaa 0aaa a000 aaaa
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="in59_slop01"
@@ -703,7 +703,7 @@
 
 <tex_palette_array size="9">
 	<tex_palette index="0" name="in59_bg_a_pl" color_size="8">
-		28e0 2d00 3120 7fff 7fff 7fff 7fff 7fff
+		28e0 2d00 3120 3566 41ec 4a92 5718 7fff
 	</tex_palette>
 	<tex_palette index="1" name="in59_bg_b_pl" color_size="4">
 		7fff 7fff 7fff 7fff
