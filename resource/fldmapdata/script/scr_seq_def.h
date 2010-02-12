@@ -1956,7 +1956,7 @@
 
 //--------------------------------------------------------------
 /**
- * 簡易会話単語をバッファいにセット
+ * 簡易会話単語をバッファにセット
  * @param idx セットするタグナンバー
  * @param word  簡易会話ワード
  */
@@ -1969,6 +1969,23 @@
   .byte \idx
   .short \word
   .endm
+
+//--------------------------------------------------------------
+/**
+ * 国名をバッファにセット
+ * @param idx セットするタグナンバー
+ * @param code  国コード
+ */
+//--------------------------------------------------------------
+#define _COUNTRY_NAME( idx, code ) \
+    _ASM_COUNTRY_NAME idx, code
+
+  .macro _ASM_COUNTRY_NAME idx, code
+  .short EV_SEQ_COUNTRY_NAME
+  .byte \idx
+  .short \code
+  .endm
+  
   
 
 //======================================================================
@@ -7564,14 +7581,16 @@
 //--------------------------------------------------------------
 /**
  * @brief 国連関連 部屋に行く前の情報セット
- * @param ret       検索結果
+ * @param country_code  国コード
+ * @param floor         フロア
  */
 //--------------------------------------------------------------
-#define _UN_SET_COUNTRY_INFO( country_code ) _ASM_UN_SET_COUNTRY_INFO country_code
+#define _UN_SET_COUNTRY_INFO( country_code, floor ) _ASM_UN_SET_COUNTRY_INFO country_code, floor
 
-  .macro _ASM_UN_SET_COUNTRY_INFO country_code
+  .macro _ASM_UN_SET_COUNTRY_INFO country_code, floor
   .short EV_SEQ_UN_SET_COUNTRY_INFO
   .short \country_code
+  .short \floor
   .endm
 
 //--------------------------------------------------------------
@@ -7591,14 +7610,15 @@
 
 //--------------------------------------------------------------
 /**
- * @brief 国連関連 部屋内　OBJ数取得
+ * @brief 国連関連 部屋内情報取得
  * @param ret       検索結果
  */
 //--------------------------------------------------------------
-#define _UN_GET_ROOM_OBJ_NUM( ret ) _ASM_UN_GET_ROOM_OBJ_NUM ret
+#define _UN_GET_ROOM_INFO( infotype, ret ) _ASM_UN_GET_ROOM_INFO infotype, ret
 
-  .macro _ASM_UN_GET_ROOM_OBJ_NUM ret
-  .short EV_SEQ_UN_GET_ROOM_OBJ_NUM
+  .macro _ASM_UN_GET_ROOM_INFO infotype, ret
+  .short EV_SEQ_UN_GET_ROOM_INFO
+  .short \infotype
   .short \ret
   .endm
 
