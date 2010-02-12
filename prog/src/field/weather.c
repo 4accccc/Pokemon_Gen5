@@ -241,6 +241,12 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_mist)
 	},
 
+	// 雷雨
+	{
+		&c_WEATHER_TASK_DATA_EVENING_RAIN,
+		FS_OVERLAY_ID(field_weather_rain)
+	},
+
 	// 蜃気楼
 	{
 		&c_WEATHER_TASK_DATA_MIRAGE,
@@ -265,8 +271,8 @@ static void FIELD_WEATHER_VBlank( GFL_TCB* p_tcb, void* p_work );
 //-------------------------------------
 ///	天気切り替え処理
 //=====================================
-static void FIELD_WEATHER_CHANGE_Normal( FIELD_WEATHER* p_sys, u32 heapID );
-static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, u32 heapID );
+static void FIELD_WEATHER_CHANGE_Normal( FIELD_WEATHER* p_sys, HEAPID heapID );
+static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, HEAPID heapID );
 
 
 
@@ -281,7 +287,7 @@ static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, u32 heapID );
  *	@return	システムワーク
  */
 //-----------------------------------------------------------------------------
-FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, const FIELD_SOUND* cp_sound, u32 heapID )
+FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, const FIELD_SOUND* cp_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID )
 {
 	FIELD_WEATHER* p_sys;
 	int i;
@@ -306,7 +312,7 @@ FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p
 	
 
 	for( i=0; i<FIELD_WEATHER_WORK_NUM; i++ ){
-		p_sys->p_task[ i ] = WEATHER_TASK_Init( p_sys->p_unit, cp_camera, p_light, p_fog, cp_zonefog, p_sys->p_3dbg, cp_sound, heapID );
+		p_sys->p_task[ i ] = WEATHER_TASK_Init( p_sys->p_unit, cp_camera, p_light, p_fog, cp_zonefog, p_sys->p_3dbg, cp_sound, cp_season_time, heapID );
 	}
 
 	// 割り込み初期化
@@ -357,10 +363,10 @@ void FIELD_WEATHER_Exit( FIELD_WEATHER* p_sys )
  *	@param	p_sys	システムワーク
  */
 //-----------------------------------------------------------------------------
-void FIELD_WEATHER_Main( FIELD_WEATHER* p_sys, u32 heapID )
+void FIELD_WEATHER_Main( FIELD_WEATHER* p_sys, HEAPID heapID )
 {
 	int i;
-	static void (*pFunc[FIELD_WEATHER_CHANGETYPE_NUM])( FIELD_WEATHER* p_sys, u32 heapID ) ={
+	static void (*pFunc[FIELD_WEATHER_CHANGETYPE_NUM])( FIELD_WEATHER* p_sys, HEAPID heapID ) ={
 		FIELD_WEATHER_CHANGE_Normal,
 		FIELD_WEATHER_CHANGE_Multi,
 	};
@@ -421,7 +427,7 @@ void FIELD_WEATHER_3DWrite( FIELD_WEATHER* p_sys )
  *	@param	weather_no		天気ナンバー
  */
 //-----------------------------------------------------------------------------
-void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, WEATHER_NO weather_no, u32 heapID )
+void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, WEATHER_NO weather_no, HEAPID heapID )
 {
 	int i;
 	
@@ -588,7 +594,7 @@ static void FIELD_WEATHER_VBlank( GFL_TCB* p_tcb, void* p_work )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_WEATHER_CHANGE_Normal( FIELD_WEATHER* p_sys, u32 heapID )
+static void FIELD_WEATHER_CHANGE_Normal( FIELD_WEATHER* p_sys, HEAPID heapID )
 {
 	switch( p_sys->seq ){
 	case FIELD_WEATHER_NORMAL_SEQ_NONE:
@@ -644,7 +650,7 @@ static void FIELD_WEATHER_CHANGE_Normal( FIELD_WEATHER* p_sys, u32 heapID )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, u32 heapID )
+static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, HEAPID heapID )
 {
 	switch( p_sys->seq ){
 	case FIELD_WEATHER_MULTI_SEQ_NONE:

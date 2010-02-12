@@ -130,7 +130,7 @@ static u16 FADE_WORK_GetSlope( const FADE_WORK* cp_wk );
  *  @return ƒ[ƒN
  */
 //-----------------------------------------------------------------------------
-FIELD_FOG_WORK* FIELD_FOG_Create( u32 heapID )
+FIELD_FOG_WORK* FIELD_FOG_Create( HEAPID heapID )
 {
   FIELD_FOG_WORK* p_wk;
 
@@ -628,7 +628,7 @@ static u16 FADE_WORK_GetSlope( const FADE_WORK* cp_wk )
 
 
 #ifdef PM_DEBUG
-void FIELD_FOG_DEBUG_Init( FIELD_FOG_WORK* p_wk, u32 heapID )
+void FIELD_FOG_DEBUG_Init( FIELD_FOG_WORK* p_wk, HEAPID heapID )
 {
   GF_ASSERT( !p_wk->p_debug_wordset );
   GF_ASSERT( !p_wk->p_debug_msgdata );

@@ -117,15 +117,15 @@ typedef struct {
 //-------------------------------------
 ///	砂嵐
 //=====================================
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
 static void WEATHER_STORM_OBJ_Move( WEATHER_OBJ_WORK* p_wk ); 
-static void WEATHER_STORM_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID ); 
+static void WEATHER_STORM_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapID ); 
 
 
 static void WEATHER_STORM_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_STORM_WORK* p_wk );
@@ -191,7 +191,7 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_STORM = {
  *	@brief	初期化
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_STORM_WORK* p_local_wk;
 	// ローカルワーク取得
@@ -235,7 +235,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Init( WEATHER_TASK* p_wk, WEATHER_
  *	@brief	フェードイン
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_STORM_WORK* p_local_wk;
 	BOOL result;
@@ -287,7 +287,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHE
  *	@brief	フェードなし
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_STORM_WORK* p_local_wk;
 	// ローカルワーク取得
@@ -328,7 +328,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_NoFade( WEATHER_TASK* p_wk, WEATHE
  *	@brief	メイン処理
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_STORM_WORK* p_local_wk;
 	u32 wind;
@@ -362,7 +362,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Main( WEATHER_TASK* p_wk, WEATHER_
  *	@brief	フェードアウト初期化
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_STORM_WORK* p_local_wk;
 	// ローカルワーク取得
@@ -395,7 +395,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_InitFadeOut( WEATHER_TASK* p_wk, W
  *	@brief	フェードアウト
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_STORM_WORK* p_local_wk;
 	BOOL result;
@@ -445,7 +445,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeOut( WEATHER_TASK* p_wk, WEATH
  *	@brief	破棄
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_STORM_WORK* p_local_wk;
 	// ローカルワーク取得
@@ -503,7 +503,7 @@ static void WEATHER_STORM_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
  *	@brief	雨オブジェ登録
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_STORM_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
+static void WEATHER_STORM_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapID )
 {
 	int i;		// ループ用
 	WEATHER_OBJ_WORK* add_obj;		// 登録オブジェ

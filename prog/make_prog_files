@@ -511,7 +511,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_pokemon_fld.c \
         field/scrcmd_crowd_people.c \
         field/scrcmd_feeling_check.c \
-				field/rail_editor.c \
         field/field_rail.c \
         field/field_rail_func.c \
 				field/rail_attr.c \
@@ -634,6 +633,7 @@ SRCS_OVERLAY_FIELD_WEATHER_MIST = field/weather_mist.c
 #===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
 #===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
 #===> SRCS_OVERLAY_FIELD_WEATHER_STORM
+#===> SRCS_OVERLAY_FIELD_WEATHER_MIST
 SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
 				field/field_comm/intrude_minimono.c \
 				field/field_comm/intrude_monolith.c \
@@ -649,6 +649,7 @@ SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
 #===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
 #===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
 #===> SRCS_OVERLAY_FIELD_WEATHER_STORM
+#===> SRCS_OVERLAY_FIELD_WEATHER_MIST
 SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
                           net_app/union/union_receive.c \
                           net_app/union/union_event_check.c \
@@ -1406,6 +1407,7 @@ SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
 SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 											 debug/mcs_resident.c \
                        debug/mcs_readfile.c \
+				               field/rail_editor.c \
                        field/script_debugger_core.c
 
 #===> SRCS_OVERLAY_MCS_LIB

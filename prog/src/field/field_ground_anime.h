@@ -65,7 +65,7 @@ typedef struct {
 ///	フィールド地面アニメーション管理システム
 //	操作関数
 //=====================================
-extern FIELD_GRANM* FIELD_GRANM_Create( const FIELD_GRANM_SETUP* cp_setup, const GFL_G3D_RES* cp_tex, u32 heapID );
+extern FIELD_GRANM* FIELD_GRANM_Create( const FIELD_GRANM_SETUP* cp_setup, const GFL_G3D_RES* cp_tex, HEAPID heapID );
 extern void FIELD_GRANM_Delete( FIELD_GRANM* p_sys );
 extern void FIELD_GRANM_Main( FIELD_GRANM* p_sys );
 extern FIELD_GRANM_WORK* FIELD_GRANM_GetWork( const FIELD_GRANM* cp_sys, u32 idx );

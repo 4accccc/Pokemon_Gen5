@@ -351,7 +351,7 @@ static void DEBUG_LIGHT_SetWordsetVec( FIELD_LIGHT* p_wk, u32 bufstart, const Ve
  *  @return システムワーク
  */
 //-----------------------------------------------------------------------------
-FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, int rtc_second, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight, u32 heapID )
+FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, int rtc_second, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight, HEAPID heapID )
 {
   FIELD_LIGHT* p_sys;
 

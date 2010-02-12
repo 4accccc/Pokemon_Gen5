@@ -70,7 +70,7 @@ typedef struct _FIELD_FOG_WORK FIELD_FOG_WORK;
 //-------------------------------------
 ///	システム生成・破棄
 //=====================================
-extern FIELD_FOG_WORK* FIELD_FOG_Create( u32 heapID );
+extern FIELD_FOG_WORK* FIELD_FOG_Create( HEAPID heapID );
 extern void FIELD_FOG_Delete( FIELD_FOG_WORK* p_wk );
 
 
@@ -118,7 +118,7 @@ extern BOOL FIELD_FOG_FADE_IsFade( const FIELD_FOG_WORK* cp_wk );
 
 
 #ifdef PM_DEBUG
-extern void FIELD_FOG_DEBUG_Init( FIELD_FOG_WORK* p_wk, u32 heapID );
+extern void FIELD_FOG_DEBUG_Init( FIELD_FOG_WORK* p_wk, HEAPID heapID );
 extern void FIELD_FOG_DEBUG_Exit( FIELD_FOG_WORK* p_wk );
 
 extern void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk );

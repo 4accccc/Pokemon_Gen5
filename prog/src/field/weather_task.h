@@ -148,7 +148,7 @@ typedef struct _WEATHER_OBJ_WORK WEATHER_OBJ_WORK;
 //-------------------------------------
 ///	天気管理関数
 //=====================================
-typedef WEATHER_TASK_FUNC_RESULT (WEATHER_TASK_FUNC)( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID );
+typedef WEATHER_TASK_FUNC_RESULT (WEATHER_TASK_FUNC)( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID );
 
 
 //-------------------------------------
@@ -220,14 +220,14 @@ typedef struct {
 //-------------------------------------
 ///	システム生成・破棄・メイン
 //=====================================
-extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, const FIELD_SOUND* cp_sound, u32 heapID ); // pp_3dbg　配列数はWEATHER_TASK_3DBG_NUM
+extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, const FIELD_SOUND* cp_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID ); // pp_3dbg　配列数はWEATHER_TASK_3DBG_NUM
 extern void WEATHER_TASK_Exit( WEATHER_TASK* p_wk );
-extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID );
+extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID );
 
 //-------------------------------------
 ///	発動・停止管理
 //=====================================
-extern void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID );
+extern void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID );
 extern void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont );
 extern void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk );
 
@@ -273,7 +273,7 @@ extern u32 WEATHER_TASK_GetActiveObjNum( const WEATHER_TASK* cp_wk );
 //-------------------------------------
 ///	動作オブジェの追加・破棄
 //=====================================
-extern WEATHER_OBJ_WORK* WEATHER_TASK_CreateObj( WEATHER_TASK* p_wk, u32 heapID );
+extern WEATHER_OBJ_WORK* WEATHER_TASK_CreateObj( WEATHER_TASK* p_wk, HEAPID heapID );
 extern void WEATHER_TASK_DeleteObj( WEATHER_OBJ_WORK* p_obj );
 
 
@@ -282,18 +282,18 @@ extern void WEATHER_TASK_DeleteObj( WEATHER_OBJ_WORK* p_obj );
 //-------------------------------------
 ///	動作オブジェの追加フェード処理
 //=====================================
-typedef void (WEATHER_TASK_OBJADD_FUNC)( WEATHER_TASK* p_wk, int num, u32 heapID );
+typedef void (WEATHER_TASK_OBJADD_FUNC)( WEATHER_TASK* p_wk, int num, HEAPID heapID );
 extern void WEATHER_TASK_ObjFade_Init( WEATHER_TASK* p_wk, s32 objAddNum, s32 objAddTmgMax, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum_tmg, s32 obj_add_num_sum, WEATHER_TASK_OBJADD_FUNC* p_addfunc );
 extern void WEATHER_TASK_ObjFade_SetOut( WEATHER_TASK* p_wk, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum );
-extern BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk, u32 heapID );
+extern BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk, HEAPID heapID );
 
 // フェードはせず、オブジェの同じ登録タイミングで、同じ数　オブジェを登録します。
-extern BOOL WEATHER_TASK_ObjFade_NoFadeMain( WEATHER_TASK* p_wk, u32 heapID );
+extern BOOL WEATHER_TASK_ObjFade_NoFadeMain( WEATHER_TASK* p_wk, HEAPID heapID );
 
 //-------------------------------------
 ///	動作オブジェを乱数で分布させる
 //=====================================
-extern void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_func, int num, int dust_div_num, int dust_div_move, u32 heapID );
+extern void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_func, int num, int dust_div_num, int dust_div_move, HEAPID heapID );
 
 //-------------------------------------
 ///	フォグフェード処理
@@ -339,6 +339,10 @@ extern void WEATHER_TASK_PlayLoopSnd( WEATHER_TASK* p_wk, int snd_no );
 extern void WEATHER_TASK_StopLoopSnd( WEATHER_TASK* p_wk );
 
 
+//-------------------------------------
+///	TimeZone関係
+//=====================================
+extern int WEATHER_TASK_GetTimeZoneChangeTime( const WEATHER_TASK* cp_wk, TIMEZONE timezone );
 
 
 //-----------------------------------------------------------------------------

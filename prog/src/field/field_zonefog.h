@@ -64,10 +64,10 @@ typedef struct {
 */
 //-----------------------------------------------------------------------------
 
-extern FIELD_ZONEFOGLIGHT* FIELD_ZONEFOGLIGHT_Create( u32 heapID );
+extern FIELD_ZONEFOGLIGHT* FIELD_ZONEFOGLIGHT_Create( HEAPID heapID );
 extern void FIELD_ZONEFOGLIGHT_Delete( FIELD_ZONEFOGLIGHT* p_sys );
 
-extern void FIELD_ZONEFOGLIGHT_Load( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 lightno, u32 heapID );
+extern void FIELD_ZONEFOGLIGHT_Load( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 lightno, HEAPID heapID );
 extern void FIELD_ZONEFOGLIGHT_Clear( FIELD_ZONEFOGLIGHT* p_sys );
 
 extern BOOL FIELD_ZONEFOGLIGHT_IsFogData( const FIELD_ZONEFOGLIGHT* cp_sys );

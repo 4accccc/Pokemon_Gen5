@@ -18,6 +18,8 @@ extern "C"{
 
 #include <gflib.h>
 
+#include "system/timezone.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -46,7 +48,10 @@ extern void FLD_SEASON_TIME_Delete( FLD_SEASON_TIME* p_sys );
 
 
 // タイムゾーン取得
-extern u32 FLD_SEASON_TIME_GetTimeZone( const FLD_SEASON_TIME* cp_sys );
+extern TIMEZONE FLD_SEASON_TIME_GetTimeZone( const FLD_SEASON_TIME* cp_sys );
+
+// 今の時間からタイムゾーン切り替え時間までの差(秒数)
+extern int FLD_SEASON_TIME_GetTimeZoneChangeTime( const FLD_SEASON_TIME* cp_sys, TIMEZONE timezone );
 
 
 

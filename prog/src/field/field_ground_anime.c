@@ -152,7 +152,7 @@ struct _FIELD_GRANM
 //-------------------------------------
 ///	ITAアニメーション管理
 //=====================================
-static void FIELD_GRANM_Ita_Init( FIELD_GRANM_ITA* p_wk, u32 arcID, u32 dataID, u32 block_num, u32 heapID );
+static void FIELD_GRANM_Ita_Init( FIELD_GRANM_ITA* p_wk, u32 arcID, u32 dataID, u32 block_num, HEAPID heapID );
 static void FIELD_GRANM_Ita_Exit( FIELD_GRANM_ITA* p_wk );
 static void FIELD_GRANM_Ita_Main( FIELD_GRANM_ITA* p_wk, fx32 speed );
 static FIELD_GRANM_WORK* FIELD_GRANM_Ita_GetWork( const FIELD_GRANM_ITA* cp_wk, u32 index );
@@ -160,7 +160,7 @@ static FIELD_GRANM_WORK* FIELD_GRANM_Ita_GetWork( const FIELD_GRANM_ITA* cp_wk, 
 //-------------------------------------
 ///	フィールド地面アニメーションワーク
 //=====================================
-static void FIELD_GRANM_Work_Init( FIELD_GRANM_WORK* p_wk, void* p_anmres, u32 heapID );
+static void FIELD_GRANM_Work_Init( FIELD_GRANM_WORK* p_wk, void* p_anmres, HEAPID heapID );
 static void FIELD_GRANM_Work_Exit( FIELD_GRANM_WORK* p_wk );
 static void FIELD_GRANM_Work_Bind( FIELD_GRANM_WORK* p_wk, const GFL_G3D_RES* cp_mdlres, const GFL_G3D_RES* cp_texres, NNSG3dRenderObj* p_rendobj );
 static void FIELD_GRANM_Work_Release( FIELD_GRANM_WORK* p_wk );
@@ -170,11 +170,11 @@ static fx32 FIELD_GRANM_Work_SetAnimeFrame( FIELD_GRANM_WORK* p_wk, fx32 frame )
 //-------------------------------------
 ///	ITPアニメーション管理
 //=====================================
-static void FIELD_GRANM_ItpSys_Init( FIELD_GRANM_ITP_SYS* p_sys, u32 arcID, u32 tblID, u32 itparcID, u32 texarcID, const GFL_G3D_RES* cp_tex, u32 heapID );
+static void FIELD_GRANM_ItpSys_Init( FIELD_GRANM_ITP_SYS* p_sys, u32 arcID, u32 tblID, u32 itparcID, u32 texarcID, const GFL_G3D_RES* cp_tex, HEAPID heapID );
 static void FIELD_GRANM_ItpSys_Exit( FIELD_GRANM_ITP_SYS* p_sys );
 static void FIELD_GRANM_ItpSys_Main( FIELD_GRANM_ITP_SYS* p_sys, fx32 speed );
 
-static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, u32 heapID );
+static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, HEAPID heapID );
 static void FIELD_GRANM_Itp_Exit( FIELD_GRANM_ITP* p_wk );
 static void FIELD_GRANM_Itp_Main( FIELD_GRANM_ITP* p_wk, fx32 speed );
 static BOOL FIELD_GRANM_Itp_IsMove( const FIELD_GRANM_ITP* cp_wk );
@@ -195,7 +195,7 @@ static void* FIELD_GRANM_Itp_GetAnimeTex( const GFL_G3D_RES* cp_anmtex, u32 anm_
  *	@return	地面アニメ管理システム
  */
 //-----------------------------------------------------------------------------
-FIELD_GRANM* FIELD_GRANM_Create( const FIELD_GRANM_SETUP* cp_setup, const GFL_G3D_RES* cp_tex, u32 heapID )
+FIELD_GRANM* FIELD_GRANM_Create( const FIELD_GRANM_SETUP* cp_setup, const GFL_G3D_RES* cp_tex, HEAPID heapID )
 {
 	FIELD_GRANM* p_sys;
 
@@ -382,7 +382,7 @@ void FIELD_GRANM_WORK_Release( FIELD_GRANM_WORK* p_wk )
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_GRANM_Ita_Init( FIELD_GRANM_ITA* p_wk, u32 arcID, u32 dataID, u32 block_num, u32 heapID )
+static void FIELD_GRANM_Ita_Init( FIELD_GRANM_ITA* p_wk, u32 arcID, u32 dataID, u32 block_num, HEAPID heapID )
 {
 	int i;
 	void* p_anmres;
@@ -501,7 +501,7 @@ static FIELD_GRANM_WORK* FIELD_GRANM_Ita_GetWork( const FIELD_GRANM_ITA* cp_wk, 
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_GRANM_Work_Init( FIELD_GRANM_WORK* p_wk, void* p_anmres, u32 heapID )
+static void FIELD_GRANM_Work_Init( FIELD_GRANM_WORK* p_wk, void* p_anmres, HEAPID heapID )
 {
 	GF_ASSERT( p_wk->p_anmobj == NULL );
 	p_wk->p_anmobj = GFL_HEAP_AllocClearMemory( heapID, FIELD_GRANM_WORK_ANIMEOBJ_WORK_SIZE );	
@@ -619,7 +619,7 @@ static fx32 FIELD_GRANM_Work_SetAnimeFrame( FIELD_GRANM_WORK* p_wk, fx32 frame )
  *	@param	heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_GRANM_ItpSys_Init( FIELD_GRANM_ITP_SYS* p_sys, u32 arcID, u32 tblID, u32 itparcID, u32 texarcID, const GFL_G3D_RES* cp_tex, u32 heapID )
+static void FIELD_GRANM_ItpSys_Init( FIELD_GRANM_ITP_SYS* p_sys, u32 arcID, u32 tblID, u32 itparcID, u32 texarcID, const GFL_G3D_RES* cp_tex, HEAPID heapID )
 {
   FIELD_GRANM_ITP_TBL* p_tbl;
   int i;
@@ -687,7 +687,7 @@ static void FIELD_GRANM_ItpSys_Main( FIELD_GRANM_ITP_SYS* p_sys, fx32 speed )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, u32 heapID )
+static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, HEAPID heapID )
 {
 	// 地面テクスチャ保存
 	p_wk->cp_ground_tex = cp_tex;

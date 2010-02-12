@@ -184,6 +184,9 @@ struct _WEATHER_TASK {
 	// カメラ情報
 	const FIELD_CAMERA* cp_camera;
 
+	// SEASON 時間
+	const FLD_SEASON_TIME* cp_season_time;
+
 	// 3DBGシステム
 	FIELD_3DBG** pp_3dbg;
 	
@@ -229,17 +232,17 @@ struct _WEATHER_TASK {
 ///	システム管理
 //=====================================
 static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk );
-static WEATHER_TASK_FUNC_RESULT WEATHER_TASK_WK_CallFunc( WEATHER_TASK* p_wk, WEATHER_TASK_FUNC* p_func, u32 heapID );
+static WEATHER_TASK_FUNC_RESULT WEATHER_TASK_WK_CallFunc( WEATHER_TASK* p_wk, WEATHER_TASK_FUNC* p_func, HEAPID heapID );
 static WEATHER_TASK_INFO WEATHER_TASK_WK_GetInfo( const WEATHER_TASK* cp_wk );
 static WEATHER_OBJ_WORK* WEATHER_TASK_WK_GetClearObj( WEATHER_TASK* p_wk );
 static void WEATHER_TASK_WK_PushObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_obj );
 static void WEATHER_TASK_WK_PopObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_obj );
 static void WEATHER_TASK_WK_MainObjList( WEATHER_TASK* p_wk );
-static void WEATHER_TASK_WK_InitOam( WEATHER_TASK* p_wk, u32 heapID );
+static void WEATHER_TASK_WK_InitOam( WEATHER_TASK* p_wk, HEAPID heapID );
 static void WEATHER_TASK_WK_ExitOam( WEATHER_TASK* p_wk );
-static void WEATHER_TASK_WK_InitBg( WEATHER_TASK* p_wk, u32 heapID );
+static void WEATHER_TASK_WK_InitBg( WEATHER_TASK* p_wk, HEAPID heapID );
 static void WEATHER_TASK_WK_ExitBg( WEATHER_TASK* p_wk );
-static void WEATHER_TASK_WK_InitOther( WEATHER_TASK* p_wk, u32 heapID );
+static void WEATHER_TASK_WK_InitOther( WEATHER_TASK* p_wk, HEAPID heapID );
 static void WEATHER_TASK_WK_ExitOther( WEATHER_TASK* p_wk );
 
 
@@ -247,11 +250,11 @@ static void WEATHER_TASK_WK_ExitOther( WEATHER_TASK* p_wk );
 ///	グラフィックシステム
 //=====================================
 static void WEATHER_TASK_GRAPHIC_Clear( WEATHER_TASK_GRAPHIC* p_wk );
-static void WEATHER_TASK_GRAPHIC_InitHandle( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, u32 heapID );
+static void WEATHER_TASK_GRAPHIC_InitHandle( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, HEAPID heapID );
 static void WEATHER_TASK_GRAPHIC_ExitHandle( WEATHER_TASK_GRAPHIC* p_wk );
-static void WEATHER_TASK_GRAPHIC_InitOam( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, u32 heapID );
+static void WEATHER_TASK_GRAPHIC_InitOam( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, HEAPID heapID );
 static void WEATHER_TASK_GRAPHIC_ExitOam( WEATHER_TASK_GRAPHIC* p_wk );
-static void WEATHER_TASK_GRAPHIC_InitBg( WEATHER_TASK_GRAPHIC* p_wk, WEATHER_TASK_3DBG_TYPE type, FIELD_3DBG* p_3dbg, const FIELD_3DBG_WRITE_DATA* cp_data, u32 heapID );
+static void WEATHER_TASK_GRAPHIC_InitBg( WEATHER_TASK_GRAPHIC* p_wk, WEATHER_TASK_3DBG_TYPE type, FIELD_3DBG* p_3dbg, const FIELD_3DBG_WRITE_DATA* cp_data, HEAPID heapID );
 static void WEATHER_TASK_GRAPHIC_ExitBg( WEATHER_TASK_GRAPHIC* p_wk, WEATHER_TASK_3DBG_TYPE type, FIELD_3DBG* p_3dbg );
 
 
@@ -261,8 +264,8 @@ static void WEATHER_TASK_GRAPHIC_ExitBg( WEATHER_TASK_GRAPHIC* p_wk, WEATHER_TAS
 static void WEATHER_OBJ_FADE_InitFade( WEATHER_TASK_OBJ_FADE* p_wk, WEATHER_TASK* p_sys, s32 objAddTmgMax, s32 objAddNum, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum_tmg, s32 obj_add_num_sum, WEATHER_TASK_OBJADD_FUNC* p_addfunc );
 
 static void WEATHER_OBJ_FADE_SetFadeOut( WEATHER_TASK_OBJ_FADE* p_wk, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum );
-static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk, u32 heapID );
-static BOOL WEATHER_TASK_OBJ_FADE_NoFadeMain( WEATHER_TASK_OBJ_FADE* p_wk, u32 heapID );
+static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk, HEAPID heapID );
+static BOOL WEATHER_TASK_OBJ_FADE_NoFadeMain( WEATHER_TASK_OBJ_FADE* p_wk, HEAPID heapID );
 
 
 //-------------------------------------
@@ -270,7 +273,7 @@ static BOOL WEATHER_TASK_OBJ_FADE_NoFadeMain( WEATHER_TASK_OBJ_FADE* p_wk, u32 h
 //=====================================
 static void WEATHER_OBJ_WK_Clear( WEATHER_OBJ_WORK* p_wk );
 static BOOL WEATHER_OBJ_WK_IsUse( const WEATHER_OBJ_WORK* cp_wk );
-static void WEATHER_OBJ_WK_Init( WEATHER_OBJ_WORK* p_wk, WEATHER_TASK* p_parent, const WEATHER_TASK_GRAPHIC* cp_graphic, GFL_CLUNIT* p_unit, u32 heapID );
+static void WEATHER_OBJ_WK_Init( WEATHER_OBJ_WORK* p_wk, WEATHER_TASK* p_parent, const WEATHER_TASK_GRAPHIC* cp_graphic, GFL_CLUNIT* p_unit, HEAPID heapID );
 static void WEATHER_OBJ_WK_Exit( WEATHER_OBJ_WORK* p_wk );
 static void* WEATHER_OBJ_WK_GetWork( const WEATHER_OBJ_WORK* cp_wk );
 static GFL_CLWK* WEATHER_OBJ_WK_GetClWk( const WEATHER_OBJ_WORK* cp_wk );
@@ -309,7 +312,7 @@ static void TOOL_GetPerspectiveScreenSize( const MtxFx44* cp_pers_mtx, fx32 dist
  *	@return	天気タスクワーク
  */
 //-----------------------------------------------------------------------------
-WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, const FIELD_SOUND* cp_sound, u32 heapID )
+WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, const FIELD_SOUND* cp_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID )
 {
 	WEATHER_TASK* p_wk;
 
@@ -323,6 +326,7 @@ WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_ca
 	p_wk->cp_zonefog	= cp_zonefog;
 	p_wk->pp_3dbg		= pp_3dbg;
 	p_wk->cp_sound	= cp_sound;
+  p_wk->cp_season_time = cp_season_time;
 
 	return p_wk;
 }
@@ -350,7 +354,7 @@ void WEATHER_TASK_Exit( WEATHER_TASK* p_wk )
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
+void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 {
 	// 処理分岐
 	switch( p_wk->seq ){
@@ -498,7 +502,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	GF_ASSERT( p_wk->seq == WEATHER_TASK_SEQ_NONE );
 	
@@ -890,7 +894,7 @@ u32 WEATHER_TASK_GetActiveObjNum( const WEATHER_TASK* cp_wk )
  *	@retval	NULL			もう追加できない
  */
 //-----------------------------------------------------------------------------
-WEATHER_OBJ_WORK* WEATHER_TASK_CreateObj( WEATHER_TASK* p_wk, u32 heapID )
+WEATHER_OBJ_WORK* WEATHER_TASK_CreateObj( WEATHER_TASK* p_wk, HEAPID heapID )
 {
 	WEATHER_OBJ_WORK* p_obj;
 
@@ -975,7 +979,7 @@ void WEATHER_TASK_ObjFade_SetOut( WEATHER_TASK* p_wk, s32 obj_add_num_end, s32 o
  *	@retval	FALSE	途中
  */
 //-----------------------------------------------------------------------------
-BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk, u32 heapID )
+BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 {
 	return WEATHER_OBJ_FADE_Main( &p_wk->obj_fade, heapID );
 }
@@ -990,7 +994,7 @@ BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk, u32 heapID )
  *	@retval	FALSE	登録してない
  */
 //-----------------------------------------------------------------------------
-BOOL WEATHER_TASK_ObjFade_NoFadeMain( WEATHER_TASK* p_wk, u32 heapID )
+BOOL WEATHER_TASK_ObjFade_NoFadeMain( WEATHER_TASK* p_wk, HEAPID heapID )
 {
 	return WEATHER_TASK_OBJ_FADE_NoFadeMain( &p_wk->obj_fade, heapID );
 }
@@ -1013,7 +1017,7 @@ BOOL WEATHER_TASK_ObjFade_NoFadeMain( WEATHER_TASK* p_wk, u32 heapID )
  * ....
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_func, int num, int dust_div_num, int dust_div_move, u32 heapID )
+void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_func, int num, int dust_div_num, int dust_div_move, HEAPID heapID )
 {
 	int i, j;
 	int move_num;
@@ -1452,6 +1456,22 @@ void WEATHER_TASK_StopLoopSnd( WEATHER_TASK* p_wk )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイムゾーンが変わるまでの時間を取得
+ *
+ *	@param	cp_wk     ワーク
+ *	@param	timezone  タイムゾーン
+ *
+ *	@return 変わるまでの時間（-12時間～11時間）
+ */
+//-----------------------------------------------------------------------------
+int WEATHER_TASK_GetTimeZoneChangeTime( const WEATHER_TASK* cp_wk, TIMEZONE timezone )
+{
+  return FLD_SEASON_TIME_GetTimeZoneChangeTime( cp_wk->cp_season_time, timezone );
+}
+
+
 
 
 
@@ -1655,6 +1675,9 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	FIELD_3DBG** pp_3dbg;
 	const FIELD_CAMERA* cp_camera;
 	const FIELD_SOUND* cp_sound;
+	const FLD_SEASON_TIME* cp_season_time;
+
+
 
 	// 一時退避
 	p_unit		= p_wk->p_unit;
@@ -1664,6 +1687,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	cp_camera	= p_wk->cp_camera;
 	pp_3dbg		= p_wk->pp_3dbg;
 	cp_sound  = p_wk->cp_sound;
+  cp_season_time = p_wk->cp_season_time;
 
 	// クリア
 	GFL_STD_MemClear( p_wk, sizeof(WEATHER_TASK) );
@@ -1676,6 +1700,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	p_wk->pp_3dbg	= pp_3dbg;
 	p_wk->cp_zonefog = cp_zonefog;
 	p_wk->cp_sound = cp_sound;
+  p_wk->cp_season_time = cp_season_time;
 }
 
 //----------------------------------------------------------------------------
@@ -1686,7 +1711,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
  *	@param	p_func		関数
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_TASK_WK_CallFunc( WEATHER_TASK* p_wk, WEATHER_TASK_FUNC* p_func, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_TASK_WK_CallFunc( WEATHER_TASK* p_wk, WEATHER_TASK_FUNC* p_func, HEAPID heapID )
 {
 	if( p_func ){
 		return p_func( p_wk, p_wk->fog_cont, heapID );
@@ -1866,7 +1891,7 @@ static void WEATHER_TASK_WK_MainObjList( WEATHER_TASK* p_wk )
  *	@param	heapID	ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_TASK_WK_InitOam( WEATHER_TASK* p_wk, u32 heapID )
+static void WEATHER_TASK_WK_InitOam( WEATHER_TASK* p_wk, HEAPID heapID )
 {
 	// グラフィック読み込み
 	WEATHER_TASK_GRAPHIC_InitHandle( &p_wk->graphic, p_wk->cp_data, heapID );
@@ -1894,7 +1919,7 @@ static void WEATHER_TASK_WK_ExitOam( WEATHER_TASK* p_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_TASK_WK_InitBg( WEATHER_TASK* p_wk, u32 heapID )
+static void WEATHER_TASK_WK_InitBg( WEATHER_TASK* p_wk, HEAPID heapID )
 {
   int i;
   for( i=0; i<p_wk->cp_data->use_bg; i++ ){
@@ -1926,7 +1951,7 @@ static void WEATHER_TASK_WK_ExitBg( WEATHER_TASK* p_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_TASK_WK_InitOther( WEATHER_TASK* p_wk, u32 heapID )
+static void WEATHER_TASK_WK_InitOther( WEATHER_TASK* p_wk, HEAPID heapID )
 {
 	int i;
 	
@@ -1996,7 +2021,7 @@ static void WEATHER_TASK_GRAPHIC_Clear( WEATHER_TASK_GRAPHIC* p_wk )
  *	@param	heapID			ヒープID
  */	
 //-----------------------------------------------------------------------------
-static void WEATHER_TASK_GRAPHIC_InitHandle( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, u32 heapID )
+static void WEATHER_TASK_GRAPHIC_InitHandle( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, HEAPID heapID )
 {
 	GF_ASSERT( !p_wk->p_handle );
 	if( cp_data->use_oam || cp_data->use_bg ){
@@ -2028,7 +2053,7 @@ static void WEATHER_TASK_GRAPHIC_ExitHandle( WEATHER_TASK_GRAPHIC* p_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_TASK_GRAPHIC_InitOam( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, u32 heapID )
+static void WEATHER_TASK_GRAPHIC_InitOam( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, HEAPID heapID )
 {
 	GF_ASSERT( !p_wk->oam_load );
 
@@ -2073,7 +2098,7 @@ static void WEATHER_TASK_GRAPHIC_ExitOam( WEATHER_TASK_GRAPHIC* p_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_TASK_GRAPHIC_InitBg( WEATHER_TASK_GRAPHIC* p_wk, WEATHER_TASK_3DBG_TYPE type, FIELD_3DBG* p_3dbg, const FIELD_3DBG_WRITE_DATA* cp_data, u32 heapID )
+static void WEATHER_TASK_GRAPHIC_InitBg( WEATHER_TASK_GRAPHIC* p_wk, WEATHER_TASK_3DBG_TYPE type, FIELD_3DBG* p_3dbg, const FIELD_3DBG_WRITE_DATA* cp_data, HEAPID heapID )
 {
   static FIELD_3DBG_WRITE_DATA s_FIELD_3DBG_WRITE_DATA;
 
@@ -2173,7 +2198,7 @@ static void WEATHER_OBJ_FADE_SetFadeOut( WEATHER_TASK_OBJ_FADE* p_wk, s32 obj_ad
  *	@retval	FALSE	途中
  */
 //-----------------------------------------------------------------------------
-static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk, u32 heapID )
+static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk, HEAPID heapID )
 {
 	int fade_flag;
 	int ret = 0;
@@ -2261,7 +2286,7 @@ static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk, u32 heapID )
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL WEATHER_TASK_OBJ_FADE_NoFadeMain( WEATHER_TASK_OBJ_FADE* p_wk, u32 heapID )
+static BOOL WEATHER_TASK_OBJ_FADE_NoFadeMain( WEATHER_TASK_OBJ_FADE* p_wk, HEAPID heapID )
 {
 
 	// タイミングカウンタが最小になるまでカウント作業
@@ -2325,7 +2350,7 @@ static BOOL WEATHER_OBJ_WK_IsUse( const WEATHER_OBJ_WORK* cp_wk )
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_OBJ_WK_Init( WEATHER_OBJ_WORK* p_wk, WEATHER_TASK* p_parent, const WEATHER_TASK_GRAPHIC* cp_graphic, GFL_CLUNIT* p_unit, u32 heapID )
+static void WEATHER_OBJ_WK_Init( WEATHER_OBJ_WORK* p_wk, WEATHER_TASK* p_parent, const WEATHER_TASK_GRAPHIC* cp_graphic, GFL_CLUNIT* p_unit, HEAPID heapID )
 {
 	static const GFL_CLWK_DATA cladd = {
 		0, 0,

@@ -101,13 +101,13 @@ typedef struct {
 //-------------------------------------
 /// 蜃気楼	
 //=====================================
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
 
 static void WEATHER_MIRAGE_VBlank( GFL_TCB* p_tcb, void* p_work );
 static void WEATHER_MIRAGE_HBlank( GFL_TCB* p_tcb, void* p_work );
@@ -185,7 +185,7 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_MIRAGE = {
  *	@brief		蜃気楼初期化
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_MIRAGE_WORK* p_local_wk;
 
@@ -255,7 +255,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Init( WEATHER_TASK* p_wk, WEATHER
  *	@brief		蜃気楼　フェードイン
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_MIRAGE_WORK* p_local_wk;
 	BOOL result;
@@ -286,7 +286,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_FadeIn( WEATHER_TASK* p_wk, WEATH
  *	@brief		蜃気楼　フェードなし
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	// フォグの設定
 	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_MIRAGE_FOG_OFS, fog_cont );
@@ -300,7 +300,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_NoFade( WEATHER_TASK* p_wk, WEATH
  *	@brief		蜃気楼　メイン
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_MIRAGE_WORK* p_local_wk;
 
@@ -316,7 +316,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Main( WEATHER_TASK* p_wk, WEATHER
  *	@brief		蜃気楼　フェードアウト初期化
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_MIRAGE_WORK* p_local_wk;
 
@@ -335,7 +335,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_InitFadeOut( WEATHER_TASK* p_wk, 
  *	@brief		蜃気楼　フェードアウト
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_MIRAGE_WORK* p_local_wk;
 	BOOL result;
@@ -358,7 +358,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_FadeOut( WEATHER_TASK* p_wk, WEAT
  *	@brief		蜃気楼　破棄
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_MIRAGE_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_MIRAGE_WORK* p_local_wk;
 

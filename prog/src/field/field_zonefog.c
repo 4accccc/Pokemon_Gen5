@@ -69,7 +69,7 @@ struct _FIELD_ZONEFOGLIGHT
  *	@return	ゾーンフォグ情報管理システム
  */
 //-----------------------------------------------------------------------------
-FIELD_ZONEFOGLIGHT* FIELD_ZONEFOGLIGHT_Create( u32 heapID )
+FIELD_ZONEFOGLIGHT* FIELD_ZONEFOGLIGHT_Create( HEAPID heapID )
 {
 	FIELD_ZONEFOGLIGHT* p_sys;
   u32 size;
@@ -108,7 +108,7 @@ void FIELD_ZONEFOGLIGHT_Delete( FIELD_ZONEFOGLIGHT* p_sys )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-void FIELD_ZONEFOGLIGHT_Load( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 lightno, u32 heapID )
+void FIELD_ZONEFOGLIGHT_Load( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 lightno, HEAPID heapID )
 {
 	GF_ASSERT( p_sys );
 	GF_ASSERT( p_sys->p_data == NULL );
