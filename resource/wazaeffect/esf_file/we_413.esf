@@ -5,6 +5,13 @@ C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_413_depthspd.NSCR
 #001
 %00
 BGのロード	bg_413_depthspd
+制御モード変更	継続
+SE再生	SEQ_SE_W245_BUCKL	SE2	0	0	127	0	0
+SE動的変化	SE2	追従	ピッチ	0	1000	0	80:0:0
+SE動的変化	SE2	追従	ボリューム	20	127	0	80:0:0
+SE再生	SEQ_SE_DUMMY5	SE2	80	0	0	0	0
+SEパン	SE2	追従	攻撃側	防御側	0	60:0:0
+制御モード変更	逐次
 BGの表示/非表示	エフェクト	表示
 射影モード	透視射影
 BGのパレットフェード	すべて	0	13	0	0:0:0
@@ -17,11 +24,9 @@ BGの表示/非表示	フィールド	非表示
 ポケモン影バニッシュ	防御側	バニッシュオン
 制御モード変更	継続
 SE再生	SEQ_SE_W255_BU	SE1	0	0	70	0	0
-SE再生	SEQ_SE_W250_UZUSHIO	SE2	0	800	120	0	0
-SE再生	SEQ_SE_DUMMY5	SE2	65	0	0	0	0
-SE動的変化	SE2	追従	ボリューム	120	0	30	30:0:0
+SE再生	SEQ_SE_W250_UZUSHIO	SE1	0	800	120	0	0
+SE再生	SEQ_SE_DUMMY5	SE1	65	0	0	0	0
 SEパン	SE1	追従	攻撃側	防御側	0	30:0:0
-SEパン	SE2	追従	攻撃側	防御側	0	30:0:0
 制御モード変更	逐次
 制御モード変更	継続
 SE再生	SEQ_SE_FLD_04	SE1	30	-500	127	0	0

@@ -4,21 +4,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_446.spa
 #001
 %00
 制御モード変更	継続
-SE再生	SEQ_SE_FLD_81	SE1	0	0	80	0	0
-SEパン	SE1	追従	攻撃側	防御側	0	40:0:0
-制御モード変更	逐次
-制御モード変更	継続
-SE再生	SEQ_SE_W001_01	SE2	30	0	60	0	0
-SE再生	SEQ_SE_W001_01	SE2	34	0	70	0	0
-SE再生	SEQ_SE_W001_01	SE2	38	0	90	0	0
-SE再生	SEQ_SE_W001_01	SE2	42	0	100	0	0
-SE再生	SEQ_SE_W001_01	SE2	46	0	110	0	0
-SE再生	SEQ_SE_W001_01	SE2	50	0	120	0	0
-SE再生	SEQ_SE_W001_01	SE2	54	0	127	0	0
-SE再生	SEQ_SE_W001_01	SE2	58	0	127	0	0
-SE再生	SEQ_SE_W001_01	SE2	62	0	127	0	0
-SE再生	SEQ_SE_W001_01	SE2	68	0	127	0	0
-SEパン	SE2	追従	防御側	防御側	20	70:0:0
+SE再生	SEQ_SE_FLD_81	SE1	15	0	80	0	0
+SE再生	SEQ_SE_DUMMY5	SE1	70	0	0	0	0
+SE動的変化	SE1	追従	ボリューム	80	0	35	70:0:0
+SEパン	SE1	追従	攻撃側	防御側	0	70:0:0
 制御モード変更	逐次
 パーティクルデータロード	w_446
 エミッタ移動	w_446	W_446_446_STONE_BEAM	放物線	攻撃側	防御側	2:30:4	1:1:0
