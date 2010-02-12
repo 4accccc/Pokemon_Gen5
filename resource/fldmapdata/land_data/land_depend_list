@@ -573,9 +573,9 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun2201_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun2202_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun2203_00_00.3dppack \
-	$(DIR_OUTPUT)/m_dun2002_00_00.3dppack \
-	$(DIR_OUTPUT)/m_dun2003_00_00.3dppack \
-	$(DIR_OUTPUT)/m_dun2004_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2002_00_00.ngpack \
+	$(DIR_OUTPUT)/m_dun2003_00_00.ngpack \
+	$(DIR_OUTPUT)/m_dun2004_00_00.ngpack \
 	$(DIR_OUTPUT)/m_dun2005_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun2006_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun2007_00_00.3dppack \
@@ -583,6 +583,9 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/winter1801_00_01.3dppack \
 	$(DIR_OUTPUT)/winter1801_01_00.3dppack \
 	$(DIR_OUTPUT)/winter1801_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun2008_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2009_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2010_00_00.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \

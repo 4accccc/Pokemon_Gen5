@@ -583,6 +583,9 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/winter1801_00_01.nsbmd \
 	$(DIR_TEMP)/winter1801_01_00.nsbmd \
 	$(DIR_TEMP)/winter1801_01_01.nsbmd \
+	$(DIR_TEMP)/m_dun2008_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun2009_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun2010_00_00.nsbmd \
 	$(DIR_TEMP)/m_ruin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate01_00_00.nsbmd \
 	$(DIR_TEMP)/m_pc01_00_00.nsbmd \
