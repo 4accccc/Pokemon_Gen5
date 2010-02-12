@@ -1784,8 +1784,10 @@ void IRC_POKETRADE_SetSubStatusIcon(POKEMON_TRADE_WORK* pWork)
                                                                 pWork->cellRes[ANM_SCROLLBAR],
                                                                 &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_SELECT] , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], FALSE );
-
+    if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+      GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], FALSE );
+    }
+    
   }
 
 

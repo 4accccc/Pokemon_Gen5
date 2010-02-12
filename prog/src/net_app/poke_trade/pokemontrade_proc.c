@@ -867,6 +867,13 @@ static void _changePokemonStatusDispAuto(POKEMON_TRADE_WORK* pWork,int sel)
     GFL_CLACTPOS pos = {_POKEMON_SELECT2_CELLX,_POKEMON_SELECT2_CELLY+4};
     GFL_CLACT_WK_SetPos( pWork->curIcon[CELL_CUR_POKE_SELECT], &pos, CLSYS_DRAW_SUB );
   }
+
+  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], FALSE );
+  }
+  else{
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT] , TRUE );
+  }
   {
     POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
     POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork,pp);
@@ -890,12 +897,14 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
   case 0:
     if(pWork->pokemonselectno!=0){
       pWork->pokemonselectno = 0;
+      GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
       _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
     }
     break;
   case 1:
     if(pWork->pokemonselectno!=1){
       pWork->pokemonselectno = 1;
+      GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
       _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
     }
     break;
@@ -909,6 +918,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
   if(GFL_UI_KEY_GetTrg()==PAD_KEY_LEFT || GFL_UI_KEY_GetTrg()==PAD_KEY_RIGHT){
     pWork->pokemonselectno = 1 - pWork->pokemonselectno;
     PMSND_PlaySystemSE(POKETRADESE_CUR);
+    GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
     _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
   }
 
@@ -936,6 +946,9 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
     POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
 
+    pWork->padMode = TRUE;
+    _PokemonIconRenew(pWork);
+    
     if(POKEMONTRADEPROC_IsTriSelect(pWork)){
       _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
     }
@@ -952,6 +965,10 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
   POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
   
   POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
+
+  pWork->padMode = FALSE;
+  _PokemonIconRenew(pWork);
+  
   _CHANGE_STATE(pWork, _pokemonStatusWait);
 
 }
@@ -1196,6 +1213,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
   switch( TOUCHBAR_GetTouch(pWork->pTouchWork )){
   case TOUCHBAR_ICON_CUR_L:
   case TOUCHBAR_ICON_CUR_R:
+    pWork->padMode=TRUE;
     if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
       APP_TASKMENU_SetActive(pWork->pAppTask,FALSE);
     }
@@ -1214,6 +1232,10 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
  // _CatchPokemonMoveFunc(pWork);
 
   if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
+    GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+    pWork->padMode=FALSE;
+    APP_TASKMENU_SetActive(pWork->pAppTask,FALSE);
+
     //if(IsTouchCLACTPosition(pWork,TRUE)){
     if(_SerchTouchCLACTPosition(pWork,&pWork->underSelectBoxno,&pWork->underSelectIndex)){
       pWork->x = x;
