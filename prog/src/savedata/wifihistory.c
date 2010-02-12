@@ -197,6 +197,25 @@ u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh)
 
 //----------------------------------------------------------
 /**
+ * @brief	国連有効データ数を返す0～20
+ * @param	wh			WIFI履歴データへのポインタ
+ * @return u8     データ数
+ */
+//----------------------------------------------------------
+u8 WIFIHISTORY_GetValidUnDataNum(WIFI_HISTORY * wh)
+{
+  u8 num;
+  int i;
+  for (i=0;i<UNITEDNATIONS_PEOPLE_MAX;i++)
+  {
+    if ( !wh->aUnitedPeople[i].valid ) break;
+  }
+  num = i;
+  return num;
+}
+
+//----------------------------------------------------------
+/**
  * @brief	交換した国の数を加算
  * @param	wh			WIFI履歴データへのポインタ
  * @return none
@@ -215,7 +234,7 @@ void WIFIHISTORY_AddMyCountryCount(WIFI_HISTORY * wh)
  * @return none
  */
 //----------------------------------------------------------
-void WIFIHISTORY_GetMyNature(WIFI_HISTORY * wh, const NATURE_TYPE inType)
+void WIFIHISTORY_SetMyNature(WIFI_HISTORY * wh, const NATURE_TYPE inType)
 {
   if ( inType < NATURE_MAX ) wh->myNature = inType;
 }

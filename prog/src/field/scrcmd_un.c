@@ -57,6 +57,34 @@ VMCMD_RESULT EvCmdUn_GetCountryNum( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * 有効データ数取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdUn_GetValidDataNum( VMHANDLE *core, void *wk )
+{
+  u16 *ret;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  ret = SCRCMD_GetVMWork( core, work );
+
+  //セーブデータにアクセス
+  {
+    GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
+    SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
+    WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
+    *ret = WIFIHISTORY_GetValidUnDataNum(wh);
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//--------------------------------------------------------------
+/**
  * 会話したフラグをON
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
@@ -147,7 +175,7 @@ VMCMD_RESULT EvCmdUn_SetPlayerNature( VMHANDLE *core, void *wk )
     SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
     WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
     //性格をセット
-    WIFIHISTORY_GetMyNature(wh, nature_idx);
+    WIFIHISTORY_SetMyNature(wh, nature_idx);
   }
   return VMCMD_RESULT_CONTINUE;
 }

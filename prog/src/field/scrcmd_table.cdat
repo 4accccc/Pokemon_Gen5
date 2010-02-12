@@ -520,11 +520,6 @@
   NO_CMD()
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-
   // ボックス関連
   DEF_CMD( EvCmdGetBoxPokeCount, EV_SEQ_GET_BOX_POKE_COUNT )
   NO_CMD()
@@ -532,6 +527,11 @@
   NO_CMD()
 
   //画面演出関連
+  DEF_CMD( EvCmdBModelAnimeLoopSet, EV_SEQ_BMODEL_ANIME_LOOP_SET )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   DEF_CMD( EvCmdPokecenRecoverAnime, EV_SEQ_POKECEN_RECOVER_ANIME )
   DEF_CMD( EvCmdPokecenPcOn, EV_SEQ_POKECEN_PC_ON )
   DEF_CMD( EvCmdPokecenPcRun, EV_SEQ_POKECEN_PC_RUN )
@@ -842,9 +842,8 @@
   DEF_CMD( EvCmdUn_GetRoomInfo, EV_SEQ_UN_GET_ROOM_INFO )
   DEF_CMD( EvCmdUn_GetRoomObjMsg, EV_SEQ_UN_GET_ROOM_OBJ_MSG )
 
-  //国連フロア選択アプリ
   DEF_CMD( EvCmdUn_CallFloorSelApp, EV_SEQ_UN_CALL_FLOOR_SEL_APP )
-  NO_CMD()
+  DEF_CMD( EvCmdUn_GetValidDataNum, EV_SEQ_UN_GET_VALID_DATA_NUM )
   NO_CMD()
   NO_CMD()
 
