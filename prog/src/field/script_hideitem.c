@@ -103,7 +103,7 @@ void HIDEITEM_Revival( EVENTWORK * ev )
     const HIDE_ITEM_DATA * data = &hide_item_data[i];
     if ( data->revival_flag == 0 ) continue;
     if ( GFUser_GetPublicRand( 100 ) >= 20 ) continue;
-    EVENTWORK_SetEventFlag( ev, FLAG_HIDEITEM_AREA_START + data->index );
+    EVENTWORK_ResetEventFlag( ev, FLAG_HIDEITEM_AREA_START + data->index );
   }
 }
 
