@@ -19,6 +19,7 @@
 #include "poke_tool/monsno_def.h"
 #include "item/item.h"  //デバッグアイテム生成用
 #include "waza_tool/wazano_def.h"  //デバッグポケ生成用
+#include "savedata/zukan_savedata.h"		// 図鑑捕獲フラグ設定
 
 #ifdef PM_DEBUG
 //============================================================================================
@@ -47,20 +48,24 @@ void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 #else
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 
 	PP_Setup(pp, MONSNO_MUSYAANA, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 
 	PP_Setup(pp, MONSNO_TIRAAMHI, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 
   PP_Setup(pp, MONSNO_TIRAAMHI, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
@@ -70,6 +75,7 @@ void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
   PP_SetWazaPos( pp , WAZANO_KAIRIKI , 2 );
   PP_SetWazaPos( pp , WAZANO_IAIGIRI , 3 );
 	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 #endif
 
 	GFL_HEAP_FreeMemory(pp);
