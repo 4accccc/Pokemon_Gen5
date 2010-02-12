@@ -116,6 +116,11 @@ EVENT_END
 /*            受付男性                                        */
 /**************************************************************/
 EVENT_START ev_c11r0101_reception03
+  DEFINE_LOCAL npc_num
+
+  //有効データ数を取得
+  _UN_GET_VALID_DATA_NUM( npc_num )
+  _NUMBER(11, npc_num, 2)     //11番に人数をセット（2桁）
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_reception03_01 )
 EVENT_END
 
@@ -144,6 +149,52 @@ EVENT_END
 /*            ガードマン                                      */
 /**************************************************************/
 EVENT_START ev_c11r0101_policeman01
+  DEFINE_LOCAL	gardman_talk_msg
+  SWITCH $WK_SCENE_C11GATE
+  CASE 0 THEN     //ここにはこないけど
+    $gardman_talk_msg = msg_policeman_01_01
+  CASE 1 THEN     //初回
+    $gardman_talk_msg = msg_policeman_01_01
+  CASE 2 THEN     //1ヶ国
+    $gardman_talk_msg = msg_policeman_01_02
+  CASE 3 THEN     //3ヶ国
+    $gardman_talk_msg = msg_policeman_01_03
+  CASE 4 THEN     //6ヶ国
+    $gardman_talk_msg = msg_policeman_01_04
+  CASE 5 THEN     //10ヶ国
+    $gardman_talk_msg = msg_policeman_01_05
+  CASE 6 THEN     //15
+    $gardman_talk_msg = msg_policeman_01_06
+  CASE 7 THEN     //20
+    $gardman_talk_msg = msg_policeman_01_07
+  CASE 8 THEN     //30
+    $gardman_talk_msg = msg_policeman_01_08
+  CASE 9 THEN     //40
+    $gardman_talk_msg = msg_policeman_01_09
+  CASE 10 THEN     //50
+    $gardman_talk_msg = msg_policeman_01_10
+  CASE 11 THEN    //60
+    $gardman_talk_msg = msg_policeman_01_11
+  CASE 12 THEN    //70
+    $gardman_talk_msg = msg_policeman_01_12
+  CASE 13 THEN    //80
+    $gardman_talk_msg = msg_policeman_01_13
+  CASE 14 THEN    //90
+    $gardman_talk_msg = msg_policeman_01_14
+  CASE 15 THEN    //100
+    $gardman_talk_msg = msg_policeman_01_15
+  CASE 16 THEN    //150
+    $gardman_talk_msg = msg_policeman_01_16
+  DEFAULT  
+    $gardman_talk_msg = msg_policeman_01_17
+  ENDSWITCH
+
+  //プレーヤー名をタグ3番にセット
+  _PLAYER_NAME( 3 )
+  _BALLOONWIN_OBJMSG(gardman_talk_msg, UN_ENTRANCE_POLICEMAN_01)
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
 EVENT_END
 
 /**************************************************************/
@@ -154,6 +205,19 @@ EVENT_START ev_c11r0101_pos01
   DEFINE_LOCAL	gardman_msg
   //シーンワークで分岐
   $talk = TRUE
+
+  //ガードマン下向く
+  _OBJ_ANIME( UN_ENTRANCE_POLICEMAN_01, anm_step_dir_down)
+  _OBJ_ANIME_WAIT()
+  //「こっちこいや」吹き出しを下に出す
+  _BALLOONWIN_OBJMSG_POS(msg_policeman_01_00, UN_ENTRANCE_POLICEMAN_01, WIN_DOWN)
+  _BALLOONWIN_CLOSE()
+
+  //ガードマン左2歩下向き
+  _OBJ_ANIME( UN_ENTRANCE_POLICEMAN_01, anm_move_left)
+  //自機上に2歩
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_up)
+  _OBJ_ANIME_WAIT()
 
   SWITCH $WK_SCENE_C11GATE
   CASE 0 THEN     //初回
@@ -196,11 +260,21 @@ EVENT_START ev_c11r0101_pos01
   ENDSWITCH
 
   IF $talk == TRUE THEN
-    _BALLOONWIN_TALKOBJ_MSG( gardman_msg )
+    //プレーヤー名をタグ3番にセット
+    _PLAYER_NAME( 3 )
+    _BALLOONWIN_OBJMSG(gardman_msg, UN_ENTRANCE_POLICEMAN_01)
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
     $WK_SCENE_C11GATE += 1    //シーンワーク更新
   ENDIF
+
+  //ガードマン戻って下向く
+  _OBJ_ANIME( UN_ENTRANCE_POLICEMAN_01, anm_move_right)
+  _OBJ_ANIME_WAIT()
+
+  //POSイベント無効化
+  $LOCALWORK1 = 0
+
 EVENT_END
 
 
@@ -355,7 +429,26 @@ check_posevt_start:
   //POS起動条件を満たす国数まで到達したか？
   IF $chk_total >= $chk_val THEN
     $LOCALWORK1 = 1   //POS起動
-//    $WK_SCENE_C11GATE += 1    //シーンワーク更新
   ENDIF
 _RET
+
+_ANIME_LABEL	anm_step_dir_down
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0  
+
+_ANIME_LABEL	anm_move_left
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_move_up
+  _ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_move_right
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0  
+  
+
 
