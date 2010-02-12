@@ -19,6 +19,10 @@
 #define D06R0101_NINJA_02                  3
 #define D06R0101_BOSS_01                   4
 #define D06R0101_NINJA_03                  5
+#define D06R0101_FLD_ITEM_01               6
+#define D06R0101_FLD_ITEM_02               7
+#define D06R0101_FLD_ITEM_03               8
+#define D06R0101_FLD_ITEM_04               9
 
 #endif //ZONE_D06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

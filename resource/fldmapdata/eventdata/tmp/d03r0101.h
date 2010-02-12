@@ -22,6 +22,8 @@
 #define D03R0101_DARUMA_04                 8
 #define D03R0101_DARUMA_05                 9
 #define D03R0101_BACKPACKERM_01           10
+#define D03R0101_FLD_ITEM_01              11
+#define D03R0101_FLD_ITEM_02              12
 
 #endif //ZONE_D03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

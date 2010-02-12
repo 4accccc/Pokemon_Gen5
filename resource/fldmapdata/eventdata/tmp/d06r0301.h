@@ -9,6 +9,7 @@
 #ifndef ZONE_D06R0301_EVC_H
 #define ZONE_D06R0301_EVC_H
 
+#define D06R0301_FLD_ITEM_01               0
 
 #endif //ZONE_D06R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d06r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

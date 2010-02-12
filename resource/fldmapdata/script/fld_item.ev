@@ -37,6 +37,21 @@ _EVENT_DATA ev_fld_item_18
 _EVENT_DATA ev_fld_item_19
 _EVENT_DATA ev_fld_item_20
 _EVENT_DATA ev_fld_item_21
+_EVENT_DATA ev_fld_item_22
+_EVENT_DATA ev_fld_item_23
+_EVENT_DATA ev_fld_item_24
+_EVENT_DATA ev_fld_item_25
+_EVENT_DATA ev_fld_item_26
+_EVENT_DATA ev_fld_item_27
+_EVENT_DATA ev_fld_item_28
+_EVENT_DATA ev_fld_item_29
+_EVENT_DATA ev_fld_item_30
+_EVENT_DATA ev_fld_item_31
+_EVENT_DATA ev_fld_item_32
+_EVENT_DATA ev_fld_item_33
+_EVENT_DATA ev_fld_item_34
+_EVENT_DATA ev_fld_item_35
+_EVENT_DATA ev_fld_item_36
 _EVENT_DATA ev_fld_item_225
 _EVENT_DATA ev_fld_item_226
 _EVENT_DATA ev_fld_item_227
@@ -222,6 +237,111 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_21
   _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02r0101 X=14 Y=56 ITEM=せんせいのツメ FLAG=22
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_22
+  _FLD_ITEM_EVENT ITEM_SENSEINOTUME,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02r0101 X=17 Y=65 ITEM=まひなおし FLAG=23
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_23
+  _FLD_ITEM_EVENT ITEM_MAHINAOSI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02r0101 X=26 Y=47 ITEM=どくけし FLAG=24
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_24
+  _FLD_ITEM_EVENT ITEM_DOKUKESI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02r0101 X=37 Y=37 ITEM=モンスターボール FLAG=25
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_25
+  _FLD_ITEM_EVENT ITEM_MONSUTAABOORU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02r0101 X=43 Y=81 ITEM=いいキズぐすり FLAG=26
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_26
+  _FLD_ITEM_EVENT ITEM_IIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d03r0101 X=408 Y=120 ITEM=きんのたま FLAG=27
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_27
+  _FLD_ITEM_EVENT ITEM_KINNOTAMA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d03r0101 X=408 Y=120 ITEM=おいしいみず FLAG=28
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_28
+  _FLD_ITEM_EVENT ITEM_OISIIMIZU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d05r0101 X=408 Y=120 ITEM=ゴールドスプレー FLAG=29
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_29
+  _FLD_ITEM_EVENT ITEM_GOORUDOSUPUREE,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d05r0101 X=408 Y=120 ITEM=とけないこおり FLAG=30
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_30
+  _FLD_ITEM_EVENT ITEM_TOKENAIKOORI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0101 X=408 Y=120 ITEM=あなぬけのヒモ FLAG=31
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_31
+  _FLD_ITEM_EVENT ITEM_ANANUKENOHIMO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0101 X=408 Y=120 ITEM=ふしぎなアメ FLAG=32
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_32
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0101 X=408 Y=120 ITEM=げんきのかたまり FLAG=33
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_33
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0101 X=408 Y=120 ITEM=じしゃく FLAG=34
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_34
+  _FLD_ITEM_EVENT ITEM_ZISYAKU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0101 X=408 Y=120 ITEM=ダークボール FLAG=35
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_35
+  _FLD_ITEM_EVENT ITEM_DAAKUBOORU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0101 X=408 Y=120 ITEM=ひかりのこな FLAG=36
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_36
+  _FLD_ITEM_EVENT ITEM_HIKARINOKONA,1
 EVENT_END
 
 //--------------------------------------------------------------

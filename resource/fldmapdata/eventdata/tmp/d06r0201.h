@@ -14,6 +14,7 @@
 
 #define D06R0201_MIDDLEMAN1_02             0
 #define D06R0201_MIDDLEMAN1_01             1
+#define D06R0201_FLD_ITEM_01               2
 
 #endif //ZONE_D06R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
