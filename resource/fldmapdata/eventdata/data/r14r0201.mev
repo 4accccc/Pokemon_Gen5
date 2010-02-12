@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/13 21:30:10
+#save date:2010/02/12 15:26:59
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14r0201.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14r0201.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -24,7 +24,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14r0201.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -34,11 +34,28 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14r0201.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Door Event Label
+DOOR_ID_R14R0201_R14_EXIT01
+#Next Zone ID Name
+ZONE_ID_R14
+#Next Door ID Name
+DOOR_ID_R14_R14R0201_EXIT01
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 104
+#size
+3 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
