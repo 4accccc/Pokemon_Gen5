@@ -51,6 +51,9 @@ void MachineSystem_Init(void)
 	GX_Init();
 	// 固定小数点API初期化
 	FX_Init();
+	
+	SCFG_SetCpuSpeed( SCFG_CPU_SPEED_1X );
+	
 	// ファイルシステム初期化
 #ifndef MULTI_BOOT_MAKE
 	{
