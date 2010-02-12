@@ -6750,7 +6750,6 @@ static BOOL scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u
   else
   {
 //    BOOL result = scEvent_CheckChangeWeather( wk, weather, &turn );
-//BTL_EVENT_WAZA_WEATHER_TURNCNT
     BTL_FIELD_SetWeather( weather, turn );
     SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
 

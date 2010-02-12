@@ -253,11 +253,11 @@ extern BOOL BTLV_ACT_DamageEffectSingle_Wait( BTLV_CORE* wk );
  *
  * @param   wk
  * @param   pokeCnt   ポケモン数
- * @param   affAbout  相性ID
+ * @param   affifnity 相性ID
  * @param   pokeID    対象となるポケモンID配列
  */
 //=============================================================================================
-extern void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAbout affAbout, const u8* pokeID, WazaID waza );
+extern void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAff affifnity, const u8* pokeID, WazaID waza );
 extern BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk );
 
 

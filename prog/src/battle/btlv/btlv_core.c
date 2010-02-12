@@ -1401,16 +1401,16 @@ typedef struct {
   u8  pokePos[ BTL_POS_MAX ];
   u8  pokeCnt;
   u16 seq;
-  BtlTypeAffAbout  affAbout;
+  BtlTypeAff       affinity;
   WazaID           wazaID;
 }DMG_PLURAL_ACT_WORK;
 
 
-void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAbout affAbout, const u8* pokeID, WazaID wazaID )
+void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAff affinity, const u8* pokeID, WazaID wazaID )
 {
   DMG_PLURAL_ACT_WORK* subwk = getGenericWork(wk, sizeof(DMG_PLURAL_ACT_WORK));
 
-  subwk->affAbout = affAbout;
+  subwk->affinity = affinity;
   subwk->pokeCnt = pokeCnt;
   subwk->wazaID = wazaID;
   subwk->seq = 0;
@@ -1438,18 +1438,21 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
       for(i=0; i<subwk->pokeCnt; ++i){
         BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->pokePos[i], subwk->wazaID );
       }
-      switch( subwk->affAbout ){
-      case BTL_TYPEAFF_ABOUT_ADVANTAGE:
-        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
-        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
-        PMSND_PlaySE( SEQ_SE_KOUKA_H );
-        break;
-      case BTL_TYPEAFF_ABOUT_DISADVANTAGE:
+
+      if( subwk->affinity < BTL_TYPEAFF_100 )
+      {
         BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
         BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
         PMSND_PlaySE( SEQ_SE_KOUKA_L );
-        break;
-      default:
+      }
+      else if( subwk->affinity > BTL_TYPEAFF_100 )
+      {
+        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
+        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+        PMSND_PlaySE( SEQ_SE_KOUKA_H );
+      }
+      else
+      {
         PMSND_PlaySE( SEQ_SE_KOUKA_M );
       }
       subwk->seq++;
