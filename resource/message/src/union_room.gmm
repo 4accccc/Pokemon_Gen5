@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2010-01-27T16:08:38"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-12T15:22:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -583,11 +583,11 @@
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 シングルバトルの　せいげんなしで
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 シングルバトルの　せいげんなしで
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_connect_03_01_03" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
@@ -602,14 +602,12 @@
 </comment>
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
-シングルバトルの
-フラットルールで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+シングルバトルの　フラットルールで
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
-シングルバトルの
-フラットルールで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+シングルバトルの　フラットルールで
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_connect_03_01_04" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -645,11 +643,11 @@
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 ダブルバトルの　せいげんなしで
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 ダブルバトルの　せいげんなしで
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_connect_03_01_06" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
@@ -665,11 +663,11 @@
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 ダブルバトルの　フラットルールで
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 ダブルバトルの　フラットルールで
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_connect_03_01_07" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -705,11 +703,11 @@
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 トリプルバトルの　せいげんなしで
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 トリプルバトルの　せいげんなしで
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_connect_03_01_09" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
@@ -724,14 +722,12 @@
 </comment>
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
-トリプルバトルの
-フラットルールで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+トリプルバトルの　フラットルールで
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
-トリプルバトルの
-フラットルールで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+トリプルバトルの　フラットルールで
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_connect_03_01_10" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -770,12 +766,12 @@
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 ローテーションバトルの
 せいげんなしで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 ローテーションバトルの
 せいげんなしで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_connect_03_01_12" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
@@ -792,12 +788,12 @@
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 ローテーションバトルの
 フラットルールで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
 ローテーションバトルの
 フラットルールで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_connect_03_01_13" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
@@ -812,14 +808,12 @@
 </comment>
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
-マルチバトルの
-せいげんなしで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+マルチバトルの　せいげんなしで
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
-マルチバトルの
-せいげんなしで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+マルチバトルの　せいげんなしで
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_connect_03_01_14" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
@@ -834,14 +828,12 @@
 </comment>
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
-マルチバトルの
-フラットルールで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+マルチバトルの　フラットルールで
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
-マルチバトルの
-フラットルールで[BE:00:ページ切り替え（行送り）]
-たいせん　しますか？</language>
+マルチバトルの　フラットルールで
+たいせん　しますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_connect_03_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
