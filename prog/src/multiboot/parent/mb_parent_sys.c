@@ -1140,6 +1140,29 @@ static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
 #endif
   }
   
+  //スコアチェック
+  {
+    const u16 nowScore = MISC_GetPalparkHighscore(work->miscSave);
+    const u16 newScore = MB_COMM_GetScore( work->commWork );
+    if( nowScore < newScore )
+    {
+      MISC_SetPalparkHighscore(work->miscSave,newScore);
+      MISC_SetPalparkFinishState( work->miscSave,PALPARK_FINISH_HIGHSOCRE );
+    }
+    else
+    {
+      if( pokeNum == 0 )
+      {
+        MISC_SetPalparkFinishState( work->miscSave,PALPARK_FINISH_NO_GET );
+      }
+      else
+      {
+        MISC_SetPalparkFinishState( work->miscSave,PALPARK_FINISH_NORMAL );
+      }
+    }
+    
+  }
+  
   MB_TPrintf( "MB_Parent Save Init\n" );
 }
 

@@ -33,9 +33,10 @@ typedef struct
   DLPLAY_CARD_TYPE cardType;
   ARCHANDLE *arcHandle;
   void *ppp[MB_CAP_POKE_NUM];
-
   u16  highScore;
   
+  //íÜÇ≈ì¸ÇÈêîíl
+  u16  score;
   BOOL isCapture[MB_CAP_POKE_NUM];
 }MB_CAPTURE_INIT_WORK;
 

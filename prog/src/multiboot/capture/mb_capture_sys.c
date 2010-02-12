@@ -289,6 +289,8 @@ static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
     }
   }
   MB_TPrintf( "\n" );
+  work->initWork->score = work->score;
+  MB_TPrintf( "Score[%d]\n",work->score );
 
   for( i=0;i<MB_CAP_BALL_NUM;i++ )
   {

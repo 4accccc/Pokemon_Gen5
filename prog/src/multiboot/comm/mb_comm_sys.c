@@ -75,7 +75,9 @@ typedef enum
 typedef struct
 {
   u8 num;
-  u8 pad[3];
+  u8 pad;
+
+  u16 score;
 }MB_COMM_PPP_PACK_HEADER;
 
 struct _MB_COMM_WORK
@@ -494,6 +496,7 @@ void MB_COMM_ClearSendPokeData( MB_COMM_WORK* commWork )
   MB_COMM_PPP_PACK_HEADER *packHeader = commWork->pppPackData;
   
   packHeader->num = 0;
+  packHeader->score = 0;
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
     POKEMON_PASO_PARAM *ppp = (POKEMON_PASO_PARAM*)((u32)commWork->pppPackData + POKETOOL_GetPPPWorkSize()*i + sizeof(MB_COMM_PPP_PACK_HEADER));
@@ -519,6 +522,11 @@ void MB_COMM_AddSendPokeData( MB_COMM_WORK* commWork , const POKEMON_PASO_PARAM 
     GFL_STD_MemCopy( ppp , pppAdr , POKETOOL_GetPPPWorkSize() );
   }
   packHeader->num++;
+}
+void MB_COMM_SetScore( MB_COMM_WORK* commWork , const u16 score )
+{
+  MB_COMM_PPP_PACK_HEADER *packHeader = commWork->pppPackData;
+  packHeader->score = score;
 }
 
 //--------------------------------------------------------------
@@ -546,6 +554,15 @@ const POKEMON_PASO_PARAM* MB_COMM_GetPostPokeData( MB_COMM_WORK* commWork , cons
 {
   MB_COMM_PPP_PACK_HEADER *packHeader = commWork->pppPackData;
   return (POKEMON_PASO_PARAM*)((u32)commWork->pppPackData + POKETOOL_GetPPPWorkSize()*idx + sizeof(MB_COMM_PPP_PACK_HEADER));
+}
+
+//--------------------------------------------------------------
+// 受信ポケモン/スコア取得
+//--------------------------------------------------------------
+const u16 MB_COMM_GetScore( MB_COMM_WORK* commWork )
+{
+  MB_COMM_PPP_PACK_HEADER *packHeader = commWork->pppPackData;
+  return packHeader->score;
 }
 
 //--------------------------------------------------------------

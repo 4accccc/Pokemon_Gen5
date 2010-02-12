@@ -598,7 +598,10 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_TRANS_POKE_INIT:
     {
       u8 i;
+      MB_COMM_INIT_DATA *commInit = MB_COMM_GetInitData( work->commWork );
+
       MB_COMM_ClearSendPokeData( work->commWork );
+      MB_COMM_SetScore( work->commWork , work->capInitWork.score );
       for( i=0;i<MB_CAP_POKE_NUM;i++ )
       {
         if( work->capInitWork.isCapture[i] == TRUE )
@@ -618,6 +621,11 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
           //読んでおいた方も消す
           PPP_Clear( work->boxPoke[tray][idx] );
         }
+      }
+      //ハイスコアの置き換え
+      if( commInit->highScore < work->capInitWork.score )
+      {
+        commInit->highScore = work->capInitWork.score;
       }
     }
     work->state = MCS_TRANS_POKE_SEND;
