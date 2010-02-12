@@ -15,7 +15,8 @@ SUBDIRS =
 #対象ヘッダーファイル
 DEPENDHEADERS = usescript.h scr_seq_def.h easy_event_def.h \
 								$(PROJECT_PROGDIR)src/field/scrcmd_table.cdat \
-								../flagwork/flag_define.h ../flagwork/work_define.h
+								../flagwork/flag_define.h ../flagwork/work_define.h \
+								../../sound/wb_sound_data.sadl
 
 #マップ依存のスクリプト（t01.ev,sp_t01.ev etc.）：定義ファイルは自動生成
 SCRIPTFILES	=
