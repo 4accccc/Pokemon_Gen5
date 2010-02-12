@@ -101,7 +101,11 @@
 #include "../../../prog/src/field/easytalk_mode_def.h"
 
 //天候ナンバー
-#include "../../../prog/include/field/weather_no.h"    
+#include "../../../prog/include/field/weather_no.h"
+
+//国連部屋情報タイプ定義
+#include "../../../prog/src/field/un_roominfo_def.h"
+
 
 //スクリプト内共通定義ヘッダファイル
 //最初の3体タイプわけなど
