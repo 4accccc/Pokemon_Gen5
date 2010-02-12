@@ -747,6 +747,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
         fieldWork->fog,
   			fieldWork->zonefog, 
         fsnd,
+        fieldWork->fieldSeasonTime,
         fieldWork->heapID );
   }
   
