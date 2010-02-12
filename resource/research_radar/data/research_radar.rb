@@ -311,9 +311,13 @@ GenerateGMM( directory, fileName, stringLavel, stringJPN, stringJPN_KANJI )
 # 出力データ作成
 outData = Array.new
 outData << "// コンバータにより生成"
+outData << "typedef enum {"
 hobbies.each do |hobby|
-  outData << "#define #{hobby.ID_lavel} (#{hobby.ID})"
+  outData << "  #{hobby.ID_lavel} = #{hobby.ID},  //「#{hobby.stringJPN}」"
 end
+outData << "  HOBBY_ID_NUM = #{hobbies.size},  // 趣味IDの数"
+outData << "  HOBBY_ID_MAX = HOBBY_ID_NUM - 1  // 趣味IDの最大値"
+outData << "} HOBBY_ID;"
 
 # 出力
 file = File.open( "hobby_id.h", "w" )
