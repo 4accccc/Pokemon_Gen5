@@ -501,7 +501,7 @@ u32 FRAMELIST_Main( FRAMELIST_WORK * wk )
 	case MAINSEQ_WAIT:
 		// Ａボタンが押されたら選択を返す
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 				ret = wk->listPos;
 			}
 		}
@@ -815,6 +815,10 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 		return COMMAND_NONE;						// 動作なし
 	}
 
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+		return COMMAND_SELECT;					// 選択
+	}
+
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		if( wk->listPos != 0 || wk->listScroll != 0 ){
@@ -830,10 +834,6 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 			return COMMAND_LIST_BOTTOM;		// リスト一番下まで移動
 		}
 		return COMMAND_NONE;						// 動作なし
-	}
-
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-		return COMMAND_SELECT;					// 選択
 	}
 
 	return COMMAND_NONE;
