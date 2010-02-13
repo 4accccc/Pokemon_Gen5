@@ -183,7 +183,7 @@
 #define FE_LEGEND2_GET                     167 /* 0x00a7 伝説ポケモン：ポルトスを捕まえた */
 #define FE_LEGEND3_GET                     168 /* 0x00a8 伝説ポケモン：アラミスを捕まえた */
 #define FE_D06R0201_GOLDGET                169 /* 0x00a9 電気洞窟内：きんのたま入手フラグ */
-		/* not used   170(0x00aa) */
+#define FE_PALACE01_OLDMANTALK             170 /* 0x00aa パレスじじい初回会話フラグ */
 		/* not used   171(0x00ab) */
 		/* not used   172(0x00ac) */
 		/* not used   173(0x00ad) */

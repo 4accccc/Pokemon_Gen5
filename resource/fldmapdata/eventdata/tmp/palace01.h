@@ -8,6 +8,9 @@
 #ifndef ZONE_PALACE01_EVC_H
 #define ZONE_PALACE01_EVC_H
 
+#define PALACE01_OLDMAN1_01                0
+#define PALACE01_GIRL4_01                  1
+#define PALACE01_GIRL4_02                  2
 
 #endif //ZONE_PALACE01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/palace01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

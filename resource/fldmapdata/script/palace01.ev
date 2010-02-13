@@ -24,6 +24,9 @@ _EVENT_DATA    ev_init_palace01
 _EVENT_DATA    ev_recover_palace01
 _EVENT_DATA    ev_scene_change_palace01
 _EVENT_DATA    ev_palace01_monolith
+_EVENT_DATA    ev_palace01_oldman1_01	//パレスじいさん
+_EVENT_DATA    ev_palace01_girl4_01		//パレス双子
+_EVENT_DATA    ev_palace01_girl4_02		//パレス双子
 _EVENT_DATA_END
 
 
@@ -92,3 +95,188 @@ EVENT_START ev_palace01_monolith
 	  _MISSION_START_WAIT_EVENT()
   ENDIF
 EVENT_END
+
+
+/**************************************************************/
+/*  パレスじいさん [100213斉藤マ]                             */
+/**************************************************************/
+EVENT_START ev_palace01_oldman1_01
+	_TALK_OBJ_START()
+	
+	//初回会話分岐
+	IF FLAG_OFF( FE_PALACE01_OLDMANTALK) THEN
+		//初めてなら
+		_PLAINWIN_MSG_DOWN( plc_oldman1_01_01 )
+		
+		//========================================//
+		//初回会話済み
+		_FLAG_SET( FE_PALACE01_OLDMANTALK )
+		//========================================//
+		
+	ELSE
+		//２回目以降
+		_PLAINWIN_MSG_DOWN( plc_oldman1_01_04 )
+		
+	ENDIF
+	_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
+	
+	
+	//パレスに興味があるのか？
+	_PLAINWIN_MSG_DOWN( plc_oldman1_01_02 )
+	
+	{
+	DEFINE_LOCAL  lwk_loop
+	DEFINE_LOCAL  lwk_bmpans
+	
+	WHILE $lwk_loop != 555
+	
+		//メニュー作成
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, lwk_bmpans )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( plc_oldman1_01_07, 0 )	//パレスとは
+		_BMPMENU_MAKE_LIST( plc_oldman1_01_08, 1 )	//アクセスとは
+		_BMPMENU_MAKE_LIST( plc_oldman1_01_09, 10 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+		_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
+		
+		SWITCH $lwk_bmpans
+		CASE 0 THEN
+			//パレスとは
+			_PLAINWIN_MSG_DOWN( plc_oldman1_01_05 )
+			_MSGWIN_CLOSE()
+		CASE 1 THEN
+			//アクセスとは
+			_PLAINWIN_MSG_DOWN( plc_oldman1_01_06 )
+			_MSGWIN_CLOSE()
+		DEFAULT
+			//やめる
+			$lwk_loop = 555
+		ENDSWITCH
+	
+	ENDWHILE
+	
+	}
+	
+	//終了メッセージ
+	_PLAINWIN_MSG_DOWN( plc_oldman1_01_03 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
+/**************************************************************/
+/*  パレス双子１ [100213斉藤マ]                               */
+/**************************************************************/
+EVENT_START ev_palace01_girl4_01
+	_TALK_OBJ_START()
+	
+	//私たちはパレスを見守るもの
+	_PLAINWIN_MSG_DOWN( plc_girl4_01_01 )
+	_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
+	
+	//パレスについて知りたい？
+	_PLAINWIN_MSG_DOWN( plc_girl4_01_02 )
+	
+	{
+	DEFINE_LOCAL  lwk_loop
+	DEFINE_LOCAL  lwk_bmpans
+	
+	WHILE $lwk_loop != 555
+	
+		//メニュー作成
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, lwk_bmpans )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( plc_girl4_01_06, 0 )	//ツリーとは
+		_BMPMENU_MAKE_LIST( plc_girl4_01_07, 1 )	//ミッションとは
+		_BMPMENU_MAKE_LIST( plc_girl4_01_08, 10 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+		_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
+		
+		SWITCH $lwk_bmpans
+		CASE 0 THEN
+			//ツリーとは
+			_PLAINWIN_MSG_DOWN( plc_girl4_01_03 )
+			_MSGWIN_CLOSE()
+		CASE 1 THEN
+			//ミッションとは
+			_PLAINWIN_MSG_DOWN( plc_girl4_01_04 )
+			_MSGWIN_CLOSE()
+		DEFAULT
+			//やめる
+			$lwk_loop = 555
+		ENDSWITCH
+	
+	ENDWHILE
+	
+	}
+	
+	//終了メッセージ
+	_PLAINWIN_MSG_DOWN( plc_girl4_01_05 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
+/**************************************************************/
+/*  パレス双子２ [100213斉藤マ]                               */
+/**************************************************************/
+EVENT_START ev_palace01_girl4_02
+	_TALK_OBJ_START()
+	
+	//私たちはパレスを見守るもの
+	_PLAINWIN_MSG_DOWN( plc_girl4_02_01 )
+	_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
+	
+	//パレスについて知りたい？
+	_PLAINWIN_MSG_DOWN( plc_girl4_02_02 )
+	
+	{
+	DEFINE_LOCAL  lwk_loop
+	DEFINE_LOCAL  lwk_bmpans
+	
+	WHILE $lwk_loop != 555
+	
+		//メニュー作成
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, lwk_bmpans )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( plc_girl4_02_06, 0 )	//Ｇパワーとは
+		_BMPMENU_MAKE_LIST( plc_girl4_02_07, 1 )	//Ｇパワーをもらうには
+		_BMPMENU_MAKE_LIST( plc_girl4_02_08, 10 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+		_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
+		
+		SWITCH $lwk_bmpans
+		CASE 0 THEN
+			//Ｇパワーとは
+			_PLAINWIN_MSG_DOWN( plc_girl4_02_03 )
+			_MSGWIN_CLOSE()
+		CASE 1 THEN
+			//Ｇパワーをもらうには
+			_PLAINWIN_MSG_DOWN( plc_girl4_02_04 )
+			_MSGWIN_CLOSE()
+		DEFAULT
+			//やめる
+			$lwk_loop = 555
+		ENDSWITCH
+	
+	ENDWHILE
+	
+	}
+	
+	//終了メッセージ
+	_PLAINWIN_MSG_DOWN( plc_girl4_02_05 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
+
+
+
+
