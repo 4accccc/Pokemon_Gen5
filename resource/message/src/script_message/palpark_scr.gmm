@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-10T22:34:02"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-13T20:16:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,8 +319,8 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="696"/>
 		<band id="3" index="3" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -339,12 +339,6 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
-
-	<row id="msg_palpark_01">
-		<comment>初回メッセージ</comment>
-		<language name="JPN" width="256">しょかいメッセージ</language>
-		<language name="JPN_KANJI" width="256">初回メッセージ</language>
-	</row>
 
 	<row id="msg_palpark_02">
 		<comment>博士</comment>
@@ -482,7 +476,8 @@ BOXに6匹以上の空きがある</comment>
 	</row>
 
 	<row id="msg_palpark_first_01">
-		<comment>助手のメッセージ</comment>
+		<comment>助手のメッセージ
+メッセージが終わったあとに「！」がでる</comment>
 		<language name="JPN" width="256">あら　こんにちは！▼
 ここにきた　ということは
 あなた　けんがくしゃ　ね？▼
@@ -503,32 +498,65 @@ BOXに6匹以上の空きがある</comment>
 あなたの　トレーナーカード？▼</language>
 	</row>
 
-	<row id="msg_palpark_first_02">
-		<comment>助手
-話した後に足早に最上階へ移動する</comment>
+	<row id="msg_palpark_first_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>激しいふきだし</comment>
 		<language name="JPN" width="256">ちょちょ　ちょっと　あなた！
-でんどういり　してるじゃない！▼
-すごいわ！
-あなたなら　もしかしたら……▼
-パークはかせーーーーーーーーーーーーーーーー</language>
-		<language name="JPN_KANJI" width="256">ちょちょ　ちょっと　あなた！
-殿堂入り　してるじゃない！▼
-すごいわ！
-あなたなら　もしかしたら……▼
-パークはかせーーーーーーーーーーーーーーー</language>
+でんどういり　してるじゃない！▼</language>
+		<language name="JPN_KANJI" width="256">ちょっちょ　ちょっと　あなた！
+殿堂入り　してるじゃない！▼</language>
+	</row>
+
+	<row id="msg_palpark_first_21_b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>助手
+話した後に主人公に背を向ける</comment>
+		<language name="JPN" width="256">すごいわ！
+あなたなら　もしかしたら……▼</language>
+		<language name="JPN_KANJI" width="256">すごいわ！
+あなたなら　もしかしたら……▼</language>
+	</row>
+
+	<row id="msg_palpark_first_20" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>話した後に足早に階段をかけあがる</comment>
+		<language name="JPN" width="256">パークはかせーーーーーーーーーーーーーーーー</language>
+		<language name="JPN_KANJI" width="256">パーク博士ーーーーーーーーーーーーーーーー</language>
+	</row>
+
+	<row id="msg_palpark_first_18">
+		<language name="JPN" width="256">はやく　はやく！</language>
+		<language name="JPN_KANJI" width="256">早く　早く！</language>
 	</row>
 
 	<row id="msg_palpark_first_03">
 		<comment>助手
-話す前にピョンピョンはねる
-この後、博士の方へ向いた後、
+この後、博士の方へ向く。
 msg_palpark_first_19に続く</comment>
 		<language name="JPN" width="256">きたわね！▼</language>
 		<language name="JPN_KANJI" width="256">来たわね！▼</language>
 	</row>
 
+	<row id="msg_palpark_first_19">
+		<comment>msg_palpark_first_03の後、
+向きを変えてから
+続くメッセージ</comment>
+		<language name="JPN" width="256">はかせ！
+ちょっと　いいかしら？▼
+いいわよね！　きいて！▼
+このこ　なんと　でんどういり　してる
+トレーナー　なのよ！▼
+このこなら　きっと
+アレを　うごかせるわ！</language>
+		<language name="JPN_KANJI" width="256">博士！
+ちょっと　いいかしら？▼
+いいわよね！　きいて！▼
+この子　なんと　殿堂入り　してる
+トレーナー　なのよ！▼
+この子なら　きっと
+アレを　動かせるわ！</language>
+	</row>
+
 	<row id="msg_palpark_first_04">
 		<comment>博士
+装置に向かって話している
 話した後に「！」がでる</comment>
 		<language name="JPN" width="256">だから　なんども
 いっているだろう▼
@@ -544,21 +572,47 @@ msg_palpark_first_19に続く</comment>
 トレーナーが　いなくては……</language>
 	</row>
 
-	<row id="msg_palpark_first_05">
-		<comment>博士　
-メッセージの後にくるくるとびまわるような
-アニメーション。
-msg_palpark_first_21へ続く</comment>
+	<row id="msg_palpark_first_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>激しいふきだし</comment>
 		<language name="JPN" width="256">って
-でんどういり　してるとな！▼
-ファンタスティック！▼
-ファンタスティコー！▼
-ゥワッフーーーーーーーーーー！▼</language>
+でんどういり　してるだと！？▼</language>
 		<language name="JPN_KANJI" width="256">って
-殿堂入り　してるとな！▼
-ファンタスティック！▼
-ファンタスティコー！▼
-ゥワッフーーーーーーーーーー！▼</language>
+殿堂入り　してるだと！？▼</language>
+	</row>
+
+	<row id="msg_palpark_first_05_b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>博士　
+</comment>
+		<language name="JPN" width="256">ファンタスティック！▼
+ファンタスティコー！▼</language>
+		<language name="JPN_KANJI" width="256">ファンタスティック！▼
+ファンタスティコー！▼</language>
+	</row>
+
+	<row id="msg_palpark_first_05_c" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>博士
+激しい噴出し</comment>
+		<language name="JPN" width="256">ゥワッフーーーーーーーーーー！▼</language>
+		<language name="JPN_KANJI" width="256">ゥワッフーーーーーーーーーー！▼</language>
+	</row>
+
+	<row id="msg_palpark_first_21">
+		<comment>博士
+
+助手のメッセージmsg_palpark_first_06
+に続く</comment>
+		<language name="JPN" width="256">なんて　すばらしい　ひだ！
+グレイト！　しんじられない！▼
+やあ　ぼくは
+アンドリュー・パークはかせ！▼
+きみ！
+えーと……</language>
+		<language name="JPN_KANJI" width="256">なんて　すばらしい　ひだ！
+グレイト！　信じられない！▼
+やあ　ぼくは
+アンドリュー・パーク博士！▼
+きみ！
+えーと……</language>
 	</row>
 
 	<row id="msg_palpark_first_06">
@@ -571,34 +625,44 @@ msg_palpark_first_21へ続く</comment>
 		<comment>博士</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]くん！▼
 れきしを　うごかす　だいじっけんに
-さんか　しないかい！？▼
-ここの　そうちはね▼
+さんか　しないかね！？▼
+ここの　そうちは　ポケシフターと　いって▼
 エネルギー　パーティクルを▽
 イヴォークしつつ▼
+
 ＤＳという……▼
 モレキュールの……▼
+
 ２つ　ジャンクションし……▼
 とおくにいる　ポケモンと……▼
+
 フリークエンシーが……▼
 マッチングすると……▼
+
 レディオアクティブな……▼
 アルファが……▼
+
 ポケモンと……▼
 ファンタスティックに……▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]くん！▼
-れきしを　うごかす　だいじっけんに
-さんか　しないかい！？▼
-ここの　そうちはね▼
+歴史を　動かす　大実験に
+参加　しないかね！？▼
+ここの　装置は　ポケシフターと　言って▼
 エネルギー　パーティクルを▽
 イヴォークしつつ▼
+
 ＤＳという……▼
 モレキュールの……▼
+
 ２つ　ジャンクションし……▼
-とおくにいる　ポケモンと……▼
+遠くにいる　ポケモンと……▼
+
 フリークエンシーが……▼
-マッチングして……▼
+マッチングすると……▼
+
 レディオアクティブな……▼
 アルファが……▼
+
 ポケモンと……▼
 ファンタスティックに……▼</language>
 	</row>
@@ -623,16 +687,19 @@ msg_palpark_first_21へ続く</comment>
 てぶらが　一番　なのよ▼</language>
 	</row>
 
-	<row id="msg_palpark_first_09">
+	<row id="msg_palpark_first_09" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>博士
-セリフの前にとびはねる</comment>
-		<language name="JPN" width="256">……というわけで　ユー！▼
-ファンタスティック
+激しいふきだし</comment>
+		<language name="JPN" width="256">……というわけで　ユー！</language>
+		<language name="JPN_KANJI" width="256">……というわけで　ユー！</language>
+	</row>
+
+	<row id="msg_palpark_09_b">
+		<language name="JPN" width="256">ファンタスティック
 ポケモントレーナー！▼
 せいきの　だいじっけんに
 つきあって　くれるかい？</language>
-		<language name="JPN_KANJI" width="256">……というわけで　ユー！▼
-ファンタスティック
+		<language name="JPN_KANJI" width="256">ファンタスティック
 ポケモントレーナー！▼
 世紀の　大実験に
 つきあって　くれるかい？</language>
@@ -680,55 +747,6 @@ msg_palpark_first_21へ続く</comment>
 モニターを　しているんだ▼
 ポケモンに　なにか　あったら
 いけないからね！</language>
-	</row>
-
-	<row id="msg_palpark_first_21">
-		<comment>博士
-
-助手のメッセージmsg_palpark_first_06
-に続く</comment>
-		<language name="JPN" width="256">なんて　すばらしい　ひだ！
-グレイト！　しんじられない！▼
-やあ　ぼくは
-アンドリュー・パークはかせ！▼
-きみ！
-えーと……</language>
-		<language name="JPN_KANJI" width="256">なんて　すばらしい　ひだ！
-グレイト！　信じられない！▼
-やあ　ぼくは
-アンドリュー・パーク博士！▼
-きみ！
-えーと……</language>
-	</row>
-
-	<row id="msg_palpark_first_18">
-		<language name="JPN" width="256">はやく　はやく！</language>
-		<language name="JPN_KANJI" width="256">早く　早く！</language>
-	</row>
-
-	<row id="msg_palpark_first_19">
-		<comment>msg_palpark_first_03の後、
-向きを変えてから
-続くメッセージ</comment>
-		<language name="JPN" width="256">はかせ！
-ちょっと　いいかしら？▼
-いいわよね！　きいて！▼
-このこ　なんと　でんどういり　してる
-トレーナー　なのよ！▼
-このこなら　きっと
-アレを　うごかせるわ！</language>
-		<language name="JPN_KANJI" width="256">博士！
-ちょっと　いいかしら？▼
-いいわよね！　きいて！▼
-この子　なんと　殿堂入り　してる
-トレーナー　なのよ！▼
-この子なら　きっと
-アレを　動かせるわ！</language>
-	</row>
-
-	<row id="msg_palpark_first_20">
-		<language name="JPN" width="256">そっちじゃないわ</language>
-		<language name="JPN_KANJI" width="256">そっちじゃないわ</language>
 	</row>
 
 	<flowchart-group-list>

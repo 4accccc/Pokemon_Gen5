@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-12T18:03:31"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-13T18:20:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,54 +338,54 @@
 		<language name="JPN_KANJI">なし</language>
 	</row>
 
-	<row id="country001">
+	<row id="country093">
 		<language name="JPN">アイスランド</language>
 		<language name="JPN_KANJI">アイスランド</language>
 	</row>
 
-	<row id="country002">
+	<row id="country098">
 		<language name="JPN">アイルランド</language>
 		<language name="JPN_KANJI">アイルランド</language>
 	</row>
 
-	<row id="country003">
+	<row id="country014">
 		<language name="JPN">アゼルバイジャン</language>
 		<language name="JPN_KANJI">アゼルバイジャン</language>
 	</row>
 
-	<row id="country004">
+	<row id="country001">
 		<language name="JPN">アフガニスタン</language>
 		<language name="JPN_KANJI">アフガニスタン</language>
 	</row>
 
-	<row id="country005">
+	<row id="country220">
 		<language name="JPN">アメリカ</language>
 		<language name="JPN_KANJI">アメリカ</language>
 	</row>
 
-	<row id="country006">
+	<row id="country004">
 		<language name="JPN">アメリカりょうサモア</language>
 		<language name="JPN_KANJI">アメリカりょうサモア</language>
 	</row>
 
-	<row id="country007">
+	<row id="country221">
 		<language name="JPN">アメリカりょう
 バージンしょとう</language>
 		<language name="JPN_KANJI">アメリカりょう
 バージンしょとう</language>
 	</row>
 
-	<row id="country008">
+	<row id="country218">
 		<language name="JPN">アラブしゅちょうこく</language>
 		<language name="JPN_KANJI">アラブしゅちょうこく</language>
 	</row>
 
-	<row id="country009">
+	<row id="country003">
 		<language name="JPN">アルジェリア</language>
 		<language name="JPN_KANJI">アルジェリア</language>
 	</row>
 
-	<row id="country010">
+	<row id="country009">
 		<language name="JPN">アルゼンチン</language>
 		<language name="JPN_KANJI">アルゼンチン</language>
 	</row>
@@ -395,757 +395,757 @@
 		<language name="JPN_KANJI">アルバ</language>
 	</row>
 
-	<row id="country012">
+	<row id="country002">
 		<language name="JPN">アルバニア</language>
 		<language name="JPN_KANJI">アルバニア</language>
 	</row>
 
-	<row id="country013">
+	<row id="country010">
 		<language name="JPN">アルメニア</language>
 		<language name="JPN_KANJI">アルメニア</language>
 	</row>
 
-	<row id="country014">
+	<row id="country007">
 		<language name="JPN">アンギラ</language>
 		<language name="JPN_KANJI">アンギラ</language>
 	</row>
 
-	<row id="country015">
+	<row id="country006">
 		<language name="JPN">アンゴラ</language>
 		<language name="JPN_KANJI">アンゴラ</language>
 	</row>
 
-	<row id="country016">
+	<row id="country008">
 		<language name="JPN">アンティグア・
 バーブーダ</language>
 		<language name="JPN_KANJI">アンティグア・
 バーブーダ</language>
 	</row>
 
-	<row id="country017">
+	<row id="country005">
 		<language name="JPN">アンドラ</language>
 		<language name="JPN_KANJI">アンドラ</language>
 	</row>
 
-	<row id="country018">
+	<row id="country231">
 		<language name="JPN">イエメン</language>
 		<language name="JPN_KANJI">イエメン</language>
 	</row>
 
-	<row id="country019">
+	<row id="country219">
 		<language name="JPN">イギリス</language>
 		<language name="JPN_KANJI">イギリス</language>
 	</row>
 
-	<row id="country020">
+	<row id="country029">
 		<language name="JPN">イギリスりょう
 バージンしょとう</language>
 		<language name="JPN_KANJI">イギリスりょう
 バージンしょとう</language>
 	</row>
 
-	<row id="country021">
+	<row id="country100">
 		<language name="JPN">イスラエル</language>
 		<language name="JPN_KANJI">イスラエル</language>
 	</row>
 
-	<row id="country022">
+	<row id="country101">
 		<language name="JPN">イタリア</language>
 		<language name="JPN_KANJI">イタリア</language>
 	</row>
 
-	<row id="country023">
+	<row id="country097">
 		<language name="JPN">イラク</language>
 		<language name="JPN_KANJI">イラク</language>
 	</row>
 
-	<row id="country024">
+	<row id="country096">
 		<language name="JPN">イラン</language>
 		<language name="JPN_KANJI">イラン</language>
 	</row>
 
-	<row id="country025">
+	<row id="country094">
 		<language name="JPN">インド</language>
 		<language name="JPN_KANJI">インド</language>
 	</row>
 
-	<row id="country026">
+	<row id="country095">
 		<language name="JPN">インドネシア</language>
 		<language name="JPN_KANJI">インドネシア</language>
 	</row>
 
-	<row id="country027">
+	<row id="country216">
 		<language name="JPN">ウガンダ</language>
 		<language name="JPN_KANJI">ウガンダ</language>
 	</row>
 
-	<row id="country028">
+	<row id="country217">
 		<language name="JPN">ウクライナ</language>
 		<language name="JPN_KANJI">ウクライナ</language>
 	</row>
 
-	<row id="country029">
+	<row id="country223">
 		<language name="JPN">ウズベキスタン</language>
 		<language name="JPN_KANJI">ウズベキスタン</language>
 	</row>
 
-	<row id="country030">
+	<row id="country222">
 		<language name="JPN">ウルグアイ</language>
 		<language name="JPN_KANJI">ウルグアイ</language>
 	</row>
 
-	<row id="country031">
+	<row id="country060">
 		<language name="JPN">エクアドル</language>
 		<language name="JPN_KANJI">エクアドル</language>
 	</row>
 
-	<row id="country032">
+	<row id="country061">
 		<language name="JPN">エジプト</language>
 		<language name="JPN_KANJI">エジプト</language>
 	</row>
 
-	<row id="country033">
+	<row id="country065">
 		<language name="JPN">エストニア</language>
 		<language name="JPN_KANJI">エストニア</language>
 	</row>
 
-	<row id="country034">
+	<row id="country066">
 		<language name="JPN">エチオピア</language>
 		<language name="JPN_KANJI">エチオピア</language>
 	</row>
 
-	<row id="country035">
+	<row id="country064">
 		<language name="JPN">エリトリア</language>
 		<language name="JPN_KANJI">エリトリア</language>
 	</row>
 
-	<row id="country036">
+	<row id="country062">
 		<language name="JPN">エルサルバドル</language>
 		<language name="JPN_KANJI">エルサルバドル</language>
 	</row>
 
-	<row id="country037">
+	<row id="country012">
 		<language name="JPN">オーストラリア</language>
 		<language name="JPN_KANJI">オーストラリア</language>
 	</row>
 
-	<row id="country038">
+	<row id="country013">
 		<language name="JPN">オーストリア</language>
 		<language name="JPN_KANJI">オーストリア</language>
 	</row>
 
-	<row id="country039">
+	<row id="country157">
 		<language name="JPN">オマーン</language>
 		<language name="JPN_KANJI">オマーン</language>
 	</row>
 
-	<row id="country040">
+	<row id="country146">
 		<language name="JPN">オランダ</language>
 		<language name="JPN_KANJI">オランダ</language>
 	</row>
 
-	<row id="country041">
+	<row id="country147">
 		<language name="JPN">オランダりょう
 アンティル</language>
 		<language name="JPN_KANJI">オランダりょう
 アンティル</language>
 	</row>
 
-	<row id="country042">
+	<row id="country078">
 		<language name="JPN">ガーナ</language>
 		<language name="JPN_KANJI">ガーナ</language>
 	</row>
 
-	<row id="country043">
+	<row id="country037">
 		<language name="JPN">カーボベルデ</language>
 		<language name="JPN_KANJI">カーボベルデ</language>
 	</row>
 
-	<row id="country044">
+	<row id="country088">
 		<language name="JPN">ガイアナ</language>
 		<language name="JPN_KANJI">ガイアナ</language>
 	</row>
 
-	<row id="country045">
+	<row id="country106">
 		<language name="JPN">カザフスタン</language>
 		<language name="JPN_KANJI">カザフスタン</language>
 	</row>
 
-	<row id="country046">
+	<row id="country105">
 		<language name="JPN">カシミール</language>
 		<language name="JPN_KANJI">カシミール</language>
 	</row>
 
-	<row id="country047">
+	<row id="country169">
 		<language name="JPN">カタール</language>
 		<language name="JPN_KANJI">カタール</language>
 	</row>
 
-	<row id="country048">
+	<row id="country036">
 		<language name="JPN">カナダ</language>
 		<language name="JPN_KANJI">カナダ</language>
 	</row>
 
-	<row id="country049">
+	<row id="country074">
 		<language name="JPN">ガボン</language>
 		<language name="JPN_KANJI">ガボン</language>
 	</row>
 
-	<row id="country050">
+	<row id="country035">
 		<language name="JPN">カメルーン</language>
 		<language name="JPN_KANJI">カメルーン</language>
 	</row>
 
-	<row id="country051">
+	<row id="country110">
 		<language name="JPN">かんこく</language>
 		<language name="JPN_KANJI">かんこく</language>
 	</row>
 
-	<row id="country052">
+	<row id="country075">
 		<language name="JPN">ガンビア</language>
 		<language name="JPN_KANJI">ガンビア</language>
 	</row>
 
-	<row id="country053">
+	<row id="country034">
 		<language name="JPN">カンボジア</language>
 		<language name="JPN_KANJI">カンボジア</language>
 	</row>
 
-	<row id="country054">
+	<row id="country109">
 		<language name="JPN">きたちょうせん</language>
 		<language name="JPN_KANJI">きたちょうせん</language>
 	</row>
 
-	<row id="country055">
+	<row id="country155">
 		<language name="JPN">きたマリアナしょとう</language>
 		<language name="JPN_KANJI">きたマリアナしょとう</language>
 	</row>
 
-	<row id="country056">
+	<row id="country086">
 		<language name="JPN">ギニア</language>
 		<language name="JPN_KANJI">ギニア</language>
 	</row>
 
-	<row id="country057">
+	<row id="country087">
 		<language name="JPN">ギニアビサウ</language>
 		<language name="JPN_KANJI">ギニアビサウ</language>
 	</row>
 
-	<row id="country058">
+	<row id="country054">
 		<language name="JPN">キプロス</language>
 		<language name="JPN_KANJI">キプロス</language>
 	</row>
 
-	<row id="country059">
+	<row id="country053">
 		<language name="JPN">キューバ</language>
 		<language name="JPN_KANJI">キューバ</language>
 	</row>
 
-	<row id="country060">
+	<row id="country080">
 		<language name="JPN">ギリシャ</language>
 		<language name="JPN_KANJI">ギリシャ</language>
 	</row>
 
-	<row id="country061">
+	<row id="country108">
 		<language name="JPN">キリバス</language>
 		<language name="JPN_KANJI">キリバス</language>
 	</row>
 
-	<row id="country062">
+	<row id="country112">
 		<language name="JPN">キルギス</language>
 		<language name="JPN_KANJI">キルギス</language>
 	</row>
 
-	<row id="country063">
+	<row id="country085">
 		<language name="JPN">グアテマラ</language>
 		<language name="JPN_KANJI">グアテマラ</language>
 	</row>
 
-	<row id="country064">
+	<row id="country083">
 		<language name="JPN">グアドループとう</language>
 		<language name="JPN_KANJI">グアドループとう</language>
 	</row>
 
-	<row id="country065">
+	<row id="country084">
 		<language name="JPN">グアム</language>
 		<language name="JPN_KANJI">グアム</language>
 	</row>
 
-	<row id="country066">
+	<row id="country111">
 		<language name="JPN">クウェート</language>
 		<language name="JPN_KANJI">クウェート</language>
 	</row>
 
-	<row id="country067">
+	<row id="country049">
 		<language name="JPN">クックしょとう</language>
 		<language name="JPN_KANJI">クックしょとう</language>
 	</row>
 
-	<row id="country068">
+	<row id="country081">
 		<language name="JPN">グリーンランド</language>
 		<language name="JPN_KANJI">グリーンランド</language>
 	</row>
 
-	<row id="country069">
+	<row id="country044">
 		<language name="JPN">クリスマスとう</language>
 		<language name="JPN_KANJI">クリスマスとう</language>
 	</row>
 
-	<row id="country070">
+	<row id="country076">
 		<language name="JPN">グルジア</language>
 		<language name="JPN_KANJI">グルジア</language>
 	</row>
 
-	<row id="country071">
+	<row id="country082">
 		<language name="JPN">グレナダ</language>
 		<language name="JPN_KANJI">グレナダ</language>
 	</row>
 
-	<row id="country072">
+	<row id="country052">
 		<language name="JPN">クロアチア</language>
 		<language name="JPN_KANJI">クロアチア</language>
 	</row>
 
-	<row id="country073">
+	<row id="country038">
 		<language name="JPN">ケイマンしょとう</language>
 		<language name="JPN_KANJI">ケイマンしょとう</language>
 	</row>
 
-	<row id="country074">
+	<row id="country107">
 		<language name="JPN">ケニア</language>
 		<language name="JPN_KANJI">ケニア</language>
 	</row>
 
-	<row id="country075">
+	<row id="country051">
 		<language name="JPN">コートジボワール</language>
 		<language name="JPN_KANJI">コートジボワール</language>
 	</row>
 
-	<row id="country076">
+	<row id="country050">
 		<language name="JPN">コスタリカ</language>
 		<language name="JPN_KANJI">コスタリカ</language>
 	</row>
 
-	<row id="country077">
+	<row id="country046">
 		<language name="JPN">コモロ</language>
 		<language name="JPN_KANJI">コモロ</language>
 	</row>
 
-	<row id="country078">
+	<row id="country045">
 		<language name="JPN">コロンビア</language>
 		<language name="JPN_KANJI">コロンビア</language>
 	</row>
 
-	<row id="country079">
+	<row id="country048">
 		<language name="JPN">コンゴきょうわこく</language>
 		<language name="JPN_KANJI">コンゴきょうわこく</language>
 	</row>
 
-	<row id="country080">
+	<row id="country047">
 		<language name="JPN">コンゴ
 みんしゅきょうわこく</language>
 		<language name="JPN_KANJI">コンゴ
 みんしゅきょうわこく</language>
 	</row>
 
-	<row id="country081">
+	<row id="country182">
 		<language name="JPN">サウジアラビア</language>
 		<language name="JPN_KANJI">サウジアラビア</language>
 	</row>
 
-	<row id="country082">
+	<row id="country179">
 		<language name="JPN">サモア</language>
 		<language name="JPN_KANJI">サモア</language>
 	</row>
 
-	<row id="country083">
+	<row id="country181">
 		<language name="JPN">サントメ・プリンシペ</language>
 		<language name="JPN_KANJI">サントメ・プリンシペ</language>
 	</row>
 
-	<row id="country084">
+	<row id="country232">
 		<language name="JPN">ザンビア</language>
 		<language name="JPN_KANJI">ザンビア</language>
 	</row>
 
-	<row id="country085">
+	<row id="country177">
 		<language name="JPN">サンピエール・
 ミクロン</language>
 		<language name="JPN_KANJI">サンピエール・
 ミクロン</language>
 	</row>
 
-	<row id="country086">
+	<row id="country180">
 		<language name="JPN">サンマリノ</language>
 		<language name="JPN_KANJI">サンマリノ</language>
 	</row>
 
-	<row id="country087">
+	<row id="country186">
 		<language name="JPN">シエラレオネ</language>
 		<language name="JPN_KANJI">シエラレオネ</language>
 	</row>
 
-	<row id="country088">
+	<row id="country057">
 		<language name="JPN">ジブチ</language>
 		<language name="JPN_KANJI">ジブチ</language>
 	</row>
 
-	<row id="country089">
+	<row id="country079">
 		<language name="JPN">ジブラルタル</language>
 		<language name="JPN_KANJI">ジブラルタル</language>
 	</row>
 
-	<row id="country090">
+	<row id="country102">
 		<language name="JPN">ジャマイカ</language>
 		<language name="JPN_KANJI">ジャマイカ</language>
 	</row>
 
-	<row id="country091">
+	<row id="country201">
 		<language name="JPN">シリア</language>
 		<language name="JPN_KANJI">シリア</language>
 	</row>
 
-	<row id="country092">
+	<row id="country187">
 		<language name="JPN">シンガポール</language>
 		<language name="JPN_KANJI">シンガポール</language>
 	</row>
 
-	<row id="country093">
+	<row id="country233">
 		<language name="JPN">ジンバブエ</language>
 		<language name="JPN_KANJI">ジンバブエ</language>
 	</row>
 
-	<row id="country094">
+	<row id="country200">
 		<language name="JPN">スイス</language>
 		<language name="JPN_KANJI">スイス</language>
 	</row>
 
-	<row id="country095">
+	<row id="country199">
 		<language name="JPN">スウェーデン</language>
 		<language name="JPN_KANJI">スウェーデン</language>
 	</row>
 
-	<row id="country096">
+	<row id="country195">
 		<language name="JPN">スーダン</language>
 		<language name="JPN_KANJI">スーダン</language>
 	</row>
 
-	<row id="country097">
+	<row id="country197">
 		<language name="JPN">スバールバル・
 ヤンマンエンとう</language>
 		<language name="JPN_KANJI">スバールバル・
 ヤンマンエンとう</language>
 	</row>
 
-	<row id="country098">
+	<row id="country193">
 		<language name="JPN">スペイン</language>
 		<language name="JPN_KANJI">スペイン</language>
 	</row>
 
-	<row id="country099">
+	<row id="country196">
 		<language name="JPN">スリナム</language>
 		<language name="JPN_KANJI">スリナム</language>
 	</row>
 
-	<row id="country100">
+	<row id="country194">
 		<language name="JPN">スリランカ</language>
 		<language name="JPN_KANJI">スリランカ</language>
 	</row>
 
-	<row id="country101">
+	<row id="country188">
 		<language name="JPN">スロバキア</language>
 		<language name="JPN_KANJI">スロバキア</language>
 	</row>
 
-	<row id="country102">
+	<row id="country189">
 		<language name="JPN">スロベニア</language>
 		<language name="JPN_KANJI">スロベニア</language>
 	</row>
 
-	<row id="country103">
+	<row id="country198">
 		<language name="JPN">スワジランド</language>
 		<language name="JPN_KANJI">スワジランド</language>
 	</row>
 
-	<row id="country104">
+	<row id="country185">
 		<language name="JPN">セーシェル</language>
 		<language name="JPN_KANJI">セーシェル</language>
 	</row>
 
-	<row id="country105">
+	<row id="country063">
 		<language name="JPN">せきどうギニア</language>
 		<language name="JPN_KANJI">せきどうギニア</language>
 	</row>
 
-	<row id="country106">
+	<row id="country183">
 		<language name="JPN">セネガル</language>
 		<language name="JPN_KANJI">セネガル</language>
 	</row>
 
-	<row id="country107">
+	<row id="country184">
 		<language name="JPN">セルビア・
 モンテネグロ</language>
 		<language name="JPN_KANJI">セルビア・
 モンテネグロ</language>
 	</row>
 
-	<row id="country108">
+	<row id="country175">
 		<language name="JPN">セントクリストファー
 ・ネービス</language>
 		<language name="JPN_KANJI">セントクリストファー
 ・ネービス</language>
 	</row>
 
-	<row id="country109">
+	<row id="country178">
 		<language name="JPN">セントビンセント・
 グレナディーン</language>
 		<language name="JPN_KANJI">セントビンセント・
 グレナディーン</language>
 	</row>
 
-	<row id="country110">
+	<row id="country174">
 		<language name="JPN">セントヘレナとう</language>
 		<language name="JPN_KANJI">セントヘレナとう</language>
 	</row>
 
-	<row id="country111">
+	<row id="country176">
 		<language name="JPN">セントルシア</language>
 		<language name="JPN_KANJI">セントルシア</language>
 	</row>
 
-	<row id="country112">
+	<row id="country191">
 		<language name="JPN">ソマリア</language>
 		<language name="JPN_KANJI">ソマリア</language>
 	</row>
 
-	<row id="country113">
+	<row id="country190">
 		<language name="JPN">ソロモンしょとう</language>
 		<language name="JPN_KANJI">ソロモンしょとう</language>
 	</row>
 
-	<row id="country114">
+	<row id="country214">
 		<language name="JPN">タークス・
 カイコスしょとう</language>
 		<language name="JPN_KANJI">タークス・
 カイコスしょとう</language>
 	</row>
 
-	<row id="country115">
+	<row id="country205">
 		<language name="JPN">タイ</language>
 		<language name="JPN_KANJI">タイ</language>
 	</row>
 
-	<row id="country116">
+	<row id="country202">
 		<language name="JPN">たいわん</language>
 		<language name="JPN_KANJI">たいわん</language>
 	</row>
 
-	<row id="country117">
+	<row id="country203">
 		<language name="JPN">タジキスタン</language>
 		<language name="JPN_KANJI">タジキスタン</language>
 	</row>
 
-	<row id="country118">
+	<row id="country204">
 		<language name="JPN">タンザニア</language>
 		<language name="JPN_KANJI">タンザニア</language>
 	</row>
 
-	<row id="country119">
+	<row id="country055">
 		<language name="JPN">チェコ</language>
 		<language name="JPN_KANJI">チェコ</language>
 	</row>
 
-	<row id="country120">
+	<row id="country040">
 		<language name="JPN">チャド</language>
 		<language name="JPN_KANJI">チャド</language>
 	</row>
 
-	<row id="country121">
+	<row id="country041">
 		<language name="JPN">チャネルしょとう</language>
 		<language name="JPN_KANJI">チャネルしょとう</language>
 	</row>
 
-	<row id="country122">
+	<row id="country039">
 		<language name="JPN">ちゅうおうアフリカ</language>
 		<language name="JPN_KANJI">ちゅうおうアフリカ</language>
 	</row>
 
-	<row id="country123">
+	<row id="country043">
 		<language name="JPN">ちゅうごく</language>
 		<language name="JPN_KANJI">ちゅうごく</language>
 	</row>
 
-	<row id="country124">
+	<row id="country211">
 		<language name="JPN">チュニジア</language>
 		<language name="JPN_KANJI">チュニジア</language>
 	</row>
 
-	<row id="country125">
+	<row id="country042">
 		<language name="JPN">チリ</language>
 		<language name="JPN_KANJI">チリ</language>
 	</row>
 
-	<row id="country126">
+	<row id="country215">
 		<language name="JPN">ツバル</language>
 		<language name="JPN_KANJI">ツバル</language>
 	</row>
 
-	<row id="country127">
+	<row id="country056">
 		<language name="JPN">デンマーク</language>
 		<language name="JPN_KANJI">デンマーク</language>
 	</row>
 
-	<row id="country128">
+	<row id="country077">
 		<language name="JPN">ドイツ</language>
 		<language name="JPN_KANJI">ドイツ</language>
 	</row>
 
-	<row id="country129">
+	<row id="country207">
 		<language name="JPN">トーゴ</language>
 		<language name="JPN_KANJI">トーゴ</language>
 	</row>
 
-	<row id="country130">
+	<row id="country208">
 		<language name="JPN">トケラウ</language>
 		<language name="JPN_KANJI">トケラウ</language>
 	</row>
 
-	<row id="country131">
+	<row id="country058">
 		<language name="JPN">ドミニカ</language>
 		<language name="JPN_KANJI">ドミニカ</language>
 	</row>
 
-	<row id="country132">
+	<row id="country059">
 		<language name="JPN">ドミニカきょうわこく</language>
 		<language name="JPN_KANJI">ドミニカきょうわこく</language>
 	</row>
 
-	<row id="country133">
+	<row id="country210">
 		<language name="JPN">トリニダード・トバゴ</language>
 		<language name="JPN_KANJI">トリニダード・トバゴ</language>
 	</row>
 
-	<row id="country134">
+	<row id="country213">
 		<language name="JPN">トルクメニスタン</language>
 		<language name="JPN_KANJI">トルクメニスタン</language>
 	</row>
 
-	<row id="country135">
+	<row id="country212">
 		<language name="JPN">トルコ</language>
 		<language name="JPN_KANJI">トルコ</language>
 	</row>
 
-	<row id="country136">
+	<row id="country209">
 		<language name="JPN">トンガ</language>
 		<language name="JPN_KANJI">トンガ</language>
 	</row>
 
-	<row id="country137">
+	<row id="country152">
 		<language name="JPN">ナイジェリア</language>
 		<language name="JPN_KANJI">ナイジェリア</language>
 	</row>
 
-	<row id="country138">
+	<row id="country144">
 		<language name="JPN">ナウル</language>
 		<language name="JPN_KANJI">ナウル</language>
 	</row>
 
-	<row id="country139">
+	<row id="country143">
 		<language name="JPN">ナミビア</language>
 		<language name="JPN_KANJI">ナミビア</language>
 	</row>
 
-	<row id="country140">
+	<row id="country153">
 		<language name="JPN">ニウエ</language>
 		<language name="JPN_KANJI">ニウエ</language>
 	</row>
 
-	<row id="country141">
+	<row id="country150">
 		<language name="JPN">ニカラグア</language>
 		<language name="JPN_KANJI">ニカラグア</language>
 	</row>
 
-	<row id="country142">
+	<row id="country151">
 		<language name="JPN">ニジェール</language>
 		<language name="JPN_KANJI">ニジェール</language>
 	</row>
 
-	<row id="country143">
+	<row id="country230">
 		<language name="JPN">にしサハラ</language>
 		<language name="JPN_KANJI">にしサハラ</language>
 	</row>
 
-	<row id="country144">
+	<row id="country103">
 		<language name="JPN">にほん</language>
 		<language name="JPN_KANJI">にほん</language>
 	</row>
 
-	<row id="country145">
+	<row id="country148">
 		<language name="JPN">ニューカレドニア</language>
 		<language name="JPN_KANJI">ニューカレドニア</language>
 	</row>
 
-	<row id="country146">
+	<row id="country149">
 		<language name="JPN">ニュージーランド</language>
 		<language name="JPN_KANJI">ニュージーランド</language>
 	</row>
 
-	<row id="country147">
+	<row id="country145">
 		<language name="JPN">ネパール</language>
 		<language name="JPN_KANJI">ネパール</language>
 	</row>
 
-	<row id="country148">
+	<row id="country154">
 		<language name="JPN">ノーフォークとう</language>
 		<language name="JPN_KANJI">ノーフォークとう</language>
 	</row>
 
-	<row id="country149">
+	<row id="country156">
 		<language name="JPN">ノルウェー</language>
 		<language name="JPN_KANJI">ノルウェー</language>
 	</row>
 
-	<row id="country150">
+	<row id="country016">
 		<language name="JPN">バーレーン</language>
 		<language name="JPN_KANJI">バーレーン</language>
 	</row>
 
-	<row id="country151">
+	<row id="country089">
 		<language name="JPN">ハイチ</language>
 		<language name="JPN_KANJI">ハイチ</language>
 	</row>
 
-	<row id="country152">
+	<row id="country158">
 		<language name="JPN">パキスタン</language>
 		<language name="JPN_KANJI">パキスタン</language>
 	</row>
 
-	<row id="country153">
+	<row id="country225">
 		<language name="JPN">バチカン</language>
 		<language name="JPN_KANJI">バチカン</language>
 	</row>
 
-	<row id="country154">
+	<row id="country160">
 		<language name="JPN">パナマ</language>
 		<language name="JPN_KANJI">パナマ</language>
 	</row>
 
-	<row id="country155">
+	<row id="country224">
 		<language name="JPN">バヌアツ</language>
 		<language name="JPN_KANJI">バヌアツ</language>
 	</row>
 
-	<row id="country156">
+	<row id="country015">
 		<language name="JPN">バハマ</language>
 		<language name="JPN_KANJI">バハマ</language>
 	</row>
 
-	<row id="country157">
+	<row id="country161">
 		<language name="JPN">パプアニューギニア</language>
 		<language name="JPN_KANJI">パプアニューギニア</language>
 	</row>
 
-	<row id="country158">
+	<row id="country023">
 		<language name="JPN">バミューダ</language>
 		<language name="JPN_KANJI">バミューダ</language>
 	</row>
@@ -1155,380 +1155,380 @@
 		<language name="JPN_KANJI">パラオ</language>
 	</row>
 
-	<row id="country160">
+	<row id="country162">
 		<language name="JPN">パラグアイ</language>
 		<language name="JPN_KANJI">パラグアイ</language>
 	</row>
 
-	<row id="country161">
+	<row id="country018">
 		<language name="JPN">バルバドス</language>
 		<language name="JPN_KANJI">バルバドス</language>
 	</row>
 
-	<row id="country162">
+	<row id="country229">
 		<language name="JPN">パレスチナじちく</language>
 		<language name="JPN_KANJI">パレスチナじちく</language>
 	</row>
 
-	<row id="country163">
+	<row id="country092">
 		<language name="JPN">ハンガリー</language>
 		<language name="JPN_KANJI">ハンガリー</language>
 	</row>
 
-	<row id="country164">
+	<row id="country017">
 		<language name="JPN">バングラデシュ</language>
 		<language name="JPN_KANJI">バングラデシュ</language>
 	</row>
 
-	<row id="country165">
+	<row id="country206">
 		<language name="JPN">ひがしティモール</language>
 		<language name="JPN_KANJI">ひがしティモール</language>
 	</row>
 
-	<row id="country166">
+	<row id="country165">
 		<language name="JPN">ピトケアン</language>
 		<language name="JPN_KANJI">ピトケアン</language>
 	</row>
 
-	<row id="country167">
+	<row id="country069">
 		<language name="JPN">フィジーしょとう</language>
 		<language name="JPN_KANJI">フィジーしょとう</language>
 	</row>
 
-	<row id="country168">
+	<row id="country164">
 		<language name="JPN">フィリピン</language>
 		<language name="JPN_KANJI">フィリピン</language>
 	</row>
 
-	<row id="country169">
+	<row id="country070">
 		<language name="JPN">フィンランド</language>
 		<language name="JPN_KANJI">フィンランド</language>
 	</row>
 
-	<row id="country170">
+	<row id="country024">
 		<language name="JPN">ブータン</language>
 		<language name="JPN_KANJI">ブータン</language>
 	</row>
 
-	<row id="country171">
+	<row id="country168">
 		<language name="JPN">プエルトリコ</language>
 		<language name="JPN_KANJI">プエルトリコ</language>
 	</row>
 
-	<row id="country172">
+	<row id="country067">
 		<language name="JPN">フェローしょとう</language>
 		<language name="JPN_KANJI">フェローしょとう</language>
 	</row>
 
-	<row id="country173">
+	<row id="country068">
 		<language name="JPN">フォークランド(マルビナス)
 しょとう</language>
 		<language name="JPN_KANJI">フォークランド(マルビナス)
 しょとう</language>
 	</row>
 
-	<row id="country174">
+	<row id="country028">
 		<language name="JPN">ブラジル</language>
 		<language name="JPN_KANJI">ブラジル</language>
 	</row>
 
-	<row id="country175">
+	<row id="country071">
 		<language name="JPN">フランス</language>
 		<language name="JPN_KANJI">フランス</language>
 	</row>
 
-	<row id="country176">
+	<row id="country072">
 		<language name="JPN">フランスりょうギアナ</language>
 		<language name="JPN_KANJI">フランスりょうギアナ</language>
 	</row>
 
-	<row id="country177">
+	<row id="country073">
 		<language name="JPN">フランスりょう
 ポリネシア</language>
 		<language name="JPN_KANJI">フランスりょう
 ポリネシア</language>
 	</row>
 
-	<row id="country178">
+	<row id="country031">
 		<language name="JPN">ブルガリア</language>
 		<language name="JPN_KANJI">ブルガリア</language>
 	</row>
 
-	<row id="country179">
+	<row id="country032">
 		<language name="JPN">ブルキナファソ</language>
 		<language name="JPN_KANJI">ブルキナファソ</language>
 	</row>
 
-	<row id="country180">
+	<row id="country030">
 		<language name="JPN">ブルネイ</language>
 		<language name="JPN_KANJI">ブルネイ</language>
 	</row>
 
-	<row id="country181">
+	<row id="country033">
 		<language name="JPN">ブルンジ</language>
 		<language name="JPN_KANJI">ブルンジ</language>
 	</row>
 
-	<row id="country182">
+	<row id="country227">
 		<language name="JPN">ベトナム</language>
 		<language name="JPN_KANJI">ベトナム</language>
 	</row>
 
-	<row id="country183">
+	<row id="country022">
 		<language name="JPN">ベナン</language>
 		<language name="JPN_KANJI">ベナン</language>
 	</row>
 
-	<row id="country184">
+	<row id="country226">
 		<language name="JPN">ベネズエラ</language>
 		<language name="JPN_KANJI">ベネズエラ</language>
 	</row>
 
-	<row id="country185">
+	<row id="country019">
 		<language name="JPN">ベラルーシ</language>
 		<language name="JPN_KANJI">ベラルーシ</language>
 	</row>
 
-	<row id="country186">
+	<row id="country021">
 		<language name="JPN">ベリーズ</language>
 		<language name="JPN_KANJI">ベリーズ</language>
 	</row>
 
-	<row id="country187">
+	<row id="country163">
 		<language name="JPN">ペルー</language>
 		<language name="JPN_KANJI">ペルー</language>
 	</row>
 
-	<row id="country188">
+	<row id="country020">
 		<language name="JPN">ベルギー</language>
 		<language name="JPN_KANJI">ベルギー</language>
 	</row>
 
-	<row id="country189">
+	<row id="country166">
 		<language name="JPN">ポーランド</language>
 		<language name="JPN_KANJI">ポーランド</language>
 	</row>
 
-	<row id="country190">
+	<row id="country026">
 		<language name="JPN">ボスニア・
 ヘルツェゴビナ</language>
 		<language name="JPN_KANJI">ボスニア・
 ヘルツェゴビナ</language>
 	</row>
 
-	<row id="country191">
+	<row id="country027">
 		<language name="JPN">ボツワナ</language>
 		<language name="JPN_KANJI">ボツワナ</language>
 	</row>
 
-	<row id="country192">
+	<row id="country025">
 		<language name="JPN">ボリビア</language>
 		<language name="JPN_KANJI">ボリビア</language>
 	</row>
 
-	<row id="country193">
+	<row id="country167">
 		<language name="JPN">ポルトガル</language>
 		<language name="JPN_KANJI">ポルトガル</language>
 	</row>
 
-	<row id="country194">
+	<row id="country091">
 		<language name="JPN">ホンコン</language>
 		<language name="JPN_KANJI">ホンコン</language>
 	</row>
 
-	<row id="country195">
+	<row id="country090">
 		<language name="JPN">ホンジュラス</language>
 		<language name="JPN_KANJI">ホンジュラス</language>
 	</row>
 
-	<row id="country196">
+	<row id="country130">
 		<language name="JPN">マーシャルしょとう</language>
 		<language name="JPN_KANJI">マーシャルしょとう</language>
 	</row>
 
-	<row id="country197">
+	<row id="country122">
 		<language name="JPN">マカオ</language>
 		<language name="JPN_KANJI">マカオ</language>
 	</row>
 
-	<row id="country198">
+	<row id="country123">
 		<language name="JPN">マケドニアきゅう
 ユーゴスラビア</language>
 		<language name="JPN_KANJI">マケドニアきゅう
 ユーゴスラビア</language>
 	</row>
 
-	<row id="country199">
+	<row id="country124">
 		<language name="JPN">マダガスカル</language>
 		<language name="JPN_KANJI">マダガスカル</language>
 	</row>
 
-	<row id="country200">
+	<row id="country134">
 		<language name="JPN">マヨット</language>
 		<language name="JPN_KANJI">マヨット</language>
 	</row>
 
-	<row id="country201">
+	<row id="country125">
 		<language name="JPN">マラウイ</language>
 		<language name="JPN_KANJI">マラウイ</language>
 	</row>
 
-	<row id="country202">
+	<row id="country128">
 		<language name="JPN">マリ</language>
 		<language name="JPN_KANJI">マリ</language>
 	</row>
 
-	<row id="country203">
+	<row id="country129">
 		<language name="JPN">マルタ</language>
 		<language name="JPN_KANJI">マルタ</language>
 	</row>
 
-	<row id="country204">
+	<row id="country131">
 		<language name="JPN">マルチニーク</language>
 		<language name="JPN_KANJI">マルチニーク</language>
 	</row>
 
-	<row id="country205">
+	<row id="country126">
 		<language name="JPN">マレーシア</language>
 		<language name="JPN_KANJI">マレーシア</language>
 	</row>
 
-	<row id="country206">
+	<row id="country099">
 		<language name="JPN">マンとう</language>
 		<language name="JPN_KANJI">マンとう</language>
 	</row>
 
-	<row id="country207">
+	<row id="country136">
 		<language name="JPN">ミクロネシア</language>
 		<language name="JPN_KANJI">ミクロネシア</language>
 	</row>
 
-	<row id="country208">
+	<row id="country192">
 		<language name="JPN">みなみアフリカ</language>
 		<language name="JPN_KANJI">みなみアフリカ</language>
 	</row>
 
-	<row id="country209">
+	<row id="country142">
 		<language name="JPN">ミャンマー</language>
 		<language name="JPN_KANJI">ミャンマー</language>
 	</row>
 
-	<row id="country210">
+	<row id="country135">
 		<language name="JPN">メキシコ</language>
 		<language name="JPN_KANJI">メキシコ</language>
 	</row>
 
-	<row id="country211">
+	<row id="country133">
 		<language name="JPN">モーリシャス</language>
 		<language name="JPN_KANJI">モーリシャス</language>
 	</row>
 
-	<row id="country212">
+	<row id="country132">
 		<language name="JPN">モーリタニア</language>
 		<language name="JPN_KANJI">モーリタニア</language>
 	</row>
 
-	<row id="country213">
+	<row id="country141">
 		<language name="JPN">モザンビーク</language>
 		<language name="JPN_KANJI">モザンビーク</language>
 	</row>
 
-	<row id="country214">
+	<row id="country138">
 		<language name="JPN">モナコ</language>
 		<language name="JPN_KANJI">モナコ</language>
 	</row>
 
-	<row id="country215">
+	<row id="country127">
 		<language name="JPN">モルディブ</language>
 		<language name="JPN_KANJI">モルディブ</language>
 	</row>
 
-	<row id="country216">
+	<row id="country137">
 		<language name="JPN">モルドバ</language>
 		<language name="JPN_KANJI">モルドバ</language>
 	</row>
 
-	<row id="country217">
+	<row id="country140">
 		<language name="JPN">モロッコ</language>
 		<language name="JPN_KANJI">モロッコ</language>
 	</row>
 
-	<row id="country218">
+	<row id="country139">
 		<language name="JPN">モンゴル</language>
 		<language name="JPN_KANJI">モンゴル</language>
 	</row>
 
-	<row id="country219">
+	<row id="country104">
 		<language name="JPN">ヨルダン</language>
 		<language name="JPN_KANJI">ヨルダン</language>
 	</row>
 
-	<row id="country220">
+	<row id="country113">
 		<language name="JPN">ラオス</language>
 		<language name="JPN_KANJI">ラオス</language>
 	</row>
 
-	<row id="country221">
+	<row id="country114">
 		<language name="JPN">ラトビア</language>
 		<language name="JPN_KANJI">ラトビア</language>
 	</row>
 
-	<row id="country222">
+	<row id="country120">
 		<language name="JPN">リトアニア</language>
 		<language name="JPN_KANJI">リトアニア</language>
 	</row>
 
-	<row id="country223">
+	<row id="country118">
 		<language name="JPN">リビア</language>
 		<language name="JPN_KANJI">リビア</language>
 	</row>
 
-	<row id="country224">
+	<row id="country119">
 		<language name="JPN">リヒテンシュタイン</language>
 		<language name="JPN_KANJI">リヒテンシュタイン</language>
 	</row>
 
-	<row id="country225">
+	<row id="country117">
 		<language name="JPN">リベリア</language>
 		<language name="JPN_KANJI">リベリア</language>
 	</row>
 
-	<row id="country226">
+	<row id="country171">
 		<language name="JPN">ルーマニア</language>
 		<language name="JPN_KANJI">ルーマニア</language>
 	</row>
 
-	<row id="country227">
+	<row id="country121">
 		<language name="JPN">ルクセンブルク</language>
 		<language name="JPN_KANJI">ルクセンブルク</language>
 	</row>
 
-	<row id="country228">
+	<row id="country173">
 		<language name="JPN">ルワンダ</language>
 		<language name="JPN_KANJI">ルワンダ</language>
 	</row>
 
-	<row id="country229">
+	<row id="country116">
 		<language name="JPN">レソト</language>
 		<language name="JPN_KANJI">レソト</language>
 	</row>
 
-	<row id="country230">
+	<row id="country115">
 		<language name="JPN">レバノン</language>
 		<language name="JPN_KANJI">レバノン</language>
 	</row>
 
-	<row id="country231">
+	<row id="country170">
 		<language name="JPN">レユニオン</language>
 		<language name="JPN_KANJI">レユニオン</language>
 	</row>
 
-	<row id="country232">
+	<row id="country172">
 		<language name="JPN">ロシア</language>
 		<language name="JPN_KANJI">ロシア</language>
 	</row>
 
-	<row id="country233">
+	<row id="country228">
 		<language name="JPN">ワリス・
 フテュナしょとう</language>
 		<language name="JPN_KANJI">ワリス・
