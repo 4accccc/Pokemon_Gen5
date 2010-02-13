@@ -2315,6 +2315,7 @@ ExpertAI_177_doku://どくどくだま
 	IF_EQUAL	TOKUSYU_MENEKI,ExpertAI_177_doku_check		// めんえき
 	IF_EQUAL	TOKUSYU_MAZIKKUGAADO,ExpertAI_177_doku_check	// マジックガード	2006.6.6
 	IF_EQUAL	TOKUSYU_POIZUNHIIRU,ExpertAI_177_doku_check		// ポイズンヒール	2006.6.6
+	IF_EQUAL	TOKUSYU_DOKUBOUSOU,ExpertAI_177_doku_check		// どくぼうそう	2010.2.13
 	
 	INCDEC		5
 	JUMP		ExpertAI_177_end
@@ -2337,6 +2338,7 @@ ExpertAI_177_doku_check://相手が毒に耐性があるとき自分が毒に耐性があるか？
 	IF_EQUAL	TOKUSYU_MAZIKKUGAADO,ExpertAI_177_ng	// マジックガード	2006.6.6
 	IF_EQUAL	TOKUSYU_POIZUNHIIRU,ExpertAI_177_ng		// ポイズンヒール	2006.6.6
 	IF_EQUAL	TOKUSYU_BUKIYOU,ExpertAI_177_ng			// ぶきよう
+	IF_EQUAL	TOKUSYU_DOKUBOUSOU,ExpertAI_177_ng		// どくぼうそう	2010.2.13
 
 	INCDEC		5	//耐性がないのでトリックする
 	JUMP		ExpertAI_177_end
@@ -2351,6 +2353,7 @@ ExpertAI_177_yakedo://かえんだま
 	CHECK_TOKUSEI	CHECK_DEFENCE
 	IF_EQUAL	TOKUSYU_MIZUNOBEERU,ExpertAI_177_yakedo_check		// みずのベール
 	IF_EQUAL	TOKUSYU_MAZIKKUGAADO,ExpertAI_177_yakedo_check		// マジックガード
+	IF_EQUAL	TOKUSYU_NETUBOUSOU,ExpertAI_177_yakedo_check		// ねつぼうそう	2010.2.13
 	IF_POKESICK	CHECK_DEFENCE,ExpertAI_177_yakedo_check		// 状態異常時は状態異常攻撃をしない
 	IF_SIDEEFF	CHECK_DEFENCE, BTL_SIDEEFF_SINPINOMAMORI,ExpertAI_177_yakedo_check	// しんぴのまもり
 	
@@ -2369,6 +2372,7 @@ ExpertAI_177_yakedo_check:
 	IF_EQUAL	TOKUSYU_MIZUNOBEERU,ExpertAI_177_ng		// みずのベール
 	IF_EQUAL	TOKUSYU_MAZIKKUGAADO,ExpertAI_177_ng	// マジックガード
 	IF_EQUAL	TOKUSYU_BUKIYOU,AI_DEC5					// ぶきよう
+	IF_EQUAL	TOKUSYU_NETUBOUSOU,ExpertAI_177_ng		// ねつぼうそう	2010.2.13
 	IF_POKESICK	CHECK_ATTACK,ExpertAI_177_ng	// 状態異常時は状態異常攻撃をしない
 	IF_SIDEEFF	CHECK_ATTACK, BTL_SIDEEFF_SINPINOMAMORI,ExpertAI_177_ng	// しんぴのまもり
 	
@@ -2393,6 +2397,7 @@ ExpertAI_177_hedoro://くろいへドロ
 
 	CHECK_TOKUSEI	CHECK_DEFENCE
 	IF_EQUAL	TOKUSYU_MAZIKKUGAADO,ExpertAI_177_doku_check	// マジックガード	2006.6.6
+	IF_EQUAL	TOKUSYU_DOKUBOUSOU,ExpertAI_177_doku_check		// どくぼうそう	2010.2.13
 	INCDEC		5
 	JUMP		ExpertAI_177_end
 
@@ -2407,6 +2412,7 @@ ExpertAI_177_hedoro_check://相手が毒に耐性があるとき自分が毒に耐性があるか？
 	CHECK_TOKUSEI	CHECK_ATTACK
 	IF_EQUAL	TOKUSYU_MAZIKKUGAADO,ExpertAI_177_ng	// マジックガード	2006.6.6
 	IF_EQUAL	TOKUSYU_BUKIYOU,ExpertAI_177_ng			// ぶきよう
+	IF_EQUAL	TOKUSYU_DOKUBOUSOU,ExpertAI_177_ng		// どくぼうそう	2010.2.13
 
 	INCDEC		5	//耐性がないのでトリックする
 	JUMP		ExpertAI_177_end
@@ -2651,6 +2657,9 @@ ExpertAI_186_end:
 	AIEND
 //---------------------------------------------------------------------------
 ExpertAI_188:	// はたきおとす
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_SYUUKAKU,AI_DEC5		// しゅうかく
+
 	IF_HP_UNDER	CHECK_DEFENCE,30,ExpertAI_188_end
 
 	CHECK_NEKODAMASI	CHECK_ATTACK
