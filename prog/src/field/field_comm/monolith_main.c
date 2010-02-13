@@ -17,6 +17,7 @@
 #include "message.naix"
 #include "font/font.naix" //NARC_font_large_gftr
 #include "system/wipe.h"
+#include "gamesystem/g_power.h"
 
 
 
@@ -86,7 +87,7 @@ static const struct{
     &MonolithAppProc_Down_MissionSelect,
   },
   {//MONOLITH_MENU_POWER
-    &MonolithAppProc_Up_PalaceMap, //MonolithAppProc_Up_PowerExplain,
+    &MonolithAppProc_Up_PowerExplain,
     &MonolithAppProc_Down_PowerSelect,
   },
   {//MONOLITH_MENU_STATUS
@@ -171,6 +172,7 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
   
   monosys = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_SYSTEM), HEAPID_MONOLITH);
   GFL_STD_MemClear(monosys, sizeof(MONOLITH_SYSTEM));
+  monosys->common.power_select_no = GPOWER_ID_NULL;
   
 	monosys->setup.hdl = GFL_ARC_OpenDataHandle(ARCID_MONOLITH, HEAPID_MONOLITH);
   {

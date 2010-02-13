@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-02-09T20:41:45"/>
+	<create user="matsuda" host="W00142" date="2010-02-13T15:03:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -436,6 +436,24 @@
 		<comment>パワー画面</comment>
 		<language name="JPN" width="256">ポイントが　たりません</language>
 		<language name="JPN_KANJI" width="256">ポイントが　たりません</language>
+	</row>
+
+	<row id="msg_mono_pow_up_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>パワー画面：上</comment>
+		<language name="JPN" width="256">C-ギアの　ふしぎなパワー</language>
+		<language name="JPN_KANJI" width="256">C-ギアの　ふしぎなパワー</language>
+	</row>
+
+	<row id="msg_mono_pow_up_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>パワー画面：上</comment>
+		<language name="JPN" width="256">パワーは　ありません</language>
+		<language name="JPN_KANJI" width="256">パワーは　ありません</language>
+	</row>
+
+	<row id="msg_mono_pow_up_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>パワー画面：上</comment>
+		<language name="JPN" width="256">１かい／[2:03:４桁:0]Ｐ</language>
+		<language name="JPN_KANJI" width="256">１かい／[2:03:４桁:0]Ｐ</language>
 	</row>
 
 	<flowchart-group-list>

@@ -235,6 +235,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
     _BmpOamCreate(mpw, appwk->setup);
 
     MonolithTool_Panel_Init(appwk);
+    appwk->common->power_select_no = GPOWER_ID_NULL;
     if(GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY){
       _SetCursorPos(appwk, mpw, 0, _SET_CURSOR_MODE_INIT);
     }
@@ -311,6 +312,13 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
         _ScrollPos_NameOamReflection(mpw);
         mpw->scroll_update = TRUE;
       }
+    }
+
+    if(mpw->cursor_pos == _CURSOR_POS_NONE){
+      appwk->common->power_select_no = GPOWER_ID_NULL;
+    }
+    else{
+      appwk->common->power_select_no = mpw->use_gpower_id[mpw->cursor_pos];
     }
     break;
 

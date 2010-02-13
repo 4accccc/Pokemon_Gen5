@@ -46,8 +46,8 @@ enum{
 #define MONOLITH_BG_DOWN_FONT_PALNO   (MONOLITH_BG_UP_FONT_PALNO)
 
 ///文字色のデフォルト設定
-#define MONOLITH_FONT_DEFCOLOR_LETTER   (2)
-#define MONOLITH_FONT_DEFCOLOR_SHADOW   (1)
+#define MONOLITH_FONT_DEFCOLOR_LETTER   (0xf)
+#define MONOLITH_FONT_DEFCOLOR_SHADOW   (2)
 #define MONOLITH_FONT_DEFCOLOR_BACK     (0)
 
 ///共通素材Indexへのアクセス
@@ -137,7 +137,8 @@ typedef struct{
 typedef struct{
   u8 mission_select_town;    ///<ミッション画面：選択している街番号 or SELECT_TOWN_ENFORCEMENT
   u8 power_select_no;        ///<パワー画面：選択しているパワー番号
-  u8 padding[2];
+  u8 power_eqp_update;       ///<パワー画面：TRUE:装備しているパワーに変更があった
+  u8 padding;
 }MONOLITH_COMMON_WORK;
 
 ///パネルカラーアニメ制御構造体
@@ -180,3 +181,4 @@ extern const GFL_PROC_DATA MonolithAppProc_Down_MissionSelect;
 extern const GFL_PROC_DATA MonolithAppProc_Up_MissionExplain;
 extern const GFL_PROC_DATA MonolithAppProc_Down_Status;
 extern const GFL_PROC_DATA MonolithAppProc_Down_PowerSelect;
+extern const GFL_PROC_DATA MonolithAppProc_Up_PowerExplain;
