@@ -312,14 +312,23 @@ static BOOL Main_TouchCheck( CURSORMOVE_WORK * wk, int * hit )
 		if( p != GFL_UI_TP_HIT_NONE ){
 			ret = TRUE;
 			if( MoveTableBitCheck( wk->mv_tbl, cnt ) == TRUE ){
+#if 0
 				wk->cur_pos  = cnt;
 				wk->old_pos  = DEF_OLDPOS;
 				wk->save_pos = DEF_OLDPOS;
+#else
+				wk->old_pos  = wk->cur_pos;
+				wk->cur_pos  = cnt;
+#endif
 				if( wk->cur_flg == TRUE && wk->cur_mode == CURSOR_MODE_VANISH ){
 					wk->cur_flg = FALSE;
 					wk->func->off( wk->work, wk->cur_pos, wk->old_pos );
 				}
 				wk->func->touch( wk->work, wk->cur_pos, wk->old_pos );
+#if 1
+				wk->old_pos  = DEF_OLDPOS;
+				wk->save_pos = DEF_OLDPOS;
+#endif
 				*hit = cnt;
 				GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 				break;
