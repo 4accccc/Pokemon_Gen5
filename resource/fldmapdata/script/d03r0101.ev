@@ -263,12 +263,8 @@ EVENT_START		ev_scene_d03r0101_plasmaevent_01
 	_BALLOONWIN_OBJMSG( msg_d03r0101_champion_02 , D03R0101_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 		
-	//【仮】チャンピオン：そらをとぶアニメ
-	_OBJ_ANIME( D03R0101_CHAMPION_01, anm_champion_sora )
-	_OBJ_ANIME_WAIT()
-	
-	//チャンピオンのOBJを消す
-	_OBJ_DEL( D03R0101_CHAMPION_01 )
+	//チャンピオン：そらをとぶアニメ
+	_CALL_NPCFLY_CUTIN(D03R0101_CHAMPION_01)
 	
 	//……オレ　もういちど　このなかを　さがす
 	_BALLOONWIN_OBJMSG( msg_d03r0101_rival_05 , D03R0101_RIVAL_02 )

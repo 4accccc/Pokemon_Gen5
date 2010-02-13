@@ -298,6 +298,8 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_OBJ_ANIME( C03_RIVAL_01, anm_rival_leave )
 	_OBJ_ANIME_WAIT()
 
+	//========================================/
+
 	//アーティ・ライバル削除
 	_OBJ_DEL( C03_RIVAL_01 )
 	_OBJ_DEL( C03_LEADER3_01 )
@@ -308,6 +310,8 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	
 	//ワークの値を１にし、イベント終了
 	$WK_SCENE_C03 = 1
+
+	//========================================/
 
 EVENT_END
 
