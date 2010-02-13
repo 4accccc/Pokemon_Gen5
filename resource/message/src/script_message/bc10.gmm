@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-06T19:19:00"/>
+	<create user="ohmori" host="W00223" date="2010-02-13T13:07:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="150"/>
 		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -367,315 +367,543 @@
 	</row>
 
 	<row id="bc10_01_01">
-		<language name="JPN" width="256">テスト『おれが　このブラックシティで
-いちばんつよい！▽
-それを　しょうめい　してやるぜ！▼</language>
-		<language name="JPN_KANJI" width="256">テスト『おれが　このブラックシティで
-いちばんつよい！▽
-それを　しょうめい　してやるぜ！▼</language>
+		<language name="JPN" width="256">ツバサ『とかいの　しげきで
+つよくなった　ぼくを　みてよ！▼</language>
+		<language name="JPN_KANJI" width="256">ツバサ『とかいの　しげきで
+つよくなった　ぼくを　みてよ！▼</language>
 	</row>
 
 	<row id="bc10_01_02">
-		<language name="JPN" width="256">まけたぜ……
-おれが　いちばんじゃ　ないのか</language>
-		<language name="JPN_KANJI" width="256">まけたぜ……
-おれが　いちばんじゃ　ないのか</language>
+		<language name="JPN" width="256">しげきが　たりなかったみたい……
+もっと　とかいの　かぜに　ふかれよう</language>
+		<language name="JPN_KANJI" width="256">しげきが　たりなかったみたい……
+もっと　とかいの　かぜに　ふかれよう</language>
 	</row>
 
 	<row id="bc10_01_03">
-		<language name="JPN" width="256">うーん　このまちも
-さわがしくなってきたな▼
-ホワイトフォレストで
-しずかに　くらすのもいいな</language>
-		<language name="JPN_KANJI" width="256">う〜ん　このまちも　さわがしくなってきたな
-ホワイトフォレストで　しずかに　くらすのもいいな</language>
+		<language name="JPN" width="256">ちょっと　ぼくには
+ここは　しげきが　つよすぎるかも……</language>
+		<language name="JPN_KANJI" width="256">ちょっと　ぼくには
+ここは　しげきが　つよすぎるかも……</language>
 	</row>
 
 	<row id="bc10_01_04">
-		<language name="JPN" width="256">やっぱり　ブラックシティは
-エキサイティングで　たのしいぜ！</language>
-		<language name="JPN_KANJI" width="256">やっぱり　ブラックシティは
-エキサイティングで　たのしいぜ！</language>
+		<language name="JPN" width="256">じゅうぶんな　しげきは
+ひとの　せいちょうを　はやくする▽
+そんな　ことばが　にあう　まちだよね</language>
+		<language name="JPN_KANJI" width="256">じゅうぶんな　しげきは
+ひとの　せいちょうを　はやくする▽
+そんな　ことばが　にあう　まちだよね</language>
 	</row>
 
 	<row id="bc10_02_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">アル『わたしの　メガネが
+ピーンときた　そこの　あなた▽
+ポケモンしょうぶ　しましょうよ！</language>
+		<language name="JPN_KANJI" width="256">アル『わたしの　メガネが
+ピーンときた　そこの　あなた▽
+ポケモンしょうぶ　しましょうよ！</language>
 	</row>
 
 	<row id="bc10_02_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">メ……　メガネに　ひびが　はいったわ
+なんて　ステキな　しょうぶ　なの！？</language>
+		<language name="JPN_KANJI" width="256">メ……　メガネに　ひびが　はいったわ
+なんて　ステキな　しょうぶ　なの！？</language>
 	</row>
 
 	<row id="bc10_02_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">ここで　すごした　じかんは
+すごく　たのしくて　ステキ　だったわ▼
+でも　しげき　だらけな　まいにちだと
+なんだか　しぜんが　こいしいの！</language>
+		<language name="JPN_KANJI" width="256">ここで　すごした　じかんは
+すごく　たのしくて　ステキ　だったわ▼
+でも　しげき　だらけな　まいにちだと
+なんだか　しぜんが　こいしいの！</language>
 	</row>
 
 	<row id="bc10_02_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">メガネに　うつる　たくさんの　ビル！
+めまいが　しちゃうぐらい　ステキね</language>
+		<language name="JPN_KANJI" width="256">メガネに　うつる　たくさんの　ビル！
+めまいが　しちゃうぐらい　ステキね</language>
 	</row>
 
 	<row id="bc10_03_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">ヤス『お！　キマってんな　おまえ！
+オレと　どっちが　キマってるか▽
+ポケモンしょうぶで　きめようぜ！▼</language>
+		<language name="JPN_KANJI" width="256">ヤス『お！　キマってんな　おまえ！
+オレと　どっちが　キマってるか▽
+ポケモンしょうぶで　きめようぜ！▼</language>
 	</row>
 
 	<row id="bc10_03_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">さいこうに　キマってんな　おまえ！
+オトコみちの　むこうに　いけるぜ！</language>
+		<language name="JPN_KANJI" width="256">さいこうに　キマってんな　おまえ！
+オトコみちの　むこうに　いけるぜ！</language>
 	</row>
 
 	<row id="bc10_03_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">ツッパリすぎて　つかれたぜ▼
+ホワイトフォレストに
+すこし　あこがれちゃうぜ</language>
+		<language name="JPN_KANJI" width="256">ツッパリすぎて　つかれたぜ▼
+ホワイトフォレストに
+すこし　あこがれちゃうぜ</language>
 	</row>
 
 	<row id="bc10_03_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">シティの　かぜで　オレが　かがやく！
+どうだ　いまの　オレ▽
+さいこうに　キマってるだろ？</language>
+		<language name="JPN_KANJI" width="256">シティの　かぜで　オレが　かがやく！
+どうだ　いまの　オレ▽
+さいこうに　キマってるだろ？</language>
 	</row>
 
 	<row id="bc10_04_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">アズサ『わたしと
+ポケモンしょうぶ　しまっし！▽
+ちょっと　てごわい　ですよ</language>
+		<language name="JPN_KANJI" width="256">アズサ『わたしと
+ポケモンしょうぶ　しまっし！▽
+ちょっと　てごわい　ですよ</language>
 	</row>
 
 	<row id="bc10_04_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">え～んなっ　つよいですね！▼
+わたしの　ポケモンじゃ
+はが　たちません</language>
+		<language name="JPN_KANJI" width="256">え～んなっ　つよいですね！▼
+わたしの　ポケモンじゃ
+はが　たちません</language>
 	</row>
 
 	<row id="bc10_04_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">あせくらしい　せいかつが
+ちょっと　きゅうくつに　なりました▼
+だいしぜんで　あしを　のばしたいです</language>
+		<language name="JPN_KANJI" width="256">あせくらしい　せいかつが
+ちょっと　きゅうくつに　なりました▼
+だいしぜんで　あしを　のばしたいです</language>
 	</row>
 
 	<row id="bc10_04_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">ブラックシティに　ついていくのは
+がっぱに　なりますが▽
+あんがい　おもしろいですね</language>
+		<language name="JPN_KANJI" width="256">ブラックシティに　ついていくのは
+がっぱに　なりますが▽
+あんがい　おもしろいですね</language>
 	</row>
 
 	<row id="bc10_05_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">ヨシヒサ『この　ブラックシティ　だと
+ノリが　のりに　のって▽
+ぜんぜん　しょうぶで　まけないのだ！</language>
+		<language name="JPN_KANJI" width="256">ヨシヒサ『この　ブラックシティ　だと
+ノリが　のりに　のって▽
+ぜんぜん　しょうぶで　まけないのだ！</language>
 	</row>
 
 	<row id="bc10_05_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">ノリに　のれなかったー！
+もういちど　のってくるから▽
+また　しょうぶ　してよ！</language>
+		<language name="JPN_KANJI" width="256">ノリに　のれなかったー！
+もういちど　のってくるから▽
+また　しょうぶ　してよ！</language>
 	</row>
 
 	<row id="bc10_05_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">あー！　ノリノリで　つかれたよー！
+ちょっと　ホワイトフォレストで▽
+きゅうけい　したいなー！</language>
+		<language name="JPN_KANJI" width="256">あー！　ノリノリで　つかれたよー！
+ちょっと　ホワイトフォレストで▽
+きゅうけい　したいなー！</language>
 	</row>
 
 	<row id="bc10_05_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">はってん　はってんで！
+まいにちが　ちがう　ブラックシティ！▽
+そんな　ここが　だいすきさ！
+</language>
+		<language name="JPN_KANJI" width="256">はってん　はってんで！
+まいにちが　ちがう　ブラックシティ！▽
+そんな　ここが　だいすきさ！
+</language>
 	</row>
 
 	<row id="bc10_06_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">０１２３４５６７８９０１２３４５６７
+チサト『こんにちわぁー▼
+とつぜんだけど　アタシと
+ポケモンしょうぶ　しましょうー▼
+しょうぶは　いつだって　とつぜんなの▼</language>
+		<language name="JPN_KANJI" width="256">０１２３４５６７８９０１２３４５６７
+チサト『こんにちわぁー▼
+とつぜんだけど　アタシと
+ポケモンしょうぶ　しましょうー▼
+しょうぶは　いつだって　とつぜんなの▼</language>
 	</row>
 
 	<row id="bc10_06_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">あれれ？　もう　まけちゃった
+けっこう　じしんが　あったのになぁー▽
+ごめんね　わたしの　ポケモンちゃん</language>
+		<language name="JPN_KANJI" width="256">あれれ？　もう　まけちゃった
+けっこう　じしんが　あったのになぁー▽
+ごめんね　わたしの　ポケモンちゃん</language>
 	</row>
 
 	<row id="bc10_06_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">さわがしすぎて　マイペースな
+アタシには　めが　まわっちゃうわぁー▽
+ホワイトフォレストで　おちつきたいわ</language>
+		<language name="JPN_KANJI" width="256">さわがしすぎて　マイペースな
+アタシには　めが　まわっちゃうわぁー▽
+ホワイトフォレストで　おちつきたいわ</language>
 	</row>
 
 	<row id="bc10_06_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">ちょっと　おそくて
+マイペースな　アタシだと▼
+ブラックシティは　なじめないのかなと
+しんぱい　してたけどー▽
+なんとかなるし　おもしろいわねー</language>
+		<language name="JPN_KANJI" width="256">ちょっと　おそくて
+マイペースな　アタシだと▼
+ブラックシティは　なじめないのかなと
+しんぱい　してたけどー▽
+なんとかなるし　おもしろいわねー</language>
 	</row>
 
 	<row id="bc10_07_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">ショウゴ『やあ！　こんにちは
+おれが　どこまで　つよくなったのか▽
+きみで　たしかめたいんだ　いいだろ？▼</language>
+		<language name="JPN_KANJI" width="256">ショウゴ『やあ！　こんにちは
+おれが　どこまで　つよくなったのか▽
+きみで　たしかめたいんだ　いいだろ？▼</language>
 	</row>
 
 	<row id="bc10_07_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">そうか……
+おれは　こんなところか▼
+ありがとう！　きみとの　しょうぶで
+もくひょうが　さだまったよ！</language>
+		<language name="JPN_KANJI" width="256">そうか……
+おれは　こんなところか▼
+ありがとう！　きみとの　しょうぶで
+もくひょうが　さだまったよ！</language>
 	</row>
 
 	<row id="bc10_07_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">セイ？　セイ？　セイ？？
+あれれ　きあいが　はいらないな……▼
+ここは　しゅうちゅう　できないのかも
+</language>
+		<language name="JPN_KANJI" width="256">セイ？　セイ？　セイ？？
+あれれ　きあいが　はいらないな……▼
+ここは　しゅうちゅう　できないのかも
+</language>
 	</row>
 
 	<row id="bc10_07_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">セイ！　セイ！　セイ！！
+つよいやつが　あつまる　ここは▼
+しゅぎょうを　するのに
+さいこうの　かんきょうだよ！</language>
+		<language name="JPN_KANJI" width="256">セイ！　セイ！　セイ！！
+つよいやつが　あつまる　ここは▼
+しゅぎょうを　するのに
+さいこうの　かんきょうだよ！</language>
 	</row>
 
 	<row id="bc10_08_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">ノリコ『ヤー！　テイ！　エイヤー！
+じゅんびは　オッケー▽
+てあわせ　おねがいします！▼</language>
+		<language name="JPN_KANJI" width="256">ノリコ『ヤー！　テイ！　エイヤー！
+じゅんびは　オッケー▽
+てあわせ　おねがいします！▼</language>
 	</row>
 
 	<row id="bc10_08_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">ありがとうございましたー！▼
+じぶんの　しゅぎょうが　まだまだ
+たりてないことが　わかったわ！</language>
+		<language name="JPN_KANJI" width="256">ありがとうございましたー！▼
+じぶんの　しゅぎょうが　まだまだ
+たりてないことが　わかったわ！</language>
 	</row>
 
 	<row id="bc10_08_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">しょうぶのなかで　
+まなぶことが　おおいけど▼
+そろそろ　まなんだことを
+きゅうしゅう　するために▽
+もりで　しゅぎょうが　したいわね</language>
+		<language name="JPN_KANJI" width="256">しょうぶのなかで　
+まなぶことが　おおいけど▼
+そろそろ　まなんだことを
+きゅうしゅう　するために▽
+もりで　しゅぎょうが　したいわね</language>
 	</row>
 
 	<row id="bc10_08_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">しょうぶで　まなぶことが　おおいわ！
+もっと　もっと　しょうぶしたいわ！</language>
+		<language name="JPN_KANJI" width="256">しょうぶで　まなぶことが　おおいわ！
+もっと　もっと　しょうぶしたいわ！</language>
 	</row>
 
 	<row id="bc10_09_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">ミヤオ『どうも！　おせわになってます▼
+おちかづきの　しるしに
+ポケモンしょうぶ　いかが　ですか！▼</language>
+		<language name="JPN_KANJI" width="256">ミヤオ『どうも！　おせわになってます▼
+おちかづきの　しるしに
+ポケモンしょうぶ　いかが　ですか！▼</language>
 	</row>
 
 	<row id="bc10_09_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">いよっ！
+イッシュいちの　おてまえで！</language>
+		<language name="JPN_KANJI" width="256">いよっ！
+イッシュいちの　おてまえで！</language>
 	</row>
 
 	<row id="bc10_09_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">モノが　あふれてる　ブラックシティで
+たりないものが　あるとすれば▽
+それは　いやしです！　いやされたーい</language>
+		<language name="JPN_KANJI" width="256">モノが　あふれてる　ブラックシティで
+たりないものが　あるとすれば▽
+それは　いやしです！　いやされたーい</language>
 	</row>
 
 	<row id="bc10_09_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">モノが　あふれてる　ブラックシティ！
+ここだと　しごとが　はかどりますね▽</language>
+		<language name="JPN_KANJI" width="256">モノが　あふれてる　ブラックシティ！
+ここだと　しごとが　はかどりますね▽</language>
 	</row>
 
 	<row id="bc10_10_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">ナルオ『この　ブラックシティいち
+エリートで　ある　この　ぼくに▽
+かてるわけ　ないんじゃない？▼</language>
+		<language name="JPN_KANJI" width="256">ナルオ『この　ブラックシティいち
+エリートで　ある　この　ぼくに▽
+かてるわけ　ないんじゃない？▼</language>
 	</row>
 
 	<row id="bc10_10_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">エリート　せんとう　トレーナーの
+この　ぼくが　まける！？▽
+これは　ノーカウントだよ　ノーカン！</language>
+		<language name="JPN_KANJI" width="256">エリート　せんとう　トレーナーの
+この　ぼくが　まける！？▽
+これは　ノーカウントだよ　ノーカン！</language>
 	</row>
 
 	<row id="bc10_10_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">シティうまれ　シティそだち　だけどね
+しぜんにも　あこがれるわけだよ▽
+ホワイトフォレストに　いきたいよ</language>
+		<language name="JPN_KANJI" width="256">シティうまれ　シティそだち　だけどね
+しぜんにも　あこがれるわけだよ▽
+ホワイトフォレストに　いきたいよ</language>
 	</row>
 
 	<row id="bc10_10_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">シティの　クールさが
+ぼくを　ひきたてる　スパイスだね</language>
+		<language name="JPN_KANJI" width="256">シティの　クールさが
+ぼくを　ひきたてる　スパイスだね</language>
 	</row>
 
 	<row id="bc10_11_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">カワセ『しょうぶを　するまえに
+ふかく　しんこきゅう……▽
+あたまが　さえたら　いざ　しょうぶ！▼</language>
+		<language name="JPN_KANJI" width="256">カワセ『しょうぶを　するまえに
+ふかく　しんこきゅう……▽
+あたまが　さえたら　いざ　しょうぶ！▼</language>
 	</row>
 
 	<row id="bc10_11_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">かんがえすぎて　まけちゃった……
+ときには　からっぽも　いいかもね</language>
+		<language name="JPN_KANJI" width="256">かんがえすぎて　まけちゃった……
+ときには　からっぽも　いいかもね</language>
 	</row>
 
 	<row id="bc10_11_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">だいぶ　ろんぶんが　いきづまったの
+ホワイトフォレストで　いやされたいわ</language>
+		<language name="JPN_KANJI" width="256">だいぶ　ろんぶんが　いきづまったの
+ホワイトフォレストで　いやされたいわ</language>
 	</row>
 
 	<row id="bc10_11_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">エキサイトな　ブラックシティに
+しげき　されて▽
+アイディアが　たくさん　でるわ</language>
+		<language name="JPN_KANJI" width="256">エキサイトな　ブラックシティに
+しげき　されて▽
+アイディアが　たくさん　でるわ</language>
 	</row>
 
 	<row id="bc10_12_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">ユーキ『ポケモントレーナーとして
+たびを　はじめてから▽
+あまり　まけたことが　ないのよね……▼
+あなた　わたしを　まかして　くれる？▼</language>
+		<language name="JPN_KANJI" width="256">ユーキ『ポケモントレーナーとして
+たびを　はじめてから▽
+あまり　まけたことが　ないのよね……▼
+あなた　わたしを　まかして　くれる？▼</language>
 	</row>
 
 	<row id="bc10_12_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">ほんとうに　まかしちゃったのね……
+おかしいな　すこし　くやしいの</language>
+		<language name="JPN_KANJI" width="256">ほんとうに　まかしちゃったのね……
+おかしいな　すこし　くやしいの</language>
 	</row>
 
 	<row id="bc10_12_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">どんなものも　さいごは
+しぜんに　かえる　らしいわ▼
+だから　ホワイトフォレストは
+おちつくのかも……</language>
+		<language name="JPN_KANJI" width="256">どんなものも　さいごは
+しぜんに　かえる　らしいわ▼
+だから　ホワイトフォレストは
+おちつくのかも……</language>
 	</row>
 
 	<row id="bc10_12_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">しぜんの　ちからを　おそれたから
+ひとは　たてものを　つくったの▽
+だから　ここは　おちつくの……</language>
+		<language name="JPN_KANJI" width="256">しぜんの　ちからを　おそれたから
+ひとは　たてものを　つくったの▽
+だから　ここは　おちつくの……</language>
 	</row>
 
 	<row id="bc10_13_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">マサシ『おー！　こんにちは！▼
+ここで　あったのも　なにかの　えん！
+ポケモンしょうぶを　しようよ！▼</language>
+		<language name="JPN_KANJI" width="256">マサシ『おー！　こんにちは！▼
+ここで　あったのも　なにかの　えん！
+ポケモンしょうぶを　しようよ！▼</language>
 	</row>
 
 	<row id="bc10_13_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">ブラックシティでの　しょうぶは
+テンションが　あがっちゃうね！</language>
+		<language name="JPN_KANJI" width="256">ブラックシティでの　しょうぶは
+テンションが　あがっちゃうね！</language>
 	</row>
 
 	<row id="bc10_13_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">うーん　そろそろ　
+ほかのばしょも　みてみたいな　</language>
+		<language name="JPN_KANJI" width="256">うーん　そろそろ　
+ほかのばしょも　みてみたいな　</language>
 	</row>
 
 	<row id="bc10_13_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">ブラックシティは　みるところが
+おおくて　あきが　こないよ！</language>
+		<language name="JPN_KANJI" width="256">ブラックシティは　みるところが
+おおくて　あきが　こないよ！</language>
 	</row>
 
 	<row id="bc10_14_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">カナ『キョロキョロして　あるいてると
+いろんな　トレーナーと▽
+めが　あっちゃうね▼
+わたしと　めがあった　あなたは
+どんな　ポケモンを　だすのかな？</language>
+		<language name="JPN_KANJI" width="256">カナ『キョロキョロして　あるいてると
+いろんな　トレーナーと▽
+めが　あっちゃうね▼
+わたしと　めがあった　あなたは
+どんな　ポケモンを　だすのかな？</language>
 	</row>
 
 	<row id="bc10_14_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">じしんが　ないときは
+したみて　あるく▽
+これも　ひとつの　ちえよね</language>
+		<language name="JPN_KANJI" width="256">じしんが　ないときは
+したみて　あるく▽
+これも　ひとつの　ちえよね</language>
 	</row>
 
 	<row id="bc10_14_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">まいにち　ザワザワ　してると
+きぶんが　おちつかないわ▽
+しずかな　ところで　ゆっくりしたいな</language>
+		<language name="JPN_KANJI" width="256">まいにち　ザワザワ　してると
+きぶんが　おちつかないわ▽
+しずかな　ところで　ゆっくりしたいな</language>
 	</row>
 
 	<row id="bc10_14_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">つねに　ぜんしん　している　かんじ
+ブラックシティは　すごく　クールよね</language>
+		<language name="JPN_KANJI" width="256">つねに　ぜんしん　している　かんじ
+ブラックシティは　すごく　クールよね</language>
 	</row>
 
 	<row id="bc10_15_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">オーヤブ『おお……　みなさい！▼
+わたしの　ポケモンが
+きみと　たたかいたいと　いっておるよ</language>
+		<language name="JPN_KANJI" width="256">オーヤブ『おお……　みなさい！▼
+わたしの　ポケモンが
+きみと　たたかいたいと　いっておるよ</language>
 	</row>
 
 	<row id="bc10_15_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">わたしの　ポケモンが
+いい　しょうぶ　だったと　いっている▼
+わたしの　ポケモンは
+じつに　しんしだと　おもわないかね</language>
+		<language name="JPN_KANJI" width="256">わたしの　ポケモンが
+いい　しょうぶ　だったと　いっている▼
+わたしの　ポケモンは
+じつに　しんしだと　おもわないかね</language>
 	</row>
 
 	<row id="bc10_15_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">わたしは　ここが　だいすき　だが
+わたしの　ポケモンは　ふまん　そうだ▽
+ホワイトフォレストに　つれていきたいな</language>
+		<language name="JPN_KANJI" width="256">わたしは　ここが　だいすき　だが
+わたしの　ポケモンは　ふまん　そうだ▽
+ホワイトフォレストに　つれていきたいな</language>
 	</row>
 
 	<row id="bc10_15_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">やはり　わたしには
+ここが　あっている▼
+へんかし　はってんする　ようすは
+じつに　きもちが　たかなる！</language>
+		<language name="JPN_KANJI" width="256">やはり　わたしには
+ここが　あっている▼
+へんかし　はってんする　ようすは
+じつに　きもちが　たかなる！</language>
 	</row>
 
 	<row id="bc10_16_01">
