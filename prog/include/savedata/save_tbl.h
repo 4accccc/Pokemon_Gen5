@@ -132,7 +132,7 @@ enum{
   EXGMDATA_ID_CGEAR_PICTURE,
 };
 
-///外部セーブデータ識別ID：CGEARピクチャー
+///外部セーブデータ識別ID：バトル検定
 enum{
   EXGMDATA_ID_BATTLE_EXAMINATION,
 };
