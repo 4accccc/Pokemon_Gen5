@@ -159,12 +159,15 @@ init_flags:
 	//D02R0101:アーティ・盗難イベントまで非表示
 	_FLAG_SET( FV_D02R0101_LEADER3 )
 	
-  //バトルサブウェイ　受付、パートナー
+	//バトルサブウェイ　受付、パートナー
 	_FLAG_SET( FV_BSUBWAY_RECEIPT_PARTNER )
-  //バトルサブウェイ　ホーム、パートナー
+	//バトルサブウェイ　ホーム、パートナー
 	_FLAG_SET( FV_C04R0111_PARTNER )
-  //バトルサブウェイ　ホーム、NPC
-  _FLAG_SET( FV_C04R0111_NPC )
+	//バトルサブウェイ　ホーム、NPC
+	_FLAG_SET( FV_C04R0111_NPC )
+	
+	//ライモンシティのサポートパパ（ミュージカル誘導イベントまで非表示）
+	_FLAG_SET( FV_C04_SUPPORTPAPA_01 )
 
 
 }  

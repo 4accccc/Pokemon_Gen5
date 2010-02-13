@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0201.h"
-  //.include  "c04r0201.h"
+  .include  "c04r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -29,16 +29,202 @@ _EVENT_DATA    ev_c04r0201_middleman1_01
 _EVENT_DATA    ev_c04r0201_stylistpoke_01
 _EVENT_DATA    ev_c04r0201_gentleman_01
 _EVENT_DATA    ev_c04r0201_man2_01
+_EVENT_DATA    ev_c04R0201_init
+_EVENT_DATA    ev_scene_c04r0201_musical_first
 _EVENT_DATA_END
 
-/**************************************************************/
-/* C04R0201_OWNER_01の何も条件を満たしていないとき            */
-/**************************************************************/
-EVENT_START		ev_c04r0201_owner_01
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_01 )
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_c04R0201_init
+	
+	//ミュージカル初回イベント用
+	IF $WK_SCENE_C04R0201 == 0 THEN
+		//オーナーの位置を変更
+		_OBJ_POS_CHANGE( C04R0201_OWNER_01, 14, 0, 13, DIR_UP )
+		
+		//初回イベント用のサポートを配置
+		_OBJ_ADD_EX( 13, 19, DIR_UP, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+		
+	ENDIF
+
+INIT_EVENT_END
+
+
+/************************************************************/
+/*				ミュージカル初回訪問イベント				*/
+/************************************************************/
+EVENT_START		ev_scene_c04r0201_musical_first
+	
+	//サポート＆主人公：受付前へ進む
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_first_support_walk_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_first_player_walk_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ね すごいでしょ！
+	_BALLOONWIN_OBJMSG( msg_c04r0201_white_01, MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	//オーナー：近寄ってくる
+	_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_come_01 )
+	_TIME_WAIT( 8 )
+	//サポート：上を見る
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	//やあ きみたち！
+	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_01, C04R0201_OWNER_01 )
+	_MSGWIN_CLOSE()
+	
+	//オーナー：サポートと主人公を見る（いったりきたり）
+	_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//きみたち いいかんじ！
+	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_02, C04R0201_OWNER_01 )
+	_MSGWIN_CLOSE()
+	
+	//グッズケース入手【仮】アクセサリー入れを渡しておきます
+	_ITEM_EVENT_KEYWAIT( ITEM_AKUSESARIIIRE, 1 )
+	
+	//そのグッズケースの中に
+	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_03, C04R0201_OWNER_01 )
+	_MSGWIN_CLOSE()
+	
+	//ドレスアップ処理：呼び出し【仮】
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	//おおお！二人とも素晴らしい
+	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_04, C04R0201_OWNER_01 )
+	_MSGWIN_CLOSE()
+	
+	//私はね… …楽しみにしてるよ
+	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_05, C04R0201_OWNER_01 )
+	_MSGWIN_CLOSE()
+	
+	//オーナー：去る
+	_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_goaway_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//オーナーを元の位置へ配置
+	_OBJ_POS_CHANGE( C04R0201_OWNER_01, 17, 6, 3, DIR_DOWN )
+	
+	//サポート：主人公を見る
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//うーん どうしようかな
+	_BALLOONWIN_OBJMSG( msg_c04r0201_white_03, MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	//サポート：去る
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_first_support_goaway_01 )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//サポート消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	//========================================//
+	//イベント無効
+	$WK_SCENE_C04R0201 = 1
+	
+	//C04フィールド：サポートパパイベントを有効にする
+	$WK_SCENE_C04 = 2
+	//サポートパパを表示
+	_FLAG_RESET( FV_C04_SUPPORTPAPA_01 )
+	
+	//========================================//
+	
 	
 EVENT_END
+
+//--------------------------------------------------------------------
+//方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート＆主人公：受付前へ進む
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_support_walk_01
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_first_player_walk_01
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//オーナー：主人公前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_owner_come_01
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//オーナー：主人公たちを見てウロウロ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_owner_move_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//オーナー：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_owner_goaway_01
+	_ANIME_DATA	AC_WALK_L_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_support_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*				ミュージカル：オーナー						*/
+/************************************************************/
+EVENT_START		ev_c04r0201_owner_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_01 )
+EVENT_END
+
 
 /**************************************************************/
 /* C04R0201_DANCER_02の会話用イベントスクリプト               */

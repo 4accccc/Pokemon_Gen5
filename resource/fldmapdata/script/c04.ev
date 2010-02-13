@@ -654,11 +654,6 @@ ev_map_change_musical:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_music_player_move_02 )
 	_OBJ_ANIME_WAIT()
 	
-	//========================================//
-	//サポートパパイベントを有効にする【仮】ミュージカル初回イベント後に値を変えた方が良い
-	$WK_SCENE_C04 = 2
-	//========================================//
-	
 	//ミュージカル内部へマップ遷移
 	_MAP_CHANGE( ZONE_ID_C04R0201, 14, 20, DIR_UP )
 

@@ -42,7 +42,10 @@ EVENT_START	ev_scene_c04r0101_entry
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_in )
 	_OBJ_ANIME_WAIT()
 	
-	$WK_OTHER_STATION_CONNECT = 1
+	//========================================//
+	//シーンチェンジを無効にする
+	$WK_OTHER_STATION_CONNECT = 0
+	//========================================//
 	
 EVENT_END
 
