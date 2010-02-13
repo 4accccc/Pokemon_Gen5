@@ -46,6 +46,9 @@
 //新規接続時のお絵描き共有
 #define CTVT_COMM_SHARE_DRAW_BUFF (0)
 
+//ビーコンのデータの生存時間(呼び出し時間
+#define CTVT_COMM_BEACON_CALL_TIME (15*60)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -162,6 +165,8 @@ struct _CTVT_COMM_WORK
   BOOL sendingDrawBuffer;
   BOOL postDrawBuffer;
 #endif //CTVT_COMM_SHARE_DRAW_BUFF
+
+  u16 beaconDataTime;
   
   BOOL updateTalkMember;
   u8 tempTalkMember;
@@ -226,7 +231,8 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->photoReqBit = 0;
   commWork->mode = CCIM_NONE;
   commWork->nextMode = CCIM_NONE;
-  
+  commWork->beaconDataTime = 0;
+
   for( i=0;i<CTVT_MEMBER_NUM;i++ )
   {
     CTVT_COMM_ClearMemberState( work , commWork , &commWork->member[i] );
@@ -393,6 +399,10 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     {
       commWork->state = CCS_WAIT_NEGOTIATION;
     }
+    if( commWork->mode != commWork->nextMode )
+    {
+      commWork->state = CCS_DISCONNECT;
+    }
     break;
 
   case CCS_WAIT_NEGOTIATION:
@@ -401,6 +411,10 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
       if( GFL_NET_HANDLE_IsNegotiation( selfHandle ) == TRUE )
       {
         commWork->state = CCS_CONNECT;
+      }
+      if( commWork->mode != commWork->nextMode )
+      {
+        commWork->state = CCS_DISCONNECT;
       }
     }
     break;
@@ -489,6 +503,22 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 
   }
   
+  if( commWork->beaconDataTime > 0 )
+  {
+    commWork->beaconDataTime--;
+    //ビーコンリセット
+    if( commWork->beaconDataTime == 0 )
+    {
+      u8 i,j;
+      for( i=0;i<3;i++ )
+      {
+        for( j=0;j<6;j++ )
+        {
+          commWork->beacon.callTarget[i][j] = 0xFF;
+        }
+      }
+    }
+  }
 }
 
 #pragma mark [>comm system
@@ -706,6 +736,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       commWork->connectNum = connectNum;
       commWork->beacon.connectNum = connectNum;
     }
+    
   }
   
   //メンバーの更新
@@ -865,6 +896,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
 //--------------------------------------------------------------
 static void CTVT_COMM_UpdateScan( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
+  WHSetScanWaitFrame(5);
   #if 0
   u8 i;
   WIH_DWC_MainLoopScanBeaconData();
@@ -1463,3 +1495,18 @@ void CTVT_COMM_AddDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     commWork->drawBufNum++;
   }
 }
+
+void CTVT_COMM_ResetBeaconTime( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  commWork->beaconDataTime = CTVT_COMM_BEACON_CALL_TIME;
+}
+
+const BOOL CTVT_COMM_IsEndBeaconTime( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  if( commWork->beaconDataTime == 0 )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+

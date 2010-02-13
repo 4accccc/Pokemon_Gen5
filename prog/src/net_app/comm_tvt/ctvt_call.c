@@ -51,7 +51,7 @@
 
 #define CTVT_CALL_SCROLL_LEN (CTVT_CALL_BAR_HEIGHT*CTVT_CALL_SEARCH_NUM-20*8)
 
-#define CTVT_CALL_CHECK_X (16)
+#define CTVT_CALL_CHECK_X (18)
 #define CTVT_CALL_CAMERA_X (200)
 
 #define CTVT_CALL_BEACONSIZE (sizeof(GBS_BEACON)<sizeof(CTVT_COMM_BEACON)?sizeof(CTVT_COMM_BEACON):sizeof(GBS_BEACON))
@@ -71,6 +71,9 @@
 #define CTVT_CALL_SCROLL_HIT_WIDTH  (12)
 #define CTVT_CALL_SCROLL_HIT_HEIGHT (12)
 
+#define CTVT_CALL_MSG_ANM_SPEED (30)
+#define CTVT_CALL_MSG_ANM_NUM (4)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -86,7 +89,8 @@ typedef enum
 
   CCS_MAIN,
   CCS_WAIT_ANIME,
-  CCS_WAIT_CONNECT,
+  CCS_WAIT_CONNECT_JOIN,
+  CCS_WAIT_CONNECT_CALL,
 
 }CTVT_CALL_STATE;
 
@@ -151,7 +155,11 @@ struct _CTVT_CALL_WORK
   APP_TASKMENU_WIN_WORK *barMenuWork;
 
   BOOL  isUpdateMsgWin;
+  BOOL  isUpdateCallMsgWin;
   GFL_BMPWIN *msgWin;
+  GFL_BMPWIN *callMsgWin;
+  u8  callAnmCnt;
+  u8  callAnmIdx;
 
   CTVT_CALL_BAR_WORK barWork[CTVT_CALL_BAR_NUM];
   CTVT_CALL_MEMBER_WORK memberData[CTVT_CALL_SEARCH_NUM];
@@ -173,6 +181,7 @@ static void CTVT_CALL_UpdateBarPosFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *ca
 
 static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const STRCODE *name , const u32 id , const u32 sex );
 static void CTVT_CALL_DispMessage( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const u16 msgId );
+static void CTVT_CALL_DispCallMessage( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const u16 msgId );
 
 
 //--------------------------------------------------------------
@@ -298,6 +307,10 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
                                         1 , 21 , 21 , 2 ,
                                         CTVT_PAL_BG_SUB_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
+  callWork->callMsgWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
+                                        2 , 9 , 28 , 2 ,
+                                        CTVT_PAL_BG_SUB_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
   {
     u8 i;
     for( i=0;i<3;i++ )
@@ -312,6 +325,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   callWork->isUpdateBarPos = FALSE;
   callWork->isHoldScroll = FALSE;
   callWork->isUpdateMsgWin = FALSE;
+  callWork->isUpdateCallMsgWin = FALSE;
   callWork->barState = CCBS_NONE;
   callWork->barMenuWork = NULL;
 
@@ -334,6 +348,8 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   
   GFL_BMPWIN_ClearTransWindow( callWork->msgWin );
   GFL_BMPWIN_Delete( callWork->msgWin );
+  GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
+  GFL_BMPWIN_Delete( callWork->callMsgWin );
   
   GFL_CLACT_WK_Remove( callWork->clwkScrollBar );
   GFL_CLACT_WK_Remove( callWork->clwkReturn );
@@ -385,7 +401,6 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     if( WIPE_SYS_EndCheck() == TRUE )
     {
       callWork->state = CCS_MAIN;
-      WHSetScanWaitFrame(5);
     }
     break;
 
@@ -440,13 +455,25 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
           CTVT_COMM_SetMode( work , commWork , CCIM_CHILD );
           CTVT_COMM_SetMacAddress( work , commWork , callWork->memberData[ callWork->checkIdxParent ].macAddress );
-          callWork->state = CCS_WAIT_CONNECT;
+          CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
+          callWork->state = CCS_WAIT_CONNECT_JOIN;
+          callWork->callAnmCnt = 0;
+          callWork->callAnmIdx = 0;
+
+          APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
+          callWork->barMenuWork = NULL;
         }
         else
         {
           CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-          callWork->state = CCS_FADEOUT;
+          callWork->state = CCS_WAIT_CONNECT_CALL;
+          CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_07 );
           CTVT_COMM_SetMode( work , commWork , CCIM_PARENT );
+          callWork->callAnmCnt = 0;
+          callWork->callAnmIdx = 0;
+
+          APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
+          callWork->barMenuWork = NULL;
           //ビーコンのセット
           {
             u8 i;
@@ -469,18 +496,64 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
                 }
               }
             }
+            CTVT_COMM_ResetBeaconTime( work , commWork );
           }
         }
+        GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
       }
     }
     break;
     
-  case CCS_WAIT_CONNECT:
+  case CCS_WAIT_CONNECT_JOIN:
+  case CCS_WAIT_CONNECT_CALL:
+    callWork->callAnmCnt++;
+    if( callWork->callAnmCnt > CTVT_CALL_MSG_ANM_SPEED &&
+        callWork->isUpdateCallMsgWin == FALSE )
+    {
+      callWork->callAnmCnt = 0;
+      callWork->callAnmIdx++;
+      if( callWork->callAnmIdx >= CTVT_CALL_MSG_ANM_NUM )
+      {
+        callWork->callAnmIdx = 0;
+      }
+      
+      if( callWork->state == CCS_WAIT_CONNECT_JOIN )
+      {
+        CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11+callWork->callAnmIdx );
+      }
+      else
+      {
+        CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_07+callWork->callAnmIdx );
+      }
+    }
     {
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       if( COMM_TVT_GetConnectNum( work ) >= 2 )
       {
         callWork->state = CCS_FADEOUT;
+      }
+    }
+    //時間切れ。戻る
+    if( callWork->state == CCS_WAIT_CONNECT_CALL )
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      if( CTVT_COMM_IsEndBeaconTime( work , commWork ) == TRUE )
+      {
+        u8 i;
+        for( i=0;i<3;i++ )
+        {
+          callWork->checkIdx[i] = CTVT_CALL_INVALID_NO;
+        }
+        callWork->checkIdxParent = CTVT_CALL_INVALID_NO;
+
+        callWork->state = CCS_MAIN;
+        BmpWinFrame_Clear( callWork->callMsgWin , WINDOW_TRANS_ON_V );
+        GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
+        CTVT_COMM_SetMode( work , commWork , CCIM_SCAN );
+
+        GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN );
+        CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
+        callWork->barState = CCBS_NONE;
       }
     }
     break;
@@ -558,6 +631,17 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       GFL_BMPWIN_MakeScreen( callWork->msgWin );
       GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
       callWork->isUpdateMsgWin = FALSE;
+    }
+  }
+  if( callWork->isUpdateCallMsgWin == TRUE )
+  {
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( callWork->callMsgWin )) == FALSE )
+    {
+      GFL_BMPWIN_TransVramCharacter( callWork->callMsgWin );
+      GFL_BMPWIN_MakeScreen( callWork->callMsgWin );
+      GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
+      callWork->isUpdateCallMsgWin = FALSE;
     }
   }
 
@@ -839,149 +923,154 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       callWork->memberData[i].isLost = TRUE;
     }
   }
-  for( i=0;i<CTVT_COMM_BEACON_NUM;i++ )
+  
+  if( callWork->state != CCS_WAIT_CONNECT_JOIN &&
+      callWork->state != CCS_WAIT_CONNECT_CALL )
   {
-    BOOL isEntry = FALSE;
-    BOOL isRefresh = FALSE;
-    void *beaconData = GFL_NET_GetBeaconData(i);
-    if( beaconData != NULL )
+    for( i=0;i<CTVT_COMM_BEACON_NUM;i++ )
     {
-      u8 registNo = 0xFF;
-      u8 mem;
-      u8 *macAddress = GFL_NET_GetBeaconMacAddress( i );
-      const GameServiceID serviceType = GFL_NET_WLGetUserGameServiceId( i );
-      if( serviceType == WB_NET_FIELDMOVE_SERVICEID )
+      BOOL isEntry = FALSE;
+      BOOL isRefresh = FALSE;
+      void *beaconData = GFL_NET_GetBeaconData(i);
+      if( beaconData != NULL )
       {
-        //フィールドビーコンをはじく
-        GBS_BEACON *becData = beaconData;
-        if( becData->beacon_type != GBS_BEACONN_TYPE_PALACE &&
-            becData->beacon_type != GBS_BEACONN_TYPE_INFO )
+        u8 registNo = 0xFF;
+        u8 mem;
+        u8 *macAddress = GFL_NET_GetBeaconMacAddress( i );
+        const GameServiceID serviceType = GFL_NET_WLGetUserGameServiceId( i );
+        if( serviceType == WB_NET_FIELDMOVE_SERVICEID )
         {
-          continue;
-        }
-      }
-      {
-        BOOL isFriend;
-        //友達かチェック
-        if( serviceType == WB_NET_COMM_TVT )
-        {
-          CTVT_COMM_BEACON *becData = beaconData;
-          const STRCODE *name = MyStatus_GetMyName( &becData->myStatus );
-          const u32 sex = MyStatus_GetMySex( &becData->myStatus );
-          const u32 id  = MyStatus_GetID( &becData->myStatus );
-          isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
-        }
-        else
-        {
+          //フィールドビーコンをはじく
           GBS_BEACON *becData = beaconData;
-          const STRCODE *name = becData->info.name;
-          const u32 sex = becData->info.sex;
-          const u32 id  = becData->info.trainer_id;
-          isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
-        }
-        if( isFriend == FALSE )
-        {
-          continue;
-        }
-      }
-
-      for( mem=0;mem<CTVT_CALL_SEARCH_NUM;mem++ )
-      {
-        if( callWork->memberData[mem].isEnable == TRUE )
-        {
-          //すでに登録済みか？
-          u8 k;
-          BOOL isSame = TRUE;
-          for( k=0;k<6;k++ )
+          if( becData->beacon_type != GBS_BEACONN_TYPE_PALACE &&
+              becData->beacon_type != GBS_BEACONN_TYPE_INFO )
           {
-            if( macAddress[k] != callWork->memberData[mem].macAddress[k] )
-            {
-              isSame = FALSE;
-              break;
-            }
+            continue;
           }
-          if( isSame == TRUE )
+        }
+        {
+          BOOL isFriend;
+          //友達かチェック
+          if( serviceType == WB_NET_COMM_TVT )
           {
-            //登録済だった
-            callWork->memberData[mem].isLost = FALSE;
-            isEntry = TRUE;
-            //情報が変わっていないか？
-            if( serviceType != callWork->memberData[mem].serviceType )
+            CTVT_COMM_BEACON *becData = beaconData;
+            const STRCODE *name = MyStatus_GetMyName( &becData->myStatus );
+            const u32 sex = MyStatus_GetMySex( &becData->myStatus );
+            const u32 id  = MyStatus_GetID( &becData->myStatus );
+            isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
+          }
+          else
+          {
+            GBS_BEACON *becData = beaconData;
+            const STRCODE *name = becData->info.name;
+            const u32 sex = becData->info.sex;
+            const u32 id  = becData->info.trainer_id;
+            isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
+          }
+          if( isFriend == FALSE )
+          {
+            continue;
+          }
+        }
+
+        for( mem=0;mem<CTVT_CALL_SEARCH_NUM;mem++ )
+        {
+          if( callWork->memberData[mem].isEnable == TRUE )
+          {
+            //すでに登録済みか？
+            u8 k;
+            BOOL isSame = TRUE;
+            for( k=0;k<6;k++ )
             {
-              isEntry = FALSE;
-              isRefresh = TRUE;
-              registNo = mem;
+              if( macAddress[k] != callWork->memberData[mem].macAddress[k] )
+              {
+                isSame = FALSE;
+                break;
+              }
             }
-            if( serviceType == WB_NET_COMM_TVT )
+            if( isSame == TRUE )
             {
-              CTVT_COMM_BEACON *newBecData = beaconData;
-              CTVT_COMM_BEACON *becData = callWork->memberData[mem].beacon;
-              if( becData->connectNum != newBecData->connectNum )
+              //登録済だった
+              callWork->memberData[mem].isLost = FALSE;
+              isEntry = TRUE;
+              //情報が変わっていないか？
+              if( serviceType != callWork->memberData[mem].serviceType )
               {
                 isEntry = FALSE;
                 isRefresh = TRUE;
                 registNo = mem;
               }
+              if( serviceType == WB_NET_COMM_TVT )
+              {
+                CTVT_COMM_BEACON *newBecData = beaconData;
+                CTVT_COMM_BEACON *becData = callWork->memberData[mem].beacon;
+                if( becData->connectNum != newBecData->connectNum )
+                {
+                  isEntry = FALSE;
+                  isRefresh = TRUE;
+                  registNo = mem;
+                }
+              }
+              break;
             }
-            break;
-          }
-        }
-        else
-        {
-          //空き番号を確保しておく
-          if( registNo == 0xFF )
-          {
-            registNo = mem;
-          }
-        }
-      }
-      
-      if( isEntry == FALSE )
-      {
-        //未登録だった
-        if( registNo != 0xFF )
-        {
-          //空きがあったので登録
-          //もしくは情報更新
-          u8 k;
-
-          callWork->memberData[registNo].isEnable = TRUE;
-          callWork->memberData[registNo].isLost = FALSE;
-          callWork->memberData[registNo].isCheck = FALSE;
-          for( k=0;k<6;k++ )
-          {
-            callWork->memberData[registNo].macAddress[k] = macAddress[k];
-          }
-          if( serviceType == WB_NET_COMM_TVT )
-          {
-            callWork->memberData[registNo].serviceType = WB_NET_COMM_TVT;
-            GFL_STD_MemCopy( beaconData , callWork->memberData[registNo].beacon , sizeof(CTVT_COMM_BEACON) );
           }
           else
           {
-            callWork->memberData[registNo].serviceType = WB_NET_FIELDMOVE_SERVICEID;
-            GFL_STD_MemCopy( beaconData , callWork->memberData[registNo].beacon , sizeof(GBS_BEACON) );
-          }
-          
-          if( isRefresh == FALSE )
-          {
-            for( k=0;k<CTVT_CALL_BAR_NUM;k++ )
+            //空き番号を確保しておく
+            if( registNo == 0xFF )
             {
-              if( callWork->barWork[k].memberWorkNo == CTVT_CALL_INVALID_NO )
+              registNo = mem;
+            }
+          }
+        }
+        
+        if( isEntry == FALSE )
+        {
+          //未登録だった
+          if( registNo != 0xFF )
+          {
+            //空きがあったので登録
+            //もしくは情報更新
+            u8 k;
+
+            callWork->memberData[registNo].isEnable = TRUE;
+            callWork->memberData[registNo].isLost = FALSE;
+            callWork->memberData[registNo].isCheck = FALSE;
+            for( k=0;k<6;k++ )
+            {
+              callWork->memberData[registNo].macAddress[k] = macAddress[k];
+            }
+            if( serviceType == WB_NET_COMM_TVT )
+            {
+              callWork->memberData[registNo].serviceType = WB_NET_COMM_TVT;
+              GFL_STD_MemCopy( beaconData , callWork->memberData[registNo].beacon , sizeof(CTVT_COMM_BEACON) );
+            }
+            else
+            {
+              callWork->memberData[registNo].serviceType = WB_NET_FIELDMOVE_SERVICEID;
+              GFL_STD_MemCopy( beaconData , callWork->memberData[registNo].beacon , sizeof(GBS_BEACON) );
+            }
+            
+            if( isRefresh == FALSE )
+            {
+              for( k=0;k<CTVT_CALL_BAR_NUM;k++ )
               {
-                callWork->barWork[k].memberWorkNo = registNo;
-                callWork->memberData[registNo].barWorkNo = k;
-                callWork->barWork[k].isUpdate = TRUE;
-                break;
+                if( callWork->barWork[k].memberWorkNo == CTVT_CALL_INVALID_NO )
+                {
+                  callWork->barWork[k].memberWorkNo = registNo;
+                  callWork->memberData[registNo].barWorkNo = k;
+                  callWork->barWork[k].isUpdate = TRUE;
+                  break;
+                }
               }
             }
+            else
+            {
+              const u8 workNo = callWork->memberData[registNo].barWorkNo;
+              callWork->barWork[ workNo ].isUpdate = TRUE;
+            }
+            isUpdate = TRUE;
           }
-          else
-          {
-            const u8 workNo = callWork->memberData[registNo].barWorkNo;
-            callWork->barWork[ workNo ].isUpdate = TRUE;
-          }
-          isUpdate = TRUE;
         }
       }
     }
@@ -1134,7 +1223,7 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
         GFL_STR_SetStringCodeOrderLength( str , becData->info.name , CTVT_COMM_NAME_LEN );
       }
       PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( barWork->strWin ) , 
-              0 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+              6 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
       GFL_STR_DeleteBuffer( str );
 
       //ID
@@ -1274,7 +1363,7 @@ static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CA
   WIFI_LIST *wifiList = GAMEDATA_GetWiFiList( initWork->gameData );
   
 #if PM_DEBUG
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  //if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   {
     return TRUE;
   }
@@ -1326,6 +1415,26 @@ static void CTVT_CALL_DispMessage( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWor
   BmpWinFrame_Write( callWork->msgWin , WINDOW_TRANS_OFF , 
                       CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME );
   callWork->isUpdateMsgWin = TRUE;
+
+}
+
+
+static void CTVT_CALL_DispCallMessage( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const u16 msgId )
+{
+  GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
+  GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
+  PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+  STRBUF *str;
+  
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( callWork->callMsgWin) , 0xF );
+  str = GFL_MSG_CreateString( msgHandle , msgId );
+  PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( callWork->callMsgWin ) , 
+          0 , 0 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
+  GFL_STR_DeleteBuffer( str );
+
+  BmpWinFrame_Write( callWork->callMsgWin , WINDOW_TRANS_OFF , 
+                      CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME );
+  callWork->isUpdateCallMsgWin = TRUE;
 
 }
 

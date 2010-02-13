@@ -984,12 +984,14 @@ static void CTVT_TALK_UpdateVoiceBar( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
     { 77, 160 , 0 , 48 }, //‰º
     {GFL_UI_TP_HIT_END,0,0,0}
   };
-  const u8 ret = GFL_UI_TP_HitTrg( hitTbl );
+  const int ret = GFL_UI_TP_HitTrg( hitTbl );
+  BOOL isTouhc = FALSE;
   
   if( ret == 0 || ret == 1 )
   {
     if( talkWork->sliderPos < CTVT_PITCH_MAX )
     {
+      isTouhc = TRUE;
       talkWork->sliderPos++;
       GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_PITCH_1+talkWork->sliderPos );
     }
@@ -999,9 +1001,17 @@ static void CTVT_TALK_UpdateVoiceBar( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
   {
     if( talkWork->sliderPos > CTVT_PITCH_MIN )
     {
+      isTouhc = TRUE;
       talkWork->sliderPos--;
       GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_PITCH_1+talkWork->sliderPos );
     }
+  }
+  
+  if( isTouhc == TRUE )
+  {
+    const int pitch = (talkWork->sliderPos - CTVT_PITCH_DEFAULT)*64;
+    PMSND_PlaySE_byPlayerID( CTVT_SND_TOUCH , SEPLAYER_SE1 );
+    PMSND_SetStatusSE_byPlayerID( SEPLAYER_SE1 , PMSND_NOEFFECT , pitch , PMSND_NOEFFECT );
   }
 }
 

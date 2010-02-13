@@ -82,6 +82,7 @@
 //âπê∫çƒê∂ë¨ìxÇÃè„å¿ÅEâ∫å¿
 #define CTVT_PITCH_MAX (8)
 #define CTVT_PITCH_MIN (0)
+#define CTVT_PITCH_DEFAULT (4)
 #define CTVT_PITCH_NUM (9)
 
 //======================================================================
