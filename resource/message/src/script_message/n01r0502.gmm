@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T18:42:40"/>
+	<create user="matsumiya" host="W00224" date="2010-02-13T20:22:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="186" right="1992" bottom="814" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="392" right="2006" bottom="1020" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1366,8 +1366,16 @@
 ・カットイン
 ・0＝主人公名前
 ・続けてboss_last_01~08表示
-・仕様はないです
-　とりあえずboss_last_01表示で</comment>
+・WHITEverで、はいと答えた回数
+　1回→last_01
+　2回→last_02
+　3回→last_03
+　4回→last_04
+・BLACKverで、はいと答えた回数
+　1回→last_05
+　2回→last_06
+　3回→last_07
+　4回→last_08</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！▼</language>
