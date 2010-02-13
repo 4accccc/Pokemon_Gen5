@@ -259,7 +259,8 @@ static int MainSeq_CallSearch( ZUKAN_MAIN_WORK * wk )
 	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANSEARCH_DATA) );
 	search = wk->work;
 
-	search->sort = &wk->sort;
+	search->gamedata = wk->prm->gamedata;
+	search->sort     = &wk->sort;
 
 	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_search), &ZUKANSEARCH_ProcData, wk->work );
 

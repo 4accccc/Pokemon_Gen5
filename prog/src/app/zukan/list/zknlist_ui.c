@@ -61,7 +61,7 @@ static const GFL_UI_TP_HITTBL RailHitTbl[] =
 
 
 
-int ZKNLISUI_ListMain( ZKNLISTMAIN_WORK * wk )
+int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 {
 	int	ret;
 

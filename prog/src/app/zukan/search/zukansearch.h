@@ -11,6 +11,7 @@
 #pragma	once
 
 #include "savedata/zukan_savedata.h"
+#include "gamesystem/game_data.h"
 #include "zukan_search_engine.h"
 
 
@@ -19,7 +20,7 @@
 //============================================================================================
 
 typedef struct {
-//  GAMEDATA * gamedata;				// ゲームデータ
+  GAMEDATA * gamedata;				// ゲームデータ
 //	ZUKAN_SAVEDATA * savedata;	// 図鑑セーブデータ
 
 	ZKNCOMM_LIST_SORT * sort;		// ソートデータ

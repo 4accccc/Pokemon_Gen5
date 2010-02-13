@@ -197,14 +197,21 @@ extern void ZKNSEARCHOBJ_PutTypePage( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHOBJ_PutColorPage( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHOBJ_PutFormPage( ZKNSEARCHMAIN_WORK * wk );
 
+extern void ZKNSEARCHOBJ_PutFormListNow( ZKNSEARCHMAIN_WORK * wk );
+
 
 extern void ZKNSEARCHOBJ_SetScrollBar( ZKNSEARCHMAIN_WORK * wk, u32 py );
 
 extern void ZKNSEARCHOBJ_SetListPageArrowAnime( ZKNSEARCHMAIN_WORK * wk, BOOL anm );
 
 extern void ZKNSEARCHOBJ_PutMark( ZKNSEARCHMAIN_WORK * wk, u16 num, s16 py, BOOL disp );
+extern void ZKNSEARCHOBJ_ChangeMark( ZKNSEARCHMAIN_WORK * wk, u16 pos, BOOL flg );
+extern void ZKNSEARCHOBJ_ChangeTypeMark( ZKNSEARCHMAIN_WORK * wk, u8	pos1, u8 pos2 );
 extern void ZKNSEARCHOBJ_PutFormMark( ZKNSEARCHMAIN_WORK * wk, s16 py, BOOL disp );
+extern void ZKNSEARCHOBJ_ChangeFormMark( ZKNSEARCHMAIN_WORK * wk, u16 pos, BOOL flg );
 extern void ZKNSEARCHOBJ_PutFormList( ZKNSEARCHMAIN_WORK * wk, u16 num, s16 py, BOOL disp );
 
 extern void ZKNSEARCHOBJ_ScrollList( ZKNSEARCHMAIN_WORK * wk, s8 mv );
 extern void ZKNSEARCHOBJ_ScrollFormList( ZKNSEARCHMAIN_WORK * wk, s8 mv );
+
+extern void ZKNSEARCHOBJ_MoveLoadingBar( ZKNSEARCHMAIN_WORK * wk, u32 cnt );

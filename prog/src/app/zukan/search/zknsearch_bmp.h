@@ -51,11 +51,21 @@ extern void ZKNSEARCHBMP_PrintUtilTrans( ZKNSEARCHMAIN_WORK * wk );
 
 extern void ZKNSEARCHBMP_PutMainPage( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHBMP_PutRowPage( ZKNSEARCHMAIN_WORK * wk );
+extern void ZKNSEARCHBMP_PutRowItem( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHBMP_PutNamePage( ZKNSEARCHMAIN_WORK * wk );
+extern void ZKNSEARCHBMP_PutNameItem( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHBMP_PutTypePage( ZKNSEARCHMAIN_WORK * wk );
+extern void ZKNSEARCHBMP_PutTypeItem( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHBMP_PutColorPage( ZKNSEARCHMAIN_WORK * wk );
+extern void ZKNSEARCHBMP_PutColorItem( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHBMP_PutFormPage( ZKNSEARCHMAIN_WORK * wk );
 
 extern void ZKNSEARCHBMP_PutListItem( ZKNSEARCHMAIN_WORK * wk, PRINT_UTIL * util, STRBUF * str );
 
 extern void ZKNSEARCHBMP_PutFormListItem( ZKNSEARCHMAIN_WORK * wk, PRINT_UTIL * util );
+
+extern void ZKNSEARCHBMP_SearchStart( ZKNSEARCHMAIN_WORK * wk );
+extern void ZKNSEARCHBMP_SearchComp( ZKNSEARCHMAIN_WORK * wk );
+extern void ZKNSEARCHBMP_SearchError( ZKNSEARCHMAIN_WORK * wk );
+
+extern void ZKNSEARCHBMP_PutResetStart( ZKNSEARCHMAIN_WORK * wk );

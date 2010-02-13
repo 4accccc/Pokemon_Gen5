@@ -41,20 +41,12 @@ void ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 * list )
 void ZKNCOMM_ResetSortData( ZKNCOMM_LIST_SORT * sort )
 {
 	sort->mode  = ZKNCOMM_LIST_SORT_MODE_ZENKOKU;
-/*
 	sort->row   = ZKNCOMM_LIST_SORT_ROW_NUMBER;
 	sort->name  = ZKNCOMM_LIST_SORT_NONE;
 	sort->type1 = ZKNCOMM_LIST_SORT_NONE;
 	sort->type2 = ZKNCOMM_LIST_SORT_NONE;
 	sort->color = ZKNCOMM_LIST_SORT_NONE;
 	sort->form  = ZKNCOMM_LIST_SORT_NONE;
-*/
-	sort->row   = 3;
-	sort->name  = 20;
-	sort->type1 = 3;
-	sort->type2 = 8;
-	sort->color = 6;
-	sort->form  = 9;
 }
 
 

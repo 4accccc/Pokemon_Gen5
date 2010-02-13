@@ -573,6 +573,10 @@ static void AddClact( ZKNLISTMAIN_WORK * wk )
 		dat.celRes = wk->celRes[dat.celRes];
 		wk->clwk[i] = ZKNCOMM_CreateClact( wk->clunit, &dat, HEAPID_ZUKAN_LIST );
 	}
+	// ‚x“o˜^
+	if( GAMEDATA_GetShortCut( wk->dat->gamedata, SHORTCUT_ID_ZUKAN_LIST ) == TRUE ){
+		ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_ON );
+	}
 }
 
 static void DelClact( ZKNLISTMAIN_WORK * wk, u32 idx )

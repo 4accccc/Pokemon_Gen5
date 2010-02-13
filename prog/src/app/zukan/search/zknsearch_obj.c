@@ -27,12 +27,14 @@
 #define	RES_NONE	( 0xffffffff )		// リソースが読み込まれていない
 
 // パレット定義（メイン画面）
-#define	PALNUM_ZKNOBJ			( 0 )														// パレット番号：図鑑用ＯＢＪ
-#define	PALSIZ_ZKNOBJ			(	3 )														// パレットサイズ：図鑑用ＯＢＪ
-#define	PALNUM_FORM				( PALNUM_ZKNOBJ+PALSIZ_ZKNOBJ )	// パレット番号：フォルムＯＢＪ
-#define	PALSIZ_FORM				(	1 )														// パレットサイズ：フォルムＯＢＪ
-#define	PALNUM_TOUCH_BAR	( PALNUM_FORM+PALSIZ_FORM )			// パレット番号：タッチバー
-#define	PALSIZ_TOUCH_BAR	( 4 )														// パレットサイズ：タッチバー
+#define	PALNUM_ZKNOBJ			( 0 )															// パレット番号：図鑑用ＯＢＪ
+#define	PALSIZ_ZKNOBJ			(	3 )															// パレットサイズ：図鑑用ＯＢＪ
+#define	PALNUM_LOADING		( PALNUM_ZKNOBJ+PALSIZ_ZKNOBJ )		// パレット番号：読み込み中ＯＢＪ
+#define	PALSIZ_LOADING		(	1 )															// パレットサイズ：読み込み中ＯＢＪ
+#define	PALNUM_FORM				( PALNUM_LOADING+PALSIZ_LOADING )	// パレット番号：フォルムＯＢＪ
+#define	PALSIZ_FORM				(	1 )															// パレットサイズ：フォルムＯＢＪ
+#define	PALNUM_TOUCH_BAR	( PALNUM_FORM+PALSIZ_FORM )				// パレット番号：タッチバー
+#define	PALSIZ_TOUCH_BAR	( 4 )															// パレットサイズ：タッチバー
 // パレット定義（サブ画面）
 #define	PALNUM_ZKNOBJ_S		( 0 )																// パレット番号：図鑑用ＯＢＪ
 #define	PALSIZ_ZKNOBJ_S		(	3 )																// パレットサイズ：図鑑用ＯＢＪ
@@ -41,8 +43,10 @@
 
 #define	MARK_PX				( 140 )
 #define	MARK_PY				( 12 )
-#define	MARK_PY_FORM	( 20 )
 #define	MARK_SY				( 24 )
+#define	MARK_PX_FORM	( 140 )
+#define	MARK_PY_FORM	( 20 )
+#define	MARK_SY_FORM	( 40 )
 
 #define	FORM_PX				( 204 )
 #define	FORM_PY				( 20 )
@@ -50,6 +54,16 @@
 #define	SCROLL_BAR_PX	( 252 )
 #define	SCROLL_BAR_UY	( 12 )
 #define	SCROLL_BAR_DY	( 156 )
+
+#define	MAINPAGE_FORM_PX	( 192 )
+#define	MAINPAGE_FORM_PY	( 116 )
+
+#define	FORMPAGE_FORM_PX	( 64 )
+#define	FORMPAGE_FORM_PY	( 104 )
+
+#define	LOADING_BAR_PX		( 8 )
+#define	LOADING_BAR_PY		( 176 )
+#define	LOADING_BAR_MVX		( 1 )
 
 
 //============================================================================================
@@ -104,23 +118,33 @@ static const ZKNCOMM_CLWK_DATA ClactParamTbl[] =
 		ZKNSEARCHOBJ_CHRRES_TOUCH_BAR, ZKNSEARCHOBJ_PALRES_TOUCH_BAR, ZKNSEARCHOBJ_CELRES_TOUCH_BAR,
 		0, CLSYS_DRAW_MAIN
 	},
+	{	// フォルム
+		{ 0, 0, 0, 0, 0 },
+		ZKNSEARCHOBJ_CHRRES_FORM_M, ZKNSEARCHOBJ_PALRES_FORM_M, ZKNSEARCHOBJ_CELRES_FORM,
+		0, CLSYS_DRAW_MAIN
+	},
+	{	// 読み込み中
+		{ LOADING_BAR_PX, LOADING_BAR_PY, 0, 0, 1 },
+		ZKNSEARCHOBJ_CHRRES_LOADING_BAR, ZKNSEARCHOBJ_PALRES_LOADING_BAR, ZKNSEARCHOBJ_CELRES_LOADING_BAR,
+		0, CLSYS_DRAW_MAIN
+	},
 	{	// マーク１
-		{ 0, 0, 2, 0, 1 },
+		{ 0, 0, 2, 0, 2 },
 		ZKNSEARCHOBJ_CHRRES_SCROLL_BAR, ZKNSEARCHOBJ_PALRES_SCROLL_BAR, ZKNSEARCHOBJ_CELRES_SCROLL_BAR,
 		0, CLSYS_DRAW_MAIN
 	},
 	{	// マーク２
-		{ 0, 0, 2, 0, 1 },
+		{ 0, 0, 2, 0, 2 },
 		ZKNSEARCHOBJ_CHRRES_SCROLL_BAR, ZKNSEARCHOBJ_PALRES_SCROLL_BAR, ZKNSEARCHOBJ_CELRES_SCROLL_BAR,
 		0, CLSYS_DRAW_MAIN
 	},
 	{	// マーク１
-		{ 0, 0, 2, 0, 1 },
+		{ 0, 0, 2, 0, 2 },
 		ZKNSEARCHOBJ_CHRRES_SCROLL_BAR_S, ZKNSEARCHOBJ_PALRES_SCROLL_BAR_S, ZKNSEARCHOBJ_CELRES_SCROLL_BAR,
 		0, CLSYS_DRAW_SUB
 	},
 	{	// マーク２
-		{ 0, 0, 2, 0, 1 },
+		{ 0, 0, 2, 0, 2 },
 		ZKNSEARCHOBJ_CHRRES_SCROLL_BAR_S, ZKNSEARCHOBJ_PALRES_SCROLL_BAR_S, ZKNSEARCHOBJ_CELRES_SCROLL_BAR,
 		0, CLSYS_DRAW_SUB
 	},
@@ -128,13 +152,13 @@ static const ZKNCOMM_CLWK_DATA ClactParamTbl[] =
 
 // フォルムセルアクターデータ（メイン画面）
 static const ZKNCOMM_CLWK_DATA FormClactParamMain = {
-	{ 0, 0, 0, 0, 1 },
+	{ 0, 0, 0, 0, 2 },
 	ZKNSEARCHOBJ_CHRRES_FORM_M, ZKNSEARCHOBJ_PALRES_FORM_M, ZKNSEARCHOBJ_CELRES_FORM,
 	0, CLSYS_DRAW_MAIN
 };
 // フォルムセルアクターデータ（サブ画面）
 static const ZKNCOMM_CLWK_DATA FormClactParamSub = {
-	{ 0, 0, 0, 0, 1 },
+	{ 0, 0, 0, 0, 2 },
 	ZKNSEARCHOBJ_CHRRES_FORM_S, ZKNSEARCHOBJ_PALRES_FORM_S, ZKNSEARCHOBJ_CELRES_FORM,
 	0, CLSYS_DRAW_SUB
 };
@@ -451,6 +475,21 @@ static void InitResource( ZKNSEARCHMAIN_WORK * wk )
   *pal = GFL_CLGRP_PLTT_Register(
 					ah, NARC_zukan_gra_search_search_objd_NCLR,
 					CLSYS_DRAW_SUB, PALNUM_ZKNOBJ_S*0x20, HEAPID_ZUKAN_SEARCH );
+	// ローディングバー
+	chr = &wk->chrRes[ ZKNSEARCHOBJ_CHRRES_LOADING_BAR ];
+	pal = &wk->palRes[ ZKNSEARCHOBJ_PALRES_LOADING_BAR ];
+	cel = &wk->celRes[ ZKNSEARCHOBJ_CELRES_LOADING_BAR ];
+	*chr = GFL_CLGRP_CGR_Register(
+					ah, NARC_zukan_gra_search_loading_NCGR,
+					FALSE, CLSYS_DRAW_MAIN, HEAPID_ZUKAN_SEARCH );
+  *pal = GFL_CLGRP_PLTT_Register(
+					ah, NARC_zukan_gra_search_loading_NCLR,
+					CLSYS_DRAW_MAIN, PALNUM_LOADING*0x20, HEAPID_ZUKAN_SEARCH );
+	*cel = GFL_CLGRP_CELLANIM_Register(
+					ah,
+					NARC_zukan_gra_search_loading_NCER,
+					NARC_zukan_gra_search_loading_NANR,
+					HEAPID_ZUKAN_SEARCH );
 	// フォルムＯＢＪ
 	// メイン画面
 	chr = &wk->chrRes[ ZKNSEARCHOBJ_CHRRES_FORM_M ];
@@ -536,13 +575,22 @@ static void AddClact( ZKNSEARCHMAIN_WORK * wk )
 		dat.celRes = wk->celRes[dat.celRes];
 		wk->clwk[i] = ZKNCOMM_CreateClact( wk->clunit, &dat, HEAPID_ZUKAN_SEARCH );
 	}
+	// Ｙ登録
+	if( GAMEDATA_GetShortCut( wk->dat->gamedata, SHORTCUT_ID_ZUKAN_SEARCH ) == TRUE ){
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_ON );
+	}
+
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, FALSE );
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, FALSE );
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_SCROLL_BAR, FALSE );
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_SCROLL_RAIL, FALSE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_LABEL, FALSE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_LOADING_BAR, FALSE );
 
-	ZKNSEARCHOBJ_SetBlendMode( wk, ZKNSEARCHOBJ_IDX_MARK1_S, TRUE );
-	ZKNSEARCHOBJ_SetBlendMode( wk, ZKNSEARCHOBJ_IDX_MARK2_S, TRUE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_M, FALSE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_M, FALSE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_S, FALSE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_S, FALSE );
 
 	// フォルム
 	for( i=0; i<ZKNSEARCHOBJ_FORM_MAX; i++ ){
@@ -584,8 +632,6 @@ static void DelClactAll( ZKNSEARCHMAIN_WORK * wk )
 }
 
 
-#define	MAINPAGE_FORM_PX	( 192 )
-#define	MAINPAGE_FORM_PY	( 116 )
 
 /*
 void ZKNSEARCHOBJ_VanishAll( ZKNSEARCHMAIN_WORK * wk )
@@ -617,6 +663,7 @@ void ZKNSEARCHOBJ_VanishList( ZKNSEARCHMAIN_WORK * wk )
 		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_M+i, FALSE );
 		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_S+i, FALSE );
 	}
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_LABEL, FALSE );
 }
 
 
@@ -630,10 +677,11 @@ void ZKNSEARCHOBJ_PutMainPage( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, TRUE );
 
 	if( wk->dat->sort->form != ZKNCOMM_LIST_SORT_NONE ){
-		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_M+wk->dat->sort->form, TRUE );
+		ZKNSEARCHOBJ_SetAnm( wk, ZKNSEARCHOBJ_IDX_FORM_LABEL, wk->dat->sort->form );
 		ZKNSEARCHOBJ_SetPos(
-			wk, ZKNSEARCHOBJ_IDX_FORM_M+wk->dat->sort->form,
+			wk, ZKNSEARCHOBJ_IDX_FORM_LABEL,
 			MAINPAGE_FORM_PX, MAINPAGE_FORM_PY, CLSYS_DRAW_MAIN );
+		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_LABEL, TRUE );
 	}
 }
 
@@ -703,7 +751,24 @@ void ZKNSEARCHOBJ_PutFormPage( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_SCROLL_RAIL, TRUE );
 
 	ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, SCROLL_BAR_UY, CLSYS_DRAW_MAIN );
+
+	ZKNSEARCHOBJ_PutFormListNow( wk );
+
 }
+
+void ZKNSEARCHOBJ_PutFormListNow( ZKNSEARCHMAIN_WORK * wk )
+{
+	if( wk->dat->sort->form != ZKNCOMM_LIST_SORT_NONE ){
+		ZKNSEARCHOBJ_SetAnm( wk, ZKNSEARCHOBJ_IDX_FORM_LABEL, wk->dat->sort->form );
+		ZKNSEARCHOBJ_SetPos(
+			wk, ZKNSEARCHOBJ_IDX_FORM_LABEL,
+			FORMPAGE_FORM_PX, FORMPAGE_FORM_PY, CLSYS_DRAW_MAIN );
+		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_LABEL, TRUE );
+	}else{
+		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_LABEL, FALSE );
+	}
+}
+
 
 
 // スクロールバー
@@ -749,6 +814,59 @@ void ZKNSEARCHOBJ_PutMark( ZKNSEARCHMAIN_WORK * wk, u16 num, s16 py, BOOL disp )
 	}
 }
 
+void ZKNSEARCHOBJ_ChangeMark( ZKNSEARCHMAIN_WORK * wk, u16 pos, BOOL flg )
+{
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_M, flg );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_S, FALSE );
+	if( flg == TRUE ){
+		ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_IDX_MARK1_M, MARK_PX, MARK_PY+MARK_SY*pos, CLSYS_DRAW_MAIN );
+	}
+}
+
+void ZKNSEARCHOBJ_ChangeTypeMark( ZKNSEARCHMAIN_WORK * wk, u8	pos1, u8 pos2 )
+{
+	u8	list_pos = FRAMELIST_GetScrollCount( wk->lwk );
+
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_M, FALSE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_M, FALSE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_S, FALSE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_S, FALSE );
+
+	if( pos1 != ZKNCOMM_LIST_SORT_NONE ){
+		u8	abs = GFL_STD_Abs( pos1 - list_pos );
+		if( pos1 < list_pos ){
+			if( abs <= 8 ){
+				ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_S, TRUE );
+				ZKNSEARCHOBJ_SetPos(
+					wk, ZKNSEARCHOBJ_IDX_MARK1_S, MARK_PX, MARK_PY+MARK_SY*(8-abs), CLSYS_DRAW_SUB );
+			}
+		}else{
+			if( abs <= 7 ){
+				ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_M, TRUE );
+				ZKNSEARCHOBJ_SetPos(
+					wk, ZKNSEARCHOBJ_IDX_MARK1_M, MARK_PX, MARK_PY+MARK_SY*abs, CLSYS_DRAW_MAIN );
+			}
+		}
+	}
+
+	if( pos2 != ZKNCOMM_LIST_SORT_NONE ){
+		u8	abs = GFL_STD_Abs( pos2 - list_pos );
+		if( pos2 < list_pos ){
+			if( abs <= 8 ){
+				ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_S, TRUE );
+				ZKNSEARCHOBJ_SetPos(
+					wk, ZKNSEARCHOBJ_IDX_MARK2_S, MARK_PX, MARK_PY+MARK_SY*(8-abs), CLSYS_DRAW_SUB );
+			}
+		}else{
+			if( abs <= 7 ){
+				ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_M, TRUE );
+				ZKNSEARCHOBJ_SetPos(
+					wk, ZKNSEARCHOBJ_IDX_MARK2_M, MARK_PX, MARK_PY+MARK_SY*abs, CLSYS_DRAW_MAIN );
+			}
+		}
+	}
+}
+
 void ZKNSEARCHOBJ_PutFormMark( ZKNSEARCHMAIN_WORK * wk, s16 py, BOOL disp )
 {
 	if( disp == TRUE ){
@@ -759,6 +877,17 @@ void ZKNSEARCHOBJ_PutFormMark( ZKNSEARCHMAIN_WORK * wk, s16 py, BOOL disp )
 		ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_IDX_MARK1_S, MARK_PX, py+MARK_PY_FORM, CLSYS_DRAW_SUB );
 	}
 }
+
+void ZKNSEARCHOBJ_ChangeFormMark( ZKNSEARCHMAIN_WORK * wk, u16 pos, BOOL flg )
+{
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_M, flg );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_S, FALSE );
+	if( flg == TRUE ){
+		ZKNSEARCHOBJ_SetPos(
+			wk, ZKNSEARCHOBJ_IDX_MARK1_M, MARK_PX_FORM, MARK_PY_FORM+MARK_SY_FORM*pos, CLSYS_DRAW_MAIN );
+	}
+}
+
 void ZKNSEARCHOBJ_PutFormList( ZKNSEARCHMAIN_WORK * wk, u16 num, s16 py, BOOL disp )
 {
 	if( disp == TRUE ){
@@ -837,4 +966,12 @@ void ZKNSEARCHOBJ_ScrollFormList( ZKNSEARCHMAIN_WORK * wk, s8 mv )
 	if( (y+mv) <= -32 || (y+mv) >= 255 ){
 		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_S, FALSE );
 	}
+}
+
+void ZKNSEARCHOBJ_MoveLoadingBar( ZKNSEARCHMAIN_WORK * wk, u32 cnt )
+{
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_LOADING_BAR, TRUE );
+	ZKNSEARCHOBJ_SetPos(
+		wk, ZKNSEARCHOBJ_IDX_LOADING_BAR,
+		LOADING_BAR_PX+LOADING_BAR_MVX*cnt, LOADING_BAR_PY, CLSYS_DRAW_MAIN );
 }

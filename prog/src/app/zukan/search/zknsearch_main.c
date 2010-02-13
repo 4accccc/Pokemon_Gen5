@@ -21,6 +21,7 @@
 
 
 #include "zknsearch_main.h"
+#include "zknsearch_bmp.h"
 #include "zknsearch_obj.h"
 #include "zukan_gra.naix"
 
@@ -32,6 +33,11 @@
 
 #define	BLEND_EV1		( 6 )				// ブレンド係数
 #define	BLEND_EV2		( 10 )			// ブレンド係数
+
+#define	TOUCH_BAR_PX		( 0 )
+#define	TOUCH_BAR_PY		( 21 )
+#define	TOUCH_BAR_SX		( 32 )
+#define	TOUCH_BAR_SY		( 3 )
 
 
 //============================================================================================
@@ -117,11 +123,13 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 
 	if( wk->bgVanish == 1 ){
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_ON );
-		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_ON );
+//		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_ON );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
 		wk->bgVanish = 0;
 	}else if( wk->bgVanish == 2 ){
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_OFF );
-		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_OFF );
+//		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_OFF );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
 		wk->bgVanish = 0;
 	}
 
@@ -233,7 +241,7 @@ void ZKNSEARCHMAIN_InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x4000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &cnth, GFL_BG_MODE_TEXT );
 	}
@@ -259,7 +267,7 @@ void ZKNSEARCHMAIN_InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x18000, 0x8000,
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
@@ -270,7 +278,7 @@ void ZKNSEARCHMAIN_InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x18000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &cnth, GFL_BG_MODE_TEXT );
 	}
@@ -296,7 +304,7 @@ void ZKNSEARCHMAIN_InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x10000, 0x8000,
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
@@ -329,16 +337,21 @@ void ZKNSEARCHMAIN_ExitBg(void)
 void ZKNSEARCHMAIN_LoadBgGraphic(void)
 {
 	ARCHANDLE * ah;
+	GFL_ARCUTIL_TRANSINFO  info;
 
 	ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_zukan_gra_search_search_bgd_NCLR, PALTYPE_MAIN_BG, 0, 0x20*4, HEAPID_ZUKAN_SEARCH );
+		ah, NARC_zukan_gra_search_search_bgd_NCLR, PALTYPE_MAIN_BG, 0, 0x20*5, HEAPID_ZUKAN_SEARCH );
 	GFL_ARCHDL_UTIL_TransVramPalette(
 		ah, NARC_zukan_gra_search_search_bgu_NCLR, PALTYPE_SUB_BG, 0, 0x20*4, HEAPID_ZUKAN_SEARCH );
 
+	GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
+		ah, NARC_zukan_gra_search_searchframe_bgd_NCGR, GFL_BG_FRAME0_M, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_search_searchframe_bgd_NCGR, GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(
+		ah, NARC_zukan_gra_search_searchframe_bgd_NCGR, GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_search_searchbase_bgd_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
@@ -365,8 +378,8 @@ void ZKNSEARCHMAIN_LoadBgGraphic(void)
 	// タッチバー
 	ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_ZUKAN_SEARCH_L );
 
-	GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
-		ah, APP_COMMON_GetBarCharArcIdx(), GFL_BG_FRAME0_M, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+	info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
+					ah, APP_COMMON_GetBarCharArcIdx(), GFL_BG_FRAME0_M, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 	GFL_ARCHDL_UTIL_TransVramPalette(
 		ah, APP_COMMON_GetBarPltArcIdx(), PALTYPE_MAIN_BG,
 		ZKNSEARCHMAIN_MBG_PAL_TOUCHBAR*0x20, 0x20, HEAPID_ZUKAN_SEARCH );
@@ -379,6 +392,19 @@ void ZKNSEARCHMAIN_LoadBgGraphic(void)
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
 
 	GFL_ARC_CloseDataHandle( ah );
+
+	{	// タッチバー展開
+		u16 * scr0;
+		u32	i;
+
+		scr0 = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
+		scr0 = &scr0[ TOUCH_BAR_PY*TOUCH_BAR_SX+TOUCH_BAR_PX ];
+
+		for( i=0; i<TOUCH_BAR_SX*TOUCH_BAR_SY; i++ ){
+			scr0[i] += info;
+		}
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
+	}
 
 	// フォントパレット
 	GFL_ARC_UTIL_TransVramPalette(
@@ -455,7 +481,7 @@ void ZKNSEARCHMAIN_InitBlinkAnm( ZKNSEARCHMAIN_WORK * wk )
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
 
 	wk->blink = BLINKPALANM_Create(
-								ZKNSEARCHMAIN_MBG_PAL_BUTTON_CUR*16, 16, GFL_BG_FRAME1_M, HEAPID_ZUKAN_SEARCH );
+								ZKNSEARCHMAIN_MBG_PAL_BUTTON_CUR2*16, 16, GFL_BG_FRAME1_M, HEAPID_ZUKAN_SEARCH );
 
 	BLINKPALANM_SetPalBufferArcHDL(
 		wk->blink, ah, NARC_zukan_gra_search_search_bgd_NCLR,
@@ -470,7 +496,7 @@ void ZKNSEARCHMAIN_ExitBlinkAnm( ZKNSEARCHMAIN_WORK * wk )
 }
 
 
-void ZKNSEARCHMAIN_LoadManuPageScreen( ZKNSEARCHMAIN_WORK * wk )
+void ZKNSEARCHMAIN_LoadMenuPageScreen( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
 
@@ -480,6 +506,95 @@ void ZKNSEARCHMAIN_LoadManuPageScreen( ZKNSEARCHMAIN_WORK * wk )
 
 	GFL_ARC_CloseDataHandle( ah );
 }
+
+void ZKNSEARCHMAIN_LoadRowListPageScreen( ZKNSEARCHMAIN_WORK * wk )
+{
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
+
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_zukan_gra_search_list_row_bgd_NSCR,
+		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+
+	GFL_ARC_CloseDataHandle( ah );
+}
+
+void ZKNSEARCHMAIN_LoadNameListPageScreen( ZKNSEARCHMAIN_WORK * wk )
+{
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
+
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_zukan_gra_search_list_name_bgd_NSCR,
+		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+
+	GFL_ARC_CloseDataHandle( ah );
+}
+
+void ZKNSEARCHMAIN_LoadTypeListPageScreen( ZKNSEARCHMAIN_WORK * wk )
+{
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
+
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_zukan_gra_search_list_type_bgd_NSCR,
+		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+
+	GFL_ARC_CloseDataHandle( ah );
+}
+
+void ZKNSEARCHMAIN_LoadColorListPageScreen( ZKNSEARCHMAIN_WORK * wk )
+{
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
+
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_zukan_gra_search_list_color_bgd_NSCR,
+		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+
+	GFL_ARC_CloseDataHandle( ah );
+}
+
+void ZKNSEARCHMAIN_LoadFormListPageScreen( ZKNSEARCHMAIN_WORK * wk )
+{
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
+
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_zukan_gra_search_list_form_bgd_NSCR,
+		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+
+	GFL_ARC_CloseDataHandle( ah );
+}
+
+#define	LOAD_WIN_PX		( 0 )
+#define	LOAD_WIN_PY		( 18 )
+#define	LOAD_WIN_SX		( 32 )
+#define	LOAD_WIN_SY		( 6 )
+
+void ZKNSEARCHMAIN_LoadingWindowOn( ZKNSEARCHMAIN_WORK * wk )
+{
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
+
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_zukan_gra_search_load_win_NSCR,
+		GFL_BG_FRAME3_M, 32*LOAD_WIN_PY, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+
+	GFL_ARC_CloseDataHandle( ah );
+
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, FALSE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, FALSE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, FALSE );
+}
+
+void ZKNSEARCHMAIN_LoadingWindowOff( ZKNSEARCHMAIN_WORK * wk )
+{
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_LOADING_BAR, FALSE );
+	GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0, LOAD_WIN_PX, LOAD_WIN_PY, LOAD_WIN_SX, LOAD_WIN_SY, 0 );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, TRUE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, TRUE );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, TRUE );
+	ZKNSEARCHBMP_PutResetStart( wk );
+//	ZKNSEARCHMAIN_LoadMenuPageScreen( wk );
+}
+
 
 void ZKNSEARCHMAIN_ListBGOn( ZKNSEARCHMAIN_WORK * wk )
 {
@@ -496,11 +611,15 @@ void ZKNSEARCHMAIN_ListBGOff( ZKNSEARCHMAIN_WORK * wk )
 	GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
 	GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
 	GFL_BG_ClearScreen( GFL_BG_FRAME1_S );
-	GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
+//	GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
+//	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
+
+	// タッチバーを残してクリア
+	GFL_BG_FillScreen( GFL_BG_FRAME0_M, 0, 0, 0, 32, 21, 0 );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
 
 	GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, 0 );
 	GFL_BG_SetScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, 0 );

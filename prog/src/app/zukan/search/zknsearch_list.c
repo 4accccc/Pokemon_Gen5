@@ -1,3 +1,11 @@
+//============================================================================================
+/**
+ * @file		zknsearch_list.c
+ * @brief		ê}ä”åüçıâÊñ  èåèëIëÉäÉXÉgèàóù
+ * @author	Hiroyuki Nakamura
+ * @date		10.02.10
+ */
+//============================================================================================
 #include <gflib.h>
 
 #include "arc_def.h"
@@ -41,12 +49,12 @@ static void FormListCallBack_Scroll( void * work, s8 mv );
 // Ç»ÇÁÇ—
 static const FRAMELIST_TOUCH_DATA RowTouchHitTbl[] =
 {
-	{ {   0,  23, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },
-	{ {  24,  47, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },
-	{ {  48,  71, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },
-	{ {  72,  95, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },
-	{ {  96, 119, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },
-	{ { 120, 143, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },
+	{ {   0,  23, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },
+	{ {  24,  47, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },
+	{ {  48,  71, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },
+	{ {  72,  95, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },
+	{ {  96, 119, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },
+	{ { 120, 143, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },
 
 	{ { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };

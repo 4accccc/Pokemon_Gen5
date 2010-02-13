@@ -232,7 +232,7 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 
 	case FRAMELIST_RET_NONE:				// ìÆçÏÇ»Çµ
 
-		ret = ZKNLISUI_ListMain( wk );
+		ret = ZKNLISTUI_ListMain( wk );
 
 		switch( ret ){
 		case ZKNLISTUI_ID_POKE:				// 02: É|ÉPÉÇÉìê≥ñ äG
