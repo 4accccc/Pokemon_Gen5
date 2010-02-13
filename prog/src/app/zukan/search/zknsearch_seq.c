@@ -106,10 +106,15 @@ static int MainSeq_ButtonAnm( ZKNSEARCHMAIN_WORK * wk );
 static int MainSeq_EndSet( ZKNSEARCHMAIN_WORK * wk );
 
 static void ChangeSortRow( ZKNSEARCHMAIN_WORK * wk, u32 pos );
+static void ResetSortRow( ZKNSEARCHMAIN_WORK * wk );
 static void ChangeSortName( ZKNSEARCHMAIN_WORK * wk, u32 pos );
+static void ResetSortName( ZKNSEARCHMAIN_WORK * wk );
 static void ChangeSortType( ZKNSEARCHMAIN_WORK * wk, u32 pos );
+static void ResetSortType( ZKNSEARCHMAIN_WORK * wk );
 static void ChangeSortColor( ZKNSEARCHMAIN_WORK * wk, u32 pos );
+static void ResetSortColor( ZKNSEARCHMAIN_WORK * wk );
 static void ChangeSortForm( ZKNSEARCHMAIN_WORK * wk, u32 pos );
+static void ResetSortForm( ZKNSEARCHMAIN_WORK * wk );
 
 static int SetWipeIn( ZKNSEARCHMAIN_WORK * wk, int next );
 static int SetWipeOut( ZKNSEARCHMAIN_WORK * wk, int next );
@@ -453,24 +458,29 @@ static int MainSeq_MainRow( ZKNSEARCHMAIN_WORK * wk )
 		ret = ZKNSEARCHUI_ListMain( wk );
 
 		switch( ret ){
-		case ZKNSEARCH_LIST_RET:
+		case ZKNSEARCHUI_LIST_RET:
 			PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 			return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_EXIT_ROW );
 
-		case ZKNSEARCH_LIST_CANCEL:
+		case ZKNSEARCHUI_LIST_CANCEL:
 			PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 			return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_EXIT_ROW );
 
-		case ZKNSEARCH_LIST_ENTER1:
-		case ZKNSEARCH_LIST_ENTER2:
-		case ZKNSEARCH_LIST_ENTER3:
-		case ZKNSEARCH_LIST_ENTER4:
-		case ZKNSEARCH_LIST_ENTER5:
-		case ZKNSEARCH_LIST_ENTER6:
+		case ZKNSEARCHUI_LIST_RESET:
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
-			ChangeSortRow( wk, ret-ZKNSEARCH_LIST_ENTER1 );
+			ResetSortRow( wk );
+			break;
+
+		case ZKNSEARCHUI_LIST_ENTER1:
+		case ZKNSEARCHUI_LIST_ENTER2:
+		case ZKNSEARCHUI_LIST_ENTER3:
+		case ZKNSEARCHUI_LIST_ENTER4:
+		case ZKNSEARCHUI_LIST_ENTER5:
+		case ZKNSEARCHUI_LIST_ENTER6:
+			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
+			ChangeSortRow( wk, ret-ZKNSEARCHUI_LIST_ENTER1 );
 			break;
 		}
 	}
@@ -532,25 +542,30 @@ static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 		ret = ZKNSEARCHUI_ListMain( wk );
 
 		switch( ret ){
-		case ZKNSEARCH_LIST_RET:
+		case ZKNSEARCHUI_LIST_RET:
 			PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 			return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_EXIT_NAME );
 
-		case ZKNSEARCH_LIST_CANCEL:
+		case ZKNSEARCHUI_LIST_CANCEL:
 			PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 			return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_EXIT_NAME );
 
-		case ZKNSEARCH_LIST_ENTER1:
-		case ZKNSEARCH_LIST_ENTER2:
-		case ZKNSEARCH_LIST_ENTER3:
-		case ZKNSEARCH_LIST_ENTER4:
-		case ZKNSEARCH_LIST_ENTER5:
-		case ZKNSEARCH_LIST_ENTER6:
-		case ZKNSEARCH_LIST_ENTER7:
+		case ZKNSEARCHUI_LIST_RESET:
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
-			ChangeSortName( wk, ret-ZKNSEARCH_LIST_ENTER1 );
+			ResetSortName( wk );
+			break;
+
+		case ZKNSEARCHUI_LIST_ENTER1:
+		case ZKNSEARCHUI_LIST_ENTER2:
+		case ZKNSEARCHUI_LIST_ENTER3:
+		case ZKNSEARCHUI_LIST_ENTER4:
+		case ZKNSEARCHUI_LIST_ENTER5:
+		case ZKNSEARCHUI_LIST_ENTER6:
+		case ZKNSEARCHUI_LIST_ENTER7:
+			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
+			ChangeSortName( wk, ret-ZKNSEARCHUI_LIST_ENTER1 );
 			break;
 		}
 	}
@@ -610,25 +625,30 @@ static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 		ret = ZKNSEARCHUI_ListMain( wk );
 
 		switch( ret ){
-		case ZKNSEARCH_LIST_RET:
+		case ZKNSEARCHUI_LIST_RET:
 			PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 			return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_EXIT_TYPE );
 
-		case ZKNSEARCH_LIST_CANCEL:
+		case ZKNSEARCHUI_LIST_CANCEL:
 			PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 			return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_EXIT_TYPE );
 
-		case ZKNSEARCH_LIST_ENTER1:
-		case ZKNSEARCH_LIST_ENTER2:
-		case ZKNSEARCH_LIST_ENTER3:
-		case ZKNSEARCH_LIST_ENTER4:
-		case ZKNSEARCH_LIST_ENTER5:
-		case ZKNSEARCH_LIST_ENTER6:
-		case ZKNSEARCH_LIST_ENTER7:
+		case ZKNSEARCHUI_LIST_RESET:
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
-			ChangeSortType( wk, ret-ZKNSEARCH_LIST_ENTER1 );
+			ResetSortType( wk );
+			break;
+
+		case ZKNSEARCHUI_LIST_ENTER1:
+		case ZKNSEARCHUI_LIST_ENTER2:
+		case ZKNSEARCHUI_LIST_ENTER3:
+		case ZKNSEARCHUI_LIST_ENTER4:
+		case ZKNSEARCHUI_LIST_ENTER5:
+		case ZKNSEARCHUI_LIST_ENTER6:
+		case ZKNSEARCHUI_LIST_ENTER7:
+			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
+			ChangeSortType( wk, ret-ZKNSEARCHUI_LIST_ENTER1 );
 			break;
 		}
 	}
@@ -688,25 +708,30 @@ static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 		ret = ZKNSEARCHUI_ListMain( wk );
 
 		switch( ret ){
-		case ZKNSEARCH_LIST_RET:
+		case ZKNSEARCHUI_LIST_RET:
 			PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 			return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_EXIT_COLOR );
 
-		case ZKNSEARCH_LIST_CANCEL:
+		case ZKNSEARCHUI_LIST_CANCEL:
 			PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 			return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_EXIT_COLOR );
 
-		case ZKNSEARCH_LIST_ENTER1:
-		case ZKNSEARCH_LIST_ENTER2:
-		case ZKNSEARCH_LIST_ENTER3:
-		case ZKNSEARCH_LIST_ENTER4:
-		case ZKNSEARCH_LIST_ENTER5:
-		case ZKNSEARCH_LIST_ENTER6:
-		case ZKNSEARCH_LIST_ENTER7:
+		case ZKNSEARCHUI_LIST_RESET:
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
-			ChangeSortColor( wk, ret-ZKNSEARCH_LIST_ENTER1 );
+			ResetSortColor( wk );
+			break;
+
+		case ZKNSEARCHUI_LIST_ENTER1:
+		case ZKNSEARCHUI_LIST_ENTER2:
+		case ZKNSEARCHUI_LIST_ENTER3:
+		case ZKNSEARCHUI_LIST_ENTER4:
+		case ZKNSEARCHUI_LIST_ENTER5:
+		case ZKNSEARCHUI_LIST_ENTER6:
+		case ZKNSEARCHUI_LIST_ENTER7:
+			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
+			ChangeSortColor( wk, ret-ZKNSEARCHUI_LIST_ENTER1 );
 			break;
 		}
 	}
@@ -765,22 +790,27 @@ static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 		ret = ZKNSEARCHUI_FormListMain( wk );
 
 		switch( ret ){
-		case ZKNSEARCH_LIST_RET:
+		case ZKNSEARCHUI_LIST_RET:
 			PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 			return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_EXIT_FORM );
 
-		case ZKNSEARCH_LIST_CANCEL:
+		case ZKNSEARCHUI_LIST_CANCEL:
 			PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 			return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_EXIT_FORM );
 
-		case ZKNSEARCH_LIST_ENTER1:
-		case ZKNSEARCH_LIST_ENTER2:
-		case ZKNSEARCH_LIST_ENTER3:
-		case ZKNSEARCH_LIST_ENTER4:
+		case ZKNSEARCHUI_LIST_RESET:
 			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
-			ChangeSortForm( wk, ret-ZKNSEARCH_LIST_ENTER1 );
+			ResetSortForm( wk );
+			break;
+
+		case ZKNSEARCHUI_LIST_ENTER1:
+		case ZKNSEARCHUI_LIST_ENTER2:
+		case ZKNSEARCHUI_LIST_ENTER3:
+		case ZKNSEARCHUI_LIST_ENTER4:
+			PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
+			ChangeSortForm( wk, ret-ZKNSEARCHUI_LIST_ENTER1 );
 			break;
 		}
 	}
@@ -860,6 +890,13 @@ static void ChangeSortRow( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	ZKNSEARCHOBJ_ChangeMark( wk, pos, TRUE );
 }
 
+static void ResetSortRow( ZKNSEARCHMAIN_WORK * wk )
+{
+	wk->dat->sort->row = ZKNCOMM_LIST_SORT_ROW_NUMBER;
+	ZKNSEARCHBMP_PutRowItem( wk );
+	ZKNSEARCHOBJ_ChangeMark( wk, 0, TRUE );
+}
+
 static void ChangeSortName( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
 	u32	list_pos = FRAMELIST_GetScrollCount( wk->lwk ) + pos;
@@ -873,6 +910,13 @@ static void ChangeSortName( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	}
 	FRAMELIST_SetCursorPos( wk->lwk, pos );
 	ZKNSEARCHBMP_PutNameItem( wk );
+}
+
+static void ResetSortName( ZKNSEARCHMAIN_WORK * wk )
+{
+	wk->dat->sort->name = ZKNCOMM_LIST_SORT_NONE;
+	ZKNSEARCHBMP_PutNameItem( wk );
+	ZKNSEARCHOBJ_VanishMark( wk );
 }
 
 static void ChangeSortType( ZKNSEARCHMAIN_WORK * wk, u32 pos )
@@ -903,6 +947,14 @@ static void ChangeSortType( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	ZKNSEARCHOBJ_ChangeTypeMark( wk, wk->dat->sort->type1, wk->dat->sort->type2 );
 }
 
+static void ResetSortType( ZKNSEARCHMAIN_WORK * wk )
+{
+	wk->dat->sort->type1 = ZKNCOMM_LIST_SORT_NONE;
+	wk->dat->sort->type2 = ZKNCOMM_LIST_SORT_NONE;
+	ZKNSEARCHBMP_PutTypeItem( wk );
+	ZKNSEARCHOBJ_VanishMark( wk );
+}
+
 static void ChangeSortColor( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
 	u32	list_pos = FRAMELIST_GetScrollCount( wk->lwk ) + pos;
@@ -916,6 +968,13 @@ static void ChangeSortColor( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	}
 	FRAMELIST_SetCursorPos( wk->lwk, pos );
 	ZKNSEARCHBMP_PutColorItem( wk );
+}
+
+static void ResetSortColor( ZKNSEARCHMAIN_WORK * wk )
+{
+	wk->dat->sort->color = ZKNCOMM_LIST_SORT_NONE;
+	ZKNSEARCHBMP_PutColorItem( wk );
+	ZKNSEARCHOBJ_VanishMark( wk );
 }
 
 static void ChangeSortForm( ZKNSEARCHMAIN_WORK * wk, u32 pos )
@@ -933,6 +992,11 @@ static void ChangeSortForm( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	ZKNSEARCHOBJ_PutFormListNow( wk );
 }
 
+static void ResetSortForm( ZKNSEARCHMAIN_WORK * wk )
+{
+	wk->dat->sort->form = ZKNCOMM_LIST_SORT_NONE;
+	ZKNSEARCHOBJ_VanishMark( wk );
+}
 
 
 static int SetWipeIn( ZKNSEARCHMAIN_WORK * wk, int next )
