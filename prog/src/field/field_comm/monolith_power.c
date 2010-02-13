@@ -152,6 +152,7 @@ static void _CancelIconUpdate(MONOLITH_PWSELECT_WORK *mpw);
 static void _Setup_BmpWinCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static void _Setup_BmpWinDelete(MONOLITH_PWSELECT_WORK *mpw);
 static void _Set_MsgStream(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id);
+static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id);
 static BOOL _Wait_MsgStream(MONOLITH_PWSELECT_WORK *mpw);
 static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw);
 static _USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id);
@@ -281,6 +282,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
   enum{
     SEQ_INIT,
     SEQ_TOP,
+    SEQ_DECIDE_STREAM,
+    SEQ_DECIDE_STREAM_WAIT,
     SEQ_FINISH,
   };
   
@@ -304,6 +307,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
       if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
         OS_TPrintf("キャンセル選択\n");
         (*seq) = SEQ_FINISH;
+        break;
       }
       
       _ScrollSpeedUpdate(appwk, mpw);
@@ -320,8 +324,35 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     else{
       appwk->common->power_select_no = mpw->use_gpower_id[mpw->cursor_pos];
     }
+    
+    if(mpw->decide_cursor_pos != _CURSOR_POS_NONE){
+      *seq = SEQ_DECIDE_STREAM;
+    }
     break;
-
+  case SEQ_DECIDE_STREAM:
+    if(MonolithTool_PanelColor_GetMode(appwk) != PANEL_COLORMODE_FLASH){
+      WORDSET_RegisterGPowerName( 
+        appwk->setup->wordset, 0, mpw->use_gpower_id[mpw->decide_cursor_pos] );
+      _Set_MsgStreamExpand(mpw, appwk->setup, msg_mono_pow_011);
+      *seq = SEQ_DECIDE_STREAM_WAIT;
+    }
+    break;
+  case SEQ_DECIDE_STREAM_WAIT:
+    if(_Wait_MsgStream(mpw) == TRUE){
+      if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+        _Clear_MsgStream(mpw);
+        {
+          GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+          INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude(GAMEDATA_GetSaveControlWork(gamedata));
+          ISC_SAVE_SetGPowerID(intsave, mpw->use_gpower_id[mpw->decide_cursor_pos]);
+        }
+        appwk->common->power_eqp_update = TRUE;
+        mpw->decide_cursor_pos = _CURSOR_POS_NONE;
+        *seq = SEQ_TOP;
+      }
+    }
+    break;
+    
   case SEQ_FINISH:
     if(MonolithTool_PanelColor_GetMode(appwk) != PANEL_COLORMODE_FLASH){
       appwk->next_menu_index = MONOLITH_MENU_TITLE;
@@ -491,6 +522,38 @@ static void _Set_MsgStream(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u
   GFL_FONTSYS_SetColor( 1, 2, 15 );
 
   mpw->strbuf_stream = GFL_MSG_CreateString(setup->mm_monolith, msg_id);
+  
+  mpw->print_stream = PRINTSYS_PrintStream(
+    mpw->bmpwin, 0, 0, mpw->strbuf_stream, setup->font_handle,
+    MSGSPEED_GetWait(), setup->tcbl_sys, 10, HEAPID_MONOLITH, 0xf);
+
+	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_ON);
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージ出力開始(WORDSETされたものをEXPANDして出力)
+ *
+ * @param   mpw		
+ * @param   setup		
+ * @param   u16     msg_id
+ *
+ * WORDSET用の単語は外側でセットしておくこと
+ */
+//--------------------------------------------------------------
+static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id)
+{
+  STRBUF *str_temp;
+  
+  GF_ASSERT(mpw->print_stream == NULL);
+  
+  GFL_FONTSYS_SetColor( 1, 2, 15 );
+
+  str_temp = GFL_MSG_CreateString(setup->mm_monolith, msg_id);
+  mpw->strbuf_stream = GFL_STR_CreateBuffer(256, HEAPID_MONOLITH);
+  
+  WORDSET_ExpandStr( setup->wordset, mpw->strbuf_stream, str_temp );
+  GFL_STR_DeleteBuffer(str_temp);
   
   mpw->print_stream = PRINTSYS_PrintStream(
     mpw->bmpwin, 0, 0, mpw->strbuf_stream, setup->font_handle,

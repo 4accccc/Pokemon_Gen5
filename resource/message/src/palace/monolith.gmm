@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-02-13T15:03:35"/>
+	<create user="matsuda" host="W00142" date="2010-02-13T16:39:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -436,6 +436,20 @@
 		<comment>パワー画面</comment>
 		<language name="JPN" width="256">ポイントが　たりません</language>
 		<language name="JPN_KANJI" width="256">ポイントが　たりません</language>
+	</row>
+
+	<row id="msg_mono_pow_010" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>パワー画面</comment>
+		<language name="JPN" width="256">モノリスから　もらえる　ふしぎなパワー</language>
+		<language name="JPN_KANJI" width="256">モノリスから　もらえる　ふしぎなパワー</language>
+	</row>
+
+	<row id="msg_mono_pow_011" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>パワー画面</comment>
+		<language name="JPN" width="256">[1:27:リボンの名前:0]　を　もらい
+Ｃギアに　とうろくした！</language>
+		<language name="JPN_KANJI" width="256">[1:27:リボンの名前:0]　を　もらい
+Ｃギアに　とうろくした！</language>
 	</row>
 
 	<row id="msg_mono_pow_up_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
