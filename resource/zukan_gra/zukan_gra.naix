@@ -84,10 +84,9 @@ enum {
 	NARC_zukan_gra_search_searchbase_bgu_NSCR = 70,
 	NARC_zukan_gra_search_searchframe_NSCR = 71,
 	NARC_zukan_gra_search_searchframe2_NSCR = 72,
-	NARC_zukan_gra_search_searchtitle_bgu_NSCR = 73,
-	NARC_zukan_gra_search_loading_NANR = 74,
-	NARC_zukan_gra_search_search_objd_NANR = 75,
-	NARC_zukan_gra_search_zkn_form_NANR = 76
+	NARC_zukan_gra_search_loading_NANR = 73,
+	NARC_zukan_gra_search_search_objd_NANR = 74,
+	NARC_zukan_gra_search_zkn_form_NANR = 75
 };
 
 /* NARC_ZUKAN_GRA_NAIX_ */

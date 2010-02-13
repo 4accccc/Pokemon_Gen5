@@ -21,11 +21,13 @@
 
 typedef struct {
   GAMEDATA * gamedata;				// ゲームデータ
-//	ZUKAN_SAVEDATA * savedata;	// 図鑑セーブデータ
+	ZUKAN_SAVEDATA * savedata;	// 図鑑セーブデータ
 
 	ZKNCOMM_LIST_SORT * sort;		// ソートデータ
 
 	u32	retMode;								// 終了モード
+	u16 * list;									// 作成したリスト
+	u16	listMax;								// 作成したリスト数
 }ZUKANSEARCH_DATA;
 
 // 終了モード

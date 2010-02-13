@@ -563,6 +563,7 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 
 	{	// リストパラメータ設定
+/*
 		u16	max;
 		u16	i;
 
@@ -585,6 +586,25 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 				}else{
 					FRAMELIST_AddItem( wk->lwk, 0, SET_LIST_PARAM(wk->dat->list[i],i+1) );
 				}
+			}
+		}
+*/
+		u32	i;
+
+		for( i=0; i<wk->dat->listMax; i++ ){
+			if( ZUKANSAVE_GetPokeGetFlag( wk->dat->savedata, wk->dat->list[i] ) == TRUE ){
+				STRBUF * srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, wk->dat->list[i] );
+				wk->name[i] = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
+				GFL_STR_DeleteBuffer( srcStr );
+				FRAMELIST_AddItem( wk->lwk, 0, SET_LIST_PARAM(ZUKAN_LIST_MONS_GET,wk->dat->list[i]) );
+			}else if( ZUKANSAVE_GetPokeSeeFlag( wk->dat->savedata, wk->dat->list[i] ) == TRUE ){
+				STRBUF * srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, wk->dat->list[i] );
+				wk->name[i] = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
+				GFL_STR_DeleteBuffer( srcStr );
+				FRAMELIST_AddItem( wk->lwk, 1, SET_LIST_PARAM(ZUKAN_LIST_MONS_SEE,wk->dat->list[i]) );
+			}else{
+				wk->name[i] = GFL_MSG_CreateString( wk->mman, str_name_01 );
+				FRAMELIST_AddItem( wk->lwk, 1, SET_LIST_PARAM(ZUKAN_LIST_MONS_NONE,wk->dat->list[i]) );
 			}
 		}
 	}

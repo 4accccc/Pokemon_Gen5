@@ -22,19 +22,25 @@
 
 
 // デフォルトリスト作成
-void ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 * list )
+u16 ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 ** list, HEAPID heapID )
 {
-	u32	i;
+	u16 * buf;
+	u16	i, max;
+
+	buf = GFL_HEAP_AllocMemory( heapID, sizeof(u16)*MONSNO_END );
+	max = 0;
 
 	for( i=0; i<MONSNO_END; i++ ){
-		if( ZUKANSAVE_GetPokeGetFlag( sv, i+1 ) == TRUE ){
-			list[i] = ZUKAN_LIST_MONS_GET;
-		}else if( ZUKANSAVE_GetPokeSeeFlag( sv, i+1 ) == TRUE ){
-			list[i] = ZUKAN_LIST_MONS_SEE;
-		}else{
-			list[i] = ZUKAN_LIST_MONS_NONE;
+		buf[i] = i+1;
+		if( ZUKANSAVE_GetPokeGetFlag( sv, i+1 ) == TRUE ||
+				ZUKANSAVE_GetPokeSeeFlag( sv, i+1 ) == TRUE ){
+			max = i+1;
 		}
 	}
+
+	*list = buf;
+
+	return max;
 }
 
 // ソートデータリセット

@@ -50,6 +50,8 @@ extern void ZKNLISTBMP_PrintUtilTrans( ZKNLISTMAIN_WORK * wk );
 
 extern void ZKNLISTBMP_PutPokeEntryStr( ZKNLISTMAIN_WORK * wk );
 
+extern void ZKNLISTBMP_PutPokeSearchStr( ZKNLISTMAIN_WORK * wk );
+
 extern void ZKNLISTBMP_PutPokeList( ZKNLISTMAIN_WORK * wk, u32 winIdx, s32 listPos );
 
 

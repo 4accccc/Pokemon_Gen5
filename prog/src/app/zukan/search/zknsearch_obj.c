@@ -63,7 +63,7 @@
 
 #define	LOADING_BAR_PX		( 8 )
 #define	LOADING_BAR_PY		( 176 )
-#define	LOADING_BAR_MVX		( 1 )
+#define	LOADING_BAR_MVX		( 2 )
 
 
 //============================================================================================
@@ -591,6 +591,9 @@ static void AddClact( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_M, FALSE );
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_S, FALSE );
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_S, FALSE );
+
+	ZKNSEARCHOBJ_SetBlendMode( wk, ZKNSEARCHOBJ_IDX_MARK1_S, TRUE );
+	ZKNSEARCHOBJ_SetBlendMode( wk, ZKNSEARCHOBJ_IDX_MARK2_S, TRUE );
 
 	// ƒtƒHƒ‹ƒ€
 	for( i=0; i<ZKNSEARCHOBJ_FORM_MAX; i++ ){

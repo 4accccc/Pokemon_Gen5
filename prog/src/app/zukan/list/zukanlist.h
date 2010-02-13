@@ -21,12 +21,19 @@ typedef struct {
   GAMEDATA * gamedata;				// ゲームデータ
 	ZUKAN_SAVEDATA * savedata;	// 図鑑セーブデータ
 
-	u16 * list;
-//	u32	listMax;
+	u16	callMode;								// 呼び出しモード
+	u16	listMax;								// リスト数
+	u16 * list;									// リストデータ
 
 	u16	retMode;								// 終了モード
 	u16	retMons;								// 選択ポケモン
 }ZUKANLIST_DATA;
+
+// 呼び出しモード
+enum {
+	ZKNLIST_CALL_NORMAL = 0,	// 通常
+	ZKNLIST_CALL_SEARCH,			// 検索モード
+};
 
 // 終了モード
 enum {

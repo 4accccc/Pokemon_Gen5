@@ -45,7 +45,7 @@
 #define	BMPWIN_TITLE_FRM		( GFL_BG_FRAME1_S )
 #define	BMPWIN_TITLE_PX			( 1 )
 #define	BMPWIN_TITLE_PY			( 0 )
-#define	BMPWIN_TITLE_SX			( 12 )
+#define	BMPWIN_TITLE_SX			( 17 )
 #define	BMPWIN_TITLE_SY			( 3 )
 #define	BMPWIN_TITLE_PAL		( 0 )
 
@@ -401,9 +401,15 @@ static void PutSubDispStr( ZKNLISTMAIN_WORK * wk, u32 idx )
 
 static void PutTitleStr( ZKNLISTMAIN_WORK * wk )
 {
-//	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNLISTBMP_WINIDX_TITLE].win), 0 );
 	PutSubDispStr( wk, ZKNLISTBMP_WINIDX_TITLE );
-	StrPrint( wk, ZKNLISTBMP_WINIDX_TITLE, str_title_00, 0, 4, FCOL_SP00WN, PRINTTOOL_MODE_LEFT );
+
+	// ‘S‘}ŠÓ
+	if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){
+		StrPrint( wk, ZKNLISTBMP_WINIDX_TITLE, str_title_01, 0, 4, FCOL_SP00WN, PRINTTOOL_MODE_LEFT );
+	// ƒCƒbƒVƒ…}ŠÓ
+	}else{
+		StrPrint( wk, ZKNLISTBMP_WINIDX_TITLE, str_title_00, 0, 4, FCOL_SP00WN, PRINTTOOL_MODE_LEFT );
+	}
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_TITLE] );
 }
 
@@ -423,6 +429,18 @@ void ZKNLISTBMP_PutPokeEntryStr( ZKNLISTMAIN_WORK * wk )
 	ExStrPrint( wk, ZKNLISTBMP_WINIDX_GETNUM, str_see_get_num, 15*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
 
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_SEENUM] );
+	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_GETNUM] );
+}
+
+void ZKNLISTBMP_PutPokeSearchStr( ZKNLISTMAIN_WORK * wk )
+{
+	PutSubDispStr( wk, ZKNLISTBMP_WINIDX_GETNUM );
+
+	StrPrint( wk, ZKNLISTBMP_WINIDX_GETNUM, str_search, 11*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
+	WORDSET_RegisterNumber(
+		wk->wset, 0, wk->dat->listMax, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	ExStrPrint( wk, ZKNLISTBMP_WINIDX_GETNUM, str_see_get_num, 15*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
+
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_GETNUM] );
 }
 

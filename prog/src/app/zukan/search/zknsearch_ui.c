@@ -213,13 +213,21 @@ static void MainCallBack_Touch( void * work, int now_pos, int old_pos )
 
 BOOL ZKNSEARCHUI_Result( ZKNSEARCHMAIN_WORK * wk )
 {
+	if( wk->loadingCnt == 90 ){
+		wk->loadingCnt = 0;
+		return TRUE;
+	}
+	wk->loadingCnt++;
+
 	if( GFL_UI_TP_GetTrg() ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+		wk->loadingCnt = 0;
 		return TRUE;
 	}
 
 	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		wk->loadingCnt = 0;
 		return TRUE;
 	}
 
@@ -244,6 +252,16 @@ int ZKNSEARCHUI_ListMain( ZKNSEARCHMAIN_WORK * wk )
 		return ZKNSEARCH_LIST_CANCEL;
 	}
 
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		return ZKNSEARCH_LIST_CANCEL;
+	}
+
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SERECT ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		return ZKNSEARCH_LIST_RESET;
+	}
+
 	return ret;
 }
 
@@ -261,6 +279,16 @@ int ZKNSEARCHUI_FormListMain( ZKNSEARCHMAIN_WORK * wk )
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return ZKNSEARCH_LIST_CANCEL;
+	}
+
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		return ZKNSEARCH_LIST_CANCEL;
+	}
+
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SERECT ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		return ZKNSEARCH_LIST_RESET;
 	}
 
 	return ret;

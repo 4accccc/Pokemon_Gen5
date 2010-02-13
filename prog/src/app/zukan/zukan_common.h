@@ -39,7 +39,7 @@ enum {
 };
 
 
-extern void ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 * list );
+extern u16 ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 ** list, HEAPID heapID );
 
 extern void ZKNCOMM_ResetSortData( ZKNCOMM_LIST_SORT * sort );
 

@@ -66,8 +66,13 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 	int	ret;
 
 	ret = GFL_UI_TP_HitTrg( TouchHitTbl );
-	
+
 	if( ret != GFL_UI_TP_HIT_NONE ){
+		if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
+			if( ret == ZKNLISTUI_ID_SELECT || ret == ZKNLISTUI_ID_Y ){
+				return GFL_UI_TP_HIT_NONE;
+			}
+		}
 		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 		return ret;
 	}
@@ -88,19 +93,20 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 		return ZKNLISTUI_ID_X;
 	}
 
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-		return ZKNLISTUI_ID_Y;
-	}
-
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return ZKNLISTUI_ID_START;
 	}
 
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-		return ZKNLISTUI_ID_SELECT;
+	if( wk->dat->callMode != ZKNLIST_CALL_SEARCH ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return ZKNLISTUI_ID_Y;
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return ZKNLISTUI_ID_SELECT;
+		}
 	}
 
 	return ret;

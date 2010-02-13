@@ -367,9 +367,14 @@ static int MainSeq_StartSort( ZKNSEARCHMAIN_WORK * wk )
 		ZKNSEARCHBMP_SearchStart( wk );
 	}
 
-	if( wk->loadingCnt == (60*4+1) ){
+	if( wk->loadingCnt == (60*2+1) ){
 		wk->loadingCnt = 0;
-		if( 0 ){
+		wk->dat->listMax = ZUKAN_SEARCH_ENGINE_Search(
+												wk->dat->savedata,
+												wk->dat->sort,
+												HEAPID_ZUKAN_SYS,
+												&wk->dat->list );
+		if( wk->dat->listMax != 0 ){
 			ZKNSEARCHBMP_SearchComp( wk );
 		}else{
 			PMSND_PlaySE( ZKNSEARCH_SE_ERROR );
@@ -386,7 +391,7 @@ static int MainSeq_StartSort( ZKNSEARCHMAIN_WORK * wk )
 static int MainSeq_ResultSort( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( ZKNSEARCHUI_Result( wk ) == TRUE ){
-		if( 0 ){
+		if( wk->dat->listMax != 0 ){
 			wk->dat->retMode = ZKNSEARCH_RET_START;
 			return MAINSEQ_END_SET;
 		}

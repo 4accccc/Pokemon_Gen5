@@ -177,7 +177,11 @@ static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 
 	ZKNLISTMAIN_MakeList( wk );
 
-	ZKNLISTBMP_PutPokeEntryStr( wk );
+	if( wk->dat->callMode == ZKNLIST_CALL_NORMAL ){
+		ZKNLISTBMP_PutPokeEntryStr( wk );
+	}else{
+		ZKNLISTBMP_PutPokeSearchStr( wk );
+	}
 
 	ZKNLISTMAIN_SetBlendAlpha();
 
