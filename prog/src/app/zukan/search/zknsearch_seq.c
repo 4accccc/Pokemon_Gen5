@@ -995,6 +995,7 @@ static void ChangeSortForm( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 static void ResetSortForm( ZKNSEARCHMAIN_WORK * wk )
 {
 	wk->dat->sort->form = ZKNCOMM_LIST_SORT_NONE;
+	ZKNSEARCHOBJ_PutFormListNow( wk );
 	ZKNSEARCHOBJ_VanishMark( wk );
 }
 
