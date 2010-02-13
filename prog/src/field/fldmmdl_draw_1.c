@@ -77,7 +77,7 @@ static void MMdl_DrawModel_Draw( MMDL * mmdl )
   FLD_G3DOBJ_CTRL_SetObjVanishFlag( objctrl, work->obj_idx, flag );
   
   if( MMDL_CheckDrawPause(mmdl) == FALSE ){
-    FLD_G3DOBJ_CTRL_LoopAnimeObject( objctrl, work->obj_idx );
+    FLD_G3DOBJ_CTRL_LoopAnimeObject( objctrl, work->obj_idx, FX32_ONE );
   }
 }
 

@@ -345,7 +345,7 @@ void MMDL_G3DOBJCONT_DeleteObject( MMDL *mmdl, FLD_G3DOBJ_OBJIDX o_idx )
   code = MMDL_GetOBJCode( mmdl );
 #endif
   
-  FLD_G3DOBJ_DeleteObject( objcont->g3dobj_ctrl, o_idx );
+  FLD_G3DOBJ_CTRL_DeleteObject( objcont->g3dobj_ctrl, o_idx );
   
   if( MMDL_SearchUseOBJCode(mmdl,code) == FALSE ){
     KAGAYA_Printf( "FLDMMDL MDL code(%d) delete resource\n", code );

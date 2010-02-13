@@ -1622,6 +1622,19 @@ FLDEFF_CTRL * FIELDMAP_GetFldEffCtrl( FIELDMAP_WORK *fieldWork )
 
 //--------------------------------------------------------------
 /**
+ * @brief  FLD_G3DOBJ_CTRLŽæ“¾
+ * @param  fieldWork FIELDMAP_WORK
+ * @retval FLD_G3DOBJ_CTRL*
+ */
+//--------------------------------------------------------------
+FLD_G3DOBJ_CTRL * FIELDMAP_GetFldG3dOBJCtrl( FIELDMAP_WORK *fieldWork )
+{
+  GF_ASSERT( fieldWork->fieldG3dObjCtrl != NULL );
+  return( fieldWork->fieldG3dObjCtrl );
+}
+
+//--------------------------------------------------------------
+/**
  * FIELDMAP_WORK UNION_EFF_SYSTEMŽæ“¾
  * @param fieldWork FIELDMAP_WORK
  * @retval UNION_EFF_SYSTEM*

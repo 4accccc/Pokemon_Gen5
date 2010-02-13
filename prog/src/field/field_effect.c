@@ -188,6 +188,18 @@ FIELDMAP_WORK * FLDEFF_CTRL_GetFieldMapWork( FLDEFF_CTRL *fectrl )
 
 //--------------------------------------------------------------
 /**
+ * フィールドエフェクト　コントロール　FLD_G3DOBJ_CTRL取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+FLD_G3DOBJ_CTRL * FLDEFF_CTRL_GetFldG3dOBJCtrl( FLDEFF_CTRL *fectrl )
+{
+  return( FIELDMAP_GetFldG3dOBJCtrl(fectrl->fieldMapWork) );
+}
+
+//--------------------------------------------------------------
+/**
  * フィールドエフェクト コントロール アーカイブID ARCID_FLDEFFハンドル取得
  * @param fectrl
  * @retval ARCHANDLE ARCID_FLDEFFハンドル

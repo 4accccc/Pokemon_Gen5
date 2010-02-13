@@ -117,6 +117,7 @@ extern void FIELDMAP_SetFieldSubscreenWork(
     FIELDMAP_WORK *fieldWork,FIELD_SUBSCREEN_WORK* pWork );
 extern FIELD_ENCOUNT * FIELDMAP_GetEncount( FIELDMAP_WORK * fieldWork );
 extern FLDEFF_CTRL * FIELDMAP_GetFldEffCtrl( FIELDMAP_WORK *fieldWork );
+extern FLD_G3DOBJ_CTRL * FIELDMAP_GetFldG3dOBJCtrl( FIELDMAP_WORK *fieldWork );
 extern UNION_EFF_SYSTEM * FIELDMAP_GetUnionEffSystem( FIELDMAP_WORK *fieldWork );
 extern FLDMAP_BASESYS_TYPE FIELDMAP_GetBaseSystemType( const FIELDMAP_WORK *fieldWork );
 extern FIELD_PLACE_NAME * FIELDMAP_GetPlaceNameSys( FIELDMAP_WORK * fieldWork );

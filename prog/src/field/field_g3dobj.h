@@ -59,7 +59,7 @@ extern u16 FLD_G3DOBJ_CTRL_CreateResource( FLD_G3DOBJ_CTRL *ctrl,
 extern void FLD_G3DOBJ_CTRL_DeleteResource(FLD_G3DOBJ_CTRL *ctrl, u16 idx);
 extern u16 FLD_G3DOBJ_CTRL_AddObject(
     FLD_G3DOBJ_CTRL *ctrl, const u16 resIdx, u16 mdlIdx );
-extern void FLD_G3DOBJ_DeleteObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx );
+extern void FLD_G3DOBJ_CTRL_DeleteObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx );
 extern GFL_G3D_OBJ * FLD_G3DOBJ_CTRL_GetObject(
     FLD_G3DOBJ_CTRL *ctrl, u16 idx );
 extern GFL_G3D_OBJSTATUS * FLD_G3DOBJ_CTRL_GetObjStatus(
@@ -70,8 +70,10 @@ extern void FLD_G3DOBJ_CTRL_SetObjCullingFlag(
     FLD_G3DOBJ_CTRL *ctrl, u16 idx, BOOL flag );
 extern void FLD_G3DOBJ_CTRL_SetObjVanishFlag(
     FLD_G3DOBJ_CTRL *ctrl, u16 idx, BOOL flag );
+extern BOOL FLD_G3DOBJ_CTRL_AnimeObject(
+    FLD_G3DOBJ_CTRL *ctrl, u16 idx, fx32 frame );
 extern BOOL FLD_G3DOBJ_CTRL_LoopAnimeObject(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx );
+    FLD_G3DOBJ_CTRL *ctrl, u16 idx, fx32 frame );
 
 extern void FLD_G3DOBJ_RES_HEADER_Init( FLD_G3DOBJ_RES_HEADER *head );
 extern void FLD_G3DOBJ_RES_HEADER_SetMdl(

@@ -293,6 +293,7 @@ u16 FLD_G3DOBJ_CTRL_AddObject(
         obj->resIdx = resIdx;
         obj->mdlIdx = mdlIdx;
         obj->useFlag = OBJ_USE_RES_WAIT;
+        obj->cullingFlag = TRUE;
         
         obj->status.scale.x = FX32_ONE;
         obj->status.scale.y = FX32_ONE;
@@ -317,7 +318,7 @@ u16 FLD_G3DOBJ_CTRL_AddObject(
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLD_G3DOBJ_DeleteObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx )
+void FLD_G3DOBJ_CTRL_DeleteObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx )
 {
   u16 flag;
   FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
@@ -329,21 +330,6 @@ void FLD_G3DOBJ_DeleteObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx )
   }
   
   ctrl->trans_flag = TRUE;
-}
-
-//--------------------------------------------------------------
-/**
- * オブジェインデックスからGFL_G3D_OBJ取得
- * @param ctrl FLD_G3DOBJ_CTRL
- * @param idx 取得するOBJインデックス
- * @retval GFL_G3D_OBJ NULL=リソース登録待ちによりまだ登録されていない
- */
-//--------------------------------------------------------------
-GFL_G3D_OBJ * FLD_G3DOBJ_CTRL_GetObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx )
-{
-  FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
-  GF_ASSERT( obj->useFlag != OBJ_USE_FALSE );
-  return( obj->pObj );
 }
 
 //--------------------------------------------------------------
@@ -386,6 +372,7 @@ void FLD_G3DOBJ_CTRL_SetObjPos(
  * @param idx 指定するobjインデックス
  * @param flag true=カリングする。false=しない
  * @retval nothing
+ * @attention FLD_G3DOBJ_CTRL_AddObject()時、カリングはONになっている。
  */
 //--------------------------------------------------------------
 void FLD_G3DOBJ_CTRL_SetObjCullingFlag(
@@ -415,14 +402,15 @@ void FLD_G3DOBJ_CTRL_SetObjVanishFlag(
 
 //--------------------------------------------------------------
 /**
- * オブジェループアニメ
+ * オブジェアニメ
  * @param ctrl  fld_g3dobj_ctrl
  * @param idx 指定するobjインデックス
- * @retval BOOL TRUE=アニメループした。
- * @note アニメ指定が無い場合は何もせず返る
+ * @retval BOOL FALSE=アニメ終了
+ * @note アニメ指定が無い場合は何もせず戻り値FALSEで返る。
  */
 //--------------------------------------------------------------
-BOOL FLD_G3DOBJ_CTRL_LoopAnimeObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx )
+BOOL FLD_G3DOBJ_CTRL_AnimeObject(
+    FLD_G3DOBJ_CTRL *ctrl, u16 idx, fx32 frame )
 {
   BOOL ret = FALSE;
   FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
@@ -433,7 +421,39 @@ BOOL FLD_G3DOBJ_CTRL_LoopAnimeObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx )
     int max = ctrl->pResTbl[obj->resIdx].anm_count;
     
     while( i < max ){
-      if( GFL_G3D_OBJECT_LoopAnimeFrame(obj->pObj,i,FX32_ONE) == FALSE ){
+      if( GFL_G3D_OBJECT_LoopAnimeFrame(obj->pObj,i,frame) != FALSE ){
+        ret = TRUE;
+      }
+      i++;
+    }
+  }
+  
+  return( ret );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * オブジェループアニメ
+ * @param ctrl  fld_g3dobj_ctrl
+ * @param idx 指定するobjインデックス
+ * @retval BOOL FALSE=アニメループした。
+ * @note アニメ指定が無い場合は何もせず戻り値FALSEで返る
+ */
+//--------------------------------------------------------------
+BOOL FLD_G3DOBJ_CTRL_LoopAnimeObject(
+    FLD_G3DOBJ_CTRL *ctrl, u16 idx, fx32 frame )
+{
+  BOOL ret = FALSE;
+  FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
+  GF_ASSERT( obj->useFlag != OBJ_USE_FALSE );
+  
+  if( obj->useFlag == OBJ_USE_TRUE ){
+    int i = 0;
+    int max = ctrl->pResTbl[obj->resIdx].anm_count;
+    
+    while( i < max ){
+      if( GFL_G3D_OBJECT_LoopAnimeFrame(obj->pObj,i,frame) != FALSE ){
         ret = TRUE;
       }
       i++;
@@ -571,6 +591,7 @@ static void setObject( FLD_G3DOBJ *obj,
   GFL_G3D_RES *pResTex = NULL;
   
   obj->useFlag = OBJ_USE_TRUE;
+  obj->cullingFlag = TRUE;
   obj->resIdx = resIdx;
   obj->mdlIdx = mdlIdx;
   

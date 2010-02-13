@@ -36,28 +36,17 @@ typedef struct _TAG_FLDEFF_NAMIPOKE FLDEFF_NAMIPOKE;
 typedef struct _TAG_FLDEFF_NAMIPOKE_EFFECT FLDEFF_NAMIPOKE_EFFECT;
 
 //--------------------------------------------------------------
-/// RIPPLE_RES構造体
-//--------------------------------------------------------------
-typedef struct
-{
-  GFL_G3D_RES *g3d_res_mdl;
-  GFL_G3D_RES *g3d_res_anm[2];
-}RIPPLE_RES;
-
-//--------------------------------------------------------------
 /// RIPPLE_WORK構造体
 //--------------------------------------------------------------
 typedef struct
 {
-  GFL_G3D_OBJ *obj;
-  GFL_G3D_ANM *obj_anm[2];
-  GFL_G3D_RND *obj_rnd;
-  
   u16 vanish_flag;
   u16 dir;
   VecFx32 pos;
   VecFx32 save_pos;
   
+  FLD_G3DOBJ_OBJIDX obj_idx;
+
   u16 rot_y;
   VecFx32 scale;
   VecFx32 offs;
@@ -69,9 +58,8 @@ typedef struct
 struct _TAG_FLDEFF_NAMIPOKE
 {
 	FLDEFF_CTRL *fectrl;
-  GFL_G3D_RES *g3d_res_mdl;
-
-  RIPPLE_RES ripple_res;
+  FLD_G3DOBJ_RESIDX res_idx_poke;
+  FLD_G3DOBJ_RESIDX res_idx_ripple;
 };
 
 //--------------------------------------------------------------
@@ -93,10 +81,13 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  int seq_no;
-  
+  GFL_G3D_OBJ *obj;
+  GFL_G3D_RND *obj_rnd;
+
+  u8 seq_no;
   u8 joint;
   u8 ripple_off;
+  u8 padding;
 
   u16 dir;
   fx32 shake_offs;
@@ -104,8 +95,7 @@ typedef struct
   
   TASKHEADER_NAMIPOKE head;
   
-  GFL_G3D_OBJ *obj;
-  GFL_G3D_RND *obj_rnd;
+  FLD_G3DOBJ_OBJIDX obj_idx;
   
   RIPPLE_WORK ripple_work;
 }TASKWORK_NAMIPOKE;
@@ -116,26 +106,11 @@ typedef struct
 struct _TAG_FLDEFF_NAMIPOKE_EFFECT
 {
   FLDEFF_CTRL *fectrl;
-  
-  GFL_G3D_RES *g3d_res_mdl_taki_land;
-  GFL_G3D_RES *g3d_res_anm_taki_land_ima;
-  GFL_G3D_RES *g3d_res_anm_taki_land_ica;
-  
-  GFL_G3D_RES *g3d_res_mdl_taki_start_f;
-  GFL_G3D_RES *g3d_res_anm_taki_start_f_ica;
-  GFL_G3D_RES *g3d_res_anm_taki_start_f_itp;
-  
-  GFL_G3D_RES *g3d_res_mdl_taki_loop_f;
-  GFL_G3D_RES *g3d_res_anm_taki_loop_f_ica;
-  GFL_G3D_RES *g3d_res_anm_taki_loop_f_itp;
-  
-  GFL_G3D_RES *g3d_res_mdl_taki_start_s;
-  GFL_G3D_RES *g3d_res_anm_taki_start_s_ica;
-  GFL_G3D_RES *g3d_res_anm_taki_start_s_itp;
-  
-  GFL_G3D_RES *g3d_res_mdl_taki_loop_s;
-  GFL_G3D_RES *g3d_res_anm_taki_loop_s_ica;
-  GFL_G3D_RES *g3d_res_anm_taki_loop_s_itp;
+  FLD_G3DOBJ_RESIDX res_idx_taki_land;
+  FLD_G3DOBJ_RESIDX res_idx_taki_start_f;
+  FLD_G3DOBJ_RESIDX res_idx_taki_start_s;
+  FLD_G3DOBJ_RESIDX res_idx_taki_loop_f;
+  FLD_G3DOBJ_RESIDX res_idx_taki_loop_s;
 };
 
 //--------------------------------------------------------------
@@ -154,11 +129,9 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  GFL_G3D_OBJ *obj;
-  GFL_G3D_ANM *obj_anm[2];
-  GFL_G3D_RND *obj_rnd;
   VecFx32 offset;
   BOOL end_flag;
+  FLD_G3DOBJ_OBJIDX obj_idx;
   TASKHEADER_NAMIPOKE_EFFECT head;
 }TASKWORK_NAMIPOKE_EFFECT;
 
@@ -226,26 +199,29 @@ static void namipoke_InitResource( FLDEFF_NAMIPOKE *namipoke )
 {
   BOOL ret;
   ARCHANDLE *handle;
+  FLD_G3DOBJ_RES_HEADER head;
+  FLD_G3DOBJ_CTRL *obj_ctrl;
   
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( namipoke->fectrl );
   handle = FLDEFF_CTRL_GetArcHandleEffect( namipoke->fectrl );
   
-  namipoke->g3d_res_mdl	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_sea_ride_nsbmd );
-  ret = GFL_G3D_TransVramTexture( namipoke->g3d_res_mdl );
-  GF_ASSERT( ret );
+  FLD_G3DOBJ_RES_HEADER_Init( &head ); //pokemon
   
-  {
-    RIPPLE_RES *rip_res = &namipoke->ripple_res;
-    rip_res->g3d_res_mdl =
-      GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_shibuki01_nsbmd );
-    ret = GFL_G3D_TransVramTexture( rip_res->g3d_res_mdl );
-    GF_ASSERT( ret );
-    
-    rip_res->g3d_res_anm[0]	=
-      GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_shibuki01_nsbca );
-    rip_res->g3d_res_anm[1]	=
-      GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_shibuki01_nsbta );
-  }
+  FLD_G3DOBJ_RES_HEADER_SetMdl(&head, handle, NARC_fldeff_sea_ride_nsbmd );
+  namipoke->res_idx_poke =
+    FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
+  
+  FLD_G3DOBJ_RES_HEADER_Init( &head ); //ripple
+
+  FLD_G3DOBJ_RES_HEADER_SetMdl(
+      &head, handle, NARC_fldeff_shibuki01_nsbmd  );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_shibuki01_nsbca );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_shibuki01_nsbta );
+  namipoke->res_idx_ripple =
+    FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
 }
 
 //--------------------------------------------------------------
@@ -257,14 +233,11 @@ static void namipoke_InitResource( FLDEFF_NAMIPOKE *namipoke )
 //--------------------------------------------------------------
 static void namipoke_DeleteResource( FLDEFF_NAMIPOKE *namipoke )
 {
- 	GFL_G3D_DeleteResource( namipoke->g3d_res_mdl );
+  FLD_G3DOBJ_CTRL *obj_ctrl;
   
-  {
-    RIPPLE_RES *rip_res = &namipoke->ripple_res;
- 	  GFL_G3D_DeleteResource( rip_res->g3d_res_mdl );
- 	  GFL_G3D_DeleteResource( rip_res->g3d_res_anm[0] );
- 	  GFL_G3D_DeleteResource( rip_res->g3d_res_anm[1] );
-  }
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( namipoke->fectrl );
+  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, namipoke->res_idx_poke );
+  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, namipoke->res_idx_ripple );
 }
 
 //======================================================================
@@ -381,6 +354,7 @@ static fx32 ripple_vecpos(
 //--------------------------------------------------------------
 static void namipokeTask_Init( FLDEFF_TASK *task, void *wk )
 {
+  FLD_G3DOBJ_CTRL *obj_ctrl;
   TASKWORK_NAMIPOKE *work = wk;
   const TASKHEADER_NAMIPOKE *head;
   
@@ -390,31 +364,21 @@ static void namipokeTask_Init( FLDEFF_TASK *task, void *wk )
   
   work->dir = head->dir;
   
-  work->obj_rnd =
-    GFL_G3D_RENDER_Create(
-        work->head.eff_namipoke->g3d_res_mdl, 0,
-        work->head.eff_namipoke->g3d_res_mdl );
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+      work->head.eff_namipoke->fectrl );
   
-  work->obj = GFL_G3D_OBJECT_Create( work->obj_rnd, NULL, 0 );
+  work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
+      obj_ctrl, work->head.eff_namipoke->res_idx_poke, 0 );
+  
   work->joint = FLDEFF_TASK_GetAddParam( task );
   work->shake_offs = FX32_ONE;
   work->shake_value = NAMIPOKE_SHAKE_VALUE;
   
   {
-    RIPPLE_RES *rip_res = &work->head.eff_namipoke->ripple_res;
     RIPPLE_WORK *rip = &work->ripple_work;
     
-    rip->obj_rnd = GFL_G3D_RENDER_Create(
-      rip_res->g3d_res_mdl, 0, rip_res->g3d_res_mdl );
-    
-    rip->obj_anm[0] = GFL_G3D_ANIME_Create(
-          rip->obj_rnd, rip_res->g3d_res_anm[0], 0 );
-    rip->obj_anm[1] = GFL_G3D_ANIME_Create(
-          rip->obj_rnd, rip_res->g3d_res_anm[1], 0 );
-    
-    rip->obj = GFL_G3D_OBJECT_Create( rip->obj_rnd, rip->obj_anm, 2 );
-	  GFL_G3D_OBJECT_EnableAnime( rip->obj, 0 );
-	  GFL_G3D_OBJECT_EnableAnime( rip->obj, 1 );
+    rip->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
+        obj_ctrl, work->head.eff_namipoke->res_idx_ripple, 0 );
     
     rip->vanish_flag = TRUE;
     rip->dir = DIR_NOT;
@@ -438,15 +402,14 @@ static void namipokeTask_Init( FLDEFF_TASK *task, void *wk )
 static void namipokeTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_NAMIPOKE *work = wk;
-  GFL_G3D_OBJECT_Delete( work->obj );
-	GFL_G3D_RENDER_Delete( work->obj_rnd );
+  FLD_G3DOBJ_CTRL *obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+      work->head.eff_namipoke->fectrl );
+  
+  FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, work->obj_idx );
   
   {
     RIPPLE_WORK *rip = &work->ripple_work;
-    GFL_G3D_OBJECT_Delete( rip->obj );
-    GFL_G3D_RENDER_Delete( rip->obj_rnd );
-    GFL_G3D_ANIME_Delete( rip->obj_anm[0] );
-    GFL_G3D_ANIME_Delete( rip->obj_anm[1] );
+    FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, rip->obj_idx );
   }
 }
 
@@ -491,12 +454,6 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
   }
 
   { //座標
-    #if 0  
-    VecFx32 pos;
-    MMDL_GetVectorPos( work->head.mmdl, &pos );
-    pos.y += work->shake_offs - FX32_ONE;
-    FLDEFF_TASK_SetPos( task, &pos );
-    #else
     VecFx32 pos;
     MMDL_GetDrawVectorPos( work->head.mmdl, &pos );
     
@@ -506,7 +463,6 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     
     pos.y += work->shake_offs - FX32_ONE;
     FLDEFF_TASK_SetPos( task, &pos );
-    #endif
   }
   
   if( work->joint == NAMIPOKE_JOINT_ONLY || work->ripple_off == TRUE ){
@@ -519,10 +475,12 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
   }else{ //波エフェクト
     fx32 ret;
     VecFx32 pos;
+    FLD_G3DOBJ_CTRL *obj_ctrl;
     RIPPLE_WORK *rip = &work->ripple_work;
-	  
-    GFL_G3D_OBJECT_LoopAnimeFrame( rip->obj, 0, FX32_ONE );
-	  GFL_G3D_OBJECT_LoopAnimeFrame( rip->obj, 1, FX32_ONE );
+    
+    obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+        work->head.eff_namipoke->fectrl );
+    FLD_G3DOBJ_CTRL_LoopAnimeObject( obj_ctrl, rip->obj_idx, FX32_ONE );
     
     MMDL_GetVectorPos( work->head.mmdl, &pos );
     
@@ -594,20 +552,28 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
  * @param task FLDEFF_TASK
  * @param wk task work
  * @retval nothing
+ * @note 描画をFLD_G3DOBJ_CTRLに任せ、
+ * ここではステータス設定を行うのみとなった。
  */
 //--------------------------------------------------------------
 static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
 {
   VecFx32 pos;
+  GFL_G3D_OBJSTATUS *st;
+  FLD_G3DOBJ_CTRL *obj_ctrl;
   TASKWORK_NAMIPOKE *work = wk;
-  GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
   u16 rtbl[DIR_MAX4][3] = {{0,0x8000,0},{0,0,0},{0,0xc000,0},{0,0x4000,0}};
   u16 *rot = rtbl[work->dir];
-  GFL_CALC3D_MTX_CreateRot( rot[0], rot[1], rot[2], &status.rotate );
-  FLDEFF_TASK_GetPos( task, &status.trans );
-  GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
   
-  if( work->ripple_work.vanish_flag == FALSE ){
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+      work->head.eff_namipoke->fectrl );
+  
+  //ポケモン回転、座標設定
+  st = FLD_G3DOBJ_CTRL_GetObjStatus( obj_ctrl, work->obj_idx );
+  GFL_CALC3D_MTX_CreateRot( rot[0], rot[1], rot[2], &st->rotate );
+  FLDEFF_TASK_GetPos( task, &st->trans );
+  
+  if( work->ripple_work.vanish_flag == FALSE ){ //飛沫
     RIPPLE_WORK *rip = &work->ripple_work;
     VecFx32 rip_otbl[DIR_MAX4] = {
       {0,RIPPLE_OFFS_Y,0xe000},
@@ -617,69 +583,19 @@ static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
     };
     u16 rip_rtbl[DIR_MAX4][3] = {
       {0,0,0},{0,0x8000,0},{0,0x4000,0},{0,0xc000,0} };
-    GFL_G3D_OBJSTATUS rip_status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
     VecFx32 *rip_offs = &rip_otbl[work->dir];
     u16 *rip_rot = rip_rtbl[work->dir];
     
-#ifdef DEBUG_PARAM_KEY_CHANGE
-    {
-		  int key_trg = GFL_UI_KEY_GetTrg( );
-		  int key_cont = GFL_UI_KEY_GetCont( );
+    st = FLD_G3DOBJ_CTRL_GetObjStatus( obj_ctrl, rip->obj_idx );
     
-      if( key_cont&PAD_BUTTON_Y ){
-        if( key_trg&PAD_BUTTON_A ){
-          rip->offs.x = 0;
-          rip->offs.y = 0;
-          rip->offs.z = 0;
-        }
-
-        if( key_cont&PAD_KEY_LEFT ){
-          rip->offs.x -= 0x800;
-        }else if( key_cont&PAD_KEY_RIGHT ){
-          rip->offs.x += 0x800;
-        }
-        
-        if( key_cont&PAD_BUTTON_B ){
-          if( key_cont&PAD_KEY_UP ){
-            rip->offs.y -= 0x800;
-          }else if( key_cont&PAD_KEY_DOWN ){
-            rip->offs.y += 0x800;
-          }
-        }else{
-          if( key_cont&PAD_KEY_UP ){
-            rip->offs.z -= 0x800;
-          }else if( key_cont&PAD_KEY_DOWN ){
-            rip->offs.z += 0x800;
-          }
-        }
-        
-        if( key_trg & PAD_BUTTON_L ){
-          rip->rot_y += 0x4000;
-        }
-        
-        if( key_trg & PAD_BUTTON_X ){
-          OS_Printf( "OFFS X=%xH,Y=%xH,Z=%xH,ROT=%xH\n",
-              rip->offs.x,
-              rip->offs.y,
-              rip->offs.z, rip->rot_y );
-        }
-      }
-    }
-#endif
-
-    {
-      GFL_CALC3D_MTX_CreateRot(
-          rip_rot[0], rip_rot[1], rip_rot[2], &status.rotate );
+    GFL_CALC3D_MTX_CreateRot(
+        rip_rot[0], rip_rot[1], rip_rot[2], &st->rotate );
       
-      FLDEFF_TASK_GetPos( task, &status.trans );
-      status.trans.x += rip->offs.x + rip_offs->x;
-      status.trans.y += rip->offs.y + rip_offs->y;
-      status.trans.z += rip->offs.z + rip_offs->z;
-      
-      status.scale = rip->scale;
-    }
-
-    GFL_G3D_DRAW_DrawObjectCullingON( rip->obj, &status );
+    FLDEFF_TASK_GetPos( task, &st->trans );
+    st->trans.x += rip->offs.x + rip_offs->x;
+    st->trans.y += rip->offs.y + rip_offs->y;
+    st->trans.z += rip->offs.z + rip_offs->z;
+    st->scale = rip->scale;
   }
 }
 
@@ -746,48 +662,67 @@ void FLDEFF_NAMIPOKE_EFFECT_Delete( FLDEFF_CTRL *fectrl, void *work )
 static void npoke_eff_InitResource( FLDEFF_NAMIPOKE_EFFECT *npoke_eff )
 {
   ARCHANDLE *handle;
+  FLD_G3DOBJ_RES_HEADER head;
+  FLD_G3DOBJ_CTRL *obj_ctrl;
   
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( npoke_eff->fectrl );
+
   handle = FLDEFF_CTRL_GetArcHandleEffect( npoke_eff->fectrl );
   
-  npoke_eff->g3d_res_mdl_taki_land =
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_land_nsbmd );
-  GFL_G3D_TransVramTexture( npoke_eff->g3d_res_mdl_taki_land );
-  npoke_eff->g3d_res_anm_taki_land_ima	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_land_nsbma );
-  npoke_eff->g3d_res_anm_taki_land_ica	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_land_nsbca );
-  
-  npoke_eff->g3d_res_mdl_taki_start_f	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_start_f_nsbmd );
-  GFL_G3D_TransVramTexture( npoke_eff->g3d_res_mdl_taki_start_f );
-  npoke_eff->g3d_res_anm_taki_start_f_ica =
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_start_f_nsbca );
-  npoke_eff->g3d_res_anm_taki_start_f_itp	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_start_f_nsbtp );
+  FLD_G3DOBJ_RES_HEADER_Init( &head );
+  FLD_G3DOBJ_RES_HEADER_SetMdl(
+      &head, handle, NARC_fldeff_taki_land_nsbmd );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_taki_land_nsbma );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_taki_land_nsbca );
+  npoke_eff->res_idx_taki_land =
+    FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
 
-  npoke_eff->g3d_res_mdl_taki_loop_f =
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_roop_f_nsbmd );
-  GFL_G3D_TransVramTexture( npoke_eff->g3d_res_mdl_taki_loop_f );
-  npoke_eff->g3d_res_anm_taki_loop_f_ica =
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_roop_f_nsbca );
-  npoke_eff->g3d_res_anm_taki_loop_f_itp	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_roop_f_nsbtp );
+  FLD_G3DOBJ_RES_HEADER_Init( &head );
+  FLD_G3DOBJ_RES_HEADER_SetMdl(
+      &head, handle, NARC_fldeff_taki_start_f_nsbmd );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_taki_start_f_nsbca );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_taki_start_f_nsbtp );
+  npoke_eff->res_idx_taki_start_f =
+    FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
 
-  npoke_eff->g3d_res_mdl_taki_start_s	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_start_s_nsbmd );
-  GFL_G3D_TransVramTexture( npoke_eff->g3d_res_mdl_taki_start_s );
-  npoke_eff->g3d_res_anm_taki_start_s_ica =
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_start_s_nsbca );
-  npoke_eff->g3d_res_anm_taki_start_s_itp	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_start_s_nsbtp );
+  FLD_G3DOBJ_RES_HEADER_Init( &head );
+  FLD_G3DOBJ_RES_HEADER_SetMdl(
+      &head, handle, NARC_fldeff_taki_roop_f_nsbmd );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_taki_roop_f_nsbca );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_taki_roop_f_nsbtp );
+  npoke_eff->res_idx_taki_loop_f =
+    FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
+
+  FLD_G3DOBJ_RES_HEADER_Init( &head );
+  FLD_G3DOBJ_RES_HEADER_SetMdl(
+      &head, handle, NARC_fldeff_taki_start_s_nsbmd );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_taki_start_s_nsbca );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_taki_start_s_nsbtp );
+  npoke_eff->res_idx_taki_start_s =
+    FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
   
-  npoke_eff->g3d_res_mdl_taki_loop_s =
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_loop_s_nsbmd );
-  GFL_G3D_TransVramTexture( npoke_eff->g3d_res_mdl_taki_loop_s );
-  npoke_eff->g3d_res_anm_taki_loop_s_ica =
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_loop_s_nsbca );
-  npoke_eff->g3d_res_anm_taki_loop_s_itp	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_taki_loop_s_nsbtp );
+  FLD_G3DOBJ_RES_HEADER_Init( &head );
+  FLD_G3DOBJ_RES_HEADER_SetMdl(
+      &head, handle, NARC_fldeff_taki_loop_s_nsbmd );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_taki_loop_s_nsbca );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_taki_loop_s_nsbtp );
+  npoke_eff->res_idx_taki_loop_s =
+    FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
 }
 
 //--------------------------------------------------------------
@@ -799,25 +734,14 @@ static void npoke_eff_InitResource( FLDEFF_NAMIPOKE_EFFECT *npoke_eff )
 //--------------------------------------------------------------
 static void npoke_eff_DeleteResource( FLDEFF_NAMIPOKE_EFFECT *npoke_eff )
 {
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_mdl_taki_land );
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_anm_taki_land_ima );
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_anm_taki_land_ica );
+  FLD_G3DOBJ_CTRL *obj_ctrl;
   
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_mdl_taki_start_f );
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_anm_taki_start_f_ica );
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_anm_taki_start_f_itp );
-  
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_mdl_taki_loop_f );
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_anm_taki_loop_f_ica );
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_anm_taki_loop_f_itp );
-  
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_mdl_taki_start_s );
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_anm_taki_start_s_ica );
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_anm_taki_start_s_itp );
-  
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_mdl_taki_loop_s );
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_anm_taki_loop_s_ica );
-  GFL_G3D_DeleteResource( npoke_eff->g3d_res_anm_taki_loop_s_itp );
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( npoke_eff->fectrl );
+  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, npoke_eff->res_idx_taki_land );
+  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, npoke_eff->res_idx_taki_start_f );
+  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, npoke_eff->res_idx_taki_loop_f );
+  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, npoke_eff->res_idx_taki_start_s );
+  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, npoke_eff->res_idx_taki_loop_s );
 }
 
 //======================================================================
@@ -903,62 +827,36 @@ static void npoke_effTask_Init( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_NAMIPOKE_EFFECT *work = wk;
   const TASKHEADER_NAMIPOKE_EFFECT *head;
+  FLD_G3DOBJ_CTRL *obj_ctrl;
   
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+      work->head.eff_npoke_eff->fectrl );
+
   head = FLDEFF_TASK_GetAddPointer( task );
   work->head = *head;
   
   switch( work->head.type ){
   case NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH:
-    work->obj_rnd = GFL_G3D_RENDER_Create(
-        work->head.eff_npoke_eff->g3d_res_mdl_taki_land, 0,
-        work->head.eff_npoke_eff->g3d_res_mdl_taki_land );
-    work->obj_anm[0] = GFL_G3D_ANIME_Create( work->obj_rnd,
-        work->head.eff_npoke_eff->g3d_res_anm_taki_land_ima, 0 );
-    work->obj_anm[1] = GFL_G3D_ANIME_Create( work->obj_rnd,
-        work->head.eff_npoke_eff->g3d_res_anm_taki_land_ica, 0 );
+    work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
+        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_land, 0 );
     break;
   case NAMIPOKE_EFFECT_TYPE_TAKI_START_F:
-    work->obj_rnd = GFL_G3D_RENDER_Create(
-        work->head.eff_npoke_eff->g3d_res_mdl_taki_start_f, 0,
-        work->head.eff_npoke_eff->g3d_res_mdl_taki_start_f );
-    work->obj_anm[0] = GFL_G3D_ANIME_Create( work->obj_rnd,
-        work->head.eff_npoke_eff->g3d_res_anm_taki_start_f_ica, 0 );
-    work->obj_anm[1] = GFL_G3D_ANIME_Create( work->obj_rnd,
-        work->head.eff_npoke_eff->g3d_res_anm_taki_start_f_itp, 0 );
+    work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
+        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_start_f, 0 );
     break;
   case NAMIPOKE_EFFECT_TYPE_TAKI_LOOP_F:
-    work->obj_rnd = GFL_G3D_RENDER_Create(
-        work->head.eff_npoke_eff->g3d_res_mdl_taki_loop_f, 0,
-        work->head.eff_npoke_eff->g3d_res_mdl_taki_loop_f );
-    work->obj_anm[0] = GFL_G3D_ANIME_Create( work->obj_rnd,
-        work->head.eff_npoke_eff->g3d_res_anm_taki_loop_f_ica, 0 );
-    work->obj_anm[1] = GFL_G3D_ANIME_Create( work->obj_rnd,
-        work->head.eff_npoke_eff->g3d_res_anm_taki_loop_f_itp, 0 );
+    work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
+        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_loop_f, 0 );
     break;
   case NAMIPOKE_EFFECT_TYPE_TAKI_START_S:
-    work->obj_rnd = GFL_G3D_RENDER_Create(
-        work->head.eff_npoke_eff->g3d_res_mdl_taki_start_s, 0,
-        work->head.eff_npoke_eff->g3d_res_mdl_taki_start_s );
-    work->obj_anm[0] = GFL_G3D_ANIME_Create( work->obj_rnd,
-        work->head.eff_npoke_eff->g3d_res_anm_taki_start_s_ica, 0 );
-    work->obj_anm[1] = GFL_G3D_ANIME_Create( work->obj_rnd,
-        work->head.eff_npoke_eff->g3d_res_anm_taki_start_s_itp, 0 );
+    work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
+        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_start_s, 0 );
     break;
   case NAMIPOKE_EFFECT_TYPE_TAKI_LOOP_S:
-    work->obj_rnd = GFL_G3D_RENDER_Create(
-        work->head.eff_npoke_eff->g3d_res_mdl_taki_loop_s, 0,
-        work->head.eff_npoke_eff->g3d_res_mdl_taki_loop_s );
-    work->obj_anm[0] = GFL_G3D_ANIME_Create( work->obj_rnd,
-        work->head.eff_npoke_eff->g3d_res_anm_taki_loop_s_ica, 0 );
-    work->obj_anm[1] = GFL_G3D_ANIME_Create( work->obj_rnd,
-        work->head.eff_npoke_eff->g3d_res_anm_taki_loop_s_itp, 0 );
+    work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
+        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_loop_s, 0 );
     break;
   }
-  
-  work->obj = GFL_G3D_OBJECT_Create(
-      work->obj_rnd, work->obj_anm, 2 );
-  GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
-  GFL_G3D_OBJECT_EnableAnime( work->obj, 1 );
   
   if( work->head.efftask_namipoke != NULL ){
     VecFx32 pos;
@@ -991,11 +889,12 @@ static void npoke_effTask_Init( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void npoke_effTask_Delete( FLDEFF_TASK *task, void *wk )
 {
+  FLD_G3DOBJ_CTRL *obj_ctrl;
   TASKWORK_NAMIPOKE_EFFECT *work = wk;
-  GFL_G3D_ANIME_Delete( work->obj_anm[0] );
-  GFL_G3D_ANIME_Delete( work->obj_anm[1] );
-  GFL_G3D_OBJECT_Delete( work->obj );
-	GFL_G3D_RENDER_Delete( work->obj_rnd );
+  
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+      work->head.eff_npoke_eff->fectrl );
+  FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, work->obj_idx );
 }
 
 //--------------------------------------------------------------
@@ -1008,6 +907,7 @@ static void npoke_effTask_Delete( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void npoke_effTask_Update( FLDEFF_TASK *task, void *wk )
 {
+  FLD_G3DOBJ_CTRL *obj_ctrl;
   TASKWORK_NAMIPOKE_EFFECT *work = wk;
   
   if( work->end_flag == TRUE && work->head.dead_flag == TRUE ){
@@ -1015,19 +915,18 @@ static void npoke_effTask_Update( FLDEFF_TASK *task, void *wk )
     return;
   }
   
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+      work->head.eff_npoke_eff->fectrl );
+  
   if( work->head.type == NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH ){
     if( work->end_flag == FALSE ){
-      BOOL ret0,ret1;
-      ret0 = GFL_G3D_OBJECT_IncAnimeFrame( work->obj, 0, FX32_ONE );
-      ret1 = GFL_G3D_OBJECT_IncAnimeFrame( work->obj, 1, FX32_ONE );
-      
-      if( ret0 == FALSE || ret1 == FALSE ){
+      if( FLD_G3DOBJ_CTRL_AnimeObject(
+            obj_ctrl,work->obj_idx,FX32_ONE) == FALSE ){
         work->end_flag = TRUE;
       }
     }
   }else{
-	  GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, 0, FX32_ONE );
-	  GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, 1, FX32_ONE );
+    FLD_G3DOBJ_CTRL_LoopAnimeObject( obj_ctrl, work->obj_idx, FX32_ONE );
   }
   
   if( work->head.efftask_namipoke != NULL ){
@@ -1051,11 +950,14 @@ static void npoke_effTask_Update( FLDEFF_TASK *task, void *wk )
 static void npoke_effTask_Draw( FLDEFF_TASK *task, void *wk )
 {
   VecFx32 pos;
+  GFL_G3D_OBJSTATUS *st;
+  FLD_G3DOBJ_CTRL *obj_ctrl;
   TASKWORK_NAMIPOKE_EFFECT *work = wk;
-  GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
-  MTX_Identity33( &status.rotate );
-  FLDEFF_TASK_GetPos( task, &status.trans );
-  GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+  
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+      work->head.eff_npoke_eff->fectrl );
+  st = FLD_G3DOBJ_CTRL_GetObjStatus( obj_ctrl, work->obj_idx );
+  FLDEFF_TASK_GetPos( task, &st->trans );
 }
 
 //--------------------------------------------------------------

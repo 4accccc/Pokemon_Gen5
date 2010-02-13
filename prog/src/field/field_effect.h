@@ -11,6 +11,7 @@
 #include "system/gfl_use.h"
 
 #include "field/fieldmap_proc.h"
+#include "field_g3dobj.h"
 
 #include "arc/fieldmap/fldeff.naix"
 
@@ -117,6 +118,7 @@ extern void FLDEFF_CTRL_Draw( FLDEFF_CTRL *fectrl );
 
 //FLDEFF_CTRL éQè∆
 extern FIELDMAP_WORK * FLDEFF_CTRL_GetFieldMapWork( FLDEFF_CTRL *fectrl );
+extern FLD_G3DOBJ_CTRL * FLDEFF_CTRL_GetFldG3dOBJCtrl( FLDEFF_CTRL *fectrl );
 extern ARCHANDLE * FLDEFF_CTRL_GetArcHandleEffect( FLDEFF_CTRL *fectrl );
 extern u8 FLDEFF_CTRL_GetSeasonID( FLDEFF_CTRL *fectrl );
 extern BOOL FLDEFF_CTRL_GetAreaInOutSwitch( FLDEFF_CTRL *fectrl );
