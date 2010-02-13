@@ -1253,6 +1253,7 @@ static void _CreateButtonObj(IRC_BATTLE_MENU* pWork)
                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->buttonObj[i] , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->buttonObj[i], TRUE );
+    GFL_CLACT_WK_SetObjMode(pWork->buttonObj[i],GX_OAM_MODE_XLU);
   }
 }
 
@@ -1284,6 +1285,7 @@ static void _CreateButtonObj2(IRC_BATTLE_MENU* pWork)
                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->buttonObj[i] , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->buttonObj[i], TRUE );
+    GFL_CLACT_WK_SetObjMode(pWork->buttonObj[i],GX_OAM_MODE_XLU);
   }
 }
 
@@ -1314,6 +1316,7 @@ static void _CreateButtonObj3(IRC_BATTLE_MENU* pWork)
                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->buttonObj[i] , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->buttonObj[i], TRUE );
+    GFL_CLACT_WK_SetObjMode(pWork->buttonObj[i],GX_OAM_MODE_XLU);
   }
 }
 
@@ -1335,6 +1338,7 @@ static void _CLACT_SetAnim(IRC_BATTLE_MENU* pWork,int x,int y,int no,int anm)
                                                          &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[no] , TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[no], TRUE );
+
   }
 }
 

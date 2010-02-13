@@ -503,6 +503,7 @@ static void _CreateButtonObj(CG_WIRELESS_MENU* pWork)
                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->buttonObj[i] , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->buttonObj[i], TRUE );
+    GFL_CLACT_WK_SetObjMode(pWork->buttonObj[i],GX_OAM_MODE_XLU);
   }
 }
 
