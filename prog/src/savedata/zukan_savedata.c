@@ -56,7 +56,6 @@ enum {
 	SEE_FLAG_MAX,
 
 	// フォルム数	
-	FORM_MAX_PITYUU = 3,					// ピチュー ※ ♂, ♀, ギザみみ
 	FORM_MAX_ANNOON = 28,					// アンノーン
 	FORM_MAX_DEOKISISU = 4,				// デオキシス
 	FORM_MAX_SHEIMI = 2,					// シェイミ
@@ -70,7 +69,10 @@ enum {
 	FORM_MAX_THERIMU = 2,					// チェリム ※特殊
 	FORM_MAX_BANBIINA = 4,				// バンビーナ ※新規
 	FORM_MAX_SIKIZIKA = 4,				// シキジカ ※新規
-	/* 合計: 69 */
+	FORM_MAX_MERODHIA = 2,				// メロディア ※新規
+	FORM_MAX_HIHIDARUMA = 2,			// シキジカ ※新規
+	FORM_MAX_ONIBASU = 2,					// オニバス ※新規
+	/* 合計: 72 */
 
 	FORM_ARRAY_LEN = 9,		///< フォルムフラグ配列の大きさ 9 * 8 = 72まで大丈夫
 
@@ -85,7 +87,6 @@ enum {
 static const u16 FormTable[][2] =
 {
 	// ポケモン番号, フォルム数
-	{ MONSNO_PITYUU, FORM_MAX_PITYUU },						// ピチュー
 	{ MONSNO_ANNOON, FORM_MAX_ANNOON },						// アンノーン
 
 	{ MONSNO_DEOKISISU, FORM_MAX_DEOKISISU },			// デオキシス
@@ -103,6 +104,9 @@ static const u16 FormTable[][2] =
 
 	{ MONSNO_BANBIINA, FORM_MAX_BANBIINA },				// バンビーナ ※新規
 	{ MONSNO_SIKIZIKA, FORM_MAX_SIKIZIKA },				// シキジカ ※新規
+	{ MONSNO_MERODHIA, FORM_MAX_MERODHIA },				// メロディア ※新規
+	{ MONSNO_HIHIDARUMA, FORM_MAX_HIHIDARUMA },		// シキジカ ※新規
+	{ MONSNO_ONIBASU, FORM_MAX_ONIBASU },					// オニバス ※新規
 
 	{ 0, 0 },
 };
@@ -114,13 +118,14 @@ static const u16 FormTable[][2] =
  */
 //----------------------------------------------------------
 struct ZUKAN_SAVEDATA {
-  u32 zukan_magic;			///< マジックナンバー
+  u32 zukan_magic;					///< マジックナンバー
 
-	u8	zukan_get:1;			///< ずかん取得フラグ
-	u8	zenkoku_flag:1;		///< 全国図鑑保持フラグ
-	u8	ver_up_flg:6;			///< バーションアップフラグ
-	u8	zukan_mode;				///< 閲覧中の図鑑モード
-	u16	defaultMonsNo;		///< 閲覧中のポケモン番号
+	u32	zukan_get:1;					///< ずかん取得フラグ
+	u32	zenkoku_flag:1;				///< 全国図鑑保持フラグ
+	u32	ver_up_flg:9;					///< バーションアップフラグ
+	u32	zukan_mode:1;					///< 閲覧中の図鑑モード
+	u32	defaultMonsNo:10;			///< 閲覧中のポケモン番号
+	u32	shortcutMonsNo:10;		///< Ｙ登録されたポケモン番号
 
   u32 get_flag[POKEZUKAN_ARRAY_LEN];    ///< 捕まえたフラグ用ワーク
 
@@ -1517,7 +1522,7 @@ ZUKAN_SAVEDATA * GAMEDATA_GetZukanSave( GAMEDATA * gamedata )
 {
   SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
   ZUKAN_SAVEDATA * zs = SaveControl_DataPtrGet( sv, GMDATA_ID_ZUKAN );
-  return zs;
+	return zs;
 }
 
 //----------------------------------------------------------
@@ -1683,6 +1688,36 @@ u16 ZUKANSAVE_GetDefaultMons( const ZUKAN_SAVEDATA * zw )
 	return zw->defaultMonsNo;
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief		ショートカット登録したポケモン番号を設定
+ *
+ * @param		zw		ずかんワークへのポインタ
+ * @param		mons	ポケモン番号
+ *
+ * @return	none
+ */
+//-----------------------------------------------------------------------------
+void ZUKANSAVE_SetShortcutMons( ZUKAN_SAVEDATA * zw, u16 mons )
+{
+  zukan_incorrect(zw);
+	zw->shortcutMonsNo = mons;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief		ショートカット登録したポケモン番号を取得
+ *
+ * @param		zw		ずかんワークへのポインタ
+ *
+ * @return	ポケモン番号
+ */
+//-----------------------------------------------------------------------------
+u16 ZUKANSAVE_GetShortcutMons( const ZUKAN_SAVEDATA * zw )
+{
+  zukan_incorrect(zw);
+	return zw->shortcutMonsNo;
+}
 
 
 
@@ -2143,35 +2178,6 @@ u32 ZUKANSAVE_GetPokeRandomFlag( const ZUKAN_SAVEDATA * zw, u8 monsno )
 
 //----------------------------------------------------------------------------
 /**
- * @brief		ピチューのフォルムを取得
- *
- * @param		mons		ポケモン番号
- * @param		sex			性別
- * @param		form		フォルム
- *
- * @return	フォルム番号
- *
- *	form = 0 : ♂
- *	form = 1 : ♀
- *	form = 2 : ギザみみ
- */
-//-----------------------------------------------------------------------------
-static u32 GetPityuuForm( u32 mons, u32 sex, u32 form )
-{
-	if( mons == MONSNO_PITYUU ){
-		if( form != 0 ){
-			form = 2;
-		}else if( sex == PTL_SEX_MALE ){
-			form = 0;
-		}else{
-			form = 1;
-		}
-	}
-	return form;
-}
-
-//----------------------------------------------------------------------------
-/**
  * @brief		通常の見たフラグ設定
  *
  * @param		zw      図鑑ワークへのポインタ
@@ -2234,7 +2240,6 @@ static void SetFormSeeFlag( ZUKAN_SAVEDATA * zw, u32 mons, u32 sex, BOOL rare, u
 			form = 0;
 			max  = FORM_MAX_THERIMU;
 		}else{
-			form = GetPityuuForm( mons, sex, form );
 			max  = 1;
 		}
 		if( rare == TRUE ){
@@ -2435,8 +2440,7 @@ BOOL ZUKANSAVE_CheckForm( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u32
 	}
 
 	if( form_max != 0 ){
-		bit  = GetPokeFormBit( mons );
-		form = GetPityuuForm( mons, sex, form );
+		bit = GetPokeFormBit( mons );
 		if( rare == TRUE ){
 			if( check_bit( zw->draw_form[COLOR_RARE], bit+form ) == 0 ){
 				return FALSE;
@@ -2532,19 +2536,6 @@ void ZUKANSAVE_GetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 * sex, BOOL * rar
 				*rare = TRUE;
 				break;
 			}
-		}
-		if( mons == MONSNO_PITYUU ){
-			if( i == 0 ){
-				*form = 0;
-				*sex  = PTL_SEX_MALE;
-			}else if( i == 1 ){
-				*form = 0;
-				*sex  = PTL_SEX_FEMALE;
-			}else{
-				*form = 1;
-				*sex  = PTL_SEX_FEMALE;
-			}
-			return;
 		}
 	}else{
 		*form = 0;
