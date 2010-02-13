@@ -666,9 +666,10 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 	// キャラクタナンバー取得
 	char_no = WF_2DC_CharNoGet( view_type );
 
+#if DEBUG_ONLY_FOR_ohno
+  OS_TPrintf("WF_2DC_WkAdd %d\n",char_no);
+#endif
   
-  NET_PRINT("WF_2DC_WkAdd %d %d\n",char_no,view_type);
-
 	// 読み込み済みチェック
 	GF_ASSERT( WF_2DC_CharResCheck( p_sys, char_no ) == TRUE );
 	

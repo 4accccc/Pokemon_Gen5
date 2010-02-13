@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-02-06T13:22:14"/>
+	<create user="ohno" host="W00141" date="2010-02-13T19:33:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -493,6 +493,28 @@
 	<row id="GTSNEGO_034">
 		<language name="JPN" width="256">まちあわせできるひとはいません</language>
 		<language name="JPN_KANJI" width="256">まちあわせできるひとはいません</language>
+	</row>
+
+	<row id="GTSNEGO_035">
+		<language name="JPN" width="256">まちあわせあいての　せんたく</language>
+		<language name="JPN_KANJI" width="256">まちあわせあいての　せんたく</language>
+	</row>
+
+	<row id="GTSNEGO_036">
+		<language name="JPN" width="256">このひとと　まちあわせしますか？</language>
+		<language name="JPN_KANJI" width="256">このひとと　まちあわせしますか？</language>
+	</row>
+
+	<row id="GTSNEGO_037">
+		<language name="JPN" width="256">こうかんあいての　えらびかたを
+きめてください</language>
+		<language name="JPN_KANJI" width="256">こうかんあいての　えらびかたを
+きめてください</language>
+	</row>
+
+	<row id="GTSNEGO_038">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<flowchart-group-list>

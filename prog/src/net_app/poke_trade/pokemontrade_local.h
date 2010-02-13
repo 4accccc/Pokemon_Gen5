@@ -524,7 +524,7 @@ struct _POKEMON_TRADE_WORK{
   u16* scrTemoti;
   u8* pCharMem;
   POKEMONTRADE_TYPE type;
-  PROGVAL_CATMULLROM_WORK aCutMullRom;
+  PROGVAL_PEZIER_WORK aCutMullRom;
   s16 SuckedCount;
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
@@ -628,6 +628,7 @@ extern void IRC_POKETRADE_EndIconResource(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_DEMOCLACT_Create(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_CLACT_Create(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BOOL bGray);
+extern void IRC_POKETRADE_PosChangeSubStatusIcon(POKEMON_TRADE_WORK* pWork,int sel,BOOL bReset);
 
 
 #if _TRADE_DEBUG

@@ -660,6 +660,8 @@ MCR_MOVEOBJ* WIFI_MCR_SetNpc( WIFI_MATCHROOM* p_mcr, u32 view, u8 friendNo )
 	MCR_MOVEOBJ_ONPOS pos;
 	WF2DMAP_POS hero_pos;
 
+  NET_PRINT("WIFI_MCR_SetNpc%d %d\n",view, friendNo);
+
 	// 空いているオブジェ取得
 	p_obj = WcrMoveObj_GetClean( p_mcr );
 	

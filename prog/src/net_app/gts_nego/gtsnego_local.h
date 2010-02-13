@@ -5,6 +5,10 @@
 #include "ui/touchbar.h"
 
 
+#define _SE_CUR	(SEQ_SE_SELECT1)         //カーソル移動。上下左右キー
+#define _SE_DECIDE	(SEQ_SE_DECIDE1)     //決定音
+#define _SE_CANCEL	(SEQ_SE_CANCEL1)     //キャンセル音
+
 
 typedef struct _GTSNEGO_MESSAGE_WORK  GTSNEGO_MESSAGE_WORK;
 typedef struct _GTSNEGO_DISP_WORK  GTSNEGO_DISP_WORK;
@@ -17,6 +21,8 @@ typedef struct _GTSNEGO_DISP_WORK  GTSNEGO_DISP_WORK;
 // はいいいえのタイプ
 #define GTSNEGO_YESNOTYPE_INFO (0)
 #define GTSNEGO_YESNOTYPE_SYS  (1)
+
+
 
 
 // スクロールするパネルのカーソルの管理
@@ -121,7 +127,10 @@ extern BOOL GTSNEGO_DISP_FriendListDownChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANEL
 extern BOOL GTSNEGO_DISP_FriendListUpChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur);
 extern void GTSNEGO_DISP_ScrollReset(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_PanelScrollStart(GTSNEGO_DISP_WORK* pWork,int scrollType);
-extern int GTSNEGO_DISP_PanelScrollMain(GTSNEGO_DISP_WORK* pWork);
+extern int GTSNEGO_DISP_PanelScrollMain(GTSNEGO_DISP_WORK* pWork,int* EndTrg);
+extern void GTSNEGO_DISP_UnionListDisp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy, int index);
+extern void GTSNEGO_DISP_UnionListUp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy);
+extern void GTSNEGO_DISP_UnionListDown(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy);
 
 
 
@@ -131,10 +140,14 @@ extern void GTSNEGO_MESSAGE_FriendListDownStart(GTSNEGO_MESSAGE_WORK* pWork,GAME
 extern void GTSNEGO_MESSAGE_FriendListDownEnd(GTSNEGO_MESSAGE_WORK* pWork);
 extern void GTSNEGO_MESSAGE_FriendListUpStart(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData, int no);
 extern void GTSNEGO_MESSAGE_FriendListUpEnd(GTSNEGO_MESSAGE_WORK* pWork);
+extern void GTSNEGO_MESSAGE_AppMenuClose(APP_TASKMENU_WORK* pAppTask);
+extern APP_TASKMENU_WORK* GTSNEGO_MESSAGE_MatchOrReturnStart(GTSNEGO_MESSAGE_WORK* pWork,int type);
+
+extern MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index);
 
 
 
 #define SCROLL_HEIGHT_SINGLE (48)   ///１パネルの高さ
 #define SCROLL_HEIGHT_DEFAULT (24+SCROLL_HEIGHT_SINGLE*1) 
 #define SCROLL_PANEL_NUM (6)   ///パネルの数
-
+#define GTSNEGO_WINDOW_MAXNUM (SCROLL_PANEL_NUM)   //ウインドウのパターン数

@@ -863,9 +863,11 @@ static void _changePokemonStatusDispAuto(POKEMON_TRADE_WORK* pWork,int sel)
   }
 
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+    IRC_POKETRADE_PosChangeSubStatusIcon(pWork, sel,FALSE);
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], FALSE );
   }
   else{
+    IRC_POKETRADE_PosChangeSubStatusIcon(pWork, sel,TRUE);
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT] , TRUE );
   }
   {
@@ -908,6 +910,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     if(pWork->pokemonselectno!=0){
       pWork->pokemonselectno = 0;
       GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+      PMSND_PlaySystemSE(POKETRADESE_CUR);
       _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
     }
     break;
@@ -915,6 +918,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     if(pWork->pokemonselectno!=1){
       pWork->pokemonselectno = 1;
       GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+      PMSND_PlaySystemSE(POKETRADESE_CUR);
       _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
     }
     break;

@@ -1835,15 +1835,39 @@ void IRC_POKETRADE_SetSubStatusIcon(POKEMON_TRADE_WORK* pWork)
     GFL_CLACT_WK_SetPlttOffs( pWork->curIcon[CELL_CUR_POKE_FRIEND] , POKEICON_GetPalNumGetByPPP( ppp2 ) , CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_ARC_CloseDataHandle(arcHandlePoke);
   }
-
-
-
-
-
-  
 }
 
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   下画面の選択アイコン表示
+ * @param   POKEMON_TRADE_WORK work
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_PosChangeSubStatusIcon(POKEMON_TRADE_WORK* pWork,int sel,BOOL bReset)
+{
+  GFL_CLACTPOS pos;
+
+  if(bReset){
+    pos.x = _POKEMON_SELECT1_CELLX;
+    pos.y = _POKEMON_SELECT1_CELLY;
+    GFL_CLACT_WK_SetPos( pWork->curIcon[CELL_CUR_POKE_PLAYER], &pos, CLSYS_DRAW_SUB );
+    pos.x = _POKEMON_SELECT2_CELLX;
+    pos.y = _POKEMON_SELECT1_CELLY;
+    GFL_CLACT_WK_SetPos( pWork->curIcon[CELL_CUR_POKE_FRIEND], &pos, CLSYS_DRAW_SUB );
+  }
+  else{
+    pos.x = _POKEMON_SELECT1_CELLX;
+    pos.y =  !(sel) ?  _POKEMON_SELECT1_CELLY - 4 : _POKEMON_SELECT1_CELLY;
+    GFL_CLACT_WK_SetPos( pWork->curIcon[CELL_CUR_POKE_PLAYER], &pos, CLSYS_DRAW_SUB );
+    pos.x = _POKEMON_SELECT2_CELLX;
+    pos.y =  (sel) ?  _POKEMON_SELECT1_CELLY - 4 : _POKEMON_SELECT1_CELLY;
+    GFL_CLACT_WK_SetPos( pWork->curIcon[CELL_CUR_POKE_FRIEND], &pos, CLSYS_DRAW_SUB );
+  }
+}
 
 
 //------------------------------------------------------------------------------
@@ -2395,6 +2419,12 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
 
   {
     VecFx32 mullpos[4];
+    fx32 x,y,scale;
+    VecFx32 angle,normal;
+
+    angle.x = (pos.x-pWork->aVecPos.x)*FX32_ONE;
+    angle.y = (pos.y-pWork->aVecPos.y)*FX32_ONE;
+    angle.z = 0;
 
     mullpos[0].x = pos.x*FX32_ONE;
     mullpos[0].y = pos.y*FX32_ONE;
@@ -2402,19 +2432,54 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
     mullpos[1].x = (pos.x-(pWork->aVecPos.x-pos.x)*1)*FX32_ONE;
     mullpos[1].y = (pos.y-(pWork->aVecPos.y-pos.y)*1)*FX32_ONE;
     mullpos[1].z = 0;
-    mullpos[2].x = (pos.x-(pWork->aVecPos.x-pos.x)*2)*FX32_ONE;
-    mullpos[2].y = (pos.y-(pWork->aVecPos.y-pos.y)*2)*FX32_ONE;
-    mullpos[2].z = 0;
+
+  //  mullpos[2].x = (pos.x-(pWork->aVecPos.x-pos.x)*2)*FX32_ONE;
+ //   mullpos[2].y = (pos.y-(pWork->aVecPos.y-pos.y)*2)*FX32_ONE;
+ //   mullpos[2].z = 0;
     mullpos[3].x = 28*FX32_ONE;
     mullpos[3].y = 0*FX32_ONE;
     mullpos[3].z = 0;
+
+    x = mullpos[0].x-mullpos[3].x;
+    y = mullpos[0].y / 2;
+
+    scale = FX_Sqrt(FX_Mul(x,x) + FX_Mul(y,y)) / 15;  //ベクトルの大きさ
+//    VEC_Normalize(&angle, &normal);
+    normal.x = FX_Mul( angle.x, scale);
+    normal.y = FX_Mul( angle.y, scale);
+    normal.z = FX_Mul( angle.z, scale);
+
+    mullpos[2].x = x + normal.x;
+    mullpos[2].y = y + normal.y;
+    mullpos[2].z = 0;
+
+    
+    
+    
+    
+#if 0
+    if(mullpos[2].x > mullpos[3].x){
+      mullpos[2].x -= (mullpos[2].x - mullpos[3].x) / 2;
+    }
+    else{
+      mullpos[2].x += (mullpos[3].x - mullpos[2].x) / 2;
+    }
+    if(mullpos[2].y > mullpos[3].y){
+      mullpos[2].y -= (mullpos[2].y - mullpos[3].y) / 2;
+    }
+    else{
+      mullpos[2].y += (mullpos[3].y - mullpos[2].y) / 2;
+    }
+#endif
+ //   mullpos[2].x =  mullpos[3].x;
+ //   mullpos[2].y =  mullpos[1].y;
 
     OS_Printf("%d %d\n",mullpos[0].x/FX32_ONE,mullpos[0].y/FX32_ONE);
     OS_Printf("%d %d\n",mullpos[1].x/FX32_ONE,mullpos[1].y/FX32_ONE);
     OS_Printf("%d %d\n",mullpos[2].x/FX32_ONE,mullpos[2].y/FX32_ONE);
     OS_Printf("%d %d\n",mullpos[3].x/FX32_ONE,mullpos[3].y/FX32_ONE);
 
-    PROGVAL_CATMULLROM_Init(&pWork->aCutMullRom,
+    PROGVAL_PEZIER_Init(&pWork->aCutMullRom,
                          &mullpos[0],&mullpos[1],&mullpos[2],&mullpos[3],_SUCKEDCOUNT_NUM-2);
 
   }
@@ -2448,7 +2513,7 @@ BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
       POKEMONTRADE_RemovePokemonCursor(pWork);
     }
     else{
-      PROGVAL_CATMULLROM_Main( &pWork->aCutMullRom );
+      PROGVAL_PEZIER_Main( &pWork->aCutMullRom );
       pos.x = pWork->aCutMullRom.now_val.x/FX32_ONE;
       pos.y = pWork->aCutMullRom.now_val.y/FX32_ONE;
       GFL_CLACT_WK_SetPos(  pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);

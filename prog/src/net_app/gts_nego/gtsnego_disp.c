@@ -44,19 +44,81 @@
 
 #include "gtsnego_local.h"
 #include "gtsnego.naix"
-
+#include "wifi_unionobj_plt.cdat"
+#include "wifi_unionobj.naix"
 
 FS_EXTERN_OVERLAY(ui_common);
+
+
+//-------------------------------------
+///	トレーナーOBJ
+//=====================================
+
+
+// ユニオンキャラクター
+#define WF_2DC_ARC_UNICHARIDX	( NARC_wifi_unionobj_normal00_NCGR )	// キャラクタグラフィックの開始 boy1 から normal00に置き換えました nagihashi
+#define WF_2DC_ARC_GETUNINCL	(NARC_wifi_unionobj_wifi_union_obj_NCLR)	// パレット取得
+#define WF_2DC_ARC_GETUNINCG(x)	(WF_2DC_ARC_UNICHARIDX + x)		// キャラクタ取得
+#define WF_2DC_UNIPLTT_NUM		( 8 )	// ユニオンキャラクタが使用するパレット本数
+#define WF_2DC_ARC_UNIANMIDX	( NARC_wifi_unionobj_normal00_NCER )	// ユニオンアニメデータ
+#define WF_2DC_ARC_GETUNICEL(x)	(WF_2DC_ARC_UNIANMIDX+((x)*2))	// セルdataidゲット
+#define WF_2DC_ARC_GETUNIANM(x)	(WF_2DC_ARC_GETUNICEL(x)+1)		// アニメdataidゲット
+
+
+#define UNION_TRAINER_NUM  (16)
+
+
+#define _OBJPAL_UNION_POS   (0)
+#define _OBJPAL_UNION_NUM   (8)
+#define _OBJPAL_NEGOOBJ_POS (8)
+#define _OBJPAL_NEGOOBJ_NUM (7)
+#define _OBJPAL_MENUBAR_POS (15)
+#define _OBJPAL_MENUBAR_NUM (1)
+
+
 
 typedef enum
 {
   PLT_NEGOOBJ,  
+  PLT_UNION,  
   PLT_MENUBAR,  
   PLT_RESOURCE_MAX,
   CHAR_NEGOOBJ = PLT_RESOURCE_MAX,
+  CHAR_UNION,
+  CHAR_UNION1,
+  CHAR_UNION2,
+  CHAR_UNION3,
+  CHAR_UNION4,
+  CHAR_UNION5,
+  CHAR_UNION6,
+  CHAR_UNION7,
+  CHAR_UNION8,
+  CHAR_UNION9,
+  CHAR_UNIONa,
+  CHAR_UNIONb,
+  CHAR_UNIONc,
+  CHAR_UNIONd,
+  CHAR_UNIONe,
+  CHAR_UNIONf,
   CHAR_MENUBAR,
   CHAR_RESOURCE_MAX,
   ANM_NEGOOBJ = CHAR_RESOURCE_MAX,
+  ANM_UNION,
+  ANM_UNION1,
+  ANM_UNION2,
+  ANM_UNION3,
+  ANM_UNION4,
+  ANM_UNION5,
+  ANM_UNION6,
+  ANM_UNION7,
+  ANM_UNION8,
+  ANM_UNION9,
+  ANM_UNIONa,
+  ANM_UNIONb,
+  ANM_UNIONc,
+  ANM_UNIONd,
+  ANM_UNIONe,
+  ANM_UNIONf,
   ANM_MENUBAR,
   ANM_RESOURCE_MAX,
   CEL_RESOURCE_MAX,
@@ -99,6 +161,7 @@ struct _GTSNEGO_DISP_WORK {
   GFL_CLWK* crossIcon;
   GFL_CLWK* menubarObj;
   GFL_CLWK* scrollbarOAM[_SCROLLBAR_OAM_NUM];
+  GFL_CLWK* unionOAM[GTSNEGO_WINDOW_MAXNUM];
 };
 
 
@@ -123,7 +186,7 @@ static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 
   GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
-  GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+  GX_VRAM_SUB_OBJEXTPLTT_16_I,	// サブ2DエンジンのOBJ拡張パレット
 
   GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
   GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
@@ -169,6 +232,7 @@ static void _CreateMenuBarObj(GTSNEGO_DISP_WORK* pWork);
 static void _PanelScrollMain(GTSNEGO_DISP_WORK* pWork);
 static void _CreateScrollBarObj(GTSNEGO_DISP_WORK* pWork);
 static void _DeleteScrollBarObj(GTSNEGO_DISP_WORK* pWork);
+static void GTSNEGO_DISP_UnionWkScroll(GTSNEGO_DISP_WORK* pWork,int workIndex, int move);
 
 
 
@@ -190,7 +254,7 @@ GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id, GAMEDATA* pGameData)
 
   GFL_BG_Init(pWork->heapID);
   GFL_CLACT_SYS_Create(	&_CLSYS_Init, &_defVBTbl, pWork->heapID );
-  pWork->cellUnit = GFL_CLACT_UNIT_Create( 40 , 0 , pWork->heapID );
+  pWork->cellUnit = GFL_CLACT_UNIT_Create( 64 , 0 , pWork->heapID );
 
   GFL_DISP_SetBank( &_defVBTbl );
   GFL_BG_SetBGMode( &BGsys_data );
@@ -225,6 +289,7 @@ void GTSNEGO_DISP_Main(GTSNEGO_DISP_WORK* pWork)
 
 void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
 {
+  int i;
   GFL_CLACT_WK_Remove(pWork->crossIcon);
   GFL_CLACT_WK_Remove(pWork->menubarObj);
 
@@ -236,7 +301,12 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_MENUBAR] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_MENUBAR] );
   GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_MENUBAR] );
-  
+  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_UNION] );
+
+  for(i=0;i<UNION_TRAINER_NUM;i++){
+    GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_UNION+i] );
+    GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_UNION+i] );
+  }
 
   GFL_TCB_DeleteTask( pWork->g3dVintr );
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
@@ -375,8 +445,10 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 
 static void dispInit(GTSNEGO_DISP_WORK* pWork)
 {
+  int i;
+  ARCHANDLE* p_handle;
 	{
-    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
+    p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gtsnego_nego_under_bg_NCLR,
                                       PALTYPE_SUB_BG, 0, 6*0x20,  pWork->heapID);
@@ -416,13 +488,13 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
 
-
+    
     pWork->cellRes[CHAR_NEGOOBJ] =
       GFL_CLGRP_CGR_Register( p_handle , NARC_gtsnego_nego_obj_NCGR ,
                               FALSE , CLSYS_DRAW_SUB , pWork->heapID );
     pWork->cellRes[PLT_NEGOOBJ] =
       GFL_CLGRP_PLTT_RegisterEx(
-        p_handle ,NARC_gtsnego_nego_obj_NCLR , CLSYS_DRAW_SUB ,    0, 0, 6, pWork->heapID  );
+        p_handle ,NARC_gtsnego_nego_obj_NCLR , CLSYS_DRAW_SUB ,    0x20*_OBJPAL_NEGOOBJ_POS, 0, _OBJPAL_NEGOOBJ_NUM, pWork->heapID  );
     pWork->cellRes[ANM_NEGOOBJ] =
       GFL_CLGRP_CELLANIM_Register(
         p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_nego_obj_NANR , pWork->heapID  );
@@ -433,11 +505,12 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
                               FALSE , CLSYS_DRAW_SUB , pWork->heapID );
     pWork->cellRes[PLT_MENUBAR] =
       GFL_CLGRP_PLTT_RegisterEx(
-        p_handle ,NARC_gtsnego_menu_bar_NCLR , CLSYS_DRAW_SUB ,    0x20*6, 0, 1, pWork->heapID  );
+        p_handle ,NARC_gtsnego_menu_bar_NCLR , CLSYS_DRAW_SUB ,    0x20*_OBJPAL_MENUBAR_POS, 0, _OBJPAL_MENUBAR_NUM, pWork->heapID  );
     pWork->cellRes[ANM_MENUBAR] =
       GFL_CLGRP_CELLANIM_Register(
         p_handle , NARC_gtsnego_menubar_NCER, NARC_gtsnego_menubar_NANR , pWork->heapID  );
-    
+
+
     pWork->pBlink = BLINKPALANM_Create(0,16,GFL_BG_FRAME0_M,pWork->heapID);
     BLINKPALANM_SetPalBufferArcHDL(pWork->pBlink,p_handle,NARC_gtsnego_nego_back_NCLR,0,16 );
 
@@ -449,6 +522,24 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
 
     
 	}
+
+  {
+
+    p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, pWork->heapID );
+    for(i=0;i<UNION_TRAINER_NUM;i++){
+      pWork->cellRes[CHAR_UNION+i] =
+        GFL_CLGRP_CGR_Register( p_handle , WF_2DC_ARC_GETUNINCG(i) ,
+                                FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+      pWork->cellRes[ANM_UNION+i] =
+        GFL_CLGRP_CELLANIM_Register(
+          p_handle , WF_2DC_ARC_GETUNICEL(i), WF_2DC_ARC_GETUNIANM(i) , pWork->heapID  );
+    }
+    pWork->cellRes[PLT_UNION] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,WF_2DC_ARC_GETUNINCL , CLSYS_DRAW_SUB ,    0x20*_OBJPAL_UNION_POS, 0, _OBJPAL_UNION_NUM, pWork->heapID  );
+    GFL_ARC_CloseDataHandle(p_handle);
+  }
+
   G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BG3,15,9);
 
 }
@@ -684,6 +775,8 @@ void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WOR
     GFL_ARC_CloseDataHandle(p_handle);
 	}
  // pWork->bgscroll = 0;
+  _CreateScrollBarObj( pWork);
+
   pWork->bgscrollRenew=TRUE;
 
 //  _FriendListPlateDisp(pWork, pMessageWork);
@@ -699,8 +792,17 @@ void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WOR
 
 void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
 {
+  int i;
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
+  for(i=0;i<SCROLL_PANEL_NUM;i++){
+    if(pWork->unionOAM[i]){
+      GFL_CLACT_WK_Remove(pWork->unionOAM[i]);
+    }
+  }
+  
+  _DeleteScrollBarObj(pWork);
+  
   GFL_BG_FillScreen( GFL_BG_FRAME2_S,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_under_bg1_NSCR,
@@ -781,6 +883,7 @@ static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork)
     MYSTATUS* pMyStatus = MyStatus_AllocWork(pWork->heapID);
     MyStatus_SetProfileID(pMyStatus,12+i);
     MyStatus_SetID(pMyStatus,12+i);
+    MyStatus_SetTrainerView(pMyStatus,i%16);
     MyStatus_SetMyNationArea(pMyStatus,1+i,1);
     WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),pMyStatus);
     GFL_HEAP_FreeMemory(pMyStatus);
@@ -817,7 +920,8 @@ static void _CreateScrollBarObj(GTSNEGO_DISP_WORK* pWork)
   int i;
   u16 buffx[]={250,250,128};
   u16 buffy[]={192/2,192/2,16};
-  u16 oamno[]={4,9,10};
+  u16 oamno[]={4,10,9};
+  u16 bgpri[]={1,1,1};
 
 
   for(i=0;i< _SCROLLBAR_OAM_NUM;i++){
@@ -825,7 +929,7 @@ static void _CreateScrollBarObj(GTSNEGO_DISP_WORK* pWork)
     cellInitData.pos_y = buffy[i];
     cellInitData.anmseq = oamno[i];
     cellInitData.softpri = i;
-    cellInitData.bgpri = 0;
+    cellInitData.bgpri = bgpri[i];
     pWork->scrollbarOAM[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                   pWork->cellRes[CHAR_NEGOOBJ],
                                                   pWork->cellRes[PLT_NEGOOBJ],
@@ -875,29 +979,36 @@ void GTSNEGO_DISP_PanelScrollStart(GTSNEGO_DISP_WORK* pWork,int scrollType)
 //-----------------------------------------------------------------------------
 
 
-int GTSNEGO_DISP_PanelScrollMain(GTSNEGO_DISP_WORK* pWork)
+int GTSNEGO_DISP_PanelScrollMain(GTSNEGO_DISP_WORK* pWork,int* EndTrg)
 {
   u8 ret = PANEL_NONESCROLL_;
+  int i;
   
   if(pWork->bgscrollType == PANEL_DOWNSCROLL_){
     pWork->bgscroll+=8;
     if(pWork->bgscrollPos==pWork->bgscroll){
-      ret = pWork->bgscrollType;
+      *EndTrg = pWork->bgscrollType;
       pWork->bgscrollType = PANEL_NONESCROLL_;
       pWork->bgscroll-=SCROLL_HEIGHT_SINGLE;
+    }
+    for(i=0;i<GTSNEGO_WINDOW_MAXNUM;i++){
+      GTSNEGO_DISP_UnionWkScroll(pWork,i,-8);
     }
     pWork->bgscrollRenew=TRUE;
   }
   if(pWork->bgscrollType == PANEL_UPSCROLL_){
     pWork->bgscroll-=8;
     if(pWork->bgscrollPos==pWork->bgscroll){
-      ret = pWork->bgscrollType;
+      *EndTrg = pWork->bgscrollType;
       pWork->bgscrollType = PANEL_NONESCROLL_;
       pWork->bgscroll+=SCROLL_HEIGHT_SINGLE;
     }
+    for(i=0;i<GTSNEGO_WINDOW_MAXNUM;i++){
+      GTSNEGO_DISP_UnionWkScroll(pWork,i,8);
+    }
     pWork->bgscrollRenew=TRUE;
   }
-  return ret;
+  return pWork->bgscrollType;
 }
 
 
@@ -916,3 +1027,148 @@ void GTSNEGO_DISP_ScrollReset(GTSNEGO_DISP_WORK* pWork)
   GFL_BG_SetScroll(GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, 0);
   GFL_BG_SetScroll(GFL_BG_FRAME2_S, GFL_BG_SCROLL_Y_SET, 0);
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アイコンWorkCreate
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+static void GTSNEGO_DISP_UnionWkCreate(GTSNEGO_DISP_WORK* pWork,int workIndex,int unionNo)
+{
+  GFL_CLWK_DATA cellInitData;
+  int i = workIndex;
+
+  GF_ASSERT(workIndex<GTSNEGO_WINDOW_MAXNUM);
+  GF_ASSERT(unionNo<UNION_TRAINER_NUM);
+
+  if(pWork->unionOAM[i]){
+    GFL_CLACT_WK_Remove(pWork->unionOAM[i]);
+  }
+
+  
+  cellInitData.pos_x = 0;
+  cellInitData.pos_y = 0;
+  cellInitData.anmseq = 1;
+  cellInitData.softpri = 10;
+  cellInitData.bgpri = 2;
+  pWork->unionOAM[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                pWork->cellRes[CHAR_UNION+unionNo],
+                                                pWork->cellRes[PLT_UNION],
+                                                pWork->cellRes[ANM_UNION+unionNo],
+                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->unionOAM[i] , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->unionOAM[i], FALSE );
+}
+
+
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アイコン表示
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+static void GTSNEGO_DISP_UnionWkDisp(GTSNEGO_DISP_WORK* pWork,int workIndex,int x,int y)
+{
+  GFL_CLACTPOS pos;
+
+  GF_ASSERT(workIndex<GTSNEGO_WINDOW_MAXNUM);
+  if(workIndex<GTSNEGO_WINDOW_MAXNUM){
+    pos.x = x;
+    pos.y = y;
+    GFL_CLACT_WK_SetPos(pWork->unionOAM[workIndex], &pos, CLSYS_DRAW_SUB);
+    GFL_CLACT_WK_SetDrawEnable( pWork->unionOAM[workIndex], TRUE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アイコン表示
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_UnionListDisp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy,int workIndex)
+{
+  int i=workIndex;
+
+  GTSNEGO_DISP_UnionWkCreate(pWork, i, MyStatus_GetTrainerView(pMy));
+  GTSNEGO_DISP_UnionWkDisp(pWork, i , 8*3, -8*6+i*8*6 );
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アイコン移動
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+static void GTSNEGO_DISP_UnionWkScroll(GTSNEGO_DISP_WORK* pWork,int workIndex, int move)
+{
+  int i=workIndex;
+  GFL_CLACTPOS pos;
+
+  GFL_CLACT_WK_GetPos(pWork->unionOAM[workIndex], &pos, CLSYS_DRAW_SUB);
+  pos.y += move;
+  GFL_CLACT_WK_SetPos(pWork->unionOAM[workIndex], &pos, CLSYS_DRAW_SUB);
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	UNIONアイコンが上にスクロール(下にキーが入った)ときの処理
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_UnionListDown(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy)
+{
+  int i,endmark = SCROLL_PANEL_NUM-1;
+
+  if(pMy){
+    GFL_CLACT_WK_Remove(pWork->unionOAM[0]);
+    for(i = 0 ; i < endmark ; i++){  //場所スライド
+      pWork->unionOAM[i] =pWork->unionOAM[i+1];
+    }
+    pWork->unionOAM[endmark]=NULL;
+    GTSNEGO_DISP_UnionListDisp(pWork, pMy, endmark );
+
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	UNIONアイコンが下にスクロール(上にキーが入った)ときの処理
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_UnionListUp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy)
+{
+  int i,endmark = SCROLL_PANEL_NUM-1;
+
+  if(pMy){
+    GFL_CLACT_WK_Remove(pWork->unionOAM[endmark]);
+    for(i = endmark ; i > 0; i--){  //場所スライド
+      pWork->unionOAM[i] =pWork->unionOAM[i-1];
+    }
+    pWork->unionOAM[0] = NULL;
+    GTSNEGO_DISP_UnionListDisp(pWork, pMy, 0 );
+  }
+}
+
