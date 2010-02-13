@@ -499,6 +499,12 @@ u32 FRAMELIST_Main( FRAMELIST_WORK * wk )
 		break;
 
 	case MAINSEQ_WAIT:
+		// ‚`ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç‘I‘ð‚ð•Ô‚·
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+				ret = wk->listPos;
+			}
+		}
 		if( wk->listWait == 0 ){
 			wk->mainSeq = MAINSEQ_MAIN;
 		}else{
