@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T14:55:26"/>
+	<create user="matsumiya" host="W00224" date="2010-02-13T18:00:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="230"/>
+		<comment position="4" width="279"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="142">
 		</attribute>
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="26" top="194" right="720" bottom="800" maximized="no" rayout="Vertical2">
+	<dialog left="1323" top="251" right="2017" bottom="857" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="119" right="1280" bottom="517" visible="yes"/>
 		<band id="0" index="1" style="0000" width="519"/>
@@ -336,423 +336,649 @@
 	</lock>
 
 
-	<row id="msg_t01r0102_letter_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>※ゲーム開始後から
-メッセージウインドウ表示できるか？</comment>
-		<language name="JPN" width="256">『……この　てがみと　いっしょに
-３びきの　ポケモンを　とどけます
-きみと　きみのともだち　とで
-なかよく　えらんでください
-それでは　よろしく！
-
-　　　　　　　　　　　アララギ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">『……この　手紙と　いっしょに
-３匹の　ポケモンを　届けます
-きみと　きみのともだち　とで
-仲良く　選んでください
-それでは　よろしく！
-
-　　　　　　　　　　　アララギ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ後、友達♀登場
-　そのまま（X=..Z=）に移動
-・続けて友達♀がやってくるアニメのあと
-　msg_t01r0102_white_01表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-アララギはかせが
-ポケモンを　くれると　きいたけど[BE:01:ページ切り替え（クリア）]
-……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]
-ベルは　また……？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-アララギ博士が
-ポケモンを　くれると　聞いたけど[BE:01:ページ切り替え（クリア）]
-……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]
-ベルは　また……？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]▼
+アララギはかせに　きいたけど
+ポケモンを　もらえるんだって？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]▼
+アララギ博士に　聞いたけれど
+ポケモンを　もらえるんだって？▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_01">
+	<row id="msg_t01r0102_black_01a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・振り向き後メッセージ
+　表示後に友達♀がやってくるアニメ
+　続けてwhite_01表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">……　……　……
+……　……　……▼
+ベルは　また……？▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……
+……　……　……▼
+ベルは　また……？▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・続けてmsg_t01r0102_black_02表示</comment>
+・続けてblack_02</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『あのー　ごめんね
-また　おそくなっちゃった……[BE:01:ページ切り替え（クリア）]</language>
+また　おそくなっちゃった……▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あのー　ごめんね
-また　遅くなっちゃった……[BE:01:ページ切り替え（クリア）]</language>
+また　遅くなっちゃった……▼</language>
 	</row>
 
-	<row id="msg_t01r0102_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_t01r0102_white_02表示</comment>
+・続けてwhite_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『なあ　ベル[BE:01:ページ切り替え（クリア）]
-ひとを　またせるのは
-よくないと　いってるだろう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『なあ　ベル[BE:01:ページ切り替え（クリア）]
-人を　待たせるのは
-よくないと　言ってるだろう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『ねえ　ベル▼
+あまり　またせないでくれるかな
+ポケモンが　もらえるんだよ！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ねえ　ベル▼
+あまり　待たせないでくれるかな
+ポケモンが　もらえるんだよ！▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_02">
+	<row id="msg_t01r0102_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・続けてmsg_t01r0102_black_03表示
+・続けてblack_03
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『はーい
-ごめんなさい　[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-で　ポケモン　どこなの？[BE:01:ページ切り替え（クリア）]
+ごめんなさい　[1:00:トレーナー名:0]▼
+で　ポケモン　どこなの？▼
 [1:00:トレーナー名:0]の　いえに　とどいたんだし
-えらぶのは　[1:00:トレーナー名:0]からで[BE:00:ページ切り替え（行送り）]
-いいよね　チェレン[BE:01:ページ切り替え（クリア）]</language>
+えらぶのは　[1:00:トレーナー名:0]からだよね▼</language>
 		<language name="JPN_KANJI" width="256">ベル『はーい
-ごめんなさい　[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-で　ポケモン　どこなの？[BE:01:ページ切り替え（クリア）]
+ごめんなさい　[1:00:トレーナー名:0]▼
+で　ポケモン　どこなの？▼
 [1:00:トレーナー名:0]の　家に　届いたんだし
-選ぶのは　[1:00:トレーナー名:0]からで[BE:00:ページ切り替え（行送り）]
-いいよね　チェレン[BE:01:ページ切り替え（クリア）]</language>
+選ぶのは　[1:00:トレーナー名:0]からだよね▼</language>
 	</row>
 
-	<row id="msg_t01r0102_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・メッセージ表示後から操作可能
-・階段から降りようとすると
-　msg_t01r0102_black_04表示</comment>
+・続けてプレゼントボックスを見て
+　black_03a表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『オレも　そのつもりだよ[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]
-３つの　ボールに[BE:00:ページ切り替え（行送り）]
-それぞれ　ポケモンが　はいっているね[BE:01:ページ切り替え（クリア）]
-どんな　ポケモンか　しりたければ
-モンスターボールを　しらべなよ</language>
-		<language name="JPN_KANJI" width="256">チェレン『オレも　そのつもり[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]
-３つの　ボールに[BE:00:ページ切り替え（行送り）]
-それぞれ　ポケモンが　入っているね[BE:01:ページ切り替え（クリア）]
-どんな　ポケモンか　知りたければ
-モンスターボールを　調べなよ</language>
+		<language name="JPN" width="256">チェレン『もちろん▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『もちろん▼</language>
 	</row>
 
-	<row id="msg_t01r0102_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_03a" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・msg_t01r0102_black_03表示後
-　ストッパー用メッセージ
-・表示後、主人公を一歩もどす</comment>
+・メッセージ表示後、主人公操作可能に
+　階段手前でストッパー→black_04
+　ライバル→black_04a
+　サポート→white_03
+　ボックス→presentbox_01
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-まず　おまえが　えらんでくれないと
-オレたちも　えらべないよね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-まず　おまえが　選んでくれないと
-オレたちも　選べないよね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ポケモンは　その　はこのなかに
+はいっているんだよね　[1:00:トレーナー名:0]▼
+さっそく　あけてくれないかな</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　その　箱の中に
+はいっているんだよね　[1:00:トレーナー名:0]▼
+さっそく　開けてくれないかな</language>
 	</row>
 
-	<row id="msg_t01r0102_white_03">
-		<comment>♀
-・msg_t01r0102_black_03表示後
-　ポケモン選択するまで</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『どの　ポケモンにするか
-まよっちゃうよね[BE:00:ページ切り替え（行送り）]
-だって　みんな　かわいいもん[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『どの　ポケモンにするか
-迷っちゃうよね[BE:00:ページ切り替え（行送り）]
-だって　みんな　かわいいもん[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_white_04">
-		<comment>♀
-・プレイヤーがボールを選択すると
-　続けてこのメッセージ
-・このときボールはすでに削除
-・続けてmsg_t01r0102_black_05</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『じゃ！
-あたし　この　ポケモン！[BE:00:ページ切り替え（行送り）]
-チェレンは　このこ　ね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『じゃ！
-あたし　この　ポケモン！[BE:00:ページ切り替え（行送り）]
-チェレンは　この子　ね！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_t01r0102_white_05表示</comment>
+・階段ストッパーメッセージ
+・表示後、主人公を一歩戻す処理</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『なんで　おまえが……[BE:01:ページ切り替え（クリア）]
-まあ　いいけどね
-さいしょから　こいつ　ねらっていたし[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『なんで　おまえが……[BE:01:ページ切り替え（クリア）]
-まあ　いいけどね
-最初から　こいつ　ねらっていたし[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『きみが　えらんでくれないと
+ぼくたちも　ポケモンを　えらべないよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『きみが　選んでくれないと
+ぼくたちも　ポケモンを　選べないよ▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_05">
-		<comment>♀
-・続けてmsg_t01r0102_black_06表示</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『ということで……
-ねえねえ　ポケモンしょうぶ　しようよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『ということで……
-ねえねえ　ポケモン勝負　しようよ！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_black_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_04a" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_t01r0102_white_06表示</comment>
+・black_03a表示後、プレゼントボックスを調べるまで</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『まだ
-よわい　ポケモンとはいえ[BE:01:ページ切り替え（クリア）]
-いえの　なかだぞ？
-[1:00:トレーナー名:0]の　へやだぞ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『まだ
-弱い　ポケモンとはいえ[BE:01:ページ切り替え（クリア）]
-家の中だぞ？
-[1:00:トレーナー名:0]の　部屋だぞ？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『はこを　あけてくれると
+ぼくたちも　うれしいよ▼
+だって　どんなポケモンが　いるか
+このままだと　わからないからね</language>
+		<language name="JPN_KANJI" width="256">チェレン『箱を　開けてくれると
+ぼくたちも　うれしいよ▼
+だって　どんなポケモンが　いるか
+このままだと　わからないからね</language>
 	</row>
 
-	<row id="msg_t01r0102_white_06">
-		<comment>♀
-・はい/いいえの選択肢表示
-　はい→msg_t01r0102_white_10
-　いいえ→msg_t01r0102_white_07
-　メッセージ表示後から操作可能</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『だいじょーぶ だって
-まだ　このこたち　よわいんでしょ？[BE:00:ページ切り替え（行送り）]
-しょうぶして　そだててあげないと[BE:01:ページ切り替え（クリア）]
-ね　[1:00:トレーナー名:0]
-あたしと　ポケモンしょうぶ　しよう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『だいじょーぶ だって
-まだ　この子たち　よわいんでしょ？[BE:00:ページ切り替え（行送り）]
-勝負して　育ててあげないと[BE:01:ページ切り替え（クリア）]
-ね　[1:00:トレーナー名:0]
-あたしと　ポケモン勝負　しよう！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_white_07">
-		<comment>♀
-・いいえ選択時
-・メッセージ表示後から操作可能</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『えー
-そんなこと　いわないで[BE:00:ページ切り替え（行送り）]
-かんがえなおしてみて！[BE:01:ページ切り替え（クリア）]
-だって　じぶんの　ポケモンが
-てにはいったんだよ！　しょうぶでしょ！</language>
-		<language name="JPN_KANJI" width="256">ベル『えー
-そんなこと　いわないで[BE:00:ページ切り替え（行送り）]
-考え直してみて！[BE:01:ページ切り替え（クリア）]
-だって　自分の　ポケモンが
-手に入ったんだよ！　勝負でしょ！</language>
-	</row>
-
-	<row id="msg_t01r0102_white_08">
-		<comment>♀
-・ストッパー用メッセージ
-・表示後、主人公を一歩もどす</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『どこいくのよお？[BE:01:ページ切り替え（クリア）]
-けんきゅうじょに　いくまえに
-あたしと　しょうぶ　してよね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『どこ行くのよお？[BE:01:ページ切り替え（クリア）]
-研究所に　行くまえに
-あたしと　勝負してよね！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_black_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・msg_t01r0102_white_07表示後のメッセージ</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『そうだな
-あいて　してあげれば？[BE:01:ページ切り替え（クリア）]
-ポケモンを　てにいれて
-はしゃぎたくなる　きもち　わかるし[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『そうだな
-相手　してあげれば？[BE:01:ページ切り替え（クリア）]
-ポケモンを　手に入れて
-はしゃぎたくなる　気持ち　わかるし[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_white_09">
-		<comment>♀
-・msg_t01r0102_white_07表示後
-　再度話しかけたとき
-・はい/いいえ
-　はい→msg_t01r0102_white_10
-　いいえ→msg_t01r0102_white_07</comment>
+・black_03a表示後、プレゼントボックスを調べるまで</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『ちょっと　どこいくのよお[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『ちょっと　どこ行くのよお[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『ねえねえ
+どんな　ポケモン　なのかな……？</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ
+どんな　ポケモン　なのかな……？</language>
 	</row>
 
-	<row id="msg_t01r0102_white_10">
-		<comment>♀
-・はい選択時
-・戦闘前メッセージ</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『よーし！[BE:01:ページ切り替え（クリア）]
-きねんすべき　はじめての
-ポケモンしょうぶ！[BE:00:ページ切り替え（行送り）]
-きあいいれて　いくんだから！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『よーし！[BE:01:ページ切り替え（クリア）]
-記念すべき　初めての
-ポケモン勝負！[BE:00:ページ切り替え（行送り）]
-気合いれて　いくんだから！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_t01r0102_presentbox_01" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>システム
+・表示後、箱が開く演出（仮）</comment>
+		<attribute name="キャラ指定">プレゼントボックス</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+プレゼントボックスを　あけはじめた！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+プレゼントボックスを　あけはじめた！▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_11">
-		<comment>♀
-・戦闘後メッセージ（フィールド）
-・ポケモンのHPで分岐
-　満タンなら→msg_t01r0102_black_08
-　そうでないなら→msg_t01r0102_black_09</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『ふええ[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]……
-あなた　すごい　トレーナーに[BE:00:ページ切り替え（行送り）]
-なれるんじゃない？　そんなきがする[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『ふええ[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]……
-あなた　すごい　トレーナーに[BE:00:ページ切り替え（行送り）]
-なれるんじゃない？　そんな気がする[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_t01r0102_letter_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>システム
+・メッセージ表示後
+　ポケモン選択が可能に</comment>
+		<attribute name="キャラ指定">手紙</attribute>
+		<language name="JPN" width="256">『……この　てがみと　いっしょに
+３びきの　ポケモンを　とどけます
+きみと　きみのともだち　とで
+なかよく　えらんでね
+それでは　よろしく！
+
+　　　　　　　　　　　アララギ▼</language>
+		<language name="JPN_KANJI" width="256">『……この　手紙と　いっしょに
+３匹の　ポケモンを　届けます
+きみと　きみのともだち　とで
+仲良く　選んでね
+それでは　よろしく！
+
+　　　　　　　　　　　アララギ▼</language>
 	</row>
 
-	<row id="msg_t01r0102_black_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・プレイヤーポケモンのHPが満タン時
-・続けてmsg_t01r0102_black_10</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『ポケモンの　たいりょく……
-ＨＰを　へらすことなく[BE:00:ページ切り替え（行送り）]
-かつなんて　すごいね！[BE:01:ページ切り替え（クリア）]
-これなら　キズぐすりを　つかう
-ひつようは　ないね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『ポケモンの　体力……
-ＨＰを　減らすことなく[BE:00:ページ切り替え（行送り）]
-勝つなんて　すごいね！[BE:01:ページ切り替え（クリア）]
-これなら　キズぐすりを　使う
-必要は　ないね[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_black_09" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>♂
-・プレイヤーポケモンのHPが減ったとき
-・道具使用ＭＥ＋HP20回復
-・続けてmsg_t01r0102_black_10</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『おまえたちの　ポケモン
-なんだか　たのしそうだったし[BE:00:ページ切り替え（行送り）]
-いい　しょうぶ　だったぜ[BE:01:ページ切り替え（クリア）]
-おまえの　ポケモンの　たいりょく……
-ＨＰ（ヒットポイント）が　へったな[BE:00:ページ切り替え（行送り）]
-キズぐすりを　つかってやるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『おまえたちの　ポケモン
-なんだか　楽しそうだったし[BE:00:ページ切り替え（行送り）]
-いい　勝負　だったよ[BE:01:ページ切り替え（クリア）]
-おまえの　ポケモンの　体力……
-ＨＰが　減ったな[BE:00:ページ切り替え（行送り）]
-これ……　キズぐすりを　使ってやるよ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・戦闘前メッセージ</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『で……[BE:01:ページ切り替え（クリア）]
-れんぞくで　わるいけど
-オレも　あいて　してもらうよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『で……[BE:01:ページ切り替え（クリア）]
-連続で　悪いけど
-オレも　相手してもらうよ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・戦闘後、フィールドに復帰すると
-　このメッセージ表示
-・続けてmsg_t01r0102_white_12</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『この　かんどう
-うまく　いいあらわせない　けれど[BE:00:ページ切り替え（行送り）]
-トレーナーに　なったんだな！[BE:01:ページ切り替え（クリア）]
-それじゃあ
-はかせに　おれいを　いいにいくか[BE:01:ページ切り替え（クリア）]
-けんきゅうじょの　まえで　まってるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『この　感動
-うまく　言い表せないけれど[BE:00:ページ切り替え（行送り）]
-トレーナーに　なったんだな！[BE:01:ページ切り替え（クリア）]
-それじゃあ
-博士に　お礼を　いいにいくか[BE:01:ページ切り替え（クリア）]
-研究所の前で　待ってるよ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_white_12">
-		<comment>♀
-・メッセージ後、友達♂＆♀退場
-　t01r0101に出現
-　画面外に消えると操作可能に</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『あっ
-あたし　いちど　いえにもどるね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『あっ
-あたし　一度　家にもどるね[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_t01r0102_ball1_fire_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0102_ball1_fire_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・続けて「はい/いいえ」の選択肢表示
 ・はい→msg_t01r0102_ball_get_01
-　いいえ→ウインドウ閉じるだけ</comment>
+　いいえ→ウインドウ閉じるだけ
+・0＝ポケモンNo554</comment>
 		<attribute name="キャラ指定">モンスターボールその１</attribute>
 		<language name="JPN" width="256">ほのおタイプの　ポケモン
-「[FF:00:色:1]ホットン[FF:00:色:0]」が　はいっている[BE:01:ページ切り替え（クリア）]
+「[FF:00:色:1][1:01:ポケモン種族名:0][FF:00:色:0]」が　はいっている▼
 この　ポケモンを　えらびますか？</language>
 		<language name="JPN_KANJI" width="256">ほのおタイプの　ポケモン
-「[FF:00:色:1]ホットン[FF:00:色:0]」が　入っている[BE:01:ページ切り替え（クリア）]
+「[FF:00:色:1][1:01:ポケモン種族名:0][FF:00:色:0]」が　はいっている▼
 この　ポケモンを　選びますか？</language>
 	</row>
 
-	<row id="msg_t01r0102_ball1_grass_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0102_ball1_grass_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・続けて「はい/いいえ」の選択肢表示
 ・はい→msg_t01r0102_ball_get_01
-　いいえ→ウインドウ閉じるだけ</comment>
+　いいえ→ウインドウ閉じるだけ
+・0＝ポケモンNo551</comment>
 		<attribute name="キャラ指定">モンスターボールその２</attribute>
 		<language name="JPN" width="256">くさタイプの　ポケモン
-「[FF:00:色:3]クサヘビ[FF:00:色:0]」が　はいっている[BE:01:ページ切り替え（クリア）]
+「[FF:00:色:3][1:01:ポケモン種族名:0][FF:00:色:0]」が　はいっている▼
 この　ポケモンを　えらびますか？</language>
 		<language name="JPN_KANJI" width="256">くさタイプの　ポケモン
-「[FF:00:色:3]クサヘビ[FF:00:色:0]」が　入っている[BE:01:ページ切り替え（クリア）]
+「[FF:00:色:3][1:01:ポケモン種族名:0][FF:00:色:0]」が　はいっている▼
 この　ポケモンを　選びますか？</language>
 	</row>
 
-	<row id="msg_t01r0102_ball1_water_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0102_ball1_water_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・続けて「はい/いいえ」の選択肢表示
 ・はい→msg_t01r0102_ball_get_01
-　いいえ→ウインドウ閉じるだけ</comment>
+　いいえ→ウインドウ閉じるだけ
+・0＝ポケモンNo557</comment>
 		<attribute name="キャラ指定">モンスターボールその３</attribute>
 		<language name="JPN" width="256">みずタイプの　ポケモン
-「[FF:00:色:2]スイッコ[FF:00:色:0]」が　はいっている[BE:01:ページ切り替え（クリア）]
+「[FF:00:色:2][1:01:ポケモン種族名:0][FF:00:色:0]」が　はいっている▼
 この　ポケモンを　えらびますか？</language>
 		<language name="JPN_KANJI" width="256">みずタイプの　ポケモン
-「[FF:00:色:2]スイッコ[FF:00:色:0]」が　入っている[BE:01:ページ切り替え（クリア）]
+「[FF:00:色:2][1:01:ポケモン種族名:0][FF:00:色:0]」が　はいっている▼
 この　ポケモンを　選びますか？</language>
 	</row>
 
-	<row id="msg_t01r0102_ball_get_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>7月ROM用
-・本来であればシステムメッセージ</comment>
+	<row id="msg_t01r0102_ball_get_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>システム
+・本来ならcommon_scr</comment>
+		<attribute name="キャラ指定">ポケモン入手</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [1:01:ポケモン種族名:1]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
 [1:01:ポケモン種族名:1]を　手に入れた！</language>
 	</row>
 
-	<row id="msg_t01r0102_game_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t01r0102_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・プレイヤーがボールを選択すると
+　フィールド画面に復帰しこのメッセージ
+・続けてblack_05</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『じゃ！
+あたし　この　ポケモン！▽
+チェレンは　このこ　ね！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『じゃ！
+あたし　この　ポケモン！▽
+チェレンは　この子　ね！▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてwhite_05
+・0＝ライバル取得ポケモン名</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『どうして　きみが
+ぼくの　ポケモンを　きめるのさ……？▼
+まあ　さいしょから
+[1:01:ポケモン種族名:0]が　ほしかったけど▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『どうして　きみが
+ぼくの　ポケモンを　決めるのさ……？▼
+まあ　最初から
+[1:01:ポケモン種族名:0]が　ほしかったけど▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・続けてblack_06</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『みんな　じぶんの
+ポケモンを　えらんだよね▽
+……ということで▼
+ねえねえ！
+ポケモンしょうぶ　しようよ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『みんな　じぶんの
+ポケモンを　選んだよね▽
+……ということで▼
+ねえねえ！
+ポケモン勝負　しようよ！▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてwhite_06</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……あのね　ベル
+まだ　よわい　ポケモンとはいえ▼
+いえの　なかで
+ポケモンしょうぶは　ダメだよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……あのね　ベル
+まだ　弱い　ポケモンとはいえ▼
+家の　中で
+ポケモン勝負は　ダメだよ▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・会話後、主人公操作可能に
+・サポートと会話→white_08
+　ライバルと会話→black_07
+　階段ストッパー</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『だいじょーぶ だって
+まだ　このこたち　よわいんでしょ？▽
+たたかわせて　そだててあげないと▼
+ねえねえ！　あたしと
+ポケモンしょうぶ　しよう！▼
+[1:00:トレーナー名:0]が　そのきに　なったら
+アタシに　はなしかけて</language>
+		<language name="JPN_KANJI" width="256">ベル『だいじょーぶ だって
+まだ　このこたち　弱いんでしょ？▽
+戦わせて　育ててあげないと▼
+ねえねえ！　あたしと
+ポケモン勝負　しようよ！▼
+[1:00:トレーナー名:0]が　その気に　なったら
+アタシに　話しかけて</language>
+	</row>
+
+	<row id="msg_t01r0102_presentbox_02" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>プレゼントボックス
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">プレゼントボックス</attribute>
+		<language name="JPN" width="256">……はこは　からっぱ</language>
+		<language name="JPN_KANJI" width="256">……はこは　からっぱ</language>
+	</row>
+
+	<row id="msg_t01r0102_black_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・white_06表示後、サポート戦闘まで</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『ウーン……　そうだな
+あいて　してあげれば？▼
+ポケモンを　てにいれて
+はしゃぎたくなる　きもち▽
+わからないでも　ないし▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ウーン……　そうだな
+相手してあげれば？▼
+ポケモンを　手に入れて
+はしゃぎたくなる　気持ち▽
+わからないでも　ないし▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・階段ストッパー用メッセージ
+・表示後、主人公を一歩もどす</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『どこ　いくのよお？
+あたしと　しょうぶ　してよう！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『どこ　いくのよお？
+あたしと　勝負　してよう！▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・はい/いいえの選択肢表示
+　はい→white_09
+　いいえ→white_10</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『ねえねえ！
+ポケモンしょうぶ　する？▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ！
+ポケモン勝負　する？▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_09" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・はい選択時
+　続けてトレーナー戦闘に</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">わーい！
+じゃあ　はじめよーね！！▼</language>
+		<language name="JPN_KANJI" width="256">わーい！
+じゃあ　はじめよーね！！▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・いいえ選択時
+・以降の話しかけはwhite_08から</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">えー！
+そんなこと　いわないで▽
+かんがえなおしてよお！▼
+だって　じぶんの
+ポケモンが　いるんだよ！▽
+しょうぶ　しよーよ！！</language>
+		<language name="JPN_KANJI" width="256">えー！
+そんなこと　いわないで▽
+考え直してよお！▼
+だって　自分の
+ポケモンが　いるんだよ！▽
+勝負しよーよ！！</language>
+	</row>
+
+	<row id="msg_t01r0102_white_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・戦闘後メッセージ
+　フィールドに復帰して煙が消えてから
+・続けてblack_08</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『ふええ▼
+[1:00:トレーナー名:0]……
+あなた　すごい　トレーナーに▽
+なれるんじゃない？▼
+あたし　そんな　きがする▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ふええ▼
+[1:00:トレーナー名:0]……
+あなた　すごい　トレーナーに▽
+なれるんじゃない？▼
+あたし　そんな　きがする▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてwhite_12</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……　……　……
+……　……　……▼
+ベル
+まわりを　みれば？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……　……　……
+……　……　……▼
+ベル
+周りを　みれば？▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・周囲を見回してからメッセージ表示
+・続けてwhite_12a</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『うわあ！
+な　なにこれ！？▼</language>
+		<language name="JPN_KANJI" width="256">ベル『うわあ！
+な　なにこれ！？▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_12a" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・主人公を向いてメッセージ表示
+・続けてblack_09
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ポケモンって　すごい！！▼
+だって　こんなに　ちいさいのに
+あたしたちに　できないことを▽
+かんたんに　しちゃうんだよ！▼
+あたし
+ポケモンに　であえて　よかった！▼
+……あっ
+[1:00:トレーナー名:0]　ごめんね▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンって　すごい！！▼
+だって　こんなに　小さいのに
+あたしたちに　できないことを▽
+簡単に　しちゃうんだよ！▼
+あたし
+ポケモンに　出会えて　よかった！▼
+……あっ
+[1:00:トレーナー名:0]　ごめんね▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてblack_10</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……まったく
+しょうがないな　きみは▼
+ほら！　キズついた　ポケモンの
+かいふくを　してあげるよ…▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……まったく
+しょうがないな　きみは▼
+ほら！　キズついた　ポケモンの
+回復を　してあげるよ…▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_10" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・システムウインドウ
+・続けて主人公のポケモンのHPが
+　満タン以外→black_11
+　満タン→black_12</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレンは
+キズぐすりを　つかった▼</language>
+		<language name="JPN_KANJI" width="256">チェレンは
+キズぐすりを　つかった▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_11" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてblack_12
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンも
+げんきに　してあげないとね▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンも
+元気に　してあげないとね▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_12" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてwhite_13</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレンは
+キズぐすりを　つかった▼</language>
+		<language name="JPN_KANJI" width="256">チェレンは
+キズぐすりを　つかった▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_13" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてwhite_13</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『ポケモンの　たいりょく……
+ＨＰを　へらすことなく▽
+かつだなんて　すごいね！▼
+これなら　キズぐすりを　つかう
+ひつようは　ないよね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ポケモンの　体力……
+ＨＰを　減らすことなく▽
+勝つだなんて　すごいね！▼
+これなら　キズぐすりを　使う
+必要は　ないよね▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_13" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・続けてblack_14</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『ねえねえ！　チェレンも
+ポケモンしょうぶ　してみたら？▼
+くわしいから　あたしのように
+しっちゃかめっちゃかに　することなく▽
+じょうずに　たたかえるでしょ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ！　チェレンも
+ポケモン勝負　してみたら？▼
+くわしいから　あたしのように
+しっちゃかめっちゃかに　することなく▽
+上手に　戦えるでしょ！▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_14" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けて主人公を向いて
+　black_15表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『うっ……！▼
+たしかに　その　じしんはあるし
+ぼくも　しょうぶ　したいけれど▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『うっ……！▼
+たしかに　その　自信はあるし
+ぼくも　勝負したいけれど▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_15" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・会話後、主人公操作可能に
+・ライバルと会話→black_17
+　階段ストッパー→black_16
+　サポートと会話→white_14</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]……▼
+へやは　よごさないと　ちかうから
+ぼくとも　しょうぶ　してくれないか？▽
+よければ　はなしかけてよ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]……▼
+部屋は　汚さないと　誓うから
+ぼくとも　勝負　してくれないか？▽
+よければ　話しかけてよ</language>
+	</row>
+
+	<row id="msg_t01r0102_black_16" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・階段ストッパー用メッセージ
+・表示後、主人公を一歩もどす</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『ちょっと！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ちょっと！▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_14" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・black_15表示後、ライバルとの戦闘まで
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『あたしね　[1:00:トレーナー名:0]と
+チェレンの　ポケモンしょうぶ　って▽
+ぜったいに　みごたえ　あるとおもう！</language>
+		<language name="JPN_KANJI" width="256">ベル『あたしね　[1:00:トレーナー名:0]と
+チェレンの　ポケモン勝負　って▽
+絶対に　見応えあると　思う！</language>
+	</row>
+
+	<row id="msg_t01r0102_black_17" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・はい/いいえの選択肢表示
+　はい→black_18
+　いいえ→black_19</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『どうかな？
+ぼくとも　しょうぶ　してくれるかい</language>
+		<language name="JPN_KANJI" width="256">チェレン『どうかな？
+ぼくとも　勝負してくれるかい</language>
+	</row>
+
+	<row id="msg_t01r0102_black_18" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・はい選択時
+　続けてトレーナー戦闘に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『さあ　ぼくたちの
+はじめての　ポケモンしょうぶ！▼
+いっしょに　がんばろう
+よろしくたのむよ！　[1:01:ポケモン種族名:1]！！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『さあ　ぼくたちの
+初めての　ポケモン勝負！▼
+一緒に　がんばろう
+よろしく頼むよ！　[1:01:ポケモン種族名:1]！！▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_19" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・いいえ選択時
+・以降の話しかけはblack_17から</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……いがいと
+しょうきょくてき　なんだね▼
+だけど　ぼくは　しょうぶしたい！
+だから　おねがいするよ</language>
+		<language name="JPN_KANJI" width="256">チェレン『……以外と
+消極的なんだね▼
+だけど　ぼくは　勝負したい！
+だから　お願いするよ</language>
+	</row>
+
+	<row id="msg_t01r0102_black_20" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・戦闘後、フィールド復帰してメッセージ表示
+・続けてwhite_15</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『この　かんどう……
+うまく　いいあらわせない　けれど▽
+トレーナーに　なったんだね！▼
+よし！　アララギはかせに
+おれいを　いいに　いかないとね▼
+ポケモンけんきゅうじょの
+まえで　まってるよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『この　感動……
+うまく　言い表せないけれど▽
+トレーナーに　なったんだね！▼
+よし！　アララギ博士に
+お礼を　いいに　いかないとね▼
+ポケモン研究所の前で　待ってるよ▼</language>
+	</row>
+
+	<row id="msg_t01r0102_white_15" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・メッセージ後、友達♂＆♀退場
+　t01r0101に出現
+・画面外に消えると操作可能に</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『あっ
+あたし　いちど　いえにもどるね▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あっ
+あたし　一度　家にもどるね▼</language>
+	</row>
+
+	<row id="msg_t01r0102_game_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">WII</attribute>
 		<language name="JPN" width="256">ウィーが　ある！
@@ -761,7 +987,17 @@
 リモコン型の　コントローラ　だ！</language>
 	</row>
 
-	<row id="msg_t01r0102_tv_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t01r0102_game_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・サポート戦闘後からマップ修復まで</comment>
+		<attribute name="キャラ指定">WII</attribute>
+		<language name="JPN" width="256">ウィーが　ある！▼
+まったく　こわれていない！</language>
+		<language name="JPN_KANJI" width="256">ウィーが　ある！▼
+まったく　壊れていない！</language>
+	</row>
+
+	<row id="msg_t01r0102_tv_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">TV</attribute>
 		<language name="JPN" width="256">おとうさんが　かった
@@ -770,13 +1006,13 @@
 薄型テレビ　だ！</language>
 	</row>
 
-	<row id="msg_t01r0102_bed_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t01r0102_bed_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">ベッド</attribute>
-		<language name="JPN" width="256">ベッドが　ある……！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ベッドが　ある……！▼
 おかあさんが　せんたくしてくれた
 シーツが　いい　かおり！</language>
-		<language name="JPN_KANJI" width="256">ベッドが　ある……！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ベッドが　ある……！▼
 おかあさんが　洗濯してくれた
 シーツが　いい　香り！</language>
 	</row>
@@ -787,17 +1023,17 @@
 ・0＝主人公名</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-パソコンを　チェックした！[BE:01:ページ切り替え（クリア）]
-ポケモン　きそちしき[BE:01:ページ切り替え（クリア）]
+パソコンを　チェックした！▼
+ポケモン　きそちしき▼
 この　せかいでは　ポケモンと
-ひとが　いっしょに　くらしています[BE:01:ページ切り替え（クリア）]
+ひとが　いっしょに　くらしています▼
 ポケモンを　たたかわせる　ひとを
 ポケモントレーナーと　いいます</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-パソコンを　チェックした！[BE:01:ページ切り替え（クリア）]
-ポケモン　基礎知識[BE:01:ページ切り替え（クリア）]
+パソコンを　チェックした！▼
+ポケモン　基礎知識▼
 この世界では　ポケモンと
-人が　一緒に　暮らしています[BE:01:ページ切り替え（クリア）]
+人が　一緒に　暮らしています▼
 ポケモンを　たたかわせる人を
 ポケモントレーナーと　いいます</language>
 	</row>
