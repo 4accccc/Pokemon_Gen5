@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-02-09T20:51:27"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-02-12T22:26:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -363,58 +363,46 @@
 		<language name="JPN_KANJI" font=" 1:small" width="84">ずかんの　ならびを　してい　します</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_INFO_05" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>検索画面</comment>
-		<language name="JPN" font=" 1:small" width="84">なまえの　かしらもじを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">なまえの　かしらもじを　してい　します</language>
+		<language name="JPN" font=" 1:small" width="84">なまえの　かしらもじを　いれてください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">「かしらもじ」を　いれてください。</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_INFO_06" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>検索画面</comment>
-		<language name="JPN" font=" 1:small" width="84">タイプを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">タイプを　してい　します</language>
+		<language name="JPN" font=" 1:small" width="84">「タイプ」を　いれてください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">「タイプ」を　いれてください。</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_INFO_09" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>検索画面</comment>
-		<language name="JPN" font=" 1:small" width="84">おもさの　はんいを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">おもさの　はんいを　してい　します</language>
+		<language name="JPN" font=" 1:small" width="84">「かたち」を　いれてください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">「かたち」を　いれてください。</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_INFO_10" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>検索画面</comment>
-		<language name="JPN" font=" 1:small" width="84">たかさの　はんいを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">たかさの　はんいを　してい　します</language>
+		<language name="JPN" font=" 1:small" width="84">「いろ」を　いれてください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">「いろ」を　いれてください。</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_INFO_11" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>検索画面</comment>
-		<language name="JPN" font=" 1:small" width="84">かたちを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">かたちを　してい　します</language>
-	</row>
-
-	<row id="ZKN_SEARCH_INFO_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
-		<comment>検索画面</comment>
-		<language name="JPN" font=" 1:small" width="84">せいそく　ちいきを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">せいそく　ちいきを　してい　します</language>
-	</row>
-
-	<row id="ZKN_SEARCH_INFO_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
-		<comment>検索画面</comment>
-		<language name="JPN" font=" 1:small" width="84">じょうけんを　みたす　ポケモンが</language>
+		<language name="JPN" font=" 1:small" width="84">ポケモンが　みつかりました！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">じょうけんを　みたす　ポケモンが</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_INFO_12" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>検索画面</comment>
-		<language name="JPN" font=" 1:small" width="84">みつかりませんでした……</language>
+		<language name="JPN" font=" 1:small" width="84">ポケモンが　みつかりません……</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">みつかりませんでした……</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_INFO_13" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>検索画面</comment>
-		<language name="JPN" font=" 1:small" width="84">けんさく　しています……</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">けんさく　しています……</language>
+		<language name="JPN" font=" 1:small" width="84">けんさく　しています</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">けんさく　しています</language>
 	</row>
 
 	<row id="ZKN_SEARCH_10" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
