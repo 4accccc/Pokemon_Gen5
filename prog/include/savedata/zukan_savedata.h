@@ -160,6 +160,8 @@ extern void ZUKANSAVE_SetZukanMode( ZUKAN_SAVEDATA * zw, BOOL mode );
 extern BOOL ZUKANSAVE_GetZukanMode( const ZUKAN_SAVEDATA * zw );
 extern void ZUKANSAVE_SetDefaultMons( ZUKAN_SAVEDATA * zw, u16 mons );
 extern u16 ZUKANSAVE_GetDefaultMons( const ZUKAN_SAVEDATA * zw );
+extern void ZUKANSAVE_SetShortcutMons( ZUKAN_SAVEDATA * zw, u16 mons );
+extern u16 ZUKANSAVE_GetShortcutMons( const ZUKAN_SAVEDATA * zw );
 extern u32	ZUKANSAVE_GetFormMax( u16 mons );
 extern BOOL ZUKANSAVE_CheckPokeSeeForm( const ZUKAN_SAVEDATA * zw, u16 monsno, int sex, int rare, int form );
 extern void ZUKANSAVE_SetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u32 form );
