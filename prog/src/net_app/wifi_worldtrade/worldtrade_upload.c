@@ -7,7 +7,6 @@
  */
 //============================================================================================
 
-//#define TEST_DEMO_OFF	// 今はデモに行くと止まるのでタイトルに戻るようにしておく
 
 #ifdef PM_DEBUG
 // コメントをはずすと必ずアップロードで失敗する
@@ -245,8 +244,8 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
 	Subseq_ServerTradeCheck,		// SUBSEQ_SERVER_TRADE_CHECK,	
 	Subseq_ServerTradeCheckResult,	// SUBSEQ_SERVER_TRADECHECK_RESULT
-	Subseq_ServerDownload,			// 
-	Subseq_ServerDownloadResult,		// 
+	Subseq_ServerDownload,			//SUBSEQ_SERVER_DOWNLOAD 
+	Subseq_ServerDownloadResult,		// SUBSEQ_SERVER_DOWNLOAD_RESULT
 	Subseq_ServerTradeCheckEnd,		// SUBSEQ_SERVER_TRADE_CHECK_END,	
 
 	SubSeq_NowSaveMessage,			// SUBSEQ_NOW_SAVE_MES,
@@ -272,6 +271,13 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
 ///強制タイムアウトまでの時間
 #define TIMEOUT_TIME			(30*60*2)	//2分
+
+static u32 NHTTP_RAP_EVILCHECK_Get( const NHTTP_RAP_EVILCHECK_RESPONSE_DATA * data )
+{
+  //ポケモンチェックの値はネットワークバイトオーダーで帰ってくる
+		return (u32)((data->poke_check1 << 24) | (data->poke_check2 << 16)
+        | (data->poke_check3 << 8) | (data->poke_check4 << 0));
+}
 
 //============================================================================================
 //	プロセス関数
@@ -639,6 +645,8 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 		// おくっています
 		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_025, 1, 0x0f0f );
 		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SVL_START );
+    //不正チェックしてからアップロードへ
+    wk->evilcheck_mode  = SUBSEQ_UPLOAD_START;
 		break;
 	case MODE_DOWNLOAD:
 		// うけとっています。
@@ -648,7 +656,9 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 	case MODE_EXCHANGE:
 		// 交換します
  		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_025, 1, 0x0f0f );
- 		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_EXCHANGE_START );
+ 		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SVL_START );
+    //不正チェックしてから交換へ
+    wk->evilcheck_mode  = SUBSEQ_EXCHANGE_START;
 		break;
 
 		// 交換が終わったポケモンを受け取ります
@@ -734,9 +744,14 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
   POKEMON_PASO_PARAM  *pp = PPPPointerGet( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
 
   NHTTP_RAP_PokemonEvilCheckCreate( wk->nhttp, HEAPID_WORLDTRADE, NHTTP_RAP_EVILCHECK_BUFF_SIZE, NHTTP_POKECHK_GTS);
+
+  OS_TPrintf( "PPPサイズ %d\n", POKETOOL_GetPPPWorkSize() );
   NHTTP_RAP_PokemonEvilCheckAdd( wk->nhttp, pp, POKETOOL_GetPPPWorkSize() );
 
   ret = NHTTP_RAP_PokemonEvilCheckConectionCreate( wk->nhttp );
+  GF_ASSERT( ret );
+
+  ret = NHTTP_RAP_StartConnect( wk->nhttp );  
   GF_ASSERT( ret );
 
   OS_TPrintf( "不正検査開始\n" );
@@ -753,26 +768,40 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
 //-----------------------------------------------------------------------------
 static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
 { 
-  if( NHTTP_ERROR_NONE == NHTTP_RAP_Process( wk->nhttp ) )
+  NHTTPError error;
+  error = NHTTP_RAP_Process( wk->nhttp );
+  if( NHTTP_ERROR_NONE == error )
   { 
     NHTTP_RAP_EVILCHECK_RESPONSE_DATA *p_data;
     p_data  = NHTTP_RAP_GetRecvBuffer(wk->nhttp);
 
     GFL_STD_MemCopy( p_data, &wk->evilcheck_data, sizeof(NHTTP_RAP_EVILCHECK_RESPONSE_DATA) );
 
-    //NHTTP_RAP_PokemonEvilCheckDelete(wk->nhttp, HEAPID_WORLDTRADE, NHTTP_RAP_EVILCHECK_BUFF_SIZE, NHTTP_POKECHK_GTS);
+    NHTTP_RAP_PokemonEvilCheckDelete(wk->nhttp);
     NHTTP_RAP_End(wk->nhttp);
 
-    if( wk->evilcheck_data.status_code == 0 )
+    //送られてきた状態は正常か
+    if( wk->evilcheck_data.status_code == 1 )
     { 
-      OS_TPrintf( "不正検査終了\n" );
-      wk->subprocess_seq = SUBSEQ_UPLOAD_START;
+      //不正ポケモンかチェック
+      if( NHTTP_RAP_EVILCHECK_Get(&wk->evilcheck_data) == 0 )
+      { 
+        OS_TPrintf( "不正検査完了！\n" );
+        wk->subprocess_seq = wk->evilcheck_mode;
+      }
+      else
+      { 
+        // 「このポケモンはあずける事ができません」→タイトルへ
+        OS_TPrintf( "不正検査NG！=[%d]\n", NHTTP_RAP_EVILCHECK_Get(&wk->evilcheck_data) );
+        wk->ConnectErrorNo = DPW_TR_ERROR_CHEAT_DATA;
+        wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
+      }
     }
     else
     { 
-      //@todo
-      GF_ASSERT( 0);
-      wk->subprocess_seq = SUBSEQ_UPLOAD_START;
+      // 「GTSのかくにんにしっぱいしました」
+      wk->ConnectErrorNo = DPW_TR_ERROR_DISCONNECTED;
+			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
     }
   }
 
@@ -1194,15 +1223,11 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Subseq_ExchangeStart( WORLDTRADE_WORK *wk )
 {
-
-	
-	// ポケモンデータ交換開始 @todo  不正検査のハッシュキーが必要
-//	Dpw_Tr_TradeAsync ( wk->DownloadPokemonData[wk->TouchTrainerPos].id,
-//						&wk->UploadPokemonData,
-//						&wk->ExchangePokemonData );
-  GF_ASSERT(0);
-
-
+	// ポケモンデータ交換開始 
+	Dpw_Tr_TradeAsync ( wk->DownloadPokemonData[wk->TouchTrainerPos].id,
+						&wk->UploadPokemonData,
+						&wk->ExchangePokemonData,
+            wk->evilcheck_data.sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
   
 	OS_TPrintf("Dpw Trade データ交換開始 id = %08x\n", wk->DownloadPokemonData[wk->TouchTrainerPos].id);
 

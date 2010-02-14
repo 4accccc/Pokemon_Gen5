@@ -28,6 +28,12 @@
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
 
+#include "net_app/pokemontrade.h"
+#include "demo/shinka_demo.h"
+#include "poke_tool/shinka_check.h"
+
+FS_EXTERN_OVERLAY(pokemon_trade);
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -43,17 +49,6 @@ static void EvoPokemonUpdate( WORLDTRADE_WORK *wk );
 //============================================================================================
 //	GFL_PROC定義
 //============================================================================================
-static const GFL_PROC_DATA  TradeDemoProcData = {
-#if 0
-	TradeDemoProc_Init,
-	TradeDemoProc_Main,
-	TradeDemoProc_Quit,
-	FS_OVERLAY_ID(demo_trade),
-#endif
-	0,
-};
-
-
 
 //============================================================================================
 //	定義
@@ -79,82 +74,76 @@ enum{
 //==============================================================================
 int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 {
+  POKEMONTRADE_DEMO_PARAM *p_param;
+  const GFL_PROC_DATA *call_proc;
 
+  WorldTrade_ExitSystem( wk );
+
+  wk->sub_proc_wk = GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, sizeof(POKEMONTRADE_DEMO_PARAM) );
+  GFL_STD_MemClear( wk->sub_proc_wk, sizeof(POKEMONTRADE_DEMO_PARAM) );
+  p_param = wk->sub_proc_wk;
 	wk->demoPokePara = PokemonParam_AllocWork( HEAPID_WORLDTRADE );
 
+  p_param->gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
+  p_param->pMy      = wk->param->mystatus;
 
-#if 0
 	// モードごとにパラメータを格納する
 	switch(wk->sub_process_mode){
 	// 預ける
 	case MODE_UPLOAD:
-		wk->tradeDemoParam.sendPoke = (POKEMON_PASO_PARAM*)PPPPointerGet(
-										(POKEMON_PARAM*)wk->UploadPokemonData.postData.data);
-		wk->tradeDemoParam.recvPoke = wk->tradeDemoParam.sendPoke;
-		wk->partnerStatus = MakePartnerStatusData( &wk->UploadPokemonData );
-		wk->tradeDemoParam.partner  = wk->partnerStatus;
+		p_param->pMyPoke = (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
+		p_param->pNPCPoke = p_param->pMyPoke;
+		wk->pNPCStatus = MakePartnerStatusData( &wk->UploadPokemonData );
+		p_param->pNPC  = wk->pNPCStatus;
 
-		wk->tradeDemoParam.bgType   = DEMO_TRADE_BGTYPE_WIFI;
-		wk->tradeDemoParam.seqFlag  = DEMO_TRADE_SEQ_SEND_ONLY;
+    call_proc = &PokemonTradeGTSSendProcData;
 		break;
 
 	// 受け取る
 	case MODE_DOWNLOAD:
-		wk->tradeDemoParam.recvPoke = (POKEMON_PASO_PARAM*)PPPPointerGet(
-										(POKEMON_PARAM*)wk->UploadPokemonData.postData.data);
-
-		wk->tradeDemoParam.sendPoke = wk->tradeDemoParam.recvPoke;
+		p_param->pNPCPoke = (POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
+		p_param->pMyPoke = p_param->pNPCPoke;
 		// 相手のMYSTATUSが無いので、できる限りでっちあげる
-		wk->partnerStatus = MakePartnerStatusData( &wk->UploadPokemonData );
-		wk->tradeDemoParam.partner  = wk->partnerStatus;
+		wk->pNPCStatus = MakePartnerStatusData( &wk->UploadPokemonData );
+		p_param->pNPC  = wk->pNPCStatus;
 
-		wk->tradeDemoParam.bgType   = DEMO_TRADE_BGTYPE_WIFI;
-		wk->tradeDemoParam.seqFlag  = DEMO_TRADE_SEQ_RECV_ONLY;
+    call_proc = &PokemonTradeGTSRecvProcData;
 		break;
 
 	// 受け取るポケモンが交換されていた
 	case MODE_DOWNLOAD_EX:
-			wk->tradeDemoParam.recvPoke = PPPPointerGet((POKEMON_PARAM*)wk->UploadPokemonData.postData.data);
+    p_param->pNPCPoke =(POKEMON_PARAM*)wk->UploadPokemonData.postData.data;
 
-			WorldTradeData_GetPokemonData( wk->param->worldtrade_data, wk->demoPokePara );
-			wk->tradeDemoParam.sendPoke = PPPPointerGet(wk->demoPokePara);
-			
-			// 相手のMYSTATUSが無いので、できる限りでっちあげる
-			wk->partnerStatus 			= MakePartnerStatusData( &wk->UploadPokemonData );
-			wk->tradeDemoParam.partner  = wk->partnerStatus;
+    WorldTradeData_GetPokemonData( wk->param->worldtrade_data, wk->demoPokePara );
+    p_param->pMyPoke = wk->demoPokePara;
 
-			wk->tradeDemoParam.bgType   = DEMO_TRADE_BGTYPE_WIFI;
-			wk->tradeDemoParam.seqFlag  = DEMO_TRADE_SEQ_FULL;
+    // 相手のMYSTATUSが無いので、できる限りでっちあげる
+    wk->pNPCStatus 			= MakePartnerStatusData( &wk->UploadPokemonData );
+    p_param->pNPC  = wk->pNPCStatus;
+
+    call_proc = &PokemonTradeGTSProcData;
 		break;
 
 	// 交換する
 	case MODE_EXCHANGE:
 		WorldTradeData_GetPokemonData( wk->param->worldtrade_data, wk->demoPokePara );
-		wk->tradeDemoParam.sendPoke = PPPPointerGet(wk->demoPokePara);
-		wk->tradeDemoParam.recvPoke = (POKEMON_PASO_PARAM*)PPPPointerGet(
-											(POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data);
+		p_param->pMyPoke = wk->demoPokePara;
+		p_param->pNPCPoke = (POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data;
 		// 相手のMYSTATUSが無いので、できる限りでっちあげる
-		wk->partnerStatus = MakePartnerStatusData( &wk->DownloadPokemonData[wk->TouchTrainerPos] );
-		wk->tradeDemoParam.partner  = wk->partnerStatus;
+		wk->pNPCStatus = MakePartnerStatusData( &wk->DownloadPokemonData[wk->TouchTrainerPos] );
+		p_param->pNPC  = wk->pNPCStatus;
 
-		wk->tradeDemoParam.bgType   = DEMO_TRADE_BGTYPE_WIFI;
-		wk->tradeDemoParam.seqFlag  = DEMO_TRADE_SEQ_FULL;
-
+    call_proc = &PokemonTradeGTSProcData;
 		break;
+  default:
+    GF_ASSERT(0);
 	}
 
-	wk->tradeDemoParam.config   = wk->param->config;
-
-	// subGFL_PROC生成
-	wk->proc = GFL_PROC_Create( &TradeDemoProcData, &wk->tradeDemoParam, HEAPID_WORLDTRADE );
-	//TODO
+	GAMESYSTEM_CallProc( wk->param->gamesys,
+		FS_OVERLAY_ID(pokemon_trade), call_proc, wk->sub_proc_wk );
 
 	wk->subprocflag = 1;
-#endif 
-	//TODO DEMOとPROC
-#ifdef DEBUG_AUTHER_ONLY
-#warning( TODO:DEMO )
-#endif
+
 	return SEQ_FADEIN;
 }
 //==============================================================================
@@ -173,11 +162,7 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 
 	switch(wk->subprocess_seq){
 	case DEMO_MODE_DEMO:
-	//	if( ProcMain( wk->proc ) ){
 			if( 1 ){	
-			//TODO	今はDEMOなし
-			//GFL_PROC_Delete( wk->proc );
-			//TODO
 
 			// 進化チェック
 			if(wk->sub_process_mode==MODE_EXCHANGE){
@@ -185,28 +170,44 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 				POKEMON_PARAM *pp = RecvPokemonParamPointerGet( wk, wk->sub_process_mode );
 				int item     = PP_Get( pp, ID_PARA_item, NULL );
 				int shinkano;
-				int shinka_cond;
+				SHINKA_COND shinka_cond;
 				OS_Printf( "進化チェック %d\n",PP_Get(pp,ID_PARA_monsno,NULL));
 
-				shinkano=PokeShinkaCheck( NULL, pp, TUUSHIN_SHINKA, item, &shinka_cond );
+				shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, item, &shinka_cond, HEAPID_WORLDTRADE );
 				if(shinkano!=0){
-					wk->shinkaWork = ShinkaInit( NULL,//ppt
-												pp,
-												shinkano,
-												wk->param->config,
-												wk->param->contestflag,
-												wk->param->zukanwork,
-												wk->param->myitem,//my_item
-												wk->param->record,//record
-												shinka_cond,//shinka_cond
-												SHINKA_STATUS_FLAG_SIO_MODE,
-												HEAPID_WORLDTRADE);
+
+          SHINKA_DEMO_PARAM *p_param;
+
+          //進化チェックのためもう一度PROCを作るため一旦削除
+          if( wk->sub_proc_wk )
+          { 
+            GFL_HEAP_FreeMemory(wk->sub_proc_wk);
+            wk->sub_proc_wk = NULL;
+          }
+
+          //進化チェックのためもう一度作成
+          wk->sub_proc_wk = GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, sizeof(SHINKA_DEMO_PARAM) );
+          GFL_STD_MemClear( wk->sub_proc_wk, sizeof(SHINKA_DEMO_PARAM) );
+          p_param = wk->sub_proc_wk;
+          p_param->gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
+          p_param->ppt      = PokeParty_AllocPartyWork(HEAPID_WORLDTRADE);
+          PokeParty_Add( (POKEPARTY *)p_param->ppt, pp );
+          p_param->after_mons_no  = shinkano;
+          p_param->shinka_pos     = 0;
+          p_param->shinka_cond    = shinka_cond;
+          p_param->b_field        = FALSE;
+          p_param->b_enable_cancel= TRUE;
+
+          //進化デモ
+          GAMESYSTEM_CallProc( wk->param->gamesys,
+              FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->sub_proc_wk );
+
 					wk->subprocess_seq = DEMO_MODE_SHINKA;
+
 				}else{
 					// 進化無しならそのまま終了
 					WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 					ret = SEQ_FADEOUT;
-				
 				}
 			}else if(wk->sub_process_mode==MODE_DOWNLOAD || wk->sub_process_mode==MODE_DOWNLOAD_EX){
 				// 自分のポケモンを引き取ったら交換されてた?
@@ -218,24 +219,38 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 
 					int item     = PP_Get( pp, ID_PARA_item, NULL );
 					int shinkano;
-					int shinka_cond;
+					SHINKA_COND shinka_cond;
 					OS_Printf( "進化チェック %d\n",PP_Get(pp,ID_PARA_monsno,NULL));
 
-					shinkano=PokeShinkaCheck( NULL, pp, TUUSHIN_SHINKA, item, &shinka_cond );
+					shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, item, &shinka_cond, HEAPID_WORLDTRADE );
 					if(shinkano!=0){
-						wk->shinkaWork = ShinkaInit( NULL,//ppt
-												pp,
-												shinkano,
-												wk->param->config,
-												wk->param->contestflag,
-												wk->param->zukanwork,
-												wk->param->myitem,//my_item
-												wk->param->record,//record
-												shinka_cond,//shinka_cond
-												SHINKA_STATUS_FLAG_SIO_MODE,
-												HEAPID_WORLDTRADE);
-						wk->subprocess_seq = DEMO_MODE_SHINKA;
-					}else{
+            SHINKA_DEMO_PARAM *p_param;
+
+            //進化チェックのためもう一度PROCを作るため一旦削除
+            if( wk->sub_proc_wk )
+            { 
+              GFL_HEAP_FreeMemory(wk->sub_proc_wk);
+              wk->sub_proc_wk = NULL;
+            }
+
+            //進化チェックのためもう一度作成
+            wk->sub_proc_wk = GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, sizeof(SHINKA_DEMO_PARAM) );
+            GFL_STD_MemClear( wk->sub_proc_wk, sizeof(SHINKA_DEMO_PARAM) );
+            p_param = wk->sub_proc_wk;
+            p_param->gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
+            p_param->ppt      = PokeParty_AllocPartyWork(HEAPID_WORLDTRADE);
+            PokeParty_Add( (POKEPARTY *)p_param->ppt, pp );
+            p_param->after_mons_no  = shinkano;
+            p_param->shinka_pos     = 0;
+            p_param->shinka_cond    = shinka_cond;
+            p_param->b_field        = FALSE;
+            p_param->b_enable_cancel= TRUE;
+
+            //進化デモ
+            GAMESYSTEM_CallProc( wk->param->gamesys,
+                FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->sub_proc_wk );						wk->subprocess_seq = DEMO_MODE_SHINKA;
+
+          }else{
 						// 進化無しならそのまま終了
 						WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 						ret = SEQ_FADEOUT;
@@ -258,9 +273,16 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 
 		break;
 	case DEMO_MODE_SHINKA:
-		// 進化終了待ち
-		if(ShinkaEndCheck(wk->shinkaWork)){
-			ShinkaEnd( wk->shinkaWork );
+		if(1){
+
+      if( wk->sub_proc_wk )
+      {
+        SHINKA_DEMO_PARAM *p_param  = wk->sub_proc_wk;
+        GFL_HEAP_FreeMemory( (void*)p_param->ppt );
+        //パラメータクリア
+        GFL_HEAP_FreeMemory(wk->sub_proc_wk);
+        wk->sub_proc_wk = NULL;
+      }
 
 			// 進化後のPOKEMON_PARAMをさっき格納した場所に反映させる
 			EvoPokemonUpdate( wk );
@@ -294,7 +316,14 @@ int WorldTrade_Demo_End(WORLDTRADE_WORK *wk, int seq)
 {
 
 	GFL_HEAP_FreeMemory(wk->demoPokePara);
-	//GFL_HEAP_FreeMemory(wk->partnerStatus);//TODO
+  if( wk->sub_proc_wk )
+  { 
+    GFL_HEAP_FreeMemory(wk->sub_proc_wk);
+    wk->sub_proc_wk = NULL;
+  }
+
+  WorldTrade_InitSystem( wk );
+
 	// ボックス画面に戻る
 	WorldTrade_SubProcessUpdate( wk );
 

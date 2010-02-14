@@ -14,6 +14,7 @@
 
 ///< DPのふりをする(??)
 #define GS_DP_GISOU
+#define GTS_DUPLICATE_BUG_FIX (1)
 
 #include "system/bmp_menulist.h"
 #include "system/touch_subwindow.h"
@@ -207,10 +208,16 @@ enum
 #define BOX_TRAY_NAME_BUF_NUM	( 9*2 )
 
 ///< 上下画面指定定義
-#define RES_NUM	( 3 )
 #define MAIN_LCD	( GFL_BG_MAIN_DISP )	// 要は０と
 #define SUB_LCD		( GFL_BG_SUB_DISP )		// １なんですが。
-#define CHARA_RES	( 2 )
+
+enum
+{ 
+  RES_MAIN  = MAIN_LCD,
+  RES_SUB   = SUB_LCD,
+  RES_HERO, 
+  RES_NUM,
+};
 
 ///< サブ画面のテキストパレット転送位置
 #define WORLDTRADE_MESFRAME_SUB_PAL	 	(  2 )
@@ -283,6 +290,9 @@ enum{
 #define DS_ICON_X	(  55 )
 #define DS_ICON_Y	( 176-8 )
 
+///< ユニオンキャラの総数
+#define UNIONCHARA_ALL_NUM  (16)
+
 
 ///< 検索条件のレベル指定の使用するメッセージテーブルを指定する
 enum{
@@ -315,11 +325,14 @@ enum{
 #define NHTTP_RAP_EVILCHECK_RESPONSE_CODE_DIRTY_GAMEMODE  400
 #define NHTTP_RAP_EVILCHECK_RESPONSE_CODE_DIRTY_TOKEN  401
 #define NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN 128
-#define NHTTP_RAP_EVILCHECK_BUFF_SIZE (POKETOOL_GetPPPWorkSize() + 1 * 367)
+#define NHTTP_RAP_EVILCHECK_BUFF_SIZE (POKETOOL_GetPPPWorkSize() * 1)
 typedef struct {
-  u8  status_code;
-  u32 pokemon_check;
-  u8  sign[NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN];
+  u8 status_code;
+  u8 poke_check1;
+  u8 poke_check2;
+  u8 poke_check3;
+  u8 poke_check4;
+  u8 sign[NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN];
 } NHTTP_RAP_EVILCHECK_RESPONSE_DATA;
 
 // ポケモンを預ける際の情報
@@ -401,11 +414,6 @@ typedef struct _WORLDTRADE_WORK{
 	void 			*heapPtr;							///< NitroDWCに渡すヒープワークの解放用ポインタ
 	NNSFndHeapHandle heapHandle;						///< heapPtrを32バイトアライメントに合わせたポインタ
 	DWCInetControl   stConnCtrl;						///< DWC接続ワーク
-
-	GFL_PROCSYS			*procsys;					    ///< サブプロセス用
-	PSTATUS_DATA	 statusParam;						///< スタータス呼び出し用パラメータ
-	DEMO_TRADE_PARAM tradeDemoParam;					///< 交換デモパラメータ
-	SHINKA_WORK		 *shinkaWork;						///< 通信進化デモ用ワーク
 	int				 subprocflag;						///< ステータスや交換デモを呼び出すためのフラグ
 	u16				listpos;				
 	u16				dummy;
@@ -418,7 +426,7 @@ typedef struct _WORLDTRADE_WORK{
 	POKEMON_PASO_PARAM	*deposit_ppp;					///< 一旦預ける指定になったポケモンのポインタ
 	int				SearchResult;						///< 検索の結果返ってきた数
 	int				TouchTrainerPos;					///< 検索結果の誰をタッチしたか
-	MYSTATUS		*partnerStatus;						///< 交換デモようにでっちあげるMYSTATUS;
+	MYSTATUS		*pNPCStatus;						///< 交換デモようにでっちあげるMYSTATUS;
 	EVOLUTION_POKEMON_INFO EvoPokeInfo;
 
 
@@ -500,13 +508,14 @@ typedef struct _WORLDTRADE_WORK{
 	// worldtrade_upload.c用ワーク
 	u16						saveNextSeq1st;						///< セーブの前半終了時に飛ぶシーケンス
 	u16						saveNextSeq2nd;						///< セーブの後半終了時に飛ぶシーケンス
+  u32           evilcheck_mode;           ///< 不正検査モード
 
 	// worldtrade_sublcd.c用ワーク
 	GFL_TCB*			demotask;							///< 主人公デモ用タスクポインタ
 	u16						demo_end;							///< デモ終了フラグ
 	u16						SubLcdTouchOK;						///< 人物OBJがでてきてから触れるようになるフラグ
-	void*					FieldObjCharaBuf;					///< 人物OBJキャラファイルデータ
-	NNSG2dCharacterData*	FieldObjCharaData;					///< 人物OBJキャラデータの実ポインタ				
+	void*					FieldObjCharaBuf[UNIONCHARA_ALL_NUM];					      ///< 人物OBJキャラファイルデータ
+	NNSG2dCharacterData*	FieldObjCharaData[UNIONCHARA_ALL_NUM];			///< 人物OBJキャラデータの実ポインタ				
 	void*					FieldObjPalBuf;						///< 人物OBJパレットァイルデータ
 	NNSG2dPaletteData*		FieldObjPalData;					///< 人物OBJパレットファイルデータ
 
@@ -553,7 +562,6 @@ typedef struct _WORLDTRADE_WORK{
   void * sub_proc_wk;                   ///< WIFILOGINやデモなどサブプロセスのワーク
 
   NHTTP_RAP_WORK  *nhttp;             ///<認証キーや不正検査で使う
-
   NHTTP_RAP_EVILCHECK_RESPONSE_DATA evilcheck_data; ///<認証コードが入った不正チェックデータ
 
 #ifdef PM_DEBUG
@@ -620,12 +628,12 @@ extern void WorldTrade_ExitSystem( WORLDTRADE_WORK *wk );
 
 
 // worldtrade_sublcd.c
-extern void WorldTrade_HeroDemo( WORLDTRADE_WORK *wk, int sex );
+extern void WorldTrade_HeroDemo( WORLDTRADE_WORK *wk );
 extern int  WorldTrade_SubLcdObjHitCheck( int max );
 extern void WorldTrade_SubLcdMatchObjAppear( WORLDTRADE_WORK *wk, int num, int flag );
 extern void WorldTrade_SubLcdMatchObjHide( WORLDTRADE_WORK *wk );
-extern void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex );
-extern void WorldTrade_ReturnHeroDemo( WORLDTRADE_WORK *wk, int sex );
+extern void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk );
+extern void WorldTrade_ReturnHeroDemo( WORLDTRADE_WORK *wk );
 extern void WorldTrade_SetPartnerCursorPos( WORLDTRADE_WORK *wk, int index, int offset_y );
 extern void WorldTrade_SetPartnerExchangePos( WORLDTRADE_WORK *wk );
 extern void WorldTrade_SetPartnerExchangePosIsReturns( WORLDTRADE_WORK *wk );

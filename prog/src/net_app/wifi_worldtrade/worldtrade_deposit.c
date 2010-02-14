@@ -32,6 +32,7 @@
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
 #include "zukan_data_old.naix"
 #include "zkn_sort_akstnhmyrw_idx.h"
+#include "../../../resource/zukan_data/zkn_sort_aiueo_idx.h"
 
 
 #include "msg/msg_wifi_place_msg_world.h"
@@ -2122,12 +2123,12 @@ void WorldTrade_PostPokemonBaseDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk )
 	
 	if(WorldTrade_GetPPorPPP( wk->BoxTrayNo )){
 		//シェイミの場合はフォルムNoをノーマルにする
-		PP_Put((POKEMON_PARAM*)(wk->deposit_ppp), ID_PARA_form_no, FORMNO_SHEIMI_NORMAL);
+		PP_Put((POKEMON_PARAM*)(wk->deposit_ppp), ID_PARA_form_no, FORMNO_SHEIMI_LAND);
 		// POKEMON_PARAMとしてコピー
 		MI_CpuCopyFast( wk->deposit_ppp, dtd->postData.data,  POKETOOL_GetWorkSize() );
 	}else{
 		//シェイミの場合はフォルムNoをノーマルにする
-		PPP_Put(wk->deposit_ppp, ID_PARA_form_no, FORMNO_SHEIMI_NORMAL);
+		PPP_Put(wk->deposit_ppp, ID_PARA_form_no, FORMNO_SHEIMI_LAND);
 		// POKEMON_PASO_PARAMなのでReplace関数でPOKEMON_PARAMに肉付けする
 		PokeReplace(wk->deposit_ppp,(POKEMON_PARAM *)dtd->postData.data);
 	}
@@ -2140,8 +2141,8 @@ void WorldTrade_PostPokemonBaseDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk )
 	dtd->trainerID   = MyStatus_GetID_Low( wk->param->mystatus );
 
 	// 国・地域
-	dtd->countryCode = WIFIHISTORY_GetMyNation( wk->param->wifihistory );
-	dtd->localCode   = WIFIHISTORY_GetMyArea( wk->param->wifihistory );
+	dtd->countryCode = MyStatus_GetMyNation( wk->param->mystatus );
+	dtd->localCode   = MyStatus_GetMyArea( wk->param->mystatus );
 
 	// 見た目
 	dtd->trainerType = MyStatus_GetTrainerView( wk->param->mystatus );
@@ -2299,17 +2300,17 @@ BMPMENULIST_WORK *WorldTrade_WordheadBmpListMake( WORLDTRADE_WORK *wk, BMP_MENUL
 
 // 頭文字テーブル（ソートされたポケモンの何番目に「ア・カ・サ…」が登場するか？
 static u16 NameHeadTable[]={
-	ZKN_AKSTNHMYRW_IDX_A,
-	ZKN_AKSTNHMYRW_IDX_K,
-	ZKN_AKSTNHMYRW_IDX_S,
-	ZKN_AKSTNHMYRW_IDX_T,
-	ZKN_AKSTNHMYRW_IDX_N,
-	ZKN_AKSTNHMYRW_IDX_H,
-	ZKN_AKSTNHMYRW_IDX_M,
-	ZKN_AKSTNHMYRW_IDX_Y,
-	ZKN_AKSTNHMYRW_IDX_R,
-	ZKN_AKSTNHMYRW_IDX_W,
-	ZKN_AKSTNHMYRW_IDX_END,
+  ZKN_SORT_AIUEO_IDX_START_A,
+  ZKN_SORT_AIUEO_IDX_START_KA,
+  ZKN_SORT_AIUEO_IDX_START_SA,
+  ZKN_SORT_AIUEO_IDX_START_TA,
+  ZKN_SORT_AIUEO_IDX_START_NA,
+  ZKN_SORT_AIUEO_IDX_START_HA,
+  ZKN_SORT_AIUEO_IDX_START_MA,
+  ZKN_SORT_AIUEO_IDX_START_YA,
+  ZKN_SORT_AIUEO_IDX_START_RA,
+  ZKN_SORT_AIUEO_IDX_START_WA,
+  ZKN_SORT_AIUEO_IDX_ALL_END,
 	0,
 };
 

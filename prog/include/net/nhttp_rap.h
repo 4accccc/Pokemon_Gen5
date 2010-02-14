@@ -94,7 +94,13 @@ extern void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork,void* pData, int
  */
 //------------------------------------------------------------------------------
 extern BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork);
-
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモン不正検査 領域破棄
+ * @param   NHTTP_RAP_WORK* pWork,  ワーク
+ */
+//------------------------------------------------------------------------------
+extern void NHTTP_RAP_PokemonEvilCheckDelete(NHTTP_RAP_WORK* pWork);
 
 #if PM_DEBUG
 void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep);

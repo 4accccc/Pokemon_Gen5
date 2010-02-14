@@ -22,7 +22,13 @@ enum {
 	NARC_wifileadingchar_hero_ine_kage_NANR = 8,
 	NARC_wifileadingchar_hero_ine_kage_NCER = 9,
 	NARC_wifileadingchar_hero_ine_kage_NCLR = 10,
-	NARC_wifileadingchar_hero_ine_kage_NCGR = 11
+	NARC_wifileadingchar_hero_ine_kage_NCGR = 11,
+	NARC_wifileadingchar_hero_gts_NCER = 12,
+	NARC_wifileadingchar_hero_gts_NANR = 13,
+	NARC_wifileadingchar_hero_gts_NCGR = 14,
+	NARC_wifileadingchar_heroine_gts_NCER = 15,
+	NARC_wifileadingchar_heroine_gts_NANR = 16,
+	NARC_wifileadingchar_heroine_gts_NCGR = 17
 };
 
 /* NARC_WIFILEADINGCHAR_NAIX_ */

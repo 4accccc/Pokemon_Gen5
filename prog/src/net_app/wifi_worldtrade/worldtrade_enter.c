@@ -301,7 +301,6 @@ int WorldTrade_Enter_End(WORLDTRADE_WORK *wk, int seq)
 //------------------------------------------------------------------
 static void InitWork( WORLDTRADE_WORK *wk )
 {
-  wk->procsys = GFL_PROC_LOCAL_boot( HEAPID_WORLDTRADE );
 }
 
 
@@ -316,7 +315,6 @@ static void InitWork( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void FreeWork( WORLDTRADE_WORK *wk )
 {
-  GFL_PROC_LOCAL_Exit( wk->procsys );
 }
 
 
@@ -1115,8 +1113,9 @@ static int Enter_Wifilogin_start( WORLDTRADE_WORK *wk )
   param->bg           = WIFILOGIN_BG_NORMAL;
   param->display      = WIFILOGIN_DISPLAY_UP;
 
-  GFL_PROC_LOCAL_CallProc( wk->procsys, FS_OVERLAY_ID(wifi_login), 
-      &WiFiLogin_ProcData, wk->sub_proc_wk );
+  GAMESYSTEM_CallProc( wk->param->gamesys,
+		FS_OVERLAY_ID(wifi_login), 
+    &WiFiLogin_ProcData, wk->sub_proc_wk );
 
   wk->subprocess_seq = ENTER_WIFILOGIN_PROC_WAIT;
 
@@ -1135,8 +1134,7 @@ static int Enter_Wifilogin_start( WORLDTRADE_WORK *wk )
 static int Enter_Wifilogin_wait( WORLDTRADE_WORK *wk )
 { 
   WIFILOGIN_PARAM *param  = wk->sub_proc_wk;
-
-  if( GFL_PROC_MAIN_NULL == GFL_PROC_LOCAL_Main( wk->procsys ) )
+  if( 1 )
   { 
     switch( param->result )
     { 
@@ -1176,7 +1174,7 @@ static int Enter_Wifilogout_start( WORLDTRADE_WORK *wk )
   param->bg           = WIFILOGIN_BG_NORMAL;
   param->display      = WIFILOGIN_DISPLAY_UP;
 
-  GFL_PROC_LOCAL_CallProc( wk->procsys, FS_OVERLAY_ID(wifi_login), 
+  GAMESYSTEM_CallProc( wk->param->gamesys,  FS_OVERLAY_ID(wifi_login), 
       &WiFiLogout_ProcData, wk->sub_proc_wk );
 
   wk->subprocess_seq = ENTER_WIFILOGOUT_PROC_WAIT;
@@ -1195,7 +1193,7 @@ static int Enter_Wifilogout_start( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_Wifilogout_wait( WORLDTRADE_WORK *wk )
 { 
-  if( GFL_PROC_MAIN_NULL == GFL_PROC_LOCAL_Main( wk->procsys ) )
+  if( 1 )
   { 
     GFL_HEAP_FreeMemory(wk->sub_proc_wk);
 

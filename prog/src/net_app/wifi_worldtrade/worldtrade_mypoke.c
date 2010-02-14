@@ -155,7 +155,7 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 
 	// Ž©•ª‚Ìƒ|ƒPƒ‚ƒ“‚Ìî•ñ
 	WorldTrade_PokeInfoPrint( 	wk->MsgManager, wk->MonsNameManager, wk->WordSet, &wk->InfoWin[INFOWIN_NICKNAME], 
-					(POKEMON_PASO_PARAM*)PP_GetPPPPointerConst((POKEMON_PARAM*)wk->UploadPokemonData.postData.data),
+					(POKEMON_PASO_PARAM*)wk->UploadPokemonData.postData.data,
 					&wk->UploadPokemonData.postSimple, &wk->print );
 
 	// Ž‚¿Žåî•ñ‚Ì•\Ž¦

@@ -159,7 +159,6 @@ int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq)
 		wk->pokeMcss	= WorldTrade_MyPoke_MCSS_Create( wk, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst((POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data), &pos );
 	}
 
-
 	// BGグラフィック転送
 	BgGraphicSet( wk );
 
@@ -633,6 +632,7 @@ static void BmpWinDelete( WORLDTRADE_WORK *wk )
 
 }
 
+#include "debug/debug_nagihashi.h"
 //------------------------------------------------------------------
 /**
  * 世界交換ワーク初期化
@@ -653,6 +653,7 @@ static void InitWork( WORLDTRADE_WORK *wk )
 
 	WORDSET_ClearAllBuffer( wk->WordSet );
 	// 国番号が存在している場合は文字列をセット
+  MORI_PRINT( "国=%d　場所=%d　\n", dtp->countryCode, dtp->localCode);
 	if(dtp->countryCode!=0){
 		WORDSET_RegisterCountryName( wk->WordSet, 8, dtp->countryCode );
 	}
@@ -664,6 +665,9 @@ static void InitWork( WORLDTRADE_WORK *wk )
 	// 国・地域文字列取得
 	wk->InfoString[0] = MSGDAT_UTIL_AllocExpandString( wk->WordSet, wk->MsgManager, msg_gtc_04_013, HEAPID_WORLDTRADE );
 	wk->InfoString[1] = MSGDAT_UTIL_AllocExpandString( wk->WordSet, wk->MsgManager, msg_gtc_04_014, HEAPID_WORLDTRADE );
+
+  DEBUG_STRBUF_Print( wk->InfoString[0] );
+  DEBUG_STRBUF_Print( wk->InfoString[1] );
 }
 
 

@@ -26,7 +26,7 @@
 #include "msg/msg_d_ohno.h"
 
 
-#define _EVILSERVER_PROTO (1)  //トークン検査が出来てない時に１
+#define _EVILSERVER_PROTO (0)  //トークン検査が出来てない時に１
 
 
 static G_SYNC_WORK* _pWork;
@@ -207,7 +207,7 @@ NHTTPConnectionHandle NHTTP_RAP_GetHandle(NHTTP_RAP_WORK* pWork)
 
 BOOL NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork)
 {
-  if ( 0 !=  NHTTPStartConnection(pWork->handle))
+  if ( NHTTP_ERROR_NONE !=  NHTTPStartConnection(pWork->handle))
   {
     GF_ASSERT(0);
     return FALSE;
@@ -265,36 +265,42 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
 {
   int     result;
   NHTTPError              err;
-  u32                     receivedCurrent = 1;
-  u32                     contentLength;
 
   if(pWork->handle==NULL){
     return NHTTP_ERROR_NONE;
   }
   
   err = NHTTPGetConnectionError(pWork->handle);
-  switch(err){
-  case NHTTP_ERROR_BUSY:
-    break;
-  case NHTTP_ERROR_NONE:  //すでに完了
-  default:
-    OS_TPrintf("err = %d  response %d \n", err,NHTTP_GetResultCode( pWork->handle ));
 
-    NHTTPDeleteConnection(pWork->handle);
-    pWork->handle=NULL;
-    NHTTPCleanup();
-    return err;
-  }
-  
-  {
-    NHTTPConnectionStatus   status = NHTTPGetConnectionStatus(pWork->handle);
-
+  if( err == NHTTP_ERROR_BUSY )
+  { 
+    u32 receivedCurrent;
+    u32 contentLength;
     if ( NHTTP_ERROR_NONE == NHTTPGetConnectionProgress(pWork->handle, &receivedCurrent, &contentLength))
     {
 
       NET_PRINT(" %d recv  \n",100*contentLength/receivedCurrent);
 
     }
+  }
+  else
+  { 
+    NHTTPError  error;
+    error = NHTTP_GetConnectionError( pWork->handle );
+
+    OS_TPrintf("err = %d  response %d status %d connect_err%d\n", err,NHTTP_GetResultCode( pWork->handle ),NHTTPGetConnectionStatus(pWork->handle), error);
+
+    if( error == NHTTP_ERROR_NONE )
+    {
+      char *res;
+      BOOL ret = NHTTP_GetHeaderAll( pWork->handle, &res );
+      OS_TPrintf( "%s\nok? %d", res, ret);
+    }
+
+    NHTTPDeleteConnection(pWork->handle);
+    pWork->handle=NULL;
+    NHTTPCleanup();
+    return err;
   }
   return err;
 }
@@ -374,25 +380,29 @@ BOOL NHTTP_RAP_SvlGetTokenMain(NHTTP_RAP_WORK* pWork)
 void NHTTP_RAP_PokemonEvilCheckReset(NHTTP_RAP_WORK* pWork,NHTTP_POKECHK_ENUM type)
 {
   u16 typeu16 = type;
-#if _EVILSERVER_PROTO
-  pWork->length = 127;
-  GFL_STD_MemCopy(pWork->svl.svltoken, pWork->pData, pWork->length);
-  pWork->length++; //\0を含ませる
-#else
-  pWork->length = GFL_STD_StrLen(pWork->svl.svltoken);
-  GFL_STD_MemCopy(pWork->svl.svltoken, pWork->pData, pWork->length);
-  pWork->length++; //\0を含ませる
-#endif
-  GFL_STD_MemCopy(&typeu16, &pWork->pData[pWork->length], 2);
-  pWork->length += 2;
+
+  pWork->length = 0;
+  while( pWork->svl.svltoken[pWork->length] != 0 )
+  { 
+    pWork->pData[pWork->length] = (u8)pWork->svl.svltoken[pWork->length];
+    pWork->length++;
+  }
+  pWork->pData[pWork->length++] = 0;
+  NET_PRINT("[%d] %s\n", pWork->length, pWork->pData);
+ 
+
+
+  pWork->pData[pWork->length++] = (u8)(typeu16 >> 8);
+  NET_PRINT("[%d] %d\n", 1, pWork->pData[pWork->length-1]);
+  pWork->pData[pWork->length++] = (u8)(typeu16 & 0xFF);
+  NET_PRINT("[%d] %d\n", 1, pWork->pData[pWork->length-1]);
 }
 
 
 void NHTTP_RAP_PokemonEvilCheckCreate(NHTTP_RAP_WORK* pWork, HEAPID heapID, int size, NHTTP_POKECHK_ENUM type)
 {
-  u16 typeu16 = type;
-
   pWork->pData = GFL_NET_Align32Alloc(heapID, size + DWC_SVL_TOKEN_LENGTH + 4);
+  GFL_STD_MemClear( pWork->pData, size + DWC_SVL_TOKEN_LENGTH + 4 );
 
   NHTTP_RAP_PokemonEvilCheckReset(pWork, type);
 }
@@ -403,6 +413,7 @@ void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, void* pData, int size)
 {
   GFL_STD_MemCopy(pData, &pWork->pData[pWork->length], size);
   pWork->length += size;
+  NET_PRINT("[%d] \n", size);
 }
 
 
@@ -411,7 +422,7 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 {
 //POKECHK_URL
   int                     result;
-  NHTTPRAP_URL_ENUM urlno = NHTTPRAP_URL_POKECHK;
+  const NHTTPRAP_URL_ENUM urlno = NHTTPRAP_URL_POKECHK;
   NHTTPConnectionHandle   handle;
   NHTTPError              err;
   OSTick                  tickStart, tickPrevious;
@@ -431,10 +442,11 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 
   
   NET_PRINT(" Target URL: %s\n", pWork->urlbuff);
-  handle = NHTTPCreateConnection( pWork->urlbuff,
+  NET_PRINT("type :%d\n", urltable[urlno].type );
+  handle = NHTTPCreateConnection( urltable[urlno].url,
                                   urltable[urlno].type,
                                   pWork->getbuffer, _GET_MAXSIZE,
-                                  ConnectionCallback, pWork);
+                                  ConnectionCallback, NULL);
   if(handle==NULL){
     NHTTPError  error = NHTTP_GetError();
     GF_ASSERT_MSG( handle, "ConnectionがNULL!, error=%d\n", error );
@@ -465,17 +477,26 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
   }
 #endif
 
-  NHTTP_AddPostDataRaw( handle, pWork->pData, pWork->length );
+  NHTTP_AddPostDataRaw( handle, &(pWork->pData[0]), pWork->length );
+  NET_PRINT("data svltoken = %s\n", pWork->pData);
+  NET_PRINT("Post Byte size %d\n", pWork->length);
+  {
+    int i;
+    for( i = 0; i < pWork->length; i++ )
+    { 
+      NET_PRINT( "%x ", pWork->pData[i] );
+    }
+      NET_PRINT( "\nend\n" );
+  }
+
 
   
   return TRUE;
 }
 
 
-void NHTTP_RAP_PokemonEvilCheckDelete(NHTTP_RAP_WORK* pWork, HEAPID heapID, int size, NHTTP_POKECHK_ENUM type)
+void NHTTP_RAP_PokemonEvilCheckDelete(NHTTP_RAP_WORK* pWork)
 {
-  u16 typeu16 = type;
-
   GFL_NET_Align32Free(pWork->pData);
   pWork->pData = NULL;
   pWork->length = 0;

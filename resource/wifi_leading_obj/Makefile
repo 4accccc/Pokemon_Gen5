@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= ohno
+USERS	= ohno toru_nagihashi
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -77,8 +77,13 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects)
+	$(MAKE) make_bin
 	nnsarc -c -n -i $(targetname) -S arc_list.txt
 	$(NAIXCUT) $(targetname).naix
+
+make_bin:
+	conv.bat
+
 endif
 
 #------------------------------------------------------------------------------

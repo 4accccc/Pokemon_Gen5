@@ -40,8 +40,8 @@
 
 #define WORLDTRADE_WORDSET_BUFLEN ( 64 )  ///< WORDSet文字列の展開用バッファ長
 
-#define MYDWC_HEAPSIZE    0x20000
 #include "worldtrade.naix"          ///< グラフィックアーカイブ定義
+#include "arc/wifileadingchar.naix"
 #include "poke_icon.naix"
 
 #define BRIGHT_VAL  (-7)          ///< パッシブ状態のための半透明率
@@ -136,7 +136,7 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 #endif
 
     // ヒープ作成
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0x80000 );
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0xB0000 );
 
     wk = GFL_PROC_AllocWork( proc, sizeof(WORLDTRADE_WORK), HEAPID_WORLDTRADE );
     GFL_STD_MemClear( wk, sizeof(WORLDTRADE_WORK) );
@@ -194,6 +194,8 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 
     // 会話ウインドウのタッチON
     MsgPrintTouchPanelFlagSet( MSG_TP_ON );
+
+    MyStatus_SetMyNationArea( wk->param->mystatus, 102, 2);
 
     return GFL_PROC_RES_FINISH;
 }
@@ -258,7 +260,7 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
       *seq = (*SubProcessTable[wk->sub_process][2])(wk, *seq);
       if(wk->subprocflag){
         //InitCLACT( wk );
-        WorldTrade_SubLcdActorAdd( wk, MyStatus_GetMySex(wk->param->mystatus) );
+        WorldTrade_SubLcdActorAdd( wk );
         WorldTrade_SubLcdMatchObjAppear( wk, wk->SearchResult, 0 );
 //        WorldTrade_SubLcdBgGraphicSet( wk );    // トレードルーム転送
 //        WorldTrade_SubLcdWinGraphicSet( wk );   // トレードルームウインドウ転送
@@ -509,7 +511,7 @@ static void InitCellActor(WORLDTRADE_WORK *wk, const GFL_DISP_VRAM * vram )
   }
 
   // セルアクター初期化
-  wk->clactSet = GFL_CLACT_UNIT_Create( 72+12, 0, HEAPID_WORLDTRADE );
+  wk->clactSet = GFL_CLACT_UNIT_Create( 72+24, 0, HEAPID_WORLDTRADE );
 
 
 
@@ -536,6 +538,7 @@ static void InitCellActor(WORLDTRADE_WORK *wk, const GFL_DISP_VRAM * vram )
   //cell読み込み
   wk->resObjTbl[SUB_LCD][CLACT_U_CELL_RES] = GFL_CLGRP_CELLANIM_Register(p_handle, NARC_worldtrade_worldtrade_obj_s_NCER, NARC_worldtrade_worldtrade_obj_s_NANR, HEAPID_WORLDTRADE);
 
+  GFL_ARC_CloseDataHandle( p_handle );
 
   // ポケモンアイコン用パレットを一気に読み込んでVRAM転送する
   // ポケモンアイコンのパレットを暗くしたデータも作成して転送する
@@ -565,7 +568,41 @@ static void InitCellActor(WORLDTRADE_WORK *wk, const GFL_DISP_VRAM * vram )
     GFL_HEAP_FreeMemory(buf);
   }
 
-  GFL_ARC_CloseDataHandle( p_handle );
+
+
+  //主人公キャラを読み込み
+  { 
+    u8 sex  = MyStatus_GetMySex(wk->param->mystatus);
+    u32 chr,anm,cel,plt;
+
+    if( sex == PTL_SEX_FEMALE )
+    { 
+      chr = NARC_wifileadingchar_heroine_gts_NCGR;
+      anm = NARC_wifileadingchar_heroine_gts_NANR;
+      cel = NARC_wifileadingchar_heroine_gts_NCER;
+      plt = NARC_wifileadingchar_heroine_NCLR;
+    }
+    else
+    { 
+      chr = NARC_wifileadingchar_hero_gts_NCGR;
+      anm = NARC_wifileadingchar_hero_gts_NANR;
+      cel = NARC_wifileadingchar_hero_gts_NCER;
+      plt = NARC_wifileadingchar_hero_NCLR;
+    }
+
+    p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFILEADING, HEAPID_WORLDTRADE );
+
+    //chara読み込み
+    wk->resObjTbl[RES_HERO][CLACT_U_CHAR_RES] = GFL_CLGRP_CGR_Register( p_handle, chr, 0, CLSYS_DRAW_SUB, HEAPID_WORLDTRADE);
+
+    //pal読み込み
+    wk->resObjTbl[RES_HERO][CLACT_U_PLTT_RES] = GFL_CLGRP_PLTT_RegisterEx(p_handle, plt, CLSYS_DRAW_SUB, 0, 0, 1, HEAPID_WORLDTRADE);
+
+    //cell読み込み
+    wk->resObjTbl[RES_HERO][CLACT_U_CELL_RES] = GFL_CLGRP_CELLANIM_Register(p_handle, cel, anm, HEAPID_WORLDTRADE);
+
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
 }
 
 #define TRAINER_NAME_POS_X    ( 24 )
@@ -978,6 +1015,10 @@ static void FreeCLACT( WORLDTRADE_WORK *wk )
   FreeFieldObjData( wk );
 
   // キャラ・パレット・セル・セルアニメのリソースマネージャー破棄
+  GFL_CLGRP_PLTT_Release( wk->resObjTbl[RES_HERO][CLACT_U_PLTT_RES] );
+  GFL_CLGRP_CGR_Release( wk->resObjTbl[RES_HERO][CLACT_U_CHAR_RES] );
+  GFL_CLGRP_CELLANIM_Release( wk->resObjTbl[RES_HERO][CLACT_U_CELL_RES] );
+
   GFL_CLGRP_PLTT_Release( wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES] );
   GFL_CLGRP_CGR_Release( wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES] );
   GFL_CLGRP_CELLANIM_Release( wk->resObjTbl[SUB_LCD][CLACT_U_CELL_RES] );

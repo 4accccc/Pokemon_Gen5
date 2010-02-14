@@ -167,7 +167,7 @@ int WorldTrade_Title_Init(WORLDTRADE_WORK *wk, int seq)
 		wk->OpeningFlag     = 1;
 
 		// 下画面に主人公を登場させる
-		WorldTrade_HeroDemo( wk, MyStatus_GetMySex(wk->param->mystatus) );
+		WorldTrade_HeroDemo( wk );
 	}else{
 		// ２回目以降
 		// ワイプフェード開始（両画面）
@@ -1011,7 +1011,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 static int SubSeq_EndDemo( WORLDTRADE_WORK *wk )
 {
 	
-	WorldTrade_ReturnHeroDemo( wk, MyStatus_GetMySex(wk->param->mystatus) );
+	WorldTrade_ReturnHeroDemo( wk );
 	wk->subprocess_seq = SUBSEQ_END_DEMO_WAIT;
 	wk->demo_end       = 0;
 

@@ -24,8 +24,8 @@
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
 
-#include "record_gra.naix"			// グラフィックアーカイブ定義
-
+#include "arc\wifi_unionobj.naix"
+#include "arc\wifi_unionobj_plt.cdat"
 
 //==============================================================================
 // 構造体定義
@@ -33,7 +33,6 @@
 typedef struct{
 	int seq;
 	int heroy;
-	int sex;
 	WORLDTRADE_WORK *wk;
 }HERO_DEMO_WORK;
 
@@ -46,7 +45,7 @@ static void HeroReturnDemoTask(  GFL_TCB* tcb, void *work  );
 static void SetSubLcdObj_Pos( GFL_CLWK* act, int x, int y );
 static void HeroAnimeChange( HERO_DEMO_WORK *hdw, int animeno );
 static void LoadFieldObjData( WORLDTRADE_WORK *wk );
-static void TransFieldObjData( NNSG2dCharacterData *CharaData, NNSG2dPaletteData *PalData, int id, int view, int sex );
+static void TransFieldObjData( NNSG2dCharacterData **CharaData, NNSG2dPaletteData *PalData, int id, int view, int sex );
 static int ObjAppearNoGet( int objno );
 
 
@@ -86,7 +85,7 @@ static int ObjAppearNoGet( int objno );
 
 
 // 人物OBJキャラグラフィックファイルのバイト数
-#define FIELDOBJ_NCG_SIZE	(256*256/2)
+#define FIELDOBJ_NCG_SIZE	(4*4*32)
 
 //==============================================================================
 // 検索結果ＯＢＪの座標
@@ -111,7 +110,7 @@ static const u16 obj_postable[][2]={
  * @retval  none		
  */
 //==============================================================================
-void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex )
+void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk )
 {
 	int i;
 	GFL_CLWK_DATA	add;
@@ -120,9 +119,6 @@ void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex )
 	// ついでにフィールドＯＢＪグラフィック読み込み
 	LoadFieldObjData( wk );
 
-#if 0 //新CLACTではヘッダは要らない
-	WorldTrade_MakeCLACT( &add,  wk, &wk->clActHeader_sub, NNS_G2D_VRAM_TYPE_2DSUB );
-#endif
 	// 主人公アクター登録
 	add.pos_x = HERO_START_POSX;
 	add.pos_y = ( 130 );// + NAMEIN_SUB_ACTOR_DISTANCE;
@@ -130,15 +126,15 @@ void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex )
 	add.softpri	= 0;
 	add.bgpri		= 0;
 	wk->SubActWork[0] = GFL_CLACT_WK_Create( wk->clactSet,
-			wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES],
-			wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES], 
-			wk->resObjTbl[SUB_LCD][CLACT_U_CELL_RES],	
+			wk->resObjTbl[RES_HERO][CLACT_U_CHAR_RES],
+			wk->resObjTbl[RES_HERO][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[RES_HERO][CLACT_U_CELL_RES],	
 			&add,CLSYS_DRAW_SUB, HEAPID_WORLDTRADE);
 	GFL_CLACT_WK_SetAutoAnmFlag( wk->SubActWork[0],1);
 	GFL_CLACT_WK_SetBgPri( wk->SubActWork[0], 2 );
 	
 	// 上を向いて立つ
-	GFL_CLACT_WK_SetAnmSeq( wk->SubActWork[0], 3+sex*7 );
+	GFL_CLACT_WK_SetAnmSeq( wk->SubActWork[0], 3 );
 	GFL_CLACT_WK_SetDrawEnable( wk->SubActWork[0], 1 );
 	
 	// 検索結果ＯＢＪ登録＆隠す
@@ -154,6 +150,7 @@ void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex )
 		GFL_CLACT_WK_SetDrawEnable( wk->SubActWork[i+1], 0 );
 		SetSubLcdObj_Pos( wk->SubActWork[i+1], obj_postable[i][0], obj_postable[i][1] );
 		GFL_CLACT_WK_SetBgPri( wk->SubActWork[i+1], 2 );
+    GFL_CLACT_WK_SetPlttOffs( wk->SubActWork[i+1], i+2,CLWK_PLTTOFFS_MODE_PLTT_TOP );
 	}
 
 	// 交換相手を指定するためのカーソル登録＆隠す
@@ -203,11 +200,10 @@ void WorldTrade_SubLcdActorAdd( WORLDTRADE_WORK *wk, int sex )
  * @retval  none		
  */
 //==============================================================================
-void WorldTrade_HeroDemo( WORLDTRADE_WORK *wk, int sex )
+void WorldTrade_HeroDemo( WORLDTRADE_WORK *wk )
 {
-	
 	// 主人公＆検索結果ＯＢＪ登録
-	WorldTrade_SubLcdActorAdd( wk, sex );
+	WorldTrade_SubLcdActorAdd( wk );
 	
 	// デモタスク登録
 	{
@@ -218,7 +214,6 @@ void WorldTrade_HeroDemo( WORLDTRADE_WORK *wk, int sex )
 		hdw          = GFL_TCB_GetWork(wk->demotask);
 		hdw->seq     = 0;
 		hdw->heroy   = HERO_START_POSY;
-		hdw->sex     = sex;
 		hdw->wk      = wk;
 
 		// くるくる回る
@@ -240,7 +235,7 @@ void WorldTrade_HeroDemo( WORLDTRADE_WORK *wk, int sex )
 //------------------------------------------------------------------
 static void HeroAnimeChange( HERO_DEMO_WORK *hdw, int animeno )
 {
-	GFL_CLACT_WK_SetAnmSeq( hdw->wk->SubActWork[0], animeno+hdw->sex*7 );
+	GFL_CLACT_WK_SetAnmSeq( hdw->wk->SubActWork[0], animeno );
 }
 
 enum{
@@ -327,7 +322,7 @@ static void HeroDemoTask(  GFL_TCB* tcb, void *work  )
  * @retval  none		
  */
 //==============================================================================
-void WorldTrade_ReturnHeroDemo( WORLDTRADE_WORK *wk, int sex )
+void WorldTrade_ReturnHeroDemo( WORLDTRADE_WORK *wk )
 {
 
 	// デモタスク登録
@@ -343,7 +338,6 @@ void WorldTrade_ReturnHeroDemo( WORLDTRADE_WORK *wk, int sex )
 		hdw          = GFL_TCB_GetWork(wk->demotask);
 		hdw->seq     = 0;
 		hdw->heroy   = HERO_STOP_POSY;
-		hdw->sex     = sex;
 		hdw->wk      = wk;
 
 		// 下に向かって歩く
@@ -580,24 +574,31 @@ void WorldTrade_SubLcdMatchObjHide( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void LoadFieldObjData( WORLDTRADE_WORK *wk )
 {
-	// パレット読み込み
-	wk->FieldObjPalBuf = GFL_ARC_UTIL_LoadPalette( ARCID_RECORD_GRA, NARC_record_gra_union_chara_NCLR, &(wk->FieldObjPalData), HEAPID_WORLDTRADE );
+  int i;
+ 	// パレット読み込み
+	wk->FieldObjPalBuf = GFL_ARC_UTIL_LoadPalette( ARCID_WIFIUNIONCHAR, NARC_wifi_unionobj_wifi_union_obj_NCLR, &(wk->FieldObjPalData), HEAPID_WORLDTRADE );
 
 	// 画像読み込み
-	wk->FieldObjCharaBuf = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_RECORD_GRA, NARC_record_gra_union_chara_NCGR,  0, &(wk->FieldObjCharaData), HEAPID_WORLDTRADE );
-	DC_FlushRange( wk->FieldObjCharaData, FIELDOBJ_NCG_SIZE );
-
+  for( i = 0; i < UNIONCHARA_ALL_NUM; i++ )
+  { 
+    wk->FieldObjCharaBuf[i] = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_WIFIUNIONCHAR, NARC_wifi_unionobj_front00_NCGR + i,  0, &(wk->FieldObjCharaData[i]), HEAPID_WORLDTRADE );
+  }
+  for( i = 0; i < UNIONCHARA_ALL_NUM; i++ )
+  { 
+    DC_FlushRange( wk->FieldObjCharaData[i]->pRawData, FIELDOBJ_NCG_SIZE ); 
+  }
 }
 
 #define OBJ_TRANS_SIZE	( 4*4 )
+//16は通信アイコン
 static const u16 obj_offset[]={
-	( 32*9                    )*0x20,
-	( 32*9 + OBJ_TRANS_SIZE*1 )*0x20,
-	( 32*9 + OBJ_TRANS_SIZE*2 )*0x20,
-	( 32*9 + OBJ_TRANS_SIZE*3 )*0x20,
-	( 32*9 + OBJ_TRANS_SIZE*4 )*0x20,
-	( 32*9 + OBJ_TRANS_SIZE*5 )*0x20,
-	( 32*9 + OBJ_TRANS_SIZE*6 )*0x20,
+	( 16                    )*0x20,
+	( 16 + OBJ_TRANS_SIZE*1 )*0x20,
+	( 16 + OBJ_TRANS_SIZE*2 )*0x20,
+	( 16 + OBJ_TRANS_SIZE*3 )*0x20,
+	( 16 + OBJ_TRANS_SIZE*4 )*0x20,
+	( 16 + OBJ_TRANS_SIZE*5 )*0x20,
+	( 16 + OBJ_TRANS_SIZE*6 )*0x20,
 };
 
 
@@ -612,7 +613,7 @@ static const u16 obj_offset[]={
  * @retval  none		
  */
 //------------------------------------------------------------------
-static void TransFieldObjData( NNSG2dCharacterData *CharaData, NNSG2dPaletteData *PalData, int id, int view, int sex )
+static void TransFieldObjData( NNSG2dCharacterData **CharaData, NNSG2dPaletteData *PalData, int id, int view, int sex )
 {
 	int pos;
 	u8 *chara, *pal;
@@ -622,11 +623,14 @@ static void TransFieldObjData( NNSG2dCharacterData *CharaData, NNSG2dPaletteData
 //	pos   = UnionView_GetCharaNo( sex, view );
   pos = view; //WBではview=indexに変更　2010.02.04(木)　matsuda
 
-	chara = (u8*)CharaData->pRawData;
+  pos = MATH_CLAMP( pos, 0, UNIONCHARA_ALL_NUM );
+
+	chara = (u8*)CharaData[pos]->pRawData;
 	pal   = (u8*)PalData->pRawData;
 
-	GXS_LoadOBJ( &chara[(OBJ_TRANS_SIZE*3)*pos*0x20], obj_offset[id], OBJ_TRANS_SIZE*0x20 );
-	GXS_LoadOBJPltt( &pal[pos*32], (id+2)*32, 32 );
+	GXS_LoadOBJ( chara, obj_offset[id], OBJ_TRANS_SIZE*0x20 );
+  //sc_wifi_unionobj_pltはarc\wifi_unionobj_plt.cdatの中にあります
+	GXS_LoadOBJPltt( &pal[sc_wifi_unionobj_plt[pos]*32], (id+2)*32, 32 );
 
 	OS_Printf("ID=%d のユニオン見た目は %d アイコン番号は %d\n", id, view, pos);
 
@@ -649,20 +653,25 @@ void FreeFieldObjData( WORLDTRADE_WORK *wk )
 {
 	if(wk->demo_end)
 	{
+    int i;
+
     if( wk->FieldObjPalBuf )
     { 
       GFL_HEAP_FreeMemory( wk->FieldObjPalBuf  );
       wk->FieldObjPalBuf  = NULL;
     }
-    if( wk->FieldObjCharaBuf )
+    for( i = 0; i < UNIONCHARA_ALL_NUM; i++ )
     { 
-      GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf );
-      wk->FieldObjCharaBuf  = NULL;
+      if( wk->FieldObjCharaBuf[i] )
+      { 
+        GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf[i] );
+        wk->FieldObjCharaBuf[i]  = NULL;
+      }
+      OS_TPrintf( "charbuff	%x\n", wk->FieldObjCharaBuf[i] );
     }
     OS_TPrintf( "FreeFieldObjData!	\n" );
 	}
 	OS_TPrintf( "palbuff	%x\n", wk->FieldObjPalBuf );
-	OS_TPrintf( "charbuff	%x\n", wk->FieldObjCharaBuf );
 }
 
 

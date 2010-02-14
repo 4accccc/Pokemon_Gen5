@@ -44,7 +44,7 @@
 #ifdef PM_DEBUG
 
 #define CHANGE_POKE_RULE_IGNORE	//交換用ポケモンが結果と一致していなくてもえらべる
-#define RESERVE_POKE_GS_BINARY	//サーバーに預けるポケモンはGSから作成したバイナリを使う
+//#define RESERVE_POKE_GS_BINARY	//サーバーに預けるポケモンはGSから作成したバイナリを使う
 //#define DEBUG_SAVE_NONE					//デバッグ用にセーブしないで進みます
 
 
@@ -116,9 +116,6 @@
 #define MSG_TP_ON							(0)
 #define MSG_TP_OFF						(0)
 
-//進化
-#define TUUSHIN_SHINKA				(0)
-#define SHINKA_STATUS_FLAG_SIO_MODE	(0)
 
 //NUMFONT
 #define NUMFONT_MODE_LEFT			(0)
@@ -138,16 +135,6 @@ typedef struct
 {	
 	int dummy;
 }ZUKAN_WORK;
-
-typedef struct
-{	
-	int dummy;
-}DEMO_TRADE_PARAM;
-
-typedef struct
-{	
-	int dummy;
-}SHINKA_WORK;
 
 typedef struct
 {	
@@ -210,11 +197,6 @@ static inline BOOL ZukanWork_GetZenkokuZukanFlag( ZUKAN_WORK *wk ){return TRUE;}
 static inline BOOL ZukanWork_GetPokeSeeFlag( ZUKAN_WORK *zukan, int a ){return TRUE;}
 static inline void SaveData_GetPokeRegister( SAVE_CONTROL_WORK *sv, POKEMON_PARAM *pp ){}
 
-//進化
-static inline SHINKA_WORK* ShinkaInit( void *a, POKEMON_PARAM *pp, int no, CONFIG	*config, int contestflag, ZUKAN_WORK *zukanwork, MYITEM *myitem, RECORD *record, int cond, int mode, HEAPID heapID ){return NULL;}
-static inline BOOL ShinkaEndCheck( SHINKA_WORK* wk ){	return TRUE;}
-static inline void ShinkaEnd( SHINKA_WORK* wk ){}
-static inline int PokeShinkaCheck( void *a, POKEMON_PARAM *pp, int tuushin, int item, int *cond ) {return 0;}
 //=============================================================================
 /**
  *					以下、単純に置き換えた関数
