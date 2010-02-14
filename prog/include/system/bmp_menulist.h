@@ -41,7 +41,7 @@ typedef struct {
 	
 	u16		count;		//リスト項目数
 	u16		line;		//表示最大項目数
-	u8		rabel_x;	//ラベル表示Ｘ座標
+	u8		label_x;	//ラベル表示Ｘ座標
 	u8		data_x;		//項目表示Ｘ座標
 	u8		cursor_x;	//カーソル表示Ｘ座標
 	u8		line_y:4;	//表示Ｙ座標
@@ -81,7 +81,7 @@ typedef struct {
 ///リストパラメータ＆返り値定義
 #define	BMPMENULIST_NULL	(0xffffffff)
 #define	BMPMENULIST_CANCEL	(0xfffffffe)
-#define	BMPMENULIST_RABEL	(0xfffffffd)
+#define	BMPMENULIST_LABEL	(0xfffffffd)
 
 // パラメータ取得・変更ＩＤ
 enum {
@@ -90,7 +90,7 @@ enum {
 	BMPMENULIST_ID_COUNT,		///<リスト項目数
 	BMPMENULIST_ID_LINE,		///<表示最大項目数
 	BMPMENULIST_ID_INDEX,		///<使用ビットマップＩＮＤＥＸ
-	BMPMENULIST_ID_RABEL_X,		///<ラベル表示Ｘ座標
+	BMPMENULIST_ID_LABEL_X,		///<ラベル表示Ｘ座標
 	BMPMENULIST_ID_DATA_X,		///<項目表示Ｘ座標
 	BMPMENULIST_ID_CURSOR_X,	///<カーソル表示Ｘ座標
 	BMPMENULIST_ID_LINE_Y,		///<表示Ｙ座標

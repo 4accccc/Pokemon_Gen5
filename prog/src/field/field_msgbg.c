@@ -1705,7 +1705,7 @@ static void FldMenuFuncH_BmpMenuListH(
 	GFL_STD_MemClear( menuH, sizeof(BMPMENULIST_HEADER) );
 	menuH->count = fmenuH->count;			//リスト項目数
 	menuH->line = fmenuH->line;				//表示最大項目数
-	menuH->rabel_x = fmenuH->rabel_x;		//ラベル表示Ｘ座標
+	menuH->label_x = fmenuH->label_x;		//ラベル表示Ｘ座標
 	menuH->data_x = fmenuH->data_x;			//項目表示Ｘ座標
 	menuH->cursor_x = fmenuH->cursor_x;		//カーソル表示Ｘ座標
 	menuH->line_y = fmenuH->line_y;			//表示Ｙ座標

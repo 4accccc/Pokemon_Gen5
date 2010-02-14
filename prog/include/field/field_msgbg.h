@@ -133,7 +133,7 @@ typedef struct
 {
   u16   count;        //リスト項目数
   u16   line;       //表示最大項目数
-  u8    rabel_x;      //ラベル表示Ｘ座標
+  u8    label_x;      //ラベル表示Ｘ座標
   u8    data_x;       //項目表示Ｘ座標
   u8    cursor_x;     //カーソル表示Ｘ座標
   u8    line_y:4;     //表示Ｙ座標

@@ -1694,7 +1694,7 @@ static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
   
   header.count     = BmpMenuWork_GetListMax(wk->list);    //リスト項目数
   header.line      = 7; //表示最大項目数
-  header.rabel_x   = 0; //ラベル表示Ｘ座標
+  header.label_x   = 0; //ラベル表示Ｘ座標
   header.data_x    = 0; //項目表示Ｘ座標
   header.cursor_x  = 0; //カーソル表示Ｘ座標
   header.line_y    = 8; //表示Ｙ座標

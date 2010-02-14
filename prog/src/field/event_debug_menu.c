@@ -223,13 +223,13 @@ static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *p_wk );
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
-  { DEBUG_FIELD_TITLE_00, (void*)BMPMENULIST_RABEL },       //○ジャンプ（移動用）
+  { DEBUG_FIELD_TITLE_00, (void*)BMPMENULIST_LABEL },       //○ジャンプ（移動用）
   { DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump },    //空を飛ぶ
   { DEBUG_FIELD_STR43, debugMenuCallProc_Jump },            //ジャンプ（ユニオン等）
   { DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },   //ゾーン選択ジャンプ
   { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},  //四季ジャンプ
 
-  { DEBUG_FIELD_TITLE_02, (void*)BMPMENULIST_RABEL },       //○フィールド
+  { DEBUG_FIELD_TITLE_02, (void*)BMPMENULIST_LABEL },       //○フィールド
   { DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },    //座標をみる
   { DEBUG_FIELD_STR02, debugMenuCallProc_ControlLinerCamera },  //カメラ簡単操作
   { DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera }, //カメラ全部操作
@@ -247,7 +247,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_FOG_TEST,   debugMenuCallProc_FogLightTest },     //FOG表現
   { DEBUG_FIELD_ENCEFF, debugMenuCallProc_EncEffList },           //エンカウントエフェクト
 
-  { DEBUG_FIELD_TITLE_01, (void*)BMPMENULIST_RABEL },       //○システム
+  { DEBUG_FIELD_TITLE_01, (void*)BMPMENULIST_LABEL },       //○システム
   { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },     //フラグ操作
   { DEBUG_FIELD_STR04, debugMenuCallProc_GameEnd },         //ゲーム終了
   { DEBUG_FIELD_STR60, debugMenuCallProc_ForceSave },       //強制セーブ
@@ -256,7 +256,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR61, debugMenuCallProc_CaptureList },     //キャプチャ
   { DEBUG_FIELD_STR40, debugMenuCallProc_ChangePlayerSex },   //主人公性別変更
 
-  { DEBUG_FIELD_TITLE_03, (void*)BMPMENULIST_RABEL },       //○データ作成
+  { DEBUG_FIELD_TITLE_03, (void*)BMPMENULIST_LABEL },       //○データ作成
   { DEBUG_FIELD_STR41, debugMenuCallProc_DebugMakePoke },   //ポケモン作成
   { DEBUG_FIELD_STR32, debugMenuCallProc_DebugItem },       //アイテム作成
   { DEBUG_FIELD_STR37, debugMenuCallProc_BoxMax },          //ボックス最大
@@ -264,18 +264,18 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg },          //タマゴ作成
   { DEBUG_FIELD_MAKE_UNDATA,   debugMenuCallProc_DebugMakeUNData }, //国連データ作成
 
-  { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_RABEL },       //○つうしん
+  { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
   { DEBUG_FIELD_GPOWER, debugMenuCallProc_GPowerList},      //Gパワー
   { DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },  //通信開始
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },  //ともだちコード配信
   { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake },             //サケ操作
   { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas },            //アトラス操作
 
-  { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_RABEL },       //○アプリ
+  { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },        //UIテンプレート
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d },             //３Dデモ
 
-  { DEBUG_FIELD_TITLE_05, (void*)BMPMENULIST_RABEL },       //○スタッフ用
+  { DEBUG_FIELD_TITLE_05, (void*)BMPMENULIST_LABEL },       //○スタッフ用
   { DEBUG_FIELD_STR47, debugMenu_ControlShortCut },           //Yボタン登録最大
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
   { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu }, //GTSネゴ
@@ -526,7 +526,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 //-----------------------------------------------------------------------------
 static void	DebugMenu_IineCallBack(BMPMENULIST_WORK* lw,u32 param,u8 y)
 {
-	if(param == BMPMENULIST_RABEL){
+	if(param == BMPMENULIST_LABEL){
 		BmpMenuList_TmpColorChange( lw,4,0,4);
 	}else{
 		BmpMenuList_TmpColorChange(lw,1,0,2);

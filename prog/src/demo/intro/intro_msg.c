@@ -473,7 +473,7 @@ void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u3
 		header.win				= p_bmpwin;
 		header.count			= tbl_max;
 		header.line				= 5;
-		header.rabel_x		= 0;
+		header.label_x		= 0;
 		header.data_x			= 16;
 		header.cursor_x		= 0;
 		header.line_y			= 2;

@@ -554,8 +554,8 @@ u32 BmpListParamGet( BMPMENULIST_WORK * lw, u8 mode )
   case BMPMENULIST_ID_LINE:   // 表示最大項目数
     ret = (u32)lw->hed.line;
     break;
-  case BMPMENULIST_ID_RABEL_X:  // ラベル表示Ｘ座標
-    ret = (u32)lw->hed.rabel_x;
+  case BMPMENULIST_ID_LABEL_X:  // ラベル表示Ｘ座標
+    ret = (u32)lw->hed.label_x;
     break;
   case BMPMENULIST_ID_DATA_X:   // 項目表示Ｘ座標
     ret = (u32)lw->hed.data_x;
@@ -636,8 +636,8 @@ void BmpMenuList_ParamSet( BMPMENULIST_WORK * lw, u8 mode, u32 param )
   case BMPMENULIST_ID_LINE:   // 表示最大項目数
     lw->hed.line = (u16)param;
     break;
-  case BMPMENULIST_ID_RABEL_X:  // ラベル表示Ｘ座標
-    lw->hed.rabel_x = (u8)param;
+  case BMPMENULIST_ID_LABEL_X:  // ラベル表示Ｘ座標
+    lw->hed.label_x = (u8)param;
     break;
   case BMPMENULIST_ID_DATA_X:   // 項目表示Ｘ座標
     lw->hed.data_x = (u8)param;
@@ -769,10 +769,10 @@ static void ListScreenPut(
   if( print_p > 0 && up_write )
   { 
     //一端かいて上にずらす
-    if( lw->hed.list[print_p-1].param != BMPMENULIST_RABEL ){
+    if( lw->hed.list[print_p-1].param != BMPMENULIST_LABEL ){
       x = lw->hed.data_x;   // 描画Ｘオフセット
     }else{
-      x = lw->hed.rabel_x;  // 描画Ｘオフセット
+      x = lw->hed.label_x;  // 描画Ｘオフセット
     }
 
     GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.win),
@@ -800,10 +800,10 @@ static void ListScreenPut(
 #endif 
 
   for( i=0; i<len ;i++ ){
-    if( lw->hed.list[print_p].param != BMPMENULIST_RABEL ){
+    if( lw->hed.list[print_p].param != BMPMENULIST_LABEL ){
       x = lw->hed.data_x;   // 描画Ｘオフセット
     }else{
-      x = lw->hed.rabel_x;  // 描画Ｘオフセット
+      x = lw->hed.label_x;  // 描画Ｘオフセット
     }
 
     y = (u8)(((i + line) * yblk) + lw->hed.line_y);//描画Ｙオフセット
@@ -954,7 +954,7 @@ static u8 ListCursorMoveUpDown( BMPMENULIST_WORK * lw, u8 mode )
     if(list_p == 0){  //リスト最初の部分
       while(cursor_p > 0){
         cursor_p--;
-        if(lw->hed.list[list_p + cursor_p].param != BMPMENULIST_RABEL){
+        if(lw->hed.list[list_p + cursor_p].param != BMPMENULIST_LABEL){
           lw->cp = cursor_p;
           return 1;
         }
@@ -963,7 +963,7 @@ static u8 ListCursorMoveUpDown( BMPMENULIST_WORK * lw, u8 mode )
     }
     while(cursor_p > check_p){
       cursor_p--;
-      if(lw->hed.list[list_p + cursor_p].param != BMPMENULIST_RABEL){
+      if(lw->hed.list[list_p + cursor_p].param != BMPMENULIST_LABEL){
         lw->cp = cursor_p;
         return 1;
       }
@@ -991,7 +991,7 @@ static u8 ListCursorMoveUpDown( BMPMENULIST_WORK * lw, u8 mode )
     if(list_p == (lw->hed.count - lw->hed.line)){//リスト最後の部分
       while(cursor_p < (lw->hed.line - 1)){
         cursor_p++;
-        if(lw->hed.list[list_p + cursor_p].param != BMPMENULIST_RABEL){
+        if(lw->hed.list[list_p + cursor_p].param != BMPMENULIST_LABEL){
           lw->cp = cursor_p;
           return 1;
         }
@@ -1000,7 +1000,7 @@ static u8 ListCursorMoveUpDown( BMPMENULIST_WORK * lw, u8 mode )
     }
     while(cursor_p < check_p){
       cursor_p++;
-      if(lw->hed.list[list_p + cursor_p].param != BMPMENULIST_RABEL){
+      if(lw->hed.list[list_p + cursor_p].param != BMPMENULIST_LABEL){
         lw->cp = cursor_p;
         return 1;
       }
@@ -1124,7 +1124,7 @@ static u8 ListMoveUpDownCheck( BMPMENULIST_WORK * lw, u8 print_f, u8 req_line, u
       }
       linecount++;
     //カーソル位置がラベルにかからなくなるまで移動
-    }while(lw->hed.list[lw->lp + lw->cp].param == BMPMENULIST_RABEL);
+    }while(lw->hed.list[lw->lp + lw->cp].param == BMPMENULIST_LABEL);
   }
 
   if(print_f){  //表示スイッチ

@@ -210,7 +210,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
 			switch( ret ){
 			case BMPMENULIST_NULL:
-			case BMPMENULIST_RABEL:
+			case BMPMENULIST_LABEL:
 				break;
 
 			case BMPMENULIST_CANCEL:		// ƒLƒƒƒ“ƒZƒ‹

@@ -1758,7 +1758,7 @@ static void LIST_Init( LIST_WORK *p_wk, const LIST_SETUP_TBL *cp_tbl, u32 tbl_ma
 		header.win				= p_bmpwin;
 		header.count			= tbl_max;
 		header.line				= 5;
-		header.rabel_x		= 0;
+		header.label_x		= 0;
 		header.data_x			= 16;
 		header.cursor_x		= 0;
 		header.line_y			= 2;
