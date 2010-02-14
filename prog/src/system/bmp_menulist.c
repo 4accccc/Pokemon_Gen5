@@ -129,7 +129,10 @@ BMPMENULIST_WORK * BmpMenuList_Set(
   }
 
   //カーソルの位置がラベルでなくなるまで移動
-  ListMoveUpDownCheck( lw, 0, 1, LIST_DOWN );
+  while(lw->hed.list[lw->lp + lw->cp].param == BMPMENULIST_RABEL)
+  { 
+    lw->cp++;
+  }
 
 
   // BMPカーソル色変更
