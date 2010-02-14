@@ -582,6 +582,7 @@ static void (* const DATA_MMdl_EventTypeInitProcTbl[EV_TYPE_MAX])( MMDL * ) =
 	SubMoveNon_Init, //EV_TYPE_TRAINER_SPIN_MOVE_R
 	SubMoveNon_Init, //EV_TYPE_MSG
 	SubMoveNon_Init, //EV_TYPE_TRAINER_ESCAPE
+	SubMoveNon_Init, //EV_TYPE_TRAINER_DASH_ALTER
 	SubMoveNon_Init, //EV_TYPE_TRAINER_DASH_REACT
 	SubMoveNon_Init, //EV_TYPE_TRAINER_DASH_ACCEL
 };
@@ -602,6 +603,7 @@ static int (* const DATA_MMdl_EventTypeStartCheckProcTbl[EV_TYPE_MAX])( MMDL * )
 	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_SPIN_MOVE_R
 	SubMoveNon_StartCheck, //EV_TYPE_MSG
 	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_ESCAPE
+	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_DASH_ALTER
 	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_DASH_REACT
 	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_DASH_ACCEL
 };
@@ -622,6 +624,7 @@ static int (* const DATA_MMdl_EventTypeMoveProcTbl[EV_TYPE_MAX])( MMDL * ) =
 	SubMoveNon_Move, //EV_TYPE_TRAINER_SPIN_MOVE_R
 	SubMoveNon_Move, //EV_TYPE_MSG
 	SubMoveNon_Move, //EV_TYPE_TRAINER_ESCAPE
+	SubMoveNon_Move, //EV_TYPE_TRAINER_DASH_ALTER
 	SubMoveNon_Move, //EV_TYPE_TRAINER_DASH_REACT
 	SubMoveNon_Move, //EV_TYPE_TRAINER_DASH_ACCEL
 };
