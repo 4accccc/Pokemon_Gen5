@@ -7902,13 +7902,13 @@
 		<language name="JPN" width="256">W307-EXP</language>
 		<language name="JPN_KANJI" width="256">W307-EXP</language>
 	</row>
-	<row id="msg_seq_se_dmy_219">
-		<language name="JPN" width="256">DMY-219</language>
-		<language name="JPN_KANJI" width="256">DMY-219</language>
+	<row id="msg_seq_se_w474_gutsu">
+		<language name="JPN" width="256">W474-GUTSU</language>
+		<language name="JPN_KANJI" width="256">W474-GUTSU</language>
 	</row>
-	<row id="msg_seq_se_dmy_220">
-		<language name="JPN" width="256">DMY-220</language>
-		<language name="JPN_KANJI" width="256">DMY-220</language>
+	<row id="msg_seq_se_w474_doku">
+		<language name="JPN" width="256">W474-DOKU</language>
+		<language name="JPN_KANJI" width="256">W474-DOKU</language>
 	</row>
 	<row id="msg_seq_se_dmy_221">
 		<language name="JPN" width="256">DMY-221</language>
