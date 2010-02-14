@@ -204,3 +204,9 @@ extern u32 APP_COMMON_GetPokerusPltArcIdx( void );
 extern u32 APP_COMMON_GetPokerusCharArcIdx( const APP_COMMON_MAPPING mapping );
 extern u32 APP_COMMON_GetPokerusCellArcIdx( const APP_COMMON_MAPPING mapping );
 extern u32 APP_COMMON_GetPokerusAnimeArcIdx( const APP_COMMON_MAPPING mapping );
+
+///メニューバーへのスクリーンオフセット(2byte * 32char * )
+#define MENUBAR_SCRN_START      (2*32*(192/8-3))
+///メニューバーへのスクリーンサイズ
+#define MENUBAR_SCRN_SIZE       (3*32*2)
+extern void APP_COMMON_MenuBarScrn_Fusion(ARCHANDLE *app_handle, u8 frmnum, HEAPID temp_heap_id, u32 menubar_pos, int palno);

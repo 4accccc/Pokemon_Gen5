@@ -197,6 +197,36 @@ const u32 APP_COMMON_GetBarScrn_512x256ArcIdx( void )
 	return NARC_app_menu_common_menu_bar_512x256_NSCR;
 }
 
+//==================================================================
+/**
+ * メニューバーのスクリーンを既に展開されているスクリーンバッファに融合する
+ *
+ * @param   app_handle		ARCID_APP_MENU_COMMONのハンドル
+ * @param   frmnum		    対象フレーム(GFL_BG_FRAME_xxx)
+ * @param   temp_heap_id	テンポラリヒープID
+ * @param   menubar_pos		メニューバーを展開した位置
+ * @param   palno		      メニューバーのパレット番号
+ */
+//==================================================================
+void APP_COMMON_MenuBarScrn_Fusion(ARCHANDLE *app_handle, u8 frmnum, HEAPID temp_heap_id, u32 menubar_pos, int palno)
+{
+  u16 *scrn_buf, *load_buf, *read_buf;
+  NNSG2dScreenData *scrnData;
+  int i;
+  
+  scrn_buf = GFL_BG_GetScreenBufferAdrs(frmnum);
+  load_buf = GFL_ARCHDL_UTIL_LoadScreen(
+    app_handle, NARC_app_menu_common_menu_bar_NSCR, FALSE, &scrnData, temp_heap_id);
+  read_buf = (u16*)scrnData->rawData;
+  GFL_STD_MemCopy(&read_buf[MENUBAR_SCRN_START/2], 
+    &scrn_buf[MENUBAR_SCRN_START/2], MENUBAR_SCRN_SIZE);
+  GFL_HEAP_FreeMemory(load_buf);
+  for(i = 0; i < MENUBAR_SCRN_SIZE/2; i++){
+    scrn_buf[MENUBAR_SCRN_START/2 + i] = (scrn_buf[MENUBAR_SCRN_START/2 + i] & 0x0fff) + menubar_pos + (palno << 12);
+  }
+}
+
+
 //--------------------------------------------------------------
 // アイテムアイコン(ポケアイコン用)
 //--------------------------------------------------------------

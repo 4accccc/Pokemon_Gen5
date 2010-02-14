@@ -264,13 +264,13 @@ static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WO
   GFL_BMPWIN_MakeScreen( pew->bmpwin[BMPWIN_TITLE] );
 
   //装備パワー
-  pew->bmpwin[BMPWIN_EQP] = GFL_BMPWIN_Create(GFL_BG_FRAME0_M, 2, 4, 28, 7, 
+  pew->bmpwin[BMPWIN_EQP] = GFL_BMPWIN_Create(GFL_BG_FRAME0_M, 2, 4, 28, 8, 
     MONOLITH_BG_UP_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
   GFL_BMPWIN_TransVramCharacter( pew->bmpwin[BMPWIN_EQP] );
   GFL_BMPWIN_MakeScreen( pew->bmpwin[BMPWIN_EQP] );
 
   //選択されているパワー
-  pew->bmpwin[BMPWIN_EXPLAIN] = GFL_BMPWIN_Create(GFL_BG_FRAME0_M, 2, 0x10, 28, 9, 
+  pew->bmpwin[BMPWIN_EXPLAIN] = GFL_BMPWIN_Create(GFL_BG_FRAME0_M, 2, 0xf, 28, 9, 
     MONOLITH_BG_UP_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
   GFL_BMPWIN_TransVramCharacter( pew->bmpwin[BMPWIN_EXPLAIN] );
   GFL_BMPWIN_MakeScreen( pew->bmpwin[BMPWIN_EXPLAIN] );
@@ -362,7 +362,7 @@ static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
 static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
 {
   GPOWER_ID gpower_id = appwk->common->power_select_no;
-  STRBUF *str_name, *str_explain, *str_point, *str_expand;
+  STRBUF *str_explain, *str_point, *str_expand;
   
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pew->bmpwin[BMPWIN_EXPLAIN]), 0x0000);
   
@@ -370,7 +370,6 @@ static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup
     WORDSET_RegisterNumber(setup->wordset, 0, pew->powerdata[gpower_id].point, 4, 
       STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     
-    str_name = GFL_MSG_CreateString(setup->mm_power, pew->powerdata[gpower_id].msg_id_title);
     str_explain = GFL_MSG_CreateString(
       setup->mm_power_explain, pew->powerdata[gpower_id].msg_id_explain);
     str_point = GFL_MSG_CreateString(setup->mm_monolith, msg_mono_pow_up_002);
@@ -379,13 +378,10 @@ static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup
     WORDSET_ExpandStr(setup->wordset, str_expand, str_point );
 
     PRINT_UTIL_Print(&pew->print_util[BMPWIN_EXPLAIN], setup->printQue, 
-      0, 0, str_name, setup->font_handle);
+      0, 4, str_explain, setup->font_handle);
     PRINT_UTIL_Print(&pew->print_util[BMPWIN_EXPLAIN], setup->printQue, 
-      0, 16, str_explain, setup->font_handle);
-    PRINT_UTIL_Print(&pew->print_util[BMPWIN_EXPLAIN], setup->printQue, 
-      0, 16+16*3, str_expand, setup->font_handle);
+      112, 4+16*3, str_expand, setup->font_handle);
     
-    GFL_STR_DeleteBuffer(str_name);
     GFL_STR_DeleteBuffer(str_explain);
     GFL_STR_DeleteBuffer(str_point);
     GFL_STR_DeleteBuffer(str_expand);

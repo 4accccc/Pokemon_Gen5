@@ -20,6 +20,8 @@
 #include "gamesystem/msgspeed.h"
 #include "message.naix"
 #include "gamesystem/g_power.h"
+#include "app_menu_common.naix"
+#include "app/app_menu_common.h"
 
 
 //==============================================================================
@@ -29,6 +31,12 @@
 #define BMPWIN_FRAME_PALNO        (MONOLITH_BG_DOWN_FONT_PALNO - 1)
 ///BMP枠のキャラクタ開始位置
 #define BMPWIN_FRAME_START_CGX    (1)
+
+///メニューバーのパレット番号
+#define _MENUBAR_PALNO    (BMPWIN_FRAME_PALNO-1)
+
+///メニューバーのCGXサイズ
+#define MENUBAR_CGX_SIZE    (4*0x20)
 
 
 //--------------------------------------------------------------
@@ -53,13 +61,15 @@ typedef enum{
 
 ///一度に画面に表示されるパワー項目数
 #define POWER_ITEM_DISP_NUM   (7)
+///十時キーで移動させる時に、上下に余裕を持たせてスクロールさせる為のパネル数
+#define POWER_ITEM_KEY_SCROLL_SPACE   (2)
 
 enum{
   SOFTPRI_BMPOAM_NAME = 10,
 };
 
 enum{
-  BGPRI_BMPOAM_NAME = 2,
+  BGPRI_BMPOAM_NAME = 3,
 };
 
 enum{
@@ -95,6 +105,20 @@ typedef enum{
   _SET_CURSOR_MODE_TP,    ///<タッチパネルで操作
 }_SET_CURSOR_MODE;
 
+enum{
+  _DUMMY_PANEL_UP_NUM = 1,    ///<上に入るダミーパネル数
+  _DUMMY_PANEL_DOWN_NUM = 1,  ///<下に入るダミーパネル数
+  _DUMMY_PANEL_NUM = 2,       ///<上下に入るダミーパネル数
+};
+///タイトルバーの直下からパネルが開始するようにする為のリストY上限値
+#define _LIST_Y_TOP_OFFSET         (8 << 8)
+///メニューバーの真上でパネルが停止するようにする為のリストY下限値
+#define _LIST_Y_BOTTOM_OFFSET      (8 << 8)
+///タイトルバーのY長
+#define _TITLE_BAR_Y_LEN          (8*3)
+///メニューバーのY長
+#define _MENU_BAR_Y_LEN           (8*3)
+
 
 //==============================================================================
 //  構造体定義
@@ -103,10 +127,12 @@ typedef enum{
 typedef struct{
   GFL_TCB *vintr_tcb;
   
+  u32 alloc_menubar_pos;
+  
   GFL_MSGDATA *mm_power;        ///<パワー名gmm
-  GFL_BMP_DATA *bmp_power_name[GPOWER_ID_MAX];
-  GPOWER_ID use_gpower_id[GPOWER_ID_MAX];      ///<bmp_power_nameに対応したGPOWER_IDが入っている
-  _USE_POWER use_power[GPOWER_ID_MAX];         ///<use_gpower_idの習得状況
+  GFL_BMP_DATA *bmp_power_name[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];
+  GPOWER_ID use_gpower_id[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];      ///<bmp_power_nameに対応したGPOWER_IDが入っている
+  _USE_POWER use_power[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];         ///<use_gpower_idの習得状況
   u8 power_list_num;        ///<パワーリスト数
   u8 power_list_write_num;  ///<BMPに書き込んだ名前の数
   
@@ -122,14 +148,18 @@ typedef struct{
   
   u32 tp_cont_frame;     ///<TRUE:タッチパネル押しっぱなしにしているフレーム数
   s32 speed;              ///<スクロール速度(下位8ビット小数。マイナス有)
+  s32 one_speed;          ///<スクロール速度(下位8ビット小数。マイナス有) 1フレームで消滅
   u32 tp_backup_y;        ///<1フレーム前のTP_Y値
   u32 tp_first_hit_y;     ///<最初にタッチした時のY値
   
   BOOL scroll_update;     ///<TRUE:スクロール座標に整数レベルで変化があった
   
-  u16 cursor_pos;         ///<カーソル位置(項目No)
-  u16 backup_cursor_pos;  ///<1つ前のカーソル位置
-  u16 decide_cursor_pos;  ///<決定時のカーソル位置
+  s32 cursor_pos;         ///<カーソル位置(項目No)
+  s32 backup_cursor_pos;  ///<1つ前のカーソル位置
+  s32 backup_tp_decide_pos; ///<タッチパネル決定判定用の1つ前の選択していたカーソル位置
+  s32 decide_cursor_pos;  ///<決定時のカーソル位置
+  BOOL cursor_pos_update;   ///<TRUE:カーソル位置に更新があった
+  _SET_CURSOR_MODE cursor_mode; ///<カーソルをキーとタッチパネルどちらでいじったか
 }MONOLITH_PWSELECT_WORK;
 
 //==============================================================================
@@ -143,7 +173,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_End(
   GFL_PROC * proc, int * seq, void * pwk, void * mywk);
 static void _Setup_BGFrameSetting(void);
 static void _Setup_BGFrameExit(void);
-static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup);
+static void _Setup_BGGraphicLoad(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
+static void _Setup_BGGraphicUnload(MONOLITH_PWSELECT_WORK *mpw);
 static void _BmpOamCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static void _BmpOamDelete(MONOLITH_PWSELECT_WORK *mpw);
 static void _CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
@@ -160,12 +191,14 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETU
 static void _Setup_PowerNameBMPDelete(MONOLITH_PWSELECT_WORK *mpw);
 static BOOL _PowerNameBMPDraw(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
+static void _ScrollBeforeUpdate(MONOLITH_PWSELECT_WORK *mpw);
+static void _SetCursorPos(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURSOR_MODE mode);
+static void _ScrollAfterUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
 static BOOL _ScrollPosUpdate(MONOLITH_PWSELECT_WORK *mpw, s32 add_y);
 static void _ScrollPos_BGReflection(MONOLITH_PWSELECT_WORK *mpw);
 static void _ScrollPos_NameOamReflection(MONOLITH_PWSELECT_WORK *mpw);
 static void _PowerSelect_VBlank(GFL_TCB *tcb, void *work);
 static s32 _GetTouchListNo(MONOLITH_PWSELECT_WORK *mpw, u32 tp_y);
-static void _SetCursorPos(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURSOR_MODE mode);
 static void _CursorPos_PanelScreenChange(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, int palno);
 static void _CursorPos_PanelFocus(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos);
 static void _CursorPos_NotFocus(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos);
@@ -222,27 +255,25 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
   case 0:
     mpw = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_PWSELECT_WORK), HEAPID_MONOLITH);
     GFL_STD_MemClear(mpw, sizeof(MONOLITH_PWSELECT_WORK));
+    mpw->list_y = _LIST_Y_TOP_OFFSET;
     mpw->decide_cursor_pos = _CURSOR_POS_NONE;
+    mpw->backup_cursor_pos = _CURSOR_POS_NONE;
+    mpw->backup_tp_decide_pos = _CURSOR_POS_NONE;
     
   	mpw->mm_power = GFL_MSG_Create(
   		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_power_dat, HEAPID_MONOLITH);
 
     //BG
     _Setup_BGFrameSetting();
-    _Setup_BGGraphicLoad(appwk->setup);
+    _Setup_BGGraphicLoad(mpw, appwk->setup);
     _Setup_BmpWinCreate(mpw, appwk->setup);
+    _ScrollPos_BGReflection(mpw);
     //OBJ
     _CancelIconCreate(appwk, mpw);
     _BmpOamCreate(mpw, appwk->setup);
 
     MonolithTool_Panel_Init(appwk);
     appwk->common->power_select_no = GPOWER_ID_NULL;
-    if(GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY){
-      _SetCursorPos(appwk, mpw, 0, _SET_CURSOR_MODE_INIT);
-    }
-    else{
-      _SetCursorPos(appwk, mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
-    }
     
     mpw->vintr_tcb = GFUser_VIntr_CreateTCB(
       _PowerSelect_VBlank, mpw, MONOLITH_VINTR_TCB_PRI_POWER);
@@ -257,6 +288,13 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
       //名前描画
       _ScrollPos_NameOamReflection(mpw);
       mpw->scroll_update = TRUE;
+
+      if(GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY){
+        _SetCursorPos(mpw, _DUMMY_PANEL_UP_NUM, _SET_CURSOR_MODE_INIT);
+      }
+      else{
+        _SetCursorPos(mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
+      }
       return GFL_PROC_RES_FINISH;
     }
     break;
@@ -284,6 +322,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     SEQ_TOP,
     SEQ_DECIDE_STREAM,
     SEQ_DECIDE_STREAM_WAIT,
+    SEQ_TP_RELEASE_WAIT,
     SEQ_FINISH,
   };
   
@@ -311,11 +350,13 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
       }
       
       _ScrollSpeedUpdate(appwk, mpw);
-      if(_ScrollPosUpdate(mpw, mpw->speed) == TRUE){
+      _ScrollBeforeUpdate(mpw);
+      if(_ScrollPosUpdate(mpw, mpw->speed + mpw->one_speed) == TRUE){
         _ScrollPos_BGReflection(mpw);
         _ScrollPos_NameOamReflection(mpw);
         mpw->scroll_update = TRUE;
       }
+      _ScrollAfterUpdate(appwk, mpw);
     }
 
     if(mpw->cursor_pos == _CURSOR_POS_NONE){
@@ -348,8 +389,18 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
         }
         appwk->common->power_eqp_update = TRUE;
         mpw->decide_cursor_pos = _CURSOR_POS_NONE;
-        *seq = SEQ_TOP;
+        if(GFL_UI_TP_GetTrg()){
+          *seq = SEQ_TP_RELEASE_WAIT;
+        }
+        else{
+          *seq = SEQ_TOP;
+        }
       }
+    }
+    break;
+  case SEQ_TP_RELEASE_WAIT:
+    if(GFL_UI_TP_GetCont() == 0){
+      *seq = SEQ_TOP;
     }
     break;
     
@@ -394,6 +445,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_End( GFL_PROC * proc, int * seq, 
   _BmpOamDelete(mpw);
   _CancelIconDelete(mpw);
   //BG
+  _Setup_BGGraphicUnload(mpw);
   _Setup_BmpWinDelete(mpw);
   _Setup_BGFrameExit();
 
@@ -415,11 +467,17 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_End( GFL_PROC * proc, int * seq, 
 static void _Setup_BGFrameSetting(void)
 {
 	static const GFL_BG_BGCNT_HEADER bgcnt_frame[] = {
-		{//GFL_BG_FRAME1_S
+		{//GFL_BG_FRAME0_S
 			0, 0, MONO_BG_COMMON_SCR_SIZE, 0,
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x0c000, 0x8000,
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		},
+		{//GFL_BG_FRAME1_S
+			0, 0, MONO_BG_COMMON_SCR_SIZE, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x14000, 0x8000,
+			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 		},
 		{//GFL_BG_FRAME2_S
 			0, 0, MONO_BG_COMMON_SCR_SIZE, 0,
@@ -429,12 +487,15 @@ static void _Setup_BGFrameSetting(void)
 		},
 	};
 
-	GFL_BG_SetBGControl( GFL_BG_FRAME1_S,   &bgcnt_frame[0],   GFL_BG_MODE_TEXT );
-	GFL_BG_SetBGControl( GFL_BG_FRAME2_S,   &bgcnt_frame[1],   GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( GFL_BG_FRAME0_S,   &bgcnt_frame[0],   GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( GFL_BG_FRAME1_S,   &bgcnt_frame[1],   GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( GFL_BG_FRAME2_S,   &bgcnt_frame[2],   GFL_BG_MODE_TEXT );
 
+	GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME1_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_OFF);
+	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_OFF);
+	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_ON);
 	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_ON);
 }
 
@@ -445,8 +506,10 @@ static void _Setup_BGFrameSetting(void)
 //--------------------------------------------------------------
 static void _Setup_BGFrameExit(void)
 {
+	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_OFF);
 	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_OFF);
 	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_OFF);
+  GFL_BG_FreeBGControl(GFL_BG_FRAME0_S);
   GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
   GFL_BG_FreeBGControl(GFL_BG_FRAME2_S);
 }
@@ -458,12 +521,49 @@ static void _Setup_BGFrameExit(void)
  * @param   hdl		アーカイブハンドル
  */
 //--------------------------------------------------------------
-static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
+static void _Setup_BGGraphicLoad(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup)
 {
 	GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgd_power_lz_NSCR, 
 		GFL_BG_FRAME2_S, 0, 0, TRUE, HEAPID_MONOLITH);
+	
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(setup->hdl, NARC_monolith_mono_bgd_lz_NCGR, 
+		GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_MONOLITH);  //キャラベースを分けているので
+	GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgd_title_lz_NSCR, 
+		GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_MONOLITH);
 
+	//メニューバー
+  {
+    ARCHANDLE *app_handle = GFL_ARC_OpenDataHandle(ARCID_APP_MENU_COMMON, HEAPID_MONOLITH);
+  
+    mpw->alloc_menubar_pos = GFL_BG_AllocCharacterArea(
+      GFL_BG_FRAME1_S, MENUBAR_CGX_SIZE, GFL_BG_CHRAREA_GET_B );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter(
+      app_handle, NARC_app_menu_common_menu_bar_NCGR, GFL_BG_FRAME1_S, mpw->alloc_menubar_pos, 
+      MENUBAR_CGX_SIZE, FALSE, HEAPID_MONOLITH);
+    
+    APP_COMMON_MenuBarScrn_Fusion(app_handle, GFL_BG_FRAME1_S, HEAPID_MONOLITH, 
+      mpw->alloc_menubar_pos, _MENUBAR_PALNO);
+    
+    PaletteWorkSet_ArcHandle(setup->pfd, app_handle, NARC_app_menu_common_menu_bar_NCLR,
+      HEAPID_MONOLITH, FADE_SUB_BG, 0x20, _MENUBAR_PALNO*16);
+  
+  	GFL_ARC_CloseDataHandle(app_handle);
+  	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
+  }
+	
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+}
+
+//--------------------------------------------------------------
+/**
+ * BGグラフィック解放
+ *
+ * @param   mpw		
+ */
+//--------------------------------------------------------------
+static void _Setup_BGGraphicUnload(MONOLITH_PWSELECT_WORK *mpw)
+{
+  GFL_BG_FreeCharacterArea( GFL_BG_FRAME1_S, mpw->alloc_menubar_pos, MENUBAR_CGX_SIZE );
 }
 
 //--------------------------------------------------------------
@@ -478,11 +578,11 @@ static void _Setup_BmpWinCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *set
 {
   GFL_BMP_DATA *bmp;
 
-  BmpWinFrame_CgxSet( GFL_BG_FRAME1_S, BMPWIN_FRAME_START_CGX, MENU_TYPE_SYSTEM, HEAPID_MONOLITH );
+  BmpWinFrame_CgxSet( GFL_BG_FRAME0_S, BMPWIN_FRAME_START_CGX, MENU_TYPE_SYSTEM, HEAPID_MONOLITH );
   PaletteWorkSetEx_Arc(setup->pfd, ARCID_FLDMAP_WINFRAME, BmpWinFrame_WinPalArcGet(), 
     HEAPID_MONOLITH, FADE_SUB_BG, 0x20, BMPWIN_FRAME_PALNO * 16, 0);
   
-	mpw->bmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME1_S,
+	mpw->bmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
 		1,19,30,4, MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B );
 
 	bmp = GFL_BMPWIN_GetBmp( mpw->bmpwin );
@@ -490,7 +590,7 @@ static void _Setup_BmpWinCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *set
 	GFL_BMP_Clear( bmp, 0xff );
 //	GFL_BMPWIN_TransVramCharacter( mpw->bmpwin );
 	GFL_BMPWIN_MakeScreen( mpw->bmpwin );
-//	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
+//	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 	
 	BmpWinFrame_Write( mpw->bmpwin, WINDOW_TRANS_ON, BMPWIN_FRAME_START_CGX, BMPWIN_FRAME_PALNO );
 }
@@ -527,7 +627,7 @@ static void _Set_MsgStream(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u
     mpw->bmpwin, 0, 0, mpw->strbuf_stream, setup->font_handle,
     MSGSPEED_GetWait(), setup->tcbl_sys, 10, HEAPID_MONOLITH, 0xf);
 
-	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_ON);
+	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_ON);
 }
 
 //--------------------------------------------------------------
@@ -559,7 +659,7 @@ static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *se
     mpw->bmpwin, 0, 0, mpw->strbuf_stream, setup->font_handle,
     MSGSPEED_GetWait(), setup->tcbl_sys, 10, HEAPID_MONOLITH, 0xf);
 
-	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_ON);
+	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_ON);
 }
 
 //--------------------------------------------------------------
@@ -597,7 +697,7 @@ static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw)
   GFL_STR_DeleteBuffer(mpw->strbuf_stream);
   mpw->strbuf_stream = NULL;
   
-	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_OFF);
+	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_OFF);
   GFL_BMP_Clear(bmp, 0xff);
 	GFL_BMPWIN_TransVramCharacter( mpw->bmpwin );
 
@@ -635,6 +735,11 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETU
   _USE_POWER use_power;
   int use_count = 0;
   
+  mpw->use_gpower_id[use_count] = 0;  //画面上部の見えないパネル
+  mpw->use_power[use_count] = _USE_POWER_SOMEMORE;
+  mpw->bmp_power_name[use_count] = GFL_BMP_Create( 
+    GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
+  use_count++;
   for(gpower_id = 0; gpower_id < GPOWER_ID_MAX; gpower_id++){
     use_power = _CheckUsePower(setup, gpower_id);
     if(use_power == _USE_POWER_NONE){
@@ -648,7 +753,13 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETU
     
     use_count++;
   }
-  
+  if(use_count >= POWER_ITEM_DISP_NUM-1){
+    mpw->use_gpower_id[use_count] = 0;  //画面下部の見えないパネル
+    mpw->use_power[use_count] = _USE_POWER_SOMEMORE;
+    mpw->bmp_power_name[use_count] = GFL_BMP_Create( 
+      GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
+    use_count++;
+  }
   mpw->power_list_num = use_count;
 }
 
@@ -810,14 +921,71 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
   BOOL tp_cont;
   u32 tp_x, tp_y;
   BOOL decide_on = FALSE;
-  u16 cursor_pos = _CURSOR_POS_NONE;
+  s32 cursor_pos = _CURSOR_POS_NONE;
+  
+  mpw->one_speed = 0;
   
   tp_cont = GFL_UI_TP_GetPointCont( &tp_x, &tp_y );
   if(mpw->tp_cont_frame == 0 && (tp_x < 24 || tp_x > 224)){
     tp_cont = FALSE;
   }
   
+  if(GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
+    s32 list_top_no = ((mpw->list_y >> 8) + _TITLE_BAR_Y_LEN) / POWER_LIST_SPACE;
+    s32 list_space_pos = ((mpw->list_y >> 8) + _TITLE_BAR_Y_LEN) % POWER_LIST_SPACE;
+    //慣性力で進んでいる場合に新たな入力があれば停止する
+    mpw->speed = 0;
+    mpw->tp_cont_frame = 0;
+    tp_cont = FALSE;
+    if(mpw->cursor_pos == _CURSOR_POS_NONE){
+      s32 set_pos = list_top_no;
+      if(list_space_pos != 0){
+        set_pos++;
+      }
+      if(set_pos < _DUMMY_PANEL_UP_NUM){
+        set_pos = _DUMMY_PANEL_UP_NUM;
+      }
+      if(set_pos >= mpw->power_list_num - 1 - _DUMMY_PANEL_DOWN_NUM){
+        _SetCursorPos(mpw, mpw->power_list_num - 1 - _DUMMY_PANEL_DOWN_NUM, _SET_CURSOR_MODE_KEY);
+      }
+      else{
+        _SetCursorPos(mpw, set_pos, _SET_CURSOR_MODE_KEY);
+      }
+      return FALSE;
+    }
+    else{
+      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
+        _SetCursorPos(mpw, mpw->cursor_pos, _SET_CURSOR_MODE_KEY);
+        return TRUE;
+      }
+      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+        s32 check_topno = list_top_no;
+        if(list_space_pos != 0){
+          check_topno++;
+        }
+        _SetCursorPos(mpw, mpw->cursor_pos - 1, _SET_CURSOR_MODE_KEY);
+        if(mpw->cursor_pos < check_topno){
+          mpw->one_speed = -(POWER_LIST_SPACE << 8);
+        }
+        return FALSE;
+      }
+      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+        s32 check_bottomno = ((mpw->list_y>>8) + 192-_MENU_BAR_Y_LEN) / POWER_LIST_SPACE;
+        s32 bottom_list_space = ((mpw->list_y>>8) + 192-_MENU_BAR_Y_LEN) % POWER_LIST_SPACE;
+        if(bottom_list_space != 0){
+          //check_bottomno--;
+        }
+        _SetCursorPos(mpw, mpw->cursor_pos + 1, _SET_CURSOR_MODE_KEY);
+        if(mpw->cursor_pos >= check_bottomno){
+          mpw->one_speed = POWER_LIST_SPACE << 8;
+        }
+        return FALSE;
+      }
+    }
+  }
+  
   if(mpw->tp_cont_frame == 0){
+  #if 0
     //慣性力で進んでいる場合に新たな入力があれば停止する
     if(mpw->speed != 0){
       if(tp_cont == TRUE 
@@ -825,12 +993,15 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
         mpw->speed = 0;
       }
     }
+  #endif
 
     if(tp_cont == TRUE){
-      mpw->tp_cont_frame = 1;
-      mpw->tp_backup_y = tp_y;
-      mpw->tp_first_hit_y = tp_y;
-      _SetCursorPos(appwk, mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
+      if(tp_y > _TITLE_BAR_Y_LEN && tp_y < 192-_MENU_BAR_Y_LEN){
+        mpw->tp_cont_frame = 1;
+        mpw->tp_backup_y = tp_y;
+        mpw->tp_first_hit_y = tp_y;
+        _SetCursorPos(mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
+      }
     }
     else if(mpw->speed != 0){ //減速
       if(mpw->speed > 0){
@@ -874,7 +1045,7 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
   
   if(decide_on == TRUE){
     mpw->speed = 0;
-    _SetCursorPos(appwk, mpw, cursor_pos, _SET_CURSOR_MODE_TP);
+    _SetCursorPos(mpw, cursor_pos, _SET_CURSOR_MODE_TP);
   }
   
   return decide_on;
@@ -888,30 +1059,21 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
  * @param   cursor_pos		カーソル位置(項目番号) ※未選択にするには _CURSOR_POS_NONE
  */
 //--------------------------------------------------------------
-static void _SetCursorPos(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURSOR_MODE mode)
+static void _SetCursorPos(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURSOR_MODE mode)
 {
-  //昔のカーソル位置のBGスクリーンをフェード無しのカラーNoに変更する
-  _CursorPos_NotFocus(mpw, mpw->cursor_pos);
-  
-  //今のカーソル位置のBGスクリーンをフェード有のカラーNoに変更する
-  _CursorPos_PanelFocus(mpw, cursor_pos);
-  
-  if(cursor_pos == _CURSOR_POS_NONE){
-    MonolithTool_PanelBG_Focus(appwk, FALSE, FADE_SUB_BG);
+  if(cursor_pos != _CURSOR_POS_NONE 
+      && (cursor_pos >= mpw->power_list_num - _DUMMY_PANEL_DOWN_NUM 
+      || cursor_pos < _DUMMY_PANEL_UP_NUM)){
+    return;
   }
-  else if((mode == _SET_CURSOR_MODE_TP 
-      && (cursor_pos == mpw->cursor_pos || cursor_pos == mpw->backup_cursor_pos))
-      || (mode == _SET_CURSOR_MODE_KEY && cursor_pos == mpw->cursor_pos)){
-    mpw->decide_cursor_pos = cursor_pos;
-    MonolithTool_PanelBG_Flash(appwk, FADE_SUB_BG);
-  }
-  else{
-    MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
-  }
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
 
   mpw->backup_cursor_pos = mpw->cursor_pos;
+  if(mpw->cursor_pos != _CURSOR_POS_NONE){
+    mpw->backup_tp_decide_pos = mpw->cursor_pos;
+  }
   mpw->cursor_pos = cursor_pos;
+  mpw->cursor_pos_update = TRUE;
+  mpw->cursor_mode = mode;
 }
 
 //--------------------------------------------------------------
@@ -971,6 +1133,53 @@ static void _CursorPos_NotFocus(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos)
 
 //--------------------------------------------------------------
 /**
+ * BGスクロール開始前に実行する必要がある処理
+ *
+ * @param   mpw		
+ */
+//--------------------------------------------------------------
+static void _ScrollBeforeUpdate(MONOLITH_PWSELECT_WORK *mpw)
+{
+  if(mpw->cursor_pos_update == TRUE){
+    //昔のカーソル位置のBGスクリーンをフェード無しのカラーNoに変更する
+    _CursorPos_NotFocus(mpw, mpw->backup_cursor_pos);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * BGスクロール後に実行する必要がある処理
+ *
+ * @param   mpw		
+ */
+//--------------------------------------------------------------
+static void _ScrollAfterUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw)
+{
+  if(mpw->cursor_pos_update == TRUE){
+    //今のカーソル位置のBGスクリーンをフェード有のカラーNoに変更する
+    _CursorPos_PanelFocus(mpw, mpw->cursor_pos);
+  
+    if(mpw->cursor_pos == _CURSOR_POS_NONE){
+      MonolithTool_PanelBG_Focus(appwk, FALSE, FADE_SUB_BG);
+    }
+    else if((mpw->cursor_mode == _SET_CURSOR_MODE_TP 
+            && mpw->cursor_pos == mpw->backup_tp_decide_pos)
+        || (mpw->cursor_mode == _SET_CURSOR_MODE_KEY 
+            && mpw->cursor_pos == mpw->backup_cursor_pos)){
+      mpw->decide_cursor_pos = mpw->cursor_pos;
+      MonolithTool_PanelBG_Flash(appwk, FADE_SUB_BG);
+    }
+    else{
+      MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
+    }
+    GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+    
+    mpw->cursor_pos_update = FALSE;
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * リスト座標更新処理
  *
  * @param   mpw		
@@ -985,14 +1194,14 @@ static BOOL _ScrollPosUpdate(MONOLITH_PWSELECT_WORK *mpw, s32 add_y)
   
   backup_y = mpw->list_y;
   
-  max_y = mpw->power_list_num * POWER_LIST_SPACE;
+  max_y = mpw->power_list_num * POWER_LIST_SPACE - (_LIST_Y_BOTTOM_OFFSET >> 8);
   if(max_y <= 192){
     return FALSE; //スクロールさせる必要無し
   }
   
   mpw->list_y += add_y;
-  if(mpw->list_y < 0){
-    mpw->list_y = 0;
+  if(mpw->list_y < _LIST_Y_TOP_OFFSET){
+    mpw->list_y = _LIST_Y_TOP_OFFSET;
   }
   else if(mpw->list_y > ((max_y - 192) << 8)){
     mpw->list_y = (max_y - 192) << 8;
