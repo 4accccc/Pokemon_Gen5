@@ -17,25 +17,70 @@
 //--------------------------------------------------------------------
 //		スクリプトテーブル
 //--------------------------------------------------------------------
-_EVENT_DATA		ev_postman_flag_change
+_EVENT_DATA		ev_init_postman
+_EVENT_DATA   ev_recover_postman
 _EVENT_DATA		ev_postman
 _EVENT_DATA_END
 
-DEFINE_LOCAL  WK_SCENE_POSTMAN
+DEFINE_LOCAL  POSTMAN_OBJID
+DEFINE_LOCAL  PLAYERX
+DEFINE_LOCAL  PLAYERZ
+DEFINE_LOCAL  POSTMANX
+DEFINE_LOCAL  POSTMANZ
 
 /********************************************************************/
-/*						FLAG_CHANGE_LABEL 							*/
+/*						FIELD_INIT_LABEL                                      */
 /********************************************************************/
-INIT_EVENT_START  ev_postman_flag_change
+INIT_EVENT_START  ev_init_postman
+    _CALL   sub_postman_on_off
+INIT_EVENT_END
 
-	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_EXISTS, WK_SCENE_POSTMAN )
-	IF $WK_SCENE_POSTMAN == 0 THEN
-		//_FLAG_SET( FV_MYSTERY_POSTMAN )
+/********************************************************************/
+/*						FIELD_RECOVER_LABEL                                   */
+/********************************************************************/
+INIT_EVENT_START  ev_recover_postman
+    _CALL   sub_postman_on_off
+INIT_EVENT_END
+
+/********************************************************************/
+/*						配達員の出現・引っ込み処理                            */
+/********************************************************************/
+sub_postman_on_off:
+  //贈り物の存在チェック
+	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_EXISTS, SCWK_ANSWER )
+	IF $SCWK_ANSWER == 0 THEN
+      _FLAG_SET( FV_POSTMAN )
+      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJSTAT, SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_POSTMAN_OBJ_EXISTS THEN
+          _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJID, POSTMAN_OBJID )
+          _OBJ_DEL( POSTMAN_OBJID )
+      ENDIF
 	ELSE
-		//_FLAG_RESET( FV_MYSTERY_POSTMAN )
+      _FLAG_RESET( FV_POSTMAN )
+      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJSTAT, SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_POSTMAN_OBJ_EXISTS THEN
+          _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJID, POSTMAN_OBJID )
+          _CALL sub_postman_move
+      ELSE
+          _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJID, POSTMAN_OBJID )
+          _OBJ_ADD( POSTMAN_OBJID )
+          _CALL sub_postman_move
+      ENDIF
 	ENDIF
 
-INIT_EVENT_END
+  _RET
+
+
+sub_postman_move:
+  _OBJ_POS_GET( POSTMAN_OBJID, POSTMANX, POSTMANZ )
+  _PLAYER_POS_GET( PLAYERX, PLAYERZ )
+  IF $PLAYERX == $POSTMANX && $PLAYERZ == $POSTMANZ THEN
+      //自機と位置が重なっていたら一つ右にずらす
+      $POSTMANX += 1
+      _OBJ_POS_CHANGE( POSTMAN_OBJID, POSTMANX, 0, POSTMANZ, DIR_DOWN )
+  ENDIF
+
+  _RET
 
 
 /********************************************************************/
@@ -50,6 +95,7 @@ EVENT_END
 
 
 sub_postman_main:
+  //存在チェック
 	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_EXISTS, SCWK_ANSWER )
   IF $SCWK_ANSWER == 0 THEN
   _DEBUG_PRINT_WK( SCWK_ANSWER )
@@ -74,10 +120,11 @@ sub_postman_main:
 
   _BALLOONWIN_CLOSE()
 
+  //受け取れるか？チェック
 	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_ENABLE, SCWK_ANSWER )
 
   IF $SCWK_ANSWER == TRUE THEN
-      //受け取った！
+      //「受け取った！」
       _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OK_MSG, SCWK_ANSWER )
       _SYSWIN_MSG_DOWN( SCWK_ANSWER )
       _ME_PLAY( SEQ_ME_LVUP )
@@ -85,13 +132,14 @@ sub_postman_main:
       _ME_WAIT()
       _SYSWIN_CLOSE()
 
+      //受け取り処理を実行
       _POSTMAN_REQUEST( SCR_POSTMAN_REQ_RECEIVE, SCWK_ANSWER )
 
       _BALLOONWIN_TALKOBJ_MSG( msg_postman_05 ) //またのごりようをおまちしております
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
   ELSE
-      //受け取れなかった！
+      //「受け取れなかった！」
       _POSTMAN_REQUEST( SCR_POSTMAN_REQ_NG_MSG, SCWK_ANSWER )
       _SYSWIN_MSG_DOWN( SCWK_ANSWER )
       _LAST_KEYWAIT()
