@@ -50,7 +50,7 @@ _EVENT_DATA_END
 INIT_EVENT_START	ev_zone_c04
 	
 	//ギアステーション内階段降りる演出用にワークをリセット
-	$WK_OTHER_STATION_CONNECT = 0
+	$WK_OTHER_STATION_CONNECT = 1
 
 INIT_EVENT_END
 
