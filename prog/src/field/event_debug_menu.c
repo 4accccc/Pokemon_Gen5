@@ -492,7 +492,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
         {
           u32 idx = DebugMenu_GetQuickJumpIdx( QuickJumpCode );
           FLDMENUFUNC_DeleteMenu( work->menuFunc );
-          work->menuFunc  = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID,  &DebugMenuData, idx-4, 3 );
+          work->menuFunc  = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID,  &DebugMenuData, idx-4, 4 );
         }
 #endif
 
