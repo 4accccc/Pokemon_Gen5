@@ -484,6 +484,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 
   p_wk->p_sv    = SaveData_GetMysteryData( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata) );
 
+#if 0
 #ifdef DEBUG_SET_SAVEDATA
   MYSTERY_DEBUG_SetGiftData( &p_wk->data );
   { 
@@ -509,6 +510,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 #endif
   }
 #endif 
+#endif
 
   //グラフィック設定
 	p_wk->p_graphic	= MYSTERY_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, HEAPID_MYSTERYGIFT );

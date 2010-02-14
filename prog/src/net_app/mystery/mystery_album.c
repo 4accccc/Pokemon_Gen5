@@ -31,6 +31,7 @@
 //自分のモジュール
 #include "mystery_util.h"
 #include "net_app/mystery.h"
+#include "mystery_debug.h"
 
 //外部公開
 #include "mystery_album.h"
@@ -927,6 +928,15 @@ static void Mystery_Album_CreateDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front
           }
         }
       }
+
+      //日付BMPWINをクリア
+      { 
+        GFL_BMP_DATA  *p_dst  = GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[dst_idx] );
+        GFL_BMP_Clear( p_dst, 0 );
+        GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[dst_idx] );
+      }
+
+
     }
     else
     { 
@@ -944,18 +954,15 @@ static void Mystery_Album_CreateDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front
                 data.card_x + j, data.card_y + i, 1, 1, MYSTERY_ALBUM_THUMBNAIL_NOGETPOKE_PLT );
           }
         }
-
-        //日付を貼り付ける
-        { 
-          const GFL_BMP_DATA  *cp_src  = MYSTERY_CARD_DATA_GetBmp( p_src );
-          GFL_BMP_DATA  *p_dst  = GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[dst_idx] );
-          GFL_BMP_Copy( cp_src, p_dst );
-          GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[dst_idx] );
-
-        }
       }
 
-
+      //日付を貼り付ける
+      { 
+        const GFL_BMP_DATA  *cp_src  = MYSTERY_CARD_DATA_GetBmp( p_src );
+        GFL_BMP_DATA  *p_dst  = GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[dst_idx] );
+        GFL_BMP_Copy( cp_src, p_dst );
+        GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[dst_idx] );
+      }
 
       //アイコンを作成する
       //  日付のように、作成しておいて、設定するだけにしたかったのだが、
@@ -2020,6 +2027,12 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 #ifdef DEBUG_SAVE
       else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
       { 
+#ifdef DEBUG_SET_SAVEDATA
+        DOWNLOAD_GIFT_DATA data;
+        MYSTERY_DEBUG_SetGiftData( &data );
+        MYSTERYDATA_SetCardData( p_wk->setup.p_sv, &data );
+#endif //DEBUG_SET_SAVEDATA
+
         p_wk->is_change = TRUE;
         MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_End );
       }
