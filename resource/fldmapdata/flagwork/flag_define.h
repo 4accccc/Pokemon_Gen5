@@ -526,7 +526,7 @@
 #define FV_T01R0102_BALL00                 502 /* 0x01f6 自宅２階：ポケモン入手イベントのボール１ */
 #define FV_T01R0102_BALL01                 503 /* 0x01f7 自宅２階：ポケモン入手イベントのボール２ */
 #define FV_T01R0102_BALL02                 504 /* 0x01f8 自宅２階：ポケモン入手イベントのボール３ */
-#define FV_T01R0401_HAKASE                 505 /* 0x01f9 カノコタウン研究所：アララギ博士 */
+#define FV_T01R0401_HAKASE2                505 /* 0x01f9 カノコタウン研究所：アララギ博士(娘) */
 #define FV_T01R0401_RIVAL                  506 /* 0x01fa カノコタウン研究所：ライバル */
 #define FV_T01R0401_SUPPORT                507 /* 0x01fb カノコタウン研究所：サポート */
 #define FV_R01_HAKASE                      508 /* 0x01fc １番道路：アララギ博士 */
@@ -677,7 +677,7 @@
 		/* not used   653(0x028d) */
 #define FV_BSUBWAY_RECEIPT_PARTNER         654 /* 0x028e バトルサブウェイ、受付：パートナー */
 #define FV_D06R0101_HAKAI                  655 /* 0x028f 電気洞窟内のダークトリニティ３人 */
-		/* not used   656(0x0290) */
+#define FV_T01R0401_HAKASE1                656 /* 0x0290 カノコタウン研究所：博士（父） */
 		/* not used   657(0x0291) */
 		/* not used   658(0x0292) */
 		/* not used   659(0x0293) */
@@ -2379,7 +2379,7 @@
 #define SYS_FLAG_BIGFOUR_FIGHTWIN         2411 /* 0x096b 四天王(格闘)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
 #define SYS_FLAG_BIGFOUR_ESPWIN           2412 /* 0x096c 四天王(エスパー)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
 #define SYS_FLAG_PCNAME                   2413 /* 0x096d 「だれかのパソコン」→「○○○のパソコン」の表示切替フラグ */
-		/* not used  2414(0x096e) */
+#define SYS_FLAG_ZENKOKU_GET              2414 /* 0x096e 全国図鑑入手フラグ */
 		/* not used  2415(0x096f) */
 		/* not used  2416(0x0970) */
 		/* not used  2417(0x0971) */

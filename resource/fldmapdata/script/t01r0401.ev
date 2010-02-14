@@ -15,9 +15,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_scene_t01r0401_zukanget_01		//図鑑入手イベント
-_EVENT_DATA		ev_t01r0401_hakase2_01
+_EVENT_DATA		ev_scene_t01r0401_zukanget_01	//図鑑入手イベント
+_EVENT_DATA		ev_t01r0401_hakase2_01			//博士（娘）
 _EVENT_DATA		ev_bg_t01r0401_picture_01
+_EVENT_DATA		ev_t01r0401_hakase1_01			//博士（父）
 _EVENT_DATA_END
 
 
@@ -230,7 +231,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 //=====================フラグ操作========================//
 
 	//博士、サポート、ライバルのバニッシュフラグをセット
-	_FLAG_SET( FV_T01R0401_HAKASE )
+	_FLAG_SET( FV_T01R0401_HAKASE2 )
 	_FLAG_SET( FV_T01R0401_RIVAL )
 	_FLAG_SET( FV_T01R0401_SUPPORT )
 
@@ -288,6 +289,14 @@ _ANIME_LABEL	anm_stay_walk_u
 
 _ANIME_LABEL	anm_stay_walk_d
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -389,19 +398,93 @@ _ANIME_LABEL	anm_zukan_support_goaway_01
 
 
 /************************************************************/
-/*						アララギ博士						*/
+/*					アララギ博士（娘）						*/
 /************************************************************/
 EVENT_START   ev_t01r0401_hakase2_01
 	_TALK_OBJ_START()
 	
+	_PLAYER_NAME( 0 )
 	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase2_20 )
-	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
+		
+	//図鑑評価処理へ【仮】
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
 EVENT_END
 
 
+
 /************************************************************/
-/*						アララギ博士						*/
+/*						博士（父）							*/
+/************************************************************/
+EVENT_START   ev_t01r0401_hakase1_01
+	_TALK_OBJ_START()
+	
+	//全国図鑑入手済み？
+	IF FLAG_ON( SYS_FLAG_ZENKOKU_GET ) THEN
+		//全国図鑑入手済みなら 図鑑評価処理へ
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_05 )
+		_MSGWIN_CLOSE()
+		
+		//図鑑評価処理をコール【仮】
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+		
+	ELSE
+	//入手前
+		
+		//全国図鑑入手条件満たしている？
+		IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+			//満たしている
+			_PLAYER_NAME( 0 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_02 )
+			_MSGWIN_CLOSE()
+			
+			//博士：机の方を向いてから振り向く
+			_OBJ_ANIME( T01R0401_HAKASE1_01, anm_stay_walk_u )
+			_OBJ_ANIME_WAIT()
+			_TIME_WAIT( 8 )
+			_OBJ_ANIME( T01R0401_HAKASE1_01, anm_stay_walk_l )
+			_OBJ_ANIME_WAIT()
+			
+			//全国版にバージョンアップした！【仮】上下自動認識に変える
+			_ME_PLAY( SEQ_ME_KEYITEM )
+			_SYSWIN_MSG_DOWN( msg_t01r0401_hakase1_03 )
+			_ME_WAIT()
+			_MSGWIN_CLOSE()
+			
+			//========================================//
+			//全国図鑑入手フラグをセット
+			_FLAG_SET( SYS_FLAG_ZENKOKU_GET )
+			//========================================//
+			
+			//あらよっと！
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_04 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ELSE
+			//満たしていない
+			_PLAYER_NAME( 0 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_01 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ENDIF
+	
+	ENDIF
+	
+	
+EVENT_END
+
+/************************************************************/
+/*						写真たて							*/
 /************************************************************/
 EVENT_START   ev_bg_t01r0401_picture_01
 	_TALK_START_SE_PLAY()
