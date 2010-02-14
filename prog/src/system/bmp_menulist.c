@@ -129,7 +129,7 @@ BMPMENULIST_WORK * BmpMenuList_Set(
   }
 
   //カーソルの位置がラベルでなくなるまで移動
-  while(lw->hed.list[lw->lp + lw->cp].param == BMPMENULIST_RABEL)
+  while(lw->hed.list[lw->lp + lw->cp].param == BMPMENULIST_LABEL)
   { 
     lw->cp++;
   }
