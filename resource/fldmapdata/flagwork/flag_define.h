@@ -678,7 +678,7 @@
 #define FV_BSUBWAY_RECEIPT_PARTNER         654 /* 0x028e バトルサブウェイ、受付：パートナー */
 #define FV_D06R0101_HAKAI                  655 /* 0x028f 電気洞窟内のダークトリニティ３人 */
 #define FV_T01R0401_HAKASE1                656 /* 0x0290 カノコタウン研究所：博士（父） */
-		/* not used   657(0x0291) */
+#define FV_POSTMAN                         657 /* 0x0291 不思議な贈り物配達員 */
 		/* not used   658(0x0292) */
 		/* not used   659(0x0293) */
 		/* not used   660(0x0294) */
