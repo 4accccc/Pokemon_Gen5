@@ -318,7 +318,8 @@ FLD_G3DOBJ_OBJIDX MMDL_G3DOBJCONT_AddObject( MMDL *mmdl, u16 code )
     residx = rescode_AddResource( mmdlsys, objcont, code );
   }
   
-  objidx = FLD_G3DOBJ_CTRL_AddObject( objcont->g3dobj_ctrl, residx, 0 );
+  objidx = FLD_G3DOBJ_CTRL_AddObject(
+      objcont->g3dobj_ctrl, residx, 0, NULL );
   return( objidx );
 }
 

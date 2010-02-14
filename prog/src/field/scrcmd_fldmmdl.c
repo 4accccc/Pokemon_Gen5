@@ -212,6 +212,27 @@ VMCMD_RESULT EvCmdMoveCodeGet( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * 動作コード変更
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMoveCodeChange( VMHANDLE *core, void *wk )
+{
+  MMDL *mmdl;
+  SCRCMD_WORK *work = wk;
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  u16 id = SCRCMD_GetVMWorkValue( core, work );
+  u16 code = SCRCMD_GetVMWorkValue( core, work );
+  
+  mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+  GF_ASSERT( mmdl != NULL && "SCRCMD GET MOVECODE NON OBJ" );
+  MMDL_ChangeMoveCode( mmdl, code );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * OBJの位置情報取得
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT

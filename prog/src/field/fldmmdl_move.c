@@ -133,12 +133,10 @@ static void MMdl_MapAttrBiriBiri_2( MMDL *mmdl, ATTRDATA *data );
 static void MMdl_MapAttrSEProc_1( MMDL *mmdl, ATTRDATA *data );
 
 static BOOL MMdl_HitCheckMoveAttr(
-  const MMDL * mmdl, const VecFx32 pos );
+  const MMDL * mmdl, u16 dir, const VecFx32 pos );
 
-#ifndef MMDL_PL_NULL
-static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MAPATTR attr );
-static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MAPATTR attr );
-#endif
+static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MAPATTR_VALUE val );
+static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MAPATTR_VALUE val );
 
 #if 0
 static BOOL MMdl_GetMapGridInfo(
@@ -1249,7 +1247,7 @@ u32 MMDL_HitCheckMove(
     u32 attr;
     fx32 height;
     
-    if( MMdl_HitCheckMoveAttr(mmdl,pos) == TRUE ){
+    if( MMdl_HitCheckMoveAttr(mmdl,dir,pos) == TRUE ){
       ret |= MMDL_MOVEHITBIT_ATTR;
     }
 
@@ -1633,11 +1631,67 @@ BOOL MMDL_HitCheckMoveLimit( const MMDL * mmdl, s16 x, s16 z )
 /**
  * フィールド動作モデルアトリビュートヒットチェック
  * @param  mmdl  MMDL * 
- * @param  pos    移動先X座標,現在位置のY,移動先Z座標
  * @param  dir    移動方向 DIR_UP等
+ * @param  pos    移動先X座標,現在位置のY,移動先Z座標
  * @retval  int    TRUE=移動不可アトリビュート
  */
 //--------------------------------------------------------------
+static BOOL MMdl_HitCheckMoveAttr(
+  const MMDL * mmdl, u16 dir, const VecFx32 pos )
+{
+  if( MMDL_CheckStatusBitAttrGetOFF(mmdl) == FALSE ){
+    BOOL first;
+    MAPATTR attr,n_attr;
+    VecFx32 pos0,pos1;
+    u8 x0,x1,z0,z1;
+    
+    first = FALSE;
+    x1 = MMDL_GetGridSizeX( mmdl );
+    z1 = MMDL_GetGridSizeZ( mmdl );
+    pos0 = pos;
+    
+    for( z0 = 0; z0 < z1; z0++, pos0.z -= GRID_FX32 )
+    {
+      for( x0 = 0, pos1 = pos0; x0 < x1; x0++, pos1.x += GRID_FX32 )
+      {
+        if( MMDL_GetMapPosAttr(mmdl,&pos1,&attr) == FALSE )
+        {
+          return( TRUE );
+        }
+        
+        if( MAPATTR_GetHitchFlag(attr) == TRUE )
+        {
+          return( TRUE );
+        }
+        
+        if( first == FALSE ){
+          first = TRUE;
+          n_attr = attr;
+        }
+      }
+    }
+    
+    {
+      MAPATTR_VALUE val = MAPATTR_GetAttrValue( MMDL_GetMapAttr(mmdl) );
+      
+      if( DATA_HitCheckAttr_Now[dir](val) == TRUE ){
+        return( TRUE );
+      }
+
+      val = MAPATTR_GetAttrValue( n_attr );
+      
+      if( DATA_HitCheckAttr_Next[dir](val) == TRUE ){
+        return( TRUE );
+      }
+    }
+
+    return( FALSE );
+  }
+  
+  return( TRUE ); //移動不可アトリビュート
+}
+
+#if 0
 static BOOL MMdl_HitCheckMoveAttr(
   const MMDL * mmdl, const VecFx32 pos )
 {
@@ -1671,30 +1725,29 @@ static BOOL MMdl_HitCheckMoveAttr(
   
   return( TRUE ); //移動不可アトリビュート
 }
+#endif
 
 //--------------------------------------------------------------
 ///  現在位置アトリビュートから判定する移動制御アトリビュートチェック関数
 //--------------------------------------------------------------
-#ifndef MMDL_PL_NULL
-static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MAPATTR attr ) =
+static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MAPATTR_VALUE val ) =
 {
-  MAPATTR_IsBadMoveUpCheck,
-  MAPATTR_IsBadMoveDownCheck,
-  MAPATTR_IsBadMoveLeftCheck,
-  MAPATTR_IsBadMoveRightCheck,
+  MAPATTR_VALUE_CheckNotMoveUp,
+  MAPATTR_VALUE_CheckNotMoveDown,
+  MAPATTR_VALUE_CheckNotMoveLeft,
+  MAPATTR_VALUE_CheckNotMoveRight,
 };
 
 //--------------------------------------------------------------
 ///  未来位置アトリビュートから判定する移動制御アトリビュートチェック関数
 //--------------------------------------------------------------
-static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MAPATTR attr ) =
+static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MAPATTR_VALUE val ) =
 {
-  MAPATTR_IsBadMoveDownCheck,
-  MAPATTR_IsBadMoveUpCheck,
-  MAPATTR_IsBadMoveRightCheck,
-  MAPATTR_IsBadMoveLeftCheck,
+  MAPATTR_VALUE_CheckNotMoveDown,
+  MAPATTR_VALUE_CheckNotMoveUp,
+  MAPATTR_VALUE_CheckNotMoveRight,
+  MAPATTR_VALUE_CheckNotMoveLeft,
 };
-#endif
 
 //--------------------------------------------------------------
 /**

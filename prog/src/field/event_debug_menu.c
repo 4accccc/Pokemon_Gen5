@@ -4678,6 +4678,12 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_BSubway =
   0,    //表示サイズY キャラ単位
 };
 
+enum
+{
+  DEBUG_BSWAY_DEMO_HOME = 0xfff0,
+  DEBUG_BSWAY_DEMO_HOME_LAST,
+};
+
 static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
 {
   { DEBUG_FIELD_BSW_01, (void*)ZONE_ID_C04R0102 },
@@ -4689,6 +4695,8 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   { DEBUG_FIELD_BSW_07, (void*)ZONE_ID_C04R0107 },
   { DEBUG_FIELD_BSW_08, (void*)ZONE_ID_C04R0110 },
   { DEBUG_FIELD_BSW_09, (void*)ZONE_ID_C04R0111 },
+  { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_DEMO_HOME },
+  { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_DEMO_HOME_LAST },
 };
 
 #define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
@@ -4738,6 +4746,15 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
         return( GMEVENT_RES_FINISH );
       }
       
+      switch( ret ){
+      case DEBUG_BSWAY_DEMO_HOME:
+        ret = ZONE_ID_C04R0111;
+        break;
+      case DEBUG_BSWAY_DEMO_HOME_LAST:
+        ret = ZONE_ID_C04R0111;
+        break;
+      }
+
       GMEVENT_CallEvent( event, DEBUG_EVENT_QuickChangeMapDefaultPos(
           work->gmSys, work->fieldWork, ret ) );
       (*seq)++;

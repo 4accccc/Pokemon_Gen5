@@ -4367,6 +4367,24 @@ void MMDL_ChangeMoveParam( MMDL *mmdl, const MMDL_HEADER *head )
 
 //--------------------------------------------------------------
 /**
+ * MMDL 動作コードヘッダーから座標タイプ、座標、コードを変更
+ * @param  mmdl  MMDL *
+ * @param  code MV_RND等
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+void MMDL_ChangeMoveCode( MMDL *mmdl, u16 code )
+{
+  const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
+  
+  MMDL_CallMoveDeleteProc( mmdl );
+  MMDL_SetMoveCode( mmdl, code );
+  mmdl_InitCallMoveProcWork( mmdl );
+  mmdl_InitMoveProc( fos, mmdl );
+}
+
+//--------------------------------------------------------------
+/**
  * MMDL 描画初期化に行う処理纏め
  * @param  mmdl  MMDL *
  * @retval  nothing

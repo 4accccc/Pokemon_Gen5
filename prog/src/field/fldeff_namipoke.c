@@ -368,7 +368,7 @@ static void namipokeTask_Init( FLDEFF_TASK *task, void *wk )
       work->head.eff_namipoke->fectrl );
   
   work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
-      obj_ctrl, work->head.eff_namipoke->res_idx_poke, 0 );
+      obj_ctrl, work->head.eff_namipoke->res_idx_poke, 0, NULL );
   
   work->joint = FLDEFF_TASK_GetAddParam( task );
   work->shake_offs = FX32_ONE;
@@ -378,7 +378,7 @@ static void namipokeTask_Init( FLDEFF_TASK *task, void *wk )
     RIPPLE_WORK *rip = &work->ripple_work;
     
     rip->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
-        obj_ctrl, work->head.eff_namipoke->res_idx_ripple, 0 );
+        obj_ctrl, work->head.eff_namipoke->res_idx_ripple, 0, NULL );
     
     rip->vanish_flag = TRUE;
     rip->dir = DIR_NOT;
@@ -838,23 +838,23 @@ static void npoke_effTask_Init( FLDEFF_TASK *task, void *wk )
   switch( work->head.type ){
   case NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH:
     work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
-        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_land, 0 );
+        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_land, 0, NULL );
     break;
   case NAMIPOKE_EFFECT_TYPE_TAKI_START_F:
     work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
-        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_start_f, 0 );
+        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_start_f, 0, NULL );
     break;
   case NAMIPOKE_EFFECT_TYPE_TAKI_LOOP_F:
     work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
-        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_loop_f, 0 );
+        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_loop_f, 0, NULL );
     break;
   case NAMIPOKE_EFFECT_TYPE_TAKI_START_S:
     work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
-        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_start_s, 0 );
+        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_start_s, 0, NULL );
     break;
   case NAMIPOKE_EFFECT_TYPE_TAKI_LOOP_S:
     work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
-        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_loop_s, 0 );
+        obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_loop_s, 0, NULL );
     break;
   }
   

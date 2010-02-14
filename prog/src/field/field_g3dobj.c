@@ -86,7 +86,7 @@ static void setResource(
 static void delResource( FLD_G3DOBJ_RES *res );
 static void setObject( FLD_G3DOBJ *obj,
     FLD_G3DOBJ_RES *res, u32 resIdx, u32 mdlIdx, HEAPID heapID,
-    BOOL init_status );
+    const VecFx32 *pos, BOOL init_status );
 static void delObject( FLD_G3DOBJ *obj, const FLD_G3DOBJ_RES *res );
 
 //======================================================================
@@ -190,7 +190,7 @@ void FLD_G3DOBJ_CTRL_Trans( FLD_G3DOBJ_CTRL *ctrl )
       if( obj->useFlag == OBJ_USE_RES_WAIT ){
         KAGAYA_Printf( "FLD G3DOBJ TransObject Index %xH\n", obj->resIdx );
         setObject( obj, &res[obj->resIdx],
-            obj->resIdx, obj->mdlIdx, ctrl->heapID, FALSE );
+            obj->resIdx, obj->mdlIdx, ctrl->heapID, NULL, FALSE );
       }
       
       obj++;
@@ -237,7 +237,7 @@ void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl )
  * @retval u16 登録されたリソースインデックス
  */
 //--------------------------------------------------------------
-u16 FLD_G3DOBJ_CTRL_CreateResource( FLD_G3DOBJ_CTRL *ctrl,
+FLD_G3DOBJ_RESIDX FLD_G3DOBJ_CTRL_CreateResource( FLD_G3DOBJ_CTRL *ctrl,
     const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag )
 {
   u16 i;
@@ -262,7 +262,8 @@ u16 FLD_G3DOBJ_CTRL_CreateResource( FLD_G3DOBJ_CTRL *ctrl,
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLD_G3DOBJ_CTRL_DeleteResource( FLD_G3DOBJ_CTRL *ctrl, u16 idx )
+void FLD_G3DOBJ_CTRL_DeleteResource(
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_RESIDX idx )
 {
   FLD_G3DOBJ_RES *res = &ctrl->pResTbl[idx];
   GF_ASSERT( res->pResMdl != NULL );
@@ -275,11 +276,12 @@ void FLD_G3DOBJ_CTRL_DeleteResource( FLD_G3DOBJ_CTRL *ctrl, u16 idx )
  * @param ctrl FLD_G3DOBJ_CTRL
  * @param resIdx 使用するリソースインデックス
  * @param mdlIdx resIdxで登録されているモデルで使用するインデックス
+ * @param pos 表示する座標 NULL=無視。
  * @retval u16 追加されたOBJインデックス
  */
 //--------------------------------------------------------------
-u16 FLD_G3DOBJ_CTRL_AddObject(
-    FLD_G3DOBJ_CTRL *ctrl, const u16 resIdx, u16 mdlIdx )
+FLD_G3DOBJ_OBJIDX FLD_G3DOBJ_CTRL_AddObject( FLD_G3DOBJ_CTRL *ctrl,
+    const u16 resIdx, u16 mdlIdx, const VecFx32 *pos )
 {
   u16 i;
   FLD_G3DOBJ *obj = ctrl->pObjTbl;
@@ -298,9 +300,14 @@ u16 FLD_G3DOBJ_CTRL_AddObject(
         obj->status.scale.x = FX32_ONE;
         obj->status.scale.y = FX32_ONE;
         obj->status.scale.z = FX32_ONE;
+
+        if( pos != NULL ){
+          obj->status.trans = *pos;
+        }
+        
         MTX_Identity33( &obj->status.rotate );
       }else{
-        setObject( obj, res, resIdx, mdlIdx, ctrl->heapID, TRUE );
+        setObject( obj, res, resIdx, mdlIdx, ctrl->heapID, pos, TRUE );
       }
       return( i );
     }
@@ -318,7 +325,8 @@ u16 FLD_G3DOBJ_CTRL_AddObject(
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLD_G3DOBJ_CTRL_DeleteObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx )
+void FLD_G3DOBJ_CTRL_DeleteObject(
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx )
 {
   u16 flag;
   FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
@@ -341,7 +349,7 @@ void FLD_G3DOBJ_CTRL_DeleteObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx )
  */
 //--------------------------------------------------------------
 GFL_G3D_OBJSTATUS * FLD_G3DOBJ_CTRL_GetObjStatus(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx )
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx )
 {
   FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
   GF_ASSERT( obj->useFlag != OBJ_USE_FALSE );
@@ -358,7 +366,7 @@ GFL_G3D_OBJSTATUS * FLD_G3DOBJ_CTRL_GetObjStatus(
  */
 //--------------------------------------------------------------
 void FLD_G3DOBJ_CTRL_SetObjPos(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx, const VecFx32 *pos )
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, const VecFx32 *pos )
 {
   FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
   GF_ASSERT( obj->useFlag != OBJ_USE_FALSE );
@@ -376,7 +384,7 @@ void FLD_G3DOBJ_CTRL_SetObjPos(
  */
 //--------------------------------------------------------------
 void FLD_G3DOBJ_CTRL_SetObjCullingFlag(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx, BOOL flag )
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, BOOL flag )
 {
   FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
   GF_ASSERT( obj->useFlag != OBJ_USE_FALSE );
@@ -393,7 +401,7 @@ void FLD_G3DOBJ_CTRL_SetObjCullingFlag(
  */
 //--------------------------------------------------------------
 void FLD_G3DOBJ_CTRL_SetObjVanishFlag(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx, BOOL flag )
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, BOOL flag )
 {
   FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
   GF_ASSERT( obj->useFlag != OBJ_USE_FALSE );
@@ -410,7 +418,7 @@ void FLD_G3DOBJ_CTRL_SetObjVanishFlag(
  */
 //--------------------------------------------------------------
 BOOL FLD_G3DOBJ_CTRL_AnimeObject(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx, fx32 frame )
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, fx32 frame )
 {
   BOOL ret = FALSE;
   FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
@@ -442,7 +450,7 @@ BOOL FLD_G3DOBJ_CTRL_AnimeObject(
  */
 //--------------------------------------------------------------
 BOOL FLD_G3DOBJ_CTRL_LoopAnimeObject(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx, fx32 frame )
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, fx32 frame )
 {
   BOOL ret = FALSE;
   FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
@@ -584,14 +592,12 @@ static void delResource( FLD_G3DOBJ_RES *res )
 //--------------------------------------------------------------
 static void setObject( FLD_G3DOBJ *obj,
     FLD_G3DOBJ_RES *res, u32 resIdx, u32 mdlIdx, HEAPID heapID,
-    BOOL init_status )
+    const VecFx32 *pos, BOOL init_status )
 {
   int i;
   GFL_G3D_RND *pRnd;
   GFL_G3D_RES *pResTex = NULL;
   
-  obj->useFlag = OBJ_USE_TRUE;
-  obj->cullingFlag = TRUE;
   obj->resIdx = resIdx;
   obj->mdlIdx = mdlIdx;
   
@@ -623,12 +629,19 @@ static void setObject( FLD_G3DOBJ *obj,
     }
   }
   
+  if( pos != NULL ){
+    obj->status.trans = *pos;
+  }
+  
   if( init_status ){
+    obj->cullingFlag = TRUE;
     obj->status.scale.x = FX32_ONE;
     obj->status.scale.y = FX32_ONE;
     obj->status.scale.z = FX32_ONE;
     MTX_Identity33( &obj->status.rotate );
   }
+  
+  obj->useFlag = OBJ_USE_TRUE; //設定途中に描画が呼ばれても反応しない
 }
 
 //--------------------------------------------------------------

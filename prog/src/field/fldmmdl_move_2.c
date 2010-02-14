@@ -15,6 +15,11 @@
 #include "field_encount.h"  //event_trainer_eye.h
 #include "event_trainer_eye.h"
 
+#include "fieldmap.h"
+#include "field_effect.h"
+
+#include "fldeff_hide.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -88,9 +93,7 @@ typedef struct
   u8 hide_type;
   u8 pulloff_flag;
   u8 dmy;
-  #ifndef MMDL_PL_NULL
-  EOA_PTR eoa_hide;
-  #endif
+  FLDEFF_TASK *task_hide;
 }MV_HIDE_WORK;
 
 #define MV_HIDE_WORK_SIZE (sizeof(MV_HIDE_WORK))
@@ -755,21 +758,19 @@ static int PairTr_OyaCheckAcmdSet( MMDL * mmdl, MV_TR_PAIR_WORK *work )
  * @retval  nothing
  */
 //--------------------------------------------------------------
-#ifndef MMDL_PL_NULL
-static void MMdl_MoveHide_Init( MMDL * mmdl, HIDETYPE type )
+static void MMdl_MoveHide_Init( MMDL * mmdl, HIDE_TYPE type )
 {
   MV_HIDE_WORK *work = MMDL_InitMoveProcWork( mmdl, MV_HIDE_WORK_SIZE );
   work->hide_type = type;
   MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
   MMDL_OffMoveBitMove( mmdl );
-  MMDL_OnStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );
+  MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
   
-  {                              //高さ落とす
+  { //高さ落とす
     VecFx32 offs = { 0, NUM_FX32(-32), 0 };
     MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
   }
 }
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -780,9 +781,7 @@ static void MMdl_MoveHide_Init( MMDL * mmdl, HIDETYPE type )
 //--------------------------------------------------------------
 void MMDL_MoveHideSnow_Init( MMDL * mmdl )
 {
-#ifndef MMDL_PL_NULL
   MMdl_MoveHide_Init( mmdl, HIDE_SNOW );
-#endif
 }
 
 //--------------------------------------------------------------
@@ -794,9 +793,7 @@ void MMDL_MoveHideSnow_Init( MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_MoveHideSand_Init( MMDL * mmdl )
 {
-#ifndef MMDL_PL_NULL
   MMdl_MoveHide_Init( mmdl, HIDE_SAND );
-#endif
 }
 
 //--------------------------------------------------------------
@@ -808,9 +805,7 @@ void MMDL_MoveHideSand_Init( MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_MoveHideGround_Init( MMDL * mmdl )
 {
-#ifndef MMDL_PL_NULL
   MMdl_MoveHide_Init( mmdl, HIDE_GROUND );
-#endif
 }
 
 //--------------------------------------------------------------
@@ -822,9 +817,7 @@ void MMDL_MoveHideGround_Init( MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_MoveHideKusa_Init( MMDL * mmdl )
 {
-#ifndef MMDL_PL_NULL
   MMdl_MoveHide_Init( mmdl, HIDE_GRASS );
-#endif
 }
 
 //--------------------------------------------------------------
@@ -849,10 +842,8 @@ void MMDL_MoveHide_Move( MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_MoveHide_Delete( MMDL * mmdl )
 {
-#ifndef MMDL_PL_NULL
-  EOA_PTR eoa = MMDL_MoveHideEoaPtrGet( mmdl );
-  if( eoa != NULL ){ FE_EoaDelete( eoa ); }
-#endif
+  FLDEFF_TASK *task = MMDL_GetMoveHideEffectTask( mmdl );
+  if( task != NULL ){ FLDEFF_TASK_CallDelete( task ); }
 }
 
 //--------------------------------------------------------------
@@ -864,25 +855,39 @@ void MMDL_MoveHide_Delete( MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_MoveHide_Return( MMDL * mmdl )
 {
-#ifndef MMDL_PL_NULL
   MV_HIDE_WORK *work = MMDL_GetMoveProcWork( mmdl );
   
   work->seq_no = 0;
   
-  MMDL_MoveHideEoaPtrSet( mmdl, NULL );
+  MMDL_SetMoveHideEffectTask( mmdl, NULL );
   
   if( work->pulloff_flag == FALSE ){
     VecFx32 offs = { 0, NUM_FX32(-32), 0 };
     MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
-    //add pl 
-    MMDL_OnStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );
+    MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
   }
-#endif
 }
 
 //======================================================================
 //  MV_HIDE 動作
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * 隠れ蓑エフェクトセット
+ * @param mmdl  MMDL*
+ * @param type HIDE_TYPE
+ * @retval FLDEFF_TASK*
+ */
+//--------------------------------------------------------------
+static FLDEFF_TASK * set_HideEffect( MMDL *mmdl, HIDE_TYPE type )
+{
+  MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+  FIELDMAP_WORK *fieldmap = MMDLSYS_GetFieldMapWork( mmdlsys );
+  FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
+  FLDEFF_TASK *eff_task = FLDEFF_HIDE_SetMMdl( fectrl, mmdl, type );
+  return( eff_task );
+}
+
 //--------------------------------------------------------------
 /**
  * hide 0
@@ -893,17 +898,15 @@ void MMDL_MoveHide_Return( MMDL * mmdl )
 //--------------------------------------------------------------
 static int HideMove_Init( MMDL * mmdl, MV_HIDE_WORK *work )
 {
-#ifndef MMDL_PL_NULL
   if( work->pulloff_flag == FALSE ){
-    EOA_PTR eoa = FE_mmdlHide_Add( mmdl, work->hide_type );
-    MMDL_MoveHideEoaPtrSet( mmdl, eoa );
+    FLDEFF_TASK *eff_task = set_HideEffect( mmdl, work->hide_type );
+    MMDL_SetMoveHideEffectTask( mmdl, eff_task );
   }
   
   MMDL_OffMoveBitMove( mmdl );
   MMDL_OffMoveBitMoveEnd( mmdl );
   
   work->seq_no++;
-#endif
   return( FALSE );
 }
 
@@ -917,21 +920,19 @@ static int HideMove_Init( MMDL * mmdl, MV_HIDE_WORK *work )
 //--------------------------------------------------------------
 static int HideMove_Move( MMDL * mmdl, MV_HIDE_WORK *work )
 {
-#ifndef MMDL_PL_NULL
   if( work->pulloff_flag == FALSE ){
-    EOA_PTR eoa = MMDL_MoveHideEoaPtrGet( mmdl );
-  
-    if( eoa == NULL ){ 
+    FLDEFF_TASK *eff_task = MMDL_GetMoveHideEffectTask( mmdl );
+    
+    if( eff_task == NULL ){ 
       if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-        eoa = FE_mmdlHide_Add( mmdl, work->hide_type );
-        MMDL_MoveHideEoaPtrSet( mmdl, eoa );
+        eff_task = set_HideEffect( mmdl, work->hide_type );
+        MMDL_SetMoveHideEffectTask( mmdl, eff_task );
       }
     }
     
-    //add pl 常に影を消す
-    MMDL_OnStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );
+    MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH ); //常に影を消す
   }
-#endif
+  
   return( FALSE );
 }
 
@@ -949,35 +950,31 @@ static int (* const DATA_HideMoveTbl[])( MMDL * mmdl, MV_HIDE_WORK *work ) =
 //======================================================================
 //--------------------------------------------------------------
 /**
- * MV_HIDE 隠れ蓑EOA_PTRセット
+ * MV_HIDE 隠れ蓑FLDEFF_TASKセット
  * @param  mmdl  MMDL *
- * @param  eoa    EOA_PTR
+ * @param  eoa    FLDEFF_TASK
  * @retval  nothing
  */
 //--------------------------------------------------------------
-#ifndef MMDL_PL_NULL
-void MMDL_MoveHideEoaPtrSet( MMDL * mmdl, EOA_PTR eoa )
+void MMDL_SetMoveHideEffectTask( MMDL * mmdl, FLDEFF_TASK *task )
 {
   MV_HIDE_WORK *work = MMDL_GetMoveProcWork( mmdl );
-  work->eoa_hide = eoa;
+  work->task_hide = task;
 }
-#endif
 
 //--------------------------------------------------------------
 /**
- * MV_HIDE 隠れ蓑EOA_PTR取得
+ * MV_HIDE 隠れ蓑FLDEFF_TASK取得
  * @param  mmdl  MMDL *
- * @param  eoa    EOA_PTR
+ * @param  eoa    FLDEFF_TASK
  * @retval  nothing
  */
 //--------------------------------------------------------------
-#ifndef MMDL_PL_NULL
-EOA_PTR MMDL_MoveHideEoaPtrGet( MMDL * mmdl )
+FLDEFF_TASK * MMDL_GetMoveHideEffectTask( MMDL * mmdl )
 {
   MV_HIDE_WORK *work = MMDL_GetMoveProcWork( mmdl );
-  return( work->eoa_hide );
+  return( work->task_hide );
 }
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -1246,7 +1243,7 @@ static int CopyMove_CmdSet( MMDL * mmdl, MV_COPY_WORK *work )
   int ret;
   MMDL *jiki = MMDLSYS_SearchMMdlPlayer( MMDL_GetMMdlSys(mmdl) );
   u16 dir = MMDL_GetDirMove( jiki );
-#ifndef MMDL_PL_NULL
+#ifndef MMDL_PL_NULL //wb 自機側の対応が必要
   u32 type = Player_AcmdTypeGet( fsys->player );
   
   switch( type ){

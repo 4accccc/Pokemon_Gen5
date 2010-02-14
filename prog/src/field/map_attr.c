@@ -892,3 +892,64 @@ BOOL MAPATTR_VALUE_CheckUpDownFloor( const MAPATTR_VALUE val )
 {
   return ( val == MATTR_UPDOWN_FLOOR );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　壁、上方向へ移動不可
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckNotMoveUp( const MAPATTR_VALUE val )
+{
+  if( val == MATTR_NMOVE_UP || val == MATTR_NMOVE_LU || val == MATTR_NMOVE_RU ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　壁、下方向へ移動不可
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckNotMoveDown( const MAPATTR_VALUE val )
+{
+  if( val == MATTR_NMOVE_DOWN || val == MATTR_NMOVE_LD || val == MATTR_NMOVE_RD ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　壁、左方向へ移動不可
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckNotMoveLeft( const MAPATTR_VALUE val )
+{
+  if( val == MATTR_NMOVE_LEFT || val == MATTR_NMOVE_LU || val == MATTR_NMOVE_LD ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　壁、右方向へ移動不可
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckNotMoveRight( const MAPATTR_VALUE val )
+{
+  if( val == MATTR_NMOVE_RIGHT || val == MATTR_NMOVE_RU || val == MATTR_NMOVE_RD ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+

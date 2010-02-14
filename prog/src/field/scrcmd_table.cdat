@@ -218,7 +218,7 @@
   DEF_CMD( EvCmdGetObjID, EV_SEQ_GET_OBJID )
   DEF_CMD( EvCmdPlayerRailLocationGet, EV_SEQ_GET_PLAYER_RAIL_LOC )
   DEF_CMD( EvCmdObjRailLocationGet, EV_SEQ_GET_OBJ_RAIL_LOC )
-  NO_CMD()
+  DEF_CMD( EvCmdMoveCodeChange, EV_SEQ_MOVE_CODE_CHANGE )
 
   //動作モデル　イベント関連
   DEF_CMD( EvCmdObjTurn, EV_SEQ_OBJ_TURN )

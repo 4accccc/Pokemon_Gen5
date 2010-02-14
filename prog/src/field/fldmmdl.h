@@ -22,6 +22,7 @@
 #include "field_nogrid_mapper.h"
 #include "eventwork.h"
 #include "map_attr.h"
+#include "field_effect.h"
 
 #include "arc/fieldmap/fldmmdl_objcode.h"
 #include "fldmmdl_code.h"
@@ -960,6 +961,7 @@ extern void MMDL_InitPosition(
 extern void MMDL_InitGridPosition(
     MMDL * mmdl, s16 gx, s16 gy, s16 gz, u16 dir );
 extern void MMDL_ChangeMoveParam( MMDL *mmdl, const MMDL_HEADER *head );
+extern void MMDL_ChangeMoveCode( MMDL *mmdl, u16 code );
 extern void MMDL_ChangeOBJID( MMDL * mmdl, u16 id );
 extern void MMDL_InitCheckSameData(
     const MMDL *mmdl, MMDL_CHECKSAME_DATA *outData );
@@ -1106,12 +1108,9 @@ extern int MMDL_MoveSub( MMDL * mmdl );
 //--------------------------------------------------------------
 //	fldmmdl_move_2.c
 //--------------------------------------------------------------
+extern void MMDL_SetMoveHideEffectTask( MMDL * mmdl, FLDEFF_TASK *task );
+extern FLDEFF_TASK * MMDL_GetMoveHideEffectTask( MMDL * mmdl );
 extern void MMDL_MoveHidePullOffFlagSet( MMDL * mmdl );
-
-#ifndef MMDL_PL_NULL
-extern void MMDL_MoveHideEoaPtrSet( MMDL * mmdl, EOA_PTR eoa );
-extern EOA_PTR MMDL_MoveHideEoaPtrGet( MMDL * mmdl );
-#endif
 
 //--------------------------------------------------------------
 //	fldmmdl_draw.c

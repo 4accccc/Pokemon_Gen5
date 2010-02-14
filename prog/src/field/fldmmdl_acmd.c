@@ -2966,13 +2966,13 @@ typedef struct
 //--------------------------------------------------------------
 static int AC_HidePullOFF_0( MMDL * mmdl )
 {
-	AC_HIDE_PULLOFF_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_HIDE_PULLOFF_WORK_SIZE );
+	AC_HIDE_PULLOFF_WORK *work;
+
+  work = MMDL_InitMoveCmdWork( mmdl, AC_HIDE_PULLOFF_WORK_SIZE );
 	
 	{
-#if 0
-		EOA_PTR eoa = MMDL_MoveHideEoaPtrGet( mmdl );
-		if( eoa != NULL ){ EOA_Delete( eoa ); }
-#endif
+		FLDEFF_TASK *task = MMDL_GetMoveHideEffectTask( mmdl );
+		if( task != NULL ){ FLDEFF_TASK_CallDelete( task ); }
 	}
 	
 	{
@@ -2980,7 +2980,7 @@ static int AC_HidePullOFF_0( MMDL * mmdl )
 		MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	}
 	
-#if 0
+#if 0 //‰B‚ê–ª“y‰Œ
 	FE_mmdlHKemuri_Add( mmdl );
 #endif
 
@@ -3017,7 +3017,9 @@ static int AC_HidePullOFF_1( MMDL * mmdl )
 	MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	
 	MMDL_OnMoveBit( mmdl,
-			MMDL_MOVEBIT_MOVE_END | MMDL_MOVEBIT_JUMP_END | MMDL_MOVEBIT_ACMD_END );
+			MMDL_MOVEBIT_MOVE_END | 
+      MMDL_MOVEBIT_JUMP_END | 
+      MMDL_MOVEBIT_ACMD_END );
 	
 	MMDL_MoveHidePullOffFlagSet( mmdl );
 	MMDL_IncAcmdSeq( mmdl );

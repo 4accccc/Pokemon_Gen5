@@ -641,10 +641,7 @@ static int eyeMeetMove_GyoeWait( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_HidePullOFFSet( EV_EYEMEET_MOVE_WORK *work )
 {
-#if 0 //pl null
-  FieldOBJ_AcmdSet( work->fldobj, AC_HIDE_PULLOFF );
-#else //wb kari
-#endif
+  MMDL_SetAcmd( work->mmdl, AC_HIDE_PULLOFF );
   work->seq_no = SEQNO_TRMOVE_HIDE_PULLOFF_WAIT;
   return( FALSE );
 }
@@ -658,13 +655,9 @@ static int eyeMeetMove_HidePullOFFSet( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_HidePullOFFWait( EV_EYEMEET_MOVE_WORK *work )
 {
-#if 0 //pl null
-  if( FieldOBJ_AcmdEndCheck(work->fldobj) == TRUE ){
+  if( MMDL_CheckEndAcmd(work->mmdl) == TRUE ){
     work->seq_no = SEQNO_TRMOVE_GYOE_END_WAIT;
   }
-#else //wb kari
-  work->seq_no = SEQNO_TRMOVE_GYOE_END_WAIT;
-#endif
   return( FALSE );
 }
 

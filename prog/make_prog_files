@@ -611,7 +611,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/united_nations.c \
         field/scrcmd_un.c \
         field/fldeff_btrain.c \
-        field/field_gimmick_bsubway.c
+        field/field_gimmick_bsubway.c \
+        field/fldeff_hide.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

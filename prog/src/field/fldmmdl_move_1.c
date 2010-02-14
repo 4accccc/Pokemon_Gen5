@@ -42,9 +42,9 @@ static void SubMoveSpinStop_Init( MMDL * fmmdl );
 static int SubMoveSpinStop_StartCheck( MMDL * fmmdl );
 static int SubMoveSpinStop_Move( MMDL * fmmdl );
 
-void (* const DATA_MMdl_EventTypeInitProcTbl[])( MMDL * );
-int (* const DATA_MMdl_EventTypeStartCheckProcTbl[])( MMDL * );
-int (* const DATA_MMdl_EventTypeMoveProcTbl[])( MMDL * );
+static void (* const DATA_MMdl_EventTypeInitProcTbl[EV_TYPE_MAX])( MMDL * );
+static int (* const DATA_MMdl_EventTypeStartCheckProcTbl[EV_TYPE_MAX])( MMDL * );
+static int (* const DATA_MMdl_EventTypeMoveProcTbl[EV_TYPE_MAX])( MMDL * );
 
 //======================================================================
 //	サブ動作
@@ -569,7 +569,7 @@ static int SubMoveSpinStop_Move( MMDL * fmmdl )
 //--------------------------------------------------------------
 //	イベントタイプ別初期化関数 EV_TYPE_NORMAL等の値に一致
 //--------------------------------------------------------------
-static void (* const DATA_MMdl_EventTypeInitProcTbl[])( MMDL * ) =
+static void (* const DATA_MMdl_EventTypeInitProcTbl[EV_TYPE_MAX])( MMDL * ) =
 {
 	SubMoveNon_Init, //EV_TYPE_NORMAL
 	SubMoveNon_Init, //EV_TYPE_TRAINER
@@ -581,15 +581,15 @@ static void (* const DATA_MMdl_EventTypeInitProcTbl[])( MMDL * ) =
 	SubMoveNon_Init, //EV_TYPE_TRAINER_SPIN_MOVE_L
 	SubMoveNon_Init, //EV_TYPE_TRAINER_SPIN_MOVE_R
 	SubMoveNon_Init, //EV_TYPE_MSG
-	
 	SubMoveNon_Init, //EV_TYPE_TRAINER_ESCAPE
-	SubMoveNon_Init, //EV_TYPE_TRAINER_SWIM_H
+	SubMoveNon_Init, //EV_TYPE_TRAINER_DASH_REACT
+	SubMoveNon_Init, //EV_TYPE_TRAINER_DASH_ACCEL
 };
 
 //--------------------------------------------------------------
 //	イベントタイプ別スタートチェック関数　EV_TYPE_NORMAL等の値に一致
 //--------------------------------------------------------------
-static int (* const DATA_MMdl_EventTypeStartCheckProcTbl[])( MMDL * ) =
+static int (* const DATA_MMdl_EventTypeStartCheckProcTbl[EV_TYPE_MAX])( MMDL * ) =
 {
 	SubMoveNon_StartCheck, //EV_TYPE_NORMAL
 	SubMoveNon_StartCheck, //EV_TYPE_TRAINER
@@ -601,15 +601,15 @@ static int (* const DATA_MMdl_EventTypeStartCheckProcTbl[])( MMDL * ) =
 	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_SPIN_MOVE_L
 	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_SPIN_MOVE_R
 	SubMoveNon_StartCheck, //EV_TYPE_MSG
-	
 	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_ESCAPE
-	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_SWIM_H
+	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_DASH_REACT
+	SubMoveNon_StartCheck, //EV_TYPE_TRAINER_DASH_ACCEL
 };
 
 //--------------------------------------------------------------
 //	イベントタイプ別動作関数 EV_TYPE_NORMAL等の値に一致
 //--------------------------------------------------------------
-static int (* const DATA_MMdl_EventTypeMoveProcTbl[])( MMDL * ) =
+static int (* const DATA_MMdl_EventTypeMoveProcTbl[EV_TYPE_MAX])( MMDL * ) =
 {
 	SubMoveNon_Move, //EV_TYPE_NORMAL
 	SubMoveNon_Move, //EV_TYPE_TRAINER
@@ -621,7 +621,7 @@ static int (* const DATA_MMdl_EventTypeMoveProcTbl[])( MMDL * ) =
 	SubMoveNon_Move, //EV_TYPE_TRAINER_SPIN_MOVE_L
 	SubMoveNon_Move, //EV_TYPE_TRAINER_SPIN_MOVE_R
 	SubMoveNon_Move, //EV_TYPE_MSG
-	
 	SubMoveNon_Move, //EV_TYPE_TRAINER_ESCAPE
-	SubMoveNon_Move, //EV_TYPE_TRAINER_SWIM_H
+	SubMoveNon_Move, //EV_TYPE_TRAINER_DASH_REACT
+	SubMoveNon_Move, //EV_TYPE_TRAINER_DASH_ACCEL
 };

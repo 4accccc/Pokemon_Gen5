@@ -54,26 +54,29 @@ extern FLD_G3DOBJ_CTRL * FLD_G3DOBJ_CTRL_Create(
 extern void FLD_G3DOBJ_CTRL_Delete( FLD_G3DOBJ_CTRL *ctrl );
 extern void FLD_G3DOBJ_CTRL_Trans( FLD_G3DOBJ_CTRL *ctrl );
 extern void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl );
-extern u16 FLD_G3DOBJ_CTRL_CreateResource( FLD_G3DOBJ_CTRL *ctrl,
+extern FLD_G3DOBJ_RESIDX FLD_G3DOBJ_CTRL_CreateResource(
+    FLD_G3DOBJ_CTRL *ctrl,
     const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag );
-extern void FLD_G3DOBJ_CTRL_DeleteResource(FLD_G3DOBJ_CTRL *ctrl, u16 idx);
-extern u16 FLD_G3DOBJ_CTRL_AddObject(
-    FLD_G3DOBJ_CTRL *ctrl, const u16 resIdx, u16 mdlIdx );
-extern void FLD_G3DOBJ_CTRL_DeleteObject( FLD_G3DOBJ_CTRL *ctrl, u16 idx );
+extern void FLD_G3DOBJ_CTRL_DeleteResource(
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_RESIDX idx);
+extern u16 FLD_G3DOBJ_CTRL_AddObject( FLD_G3DOBJ_CTRL *ctrl,
+    const u16 resIdx, u16 mdlIdx, const VecFx32 *pos );
+extern void FLD_G3DOBJ_CTRL_DeleteObject(
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx );
 extern GFL_G3D_OBJ * FLD_G3DOBJ_CTRL_GetObject(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx );
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx );
 extern GFL_G3D_OBJSTATUS * FLD_G3DOBJ_CTRL_GetObjStatus(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx );
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx );
 extern void FLD_G3DOBJ_CTRL_SetObjPos(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx, const VecFx32 *pos );
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, const VecFx32 *pos );
 extern void FLD_G3DOBJ_CTRL_SetObjCullingFlag(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx, BOOL flag );
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, BOOL flag );
 extern void FLD_G3DOBJ_CTRL_SetObjVanishFlag(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx, BOOL flag );
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, BOOL flag );
 extern BOOL FLD_G3DOBJ_CTRL_AnimeObject(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx, fx32 frame );
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, fx32 frame );
 extern BOOL FLD_G3DOBJ_CTRL_LoopAnimeObject(
-    FLD_G3DOBJ_CTRL *ctrl, u16 idx, fx32 frame );
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, fx32 frame );
 
 extern void FLD_G3DOBJ_RES_HEADER_Init( FLD_G3DOBJ_RES_HEADER *head );
 extern void FLD_G3DOBJ_RES_HEADER_SetMdl(

@@ -41,7 +41,8 @@ typedef enum
   FLDEFF_PROCID_IAIGIRI, ///<居合い切り
   FLDEFF_PROCID_FISHING_LURE, ///<釣りイベントのルアー
   FLDEFF_PROCID_BTRAIN, ///<バトルトレイン
-  
+  FLDEFF_PROCID_HIDE, ///<動作モデル隠れ蓑
+
   //ここからエフェクトエンカウント用
   FLDEFF_PROCID_ENC_SGRASS, ///<エフェクトエンカウント用　短い草
   FLDEFF_PROCID_ENC_LGRASS, ///<エフェクトエンカウント用　長い草

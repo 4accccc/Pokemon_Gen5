@@ -12,16 +12,15 @@
 EVENT_START ev_trainer_talk_battle
   _TALK_OBJ_START()
   
-  /* //wb null
   //かくれみのアニメチェック
   _CALL sub_trainer_talk_battle_hide_pulloff
-  */
   
   //トレーナーID取得
   _TRAINER_ID_GET( LWK_TRAINERID )
   
   //すでに勝利しているトレーナーかチェックして、戦闘勝利後の会話へ
   _TRAINER_FLAG_CHECK( LWK_TRAINERID, SCWK_ANSWER )
+
   IF $SCWK_ANSWER == 1 THEN
 
     _CALL sub_trainer_talk_after_normal
@@ -138,37 +137,48 @@ ev_trainer_revenge:
 //--------------------------------------------------------------------
 //かくれみのアニメ
 //--------------------------------------------------------------------
-/*
 sub_trainer_talk_battle_hide_pulloff:
+{
   //かくれみのアニメチェック
   _MOVE_CODE_GET( SCWK_ANSWER, SCWK_TARGET_OBJID ) //戻り値取得ワーク、話しかけ対象OBJID
+  
   SWITCH $SCWK_ANSWER
-  CASE MV_HIDE_SNOW, MV_HIDE_SAND, MV_HIDE_GRND, MV_HIDE_KUSA
-
-    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_trainer_talk_battle_hide_pulloff )
-    _OBJ_ANIME_WAIT()
-
-    //動作コードを書き換えないと、再度、土の中から出てくるアニメが入ってしまう！
-    _PLAYER_DIR_GET( SCWK_ANSWER )
-    SWITCH $SCWK_ANSWER
-    WHEN DIR_UP
-      _MOVE_CODE_CHANGE  SCWK_TARGET_OBJID,MV_DOWN
-    WHEN DIR_DOWN
-      _MOVE_CODE_CHANGE  SCWK_TARGET_OBJID,MV_UP
-    WHEN DIR_LEFT
-      _MOVE_CODE_CHANGE  SCWK_TARGET_OBJID,MV_RIGHT
-    WHEN DIR_RIGHT
-      _MOVE_CODE_CHANGE  SCWK_TARGET_OBJID,MV_LEFT
-    ENDSWITCH //DIR
-
+  CASE MV_HIDE_SNOW THEN
+    _CALL sub_trainer_talk_battle_hide_pulloff_change
+  CASE MV_HIDE_SAND THEN
+    _CALL sub_trainer_talk_battle_hide_pulloff_change
+  CASE MV_HIDE_GRND THEN
+    _CALL sub_trainer_talk_battle_hide_pulloff_change
+  CASE MV_HIDE_KUSA THEN
+    _CALL sub_trainer_talk_battle_hide_pulloff_change
   ENDSWITCH //MOVE_CODE
-  _RET
+}
+_RET
+
+sub_trainer_talk_battle_hide_pulloff_change:
+{
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_trainer_talk_battle_hide_pulloff )
+  _OBJ_ANIME_WAIT()
+    
+  //動作コードを書き換えないと、再度、土の中から出てくるアニメが入ってしまう！
+  _PLAYER_DIR_GET( SCWK_ANSWER )
+    
+  SWITCH $SCWK_ANSWER
+  CASE DIR_UP THEN
+    _MOVE_CODE_CHANGE( SCWK_TARGET_OBJID, MV_DOWN )
+  CASE DIR_DOWN THEN
+    _MOVE_CODE_CHANGE( SCWK_TARGET_OBJID, MV_UP )
+  CASE DIR_LEFT THEN
+    _MOVE_CODE_CHANGE( SCWK_TARGET_OBJID, MV_RIGHT )
+  CASE DIR_RIGHT THEN
+    _MOVE_CODE_CHANGE( SCWK_TARGET_OBJID, MV_LEFT )
+  ENDSWITCH //DIR
+}
+_RET
 
 _ANIME_LABEL  anm_trainer_talk_battle_hide_pulloff
   _ANIME_DATA  AC_HIDE_PULLOFF,1
   _ANIME_DATA  ACMD_END,0
-*/
-
 
 //******************************************************************
 //          視線からのトレーナー戦闘            

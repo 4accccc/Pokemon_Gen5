@@ -1387,7 +1387,21 @@
   .short  \ret_wk
   .short  \obj_id
   .endm
+  
+//--------------------------------------------------------------
+/**
+ *  _MOVE_CODE_CHANGE 動作コードを変更(fldmmdl_code.h)
+ *  @param obj_id 動作コードを変更するOBJ ID
+ *  @param code 変更する動作コード
+ */
+//--------------------------------------------------------------
+#define  _MOVE_CODE_CHANGE( obj_id, code ) _ASM_MOVE_CODE_CHANGE obj_id, code
 
+  .macro  _ASM_MOVE_CODE_CHANGE obj_id, code
+  .short  EV_SEQ_MOVE_CODE_CHANGE
+  .short  \obj_id
+  .short  \code
+  .endm
 
 //--------------------------------------------------------------
 /**

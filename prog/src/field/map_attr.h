@@ -122,3 +122,8 @@ extern BOOL MAPATTR_VALUE_CheckSnowGrassLow( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSnowGrassHigh( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckMirrorFloor( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckUpDownFloor( const MAPATTR_VALUE val );
+
+extern BOOL MAPATTR_VALUE_CheckNotMoveUp( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckNotMoveDown( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckNotMoveLeft( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckNotMoveRight( const MAPATTR_VALUE val );
