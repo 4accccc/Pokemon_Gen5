@@ -113,6 +113,7 @@
 //最初の3体タイプわけなど
 #include "user_define.h"
 
+#include  "../../../prog/include/system/timezone.h" //時間帯定義
 
 //--------------------------------------------------------------
 //  wb_null
@@ -123,7 +124,6 @@
 #include "../../../include/system/brightness.h"   //輝度
 #include "../../../include/system/window.h"     //ウィンドウ
 #include "../../../include/system/wipe.h"     //ワイプ
-#include "../../../include/system/timezone.h"   //時間帯
 
 #include "../../../include/battle/battle_common.h"  //戦闘関連
 #include "../../../include/battle/trno_def.h"   //トレーナーナンバー定義
