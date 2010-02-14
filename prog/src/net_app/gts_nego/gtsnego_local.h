@@ -31,6 +31,8 @@ typedef struct _GTSNEGO_DISP_WORK  GTSNEGO_DISP_WORK;
 #define GTSNEGO_YESNOTYPE_INFO (0)
 #define GTSNEGO_YESNOTYPE_SYS  (1)
 
+#define SCROLLBAR_TOP   (3*8+8)  //スクロールバーのTOP
+#define SCROLLBAR_LENGTH   (120+16-8)  //スクロールバーの長さ
 
 
 

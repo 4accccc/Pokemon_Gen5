@@ -957,7 +957,11 @@ const static GFL_UI_TP_HITTBL _tp_data2[]={
   { 8*3, 8*(3+6), 8*1, 8*(32-3)},
   { 8*(3+6), 8*(3+6*2), 8*1, 8*(32-3)},
   { 8*(3+6*2), 8*(3+6*3), 8*1, 8*(32-3)},
-  { 8*3, 8*(3+6*3), 8*(32-3), 8*32},   //スクロールバー
+  {GFL_UI_TP_HIT_END,0,0,0},
+};
+
+const static GFL_UI_TP_HITTBL _tp_data3[]={
+  { SCROLLBAR_TOP, SCROLLBAR_TOP+SCROLLBAR_LENGTH, 8*(32-3), 8*32},   //スクロールバー
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 
@@ -1033,6 +1037,8 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
     pWork->selectFriendIndex = pWork->key3;
     _CHANGE_STATE(pWork,_friendSelectDecide);
   }
+
+
   {
     int trgindex=GFL_UI_TP_HitTrg(_tp_data2);
     switch(trgindex){
@@ -1046,14 +1052,12 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
       PMSND_PlaySystemSE(_SE_DECIDE);
       _CHANGE_STATE(pWork,_friendSelectDecide);
       return;
-    case 3:
-      {
-        u32 x,y;
-        if(GFL_UI_TP_GetPointCont(&x, &y)==TRUE){
-          GTSNEGO_DISP_ScrollChipDispMouse(pWork->pDispWork, y,pWork->scrollPanelCursor.listmax);
-        }
-      }
-      break;
+    }
+  }
+  if(GFL_UI_TP_HitCont(_tp_data3)==0){
+    u32 x,y;
+    if(GFL_UI_TP_GetPointCont(&x, &y)==TRUE){
+      GTSNEGO_DISP_ScrollChipDispMouse(pWork->pDispWork, y, pWork->scrollPanelCursor.listmax);
     }
   }
   TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));

@@ -119,8 +119,6 @@ typedef enum
 } _CELL_RESOURCE_TYPE;
 
 
-#define SCROLLBAR_TOP   (3*8)  //スクロールバーのTOP
-#define SCROLLBAR_LENGTH   (120)  //スクロールバーの長さ
 
 #define _PALMODE_LEVEL (0)
 #define _PALMODE_FRIEND (1)
@@ -1386,7 +1384,7 @@ void GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max)
   GFL_CLACTPOS pos;
 
   GFL_CLACT_WK_GetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
-  pos.y = _touchToCurcorPos(pWork,y, max)+SCROLLBAR_TOP;
+  pos.y = y;
   GFL_CLACT_WK_SetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
 
 }

@@ -33,9 +33,10 @@
 #include "ircbattle.naix"
 #include "cg_comm.naix"
 #include "net_app/connect_anm.h"
-#include "../../field/event_ircbattle.h"
+//#include "../../field/event_ircbattle.h"
 #include "ir_ani_NANR_LBLDEFS.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
+#include "net_app/irc_match.h"
 
 #include "ircbattlematch.cdat"
 
@@ -79,10 +80,6 @@ typedef enum
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
 #define _BRIGHTNESS_SYNC (2)  // フェードのＳＹＮＣは要調整
 
-// サウンドが出来るまでの仮想
-#define _SE_DESIDE (0)
-#define _SE_CANCEL (0)
-static void Snd_SePlay(int a){}
 
 
 //--------------------------------------------
@@ -167,6 +164,50 @@ typedef enum {
 //--------------------------------------------
 // 内部ワーク
 //--------------------------------------------
+
+
+
+typedef struct{
+  int gameNo;   ///< ゲーム種類
+} _testBeaconStruct;
+
+static _testBeaconStruct _testBeacon = { WB_NET_COMPATI_CHECK };
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   ビーコンデータ取得関数
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+static void* IrcBattleBeaconGetFunc(void* pWork)
+{
+  return &_testBeacon;
+}
+
+///< ビーコンデータサイズ取得関数
+static int IrcBattleBeaconGetSizeFunc(void* pWork)
+{
+  return sizeof(_testBeacon);
+}
+
+///< ビーコンデータ取得関数
+static BOOL IrcBattleBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
+{
+  if(myNo != beaconNo){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+
+
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
   {_RecvModeCheckData,          NULL},  ///_NETCMD_TYPESEND
@@ -225,7 +266,7 @@ typedef BOOL (TouchFunc)(int no, IRC_BATTLE_MATCH* pState);
 
 
 struct _IRC_BATTLE_MATCH {
-  EVENT_IRCBATTLE_WORK* pBattleWork;
+  IRC_MATCH_WORK* pBattleWork;
   StateFunc* state;      ///< ハンドルのプログラム状態
   int selectType;   // 接続タイプ
   HEAPID heapID;
@@ -539,7 +580,7 @@ static void _RecvModeCheckData(const int netID, const int size, const void* pDat
   }
   if(pWork->selectType > pType[0] ){
     NET_PRINT("BattleChange %d ->%d\n",pWork->selectType, pType[0]);
-    EVENT_IrcBattleSetType(pWork->pBattleWork, pType[0]);
+    pWork->pBattleWork->selectType = pType[0];
     //pWork->selectType = pType[0];
   }
 }
@@ -1197,7 +1238,8 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
     pWork->pAppTask=NULL;
     if(selectno == 0)
     { // はいを選択した場合
-      EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_EXIT);
+      pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+//      EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_EXIT);
       _buttonWindowDelete(pWork);
       GFL_NET_Exit(NULL);
       _CHANGE_STATE(pWork,_modeFadeoutStart);
@@ -1230,7 +1272,8 @@ static void _ircEndKeyWait(IRC_BATTLE_MATCH* pWork)
   if(GFL_UI_KEY_GetTrg() != 0){
 
 
-    EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_RETRY);
+    pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_RETRY;
+//    EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_RETRY);
     GFL_NET_Exit(NULL);
     _CHANGE_STATE(pWork,_modeFadeoutStart);
   }
@@ -1533,8 +1576,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcInit( GFL_PROC * proc, int * seq, void 
     GFL_STD_MemClear(pWork, sizeof(IRC_BATTLE_MATCH));
     pWork->pBattleWork = pwk;
     pWork->heapID = HEAPID_IRCBATTLE;
-    pWork->selectType =  EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
-
+    pWork->selectType =  pWork->pBattleWork->selectType; //EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
 
     _CHANGE_STATE( pWork, _modeInit);
   }
@@ -1582,8 +1624,6 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
 {
   IRC_BATTLE_MATCH* pWork = mywk;
 
-    
-//  EVENT_IrcBattleSetType(pWork->pBattleWork, pWork->selectType);
 
   if(pWork->pAppTask){
     APP_TASKMENU_CloseMenu(pWork->pAppTask);

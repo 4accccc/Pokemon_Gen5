@@ -3119,3 +3119,10 @@ const GFL_PROC_DATA PokemonTradeGTSSendProcData = {
   PokemonTradeProcEnd,
 };
 
+//GTSRecv—p
+const GFL_PROC_DATA PokemonTradeGTSRecvProcData = {
+  PokemonTradeDemoProcInit,
+  PokemonTradeProcMain,
+  PokemonTradeProcEnd,
+};
+

@@ -75,6 +75,7 @@ extern const GFL_PROC_DATA PokemonTradeDemoProcData;
 extern const GFL_PROC_DATA PokemonTradeClubProcData;
 extern const GFL_PROC_DATA PokemonTradeGTSProcData;
 extern const GFL_PROC_DATA PokemonTradeGTSSendProcData;
+extern const GFL_PROC_DATA PokemonTradeGTSRecvProcData;
 
 
 

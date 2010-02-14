@@ -154,12 +154,20 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     break;
   case _CALL_IRCBATTLE_MATCH:
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ircbattlematch), &IrcBattleMatchProcData, dbw);
+    dbw->irc_match.gamedata = dbw->gamedata;
+    dbw->irc_match.pParty = dbw->pParty;
+    dbw->irc_match.pNetParty[0] = dbw->pNetParty[0];
+    dbw->irc_match.pNetParty[1] = dbw->pNetParty[1];
+    dbw->irc_match.pNetParty[2] = dbw->pNetParty[2];
+    dbw->irc_match.pNetParty[3] = dbw->pNetParty[3];
+    dbw->irc_match.selectType = dbw->selectType;
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ircbattlematch), &IrcBattleMatchProcData, &dbw->irc_match);
     (*seq)++;
     break;
   case _WAIT_IRCBATTLE_MATCH:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       // マッチング内容によりゲーム分岐
+      dbw->selectType = dbw->irc_match.selectType;
       switch(dbw->selectType){
       case EVENTIRCBTL_ENTRYMODE_EXIT:
         *seq = _WAIT_NET_END;
@@ -434,46 +442,6 @@ static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw)
   BATTLE_PARAM_Delete(dbw->para);
 }
 
-
-
-typedef struct{
-  int gameNo;   ///< ゲーム種類
-} _testBeaconStruct;
-
-static _testBeaconStruct _testBeacon = { WB_NET_COMPATI_CHECK };
-
-
-//--------------------------------------------------------------
-/**
- * @brief   ビーコンデータ取得関数
- * @param   netID      送ってきたID
- * @param   size       パケットサイズ
- * @param   pData      データ
- * @param   pWork      ワークエリア
- * @param   pHandle    受け取る側の通信ハンドル
- * @retval  none
- */
-//--------------------------------------------------------------
-
-void* IrcBattleBeaconGetFunc(void* pWork)
-{
-  return &_testBeacon;
-}
-
-///< ビーコンデータサイズ取得関数
-int IrcBattleBeaconGetSizeFunc(void* pWork)
-{
-  return sizeof(_testBeacon);
-}
-
-///< ビーコンデータ取得関数
-BOOL IrcBattleBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
-{
-  if(myNo != beaconNo){
-    return FALSE;
-  }
-  return TRUE;
-}
 
 
 //--------------------------------------------------------------
