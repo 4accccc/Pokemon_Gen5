@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2010 02/09 (Tue) 19:51
+ * @date  2010 02/12 (Fri) 21:41
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -17,6 +17,12 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       ID_DEBUG_SCR_OFFSET_END,        //(12199),
       NARC_script_seq_debug_scr_bin,
       NARC_script_message_debug_scr_dat
+    },
+    {//不思議な贈り物配達員スクリプト
+      ID_POSTMAN_SCR_OFFSET,          //(10395),
+      ID_POSTMAN_SCR_OFFSET_END,      //(10399),
+      NARC_script_seq_postman_scr_bin,
+      NARC_script_message_postman_dat
     },
     {//家具屋（PDW)用スクリプト
       ID_FURNITURE_STORE_OFFSET,      //(10390),

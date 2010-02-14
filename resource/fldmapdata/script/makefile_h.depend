@@ -102,6 +102,9 @@ hyouka_scr_def.h: hyouka_scr.ev
 furniture_store_def.h: furniture_store.ev
 	$(EV_DEF) furniture_store.ev $(SCR_OFFS_ID_H)
 
+postman_scr_def.h: postman_scr.ev
+	$(EV_DEF) postman_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 

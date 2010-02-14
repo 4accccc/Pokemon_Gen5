@@ -1,0 +1,106 @@
+//====================================================================
+/**						ふしぎなおくりもの配達員
+ * @file	postman_scr.ev
+ * @brief	ふしぎなおくりもの/貯金アイテムで受け取った物を受け取るための人物
+ * @author	tamada GAME FREAK inc.  --> k.ohno -->
+ * @date	2006.05.26
+ */
+//====================================================================
+
+	.text
+
+	.include	"scr_seq_def.h"
+
+	.include	"msg_postman.h"
+
+
+//--------------------------------------------------------------------
+//		スクリプトテーブル
+//--------------------------------------------------------------------
+_EVENT_DATA		ev_postman_flag_change
+_EVENT_DATA		ev_postman
+_EVENT_DATA_END
+
+DEFINE_LOCAL  WK_SCENE_POSTMAN
+
+/********************************************************************/
+/*						FLAG_CHANGE_LABEL 							*/
+/********************************************************************/
+INIT_EVENT_START  ev_postman_flag_change
+
+	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_EXISTS, WK_SCENE_POSTMAN )
+	IF $WK_SCENE_POSTMAN == 0 THEN
+		//_FLAG_SET( FV_MYSTERY_POSTMAN )
+	ELSE
+		//_FLAG_RESET( FV_MYSTERY_POSTMAN )
+	ENDIF
+
+INIT_EVENT_END
+
+
+/********************************************************************/
+//				ふしぎなおくりもの配達員
+/********************************************************************/
+EVENT_START   ev_postman
+	_TALK_OBJ_START()
+
+  _CALL   sub_postman_main
+
+EVENT_END
+
+
+sub_postman_main:
+	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_EXISTS, WK_SCENE_POSTMAN )
+  IF $SCWK_ANSWER == 0 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_postman_04 ) //おあずかりしている～もうありません
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+      _RET
+  ENDIF
+
+  //あいさつ
+  _PLAYER_NAME( 0 )
+	_GET_TIMEZONE( SCWK_ANSWER )
+
+  SWITCH   $SCWK_ANSWER
+  CASE  TIMEZONE_MORNING  THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_postman_01 ) //おはようございます
+  CASE  TIMEZONE_NOON THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_postman_02 ) //こんにちは
+  DEFAULT
+      _BALLOONWIN_TALKOBJ_MSG( msg_postman_03 ) //こんばんは
+  ENDSWITCH
+
+  _AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
+	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_ENABLE, SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == TRUE THEN
+      //受け取った！
+      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OK_MSG, SCWK_ANSWER )
+      _BALLOONWIN_TALKOBJ_MSG( SCWK_ANSWER )
+      _AB_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_RECEIVE, SCWK_ANSWER )
+
+      _BALLOONWIN_TALKOBJ_MSG( msg_postman_05 ) //またのごりようをおまちしております
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+  ELSE
+      //受け取れなかった！
+      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_NG_MSG, SCWK_ANSWER )
+      _BALLOONWIN_TALKOBJ_MSG( SCWK_ANSWER )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+  ENDIF
+
+  _RET
+
+
+
+
+
+
+
