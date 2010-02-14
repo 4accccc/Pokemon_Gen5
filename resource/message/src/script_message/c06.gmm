@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-06T16:14:13"/>
+	<create user="matsumiya" host="W00224" date="2010-02-14T21:01:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="199" right="1995" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="392" right="2006" bottom="1020" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -701,7 +701,8 @@
 	<row id="msg_c06_boy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・msg_c06r0101_boy2_01表示後にセットされる
-　アイテム（暫定でわざましん０１）を入手すると登場し
+　アイテムNo602
+　「わざマシン９６：なみのり」を入手すると登場し
 　主人公に隣接してメッセージ表示
 ・続けてbabygirl_01</comment>
 		<attribute name="キャラクター">BOY2</attribute>
@@ -721,20 +722,20 @@
 		<language name="JPN_KANJI" width="256">とったあ！！▼</language>
 	</row>
 
-	<row id="msg_c06_boy2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_boy2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてbabygirl_02</comment>
 		<attribute name="キャラクター">BOY2</attribute>
 		<language name="JPN" width="256">なんてね▼
 ぼくら　ポケモン　もってないし
-それまで　その　わざマシンを
-かくしておく　つもりだったんだ▼
+それまで　その　わざマシンを▽
+かくしておくつもり　だったんだ▼
 だけど　もったいないから
 おにいちゃん　つかって　いいよ▼</language>
 		<language name="JPN_KANJI" width="256">なんてね▼
 ぼくら　ポケモン　もってないし
-それまで　その　わざマシンを
-かくしておく　つもりだったんだ▼
+それまで　その　わざマシンを▽
+かくしておくつもり　だったんだ▼
 だけど　もったいないから
 おにいちゃん　つかって　いいよ▼</language>
 	</row>
