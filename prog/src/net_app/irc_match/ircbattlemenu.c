@@ -1047,7 +1047,14 @@ static void _modeSelectBattleTypeButtonCallback2(u32 param, fx32 currentFrame )
 {
   IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
 
-  _CHANGE_STATE(pWork, _modeFadeoutStart);
+
+  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_EXIT){
+    
+    _CHANGE_STATE(pWork, _modeSelectEntryNumInit);
+  }
+  else{
+    _CHANGE_STATE(pWork, _modeFadeoutStart);
+  }
 }
 
 static void _modeSelectBattleTypeButtonFlash2(IRC_BATTLE_MENU* pWork)
@@ -1613,7 +1620,6 @@ static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 
-  //        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 
@@ -1689,16 +1695,11 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
       APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
                                pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
-    {
-//			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pwk));
-	//		INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
-		}
     _CLACT_SetResource(pWork);
 
     _CLACT_SetAnim(pWork,88,72,CELL_IRWAVE1,NANR_ir_ani_CellAnime3);
     _CLACT_SetAnim(pWork,168,110,CELL_IRWAVE2,NANR_ir_ani_CellAnime2);
 
-//    _CreateButtonObj(pWork);
       
 		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
