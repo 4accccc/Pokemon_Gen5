@@ -876,16 +876,16 @@ BOOL MYSTERY_MSGWINSET_PrintMain( MYSTERY_MSGWINSET_WORK* p_wk )
 static const GFL_POINT sc_menu_cursor_pos[] =
 { 
   { 
-    134,16
+    128,16
   },
   { 
-    134,44
+    128,44
   },
   { 
-    134,72
+    128,72
   },
   { 
-    134,104
+    128,104
   },
 };
 

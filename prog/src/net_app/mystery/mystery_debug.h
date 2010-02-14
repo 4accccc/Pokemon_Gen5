@@ -52,7 +52,8 @@ static inline void MYSTERY_DEBUG_SetGiftData( DOWNLOAD_GIFT_DATA *p_data )
   p_data->data.data.pokemon.oyaname[2]  = L'ッ';
   p_data->data.data.pokemon.oyaname[3]  = L'グ';
   p_data->data.data.pokemon.oyaname[4]  = 0xffff;
-
+  p_data->data.data.pokemon.oyaname[4]  = 0xffff;
+  p_data->data.data.pokemon.waza1       = 1;
 
   //イベントタイトル
   p_data->data.event_name[ 0] = L'き';

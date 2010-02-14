@@ -30,6 +30,7 @@
 
 //自分のモジュール
 #include "mystery_util.h"
+#include "net_app/mystery.h"
 
 //外部公開
 #include "mystery_album.h"
@@ -40,9 +41,18 @@
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //=============================================================================
 /**
+ *          デバッグ
+ */
+//=============================================================================
+#ifdef PM_DEBUG
+#define DEBUG_SAVE  //STARTを押すとセーブして終了
+#endif //PM_DEBUG
+//=============================================================================
+/**
  *          定数
  */
 //=============================================================================
+
 #define MYSTERY_ALBUM_CARD_MAX         GIFT_DATA_MAX 
 #define MYSTERY_ALBUM_PAGE_MAX          3
 #define MYSTERY_ALBUM_PAGE_IN_CARD_NUM  (MYSTERY_ALBUM_CARD_MAX/MYSTERY_ALBUM_PAGE_MAX)
@@ -467,7 +477,7 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
       setup.p_font            = p_wk->setup.p_font; 
       setup.p_que             = p_wk->setup.p_que; 
       setup.p_word            = p_wk->setup.p_word;
-      p_wk->p_card  = MYSTERY_CARD_Init( &setup, heapID );
+      p_wk->p_card  = MYSTERY_CARD_Init( &setup, cp_setup->p_gamedata,heapID );
     }
   }
 
@@ -568,7 +578,7 @@ void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk )
           setup.p_font            = p_wk->setup.p_font; 
           setup.p_que             = p_wk->setup.p_que; 
           setup.p_word            = p_wk->setup.p_word;
-          p_wk->p_card  = MYSTERY_CARD_Init( &setup, p_wk->heapID );
+          p_wk->p_card  = MYSTERY_CARD_Init( &setup, p_wk->setup.p_gamedata, p_wk->heapID );
           GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0 | GX_PLANEMASK_BG2 | GX_PLANEMASK_OBJ, TRUE );
         }
       }
@@ -934,16 +944,18 @@ static void Mystery_Album_CreateDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front
                 data.card_x + j, data.card_y + i, 1, 1, MYSTERY_ALBUM_THUMBNAIL_NOGETPOKE_PLT );
           }
         }
+
+        //日付を貼り付ける
+        { 
+          const GFL_BMP_DATA  *cp_src  = MYSTERY_CARD_DATA_GetBmp( p_src );
+          GFL_BMP_DATA  *p_dst  = GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[dst_idx] );
+          GFL_BMP_Copy( cp_src, p_dst );
+          GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[dst_idx] );
+
+        }
       }
 
-      //日付を貼り付ける
-      { 
-        const GFL_BMP_DATA  *cp_src  = MYSTERY_CARD_DATA_GetBmp( p_src );
-        GFL_BMP_DATA  *p_dst  = GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[dst_idx] );
-        GFL_BMP_Copy( cp_src, p_dst );
-        GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[dst_idx] );
 
-      }
 
       //アイコンを作成する
       //  日付のように、作成しておいて、設定するだけにしたかったのだが、
@@ -2005,6 +2017,13 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
           MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_End );
         }
       }
+#ifdef DEBUG_SAVE
+      else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+      { 
+        p_wk->is_change = TRUE;
+        MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_End );
+      }
+#endif //DEBUG_SAVE
 
       //カーソルの移動
       if( is_update )
@@ -2020,8 +2039,8 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         else
         { 
           pos.x = 176;
-          pos.y = 156;
-          GFL_CLACT_WK_SetAnmSeq( p_wk->p_cursor, 12);
+          pos.y = 152;
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_cursor, 11);
         }
 
         GFL_CLACT_WK_SetPos( p_wk->p_cursor, &pos, CLSYS_DEFREND_MAIN );
@@ -2820,7 +2839,7 @@ struct _MYSTERY_CARD_WORK
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPID heapID )
+MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMEDATA *p_gamedata, HEAPID heapID )
 { 
   CLSYS_DRAW_TYPE draw_type;
   PALTYPE         paltype;
@@ -2856,7 +2875,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPI
     setup.p_que     = cp_setup->p_que;
     setup.p_word    = cp_setup->p_word;
     setup.p_msg     = cp_setup->p_msg;
-    setup.p_gamedata  = NULL;
+    setup.p_gamedata  = p_gamedata;
  
     MYSTERY_CARD_DATA_Init( &p_wk->data, cp_setup->p_data, &setup, heapID );
   }
@@ -3021,11 +3040,12 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPI
   { 
     { 
       const GIFT_PRESENT_POKEMON  *cp_pokemon = &cp_setup->p_data->data.pokemon;
+      POKEMON_PARAM* p_pp = MYSTERY_PokemonCreate( cp_pokemon, GFL_HEAP_LOWID(heapID), p_gamedata );
       ARCHANDLE *p_handle = POKE2DGRA_OpenHandle( heapID );
 
       p_wk->res_silhouette_plt  = POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, draw_type, cp_setup->silhouette_obj_plt_num*0x20, heapID );
       p_wk->res_silhouette_cel	= POKE2DGRA_OBJ_CELLANM_Register( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, APP_COMMON_MAPPING_128K, draw_type, heapID );
-      p_wk->res_silhouette_cgx	= POKE2DGRA_OBJ_CGR_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, draw_type, heapID );
+      p_wk->res_silhouette_cgx	= POKE2DGRA_OBJ_CGR_RegisterPPP( p_handle, PP_GetPPPPointerConst(p_pp), POKEGRA_DIR_FRONT, draw_type, heapID );
 
       p_wk->mons_no = cp_pokemon->mons_no;
       p_wk->form_no = cp_pokemon->form_no;
@@ -3048,6 +3068,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPI
         GFL_HEAP_FreeMemory( p_buff );
       }
 
+      GFL_HEAP_FreeMemory( p_pp );
       GFL_ARC_CloseDataHandle( p_handle );
     }
     { 

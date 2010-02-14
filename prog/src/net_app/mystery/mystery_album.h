@@ -100,7 +100,7 @@ typedef struct _MYSTERY_CARD_WORK MYSTERY_CARD_WORK;
 //-------------------------------------
 ///	パブリック
 //=====================================
-extern MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPID heapID );
+extern MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMEDATA *p_gamedata, HEAPID heapID );
 extern void MYSTERY_CARD_Exit( MYSTERY_CARD_WORK *p_wk );
 extern void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk );
 extern void MYSTERY_CARD_StartEffect( MYSTERY_CARD_WORK *p_wk );

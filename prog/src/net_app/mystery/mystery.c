@@ -415,7 +415,7 @@ static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk );
 //-------------------------------------
 ///	デモ
 //=====================================
-static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, HEAPID heapID );
+static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, GAMEDATA *p_gamedata, HEAPID heapID );
 static void MYSTERY_DEMO_Exit( MYSTERY_DEMO_WORK *p_wk );
 static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg );
 static BOOL MYSTERY_DEMO_IsEnd( const MYSTERY_DEMO_WORK *cp_wk );
@@ -488,7 +488,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   MYSTERY_DEBUG_SetGiftData( &p_wk->data );
   { 
     int i;
-    for( i = 0; i < 6; i++ )
+    for( i = 0; i < 1; i++ )
     { 
       MYSTERYDATA_SetCardData( p_wk->p_sv, &p_wk->data.data );
     }
@@ -1731,7 +1731,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     //おくりものを受信中です
     { 
       GFL_CLUNIT	*p_unit	= MYSTERY_GRAPHIC_GetClunit( p_wk->p_graphic );
-      MYSTERY_DEMO_Init( &p_wk->demo, p_unit, &p_wk->data, HEAPID_MYSTERYGIFT );
+      MYSTERY_DEMO_Init( &p_wk->demo, p_unit, &p_wk->data, p_wk->p_gamedata, HEAPID_MYSTERYGIFT );
       MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_014, MYSTERY_TEXT_TYPE_QUE );
       *p_seq  = SEQ_INIT_WAIT;
     }
@@ -1805,7 +1805,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         setup.p_font    = p_wk->p_font; 
         setup.p_que     = p_wk->p_que; 
         setup.p_word    = p_wk->p_word;
-        p_wk->p_card  = MYSTERY_CARD_Init( &setup, HEAPID_MYSTERYGIFT );
+        p_wk->p_card  = MYSTERY_CARD_Init( &setup, p_wk->p_gamedata, HEAPID_MYSTERYGIFT );
       }
     }
     *p_seq  = SEQ_START_CARD_EFFECT;
@@ -2587,7 +2587,7 @@ static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk )
  *	@param	heapID                  ヒープID
  */
 //-----------------------------------------------------------------------------
-static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, HEAPID heapID )
+static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, GAMEDATA *p_gamedata, HEAPID heapID )
 {
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_DEMO_WORK) );
 
@@ -2597,15 +2597,19 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
   case MYSTERYGIFT_TYPE_POKEMON:
     {	
       const GIFT_PRESENT_POKEMON  *cp_pokemon = &cp_data->data.data.pokemon;
+
+      POKEMON_PARAM* p_pp = MYSTERY_PokemonCreate( cp_pokemon, GFL_HEAP_LOWID(heapID), p_gamedata );
       ARCHANDLE		*p_handle	= POKE2DGRA_OpenHandle( heapID );
 
       p_wk->res_plt	= POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare == 2, POKEGRA_DIR_FRONT, cp_pokemon->egg, CLSYS_DRAW_MAIN, PLT_OBJ_GIFT_M * 0x20, heapID );
  
       p_wk->res_cel	= POKE2DGRA_OBJ_CELLANM_Register( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare == 1, POKEGRA_DIR_FRONT, cp_pokemon->egg, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
         
-      p_wk->res_cgx	= POKE2DGRA_OBJ_CGR_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare == 1, POKEGRA_DIR_FRONT, cp_pokemon->egg, CLSYS_DRAW_MAIN, heapID );
+      p_wk->res_cgx	= POKE2DGRA_OBJ_CGR_RegisterPPP( p_handle, PP_GetPPPPointerConst(p_pp),
+          POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, heapID );
  
       GFL_ARC_CloseDataHandle( p_handle );
+      GFL_HEAP_FreeMemory( p_pp );
     }
     break;
 

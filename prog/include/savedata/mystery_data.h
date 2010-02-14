@@ -43,6 +43,7 @@
 #define MYSTERYGIFT_TYPE_ITEM		2	// どうぐ
 #define MYSTERYGIFT_TYPE_RULE		3	// ルール
 #define MYSTERYGIFT_TYPE_NUTSET		4	// 木の実セット
+//@todo Gパワー
 #define MYSTERYGIFT_TYPE_MAX	5	// 総数
 
 #define MYSTERYGIFT_TYPE_CLEAR		255	// ふしぎ領域の強制クリア
@@ -244,6 +245,8 @@ extern BOOL MYSTERYDATA_IsEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
 /// 指定のイベントもらったよフラグを立てる
 //------------------------------------------------------------------
 extern void MYSTERYDATA_SetEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
+
+//受け取ってないものがあるか
 
 
 //------------------------------------------------------------------
