@@ -418,7 +418,7 @@ struct _POKEMON_TRADE_WORK{
   MCSS_SYS_WORK *mcssSys;
   MCSS_WORK     *pokeMcss[4];
   BOOL     mcssStop[2];
-  _POKEMCSS_MOVE_WORK* pMoveMcss[2];
+  _POKEMCSS_MOVE_WORK* pMoveMcss[4];
 
   GFL_ARCUTIL_TRANSINFO subchar;
   GFL_ARCUTIL_TRANSINFO subchar1;

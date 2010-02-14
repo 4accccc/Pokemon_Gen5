@@ -68,12 +68,6 @@ FS_EXTERN_OVERLAY(ui_common);
 #define UNION_TRAINER_NUM  (16)
 
 
-#define _OBJPAL_UNION_POS   (0)
-#define _OBJPAL_UNION_NUM   (8)
-#define _OBJPAL_NEGOOBJ_POS (8)
-#define _OBJPAL_NEGOOBJ_NUM (7)
-#define _OBJPAL_MENUBAR_POS (15)
-#define _OBJPAL_MENUBAR_NUM (1)
 
 
 
@@ -125,12 +119,19 @@ typedef enum
 } _CELL_RESOURCE_TYPE;
 
 
+#define SCROLLBAR_TOP   (3*8)  //スクロールバーのTOP
+#define SCROLLBAR_LENGTH   (120)  //スクロールバーの長さ
+
+#define _PALMODE_LEVEL (0)
+#define _PALMODE_FRIEND (1)
+
+
 typedef enum
 {
-_SCROLLBAR_OAM_TITLEP,
-_SCROLLBAR_OAM_BAR,
-_SCROLLBAR_OAM_CHIP,
-_SCROLLBAR_OAM_NUM
+  _SCROLLBAR_OAM_CHIP,
+  _SCROLLBAR_OAM_BAR,
+  _SCROLLBAR_OAM_TITLEP,
+  _SCROLLBAR_OAM_NUM
 } _SCROLLBAR_OAM_TYPE;
 
 #define _CELL_DISP_NUM (12)
@@ -158,6 +159,9 @@ struct _GTSNEGO_DISP_WORK {
  // int oamlistpos;
   GAMEDATA* pGameData;
 
+  NNSG2dScreenData* pBGPanelScr;
+  void* pBGPanelScrAddr;
+  
   GFL_CLWK* crossIcon;
   GFL_CLWK* menubarObj;
   GFL_CLWK* scrollbarOAM[_SCROLLBAR_OAM_NUM];
@@ -224,16 +228,16 @@ static void _TOUCHBAR_Init(GTSNEGO_DISP_WORK* pWork);
 static void	_VBlank( GFL_TCB *tcb, void *work );
 static void _SetArrow(GTSNEGO_DISP_WORK* pWork,int x,int y,BOOL bRight);
 static void _ArrowRelease(GTSNEGO_DISP_WORK* pWork);
-static void _FriendListPlateDisp(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WORK* pMessageWork);
 static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork);
 static void _CreateCrossIcon(GTSNEGO_DISP_WORK* pWork);
 static void _CreateMenuBarObj(GTSNEGO_DISP_WORK* pWork);
+static void _RemoveMenuBarObj(GTSNEGO_DISP_WORK* pWork);
 
 static void _PanelScrollMain(GTSNEGO_DISP_WORK* pWork);
-static void _CreateScrollBarObj(GTSNEGO_DISP_WORK* pWork);
+static void _CreateScrollBarObj(GTSNEGO_DISP_WORK* pWork, BOOL bCursor);
 static void _DeleteScrollBarObj(GTSNEGO_DISP_WORK* pWork);
 static void GTSNEGO_DISP_UnionWkScroll(GTSNEGO_DISP_WORK* pWork,int workIndex, int move);
-
+static void _paletteModeChange(GTSNEGO_DISP_WORK* pWork, int mode);
 
 
 
@@ -271,7 +275,6 @@ GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id, GAMEDATA* pGameData)
 #if DEBUG_ONLY_FOR_ohno
   _DebugDataCreate(pWork);
 #endif
-  _CreateMenuBarObj(pWork);
   
   return pWork;
 }
@@ -291,7 +294,8 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
 {
   int i;
   GFL_CLACT_WK_Remove(pWork->crossIcon);
-  GFL_CLACT_WK_Remove(pWork->menubarObj);
+
+  _RemoveMenuBarObj(pWork);
 
   
   _ArrowRelease(pWork);
@@ -492,9 +496,13 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
     pWork->cellRes[CHAR_NEGOOBJ] =
       GFL_CLGRP_CGR_Register( p_handle , NARC_gtsnego_nego_obj_NCGR ,
                               FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+
+
     pWork->cellRes[PLT_NEGOOBJ] =
       GFL_CLGRP_PLTT_RegisterEx(
-        p_handle ,NARC_gtsnego_nego_obj_NCLR , CLSYS_DRAW_SUB ,    0x20*_OBJPAL_NEGOOBJ_POS, 0, _OBJPAL_NEGOOBJ_NUM, pWork->heapID  );
+        p_handle ,NARC_gtsnego_nego_obj_NCLR , CLSYS_DRAW_SUB , 0x20*_OBJPAL_NEGOOBJ_POS, 0, _OBJPAL_NEGOOBJ_NUM, pWork->heapID  );
+
+
     pWork->cellRes[ANM_NEGOOBJ] =
       GFL_CLGRP_CELLANIM_Register(
         p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_nego_obj_NANR , pWork->heapID  );
@@ -545,9 +553,43 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
 }
 
 
+
+//--------------------------------------------------------------
+/**
+ * パレットが足りないので ともだちとジャンルとでパレット読み替え
+ */
+//--------------------------------------------------------------
+
+
+static void _paletteModeChange(GTSNEGO_DISP_WORK* pWork, int mode)
+{
+  ARCHANDLE* p_handle;
+    p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
+
+  if(mode==_PALMODE_LEVEL){  //ジャンル選択時
+    GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_NEGOOBJ] );
+    pWork->cellRes[PLT_NEGOOBJ] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,NARC_gtsnego_nego_obj_NCLR , CLSYS_DRAW_SUB , 0x20*_OBJPAL_NEGOOBJ_POS, 0, _OBJPAL_NEGOOBJ_NUM, pWork->heapID  );
+  }
+  else{  //待ち合わせ時
+    GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_MENUBAR] );
+    pWork->cellRes[PLT_MENUBAR] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,NARC_gtsnego_menu_bar_NCLR , CLSYS_DRAW_SUB ,    0x20*_OBJPAL_MENUBAR_POS, 0, _OBJPAL_MENUBAR_NUM, pWork->heapID  );
+  }
+  GFL_ARC_CloseDataHandle(p_handle);
+}
+
+
+
+
 void GTSNEGO_DISP_LevelInputInit(GTSNEGO_DISP_WORK* pWork)
 {
-	{
+
+  _paletteModeChange(pWork, _PALMODE_LEVEL);
+
+  {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
     //キャラパレット転送済み
@@ -677,7 +719,6 @@ void GTSNEGO_DISP_CrossIconDisp(GTSNEGO_DISP_WORK* pWork,APP_TASKMENU_WIN_WORK* 
     GFL_CLACT_WK_SetDrawEnable( pWork->crossIcon, FALSE );
     break;
   case _CROSSCUR_TYPE_ANY4:
-  case _CROSSCUR_TYPE_FRIEND4:
     GFL_CLACT_WK_SetDrawEnable( pWork->crossIcon, FALSE );
     if(pAppWin){
       APP_TASKMENU_WIN_SetActive( pAppWin, TRUE );
@@ -745,6 +786,20 @@ static void _ArrowRelease(GTSNEGO_DISP_WORK* pWork)
   }
 }
 
+void GTSNEGO_DISP_ArrowAnim(GTSNEGO_DISP_WORK* pWork,int i)
+{
+  int a = GFL_CLACT_WK_GetAnmSeq( pWork->curIcon[i]);
+  if(a<2){
+    a=1;
+  }
+  else{
+    a=3;
+  }
+  GFL_CLACT_WK_SetAnmSeq( pWork->curIcon[i] , a);
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[i] , TRUE );
+
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -754,32 +809,87 @@ static void _ArrowRelease(GTSNEGO_DISP_WORK* pWork)
  */
 //-----------------------------------------------------------------------------
 
-void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WORK* pMessageWork)
+void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, BOOL bCursor)
 {
-
+  _paletteModeChange(pWork, _PALMODE_FRIEND);
 	{
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
-
-
-    // サブ画面BG0スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_wait_under_bg2_NSCR,
-                                              GFL_BG_FRAME0_S, 0,
-                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-                                              pWork->heapID);
-
-//    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_wait_under_bg_NSCR,
-  //                                            GFL_BG_FRAME0_S, 0,
-    //                                          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-      //                                        pWork->heapID);
-    
+    pWork->pBGPanelScrAddr = GFL_ARCHDL_UTIL_LoadScreen(p_handle, NARC_gtsnego_nego_wait_under_bg2_NSCR,
+                                              FALSE, &pWork->pBGPanelScr, pWork->heapID);
     GFL_ARC_CloseDataHandle(p_handle);
 	}
- // pWork->bgscroll = 0;
-  _CreateScrollBarObj( pWork);
-
+  _CreateMenuBarObj(pWork);
+  _CreateScrollBarObj( pWork, bCursor);
   pWork->bgscrollRenew=TRUE;
+}
 
-//  _FriendListPlateDisp(pWork, pMessageWork);
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フレンド選択パネルを書く
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+static void GTSNEGO_DISP_FriendSelectPlateWrite(GTSNEGO_DISP_WORK* pWork, int index)
+{
+  u16* scrBuff = (u16*)pWork->pBGPanelScr->rawData;
+  int add = GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar);
+  int j=0,x,y;
+
+  for(y = 0; y < 6; y++){
+    for(x = 0;x<32;x++){
+      GFL_BG_ScrSetDirect(GFL_BG_FRAME0_S, x, y + index*6, scrBuff[j]+add);
+      j++;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フレンド選択パネルを消す
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+static void GTSNEGO_DISP_FriendSelectPlateClean(GTSNEGO_DISP_WORK* pWork, int index)
+{
+  u16* scrBuff = (u16*)pWork->pBGPanelScr->rawData;
+  int add = GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar);
+  int j=0,x,y;
+
+  for(y = 0; y < 6; y++){
+    for(x = 0;x<32;x++){
+      GFL_BG_ScrSetDirect(GFL_BG_FRAME0_S, x, y + index*6, scrBuff[31]+add);
+      j++;
+    }
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フレンド選択パネルを MYSTATUSをみて書き直す
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_FriendSelectPlateView(GTSNEGO_DISP_WORK* pWork, GAMEDATA* pGameData, int topindex)
+{
+  int i;
+  
+  for(i=0; i < SCROLL_PANEL_NUM;i++){
+    MYSTATUS* pMy = GTSNEGO_GetMyStatus(pGameData, topindex+i);
+    if(pMy){
+      GTSNEGO_DISP_FriendSelectPlateWrite(pWork, i);
+    }
+    else{
+      GTSNEGO_DISP_FriendSelectPlateClean(pWork, i);
+    }
+  }
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_S );
 }
 
 //----------------------------------------------------------------------------
@@ -798,8 +908,15 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
   for(i=0;i<SCROLL_PANEL_NUM;i++){
     if(pWork->unionOAM[i]){
       GFL_CLACT_WK_Remove(pWork->unionOAM[i]);
+      pWork->unionOAM[i]=NULL;
     }
   }
+
+  if(pWork->pBGPanelScrAddr){
+    GFL_HEAP_FreeMemory(pWork->pBGPanelScrAddr);
+    pWork->pBGPanelScrAddr=NULL;
+  }
+
   
   _DeleteScrollBarObj(pWork);
   
@@ -812,6 +929,8 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
 
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_S );
   GFL_ARC_CloseDataHandle(p_handle);
+  _RemoveMenuBarObj(pWork);
+
 }
 
 
@@ -881,8 +1000,8 @@ static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork)
 
   for(i = 0; i < WIFI_NEGOTIATION_DATAMAX;i++){
     MYSTATUS* pMyStatus = MyStatus_AllocWork(pWork->heapID);
-    MyStatus_SetProfileID(pMyStatus,12+i);
-    MyStatus_SetID(pMyStatus,12+i);
+    MyStatus_SetProfileID(pMyStatus,1+i);
+    MyStatus_SetID(pMyStatus,1+i);
     MyStatus_SetTrainerView(pMyStatus,i%16);
     MyStatus_SetMyNationArea(pMyStatus,1+i,1);
     WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),pMyStatus);
@@ -912,31 +1031,44 @@ static void _CreateMenuBarObj(GTSNEGO_DISP_WORK* pWork)
   GFL_CLACT_WK_SetDrawEnable( pWork->menubarObj, TRUE );
 }
 
+static void _RemoveMenuBarObj(GTSNEGO_DISP_WORK* pWork)
+{
+  if(pWork->menubarObj){
+    GFL_CLACT_WK_Remove(pWork->menubarObj);
+  }
+  pWork->menubarObj=NULL;
+}
 
 
-static void _CreateScrollBarObj(GTSNEGO_DISP_WORK* pWork)
+
+
+static void _CreateScrollBarObj(GTSNEGO_DISP_WORK* pWork, BOOL bCursor)
 {
   GFL_CLWK_DATA cellInitData;
   int i;
-  u16 buffx[]={250,250,128};
-  u16 buffy[]={192/2,192/2,16};
-  u16 oamno[]={4,10,9};
-  u16 bgpri[]={1,1,1};
+  u16 buffx[]={250,  250,  128};
+  u16 buffy[]={192/2,192/2, 16};
+  u16 oamno[]={4,10, 9};
+  u16 bgpri[]={1, 1, 1};
 
 
   for(i=0;i< _SCROLLBAR_OAM_NUM;i++){
-    cellInitData.pos_x = buffx[i];
-    cellInitData.pos_y = buffy[i];
-    cellInitData.anmseq = oamno[i];
-    cellInitData.softpri = i;
-    cellInitData.bgpri = bgpri[i];
-    pWork->scrollbarOAM[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                  pWork->cellRes[CHAR_NEGOOBJ],
-                                                  pWork->cellRes[PLT_NEGOOBJ],
-                                                  pWork->cellRes[ANM_NEGOOBJ],
-                                                  &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->scrollbarOAM[i] , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->scrollbarOAM[i], TRUE );
+    if(!bCursor && i == 0){
+    }
+    else{
+      cellInitData.pos_x = buffx[i];
+      cellInitData.pos_y = buffy[i];
+      cellInitData.anmseq = oamno[i];
+      cellInitData.softpri = i;
+      cellInitData.bgpri = bgpri[i];
+      pWork->scrollbarOAM[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                    pWork->cellRes[CHAR_NEGOOBJ],
+                                                    pWork->cellRes[PLT_NEGOOBJ],
+                                                    pWork->cellRes[ANM_NEGOOBJ],
+                                                    &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+      GFL_CLACT_WK_SetAutoAnmFlag( pWork->scrollbarOAM[i] , TRUE );
+      GFL_CLACT_WK_SetDrawEnable( pWork->scrollbarOAM[i], TRUE );
+    }
   }
 
 }
@@ -1120,9 +1252,11 @@ static void GTSNEGO_DISP_UnionWkScroll(GTSNEGO_DISP_WORK* pWork,int workIndex, i
   int i=workIndex;
   GFL_CLACTPOS pos;
 
-  GFL_CLACT_WK_GetPos(pWork->unionOAM[workIndex], &pos, CLSYS_DRAW_SUB);
-  pos.y += move;
-  GFL_CLACT_WK_SetPos(pWork->unionOAM[workIndex], &pos, CLSYS_DRAW_SUB);
+  if(pWork->unionOAM[workIndex]){
+    GFL_CLACT_WK_GetPos(pWork->unionOAM[workIndex], &pos, CLSYS_DRAW_SUB);
+    pos.y += move;
+    GFL_CLACT_WK_SetPos(pWork->unionOAM[workIndex], &pos, CLSYS_DRAW_SUB);
+  }
 }
 
 
@@ -1140,7 +1274,9 @@ void GTSNEGO_DISP_UnionListDown(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy)
   int i,endmark = SCROLL_PANEL_NUM-1;
 
   if(pMy){
-    GFL_CLACT_WK_Remove(pWork->unionOAM[0]);
+    if(pWork->unionOAM[0]){
+      GFL_CLACT_WK_Remove(pWork->unionOAM[0]);
+    }
     for(i = 0 ; i < endmark ; i++){  //場所スライド
       pWork->unionOAM[i] =pWork->unionOAM[i+1];
     }
@@ -1163,7 +1299,9 @@ void GTSNEGO_DISP_UnionListUp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy)
   int i,endmark = SCROLL_PANEL_NUM-1;
 
   if(pMy){
-    GFL_CLACT_WK_Remove(pWork->unionOAM[endmark]);
+    if(pWork->unionOAM[endmark]){
+      GFL_CLACT_WK_Remove(pWork->unionOAM[endmark]);
+    }
     for(i = endmark ; i > 0; i--){  //場所スライド
       pWork->unionOAM[i] =pWork->unionOAM[i-1];
     }
@@ -1172,3 +1310,83 @@ void GTSNEGO_DISP_UnionListUp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロールカーソルの位置
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+static int _getScrollCurPos(GTSNEGO_DISP_WORK* pWork,int pos,int max)
+{
+  if(pos == 0){
+    return 0;
+  }
+  else if(pos == (max-1)){
+    return SCROLLBAR_LENGTH;
+  }
+  
+  return (SCROLLBAR_LENGTH * pos) / max;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロールカーソルの位置
+ *	@param	
+ *	@return	index
+ */
+//-----------------------------------------------------------------------------
+
+static int _touchToCurcorPos(GTSNEGO_DISP_WORK* pWork,int y,int max)
+{
+  float yf = y - SCROLLBAR_TOP;
+  float length = SCROLLBAR_LENGTH;
+  float ansf;
+
+  length = length / max;
+  ansf = yf / length;
+
+  return (int)ansf;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロールバーのチップの位置変更
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_ScrollChipDisp(GTSNEGO_DISP_WORK* pWork,int index,int max)
+{
+  GFL_CLACTPOS pos;
+
+  GFL_CLACT_WK_GetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
+  pos.y = _getScrollCurPos(pWork,index, max)+SCROLLBAR_TOP;
+  GFL_CLACT_WK_SetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロールバーのチップの位置変更
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max)
+{
+
+  GFL_CLACTPOS pos;
+
+  GFL_CLACT_WK_GetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
+  pos.y = _touchToCurcorPos(pWork,y, max)+SCROLLBAR_TOP;
+  GFL_CLACT_WK_SetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
+
+}

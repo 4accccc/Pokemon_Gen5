@@ -519,9 +519,10 @@ void GTSNEGO_MESSAGE_DispClear(GTSNEGO_MESSAGE_WORK* pWork)
   
   for(i=0;i<_BMP_WINDOW_NUM;i++){
     if(pWork->mainDispWin[i]!=NULL){
+      GFL_BG_LoadScreenV_Req(GFL_BMPWIN_GetFrame(pWork->mainDispWin[i]));
       BmpWinFrame_Clear(pWork->mainDispWin[i], WINDOW_TRANS_OFF);
       GFL_BMPWIN_ClearScreen(pWork->mainDispWin[i]);
-      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+//      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
     }
   }
 }
@@ -718,9 +719,6 @@ static int _PrintMyStatusDisp(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMyStatus, i
   WORDSET_RegisterNumber(pWork->pWordSet, 1, MyStatus_GetID_Low(pMyStatus),
                          5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   WORDSET_RegisterCountryName( pWork->pWordSet, 2, MyStatus_GetMyNation(pMyStatus));
- // WORDSET_RegisterLocalPlaceName( pWork->pWordSet, 3, MyStatus_GetMyNation(pMyStatus),MyStatus_GetMyArea(pMyStatus));
-
-  OS_TPrintf("-->%x \n",&pWork->pExStrBuf);
 
   GFL_MSG_GetString( pWork->pMsgData, GTSNEGO_033, pWork->pExStrBuf );
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
@@ -797,13 +795,13 @@ void GTSNEGO_MESSAGE_FriendListDownEnd(GTSNEGO_MESSAGE_WORK* pWork)
   }
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
   //バッファ移動
-  pWork->MyStatusDispWin[ 0 ] = pWork->MyStatusDispWin[ 1 ];
-  pWork->MyStatusDispWin[ 1 ] = pWork->MyStatusDispWin[ 2 ];
-  pWork->MyStatusDispWin[ 2 ] = pWork->MyStatusDispWin[ 3 ];
-  pWork->MyStatusDispWin[ 3 ] = pWork->MyStatusDispWin[ 4 ];
-  pWork->MyStatusDispWin[ 4 ] = pWork->MyStatusDispWin[ 5 ];
-  pWork->MyStatusDispWin[ 5 ] = NULL;
-
+  {
+    int endmark = SCROLL_PANEL_NUM-1;
+    for(i = 0 ; i < endmark ; i++){  //場所スライド
+      pWork->MyStatusDispWin[ i ] = pWork->MyStatusDispWin[ i+1 ];
+    }
+    pWork->MyStatusDispWin[ endmark ] = NULL;
+  }
 
 }
 
@@ -844,14 +842,14 @@ void GTSNEGO_MESSAGE_FriendListUpEnd(GTSNEGO_MESSAGE_WORK* pWork)
   }
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
   //バッファ移動
-  pWork->MyStatusDispWin[ 5 ] = pWork->MyStatusDispWin[ 4 ];
-  pWork->MyStatusDispWin[ 4 ] = pWork->MyStatusDispWin[ 3 ];
-  pWork->MyStatusDispWin[ 3 ] = pWork->MyStatusDispWin[ 2 ];
-  pWork->MyStatusDispWin[ 2 ] = pWork->MyStatusDispWin[ 1 ];
-  pWork->MyStatusDispWin[ 1 ] = pWork->MyStatusDispWin[ 0 ];
-  pWork->MyStatusDispWin[ 0 ] = NULL;
 
-
+  {
+    int endmark = SCROLL_PANEL_NUM-1;
+    for(i = endmark ; i > 0; i--){  //場所スライド
+      pWork->MyStatusDispWin[i] =pWork->MyStatusDispWin[i-1];
+    }
+    pWork->MyStatusDispWin[0] = NULL;
+  }
 }
 
 //------------------------------------------------------------------------------

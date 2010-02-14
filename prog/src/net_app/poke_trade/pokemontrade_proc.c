@@ -2347,9 +2347,10 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
     }
   }
 
-  //パネルのスクロール
-  _panelScroll(pWork);
-
+//  if(!pWork->pCatchCLWK){  //つかんでる時は以下の動作にいかない
+    //パネルのスクロール
+    _panelScroll(pWork);
+ // }
   TOUCHBAR_Main(pWork->pTouchWork);   //タッチバー
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
   case TOUCHBAR_ICON_RETURN:
@@ -2588,11 +2589,13 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData)
     pWork->pMy = GAMEDATA_GetMyStatus( pGameData );
     pWork->pMyParty = GAMEDATA_GetMyPokemon(pGameData);
     pWork->pMailBlock = GAMEDATA_GetMailBlock(pGameData);
-    if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-      pWork->pFriend = GAMEDATA_GetMyStatusPlayer(pGameData, 1-GFL_NET_SystemGetCurrentID());
-    }
-    else{
-      pWork->pFriend = GAMEDATA_GetMyStatusPlayer(pGameData, 1);
+    if(pWork->pFriend==NULL){
+      if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+        pWork->pFriend = GAMEDATA_GetMyStatusPlayer(pGameData, 1-GFL_NET_SystemGetCurrentID());
+      }
+      else{
+        pWork->pFriend = GAMEDATA_GetMyStatusPlayer(pGameData, 1);
+      }
     }
   }
 #if PM_DEBUG
@@ -2647,7 +2650,7 @@ static void _savedataHeapEnd(POKEMON_TRADE_WORK* pWork,BOOL bParentWork)
   else{
     BOX_DAT_ExitManager(pWork->pBox);
     GFL_HEAP_FreeMemory(pWork->pMy);
-    GFL_HEAP_FreeMemory(pWork->pFriend);
+//    GFL_HEAP_FreeMemory(pWork->pFriend);
     GFL_HEAP_FreeMemory(pWork->pMyParty);
     GFL_HEAP_FreeMemory(pWork->pMailBlock );
   }
@@ -2921,8 +2924,12 @@ static GFL_PROC_RESULT PokemonTradeDemoProcInit( GFL_PROC * proc, int * seq, voi
   GFL_STD_MemCopy(pParent->pNPCPoke, pWork->recvPoke[1] , POKETOOL_GetWorkSize());
 
   IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, pParent->pMyPoke);
+  
   IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, pParent->pNPCPoke);
-
+  MCSS_SetVanishFlag( pWork->pokeMcss[1] );
+  
+  pWork->pMy = pParent->pMy;
+  pWork->pFriend = pParent->pNPC;
   
   POKMEONTRADE_IRCDEMO_ChangeDemo(pWork);
 
@@ -3096,3 +3103,19 @@ const GFL_PROC_DATA PokemonTradeDemoProcData = {
   PokemonTradeProcMain,
   PokemonTradeProcEnd,
 };
+
+
+//GTS用
+const GFL_PROC_DATA PokemonTradeGTSProcData = {
+  PokemonTradeDemoProcInit,
+  PokemonTradeProcMain,
+  PokemonTradeProcEnd,
+};
+
+//GTSSend用
+const GFL_PROC_DATA PokemonTradeGTSSendProcData = {
+  PokemonTradeDemoProcInit,
+  PokemonTradeProcMain,
+  PokemonTradeProcEnd,
+};
+

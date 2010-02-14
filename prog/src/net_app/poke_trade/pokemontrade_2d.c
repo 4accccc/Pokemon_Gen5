@@ -336,8 +336,6 @@ void IRC_POKETRADE_SubStatusInit(POKEMON_TRADE_WORK* pWork,int pokeposx, int bgt
 
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
 
-  OS_TPrintf("%d \n",pWork->subchar1);
-
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 nscr[bgtype],
 																				 frame, 0,

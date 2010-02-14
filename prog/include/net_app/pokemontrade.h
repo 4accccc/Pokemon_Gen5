@@ -59,8 +59,8 @@ typedef struct{
 
 ///ポケモンデモ呼び出し用パラメータ
 typedef struct{
-  POKEMONTRADE_PARAM aParam;
-  GAMEDATA* gamedata;
+  POKEMONTRADE_PARAM aParam;   // ※ここは入れないでください
+  GAMEDATA* gamedata;   ///< gamedata
   POKEMON_PARAM* pMyPoke;      ///< ユーザーのポケモン
   POKEMON_PARAM* pNPCPoke;  ///< NPCのポケモン
   MYSTATUS* pMy;    ///<自分のMYSTATUS
@@ -73,6 +73,8 @@ extern const GFL_PROC_DATA PokemonTradeIrcProcData;
 extern const GFL_PROC_DATA PokemonTradeWiFiProcData;
 extern const GFL_PROC_DATA PokemonTradeDemoProcData;
 extern const GFL_PROC_DATA PokemonTradeClubProcData;
+extern const GFL_PROC_DATA PokemonTradeGTSProcData;
+extern const GFL_PROC_DATA PokemonTradeGTSSendProcData;
 
 
 

@@ -257,7 +257,10 @@ void POKMEONTRADE_IRCDEMO_ChangeDemo(POKEMON_TRADE_WORK* pWork)
   pWork->mcssStop[0] = TRUE;
   MCSS_SetAnimeIndex(pWork->pokeMcss[0], 0);
   MCSS_SetAnmStopFlag( pWork->pokeMcss[0]);
-  
+  if(pWork->type==POKEMONTRADE_TYPE_EVENT){  //ƒfƒ‚‚Ì‚Æ‚«‚Í^‚ñ’†‚©‚ç
+    VecFx32 pos={_POKEMON_PLAYER_CENTER_POSX,_POKEMON_PLAYER_CENTER_POSY, _POKEMON_PLAYER_CENTER_POSZ};
+    MCSS_SetPosition( pWork->pokeMcss[0] ,&pos );
+  }
   _CHANGE_STATE(pWork,_changeDemo_ModelT1);
 }
 

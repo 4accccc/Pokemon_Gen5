@@ -16,7 +16,16 @@ typedef struct _GTSNEGO_DISP_WORK  GTSNEGO_DISP_WORK;
 #define _BUTTON_WIN_PAL   (12)  // ウインドウ
 #define _BUTTON_MSG_PAL   (11)  // メッセージフォント
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
-#define _TOUCHBAR_PAL  (8)  //タッチバーのパレット
+
+#define _TOUCHBAR_PAL  (15)  //タッチバーのパレット
+
+#define _OBJPAL_UNION_POS   (0)
+#define _OBJPAL_UNION_NUM   (8)
+#define _OBJPAL_NEGOOBJ_POS (8)
+#define _OBJPAL_NEGOOBJ_NUM (7)
+#define _OBJPAL_MENUBAR_POS (8)
+#define _OBJPAL_MENUBAR_NUM (1)
+
 
 // はいいいえのタイプ
 #define GTSNEGO_YESNOTYPE_INFO (0)
@@ -54,7 +63,6 @@ typedef enum
   _CROSSCUR_TYPE_FRIEND1,
   _CROSSCUR_TYPE_FRIEND2,
   _CROSSCUR_TYPE_FRIEND3,
-  _CROSSCUR_TYPE_FRIEND4,
   _CROSSCUR_TYPE_NONE,
 } CROSSCUR_TYPE;
 
@@ -120,7 +128,7 @@ extern void GTSNEGO_DISP_SettingSubBgControl(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_LevelInputInit(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_LevelInputFree(GTSNEGO_DISP_WORK* pWork);
 extern TOUCHBAR_WORK* GTSNEGO_DISP_GetTouchWork(GTSNEGO_DISP_WORK* pWork);
-extern void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WORK* pMessageWork);
+extern void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, BOOL bCursor);
 extern void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_CrossIconDisp(GTSNEGO_DISP_WORK* pWork,APP_TASKMENU_WIN_WORK* pAppWin , CROSSCUR_TYPE type);
 extern BOOL GTSNEGO_DISP_FriendListDownChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur);
@@ -131,6 +139,12 @@ extern int GTSNEGO_DISP_PanelScrollMain(GTSNEGO_DISP_WORK* pWork,int* EndTrg);
 extern void GTSNEGO_DISP_UnionListDisp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy, int index);
 extern void GTSNEGO_DISP_UnionListUp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy);
 extern void GTSNEGO_DISP_UnionListDown(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy);
+extern void GTSNEGO_DISP_ArrowAnim(GTSNEGO_DISP_WORK* pWork, int i);
+//extern void GTSNEGO_DISP_FriendSelectPlateWrite(GTSNEGO_DISP_WORK* pWork, int index);
+//extern void GTSNEGO_DISP_FriendSelectPlateClean(GTSNEGO_DISP_WORK* pWork, int index);
+extern void GTSNEGO_DISP_FriendSelectPlateView(GTSNEGO_DISP_WORK* pWork, GAMEDATA* pGameData, int topindex);
+extern void GTSNEGO_DISP_ScrollChipDisp(GTSNEGO_DISP_WORK* pWork,int pos,int max);
+extern void GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max);
 
 
 
