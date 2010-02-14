@@ -27,8 +27,8 @@ _EVENT_DATA_END //èIóπ
 /**************************************************************/
 /*    ê}ä”ï]âøÅFÉAÉâÉâÉMîéémÅiñ∫Åj                            */
 /**************************************************************/
-EVENT_START ev_zukan_daughter
-
+ev_zukan_daughter:
+{
   _PLAYER_NAME( 0 )
   _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_01 )
   _YES_NO_WIN( SCWK_ANSWER )
@@ -51,14 +51,15 @@ EVENT_START ev_zukan_daughter
   ENDIF
 
   _CHG_LOCAL_SCR
-EVENT_END
+}
+
 
 
 /**************************************************************/
 /*    ê}ä”ï]âøÅFÉAÉâÉâÉMîéémÅiïÉÅj                            */
 /**************************************************************/
-EVENT_START ev_zukan_father
-
+ev_zukan_father:
+{
   _PLAYER_NAME( 0 )
   _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase_01 )
   _YES_NO_WIN( SCWK_ANSWER )
@@ -83,18 +84,18 @@ EVENT_START ev_zukan_father
   ENDIF
 
   _CHG_LOCAL_SCR
-EVENT_END
+}
 
 /**************************************************************/
 /*    ê}ä”ï]âøÅFÉpÉ\ÉRÉìÇ©ÇÁ                                  */
 /**************************************************************/
-EVENT_START ev_zukan_machine
-
+ev_zukan_machine:
+{
   _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_AUTO, HYOUKA_MSGID, HYOUKA_COUNT )
   _SYSWIN_MSG_DOWN( HYOUKA_MSGID )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   _CHG_LOCAL_SCR
+}
 
-EVENT_END
 
