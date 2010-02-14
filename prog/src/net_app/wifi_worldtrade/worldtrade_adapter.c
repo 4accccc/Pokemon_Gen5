@@ -232,7 +232,7 @@ void WT_PRINT_Init( WT_PRINT *wk, const CONFIG *cfg )
 
   wk->tcbsys  = GFL_TCBL_Init( HEAPID_WORLDTRADE, HEAPID_WORLDTRADE, 32, 32 );
   wk->cfg     = cfg;
-  wk->font    = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_WORLDTRADE );
+  wk->font    = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WORLDTRADE );
   wk->que     = PRINTSYS_QUE_Create( HEAPID_WORLDTRADE );
 
 
@@ -320,7 +320,7 @@ void WT_PRINT_Main( WT_PRINT *wk )
 BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup )
 {
   int i;
-  BOOL ret = TRUE;
+  BOOL ret = FALSE;
 
   for( i = 0; i < WT_PRINT_STREAM_MAX; i++ )
   {
@@ -329,12 +329,8 @@ BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup )
     {
       if( PRINTSYS_PrintStreamGetState(setup->stream[i]) != PRINTSTREAM_STATE_DONE )
       {
-        ret &= FALSE;
+        ret = TRUE;
       }
-    }
-    else
-    { 
-      ret &= TRUE;
     }
   }
 

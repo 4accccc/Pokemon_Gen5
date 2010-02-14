@@ -71,7 +71,7 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 
 	WorldTrade_ExitSystem( wk );
 
-	MORI_PRINT( "heap remain RAM = %d\n", GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
+	MORI_PRINT( "heap remain RAM = %d\n", GFL_HEAP_GetHeapFreeSize( HEAPID_WORLDTRADE ));
 	
   wk->sub_proc_wk = GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, sizeof(PSTATUS_DATA) );
   GFL_STD_MemClear( wk->sub_proc_wk, sizeof(PSTATUS_DATA) );

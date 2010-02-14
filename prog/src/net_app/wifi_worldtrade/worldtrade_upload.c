@@ -11,6 +11,7 @@
 #ifdef PM_DEBUG
 // コメントをはずすと必ずアップロードで失敗する
 //#define DEBUG_UPLOAD_ERROR
+#define DEBUG_UPLOAD_DIRTY_NONE   //不正チェックで必ず成功する
 #endif
 
 // サーバー確認からダウンロードに流れる時にﾌｪｰﾄﾞｱｳﾄしないようにする版
@@ -784,7 +785,11 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
     if( wk->evilcheck_data.status_code == 1 )
     { 
       //不正ポケモンかチェック
+#ifdef DEBUG_UPLOAD_DIRTY_NONE
+      if(1)
+#else
       if( NHTTP_RAP_EVILCHECK_Get(&wk->evilcheck_data) == 0 )
+#endif
       { 
         OS_TPrintf( "不正検査完了！\n" );
         wk->subprocess_seq = wk->evilcheck_mode;
