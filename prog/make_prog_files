@@ -373,7 +373,8 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         field/event_egg_birth.c \
         app/townmap/townmap_util.c \
         field/scrcmd_easytalk.c \
-        field/scrcmd_weather.c
+        field/scrcmd_weather.c \
+        debug/debug_mystery_card.c
 
 
 # wifiプログラム
@@ -1272,7 +1273,6 @@ SRCS_OVERLAY_MYSTERY = net_app/mystery/mystery.c \
                       net_app/mystery/mystery_album.c \
                       net_app/mystery/mystery_net.c
 
-
 # CGEAR WIRELESS
 #===> SRCS_OVERLAY_DPW_COMMON
 SRCS_OVERLAY_CG_WIRELESS   = net_app/cg_wireless/cg_wireless_menu.c
@@ -1359,6 +1359,7 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 #===> SRCS_OVERLAY_DPW_COMMON
 #===> SRCS_OVERLAY_WIFI_LOGIN
 #===> SRCS_OVERLAY_POKE_STATUS
+#===> SRCS_OVERLAY_POKEMON_TRADE
 SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 													net_app/wifi_worldtrade/worldtrade_box.c \
 													net_app/wifi_worldtrade/worldtrade_demo.c \
@@ -1599,6 +1600,7 @@ SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 #===> SRCS_OVERLAY_BOX
 #===> SRCS_OVERLAY_UI_COMMON
 #===> SRCS_OVERLAY_POKE_STATUS
+#===> SRCS_OVERLAY_WORLDTRADE
 SRCS_OVERLAY_SHINKA_DEMO	= demo/shinka_demo/shinka_demo.c \
 													  demo/shinka_demo/shinka_demo_graphic.c \
 													  demo/shinka_demo/shinka_demo_view.c
@@ -1609,7 +1611,7 @@ SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c
 
 
 #	名木橋デバッグ
-#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_UI_DEBUG
 SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_irc_name.c \
 																test/nagihashi/debug_template.c \

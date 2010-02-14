@@ -92,6 +92,8 @@
 
 #include "gamesystem/pm_weather.h"
 
+#include "debug/debug_mystery_card.h"
+
 FS_EXTERN_OVERLAY( d_iwasawa );
 
 //======================================================================
@@ -213,6 +215,9 @@ static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *l
 static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work );
 
 static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -263,8 +268,10 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR39, debugMenuCallProc_MyItemMax },       //アイテム最大
   { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg },          //タマゴ作成
   { DEBUG_FIELD_MAKE_UNDATA,   debugMenuCallProc_DebugMakeUNData }, //国連データ作成
+  { DEBUG_FIELD_MYSTERY_00, debugMenuCallProc_MakeMysteryCardList },//ふしぎなおくりものカード作成
 
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
+  { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
   { DEBUG_FIELD_GPOWER, debugMenuCallProc_GPowerList},      //Gパワー
   { DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },  //通信開始
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },  //ともだちコード配信
@@ -277,7 +284,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 
   { DEBUG_FIELD_TITLE_05, (void*)BMPMENULIST_LABEL },       //○スタッフ用
   { DEBUG_FIELD_STR47, debugMenu_ControlShortCut },           //Yボタン登録最大
-  { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
   { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu }, //GTSネゴ
   { DEBUG_FIELD_STR55,   debugMenuCallProc_CGEARPictureSave },//Cギアー写真
   { DEBUG_FIELD_STR21 , debugMenuCallProc_MusicalSelect },    //ミュージカル
@@ -309,6 +315,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   #define QuickJumpCode   DEBUG_FIELD_STR03
 #elif defined DEBUG_ONLY_FOR_murakami_naoto
   #define QuickJumpCode   DEBUG_FIELD_STR03
+#elif defined DEBUG_ONLY_FOR_ohno
+  #define QuickJumpCode   DEBUG_FIELD_STR19
 //#elif defined DEBUG_ONLY_FOR_
 //  #define QuickJumpCode
 #endif
@@ -4976,25 +4984,11 @@ static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work )
 //  デバッグメニュー　フィールドわざ
 //======================================================================
 //--------------------------------------------------------------
-/// DEBUG_FIELDSKILL_EVENT_WORK
-//--------------------------------------------------------------
-typedef struct
-{
-  HEAPID heapID;
-  GAMESYS_WORK *gmSys;
-  GMEVENT *gmEvent;
-  FIELDMAP_WORK *fieldWork;
-  FLDMENUFUNC *menuFunc;
-  DEBUG_MENU_CALLPROC call_proc;
-  DEBUG_MENU_EVENT_WORK *wk;
-}DEBUG_FIELDSKILL_EVENT_WORK;
-
-//--------------------------------------------------------------
 /// proto
 //--------------------------------------------------------------
 static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, void *wk );
 
-static const FLDMENUFUNC_LIST DATA_SubFieldSkillList[FIELD_SUBSCREEN_MODE_MAX] =
+static const FLDMENUFUNC_LIST DATA_SubFieldSkillList[] =
 {
   { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },              //波乗り
   { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },               //怪力
@@ -5034,6 +5028,9 @@ static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *wk )
   
   *work  = temp;
   work->call_proc = NULL;
+
+  work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugSubFieldSkillListSelectData );
+
   return( TRUE );
 }
 
@@ -5052,7 +5049,6 @@ static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, voi
   
   switch( (*seq) ){
   case 0:
-    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugSubFieldSkillListSelectData );
     (*seq)++;
     break;
   case 1:
@@ -5089,4 +5085,94 @@ static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, voi
   return( GMEVENT_RES_CONTINUE );
 }
 
+//======================================================================
+//  デバッグメニュー　ふしぎなおくりもの作成
+//======================================================================
+//--------------------------------------------------------------
+/// proto
+//--------------------------------------------------------------
 
+static const FLDMENUFUNC_LIST DATA_SubMysteryCardMakeList[] =
+{
+  { DEBUG_FIELD_MYSTERY_01, debugMenuCallProc_MakeMysteryCardPoke },              //ポケモン作成
+  { DEBUG_FIELD_MYSTERY_02, debugMenuCallProc_MakeMysteryCardItem },               //道具作成
+};
+
+static const DEBUG_MENU_INITIALIZER DebugSubMysteryCardMakeData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_SubMysteryCardMakeList),
+  DATA_SubMysteryCardMakeList,
+  &DATA_DebugMenuList_ZoneSel, //流用
+  1, 1, 16, 17,
+  NULL,
+  NULL
+};
+
+
+static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *wk )
+{ 
+  GMEVENT *event = wk->gmEvent;
+  DEBUG_MENU_EVENT_WORK   temp  = *wk;
+  DEBUG_MENU_EVENT_WORK   *work;
+  
+  //イベント流用
+  GMEVENT_Change( event,
+    debugMenuFieldSkillListEvent, sizeof(DEBUG_MENU_EVENT_WORK) );
+  
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_MENU_EVENT_WORK) );
+  
+  *work  = temp;
+  work->call_proc = NULL;
+
+  work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugSubMysteryCardMakeData );
+
+  return( TRUE );
+}
+
+static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  MYSTERY_DATA *p_mystery_sv  = SaveData_GetMysteryData( pSave);
+  GIFT_PACK_DATA  data;
+  int i;
+
+  for( i = 1; i < 2048; i++ )
+  { 
+    if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
+    { 
+
+      DEBUG_MYSTERY_SetGiftPokeData( &data, i );
+      MYSTERYDATA_SetCardData( p_mystery_sv, &data );
+
+      OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
+      break;
+    }
+  }
+
+
+  return FALSE;
+}
+static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  MYSTERY_DATA *p_mystery_sv  = SaveData_GetMysteryData( pSave);
+  GIFT_PACK_DATA  data;
+  int i;
+
+  for( i = 1; i < 2048; i++ )
+  { 
+    if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
+    { 
+
+      DEBUG_MYSTERY_SetGiftItemData( &data, i );
+      MYSTERYDATA_SetCardData( p_mystery_sv, &data );
+
+      OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
+      break;
+    }
+  }
+
+
+  return FALSE;
+}

@@ -102,7 +102,6 @@ SUBDIRS	=	wmi \
 			config \
 			narc_cpy \
 			pokeicon \
-			zukan_data_old \
             b_bag \
             b_plist \
 		  regulation \
