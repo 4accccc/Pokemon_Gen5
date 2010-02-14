@@ -128,6 +128,10 @@ BMPMENULIST_WORK * BmpMenuList_Set(
     lw->hed.line = lw->hed.count;
   }
 
+  //カーソルの位置がラベルでなくなるまで移動
+  ListMoveUpDownCheck( lw, 0, 1, LIST_DOWN );
+
+
   // BMPカーソル色変更
 //  BMPCURSOR_ChangeColor( lw->cursor,
 //    GF_PRINTCOLOR_MAKE(lw->hed.f_col,lw->hed.s_col,lw->hed.b_col) );

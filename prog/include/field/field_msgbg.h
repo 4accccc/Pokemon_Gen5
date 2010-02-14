@@ -150,6 +150,8 @@ typedef struct
   u16   bmppos_y;     //表示座標Y キャラ単位
   u16   bmpsize_x;      //表示サイズX キャラ単位
   u16   bmpsize_y;      //表示サイズY キャラ単位
+	//一列表示ごとのコールバック関数
+	BMPMENULIST_PRINT_CALLBACK icon;
 }FLDMENUFUNC_HEADER;
 
 //======================================================================

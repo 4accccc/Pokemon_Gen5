@@ -113,6 +113,12 @@ FS_EXTERN_OVERLAY( d_iwasawa );
 //======================================================================
 //  proto
 //======================================================================
+static FLDMENUFUNC * DEBUGFLDMENU_InitExPos(
+    FIELDMAP_WORK * fieldmap, HEAPID heapID,
+    const DEBUG_MENU_INITIALIZER * init, u16 list_pos, u16 cursor_pos );
+static void	DebugMenu_IineCallBack(BMPMENULIST_WORK* lw,u32 param,u8 y);
+static u32 DebugMenu_GetQuickJumpIdx( u32 strID );
+
 static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk );
 
 static BOOL debugMenuCallProc_OpenStartComm( DEBUG_MENU_EVENT_WORK *wk );
@@ -206,6 +212,8 @@ static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *l
   HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
 static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work );
 
+static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *p_wk );
+
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -215,63 +223,85 @@ static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work );
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
-  { DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump },
-  { DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },
-  { DEBUG_FIELD_STR43, debugMenuCallProc_Jump },
-  { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },
-  { DEBUG_FIELD_STR02, debugMenuCallProc_ControlLinerCamera },
-  { DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera },
-  { DEBUG_FIELD_EVENT_CONTROL, debugMenuCallProc_EventFlagScript },
-  { DEBUG_FIELD_STR03, debugMenuCallProc_ScriptSelect },
-  { DEBUG_FIELD_STR04, debugMenuCallProc_GameEnd },
-  { DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },
-  { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},
-  { DEBUG_FIELD_GPOWER, debugMenuCallProc_GPowerList},
-  { DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },
-  { DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },
-  { DEBUG_FIELD_STR60, debugMenuCallProc_ForceSave },
-  { DEBUG_FIELD_STR53, debugMenuCallProc_UseMemoryDump },
-  { DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },
-  { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },
-  { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu },
-  { DEBUG_FIELD_STR55,   debugMenuCallProc_CGEARPictureSave },
-  { DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },
-  { DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },
-  { DEBUG_FIELD_STR16, debugMenuCallProc_WeatherList },
-  { DEBUG_FIELD_STR61, debugMenuCallProc_CaptureList },
-  { DEBUG_FIELD_STR_SUBSCRN, debugMenuCallProc_SubscreenSelect },
-  { DEBUG_FIELD_STR21 , debugMenuCallProc_MusicalSelect },
-  { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },
-  { DEBUG_FIELD_STR41, debugMenuCallProc_DebugMakePoke },
-  { DEBUG_FIELD_STR32, debugMenuCallProc_DebugItem },
-  { DEBUG_FIELD_STR37, debugMenuCallProc_BoxMax },
-  { DEBUG_FIELD_STR39, debugMenuCallProc_MyItemMax },
-  { DEBUG_FIELD_STR36, debugMenuCallProc_ControlFog },
-  { DEBUG_FIELD_STR40, debugMenuCallProc_ChangePlayerSex },
-  { DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },
-  { DEBUG_FIELD_STR48, debugMenuCallProc_GDS },
-  { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },
-  { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },
-  { DEBUG_FIELD_STR47, debugMenu_ControlShortCut },
-  { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },
-  { DEBUG_FIELD_STR50, debugMenuCallProc_WazaOshie },
-  { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },
-  { DEBUG_FIELD_SEASON_DISPLAY, debugMenuCallProc_SeasonDisplay }, 
-  { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake }, 
-  { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas }, 
-  { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },
-  { DEBUG_FIELD_ANANUKENOHIMO, debugMenuCallProc_Ananukenohimo }, 
-  { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru }, 
-  { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport }, 
-  { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d }, 
-  { DEBUG_FIELD_MVPOKE,   debugMenuCallProc_DebugMvPokemon }, 
-  { DEBUG_FIELD_STR62,   debugMenuCallProc_BBDColor }, 
-  { DEBUG_FIELD_FOG_TEST,   debugMenuCallProc_FogLightTest },
-  { DEBUG_FIELD_ENCEFF, debugMenuCallProc_EncEffList },
-  { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg },
-  { DEBUG_FIELD_MAKE_UNDATA,   debugMenuCallProc_DebugMakeUNData },
-  { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },
+  { DEBUG_FIELD_TITLE_00, (void*)BMPMENULIST_RABEL },       //○ジャンプ（移動用）
+  { DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump },    //空を飛ぶ
+  { DEBUG_FIELD_STR43, debugMenuCallProc_Jump },            //ジャンプ（ユニオン等）
+  { DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },   //ゾーン選択ジャンプ
+  { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},  //四季ジャンプ
+
+  { DEBUG_FIELD_TITLE_02, (void*)BMPMENULIST_RABEL },       //○フィールド
+  { DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },    //座標をみる
+  { DEBUG_FIELD_STR02, debugMenuCallProc_ControlLinerCamera },  //カメラ簡単操作
+  { DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera }, //カメラ全部操作
+  { DEBUG_FIELD_EVENT_CONTROL, debugMenuCallProc_EventFlagScript }, //イベント操作
+  { DEBUG_FIELD_STR03, debugMenuCallProc_ScriptSelect },    //スクリプト実行
+  { DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },      //カメラサンプル
+  { DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },        //モデルリスト
+  { DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },      //ライト
+  { DEBUG_FIELD_STR16, debugMenuCallProc_WeatherList },       //てんき
+  { DEBUG_FIELD_STR36, debugMenuCallProc_ControlFog },        //フォグ操作
+  { DEBUG_FIELD_STR_SUBSCRN, debugMenuCallProc_SubscreenSelect }, //下画面操作
+  { DEBUG_FIELD_FSKILL, debugMenuCallProc_FieldSkillList },  //フィールド技（波乗り、怪力等）
+  { DEBUG_FIELD_MVPOKE,   debugMenuCallProc_DebugMvPokemon },     //いどうポケモン
+  { DEBUG_FIELD_STR62,   debugMenuCallProc_BBDColor },            //ビルボードの色
+  { DEBUG_FIELD_FOG_TEST,   debugMenuCallProc_FogLightTest },     //FOG表現
+  { DEBUG_FIELD_ENCEFF, debugMenuCallProc_EncEffList },           //エンカウントエフェクト
+
+  { DEBUG_FIELD_TITLE_01, (void*)BMPMENULIST_RABEL },       //○システム
+  { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },     //フラグ操作
+  { DEBUG_FIELD_STR04, debugMenuCallProc_GameEnd },         //ゲーム終了
+  { DEBUG_FIELD_STR60, debugMenuCallProc_ForceSave },       //強制セーブ
+  { DEBUG_FIELD_STR53, debugMenuCallProc_UseMemoryDump },   //メモリ状況
+  { DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },  //時間
+  { DEBUG_FIELD_STR61, debugMenuCallProc_CaptureList },     //キャプチャ
+  { DEBUG_FIELD_STR40, debugMenuCallProc_ChangePlayerSex },   //主人公性別変更
+
+  { DEBUG_FIELD_TITLE_03, (void*)BMPMENULIST_RABEL },       //○データ作成
+  { DEBUG_FIELD_STR41, debugMenuCallProc_DebugMakePoke },   //ポケモン作成
+  { DEBUG_FIELD_STR32, debugMenuCallProc_DebugItem },       //アイテム作成
+  { DEBUG_FIELD_STR37, debugMenuCallProc_BoxMax },          //ボックス最大
+  { DEBUG_FIELD_STR39, debugMenuCallProc_MyItemMax },       //アイテム最大
+  { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg },          //タマゴ作成
+  { DEBUG_FIELD_MAKE_UNDATA,   debugMenuCallProc_DebugMakeUNData }, //国連データ作成
+
+  { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_RABEL },       //○つうしん
+  { DEBUG_FIELD_GPOWER, debugMenuCallProc_GPowerList},      //Gパワー
+  { DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },  //通信開始
+  { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },  //ともだちコード配信
+  { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake },             //サケ操作
+  { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas },            //アトラス操作
+
+  { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_RABEL },       //○アプリ
+  { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },        //UIテンプレート
+  { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d },             //３Dデモ
+
+  { DEBUG_FIELD_TITLE_05, (void*)BMPMENULIST_RABEL },       //○スタッフ用
+  { DEBUG_FIELD_STR47, debugMenu_ControlShortCut },           //Yボタン登録最大
+  { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
+  { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu }, //GTSネゴ
+  { DEBUG_FIELD_STR55,   debugMenuCallProc_CGEARPictureSave },//Cギアー写真
+  { DEBUG_FIELD_STR21 , debugMenuCallProc_MusicalSelect },    //ミュージカル
+  { DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },           //GTS
+  { DEBUG_FIELD_STR48, debugMenuCallProc_GDS },               //GDS
+  { DEBUG_FIELD_STR50, debugMenuCallProc_WazaOshie },         //技教え
+  { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },   //WIFI世界対戦
+  { DEBUG_FIELD_SEASON_DISPLAY, debugMenuCallProc_SeasonDisplay },//季節表示
+  { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },        //バトルレコーダー
+  { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
 };
+
+
+//------------------------------------------------------------------------
+/*
+ *  QUICKSJUMP
+ *  上記のリストのSTRIDを書くと、STARTボタンをおしたときに、その位置までカーソルが動きます
+ */
+//------------------------------------------------------------------------
+#if defined DEBUG_ONLY_FOR_toru_nagihashi
+  #define QuickJumpCode   DEBUG_FIELD_STR42
+//#elif defined DEBUG_ONLY_FOR_
+//  #define QuickJumpCode
+#endif
 
 //--------------------------------------------------------------
 /// メニューヘッダー
@@ -296,6 +326,7 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuListHeader =
   0,    //表示座標Y キャラ単位
   0,    //表示サイズX キャラ単位
   0,    //表示サイズY キャラ単位
+  DebugMenu_IineCallBack,  //１行ごとのコールバック
 };  
 
 //--------------------------------------------------------------
@@ -354,7 +385,7 @@ GMEVENT * DEBUG_EVENT_DebugMenu(
 //--------------------------------------------------------------
 static FLDMENUFUNC * DebugMenuInitCore(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
-    const DEBUG_MENU_INITIALIZER * init, void* cb_work )
+    const DEBUG_MENU_INITIALIZER * init, void* cb_work, u16 list_pos, u16 cursor_pos )
 {
   GAMESYS_WORK * gsys;
   FLDMENUFUNC * ret;
@@ -385,7 +416,7 @@ static FLDMENUFUNC * DebugMenuInitCore(
     u8 sy = (max * 2 < init->sy) ? max * 2 : init->sy;
     FLDMENUFUNC_InputHeaderListSize( &menuH, max, init->px, init->py, init->sx, sy );
   }
-  ret = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
+  ret = FLDMENUFUNC_AddMenuList( msgBG, &menuH, listdata, list_pos, cursor_pos );
   GFL_MSG_Delete( msgData );
   return ret;
 }
@@ -396,7 +427,7 @@ FLDMENUFUNC * DEBUGFLDMENU_Init(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
     const DEBUG_MENU_INITIALIZER * init )
 {
-  return DebugMenuInitCore( fieldmap, heapID, init, NULL );
+  return DebugMenuInitCore( fieldmap, heapID, init, NULL, 0, 0 );
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -404,7 +435,14 @@ FLDMENUFUNC * DEBUGFLDMENU_InitEx(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
     const DEBUG_MENU_INITIALIZER * init, void* cb_work )
 {
-  return DebugMenuInitCore( fieldmap, heapID, init, cb_work );
+  return DebugMenuInitCore( fieldmap, heapID, init, cb_work, 0, 0 );
+}
+
+static FLDMENUFUNC * DEBUGFLDMENU_InitExPos(
+    FIELDMAP_WORK * fieldmap, HEAPID heapID,
+    const DEBUG_MENU_INITIALIZER * init, u16 list_pos, u16 cursor_pos )
+{
+  return DebugMenuInitCore( fieldmap, heapID, init, NULL, list_pos, cursor_pos );
 }
 
 //--------------------------------------------------------------
@@ -431,6 +469,15 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
       
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
+#ifdef QuickJumpCode
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+        {
+          u32 idx = DebugMenu_GetQuickJumpIdx( QuickJumpCode );
+          FLDMENUFUNC_DeleteMenu( work->menuFunc );
+          work->menuFunc  = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID,  &DebugMenuData, idx-4, 3 );
+        }
+#endif
+
         break;
       }else if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
         (*seq)++;
@@ -456,6 +503,47 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
   }
 
   return( GMEVENT_RES_CONTINUE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  １行ごとのコールバック
+ *
+ *	@param	lw    ワーク
+ *	@param	param 引数
+ *	@param	y     Y位置
+ */
+//-----------------------------------------------------------------------------
+static void	DebugMenu_IineCallBack(BMPMENULIST_WORK* lw,u32 param,u8 y)
+{
+	if(param == BMPMENULIST_RABEL){
+		BmpMenuList_TmpColorChange( lw,4,0,4);
+	}else{
+		BmpMenuList_TmpColorChange(lw,1,0,2);
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  関数の位置を取得
+ *
+ *	@param	void *p_adrs  サーチする関数
+ *
+ *	@return 関数のインデックス
+ */
+//-----------------------------------------------------------------------------
+static u32 DebugMenu_GetQuickJumpIdx( u32 strID )
+{ 
+  int i;
+  for( i = 0; i < NELEMS(DATA_DebugMenuList); i++ )
+  { 
+    if( DATA_DebugMenuList[i].str_id == strID )
+    { 
+      return i;
+    }
+  }
+  GF_ASSERT_MSG( 0, "デバッグメニューのクイックジャンプが間違っています\n" );
+  return 0;
 }
 
 //======================================================================
@@ -4856,4 +4944,122 @@ static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work )
 {
   return GPOWER_ID_MAX + 1; // +1 = 「全てリセット」
 }
+
+//======================================================================
+//  デバッグメニュー　フィールドわざ
+//======================================================================
+//--------------------------------------------------------------
+/// DEBUG_FIELDSKILL_EVENT_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  FLDMENUFUNC *menuFunc;
+  DEBUG_MENU_CALLPROC call_proc;
+  DEBUG_MENU_EVENT_WORK *wk;
+}DEBUG_FIELDSKILL_EVENT_WORK;
+
+//--------------------------------------------------------------
+/// proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, void *wk );
+
+static const FLDMENUFUNC_LIST DATA_SubFieldSkillList[FIELD_SUBSCREEN_MODE_MAX] =
+{
+  { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },              //波乗り
+  { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },               //怪力
+  { DEBUG_FIELD_ANANUKENOHIMO, debugMenuCallProc_Ananukenohimo }, //穴ヌケの紐
+  { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru },         //穴を掘る
+  { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport },           //テレポート
+};
+
+static const DEBUG_MENU_INITIALIZER DebugSubFieldSkillListSelectData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_SubFieldSkillList),
+  DATA_SubFieldSkillList,
+  &DATA_DebugMenuList_ZoneSel, //流用
+  1, 1, 16, 17,
+  NULL,
+  NULL
+};
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　フィールド技リスト
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT *event = wk->gmEvent;
+  DEBUG_MENU_EVENT_WORK   temp  = *wk;
+  DEBUG_MENU_EVENT_WORK   *work;
+  
+  GMEVENT_Change( event,
+    debugMenuFieldSkillListEvent, sizeof(DEBUG_MENU_EVENT_WORK) );
+  
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_MENU_EVENT_WORK) );
+  
+  *work  = temp;
+  work->call_proc = NULL;
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：フィールド技リスト
+ * @param event GMEVENT
+ * @param seq   シーケンス
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_MENU_EVENT_WORK *work = wk;
+  
+  switch( (*seq) ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugSubFieldSkillListSelectData );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      u32 ret;
+      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_NULL ){  //操作無し
+        break;
+      }else if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
+        (*seq)++;
+      }else if( ret != FLDMENUFUNC_CANCEL ){  //決定
+        work->call_proc = (DEBUG_MENU_CALLPROC)ret;
+        (*seq)++;
+      }
+    }
+    break;
+
+  case 2:
+    {
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      
+      if( work->call_proc != NULL ){
+        if( work->call_proc(work) == TRUE ){
+          return( GMEVENT_RES_CONTINUE );
+        }
+      }
+      
+      return( GMEVENT_RES_FINISH );
+    }
+    break;
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
+
 

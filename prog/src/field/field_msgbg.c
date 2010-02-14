@@ -1365,7 +1365,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
 	FLDMENUFUNC_LISTDATA *pMenuListData,
   u16 list_pos, u16 cursor_pos )
 {
-  return FLDMENUFUNC_AddMenuListEx(fmb, pMenuHead, pMenuListData, list_pos, cursor_pos, NULL, NULL, NULL);
+  return FLDMENUFUNC_AddMenuListEx(fmb, pMenuHead, pMenuListData, list_pos, cursor_pos, NULL, pMenuHead->icon, NULL);
 }
 
 //--------------------------------------------------------------
@@ -1717,6 +1717,7 @@ static void FldMenuFuncH_BmpMenuListH(
 	menuH->page_skip = fmenuH->page_skip;	//ページスキップタイプ
 	menuH->font_size_x = fmenuH->font_size_x;	//文字サイズX(ドット
 	menuH->font_size_y = fmenuH->font_size_y;	//文字サイズY(ドット
+  menuH->icon = fmenuH->icon;
 }
 
 //======================================================================
