@@ -267,10 +267,6 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	//螺旋階段にある炎のアニメをループ再生
 	_BMODEL_DIRECT_ANIME_SET_LOOP( SCR_BMID_EVENT, 24, 16 )
 	
-	//主人公：上を向く
-//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
-//	_OBJ_ANIME_WAIT()
-	
 	//登りきったところでウェイト
 	_TIME_WAIT( 30 )
 	
@@ -278,9 +274,9 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//炎があがるＳＥを再生【仮】
-	_SE_PLAY( SEQ_SE_KOUKA_H )
-	_SE_PLAY( SEQ_SE_TOUJOU_SMALL )
+	//炎があがるＳＥを再生
+	_SE_PLAY( SEQ_SE_FLD_104 )
+	_SE_PLAY( SEQ_SE_FLD_104 )
 	
 	//四天王横にある炎のアニメコントローラを作成
 	_BMODEL_ANIME_CREATE( BM_ANIME_ID2, SCR_BMID_EVENT, 16, 8 )
@@ -312,13 +308,6 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	
 	
 EVENT_END
-
-//--------------------------------------------------------------------
-//主人公：上を向く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_stay_walk_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //主人公：上へ進む１
