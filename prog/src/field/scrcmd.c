@@ -83,6 +83,7 @@
 #include "scrcmd_sxy.h"
 #include "scrcmd_easytalk.h"
 #include "scrcmd_weather.h"
+#include "scrcmd_postman.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
@@ -465,6 +466,16 @@ VMCMD_RESULT EvCmdDebugPrintWk( VMHANDLE * core, void *wk )
   u16         val = SCRCMD_GetVMWorkValue( core, wk );  // ÉRÉ}ÉìÉhëÊ1à¯êî
 
   OS_Printf( "EvCmdDebugPrintWk: %d\n", val );
+#ifdef  DEBUG_ONLY_FOR_tamada
+  {
+    int count = OS_GetArgc();
+    int i;
+    for ( i = 0; i < count ; i++ )
+    {
+      OS_Printf("argv[%d] = %s\n", i, OS_GetArgv(i) );
+    }
+  }
+#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
