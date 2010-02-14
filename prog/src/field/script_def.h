@@ -295,26 +295,10 @@
 #define SCR_POSTMAN_REQ_OK_MSG  (2) ///<受け取ったメッセージID
 #define SCR_POSTMAN_REQ_NG_MSG  (3) ///<受け取れないメッセージID
 #define SCR_POSTMAN_REQ_RECEIVE (4) ///<受け取り処理
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-/*
-//フラグ操作関数のモード指定用
-#define FLAG_MODE_RESET       (0)
-#define FLAG_MODE_SET       (1)
-#define FLAG_MODE_GET       (2)
-
-//パソコンアニメ管理ナンバー
-#define SCR_PASO_ANM_NO   90
+#define SCR_POSTMAN_REQ_OBJID   (5) ///<配達員のOBJIDを取得
+#define SCR_POSTMAN_REQ_OBJSTAT (6) ///<配達員OBJの状態取得
 
 
-//技教え：3人いて、それぞれの色の技しか教えてくれない
-#define WAZA_OSHIE_COL_BLUE     (0)
-#define WAZA_OSHIE_COL_RED      (1)
-#define WAZA_OSHIE_COL_YELLOW   (2)
+#define SCR_POSTMAN_OBJ_NONE    (0) ///<配達員OBJ:存在しない
+#define SCR_POSTMAN_OBJ_EXISTS  (1) ///<配達員OBJ:存在する
 
-//技覚え共通ウェイト
-#define WAZA_COMMON_WAIT      (30)
-#define WAZA_COMMON_WAIT2     (32)
-#define WAZA_COMMON_WAIT3     (16)
-*/

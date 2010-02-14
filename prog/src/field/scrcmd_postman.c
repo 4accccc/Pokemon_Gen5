@@ -32,17 +32,13 @@
 #include "net_app/mystery.h"  //MYSTERY_PokemonCreate
 #include "print/wordset.h"   //WORDSET_
 
-//======================================================================
-//======================================================================
-static BOOL PFuncCheckPokemon( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-static void PFuncAddPokemon( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-static u16  PFuncSetSuccessPokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );  //msg_postman_06,
-static u16  PFuncSetFailurePokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );  //msg_postman_07,
+#include "fldmmdl.h"
+#include "fieldmap.h" //FIELDMAP_GetMMdlSys
+#include "field/eventdata_system.h"
+#include "field/eventdata_sxy.h"
 
-static BOOL PFuncCheckItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-static void PFuncAddItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-static u16  PFuncSetSuccessItemWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work ); //msg_postman_08,
-static u16  PFuncSetFailureItemWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work ); //msg_postman_09,
+//======================================================================
+//======================================================================
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -53,27 +49,19 @@ typedef struct {
   u16 (*set_failure_words)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
 }POSTMAN_FUNC_TABLE;
 
-static const POSTMAN_FUNC_TABLE PostmanFuncTable[] = {
-  { //MYSTERYGIFT_TYPE_NONE		
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-  },
-  { //MYSTERYGIFT_TYPE_POKEMON	
-    PFuncCheckPokemon,
-    PFuncAddPokemon,
-    PFuncSetSuccessPokemonWords,  //msg_postman_06,
-    PFuncSetFailurePokemonWords,  //msg_postman_07,
-  },
-  { //MYSTERYGIFT_TYPE_ITEM		
-    PFuncCheckItem,
-    PFuncAddItem,
-    PFuncSetSuccessItemWords, //msg_postman_08,
-    PFuncSetFailureItemWords, //msg_postman_09,
-  },
-};
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static MMDL * searchPOSTMANOBJ( FIELDMAP_WORK * fieldWork );
+static int searchEventDataPostmanObj( GAMEDATA * gamedata );
 
+static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ];
+
+
+//======================================================================
+//
+//    スクリプトコマンド実装
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * @brief 
@@ -135,6 +123,38 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
     FIELD_MYSTERYDATA_SetReceived( fd, index );
     *ret_wk = 0;
     break;
+  case SCR_POSTMAN_REQ_OBJID:
+    {
+      FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( SCRCMD_WORK_GetGameSysWork( work ) );
+      MMDL * mmdl = searchPOSTMANOBJ( fieldmap );
+      if ( mmdl != NULL )
+      {
+        *ret_wk = MMDL_GetOBJID( mmdl );
+      }
+      else
+      {
+        int obj_id = searchEventDataPostmanObj( gamedata );
+        if ( obj_id >= 0 )
+        {
+          *ret_wk = obj_id;
+        }
+      }
+    }
+    break;
+  case SCR_POSTMAN_REQ_OBJSTAT:
+    {
+      FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( SCRCMD_WORK_GetGameSysWork( work ) );
+      MMDL * mmdl = searchPOSTMANOBJ( fieldmap );
+      if ( mmdl == NULL )
+      {
+        *ret_wk = SCR_POSTMAN_OBJ_NONE;
+      }
+      else 
+      {
+        *ret_wk = SCR_POSTMAN_OBJ_EXISTS;
+      }
+    }
+    break;
   default:
     GF_ASSERT( 0 );
   }
@@ -142,6 +162,39 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static MMDL * searchPOSTMANOBJ( FIELDMAP_WORK * fieldWork )
+{
+  u32 no = 0;
+	MMDL *mmdl;
+  MMDLSYS * mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
+		if( MMDL_GetOBJCode(mmdl) == DELIVERY ){
+			return( mmdl );
+		}
+	}
+  return NULL;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static int searchEventDataPostmanObj( GAMEDATA * gamedata )
+{
+  EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( gamedata );
+  const MMDL_HEADER * tbl = EVENTDATA_GetNpcData( evdata );
+  int max = EVENTDATA_GetNpcCount( evdata );
+  int i;
+
+  if ( tbl == NULL || max == 0 ) return -1;
+  
+  for ( i = 0; i < max; i ++ )
+  {
+    if ( tbl[i].obj_code == DELIVERY ) return tbl[i].id;
+  }
+  return -1;
+}
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -248,4 +301,39 @@ static u16  PFuncSetFailureItemWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, S
   return msg_postman_09;
 }
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL PFuncCheckPokemon( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
+static void PFuncAddPokemon( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
+static u16  PFuncSetSuccessPokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );  //msg_postman_06,
+static u16  PFuncSetFailurePokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );  //msg_postman_07,
+
+static BOOL PFuncCheckItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
+static void PFuncAddItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
+static u16  PFuncSetSuccessItemWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work ); //msg_postman_08,
+static u16  PFuncSetFailureItemWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work ); //msg_postman_09,
+
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ] = {
+  { //MYSTERYGIFT_TYPE_NONE		
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+  },
+  { //MYSTERYGIFT_TYPE_POKEMON	
+    PFuncCheckPokemon,
+    PFuncAddPokemon,
+    PFuncSetSuccessPokemonWords,  //msg_postman_06,
+    PFuncSetFailurePokemonWords,  //msg_postman_07,
+  },
+  { //MYSTERYGIFT_TYPE_ITEM		
+    PFuncCheckItem,
+    PFuncAddItem,
+    PFuncSetSuccessItemWords, //msg_postman_08,
+    PFuncSetFailureItemWords, //msg_postman_09,
+  },
+};
 
