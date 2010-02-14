@@ -50,7 +50,7 @@ typedef struct {
   BOOL (*add_check_func)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
   void (*add_func)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
   u16 (*set_success_words)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
-  u16 (*get_failure_words)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
+  u16 (*set_failure_words)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
 }POSTMAN_FUNC_TABLE;
 
 static const POSTMAN_FUNC_TABLE PostmanFuncTable[] = {
@@ -99,7 +99,14 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
   switch ( req )
   {
   case SCR_POSTMAN_REQ_EXISTS:
-    *ret_wk =  ( gift_type != MYSTERYGIFT_TYPE_NONE );
+    if ( gift_type != MYSTERYGIFT_TYPE_NONE )
+    { 
+      *ret_wk = TRUE;
+    }
+    else
+    {
+      *ret_wk = FALSE;
+    }
     break;
   case SCR_POSTMAN_REQ_ENABLE:
     {
@@ -109,12 +116,23 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
     }
     break;
   case SCR_POSTMAN_REQ_OK_MSG:
-    *ret_wk = msg_postman_06;
+    {
+      u16 msg_id;
+      msg_id = PostmanFuncTable[gift_type].set_success_words( wordset, gpd, work );
+      *ret_wk = msg_id;
+    }
     break;
   case SCR_POSTMAN_REQ_NG_MSG:
-    *ret_wk = msg_postman_07;
+    {
+      u16 msg_id;
+      msg_id = PostmanFuncTable[gift_type].set_failure_words( wordset, gpd, work );
+      *ret_wk = msg_id;
+    }
     break;
   case SCR_POSTMAN_REQ_RECEIVE:
+    //éËÇ…ì¸ÇÍÇÈèàóù
+    PostmanFuncTable[gift_type].add_func( work, gamedata, gpd );
+    FIELD_MYSTERYDATA_SetReceived( fd, index );
     *ret_wk = 0;
     break;
   default:
@@ -151,7 +169,7 @@ static void PFuncAddPokemon( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_
   POKEPARTY*   party = GAMEDATA_GetMyPokemon( gamedata );
   POKEMON_PARAM * pp = createPokemon( work, gpd );
 
-  if ( PokeParty_GetPokeCount( party ) < TEMOTI_POKEMAX || pp == NULL )
+  if ( PokeParty_GetPokeCount( party ) >= TEMOTI_POKEMAX || pp == NULL )
   {
     return;
   }

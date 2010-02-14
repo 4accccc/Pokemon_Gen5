@@ -22,7 +22,6 @@ GIFT_PACK_DATA * getEnableGiftData( MYSTERY_DATA * fd, int index )
   gpd = MYSTERYDATA_GetCardData( fd, index );
   if ( gpd == NULL ) return NULL;
   if ( gpd->gift_type == MYSTERYGIFT_TYPE_NONE ) return NULL;
-  if ( MYSTERYDATA_IsEventRecvFlag( fd, gpd->event_id ) == TRUE ) return NULL;
 
   return gpd;
 }
