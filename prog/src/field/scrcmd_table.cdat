@@ -865,6 +865,11 @@
   NO_CMD()
   NO_CMD()
 
+  DEF_CMD( EvCmdPostmanCommand, EV_SEQ_POSTMAN_REQUEST )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
 
   //スクリプトコマンドテーブル終了
