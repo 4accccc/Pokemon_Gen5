@@ -233,6 +233,10 @@ extern BOOL MYSTERYDATA_IsExistsCardAll(const MYSTERY_DATA *fd);
 //------------------------------------------------------------------
 extern BOOL MYSTERYDATA_IsHavePresent(const MYSTERY_DATA * fd, u32 cardindex);
 //------------------------------------------------------------------
+//   指定のカードからデータを受け取ったことにする
+//------------------------------------------------------------------
+extern void MYSTERYDATA_SetHavePresent(MYSTERY_DATA * fd, u32 index);
+//------------------------------------------------------------------
 /// 指定のイベントはすでにもらったか返す
 //------------------------------------------------------------------
 extern BOOL MYSTERYDATA_IsEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);

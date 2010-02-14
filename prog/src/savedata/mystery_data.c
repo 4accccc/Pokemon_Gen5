@@ -212,7 +212,20 @@ BOOL MYSTERYDATA_IsHavePresent(const MYSTERY_DATA * fd, u32 index)
   return FALSE;
 }
 
-
+//------------------------------------------------------------------
+/**
+ * @brief	 指定のカードからデータを受け取ったことにする
+ * @param	 fd		ふしぎセーブデータへのポインタ
+ * @param	 index		イベント番号
+ */
+//------------------------------------------------------------------
+void MYSTERYDATA_SetHavePresent(MYSTERY_DATA * fd, u32 index)
+{
+  GF_ASSERT(index < GIFT_DATA_MAX);
+  if(index < GIFT_DATA_MAX){
+    fd->card[index].have = TRUE;
+  }
+}
 //------------------------------------------------------------------
 /**
  * @brief	セーブデータ内にカードデータが存在するか返す
