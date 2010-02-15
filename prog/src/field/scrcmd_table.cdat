@@ -844,8 +844,8 @@
 
   DEF_CMD( EvCmdUn_CallFloorSelApp, EV_SEQ_UN_CALL_FLOOR_SEL_APP )
   DEF_CMD( EvCmdUn_GetValidDataNum, EV_SEQ_UN_GET_VALID_DATA_NUM )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdUn_SetPlayerFavorite, EV_SEQ_UN_SET_MY_FAVORITE )
+  DEF_CMD( EvCmdUn_GetPlayerFavorite, EV_SEQ_UN_GET_MY_FAVORITE )
 
   //‹Z‹³‚¦ŠÖ˜A
   DEF_CMD( EvCmdSkillTeachCheckParty, EV_SEQ_SKILLTEACH_CHECK_PARTY )

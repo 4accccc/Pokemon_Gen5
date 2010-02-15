@@ -182,6 +182,62 @@ VMCMD_RESULT EvCmdUn_SetPlayerNature( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * 自分の趣味をセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdUn_SetPlayerFavorite( VMHANDLE *core, void *wk )
+{
+  u8 favorite;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  favorite = SCRCMD_GetVMWorkValue( core, work );
+
+  //セーブデータにアクセス
+  {
+    GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
+    SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
+    WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
+    //趣味をセット
+    WIFIHISTORY_SetMyFavorite(wh, favorite);
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 自分の趣味を取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdUn_GetPlayerFavorite( VMHANDLE *core, void *wk )
+{
+  u16 *ret;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  ret = SCRCMD_GetVMWork( core, work );
+
+  //セーブデータにアクセス
+  {
+    GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
+    SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
+    WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
+    //趣味を取得
+    *ret = WIFIHISTORY_GetMyFavorite(wh);
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+
+//--------------------------------------------------------------
+/**
  * 指定国コードの情報を国連ワークに情報をセット
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT

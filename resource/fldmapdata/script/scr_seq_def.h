@@ -7677,7 +7677,7 @@
 //--------------------------------------------------------------
 /**
  * @brief 国連関連 自分の性格をセット
- * @param ret       検索結果
+ * @param nature_idx 正確コード
  */
 //--------------------------------------------------------------
 #define _UN_SET_MY_NATURE( nature_idx ) _ASM_UN_SET_MY_NATURE nature_idx
@@ -7686,6 +7686,34 @@
   .short EV_SEQ_UN_SET_MY_NATURE
   .short \nature_idx
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 自分の趣味をセット
+ * @param favorite_idx    趣味コード
+ */
+//--------------------------------------------------------------
+#define _UN_SET_MY_FAVORITE( favorite_idx ) _ASM_UN_SET_MY_FAVORITE favorite_idx
+
+  .macro _ASM_UN_SET_MY_FAVORITE favorite_idx
+  .short EV_SEQ_UN_SET_MY_FAVORITE
+  .short \favorite_idx
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 自分の趣味を取得
+ * @param ret       結果
+ */
+//--------------------------------------------------------------
+#define _UN_GET_MY_FAVORITE( ret ) _ASM_UN_GET_MY_FAVORITE ret
+
+  .macro _ASM_UN_GET_MY_FAVORITE ret
+  .short EV_SEQ_UN_GET_MY_FAVORITE
+  .short \ret
+  .endm
+  
+  
   
 //--------------------------------------------------------------
 /**

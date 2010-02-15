@@ -296,8 +296,12 @@ static void SetWords(WORDSET *wordset, GAMEDATA *gdata, const u32 inDataIdx)
     monsno = WIFIHISTORY_GetUnInfo(wh, inDataIdx, UN_INFO_RECV_POKE);
     WORDSET_RegisterPokeMonsNameNo( wordset, 5, monsno );
   }
-  //6番にプレーヤーの趣味をセット  @todo
-  ;
+  //6番にプレーヤーの趣味をセット
+  {
+    u8 favorite;
+    favorite = WIFIHISTORY_GetMyFavorite( wh );
+    WORDSET_RegisterHobbyName( wordset, 6, favorite );
+  }
   //7番にNPCトレーナー名をセット
   {
     WORDSET_RegisterPlayerName( wordset, 3, npc_my );
@@ -314,8 +318,12 @@ static void SetWords(WORDSET *wordset, GAMEDATA *gdata, const u32 inDataIdx)
     monsno = WIFIHISTORY_GetUnInfo(wh, inDataIdx, UN_INFO_SEND_POKE);
     WORDSET_RegisterPokeMonsNameNo( wordset, 9, monsno );
   }
-  //10番にNPCの趣味をセット @todo
-  ;
+  //10番にNPCの趣味をセット
+  {
+    u8 favorite;
+    favorite = WIFIHISTORY_GetUnInfo(wh, inDataIdx, UN_INFO_FAVORITE);
+    WORDSET_RegisterHobbyName( wordset, 10, favorite );
+  }
 }
 
 

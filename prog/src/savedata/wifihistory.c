@@ -14,6 +14,7 @@
 #include "wifihistory_local.h"
 #include "savedata/unitednations_def.h"
 
+#include "../../../resource/research_radar/data/hobby_id.h"  // for HOBBY_ID_xxxx
 
 //============================================================================================
 //============================================================================================
@@ -237,6 +238,32 @@ void WIFIHISTORY_AddMyCountryCount(WIFI_HISTORY * wh)
 void WIFIHISTORY_SetMyNature(WIFI_HISTORY * wh, const NATURE_TYPE inType)
 {
   if ( inType < NATURE_MAX ) wh->myNature = inType;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	自分の趣味をセット
+ * @param	wh			WIFI履歴データへのポインタ
+ * @param inFavorite    趣味コード
+ * @return none
+ */
+//----------------------------------------------------------
+void WIFIHISTORY_SetMyFavorite(WIFI_HISTORY * wh, const int inFavorite)
+{
+  if ( inFavorite < HOBBY_ID_NUM ) wh->myFavorite = inFavorite;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	自分の趣味をセット
+ * @param	wh			WIFI履歴データへのポインタ
+ * @param inFavorite    趣味コード
+ * @return none
+ */
+//----------------------------------------------------------
+u8 WIFIHISTORY_GetMyFavorite(WIFI_HISTORY * wh )
+{
+  return wh->myFavorite;
 }
 
 //----------------------------------------------------------

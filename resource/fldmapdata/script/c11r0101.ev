@@ -117,7 +117,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_c11r0101_reception03
   DEFINE_LOCAL npc_num
-
   //有効データ数を取得
   _UN_GET_VALID_DATA_NUM( npc_num )
   _NUMBER(11, npc_num, 2)     //11番に人数をセット（2桁）
@@ -128,6 +127,11 @@ EVENT_END
 /*            バックパッカー                                  */
 /**************************************************************/
 EVENT_START ev_c11r0101_backpackerm01
+  DEFINE_LOCAL favorite
+  //趣味取得
+  _UN_GET_MY_FAVORITE(favorite)
+  //趣味コードをタグ番号6にセット
+  _HOBBY_NAME(6, favorite)
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_backpackerm_01 )
 EVENT_END
 
