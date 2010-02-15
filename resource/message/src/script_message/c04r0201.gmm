@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-07T15:56:04"/>
+	<create user="matsumiya" host="W00224" date="2010-02-15T20:45:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="165"/>
+		<id position="0" width="176"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="199" right="1995" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="1520" top="125" right="2225" bottom="753" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="286"/>
 		<band id="3" index="4" style="0000" width="409"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c04r0201_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_white_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公の左。主人公と共に入り口から前に3歩移動
 ・主人公と向き合って
@@ -305,7 +305,7 @@
 すっごいでしょ！？▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_demo_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・中央受付の１歩下が初期配置
 ・主人公たちに気づいて[！]を出す
@@ -323,7 +323,7 @@
 オーナーです　よろしく！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_demo_02" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公とサポートの前方を行ったりきたりした後メッセージ
 ・メッセージ表示後
@@ -351,10 +351,12 @@
 グッズケースは　プレゼントだよ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_demo_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後
-　ドレスアップのみのアプリへ</comment>
+　ドレスアップのみのアプリへ
+・ドレスアップできないときは
+　owner_demo_03a</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">その　グッズケースの　なかに
@@ -369,7 +371,22 @@
 レッツ　ドレスアップ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_demo_03a" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・続けてowner_demo_05</comment>
+		<language name="JPN" width="256">おっと！　ざんねんながら
+きみが　いま　つれている▽
+ポケモンでは　ドレスアップできないね▼
+こんど　べつの　ポケモンで
+ドレスアップして　ほしいな▼</language>
+		<language name="JPN_KANJI" width="256">おっと！　残念ながら
+きみが　いま　連れている▽
+ポケモンでは　ドレスアップできないね▼
+今度　別の　ポケモンで
+ドレスアップして　ほしいな▼</language>
+	</row>
+
+	<row id="msg_c04r0201_owner_demo_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ドレスアップアプリが終わると
 　フィールド画面に復帰してこのメッセージ
@@ -385,7 +402,7 @@
 とても　キュート　ではないか！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_demo_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・表示後、そのまま左に向かって歩いて行きフェードアウト
 　初期配置箇所に戻る
@@ -414,7 +431,7 @@
 楽しみに　しているよ▼</language>
 	</row>
 
-	<row id="msg_c04r0201_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_white_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公の方向（右）を向く
 ・メッセージ表示後
@@ -438,7 +455,7 @@
 じゃあね　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・何も条件を満たしていない</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -455,7 +472,7 @@
 だって　ポケモンだからね</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はじめてワイヤレス通信の複数プレイに参加
 ・グッズ「ティアラ」入手処理</comment>
@@ -477,7 +494,7 @@
 遠慮しないで　受け取りたまえ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・グッズ「ティアラ」入手処理後
 　自動で表示</comment>
@@ -489,7 +506,7 @@
 楽しみに　しているよ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_03_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_03_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・5回以上最高得点
 ・グッズ「クラウン」入手処理</comment>
@@ -513,7 +530,7 @@
 遠慮せず　うけとりたまえ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・グッズ「クラウン」入手処理後
 　自動で表示</comment>
@@ -533,7 +550,7 @@
 わたしは　オーナーだからね</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_04_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_04_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・10回以上最高得点
 ・グッズ「ゆうしょうベルト」入手処理</comment>
@@ -559,7 +576,7 @@
 遠慮せず　うけとりたまえ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・グッズ「ゆうしょうベルト」入手後
 　自動で表示</comment>
@@ -571,7 +588,7 @@
 ミュージカルを　楽しんでくれ！</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_05_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_05_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・誕生日
 ・グッズ「ケーキのもけい」入手処理</comment>
@@ -601,7 +618,7 @@
 だって　わたしは　オーナーだからね</language>
 	</row>
 
-	<row id="msg_c04r0201_man2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・参加回数＝0</comment>
 		<attribute name="キャラ指定">MAN2
@@ -616,7 +633,7 @@
 いっそう　チャーミングに　してるさ</language>
 	</row>
 
-	<row id="msg_c04r0201_man2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・参加回数＝1
 ・コンディションに関するタグがない（要発注）</comment>
@@ -640,7 +657,7 @@
 よし！　ぼくも　負けないよ！！</language>
 	</row>
 
-	<row id="msg_c04r0201_man2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・参加回数＝5
 ・グッズ「おへそボタン」入手処理</comment>
@@ -656,7 +673,7 @@
 ぼくからの　プレゼントだよ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_man2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・参加回数＝10
 ・グッズ「にこにこおめん」入手処理</comment>
@@ -672,7 +689,7 @@
 とっておきの　プレゼントだよ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_stylistpoke_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_c04r0201_stylistpoke_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>ポケモン
 ・上記OBJに隣接
 ・メッセージ表示と共に鳴き声再生</comment>
@@ -682,7 +699,7 @@
 		<language name="JPN_KANJI" width="256">ずもっ！！</language>
 	</row>
 
-	<row id="msg_c04r0201_dancer_02">
+	<row id="msg_c04r0201_dancer_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
 ・オネエ系</comment>
 		<attribute name="キャラ指定">ダンサー
@@ -705,7 +722,7 @@
 めだたないと　もったいないもの！</language>
 	</row>
 
-	<row id="msg_c04r0201_maid_01">
+	<row id="msg_c04r0201_maid_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・ヒント</comment>
 		<attribute name="キャラ指定">MAID
@@ -726,7 +743,7 @@
 ありだと　おもいますです</language>
 	</row>
 
-	<row id="msg_c04r0201_lady_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_lady_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・</comment>
 		<attribute name="キャラ指定">ＬＡＤＹ
@@ -741,7 +758,7 @@
 いわゆる　たしなみって　やつね</language>
 	</row>
 
-	<row id="msg_c04r0201_gentleman_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_c04r0201_gentleman_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>♂
 ・参加回数＝0</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -754,7 +771,7 @@
 トレーナーは　実に　すばらしい！</language>
 	</row>
 
-	<row id="msg_c04r0201_gentleman_02" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_c04r0201_gentleman_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>♂
 ・参加回数＝1</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -769,7 +786,7 @@
 楽しませてくれると　うれしいな</language>
 	</row>
 
-	<row id="msg_c04r0201_gentleman_03" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_c04r0201_gentleman_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>♂
 ・参加回数＝5</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -786,7 +803,7 @@
 極上の　エンターテイメントだ！</language>
 	</row>
 
-	<row id="msg_c04r0201_breederw_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_breederw_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ･条件を満たすと出現
 ・アイテムくれない
@@ -803,7 +820,7 @@
 これからも　がんばってください！</language>
 	</row>
 
-	<row id="msg_c04r0201_breederw_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_breederw_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテムくれる</comment>
 		<attribute name="キャラ指定">BREEDERW
@@ -814,7 +831,7 @@
 このアクセ　つかってください！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_girl2_01">
+	<row id="msg_c04r0201_girl2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ･条件を満たすと出現
 ・アイテムくれない
@@ -831,7 +848,7 @@
 あたしも　真似していきたいです！</language>
 	</row>
 
-	<row id="msg_c04r0201_girl2_02">
+	<row id="msg_c04r0201_girl2_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・アイテムくれる</comment>
 		<attribute name="キャラ指定">GIRL2
@@ -842,7 +859,7 @@
 このアクセ　つかってください！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_baker_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_baker_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ･条件を満たすと出現
 ・アイテムくれない
@@ -859,7 +876,7 @@
 すばらしかったんですもの</language>
 	</row>
 
-	<row id="msg_c04r0201_baker_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_baker_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテムくれる</comment>
 		<attribute name="キャラ指定">BAKER
@@ -870,7 +887,7 @@
 気に入ってもらえると　うれしいです▼</language>
 	</row>
 
-	<row id="msg_c04r0201_man3_01">
+	<row id="msg_c04r0201_man3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
 ･条件を満たすと出現
 ・アイテムくれない
@@ -889,7 +906,7 @@
 言葉が　でてこないです……</language>
 	</row>
 
-	<row id="msg_c04r0201_man3_02">
+	<row id="msg_c04r0201_man3_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
 ・アイテムくれる</comment>
 		<attribute name="キャラ指定">MAN3
@@ -900,7 +917,7 @@
 グッズ　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_mountain_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_mountain_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ･条件を満たすと出現
 ・アイテムくれない</comment>
@@ -916,7 +933,7 @@
 オレも　もう一度　山に登るよ！</language>
 	</row>
 
-	<row id="msg_c04r0201_mountain_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_mountain_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・アイテムくれる</comment>
 		<attribute name="キャラ指定">MOUNTAIN
@@ -927,7 +944,7 @@
 これ　もらってくれ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_photo_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04r0201_photo_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ミュージカルショットのデータがある</comment>
 		<attribute name="キャラ指定">壁の写真</attribute>
@@ -939,7 +956,7 @@
 飾られて　います</language>
 	</row>
 
-	<row id="msg_c04r0201_photo_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04r0201_photo_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ミュージカルショットのデータがない</comment>
 		<attribute name="キャラ指定">壁の写真</attribute>
@@ -951,7 +968,7 @@
 飾ることが　できます</language>
 	</row>
 
-	<row id="msg_c04r0201_girl3_01">
+	<row id="msg_c04r0201_girl3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・ヒント</comment>
 		<attribute name="キャラ指定">GIRL3</attribute>
@@ -963,7 +980,7 @@
 くぎづけに　なっちゃう！</language>
 	</row>
 
-	<row id="msg_c04r0201_middleman1_01">
+	<row id="msg_c04r0201_middleman1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
 ・ミュージカルの由来</comment>
 		<attribute name="キャラ指定">MIDDLEMAN1</attribute>
@@ -985,7 +1002,7 @@
 ミュージカルを　始めたんだよね</language>
 	</row>
 
-	<row id="msg_c04r0201_add_goods_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_add_goods_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>システム
 ・0＝グッズ名
 ・1＝プレイヤー名</comment>
