@@ -47,11 +47,14 @@ palpark_main:
   IF FLAG_OFF( FE_PALPARK_FIRSTTALK ) THEN
     //初回話しかけフラグＯＮ
     _FLAG_SET(FE_PALPARK_FIRSTTALK)
-    //初回メッセージ「というわけで、やってみる」
-    _BALLOONWIN_OBJMSG( msg_palpark_first_09, R15R0301_PARK )
+    //博士「ユー」☆ギザウィンドウ
+    _GIZAWIN_OBJMSG_POS( msg_palpark_first_09, R15R0301_PARK, WIN_NONE )
+    _GIZAWIN_CLOSE()
+    //初回メッセージ「やってみる？」
+    _BALLOONWIN_OBJMSG( msg_palpark_09_b, R15R0301_PARK )
   ELSE
     //「やってみる？」
-  _BALLOONWIN_OBJMSG( msg_palpark_02, R15R0301_PARK )
+    _BALLOONWIN_OBJMSG( msg_palpark_02, R15R0301_PARK )
   ENDIF
 
   _YES_NO_WIN( SCWK_ANSWER )
@@ -353,8 +356,17 @@ first_anime_evt:
   //助手「！」
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_gyoe )
   _OBJ_ANIME_WAIT()
+  //「殿堂入りしとるやないけ！」☆ギザウィンドウ
+  _GIZAWIN_OBJMSG_POS( msg_palpark_first_02, R15R0301_ASSISTANTW_01, WIN_NONE )
+  _GIZAWIN_CLOSE()
+  //助手「もしかするともしかするで]
+  _BALLOONWIN_OBJMSG( msg_palpark_first_21_b, R15R0301_ASSISTANTW_01 )
+  _BALLOONWIN_CLOSE()
+  //助手後ろ向く
+  _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_up_turn )
+  _OBJ_ANIME_WAIT()
   //助手「はかせーーー」
-  _BALLOONWIN_OBJMSG( msg_palpark_first_02, R15R0301_ASSISTANTW_01 )
+  _BALLOONWIN_OBJMSG( msg_palpark_first_20, R15R0301_ASSISTANTW_01 )
   _BALLOONWIN_CLOSE()
   //助手先行つれてく
   IF $pos_x == 9 THEN       //左
@@ -383,43 +395,42 @@ first_anime_evt:
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_start3 )
   ENDIF
   _OBJ_ANIME_WAIT()
-
   //助手「きたか」
   _BALLOONWIN_OBJMSG( msg_palpark_first_03, R15R0301_ASSISTANTW_01 )
   _BALLOONWIN_CLOSE()
-
+  //助手上向く
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_dir_up )
   _OBJ_ANIME_WAIT()
-
   //助手「こいつ殿堂入りしとるで！」
   _BALLOONWIN_OBJMSG( msg_palpark_first_19, R15R0301_ASSISTANTW_01 )
   _BALLOONWIN_CLOSE()
-
   //自機を博士の前に助手はける
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_back )
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_front )
   _OBJ_ANIME_WAIT()
-
   //博士「なんどもいっとる・・」
-  _BALLOONWIN_OBJMSG( msg_palpark_first_04, R15R0301_PARK )
+  _BALLOONWIN_OBJMSG_POS( msg_palpark_first_04, R15R0301_PARK, WIN_DOWN )
   _BALLOONWIN_CLOSE()
   //博士「！」
   _OBJ_ANIME( R15R0301_PARK, anm_gyoe )
   _OBJ_ANIME_WAIT()
-
   //博士振り向く
-  _OBJ_ANIME( R15R0301_PARK, anm_turn )
+  _OBJ_ANIME( R15R0301_PARK, anm_turn_mov )
   _OBJ_ANIME_WAIT()
 
-  //博士「グーレイト」
-  _BALLOONWIN_OBJMSG( msg_palpark_first_05, R15R0301_PARK )
-  _BALLOONWIN_CLOSE()
-
+  //博士「殿堂入りしとるとな！」☆ギザウィンドウ
+  _GIZAWIN_OBJMSG_POS( msg_palpark_first_05, R15R0301_PARK, WIN_NONE )
+  _GIZAWIN_CLOSE()
+  //博士「ファンタスティック」☆ギザウィンドウ
+  _GIZAWIN_OBJMSG_POS( msg_palpark_first_05_b, R15R0301_PARK, WIN_NONE )
+  _GIZAWIN_CLOSE()
+  //博士「フーーーーー」☆ギザウィンドウ
+  _GIZAWIN_OBJMSG_POS( msg_palpark_first_05_c, R15R0301_PARK, WIN_NONE )
+  _GIZAWIN_CLOSE()
   //博士乱舞
   _OBJ_ANIME( R15R0301_PARK, anm_spin)
   _OBJ_ANIME_WAIT()
-
   //博士「えーと」
   _BALLOONWIN_OBJMSG( msg_palpark_first_21, R15R0301_PARK )
   _BALLOONWIN_CLOSE()
@@ -611,10 +622,18 @@ _ANIME_LABEL	anm_gyoe
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
+// 上向きターン
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_up_turn
+  _ANIME_DATA	AC_STAY_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0   
+
+//--------------------------------------------------------------------
 // ターン
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_turn
+_ANIME_LABEL	anm_turn_mov
   _ANIME_DATA	AC_STAY_WALK_D_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,3
 	_ANIME_DATA	ACMD_END,0  
 
 //--------------------------------------------------------------------
@@ -653,6 +672,7 @@ _ANIME_LABEL	anm_spin
   _ANIME_DATA	AC_DIR_U,1
   _ANIME_DATA	AC_DIR_R,1
   _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA AC_STAY_JUMP_D_8F,2
 	_ANIME_DATA	ACMD_END,0
   
   
