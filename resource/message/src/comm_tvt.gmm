@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-13T15:02:30"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-15T20:17:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -408,8 +408,8 @@
 
 	<row id="COMM_TVT_TALK_01">
 		<comment>通話画面用</comment>
-		<language name="JPN">REC</language>
-		<language name="JPN_KANJI">REC</language>
+		<language name="JPN">ＲＥＣ</language>
+		<language name="JPN_KANJI">ＲＥＣ</language>
 	</row>
 
 	<row id="COMM_TVT_TALK_02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -419,17 +419,17 @@
 
 	<row id="COMM_TVT_CALL_01">
 		<comment>呼び出し画面用</comment>
-		<language name="JPN">ID[2:04:５桁:0]</language>
-		<language name="JPN_KANJI">ID[2:04:５桁:0]</language>
+		<language name="JPN">ＩＤ[2:04:５桁:0]</language>
+		<language name="JPN_KANJI">ＩＤ[2:04:５桁:0]</language>
 	</row>
 
 	<row id="COMM_TVT_CALL_02">
-		<language name="JPN">-/-</language>
-		<language name="JPN_KANJI">-/-</language>
+		<language name="JPN">―／―</language>
+		<language name="JPN_KANJI">―／―</language>
 	</row>
 
 	<row id="COMM_TVT_CALL_03">
-		<language name="JPN">[2:00:１桁:0]/4</language>
+		<language name="JPN">[2:00:１桁:0]／４</language>
 		<language name="JPN_KANJI">[2:00:１桁:0]/4</language>
 	</row>
 
