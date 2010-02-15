@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-08T22:34:01"/>
+	<create user="matsumiya" host="W00224" date="2010-02-15T19:12:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,15 +330,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1452" top="270" right="2153" bottom="889" maximized="no" rayout="Vertical2">
+	<dialog left="1439" top="242" right="2144" bottom="870" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="526"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="539"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="693"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -382,10 +382,10 @@
 ともに　たたかう
 ポケモンの　うつくしい　すがたは！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]どう　[1:00:トレーナー名:0]▼
-せかいを　みちびく　えいゆうのもと
-その　すがたを　あらわし▼
-ともに　たたかう
-ポケモンの　うつくしい　すがたは！[BE:09:速度コントロール:0]▼</language>
+世界を　導く　英雄のもと
+その姿を　あらわし▼
+共に　戦う
+ポケモンの　美しい　姿は！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -398,10 +398,10 @@
 ともに　たたかう
 ポケモンの　ちからづよい　すがたは！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]どう　[1:00:トレーナー名:0]▼
-せかいを　みちびく　えいゆうのもと
-その　すがたを　あらわし▼
-ともに　たたかう
-ポケモンの　ちからづよい　すがたは！[BE:09:速度コントロール:0]▼</language>
+世界を　導く　英雄のもと
+その姿を　あらわし▼
+共に　戦う
+ポケモンの　力強い　姿は！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_02w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -415,10 +415,10 @@
 ポケモンだけの　せかい……
 ようやく　じつげん　する[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]これから　ボクは
-シンと　ともに▽
-さいごの　いってを　うつよ▼
-ポケモンだけの　せかい……
-ようやく　じつげん　する[BE:09:速度コントロール:0]▼</language>
+シンと　共に▽
+最後の　一手を　うつよ▼
+ポケモンだけの　世界……
+ようやく　実現する[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_02b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -431,10 +431,10 @@
 ポケモンだけの　せかい……
 ようやく　じつげん　する[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]これから　ボクは
-ムと　ともに▽
-さいごの　いってを　うつよ▼
-ポケモンだけの　せかい……
-ようやく　じつげん　する[BE:09:速度コントロール:0]▼</language>
+ムと　共に▽
+最後の　一手を　うつよ▼
+ポケモンだけの　世界……
+ようやく　実現する[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -457,13 +457,13 @@
 ポケモン　ムに　みとめられた▽
 えいゆう　だけが▽
 ボクたちを　そし　できる！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　とめられるのは
-しんわに　とうじょうした　えいゆう……▽
-ふたごの　もうひとり　だけ▼
-シンと　ついをなす
-ポケモン　ムに　みとめられた▽
-えいゆう　だけが▽
-ボクたちを　そし　できる！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　止められるのは
+神話に　登場した　英雄……▽
+双子の　もう一人　だけ▼
+シンと　対をなす
+ポケモン　ムに　認められた▽
+英雄だけが▽
+ボクたちを　阻止できる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_03b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -477,13 +477,13 @@
 ポケモン　シンに　みとめられた▽
 えいゆう　だけが▽
 ボクたちを　そし　できる！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　とめられるのは
-しんわに　とうじょうした　えいゆう……▽
-ふたごの　もうひとり　だけ▼
-ムと　ついをなす
-ポケモン　シンに　みとめられた▽
-えいゆう　だけが▽
-ボクたちを　そし　できる！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　止められるのは
+神話に　登場した　英雄……▽
+双子の　もう一人　だけ▼
+ムと　対をなす
+ポケモン　シンに　認められた▽
+英雄だけが▽
+ボクたちを　阻止できる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_04w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -503,14 +503,14 @@
 まもりたいなら　ボクと　おなじ▽
 えいゆうに　なりなよ[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
-ボクの　よそく　では
-キミなら　ムと　であえるだろう▼
+ボクの　予測では
+キミなら　ムと　出会えるだろう▼
 そうすれば　はじめて
-ボクの　けいさんを　くつがえせる▽
-ちょっと　たのしみだね▼
-ポケモンと　ひとの　きずなを
-まもりたいなら　ボクと　おなじ▽
-えいゆうに　なりなよ[BE:09:速度コントロール:0]▼</language>
+ボクの　計算を　覆せる▽
+ちょっと　楽しみだね▼
+ポケモンと　人の　きずなを
+守りたいなら　ボクと　同じ▽
+英雄に　なりなよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_04b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -526,14 +526,14 @@
 まもりたいなら　ボクと　おなじ▽
 えいゆうに　なりなよ[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
-ボクの　よそく　では
-キミなら　シンと　であえるだろう▼
+ボクの　予測では
+キミなら　シンと　出会えるだろう▼
 そうすれば　はじめて
-ボクの　けいさんを　くつがえせる▽
-ちょっと　たのしみだね▼
-ポケモンと　ひとの　きずなを
-まもりたいなら　ボクと　おなじ▽
-えいゆうに　なりなよ[BE:09:速度コントロール:0]▼</language>
+ボクの　計算を　覆せる▽
+ちょっと　楽しみだね▼
+ポケモンと　人の　きずなを
+守りたいなら　ボクと　同じ▽
+英雄に　なりなよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0901_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -545,7 +545,7 @@
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]
 いま　とびさったのって……▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]
-いま　とびさったのって……▼</language>
+いま　飛び去ったのって……▼</language>
 	</row>
 
 	<row id="msg_d08r0901_leader7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -567,10 +567,10 @@
 まさか　かれは　ほんとうに
 えいゆうだと　いうのかい！？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『どうして？▼
-Ｎが　でんせつの　ポケモンと
+Ｎが　伝説の　ポケモンと
 いっしょに　いたんだ？▼
-まさか　かれは　ほんとうに
-えいゆうだと　いうのかい！？▼</language>
+まさか　彼は　本当に
+英雄だと　いうのかい！？▼</language>
 	</row>
 
 	<row id="msg_d08r0901_leader7_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -583,9 +583,9 @@
 いま　だいじ　なのは
 おきたことを　かいめい　するより▽
 これから　なにをするか　だ▼</language>
-		<language name="JPN_KANJI" width="256">ハチク『……もどろう▼
-いま　だいじ　なのは
-おきたことを　かいめい　するより▽
+		<language name="JPN_KANJI" width="256">ハチク『……戻ろう▼
+いま　大事なのは
+起きたことを　解明するより▽
 これから　なにをするか　だ▼</language>
 	</row>
 
