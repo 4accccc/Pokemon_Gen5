@@ -13,7 +13,7 @@
 #include "poke_personal_local.h"
 
 #include "arc_def.h"
-#include "personal.naix"
+#include "personal/personal.naix"
 
 
 /*--------------------------------------------------------------------------*/
@@ -329,7 +329,7 @@ u16* POKE_PERSONAL_GetZenkokuToChihouArray( HEAPID heap_id, u16* num )
   u16* chihou_list;
   u32  size;
     
-  chihou_list = GFL_ARCHDL_UTIL_LoadEx( ArcHandle, NARC_personal_zenkoku_to_chihou_bin, FALSE, heap_id, &size)
+  chihou_list = GFL_ARCHDL_UTIL_LoadEx( ArcHandle, NARC_personal_zenkoku_to_chihou_bin, FALSE, heap_id, &size);
   chihou_num = size / sizeof(u16);
 
   if( num )
