@@ -225,7 +225,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE*4,	// 1ブロックメモリサイズ
-      1,
+      0,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -288,7 +288,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
-      1,
+      0,
 		},
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
@@ -463,6 +463,27 @@ const SCENE_DATA resistMapTbl[] = {
 
 			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差用アトリビュートサイズ込み) by iwasawa 090910
       1,
+		},
+		&FieldMapCtrl_GridFunctions,
+		TRUE,
+	},
+  //RSC_GRID_ONE_BLOCK = 17,  // 分割読み込みOFF用
+	{	//実験マップ グリッド移動
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      1,1,
+      FLDMAPPER_MODE_SCROLL_NONE, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差用アトリビュートサイズ込み) by iwasawa 090910
+      0,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
