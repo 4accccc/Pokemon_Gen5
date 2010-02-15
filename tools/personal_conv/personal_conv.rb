@@ -27,7 +27,8 @@
   u16   pains_agi   :2; //贈与努力値素早さ
   u16   pains_spepow:2; //贈与努力値特殊攻撃力
   u16   pains_spedef:2; //贈与努力値特殊防御力
-  u16               :4; //贈与努力値予備
+  u16   no_jump     :1; //はねる禁止
+  u16               :3; //贈与努力値予備
 
   u16   item1;          //アイテム１
   u16   item2;          //アイテム２
@@ -176,6 +177,7 @@ class PARA
     HEIGHT
     WEIGHT
     WAZA_OSHIE
+    NO_JUMP
     MAX
   ]
 end
@@ -598,7 +600,7 @@ end
   fp_lst.printf( "kanto/000/pmwb_000_n.ncl\n" )
   fp_lst.printf( "kanto/000/pmwb_000_r.ncl\n" )
 
-  gmm.make_row_index( "MONSNAME_", 0, "－－－－－" )
+  gmm.make_row_index_kanji( "MONSNAME_", 0, "―――――", "―――――" )
 
   pokelist << "－－－－－\t999\tノーマル\tノーマル\t－\t－\n"
 
@@ -676,7 +678,7 @@ end
 
       write_lst_file( fp_lst, gra_no, form_name )
 
-      gmm.make_row_index( "MONSNAME_", cnt, split_data[ PARA::POKENAME ] )
+      gmm.make_row_index_kanji( "MONSNAME_", cnt, split_data[ PARA::POKENAME ], split_data[ PARA::POKENAME ] )
 
       speabi1 = split_data[ PARA::SPEABI1 ]
       if speabi1 == ""
@@ -726,8 +728,8 @@ end
   fp_hash.close
 
   #gmmファイルの後始末
-  gmm.make_row_index( "MONSNAME_", monsno_max, "タマゴ" )
-  gmm.make_row_index( "MONSNAME_", monsno_max + 1, "タマゴ" )
+  gmm.make_row_index_kanji( "MONSNAME_", monsno_max, "タマゴ", "タマゴ" )
+  gmm.make_row_index_kanji( "MONSNAME_", monsno_max + 1, "タマゴ", "タマゴ" )
   gmm.close_gmm
 
   #タマゴは独自の持ち方をする
@@ -839,8 +841,8 @@ end
         fp_monsno.printf( "#define\t\t%s\t\t\t\t( %d )\n", str, j )
         if j != 0
           if split_data[ PARA::PLTT_ONLY ] == "●"
-  	        fp_form.printf( "\"pmwb_%s_%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	        fp_form.printf( "\"pmwb_%s_%s_r.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_pltt.printf( "\"pmwb_%s_%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_pltt.printf( "\"pmwb_%s_%s_r.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
           else
   	        fp_form.printf( "\"pfwb_%s_%s_m.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
   	        fp_form.printf( "\"pfwb_%s_%s_f.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
@@ -888,7 +890,6 @@ end
 	fp_form.print( "\"pbwb_migawari.NCEC\"\n" )
 	fp_form.print( "\"pmwb_migawari.NCLR\"\n" )
 
-  fp_monsno.close
   fp_monsnum.close
   fp_form.close
   fp_pltt.close
@@ -942,6 +943,7 @@ end
   cnt = 1
   other_form = 0
   form_gra_index = 0
+  form_pal_index = 0
   seed = []
   read_data.size.times {|i|
     split_data = read_data[ i ].split(/,/)
@@ -978,12 +980,18 @@ end
       get     = split_data[ PARA::GET ].to_i
       #@todo 今後はサウンド用の値になるはず
       rank    = split_data[ PARA::RANK ].to_i
+      if  split_data[ PARA::NO_JUMP ] == "●"
+        no_jump = 1
+      else
+        no_jump = 0
+      end
       exp_value = ( split_data[ PARA::HP_EXP ].to_i     <<  0 ) |
                   ( split_data[ PARA::POW_EXP ].to_i    <<  2 ) |
                   ( split_data[ PARA::DEF_EXP ].to_i    <<  4 ) |
                   ( split_data[ PARA::AGI_EXP ].to_i    <<  6 ) |
                   ( split_data[ PARA::SPEPOW_EXP ].to_i <<  8 ) |
-                  ( split_data[ PARA::SPEDEF_EXP ].to_i << 10 )
+                  ( split_data[ PARA::SPEDEF_EXP ].to_i << 10 ) |
+                  ( no_jump << 12 )
 
       if split_data[ PARA::ITEM1 ] == ""
         item1 = 0
@@ -1031,8 +1039,13 @@ end
       if form[ cnt ].get_form_max == 0
         form_gra_start = 0
       else
-        form_gra_start =  form_gra_index
-        form_gra_index += ( form[ cnt ].get_form_max - 1 )
+        if split_data[ PARA::PLTT_ONLY ] == "●"
+          form_gra_start =  form_pal_index
+          form_pal_index += ( form[ cnt ].get_form_max - 1 )
+        else
+          form_gra_start =  form_gra_index
+          form_gra_index += ( form[ cnt ].get_form_max - 1 )
+        end
       end
 
       form_max  = form[ cnt ].get_form_max
@@ -1192,6 +1205,10 @@ end
       cnt += 1
     end
   }
+
+  fp_monsno.printf( "//フォルム違いトータル\n" )
+  fp_monsno.printf( "#define OTHER_FORM_MAX  ( %d )\n",form_gra_index )
+  fp_monsno.close
 
   #技覚えハッシュテーブル生成
   fp_wothash = open( "wazaoboe_hash.rb", "w" )
