@@ -311,7 +311,7 @@ static void SetWords(WORDSET *wordset, GAMEDATA *gdata, const u32 inDataIdx)
     int keta = 3;
     int number;
     number = WIFIHISTORY_GetUnInfo(wh, inDataIdx, UN_INFO_COUNTRY_NUM);
-    WORDSET_RegisterNumber( wordset, 8, number, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordset, 8, number, keta, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   }
   //9番にNPCがプレーヤーにあげたポケモンをセット
   {
