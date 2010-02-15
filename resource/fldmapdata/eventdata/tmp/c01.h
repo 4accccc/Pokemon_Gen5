@@ -36,5 +36,8 @@
 #define BGID_C01_SIGN1_01                 0
 #define BGID_C01_SIGN2_01                 1
 #define BGID_C01_SIGN3_01                 2
+#define C01_HIDE_ITEM_01                  3
+#define C01_HIDE_ITEM_02                  4
+#define C01_HIDE_ITEM_03                  5
 
 #endif //ZONE_C01_EVB_H

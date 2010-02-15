@@ -18,5 +18,8 @@
 #define ZONE_D02_EVB_H
 
 #define BGID_D02_ROCK_01                  0
+#define D02_HIDE_ITEM_00                  1
+#define D02_HIDE_ITEM_02                  2
+#define D02_HIDE_ITEM_03                  3
 
 #endif //ZONE_D02_EVB_H

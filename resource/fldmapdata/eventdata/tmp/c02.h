@@ -40,5 +40,6 @@
 #ifndef ZONE_C02_EVB_H
 #define ZONE_C02_EVB_H
 
+#define C02_HIDE_ITEM_00                  0
 
 #endif //ZONE_C02_EVB_H

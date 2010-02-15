@@ -30,7 +30,5 @@
 #define R07_BOARD_03                      0
 #define R07_BOARD_02                      1
 #define R07_BOARD_01                      2
-#define R07_HIDE_ITEM_00                  3
-#define R07_HIDE_ITEM_01                  4
 
 #endif //ZONE_R07_EVB_H
