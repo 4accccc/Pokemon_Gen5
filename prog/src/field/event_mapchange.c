@@ -414,6 +414,7 @@ typedef enum{
   EV_MAPCHG_FLYSKY,
   EV_MAPCHG_ESCAPE,
   EV_MAPCHG_TELEPORT,
+  EV_MAPCHG_UNION,
 } EV_MAPCHG_TYPE;
 
 
@@ -496,6 +497,10 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     //新しいマップID、初期位置をセット
     MAPCHG_updateGameData( gameSystem, &work->loc_req );
 
+    //ビーコンリクエスト(ユニオン移動は専用ビーコン)
+    if( work->mapchange_type != EV_MAPCHG_UNION ){
+      GAMEBEACON_Set_ZoneChange( work->loc_req.zone_id, gameData );
+    }
     //タイプに応じたフラグ初期化
     switch(work->mapchange_type){
     case EV_MAPCHG_FLYSKY:
@@ -916,7 +921,7 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion( GMEVENT* event, int* seq, void* wk
     break;
   case 1: 
     // マップチェンジ コアイベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_UNION ) );
     (*seq)++;
     break;
   case 2: 
@@ -1172,7 +1177,9 @@ GMEVENT* EVENT_ChangeMapToUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldm
   MAPCHANGE_WORK_init( work, gameSystem ); 
   LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), ZONE_ID_UNION );
   work->exit_type = EXIT_TYPE_NONE;
-
+ 
+  //ユニオン入室ビーコンリクエスト
+  GAMEBEACON_Set_UnionIn();
   return event;
 }
 
