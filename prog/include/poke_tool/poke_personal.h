@@ -40,6 +40,7 @@ typedef enum {
   POKEPER_ID_pains_agi,       //贈与努力値素早さ
   POKEPER_ID_pains_spepow,    //贈与努力値特殊攻撃力
   POKEPER_ID_pains_spedef,    //贈与努力値特殊防御力
+  POKEPER_ID_no_jump,        //浮くの禁止フラグ
   POKEPER_ID_item1,           //アイテム１
   POKEPER_ID_item2,           //アイテム２
   POKEPER_ID_item3,           //アイテム３
