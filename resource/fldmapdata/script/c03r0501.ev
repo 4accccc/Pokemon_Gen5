@@ -84,7 +84,9 @@ _TALK_OBJ_START()
 			IF $LWK_TOTAL == 1 THEN
 			
 				//あら　～さんとしか　フィーリングチェックを　していないのね
+				
 				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_middlewoman2_05 )
+				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 			
 			//複数人データがある場合
@@ -92,6 +94,7 @@ _TALK_OBJ_START()
 			
 				//ハッピーに過ごせる人は
 				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_middlewoman2_03 )
+				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 			
 			ENDIF
@@ -100,6 +103,7 @@ _TALK_OBJ_START()
 		ELSE
 			//あら　えんりょ　しなくていいのよ
 			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_middlewoman2_04 )
+			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 		
 		ENDIF

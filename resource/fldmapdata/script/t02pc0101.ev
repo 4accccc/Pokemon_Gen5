@@ -276,6 +276,9 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_FLAG_RESET( FV_T02_SPEECH_BEFORE )
 	_FLAG_SET( FV_T02_SPEECH_AFTER )
 
+	//T01ÇÃîéémï\é¶
+	_FLAG_RESET( FV_T01R0401_HAKASE2 )
+
 	//===================================//
 
 	//BGMèIóπ

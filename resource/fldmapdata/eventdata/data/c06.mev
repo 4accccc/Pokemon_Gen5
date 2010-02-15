@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/29 14:51:48
+#save date:2010/02/15 15:56:34
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\C06.wms
 #SECTION START:OBJ_EVENT
@@ -366,7 +366,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-328 0 24
+216 0 -72
 #size
 1 1
 #event number: 3
@@ -383,7 +383,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 40
+-24 0 56
 #size
 1 1
 #event number: 4
@@ -434,7 +434,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-312 0 24
+232 0 -72
 #size
 1 1
 #event number: 7

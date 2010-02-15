@@ -252,20 +252,46 @@ EVENT_START		ev_scene_d03r0101_plasmaevent_01
 	_SE_WAIT()
 	
 	//ライバル：自機のほうに向く
-	
+	_OBJ_ANIME( D03R0101_RIVAL_02, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
 	//おまえの　TVトランシーバーなってるぜ
+	_PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG( msg_d03r0101_rival_04 , D03R0101_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
 	
 	//【仮】TVトランシーバーを見るイベント
-	
+
+	//ライバル：自機のほうに向く
+	_OBJ_ANIME( D03R0101_RIVAL_02, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
 	//……シッポウはくぶつかん　そこに　いけば
 	_BALLOONWIN_OBJMSG( msg_d03r0101_champion_02 , D03R0101_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
-		
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	//カメラ操作　サポートの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,3969024,98327,2199552,10 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_OBJ_ANIME( D03R0101_CHAMPION_01, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+
 	//チャンピオン：そらをとぶアニメ
 	_CALL_NPCFLY_CUTIN(D03R0101_CHAMPION_01)
 	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 10 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
+	_OBJ_ANIME( D03R0101_RIVAL_02, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
 	//……オレ　もういちど　このなかを　さがす
 	_BALLOONWIN_OBJMSG( msg_d03r0101_rival_05 , D03R0101_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
@@ -282,7 +308,20 @@ EVENT_START		ev_scene_d03r0101_plasmaevent_01
 
 EVENT_END
 
+//--------------------------------------------------------------------
+//	ステイウォーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //チャンピオン：そらをとぶ
