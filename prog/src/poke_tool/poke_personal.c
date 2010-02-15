@@ -13,6 +13,7 @@
 #include "poke_personal_local.h"
 
 #include "arc_def.h"
+#include "personal.naix"
 
 
 /*--------------------------------------------------------------------------*/
@@ -305,6 +306,44 @@ POKEPER_SEX_TYPE PokePersonal_SexVecTypeGet( POKEPER_SEX sex_vec )
 }
 
 
+//------------------------------------------------------------------
+/**
+ *  @brief          全国図鑑番号から地方図鑑番号を得ることができるリストを得る 
+ *
+ *  @param[in]      heap_id     ヒープID
+ *  @param[out]     num         地方図鑑に登場するポケモンの数(NULL可)
+ *
+ *  @retval         戻り値をlistで[monsno]で地方図鑑番号が得られる
+ *
+ *  @note           戻り値の配列は呼び出し元で解放して下さい。
+ *  @note           戻り値をu16* listで受け取ったとすると、
+ *                  list[monsno]で地方図鑑番号が得られる(0<=monsno<=MONSNO_END)。
+ *                  0のときはそのmonsnoのポケモンは地方図鑑に登場しない。
+ *
+ */
+//------------------------------------------------------------------
+u16* POKE_PERSONAL_GetZenkokuToChihouArray( HEAPID heap_id, u16* num )
+{
+  u16  chihou_appear_num = 0;
+  u16  chihou_num;
+  u16* chihou_list;
+  u32  size;
+    
+  chihou_list = GFL_ARCHDL_UTIL_LoadEx( ArcHandle, NARC_personal_zenkoku_to_chihou_bin, FALSE, heap_id, &size)
+  chihou_num = size / sizeof(u16);
+
+  if( num )
+  {
+    u16 i;
+    for( i=0; i<chihou_num; i++ )
+    {
+      if( chihou_list[i] != 0 ) chihou_appear_num++;
+    }
+    *num = chihou_appear_num;
+  }
+
+  return chihou_list;
+}
 
 
 
