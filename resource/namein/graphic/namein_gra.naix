@@ -14,13 +14,14 @@ enum {
 	NARC_namein_gra_name_base_NSCR = 0,
 	NARC_namein_gra_name_bg_NCGR = 1,
 	NARC_namein_gra_name_bg_NCLR = 2,
-	NARC_namein_gra_name_btn_NSCR = 3,
-	NARC_namein_gra_name_kana_NSCR = 4,
-	NARC_namein_gra_name_obj_NANR = 5,
-	NARC_namein_gra_name_obj_NCER = 6,
-	NARC_namein_gra_name_obj_NCGR = 7,
-	NARC_namein_gra_name_obj_NCLR = 8,
-	NARC_namein_gra_name_romaji_NSCR = 9
+	NARC_namein_gra_name_bgu_NSCR = 3,
+	NARC_namein_gra_name_btn_NSCR = 4,
+	NARC_namein_gra_name_kana_NSCR = 5,
+	NARC_namein_gra_name_obj_NANR = 6,
+	NARC_namein_gra_name_obj_NCER = 7,
+	NARC_namein_gra_name_obj_NCGR = 8,
+	NARC_namein_gra_name_obj_NCLR = 9,
+	NARC_namein_gra_name_romaji_NSCR = 10
 };
 
 /* NARC_NAMEIN_GRA_NAIX_ */
