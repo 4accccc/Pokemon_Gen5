@@ -24,7 +24,8 @@ enum {
 	NARC_mididl_msl_voice_01_adpcm_swav = 10,
 	NARC_mididl_msl_voice_02_adpcm_swav = 11,
 	NARC_mididl_msl_voice_03_adpcm_swav = 12,
-	NARC_mididl_msl_voice_04_adpcm_swav = 13
+	NARC_mididl_msl_voice_04_adpcm_swav = 13,
+	NARC_mididl_voice_swar = 14
 };
 
 /* NARC_MIDIDL_NAIX_ */

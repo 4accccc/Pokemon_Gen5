@@ -65,6 +65,9 @@ $(targetname).narc:  $(OBJ_FILE) makefile
 	-ls *.sbnk >> $(LIST_FILE)
 	-ls *.wav >> $(LIST_FILE)
 	-ls *.swav >> $(LIST_FILE)
+	-ls *.swav >> voice.swls
+	wavearc --update -o voice.swar voice.swls
+	-ls *.swar >> $(LIST_FILE)
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(LIST_FILE)
 	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
