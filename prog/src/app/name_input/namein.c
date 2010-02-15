@@ -135,7 +135,8 @@ enum
   PLT_OBJ_ICON_M      = 2,  //アイコン
 
   //サブBG
-  PLT_BG_FRAME_S      = 0,  //WINDOWフレーム
+  PLT_BG_BACK_S       = 0,  //背景
+  PLT_BG_FRAME_S      = 14,  //WINDOWフレーム
   PLT_BG_FONT_S       = 15, //フォント色
 
   //サブOBJ
@@ -1140,6 +1141,17 @@ static void BG_Init( BG_WORK *p_wk, HEAPID heapID )
   { 
     ARCHANDLE * p_handle  = GFL_ARC_OpenDataHandle( ARCID_NAMEIN_GRA, heapID );
 
+    //上画面
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_namein_gra_name_bg_NCLR,
+        PALTYPE_SUB_BG, PLT_BG_BACK_S*0x20, 0, heapID );
+    //CHR
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_namein_gra_name_bg_NCGR, 
+        BG_FRAME_BACK_S, 0, 0, FALSE, heapID );
+    //SCR
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_namein_gra_name_bgu_NSCR,
+        BG_FRAME_BACK_S, 0, 0, FALSE, heapID );
+
+    //下画面
     //PLT
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_namein_gra_name_bg_NCLR,
         PALTYPE_MAIN_BG, PLT_BG_STR_M*0x20, 0, heapID );
@@ -1173,12 +1185,13 @@ static void BG_Init( BG_WORK *p_wk, HEAPID heapID )
   }
 
   { 
+    //上画面テキスト枠
     GFL_BG_FillCharacter( BG_FRAME_TEXT_S, 0, 1,  0 );
     BmpWinFrame_GraphicSet(
         BG_FRAME_TEXT_S, MSGWND_FRAME_CHR, PLT_BG_FRAME_S, MENU_TYPE_SYSTEM, heapID );
   }
 
-  GFL_BG_SetBackGroundColor( BG_FRAME_TEXT_S, 0 );
+  //GFL_BG_SetBackGroundColor( BG_FRAME_TEXT_S, 0 );
 }
 //----------------------------------------------------------------------------
 /**
