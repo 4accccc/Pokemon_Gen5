@@ -96,7 +96,7 @@
   NO_CMD()
 
   DEF_CMD( EvCmdReserveScript, EV_SEQ_RESERVE_SCRIPT )
-  NO_CMD()
+  DEF_CMD( EvCmdCheckContinueRecover, EV_SEQ_CHECK_CONTINUE_RECOVER )
   NO_CMD()
   NO_CMD()
   

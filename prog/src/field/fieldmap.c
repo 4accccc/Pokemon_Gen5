@@ -837,6 +837,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       SCRIPT_CallFieldRecoverScript( fieldWork->gsys, fieldWork->heapID );
     }
   }
+  FIELD_STATUS_SetContinueFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ), FALSE );
 
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
 

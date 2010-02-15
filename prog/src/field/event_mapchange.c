@@ -158,6 +158,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
       }
       else
       {
+        FIELD_STATUS_SetContinueFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
         //新しいマップモードなど機能指定を行う
         MAPCHG_setupMapTools( gsys, &fmw->loc_req );
         //イベント時間更新

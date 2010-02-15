@@ -25,6 +25,7 @@
 struct _FIELD_STATUS{
   MAPMODE map_mode;
   u8 isFieldInitFlag;
+  u8 isContinueFlag;
 
   // フィールド技関連
   u8  fs_flash;      // フラッシュON
@@ -103,6 +104,20 @@ void FIELD_STATUS_SetFieldInitFlag( FIELD_STATUS * fldstatus, BOOL flag )
 BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus )
 {
   return fldstatus->isFieldInitFlag;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_STATUS_SetContinueFlag( FIELD_STATUS * fldstatus, BOOL flag )
+{
+  fldstatus->isContinueFlag = flag;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL FIELD_STATUS_GetContinueFlag( const FIELD_STATUS * fldstatus )
+{
+  return fldstatus->isContinueFlag;
 }
 
 //------------------------------------------------------------------

@@ -984,6 +984,20 @@ static VMCMD_RESULT EvCmdReserveScript( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   コンティニュー時かどうか？の判定
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdCheckContinueRecover( VMHANDLE * core, void *wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
+
+  *ret_wk = FIELD_STATUS_GetContinueFlag( GAMEDATA_GetFieldStatus( gamedata ) );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //======================================================================
 //  イベントワーク関連
 //======================================================================
