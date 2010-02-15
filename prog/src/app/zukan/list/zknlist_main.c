@@ -595,24 +595,6 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 			FRAMELIST_AddItem( wk->lwk, 1, SET_LIST_PARAM(ZUKAN_LIST_MONS_NONE,wk->dat->list[i]) );
 		}
 	}
-
-
-
-/*
-	// Œ©‚Â‚¯‚½”
-	wk->seeNum = ;
-	// •ß‚Ü‚¦‚½”
-	wk->getNum = ;
-*/
-
-/*
-extern u16 ZUKANSAVE_GetPokeGetCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZUKANSAVE_GetPokeSeeCount(const ZUKAN_SAVEDATA * zs);
-
-extern u16 ZUKANSAVE_GetLocalPokeGetCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZUKANSAVE_GetLocalPokeSeeCount(const ZUKAN_SAVEDATA * zs);
-*/
-
 }
 
 //--------------------------------------------------------------------------------------------
@@ -636,9 +618,6 @@ void ZKNLISTMAIN_FreeList( ZKNLISTMAIN_WORK * wk )
 			GFL_STR_DeleteBuffer( wk->name[i] );
 		}
 	}
-
-//	BLINKPALANM_Exit( wk->blink );
-//	ZKNLISTMAIN_ExitList( wk->list );
 }
 
 
@@ -652,6 +631,3 @@ void ZKNLISTMAIN_FreeLocalNoList( ZKNLISTMAIN_WORK * wk )
 {
 	GFL_HEAP_FreeMemory( wk->localNo );
 }
-
-
-

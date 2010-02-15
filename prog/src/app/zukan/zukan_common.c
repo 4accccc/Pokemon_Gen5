@@ -25,15 +25,19 @@
 u16 ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 ** list, HEAPID heapID )
 {
 	u16 * buf;
-	u16	i, max;
+	u16	siz, max;
+	u32	i;
 
-	buf = GFL_HEAP_AllocMemory( heapID, sizeof(u16)*MONSNO_END );
+	if( ZUKANSAVE_GetZukanMode( sv ) == TRUE ){
+		siz = ZUKAN_GetNumberRow( ZKNCOMM_LIST_SORT_MODE_ZENKOKU, heapID, &buf );
+	}else{
+		siz = ZUKAN_GetNumberRow( ZKNCOMM_LIST_SORT_MODE_LOCAL, heapID, &buf );
+	}
 	max = 0;
 
-	for( i=0; i<MONSNO_END; i++ ){
-		buf[i] = i+1;
-		if( ZUKANSAVE_GetPokeGetFlag( sv, i+1 ) == TRUE ||
-				ZUKANSAVE_GetPokeSeeFlag( sv, i+1 ) == TRUE ){
+	for( i=0; i<siz; i++ ){
+		if( ZUKANSAVE_GetPokeGetFlag( sv, buf[i] ) == TRUE ||
+				ZUKANSAVE_GetPokeSeeFlag( sv, buf[i] ) == TRUE ){
 			max = i+1;
 		}
 	}

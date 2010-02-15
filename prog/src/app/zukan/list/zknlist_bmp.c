@@ -415,17 +415,27 @@ static void PutTitleStr( ZKNLISTMAIN_WORK * wk )
 
 void ZKNLISTBMP_PutPokeEntryStr( ZKNLISTMAIN_WORK * wk )
 {
+	u32	see, get;
+
+	// 全国
+	if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){
+		see = ZUKANSAVE_GetPokeSeeCount( wk->dat->savedata );
+		get = ZUKANSAVE_GetPokeGetCount( wk->dat->savedata );
+	// イッシュ
+	}else{
+		see = ZUKANSAVE_GetLocalPokeSeeCount( wk->dat->savedata, HEAPID_ZUKAN_LIST_L );
+		get = ZUKANSAVE_GetLocalPokeGetCount( wk->dat->savedata, HEAPID_ZUKAN_LIST_L );
+	}
+
 	PutSubDispStr( wk, ZKNLISTBMP_WINIDX_SEENUM );
 	PutSubDispStr( wk, ZKNLISTBMP_WINIDX_GETNUM );
 
 	StrPrint( wk, ZKNLISTBMP_WINIDX_SEENUM, str_see, 9*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
-	WORDSET_RegisterNumber(
-		wk->wset, 0, wk->seeNum, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( wk->wset, 0, see, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	ExStrPrint( wk, ZKNLISTBMP_WINIDX_SEENUM, str_see_get_num, 13*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
 
 	StrPrint( wk, ZKNLISTBMP_WINIDX_GETNUM, str_get, 11*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
-	WORDSET_RegisterNumber(
-		wk->wset, 0, wk->getNum, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( wk->wset, 0, get, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	ExStrPrint( wk, ZKNLISTBMP_WINIDX_GETNUM, str_see_get_num, 15*8, 4, FCOL_SP00BN, PRINTTOOL_MODE_RIGHT );
 
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_SEENUM] );

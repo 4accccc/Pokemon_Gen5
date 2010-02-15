@@ -105,9 +105,6 @@ typedef struct {
 	u16	iconPutMain;				// ポケアイコン表示状況（メイン）
 	u16	iconPutSub;					// ポケアイコン表示状況（サブ）
 
-	u16	seeNum;			// 見つけた数
-	u16	getNum;			// 捕まえた数
-
 	FRAMELIST_WORK * lwk;		// リストワーク
 
 	u16 * localNo;					// 地方図鑑番号リスト
