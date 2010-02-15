@@ -377,7 +377,8 @@ static void	fldmap_BG_Exit( FIELDMAP_WORK *fieldWork );
 static void fldmap_G3D_CallBackSetUp( void );
 static void fldmap_G3D_Load( FIELDMAP_WORK * fieldWork );
 static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork );
-static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork );
+static void fldmap_G3D_Draw_top( FIELDMAP_WORK * fieldWork );
+static void fldmap_G3D_Draw_tail( FIELDMAP_WORK * fieldWork );
 static void fldmap_G3D_Unload( FIELDMAP_WORK * fieldWork );
 static void	fldmap_G3D_VBlank( GFL_TCB* tcb, void* work );
 static void	fldmap_G3D_BBDTrans(
@@ -429,7 +430,8 @@ static const u16 fldmapdata_bgColorTable[16];
 static void InitGmkTmpWork(GMK_TMP_WORK *tmpWork);
 
 //3Ｄ描画モード
-static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork );
+static void Draw3DNormalMode_top( FIELDMAP_WORK * fieldWork );
+static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork );
 static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork);
 static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork);
 static void DrawEncEff(FIELDMAP_WORK * fieldWork);
@@ -809,7 +811,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
 	fldmap_G3D_Control( fieldWork );
-	fldmap_G3D_Draw( fieldWork );
+	fldmap_G3D_Draw_top( fieldWork );
+	fldmap_G3D_Draw_tail( fieldWork );
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
   
   if(fieldWork->fldMsgBG){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
@@ -874,6 +877,12 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
+  // 描画にかかる micro second を表示
+#ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
+  OSTick debug_fieldmap_start_tick = OS_GetTick(); 
+  OSTick debug_fieldmap_end_tick;
+#endif
+
   if (fieldWork->MainHookFlg) return MAINSEQ_RESULT_CONTINUE;
   if (GAMEDATA_GetIsSave( fieldWork->gamedata )) return MAINSEQ_RESULT_CONTINUE;
 
@@ -955,6 +964,35 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     PL_BOAT_Main(*wk_ptr);
   }
 
+
+
+  // ----------------------top側3D描画処理---------------------------------------
+  // これ以降にデータ更新処理を入れないこと。
+  {
+    if(GAMEDATA_GetIsSave( fieldWork->gamedata )){
+       GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
+       return MAINSEQ_RESULT_CONTINUE;
+    }
+    
+    GFL_G3D_ClearG3dInfo();
+    FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
+
+    MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
+    fldmap_G3D_Draw_top( fieldWork );
+    MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
+  }
+
+
+#ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
+  debug_fieldmap_end_tick = OS_GetTick();
+  debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
+
+  if( GFL_UI_KEY_GetCont() & DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY )
+  {
+    OS_TPrintf( "top_tick %d micro second\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
+  }
+#endif
+
   return MAINSEQ_RESULT_CONTINUE;
 }
 
@@ -971,17 +1009,15 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
      return MAINSEQ_RESULT_CONTINUE;
   }
 
-  GFL_G3D_ClearG3dInfo();
   
   FIELD_SUBSCREEN_Draw(fieldWork->fieldSubscreenWork);
-  FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
   
   if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
 
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Draw( fieldWork->placeNameSys ); }
   
 	MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
-	fldmap_G3D_Draw( fieldWork );
+	fldmap_G3D_Draw_tail( fieldWork );
 	MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
@@ -2010,7 +2046,10 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 //--------------------------------------------------------------
 //プロジェクションマトリクスを操作する際のＺオフセット
 #define	PRO_MAT_Z_OFS	(310)
-static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
+// topフレームでの描画
+// ３D描画環境の初期化
+// field_g3d_mapperのtopフレーム描画
+static void fldmap_G3D_Draw_top( FIELDMAP_WORK * fieldWork )
 {
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定
@@ -2029,9 +2068,29 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
   }
 #endif  //PM_DEBUG
 
+
   {
     static const DRAW3DMODE_FUNC func[] = {
-      Draw3DNormalMode,
+      Draw3DNormalMode_top,
+      NULL,
+      NULL,
+      NULL,
+    };
+
+    if(func[ fieldWork->Draw3DMode ]){
+      func[ fieldWork->Draw3DMode ](fieldWork);
+    }
+  }
+}
+// tailフレームでの描画
+// 3D・2Dの描画処理
+// ３D描画終了（スワップバッファ）
+static void fldmap_G3D_Draw_tail( FIELDMAP_WORK * fieldWork )
+{
+
+  {
+    static const DRAW3DMODE_FUNC func[] = {
+      Draw3DNormalMode_tail,
       Draw3DCutinMode,
       Draw3DScrnTexMode,
       DrawEncEff,
@@ -2973,17 +3032,24 @@ void *GMK_TMP_WK_GetWork(FIELDMAP_WORK *fieldWork, const u32 inAssignID)
  * @return none
  */
 //==================================================================
-static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
+//　topフレームでの描画処理
+static void Draw3DNormalMode_top( FIELDMAP_WORK * fieldWork )
 {
   FIELD_FOG_Reflect( fieldWork->fog );
 	FIELD_LIGHT_Reflect( fieldWork->light, FALSE );
 
 	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );
-  
+
+	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera, FLDMAPPER_DRAW_TOP );
+}
+//　tailフレームでの描画処理
+static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
+{
   if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintG3D( fieldWork->fldMsgBG ); }
 
-	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
+  FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera, FLDMAPPER_DRAW_TAIL );
+  
 	FIELDSKILL_MAPEFF_Draw( fieldWork->fieldskill_mapeff );
 
 

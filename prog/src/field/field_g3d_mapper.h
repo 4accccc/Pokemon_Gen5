@@ -44,6 +44,17 @@ typedef struct {
 #define FLD_MAPPER_BLOCK_MEMSIZE	( FLD_MAPPER_MAPMDL_SIZE + FLD_MAPPER_MAPTEX_SIZE + FLD_MAPPER_MAPATTR_SIZE )
 #define FLD_MAPPER_CROSSBLOCK_MEMSIZE	( FLD_MAPPER_MAPMDL_SIZE + FLD_MAPPER_MAPTEX_SIZE + (FLD_MAPPER_MAPATTR_SIZE*2) )
 
+
+//-------------------------------------
+///	描画ブロック指定
+//=====================================
+typedef enum{
+  FLDMAPPER_DRAW_TOP,   // トップフレーム描画
+  FLDMAPPER_DRAW_TAIL,  // テイルフレーム描画
+
+  FLDMAPPER_DRAW_TYPE_MAX,
+} FLDMAPPER_DRAW_TYPE;
+
 //============================================================================================
 //
 //
@@ -67,7 +78,7 @@ extern void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper );
  * @brief	３Ｄマップコントロールシステムディスプレイ
  */
 //------------------------------------------------------------------
-extern void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera );
+extern void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera, FLDMAPPER_DRAW_TYPE type );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステム破棄

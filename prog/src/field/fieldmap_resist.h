@@ -77,6 +77,9 @@ typedef struct {
 	FLDMAPPER_RESIST_GROUND_ANIME ground_anime;	// 地面アニメーション
 
 	u32						memsize;				// １ブロックメモリサイズ
+
+  u8            topWriteBlockNum; // top（データ更新フレーム）で描画するブロック数
+  u8            pad[3];
 }FLDMAPPER_RESISTDATA;
 
 //============================================================================================

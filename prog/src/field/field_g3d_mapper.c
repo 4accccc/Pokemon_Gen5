@@ -131,6 +131,8 @@ struct _FLD_G3D_MAPPER {
   
 	u32					nowBlockIdx;				
 	VecFx32				posCont;
+  
+  u32         topWriteBlockNum; // top（データ更新フレーム）で描画するブロック数
 
 	VecFx32 globalDrawOffset;		//共通座標オフセット
 
@@ -213,6 +215,7 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
 	g3Dmapper->blockHeight = 0;
 	g3Dmapper->mode = FLDMAPPER_MODE_SCROLL_XZ;
 	g3Dmapper->arcID = MAPARC_NULL;
+	g3Dmapper->topWriteBlockNum = 0;
 	
   g3Dmapper->granime = NULL;
   //  配置モデルマネジャー生成
@@ -313,27 +316,44 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
  * @brief	３Ｄマップコントロールシステムディスプレイ
  */
 //------------------------------------------------------------------
-void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
+void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera, FLDMAPPER_DRAW_TYPE type )
 {
 	int i;
+  int index;
 	VecFx32 org_pos,draw_pos;
+  int loop_start, loop_end;
 	
 	GF_ASSERT( g3Dmapper );
 	
 ///	GFL_G3D_MAP_StartDraw();
 
-	for( i=0; i<g3Dmapper->blockNum; i++ ){
-		GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
-		draw_pos.x = org_pos.x + g3Dmapper->globalDrawOffset.x;
-		draw_pos.y = org_pos.y + g3Dmapper->globalDrawOffset.y;
-		draw_pos.z = org_pos.z + g3Dmapper->globalDrawOffset.z;
-		GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &draw_pos );
-		GFL_G3D_MAP_Draw( g3Dmapper->blockWk[i].g3Dmap, g3Dcamera );
-		GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
-	}
+  // ブロック描画
+  {
+    // 表示ブロック制御
+    if( type == FLDMAPPER_DRAW_TOP ){
+      loop_start  = 0;
+      loop_end    = g3Dmapper->topWriteBlockNum;
+    }else{
+      loop_start  = g3Dmapper->topWriteBlockNum;
+      loop_end    = g3Dmapper->blockNum;
+    }
 
-  FIELD_BMODEL_MAN_Draw( g3Dmapper->bmodel_man );
-///	GFL_G3D_MAP_EndDraw();
+    for( i=loop_start; i<loop_end; i++ ){
+      GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
+      draw_pos.x = org_pos.x + g3Dmapper->globalDrawOffset.x;
+      draw_pos.y = org_pos.y + g3Dmapper->globalDrawOffset.y;
+      draw_pos.z = org_pos.z + g3Dmapper->globalDrawOffset.z;
+      GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &draw_pos );
+      GFL_G3D_MAP_Draw( g3Dmapper->blockWk[i].g3Dmap, g3Dcamera );
+      GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
+    }
+  }
+
+
+  //配置オブジェ描画
+  if( type == FLDMAPPER_DRAW_TAIL ){
+    FIELD_BMODEL_MAN_Draw( g3Dmapper->bmodel_man );
+  }
 }
 
 //------------------------------------------------------------------
@@ -596,6 +616,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
   g3Dmapper->blockXNum  = resistData->blockXNum;
   g3Dmapper->blockZNum  = resistData->blockZNum;
   g3Dmapper->blockNum   = resistData->blockXNum * resistData->blockZNum;
+  g3Dmapper->topWriteBlockNum = resistData->topWriteBlockNum;
 
   {//mode異常の対処 
     switch( g3Dmapper->mode ){

@@ -795,8 +795,15 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   EV_REQUEST req;
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldWork = work;
+  RAIL_LOCATION front_location;
+  const MMDL *player_fmmdl;
   
   setupRequest( &req, gsys, fieldWork );
+
+  player_fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+
+  // 目の前のロケーションを取得
+  MMDL_GetRailFrontLocation( player_fmmdl, &front_location );
 
   
   //デバッグ用チェック
@@ -882,12 +889,10 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
     u16 id;
     RAIL_LOCATION pos;
     EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-    const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
-    u16 dir = MMDL_GetDirDisp( fmmdl );
+    u16 dir = MMDL_GetDirDisp( player_fmmdl );
   
     // 1歩前のレールロケーション取得
-    MMDL_GetRailFrontLocation( fmmdl, &pos );
-  
+    pos = front_location;
     {
       //OBJ看板チェック
     }
@@ -927,10 +932,9 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
       u16 id;
       RAIL_LOCATION pos;
       EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-      MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
-      u16 dir = MMDL_GetDirDisp( fmmdl );
+      u16 dir = MMDL_GetDirDisp( player_fmmdl );
       
-      MMDL_GetRailFrontLocation( fmmdl, &pos );
+      pos = front_location;
       id = EVENTDATA_CheckTalkBGEventRailLocation( req.evdata, evwork, &pos, dir );
       
       if( id != EVENTDATA_ID_NONE ){ //座標イベント起動

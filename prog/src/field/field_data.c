@@ -120,6 +120,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差用アトリビュートサイズ込み) by iwasawa 090910
+      1,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -140,6 +141,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+      1,
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
@@ -160,6 +162,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+      1,
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
@@ -180,6 +183,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+      0,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -200,6 +204,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+      1,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -220,6 +225,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE*4,	// 1ブロックメモリサイズ
+      1,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -240,6 +246,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+      0,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -260,6 +267,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+      1,
 		},
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
@@ -280,6 +288,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+      1,
 		},
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
@@ -300,6 +309,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+      0,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -320,6 +330,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,
+      0,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -341,6 +352,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差用アトリビュートサイズ込み) by iwasawa 090910
+      1,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -362,6 +374,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 
+      1,
 		},
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
@@ -383,6 +396,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 
+      1,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -404,6 +418,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 
+      1,
 		},
 		&FieldMapCtrl_HybridFunctions,
 		TRUE,
@@ -425,6 +440,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+      0,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -446,6 +462,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差用アトリビュートサイズ込み) by iwasawa 090910
+      1,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
