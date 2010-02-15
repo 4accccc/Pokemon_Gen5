@@ -18,6 +18,7 @@
 #include "monolith.naix"
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
+#include "sound/pm_sndsys.h"
 
 
 //==============================================================================
@@ -322,6 +323,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       else if(tp_ret == TOUCH_RECEIVE || (trg & PAD_BUTTON_DECIDE)){
         OS_TPrintf("uŽó‚¯‚év‘I‘ð\n");
         MonolithTool_PanelOBJ_Flash(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+        PMSND_PlaySE( SEQ_SE_SYS_68 );
         *seq = SEQ_ORDER;
       }
       else if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){

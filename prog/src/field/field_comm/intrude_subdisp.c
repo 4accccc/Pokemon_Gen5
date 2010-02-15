@@ -28,6 +28,7 @@
 #include "msg/msg_invasion.h"
 #include "system/bmp_oam.h"
 #include "intrude_mission_field.h"
+#include "sound/pm_sndsys.h"
 
 
 //==============================================================================
@@ -1615,6 +1616,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
             Intrude_SetWarpPlayerNetID(game_comm, net_id);
             FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_PLAYER_WARP);
           }
+          PMSND_PlaySE( SEQ_SE_FLD_102 ); //※check サブスクリーンイベントからワープイベントを起動するようにしたらそっちに移す
           return;
         }
       }
@@ -1630,13 +1632,13 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
         if(i == PALACE_TOWN_WFBC){
           intsub->wfbc_go = TRUE;
           intsub->wfbc_seq = 0;
-          return;
         }
         else{
           Intrude_SetWarpTown(game_comm, i);
           FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
-          return;
         }
+        PMSND_PlaySE( SEQ_SE_FLD_102 ); //※check サブスクリーンイベントからワープイベントを起動するようにしたらそっちに移す
+        return;
       }
     }
   }
@@ -1647,6 +1649,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   if(_CheckRectHit(x, y, &rect) == TRUE){
     Intrude_SetWarpTown(game_comm, PALACE_TOWN_DATA_PALACE);
     FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
+    PMSND_PlaySE( SEQ_SE_FLD_102 ); //※check サブスクリーンイベントからワープイベントを起動するようにしたらそっちに移す
     return;
   }
   

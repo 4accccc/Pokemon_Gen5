@@ -29,6 +29,7 @@
 #include "item/itemsym.h"
 #include "event_intrude.h"
 #include "field_comm\intrude_field.h"
+#include "sound/pm_sndsys.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -242,6 +243,7 @@ BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTR
   case 0:
     iedw->wait_max = DISGUISE_ANM_WAIT_MAX;
     iedw->wait = iedw->wait_max;
+    PMSND_PlaySE( SEQ_SE_FLD_103 );
     iedw->seq++;
     break;
   case 1:
