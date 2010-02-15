@@ -79,3 +79,16 @@ extern u16 ZUKAN_SEARCH_ENGINE_Search(
                HEAPID                     heap_id,
                u16**                      list );
 
+//-------------------------------------
+/// 全国/地方図鑑の番号順リストを得る
+//=====================================
+extern u16 ZUKAN_GetNumberRow(
+               u8       mode,  // ZKNCOMM_LIST_SORT_MODE_ZENKOKU / ZKNCOMM_LIST_SORT_MODE_LOCAL
+               HEAPID   heap_id,
+               u16**    list );
+
+//-------------------------------------
+/// 全国図鑑番号から地方図鑑番号を得ることができるリストを得る
+//=====================================
+extern u16* ZUKAN_GetZenkokuToChihouArray( HEAPID heap_id, u16* num );
+

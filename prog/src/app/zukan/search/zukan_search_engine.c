@@ -8,7 +8,7 @@
  *  モジュール名：ZUKAN_SEARCH_ENGINE
  */
 //============================================================================
-//#define DEBUG_KAWADA
+#define DEBUG_KAWADA
 
 
 // インクルード
@@ -363,6 +363,162 @@ u16 ZUKAN_SEARCH_ENGINE_Search(
 }
 
 #undef BLOCK_FULL_FLAG_ON_AND_CONTINUE
+
+
+//------------------------------------------------------------------
+/**
+ *  @brief          全国/地方図鑑の番号順リストを得る 
+ *
+ *  @param[in]      mode        検索条件
+ *  @param[in]      heap_id     ヒープID
+ *  @param[out]     list        monsnoの列
+ *
+ *  @retval         listのサイズ 
+ *
+ *  @note           listは呼び出し元で解放して下さい。
+ *  @note           見た捕まえたに関係なく、その図鑑に登場する全ポケモンをリストにします。
+ *
+ */
+//------------------------------------------------------------------
+u16 ZUKAN_GetNumberRow(
+               u8       mode,  // ZKNCOMM_LIST_SORT_MODE_ZENKOKU / ZKNCOMM_LIST_SORT_MODE_LOCAL
+               HEAPID   heap_id,
+               u16**    list )
+{
+  
+  if( mode == ZKNCOMM_LIST_SORT_MODE_ZENKOKU )
+  {
+    // 全国図鑑番号 = monsno
+    u16  full_num;
+    u16* full_list;
+    u16  i;
+    
+    full_list = GFL_HEAP_AllocMemory( heap_id, sizeof(u16)*MONSNO_END );
+    for( i=0; i<MONSNO_END; i++ ) full_list[i] = i +1;
+    full_num = MONSNO_END;
+  
+#ifdef DEBUG_KAWADA
+    {
+      u16 i;
+      OS_Printf( "ZUKAN_GetNumberRow  Result\n" );
+      OS_Printf( "num=%d\n", full_num );
+      OS_Printf( "order  monsno\n" );
+      for( i=0; i<full_num; i++ )
+      {
+        OS_Printf( "%3d    %3d\n", i, full_list[i] );
+      }      
+      OS_Printf( "End\n" );
+    }
+#endif
+
+    *list = full_list;
+    return full_num;
+  }
+  else
+  {
+    u16* chihou_appear_list;
+    u16  chihou_appear_count;
+
+    u16  chihou_appear_num;
+    u16* zenkoku_to_chihou_list = ZUKAN_GetZenkokuToChihouArray( heap_id, &chihou_appear_num );
+
+    u16  full_num;
+    u16* full_list;
+    u32  size;
+    u16  i; 
+
+    full_list = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_sort_chihou_dat, FALSE, heap_id, &size );
+    full_num = size / sizeof(u16);
+
+    chihou_appear_list = GFL_HEAP_AllocMemory( heap_id, sizeof(u16)*chihou_appear_num );
+
+    chihou_appear_count = 0;
+    for( i=0; i<full_num; i++ )
+    {
+      u16  monsno = full_list[i];
+      if( zenkoku_to_chihou_list[monsno] != 0 )
+      {
+        chihou_appear_list[chihou_appear_count] = monsno;
+        chihou_appear_count++;
+      }
+    }
+
+    GFL_HEAP_FreeMemory( full_list );
+    GFL_HEAP_FreeMemory( zenkoku_to_chihou_list );
+
+#ifdef DEBUG_KAWADA
+    {
+      u16 i;
+      OS_Printf( "ZUKAN_GetNumberRow  Result\n" );
+      OS_Printf( "num=%d\n", chihou_appear_num );
+      OS_Printf( "order  monsno\n" );
+      for( i=0; i<chihou_appear_num; i++ )
+      {
+        OS_Printf( "%3d    %3d\n", i, chihou_appear_list[i] );
+      }      
+      OS_Printf( "End\n" );
+    }
+#endif
+
+    *list = chihou_appear_list;
+    return chihou_appear_num;
+  }
+}
+
+
+//------------------------------------------------------------------
+/**
+ *  @brief          全国図鑑番号から地方図鑑番号を得ることができるリストを得る 
+ *
+ *  @param[in]      heap_id     ヒープID
+ *  @param[out]     num         地方図鑑に登場するポケモンの数(NULL可)
+ *
+ *  @retval         戻り値をlistで[monsno]で地方図鑑番号が得られる
+ *
+ *  @note           戻り値の配列は呼び出し元で解放して下さい。
+ *  @note           戻り値をu16* listで受け取ったとすると、
+ *                  list[monsno]で地方図鑑番号が得られる(0<=monsno<=MONSNO_END)。
+ *                  0のときはそのmonsnoのポケモンは地方図鑑に登場しない。
+ *
+ */
+//------------------------------------------------------------------
+u16* ZUKAN_GetZenkokuToChihouArray( HEAPID heap_id, u16* num )
+{
+  u16  chihou_appear_num = 0;
+  u16  chihou_num;
+  u16* chihou_list;
+  u32  size;
+    
+  chihou_list = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_chihou_no_dat, FALSE, heap_id, &size );
+  chihou_num = size / sizeof(u16);
+
+  if( num )
+  {
+    u16 i;
+    for( i=0; i<chihou_num; i++ )
+    {
+      if( chihou_list[i] != 0 ) chihou_appear_num++;
+    }
+    *num = chihou_appear_num;
+  }
+
+#ifdef DEBUG_KAWADA
+  {
+    u16 i;
+    OS_Printf( "ZUKAN_GetZenkokuToChihouArray  Result\n" );
+    OS_Printf( "chihou_appear_num=%d\n", chihou_appear_num );
+    OS_Printf( "chihou_num=%d\n", chihou_num );
+    OS_Printf( "order  monsno\n" );
+    for( i=0; i<chihou_num; i++ )
+    {
+      OS_Printf( "%3d    %3d\n", i, chihou_list[i] );
+    }      
+    OS_Printf( "End\n" );
+  }
+#endif
+
+  return chihou_list;
+}
 
 
 //=============================================================================
