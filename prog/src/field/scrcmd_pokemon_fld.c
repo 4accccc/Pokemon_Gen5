@@ -280,6 +280,7 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
   u16 * ret_msgid = SCRCMD_GetVMWork( core, wk );
   u16 * ret_count = SCRCMD_GetVMWork( core, wk );
 
+  HEAPID     heap_id = SCRCMD_WORK_GetHeapID( wk );
   GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
   ZUKAN_SAVEDATA * zw = GAMEDATA_GetZukanSave( gamedata );
   BOOL zenkoku_flag = ZUKANSAVE_GetZenkokuZukanFlag( zw );
