@@ -184,6 +184,7 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
     _Setup_MessageSetting(&monosys->setup);
     _Setup_ActorSetting(&monosys->setup);
     _Setup_OBJGraphicLoad(&monosys->setup);
+    monosys->setup.powerdata = GPOWER_PowerData_LoadAlloc(HEAPID_MONOLITH);
   }
 
   //ƒ[ƒJƒ‹PROCì¬
@@ -337,6 +338,7 @@ static GFL_PROC_RESULT MonolithProc_End( GFL_PROC * proc, int * seq, void * pwk,
   
 	GFL_TCB_DeleteTask(monosys->vintr_tcb);
 
+  GPOWER_PowerData_Unload(monosys->setup.powerdata);
   _Setup_OBJGraphicUnload(&monosys->setup);
   _Setup_ActorExit(&monosys->setup);
   _Setup_MessageExit(&monosys->setup);

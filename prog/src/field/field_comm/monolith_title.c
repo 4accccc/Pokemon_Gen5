@@ -279,7 +279,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
     break;
   case 2:
     if(mtw->select_panel != TITLE_PANEL_CANCEL){
-      if(MonolithTool_PanelColor_GetMode(appwk) != PANEL_COLORMODE_FLASH){
+      if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
         appwk->next_menu_index = MONOLITH_MENU_MISSION + mtw->select_panel;
         return GFL_PROC_RES_FINISH;
       }
@@ -340,12 +340,14 @@ static void _Title_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
   for(i = 0; i < TitlePanelMax[mtw->mission_occ]; i++){
     if(mtw->mission_occ == TRUE){
       MonolithTool_PanelOBJ_Create(appwk->setup, &mtw->panel[i], 
-        COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, TitlePanelTblY[mtw->mission_occ][i], 
+        COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, 
+        PANEL_POS_X, TitlePanelTblY[mtw->mission_occ][i], 
         msg_mono_title_001 + i, NULL);
     }
     else{
       MonolithTool_PanelOBJ_Create(appwk->setup, &mtw->panel[i], 
-        COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, TitlePanelTblY[mtw->mission_occ][i], 
+        COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, 
+        PANEL_POS_X, TitlePanelTblY[mtw->mission_occ][i], 
         msg_mono_title_002 + i, NULL);
     }
   }

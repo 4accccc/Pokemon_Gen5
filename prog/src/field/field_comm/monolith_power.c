@@ -38,6 +38,18 @@
 ///メニューバーのCGXサイズ
 #define MENUBAR_CGX_SIZE    (4*0x20)
 
+enum{
+  _BMPWIN_TALKWIN,    ///<会話ウィンドウ
+  _BMPWIN_TITLE,      ///<タイトル
+  
+  _BMPWIN_MAX,
+};
+
+enum{
+  _PRINTUTIL_TITLE,
+  
+  _PRINTUTIL_MAX,
+};
 
 //--------------------------------------------------------------
 //  
@@ -69,6 +81,7 @@ enum{
 };
 
 enum{
+  BGPRI_BMPOAM_HAVE_POINT = 1,
   BGPRI_BMPOAM_NAME = 3,
 };
 
@@ -119,6 +132,17 @@ enum{
 ///メニューバーのY長
 #define _MENU_BAR_Y_LEN           (8*3)
 
+///パネル「もらう」X座標
+#define _PANEL_DECIDE_X   (64)
+///パネル「もらう」Y座標
+#define _PANEL_DECIDE_Y   (192 - _MENU_BAR_Y_LEN/2)
+
+enum{
+  _SCROLL_ARROW_X = 128,
+  _SCROLL_ARROW_UP_Y = _TITLE_BAR_Y_LEN + 4,
+  _SCROLL_ARROW_DOWN_Y = 192 - _MENU_BAR_Y_LEN - 4,
+};
+
 
 //==============================================================================
 //  構造体定義
@@ -129,6 +153,12 @@ typedef struct{
   
   u32 alloc_menubar_pos;
   
+  PANEL_ACTOR panel;
+  GFL_CLWK *act_arrow_up;       ///<上矢印
+  GFL_CLWK *act_arrow_down;     ///<下矢印
+  
+  MONOLITH_BMPSTR bmpstr_point; ///<所持ポイントBMPOAM
+  
   GFL_MSGDATA *mm_power;        ///<パワー名gmm
   GFL_BMP_DATA *bmp_power_name[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];
   GPOWER_ID use_gpower_id[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];      ///<bmp_power_nameに対応したGPOWER_IDが入っている
@@ -136,7 +166,8 @@ typedef struct{
   u8 power_list_num;        ///<パワーリスト数
   u8 power_list_write_num;  ///<BMPに書き込んだ名前の数
   
-  GFL_BMPWIN *bmpwin;
+  GFL_BMPWIN *bmpwin[_BMPWIN_MAX];
+  PRINT_UTIL print_util[_PRINTUTIL_MAX];
   STRBUF *strbuf_stream;
   PRINT_STREAM *print_stream;
   GFL_CLWK *act_cancel;   ///<キャンセルアイコンアクターへのポインタ
@@ -177,11 +208,21 @@ static void _Setup_BGGraphicLoad(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *se
 static void _Setup_BGGraphicUnload(MONOLITH_PWSELECT_WORK *mpw);
 static void _BmpOamCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static void _BmpOamDelete(MONOLITH_PWSELECT_WORK *mpw);
+static void _DecidePanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
+static void _DecidePanelDelete(MONOLITH_PWSELECT_WORK *mpw);
+static void _DecidePanelUpdate(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw);
+static void _HavePointCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
+static void _HavePointDelete(MONOLITH_PWSELECT_WORK *mpw);
+static void _HavePointUpdate(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw);
 static void _CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
 static void _CancelIconDelete(MONOLITH_PWSELECT_WORK *mpw);
 static void _CancelIconUpdate(MONOLITH_PWSELECT_WORK *mpw);
+static void _ScrollArrowCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
+static void _ScrollArrowDelete(MONOLITH_PWSELECT_WORK *mpw);
+static void _ScrollArrowUpdate(MONOLITH_PWSELECT_WORK *mpw);
 static void _Setup_BmpWinCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static void _Setup_BmpWinDelete(MONOLITH_PWSELECT_WORK *mpw);
+static void _Set_TitlePrint(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
 static void _Set_MsgStream(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id);
 static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id);
 static BOOL _Wait_MsgStream(MONOLITH_PWSELECT_WORK *mpw);
@@ -259,6 +300,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
     mpw->decide_cursor_pos = _CURSOR_POS_NONE;
     mpw->backup_cursor_pos = _CURSOR_POS_NONE;
     mpw->backup_tp_decide_pos = _CURSOR_POS_NONE;
+
+    MonolithTool_Panel_Init(appwk);
     
   	mpw->mm_power = GFL_MSG_Create(
   		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_power_dat, HEAPID_MONOLITH);
@@ -269,10 +312,14 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
     _Setup_BmpWinCreate(mpw, appwk->setup);
     _ScrollPos_BGReflection(mpw);
     //OBJ
+    _HavePointCreate(appwk, mpw);
     _CancelIconCreate(appwk, mpw);
     _BmpOamCreate(mpw, appwk->setup);
+    _DecidePanelCreate(appwk, mpw);
+    _ScrollArrowCreate(appwk, mpw);
 
-    MonolithTool_Panel_Init(appwk);
+    _Set_TitlePrint(appwk, mpw);
+
     appwk->common->power_select_no = GPOWER_ID_NULL;
     
     mpw->vintr_tcb = GFUser_VIntr_CreateTCB(
@@ -317,6 +364,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
 {
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_PWSELECT_WORK *mpw = mywk;
+  int i;
   enum{
     SEQ_INIT,
     SEQ_TOP,
@@ -327,7 +375,13 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
   };
   
   MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_BG);
+  MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_OBJ);
+  _HavePointUpdate(appwk->setup, mpw);
   _CancelIconUpdate(mpw);
+  _DecidePanelUpdate(appwk->setup, mpw);
+  for(i = 0; i < _PRINTUTIL_MAX; i++){
+    PRINT_UTIL_Trans(&mpw->print_util[i], appwk->setup->printQue);
+  }
 
   if(appwk->force_finish == TRUE){
     return GFL_PROC_RES_FINISH;
@@ -371,7 +425,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     }
     break;
   case SEQ_DECIDE_STREAM:
-    if(MonolithTool_PanelColor_GetMode(appwk) != PANEL_COLORMODE_FLASH){
+    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH){
       WORDSET_RegisterGPowerName( 
         appwk->setup->wordset, 0, mpw->use_gpower_id[mpw->decide_cursor_pos] );
       _Set_MsgStreamExpand(mpw, appwk->setup, msg_mono_pow_011);
@@ -405,12 +459,14 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     break;
     
   case SEQ_FINISH:
-    if(MonolithTool_PanelColor_GetMode(appwk) != PANEL_COLORMODE_FLASH){
+    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH){
       appwk->next_menu_index = MONOLITH_MENU_TITLE;
       return GFL_PROC_RES_FINISH;
     }
     break;
   }
+
+  _ScrollArrowUpdate(mpw);
   
   return GFL_PROC_RES_CONTINUE;
 }
@@ -442,8 +498,11 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_End( GFL_PROC * proc, int * seq, 
   _Setup_PowerNameBMPDelete(mpw);
 
   //OBJ
+  _HavePointDelete(mpw);
+  _DecidePanelDelete(mpw);
   _BmpOamDelete(mpw);
   _CancelIconDelete(mpw);
+  _ScrollArrowDelete(mpw);
   //BG
   _Setup_BGGraphicUnload(mpw);
   _Setup_BmpWinDelete(mpw);
@@ -494,7 +553,7 @@ static void _Setup_BGFrameSetting(void)
 	GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME1_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_OFF);
+	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_ON);
 	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_ON);
 	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_ON);
 }
@@ -582,17 +641,21 @@ static void _Setup_BmpWinCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *set
   PaletteWorkSetEx_Arc(setup->pfd, ARCID_FLDMAP_WINFRAME, BmpWinFrame_WinPalArcGet(), 
     HEAPID_MONOLITH, FADE_SUB_BG, 0x20, BMPWIN_FRAME_PALNO * 16, 0);
   
-	mpw->bmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
+	mpw->bmpwin[_BMPWIN_TALKWIN] = GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
 		1,19,30,4, MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B );
 
-	bmp = GFL_BMPWIN_GetBmp( mpw->bmpwin );
+	bmp = GFL_BMPWIN_GetBmp( mpw->bmpwin[_BMPWIN_TALKWIN] );
 	
 	GFL_BMP_Clear( bmp, 0xff );
-//	GFL_BMPWIN_TransVramCharacter( mpw->bmpwin );
-	GFL_BMPWIN_MakeScreen( mpw->bmpwin );
+//	GFL_BMPWIN_TransVramCharacter( mpw->bmpwin[_BMPWIN_TALKWIN] );
+//	GFL_BMPWIN_MakeScreen( mpw->bmpwin[_BMPWIN_TALKWIN] );
 //	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 	
-	BmpWinFrame_Write( mpw->bmpwin, WINDOW_TRANS_ON, BMPWIN_FRAME_START_CGX, BMPWIN_FRAME_PALNO );
+	mpw->bmpwin[_BMPWIN_TITLE] = GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
+		0,0,32,3, MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B );
+	GFL_BMPWIN_MakeScreen( mpw->bmpwin[_BMPWIN_TITLE] );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+	PRINT_UTIL_Setup(&mpw->print_util[_PRINTUTIL_TITLE], mpw->bmpwin[_BMPWIN_TITLE]);
 }
 
 //--------------------------------------------------------------
@@ -604,7 +667,30 @@ static void _Setup_BmpWinCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *set
 //--------------------------------------------------------------
 static void _Setup_BmpWinDelete(MONOLITH_PWSELECT_WORK *mpw)
 {
-  GFL_BMPWIN_Delete(mpw->bmpwin);
+  int i;
+  for(i = 0; i < _BMPWIN_MAX; i++){
+    GFL_BMPWIN_Delete(mpw->bmpwin[i]);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * タイトル描画
+ *
+ * @param   appwk		
+ * @param   mpw		
+ */
+//--------------------------------------------------------------
+static void _Set_TitlePrint(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw)
+{
+  STRBUF *str_msg;
+  
+  str_msg = GFL_MSG_CreateString(appwk->setup->mm_monolith, msg_mono_pow_010);
+
+  PRINT_UTIL_Print(&mpw->print_util[_PRINTUTIL_TITLE], appwk->setup->printQue, 
+    8, 4, str_msg, appwk->setup->font_handle);
+  
+  GFL_STR_DeleteBuffer(str_msg);
 }
 
 //--------------------------------------------------------------
@@ -624,10 +710,12 @@ static void _Set_MsgStream(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u
   mpw->strbuf_stream = GFL_MSG_CreateString(setup->mm_monolith, msg_id);
   
   mpw->print_stream = PRINTSYS_PrintStream(
-    mpw->bmpwin, 0, 0, mpw->strbuf_stream, setup->font_handle,
+    mpw->bmpwin[_BMPWIN_TALKWIN], 0, 0, mpw->strbuf_stream, setup->font_handle,
     MSGSPEED_GetWait(), setup->tcbl_sys, 10, HEAPID_MONOLITH, 0xf);
 
-	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_ON);
+	GFL_BMPWIN_MakeScreen( mpw->bmpwin[_BMPWIN_TALKWIN] );
+	BmpWinFrame_Write( mpw->bmpwin[_BMPWIN_TALKWIN], 
+	  WINDOW_TRANS_ON_V, BMPWIN_FRAME_START_CGX, BMPWIN_FRAME_PALNO );
 }
 
 //--------------------------------------------------------------
@@ -656,10 +744,12 @@ static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *se
   GFL_STR_DeleteBuffer(str_temp);
   
   mpw->print_stream = PRINTSYS_PrintStream(
-    mpw->bmpwin, 0, 0, mpw->strbuf_stream, setup->font_handle,
+    mpw->bmpwin[_BMPWIN_TALKWIN], 0, 0, mpw->strbuf_stream, setup->font_handle,
     MSGSPEED_GetWait(), setup->tcbl_sys, 10, HEAPID_MONOLITH, 0xf);
 
-	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_ON);
+	GFL_BMPWIN_MakeScreen( mpw->bmpwin[_BMPWIN_TALKWIN] );
+	BmpWinFrame_Write( mpw->bmpwin[_BMPWIN_TALKWIN], 
+	  WINDOW_TRANS_ON_V, BMPWIN_FRAME_START_CGX, BMPWIN_FRAME_PALNO );
 }
 
 //--------------------------------------------------------------
@@ -688,7 +778,7 @@ static BOOL _Wait_MsgStream(MONOLITH_PWSELECT_WORK *mpw)
 //--------------------------------------------------------------
 static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw)
 {
-  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( mpw->bmpwin );
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( mpw->bmpwin[_BMPWIN_TALKWIN] );
 
   GF_ASSERT(mpw->print_stream != NULL);
   PRINTSYS_PrintStreamDelete(mpw->print_stream);
@@ -696,10 +786,11 @@ static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw)
   
   GFL_STR_DeleteBuffer(mpw->strbuf_stream);
   mpw->strbuf_stream = NULL;
+
+  BmpWinFrame_Clear( mpw->bmpwin[_BMPWIN_TALKWIN], WINDOW_TRANS_ON );
   
-	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_OFF);
   GFL_BMP_Clear(bmp, 0xff);
-	GFL_BMPWIN_TransVramCharacter( mpw->bmpwin );
+	GFL_BMPWIN_TransVramCharacter( mpw->bmpwin[_BMPWIN_TALKWIN] );
 
   GFL_FONTSYS_SetColor( 
     MONOLITH_FONT_DEFCOLOR_LETTER, MONOLITH_FONT_DEFCOLOR_SHADOW, MONOLITH_FONT_DEFCOLOR_BACK );
@@ -872,6 +963,90 @@ static void _BmpOamDelete(MONOLITH_PWSELECT_WORK *mpw)
 
 //==================================================================
 /**
+ * 「もらう」パネル生成
+ *
+ * @param   appwk		
+ * @param   mpw		
+ */
+//==================================================================
+static void _DecidePanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw)
+{
+  MonolithTool_PanelOBJ_Create(appwk->setup, &mpw->panel, 
+    COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_DECIDE, 
+    _PANEL_DECIDE_X, _PANEL_DECIDE_Y, msg_mono_pow_012, NULL);
+//  MonolithTool_PanelOBJ_Focus(appwk, &mpw->panel, 1, 0, FADE_SUB_OBJ);
+}
+
+//==================================================================
+/**
+ * 「もらう」パネル削除
+ *
+ * @param   mpw		
+ */
+//==================================================================
+static void _DecidePanelDelete(MONOLITH_PWSELECT_WORK *mpw)
+{
+  MonolithTool_PanelOBJ_Delete(&mpw->panel);
+}
+
+//==================================================================
+/**
+ * 「もらう」パネル更新処理
+ *
+ * @param   mpw		
+ */
+//==================================================================
+static void _DecidePanelUpdate(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw)
+{
+  MonolithTool_PanelOBJ_TransUpdate(setup, &mpw->panel);
+}
+
+//--------------------------------------------------------------
+/**
+ * 所持ポイントBMPOAM作成
+ *
+ * @param   appwk		
+ * @param   mpw		
+ */
+//--------------------------------------------------------------
+static void _HavePointCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+  OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  
+  WORDSET_RegisterNumber(appwk->setup->wordset, 0, occupy->intrude_point, 4, 
+    STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+  MonolithTool_Bmpoam_Create(appwk->setup, &mpw->bmpstr_point, COMMON_RESOURCE_INDEX_DOWN, 
+    128+64, 192-_MENU_BAR_Y_LEN/2, 8, 2, msg_mono_pow_013, appwk->setup->wordset);
+  MonolithTool_Bmpoam_BGPriSet(appwk->setup, &mpw->bmpstr_point, BGPRI_BMPOAM_HAVE_POINT);
+}
+
+//==================================================================
+/**
+ * 所持ポイントBMPOAM削除
+ *
+ * @param   mpw		
+ */
+//==================================================================
+static void _HavePointDelete(MONOLITH_PWSELECT_WORK *mpw)
+{
+  MonolithTool_Bmpoam_Delete(&mpw->bmpstr_point);
+}
+
+//==================================================================
+/**
+ * 所持ポイントBMPOAM更新処理
+ *
+ * @param   mpw		
+ */
+//==================================================================
+static void _HavePointUpdate(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw)
+{
+  MonolithTool_Bmpoam_TransUpdate(setup, &mpw->bmpstr_point);
+}
+
+//==================================================================
+/**
  * キャンセルアイコン生成
  *
  * @param   appwk		
@@ -905,6 +1080,64 @@ static void _CancelIconDelete(MONOLITH_PWSELECT_WORK *mpw)
 static void _CancelIconUpdate(MONOLITH_PWSELECT_WORK *mpw)
 {
   MonolithTool_CancelIcon_Update(mpw->act_cancel);
+}
+
+//==================================================================
+/**
+ * 矢印上下アクター生成
+ *
+ * @param   appwk		
+ * @param   mpw		
+ */
+//==================================================================
+static void _ScrollArrowCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw)
+{
+  mpw->act_arrow_up = MonolithTool_Arrow_Create(
+    appwk->setup, _SCROLL_ARROW_X, _SCROLL_ARROW_UP_Y, COMMON_ANMSEQ_ARROW_UP);
+  mpw->act_arrow_down = MonolithTool_Arrow_Create(
+    appwk->setup, _SCROLL_ARROW_X, _SCROLL_ARROW_DOWN_Y, COMMON_ANMSEQ_ARROW_DOWN);
+  GFL_CLACT_WK_SetDrawEnable( mpw->act_arrow_up, FALSE );
+  GFL_CLACT_WK_SetDrawEnable( mpw->act_arrow_down, FALSE );
+}
+
+//==================================================================
+/**
+ * 矢印上下アクター削除
+ *
+ * @param   mpw		
+ */
+//==================================================================
+static void _ScrollArrowDelete(MONOLITH_PWSELECT_WORK *mpw)
+{
+  MonolithTool_ArrowIcon_Delete(mpw->act_arrow_up);
+  MonolithTool_ArrowIcon_Delete(mpw->act_arrow_down);
+}
+
+//==================================================================
+/**
+ * 矢印上下アクター更新処理
+ *
+ * @param   mpw		
+ */
+//==================================================================
+static void _ScrollArrowUpdate(MONOLITH_PWSELECT_WORK *mpw)
+{
+  if(mpw->list_y <= _LIST_Y_TOP_OFFSET){
+    GFL_CLACT_WK_SetDrawEnable( mpw->act_arrow_up, FALSE );
+  }
+  else{
+    GFL_CLACT_WK_SetDrawEnable( mpw->act_arrow_up, TRUE );
+  }
+//  if((mpw->list_y >> 8) >= POWER_LIST_SPACE * mpw->power_list_num - _MENU_BAR_Y_LEN - 192){
+  if((mpw->list_y >> 8) >= mpw->power_list_num * POWER_LIST_SPACE - (_LIST_Y_BOTTOM_OFFSET >> 8) - 192){
+    GFL_CLACT_WK_SetDrawEnable( mpw->act_arrow_down, FALSE );
+  }
+  else{
+    GFL_CLACT_WK_SetDrawEnable( mpw->act_arrow_down, TRUE );
+  }
+  
+  MonolithTool_ArrowIcon_Update(mpw->act_arrow_up);
+  MonolithTool_ArrowIcon_Update(mpw->act_arrow_down);
 }
 
 //--------------------------------------------------------------

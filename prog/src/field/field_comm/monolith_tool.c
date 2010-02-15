@@ -32,9 +32,11 @@ enum{
 };
 
 ///パネル(大)BMPFONT座標X
-#define PANEL_LARGE_BMPFONT_POS_X   (PANEL_POS_X - PANEL_LARGE_CHARSIZE_X/2*8)
+#define PANEL_LARGE_BMPFONT_POS_X(panel_x)   (panel_x - PANEL_LARGE_CHARSIZE_X/2*8)
 ///パネル(小)BMPFONT座標X
-#define PANEL_SMALL_BMPFONT_POS_X   (PANEL_POS_X - PANEL_SMALL_CHARSIZE_X/2*8)
+#define PANEL_SMALL_BMPFONT_POS_X(panel_x)   (panel_x - PANEL_SMALL_CHARSIZE_X/2*8)
+///パネル(決定)BMPFONT座標X
+#define PANEL_DECIDE_BMPFONT_POS_X(panel_x)   (panel_x - PANEL_DECIDE_CHARSIZE_X/2*8)
 
 
 //==============================================================================
@@ -127,6 +129,7 @@ static const BMPOAM_ACT_DATA BmpOamHead_Str = {
  * @param   dest		    生成したパネルアクター代入先
  * @param   res_index		共通素材Index
  * @param   size		    パネルサイズ
+ * @param   x           X座標(中心)
  * @param   y		        Y座標(中心)
  * @param   msg_id      メッセージID
  * @param   wordset       WORDSETが不必要な場合はNULL指定
@@ -134,7 +137,7 @@ static const BMPOAM_ACT_DATA BmpOamHead_Str = {
  * WORDSETが必要な場合は外側であらかじめWORDSETをしてください
  */
 //==================================================================
-void MonolithTool_PanelOBJ_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int y, u32 msg_id, WORDSET *wordset)
+void MonolithTool_PanelOBJ_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int x, int y, u32 msg_id, WORDSET *wordset)
 {
   CLSYS_DEFREND_TYPE defrend_type;
   GFL_CLWK_DATA head = ActHead_Panel;
@@ -142,26 +145,40 @@ void MonolithTool_PanelOBJ_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMM
   int bmp_size_x;
   STRBUF *strbuf;
   
+  switch(size){
+  case PANEL_SIZE_LARGE:
+    bmp_size_x = PANEL_LARGE_CHARSIZE_X;
+    head.anmseq = COMMON_ANMSEQ_PANEL_LARGE;
+    bmpoam_head.x = PANEL_LARGE_BMPFONT_POS_X(x);
+    break;
+  case PANEL_SIZE_SMALL:
+    bmp_size_x = PANEL_SMALL_CHARSIZE_X;
+    head.anmseq = COMMON_ANMSEQ_PANEL_SMALL;
+    bmpoam_head.x = PANEL_SMALL_BMPFONT_POS_X(x);
+    break;
+  case PANEL_SIZE_DECIDE:
+  default:
+    bmp_size_x = PANEL_DECIDE_CHARSIZE_X;
+    head.anmseq = COMMON_ANMSEQ_PANEL_DECIDE;
+    bmpoam_head.x = PANEL_DECIDE_BMPFONT_POS_X(x);
+    break;
+  }
+  
   //BMP作成
-  bmp_size_x = (size == PANEL_SIZE_LARGE) ? PANEL_LARGE_CHARSIZE_X : PANEL_SMALL_CHARSIZE_X;
   dest->bmp = GFL_BMP_Create(bmp_size_x, PANEL_CHARSIZE_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH);
   
   //ヘッダ作成
-  head.anmseq = (size == PANEL_SIZE_LARGE) ? COMMON_ANMSEQ_PANEL_LARGE : COMMON_ANMSEQ_PANEL_SMALL;
+  head.pos_x = x;
   head.pos_y = y;
   bmpoam_head.y = y - 8;
   bmpoam_head.bmp = dest->bmp;
   bmpoam_head.pltt_index = setup->common_res[res_index].pltt_bmpfont_index;
   if(res_index == COMMON_RESOURCE_INDEX_UP){
     defrend_type = CLSYS_DEFREND_MAIN;
-    head.anmseq = COMMON_ANMSEQ_PANEL_LARGE;
-    bmpoam_head.x = PANEL_LARGE_BMPFONT_POS_X;
     bmpoam_head.draw_type = CLSYS_DRAW_MAIN;
   }
   else{
     defrend_type = CLSYS_DEFREND_SUB;
-    head.anmseq = COMMON_ANMSEQ_PANEL_SMALL;
-    bmpoam_head.x = PANEL_SMALL_BMPFONT_POS_X;
     bmpoam_head.draw_type = CLSYS_DRAW_SUB;
   }
   bmpoam_head.setSerface = defrend_type;
@@ -344,7 +361,10 @@ void MonolithTool_PanelBG_Flash(MONOLITH_APP_PARENT *appwk, FADEREQ req)
 //==================================================================
 void MonolithTool_Panel_Init(MONOLITH_APP_PARENT *appwk)
 {
-  GFL_STD_MemClear(&appwk->tool.panel_color, sizeof(PANEL_COLOR_CONTROL));
+  int i;
+  for(i = 0; i < PANEL_CONTROL_MAX; i++){
+    GFL_STD_MemClear(&appwk->tool.panel_color[i], sizeof(PANEL_COLOR_CONTROL));
+  }
 }
 
 //==================================================================
@@ -355,9 +375,9 @@ void MonolithTool_Panel_Init(MONOLITH_APP_PARENT *appwk)
  * @retval  PANEL_COLORMODE		
  */
 //==================================================================
-PANEL_COLORMODE MonolithTool_PanelColor_GetMode(MONOLITH_APP_PARENT *appwk)
+PANEL_COLORMODE MonolithTool_PanelColor_GetMode(MONOLITH_APP_PARENT *appwk, FADEREQ req)
 {
-  return appwk->tool.panel_color.mode;
+  return appwk->tool.panel_color[req].mode;
 }
 
 //==================================================================
@@ -369,8 +389,10 @@ PANEL_COLORMODE MonolithTool_PanelColor_GetMode(MONOLITH_APP_PARENT *appwk)
 //==================================================================
 void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
 {
-  PANEL_COLOR_CONTROL *pcc = &appwk->tool.panel_color;
+  PANEL_COLOR_CONTROL *pcc = &appwk->tool.panel_color[req];
   int start_colpos, change_colpos, color_num;
+  
+  GF_ASSERT(req < PANEL_CONTROL_MAX);
   
   start_colpos = _PanelColor_GetStartColorPos(req);
   change_colpos = _PanelColor_GetChangeDataColorPos(req);
@@ -449,7 +471,7 @@ void MonolithTool_Panel_ColorUpdate(MONOLITH_APP_PARENT *appwk, FADEREQ req)
 //--------------------------------------------------------------
 static void _PanelColor_SetMode(MONOLITH_APP_PARENT *appwk, PANEL_COLORMODE mode, FADEREQ req)
 {
-  PANEL_COLOR_CONTROL *pcc = &appwk->tool.panel_color;
+  PANEL_COLOR_CONTROL *pcc = &appwk->tool.panel_color[req];
   
   GFL_STD_MemClear(pcc, sizeof(PANEL_COLOR_CONTROL));
   pcc->mode = mode;
@@ -613,6 +635,20 @@ BOOL MonolithTool_Bmpoam_TransUpdate(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmp
 
 //==================================================================
 /**
+ * BMPOAMアクターBGプライオリティ設定
+ *
+ * @param   setup		
+ * @param   bmpstr		
+ * @param   bg_pri		BGプライオリティ
+ */
+//==================================================================
+void MonolithTool_Bmpoam_BGPriSet(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmpstr, int bg_pri)
+{
+  BmpOam_ActorSetBgPriority( bmpstr->bmpoam, bg_pri );
+}
+
+//==================================================================
+/**
  * 現在プレイヤーがいるパレスエリアの占拠情報を取得する
  *
  * @param   appwk		
@@ -759,6 +795,62 @@ void MonolithTool_CancelIcon_Delete(GFL_CLWK *cap)
  */
 //==================================================================
 void MonolithTool_CancelIcon_Update(GFL_CLWK *cap)
+{
+  return;
+}
+
+//==================================================================
+/**
+ * 矢印アクターを作成
+ *
+ * @param   setup		    
+ *
+ * @retval  GFL_CLWK *		
+ */
+//==================================================================
+GFL_CLWK * MonolithTool_Arrow_Create(MONOLITH_SETUP *setup, int x, int y, int anmseq)
+{
+  GFL_CLWK *cap;
+  GFL_CLWK_DATA ActHead_Arrow = {  //矢印アクターヘッダ
+    0, 0, //pos_x, pos_y
+    0, //anmseq
+    0, 1, //softpri, bgpri
+  };
+  
+  ActHead_Arrow.pos_x = x;
+  ActHead_Arrow.pos_y = y;
+  ActHead_Arrow.anmseq = anmseq;
+  cap = GFL_CLACT_WK_Create( setup->clunit, 
+    setup->common_res[COMMON_RESOURCE_INDEX_DOWN].char_index, 
+    setup->common_res[COMMON_RESOURCE_INDEX_DOWN].pltt_index, 
+    setup->common_res[COMMON_RESOURCE_INDEX_DOWN].cell_index, 
+    &ActHead_Arrow, CLSYS_DEFREND_SUB, HEAPID_MONOLITH );
+
+  GFL_CLACT_WK_SetAutoAnmFlag( cap, TRUE );
+  
+  return cap;
+}
+
+//==================================================================
+/**
+ * 矢印アクター削除
+ *
+ * @param   cap		
+ */
+//==================================================================
+void MonolithTool_ArrowIcon_Delete(GFL_CLWK *cap)
+{
+  GFL_CLACT_WK_Remove(cap);
+}
+
+//==================================================================
+/**
+ * 矢印アクター更新
+ *
+ * @param   cap		
+ */
+//==================================================================
+void MonolithTool_ArrowIcon_Update(GFL_CLWK *cap)
 {
   return;
 }

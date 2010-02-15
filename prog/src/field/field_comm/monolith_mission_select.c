@@ -386,7 +386,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
     break;
 
   case SEQ_FINISH:
-    if(MonolithTool_PanelColor_GetMode(appwk) != PANEL_COLORMODE_FLASH){
+    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
       if(mmw->order_end == TRUE){
         appwk->next_menu_index = MONOLITH_MENU_END;
       }
@@ -668,11 +668,13 @@ static void _Msselect_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_
   MonolithTool_Panel_Init(appwk);
   
   MonolithTool_PanelOBJ_Create(appwk->setup, &mmw->panel[_PANEL_ORDER], 
-    COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_RECEIVE_Y, msg_mono_mis_000, NULL);
+    COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_POS_X, PANEL_RECEIVE_Y, 
+    msg_mono_mis_000, NULL);
   MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
 
   MonolithTool_PanelOBJ_Create(appwk->setup, &mmw->panel[_PANEL_ENFORCEMENT], 
-    COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_RECEIVE_Y, msg_mono_mis_001, NULL);
+    COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_POS_X, PANEL_RECEIVE_Y, 
+    msg_mono_mis_001, NULL);
   MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ENFORCEMENT], 1, 0, FADE_SUB_OBJ);
   MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], FALSE);
 }

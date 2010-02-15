@@ -109,6 +109,9 @@ enum{
   MONOLITH_VINTR_TCB_PRI_MAIN = 10,     ///<モノリス画面全体で使用しているVINTR TCB
 };
 
+///パネルコントロール数
+#define PANEL_CONTROL_MAX     (4)
+
 
 //==============================================================================
 //  構造体定義
@@ -159,7 +162,7 @@ typedef struct{
 
 ///共有ツールで使用するワーク
 typedef struct{
-  PANEL_COLOR_CONTROL panel_color;
+  PANEL_COLOR_CONTROL panel_color[PANEL_CONTROL_MAX];
 }MONOLITH_TOOL_WORK;
 
 ///モノリスAPP PROC用ParentWork
