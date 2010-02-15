@@ -590,7 +590,7 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
 
     pParent->aUser[0].selectLV = pWork->myChageType;
     pParent->aUser[0].selectType = pWork->changeMode;
-    WIFI_NEGOTIATION_SV_GetMsg(GAMEDATA_GetWifiNegotiation(pGameData),&pWork->myMatchData.pms);
+    WIFI_NEGOTIATION_SV_GetMsg(GAMEDATA_GetWifiNegotiation(pWork->pGameData),&pWork->myMatchData.pms);
     
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO);
     
