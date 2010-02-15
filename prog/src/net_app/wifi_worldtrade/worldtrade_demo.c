@@ -1,11 +1,16 @@
 //============================================================================================
 /**
- * @file	worldtrade_status.c
+ * @file	worldtrade_demo.c
  * @brief	世界交換ポケモン交換デモ呼び出し
  * @author	Akito Mori
  * @date	06.05.10
  */
 //============================================================================================
+#ifdef PM_DEBUG
+#define DEBUG_DEMO_NONE   //デモを飛ばす
+#endif
+
+
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
@@ -138,9 +143,10 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
   default:
     GF_ASSERT(0);
 	}
-
+#ifndef DEBUG_DEMO_NONE
 	GAMESYSTEM_CallProc( wk->param->gamesys,
 		FS_OVERLAY_ID(pokemon_trade), call_proc, wk->sub_proc_wk );
+#endif
 
 	wk->subprocflag = 1;
 
@@ -199,8 +205,10 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
           p_param->b_enable_cancel= TRUE;
 
           //進化デモ
+#ifndef DEBUG_DEMO_NONE
           GAMESYSTEM_CallProc( wk->param->gamesys,
               FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->sub_proc_wk );
+#endif
 
 					wk->subprocess_seq = DEMO_MODE_SHINKA;
 
@@ -247,8 +255,11 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
             p_param->b_enable_cancel= TRUE;
 
             //進化デモ
+#ifndef DEBUG_DEMO_NONE
             GAMESYSTEM_CallProc( wk->param->gamesys,
-                FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->sub_proc_wk );						wk->subprocess_seq = DEMO_MODE_SHINKA;
+                FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->sub_proc_wk );
+#endif
+            wk->subprocess_seq = DEMO_MODE_SHINKA;
 
           }else{
 						// 進化無しならそのまま終了

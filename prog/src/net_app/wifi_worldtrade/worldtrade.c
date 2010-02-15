@@ -44,6 +44,9 @@
 #include "arc/wifileadingchar.naix"
 #include "poke_icon.naix"
 
+#include "debug/debug_nagihashi.h"
+
+
 #define BRIGHT_VAL  (-7)          ///< パッシブ状態のための半透明率
 
 FS_EXTERN_OVERLAY( dpw_common );
@@ -225,6 +228,8 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
     // Dpw_Tr_Main() だけは例外的にいつでも呼べる
     Dpw_Tr_Main();
   }
+
+  DEBUG_HEAP_PrintRestUse( HEAPID_WORLDTRADE );
 
   GFL_TCB_Main( wk->tcbsys );
   WT_PRINT_Main( &wk->print );

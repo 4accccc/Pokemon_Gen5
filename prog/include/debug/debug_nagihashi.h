@@ -11,6 +11,8 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#ifdef PM_DEBUG
+
 //ライブラリ
 #include <gflib.h>
 
@@ -22,6 +24,7 @@
  *					定数宣言
 */
 //=============================================================================
+#define   DEBUG_NAGI_Printf( ... )      OS_TPrintf( __VA_ARGS__ )
 
 //=============================================================================
 /**
@@ -53,9 +56,9 @@ static inline void DEBUG_STRBUF_Print( const STRBUF *cp_str )
     for( i = 0; i < len; i++ )
     {
       DEB_STR_CONV_StrcodeToSjis( &cp_code[i] , str , 1 );
-      NAGI_Printf( "%s ", str );
+      DEBUG_NAGI_Printf( "%s ", str );
     }
-    NAGI_Printf("\n");
+    DEBUG_NAGI_Printf("\n");
   }
 
 }
@@ -63,8 +66,36 @@ static inline void DEBUG_STRBUF_Print( const STRBUF *cp_str )
 //=============================================================================
 /**
  *					処理時間計算マクロ
+ *					  PrintStartとPrintEndで挟んだ箇所をマイクロ秒で図ります
 */
 //=============================================================================
 static OSTick s_DUN_TICK_DRAW_start;
 #define DEBUG_TICK_PrintStart  (s_DUN_TICK_DRAW_start = OS_GetTick())
-#define DEBUG_TICK_PrintEnd    NAGI_Printf("line[%d] time=%dms\n",__LINE__,OS_TicksToMicroSeconds(OS_GetTick() - s_DUN_TICK_DRAW_start) )
+#define DEBUG_TICK_PrintEnd    DEBUG_NAGI_Printf("file[%s] line[%d] time=%dms\n", __FILE__, __LINE__,OS_TicksToMicroSeconds(OS_GetTick() - s_DUN_TICK_DRAW_start) )
+
+//=============================================================================
+/**
+ *					ヒープ残りサイズプリント関数
+ *					  以下関数を毎フレームまわしてください
+*/
+//=============================================================================
+static inline void DEBUG_HEAP_PrintRestUse( HEAPID heapID )
+{ 
+  static u32 s_max = 0xFFFFFFFF;
+  int rest;
+
+  rest  = GFL_HEAP_GetHeapFreeSize( heapID );
+  if( s_max > rest )
+  { 
+    s_max = rest;
+  }
+  DEBUG_NAGI_Printf( "HEAPID[0x%x] most low rest size=0x%x\n", heapID, s_max );
+}
+
+#else //PM_DEBUG
+#define   DEBUG_NAGI_Printf( ... )  /* */
+#define DEBUG_STRBUF_Print(x)       /* */
+#define DEBUG_TICK_PrintStart       /* */
+#define DEBUG_TICK_PrintEnd         /* */
+#define DEBUG_HEAP_PrintRestUse(x)  /* */
+#endif //PM_DEBUG

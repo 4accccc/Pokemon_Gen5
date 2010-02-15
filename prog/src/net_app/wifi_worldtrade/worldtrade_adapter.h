@@ -107,7 +107,6 @@
 #define SEQ_GS_WIFI_ACCESS		(0)
 #define SEQ_GS_BLD_GTC				(0)
 
-//フォント置き換えようWT_PRINTの中で使ってください
 #define FONT_TOUCH						(0)
 #define FONT_SYSTEM						(0)
 #define FONT_TALK							(0)
@@ -150,16 +149,6 @@ typedef struct
 #define MSG_NO_PUT						(0)
 #define MSG_ALLPUT						(0)
 
-typedef struct
-{	
-	int dummy;
-}CLACT_ADD;
-
-typedef struct
-{	
-	int dummy;
-}CLACT_HEADER;
-
 //=============================================================================
 /**
  *					置き換える予定だが、まだなく、中身を定義していない関数
@@ -182,7 +171,7 @@ static inline void NUMFONT_WriteNumber( NUMFONT *wk, int a, int b, int c, GFL_BM
 static inline void NUMFONT_WriteMark( NUMFONT *wk, int a, GFL_BMPWIN *bmpwin, int c, int d ){}
 
 
-//各種セーブデータ　PHC　ペラップ　イベント 図鑑登録
+//各種セーブデータ　PHC
 static inline PHC_SVDATA * SaveData_GetPhcSaveData( SAVE_CONTROL_WORK *sv ){	return NULL; }
 static inline void PhcSvData_SetCourseOpenFlag( PHC_SVDATA *sv, int a ){}
 static inline EVENTWORK* SaveData_GetEventWork( SAVE_CONTROL_WORK *sv ){ return NULL; }
@@ -190,7 +179,6 @@ static inline EVENTWORK* SaveData_GetEventWork( SAVE_CONTROL_WORK *sv ){ return 
 //アルセウスイベント
 static inline int SysWork_AruseusuEventGet( EVENTWORK *ev ){	return 0;}
 static inline void SysWork_AruseusuEventSet( EVENTWORK *ev, int a ){}
-
 
 //図鑑
 static inline BOOL ZukanWork_GetZenkokuZukanFlag( ZUKAN_WORK *wk ){return TRUE;}
@@ -304,27 +292,7 @@ extern void EMAILSAVE_DCProfileCreate_Update( SAVE_CONTROL_WORK * savedata, Dpw_
 */
 //=============================================================================
 #include "system/bgwinfrm.h"
-#if 0
-#define BGWINFRM_TRANS_VBLANK	(0)
 
-typedef struct _BGWINFRM_WORK BGWINFRM_WORK;
-
-extern BGWINFRM_WORK * BGWINFRM_Create( int mode, int max, HEAPID heapID );
-extern void BGWINFRM_Add( BGWINFRM_WORK *wk, int index, int frm, int sx, int sy );
-extern void BGWINFRM_BmpWinOn( BGWINFRM_WORK *wk, int index, GFL_BMPWIN *win );
-extern void BGWINFRM_PosGet( BGWINFRM_WORK *wk, int index, s8 *px, s8 *py  );
-extern void BGWINFRM_Exit( BGWINFRM_WORK *wk );
-extern void BGWINFRM_MoveMain( BGWINFRM_WORK *wk );
-extern u32 BGWINFRM_MoveOne( BGWINFRM_WORK * wk, u32 index );
-extern void BGWINFRM_MoveInit( BGWINFRM_WORK *wk, int index, int add_x, int add_y, int cnt );
-extern void BGWINFRM_FrameSet( BGWINFRM_WORK * wk, u32 index, u16 * scr );
-extern u32 BGWINFRM_MoveCheck( BGWINFRM_WORK *wk, int index );
-extern void BGWINFRM_FrameSetArc( BGWINFRM_WORK *wk, int index, ARCID arcID, ARCDATID datID, int comp );
-extern void BGWINFRM_FramePut( BGWINFRM_WORK *wk, int index, int px, int py );
-extern u16 * BGWINFRM_FrameBufGet( BGWINFRM_WORK *wk, int index );
-extern void BGWINFRM_FrameOn( BGWINFRM_WORK *wk, int index );
-extern void BGWINFRM_FrameOff( BGWINFRM_WORK *wk, int index );
-#endif
 
 //=============================================================================
 /**
@@ -344,7 +312,6 @@ typedef struct
 	BOOL					use;
 } WT_PRINT_QUE;
 
-
 typedef struct
 {	
 	GFL_FONT			*font;
@@ -354,7 +321,6 @@ typedef struct
 	PRINT_STREAM	*stream[WT_PRINT_STREAM_MAX];
 	WT_PRINT_QUE	one[WT_PRINT_BUFF_MAX];
 }WT_PRINT;
-
 
 extern int FontProc_GetPrintStrWidth( WT_PRINT *wk, u8 font_idx, STRBUF *buf, int magin );
 
