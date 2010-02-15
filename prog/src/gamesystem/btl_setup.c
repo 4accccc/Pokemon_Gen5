@@ -14,6 +14,8 @@
 #include "tr_tool/trno_def.h"
 #include "tr_tool/trtype_def.h"
 #include "buflen.h"
+#include "field/eventwork.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 #include "gamesystem/btl_setup.h"
 
@@ -252,6 +254,11 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   dst->musicPinch = SEQ_BGM_BATTLEPINCH;
 
   dst->result = BTL_RESULT_WIN;
+  
+  //ボックス開発者に会っているかフラグ
+  if( EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork( gameData ), SYS_FLAG_PCNAME)){
+    BATTLE_PARAM_SetBtlStatusFlag( dst, BTL_STATUS_FLAG_PCNAME_OPEN );
+  }
 }
 
 //=============================================================================================

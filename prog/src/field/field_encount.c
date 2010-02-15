@@ -254,6 +254,10 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
   //バトルパラメータセット
   bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
   enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
+  
+  if( flags & SCR_WILD_BTL_FLAG_LEGEND ){
+    BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_LEGEND );
+  }
 
   //エンカウントエフェクト抽選
   enc_eff_no = ENCEFFNO_GetWildEncEffNo( poke_tbl[0].monsNo, enc->fwork );
@@ -319,6 +323,9 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   //バトルパラメータセット
   bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
   enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
+  
+  //釣り戦闘フラグ
+  BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_FISHING );
 
   return bp;
 }
@@ -579,6 +586,9 @@ static void enc_CreateBattleParamMovePoke( FIELD_ENCOUNT *enc, const ENCPOKE_FLD
 
   BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );
   BTL_SETUP_Wild( bsp, enc->gdata, partyEnemy, &sit, BTL_RULE_SINGLE, heapID );
+
+  //移動ポケモンバトルフラグセット
+  BATTLE_PARAM_SetBtlStatusFlag( bsp, BTL_STATUS_FLAG_MOVE_POKE|BTL_STATUS_FLAG_LEGEND );
 
   GFL_HEAP_FreeMemory( pp );
   GFL_HEAP_FreeMemory( partyEnemy );

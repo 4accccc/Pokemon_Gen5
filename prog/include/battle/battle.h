@@ -148,10 +148,10 @@ typedef struct {
 //-----------------------------------------------------------------------------------
 typedef enum {
   //フラグ数が8をこえるときはBATTLE_SETUP_PARAM->btl_status_flagの型をu8から拡張してください
-  BTL_STATUS_FLAG_FISHNING = 0x01,     ///<釣り戦闘ならTRUE
-  BTL_STATUS_FLAG_PCOWNER_SEE = 0x02,  ///<パソコン開発者に会っていればTRUE
-  BTL_STATUS_FLAG_REGEND = 0x04,       ///<伝説級ポケモンとのエンカウントならTRUE
-  BTL_STATUS_FALG_MOVE_POKE = 0x08,    ///<移動ポケモンとのエンカウントならTRUE
+  BTL_STATUS_FLAG_FISHING = 0x01,     ///<釣り戦闘ならTRUE
+  BTL_STATUS_FLAG_PCNAME_OPEN = 0x02,  ///<パソコンの名前がオープンされているか？
+  BTL_STATUS_FLAG_LEGEND = 0x04,       ///<伝説級ポケモンとのエンカウントならTRUE
+  BTL_STATUS_FLAG_MOVE_POKE = 0x08,    ///<移動ポケモンとのエンカウントならTRUE
 }BTL_STATUS_FLAG;
 
 //-----------------------------------------------------------------------------------

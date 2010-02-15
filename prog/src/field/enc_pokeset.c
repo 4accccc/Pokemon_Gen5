@@ -17,6 +17,7 @@
 
 #include "battle/battle.h"
 #include "gamesystem/btl_setup.h"
+#include "gamesystem/g_power.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/tokusyu_def.h"
 #include "poke_tool/poketype.h"
@@ -213,6 +214,9 @@ u32 ENCPOKE_EncProbManipulation( const ENCPOKE_FLD_PARAM* efp, const GAMEDATA* g
   if(new_prob >= 100){
     new_prob = 100;
   }
+  //Gƒpƒ[•Ï“®
+  new_prob = GPOWER_Calc_Encount( new_prob );
+
   return new_prob;
 }
 
