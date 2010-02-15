@@ -105,6 +105,9 @@ furniture_store_def.h: furniture_store.ev
 postman_scr_def.h: postman_scr.ev
 	$(EV_DEF) postman_scr.ev $(SCR_OFFS_ID_H)
 
+vending_machine_def.h: vending_machine.ev
+	$(EV_DEF) vending_machine.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
