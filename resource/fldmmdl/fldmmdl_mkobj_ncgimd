@@ -838,6 +838,11 @@
 	@echo convert ncg_imd flag
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/flag.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
 
+#sprock.imd
+./mmdl_res/sprock.imd: ./mmdl_nchara/sprock.ncg ./mmdl_nchara/sprock.ncl ./mmdl_res/ncg4x4ocell.imd fldmmdl_list.csv
+	@echo convert ncg_imd sprock
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sprock.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_res/ncg4x4pokeflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd tsure_001
