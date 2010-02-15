@@ -173,6 +173,7 @@
 #define WK_SCENE_C03R0301                16561 /* 0x40b1 ヒウンシティ（バトルカンパニーF1）：イベント用ワーク */
 #define WK_SCENE_C03R1301_SUNGLASSES     16562 /* 0x40b2 ヒウンシティ（お金持ちの家１F）：ボディチェックイベント用ワーク */
 #define WK_SCENE_C04R0201                16563 /* 0x40b3 ミュージカルホール：イベント用ワーク */
+#define WK_SCENE_R07_RIVAL_01            16564 /* 0x40b4 7番道路：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
