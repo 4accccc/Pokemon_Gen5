@@ -680,7 +680,7 @@
 #define FV_T01R0401_HAKASE1                656 /* 0x0290 カノコタウン研究所：博士（父） */
 #define FV_POSTMAN                         657 /* 0x0291 不思議な贈り物配達員 */
 #define FV_R07_RIVAL_01                    658 /* 0x0292 ７番道路：ライバルとチャンピオン */
-		/* not used   659(0x0293) */
+#define FV_D08R0101_HAKAI                  659 /* 0x0293 リュウラセンの塔入り口（破壊前）：プラズマ団 */
 		/* not used   660(0x0294) */
 		/* not used   661(0x0295) */
 		/* not used   662(0x0296) */
