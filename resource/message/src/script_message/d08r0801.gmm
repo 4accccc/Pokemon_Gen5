@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-15T19:22:04"/>
+	<create user="matsumiya" host="W00224" date="2010-02-15T19:26:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1449" top="241" right="2154" bottom="869" maximized="no" rayout="Vertical2">
+	<dialog left="1480" top="263" right="2185" bottom="891" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -531,10 +531,10 @@
 ねがいが　ようやく　かなう！▼
 だれにも　われらを
 とめることなど　できない！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『われらの
-ねがいが　ようやく　かなう！▼
-だれにも　われらを
-とめることなど　できない！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『我らの
+願いが　ようやく　かなう！▼
+だれにも　我らを
+止めることなど　できない！▼</language>
 	</row>
 
 	<row id="msg_d08r0801_hakaim2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -544,10 +544,10 @@
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
 		<language name="JPN" width="256">プラズマだん『わたしは　とめられた▼
 だが　つぎの　なかまが
-おまえの　うごきを　ふうじるだろう！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『わたしは　とめられた▼
-だが　つぎの　なかまが
-おまえの　うごきを　ふうじるだろう！▼</language>
+おまえの　うごきを　ふうじる！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『わたしは　止められた▼
+だが　次の　同士が
+おまえの　動きを　封じる！▼</language>
 	</row>
 
 	<row id="msg_d08r0801_hakaim2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,,">
@@ -557,7 +557,7 @@
 		<language name="JPN" width="256">プラズマだん『ポケモンを
 こきつかうことに　なれていやがる</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『ポケモンを
-こきつかうことに　なれていやがる</language>
+こきつかうことに　慣れていやがる</language>
 	</row>
 
 	<row id="msg_d08r0801_hakaiw1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -566,7 +566,7 @@
 		<attribute name="キャラ指定">プラズマ団したっぱ♀</attribute>
 		<language name="JPN" width="256">プラズマだん『いくよ！
 プラ～ズマ～！！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『いくよ！
+		<language name="JPN_KANJI" width="256">プラズマ団『行くよ！
 プラ～ズマ～！！▼</language>
 	</row>
 
@@ -578,7 +578,7 @@
 		<language name="JPN" width="256">プラズマだん『わたしたちの　おうが
 あたらしい　くにを　つくります▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『わたしたちの　王が
-あたらしい　国を　創ります▼</language>
+新しい　国を　創ります▼</language>
 	</row>
 
 	<row id="msg_d08r0801_hakaiw1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -588,7 +588,7 @@
 		<language name="JPN" width="256">プラズマだん『わたしたちの　おうが
 あたらしい　くにを　つくります▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『わたしたちの　王が
-あたらしい　国を　創ります</language>
+新しい　国を　創ります</language>
 	</row>
 
 	<row id="msg_d08r0801_hakaim3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -596,9 +596,9 @@
 ・表示後、トレーナ-戦闘に</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
 		<language name="JPN" width="256">プラズマだん『ほらほら！
-４にん　つづけて　たたかえるか？▼</language>
+４にん　つづけて　あいてできるか？▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『ほらほら！
-４にん　つづけて　たたかえるか？▼</language>
+４人続けて　相手できるか？▼</language>
 	</row>
 
 	<row id="msg_d08r0801_hakaim3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -610,11 +610,11 @@
 		<language name="JPN" width="256">プラズマだん『なんて　ヤツ……
 なぜ　そこまで　がんばれるのだ？▼
 とっ　とりあえず
-みちを　あけてやる！▼</language>
+みちは　あけてやるよ！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『なんて　ヤツ……
 なぜ　そこまで　がんばれるのだ？▼
 とっ　とりあえず
-みちを　あけてやる！▼</language>
+道は　あけてやるよ！▼</language>
 	</row>
 
 	<row id="msg_d08r0801_hakaim3_03" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
