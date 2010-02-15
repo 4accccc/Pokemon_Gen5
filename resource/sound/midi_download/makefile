@@ -63,6 +63,7 @@ LIST_FILE = list.txt
 $(targetname).narc:  $(OBJ_FILE) makefile
 	-ls *.sseq > $(LIST_FILE)
 	-ls *.sbnk >> $(LIST_FILE)
+	-ls *.wav >> $(LIST_FILE)
 	-ls *.swav >> $(LIST_FILE)
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(LIST_FILE)
 	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
