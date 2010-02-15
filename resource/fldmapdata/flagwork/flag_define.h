@@ -184,7 +184,7 @@
 #define FE_LEGEND3_GET                     168 /* 0x00a8 伝説ポケモン：アラミスを捕まえた */
 #define FE_D06R0201_GOLDGET                169 /* 0x00a9 電気洞窟内：きんのたま入手フラグ */
 #define FE_PALACE01_OLDMANTALK             170 /* 0x00aa パレスじじい初回会話フラグ */
-		/* not used   171(0x00ab) */
+#define FE_C09R0501_CHAMPION               171 /* 0x00ab チャンピオンリーグ：アデク初回会話フラグ */
 		/* not used   172(0x00ac) */
 		/* not used   173(0x00ad) */
 		/* not used   174(0x00ae) */
