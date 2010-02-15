@@ -82,7 +82,7 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 	}
 	
 	work->initWork = initWork;
-	
+
 	work->fitInitWork->commWork = initWork->commWork;
 	work->fitInitWork->musPoke = initWork->musPoke;
   work->fitInitWork->mus_save = initWork->mus_save;

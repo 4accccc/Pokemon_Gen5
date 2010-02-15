@@ -1171,6 +1171,8 @@ SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_FIELDMAP
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
         musical/mus_poke_data.c \
         musical/mus_item_draw.c \

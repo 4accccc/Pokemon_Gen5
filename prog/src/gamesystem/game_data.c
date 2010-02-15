@@ -1624,3 +1624,15 @@ UNSV_WORK *GAMEDATA_GetUnsvWorkPtr(GAMEDATA * gamedata)
 {
   return &gamedata->UnsvWork;
 }
+
+//----------------------------------------------------------
+/**
+ * @brief ミュージカルセーブポインタ取得
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @retval  UNSV_WORK *    
+ */
+//----------------------------------------------------------
+MUSICAL_SAVE *GAMEDATA_GetMusicalSavePtr(GAMEDATA * gamedata)
+{
+  return SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_MUSICAL);
+}

@@ -34,6 +34,7 @@
 #include "savedata/misc.h"
 #include "savedata/wifi_negotiation.h"
 #include "savedata/record.h"
+#include "savedata/musical_save.h"  //MUSICAL_SAVE
 #include "gamesystem/comm_player_support.h"
 
 #include "field/bsubway_scr_proc.h"
@@ -631,5 +632,14 @@ extern int TRAINERCARD_GetCardRank( GAMEDATA *gameData );
  */
 //----------------------------------------------------------
 extern UNSV_WORK *GAMEDATA_GetUnsvWorkPtr(GAMEDATA * gamedata);
+
+//----------------------------------------------------------
+/**
+ * @brief ミュージカルセーブポインタ取得
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @retval  UNSV_WORK *    
+ */
+//----------------------------------------------------------
+extern MUSICAL_SAVE *GAMEDATA_GetMusicalSavePtr(GAMEDATA * gamedata);
 
 

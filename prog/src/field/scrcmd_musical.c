@@ -27,6 +27,8 @@
 
 #include "musical/musical_system.h"
 #include "musical/musical_event.h"
+#include "musical/musical_shot_sys.h"
+#include "musical/musical_dressup_sys.h"
 #include "savedata/save_control.h"
 #include "savedata/musical_save.h"
 #include "savedata/musical_dist_save.h"
@@ -50,6 +52,7 @@
 //======================================================================
 //  define
 //======================================================================
+FS_EXTERN_OVERLAY(musical);
 
 //======================================================================
 //  struct
@@ -63,10 +66,23 @@ typedef struct
   GMEVENT *event;
 }EVENT_MUSICAL_WORK;
 
+typedef struct
+{
+  MUS_SHOT_INIT_WORK *initWork;
+}EV_MUSSHOT_CALL_WORK;
+
+typedef struct
+{
+  DRESSUP_INIT_WORK *initWork;
+}EV_FITTING_CALL_WORK;
+
+
 //======================================================================
 //  proto
 //======================================================================
 static GMEVENT_RESULT event_Musical( GMEVENT *event, int *seq, void *work );
+static void EvCmdMusicalShotCallProc_CallBack( void* work );
+static void EvCmdFittingCallProc_CallBack( void* work );
 
 //======================================================================
 //  スクリプトコマンド　ミュージカル
@@ -87,46 +103,67 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   
   u8  mode = VMGetU8(core);
   u16 pokeIdx = SCRCMD_GetVMWorkValue( core, work );
 
-  call_event = GMEVENT_Create(
-      gsys, NULL, event_Musical, sizeof(EVENT_MUSICAL_WORK) );
-  ev_musical_work = GMEVENT_GetEventWork( call_event );
-	MI_CpuClear8( ev_musical_work, sizeof(EVENT_MUSICAL_WORK) );
-  
-  init = &ev_musical_work->init;
-  init->saveCtrl = GAMEDATA_GetSaveControlWork( gdata );
-  init->pokePara = PP_Create(
-      MONSNO_PIKUSII , 20, PTL_SETUP_POW_AUTO , HEAPID_PROC );
-  init->isComm = FALSE;
-  init->isDebug = FALSE;
-  init->gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
-  
-//  ev_musical_work->event = EVENT_FieldSubProc( gsys, fparam->fieldMap,
-//    NO_OVERLAY_ID, &Musical_ProcData, init );
-  ev_musical_work->event = MUSICAL_CreateEvent( gsys, gdata , FALSE );
-   
-  //スクリプト終了後、指定したイベントに遷移する
-  SCRIPT_EntryNextEvent( sc, call_event );
-  
+  if( mode == 0 || mode == 1 )
   {
-    FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-  //  PMSND_StopBGM();
-  //  FIELD_SOUND_PushBGM( fsnd );
-  //  PMSND_FadeOutBGM( 30 );
-  }
+    call_event = GMEVENT_Create(
+        gsys, NULL, event_Musical, sizeof(EVENT_MUSICAL_WORK) );
+    ev_musical_work = GMEVENT_GetEventWork( call_event );
+  	MI_CpuClear8( ev_musical_work, sizeof(EVENT_MUSICAL_WORK) );
+    
+    init = &ev_musical_work->init;
+    init->saveCtrl = GAMEDATA_GetSaveControlWork( gdata );
+    init->pokePara = PP_Create(
+        MONSNO_PIKUSII , 20, PTL_SETUP_POW_AUTO , HEAPID_PROC );
+    init->isComm = FALSE;
+    init->isDebug = FALSE;
+    init->gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+    
+  //  ev_musical_work->event = EVENT_FieldSubProc( gsys, fparam->fieldMap,
+  //    NO_OVERLAY_ID, &Musical_ProcData, init );
+    ev_musical_work->event = MUSICAL_CreateEvent( gsys, gdata , FALSE );
+     
+    //スクリプト終了後、指定したイベントに遷移する
+    SCRIPT_EntryNextEvent( sc, call_event );
+    
+    {
+      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
+    //  PMSND_StopBGM();
+    //  FIELD_SOUND_PushBGM( fsnd );
+    //  PMSND_FadeOutBGM( 30 );
+    }
   
-  VM_End( core );
-  //return VMCMD_RESULT_CONTINUE;;
-  return VMCMD_RESULT_SUSPEND;;
+    VM_End( core );
+    return VMCMD_RESULT_SUSPEND;
+  }
+  else
+  {
+    GMEVENT* event;
+    MUSICAL_SAVE *musSave = GAMEDATA_GetMusicalSavePtr( gdata );
+    EV_MUSSHOT_CALL_WORK *callWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(EV_MUSSHOT_CALL_WORK) );
+    callWork->initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(MUS_SHOT_INIT_WORK) );
+    callWork->initWork->isCheckMode = FALSE;
+    callWork->initWork->musShotData = MUSICAL_SAVE_GetMusicalShotData( musSave );
+    
+    //ショット呼び出し
+    event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
+                                         FS_OVERLAY_ID(musical), &MusicalShot_ProcData, callWork->initWork,
+                                         EvCmdMusicalShotCallProc_CallBack, callWork );
+    SCRIPT_CallEvent( sc, event );
+
+    return VMCMD_RESULT_SUSPEND;
+    
+  }
 }
 
 //--------------------------------------------------------------
 /**
- * ミュージカル：ミュージカル系ワードセット
+ * ミュージカル：ミュージカル 試着室呼び出し
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
  */
@@ -134,10 +171,34 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdMusicalFittingCall( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
   u16 pokeIdx = SCRCMD_GetVMWorkValue( core, work );
+  
+  {
+    GMEVENT* event;
+    MUSICAL_SAVE *musSave = GAMEDATA_GetMusicalSavePtr( gdata );
+    POKEPARTY *party = GAMEDATA_GetMyPokemon(gdata);
+    POKEMON_PARAM *pokePara = PokeParty_GetMemberPointer( party , pokeIdx );
+    MUSICAL_POKE_PARAM *musPoke = MUSICAL_SYSTEM_InitMusPoke( pokePara , HEAPID_PROC );
 
-  return VMCMD_RESULT_CONTINUE;
+    EV_FITTING_CALL_WORK *callWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(EV_FITTING_CALL_WORK) );
+    callWork->initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(DRESSUP_INIT_WORK) );
+    callWork->initWork->musPoke = musPoke;
+    callWork->initWork->mus_save = musSave;
+    callWork->initWork->commWork = NULL;
+    
+    //ショット呼び出し
+    event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
+                                         FS_OVERLAY_ID(musical), &DressUp_ProcData, callWork->initWork,
+                                         EvCmdFittingCallProc_CallBack, callWork );
+    SCRIPT_CallEvent( sc, event );
+  }
+
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------
@@ -156,8 +217,7 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
   u16* ret_wk = SCRCMD_GetVMWork( core, work );
 
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
-  MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( svWork );
+  MUSICAL_SAVE *musSave = GAMEDATA_GetMusicalSavePtr( gdata );
 
   switch( type )
   {
@@ -198,6 +258,106 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
   case MUSICAL_VALUE_SET_PROGRAM_NUMBER:  //選択演目番号設定
     MUSICAL_SAVE_SetProgramNumber( musSave , val );
     break;
+  case MUSICAL_VALUE_IS_EQUIP_ANY:      //何か装備しているか？
+    {
+      u8 i;
+      *ret_wk = 0;
+      for( i=0;i<MCT_MAX;i++ )
+      {
+        const u8 val = MUSICAL_SAVE_GetBefCondition( musSave , i );
+        if( val != 0 )
+        {
+          *ret_wk = 1;
+        }
+      }
+    }
+    break;
+  case MUSICAL_VALUE_IS_ENABLE_SHOT:    //ミュージカルショットが有効か？
+    {
+      MUSICAL_SHOT_DATA *shotData = MUSICAL_SAVE_GetMusicalShotData( musSave );
+      if( shotData->month == 0 )
+      {
+        *ret_wk = 0;
+      }
+      else
+      {
+        *ret_wk = 1;
+      }
+    }
+    break;
+  case MUSICAL_VALUE_LAST_CONDITION_MIN://最終コンディション(最低)
+    {
+      u8 i;
+      u8 min = 0xFF;
+      u8 minIdx = MCT_MAX;
+      for( i=0;i<MCT_MAX;i++ )
+      {
+        const u8 val = MUSICAL_SAVE_GetBefCondition( musSave , i );
+        //同点があった場合は下から優先するため、ここは以下でチェック
+        if( val <= min )
+        {
+          min = val;
+          minIdx = i;
+        }
+      }
+      *ret_wk = minIdx;
+    }
+    break;
+
+  case MUSICAL_VALUE_LAST_CONDITION_MAX://最終コンディション(最低)
+    {
+      u8 i;
+      u8 sameCnt = 0;
+      u8 max = 0;
+      u8 maxIdx = MCT_MAX;
+      for( i=0;i<MCT_MAX;i++ )
+      {
+        const u8 val = MUSICAL_SAVE_GetBefCondition( musSave , i );
+        //同点があった場合は上から優先するため、ここは"より大きい"でチェック
+        if( val > max )
+        {
+          max = val;
+          maxIdx = i;
+        }
+        else
+        if( val == max )
+        {
+        }
+      }
+      *ret_wk = maxIdx;
+    }
+    break;
+
+  case MUSICAL_VALUE_LAST_CONDITION_2ND://最終コンディション(２位)
+    {
+      u8 i;
+      u8 max = 0;
+      u8 maxIdx = MCT_MAX;
+      u8 second = 0;
+      u8 secondIdx = MCT_MAX;
+      for( i=0;i<MCT_MAX;i++ )
+      {
+        const u8 val = MUSICAL_SAVE_GetBefCondition( musSave , i );
+        //同点があった場合は上から優先するため、ここは"より大きい"でチェック
+        if( val > max )
+        {
+          if( second == max )
+          {
+            secondIdx = MCT_MAX;
+          }
+          else
+          {
+            second = max;
+            secondIdx = maxIdx;
+          }
+          
+          max = val;
+          maxIdx = i;
+        }
+      }
+      *ret_wk = secondIdx;
+    }
+    break;
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -219,8 +379,7 @@ VMCMD_RESULT EvCmdGetMusicalFanValue( VMHANDLE *core, void *wk )
   u16* ret_wk = SCRCMD_GetVMWork( core, work );
 
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
-  MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( svWork );
+  MUSICAL_SAVE *musSave = GAMEDATA_GetMusicalSavePtr( gdata );
   MUSICAL_FAN_STATE *fanState = MUSICAL_SAVE_GetFanState( musSave , pos );
   
   switch( type )
@@ -338,8 +497,7 @@ VMCMD_RESULT EvCmdAddMusicalGoods( VMHANDLE *core, void *wk )
   u16  val   = SCRCMD_GetVMWorkValue( core, work );
 
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
-  MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( svWork );
+  MUSICAL_SAVE *musSave = GAMEDATA_GetMusicalSavePtr( gdata );
 
   MUSICAL_SAVE_AddItem( musSave , val );
 
@@ -447,8 +605,7 @@ VMCMD_RESULT EvCmdResetMusicalFanGiftFlg( VMHANDLE *core, void *wk )
   u16  pos  = SCRCMD_GetVMWorkValue( core, work );
 
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
-  MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( svWork );
+  MUSICAL_SAVE *musSave = GAMEDATA_GetMusicalSavePtr( gdata );
   MUSICAL_FAN_STATE *fanState = MUSICAL_SAVE_GetFanState( musSave , pos );
   
   fanState->giftType = MUSICAL_GIFT_TYPE_NONE;
@@ -492,4 +649,20 @@ static GMEVENT_RESULT event_Musical(
     return( GMEVENT_RES_FINISH );
   }
   return( GMEVENT_RES_CONTINUE );
+}
+
+static void EvCmdMusicalShotCallProc_CallBack( void* work )
+{
+  EV_MUSSHOT_CALL_WORK *callWork = work;
+  
+  // callWorkはPROC呼び出しイベントルーチン内で解放される
+  GFL_HEAP_FreeMemory( callWork->initWork );
+}
+static void EvCmdFittingCallProc_CallBack( void* work )
+{
+  EV_FITTING_CALL_WORK *callWork = work;
+  
+  // callWorkはPROC呼び出しイベントルーチン内で解放される
+  GFL_HEAP_FreeMemory( callWork->initWork->musPoke );
+  GFL_HEAP_FreeMemory( callWork->initWork );
 }

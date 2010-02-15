@@ -372,7 +372,6 @@ static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WO
 	int	file_start;
 	int	file_offset;
 
-
 	file_start = MUS_POKEGRA_FILE_MAX * MUSICAL_SYSTEM_ChangeMusicalPokeNumber(mons_no);	//ポケモンナンバーからファイルのオフセットを計算
 
   if( isBack == TRUE )

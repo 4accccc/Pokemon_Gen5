@@ -26,6 +26,7 @@
 #define MUSICAL_CONDITION_ELEGANT (2) //エレガント
 #define MUSICAL_CONDITION_UNIQUE (3)  //ユニーク
 #define MUSICAL_CONDITION_NONE (4)  //上以外のときに帰ってくる値(無かったとか対象が複数ある
+#define MUSICAL_CONDITION_BALANCE (5)  //全部一緒
 
 
 //_GET_MUSICAL_FAN_VALUE_GIFT_TYPE で戻ってくる値
@@ -53,9 +54,14 @@
 #define MUSICAL_VALUE_JOINNUM (0)   //参加回数
 #define MUSICAL_VALUE_TOPNUM  (1)   //トップ回数
 #define MUSICAL_VALUE_LAST_POINT (2)  //最終評価点
-#define MUSICAL_VALUE_LAST_CONDITION (3)  //最終コンディション
+#define MUSICAL_VALUE_LAST_CONDITION (3)  //最終コンディション(同点はその他で返る
 #define MUSICAL_VALUE_PROGRAM_NUMBER (4)  //選択演目番号
 #define MUSICAL_VALUE_SET_PROGRAM_NUMBER (5)  //選択演目番号設定
+#define MUSICAL_VALUE_IS_EQUIP_ANY (6)    //何か装備しているか？
+#define MUSICAL_VALUE_IS_ENABLE_SHOT (7)  //ミュージカルショットが有効か？
+#define MUSICAL_VALUE_LAST_CONDITION_MIN (8) //最終コンディション(最低)
+#define MUSICAL_VALUE_LAST_CONDITION_MAX (9) //最終コンディション(最高)(同点は優先順位で設定された順に返ってくる
+#define MUSICAL_VALUE_LAST_CONDITION_2ND (10) //最終コンディション(２位)(同点はその他で返る
 
 //_GET_MUSICAL_FAN_VALUE 用
 #define MUSICAL_VALUE_FAN_TYPE (0)  //見た目

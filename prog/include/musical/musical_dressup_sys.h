@@ -10,6 +10,8 @@
 #define MUSICAL_DRESSUP_SYS_H__
 
 #include "musical/musical_define.h"
+#include "savedata/musical_save.h"
+#include "musical/comm/mus_comm_func.h"
 
 //======================================================================
 //	define
@@ -23,7 +25,13 @@
 //	typedef struct
 //======================================================================
 
-typedef struct _DRESSUP_INIT_WORK DRESSUP_INIT_WORK;
+
+typedef struct
+{
+  MUS_COMM_WORK *commWork;
+	MUSICAL_POKE_PARAM *musPoke;
+	MUSICAL_SAVE *mus_save;
+}DRESSUP_INIT_WORK;
 
 //======================================================================
 //	proto

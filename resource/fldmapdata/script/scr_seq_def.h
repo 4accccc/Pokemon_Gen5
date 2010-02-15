@@ -3265,7 +3265,7 @@
 /**
  *  _MUSICAL_CALL ミュージカル：ミュージカル呼び出し
  *  @param pokeIdx 選択位置
- *  @param mode モード (0:非通信 1:通信
+ *  @param mode モード (0:非通信 1:通信 2:ミュージカルショット
  */
 //--------------------------------------------------------------
 #define _MUSICAL_CALL( pokeIdx, mode ) \
@@ -3275,6 +3275,20 @@
   .short EV_SEQ_MUSICAL_CALL
   .short \pokeIdx
   .byte \mode
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _MUSICAL_CALL ミュージカル：ミュージカルショット呼び出し
+ */
+//--------------------------------------------------------------
+#define _MUSICAL_CALL_MUSICAL_SHOT( pokeIdx, mode ) \
+    _ASM_MUSICAL_CALL_MUSICAL_SHOT pokeIdx, mode
+
+  .macro  _ASM_MUSICAL_CALL_MUSICAL_SHOT pokeIdx, mode
+  .short EV_SEQ_MUSICAL_CALL
+  .short 0
+  .byte 2
   .endm
 
 //--------------------------------------------------------------
@@ -3296,7 +3310,7 @@
  *  _GET_MUSICAL_VALUE ミュージカル：ミュージカル数値取得(汎用
  *      基本的に下にあるラッパーを呼んでください
  *  @param type 種類(参加回数・トップ回数・最終評価点・最終コンディション
- *  @param val  取得用番号 (現在未使用
+ *  @param val  取得用番号
  *  @param ret_val  戻り値
  */
 //--------------------------------------------------------------
@@ -3361,6 +3375,7 @@
 //--------------------------------------------------------------
 /**
  *  _GET_MUSICAL_VALUE_LAST_CONDITION ミュージカル：最終コンディション
+ *                                      最高が複数の場合はMUSICAL_CONDITION_NONEを返します
  *  @param ret_val  戻り値
  */
 //--------------------------------------------------------------
@@ -3404,6 +3419,94 @@
   .byte 5
   .short \setVal
   .short 0
+  .endm
+  
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_IS_EQUIP_ANY ミュージカル：装備グッズがあるかチェック
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_IS_EQUIP_ANY( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_IS_EQUIP_ANY retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_IS_EQUIP_ANY retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 6
+  .short 0
+  .short \retVal
+  .endm
+
+  
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_IS_EQUIP_ANY ミュージカル：ミュージカルショットが有効？
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_IS_ENABLE_SHOT( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_IS_ENABLE_SHOT retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_IS_ENABLE_SHOT retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 7
+  .short 0
+  .short \retVal
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_LAST_CONDITION_MIN ミュージカル：最終コンディション(低い
+ *                  最低が複数の場合、定義順の後ろから優先的に返します。
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_LAST_CONDITION_MIN( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_LAST_CONDITION_MIN retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_LAST_CONDITION_MIN retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 8
+  .short 0
+  .short \retVal
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_LAST_CONDITION_MAX ミュージカル：最終コンディション(高い
+ *                  最高が複数の場合、定義順のに優先的に返します。
+ *                  すべて同じ点だった場合、MUSICAL_CONDITION_BALANCE
+ *                  何も装備していなかった場合、MUSICAL_CONDITION_NONE
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_LAST_CONDITION_MAX( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_LAST_CONDITION_MAX retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_LAST_CONDITION_MAX retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 9
+  .short 0
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_LAST_CONDITION_2ND ミュージカル：最終コンディション(２位
+ *                  ２位が複数の場合、MUSICAL_CONDITION_NONE
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_LAST_CONDITION_2ND( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_LAST_CONDITION_2ND retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_LAST_CONDITION_2ND retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 10
+  .short 0
+  .short \retVal
   .endm
 
 //--------------------------------------------------------------
