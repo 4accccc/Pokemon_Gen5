@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-09T21:26:26"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-15T21:20:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,6 +352,7 @@
 　「じこしょうかい」→msg_touroku_02
 　「かったとき」→msg_touroku_03
 　「まけたとき」→msg_touroku_04
+　「いちばんになったとき」→msg_touroku_08
 　「おしえない」→msg_touroku_06</comment>
 		<attribute name="キャラ指定">BOY1
 少年</attribute>
@@ -401,6 +402,19 @@
 		<language name="JPN" width="256">じゃあ　しょうぶに　かったときの
 きもちを　ひとつ　ヨロシク！</language>
 		<language name="JPN_KANJI" width="256">じゃあ　勝負に　勝ったときの
+気持ちを　ひとつ　ヨロシク！</language>
+	</row>
+
+	<row id="msg_touroku_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>■メッセージ登録少年（ギアステーション内に配置）
+・メッセージ終了後簡易会話入力へ
+・キャンセルした場合→msg_touroku_05
+　入力した場合→msg_touroku_06</comment>
+		<attribute name="キャラ指定">BOY1
+少年</attribute>
+		<language name="JPN" width="256">じゃあ　いちばんに　なったときの
+きもちを　ひとつ　ヨロシク！</language>
+		<language name="JPN_KANJI" width="256">じゃあ　一番に　なったときの
 気持ちを　ひとつ　ヨロシク！</language>
 	</row>
 
@@ -458,6 +472,13 @@
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">まけたとき</language>
 		<language name="JPN_KANJI" width="256">負けたとき</language>
+	</row>
+
+	<row id="msg_touroku__win_05" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いちばんになったとき</language>
+		<language name="JPN_KANJI" width="256">一番になったとき</language>
 	</row>
 
 	<row id="msg_touroku__win_04" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
