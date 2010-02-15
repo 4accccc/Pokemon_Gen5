@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T14:46:55"/>
+	<create user="matsumiya" host="W00224" date="2010-02-15T22:46:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1409" top="235" right="2114" bottom="863" maximized="no" rayout="Vertical2">
+	<dialog left="1365" top="188" right="2070" bottom="816" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -568,11 +568,11 @@
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">チェレン『まあね▼
-ポケモンリーグを　かちぬいたよ
-なかなか　タフ　だったけど▼</language>
+ポケモンリーグを　かちぬきましたよ
+なかなか　タフでしたけど▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『まあね▼
-ポケモンリーグを　勝ち抜いたよ
-なかなか　タフ　だったけど▼</language>
+ポケモンリーグを　勝ち抜きましたよ
+なかなか　タフでしたけど▼</language>
 	</row>
 
 	<row id="msg_c09r0501_champion_03">
@@ -597,8 +597,8 @@
 それが　きみと！
 きみの　ポケモンの！▽
 やるべきこと　だろ</language>
-		<language name="JPN_KANJI" width="256">チェレン『……じぶんの　やることが
-わかったから　つよくなれたんだ　きっと▼
+		<language name="JPN_KANJI" width="256">チェレン『……自分の　やることが
+わかったから　強くなれたんだ　きっと▼
 [1:00:トレーナー名:0]！▼
 Ｎのこと
 ぶっとばしてよッ！！▼
@@ -611,10 +611,10 @@
 		<comment>♂
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『……アデクさんのことは
-ぼくが　めんどう　みておくから</language>
-		<language name="JPN_KANJI" width="256">チェレン『……アデクさんのことは
-ぼくが　めんどう　みておくから</language>
+		<language name="JPN" width="256">チェレン『……アデクさんは
+ぼくが　みておくから</language>
+		<language name="JPN_KANJI" width="256">チェレン『……アデクさんは
+ぼくが　みておくから</language>
 	</row>
 
 	<row id="msg_c09r0501_champion_04">
@@ -634,18 +634,18 @@
 ポケモンと　ひとを　きりはなしても
 なにも　うまれん……▽
 それを　おしえてやってくれい</language>
-		<language name="JPN_KANJI" width="256">アデク『……まけたわ▼
-すうしき　すうしきと
-うるさい　こぞうを　だまらせるほどの▼
+		<language name="JPN_KANJI" width="256">アデク『……負けたわ▼
+数式　数式と
+うるさい　小僧を　だまらせるほどの▼
 ポケモンとの　きずなを
 みせてやるはず　だったがな……▼
-あいつの　しんねんも
-また　ほんもの　ということか▼
+あいつの　信念も
+また　本物ということか▼
 たのむ
 [1:00:トレーナー名:0]！▼
-ポケモンと　ひとを　きりはなしても
+ポケモンと　人を　切り離しても
 なにも　うまれん……▽
-それを　おしえてやってくれい</language>
+それを　教えてやってくれい</language>
 	</row>
 
 	<row id="msg_c09r0501_champion_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -659,22 +659,22 @@
 きみには　かんしゃ　しておるよ▼
 ……いまの　かれが
 なにを　おもっているか　しらんが▼
-ひともに　ポケモンにも
+ひとにも　ポケモンにも
 それぞれの　みちが　あること▽
 きっと　きづいたで　あろうからな▼
 さて　イッシュちほうで　さいきょうの
 ポケモントレーナーである　きみの▽
 むねを　かしてもらうと　するか！▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……Ｎの　こと
-きみには　かんしゃ　しておるよ▼
-……いまの　かれが
-なにを　おもっているか　しらんが▼
-ひともに　ポケモンにも
-それぞれの　みちが　あること▽
+きみには　感謝しておるよ▼
+……今の　彼が
+なにを　思っているか　しらんが▼
+人にも　ポケモンにも
+それぞれの　道が　あること▽
 きっと　きづいたで　あろうからな▼
-さて　イッシュちほうで　さいきょうの
+さて　イッシュ地方で　最強の
 ポケモントレーナーである　きみの▽
-むねを　かしてもらうと　するか！▼</language>
+胸を　貸してもらうと　するか！▼</language>
 	</row>
 
 	<row id="msg_c09r0501_champion_11" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -691,9 +691,9 @@
 ポケモントレーナーの
 アデク　まいるぞ！▼</language>
 		<language name="JPN_KANJI" width="256">アデク『さて　どちらが
-イッシュちほうで　さいきょうの▽
+イッシュ地方で　最強の▽
 ポケモントレーナーで　あるか▽
-きめるのが　たのしみで　たらまんよ！▼
+決めるのが　楽しみで　たらまんよ！▼
 ポケモントレーナーの
 アデク　まいるぞ！▼</language>
 	</row>
@@ -708,8 +708,8 @@
 		<language name="JPN" width="256">アデク『あっぱれ！
 まさに　てんかむそう　なり！▼
 さあ　ついてまいれ！▼</language>
-		<language name="JPN_KANJI" width="256">アデク『あっぱれ！
-まさに　てんかむそう　なり！▼
+		<language name="JPN_KANJI" width="256">アデク『天晴れ！
+まさに　天下無双　なり！▼
 さあ　ついてまいれ！▼</language>
 	</row>
 
