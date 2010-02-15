@@ -671,7 +671,7 @@ static BOOL SubEvent_ColosseumWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, 
       
       pos.x = (88 + 16*GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())) << FX32_SHIFT;
       pos.y = 0;
-      pos.z = 136 << FX32_SHIFT;
+      pos.z = 152 << FX32_SHIFT;
       *child_event = EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_CLOSSEUM, &pos, 0, FALSE);
     }
     break;
@@ -705,7 +705,7 @@ static BOOL SubEvent_ColosseumWarpMulti(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR uni
       
       pos.x = (88 + 16*GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())) << FX32_SHIFT;
       pos.y = 0;
-      pos.z = 136 << FX32_SHIFT;
+      pos.z = 152 << FX32_SHIFT;
       *child_event = EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_CLOSSEUM02, &pos, 0, FALSE);
     }
     break;
