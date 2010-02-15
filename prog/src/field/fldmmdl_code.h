@@ -301,7 +301,6 @@
 //--------------------------------------------------------------
 #define DRAW_STA_ITEMGET_STOP 0x00 ///<停止
 #define DRAW_STA_ITEMGET_ANM 0x01 ///<アニメ
-#define DRAW_STA_ITEMGET_MAX 0x02 ///<最大
 #define DRAW_STA_ITEMGET_MAX 0x02 ///<データインデックス最大
 
 //--------------------------------------------------------------
