@@ -20,6 +20,9 @@
 //=========================================================================================
 // ■定数・マクロ
 //=========================================================================================
+// デバッグ出力スイッチ
+//#define DEBUG_PRINT_ON 
+
 // 無効なゾーンID
 #define INVALID_ZONE_ID (0xffff)
 
@@ -75,10 +78,12 @@ static void SetBGMParam( const BGM_PARAM* param, u8 season )
   }
 
 	// DEBUG:
+#ifdef DEBUG_PRINT_ON
 	OBATA_Printf( "ISS-D: set BGM param\n" );
 	OBATA_Printf( "- pitch  = %d\n", param->pitch[season] );
 	OBATA_Printf( "- tempo  = %d\n", param->tempo[season] );
 	OBATA_Printf( "- reverb = %d\n", param->reverb[season] );
+#endif 
 }
 
 
@@ -120,6 +125,7 @@ static BGM_PARAMSET* LoadParamset( HEAPID heap_id )
 	} 
 
 	// DEBUG:
+#ifdef DEBUG_PRINT_ON
 	OBATA_Printf( "ISS-D: load BGM parameters\n" );
 	OBATA_Printf( "- dataNum = %d\n", paramset->dataNum );
 	for( dat_id=0; dat_id<paramset->dataNum; dat_id++ )
@@ -141,6 +147,7 @@ static BGM_PARAMSET* LoadParamset( HEAPID heap_id )
         paramset->param[dat_id].reverb[PMSEASON_AUTUMN], 
         paramset->param[dat_id].reverb[PMSEASON_WINTER] );
 	}
+#endif
 
 	// 読み込んだデータを返す
 	return paramset;
@@ -187,7 +194,10 @@ static const BGM_PARAM* GetBGMParam( const BGM_PARAMSET* paramset, u16 zone_id )
 	}
 
 	// DEBUG: BGMパラメータ発見できず
+#ifdef DEBUG_PRINT_ON
   OBATA_Printf( "ISS-D: BGM param is not found\n" );
+#endif
+
 	return NULL;
 }
 
@@ -268,7 +278,9 @@ ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( GAMEDATA* gdata,
   SetupDefaultParam( sys );
 
 	// DEBUG:
+#ifdef DEBUG_PRINT_ON
 	OBATA_Printf( "ISS-D: create\n" );
+#endif
 
 	// 作成したダンジョンISSシステムを返す
 	return sys;
@@ -293,7 +305,9 @@ void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* sys )
 	GFL_HEAP_FreeMemory( sys );
 
 	// DEBUG:
+#ifdef DEBUG_PRINT_ON
 	OBATA_Printf( "ISS-D: delete\n" );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -326,8 +340,10 @@ void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* sys, u16 next_zone_id )
 	sys->nextZoneID = next_zone_id; 
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OBATA_Printf( "ISS-D: zone change\n" );
   OBATA_Printf( "- next zone id = %d\n", next_zone_id );
+#endif
 }
 
 //-----------------------------------------------------------------------------------------
@@ -408,7 +424,9 @@ static void BootSystem( ISS_DUNGEON_SYS* sys )
 	sys->isActive = TRUE;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OBATA_Printf( "ISS-D: boot\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------------------
@@ -430,7 +448,9 @@ static void StopSystem( ISS_DUNGEON_SYS* sys )
   //SetBGMParam( &sys->defaultParam, 0 );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OBATA_Printf( "ISS-D: stop\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------------------

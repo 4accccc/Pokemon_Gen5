@@ -15,6 +15,7 @@
 //===============================================================================
 // ■定数
 //===============================================================================
+//#define DEBUG_PRINT_ON           // デバッグ出力スイッチ
 #define PRINT_DEST       (1)       // デバッグ情報の出力先
 #define TRACK_NUM        (16)      // トラック数
 #define TRACKBIT_ALL     (0xffff)  // 全トラック指定
@@ -140,7 +141,10 @@ ISS_SWITCH_SYS* ISS_SWITCH_SYS_Create( HEAPID heapID )
 
   // 初期設定
   LoadAllSwitchData( sys );
+
+#ifdef DEBUG_PRINT_ON
   DebugPrint_SwitchData( sys );
+#endif
 
   return sys;
 }
@@ -262,7 +266,9 @@ BOOL ISS_SWITCH_SYS_IsSwitchOn( const ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
 {
   if( SWITCH_MAX < idx )
   {
+#ifdef DEBUG_PRINT_ON
     OS_TFPrintf( PRINT_DEST, "ISS-S: switch index range over\n" );
+#endif
     return FALSE;
   }
   return (sys->switchState[idx] == SWITCH_STATE_ON);
@@ -376,8 +382,10 @@ static BOOL ChangeCurrentSwitchData( ISS_SWITCH_SYS* sys )
   sys->switchDataIdx = nextDataIdx;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, 
                "ISS-S: change switch data index ==> %d\n", nextDataIdx );
+#endif
 
   return TRUE;
 }
@@ -460,7 +468,9 @@ static void InitSwitchData( ISS_SWITCH_SYS* sys )
   sys->switchDataIdx = SWITCH_DATA_NONE;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: init switch data\n" );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -494,7 +504,9 @@ static void LoadAllSwitchData( ISS_SWITCH_SYS* sys )
   }
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: load all switch data\n" );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -522,7 +534,9 @@ static void UnloadAllSwitchData( ISS_SWITCH_SYS* sys )
   GFL_HEAP_FreeMemory( data );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: unload all switch data\n" );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -540,7 +554,9 @@ static SWITCH_STATE GetSwitchState( const ISS_SWITCH_SYS* sys, SWITCH_INDEX swit
   // インデックス エラー
   if( SWITCH_NUM < switchIdx )
   {
+#ifdef DEBUG_PRINT_ON
     OS_Printf( "ISS-S: switch index error\n" );
+#endif
     GF_ASSERT(0);
     return SWITCH_STATE_OFF;
   }
@@ -563,7 +579,9 @@ static void SetSwitchState( ISS_SWITCH_SYS* sys,
   // インデックス エラー
   if( SWITCH_NUM < switchIdx )
   {
+#ifdef DEBUG_PRINT_ON
     OS_Printf( "ISS-S: switch index error\n" );
+#endif
     GF_ASSERT(0);
     return;
   }
@@ -590,7 +608,9 @@ static void InitSwitchState( ISS_SWITCH_SYS* sys )
   }
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: init switch state\n" );
+#endif
 } 
 
 //-------------------------------------------------------------------------------
@@ -606,7 +626,9 @@ static void ResetSwitchState( ISS_SWITCH_SYS* sys )
   SetSwitchState( sys, SWITCH_00, SWITCH_STATE_ON );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: reset switch state\n" );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -630,7 +652,9 @@ static void BootSystem( ISS_SWITCH_SYS* sys )
   SetBGMVolume( sys );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: boot system\n" );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -648,7 +672,9 @@ static void StopSystem( ISS_SWITCH_SYS* sys )
   sys->boot = FALSE;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: stop system\n" );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -665,12 +691,16 @@ static void NotifyZoneChange( ISS_SWITCH_SYS* sys, u16 nextZoneID )
   if( CheckZoneIsValid( sys, nextZoneID ) )
   {
     // DEBUG:
+#ifdef DEBUG_PRINT_ON
     OS_TFPrintf( PRINT_DEST, "ISS-S: detect zone change ==> valid zone\n" );
+#endif
     return;
   }
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: detect zone change ==> invalid zone\n" );
+#endif
 
   // リセット ( BGM 音量操作なし )
   ResetSwitchState( sys ); 
@@ -695,7 +725,9 @@ static void SwitchOn( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
   SetSwitchState( sys, switchIdx, SWITCH_STATE_FADE_IN );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: switch %d on\n", switchIdx );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -717,7 +749,9 @@ static void SwitchOff( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
   SetSwitchState( sys, switchIdx, SWITCH_STATE_FADE_OUT );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: switch %d off\n", switchIdx );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -764,7 +798,9 @@ static void SwitchMain( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
   case SWITCH_STATE_FADE_OUT:  SwitchMain_FADE_OUT( sys, switchIdx );  break;
   default:
     // エラー
+#ifdef DEBUG_PRINT_ON
     OS_TFPrintf( PRINT_DEST, "ISS-S: switch state error\n" ); 
+#endif
     GF_ASSERT(0);
     break;
   }
@@ -788,7 +824,9 @@ static void SwitchMain_FADE_IN( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
   // 参照データが存在しない
   if( switchData == NULL )
   {
+#ifdef DEBUG_PRINT_ON
     OS_Printf( "ISS-S: switch data not found\n" );
+#endif
     GF_ASSERT(0);
     return;
   }
@@ -803,7 +841,9 @@ static void SwitchMain_FADE_IN( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
     SetSwitchState( sys, switchIdx, SWITCH_STATE_ON );
 
     // DEBUG:
+#ifdef DEBUG_PRINT_ON
     OS_TFPrintf( PRINT_DEST, "ISS-S: switch %d fade in finish\n", switchIdx );
+#endif
   }
 }
 
@@ -825,7 +865,9 @@ static void SwitchMain_FADE_OUT( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
   // 参照データが存在しない
   if( switchData == NULL )
   {
+#ifdef DEBUG_PRINT_ON
     OS_Printf( "ISS-S: switch data not found\n" );
+#endif
     GF_ASSERT(0);
     return;
   }
@@ -840,7 +882,9 @@ static void SwitchMain_FADE_OUT( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
     SetSwitchState( sys, switchIdx, SWITCH_STATE_OFF );
 
     // DEBUG:
+#ifdef DEBUG_PRINT_ON
     OS_TFPrintf( PRINT_DEST, "ISS-S: switch %d fade out finish\n", switchIdx );
+#endif
   }
 }
 
@@ -890,6 +934,8 @@ static void SetBGMVolume( const ISS_SWITCH_SYS* sys )
   }
 }
 
+
+#ifdef DEBUG_PRINT_ON
 //-------------------------------------------------------------------------------
 /**
  * @brief スイッチデータを出力する
@@ -947,3 +993,4 @@ static void DebugPrint_SwitchData( const ISS_SWITCH_SYS* sys )
     }
   }
 }
+#endif

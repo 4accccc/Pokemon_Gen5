@@ -20,6 +20,9 @@
 //===========================================================================================
 // ■定数・マクロ
 //===========================================================================================
+// デバッグ出力スイッチ
+//#define DEBUG_PRINT_ON
+
 // デバッグ情報の出力先
 #define PRINT_DEST (1)
 
@@ -97,7 +100,9 @@ ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* player, HEAPID heapID )
 	ISS_CITY_SYS* system;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: create\n" );
+#endif
 
 	// 生成
 	system = (ISS_CITY_SYS*)GFL_HEAP_AllocMemory( heapID, sizeof( ISS_CITY_SYS ) );
@@ -129,7 +134,9 @@ void ISS_CITY_SYS_Delete( ISS_CITY_SYS* system )
 	GFL_HEAP_FreeMemory( system );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: delete\n" );
+#endif
 }
 
 //------------------------------------------------------------------------------------------
@@ -220,7 +227,9 @@ static void LoadUnitData( ISS_CITY_SYS* system )
   GF_ASSERT( system->unit == NULL );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: load unit data\n" );
+#endif
 
   // ユニット数 取得
   datnum          = GFL_ARC_GetDataFileCnt( ARCID_ISS_CITY );
@@ -251,7 +260,9 @@ static void UnloadUnitData( ISS_CITY_SYS* system )
   GF_ASSERT( system->unit );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: unload unit data\n" );
+#endif
 
   unitNum = system->unitNum;
 
@@ -277,7 +288,9 @@ static void BootSystem( ISS_CITY_SYS* system )
   if( system->boot ){ return; }
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: boot\n" );
+#endif
 
   // 起動
   system->boot        = TRUE;
@@ -313,7 +326,9 @@ static void StopSystem( ISS_CITY_SYS* system )
   system->activeUnitIdx = UNIT_NOT_FOUND;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: stop\n" );
+#endif
 } 
 
 //-------------------------------------------------------------------------------------------
@@ -403,7 +418,9 @@ static void ChangeUnit( ISS_CITY_SYS* system, u16 zoneID )
 			system->activeUnitIdx = unitIdx;
 
       // DEBUG:
+#ifdef DEBUG_PRINT_ON
       OS_TFPrintf( PRINT_DEST, "ISS-C: change unit index ==> %d\n", unitIdx );
+#endif
       return;
 		}
 	}
@@ -456,7 +473,9 @@ static BOOL UpdateMasterVolume( ISS_CITY_SYS* system )
   system->practicalMasterVolume = nextVolume;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: update master volume => %d\n", nextVolume );
+#endif
 
   return TRUE;
 }
@@ -542,5 +561,7 @@ static void ChangeBGMTrackVolume( const ISS_CITY_SYS* system )
   PMSND_ChangeBGMVolume( TRACKBIT, volume );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: change BGM track volume ==> %d\n", volume );
+#endif
 }

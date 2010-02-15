@@ -15,6 +15,7 @@
 //================================================================================
 // ■定数
 //================================================================================
+//#define DEBUG_PRINT_ON      // デバッグ出力スイッチ
 #define PRINT_DEST     (1)    // デバッグ情報の出力先
 #define MIN_VOLUME     (0)	  // 最低音量
 #define MAX_VOLUME     (127)	// 最大音量
@@ -79,7 +80,9 @@ ISS_ROAD_SYS* ISS_ROAD_SYS_Create( PLAYER_WORK* player, HEAPID heapID )
 	system->prevPlayerPos     = *( PLAYERWORK_getPosition( player ) );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-R: create\n" );
+#endif
 	
 	return system;
 }
@@ -96,7 +99,9 @@ void ISS_ROAD_SYS_Delete( ISS_ROAD_SYS* system )
 	GFL_HEAP_FreeMemory( system );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-R: delete\n" );
+#endif
 }
 
 //--------------------------------------------------------------------------------
@@ -153,7 +158,9 @@ static void BootSystem( ISS_ROAD_SYS* system )
   if( system->boot ){ return; }
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-R: boot\n" );
+#endif
 
   // 起動
 	system->boot = TRUE;
@@ -177,7 +184,9 @@ static void StopSystem( ISS_ROAD_SYS* system )
 	system->boot = FALSE; 
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-R: stop\n" );
+#endif
 } 
 
 //--------------------------------------------------------------------------------
@@ -299,5 +308,7 @@ static void ChangeTrackVolume( const ISS_ROAD_SYS* system )
   PMSND_ChangeBGMVolume( TRACKBIT, system->targetTrackVolume );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-R: change volume ==> %d\n", system->targetTrackVolume );
+#endif
 }

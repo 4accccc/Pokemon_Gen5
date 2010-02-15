@@ -15,6 +15,7 @@
 //==========================================================================================
 // ■定数
 //==========================================================================================
+//#define DEBUG_PRINT_ON                    // デバッグ出力スイッチ
 #define TRACK_NUM          (16)             // トラック数
 #define MAX_TRACK_NO       (TRACK_NUM - 1)  // トラック番号の最大値
 #define INVALID_DATA_INDEX (0xff)           // 参照データなし
@@ -217,6 +218,7 @@ static void LoadZoneData( ISS_ZONE_SYS* sys, HEAPID heap_id )
   GFL_ARC_CloseDataHandle( handle );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OBATA_Printf( "ISS-Z: load zone data\n" );
   for( data_idx=0; data_idx<num; data_idx++ )
   {
@@ -243,6 +245,7 @@ static void LoadZoneData( ISS_ZONE_SYS* sys, HEAPID heap_id )
     OBATA_Printf( "\n" );
     OBATA_Printf( "-- fadeFrame = %d\n", sys->zoneData[data_idx].fadeFrame ); 
   }
+#endif
 } 
 
 //------------------------------------------------------------------------------------------
@@ -275,7 +278,9 @@ static void BootSystem( ISS_ZONE_SYS* sys, u16 zone_id )
   sys->fadeCount       = 0;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OBATA_Printf( "ISS-Z: boot\n" );
+#endif
 }
 
 //------------------------------------------------------------------------------------------
@@ -294,7 +299,9 @@ static void StopSystem( ISS_ZONE_SYS* sys )
   sys->boot = FALSE;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OBATA_Printf( "ISS-Z: stop\n" );
+#endif
 }
 
 //------------------------------------------------------------------------------------------
@@ -329,9 +336,11 @@ static void ChangeZoneData( ISS_ZONE_SYS* sys, u16 zone_id )
   sys->currentDataIdx = next;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OBATA_Printf( "ISS-Z: change zone data\n" );
   OBATA_Printf( "- now = %d\n", now );
   OBATA_Printf( "- next = %d\n", next );
+#endif
 }
 
 //------------------------------------------------------------------------------------------
@@ -359,7 +368,9 @@ static u8 SearchZoneData( const ISS_ZONE_SYS* sys, u16 zone_id )
   }
 
   // 存在しない
+#ifdef DEBUG_PRINT_ON
   OBATA_Printf( "ISS-Z: don't have data (zoneID = %d)\n", zone_id );
+#endif
   return INVALID_DATA_INDEX;  
 }
 
@@ -386,7 +397,9 @@ static void UpdateFade( ISS_ZONE_SYS* sys )
     vol = MAX_VOLUME * ((float)sys->fadeCount / (float)sys->fadeFrame);
     PMSND_ChangeBGMVolume( sys->fadeInTrackBit, vol );
     // DEBUG:
+#ifdef DEBUG_PRINT_ON
     OBATA_Printf( "ISS-Z: update fade in ==> %d\n", vol );
+#endif
   }
   // フェードアウト
   if( sys->fadeOutTrackBit )
@@ -394,6 +407,8 @@ static void UpdateFade( ISS_ZONE_SYS* sys )
     vol = MAX_VOLUME * ( 1.0f - ((float)sys->fadeCount / (float)sys->fadeFrame) );
     PMSND_ChangeBGMVolume( sys->fadeOutTrackBit, vol );
     // DEBUG:
+#ifdef DEBUG_PRINT_ON
     OBATA_Printf( "ISS-Z: update fade out ==> %d\n", vol );
+#endif
   } 
 }

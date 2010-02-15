@@ -12,6 +12,7 @@
  * 
  */
 //=============================================================================================
+//#define DEBUG_PRINT_ON
 #define ARC_ID      (ARCID_BGM_INFO)				// BGM情報のアーカイブ・インデックス
 #define ARC_DATA_ID (NARC_bgm_info_bgm_info_bin)	// アーカイブ内データ・インデックス
 
@@ -93,11 +94,11 @@ void BGM_INFO_DeleteSystem( BGM_INFO_SYS* p_sys )
 	GFL_HEAP_FreeMemory( p_sys );
 
 	// DEBUG:
-	/*
+#ifdef DEBUG_PRINT_ON
 	OBATA_Printf( "-----------------free size = %d\n", sizeof( u16 ) * p_sys->dataNum );
 	OBATA_Printf( "-----------------free size = %d\n", sizeof( u8 ) * p_sys->dataNum );
 	OBATA_Printf( "-----------------free size = %d\n", sizeof( BGM_INFO_SYS ) );
-	*/
+#endif
 }
 
 
@@ -187,12 +188,12 @@ void LoadInfo( BGM_INFO_SYS* p_sys, HEAPID heap_id )
 	}
 
 	// DEBUG:
-	/*
+#ifdef DEBUG_PRINT_ON
 	OBATA_Printf( "--------------------------------------\n" );
 	OBATA_Printf( "dataNum = %d\n", p_sys->dataNum );
 	for( i=0; i<p_sys->dataNum; i++ )
 	{
 		OBATA_Printf( "[%d]: seq=%d, iss=%d\n", i, p_sys->seqIndex[i], p_sys->issType[i] );
 	}
-	*/
+#endif
 }

@@ -15,6 +15,9 @@
 //===============================================================================
 // ■定数
 //===============================================================================
+// デバッグ出力スイッチ
+//#define DEBUG_PRINT_ON
+
 // デバッグ情報の出力先
 #define PRINT_TARGET (1)
 
@@ -328,7 +331,9 @@ static void InitSystemData( ISS_3DS_SYS* system )
   system->currentSysDataIdx = CURRENT_DATA_NONE;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "ISS-B: init system data\n" );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -363,8 +368,10 @@ static void LoadSystemData( ISS_3DS_SYS* system )
   GFL_ARC_CloseDataHandle( handle );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "ISS-B: load system data\n" );
   DebugPrint_systemData( system );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -379,7 +386,9 @@ static void UnloadSystemData( ISS_3DS_SYS* system )
   GF_ASSERT( system->systemData );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "ISS-B: unload system data\n" );
+#endif
 
   // 破棄 / 初期化
   GFL_HEAP_FreeMemory( system->systemData );
@@ -403,7 +412,9 @@ static void ChangeCurrentSystemData( ISS_3DS_SYS* system, u8 nextDataIdx )
   system->currentSysDataIdx = nextDataIdx;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "ISS-B: update current system data index ==> %d\n", nextDataIdx ); 
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -466,7 +477,9 @@ static void InitAllUnit( ISS_3DS_SYS* system )
   }
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "ISS-B: init all unit\n" );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -500,8 +513,10 @@ void RegisterUnit( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx,
   unit->maxVolume      = maxVolume;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "ISS-B: register unit no.%d\n", unitIdx );
   DebugPrint_unit( unit );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -559,7 +574,9 @@ static void BootSystem( ISS_3DS_SYS* system )
   if( system->boot ){ return; }
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "ISS-B: boot system\n" );
+#endif
 
   // 起動
   system->boot = TRUE; 
@@ -594,7 +611,9 @@ static void StopSystem( ISS_3DS_SYS* system )
   system->boot = FALSE;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "ISS-B: stop system\n" );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -857,8 +876,10 @@ static void FadePracticalMasterVolume( ISS_3DS_SYS* system )
   system->practicalMasterVolume += add;
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, 
                "ISS-B: update master volume ==> %d\n", system->practicalMasterVolume );
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -911,6 +932,8 @@ static void DebugPrint_unit( const ISS_3DS_UNIT* unit )
   OS_TFPrintf( PRINT_TARGET, "ISS-B-UNIT: trackBit = %x\n", unit->trackBit );
 } 
 
+
+#ifdef DEBUG_PRINT_ON
 //-------------------------------------------------------------------------------
 /**
  * @brief システムデータを表示する
@@ -945,3 +968,4 @@ static void DebugPrint_systemData( const ISS_3DS_SYS* system )
     OS_TFPrintf( PRINT_TARGET, "\n" );
   }
 }
+#endif

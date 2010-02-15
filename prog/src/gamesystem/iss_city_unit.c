@@ -15,6 +15,7 @@
 //=========================================================================================
 // ■定数
 //=========================================================================================
+//#define DEBUG_PRINT_ON        // デバッグ出力スイッチ
 #define PRINT_DEST       (1)  // デバッグ情報の出力先
 #define VOLUME_SPACE_NUM (6)  // 1つの街ISSユニットが持つ音量空間の数
 
@@ -107,8 +108,10 @@ ISS_C_UNIT* ISS_C_UNIT_Create( HEAPID heapID, ARCDATID datID )
   GFL_HEAP_FreeMemory( unitData );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C-UNIT: create\n" );
   DebugPrint_unitParam( unit );
+#endif
 
   return unit; 
 }
@@ -125,7 +128,9 @@ void ISS_C_UNIT_Delete( ISS_C_UNIT* unit )
   GFL_HEAP_FreeMemory( unit );
 
   // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C-UNIT: delete\n" );
+#endif
 }
 
 
@@ -467,6 +472,8 @@ static int CalcLerp( int startPos, int startVal, int endPos, int endVal, int cal
   return y3;
 }
 
+
+#ifdef DEBUG_PRINT_ON
 //-----------------------------------------------------------------------------------------
 /**
  * @brief ユニット情報を出力する
@@ -489,3 +496,4 @@ static void DebugPrint_unitParam( const ISS_C_UNIT* unit )
                  unit->xRange[ spaceIdx ], unit->yRange[ spaceIdx ], unit->zRange[ spaceIdx ] );
   }
 }
+#endif
