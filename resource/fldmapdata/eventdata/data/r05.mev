@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/08 21:45:07
+#save date:2010/02/15 12:41:45
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r05.wms
 #SECTION START:OBJ_EVENT
@@ -235,9 +235,9 @@ TR_ARTIST_01
 #OBJ CODE Number
 MIDDLEMAN1
 #MOVE CODE Number
-MV_DOWN
+MV_RTDR         
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TRAINER_ESCAPE
 #Flag Name
 0
 #Event Script Name
@@ -245,19 +245,19 @@ SCRID_TRID_ARTIST_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-4
+3
 #Parameter 1 Number
 0
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+5
 #Move Limit Z Number
-0
+5
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -56
+120 0 -8
 #event number: 8
 #type
 1
