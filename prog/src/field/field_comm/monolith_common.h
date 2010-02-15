@@ -113,6 +113,15 @@ enum{
 ///パネルコントロール数
 #define PANEL_CONTROL_MAX     (4)
 
+///Gパワー習得状況
+typedef enum{
+  MONO_USE_POWER_OK,        ///<習得している
+  MONO_USE_POWER_SOMEMORE,  ///<あと少しで習得
+  MONO_USE_POWER_NONE,      ///<習得していない
+  
+  MONO_USE_POWER_MAX,
+}MONO_USE_POWER;
+
 
 //==============================================================================
 //  構造体定義
@@ -146,6 +155,7 @@ typedef struct{
 typedef struct{
   u8 mission_select_town;    ///<ミッション画面：選択している街番号 or SELECT_TOWN_ENFORCEMENT
   u8 power_select_no;        ///<パワー画面：選択しているパワー番号
+  u8 power_mono_use;         ///<パワー画面：power_select_noのMONO_USE_POWER状態
   u8 power_eqp_update;       ///<パワー画面：TRUE:装備しているパワーに変更があった
   u8 padding;
 }MONOLITH_COMMON_WORK;

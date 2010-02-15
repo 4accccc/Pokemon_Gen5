@@ -51,19 +51,12 @@ enum{
   _PRINTUTIL_MAX,
 };
 
+///Gパワー：片方の条件を満たしていて、もう片方のレベル差分がこの値以内なら灰色
+#define _POWER_GRAY_OFFSET    (3)
+
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
-///Gパワー習得状況
-typedef enum{
-  _USE_POWER_OK,        ///<習得している
-  _USE_POWER_SOMEMORE,  ///<あと少しで習得
-  _USE_POWER_NONE,      ///<習得していない
-  
-  _USE_POWER_MAX,
-  _POWER_GRAY_OFFSET = 3, ///<片方の条件を満たしていて、もう片方のレベル差分がこの値以内なら灰色
-}_USE_POWER;
-
 ///Gパワー名用に確保するBMPのX(キャラクタ単位)
 #define GPOWER_NAME_BMP_LEN_X     (23)
 ///Gパワー名用に確保するBMPのY(キャラクタ単位)
@@ -163,7 +156,7 @@ typedef struct{
   GFL_MSGDATA *mm_power;        ///<パワー名gmm
   GFL_BMP_DATA *bmp_power_name[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];
   GPOWER_ID use_gpower_id[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];      ///<bmp_power_nameに対応したGPOWER_IDが入っている
-  _USE_POWER use_power[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];         ///<use_gpower_idの習得状況
+  MONO_USE_POWER use_power[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];         ///<use_gpower_idの習得状況
   u8 power_list_num;        ///<パワーリスト数
   u8 power_list_write_num;  ///<BMPに書き込んだ名前の数
   
@@ -228,7 +221,7 @@ static void _Set_MsgStream(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u
 static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id);
 static BOOL _Wait_MsgStream(MONOLITH_PWSELECT_WORK *mpw);
 static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw);
-static _USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy);
+static MONO_USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy);
 static void _Setup_ScreenClear(MONOLITH_PWSELECT_WORK *mpw);
 static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static void _Setup_PowerNameBMPDelete(MONOLITH_PWSELECT_WORK *mpw);
@@ -418,9 +411,17 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
 
     if(mpw->cursor_pos == _CURSOR_POS_NONE){
       appwk->common->power_select_no = GPOWER_ID_NULL;
+      MonolithTool_PanelOBJ_SetEnable(&mpw->panel, FALSE);
     }
     else{
       appwk->common->power_select_no = mpw->use_gpower_id[mpw->cursor_pos];
+      appwk->common->power_mono_use = mpw->use_power[mpw->cursor_pos];
+      if(mpw->use_power[mpw->cursor_pos] == MONO_USE_POWER_OK){
+        MonolithTool_PanelOBJ_SetEnable(&mpw->panel, TRUE);
+      }
+      else{
+        MonolithTool_PanelOBJ_SetEnable(&mpw->panel, FALSE);
+      }
     }
     
     if(mpw->decide_cursor_pos != _CURSOR_POS_NONE){
@@ -428,7 +429,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     }
     break;
   case SEQ_DECIDE_STREAM:
-    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH){
+    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
+        && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
       WORDSET_RegisterGPowerName( 
         appwk->setup->wordset, 0, mpw->use_gpower_id[mpw->decide_cursor_pos] );
       _Set_MsgStreamExpand(mpw, appwk->setup, msg_mono_pow_011);
@@ -446,6 +448,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
         }
         appwk->common->power_eqp_update = TRUE;
         mpw->decide_cursor_pos = _CURSOR_POS_NONE;
+        MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
+        MonolithTool_PanelOBJ_Focus(appwk, &mpw->panel, 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
         if(GFL_UI_TP_GetTrg()){
           *seq = SEQ_TP_RELEASE_WAIT;
         }
@@ -462,7 +466,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     break;
     
   case SEQ_FINISH:
-    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH){
+    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
+        && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
       appwk->next_menu_index = MONOLITH_MENU_TITLE;
       return GFL_PROC_RES_FINISH;
     }
@@ -806,31 +811,31 @@ static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw)
  * @param   setup		
  * @param   gpower_id		GパワーID
  *
- * @retval  _USE_POWER		習得状況
+ * @retval  MONO_USE_POWER		習得状況
  */
 //--------------------------------------------------------------
-static _USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy)
+static MONO_USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy)
 {
 #if 0
-  return GFUser_GetPublicRand0(_USE_POWER_MAX);
+  return GFUser_GetPublicRand0(MONO_USE_POWER_MAX);
 #endif
   if(setup->powerdata[gpower_id].level_w <= occupy->white_level){
     if(setup->powerdata[gpower_id].level_b <= occupy->black_level){
-      return _USE_POWER_OK;
+      return MONO_USE_POWER_OK;
     }
     if((s32)setup->powerdata[gpower_id].level_b - occupy->black_level <= _POWER_GRAY_OFFSET){
-      return _USE_POWER_SOMEMORE;
+      return MONO_USE_POWER_SOMEMORE;
     }
   }
   else if(setup->powerdata[gpower_id].level_b <= occupy->black_level){
     if(setup->powerdata[gpower_id].level_w <= occupy->white_level){
-      return _USE_POWER_OK;
+      return MONO_USE_POWER_OK;
     }
     if((s32)setup->powerdata[gpower_id].level_w - occupy->white_level <= _POWER_GRAY_OFFSET){
-      return _USE_POWER_SOMEMORE;
+      return MONO_USE_POWER_SOMEMORE;
     }
   }
-  return _USE_POWER_NONE;
+  return MONO_USE_POWER_NONE;
 }
 
 //--------------------------------------------------------------
@@ -864,19 +869,19 @@ static void _Setup_ScreenClear(MONOLITH_PWSELECT_WORK *mpw)
 static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup)
 {
   GPOWER_ID gpower_id;
-  _USE_POWER use_power;
+  MONO_USE_POWER use_power;
   int use_count = 0;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
   const OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   
   mpw->use_gpower_id[use_count] = 0;  //画面上部の見えないパネル
-  mpw->use_power[use_count] = _USE_POWER_SOMEMORE;
+  mpw->use_power[use_count] = MONO_USE_POWER_SOMEMORE;
   mpw->bmp_power_name[use_count] = GFL_BMP_Create( 
     GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
   use_count++;
   for(gpower_id = 0; gpower_id < GPOWER_ID_MAX; gpower_id++){
     use_power = _CheckUsePower(setup, gpower_id, occupy);
-    if(use_power == _USE_POWER_NONE){
+    if(use_power == MONO_USE_POWER_NONE){
       continue;
     }
     
@@ -888,7 +893,7 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSEL
     use_count++;
   }
   mpw->use_gpower_id[use_count] = 0;  //画面下部の見えないパネル
-  mpw->use_power[use_count] = _USE_POWER_SOMEMORE;
+  mpw->use_power[use_count] = MONO_USE_POWER_SOMEMORE;
   mpw->bmp_power_name[use_count] = GFL_BMP_Create( 
     GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
   use_count++;
@@ -1279,6 +1284,15 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
         mpw->tp_first_hit_y = tp_y;
         _SetCursorPos(mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
       }
+      //「もらう」タッチチェック
+      else if(GFL_UI_TP_GetTrg() == TRUE && mpw->cursor_pos != _CURSOR_POS_NONE
+          && tp_x >= _PANEL_DECIDE_X-PANEL_DECIDE_CHARSIZE_X/2*8 
+          && tp_x <= _PANEL_DECIDE_X+PANEL_DECIDE_CHARSIZE_X/2*8 
+          && tp_y >= _PANEL_DECIDE_Y-PANEL_CHARSIZE_Y/2*8
+          && tp_y <= _PANEL_DECIDE_Y+PANEL_CHARSIZE_Y/2*8){
+        decide_on = TRUE;
+        cursor_pos = mpw->cursor_pos;
+      }
     }
     else if(mpw->speed != 0){ //減速
       if(mpw->speed > 0){
@@ -1345,9 +1359,13 @@ static void _SetCursorPos(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURS
   }
 
   mpw->backup_cursor_pos = mpw->cursor_pos;
+#if 0 //ダブルタッチで決定は無しにした
   if(mpw->cursor_pos != _CURSOR_POS_NONE){
     mpw->backup_tp_decide_pos = mpw->cursor_pos;
   }
+#else
+  mpw->backup_tp_decide_pos = mpw->cursor_pos;
+#endif
   mpw->cursor_pos = cursor_pos;
   mpw->cursor_pos_update = TRUE;
   mpw->cursor_mode = mode;
@@ -1443,8 +1461,20 @@ static void _ScrollAfterUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
             && mpw->cursor_pos == mpw->backup_tp_decide_pos)
         || (mpw->cursor_mode == _SET_CURSOR_MODE_KEY 
             && mpw->cursor_pos == mpw->backup_cursor_pos)){
-      mpw->decide_cursor_pos = mpw->cursor_pos;
-      MonolithTool_PanelBG_Flash(appwk, FADE_SUB_BG);
+      if(mpw->use_power[mpw->cursor_pos] == MONO_USE_POWER_OK){
+        mpw->decide_cursor_pos = mpw->cursor_pos;
+        if(mpw->cursor_mode == _SET_CURSOR_MODE_KEY){
+          MonolithTool_PanelBG_Flash(appwk, FADE_SUB_BG);
+        }
+        else{
+          MonolithTool_PanelOBJ_Flash(appwk, &mpw->panel, 1, 0, FADE_SUB_OBJ);
+        }
+      }
+      else{
+        if(mpw->cursor_mode == _SET_CURSOR_MODE_TP){
+          MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
+        }
+      }
     }
     else{
       MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);

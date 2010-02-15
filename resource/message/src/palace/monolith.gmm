@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-02-14T19:30:18"/>
+	<create user="matsuda" host="W00142" date="2010-02-15T17:16:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -480,6 +480,30 @@
 		<comment>パワー画面：上</comment>
 		<language name="JPN" width="256">１かい／[2:03:４桁:0]Ｐ</language>
 		<language name="JPN_KANJI" width="256">１かい／[2:03:４桁:0]Ｐ</language>
+	</row>
+
+	<row id="msg_mono_pow_up_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>パワー画面：上</comment>
+		<language name="JPN" width="256">モノリスの　ホワイトレベルが
+[2:02:３桁:0]いじょうで　おぼえます
+
+ホワイトＬｖ：[2:02:３桁:1]　　　ブラックＬｖ：[2:02:３桁:2]</language>
+		<language name="JPN_KANJI" width="256">モノリスの　ホワイトレベルが
+[2:02:３桁:0]いじょうで　おぼえます
+
+ホワイトＬｖ：[2:02:３桁:1]　　　ブラックＬｖ：[2:02:３桁:2]</language>
+	</row>
+
+	<row id="msg_mono_pow_up_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>パワー画面：上</comment>
+		<language name="JPN" width="256">モノリスの　ブラックレベルが
+[2:02:３桁:0]いじょうで　おぼえます
+
+ホワイトＬｖ：[2:02:３桁:1]　　　ブラックＬｖ：[2:02:３桁:2]</language>
+		<language name="JPN_KANJI" width="256">モノリスの　ブラックレベルが
+[2:02:３桁:0]いじょうで　おぼえます
+
+ホワイトＬｖ：[2:02:３桁:1]　　　ブラックＬｖ：[2:02:３桁:2]</language>
 	</row>
 
 	<flowchart-group-list>

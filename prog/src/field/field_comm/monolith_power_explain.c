@@ -356,29 +356,62 @@ static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
 static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
 {
   GPOWER_ID gpower_id = appwk->common->power_select_no;
-  STRBUF *str_explain, *str_point, *str_expand;
   
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pew->bmpwin[BMPWIN_EXPLAIN]), 0x0000);
   
   if(gpower_id != GPOWER_ID_NULL){
-    WORDSET_RegisterNumber(setup->wordset, 0, setup->powerdata[gpower_id].point, 4, 
-      STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-    
-    str_explain = GFL_MSG_CreateString(
-      setup->mm_power_explain, setup->powerdata[gpower_id].msg_id_explain);
-    str_point = GFL_MSG_CreateString(setup->mm_monolith, msg_mono_pow_up_002);
+    if(appwk->common->power_mono_use == MONO_USE_POWER_OK){
+      STRBUF *str_explain, *str_point, *str_expand;
+      
+      WORDSET_RegisterNumber(setup->wordset, 0, setup->powerdata[gpower_id].point, 4, 
+        STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+      
+      str_explain = GFL_MSG_CreateString(
+        setup->mm_power_explain, setup->powerdata[gpower_id].msg_id_explain);
+      str_point = GFL_MSG_CreateString(setup->mm_monolith, msg_mono_pow_up_002);
 
-    str_expand = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-    WORDSET_ExpandStr(setup->wordset, str_expand, str_point );
+      str_expand = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
+      WORDSET_ExpandStr(setup->wordset, str_expand, str_point );
 
-    PRINT_UTIL_Print(&pew->print_util[BMPWIN_EXPLAIN], setup->printQue, 
-      0, 4, str_explain, setup->font_handle);
-    PRINT_UTIL_Print(&pew->print_util[BMPWIN_EXPLAIN], setup->printQue, 
-      112, 4+16*3, str_expand, setup->font_handle);
-    
-    GFL_STR_DeleteBuffer(str_explain);
-    GFL_STR_DeleteBuffer(str_point);
-    GFL_STR_DeleteBuffer(str_expand);
+      PRINT_UTIL_Print(&pew->print_util[BMPWIN_EXPLAIN], setup->printQue, 
+        0, 4, str_explain, setup->font_handle);
+      PRINT_UTIL_Print(&pew->print_util[BMPWIN_EXPLAIN], setup->printQue, 
+        112, 4+16*3, str_expand, setup->font_handle);
+      
+      GFL_STR_DeleteBuffer(str_explain);
+      GFL_STR_DeleteBuffer(str_point);
+      GFL_STR_DeleteBuffer(str_expand);
+    }
+    else{
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+      const OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+      int num, msg_id;
+      STRBUF *str_msg, *str_expand;
+      
+      if(setup->powerdata[gpower_id].level_w > occupy->white_level){
+        num = setup->powerdata[gpower_id].level_w;
+        msg_id = msg_mono_pow_up_003;
+      }
+      else{
+        num = setup->powerdata[gpower_id].level_b;
+        msg_id = msg_mono_pow_up_004;
+      }
+      WORDSET_RegisterNumber(setup->wordset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+      WORDSET_RegisterNumber(setup->wordset, 1, occupy->white_level, 
+        3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+      WORDSET_RegisterNumber(setup->wordset, 2, occupy->black_level, 
+        3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+
+      str_msg = GFL_MSG_CreateString(setup->mm_monolith, msg_id);
+      str_expand = GFL_STR_CreateBuffer( 128, HEAPID_MONOLITH );
+      WORDSET_ExpandStr(setup->wordset, str_expand, str_msg );
+
+      PRINT_UTIL_Print(&pew->print_util[BMPWIN_EXPLAIN], setup->printQue, 
+        0, 4, str_expand, setup->font_handle);
+
+      GFL_STR_DeleteBuffer(str_expand);
+      GFL_STR_DeleteBuffer(str_msg);
+    }
   }
   else{ //PrintUtilが実行されないため、クリアしたキャラを転送しておく
     GFL_BMPWIN_TransVramCharacter( pew->bmpwin[BMPWIN_EXPLAIN] );
