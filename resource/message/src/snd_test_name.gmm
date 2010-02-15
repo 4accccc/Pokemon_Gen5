@@ -6714,21 +6714,21 @@
 		<language name="JPN" width="256">MSCL-19</language>
 		<language name="JPN_KANJI" width="256">MSCL-19</language>
 	</row>
-	<row id="msg_seq_se_dummy_01">
-		<language name="JPN" width="256">DUMMY-01</language>
-		<language name="JPN_KANJI" width="256">DUMMY-01</language>
+	<row id="msg_seq_se_shinka_w025">
+		<language name="JPN" width="256">SHINKA-W025</language>
+		<language name="JPN_KANJI" width="256">SHINKA-W025</language>
 	</row>
-	<row id="msg_seq_se_dummy_02">
-		<language name="JPN" width="256">DUMMY-02</language>
-		<language name="JPN_KANJI" width="256">DUMMY-02</language>
+	<row id="msg_seq_se_shinka_w060c">
+		<language name="JPN" width="256">SHINKA-W060C</language>
+		<language name="JPN_KANJI" width="256">SHINKA-W060C</language>
 	</row>
-	<row id="msg_seq_se_dummy_03">
-		<language name="JPN" width="256">DUMMY-03</language>
-		<language name="JPN_KANJI" width="256">DUMMY-03</language>
+	<row id="msg_seq_se_shinka_w062">
+		<language name="JPN" width="256">SHINKA-W062</language>
+		<language name="JPN_KANJI" width="256">SHINKA-W062</language>
 	</row>
-	<row id="msg_seq_se_dummy_04">
-		<language name="JPN" width="256">DUMMY-04</language>
-		<language name="JPN_KANJI" width="256">DUMMY-04</language>
+	<row id="msg_seq_se_shinka_w080">
+		<language name="JPN" width="256">SHINKA-W080</language>
+		<language name="JPN_KANJI" width="256">SHINKA-W080</language>
 	</row>
 	<row id="msg_seq_se_dummy_05">
 		<language name="JPN" width="256">DUMMY-05</language>
@@ -7910,17 +7910,17 @@
 		<language name="JPN" width="256">W474-DOKU</language>
 		<language name="JPN_KANJI" width="256">W474-DOKU</language>
 	</row>
-	<row id="msg_seq_se_dmy_221">
-		<language name="JPN" width="256">DMY-221</language>
-		<language name="JPN_KANJI" width="256">DMY-221</language>
+	<row id="msg_seq_se_fld_120">
+		<language name="JPN" width="256">FLD-120</language>
+		<language name="JPN_KANJI" width="256">FLD-120</language>
 	</row>
-	<row id="msg_seq_se_dmy_222">
-		<language name="JPN" width="256">DMY-222</language>
-		<language name="JPN_KANJI" width="256">DMY-222</language>
+	<row id="msg_seq_se_fld_121">
+		<language name="JPN" width="256">FLD-121</language>
+		<language name="JPN_KANJI" width="256">FLD-121</language>
 	</row>
-	<row id="msg_seq_se_dmy_223">
-		<language name="JPN" width="256">DMY-223</language>
-		<language name="JPN_KANJI" width="256">DMY-223</language>
+	<row id="msg_seq_se_fld_122">
+		<language name="JPN" width="256">FLD-122</language>
+		<language name="JPN_KANJI" width="256">FLD-122</language>
 	</row>
 	<row id="msg_seq_se_dmy_224">
 		<language name="JPN" width="256">DMY-224</language>
