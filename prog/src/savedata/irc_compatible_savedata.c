@@ -300,10 +300,12 @@ u8 Irc_Compatible_SV_CalcBioRhythm( u8 birth_month, u8 birth_day, const RTCDate 
   { 
     RTCDate date  = *cp_now_date;
     now_days  = GFL_RTC_GetDaysOffset(&date);
+    OS_TFPrintf( 0, "現在の日時　%d年%d月%d日=[%d]\n", date.year, date.month, date.day, now_days );
 
     date.month  = birth_month;
     date.day    = birth_day;
     days        = GFL_RTC_GetDaysOffset(&date);
+    OS_TFPrintf( 0, "自分の誕生日　%d年%d月%d日=[%d]\n", date.year, date.month, date.day, days );
   }
 
   //誕生日から今日まで何日かかっているか
@@ -311,7 +313,7 @@ u8 Irc_Compatible_SV_CalcBioRhythm( u8 birth_month, u8 birth_day, const RTCDate 
   { 
     days  += 365;
   }
-  days_diff = days  - now_days;
+  days_diff = days - now_days;
 
   days_diff %= BIORHYTHM_CYCLE;
 
