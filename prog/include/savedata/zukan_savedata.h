@@ -165,7 +165,6 @@ extern u16 ZUKANSAVE_GetShortcutMons( const ZUKAN_SAVEDATA * zw );
 extern u32	ZUKANSAVE_GetFormMax( u16 mons );
 extern BOOL ZUKANSAVE_CheckPokeSeeForm( const ZUKAN_SAVEDATA * zw, u16 monsno, int sex, int rare, int form );
 extern void ZUKANSAVE_SetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u32 form );
-extern BOOL ZUKANSAVE_CheckForm( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u32 form );
 extern void ZUKANSAVE_GetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 * sex, BOOL * rare, u32 * form, HEAPID heapID );
 
 
