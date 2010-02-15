@@ -41,6 +41,11 @@
 #include "enceffno_def.h"
 #include "enceffno.h"
 
+#include "gamesystem/game_beacon.h"
+#include "tr_tool/trtype_def.h"
+#include "tr_tool/tr_tool.h"
+#include "battle/battle.h"
+
 #include "debug/debug_flg.h"
 
 //======================================================================
@@ -50,6 +55,60 @@ enum {
   BATTLE_BGM_FADEOUT_WAIT = 60,
   BATTLE_BGM_FADEIN_WAIT = 60,
 };
+
+typedef void (*TR_BEACON_SET_FUNC)( u16 tr_no );
+
+typedef enum{
+ TR_BEACON_NORMAL,
+ TR_BEACON_LEADER,
+ TR_BEACON_BIGFOUR,
+ TR_BEACON_CHAMPION,
+ TR_BEACON_TYPE_MAX,
+}TRAINER_BEACON_TYPE;
+
+typedef enum{
+ BTL_BEACON_ST_START,
+ BTL_BEACON_ST_WIN,
+ BTL_BEACON_ST_CAPTURE,
+ BTL_BEACON_ST_MAX,
+}BTL_BEACON_ST;
+
+static const TR_BEACON_SET_FUNC DATA_TrBeaconSetFuncTbl[TR_BEACON_TYPE_MAX][2] = {
+ { GAMEBEACON_Set_BattleTrainerStart, GAMEBEACON_Set_BattleTrainerVictory },
+ { GAMEBEACON_Set_BattleLeaderStart, GAMEBEACON_Set_BattleLeaderVictory },
+ { GAMEBEACON_Set_BattleBigFourStart, GAMEBEACON_Set_BattleBigFourVictory },
+ { GAMEBEACON_Set_BattleChampionStart, GAMEBEACON_Set_BattleChampionVictory },
+};
+
+static u8 DATA_TrBeaconLeaderTbl[] = {
+ TRTYPE_LEADER1A,
+ TRTYPE_LEADER1B,
+ TRTYPE_LEADER1C,
+ TRTYPE_LEADER2,
+ TRTYPE_LEADER3,
+ TRTYPE_LEADER4,
+ TRTYPE_LEADER5,
+ TRTYPE_LEADER6,
+ TRTYPE_LEADER7,
+ TRTYPE_LEADER8A,
+ TRTYPE_LEADER8B,
+};
+#define TR_BEACON_LEADER_NUM NELEMS( DATA_TrBeaconLeaderTbl)
+
+static u8 DATA_TrBeaconBigFourTbl[] = {
+ TRTYPE_BIGFOUR1,
+ TRTYPE_BIGFOUR2,
+ TRTYPE_BIGFOUR3,
+ TRTYPE_BIGFOUR4,
+};
+#define TR_BEACON_BIGFOUR_NUM NELEMS( DATA_TrBeaconLeaderTbl)
+
+static u8 DATA_TrBeaconChampTbl[] = {
+ TRTYPE_SAGE1,
+};
+#define TR_BEACON_CHAMP_NUM NELEMS( DATA_TrBeaconChampTbl )
+
+
 
 //======================================================================
 //  struct
@@ -95,6 +154,9 @@ typedef struct {
 static GMEVENT_RESULT fieldBattleEvent(
     GMEVENT * event, int *  seq, void * work );
 
+static void BeaconReq_BtlTrainer( u16 tr_id, BTL_BEACON_ST state );
+static void BeaconReq_BtlWild( BATTLE_SETUP_PARAM* bp, BTL_BEACON_ST state );
+static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew );
 
 static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew);
 static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata);
@@ -143,6 +205,9 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
   bew->is_sub_event = sub_event_f;
   bew->EncEffNo = enc_eff_no;     //エンカウントエフェクトセット
 
+  //すれ違いビーコン送信リクエスト
+  BeaconReq_BtlWild( bp, BTL_BEACON_ST_START );
+
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
   return event;
@@ -175,6 +240,9 @@ GMEVENT * EVENT_TrainerBattle(
 
     bp = BATTLE_PARAM_Create(HEAPID_PROC);
     FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, partner_id, tr_id0, tr_id1, HEAPID_PROC );
+
+    BeaconReq_BtlTrainer( tr_id0, BTL_BEACON_ST_START );
+
 #if 1
     //2009年12月末ロム用処理：ジムリーダー戦のみ、BGMを変更する
     switch (tr_id0)
@@ -374,6 +442,95 @@ static GMEVENT_RESULT fieldBattleEvent(
   }
 
   return GMEVENT_RES_CONTINUE;
+}
+
+
+//======================================================================
+//
+//  ビーコン配信関連　サブ関数
+//
+//
+//======================================================================
+
+/*
+ *  @brief  トレーナービーコンタイプ取得
+ */
+static u8 btl_trainer_GetBeaconType( u16 tr_id )
+{
+  int i;
+  u16 tr_type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
+  
+  for(i = 0;i < TR_BEACON_CHAMP_NUM;i++){
+    if( tr_type == DATA_TrBeaconChampTbl[i] ){
+      return TR_BEACON_CHAMPION;
+    }
+  }
+  for(i = 0;i < TR_BEACON_BIGFOUR_NUM;i++){
+    if( tr_type == DATA_TrBeaconBigFourTbl[i] ){
+      return TR_BEACON_BIGFOUR;
+    }
+  }
+  for(i = 0;i < TR_BEACON_LEADER_NUM;i++){
+    if( tr_type == DATA_TrBeaconLeaderTbl[i] ){
+      return TR_BEACON_LEADER;
+    }
+  }
+  return TR_BEACON_NORMAL;
+}
+
+/*
+ *  @brief  トレーナー戦闘ビーコンリクエスト
+ */
+static void BeaconReq_BtlTrainer( u16 tr_id, BTL_BEACON_ST state )
+{
+  TRAINER_BEACON_TYPE type = btl_trainer_GetBeaconType( tr_id );
+
+  DATA_TrBeaconSetFuncTbl[type][state]( tr_id );
+}
+
+/*
+ *  @brief  野生戦ビーコンリクエスト
+ */
+static void BeaconReq_BtlWild( BATTLE_SETUP_PARAM* bp, BTL_BEACON_ST state )
+{
+  POKEPARTY* party = BATTLE_PARAM_GetPokePartyPointer( bp, BTL_CLIENT_ENEMY1 );
+  u16 monsno = PP_Get( PokeParty_GetMemberPointer(party,0), ID_PARA_monsno, NULL );
+
+  switch( state ){
+  case BTL_BEACON_ST_START:
+    GAMEBEACON_Set_BattlePokeStart( monsno );
+    break;
+  case BTL_BEACON_ST_WIN:
+    GAMEBEACON_Set_BattlePokeVictory( monsno );
+    break;
+  case BTL_BEACON_ST_CAPTURE:
+    monsno = PP_Get( PokeParty_GetMemberPointer(party,bp->capturedPokeIdx), ID_PARA_monsno, NULL );
+    GAMEBEACON_Set_PokemonGet( monsno );
+    break;
+  }
+}
+
+/*
+ *  @brief  バトル終了時ビーコンリクエスト
+ */
+static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
+{
+  BATTLE_SETUP_PARAM* bp = bew->battle_param;
+
+  switch( bp->competitor ){
+  case BTL_COMPETITOR_WILD:
+    if( bp->result == BTL_RESULT_CAPTURE ){
+      BeaconReq_BtlWild( bp, BTL_BEACON_ST_CAPTURE );
+    }else if( bp->result == BTL_RESULT_WIN ){
+      BeaconReq_BtlWild( bp, BTL_BEACON_ST_WIN );
+    }
+    break;
+  case BTL_COMPETITOR_TRAINER:
+    if( bp->result == BTL_RESULT_WIN ){
+      BeaconReq_BtlTrainer( bp->tr_data[BTL_CLIENT_ENEMY1]->tr_id, BTL_BEACON_ST_WIN );
+    }
+    break;
+  }
 }
 
 //======================================================================

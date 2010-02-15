@@ -56,6 +56,16 @@ extern void BATTLE_PARAM_SetPokeParty( BATTLE_SETUP_PARAM* bp, const POKEPARTY* 
  */
 extern POKEPARTY* BATTLE_PARAM_GetPokePartyPointer( BATTLE_SETUP_PARAM* bp, BTL_CLIENT_ID client );
 
+/*
+ *  @brief  バトルパラム　バトルステータスフラグセット
+ */
+extern void BATTLE_PARAM_SetBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG status_f);
+
+/*
+ *  @brief  バトルパラム バトルステータスフラグチェック
+ */
+extern BOOL BATTLE_PARAM_CheckBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG status_f );
+
 ////////////////////////////////////////////////////////////////////////
 //
 /*

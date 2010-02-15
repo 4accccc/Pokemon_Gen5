@@ -119,6 +119,8 @@ extern BOOL GAMEBEACON_Set_SearchUpdateFlag(const GAMEBEACON_INFO *info);
 //--------------------------------------------------------------
 //  ビーコンセット
 //--------------------------------------------------------------
+extern void GAMEBEACON_Set_BattlePokeStart(u16 monsno);
+extern void GAMEBEACON_Set_BattlePokeVictory(u16 monsno);
 extern void GAMEBEACON_Set_BattleWildPokeStart(u16 monsno);
 extern void GAMEBEACON_Set_BattleWildPokeVictory(u16 monsno);
 extern void GAMEBEACON_Set_BattleSpPokeStart(u16 monsno);
@@ -132,6 +134,7 @@ extern void GAMEBEACON_Set_BattleBigFourVictory(u16 tr_no);
 extern void GAMEBEACON_Set_BattleChampionStart(u16 tr_no);
 extern void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no);
 extern void GAMEBEACON_Set_PokemonGet(u16 monsno);
+extern void GAMEBEACON_Set_WildPokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname);
 extern void GAMEBEACON_Set_PokemonEvolution(u16 monsno, const STRBUF *nickname);

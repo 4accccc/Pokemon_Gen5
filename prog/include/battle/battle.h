@@ -141,6 +141,18 @@ typedef struct {
 
 }BTL_FIELD_SITUATION;
 
+//-----------------------------------------------------------------------------------
+/**
+ * フィールドからバトルに引き渡すべきフラグ群
+ */
+//-----------------------------------------------------------------------------------
+typedef enum {
+  //フラグ数が8をこえるときはBATTLE_SETUP_PARAM->btl_status_flagの型をu8から拡張してください
+  BTL_STATUS_FLAG_FISHNING = 0x01,     ///<釣り戦闘ならTRUE
+  BTL_STATUS_FLAG_PCOWNER_SEE = 0x02,  ///<パソコン開発者に会っていればTRUE
+  BTL_STATUS_FLAG_REGEND = 0x04,       ///<伝説級ポケモンとのエンカウントならTRUE
+  BTL_STATUS_FALG_MOVE_POKE = 0x08,    ///<移動ポケモンとのエンカウントならTRUE
+}BTL_STATUS_FLAG;
 
 //-----------------------------------------------------------------------------------
 /**
@@ -230,6 +242,9 @@ typedef struct {
   // 制限時間設定
   u16         LimitTimeGame;        ///< 試合制限時間（秒）         [ 0 = 無制限 ]
   u16         LimitTimeCommand;     ///< コマンド選択制限時間（秒） [ 0 = 無制限 ]
+
+  // 各種ステータスフラグ
+  u8          btl_status_flag;  ///<各種ステータスフラグ(定義値 BTL_STATUS_FLAG型)
 
   // デバッグ系
   u16         DebugFlagBit;          ///< 各種デバッグフラグ

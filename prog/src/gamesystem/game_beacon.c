@@ -96,7 +96,7 @@ void BEACONINFO_Set_BattleBigFourStart(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleBigFourVictory(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_PokemonGet(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_WildPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname);
 void BEACONINFO_Set_PokemonEvolution(GAMEBEACON_INFO *info, u16 monsno, const STRBUF *nickname);
@@ -124,6 +124,8 @@ void BEACONINFO_Set_Details_BattleBigFour(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_Details_BattleChampion(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_Details_Walk(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_Details_IntroductionPms(GAMEBEACON_INFO *info, const PMS_DATA *pms);
+
+static BOOL beacon_PokeBeaconTypeIsSpecial(const monsno );
 
 #ifdef PM_DEBUG
 GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void);
@@ -614,7 +616,37 @@ void DEBUG_GAMEBEACON_Set_NewEntry(void)
 //==============================================================================
 //==================================================================
 /**
- * 送信ビーコンセット：野生のポケモンと対戦を開始しました
+ * 送信ビーコンセット：ポケモンと対戦を開始しました
+ * @param   monsno   ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattlePokeStart(u16 monsno)
+{
+  if( beacon_PokeBeaconTypeIsSpecial( monsno )){
+    GAMEBEACON_Set_BattleSpPokeStart(monsno);
+  }else{
+    GAMEBEACON_Set_BattleWildPokeStart(monsno);
+  }
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：ポケモンとの対戦に勝利しました
+ * @param   monsno   ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattlePokeVictory(u16 monsno)
+{
+  if( beacon_PokeBeaconTypeIsSpecial( monsno )){
+    GAMEBEACON_Set_BattleSpPokeVictory(monsno);
+  }else{
+    GAMEBEACON_Set_BattleWildPokeVictory(monsno);
+  }
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：野生ポケモンと対戦を開始しました
  * @param   monsno   ポケモン番号
  */
 //==================================================================
@@ -634,7 +666,7 @@ void BEACONINFO_Set_BattleWildPokeStart(GAMEBEACON_INFO *info, u16 monsno)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
   info->action.monsno = monsno;
-  
+ 
   BEACONINFO_Set_Details_BattleWildPoke(info, monsno);
 }
 
@@ -933,7 +965,23 @@ void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_PokemonGet(u16 monsno)
 {
-  BEACONINFO_Set_PokemonGet(&GameBeaconSys->send.info, monsno);
+  if( beacon_PokeBeaconTypeIsSpecial( monsno )){
+    GAMEBEACON_Set_SpecialPokemonGet(monsno);
+  }else{
+    GAMEBEACON_Set_WildPokemonGet(monsno);
+  }
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：野生ポケモン捕獲
+ *
+ * @param   monsno    ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_WildPokemonGet(u16 monsno)
+{
+  BEACONINFO_Set_WildPokemonGet(&GameBeaconSys->send.info, monsno);
   SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
@@ -944,7 +992,7 @@ void GAMEBEACON_Set_PokemonGet(u16 monsno)
  * @param   monsno    ポケモン番号
  */
 //==================================================================
-void BEACONINFO_Set_PokemonGet(GAMEBEACON_INFO *info, u16 monsno)
+void BEACONINFO_Set_WildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 {
   info->action.action_no = GAMEBEACON_ACTION_POKE_GET;
   info->action.monsno = monsno;
@@ -1531,6 +1579,43 @@ void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
 {
   BEACONINFO_Set_Details_IntroductionPms(&GameBeaconSys->send.info, pms);
 }
+
+//==================================================================
+/**
+ * ポケモン関連ビーコン タイプチェック
+ *
+ * @param   monsno
+ */
+//==================================================================
+static BOOL beacon_PokeBeaconTypeIsSpecial(const monsno )
+{
+  int i;
+  static const u16 sp_poke[] = {
+    MONSNO_ATOSU, 
+    MONSNO_PORUTOSU, 
+    MONSNO_ARAMISU, 
+    MONSNO_KAZAKAMI, 
+    MONSNO_RAIKAMI, 
+    MONSNO_SIN, 
+    MONSNO_MU, 
+    MONSNO_TUTINOKAMI, 
+    MONSNO_RAI, 
+    MONSNO_DARUTANISU, 
+    MONSNO_MERODHIA, 
+    MONSNO_INSEKUTA, 
+    MONSNO_BIKUTHI, 
+  };
+
+  for(i = 0;i < NELEMS(sp_poke);i++){
+    if( sp_poke[i] == monsno ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+
 
 #ifdef PM_DEBUG
 //==================================================================

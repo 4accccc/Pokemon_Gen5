@@ -120,6 +120,22 @@ POKEPARTY* BATTLE_PARAM_GetPokePartyPointer( BATTLE_SETUP_PARAM* bp, BTL_CLIENT_
 }
 
 /*
+ *  @brief  バトルパラム　バトルステータスフラグセット
+ */
+void BATTLE_PARAM_SetBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG status_f)
+{
+  bp->btl_status_flag |= status_f; 
+}
+
+/*
+ *  @brief  バトルパラム バトルステータスフラグチェック
+ */
+BOOL BATTLE_PARAM_CheckBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG status_f )
+{
+  return (bp->btl_status_flag & status_f);
+}
+
+/*
  *  @brief  戦闘フィールドシチュエーションデータデフォルト初期化（室内設定・ライトなし）
  */
 void BTL_FIELD_SITUATION_Init( BTL_FIELD_SITUATION* sit )
