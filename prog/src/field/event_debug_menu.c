@@ -304,21 +304,26 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
  */
 //------------------------------------------------------------------------
 #if defined DEBUG_ONLY_FOR_toru_nagihashi
-  #define QuickJumpCode   DEBUG_FIELD_STR42
+  #define QuickJumpStart   DEBUG_FIELD_STR42
 #elif defined DEBUG_ONLY_FOR_matsumiya
-  #define QuickJumpCode   DEBUG_FIELD_STR03
+  #define QuickJumpStart   DEBUG_FIELD_STR03
+  #define QuickJumpSelect  DEBUG_FIELD_STR17
 #elif defined DEBUG_ONLY_FOR_masafumi_saitou
-  #define QuickJumpCode   DEBUG_FIELD_STR03
+  #define QuickJumpStart   DEBUG_FIELD_STR03
+  #define QuickJumpSelect  DEBUG_FIELD_STR17
 #elif defined DEBUG_ONLY_FOR_suginaka_katsunori
-  #define QuickJumpCode   DEBUG_FIELD_STR03
+  #define QuickJumpStart   DEBUG_FIELD_STR03
+  #define QuickJumpSelect  DEBUG_FIELD_STR17
 #elif defined DEBUG_ONLY_FOR_mizuguchi_mai || defined DEBUG_ONLY_FOR_mai_ando
-  #define QuickJumpCode   DEBUG_FIELD_STR03
+  #define QuickJumpStart   DEBUG_FIELD_STR03
+  #define QuickJumpSelect  DEBUG_FIELD_STR17
 #elif defined DEBUG_ONLY_FOR_murakami_naoto
-  #define QuickJumpCode   DEBUG_FIELD_STR03
+  #define QuickJumpStart   DEBUG_FIELD_STR03
+  #define QuickJumpSelect  DEBUG_FIELD_STR17
 #elif defined DEBUG_ONLY_FOR_ohno
-  #define QuickJumpCode   DEBUG_FIELD_STR19
+  #define QuickJumpStart   DEBUG_FIELD_STR19
 //#elif defined DEBUG_ONLY_FOR_
-//  #define QuickJumpCode
+//  #define QuickJumpStart
 #endif
 
 //--------------------------------------------------------------
@@ -487,14 +492,22 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
       
       if( ret == FLDMENUFUNC_NULL ){  //‘€ì–³‚µ
-#ifdef QuickJumpCode
+#ifdef QuickJumpStart
         if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
         {
-          u32 idx = DebugMenu_GetQuickJumpIdx( QuickJumpCode );
+          u32 idx = DebugMenu_GetQuickJumpIdx( QuickJumpStart );
           FLDMENUFUNC_DeleteMenu( work->menuFunc );
           work->menuFunc  = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID,  &DebugMenuData, idx-4, 4 );
         }
-#endif
+#endif  //QuickJumpStart
+#ifdef QuickJumpSelect
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+        {
+          u32 idx = DebugMenu_GetQuickJumpIdx( QuickJumpSelect );
+          FLDMENUFUNC_DeleteMenu( work->menuFunc );
+          work->menuFunc  = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID,  &DebugMenuData, idx-4, 4 );
+        }
+#endif  //QuickJumpSelect
 
         break;
       }else if( ret == FLDMENUFUNC_CANCEL ){  //ƒLƒƒƒ“ƒZƒ‹
