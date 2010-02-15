@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-11T12:46:18"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-02-14T13:11:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -375,9 +375,8 @@
 	</row>
 
 	<row id="msg_debug_common_02">
-		<comment>とりあえず確保</comment>
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">到着フラグ</language>
+		<language name="JPN_KANJI" width="256">到着フラグ</language>
 	</row>
 
 	<row id="msg_debug_common_03">
