@@ -114,21 +114,12 @@ typedef struct {
   int movieflag;    ///映画配信かどうか
 } GIFT_PRESENT_ITEM;
 
-// ルール(レギュレーション)
-typedef struct {
-  REGULATION regu_data;  ///デジタル選手証
-} GIFT_PRESENT_RULE;
 
-// 木の実セット  PDW用
+// Ｇパワー
 typedef struct {
-  int itemNo[MYSTERYGIFT_NUTSET_MAX];
-  int itemMax[MYSTERYGIFT_NUTSET_MAX];
-} GIFT_PRESENT_NUTSET;
+  int type;        ///開放するパワータイプ一種類
+} GIFT_PRESENT_POWER;
 
-// ポケモンエンカウント PDW用
-typedef struct {
-  int pokemon;
-} GIFT_PRESENT_ENCOUNT;
 
 
 // ふしぎなおくりもの強制クリア
@@ -137,12 +128,9 @@ typedef struct {
 } GIFT_PRESENT_REMOVE;
 
 typedef union {
-  GIFT_PRESENT_ALL 		all;
   GIFT_PRESENT_POKEMON		pokemon;
   GIFT_PRESENT_ITEM		item;
-  GIFT_PRESENT_RULE		rule;
-  GIFT_PRESENT_NUTSET nutset;
-  GIFT_PRESENT_ENCOUNT encount;
+  GIFT_PRESENT_POWER		gpower;
   GIFT_PRESENT_REMOVE		remove;
 } GIFT_PRESENT;
 
@@ -169,6 +157,7 @@ typedef struct{
   GIFT_PACK_DATA data;
   u32 version;					// 対象バージョン(０の場合は制限無しで配布)
   STRCODE event_text[GIFT_DATA_CARD_TEXT_MAX+EOM_SIZE];	// 説明テキスト
+  u16 crc;
 } DOWNLOAD_GIFT_DATA;
 
 
