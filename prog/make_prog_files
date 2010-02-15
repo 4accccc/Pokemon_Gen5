@@ -746,6 +746,11 @@ SRCS_OVERLAY_FIELD_EVENT_FOURKINGS = field/event_fourkings.c
 #===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_CROWD_PEOPLE = field/field_crowd_people.c
 
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_SEATEMPLE = field/field_seatemple.c
+
 # マッパーサンプル
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
