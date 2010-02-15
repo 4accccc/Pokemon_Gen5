@@ -61,6 +61,7 @@ typedef enum{
   _USE_POWER_NONE,      ///<習得していない
   
   _USE_POWER_MAX,
+  _POWER_GRAY_OFFSET = 3, ///<片方の条件を満たしていて、もう片方のレベル差分がこの値以内なら灰色
 }_USE_POWER;
 
 ///Gパワー名用に確保するBMPのX(キャラクタ単位)
@@ -227,8 +228,9 @@ static void _Set_MsgStream(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u
 static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id);
 static BOOL _Wait_MsgStream(MONOLITH_PWSELECT_WORK *mpw);
 static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw);
-static _USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id);
-static void _Setup_PowerNameBMPCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
+static _USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy);
+static void _Setup_ScreenClear(MONOLITH_PWSELECT_WORK *mpw);
+static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static void _Setup_PowerNameBMPDelete(MONOLITH_PWSELECT_WORK *mpw);
 static BOOL _PowerNameBMPDraw(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
@@ -326,7 +328,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
       _PowerSelect_VBlank, mpw, MONOLITH_VINTR_TCB_PRI_POWER);
 
     OS_TPrintf("NameDraw start\n");
-    _Setup_PowerNameBMPCreate(mpw, appwk->setup);
+    _Setup_PowerNameBMPCreate(appwk, mpw, appwk->setup);
+    _Setup_ScreenClear(mpw);
     (*seq)++;
     break;
   case 1:
@@ -806,10 +809,48 @@ static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw)
  * @retval  _USE_POWER		習得状況
  */
 //--------------------------------------------------------------
-static _USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id)
+static _USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy)
 {
-  //※check　とりあえずランダム
+#if 0
   return GFUser_GetPublicRand0(_USE_POWER_MAX);
+#endif
+  if(setup->powerdata[gpower_id].level_w <= occupy->white_level){
+    if(setup->powerdata[gpower_id].level_b <= occupy->black_level){
+      return _USE_POWER_OK;
+    }
+    if((s32)setup->powerdata[gpower_id].level_b - occupy->black_level <= _POWER_GRAY_OFFSET){
+      return _USE_POWER_SOMEMORE;
+    }
+  }
+  else if(setup->powerdata[gpower_id].level_b <= occupy->black_level){
+    if(setup->powerdata[gpower_id].level_w <= occupy->white_level){
+      return _USE_POWER_OK;
+    }
+    if((s32)setup->powerdata[gpower_id].level_w - occupy->white_level <= _POWER_GRAY_OFFSET){
+      return _USE_POWER_SOMEMORE;
+    }
+  }
+  return _USE_POWER_NONE;
+}
+
+//--------------------------------------------------------------
+/**
+ * リストが画面内に収まっている場合、不必要なスクリーンをクリアする
+ *
+ * @param   mpw		
+ */
+//--------------------------------------------------------------
+static void _Setup_ScreenClear(MONOLITH_PWSELECT_WORK *mpw)
+{
+  int start_y;
+  
+  if(mpw->power_list_num - _DUMMY_PANEL_NUM >= POWER_ITEM_DISP_NUM){
+    return;
+  }
+  
+  start_y = (mpw->power_list_num - _DUMMY_PANEL_DOWN_NUM) * POWER_LIST_SPACE / 8;
+  GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0, 0, start_y, 32, 32 - start_y, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
 }
 
 //--------------------------------------------------------------
@@ -820,11 +861,13 @@ static _USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id)
  * @param   setup		
  */
 //--------------------------------------------------------------
-static void _Setup_PowerNameBMPCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup)
+static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup)
 {
   GPOWER_ID gpower_id;
   _USE_POWER use_power;
   int use_count = 0;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+  const OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   
   mpw->use_gpower_id[use_count] = 0;  //画面上部の見えないパネル
   mpw->use_power[use_count] = _USE_POWER_SOMEMORE;
@@ -832,7 +875,7 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETU
     GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
   use_count++;
   for(gpower_id = 0; gpower_id < GPOWER_ID_MAX; gpower_id++){
-    use_power = _CheckUsePower(setup, gpower_id);
+    use_power = _CheckUsePower(setup, gpower_id, occupy);
     if(use_power == _USE_POWER_NONE){
       continue;
     }
@@ -844,13 +887,12 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETU
     
     use_count++;
   }
-  if(use_count >= POWER_ITEM_DISP_NUM-1){
-    mpw->use_gpower_id[use_count] = 0;  //画面下部の見えないパネル
-    mpw->use_power[use_count] = _USE_POWER_SOMEMORE;
-    mpw->bmp_power_name[use_count] = GFL_BMP_Create( 
-      GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
-    use_count++;
-  }
+  mpw->use_gpower_id[use_count] = 0;  //画面下部の見えないパネル
+  mpw->use_power[use_count] = _USE_POWER_SOMEMORE;
+  mpw->bmp_power_name[use_count] = GFL_BMP_Create( 
+    GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
+  use_count++;
+
   mpw->power_list_num = use_count;
 }
 
@@ -893,10 +935,12 @@ static BOOL _PowerNameBMPDraw(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup
   
   str = GFL_STR_CreateBuffer(32, HEAPID_MONOLITH);
   for(i = mpw->power_list_write_num; i < mpw->power_list_num; i++){
-    GF_ASSERT(mpw->use_power[i] < NELEMS(print_color));
-    GFL_MSG_GetString(mpw->mm_power, mpw->use_gpower_id[i], str);
-    PRINTSYS_PrintColor( mpw->bmp_power_name[i], 0, 0, str, 
-      setup->font_handle, print_color[mpw->use_power[i]] );
+    if(i >= _DUMMY_PANEL_UP_NUM && i < mpw->power_list_num - _DUMMY_PANEL_DOWN_NUM){
+      GF_ASSERT(mpw->use_power[i] < NELEMS(print_color));
+      GFL_MSG_GetString(mpw->mm_power, mpw->use_gpower_id[i], str);
+      PRINTSYS_PrintColor( mpw->bmp_power_name[i], 0, 0, str, 
+        setup->font_handle, print_color[mpw->use_power[i]] );
+    }
     
     count++;
     if(count >= GPOWER_NAME_WRITE_NUM){

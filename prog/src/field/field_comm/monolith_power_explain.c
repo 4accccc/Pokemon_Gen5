@@ -42,8 +42,6 @@ typedef struct{
   PRINT_UTIL print_util[BMPWIN_MAX];
   
   GPOWER_ID print_select_gpower_id;   ///<•`‰æ‚µ‚½GPOWER_ID
-  
-  POWER_CONV_DATA *powerdata;
 }MONOLITH_POWEREXPLAIN_WORK;
 
 
@@ -102,8 +100,6 @@ static GFL_PROC_RESULT MonolithPowerExplainProc_Init(GFL_PROC * proc, int * seq,
   pew = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_POWEREXPLAIN_WORK), HEAPID_MONOLITH);
   GFL_STD_MemClear(pew, sizeof(MONOLITH_POWEREXPLAIN_WORK));
   pew->print_select_gpower_id = GPOWER_ID_NULL;
-  
-  pew->powerdata = GPOWER_PowerData_LoadAlloc(HEAPID_MONOLITH);
   
   //BG
   _Setup_BGFrameSetting();
@@ -175,8 +171,6 @@ static GFL_PROC_RESULT MonolithPowerExplainProc_End( GFL_PROC * proc, int * seq,
   _Setup_BmpWin_Exit(pew);
   _Setup_BGFrameExit();
 
-  GPOWER_PowerData_Unload(pew->powerdata);
-  
   GFL_PROC_FreeWork(proc);
   return GFL_PROC_RES_FINISH;
 }
@@ -338,9 +332,9 @@ static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
     str_name = GFL_MSG_CreateString(setup->mm_monolith, msg_mono_pow_up_001);
   }
   else{
-    str_name = GFL_MSG_CreateString(setup->mm_power, pew->powerdata[gpower_id].msg_id_title);
+    str_name = GFL_MSG_CreateString(setup->mm_power, setup->powerdata[gpower_id].msg_id_title);
     str_explain = GFL_MSG_CreateString(
-      setup->mm_power_explain, pew->powerdata[gpower_id].msg_id_explain);
+      setup->mm_power_explain, setup->powerdata[gpower_id].msg_id_explain);
     PRINT_UTIL_Print(&pew->print_util[BMPWIN_EQP], setup->printQue, 
       0, 16, str_explain, setup->font_handle);
     GFL_STR_DeleteBuffer(str_explain);
@@ -367,11 +361,11 @@ static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pew->bmpwin[BMPWIN_EXPLAIN]), 0x0000);
   
   if(gpower_id != GPOWER_ID_NULL){
-    WORDSET_RegisterNumber(setup->wordset, 0, pew->powerdata[gpower_id].point, 4, 
+    WORDSET_RegisterNumber(setup->wordset, 0, setup->powerdata[gpower_id].point, 4, 
       STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     
     str_explain = GFL_MSG_CreateString(
-      setup->mm_power_explain, pew->powerdata[gpower_id].msg_id_explain);
+      setup->mm_power_explain, setup->powerdata[gpower_id].msg_id_explain);
     str_point = GFL_MSG_CreateString(setup->mm_monolith, msg_mono_pow_up_002);
 
     str_expand = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );

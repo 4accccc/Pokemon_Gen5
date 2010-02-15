@@ -42,8 +42,10 @@ typedef struct{
 typedef struct{
   OCCUPY_INFO_TOWN town;                 ///<ŠX‚Ìè‹’î•ñ
   u16 intrude_point;                     ///<N“üƒ|ƒCƒ“ƒg
-  u8 intrude_level;                      ///<N“üƒŒƒxƒ‹
-  u8 padding;
+  u8 intrude_level;                      ///<N“üƒŒƒxƒ‹ ¦check íœŒó•â
+  u8 white_level;                        ///<”’ƒŒƒxƒ‹
+  u8 black_level;                        ///<•ƒŒƒxƒ‹
+  u8 padding[3];
 }OCCUPY_INFO;
 
 //--------------------------------------------------------------
