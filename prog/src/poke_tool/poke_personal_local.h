@@ -39,7 +39,8 @@ struct  pokemon_personal_data
   u16   pains_agi   :2; //‘¡—^“w—Í’l‘f‘‚³
   u16   pains_spepow:2; //‘¡—^“w—Í’l“ÁêUŒ‚—Í
   u16   pains_spedef:2; //‘¡—^“w—Í’l“Áê–hŒä—Í
-  u16               :4; //‘¡—^“w—Í’l—\”õ
+  u16   no_jump     :1; //‚Í‚Ë‚é‹Ö~ƒtƒ‰ƒO
+  u16               :3; //‘¡—^“w—Í’l—\”õ
 
   u16   item1;          //ƒAƒCƒeƒ€‚P
   u16   item2;          //ƒAƒCƒeƒ€‚Q

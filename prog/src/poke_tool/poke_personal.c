@@ -192,8 +192,8 @@ u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID para
 	case POKEPER_ID_pains_spepow:	    //‘¡—^“w—Í’l“ÁêUŒ‚—Í
 		ret = ppd->pains_spepow;
 		break;
-	case POKEPER_ID_pains_spedef:	    //‘¡—^“w—Í’l“Áê–hŒä—Í
-		ret = ppd->pains_spedef;
+	case POKEPER_ID_no_jump:	        //‚Í‚Ë‚é‹Ö~ƒtƒ‰ƒO
+		ret = ppd->no_jump;
 		break;
 	case POKEPER_ID_item1:			      //ƒAƒCƒeƒ€‚P
 		ret = ppd->item1;
