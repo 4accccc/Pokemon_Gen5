@@ -23,6 +23,7 @@ _EVENT_DATA ev_r07_fightrew_01
 _EVENT_DATA ev_bg_r07_board_01
 _EVENT_DATA ev_bg_r07_board_02
 _EVENT_DATA ev_bg_r07_board_03
+_EVENT_DATA ev_pos_r07_rival_01
 _EVENT_DATA_END
 
 
@@ -62,3 +63,274 @@ EVENT_END
 EVENT_START  ev_bg_r07_board_03
 	_EASY_BGWIN_MSG(msg_r07_sign3_01 , TYPE_INFO)
 EVENT_END
+
+/**************************************************************/
+/*POS：ライバルとチャンピオン                                  */
+/**************************************************************/
+EVENT_START  ev_pos_r07_rival_01
+	
+	//ライバルのOBJを出現させる
+	_FLAG_RESET(FV_R07_RIVAL_01)
+	_OBJ_ADD(R07_RIVAL_01)
+	
+	//【仮】専用曲鳴らす
+	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+	//_START_TEMP_EVENT_BGM( SEQ_BGM_E_RIVAL )
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//ライバル来る
+	_OBJ_ANIME( R07_RIVAL_01,anm_r07_rival_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//自機位置の座標を格納する変数を定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	SWITCH $POSZ
+	CASE 243 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_look_player_z243 )
+		_OBJ_ANIME_WAIT()
+	CASE 244 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_look_player_z244 )
+		_OBJ_ANIME_WAIT()
+	CASE 245 THEN  //目の前に立った時
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_look_player_z245 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //真ん中にいる時と同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_look_player_z244 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//ライバル：ぼくの実力をためさせてもらうよ
+	_BALLOONWIN_OBJMSG(msg_r07_black_01,R07_RIVAL_01  )
+	_BALLOONWIN_CLOSE()
+	
+	//【仮】戦闘処理
+	
+	//【仮】ライバル曲停止（本来は戦闘処理で自動停止）
+	_END_EVENT_BGM()
+	
+	//戦闘復帰後にアテグのOBJを表示
+	_OBJ_ADD(R07_CHAMPION_01)
+	
+	//アテグその場歩き
+	_OBJ_ANIME( R07_CHAMPION_01,anm_r07_champion_stayl )
+	_OBJ_ANIME_WAIT()
+	//主人公アテグの方を見る
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_player_look_champion )
+	_OBJ_ANIME_WAIT()
+	
+	//アテグ：なかなかのポケモン勝負！
+	_BALLOONWIN_OBJMSG(msg_r07_champion_01,R07_CHAMPION_01  )
+	_BALLOONWIN_CLOSE()
+
+	//ライバル：だれかとおもえば
+	_BALLOONWIN_OBJMSG(msg_r07_black_02,R07_RIVAL_01  )
+	_BALLOONWIN_CLOSE()
+	
+	//アテグライバルに隣接
+	_OBJ_ANIME( R07_CHAMPION_01,anm_r07_champion_jump_to_rival )
+	_OBJ_ANIME_WAIT()
+	//主人公とライバルアテグの方を向く
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_rival_look_champion01 )
+	_OBJ_ANIME( R07_RIVAL_01,anm_r07_rival_look_champion01 )
+	_OBJ_ANIME_WAIT()
+	
+	//アテグ：まったくとげのある
+	_BALLOONWIN_OBJMSG(msg_r07_champion_02,R07_CHAMPION_01  )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル：…つよくなれば
+	_BALLOONWIN_OBJMSG(msg_r07_black_03,R07_RIVAL_01  )
+	_BALLOONWIN_CLOSE()
+	
+	//アテグ：ふむう
+	_BALLOONWIN_OBJMSG(msg_r07_champion_03,R07_CHAMPION_01  )
+	_BALLOONWIN_CLOSE()
+	
+	//アテグ、ライバルに何か渡す
+	_OBJ_ANIME( R07_CHAMPION_01,anm_r07_champion_gift_to_rival )
+	_OBJ_ANIME_WAIT()
+	
+	//アテグ、主人公に何か渡す
+	_OBJ_ANIME( R07_CHAMPION_01,anm_r07_champion_gift_to_player01 )
+	_OBJ_ANIME_WAIT()
+	
+	//アテグ：ほら おまえさんも
+	_BALLOONWIN_OBJMSG(msg_r07_champion_04,R07_CHAMPION_01  )
+	_BALLOONWIN_CLOSE()
+	
+	//アテグ、主人公に何か渡す
+	_OBJ_ANIME( R07_CHAMPION_01,anm_r07_champion_gift_to_player02 )
+	_OBJ_ANIME_WAIT()
+
+	//【仮】わざマシン入手処理（内容仮）
+	_ITEM_EVENT_KEYWAIT ( ITEM_WAZAMASIN01 , 1  )
+	
+	//アテグ：じゃあな
+	_BALLOONWIN_OBJMSG(msg_r07_champion_05,R07_CHAMPION_01  )
+	_BALLOONWIN_CLOSE()
+	
+	//アテグ退場
+	_OBJ_ANIME( R07_CHAMPION_01,anm_r07_champion_goodbye )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル画面左を見る
+	_OBJ_ANIME( R07_RIVAL_01,anm_r07_rival_look_champion02 )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：なにが したいか…
+	_BALLOONWIN_OBJMSG(msg_r07_black_04,R07_RIVAL_01  )
+	_BALLOONWIN_CLOSE()
+	
+	//主人公とライバル向き合う
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_player_look_rival )
+	_OBJ_ANIME( R07_RIVAL_01,anm_r07_rival_look_player )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：じゃあね
+	_BALLOONWIN_OBJMSG(msg_r07_black_05,R07_RIVAL_01  )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル退場
+	_OBJ_ANIME( R07_RIVAL_01,anm_r07_rival_goodbye )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバルとアテグのOBJ削除
+	_OBJ_DEL(R07_CHAMPION_01)
+	_OBJ_DEL(R07_RIVAL_01)
+	
+	//==================================//
+
+	//ザテグとライバルを非表示
+	_FLAG_SET( FV_R07_RIVAL_01 )
+
+	//R07のPOSを無効に
+	$WK_SCENE_R07_RIVAL_01 = 1
+
+	//==================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：POSで主人公移動z243
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r07_look_player_z243
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：POSで主人公移動z244
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r07_look_player_z244
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：POSで主人公移動z245
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_r07_look_player_z245
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：ライバル主人公に隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_rival_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：アテグその場歩き
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_champion_stayl
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：主人公アテグの方を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_look_champion
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：アテグ、ライバルに隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_champion_jump_to_rival
+	_ANIME_DATA	AC_JUMP_L_1G_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：ライバルと主人公、アテグを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_rival_look_champion01
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：アテグ、ライバルに渡す
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_champion_gift_to_rival
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：アテグ、主人公の前に
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_champion_gift_to_player01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：アテグ、主人公に渡す
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_champion_gift_to_player02
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：アテグ退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_champion_goodbye
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：アテグの去ったほうを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_rival_look_champion02
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：ライバル、主人公のほうを向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_rival_look_player
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：主人公、ライバルのほうを向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_look_rival
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R07　ライバルイベント用：ライバル退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_rival_goodbye
+	_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	ACMD_END,0
