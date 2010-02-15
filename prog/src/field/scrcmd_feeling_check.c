@@ -37,7 +37,8 @@
 VMCMD_RESULT EvCmdSetFeelingCheckName( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );    
+  u16 set_pos = SCRCMD_GetVMWorkValue( core, work );
   SAVE_CONTROL_WORK* p_sv_ctrl  = GAMEDATA_GetSaveControlWork( gdata );
   IRC_COMPATIBLE_SAVEDATA * p_sv  = IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
   
@@ -59,6 +60,7 @@ VMCMD_RESULT EvCmdSetFeelingCheckName( VMHANDLE * core, void * wk )
 
   //インデックスから仲良しの人のデータを取り出す
   sex     = IRC_COMPATIBLE_SV_GetSex( p_sv, rank );
+  sex     = (sex == IRC_COMPATIBLE_SEX_MALE) ? PTL_SEX_MALE: PTL_SEX_FEMALE;
   cp_name = IRC_COMPATIBLE_SV_GetPlayerName( p_sv, rank );
 
 
@@ -66,9 +68,10 @@ VMCMD_RESULT EvCmdSetFeelingCheckName( VMHANDLE * core, void * wk )
   { 
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
     WORDSET *wordset    = SCRIPT_GetWordSet( sc );
-    u16 set_pos = SCRCMD_GetVMWorkValue( core, work );
     STRBUF * word = GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
+    GFL_STR_SetStringCode( word, cp_name );
     WORDSET_RegisterWord( wordset, set_pos, word, sex, TRUE, PM_LANG );
+    OS_TPrintf( "相性チェックpos%d rank%d sex%d\n", set_pos, rank, sex );
     GFL_STR_DeleteBuffer( word );
   }
 
