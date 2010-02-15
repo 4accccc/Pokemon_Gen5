@@ -1949,7 +1949,7 @@ u32 FLDMMDL_BLACTCONT_GetAnmTblNo_Status( u32 sta )
 //--------------------------------------------------------------
 u32 FLDMMDL_BLACTCONT_GetAnmTblNo_StatusHero( u32 sta )
 {
-  GF_ASSERT( sta < DRAW_STA_MAX_HERO );
+  GF_ASSERT( sta < DRAW_STA_HERO_MAX );
   //ã‰º¶‰E‚Ì•À‚Ñ‚ÅŠe‚S•ûŒü
   return( sta * DIR_MAX4 );
 }

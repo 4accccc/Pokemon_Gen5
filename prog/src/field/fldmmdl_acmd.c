@@ -177,6 +177,7 @@ typedef struct
 #define AC_WALK_7F_FRAME (7)
 #define AC_WALK_6F_FRAME (6)
 #define AC_WALK_3F_FRAME (3)
+#define AC_WALK_10F_FRAME (10)
 
 //--------------------------------------------------------------
 ///	AC_WALKVEC_WORK構造体。移動ベクトル使用による移動処理で使用するワーク
@@ -250,6 +251,7 @@ const fx32 * DATA_AcJumpOffsetTbl[];
 static const fx32 DATA_AcWalk7FMoveValueTbl[AC_WALK_7F_FRAME];
 static const fx32 DATA_AcWalk6FMoveValueTbl[AC_WALK_6F_FRAME];
 static const fx32 DATA_AcWalk3FMoveValueTbl[AC_WALK_3F_FRAME];
+static const fx32 DATA_AcWalk10FMoveValueTbl[AC_WALK_10F_FRAME];
 
 //======================================================================
 //	アニメーションコマンドリスト
@@ -1148,7 +1150,7 @@ static int AC_WalkR1F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_DashU4F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_UP, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F ); 
 	return( TRUE );
 }
 
@@ -1161,7 +1163,7 @@ static int AC_DashU4F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_DashD4F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_DOWN, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F ); 
 	return( TRUE );
 }
 
@@ -1174,7 +1176,7 @@ static int AC_DashD4F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_DashL4F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_LEFT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F ); 
 	return( TRUE );
 }
 
@@ -1187,7 +1189,7 @@ static int AC_DashL4F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_DashR4F_0( MMDL * mmdl )
 {
-	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcWalkWorkInit( mmdl, DIR_RIGHT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F ); 
 	return( TRUE );
 }
 
@@ -2743,6 +2745,58 @@ static int AC_WalkR6F_0( MMDL * mmdl )
 
 //--------------------------------------------------------------
 /**
+ * AC_DASH_U_6F 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_DashU6F_0( MMDL * mmdl )
+{
+	AcWalkOddWorkInit( mmdl, DIR_UP, AC_WALK_6F_FRAME, DRAW_STA_HERO_DASH_6F );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_DASH_D_6F 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_DashD6F_0( MMDL * mmdl )
+{
+	AcWalkOddWorkInit( mmdl, DIR_DOWN, AC_WALK_6F_FRAME, DRAW_STA_HERO_DASH_6F );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_DASH_L_6F 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_DashL6F_0( MMDL * mmdl )
+{
+	AcWalkOddWorkInit( mmdl, DIR_LEFT, AC_WALK_6F_FRAME, DRAW_STA_HERO_DASH_6F );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_DASH_R_6F 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_DashR6F_0( MMDL * mmdl )
+{
+	AcWalkOddWorkInit( mmdl, DIR_RIGHT, AC_WALK_6F_FRAME, DRAW_STA_HERO_DASH_6F );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
  * AC_WALK_*_6F 1
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
@@ -2887,6 +2941,74 @@ static int AC_WalkR7F_0( MMDL * mmdl )
 static int AC_Walk7F_1( MMDL * mmdl )
 {
 	if( AC_WalkOdd_Walk(mmdl,DATA_AcWalk7FMoveValueTbl) == TRUE ){
+		return( TRUE );
+	}
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_WALK_U_10F 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_WalkU10F_0( MMDL * mmdl )
+{
+	AcWalkOddWorkInit( mmdl, DIR_UP, AC_WALK_10F_FRAME, DRAW_STA_WALK_10F );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_WALK_D_10F 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_WalkD10F_0( MMDL * mmdl )
+{
+	AcWalkOddWorkInit( mmdl, DIR_DOWN, AC_WALK_10F_FRAME, DRAW_STA_WALK_10F );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_WALK_L_10F 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_WalkL10F_0( MMDL * mmdl )
+{
+	AcWalkOddWorkInit( mmdl, DIR_LEFT, AC_WALK_10F_FRAME, DRAW_STA_WALK_10F );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_WALK_R_10F 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_WalkR10F_0( MMDL * mmdl )
+{
+	AcWalkOddWorkInit( mmdl, DIR_RIGHT, AC_WALK_10F_FRAME, DRAW_STA_WALK_10F );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_WALK_*_10F 1
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_Walk10F_1( MMDL * mmdl )
+{
+	if( AC_WalkOdd_Walk(mmdl,DATA_AcWalk10FMoveValueTbl) == TRUE ){
 		return( TRUE );
 	}
 	
@@ -3563,7 +3685,7 @@ static int AC_DashGLU4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, GRID_VALUE_SPEED_4, 0 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_LEFT, DIR_UP, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_LEFT, DIR_UP, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3578,7 +3700,7 @@ static int AC_DashGLD4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, -GRID_VALUE_SPEED_4, 0 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_RIGHT, DIR_DOWN, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_RIGHT, DIR_DOWN, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3593,7 +3715,7 @@ static int AC_DashGLL4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_DOWN, DIR_LEFT, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_DOWN, DIR_LEFT, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3608,7 +3730,7 @@ static int AC_DashGLR4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_UP, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_UP, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3623,7 +3745,7 @@ static int AC_DashGRU4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, GRID_VALUE_SPEED_4, 0 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_RIGHT, DIR_UP, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_RIGHT, DIR_UP, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3638,7 +3760,7 @@ static int AC_DashGRD4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, -GRID_VALUE_SPEED_4, 0 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_LEFT, DIR_DOWN, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_LEFT, DIR_DOWN, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3653,7 +3775,7 @@ static int AC_DashGRL4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_UP, DIR_LEFT, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_UP, DIR_LEFT, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3668,7 +3790,7 @@ static int AC_DashGRR4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_DOWN, DIR_LEFT, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_DOWN, DIR_LEFT, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3683,7 +3805,7 @@ static int AC_DashGUU4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_DOWN, DIR_UP, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_DOWN, DIR_UP, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3698,7 +3820,7 @@ static int AC_DashGUD4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { 0, 0, -GRID_VALUE_SPEED_4 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_UP, DIR_DOWN, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_UP, DIR_DOWN, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3713,7 +3835,7 @@ static int AC_DashGUL4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { -GRID_VALUE_SPEED_4, 0, 0 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_RIGHT, DIR_LEFT, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_RIGHT, DIR_LEFT, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -3728,7 +3850,7 @@ static int AC_DashGUR4F_0( MMDL * mmdl )
 {
 	VecFx32 vec = { GRID_VALUE_SPEED_4, 0, 0 };
 	AcWalkVecWorkInit( mmdl, &vec,
-		DIR_LEFT, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_DASH_4F );
+		DIR_LEFT, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F );
 	return( TRUE );
 }
 
@@ -5002,6 +5124,46 @@ int (* const DATA_AC_WalkR6F_Tbl[])( MMDL * ) =
 };
 
 //--------------------------------------------------------------
+///	AC_DASH_U_6F
+//--------------------------------------------------------------
+int (* const DATA_AC_DashU6F_Tbl[])( MMDL * ) =
+{
+	AC_DashU6F_0,
+	AC_Walk6F_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_DASH_D_6F
+//--------------------------------------------------------------
+int (* const DATA_AC_DashD6F_Tbl[])( MMDL * ) =
+{
+	AC_DashD6F_0,
+	AC_Walk6F_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_DASH_L_6F
+//--------------------------------------------------------------
+int (* const DATA_AC_DashL6F_Tbl[])( MMDL * ) =
+{
+	AC_DashL6F_0,
+	AC_Walk6F_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_DASH_R_6F
+//--------------------------------------------------------------
+int (* const DATA_AC_DashR6F_Tbl[])( MMDL * ) =
+{
+	AC_DashR6F_0,
+	AC_Walk6F_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
 ///	AC_WALK_U_3F
 //--------------------------------------------------------------
 int (* const DATA_AC_WalkU3F_Tbl[])( MMDL * ) =
@@ -5118,6 +5280,46 @@ int (* const DATA_AC_WalkR7F_Tbl[])( MMDL * ) =
 {
 	AC_WalkR7F_0,
 	AC_Walk7F_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_WALK_U_10F
+//--------------------------------------------------------------
+int (* const DATA_AC_WalkU10F_Tbl[])( MMDL * ) =
+{
+	AC_WalkU10F_0,
+	AC_Walk10F_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_WALK_D_10F
+//--------------------------------------------------------------
+int (* const DATA_AC_WalkD10F_Tbl[])( MMDL * ) =
+{
+	AC_WalkD10F_0,
+	AC_Walk10F_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_WALK_L_10F
+//--------------------------------------------------------------
+int (* const DATA_AC_WalkL10F_Tbl[])( MMDL * ) =
+{
+	AC_WalkL10F_0,
+	AC_Walk10F_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_WALK_R_10F
+//--------------------------------------------------------------
+int (* const DATA_AC_WalkR10F_Tbl[])( MMDL * ) =
+{
+	AC_WalkR10F_0,
+	AC_Walk10F_1,
 	AC_End,
 };
 
@@ -5800,4 +6002,22 @@ static const fx32 DATA_AcWalk6FMoveValueTbl[AC_WALK_6F_FRAME] =
 static const fx32 DATA_AcWalk3FMoveValueTbl[AC_WALK_3F_FRAME] =
 {
 	FX32_ONE*5, FX32_ONE*6, FX32_ONE*5,
+};
+
+//--------------------------------------------------------------
+///	AC_WALK_*_10F　移動テーブル
+//--------------------------------------------------------------
+static const fx32 DATA_AcWalk10FMoveValueTbl[AC_WALK_10F_FRAME] =
+{
+  NUM_FX32(1)+0x99a,
+  NUM_FX32(1)+0x99a,
+  NUM_FX32(1)+0x999,
+  NUM_FX32(1)+0x99a,
+  NUM_FX32(1)+0x999,
+  
+  NUM_FX32(1)+0x99a,
+  NUM_FX32(1)+0x99a,
+  NUM_FX32(1)+0x999,
+  NUM_FX32(1)+0x99a,
+  NUM_FX32(1)+0x999,
 };

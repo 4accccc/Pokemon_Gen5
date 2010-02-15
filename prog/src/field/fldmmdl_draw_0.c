@@ -278,7 +278,7 @@ static void DrawCycleHero_Draw( MMDL *mmdl )
   
   dir = blact_GetDrawDir( mmdl );
   status = MMDL_GetDrawStatus( mmdl );
-  GF_ASSERT( status < DRAW_STA_MAX_HERO );
+  GF_ASSERT( status < DRAW_STA_HERO_MAX );
 
 #if 0  //–³—
   if( status == DRAW_STA_WALK_4F ){ //090731 ‘¬“x‚Í4F‚¾‚ª8F‚ÅŒ©‚¹‚½‚¢‚Æ—v–]
@@ -303,7 +303,7 @@ static void DrawCycleHero_Draw( MMDL *mmdl )
     case DRAW_STA_WALK_8F:
     case DRAW_STA_WALK_4F:
     case DRAW_STA_WALK_2F:
-    case DRAW_STA_DASH_4F:
+    case DRAW_STA_HERO_DASH_4F:
       if( GFL_BBDACT_GetAnimeFrmIdx(actSys,work->actID) < 2 ){
         frame = 2;
       }

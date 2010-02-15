@@ -565,7 +565,7 @@ static int AC_RailWalkR2F_0( MMDL* mmdl )
 //--------------------------------------------------------------
 static int AC_RailDashU4F_0( MMDL* mmdl )
 {
-	AcRailWalkInit( mmdl, DIR_UP, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcRailWalkInit( mmdl, DIR_UP, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F ); 
 	return( TRUE );
 }
 
@@ -578,7 +578,7 @@ static int AC_RailDashU4F_0( MMDL* mmdl )
 //--------------------------------------------------------------
 static int AC_RailDashD4F_0( MMDL* mmdl )
 {
-	AcRailWalkInit( mmdl, DIR_DOWN, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcRailWalkInit( mmdl, DIR_DOWN, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F ); 
 	return( TRUE );
 }
 
@@ -591,7 +591,7 @@ static int AC_RailDashD4F_0( MMDL* mmdl )
 //--------------------------------------------------------------
 static int AC_RailDashL4F_0( MMDL* mmdl )
 {
-	AcRailWalkInit( mmdl, DIR_LEFT, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcRailWalkInit( mmdl, DIR_LEFT, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F ); 
 	return( TRUE );
 }
 
@@ -604,7 +604,7 @@ static int AC_RailDashL4F_0( MMDL* mmdl )
 //--------------------------------------------------------------
 static int AC_RailDashR4F_0( MMDL* mmdl )
 {
-	AcRailWalkInit( mmdl, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
+	AcRailWalkInit( mmdl, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_HERO_DASH_4F ); 
 	return( TRUE );
 }
 

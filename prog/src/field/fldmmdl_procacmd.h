@@ -173,6 +173,16 @@ extern int (* const DATA_AC_WalkD7F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_WalkL7F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_WalkR7F_Tbl[])( MMDL * );
 
+extern int (* const DATA_AC_WalkU10F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_WalkD10F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_WalkL10F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_WalkR10F_Tbl[])( MMDL * );
+
+extern int (* const DATA_AC_DashU6F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_DashD6F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_DashL6F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_DashR6F_Tbl[])( MMDL * );
+
 //--------------------------------------------------------------
 ///	AC_PC_BOW
 //--------------------------------------------------------------

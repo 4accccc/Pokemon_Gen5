@@ -1336,6 +1336,16 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_MarkOnpu_Tbl,               //AC_MARK_ONPU
   DATA_AC_MarkTenTen_Tbl,             //AC_MARK_TENTEN
 
+  DATA_AC_DashU6F_Tbl,                  //AC_DASH_U_6F
+  DATA_AC_DashD6F_Tbl,                  //AC_DASH_D_6F
+  DATA_AC_DashL6F_Tbl,                  //AC_DASH_L_6F
+  DATA_AC_DashR6F_Tbl,                  //AC_DASH_R_6F
+  
+  DATA_AC_WalkU10F_Tbl,                  //AC_WALK_U_10F
+  DATA_AC_WalkD10F_Tbl,                  //AC_WALK_D_10F
+  DATA_AC_WalkL10F_Tbl,                  //AC_WALK_L_10F
+  DATA_AC_WalkR10F_Tbl,                  //AC_WALK_R_10F
+  
   DATA_AC_HeroCutin_Tbl, //AC_HERO_CUTIN
 };
 
@@ -1508,6 +1518,16 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailDummy,                  //
   DATA_AC_RailDummy,                  //
   DATA_AC_RailDummy,                  //
+
+  DATA_AC_RailDummy,                  //AC_DASH_U_6F
+  DATA_AC_RailDummy,                  //AC_DASH_D_6F
+  DATA_AC_RailDummy,                  //AC_DASH_L_6F
+  DATA_AC_RailDummy,                  //AC_DASH_R_6F
+  
+  DATA_AC_RailDummy,                  //AC_WALK_U_10F
+  DATA_AC_RailDummy,                  //AC_WALK_D_10F
+  DATA_AC_RailDummy,                  //AC_WALK_L_10F
+  DATA_AC_RailDummy,                  //AC_WALK_R_10F
 };
 
 //==============================================================================
