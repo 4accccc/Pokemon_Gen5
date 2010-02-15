@@ -77,6 +77,7 @@ typedef struct{
 //==============================================================================
 static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_Enter(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectReqInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
@@ -129,7 +130,7 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   },
   {//UNION_STATUS_ENTER
     NULL,
-    NULL,
+    OneselfSeq_Enter,
     NULL,
   },
   {//UNION_STATUS_LEAVE
@@ -802,16 +803,59 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
 
   //出口チェック
   if(UnionTool_CheckWayOut(fieldWork) == TRUE){
-    if(unisys->debug_wayout_walk == TRUE){
+    if(unisys->wayout_walk == TRUE){
       _PlayerMinePause(unisys, fieldWork, TRUE);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_LEAVE);
     }
   }
-  else{
-    unisys->debug_wayout_walk = TRUE;
+  else{ //一度でも出口座標から移動した
+    unisys->wayout_walk = TRUE;
   }
   
   return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ユニオンルーム入室：更新
+ *
+ * @param   unisys		
+ * @param   situ		  
+ * @param   seq		    
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_Enter(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
+{
+#if 0
+  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
+  MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
+
+  switch(*seq){
+  case 0:
+    _PlayerMinePause(unisys, fieldWork, TRUE);
+    if(MMDL_CheckPossibleAcmd(player_mmdl) == TRUE){
+      MMDL_SetAcmd(player_mmdl, AC_WARP_DOWN);
+      (*seq)++;
+    }
+    else{
+      OS_TPrintf("MMDL_CheckPossibleAcmd待ち\n");
+    }
+    break;
+  case 1:
+    if(MMDL_CheckEndAcmd(player_mmdl) == TRUE){
+      MMDL_EndAcmd(player_mmdl);
+      _PlayerMinePause(unisys, fieldWork, FALSE);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+#else
+  return TRUE;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1444,6 +1488,7 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     break;
     
   case _YESNO_SELECT:   //「はい・いいえ」選択
+    UnionMsg_Menu_RegulationDel(unisys);
     UnionMsg_YesNo_Setup(unisys, fieldWork);
     (*seq)++;
     break;
@@ -1456,7 +1501,6 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
         const POKEPARTY *party = GAMEDATA_GetMyPokemon(unisys->uniparent->game_data);
         
         UnionMsg_YesNo_Del(unisys);
-        UnionMsg_Menu_RegulationDel(unisys);
         //戦闘の時はレギュレーションを見て参加可能かチェック
         if(Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select, 
             &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit) == FALSE){
@@ -1860,6 +1904,7 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
     
   case LOCALSEQ_YESNO_SETUP:   //「はい・いいえ」選択
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      UnionMsg_Menu_RegulationDel(unisys);
       UnionMsg_YesNo_Setup(unisys, fieldWork);
       (*seq)++;
     }
@@ -1869,7 +1914,6 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       BOOL result;
       if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
         UnionMsg_YesNo_Del(unisys);
-        UnionMsg_Menu_RegulationDel(unisys);
         if(result == FALSE){  //途中参加断る
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
             UnionMsg_GetMsgID_MultiIntrudeRefuses(situ->mycomm.talk_pc->beacon.sex));
@@ -2603,8 +2647,14 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 {
   switch(*seq){
   case 0:
+    //通信プレイヤー制御システムの生成
+    GF_ASSERT(unisys->colosseum_sys == NULL);
+    unisys->colosseum_sys = Colosseum_InitSystem(unisys->uniparent->game_data, 
+      unisys->uniparent->gsys, unisys->uniparent->mystatus, situ->mycomm.intrude);
+
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
       UnionMsg_GetMsgID_MultiStart(situ->mycomm.talk_pc->beacon.sex));
+
     (*seq)++;
     break;
   case 1:
@@ -2637,11 +2687,6 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
   case 5:
     if(UnionSubProc_IsExits(unisys) == FALSE){
       OS_TPrintf("コロシアム遷移のサブPROC終了\n");
-
-      //通信プレイヤー制御システムの生成
-      GF_ASSERT(unisys->colosseum_sys == NULL);
-      unisys->colosseum_sys = Colosseum_InitSystem(unisys->uniparent->game_data, 
-        unisys->uniparent->gsys, unisys->uniparent->mystatus, situ->mycomm.intrude);
 
       _PlayerMinePause(unisys, fieldWork, TRUE);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_MEMBER_WAIT);

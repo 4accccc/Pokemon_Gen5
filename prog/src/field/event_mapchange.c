@@ -931,7 +931,7 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion( GMEVENT* event, int* seq, void* wk
     break;
   case 3:
     // 入口退出イベント
-    GMEVENT_CallEvent( event, EVENT_APPEAR_Fall( event, gameSystem, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_APPEAR_UnionIn( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
   case 4:
@@ -1175,7 +1175,8 @@ GMEVENT* EVENT_ChangeMapToUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldm
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
-  LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), ZONE_ID_UNION );
+  LOCATION_SetDirect( &(work->loc_req), ZONE_ID_UNION, 
+    DIR_UP, NUM_FX32(184), NUM_FX32(0), NUM_FX32(248) ); 
   work->exit_type = EXIT_TYPE_NONE;
  
   //ユニオン入室ビーコンリクエスト

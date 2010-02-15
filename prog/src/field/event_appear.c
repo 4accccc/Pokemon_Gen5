@@ -56,6 +56,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Warp( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_UnionIn( GMEVENT* event, int* seq, void* wk );
 
 
 //========================================================================================== 
@@ -194,6 +195,34 @@ GMEVENT* EVENT_APPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* 
 
   // イベントを作成
   event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Warp, sizeof( EVENT_WORK ) );
+
+  // イベントワークを初期化
+  work           = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->fieldmap = fieldmap;
+  work->gsys     = gsys;
+
+  // 作成したイベントを返す
+  return event;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 登場イベントを作成する( ユニオン入室 )
+ *
+ * @param parent   親イベント
+ * @param gsys     ゲームシステム
+ * @param fieldmap フィールドマップ
+ *
+ * @return 作成したイベント
+ */
+//------------------------------------------------------------------------------------------
+GMEVENT* EVENT_APPEAR_UnionIn( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+{
+  GMEVENT*   event;
+  EVENT_WORK* work;
+
+  // イベントを作成
+  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_UnionIn, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
   work           = (EVENT_WORK*)GMEVENT_GetEventWork( event );
@@ -540,3 +569,49 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Warp( GMEVENT* event, int* seq, void* wk
   } 
   return GMEVENT_RES_CONTINUE;
 } 
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 登場イベント処理関数( ユニオン入室 )
+ */
+//------------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_UnionIn( GMEVENT* event, int* seq, void* wk )
+{
+  EVENT_WORK*     work = (EVENT_WORK*)wk;
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
+  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(work->fieldmap);
+  MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
+
+  switch( *seq )
+  {
+  case 0:
+    // カメラモードの設定
+    work->cameraMode = FIELD_CAMERA_GetMode( camera );
+    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+    { 
+      MMDL_SetAcmd(player_mmdl, AC_WARP_DOWN);
+    }
+    { // フェードイン
+      GMEVENT* fadeInEvent;
+      fadeInEvent = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
+      GMEVENT_CallEvent( event, fadeInEvent );
+    }
+    ++( *seq );
+    break;
+  case 1:
+    if(MMDL_CheckEndAcmd(player_mmdl) == TRUE){
+      MMDL_EndAcmd(player_mmdl);
+      ++( *seq );
+    }
+    break;
+  case 2:
+    // カメラモードの復帰
+    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
+    ++( *seq );
+    break;
+  case 3: 
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
+} 
+

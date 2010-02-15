@@ -799,6 +799,7 @@ void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
   GFL_STD_MemClear(situ, sizeof(UNION_MY_SITUATION));
   PMSDAT_SetupDefaultUnionMessage(&situ->chat_pmsdata);
   situ->chat_pms_rand = GFUser_GetPublicRand(0xffff);
+  situ->union_status = UNION_STATUS_ENTER;
   UnionMyComm_Init(unisys, &situ->mycomm);
 }
 

@@ -25,3 +25,7 @@ extern GMEVENT* EVENT_APPEAR_Teleport( GMEVENT* parent,
 // ワープ
 extern GMEVENT* EVENT_APPEAR_Warp( GMEVENT* parent, 
                                    GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );  
+
+// ユニオン入室
+extern GMEVENT* EVENT_APPEAR_UnionIn( GMEVENT* parent, 
+                                   GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );
