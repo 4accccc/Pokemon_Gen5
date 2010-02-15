@@ -10,7 +10,8 @@
 #define EASYTALK_MODE_READY (0)
 #define EASYTALK_MODE_WIN (1)
 #define EASYTALK_MODE_LOSE (2)
-#define EASYTALK_MODE_QUES (3)
+#define EASYTALK_MODE_TOP (3)
+#define EASYTALK_MODE_QUES (4)
 
 
 

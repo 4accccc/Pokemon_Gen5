@@ -88,16 +88,20 @@ VMCMD_RESULT EvCmdCallEasyTalkApp( VMHANDLE *core, void *wk )
     
     switch(mode){
     case EASYTALK_MODE_READY:
-      guidance = PMSI_GUIDANCE_BATTLE_READY;  ///< 対戦前
+      guidance = PMSI_GUIDANCE_BATTLE_READY;  ///< 対戦前         <<@todo
       evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_READY;  //バトル勝負前挨拶
       break;
     case EASYTALK_MODE_WIN:
-      guidance = PMSI_GUIDANCE_BATTLE_WON;    ///< 勝った時のコメント
+      guidance = PMSI_GUIDANCE_BATTLE_WON;    ///< 勝った時のコメント <<@todo
       evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_WON;    //バトル勝ち時セリフ
       break;
     case EASYTALK_MODE_LOSE:
-      guidance = PMSI_GUIDANCE_BATTLE_LOST; 	///< 負けたときコメント
+      guidance = PMSI_GUIDANCE_BATTLE_LOST; 	///< 負けたときコメント <<@todo
       evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_LOST;   //バトル負け時セリフ
+      break;
+    case EASYTALK_MODE_TOP:
+      guidance = PMSI_GUIDANCE_DEFAULT;   //<<@todo
+      evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_TOP;    ///<　一番になったとき
       break;
     default:
       GF_ASSERT(0);
