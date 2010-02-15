@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-13T20:16:34"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-15T15:29:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,8 +319,8 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="696"/>
 		<band id="3" index="3" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -517,8 +517,9 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_first_20" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>話した後に足早に階段をかけあがる</comment>
-		<language name="JPN" width="256">パークはかせーーーーーーーーーーーーーーーー</language>
-		<language name="JPN_KANJI" width="256">パーク博士ーーーーーーーーーーーーーーーー</language>
+		<language name="JPN" width="256">パークはかせーーーーーーーーーーーーーー▼
+</language>
+		<language name="JPN_KANJI" width="256">パーク博士ーーーーーーーーーーーーーーー▼</language>
 	</row>
 
 	<row id="msg_palpark_first_18">
@@ -538,15 +539,15 @@ msg_palpark_first_19に続く</comment>
 		<comment>msg_palpark_first_03の後、
 向きを変えてから
 続くメッセージ</comment>
-		<language name="JPN" width="256">はかせ！
-ちょっと　いいかしら？▼
+		<language name="JPN" width="256">はかせ！▼
+ちょっと　いいかしら？
 いいわよね！　きいて！▼
 このこ　なんと　でんどういり　してる
 トレーナー　なのよ！▼
 このこなら　きっと
 アレを　うごかせるわ！</language>
-		<language name="JPN_KANJI" width="256">博士！
-ちょっと　いいかしら？▼
+		<language name="JPN_KANJI" width="256">博士！▼
+ちょっと　いいかしら？
 いいわよね！　きいて！▼
 この子　なんと　殿堂入り　してる
 トレーナー　なのよ！▼
@@ -606,19 +607,19 @@ msg_palpark_first_19に続く</comment>
 やあ　ぼくは
 アンドリュー・パークはかせ！▼
 きみ！
-えーと……</language>
+えーと……▼</language>
 		<language name="JPN_KANJI" width="256">なんて　すばらしい　ひだ！
 グレイト！　信じられない！▼
 やあ　ぼくは
 アンドリュー・パーク博士！▼
 きみ！
-えーと……</language>
+えーと……▼</language>
 	</row>
 
 	<row id="msg_palpark_first_06">
 		<comment>助手</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]　さん　よ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　さん　よ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]　さん　よ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　さん　よ！▼</language>
 	</row>
 
 	<row id="msg_palpark_first_07">
@@ -627,22 +628,27 @@ msg_palpark_first_19に続く</comment>
 れきしを　うごかす　だいじっけんに
 さんか　しないかね！？▼
 ここの　そうちは　ポケシフターと　いって▼
-エネルギー　パーティクルを▽
+エネルギー　パーティクルを
 イヴォークしつつ▼
 
 ＤＳという……▼
+
 モレキュールの……▼
 
 ２つ　ジャンクションし……▼
+
 とおくにいる　ポケモンと……▼
 
 フリークエンシーが……▼
+
 マッチングすると……▼
 
 レディオアクティブな……▼
+
 アルファが……▼
 
 ポケモンと……▼
+
 ファンタスティックに……▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]くん！▼
 歴史を　動かす　大実験に

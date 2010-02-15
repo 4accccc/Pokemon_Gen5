@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-12T16:08:24"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-15T16:00:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -137,6 +137,9 @@
 				<comment language="japanese">リボンの名前</comment>
 				<comment language="english">リボンの名前</comment>
 			</tag>
+			<tag entry="40" japanese="しゅみ名" english="しゅみ名" view="EP" length="4" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）">
@@ -265,14 +268,14 @@
 
 	<dialog left="203" top="257" right="908" bottom="885" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="53" right="1280" bottom="451" visible="yes"/>
+		<tag-palette left="649" top="113" right="1122" bottom="511" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -339,12 +342,12 @@
 
 	<row id="msg_backpackerm_01">
 		<attribute name="キャラ指定">バックパッカー</attribute>
-		<language name="JPN" width="256">へぇ　きみは　（しゅみ）
+		<language name="JPN" width="256">へぇ　きみは　[1:28:しゅみ名:10]
 するのが　すきなんだね▼
 もし　しゅみが　かわったら
 ヒウンシティにいる　きょうだいにも▽
 おしえてあげてよ（仮）</language>
-		<language name="JPN_KANJI" width="256">へぇ　君は　（しゅみ)
+		<language name="JPN_KANJI" width="256">へぇ　君は　[1:28:しゅみ名:10]
 するのが　好きなんだね▼
 もし　趣味が　変わったら
 ヒウンシティにいる　兄弟にも▽
