@@ -801,10 +801,8 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
       {
         // すれ違い用データをセット
         { 
-          STRBUF* strbuf = GFL_STR_CreateBuffer( STRBUF_LENGTH, work->heap_id );
-          PP_Get( work->pp, ID_PARA_nickname, strbuf );  // ここは新しいニックネームでいいのだろうか？
-          GAMEBEACON_Set_PokemonEvolution( PP_Get( work->pp, ID_PARA_monsno, NULL ), strbuf );
-          GFL_STR_DeleteBuffer( strbuf );
+          GAMEBEACON_Set_PokemonEvolution( PP_Get( work->pp, ID_PARA_monsno, NULL ), work->poke_nick_name_strbuf );
+          // (古い)ニックネームは(新しい)種族名に進化した
         }
 
         // 次へ
