@@ -30,7 +30,7 @@
 #include "print/printsys.h"
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
-#include "zukan_data_old.naix"
+#include "zukan_data.naix"
 #include "../../../resource/zukan_data/zkn_sort_aiueo_idx.h"
 
 
@@ -1992,6 +1992,7 @@ u16* WorldTrade_ZukanSortDataGet( int heap, int idx, int* p_arry_num )
 	//STRBUF* MSGDAT_UTIL_GetMonsName( u32 monsno, u32 heapID )
 }
 
+#if 0
 static const u32 ZukanSortHiraTable[]={
 	NARC_zukan_data_zkn_sort_only_a_dat,	// あ
 	NARC_zukan_data_zkn_sort_only_i_dat,
@@ -2038,6 +2039,7 @@ static const u32 ZukanSortHiraTable[]={
 	NARC_zukan_data_zkn_sort_only_ro_dat,
 	NARC_zukan_data_zkn_sort_only_wa_dat,	// わ
 };
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -2056,7 +2058,7 @@ u16* WorldTrade_ZukanSortDataGet2( int heap, int idx, int* p_arry_num )
 	u16* p_buf;
 	
 	// 読み込み
-	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, ZukanSortHiraTable[idx], FALSE, heap, &size );
+	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, /*ZukanSortHiraTable[idx]*/0, FALSE, heap, &size );
 
 	*p_arry_num = size / ZKN_SORTDATA_ONESIZE;
 
@@ -2088,7 +2090,7 @@ u8 *WorldTrade_SinouZukanDataGet( int heap  )
 	MI_CpuClearFast( sinouData, MONSNO_END+1 );
 
 	// シンオウ図鑑テーブル
-	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_sort_shinoh_dat, FALSE, heap, &size );
+	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, 0/*NARC_zukan_data_zkn_sort_shinoh_dat*/, FALSE, heap, &size );
 	
 	num = size / ZKN_SORTDATA_ONESIZE;
 

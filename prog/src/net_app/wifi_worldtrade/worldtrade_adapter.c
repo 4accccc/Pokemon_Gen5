@@ -294,10 +294,35 @@ void WT_PRINT_Main( WT_PRINT *wk )
     {
       if( wk->stream[i] != NULL )
       {
-        if( PRINTSYS_PrintStreamGetState(wk->stream[i]) == PRINTSTREAM_STATE_DONE )
-        {
+        PRINTSTREAM_STATE state;
+        state  = PRINTSYS_PrintStreamGetState( wk->stream[i] );
+
+        switch( state )
+        { 
+        case PRINTSTREAM_STATE_RUNNING:  ///< 処理実行中（文字列が流れている）
+
+          // メッセージスキップ
+          if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ||
+              GFL_UI_TP_GetTrg() )
+          {
+            PRINTSYS_PrintStreamShortWait( wk->stream[i], 0 );
+          }
+          break;
+
+        case PRINTSTREAM_STATE_PAUSE:    ///< 一時停止中（ページ切り替え待ち等）
+
+          //改行
+          if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ||
+              GFL_UI_TP_GetTrg() )
+          { 
+            PRINTSYS_PrintStreamReleasePause( wk->stream[i] );
+          }
+          break;
+
+        case PRINTSTREAM_STATE_DONE:     ///< 文字列終端まで表示完了
           PRINTSYS_PrintStreamDelete( wk->stream[i] );
           wk->stream[i] = NULL;
+          break;
         }
       }
     }
