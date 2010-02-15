@@ -592,6 +592,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fld_trade.c \
         field/scrcmd_league_front.c \
         field/scrcmd_palpark.c \
+        field/scrcmd_beacon.c \
         field/party_select_list.c \
         field/field_fk_sound_anime.c \
         field/field_bbd_color.c \

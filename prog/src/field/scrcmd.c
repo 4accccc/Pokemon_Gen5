@@ -84,6 +84,7 @@
 #include "scrcmd_easytalk.h"
 #include "scrcmd_weather.h"
 #include "scrcmd_postman.h"
+#include "scrcmd_beacon.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

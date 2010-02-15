@@ -192,6 +192,7 @@ ev_item_event_field_core:
   ELSE
     //アイテム追加
     _ADD_ITEM( SCWK_PARAM0,SCWK_PARAM1,SCWK_ANSWER )
+    _BEACON_SET_REQ_ITEM_GET( SCWK_PARAM0 ) 
 
     //入手成功システムメッセージ
     _PLAYER_NAME( 0 )

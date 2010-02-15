@@ -6220,6 +6220,21 @@
   .short EV_SEQ_IAIGIRI_EFFECT
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _BEACON_SET_REQ
+ * @brief ビーコンセットリクエスト関連
+ */
+//--------------------------------------------------------------
+#define _BEACON_SET_REQ_ITEM_GET( itemno ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_ITEM_GET, itemno
+  
+  .macro _ASM_BEACON_SET_REQ beacon_id, value
+  .short EV_SEQ_BEACON_SET_REQUEST
+  .short \beacon_id
+  .short \value 
+  .endm
+
 //======================================================================
 //
 //  簡易コマンド

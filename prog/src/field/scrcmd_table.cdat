@@ -870,6 +870,23 @@
   NO_CMD()
   NO_CMD()
 
+  //ビーコン&Gパワー関連
+  DEF_CMD( EvCmdBeaconSetRequest, EV_SEQ_BEACON_SET_REQUEST )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+
   END_CMD
 
   //スクリプトコマンドテーブル終了
