@@ -14,6 +14,7 @@ include user.def
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 PERSONAL	= personal.narc
+PERSONAL_NAIX	= personal.naix
 WOTBL			= wotbl.narc
 EVOTBL		= evo.narc
 PMSTBL		= pms.narc
@@ -48,9 +49,9 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL)
+LDIRT_CLEAN = $(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(PERSONAL_NAIX) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += $(PERSONAL) $(WOTBL) $(EVOTBL) $(PMSTBL) *.bin
+LDIRT_CLEAN += $(PERSONAL) $(PERSONAL_NAIX) $(WOTBL) $(EVOTBL) $(PMSTBL) *.bin
 endif
 
 .PHONY:	do-build
@@ -63,7 +64,7 @@ do-build: narc
 
 narc:
 personal.narc: $(PERFILES)
-	nnsarc -c -l -n personal.narc per_*.bin
+	nnsarc -c -l -n -i personal.narc per_*.bin zenkoku_to_chihou.bin
 wotbl.narc: $(WOTFILES)
 	nnsarc -c -l -n wotbl.narc wot_*.bin
 evo.narc: $(EVOFILES)
@@ -76,10 +77,13 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL) $(TARGETDIR)$(GROWTBL)
+do-build:	$(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(PERSONAL_NAIX) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL) $(TARGETDIR)$(GROWTBL)
 
 $(TARGETDIR)$(PERSONAL):	$(PERSONAL)
 	$(COPY)	$(PERSONAL) $(TARGETDIR)
+
+$(TARGETDIR)$(PERSONAL_NAIX):	$(PERSONAL_NAIX)
+	$(COPY)	$(PERSONAL_NAIX) $(TARGETDIR)
 
 $(TARGETDIR)$(WOTBL):	$(WOTBL)
 	$(COPY)	$(WOTBL) $(TARGETDIR)

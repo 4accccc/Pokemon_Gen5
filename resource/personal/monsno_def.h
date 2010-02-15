@@ -796,3 +796,5 @@
 #define		FORMNO_INSEKUTA_BLAZE				( 3 )
 #define		FORMNO_INSEKUTA_FREEZE				( 4 )
 
+//フォルム違いトータル
+#define OTHER_FORM_MAX  ( 60 )
