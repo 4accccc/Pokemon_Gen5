@@ -1992,80 +1992,68 @@ u16* WorldTrade_ZukanSortDataGet( int heap, int idx, int* p_arry_num )
 	//STRBUF* MSGDAT_UTIL_GetMonsName( u32 monsno, u32 heapID )
 }
 
-#if 0
-static const u32 ZukanSortHiraTable[]={
-	NARC_zukan_data_zkn_sort_only_a_dat,	// あ
-	NARC_zukan_data_zkn_sort_only_i_dat,
-	NARC_zukan_data_zkn_sort_only_u_dat,
-	NARC_zukan_data_zkn_sort_only_e_dat,
-	NARC_zukan_data_zkn_sort_only_o_dat,
-	NARC_zukan_data_zkn_sort_only_ka_dat,	// か
-	NARC_zukan_data_zkn_sort_only_ki_dat,
-	NARC_zukan_data_zkn_sort_only_ku_dat,
-	NARC_zukan_data_zkn_sort_only_ke_dat,
-	NARC_zukan_data_zkn_sort_only_ko_dat,
-	NARC_zukan_data_zkn_sort_only_sa_dat,	// さ
-	NARC_zukan_data_zkn_sort_only_si_dat,
-	NARC_zukan_data_zkn_sort_only_su_dat,
-	NARC_zukan_data_zkn_sort_only_se_dat,
-	NARC_zukan_data_zkn_sort_only_so_dat,
-	NARC_zukan_data_zkn_sort_only_ta_dat,	// た
-	NARC_zukan_data_zkn_sort_only_ti_dat,
-	NARC_zukan_data_zkn_sort_only_tu_dat,
-	NARC_zukan_data_zkn_sort_only_te_dat,
-	NARC_zukan_data_zkn_sort_only_to_dat,
-	NARC_zukan_data_zkn_sort_only_na_dat,	// な
-	NARC_zukan_data_zkn_sort_only_ni_dat,
-	NARC_zukan_data_zkn_sort_only_nu_dat,
-	NARC_zukan_data_zkn_sort_only_ne_dat,
-	NARC_zukan_data_zkn_sort_only_no_dat,
-	NARC_zukan_data_zkn_sort_only_ha_dat,	// は
-	NARC_zukan_data_zkn_sort_only_hi_dat,
-	NARC_zukan_data_zkn_sort_only_hu_dat,
-	NARC_zukan_data_zkn_sort_only_he_dat,
-	NARC_zukan_data_zkn_sort_only_ho_dat,
-	NARC_zukan_data_zkn_sort_only_ma_dat,	// ま
-	NARC_zukan_data_zkn_sort_only_mi_dat,
-	NARC_zukan_data_zkn_sort_only_mu_dat,
-	NARC_zukan_data_zkn_sort_only_me_dat,
-	NARC_zukan_data_zkn_sort_only_mo_dat,
-	NARC_zukan_data_zkn_sort_only_ya_dat,	// や
-	NARC_zukan_data_zkn_sort_only_yu_dat,
-	NARC_zukan_data_zkn_sort_only_yo_dat,
-	NARC_zukan_data_zkn_sort_only_ra_dat,	// ら
-	NARC_zukan_data_zkn_sort_only_ri_dat,
-	NARC_zukan_data_zkn_sort_only_ru_dat,
-	NARC_zukan_data_zkn_sort_only_re_dat,
-	NARC_zukan_data_zkn_sort_only_ro_dat,
-	NARC_zukan_data_zkn_sort_only_wa_dat,	// わ
-};
-#endif
-
-//------------------------------------------------------------------
+//----------------------------------------------------------------------------
 /**
- * @brief   ずかんソートデータ取得（あういえお順）。解放はじぶんで。
- *			
- * @param   heap		ヒープID
- * @param   idx			インデックス
- * @param   p_arry_num	通常図鑑と全国図鑑の総数
+ *	@brief  上記図鑑データで、頭文字を指定したときの開始から終了インデックスを取得する
  *
- * @retval  u16*		読み込んだソートデータ
+ *	@param	int select  頭文字インデックス
+ *	@param	*start      開始受け取り
+ *	@param	*end        終了受け取り
  */
-//------------------------------------------------------------------
-u16* WorldTrade_ZukanSortDataGet2( int heap, int idx, int* p_arry_num )
-{
-	u32 size;
-	u16* p_buf;
-	
-	// 読み込み
-	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, /*ZukanSortHiraTable[idx]*/0, FALSE, heap, &size );
+//-----------------------------------------------------------------------------
+void WorldTrade_ZukanSortDataGetOnlyIndex( int select, int *start, int *end )
+{ 
+	static const u32 ZukanSortHiraTable[]={
+		ZKN_SORT_AIUEO_IDX_START_A,  	// あ
+		ZKN_SORT_AIUEO_IDX_START_I,
+    ZKN_SORT_AIUEO_IDX_START_U,
+		ZKN_SORT_AIUEO_IDX_START_E,
+		ZKN_SORT_AIUEO_IDX_START_O,
+		ZKN_SORT_AIUEO_IDX_START_KA ,	// か
+		ZKN_SORT_AIUEO_IDX_START_KI ,
+		ZKN_SORT_AIUEO_IDX_START_KU ,
+		ZKN_SORT_AIUEO_IDX_START_KE ,
+		ZKN_SORT_AIUEO_IDX_START_KO ,
+		ZKN_SORT_AIUEO_IDX_START_SA ,	// さ
+		ZKN_SORT_AIUEO_IDX_START_SI ,
+		ZKN_SORT_AIUEO_IDX_START_SU ,
+		ZKN_SORT_AIUEO_IDX_START_SE ,
+		ZKN_SORT_AIUEO_IDX_START_SO ,
+		ZKN_SORT_AIUEO_IDX_START_TA ,	// た
+		ZKN_SORT_AIUEO_IDX_START_TI ,
+		ZKN_SORT_AIUEO_IDX_START_TU ,
+		ZKN_SORT_AIUEO_IDX_START_TE ,
+		ZKN_SORT_AIUEO_IDX_START_TO ,
+		ZKN_SORT_AIUEO_IDX_START_NA ,	// な
+		ZKN_SORT_AIUEO_IDX_START_NI ,
+		ZKN_SORT_AIUEO_IDX_START_NU ,
+		ZKN_SORT_AIUEO_IDX_START_NE ,
+		ZKN_SORT_AIUEO_IDX_START_NO ,
+		ZKN_SORT_AIUEO_IDX_START_HA ,	// は
+		ZKN_SORT_AIUEO_IDX_START_HI ,
+		ZKN_SORT_AIUEO_IDX_START_HU ,
+		ZKN_SORT_AIUEO_IDX_START_HE ,
+		ZKN_SORT_AIUEO_IDX_START_HO ,
+		ZKN_SORT_AIUEO_IDX_START_MA ,	// ま
+		ZKN_SORT_AIUEO_IDX_START_MI ,
+		ZKN_SORT_AIUEO_IDX_START_MU ,
+		ZKN_SORT_AIUEO_IDX_START_ME ,
+		ZKN_SORT_AIUEO_IDX_START_MO ,
+		ZKN_SORT_AIUEO_IDX_START_YA ,	// や
+		ZKN_SORT_AIUEO_IDX_START_YU ,
+		ZKN_SORT_AIUEO_IDX_START_YO ,
+		ZKN_SORT_AIUEO_IDX_START_RA ,	// ら
+		ZKN_SORT_AIUEO_IDX_START_RI ,
+		ZKN_SORT_AIUEO_IDX_START_RU ,
+		ZKN_SORT_AIUEO_IDX_START_RE ,
+		ZKN_SORT_AIUEO_IDX_START_RO ,
+		ZKN_SORT_AIUEO_IDX_START_WA ,	// わ
+    ZKN_SORT_AIUEO_IDX_ALL_END,   //終端
+  };
+  GF_ASSERT( select < NELEMS(ZukanSortHiraTable) );
 
-	*p_arry_num = size / ZKN_SORTDATA_ONESIZE;
-
-	return p_buf;
-
-	// ポケモンの名前を取得する
-	//STRBUF* MSGDAT_UTIL_GetMonsName( u32 monsno, u32 heapID )
+  *start  = ZukanSortHiraTable[ select ];
+  *end    = ZukanSortHiraTable[ select + 1 ];
 }
 
 //==============================================================================
@@ -2090,7 +2078,7 @@ u8 *WorldTrade_SinouZukanDataGet( int heap  )
 	MI_CpuClearFast( sinouData, MONSNO_END+1 );
 
 	// シンオウ図鑑テーブル
-	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, 0/*NARC_zukan_data_zkn_sort_shinoh_dat*/, FALSE, heap, &size );
+	p_buf = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_sort_chihou_dat, FALSE, heap, &size );
 	
 	num = size / ZKN_SORTDATA_ONESIZE;
 

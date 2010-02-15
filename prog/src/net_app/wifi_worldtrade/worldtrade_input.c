@@ -82,7 +82,7 @@ static void system_print( BGWINFRM_WORK *wfwk, GFL_MSGDATA *mm, GFL_BMPWIN *win,
 static void touch_print( BGWINFRM_WORK *wfwk, GFL_MSGDATA *mm, GFL_BMPWIN *win, int mesno, WT_PRINT *print );
 static  int PokeName_MakeSortList( BMPLIST_DATA **list, GFL_MSGDATA *monsnameman, 
 									GFL_MSGDATA *msgman,u8 *sinou, int select, ZUKAN_WORK *zukan );
-static  int PokeName_GetSortNum( u8 *sinou, ZUKAN_WORK *zukan, int pokenum, u16 *sortlist );
+static int PokeName_GetSortNum( u8 *sinou, ZUKAN_WORK *zukan, int pokenum, u16 *sortlist, int start, int end );
 static void PokeName_ListPrint( WORLDTRADE_INPUT_WORK *wk, int page, int max );
 static  int _list_page_num( int num, int in_page );
 static  int Nation_GetSortListNum( int start, int *number );
@@ -2698,10 +2698,10 @@ static int	wi_seq_head2_return( WORLDTRADE_INPUT_WORK *wk )
  * @retval  int		
  */
 //------------------------------------------------------------------
-static int PokeName_GetSortNum( u8 *sinou, ZUKAN_WORK *zukan, int pokenum, u16 *sortlist )
+static int PokeName_GetSortNum( u8 *sinou, ZUKAN_WORK *zukan, int pokenum, u16 *sortlist, int start, int end )
 {
 	int i, count;
-	for(i=0,count=0;i<pokenum;i++){
+	for(i=start,count=0;i<end;i++){
 		if(ZukanWork_GetPokeSeeFlag( zukan, sortlist[i] )){
 			OS_Printf(" SeeCheck i = %d, table[index+i] = %d\n", i, sortlist[i]);
 			count++;
@@ -2728,21 +2728,22 @@ static int PokeName_MakeSortList( BMPLIST_DATA **list, GFL_MSGDATA *monsnameman,
 {
 	int i,index,see_count=0;
 	int pokenum;
-	u16 *sortlist = WorldTrade_ZukanSortDataGet2( HEAPID_WORLDTRADE, select, &pokenum );
+  int start, end;
+	u16 *sortlist = WorldTrade_ZukanSortDataGet( HEAPID_WORLDTRADE, 0, &pokenum );
+  WorldTrade_ZukanSortDataGetOnlyIndex( select, &start, &end );
 
-
+  pokenum = end - start;
 	OS_TPrintf("select = %d, num = %d\n",select, pokenum);
 	
 	// 図鑑と比べて何体見ているかを確認
-	//	index = NameHeadTable[select];
-	see_count = PokeName_GetSortNum( sinou, zukan, pokenum, sortlist );
+	see_count = PokeName_GetSortNum( sinou, zukan, pokenum, sortlist, start ,end );
 
 	// 項目リストの作成
 	*list = BmpMenuWork_ListCreate( see_count+1, HEAPID_WORLDTRADE );
 
 
 	// ポケモン名の登録
-	for(i=0;i<pokenum;i++){
+	for(i=start;i<end;i++){
 		if(ZukanWork_GetPokeSeeFlag( zukan, sortlist[i] )){
 			OS_Printf(" ListAdd i = %d, table[index+i] = %d\n", i, sortlist[i]);
 			BmpMenuWork_ListAddArchiveString( *list, monsnameman, sortlist[i], sortlist[i], HEAPID_WORLDTRADE );
@@ -3635,10 +3636,14 @@ static void PagePrint( BGWINFRM_WORK *wfwk, NUMFONT *numfont, GFL_BMPWIN *win, i
 static int PokeSeeCount_Siin(WORLDTRADE_INPUT_WORK *wk, int siin)
 {
 	int pokenum, see_count;
-    u16 *sortlist;
+  u16 *sortlist;
+  int start, end;
     
-	sortlist = WorldTrade_ZukanSortDataGet2( HEAPID_WORLDTRADE, siin, &pokenum );
-	see_count = PokeName_GetSortNum( wk->SinouTable, wk->zukan, pokenum, sortlist );
+	sortlist = WorldTrade_ZukanSortDataGet( HEAPID_WORLDTRADE, 0, &pokenum );
+  WorldTrade_ZukanSortDataGetOnlyIndex( siin, &start, &end );
+  pokenum = end - start;
+
+	see_count = PokeName_GetSortNum( wk->SinouTable, wk->zukan, pokenum, sortlist, start, end );
     GFL_HEAP_FreeMemory(sortlist);
     
     OS_TPrintf("子音 %d 見たフラグ数=%d\n", siin, see_count);

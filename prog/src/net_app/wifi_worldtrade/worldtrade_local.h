@@ -715,7 +715,7 @@ extern BMPMENULIST_WORK *WorldTrade_LevelListMake(BMP_MENULIST_DATA **menulist, 
 extern const int WorldTrade_WantLevelTable[];
 extern const int WorldTrade_SexStringTable[];
 extern u16* WorldTrade_ZukanSortDataGet( int heap, int idx, int* p_arry_num );
-extern u16* WorldTrade_ZukanSortDataGet2( int heap, int idx, int* p_arry_num );
+extern void WorldTrade_ZukanSortDataGetOnlyIndex( int select, int *start, int *end );
 
 extern BMPMENULIST_WORK *WorldTrade_CountryListMake(BMP_MENULIST_DATA **menulist, GFL_BMPWIN *win, GFL_MSGDATA *CountryMsgManager, GFL_MSGDATA *NormalMsgManager);
 

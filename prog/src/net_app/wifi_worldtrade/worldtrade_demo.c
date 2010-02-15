@@ -325,6 +325,11 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 //==============================================================================
 int WorldTrade_Demo_End(WORLDTRADE_WORK *wk, int seq)
 {
+  if( wk->pNPCStatus )
+  { 
+    GFL_HEAP_FreeMemory( wk->pNPCStatus );
+    wk->pNPCStatus  = NULL;
+  }
 
 	GFL_HEAP_FreeMemory(wk->demoPokePara);
   if( wk->sub_proc_wk )

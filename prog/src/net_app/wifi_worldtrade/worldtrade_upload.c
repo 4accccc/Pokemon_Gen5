@@ -807,6 +807,7 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
       // uGTS‚Ì‚©‚­‚É‚ñ‚É‚µ‚Á‚Ï‚¢‚µ‚Ü‚µ‚½v
       wk->ConnectErrorNo = DPW_TR_ERROR_DISCONNECTED;
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+      GF_ASSERT(0);
     }
   }
 

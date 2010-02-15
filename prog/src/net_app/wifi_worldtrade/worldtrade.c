@@ -139,7 +139,7 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 #endif
 
     // ÉqÅ[ÉvçÏê¨
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0x70000 );
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0x40000 );  //old 0x70000
 
     wk = GFL_PROC_AllocWork( proc, sizeof(WORLDTRADE_WORK), HEAPID_WORLDTRADE );
     GFL_STD_MemClear( wk, sizeof(WORLDTRADE_WORK) );
