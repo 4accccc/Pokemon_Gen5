@@ -228,8 +228,8 @@ GFL_PROC_RESULT Guru2ReceiptProc_Init( GFL_PROC * proc, int *seq, void *pwk, voi
   
     // ワイプフェード開始
     WIPE_SYS_Start(
-      WIPE_PATTERN_WMS, WIPE_TYPE_HOLEIN,
-      WIPE_TYPE_HOLEIN, WIPE_FADE_BLACK, 16, 1, HEAPID_GURU2 );
+      WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN,
+      WIPE_TYPE_FADEIN, WIPE_FADE_BLACK, 16, 1, HEAPID_GURU2 );
   
     //BGグラフィックセット
     BgGraphicSet( wk, p_handle );
@@ -389,6 +389,9 @@ GFL_PROC_RESULT Guru2ReceiptProc_End( GFL_PROC * proc, int *seq, void *pwk, void
 {
   int i;
   GURU2RC_WORK *wk = (GURU2RC_WORK *)mywk;
+  
+  // 現在の接続状態をbit情報で保存(これ以降は変動しないはずなので）
+  wk->g2c->comm_game_join_bit = Union_App_GetMemberNetBit(_get_unionwork(wk));
   
   // メッセージ表示用システム解放
   PRINTSYS_QUE_Delete( wk->printQue );
@@ -1750,7 +1753,8 @@ static int  Record_EndChildWait( GURU2RC_WORK *wk, int seq )
 {     
   if( ++wk->wait > RECORD_CORNER_MESSAGE_END_WAIT ){
     // ワイプフェード開始
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEOUT, WIPE_TYPE_HOLEOUT, WIPE_FADE_BLACK, 16, 1, HEAPID_GURU2 );
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
+                    WIPE_FADE_BLACK, 16, 1, HEAPID_GURU2 );
     seq = SEQ_OUT;            //終了シーケンスへ
   }
 
@@ -1779,6 +1783,7 @@ static int Record_EndSelectParent( GURU2RC_WORK *wk, int seq )
                                                MENUFRAME_PAL_INDEX, 0, HEAPID_GURU2 );
 
   wk->seq = RECORD_MODE_END_SELECT_PARENT_WAIT;
+  
 
   EndSequenceCommonFunc( wk );    //終了選択時の共通処理
   return seq;
@@ -1929,7 +1934,8 @@ static int Record_ForceEndSynchronize( GURU2RC_WORK *wk, int seq )
     GFL_NET_SetAutoErrorCheck(FALSE);
     OS_Printf("終了時同期成功\n");
     // ワイプフェード開始
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEOUT, WIPE_TYPE_HOLEOUT, WIPE_FADE_BLACK, 16, 1, HEAPID_GURU2);
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
+                    WIPE_FADE_BLACK, 16, 1, HEAPID_GURU2);
 
     seq = SEQ_OUT;            //終了シーケンスへ
   }
@@ -2174,7 +2180,7 @@ static int  Record_Guru2PokeSelStart( GURU2RC_WORK *wk, int seq )
   
   // ワイプフェード開始
   WIPE_SYS_Start(
-    WIPE_PATTERN_WMS, WIPE_TYPE_HOLEOUT, WIPE_TYPE_HOLEOUT,
+    WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
     WIPE_FADE_BLACK, 16, 1, HEAPID_GURU2);
   
   wk->end_next_flag = TRUE;

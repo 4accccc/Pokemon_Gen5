@@ -58,6 +58,7 @@
 //----PM_DEBUG
 #ifdef PM_DEBUG
 
+//#define GURU2_DEBUG_ON
 //----GURU2_DEBUG_ON
 #ifdef GURU2_DEBUG_ON
 #define DEBUG_DISC_NO (3)
@@ -83,7 +84,7 @@
 #define FRAME_SEC (30)  ///<秒
 
 
-#define GURU2_GAME_FRAME (FRAME_SEC*20)
+#define GURU2_GAME_FRAME   (FRAME_SEC*20)
 #define GURU2_GAME_FRAME_H (GURU2_GAME_FRAME/2)
 
 #define COMM_WAIT_ERROR_FRAME (FRAME_SEC*30)
@@ -264,7 +265,7 @@ enum              ///<ネームウィンドウ
 #define CM_ANGLE_Z (0)
 //#define CM_PERSP (10)           ///<カメラパース
 #define CM_PERSP (6)            ///<カメラパース
-#define CM_DISTANCE (0x143)
+#define CM_DISTANCE (0x103)
 
 #define CAMERA_ANGLE_X (FX_GET_ROTA_NUM(CM_ANGLE_X))
 #define CAMERA_ANGLE_Y (FX_GET_ROTA_NUM(CM_ANGLE_Y))
@@ -1329,7 +1330,8 @@ GFL_PROC_RESULT Guru2MainProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
   RET ret;
   GURU2MAIN_WORK *g2m = (GURU2MAIN_WORK *)mywk;
   
-  
+//  OS_Printf("g2m->comm.play_max=%d\n", g2m->comm.play_max);
+//  OS_Printf("join_bit=%d\n", g2m->g2c->comm_game_join_bit);
   do{
     #ifdef GURU2_DEBUG_ON
     DEBUG_Proc( g2m );
@@ -1393,8 +1395,10 @@ static RET Guru2Subproc_FadeInWait( GURU2MAIN_WORK *g2m )
 {
   if( WIPE_SYS_EndCheck() ){
     if( GFL_NET_SystemGetCurrentID() == 0 ){
+      OS_Printf("親として動作\n");
       g2m->seq_no = SEQNO_MAIN_OYA_SIGNAL_JOIN_WAIT;
     }else{
+      OS_Printf("子として動作\n");
       g2m->seq_no = SEQNO_MAIN_KO_SEND_SIGNAL_JOIN;
     }
     
@@ -1470,7 +1474,7 @@ static UNION_APP_PTR _get_unionwork(GURU2MAIN_WORK *wk)
 //--------------------------------------------------------------
 static RET Guru2Subproc_OyaConnectNumCheck( GURU2MAIN_WORK *g2m )
 {
-  int count = Guru2MainCommJoinNumGet( g2m ) + 1; //+1=自身
+  int count = Guru2MainCommJoinNumGet( g2m );// + 1; //+1=自身
   
   if( count != Union_App_GetMemberNum(_get_unionwork(g2m)) ){
     return( RET_NON );
@@ -1491,7 +1495,8 @@ static RET Guru2Subproc_OyaSendPlayMax( GURU2MAIN_WORK *g2m )
 {
   int ret;
   
-  g2m->comm.play_max = Guru2MainCommJoinNumGet(g2m) + 1; //+1=自身
+//  g2m->comm.play_max = Guru2MainCommJoinNumGet(g2m); //+1=自身
+  g2m->comm.play_max = Union_App_GetMemberNum(_get_unionwork(g2m));
   
   ret = Guru2Comm_SendData(
     g2m->g2c, G2COMM_GM_PLAYMAX, &g2m->comm.play_max, 4 );
@@ -1538,39 +1543,6 @@ static RET Guru2Subproc_OyaSendPlayNo( GURU2MAIN_WORK *g2m )
     return( RET_NON );
   }
   
-#if 0
-  { //子プレイデータ送信
-    int id = 1, count = 1;
-    u32 join = g2m->g2c->comm_game_join_bit;
-    
-    while( join ){
-      if( (join&0x01) ){
-        if( count >= g2m->play_send_count ){
-          play.comm_id = id;
-          play.play_no = g2m->play_send_count;
-          
-          ret = Guru2Comm_SendData(g2m->g2c,
-            G2COMM_GM_PLAYNO,&play,sizeof(GURU2COMM_PLAYNO) );
-          
-          if( ret == TRUE ){
-            g2m->play_send_count++;
-            #ifdef DEBUG_GURU2_PRINTF_FORCE
-            OS_Printf( "ぐるぐる 子(ID:%d)へ", id );
-            OS_Printf( "プレイ番号転送 no=%d\n", count );
-            #endif
-          }
-          
-          return( RET_NON );
-        }
-        
-        count++;
-      }
-      
-      id++;
-      join >>= 1;
-    }
-  }
-#else
   { //子プレイデータ送信
     int id = 1, count = 1;
     u32 join = g2m->g2c->comm_game_join_bit;
@@ -1600,7 +1572,6 @@ static RET Guru2Subproc_OyaSendPlayNo( GURU2MAIN_WORK *g2m )
       id++;
     }while( id < G2MEMBER_MAX );
   }
-#endif
   
   if( g2m->play_send_count >= g2m->comm.play_max ){
     g2m->seq_no = SEQNO_MAIN_OYA_SIGNAL_EGG_ADD_START;
@@ -1678,8 +1649,9 @@ static RET Guru2Subproc_KoSendSignalJoin( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_KoEggAddStartWait( GURU2MAIN_WORK *g2m )
 {
   if( Guru2MainCommSignalCheck(g2m,G2COMM_GMSBIT_EGG_ADD_START) == TRUE ){
-    GF_ASSERT( g2m->comm.play_max >= 2 );
-    GF_ASSERT( g2m->comm.my_play_no != 0 );
+//    GF_ASSERT( g2m->comm.play_max >= 2 );
+//    GF_ASSERT( g2m->comm.my_play_no != 0 );
+    g2m->comm.play_max = Guru2MainCommJoinNumGet(g2m);
     g2m->seq_no = SEQNO_MAIN_EGG_DATA_SEND_INIT;
   }
   
@@ -1751,8 +1723,15 @@ static RET Guru2Subproc_EggDataSend( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
   BOOL ret;
-  ret=GFL_NET_SendData( pNet, G2COMM_GM_SEND_EGG_DATA, 
-                        GURU2_WIDEUSE_SENDWORK_SIZE, (void*)g2m->my_poke_party );
+
+//    ret=GFL_NET_SendData( pNet, G2COMM_GM_SEND_EGG_DATA, 
+//                        GURU2_WIDEUSE_SENDWORK_SIZE, (void*)g2m->my_poke_party );
+  ret=GFL_NET_SendDataExBit( pNet, Union_App_GetMemberNetBit(_get_unionwork(g2m)), 
+                             G2COMM_GM_SEND_EGG_DATA, POKEPARTY_SEND_ONCE_SIZE, 
+                             (void*)g2m->my_poke_party, TRUE, TRUE, TRUE);
+
+  OS_Printf("my_pokepartyt adr = %08x\n", (u32)g2m->my_poke_party);
+
   if( ret ){
     g2m->seq_no = SEQNO_MAIN_EGG_DATA_RECV_WAIT;
   }
@@ -1769,6 +1748,9 @@ static RET Guru2Subproc_EggDataSend( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static RET Guru2Subproc_EggDataRecvWait( GURU2MAIN_WORK *g2m )
 {
+  OS_Printf("子機:play_max = %d\n", g2m->comm.play_max);
+  
+
   if( Guru2MainCommEggDataNumGet(g2m) == g2m->comm.play_max ){
     //タマゴデータ受信完了　ダメタマゴチェック
     if( Guru2MainDameTamagoCheck(g2m) == TRUE ){
@@ -2271,10 +2253,13 @@ static RET Guru2Subproc_GameEndErrorRotate( GURU2MAIN_WORK *g2m )
 {
   u32 front;
   EGGACTOR *eact = g2m->front_eggact;
-  
+
+  // 回転処理
   DiscRotateEggMove( g2m, DISC_LOW_SPEED_FX );
+  // 直近のタマゴアクターを取得
   g2m->front_eggact = EggAct_FrontEggActGet( g2m );
   
+  // 一番近いタマゴのIDが自分の通信IDと違ったのであれば最後のターンへ
   if( g2m->front_eggact->comm_id != GFL_NET_SystemGetCurrentID() ){
     g2m->seq_no = SEQNO_MAIN_GAME_END_LAST_ROTATE;
   }
@@ -2988,88 +2973,82 @@ static RET Guru2Subproc_End( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static RET (* const DATA_Guru2ProcTbl[SEQNO_MAIN_MAX])( GURU2MAIN_WORK *g2m ) =
 {
-  Guru2Subproc_Init,
-  Guru2Subproc_FadeInWait,
-  
-  Guru2Subproc_OyaSignalJoinWait,
-  Guru2Subproc_OyaSendJoinClose,
-  Guru2Subproc_OyaConnectNumCheck,
-  Guru2Subproc_OyaSendPlayMax,
-  Guru2Subproc_OyaSendPlayNo,
-  Guru2Subproc_OyaSignalEggAddStart,
-
-  Guru2Subproc_KoSendSignalJoin,
-  Guru2Subproc_KoEggAddStartWait,
-  
-  Guru2Subproc_EggDataSendInit,
-  Guru2Subproc_EggDataSendTimingWait,
-  Guru2Subproc_EggDataTradePosSend,
-  Guru2Subproc_EggDataSend,
-  Guru2Subproc_EggDataRecvWait,
-  
-  Guru2Subproc_DameTamagoCheckWait,
-  
-  Guru2Subproc_EggAddInit,
-  Guru2Subproc_EggAdd,
-  Guru2Subproc_EggAddWait,
-  Guru2Subproc_EggAddEndWait,
-  
-  Guru2Subproc_SendGameStartFlag,
-  Guru2Subproc_RecvGameStartFlag,
-  
-  #ifdef DEBUG_DISP_CHECK
-  DEBUG_Guru2Subproc_DispCheck,
-  #endif
-  
-  Guru2Subproc_CountDownBeforeTimingInit,
-  Guru2Subproc_CountDownBeforeTimingWait,
-  Guru2Subproc_CountDownInit,
-  Guru2Subproc_CountDown,
-  
-  Guru2Subproc_GameInit,
-  Guru2Subproc_GameOya,
-  Guru2Subproc_GameKo,
-  
-  Guru2Subproc_GameEndInit,
-  Guru2Subproc_GameEndErrorRotate,
-  Guru2Subproc_GameEndLastRotate,
-  Guru2Subproc_GameEndTimingInit,
-  Guru2Subproc_GameEndTimingWait,
-  Guru2Subproc_OyaGameEndDataSend,
-  Guru2Subproc_KoGameEndDataRecv,
-  
-  Guru2Subproc_ResultInit,
-  Guru2Subproc_ResultNameWait,
-  Guru2Subproc_ResultMsgWait,
-  
-  Guru2Subproc_OmakeAreaCheck,
-  Guru2Subproc_OmakeAreaMsgWait,
-  Guru2Subproc_OmakeAreaErrorMsgStartWait,
-  Guru2Subproc_OmakeAreaErrorMsgWait,
-  
-  Guru2Subproc_SaveBeforeTimingInit,
-  Guru2Subproc_SaveBeforeTimingWait,
-  Guru2Subproc_Save,
-  
-  #if 0
-  Guru2Subproc_CommErrorMsg,
-  Guru2Subproc_CommErrorMember,
-  Guru2Subproc_CommErrorOyaCancelMsg,
-  Guru2Subproc_CommErrorJoinCloseMsg,
-  #endif
-  Guru2Subproc_CommErrorDameTamagoMsg,
-  
-  Guru2Subproc_MsgWaitNextEnd,
-  
-  Guru2Subproc_EndTimingSyncInit,
-  Guru2Subproc_EndTimingSync,
-  Guru2Subproc_EndConnectCheck,
-  
-  Guru2Subproc_EndFadeOutStart,
-  Guru2Subproc_EndFadeOut,
-  Guru2Subproc_End,
-};
-
+  Guru2Subproc_Init,                          //  SEQNO_MAIN_INIT = 0,
+  Guru2Subproc_FadeInWait,                    //  SEQNO_MAIN_FADEIN_WAIT,
+                                              //  
+  Guru2Subproc_OyaSignalJoinWait,             //  SEQNO_MAIN_OYA_SIGNAL_JOIN_WAIT,
+  Guru2Subproc_OyaSendJoinClose,              //  SEQNO_MAIN_OYA_SEND_JOIN_CLOSE,
+  Guru2Subproc_OyaConnectNumCheck,            //  SEQNO_MAIN_OYA_CONNECT_NUM_CHECK,
+  Guru2Subproc_OyaSendPlayMax,                //  SEQNO_MAIN_OYA_SEND_PLAY_MAX,
+  Guru2Subproc_OyaSendPlayNo,                 //  SEQNO_MAIN_OYA_SEND_PLAY_NO,
+  Guru2Subproc_OyaSignalEggAddStart,          //  SEQNO_MAIN_OYA_SIGNAL_EGG_ADD_START,
+                                              //  
+  Guru2Subproc_KoSendSignalJoin,              //  SEQNO_MAIN_KO_SEND_SIGNAL_JOIN,
+  Guru2Subproc_KoEggAddStartWait,             //  SEQNO_MAIN_KO_EGG_ADD_START_WAIT,
+                                              //  
+  Guru2Subproc_EggDataSendInit,               //  SEQNO_MAIN_EGG_DATA_SEND_INIT,
+  Guru2Subproc_EggDataSendTimingWait,         //  SEQNO_MAIN_EGG_DATA_SEND_TIMING_WAIT,
+  Guru2Subproc_EggDataTradePosSend,           //  SEQNO_MAIN_EGG_DATA_TRADE_POS_SEND,
+  Guru2Subproc_EggDataSend,                   //  SEQNO_MAIN_EGG_DATA_SEND,
+  Guru2Subproc_EggDataRecvWait,               //  SEQNO_MAIN_EGG_DATA_RECV_WAIT,
+                                              //  
+  Guru2Subproc_DameTamagoCheckWait,           //  SEQNO_MAIN_EGG_DATA_CHECK_WAIT,
+                                              //  
+  Guru2Subproc_EggAddInit,                    //  SEQNO_MAIN_EGG_ADD_INIT,
+  Guru2Subproc_EggAdd,                        //  SEQNO_MAIN_EGG_ADD,
+  Guru2Subproc_EggAddWait,                    //  SEQNO_MAIN_EGG_ADD_WAIT,
+  Guru2Subproc_EggAddEndWait,                 //  SEQNO_MAIN_EGG_ADD_END_WAIT,
+                                              //  
+  Guru2Subproc_SendGameStartFlag,             //  SEQNO_MAIN_SEND_GAME_START_FLAG,
+  Guru2Subproc_RecvGameStartFlag,             //  SEQNO_MAIN_RECV_GAME_START_FLAG,
+                                              //  
+  #ifdef DEBUG_DISP_CHECK                     //
+  DEBUG_Guru2Subproc_DispCheck,               //  SEQNO_MAIN_DEBUG_DISP_CHECK,
+  #endif                                      //
+                                              //  
+  Guru2Subproc_CountDownBeforeTimingInit,     //  SEQNO_MAIN_COUNTDOWN_BEFORE_TIMING_INIT,
+  Guru2Subproc_CountDownBeforeTimingWait,     //  SEQNO_MAIN_COUNTDOWN_BEFORE_TIMING_WAIT,
+  Guru2Subproc_CountDownInit,                 //  SEQNO_MAIN_COUNTDOWN_INIT,
+  Guru2Subproc_CountDown,                     //  SEQNO_MAIN_COUNTDOWN,
+                                              //  
+  Guru2Subproc_GameInit,                      //  SEQNO_MAIN_GAME_INIT,
+  Guru2Subproc_GameOya,                       //  SEQNO_MAIN_GAME_OYA,
+  Guru2Subproc_GameKo,                        //  SEQNO_MAIN_GAME_KO,
+                                              //  
+  Guru2Subproc_GameEndInit,                   //  SEQNO_MAIN_GAME_END_INIT,
+  Guru2Subproc_GameEndErrorRotate,            //  SEQNO_MAIN_GAME_END_ERROR_ROTATE,
+  Guru2Subproc_GameEndLastRotate,             //  SEQNO_MAIN_GAME_END_LAST_ROTATE,
+  Guru2Subproc_GameEndTimingInit,             //  SEQNO_MAIN_GAME_END_TIMING_INIT,
+  Guru2Subproc_GameEndTimingWait,             //  SEQNO_MAIN_GAME_END_TIMING_WAIT,
+  Guru2Subproc_OyaGameEndDataSend,            //  SEQNO_MAIN_GAME_END_OYA_DATA_SEND,
+  Guru2Subproc_KoGameEndDataRecv,             //  SEQNO_MAIN_GAME_END_KO_DATA_RECV,
+                                              //  
+  Guru2Subproc_ResultInit,                    //  SEQNO_MAIN_RESULT_INIT,
+  Guru2Subproc_ResultNameWait,                //  SEQNO_MAIN_RESULT_NAME_WAIT,
+  Guru2Subproc_ResultMsgWait,                 //  SEQNO_MAIN_RESULT_MSG_WAIT,
+                                              //  
+  Guru2Subproc_OmakeAreaCheck,                //  SEQNO_MAIN_OMAKE_CHECK,
+  Guru2Subproc_OmakeAreaMsgWait,              //  SEQNO_MAIN_OMAKE_MSG_WAIT,
+  Guru2Subproc_OmakeAreaErrorMsgStartWait,    //  SEQNO_MAIN_OMAKE_ERROR_MSG_START_WAIT,
+  Guru2Subproc_OmakeAreaErrorMsgWait,         //  SEQNO_MAIN_OMAKE_ERROR_MSG_WAIT,
+                                              //  
+  Guru2Subproc_SaveBeforeTimingInit,          //  SEQNO_MAIN_SAVE_BEFORE_TIMING_INIT,
+  Guru2Subproc_SaveBeforeTimingWait,          //  SEQNO_MAIN_SAVE_BEFORE_TIMING_WAIT,
+  Guru2Subproc_Save,                          //  SEQNO_MAIN_SAVE,
+                                              //  
+  Guru2Subproc_CommErrorDameTamagoMsg,        //  SEQNO_MAIN_COMM_ERROR_DAME_TAMAGO_MSG,
+                                              //  
+  Guru2Subproc_MsgWaitNextEnd,                //  SEQNO_MAIN_MSG_WAIT_NEXT_END,
+                                              //  
+  Guru2Subproc_EndTimingSyncInit,             //  SEQNO_MAIN_END_TIMING_SYNC_INIT,
+  Guru2Subproc_EndTimingSync,                 //  SEQNO_MAIN_END_TIMING_SYNC,
+  Guru2Subproc_EndConnectCheck,               //  SEQNO_MAIN_END_CONNECT_CHECK,
+                                              //  
+  Guru2Subproc_EndFadeOutStart,               //  SEQNO_MAIN_END_FADEOUT_START,
+  Guru2Subproc_EndFadeOut,                    //  SEQNO_MAIN_END_FADEOUT,
+  Guru2Subproc_End,                           //  SEQNO_MAIN_END,
+};                                            //  
+                                                
 //==============================================================================
 //  VBlank
 //==============================================================================
@@ -3143,6 +3122,7 @@ static void guru2_DrawDelete( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void guru2_DrawProc( GURU2MAIN_WORK *g2m )
 {
+  int i;
   {
     fx32 far = FX32_ONE * 4096;
     GFL_G3D_CAMERA_SetFar( g2m->camera.gf_camera, &far );
@@ -3174,8 +3154,12 @@ static void guru2_DrawProc( GURU2MAIN_WORK *g2m )
   //----2D描画
   GFL_CLACT_SYS_Main();
 
+  // BMP周り描画
   PRINTSYS_QUE_Main( g2m->msgwork.printQue );
-  
+  PRINT_UTIL_Trans( &g2m->msgwork.printUtilTalk, g2m->msgwork.printQue );
+  for(i=0;i<GURU2NAME_WIN_MAX;i++){
+    PRINT_UTIL_Trans( &g2m->msgwork.printUtilName[i], g2m->msgwork.printQue );
+  }
 }
 
 //==============================================================================
@@ -3338,7 +3322,7 @@ static void guru2_3DDrawInit( GURU2MAIN_WORK *g2m )
 
   //カメラ設定
   { 
-    static const VecFx32 cam_pos    = { 0,0,0};
+    static const VecFx32 cam_pos    = { 0,0,0x100*FX32_ONE};
     static const VecFx32 cam_target = { CAMERA_TARGET_X,CAMERA_TARGET_Y,CAMERA_TARGET_Z};
     cm->gf_camera = GFL_G3D_CAMERA_CreateDefault( &cam_pos, &cam_target, HEAPID_GURU2 );
     
@@ -3653,6 +3637,8 @@ static void guru2_ClActInit( GURU2MAIN_WORK *g2m )
   // セルアクターシステム開始
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &Guru2DispVramDat, HEAPID_GURU2 );
 
+  g2m->clUnit = GFL_CLACT_UNIT_Create( 30, 1, HEAPID_GURU2 );
+
 }
 
 //--------------------------------------------------------------
@@ -3743,6 +3729,9 @@ static void guru2_ClActDelete( GURU2MAIN_WORK *g2m )
 
   // セル・アニメ破棄
   GFL_CLGRP_CELLANIM_Release( g2m->resobj[GURU2MAIN_CLACT_RES_CELL] );
+
+  // セルアクターセット破棄
+  GFL_CLACT_UNIT_Delete( g2m->clUnit );
 
   // セルアクターシステム終了
   GFL_CLACT_SYS_Delete();
@@ -4696,10 +4685,15 @@ static EGGACTOR * EggAct_FrontEggActGet( GURU2MAIN_WORK *g2m )
   EGGWORK *egg = &g2m->egg;
   
   i = 0;
+  // 自分の通信IDに対応した回転角度位置を取得
   front = NUM_FX32( DATA_EggStartAngle[max][g2m->comm.my_play_no] );
   
-  do{no[i]=i,buf[i]=0xffff;}while(++i<max);
+  OS_Printf("my_play_no%d\n", g2m->comm.my_play_no);
+  OS_Printf("egg0->comm_id=%d, egg1->comm_id=%d\n", egg->eact[0].comm_id,egg->eact[1].comm_id);
+  // ワーク初期化
+  do{no[i]=i,buf[i]=0xffff;}while(++i<max); // no[5]=0,1,2,3,4 buf[5]=0xffff,0xffff,0xffff,0xffff,0xffff,
   
+  // 自分視点から見て各通信IDの現在の回転角度はいくつかbufに格納
   for( i = 0; i < max; i++ ){
     angle = egg->eact[i].angle;
     res = front - angle;
@@ -4711,6 +4705,8 @@ static EGGACTOR * EggAct_FrontEggActGet( GURU2MAIN_WORK *g2m )
     buf[i] = FX32_NUM( res );
   }
   
+  // 自分の通信IDの角度とタマゴの角度を比較して一番近い順に
+  // 並べ直す
   for( i = 1; i < max; i++ ){
     n = no[i]; a = buf[n];
     for( j = i - 1; j >= 0 && buf[no[j]] > a; j-- ){
@@ -4822,7 +4818,7 @@ static void EggCursor_Update( GURU2MAIN_WORK *g2m, EGGCURSOR *ecs, int i )
   ecs->pos.y += EGGCURSOR_OFFS_Y_FX;
 //  FRO_ANM_Play(
 //    &egg->m_ranm_cursor[ecs->eact->play_no], FX32_ONE, ANMLOOP_ON);
-  GFL_G3D_OBJECT_LoopAnimeFrame( obj, ecs->eact->play_no, FX32_ONE );
+  GFL_G3D_OBJECT_LoopAnimeFrame( obj, 0, FX32_ONE );
 
 }
 
@@ -6148,29 +6144,12 @@ static void * Guru2MainTempWorkGet( GURU2MAIN_WORK *g2m )
 static BOOL Guru2MainCommSignalCheck(GURU2MAIN_WORK *g2m, u16 bit)
 {
   u32 signal = g2m->g2c->comm_game_signal_bit;
+//  OS_Printf("comm_game_signal_bit=%x\n",signal);
+
   if( (signal&bit) ){ return( TRUE ); }
   return( FALSE );
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * ゲーム参加締め切りチェック
- * @param g2m GURU2MAIN_WORK
- * @retval  BOOL  TRUE=締め切り
- */
-//--------------------------------------------------------------
-static BOOL Guru2MainCommJoinCloseCheck( GURU2MAIN_WORK *g2m )
-{
-  u32 bit = g2m->g2c->comm_game_signal_bit;
-  
-  if( (bit&G2COMM_GMSBIT_JOIN_CLOSE) ){
-    return( TRUE );
-  }
-  
-  return( FALSE );
-}
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -6182,7 +6161,7 @@ static BOOL Guru2MainCommJoinCloseCheck( GURU2MAIN_WORK *g2m )
 static BOOL Guru2MainCommJoinNumCheck( GURU2MAIN_WORK *g2m )
 {
   int in = 0;
-  int max = g2m->g2p->receipt_num - 1;  //-1=自身
+  int max = g2m->g2p->receipt_num;  //-1=自身
   u32 bit = g2m->g2c->comm_game_join_bit;
   
   while( bit ){
@@ -6217,23 +6196,6 @@ static int Guru2MainCommJoinNumGet( GURU2MAIN_WORK *g2m )
   return( in );
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * 親ゲームキャンセルチェック
- * @param g2m GURU2MAIN_WORK
- * @retval  BOOL  TRUE=親キャンセル
- */
-//--------------------------------------------------------------
-static BOOL Guru2MainCommOyaCancelCheck( GURU2MAIN_WORK *g2m )
-{
-  if( Guru2MainCommSignalCheck(g2m,G2COMM_GMSBIT_CANCEL) ){
-    return( TRUE );
-  }
-
-  return( FALSE );
-}
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -6247,6 +6209,7 @@ void Guru2Main_CommPlayNoDataSet(
     GURU2MAIN_WORK *g2m, const GURU2COMM_PLAYNO *no )
 {
   g2m->comm.play_no_tbl[no->play_no] = *no;
+  OS_Printf("play_no=%d comm_id=%d\n", no->play_no, no->comm_id);
   
   if( no->comm_id == GFL_NET_SystemGetCurrentID() ){
     g2m->comm.my_play_no = no->play_no;
@@ -6266,7 +6229,8 @@ void Guru2Main_CommPlayNoDataSet(
 //--------------------------------------------------------------
 void Guru2Main_CommPlayMaxSet( GURU2MAIN_WORK *g2m, int max )
 {
-  g2m->comm.play_max = max;
+//  g2m->comm.play_max = max;
+  g2m->comm.play_max = Union_App_GetMemberNum(_get_unionwork(g2m));
 }
 
 //--------------------------------------------------------------
@@ -6878,10 +6842,11 @@ static void DEBUG_OmakeCheck( GURU2MAIN_WORK *g2m );
 static void guru2_CameraSet( GURU2MAIN_WORK *g2m )
 {
   CAMERAWORK *cm = &g2m->camera;
-  GFC_BindCameraTarget( &cm->target_pos, cm->gf_camera );
-  GFC_SetCameraAngleRev( &cm->angle, cm->gf_camera );
-  GFC_SetCameraDistance( cm->distance, cm->gf_camera );
-  GFC_SetCameraPerspWay( cm->persp, cm->gf_camera );  
+  GFL_G3D_CAMERA_SetTarget( cm->gf_camera, &cm->target_pos );
+//  GFC_BindCameraTarget( &cm->target_pos, cm->gf_camera );
+//  GFC_SetCameraAngleRev( &cm->angle, cm->gf_camera );
+//  GFC_SetCameraDistance( cm->distance, cm->gf_camera );
+//  GFC_SetCameraPerspWay( cm->persp, cm->gf_camera );  
 }
 
 
@@ -6890,10 +6855,10 @@ static void DEBUG_WorkInit( GURU2MAIN_WORK *g2m )
   DEBUGWORK *dw = &g2m->debug;
   GFL_STD_MemFill( dw, 0, sizeof(DEBUGWORK) );
   
-  dw->angle_x = CM_ANGLE_X;
-  dw->angle_y = CM_ANGLE_Y;
-  dw->angle_z = CM_ANGLE_Z;
-  dw->persp = CM_PERSP;
+  dw->angle_x  = CM_ANGLE_X;
+  dw->angle_y  = CM_ANGLE_Y;
+  dw->angle_z  = CM_ANGLE_Z;
+  dw->persp    = CM_PERSP;
   dw->distance = CAMERA_DISTANCE;
 }
 

@@ -98,24 +98,24 @@ enum
 //--------------------------------------------------------------
 /// ゲームシグナル
 //--------------------------------------------------------------
-#define G2COMM_GMSBIT_JOIN_CLOSE  (1<<0) ///<ゲーム参加締め切り
-#define G2COMM_GMSBIT_CANCEL    (1<<1) ///<ゲームキャンセル
-#define G2COMM_GMSBIT_GAME_START  (1<<2) ///<ゲーム開始
+#define G2COMM_GMSBIT_JOIN_CLOSE    (1<<0) ///<ゲーム参加締め切り
+#define G2COMM_GMSBIT_CANCEL        (1<<1) ///<ゲームキャンセル
+#define G2COMM_GMSBIT_GAME_START    (1<<2) ///<ゲーム開始
 #define G2COMM_GMSBIT_EGG_ADD_START (1<<3) ///<タマゴ追加開始
 
-#define G2COMM_GAMEBIT_DISC_STOP  (1<<0) ///<ゲーム　皿停止
-#define G2COMM_GAMEBIT_BTN_STOP   (1<<1) ///<ゲーム　ボタン入力禁止
+#define G2COMM_GAMEBIT_DISC_STOP    (1<<0) ///<ゲーム　皿停止
+#define G2COMM_GAMEBIT_BTN_STOP     (1<<1) ///<ゲーム　ボタン入力禁止
 
-#define GURU2COMM_BAN_NONE    (0)
-#define GURU2COMM_BAN_ON    (1)
-#define GURU2COMM_BAN_MOST_ON (2)
+#define GURU2COMM_BAN_NONE    ( 0)
+#define GURU2COMM_BAN_ON      ( 1)
+#define GURU2COMM_BAN_MOST_ON ( 2)
 
-#define GURU2_COMM_SYNCRO_0 (201) ///<通信同期 0
+#define GURU2_COMM_SYNCRO_0   (201) ///<通信同期 0
 
 #define GURU2COMM_RC_SEND_DATABUF_SIZE  (3000)    ///<送信データサイズ
 
 // ポケモンパーティーを送信するときのデータ量
-#define POKEPARTY_SEND_ONCE_SIZE (236*6+4*2)  // sizeof(POKEPARTY)
+#define POKEPARTY_SEND_ONCE_SIZE (236*6+4*3)  // sizeof(POKEPARTY)
 
 //==============================================================================
 //  typedef

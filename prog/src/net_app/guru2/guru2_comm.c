@@ -22,7 +22,7 @@
 #define D_GURU2_PRINTF_ON //定義でOS_Printf有効
 #endif
 
-#define GURU2_MAIN_FUNC_OFF
+//#define GURU2_MAIN_FUNC_OFF
 
 
 //==============================================================================
@@ -263,7 +263,7 @@ BOOL Guru2Comm_SendData(
 //    return( FALSE );
 //  }
 
-  OS_Printf("g2c=%08x\n", (u32)g2c);  
+//  OS_Printf("g2c=%08x\n", (u32)g2c);  
   return guru2Comm_WideUseSendWorkSend(g2c,code,data,size) ;
 }
 
@@ -273,7 +273,7 @@ BOOL Guru2Comm_SendData(
 
 //--------------------------------------------------------------
 /**
- * 受付　ポケモンパーティを受信
+ * 受付　ポケモンパーティを受信 22a7b44 22a75b4
  * @param   netID   
  * @param   size    
  * @param   pData   
@@ -290,9 +290,10 @@ static void CommCB_Guru2PokeParty(
   g2c->comm_game_egg_recv_bit |= 1 << netID;
   buf = Guru2Comm_FriendPokePartyGet( g2c, netID );
   GFL_STD_MemCopy( pData, buf,  POKEPARTY_SEND_ONCE_SIZE );
+  OS_Printf("netID:%d adr=%08x\n", netID, buf);
 
   #ifdef D_GURU2_PRINTF_ON
-  OS_Printf( "タマゴ受信" );
+  OS_Printf( "タマゴ受信 bit=%x\n",g2c->comm_game_egg_recv_bit );
   #endif
 }
 
@@ -521,6 +522,9 @@ static void CommCB_Main_PlayNo(
 {
   GURU2COMM_WORK *g2c = pWk;
   const GURU2COMM_PLAYNO *no = pData;
+  
+  OS_Printf("G2COMM_GM_PLAYNO受信 play_no=%d, comm_id=%d\n", no->play_no, no->comm_id);
+
 #ifndef GURU2_MAIN_FUNC_OFF
   Guru2Main_CommPlayNoDataSet( g2c->g2p->g2m, no );
 #endif
@@ -695,13 +699,17 @@ static int _getPokePartyOnceSize( void )
 //==============================================================================
 //  受信バッファ
 //==============================================================================
-//--------------------------------------------------------------
+//----------------------------------------------------------------------------------
 /**
- * ポケモンデータ受信バッファ
- * @param
- * @retval
+ * @brief ポケモンデータ受信バッファ
+ *
+ * @param   netID   通信ID
+ * @param   pWork   ワーク
+ * @param   size    受信データのサイズ
+ *
+ * @retval  u8 *    
  */
-//--------------------------------------------------------------
+//----------------------------------------------------------------------------------
 static u8 * _getPokePartyRecvBuff( int netID, void *pWork, int size )
 {
   u32 buf;

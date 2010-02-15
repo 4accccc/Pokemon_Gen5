@@ -110,7 +110,7 @@ GFL_PROC_RESULT Guru2Proc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk
   GURU2_CALL_WORK *g2call = mywk;
   
   if( DATA_SeqTbl[g2call->seq_no](g2call) == TRUE ){
-    GFL_HEAP_FreeMemory( g2call );
+//    GFL_HEAP_FreeMemory( g2call );
     return GFL_PROC_RES_FINISH;
   }
   OS_Printf("ぐるぐるプロセスメイン\n");
@@ -134,7 +134,10 @@ GFL_PROC_RESULT Guru2Proc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk 
 {
   OS_Printf("ぐるぐるプロセス終了\n");
 
-  return GFL_PROC_RES_CONTINUE;
+  // プロセル用ワーク解放
+  GFL_PROC_FreeWork( proc );
+
+  return GFL_PROC_RES_FINISH;
 }
 
 
