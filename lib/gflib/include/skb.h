@@ -19,10 +19,14 @@ typedef struct _GFL_SKB GFL_SKB;
 #define GFL_SKB_STRLEN_MAX  (24)  //入力文字列最大数
 #define GFL_SKB_STRBUF_SIZ  (sizeof(u16)*(GFL_SKB_STRLEN_MAX+1))//入力文字列バッファ確保サイズ
 
+// ファンクションキーコールバック用関数
+typedef BOOL		(GFL_SKB_FUNCTION)( STRBUF* );
+
 typedef enum {
   GFL_SKB_MODE_HIRAGANA = 0,
   GFL_SKB_MODE_KATAKANA,
   GFL_SKB_MODE_ENG,
+  GFL_SKB_MODE_ENG_S,
   GFL_SKB_MODE_NUM,
 }GFL_SKB_MODE;
 
@@ -71,8 +75,6 @@ extern GflSkbReaction GFL_SKB_Main( GFL_SKB* gflSkb );  //FALSEで終了
 extern void GFL_SKB_PickStr( GFL_SKB* skb );
 extern void GFL_SKB_ReloadStr( GFL_SKB* skb, const STRBUF* strbuf );
 
-//SjisCode格納用文字列バッファ作成
-//GFL_SKB_STRTYPE_SJISを使用する場合、この関数で入力最大配列を確保出来る
-//extern void*  GFL_SKB_CreateSjisCodeBuffer( HEAPID heapID );
-//extern void   GFL_SKB_DeleteSjisCodeBuffer( void* strbuf );
+extern void GFL_SKB_SetFunctionF1( GFL_SKB* gflSkb, GFL_SKB_FUNCTION* func );
+extern void GFL_SKB_SetFunctionF2( GFL_SKB* gflSkb, GFL_SKB_FUNCTION* func );
 
