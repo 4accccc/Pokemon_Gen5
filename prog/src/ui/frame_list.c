@@ -96,10 +96,6 @@ struct _FRAMELIST_WORK {
 	u8	slidePos;						// スライド基準項目位置
 	u8	slideCnt;						// スライド処理テーブル位置
 
-//	s8	slideReq;
-//	s16	slideInitCount;
-//	u32	slidePy[10];
-
 	u8	keyRepeat;					// キーリピートカウンタ
 	u8	keyRepPos;					// キーリピート処理テーブル位置
 	u8	listWait;						// キーリピートウェイト
@@ -145,8 +141,16 @@ enum {
 #define	BGSCRN_CHR_SIZE_X		( 32 )
 #define	BGSCRN_CHR_SIZE_Y		( 24 )
 
-
 #define	PALCHG_NONE		( 0xff )			// パレットチェンジ無効
+
+#define	KEYWAIT_LIST_MOVE					( 8 )			// キー入力後に次の入力を許可するウェイト（カーソル移動後）
+#define	KEYWAIT_LIST_SCROLL				( 0 )			// キー入力後に次の入力を許可するウェイト（スクロール後）
+#define	KEYWAIT_LIST_PAGE_MOVE		( 4 )			// キー入力後に次の入力を許可するウェイト（ページ移動後）
+
+#define	RAIL_AREA_X				( 0 )				// レール処理のタッチ範囲Ｘ補正値
+#define	RAIL_AREA_Y				( 32 )			// レール処理のタッチ範囲Ｙ補正値
+#define	RAIL_AREA_X_MAX		( 255 )			// レール処理のタッチ範囲Ｘ最大値
+#define	RAIL_AREA_Y_MAX		( 191 )			// レール処理のタッチ範囲Ｙ最大値
 
 
 //============================================================================================
@@ -171,25 +175,21 @@ static void WriteItemFrame( FRAMELIST_WORK * wk, u32 itemNum, u32 frmNum );
 static void PutItemFrame( FRAMELIST_WORK * wk, u32 idx, s8 py );
 static s8 GetItemFramePosY( FRAMELIST_WORK * wk, s8 vec );
 static s8 GetNextFrameNum( s8 now, s8 max, s8 vec );
-static BOOL DrawListItemMain( FRAMELIST_WORK * wk, s32 pos, s8 py );
-static BOOL DrawListItemSub( FRAMELIST_WORK * wk, s32 pos, s8 py );
+static void DrawListItemMain( FRAMELIST_WORK * wk, s32 pos, s8 py );
+static void DrawListItemSub( FRAMELIST_WORK * wk, s32 pos, s8 py );
 static void ChangeCursorPosPalette( FRAMELIST_WORK * wk, u16 now, u16 old );
 static void PrintTransMain( FRAMELIST_WORK * wk );
-
-//static void CallBack_Dummy( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp );
 
 
 //============================================================================================
 //	グローバル
 //============================================================================================
 
-/*
-// ダミーのコールバック関数
-static const FRAMELIST_CALLBACK DummyCallBack = {
-	CallBack_Dummy,
-	CallBack_Dummy,
+// オートスクロールカウンタ
+static const u8 AutoScrollCount[] = {
+	128, 64, 32, 16, 8, 4
 };
-*/
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -239,7 +239,6 @@ FRAMELIST_WORK * FRAMELIST_Create( FRAMELIST_HEADER * hed, HEAPID heapID )
 		wk->printMax *= 2;
 	}
 	wk->wfrm = BGWINFRM_Create( BGWINFRM_TRANS_VBLANK, wk->printMax, wk->heapID );
-//	OS_Printf( "printMax = %d\n", wk->printMax );
 
 	wk->printUtil = GFL_HEAP_AllocMemory( wk->heapID, sizeof(FL_PRINT_UTIL)*wk->printMax );
 
@@ -285,14 +284,6 @@ FRAMELIST_WORK * FRAMELIST_Create( FRAMELIST_HEADER * hed, HEAPID heapID )
 			GFL_STD_MemCopy32( &wk->hed.touch[i].tbl, &wk->touch[i], sizeof(GFL_UI_TP_HITTBL) );
 		}
 	}
-
-
-/*
-	// ダミーコールバック設定
-	if( wk->hed.cbFunc == NULL ){
-		wk->hed.cbFunc = &DummyCallBack;
-	}
-*/
 
 	return wk;
 }
@@ -364,7 +355,6 @@ void FRAMELIST_AddItem( FRAMELIST_WORK * wk, u32 type, u32 param )
 	wk->item[wk->listMax].type  = type;
 	wk->item[wk->listMax].param = param;
 	wk->listMax++;
-
 }
 
 //--------------------------------------------------------------------------------------------
@@ -424,7 +414,8 @@ void FRAMELIST_LoadBlinkPalette( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataId
  *
  * @param		wk		ワーク
  *
- * @return	TRUE:初期化中, FALSE:初期化終了
+ * @retval	"TRUE = 初期化中"
+ * @retval	"FALSE = 初期化終了"
  */
 //--------------------------------------------------------------------------------------------
 BOOL FRAMELIST_Init( FRAMELIST_WORK * wk )
@@ -445,7 +436,8 @@ BOOL FRAMELIST_Init( FRAMELIST_WORK * wk )
 		}
 		break;
 
-  default: GF_ASSERT(0);
+  default:
+		GF_ASSERT(0);
 	}
 
 	PrintTransMain( wk );
@@ -512,7 +504,8 @@ u32 FRAMELIST_Main( FRAMELIST_WORK * wk )
 		}
 		break;
 
-  default : GF_ASSERT(0);
+  default:
+		GF_ASSERT(0);
 	}
 
 	wk->oldTpy = wk->nowTpy;
@@ -525,17 +518,19 @@ u32 FRAMELIST_Main( FRAMELIST_WORK * wk )
 }
 
 
-
-
-
-
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+//============================================================================================
 //	初期描画
-//--------------------------------------------------------------------------------------------
+//============================================================================================
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストデータ初期化
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitListData( FRAMELIST_WORK * wk )
 {
 	// カーソル移動最大値設定
@@ -563,6 +558,15 @@ static void InitListData( FRAMELIST_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト初期描画
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitListDraw( FRAMELIST_WORK * wk, BOOL flg )
 {
 	s16	pos;
@@ -634,21 +638,19 @@ static void InitListDraw( FRAMELIST_WORK * wk, BOOL flg )
 }
 
 
-
-
-
-
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+//============================================================================================
 //	メインコントロール
+//============================================================================================
+
 //--------------------------------------------------------------------------------------------
-#define	KEYWAIT_LIST_MOVE					( 8 )			// キー入力後に次の入力を許可するウェイト（カーソル移動後）
-#define	KEYWAIT_LIST_SCROLL				( 0 )			// キー入力後に次の入力を許可するウェイト（スクロール後）
-#define	KEYWAIT_LIST_PAGE_MOVE		( 4 )			// キー入力後に次の入力を許可するウェイト（ページ移動後）
-
-
+/**
+ * @brief		タッチチェック
+ *
+ * @param		wk		ワーク
+ *
+ * @return	タッチに対応したコマンド
+ */
+//--------------------------------------------------------------------------------------------
 static int MoveListTouch( FRAMELIST_WORK * wk )
 {
 	int	ret;
@@ -735,12 +737,22 @@ static int MoveListTouch( FRAMELIST_WORK * wk )
 		}
 		break;
 
-  default : GF_ASSERT(0);
+  default:
+		GF_ASSERT(0);
 	}
 
 	return COMMAND_NONE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		キーチェック
+ *
+ * @param		wk		ワーク
+ *
+ * @return	キーに対応したコマンド
+ */
+//--------------------------------------------------------------------------------------------
 static int MoveListKey( FRAMELIST_WORK * wk )
 {
 	if( GFL_UI_KEY_GetTrg() ){
@@ -839,6 +851,15 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 	return COMMAND_NONE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインコントロール
+ *
+ * @param		wk		ワーク
+ *
+ * @return	外部へ戻す値
+ */
+//--------------------------------------------------------------------------------------------
 static u32 MoveListMain( FRAMELIST_WORK * wk )
 {
 	int	ret;
@@ -943,12 +964,22 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 	case COMMAND_NONE:						// 動作なし
 		break;
   
-  default : GF_ASSERT(0);
+  default:
+		GF_ASSERT(0);
 	}
 
 	return FRAMELIST_RET_NONE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクロール速度セット
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetListScrollSpeed( FRAMELIST_WORK * wk )
 {
 	if( wk->keyRepeat < 40 ){
@@ -970,19 +1001,35 @@ static void SetListScrollSpeed( FRAMELIST_WORK * wk )
 }
 
 
-
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+//============================================================================================
 //	スクロール関連
-//--------------------------------------------------------------------------------------------
+//============================================================================================
 
-static u8 MakeScrollCount( FRAMELIST_WORK * wk, s8 vec )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクロールフレーム数作成
+ *
+ * @param		wk			ワーク
+ * @param		speed		スクロール速度
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static u8 MakeScrollCount( FRAMELIST_WORK * wk, s8 speed )
 {
-	return ( wk->hed.itemSizY * 8 / GFL_STD_Abs(vec) );
+	return ( wk->hed.itemSizY * 8 / GFL_STD_Abs(speed) );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		現在の位置からの残りの最大スクロール値を取得
+ *
+ * @param		wk			ワーク
+ * @param		speed		スクロール速度
+ *
+ * @return	残りの最大スクロール値
+ */
+//--------------------------------------------------------------------------------------------
 static u32 GetListScrollCount( FRAMELIST_WORK * wk, s8 speed )
 {
 	if( speed < 0 ){
@@ -991,9 +1038,22 @@ static u32 GetListScrollCount( FRAMELIST_WORK * wk, s8 speed )
 	return ( wk->listScrollMax - wk->listScroll );
 }
 
-static void InitListScroll( FRAMELIST_WORK * wk, s8 vec, u8 max, s16 next, BOOL se )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクロール初期設定
+ *
+ * @param		wk			ワーク
+ * @param		speed		スクロール速度
+ * @param		max			スクロール数
+ * @param		next		スクロール後のシーケンス
+ * @param		se			ＳＥ再生フラグ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void InitListScroll( FRAMELIST_WORK * wk, s8 speed, u8 max, s16 next, BOOL se )
 {
-	wk->listBgScrollSpeed = vec;
+	wk->listBgScrollSpeed = speed;
 	wk->listBgScrollMax   = max;
 	wk->listBgScrollCount = 0;
 
@@ -1003,11 +1063,16 @@ static void InitListScroll( FRAMELIST_WORK * wk, s8 vec, u8 max, s16 next, BOOL 
 	wk->scrollSE = se;
 }
 
-static const u8 AutoScrollCount[] = {
-	128, 64, 32, 16, 8, 4
-};
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクロールメイン処理
+ *
+ * @param		wk			ワーク
+ *
+ * @retval	"TRUE = スクロール中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL MainListScroll( FRAMELIST_WORK * wk )
 {
 	if( wk->listBgScrollCount == 0 ){
@@ -1112,18 +1177,20 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 }
 
 
-
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+//============================================================================================
 //	レール関連
-//--------------------------------------------------------------------------------------------
-#define	RAIL_AREA_X				( 0 )
-#define	RAIL_AREA_Y				( 32 )
-#define	RAIL_AREA_X_MAX		( 255 )
-#define	RAIL_AREA_Y_MAX		( 191 )
+//============================================================================================
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		レール移動初期化
+ *
+ * @param		wk			ワーク
+ * @param		pos			タッチデータ位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitRailMove( FRAMELIST_WORK * wk, int pos )
 {
 	wk->railTop    = wk->touch[pos].rect.top;
@@ -1156,6 +1223,15 @@ static void InitRailMove( FRAMELIST_WORK * wk, int pos )
 	wk->mainSeq = MAINSEQ_RAIL;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タッチ位置からスクロール値を取得
+ *
+ * @param		wk			ワーク
+ *
+ * @return	スクロール値
+ */
+//--------------------------------------------------------------------------------------------
 static u32 GetRailScroll( FRAMELIST_WORK * wk )
 {
 	u32	x, y;
@@ -1195,6 +1271,16 @@ u32 FRAMELIST_GetScrollBarPY( FRAMELIST_WORK * wk )
 	return SCROLLBAR_GetPosY( wk->listScrollMax, wk->listScroll, ty, by, wk->hed.barSize );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		レール処理メイン
+ *
+ * @param		wk			ワーク
+ *
+ * @retval	"TRUE = 動作中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL MainRailMove( FRAMELIST_WORK * wk )
 {
 	u32	scroll;
@@ -1223,19 +1309,36 @@ static BOOL MainRailMove( FRAMELIST_WORK * wk )
 }
 
 
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+//============================================================================================
 //	スライド処理
-//--------------------------------------------------------------------------------------------
+//============================================================================================
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スライド処理初期化
+ *
+ * @param		wk			ワーク
+ * @param		pos			タッチした項目位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitSlideMove( FRAMELIST_WORK * wk, int pos )
 {
 	wk->slidePos = pos;
 	wk->mainSeq  = MAINSEQ_SLIDE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		レール処理メイン
+ *
+ * @param		wk			ワーク
+ *
+ * @retval	"TRUE = 動作中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 {
 	int	ret;
@@ -1323,14 +1426,19 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 }
 
 
-
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
+//============================================================================================
 //	描画関連
-//--------------------------------------------------------------------------------------------
+//============================================================================================
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＶＲＡＭ取得用のＢＧフレームパラメータを取得
+ *
+ * @param		bgFrame		ＢＧフレーム番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static GFL_DISPUT_BGID GetDispBGID( u8 bgFrame )
 {
 	if( bgFrame == GFL_BG_FRAME0_M ){
@@ -1353,6 +1461,16 @@ static GFL_DISPUT_BGID GetDispBGID( u8 bgFrame )
 	return GFL_DISPUT_BGID_M0;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		項目背景書き込み
+ *
+ * @param		itemNum		項目番号
+ * @param		frmNum		プリントフレーム番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void WriteItemFrame( FRAMELIST_WORK * wk, u32 itemNum, u32 frmNum )
 {
 	GFL_BMPWIN * win;
@@ -1389,14 +1507,18 @@ static void WriteItemFrame( FRAMELIST_WORK * wk, u32 itemNum, u32 frmNum )
 				0x20 );
 		}
 	}
-
-/*
-	// BMPWINに文字列を描画
-	PRINT_UTIL_PrintColor(
-		&wk->printUtil[frmNum].util, wk->hed.que, 0, 0, wk->item[itemNum].str, wk->hed.font, wk->hed.col );
-*/
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		項目配置
+ *
+ * @param		idx			項目インデックス
+ * @param		py			配置Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PutItemFrame( FRAMELIST_WORK * wk, u32 idx, s8 py )
 {
 	u16 * buf;
@@ -1440,6 +1562,16 @@ static void ClearItemFrame( FRAMELIST_WORK * wk, u8 frm, s8 py )
 	GFL_BG_LoadScreenV_Req( frm );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		項目配置Ｙ座標を取得
+ *
+ * @param		wk		ワーク
+ * @param		vec		配置方向
+ *
+ * @return	配置Ｙ座標
+ */
+//--------------------------------------------------------------------------------------------
 static s8 GetItemFramePosY( FRAMELIST_WORK * wk, s8 vec )
 {
 	s8	py;
@@ -1458,6 +1590,17 @@ static s8 GetItemFramePosY( FRAMELIST_WORK * wk, s8 vec )
 	return py;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		次の項目フレーム番号を取得
+ *
+ * @param		now		現在の項目フレーム番号
+ * @param		max		フレーム最大数
+ * @param		vec		配置方向
+ *
+ * @return	フレーム番号
+ */
+//--------------------------------------------------------------------------------------------
 static s8 GetNextFrameNum( s8 now, s8 max, s8 vec )
 {
 	now += vec;
@@ -1470,7 +1613,18 @@ static s8 GetNextFrameNum( s8 now, s8 max, s8 vec )
 	return now;
 }
 
-static BOOL DrawListItemMain( FRAMELIST_WORK * wk, s32 pos, s8 py )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メイン画面の項目描画
+ *
+ * @param		wk			ワーク
+ * @param		pos			項目番号
+ * @param		py			描画Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void DrawListItemMain( FRAMELIST_WORK * wk, s32 pos, s8 py )
 {
 	if( pos >= 0 && pos < wk->listMax ){
 		WriteItemFrame( wk, pos, wk->putFrameMain );
@@ -1484,17 +1638,26 @@ static BOOL DrawListItemMain( FRAMELIST_WORK * wk, s32 pos, s8 py )
 				drawPy * 8 - wk->listBgScoll,
 				TRUE );
 		}
-		return TRUE;
+	}else{
+		ClearItemFrame( wk, wk->hed.mainBG, py );
 	}
-	ClearItemFrame( wk, wk->hed.mainBG, py );
-	return FALSE;
 }
 
-static BOOL DrawListItemSub( FRAMELIST_WORK * wk, s32 pos, s8 py )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		サブ画面の項目描画
+ *
+ * @param		wk			ワーク
+ * @param		pos			項目番号
+ * @param		py			描画Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void DrawListItemSub( FRAMELIST_WORK * wk, s32 pos, s8 py )
 {
-	py += wk->subFramePy;
-
 	if( wk->hed.subBG != FRAMELIST_SUB_BG_NONE ){
+		py += wk->subFramePy;
 		if( pos >= 0 ){
 			u32	subFrame = wk->putFrameSub + wk->printSubPos;
 			WriteItemFrame( wk, pos, subFrame );
@@ -1508,11 +1671,10 @@ static BOOL DrawListItemSub( FRAMELIST_WORK * wk, s32 pos, s8 py )
 					drawPy * 8 - wk->listBgScoll,
 					FALSE );
 			}
-			return TRUE;
+		}else{
+			ClearItemFrame( wk, wk->hed.subBG, py );
 		}
 	}
-	ClearItemFrame( wk, wk->hed.subBG, py );
-	return FALSE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1549,6 +1711,17 @@ void FRAMELIST_ChangePosPalette( FRAMELIST_WORK * wk, u16 pos, u16 pal )
 	GFL_BG_LoadScreenV_Req( wk->hed.mainBG );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置のパレット変更
+ *
+ * @param		wk			ワーク
+ * @param		now			現在のカーソル位置
+ * @param		old			前回のカーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ChangeCursorPosPalette( FRAMELIST_WORK * wk, u16 now, u16 old )
 {
 	if( old < wk->listPosMax ){
@@ -1561,7 +1734,15 @@ static void ChangeCursorPosPalette( FRAMELIST_WORK * wk, u16 now, u16 old )
 	}
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＭＰ転送
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PrintTransMain( FRAMELIST_WORK * wk )
 {
 	u32	i;
@@ -1573,13 +1754,9 @@ static void PrintTransMain( FRAMELIST_WORK * wk )
 }
 
 
-/*
-static void CallBack_Dummy( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp )
-{
-//	OS_Printf( "call back\n" );
-}
-*/
-
+//============================================================================================
+//	ワーク操作関連
+//============================================================================================
 
 //--------------------------------------------------------------------------------------------
 /**
