@@ -664,6 +664,13 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
     if(ZONEDATA_IsUnionRoom(FIELDMAP_GetZoneID(fieldWork)) == TRUE){
       return EVENT_ChangeMapFromUnion( gsys, fieldWork );
     }
+        //デバッグ用チェック
+      #ifdef  PM_DEBUG
+        event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
+        if (event != NULL) {
+          return event;
+        }
+      #endif //debug
     return NULL;
   #else
     return EVENT_ChangeMapFromUnion( gsys, fieldWork );
