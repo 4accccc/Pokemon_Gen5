@@ -296,13 +296,13 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
     if ( zenkoku_flag == FALSE )
     {
       //ちほうずかん（全国モード前）は「見た数」
-      count = ZUKANSAVE_GetLocalPokeSeeCount( zw );
+      count = ZUKANSAVE_GetLocalPokeSeeCount( zw, heap_id );
       tbl = LocalSeeTable;
     }
     else
     {
       //ぜんこくずかんは「捕まえた数」
-      count = ZUKANSAVE_GetZukanPokeGetCount( zw );
+      count = ZUKANSAVE_GetZukanPokeGetCount( zw, heap_id );
       tbl = GlobalGetTable;
     }
     break;
@@ -311,13 +311,13 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
     if ( zenkoku_flag == TRUE )
     {
       //ちほうずかん（全国モード後）は「捕まえた数」
-      count = ZUKANSAVE_GetLocalPokeGetCount( zw );
+      count = ZUKANSAVE_GetLocalPokeGetCount( zw, heap_id );
       tbl = LocalGetTable;
     }
     else
     {
       //ちほうずかん（全国モード前）は「見た数」
-      count = ZUKANSAVE_GetLocalPokeSeeCount( zw );
+      count = ZUKANSAVE_GetLocalPokeSeeCount( zw, heap_id );
       tbl = LocalSeeTable;
     }
     break;
@@ -326,7 +326,7 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
     if ( zenkoku_flag == TRUE )
     {
       //ぜんこくずかんは「捕まえた数」
-      count = ZUKANSAVE_GetZukanPokeGetCount( zw );
+      count = ZUKANSAVE_GetZukanPokeGetCount( zw, heap_id );
       tbl = GlobalGetTable;
     }
     else

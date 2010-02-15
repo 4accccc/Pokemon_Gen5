@@ -15,6 +15,7 @@
 #include <gflib.h>
 
 #include "pm_version.h"
+#include "arc_def.h"
 #include "system/gfl_use.h"
 #include "savedata/save_tbl.h"
 #include "savedata/save_control.h"
@@ -23,14 +24,13 @@
 #include "savedata/zukan_savedata.h"
 #include "poke_tool/poke_personal.h"
 
+#include "zukan_data.naix"
+
 
 //#include "include/application/zukanlist/zkn_world_text_data.h"
 
 // 海外版図鑑テキスト処理が存在していたら１、無かったら０
-#define FOREIGN_TEXT_FUNC   ( 0 )
-
-// イッシュ図鑑テーブルが無い間は全部の図鑑情報から数えるようにする(1:無い 0:イッシュ図鑑ある)
-#define ZUKAN_ISSHU_TABLE_NONE  ( 1 )
+//#define FOREIGN_TEXT_FUNC   ( 0 )
 
 
 //============================================================================================
@@ -1414,27 +1414,31 @@ static int get_threeform_poke_see_form( const ZUKAN_SAVEDATA * zw, u32 monsno, i
 static BOOL check_ZenkokuCompMonsno( u16 monsno )
 {
   int i;
-  BOOL cut_check;
-  static const u16 cut_check_monsno[ ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM ] = {
-    MONSNO_MYUU,
-    MONSNO_SEREBHI,
-    MONSNO_ZIRAATI,
-    MONSNO_DEOKISISU,
-    MONSNO_FIONE,
-    MONSNO_MANAFI,
-    MONSNO_DAAKURAI,
-    MONSNO_SHEIMI,
-    MONSNO_ARUSEUSU,
+  static const u16 cut_check_monsno[] = {
+    MONSNO_MYUU,				// ミュウ
+    MONSNO_SEREBHI,			// セレビィ
+    MONSNO_ZIRAATI,			// ジラーチ
+    MONSNO_DEOKISISU,		// デオキシス
+    MONSNO_FIONE,				// フィオネ
+    MONSNO_MANAFI,			// マナフィ
+    MONSNO_DAAKURAI,		// ダークライ
+    MONSNO_SHEIMI,			// シェイミ
+    MONSNO_ARUSEUSU,		// アルセウス
+		MONSNO_TUTINOKAMI,	// ツチノカミ
+		MONSNO_RAI,					// ライ
+		MONSNO_DARUTANISU,	// ダルタニス
+		MONSNO_MERODHIA,		// メロディア
+		MONSNO_INSEKUTA,		// インセクタ
+		MONSNO_BIKUTHI,			// ビクティ
   };
 
   // チェック除外ポケモンチェック
-  cut_check = TRUE;
-  for( i=0; i<ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM; i++ ){
-    if( cut_check_monsno[ i ] == monsno ){
-      cut_check = FALSE;
+  for( i=0; i<NELEMS(cut_check_monsno); i++ ){
+    if( cut_check_monsno[i] == monsno ){
+      return FALSE;
     }
   }
-  return cut_check;
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -1445,20 +1449,22 @@ static BOOL check_ZenkokuCompMonsno( u16 monsno )
 static BOOL check_LocalCompMonsno( u16 monsno )
 {
   int i;
-  BOOL cut_check;
-  static const u16 cut_check_monsno[ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM] = {
-    MONSNO_MYUU,
-    MONSNO_SEREBHI,
+  static const u16 cut_check_monsno[] = {
+		MONSNO_TUTINOKAMI,	// ツチノカミ
+		MONSNO_RAI,					// ライ
+		MONSNO_DARUTANISU,	// ダルタニス
+		MONSNO_MERODHIA,		// メロディア
+		MONSNO_INSEKUTA,		// インセクタ
+		MONSNO_BIKUTHI,			// ビクティ
   };
 
   // チェック除外ポケモンチェック
-  cut_check = TRUE;
-  for( i=0; i<ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM; i++ ){
-    if( cut_check_monsno[ i ] == monsno ){
-      cut_check = FALSE;
+  for( i=0; i<NELEMS(cut_check_monsno); i++ ){
+    if( cut_check_monsno[i] == monsno ){
+      return FALSE;
     }
   }
-  return cut_check;
+  return TRUE;
 }
 
 
@@ -1775,12 +1781,12 @@ u16 ZUKANSAVE_GetPokeGetCount( const ZUKAN_SAVEDATA * zw )
  *  @return 捕まえた数
  */
 //-----------------------------------------------------------------------------
-u16 ZUKANSAVE_GetZukanPokeGetCount( const ZUKAN_SAVEDATA * zw )
+u16 ZUKANSAVE_GetZukanPokeGetCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 {
   if( ZUKANSAVE_GetZenkokuZukanFlag( zw ) ){
     return ZUKANSAVE_GetPokeGetCount( zw );
   }
-  return ZUKANSAVE_GetLocalPokeGetCount( zw );
+  return ZUKANSAVE_GetLocalPokeGetCount( zw, heapID );
 }
 
 //----------------------------------------------------------
@@ -1791,7 +1797,7 @@ u16 ZUKANSAVE_GetZukanPokeGetCount( const ZUKAN_SAVEDATA * zw )
  * @return  u16   捕まえた数
  */
 //----------------------------------------------------------
-u16 ZUKANSAVE_GetLocalPokeGetCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetLocalPokeGetCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 {
   u16 * buf;
   u16 i;
@@ -1799,15 +1805,7 @@ u16 ZUKANSAVE_GetLocalPokeGetCount(const ZUKAN_SAVEDATA * zw)
 
   zukan_incorrect(zw);
 
-
-#if ZUKAN_ISSHU_TABLE_NONE
-  for( i=1; i<=MONSNO_END; i++ ){
-    if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
-      num++;
-    }
-  }
-#else
-  buf = PokeZukanNo2LocalNoTblLoad();   // @TODO 図鑑NOテーブルがまだ存在しない
+  buf = GFL_ARC_UTIL_Load( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_chihou_no_dat, FALSE, heapID );
   num = 0;
 
   for( i=1; i<=MONSNO_END; i++ ){
@@ -1820,7 +1818,6 @@ u16 ZUKANSAVE_GetLocalPokeGetCount(const ZUKAN_SAVEDATA * zw)
   }
 
   GFL_HEAP_FreeMemory( buf );
-#endif
 
   return num;
 
@@ -1880,12 +1877,12 @@ u16 ZUKANSAVE_GetPokeSeeCount( const ZUKAN_SAVEDATA * zw )
  *  @return 見た数
  */
 //-----------------------------------------------------------------------------
-u16 ZUKANSAVE_GetZukanPokeSeeCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetZukanPokeSeeCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 {
   if( ZUKANSAVE_GetZenkokuZukanFlag( zw ) ){
     return ZUKANSAVE_GetPokeSeeCount( zw );
   }
-  return ZUKANSAVE_GetLocalPokeSeeCount( zw );
+  return ZUKANSAVE_GetLocalPokeSeeCount( zw, heapID );
 }
 
 //----------------------------------------------------------
@@ -1896,7 +1893,7 @@ u16 ZUKANSAVE_GetZukanPokeSeeCount(const ZUKAN_SAVEDATA * zw)
  * @return  u16   見つけた数
  */
 //----------------------------------------------------------
-u16 ZUKANSAVE_GetLocalPokeSeeCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetLocalPokeSeeCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 {
   u16 * buf;
   u16 i;
@@ -1904,15 +1901,7 @@ u16 ZUKANSAVE_GetLocalPokeSeeCount(const ZUKAN_SAVEDATA * zw)
 
   zukan_incorrect(zw);
 
-#if ZUKAN_ISSHU_TABLE_NONE
-
-  for( i=1; i<=MONSNO_END; i++ ){
-    if( ZUKANSAVE_GetPokeSeeFlag( zw, i ) == TRUE ){
-       num++;
-    }
-  }
-#else
-  buf = PokeZukanNo2LocalNoTblLoad();
+  buf = GFL_ARC_UTIL_Load( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_chihou_no_dat, FALSE, heapID );
   num = 0;
 
   for( i=1; i<=MONSNO_END; i++ ){
@@ -1925,7 +1914,7 @@ u16 ZUKANSAVE_GetLocalPokeSeeCount(const ZUKAN_SAVEDATA * zw)
   }
 
   GFL_HEAP_FreeMemory( buf );
-#endif
+
   return num;
 }
 
@@ -2069,12 +2058,12 @@ BOOL ZUKANSAVE_CheckZenkokuComp(const ZUKAN_SAVEDATA * zw)
  *  @retval FALSE 未完成
  */
 //-----------------------------------------------------------------------------
-BOOL ZUKANSAVE_CheckLocalComp(const ZUKAN_SAVEDATA * zw)
+BOOL ZUKANSAVE_CheckLocalComp( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 {
   u16 num;
 
   // 地方図鑑完成に必要なポケモンを何匹捕まえたか
-  num = ZUKANSAVE_GetLocalGetCompCount( zw );
+  num = ZUKANSAVE_GetLocalGetCompCount( zw, heapID );
 
   if( num >= ZUKANSAVE_LOCAL_COMP_NUM ){
     return TRUE;
@@ -2094,8 +2083,7 @@ u16 ZUKANSAVE_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zw)
 {
   int i;
   u16 num;
-  // エルフィ　マナフィ　ダーク　エリウス　アウス
-  // 以外を捕まえていたらOK
+
   num = 0;
   for( i=1; i<=ZUKANSAVE_ZENKOKU_MONSMAX; i++ ){
     if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
@@ -2115,26 +2103,14 @@ u16 ZUKANSAVE_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zw)
  *  @return 完成に必要なポケモンを見つけた数
  */
 //-----------------------------------------------------------------------------
-u16 ZUKANSAVE_GetLocalGetCompCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetLocalGetCompCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 {
   u16 * buf;
   u16 i;
   u16 num=0;
 
+  buf = GFL_ARC_UTIL_Load( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_chihou_no_dat, FALSE, heapID );
 
-#if ZUKAN_ISSHU_TABLE_NONE
-
-  for( i=1; i<=MONSNO_END; i++ ){
-    if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
-      num++;
-    }
-  }
-
-#else
-
-  buf = PokeZukanNo2LocalNoTblLoad();
-  // ミュウとセレビィ
-  // 以外を捕まえていたらOK
   for( i=1; i<=ZUKANSAVE_ZENKOKU_MONSMAX; i++ ){
     if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
       if( buf[i] != 0 ){
@@ -2144,10 +2120,8 @@ u16 ZUKANSAVE_GetLocalGetCompCount(const ZUKAN_SAVEDATA * zw)
       }
     }
   }
-  OS_Printf("地方コンプリートチェック num = %d\n",num);
-  GFL_HEAP_FreeMemory( buf );
 
-#endif
+  GFL_HEAP_FreeMemory( buf );
 
   return num;
 }

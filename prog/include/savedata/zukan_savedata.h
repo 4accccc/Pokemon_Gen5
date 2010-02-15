@@ -97,8 +97,8 @@ extern void ZUKANSAVE_Init(ZUKAN_SAVEDATA * zs);
 extern u16 ZUKANSAVE_GetPokeGetCount(const ZUKAN_SAVEDATA * zs);
 extern u16 ZUKANSAVE_GetPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 
-extern u16 ZUKANSAVE_GetLocalPokeGetCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZUKANSAVE_GetLocalPokeSeeCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetLocalPokeGetCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
+extern u16 ZUKANSAVE_GetLocalPokeSeeCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
 
 // ポケモン見た登録・ポケモン捕まえた登録
 extern void ZUKANSAVE_SetPokeSee(ZUKAN_SAVEDATA * zs, POKEMON_PARAM * pp);
@@ -106,17 +106,17 @@ extern void ZUKANSAVE_SetPokeGet(ZUKAN_SAVEDATA * zs, POKEMON_PARAM * pp);
 
 // ゼンコク図鑑持っているときー＞全国用の各数字を返す
 // イッシュ図鑑しかもっていないときー＞イッシュ図鑑用の各数字を返す
-extern u16 ZUKANSAVE_GetZukanPokeGetCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZUKANSAVE_GetZukanPokeSeeCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetZukanPokeGetCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
+extern u16 ZUKANSAVE_GetZukanPokeSeeCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
 
 
 // ゼンコク図鑑　イッシュ図鑑
 // 完成に必要なポケモンだけでカウントした値を取得
 extern u16 ZUKANSAVE_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZUKANSAVE_GetLocalGetCompCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetLocalGetCompCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
 
 extern BOOL ZUKANSAVE_CheckZenkokuComp(const ZUKAN_SAVEDATA * zs);
-extern BOOL ZUKANSAVE_CheckLocalComp(const ZUKAN_SAVEDATA * zs);
+extern BOOL ZUKANSAVE_CheckLocalComp( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
 
 extern BOOL ZUKANSAVE_GetPokeGetFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);
 extern BOOL ZUKANSAVE_GetPokeSeeFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);
