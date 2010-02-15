@@ -126,9 +126,6 @@ EVENT_START	ev_c04r0101_boy1_btltalk
   DEFINE_LOCAL last_msg
 
   _TALK_OBJ_START()
-  //「教えて」
-  _BALLOONWIN_TALKOBJ_MSG( msg_touroku_01 )
-  _BALLOONWIN_CLOSE()
 
   _CALL easy_talk_loop
 
@@ -141,7 +138,7 @@ EVENT_START	ev_c04r0101_boy1_btltalk
     $last_msg = msg_touroku_05
   ENDIF
 
-  _BALLOONWIN_TALKOBJ_MSG( last_msg )
+  _BALLOONWIN_TALKOBJ_MSG_DOWN( last_msg )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
@@ -153,15 +150,20 @@ easy_talk_loop:
 
   $exit = FALSE
 
+  //「教えて」
+  _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_touroku_01 )
+
   WHILE $exit == FALSE
     //リスト作成
     _BMPMENU_INIT_EX( 1,1,0,1,list_ret )
     _BMPMENU_MAKE_LIST( msg_touroku__win_01, 1 )  //自己紹介
     _BMPMENU_MAKE_LIST( msg_touroku__win_02, 2 )  //勝ったとき
     _BMPMENU_MAKE_LIST( msg_touroku__win_03, 3 )  //負けたとき
+    _BMPMENU_MAKE_LIST( msg_touroku__win_05, 4 )  //一番になったとき
     _BMPMENU_MAKE_LIST( msg_touroku__win_04, 0 )  //おしえない
 
     _BMPMENU_START()
+    _BALLOONWIN_CLOSE()   //ウィンドウ閉じる
     //キャンセルチェック
     IF $list_ret != EV_WIN_B_CANCEL THEN
       IF $list_ret != 0 THEN
@@ -179,9 +181,13 @@ easy_talk_loop:
         CASE 3 THEN
           $msg = msg_touroku_03     //負けたとき
           $easy_talk_mode = EASYTALK_MODE_LOSE
+        CASE 4 THEN
+          $msg = msg_touroku_08     //一番になったとき
+          $easy_talk_mode = EASYTALK_MODE_TOP
+
         ENDSWITCH
 
-        _BALLOONWIN_TALKOBJ_MSG( msg )
+        _BALLOONWIN_TALKOBJ_MSG_DOWN( msg )
         _BALLOONWIN_CLOSE()
         //簡易会話アプリ
         {
@@ -196,10 +202,10 @@ easy_talk_loop:
 
         IF $SCWK_ANSWER == TRUE THEN
           //「他にも教えて」
-          _BALLOONWIN_TALKOBJ_MSG( msg_touroku_07 )
+          _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_touroku_07 )
           _YES_NO_WIN( SCWK_ANSWER )
-          _BALLOONWIN_CLOSE()
           IF $SCWK_ANSWER != 0 THEN   //教えない。終了
+            _BALLOONWIN_CLOSE() //ウィンドウ閉じる
             $SCWK_ANSWER = TRUE
             $exit = TRUE    //終了
           ENDIF
