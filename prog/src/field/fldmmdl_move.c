@@ -2232,6 +2232,41 @@ BOOL MMDL_UpdateCurrentMapAttr( MMDL * mmdl )
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * 指定動作モデルの画面サイズの範囲内に自機が居るかどうか
+ * @param 
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL MMDL_CheckPlayerDispSizeRect( const MMDL *mmdl )
+{
+  MMDL *jiki;
+  
+  jiki = MMDLSYS_SearchMMdlPlayer( MMDL_GetMMdlSys(mmdl) );
+  
+  if( jiki != NULL ){
+    MMDL_RECT rect;
+    s16 jx = MMDL_GetGridPosX( jiki );
+    s16 jz = MMDL_GetGridPosZ( jiki );
+    s16 gx = MMDL_GetGridPosX( mmdl );
+    s16 gz = MMDL_GetGridPosZ( mmdl );
+    
+    rect.left = gx - 18; //1Grid 16dotで。さらに緩めな判定として2Grid足す
+    rect.right = gx + 17;
+    rect.top = gz - 18;
+    rect.bottom = gz + 17;
+    
+    if( rect.top <= jz && rect.bottom >= jz ){
+      if( rect.left <= jx && rect.right >= jx ){
+        return( TRUE );
+      }
+    }
+  }
+  
+  return( FALSE );
+}
+
 //======================================================================
 //  描画初期化、復帰直後に呼ばれる動作初期化関数
 //======================================================================

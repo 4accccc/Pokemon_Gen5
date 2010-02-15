@@ -249,8 +249,10 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  s16 seq_no;
-  s16 turn_flag;
+  u8 seq_no;
+  u8 turn_flag;
+  u8 react_count;
+  u8 padding;
   RT_KURUKURU_WORK kurukuru;
 }MV_RT2_WORK;
 
@@ -265,7 +267,12 @@ typedef struct
   u8 turn_no;
   u8 turn_check_no;
   u8 turn_check_type;
-  int tbl_id;
+  
+  u8 tbl_id;
+  u8 react_count;
+  u8 padding0;
+  u8 padding1;
+  
   RT_KURUKURU_WORK kurukuru;
 }MV_RT3_WORK;
 
@@ -280,10 +287,12 @@ typedef struct
   s8 turn_no;
   u8 turn_check_no;
   u8 turn_check_type;
+  
   u8 tbl_id;
   u8 rev_flag;
-  u8 dmy0;
-  u8 dmy1;
+  u8 react_count;
+  u8 padding;
+   
   RT_KURUKURU_WORK kurukuru;
 }MV_RT4_WORK;
 
@@ -303,7 +312,9 @@ static int TblIDRndGet( int id, int end );
 static const int * MoveDirTblIDSearch( int id );
 static int TrJikiDashSearch( MMDL * mmdl );
 static int TrJikiDashSearchTbl( MMDL * mmdl, int id, int end );
-static BOOL checkJikiDispSize( const MMDL *mmdl );
+static BOOL MMDL_CheckPlayerDispSizeRect( const MMDL *mmdl );
+static BOOL checkEvTypeDashReact( const MMDL *mmdl, u8 *count );
+static BOOL checkMMdlEventTypeDashAccel( const MMDL *mmdl );
 
 static void MvRndRectMake( MMDL * mmdl, RECT *rect );
 static int MvRndRectMoveLimitCheck( MMDL * mmdl, int dir );
@@ -550,7 +561,7 @@ void MMDL_MoveDirRnd_Move( MMDL * mmdl )
   
   if( type == EV_TYPE_TRAINER_DASH_ALTER )
   {
-    if( checkJikiDispSize(mmdl) == TRUE ){
+    if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
       if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B) ){
         u16 dir = MMDL_GetDirDisp( mmdl );
         dir = get_DashAlterNextDir( MMDL_GetMoveCode(mmdl), dir );
@@ -782,7 +793,7 @@ void MMDL_MvRnd_Move( MMDL * mmdl )
       break;
     }
     
-    work->seq_no++;
+    work->seq_no++; //即 次のシーケンスへ移る
   case 3:
     ret = TblIDRndGet( work->tbl_id, DIR_NOT );
     MMDL_SetDirAll( mmdl, ret );
@@ -1079,7 +1090,7 @@ void MMDL_MoveSpin_Move( MMDL * mmdl )
 //--------------------------------------------------------------
 static int MvSpinMove_DirCmdSet( MMDL * mmdl, MV_SPIN_DIR_WORK *work )
 {
-  int ret = TrJikiDashSearchTbl( mmdl, DIRID_MvDirSpin_DirTbl, DIR_NOT );
+ int ret = TrJikiDashSearchTbl( mmdl, DIRID_MvDirSpin_DirTbl, DIR_NOT );
   
   if( ret == DIR_NOT ){
     ret = MMDL_GetDirDisp( mmdl );
@@ -1121,20 +1132,34 @@ static int MvSpinMove_CmdAction( MMDL * mmdl, MV_SPIN_DIR_WORK *work )
 //--------------------------------------------------------------
 static int MvSpinMove_Wait( MMDL * mmdl, MV_SPIN_DIR_WORK *work )
 {
-  if( work->wait ){
-    if( TrJikiDashSearchTbl(mmdl,DIRID_MvDirSpin_DirTbl,DIR_NOT) != DIR_NOT ){
-      work->seq_no = SEQNO_MV_SPIN_DIR_CMD_SET;
-      return( TRUE );
+  if( MMDL_GetEventType(mmdl) == EV_TYPE_TRAINER_DASH_ALTER ){
+    if( MMDL_CheckPlayerDispSizeRect(mmdl) == FALSE ){
+      return( FALSE );
     }
+
+    if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B) == FALSE ){
+      return( FALSE );
+    }
+    
+    work->seq_no = SEQNO_MV_SPIN_DIR_NEXT_DIR_SET;
+  }else{
+    if( work->wait ){
+      if( TrJikiDashSearchTbl(
+            mmdl,DIRID_MvDirSpin_DirTbl,DIR_NOT) != DIR_NOT ){
+        work->seq_no = SEQNO_MV_SPIN_DIR_CMD_SET;
+        return( TRUE );
+      }
+    }
+  
+    work->wait++;
+  
+    if( work->wait < MV_SPIN_WAIT_FRAME ){
+      return( FALSE );
+    }
+  
+    work->seq_no = SEQNO_MV_SPIN_DIR_NEXT_DIR_SET;
   }
   
-  work->wait++;
-  
-  if( work->wait < MV_SPIN_WAIT_FRAME ){
-    return( FALSE );
-  }
-  
-  work->seq_no = SEQNO_MV_SPIN_DIR_NEXT_DIR_SET;
   return( TRUE );
 }
 
@@ -1417,6 +1442,10 @@ static int MvRt2_DirCheck( MMDL * mmdl, MV_RT2_WORK *work )
 //--------------------------------------------------------------
 static int MvRt2_MoveSet( MMDL * mmdl, MV_RT2_WORK *work )
 {
+  if( checkEvTypeDashReact(mmdl,&work->react_count) == FALSE ){
+    return( FALSE );
+  }
+  
   if( work->turn_flag ){
     int ix,iz,gx,gz;
     
@@ -1452,6 +1481,12 @@ static int MvRt2_MoveSet( MMDL * mmdl, MV_RT2_WORK *work )
     }
     
     ac = AC_WALK_U_8F;
+    
+    if( checkMMdlEventTypeDashAccel(mmdl) ){
+      if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
+        ac = AC_WALK_U_4F;
+      }
+    }
     
     if( ret != MMDL_MOVEHITBIT_NON ){
       ac = AC_STAY_WALK_U_8F;
@@ -1747,6 +1782,10 @@ void MMDL_MoveRoute3_Move( MMDL * mmdl )
 //--------------------------------------------------------------
 static int MvRt3Move_MoveDirSet( MMDL * mmdl, MV_RT3_WORK *work )
 {
+  if( checkEvTypeDashReact(mmdl,&work->react_count) == FALSE ){
+    return( FALSE );
+  }
+  
   if( work->turn_no == work->turn_check_no  ){
     if( work->turn_check_type == MV_RT3_CHECK_TYPE_X ){
       int ix = MMDL_GetInitGridPosX( mmdl );
@@ -1807,6 +1846,12 @@ static int MvRt3Move_MoveDirSet( MMDL * mmdl, MV_RT3_WORK *work )
     
     ac = AC_WALK_U_8F;
     
+    if( checkMMdlEventTypeDashAccel(mmdl) ){
+      if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
+        ac = AC_WALK_U_4F;
+      }
+    }
+ 
     if( (ret != MMDL_MOVEHITBIT_NON) ){
       ac = AC_STAY_WALK_U_8F;
     }
@@ -2067,6 +2112,10 @@ static int MvRt4Move_DiscoveryJump( MMDL * mmdl, MV_RT4_WORK *work )
 //--------------------------------------------------------------
 static int MvRt4Move_MoveDirSet( MMDL * mmdl, MV_RT4_WORK *work )
 {
+  if( checkEvTypeDashReact(mmdl,&work->react_count) == FALSE ){
+    return( FALSE );
+  }
+  
   if( work->turn_no == work->turn_check_no  ){
     if( work->turn_check_type == MV_RT3_CHECK_TYPE_X ){
       int ix = MMDL_GetInitGridPosX( mmdl );
@@ -2126,6 +2175,12 @@ static int MvRt4Move_MoveDirSet( MMDL * mmdl, MV_RT4_WORK *work )
     }
     
     ac = AC_WALK_U_8F;
+
+    if( checkMMdlEventTypeDashAccel(mmdl) ){
+      if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
+        ac = AC_WALK_U_4F;
+      }
+    }
     
     if( (ret != MMDL_MOVEHITBIT_NON) ){
       ac = AC_STAY_WALK_U_8F;
@@ -2386,37 +2441,57 @@ static int TrJikiDashSearchTbl( MMDL * mmdl, int id, int end )
 
 //--------------------------------------------------------------
 /**
- * 指定の動作モデルが配置された位置から画面サイズ範囲内に
- * 自機がいるかどうかチェック。
+ * EV_TYPE_TRAINER_DASH_REACT判定処理
  * @param mmdl MMDL*
- * @retval BOOL TRUE=居る。FALSE=居ない。
+ * @param count カウント格納先
+ * @retval BOOL TRUE=移動可能 FALSE=不可
  */
 //--------------------------------------------------------------
-static BOOL checkJikiDispSize( const MMDL *mmdl )
+static BOOL checkEvTypeDashReact( const MMDL *mmdl, u8 *count )
 {
-  MMDL *jiki;
-  
-  jiki = MMDLSYS_SearchMMdlPlayer( MMDL_GetMMdlSys(mmdl) );
-  
-  if( jiki != NULL ){
-    MMDL_RECT rect;
-    s16 jx = MMDL_GetGridPosX( jiki );
-    s16 jz = MMDL_GetGridPosZ( jiki );
-    s16 gx = MMDL_GetGridPosX( mmdl );
-    s16 gz = MMDL_GetGridPosZ( mmdl );
-    
-    rect.left = gx - 18; //1Grid 16dotで。さらにゆるめ判定として2Grid足す
-    rect.right = gx + 17;
-    rect.top = gz - 18;
-    rect.bottom = gz + 17;
-    
-    if( rect.top <= jz && rect.bottom >= jz ){
-      if( rect.left <= jx && rect.right >= jx ){
-        return( TRUE );
-      }
-    }
+  if( MMDL_GetEventType(mmdl) != EV_TYPE_TRAINER_DASH_REACT ){
+    return( TRUE );
   }
   
+  if( (*count) == 0 ){
+    if( MMDL_CheckPlayerDispSizeRect(mmdl) == FALSE ){
+      return( FALSE );
+    }
+      
+    if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B) == 0 ){
+      return( FALSE );
+    }
+      
+    *count = MMDL_GetParam( mmdl, MMDL_PARAM_1 );
+    GF_ASSERT( (*count) && "EV_TYPE_TRAINER_DASH_REACT NONE PARAM\n" );
+    
+  }
+  
+  if( (*count) ){
+    (*count)--;
+  }
+  
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * ダッシュに反応して移動速度を上げるイベントタイプかチェック
+ * @param mmdl MMDL*
+ * @retval BOOL TRUE=そう。
+ */
+//--------------------------------------------------------------
+static BOOL checkMMdlEventTypeDashAccel( const MMDL *mmdl )
+{
+  u16 ev_type = MMDL_GetEventType( mmdl );
+  
+  if( ev_type == EV_TYPE_TRAINER_DASH_ACCEL ||
+      ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_L ||
+      ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_R ||
+      ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L ||
+      ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L ){
+    return( TRUE );
+  }
   return( FALSE );
 }
 
@@ -2444,7 +2519,9 @@ static int MoveSub_KuruKuruCheck( MMDL * mmdl )
   int type = MMDL_GetEventType( mmdl );
   
   if( type == EV_TYPE_TRAINER_SPIN_MOVE_L  ||
-    type == EV_TYPE_TRAINER_SPIN_MOVE_R  ){
+      type == EV_TYPE_TRAINER_SPIN_MOVE_R  ||
+      type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L ||
+      type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_R ){
     return( TRUE );
   }
   
@@ -2461,7 +2538,10 @@ static int MoveSub_KuruKuruCheck( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MoveSub_KuruKuruInit( MMDL * mmdl, RT_KURUKURU_WORK *work )
 {
-  if( MMDL_GetEventType(mmdl) == EV_TYPE_TRAINER_SPIN_MOVE_L ){
+  u16 ev_type = MMDL_GetEventType( mmdl );
+  
+  if( ev_type == EV_TYPE_TRAINER_SPIN_MOVE_L ||
+      ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L ){
     work->spin_type = RT_KURU2_L;
   }else{
     work->spin_type = RT_KURU2_R;

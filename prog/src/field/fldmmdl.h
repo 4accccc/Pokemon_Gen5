@@ -1083,6 +1083,7 @@ extern void MMDL_AddVectorPos( MMDL * mmdl, const VecFx32 *val );
 extern void MMDL_AddVectorPosDir( MMDL * mmdl, u16 dir, fx32 val );
 extern BOOL MMDL_UpdateCurrentHeight( MMDL * mmdl );
 extern BOOL MMDL_UpdateCurrentMapAttr( MMDL * mmdl );
+extern BOOL MMDL_CheckPlayerDispSizeRect( const MMDL *mmdl );
 
 extern void MMDL_CallMoveProcAfterDrawInit( MMDL * mmdl );
 
