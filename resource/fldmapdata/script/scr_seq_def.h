@@ -606,6 +606,22 @@
   .short  \scr_id
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_CONTINUE_RECOVER
+ * @brief コンティニュー時かどうかの判定
+ * @param ret_wk    TRUEのとき、コンティニュータイミング
+ *
+ * FIELD_RECOVER_LABELからのスクリプト以外では常にFALSEになる
+ */
+//--------------------------------------------------------------
+#define _CHECK_CONTINUE_RECOVER( ret_wk ) \
+    _ASM_CHECK_CONTINUE_RECOVER ret_wk
+
+    .macro  _ASM_CHECK_CONTINUE_RECOVER ret_wk
+    .short  EV_SEQ_CHECK_CONTINUE_RECOVER
+    .short  \ret_wk
+    .endm
 
 //======================================================================
 //  分岐命令

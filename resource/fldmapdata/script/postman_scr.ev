@@ -39,7 +39,10 @@ INIT_EVENT_END
 /*						FIELD_RECOVER_LABEL                                   */
 /********************************************************************/
 INIT_EVENT_START  ev_recover_postman
-    _CALL   sub_postman_on_off
+    _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+        _CALL   sub_postman_on_off
+    ENDIF
 INIT_EVENT_END
 
 /********************************************************************/
@@ -49,6 +52,7 @@ sub_postman_on_off:
   //贈り物の存在チェック
 	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_EXISTS, SCWK_ANSWER )
 	IF $SCWK_ANSWER == 0 THEN
+      //贈り物がない場合
       _FLAG_SET( FV_POSTMAN )
       _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJSTAT, SCWK_ANSWER )
       IF $SCWK_ANSWER == SCR_POSTMAN_OBJ_EXISTS THEN
@@ -56,6 +60,7 @@ sub_postman_on_off:
           _OBJ_DEL( POSTMAN_OBJID )
       ENDIF
 	ELSE
+      //贈り物がある場合
       _FLAG_RESET( FV_POSTMAN )
       _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJSTAT, SCWK_ANSWER )
       IF $SCWK_ANSWER == SCR_POSTMAN_OBJ_EXISTS THEN
