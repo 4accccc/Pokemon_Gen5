@@ -47,9 +47,9 @@ palpark_main:
   IF FLAG_OFF( FE_PALPARK_FIRSTTALK ) THEN
     //初回話しかけフラグＯＮ
     _FLAG_SET(FE_PALPARK_FIRSTTALK)
-    //博士「ユー」☆ギザウィンドウ
-    _GIZAWIN_OBJMSG_POS( msg_palpark_first_09, R15R0301_PARK, WIN_NONE )
-    _GIZAWIN_CLOSE()
+    //博士「ユー」
+    _BALLOONWIN_OBJMSG( msg_palpark_first_09, R15R0301_PARK )
+    _BALLOONWIN_CLOSE()
     //初回メッセージ「やってみる？」
     _BALLOONWIN_OBJMSG( msg_palpark_09_b, R15R0301_PARK )
   ELSE
@@ -275,8 +275,8 @@ _RET
 //博士はける
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_doc_in
-	_ANIME_DATA	AC_WALK_U_8F,1
-  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_4F,1
+  _ANIME_DATA	AC_WALK_L_4F,1
   _ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -318,8 +318,8 @@ _ANIME_LABEL	anm_player_out
 //博士もどる
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_doc_out
-	_ANIME_DATA	AC_WALK_R_8F,1
-  _ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
