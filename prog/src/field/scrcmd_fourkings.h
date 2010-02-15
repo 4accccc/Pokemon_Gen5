@@ -40,9 +40,6 @@ extern VMCMD_RESULT EvCmdFourKings_WalkEvent( VMHANDLE *core, void *wk );
 // 四天王部屋 頂上　カメラ設定
 extern VMCMD_RESULT EvCmdFourKings_SetCameraParam( VMHANDLE *core, void *wk );
 
-// 四天王部屋　雷音システム　開始
-extern VMCMD_RESULT EvCmdFourKings_SetGhostSparkSound( VMHANDLE *core, void *wk );
-
 // 四天王部屋　サウンドシステム　開始
 extern VMCMD_RESULT EvCmdFourKings_SetSoundSystem( VMHANDLE *core, void *wk );
 

@@ -573,7 +573,7 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
     // 描画開始
     {
       EV_CIRCLEWALK_DRAWWK* p_drawwk;
-      p_work->p_drawtask = FLDMAPFUNC_Create( FIELDMAP_GetFldmapFuncSys(p_work->p_fieldmap), &sc_DRAWTASK_DATA );
+      p_work->p_drawtask = FLDMAPFUNC_Create( NO_OVERLAY_ID, FIELDMAP_GetFldmapFuncSys(p_work->p_fieldmap), &sc_DRAWTASK_DATA );
       p_drawwk = FLDMAPFUNC_GetFreeWork( p_work->p_drawtask );
       p_drawwk->p_hero = &p_work->hero;
     }
@@ -1321,7 +1321,7 @@ static void GHOST_SPARK_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p
 static void GHOST_SPARK_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
 
 
-static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_GHOST_SPARK_SOUND = 
+const FLDMAPFUNC_DATA c_FLDMAPFUNC_GHOST_SPARK_SOUND = 
 {
   128,
   sizeof(GHOST_SPARK_SOUND),
@@ -1331,22 +1331,6 @@ static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_GHOST_SPARK_SOUND =
   NULL,
 };
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  四天王　ゴースト部屋　雷音　起動
- *
- *	@param	p_fieldmap 
- */
-//-----------------------------------------------------------------------------
-void FIELDMAPFUNC_FourkingsGhostSound( FIELDMAP_WORK* p_fieldmap )
-{
-  FLDMAPFUNC_WORK * p_funcwk;
-  FLDMAPFUNC_SYS* p_funcsys = FIELDMAP_GetFldmapFuncSys( p_fieldmap );
-
-  // 
-  p_funcwk = FLDMAPFUNC_Create(p_funcsys, &sc_FLDMAPFUNC_GHOST_SPARK_SOUND);
-}
 
 
 
@@ -1475,7 +1459,7 @@ static void ESPERT_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fiel
 static void ESPERT_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
 
 
-static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_ESPERT_SOUND = 
+const FLDMAPFUNC_DATA c_FLDMAPFUNC_ESPERT_SOUND = 
 {
   128,
   sizeof(ESPERT_SOUND),
@@ -1485,22 +1469,6 @@ static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_ESPERT_SOUND =
   NULL,
 };
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  エスパー部屋のサウンドシステム開始
- *
- *	@param	p_fieldmap 
- */
-//-----------------------------------------------------------------------------
-void FIELDMAPFUNC_FourkingsEspertSound( FIELDMAP_WORK* p_fieldmap )
-{
-  FLDMAPFUNC_WORK * p_funcwk;
-  FLDMAPFUNC_SYS* p_funcsys = FIELDMAP_GetFldmapFuncSys( p_fieldmap );
-
-  // 
-  p_funcwk = FLDMAPFUNC_Create(p_funcsys, &sc_FLDMAPFUNC_ESPERT_SOUND);
-}
 
 
 //----------------------------------------------------------------------------
@@ -1601,7 +1569,7 @@ static void BAD_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
 static void BAD_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
 
 
-static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_BAD_SOUND = 
+const FLDMAPFUNC_DATA c_FLDMAPFUNC_BAD_SOUND = 
 {
   128,
   sizeof(BAD_SOUND),
@@ -1611,22 +1579,6 @@ static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_BAD_SOUND =
   NULL,
 };
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  悪部屋のサウンドシステム開始
- *
- *	@param	p_fieldmap 
- */
-//-----------------------------------------------------------------------------
-void FIELDMAPFUNC_FourkingsBadSound( FIELDMAP_WORK* p_fieldmap )
-{
-  FLDMAPFUNC_WORK * p_funcwk;
-  FLDMAPFUNC_SYS* p_funcsys = FIELDMAP_GetFldmapFuncSys( p_fieldmap );
-
-  // 
-  p_funcwk = FLDMAPFUNC_Create(p_funcsys, &sc_FLDMAPFUNC_BAD_SOUND);
-}
 
 
 //----------------------------------------------------------------------------
@@ -1652,3 +1604,52 @@ static void BAD_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
   PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_116) );
 }
 
+
+//-----------------------------------------------------------------------------
+/**
+ *    格闘部屋
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	FIGHT SOUND
+//=====================================
+typedef struct 
+{
+  int dummy;
+} FIGHT_SOUND;
+
+
+static void FIGHT_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+static void FIGHT_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+
+
+const FLDMAPFUNC_DATA c_FLDMAPFUNC_FIGHT_SOUND = 
+{
+  128,
+  sizeof(FIGHT_SOUND),
+  FIGHT_SOUND_Create,
+  FIGHT_SOUND_Delete,
+  NULL,
+  NULL,
+};
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  格闘SEシステム  生成
+ */
+//-----------------------------------------------------------------------------
+static void FIGHT_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  格闘SEシステム  破棄
+ */
+//-----------------------------------------------------------------------------
+static void FIGHT_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+}

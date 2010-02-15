@@ -19,6 +19,9 @@ extern "C"{
 #include "gflib.h"
 #include "gamesystem/gamesystem.h"
 #include "field/fieldmap_proc.h"
+#include "field/fieldmap_func.h"
+
+FS_EXTERN_OVERLAY(field_event_fourkings);
 
 //-----------------------------------------------------------------------------
 /**
@@ -48,10 +51,11 @@ extern GMEVENT* EVENT_FourKings_CircleWalk(
 //  頂上カメラIDのテーブル
 extern u32 EVENT_FourKings_GetCameraID( u32 fourkins_no );
 
-// ゴースト部屋の雷音管理システム発動
-extern void FIELDMAPFUNC_FourkingsGhostSound( FIELDMAP_WORK* p_fieldmap );
-extern void FIELDMAPFUNC_FourkingsEspertSound( FIELDMAP_WORK* p_fieldmap );
-extern void FIELDMAPFUNC_FourkingsBadSound( FIELDMAP_WORK* p_fieldmap );
+// 四天王部屋管理タスク発動
+extern const FLDMAPFUNC_DATA c_FLDMAPFUNC_GHOST_SPARK_SOUND;
+extern const FLDMAPFUNC_DATA c_FLDMAPFUNC_ESPERT_SOUND;
+extern const FLDMAPFUNC_DATA c_FLDMAPFUNC_BAD_SOUND;
+extern const FLDMAPFUNC_DATA c_FLDMAPFUNC_FIGHT_SOUND;
 
 #ifdef _cplusplus
 }	// extern "C"{

@@ -45,7 +45,6 @@
 */
 //-----------------------------------------------------------------------------
 
-
 //======================================================================
 //  四天王歩きイベント
 //======================================================================
@@ -103,25 +102,6 @@ VMCMD_RESULT EvCmdFourKings_SetCameraParam( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ゴースト雷音　設定
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdFourKings_SetGhostSparkSound( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK* fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
-
-  // 雷音ON
-  FIELDMAPFUNC_FourkingsGhostSound( fieldWork );
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  四天王部屋サウンドシステム　設定
@@ -132,17 +112,21 @@ VMCMD_RESULT EvCmdFourKings_SetSoundSystem( VMHANDLE *core, void *wk )
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK* fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMAPFUNC_SYS * fldmapFunc = FIELDMAP_GetFldmapFuncSys( fieldWork );
   u16          index = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
 
   switch(index){
   case 1:
-    FIELDMAPFUNC_FourkingsGhostSound( fieldWork );
+    FLDMAPFUNC_Create( FS_OVERLAY_ID(field_event_fourkings), fldmapFunc, &c_FLDMAPFUNC_GHOST_SPARK_SOUND );
     break;
   case 2:
-    FIELDMAPFUNC_FourkingsBadSound( fieldWork );
+    FLDMAPFUNC_Create( FS_OVERLAY_ID(field_event_fourkings), fldmapFunc, &c_FLDMAPFUNC_BAD_SOUND );
+    break;
+  case 3:
+    FLDMAPFUNC_Create( FS_OVERLAY_ID(field_event_fourkings), fldmapFunc, &c_FLDMAPFUNC_FIGHT_SOUND );
     break;
   case 4:
-    FIELDMAPFUNC_FourkingsEspertSound( fieldWork );
+    FLDMAPFUNC_Create( FS_OVERLAY_ID(field_event_fourkings), fldmapFunc, &c_FLDMAPFUNC_ESPERT_SOUND );
     break;
 
   default:

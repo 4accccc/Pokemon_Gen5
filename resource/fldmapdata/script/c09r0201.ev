@@ -42,6 +42,11 @@ _EVENT_DATA_END
 /*				フィールドイニットスクリプト				*/
 /************************************************************/
 INIT_EVENT_START	ev_init_c09r0201
+
+  // あく　音開始
+  // 一番上で呼んでください
+  _FOURKINGS_SET_SOUND_SYSTEM( 2 )
+
 	//四天王（あく）倒しているならワープPOSイベントを有効にする
 	IF FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) THEN
 		
@@ -50,9 +55,6 @@ INIT_EVENT_START	ev_init_c09r0201
 		
 	ENDIF
 
-  // あく　音開始
-  _FOURKINGS_SET_SOUND_SYSTEM( 2 )
-
 INIT_EVENT_END
 
 
@@ -60,6 +62,10 @@ INIT_EVENT_END
 /*				フィールドリカバースクリプト				*/
 /************************************************************/
 INIT_EVENT_START	ev_recover_c09r0201
+
+  // あく　音開始 
+  // 一番上で呼んでください
+  _FOURKINGS_SET_SOUND_SYSTEM( 2 )
 	
 	//四天王（あく）倒しているならワープPOSイベントを有効にする
 	IF FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) THEN
@@ -80,9 +86,6 @@ INIT_EVENT_START	ev_recover_c09r0201
 		_BMODEL_DIRECT_ANIME_SET_LOOP( SCR_BMID_EVENT, 16, 8 )
 		
 	ENDIF
-
-  // あく　音開始
-  _FOURKINGS_SET_SOUND_SYSTEM( 2 )
 
 INIT_EVENT_END
 

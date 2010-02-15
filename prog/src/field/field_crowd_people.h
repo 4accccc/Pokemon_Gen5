@@ -18,6 +18,7 @@ extern "C"{
 
 #include "fieldmap_func.h"
 
+FS_EXTERN_OVERLAY(field_crowd_people);
 
 //-----------------------------------------------------------------------------
 /**
@@ -38,7 +39,7 @@ extern "C"{
 */
 //-----------------------------------------------------------------------------
 
-extern FLDMAPFUNC_WORK * FIELD_CROWD_PEOPLE_Create( FLDMAPFUNC_SYS * sys );
+extern const FLDMAPFUNC_DATA c_FLDMAPFUNC_DATA;
 
 #ifdef _cplusplus
 }	// extern "C"{

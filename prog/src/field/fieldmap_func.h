@@ -5,6 +5,7 @@
  * @author	tamada GAME FREAK inc.
  * @date	2006.03.15
  * @date	2009.07.22	DSから移植	tomoya 
+ * @date	2010.02.15	GYM GIMMICのオーバーレイ上のプログラムとしてタスクを使用できるように、Overlay指定を追加
  */
 //============================================================================================
 
@@ -53,7 +54,7 @@ extern void FLDMAPFUNC_Sys_Draw3D(FLDMAPFUNC_SYS * sys);
 //------------------------------------------------------------------
 //		個別処理用関数
 //------------------------------------------------------------------
-extern FLDMAPFUNC_WORK * FLDMAPFUNC_Create(FLDMAPFUNC_SYS * sys, const FLDMAPFUNC_DATA * data);
+extern FLDMAPFUNC_WORK * FLDMAPFUNC_Create(FSOverlayID ov_id, FLDMAPFUNC_SYS * sys, const FLDMAPFUNC_DATA * data);
 extern void FLDMAPFUNC_Delete(FLDMAPFUNC_WORK * fwk);
 
 //------------------------------------------------------------------

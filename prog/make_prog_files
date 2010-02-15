@@ -570,7 +570,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fieldskill_mapeff.c \
         field/fld_wipe_3dobj.c \
         field/scrcmd_fldci.c \
-        field/event_fourkings.c \
         field/fskill_sorawotobu.c \
         field/event_season_display.c \
         field/pleasure_boat.c \
@@ -599,8 +598,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         test/camera_adjust_view.c \
 				field/event_comm_talk.c \
 				field/event_comm_talked.c \
-				field/fog_light_test.c \
-				field/field_crowd_people.c \
 				field/field_season_time.c \
 				net_app/comm_entry_menu.c \
 				net_app/comm_entry_menu_comm_command.c \
@@ -740,6 +737,14 @@ SRCS_OVERLAY_FIELD_GIMMICK_H01 = field/field_gimmick_h01.c
 #===> SRCS_OVERLAY_UNION_ROOM
 #===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_GIMMICK_H03 = field/field_gimmick_h03.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_EVENT_FOURKINGS = field/event_fourkings.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_CROWD_PEOPLE = field/field_crowd_people.c
 
 # マッパーサンプル
 #===> SRCS_OVERLAY_DEV_IRC

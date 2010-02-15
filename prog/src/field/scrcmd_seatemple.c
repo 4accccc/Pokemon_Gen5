@@ -179,7 +179,7 @@ VMCMD_RESULT EvCmdSeaTempleStart( VMHANDLE *core, void *wk )
   FIELDMAP_WORK* p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FLDMAPFUNC_SYS* p_funcsys = FIELDMAP_GetFldmapFuncSys( p_fieldmap );
 
-  FLDMAPFUNC_Create(p_funcsys, &sc_FLDMAPFUNC_SEATEMPLE);
+  FLDMAPFUNC_Create(NO_OVERLAY_ID,  p_funcsys, &sc_FLDMAPFUNC_SEATEMPLE);
 
   return VMCMD_RESULT_CONTINUE;
 }

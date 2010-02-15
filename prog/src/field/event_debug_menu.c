@@ -88,8 +88,6 @@
 #include "event_debug_mvpoke.h"
 #include "field_bbd_color.h"
 
-#include "fog_light_test.h"
-
 #include "gamesystem/pm_weather.h"
 
 #include "debug/debug_mystery_card.h"
@@ -198,7 +196,6 @@ static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL debugMenuCallProc_FogLightTest( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_MakeEgg( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -249,7 +246,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_FSKILL, debugMenuCallProc_FieldSkillList },  //フィールド技（波乗り、怪力等）
   { DEBUG_FIELD_MVPOKE,   debugMenuCallProc_DebugMvPokemon },     //いどうポケモン
   { DEBUG_FIELD_STR62,   debugMenuCallProc_BBDColor },            //ビルボードの色
-  { DEBUG_FIELD_FOG_TEST,   debugMenuCallProc_FogLightTest },     //FOG表現
   { DEBUG_FIELD_ENCEFF, debugMenuCallProc_EncEffList },           //エンカウントエフェクト
 
   { DEBUG_FIELD_TITLE_01, (void*)BMPMENULIST_LABEL },       //○システム
@@ -4362,25 +4358,6 @@ static GMEVENT_RESULT debugMenuControlBbdColor(
   return( GMEVENT_RES_CONTINUE );
 }
 
-
-
-//-----------------------------------------------------------------------------
-/**
- *    FOG　LIGHTテスト
- */
-//-----------------------------------------------------------------------------
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  FOG LIGHT テスト実行
- */
-//-----------------------------------------------------------------------------
-static BOOL debugMenuCallProc_FogLightTest( DEBUG_MENU_EVENT_WORK *wk )
-{
-  // FOG LIGHT 処理 ON
-  FOG_LIGHT_TEST_Init( wk->fieldWork );
-  return( FALSE );
-}
 
 //======================================================================
 //  デバッグメニュー　エンカウントエフェクトリスト

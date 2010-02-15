@@ -372,7 +372,7 @@ static void FIELD_CROWD_PEOPLE_NOISEWK_Off( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, F
 
 
 
-static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_DATA = 
+const FLDMAPFUNC_DATA c_FLDMAPFUNC_DATA = 
 {
   0,
   sizeof(FIELD_CROWD_PEOPLE),
@@ -382,21 +382,6 @@ static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_DATA =
   NULL,
 };
 
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  群集管理タスク生成
- *
- *	@param	sys   システム
- *
- *	@return ワーク
- */
-//-----------------------------------------------------------------------------
-FLDMAPFUNC_WORK * FIELD_CROWD_PEOPLE_Create( FLDMAPFUNC_SYS * sys )
-{
-  return FLDMAPFUNC_Create( sys, &sc_FLDMAPFUNC_DATA );
-}
 
 
 

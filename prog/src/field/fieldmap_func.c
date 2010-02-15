@@ -47,6 +47,7 @@ struct FLDMAPFUNC_WORK{
 	GFL_TCB* drawtcb;				///<保持している描画TCBへのポインタ
 	const FLDMAPFUNC_DATA * data;	///<定義データへのポインタ
 	void * free_work;				///<それぞれで使用するワークへのポインタ
+  FSOverlayID ov_id;      ///< オーバーレイID
 };
 
 #define	DEFAULT_FREEWORK_SIZE	(sizeof(FREE_WORK))
@@ -172,12 +173,18 @@ static void FLDMAPFUNC_DrawTcb(GFL_TCB* tcb, void * work)
  * @return	FLDMAPFUNC_WORK	生成した制御タスクのワークへのポインタ
  */
 //------------------------------------------------------------------
-FLDMAPFUNC_WORK * FLDMAPFUNC_Create(FLDMAPFUNC_SYS * sys, const FLDMAPFUNC_DATA * data)
+FLDMAPFUNC_WORK * FLDMAPFUNC_Create(FSOverlayID ov_id, FLDMAPFUNC_SYS * sys, const FLDMAPFUNC_DATA * data)
 {
 	int i;
 	FLDMAPFUNC_WORK * fwk;
 	for (fwk = sys->array, i = 0; i < sys->max; fwk ++, i++) {
 		if (fwk->tcb == NULL) {
+
+      // Overlay読み込み
+      if(ov_id != NO_OVERLAY_ID){
+        GFL_OVERLAY_Load( ov_id );
+      }
+      fwk->ov_id = ov_id;
 			fwk->tcb = GFL_TCB_AddTask(sys->mainsys, FLDMAPFUNC_Tcb, fwk, data->pri);
 			fwk->drawtcb = GFL_TCB_AddTask(sys->drawsys, FLDMAPFUNC_DrawTcb, fwk, data->pri);
 			fwk->sys = sys;
@@ -216,6 +223,11 @@ void FLDMAPFUNC_Delete(FLDMAPFUNC_WORK * fwk)
 	}
 	GFL_TCB_DeleteTask(fwk->tcb);
 	GFL_TCB_DeleteTask(fwk->drawtcb);
+
+  // Overlay破棄
+  if(fwk->ov_id != NO_OVERLAY_ID){
+		GFL_OVERLAY_Unload( fwk->ov_id );
+  }
 	GFL_STD_MemClear(fwk, sizeof(FLDMAPFUNC_WORK));
 }
 
