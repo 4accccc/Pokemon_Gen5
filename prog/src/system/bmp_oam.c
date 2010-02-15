@@ -398,6 +398,24 @@ void BmpOam_ActorSetSoftPriprity( BMPOAM_ACT_PTR bact, u8 soft_pri )
 	}
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPOAMアクターのBGプライオリティをセット
+ *
+ *	@param	BMPOAM_ACT_PTR bact
+ *	@param	bg_pri
+ */
+//-----------------------------------------------------------------------------
+void BmpOam_ActorSetBgPriority( BMPOAM_ACT_PTR bact, u8 bg_pri )
+{ 
+	int num_y, num_x;
+	for(num_y = 0; num_y < bact->act_num_y; num_y++){
+		for(num_x = 0; num_x < bact->act_num_x; num_x++){
+      GFL_CLACT_WK_SetBgPri( bact->cap[num_x + num_y*bact->act_num_x], bg_pri );
+		}
+	}
+}
+
 //==============================================================================
 //	ローカル関数
 //==============================================================================

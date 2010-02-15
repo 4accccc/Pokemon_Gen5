@@ -46,6 +46,7 @@ extern void BmpOam_ActorGetPos(BMPOAM_ACT_PTR bact, s16 *x, s16 *y);
 extern void BmpOam_ActorSetPos(BMPOAM_ACT_PTR bact, s16 x, s16 y);
 extern void BmpOam_ActorSetObjMode( BMPOAM_ACT_PTR bact, GXOamMode mode );
 extern void BmpOam_ActorSetSoftPriprity( BMPOAM_ACT_PTR bact, u8 soft_pri );
+extern void BmpOam_ActorSetBgPriority( BMPOAM_ACT_PTR bact, u8 bg_pri );
 
 
 #endif	//__BMP_OAM_H__
