@@ -3053,7 +3053,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
   { 
     { 
       const GIFT_PRESENT_POKEMON  *cp_pokemon = &cp_setup->p_data->data.pokemon;
-      POKEMON_PARAM* p_pp = MYSTERY_PokemonCreate( cp_pokemon, GFL_HEAP_LOWID(heapID), p_gamedata );
+      POKEMON_PARAM* p_pp = MYSTERY_CreatePokemon( cp_setup->p_data, GFL_HEAP_LOWID(heapID), p_gamedata );
       ARCHANDLE *p_handle = POKE2DGRA_OpenHandle( heapID );
 
       p_wk->res_silhouette_plt  = POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, draw_type, cp_setup->silhouette_obj_plt_num*0x20, heapID );

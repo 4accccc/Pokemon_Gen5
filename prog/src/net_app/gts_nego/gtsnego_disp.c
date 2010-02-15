@@ -75,7 +75,7 @@ typedef enum
 {
   PLT_NEGOOBJ,  
   PLT_UNION,  
-  PLT_MENUBAR,  
+  PLT_MENUBAR,
   PLT_RESOURCE_MAX,
   CHAR_NEGOOBJ = PLT_RESOURCE_MAX,
   CHAR_UNION,
@@ -162,6 +162,7 @@ struct _GTSNEGO_DISP_WORK {
   
   GFL_CLWK* crossIcon;
   GFL_CLWK* menubarObj;
+  GFL_CLWK* pTrOAM;
   GFL_CLWK* scrollbarOAM[_SCROLLBAR_OAM_NUM];
   GFL_CLWK* unionOAM[GTSNEGO_WINDOW_MAXNUM];
 };
@@ -295,7 +296,6 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
 
   _RemoveMenuBarObj(pWork);
 
-  
   _ArrowRelease(pWork);
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_NEGOOBJ] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_NEGOOBJ] );
@@ -1388,3 +1388,5 @@ void GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max)
   GFL_CLACT_WK_SetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
 
 }
+
+

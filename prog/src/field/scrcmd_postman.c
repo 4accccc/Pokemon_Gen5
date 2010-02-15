@@ -204,7 +204,7 @@ static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, GIFT_PACK_DATA * gpd )
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
   POKEMON_PARAM * pp;
-  pp = MYSTERY_PokemonCreate( &(gpd->data.pokemon), heapID, gamedata );
+  pp = MYSTERY_CreatePokemon( gpd, heapID, gamedata );
   return pp;
 }
 //--------------------------------------------------------------
@@ -264,7 +264,7 @@ static BOOL PFuncCheckItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_D
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
 
-  item_no = gpd->data.item.itemNo;
+  item_no = MYSTERY_CreateItem(gpd);
 
   return MYITEM_AddCheck( myitem, item_no, 1, heapID );
 }

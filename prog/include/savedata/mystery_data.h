@@ -41,10 +41,10 @@
 #define MYSTERYGIFT_TYPE_NONE		0	// 何も無い
 #define MYSTERYGIFT_TYPE_POKEMON	1	// ポケモン
 #define MYSTERYGIFT_TYPE_ITEM		2	// どうぐ
-#define MYSTERYGIFT_TYPE_RULE		3	// ルール
-#define MYSTERYGIFT_TYPE_NUTSET		4	// 木の実セット
-//@todo Gパワー
-#define MYSTERYGIFT_TYPE_MAX	5	// 総数
+#define MYSTERYGIFT_TYPE_POWER		3	// パワー
+#define MYSTERYGIFT_TYPE_RULE  4   //削除予定
+#define MYSTERYGIFT_TYPE_NUTSET  5 //削除予定
+#define MYSTERYGIFT_TYPE_MAX	6	// 総数
 
 #define MYSTERYGIFT_TYPE_CLEAR		255	// ふしぎ領域の強制クリア
 
@@ -149,6 +149,7 @@ typedef struct{
   u8 padding:6;
   u8 padding2;
   u32 dummy[4];            //予備データ16byte
+  u16 crc;             //CRCデータ
 } GIFT_PACK_DATA;
 
 
@@ -157,7 +158,6 @@ typedef struct{
   GIFT_PACK_DATA data;
   u32 version;					// 対象バージョン(０の場合は制限無しで配布)
   STRCODE event_text[GIFT_DATA_CARD_TEXT_MAX+EOM_SIZE];	// 説明テキスト
-  u16 crc;
 } DOWNLOAD_GIFT_DATA;
 
 

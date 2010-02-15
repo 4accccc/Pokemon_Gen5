@@ -47,8 +47,11 @@
 
 #if DEBUG_ONLY_FOR_ohno
 #define _NET_DEBUG (1)
+
+#define _DISP_DEBUG (1)  //表示作りこみ
 #else
 #define _NET_DEBUG (0)
+#define _DISP_DEBUG (0)
 #endif
 
 #define _NO2   (2)
@@ -140,6 +143,12 @@ typedef struct tagGameMatchExtKeys
 } GameMatchExtKeys;
 
 
+typedef struct{   //交換するデータの構造体
+  PMS_DATA pms;
+} MATCH_DATA;
+
+
+
 
 struct _GTSNEGO_WORK {
   StateFunc* state;      ///< ハンドルのプログラム状態
@@ -175,6 +184,8 @@ struct _GTSNEGO_WORK {
   CROSSCUR_TYPE key1;  //メイン
   CROSSCUR_TYPE key2;  //だれでも用
   CROSSCUR_TYPE key3;  //まちあわせよう
+  MATCH_DATA myMatchData;
+  MATCH_DATA MatchData[2];
   BOOL keyMode;
 };
 
@@ -183,6 +194,7 @@ struct _GTSNEGO_WORK {
 typedef enum {
   _NETCMD_INFOSEND = GFL_NET_CMD_GTSNEGO,
   _NETCMD_MYSTATUSSEND,
+  _NETCMD_MATCH,
 } _BATTLEIRC_SENDCMD;
 
 
@@ -213,6 +225,7 @@ static void _recvMystatusData(const int netID, const int size, const void* pData
 static const NetRecvFuncTable _PacketTbl[] = {
   {_recvInfomationData,   NULL},    ///_NETCMD_INFOSEND
   {_recvMystatusData, NULL},    ///_NETCMD_MYSTATUSSEND
+  {_recvMystatusData, NULL},    ///_NETCMD_MATCH
 };
 
 
@@ -293,6 +306,23 @@ static void _recvMystatusData(const int netID, const int size, const void* pData
     return;//自分のは今は受け取らない
   }
   GFL_STD_MemCopy(pData,pEv->pStatus[1], MyStatus_GetWorkSize());
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信コールバック簡易会話 _NETCMD_MATCH
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _recvMatchData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  GTSNEGO_WORK *pWork = pWk;
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  GFL_STD_MemCopy(pData,&pWork->MatchData[netID], sizeof(MATCH_DATA));
 }
 
 
@@ -434,6 +464,15 @@ static void _LevelKeyCallback(BOOL bRight,GTSNEGO_WORK* pWork)
 }
 
 
+static void _messageCountry( GTSNEGO_WORK *pWork )
+{
+
+    GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_040);
+
+  
+
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	同期検査+INFO送信
@@ -446,7 +485,10 @@ static void _LevelKeyCallback(BOOL bRight,GTSNEGO_WORK* pWork)
 static void _timingCheck2( GTSNEGO_WORK *pWork )
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO)){
-    _CHANGE_STATE(pWork,NULL);
+
+    GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_039);
+
+    _CHANGE_STATE(pWork,_messageCountry);
   }
 }
 
@@ -477,13 +519,29 @@ static void _statussendCheck( GTSNEGO_WORK *pWork )
 static void _infosendCheck( GTSNEGO_WORK *pWork )
 {
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
-  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_MYSTATUSSEND, MyStatus_GetWorkSize(),pEv->pStatus[0])){
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_MYSTATUSSEND,
+                      MyStatus_GetWorkSize(),pEv->pStatus[0])){
     _CHANGE_STATE(pWork,_statussendCheck);
   }
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	PMS送信
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
 
+static void _pmssendCheck( GTSNEGO_WORK *pWork )
+{
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_MATCH, sizeof(MATCH_DATA),
+                      &pWork->myMatchData )){
+    _CHANGE_STATE(pWork,_infosendCheck);
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -497,9 +555,9 @@ static void _infosendCheck( GTSNEGO_WORK *pWork )
 static void _timingCheck( GTSNEGO_WORK *pWork )
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO)){
-      EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+    EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_INFOSEND, sizeof(EVENT_GTSNEGO_USER_DATA),&pEv->aUser[0])){
-      _CHANGE_STATE(pWork,_infosendCheck);
+      _CHANGE_STATE(pWork,_pmssendCheck);
     }
   }
 }
@@ -525,15 +583,19 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
     pWork->timer--;
   }
   else{
+#if _DISP_DEBUG
+    _CHANGE_STATE(pWork,_timingCheck);
+#else
     EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
 
     pParent->aUser[0].selectLV = pWork->myChageType;
     pParent->aUser[0].selectType = pWork->changeMode;
-    {
-    }
+    WIFI_NEGOTIATION_SV_GetMsg(GAMEDATA_GetWifiNegotiation(pGameData),&pWork->myMatchData.pms);
+    
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO);
     
     _CHANGE_STATE(pWork,_timingCheck);
+#endif
   }
 }
 
@@ -541,11 +603,15 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
 
 static void _friendGreeStateParent( GTSNEGO_WORK *pWork )
 {
+#if _DISP_DEBUG
+  _CHANGE_STATE(pWork,_friendGreeState);
+#else
   if(GFL_NET_HANDLE_GetNumNegotiation() != 0){
     if(GFL_NET_HANDLE_RequestNegotiation()){
       _CHANGE_STATE(pWork,_friendGreeState);
     }
   }
+#endif
 }
 
 
@@ -596,16 +662,18 @@ static void _lookatDownState( GTSNEGO_WORK *pWork )
 
 static void _matchingState( GTSNEGO_WORK *pWork )
 {
- //接続したら表示して交換に
+#if _DISP_DEBUG
+  if(1){
+#else
+    //接続したら表示して交換に
   if(STEPMATCH_SUCCESS == GFL_NET_DWC_GetStepMatchResult()){
-    
+#endif
+
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_021);
 
     pWork->timer = _FRIEND_LOOKAT_DOWN_TIME;
 
-    
     _CHANGE_STATE(pWork, _lookatDownState);
-    
   }
 }
 
@@ -666,9 +734,11 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  GFL_NET_SetWifiBothNet(FALSE);
-  //GFL_NET_StateWifiEnterLogin();
+#if _DISP_DEBUG
+    _CHANGE_STATE(pWork,_matchingState);
+#else //_DISP_DEBUG
 
+  GFL_NET_SetWifiBothNet(FALSE);
   
   GFL_NET_DWC_GetMySendedFriendCode(pWork->pList, (DWCFriendData*)&buff[0]);
 
@@ -703,11 +773,9 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
     _CHANGE_STATE(pWork,_matchingState);
   }
   else{
-    
+    //@todo
   }
-
-
-
+#endif  //_DISP_DEBUG
 }
 
 //----------------------------------------------------------------------------

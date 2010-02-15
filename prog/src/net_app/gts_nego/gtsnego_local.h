@@ -13,6 +13,8 @@
 typedef struct _GTSNEGO_MESSAGE_WORK  GTSNEGO_MESSAGE_WORK;
 typedef struct _GTSNEGO_DISP_WORK  GTSNEGO_DISP_WORK;
 
+#define _PALNUM_TRGRA  (0)   //上画面トレーナーのグラフィック
+
 #define _BUTTON_WIN_PAL   (12)  // ウインドウ
 #define _BUTTON_MSG_PAL   (11)  // メッセージフォント
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
@@ -158,6 +160,7 @@ extern void GTSNEGO_MESSAGE_FriendListUpStart(GTSNEGO_MESSAGE_WORK* pWork,GAMEDA
 extern void GTSNEGO_MESSAGE_FriendListUpEnd(GTSNEGO_MESSAGE_WORK* pWork);
 extern void GTSNEGO_MESSAGE_AppMenuClose(APP_TASKMENU_WORK* pAppTask);
 extern APP_TASKMENU_WORK* GTSNEGO_MESSAGE_MatchOrReturnStart(GTSNEGO_MESSAGE_WORK* pWork,int type);
+extern void GTSNEGO_MESSAGE_MainMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid);
 
 extern MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index);
 

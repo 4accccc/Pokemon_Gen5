@@ -185,6 +185,26 @@ s32 WIFI_NEGOTIATION_SV_GetFriendNum(WIFI_NEGOTIATION_SAVEDATA* pSV)
   return j;
 }
 
+//--------------------------------------------------------------
+/**
+ *  @brief  簡易会話データをセット
+ */
+//--------------------------------------------------------------
+void WIFI_NEGOTIATION_SV_SetMsg(WIFI_NEGOTIATION_SAVEDATA* pSV,const PMS_DATA* src)
+{
+  PMSDAT_Copy(&pSV->message, src);
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  簡易会話データを取得
+ */
+//--------------------------------------------------------------
+void WIFI_NEGOTIATION_SV_GetMsg(WIFI_NEGOTIATION_SAVEDATA* pSV,PMS_DATA* dist)
+{
+  PMSDAT_Copy(dist, &pSV->message);
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**

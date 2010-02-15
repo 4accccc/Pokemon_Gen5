@@ -2600,7 +2600,7 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
     {	
       const GIFT_PRESENT_POKEMON  *cp_pokemon = &cp_data->data.data.pokemon;
 
-      POKEMON_PARAM* p_pp = MYSTERY_PokemonCreate( cp_pokemon, GFL_HEAP_LOWID(heapID), p_gamedata );
+      POKEMON_PARAM* p_pp = MYSTERY_CreatePokemon( &cp_data->data, GFL_HEAP_LOWID(heapID), p_gamedata );
       ARCHANDLE		*p_handle	= POKE2DGRA_OpenHandle( heapID );
 
       p_wk->res_plt	= POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare == 2, POKEGRA_DIR_FRONT, cp_pokemon->egg, CLSYS_DRAW_MAIN, PLT_OBJ_GIFT_M * 0x20, heapID );

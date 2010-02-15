@@ -1,7 +1,9 @@
 //============================================================================================
 /**
- * @file    mystery_pokemoncreate.c
- * @bfief   不思議通信データからポケモンを作る関数
+ * @file    mystery_createdata.c
+ * @brief   不思議通信データからゲーム用データを作る関数
+             @todo RC4複合化が
+
  * @author  k.ohno
  * @date    10.01.27
  */
@@ -19,11 +21,20 @@
 #include "net_app/mystery.h"
 #include "system/gfl_use.h"
 
+//--------------------------------------------------------------
+/**
+ * @brief  不思議データからのポケモン作成
+ * @param  GIFT_PACK_DATA   セーブデータに格納されてる不思議データ
+ * @param  HEAPID                 POKEMON_PARAMをつくるHEAPID
+ * @param  GAMEDATA 
+ * @retval POKEMON_PARAM  失敗したらNULL 終ったら開放してください
+ */
+//--------------------------------------------------------------
 
-
-POKEMON_PARAM* MYSTERY_PokemonCreate(const GIFT_PRESENT_POKEMON* pGift, HEAPID heapID, GAMEDATA* pGameData)
+POKEMON_PARAM* MYSTERY_CreatePokemon(const GIFT_PACK_DATA* pPack, HEAPID heapID, GAMEDATA* pGameData)
 {
   POKEMON_PARAM* pp;
+  const GIFT_PRESENT_POKEMON* pGift= &pPack->data.pokemon;
   u16 level=pGift->level;
   u32 id = pGift->id_no;
   u32 monsno = pGift->mons_no;
@@ -33,6 +44,9 @@ POKEMON_PARAM* MYSTERY_PokemonCreate(const GIFT_PRESENT_POKEMON* pGift, HEAPID h
   u8 tokusei = pGift->speabino & 0x7f;
   BOOL tokuseiBit = (pGift->speabino & 0x80) ? TRUE : FALSE;
 
+  if(pPack->gift_type != MYSTERYGIFT_TYPE_POKEMON){
+    return NULL;
+  }
   
   if(pGift->mons_no > MONSNO_END){  //モンスター番号が存在しない物は作らない
     return NULL;
@@ -157,3 +171,36 @@ POKEMON_PARAM* MYSTERY_PokemonCreate(const GIFT_PRESENT_POKEMON* pGift, HEAPID h
 
 
 
+//--------------------------------------------------------------
+/**
+ * @brief  不思議データからのアイテム作成
+ * @param  GIFT_PACK_DATA   セーブデータに格納されてる不思議データ
+ * @retval itemsym.hのアイテム番号 不正の場合 ITEM_DUMMY_DATA
+ */
+//--------------------------------------------------------------
+int MYSTERY_CreateItem(const GIFT_PACK_DATA* pPack)
+{
+  const GIFT_PRESENT_ITEM* pGift =  &pPack->data.item;
+
+  if(pPack->gift_type != MYSTERYGIFT_TYPE_ITEM){
+    return ITEM_DUMMY_DATA;
+  }
+  return pGift->itemNo;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  不思議データからのGPower作成
+ * @param  GIFT_PACK_DATA   セーブデータに格納されてる不思議データ
+ * @retval @todo未定
+ */
+//--------------------------------------------------------------
+int MYSTERY_CreateGPower(const GIFT_PACK_DATA* pPack)
+{
+  const GIFT_PRESENT_POWER* pGift = &pPack->data.gpower;
+
+  if(pPack->gift_type != MYSTERYGIFT_TYPE_POWER){
+    return 0;
+  }
+  return pGift->type;
+}
