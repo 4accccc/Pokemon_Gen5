@@ -525,6 +525,7 @@ end
   machine = []
   oshie = []
   pokelist = []
+  chihou_zukan = []
   
   form[ 0 ] = FORM::new
   read_data.size.times {|i|
@@ -600,7 +601,7 @@ end
   fp_lst.printf( "kanto/000/pmwb_000_n.ncl\n" )
   fp_lst.printf( "kanto/000/pmwb_000_r.ncl\n" )
 
-  gmm.make_row_index_kanji( "MONSNAME_", 0, "―――――", "―――――" )
+  gmm.make_row_index_kanji( "MONSNAME_", 0, "ーーーーー", "ーーーーー" )
 
   pokelist << "－－－－－\t999\tノーマル\tノーマル\t－\t－\n"
 
@@ -626,6 +627,7 @@ end
       monsno[ split_data[ PARA::POKENAME ] ] = cnt
       gra_hash[ split_data[ PARA::GRA_NO ] ] = cnt
       monsname[ cnt - 1 ] = split_data[ PARA::POKENAME ]
+      chihou_zukan << split_data[ PARA::CHIHOU_NO ].to_i
       fp_monsno.print( "#define\t\t" )
       label_str = label.make_label( "MONSNO_", split_data[ PARA::POKENAME ] )
       fp_monsno.print( label_str )
@@ -1245,6 +1247,18 @@ end
     fp_pms.close
     printf( "pms_%03d.bin 生成終了\n", i )
   end
+
+  print "地方図鑑ナンバーテーブル生成中\n"
+
+  fp_chihou = open( "zenkoku_to_chihou.bin", "wb" )
+
+  chihou_zukan.size.times {|i|
+    fp_chihou.write( [ chihou_zukan[ i ] ].pack("S") )
+  }
+
+  fp_chihou.close
+
+  print "地方図鑑ナンバーテーブル生成終了\n"
 
   #タイムスタンプ比較用のダミーファイルを生成
   fp_w = open( "out_end", "w" )
