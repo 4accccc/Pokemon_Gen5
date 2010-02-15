@@ -475,6 +475,9 @@ void ZKNLISTBMP_PutPokeList2( ZKNLISTMAIN_WORK * wk, PRINT_UTIL * util, STRBUF *
 	que = FRAMELIST_GetPrintQue( wk->lwk );
 
 	// }ŠÓ”Ô†
+	if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == FALSE ){
+		num = wk->localNo[num];
+	}
 	str = GFL_MSG_CreateString( wk->mman, str_poek_num );
 	WORDSET_RegisterNumber( wk->wset, 0, num, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );

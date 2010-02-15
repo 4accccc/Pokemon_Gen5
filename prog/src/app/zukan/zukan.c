@@ -132,7 +132,7 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 	wk->prm = pwk;
 
 	wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
-	ZKNCOMM_ResetSortData( &wk->sort );
+	ZKNCOMM_ResetSortData( wk->prm->savedata, &wk->sort );
 
 	if( wk->prm->callMode == ZUKAN_MODE_LIST ){
 		wk->listMode = ZKNLIST_CALL_NORMAL;
@@ -254,6 +254,12 @@ static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
 	case ZKNLIST_RET_EXIT_X:	// 図鑑を終了してメニューを閉じる
 		wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
 		ret = SEQ_PROC_FINISH;
+		break;
+
+	case ZKNLIST_RET_MODE_CHANGE:	// 図鑑モードを切り替える
+		FreeListData( wk );
+		wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
+		ret = SEQ_LIST_CALL;
 		break;
 
 	case ZKNLIST_RET_INFO:		// 詳細画面へ

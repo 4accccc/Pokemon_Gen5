@@ -41,7 +41,7 @@ enum {
 
 extern u16 ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 ** list, HEAPID heapID );
 
-extern void ZKNCOMM_ResetSortData( ZKNCOMM_LIST_SORT * sort );
+extern void ZKNCOMM_ResetSortData( const ZUKAN_SAVEDATA * sv, ZKNCOMM_LIST_SORT * sort );
 
 extern void ZKNCOMM_SetFadeIn( HEAPID heapID );
 

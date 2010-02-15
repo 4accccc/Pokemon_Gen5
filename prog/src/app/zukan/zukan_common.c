@@ -44,9 +44,13 @@ u16 ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 ** list, HEAPID heapID )
 }
 
 // ソートデータリセット
-void ZKNCOMM_ResetSortData( ZKNCOMM_LIST_SORT * sort )
+void ZKNCOMM_ResetSortData( const ZUKAN_SAVEDATA * sv, ZKNCOMM_LIST_SORT * sort )
 {
-	sort->mode  = ZKNCOMM_LIST_SORT_MODE_ZENKOKU;
+	if( ZUKANSAVE_GetZukanMode( sv ) == TRUE ){
+		sort->mode = ZKNCOMM_LIST_SORT_MODE_ZENKOKU;
+	}else{
+		sort->mode = ZKNCOMM_LIST_SORT_MODE_LOCAL;
+	}
 	sort->row   = ZKNCOMM_LIST_SORT_ROW_NUMBER;
 	sort->name  = ZKNCOMM_LIST_SORT_NONE;
 	sort->type1 = ZKNCOMM_LIST_SORT_NONE;

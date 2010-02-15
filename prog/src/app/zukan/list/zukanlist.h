@@ -25,8 +25,7 @@ typedef struct {
 	u16	listMax;								// リスト数
 	u16 * list;									// リストデータ
 
-	u16	retMode;								// 終了モード
-	u16	retMons;								// 選択ポケモン
+	u32	retMode;								// 終了モード
 }ZUKANLIST_DATA;
 
 // 呼び出しモード
@@ -39,6 +38,7 @@ enum {
 enum {
 	ZKNLIST_RET_EXIT = 0,			// 図鑑終了
 	ZKNLIST_RET_EXIT_X,				// 図鑑を終了してメニューを閉じる
+	ZKNLIST_RET_MODE_CHANGE,	// 図鑑モードを切り替える
 	ZKNLIST_RET_INFO,					// 詳細画面へ
 	ZKNLIST_RET_SEARCH,				// 検索画面へ
 };

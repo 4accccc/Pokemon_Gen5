@@ -573,6 +573,11 @@ static void AddClact( ZKNLISTMAIN_WORK * wk )
 		dat.celRes = wk->celRes[dat.celRes];
 		wk->clwk[i] = ZKNCOMM_CreateClact( wk->clunit, &dat, HEAPID_ZUKAN_LIST );
 	}
+
+	// ‘S‘}ŠÓ–¢Žæ“¾Žž
+	if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == FALSE ){
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TB_SELECT, FALSE );
+	}
 	// ŒŸõŽž
 	if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TB_SELECT, FALSE );

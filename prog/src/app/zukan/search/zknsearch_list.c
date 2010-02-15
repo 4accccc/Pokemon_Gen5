@@ -566,42 +566,10 @@ static void NameListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, 
 	if( wk->dat->sort->name == itemNum ){
 		ZKNSEARCHOBJ_PutMark( wk, 0, py, disp );
 	}
-
-/*
-	u32	prm;
-	u32	obj;
-
-	wk = work;
-
-	prm = FRAMELIST_GetItemParam( wk->lwk, itemNum );
-
-	ZKNLISTBMP_PutPokeList2( wk, util, wk->name[itemNum], GET_LIST_MONS(prm) );
-
-	if( GET_LIST_INFO(prm) != 0 ){
-		ZKNLISTOBJ_PutPokeList2( wk, GET_LIST_MONS(prm), py, disp );
-	}
-*/
 }
 
 static void NameListCallBack_Move( void * work, u32 listPos, BOOL flg )
 {
-/*
-	ZKNLISTMAIN_WORK * wk;
-	u32	prm;
-
-	wk = work;
-
-	prm = FRAMELIST_GetItemParam( wk->lwk, listPos );
-//	OS_Printf( "info = %d, mons = %d\n", GET_LIST_INFO(prm), GET_LIST_MONS(prm) );
-
-	if( GET_LIST_INFO(prm) != 0 ){
-		ZKNLISTOBJ_SetPokeGra( wk, GET_LIST_MONS(prm) );
-	}else{
-		ZKNLISTOBJ_SetPokeGra( wk, 0 );
-	}
-	ZKNLISTOBJ_ChangePokeIconAnime( wk, listPos-FRAMELIST_GetScrollCount(wk->lwk) );
-	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-*/
 	ZKNSEARCHMAIN_WORK * wk = work;
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
@@ -609,19 +577,6 @@ static void NameListCallBack_Move( void * work, u32 listPos, BOOL flg )
 
 static void NameListCallBack_Scroll( void * work, s8 mv )
 {
-/*
-	ZKNLISTMAIN_WORK * wk;
-
-	wk = work;
-
-	ZKNLISTOBJ_PutScrollList2( wk, mv*-1 );
-	ZKNLISTOBJ_ChangePokeIconAnime( wk, FRAMELIST_GetCursorPos(wk->lwk) );
-
-	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNLISTOBJ_SetListPageArrowAnime( wk, TRUE );
-
-//	PMSND_PlaySE( ZKNLIST_SE_SCROLL );
-*/
 	ZKNSEARCHMAIN_WORK * wk = work;
 
 	ZKNSEARCHOBJ_ScrollList( wk, mv*-1 );
@@ -642,41 +597,10 @@ static void TypeListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, 
 	if( wk->dat->sort->type2 == itemNum ){
 		ZKNSEARCHOBJ_PutMark( wk, 1, py, disp );
 	}
-
-/*
-	u32	prm;
-	u32	obj;
-
-	wk = work;
-
-	prm = FRAMELIST_GetItemParam( wk->lwk, itemNum );
-
-	ZKNLISTBMP_PutPokeList2( wk, util, wk->name[itemNum], GET_LIST_MONS(prm) );
-
-	if( GET_LIST_INFO(prm) != 0 ){
-		ZKNLISTOBJ_PutPokeList2( wk, GET_LIST_MONS(prm), py, disp );
-	}
-*/
 }
 
 static void TypeListCallBack_Move( void * work, u32 listPos, BOOL flg )
 {
-/*
-	ZKNLISTMAIN_WORK * wk;
-	u32	prm;
-
-	wk = work;
-
-	prm = FRAMELIST_GetItemParam( wk->lwk, listPos );
-//	OS_Printf( "info = %d, mons = %d\n", GET_LIST_INFO(prm), GET_LIST_MONS(prm) );
-
-	if( GET_LIST_INFO(prm) != 0 ){
-		ZKNLISTOBJ_SetPokeGra( wk, GET_LIST_MONS(prm) );
-	}else{
-		ZKNLISTOBJ_SetPokeGra( wk, 0 );
-	}
-	ZKNLISTOBJ_ChangePokeIconAnime( wk, listPos-FRAMELIST_GetScrollCount(wk->lwk) );
-*/
 	ZKNSEARCHMAIN_WORK * wk = work;
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
@@ -684,19 +608,6 @@ static void TypeListCallBack_Move( void * work, u32 listPos, BOOL flg )
 
 static void TypeListCallBack_Scroll( void * work, s8 mv )
 {
-/*
-	ZKNLISTMAIN_WORK * wk;
-
-	wk = work;
-
-	ZKNLISTOBJ_PutScrollList2( wk, mv*-1 );
-	ZKNLISTOBJ_ChangePokeIconAnime( wk, FRAMELIST_GetCursorPos(wk->lwk) );
-
-	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNLISTOBJ_SetListPageArrowAnime( wk, TRUE );
-
-//	PMSND_PlaySE( ZKNLIST_SE_SCROLL );
-*/
 	ZKNSEARCHMAIN_WORK * wk = work;
 
 	ZKNSEARCHOBJ_ScrollList( wk, mv*-1 );
@@ -714,42 +625,10 @@ static void ColorListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util,
 	if( wk->dat->sort->color == itemNum ){
 		ZKNSEARCHOBJ_PutMark( wk, 0, py, disp );
 	}
-
-/*
-	u32	prm;
-	u32	obj;
-
-	wk = work;
-
-	prm = FRAMELIST_GetItemParam( wk->lwk, itemNum );
-
-	ZKNLISTBMP_PutPokeList2( wk, util, wk->name[itemNum], GET_LIST_MONS(prm) );
-
-	if( GET_LIST_INFO(prm) != 0 ){
-		ZKNLISTOBJ_PutPokeList2( wk, GET_LIST_MONS(prm), py, disp );
-	}
-*/
 }
 
 static void ColorListCallBack_Move( void * work, u32 listPos, BOOL flg )
 {
-/*
-	ZKNLISTMAIN_WORK * wk;
-	u32	prm;
-
-	wk = work;
-
-	prm = FRAMELIST_GetItemParam( wk->lwk, listPos );
-//	OS_Printf( "info = %d, mons = %d\n", GET_LIST_INFO(prm), GET_LIST_MONS(prm) );
-
-	if( GET_LIST_INFO(prm) != 0 ){
-		ZKNLISTOBJ_SetPokeGra( wk, GET_LIST_MONS(prm) );
-	}else{
-		ZKNLISTOBJ_SetPokeGra( wk, 0 );
-	}
-	ZKNLISTOBJ_ChangePokeIconAnime( wk, listPos-FRAMELIST_GetScrollCount(wk->lwk) );
-	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-*/
 	ZKNSEARCHMAIN_WORK * wk = work;
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
@@ -757,19 +636,6 @@ static void ColorListCallBack_Move( void * work, u32 listPos, BOOL flg )
 
 static void ColorListCallBack_Scroll( void * work, s8 mv )
 {
-/*
-	ZKNLISTMAIN_WORK * wk;
-
-	wk = work;
-
-	ZKNLISTOBJ_PutScrollList2( wk, mv*-1 );
-	ZKNLISTOBJ_ChangePokeIconAnime( wk, FRAMELIST_GetCursorPos(wk->lwk) );
-
-	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNLISTOBJ_SetListPageArrowAnime( wk, TRUE );
-
-//	PMSND_PlaySE( ZKNLIST_SE_SCROLL );
-*/
 	ZKNSEARCHMAIN_WORK * wk = work;
 
 	ZKNSEARCHOBJ_ScrollList( wk, mv*-1 );
@@ -788,42 +654,10 @@ static void FormListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, 
 		ZKNSEARCHOBJ_PutFormMark( wk, py, disp );
 	}
 	ZKNSEARCHOBJ_PutFormList( wk, itemNum, py, disp );
-
-/*
-	u32	prm;
-	u32	obj;
-
-	wk = work;
-
-	prm = FRAMELIST_GetItemParam( wk->lwk, itemNum );
-
-	ZKNLISTBMP_PutPokeList2( wk, util, wk->name[itemNum], GET_LIST_MONS(prm) );
-
-	if( GET_LIST_INFO(prm) != 0 ){
-		ZKNLISTOBJ_PutPokeList2( wk, GET_LIST_MONS(prm), py, disp );
-	}
-*/
 }
 
 static void FormListCallBack_Move( void * work, u32 listPos, BOOL flg )
 {
-/*
-	ZKNLISTMAIN_WORK * wk;
-	u32	prm;
-
-	wk = work;
-
-	prm = FRAMELIST_GetItemParam( wk->lwk, listPos );
-//	OS_Printf( "info = %d, mons = %d\n", GET_LIST_INFO(prm), GET_LIST_MONS(prm) );
-
-	if( GET_LIST_INFO(prm) != 0 ){
-		ZKNLISTOBJ_SetPokeGra( wk, GET_LIST_MONS(prm) );
-	}else{
-		ZKNLISTOBJ_SetPokeGra( wk, 0 );
-	}
-	ZKNLISTOBJ_ChangePokeIconAnime( wk, listPos-FRAMELIST_GetScrollCount(wk->lwk) );
-	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-*/
 	ZKNSEARCHMAIN_WORK * wk = work;
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
@@ -831,19 +665,6 @@ static void FormListCallBack_Move( void * work, u32 listPos, BOOL flg )
 
 static void FormListCallBack_Scroll( void * work, s8 mv )
 {
-/*
-	ZKNLISTMAIN_WORK * wk;
-
-	wk = work;
-
-	ZKNLISTOBJ_PutScrollList2( wk, mv*-1 );
-	ZKNLISTOBJ_ChangePokeIconAnime( wk, FRAMELIST_GetCursorPos(wk->lwk) );
-
-	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNLISTOBJ_SetListPageArrowAnime( wk, TRUE );
-
-//	PMSND_PlaySE( ZKNLIST_SE_SCROLL );
-*/
 	ZKNSEARCHMAIN_WORK * wk = work;
 
 	ZKNSEARCHOBJ_ScrollFormList( wk, mv*-1 );

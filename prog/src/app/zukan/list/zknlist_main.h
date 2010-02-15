@@ -108,42 +108,11 @@ typedef struct {
 	u16	seeNum;			// 見つけた数
 	u16	getNum;			// 捕まえた数
 
-	// リスト関連
-	FRAMELIST_WORK * lwk;
-/*
-	ZUKAN_LIST_WORK * list;
-	s32	listPutIndex;
-	u8	listScroll;
-	u8	listSpeed;
-	u8	listRepeat;
-	u8	listConut;
-	u8	listBgScroll;
+	FRAMELIST_WORK * lwk;		// リストワーク
 
+	u16 * localNo;					// 地方図鑑番号リスト
 
-	BOOL	initTouchFlag;
-	u32	initTouchPY;
-	u32	frameTouchPY;
-
-//	u32	autoSpeed;
-	u32	autoScroll;
-	u32	autoSpeed;
-	u32	autoCount;
-	u32	autoWait;
-*/
-/*
-	u32	tsCount;
-	u32	targetPos;
-*/
-
-	u32	BaseScroll;
-
-
-/*
-	PALETTE_FADE_PTR	pfd;		// パレットフェードデータ
-	BUTTON_ANM_WORK	bawk;				// ボタンアニメワーク
-*/
-
-
+	u32	BaseScroll;					// 背景スクロールカウンタ
 
 }ZKNLISTMAIN_WORK;
 
@@ -241,47 +210,5 @@ extern void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk );
 //--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_FreeList( ZKNLISTMAIN_WORK * wk );
 
-/*
-extern u32 ZKNLISTMAIN_GetListMons( ZUKAN_LIST_WORK * wk, u32 pos );
-
-extern u32 ZKNLISTMAIN_GetListInfo( ZUKAN_LIST_WORK * wk, u32 pos );
-
-extern void ZKNLISTMAIN_PutListCursor( ZKNLISTMAIN_WORK * wk, u8 pal, s16 pos );
-
-extern void ZKNLISTMAIN_InitListPut( ZKNLISTMAIN_WORK * wk );
-
-
-
-
-
-#define	ZKNLISTMAIN_LIST_MOVE_UP							( 0 )
-#define	ZKNLISTMAIN_LIST_MOVE_DOWN						( 1 )
-#define	ZKNLISTMAIN_LIST_MOVE_LEFT						( 2 )
-#define	ZKNLISTMAIN_LIST_MOVE_RIGHT						( 3 )
-#define	ZKNLISTMAIN_LIST_MOVE_SCROLL_UP				( 4 )
-#define	ZKNLISTMAIN_LIST_MOVE_SCROLL_DOWN			( 5 )
-#define	ZKNLISTMAIN_LIST_MOVE_POS_DIRECT			( 6 )
-#define	ZKNLISTMAIN_LIST_MOVE_SCROLL_DIRECT		( 7 )
-#define	ZKNLISTMAIN_LIST_MOVE_NONE						( 0xffffffff )
-
-extern ZUKAN_LIST_WORK * ZKNLISTMAIN_CreateList( u32 siz, HEAPID heapID );
-extern void ZKNLISTMAIN_ExitList( ZUKAN_LIST_WORK * wk );
-extern void ZKNLISTMAIN_AddListData( ZUKAN_LIST_WORK * wk, STRBUF * str, u32 prm );
-extern void ZKNLISTMAIN_InitList( ZUKAN_LIST_WORK * wk, s16 pos, s16 posMax, s16 scroll, void * work, pZUKAN_LIST_CALLBACK func );
-extern s16 ZKNLISTMAIN_GetListPos( ZUKAN_LIST_WORK * wk );
-extern s16 ZKNLISTMAIN_GetListScroll( ZUKAN_LIST_WORK * wk );
-extern s16 ZKNLISTMAIN_GetListPosMax( ZUKAN_LIST_WORK * wk );
-extern s16 ZKNLISTMAIN_GetListMax( ZUKAN_LIST_WORK * wk );
-extern s16 ZKNLISTMAIN_GetListCursorPos( ZUKAN_LIST_WORK * wk );
-extern s16 ZKNLISTMAIN_GetListScrollMax( ZUKAN_LIST_WORK * wk );
-extern STRBUF * ZKNLISTMAIN_GetListStr( ZUKAN_LIST_WORK * wk, u32 pos );
-extern u32 ZKNLISTMAIN_GetListParam( ZUKAN_LIST_WORK * wk, u32 pos );
-extern void ZKNLISTMAIN_SetListPos( ZUKAN_LIST_WORK * wk, s16 pos );
-extern void ZKNLISTMAIN_SetListScroll( ZUKAN_LIST_WORK * wk, s16 scroll );
-extern u32 ZKNLISTMAIN_Main( ZUKAN_LIST_WORK * wk );
-extern u32 ZKNLISTMAIN_MoveLeft( ZUKAN_LIST_WORK * wk );
-extern u32 ZKNLISTMAIN_MoveRight( ZUKAN_LIST_WORK * wk );
-extern void ZKNLISTMAIN_SetPosDirect( ZUKAN_LIST_WORK * wk, s16 pos );
-extern void ZKNLISTMAIN_SetScrollDirect( ZUKAN_LIST_WORK * wk, s16 scroll );
-extern u32 ZKNLISTMAIN_SetListDirect( ZUKAN_LIST_WORK * wk, s16 pos, s16 mv, BOOL autoFlag );
-*/
+extern void ZKNLISTMAIN_LoadLocalNoList( ZKNLISTMAIN_WORK * wk );
+extern void ZKNLISTMAIN_FreeLocalNoList( ZKNLISTMAIN_WORK * wk );

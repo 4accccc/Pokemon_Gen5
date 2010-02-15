@@ -68,8 +68,21 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 	ret = GFL_UI_TP_HitTrg( TouchHitTbl );
 
 	if( ret != GFL_UI_TP_HIT_NONE ){
-		if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
-			if( ret == ZKNLISTUI_ID_SELECT || ret == ZKNLISTUI_ID_Y ){
+		// ƒ‚[ƒhØ‘Ö
+		if( ret == ZKNLISTUI_ID_SELECT ){
+			// ‘S‘}ŠÓ–¢Žæ“¾Žž
+			if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == FALSE ){
+				return GFL_UI_TP_HIT_NONE;
+			}
+			// ŒŸõƒŠƒXƒgŽž
+			if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
+				return GFL_UI_TP_HIT_NONE;
+			}
+		}
+		// ‚x“o˜^
+		if( ret == ZKNLISTUI_ID_Y ){
+			// ŒŸõƒŠƒXƒgŽž
+			if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
 				return GFL_UI_TP_HIT_NONE;
 			}
 		}
@@ -98,15 +111,28 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 		return ZKNLISTUI_ID_START;
 	}
 
-	if( wk->dat->callMode != ZKNLIST_CALL_SEARCH ){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-			return ZKNLISTUI_ID_Y;
+	// ƒ‚[ƒhØ‘Ö
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+		// ‘S‘}ŠÓ–¢Žæ“¾Žž
+		if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == FALSE ){
+			return GFL_UI_TP_HIT_NONE;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-			return ZKNLISTUI_ID_SELECT;
+		// ŒŸõƒŠƒXƒgŽž
+		if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
+			return GFL_UI_TP_HIT_NONE;
 		}
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		return ZKNLISTUI_ID_SELECT;
+	}
+
+	// ‚x“o˜^
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+		// ŒŸõƒŠƒXƒgŽž
+		if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
+			return GFL_UI_TP_HIT_NONE;
+		}
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		return ZKNLISTUI_ID_Y;
 	}
 
 	return ret;

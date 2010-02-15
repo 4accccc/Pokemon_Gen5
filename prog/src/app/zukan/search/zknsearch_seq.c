@@ -359,7 +359,7 @@ static int MainSeq_ExitMenu( ZKNSEARCHMAIN_WORK * wk )
 
 static int MainSeq_ResetSort( ZKNSEARCHMAIN_WORK * wk )
 {
-	ZKNCOMM_ResetSortData( wk->dat->sort );
+	ZKNCOMM_ResetSortData( wk->dat->savedata, wk->dat->sort );
 	ZKNSEARCHBMP_PutMainPage( wk );
 	return MAINSEQ_MAIN_MENU;
 }
