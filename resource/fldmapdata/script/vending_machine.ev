@@ -1,0 +1,120 @@
+//======================================================================
+//                vending_machine.ev
+//
+//    スクリプトファイル：自動販売機
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "../../message/dst/script/msg_vender_scr.h"
+  .include  "../../message/dst/script/msg_item_get_scr.h"
+
+
+//----------------------------------------------------------------------
+//               スクリプトテーブル
+//----------------------------------------------------------------------
+_EVENT_DATA   ev_vending_machine01
+_EVENT_DATA_END
+
+EVENT_START ev_vending_machine01
+  DEFINE_LOCAL select_item
+  DEFINE_LOCAL item
+  DEFINE_LOCAL gold
+  DEFINE_LOCAL loop
+
+  //所持金表示
+  _GOLD_WIN_OPEN( 17, 1 )
+
+  //「自販機あるで」
+  _SYSWIN_MSG_DOWN( msg_vender_01 )
+  
+  WHILE $loop == TRUE
+    //選択肢
+    _BMPMENU_INIT_EX( 1,1,0,1,select_item )
+    _BMPMENU_MAKE_LIST( msg_vender_select_01, 1 )    //おいしい水
+    _BMPMENU_MAKE_LIST( msg_vender_select_02, 2 )    //サイコソーダ
+    _BMPMENU_MAKE_LIST( msg_vender_select_03, 3 )    //ミックスオレ
+    _BMPMENU_MAKE_LIST( msg_vender_select_04, 0 )    //やめる
+    _BMPMENU_START()
+    //ウィンドウ閉じる
+    _SYSWIN_CLOSE()
+
+    IF $select_item == EV_WIN_B_CANCEL THEN     //キャンセル
+      //「やめた」
+      _SYSWIN_MSG_DOWN( msg_vender_05 )
+      $loop = FALSE
+    ELSIF $select_item == 0 THEN                //「やめる」選択
+      //「やめた」
+      _SYSWIN_MSG_DOWN( msg_vender_05 )
+      $loop = FALSE
+    ELSE                                        //それ以外(商品選択)
+      SWITCH $select_item
+      CASE 1 THEN      //おいしい水
+        $item = ITEM_OISIIMIZU
+        $gold = 200      //200円
+      CASE 2 THEN      //サイコソーダ
+        $item = ITEM_SAIKOSOODA
+        $gold = 300      //300円
+      CASE 3 THEN      //ミックスオレ
+        $item = ITEM_MIKKUSUORE
+        $gold = 350      //350円
+      ENDSWITCH
+    ENDIF
+    
+    IF $loop == TRUE THEN
+      //アイテムはバッグに入るか？
+      _ADD_ITEM_CHK( item, 1, SCWK_ANSWER )
+      IF $SCWK_ANSWER == FALSE  THEN //バッグはいらない
+        //「バッグがいっぱい」
+        _SYSWIN_MSG_DOWN( msg_item_get_fail_nowait )
+        $loop = FALSE
+      ELSE    //バッグはいる
+        //所持金は？
+        _CHECK_GOLD( SCWK_ANSWER, gold )
+        IF $SCWK_ANSWER == TRUE THEN    //足りる
+          //代金減算
+          _SUBTRACT_GOLD( gold )
+          //所持金表示更新
+          _GOLD_WIN_UPDATE(17, 1)
+          //アイテムセット
+          _ADD_ITEM( item, 1, SCWK_ANSWER )
+          //タグ０番にアイテムセット
+          _ITEM_NAME( 0, item )
+          //「○○がでてきた！」
+          _SYSWIN_MSG_DOWN( msg_vender_02 )
+          _SYSWIN_CLOSE()
+          //まだ入るか？
+          _ADD_ITEM_CHK( item, 1, SCWK_ANSWER )
+          IF  $SCWK_ANSWER == TRUE THEN   //入いる
+            DEFINE_LOCAL ans
+            //抽選する
+            _GET_RND( ans, 32 )
+            IF $ans == 0 THEN //あたり
+              //「あたり！もう一本」
+              _SYSWIN_MSG_DOWN( msg_vender_03 )
+              _SYSWIN_CLOSE()
+              //アイテム加算
+              _ADD_ITEM( item, 1, SCWK_ANSWER )
+            ENDIF 
+          ENDIF
+          //もう一本かう？
+          _SYSWIN_MSG_DOWN( msg_vender_06 ) //このメッセージのあとリスト選択に戻る
+        ELSE       //足りない
+          //「おかねがない」
+          _SYSWIN_MSG_DOWN( msg_vender_04 )
+          $loop = FALSE
+        ENDIF
+      ENDIF
+    ENDIF //$loop  
+  ENDWHILE
+
+  _LAST_KEYWAIT()
+  //ウィンドウ閉じる
+  _SYSWIN_CLOSE()
+
+  //所持金表示オフ
+  _GOLD_WIN_CLOSE()
+
+EVENT_END
