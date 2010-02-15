@@ -240,7 +240,13 @@ static int sub_MenuMain( EVENT_DEB_MVPOKE* wk )
   }else if( trg & PAD_KEY_DOWN ){
     wk->mvpoke_idx = (wk->mvpoke_idx+1)%wk->mvpoke_max;
     code = 1;
+  }else if ( trg & PAD_BUTTON_X ){
+    if(EncDataSave_IsMovePokeValid( wk->enc, wk->mvpoke_idx ) == FALSE ){
+      MP_AddMovePoke( wk->gdata, wk->mvpoke_idx ); 
+      code = 1;
+    }
   }
+
 
   if(code){
     sub_MvPokeInfoDraw( wk, wk->mvpoke_idx );

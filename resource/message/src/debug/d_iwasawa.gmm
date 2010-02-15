@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-01-05T13:36:03"/>
+	<create user="iwasawa" host="W00157" date="2010-02-15T18:28:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -353,8 +353,8 @@ pow-rnd：[2:07:８桁:5]</language>
 	</row>
 
 	<row id="d_iwa_mvpoke_st_none">
-		<language name="JPN" width="256">なし</language>
-		<language name="JPN_KANJI" width="256">なし</language>
+		<language name="JPN" width="256">なし Xでついか</language>
+		<language name="JPN_KANJI" width="256">なし Xで追加</language>
 	</row>
 
 	<row id="d_iwa_mvpoke_st_down">
