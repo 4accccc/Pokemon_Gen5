@@ -303,7 +303,7 @@ VMCMD_RESULT EvCmdNumber(VMHANDLE * core, void *wk )
   u16              num = SCRCMD_GetVMWorkValue( core, work );
   u16             keta = SCRCMD_GetVMWorkValue( core, work );
 
-  WORDSET_RegisterNumber( wordset, idx, num, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wordset, idx, num, keta, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   return VMCMD_RESULT_CONTINUE;
 }
 //--------------------------------------------------------------
