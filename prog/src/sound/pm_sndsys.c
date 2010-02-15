@@ -1258,23 +1258,26 @@ BOOL  PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 dummyNo )
 	return TRUE;
 }
 
-BOOL  PMDSND_ChangeWaveData( u32 waveNo, u32 waveIdx, void* waveAdrs) 
+BOOL  PMDSND_ChangeWaveData
+			( u32 waveArcDstID, u32 waveDstIdx, void* waveArcSrcAdrs, u32 waveSrcIdx)
 {
 	const NNSSndArcWaveArcInfo* waveInfo;
-	SNDWaveArc*									waveArc;
+	SNDWaveArc*									waveArcDst;
+	SNDWaveArc*									waveArcSrc = (SNDWaveArc*)waveArcSrcAdrs;
+	const SNDWaveData*					waveData;
 
 	// 波形ファイルID取得
-	waveInfo = NNS_SndArcGetWaveArcInfo( waveNo );
+	waveInfo = NNS_SndArcGetWaveArcInfo( waveArcDstID );
 	if( waveInfo == NULL ){ return FALSE; }
 
-	// 波形ファイルアドレス取得
-	waveArc = (SNDWaveArc*)NNS_SndArcGetFileAddress( waveInfo->fileId );
-	if(waveArc == NULL){ return FALSE; }
-	
-	//OS_Printf("外部BGM再生...波形書き換え waveArcAdrs(%x)\n", waveArc);
+	// 差し替え先の波形アドレス取得
+	waveArcDst = (SNDWaveArc*)NNS_SndArcGetFileAddress( waveInfo->fileId );
+	if(waveArcDst == NULL){ return FALSE; }
+	// 差し替え元の波形アドレス取得
+	waveData = SND_GetWaveDataAddress( waveArcSrc, waveSrcIdx );	
 
 	// 波形アドレス書き換え
-	SND_SetWaveDataAddress( waveArc, waveIdx, waveAdrs );
+	SND_SetWaveDataAddress( waveArcDst, waveDstIdx, waveData );
 
 	return TRUE;
 }
