@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-08T21:39:18"/>
+	<create user="matsumiya" host="W00224" date="2010-02-15T19:34:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="208" right="1990" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="1395" top="251" right="2099" bottom="877" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -306,11 +306,11 @@
 		<attribute name="キャラ指定">LEADER7
 ハチク</attribute>
 		<language name="JPN" width="256">ハチク『……[1:00:トレーナー名:0]▼
-わたしたちが　こいつらを　くいとめる▼
+こいつらを　くいとめる▼
 だから　きみが　ゆけ！</language>
 		<language name="JPN_KANJI" width="256">ハチク『……[1:00:トレーナー名:0]▼
-わたしたちが　こいつらを　くいとめる▼
-だから　きみが　ゆけ！</language>
+こいつらを　くいとめる▼
+だから　君が　行け！</language>
 	</row>
 
 	<row id="msg_d08r0601_leader7_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -321,8 +321,8 @@
 ハチク</attribute>
 		<language name="JPN" width="256">ハチク『……わたしは　へいきだ▼
 だが　じかんが　ない</language>
-		<language name="JPN_KANJI" width="256">ハチク『……わたしは　へいきだ▼
-だが　じかんが　ない</language>
+		<language name="JPN_KANJI" width="256">ハチク『……わたしは　平気だ▼
+だが　時間が　ない</language>
 	</row>
 
 	<row id="msg_d08r0601_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -334,9 +334,9 @@
 		<language name="JPN" width="256">チェレン『ぼくも　だいじょうぶ▼
 だけど　こんなに
 プラズマだんが　いるとね……</language>
-		<language name="JPN_KANJI" width="256">チェレン『ぼくも　だいじょうぶ▼
+		<language name="JPN_KANJI" width="256">チェレン『ぼくも　大丈夫▼
 だけど　こんなに
-プラズマだんが　いるとね……</language>
+プラズマ団が　いるとね……</language>
 	</row>
 
 	<row id="msg_d08r0601_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -350,14 +350,11 @@
 どうして　こんなに　がんばれるんだ！？</language>
 	</row>
 
-	<row id="msg_d08r0601_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・</comment>
+	<row id="msg_d08r0601_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『どいつも　こいつも
-おんなじ　ポケモンばかり　じゃん！</language>
-		<language name="JPN_KANJI" width="256">チェレン『どいつも　こいつも
-おんなじ　ポケモンばかり　じゃん！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_d08r0601_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -366,10 +363,10 @@
 ・d08r0901イベント終了で削除
 ・GRIDX=18、GRIDZ=13、左向き</comment>
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『これが
-ジムリーダーの　じつりょく！</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『これが
-ジムリーダーの　じつりょく！</language>
+		<language name="JPN" width="256">プラズマだん『……これが
+ジムリーダーの　じつりょく　か！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……これが
+ジムリーダーの　実力か！</language>
 	</row>
 
 	<row id="msg_d08r0601_hakaiw1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -380,8 +377,8 @@
 		<attribute name="キャラ指定">プラズマ団♀</attribute>
 		<language name="JPN" width="256">プラズマだん『この　つよさ……
 しちけんじんさまと　おなじ……？</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『この　つよさ……
-しちけんじんさまと　おなじ……？</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『この　強さ……
+七賢人さまと　同じ……？</language>
 	</row>
 
 	<row id="msg_d08r0601_hakaim3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -392,7 +389,7 @@
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『だれにも！
 だれにも　ジャマは　させない！</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『だれにも！
+		<language name="JPN_KANJI" width="256">プラズマ団『だれにも！
 だれにも　ジャマは　させない！</language>
 	</row>
 
@@ -403,11 +400,11 @@
 ・GRIDX=18、GRIDZ=16、左向き</comment>
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『われわれの　すうこうな
-もくてきを　りかい　できないくせに▲
+もくてきを　りかい　できないくせに▽
 どうして　ぼうがい　する！</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『われわれの　すうこうな
-もくてきを　りかい　できないくせに▲
-どうして　ぼうがい　する！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『我々の　崇高な
+目的を　理解できないくせに▽
+どうして　妨害する！</language>
 	</row>
 
 	<row id="msg_d08r0601_hakaiw1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -418,7 +415,7 @@
 		<attribute name="キャラ指定">プラズマ団♀</attribute>
 		<language name="JPN" width="256">プラズマだん『コイツ！
 こどもの　くせに！！</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『コイツ！
+		<language name="JPN_KANJI" width="256">プラズマ団『コイツ！
 こどもの　くせに！！</language>
 	</row>
 
@@ -430,8 +427,8 @@
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『……そうだよ
 ジムリーダーに　まけたんだよ</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『……そうだよ
-ジムリーダーに　まけたんだよ</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……そうだよ
+ジムリーダーに　負けたんだよ</language>
 	</row>
 
 	<row id="msg_d08r0601_hakaiw1_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -443,8 +440,8 @@
 		<language name="JPN" width="256">プラズマだん『いまごろ　うえでは
 われらの　おうさまが……▼
 オマエには　なにも　できないよ！</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『いまごろ　うえでは
-われらの　おうさまが……▼
+		<language name="JPN_KANJI" width="256">プラズマ団『いまごろ　上では
+我らの　王様が……▼
 オマエには　なにも　できないよ！</language>
 	</row>
 
