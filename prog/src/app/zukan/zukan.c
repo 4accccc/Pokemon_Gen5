@@ -343,8 +343,8 @@ static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )
  * @return	次のメインシーケンス
  */
 //--------------------------------------------------------------------------------------------
-#define test_num (6)
-static u16 test_list[test_num] = { 1, 2, 3, 4, 5, 201 };
+#define test_num (7)
+static u16 test_list[test_num] = { 1, 2, 3, 4, 5, 151, 201 };
 static int MainSeq_CallDetail( ZUKAN_MAIN_WORK * wk )
 {
   ZUKAN_DETAIL_PARAM* detail;

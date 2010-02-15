@@ -307,6 +307,22 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
     {
       *seq = SEQ_PREPARE;
 
+      // BG
+      {
+        // クリア
+        u8 i;
+        for( i=GFL_BG_FRAME0_M; i<=GFL_BG_FRAME3_S; i++ )
+        {
+          if(    i != ZKNDTL_BG_FRAME_M_TOUCHBAR
+              && i != ZKNDTL_BG_FRAME_S_HEADBAR )
+          {
+            GFL_BG_SetScroll( i, GFL_BG_SCROLL_X_SET, 0 );
+            GFL_BG_SetScroll( i, GFL_BG_SCROLL_Y_SET, 0 );
+            GFL_BG_ClearFrame(i);
+          }
+        }
+      }
+
       // 言語ボタン
       Zukan_Detail_Info_CreateLangButton( param, work, cmn );
 

@@ -568,7 +568,7 @@ static void Zukan_Toroku_CreateBG( ZUKAN_TOROKU_WORK* work )
     work->bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle,
                                                                        NARC_zukan_gra_info_name_bgu_NCGR,
                                                                        GFL_BG_FRAME1_M,
-                                                                       32*1*GFL_BG_1CHRDATASIZ,  // その後、必要なキャラ領域が増えたらここを修正
+                                                                       32*2*GFL_BG_1CHRDATASIZ,  // その後、必要なキャラ領域が増えたらここを修正
                                                                        FALSE, work->heap_id );
     GF_ASSERT_MSG( work->bg_chara_info != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_TOROKU : BGキャラ領域が足りませんでした。\n" );
     GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_zukan_gra_info_name_bgu_NSCR,

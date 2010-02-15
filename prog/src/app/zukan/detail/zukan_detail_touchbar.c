@@ -120,91 +120,42 @@ enum
 };
 #define ICON_MAX_MAX (GENERAL_ICON_MAX)  // GENERAL_ICON_MAX, MAP_ICON_MAX, FORM_ICON_MAXの中で最大のもの
 
-// GENERAL 
-static const int general_icon_id[GENERAL_ICON_MAX] =
+typedef struct
 {
-  ZKND_TBAR_ICON_RETURN,
-  ZKND_TBAR_ICON_CLOSE,
-  ZKND_TBAR_ICON_CHECK,
-  GENERAL_CUSTOM_FORM,
-  GENERAL_CUSTOM_VOICE,
-  GENERAL_CUSTOM_MAP,
-  GENERAL_CUSTOM_INFO,
-  ZKND_TBAR_ICON_CUR_D,
-  ZKND_TBAR_ICON_CUR_U,
-};
-// MAP
-static const int map_icon_id[MAP_ICON_MAX] =
-{
-  ZKND_TBAR_ICON_RETURN,
-};
-// FORM
-static const int form_icon_id[FORM_ICON_MAX] =
-{
-  ZKND_TBAR_ICON_RETURN,
-  ZKND_TBAR_ICON_CUR_R,
-  ZKND_TBAR_ICON_CUR_L,
-  ZKND_TBAR_ICON_CUR_D,
-  ZKND_TBAR_ICON_CUR_U,
-  FORM_CUSTOM_EXCHANGE,
-};
+  int            id;
+  GFL_CLACTPOS   pos;
+  u16            width;
+  ZKNDTL_COMMAND cmd;
+}
+ICON_CONST_SET;
 
-// GENERAL 
-static const GFL_CLACTPOS general_icon_pos[GENERAL_ICON_MAX] =
+// GENERAL
+static const ICON_CONST_SET general_icon_const_set[GENERAL_ICON_MAX] =
 {
-  { 232, ZKND_TBAR_ICON_Y       },
-  { 208, ZKND_TBAR_ICON_Y       },
-  { 184, ZKND_TBAR_ICON_Y_CHECK },
-  { 144, ZKND_TBAR_ICON_Y       },
-  { 112, ZKND_TBAR_ICON_Y       },
-  {  80, ZKND_TBAR_ICON_Y       },
-  {  48, ZKND_TBAR_ICON_Y       },
-  {  24, ZKND_TBAR_ICON_Y       },
-  {   0, ZKND_TBAR_ICON_Y       },
+  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_RETURN,        },
+  { ZKND_TBAR_ICON_CLOSE,     { 208, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CLOSE,         },
+  { ZKND_TBAR_ICON_CHECK,     { 184, ZKND_TBAR_ICON_Y_CHECK },    24,  ZKNDTL_CMD_CHECK,         },
+  { GENERAL_CUSTOM_FORM,      { 144, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_FORM,          },
+  { GENERAL_CUSTOM_VOICE,     { 112, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_VOICE,         }, 
+  { GENERAL_CUSTOM_MAP,       {  80, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_MAP,           },
+  { GENERAL_CUSTOM_INFO,      {  48, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_INFO,          },
+  { ZKND_TBAR_ICON_CUR_D,     {  24, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CUR_D,         },
+  { ZKND_TBAR_ICON_CUR_U,     {   0, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CUR_U,         },
 };
 // MAP
-static const GFL_CLACTPOS map_icon_pos[MAP_ICON_MAX] =
+static const ICON_CONST_SET map_icon_const_set[MAP_ICON_MAX] =
 {
-  { 232, ZKND_TBAR_ICON_Y },
+  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_MAP_RETURN,    },
 };
 // FORM
-static const GFL_CLACTPOS form_icon_pos[FORM_ICON_MAX] =
+static const ICON_CONST_SET form_icon_const_set[FORM_ICON_MAX] =
 {
-  { 232, ZKND_TBAR_ICON_Y },
-  { 208, ZKND_TBAR_ICON_Y },
-  { 184, ZKND_TBAR_ICON_Y },
-  { 160, ZKND_TBAR_ICON_Y },
-  { 136, ZKND_TBAR_ICON_Y },
-  {   0, ZKND_TBAR_ICON_Y },
-};
-
-// GENERAL 
-static const ZKNDTL_COMMAND general_command[GENERAL_ICON_MAX] =
-{
-  ZKNDTL_CMD_RETURN,
-  ZKNDTL_CMD_CLOSE,
-  ZKNDTL_CMD_CHECK,
-  ZKNDTL_CMD_FORM,
-  ZKNDTL_CMD_VOICE,
-  ZKNDTL_CMD_MAP,
-  ZKNDTL_CMD_INFO,
-  ZKNDTL_CMD_CUR_D,
-  ZKNDTL_CMD_CUR_U,
-};
-// MAP
-static const ZKNDTL_COMMAND map_command[MAP_ICON_MAX] =
-{
-  ZKNDTL_CMD_MAP_RETURN,
-};
-// FORM
-static const ZKNDTL_COMMAND form_command[FORM_ICON_MAX] =
-{
-  ZKNDTL_CMD_FORM_RETURN,
-  ZKNDTL_CMD_FORM_CUR_R,
-  ZKNDTL_CMD_FORM_CUR_L,
-  ZKNDTL_CMD_FORM_CUR_D,
-  ZKNDTL_CMD_FORM_CUR_U,
-  ZKNDTL_CMD_FORM_EXCHANGE,
+  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_RETURN,   },
+  { ZKND_TBAR_ICON_CUR_R,     { 208, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_R,    },
+  { ZKND_TBAR_ICON_CUR_L,     { 184, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_L,    },
+  { ZKND_TBAR_ICON_CUR_D,     { 160, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_D,    },
+  { ZKND_TBAR_ICON_CUR_U,     { 136, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_U,    },
+  { FORM_CUSTOM_EXCHANGE,     {   0, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_FORM_EXCHANGE, },
 };
 
 
@@ -215,8 +166,7 @@ static const ZKNDTL_COMMAND form_command[FORM_ICON_MAX] =
 //=============================================================================
 typedef struct
 {
-  int                    id;
-  const GFL_CLACTPOS*    pos;
+  const ICON_CONST_SET*  cset;
   GFL_CLWK*              clwk;
 }
 ICON_SET;
@@ -550,36 +500,14 @@ ZKNDTL_COMMAND ZUKAN_DETAIL_TOUCHBAR_GetTrg( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
     switch( work->type )
     {
     case ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL:
-      {
-        for( i=0; i<work->icon_set_num; i++ )
-        {
-          if( icon_id == work->icon_set[i].id )
-          {
-            cmd = general_command[i];
-            break;
-          }
-        }
-      }
-      break;
     case ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP:
-      {
-        for( i=0; i<work->icon_set_num; i++ )
-        {
-          if( icon_id == work->icon_set[i].id )
-          {
-            cmd = map_command[i];
-            break;
-          }
-        }
-      }
-      break;
     case ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM:
       {
         for( i=0; i<work->icon_set_num; i++ )
         {
-          if( icon_id == work->icon_set[i].id )
+          if( icon_id == work->icon_set[i].cset->id )
           {
-            cmd = form_command[i];
+            cmd = work->icon_set[i].cset->cmd;;
             break;
           }
         }
@@ -672,7 +600,7 @@ static void Zukan_Detail_Touchbar_SetIconOfsPosY( ZUKAN_DETAIL_TOUCHBAR_WORK* wo
   u8 i;
   for( i=0; i<work->icon_set_num; i++ )
   {
-    GFL_CLACTPOS pos = *(work->icon_set[i].pos);
+    GFL_CLACTPOS pos = work->icon_set[i].cset->pos;
     pos.y += ofs_pos_y;
     GFL_CLACT_WK_SetWldPos( work->icon_set[i].clwk, &pos );
   }
@@ -711,14 +639,13 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
     GFL_ARC_CloseDataHandle( handle );
   }
 
-  // ICON_SETのidを設定する
+  // ICON_SETにICON_CONST_SETを設定する
   work->icon_set_num = GENERAL_ICON_MAX;
   {
     u8 i;
     for( i=0; i<work->icon_set_num; i++ )
     {
-      work->icon_set[i].id = general_icon_id[i];
-      work->icon_set[i].pos = &(general_icon_pos[i]);
+      work->icon_set[i].cset = &general_icon_const_set[i];
     } 
   }
 
@@ -728,59 +655,14 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
     
     // アイコンの設定
     // 数分作る
-    ZKND_TBAR_ITEM_ICON icon_tbl[] =
+    ZKND_TBAR_ITEM_ICON icon_tbl[GENERAL_ICON_MAX];
+    u8 i;
+    for( i=0; i<work->icon_set_num; i++ )
     {
-      {
-        ZKND_TBAR_ICON_RETURN,
-        { 232, ZKND_TBAR_ICON_Y       },
-        24,
-      },
-      {	
-        ZKND_TBAR_ICON_CLOSE,
-        { 208, ZKND_TBAR_ICON_Y       },
-        24,
-      },
-      {	
-        ZKND_TBAR_ICON_CHECK,
-        { 184, ZKND_TBAR_ICON_Y_CHECK },
-        24,
-      },
-
-      // カスタム↓
-      {	
-        GENERAL_CUSTOM_FORM,
-        { 144, ZKND_TBAR_ICON_Y },
-        32,
-      },
-      {	
-        GENERAL_CUSTOM_VOICE,
-        { 112, ZKND_TBAR_ICON_Y },
-        32,
-      },
-      {	
-        GENERAL_CUSTOM_MAP,
-        { 80, ZKND_TBAR_ICON_Y },
-        32,
-      },
-      {
-        GENERAL_CUSTOM_INFO,
-        { 48, ZKND_TBAR_ICON_Y },
-        32,
-      },
-      // カスタム↑
-
-      {
-        ZKND_TBAR_ICON_CUR_D,
-        { 24, ZKND_TBAR_ICON_Y },
-       24,
-      },
-      {	
-        ZKND_TBAR_ICON_CUR_U,
-        { 0, ZKND_TBAR_ICON_Y },
-        24,
-      },
-    };
-
+      icon_tbl[i].icon    = work->icon_set[i].cset->id;
+      icon_tbl[i].pos     = work->icon_set[i].cset->pos;
+      icon_tbl[i].width   = work->icon_set[i].cset->width;
+    }
     // 以下カスタムボタンならば入れなくてはいけない情報
     // カスタムボタン
     {
@@ -852,7 +734,7 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
     u8 i;
     for( i=0; i<work->icon_set_num; i++ )
     {
-      work->icon_set[i].clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[i].id );
+      work->icon_set[i].clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[i].cset->id );
     } 
   }
 }
@@ -908,32 +790,31 @@ static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
     GFL_ARC_CloseDataHandle( handle );
   }
 
-  // ICON_SETのidを設定する
+  // ICON_SETにICON_CONST_SETを設定する
   work->icon_set_num = MAP_ICON_MAX;
   {
     u8 i;
     for( i=0; i<work->icon_set_num; i++ )
     {
-      work->icon_set[i].id = map_icon_id[i];
-      work->icon_set[i].pos = &(map_icon_pos[i]);
+      work->icon_set[i].cset = &map_icon_const_set[i];
     } 
   }
 
   // タッチバーの設定
   {
     ZKND_TBAR_SETUP setup;
-    
+ 
     // アイコンの設定
     // 数分作る
-    ZKND_TBAR_ITEM_ICON icon_tbl[] =
+    ZKND_TBAR_ITEM_ICON icon_tbl[MAP_ICON_MAX];
+    u8 i;
+    for( i=0; i<work->icon_set_num; i++ )
     {
-      {
-        ZKND_TBAR_ICON_RETURN,
-        { 232, ZKND_TBAR_ICON_Y },
-        24,
-      },
-    };
-
+      icon_tbl[i].icon    = work->icon_set[i].cset->id;
+      icon_tbl[i].pos     = work->icon_set[i].cset->pos;
+      icon_tbl[i].width   = work->icon_set[i].cset->width;
+    }
+  
     // 設定構造体
     // さきほどの窓情報＋リソース情報をいれる
     GFL_STD_MemClear( &setup, sizeof(ZKND_TBAR_SETUP) );
@@ -954,7 +835,7 @@ static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
     u8 i;
     for( i=0; i<work->icon_set_num; i++ )
     {
-      work->icon_set[i].clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[i].id );
+      work->icon_set[i].clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[i].cset->id );
     } 
   }
 }
@@ -1010,14 +891,13 @@ static void Zukan_Detail_Touchbar_CreateForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
     GFL_ARC_CloseDataHandle( handle );
   }
 
-  // ICON_SETのidを設定する
+  // ICON_SETにICON_CONST_SETを設定する
   work->icon_set_num = FORM_ICON_MAX;
   {
     u8 i;
     for( i=0; i<work->icon_set_num; i++ )
     {
-      work->icon_set[i].id = form_icon_id[i];
-      work->icon_set[i].pos = &(form_icon_pos[i]);
+      work->icon_set[i].cset = &form_icon_const_set[i];
     } 
   }
 
@@ -1027,44 +907,14 @@ static void Zukan_Detail_Touchbar_CreateForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
     
     // アイコンの設定
     // 数分作る
-    ZKND_TBAR_ITEM_ICON icon_tbl[] =
+    ZKND_TBAR_ITEM_ICON icon_tbl[FORM_ICON_MAX];
+    u8 i;
+    for( i=0; i<work->icon_set_num; i++ )
     {
-      {
-        ZKND_TBAR_ICON_CLOSE,
-        { 232, ZKND_TBAR_ICON_Y },
-        24,
-      },
-      {	
-        ZKND_TBAR_ICON_CUR_R,
-        { 208, ZKND_TBAR_ICON_Y },
-        24,
-      },
-      {	
-        ZKND_TBAR_ICON_CUR_L,
-        { 184, ZKND_TBAR_ICON_Y },
-        24,
-      },
-      {	
-        ZKND_TBAR_ICON_CUR_D,
-        { 160, ZKND_TBAR_ICON_Y },
-        24,
-      },
-      {	
-        ZKND_TBAR_ICON_CUR_U,
-        { 136, ZKND_TBAR_ICON_Y },
-        24,
-      },
-      
-      // カスタム↓
-      {	
-        FORM_CUSTOM_EXCHANGE,
-        { 0, ZKND_TBAR_ICON_Y },
-        32,
-      },
-      // カスタム↑
-
-    };
-
+      icon_tbl[i].icon    = work->icon_set[i].cset->id;
+      icon_tbl[i].pos     = work->icon_set[i].cset->pos;
+      icon_tbl[i].width   = work->icon_set[i].cset->width;
+    }
     // 以下カスタムボタンならば入れなくてはいけない情報
     // カスタムボタン
     {
@@ -1102,7 +952,7 @@ static void Zukan_Detail_Touchbar_CreateForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
     u8 i;
     for( i=0; i<work->icon_set_num; i++ )
     {
-      work->icon_set[i].clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[i].id );
+      work->icon_set[i].clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[i].cset->id );
     } 
   }
 

@@ -34,6 +34,7 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_zkn.h"
+#include "zukan_gra.naix"
 
 // サウンド
 
@@ -46,24 +47,28 @@
 */
 //=============================================================================
 // メインBGフレーム
-#define BG_FRAME_M_GRAPH           (GFL_BG_FRAME2_M)
+#define BG_FRAME_M_PANEL           (GFL_BG_FRAME2_M)
 #define BG_FRAME_M_TIME            (GFL_BG_FRAME3_M)
+#define BG_FRAME_M_REAR            (GFL_BG_FRAME0_M)
 // メインBGフレームのプライオリティ
-#define BG_FRAME_PRI_M_GRAPH       (2)
+#define BG_FRAME_PRI_M_PANEL       (2)
 #define BG_FRAME_PRI_M_TIME        (1)
+#define BG_FRAME_PRI_M_REAR        (3)
 
 // メインBGパレット
 // 本数
 enum
 {
-  BG_PAL_NUM_M_GRAPH             = 1,
+  BG_PAL_NUM_M_PANEL             = 1,
   BG_PAL_NUM_M_TIME              = 1,
+  BG_PAL_NUM_M_REAR              = ZKNDTL_COMMON_REAR_BG_PAL_NUM,
 };
 // 位置
 enum
 {
-  BG_PAL_POS_M_GRAPH             = 0,
+  BG_PAL_POS_M_PANEL             = 0,
   BG_PAL_POS_M_TIME              = 1,
+  BG_PAL_POS_M_REAR              = 2,
 };
 
 // メインOBJパレット
@@ -81,18 +86,22 @@ enum
 
 // サブBGフレーム
 #define BG_FRAME_S_NAME           (GFL_BG_FRAME2_S)
+#define BG_FRAME_S_REAR           (GFL_BG_FRAME0_S)
 // サブBGフレームのプライオリティ
 #define BG_FRAME_PRI_S_NAME       (1)
+#define BG_FRAME_PRI_S_REAR       (3)
 
 // サブBGパレット
 enum
 {
   BG_PAL_NUM_S_NAME              = 1,
+  BG_PAL_NUM_S_REAR              = ZKNDTL_COMMON_REAR_BG_PAL_NUM,
 };
 // 位置
 enum
 {
   BG_PAL_POS_S_NAME              = 0,
+  BG_PAL_POS_S_REAR              = 1,
 };
 
 // サブOBJパレット
@@ -164,6 +173,11 @@ typedef struct
   OSTick                      voice_start;
   u16                         voice_disp_millisec;
   u16                         voice_prev_disp_millisec;
+
+  GFL_ARCUTIL_TRANSINFO       panel_m_tinfo;
+
+  ZKNDTL_COMMON_REAR_WORK*    rear_wk_m;
+  ZKNDTL_COMMON_REAR_WORK*    rear_wk_s;
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
@@ -321,6 +335,13 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcExit( ZKNDTL_PROC* proc, int* s
   ZUKAN_DETAIL_VOICE_PARAM*    param    = (ZUKAN_DETAIL_VOICE_PARAM*)pwk;
   ZUKAN_DETAIL_VOICE_WORK*     work     = (ZUKAN_DETAIL_VOICE_WORK*)mywk;
 
+  // 最背面
+  ZKNDTL_COMMON_RearExit( work->rear_wk_s );
+  ZKNDTL_COMMON_RearExit( work->rear_wk_m );
+  // BGパネル 
+  ZKNDTL_COMMON_PanelDelete(
+           BG_FRAME_M_PANEL,
+           work->panel_m_tinfo );
   // ポケモン2D
   Zukan_Detail_Voice_DeletePoke( param, work, cmn );
   // ポケモン名
@@ -384,11 +405,13 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
         }
 
         // メインBG
-        GFL_BG_SetPriority( BG_FRAME_M_GRAPH, BG_FRAME_PRI_M_GRAPH );
-        GFL_BG_SetPriority( BG_FRAME_M_TIME, BG_FRAME_PRI_M_TIME );
+        GFL_BG_SetPriority( BG_FRAME_M_PANEL, BG_FRAME_PRI_M_PANEL );
+        GFL_BG_SetPriority( BG_FRAME_M_TIME,  BG_FRAME_PRI_M_TIME );
+        GFL_BG_SetPriority( BG_FRAME_M_REAR,  BG_FRAME_PRI_M_REAR );
         
         // サブBG
         GFL_BG_SetPriority( BG_FRAME_S_NAME, BG_FRAME_PRI_S_NAME );
+        GFL_BG_SetPriority( BG_FRAME_S_REAR, BG_FRAME_PRI_S_REAR );
       }
 
       // ポケモン2D
@@ -399,6 +422,24 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
       // ボイス再生時間
       Zukan_Detail_Voice_CreateTimeBase( param, work, cmn );
       Zukan_Detail_Voice_CreateTime( param, work, cmn, 0, 0 );
+      // BGパネル 
+      work->panel_m_tinfo = ZKNDTL_COMMON_PanelCreate(
+                              ZKNDTL_COMMON_PANEL_CREATE_TYPE_TRANS_PAL_CHARA,
+                              param->heap_id,
+                              BG_FRAME_M_PANEL,
+                              BG_PAL_NUM_M_PANEL,
+                              BG_PAL_POS_M_PANEL,
+                              0,
+                              ARCID_ZUKAN_GRA,
+                              NARC_zukan_gra_info_info_bgd_NCLR,
+                              NARC_zukan_gra_info_info_bgd_NCGR,
+                              NARC_zukan_gra_info_voicewin_bgd_NSCR,
+                              0 );
+      // 最背面
+      work->rear_wk_m = ZKNDTL_COMMON_RearInit( param->heap_id, ZKNDTL_COMMON_REAR_TYPE_VOICE,
+          BG_FRAME_M_REAR, BG_PAL_POS_M_REAR +0, BG_PAL_POS_M_REAR +1 );
+      work->rear_wk_s = ZKNDTL_COMMON_RearInit( param->heap_id, ZKNDTL_COMMON_REAR_TYPE_VOICE,
+          BG_FRAME_S_REAR, BG_PAL_POS_S_REAR +0, BG_PAL_POS_S_REAR +1 );
     }
     break;
   case SEQ_PREPARE:
@@ -498,6 +539,13 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
   if( *seq >= SEQ_FADE_IN )
   {
     Zukan_Detail_Voice_UpdateTime( param, work, cmn );
+  }
+
+  // 最背面
+  if( *seq >= SEQ_PREPARE )
+  {
+    ZKNDTL_COMMON_RearMain( work->rear_wk_m );
+    ZKNDTL_COMMON_RearMain( work->rear_wk_s );
   }
 
   // フェード
@@ -867,3 +915,80 @@ static void Zukan_Detail_Voice_TouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* param,
   }
 }
 
+/*
+//-------------------------------------
+/// BGパネル
+//=====================================
+static void Zukan_Detail_Voice_CreatePanelM( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  HEAPID heap_id     = param->heap_id;
+  u8 bg_frame        = BG_FRAME_M_PANEL;
+  u8 pal_num         = BG_PAL_NUM_M_PANEL;
+  u8 pal_pos         = BG_PAL_POS_M_PANEL;
+  u8 pal_ofs         = 0;
+  ARCDATID data_ncl  = NARC_zukan_gra_info_info_bgd_NCLR;
+  ARCDATID data_ncg  = NARC_zukan_gra_info_info_bgd_NCGR;
+  ARCDATID data_nsc  = NARC_zukan_gra_info_voicewin_bgd_NSCR;
+
+
+  GFL_ARCUTIL_TRANSINFO  tinfo;
+  ARCHANDLE* handle;
+
+  // BGフレームからメインかサブか判定する
+  PALTYPE   paltype;
+  
+  if( bg_frame < GFL_BG_FRAME0_S )
+  {
+    paltype = PALTYPE_MAIN_BG;
+  }
+  else
+  {
+    paltype = PALTYPE_SUB_BG;
+  }
+
+  // 読み込んで転送
+  handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramPaletteEx(
+                               handle,
+                               data_ncl,
+                               paltype,
+                               pal_ofs * 0x20,
+                               pal_pos * 0x20,
+                               pal_num * 0x20,
+                               heap_id );
+
+  tinfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
+                            handle,
+                            data_ncg,
+                            bg_frame,
+                            0,
+                            FALSE,
+                            heap_id );
+  GF_ASSERT_MSG( tinfo != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_DETAIL_ : BGキャラ領域が足りませんでした。\n" );
+
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
+        handle,
+        data_nsc,
+        bg_frame,
+        0,
+        GFL_ARCUTIL_TRANSINFO_GetPos( tinfo ),
+        0,
+        FALSE,
+        heap_id );
+  GFL_BG_ChangeScreenPalette( bg_frame, 0, 0, 32, 24, pal_pos );
+
+  GFL_ARC_CloseDataHandle( handle );
+
+  GFL_BG_LoadScreenV_Req( bg_frame );
+
+
+  work->panel_m_tinfo = tinfo;
+}
+static void Zukan_Detail_Voice_DeletePanelM( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  GFL_BG_FreeCharacterArea( BG_FRAME_M_PANEL,
+                            GFL_ARCUTIL_TRANSINFO_GetPos( work->panel_m_tinfo ),
+                            GFL_ARCUTIL_TRANSINFO_GetSize( work->panel_m_tinfo ) );
+}
+*/

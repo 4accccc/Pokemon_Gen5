@@ -111,3 +111,7 @@ typedef enum
 }
 ZKNDTL_COMMAND;
 
+
+// ”w–Ê‚ÌƒXƒNƒ[ƒ‹‘Ò‚¿ŠÔ
+#define ZKNDTL_SCROLL_WAIT    (4)
+

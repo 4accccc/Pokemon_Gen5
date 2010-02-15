@@ -1229,12 +1229,19 @@ static void Zukan_Info_CreateBall( ZUKAN_INFO_WORK* work )
 
   // モンスターボールのマークなし
   work->ball_no_bmpwin = GFL_BMPWIN_Create( work->fore_bg_frame, 12, 4, 4, 3, 0x0, GFL_BMP_CHRAREA_GET_F );
+/*
   GFL_BMP_Print( bmp_data, GFL_BMPWIN_GetBmp(work->ball_no_bmpwin), 8*26, 8*0,   0,   0, 8*4, 8*1, 0x0 );
   GFL_BMP_Print( bmp_data, GFL_BMPWIN_GetBmp(work->ball_no_bmpwin), 8*11, 8*1,   0, 8*1, 8*4, 8*1, 0x0 );
   GFL_BMP_Print( bmp_data, GFL_BMPWIN_GetBmp(work->ball_no_bmpwin), 8*18, 8*1, 8*1, 8*2, 8*2, 8*1, 0x0 );
   GFL_BMP_Print( bmp_data, GFL_BMPWIN_GetBmp(work->ball_no_bmpwin), 8* 1, 8*2, 8*0, 8*2, 8*1, 8*1, 0x0 );
   GFL_BMP_Print( bmp_data, GFL_BMPWIN_GetBmp(work->ball_no_bmpwin), 8* 4, 8*2, 8*3, 8*2, 8*1, 8*1, 0x0 );
-  
+*/
+  GFL_BMP_Print( bmp_data, GFL_BMPWIN_GetBmp(work->ball_no_bmpwin), 8*0x15, 8*0x01,   0,   0, 8*4, 8*1, 0x0 );
+  GFL_BMP_Print( bmp_data, GFL_BMPWIN_GetBmp(work->ball_no_bmpwin), 8*0x1F, 8*0x01,   0, 8*1, 8*1, 8*1, 0x0 );
+  GFL_BMP_Print( bmp_data, GFL_BMPWIN_GetBmp(work->ball_no_bmpwin), 8*0x05, 8*0x02, 8*1, 8*1, 8*3, 8*1, 0x0 );
+  GFL_BMP_Print( bmp_data, GFL_BMPWIN_GetBmp(work->ball_no_bmpwin), 8*0x10, 8*0x00, 8*0, 8*2, 8*1, 8*1, 0x0 );
+  GFL_BMP_Print( bmp_data, GFL_BMPWIN_GetBmp(work->ball_no_bmpwin), 8*0x0B, 8*0x02, 8*1, 8*2, 8*3, 8*1, 0x0 );
+
   GFL_BMP_Delete( bmp_data );
 }
 static void Zukan_Info_DeleteBall( ZUKAN_INFO_WORK* work )

@@ -1657,6 +1657,7 @@ SRCS_OVERLAY_ZUKAN_TOROKU = app/zukan/entry/zukan_toroku.c \
                             app/zukan/info/zukan_info.c
 
 # }ŠÓÚ×
+#===> SRCS_OVERLAY_UI_COMMON
 #===> SRCS_OVERLAY_ZUKAN_TOROKU
 SRCS_OVERLAY_ZUKAN_DETAIL = app/zukan/detail/zukan_detail_procsys.c \
                             app/zukan/detail/zukan_detail_common.c \
