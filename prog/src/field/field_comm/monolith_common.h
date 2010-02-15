@@ -16,6 +16,7 @@
 #include "system/palanm.h"
 #include "system/actor_tool.h"
 #include "system/bmp_oam.h"
+#include "mission_types.h"
 
 
 //==============================================================================
@@ -131,7 +132,8 @@ typedef struct{
 	GFL_MSGDATA *mm_monolith;       ///<monolith.gmm
 	BMPOAM_SYS_PTR bmpoam_sys;
 	ARCHANDLE *hdl;
-	
+  POWER_CONV_DATA *powerdata;
+
 	struct{
     u32 pltt_index;          ///<アクター共通素材パレットIndex
     u32 char_index;          ///<アクター共通素材キャラIndex
