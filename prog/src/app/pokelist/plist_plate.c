@@ -24,6 +24,7 @@
 
 #include "plist_sys.h"
 #include "plist_plate.h"
+#include "musical/musical_system.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -505,7 +506,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , TRUE );
   }
   
-  //HPorバトル参加順or技教え
+  //HPorバトル参加順or技教えor進化アイテムorミュージカル
   if( plateWork->btlOrder != PPBO_INVALLID )
   {
     //バトル参加順
@@ -579,6 +580,22 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
                     PLIST_PLATE_STR_BTL_ORDER_X , PLIST_PLATE_STR_BTL_ORDER_Y , fontCol );
     //HPバー非表示
     GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
+  }
+  else
+  if( work->isSetMusicalMode == TRUE )
+  {
+    const BOOL ret = MUSICAL_SYSTEM_CheckEntryMusical( plateWork->pp );
+    u32 strId;
+    if( ret == TRUE )
+    {
+      strId = mes_pokelist_06_12;
+    }
+    else
+    {
+      strId = mes_pokelist_06_13;
+    }
+    PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , strId ,
+                    PLIST_PLATE_STR_BTL_ORDER_X , PLIST_PLATE_STR_BTL_ORDER_Y , fontCol );
   }
   else
   {

@@ -248,6 +248,16 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
     work->cellRes[i] = PCR_NONE;
   }
 
+  if( work->plData->mode == PL_MODE_SET_MUSICAL )
+  {
+    work->plData->mode = PL_MODE_SET;
+    work->isSetMusicalMode = TRUE;
+  }
+  else
+  {
+    work->isSetMusicalMode = FALSE;
+  }
+  
   if( work->plData->mode == PL_MODE_SET_WAZA )
   {
     work->plData->mode = PL_MODE_SET;
@@ -371,6 +381,10 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
   if( work->isSetWazaMode == TRUE )
   {
     work->plData->mode = PL_MODE_SET_WAZA;
+  }
+  if( work->isSetMusicalMode == TRUE )
+  {
+    work->plData->mode = PL_MODE_SET_MUSICAL;
   }
 
 

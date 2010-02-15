@@ -61,6 +61,8 @@ typedef enum
   PL_MODE_SET_WAZA,       // 内部でPL_MODE_SETに置き換わります。
                           // 終了時にはPL_MODE_SET_WAZAに戻します。
                           // wazaLearnBitの設定を忘れないでください。
+  PL_MODE_SET_MUSICAL,    // 内部でPL_MODE_SETに置き換わります。
+                          // 終了時にはPL_MODE_SET_MUSICALに戻します。
 
 }PL_MODE_TYPE;
 

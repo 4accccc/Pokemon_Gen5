@@ -3511,6 +3511,38 @@
 
 //--------------------------------------------------------------
 /**
+ *  _GET_MUSICAL_VALUE_COUNT_MUSICAL_POKE ミュージカル：参加可能なポケモンの数
+ *  @param ret_val  戻り値  (０なら全員参加できない！
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_COUNT_MUSICAL_POKE( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_COUNT_MUSICAL_POKE retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_COUNT_MUSICAL_POKE retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 11
+  .short 0
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_CHECK_MUSICAL_POKE ミュージカル：参加ポケモンが参加可能か？
+ *  @param ret_val  戻り値  (０できない！:１できる！
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_CHECK_MUSICAL_POKE( pokeIdx, retVal ) \
+    _ASM_GET_MUSICAL_VALUE_CHECK_MUSICAL_POKE pokeIdx, retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_CHECK_MUSICAL_POKE pokeIdx, retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 12
+  .short \pokeIdx
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
  *  _GET_MUSICAL_FAN_VALUE ミュージカル：ミュージカル数値取得(ファン用
  *      基本的に下にあるラッパーを呼んでください
  *  @param pos  立ち位置(0～4
@@ -3656,6 +3688,22 @@
 
   .macro  _ASM_RESET_MUSICAL_FAN_GIFT_FLG pos, retVal
   .short EV_SEQ_RESET_MUSICAL_FAN_GIFT_FLG
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _SELECT_MUSCAL_POKE ミュージカル：ミュージカル参加ポケ選択
+ *  @param decide  戻り値(０キャンセル：１決定
+ *  @param pos     戻り値(参加番号
+ */
+//--------------------------------------------------------------
+#define _SELECT_MUSCAL_POKE( decide , pos ) \
+    _ASM_SELECT_MUSCAL_POKE pos
+
+  .macro  _ASM_SELECT_MUSCAL_POKE decide, pos
+  .short EV_SEQ_SELECT_MUSICAL_POKE
+  .short \decide
   .short \pos
   .endm
 

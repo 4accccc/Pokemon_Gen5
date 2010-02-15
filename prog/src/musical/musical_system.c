@@ -142,6 +142,7 @@ const BOOL  MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( const u16 mons_no )
 const BOOL  MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara )
 {
   u16 mons_no = PP_Get( pokePara, ID_PARA_monsno, NULL );
+  //FIXME É^É}ÉSÇ∆Ç©
   return MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( mons_no );
 }
 

@@ -39,6 +39,20 @@ extern GMEVENT * EVENT_CreatePokeSelect(
 extern GMEVENT * EVENT_CreatePokeSelectWazaOboe( 
     GAMESYS_WORK * gsys, u16* retDecide , u16* retPos, u8 learnBit );
 
+//-------------------------------------------------------------------------------------
+/**
+ * @brief ポケモン選択イベント：ミュージカル
+ *
+ * @param gsys      ゲームシステム
+ * @param retDecide 選択結果の格納先ワーク
+ * @param retValue  選択位置の格納先ワーク
+ *
+ * @return イベント
+ */
+//-------------------------------------------------------------------------------------
+extern GMEVENT * EVENT_CreatePokeSelectMusical( 
+    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos );
+
 //------------------------------------------------------------------
 /**
  * @brief ポケモン選択イベント

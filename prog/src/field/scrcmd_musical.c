@@ -36,6 +36,7 @@
 #include "poke_tool/poke_tool.h"  //ドレスアップ仮データ用
 #include "poke_tool/monsno_def.h" //ドレスアップ仮データ用
 #include "event_fieldmap_control.h"
+#include "event_poke_status.h"
 
 #include "field_sound.h"
 #include "message.naix"
@@ -358,6 +359,41 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
       *ret_wk = secondIdx;
     }
     break;
+
+  case MUSICAL_VALUE_COUNT_MUSICAL_POKE://参加可能なポケモン数
+    {
+      u8 num = 0;
+      u8 i;
+      POKEPARTY *party = GAMEDATA_GetMyPokemon(gdata);
+      const u8 partyNum = PokeParty_GetPokeCount( party );
+      for( i=0;i<partyNum;i++ )
+      {
+        POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , i );
+        if( MUSICAL_SYSTEM_CheckEntryMusical( pp ) == TRUE )
+        {
+          num++;
+        }
+      }
+      *ret_wk = num;
+    }
+  
+    break;
+  case MUSICAL_VALUE_CHECK_MUSICAL_POKE:
+    {
+      u8 num = 0;
+      u8 i;
+      POKEPARTY *party = GAMEDATA_GetMyPokemon(gdata);
+      POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , val );
+      if( MUSICAL_SYSTEM_CheckEntryMusical( pp ) == TRUE )
+      {
+        *ret_wk = 1;
+      }
+      else
+      {
+        *ret_wk = 0;
+      }
+    }
+    break;
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -610,6 +646,22 @@ VMCMD_RESULT EvCmdResetMusicalFanGiftFlg( VMHANDLE *core, void *wk )
   
   fanState->giftType = MUSICAL_GIFT_TYPE_NONE;
   return VMCMD_RESULT_CONTINUE;
+}
+
+VMCMD_RESULT EvCmdSelectMusicalPoke( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16*         ret_decide = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第2引数
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  
+  {
+    GMEVENT *event = EVENT_CreatePokeSelectMusical( gsys , ret_decide , ret_wk );
+    SCRIPT_CallEvent( scw, event );
+  }
+  
+  return VMCMD_RESULT_SUSPEND;
 }
 
 
