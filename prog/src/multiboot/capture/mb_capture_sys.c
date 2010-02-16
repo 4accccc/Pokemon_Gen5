@@ -289,6 +289,19 @@ static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
     }
   }
   MB_TPrintf( "\n" );
+
+#ifdef PM_DEBUG
+  if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_START  )&&
+      ( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ))
+  {
+    for( i=0;i<MB_CAP_POKE_NUM;i++ )
+    {
+      work->initWork->isCapture[i] = TRUE;
+    }
+    MB_TPrintf( "Debug all capture!!\n" );
+  }
+#endif
+
   work->initWork->score = work->score;
   MB_TPrintf( "Score[%d]\n",work->score );
 
@@ -486,11 +499,14 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
   GFL_CLACT_SYS_Main();
 
   PRINTSYS_QUE_Main( work->printQue );
-  
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+
+#ifdef PM_DEBUG
+  if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_START  )&&
+      ( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ))
   {
     return TRUE;
   }
+#endif
   return FALSE;
 }
 

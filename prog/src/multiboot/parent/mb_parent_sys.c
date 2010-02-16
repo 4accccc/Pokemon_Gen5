@@ -81,6 +81,7 @@ typedef enum
   MPS_SAVE_MAIN,
   MPS_SAVE_TERM,
 
+  MPS_SEND_LEAST_BOX,
   MPS_WAIT_NEXT_GAME_CONFIRM,
 
   MPS_EXIT_COMM,
@@ -471,7 +472,19 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
 
   case MPS_SAVE_TERM:
     MB_PARENT_SaveTerm( work );
-    work->state = MPS_WAIT_NEXT_GAME_CONFIRM;
+    work->state = MPS_SEND_LEAST_BOX;
+    break;
+
+  case MPS_SEND_LEAST_BOX:
+    {
+      BOX_MANAGER *boxMng = GAMEDATA_GetBoxManager(work->initWork->gameData);
+      const u16 leastBoxNum = BOXDAT_GetEmptySpaceTotal( boxMng );
+      if( MB_COMM_Send_Flag( work->commWork , MCFT_LEAST_BOX , leastBoxNum ) == TRUE )
+      {
+        MB_Printf("Parent box empty num[%d]\n",leastBoxNum);
+        work->state = MPS_WAIT_NEXT_GAME_CONFIRM;
+      }
+    }
     break;
 
   case MPS_WAIT_NEXT_GAME_CONFIRM:
@@ -481,7 +494,8 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       work->state = MPS_WAIT_SELBOX;
     }
     else
-    if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME )
+    if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME ||
+        MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
     {
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
       MB_COMM_ReqDisconnect( work->commWork );

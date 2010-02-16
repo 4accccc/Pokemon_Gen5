@@ -67,11 +67,14 @@ struct _MB_DATA_WORK
   
   BOOL  isDummyCard;
   DLPLAY_CARD_TYPE  cardType;     //本体に刺さっているカードの種類(デバッグ時に選択したROMがのる
-  u8          boxSavePos;  //ボックスデータの新しい方
-  u8          mainSavePos; //メインデータの新しい方
+  u8          boxLoadPos;  //ボックスデータの新しい方
+  u8          mainLoadPos; //メインデータの新しい方
+  u8          boxSavePos;  //セーブするほう
+  u8          mainSavePos; //セーブするほう
 
   u8  *pData;  //読み出したデータ
   u8  *pDataMirror;  //ミラー用データ
+  
   u8  *pBoxData;    //読み込み対象のBOXデータアドレス(まだポケモンデータじゃない！
   u8  *pItemData;   //読み込み対象のアイテムデータアドレス(まだアイテムデータじゃない！
 };

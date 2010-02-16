@@ -129,21 +129,26 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
         const BOOL isCorrectData = MB_DATA_PT_CheckDataCorrect( &footer[0] , dataWork );
         if( isCorrectData == TRUE )
         {
-          if( dataWork->boxSavePos == DDS_FIRST )
+          if( dataWork->boxLoadPos == DDS_FIRST )
           {
             dataWork->pBoxData = dataWork->pData + boxStartAdd;
+            dataWork->boxSavePos = DDS_SECOND;
           }
           else
           {
             dataWork->pBoxData = dataWork->pDataMirror + boxStartAdd;
+            dataWork->boxSavePos = DDS_FIRST;
           }
-          if( dataWork->mainSavePos == DDS_FIRST )
+          
+          if( dataWork->mainLoadPos == DDS_FIRST )
           {
             dataWork->pItemData = dataWork->pData + itemStartAdd;
+            dataWork->mainSavePos = DDS_SECOND;
           }
           else
           {
             dataWork->pItemData = dataWork->pDataMirror + itemStartAdd;
+            dataWork->mainSavePos = DDS_FIRST;
           }
 
         }
@@ -288,14 +293,14 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       //BOX
       {
         PT_SAVE_FOOTER *boxFooter,*mainFooter;
-        if( dataWork->boxSavePos == DDS_FIRST ){
+        if( dataWork->boxLoadPos == DDS_FIRST ){
           boxFooter = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER,dataWork->cardType) ];
         }
         else{
           boxFooter = (PT_SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER,dataWork->cardType) ];
         }
 
-        if( dataWork->mainSavePos == DDS_FIRST ){
+        if( dataWork->mainLoadPos == DDS_FIRST ){
           mainFooter = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER,dataWork->cardType) ];
           mainFooter->crc = MATH_CalcCRC16CCITT( &dataWork->crcTable_, dataWork->pData, mainFooter->size - sizeof(PT_SAVE_FOOTER) );
         }
@@ -323,11 +328,10 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
 
   case 1: //進行データのセーブ
     {
-      //読み込んだほうとは反対側に書く
-      const u32 saveAddress = ( dataWork->mainSavePos == DDS_FIRST ? 0x40000 : 0x00000 );
+      const u32 saveAddress = ( dataWork->mainSavePos == DDS_FIRST ? 0x00000 : 0x40000 );
       const u32 saveSize = MB_DATA_GetStartAddress( PT_GMDATA_NORMAL_FOOTER+1 , dataWork->cardType );
       void *pData;
-      if( dataWork->mainSavePos == DDS_FIRST ){
+      if( dataWork->mainLoadPos == DDS_FIRST ){
         pData = dataWork->pData;
       }
       else{
@@ -355,8 +359,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
 
       //セーブ開始！
-      //読み込んだほうとは反対側に書く
-      saveAddress = ( dataWork->boxSavePos == DDS_FIRST ? 0x40000 : 0x00000 );
+      saveAddress = ( dataWork->boxSavePos == DDS_FIRST ? 0x00000 : 0x40000 );
       saveAddress += MB_DATA_GetStartAddress(PT_GMDATA_ID_BOXDATA,dataWork->cardType);
 
       CARD_WriteAndVerifyFlashAsync( saveAddress , dataWork->pBoxData , saveSize-1 , NULL , NULL );
@@ -404,8 +407,7 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
 
       //セーブ開始！
-      //読み込んだほうとは反対側に書く
-      saveAddress = ( dataWork->boxSavePos == DDS_FIRST ? 0x40000 : 0x00000 );
+      saveAddress = ( dataWork->boxSavePos == DDS_FIRST ? 0x00000 : 0x40000 );
       saveAddress += MB_DATA_GetStartAddress(PT_GMDATA_ID_BOXDATA,dataWork->cardType);
       saveAddress += saveSize-1;
 
@@ -433,6 +435,24 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       dataWork->subSeq++;
       dataWork->isFinishSaveSecond = TRUE;  //2番目は無い
       dataWork->isFinishSaveAll_ = TRUE;
+      
+      //セーブ位置の入れ替え
+      if( dataWork->mainSavePos == DDS_FIRST )
+      {
+        dataWork->mainSavePos = DDS_SECOND;
+      }
+      else
+      {
+        dataWork->mainSavePos = DDS_FIRST;
+      }
+      if( dataWork->boxSavePos == DDS_FIRST )
+      {
+        dataWork->boxSavePos = DDS_SECOND;
+      }
+      else
+      {
+        dataWork->boxSavePos = DDS_FIRST;
+      }
     }
     break;
   }
@@ -497,17 +517,17 @@ static  BOOL MB_DATA_PT_CheckDataCorrect( PT_SAVE_FOOTER **pFooterArr , MB_DATA_
   }
   mainDataNum = MB_DATA_PT_CompareFooterData( pFooterArr[ PT_MAIN_FIRST ] ,isCorrect[ PT_MAIN_FIRST ],
                            pFooterArr[ PT_MAIN_SECOND ] ,isCorrect[ PT_MAIN_SECOND ] ,
-                           &dataWork->mainSavePos );
+                           &dataWork->mainLoadPos );
   boxDataNum = MB_DATA_PT_CompareFooterData(  pFooterArr[ PT_BOX_FIRST ] ,isCorrect[ PT_BOX_FIRST ],
                            pFooterArr[ PT_BOX_SECOND ] ,isCorrect[ PT_BOX_SECOND ] ,
-                           &dataWork->boxSavePos );
+                           &dataWork->boxLoadPos );
   if( mainDataNum == 0 || boxDataNum == 0 )
   {
     return FALSE;
   }
   else if( mainDataNum == 1 && boxDataNum == 1 )
   {
-    if( dataWork->mainSavePos == dataWork->boxSavePos )
+    if( dataWork->mainLoadPos == dataWork->boxLoadPos )
     {
       //初回セーブ
       return TRUE;
@@ -525,8 +545,8 @@ static  BOOL MB_DATA_PT_CheckDataCorrect( PT_SAVE_FOOTER **pFooterArr , MB_DATA_
   }
   else if( mainDataNum == 2 && boxDataNum == 1 )
   {
-    if( pFooterArr[ dataWork->mainSavePos*2 ]->g_count ==
-      pFooterArr[ dataWork->boxSavePos*2+1]->g_count )
+    if( pFooterArr[ dataWork->mainLoadPos*2 ]->g_count ==
+      pFooterArr[ dataWork->boxLoadPos*2+1]->g_count )
     {
       //初回セーブ後、全体セーブなし
       return TRUE;
@@ -539,8 +559,8 @@ static  BOOL MB_DATA_PT_CheckDataCorrect( PT_SAVE_FOOTER **pFooterArr , MB_DATA_
   }
   else
   {
-    if( pFooterArr[ dataWork->mainSavePos*2 ]->g_count ==
-      pFooterArr[ dataWork->boxSavePos*2+1]->g_count )
+    if( pFooterArr[ dataWork->mainLoadPos*2 ]->g_count ==
+      pFooterArr[ dataWork->boxLoadPos*2+1]->g_count )
     {
       //問題なし
       return TRUE;

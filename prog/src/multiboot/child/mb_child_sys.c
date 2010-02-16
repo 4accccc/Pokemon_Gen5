@@ -92,6 +92,8 @@ typedef enum
   MCS_WAIT_NEXT_GAME_CONFIRM,
   MCS_SELECT_NEXT_GAME_CONFIRM,
 
+  MCS_WAIT_NEXT_GAME_ERROR_MSG,
+
   MCS_WAIT_EXIT_COMM,
   MCS_EXIT_GAME,
   
@@ -164,6 +166,7 @@ static void MB_CHILD_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane
 static void MB_CHILD_LoadResource( MB_CHILD_WORK *work );
 
 static void MB_CHILD_DataConvert( MB_CHILD_WORK *work );
+static const u16 MB_CHILD_GetLeastPoke( MB_CHILD_WORK *work );
 static const BOOL MB_CHILD_ErrCheck( MB_CHILD_WORK *work , const BOOL noFade );
 
 static void MB_CHILD_SaveInit( MB_CHILD_WORK *work );
@@ -252,7 +255,10 @@ static void MB_CHILD_Term( MB_CHILD_WORK *work )
     MB_DATA_TermSystem( work->dataWork );
   }
 
-  MB_MSG_MessageTerm( work->msgWork );
+  if( work->msgWork != NULL )
+  {
+    MB_MSG_MessageTerm( work->msgWork );
+  }
   MB_CHILD_TermGraphic( work );
 }
 
@@ -303,13 +309,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       if( MB_IsMultiBootChild() == FALSE ||
           GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
       {
-#if DEB_ARI
-        
-        work->state = MCS_CHECK_ROM;
-        return FALSE;
-#else
         GF_ASSERT_MSG(0,"This DS is not multiboot child!!\n");
-#endif
       }
       else
       {
@@ -672,14 +672,36 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     break;
   
   case MCS_DIPS_NEXT_GAME_CONFIRM:
+    if( MB_COMM_IsPostBoxLeast( work->commWork ) == TRUE )
     {
-      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
+      if( MB_CHILD_GetLeastPoke( work ) < MB_CAP_POKE_NUM )
+      {
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
 
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_06 , work->initData->msgSpeed );
-      MB_COMM_SetChildState( work->commWork , MCCS_NEXT_GAME );
-      work->state = MCS_WAIT_NEXT_GAME_CONFIRM;
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_09 , work->initData->msgSpeed );
+        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
+        work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+      }
+      else
+      if( MB_COMM_GetBoxLeast( work->commWork ) < MB_CAP_POKE_NUM )
+      {
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_08 , work->initData->msgSpeed );
+        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
+        work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+      }
+      else
+      {
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
+
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_06 , work->initData->msgSpeed );
+        MB_COMM_SetChildState( work->commWork , MCCS_NEXT_GAME );
+        work->state = MCS_WAIT_NEXT_GAME_CONFIRM;
+      }
     }
     break;
+    
   case MCS_WAIT_NEXT_GAME_CONFIRM:
     if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
     {
@@ -714,6 +736,16 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     MB_CHILD_ErrCheck( work , FALSE );
     break;
   
+  case MCS_WAIT_NEXT_GAME_ERROR_MSG:
+    if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
+    {
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , work->initData->msgSpeed );
+      MB_COMM_ReqDisconnect( work->commWork );
+      work->state = MCS_WAIT_EXIT_COMM;
+    }
+    MB_CHILD_ErrCheck( work , FALSE );
+    break;
+  
   case MCS_WAIT_EXIT_COMM:
     if( MB_COMM_IsDisconnect( work->commWork ) == TRUE )
     {
@@ -731,12 +763,6 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   }
   PMSND_Main();
   
-  
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START &&
-      GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-  {
-    return TRUE;
-  }
   return FALSE;
 }
 
@@ -903,6 +929,32 @@ static void MB_CHILD_DataConvert( MB_CHILD_WORK *work )
     
     MB_UTIL_ConvertStr( strSrc , work->boxName[i] , 10 , work->cardType );
   }
+}
+
+//--------------------------------------------------------------
+//  ボックスの残個数チェック
+//--------------------------------------------------------------
+static const u16 MB_CHILD_GetLeastPoke( MB_CHILD_WORK *work )
+{
+  u8 i,j;
+  u16 num = 0;
+  for( i=0;i<MB_POKE_BOX_TRAY;i++ )
+  {
+    for( j=0;j<MB_POKE_BOX_POKE;j++ )
+    {
+      if( PPP_Get( work->boxPoke[i][j] , ID_PARA_poke_exist , NULL ) == TRUE )
+      {
+        const u8 ret = MB_UTIL_CheckPlay_PalGate( work->boxPoke[i][j] , work->cardType );
+        if( ret == MUCPR_OK )
+        {
+          num++;
+        }
+      }
+    }
+  }
+  
+  MB_TPrintf("Child box least poke [%].\n",num);
+  return num;
 }
 
 //--------------------------------------------------------------

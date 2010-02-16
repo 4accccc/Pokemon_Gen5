@@ -108,8 +108,12 @@ struct _MB_COMM_WORK
   u16    isPermitSecondSave:1;
   u16    isPermitFinishSave:1;
   u16    isInitLowerData:1;
+  u16    isPostBoxLeast:1;    //13
+  
+  u16    pad:3;
   
   u8      saveWaitCnt;
+  u16     boxLeast;
 };
 
 
@@ -435,6 +439,7 @@ void MB_COMM_ResetFlag( MB_COMM_WORK* commWork )
   commWork->isPermitFirstSave = FALSE;
   commWork->isPermitSecondSave = FALSE;
   commWork->isPermitFinishSave = FALSE;
+  commWork->isPostBoxLeast = FALSE;
   
   commWork->saveWaitCnt = 0;
   
@@ -475,6 +480,15 @@ const BOOL MB_COMM_GetIsPermitFinishSave( const MB_COMM_WORK* commWork )
 const u8 MB_COMM_GetSaveWaitTime( const MB_COMM_WORK* commWork )
 {
   return commWork->saveWaitCnt;
+}
+
+const BOOL MB_COMM_IsPostBoxLeast( const MB_COMM_WORK* commWork )
+{
+  return commWork->isPostBoxLeast;
+}
+const u16 MB_COMM_GetBoxLeast( const MB_COMM_WORK* commWork )
+{
+  return commWork->boxLeast;
 }
 
 #pragma mark [>SendDataFunc
@@ -642,6 +656,11 @@ static void MB_COMM_Post_Flag( const int netID, const int size , const void* pDa
     break;
   case MCFT_PERMIT_FINISH_SAVE:
     commWork->isPermitFinishSave = TRUE;
+    break;
+
+  case MCFT_LEAST_BOX:
+    commWork->boxLeast = pkt->value;
+    commWork->isPostBoxLeast = TRUE;
     break;
 
   // éqÅ®êe----------------------------------

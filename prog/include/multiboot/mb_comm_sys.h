@@ -30,6 +30,8 @@ typedef enum
   MCFT_PERMIT_SECOND_SAVE,
   MCFT_PERMIT_FINISH_SAVE,
 
+  MCFT_LEAST_BOX,
+
   //子→親
   MCFT_CHILD_STATE = 10,
   MCFT_READY_START_SAVE,
@@ -51,6 +53,7 @@ typedef enum
   MCCS_NEXT_GAME,
 
   MCCS_END_GAME,
+  MCCS_END_GAME_ERROR,  //ボックス不足とかで終了
   MCCS_CANCEL_BOX,
 
 }MB_COMM_CHILD_STATE;
@@ -109,6 +112,8 @@ extern const BOOL MB_COMM_GetIsPermitFirstSave( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_GetIsPermitSecondSave( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_GetIsPermitFinishSave( const MB_COMM_WORK* commWork );
 extern const u8 MB_COMM_GetSaveWaitTime( const MB_COMM_WORK* commWork );
+const BOOL MB_COMM_IsPostBoxLeast( const MB_COMM_WORK* commWork );
+const u16 MB_COMM_GetBoxLeast( const MB_COMM_WORK* commWork );
 
 extern void MB_COMM_InitSendGameData( MB_COMM_WORK* commWork , void* gameData , u32 size );
 extern void MB_COMM_ClearSendPokeData( MB_COMM_WORK* commWork );
