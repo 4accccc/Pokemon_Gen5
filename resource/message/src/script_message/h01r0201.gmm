@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-15T20:36:24"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T12:53:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="262"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1408" top="326" right="2113" bottom="946" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -291,6 +291,112 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_h01r0201_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・pos起動（GRIDZ=8^11、GRIDX=8）に出現
+・主人公と向き合ってメッセージ表示
+・続けてblack_02</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼</language>
+	</row>
+
+	<row id="msg_h01r0201_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・画面下を見ながらメッセージ表示
+　（主人公の位置を調整の可能性あり）
+・続けてblack_03</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">きいたよ
+ヤグルマのもり　でのこと▼
+おかしな　プラズマだんを
+きみが　こらしめて　くれて▽
+うれしい　かぎりさ▼</language>
+		<language name="JPN_KANJI" width="256">きいたよ
+ヤグルマの森　でのこと▼
+おかしな　プラズマだんを
+きみが　こらしめて　くれて▽
+うれしい　かぎりさ▼</language>
+	</row>
+
+	<row id="msg_h01r0201_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・再度主人公と向き合ってメッセージ表示
+・以下の選択肢表示
+　ポケモンセンター→black_04
+　ポケモンジム→black_05</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">それは　さておき……▼
+シッポウシティでも
+アドバイス　したけれど▼
+あたらしい　まちに　ついたら
+さいしょに　むかうべき　なのは……？</language>
+		<language name="JPN_KANJI" width="256">それは　さておき……▼
+シッポウシティでも
+アドバイス　したけれど▼
+新しい　街に　着いたら
+最初に　向かうべき　なのは……？</language>
+	</row>
+
+	<row id="msg_h01r0201_black_win01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>選択肢</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">ポケモンセンター</language>
+	</row>
+
+	<row id="msg_h01r0201_black_win02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>選択肢</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ポケモンジム</language>
+		<language name="JPN_KANJI" width="256">ポケモンジム</language>
+	</row>
+
+	<row id="msg_h01r0201_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ライバルだけゲートからヒウンに向かう
+・画面外に消えると主人公、操作可能に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">そう！　そのとおり
+ポケモンセンターだよね▼
+ヒウンシティの　ポケモンセンターは
+ゲートをでて　そのまま
+まっすぐ　すすめば　すぐらしいよ▼
+ということで
+おさきに！▼</language>
+		<language name="JPN_KANJI" width="256">そう！　そのとおり
+ポケモンセンターだよね▼
+ヒウンシティの　ポケモンセンターは
+ゲートをでて　そのまま
+まっすぐ　進めば　すぐらしいよ▼
+ということで
+おさきに！▼</language>
+	</row>
+
+	<row id="msg_h01r0201_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ライバルだけゲートからヒウンに向かう
+・画面外に消えると主人公、操作可能に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ポケモンジム……？
+ずいぶんと　もえているんだね▼
+でも　さいしょに　いくべきなのは
+ヒウンシティの　ポケモンセンターは
+ゲートをでて　そのまま
+まっすぐ　すすめば　すぐらしいよ▼
+ということで
+おさきに！▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンジム……？
+ずいぶんと　燃えているんだね▼
+でも　最初に　行くべきなのは
+ポケモンセンターだと　思うよ▼
+ヒウンシティの　ポケモンセンターは
+ゲートをでて　そのまま
+まっすぐ　進めば　すぐらしいよ▼
+ということで
+おさきに！▼</language>
+	</row>
 
 	<row id="msg_h01r0201_infomationw_01">
 		<comment>♀</comment>
