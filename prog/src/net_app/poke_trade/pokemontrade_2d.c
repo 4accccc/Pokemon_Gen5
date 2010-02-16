@@ -2407,9 +2407,35 @@ void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x
  * @retval  none
  */
 //------------------------------------------------------------------------------
+#define DEF_SUCKED_X (28)
+#define DEF_SUCKED_Y (0)
 
 void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
 {
+/*   GFL_CLACTPOS pos;
+ * 
+ *   GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
+ * 
+ *   pWork->AddPos.x = pos.x-pWork->aVecPos.x;
+ *   pWork->AddPos.y = pos.y-pWork->aVecPos.y;
+ *   if(pWork->AddPos.x==0){
+ *     if(pos.x > DEF_SUCKED_X){  //今の場所が最終地点より大きい
+ *       pWork->AddPos.x = -1;
+ *     }
+ *     if(pos.x < DEF_SUCKED_X){ //小さい
+ *       pWork->AddPos.x = 1;
+ *     }
+ *   }
+ *   if(pWork->AddPos.y==0){
+ *     pWork->AddPos.y = -1;
+ *   }
+ * 
+ *   pWork->SuckedCount = 1;
+ * 
+ */
+
+
+#if 1
   GFL_CLACTPOS pos;
 
   GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
@@ -2417,13 +2443,27 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
 
   {
     VecFx32 mullpos[4];
-    fx32 x,y,scale;
+    fx32 x,y,scale,dotproduct;
     VecFx32 angle,normal;
+    u16 rad;
 
-    angle.x = (pos.x-pWork->aVecPos.x)*FX32_ONE;
+    angle.x = (pos.x-pWork->aVecPos.x)*FX32_ONE;  //動かしたベクトル
     angle.y = (pos.y-pWork->aVecPos.y)*FX32_ONE;
     angle.z = 0;
 
+    normal.x = (DEF_SUCKED_X - pos.x)*FX32_ONE;  //最後の方へのベクトル
+    normal.y = (DEF_SUCKED_Y - pos.y)*FX32_ONE;
+    normal.z = 0;
+#if 0
+    dotproduct = VEC_DotProduct(&angle,&normal);
+//    FX_Sqrt(FX_Mul(angle.x,angle.x),FX_Mul(angle.y,angle.y))
+    dotproduct = FX_Div(FX_Mul(angle.x, normal.x) + FX_Mul(angle.y, normal.y),dotproduct);
+
+    rad = FX_AcosIdx(dotproduct);  //目標地点への角度がでる
+
+    OS_TPrintf("rad = %x\n",rad);
+#endif
+    
     mullpos[0].x = pos.x*FX32_ONE;
     mullpos[0].y = pos.y*FX32_ONE;
     mullpos[0].z = 0;
@@ -2451,26 +2491,6 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
     mullpos[2].y = y + normal.y;
     mullpos[2].z = 0;
 
-    
-    
-    
-    
-#if 0
-    if(mullpos[2].x > mullpos[3].x){
-      mullpos[2].x -= (mullpos[2].x - mullpos[3].x) / 2;
-    }
-    else{
-      mullpos[2].x += (mullpos[3].x - mullpos[2].x) / 2;
-    }
-    if(mullpos[2].y > mullpos[3].y){
-      mullpos[2].y -= (mullpos[2].y - mullpos[3].y) / 2;
-    }
-    else{
-      mullpos[2].y += (mullpos[3].y - mullpos[2].y) / 2;
-    }
-#endif
- //   mullpos[2].x =  mullpos[3].x;
- //   mullpos[2].y =  mullpos[1].y;
 
     OS_Printf("%d %d\n",mullpos[0].x/FX32_ONE,mullpos[0].y/FX32_ONE);
     OS_Printf("%d %d\n",mullpos[1].x/FX32_ONE,mullpos[1].y/FX32_ONE);
@@ -2482,7 +2502,7 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
 
   }
   pWork->SuckedCount = _SUCKEDCOUNT_NUM;
-
+#endif
 }
 
 
@@ -2498,6 +2518,63 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
 
 BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
 {
+/* #if 0
+ *   GFL_CLACTPOS pos;
+ *   s16 x,y;
+ * //  fx32 lastx = 28*FX32_ONE;
+ * //  fx32 lasty = 0;
+ * //  fx32 tan32;
+ *   fx16 tan = FX_SinIdx(pWork->SuckedCount)/FX_CosIdx(pWork->SuckedCount);
+ * 
+ *   
+ * //  lastx = FX_Mul(pWork->AddPos.x, tan32);
+ * 
+ *   
+ * 
+ * 
+ *   GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
+ *   if(pos.x==DEF_SUCKED_X){
+ *     if(pos.y==0){
+ *       POKEMONTRADE_RemovePokemonCursor(pWork);
+ *       return TRUE;
+ *     }
+ *   }
+ *   x=DEF_SUCKED_X;
+ *   y=0;
+ * 
+ *   if(pos.x != DEF_SUCKED_X){
+ *     if(pos.x > DEF_SUCKED_X){
+ *       pWork->AddPos.x -= pWork->SuckedCount * 2;
+ *       x = pos.x + pWork->AddPos.x;
+ *       if(x < DEF_SUCKED_X){
+ *         x = DEF_SUCKED_X;
+ *       }
+ *     }
+ *     if(pos.x < DEF_SUCKED_X){
+ *       pWork->AddPos.x += pWork->SuckedCount * 2;
+ *       x = pos.x + pWork->AddPos.x;
+ *       if(x > DEF_SUCKED_X){
+ *         x = DEF_SUCKED_X;
+ *       }
+ *     }
+ *   }
+ *   if(pos.y > 0){
+ *     pWork->AddPos.y -= pWork->SuckedCount * 2;
+ *     y = pos.y + pWork->AddPos.y;
+ *     if(y < 0){
+ *       y=0;
+ *     }
+ *   }
+ *   pos.x = x;
+ *   pos.y = y;
+ *   GFL_CLACT_WK_SetPos(  pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
+ * 
+ *   pWork->SuckedCount++;
+ *   return FALSE;
+ * 
+ * #endif
+ */
+#if 1
   double num;
   double ansx,ansy;
     GFL_CLACTPOS pos;
@@ -2506,6 +2583,10 @@ BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
     pWork->SuckedCount--;
     if(pWork->SuckedCount==0){
       return TRUE;
+    }
+    GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
+    if(pos.y < 0){
+      pWork->SuckedCount=1;
     }
     if(pWork->SuckedCount==1){
       POKEMONTRADE_RemovePokemonCursor(pWork);
@@ -2518,7 +2599,7 @@ BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
     }
   }
   return FALSE;
-
+#endif
 }
 
 //------------------------------------------------------------------------------

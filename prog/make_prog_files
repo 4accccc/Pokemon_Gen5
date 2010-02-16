@@ -64,6 +64,7 @@ NETWORKSRC =  net/net_icondata.c \
         net/dwc_rapfriend.c \
         system/net_err.c \
 				net/wih_dwc.c \
+				net/net_save.c \
 				net_app/pdw_account/pdwacc_mainproc.c \
         net_app/union/union_comm.c \
         net_app/union/union_main.c \

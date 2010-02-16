@@ -38,6 +38,8 @@
 #include "savedata/mail_util.h"
 #include "progval.h"
 
+#include "net/net_save.h"
+
 ///3Dモデルのタイプ
 typedef enum
 {
@@ -446,7 +448,7 @@ struct _POKEMON_TRADE_WORK{
   u32 pokeIconForm[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   u8 pokeIconLine[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
 
-  
+  NET_SAVE_WORK* pNetSave;
   GFL_CLWK* curIcon[CELL_DISP_NUM];
 
   int windowNum;
@@ -523,6 +525,7 @@ struct _POKEMON_TRADE_WORK{
   u16* scrTray;
   u16* scrTemoti;
   u8* pCharMem;
+  GFL_CLACTPOS AddPos;
   POKEMONTRADE_TYPE type;
   PROGVAL_PEZIER_WORK aCutMullRom;
   s16 SuckedCount;

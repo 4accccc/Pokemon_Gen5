@@ -12,6 +12,7 @@
 
 #include "arc_def.h"
 #include "net/network_define.h"
+#include "net/net_save.h"
 #include "system\wipe.h"
 
 #include "net_app/pokemontrade.h"
@@ -339,68 +340,18 @@ static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
     return;
   }
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVEST,WB_NET_TRADE_SERVICEID);
+    pWork->pNetSave = NET_SAVE_Init(pWork->heapID, pWork->pGameData);
     _CHANGE_STATE(pWork, _changeTimingSaveStart2);
   }
   else{
-  //  GAMEDATA_SaveAsyncStart(pWork->pGameData);
     _CHANGE_STATE(pWork, _changeDemo_ModelTrade30);
   }
 
 }
 static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork)
 {
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVEST,WB_NET_TRADE_SERVICEID)){
-    GAMEDATA_SaveAsyncStart(pWork->pGameData);
-    _CHANGE_STATE(pWork,_changeTimingSaveStart3);
-  }
-}
-
-static void _changeTimingSaveStart3(POKEMON_TRADE_WORK* pWork)
-{
-  if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_LAST){
-    if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-      pWork->saveStep = GFUser_GetPublicRand(_CHANGERAND);
-      _CHANGE_STATE(pWork,_changeTimingSaveStart4);
-    }
-    else{
-      _CHANGE_STATE(pWork,_changeDemo_ModelTrade25);
-    }
-  }
-}
-
-static void _changeTimingSaveStart4(POKEMON_TRADE_WORK* pWork)
-{
-  pWork->saveStep--;
-  if(pWork->saveStep<0){
-    if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVELAST,WB_NET_TRADE_SERVICEID);
-      _CHANGE_STATE(pWork, _changeTimingSaveStart5);
-    }
-    else{
-      _CHANGE_STATE(pWork,_changeDemo_ModelTrade30);
-    }
-  }
-}
-
-static void _changeTimingSaveStart5(POKEMON_TRADE_WORK* pWork)
-{
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVELAST,WB_NET_TRADE_SERVICEID)){
-    _CHANGE_STATE(pWork,_changeDemo_ModelTrade25);
-  }
-}
-
-static void _changeDemo_ModelTrade25(POKEMON_TRADE_WORK* pWork)
-{
-  if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_OK){
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVEEND, WB_NET_TRADE_SERVICEID);
-    _CHANGE_STATE(pWork,_changeDemo_ModelTrade26);
-  }
-}
-
-static void _changeDemo_ModelTrade26(POKEMON_TRADE_WORK* pWork)
-{
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVEEND, WB_NET_TRADE_SERVICEID)){
+  if(NET_SAVE_Main(pWork->pNetSave)){
+    NET_SAVE_Exit(pWork->pNetSave);
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade30);
   }
 }
