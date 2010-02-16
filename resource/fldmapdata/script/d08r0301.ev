@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d08r0301
+_EVENT_DATA    ev_pos_d08r0301_demo_01
 _EVENT_DATA_END
 
 
@@ -30,9 +30,76 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*              	塔全体が揺れるデモ                        */
 /**************************************************************/
-ev_d08r0301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START	ev_pos_d08r0301_demo_01
+	
+	//画面を揺らすデモを入れる
+	
+	//びっくりする
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
+	_OBJ_ANIME_WAIT()
+	
+	//左右をきょろきょろ見る
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_left)
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(10)
+	
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_right)
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(20)
+
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_up)
+	_OBJ_ANIME_WAIT()
+	
+	//なにかが…　とうの　うえで
+	_SYSWIN_MSG_DOWN(msg_d08r0301_demo_01)
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	//============フラグワーク操作=============//
+	
+	//ライバルのPOSイベントを無効
+	$WK_SCENE_D08_LEGEND = 3
+	
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//共通スクリプト：びっくりする                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：上を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：下を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：右を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：左を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+	
 

@@ -15,7 +15,10 @@
   .include  "pokecen_scr_def.h"
 
   .include  "debug_scr_local_iwasawa.h"
-   .include  "c02.h"
+  
+  .include  "c02.h"
+  .include  "d06.h"
+  .include  "d06r0101.h"
 
   .include "c08r0401_def.h"
   .include "t01.h"
@@ -414,11 +417,10 @@ EVENT_START   ev_debug_murakami
 		//メニュー作成
 		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
 		//リスト追加
-		_BMPMENU_MAKE_LIST( msg_debug_01, 1 )	//テスト01
-		_BMPMENU_MAKE_LIST( msg_debug_02, 2 )	//テスト02
-		_BMPMENU_MAKE_LIST( msg_debug_03, 3 )	//テスト03
-		_BMPMENU_MAKE_LIST( msg_debug_05, 4 )	//イベントＯＦＦ
-		_BMPMENU_MAKE_LIST( msg_debug_07, 5 )	//マップ差し替え
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_01, 1 )	//テスト01
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_02, 2 )	//テスト02
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_03, 3 )	//テスト用1
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_04, 4 )	//テスト用2
 		_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -440,23 +442,29 @@ EVENT_START   ev_debug_murakami
 			_MAP_CHANGE( ZONE_ID_C02, 644, 587, DIR_UP )
 	  
 		ELSIF $SCWK_TEMP1 == 2 THEN
-		
-			$WK_SCENE_D06 = 1
-		
+			_FLAG_RESET(FV_D08R0901_BOSS_01)
+			_FLAG_RESET(FV_D08R0801_EVENT_01)
+			_FLAG_RESET(FV_D08R0901_EVENT_01)
+			_FLAG_RESET(FV_D08R0601_EVENT_01)
+			_FLAG_RESET(FV_D08_HAKASE1_01)
+			_FLAG_RESET(FV_D08_RIVAL_01)
+			
+			//d08r0101のマップを入り口が破壊されたマップに差し替える
+			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
+			
+			_MAP_CHANGE( ZONE_ID_D08, 180, 148, DIR_UP )
+			$WK_SCENE_D08_LEGEND = 1
+				
 		ELSIF $SCWK_TEMP1 == 3 THEN
 		
-			_SE_PLAY( SEQ_SE_FLD_36)		
-			//本棚が動くアニメーション
-			_GYM_NORMAL_MOVE_WALL(0)
-			_SE_STOP()	
+			_ADD_GOLD(10000)
 		
 		ELSIF $SCWK_TEMP1 == 4 THEN
-		
-		ELSIF $SCWK_TEMP1 == 5 THEN
 		
 		ENDIF
 		
 EVENT_END
+
 /**************************************************************/
 /*                                                            */
 /**************************************************************/

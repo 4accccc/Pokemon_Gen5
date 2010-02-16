@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/26 20:04:35
+#save date:2010/02/13 19:47:34
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0401.wms
 #SECTION START:OBJ_EVENT
@@ -9,38 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0401.wms
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#type
-1
-#ID name
-D08R0401_RIVEL_01
-#OBJ CODE Number
-RIVEL
-#MOVE CODE Number
-MV_UP
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D08R0401_RIVAL_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
 0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 0 -136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -71,13 +40,13 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_D08_LEGEND
 #Event Trigger Work Value
-2
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 -168
+-24 0 -136
 #size
-5 1
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

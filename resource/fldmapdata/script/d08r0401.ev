@@ -26,57 +26,89 @@ _EVENT_DATA_END
 /*	ライバルのPOSイベント                           */
 /**************************************************************/
 EVENT_START    ev_pos_d08r0401_rivel_01	
+
+	_OBJ_ADD_EX(4,14,DIR_RIGHT,MMDL_ID_EVENTOBJ_00, RIVEL, MV_DMY )
 	
+	_PLAYER_NAME(0)
 	//ライバルが喋る
-	//ライバル：なにが　あったんだろうな
-	_BALLOONWIN_OBJMSG( msg_d08r0401_black_01, D08R0401_RIVEL_01)
+	//ライバル：(プレイヤーの名前)！
+	_BALLOONWIN_OBJMSG( msg_d08r0401_black_01, MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 
-	//ライバルが主人公を向く
-	_OBJ_ANIME( D08R0401_RIVEL_01,anm_common_turn_d ) 
-	_OBJ_ANIME_WAIT()
-	
-	//ライバルが喋る
-	//ライバル：プラズマだんは　うえ　だな
-	_BALLOONWIN_OBJMSG( msg_d08r0401_black_02, D08R0401_RIVEL_01)
+	//カメラが、ライバルまで移動する
+	_CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	_CAMERA_MOVE(9688,0,970752,303104,114688,872448,60)
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+ 	
+ 
+ 	//ライバルが喋る
+	//ライバル：たおれている　はしらも
+	_BALLOONWIN_OBJMSG( msg_d08r0401_black_02, MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 	
 	//ライバルが去っていく
-	_OBJ_ANIME( D08R0401_RIVEL_01,anm_raival_saru_01)
-	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_rivel_saru_01)
 	
+	//カメラが戻る
+   	_CAMERA_RECV_MOVE( 80 )
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
+	_OBJ_ANIME_WAIT()
+		
 	//============フラグワーク操作=============//
 	
 	//ライバルのPOSイベントを無効
-	$WK_SCENE_D08_LEGEND = 3
+	$WK_SCENE_D08_LEGEND = 4
 	
 	//ライバルを消す
-	_OBJ_DEL( D08R0401_RIVEL_01 )
-	_FLAG_SET(FV_D08R0401_RIVAL_01)
-	
-	//ハチク、博士を消す
-	_FLAG_SET(FV_D08R0101_EVENT_01)
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	
 	//========================================//
 	
-EVENT_END 
+EVENT_END
 
 //--------------------------------------------------------------------
-// ライバル：去っていく                    
+//ライバル：去っていく                  
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_raival_saru_01
-
-	_ANIME_DATA AC_WALK_U_8F,9
-	_ANIME_DATA AC_WALK_L_8F,9
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------------
-// 共通アニメ：下振り向き                       
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_d
-
-	_ANIME_DATA AC_DIR_D,1
+_ANIME_LABEL	anm_rivel_saru_01
+	_ANIME_DATA	AC_WALK_L_8F,5
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//共通スクリプト：びっくりする                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//共通スクリプト：上を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：下を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：右を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：左を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
 

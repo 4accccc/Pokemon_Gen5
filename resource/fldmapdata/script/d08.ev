@@ -31,12 +31,15 @@ _EVENT_DATA_END
 EVENT_START	ev_reserve_d08_hakase1_01
 
 		//博士とライバル、サポートの位置をイベント用に配置
-		_OBJ_POS_CHANGE( D08_HAKASE1_01, 180, 3, 149, DIR_DOWN )
-		_OBJ_POS_CHANGE( D08_RIVEL_01, 178, 3, 153, DIR_UP )
-		_OBJ_POS_CHANGE( D08_SUPPORT_01, 180, 3, 153, DIR_UP )
+		_OBJ_POS_CHANGE( D08_HAKASE1_01, 180, 3, 144, DIR_DOWN )
+		_OBJ_POS_CHANGE( D08_RIVEL_01, 178, 3, 146, DIR_UP )
+		_OBJ_POS_CHANGE( D08_SUPPORT_01, 180, 3, 146, DIR_UP )
+		
+		//マップ遷移後のフェード明け
+		_MAP_FADE_BLACK_IN()
+		_MAP_FADE_END_CHECK()
 		
 		_PLAYER_NAME(0)
-		
 		//博士が喋る
 		//博士（父）：『まさか……	
 		_BALLOONWIN_OBJMSG(msg_d08_hakase1_06, D08_HAKASE1_01)
@@ -119,8 +122,6 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	
 		//ハチクと博士が塔内に移動
 		_OBJ_ANIME( D08_HAKASE1_01,anm_hakase1_saru_01)
-		_OBJ_ANIME_WAIT()
-		
 		_OBJ_ANIME( D08_LEADER7_01,anm_leader7_saru_01)
 		_OBJ_ANIME_WAIT()
 		
@@ -135,15 +136,15 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_OBJ_ANIME( D08_CHAMPION_01,anm_champion_saru_01)
 		_OBJ_ANIME_WAIT()
 		
+		_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_l)
+		_OBJ_ANIME_WAIT()
+		
 		//サポートが喋る
 		//サポート：たいへんな　ことに　なっちゃったね
 		_BALLOONWIN_OBJMSG(msg_d08_white_07, D08_SUPPORT_01)
 		_BALLOONWIN_CLOSE()
 		
 	//============フラグワーク操作=============//
-	
-	//シンとムの復活のPOSイベントを無効
-	$WK_SCENE_D08_LEGEND = 6
 	
 	//ライバル、ジムリーダー7、チャンピオン、博士（父）を消す
 	_OBJ_DEL( D08_RIVEL_01 )
@@ -156,9 +157,9 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	_FLAG_SET(FV_D08_RIVAL_01)
 	_FLAG_SET(FV_D08_CHAMPION_01)
 	_FLAG_SET( FV_D08_LEADER7_01 )
-	
-	//C07にてジムリーダー7を出現させる
-	_FLAG_RESET( FV_C07GYM0101_READER7_01 )
+
+	//D08R0101の博士とハチクを出現させる
+	_FLAG_RESET( FV_D08R0101_EVENT_01 )
 	
 	//リゾートデザートのライバルイベント開始
 	$WK_SCENE_D03R0101 = 2
@@ -186,7 +187,7 @@ _ANIME_LABEL	anm_common_gyoe
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_r
 
-	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -194,7 +195,7 @@ _ANIME_LABEL	anm_common_turn_r
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_l
 
-	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -202,7 +203,7 @@ _ANIME_LABEL	anm_common_turn_l
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_d
 
-	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -210,7 +211,7 @@ _ANIME_LABEL	anm_common_turn_d
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_u
 
-	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -226,8 +227,7 @@ _ANIME_LABEL	anm_hakase1_saru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader7_saru_01
 
-	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
@@ -236,7 +236,7 @@ _ANIME_LABEL	anm_leader7_saru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_champion_kuru_01
 
-	_ANIME_DATA AC_WALK_U_8F,4
+	_ANIME_DATA AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -244,7 +244,7 @@ _ANIME_LABEL	anm_champion_kuru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_champion_saru_01
 
-	_ANIME_DATA AC_WALK_D_8F,8
+	_ANIME_DATA AC_WALK_D_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -252,9 +252,7 @@ _ANIME_LABEL	anm_champion_saru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rivel_saru_02
 
-	_ANIME_DATA AC_WALK_D_8F,3
-	_ANIME_DATA AC_WALK_R_8F,1
-	_ANIME_DATA AC_WALK_D_8F,4
+	_ANIME_DATA AC_WALK_D_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -373,15 +371,13 @@ EVENT_START    ev_pos_d08_hakase1_01
 		_BALLOONWIN_CLOSE()
 		
 		//============フラグワーク操作=============//
-		
+
 		//D08のライバルを消す
 		//C07のライバルを消す
 		_FLAG_SET(FV_D08_RIVAL_01)
 		_FLAG_SET( FV_C07_RIVAL_01 )
 		_FLAG_SET( FV_C07_RIVAL_01 )
 
-		//D08R0101の博士とハチクを出現させる
-		_FLAG_RESET( FV_D08R0101_EVENT_01 )
 		_FLAG_SET(FV_D08R0101_NONDRAW_01)
 		//リュウラセンの外マップイベントを無効に
 		$WK_SCENE_D08_LEGEND = 2

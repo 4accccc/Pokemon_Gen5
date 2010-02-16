@@ -19,87 +19,252 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d08r0801_boss_01
+_EVENT_DATA    ev_pos_d08r0801_hakai_01	
 _EVENT_DATA		ev_d08r0801_hakaim_01
 _EVENT_DATA		ev_d08r0801_hakaim_02
+_EVENT_DATA		ev_d08r0801_hakaim_03
 _EVENT_DATA		ev_d08r0801_hakaiw_01
 _EVENT_DATA		ev_d08r0801_sage2_01
+_EVENT_DATA		ev_init_d08r0801
+_EVENT_DATA		ev_pos_d08r0801_demo_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/* Nへの話しかけイベント                          */
+/*            FIELD_INIT_LABEL                              　 */
 /**************************************************************/
-EVENT_START    ev_d08r0801_boss_01	
+INIT_EVENT_START	ev_init_d08r0801
 	
-	_TALK_OBJ_START()
-	
-	//Nがしゃべる
-	//ふうん……　きみ　なんだ
-	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_01)
-	
-	//はい/いいえの選択
-	_YES_NO_WIN( SCWK_ANSWER )
-   _BALLOONWIN_CLOSE()
-   
-	IF $SCWK_ANSWER ==  SCR_NO THEN
-	
-		//Nが喋る・いいえの場合
-		//ほんとう　かい！
-		_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_03)
-    	_BALLOONWIN_CLOSE()
+	IF $WK_SCENE_D08_LEGEND >= 8 THEN
+
+		_OBJ_POS_CHANGE( D08R0801_HAKAIM_01, 13, 0, 12, DIR_LEFT )
+		_OBJ_POS_CHANGE( D08R0801_HAKAIM_02, 11, 0, 10, DIR_DOWN )
+		_OBJ_POS_CHANGE( D08R0801_HAKAIM_03, 9, 0, 12, DIR_RIGHT )
+		_OBJ_POS_CHANGE( D08R0801_HAKAIW_01, 11, 0, 14, DIR_UP )
+		_OBJ_POS_CHANGE( D08R0801_SAGE2_01, 7, 0, 12, DIR_RIGHT )
 		
-	ELSE
-		//Nが喋る・はいの場合
-		//ひどい　はなし　だね
-    	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_02)
-    	_BALLOONWIN_CLOSE()
-    	
 	ENDIF
-	
-	//Nとの戦闘
-	_CALL		ev_boss_btl
-	
-	//Nが喋る
-	//Ｎまいったな……
-	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_04)
-    _BALLOONWIN_CLOSE()
 
-	//七人衆が喋る
-	//ええい！　Ｎさまを　おたすけ　するのだ！
-	_BALLOONWIN_OBJMSG( msg_d08r0801_sage2_01, D08R0801_SAGE2_01 )
-    _BALLOONWIN_CLOSE()
+INIT_EVENT_END
+/**************************************************************/
+/* パッケージポケモンの鳴き声が聞こえてくる                   */
+/**************************************************************/
+EVENT_START    ev_pos_d08r0801_demo_01	
 	
-	//Nが喋る
-	//そのトレーナーを　とおしてあげて
- 	_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_boss_05)
-    _BALLOONWIN_CLOSE()
-
-	//プラズマ団が移動する
-	_OBJ_ANIME( D08R0801_HAKAIW_01,anm_hakaiw_01_idou_01)
-	_OBJ_ANIME( D08R0801_HAKAIM_01,anm_common_turn_l)
-	_OBJ_ANIME( D08R0801_HAKAIM_02,anm_hakaim_02_idou_01)
-	_OBJ_ANIME( D08R0801_SAGE2_01,anm_sage02_idou_01)
+	DEFINE_LOCAL	LCWK_VERSION
+	_GET_ROM_VERSION(LCWK_VERSION)
+	
+	//画面を揺らすデモを入れる
+	
+	//びっくりする
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
 	_OBJ_ANIME_WAIT()
 	
-	//Nが次のフロアに移動する。
-	_OBJ_ANIME( D08R0801_BOSS_01,anm_boss_01_idou_01)
+	//左右をきょろきょろ見る
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
 	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(10)
+	
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(20)
+
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+	_OBJ_ANIME_WAIT()
+	
+	//【仮】ポケモンの鳴き声のウィンドウを仮
+	//ROMによって、ポケモンの鳴き声が違う
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+		_VOICE_PLAY(MONSNO_650,0)
+
+	ELSE
+		_VOICE_PLAY(MONSNO_651,0)
+		
+	ENDIF
+		_VOICE_WAIT()
+	
+	_SYSWIN_MSG_DOWN(msg_d08r0801_demo_02)
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 
 	//============フラグワーク操作=============//
-	
-	//ライバルを消す
-	_OBJ_DEL( D08R0801_BOSS_01 )
-	_FLAG_SET(FV_D08R0801_BOSS_01)
-	
+		
+		$WK_SCENE_D08_LEGEND  = 7
 	//========================================//
 	
 EVENT_END
 
-//Nとの戦闘
+/**************************************************************/
+/* ゲーチスとプラズマ団のPOSイベント                          */
+/**************************************************************/
+EVENT_START    ev_pos_d08r0801_hakai_01	
+	
+
+	DEFINE_LOCAL	LWK_HERO_POSX
+	DEFINE_LOCAL	LWK_HERO_POSZ
+	_PLAYER_POS_GET(LWK_HERO_POSX, LWK_HERO_POSZ)
+	
+	//カメラをゲーチスに寄せる
+	
+	//いよいよである
+	_BALLOONWIN_OBJMSG(msg_d08r0801_sage2_01,D08R0801_SAGE2_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ゲーチスがびっくり、振り返る
+	_OBJ_ANIME(D08R0801_SAGE2_01,anm_common_gyoe)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(D08R0801_SAGE2_01,anm_common_turn_r)
+	_OBJ_ANIME_WAIT()
+	
+	//なんと！
+	_BALLOONWIN_OBJMSG(msg_d08r0801_sage2_02,D08R0801_SAGE2_01)
+	_BALLOONWIN_CLOSE()
+	
+	//七賢人移動
+	_OBJ_ANIME(D08R0801_SAGE2_01,anm_sage02_idou_01)
+	_OBJ_ANIME_WAIT()
+	
+	//カメラを主人公に寄せる
+	
+	//カメラを主人公が連れて行かれる場所へ
+	
+	//プラズマ団、4人が主人公を取り囲む
+	IF $LWK_HERO_POSZ == 10 THEN 
+		_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_01_a)
+		_TIME_WAIT(8)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01_a)
+		_OBJ_ANIME_WAIT()
+	
+	ELSIF $LWK_HERO_POSZ == 11	THEN
+		_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_01_b)
+		_TIME_WAIT(8)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01_b)
+		_OBJ_ANIME_WAIT()
+		
+	ELSIF $LWK_HERO_POSZ == 12	THEN
+		_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_01_c)
+		_TIME_WAIT(10)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01_c)
+		_OBJ_ANIME_WAIT()
+		
+	ELSIF $LWK_HERO_POSZ == 13	THEN
+		_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_01_d)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01_d)
+		_TIME_WAIT(10)
+		_OBJ_ANIME_WAIT()
+		
+	ELSIF $LWK_HERO_POSZ == 14	THEN
+		_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_01_e1)
+		_OBJ_ANIME_WAIT()
+		
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01_e)
+		_TIME_WAIT(15)
+		_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_01_e2)		
+		_OBJ_ANIME_WAIT()
+		
+	ENDIF
+	
+		
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME(D08R0801_HAKAIM_02,anm_hakaim_02_idou_01)
+	_OBJ_ANIME(D08R0801_HAKAIM_03,anm_hakaim_03_idou_01)
+	_OBJ_ANIME(D08R0801_HAKAIW_01,anm_hakaiw_01_idou_01)
+	_OBJ_ANIME_WAIT()
+
+
+	//プラズマだん　いがいは
+	_BALLOONWIN_OBJMSG(msg_d08r0801_sage2_03,D08R0801_SAGE2_01)
+	_BALLOONWIN_CLOSE()
+	
+	//【仮】トレーナーデータ、全体的に仮
+	//足踏みで話すやつを分かりやすく
+	_OBJ_ANIME(D08R0801_HAKAIM_01,anm_common_turn_l)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+	_OBJ_ANIME_WAIT()
+	
+	//イッシュの　よあけを
+	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim1_01,D08R0801_HAKAIM_01)
+	_BALLOONWIN_CLOSE()
+	
+//	_CALL		ev_boss_btl
+	
+	//く…　こんな　こどもに
+	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim1_03,D08R0801_HAKAIM_01)
+	_BALLOONWIN_CLOSE()
+	
+	
+	
+	//足踏みで話すやつを分かりやすく
+	_OBJ_ANIME(D08R0801_HAKAIM_02,anm_common_turn_d)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+	_OBJ_ANIME_WAIT()
+	//われらの　ねがいが
+	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim2_01,D08R0801_HAKAIM_02)
+	_BALLOONWIN_CLOSE()
+	
+//	_CALL		ev_boss_btl
+	
+	//わたしは　とめられた
+	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim2_02,D08R0801_HAKAIM_02)
+	_BALLOONWIN_CLOSE()
+	
+	
+	
+	//足踏みで話すやつを分かりやすく
+	_OBJ_ANIME(D08R0801_HAKAIW_01,anm_common_turn_u)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
+	_OBJ_ANIME_WAIT()
+	//いくよ！　プラ～ズマ～！！
+	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaiw1_01,D08R0801_HAKAIW_01)
+	_BALLOONWIN_CLOSE()
+	
+//	_CALL		ev_boss_btl
+	
+	//わたしたちの　おうが
+	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaiw1_02,D08R0801_HAKAIW_01)
+	_BALLOONWIN_CLOSE()
+	
+	
+	
+
+	//足踏みで話すやつを分かりやすく
+	_OBJ_ANIME(D08R0801_HAKAIM_03,anm_common_turn_r)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
+	_OBJ_ANIME_WAIT()
+	//ほらほら　４にんつづけて
+	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim3_01,D08R0801_HAKAIM_03)
+	_BALLOONWIN_CLOSE()
+	
+//	_CALL		ev_boss_btl
+	
+	//なんてヤツ……
+	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim3_02,D08R0801_HAKAIM_03)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ団が移動して、道を空ける
+	_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_02)
+	_OBJ_ANIME(D08R0801_HAKAIM_02,anm_hakaim_02_idou_02)
+	_OBJ_ANIME(D08R0801_HAKAIM_03,anm_hakaim_03_idou_02)
+	_OBJ_ANIME(D08R0801_HAKAIW_01,anm_hakaiw_01_idou_02)
+	_OBJ_ANIME_WAIT()
+	
+	//============フラグワーク操作=============//
+	
+	$WK_SCENE_D08_LEGEND  = 8
+	
+	//========================================//
+
+/*	
+//プラズマ団男1との戦闘
 ev_boss_btl:
 
 //戦闘処理
-		_TRAINER_BTL_SET ( TRID_BOSS_05, 0 )
+		_TRAINER_BTL_SET ( TRID_BOSS_02, 0 )
 		//敗戦チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -108,49 +273,256 @@ ev_boss_btl:
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF	
 _RET
+//プラズマ団男2との戦闘
+ev_boss_btl:
+
+//戦闘処理
+		_TRAINER_BTL_SET ( TRID_BOSS_02, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF	
+_RET
+//プラズマ団男3との戦闘
+ev_boss_btl:
+
+//戦闘処理
+		_TRAINER_BTL_SET ( TRID_BOSS_02, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF	
+_RET
+//プラズマ団女1との戦闘
+ev_boss_btl:
+
+//戦闘処理
+		_TRAINER_BTL_SET ( TRID_BOSS_02, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF	
+_RET
+*/
+EVENT_END
 
 //--------------------------------------------------------------------
-// N：次の階に移動する                    
+// 主人公1：囲まれるA                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_boss_01_idou_01
+_ANIME_LABEL	anm_player_idou_01_a
 
 	_ANIME_DATA AC_WALK_L_8F,1
-	_ANIME_DATA AC_WALK_D_8F,7
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-// プラズマ団：道を開ける                    
+// 主人公1：囲まれるB                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakaiw_01_idou_01
+_ANIME_LABEL	anm_player_idou_01_b
 
-	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 主人公1：囲まれるC                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_01_c
+
+	_ANIME_DATA AC_WALK_L_8F,2
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-// プラズマ団：道を開ける                    
+// 主人公1：囲まれるD                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_01_d
+
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 主人公1：囲まれるE                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_01_e
+	
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団女1：主人公を囲む                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaiw_01_idou_01
+
+	_ANIME_DATA AC_WALK_L_4F,1
+	_ANIME_DATA AC_WALK_U_4F,3
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// プラズマ団男1：主人公を囲むA                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_01_idou_01_a
+
+	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_WALK_U_4F,4
+	_ANIME_DATA AC_WALK_L_4F,2
+	_ANIME_DATA AC_WALK_D_4F,2
+	_ANIME_DATA AC_STAY_WALK_L_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団男1：主人公を囲むB                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_01_idou_01_b
+
+	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_WALK_U_4F,3
+	_ANIME_DATA AC_WALK_L_4F,2
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA AC_STAY_WALK_L_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団男1：主人公を囲むC                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_01_idou_01_c
+
+	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_WALK_U_4F,2
+	_ANIME_DATA AC_WALK_L_4F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団男1：主人公を囲むD                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_01_idou_01_d
+
+	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_WALK_L_4F,2
+	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_STAY_WALK_L_4F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団男1：主人公を囲むE                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_01_idou_01_e1
+
+	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団男1：主人公を囲むE                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_01_idou_01_e2
+
+	_ANIME_DATA AC_WALK_L_4F,1
+	_ANIME_DATA AC_WALK_U_4F,2
+	_ANIME_DATA AC_WALK_L_4F,1
+	_ANIME_DATA AC_STAY_WALK_L_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団男2：主人公を囲む                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakaim_02_idou_01
 
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_U_4F,3
+	_ANIME_DATA AC_WALK_R_4F,3
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
-// プラズマ団：七人衆、道を開ける                    
+// プラズマ団男3：主人公を囲む
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_03_idou_01
+
+	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_WALK_U_4F,4
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// プラズマ団：七人衆、主人公から離れる                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_sage02_idou_01
 
-	_ANIME_DATA AC_WALK_D_8F,1
-	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_L_4F,3
+	_ANIME_DATA AC_STAY_WALK_R_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団女1：道を空ける                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaiw_01_idou_02
+	
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_WALK_D_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 	
+//--------------------------------------------------------------------
+// プラズマ団男1：道を空ける                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_01_idou_02
+
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_WALK_R_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// プラズマ団男2：道を空ける                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_02_idou_02
+
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_WALK_U_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// プラズマ団男3：道を空ける
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakaim_03_idou_02
+
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_WALK_L_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//共通スクリプト：びっくりする                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+
 //--------------------------------------------------------------------
 // 共通アニメ：右振り向き                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_r
 
-	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -158,7 +530,7 @@ _ANIME_LABEL	anm_common_turn_r
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_l
 
-	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -166,7 +538,7 @@ _ANIME_LABEL	anm_common_turn_l
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_d
 
-	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -174,7 +546,7 @@ _ANIME_LABEL	anm_common_turn_d
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_u
 
-	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -183,7 +555,7 @@ _ANIME_LABEL	anm_common_turn_u
 /**************************************************************/
 EVENT_START    ev_d08r0801_hakaim_01
 	
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_hakaim1_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_hakaim1_03 )
 	
 EVENT_END
 
@@ -192,16 +564,26 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_d08r0801_hakaim_02
 	
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_hakaim2_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_hakaim2_03 )
 	
 EVENT_END
+
+/**************************************************************/
+/*プラズマ団男3の話しかけイベント                           */
+/**************************************************************/
+EVENT_START    ev_d08r0801_hakaim_03
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_hakaim3_03 )
+	
+EVENT_END
+
 
 /**************************************************************/
 /*プラズマ団女1の話しかけイベント                           */
 /**************************************************************/
 EVENT_START    ev_d08r0801_hakaiw_01
 	
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_hakaiw1_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_hakaiw1_03 )
 	
 EVENT_END
 
@@ -210,6 +592,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_d08r0801_sage2_01
 	
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_sage2_02 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0801_sage2_04 )
 	
 EVENT_END

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/05 10:50:13
+#save date:2010/02/13 19:49:01
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0301.wms
 #SECTION START:OBJ_EVENT
@@ -29,7 +29,24 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0301.wms
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Pos Event Label
+POS_D08R0301_DEMO_01
+#Pos Script Name
+SCRID_POS_D08R0301_DEMO_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D08_LEGEND
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 0 88
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

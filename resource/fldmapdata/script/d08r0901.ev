@@ -27,8 +27,88 @@ _EVENT_DATA_END
 /* パッケージポケモンの復活POSイベント                                                          
 /**************************************************************/
 EVENT_START    ev_pos_d08R0901_boss_01	
-
 	
+	//プレイヤーの名前を格納
+	_PLAYER_NAME(0)
+
+	//主人公がびっくりする
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
+	_OBJ_ANIME_WAIT()
+	
+	//バージョンによって、復活するポケモンを変更する
+	DEFINE_LOCAL	LCWK_VERSION
+	_GET_ROM_VERSION(LCWK_VERSION)
+
+	//デモを呼ぶ
+
+	//ROMによって、復活するポケモンを変更する
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+		_OBJ_ADD_EX( 16, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE7, MV_DMY )
+	ELSE
+		_OBJ_ADD_EX( 16, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE8, MV_DMY )
+	ENDIF
+	
+	//主人公がNに近寄る
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01)
+	_OBJ_ANIME_WAIT()
+	
+	//Nが喋る
+	//どう　せかいを　みちびく
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_01w, msg_d08r0901_boss_01b, D08R0901_BOSS_01, WIN_DOWN )
+	_MSGWIN_CLOSE()
+
+	_TIME_WAIT(16)
+	
+	//Nがパッケージポケモンの方を振り向く
+	_OBJ_ANIME(D08R0901_BOSS_01,anm_common_turn_up)
+	_OBJ_ANIME_WAIT()
+	
+	//Nが喋る
+	//これから　ボクは
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_02w, msg_d08r0901_boss_02b, D08R0901_BOSS_01, WIN_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//パッケージポケモンが画面外に
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_poke_idou_01)
+	_OBJ_ANIME_WAIT()
+
+	//パッケージポケモンが画面外に
+	_OBJ_ANIME(D08R0901_BOSS_01,anm_common_turn_down)
+	_OBJ_ANIME_WAIT()
+	
+	//Nが喋る
+	//ぼくたちを　とめられるのは
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_03w, msg_d08r0901_boss_03b, D08R0901_BOSS_01, WIN_DOWN )
+	_MSGWIN_CLOSE()
+	
+	_TIME_WAIT(16)
+	
+	//Nが喋る
+	//さて　どうする？
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_04w, msg_d08r0901_boss_04b, D08R0901_BOSS_01, WIN_DOWN )
+	_MSGWIN_CLOSE()
+
+	_OBJ_POS_CHANGE(MMDL_ID_EVENTOBJ_00,28,0,9,DIR_RIGHT)
+
+	_TIME_WAIT(24)
+	
+	//Nがマップの上に移動する
+	//パッケージポケモンがNを乗せて飛び去る
+	_OBJ_ANIME( D08R0901_BOSS_01,anm_boss_idou_01)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke_idou_02)
+	//Nの動作モデルを消す
+	_TIME_WAIT(22)
+	_OBJ_DEL( D08R0901_BOSS_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//Nとパッケージポケモンを消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//主人公がNが飛び去った方向を見る
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_left)
+	_OBJ_ANIME_WAIT()
+
 	//============フラグワーク操作=============//
 	
 	//ハチクとライバルを表示
@@ -38,44 +118,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 		
 	//========================================//
 	
-	DEFINE_LOCAL	LCWK_VERSION
-	_GET_ROM_VERSION(LCWK_VERSION)
-	
-	//Nが喋る
-	//
-	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_01, D08R0901_BOSS_01,WIN_DOWN)
-	_MSGWIN_CLOSE()
-
-	//ROMによって、復活するポケモンを変更する
-	IF $LCWK_VERSION == VERSION_WHITE THEN
-		_OBJ_ADD_EX( 15, 12, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE7, MV_DMY )
-	ELSE
-		_OBJ_ADD_EX( 15, 12, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE8, MV_DMY )
-	ENDIF
-
-	//Nが喋る
-	//
-	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_02w, msg_d08r0901_boss_02b, D08R0901_BOSS_01, WIN_DOWN )
-	_MSGWIN_CLOSE()
-
-	//Nがマップの端へと移動する
-	_OBJ_ANIME( D08R0901_BOSS_01,anm_boss_idou_01)
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_boss_idou_01)
-	
-	//少し間を置いて、主人公が追いかける
-	_TIME_WAIT( 20 )
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01)
-	_OBJ_ANIME_WAIT()
-
-	//Nが喋る
-	//
-	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_03, D08R0901_BOSS_01,WIN_DOWN)
-	_MSGWIN_CLOSE()
-	
-	//Nとパッケージポケモンを消す
-	_OBJ_DEL( D08R0901_BOSS_01 )
-	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-
 	//ハチクとライバルがやってくる		
 	_OBJ_ANIME( D08R0901_RIVEL_01,anm_raival_idou_01)
 	_OBJ_ANIME( D08R0901_LEADER7_01,anm_leader7_idou_01)
@@ -90,40 +132,24 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	//
 	_BALLOONWIN_OBJMSG( msg_d08r0901_leader7_01, D08R0901_LEADER7_01)
 	_MSGWIN_CLOSE()
-
-	//ライバルと、ハチク、Nが飛び去った後を見つめる
-	_OBJ_ANIME( D08R0901_RIVEL_01,anm_raival_idou_02)
-	_OBJ_ANIME( D08R0901_LEADER7_01,anm_leader7_idou_02)
-	_OBJ_ANIME_WAIT()
-
-	//ライバルが喋る
-	//
-	_BALLOONWIN_OBJMSG( msg_d08r0901_black_02, D08R0901_RIVEL_01)
-	_MSGWIN_CLOSE()
-	
-	//ハチクが喋る
-	//
-	_BALLOONWIN_OBJMSG( msg_d08r0901_leader7_02, D08R0901_LEADER7_01)
-	_MSGWIN_CLOSE()
 	
 	//画面暗転処理
-	_BLACK_OUT()
-	_TIME_WAIT( 15 )
+	_MAP_FADE_BLACK_OUT()
+	_MAP_FADE_END_CHECK()
 	
 	//============フラグワーク操作=============//
 	
 	//シンとムの復活のPOSイベントを無効
-	$WK_SCENE_D08_LEGEND = 5
+	$WK_SCENE_D08_LEGEND = 9
 	
-	//ライバル、ジムリーダー7、Nを消す
-	_OBJ_DEL( D08R0901_RIVEL_01 )
-	_OBJ_DEL( D08R0901_LEADER7_01 )
 	_FLAG_SET(FV_D08R0901_BOSS_01)
 	_FLAG_SET(FV_D08R0801_EVENT_01)
 	_FLAG_SET(FV_D08R0901_EVENT_01)
 	_FLAG_SET( FV_C07_HAKAIM_01 )
 	_FLAG_SET(FV_D08R0601_EVENT_01)
+	_FLAG_SET(FV_D08R0101_HAKAI)
 	
+	_FLAG_RESET( FV_D08_SUPORT_01 )
 	_FLAG_RESET(FV_D08_RIVAL_01)
 	_FLAG_RESET(FV_D08_CHAMPION_01)
 	_FLAG_RESET(FV_D08_LEADER7_01)
@@ -132,9 +158,9 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	//画面遷移後、イベントが自動で始まるようにセット
 	_RESERVE_SCRIPT( SCRID_RESERVE_D08_HAKASE1_01 )
-	_MAP_CHANGE( ZONE_ID_D08, 179, 152, DIR_DOWN )
+	_MAP_CHANGE_NO_FADE(ZONE_ID_D08, 179, 3, 146, DIR_UP)
 	
-	_BLACK_IN()
+
 	
 EVENT_END
 
@@ -143,7 +169,7 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_boss_idou_01
 
-	_ANIME_DATA AC_WALK_U_8F,8
+	_ANIME_DATA AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -151,7 +177,7 @@ _ANIME_LABEL	anm_boss_idou_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_idou_01
 	
-	_ANIME_DATA AC_WALK_U_8F,10
+	_ANIME_DATA AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -159,7 +185,7 @@ _ANIME_LABEL	anm_player_idou_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_raival_idou_01
 
-	_ANIME_DATA AC_WALK_U_8F,15
+	_ANIME_DATA AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -167,23 +193,58 @@ _ANIME_LABEL	anm_raival_idou_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader7_idou_01
 
-	_ANIME_DATA AC_WALK_U_8F,15
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//   ライバル：Nが飛び去った場所を追いかける                   
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_raival_idou_02
-	
-	_ANIME_DATA AC_WALK_L_8F,2
-	_ANIME_DATA AC_WALK_U_8F,5
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ハチク： Nが飛び去った場所を追いかける                    
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_leader7_idou_02
-	
+	_ANIME_DATA AC_WALK_U_8F,8
 	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//  パッケージポケモン： 画面外に移動する                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke_idou_01
+
 	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//  パッケージポケモン： Nを乗せて飛ぶ              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke_idou_02
+	
+	_ANIME_DATA AC_WALK_L_2F,24
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：びっくりする                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：上を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：下を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：右を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：左を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
