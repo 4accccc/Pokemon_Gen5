@@ -37,6 +37,7 @@ _EVENT_DATA    ev_bg_r03_board_03
 _EVENT_DATA    ev_init_r03
 _EVENT_DATA    ev_pos_r03_babygirl1_01
 _EVENT_DATA    ev_r03_rival_03
+_EVENT_DATA    ev_pos_r03_sodateya_egg		//タマゴ発見を教えてくれるPOSイベント
 _EVENT_DATA_END
 
 /************************************************************/
@@ -1013,6 +1014,85 @@ _ANIME_LABEL	 anm_kusa_rival_02_03
 
 _ANIME_LABEL	 anm_kusa_rival_02_04
 		_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/*               育て屋じいさんPOSイベント                    */
+/**************************************************************/
+//タマゴが発見された時、声をかけてくれるPOSイベント
+EVENT_START   ev_pos_r03_sodateya_egg
+	//育て屋：下向きにして
+	_OBJ_ANIME( R03_SODATEYA_GRANDPA, anm_obj_dir_d )
+	_OBJ_ANIME_WAIT()
+	
+	//おーい ～～くん！
+	_PLAYER_NAME( 0 )
+	_GET_MY_SEX( SCWK_ANSWER )
+	IF $SCWK_ANSWER == 0 THEN
+		_PLAINWIN_MSG_UP( msg_r03_sodateya_01m )
+	ELSE
+		_PLAINWIN_MSG_UP( msg_r03_sodateya_01f )
+	ENDIF
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
+	
+	/*
+	//主人公：育て屋の方へ
+	_PLAYER_POS_GET( SCWK_TEMP0, SCWK_TEMP1 )
+	IF $SCWK_TEMP1 == 562 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01a )
+	ELSIF $SCWK_TEMP1 == 563 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01b )
+	ELSIF $SCWK_TEMP1 == 564 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01c )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01d )
+	ENDIF*/
+	_OBJ_ANIME_WAIT()
+	
+	//========================================//
+	//POSを無効にする
+	$WK_OTHER_R03_EGG = 0
+	//========================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------
+//方向変更
+//--------------------------------------------------------------
+_ANIME_LABEL	 anm_obj_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	 anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//タマゴ発見連絡：主人公：育て屋じいさんの前へ
+//--------------------------------------------------------------
+_ANIME_LABEL	 anm_egg_player_move_01a
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	 anm_egg_player_move_01b
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	 anm_egg_player_move_01c
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	 anm_egg_player_move_01d
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 

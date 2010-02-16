@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T19:31:40"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-02-10T23:41:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -709,16 +709,24 @@
 シッポウシティに　行くよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_12" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+	<row id="msg_r03_sodateya_01m">
+		<comment>育て屋：タマゴが見つかったときに３番道路を通ると
+声をかけてくれる（POSイベント）</comment>
+		<attribute name="キャラ指定">育て屋じいさん</attribute>
+		<language name="JPN" width="256">おーい　[1:00:トレーナー名:0]くん！
+ちょっと　きてくれ！▼</language>
+		<language name="JPN_KANJI" width="256">おーい　[1:00:トレーナー名:0]くん！
+ちょっと　きてくれ！▼</language>
 	</row>
 
-	<row id="msg_r03_hakaim_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+	<row id="msg_r03_sodateya_01f">
+		<comment>育て屋：タマゴが見つかったときに３番道路を通ると
+声をかけてくれる（POSイベント）</comment>
+		<attribute name="キャラ指定">育て屋じいさん</attribute>
+		<language name="JPN" width="256">おーい　[1:00:トレーナー名:0]ちゃん！
+ちょっと　きてくれ！▼</language>
+		<language name="JPN_KANJI" width="256">おーい　[1:00:トレーナー名:0]ちゃん！
+ちょっと　きてくれ！▼</language>
 	</row>
 
 	<row id="msg_r03_hakaim_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">

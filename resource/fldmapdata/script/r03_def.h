@@ -22,5 +22,6 @@
 #define SCRID_INIT_R03 (15)
 #define SCRID_POS_R03_BABYGIRL1_01 (16)
 #define SCRID_R03_RIVAL_03 (17)
+#define SCRID_POS_R03_SODATEYA_EGG (18)
 
 #endif //_R03_DEF_H_
