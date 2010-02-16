@@ -391,7 +391,7 @@ GFL_PROC_RESULT Guru2ReceiptProc_End( GFL_PROC * proc, int *seq, void *pwk, void
   GURU2RC_WORK *wk = (GURU2RC_WORK *)mywk;
   
   // 現在の接続状態をbit情報で保存(これ以降は変動しないはずなので）
-  wk->g2c->comm_game_join_bit = Union_App_GetMemberNetBit(_get_unionwork(wk));
+//  wk->g2c->comm_game_join_bit = Union_App_GetMemberNetBit(_get_unionwork(wk));
   
   // メッセージ表示用システム解放
   PRINTSYS_QUE_Delete( wk->printQue );

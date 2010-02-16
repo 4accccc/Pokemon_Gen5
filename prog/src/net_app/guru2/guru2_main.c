@@ -1333,7 +1333,7 @@ GFL_PROC_RESULT Guru2MainProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
   GURU2MAIN_WORK *g2m = (GURU2MAIN_WORK *)mywk;
   
 //  OS_Printf("g2m->comm.play_max=%d\n", g2m->comm.play_max);
-//  OS_Printf("join_bit=%d\n", g2m->g2c->comm_game_join_bit);
+  OS_Printf("join_bit=%d\n", g2m->g2c->comm_game_join_bit);
   do{
     #ifdef GURU2_DEBUG_ON
     DEBUG_Proc( g2m );
@@ -1476,7 +1476,7 @@ static UNION_APP_PTR _get_unionwork(GURU2MAIN_WORK *wk)
 //--------------------------------------------------------------
 static RET Guru2Subproc_OyaConnectNumCheck( GURU2MAIN_WORK *g2m )
 {
-  int count = Guru2MainCommJoinNumGet( g2m );// + 1; //+1=自身
+  int count = Guru2MainCommJoinNumGet( g2m ) + 1; //+1=自身
   
   if( count != Union_App_GetMemberNum(_get_unionwork(g2m)) ){
     return( RET_NON );
@@ -1497,8 +1497,8 @@ static RET Guru2Subproc_OyaSendPlayMax( GURU2MAIN_WORK *g2m )
 {
   int ret;
   
-//  g2m->comm.play_max = Guru2MainCommJoinNumGet(g2m); //+1=自身
-  g2m->comm.play_max = Union_App_GetMemberNum(_get_unionwork(g2m));
+  g2m->comm.play_max = Guru2MainCommJoinNumGet(g2m)+1; //+1=自身
+//  g2m->comm.play_max = Union_App_GetMemberNum(_get_unionwork(g2m));
   
   ret = Guru2Comm_SendData(
     g2m->g2c, G2COMM_GM_PLAYMAX, &g2m->comm.play_max, 4 );
@@ -1623,21 +1623,6 @@ static RET Guru2Subproc_KoSendSignalJoin( GURU2MAIN_WORK *g2m )
     g2m->seq_no = SEQNO_MAIN_KO_EGG_ADD_START_WAIT;
     return( RET_NON );
   }
-  
-  #if 0
-  {
-    g2m->comm_wait_frame++;
-    if( g2m->comm_wait_frame >= COMM_WAIT_ERROR_FRAME ){ //待ち時間超え
-      g2m->force_end_flag = TRUE;
-      g2m->seq_no = SEQNO_MAIN_KO_SEND_JOIN_TIME_OVER_CANCEL;
-      #ifdef DEBUG_GURU2_PRINTF
-      OS_Printf( "ぐるぐる　子　時間切れによるキャンセル\n" );
-      #endif
-      return( RET_CONT );
-    }
-  }
-  #endif
-  
   return( RET_NON );
 }
 
@@ -1653,7 +1638,7 @@ static RET Guru2Subproc_KoEggAddStartWait( GURU2MAIN_WORK *g2m )
   if( Guru2MainCommSignalCheck(g2m,G2COMM_GMSBIT_EGG_ADD_START) == TRUE ){
 //    GF_ASSERT( g2m->comm.play_max >= 2 );
 //    GF_ASSERT( g2m->comm.my_play_no != 0 );
-    g2m->comm.play_max = Guru2MainCommJoinNumGet(g2m);
+    g2m->comm.play_max = Guru2MainCommJoinNumGet(g2m)+1;
     g2m->seq_no = SEQNO_MAIN_EGG_DATA_SEND_INIT;
   }
   
@@ -6067,7 +6052,7 @@ static BOOL Guru2MainCommSignalCheck(GURU2MAIN_WORK *g2m, u16 bit)
 static BOOL Guru2MainCommJoinNumCheck( GURU2MAIN_WORK *g2m )
 {
   int in = 0;
-  int max = g2m->g2p->receipt_num;  //-1=自身
+  int max = g2m->g2p->receipt_num-1;  //-1=自身
   u32 bit = g2m->g2c->comm_game_join_bit;
   
   while( bit ){
