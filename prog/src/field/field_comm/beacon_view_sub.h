@@ -28,6 +28,11 @@ extern int BeaconView_CheckInputThanks( BEACON_VIEW_PTR wk );
 extern BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk );
 
 /*
+ *  @brief  アクティブ・パッシブ切替
+ */
+extern void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f );
+
+/*
  *  @brief  サブシーケンス　GPower使用メイン
  */
 extern BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk );

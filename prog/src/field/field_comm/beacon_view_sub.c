@@ -137,6 +137,7 @@ static void sub_PlttVramTrans( u16* p_data, u16 pos, u16 num );
 
 static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y );
 static void act_AnmStart( GFL_CLWK* act, u8 anm_no );
+static void obj_MenuIconVisibleSet( BEACON_VIEW_PTR wk, BOOL visible_f );
 static void obj_UpDownViewSet( BEACON_VIEW_PTR wk );
 static void obj_ThanksViewSet( BEACON_VIEW_PTR wk );
 
@@ -198,6 +199,8 @@ void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
   //矢印と御礼メニューの見た目セット
   obj_UpDownViewSet( wk );
   obj_ThanksViewSet( wk );
+
+  GFL_NET_ReloadIcon();
 }
 
 /*
@@ -285,6 +288,10 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     }
     return TRUE;
   }
+  //新規
+  wk->log_count++;
+  draw_LogNumWindow( wk );
+  draw_MenuWindow( wk, msg_sys_now_record );
   obj_ThanksViewSet( wk );
   if( wk->ctrl.view_top > 0){ //描画リストがトップでない時はスクロールのみ
     ofs = wk->ctrl.view_top-1;
@@ -294,6 +301,31 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   //スクロールリクエスト
   list_ScrollReq( wk, wk->tmpInfo, ofs, idx, SCROLL_DOWN, (wk->ctrl.view_top == 0));
   return TRUE;
+}
+
+/*
+ *  @brief  アクティブ・パッシブ切替
+ */
+void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f )
+{
+  if(passive_f){
+    SoftFadePfd( wk->pfd, FADE_SUB_BG, 0, 16*BG_PALANM_AREA, 5, 0x0000);
+    SoftFadePfd( wk->pfd, FADE_SUB_OBJ, 0, 16*ACT_PAL_WMI, 5, 0x0000);
+    G2S_SetBlendAlpha( ALPHA_1ST_PASSIVE, ALPHA_2ND, ALPHA_EV1_PASSIVE, ALPHA_EV2_PASSIVE);
+
+    if( wk->printStream != NULL ){
+      PRINTSYS_PrintStreamStop( wk->printStream );
+    }
+    GFL_FONTSYS_SetDefaultColor();
+  }else{
+    SoftFadePfd( wk->pfd, FADE_SUB_BG, 0, 16*BG_PALANM_AREA, 0, 0x0000);
+    SoftFadePfd( wk->pfd, FADE_SUB_OBJ, 0, 16*ACT_PAL_WMI, 0, 0x0000);
+    G2S_SetBlendAlpha( ALPHA_1ST_NORMAL, ALPHA_2ND, ALPHA_EV1_NORMAL, ALPHA_EV2_NORMAL);
+    if( wk->printStream != NULL ){
+      PRINTSYS_PrintStreamRun( wk->printStream );
+    }
+//    GFL_FONTSYS_SetColor( FCOL_POPUP_MAIN, FCOL_POPUP_SDW, FCOL_POPUP_BASE );
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -890,6 +922,18 @@ static void act_AnmStart( GFL_CLWK* act, u8 anm_no )
 {
   GFL_CLACT_WK_SetAnmSeq( act, anm_no );
   GFL_CLACT_WK_ResetAnm( act );
+}
+
+/*
+ *  @brief  メニューアクター Viewセット
+ */
+static void obj_MenuIconVisibleSet( BEACON_VIEW_PTR wk, BOOL visible_f )
+{
+  int i;
+
+  for(i = ACT_POWER;i <= ACT_RETURN;i++){
+    GFL_CLACT_WK_SetDrawEnable( wk->pAct[i], visible_f );
+  }
 }
 
 /*
@@ -1571,6 +1615,10 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
   TASKWK_WIN_GPOWER* twk = (TASKWK_WIN_GPOWER*)tcb_wk;
   BEACON_VIEW_PTR bvp = twk->bvp;
 
+  if( !bvp->active ){
+    return;
+  }
+
   switch( twk->seq ){
   case 0:
     GFL_BMP_Clear( bvp->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
@@ -1588,6 +1636,7 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
   case 2:
     if( print_PopupWindowStreamCheck( bvp ) ){
       tmenu_YnCreate( bvp );
+      obj_MenuIconVisibleSet( bvp, FALSE );
       twk->seq++;
     }
     return;
@@ -1605,6 +1654,7 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
     if( !tmenu_YnEndWait( bvp, twk->cancel_f )){
       return;
     }
+    obj_MenuIconVisibleSet( bvp, TRUE );
     if( twk->cancel_f ){
       twk->seq = 6;
     }else{

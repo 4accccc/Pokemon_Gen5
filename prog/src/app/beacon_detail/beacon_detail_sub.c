@@ -142,6 +142,8 @@ void BeaconDetail_InitialDraw( BEACON_DETAIL_WORK* wk )
   draw_UpdateUnderView( wk );
 
   sub_UpDownButtonActiveControl( wk );
+
+  GFL_NET_ReloadIcon();
 }
 
 /*

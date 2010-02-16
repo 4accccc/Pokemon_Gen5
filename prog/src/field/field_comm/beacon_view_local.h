@@ -76,13 +76,13 @@ typedef enum{
 #define ACT_PAL_LOCALIZE  (15)  //ローカライズ用空きパレット
 
 ///フォントカラー
-#define	FCOL_FNTOAM   ( PRINTSYS_LSB_Make(1,2,0) )	 ///<OAMフォント黒抜
-#define FCOL_FNTOAM_W ( PRINTSYS_LSB_Make(15,3,0))  ///<Oam白抜き
-#define FCOL_WHITE_N  ( PRINTSYS_LSB_Make(15,2,0) ) ///<BG白抜き
-#define FCOL_POPUP_BASE (7)
-#define FCOL_POPUP_MAIN (15)
-#define FCOL_POPUP_SDW  (14)
-#define FCOL_POPUP      ( PRINTSYS_LSB_Make(FCOL_POPUP_MAIN,FCOL_POPUP_SDW,FCOL_POPUP_BASE))  //BGポップアップ
+#define	FCOL_FNTOAM   ( PRINTSYS_MACRO_LSB(1,2,0) )	 ///<OAMフォント黒抜
+#define FCOL_FNTOAM_W ( PRINTSYS_MACRO_LSB(15,3,0))  ///<Oam白抜き
+#define FCOL_WHITE_N  ( PRINTSYS_MACRO_LSB(15,2,0) ) ///<BG白抜き
+#define FCOL_POPUP_BASE (9)
+#define FCOL_POPUP_MAIN (1)
+#define FCOL_POPUP_SDW  (2)
+#define FCOL_POPUP      ( PRINTSYS_MACRO_LSB(FCOL_POPUP_MAIN,FCOL_POPUP_SDW,FCOL_POPUP_BASE))  //BGポップアップ
 
 ///表示するログ件数
 #define VIEW_LOG_MAX    (4)

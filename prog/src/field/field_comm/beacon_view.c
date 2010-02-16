@@ -184,12 +184,12 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
 
   GFL_TCBL_Main( wk->pTcbSys );
 
-  if( wk->event_id != EV_NONE ){
-    return; //イベントリクエスト中はメイン処理をスキップ
-  }
-
   if( wk->active != bActive ){
     wk->active = bActive;
+    BeaconView_SetViewPassive( wk, !bActive );
+  }
+  if( wk->event_id != EV_NONE ){
+    return; //イベントリクエスト中はメイン処理をスキップ
   }
   if(!bActive){
     return;
@@ -554,7 +554,8 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 	wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-  GFL_FONTSYS_SetColor( FCOL_POPUP_MAIN, FCOL_POPUP_SDW, FCOL_POPUP_BASE );
+//  GFL_FONTSYS_SetColor( FCOL_POPUP_MAIN, FCOL_POPUP_SDW, FCOL_POPUP_BASE );
+  GFL_FONTSYS_SetDefaultColor();
  
   wk->wordset = WORDSET_Create( wk->heapID);
 
