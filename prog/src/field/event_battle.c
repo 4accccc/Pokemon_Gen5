@@ -659,7 +659,7 @@ BOOL FIELD_BATTLE_IsLoseResult(BtlResult result, BtlCompetitor competitor)
 
   u8 lose_flag;
   GF_ASSERT_MSG( result <= BTL_RESULT_CAPTURE, "想定外のBtlResult(%d)\n", result );
-  GF_ASSERT_MSG( competitor <= BTL_COMPETITOR_COMM, "想定外のBtlCompetitor(%d)\n", competitor);
+  GF_ASSERT_MSG( competitor < BTL_COMPETITOR_MAX, "想定外のBtlCompetitor(%d)\n", competitor);
   lose_flag = result_table[result][competitor];
    
   if( lose_flag == RES_ERR )
