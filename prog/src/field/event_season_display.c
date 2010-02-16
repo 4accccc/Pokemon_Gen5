@@ -93,6 +93,7 @@ typedef struct
   u8 dispSeason;     // 表示中の季節
   u32 count;         // カウンタ
   u32 maxCount;      // カウンタ最大値
+  BOOL skipOn;       // スキップするかどうか
 
 } EVENT_WORK;
 
@@ -143,6 +144,10 @@ static GMEVENT_RESULT SeasonDisplay( GMEVENT* event, int* seq, void* wk )
   }
 
   // 共通処理
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    work->skipOn = TRUE;
+  }
   work->count++;
   StepNextSeq( work, seq );
   return GMEVENT_RES_CONTINUE;
@@ -181,6 +186,7 @@ GMEVENT* EVENT_SeasonDisplay( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
   work->fieldmap      = fieldmap;
   work->currentSeason = end;
   work->dispSeason    = PMSEASON_GetPrevSeasonID( start );
+  work->skipOn        = FALSE;
   SetSeq( work, seq, SEQ_INIT );
   return event;
 }
@@ -401,7 +407,11 @@ static int GetNextSeq( const EVENT_WORK* work, int seq )
     break;
   // 待機
   case SEQ_WAIT:
-    if( work->maxCount < work->count ){ next = SEQ_FADEOUT; }
+    if( (work->maxCount < work->count) || 
+        (work->skipOn == TRUE) )
+    {
+      next = SEQ_FADEOUT; 
+    }
     break;
   // フェードアウト
   case SEQ_FADEOUT:
