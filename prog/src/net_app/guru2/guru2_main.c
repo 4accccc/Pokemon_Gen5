@@ -28,6 +28,7 @@
 #include "system/palanm.h"
 #include "system/bmp_winframe.h"
 #include "savedata/mystatus.h"
+#include "net/net_save.h"     // NET_SAVE_Init,
 
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -984,7 +985,8 @@ struct GURU2MAIN_WORK
   void        *tcbSysWork;  // タスクシステム用ワーク
   GFL_TCBSYS  *tcbSys;      // タスクシステム
   GFL_TCB     *vintr_tcb;   // Vblank割り込みTCB
-  
+
+  NET_SAVE_WORK *NetSaveWork;   // 通信同期セーブ用ワーク
 #ifdef GURU2_DEBUG_ON
   DEBUGWORK debug;
 #endif
@@ -2564,56 +2566,6 @@ static RET Guru2Subproc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
   return( RET_NON );
 }
 
-#if 0 // old
-static RET Guru2Subproc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
-{
-  OmakeEggJumpTcb_AllSet( g2m );
-  
-  {
-    fx32 pos = g2m->front_eggact->angle;
-    
-    if( Guru2MainOmakeZoneCheck(g2m,pos,g2m->comm.play_max) == FALSE ){
-      g2m->seq_no = SEQNO_MAIN_SAVE_BEFORE_TIMING_INIT;
-      return( RET_NON );
-    }
-  }
-  
-  {
-    u32 id;
-    BOOL ret;
-    
-    id = DATA_KinomiTbl[g2m->comm.play_max][0];
-    id += GFUser_GetPublicRand(GFUSER_RAND_PAST_MAX) % (DATA_KinomiTbl[g2m->comm.play_max][1] - id + 1);
-    
-    if( id < DATA_KinomiTbl[g2m->comm.play_max][0] ){ //念の為
-      #ifdef DEBUG_GURU2_PRINTF       
-      OS_Printf( "木の実の値が変\n" );
-      #endif
-      id = DATA_KinomiTbl[g2m->comm.play_max][0];
-    }else if( id > DATA_KinomiTbl[g2m->comm.play_max][1] ){
-      #ifdef DEBUG_GURU2_PRINTF       
-      OS_Printf( "木の実の値が変\n" );
-      #endif
-      id = DATA_KinomiTbl[g2m->comm.play_max][1];
-    }
-    
-    Guru2TalkWin_WriteItem( g2m, MSG_OMAKE_AREA, id );
-    
-    ret = MYITEM_AddItem(
-      GAMEDATA_GetMyItem(g2m->g2p->param.gamedata), id, 1, HEAPID_GURU2 ); 
-    
-    _me_play( SEQ_ME_ITEM );  //ファンファーレ
-    
-    if( ret == TRUE ){  //成功
-      g2m->seq_no = SEQNO_MAIN_OMAKE_MSG_WAIT;
-    }else{        //失敗
-      g2m->seq_no = SEQNO_MAIN_OMAKE_ERROR_MSG_START_WAIT;
-    }
-  }
-  
-  return( RET_NON );
-}
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -2725,7 +2677,9 @@ static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
     Guru2MainFriendEggExchange( g2m, g2m->front_eggact->comm_id );
-    CommSyncronizeSaveInit( &g2m->save_seq );
+//    CommSyncronizeSaveInit( &g2m->save_seq );
+    // 通信同期セーブ開始
+    g2m->NetSaveWork = NET_SAVE_Init( HEAPID_GURU2, g2m->g2p->param.gamedata);
 #ifdef WINDOW_SAVE_ICON
     g2m->time_wait_icon_p = TimeWaitIconAdd(
       g2m->msgwork.bmpwin_talk, BGF_CHARNO_TALK );
@@ -2745,75 +2699,20 @@ static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static RET Guru2Subproc_Save( GURU2MAIN_WORK *g2m )
 {
-  int ret = CommSyncronizeSave( g2m->g2p->param.sv, &g2m->save_seq );
+//  int ret = CommSyncronizeSave( g2m->g2p->param.sv, &g2m->save_seq );
+  BOOL ret = NET_SAVE_Main( g2m->NetSaveWork ); // 通信同期セーブメイン
   
   if( ret ){
 #ifdef WINDOW_SAVE_ICON
     TimeWaitIconDel( g2m->time_wait_icon_p );
 #endif
+    NET_SAVE_Exit( g2m->NetSaveWork );          // 通信同期セーブ終了
     g2m->seq_no = SEQNO_MAIN_END_TIMING_SYNC_INIT;
   }
   
   return( RET_NON );
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * メイン　通信エラーメッセージ　通信エラー
- * @param g2m GURU2MAIN_WORK
- * @retval  GURU2RET  GURU2RET
- */
-//--------------------------------------------------------------
-static RET Guru2Subproc_CommErrorMsg( GURU2MAIN_WORK *g2m )
-{
-  Guru2TalkWin_Write( g2m, MSG_COMM_ERROR );
-  g2m->seq_no = SEQNO_MAIN_MSG_WAIT_NEXT_END;
-  return( RET_NON );
-}
-
-//--------------------------------------------------------------
-/**
- * メイン　通信エラーメッセージ　メンバーの都合がつかない
- * @param g2m GURU2MAIN_WORK
- * @retval  GURU2RET  GURU2RET
- */
-//--------------------------------------------------------------
-static RET Guru2Subproc_CommErrorMember( GURU2MAIN_WORK *g2m )
-{
-  Guru2TalkWin_Write( g2m, MSG_COMM_ERROR_MEMBER );
-  g2m->seq_no = SEQNO_MAIN_MSG_WAIT_NEXT_END;
-  return( RET_NON );
-}
-
-//--------------------------------------------------------------
-/**
- * メイン　通信エラーメッセージ　親キャンセル
- * @param g2m GURU2MAIN_WORK
- * @retval  GURU2RET  GURU2RET
- */
-//--------------------------------------------------------------
-static RET Guru2Subproc_CommErrorOyaCancelMsg( GURU2MAIN_WORK *g2m )
-{
-  Guru2TalkWin_Write( g2m, MSG_COMM_ERROR_CANCEL_OYA );
-  g2m->seq_no = SEQNO_MAIN_MSG_WAIT_NEXT_END;
-  return( RET_NON );
-}
-
-//--------------------------------------------------------------
-/**
- * メイン　通信エラーメッセージ　参加締め切り
- * @param g2m GURU2MAIN_WORK
- * @retval  GURU2RET  GURU2RET
- */
-//--------------------------------------------------------------
-static RET Guru2Subproc_CommErrorJoinCloseMsg( GURU2MAIN_WORK *g2m )
-{
-  Guru2TalkWin_Write( g2m, MSG_COMM_ERROR_JOIN_CLOSE );
-  g2m->seq_no = SEQNO_MAIN_MSG_WAIT_NEXT_END;
-  return( RET_NON );
-}
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -2861,6 +2760,7 @@ static RET Guru2Subproc_EndTimingSyncInit( GURU2MAIN_WORK *g2m )
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   if( g2m->force_end_flag == FALSE ){
     GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
+    OS_Printf("通信同期開始\n");
   }
   
   Guru2TalkWin_Write( g2m, MSG_COMM_WAIT );
@@ -2879,10 +2779,13 @@ static RET Guru2Subproc_EndTimingSync( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   if( g2m->force_end_flag == FALSE ){
+    OS_Printf("通信同期中\n");
     if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
-      GFL_NET_SetAutoErrorCheck( FALSE );     //切断可能に  
+//      GFL_NET_SetAutoErrorCheck( FALSE );     //切断可能に  
 //      CommStateSetLimitNum( 1 );            // 接続最大人数を1人（ユニオンに戻るため）
 //      CommStateUnionBconCollectionRestart();
+      OS_Printf("通信切断開始\n");
+      Union_App_Shutdown( _get_unionwork(g2m) );  // 通信切断開始
       g2m->seq_no = SEQNO_MAIN_END_CONNECT_CHECK;
     }
   }else{
@@ -2906,14 +2809,17 @@ static RET Guru2Subproc_EndTimingSync( GURU2MAIN_WORK *g2m )
 
 //--------------------------------------------------------------
 /**
- * メイン　終了　通信人数確認
+ * メイン　終了　通信切断待ち
  * @param g2m GURU2MAIN_WORK
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
 static RET Guru2Subproc_EndConnectCheck( GURU2MAIN_WORK *g2m )
 {
-  if( Union_App_GetMemberNum(_get_unionwork(g2m)) <= 1 ){
+  // 通信切断待ち
+  OS_Printf("通信切断待ち\n");
+  if( Union_App_WaitShutdown(_get_unionwork(g2m)) ){
+    OS_Printf("通信切断終了\n");
     g2m->seq_no = SEQNO_MAIN_END_FADEOUT_START;
     return( RET_CONT );
   }
@@ -6285,9 +6191,9 @@ static void Guru2MainFriendEggExchange( GURU2MAIN_WORK *g2m, int id )
     TRMEMO_ONTRADE_PLACESET,
     0,
     HEAPID_PROC );
+#endif
   
   POKETOOL_CopyPPtoPP( f_pp, m_pp ); //コピー元,コピー先
-#endif
 }
 
 //--------------------------------------------------------------
