@@ -217,6 +217,9 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 
 	ZKNSEARCHMAIN_InitBlinkAnm( wk );
 
+	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_ZUKAN_SEARCH );
+	GFL_NET_ReloadIcon();
+
 	ZKNSEARCHMAIN_InitVBlank( wk );
 	ZKNSEARCHMAIN_InitHBlank( wk );
 

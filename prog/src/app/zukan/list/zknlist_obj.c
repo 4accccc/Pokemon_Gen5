@@ -668,9 +668,9 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons )
 		wk->chrRes[prm.chrRes] = GFL_CLGRP_CGR_Register(
 															ah, NARC_zukan_gra_list_list_hate_NCGR,
 															FALSE, CLSYS_DRAW_MAIN, HEAPID_ZUKAN_LIST );
-		wk->palRes[prm.palRes] = GFL_CLGRP_PLTT_Register(
-															ah, NARC_zukan_gra_list_list_hate_NCLR,
-															CLSYS_DRAW_MAIN, pal, HEAPID_ZUKAN_LIST );
+		wk->palRes[prm.palRes] = GFL_CLGRP_PLTT_RegisterEx(
+															 ah, NARC_zukan_gra_list_list_hate_NCLR,
+															 CLSYS_DRAW_MAIN, pal, 0, 1, HEAPID_ZUKAN_LIST );
 		wk->celRes[prm.celRes] = GFL_CLGRP_CELLANIM_Register(
 															ah,
 															NARC_zukan_gra_list_list_hate_NCER,
