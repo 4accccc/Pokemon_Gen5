@@ -8863,14 +8863,17 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+    if( BTL_SVFTOOL_IsFlyingPoke(flowWk, targetPokeID) )
+    {
+      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
-    param->poke_cnt = 1;
-    param->pokeID[0] = targetPokeID;
-    param->sickID = WAZASICK_FLYING_CANCEL;
-    param->sickCont = BPP_SICKCONT_MakePermanent();
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
-    HANDEX_STR_AddArg( &param->exStr, targetPokeID );
+      param->poke_cnt = 1;
+      param->pokeID[0] = targetPokeID;
+      param->sickID = WAZASICK_FLYING_CANCEL;
+      param->sickCont = BPP_SICKCONT_MakePermanent();
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
+      HANDEX_STR_AddArg( &param->exStr, targetPokeID );
+    }
   }
 #endif
 }
