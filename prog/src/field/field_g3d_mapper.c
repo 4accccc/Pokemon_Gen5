@@ -132,7 +132,10 @@ struct _FLD_G3D_MAPPER {
 	u32					nowBlockIdx;				
 	VecFx32				posCont;
   
-  u32         topWriteBlockNum; // top（データ更新フレーム）で描画するブロック数
+  /* 描画ブロック制御 */
+  u16         topWriteBlockNum; // top（データ更新フレーム）で描画するブロック数
+  u16         nowWriteBlockNum; // 描画の必要があるブロック数
+  /*-----------------*/
 
 	VecFx32 globalDrawOffset;		//共通座標オフセット
 
@@ -181,6 +184,11 @@ static void BLOCKINFO_SetBlockTransVec(BLOCKINFO * info, const VecFx32* trans);
 static void BLOCKINFO_GetBlockTrans(const BLOCKINFO * info, VecFx32* trans);
 static void GetExHight( const FLDMAPPER* g3Dmapper, const VecFx32 *pos, FLDMAPPER_GRIDINFO* gridInfo );
 
+static void WRITEBLOCK_Control_Clear( FLDMAPPER* g3Dmapper );
+static void WRITEBLOCK_Control_SetOneBlock( FLDMAPPER* g3Dmapper, GFL_G3D_MAP* g3Dmap, u32 index );
+static BOOL WRITEBLOCK_Control_IsWriteBlockIndex( const FLDMAPPER* g3Dmapper, u32 index, FLDMAPPER_DRAW_TYPE draw_type );
+
+
 //------------------------------------------------------------------
 /**
  * @brief	セットアップ
@@ -216,6 +224,7 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
 	g3Dmapper->mode = FLDMAPPER_MODE_SCROLL_XZ;
 	g3Dmapper->arcID = MAPARC_NULL;
 	g3Dmapper->topWriteBlockNum = 0;
+	g3Dmapper->nowWriteBlockNum = 0;
 	
   g3Dmapper->granime = NULL;
   //  配置モデルマネジャー生成
@@ -291,8 +300,11 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 	ReloadMapperBlock( g3Dmapper, g3Dmapper->blockNew );
 
 	//ブロック制御メイン
+  // 描画ブロック数を求める
+  WRITEBLOCK_Control_Clear( g3Dmapper );
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
 		GFL_G3D_MAP_Main( g3Dmapper->blockWk[i].g3Dmap );
+    WRITEBLOCK_Control_SetOneBlock( g3Dmapper, g3Dmapper->blockWk[i].g3Dmap, i );
 	}
 
 	//現在ブロックのindex取得
@@ -321,31 +333,28 @@ void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera, FLDM
 	int i;
   int index;
 	VecFx32 org_pos,draw_pos;
-  int loop_start, loop_end;
 	
 	GF_ASSERT( g3Dmapper );
 	
 ///	GFL_G3D_MAP_StartDraw();
 
+  if( (type == FLDMAPPER_DRAW_TOP) && (g3Dmapper->topWriteBlockNum == 0) ){
+    return ;
+  }
+
   // ブロック描画
   {
     // 表示ブロック制御
-    if( type == FLDMAPPER_DRAW_TOP ){
-      loop_start  = 0;
-      loop_end    = g3Dmapper->topWriteBlockNum;
-    }else{
-      loop_start  = g3Dmapper->topWriteBlockNum;
-      loop_end    = g3Dmapper->blockNum;
-    }
-
-    for( i=loop_start; i<loop_end; i++ ){
-      GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
-      draw_pos.x = org_pos.x + g3Dmapper->globalDrawOffset.x;
-      draw_pos.y = org_pos.y + g3Dmapper->globalDrawOffset.y;
-      draw_pos.z = org_pos.z + g3Dmapper->globalDrawOffset.z;
-      GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &draw_pos );
-      GFL_G3D_MAP_Draw( g3Dmapper->blockWk[i].g3Dmap, g3Dcamera );
-      GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
+    for( i=0; i<g3Dmapper->blockNum; i++ ){
+      if( WRITEBLOCK_Control_IsWriteBlockIndex( g3Dmapper, i, type ) ){
+        GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
+        draw_pos.x = org_pos.x + g3Dmapper->globalDrawOffset.x;
+        draw_pos.y = org_pos.y + g3Dmapper->globalDrawOffset.y;
+        draw_pos.z = org_pos.z + g3Dmapper->globalDrawOffset.z;
+        GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &draw_pos );
+        GFL_G3D_MAP_Draw( g3Dmapper->blockWk[i].g3Dmap, g3Dcamera );
+        GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
+      }
     }
   }
 
@@ -617,6 +626,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
   g3Dmapper->blockZNum  = resistData->blockZNum;
   g3Dmapper->blockNum   = resistData->blockXNum * resistData->blockZNum;
   g3Dmapper->topWriteBlockNum = resistData->topWriteBlockNum;
+  g3Dmapper->nowWriteBlockNum = g3Dmapper->blockNum;
 
   {//mode異常の対処 
     switch( g3Dmapper->mode ){
@@ -2015,5 +2025,70 @@ static void GetExHight( const FLDMAPPER* g3Dmapper, const VecFx32 *pos, FLDMAPPE
 
 }
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  描画ブロック制御ワーク　クリア
+ *
+ *	@param	g3Dmapper   マッパー
+ */
+//-----------------------------------------------------------------------------
+static void WRITEBLOCK_Control_Clear( FLDMAPPER* g3Dmapper )
+{
+  g3Dmapper->nowWriteBlockNum = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  描画ブロック設定
+ *
+ *	@param	g3Dmapper マッパー
+ *	@param	g3Dmap    ブロックデータ
+ */
+//-----------------------------------------------------------------------------
+static void WRITEBLOCK_Control_SetOneBlock( FLDMAPPER* g3Dmapper, GFL_G3D_MAP* g3Dmap, u32 index )
+{
+  if( GFL_G3D_MAP_GetRenderObj( g3Dmap ) != NULL ){
+    if( GFL_G3D_MAP_GetDrawSw( g3Dmap ) ){
+      g3Dmapper->nowWriteBlockNum++;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ブロック描画　有無　チェック
+ *
+ *	@param	g3Dmapper   マッパー
+ *	@param	index       インデックス
+ *	@param	draw_type   描画タイプ
+ *
+ *	@retval TRUE  描画する
+ *	@retval FALSE 描画しない
+ */
+//-----------------------------------------------------------------------------
+static BOOL WRITEBLOCK_Control_IsWriteBlockIndex( const FLDMAPPER* g3Dmapper, u32 index, FLDMAPPER_DRAW_TYPE draw_type )
+{
+  
+  if( draw_type == FLDMAPPER_DRAW_TOP ){
+
+    GF_ASSERT( (g3Dmapper->topWriteBlockNum*2) <= g3Dmapper->blockNum );
+    // TOPの場合、表示ブロックがtopWriteBlockNumの2倍の場合から、分割していく。
+    if( (g3Dmapper->nowWriteBlockNum >= (g3Dmapper->topWriteBlockNum*2)) && 
+        (index < g3Dmapper->topWriteBlockNum) ){
+      return TRUE;
+    }
+  }else{
+    // TAILの場合、topWriteBlockNum*2よりも表示ブロックが小さいときは、
+    // すべてのブロックを描画。それ以外であれば、topWriteBlockNum以上のブロックを描画
+    if( (g3Dmapper->nowWriteBlockNum < (g3Dmapper->topWriteBlockNum*2)) ){
+      return TRUE;
+    }else if( (g3Dmapper->topWriteBlockNum <= index) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
 
 
