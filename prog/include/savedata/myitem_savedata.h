@@ -24,11 +24,20 @@ typedef	struct {
 	u16	no;		// 個数
 }ITEM_ST;
 
-#define	BAG_EVENT_ITEM_MAX		( 50 )		// 大切な物ポケット最大数
-#define	BAG_WAZA_ITEM_MAX		( 101 )		// 技マシンポケット最大数
-#define	BAG_DRUG_ITEM_MAX		( 40 )		// 薬ポケット最大数
-#define	BAG_NUTS_ITEM_MAX		( 64 )		// 木の実ポケット最大数
-#define	BAG_NORMAL_ITEM_MAX		( 165+30+15+12 )		// 道具ポケット最大数
+#define	BAG_EVENT_ITEM_MAX		( 87 )		// 大切な物ポケット最大数
+#define	BAG_WAZA_ITEM_MAX			( 109 )		// 技マシンポケット最大数
+#define	BAG_DRUG_ITEM_MAX			( 44 )		// 薬ポケット最大数
+#define	BAG_NUTS_ITEM_MAX			( 64 )		// 木の実ポケット最大数
+#define	BAG_NORMAL_ITEM_MAX		( 310 )		// 道具ポケット最大数
+/*
+	※ BAG_NORMAL_ITEM_MAXは
+			ボール		26
+			メール		12
+			装備			149
+			戦闘用		38
+			ノーマル	85
+		の合計
+*/
 
 #define	BAG_MYITEM_MAX (BAG_NORMAL_ITEM_MAX) //一番要素が大きい物
 
