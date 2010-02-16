@@ -7772,7 +7772,9 @@
 //--------------------------------------------------------------
 /**
  * @brief 顔アップ開始
- * @param ret       検索結果
+ * @note      引数は、src/field/fld_faceup_def.hを参照のこと
+ * @param back_idx    背景指定          FLD_FACEUP_BG～を指定
+ * @param char_idx    キャラクター指定  FLD_FACEUP_CHAR～を指定
  */
 //--------------------------------------------------------------
 #define _START_FACEUP( back_idx, char_idx ) _ASM_START_FACEUP back_idx, char_idx
@@ -7798,7 +7800,8 @@
 //--------------------------------------------------------------
 /**
  * @brief 顔アップ 顔j変更
- * @param ret       検索結果
+ * @note      引数は、src/field/fld_faceup_def.hを参照のこと
+ * @param char_idx    キャラクター指定  FLD_FACEUP_CHAR～を指定   
  */
 //--------------------------------------------------------------
 #define _CHANGE_FACEUP( char_idx ) _ASM_CHANGE_FACEUP char_idx
