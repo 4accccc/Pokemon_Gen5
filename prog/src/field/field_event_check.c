@@ -97,7 +97,7 @@
 
 #include "event_intrude.h"
 #include "field_comm/intrude_work.h"
-#include "scrcmd.h"
+
 #include "scrcmd_intrude.h"
 
 #include "savedata/situation.h"
