@@ -324,9 +324,11 @@ static const u8 ALIGN4 skip_cursor_Character[128];
 #ifdef DEBUG_FLDMSGBG
 static void DEBUG_AddCountPrintTCB( FLDMSGBG *fmb );
 static void DEBUG_SubCountPrintTCB( FLDMSGBG *fmb );
+static void DEBUG_CheckCountPrintTCB( FLDMSGBG *fmb );
 #else
 #define DEBUG_AddCountPrintTCB( fmb ) ((void)0)
 #define DEBUG_SubCountPrintTCB( fmb ) ((void)0)
+#define DEBUG_CheckCountPrintTCB( fmb ) ((void)0)
 #endif
 
 //======================================================================
@@ -431,6 +433,7 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
   }
   
   if( fmb->printTCBLSys != NULL ){
+    DEBUG_CheckCountPrintTCB( fmb );
     GFL_TCBL_Exit( fmb->printTCBLSys );
   }
 	
@@ -4619,6 +4622,18 @@ static void DEBUG_SubCountPrintTCB( FLDMSGBG *fmb )
   
   if( fmb->d_printTCBcount < 0 ){
     GF_ASSERT( 0 && "フィールド　メッセージ処理を多く削除しています" );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグ　プリントストリームで使用しているTCBをカウント
+ */
+//--------------------------------------------------------------
+static void DEBUG_CheckCountPrintTCB( FLDMSGBG *fmb )
+{
+  if( fmb->d_printTCBcount ){
+    GF_ASSERT( 0 && "フィールド　メッセージ処理が残っています" );
   }
 }
 
