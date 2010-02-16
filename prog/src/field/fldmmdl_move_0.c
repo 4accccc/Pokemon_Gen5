@@ -312,7 +312,6 @@ static int TblIDRndGet( int id, int end );
 static const int * MoveDirTblIDSearch( int id );
 static int TrJikiDashSearch( MMDL * mmdl );
 static int TrJikiDashSearchTbl( MMDL * mmdl, int id, int end );
-static BOOL MMDL_CheckPlayerDispSizeRect( const MMDL *mmdl );
 static BOOL checkEvTypeDashReact( const MMDL *mmdl, u8 *count );
 static BOOL checkMMdlEventTypeDashAccel( const MMDL *mmdl );
 

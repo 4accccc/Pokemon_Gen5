@@ -180,13 +180,15 @@
 /// 動作モデル イベントタイプ　トレーナー
 /// Param0に視線距離
 //--------------------------------------------------------------
-#define EV_TYPE_TRAINER 0x01
+#define EV_TYPE_TR 0x01
+#define EV_TYPE_TRAINER (EV_TYPE_TR) //old
 
 //--------------------------------------------------------------
 ///  動作モデル　イベントタイプ　トレーナー全方位検知
 ///  Param0に視線距離
 //--------------------------------------------------------------
-#define EV_TYPE_TRAINER_EYEALL 0x02
+#define EV_TYPE_TR_EYEALL 0x02
+#define EV_TYPE_TRAINER_EYEALL (EV_TYPE_TR_EYEALL) //old
 
 //--------------------------------------------------------------
 ///  動作モデル　イベントタイプ　アイテム
@@ -198,17 +200,24 @@
 /// Param0に視線距離。
 /// Param1にきょろきょろを開始するグリッド数。
 //--------------------------------------------------------------
-#define EV_TYPE_TRAINER_KYORO 0x04 ///<トレーナータイプ　きょろきょろ
+#define EV_TYPE_TR_KYORO 0x04 ///<トレーナータイプ　きょろきょろ
+#define EV_TYPE_TRAINER_KYORO (EV_TYPE_TR_KYORO)
 
 //--------------------------------------------------------------
 /// 動作モデル　イベントタイプ　トレーナー停止回転
 /// Param0に視線距離。
 /// Param1に回転を開始する開始するグリッド数。
 //--------------------------------------------------------------
-#define EV_TYPE_TRAINER_SPIN_STOP_L 0x05 ///<トレーナータイプ停止回転左周り
-#define EV_TYPE_TRAINER_SPIN_STOP_R 0x06 ///<トレーナータイプ停止回転右回り
-#define EV_TYPE_TRAINER_SPIN_MOVE_L 0x07 ///<トレーナータイプ移動回転左周り
-#define EV_TYPE_TRAINER_SPIN_MOVE_R 0x08 ///<トレーナータイプ移動回転右回り
+#define EV_TYPE_TR_SPINS_L 0x05 ///<トレーナータイプ停止回転左周り
+#define EV_TYPE_TR_SPINS_R 0x06 ///<トレーナータイプ停止回転右回り
+#define EV_TYPE_TR_SPINM_L 0x07 ///<トレーナータイプ移動回転左周り
+#define EV_TYPE_TR_SPINM_R 0x08 ///<トレーナータイプ移動回転右回り
+
+//old
+#define EV_TYPE_TRAINER_SPIN_STOP_L (EV_TYPE_TR_SPINS_L)
+#define EV_TYPE_TRAINER_SPIN_STOP_R (EV_TYPE_TR_SPINS_R)
+#define EV_TYPE_TRAINER_SPIN_MOVE_L (EV_TYPE_TR_SPINM_L)
+#define EV_TYPE_TRAINER_SPIN_MOVE_R (EV_TYPE_TR_SPINM_R)
 
 //--------------------------------------------------------------
 /// 動作モデル　イベントタイプ　メッセージID指定
@@ -220,44 +229,55 @@
 /// Param0に視線距離。
 /// ４点移動系のみ。視線ヒットチェック対象ではない。
 //--------------------------------------------------------------
-#define EV_TYPE_TRAINER_ESCAPE 0x0a
+#define EV_TYPE_TR_ESC 0x0a
+#define EV_TYPE_TRAINER_ESCAPE (EV_TYPE_TR_ESC) //old
 
 //--------------------------------------------------------------
 /// 動作モデル　イベントタイプ　ダッシュに反応して方向変更
 /// Param0に視線距離。
 /// ２方向切り替え、３方向切り替え、SPINタイプ限定
 //--------------------------------------------------------------
-#define EV_TYPE_TRAINER_DASH_ALTER 0x0b
+#define EV_TYPE_TR_D_ALT 0x0b
+#define EV_TYPE_TRAINER_DASH_ALTER (EV_TYPE_TR_D_ALT) //old
 
 //--------------------------------------------------------------
 /// 動作モデル　イベントタイプ　ダッシュに反応して動く
 /// Param0に視線距離。
 /// Param1に移動するグリッド数。
 //--------------------------------------------------------------
-#define EV_TYPE_TRAINER_DASH_REACT 0x0c
+#define EV_TYPE_TR_D_REA 0x0c
+#define EV_TYPE_TRAINER_DASH_REACT (EV_TYPE_TR_D_REA) //old
 
 //--------------------------------------------------------------
 /// 動作モデル　イベントタイプ　ダッシュに反応して移動速度アップ
 /// Param0に視線距離。
 //--------------------------------------------------------------
-#define EV_TYPE_TRAINER_DASH_ACCEL 0x0d
+#define EV_TYPE_TR_D_ACC 0x0d
+#define EV_TYPE_TRAINER_DASH_ACCEL (EV_TYPE_TR_D_ACC) //old
 
 //--------------------------------------------------------------
 /// 動作モデル　イベントタイプ　トレーナーきょろきょろ　ダッシュで速度Up版
 /// Param0に視線距離。
 /// Param1にきょろきょろを開始するグリッド数。
 //--------------------------------------------------------------
-#define EV_TYPE_TRAINER_DASH_ACCEL_KYORO 0x0e
+#define EV_TYPE_TR_D_KYORO (0x0e)
+#define EV_TYPE_TRAINER_DASH_ACCEL_KYORO (EV_TYPE_TR_D_KYORO) //old
 
 //--------------------------------------------------------------
 /// 動作モデル　イベントタイプ　トレーナー停止回転 ダッシュで速度Up版
 /// Param0に視線距離。
 /// Param1に回転を開始する開始するグリッド数。
 //--------------------------------------------------------------
-#define EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_L 0x0f ///<トレーナータイプ停止回転左周り
-#define EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_R 0x10 ///<トレーナータイプ停止回転右回り
-#define EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L 0x11 ///<トレーナータイプ移動回転左周り
-#define EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_R 0x12 ///<トレーナータイプ移動回転右回り
+#define EV_TYPE_TR_D_SPINS_L 0x0f ///<トレーナータイプ停止回転左周り
+#define EV_TYPE_TR_D_SPINS_R 0x10 ///<トレーナータイプ停止回転右回り
+#define EV_TYPE_TR_D_SPINM_L 0x11 ///<トレーナータイプ移動回転左周り
+#define EV_TYPE_TR_D_SPINM_R 0x12 ///<トレーナータイプ移動回転右回り
+
+//old
+#define EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_L (EV_TYPE_TR_D_SPINS_L)
+#define EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_R (EV_TYPE_TR_D_SPINM_R)
+#define EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L (EV_TYPE_TR_D_SPINM_L)
+#define EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_R (EV_TYPE_TR_D_SPINM_R)
 
 //--------------------------------------------------------------
 /// 動作モデル　イベントタイプ　最大数
@@ -279,7 +299,7 @@
 #define DRAW_STA_WALK_6F  0x06    ///<移動 6フレーム
 #define DRAW_STA_WALK_3F  0x07    ///<移動 3フレーム
 #define DRAW_STA_WALK_7F  0x08    ///<移動 7フレーム
-#define DRAW_STA_WALK_10F 0x09    ///<移動 10フレーム
+#define DRAW_STA_WALK_12F 0x09    ///<移動 10フレーム
 #define DRAW_STA_MAX      0x0a    ///<描画ステータス最大
 
 ///描画ステータス四方向分
@@ -534,10 +554,10 @@
 #define AC_DASH_D_6F 0xa4 ///<下方向に移動 6フレーム(自機専用
 #define AC_DASH_L_6F 0xa5 ///<左方向に移動 6フレーム(自機専用
 #define AC_DASH_R_6F 0xa6 ///<右方向に移動 6フレーム(自機専用
-#define AC_WALK_U_10F 0xa7 ///<上に移動 10フレーム
-#define AC_WALK_D_10F 0xa8 ///<上に移動 10フレーム
-#define AC_WALK_L_10F 0xa9 ///<上に移動 10フレーム
-#define AC_WALK_R_10F 0xaa ///<上に移動 10フレーム
+#define AC_WALK_U_12F 0xa7 ///<上に移動 10フレーム
+#define AC_WALK_D_12F 0xa8 ///<上に移動 10フレーム
+#define AC_WALK_L_12F 0xa9 ///<上に移動 10フレーム
+#define AC_WALK_R_12F 0xaa ///<上に移動 10フレーム
 #define ACMD_MAX 0xab ///<アニメーションコマンド最大数
 
 #define ACMD_END 0xfe ///<アニメーションコマンド終了

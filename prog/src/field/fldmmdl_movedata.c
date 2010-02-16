@@ -1335,18 +1335,17 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_MarkHatena_Tbl,             //AC_MARK_HATENA
   DATA_AC_MarkOnpu_Tbl,               //AC_MARK_ONPU
   DATA_AC_MarkTenTen_Tbl,             //AC_MARK_TENTEN
+  DATA_AC_HeroCutin_Tbl, //AC_HERO_CUTIN
 
   DATA_AC_DashU6F_Tbl,                  //AC_DASH_U_6F
   DATA_AC_DashD6F_Tbl,                  //AC_DASH_D_6F
   DATA_AC_DashL6F_Tbl,                  //AC_DASH_L_6F
   DATA_AC_DashR6F_Tbl,                  //AC_DASH_R_6F
   
-  DATA_AC_WalkU10F_Tbl,                  //AC_WALK_U_10F
-  DATA_AC_WalkD10F_Tbl,                  //AC_WALK_D_10F
-  DATA_AC_WalkL10F_Tbl,                  //AC_WALK_L_10F
-  DATA_AC_WalkR10F_Tbl,                  //AC_WALK_R_10F
-  
-  DATA_AC_HeroCutin_Tbl, //AC_HERO_CUTIN
+  DATA_AC_WalkU12F_Tbl,                  //AC_WALK_U_12F
+  DATA_AC_WalkD12F_Tbl,                  //AC_WALK_D_12F
+  DATA_AC_WalkL12F_Tbl,                  //AC_WALK_L_12F
+  DATA_AC_WalkR12F_Tbl,                  //AC_WALK_R_12F
 };
 
 //--------------------------------------------------------------
@@ -1524,10 +1523,10 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailDummy,                  //AC_DASH_L_6F
   DATA_AC_RailDummy,                  //AC_DASH_R_6F
   
-  DATA_AC_RailDummy,                  //AC_WALK_U_10F
-  DATA_AC_RailDummy,                  //AC_WALK_D_10F
-  DATA_AC_RailDummy,                  //AC_WALK_L_10F
-  DATA_AC_RailDummy,                  //AC_WALK_R_10F
+  DATA_AC_RailDummy,                  //AC_WALK_U_12F
+  DATA_AC_RailDummy,                  //AC_WALK_D_12F
+  DATA_AC_RailDummy,                  //AC_WALK_L_12F
+  DATA_AC_RailDummy,                  //AC_WALK_R_12F
 };
 
 //==============================================================================
@@ -1634,18 +1633,27 @@ static const int DATA_CodeTbl_AC_JUMPGU_U_1G_8F[] =
 static const int DATA_CodeTbl_AC_SANDWALK_U_16F[] =
 {AC_SANDWALK_U_16F,AC_SANDWALK_D_16F,AC_SANDWALK_L_16F,AC_SANDWALK_R_16F};
 
+static const int DATA_CodeTbl_AC_WALK_U_12F[] =
+{AC_WALK_U_12F,AC_WALK_D_12F,AC_WALK_L_12F,AC_WALK_R_12F };
+
+static const int DATA_CodeTbl_AC_DASH_U_6F[] =
+{AC_DASH_U_6F,AC_DASH_D_6F,AC_DASH_L_6F,AC_DASH_R_6F };
+
 //--------------------------------------------------------------
 ///  MMDL_ChangeDirAcmdCode()で対応するコード。
-/// 並びは不順。
+/// 並びは不順。よく使うコードを上に持ってくると速度面で良い。
 //--------------------------------------------------------------
 const int * const DATA_AcmdCodeDirChangeTbl[] =
 {
   DATA_CodeTbl_AC_DIR_U,
+  DATA_CodeTbl_AC_WALK_U_8F,
+  DATA_CodeTbl_AC_DASH_U_4F,
+  DATA_CodeTbl_AC_WALK_U_2F,
+  DATA_CodeTbl_AC_WALK_U_4F,
+  DATA_CodeTbl_AC_WALK_U_12F,
+  DATA_CodeTbl_AC_DASH_U_6F,
   DATA_CodeTbl_AC_WALK_U_32F,
   DATA_CodeTbl_AC_WALK_U_16F,
-  DATA_CodeTbl_AC_WALK_U_8F,
-  DATA_CodeTbl_AC_WALK_U_4F,
-  DATA_CodeTbl_AC_WALK_U_2F,
   DATA_CodeTbl_AC_STAY_WALK_U_32F,
   DATA_CodeTbl_AC_STAY_WALK_U_16F,
   DATA_CodeTbl_AC_STAY_WALK_U_8F,
@@ -1658,7 +1666,6 @@ const int * const DATA_AcmdCodeDirChangeTbl[] =
   DATA_CodeTbl_AC_WALK_U_6F,
   DATA_CodeTbl_AC_WALK_U_3F,
   DATA_CodeTbl_AC_WALK_U_1F,
-  DATA_CodeTbl_AC_DASH_U_4F,
   DATA_CodeTbl_AC_JUMPHI_L_1G_16F,
   DATA_CodeTbl_AC_JUMPHI_L_3G_32F,
   DATA_CodeTbl_AC_WALK_U_7F,

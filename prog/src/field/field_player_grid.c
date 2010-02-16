@@ -124,6 +124,16 @@ typedef enum
   UNDER_MAX,
 }UNDER;
 
+//--------------------------------------------------------------
+/// GROUND_HEIGHT
+//--------------------------------------------------------------
+typedef enum
+{
+  GROUND_HEIGHT_FLAT = 0, ///<平ら
+  GROUND_HEIGHT_UP, ///<登り
+  GROUND_HEIGHT_DOWN, ///<下り
+}GROUND_HEIGHT;
+
 //======================================================================
 //  struct
 //======================================================================
@@ -142,6 +152,9 @@ struct _TAG_FIELD_PLAYER_GRID
   
   u16 oze_yure_frame;
   u16 oze_anime_reset_flag;
+  
+  u16 walk_play_se;
+  u16 walk_play_se_count;
 };
 
 //======================================================================
@@ -366,6 +379,8 @@ static void oze_EndYureJiki( FIELD_PLAYER_GRID *gjiki );
 
 //parts
 static BOOL gjiki_GetAttr( FIELD_PLAYER_GRID *gjiki, u16 dir, MAPATTR *attr );
+static GROUND_HEIGHT gjiki_CheckNextHeight(
+    FIELD_PLAYER_GRID *gjiki, u16 dir );
 
 //======================================================================
 //  グリッド移動 フィールドプレイヤー制御
@@ -521,45 +536,47 @@ static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir )
 typedef struct
 {
   BOOL (*check)(const MAPATTR_VALUE);
-  int se;
+  u32 se;
+  int dash_count;
 }ATTR_VALUE_SE;
 
 typedef struct
 {
   u32 flag;
-  int se;
+  u32 se;
+  int dash_count;
 }ATTR_FLAG_SE;
 
 //now value
 static const ATTR_VALUE_SE data_PlaySE_NowValue[] =
 {
-  {NULL,0},
+  {NULL,0,0},
 };
 
 //next value
 static const ATTR_VALUE_SE data_PlaySE_NextValue[] =
 {
-  {MAPATTR_VALUE_CheckLongGrass,SEQ_SE_FLD_08},
-  {MAPATTR_VALUE_CheckSnow,SEQ_SE_FLD_11},
-  {MAPATTR_VALUE_CheckShoal,SEQ_SE_FLD_13},
-  {MAPATTR_VALUE_CheckPool,SEQ_SE_FLD_13},
-  {MAPATTR_VALUE_CheckMarsh,SEQ_SE_FLD_13},
-  {MAPATTR_VALUE_CheckDesertDeep,SEQ_SE_FLD_91},
-  {MAPATTR_VALUE_CheckSandType,SEQ_SE_FLD_14},
-  {MAPATTR_FLAGBIT_NONE,0}, //end
+  {MAPATTR_VALUE_CheckLongGrass,SEQ_SE_FLD_08,2},
+  {MAPATTR_VALUE_CheckSnow,SEQ_SE_FLD_11,2},
+  {MAPATTR_VALUE_CheckShoal,SEQ_SE_FLD_13,2},
+  {MAPATTR_VALUE_CheckPool,SEQ_SE_FLD_13,2},
+  {MAPATTR_VALUE_CheckMarsh,SEQ_SE_FLD_13,2},
+  {MAPATTR_VALUE_CheckDesertDeep,SEQ_SE_FLD_91,2},
+  {MAPATTR_VALUE_CheckSandType,SEQ_SE_FLD_14,2},
+  {MAPATTR_FLAGBIT_NONE,SEQ_SE_DUMMY,0}, //end
 };
 
 //now flag
 static const ATTR_FLAG_SE data_PlaySE_NowFlag[] =
 {
-  {ATTRFLAG_NONE,0}, //end
+  {ATTRFLAG_NONE,SEQ_SE_DUMMY,0}, //end
 };
 
 //next flag
 static const ATTR_FLAG_SE data_PlaySE_NextFlag[] =
 {
   {MAPATTR_FLAGBIT_GRASS,SEQ_SE_FLD_09},
-  {ATTRFLAG_NONE,0}, //end
+  {ATTRFLAG_NONE,SEQ_SE_DUMMY,0}, //end
 };
 
 //--------------------------------------------------------------
@@ -573,7 +590,7 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
     JIKI_MOVEORDER set, u16 dir )
 {
   VecFx32 pos;
-  int se = -1;
+  u32 se = SEQ_SE_DUMMY;
   const ATTR_FLAG_SE *p0;
   const ATTR_VALUE_SE *p1;
   MMDL *mmdl;
@@ -597,8 +614,8 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
         break;
       }
     }
-  
-    if( se == -1 ){
+    
+    if( se == SEQ_SE_DUMMY ){
       for( p1 = data_PlaySE_NowValue; p1->check != NULL; p1++ ){
         if( p1->check(attr) == TRUE ){
           se = p1->se;
@@ -607,17 +624,17 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
       }
     }
     
-    if( se != -1 ){
+    if( se != SEQ_SE_DUMMY ){
       PMSND_PlaySE( se );
       return;
     }
   }
   
   MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-
+  
   if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
     flag = MAPATTR_GetAttrFlag( attr );
-
+    
     for( p0 = data_PlaySE_NextFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
       if( (p0->flag & flag) ){
         se = p0->se;
@@ -625,7 +642,7 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
       }
     }
   
-    if( se == -1 ){
+    if( se == SEQ_SE_DUMMY ){
       for( p1 = data_PlaySE_NextValue; p1->check != NULL; p1++ ){
         if( p1->check(attr) == TRUE ){
           se = p1->se;
@@ -634,7 +651,7 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
       }
     }
     
-    if( se != -1 ){
+    if( se != SEQ_SE_DUMMY ){
       PMSND_PlaySE( se );
       return;
     }
@@ -1818,29 +1835,48 @@ static void gjiki_SetMove_Walk(
   u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
   u16 code;
- 
+  BOOL flat_check = TRUE;
+  
   GF_ASSERT( dir != DIR_NOT );
   
   if( debug_flag == TRUE ){
     code = AC_WALK_U_2F;
+    flat_check = FALSE;
   }else if( key_cont & PAD_BUTTON_B ){
-    if( FIELD_PLAYER_CORE_CheckIllegalOBJCode(gjiki->player_core) == FALSE ){
+    if( FIELD_PLAYER_CORE_CheckIllegalOBJCode( gjiki->player_core) == FALSE ){
       code = AC_WALK_U_4F;
     }else{
-      MAPATTR attr;
       VecFx32 pos;
-      FIELD_PLAYER_CORE_GetPos( gjiki->player_core, &pos );
+      MAPATTR attr;
       
       code = AC_DASH_U_4F;
+      FIELD_PLAYER_CORE_GetPos( gjiki->player_core, &pos );
+      
       if( MMDL_GetMapPosAttr( mmdl, &pos, &attr )){
-        //上下動床ではダッシュなし
-        if( MAPATTR_VALUE_CheckUpDownFloor( MAPATTR_GetAttrValue(attr) )){
-          code = AC_WALK_U_8F;
+        if( MAPATTR_VALUE_CheckUpDownFloor(MAPATTR_GetAttrValue(attr)) ){
+          code = AC_WALK_U_8F; //上下動床ではダッシュなし
+          flat_check = FALSE;
         }
       }
     }
   }else{
     code = AC_WALK_U_8F;
+  }
+  
+  if( flat_check == TRUE ){
+    if( gjiki_CheckNextHeight(gjiki,dir) == GROUND_HEIGHT_UP ){
+      switch( code ){
+      case AC_WALK_U_4F:
+        code = AC_WALK_U_6F;
+        break;
+      case AC_DASH_U_4F:
+        code = AC_DASH_U_6F;
+        break;
+      case AC_WALK_U_8F:
+        code = AC_WALK_U_12F;
+        break;
+      }
+    }
   }
   
   code = MMDL_ChangeDirAcmdCode( dir, code );
@@ -2161,11 +2197,13 @@ static void gjikiCycle_SetMove_Walk(
   u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
   u16 code;
+  BOOL flat_check = TRUE;
   
   GF_ASSERT( dir != DIR_NOT );
   
   if( debug_flag == TRUE ){
     code = AC_WALK_U_2F;
+    flat_check = FALSE;
   }else{
     MAPATTR attr;
     code = AC_WALK_U_2F;
@@ -2179,6 +2217,14 @@ static void gjikiCycle_SetMove_Walk(
         
         fectrl = FIELDMAP_GetFldEffCtrl( gjiki->fieldWork );
         FLDEFF_KEMURI_SetMMdl( mmdl, fectrl ); //煙出す
+      }
+    }
+  }
+  
+  if( flat_check == TRUE ){
+    if( gjiki_CheckNextHeight(gjiki,dir) == GROUND_HEIGHT_UP ){
+      if( code == AC_WALK_U_2F ){
+        code = AC_WALK_U_4F;
       }
     }
   }
@@ -3277,3 +3323,32 @@ static BOOL gjiki_GetAttr(
   return( ret );
 }
 
+//--------------------------------------------------------------
+/**
+ * 移動先の高低差をチェック
+ * @param gjiki FIELD_PLAYER_GRID
+ * @param dir 移動方向
+ * @retval  GROUND_HEIGHT
+ */
+//--------------------------------------------------------------
+static GROUND_HEIGHT gjiki_CheckNextHeight(
+    FIELD_PLAYER_GRID *gjiki, u16 dir )
+{
+  VecFx32 pos;
+  fx32 now,next;
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
+  
+  MMDL_GetVectorPos( mmdl, &pos );
+  now = pos.y;
+  MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+  
+  if( MMDL_GetMapPosHeight(mmdl,&pos,&next) == TRUE ){
+    if( now < next ){
+      return( GROUND_HEIGHT_UP );
+    }else if( now > next ){
+      return( GROUND_HEIGHT_DOWN );
+    }
+  }
+  
+  return( GROUND_HEIGHT_FLAT );
+}

@@ -177,7 +177,7 @@ typedef struct
 #define AC_WALK_7F_FRAME (7)
 #define AC_WALK_6F_FRAME (6)
 #define AC_WALK_3F_FRAME (3)
-#define AC_WALK_10F_FRAME (10)
+#define AC_WALK_12F_FRAME (12)
 
 //--------------------------------------------------------------
 ///	AC_WALKVEC_WORK構造体。移動ベクトル使用による移動処理で使用するワーク
@@ -251,7 +251,7 @@ const fx32 * DATA_AcJumpOffsetTbl[];
 static const fx32 DATA_AcWalk7FMoveValueTbl[AC_WALK_7F_FRAME];
 static const fx32 DATA_AcWalk6FMoveValueTbl[AC_WALK_6F_FRAME];
 static const fx32 DATA_AcWalk3FMoveValueTbl[AC_WALK_3F_FRAME];
-static const fx32 DATA_AcWalk10FMoveValueTbl[AC_WALK_10F_FRAME];
+static const fx32 DATA_AcWalk12FMoveValueTbl[AC_WALK_12F_FRAME];
 
 //======================================================================
 //	アニメーションコマンドリスト
@@ -2949,66 +2949,66 @@ static int AC_Walk7F_1( MMDL * mmdl )
 
 //--------------------------------------------------------------
 /**
- * AC_WALK_U_10F 0
+ * AC_WALK_U_12F 0
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkU10F_0( MMDL * mmdl )
+static int AC_WalkU12F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( mmdl, DIR_UP, AC_WALK_10F_FRAME, DRAW_STA_WALK_10F );
+	AcWalkOddWorkInit( mmdl, DIR_UP, AC_WALK_12F_FRAME, DRAW_STA_WALK_12F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
- * AC_WALK_D_10F 0
+ * AC_WALK_D_12F 0
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkD10F_0( MMDL * mmdl )
+static int AC_WalkD12F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( mmdl, DIR_DOWN, AC_WALK_10F_FRAME, DRAW_STA_WALK_10F );
+	AcWalkOddWorkInit( mmdl, DIR_DOWN, AC_WALK_12F_FRAME, DRAW_STA_WALK_12F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
- * AC_WALK_L_10F 0
+ * AC_WALK_L_12F 0
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkL10F_0( MMDL * mmdl )
+static int AC_WalkL12F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( mmdl, DIR_LEFT, AC_WALK_10F_FRAME, DRAW_STA_WALK_10F );
+	AcWalkOddWorkInit( mmdl, DIR_LEFT, AC_WALK_12F_FRAME, DRAW_STA_WALK_12F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
- * AC_WALK_R_10F 0
+ * AC_WALK_R_12F 0
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_WalkR10F_0( MMDL * mmdl )
+static int AC_WalkR12F_0( MMDL * mmdl )
 {
-	AcWalkOddWorkInit( mmdl, DIR_RIGHT, AC_WALK_10F_FRAME, DRAW_STA_WALK_10F );
+	AcWalkOddWorkInit( mmdl, DIR_RIGHT, AC_WALK_12F_FRAME, DRAW_STA_WALK_12F );
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
- * AC_WALK_*_10F 1
+ * AC_WALK_*_12F 1
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再帰
  */
 //--------------------------------------------------------------
-static int AC_Walk10F_1( MMDL * mmdl )
+static int AC_Walk12F_1( MMDL * mmdl )
 {
-	if( AC_WalkOdd_Walk(mmdl,DATA_AcWalk10FMoveValueTbl) == TRUE ){
+	if( AC_WalkOdd_Walk(mmdl,DATA_AcWalk12FMoveValueTbl) == TRUE ){
 		return( TRUE );
 	}
 	
@@ -5284,42 +5284,42 @@ int (* const DATA_AC_WalkR7F_Tbl[])( MMDL * ) =
 };
 
 //--------------------------------------------------------------
-///	AC_WALK_U_10F
+///	AC_WALK_U_12F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkU10F_Tbl[])( MMDL * ) =
+int (* const DATA_AC_WalkU12F_Tbl[])( MMDL * ) =
 {
-	AC_WalkU10F_0,
-	AC_Walk10F_1,
+	AC_WalkU12F_0,
+	AC_Walk12F_1,
 	AC_End,
 };
 
 //--------------------------------------------------------------
-///	AC_WALK_D_10F
+///	AC_WALK_D_12F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkD10F_Tbl[])( MMDL * ) =
+int (* const DATA_AC_WalkD12F_Tbl[])( MMDL * ) =
 {
-	AC_WalkD10F_0,
-	AC_Walk10F_1,
+	AC_WalkD12F_0,
+	AC_Walk12F_1,
 	AC_End,
 };
 
 //--------------------------------------------------------------
-///	AC_WALK_L_10F
+///	AC_WALK_L_12F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkL10F_Tbl[])( MMDL * ) =
+int (* const DATA_AC_WalkL12F_Tbl[])( MMDL * ) =
 {
-	AC_WalkL10F_0,
-	AC_Walk10F_1,
+	AC_WalkL12F_0,
+	AC_Walk12F_1,
 	AC_End,
 };
 
 //--------------------------------------------------------------
-///	AC_WALK_R_10F
+///	AC_WALK_R_12F
 //--------------------------------------------------------------
-int (* const DATA_AC_WalkR10F_Tbl[])( MMDL * ) =
+int (* const DATA_AC_WalkR12F_Tbl[])( MMDL * ) =
 {
-	AC_WalkR10F_0,
-	AC_Walk10F_1,
+	AC_WalkR12F_0,
+	AC_Walk12F_1,
 	AC_End,
 };
 
@@ -6005,19 +6005,11 @@ static const fx32 DATA_AcWalk3FMoveValueTbl[AC_WALK_3F_FRAME] =
 };
 
 //--------------------------------------------------------------
-///	AC_WALK_*_10F　移動テーブル
+///	AC_WALK_*_12F　移動テーブル
 //--------------------------------------------------------------
-static const fx32 DATA_AcWalk10FMoveValueTbl[AC_WALK_10F_FRAME] =
+static const fx32 DATA_AcWalk12FMoveValueTbl[AC_WALK_12F_FRAME] =
 {
-  NUM_FX32(1)+0x99a,
-  NUM_FX32(1)+0x99a,
-  NUM_FX32(1)+0x999,
-  NUM_FX32(1)+0x99a,
-  NUM_FX32(1)+0x999,
-  
-  NUM_FX32(1)+0x99a,
-  NUM_FX32(1)+0x99a,
-  NUM_FX32(1)+0x999,
-  NUM_FX32(1)+0x99a,
-  NUM_FX32(1)+0x999,
+  NUM_FX32(1),NUM_FX32(1),NUM_FX32(2),NUM_FX32(1),
+  NUM_FX32(1),NUM_FX32(2),NUM_FX32(1),NUM_FX32(1),
+  NUM_FX32(2),NUM_FX32(1),NUM_FX32(1),NUM_FX32(2),
 };
