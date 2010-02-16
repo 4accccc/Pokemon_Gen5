@@ -5339,14 +5339,17 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
 
 		case 2:			// ƒ‰ƒ“ƒ_ƒ€
 			{
+				u32	rand;
 				u32	max;
 				u32	i;
 				for( i=1; i<=MONSNO_END; i++ ){
+					rand = GFL_STD_MtRand( 3 );
+					if( rand == 2 ){ continue; }
 					max = ZUKANSAVE_GetFormMax( i );
 					if( max != 0 ){
-						SetZukanDataOne( wk, i, GFL_STD_MtRand(max), GFL_STD_MtRand(2) );
+						SetZukanDataOne( wk, i, GFL_STD_MtRand(max), rand );
 					}else{
-						SetZukanDataOne( wk, i, 0, GFL_STD_MtRand(2) );
+						SetZukanDataOne( wk, i, 0, rand );
 					}
 				}
 			}
@@ -5363,8 +5366,6 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
 						for( j=0; j<max; j++ ){
 							SetZukanDataOne( wk, i, j, 0 );
 						}
-					}else{
-						SetZukanDataOne( wk, i, 0, 0 );
 					}
 				}
 			}
