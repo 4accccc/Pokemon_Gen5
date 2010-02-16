@@ -85,6 +85,7 @@
 #include "scrcmd_weather.h"
 #include "scrcmd_postman.h"
 #include "scrcmd_beacon.h"
+#include "scrcmd_elevator.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
@@ -461,7 +462,7 @@ static VMCMD_RESULT EvCmdDebugWatch(VMHANDLE * core, void *wk )
  *
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdDebugPrintWk( VMHANDLE * core, void *wk )
+static VMCMD_RESULT EvCmdDebugPrintWk( VMHANDLE * core, void *wk )
 {
   GAMEDATA* gdata = SCRCMD_WORK_GetGameData( wk );
   u16         val = SCRCMD_GetVMWorkValue( core, wk );  // コマンド第1引数
@@ -488,7 +489,7 @@ VMCMD_RESULT EvCmdDebugPrintWk( VMHANDLE * core, void *wk )
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT  EvCmdDebugAssert( VMHANDLE * core, void *wk )
+static VMCMD_RESULT  EvCmdDebugAssert( VMHANDLE * core, void *wk )
 {
   u16 val1 = VMCMD_Pop( core );
   u16 val2 = SCRCMD_GetVMWorkValue( core, wk );  // コマンド第1引数

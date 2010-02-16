@@ -19,7 +19,6 @@
 //======================================================================
 //	íËã`
 //======================================================================
-//#define EVCMD_MAX	(565)		//scrcmd.c ScriptCmdTblÇÃóvëfêî
 #define SCRCMD_PL_NULL //ñ≥å¯âªíËã`
 
 //--------------------------------------------------------------
@@ -45,12 +44,5 @@ extern u16 * SCRCMD_GetVMWork( VMHANDLE *core, SCRCMD_WORK *work );
 extern u16 SCRCMD_GetVMWorkValue( VMHANDLE * core, SCRCMD_WORK *work );
 
 
-#ifndef SCRCMD_PL_NULL
-extern BOOL EvCmdWaitSubProcEnd( VM_MACHINE * core );
-extern BOOL EvWaitSubProcAndFree( VM_MACHINE * core );
-#endif
-
-extern VMCMD_RESULT EvCmdDebugPrintWk( VMHANDLE * core, void *wk );
-extern VMCMD_RESULT  EvCmdDebugAssert( VMHANDLE * core, void *wk );
 
 #endif	/* SCRCMD_H */

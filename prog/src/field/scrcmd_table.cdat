@@ -796,9 +796,10 @@
   NO_CMD()
   NO_CMD()
   
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  //エレベーター
+  DEF_CMD( EvCmdElevatorEntryList, EV_SEQ_ELEVATOR_ENTRY_LIST )
+  DEF_CMD( EvCmdElevatorBmpMenuMakeList, EV_SEQ_ELEVATOR_MAKE_LIST )
+  DEF_CMD( EvCmdElevatorMapChange, EV_SEQ_ELEVATOR_MAP_CHANGE)
   NO_CMD()
 
   //ポケモンID数検索
@@ -865,6 +866,7 @@
   NO_CMD()
   NO_CMD()
 
+  //ふしぎなおくりもの配達員
   DEF_CMD( EvCmdPostmanCommand, EV_SEQ_POSTMAN_REQUEST )
   NO_CMD()
   NO_CMD()
