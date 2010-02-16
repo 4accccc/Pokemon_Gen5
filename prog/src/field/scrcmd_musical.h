@@ -22,6 +22,7 @@ extern VMCMD_RESULT EvCmdResetMusicalFanGiftFlg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdSelectMusicalPoke( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk );
 
 #endif	/* __ASM_NO_DEF_ */
 

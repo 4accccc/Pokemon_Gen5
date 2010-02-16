@@ -212,6 +212,7 @@ VMCMD_RESULT EvCmdMusicalFittingCall( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 
   u8   type = VMGetU8(core);
   u16  val = SCRCMD_GetVMWorkValue( core, work );
@@ -219,6 +220,13 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
 
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   MUSICAL_SAVE *musSave = GAMEDATA_GetMusicalSavePtr( gdata );
+
+  
+  MUSICAL_EVENT_WORK *evWork = NULL;
+  if( type >= MUSICAL_VALUE_WR_SELF_IDX )
+  {
+    evWork = SCRIPT_GetMemberWork_Musical( sc );
+  }
 
   switch( type )
   {
@@ -378,7 +386,7 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
     }
   
     break;
-  case MUSICAL_VALUE_CHECK_MUSICAL_POKE:
+  case MUSICAL_VALUE_CHECK_MUSICAL_POKE://ポケモンが参加可能か？
     {
       u8 num = 0;
       u8 i;
@@ -393,6 +401,45 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
         *ret_wk = 0;
       }
     }
+    break;
+
+    //以下控え室用
+  case MUSICAL_VALUE_WR_SELF_IDX:  //自分の参加番号
+    *ret_wk = MUSICAL_EVENT_GetSelfIndex( evWork );
+    ARI_TPrintf("MusValWR:SelfIdx[%d]\n",*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_MAX_POINT: //最高評価点
+    *ret_wk = MUSICAL_EVENT_GetMaxPoint( evWork );
+    ARI_TPrintf("MusValWR:MaxPoint[%d]\n",*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_MIN_POINT: //最低評価点
+    *ret_wk = MUSICAL_EVENT_GetMinPoint( evWork );
+    ARI_TPrintf("MusValWR:MinPoint[%d]\n",*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_POINT:     //個人得点
+    *ret_wk = MUSICAL_EVENT_GetPoint( evWork , val );
+    ARI_TPrintf("MusValWR:Point[%d:%d]\n",val,*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_GRADE_MSG: //評価メッセージの取得
+    break;
+  case MUSICAL_VALUE_WR_POS_TO_IDX: //立ち位置に対応した参加番号
+    *ret_wk = MUSICAL_EVENT_GetPosIndex( evWork , val );
+    ARI_TPrintf("MusValWR:PosIdx[%d:%d]\n",val,*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_MAX_CONDITION: //演目の高いコンディション
+    *ret_wk = MUSICAL_EVENT_GetMaxCondition( evWork  );
+    ARI_TPrintf("MusValWR:MaxCondition[%d]\n",*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_POS_TO_RANK://順位に対応した参加番号
+    *ret_wk = MUSICAL_EVENT_GetPosToRank( evWork , val );
+    ARI_TPrintf("MusValWR:PosRank[%d:%d]\n",val,*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_POKE_MAX_POINT_CON: //最も点が高かったコンディション
+    *ret_wk = MUSICAL_EVENT_GetMaxPointCondition( evWork , val );
+    ARI_TPrintf("MusValWR:MaxPointCon[%d:%d]\n",val,*ret_wk);
+    break;
+  default:
+    GF_ASSERT_MSG( 0 , "タイプ指定が間違ってる[%d]\n",type );
     break;
   }
 
@@ -451,68 +498,6 @@ VMCMD_RESULT EvCmdGetMusicalFanValue( VMHANDLE *core, void *wk )
     break;
   case MUSICAL_VALUE_FAN_GIFT_NUMBER: //プレゼント番号
     *ret_wk = fanState->giftValue;
-    break;
-  }
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * ミュージカル：ミュージカル控え室用数値取得
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetMusicalWaitRoomValue( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-
-  u8   type = VMGetU8(core);
-  u16  val   = SCRCMD_GetVMWorkValue( core, work );
-  u16* ret_wk = SCRCMD_GetVMWork( core, work );
-
-  MUSICAL_EVENT_WORK *evWork = SCRIPT_GetMemberWork_Musical( sc );
-
-  switch( type )
-  {
-  case MUSICAL_VALUE_WR_SELF_IDX:  //自分の参加番号
-    *ret_wk = MUSICAL_EVENT_GetSelfIndex( evWork );
-    ARI_TPrintf("MusValWR:SelfIdx[%d]\n",*ret_wk);
-    break;
-  case MUSICAL_VALUE_WR_MAX_POINT: //最高評価点
-    *ret_wk = MUSICAL_EVENT_GetMaxPoint( evWork );
-    ARI_TPrintf("MusValWR:MaxPoint[%d]\n",*ret_wk);
-    break;
-  case MUSICAL_VALUE_WR_MIN_POINT: //最低評価点
-    *ret_wk = MUSICAL_EVENT_GetMinPoint( evWork );
-    ARI_TPrintf("MusValWR:MinPoint[%d]\n",*ret_wk);
-    break;
-  case MUSICAL_VALUE_WR_POINT:     //個人得点
-    *ret_wk = MUSICAL_EVENT_GetPoint( evWork , val );
-    ARI_TPrintf("MusValWR:Point[%d:%d]\n",val,*ret_wk);
-    break;
-  case MUSICAL_VALUE_WR_GRADE_MSG: //評価メッセージの取得
-    break;
-  case MUSICAL_VALUE_WR_POS_TO_IDX: //立ち位置に対応した参加番号
-    *ret_wk = MUSICAL_EVENT_GetPosIndex( evWork , val );
-    ARI_TPrintf("MusValWR:PosIdx[%d:%d]\n",val,*ret_wk);
-    break;
-  case MUSICAL_VALUE_WR_MAX_CONDITION: //演目の高いコンディション
-    *ret_wk = MUSICAL_EVENT_GetMaxCondition( evWork  );
-    ARI_TPrintf("MusValWR:MaxCondition[%d]\n",*ret_wk);
-    break;
-  case MUSICAL_VALUE_WR_POS_TO_RANK://順位に対応した参加番号
-    *ret_wk = MUSICAL_EVENT_GetPosToRank( evWork , val );
-    ARI_TPrintf("MusValWR:PosRank[%d:%d]\n",val,*ret_wk);
-    break;
-  case MUSICAL_VALUE_WR_POKE_MAX_POINT_CON: //最も点が高かったコンディション
-    *ret_wk = MUSICAL_EVENT_GetMaxPointCondition( evWork , val );
-    ARI_TPrintf("MusValWR:MaxPointCon[%d:%d]\n",val,*ret_wk);
-    break;
-  default:
-    GF_ASSERT_MSG( 0 , "タイプ指定が間違ってる[%d]\n",type );
     break;
   }
 
@@ -664,6 +649,10 @@ VMCMD_RESULT EvCmdSelectMusicalPoke( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
+{
+ return VMCMD_RESULT_CONTINUE;  
+}
 
 //======================================================================
 //  ミュージカル　イベント部分

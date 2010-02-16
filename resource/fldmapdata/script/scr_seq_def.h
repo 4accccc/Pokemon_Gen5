@@ -3669,7 +3669,7 @@
     _ASM_GET_MUSICAL_WAITROOM_VALUE type, val, retVal
 
   .macro  _ASM_GET_MUSICAL_WAITROOM_VALUE type, val, retVal
-  .short EV_SEQ_GET_MUSICAL_WAITROOM_VALUE
+  .short EV_SEQ_GET_MUSICAL_VALUE
   .byte \type
   .short \val
   .short \retVal
@@ -3711,13 +3711,34 @@
  */
 //--------------------------------------------------------------
 #define _SELECT_MUSCAL_POKE( decide , pos ) \
-    _ASM_SELECT_MUSCAL_POKE pos
+    _ASM_SELECT_MUSCAL_POKE  decide , pos
 
   .macro  _ASM_SELECT_MUSCAL_POKE decide, pos
   .short EV_SEQ_SELECT_MUSICAL_POKE
   .short \decide
   .short \pos
   .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _MUSICAL_TOOLS ミュージカル：汎用ツール(通信起動とか
+ *  @param val1  取得用番号
+ *  @param val2  取得用番号
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _MUSICAL_TOOLS( val1, val2, ret_val ) \
+    _ASM_MUSICAL_TOOLS  val1, val2, ret_val 
+
+  .macro  _ASM_MUSICAL_TOOLS  val1, val2, ret_val 
+  .short EV_SEQ_MUSICAL_TOOLS
+  .short \val1
+  .short \val2
+  .short \ret_val
+  .endm
+
+
 
 //======================================================================
 //  レポート関連

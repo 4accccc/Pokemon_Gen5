@@ -136,6 +136,7 @@ const BOOL  MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( const u16 mons_no )
     }
     i++;
   }
+  return TRUE;    //‰¼ FIXME
   return FALSE;
 }
 

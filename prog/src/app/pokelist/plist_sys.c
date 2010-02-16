@@ -41,6 +41,7 @@
 #include "app/p_status.h" //Proc切り替え用
 #include "app/app_menu_common.h"
 #include "app/app_taskmenu.h"
+#include "musical/musical_system.h" //ミュージカル参加チェック用
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -250,7 +251,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
 
   if( work->plData->mode == PL_MODE_SET_MUSICAL )
   {
-    work->plData->mode = PL_MODE_SET;
+    //work->plData->mode = PL_MODE_SET;
     work->isSetMusicalMode = TRUE;
   }
   else
@@ -1074,6 +1075,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
   case PL_MODE_WAZASET:
   case PL_MODE_SODATEYA:
   case PL_MODE_GURU2:
+  case PL_MODE_SET_MUSICAL:
     //選択画面へ
     PLIST_InitMode_Select( work );
     work->nextMainSeq = PSMS_SELECT_POKE;
@@ -1271,6 +1273,7 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     break;
   
   case PL_MODE_SET:
+  case PL_MODE_SET_MUSICAL:
     PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_01 );
     work->canExit = FALSE;
@@ -1300,6 +1303,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
   case PL_MODE_BATTLE:
   case PL_MODE_SODATEYA:
   case PL_MODE_GURU2:
+  case PL_MODE_SET_MUSICAL:
     PLIST_SelectMenuInit( work );
     //中で一緒にメニューを開く
     PLIST_InitMode_Menu( work );
@@ -1629,6 +1633,30 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
     }
     break;
     
+  case PL_MODE_SET_MUSICAL:
+    {
+      const BOOL ret = MUSICAL_SYSTEM_CheckEntryMusical( work->selectPokePara );
+      if( ret == TRUE )
+      {
+        itemArr[0] = PMIT_STATSU;
+        itemArr[1] = PMIT_ENTER;
+        itemArr[2] = PMIT_CLOSE;
+        itemArr[3] = PMIT_END_LIST;
+      }
+      else
+      {
+        itemArr[0] = PMIT_STATSU;
+        itemArr[1] = PMIT_CLOSE;
+        itemArr[2] = PMIT_END_LIST;
+      }
+      PLIST_MSG_CreateWordSet( work , work->msgWork );
+      PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+      PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
+      PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_01 );
+      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+    }
+
+    break;
   default:
     GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
     itemArr[0] = PMIT_STATSU;

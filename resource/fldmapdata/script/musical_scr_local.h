@@ -75,14 +75,14 @@
 //_GET_MUSICAL_WAITROOM_VALUE
 //全部※(控え室のみ有効です！)
 //しかもそれぞれドレスアップ後・ショー後のみ有効な物があるので有泉以外使用禁止
-#define MUSICAL_VALUE_WR_SELF_IDX  (0) //自分の参加番号
-#define MUSICAL_VALUE_WR_MAX_POINT (1) //最高評価点
-#define MUSICAL_VALUE_WR_MIN_POINT (2) //最低評価点
-#define MUSICAL_VALUE_WR_POINT     (3) //個人得点
-#define MUSICAL_VALUE_WR_GRADE_MSG (4) //評価メッセージの取得
-#define MUSICAL_VALUE_WR_POS_TO_IDX (5) //立ち位置に対応した参加番号
-#define MUSICAL_VALUE_WR_MAX_CONDITION (6) //演目の高いコンディション
-#define MUSICAL_VALUE_WR_POS_TO_RANK (7) //順位に対応した参加番号
-#define MUSICAL_VALUE_WR_POKE_MAX_POINT_CON (8) //最も点が高かったコンディション
+#define MUSICAL_VALUE_WR_SELF_IDX  (30) //自分の参加番号
+#define MUSICAL_VALUE_WR_MAX_POINT (31) //最高評価点
+#define MUSICAL_VALUE_WR_MIN_POINT (32) //最低評価点
+#define MUSICAL_VALUE_WR_POINT     (33) //個人得点
+#define MUSICAL_VALUE_WR_GRADE_MSG (34) //評価メッセージの取得
+#define MUSICAL_VALUE_WR_POS_TO_IDX (35) //立ち位置に対応した参加番号
+#define MUSICAL_VALUE_WR_MAX_CONDITION (36) //演目の高いコンディション
+#define MUSICAL_VALUE_WR_POS_TO_RANK (37) //順位に対応した参加番号
+#define MUSICAL_VALUE_WR_POKE_MAX_POINT_CON (38) //最も点が高かったコンディション
 
 
