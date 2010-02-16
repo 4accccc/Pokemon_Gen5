@@ -312,8 +312,9 @@ POKEPER_SEX_TYPE PokePersonal_SexVecTypeGet( POKEPER_SEX sex_vec )
  *
  *  @param[in]      heap_id     ヒープID
  *  @param[out]     num         地方図鑑に登場するポケモンの数(NULL可)
+ *                              戻り値の配列の要素数ではありません。
  *
- *  @retval         戻り値をlistで[monsno]で地方図鑑番号が得られる
+ *  @retval         地方図鑑番号の配列
  *
  *  @note           戻り値の配列は呼び出し元で解放して下さい。
  *  @note           戻り値をu16* listで受け取ったとすると、
