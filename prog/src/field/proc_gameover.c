@@ -359,7 +359,7 @@ static void scr_msg_print( GAMEOVER_MSG_WORK* wk, u16 msg_id, u8 x, u8 y )
 	GFL_MSG_GetString( wk->msgman, msg_id, tmp_buf );
 
   //主人公名セット
-  WORDSET_RegisterPlayerName( wk->wordset, 0, wk->mystatus );
+  WORDSET_RegisterPlayerName( wk->wordset, 1, wk->mystatus );
 
 	WORDSET_ExpandStr( wk->wordset, tmp_buf2, tmp_buf );
 
