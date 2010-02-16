@@ -436,6 +436,8 @@ static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork);
 static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork);
 static void DrawEncEff(FIELDMAP_WORK * fieldWork);
 
+static void DrawTop(FIELDMAP_WORK *fieldWork);
+
 typedef void (*DRAW3DMODE_FUNC)(FIELDMAP_WORK * fieldWork);
 
 //--------------------------------------------------------------
@@ -884,8 +886,14 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   OSTick debug_fieldmap_end_tick;
 #endif
 
-  if (fieldWork->MainHookFlg) return MAINSEQ_RESULT_CONTINUE;
   if (GAMEDATA_GetIsSave( fieldWork->gamedata )) return MAINSEQ_RESULT_CONTINUE;
+
+  if (fieldWork->MainHookFlg)
+  {
+    //描画部分は行う
+    DrawTop(fieldWork);
+    return MAINSEQ_RESULT_CONTINUE;
+  }
 
 
 	//キーの分割取得カウンタをリセット
@@ -969,20 +977,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   // ----------------------top側3D描画処理---------------------------------------
   // これ以降にデータ更新処理を入れないこと。
-  {
-    if(GAMEDATA_GetIsSave( fieldWork->gamedata )){
-       GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
-       return MAINSEQ_RESULT_CONTINUE;
-    }
-    
-    GFL_G3D_ClearG3dInfo();
-    FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
-
-    MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
-    fldmap_G3D_Draw_top( fieldWork );
-    MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
-  }
-
+  DrawTop(fieldWork);
 
 #ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
   debug_fieldmap_end_tick = OS_GetTick();
@@ -995,6 +990,23 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 #endif
 
   return MAINSEQ_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドマップ　トップ部分描画
+ * @param	fieldWork	FIELDMAP_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DrawTop(FIELDMAP_WORK *fieldWork)
+{
+  GFL_G3D_ClearG3dInfo();
+  FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
+
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
+  fldmap_G3D_Draw_top( fieldWork );
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 }
 
 static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
