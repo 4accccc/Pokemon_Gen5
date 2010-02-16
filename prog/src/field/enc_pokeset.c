@@ -326,6 +326,8 @@ u32 ENCPOKE_GetWFBCEncountPoke( const FIELD_WFBC* cp_wfbc, ENCPOKE_FLD_PARAM* ef
   const FIELD_WFBC_PEOPLE* cp_people;
   const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
   u32 rand;
+  u32 total_par;
+  u32 calc_par;
   
   GF_ASSERT( cp_wfbc );
   GF_ASSERT( outPokeTbl );
@@ -350,8 +352,25 @@ u32 ENCPOKE_GetWFBCEncountPoke( const FIELD_WFBC* cp_wfbc, ENCPOKE_FLD_PARAM* ef
     GF_ASSERT_MSG( 0, "WFBC enc not support enc_location = %d\n", efp->location );
     break;
   }
-  
 
+  // まず、抽選PERCENT総数を求める。
+  // parcentというより、全ポケモンの相対的な出現率計算
+  total_par = 0;
+  for( i=0; i<FIELD_WFBC_NPCID_MAX; i++ )
+  {
+    cp_people  = FIELD_WFBC_GetPeople( cp_wfbc, i );
+    if( cp_people )
+    {
+      cp_people_data = FIELD_WFBC_PEOPLE_GetPeopleData( cp_people );
+      total_par += cp_people_data->enc_percent[ tbl_index ];
+    }
+  }
+
+  GF_ASSERT( total_par > 0 );
+
+  // 今回のポケモン決定
+  rand = GFUser_GetPublicRand( total_par );
+  calc_par = 0;
   for( i=0; i<FIELD_WFBC_NPCID_MAX; i++ )
   {
 
@@ -360,12 +379,12 @@ u32 ENCPOKE_GetWFBCEncountPoke( const FIELD_WFBC* cp_wfbc, ENCPOKE_FLD_PARAM* ef
     {
       cp_people_data = FIELD_WFBC_PEOPLE_GetPeopleData( cp_people );
 
-      rand = GFUser_GetPublicRand( FIELD_WFBC_PEOPLE_ENC_POKE_PERCENT_MAX );
+      calc_par += cp_people_data->enc_percent[ tbl_index ];
 
-      TOMOYA_Printf( "percent %d\n", cp_people_data->enc_percent[ tbl_index ] );
       // ポケモン抽選
-      if( rand < cp_people_data->enc_percent[ tbl_index ] )
+      if( rand < calc_par )
       {
+        TOMOYA_Printf( "rand %d total_par %d local_par %d\n", rand, total_par, cp_people_data->enc_percent[ tbl_index ] );
         GFL_STD_MemClear( &outPokeTbl[0], sizeof(ENC_POKE_PARAM) );
         
         // ヒット

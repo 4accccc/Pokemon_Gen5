@@ -18,6 +18,7 @@
 
 #include "battle/battle.h"
 #include "gamesystem/btl_setup.h"
+#include "gamesystem/g_power.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/tokusyu_def.h"
 #include "poke_tool/poketype.h"
@@ -53,6 +54,7 @@ static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
 static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location, u8 prob_rev );
 static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, const u32 per );
 static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per );
+static BOOL enc_CheckEncountWfbc( ENCOUNT_WORK* ewk, const FIELD_WFBC* cp_wfbc );
 
 static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* spa,
     BATTLE_SETUP_PARAM *bsp, HEAPID heapID, const ENC_POKE_PARAM* inPokeTbl );
@@ -70,6 +72,7 @@ static void enc_ClearWalkCount( FIELD_ENCOUNT *enc );
 static void encwork_SetPlayerPos( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player);
 static void encwork_AddPlayerWalkCount( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player);
 static u32 encwork_GetPlayerWalkCount( ENCOUNT_WORK* ewk );
+
 
 //======================================================================
 //  フィールドエンカウント
@@ -350,11 +353,15 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_w
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
 
 
-
   ewk = GAMEDATA_GetEncountWork(enc->gdata);
 
   //最後のエンカウントからのプレイヤーの歩数を加算
   encwork_AddPlayerWalkCount( ewk, fplayer);
+
+  // 進入中はエンカウントしない
+  if( FIELD_WFBC_GetMapMode( cp_wfbcdata ) == MAPMODE_INTRUDE ){
+    return NULL;
+  }
 
 #ifdef PM_DEBUG
   //デバッグ強制エンカウントOffルーチン
@@ -362,6 +369,11 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_w
     return NULL;
   }
 #endif
+
+  // 歩数込みのエンカウントチェック
+  if( enc_CheckEncountWfbc( ewk, cp_wfbcdata ) == FALSE ){
+    return NULL;
+  }
 
   //ロケーションチェック
   {
@@ -372,22 +384,6 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_w
   //ENCPOKE_FLD_PARAM作成
   ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, ENC_TYPE_WFBC,
       FIELD_WEATHER_GetWeatherNo(FIELDMAP_GetFieldWeather( enc->fwork )) );
-
-#if 0
-  if( !force_f )
-  {
-    //道具＆特性によるエンカウント率変動
-    per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
-
-    if( enc_CheckEncount(enc,ewk,per) == FALSE ){ //エンカウントチェック
-      return NULL;
-    }
-  }
-#endif
-
-  { //移動ポケモンチェック
-
-  }
 
   //エンカウントデータ生成
   MI_CpuClear8(poke_tbl,sizeof(ENC_POKE_PARAM)*FLD_ENCPOKE_NUM_MAX);
@@ -558,6 +554,44 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per )
     return( TRUE );
   }
   return( FALSE );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBCのエンカウントチェック
+ *
+ *	@param	ewk       エンカウントワーク
+ *	@param	cp_wfbc   WFBC情報
+ *
+ *	@retval TRUE  エンカウントする
+ *	@retval FALSE エンカウントしない
+ */
+//-----------------------------------------------------------------------------
+static BOOL enc_CheckEncountWfbc( ENCOUNT_WORK* ewk, const FIELD_WFBC* cp_wfbc )
+{
+  s32 walk_ct = encwork_GetPlayerWalkCount( ewk );
+  s32 people_num = FIELD_WFBC_GetPeopleNum( cp_wfbc );
+  s32 prob;
+  fx32 calc_wk;
+  s32 rand = GFUser_GetPublicRand(100);
+  
+  
+  //（草むらを歩いた歩数-1)　×　√人数　×　4　×　Gパワー　％　の確率でエンカウントする。
+  calc_wk = (walk_ct-1) << FX32_SHIFT;
+  calc_wk = FX_Mul( calc_wk, FX_Sqrt( people_num<<FX32_SHIFT ) );
+  calc_wk = FX_Mul( calc_wk, 4<<FX32_SHIFT );
+  prob = calc_wk >> FX32_SHIFT;
+
+  // x Gパワー
+  prob = GPOWER_Calc_Encount( prob );
+
+  TOMOYA_Printf( "wfbc encount par %d  rand %d\n", prob, rand );
+
+  if( prob > rand ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //======================================================================

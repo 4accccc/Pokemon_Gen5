@@ -313,9 +313,6 @@ typedef enum
 #define FIELD_WFBC_PEOPLE_WF_MESSAGE_MAX  (3)
 #define FIELD_WFBC_PEOPLE_BC_MESSAGE_MAX  (4)
 
-// エンカウント抽選確率　最大値
-#define FIELD_WFBC_PEOPLE_ENC_POKE_PERCENT_MAX  ( 100 )
-
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
