@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-15T20:45:55"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T11:29:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1520" top="125" right="2225" bottom="753" maximized="no" rayout="Vertical2">
+	<dialog left="1289" top="151" right="1994" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="286"/>
 		<band id="3" index="4" style="0000" width="409"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -356,7 +356,9 @@
 ・メッセージ表示後
 　ドレスアップのみのアプリへ
 ・ドレスアップできないときは
-　owner_demo_03a</comment>
+　owner_demo_03a
+・ドレスアップ画面で何もつけずに終わったとき
+　owner_demo_03b</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">その　グッズケースの　なかに
@@ -384,6 +386,21 @@
 ポケモンでは　ドレスアップできないね▼
 今度　別の　ポケモンで
 ドレスアップして　ほしいな▼</language>
+	</row>
+
+	<row id="msg_c04r0201_owner_demo_03b" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・続けてowner_demo_05</comment>
+		<language name="JPN" width="256">なるほど！　なにもつけずに
+ポケモンそのままの　みりょくを▽
+ひょうげん　するんだね▼
+ただ　ミュージカルでは
+ドレスアップしたほうが　うけるよ▼</language>
+		<language name="JPN_KANJI" width="256">なるほど！　何もつけずに
+ポケモンそのままの　魅力を▽
+表現するんだね▼
+ただ　ミュージカルでは
+ドレスアップしたほうが　受けるよ▼</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_demo_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
