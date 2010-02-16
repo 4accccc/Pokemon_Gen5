@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-01-07T13:32:47"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T20:42:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -500,7 +500,7 @@
 しばらく　お待ちください</language>
 	</row>
 
-	<row id="msg_common_gameover_myhome_01">
+	<row id="msg_common_gameover_myhome_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>ゲームオーバー自宅復帰時</comment>
 		<language name="JPN">おかあさん『[1:00:トレーナー名:0]！
 おかえりなさい[BE:01:ページ切り替え（クリア）]
@@ -518,7 +518,7 @@
 ……　……　……</language>
 	</row>
 
-	<row id="msg_common_gameover_myhome_02">
+	<row id="msg_common_gameover_myhome_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>ゲームオーバー自宅復帰時</comment>
 		<language name="JPN">おかあさん『あらあら！
 あなたも　ポケモンも[BE:00:ページ切り替え（行送り）]

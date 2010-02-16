@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:56:33"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T21:08:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="196" right="761" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="1434" top="223" right="2138" bottom="842" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="529"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -466,8 +466,22 @@ TVトランシーバー</attribute>
 
 	<row id="msg_r04_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
+		<language name="JPN" width="256">おとくな　けいじばん！▼
+ポケモンには　わざを　だすための
+げんきの　みなもとの　ＰＰ……▽
+すなわち　パワーポイントが　あります▼
+この　パワーポイントが　なくなると
+わざが　だせなくなります▼
+パワーポイントが　へったときも
+ポケモンセンターに　いきましょう！</language>
+		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
+ポケモンには　わざを　だすための
+元気の源の　ＰＰ……▽
+すなわち　パワーポイントが　あります▼
+この　パワーポイントが　なくなると
+わざが　だせなくなります▼
+パワーポイントが　減ったときも
+ポケモンセンターに　行きましょう！</language>
 	</row>
 
 	<flowchart-group-list>
