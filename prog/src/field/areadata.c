@@ -33,7 +33,7 @@ struct AREADATA{
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
-  AREA_ID_OUT_MAX = AREA_ID_IN01 - 4,
+  AREA_ID_OUT_MAX = AREA_ID_IN01,
 };
 
 //============================================================================================
@@ -196,6 +196,7 @@ BOOL AREADATA_HasSeasonDiff(u16 area_id)
     return FALSE;
   }
 	if (AREA_ID_OUT09 >= area_id && area_id <= AREA_ID_OUT11) return TRUE;
+  if (AREA_ID_OUT51 == area_id ) return TRUE;
 	return FALSE;
 }
 
