@@ -41,6 +41,7 @@ typedef struct
   u32       rate;
   PMS_DATA  pms;
   u32       wificup_no;
+  u32       btl_server_version;
   u8        pokeparty[0]; //後尾にポケパーティのデータがつく
 } WIFIBATTLEMATCH_ENEMYDATA;
 
