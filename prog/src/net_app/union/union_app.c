@@ -580,9 +580,10 @@ BOOL Union_App_WaitShutdown(UNION_APP_PTR uniapp)
 //==================================================================
 const MYSTATUS * Union_App_GetMystatus(UNION_APP_PTR uniapp, NetID net_id)
 {
-  GF_ASSERT_MSG(uniapp->recv_mystatus_bit & (1 << net_id), 
-    "net_id=%d, recvmystbit=%d, member_bit=%d\n", 
-    net_id, uniapp->recv_mystatus_bit, uniapp->basic_status.member_bit);
+  if((uniapp->recv_mystatus_bit & (1 << net_id)) == 0 
+      || (uniapp->basic_status.member_bit & (1 << net_id)) == 0){
+    return NULL;
+  }
   
   return uniapp->mystatus[net_id];
 }
