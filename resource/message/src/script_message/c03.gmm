@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T15:48:31"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T13:11:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="251"/>
+		<comment position="4" width="308"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1455" top="341" right="2160" bottom="961" maximized="no" rayout="Vertical2">
+	<dialog left="1289" top="151" right="1994" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,23 +292,15 @@
 	</lock>
 
 
-	<row id="msg_c03_black_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・h01r0201からc03に来て
-　一歩移動したら（どの方向でも）
-　GRIDZ=72、GRIDX=33に出現
-・主人公と向き合ってメッセージ表示
-・続けてblack_02</comment>
+	<row id="msg_c03_black_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼</language>
 	</row>
 
-	<row id="msg_c03_black_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・画面下を見ながらメッセージ表示
-　（主人公の位置を調整の可能性あり）
-・続けてblack_03</comment>
+	<row id="msg_c03_black_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">きいたよ
 ヤグルマのもり　でのこと▼
@@ -322,12 +314,8 @@
 うれしい　かぎりさ▼</language>
 	</row>
 
-	<row id="msg_c03_black_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・再度主人公と向き合ってメッセージ表示
-・以下の選択肢表示
-　ポケモンセンター→black_04
-　ポケモンジム→black_05</comment>
+	<row id="msg_c03_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">それは　さておき……▼
 シッポウシティでも
@@ -341,24 +329,22 @@
 最初に　向かうべき　なのは……？</language>
 	</row>
 
-	<row id="msg_c03_black_win01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>選択肢</comment>
+	<row id="msg_c03_black_win01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ポケモンセンター</language>
 		<language name="JPN_KANJI" width="256">ポケモンセンター</language>
 	</row>
 
-	<row id="msg_c03_black_win02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>選択肢</comment>
+	<row id="msg_c03_black_win02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ポケモンジム</language>
 		<language name="JPN_KANJI" width="256">ポケモンジム</language>
 	</row>
 
-	<row id="msg_c03_black_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・ライバル先導で連れ歩き開始
-・続けてblack_06</comment>
+	<row id="msg_c03_black_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">そう！　そのとおり
 ポケモンセンターだよね▼
@@ -374,10 +360,8 @@
 案内するから▼</language>
 	</row>
 
-	<row id="msg_c03_black_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・ライバル先導で連れ歩き開始
-・続けてblack_06</comment>
+	<row id="msg_c03_black_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ポケモンジム……？
 ずいぶんと　もえているんだね▼
@@ -397,7 +381,7 @@
 案内するから▼</language>
 	</row>
 
-	<row id="msg_c03_black_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03_black_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ライバルがGRIDX=73、GRIDZ=60に到達すると
 　主人公と向き合ってメッセージ表示
@@ -409,7 +393,7 @@
 ポケモンセンターが　あるよね？▼</language>
 	</row>
 
-	<row id="msg_c03_black_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03_black_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ライバル、画面上（中央部）向きでこのメッセージ表示
 ・続けてblack_08</comment>
@@ -420,7 +404,7 @@
 シンボルマークも　描かれている▼</language>
 	</row>
 
-	<row id="msg_c03_black_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03_black_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・再度ライバル先導で連れ歩き開始</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -430,9 +414,10 @@
 ポケモンジムも　案内するよ▼</language>
 	</row>
 
-	<row id="msg_c03_leader3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03_leader3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・ライバルがGRIDX=39、GRIDZ=74に到達すると
+・ｃ03ジムバッジ取得前のみ発生
+・c03r0301手前のposで起動（範囲はお任せ、広めで）
 　c03r0301からジムリーダーが登場
 　GRIDX=38、GRIDZ=74に移動して
 　ライバル、主人公と向き合いメッセージ表示
@@ -472,9 +457,9 @@
 
 	<row id="msg_c03_leader3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・主人公たちと向き合ってメッセージ表示
+・主人公と向き合ってメッセージ表示
 ・表示後、C03P07方面に移動
-・画面外に消えると続けてblack_09</comment>
+　画面外に消えると主人公操作可能に</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
 		<language name="JPN" width="256">もちろん　おっぱったけどね▼
@@ -485,7 +470,7 @@
 ポケモンジムで　待ってる▼</language>
 	</row>
 
-	<row id="msg_c03_black_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03_black_09" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・画面左をみたままメッセージ表示
 ・続けてblack_10
@@ -506,7 +491,7 @@
 どんな　用が　あったんだろう？▼</language>
 	</row>
 
-	<row id="msg_c03_black_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03_black_10" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ表示
 ・表示後、ライバル先導で連れ歩き開始</comment>
@@ -525,7 +510,7 @@
 さて　ポケモンジムに　向かおうか▼</language>
 	</row>
 
-	<row id="msg_c03_black_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03_black_11" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ライバルがGRIDX=22、GRIDZ=36に到達すると
 　画面上を向いてメッセージ表示
@@ -541,7 +526,7 @@
 ヒウンシティ　ポケモンジム　だよ▼</language>
 	</row>
 
-	<row id="msg_c03_black_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03_black_12" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・表示後、画面右に移動する
 ・画面外に消えると主人公操作可能に

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-20T22:10:17"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T13:12:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1346" top="245" right="2051" bottom="873" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,54 @@
 	</lock>
 
 
-	<row id="msg_c03p07_tvt_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p07_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ポケモンジムまえのpos（お任せ）を踏むと起動
+・ジムからライバルが登場してメッセージ表示
+・続けてblack_02</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『やあ
+[1:00:トレーナー名:0]▼
+アーティさんに　いどんだけれど……▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『やあ
+[1:00:トレーナー名:0]▼
+アーティさんに　挑んだけれど……▼</language>
+	</row>
+
+	<row id="msg_c03p07_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ジムのほうを見てメッセージ
+・続けてblack_03</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">さすが　ジムリーダーだね▼
+ジムバッジを　てにいれるのに
+こんなに　くろう　するなんて▼</language>
+		<language name="JPN_KANJI" width="256">さすが　ジムリーダーだね▼
+ジムバッジを　てにいれるのに
+こんなに　くろう　するなんて▼</language>
+	</row>
+
+	<row id="msg_c03p07_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・主人公と向き合ってメッセージ
+・表示後、画面手前に移動する
+　画面外に消えると主人公操作可能</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ぼくは　いちど
+ポケモンセンターに　もどる▼
+そのあとは　４ばんどうろか……
+バトルカンパニーで▽
+ポケモンたちを　きたえるよ▼
+それでは　けんとうを　いのる▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ぼくは　一度
+ポケモンセンターに　戻るよ▼
+そのあとは　４番道路か……
+バトルカンパニーで▽
+ポケモンたちを　鍛えるよ▼
+それでは　健闘を　祈る▼</language>
+	</row>
+
+	<row id="msg_c03p07_tvt_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・ジムバッジ取得後
 ・ジムの外に出るとコール音</comment>
 		<attribute name="キャラ指定">システム
