@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-17T00:29:50"/>
+	<create user="taya" host="W00146" date="2010-02-17T01:25:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3053,11 +3053,9 @@
 		<comment>合体ワザ準備</comment>
 		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]と▽
-こきゅうを　あわせている…</language>
+[1:02:ポケモンニックネーム:1]を　まっている…</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]と▽
-呼吸を　合わせている…</language>
+[1:02:ポケモンニックネーム:1]を　待っている…</language>
 	</row>
 
 	<row id="BTL_STRID_SET_CombiWazaStart">
