@@ -405,12 +405,15 @@ BOOL BTL_SICK_MakeDefaultCureMsg( WazaSick sickID, BPP_SICK_CONT oldCont, const 
 
     switch( sickID ){
     case WAZASICK_BIND:
-    case WAZASICK_YADORIGI:
       {
         WazaID  waza = BPP_SICKCONT_GetParam( oldCont );
         HANDEX_STR_AddArg( str, waza );
       }
       break;
+    case WAZASICK_YADORIGI:
+      HANDEX_STR_AddArg( str, WAZANO_YADORIGINOTANE );
+      break;
+
     }
     return TRUE;
   }
