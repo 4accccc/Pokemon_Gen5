@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-17T00:13:20"/>
+	<create user="taya" host="W00146" date="2010-02-17T00:29:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -6767,6 +6767,22 @@
 [1:02:ポケモンニックネーム:1]と▽
 呼吸を　合わせている…</language>
 	</row>
+	<row id="BTL_STRID_SET_CombiWazaReady_2Y">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+やせいの　[1:02:ポケモンニックネーム:1]と▽
+こきゅうを　あわせている…</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+野生の　[1:02:ポケモンニックネーム:1]と▽
+呼吸を　合わせている…</language>
+	</row>
+	<row id="BTL_STRID_SET_CombiWazaReady_2E">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+あいての　[1:02:ポケモンニックネーム:1]と▽
+こきゅうを　あわせている…</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+相手の　[1:02:ポケモンニックネーム:1]と▽
+呼吸を　合わせている…</language>
+	</row>
 	<row id="BTL_STRID_SET_CombiWazaReady_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]と▽
@@ -6775,12 +6791,28 @@
 [1:02:ポケモンニックネーム:1]と▽
 呼吸を　合わせている…</language>
 	</row>
+	<row id="BTL_STRID_SET_CombiWazaReady_Y2Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+やせいの　[1:02:ポケモンニックネーム:1]と▽
+こきゅうを　あわせている…</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+野生の　[1:02:ポケモンニックネーム:1]と▽
+呼吸を　合わせている…</language>
+	</row>
 	<row id="BTL_STRID_SET_CombiWazaReady_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]と▽
 こきゅうを　あわせている…</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]と▽
+呼吸を　合わせている…</language>
+	</row>
+	<row id="BTL_STRID_SET_CombiWazaReady_E2E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+あいての　[1:02:ポケモンニックネーム:1]と▽
+こきゅうを　あわせている…</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+相手の　[1:02:ポケモンニックネーム:1]と▽
 呼吸を　合わせている…</language>
 	</row>
 
