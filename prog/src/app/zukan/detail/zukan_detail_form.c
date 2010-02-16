@@ -984,6 +984,11 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
       break;
     case ZKNDTL_CMD_CHECK:
       {
+        GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+        ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( gamedata );
+        u16 monsno_curr;
+        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        ZUKANSAVE_SetShortcutMons( zukan_savedata, monsno_curr );
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
@@ -1566,7 +1571,7 @@ static void Zukan_Detail_Form_GetDiffInfo( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
   u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
 
   GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
-  ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( gamedata );
+  ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
 
   // 今だけのダミーデータ作成
   {

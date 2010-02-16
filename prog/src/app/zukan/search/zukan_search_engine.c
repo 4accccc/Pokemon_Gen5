@@ -8,7 +8,7 @@
  *  モジュール名：ZUKAN_SEARCH_ENGINE
  */
 //============================================================================
-#define DEBUG_KAWADA
+//#define DEBUG_KAWADA
 
 
 // インクルード
@@ -216,8 +216,18 @@ u16 ZUKAN_SEARCH_ENGINE_Search(
 
     GF_ASSERT_MSG( 1<=monsno && monsno<=MONSNO_END,  "ZUKAN_SEARCH_ENGINE : full_listのmonsnoが異常です。\n" );
 
+    // 見つけていなければならない
+    if( !ZUKANSAVE_GetPokeSeeFlag( zkn_sv, monsno ) )
+      BLOCK_FULL_FLAG_ON_AND_CONTINUE(i)
+
     // monsnoのポケモンの現在着目しているフォルム番号を得る
-    target_formno = 0;//GetCurrFormnoOfMonsno(zkn_sv, monsno);みたいな感じか？
+    {
+      u32 sex;
+      BOOL rare;
+      u32 form;
+      ZUKANSAVE_GetDrawData( (ZUKAN_SAVEDATA*)zkn_sv, monsno, &sex, &rare, &form, heap_id );
+      target_formno = (u16)form;
+    }
 
     // 現在着目しているフォルムと一致していなければならない
     if( formno != target_formno )
@@ -241,10 +251,6 @@ u16 ZUKAN_SEARCH_ENGINE_Search(
       if( chihou_list[monsno] == 0 )
         BLOCK_FULL_FLAG_ON_AND_CONTINUE(i)
     }
-
-    // 見つけていなければならない
-    if( !ZUKANSAVE_GetPokeSeeFlag( zkn_sv, monsno ) )
-      BLOCK_FULL_FLAG_ON_AND_CONTINUE(i)
 
     // 頭文字が一致していなければならない
     if( term->name != ZKNCOMM_LIST_SORT_NONE )

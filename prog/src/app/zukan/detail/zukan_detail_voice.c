@@ -18,6 +18,8 @@
 
 #include "system/bmp_winframe.h"
 #include "system/poke2dgra.h"
+#include "gamesystem/gamedata_def.h"
+#include "savedata/zukan_savedata.h"
 #include "print/printsys.h"
 #include "print/gf_font.h"
 #include "print/wordset.h"
@@ -615,6 +617,11 @@ static void Zukan_Detail_Voice_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* p
       break;
     case ZKNDTL_CMD_CHECK:
       {
+        GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+        ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( gamedata );
+        u16 monsno_curr;
+        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        ZUKANSAVE_SetShortcutMons( zukan_savedata, monsno_curr );
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;

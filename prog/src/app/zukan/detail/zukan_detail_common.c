@@ -13,6 +13,9 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "gamesystem/gamedata_def.h"
+#include "savedata/zukan_savedata.h"
+
 #include "zukan_detail_def.h"
 #include "zukan_detail_common.h"
 
@@ -164,19 +167,57 @@ ZUKAN_DETAIL_HEADBAR_WORK*   ZKNDTL_COMMON_GetHeadbar( ZKNDTL_COMMON_WORK* cmn )
  *  @retval          
  */
 //------------------------------------------------------------------
-u16   ZKNDTL_COMMON_GetCurrPoke( ZKNDTL_COMMON_WORK* cmn )
+u16   ZKNDTL_COMMON_GetCurrPoke( ZKNDTL_COMMON_WORK* cmn )  // monsno‚ð•Ô‚·
 {
   return cmn->list[*(cmn->no)];
 }
 void  ZKNDTL_COMMON_GoToNextPoke( ZKNDTL_COMMON_WORK* cmn )
 {
-  *(cmn->no) += 1;
-  if( *(cmn->no) >= cmn->num ) *(cmn->no) = 0;
+  u16   start_no   = *(cmn->no);
+  BOOL  see_flag   = FALSE;
+
+  ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( cmn->gamedata );
+  
+  do
+  {
+    *(cmn->no) += 1;
+    if( *(cmn->no) >= cmn->num ) *(cmn->no) = 0;
+
+    if( *(cmn->no) == start_no )
+    {
+      break;
+    }
+    else
+    {
+      u16 monsno = cmn->list[*(cmn->no)];
+      see_flag = ZUKANSAVE_GetPokeSeeFlag( zukan_savedata, monsno );
+    }
+  }
+  while( !see_flag );
 }
 void  ZKNDTL_COMMON_GoToPrevPoke( ZKNDTL_COMMON_WORK* cmn )
 {
-  if( *(cmn->no) == 0 ) *(cmn->no) = cmn->num -1;
-  else                  *(cmn->no) -= 1;
+  u16   start_no   = *(cmn->no);
+  BOOL  see_flag   = FALSE;
+
+  ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( cmn->gamedata );
+ 
+  do
+  {
+    if( *(cmn->no) == 0 ) *(cmn->no) = cmn->num -1;
+    else                  *(cmn->no) -= 1;
+    
+    if( *(cmn->no) == start_no )
+    {
+      break;
+    }
+    else
+    {
+      u16 monsno = cmn->list[*(cmn->no)];
+      see_flag = ZUKANSAVE_GetPokeSeeFlag( zukan_savedata, monsno );
+    }
+  }
+  while( !see_flag );
 }
 
 

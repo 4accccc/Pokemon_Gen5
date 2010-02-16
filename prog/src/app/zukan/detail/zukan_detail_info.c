@@ -16,6 +16,8 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "gamesystem/gamedata_def.h"
+#include "savedata/zukan_savedata.h"
 #include "sound/pm_sndsys.h"
 
 #include "../info/zukan_info.h"
@@ -541,6 +543,11 @@ static void Zukan_Detail_Info_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
       break;
     case ZKNDTL_CMD_CHECK:
       {
+        GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+        ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( gamedata );
+        u16 monsno_curr;
+        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        ZUKANSAVE_SetShortcutMons( zukan_savedata, monsno_curr );
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;

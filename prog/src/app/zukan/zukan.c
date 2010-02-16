@@ -94,12 +94,12 @@ static const pZUKAN_FUNC MainSeq[] = {
 	MainSeq_CallDetail,	// 情報呼び出し
 	MainSeq_EndDetail,	// 情報終了後
 
-	NULL,	// 分布呼び出し
-	NULL,	// 分布終了後
-	NULL,	// 鳴き声呼び出し
-	NULL,	// 鳴き声終了後
-	NULL,	// 姿呼び出し
-	NULL,	// 姿終了後
+	MainSeq_CallDetail,	// 分布呼び出し
+	MainSeq_EndDetail,	// 分布終了後
+	MainSeq_CallDetail,	// 鳴き声呼び出し
+	MainSeq_EndDetail,	// 鳴き声終了後
+	MainSeq_CallDetail,	// 姿呼び出し
+	MainSeq_EndDetail,	// 姿終了後
 
 	MainSeq_CallSearch,		// 検索呼び出し
 	MainSeq_EndSearch,		// 検索終了後
@@ -343,30 +343,55 @@ static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )
  * @return	次のメインシーケンス
  */
 //--------------------------------------------------------------------------------------------
-#define test_num (7)
-static u16 test_list[test_num] = { 1, 2, 3, 4, 5, 151, 201 };
 static int MainSeq_CallDetail( ZUKAN_MAIN_WORK * wk )
 {
-  ZUKAN_DETAIL_PARAM* detail;
+  ZUKAN_DETAIL_PARAM*   detail;
+
+  GAMEDATA*             gamedata       = wk->prm->gamedata;
+  ZUKAN_SAVEDATA*       zukan_savedata = GAMEDATA_GetZukanSave( gamedata );
+  u16                   monsno         = ZUKANSAVE_GetDefaultMons( zukan_savedata );
+
 	detail = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKAN_DETAIL_PARAM) );
   
   detail->gamedata = wk->prm->gamedata;
   detail->type     = ZUKAN_DETAIL_TYPE_INFO;
-  detail->list     = test_list;
-  detail->num      = test_num;
+  detail->list     = wk->list;
+  detail->num      = wk->listMax;
   detail->no       = 0;
+  {
+    u16 i;
+    for( i=0; i<detail->num; i++ )
+    {
+      if( detail->list[i] == monsno )
+      {
+        detail->no = i;
+        break;
+      }
+    }
+  }
 
 	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_detail), &ZUKAN_DETAIL_ProcData, detail );
+
   wk->work = detail;	
   return SEQ_INFO_END;
 }
 
 static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
 {
-	ZUKAN_DETAIL_PARAM* detail;
-	int	ret;
+	ZUKAN_DETAIL_PARAM*   detail;
+
+  GAMEDATA*             gamedata       = wk->prm->gamedata;
+  ZUKAN_SAVEDATA*       zukan_savedata = GAMEDATA_GetZukanSave( gamedata );
+  u16                   monsno;
+
+	int	                  ret;
 
 	detail = wk->work;
+
+  {
+    monsno = detail->list[detail->no];
+    ZUKANSAVE_SetDefaultMons( zukan_savedata, monsno );
+  }
 
   switch( detail->ret )
   {
