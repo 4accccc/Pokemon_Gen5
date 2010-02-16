@@ -10,6 +10,20 @@
 #
 ###############################################################
 
+COL_NUMBER  = 0
+COL_SYMBOL = 1
+COL_ROOM_ID = 2
+COL_ROOM_X = 3
+COL_ROOM_Z = 4
+COL_WARPFLAG = 5
+COL_FLD_ID = 6
+COL_FLD_X = 7
+COL_FLD_Z = 8
+COL_ESC_ID = 9
+COL_ESC_X = 10
+COL_ESC_Z = 11
+COL_AUTO_FLG = 12
+COL_FLGNAME = 13
 ###############################################################
 #
 #
@@ -86,9 +100,13 @@ class WarpDataFile < OutputFile
 	end
 
 	def putLine	room_id, room_x, room_z, escape, fld_id, fld_x, fld_z, exit_id,exit_x,exit_z,arrive, arrive_id
-		a_id = "SYS_FLAG_ARRIVE_" + arrive_id.upcase
+    if arrive_id =~ /^SYS_FLAG_ARRIVE_/ then
+      #a_id = "SYS_FLAG_ARRIVE_" + arrive_id.upcase
+    else
+      raise Exception, "#{arrive_id}:ƒtƒ‰ƒO–¼‚Ì–½–¼‹K‘¥‚Å‚È‚¢"
+    end
 		puts "\t{"
-		printf "\t\t%s,\n", a_id
+		printf "\t\t%s,\n", arrive_id
 		printf "\t\t%-5s,", if escape == true then "TRUE" else "FALSE" end
 		printf "%-5s,\n", if arrive == true then "TRUE" else "FALSE" end
 		printf "\t\t%-20s,%4d,%4d,\n", "ZONE_ID_" + room_id.upcase, room_x, room_z
@@ -145,8 +163,13 @@ def convert	infile
 	while line = infile.gets
 		if line =~/^[1-9]/ then
 			cl = line.split
-			datafile.putLine cl[1],cl[2],cl[3],cl[4]=="›", cl[5],cl[6],cl[7], cl[8],cl[9],cl[10], cl[11]=="›", cl[12]
-			headerfile.putLine	cl[12],cl[0]
+			datafile.putLine( cl[COL_ROOM_ID],cl[COL_ROOM_X],cl[COL_ROOM_Z],
+                       cl[COL_WARPFLAG]=="›",
+                       cl[COL_FLD_ID],cl[COL_FLD_X],cl[COL_FLD_Z],
+                       cl[COL_ESC_ID],cl[COL_ESC_X],cl[COL_ESC_Z],
+                       cl[COL_AUTO_FLG]=="›",
+                       cl[COL_FLGNAME] )
+			headerfile.putLine(	cl[COL_SYMBOL],cl[COL_NUMBER] )
 		else
 			break
 		end
