@@ -56,6 +56,8 @@ static BOOL UnionCharaFunc(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara);
 static BOOL BeaconPC_UpdateLife(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc);
 
 static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq);
+static BOOL UnicharaSeq_EnterUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq);
+static BOOL UnicharaSeq_LeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq);
 
 
 //==============================================================================
@@ -121,12 +123,12 @@ static const UNICHARA_FUNC_DATA UnicharaFuncTbl[] = {
   },
   {//BPC_EVENT_STATUS_ENTER
     NULL,
-    NULL,
+    UnicharaSeq_EnterUpdate,
     NULL,
   },
   {//BPC_EVENT_STATUS_LEAVE
     NULL,
-    NULL,
+    UnicharaSeq_LeaveUpdate,
     NULL,
   },
 };
@@ -250,6 +252,26 @@ u16 UNION_CHARA_GetCharaIndex_to_ParentNo(u16 chara_index)
 
 //==================================================================
 /**
+ * CharacterIndexが通信プレイヤーかNPCかを判定する
+ *
+ * @param   chara_index		
+ *
+ * @retval  BOOL		TRUE:通信プレイヤー　　FALSE:NPC
+ */
+//==================================================================
+BOOL UNION_CHARA_CheckCommPlayer(u16 chara_index)
+{
+  u16 child_chara_index;
+  
+  child_chara_index = (chara_index & 0x00ff);
+  if(child_chara_index < UNION_CHARINDEX_OFFSET){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//==================================================================
+/**
  * ユニオンキャラクタのMMDL*を取得する
  *
  * @param   unisys		
@@ -281,10 +303,11 @@ static MMDL * UNION_CHARA_GetMmdl(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc, 
  * @param   pc		    
  */
 //==================================================================
-static UNION_CHARACTER * UNION_CHARA_AddChar(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc, UNION_MEMBER *member, int child_no)
+static UNION_CHARACTER * UNION_CHARA_AddChar(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc, UNION_MEMBER *member, int child_no, BOOL enable)
 {
   int i;
   UNION_CHARACTER *unichara;
+  MMDL *mmdl;
   
   unichara = unisys->character;
   for(i = 0; i < UNION_CHARACTER_MAX; i++){
@@ -295,9 +318,11 @@ static UNION_CHARACTER * UNION_CHARA_AddChar(UNION_SYSTEM_PTR unisys, UNION_BEAC
       unichara->child_no = child_no;
       unichara->occ = TRUE;
       
-      UNION_CHAR_AddOBJ(unisys, unisys->uniparent->game_data, 
+      mmdl = UNION_CHAR_AddOBJ(unisys, unisys->uniparent->game_data, 
         member->trainer_view, UNION_CHARA_GetCharaIndex(pc, unichara));
-      
+      if(enable == FALSE){
+        MMDL_SetStatusBitVanish( mmdl, TRUE );
+      }
       return unichara;
     }
     unichara++;
@@ -340,8 +365,9 @@ static void UNION_CHARA_CheckOBJ_Entry(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC 
   for(i = 0; i < UNION_CONNECT_PLAYER_NUM; i++){
     unichara = pc->chara_group.character[i];
     if(unichara == NULL && beacon->party.member[i].occ == TRUE){
-      pc->chara_group.character[i] = UNION_CHARA_AddChar(unisys, pc, &beacon->party.member[i], i);
-      UNION_CHAR_EventReq(pc->chara_group.character[i], BPC_EVENT_STATUS_ENTER);
+      pc->chara_group.character[i] = UNION_CHARA_AddChar(unisys, pc, &beacon->party.member[i], i, FALSE);
+      pc->chara_group.character[i]->event_status = BPC_EVENT_STATUS_ENTER;
+      UNION_CHAR_EventReq(pc->chara_group.character[i], BPC_EVENT_STATUS_NORMAL);
     }
   }
 }
@@ -587,3 +613,77 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
   return FALSE;
 }
 
+//==================================================================
+/**
+ * 入室：更新
+ *
+ * @param   unisys		
+ * @param   bpc		
+ * @param   mmdl		
+ * @param   seq		
+ *
+ * @retval  static BOOL		
+ */
+//==================================================================
+static BOOL UnicharaSeq_EnterUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  UNION_BEACON *beacon;
+  MMDL *mmdl;
+
+  mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
+  
+  switch(*seq){
+  case 0:
+    if(MMDL_CheckPossibleAcmd(mmdl) == TRUE){
+      MMDL_SetAcmd(mmdl, AC_WARP_DOWN);
+      MMDL_SetStatusBitVanish( mmdl, FALSE );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if(MMDL_CheckEndAcmd(mmdl) == TRUE){
+      MMDL_EndAcmd(mmdl);
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 退室：更新
+ *
+ * @param   unisys		
+ * @param   bpc		
+ * @param   mmdl		
+ * @param   seq		
+ *
+ * @retval  static BOOL		
+ */
+//==================================================================
+static BOOL UnicharaSeq_LeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  UNION_BEACON *beacon;
+  MMDL *mmdl;
+
+  mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
+  
+  switch(*seq){
+  case 0:
+    if(MMDL_CheckPossibleAcmd(mmdl) == TRUE){
+      MMDL_SetAcmd(mmdl, AC_WARP_UP);
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if(MMDL_CheckEndAcmd(mmdl) == TRUE){
+      MMDL_EndAcmd(mmdl);
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}

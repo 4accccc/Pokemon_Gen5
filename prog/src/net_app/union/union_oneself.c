@@ -766,8 +766,11 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
     if(target_pc == NULL){
       return FALSE;
     }
-    
     obj_id = MMDL_GetOBJID(target_pc);
+    if(UNION_CHARA_CheckCommPlayer(obj_id) == FALSE){
+      return FALSE;
+    }
+    
     situ->mycomm.talk_obj_id = obj_id;
     buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(obj_id);
     OS_TPrintf("ターゲット発見! buf_no = %d, gx=%d, gz=%d\n", buf_no, check_gx, check_gz);
