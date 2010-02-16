@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-10T18:51:02"/>
+	<create user="taya" host="W00146" date="2010-02-15T23:41:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -333,7 +333,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="831"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1146,6 +1146,20 @@
 まきびしが　散らばった！</language>
 	</row>
 
+	<row id="BTL_STRID_STD_MakibisiOff">
+		<language name="JPN" width="216">みかたの　あしもとの
+まきびしが　きえさった！</language>
+		<language name="JPN_KANJI" width="216">味方の　足下の
+まきびしが　消え去った！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_MakibisiOff_E">
+		<language name="JPN" width="216">あいての　あしもとの
+まきびしが　きえさった！</language>
+		<language name="JPN_KANJI" width="216">相手の　足下の
+まきびしが　消え去った！</language>
+	</row>
+
 	<row id="BTL_STRID_STD_Dokubisi">
 		<comment>どくびし</comment>
 		<language name="JPN" width="216">みかたの　あしもとに
@@ -1161,6 +1175,20 @@
 どくびしが　散らばった！</language>
 	</row>
 
+	<row id="BTL_STRID_STD_DokubisiOff">
+		<language name="JPN" width="216">みかたの　あしもとの
+どくびしが　きえさった！</language>
+		<language name="JPN_KANJI" width="216">味方の　足下の
+どくびしが　消え去った！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_DokubisiOff_E">
+		<language name="JPN" width="216">あいての　あしもとの
+どくびしが　きえさった！</language>
+		<language name="JPN_KANJI" width="216">相手の　足下の
+どくびしが　消え去った！</language>
+	</row>
+
 	<row id="BTL_STRID_STD_StealthRock">
 		<comment>ステルスロック</comment>
 		<language name="JPN" width="216">みかたの　まわりに
@@ -1174,6 +1202,20 @@
 とがった　いわが　ただよいはじめた！</language>
 		<language name="JPN_KANJI" width="216">相手の　周りに
 とがった岩が　ただよい始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_StealthRockOff">
+		<language name="JPN" width="216">みかたの　まわりの
+ステルスロックが　きえさった！</language>
+		<language name="JPN_KANJI" width="216">味方の　周りの
+ステルスロックが　消え去った！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_StealthRockOff_E">
+		<language name="JPN" width="216">あいての　まわりの
+ステルスロックが　きえさった！</language>
+		<language name="JPN_KANJI" width="216">相手の　周りの
+ステルスロックが　消え去った！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_WideGuard">
