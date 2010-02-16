@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-02-14T20:34:50"/>
+	<create user="saitou" host="W00158" date="2010-02-16T11:06:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -477,6 +477,11 @@
 	<row id="DEBUG_FIELD_STR05">
 		<language name="JPN" width="80">マップせんい</language>
 		<language name="JPN_KANJI" width="80">マップせん移</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR05_b">
+		<language name="JPN" width="80">マップジャンプ</language>
+		<language name="JPN_KANJI" width="80">マップジャンプ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR06">
