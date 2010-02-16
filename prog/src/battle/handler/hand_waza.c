@@ -6857,9 +6857,8 @@ static void handler_KousokuSpin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BTL_HANDEX_PARAM_CURE_SICK* cure_param;
-    BTL_HANDEX_PARAM_SIDEEFF_REMOVE* side_param;
-    BTL_HANDEX_PARAM_MESSAGE* msg_param;
     BtlSide  side;
+    u8  fMakibisi, fDokubisi, fStealth;
 
     if( BPP_CheckSick(bpp, WAZASICK_YADORIGI) ){
       cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
@@ -6875,30 +6874,27 @@ static void handler_KousokuSpin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     }
 
     side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
-    if( BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_MAKIBISI) )
+    fMakibisi = BTL_HANDER_SIDE_IsExist( side, BTL_SIDEEFF_MAKIBISI );
+    fDokubisi = BTL_HANDER_SIDE_IsExist( side, BTL_SIDEEFF_DOKUBISI );
+    fStealth = BTL_HANDER_SIDE_IsExist( side, BTL_SIDEEFF_STEALTHROCK );
+
+    if( fMakibisi || fDokubisi || fStealth )
     {
+      BTL_HANDEX_PARAM_SIDEEFF_REMOVE* side_param;
+
       side_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
       side_param->side = side;
       BTL_CALC_BITFLG_Construction( side_param->flags, sizeof(side_param->flags) );
-      BTL_CALC_BITFLG_Set( side_param->flags, BTL_SIDEEFF_MAKIBISI );
 
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_KousokuSpin );
-      HANDEX_STR_AddArg( &msg_param->str, pokeID );
-      HANDEX_STR_AddArg( &msg_param->str, WAZANO_MAKIBISI );
-      BTL_Printf("‚±‚¤‚»‚­ƒXƒsƒ“‚Åside[%d]‚Ì‚Ü‚«‚Ñ‚µœ‹Ž‚µ‚Ü‚·\n", side);
-    }
-    if( BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_DOKUBISI) )
-    {
-      side_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
-      side_param->side = side;
-      BTL_CALC_BITFLG_Construction( side_param->flags, sizeof(side_param->flags) );
-      BTL_CALC_BITFLG_Set( side_param->flags, BTL_SIDEEFF_DOKUBISI );
-
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_KousokuSpin );
-      HANDEX_STR_AddArg( &msg_param->str, pokeID );
-      HANDEX_STR_AddArg( &msg_param->str, WAZANO_DOKUBISI );
+      if( fMakibisi ){
+        BTL_CALC_BITFLG_Set( side_param->flags, BTL_SIDEEFF_MAKIBISI );
+      }
+      if( fDokubisi ){
+        BTL_CALC_BITFLG_Set( side_param->flags, BTL_SIDEEFF_DOKUBISI );
+      }
+      if( fStealth ){
+        BTL_CALC_BITFLG_Set( side_param->flags, BTL_SIDEEFF_STEALTHROCK );
+      }
     }
   }
 }

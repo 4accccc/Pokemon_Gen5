@@ -220,7 +220,8 @@ static inline void BTL_CALC_BITFLG_Construction( u8* flags, u8 bufsize )
 static inline void BTL_CALC_BITFLG_Set( u8* flags, u32 index )
 {
   u8 byte = 1 + index / 8;
-  u8 bit = index & 8;
+  u8 bit = index % 8;
+
   if( byte < flags[0] ){
     flags[ byte ] |= (1 << bit);
   }
@@ -228,7 +229,8 @@ static inline void BTL_CALC_BITFLG_Set( u8* flags, u32 index )
 static inline BOOL BTL_CALC_BITFLG_Check( const u8* flags, u32 index )
 {
   u8 byte = 1 + index / 8;
-  u8 bit = index & 8;
+  u8 bit = index % 8;
+
   if( byte < flags[0] ){
     return (flags[ byte ] & (1 << bit)) != 0;
   }
