@@ -1555,7 +1555,7 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
   MAPCHG_SetUpWfbc( gamedata, &loc );
 
   // 天気更新
-  PM_WEATHER_UpdateZoneChangeWeatherNo( gamedata, loc.zone_id );
+  PM_WEATHER_UpdateZoneChangeWeatherNo( gsys, loc.zone_id );
 }
 
 //--------------------------------------------------------------

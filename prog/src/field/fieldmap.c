@@ -1475,7 +1475,7 @@ FIELD_WEATHER * FIELDMAP_GetFieldWeather( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 u16 FIELDMAP_GetZoneWeatherID( FIELDMAP_WORK *fieldWork, u16 zone_id )
 {
-	return PM_WEATHER_GetZoneWeatherNo( fieldWork->gamedata, zone_id );
+	return PM_WEATHER_GetZoneWeatherNo( fieldWork->gsys, zone_id );
 }
 
 
@@ -2615,7 +2615,7 @@ static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 	u16 w_no;
 	FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( fieldWork );
 
-  PM_WEATHER_UpdateZoneChangeWeatherNo( fieldWork->gamedata, zone_id );
+  PM_WEATHER_UpdateZoneChangeWeatherNo( fieldWork->gsys, zone_id );
 
   w_no = GAMEDATA_GetWeatherNo( fieldWork->gamedata );
 

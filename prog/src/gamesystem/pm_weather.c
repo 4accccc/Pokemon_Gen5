@@ -21,6 +21,8 @@
 #include "field/palace_weather.cdat"
 #include "field/zonedata.h"
 
+#include "field/field_comm/intrude_work.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -38,20 +40,21 @@
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-static u16 PM_WEATHER_GetPalaceWeather( GAMEDATA* p_data, int zone_id );
+static u16 PM_WEATHER_GetPalaceWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
 
 //----------------------------------------------------------------------------
 /**
  *	@brief  現在の指定ZONEの天気を取得する
  *
- *	@param	p_data データ
+ *	@param	p_gamesystem データ
  *	@param	zone_id ゾーンID
  *
  *	@return ゾーンの天気
  */
 //-----------------------------------------------------------------------------
-u8 PM_WEATHER_GetZoneWeatherNo( GAMEDATA* p_data, int zone_id )
+u8 PM_WEATHER_GetZoneWeatherNo( GAMESYS_WORK* p_gamesystem, int zone_id )
 {
+  GAMEDATA* p_data  = GAMESYSTEM_GetGameData( p_gamesystem );
   CALENDER* calender = GAMEDATA_GetCalender( p_data );
   u16       weather  = MP_CheckMovePokeWeather( p_data, zone_id );
 
@@ -62,7 +65,7 @@ u8 PM_WEATHER_GetZoneWeatherNo( GAMEDATA* p_data, int zone_id )
   }
 
   // パレスチェック
-  weather = PM_WEATHER_GetPalaceWeather( p_data, zone_id );
+  weather = PM_WEATHER_GetPalaceWeather( p_gamesystem, p_data, zone_id );
   if( weather != WEATHER_NO_NONE )
   {
     return weather;
@@ -79,12 +82,13 @@ u8 PM_WEATHER_GetZoneWeatherNo( GAMEDATA* p_data, int zone_id )
 /**
  *	@brief  ゾーンチェンジでの天気アップデート
  *
- *	@param	p_data ゲームデータ
+ *	@param	p_gamesystem ゲームデータ
  */
 //-----------------------------------------------------------------------------
-void PM_WEATHER_UpdateZoneChangeWeatherNo( GAMEDATA* p_data, int zone_id )
+void PM_WEATHER_UpdateZoneChangeWeatherNo( GAMESYS_WORK* p_gamesystem, int zone_id )
 {
-  u16       weather  = PM_WEATHER_GetZoneWeatherNo( p_data, zone_id );
+  GAMEDATA* p_data  = GAMESYSTEM_GetGameData( p_gamesystem );
+  u16       weather  = PM_WEATHER_GetZoneWeatherNo( p_gamesystem, zone_id );
   GAMEDATA_SetWeatherNo( p_data, weather );
 }
 
@@ -126,9 +130,10 @@ void PM_WEATHER_UpdateSaveLoadWeatherNo( GAMEDATA* p_data, int zone_id )
  *	@return 天気
  */
 //-----------------------------------------------------------------------------
-static u16 PM_WEATHER_GetPalaceWeather( GAMEDATA* p_data, int zone_id )
+static u16 PM_WEATHER_GetPalaceWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id )
 {
   EVENTWORK * p_evwork = GAMEDATA_GetEventWork( p_data );
+  GAME_COMM_SYS_PTR p_gamecomm = GAMESYSTEM_GetGameCommSysPtr( p_gamesystem );
   int i;
   
   // パレスなら、パレス用
@@ -140,9 +145,13 @@ static u16 PM_WEATHER_GetPalaceWeather( GAMEDATA* p_data, int zone_id )
        {
          if( EVENTWORK_CheckEventFlag( p_evwork, sc_PALACE_WEATHER_DATA[i].sys_flag ) == FALSE )
          {
-           // 霧決定
-           // @TODO ROMVersionをみて振り分ける必要がある。
-           return WEATHER_NO_PALACE_WHITE_MIST;
+           if( p_gamecomm ){
+             if( Intrude_GetRomVersion( p_gamecomm ) == VERSION_WHITE ){
+                return WEATHER_NO_PALACE_WHITE_MIST;
+             }else{
+                return WEATHER_NO_PALACE_BLACK_MIST;
+             }
+           }
          }
        }
      }

@@ -16,7 +16,7 @@
 extern "C"{
 #endif
 
-#include "game_data.h"
+#include "gamesystem.h"
 
 
 //-----------------------------------------------------------------------------
@@ -30,10 +30,10 @@ extern void GAMEDATA_SetWeatherNo( GAMEDATA* p_data, u8 weather_no );
 
 
 // 今の指定ZONEの天気を取得する
-extern u8 PM_WEATHER_GetZoneWeatherNo( GAMEDATA* p_data, int zone_id );
+extern u8 PM_WEATHER_GetZoneWeatherNo( GAMESYS_WORK* p_gamesystem, int zone_id );
 
 // ZoneChangeでの天気更新処理
-extern void PM_WEATHER_UpdateZoneChangeWeatherNo( GAMEDATA* p_data, int zone_id );
+extern void PM_WEATHER_UpdateZoneChangeWeatherNo( GAMESYS_WORK* p_gamesystem, int zone_id );
 
 // セーブ復帰での天気更新処理
 extern void PM_WEATHER_UpdateSaveLoadWeatherNo( GAMEDATA* p_data, int zone_id );

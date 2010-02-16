@@ -64,6 +64,8 @@ void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
 	PP_Setup(pp, MONSNO_TIRAAMHI, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+  PP_SetWazaPos( pp , WAZANO_TEREPOOTO , 0 );
+  PP_SetWazaPos( pp , WAZANO_HURASSYU, 1 );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 
