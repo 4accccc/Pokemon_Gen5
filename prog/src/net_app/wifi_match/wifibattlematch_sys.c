@@ -25,6 +25,7 @@
 #include "field/event_battle_call.h"
 #include "net_app/wifi_login.h"
 #include "title/title.h"
+#include "battle/btl_net.h"
 
 //セーブデータ
 #include "savedata/battle_box_save.h"
@@ -92,19 +93,19 @@ typedef struct {
 //=====================================
 typedef struct
 { 
-  BOOL                  is_create_gamedata;
-  WIFIBATTLEMATCH_PARAM param;
-  SUBPROC_WORK          subproc;
+  BOOL                        is_create_gamedata;
+  WIFIBATTLEMATCH_PARAM       param;
+  SUBPROC_WORK                subproc;
 
   //コアモード
   WIFIBATTLEMATCH_CORE_MODE     core_mode;
   WIFIBATTLEMATCH_CORE_RETMODE  core_ret;
 
   //バトルの結果
-  BtlResult                 btl_result;
-  BtlRule                   btl_rule;
+  BtlResult                   btl_result;
+  BtlRule                     btl_rule;
 
-  POKEPARTY                 *p_btl_party;
+  POKEPARTY                   *p_btl_party;
 
   u32 sub_seq;
 
@@ -214,7 +215,6 @@ static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
   //SUBPROCID_BATTLE,
   { 
 	  NO_OVERLAY_ID,
-    //&BtlProcData,
     &CommBattleCommProcData,
     BATTLE_AllocParam,
     BATTLE_FreeParam,
@@ -297,6 +297,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
     WIFIBATTLEMATCH_ENEMYDATA *p_player;
 
     p_player  = p_wk->p_player_data;
+
+    p_player->btl_server_version  = BTL_NET_SERVER_VERSION;
     {
       MYSTATUS  *p_my;
       p_my  = GAMEDATA_GetMyStatus(p_wk->param.p_game_data);
@@ -822,19 +824,43 @@ static BOOL POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 //-----------------------------------------------------------------------------
 static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
 { 
-  EVENT_BATTLE_CALL_WORK  *p_param;
+  COMM_BATTLE_CALL_PROC_PARAM  *p_param;
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
-
-  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
   
-  p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(EVENT_BATTLE_CALL_WORK) );
-	GFL_STD_MemClear( p_param, sizeof(EVENT_BATTLE_CALL_WORK) );
+  //デモバトル接続ワーク
+  p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(COMM_BATTLE_CALL_PROC_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(COMM_BATTLE_CALL_PROC_PARAM) );
+  p_param->gdata  = p_wk->param.p_game_data;
 
+  //デモパラメータ
+  p_param->demo_prm = GFL_HEAP_AllocMemory( heapID, sizeof(COMM_BTL_DEMO_PARAM) );
+	GFL_STD_MemClear( p_param->demo_prm, sizeof(COMM_BTL_DEMO_PARAM) );
 
-  //-----バトル設定パラメータ-----
+  //デモパラメータへの設定
+  //自分
+  {
+    COMM_BTL_DEMO_TRAINER_DATA *p_tr;
+    p_tr  = &p_param->demo_prm->trainer_data[ COMM_BTL_DEMO_TRDATA_A ];
+    p_tr->mystatus  = (MYSTATUS*)p_wk->p_player_data->mystatus;
+    p_tr->party     = p_wk->p_btl_party;
+    p_tr->server_version  = p_wk->p_player_data->btl_server_version;
+  }
+  //相手
+  { 
+    COMM_BTL_DEMO_TRAINER_DATA *p_tr;
+    p_tr  = &p_param->demo_prm->trainer_data[ COMM_BTL_DEMO_TRDATA_B ];
+    p_tr->mystatus  = (MYSTATUS*)p_wk->p_enemy_data->mystatus;
+    p_tr->party     = p_wk->p_btl_party;
+    p_tr->server_version  = p_wk->p_enemy_data->btl_server_version;
+  }
+
+  //バトル設定パラメータ
   p_param->btl_setup_prm	= GFL_HEAP_AllocMemory( heapID, sizeof(BATTLE_SETUP_PARAM) );
 	GFL_STD_MemClear( p_param->btl_setup_prm, sizeof(BATTLE_SETUP_PARAM) );
-		
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+
+	//ランダムバトルのバトル設定
   if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_RANDOM )
   { 
     switch( p_wk->param.btl_rule )
@@ -867,16 +893,14 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
       break;
     }
   }
+  //WiFI大会のバトル設定
   else if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_WIFI )
   { 
     SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
     REGULATION* p_reg         = SaveData_GetRegulation( p_sv,0 );
 
-    //@todo
     switch( Regulation_GetParam( p_reg, REGULATION_BATTLETYPE ) )
     {
-    default:
-      //@todo
     case REGULATION_BATTLE_SINGLE:    ///< シングル
       BTL_SETUP_Single_Comm( p_param->btl_setup_prm, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
@@ -896,6 +920,13 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
       BTL_SETUP_Rotation_Comm( p_param->btl_setup_prm, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
       break;
+
+//    case REGULATION_BATTLE_SH:    ///< シューター
+      default:
+      //@todo
+      BTL_SETUP_Triple_Comm( p_param->btl_setup_prm, p_wk->param.p_game_data, 
+          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
+      break;
     }
   }
   else
@@ -903,7 +934,10 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
     GF_ASSERT(0);
   }
 
+
   BATTLE_PARAM_SetPokeParty( p_param->btl_setup_prm, p_wk->p_btl_party, BTL_CLIENT_PLAYER ); 
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
   //デモパラメータ
 	return p_param;
@@ -920,25 +954,23 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
 static BOOL BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
-  BATTLE_SETUP_PARAM  *p_param  = p_param_adrs;
+  COMM_BATTLE_CALL_PROC_PARAM  *p_param  = p_param_adrs;
+  BATTLE_SETUP_PARAM  *p_btl_param  = p_param->btl_setup_prm;
 
   //受け取り
-  p_wk->btl_result  = p_param->result;
-  p_wk->btl_rule  = p_param->rule;
-  //@todo
-
+  p_wk->btl_result  = p_btl_param->result;
+  p_wk->btl_rule  = p_btl_param->rule;
   OS_FPrintf( 3, "バトル結果 %d \n", p_wk->btl_result);
 
   //破棄
-  BATTLE_PARAM_Release( p_param );
+  BATTLE_PARAM_Release( p_param->btl_setup_prm );
+	GFL_HEAP_FreeMemory( p_param->btl_setup_prm );
+	GFL_HEAP_FreeMemory( p_param->demo_prm );
 	GFL_HEAP_FreeMemory( p_param );
 
   //次のPROC
   p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE;
   SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
-
-
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
   return TRUE;
 }
@@ -960,6 +992,8 @@ static void *LOGIN_AllocParam( HEAPID heapID, void *p_wk_adrs )
 	GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_PARAM) );
 
   p_param->gamedata = p_wk->param.p_game_data;
+  p_param->bg       = WIFILOGIN_BG_NORMAL;
+  p_param->display  = WIFILOGIN_DISPLAY_UP;
 
   return p_param;
 }

@@ -41,6 +41,7 @@ typedef struct
   WIFIBATTLEMATCH_MODE mode;
   WIFIBATTLEMATCH_POKE  poke;
   WIFIBATTLEMATCH_BTLRULE btl_rule;
+  BOOL              is_debug;
 } EVENT_WIFIBTLMATCH_WORK;
 
 
@@ -64,6 +65,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
 {
   enum{
     _FIELD_COMM,
+    _FIELD_FADEIN,
     _FIELD_CLOSE,
     //_CALL_WIFILOGIN,
     //_WAIT_WIFILOGIN,
@@ -71,6 +73,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
     _WAIT_WIFIBTLMATCH,
     _WAIT_NET_END,
     _FIELD_OPEN,
+    _FIELD_FADEOUT,
     _FIELD_END
   };
 
@@ -84,6 +87,14 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
     {
       (*seq)++;
     }
+    break;
+  case _FIELD_FADEIN:
+    if(dbw->is_debug)
+    { 
+      GMEVENT_CallEvent( event,
+        EVENT_FieldFadeOut_Black(gsys,dbw->fieldmap,FIELD_FADE_WAIT) );
+    }
+    (*seq)++;
     break;
   case _FIELD_CLOSE:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
@@ -140,6 +151,14 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
+  case _FIELD_FADEOUT:
+    if(dbw->is_debug)
+    { 
+      GMEVENT_CallEvent( event,
+        EVENT_FieldFadeIn_Black(gsys,dbw->fieldmap,FIELD_FADE_WAIT) );
+    }
+    (*seq)++;
+    break;
   case _FIELD_END:
     return GMEVENT_RES_FINISH;
   default:
@@ -170,9 +189,17 @@ GMEVENT* EVENT_WifiBattleMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, W
     dbw = GMEVENT_GetEventWork(event);
     dbw->gsys = gsys;
     dbw->fieldmap = fieldmap;
-    dbw->mode   = mode;
+    dbw->mode   = mode & 0xFFFF;
     dbw->poke   = poke;
     dbw->btl_rule   = btl_rule;
+    dbw->is_debug = FALSE;
+
+#ifdef PM_DEBUG
+    if( mode & DEBUG_MODE_BIT )
+    { 
+      dbw->is_debug = TRUE;
+    }
+#endif  //PM_DEBUG
   }
 
   return event;

@@ -369,7 +369,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Exit( GFL_PROC *p_proc, int *p_s
   WIFIBATTLEMATCH_VIEW_UnLoadResource( p_wk->p_res );
 
 	//グラフィック破棄
-	WIFIBATTLEMATCH_GRAPHIC_Exit( p_wk->p_graphic );
+  WIFIBATTLEMATCH_GRAPHIC_Exit( p_wk->p_graphic );
 
 	//プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );

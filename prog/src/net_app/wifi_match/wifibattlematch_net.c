@@ -133,6 +133,9 @@ typedef enum
 //マッチメイクキー
 typedef enum
 {
+  MATCHMAKE_KEY_BTL_MODE,
+  MATCHMAKE_KEY_BTL_RULE,
+  MATCHMAKE_KEY_DEBUG,
   MATCHMAKE_KEY_RATE,
   MATCHMAKE_KEY_CUPNO,
   MATCHMAKE_KEY_DISCONNECT,
@@ -396,6 +399,9 @@ static const int sc_field_type[]  =
 //=====================================
 static const char *sc_matchmake_key_str[ MATCHMAKE_KEY_MAX ] =
 { 
+  "mod",
+  "rul",
+  "deb",
   "rat",
   "cup",
   "dis",
@@ -666,10 +672,14 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
     btl_mode  += is_rnd_rate;
   }
 
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL_MODE, btl_mode );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL_RULE, btl_rule );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DEBUG, MATCHINGKEY );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_RATE, cp_data->rate );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DISCONNECT, cp_data->disconnect );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_CUPNO, cp_data->cup_no );
-  STD_TSPrintf( p_wk->filter, "wbm=%d And mod=%d And rul=%d And deb=%d", TRUE, btl_mode, btl_rule, MATCHINGKEY );
+  STD_TSPrintf( p_wk->filter, "mod=%d And rul=%d And deb=%d", btl_mode, btl_rule, MATCHINGKEY );
+  OS_TFPrintf( 3, "%s\n", p_wk->filter );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
 
   //接続評価コールバック指定
@@ -691,6 +701,8 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
       p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_FREE_Eval_Callback;
     }
     break;
+  default:
+    GF_ASSERT(0);
   }
 }
 
@@ -703,7 +715,13 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
 //-----------------------------------------------------------------------------
 void WIFIBATTLEMATCH_NET_StartMatchMakeDebug( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
-  STD_TSPrintf( p_wk->filter, "wbm=%d And mod=%d And rul=%d And deb=%d", 0, 0, 0, 0xF );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL_MODE, 0 );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL_RULE, 0 );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DEBUG, MATCHINGKEY );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_RATE, 0 );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DISCONNECT, 0 );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_CUPNO, 0 );
+  STD_TSPrintf( p_wk->filter, "mod=%d And rul=%d And deb=%d", 0, 0, MATCHINGKEY );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
 
   p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_FREE_Eval_Callback;
@@ -726,7 +744,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
     break;
 
   case WIFIBATTLEMATCH_NET_SEQ_MATCH_START:
-    if( GFL_NET_DWC_StartMatchFilter( p_wk->filter, 2 ,p_wk->matchmake_eval_callback, p_wk ) != 0 )
+    if( GFL_NET_DWC_StartMatchFilter( p_wk->filter, 2, p_wk->matchmake_eval_callback, p_wk ) != 0 )
     {
       GFL_NET_DWC_SetVChat( FALSE );
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START2;
@@ -763,6 +781,12 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
       case STEPMATCH_FAIL:
         GF_ASSERT( 0 );
         break;
+
+      case STEPMATCH_CONNECT:
+        break;
+
+      default:
+        GF_ASSERT_MSG(0,"StepMatchResult=[%d]\n",ret);
       }
     }
     break;
@@ -939,6 +963,7 @@ static int WIFIBATTLEMATCH_RND_RATE_Eval_Callback( int index, void* p_param_adrs
 static int WIFIBATTLEMATCH_RND_FREE_Eval_Callback( int index, void* p_param_adrs )
 { 
   //フリーモードは誰とでも同程度繋がる
+  OS_TPrintf( "フリーモード評価コールバック！\n" );
   return 1000;
 
 }
