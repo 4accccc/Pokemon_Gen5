@@ -452,6 +452,13 @@ void BTL_SICKEVENT_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKE
     }
   }
 
+  // 「うちおとす」状態なら、地面ワザが等倍
+  if( BPP_CheckSick(defender, WAZASICK_FLYING_CANCEL) ){
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_JIMEN ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
+    }
+  }
+
 }
 /**-------------------------------------------------------------
  * 飛行フラグチェックハンドラ
