@@ -55,6 +55,8 @@ subdir:
 # cdat のコピーだけ実行する
 $(TARGETDIR)/$(targetname).cdat: $(targetname).cdat bpshop.cdat
 	$(COPY) $(targetname).cdat $(TARGETDIR)
+
+$(TARGETDIR)/bpshop.cdat: bpshop.cdat
 	$(COPY) bpshop.cdat $(TARGETDIR)
 
 
