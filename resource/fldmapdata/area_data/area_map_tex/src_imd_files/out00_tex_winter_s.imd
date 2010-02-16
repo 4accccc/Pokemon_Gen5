@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-02-12T18:02:25"/>
+	<create user="fuchino" host="W00152" date="2010-02-16T21:08:41"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -185,13 +185,13 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gake1_1_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex_winter/gake1_1.tga"
+		path="C:/home/wb_data3d/field/out00/chip/tex_winter_s/gake1_1.tga"
 	>
 		<bitmap size="32">
-			bddb dbdd dddb ddbb 9e98 dded edd9 ceca
-			8987 9be9 ed98 8c89 7873 7898 c877 7878
-			3711 3787 8733 3737 1331 4111 7145 1221
-			5443 6665 4556 4421 6654 6666 5666 4204
+			ccbb cbcc cbcc aacc bbaa bccb bccb abbb
+			ba98 aaba baaa 99aa 9804 8999 9980 0089
+			0022 4000 0044 4440 2442 5222 0256 2332
+			6554 7776 5667 5532 7765 7777 6777 5315
 		</bitmap>
 	</tex_image>
 	<tex_image index="7" name="gake1_2"
@@ -2084,17 +2084,17 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="yamagrs01_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/yamagrs01.tga"
+		path="C:/home/wb_data3d/field/out00/chip/tex_winter_s/yamagrs01.tga"
 	>
 		<bitmap size="64">
-			4444 5545 4454 4554 4434 4454 4444 4544
-			4444 2444 2244 4444 2444 2443 2242 4444
-			4445 4444 2134 5443 2444 4442 2312 4443
-			1221 4442 2444 1241 2410 4414 4144 0144
-			4101 4201 1014 1014 1012 1010 0101 2101
-			0144 0112 4210 4310 1414 1444 3241 4441
-			4424 4444 4344 4434 5544 2444 3244 4222
-			4544 4444 4445 4244 5444 5555 5555 4455
+			5555 3333 2543 5555 4455 4444 5554 5525
+			5425 4445 5254 5225 5542 5555 2555 5555
+			4245 5555 5555 5555 4255 4442 5544 5555
+			5551 1145 5511 1555 5510 0015 5100 0155
+			1101 1101 1011 1015 0013 3310 0133 3100
+			1133 3331 1333 3311 3335 4333 3334 3333
+			3325 3445 3333 5353 5555 5225 5525 5522
+			5255 5553 5555 5552 5555 5525 5225 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="64" name="yamasaba01"
@@ -2158,8 +2158,8 @@
 		2191 25b1 25d5 298f 29d2 29f7 2df4 2e18
 	</tex_palette>
 	<tex_palette index="6" name="gake1_1_pl" color_size="16">
-		298f 29af 29d2 2dad 2df4 2e17 3a7a 4a52
-		52d5 5317 5736 5737 5738 5b58 5b59 7fff
+		258b 298f 29af 29d2 2dad 2df4 2e17 3a7a
+		4230 5ed5 7f9b 7ffc 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="7" name="gake1_2_pl" color_size="8">
 		194f 1991 1dd3 2a36 3dec 4b1c 639e 6bbf
@@ -2354,7 +2354,7 @@
 		25b1 298f 29d2 29d3 2df4 2e17 3a7a 7fff
 	</tex_palette>
 	<tex_palette index="63" name="yamagrs01_pl" color_size="8">
-		370d 3f4e 3f6e 436f 438f 478f 7fff 7fff
+		7f9b 7fdb 7fdc 7ffb 7ffc 7ffd 7fff 7fff
 	</tex_palette>
 	<tex_palette index="64" name="yamasaba01_pl" color_size="8">
 		3efb 433d 435e 437e 437f 7fff 7fff 7fff
@@ -5897,7 +5897,7 @@
 		<ex_tex_image index="60" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="61" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="62" disp_pos="3540.000000 300.000000"/>
-		<ex_tex_image index="63" disp_pos="3660.000000 300.000000"/>
+		<ex_tex_image index="63" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="64" disp_pos="3780.000000 300.000000"/>
 		<ex_tex_image index="65" disp_pos="3900.000000 300.000000"/>
 	</ex_tex_image_array>
@@ -5965,7 +5965,7 @@
 		<ex_tex_palette index="60" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="61" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="62" disp_pos="3540.000000 360.000000"/>
-		<ex_tex_palette index="63" disp_pos="3660.000000 360.000000"/>
+		<ex_tex_palette index="63" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="64" disp_pos="3780.000000 360.000000"/>
 		<ex_tex_palette index="65" disp_pos="3900.000000 360.000000"/>
 	</ex_tex_palette_array>
