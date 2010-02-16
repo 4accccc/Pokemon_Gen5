@@ -52,8 +52,10 @@ typedef enum
   JIKI_MOVEBIT_OZE_YURE    = (1<<3),
   ///尾瀬落下中
   JIKI_MOVEBIT_OZE_FALLOUT = (1<<4),
+  ///ダッシュ移動中
+  JIKI_MOVEBIT_DASH        = (1<<5),
   ///最大
-  JIKI_MOVEBIT_BITMAX      = (1<<5),
+  JIKI_MOVEBIT_BITMAX      = (1<<6),
 }JIKI_MOVEBIT;
 
 //--------------------------------------------------------------
@@ -144,7 +146,7 @@ struct _TAG_FIELD_PLAYER_GRID
 {
   JIKI_ACTION move_action;
   JIKI_MOVEORDER move_order;
-  
+   
   JIKI_MOVEBIT move_bit;
   
   FIELD_PLAYER_CORE *player_core;
@@ -153,8 +155,8 @@ struct _TAG_FIELD_PLAYER_GRID
   u16 oze_yure_frame;
   u16 oze_anime_reset_flag;
   
-  u16 walk_play_se;
-  u16 walk_play_se_count;
+  u16 dash_play_se;
+  u16 dash_play_se_count;
 };
 
 //======================================================================
@@ -402,6 +404,8 @@ FIELD_PLAYER_GRID * FIELD_PLAYER_GRID_Init(
   gjiki->player_core = player_core;
   gjiki->fieldWork = FIELD_PLAYER_CORE_GetFieldMapWork( player_core );
 
+  gjiki->dash_play_se = SEQ_SE_DUMMY;
+
   gjiki_OnMoveBitUnderOff( gjiki );
   
   //復帰
@@ -496,6 +500,7 @@ static void gjiki_InitMoveStartCommon(
   gjiki->move_order = set;
   FIELD_PLAYER_CORE_SetMoveStartKeyDir( gjiki->player_core, key_prs );
   gjiki_OffMoveBitStep( gjiki );
+  gjiki_OffMoveBit( gjiki, JIKI_MOVEBIT_DASH );
   
   if( set == JIKI_MOVEORDER_WALK ){
     gjiki_OffMoveBitUnderOff( gjiki );
@@ -575,7 +580,7 @@ static const ATTR_FLAG_SE data_PlaySE_NowFlag[] =
 //next flag
 static const ATTR_FLAG_SE data_PlaySE_NextFlag[] =
 {
-  {MAPATTR_FLAGBIT_GRASS,SEQ_SE_FLD_09},
+  {MAPATTR_FLAGBIT_GRASS,SEQ_SE_FLD_09,2},
   {ATTRFLAG_NONE,SEQ_SE_DUMMY,0}, //end
 };
 
@@ -589,71 +594,133 @@ static const ATTR_FLAG_SE data_PlaySE_NextFlag[] =
 static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
     JIKI_MOVEORDER set, u16 dir )
 {
-  VecFx32 pos;
-  u32 se = SEQ_SE_DUMMY;
-  const ATTR_FLAG_SE *p0;
-  const ATTR_VALUE_SE *p1;
-  MMDL *mmdl;
-  MAPATTR attr;
-  MAPATTR_FLAG flag;
-  MAPATTR_VALUE val;
-  
-  if( set != JIKI_MOVEORDER_WALK ){
-    return;
-  }
-  
-  mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
-  MMDL_GetVectorPos( mmdl, &pos );
-  
-  if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
-    flag = MAPATTR_GetAttrFlag( attr );
+  if( set == JIKI_MOVEORDER_WALK ){
+    int dash_count;
+    u32 se,dash_flag;
+    VecFx32 pos;
+    const ATTR_FLAG_SE *p0;
+    const ATTR_VALUE_SE *p1;
+    MMDL *mmdl;
+    MAPATTR attr;
+    MAPATTR_FLAG flag;
+    MAPATTR_VALUE val;
+    
+    se = SEQ_SE_DUMMY;
+    dash_count = 0;
 
-    for( p0 = data_PlaySE_NowFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
-      if( (p0->flag & flag) ){
-        se = p0->se;
-        break;
-      }
+    dash_flag = FALSE;
+    
+    if( gjiki_CheckMoveBit(gjiki,JIKI_MOVEBIT_DASH) ||
+        FIELD_PLAYER_CORE_GetMoveForm(
+          gjiki->player_core) == PLAYER_MOVE_FORM_CYCLE ){
+      dash_flag = TRUE;
     }
     
-    if( se == SEQ_SE_DUMMY ){
-      for( p1 = data_PlaySE_NowValue; p1->check != NULL; p1++ ){
-        if( p1->check(attr) == TRUE ){
-          se = p1->se;
+    if( dash_flag == FALSE ){
+      gjiki->dash_play_se = SEQ_SE_DUMMY;
+      gjiki->dash_play_se_count = 0;
+    }
+    
+    mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
+    MMDL_GetVectorPos( mmdl, &pos );
+  
+    if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
+      flag = MAPATTR_GetAttrFlag( attr );
+  
+      for( p0 = data_PlaySE_NowFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
+        if( (p0->flag & flag) ){
+          se = p0->se;
+          dash_count = p0->dash_count;
           break;
         }
       }
-    }
-    
-    if( se != SEQ_SE_DUMMY ){
-      PMSND_PlaySE( se );
-      return;
-    }
-  }
-  
-  MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-  
-  if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
-    flag = MAPATTR_GetAttrFlag( attr );
-    
-    for( p0 = data_PlaySE_NextFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
-      if( (p0->flag & flag) ){
-        se = p0->se;
-        break;
+      
+      if( se == SEQ_SE_DUMMY ){
+        for( p1 = data_PlaySE_NowValue; p1->check != NULL; p1++ ){
+          if( p1->check(attr) == TRUE ){
+            se = p1->se;
+            dash_count = p1->dash_count;
+            break;
+          }
+        }
+      }
+      
+      if( se != SEQ_SE_DUMMY ){
+        if( dash_flag == TRUE ){ //dash系判定
+          if( gjiki->dash_play_se != se ){
+            gjiki->dash_play_se_count = 0;
+          }
+          
+          gjiki->dash_play_se = se;
+          
+          if( gjiki->dash_play_se_count != 0 &&
+              gjiki->dash_play_se_count < dash_count ){
+            se = SEQ_SE_DUMMY;
+          }
+          
+          if( gjiki->dash_play_se_count >= dash_count ){
+            gjiki->dash_play_se_count = 0;
+          }
+
+          gjiki->dash_play_se_count++;
+        }
+      }
+
+      if( se != SEQ_SE_DUMMY ){
+          PMSND_PlaySE( se );
+          return;
       }
     }
+    
   
-    if( se == SEQ_SE_DUMMY ){
-      for( p1 = data_PlaySE_NextValue; p1->check != NULL; p1++ ){
-        if( p1->check(attr) == TRUE ){
-          se = p1->se;
+    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+    
+    if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
+      flag = MAPATTR_GetAttrFlag( attr );
+      
+      for( p0 = data_PlaySE_NextFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
+        if( (p0->flag & flag) ){
+          se = p0->se;
+          dash_count = p0->dash_count;
           break;
         }
       }
-    }
     
-    if( se != SEQ_SE_DUMMY ){
-      PMSND_PlaySE( se );
-      return;
+      if( se == SEQ_SE_DUMMY ){
+        for( p1 = data_PlaySE_NextValue; p1->check != NULL; p1++ ){
+          if( p1->check(attr) == TRUE ){
+            se = p1->se;
+            dash_count = p1->dash_count;
+            break;
+          }
+        }
+      }
+
+      if( se != SEQ_SE_DUMMY ){
+        if( dash_flag == TRUE ){ //dash系判定
+          if( gjiki->dash_play_se != se ){
+            gjiki->dash_play_se_count = 0;
+          }
+          
+          gjiki->dash_play_se = se;
+          
+          if( gjiki->dash_play_se_count != 0 &&
+              gjiki->dash_play_se_count < dash_count ){
+            se = SEQ_SE_DUMMY;
+          }
+          
+          if( gjiki->dash_play_se_count >= dash_count ){
+            gjiki->dash_play_se_count = 0;
+          }
+
+          gjiki->dash_play_se_count++;
+        }
+      }
+      
+      if( se != SEQ_SE_DUMMY ){
+        PMSND_PlaySE( se );
+        return;
+      }
     }
   }
 }
@@ -1843,19 +1910,21 @@ static void gjiki_SetMove_Walk(
     code = AC_WALK_U_2F;
     flat_check = FALSE;
   }else if( key_cont & PAD_BUTTON_B ){
-    if( FIELD_PLAYER_CORE_CheckIllegalOBJCode( gjiki->player_core) == FALSE ){
+    if( FIELD_PLAYER_CORE_CheckIllegalOBJCode(gjiki->player_core) == FALSE ){
       code = AC_WALK_U_4F;
     }else{
       VecFx32 pos;
       MAPATTR attr;
       
       code = AC_DASH_U_4F;
+      gjiki_OnMoveBit( gjiki, JIKI_MOVEBIT_DASH );
       FIELD_PLAYER_CORE_GetPos( gjiki->player_core, &pos );
       
       if( MMDL_GetMapPosAttr( mmdl, &pos, &attr )){
         if( MAPATTR_VALUE_CheckUpDownFloor(MAPATTR_GetAttrValue(attr)) ){
           code = AC_WALK_U_8F; //上下動床ではダッシュなし
           flat_check = FALSE;
+          gjiki_OffMoveBit( gjiki, JIKI_MOVEBIT_DASH );
         }
       }
     }
