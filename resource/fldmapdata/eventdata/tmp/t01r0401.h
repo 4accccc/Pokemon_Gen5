@@ -22,5 +22,9 @@
 #define ZONE_T01R0401_EVB_H
 
 #define BG_T01R0401_PICTURE_01            0
+#define BG_T01R0401_BOOK_01               1
+#define BG_T01R0401_BOOK_02               2
+#define BG_T01R0401_BOOK_03               3
+#define BG_T01R0401_NOTE_01               4
 
 #endif //ZONE_T01R0401_EVB_H

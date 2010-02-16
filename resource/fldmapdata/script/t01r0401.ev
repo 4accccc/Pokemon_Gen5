@@ -7,6 +7,7 @@
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_t01r0401.h"
   .include  "t01r0401.h"
+  .include  "hyouka_scr_def.h"
 
 //--------------------------------------------------------------
 //               ÉXÉNÉäÉvÉgñ{ëÃ
@@ -19,6 +20,10 @@ _EVENT_DATA		ev_scene_t01r0401_zukanget_01	//ê}ä”ì¸éËÉCÉxÉìÉg
 _EVENT_DATA		ev_t01r0401_hakase2_01			//îéémÅiñ∫Åj
 _EVENT_DATA		ev_bg_t01r0401_picture_01
 _EVENT_DATA		ev_t01r0401_hakase1_01			//îéémÅiïÉÅj
+_EVENT_DATA		ev_bg_t01r0401_book_01
+_EVENT_DATA		ev_bg_t01r0401_book_02
+_EVENT_DATA		ev_bg_t01r0401_book_03
+_EVENT_DATA		ev_bg_t01r0401_note_01
 _EVENT_DATA_END
 
 
@@ -407,11 +412,8 @@ EVENT_START   ev_t01r0401_hakase2_01
 	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase2_20 )
 	_MSGWIN_CLOSE()
 		
-	//ê}ä”ï]âøèàóùÇ÷ÅyâºÅz
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+	//ê}ä”ï]âøèàóùÇ÷
+	_GLOBAL_CALL		SCRID_ZUKAN_DAUGHTER
 
 EVENT_END
 
@@ -430,11 +432,8 @@ EVENT_START   ev_t01r0401_hakase1_01
 		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_05 )
 		_MSGWIN_CLOSE()
 		
-		//ê}ä”ï]âøèàóùÇÉRÅ[ÉãÅyâºÅz
-		_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
-		_BLACK_IN()
-		_DISP_FADE_END_CHECK()
+		//ê}ä”ï]âøèàóùÇÉRÅ[Éã
+		_GLOBAL_CALL		SCRID_ZUKAN_FATHER
 		
 	ELSE
 	//ì¸éËëO
@@ -483,6 +482,7 @@ EVENT_START   ev_t01r0401_hakase1_01
 	
 EVENT_END
 
+
 /************************************************************/
 /*						é ê^ÇΩÇƒ							*/
 /************************************************************/
@@ -502,5 +502,47 @@ EVENT_START   ev_bg_t01r0401_picture_01
 EVENT_END
 
 
+/************************************************************/
+/*							ñ{íIÇP							*/
+/************************************************************/
+EVENT_START   ev_bg_t01r0401_book_01
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_t01r0401_photo_03 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*							ñ{íIÇQ							*/
+/************************************************************/
+EVENT_START   ev_bg_t01r0401_book_02
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_t01r0401_photo_04 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*							äwèpèë							*/
+/************************************************************/
+EVENT_START   ev_bg_t01r0401_book_03
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_t01r0401_photo_05 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*							äwèpèë							*/
+/************************************************************/
+EVENT_START   ev_bg_t01r0401_note_01
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_t01r0401_photo_06 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
 
