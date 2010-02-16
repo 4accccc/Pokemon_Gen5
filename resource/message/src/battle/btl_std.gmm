@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-16T18:53:27"/>
+	<create user="taya" host="W00146" date="2010-02-16T23:49:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -81,6 +81,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
 				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -246,6 +249,13 @@
 				<comment language="english">描画X座標を加算します。
 使用は許可制です。</comment>
 			</tag>
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+				<comment language="japanese">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+				<comment language="english">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
 		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
@@ -266,20 +276,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
-			<tag entry="09" japanese="特殊ウェイト" english="特殊ウェイト" view="EP" length="0" line="1">
-				<parameter number="0" japanese="ウェイト値（60=１秒）" english="ウェイト値（60=１秒）" type="int16"/>
-				<parameter number="1" japanese="スキップ許可" english="スキップ許可" type="int8"/>
-				<parameter number="2" japanese="スキップ方法" english="スキップ方法" type="int8"/>
-				<comment language="japanese">１文字ごとのウェイトとは別個に
-任意のタイミングでウェイトする。</comment>
-				<comment language="english">１文字ごとのウェイトとは別個に
-任意のタイミングでウェイトする。</comment>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
 			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -333,7 +344,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="831"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -661,8 +672,8 @@
 	</row>
 
 	<row id="BTL_STRID_STD_WazaFail">
-		<language name="JPN" width="216">[BE:09:特殊ウェイト:60:0:0]しかし　うまく　きまらなかった！！</language>
-		<language name="JPN_KANJI" width="216">[BE:09:特殊ウェイト:60:1:0]しかし　うまく決まらなかった！！</language>
+		<language name="JPN" width="216">[BE:09:速度コントロール:60]しかし　うまく　きまらなかった！！</language>
+		<language name="JPN_KANJI" width="216">[BE:09:速度コントロール:60]しかし　うまく決まらなかった！！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_EscapeSuccess">
@@ -1246,6 +1257,85 @@
 ファストガードが　まもっている！</language>
 		<language name="JPN_KANJI" width="216">相手の　まわりを
 ファストガードが　守っている！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Rainbow">
+		<comment>合体ワザ効果：虹</comment>
+		<language name="JPN" width="216">みかたの　そらに　にじが　かかった！</language>
+		<language name="JPN_KANJI" width="216">味方の空に　にじが　かかった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Rainbow_E">
+		<language name="JPN" width="216">あいての　そらに　にじが　かかった！</language>
+		<language name="JPN_KANJI" width="216">相手の空に　にじが　かかった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_RainbowOff">
+		<language name="JPN" width="216">みかたの　そらから　にじが　きえた！</language>
+		<language name="JPN_KANJI" width="216">味方の空から　にじが　消えた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_RainbowOff_E">
+		<language name="JPN" width="216">あいての　そらから　にじが　きえた！</language>
+		<language name="JPN_KANJI" width="216">相手の空から　にじが　消えた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Burning">
+		<comment>合体ワザ効果：火の海</comment>
+		<language name="JPN" width="216">みかたの　まわりが
+ひのうみに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">味方の　周りが
+火の海に　包まれた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Burning_E">
+		<language name="JPN" width="216">あいての　まわりが
+ひのうみに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">相手の　周りが
+火の海に　包まれた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_BurningOff">
+		<language name="JPN" width="216">みかたの　まわりの
+ひのうみが　きえさった！</language>
+		<language name="JPN_KANJI" width="216">味方の　周りの
+火の海が　消え去った！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_BurningOff_E">
+		<language name="JPN" width="216">あいての　まわりの
+ひのうみが　きえさった！</language>
+		<language name="JPN_KANJI" width="216">相手の　周りの
+火の海が　消え去った！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Moor">
+		<comment>合体ワザ効果：湿原</comment>
+		<language name="JPN" width="216">みかたの　まわりに
+しつげんが　ひろがった！</language>
+		<language name="JPN_KANJI" width="216">味方の　周りに
+湿原が　広がった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Moor_E">
+		<language name="JPN" width="216">あいての　まわりに
+しつげんが　ひろがった！</language>
+		<language name="JPN_KANJI" width="216">相手の　周りに
+湿原が　広がった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_MoorOff">
+		<language name="JPN" width="216">みかたの　まわりの
+しつげんが　きえさった！</language>
+		<language name="JPN_KANJI" width="216">味方の　周りの
+湿原が　消え去った！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_MoorOff_E">
+		<language name="JPN" width="216">あいての　まわりの
+しつげんが　きえさった！</language>
+		<language name="JPN_KANJI" width="216">相手の　周りの
+湿原が　消え去った！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Kinchoukan">
