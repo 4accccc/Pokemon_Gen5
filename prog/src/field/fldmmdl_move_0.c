@@ -599,10 +599,12 @@ void MMDL_MoveDirRnd_Move( MMDL * mmdl )
 //--------------------------------------------------------------
 static const u16 data_DashAlterDirTbl[][1+(4+1)] =
 {
-  {MV_RND_UL, DIR_UP,DIR_LEFT,DIR_NOT},
-  {MV_RND_UR, DIR_UP,DIR_RIGHT,DIR_NOT},
-  {MV_RND_DL, DIR_DOWN,DIR_LEFT,DIR_NOT},
-  {MV_RND_DR, DIR_DOWN,DIR_RIGHT,DIR_NOT},
+  {MV_RND_V,   DIR_UP,DIR_DOWN,DIR_NOT},
+  {MV_RND_H,   DIR_LEFT,DIR_RIGHT,DIR_NOT},
+  {MV_RND_UL,  DIR_UP,DIR_LEFT,DIR_NOT},
+  {MV_RND_UR,  DIR_UP,DIR_RIGHT,DIR_NOT},
+  {MV_RND_DL,  DIR_DOWN,DIR_LEFT,DIR_NOT},
+  {MV_RND_DR,  DIR_DOWN,DIR_RIGHT,DIR_NOT},
   {MV_RND_UDL, DIR_UP,DIR_DOWN,DIR_LEFT,DIR_NOT},
   {MV_RND_UDR, DIR_UP,DIR_RIGHT,DIR_DOWN,DIR_NOT},
   {MV_RND_ULR, DIR_UP,DIR_RIGHT,DIR_LEFT,DIR_NOT},
@@ -1116,7 +1118,10 @@ static int MvSpinMove_CmdAction( MMDL * mmdl, MV_SPIN_DIR_WORK *work )
     return( FALSE );
   }
   
-  work->wait = 0;
+  if( MMDL_GetEventType(mmdl) != EV_TYPE_TRAINER_DASH_ALTER ){
+    work->wait = 0; //ダッシュ反応は別の扱いになっている。
+  }
+
   work->seq_no = SEQNO_MV_SPIN_DIR_WAIT;
   return( TRUE );
 }
@@ -1132,14 +1137,20 @@ static int MvSpinMove_CmdAction( MMDL * mmdl, MV_SPIN_DIR_WORK *work )
 static int MvSpinMove_Wait( MMDL * mmdl, MV_SPIN_DIR_WORK *work )
 {
   if( MMDL_GetEventType(mmdl) == EV_TYPE_TRAINER_DASH_ALTER ){
+    if( work->wait != 0 ){
+      work->wait = 0;
+      return( FALSE );
+    }
+    
     if( MMDL_CheckPlayerDispSizeRect(mmdl) == FALSE ){
       return( FALSE );
     }
-
+    
     if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B) == FALSE ){
       return( FALSE );
     }
     
+    work->wait++;
     work->seq_no = SEQNO_MV_SPIN_DIR_NEXT_DIR_SET;
   }else{
     if( work->wait ){
