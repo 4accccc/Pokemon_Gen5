@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-09T12:06:15"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-15T19:00:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1410" top="206" right="2115" bottom="834" maximized="no" rayout="Vertical2">
+	<dialog left="306" top="276" right="1011" bottom="904" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -341,28 +341,35 @@
 
 
 	<row id="MSG_MB_CHILD_01">
-		<language name="JPN" width="208">ロードしています</language>
-		<language name="JPN_KANJI" width="208">ロードしています</language>
+		<language name="JPN" width="208">ロードちゅう……
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="208">ロード中……
+しばらく　お待ち下さい</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_02">
-		<language name="JPN" width="208">きゅうソフトが　ささっていません。
-WBがわの　DSの　せつめいに　
-したがって　ください。</language>
-		<language name="JPN_KANJI" width="208">旧ソフトがささっていません。
-WB側のDSの説明に従って下さい。</language>
+		<language name="JPN" width="208">ただしい　ソフトが　ささっていません
+もうひとつの　DSの　せつめいに　
+したがって　ポケシフターを
+きどう　しなおして　ください</language>
+		<language name="JPN_KANJI" width="208">正しい　ソフトが　ささっていません
+もう一つの　DSの　説明に
+従って　オケシフターを
+起動　しなおして　下さい</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_03">
-		<language name="JPN" width="208">パルパーク　きどうちゅう・・・</language>
-		<language name="JPN_KANJI" width="208">パルパーク　起動中・・・</language>
+		<language name="JPN" width="208">ポケシフター　きどうちゅう……
+まもなく　はじまります</language>
+		<language name="JPN_KANJI" width="208">ポケシフター　起動中……
+まもなく　始まります</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_04">
-		<language name="JPN" width="208">レポートにかきこんでいます。
-でんげんをきらないでください。</language>
-		<language name="JPN_KANJI" width="208">レポートにかきこんでいます。
-でんげんをきらないでください。</language>
+		<language name="JPN" width="208">レポートに　かきこんでいます
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" width="208">レポートに　書き込んでいます
+電源を　切らないで下さい</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_05">
@@ -373,16 +380,19 @@ WB側のDSの説明に従って下さい。</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_06">
-		<language name="JPN" width="208">もういちど　あそびますか？</language>
-		<language name="JPN_KANJI" width="208">もう一度　遊びますか？</language>
+		<language name="JPN" width="208">もういちど　ポケシフターで
+あそびますか？</language>
+		<language name="JPN_KANJI" width="208">もう一度　ポケシフターで
+遊びますか？</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_07">
 		<language name="JPN" width="208">ゲームを　しゅうりょうします
-でんげんを　きって　しゅうりょうして
-ください</language>
+でんげんを　きって
+しゅうりょうしてください</language>
 		<language name="JPN_KANJI" width="208">ゲームを　終了します
-電源を切って　終了してください</language>
+電源を切って
+終了してください</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_SYS_01">
@@ -401,38 +411,58 @@ WB側のDSの説明に従って下さい。</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_SEL_02">
-		<language name="JPN" width="240">タマゴは　パルパークで　遊ぶ事が
-できません。</language>
-		<language name="JPN_KANJI" width="240">タマゴは　パルパークで　あそぶことが
-できません。</language>
+		<language name="JPN" width="240">タマゴは　ポケシフターで
+つかまえることが　できません</language>
+		<language name="JPN_KANJI" width="240">タマゴは　ポケシフターで
+捕まえる事が　できません</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_SEL_03">
 		<language name="JPN" width="240">ひでんわざを　おぼえている　ポケモンは
-パルパークで　遊ぶ事が　できません。</language>
-		<language name="JPN_KANJI" width="240">ひでんわざを　おぼえている　ポケモンは　
-パルパークで　あそぶことが　できません。</language>
+ポケシフターで　つかまえられません</language>
+		<language name="JPN_KANJI" width="240">ひでんわざを　覚えている　ポケモンは
+ポケシフターで　捕まえられません</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_SEL_04">
-		<language name="JPN" width="240">このポケモンは　パルパークで　
-遊ぶ事が　できません。</language>
-		<language name="JPN_KANJI" width="240">このポケモンは　パルパークで　
-あそぶことが　できません。</language>
+		<language name="JPN" width="240">このポケモンは　ポケシフターで
+つかまえられません</language>
+		<language name="JPN_KANJI" width="240">このポケモンは　ポケシフターで
+捕まえられません</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_SEL_05">
 		<language name="JPN" width="240">この６ひきで　よろしいですか？</language>
-		<language name="JPN_KANJI" width="240">この６ひきで　よろしいですか？</language>
+		<language name="JPN_KANJI" width="240">この６匹で　よろしいですか？</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_SEL_06">
-		<language name="JPN" width="240">ぎざみみピチューは　パルゲートを
-つうか　することが　できません。▼
-いか　せつめい・・・</language>
-		<language name="JPN_KANJI" width="240">ぎざみみピチューは　パルゲートを
-通過　することが　できません。▼
-以下　説明・・・</language>
+		<language name="JPN" width="240">オーゥ！▼
+このぎざみみピチューは　もとの　ばしょに
+ステイさせたほうが　よさそうだ！▼
+このピチューは　ときわたりで
+やってきた　ポケモンらしいね▼
+みたところ　この　ピチューは
+セレビィと　いっしょに　ながい　じかん▽
+わたってきた　えいきょうが　からだに▽
+のこってる　みたいだ▼
+つれてくるのは　デンジャラス！
+ベリー　デンジャラスッ！▼
+もとの　ばしょに　いるほうが
+ピチューに　とっても　ベストだろう！</language>
+		<language name="JPN_KANJI" width="240">オーゥ！▼
+このぎざみみピチューは　元の　場所に
+ステイさせたほうが　良さそうだ！▼
+このピチューは　時渡りで
+やってきた　ポケモンらしいね▼
+見たところ　この　ピチューは
+セレビィと　一緒に　長い　じかん▽
+渡ってきた　影響が　体に▽
+残ってる　みたいだ▼
+連れてくるのは　デンジャラス！
+ベリー　デンジャラスッ！▼
+元の　場所に　いるほうが
+ピチューに　とっても　ベストだろう！</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_CAP_01">

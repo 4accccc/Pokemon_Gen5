@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-09T12:23:15"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-16T12:52:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="243" top="193" right="948" bottom="821" maximized="no" rayout="Vertical2">
+	<dialog left="361" top="165" right="1066" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -341,46 +341,50 @@
 
 
 	<row id="MSG_MB_PAERNT_01">
-		<language name="JPN" width="208">もうひとつの　ＤＳに　きゅうソフトを
-いれて『ＤＳダウンロードプレイ』から
-『パルパーク　[1:00:トレーナー名:0]』を
+		<language name="JPN" width="208">もうひとつのＤＳに　きゅうソフトをいれ
+『ＤＳダウンロードプレイ』から
+『ポケシフター　[1:00:トレーナー名:0]』を
 えらんでください</language>
-		<language name="JPN_KANJI" width="208">もう一つの　ＤＳに　旧ソフトを
-入れて『ＤＳダウンロードプレイ』から
-『パルパーク　[1:00:トレーナー名:0]』を
-選んでください</language>
+		<language name="JPN_KANJI" width="208">もうひとつのＤＳに　旧ソフトをいれ
+『ＤＳダウンロードプレイ』から
+『ポケシフター　[1:00:トレーナー名:0]』を
+えらんでください</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_02">
-		<language name="JPN" width="208">ロードしています。</language>
-		<language name="JPN_KANJI" width="208">ロードしています。</language>
+		<language name="JPN" width="208">ロードしています</language>
+		<language name="JPN_KANJI" width="208">ロードしています</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_03">
-		<language name="JPN" width="208">ポケモンを　せんたくしています</language>
-		<language name="JPN_KANJI" width="208">ポケモンを　選択しています</language>
+		<language name="JPN" width="208">もうひとつの　DSで
+ポケモンを　せんたくしてください</language>
+		<language name="JPN_KANJI" width="208">もう1つの　DSで
+ポケモンを　選択してください</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_04">
-		<language name="JPN" width="208">パルパーク　きどうちゅう</language>
-		<language name="JPN_KANJI" width="208">パルパーク　起動中</language>
+		<language name="JPN" width="208">ポケシフター　きどうちゅう</language>
+		<language name="JPN_KANJI" width="208">ポケシフター　起動中</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_05">
-		<language name="JPN" width="208">ゲームちゅう　です</language>
-		<language name="JPN_KANJI" width="208">ゲームちゅう　です</language>
+		<language name="JPN" width="208">ポケシフター　じっけんちゅう……</language>
+		<language name="JPN_KANJI" width="208">ポケシフター　実験中……</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_06">
-		<language name="JPN" width="208">データを　じゅしん　しています</language>
-		<language name="JPN_KANJI" width="208">データを　受信しています</language>
+		<language name="JPN" width="208">じっけんデータを
+じゅしん　しています</language>
+		<language name="JPN_KANJI" width="208">実験データを
+受信しています</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_07">
-		<language name="JPN" width="208">レポートにかきこんでいます。
-でんげんをきらないでください。</language>
-		<language name="JPN_KANJI" width="208">レポートにかきこんでいます。
-でんげんをきらないでください。</language>
+		<language name="JPN" width="208">レポートに　かきこんでいます
+でんげんをきらないでください</language>
+		<language name="JPN_KANJI" width="208">レポートに　書き込んでいます
+電源を　切らないで下さい</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_08">
@@ -389,20 +393,22 @@
 	</row>
 
 	<row id="MSG_MB_PAERNT_09">
-		<language name="JPN" width="208">ゲームを　しゅうりょうします</language>
-		<language name="JPN_KANJI" width="208">ゲームを　終了します</language>
+		<language name="JPN" width="208">ポケシフターを　しゅうりょうします</language>
+		<language name="JPN_KANJI" width="208">ポケシフターを　終了します</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_10">
-		<language name="JPN" width="208">パルパークを　ちゅうししますか？</language>
-		<language name="JPN_KANJI" width="208">パルパークを　中止しますか？</language>
+		<language name="JPN" width="208">ポケシフターを　ちゅうししますか？</language>
+		<language name="JPN_KANJI" width="208">ポケシフターを　中止しますか？</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_11">
 		<comment>初回接続時、子機落ち
 (ROM転送後・NET接続前)</comment>
-		<language name="JPN" width="208">こきの　せつぞくに　しっぱいしました。▼</language>
-		<language name="JPN_KANJI" width="208">子機の　接続に　失敗しました。▼</language>
+		<language name="JPN" width="208">もうひとつの　DSの
+せつぞくに　しっぱいしました▼</language>
+		<language name="JPN_KANJI" width="208">もうひとつの　DSの
+接続に　失敗しました▼</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_ROM_TITLE">
@@ -410,8 +416,8 @@
 48文字185ドット以内
 DSシステムフォントなので
 幅が違います。注意！</comment>
-		<language name="JPN" width="208">パルパーク　[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="208">パルパーク　[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="208">ポケシフター　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="208">ポケシフター　[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_ROM_INFO">
@@ -420,9 +426,9 @@ DSシステムフォントなので
 DSシステムフォントなので
 幅が違います。注意！</comment>
 		<language name="JPN" width="208">ポケットモンスター シャチ
-パルパークてんそう プログラム</language>
+ポケシフター プログラム</language>
 		<language name="JPN_KANJI" width="208">ポケットモンスター シャチ
-パルパークてんそう プログラム</language>
+ポケシフター プログラム</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_SYS_01">
