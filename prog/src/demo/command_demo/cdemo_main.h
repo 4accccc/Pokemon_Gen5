@@ -152,6 +152,8 @@ typedef struct {
 	int	main_seq;
 	int	next_seq;
 
+	BOOL	init_flg;			// ‰Šú‰»Ï‚İƒtƒ‰ƒO
+
 #ifdef PM_DEBUG
 	u32	debug_count_frm;
 	u32	debug_count;

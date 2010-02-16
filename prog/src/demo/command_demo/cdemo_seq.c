@@ -174,6 +174,9 @@ static int MainSeq_Init( CDEMO_WORK * wk )
 
 //	return CDEMOSEQ_MAIN_MAIN;
 	CDEMOMAIN_FadeInSet( wk, 1, 1, CDEMOSEQ_MAIN_MAIN );
+
+	wk->init_flg = TRUE;
+
 	return CDEMOSEQ_MAIN_FADE;
 
 
@@ -262,10 +265,13 @@ static int MainSeq_Release( CDEMO_WORK * wk )
 		return CDEMOSEQ_MAIN_RELEASE;
 	}
 
-	CDEMOMAIN_ExitVBlank( wk );
-	GFL_ARC_CloseDataHandle( wk->gra_ah );	
-	CDEMOMAIN_CommDataDelete( wk );
-	CDEMOMAIN_BgExit();
+	// ‰Šú‰»‚µ‚Ä‚¢‚½‚ç
+	if( wk->init_flg == TRUE ){
+		CDEMOMAIN_ExitVBlank( wk );
+		GFL_ARC_CloseDataHandle( wk->gra_ah );	
+		CDEMOMAIN_CommDataDelete( wk );
+		CDEMOMAIN_BgExit();
+	}
 
 /*
 	LDA_WORK * awk = wk->work;

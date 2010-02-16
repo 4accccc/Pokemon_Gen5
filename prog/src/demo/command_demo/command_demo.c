@@ -108,6 +108,7 @@ static GFL_PROC_RESULT CommDemoProc_Init( GFL_PROC * proc, int * seq, void * pwk
 	GFL_STD_MemClear( wk, sizeof(CDEMO_WORK) );
 
 	wk->dat = pwk;
+	wk->init_flg = FALSE;
 
 	OS_InitTick();
 
