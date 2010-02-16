@@ -47,7 +47,7 @@ CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 #------------------------------------------------------------------------------
 #	make do-build ÉãÅ[Éã
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).cdat bpshop.cdat
+do-build:	subdir $(TARGETDIR)/$(targetname).cdat $(TARGETDIR)/bpshop.cdat
 
 subdir:
 	@$(MAKE_SUBDIR)
