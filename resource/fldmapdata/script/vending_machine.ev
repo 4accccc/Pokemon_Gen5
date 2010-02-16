@@ -28,14 +28,14 @@ EVENT_START ev_vending_machine01
   $loop = TRUE
 
   //所持金表示
-  _GOLD_WIN_OPEN( 17, 1 )
+  _GOLD_WIN_OPEN( 1, 1 )
 
   //「自販機あるで」
   _SYSWIN_MSG_DOWN( msg_vender_01 )
   
   WHILE $loop == TRUE
     //選択肢
-    _BMPMENU_INIT_EX( 1,1,0,1,select_item )
+    _BMPMENU_INIT_EX( 1,5,0,1,select_item )
     _BMPMENU_MAKE_LIST( msg_vender_select_01, 1 )    //おいしい水
     _BMPMENU_MAKE_LIST( msg_vender_select_02, 2 )    //サイコソーダ
     _BMPMENU_MAKE_LIST( msg_vender_select_03, 3 )    //ミックスオレ
@@ -80,17 +80,17 @@ EVENT_START ev_vending_machine01
           //代金減算
           _SUBTRACT_GOLD( gold )
           //所持金表示更新
-          _GOLD_WIN_UPDATE(17, 1)
-          //アイテムセット
-          _ADD_ITEM( item, 1, SCWK_ANSWER )
+          _GOLD_WIN_UPDATE(1, 1)
           //タグ０番にアイテムセット
           _ITEM_NAME( 0, item )
           //「○○がでてきた！」
           _SYSWIN_MSG_DOWN( msg_vender_02 )
           _SYSWIN_CLOSE()
+          //アイテム取得
+          _ITEM_EVENT_SUCCESS_KEYWAIT(item, 1)
           //まだ入るか？
           _ADD_ITEM_CHK( item, 1, SCWK_ANSWER )
-          IF  $SCWK_ANSWER == TRUE THEN   //入いる
+          IF  $SCWK_ANSWER == TRUE THEN   //入る
             DEFINE_LOCAL ans
             //抽選する
             _GET_RND( ans, 32 )
@@ -99,7 +99,7 @@ EVENT_START ev_vending_machine01
               _SYSWIN_MSG_DOWN( msg_vender_03 )
               _SYSWIN_CLOSE()
               //アイテム加算
-              _ADD_ITEM( item, 1, SCWK_ANSWER )
+              _ITEM_EVENT_SUCCESS_KEYWAIT(item, 1)
             ENDIF 
           ENDIF
           //もう一本かう？
