@@ -59,7 +59,7 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
 static void enc_CreateBattleParamMovePoke( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* efp,
     BATTLE_SETUP_PARAM *bsp, HEAPID heapID, MPD_PTR mpd );
 
-static void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GAMEDATA* gdata, FIELDMAP_WORK* fieldWork );
+static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork );
 
 static u32 enc_GetPercentRand( void );
 
@@ -163,10 +163,7 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
     enc_loc = enc_GetLocation( enc, enc_type, &prob_rev );
     per = enc_GetLocationPercent( enc, enc_loc, prob_rev );
   }
-  if( per <= 0 ){
-    return( NULL ); //確率0
-  }
-
+  
   //ENCPOKE_FLD_PARAM作成
   ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, enc_type,
       FIELD_WEATHER_GetWeatherNo(FIELDMAP_GetFieldWeather( enc->fwork )) );
@@ -412,6 +409,36 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_w
 
   //エンカウントイベント生成
   return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, FALSE, enc_eff_no );
+}
+
+/*
+ *  @brief  戦闘背景/天候 など FIELDMAP_WORKを参照して決定されるシチュエーションデータを取得する
+ *  @todo 仮処理
+ */
+void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GAMEDATA* gdata, FIELDMAP_WORK* fieldWork )
+{
+  u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
+  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( fieldWork );
+
+  //戦闘背景
+  sit->bgType = ZONEDATA_GetBattleBGType(zone_id);
+  {
+    MAPATTR attr = FIELD_PLAYER_GetMapAttr( fplayer );
+    sit->bgAttr = FIELD_BATTLE_GetBattleAttrID(MAPATTR_GetAttrValue(attr));
+  }
+  //タイムゾーン取得
+  sit->zoneID = zone_id;
+  {
+    RTCTime time;
+    GFL_RTC_GetTime(&time);
+    sit->hour   = time.hour;
+    sit->minute = time.minute;
+  }
+
+  //天候
+  sit->weather = btlparam_GetBattleWeather( fieldWork );
+
+  sit->season = GAMEDATA_GetSeasonID( gdata );
 }
 
 //======================================================================
@@ -665,35 +692,6 @@ static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
   return BTL_WEATHER_NONE;
 }
 
-/*
- *  @brief  戦闘背景/天候 など FIELDMAP_WORKを参照して決定されるシチュエーションデータを取得する
- *  @todo 仮処理
- */
-static void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GAMEDATA* gdata, FIELDMAP_WORK* fieldWork )
-{
-  u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
-  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( fieldWork );
-
-  //戦闘背景
-  sit->bgType = ZONEDATA_GetBattleBGType(zone_id);
-  {
-    MAPATTR attr = FIELD_PLAYER_GetMapAttr( fplayer );
-    sit->bgAttr = FIELD_BATTLE_GetBattleAttrID(MAPATTR_GetAttrValue(attr));
-  }
-  //タイムゾーン取得
-  sit->zoneID = zone_id;
-  {
-    RTCTime time;
-    GFL_RTC_GetTime(&time);
-    sit->hour   = time.hour;
-    sit->minute = time.minute;
-  }
-
-  //天候
-  sit->weather = btlparam_GetBattleWeather( fieldWork );
-
-  sit->season = GAMEDATA_GetSeasonID( gdata );
-}
 
 //======================================================================
 //  パーツ

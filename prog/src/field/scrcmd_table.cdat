@@ -658,7 +658,7 @@
   DEF_CMD( EvCmdWildLoseCheck, EV_SEQ_WILD_LOSE_CHECK )
 
   DEF_CMD( EvCmdWildBattleRetryCheck, EV_SEQ_WILD_BTL_RETRY_CHECK )
-  NO_CMD()
+  DEF_CMD( EvCmdCaptureDemoBattleSet, EV_SEQ_CAPTURE_DEMO_SET )
   NO_CMD()
   NO_CMD()
 

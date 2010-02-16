@@ -28,6 +28,7 @@
 //#include "poke_tool/monsno_def.h"
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
+#include "waza_tool/wazano_def.h"
 
 #include "event_encount_effect.h"
 #include "effect_encount.h"
@@ -321,6 +322,65 @@ GMEVENT * EVENT_BSubwayTrainerBattle(
 
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールド捕獲デモバトルイベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldmap FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, HEAPID heapID )
+{
+  GMEVENT * event;
+  GAMEDATA* gdata;
+  BATTLE_EVENT_WORK * bew;
+  BATTLE_SETUP_PARAM* bp;
+  HEAPID tmpHeapID = GFL_HEAP_LOWID( heapID );
+
+  gdata = GAMESYSTEM_GetGameData( gsys );
+  //バトルパラメータセット
+  bp = BATTLE_PARAM_Create( heapID );
+
+  {
+    BTL_FIELD_SITUATION sit;
+    POKEPARTY* partyMine = PokeParty_AllocPartyWork( tmpHeapID );
+    POKEPARTY* partyEnemy = PokeParty_AllocPartyWork( tmpHeapID );
+    POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( tmpHeapID, POKETOOL_GetWorkSize() );
+
+    PP_Setup( pp, MONSNO_TIRAAMHI, 5, 0 );
+    PP_Put( pp, ID_PARA_waza1, WAZANO_HATAKU );
+    PP_Put( pp, ID_PARA_waza2, WAZANO_NAKIGOE );
+    PP_Put( pp, ID_PARA_waza3, WAZANO_NULL );
+    PP_Put( pp, ID_PARA_waza4, WAZANO_NULL );
+    PokeParty_Add( partyMine, pp );
+    
+    PP_Setup( pp, MONSNO_MINEZUMI, 2, 0 );
+    PP_Put( pp, ID_PARA_waza1, WAZANO_TAIATARI );
+    PP_Put( pp, ID_PARA_waza2, WAZANO_NIRAMITUKERU );
+    PP_Put( pp, ID_PARA_waza3, WAZANO_NULL );
+    PP_Put( pp, ID_PARA_waza4, WAZANO_NULL );
+    PokeParty_Add( partyMine, pp );
+
+    BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, fieldmap );
+    BTL_SETUP_CaptureDemo( bp, gdata, partyMine, partyEnemy, &sit, heapID );
+
+    GFL_HEAP_FreeMemory( pp );
+    GFL_HEAP_FreeMemory( partyEnemy );
+    GFL_HEAP_FreeMemory( partyMine );
+  }
+
+  event = GMEVENT_Create(
+      gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
+
+  bew = GMEVENT_GetEventWork(event);
+  BEW_Initialize( bew, gsys, bp );
+  bew->is_sub_event = TRUE;
+  bew->EncEffNo = ENCEFFNO_GetWildEncEffNo( MONSNO_MINEZUMI, fieldmap );
+
   return event;
 }
 

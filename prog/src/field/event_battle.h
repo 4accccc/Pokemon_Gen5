@@ -33,6 +33,8 @@ extern GMEVENT * EVENT_TrainerBattle(
 extern GMEVENT * EVENT_BSubwayTrainerBattle(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp );
 
+extern GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, HEAPID heapID );
+
 //--------------------------------------------------------------
 /**
  * @brief ÅuîsñkèàóùÅvÇ∆Ç∑ÇÈÇ◊Ç´Ç©Ç«Ç§Ç©ÇÃîªíË

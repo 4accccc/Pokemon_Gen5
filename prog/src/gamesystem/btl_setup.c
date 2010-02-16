@@ -371,6 +371,41 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
   }
 }
 
+//=============================================================================================
+/**
+ * @brief 捕獲デモコモンパラメータセット
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   partyMine
+ * @param   partyEnemy
+ * @param   sit
+ * @param   heapID
+ *
+ * @li  内部でメモリの確保を行います。
+ *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
+ */
+//=============================================================================================
+void BTL_SETUP_CaptureDemo( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData,
+  const POKEPARTY* partyMine, const POKEPARTY* partyEnemy, const BTL_FIELD_SITUATION* sit, HEAPID heapID )
+{
+  BATTLE_PARAM_Init( bp );
+  setup_common( bp, gameData, (BTL_FIELD_SITUATION*)sit );
+  
+  setup_player_param( bp, gameData, heapID );
+ 
+  if( partyMine != NULL ){
+    PokeParty_Copy( partyMine, bp->party[ BTL_CLIENT_PLAYER ] );
+  }
+  bp->party[ BTL_CLIENT_ENEMY1 ] = PokeParty_AllocPartyWork( heapID );
+  if( partyEnemy != NULL ){
+    PokeParty_Copy( partyEnemy, bp->party[ BTL_CLIENT_ENEMY1 ] );
+  }
+
+  bp->competitor = BTL_COMPETITOR_DEMO_CAPTURE;
+  bp->rule = BTL_RULE_SINGLE;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //  ローカルトレーナー対戦関連
 ///////////////////////////////////////////////////////////////////////////////

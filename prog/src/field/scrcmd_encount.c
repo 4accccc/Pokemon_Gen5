@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
+#include "system/main.h"  //HEAPID_PROC
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
@@ -98,6 +99,28 @@ VMCMD_RESULT EvCmdWildBattleRetryCheck( VMHANDLE *core, void *wk )
 	u16* ret_wk = SCRCMD_GetVMWork( core, work );
   *ret_wk = FIELD_BATTLE_GetWildBattleRevengeCode( res );
 	return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 捕獲デモ呼び出し
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"1"
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCaptureDemoBattleSet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fwork = GAMESYSTEM_GetFieldMapWork( gsys );
+	
+  {
+    GMEVENT *ev_battle =
+      EVENT_CaptureDemoBattle( gsys, fwork, HEAPID_PROC );
+    SCRIPT_CallEvent( sc, ev_battle );
+  }
+	return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------------
