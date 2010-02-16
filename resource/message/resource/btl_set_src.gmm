@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-16T22:41:12"/>
+	<create user="taya" host="W00146" date="2010-02-17T00:13:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3065,6 +3065,14 @@
 いきが　ピッタリだ！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]と
 息が　ピッタリだ！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_BurningDamage">
+		<comment>火の海のダメージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+ひのうみの　ダメージをうけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+火の海の　ダメージを受けた！</language>
 	</row>
 
 	<flowchart-group-list>
