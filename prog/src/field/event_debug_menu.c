@@ -217,6 +217,8 @@ static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk )
 static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk );
 
+static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk );
+
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -291,6 +293,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_SEASON_DISPLAY, debugMenuCallProc_SeasonDisplay },//季節表示
   { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },        //バトルレコーダー
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
+	{ DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },						//ずかん
 };
 
 
@@ -5188,4 +5191,211 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
   }
 
   return FALSE;
+}
+
+
+//======================================================================
+//  デバッグメニュー　図鑑
+//======================================================================
+
+typedef struct {
+  int seq_no;
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  FLDMENUFUNC *menuFunc;
+	ZUKAN_SAVEDATA * sv;
+}DEBUG_ZUKAN_WORK;
+
+///リスト メニューヘッダー
+static const FLDMENUFUNC_HEADER ZukanMenuHeader =
+{
+  1,    //リスト項目数
+  8,    //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+  0,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  12,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
+};
+
+///メニューリスト
+static const FLDMENUFUNC_LIST ZukanMenuList[] =
+{
+  { DEBUG_FIELD_ZUKAN_01, (void*)0 },		// 全国捕獲
+  { DEBUG_FIELD_ZUKAN_07, (void*)1 },		// 全国見た
+  { DEBUG_FIELD_ZUKAN_09, (void*)2 },		// ランダム
+  { DEBUG_FIELD_ZUKAN_03, (void*)3 },		// フォルム
+  { DEBUG_FIELD_ZUKAN_05, (void*)4 },		// 全国フラグ
+  { DEBUG_FIELD_ZUKAN_06, (void*)5 },		// バージョンアップ
+};
+
+static const DEBUG_MENU_INITIALIZER DebugMenuZukanImitializer = {
+  NARC_message_d_field_dat,
+  NELEMS(ZukanMenuList),
+  ZukanMenuList,
+  &ZukanMenuHeader,
+  1, 1, 16, 16,
+  NULL,
+  NULL
+};
+
+//--------------------------------------------------------------
+/// proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk );
+static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u32 mode );
+
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　図鑑
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_ZUKAN_WORK *work;
+  
+  GMEVENT_Change( event, debugMenuZukanEvent, sizeof(DEBUG_ZUKAN_WORK) );
+  
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_ZUKAN_WORK) );
+  
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	work->sv = GAMEDATA_GetZukanSave( GAMESYSTEM_GetGameData(wk->gmSys) );
+
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：図鑑
+ * @param event GMEVENT
+ * @param seq   シーケンス
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_ZUKAN_WORK *work = wk;
+  
+  switch( *seq ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID, &DebugMenuZukanImitializer );
+    (*seq)++;
+    break;
+
+  case 1:
+
+		switch( FLDMENUFUNC_ProcMenu(work->menuFunc) ){
+		case FLDMENUFUNC_NULL:		// 操作無し
+			break;
+
+		case FLDMENUFUNC_CANCEL:	// キャンセル
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			return GMEVENT_RES_FINISH;
+
+		case 0:			// 全国捕獲
+			{
+				u32	i;
+				for( i=1; i<=MONSNO_END; i++ ){
+					SetZukanDataOne( wk, i, 0, 0 );
+				}
+			}
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			return GMEVENT_RES_FINISH;
+
+		case 1:			// 全国見た
+			{
+				u32	i;
+				for( i=1; i<=MONSNO_END; i++ ){
+					SetZukanDataOne( wk, i, 0, 1 );
+				}
+			}
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			return GMEVENT_RES_FINISH;
+
+		case 2:			// ランダム
+			{
+				u32	max;
+				u32	i;
+				for( i=1; i<=MONSNO_END; i++ ){
+					max = ZUKANSAVE_GetFormMax( i );
+					if( max != 0 ){
+						SetZukanDataOne( wk, i, GFL_STD_MtRand(max), GFL_STD_MtRand(2) );
+					}else{
+						SetZukanDataOne( wk, i, 0, GFL_STD_MtRand(2) );
+					}
+				}
+			}
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			return GMEVENT_RES_FINISH;
+
+		case 3:			// フォルム
+			{
+				u32	max;
+				u16	i, j;
+				for( i=1; i<=MONSNO_END; i++ ){
+					max = ZUKANSAVE_GetFormMax( i );
+					if( max != 0 ){
+						for( j=0; j<max; j++ ){
+							SetZukanDataOne( wk, i, j, 0 );
+						}
+					}else{
+						SetZukanDataOne( wk, i, 0, 0 );
+					}
+				}
+			}
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			return GMEVENT_RES_FINISH;
+
+		case 4:			// 全国フラグ
+			ZUKANSAVE_SetZenkokuZukanFlag( work->sv );
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			return GMEVENT_RES_FINISH;
+
+		case 5:			// バージョンアップ
+			ZUKANSAVE_SetGraphicVersionUpFlag( work->sv );
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			return GMEVENT_RES_FINISH;
+		}
+		break;
+  }
+  
+  return GMEVENT_RES_CONTINUE;
+}
+
+static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u32 mode )
+{
+	POKEMON_PARAM * pp = PP_Create( mons, 50, 0, wk->heapID );
+
+	if( mode == 0 ){
+		ZUKANSAVE_SetPokeGet( wk->sv, pp );
+	}else{
+		ZUKANSAVE_SetPokeSee( wk->sv, pp );
+	}
+
+	GFL_HEAP_FreeMemory( pp );
 }

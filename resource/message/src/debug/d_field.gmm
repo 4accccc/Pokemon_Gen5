@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-02-16T11:17:24"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-02-16T12:49:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1295,6 +1295,41 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_MYSTERY_03">
 		<language name="JPN" width="160">GPOWERいり</language>
 		<language name="JPN_KANJI" width="160">GPOWER入り</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_01">
+		<language name="JPN" width="160">ぜんこくほかくセット</language>
+		<language name="JPN_KANJI" width="160">ぜんこくずかんセット</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_03">
+		<language name="JPN" width="160">ずかんフォルムセット</language>
+		<language name="JPN_KANJI" width="160">ずかんフォルムセット</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_04">
+		<language name="JPN" width="160">ずかん</language>
+		<language name="JPN_KANJI" width="160">ずかん</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_05">
+		<language name="JPN" width="160">ぜんこくフラグセット</language>
+		<language name="JPN_KANJI" width="160">ぜんこくフラグセット</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_06">
+		<language name="JPN" width="160">バージョンアップ</language>
+		<language name="JPN_KANJI" width="160">バージョンアップ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_07">
+		<language name="JPN" width="160">ぜんこくみたセット</language>
+		<language name="JPN_KANJI" width="160">ぜんこくみたセット</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_09">
+		<language name="JPN" width="160">ランダムセット</language>
+		<language name="JPN_KANJI" width="160">ランダムセット</language>
 	</row>
 
 	<flowchart-group-list>
