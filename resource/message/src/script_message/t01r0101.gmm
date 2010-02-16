@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T14:54:05"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T17:19:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="26" top="192" right="729" bottom="812" maximized="no" rayout="Vertical2">
+	<dialog left="1429" top="299" right="2132" bottom="919" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="528"/>
@@ -425,6 +425,66 @@
 どんな　ポケモンと　であうのかしら？</language>
 		<language name="JPN_KANJI" width="256">ママ『次は　どこに　行って
 どんな　ポケモンと　出会うのかしら？</language>
+	</row>
+
+	<row id="msg_t01r0101_dead_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ゲームオーバー処理
+・戻りの処理
+　２：自宅
+・0＝主人公名
+・回復ＳＥ後
+　msg_t01r0101_dead_02</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『[1:03:ポケモンタイプ:0]！
+おかえりなさい▼
+たいへん　だったみたいね
+すこし　やすんで　いきなさいよ▼
+……　……　……
+……　……　……</language>
+		<language name="JPN_KANJI" width="256">ママ『[1:03:ポケモンタイプ:0]！
+おかえりなさい▼
+たいへん　だったみたいね
+すこし　やすんで　いきなさいよ▼
+……　……　……
+……　……　……</language>
+	</row>
+
+	<row id="msg_t01r0101_dead_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ゲームオーバー処理
+・メッセージ表示後、主人公操作可能に</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『あらあら！▼
+あなたも　ポケモンも
+げんき　いっぱいね！▼
+あのね　ママからの
+アドバイス　なんだけど……▼
+ポケモンの　たいりょく
+えっと　ＨＰが　なくなってきたら▼
+こまめに　ポケモンセンターで
+かいふく　させるか▼
+とおくに　ぼうけん　するときは
+フレンドリィショップで▽
+キズぐすりを　かっておくと　いいわよ▼
+きを　つけてね！
+いってらっしゃい！▽
+ママ　おうえん　してるから！</language>
+		<language name="JPN_KANJI" width="256">ママ『あらあら！▼
+あなたも　ポケモンも
+元気　一杯ね！▼
+あのね　ママからの
+アドバイス　なんだけど……▼
+ポケモンの　体力
+えっと　ＨＰが　なくなってきたら▼
+こまめに　ポケモンセンターで
+回復させるか▼
+とおくに　冒険するときは
+フレンドリィショップで▽
+キズぐすりを　買っておくと　いいわよ▼
+気を　つけてね！
+いってらっしゃい！▽
+ママ　応援してるから！</language>
 	</row>
 
 	<flowchart-group-list>
