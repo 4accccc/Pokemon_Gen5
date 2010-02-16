@@ -52,6 +52,7 @@ struct _GURU2_CALL_WORK
   GAMESYS_WORK  *gsys;
   PLIST_DATA *plist;
   PSTATUS_DATA *psd;
+  GFL_PROCSYS *local_procsys;
 };
 
 //==============================================================================
@@ -86,6 +87,8 @@ GFL_PROC_RESULT Guru2Proc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk
 //  work->param.record = GAMEDATA_GetRecordPtr( param->gamedata );
   work->param        = *param;
 
+  work->local_procsys = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );
+
   OS_Printf("ぐるぐるプロセス開始\n");
 
   return GFL_PROC_RES_FINISH;
@@ -108,13 +111,22 @@ GFL_PROC_RESULT Guru2Proc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk
 {
 
   GURU2_CALL_WORK *g2call = mywk;
+  GFL_PROC_MAIN_STATUS proc_status;
   
-  if( DATA_SeqTbl[g2call->seq_no](g2call) == TRUE ){
-//    GFL_HEAP_FreeMemory( g2call );
-    return GFL_PROC_RES_FINISH;
+  proc_status = GFL_PROC_LOCAL_Main( g2call->local_procsys );
+  switch(proc_status){
+  case GFL_PROC_MAIN_NULL:         //PROCが存在しない
+    if( DATA_SeqTbl[g2call->seq_no](g2call) == TRUE ){
+  //    GFL_HEAP_FreeMemory( g2call );
+      return GFL_PROC_RES_FINISH;
+    }
+    OS_Printf("ぐるぐるプロセスメイン\n");
+    break;
+  case GFL_PROC_MAIN_VALID:        //有効なPROCがある
+  case GFL_PROC_MAIN_CHANGE:       //PROCが切り替わった
+    break;
   }
-  OS_Printf("ぐるぐるプロセスメイン\n");
-
+  
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -132,7 +144,11 @@ GFL_PROC_RESULT Guru2Proc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk
 //=============================================================================================
 GFL_PROC_RESULT Guru2Proc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
+  GURU2_CALL_WORK *g2call = mywk;
+
   OS_Printf("ぐるぐるプロセス終了\n");
+
+  GFL_PROC_LOCAL_Exit( g2call->local_procsys );
 
   // プロセル用ワーク解放
   GFL_PROC_FreeWork( proc );
@@ -262,7 +278,8 @@ static BOOL _seq_Init( GURU2_CALL_WORK *g2call )
 //  GameSystem_StartSubProc( g2call->fsys, &Guru2Receipt_Proc, g2call->g2p );
 
   OS_Printf("gamedata adr=%08x\n", (u32)g2call->gamedata);
-  GFL_PROC_SysCallProc( NO_OVERLAY_ID, &Guru2Receipt_Proc, g2call->g2p );
+//  GFL_PROC_SysCallProc( NO_OVERLAY_ID, &Guru2Receipt_Proc, g2call->g2p );
+  GFL_PROC_LOCAL_CallProc( g2call->local_procsys, NO_OVERLAY_ID, &Guru2Receipt_Proc, g2call->g2p );
   return( FALSE );
 }
 
@@ -321,7 +338,10 @@ static BOOL _seq_Receipt( GURU2_CALL_WORK *g2call )
       OS_Printf("pokelist start\n");
       GFL_NET_SetAutoErrorCheck( TRUE );
       g2call->plist = Guru2PokeListWorkCreate( g2call, PL_MODE_GURU2, 0 );
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(pokelist), &PokeList_ProcData, g2call->plist );
+//      GFL_PROC_SysCallProc( FS_OVERLAY_ID(pokelist), &PokeList_ProcData, g2call->plist );
+      GFL_PROC_LOCAL_CallProc( 
+        g2call->local_procsys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, g2call->plist );
+
 
 //    g2call->plist = Guru2ListEvent_SetProc( g2call->fsys, g2call->psel_pos );
       g2call->g2p->guru2_mode = GURU2MODE_POKESEL;
@@ -373,14 +393,17 @@ static BOOL _seq_PokeSelect( GURU2_CALL_WORK *g2call )
       g2call->psd->pos = ret;
 //      FieldPokeStatus_SetProc( g2call->fsys, g2call->psd ); 
       OS_Printf("pokestatus start\n");
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, g2call->psd );
+//      GFL_PROC_SysCallProc( FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, g2call->psd );
+      GFL_PROC_LOCAL_CallProc( 
+        g2call->local_procsys, FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, g2call->psd );
 
       g2call->seq_no = SEQNO_G2P_POKE_STATUS;
     }else{                      //ゲームへ
       g2call->g2p->trade_no = ret;
 //      GameSystem_StartSubProc(
 //        g2call->fsys, &Guru2Main_Proc, g2call->g2p );
-        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &Guru2Main_Proc, g2call->g2p );
+//        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &Guru2Main_Proc, g2call->g2p );
+      GFL_PROC_LOCAL_CallProc( g2call->local_procsys, NO_OVERLAY_ID, &Guru2Main_Proc, g2call->g2p );
       g2call->g2p->guru2_mode = GURU2MODE_GAME_MAIN;
       g2call->seq_no = SEQNO_G2P_GURU2_GAME;
     }
@@ -401,7 +424,9 @@ static BOOL _seq_PokeStatus( GURU2_CALL_WORK *g2call )
 //    g2call->plist =
 //      Guru2ListEvent_SetProc( g2call->fsys, g2call->psel_pos );
       g2call->plist = Guru2PokeListWorkCreate( g2call, PL_MODE_GURU2, 0 );
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &g2call->plist );
+//      GFL_PROC_SysCallProc( FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &g2call->plist );
+    GFL_PROC_LOCAL_CallProc( 
+      g2call->local_procsys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, g2call->plist );
 
     g2call->seq_no = SEQNO_G2P_POKE_SELECT;
   
