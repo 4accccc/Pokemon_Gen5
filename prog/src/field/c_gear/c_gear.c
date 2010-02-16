@@ -924,6 +924,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
   //    ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_ircbattle_connect_anm_NCLR, pWork->heapID);
   GFL_ARC_CloseDataHandle( p_handle );
 
+  GFL_NET_WirelessIconEasy_HoldLCD(FALSE, pWork->heapID);
   GFL_NET_ChangeIconPosition(240-22,14);
   GFL_NET_ReloadIcon();
 
