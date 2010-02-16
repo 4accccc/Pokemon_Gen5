@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/27 11:29:03
+#save date:2010/02/16 11:52:02
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\union.wms
 #SECTION START:OBJ_EVENT
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_UNION_GUIDE_00
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -60,24 +60,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Pos Event Label
-POS_UNION_EXIT_01
-#Pos Script Name
-SCRID_DUMMY
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK0
-#Event Trigger Work Value
 0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 8
-#size
-1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
