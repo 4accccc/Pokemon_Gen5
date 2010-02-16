@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-12T11:14:26"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T21:35:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="195" right="762" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="1358" top="323" right="2063" bottom="943" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -323,8 +323,16 @@
 
 	<row id="msg_r09_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
+		<language name="JPN" width="256">おとくな　けいじばん！▼
+おなじ　しゅるいの　ポケモンでも
+とくせいが　ことなることが　あります▼
+つかまえた　ポケモンでも
+また　つかまえてみましょう！</language>
+		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
+同じ　種類の　ポケモンでも
+とくせいが　異なることが　あります▼
+捕まえた　ポケモンでも
+また　捕まえてみましょう！</language>
 	</row>
 
 	<flowchart-group-list>
