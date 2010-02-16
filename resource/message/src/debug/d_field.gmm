@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="saitou" host="W00158" date="2010-02-16T11:06:24"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-02-16T11:17:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1290,6 +1290,11 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_MYSTERY_02">
 		<language name="JPN" width="160">どうぐいり</language>
 		<language name="JPN_KANJI" width="160">道具入り</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MYSTERY_03">
+		<language name="JPN" width="160">GPOWERいり</language>
+		<language name="JPN_KANJI" width="160">GPOWER入り</language>
 	</row>
 
 	<flowchart-group-list>

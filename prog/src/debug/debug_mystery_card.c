@@ -90,6 +90,26 @@ void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data, u32 event_id )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  GPOWERいりのデータを作成
+ *
+ *	@param	GIFT_PACK_DATA *p_data  データ 
+ */
+//-----------------------------------------------------------------------------
+void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data, u32 event_id )
+{ 
+  GFL_STD_MemClear( p_data, sizeof(GIFT_PACK_DATA) );
+  //道具作成
+  { 
+    GIFT_PRESENT_POWER  *p_gpower = &p_data->data.gpower;
+    p_gpower->type  = 1;
+  }
+  p_data->gift_type     = MYSTERYGIFT_TYPE_POWER;
+
+  //共通部分
+  DEBUG_MYSTERY_SetGiftCommonData( p_data, event_id, TRUE );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  共通部分のデータ作成
  *
  *	@param	DOWNLOAD_GIFT_DATA *p_data  データ

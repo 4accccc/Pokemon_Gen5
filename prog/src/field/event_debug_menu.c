@@ -215,6 +215,7 @@ static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -5086,6 +5087,7 @@ static const FLDMENUFUNC_LIST DATA_SubMysteryCardMakeList[] =
 {
   { DEBUG_FIELD_MYSTERY_01, debugMenuCallProc_MakeMysteryCardPoke },              //ポケモン作成
   { DEBUG_FIELD_MYSTERY_02, debugMenuCallProc_MakeMysteryCardItem },               //道具作成
+  { DEBUG_FIELD_MYSTERY_03, debugMenuCallProc_MakeMysteryCardGPower },              //Gパワー作成
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMysteryCardMakeData = {
@@ -5163,6 +5165,27 @@ static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk )
     }
   }
 
+  return FALSE;
+}
+static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  MYSTERY_DATA *p_mystery_sv  = SaveData_GetMysteryData( pSave);
+  GIFT_PACK_DATA  data;
+  int i;
+
+  for( i = 1; i < 2048; i++ )
+  { 
+    if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
+    { 
+
+      DEBUG_MYSTERY_SetGiftGPowerData( &data, i );
+      MYSTERYDATA_SetCardData( p_mystery_sv, &data );
+
+      OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
+      break;
+    }
+  }
 
   return FALSE;
 }
