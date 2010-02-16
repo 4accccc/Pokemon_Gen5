@@ -423,6 +423,7 @@ extern u8 BPP_CONFRONT_REC_GetPokeID( const BTL_POKEPARAM* bpp, u8 idx );
 
 extern void BPP_CombiWaza_SetParam( BTL_POKEPARAM* bpp, u8 combiPokeID, WazaID combiUsedWaza );
 extern BOOL BPP_CombiWaza_GetParam( const BTL_POKEPARAM* bpp, u8* combiPokeID, WazaID* combiUsedWaza );
+extern BOOL BPP_CombiWaza_IsSetParam( const BTL_POKEPARAM* bpp );
 extern void BPP_CombiWaza_ClearParam( BTL_POKEPARAM* bpp );
 
 

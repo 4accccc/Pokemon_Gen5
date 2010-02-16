@@ -431,27 +431,27 @@ static BOOL Effrank_Recover( BPP_VARIABLE_PARAM* rank )
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
 
-u8 BPP_GetID( const BTL_POKEPARAM* pp )
+u8 BPP_GetID( const BTL_POKEPARAM* bpp )
 {
-  return pp->coreParam.myID;
+  return bpp->coreParam.myID;
 }
 
-u16 BPP_GetMonsNo( const BTL_POKEPARAM* pp )
+u16 BPP_GetMonsNo( const BTL_POKEPARAM* bpp )
 {
-  return pp->coreParam.monsno;
+  return bpp->coreParam.monsno;
 }
 
-u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* pp )
+u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* bpp )
 {
-  return pp->wazaCnt;
+  return bpp->wazaCnt;
 }
 
-u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* pp )
+u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* bpp )
 {
   u8 cnt, i;
-  for(i=0, cnt=0; i<pp->wazaCnt; ++i)
+  for(i=0, cnt=0; i<bpp->wazaCnt; ++i)
   {
-    if( pp->waza[i].usedFlag ){
+    if( bpp->waza[i].usedFlag ){
       ++cnt;
     }
   }
@@ -2820,6 +2820,7 @@ void BPP_CombiWaza_SetParam( BTL_POKEPARAM* bpp, u8 combiPokeID, WazaID combiUse
 {
   bpp->combiPokeID = combiPokeID;
   bpp->combiWazaID = combiUsedWaza;
+  OS_TPrintf("ポケ(%d：%p）に合体パラメセット .. combiPoke=%d\n", bpp->coreParam.myID, bpp, bpp->combiPokeID);
 }
 //=============================================================================================
 /**
@@ -2844,6 +2845,19 @@ BOOL BPP_CombiWaza_GetParam( const BTL_POKEPARAM* bpp, u8* combiPokeID, WazaID* 
 }
 //=============================================================================================
 /**
+ * 合体ワザパラメータが設定されているかチェック
+ *
+ * @param   bpp
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BPP_CombiWaza_IsSetParam( const BTL_POKEPARAM* bpp )
+{
+  return bpp->combiPokeID != BTL_POKEID_NULL;
+}
+//=============================================================================================
+/**
  * 合体ワザパラメータクリア
  *
  * @param   bpp
@@ -2851,8 +2865,12 @@ BOOL BPP_CombiWaza_GetParam( const BTL_POKEPARAM* bpp, u8* combiPokeID, WazaID* 
 //=============================================================================================
 void BPP_CombiWaza_ClearParam( BTL_POKEPARAM* bpp )
 {
-  bpp->combiPokeID = BTL_POKEID_NULL;
-  bpp->combiWazaID = WAZANO_NULL;
+  if( bpp->combiPokeID!= BTL_POKEID_NULL)
+  {
+    bpp->combiPokeID = BTL_POKEID_NULL;
+    bpp->combiWazaID = WAZANO_NULL;
+    OS_TPrintf("ポケ(%d）に合体パラメクリア\n", bpp->coreParam.myID);
+  }
 }
 
 

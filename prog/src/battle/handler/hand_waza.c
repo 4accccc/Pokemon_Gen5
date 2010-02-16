@@ -9686,8 +9686,6 @@ static const BtlEventHandlerTable*  ADD_MizuNoTikai( u32* numElems )
     { BTL_EVENT_WAZA_PARAM,      handler_CombiWaza_WazaParam },    // ワザパラメータチェック
     { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow       },    // 威力計算
     { BTL_EVENT_WAZA_DMG_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
-
-
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9700,8 +9698,11 @@ static const BtlEventHandlerTable*  ADD_MizuNoTikai( u32* numElems )
 static const BtlEventHandlerTable*  ADD_HonooNoTikai( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_COMBIWAZA_CHECK, handler_CombiWaza_CheckExe },    // 合体ワザ発動チェック
-    { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow      },    // 威力計算
+    { BTL_EVENT_COMBIWAZA_CHECK, handler_CombiWaza_CheckExe  },    // 合体ワザ発動チェック
+    { BTL_EVENT_WAZA_EXE_DECIDE, handler_CombiWaza_Decide    },    // ワザ出し確定
+    { BTL_EVENT_WAZA_PARAM,      handler_CombiWaza_WazaParam },    // ワザパラメータチェック
+    { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow       },    // 威力計算
+    { BTL_EVENT_WAZA_DMG_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9715,8 +9716,11 @@ static const BtlEventHandlerTable*  ADD_HonooNoTikai( u32* numElems )
 static const BtlEventHandlerTable*  ADD_KusaNoTikai( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_COMBIWAZA_CHECK, handler_CombiWaza_CheckExe },    // 合体ワザ発動チェック
-    { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow      },    // 威力計算
+    { BTL_EVENT_COMBIWAZA_CHECK, handler_CombiWaza_CheckExe  },    // 合体ワザ発動チェック
+    { BTL_EVENT_WAZA_EXE_DECIDE, handler_CombiWaza_Decide    },    // ワザ出し確定
+    { BTL_EVENT_WAZA_PARAM,      handler_CombiWaza_WazaParam },    // ワザパラメータチェック
+    { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow       },    // 威力計算
+    { BTL_EVENT_WAZA_DMG_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9731,6 +9735,8 @@ static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     WazaID  combiWazaID;
     u8 combiPokeID;
+
+    OS_TPrintf("合体ワザ発動チェック...Poke=%d\n", pokeID );
 
     if( BPP_CombiWaza_GetParam(bpp, &combiPokeID, &combiWazaID) )
     {

@@ -474,6 +474,7 @@ static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet );
 static u32 scEvent_SickDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sickID, u32 damage );
 static void scproc_turncheck_side( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_side_callback( BtlSide side, BtlSideEffect sideEffect, void* arg );
+static void scPut_SideEffectOffMsg( BTL_SVFLOW_WORK* wk, BtlSideEffect sideEffect, BtlSide side );
 static void scproc_turncheck_field( BTL_SVFLOW_WORK* wk );
 static void turncheck_field_callback( BtlFieldEffect effect, void* arg );
 static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect );
@@ -3178,8 +3179,10 @@ static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
       break;
     }
   }
-  if( (i != NELEMS(CombiWazaTbl)) && BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_COMBIWAZA_READY) )
-  {
+  if( (i != NELEMS(CombiWazaTbl))
+  &&  (!BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_COMBIWAZA_READY))
+  &&  (!BPP_CombiWaza_IsSetParam(attacker))
+  ){
     enum {
       COMBI_MAX = BTL_POSIDX_MAX - 1,   // 合体ワザを一緒に撃ってくれる論理上の最大ポケ数
     };
@@ -3202,29 +3205,32 @@ static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
 
     if( orderCnt )
     {
-      u8 idx, idxMin, targetIdx, combiPokeID;
+      BTL_POKEPARAM* combiPoke;
+      u8 idx, idxMin, combiPokeID;
 
 
       idxMin = BTL_POS_MAX;
-      targetIdx = 0;
+      combiPoke = orderWork[ 0 ]->bpp;
 
       for(i=0; i<orderCnt; ++i)
       {
         idx = ActOrderTool_GetIndex( wk, orderWork[i] );
         if( idx < idxMin ){
           idxMin = idx;
-          targetIdx = i;
+          combiPoke = orderWork[i]->bpp;
         }
       }
 
-      combiPokeID = BPP_GetID( orderWork[targetIdx]->bpp );
+      combiPokeID = BPP_GetID( combiPoke );
+      OS_TPrintf(" Bpp Adrs=%p, ID=%d\n", combiPoke, combiPokeID);
 
-      BTL_N_Printf( DBGSTR_SVFL_CombiDecide, combiPokeID );
+      BTL_N_Printf( DBGSTR_SVFL_CombiDecide, pokeID, combiPokeID );
+
+      BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_COMBIWAZA_READY );
+      BPP_CombiWaza_SetParam( combiPoke, pokeID, waza );
+      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_CombiWazaReady, pokeID, combiPokeID );
 
       ActOrder_IntrReserve( wk, combiPokeID );
-      BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_COMBIWAZA_READY );
-      BPP_CombiWaza_SetParam( orderWork[targetIdx]->bpp, pokeID, waza );
-      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_SET_CombiWazaReady, pokeID, combiPokeID );
       return TRUE;
     }
   }
@@ -7423,20 +7429,35 @@ static void scproc_turncheck_side( BTL_SVFLOW_WORK* wk )
 static void scproc_turncheck_side_callback( BtlSide side, BtlSideEffect sideEffect, void* arg )
 {
   BTL_SVFLOW_WORK* wk = arg;
+  scPut_SideEffectOffMsg( wk, sideEffect, side );
+}
+static void scPut_SideEffectOffMsg( BTL_SVFLOW_WORK* wk, BtlSideEffect sideEffect, BtlSide side )
+{
   int strID = -1;
+
   switch( sideEffect ){
-  case BTL_SIDEEFF_REFRECTOR:     strID = BTL_STRID_STD_ReflectorOff; break;
-  case BTL_SIDEEFF_HIKARINOKABE:  strID = BTL_STRID_STD_HikariNoKabeOff; break;
-  case BTL_SIDEEFF_SINPINOMAMORI: strID = BTL_STRID_STD_SinpiNoMamoriOff; break;
-  case BTL_SIDEEFF_SIROIKIRI:     strID = BTL_STRID_STD_SiroiKiriOff; break;
-  case BTL_SIDEEFF_OIKAZE:        strID = BTL_STRID_STD_OikazeOff; break;
-  case BTL_SIDEEFF_OMAJINAI:      strID = BTL_STRID_STD_OmajinaiOff; break;
+  case BTL_SIDEEFF_REFRECTOR:       strID = BTL_STRID_STD_ReflectorOff; break;
+  case BTL_SIDEEFF_HIKARINOKABE:    strID = BTL_STRID_STD_HikariNoKabeOff; break;
+  case BTL_SIDEEFF_SINPINOMAMORI:   strID = BTL_STRID_STD_SinpiNoMamoriOff; break;
+  case BTL_SIDEEFF_SIROIKIRI:       strID = BTL_STRID_STD_SiroiKiriOff; break;
+  case BTL_SIDEEFF_OIKAZE:          strID = BTL_STRID_STD_OikazeOff; break;
+  case BTL_SIDEEFF_OMAJINAI:        strID = BTL_STRID_STD_OmajinaiOff; break;
+  case BTL_SIDEEFF_MAKIBISI:        strID = BTL_STRID_STD_MakibisiOff; break;
+  case BTL_SIDEEFF_DOKUBISI:        strID = BTL_STRID_STD_DokubisiOff; break;
+  case BTL_SIDEEFF_STEALTHROCK:     strID = BTL_STRID_STD_StealthRockOff; break;
+  case BTL_SIDEEFF_RAINBOW:         strID = BTL_STRID_STD_RainbowOff; break;
+  case BTL_SIDEEFF_BURNING:         strID = BTL_STRID_STD_BurningOff; break;
+  case BTL_SIDEEFF_MOOR:            strID = BTL_STRID_STD_MoorOff; break;
+  default:
+    break;
   }
+
   if( strID >= 0 )
   {
     SCQUE_PUT_MSG_STD( wk->que, strID, side );
   }
 }
+
 //------------------------------------------------------------------
 // サーバーフロー下請け： ターンチェック > フィールドエフェクト
 //------------------------------------------------------------------
@@ -11800,25 +11821,7 @@ static u8 scproc_HandEx_sideEffectRemove( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_
     {
       if( BTL_HANDLER_SIDE_Remove(param->side, i) )
       {
-        int strID = -1;
-
-        switch( i ){
-        case BTL_SIDEEFF_REFRECTOR:       strID = BTL_STRID_STD_ReflectorOff; break;
-        case BTL_SIDEEFF_HIKARINOKABE:    strID = BTL_STRID_STD_HikariNoKabeOff; break;
-        case BTL_SIDEEFF_SINPINOMAMORI:   strID = BTL_STRID_STD_SinpiNoMamoriOff; break;
-        case BTL_SIDEEFF_SIROIKIRI:       strID = BTL_STRID_STD_SiroiKiriOff; break;
-        case BTL_SIDEEFF_OIKAZE:          strID = BTL_STRID_STD_OikazeOff; break;
-        case BTL_SIDEEFF_OMAJINAI:        strID = BTL_STRID_STD_OmajinaiOff; break;
-        case BTL_SIDEEFF_MAKIBISI:        strID = BTL_STRID_STD_MakibisiOff; break;
-        case BTL_SIDEEFF_DOKUBISI:        strID = BTL_STRID_STD_DokubisiOff; break;
-        case BTL_SIDEEFF_STEALTHROCK:     strID = BTL_STRID_STD_StealthRockOff; break;
-        default:
-          break;
-        }
-//          SCQUE_PUT_MSG_SET( wk->que, param->exStrID, param_header->userPokeID, waza );
-        if( strID >= 0 ){
-          SCQUE_PUT_MSG_STD( wk->que, strID, param->side );
-        }
+        scPut_SideEffectOffMsg( wk, i, param->side );
         result = 1;
       }
     }
