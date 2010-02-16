@@ -516,6 +516,11 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
         em->seq++;
       }
     }
+    else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
+      em->seq = _SEQ_BREAKUP_CHECK;
+      em->entry_result = COMM_ENTRY_RESULT_CANCEL;
+      em->seq = _SEQ_FINISH;
+    }
     break;
   case _SEQ_FIRST_NEGO_WAIT:
     if( GFL_NET_HANDLE_IsNegotiation( GFL_NET_HANDLE_GetCurrentHandle() ) == TRUE ){
