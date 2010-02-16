@@ -459,6 +459,8 @@ sub_receipt_challenge_multi_comm:
     _RET
   ENDIF
   
+  _SYSWIN_CLOSE()
+
   //í êMäJén
   _BSUBWAY_TOOL( BSWSUB_COMM_START, BSW_NULL, BSW_NULL, BSW_NULL )
   
