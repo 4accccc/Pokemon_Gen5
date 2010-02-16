@@ -236,8 +236,7 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk );
 static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk );
 static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk );
 static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk );
-static void scproc_CheckFlyingAllPoke( BTL_SVFLOW_WORK* wk );
-static BOOL scproc_CheckFlying( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static BOOL scproc_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 orderMax );
 static void reqWazaUseForCalcActOrder( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order );
@@ -1257,15 +1256,12 @@ static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk )
  * @param   bpp
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_CheckFlying( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+static BOOL scproc_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
-  BPP_TURNFLAG_ForceOff( bpp, BPP_TURNFLG_FLYING );
-
   // じゅうりょくが効いていたら誰も浮けないのでチェックしない
   if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
   {
     if( scEvent_CheckFlying(wk, bpp) ){
-      scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_FLYING );
       return TRUE;
     }
   }
@@ -4707,23 +4703,20 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
     f_same_aff = TRUE;
 
     // 相性全一致チェック
-    if( f_same_aff )
+    for(i=0; i<poke_cnt; ++i)
     {
-      for(i=0; i<poke_cnt; ++i)
-      {
-        bpp = BTL_POKESET_Get( targets, i );
-        if( BPP_MIGAWARI_IsExist(bpp) ){    // １体でもみがわりがいる場合は一致とみなさない
-          f_same_aff = FALSE;
-          break;
-        }
+      bpp = BTL_POKESET_Get( targets, i );
+      if( BPP_MIGAWARI_IsExist(bpp) ){    // １体でもみがわりがいる場合は一致とみなさない
+        f_same_aff = FALSE;
+        break;
+      }
 
-        for(j=0; j<i; ++j)
-        {
-          if( BTL_CALC_TypeAffAbout(affAry[i]) != BTL_CALC_TypeAffAbout(affAry[i]) ){
-            f_same_aff = FALSE;
-            i = poke_cnt; // for loopOut
-            break;
-          }
+      for(j=0; j<i; ++j)
+      {
+        if( BTL_CALC_TypeAffAbout(affAry[i]) != BTL_CALC_TypeAffAbout(affAry[j]) ){
+          f_same_aff = FALSE;
+          i = poke_cnt; // for loopOut
+          break;
         }
       }
     }
@@ -9441,11 +9434,10 @@ static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
     return BTL_TYPEAFF_100;
   }
 
-  // ふゆう状態のポケモンに地面ワザは効果がない
+  // ふゆう状態のポケモンに地面ダメージワザは効果がない
   if( wazaParam->wazaType == POKETYPE_JIMEN )
   {
-    scproc_CheckFlying( wk, defender );
-    if( BPP_TURNFLAG_Get(defender, BPP_TURNFLG_FLYING) ){
+    if( scproc_CheckFlying(wk, defender) ){
       return BTL_TYPEAFF_0;
     }
   }
@@ -10706,7 +10698,21 @@ u16 BTL_SVFTOOL_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BOOL
 {
   return scEvent_CalcAgility( wk, bpp, fTrickRoomEnable );
 }
-
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] “浮いている”状態チェック
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_IsFlyingPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+  return scproc_CheckFlying( wk, bpp );
+}
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] 天候取得
@@ -11632,12 +11638,28 @@ static u8 scproc_HandEx_sideEffectRemove( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_
   u8 result = 0;
   for(i=BTL_SIDEEFF_START; i<BTL_SIDEEFF_MAX; ++i)
   {
-    if( BTL_CALC_BITFLG_Check(param->flags, i) ){
-      if( BTL_HANDLER_SIDE_Remove(param->side, i) ){
-        if( param->fExMsg )
-        {
-          WazaID waza = BTL_CALC_SideEffectIDtoWazaID( i );
-          SCQUE_PUT_MSG_SET( wk->que, param->exStrID, param_header->userPokeID, waza );
+    if( BTL_CALC_BITFLG_Check(param->flags, i) )
+    {
+      if( BTL_HANDLER_SIDE_Remove(param->side, i) )
+      {
+        int strID = -1;
+
+        switch( i ){
+        case BTL_SIDEEFF_REFRECTOR:       strID = BTL_STRID_STD_ReflectorOff; break;
+        case BTL_SIDEEFF_HIKARINOKABE:    strID = BTL_STRID_STD_HikariNoKabeOff; break;
+        case BTL_SIDEEFF_SINPINOMAMORI:   strID = BTL_STRID_STD_SinpiNoMamoriOff; break;
+        case BTL_SIDEEFF_SIROIKIRI:       strID = BTL_STRID_STD_SiroiKiriOff; break;
+        case BTL_SIDEEFF_OIKAZE:          strID = BTL_STRID_STD_OikazeOff; break;
+        case BTL_SIDEEFF_OMAJINAI:        strID = BTL_STRID_STD_OmajinaiOff; break;
+        case BTL_SIDEEFF_MAKIBISI:        strID = BTL_STRID_STD_MakibisiOff; break;
+        case BTL_SIDEEFF_DOKUBISI:        strID = BTL_STRID_STD_DokubisiOff; break;
+        case BTL_SIDEEFF_STEALTHROCK:     strID = BTL_STRID_STD_StealthRockOff; break;
+        default:
+          break;
+        }
+//          SCQUE_PUT_MSG_SET( wk->que, param->exStrID, param_header->userPokeID, waza );
+        if( strID >= 0 ){
+          SCQUE_PUT_MSG_STD( wk->que, strID, param->side );
         }
         result = 1;
       }

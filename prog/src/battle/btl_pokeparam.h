@@ -90,7 +90,6 @@ typedef enum {
   BPP_TURNFLG_SHRINK,        ///< ひるまされた
   BPP_TURNFLG_MUST_SHRINK,   ///< ダメージで必ずひるむ
   BPP_TURNFLG_MAMORU,        ///< “まもる”発動
-  BPP_TURNFLG_FLYING,        ///< 宙に浮いてる
   BPP_TURNFLG_ITEM_CONSUMED, ///< アイテムを使用して無くなった
   BPP_TURNFLG_ITEM_CANT_USE, ///< 装備アイテム使えない
 

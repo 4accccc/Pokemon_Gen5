@@ -41,7 +41,7 @@ typedef enum {
   BTL_EVENT_NIGERU_EXMSG,           ///< にげる特殊メッセージ
   BTL_EVENT_CHECK_SP_PRIORITY,      ///< とくしゅ優先度チェック
   BTL_EVENT_GET_WAZA_PRI,           ///< ワザプライオリティ取得
-  BTL_EVENT_CHECK_FLYING,           ///< 飛行チェック
+  BTL_EVENT_CHECK_FLYING,           ///< 浮遊チェック
   BTL_EVENT_CALC_AGILITY,           ///< すばやさ計算
   BTL_EVENT_CHECK_CONF,             ///< 混乱チェック
   BTL_EVENT_CALC_CONF_DAMAGE,       ///< 混乱ダメージ計算

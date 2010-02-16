@@ -1420,7 +1420,6 @@ static BOOL handler_Kawarawari_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFa
 static const BtlEventHandlerTable*  ADD_Tobigeri( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-//    { BTL_EVENT_WAZA_AVOID,             handler_Tobigeri_Avoid     }, // ワザはずれたハンドラ
     { BTL_EVENT_WAZA_EXECUTE_NO_EFFECT, handler_Tobigeri_NoEffect  }, // 効果なかったハンドラ
   };
   *numElems = NELEMS( HandlerTable );
@@ -6876,8 +6875,8 @@ static void handler_KousokuSpin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     }
 
     side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
-    if( BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_MAKIBISI)
-    ){
+    if( BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_MAKIBISI) )
+    {
       side_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
       side_param->side = side;
       BTL_CALC_BITFLG_Construction( side_param->flags, sizeof(side_param->flags) );
@@ -6889,8 +6888,8 @@ static void handler_KousokuSpin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       HANDEX_STR_AddArg( &msg_param->str, WAZANO_MAKIBISI );
       BTL_Printf("こうそくスピンでside[%d]のまきびし除去します\n", side);
     }
-    if( BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_DOKUBISI)
-    ){
+    if( BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_DOKUBISI) )
+    {
       side_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
       side_param->side = side;
       BTL_CALC_BITFLG_Construction( side_param->flags, sizeof(side_param->flags) );
@@ -7831,14 +7830,8 @@ static void handler_Haneyasume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-//    BTL_HANDEX_PARAM_TURNFLAG* flag_param;
     BTL_HANDEX_PARAM_ADD_SICK* sick_param;
-/*
-    flag_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_TURNFLAG, pokeID );
-    flag_param->pokeID = pokeID;
-    flag_param->flag = BPP_TURNFLG_FLYING;
-*/
-    //
+
     sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
     sick_param->poke_cnt = 1;
     sick_param->pokeID[0] = pokeID;
@@ -8852,9 +8845,9 @@ static const BtlEventHandlerTable*  ADD_Utiotosu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
 #ifdef _UTIOTOSU_NEW
-    { BTL_EVENT_WAZASICK_SPECIAL,  handler_Utiotosu   },  // 特殊状態異常
+    { BTL_EVENT_WAZASICK_SPECIAL,   handler_Utiotosu   },   // 特殊状態異常
 #else
-    { BTL_EVENT_WAZA_DMG_REACTION,  handler_Utiotosu   },         // ダメージ直後
+    { BTL_EVENT_WAZA_DMG_REACTION,  handler_Utiotosu   },   // ダメージ直後
 #endif
   };
   *numElems = NELEMS( HandlerTable );

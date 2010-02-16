@@ -308,7 +308,9 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
    */
   static const u16 sideConvStrID[] = {
     BTL_STRID_STD_Makibisi,
+    BTL_STRID_STD_MakibisiOff,
     BTL_STRID_STD_Dokubisi,
+    BTL_STRID_STD_DokubisiOff,
     BTL_STRID_STD_StealthRock,
     BTL_STRID_STD_WideGuard,
     BTL_STRID_STD_FastGuard,

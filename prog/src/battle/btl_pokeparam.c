@@ -219,11 +219,10 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   // この時点でポケモン用状態異常になっていれば引き継ぎ
   {
     PokeSick sick = PP_GetSick( pp );
-    if( sick == POKESICK_NEMURI )
+    if( sick != POKESICK_NULL )
     {
-      u32 turns = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MAX );
-      bpp->sickCont[WAZASICK_NEMURI] = BPP_SICKCONT_MakeTurn( turns );
-      bpp->wazaSickCounter[WAZASICK_NEMURI] = 0;
+      bpp->sickCont[ sick ] = BTL_CALC_MakeDefaultPokeSickCont( sick );
+      bpp->wazaSickCounter[ sick ] = 0;
     }
   }
 

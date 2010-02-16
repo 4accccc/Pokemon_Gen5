@@ -543,15 +543,13 @@ static const BtlEventHandlerTable* ADD_SIDE_Makibisi( u32* numElems )
 static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
-  ){
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-
-    if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_FLYING) )
+  if( BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide )
+  {
+    if( !BTL_SVFTOOL_IsFlyingPoke(flowWk, pokeID) )
     {
       u8 add_counter = getMyAddCounter( myHandle, mySide );
       u8 denom;
-      switch( add_counter) {
+      switch( add_counter ) {
       case 1:
       default:
         denom = 8; break;
@@ -562,6 +560,7 @@ static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       }
       {
         BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
+        const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
         param->pokeID = pokeID;
         param->damage = BTL_CALC_QuotMaxHP( bpp, denom );
@@ -587,23 +586,34 @@ static const BtlEventHandlerTable* ADD_SIDE_Dokubisi( u32* numElems )
 static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
-  ){
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-
-    if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_FLYING) )
+  if( BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide )
+  {
+    if( !BTL_SVFTOOL_IsFlyingPoke( flowWk, pokeID ) )
     {
-      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, BTL_POKEID_NULL );
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
-      param->sickID = WAZASICK_DOKU;
-      if( getMyAddCounter(myHandle, mySide) > 1 ){
-        param->sickCont = BPP_SICKCONT_MakePermanentInc( BTL_MOUDOKU_COUNT_MAX );
-      }else{
-        param->sickCont = BPP_SICKCONT_MakePermanent();
+      if( BPP_IsMatchType(bpp, POKETYPE_DOKU) )
+      {
+        BTL_HANDEX_PARAM_SIDEEFF_REMOVE* side_param;
+        side_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
+        side_param->side = mySide;
+        BTL_CALC_BITFLG_Construction( side_param->flags, sizeof(side_param->flags) );
+        BTL_CALC_BITFLG_Set( side_param->flags, BTL_SIDEEFF_DOKUBISI );
       }
+      else
+      {
+        BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, BTL_POKEID_NULL );
 
-      param->poke_cnt = 1;
-      param->pokeID[0] = pokeID;
+        param->sickID = WAZASICK_DOKU;
+        if( getMyAddCounter(myHandle, mySide) > 1 ){
+          param->sickCont = BPP_SICKCONT_MakeMoudokuCont();
+        }else{
+          param->sickCont = BPP_SICKCONT_MakePermanent();
+        }
+
+        param->poke_cnt = 1;
+        param->pokeID[0] = pokeID;
+      }
     }
   }
 }
