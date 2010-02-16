@@ -276,7 +276,7 @@ const void * SaveControl_GetSaveWorkAdrs(SAVE_CONTROL_WORK *ctrl, u32 *get_size)
  * @retval  TRUE:新規データである
  */
 //--------------------------------------------------------------
-BOOL SaveControl_NewDataFlagGet(SAVE_CONTROL_WORK *ctrl)
+BOOL SaveControl_NewDataFlagGet(const SAVE_CONTROL_WORK *ctrl)
 {
 	return ctrl->new_data_flag;
 }
@@ -303,6 +303,23 @@ u32 SaveControl_GetLoadResult(const SAVE_CONTROL_WORK * sv)
 BOOL SaveData_GetExistFlag(const SAVE_CONTROL_WORK * sv)
 {
 	return sv->data_exists;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	データ上書きチェック(他人のレポート上書きチェック)
+ * @param	sv			セーブデータ構造へのポインタ
+ * @retval	TRUE		既にあるデータに別のデータを上書きしようとしている
+ * @retval	FALSE		データがないか、既存データである
+ */
+//---------------------------------------------------------------------------
+BOOL SaveControl_IsOverwritingOtherData(const SAVE_CONTROL_WORK * sv)
+{
+	if (SaveControl_NewDataFlagGet(sv) == TRUE && SaveData_GetExistFlag(sv) == TRUE) {
+		return TRUE;
+	} else {
+		return FALSE;
+	}
 }
 
 //---------------------------------------------------------------------------
