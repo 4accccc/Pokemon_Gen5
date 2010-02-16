@@ -508,6 +508,9 @@ _RET
 /********------共通：対戦イベント-------***********/
 ev_t01r0102_poke_battle:
 
+	//戦闘復帰後、自宅があらされた状態にする
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, TRUE, TRUE )
+
 	//サポート戦闘呼び出し　最初の３匹によって分岐　負けてもシナリオ進行
 	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
 		//初期３匹で草タイプを選択
@@ -520,11 +523,13 @@ ev_t01r0102_poke_battle:
 		_TRAINER_BTL_SP_SET( TRID_SUPPORT_03, 0, SCR_BATTLE_MODE_NOLOSE )
 	ENDIF
 
+	//戦闘復帰処理
+	_TRAINER_WIN()
+
 	//【仮】勝敗によるメッセージ分岐
 	//サポート会話：つよいねー
 	_BALLOONWIN_OBJMSG( msg_t01r0102_white_11, T01R0102_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
-	
 	
 	//ライバル曲再生
 	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
@@ -569,6 +574,9 @@ ev_t01r0102_poke_battle:
 		//初期３匹で水タイプを選択
 		_TRAINER_BTL_SP_SET( TRID_RIVAL_03, 0, SCR_BATTLE_MODE_NOLOSE )
 	ENDIF
+
+	//戦闘復帰処理
+	_TRAINER_WIN()
 
 	//全滅する可能性もあるので回復させる
 	_TEMOTI_POKEMON_KAIFUKU()		//回復処理
