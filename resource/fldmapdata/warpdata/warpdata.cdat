@@ -86,6 +86,13 @@ static const WARPDATA WarpData[] = {
 		ZONE_ID_C09         ,  17,  17,
 	},
 	{
+		SYS_FLAG_ARRIVE_T04,
+		TRUE ,TRUE ,
+		ZONE_ID_T04PC0101   ,   7,  12,
+		ZONE_ID_T04         , 100, 100,
+		ZONE_ID_T04         , 100, 100,
+	},
+	{
 		SYS_FLAG_ARRIVE_C10,
 		TRUE ,TRUE ,
 		ZONE_ID_BC10PCR0101 ,   7,  12,
