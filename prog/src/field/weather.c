@@ -247,6 +247,18 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_rain)
 	},
 
+	// パレスホワイト霧
+	{
+		&c_WEATHER_TASK_DATA_PALACE_WHITE_MIST,
+		FS_OVERLAY_ID(field_weather_mist)
+	},
+
+	// パレスブラック霧
+	{
+		&c_WEATHER_TASK_DATA_PALACE_BLACK_MIST,
+		FS_OVERLAY_ID(field_weather_mist)
+	},
+
 	// 蜃気楼
 	{
 		&c_WEATHER_TASK_DATA_MIRAGE,

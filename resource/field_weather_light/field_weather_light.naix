@@ -13,10 +13,12 @@
 enum {
 	NARC_field_weather_light_light_kazakami_dat = 0,
 	NARC_field_weather_light_light_mist_dat = 1,
-	NARC_field_weather_light_light_raikami_dat = 2,
-	NARC_field_weather_light_light_rain_dat = 3,
-	NARC_field_weather_light_light_show_dat = 4,
-	NARC_field_weather_light_light_storm_dat = 5
+	NARC_field_weather_light_light_palace_black_mist_dat = 2,
+	NARC_field_weather_light_light_palace_white_mist_dat = 3,
+	NARC_field_weather_light_light_raikami_dat = 4,
+	NARC_field_weather_light_light_rain_dat = 5,
+	NARC_field_weather_light_light_show_dat = 6,
+	NARC_field_weather_light_light_storm_dat = 7
 };
 
 /* NARC_FIELD_WEATHER_LIGHT_NAIX_ */

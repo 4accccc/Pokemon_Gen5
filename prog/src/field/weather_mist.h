@@ -26,6 +26,8 @@ FS_EXTERN_OVERLAY(field_weather_mist);
 */
 //-----------------------------------------------------------------------------
 extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_MIST;
+extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_PALACE_WHITE_MIST;
+extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_PALACE_BLACK_MIST;
 
 
 #ifdef _cplusplus
