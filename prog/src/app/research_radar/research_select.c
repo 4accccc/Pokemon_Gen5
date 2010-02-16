@@ -791,6 +791,13 @@ static u8 GetTopicScreenPosLeft( u8 topicID, BOOL selected )
 //----------------------------------------------------------------------------------------------
 static u8 GetTopicScreenPosTop ( u8 topicID, BOOL selected )
 {
+  u8 top;
+
+  // デフォルトの位置
+  top = TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * topicID;
+
+  // 
+  return top;
 }
 
 
