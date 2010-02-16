@@ -10,6 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_sodateya_scr.h"
+  .include  "r03r0201.h"
   //.include  "sodateya_scr.h"
 
 //----------------------------------------------------------------------
@@ -515,7 +516,9 @@ take_back_pokemon_core:
        _SE_PLAY( SEQ_SE_SYS_22 )
        _SE_WAIT()
 
-       //【仮】引き取りアニメ演出
+       //引き取りアニメ演出
+       _OBJ_ANIME( R03R0201_SODATEYA_GRANDMA, anime_grandma_take_back )
+       _OBJ_ANIME_WAIT()
 
        // 鳴き声SE
        _GET_SODATEYA_POKE_MONSNO( monsno, select_sodateya_pos )
@@ -525,8 +528,8 @@ take_back_pokemon_core:
        //「[ニックネーム]を引き取った！」
        _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
        _PLAYER_NAME( 1 )
-       $message_id = msg_sodateya_oldwoman_15
-       _CALL say_no_wait
+       _SYSWIN_MSG_DOWN( msg_sodateya_oldwoman_15 )
+       _SYSWIN_CLOSE()
 
        // 手持ちポケモンに移動
        _POKE_FROM_SODATEYA( select_sodateya_pos )
@@ -546,6 +549,17 @@ take_back_pokemon_core:
   _CALL get_party_state
 }
 _RET
+
+
+//======================================================================
+// 動作モデル アニメーション: おばあさん 引き取り時の動作
+//======================================================================
+_ANIME_LABEL anime_grandma_take_back
+  _ANIME_DATA AC_WALK_U_16F, 3
+  _ANIME_DATA AC_WAIT_8F,    1
+  _ANIME_DATA AC_WALK_D_16F, 3
+  _ANIME_DATA ACMD_END,      0
+
 
 //======================================================================
 // サブルーチン：『ひきとる』処理
