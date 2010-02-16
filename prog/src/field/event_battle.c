@@ -363,7 +363,7 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
     PP_Put( pp, ID_PARA_waza2, WAZANO_NIRAMITUKERU );
     PP_Put( pp, ID_PARA_waza3, WAZANO_NULL );
     PP_Put( pp, ID_PARA_waza4, WAZANO_NULL );
-    PokeParty_Add( partyMine, pp );
+    PokeParty_Add( partyEnemy, pp );
 
     BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, fieldmap );
     BTL_SETUP_CaptureDemo( bp, gdata, partyMine, partyEnemy, &sit, heapID );
