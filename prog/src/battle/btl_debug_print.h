@@ -135,6 +135,9 @@ typedef enum {
   DBGSTR_SVFL_WazaExeFail_1,
   DBGSTR_SVFL_WazaExeFail_2,
   DBGSTR_SVFL_HandEx_AddSick,
+  DBGSTR_SVFL_CombiWazaCheck,
+  DBGSTR_SVFL_CombiWazaFound,
+  DBGSTR_SVFL_CombiDecide,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
@@ -174,6 +177,7 @@ typedef enum {
 
   DBGSTR_Item_PinchReactItem,
   DBGSTR_Item_PinchReactOn,
+  DBGSTR_HANDWAZA_CombiWazaExe,
 
 
   DBGSTR_val_comma,

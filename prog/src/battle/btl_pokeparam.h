@@ -84,14 +84,15 @@ enum {
 //--------------------------------------------------------------
 typedef enum {
 
-  BPP_TURNFLG_ACTION_DONE,   ///< 行動した
-  BPP_TURNFLG_DAMAGED,       ///< ダメージ喰らった
-  BPP_TURNFLG_WAZAPROC_DONE, ///< ワザ処理を修了した
-  BPP_TURNFLG_SHRINK,        ///< ひるまされた
-  BPP_TURNFLG_MUST_SHRINK,   ///< ダメージで必ずひるむ
-  BPP_TURNFLG_MAMORU,        ///< “まもる”発動
-  BPP_TURNFLG_ITEM_CONSUMED, ///< アイテムを使用して無くなった
-  BPP_TURNFLG_ITEM_CANT_USE, ///< 装備アイテム使えない
+  BPP_TURNFLG_ACTION_DONE,      ///< 行動した
+  BPP_TURNFLG_DAMAGED,          ///< ダメージ喰らった
+  BPP_TURNFLG_WAZAPROC_DONE,    ///< ワザ処理を修了した
+  BPP_TURNFLG_SHRINK,           ///< ひるまされた
+  BPP_TURNFLG_MUST_SHRINK,      ///< ダメージで必ずひるむ
+  BPP_TURNFLG_MAMORU,           ///< “まもる”発動
+  BPP_TURNFLG_ITEM_CONSUMED,    ///< アイテムを使用して無くなった
+  BPP_TURNFLG_ITEM_CANT_USE,    ///< 装備アイテム使えない
+  BPP_TURNFLG_COMBIWAZA_READY,  ///< 合体ワザ準備中
 
   BPP_TURNFLG_MAX,
 
@@ -419,6 +420,10 @@ extern void BPP_CONFRONT_REC_Set( BTL_POKEPARAM* bpp, u8 pokeID );
 extern u8 BPP_CONFRONT_REC_GetCount( const BTL_POKEPARAM* bpp );
 extern u8 BPP_CONFRONT_REC_GetPokeID( const BTL_POKEPARAM* bpp, u8 idx );
 
+
+extern void BPP_CombiWaza_SetParam( BTL_POKEPARAM* bpp, u8 combiPokeID, WazaID combiUsedWaza );
+extern BOOL BPP_CombiWaza_GetParam( const BTL_POKEPARAM* bpp, u8* combiPokeID, WazaID* combiUsedWaza );
+extern void BPP_CombiWaza_ClearParam( BTL_POKEPARAM* bpp );
 
 
 #endif

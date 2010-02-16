@@ -243,10 +243,12 @@ static void reqWazaUseForCalcActOrder( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* o
 static u8 scEvent_GetWazaPriority( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp );
 static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BOOL fTrickRoomEnable );
 static inline WazaID ActOrder_GetWazaID( const ACTION_ORDER_WORK* wk );
-static ACTION_ORDER_WORK* SearchActOrderByPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID );
-static ACTION_ORDER_WORK* SearchActOrderByWaza( BTL_SVFLOW_WORK* wk, WazaID waza, u8 startIndex );
-static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex );
-static void SendLastActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
+static ACTION_ORDER_WORK* ActOrderTool_SearchByPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID );
+static ACTION_ORDER_WORK* ActOrderTool_SearchByWazaID( BTL_SVFLOW_WORK* wk, WazaID waza, u8 startIndex );
+static ACTION_ORDER_WORK* ActOrderTool_SearchForCombiWaza( BTL_SVFLOW_WORK* wk, WazaID waza, u8 pokeID, BtlPokePos targetPos );
+static u8 ActOrderTool_GetIndex( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
+static int ActOrderTool_Intr( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex );
+static void ActOrderTool_SendToLast( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
 static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder );
 static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
@@ -308,8 +310,10 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
 static BOOL scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action );
+static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scproc_WazaExe_Decide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_WazaExeDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
+static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
 static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
 static BOOL scEvent_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BtlPokePos targetPos );
 static void scproc_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
@@ -1526,7 +1530,7 @@ static inline WazaID ActOrder_GetWazaID( const ACTION_ORDER_WORK* wk )
   return WAZANO_NULL;
 }
 // 指定ポケモンのアクション内容データポインタを取得
-static ACTION_ORDER_WORK* SearchActOrderByPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
+static ACTION_ORDER_WORK* ActOrderTool_SearchByPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   u32 i;
   for(i=0; i<wk->numActOrder; ++i){
@@ -1537,7 +1541,7 @@ static ACTION_ORDER_WORK* SearchActOrderByPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID
   return NULL;
 }
 // 未実行の指定ワザ使用アクション内容データポインタを取得
-static ACTION_ORDER_WORK* SearchActOrderByWaza( BTL_SVFLOW_WORK* wk, WazaID waza, u8 startIndex )
+static ACTION_ORDER_WORK* ActOrderTool_SearchByWazaID( BTL_SVFLOW_WORK* wk, WazaID waza, u8 startIndex )
 {
   u32 i;
   for(i=startIndex; i<wk->numActOrder; ++i)
@@ -1553,8 +1557,57 @@ static ACTION_ORDER_WORK* SearchActOrderByWaza( BTL_SVFLOW_WORK* wk, WazaID waza
   }
   return NULL;
 }
+//----------------------------------------------------------------------------------
+/**
+ * 合体ワザ対象となるアクション内容データポインタを取得（存在しない場合NULL）
+ *
+ * @param   wk
+ * @param   waza        対象ワザID
+ * @param   pokeID      先に合体ワザを打つポケID（このポケの味方のみが対象となる）
+ * @param   targetPos   先に合体ワザを打つポケが狙っている位置（同位置を狙うワザのみ対象となる）
+ *
+ * @retval  ACTION_ORDER_WORK*
+ */
+//----------------------------------------------------------------------------------
+static ACTION_ORDER_WORK* ActOrderTool_SearchForCombiWaza( BTL_SVFLOW_WORK* wk, WazaID waza, u8 pokeID, BtlPokePos targetPos )
+{
+  ACTION_ORDER_WORK* p = ActOrderTool_SearchByWazaID( wk, waza, 0 );
+  while( p != NULL )
+  {
+    if( BTL_MAINUTIL_IsFriendPokeID(pokeID, BPP_GetID(p->bpp)) )
+    {
+      return p;
+    }
 
-
+    {
+      u8 idx = ActOrderTool_GetIndex( wk, p );
+      p = ActOrderTool_SearchByWazaID( wk, waza, idx + 1 );
+    }
+  }
+  return NULL;
+}
+//----------------------------------------------------------------------------------
+/**
+ * アクション内容データポインタから自身のIndexを取得
+ *
+ * @param   wk
+ * @param   actOrder
+ *
+ * @retval  u8
+ */
+//----------------------------------------------------------------------------------
+static u8 ActOrderTool_GetIndex( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder )
+{
+  int i;
+  for(i=0; i<wk->numActOrder; ++i)
+  {
+    if( &(wk->actOrder[i]) == actOrder ){
+      return i;
+    }
+  }
+  GF_ASSERT(0);
+  return wk->numActOrder;
+}
 //----------------------------------------------------------------------------------
 /**
  * 指定アクションを、指定index以降の未実行列の先頭に割り込ませる
@@ -1566,7 +1619,7 @@ static ACTION_ORDER_WORK* SearchActOrderByWaza( BTL_SVFLOW_WORK* wk, WazaID waza
  * @retval  int   割り込んだIndex （割り込めなければ-1)
  */
 //----------------------------------------------------------------------------------
-static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex )
+static int ActOrderTool_Intr( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex )
 {
   int prevOrder, topOrder, i;
 
@@ -1610,7 +1663,7 @@ static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder,
  * @param   actOrder
  */
 //----------------------------------------------------------------------------------
-static void SendLastActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder )
+static void ActOrderTool_SendToLast( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder )
 {
   // 自分自身の元々のIndex
   int prevOrder = -1;
@@ -1732,7 +1785,7 @@ static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 //--------------------------------------------------------------
 static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
 {
-  ACTION_ORDER_WORK* actOrder = SearchActOrderByPokeID( wk, intrPokeID );
+  ACTION_ORDER_WORK* actOrder = ActOrderTool_SearchByPokeID( wk, intrPokeID );
   if( actOrder && (actOrder->fDone == FALSE) ){
     ActOrder_Proc( wk, actOrder );
     return TRUE;
@@ -1742,14 +1795,15 @@ static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
 //--------------------------------------------------------------
 /**
  *  アクションの割り込み予約（ポケモンID指定）
- *  ※割り込んで、現在処理しているアクションの直後に実行（現状は“おさきにどうぞ”にのみ使用）
+ *  ※割り込んで、現在処理しているアクションの直後に実行
+ * （現状は“おさきにどうぞ”と合体ワザにのみ使用）
  */
 //--------------------------------------------------------------
 static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
 {
-  ACTION_ORDER_WORK* actOrder = SearchActOrderByPokeID( wk, intrPokeID );
+  ACTION_ORDER_WORK* actOrder = ActOrderTool_SearchByPokeID( wk, intrPokeID );
   if( actOrder && (actOrder->fDone == FALSE) ){
-    if( IntrActOrder(wk, actOrder, 0) >= 0 ){
+    if( ActOrderTool_Intr(wk, actOrder, 0) >= 0 ){
       return TRUE;
     }
   }
@@ -1763,14 +1817,14 @@ static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
 //--------------------------------------------------------------
 static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza )
 {
-  ACTION_ORDER_WORK* actOrder = SearchActOrderByWaza( wk, waza, 0 );
+  ACTION_ORDER_WORK* actOrder = ActOrderTool_SearchByWazaID( wk, waza, 0 );
   int intrIdx = 0;
   BOOL result = FALSE;
   while( actOrder )
   {
-    intrIdx = IntrActOrder( wk, actOrder, intrIdx );
+    intrIdx = ActOrderTool_Intr( wk, actOrder, intrIdx );
     if( intrIdx >= 0 ){
-      actOrder = SearchActOrderByWaza( wk, waza, ++intrIdx );
+      actOrder = ActOrderTool_SearchByWazaID( wk, waza, ++intrIdx );
       result = TRUE;
     }else{
       break;
@@ -1785,9 +1839,9 @@ static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza )
 //--------------------------------------------------------------
 static BOOL ActOrder_SendLast( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
-  ACTION_ORDER_WORK* actOrder = SearchActOrderByPokeID( wk, pokeID );
+  ACTION_ORDER_WORK* actOrder = ActOrderTool_SearchByPokeID( wk, pokeID );
   if( actOrder && (actOrder->fDone == FALSE) ){
-    SendLastActOrder( wk, actOrder );
+    ActOrderTool_SendToLast( wk, actOrder );
     return TRUE;
   }
   return FALSE;
@@ -2920,6 +2974,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       actWaza = orgWaza;
       actTargetPos = orgTargetPos;
     }
+    // 合体ワザ（後発）の発動チェック
+    scEvent_CheckCombiWazaExe( wk, attacker, actWaza );
+
     // ワザパラメータ確定
     scEvent_GetWazaParam( wk, actWaza, attacker, &wk->wazaParam );
 
@@ -2937,6 +2994,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
     // 遅延発動ワザの準備処理
     if( scproc_Fight_CheckDelayWazaSet(wk, attacker, actWaza, actTargetPos) ){ break; }
+
+    // 合体ワザ（先発）の準備処理
+    if( scproc_Fight_CheckCombiWazaReady(wk, attacker, actWaza, actTargetPos) ){ break; }
 
     // ワザ対象をワークに取得
     BTL_POKESET_Clear( &wk->pokesetTarget );
@@ -3043,6 +3103,23 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 }
 //----------------------------------------------------------------------------------
 /**
+ * [Event] 合体ワザの成立チェック
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   waza
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_COMBIWAZA_CHECK );
+  BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
  * ワザだし確定イベント呼び出し処理
  *
  * @param   wk
@@ -3075,7 +3152,86 @@ static void scEvent_WazaExeDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXE_DECIDE );
   BTL_EVENTVAR_Pop();
 }
+//----------------------------------------------------------------------------------
+/**
+ * 必要なら、合体ワザの発動準備処理を行う
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   waza
+ * @param   targetPos
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos )
+{
+  static const WazaID CombiWazaTbl[] = {
+    WAZANO_HONOONOTIKAI,  WAZANO_MIZUNOTIKAI,  WAZANO_KUSANOTIKAI,
+  };
+  u32 i;
 
+  for(i=0; i<NELEMS(CombiWazaTbl); ++i)
+  {
+    if( CombiWazaTbl[i] == waza ){
+      BTL_N_Printf( DBGSTR_SVFL_CombiWazaCheck, waza);
+      break;
+    }
+  }
+  if( (i != NELEMS(CombiWazaTbl)) && BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_COMBIWAZA_READY) )
+  {
+    enum {
+      COMBI_MAX = BTL_POSIDX_MAX - 1,   // 合体ワザを一緒に撃ってくれる論理上の最大ポケ数
+    };
+    ACTION_ORDER_WORK*  orderWork[ COMBI_MAX ];
+    u32 orderCnt = 0;
+    u8 pokeID = BPP_GetID( attacker );
+
+    for(i=0; i<NELEMS(CombiWazaTbl); ++i)
+    {
+      if( CombiWazaTbl[i] != waza )
+      {
+        orderWork[ orderCnt ] = ActOrderTool_SearchForCombiWaza( wk, CombiWazaTbl[i], pokeID, targetPos );
+        if( orderWork[ orderCnt ] != NULL ){
+          BTL_N_Printf( DBGSTR_SVFL_CombiWazaFound,
+                    targetPos, CombiWazaTbl[i], BPP_GetID(orderWork[orderCnt]->bpp) );
+          if( ++orderCnt >= COMBI_MAX ){ break; }
+        }
+      }
+    }
+
+    if( orderCnt )
+    {
+      u8 idx, idxMin, targetIdx, combiPokeID;
+
+
+      idxMin = BTL_POS_MAX;
+      targetIdx = 0;
+
+      for(i=0; i<orderCnt; ++i)
+      {
+        idx = ActOrderTool_GetIndex( wk, orderWork[i] );
+        if( idx < idxMin ){
+          idxMin = idx;
+          targetIdx = i;
+        }
+      }
+
+      combiPokeID = BPP_GetID( orderWork[targetIdx]->bpp );
+
+      BTL_N_Printf( DBGSTR_SVFL_CombiDecide, combiPokeID );
+
+      ActOrder_IntrReserve( wk, combiPokeID );
+      BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_COMBIWAZA_READY );
+      BPP_CombiWaza_SetParam( orderWork[targetIdx]->bpp, pokeID, waza );
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_SET_CombiWazaReady, pokeID, combiPokeID );
+      return TRUE;
+    }
+  }
+
+
+  return FALSE;
+}
 //----------------------------------------------------------------------------------
 /**
  * 必要なら、遅延発動ワザの準備処理を行う。
@@ -7094,6 +7250,7 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     BTL_POKESET_SeekStart( pokeSet );
     while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL ){
       BPP_TurnCheck( bpp );
+      BPP_CombiWaza_ClearParam( bpp );
     }
   }
 
@@ -9377,9 +9534,10 @@ static void scEvent_WazaDamageAfter( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u32 damage )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_AFTER );
   BTL_EVENTVAR_Pop();
 }

@@ -27,6 +27,9 @@ typedef enum {
   BTL_SIDEEFF_STEALTHROCK,    ///< 入れ替えて出てきたポケモンにダメージ（相性計算あり）
   BTL_SIDEEFF_WIDEGUARD,      ///< ヒット範囲「敵全体」「自分以外」の攻撃ワザを防ぐ
   BTL_SIDEEFF_FASTGUARD,      ///< 先制プライオリティ1以上のポケモン対象ワザを防ぐ
+  BTL_SIDEEFF_RAINBOW,        ///< 合体ワザ効果・虹（追加効果の発生率が倍になる）
+  BTL_SIDEEFF_BURNING,        ///< 合体ワザ効果・火の海（炎タイプ以外に毎ターン1/8ダメージ）
+  BTL_SIDEEFF_MOOR,           ///< 合体ワザ効果・湿原（素早さ 1/4）
 
   BTL_SIDEEFF_MAX,
   BTL_SIDEEFF_NULL = BTL_SIDEEFF_MAX,

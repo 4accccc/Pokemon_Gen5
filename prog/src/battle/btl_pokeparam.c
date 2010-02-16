@@ -148,6 +148,9 @@ struct _BTL_POKEPARAM {
   u8  confrontRec[ BTL_POKEID_MAX ];
 
   u16 migawariHP;
+
+  WazaID  combiWazaID;
+  u8      combiPokeID;
 //  u32 dmy;
 };
 
@@ -233,6 +236,8 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->prevSelectWazaID = WAZANO_NULL;
   bpp->prevActWazaID    = WAZANO_NULL;
   bpp->wazaContCounter   = 0;
+  bpp->combiWazaID = WAZANO_NULL;
+  bpp->combiPokeID = BTL_POKEID_NULL;
 
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
@@ -1945,6 +1950,7 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
   BPP_MIGAWARI_Delete( bpp );
+  BPP_CombiWaza_ClearParam( bpp );
 
   clearWazaSickWork( bpp, TRUE );
 //  ConfrontRec_Clear( bpp );
@@ -1972,11 +1978,15 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
+  BPP_CombiWaza_ClearParam( bpp );
+
 //  ConfrontRec_Clear( bpp );
   if( bpp->coreParam.ppFake ){
     bpp->coreParam.fFakeEnable = TRUE;
   }
   bpp->formNo = bpp->coreParam.defaultFormNo;
+
+
 }
 //=============================================================================================
 /**
@@ -2791,6 +2801,58 @@ u8 BPP_CONFRONT_REC_GetPokeID( const BTL_POKEPARAM* bpp, u8 idx )
     return bpp->confrontRec[ idx ];
   }
   return BTL_POKEID_NULL;
+}
+
+//---------------------------------------------------------------------------------------------
+// 合体ワザ関連
+//---------------------------------------------------------------------------------------------
+
+//=============================================================================================
+/**
+ * 合体ワザ対象（後発）としてのパラメータセット
+ *
+ * @param   bpp
+ * @param   combiPokeID     先発ポケモンID
+ * @param   combiUsedWaza   先発ポケモンが使ったワザID
+ */
+//=============================================================================================
+void BPP_CombiWaza_SetParam( BTL_POKEPARAM* bpp, u8 combiPokeID, WazaID combiUsedWaza )
+{
+  bpp->combiPokeID = combiPokeID;
+  bpp->combiWazaID = combiUsedWaza;
+}
+//=============================================================================================
+/**
+ * 合体ワザパラメータ取得
+ *
+ * @param   bpp
+ * @param   combiPokeID     [out]
+ * @param   combiUsedWaza   [out]
+ *
+ * @retval  BOOL    セットされたパラメータがある場合、TRUE
+ */
+//=============================================================================================
+BOOL BPP_CombiWaza_GetParam( const BTL_POKEPARAM* bpp, u8* combiPokeID, WazaID* combiUsedWaza )
+{
+  if( bpp->combiPokeID != BTL_POKEID_NULL )
+  {
+    *combiPokeID = bpp->combiPokeID;
+    *combiUsedWaza = bpp->combiWazaID;
+    return TRUE;
+  }
+  return FALSE;
+}
+//=============================================================================================
+/**
+ * 合体ワザパラメータクリア
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_CombiWaza_ClearParam( BTL_POKEPARAM* bpp )
+{
+  bpp->combiPokeID = BTL_POKEID_NULL;
+  bpp->combiWazaID = WAZANO_NULL;
 }
 
 

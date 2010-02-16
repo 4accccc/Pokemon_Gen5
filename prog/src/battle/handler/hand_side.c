@@ -71,6 +71,12 @@ static const BtlEventHandlerTable* ADD_SIDE_Makibisi( u32* numElems );
 static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static const BtlEventHandlerTable* ADD_SIDE_Dokubisi( u32* numElems );
 static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static const BtlEventHandlerTable* ADD_SIDE_Rainbow( u32* numElems );
+static void handler_Rainbow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static const BtlEventHandlerTable* ADD_SIDE_Burning( u32* numElems );
+static void handler_side_Burning( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static const BtlEventHandlerTable* ADD_SIDE_Moor( u32* numElems );
+static void handler_side_Moor( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 
 
 
@@ -118,6 +124,10 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
     { BTL_SIDEEFF_STEALTHROCK,    ADD_SIDE_StealthRock,    1   },
     { BTL_SIDEEFF_WIDEGUARD,      ADD_SIDE_WideGuard,      1   },
     { BTL_SIDEEFF_FASTGUARD,      ADD_SIDE_FastGuard,      1   },
+    { BTL_SIDEEFF_RAINBOW,        ADD_SIDE_Rainbow,        1   },
+    { BTL_SIDEEFF_BURNING,        ADD_SIDE_Burning,        1   },
+    { BTL_SIDEEFF_MOOR,           ADD_SIDE_Moor,           1   },
+
   };
 
   GF_ASSERT(side < BTL_SIDE_MAX);
@@ -617,4 +627,87 @@ static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     }
   }
 }
+
+//--------------------------------------------------------------------------------------
+/**
+ *  合体ワザ効果：虹
+ */
+//--------------------------------------------------------------------------------------
+static const BtlEventHandlerTable* ADD_SIDE_Rainbow( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_ADD_SICK,         handler_Rainbow },  // 追加効果（状態異常）チェックハンドラ
+    { BTL_EVENT_ADD_RANK_TARGET,  handler_Rainbow },  // 追加効果（ランク効果）チェックハンドラ
+    { BTL_EVENT_WAZA_SHRINK_PER,  handler_Rainbow },  // ひるみチェックハンドラ
+
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+static void handler_Rainbow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+{
+  u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+
+  if( BTL_MAINUTIL_PokeIDtoSide(atkPokeID) == mySide )
+  {
+    u16 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER ) * 2;
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
+  }
+}
+
+//--------------------------------------------------------------------------------------
+/**
+ *  合体ワザ効果：火の海
+ */
+//--------------------------------------------------------------------------------------
+static const BtlEventHandlerTable* ADD_SIDE_Burning( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_TURNCHECK_BEGIN,  handler_side_Burning  },  // ターンチェック開始ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+// ターンチェック開始ハンドラ
+static void handler_side_Burning( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+{
+  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( !BPP_IsMatchType(bpp, POKETYPE_HONOO) )
+    {
+      BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
+
+      param->pokeID = pokeID;
+      param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_BurningDamage );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------------
+/**
+ *  合体ワザ効果：湿原
+ */
+//--------------------------------------------------------------------------------------
+static const BtlEventHandlerTable* ADD_SIDE_Moor( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CALC_AGILITY,  handler_side_Moor  },  // すばやさ計算ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+// すばやさ計算ハンドラ
+static void handler_side_Moor( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+{
+  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
+  ){
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.25) );
+  }
+}
+
 

@@ -178,6 +178,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_WazaExeFail_1:       return "ワザ出し失敗（１）  ポケID=%d, 失敗コード=%d\n";
   case DBGSTR_SVFL_WazaExeFail_2:       return "ワザ出し失敗（２）  ポケID=%d, 失敗コード=%d\n";
   case DBGSTR_SVFL_HandEx_AddSick:      return "状態異常 poke=%d, code=%d, AlmostFlag=%d\n";
+  case DBGSTR_SVFL_CombiWazaCheck:      return "ワザ[%d]は合体ワザのひとつです\n";
+  case DBGSTR_SVFL_CombiWazaFound:      return "  自分より後に、同じ位置(%d）にワザ(%d)を打つ味方（%d）が見つかった\n";
+  case DBGSTR_SVFL_CombiDecide:         return "  ポケ(%d)と合体ワザ予約！\n";
+
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";
@@ -213,7 +217,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SCU_RelivePokeAct:        return "Pos[%d]=Vpos[%d] ポケ(%d)が生き返り\n";
   case DBGSTR_Item_PinchReactItem:      return "PokeID=%d, 最大HP=%d, 現HP=%d, n=%d ... ";
   case DBGSTR_Item_PinchReactOn:        return "反応あり";
-
+  case DBGSTR_HANDWAZA_CombiWazaExe:    return "ポケ(%d)がポケ(%d）のワザ(%d)に続けて合体ワザ発動->効果=%d\n";
 
 
   case DBGSTR_val_comma:  return "%d,";

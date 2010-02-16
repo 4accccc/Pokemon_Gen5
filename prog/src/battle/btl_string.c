@@ -327,6 +327,12 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     BTL_STRID_STD_OikazeOff,
     BTL_STRID_STD_Omajinai,
     BTL_STRID_STD_OmajinaiOff,
+    BTL_STRID_STD_Rainbow,
+    BTL_STRID_STD_RainbowOff,
+    BTL_STRID_STD_Burning,
+    BTL_STRID_STD_BurningOff,
+    BTL_STRID_STD_Moor,
+    BTL_STRID_STD_MoorOff,
   };
   int i;
 

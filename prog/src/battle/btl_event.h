@@ -156,6 +156,7 @@ typedef enum {
   BTL_EVENT_CHECK_SIDEEFF_PARAM,    ///< サイドエフェクトパラメータ調整
   BTL_EVENT_UNCATEGORIZE_WAZA,            ///< 未分類ワザ処理
   BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  ///< 未分類ワザ処理（ターゲットいないワザ）
+  BTL_EVENT_COMBIWAZA_CHECK,        ///< 合体ワザ成立チェック
 
 
 }BtlEventType;
