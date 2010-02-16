@@ -24,6 +24,9 @@ EVENT_START ev_vending_machine01
   DEFINE_LOCAL gold
   DEFINE_LOCAL loop
 
+  //自動販売機処理ループON
+  $loop = TRUE
+
   //所持金表示
   _GOLD_WIN_OPEN( 17, 1 )
 
