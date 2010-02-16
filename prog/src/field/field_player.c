@@ -52,9 +52,6 @@ struct _FIELD_PLAYER
 //======================================================================
 static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX];
 
-
-
-
 //======================================================================
 //	フィールドプレイヤー
 //======================================================================
@@ -123,7 +120,6 @@ void FIELD_PLAYER_Delete( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
 {
-  
   { 
     //プレイヤー座標をPLAYERWORKへ反映
     VecFx32 pos;
@@ -1138,6 +1134,43 @@ void FIELD_PLAYER_CheckSpecialDrawForm(
   }
   else
   {
+    OS_Printf( "rail not support\n" );
+    GF_ASSERT(0);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機が波乗りイベント終了直後か
+ * @param fld_player FIELD_PLAYER
+ * @retval BOOL TRUE=終了直後
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_CheckNaminoriEventEnd( FIELD_PLAYER *fld_player )
+{
+  if( FIELDMAP_GetBaseSystemType(
+        fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
+    return( FIELD_PLAYER_GRID_CheckNaminoriEventEnd(fld_player->gridwk) );
+  }
+  
+  OS_Printf( "rail not support\n" );
+  GF_ASSERT(0);
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機が波乗りイベント終了直後のフラグをセット
+ * @param fld_player FIELD_PLAYER
+ * @retval BOOL TRUE=終了直後
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_SetNaminoriEventEnd( FIELD_PLAYER *fld_player, BOOL flag )
+{
+  if( FIELDMAP_GetBaseSystemType(
+        fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
+    FIELD_PLAYER_GRID_SetNaminoriEventEnd( fld_player->gridwk, flag );
+  }else{
     OS_Printf( "rail not support\n" );
     GF_ASSERT(0);
   }

@@ -614,7 +614,7 @@ static void evtcb_NaminoriStart( GFL_TCB *tcb, void *wk )
       task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
       FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ON );
       FIELD_PLAYER_SetNaminori( work->fld_player );
-      
+      FIELD_PLAYER_SetNaminoriEventEnd( work->fld_player, TRUE );
       work->end_flag = TRUE;
       work->seq++;
     }

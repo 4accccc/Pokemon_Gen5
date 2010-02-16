@@ -157,6 +157,8 @@ struct _TAG_FIELD_PLAYER_GRID
   
   u16 dash_play_se;
   u16 dash_play_se_count;
+  
+  u32 naminori_end_flag;
 };
 
 //======================================================================
@@ -505,6 +507,8 @@ static void gjiki_InitMoveStartCommon(
   if( set == JIKI_MOVEORDER_WALK ){
     gjiki_OffMoveBitUnderOff( gjiki );
   }
+  
+  gjiki->naminori_end_flag = FALSE;
 }
 
 //--------------------------------------------------------------
@@ -3359,6 +3363,34 @@ void FIELD_PLAYER_GRID_CheckSpecialDrawForm(
       gjiki->oze_yure_frame = oze_yure_frame;
       gjiki->oze_anime_reset_flag = TRUE;
     }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機が波乗りイベント終了直後か
+ * @param gjiki
+ * @retval BOOL
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_GRID_CheckNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki )
+{
+  return( gjiki->naminori_end_flag );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機が波乗りイベント終了直後のフラグをセット
+ * @param gjiki
+ * @retval BOOL
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_GRID_SetNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki, BOOL flag )
+{
+  if( flag == TRUE ){
+    gjiki->naminori_end_flag = TRUE;
+  }else{
+    gjiki->naminori_end_flag = FALSE;
   }
 }
 
