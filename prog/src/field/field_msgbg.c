@@ -38,6 +38,10 @@
 #define TEST_TALKMSGWIN_TYPE (TALKMSGWIN_TYPE_NORMAL)
 #endif
 
+#ifdef PM_DEBUG
+#define DEBUG_FLDMSGBG
+#endif
+
 #define FLDMSGBG_BGFRAME ( FLDBG_MFRM_MSG )	///<使用BGフレーム
 
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
@@ -141,6 +145,10 @@ struct _TAG_FLDMSGBG
   
   GFL_TCBLSYS *printTCBLSys;
   GFL_G3D_CAMERA *g3Dcamera;
+
+#ifdef DEBUG_FLDMSGBG
+  int d_printTCBcount;
+#endif
 };
 
 //--------------------------------------------------------------
@@ -185,6 +193,7 @@ struct _TAG_FLDMSGPRINT_STREAM
   u8 flag_key_cont;
   int msg_wait;
   PRINT_STREAM *printStream;
+  FLDMSGBG *fmb;
 };
 
 //--------------------------------------------------------------
@@ -311,6 +320,14 @@ static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id );
 
 static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo;
 static const u8 ALIGN4 skip_cursor_Character[128];
+
+#ifdef DEBUG_FLDMSGBG
+static void DEBUG_AddCountPrintTCB( FLDMSGBG *fmb );
+static void DEBUG_SubCountPrintTCB( FLDMSGBG *fmb );
+#else
+#define DEBUG_AddCountPrintTCB( fmb ) ((void)0)
+#define DEBUG_SubCountPrintTCB( fmb ) ((void)0)
+#endif
 
 //======================================================================
 //	FLDMSGBG	フィールドメッセージBG関連
@@ -1809,7 +1826,10 @@ FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrintColor(
   FLDMSGPRINT_STREAM *stm = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDMSGPRINT_STREAM) );
   
+  stm->fmb = fmb;
   stm->msg_wait = wait;
+  
+  DEBUG_AddCountPrintTCB( fmb );
   
   stm->printStream = PRINTSYS_PrintStream(
       bmpwin, x, y,
@@ -1850,6 +1870,7 @@ FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrint(
 //--------------------------------------------------------------
 void FLDMSGPRINT_STREAM_Delete( FLDMSGPRINT_STREAM *stm )
 {
+  DEBUG_SubCountPrintTCB( stm->fmb );
   PRINTSYS_PrintStreamDelete( stm->printStream );
   GFL_HEAP_FreeMemory( stm );
 }
@@ -4567,3 +4588,38 @@ static const u8 ALIGN4 skip_cursor_Character[128] = {
 パレット 14=0H
 パレット 15=0H
 */
+
+//======================================================================
+//  debug
+//======================================================================
+#ifdef DEBUG_FLDMSGBG
+
+//--------------------------------------------------------------
+/**
+ * デバッグ　プリントストリームで使用しているTCBをカウント
+ */
+//--------------------------------------------------------------
+static void DEBUG_AddCountPrintTCB( FLDMSGBG *fmb )
+{
+  fmb->d_printTCBcount++;
+  
+  if( fmb->d_printTCBcount > FLDMSGBG_PRINT_STREAM_MAX ){
+    GF_ASSERT( 0 && "フィールド　メッセージ処理が一杯です" );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグ　プリントストリームで使用しているTCBをカウント
+ */
+//--------------------------------------------------------------
+static void DEBUG_SubCountPrintTCB( FLDMSGBG *fmb )
+{
+  fmb->d_printTCBcount--;
+  
+  if( fmb->d_printTCBcount < 0 ){
+    GF_ASSERT( 0 && "フィールド　メッセージ処理を多く削除しています" );
+  }
+}
+
+#endif //DEBUG_FLDMSGBG
