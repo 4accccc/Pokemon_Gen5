@@ -70,29 +70,30 @@ end
 # □全質問の取得
 #===================================================================================
 # 列インデックス
-COLUMN_QUESTION_ID           = 0   # 回答ID
-COLUMN_QUESTION_JPN          = 1   # 回答文字列 (かな)
-COLUMN_QUESTION_JPN_KANJI    = 2   # 回答文字列 (漢字)
-COLUMN_QUESTION_ANSWER_NUM   = 3   # 選択数
-COLUMN_QUESTION_BIT_COUNT    = 4   # bit数
-COLUMN_QUESTION_ANSWER_ID_0  = 5   # 回答0
-COLUMN_QUESTION_ANSWER_ID_1  = 7   # 回答1
-COLUMN_QUESTION_ANSWER_ID_2  = 9   # 回答2 
-COLUMN_QUESTION_ANSWER_ID_3  = 11  # 回答3 
-COLUMN_QUESTION_ANSWER_ID_4  = 13  # 回答4 
-COLUMN_QUESTION_ANSWER_ID_5  = 15  # 回答5 
-COLUMN_QUESTION_ANSWER_ID_6  = 17  # 回答6 
-COLUMN_QUESTION_ANSWER_ID_7  = 19  # 回答7 
-COLUMN_QUESTION_ANSWER_ID_8  = 21  # 回答8 
-COLUMN_QUESTION_ANSWER_ID_9  = 23  # 回答9 
-COLUMN_QUESTION_ANSWER_ID_10 = 25  # 回答10
-COLUMN_QUESTION_ANSWER_ID_11 = 27  # 回答11
-COLUMN_QUESTION_ANSWER_ID_12 = 29  # 回答12
-COLUMN_QUESTION_ANSWER_ID_13 = 31  # 回答13
-COLUMN_QUESTION_ANSWER_ID_14 = 33  # 回答14
-COLUMN_QUESTION_ANSWER_ID_15 = 35  # 回答15
-COLUMN_QUESTION_ANSWER_ID_16 = 37  # 回答16
-COLUMN_QUESTION_ANSWER_ID_17 = 39  # 回答17
+COLUMN_QUESTION_ID           = 0   # 質問ID
+COLUMN_QUESTION_ID_LAVEL     = 1   # 質問ID (ラベル名)
+COLUMN_QUESTION_ANSWER_NUM   = 2   # 選択数
+COLUMN_QUESTION_BIT_COUNT    = 3   # bit数
+COLUMN_QUESTION_JPN          = 4   # 回答文字列 (かな)
+COLUMN_QUESTION_JPN_KANJI    = 5   # 回答文字列 (漢字)
+COLUMN_QUESTION_ANSWER_ID_0  = 6   # 回答0
+COLUMN_QUESTION_ANSWER_ID_1  = 8   # 回答1
+COLUMN_QUESTION_ANSWER_ID_2  = 11  # 回答2 
+COLUMN_QUESTION_ANSWER_ID_3  = 13  # 回答3 
+COLUMN_QUESTION_ANSWER_ID_4  = 15  # 回答4 
+COLUMN_QUESTION_ANSWER_ID_5  = 17  # 回答5 
+COLUMN_QUESTION_ANSWER_ID_6  = 19  # 回答6 
+COLUMN_QUESTION_ANSWER_ID_7  = 21  # 回答7 
+COLUMN_QUESTION_ANSWER_ID_8  = 23  # 回答8 
+COLUMN_QUESTION_ANSWER_ID_9  = 25  # 回答9 
+COLUMN_QUESTION_ANSWER_ID_10 = 27  # 回答10
+COLUMN_QUESTION_ANSWER_ID_11 = 29  # 回答11
+COLUMN_QUESTION_ANSWER_ID_12 = 31  # 回答12
+COLUMN_QUESTION_ANSWER_ID_13 = 33  # 回答13
+COLUMN_QUESTION_ANSWER_ID_14 = 35  # 回答14
+COLUMN_QUESTION_ANSWER_ID_15 = 37  # 回答15
+COLUMN_QUESTION_ANSWER_ID_16 = 39  # 回答16
+COLUMN_QUESTION_ANSWER_ID_17 = 41  # 回答17
 # 行インデックス
 ROW_FIRST_QUESTION = 1  # 先頭データ行
 
@@ -100,10 +101,11 @@ fileReader = TabSeparatedFileReader.new
 fileReader.ReadFile( FILENAME_QUESTION_DATA )
 ROW_FIRST_QUESTION.upto( fileReader.GetRowNum - 1 ) do |rowIdx|
   id              = fileReader.GetCell( rowIdx, COLUMN_QUESTION_ID ).to_i
-  stringJPN       = fileReader.GetCell( rowIdx, COLUMN_QUESTION_JPN )
-  stringJPN_KANJI = fileReader.GetCell( rowIdx, COLUMN_QUESTION_JPN_KANJI )
+  idLavel         = fileReader.GetCell( rowIdx, COLUMN_QUESTION_ID_LAVEL )
   answerNum       = fileReader.GetCell( rowIdx, COLUMN_QUESTION_ANSWER_NUM ).to_i
   bitCount        = fileReader.GetCell( rowIdx, COLUMN_QUESTION_BIT_COUNT ).to_i
+  stringJPN       = fileReader.GetCell( rowIdx, COLUMN_QUESTION_JPN )
+  stringJPN_KANJI = fileReader.GetCell( rowIdx, COLUMN_QUESTION_JPN_KANJI )
   answerID = Array.new
   answerID << fileReader.GetCell( rowIdx, COLUMN_QUESTION_ANSWER_ID_0  ).to_i
   answerID << fileReader.GetCell( rowIdx, COLUMN_QUESTION_ANSWER_ID_1  ).to_i
@@ -124,7 +126,7 @@ ROW_FIRST_QUESTION.upto( fileReader.GetRowNum - 1 ) do |rowIdx|
   answerID << fileReader.GetCell( rowIdx, COLUMN_QUESTION_ANSWER_ID_16 ).to_i
   answerID << fileReader.GetCell( rowIdx, COLUMN_QUESTION_ANSWER_ID_17 ).to_i
   question  = Question.new
-  question.SetID( id )
+  question.SetID( id, idLavel )
   question.SetString( stringJPN, stringJPN_KANJI )
   question.SetAnswerNum( answerNum )
   question.SetBitCount( bitCount )
@@ -142,13 +144,14 @@ end
 #===================================================================================
 # 列インデックス
 COLUMN_TOPIC_ID                = 0   # 調査ID
-COLUMN_TOPIC_TITLE_JPN         = 1   # 題名 (かな)
-COLUMN_TOPIC_TITLE_JPN_KANJI   = 2   # 題名 (漢字)
-COLUMN_TOPIC_CAPTION_JPN       = 3   # 補足 (かな)
-COLUMN_TOPIC_CAPTION_JPN_KANJI = 4   # 補足 (漢字)
-COLUMN_TOPIC_QUESTION_ID_0     = 5   # 質問0
-COLUMN_TOPIC_QUESTION_ID_1     = 7   # 質問1
-COLUMN_TOPIC_QUESTION_ID_2     = 9   # 質問2 
+COLUMN_TOPIC_ID_LAVEL          = 1   # 調査ID (ラベル名)
+COLUMN_TOPIC_TITLE_JPN         = 2   # 題名 (かな)
+COLUMN_TOPIC_TITLE_JPN_KANJI   = 3   # 題名 (漢字)
+COLUMN_TOPIC_CAPTION_JPN       = 4   # 補足 (かな)
+COLUMN_TOPIC_CAPTION_JPN_KANJI = 5   # 補足 (漢字)
+COLUMN_TOPIC_QUESTION_ID_0     = 6   # 質問0
+COLUMN_TOPIC_QUESTION_ID_1     = 8   # 質問1
+COLUMN_TOPIC_QUESTION_ID_2     = 10  # 質問2 
 # 行インデックス
 ROW_FIRST_TOPIC = 1  # 先頭データ行
 
@@ -156,6 +159,7 @@ fileReader = TabSeparatedFileReader.new
 fileReader.ReadFile( FILENAME_TOPIC_DATA ) 
 ROW_FIRST_TOPIC.upto( fileReader.GetRowNum - 1 ) do |rowIdx|
   id               = fileReader.GetCell( rowIdx, COLUMN_TOPIC_ID ).to_i
+  idLavel          = fileReader.GetCell( rowIdx, COLUMN_TOPIC_ID_LAVEL )
   titleJPN         = fileReader.GetCell( rowIdx, COLUMN_TOPIC_TITLE_JPN )
   titleJPN_KANJI   = fileReader.GetCell( rowIdx, COLUMN_TOPIC_TITLE_JPN_KANJI )
   captionJPN       = fileReader.GetCell( rowIdx, COLUMN_TOPIC_CAPTION_JPN )
@@ -165,7 +169,7 @@ ROW_FIRST_TOPIC.upto( fileReader.GetRowNum - 1 ) do |rowIdx|
   questionID << fileReader.GetCell( rowIdx, COLUMN_TOPIC_QUESTION_ID_1  ).to_i
   questionID << fileReader.GetCell( rowIdx, COLUMN_TOPIC_QUESTION_ID_2  ).to_i
   topic  = Topic.new
-  topic.SetID( id )
+  topic.SetID( id, idLavel )
   topic.SetTitle( titleJPN, titleJPN_KANJI )
   topic.SetCaption( captionJPN, captionJPN_KANJI )
   questionID.each do |qID|
@@ -181,9 +185,10 @@ end
 # □趣味リストの取得
 #=================================================================================== 
 # 列インデックス
-COLUMN_HOBBY_JPN       = 1  # 趣味文字列 (かな)
-COLUMN_HOBBY_JPN_KANJI = 2  # 趣味文字列 (漢字)
-COLUMN_HOBBY_ID_LAVEL  = 3  # 趣味IOラベル名
+COLUMN_HOBBY_ID        = 0  # 趣味ID
+COLUMN_HOBBY_ID_LAVEL  = 1  # 趣味IOラベル名
+COLUMN_HOBBY_JPN       = 3  # 趣味文字列 (かな)
+COLUMN_HOBBY_JPN_KANJI = 4  # 趣味文字列 (漢字)
 # 行インデックス
 ROW_FIRST_HOBBY = 2  # 先頭データ
 
@@ -191,10 +196,10 @@ ROW_FIRST_HOBBY = 2  # 先頭データ
 fileReader = TabSeparatedFileReader.new
 fileReader.ReadFile( FILENAME_HOBBY_DATA )
 ROW_FIRST_HOBBY.upto( fileReader.GetRowNum - 1 ) do |rowIdx|
-  id              = rowIdx - ROW_FIRST_HOBBY
+  id              = fileReader.GetCell( rowIdx, COLUMN_HOBBY_ID ).to_i
+  idLavel         = fileReader.GetCell( rowIdx, COLUMN_HOBBY_ID_LAVEL ).strip
   stringJPN       = fileReader.GetCell( rowIdx, COLUMN_HOBBY_JPN ).strip
   stringJPN_KANJI = fileReader.GetCell( rowIdx, COLUMN_HOBBY_JPN_KANJI ).strip
-  idLavel         = fileReader.GetCell( rowIdx, COLUMN_HOBBY_ID_LAVEL ).strip
   hobby = Hobby.new
   hobby.SetID( id, idLavel )
   hobby.SetString( stringJPN, stringJPN_KANJI )
@@ -253,28 +258,28 @@ stringJPN_KANJI = Array.new
 
 # 調査項目 (タイトル)
 topics.each do |topic|
-  stringLavel     << "title_%d" % topic.ID
+  stringLavel     << "str_title_%d" % topic.ID
   stringJPN       << topic.titleJPN
   stringJPN_KANJI << topic.titleJPN_KANJI
 end
 
 # 調査項目 (補足)
 topics.each do |topic|
-  stringLavel     << "caption_%d" % topic.ID
+  stringLavel     << "str_caption_%d" % topic.ID
   stringJPN       << topic.captionJPN
   stringJPN_KANJI << topic.captionJPN_KANJI
 end
 
 # 質問
 questions.each do |question|
-  stringLavel     << "question_%d" % question.ID
+  stringLavel     << "str_question_%d" % question.ID
   stringJPN       << question.stringJPN
   stringJPN_KANJI << question.stringJPN_KANJI
 end
 
 # 回答
 answers.each do |answer|
-  stringLavel     << "answer_%d" % answer.ID
+  stringLavel     << "str_answer_%d" % answer.ID
   stringJPN       << answer.stringJPN
   stringJPN_KANJI << answer.stringJPN_KANJI
 end
@@ -314,10 +319,51 @@ outData << "// コンバータにより生成"
 hobbies.each do |hobby|
   outData << "#define #{hobby.ID_lavel} (#{hobby.ID}) //「#{hobby.stringJPN}」"
 end
-outData << "#define HOBBY_ID_NUM (#{hobbies.size})   // 趣味IDの数"
-outData << "#define HOBBY_ID_MAX (HOBBY_ID_NUM - 1)  // 趣味IDの最大値"
+outData << "#define HOBBY_ID_NUM   (#{hobbies.size})   // 趣味IDの数"
+outData << "#define HOBBY_ID_MAX   (HOBBY_ID_NUM - 1)  // 趣味IDの最大値"
+outData << "#define HOBBY_ID_DUMMY (0xff)              // 趣味IDのダミー値"
 
 # 出力
 file = File.open( "hobby_id.h", "w" )
+file.puts( outData )
+file.close
+
+
+#=================================================================================== 
+# ■main
+# □質問ID ファイル出力
+#===================================================================================
+# 出力データ作成
+outData = Array.new
+outData << "// コンバータにより生成"
+questions.each do |question|
+  outData << "#define #{question.ID_lavel} (#{question.ID}) //「#{question.stringJPN}」"
+end
+outData << "#define QUESTION_ID_NUM   (#{questions.size})    // 質問IDの数"
+outData << "#define QUESTION_ID_MAX   (QUESTION_ID_NUM - 1)  // 質問IDの最大値"
+outData << "#define QUESTION_ID_DUMMY (0xff)                 // 質問IDのダミー値"
+
+# 出力
+file = File.open( "question_id.h", "w" )
+file.puts( outData )
+file.close
+
+
+#=================================================================================== 
+# ■main
+# □調査項目ID ファイル出力
+#===================================================================================
+# 出力データ作成
+outData = Array.new
+outData << "// コンバータにより生成"
+topics.each do |topic|
+  outData << "#define #{topic.ID_lavel} (#{topic.ID}) //「#{topic.titleJPN}」"
+end
+outData << "#define TOPIC_ID_NUM   (#{topics.size})    // 調査項目IDの数"
+outData << "#define TOPIC_ID_MAX   (TOPIC_ID_NUM - 1)  // 調査項目IDの最大値"
+outData << "#define TOPIC_ID_DUMMY (0xff)              // 調査項目IDのダミー値"
+
+# 出力
+file = File.open( "topic_id.h", "w" )
 file.puts( outData )
 file.close

@@ -15,6 +15,7 @@ class Topic
   
   def initialize
     @ID               = 0          # 項目ID
+    @ID_lavel         = 0          # 項目ID (ラベル名)
     @titleJPN         = nil        # 項目名 (かな)
     @titleJPN_KANJI   = nil        # 項目名 (漢字)
     @captionJPN       = nil        # 補足文 (かな)
@@ -22,13 +23,17 @@ class Topic
     @questions        = Array.new  # 質問配列
   end
 
-  attr_reader :ID, :titleJPN, :titleJPN_KANJI, :captionJPN, :captionJPN_KANJI, :questions
+  attr_reader :ID, :ID_lavel, 
+              :titleJPN, :titleJPN_KANJI, :captionJPN, :captionJPN_KANJI, 
+              :questions
 
-  #----------------------------
+  #-------------------------------
   # □brief: 調査IDを設定する
-  # □param: id 調査ID
-  def SetID( id )
-    @ID = id
+  # □param: id    調査ID
+  # □param: lavel 調査ID (ラベル名)
+  def SetID( id, lavel )
+    @ID       = id
+    @ID_lavel = lavel
   end
 
   #--------------------------------------
@@ -63,6 +68,7 @@ class Topic
     # 出力データ作成
     outData = Array.new
     outData << "ID               = #{@ID}"
+    outData << "ID_lavel         = #{@ID_lavel}"
     outData << "titleJPN         = #{@titleJPN}"
     outData << "titleJPN_KANJI   = #{@titleJPN_KANJI}"
     outData << "captionJPN       = #{@captionJPN}"

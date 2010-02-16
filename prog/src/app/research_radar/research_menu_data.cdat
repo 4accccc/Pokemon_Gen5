@@ -1,0 +1,267 @@
+////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief  調査レーダー 初期画面のデータ定義
+ * @file   research_menu_data.cdat
+ * @author obata
+ * @date   2010.02.13
+ */
+//////////////////////////////////////////////////////////////////////////////////////////////// 
+#include <gflib.h>
+#include "bg_font.h"
+#include "research_menu_index.h"
+#include "obj_NANR_LBLDEFS.h"        // for NANR_obj_xxxx
+#include "arc/message.naix"          // for NARC_message_xxxx
+#include "msg/msg_research_radar.h"  // for str_xxxx
+
+
+//==============================================================================================
+// ■メッセージ
+//==============================================================================================
+
+// 読み込むファイル
+static const u32 MessageDataID[ MESSAGE_NUM ] = 
+{
+  NARC_message_research_radar_dat,  // 定型文
+  NARC_message_questionnaire_dat,   // アンケート関連
+};
+
+
+//==============================================================================================
+// ■BG
+//==============================================================================================
+
+//-------------------
+// □BG コントロール
+//-------------------
+// SUB-BG ( ウィンドウ面 )
+static const GFL_BG_BGCNT_HEADER SubBGControl_WINDOW = 
+{
+  0, 0,					          // 初期表示位置
+  0x800,						      // スクリーンバッファサイズ
+  0,							        // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+  GX_BG_COLORMODE_16,			// カラーモード
+  GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
+  GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+  SUB_BG_PRIORITY_WINDOW, // 表示プライオリティー
+  0,							        // エリアオーバーフラグ
+  0,							        // DUMMY
+  FALSE,						      // モザイク設定
+}; 
+
+// SUB-BG ( フォント面 )
+static const GFL_BG_BGCNT_HEADER SubBGControl_FONT = 
+{
+  0, 0,					          // 初期表示位置
+  0x800,						      // スクリーンバッファサイズ
+  0,							        // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+  GX_BG_COLORMODE_16,			// カラーモード
+  GX_BG_SCRBASE_0x1800,		// スクリーンベースブロック
+  GX_BG_CHARBASE_0x10000,	// キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+  SUB_BG_PRIORITY_FONT,   // 表示プライオリティー
+  0,							        // エリアオーバーフラグ
+  0,							        // DUMMY
+  FALSE,						      // モザイク設定
+}; 
+
+// MAIN-BG ( ウィンドウ面 )
+static const GFL_BG_BGCNT_HEADER MainBGControl_WINDOW = 
+{
+  0, 0,					          // 初期表示位置
+  0x800,						      // スクリーンバッファサイズ
+  0,							        // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+  GX_BG_COLORMODE_16,			// カラーモード
+  GX_BG_SCRBASE_0x0800,		// スクリーンベースブロック
+  GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+  MAIN_BG_WINDOW_PRIORITY,// 表示プライオリティー
+  0,							        // エリアオーバーフラグ
+  0,							        // DUMMY
+  FALSE,						      // モザイク設定
+}; 
+
+// MAIN-BG ( フォント面 )
+static const GFL_BG_BGCNT_HEADER MainBGControl_FONT = 
+{
+  0, 0,					          // 初期表示位置
+  0x800,						      // スクリーンバッファサイズ
+  0,							        // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+  GX_BG_COLORMODE_16,			// カラーモード
+  GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
+  GX_BG_CHARBASE_0x10000,	// キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+  MAIN_BG_FONT_PRIORITY,  // 表示プライオリティー
+  0,							        // エリアオーバーフラグ
+  0,							        // DUMMY
+  FALSE,						      // モザイク設定
+}; 
+
+//-----------------------
+// □BGFont オブジェクト
+//-----------------------
+typedef struct
+{
+  u8 BGFrame;    // 対象BGフレーム
+  u8 posX;       // x座標 (キャラクター単位)
+  u8 posY;       // x座標 (キャラクター単位)
+  u8 sizeX;      // xサイズ (キャラクター単位)
+  u8 sizeY;      // yサイズ (キャラクター単位)
+  u8 offsetX;    // 書き込み先x座標 (ドット単位)
+  u8 offsetY;    // 書き込み先y座標 (ドット単位)
+  u8 paletteNo;  // 使用パレット番号
+  u8 colorNo_L;  // 文字のカラー番号
+  u8 colorNo_S;  // 影のカラー番号
+  u8 colorNo_B;  // 背景のカラー番号
+  MESSAGE_INDEX messageIdx;  // 参照するメッセージデータ
+  u32           stringIdx;   // 使用する文字列
+} BG_FONT_INIT_DATA;
+
+static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] = 
+{
+  { // 上画面 説明文
+    SUB_BG_FONT,
+    CAPTION_WINDOW_X,
+    CAPTION_WINDOW_Y,
+    CAPTION_WINDOW_WIDTH,
+    CAPTION_WINDOW_HEIGHT,
+    CAPTION_WINDOW_STRING_OFFSET_X,
+    CAPTION_WINDOW_STRING_OFFSET_Y,
+    SUB_BG_PALETTE_FONT,
+    CAPTION_WINDOW_STRING_COLOR_L,
+    CAPTION_WINDOW_STRING_COLOR_S,
+    CAPTION_WINDOW_STRING_COLOR_B,
+    MESSAGE_STATIC,
+    str_menu_caption,
+  }, 
+  { // 下画面 タイトル
+    MAIN_BG_FONT,
+    TITLE_WINDOW_X,
+    TITLE_WINDOW_Y,
+    TITLE_WINDOW_WIDTH,
+    TITLE_WINDOW_HEIGHT,
+    TITLE_WINDOW_STRING_OFFSET_X,
+    TITLE_WINDOW_STRING_OFFSET_Y,
+    MAIN_BG_PALETTE_FONT,
+    TITLE_WINDOW_STRING_COLOR_L,
+    TITLE_WINDOW_STRING_COLOR_S,
+    TITLE_WINDOW_STRING_COLOR_B,
+    MESSAGE_STATIC,
+    str_menu_title,
+  },
+  { // 下画面「調査内容の決定」
+    MAIN_BG_FONT,
+    CHANGE_BUTTON_X,
+    CHANGE_BUTTON_Y,
+    CHANGE_BUTTON_WIDTH,
+    CHANGE_BUTTON_HEIGHT,
+    CHANGE_BUTTON_STRING_OFFSET_X,
+    CHANGE_BUTTON_STRING_OFFSET_Y,
+    MAIN_BG_PALETTE_FONT,
+    CHANGE_BUTTON_STRING_COLOR_L,
+    CHANGE_BUTTON_STRING_COLOR_S,
+    CHANGE_BUTTON_STRING_COLOR_B,
+    MESSAGE_STATIC,
+    str_menu_button_change,
+  },
+  { // 下画面「調査報告の確認」
+    MAIN_BG_FONT,
+    CHECK_BUTTON_X,
+    CHECK_BUTTON_Y,
+    CHECK_BUTTON_WIDTH,
+    CHECK_BUTTON_HEIGHT,
+    CHECK_BUTTON_STRING_OFFSET_X,
+    CHECK_BUTTON_STRING_OFFSET_Y,
+    MAIN_BG_PALETTE_FONT,
+    CHECK_BUTTON_STRING_COLOR_L,
+    CHECK_BUTTON_STRING_COLOR_S,
+    CHECK_BUTTON_STRING_COLOR_B,
+    MESSAGE_STATIC,
+    str_menu_button_check,
+  },
+};
+
+
+//==============================================================================================
+// ■OBJ
+//==============================================================================================
+
+//-----------------------
+// □セルアクターシステム
+//-----------------------
+static const GFL_CLSYS_INIT ClactSystemInitData = 
+{
+  0, 0,   // メイン サーフェースの左上座標
+  0, 512, // サブ サーフェースの左上座標
+  4, 124, // メイン画面OAM管理開始位置/管理数 4の倍数
+  4, 124, // サブ画面OAM管理開始位置/管理数 4の倍数
+  0,      // セルVram転送管理数
+  256,    ///< 登録できるキャラデータ数
+  32,     ///< 登録できるパレットデータ数
+  32,     ///< 登録できるセルアニメパターン数
+  32,     ///< 登録できるマルチセルアニメパターン数（※現状未対応）
+  16,     ///< メイン CGR VRAM管理領域 開始オフセット（キャラクタ単位）
+  16,     ///< サブ CGR VRAM管理領域開始オフセット（キャラクタ単位）
+};
+
+//-----------------------
+// □セルアクターユニット
+//-----------------------
+
+// 最大ワーク数
+static const u16 ClactUnitWorkSize[ CLUNIT_NUM ] = 
+{
+  CLUNIT_SUB_OBJ_WORK_SIZE,   // index CLUNIT_SUB_OBJ
+  CLUNIT_MAIN_OBJ_WORK_SIZE,  // index CLUNIT_MAIN_OBJ
+};
+
+// 描画優先順位
+static const u8 ClactUnitPriority[ CLUNIT_NUM ] = 
+{
+  CLUNIT_SUB_OBJ_PRIORITY,   // index CLUNIT_SUB_OBJ
+  CLUNIT_MAIN_OBJ_PRIORITY,  // index CLUNIT_MAIN_OBJ
+};
+
+//-----------------------
+// □セルアクターワーク
+//-----------------------
+
+// 初期化データ
+typedef struct
+{
+  s16             posX;            // x 座標
+  s16             posY;            // y 座標
+  s16             animeSeq;        // アニメーションシーケンス
+  u8              softPriority;    // ソフト優先順位
+  u8              BGPriority;      // BG 優先順位
+  CLUNIT_INDEX    unitIdx;         // 所属ユニット
+  OBJ_RESOURCE_ID characterResID;  // キャラクタ リソース
+  OBJ_RESOURCE_ID paletteResID;    // パレット リソース
+  OBJ_RESOURCE_ID cellAnimeResID;  // セルアニメ リソース
+  u16             setSurface;      // サーフェス指定
+
+} CLWK_INIT_DATA;
+
+static const CLWK_INIT_DATA ClactWorkInitData[ CLWK_NUM ] = 
+{
+  { // "new" アイコン
+    CLWK_NEW_ICON_POS_X,          // x 座標
+    CLWK_NEW_ICON_POS_Y,          // y 座標
+    CLWK_NEW_ICON_ANIME_SEQ,      // アニメーションシーケンス
+    CLWK_NEW_ICON_SOFT_PRIORITY,  // ソフト優先順位
+    CLWK_NEW_ICON_BG_PRIORITY,    // BG 優先順位
+    CLUNIT_MAIN_OBJ,              // 所属ユニット
+    OBJ_RESOURCE_MAIN_CHARACTER,  // キャラクタ リソース
+    OBJ_RESOURCE_MAIN_PALETTE,    // パレット リソース
+    OBJ_RESOURCE_MAIN_CELL_ANIME, // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,           // サーフェス指定
+  },
+};

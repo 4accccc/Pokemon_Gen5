@@ -16,15 +16,16 @@
 
 #include "event_entrance_in.h"
 
-#include "event_fieldmap_control.h" // EVENT_FieldFadeOut
-#include "event_entrance_effect.h"  // EVENT_FieldDoorInAnime
-#include "event_fldmmdl_control.h"  // EVENT_PlayerOneStepAnime
+#include "entrance_camera_settings.h"  // for ENTRANCE_CAMERA_SETTINGS
+#include "event_fieldmap_control.h"    // for EVENT_FieldFadeOut
+#include "event_entrance_effect.h"     // for EVENT_FieldDoorInAnime
+#include "event_fldmmdl_control.h"     // for EVENT_PlayerOneStepAnime
+#include "event_disappear.h"           // for EVENT_DISAPPEAR_xxxx
+
 #include "sound/pm_sndsys.h"
 #include "field_sound.h"
 #include "sound/bgm_info.h"
 #include "../../resource/sound/bgm_info/iss_type.h"
-#include "event_disappear.h"  // for EVENT_DISAPPEAR_xxxx
-#include "field_status_local.h"  // for FIELD_STATUS_
 
 #include "fieldmap.h"
 #include "field_task.h"  
@@ -33,21 +34,19 @@
 #include "field_task_camera_rot.h"
 #include "field_task_target_offset.h"
 
-#include "arc/arc_def.h"
-#include "../../resource/fldmapdata/entrance_camera/entrance_camera.naix"
-
 
 //=======================================================================================
 // ■イベント ワーク
 //=======================================================================================
 typedef struct
 {
-  GAMESYS_WORK*  gameSystem;
-  GAMEDATA*      gameData;
-  FIELDMAP_WORK* fieldmap;
-  LOCATION       nextLocation;       // 遷移先指定
-  EXIT_TYPE      exitType;           // 出入り口タイプ
-  BOOL           seasonDisplayFlag;  // 季節表示を行うかどうか
+  GAMESYS_WORK*           gameSystem;
+  GAMEDATA*               gameData;
+  FIELDMAP_WORK*          fieldmap;
+  LOCATION                nextLocation;       // 遷移先指定
+  EXIT_TYPE               exitType;           // 出入り口タイプ
+  BOOL                    seasonDisplayFlag;  // 季節表示を行うかどうか
+  ENTRANCE_CAMERA_SETTINGS cameraSettings;    // 特殊出入り口のカメラ設定データ
 
 } EVENT_WORK;
 
@@ -97,43 +96,43 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
   // イベントテーブル
   const GMEVENT_FUNC eventFuncTable[] = 
   {
-    EVENT_FUNC_EntranceIn_ExitTypeNone,   //EXIT_TYPE_NONE
-    EVENT_FUNC_EntranceIn_ExitTypeNone,   //EXIT_TYPE_MAT
-    EVENT_FUNC_EntranceIn_ExitTypeStep,   //EXIT_TYPE_STAIRS
-    EVENT_FUNC_EntranceIn_ExitTypeDoor,   //EXIT_TYPE_DOOR
-    EVENT_FUNC_EntranceIn_ExitTypeStep,   //EXIT_TYPE_WALL
-    EVENT_FUNC_EntranceIn_ExitTypeWarp,   //EXIT_TYPE_WARP
-    EVENT_FUNC_EntranceIn_ExitTypeNone,   //EXIT_TYPE_INTRUDE
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP1
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP2
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP3
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP4
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP5
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP6
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP7
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP8
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP9
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP10
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP11
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP12
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP13
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP14
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP15
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP16
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP17
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP18
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP19
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP20
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP21
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP22
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP23
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP24
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP25
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP26
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP27
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP28
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP29
-    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP30
+    EVENT_FUNC_EntranceIn_ExitTypeNone,   // EXIT_TYPE_NONE
+    EVENT_FUNC_EntranceIn_ExitTypeNone,   // EXIT_TYPE_MAT
+    EVENT_FUNC_EntranceIn_ExitTypeStep,   // EXIT_TYPE_STAIRS
+    EVENT_FUNC_EntranceIn_ExitTypeDoor,   // EXIT_TYPE_DOOR
+    EVENT_FUNC_EntranceIn_ExitTypeStep,   // EXIT_TYPE_WALL
+    EVENT_FUNC_EntranceIn_ExitTypeWarp,   // EXIT_TYPE_WARP
+    EVENT_FUNC_EntranceIn_ExitTypeNone,   // EXIT_TYPE_INTRUDE
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP1
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP2
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP3
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP4
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP5
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP6
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP7
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP8
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP9
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP10
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP11
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP12
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP13
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP14
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP15
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP16
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP17
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP18
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP19
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP20
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP21
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP22
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP23
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP24
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP25
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP26
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP27
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP28
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP29
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP30
   };
 
   // イベント作成
@@ -325,21 +324,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp( GMEVENT* event, int* s
 }
 
 
-//=======================================================================================
-// ■特殊進入イベントのカメラ動作データ
-//=======================================================================================
-typedef struct 
-{
-  u32 exitType;        // 出入り口タイプ
-  u32 pitch;           // ピッチ
-  u32 yaw;             // ヨー
-  u32 length;          // 距離
-  u32 targetOffsetX;   // ターゲットオフセットx
-  u32 targetOffsetY;   // ターゲットオフセットy
-  u32 targetOffsetZ;   // ターゲットオフセットz
-  u32 frame;           // フレーム数
-
-} ENTRANCE_CAMERA_ACTION;
 
 
 //---------------------------------------------------------------------------------------
@@ -356,55 +340,36 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
 	FIELDMAP_WORK* fieldmap   = work->fieldmap;
   FIELD_CAMERA*  camera     = FIELDMAP_GetFieldCamera( work->fieldmap );
 
-  // 出入り口タイプに対応するカメラデータのインデックス
-  const ARCDATID dataIndex[] = 
-  {
-    0, 0, 0, 0, 0, 0, 0,  // EXIT_TYPE_NONE - EXIT_TYPE_INTRUDE
-    NARC_entrance_camera_exit_type_sp1_bin,    // EXIT_TYPE_SP1
-    NARC_entrance_camera_exit_type_sp2_bin,    // EXIT_TYPE_SP2
-    NARC_entrance_camera_exit_type_sp3_bin,    // EXIT_TYPE_SP3
-    NARC_entrance_camera_exit_type_sp4_bin,    // EXIT_TYPE_SP4
-    NARC_entrance_camera_exit_type_sp5_bin,    // EXIT_TYPE_SP5
-    NARC_entrance_camera_exit_type_sp6_bin,    // EXIT_TYPE_SP6
-    NARC_entrance_camera_exit_type_sp7_bin,    // EXIT_TYPE_SP7
-    NARC_entrance_camera_exit_type_sp8_bin,    // EXIT_TYPE_SP8
-    NARC_entrance_camera_exit_type_sp9_bin,    // EXIT_TYPE_SP9
-    NARC_entrance_camera_exit_type_sp10_bin,   // EXIT_TYPE_SP10
-    NARC_entrance_camera_exit_type_sp11_bin,   // EXIT_TYPE_SP11
-    NARC_entrance_camera_exit_type_sp12_bin,   // EXIT_TYPE_SP12
-    NARC_entrance_camera_exit_type_sp13_bin,   // EXIT_TYPE_SP13
-    NARC_entrance_camera_exit_type_sp14_bin,   // EXIT_TYPE_SP14
-    NARC_entrance_camera_exit_type_sp15_bin,   // EXIT_TYPE_SP15
-    NARC_entrance_camera_exit_type_sp16_bin,   // EXIT_TYPE_SP16
-    NARC_entrance_camera_exit_type_sp17_bin,   // EXIT_TYPE_SP17
-    NARC_entrance_camera_exit_type_sp18_bin,   // EXIT_TYPE_SP18
-    NARC_entrance_camera_exit_type_sp19_bin,   // EXIT_TYPE_SP19
-    NARC_entrance_camera_exit_type_sp20_bin,   // EXIT_TYPE_SP20
-    NARC_entrance_camera_exit_type_sp21_bin,   // EXIT_TYPE_SP21
-    NARC_entrance_camera_exit_type_sp22_bin,   // EXIT_TYPE_SP22
-    NARC_entrance_camera_exit_type_sp23_bin,   // EXIT_TYPE_SP23
-    NARC_entrance_camera_exit_type_sp24_bin,   // EXIT_TYPE_SP24
-    NARC_entrance_camera_exit_type_sp25_bin,   // EXIT_TYPE_SP25
-    NARC_entrance_camera_exit_type_sp26_bin,   // EXIT_TYPE_SP26
-    NARC_entrance_camera_exit_type_sp27_bin,   // EXIT_TYPE_SP27
-    NARC_entrance_camera_exit_type_sp28_bin,   // EXIT_TYPE_SP28
-    NARC_entrance_camera_exit_type_sp29_bin,   // EXIT_TYPE_SP29
-    NARC_entrance_camera_exit_type_sp30_bin,   // EXIT_TYPE_SP30
-  };
-
   // 処理シーケンス
-  enum{
-    SEQ_CREATE_CAMERA_EFFECT_TASK,  // カメラ演出タスクの作成
-    SEQ_WAIT_CAMERA_EFFECT_TASK,    // カメラ演出タスク終了待ち
-    SEQ_CAMERA_STOP_TRACE_REQUEST,  // カメラの自機追従OFFリクエスト発行
-    SEQ_WAIT_CAMERA_TRACE,          // カメラの自機追従処理の終了待ち
-    SEQ_CAMERA_TRACE_OFF,           // カメラの自機追従OFF
-    SEQ_DOOR_IN_ANIME,              // ドア進入イベント
-    SEQ_EXIT,                       // イベント終了
+  enum {
+    SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS,  // カメラ演出データ取得
+    SEQ_CREATE_CAMERA_EFFECT_TASK,      // カメラ演出タスクの作成
+    SEQ_WAIT_CAMERA_EFFECT_TASK,        // カメラ演出タスク終了待ち
+    SEQ_CAMERA_STOP_TRACE_REQUEST,      // カメラの自機追従OFFリクエスト発行
+    SEQ_WAIT_CAMERA_TRACE,              // カメラの自機追従処理の終了待ち
+    SEQ_CAMERA_TRACE_OFF,               // カメラの自機追従OFF
+    SEQ_DOOR_IN_ANIME,                  // ドア進入イベント
+    SEQ_EXIT,                           // イベント終了
   };
 
   switch( *seq )
   {
+  // カメラ演出データ取得
+  case SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS:
+    // データ取得
+    ENTRANCE_CAMERA_SETTINGS_LoadData( &work->cameraSettings, work->exitType );
+
+    // データが有効かどうか
+    if( work->cameraSettings.validFlag_IN )
+    {
+      *seq = SEQ_CREATE_CAMERA_EFFECT_TASK;
+    }
+    else
+    {
+      *seq = SEQ_DOOR_IN_ANIME;
+    } 
+    break;
+
   // カメラ演出タスクの作成
   case SEQ_CREATE_CAMERA_EFFECT_TASK:
     {
@@ -414,24 +379,14 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
       VecFx32 targetOffset;
       // 各パラメータ取得
       {
-        ENTRANCE_CAMERA_ACTION cameraAction;
-        GFL_ARC_LoadData( &cameraAction, ARCID_ENTRANCE_CAMERA, dataIndex[ work->exitType ] );
-        frame  = cameraAction.frame;
-        pitch  = cameraAction.pitch;
-        yaw    = cameraAction.yaw;
-        length = cameraAction.length << FX32_SHIFT;
+        frame  = work->cameraSettings.frame;
+        pitch  = work->cameraSettings.pitch;
+        yaw    = work->cameraSettings.yaw;
+        length = work->cameraSettings.length << FX32_SHIFT;
         VEC_Set( &targetOffset, 
-                 cameraAction.targetOffsetX << FX32_SHIFT,
-                 cameraAction.targetOffsetY << FX32_SHIFT,
-                 cameraAction.targetOffsetZ << FX32_SHIFT );
-        // DEBUG:
-        OBATA_Printf( "frame   = %d\n", cameraAction.frame );
-        OBATA_Printf( "pitch   = %x\n", cameraAction.pitch );
-        OBATA_Printf( "yaw     = %x\n", cameraAction.yaw );
-        OBATA_Printf( "length  = %x\n", cameraAction.length );
-        OBATA_Printf( "offsetX = %x\n", cameraAction.targetOffsetX );
-        OBATA_Printf( "offsetY = %x\n", cameraAction.targetOffsetX );
-        OBATA_Printf( "offsetZ = %x\n", cameraAction.targetOffsetX );
+                 work->cameraSettings.targetOffsetX << FX32_SHIFT,
+                 work->cameraSettings.targetOffsetY << FX32_SHIFT,
+                 work->cameraSettings.targetOffsetZ << FX32_SHIFT );
       }
       // タスク登録
       {
@@ -441,9 +396,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
         FIELD_TASK* yawTask;
         FIELD_TASK* targetOffsetTask;
         // 生成
-        zoomTaks  = FIELD_TASK_CameraLinearZoom( fieldmap, frame, length );
-        pitchTask = FIELD_TASK_CameraRot_Pitch( fieldmap, frame, pitch );
-        yawTask   = FIELD_TASK_CameraRot_Yaw( fieldmap, frame, yaw );
+        zoomTaks         = FIELD_TASK_CameraLinearZoom  ( fieldmap, frame, length );
+        pitchTask        = FIELD_TASK_CameraRot_Pitch   ( fieldmap, frame, pitch );
+        yawTask          = FIELD_TASK_CameraRot_Yaw     ( fieldmap, frame, yaw );
         targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &targetOffset );
         // 登録
         taskMan = FIELDMAP_GetTaskManager( fieldmap );
@@ -455,6 +410,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
     }
     *seq = SEQ_WAIT_CAMERA_EFFECT_TASK;
     break;
+
   // タスク終了待ち
   case SEQ_WAIT_CAMERA_EFFECT_TASK:
     {
@@ -463,20 +419,24 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
       if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ){ *seq = SEQ_CAMERA_STOP_TRACE_REQUEST; }
     }
     break;
+
   // カメラのトレース処理停止リクエスト発行
   case SEQ_CAMERA_STOP_TRACE_REQUEST:
     FIELD_CAMERA_StopTraceRequest( camera );
     *seq = SEQ_WAIT_CAMERA_TRACE;
     break;
+
   // カメラのトレース処理終了待ち
   case SEQ_WAIT_CAMERA_TRACE: 
     if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ){ *seq = SEQ_CAMERA_TRACE_OFF; }
     break;
+
   // カメラのトレースOFF
   case SEQ_CAMERA_TRACE_OFF:
     FIELD_CAMERA_FreeTarget( camera );
     *seq = SEQ_DOOR_IN_ANIME;
     break;
+
   // ドア進入アニメ
   case SEQ_DOOR_IN_ANIME:
     GMEVENT_CallEvent( event, 
@@ -484,6 +444,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
           gameSystem, fieldmap, &work->nextLocation, FALSE, work->seasonDisplayFlag ) );
     *seq = SEQ_EXIT;
     break;
+
   // イベント終了
   case SEQ_EXIT:
     return GMEVENT_RES_FINISH;

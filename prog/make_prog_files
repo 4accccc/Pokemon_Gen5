@@ -242,9 +242,7 @@ SRCS  +=    $(SOUNDSRC) \
 		debug/debug_sd_print.c \
 		system/ds_system.c \
         savedata/undata_update.c \
-        field/event_research_radar.c \
-        system/scroll_bar.c \
-        gamesystem/g_power.c
+        system/scroll_bar.c
 
 
 #================================================
@@ -375,7 +373,10 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         app/townmap/townmap_util.c \
         field/scrcmd_easytalk.c \
         field/scrcmd_weather.c \
-        debug/debug_mystery_card.c
+        debug/debug_mystery_card.c \
+        gamesystem/g_power.c \
+        field/event_research_radar.c \
+        app/research_radar/questionnaire_index.c
 
 
 # wifiプログラム
@@ -532,6 +533,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_camera_act.c \
         field/event_entrance_in.c \
         field/event_entrance_out.c \
+        field/entrance_camera_settings.c \
         field/field_gimmick.c \
         field/fld_exp_obj.c \
         field/test_gimmick.c \
@@ -1769,6 +1771,7 @@ SRCS_OVERLAY_RESEARCH_RADAR = app/research_radar/research_main.c \
                               app/research_radar/research_select.c \
                               app/research_radar/research_check.c \
                               app/research_radar/research_test.c \
+                              app/research_radar/research_common.c \
                               app/research_radar/bg_font.c
 
 # 国連ビル

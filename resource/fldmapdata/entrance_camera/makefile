@@ -57,7 +57,6 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-# コンバート
 # タブ区切り
 entrance_camera.txt: entrance_camera.xls
 	ruby $(XLS_TAB_CONVERTOR) -n 0 $< > $@ 

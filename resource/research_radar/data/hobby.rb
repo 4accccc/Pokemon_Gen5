@@ -14,8 +14,8 @@
 class Hobby
 
   def initialize
-    @ID              = 0    # ID
-    @ID_lavel        = nil  # ID (ラベル名)
+    @ID              = 0    # 趣味ID
+    @ID_lavel        = nil  # 趣味ID (ラベル名)
     @stringJPN       = nil  # 趣味名 (かな)
     @stringJPN_KANJI = nil  # 趣味名 (漢字)
   end
@@ -24,8 +24,8 @@ class Hobby
 
   #-----------------------------
   # □brief: IDを設定する
-  # □param: id    ID
-  # □param: lavel ID (ラベル名)
+  # □param: id    趣味ID
+  # □param: lavel 趣味ID (ラベル名)
   def SetID( id, lavel )
     @ID       = id
     @ID_lavel = lavel

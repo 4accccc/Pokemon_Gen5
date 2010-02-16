@@ -19,6 +19,65 @@
 
 
 //===============================================================================
+// ■定数
+//===============================================================================
+
+// SUB-BG 背景面
+static const GFL_BG_BGCNT_HEADER SubBGControl_BACK = 
+{
+  0, 0,                    // 初期表示位置
+  0x800,                   // スクリーンバッファサイズ
+  0,                       // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,   // スクリーンサイズ
+  GX_BG_COLORMODE_16,      // カラーモード
+  GX_BG_SCRBASE_0x0000,    // スクリーンベースブロック
+  GX_BG_CHARBASE_0x04000,  // キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,   // キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,        // BG拡張パレットスロット選択
+  SUB_BG_BACK_PRIORITY,    // 表示プライオリティー
+  0,                       // エリアオーバーフラグ
+  0,                       // DUMMY
+  FALSE,                   // モザイク設定
+}; 
+
+// SUB-BG レーダー面
+static const GFL_BG_BGCNT_HEADER SubBGControl_RADAR = 
+{
+  0, 0,                    // 初期表示位置
+  0x800,                   // スクリーンバッファサイズ
+  0,                       // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,   // スクリーンサイズ
+  GX_BG_COLORMODE_16,      // カラーモード
+  GX_BG_SCRBASE_0x0800,    // スクリーンベースブロック
+  GX_BG_CHARBASE_0x04000,  // キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,   // キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,        // BG拡張パレットスロット選択
+  SUB_BG_RADAR_PRIORITY,   // 表示プライオリティー
+  0,                       // エリアオーバーフラグ
+  0,                       // DUMMY
+  FALSE,                   // モザイク設定
+}; 
+
+// MAIN-BG 背景面
+static const GFL_BG_BGCNT_HEADER MainBGControl_BACK = 
+{
+  0, 0,                    // 初期表示位置
+  0x800,                   // スクリーンバッファサイズ
+  0,                       // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,   // スクリーンサイズ
+  GX_BG_COLORMODE_16,      // カラーモード
+  GX_BG_SCRBASE_0x0000,    // スクリーンベースブロック
+  GX_BG_CHARBASE_0x04000,  // キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,   // キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,        // BG拡張パレットスロット選択
+  MAIN_BG_BACK_PRIORITY,   // 表示プライオリティー
+  0,                       // エリアオーバーフラグ
+  0,                       // DUMMY
+  FALSE,                   // モザイク設定
+};
+
+
+//===============================================================================
 // ■各種プロセス シーケンス番号
 //===============================================================================
 // 初期化プロセス
@@ -86,17 +145,12 @@ static PROC_MAIN_SEQ ProcMain_TEST  ( RESEARCH_WORK* work );
 static PROC_MAIN_SEQ ProcMain_MENU  ( RESEARCH_WORK* work );
 static PROC_MAIN_SEQ ProcMain_SELECT( RESEARCH_WORK* work );
 static PROC_MAIN_SEQ ProcMain_CHECK ( RESEARCH_WORK* work );
-// VRAM-Bank
-static void SetupVRAMBank();
 // BG
 static void SetupBG  ( HEAPID heapID );
 static void CleanUpBG( void );
-// 上画面 背景BG面
-static void SubBG_BackGround_Setup( HEAPID heapID );
-static void SubBG_BackGround_PaletteAnime( const RESEARCH_WORK* work );
-// 下画面 背景BG面
-static void MainBG_BackGround_Setup( HEAPID heapID );
-static void MainBG_BackGround_PaletteAnime( const RESEARCH_WORK* work );
+static void LoadSubBGResources ( HEAPID heapID );
+static void LoadMainBGResources( HEAPID heapID );
+static void SUB_BG_RADAR_UpdatePaletteAnime( const RESEARCH_WORK* work );
 
 
 //===============================================================================
@@ -133,15 +187,13 @@ static GFL_PROC_RESULT ResearchRadarProcInit( GFL_PROC* proc, int* seq, void* pr
   {
   // プロセスワーク確保
   case PROC_INIT_SEQ_ALLOC_WORK:
-    GFL_PROC_AllocWork( proc, sizeof(RESEARCH_WORK), HEAPID_PROC );
+    GFL_PROC_AllocWork( proc, sizeof(RESEARCH_WORK), GFL_HEAPID_APP );
     (*seq)++;
     break;
 
   // プロセスワーク初期化
   case PROC_INIT_SEQ_INIT_WORK:
-    OBATA_Printf( "HEAPID_PROC = %d\n", HEAPID_PROC );
-    OBATA_Printf( "HEAPID_SAVE = %d\n", HEAPID_SAVE );
-    work->heapID     = HEAPID_PROC;
+    work->heapID     = GFL_HEAPID_APP;
     work->gameSystem = param->gameSystem;
     work->frameCount = 0;
     work->testWork   = NULL;
@@ -153,7 +205,7 @@ static GFL_PROC_RESULT ResearchRadarProcInit( GFL_PROC* proc, int* seq, void* pr
 
   // 表示準備
   case PROC_INIT_SEQ_SETUP_DISPLAY:
-    SetupVRAMBank(); // VRAM-Bank 割り当て
+    GFL_DISP_SetBank( &VRAMBankSettings );         // VRAM-Bank 割り当て
     GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );  // 下画面がメイン
     (*seq)++;
     break;
@@ -161,8 +213,8 @@ static GFL_PROC_RESULT ResearchRadarProcInit( GFL_PROC* proc, int* seq, void* pr
   // BG準備
   case PROC_INIT_SEQ_SETUP_BG:
     SetupBG( work->heapID );
-    MainBG_BackGround_Setup( work->heapID ); 
-    SubBG_BackGround_Setup( work->heapID ); 
+    LoadMainBGResources( work->heapID ); 
+    LoadSubBGResources ( work->heapID ); 
     (*seq)++;
     break;
 
@@ -244,9 +296,8 @@ static GFL_PROC_RESULT ResearchRadarProcMain( GFL_PROC* proc, int* seq, void* pr
   default:  GF_ASSERT(0);
   }
 
-  // 背景BGのパレットアニメーション
-  //MainBG_BackGround_PaletteAnime( work );
-  SubBG_BackGround_PaletteAnime( work );
+  // SUB-BG レーダー面のパレットアニメーション更新
+  SUB_BG_RADAR_UpdatePaletteAnime( work );
 
   // フレームカウンタ更新
   work->frameCount++; 
@@ -528,39 +579,6 @@ static PROC_MAIN_SEQ ProcMain_CHECK( RESEARCH_WORK* work )
 
 
 //===============================================================================
-// ■VRAM-Bank
-//===============================================================================
-
-//-------------------------------------------------------------------------------
-/**
- * @biref VRAM-Bank の割り当てを設定する
- */
-//-------------------------------------------------------------------------------
-static void SetupVRAMBank()
-{
-  const GFL_DISP_VRAM VRAMBankSettings =
-  {
-    GX_VRAM_BG_128_A,            // MAIN-BG
-    GX_VRAM_BGEXTPLTT_NONE,      // MAIN-BG-EXP-PLT
-    GX_VRAM_SUB_BG_128_C,        // SUB--BG
-    GX_VRAM_SUB_BGEXTPLTT_NONE,  // SUB--BG-EXP-PLT
-    GX_VRAM_OBJ_64_E,            // MAIN-OBJ
-    GX_VRAM_OBJEXTPLTT_NONE,     // MAIN-OBJ-EXP-PLT
-    GX_VRAM_SUB_OBJ_16_I,        // SUB--OBJ
-    GX_VRAM_SUB_OBJEXTPLTT_NONE, // SUB--OBJ-EXP-PLT
-    GX_VRAM_TEX_0_B,             // TEX-IMG
-    GX_VRAM_TEXPLTT_0_G,         // TEX-PLT
-    GX_OBJVRAMMODE_CHAR_1D_64K,  // MAIN-OBJ-MAPPING-MODE
-    GX_OBJVRAMMODE_CHAR_1D_32K,  // SUB--OBJ-MAPPING-MODE
-  }; 
-  GFL_DISP_SetBank( &VRAMBankSettings );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH: setup VRAM-Bank\n" );
-}
-
-
-//===============================================================================
 // ■BG
 //===============================================================================
 
@@ -576,60 +594,17 @@ static void SetupBG( HEAPID heapID )
   GFL_BG_Init( heapID );
 
   // BGモード
-  {
-    static const GFL_BG_SYS_HEADER BGSysHeader = 
-    {
-      GX_DISPMODE_GRAPHICS,   // 表示モード指定
-      GX_BGMODE_0,            // ＢＧモード指定(メインスクリーン)
-      GX_BGMODE_0,            // ＢＧモード指定(サブスクリーン)
-      GX_BG0_AS_2D            // ＢＧ０の２Ｄ、３Ｄモード選択
-    };
-    GFL_BG_SetBGMode( &BGSysHeader );
-  } 
+  GFL_BG_SetBGMode( &BGSysHeader2D );
 
   // SUB-BG
-  {
-    const GFL_BG_BGCNT_HEADER BGCntHeader = 
-    {
-      0, 0,                         // 初期表示位置
-      0x800,                        // スクリーンバッファサイズ
-      0,                            // スクリーンバッファオフセット
-      GFL_BG_SCRSIZ_256x256,        // スクリーンサイズ
-      GX_BG_COLORMODE_16,           // カラーモード
-      GX_BG_SCRBASE_0x0000,         // スクリーンベースブロック
-      GX_BG_CHARBASE_0x04000,       // キャラクタベースブロック
-      GFL_BG_CHRSIZ_256x256,        // キャラクタエリアサイズ
-      GX_BG_EXTPLTT_01,             // BG拡張パレットスロット選択
-      SUB_BG_BACK_GROUND_PRIORITY,  // 表示プライオリティー
-      0,                            // エリアオーバーフラグ
-      0,                            // DUMMY
-      FALSE,                        // モザイク設定
-    }; 
-    GFL_BG_SetBGControl( SUB_BG_BACK_GROUND, &BGCntHeader, GFL_BG_MODE_TEXT );
-    GFL_BG_SetVisible( SUB_BG_BACK_GROUND, VISIBLE_ON );
-  }
+  GFL_BG_SetBGControl( SUB_BG_BACK,  &SubBGControl_BACK,  GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( SUB_BG_RADAR, &SubBGControl_RADAR, GFL_BG_MODE_TEXT );
+  GFL_BG_SetVisible( SUB_BG_BACK,  VISIBLE_ON );
+  GFL_BG_SetVisible( SUB_BG_RADAR, VISIBLE_ON );
 
   // MAIN-BG
-  {
-    const GFL_BG_BGCNT_HEADER BGCntHeader = 
-    {
-      0, 0,                         // 初期表示位置
-      0x800,                        // スクリーンバッファサイズ
-      0,                            // スクリーンバッファオフセット
-      GFL_BG_SCRSIZ_256x256,        // スクリーンサイズ
-      GX_BG_COLORMODE_16,           // カラーモード
-      GX_BG_SCRBASE_0x0000,         // スクリーンベースブロック
-      GX_BG_CHARBASE_0x04000,       // キャラクタベースブロック
-      GFL_BG_CHRSIZ_256x256,        // キャラクタエリアサイズ
-      GX_BG_EXTPLTT_01,             // BG拡張パレットスロット選択
-      MAIN_BG_BACK_GROUND_PRIORITY, // 表示プライオリティー
-      0,                            // エリアオーバーフラグ
-      0,                            // DUMMY
-      FALSE,                        // モザイク設定
-    };
-    GFL_BG_SetBGControl( MAIN_BG_BACK_GROUND, &BGCntHeader, GFL_BG_MODE_TEXT );
-    GFL_BG_SetVisible( MAIN_BG_BACK_GROUND, TRUE );
-  }
+  GFL_BG_SetBGControl( MAIN_BG_BACK, &MainBGControl_BACK, GFL_BG_MODE_TEXT );
+  GFL_BG_SetVisible( MAIN_BG_BACK, VISIBLE_ON );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH: setup BG\n" );
@@ -642,27 +617,22 @@ static void SetupBG( HEAPID heapID )
 //-------------------------------------------------------------------------------
 static void CleanUpBG()
 {
-  GFL_BG_FreeBGControl( MAIN_BG_BACK_GROUND );
-  GFL_BG_FreeBGControl( SUB_BG_BACK_GROUND );
+  GFL_BG_FreeBGControl( MAIN_BG_BACK );
+  GFL_BG_FreeBGControl( SUB_BG_BACK );
   GFL_BG_Exit();
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH: clean up BG\n" );
 }
 
-
-//===============================================================================
-// ■上画面 背景BG面
-//===============================================================================
-
 //-------------------------------------------------------------------------------
 /**
- * @brief 上画面 背景BG面の準備
+ * @brief SUB-BG のリソースを読み込む
  *
- * @param heapID
+ * @param heapID 使用するヒープID
  */
 //-------------------------------------------------------------------------------
-static void SubBG_BackGround_Setup( HEAPID heapID )
+static void LoadSubBGResources( HEAPID heapID )
 { 
   // データ読み込み
   {
@@ -679,7 +649,7 @@ static void SubBG_BackGround_Setup( HEAPID heapID )
       datID = NARC_research_radar_graphic_bgu_NCLR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedPaletteData( src, &data );
-      GFL_BG_LoadPalette( SUB_BG_BACK_GROUND, data->pRawData, FULL_PALETTE_SIZE, 0 );
+      GFL_BG_LoadPalette( SUB_BG_BACK, data->pRawData, FULL_PALETTE_SIZE, 0 );
       GFL_HEAP_FreeMemory( src );
     }
     // キャラクタデータ
@@ -690,10 +660,10 @@ static void SubBG_BackGround_Setup( HEAPID heapID )
       datID = NARC_research_radar_graphic_bgu_NCGR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedBGCharacterData( src, &data );
-      GFL_BG_LoadCharacter( SUB_BG_BACK_GROUND, data->pRawData, data->szByte, 0 );
+      GFL_BG_LoadCharacter( SUB_BG_BACK, data->pRawData, data->szByte, 0 );
       GFL_HEAP_FreeMemory( src );
     }
-    // スクリーンデータ
+    // スクリーンデータ ( 背景面 )
     {
       void* src;
       ARCDATID datID;
@@ -701,8 +671,20 @@ static void SubBG_BackGround_Setup( HEAPID heapID )
       datID = NARC_research_radar_graphic_bgu_base_NSCR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedScreenData( src, &data );
-      GFL_BG_WriteScreen( SUB_BG_BACK_GROUND, data->rawData, 0, 0, 32, 24 );
-      GFL_BG_LoadScreenReq( SUB_BG_BACK_GROUND );
+      GFL_BG_WriteScreen( SUB_BG_BACK, data->rawData, 0, 0, 32, 24 );
+      GFL_BG_LoadScreenReq( SUB_BG_BACK );
+      GFL_HEAP_FreeMemory( src );
+    }
+    // スクリーンデータ ( レーダー面 )
+    {
+      void* src;
+      ARCDATID datID;
+      NNSG2dScreenData* data;
+      datID = NARC_research_radar_graphic_bgu_base_NSCR;
+      src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
+      NNS_G2dGetUnpackedScreenData( src, &data );
+      GFL_BG_WriteScreen( SUB_BG_RADAR, data->rawData, 0, 0, 32, 24 );
+      GFL_BG_LoadScreenReq( SUB_BG_RADAR );
       GFL_HEAP_FreeMemory( src );
     }
 
@@ -711,40 +693,38 @@ static void SubBG_BackGround_Setup( HEAPID heapID )
   } 
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH: setup SUB BG BACK GROUND\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH: load SUB-BG resources\n" );
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief 上画面 背景BG面のパレットアニメーション更新
+ * @brief SUB-BG レーダー面のパレットアニメーションを更新する
  *
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void SubBG_BackGround_PaletteAnime( const RESEARCH_WORK* work )
+static void SUB_BG_RADAR_UpdatePaletteAnime( const RESEARCH_WORK* work )
 { 
+  u8 paletteOffset;
   u8 paletteNo;
 
-  paletteNo = SUB_BG_BACK_GROUND_FIRST_PLT_IDX + 
-              ( (work->frameCount / 40) % SUB_BG_BACK_GROUND_PLT_NUM );
+  // 設定するパレット番号を決定
+  paletteOffset = ( (work->frameCount / SUB_BG_RADAR_PLT_ANIME_FRAME) % SUB_BG_RADAR_PLT_NUM );
+  paletteNo     = SUB_BG_RADAR_FIRST_PLT_IDX + paletteOffset;
 
-  GFL_BG_ChangeScreenPalette( SUB_BG_BACK_GROUND, 0, 0, 32, 24, paletteNo );
-  GFL_BG_LoadScreenReq( SUB_BG_BACK_GROUND );
+  // スクリーンデータを更新
+  GFL_BG_ChangeScreenPalette( SUB_BG_RADAR, 0, 0, 32, 24, paletteNo );
+  GFL_BG_LoadScreenReq( SUB_BG_RADAR );
 }
-
-
-//===============================================================================
-// ■下画面 背景BG面
-//===============================================================================
 
 //-------------------------------------------------------------------------------
 /**
- * @brief 下画面 背景BG面の準備
+ * @brief MAIN-BG のリソースを読み込む
  *
- * @param heapID
+ * @param heapID 使用するヒープID
  */
 //-------------------------------------------------------------------------------
-static void MainBG_BackGround_Setup( HEAPID heapID )
+static void LoadMainBGResources( HEAPID heapID )
 { 
   // データ読み込み
   {
@@ -761,7 +741,7 @@ static void MainBG_BackGround_Setup( HEAPID heapID )
       datID = NARC_research_radar_graphic_bgd_NCLR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedPaletteData( src, &data );
-      GFL_BG_LoadPalette( MAIN_BG_BACK_GROUND, data->pRawData, FULL_PALETTE_SIZE, 0 );
+      GFL_BG_LoadPalette( MAIN_BG_BACK, data->pRawData, FULL_PALETTE_SIZE, 0 );
       GFL_HEAP_FreeMemory( src );
     }
     // キャラクタデータ
@@ -772,10 +752,10 @@ static void MainBG_BackGround_Setup( HEAPID heapID )
       datID = NARC_research_radar_graphic_bgd_NCGR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedBGCharacterData( src, &data );
-      GFL_BG_LoadCharacter( MAIN_BG_BACK_GROUND, data->pRawData, data->szByte, 0 );
+      GFL_BG_LoadCharacter( MAIN_BG_BACK, data->pRawData, data->szByte, 0 );
       GFL_HEAP_FreeMemory( src );
     }
-    // スクリーンデータ
+    // スクリーンデータ ( 背景面 )
     {
       void* src;
       ARCDATID datID;
@@ -783,8 +763,8 @@ static void MainBG_BackGround_Setup( HEAPID heapID )
       datID = NARC_research_radar_graphic_bgd_base_NSCR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedScreenData( src, &data );
-      GFL_BG_WriteScreen( MAIN_BG_BACK_GROUND, data->rawData, 0, 0, 32, 24 );
-      GFL_BG_LoadScreenReq( MAIN_BG_BACK_GROUND );
+      GFL_BG_WriteScreen( MAIN_BG_BACK, data->rawData, 0, 0, 32, 24 );
+      GFL_BG_LoadScreenReq( MAIN_BG_BACK );
       GFL_HEAP_FreeMemory( src );
     }
 
@@ -793,23 +773,5 @@ static void MainBG_BackGround_Setup( HEAPID heapID )
   } 
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH: setup MAIN BG BACK GROUND\n" );
-}
-
-//-------------------------------------------------------------------------------
-/**
- * @brief 下画面 背景BG面のパレットアニメーション更新
- *
- * @param work
- */
-//-------------------------------------------------------------------------------
-static void MainBG_BackGround_PaletteAnime( const RESEARCH_WORK* work )
-{ 
-  u8 paletteNo;
-
-  paletteNo = MAIN_BG_BACK_GROUND_FIRST_PLT_IDX + 
-              ( (work->frameCount / 40) % MAIN_BG_BACK_GROUND_PLT_NUM );
-
-  GFL_BG_ChangeScreenPalette( MAIN_BG_BACK_GROUND, 0, 0, 32, 24, paletteNo );
-  GFL_BG_LoadScreenReq( MAIN_BG_BACK_GROUND );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH: load MAIN-BG resources\n" );
 }

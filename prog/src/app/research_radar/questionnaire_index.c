@@ -7,9 +7,11 @@
  */
 /////////////////////////////////////////////////////////////////////////////
 #pragma once
-#include "../../../resource/research_radar/data/question_id.h"             // for QUESTION_ID_xxxx
-#include "../../../resource/research_radar/data/questionnaire_index.h"     // for QUESTIONNAIRE_INDEX
-#include "../../../resource/research_radar/data/questionnaire_index.cdat"  // for QuestionnaireIndex
+#include <gflib.h>
+#include "questionnaire_index.h"
+
+#include "../../../../resource/research_radar/data/question_id.h"             // for QUESTION_ID_xxxx
+#include "../../../../resource/research_radar/data/questionnaire_index.cdat"  // for QuestionnaireIndex
 
 
 //---------------------------------------------------------------------------
@@ -82,7 +84,7 @@ u8 QUESTIONNAIRE_INDEX_GetAnswerNumOffset( u8 questionID )
  * 　　　　アクセスするためのオフセット
  */
 //---------------------------------------------------------------------------
-extern u8 QUESTIONNAIRE_INDEX_GetBitCount( u8 questionID )
+extern u8 QUESTIONNAIRE_INDEX_GetBitCountOffset( u8 questionID )
 {
   // IDエラー
   if( QUESTION_ID_MAX < questionID )

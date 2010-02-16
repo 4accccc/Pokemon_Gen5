@@ -259,7 +259,8 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
         PMSND_PlaySE( seNo );
       }
     }
-    *seq = SEQ_DOORIN_CAMERA_ACT;
+    //*seq = SEQ_DOORIN_CAMERA_ACT;
+    *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     break;
 
   case SEQ_DOORIN_CAMERA_ACT: 

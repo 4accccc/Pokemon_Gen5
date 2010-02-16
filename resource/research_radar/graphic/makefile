@@ -27,14 +27,18 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
-XLSCONV        = ../../../../tools/exceltool/xls2xml/tab_out_sheet.rb
-GRAPHIC_SOURCE = .
-GRAPHIC_BIN    = bin
+XLSCONV          = ../../../../tools/exceltool/xls2xml/tab_out_sheet.rb
+GRAPHIC_SOURCE   = .
+GRAPHIC_BIN      = bin
+OBJ_ANM_DEF_FILE = obj_NANR_LBLDEFS.h
+OBJ_ANM_DEF_SRC  = $(GRAPHIC_BIN)/$(OBJ_ANM_DEF_FILE)
+OBJ_ANM_DEF_DEST = $(PROJECT_PROGDIR)src/app/research_radar/
 
 GRAPHIC_DATA = $(GRAPHIC_BIN)/bgd.NCLR \
 							 $(GRAPHIC_BIN)/bgd.NCGR \
 							 $(GRAPHIC_BIN)/bgd_base.NSCR \
 							 $(GRAPHIC_BIN)/bgd_topbtn.NSCR \
+							 $(GRAPHIC_BIN)/bgd_searchbtn.NSCR \
 							 $(GRAPHIC_BIN)/bgu.NCLR \
 							 $(GRAPHIC_BIN)/bgu.NCGR \
 							 $(GRAPHIC_BIN)/bgu_base.NSCR \
@@ -57,7 +61,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(OBJ_ANM_DEF_DEST)$(OBJ_ANM_DEF_FILE)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -68,6 +72,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd.ncg -bg -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd_base.nsc -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd_topbtn.nsc -o/$(GRAPHIC_BIN)
+	g2dcvtr $(GRAPHIC_SOURCE)/bgd_searchbtn.nsc -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu.ncl -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu.ncg -bg -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu_base.nsc -o/$(GRAPHIC_BIN)
@@ -75,6 +80,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $(GRAPHIC_SOURCE)/obj.nce -lbl -o/$(GRAPHIC_BIN)
 endif
 
+# ヘッダのコピーだけ実行する
+$(OBJ_ANM_DEF_DEST)$(OBJ_ANM_DEF_FILE): $(OBJ_ANM_DEF_SRC)
+	$(COPY) $(OBJ_ANM_DEF_SRC) $(OBJ_ANM_DEF_DEST)
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc

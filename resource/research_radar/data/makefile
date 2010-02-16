@@ -18,6 +18,7 @@ targetname =
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 GMM_COPY_DIR = $(PROJECT_RSCDIR)message/src
+DEF_COPY_DIR = $(PROJECT_PROGDIR)src/app/research_radar
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -40,6 +41,7 @@ DATA_BIN          = bin
 DATA_DEBUG        = debug
 GMM_QUESTIONNAIRE = questionnaire.gmm
 GMM_HOBBY         = hobby.gmm
+TOPIC_ID_DEF      = topic_id.h
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -53,13 +55,13 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE) $(GMM_COPY_DIR)/$(GMM_HOBBY)
+do-build:	subdir $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE) $(GMM_COPY_DIR)/$(GMM_HOBBY) $(DEF_COPY_DIR)/$(TOPIC_ID_DEF)
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-# コンバート
+  # コンバート
 	ruby $(XLSCONV) $(XLS_DATA) 1 $(TOPIC_DATA)
 	ruby $(XLSCONV) $(XLS_DATA) 2 $(QUESTION_DATA)
 	ruby $(XLSCONV) $(XLS_DATA) 3 $(ANSWER_DATA)
@@ -74,6 +76,10 @@ $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE): $(GMM_QUESTIONNAIRE)
 # gmm コピー
 $(GMM_COPY_DIR)/$(GMM_HOBBY): $(GMM_HOBBY)
 	$(COPY) $(GMM_HOBBY) $(GMM_COPY_DIR)
+
+# def コピー
+$(DEF_COPY_DIR)/$(TOPIC_ID_DEF): $(TOPIC_ID_DEF)
+	$(COPY) $(TOPIC_ID_DEF) $(DEF_COPY_DIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 endif

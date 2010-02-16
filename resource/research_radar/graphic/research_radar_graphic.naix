@@ -15,14 +15,15 @@ enum {
 	NARC_research_radar_graphic_bgd_NCGR = 1,
 	NARC_research_radar_graphic_bgd_base_NSCR = 2,
 	NARC_research_radar_graphic_bgd_topbtn_NSCR = 3,
-	NARC_research_radar_graphic_bgu_NCLR = 4,
-	NARC_research_radar_graphic_bgu_NCGR = 5,
-	NARC_research_radar_graphic_bgu_base_NSCR = 6,
-	NARC_research_radar_graphic_bgu_win1_NSCR = 7,
-	NARC_research_radar_graphic_obj_NCER = 8,
-	NARC_research_radar_graphic_obj_NCGR = 9,
-	NARC_research_radar_graphic_obj_NCLR = 10,
-	NARC_research_radar_graphic_obj_NANR = 11
+	NARC_research_radar_graphic_bgd_searchbtn_NSCR = 4,
+	NARC_research_radar_graphic_bgu_NCLR = 5,
+	NARC_research_radar_graphic_bgu_NCGR = 6,
+	NARC_research_radar_graphic_bgu_base_NSCR = 7,
+	NARC_research_radar_graphic_bgu_win1_NSCR = 8,
+	NARC_research_radar_graphic_obj_NCER = 9,
+	NARC_research_radar_graphic_obj_NCGR = 10,
+	NARC_research_radar_graphic_obj_NCLR = 11,
+	NARC_research_radar_graphic_obj_NANR = 12
 };
 
 /* NARC_RESEARCH_RADAR_GRAPHIC_NAIX_ */
