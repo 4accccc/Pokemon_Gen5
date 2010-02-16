@@ -58,8 +58,8 @@ EVENT_START ev_r06r0203_legend1
         _CALL sub_legend1_captured
 
         _FLAG_SET( FE_LEGEND1_GET )
-        //_FLAG_SET( FV_D09_ROCK1 )
-        //_FLAG_SET( FV_D02_ROCK1 )
+        _FLAG_SET( FV_D09_ROCK1 )
+        _FLAG_SET( FV_D02_ROCK1 )
 
     ENDSWITCH
 
