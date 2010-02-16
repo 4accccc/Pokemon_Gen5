@@ -1505,8 +1505,8 @@ static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_
 //----------------------------------------------------------------------------------
 static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp )
 {
-  BtlPokePos myPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(bpp) );
-  BTL_ACTION_SetFightParam( dst, WAZANO_WARUAGAKI, myPos );
+  BtlPokePos targetPos = BTL_CALC_DecideWazaTargetAuto( wk->mainModule, wk->pokeCon, bpp, WAZANO_WARUAGAKI );
+  BTL_ACTION_SetFightParam( dst, WAZANO_WARUAGAKI, targetPos );
 }
 
 //----------------------------------------------------------------------------------

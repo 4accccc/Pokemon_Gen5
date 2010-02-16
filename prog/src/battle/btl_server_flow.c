@@ -212,10 +212,10 @@ struct _BTL_SVFLOW_WORK {
   BTL_POKESET         pokesetDamaged;
   BTL_POKESET         pokesetRobTarget;
 
-  SVFL_WAZAPARAM      wazaParam;
-  BTL_POSPOKE_WORK    pospokeWork;
-  BTL_HANDEX_STR_PARAMS strParam;
-  CALC_EXP_WORK       calcExpWork[ BTL_PARTY_MEMBER_MAX ];
+  SVFL_WAZAPARAM         wazaParam;
+  BTL_POSPOKE_WORK       pospokeWork;
+  BTL_HANDEX_STR_PARAMS  strParam;
+  CALC_EXP_WORK          calcExpWork[ BTL_PARTY_MEMBER_MAX ];
 
   BTL_EVENT_WORK_STACK        eventWork;
   HANDLER_EXHIBISION_MANAGER  HEManager;
