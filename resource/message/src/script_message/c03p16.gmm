@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-08T22:43:23"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T17:59:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="215"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1459" top="293" right="2164" bottom="913" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -307,21 +307,23 @@
 ご乗船は　初めてですか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_02">
+	<row id="msg_c03p16_cabinguide_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀（仮）
-・続けてcabinguide_03</comment>
+・続けてcabinguide_03
+
+※乗船時間以降の文章がおかしい</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
 		<language name="JPN" width="256">イッシュちほうの　おおきな　はし
 スカイアローブリッジを　くぐり[BE:01:ページ切り替え（クリア）]
-ワンダーブリッジを　まわり
+ワンダーブリッジを　まわって
 ヒウンシティに　もどる　ふねです[BE:01:ページ切り替え（クリア）]
 じょうせんじかんは
 ぜんぶで　５かい　ボォォォ！と[BE:00:ページ切り替え（行送り）]
 きてきで　おしらせ　いたします[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">イッシュ地方の　大きな橋
 スカイアローブリッジを　くぐり[BE:01:ページ切り替え（クリア）]
-ワンダーブリッジを　まわり
+ワンダーブリッジを　まわって
 ヒウンシティに　戻ります[BE:01:ページ切り替え（クリア）]
 乗船時間は　全部で　５回
 ボォォォォォォォ！　と[BE:00:ページ切り替え（行送り）]
