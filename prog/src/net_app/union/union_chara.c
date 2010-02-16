@@ -45,6 +45,9 @@ enum{
   BPC_SUBPROC_EXIT,     ///<終了処理
 };
 
+///スクリプトのOBJIDと被らないようにプログラムでずらすオフセット
+#define UNION_CHARINDEX_OFFSET    (32)
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -174,7 +177,7 @@ static MMDL * UNION_CHAR_AddOBJ(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, u8 tra
   
   mdlsys = GAMEDATA_GetMMdlSys( gdata );
   oya_chara_index = chara_index >> 8;
-  child_chara_index = chara_index & 0x00ff;
+  child_chara_index = (chara_index & 0x00ff) - UNION_CHARINDEX_OFFSET;
   
   head = UnionChar_MMdlHeader;
   head.id = chara_index;
@@ -202,7 +205,7 @@ static u16 UNION_CHARA_GetCharaIndex(UNION_BEACON_PC *pc, UNION_CHARACTER *unich
 {
   u16 chara_index;
   
-  chara_index = (pc->buffer_no << 8) | unichara->child_no;
+  chara_index = (pc->buffer_no << 8) | (unichara->child_no + UNION_CHARINDEX_OFFSET);
   return chara_index;
 }
 
@@ -220,7 +223,7 @@ UNION_CHARA_INDEX UNION_CHARA_CheckCharaIndex(u16 chara_index)
   u16 oya_chara_index, child_chara_index;
   
   oya_chara_index = chara_index >> 8;
-  child_chara_index = chara_index & 0x00ff;
+  child_chara_index = (chara_index & 0x00ff) - UNION_CHARINDEX_OFFSET;
   
   GF_ASSERT(oya_chara_index < UNION_RECEIVE_BEACON_MAX);
   GF_ASSERT(child_chara_index < UNION_CONNECT_PLAYER_NUM);
