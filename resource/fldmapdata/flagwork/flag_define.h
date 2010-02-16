@@ -673,8 +673,8 @@
 #define FV_R06R0203_LEGEND1                649 /* 0x0289 伝説ポケモン：アトス */
 #define FV_D09R1501_LEGEND2                650 /* 0x028a 伝説ポケモン：ポルトス */
 #define FV_D02R0201_LEGEND3                651 /* 0x028b 伝説ポケモン：アラミス */
-		/* not used   652(0x028c) */
-		/* not used   653(0x028d) */
+#define FV_D09_ROCK1                       652 /* 0x028c ポルトスのダンジョンを塞ぐ岩 */
+#define FV_D02_ROCK1                       653 /* 0x028d アラミスのダンジョンを塞ぐ岩 */
 #define FV_BSUBWAY_RECEIPT_PARTNER         654 /* 0x028e バトルサブウェイ、受付：パートナー */
 #define FV_D06R0101_HAKAI                  655 /* 0x028f 電気洞窟内のダークトリニティ３人 */
 #define FV_T01R0401_HAKASE1                656 /* 0x0290 カノコタウン研究所：博士（父） */
@@ -2458,7 +2458,7 @@
 #define SYS_FLAG_ARRIVE_T03               2490 /* 0x09ba 到着フラグ：T0３ */
 #define SYS_FLAG_ARRIVE_C09               2491 /* 0x09bb 到着フラグ：C09 */
 #define SYS_FLAG_ARRIVE_C10               2492 /* 0x09bc 到着フラグ：C10 */
-		/* not used  2493(0x09bd) */
+#define SYS_FLAG_ARRIVE_T04               2493 /* 0x09bd 到着フラグ：T04 */
 		/* not used  2494(0x09be) */
 		/* not used  2495(0x09bf) */
 		/* not used  2496(0x09c0) */
