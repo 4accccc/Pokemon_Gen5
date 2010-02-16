@@ -18,8 +18,8 @@ enum {
 	NARC_comm_tvt_tv_t_oekaki_NCLR = 4,
 	NARC_comm_tvt_tv_t_rec_button_NCLR = 5,
 	NARC_comm_tvt_tv_t_tuuwa_bg_NCLR = 6,
-	NARC_comm_tvt_noise_bg_NCGR = 7,
-	NARC_comm_tvt_test_NCGR = 8,
+	NARC_comm_tvt_hit_tbl_NCGR = 7,
+	NARC_comm_tvt_noise_bg_NCGR = 8,
 	NARC_comm_tvt_tv_t_common_bg_NCGR = 9,
 	NARC_comm_tvt_tv_t_obj_NCGR = 10,
 	NARC_comm_tvt_tv_t_tuuwa_bg_NCGR = 11,
@@ -29,16 +29,14 @@ enum {
 	NARC_comm_tvt_tv_t_paint_bg_NSCR = 15,
 	NARC_comm_tvt_tv_t_tuuwa_bg_NSCR = 16,
 	NARC_comm_tvt_tv_t_yobidashi_bg_NSCR = 17,
-	NARC_comm_tvt_test_NCER = 18,
-	NARC_comm_tvt_tv_t_lower_obj_NCER = 19,
-	NARC_comm_tvt_tv_t_upper_obj_NCER = 20,
-	NARC_comm_tvt_test_NANR = 21,
-	NARC_comm_tvt_tv_t_lower_obj_NANR = 22,
-	NARC_comm_tvt_tv_t_upper_obj_NANR = 23,
-	NARC_comm_tvt_tv_t_lower_obj_NCGR = 24,
-	NARC_comm_tvt_tv_t_upper_obj_NCGR = 25,
-	NARC_comm_tvt_tv_t_ds_mode_ntft = 26,
-	NARC_comm_tvt_tv_t_ds_mode_double_ntft = 27
+	NARC_comm_tvt_tv_t_lower_obj_NCER = 18,
+	NARC_comm_tvt_tv_t_upper_obj_NCER = 19,
+	NARC_comm_tvt_tv_t_lower_obj_NANR = 20,
+	NARC_comm_tvt_tv_t_upper_obj_NANR = 21,
+	NARC_comm_tvt_tv_t_lower_obj_NCGR = 22,
+	NARC_comm_tvt_tv_t_upper_obj_NCGR = 23,
+	NARC_comm_tvt_tv_t_ds_mode_ntft = 24,
+	NARC_comm_tvt_tv_t_ds_mode_double_ntft = 25
 };
 
 /* NARC_COMM_TVT_NAIX_ */
