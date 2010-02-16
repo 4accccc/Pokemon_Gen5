@@ -88,6 +88,8 @@ static void SetTopicActive  ( u8 topicID );
 static void SetTopicInactive( u8 topicID );
 static void SetTopicSelected( u8 topicID );
 static void SetTopicNotSelected( u8 topicID );
+static u8 GetTopicScreenPosLeft( u8 topicID, BOOL selected );
+static u8 GetTopicScreenPosTop ( u8 topicID, BOOL selected );
 // 画面終了結果
 static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result );
 
@@ -316,7 +318,16 @@ static RESEARCH_SELECT_SEQ Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
   // A ボタン
   if( trg & PAD_BUTTON_A )
   {
-    SetTopicSelected( work->topicCursorPos );
+    if( IsTopicIDSelected( work, work->topicCursorPos ) )
+    {
+      CancelTopicID( work, work->topicCursorPos );
+      SetTopicNotSelected( work->topicCursorPos );
+    }
+    else
+    {
+      SelectTopicID( work, work->topicCursorPos );
+      SetTopicSelected( work->topicCursorPos );
+    }
   }
 
   //----------
@@ -719,7 +730,7 @@ static void SetTopicSelected( u8 topicID )
 //----------------------------------------------------------------------------------------------
 static void SetTopicNotSelected( u8 topicID )
 {
-  u8* screenBuffer;
+  u16* screenBuffer;
   int xOffset, yOffset;
 
   // スクリーンバッファを取得
@@ -743,6 +754,43 @@ static void SetTopicNotSelected( u8 topicID )
       screenBuffer[ destPos ] = screenBuffer[ srcPos ];
     }
   }
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目のスクリーン x 座標を取得する
+ *
+ * @param topicID  調査項目ID
+ * @param selected 調査項目が選択されている状態かどうか
+ *
+ * @return 指定した調査項目IDが該当するスクリーン範囲の左上x座標
+ */
+//----------------------------------------------------------------------------------------------
+static u8 GetTopicScreenPosLeft( u8 topicID, BOOL selected )
+{
+  u8 left;
+
+  // デフォルトの位置
+  left = TOPIC_BUTTON_X;
+
+  // 選択されている場合, 1キャラ分左にある
+  if( selected ){ left - 1; }
+
+  return left;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目のスクリーン y 座標を取得する
+ *
+ * @param topicID  調査項目ID
+ * @param selected 調査項目が選択されている状態かどうか
+ *
+ * @return 指定した調査項目IDが該当するスクリーン範囲の左上y座標
+ */
+//----------------------------------------------------------------------------------------------
+static u8 GetTopicScreenPosTop ( u8 topicID, BOOL selected )
+{
 }
 
 
