@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 02/15 (Mon) 18:38
+ * @date  2010 02/15 (Mon) 19:12
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -123,6 +123,9 @@
 
 #define ID_VENDING_MACHINE_OFFSET        (10400) //自動販売機スクリプト
 #define ID_VENDING_MACHINE_OFFSET_END    (10404)
+
+#define ID_ELEVATOR_OFFSET               (10405) //エレベーター共通スクリプト
+#define ID_ELEVATOR_OFFSET_END           (10424)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

@@ -1,0 +1,217 @@
+//======================================================================
+//                elevator.ev
+//    エレベーター関連スクリプト
+//
+//    スクリプトファイル：elevator用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "msg_elevator.h"
+
+
+//--------------------------------------------------------------
+//               スクリプト本体
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA   ev_elevator_c03r03
+_EVENT_DATA   ev_elevator_c03r04
+_EVENT_DATA   ev_elevator_c03r05
+_EVENT_DATA   ev_elevator_c03r10
+_EVENT_DATA   ev_elevator_c03r11
+_EVENT_DATA   ev_elevator_c03r12
+_EVENT_DATA   ev_elevator_c03r13
+_EVENT_DATA_END
+
+
+
+DEFINE_LOCAL  HEROX
+DEFINE_LOCAL  HEROZ
+DEFINE_LOCAL  ELEVATOR_ID
+
+/**************************************************************/
+/*        C03R030?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c03r03
+    _ELEVATOR_ENTRY_LIST( elevator_c03r03 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c03r03
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R0301,7,0,0
+  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R0302,7,0,0
+  _ELEVATOR_DATA  msg_elevator_3f, ZONE_ID_C03R0303,7,0,0
+_ELEVATOR_DATA_END
+
+/**************************************************************/
+/*        C03R040?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c03r04
+    _ELEVATOR_ENTRY_LIST( elevator_c03r04 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c03r04
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R0401,7,0,0
+  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R0402,7,0,0
+_ELEVATOR_DATA_END
+
+/**************************************************************/
+/*        C03R050?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c03r05
+    _ELEVATOR_ENTRY_LIST( elevator_c03r05 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c03r05
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R0501,7,0,0
+  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R0502,7,0,0
+_ELEVATOR_DATA_END
+
+/**************************************************************/
+/*        C03R100?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c03r10
+    _ELEVATOR_ENTRY_LIST( elevator_c03r10 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c03r10
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R1001,7,0,0
+  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R1002,7,0,0
+_ELEVATOR_DATA_END
+
+/**************************************************************/
+/*        C03R110?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c03r11
+    _ELEVATOR_ENTRY_LIST( elevator_c03r11 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c03r11
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R1101,7,0,0
+  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R1102,7,0,0
+_ELEVATOR_DATA_END
+
+/**************************************************************/
+/*        C03R100?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c03r12
+    _ELEVATOR_ENTRY_LIST( elevator_c03r12 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c03r12
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R1201,7,0,0
+  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R1202,7,0,0
+_ELEVATOR_DATA_END
+
+/**************************************************************/
+/*        C03R130?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c03r13
+    _ELEVATOR_ENTRY_LIST( elevator_c03r13 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c03r13
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R1301,7,0,0
+  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R1302,7,0,0
+_ELEVATOR_DATA_END
+
+
+
+
+//======================================================================
+//
+//    エレベーター共通処理
+//
+//======================================================================
+/**************************************************************/
+/*    エレベーターメイン処理                                  */
+/**************************************************************/
+sub_elevator_main:
+    _TALK_START_SE_PLAY()
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+    _ELEVATOR_MAKE_LIST()
+    _BMPMENU_MAKE_LIST( msg_elevator_cancel, 0xff )
+    _BMPMENU_START()
+
+    IF $SCWK_ANSWER != 0xff THEN
+        //エレベーターに乗り込む
+        _CALL sub_elevator_in
+        //指定フロアにマップ遷移
+        _ELEVATOR_MAP_CHANGE( SCWK_ANSWER )
+        //エレベーターから出てくる
+        _CALL sub_elevator_out
+    ENDIF
+    _RET
+
+
+
+/**************************************************************/
+/*    エレベーターに乗り込む演出                              */
+/**************************************************************/
+sub_elevator_in:
+    _SE_PLAY( SEQ_SE_FLD_23 )
+    _TIME_WAIT( 60 )
+    _SE_STOP()
+    _SE_PLAY( SEQ_SE_FLD_87 )
+    _SE_WAIT()
+    _PLAYER_POS_GET( HEROX, HEROZ )
+    $HEROX += 2
+    $HEROZ -= 1
+    _BMODEL_ANIME_CREATE( ELEVATOR_ID, SCR_BMID_DOOR, HEROX, HEROZ )
+    _BMODEL_ANIME_SET( ELEVATOR_ID, SCR_BMANM_DOOR_OPEN )
+    _BMODEL_ANIME_WAIT( ELEVATOR_ID )
+
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
+    _OBJ_ANIME_WAIT()
+
+    _BMODEL_ANIME_SET( ELEVATOR_ID, SCR_BMANM_DOOR_CLOSE )
+    _BMODEL_ANIME_WAIT( ELEVATOR_ID )
+    _BMODEL_ANIME_DELETE( ELEVATOR_ID )
+    _RET
+
+_ANIME_LABEL anm_player_in
+    _ANIME_DATA AC_WALK_R_8F, 2
+    _ANIME_DATA AC_WALK_U_8F, 2
+    _ANIME_DATA ACMD_END,0
+    
+
+/**************************************************************/
+/*    エレベーターから出てくる演出                            */
+/**************************************************************/
+sub_elevator_out:
+    _SE_PLAY( SEQ_SE_FLD_23 )
+    _TIME_WAIT( 60 )
+    _SE_STOP()
+    _SE_PLAY( SEQ_SE_FLD_87 )
+    _SE_WAIT()
+    _PLAYER_POS_GET( HEROX, HEROZ )
+    $HEROZ += 1
+    _BMODEL_ANIME_CREATE( ELEVATOR_ID, SCR_BMID_DOOR, HEROX, HEROZ )
+    _BMODEL_ANIME_SET( ELEVATOR_ID, SCR_BMANM_DOOR_OPEN )
+    _BMODEL_ANIME_WAIT( ELEVATOR_ID )
+
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
+    _OBJ_ANIME_WAIT()
+
+    _BMODEL_ANIME_SET( ELEVATOR_ID, SCR_BMANM_DOOR_CLOSE )
+    _BMODEL_ANIME_WAIT( ELEVATOR_ID )
+    _BMODEL_ANIME_DELETE( ELEVATOR_ID )
+    _RET
+
+_ANIME_LABEL anm_player_out
+    _ANIME_DATA AC_WALK_D_8F, 2
+    _ANIME_DATA ACMD_END,0
+    
+
+
+

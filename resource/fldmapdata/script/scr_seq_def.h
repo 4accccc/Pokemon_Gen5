@@ -7687,6 +7687,71 @@
     .endm
 
 //======================================================================
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+    .macro  _ELEVATOR_LABEL   adrs
+  .align  4
+  \adrs:
+    .endm
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+    .macro  _ELEVATOR_DATA  msgid, zone_id, x, y, z
+    .short  \msgid, \zone_id, \x, \y, \z
+    .endm
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+    .macro  _ELEVATOR_DATA_END
+    .short  0xffff
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ELEVATOR_ENTRY_LIST
+ * @brief
+ * @param list_label  データラベル
+ */
+//--------------------------------------------------------------
+#define _ELEVATOR_ENTRY_LIST( list_label ) \
+    _ASM_ELEVATOR_ENTRY_LIST list_label 
+
+    .macro  _ASM_ELEVATOR_ENTRY_LIST list_label 
+    .short  EV_SEQ_ELEVATOR_ENTRY_LIST
+    .long  ((\list_label-.)-4)
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ELEVATOR_MAKE_LIST
+ * @brief
+ */
+//--------------------------------------------------------------
+#define _ELEVATOR_MAKE_LIST( ) \
+    _ASM_ELEVATOR_MAKE_LIST 
+
+    .macro  _ASM_ELEVATOR_MAKE_LIST list_label
+    .short  EV_SEQ_ELEVATOR_MAKE_LIST
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ELEVATOR_MAP_CHANGE
+ * @brief
+ * @param list_label  データラベル
+ * @param select_id   選択位置
+ */
+//--------------------------------------------------------------
+#define _ELEVATOR_MAP_CHANGE( select_id ) \
+    _ASM_ELEVATOR_MAP_CHANGE select_id
+
+    .macro  _ASM_ELEVATOR_MAP_CHANGE select_id
+    .short  EV_SEQ_ELEVATOR_MAP_CHANGE
+    .short  \select_id
+    .endm
+
+//======================================================================
 //
 //  個別ギミック関連
 //
