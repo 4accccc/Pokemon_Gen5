@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-10T16:00:20"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T21:28:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1515" top="308" right="2220" bottom="936" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="349" right="1995" bottom="977" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -493,8 +493,16 @@
 
 	<row id="msg_r07_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
+		<language name="JPN" width="256">おとくな　けいじばん！▼
+つよい　ポケモンで
+よわい　ポケモンを　たおしても▽
+もらえる　けいけんちは▽
+ちょっと　すくなくなります</language>
+		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
+強い　ポケモンで
+弱い　ポケモンを　倒しても▽
+もらえる　経験値は▽
+ちょっと　少なくなります</language>
 	</row>
 
 	<flowchart-group-list>

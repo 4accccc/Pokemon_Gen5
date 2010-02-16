@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-14T21:18:17"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T21:17:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1302" top="338" right="2007" bottom="966" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="349" right="1995" bottom="977" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -393,11 +393,21 @@
 		<language name="JPN_KANJI" width="256">６番道路</language>
 	</row>
 
-	<row id="msg_r06_sign3_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r06_sign3_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：掲示板</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
+		<language name="JPN" width="256">おとくな　けいじばん！▼
+バッグの　たいせつなものポケットに
+しまっている　どうぐは▽
+とうろく　しておけば▼
+Ｙボタンで　かんたんに
+えらべるように　なります！</language>
+		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
+バッグの　たいせつなものポケットに
+しまっている　道具は▽
+登録しておけば▼
+Ｙボタンで　簡単に
+選べるように　なります！</language>
 	</row>
 
 	<row id="msg_r06_sign3_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
