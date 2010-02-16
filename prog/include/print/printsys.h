@@ -630,6 +630,7 @@ typedef enum {
   PRINTSYS_CTRL_GENERAL_X_CENTERING  = (0x0002), ///< Ｘ座標右寄せ
   PRINTSYS_CTRL_GENERAL_X_RIGHTFIT   = (0x0003), ///< Ｘ座標センタリング
   PRINTSYS_CTRL_GENERAL_X_ADD        = (0x0004), ///< Ｘ座標を加算
+  PRINTSYS_CTRL_GENERAL_X_SET        = (0x0005), ///< Ｘ座標を指定
 }PrintSysGenCtrlCode;
 
 // ストリームコントロールタイプ

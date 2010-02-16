@@ -857,7 +857,7 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
 
       areaWidth = GFL_BMP_GetSizeX( wk->dst ) - wk->org_x;
       strWidth = get_line_width( sp, wk->fontHandle, 0, NULL );
-      wk->write_x = wk->org_x + (areaWidth - strWidth) - 1;
+      wk->write_x = wk->org_x + (areaWidth - strWidth) - 1 - STR_TOOL_GetTagParam( sp, 0 );
     }
     break;
 
@@ -881,6 +881,10 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
 
   case PRINTSYS_CTRL_GENERAL_X_ADD:
     wk->write_x += STR_TOOL_GetTagParam( sp, 0 );
+    break;
+
+  case PRINTSYS_CTRL_GENERAL_X_SET:
+    wk->write_x = STR_TOOL_GetTagParam( sp, 0 );
     break;
 
   default:
