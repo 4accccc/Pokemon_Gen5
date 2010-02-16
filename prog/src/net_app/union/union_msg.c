@@ -133,10 +133,10 @@ static const struct{
 static const FLDMENUFUNC_LIST MainMenuList[] =
 {
   {msg_union_select_01, (void*)UNION_PLAY_CATEGORY_TRAINERCARD},   //à•éA
-  {msg_union_select_04, (void*)UNION_PLAY_CATEGORY_TRADE},   //åä∑
   {msg_union_select_03, (void*)UNION_MENU_NO_SEND_BATTLE},   //ëŒêÌ
-  {msg_union_select_06, (void*)UNION_PLAY_CATEGORY_GURUGURU}, //ÇÆÇÈÇÆÇÈåä∑
+  {msg_union_select_04, (void*)UNION_PLAY_CATEGORY_TRADE},   //åä∑
   {msg_union_select_02, (void*)UNION_PLAY_CATEGORY_PICTURE},   //Ç®äGÇ©Ç´
+  {msg_union_select_06, (void*)UNION_PLAY_CATEGORY_GURUGURU}, //ÇÆÇÈÇÆÇÈåä∑
   {msg_union_select_05, (void*)UNION_MENU_SELECT_CANCEL},   //Ç‚ÇﬂÇÈ
 };
 
