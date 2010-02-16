@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/12 21:34:52
+#save date:2010/02/16 18:04:58
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02r0101.wms
 #hold event type:
 1
 #hold event number:
-33
+37
 #event number: 0
 #type
 1
@@ -1033,6 +1033,130 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 1624 -32 -712
+#event number: 33
+#type
+1
+#ID name
+D02R0101_SPROCK_01
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02_ROCK1
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1448 0 -200
+#event number: 34
+#type
+1
+#ID name
+D02R0101_SPROCK_02
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02_ROCK1
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1464 0 -200
+#event number: 35
+#type
+1
+#ID name
+D02R0101_SPROCK_03
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02_ROCK1
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1480 0 -200
+#event number: 36
+#type
+1
+#ID name
+D02R0101_SPROCK_04
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02_ROCK1
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1496 0 -200
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
