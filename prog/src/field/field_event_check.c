@@ -736,6 +736,52 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
     }
   }
 
+	//フィールド話し掛けチェック
+  if( req.talkRequest )
+  {
+    { //OBJ話し掛け
+      MMDL *fmmdl_talk = getFrontTalkOBJ( &req, fieldWork );
+      if( fmmdl_talk != NULL )
+      {
+        u32 scr_id = MMDL_GetEventID( fmmdl_talk );
+        if ( SCRIPT_IsValidScriptID( scr_id ) == TRUE )
+        {
+          MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
+          FIELD_PLAYER_ForceStop( req.field_player );
+          //*eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
+          return EVENT_FieldTalk( gsys, fieldWork,
+            scr_id, fmmdl_player, fmmdl_talk, req.heapID );
+        }
+      }
+    }
+    
+    { //BG話し掛け
+      u16 id;
+      VecFx32 pos;
+      EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+      MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+      u16 dir = MMDL_GetDirDisp( fmmdl );
+      
+      FIELD_PLAYER_GetPos( req.field_player, &pos );
+      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+      id = EVENTDATA_CheckTalkBGEvent( req.evdata, evwork, &pos, dir );
+      
+      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+        return event;
+      }
+    }
+
+    { //BG Attribute 話しかけ
+      u16 id = checkTalkAttrEvent( &req, fieldWork );
+      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+        return event;
+      }
+
+    }
+  }
+
   //++++ ここから下は自機が完全に動作フリーな状態でなければチェックしない ++++
 	if(UnionMain_CheckPlayerFreeMode(gsys) == FALSE){
     return NULL;
