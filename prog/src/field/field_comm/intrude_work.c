@@ -22,27 +22,6 @@
 #include "intrude_work.h"
 
 
-//--------------------------------------------------------------
-/**
- * 侵入システムワークを取得する
- *
- * @param   game_comm		
- *
- * @retval  INTRUDE_COMM_SYS_PTR		侵入システムワークへのポインタ
- * @retval  INTRUDE_COMM_SYS_PTR    侵入システムが起動していない場合はNULL
- */
-//--------------------------------------------------------------
-static INTRUDE_COMM_SYS_PTR _GetIntrudeCommSys(GAME_COMM_SYS_PTR game_comm)
-{
-  INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
-  
-  if(intcomm == NULL || GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){
-    GF_ASSERT(0);
-    return NULL;
-  }
-  return intcomm;
-}
-
 //==================================================================
 /**
  * アクションステータスを設定
@@ -53,7 +32,7 @@ static INTRUDE_COMM_SYS_PTR _GetIntrudeCommSys(GAME_COMM_SYS_PTR game_comm)
 //==================================================================
 void IntrudeWork_SetActionStatus(GAME_COMM_SYS_PTR game_comm, INTRUDE_ACTION action)
 {
-  INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeCommSys(game_comm);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
   if(intcomm == NULL){
     return;
@@ -73,7 +52,7 @@ void IntrudeWork_SetActionStatus(GAME_COMM_SYS_PTR game_comm, INTRUDE_ACTION act
 //==================================================================
 void Intrude_SetWarpPlayerNetID(GAME_COMM_SYS_PTR game_comm, int net_id)
 {
-  INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeCommSys(game_comm);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
   if(intcomm == NULL){
     return;
@@ -93,7 +72,7 @@ void Intrude_SetWarpPlayerNetID(GAME_COMM_SYS_PTR game_comm, int net_id)
 //==================================================================
 int Intrude_GetWarpPlayerNetID(GAME_COMM_SYS_PTR game_comm)
 {
-  INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeCommSys(game_comm);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
   if(intcomm == NULL){
     return GAMEDATA_GetIntrudeMyID( GameCommSys_GetGameData(game_comm) );
@@ -111,7 +90,7 @@ int Intrude_GetWarpPlayerNetID(GAME_COMM_SYS_PTR game_comm)
 //==================================================================
 void Intrude_SetWarpTown(GAME_COMM_SYS_PTR game_comm, int town_tblno)
 {
-  INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeCommSys(game_comm);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
   if(intcomm == NULL){
     return;
@@ -131,7 +110,7 @@ void Intrude_SetWarpTown(GAME_COMM_SYS_PTR game_comm, int town_tblno)
 //==================================================================
 int Intrude_GetWarpTown(GAME_COMM_SYS_PTR game_comm)
 {
-  INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeCommSys(game_comm);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
   if(intcomm == NULL){
     return PALACE_TOWN_DATA_NULL;
@@ -283,3 +262,29 @@ WFBC_COMM_DATA * Intrude_GetWfbcCommData(INTRUDE_COMM_SYS_PTR intcomm)
 {
   return &intcomm->wfbc_comm_data;
 }
+
+//==================================================================
+/**
+ * 自分が現在いる侵入先のPM_VERSIONを取得
+ *
+ * @param   game_comm		
+ *
+ * @retval  int		自分がいるROMのPM_VERSION
+ *                (通信していない、侵入していない、通信エラー中は自分のPM_VERSION)
+ */
+//==================================================================
+u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  const MYSTATUS *myst;
+  u8 palace_area;
+  
+  if(intcomm == NULL){
+    return PM_VERSION;
+  }
+  
+  palace_area = Intrude_GetPalaceArea(intcomm);
+  myst = Intrude_GetMyStatus(intcomm, palace_area);
+  return MyStatus_GetRomCode( myst );
+}
+

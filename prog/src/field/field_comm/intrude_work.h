@@ -29,3 +29,4 @@ extern u8 Intrude_GetPalaceArea(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL Intrude_GetRecvWfbc(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL Intrude_GetNewMissionRecvFlag(INTRUDE_COMM_SYS_PTR intcomm);
 extern WFBC_COMM_DATA * Intrude_GetWfbcCommData(INTRUDE_COMM_SYS_PTR intcomm);
+extern u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm);
