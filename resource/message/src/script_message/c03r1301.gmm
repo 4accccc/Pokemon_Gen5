@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T15:59:47"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T18:14:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1408" top="325" right="2113" bottom="945" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="165" right="1996" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -310,8 +310,12 @@
 ・メッセージ後、主人公の周囲を一周し
 　sunglasses_03表示</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">ちょっと　しらべさせてもらうぞ▼</language>
-		<language name="JPN_KANJI" width="256">ちょっと　調べさせてもらうぞ▼</language>
+		<language name="JPN" width="256">ちょっと　しらべさせてもらうぞ▼
+ナデナデ……
+ナデナデ……　ここもナデナデ……▼</language>
+		<language name="JPN_KANJI" width="256">ちょっと　調べさせてもらうぞ▼
+ナデナデ……
+ナデナデ……　ここもナデナデ……▼</language>
 	</row>
 
 	<row id="msg_c03r1301_sunglasses_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
