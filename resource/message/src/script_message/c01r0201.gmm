@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T20:15:46"/>
+	<create user="matsumiya" host="W00224" date="2010-02-16T17:43:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="83" top="197" right="788" bottom="817" maximized="no" rayout="Vertical2">
+	<dialog left="1350" top="263" right="2055" bottom="883" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="126" right="1280" bottom="524" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -329,10 +329,10 @@
 おじいさん</attribute>
 		<language name="JPN" width="256">ばあさんとの　であいは
 ポケモンしょうぶが　きっかけ　だった[BE:01:ページ切り替え（クリア）]
-なんど　いどんでも　かてなかったんだ</language>
+なんど　いどんでも　かてなかったな</language>
 		<language name="JPN_KANJI" width="256">ばあさんとの　出会いは
 ポケモン勝負が　きっかけ　だった[BE:01:ページ切り替え（クリア）]
-何度　挑んでも　勝てなかったんだ</language>
+何度　挑んでも　勝てなかったな</language>
 	</row>
 
 	<row id="msg_c01r0201_oldwoman1_01">
@@ -342,7 +342,7 @@
 		<language name="JPN" width="256">そういう　いみ　では
 あたしと　じいさんは[BE:00:ページ切り替え（行送り）]
 あいしょうが　よかったのよ</language>
-		<language name="JPN_KANJI" width="256">そういう　意味では
+		<language name="JPN_KANJI" width="256">そういう意味では
 あたしと　じいさんは[BE:00:ページ切り替え（行送り）]
 相性が　良かったのよ</language>
 	</row>
