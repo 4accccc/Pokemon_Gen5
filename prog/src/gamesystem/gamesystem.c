@@ -51,7 +51,7 @@ enum {
    * 存在するメモリ（ユニオンルームやバトルタワーのコントロール）は
    * このHEAPから取得する
    */
-  HEAPSIZE_APP_CONTROL  =      (0x1000),
+  HEAPSIZE_APP_CONTROL  =      (0x1300),
 
 };
 

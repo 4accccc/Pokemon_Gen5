@@ -124,10 +124,10 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   NetID net_id;
   
   OS_TPrintf("intcomm alloc size = 0x%x\n", sizeof(INTRUDE_COMM_SYS));
-  intcomm = GFL_HEAP_AllocClearMemory(HEAPID_WORLD, sizeof(INTRUDE_COMM_SYS));
+  intcomm = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(INTRUDE_COMM_SYS));
   intcomm->game_comm = invalid_parent->game_comm;
 	intcomm->comm_status = INTRUDE_COMM_STATUS_INIT_START;
-  intcomm->cps = CommPlayer_Init(FIELD_COMM_MEMBER_MAX, invalid_parent->gsys, HEAPID_WORLD);
+  intcomm->cps = CommPlayer_Init(FIELD_COMM_MEMBER_MAX, invalid_parent->gsys, HEAPID_APP_CONTROL);
   intcomm->member_num = 1;
   Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
   Bingo_InitBingoSystem(Bingo_GetBingoSystemWork(intcomm));
