@@ -903,7 +903,7 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     	PMS_SELECT_PARAM	*initParam;
     	PMS_DATA  pmsDat;
 
-    	initParam             = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof( PMS_SELECT_PARAM ) );
+    	initParam             = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof( PMS_SELECT_PARAM ) );
       initParam->save_ctrl  = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
 
       unisys->parent_work = initParam;

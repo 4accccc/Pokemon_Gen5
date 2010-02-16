@@ -50,7 +50,8 @@ void UNION_CommBoot(GAMESYS_WORK *gsys)
   {
     UNION_PARENT_WORK *upw;
     
-    upw = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(UNION_PARENT_WORK));
+    OS_TPrintf("union_system heap size = 0x%x\n", sizeof(UNION_PARENT_WORK));
+    upw = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(UNION_PARENT_WORK));
     upw->mystatus = GAMEDATA_GetMyStatus(gdata);
     upw->game_comm = game_comm;
     upw->game_data = gdata;
