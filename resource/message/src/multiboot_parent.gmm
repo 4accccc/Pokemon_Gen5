@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-16T12:52:04"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-16T17:18:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -341,14 +341,24 @@
 
 
 	<row id="MSG_MB_PAERNT_01">
-		<language name="JPN" width="208">もうひとつのＤＳに　きゅうソフトをいれ
-『ＤＳダウンロードプレイ』から
-『ポケシフター　[1:00:トレーナー名:0]』を
+		<language name="JPN" width="208">もうひとつのDSに
+ポケットモンスターの
+ダイヤモンド・パール・プラチナ・
+ハートゴールド・ソウルシルバー
+いずれかの　ソフトを　セットし
+『DSダウンロードプレイ』から
+『ポケットモンスターシャチ
+ポケシフター　[1:00:トレーナー名:0]』を
 えらんでください</language>
-		<language name="JPN_KANJI" width="208">もうひとつのＤＳに　旧ソフトをいれ
-『ＤＳダウンロードプレイ』から
-『ポケシフター　[1:00:トレーナー名:0]』を
-えらんでください</language>
+		<language name="JPN_KANJI" width="208">もうひとつのDSに
+ポケットモンスターの
+ダイヤモンド・パール・プラチナ・
+ハートゴールド・ソウルシルバー
+いずれかの　ソフトを　セットし
+『DSダウンロードプレイ』から
+『ポケットモンスターシャチ
+ポケシフター　[1:00:トレーナー名:0]』を
+選んで下さい</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_02">
