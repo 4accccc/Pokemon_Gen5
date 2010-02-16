@@ -711,6 +711,11 @@ static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk )
   
   entry_ret = CommEntryMenu_Update( bsw_scr->pCommEntryMenu ); 
   
+  if( entry_ret != COMM_ENTRY_RESULT_NULL ){
+    CommEntryMenu_Exit( bsw_scr->pCommEntryMenu );
+    bsw_scr->pCommEntryMenu = NULL;
+  }
+  
   switch( entry_ret ){
   case COMM_ENTRY_RESULT_SUCCESS:      //メンバーが集まった
     (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_OK;
@@ -723,10 +728,6 @@ static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk )
     return( TRUE );
   }
    
-  if( entry_ret != COMM_ENTRY_RESULT_NULL ){
-    CommEntryMenu_Exit( bsw_scr->pCommEntryMenu );
-    bsw_scr->pCommEntryMenu = NULL;
-  }
   
   return( FALSE );
 }
@@ -759,6 +760,11 @@ static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk )
   
   entry_ret = CommEntryMenu_Update( bsw_scr->pCommEntryMenu ); 
   
+  if( entry_ret != COMM_ENTRY_RESULT_NULL ){
+    CommEntryMenu_Exit( bsw_scr->pCommEntryMenu );
+    bsw_scr->pCommEntryMenu = NULL;
+  }
+  
   switch( entry_ret ){
   case ENTRY_PARENT_ANSWER_OK:      //エントリーOK
     (*bsw_scr->pCommEntryResult) = BSWAY_COMM_CHILD_ENTRY_OK;
@@ -766,11 +772,6 @@ static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk )
   case ENTRY_PARENT_ANSWER_NG:    //エントリーNG
     (*bsw_scr->pCommEntryResult) = BSWAY_COMM_CHILD_ENTRY_NG ;
     return( TRUE );
-  }
-  
-  if( entry_ret != COMM_ENTRY_RESULT_NULL ){
-    CommEntryMenu_Exit( bsw_scr->pCommEntryMenu );
-    bsw_scr->pCommEntryMenu = NULL;
   }
   
   return( FALSE );
