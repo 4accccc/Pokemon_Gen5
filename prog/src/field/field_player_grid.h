@@ -96,7 +96,7 @@ extern MMDL * FIELD_PLAYER_GRID_GetMMdl( FIELD_PLAYER_GRID *gjiki );
 
 extern void FIELD_PLAYER_GRID_CheckSpecialDrawForm( FIELD_PLAYER_GRID *gjiki, BOOL menu_open_flag );
 extern BOOL FIELD_PLAYER_GRID_CheckNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki );
-extern BOOL FIELD_PLAYER_GRID_SetNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki, BOOL flag );
+extern void FIELD_PLAYER_GRID_SetNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki, BOOL flag );
 
 
 //======================================================================

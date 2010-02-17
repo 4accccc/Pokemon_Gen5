@@ -546,45 +546,47 @@ typedef struct
 {
   BOOL (*check)(const MAPATTR_VALUE);
   u32 se;
-  int dash_count;
+  s16 dash_count;
+  s16 cycle_count;
 }ATTR_VALUE_SE;
 
 typedef struct
 {
   u32 flag;
   u32 se;
-  int dash_count;
+  s16 dash_count;
+  s16 cycle_count;
 }ATTR_FLAG_SE;
 
 //now value
 static const ATTR_VALUE_SE data_PlaySE_NowValue[] =
 {
-  {NULL,0,0},
+  {NULL,0,0,0}, //end
 };
 
 //next value
 static const ATTR_VALUE_SE data_PlaySE_NextValue[] =
 {
-  {MAPATTR_VALUE_CheckLongGrass,SEQ_SE_FLD_08,2},
-  {MAPATTR_VALUE_CheckSnow,SEQ_SE_FLD_11,2},
-  {MAPATTR_VALUE_CheckShoal,SEQ_SE_FLD_13,2},
-  {MAPATTR_VALUE_CheckPool,SEQ_SE_FLD_13,2},
-  {MAPATTR_VALUE_CheckMarsh,SEQ_SE_FLD_13,2},
-  {MAPATTR_VALUE_CheckDesertDeep,SEQ_SE_FLD_91,2},
-  {MAPATTR_VALUE_CheckSandType,SEQ_SE_FLD_14,2},
-  {MAPATTR_FLAGBIT_NONE,SEQ_SE_DUMMY,0}, //end
+  {MAPATTR_VALUE_CheckLongGrass,SEQ_SE_FLD_08,2,4},
+  {MAPATTR_VALUE_CheckSnow,SEQ_SE_FLD_11,2,4},
+  {MAPATTR_VALUE_CheckShoal,SEQ_SE_FLD_13,2,4},
+  {MAPATTR_VALUE_CheckPool,SEQ_SE_FLD_13,2,4},
+  {MAPATTR_VALUE_CheckMarsh,SEQ_SE_FLD_13,2,4},
+  {MAPATTR_VALUE_CheckDesertDeep,SEQ_SE_FLD_91,2,4},
+  {MAPATTR_VALUE_CheckSandType,SEQ_SE_FLD_14,2,4},
+  {NULL,0,0,0}, //end
 };
 
 //now flag
 static const ATTR_FLAG_SE data_PlaySE_NowFlag[] =
 {
-  {ATTRFLAG_NONE,SEQ_SE_DUMMY,0}, //end
+  {ATTRFLAG_NONE,SEQ_SE_DUMMY,0,0}, //end
 };
 
 //next flag
 static const ATTR_FLAG_SE data_PlaySE_NextFlag[] =
 {
-  {MAPATTR_FLAGBIT_GRASS,SEQ_SE_FLD_09,2},
+  {MAPATTR_FLAGBIT_GRASS,SEQ_SE_FLD_09,2,4},
   {ATTRFLAG_NONE,SEQ_SE_DUMMY,0}, //end
 };
 
@@ -611,16 +613,17 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
     
     se = SEQ_SE_DUMMY;
     dash_count = 0;
-
-    dash_flag = FALSE;
     
-    if( gjiki_CheckMoveBit(gjiki,JIKI_MOVEBIT_DASH) ||
-        FIELD_PLAYER_CORE_GetMoveForm(
+    dash_flag = 0;
+    
+    if( FIELD_PLAYER_CORE_GetMoveForm(
           gjiki->player_core) == PLAYER_MOVE_FORM_CYCLE ){
-      dash_flag = TRUE;
+      dash_flag = 2;
+    }else if( gjiki_CheckMoveBit(gjiki,JIKI_MOVEBIT_DASH) ){
+      dash_flag = 1;
     }
     
-    if( dash_flag == FALSE ){
+    if( dash_flag == 0 ){
       gjiki->dash_play_se = SEQ_SE_DUMMY;
       gjiki->dash_play_se_count = 0;
     }
@@ -634,7 +637,12 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
       for( p0 = data_PlaySE_NowFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
         if( (p0->flag & flag) ){
           se = p0->se;
-          dash_count = p0->dash_count;
+          
+          if( dash_flag == 1 ){
+            dash_count = p0->dash_count;
+          }else if( dash_flag == 2 ){
+            dash_count = p0->cycle_count;
+          }
           break;
         }
       }
@@ -643,14 +651,19 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
         for( p1 = data_PlaySE_NowValue; p1->check != NULL; p1++ ){
           if( p1->check(attr) == TRUE ){
             se = p1->se;
-            dash_count = p1->dash_count;
+            
+            if( dash_flag == 1 ){
+              dash_count = p1->dash_count;
+            }else if( dash_flag == 2 ){
+              dash_count = p1->cycle_count;
+            }
             break;
           }
         }
       }
       
       if( se != SEQ_SE_DUMMY ){
-        if( dash_flag == TRUE ){ //dashŒn”»’è
+        if( dash_flag != 0 ){ //dashŒn”»’è
           if( gjiki->dash_play_se != se ){
             gjiki->dash_play_se_count = 0;
           }
@@ -685,7 +698,12 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
       for( p0 = data_PlaySE_NextFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
         if( (p0->flag & flag) ){
           se = p0->se;
-          dash_count = p0->dash_count;
+
+          if( dash_flag == 1 ){
+            dash_count = p0->dash_count;
+          }else if( dash_flag == 2 ){
+            dash_count = p0->cycle_count;
+          }
           break;
         }
       }
@@ -694,14 +712,19 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
         for( p1 = data_PlaySE_NextValue; p1->check != NULL; p1++ ){
           if( p1->check(attr) == TRUE ){
             se = p1->se;
-            dash_count = p1->dash_count;
+
+            if( dash_flag == 1 ){
+              dash_count = p1->dash_count;
+            }else if( dash_flag == 2 ){
+              dash_count = p1->cycle_count;
+            }
             break;
           }
         }
       }
 
       if( se != SEQ_SE_DUMMY ){
-        if( dash_flag == TRUE ){ //dashŒn”»’è
+        if( dash_flag != 0 ){ //dashŒn”»’è
           if( gjiki->dash_play_se != se ){
             gjiki->dash_play_se_count = 0;
           }
@@ -3385,7 +3408,7 @@ BOOL FIELD_PLAYER_GRID_CheckNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki )
  * @retval BOOL
  */
 //--------------------------------------------------------------
-BOOL FIELD_PLAYER_GRID_SetNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki, BOOL flag )
+void FIELD_PLAYER_GRID_SetNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki, BOOL flag )
 {
   if( flag == TRUE ){
     gjiki->naminori_end_flag = TRUE;

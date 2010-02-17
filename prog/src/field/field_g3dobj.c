@@ -434,6 +434,8 @@ BOOL FLD_G3DOBJ_CTRL_AnimeObject(
       }
       i++;
     }
+  }else if( obj->useFlag == OBJ_USE_RES_WAIT ){ //リソース待ち
+    ret = TRUE; //アニメは実行中とする
   }
   
   return( ret );
@@ -466,6 +468,8 @@ BOOL FLD_G3DOBJ_CTRL_LoopAnimeObject(
       }
       i++;
     }
+  }else if( obj->useFlag == OBJ_USE_RES_WAIT ){ //リソース待ち
+    ret = TRUE; //アニメは実行中とする
   }
   
   return( ret );

@@ -826,14 +826,14 @@ BOOL FLDEFF_NAMIPOKE_EFFECT_CheckTaskEnd( const FLDEFF_TASK *task )
 static void npoke_effTask_Init( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_NAMIPOKE_EFFECT *work = wk;
-  const TASKHEADER_NAMIPOKE_EFFECT *head;
   FLD_G3DOBJ_CTRL *obj_ctrl;
+  const TASKHEADER_NAMIPOKE_EFFECT *head;
+  
+  head = FLDEFF_TASK_GetAddPointer( task );
+  work->head = *head;
   
   obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
       work->head.eff_npoke_eff->fectrl );
-
-  head = FLDEFF_TASK_GetAddPointer( task );
-  work->head = *head;
   
   switch( work->head.type ){
   case NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH:
@@ -856,6 +856,8 @@ static void npoke_effTask_Init( FLDEFF_TASK *task, void *wk )
     work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
         obj_ctrl, work->head.eff_npoke_eff->res_idx_taki_loop_s, 0, NULL );
     break;
+  default:
+    GF_ASSERT( 0 );
   }
   
   if( work->head.efftask_namipoke != NULL ){
