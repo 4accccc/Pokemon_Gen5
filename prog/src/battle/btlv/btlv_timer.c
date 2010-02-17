@@ -129,8 +129,6 @@ BTLV_TIMER_WORK*  BTLV_TIMER_Init( HEAPID heapID )
 
   GFL_ARC_CloseDataHandle( handle );
 
-  OS_SetTick( 0 );
-
   return btw;
 }
 
