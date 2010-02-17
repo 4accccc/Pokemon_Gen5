@@ -33,7 +33,7 @@
  *					プロトタイプ宣言
 */
 //=============================================================================
-static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, u32 *p_mons_offset, u32 *p_dir_offset, u32 *p_sex_offset, u32 *p_rare_offset );
+static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, u32 *p_mons_offset, u32 *p_dir_offset, u32 *p_sex_offset, u32 *p_rare_offset, u32 *pltt_only );
 
 //=============================================================================
 /**
@@ -70,7 +70,7 @@ ARCDATID POKEGRA_GetCgrArcIndex( int mons_no, int form_no, int sex, int rare, in
 	u32 dir_offset;
 	u32 sex_offset;
 
-  PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, &sex_offset, NULL );
+  PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, &sex_offset, NULL, NULL );
   return mons_offset + dir_offset + POKEGRA_M_NCGR + sex_offset;
 }
 //----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ ARCDATID POKEGRA_GetCbrArcIndex( int mons_no, int form_no, int sex, int rare, in
 	u32 dir_offset;
 	u32 sex_offset;
 
-  PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, &sex_offset, NULL );
+  PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, &sex_offset, NULL, NULL );
   return mons_offset + dir_offset + POKEGRA_M_NCBR + sex_offset;
 }
 //----------------------------------------------------------------------------
@@ -112,7 +112,12 @@ ARCDATID POKEGRA_GetPalArcIndex( int mons_no, int form_no, int sex, int rare, in
 {	
   u32 mons_offset;
   u32 rare_offset;
-  PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, NULL, NULL, &rare_offset );
+  u32 pltt_only;
+  PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, NULL, NULL, &rare_offset, &pltt_only );
+  if( pltt_only )
+  { 
+    return pltt_only;
+  }
   return mons_offset + POKEGRA_NORMAL_NCLR + rare_offset;
 }
 //----------------------------------------------------------------------------
@@ -133,7 +138,7 @@ ARCDATID POKEGRA_GetCelArcIndex( int mons_no, int form_no, int sex, int rare, in
   u32 mons_offset;
   u32 dir_offset;
 
-  PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL );
+  PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL, NULL );
   return mons_offset + dir_offset + POKEGRA_NCER;
 }
 //----------------------------------------------------------------------------
@@ -154,7 +159,7 @@ ARCDATID POKEGRA_GetAnmArcIndex( int mons_no, int form_no, int sex, int rare, in
 	u32 mons_offset;
 	u32 dir_offset;
 
-	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL );
+	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL, NULL );
 
 	return mons_offset + dir_offset + POKEGRA_NANR;
 }
@@ -176,7 +181,7 @@ ARCDATID POKEGRA_GetMCelArcIndex( int mons_no, int form_no, int sex, int rare, i
 	u32 mons_offset;
 	u32 dir_offset;
 
-	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL );
+	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL, NULL );
 
 	return mons_offset + dir_offset + POKEGRA_NMCR;
 }
@@ -198,7 +203,7 @@ ARCDATID POKEGRA_GetMAnmArcIndex( int mons_no, int form_no, int sex, int rare, i
 	u32 mons_offset;
 	u32 dir_offset;
 
-	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL );
+	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL, NULL );
 
 	return mons_offset + dir_offset + POKEGRA_NMAR;
 }
@@ -220,7 +225,7 @@ ARCDATID POKEGRA_GetNcecArcIndex( int mons_no, int form_no, int sex, int rare, i
 	u32 mons_offset;
 	u32 dir_offset;
 
-	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL );
+	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL, NULL );
 
 	return mons_offset + dir_offset + POKEGRA_NCEC;
 }
@@ -244,9 +249,10 @@ ARCDATID POKEGRA_GetNcecArcIndex( int mons_no, int form_no, int sex, int rare, i
  *	@param	*p_dir_offset			背面オフセット
  *	@param	*p_sex_offset				性別オフセット
  *	@param	u32 *p_rare_offset	レアオフセット
+ *	@param	*pltt_only_offset    別フォルムがパレットのみのときのオフセット
  */
 //-----------------------------------------------------------------------------
-static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, u32 *p_mons_offset, u32 *p_dir_offset, u32 *p_sex_offset, u32 *p_rare_offset )
+static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, u32 *p_mons_offset, u32 *p_dir_offset, u32 *p_sex_offset, u32 *p_rare_offset, u32* pltt_only_offset )
 {	
 	u32 file_start;
 	u32 file_offset;
@@ -273,12 +279,23 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
   else if( form_no )
   { 
     int gra_index = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_gra_index );
+    int pltt_only = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_pltt_only );
     int form_max = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_max );
     if( form_no >= form_max )
     { 
       form_no = 0;
     }
-    file_start = POKEGRA_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEGRA_FILE_MAX * ( gra_index + form_no - 1 );
+    if( pltt_only )
+    { 
+      if( pltt_only_offset )
+      { 
+        *pltt_only_offset = POKEGRA_FILE_MAX * ( MONSNO_MAX + OTHER_FORM_MAX + 1 ) + 13 + POKEGRA_PLTT_ONLY_MAX * ( gra_index + form_no - 1 ) + rare;
+      }
+    }
+    else
+    { 
+      file_start = POKEGRA_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEGRA_FILE_MAX * ( gra_index + form_no - 1 );
+    }
   }
 
   //性別のチェック
