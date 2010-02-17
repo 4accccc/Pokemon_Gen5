@@ -39,6 +39,7 @@
 #include "event_mapchange.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h" //SCRID_～
+#include "../../../resource/fldmapdata/script/t01r0101_def.h" //SCRID_～
 
 //#include "situation_local.h"		//Situation_Get～
 //#include "scr_tool.h"
@@ -137,7 +138,7 @@ static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *w
 		//OS_Printf( "field_encount zone_id = %d\n", fsys->location->zone_id );
     if ( param->rev_type == REVIVAL_TYPE_HOME ) {
 			//初期値のワープID＝＝最初の戻り先なので自分の家
-			SCRIPT_CallScript( event, SCRID_GAMEOVER_RECOVER_HOME, NULL, NULL, HEAPID_FIELDMAP );
+			SCRIPT_CallScript( event, SCRID_T01R0101_GAMEOVER_RECOVER, NULL, NULL, HEAPID_FIELDMAP );
 		}else{
 			//それ以外＝＝ポケセンのはず
 			SCRIPT_CallScript( event, SCRID_GAMEOVER_RECOVER_POKECEN, NULL, NULL, HEAPID_FIELDMAP );
@@ -145,7 +146,7 @@ static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *w
 		(*seq) ++;
 		break;
 
-	case 6:
+	case 3:
 		//サウンドリスタート処理(06/07/10いらないので削除)
 		//Snd_RestartSet( fsys );
 

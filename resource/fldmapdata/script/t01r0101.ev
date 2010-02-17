@@ -18,6 +18,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_scene_t01r0101_first_01		//ゲーム開始後、初めて１階に下りてきた時のイベント
 _EVENT_DATA    ev_t01r0101_mother_01
+_EVENT_DATA    ev_t01r0101_gameover_recover //ゲームオーバー復帰時
 _EVENT_DATA_END
 
 
@@ -257,4 +258,33 @@ ev_everyday:
 	ENDIF
 
 _RET
+
+/************************************************************/	
+/*				ゲームオーバー復帰時	                    				*/
+/************************************************************/
+EVENT_START ev_t01r0101_gameover_recover
+{
+  //マップフェードイン
+  _OBJ_POS_CHANGE( T01R0101_MAMA_01, 6, 0, 7, DIR_DOWN )
+	_MAP_FADE_BLACK_IN_FORCE( )
+	_MAP_FADE_END_CHECK()
+
+	_BALLOONWIN_OBJMSG( msg_t01r0101_dead_01, T01R0101_MAMA_01 )
+	
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+  
+  _BALLOONWIN_CLOSE()
+  _ME_PLAY( SEQ_ME_ASA )
+  _ME_WAIT()
+  _TEMOTI_POKEMON_KAIFUKU() 
+  
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+  
+	_BALLOONWIN_OBJMSG( msg_t01r0101_dead_02, T01R0101_MAMA_01 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+}
+EVENT_END
 
