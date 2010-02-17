@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-10T22:09:51"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:19:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -784,7 +784,7 @@ const u8 msg_cycling_road_error[]</comment>
 つかいどきが　あるのじゃ！</language>
 	</row>
 
-	<row id="msg_bag_062">
+	<row id="msg_bag_062" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バッグ / アイテム関連
 const u8 msg_coincase[]
 ０＝数字5桁（所有コイン枚数）</comment>
@@ -799,7 +799,7 @@ const u8 msg_waza_machine00[]</comment>
 		<language name="JPN_KANJI" font=" 1:small">わざマシンを　きどうした！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:4\]</language>
 	</row>
 
-	<row id="msg_bag_064">
+	<row id="msg_bag_064" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バッグ / アイテム関連
 const u8 msg_waza_machine01[]</comment>
 		<language name="JPN" font=" 1:small">ひでんマシンを　きどうした！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:4\]</language>
@@ -911,7 +911,7 @@ const u8 str_konanoryou[]
 		<language name="JPN_KANJI" font=" 1:small">[2:01:２桁:0][1:07:わざ名:1]</language>
 	</row>
 
-	<row id="msg_bag_089">
+	<row id="msg_bag_089" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>const u8 str_kinominokona[]
 
 ※ＦＲＬＧ用メッセージ</comment>
@@ -919,7 +919,7 @@ const u8 str_konanoryou[]
 		<language name="JPN_KANJI" font=" 1:small">きのみのこな</language>
 	</row>
 
-	<row id="msg_bag_090">
+	<row id="msg_bag_090" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>const u8 msg_poke_pipe[]
 
 ※ＦＲＬＧ用メッセージ</comment>
@@ -929,7 +929,7 @@ const u8 str_konanoryou[]
 うーん！　すばらしい　ねいろだ！</language>
 	</row>
 
-	<row id="msg_bag_091">
+	<row id="msg_bag_091" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>const u8 msg_poke_pipe2[]
 
 ※ＦＲＬＧ用メッセージ</comment>
@@ -937,7 +937,7 @@ const u8 str_konanoryou[]
 		<language name="JPN_KANJI" font=" 1:small">ポケモンのふえを　ふいた！</language>
 	</row>
 
-	<row id="msg_bag_092">
+	<row id="msg_bag_092" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>const u8 msg_poke_pipe3[]
 
 ※ＦＲＬＧ用メッセージ</comment>
@@ -947,7 +947,7 @@ const u8 str_konanoryou[]
 ポケモンは　めを　さました</language>
 	</row>
 
-	<row id="msg_bag_094">
+	<row id="msg_bag_094" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>金銀バッグどうぐ選択時の選択肢</comment>
 		<language name="JPN" font=" 1:small">いどう</language>
 		<language name="JPN_KANJI" font=" 1:small">いどう</language>
@@ -1035,7 +1035,7 @@ const u8 str_konanoryou[]
 		<language name="JPN_KANJI" font=" 1:small" width="36">×[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_bag_094" back-color="#808080,,,#808080,,#808080,,,,,,,,,,,,">
+	<row id="mes_bag_094" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>宝袋を選択したときのメニュー</comment>
 		<language name="JPN" font=" 1:small">とりだす</language>
 		<language name="JPN_KANJI" font=" 1:small">とりだす</language>
@@ -1077,14 +1077,14 @@ const u8 str_konanoryou[]
 		<language name="JPN_KANJI" font=" 1:small">[2:02:３桁:0]</language>
 	</row>
 
-	<row id="mes_bag_101" back-color=",,,#ffffff,,#ffffff,,,,,,,,,,,,">
+	<row id="mes_bag_101" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>シールケースを使ったとき
 ０：シールの枚数</comment>
 		<language name="JPN">シール　[2:03:４桁:0]まい</language>
 		<language name="JPN_KANJI">シール　[2:03:４桁:0]まい</language>
 	</row>
 
-	<row id="mes_bag_102" back-color=",,,#ffffff,,#ffffff,,,,,,,,,,,,">
+	<row id="mes_bag_102" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>アクセサリーケースを使ったとき
 ０：アクセサリーの枚数
 １：壁紙の枚数</comment>
@@ -1094,26 +1094,26 @@ const u8 str_konanoryou[]
 かべがみ　　　　[2:01:２桁:1]まい</language>
 	</row>
 
-	<row id="mes_bag_103" back-color=",,,#ffffff,,#ffffff,,,,,,,,,,,,">
+	<row id="mes_bag_103" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バッグを閉じたときのメッセージ</comment>
 		<language name="JPN" font=" 1:small">バッグを　とじます</language>
 		<language name="JPN_KANJI" font=" 1:small">バッグを　とじます</language>
 	</row>
 
-	<row id="mes_bag_104" back-color=",,,#ffffff,,#ffffff,,,,,,,,,,,,">
+	<row id="mes_bag_104" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>目の前に木の実を植えられる土があったときに
 きのみを選んだときに出る項目</comment>
 		<language name="JPN" font=" 1:small">うめる</language>
 		<language name="JPN_KANJI" font=" 1:small">うめる</language>
 	</row>
 
-	<row id="mes_bag_105" back-color=",,,#ffffff,,#ffffff,,,,,,,,,,,,">
+	<row id="mes_bag_105" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトケースを使用する場合の項目メッセージ</comment>
 		<language name="JPN" font=" 1:small">ひらく</language>
 		<language name="JPN_KANJI" font=" 1:small">ひらく</language>
 	</row>
 
-	<row id="mes_bag_106" back-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,">
+	<row id="mes_bag_106" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポイントカードを使用したときのメッセージ
 ０：バトルポイントの値</comment>
 		<language name="JPN">たまった　バトルポイント
@@ -1128,7 +1128,7 @@ const u8 str_konanoryou[]
 		<language name="JPN_KANJI">タイプ</language>
 	</row>
 
-	<row id="mes_bag_108" back-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,">
+	<row id="mes_bag_108" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>何も登録していないときに、Ｙボタンを押したときのメッセージ</comment>
 		<language name="JPN">バッグに　いれてある　どうぐを
 べんりボタンに　とうろく　できます</language>
@@ -1136,7 +1136,7 @@ const u8 str_konanoryou[]
 べんりボタンに　とうろく　できます</language>
 	</row>
 
-	<row id="mes_bag_109">
+	<row id="mes_bag_109" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="216">べんりボタンに　とうろく　できる
 どうぐは　２つ　までです！
 </language>
@@ -1145,7 +1145,7 @@ const u8 str_konanoryou[]
 </language>
 	</row>
 
-	<row id="mes_bag_110">
+	<row id="mes_bag_110" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ゲームボーイ音源曲に切り替えるときのメッセージ</comment>
 		<language name="JPN" width="216">ＧＢプレイヤーの　でんげんを　
 いれた！</language>
@@ -1153,7 +1153,7 @@ const u8 str_konanoryou[]
 いれた！</language>
 	</row>
 
-	<row id="mes_bag_111">
+	<row id="mes_bag_111" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ゲームボーイ曲をＯＦＦにするときのメッセージ</comment>
 		<language name="JPN" width="216">ＧＢプレイヤーの　でんげんを
 きった！</language>
@@ -1161,13 +1161,13 @@ const u8 str_konanoryou[]
 きった！</language>
 	</row>
 
-	<row id="mes_bag_112" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="mes_bag_112" back-color="#808080,,,#808080,,#808080,#808080,#ffff00,,#808080,#ffff00,#808080,#808080,,,#808080,,">
 		<comment>きのみプランターでこやし以外を選んだとき</comment>
 		<language name="JPN">[1:09:どうぐ名:0]は　つかえません</language>
 		<language name="JPN_KANJI">[1:09:どうぐ名:0]は　つかえません</language>
 	</row>
 
-	<row id="msg_bag_tre_001" back-color="#808080,,,#808080,,#808080,,,,,,,,,,,,">
+	<row id="msg_bag_tre_001" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>宝袋を使ったとき：</comment>
 		<language name="JPN">たからぶくろ　の　なかを
 のぞいた！</language>
@@ -1175,7 +1175,7 @@ const u8 str_konanoryou[]
 のぞいた！</language>
 	</row>
 
-	<row id="msg_bag_tre_002" back-color="#808080,,,#808080,,#808080,,,,,,,,,,,,">
+	<row id="msg_bag_tre_002" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>宝袋を使ったとき：
 アイテムを取り出した</comment>
 		<language name="JPN">[1:09:どうぐ名:0]　を
@@ -1184,7 +1184,7 @@ const u8 str_konanoryou[]
 とりだした！</language>
 	</row>
 
-	<row id="msg_bag_tre_003" back-color="#808080,,,#808080,,#808080,,,,,,,,,,,,">
+	<row id="msg_bag_tre_003" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>宝袋を使ったとき：
 アイテムをポケットに入れた</comment>
 		<language name="JPN">[1:09:どうぐ名:0]　を
@@ -1193,14 +1193,14 @@ const u8 str_konanoryou[]
 [1:09:どうぐ名:1]　に　しまった</language>
 	</row>
 
-	<row id="msg_bag_tre_004" back-color="#808080,,,#808080,,#808080,,,,,,,,,,,,">
+	<row id="msg_bag_tre_004" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>宝袋を使ったとき：
 アイテムをすべて取り出した</comment>
 		<language name="JPN">ぜんぶ　とりだした！</language>
 		<language name="JPN_KANJI">ぜんぶ　とりだした！</language>
 	</row>
 
-	<row id="msg_bag_tre_005" back-color="#808080,,,#808080,,#808080,,,,,,,,,,,,">
+	<row id="msg_bag_tre_005" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>宝袋を使ったとき：
 アイテムがなかった</comment>
 		<language name="JPN">なかには　なにも
@@ -1209,7 +1209,7 @@ const u8 str_konanoryou[]
 なかった……</language>
 	</row>
 
-	<row id="msg_bag_tre_006" back-color="#808080,,,#808080,,#808080,,,,,,,,,,,,">
+	<row id="msg_bag_tre_006" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>宝袋を使ったとき：
 ポケットがいっぱいだった</comment>
 		<language name="JPN">しかし　\[1:1B:ポケット名（アイコンつき）:0\]　が
@@ -1218,7 +1218,7 @@ const u8 str_konanoryou[]
 いっぱいで　とりだせ　なかった……</language>
 	</row>
 
-	<row id="msg_bag_pokes_001" back-color=",,,#ffffff,,#ffffff,,,,,,,,,,,,">
+	<row id="msg_bag_pokes_001" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポケトレ使用時のメッセージ
 使用不可の場合</comment>
 		<language name="JPN">バッテリー　が　たりない！
@@ -1229,7 +1229,7 @@ const u8 str_konanoryou[]
 あと　[2:01:２桁:0]ほ　</language>
 	</row>
 
-	<row id="msg_bag_pokes_002" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,">
+	<row id="msg_bag_pokes_002" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポケトレ使用時のメッセージ
 不発の場合</comment>
 		<language name="JPN">くさむらは
@@ -1238,21 +1238,21 @@ const u8 str_konanoryou[]
 しずか　だった……</language>
 	</row>
 
-	<row id="msg_bag_polto_01" back-color=",,,#ff8000,,#ff8000,,,,,,,,,,,,">
+	<row id="msg_bag_polto_01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトミニゲームメッセージ：
 残りのポルトケースの表示</comment>
 		<language name="JPN" font=" 1:small">ポフィンのかず</language>
 		<language name="JPN_KANJI" font=" 1:small">ポフィンのかず</language>
 	</row>
 
-	<row id="msg_bag_polto_02" back-color=",,,#ff8000,,#ff8000,,,,,,,,,,,,">
+	<row id="msg_bag_polto_02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトミニゲームメッセージ：
 ０：今のポルト所持数</comment>
 		<language name="JPN" font=" 1:small">[2:02:３桁:0]／１００</language>
 		<language name="JPN_KANJI" font=" 1:small">[2:02:３桁:0]／１００</language>
 	</row>
 
-	<row id="msg_bag_polto_03" back-color=",,,#ff8000,,#ff8000,,,,,,,,,,,,">
+	<row id="msg_bag_polto_03" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ポルトミニゲームメッセージ：
 ポルトづくりで、木の実をえらぶメッセージ</comment>
 		<language name="JPN">りょうりに　つかう　きのみを
@@ -1261,7 +1261,7 @@ const u8 str_konanoryou[]
 バッグから　えらんで　ください！</language>
 	</row>
 
-	<row id="msg_bag_err_pair">
+	<row id="msg_bag_err_pair" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>連れ歩きエラーメッセージ</comment>
 		<language name="JPN">つれあるいている　ときは
 つかえません！</language>
@@ -1269,13 +1269,13 @@ const u8 str_konanoryou[]
 つかえません！</language>
 	</row>
 
-	<row id="msg_bag_err_disguise">
+	<row id="msg_bag_err_disguise" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ロケット団変装イベント中エラーメッセージ</comment>
 		<language name="JPN">いまは　それどころじゃ　ない！</language>
 		<language name="JPN_KANJI">いまは　それどころじゃ　ない！</language>
 	</row>
 
-	<row id="msg_bag_pocket_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,,,,,,,">
+	<row id="msg_bag_pocket_01" back-color="#808080,,,#808080,,#808080,#808080,#80ffff,,#808080,#80ffff,#808080,#808080,,,#808080,,">
 		<comment>どうぐポケット説明
 </comment>
 		<language name="JPN">どうぐ　ポケット
@@ -1286,7 +1286,7 @@ const u8 str_konanoryou[]
 べんりな　どうぐを　いれます</language>
 	</row>
 
-	<row id="msg_bag_pocket_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,,,,,,,">
+	<row id="msg_bag_pocket_02" back-color="#808080,,,#808080,,#808080,#808080,#80ffff,,#808080,#80ffff,#808080,#808080,,,#808080,,">
 		<comment>かいふくポケット説明
 </comment>
 		<language name="JPN">かいふく　ポケット
@@ -1297,7 +1297,7 @@ const u8 str_konanoryou[]
 かいふくさせる　どうぐを　いれます</language>
 	</row>
 
-	<row id="msg_bag_pocket_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,,,,,,,">
+	<row id="msg_bag_pocket_03" back-color="#808080,,,#808080,,#808080,#808080,#80ffff,,#808080,#80ffff,#808080,#808080,,,#808080,,">
 		<comment>ボールポケット説明
 </comment>
 		<language name="JPN">ボール　ポケット
@@ -1308,7 +1308,7 @@ const u8 str_konanoryou[]
 モンスターボールを　いれます</language>
 	</row>
 
-	<row id="msg_bag_pocket_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,,,,,,,">
+	<row id="msg_bag_pocket_04" back-color="#808080,,,#808080,,#808080,#808080,#80ffff,,#808080,#80ffff,#808080,#808080,,,#808080,,">
 		<comment>わざマシンポケット説明
 </comment>
 		<language name="JPN">わざマシン　ポケット
@@ -1319,7 +1319,7 @@ const u8 str_konanoryou[]
 わざマシンを　いれます</language>
 	</row>
 
-	<row id="msg_bag_pocket_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,,,,,,,">
+	<row id="msg_bag_pocket_05" back-color="#808080,,,#808080,,#808080,#808080,#80ffff,,#808080,#80ffff,#808080,#808080,,,#808080,,">
 		<comment>きのみポケット説明
 </comment>
 		<language name="JPN">きのみ　ポケット
@@ -1330,7 +1330,7 @@ const u8 str_konanoryou[]
 せいりして　いれます</language>
 	</row>
 
-	<row id="msg_bag_pocket_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,,,,,,,">
+	<row id="msg_bag_pocket_06" back-color="#808080,,,#808080,,#808080,#808080,#80ffff,,#808080,#80ffff,#808080,#808080,,,#808080,,">
 		<comment>メールポケット説明
 </comment>
 		<language name="JPN">メール　ポケット
@@ -1341,7 +1341,7 @@ const u8 str_konanoryou[]
 せいりして　いれます</language>
 	</row>
 
-	<row id="msg_bag_pocket_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,,,,,,,">
+	<row id="msg_bag_pocket_07" back-color="#808080,,,#808080,,#808080,#808080,#80ffff,,#808080,#80ffff,#808080,#808080,,,#808080,,">
 		<comment>ポケット説明
 </comment>
 		<language name="JPN">せんとうよう　ポケット
@@ -1352,7 +1352,7 @@ const u8 str_konanoryou[]
 どうぐを　いれます</language>
 	</row>
 
-	<row id="msg_bag_pocket_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,,,,,,,">
+	<row id="msg_bag_pocket_08" back-color="#808080,,,#808080,,#808080,#808080,#80ffff,,#808080,#80ffff,#808080,#808080,,,#808080,,">
 		<comment>たいせつなものポケット説明
 </comment>
 		<language name="JPN">たいせつなもの　ポケット
@@ -1363,33 +1363,33 @@ const u8 str_konanoryou[]
 どうぐを　いれます</language>
 	</row>
 
-	<row id="msg_bag_menu_ex_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="msg_bag_menu_ex_01" back-color="#808080,,,#808080,,#808080,#808080,#ffff00,,#808080,#ffff00,#808080,#808080,,,#808080,,">
 		<comment>GBプレイヤーを止める場合のメニュー「つかう」</comment>
 		<language name="JPN">とめる</language>
 		<language name="JPN_KANJI">とめる</language>
 	</row>
 
-	<row id="MSG_ITEM_STR001" back-color="#ffff00,,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="MSG_ITEM_STR001" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
 		<language name="JPN" width="160">[BD:02:Ｘセンタリング][1:09:どうぐ名:0]</language>
 		<language name="JPN_KANJI" width="160">[BD:02:Ｘセンタリング][1:09:どうぐ名:0]</language>
 	</row>
 
-	<row id="MSG_ITEM_STR002" back-color="#ffff00,,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="MSG_ITEM_STR002" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
 		<language name="JPN" width="160">×[2:02:３桁:0]</language>
 		<language name="JPN_KANJI" width="160">×[2:02:３桁:0]</language>
 	</row>
 
-	<row id="MSG_ITEM_STR003" back-color="#ffff00,,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="MSG_ITEM_STR003" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
 		<language name="JPN" width="160">はい</language>
 		<language name="JPN_KANJI" width="160">はい</language>
 	</row>
 
-	<row id="MSG_ITEM_STR004" back-color="#ffff00,,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="MSG_ITEM_STR004" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
 		<language name="JPN" width="160">いいえ</language>
 		<language name="JPN_KANJI" width="160">いいえ</language>
 	</row>
 
-	<row id="msg_bag_item_none" back-color="#ffff00,,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
+	<row id="msg_bag_item_none" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
 		<comment>ポケットに何もない時に表示</comment>
 		<language name="JPN" width="160">もっていません</language>
 		<language name="JPN_KANJI" width="160">持っていません</language>
