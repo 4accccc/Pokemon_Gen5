@@ -9736,8 +9736,6 @@ static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     WazaID  combiWazaID;
     u8 combiPokeID;
 
-    OS_TPrintf("合体ワザ発動チェック...Poke=%d\n", pokeID );
-
     if( BPP_CombiWaza_GetParam(bpp, &combiPokeID, &combiWazaID) )
     {
       CombiEffectType  effectType = GetCombiWazaType( BTL_EVENT_FACTOR_GetSubID(myHandle), combiWazaID );
@@ -9759,8 +9757,8 @@ static void handler_CombiWaza_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     if( work[0] )
     {
       BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_CombiWazaStart );
-      HANDEX_STR_AddArg( &param->str, work[2] );
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_CombiWazaExe );
+//      HANDEX_STR_AddArg( &param->str, work[2] );
     }
   }
 }
