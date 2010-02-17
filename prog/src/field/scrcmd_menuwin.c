@@ -122,7 +122,7 @@ VMCMD_RESULT EvCmdBmpMenuInit( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   u8 x = VMGetU8(core);
   u8 y = VMGetU8(core);
-  u8 cursor = VMGetU8(core);
+  u16 cursor = SCRCMD_GetVMWorkValue( core, work );
   u8 cancel = VMGetU8(core);
   u16 wk_id = VMGetU16( core );
   u16 *ret = SCRIPT_GetEventWork( sc, gdata, wk_id );
@@ -149,7 +149,7 @@ VMCMD_RESULT EvCmdBmpMenuInitEx( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   u8 x = VMGetU8(core);
   u8 y = VMGetU8(core);
-  u8 cursor = VMGetU8(core);
+  u16 cursor = SCRCMD_GetVMWorkValue( core, work );
   u8 cancel = VMGetU8(core);
   u16 wk_id = VMGetU16( core );
   u16 *ret = SCRIPT_GetEventWork( sc, gdata, wk_id );
