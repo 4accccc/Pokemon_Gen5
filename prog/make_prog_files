@@ -73,6 +73,7 @@ NETWORKSRC =  net/net_icondata.c \
         net_app/union/colosseum_comm_command.c \
         net_app/union/colosseum.c \
         net_app/gds/gds_main.c \
+        gamesystem/g_power.c \
         field/bsubway_comm.c
 
 
@@ -374,7 +375,6 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         field/scrcmd_easytalk.c \
         field/scrcmd_weather.c \
         debug/debug_mystery_card.c \
-        gamesystem/g_power.c \
         field/event_research_radar.c \
         app/research_radar/questionnaire_index.c
 
