@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-12T20:32:26"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T21:37:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,7 +266,7 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
-			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP">
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
 				<parameter number="0" japanese="モード" english="モード" type="int8"/>
 				<comment language="japanese">ユーザConfig設定に応じて
 相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
@@ -327,14 +327,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1432" top="306" right="2137" bottom="926" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -357,14 +357,14 @@
 
 	<row id="msg_guru2_receipt_name_01">
 		<comment>リストに表示するメンバーの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">[1:00:トレーナー名:0]</language>
+		<language name="JPN" font=" 1:small" width="60">[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="msg_guru2_receipt_name_02">
 		<comment>リストに表示するメンバーのＩＤ</comment>
-		<language name="JPN" font=" 1:font_system" width="56">ＩＤ[2:04:５桁:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="56">ＩＤ[2:04:５桁:0]</language>
+		<language name="JPN" font=" 1:small" width="56">ＩＤ[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="56">ＩＤ[2:04:５桁:0]</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_01">
@@ -397,7 +397,7 @@
 		<language name="JPN" width="216" line="2">ぐるぐるこうかんを
 ちゅうし　しますか？</language>
 		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかんを
-ちゅうし　しますか？</language>
+中止しますか？</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_04">
@@ -406,7 +406,7 @@
 		<language name="JPN" width="216" line="2">それでは　ぐるぐるこうかんを
 ちゅうし　します</language>
 		<language name="JPN_KANJI" width="216" line="2">それでは　ぐるぐるこうかんを
-ちゅうし　します</language>
+中止します</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_05">
@@ -414,7 +414,7 @@
 子が抜けた場合に、表示。</comment>
 		<language name="JPN" width="216" line="2">つごうが　わるくなってしまった
 メンバーが　います</language>
-		<language name="JPN_KANJI" width="216" line="2">つごうが　わるくなってしまった
+		<language name="JPN_KANJI" width="216" line="2">都合が　悪くなってしまった
 メンバーが　います</language>
 	</row>
 
@@ -424,7 +424,7 @@
 		<language name="JPN" width="216" line="2">メンバーが　いなくなりました
 ぐるぐるこうかんを　ちゅうし　します</language>
 		<language name="JPN_KANJI" width="216" line="2">メンバーが　いなくなりました
-ぐるぐるこうかんを　ちゅうし　します</language>
+ぐるぐるこうかんを　中止します</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_07">
@@ -433,7 +433,7 @@
 Ｂボタン　→msg_guru2_receipt_01_09</comment>
 		<language name="JPN" width="216" line="2">そのまま　おまちください
 Ｂボタン…やめる</language>
-		<language name="JPN_KANJI" width="216" line="2">そのまま　おまちください
+		<language name="JPN_KANJI" width="216" line="2">そのまま　お待ちください
 Ｂボタン…やめる</language>
 	</row>
 
@@ -443,8 +443,8 @@
 メッセージ表示後、ユニオンルームへ戻る。</comment>
 		<language name="JPN" width="216" line="2">つごうのつかない　メンバーがいたので
 ぐるぐるこうかんを　ちゅうし　します</language>
-		<language name="JPN_KANJI" width="216" line="2">つごうのつかない　メンバーがいたので
-ぐるぐるこうかんを　ちゅうし　します</language>
+		<language name="JPN_KANJI" width="216" line="2">都合のつかない　メンバーがいたので
+ぐるぐるこうかんを　中止します</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_09">
@@ -462,7 +462,7 @@
 		<language name="JPN" width="216" line="2">それでは　ぐるぐるこうかんを
 ちゅうし　します</language>
 		<language name="JPN_KANJI" width="216" line="2">それでは　ぐるぐるこうかんを
-ちゅうし　します</language>
+中止します</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_11">
@@ -470,8 +470,8 @@
 参加メンバー全員の画面下に表示。</comment>
 		<language name="JPN" width="216" line="2">レコードを　まぜています
 でんげんを　きらないで　ください！</language>
-		<language name="JPN_KANJI" width="216" line="2">レコードを　まぜています
-でんげんを　きらないで　ください！</language>
+		<language name="JPN_KANJI" width="216" line="2">レコードを　混ぜています
+電源を　切らないで　ください！</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_12">
@@ -480,8 +480,8 @@
 表示後、ユニオンルームへ戻ります。</comment>
 		<language name="JPN" width="216" line="2">ぐるぐるこうかんが　おわりました！
 ユニオンルームへ　いどうします</language>
-		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかんが　おわりました！
-ユニオンルームへ　いどうします</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかんが　終わりました！
+ユニオンルームへ　移動します</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_13">
@@ -492,14 +492,14 @@
 いいえ（募集枠に余裕なし）　→msg_guru2_receipt_01_02</comment>
 		<language name="JPN" width="216" line="2">リーダーが　やめると　かいさんに
 なりますが　よろしいですか？</language>
-		<language name="JPN_KANJI" width="216" line="2">リーダーが　やめると　かいさんに
+		<language name="JPN_KANJI" width="216" line="2">リーダーが　やめると　解散に
 なりますが　よろしいですか？</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_14">
 		<comment>子が抜けた時、全員に表示</comment>
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]さんが　かえりました</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]さんが　かえりました</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]さんが　帰りました</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_15">
@@ -507,31 +507,31 @@
 		<language name="JPN" width="216" line="2">リーダーの　[1:02:ポケモンニックネーム:0]さんが
 ぬけたので　かいさん　します</language>
 		<language name="JPN_KANJI" width="216" line="2">リーダーの　[1:02:ポケモンニックネーム:0]さんが
-ぬけたので　かいさん　します</language>
+抜けたので　解散します</language>
 	</row>
 
 	<row id="msg_guru2_receipt_title_01">
 		<comment>レコード交換の待機中に、画面上部に表示。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ぐるぐるこうかん　ぼしゅうちゅう！</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ぐるぐるこうかん　ぼしゅうちゅう！</language>
+		<language name="JPN" font=" 1:small" width="216">ぐるぐるこうかん　ぼしゅうちゅう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ぐるぐるこうかん　募集中！</language>
 	</row>
 
 	<row id="msg_guru2_receipt_title_02">
 		<comment>レコード交換開始からユニオンに戻るまで、画面上部に表示。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">ぐるぐるこうかんちゅう！</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ぐるぐるこうかんちゅう！</language>
+		<language name="JPN" font=" 1:small" width="216">ぐるぐるこうかんちゅう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ぐるぐるこうかん中！</language>
 	</row>
 
 	<row id="msg_guru2_receipt_res_01">
 		<comment>レコード交換画面の「はい／いいえ」選択時の「はい」</comment>
-		<language name="JPN" font=" 1:font_system" width="36">はい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="36">はい</language>
+		<language name="JPN" font=" 1:small" width="36">はい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="36">はい</language>
 	</row>
 
 	<row id="msg_guru2_receipt_res_02">
 		<comment>レコード交換画面の「はい／いいえ」選択時の「いいえ」</comment>
-		<language name="JPN" font=" 1:font_system" width="36">いいえ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="36">いいえ</language>
+		<language name="JPN" font=" 1:small" width="36">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="36">いいえ</language>
 	</row>
 
 	<flowchart-group-list>
