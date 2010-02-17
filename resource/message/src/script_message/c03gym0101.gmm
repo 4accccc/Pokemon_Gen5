@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-16T13:11:18"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T18:42:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="351" top="292" right="1057" bottom="912" maximized="no" rayout="Vertical2">
+	<dialog left="1434" top="291" right="2140" bottom="911" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="531"/>
@@ -339,10 +339,16 @@
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">ビートルバッジ
 かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
+それに　バッジを　３こ　もっていれば
+レベル４０までの　ポケモンは▽
+いうことを　きいてくれるしね▼
 えーっと　そうだ
 これも　あげるよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ビートルバッジ
 かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
+それに　バッジを　３こ　持っていれば
+レベル４０までの　ポケモンは▽
+いうことを　きいてくれるしね▼
 えーっと　そうだ
 これも　あげるよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
