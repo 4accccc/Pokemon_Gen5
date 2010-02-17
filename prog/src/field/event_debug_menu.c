@@ -306,7 +306,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
  */
 //------------------------------------------------------------------------
 #if defined DEBUG_ONLY_FOR_toru_nagihashi
-  #define QuickJumpStart   DEBUG_FIELD_STR42
+  #define QuickJumpStart   DEBUG_FIELD_STR56
 #elif defined DEBUG_ONLY_FOR_matsumiya
   #define QuickJumpStart   DEBUG_FIELD_STR03
   #define QuickJumpSelect  DEBUG_FIELD_STR17
@@ -2523,7 +2523,6 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
         ppp = (POKEMON_PASO_PARAM  *)PP_GetPPPPointerConst( pp );
         PPP_Put( ppp , ID_PARA_oyaname_raw , (u32)name );
         PPP_Put( ppp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
-        PPP_Put( ppp , ID_PARA_item , 13 );
 
         BOXDAT_PutPokemonBox(pBox, i, ppp);
       }
@@ -3274,7 +3273,7 @@ static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
   }
 #endif
 
-  GMEVENT_ChangeEvent( wk->gmEvent, EVENT_WifiBattleMatch( wk->gmSys, wk->fieldWork, mode, WIFIBATTLEMATCH_POKE_TEMOTI, btl_rule ) );
+  GMEVENT_ChangeEvent( wk->gmEvent, EVENT_WifiBattleMatch( wk->gmSys, wk->fieldWork, DEBUG_MODE(mode), WIFIBATTLEMATCH_POKE_TEMOTI, btl_rule ) );
   return TRUE;
 }
 

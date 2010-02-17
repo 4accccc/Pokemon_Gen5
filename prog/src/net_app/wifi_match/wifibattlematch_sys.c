@@ -36,6 +36,7 @@
 #include "wifibattlematch_core.h"
 #include "wifibattlematch_subproc.h"
 #include "wifibattlematch_data.h"
+#include "wifibattlematch_utilproc.h"
 
 //外部公開
 #include "net_app/wifibattlematch.h"
@@ -105,9 +106,8 @@ typedef struct
   BtlResult                   btl_result;
   BtlRule                     btl_rule;
 
-  POKEPARTY                   *p_btl_party;
-
-  u32 sub_seq;
+  POKEPARTY                   *p_player_btl_party; //自分で決めたパーティ
+  POKEPARTY                   *p_enemy_btl_party; //相手の決めたパーティ
 
   //以下システム層に置いておくデータ
   WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
@@ -145,18 +145,21 @@ static void SUBPROC_CallProc( SUBPROC_WORK *p_wk, u32 procID );
 //-------------------------------------
 ///	サブプロセス用引数の解放、破棄関数
 //=====================================
-//バトルマッチ
+//マッチングメインプロセス
 static void *WBM_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs );
 static BOOL WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
-//リスト
+//リスト＋ステータス
 static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs );
 static BOOL POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs );
-//バトル
+//バトル＋デモ
 static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs );
 static BOOL BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 //WIFIログイン
 static void *LOGIN_AllocParam( HEAPID heapID, void *p_wk_adrs );
 static BOOL LOGIN_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+//リスト＋ステータス～バトル＋デモへのつなぎプロセス
+static void *WBM_LISTAFTER_AllocParam( HEAPID heapID, void *p_wk_adrs );
+static BOOL WBM_LISTAFTER_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 
 //-------------------------------------
 ///	データバッファ作成
@@ -193,6 +196,7 @@ typedef enum
   SUBPROCID_POKELIST,
   SUBPROCID_BATTLE,
   SUBPROCID_LOGIN,
+  SUBPROCID_LISTAFTER,
 
 	SUBPROCID_MAX
 } SUBPROC_ID;
@@ -226,6 +230,13 @@ static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
     LOGIN_AllocParam,
     LOGIN_FreeParam,
   },
+  //SUBPROCID_LISTAFTER,
+  { 
+		FS_OVERLAY_ID( wifibattlematch_core ),
+		&WifiBattleMatch_ListAfter_ProcData,
+		WBM_LISTAFTER_AllocParam,
+		WBM_LISTAFTER_FreeParam,
+  }
 };
 
 //=============================================================================
@@ -280,9 +291,13 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
     p_wk->param.p_game_data = GAMEDATA_Create( GFL_HEAPID_APP );
     p_wk->is_create_gamedata  = TRUE;
   }
-  if( p_wk->p_btl_party == NULL )
+  if( p_wk->p_player_btl_party == NULL )
   { 
-    p_wk->p_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
+    p_wk->p_player_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
+  }
+  if( p_wk->p_enemy_btl_party == NULL )
+  { 
+    p_wk->p_enemy_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
   }
 
   OS_Printf( "ランダムマッチ引数 使用ポケ%d ルール%d\n", p_wk->param.poke, p_wk->param.btl_rule );
@@ -362,10 +377,15 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
   //データバッファ破棄
   DATA_DeleteBuffer( p_wk );
 
-  if( p_wk->p_btl_party )
+  if( p_wk->p_enemy_btl_party )
   { 
-    GFL_HEAP_FreeMemory( p_wk->p_btl_party );
-    p_wk->p_btl_party = NULL;
+    GFL_HEAP_FreeMemory( p_wk->p_enemy_btl_party );
+    p_wk->p_enemy_btl_party = NULL;
+  }
+  if( p_wk->p_player_btl_party )
+  { 
+    GFL_HEAP_FreeMemory( p_wk->p_player_btl_party );
+    p_wk->p_player_btl_party = NULL;
   }
 
   if( p_wk->is_create_gamedata )
@@ -393,6 +413,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 	return GFL_PROC_RES_FINISH;
 }
 
+#include "system/net_err.h"
 //----------------------------------------------------------------------------
 /**
  *	@brief	WIFIバトルマッチ画面	メインプロセス処理
@@ -466,8 +487,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 	case WBM_SYS_SEQ_EXIT:
 		return GFL_PROC_RES_FINISH;
 	}
-
-
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -735,7 +754,7 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
     GF_ASSERT(0);
   }
 
-  p_param->p_party    = p_wk->p_btl_party;
+  p_param->p_party    = p_wk->p_player_btl_party;
   p_param->gameData   = p_wk->param.p_game_data;
 
   //自分のデータ
@@ -778,39 +797,21 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
 //-----------------------------------------------------------------------------
 static BOOL POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 { 
-  WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
-  WIFIBATTLEMATCH_SUBPROC_PARAM       *p_param  = p_param_adrs;
+  WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
+  WIFIBATTLEMATCH_SUBPROC_PARAM   *p_param  = p_param_adrs;
 
-  switch( p_wk->sub_seq )
+  if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
   { 
-  case 0:
-    if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
-    { 
-      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),17, WB_NET_WIFIMATCH);
-      p_wk->sub_seq++;
-    }
-    else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN )
-    { 
-
-      GFL_HEAP_FreeMemory( p_param->regulation );
-      SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
-      GFL_HEAP_FreeMemory( p_param );
-      p_wk->sub_seq = 0;
-    }
-    break;
-
-  case 1:
-    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),17, WB_NET_WIFIMATCH) )
-    { 
-      GFL_HEAP_FreeMemory( p_param->regulation );
-      SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_BATTLE );
-      GFL_HEAP_FreeMemory( p_param );
-      p_wk->sub_seq = 0;
-      return TRUE;
-    }
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LISTAFTER );
   }
+  else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN )
+  { 
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
+  }
+  GFL_HEAP_FreeMemory( p_param->regulation );
+  GFL_HEAP_FreeMemory( p_param );
 
-  return FALSE;
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -842,7 +843,7 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
     COMM_BTL_DEMO_TRAINER_DATA *p_tr;
     p_tr  = &p_param->demo_prm->trainer_data[ COMM_BTL_DEMO_TRDATA_A ];
     p_tr->mystatus  = (MYSTATUS*)p_wk->p_player_data->mystatus;
-    p_tr->party     = p_wk->p_btl_party;
+    p_tr->party     = p_wk->p_player_btl_party;
     p_tr->server_version  = p_wk->p_player_data->btl_server_version;
   }
   //相手
@@ -850,7 +851,7 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
     COMM_BTL_DEMO_TRAINER_DATA *p_tr;
     p_tr  = &p_param->demo_prm->trainer_data[ COMM_BTL_DEMO_TRDATA_B ];
     p_tr->mystatus  = (MYSTATUS*)p_wk->p_enemy_data->mystatus;
-    p_tr->party     = p_wk->p_btl_party;
+    p_tr->party     = p_wk->p_enemy_btl_party;
     p_tr->server_version  = p_wk->p_enemy_data->btl_server_version;
   }
 
@@ -859,6 +860,9 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
 	GFL_STD_MemClear( p_param->btl_setup_prm, sizeof(BATTLE_SETUP_PARAM) );
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+
+  //録画バッファ作成
+  //BTL_SETUP_AllocRecBuffer( p_param->btl_setup_prm, heapID );
 
 	//ランダムバトルのバトル設定
   if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_RANDOM )
@@ -935,7 +939,7 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
   }
 
 
-  BATTLE_PARAM_SetPokeParty( p_param->btl_setup_prm, p_wk->p_btl_party, BTL_CLIENT_PLAYER ); 
+  BATTLE_PARAM_SetPokeParty( p_param->btl_setup_prm, p_wk->p_player_btl_party, BTL_CLIENT_PLAYER ); 
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
@@ -1021,6 +1025,60 @@ static BOOL LOGIN_FreeParam( void *p_param_adrs, void *p_wk_adrs )
     break;
 
   case WIFILOGIN_RESULT_CANCEL:
+    //PROCが全て死ぬと終了するので
+    //なにもよばないで終わる
+    break;
+  }
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リスト後プロセスの引数	作成
+ *
+ *	@param	HEAPID heapID			ヒープID
+ *	@param	*p_wk_adrs				ワーク
+ *
+ *	@return	引数
+ */
+//-----------------------------------------------------------------------------
+static void *WBM_LISTAFTER_AllocParam( HEAPID heapID, void *p_wk_adrs )
+{ 
+  WIFIBATTLEMATCH_LISTAFTER_PARAM *p_param;
+  WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
+  p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_LISTAFTER_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_LISTAFTER_PARAM) );
+  p_param->p_param        = &p_wk->param;
+  p_param->p_player_btl_party = p_wk->p_player_btl_party;
+  p_param->p_enemy_btl_party  = p_wk->p_enemy_btl_party;
+
+  return p_param;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リスト後プロセスの引数	破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL WBM_LISTAFTER_FreeParam( void *p_param_adrs, void *p_wk_adrs )
+{ 
+  WIFIBATTLEMATCH_SYS               *p_wk     = p_wk_adrs;
+  WIFIBATTLEMATCH_LISTAFTER_PARAM   *p_param  = p_param_adrs;
+  WIFIBATTLEMATCH_LISTAFTER_RESULT  result    = p_param->result;
+
+  GFL_HEAP_FreeMemory( p_param );
+
+  switch( result )
+  { 
+  case WIFIBATTLEMATCH_LISTAFTER_RESULT_SUCCESS:
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_BATTLE );
+    break;
+
+  case WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_NEXT_LOGIN:
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
     break;
   }
 

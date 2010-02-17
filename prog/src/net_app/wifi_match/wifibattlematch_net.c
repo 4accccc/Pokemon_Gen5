@@ -127,6 +127,8 @@ typedef enum
 #define CANCELSELECT_TIMEOUT (60*60)     //キャンセルセレクトタイムアウト
 #define ASYNC_TIMEOUT (60*60)     //キャンセルセレクトタイムアウト
 
+#define RECV_BUFFER_SIZE  (0x1000)
+
 //-------------------------------------
 ///	マッチメイク
 //=====================================
@@ -159,6 +161,7 @@ typedef enum
   WIFIBATTLEMATCH_NET_RECVFLAG_PLAYER,
   WIFIBATTLEMATCH_NET_RECVFLAG_GAMEDATA,
   WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST,
+  WIFIBATTLEMATCH_NET_RECVFLAG_POKEPARTY,
   WIFIBATTLEMATCH_NET_RECVFLAG_MAX
 } WIFIBATTLEMATCH_NET_RECVFLAG;
 
@@ -257,15 +260,13 @@ struct _WIFIBATTLEMATCH_NET_WORK
   int sake_record_id;
   DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA gdb_write_data;
   u32   magic_num;
-
-
-  //以下のバッファはフレキシブルなので、メモリ確保している
-  WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data;
-
   u32 async_timeout;
   u32 cancel_select_timeout;   //CANCELSELECT_TIMEOUT
   BOOL is_stop_connect;
   BOOL is_auth;
+
+  //SENDDATA系
+  u8 recv_buffer[RECV_BUFFER_SIZE];//受信バッファ
 
   //マッチメイク
   DWCEvalPlayerCallback matchmake_eval_callback;
@@ -325,8 +326,10 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs );
 //=====================================
 static void DwcRap_Sc_RecvPlayerData(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
 static void WifiBattleMatch_RecvEnemyData(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
-static u8* WifiBattleMatch_RecvEnemyDataBuffAddr(int netID, void* p_wk_adrs, int size);
+static u8* WifiBattleMatch_RecvBuffAddr(int netID, void* p_wk_adrs, int size);
 static void WifiBattleMatch_RecvMatchCancel(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
+static void WifiBattleMatch_RecvPokeParty(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
+
 
 //-------------------------------------
 ///	SC関係
@@ -414,13 +417,15 @@ enum
   WIFIBATTLEMATCH_NETCMD_SEND_PLAYERDATA  = GFL_NET_CMD_WIFIMATCH,
   WIFIBATTLEMATCH_NETCMD_SEND_ENEMYDATA,
   WIFIBATTLEMATCH_NETCMD_SEND_CANCELMATCH,
+  WIFIBATTLEMATCH_NETCMD_SEND_POKEPARTY,
   WIFIBATTLEMATCH_NETCMD_MAX,
 };
 static const NetRecvFuncTable sc_net_recv_tbl[] = 
 {
   {DwcRap_Sc_RecvPlayerData,   NULL},    ///_NETCMD_INFOSEND
-  {WifiBattleMatch_RecvEnemyData, WifiBattleMatch_RecvEnemyDataBuffAddr },
+  {WifiBattleMatch_RecvEnemyData, WifiBattleMatch_RecvBuffAddr },
   {WifiBattleMatch_RecvMatchCancel, NULL},
+  {WifiBattleMatch_RecvPokeParty, WifiBattleMatch_RecvBuffAddr },
 };
 
 
@@ -453,9 +458,6 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( const DWCUserData *cp_user_
   p_wk->p_field_buff  = GFL_HEAP_AllocMemory( heapID, (ATLAS_RND_GetFieldNameNum() + ATLAS_WIFI_GetFieldNameNum()) * sizeof(DWCGdbField) );
   GFL_STD_MemClear(p_wk->p_field_buff, (ATLAS_RND_GetFieldNameNum() + ATLAS_WIFI_GetFieldNameNum()) * sizeof(DWCGdbField) );
 
-  p_wk->p_enemy_data  = GFL_HEAP_AllocMemory( heapID, MATH_ROUNDUP32(WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE) );
-  GFL_STD_MemClear(p_wk->p_enemy_data, MATH_ROUNDUP32(WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE) );
-
   GFL_NET_DebugPrintOn();
 
   if(!GFL_NET_IsInit())
@@ -466,20 +468,8 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( const DWCUserData *cp_user_
   GFL_NET_AddCommandTable( GFL_NET_CMD_WIFIMATCH, sc_net_recv_tbl, NELEMS(sc_net_recv_tbl), p_wk );
   GFL_NET_SetWifiBothNet(FALSE);
 
-
-  NAGI_Printf( "Net Wk 0x%x buff 0x%x\n", p_wk, p_wk->p_enemy_data );
-  NAGI_Printf( "BufferAddr 0x%x\n", WifiBattleMatch_RecvEnemyDataBuffAddr );
-
   return p_wk;
 }
-
-#if 0
-wk 0x255d114 buff 0x0
-
-
-Net Wk 0x255d114 buff 0x255d73c
-BufferAddr 0x22231d1
-#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -492,7 +482,6 @@ void WIFIBATTLEMATCH_NET_Exit( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
   GFL_NET_DelCommandTable( GFL_NET_CMD_WIFIMATCH );
 
-  GFL_HEAP_FreeMemory( p_wk->p_enemy_data );
   GFL_HEAP_FreeMemory( p_wk->p_field_buff );
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -614,9 +603,11 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
     SEQ_END,
   };
 
+
   switch( p_wk->init_seq )
   { 
   case SEQ_START_GET_TABLE_ID:
+    *p_result = DWC_GDB_ERROR_NONE;
     WIFIBATTLEMATCH_GDB_Start( p_wk, WIFIBATTLEMATCH_GDB_GET_RECORDID, &p_wk->sake_record_id );
     p_wk->init_seq  = SEQ_WAIT_GET_TABLE_ID;
     break;
@@ -974,9 +965,15 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
 
   int value=0;
   int rate, disconnect, cup;
-  rate      = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_RATE].keyStr, 0 );
-  disconnect= DWC_GetMatchIntValue(index, p_wk->key_wk[MATCHMAKE_KEY_DISCONNECT].keyStr, 0 );
-  cup       = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].keyStr, 0 );
+  rate      = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_RATE].keyStr, -1 );
+  disconnect= DWC_GetMatchIntValue(index, p_wk->key_wk[MATCHMAKE_KEY_DISCONNECT].keyStr, -1 );
+  cup       = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].keyStr, -1 );
+
+  //指標キーが反映されていないので、無視する
+  if( rate == -1 || disconnect == -1 || cup == -1 )
+  { 
+    return 0;
+  }
 
   if( cup == p_wk->key_wk[MATCHMAKE_KEY_CUPNO].ivalue )
   {
@@ -2249,18 +2246,18 @@ static void WifiBattleMatch_RecvEnemyData(const int netID, const int size, const
  *	@return バッファアドレス
  */
 //-----------------------------------------------------------------------------
-static u8* WifiBattleMatch_RecvEnemyDataBuffAddr(int netID, void* p_wk_adrs, int size)
+static u8* WifiBattleMatch_RecvBuffAddr(int netID, void* p_wk_adrs, int size)
 { 
   WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
 
-  GF_ASSERT_MSG( p_wk->p_enemy_data, "wk 0x%x buff 0x%x\n", p_wk, p_wk->p_enemy_data );
+  GF_ASSERT_MSG( size < RECV_BUFFER_SIZE, "recv_buff error!! size = 0x%x <> buff= 0x%x\n", size, RECV_BUFFER_SIZE );
 
   if( netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )
   {
     GF_ASSERT( 0 );
     return NULL;//自分のは受け取らない
   }
-  return (u8 *)(p_wk->p_enemy_data);
+  return p_wk->recv_buffer;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2290,6 +2287,35 @@ static void WifiBattleMatch_RecvMatchCancel(const int netID, const int size, con
 
   p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST] = TRUE;
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケパーティ受信コールバック
+ *
+ *	@param	int netID     ネットID
+ *	@param	int size      サイズ
+ *	@param	void* pData   データ
+ *	@param	pWk           自分であたえたアドレス
+ *	@param	pNetHandle    ネットハンドル
+ */
+//-----------------------------------------------------------------------------
+static void WifiBattleMatch_RecvPokeParty(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle)
+{ 
+  WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
+
+  if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+  {
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if( netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )
+  {
+    return;//自分のは今は受け取らない
+  }
+
+  DEBUG_NET_Printf( "ポケパーティ受信コールバック！netID=%d size=%d \n", netID, size );
+
+  p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_POKEPARTY] = TRUE;
 }
 
 //=============================================================================
@@ -3077,12 +3103,17 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk, DW
 
   return FALSE;
 }
+//=============================================================================
+/**
+ *    お互いの情報を送る  SENDDATA系
+ */
+//=============================================================================
 //----------------------------------------------------------------------------
 /**
  *	@brief  敵情報
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
- *	@return TRUEで送信  FALSEで受信
+ *	@return TRUEで送信  FALSEで失敗
  */
 //-----------------------------------------------------------------------------
 BOOL WIFIBATTLEMATCH_NET_StartEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, const void *cp_buff )
@@ -3106,10 +3137,61 @@ BOOL WIFIBATTLEMATCH_NET_StartEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, const v
 //-----------------------------------------------------------------------------
 BOOL WIFIBATTLEMATCH_NET_WaitEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_ENEMYDATA **pp_data )
 { 
-  *pp_data  = p_wk->p_enemy_data;
-  return p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_GAMEDATA];
+  BOOL ret  = p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_GAMEDATA];
+
+  if( ret )
+  { 
+    *pp_data  = (WIFIBATTLEMATCH_ENEMYDATA *)p_wk->recv_buffer;
+  }
+
+  return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のポケパーティを送る
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	POKEPARTY *cp_party   送る自分のポケパーティ
+ *
+ *	@return TRUEで送信  FALSEで失敗
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_SendPokeParty( WIFIBATTLEMATCH_NET_WORK *p_wk, const POKEPARTY *cp_party )
+{ 
+  NetID netID;
+
+  //相手にのみ送信
+  netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+  netID = netID == 0? 1: 0;
+  return GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), netID, WIFIBATTLEMATCH_NETCMD_SEND_POKEPARTY, PokeParty_GetWorkSize(), cp_party, TRUE, TRUE, TRUE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  相手のポケパーティ受信待ち
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	*p_party                        相手からもらったポケパーティ
+ *
+ *	@return TRUE受信  FALSE受信中
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_RecvPokeParty( WIFIBATTLEMATCH_NET_WORK *p_wk, POKEPARTY *p_party )
+{ 
+  BOOL ret;
+  ret = p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_POKEPARTY];
+
+  if( ret )
+  { 
+    GFL_STD_MemCopy( p_wk->recv_buffer, p_party, PokeParty_GetWorkSize() );
+  }
+  return ret;
 }
 
+//=============================================================================
+/**
+ *    ダウンロード系  （ND系）
+ */
+//=============================================================================
 //----------------------------------------------------------------------------
 /**
  *	@brief  初期化開始

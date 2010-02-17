@@ -17,6 +17,8 @@
 #include "net_app/wifibattlematch.h"
 #include "savedata/regulation.h"
 #include "net/nhttp_rap.h"
+#include "savedata/wifilist.h"
+#include "system/net_err.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -174,10 +176,6 @@ extern BOOL WIFIBATTLEMATCH_NET_IsInitialize( const WIFIBATTLEMATCH_NET_WORK *cp
 //-------------------------------------
 ///	マッチング
 //=====================================
-//マッチング
-//-------------------------------------
-///	
-//=====================================
 typedef struct 
 {
   u32 rate;
@@ -276,11 +274,13 @@ extern BOOL WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p
 
 
 //-------------------------------------
-///	相手のデータ受信
+///	相手のデータ受信  お互いのデータを送る  SENDDATA系
 //=====================================
 extern BOOL WIFIBATTLEMATCH_NET_StartEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, const void *cp_buff );
 extern BOOL WIFIBATTLEMATCH_NET_WaitEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_ENEMYDATA **pp_data );
 
+extern BOOL WIFIBATTLEMATCH_NET_SendPokeParty( WIFIBATTLEMATCH_NET_WORK *p_wk, const POKEPARTY *cp_party );
+extern BOOL WIFIBATTLEMATCH_NET_RecvPokeParty( WIFIBATTLEMATCH_NET_WORK *p_wk, POKEPARTY *p_party );
 
 //-------------------------------------
 ///	ダウンロードサーバー  (ND)

@@ -199,8 +199,6 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     break;
   case SEQ_BATTLE_INIT:
     BattleRec_Init( HEAPID_BATTLE_CALL );                                // 録画
-    BTL_SETUP_AllocRecBuffer( bcw->btl_setup_prm, HEAPID_BATTLE_CALL );  // 録画
-
 //  GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, bcw->btl_setup_prm->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
     GFL_PROC_LOCAL_CallProc(work->procsys_up, NO_OVERLAY_ID, &BtlProcData, bcw->btl_setup_prm);
     (*seq) = SEQ_BATTLE_WAIT;
@@ -237,19 +235,20 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       // 勝敗設定
       switch( bcw->btl_setup_prm->result )
       {
-        case BTL_RESULT_WIN :
-          bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_WIN;
-          break;
-        case BTL_RESULT_LOSE :
-#ifdef PM_DEBUG
-        case BTL_RESULT_RUN : //@TODO 一時的なフォロー。将来的にはWIN/LOSE/DRAWしか入ってこなくなるはず
-#endif
-          bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_LOSE;
-          break;
-        case BTL_RESULT_DRAW :
-          bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_DRAW;
-          break;
-        default : GF_ASSERT(0);
+      case BTL_RESULT_RUN_ENEMY:
+      case BTL_RESULT_WIN :
+        bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_WIN;
+        break;
+      case BTL_RESULT_LOSE :
+      case BTL_RESULT_RUN :
+        bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_LOSE;
+        break;
+      case BTL_RESULT_DRAW :
+        bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_DRAW;
+        break;
+      default : 
+        GF_ASSERT(0);
+        bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_DRAW;  //アサートしてもすすめるように
       }
 
       GFL_PROC_LOCAL_CallProc(work->procsys_up, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, bcw->demo_prm);
@@ -263,18 +262,26 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     break;
   case SEQ_CALL_BTL_REC_SEL:
     {
-      // 通信相手と自分のROMのサーバーバージョンを比較する
       BOOL b_rec = TRUE;  // TRUEのとき、「通信相手 <= 自分」となり録画できる。
-      u8 trainer_num = ( bcw->btl_setup_prm->multiMode == 0 ) ? (2) : (4);
-      u8 my_version = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].server_version;
-      int i; 
-      for( i=COMM_BTL_DEMO_TRDATA_B; i<trainer_num; i++ )
-      {
-        u8 other_version = bcw->demo_prm->trainer_data[i].server_version;
-        if( other_version > my_version )
+      //バトルセットアップの録画バッファがなかったら録画しない
+      if( bcw->btl_setup_prm->recBuffer == NULL )
+      { 
+        b_rec = FALSE;
+      }
+      else
+      { 
+        // 通信相手と自分のROMのサーバーバージョンを比較する
+        u8 trainer_num = ( bcw->btl_setup_prm->multiMode == 0 ) ? (2) : (4);
+        u8 my_version = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].server_version;
+        int i; 
+        for( i=COMM_BTL_DEMO_TRDATA_B; i<trainer_num; i++ )
         {
-          b_rec = FALSE;
-          break;
+          u8 other_version = bcw->demo_prm->trainer_data[i].server_version;
+          if( other_version > my_version )
+          {
+            b_rec = FALSE;
+            break;
+          }
         }
       }
       // 通信対戦後の録画選択画面へ移行(録画しない人も移行します)
