@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T18:50:29"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T19:54:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -678,11 +678,11 @@
 	<row id="msg_mycode_codeon">
 		<comment>自分のともだちコード説明</comment>
 		<language name="JPN" font=" 1:small" width="216">ともだちコードを　おしえあうと
-ＷｉーＦｉコネクションを　つかって
+Ｗ－Ｆｉコネクションを　つかって
 とおくのともだちと
 たいせんやこうかんが　たのしめます</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ともだちコードを　おしえあうと
-ＷｉーＦｉコネクションを　つかって
+Ｗ－Ｆｉコネクションを　つかって
 とおくのともだちと
 たいせんやこうかんが　たのしめます</language>
 	</row>
@@ -690,10 +690,10 @@
 	<row id="msg_mycode_codeoff">
 		<comment>自分のともだちコードを持っていない場合</comment>
 		<language name="JPN" font=" 1:small" width="216">ともだちコードを　もらうには
-いちど　ＷｉーＦｉコネクションに
+いちど　Ｗ－Ｆｉコネクションに
 せつぞく　してください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ともだちコードを　もらうには
-いちど　ＷｉーＦｉコネクションに
+いちど　Ｗ－Ｆｉコネクションに
 せつぞく　してください</language>
 	</row>
 
