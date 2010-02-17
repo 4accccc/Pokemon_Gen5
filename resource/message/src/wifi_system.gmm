@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-12-17T11:32:25"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T19:58:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -335,13 +335,13 @@
 
 	<row id="dwc_error_0001">
 		<comment>専用ウインドウ</comment>
-		<language name="JPN" width="192">ＷｉーＦｉコネクション　に
+		<language name="JPN" width="192">Ｗｉ－Ｆｉコネクション　に
 せつぞく　できません
 
 くわしくは　ガイドブック　を
 ごらん　ください
 （[2:04:５桁:0]）</language>
-		<language name="JPN_KANJI" width="192">ＷｉーＦｉコネクション　に
+		<language name="JPN_KANJI" width="192">Ｗｉ－Ｆｉコネクション　に
 せつぞく　できません
 
 くわしくは　ガイドブック　を
@@ -351,7 +351,7 @@
 
 	<row id="dwc_error_0002">
 		<comment>専用ウインドウ</comment>
-		<language name="JPN" width="192">ＷｉーＦｉコネクション　が
+		<language name="JPN" width="192">Ｗｉ－Ｆｉコネクション　が
 こみあっている　か
 サービス　が　ていし
 しているために
@@ -359,7 +359,7 @@
 しばらく　まって
 やりなおして　ください
 （[2:04:５桁:0]）</language>
-		<language name="JPN_KANJI" width="192">ＷｉーＦｉコネクション　が
+		<language name="JPN_KANJI" width="192">Ｗｉ－Ｆｉコネクション　が
 こみあっている　か
 サービス　が　ていし
 しているために
@@ -372,7 +372,7 @@
 	<row id="dwc_error_0003">
 		<comment>専用ウインドウ</comment>
 		<language name="JPN" width="192">おきゃくさま　の
-ＷｉーＦｉコネクションＩＤ　は
+Ｗｉ－ＦｉコネクションＩＤ　は
 ながい　あいだ
 しよう　されなかった　ため
 さくじょ　されました
@@ -380,7 +380,7 @@
 くわしくは　ガイドブック　を
 ごらん　ください（[2:04:５桁:0]）</language>
 		<language name="JPN_KANJI" width="192">おきゃくさま　の
-ＷｉーＦｉコネクションＩＤ　は
+Ｗｉ－ＦｉコネクションＩＤ　は
 ながい　あいだ
 しよう　されなかった　ため
 さくじょ　されました
@@ -392,13 +392,13 @@
 	<row id="dwc_error_0004">
 		<comment>専用ウインドウ</comment>
 		<language name="JPN" width="192">この　ソフト　の
-ＷｉーＦｉコネクション　サービス　は
+Ｗｉ－Ｆｉコネクション　サービス　は
 しゅうりょう　しました
 
 ごりよう　ありがとう　ございました
 （[2:04:５桁:0]）</language>
 		<language name="JPN_KANJI" width="192">この　ソフト　の
-ＷｉーＦｉコネクション　サービス　は
+Ｗｉ－Ｆｉコネクション　サービス　は
 しゅうりょう　しました
 
 ごりよう　ありがとう　ございました
@@ -445,7 +445,7 @@
 アクセスポイント　が
 みつかりません
 
-ＷｉーＦｉコネクションせってい　で
+Ｗｉ－Ｆｉコネクションせってい　で
 せつぞくさきの　せっていを
 ごかくにん　ください
 （[2:04:５桁:0]）</language>
@@ -453,7 +453,7 @@
 アクセスポイント　が
 みつかりません
 
-ＷｉーＦｉコネクションせってい　で
+Ｗｉ－Ｆｉコネクションせってい　で
 せつぞくさきの　せっていを
 ごかくにん　ください
 （[2:04:５桁:0]）</language>
@@ -461,35 +461,35 @@
 
 	<row id="dwc_error_0008">
 		<comment>専用ウインドウ</comment>
-		<language name="JPN" width="192">ニンテンドーＷｉーＦｉコネクタ　に
+		<language name="JPN" width="192">ニンテンドーＷｉ－Ｆｉコネクタ　に
 せつぞく　できません
 
-ＷｉーＦｉコネクションせってい　で
-ニンテンドーＷｉーＦｉコネクタ　の
+Ｗｉ－Ｆｉコネクションせってい　で
+ニンテンドーＷｉ－Ｆｉコネクタ　の
 せつぞく　を　ごかくにん　ください
 （[2:04:５桁:0]）</language>
-		<language name="JPN_KANJI" width="192">ニンテンドーＷｉーＦｉコネクタ　に
+		<language name="JPN_KANJI" width="192">ニンテンドーＷｉ－Ｆｉコネクタ　に
 せつぞく　できません
 
-ＷｉーＦｉコネクションせってい　で
-ニンテンドーＷｉーＦｉコネクタ　の
+Ｗｉ－Ｆｉコネクションせってい　で
+ニンテンドーＷｉ－Ｆｉコネクタ　の
 せつぞく　を　ごかくにん　ください
 （[2:04:５桁:0]）</language>
 	</row>
 
 	<row id="dwc_error_0009">
 		<comment>専用ウインドウ</comment>
-		<language name="JPN" width="192">ＷｉーＦｉコネクション　に
+		<language name="JPN" width="192">Ｗｉ－Ｆｉコネクション　に
 せつぞく　できません
 
-ＷｉーＦｉコネクションせってい　で
+Ｗｉ－Ｆｉコネクションせってい　で
 せつぞくさき　の　せってい　を
 ごかくにん　ください
 （[2:04:５桁:0]）</language>
-		<language name="JPN_KANJI" width="192">ＷｉーＦｉコネクション　に
+		<language name="JPN_KANJI" width="192">Ｗｉ－Ｆｉコネクション　に
 せつぞく　できません
 
-ＷｉーＦｉコネクションせってい　で
+Ｗｉ－Ｆｉコネクションせってい　で
 せつぞくさき　の　せってい　を
 ごかくにん　ください
 （[2:04:５桁:0]）</language>
@@ -500,7 +500,7 @@
 		<language name="JPN" width="192">あいてからの
 おうとうが　ありません
 すでに　あいてが
-ＷｉーＦｉコネクション　に
+Ｗｉ－Ｆｉコネクション　に
 せつぞく　していない　か
 あいての　ともだちてちょう　から
 とうろく　が　なくなった
@@ -508,7 +508,7 @@
 		<language name="JPN_KANJI" width="192">あいてからの
 おうとうが　ありません
 すでに　あいてが
-ＷｉーＦｉコネクション　に
+Ｗｉ－Ｆｉコネクション　に
 せつぞく　していない　か
 あいての　ともだちてちょう　から
 とうろく　が　なくなった
@@ -518,11 +518,11 @@
 	<row id="dwc_error_0011">
 		<comment>専用ウインドウ</comment>
 		<language name="JPN" width="192">つうしんエラー　に　よって
-ＷｉーＦｉコネクション　から
+Ｗｉ－Ｆｉコネクション　から
 せつだん　されました
 （[2:04:５桁:0]）</language>
 		<language name="JPN_KANJI" width="192">つうしんエラー　に　よって
-ＷｉーＦｉコネクション　から
+Ｗｉ－Ｆｉコネクション　から
 せつだん　されました
 （[2:04:５桁:0]）</language>
 	</row>
@@ -543,10 +543,10 @@
 
 	<row id="dwc_error_0014">
 		<language name="JPN" width="216">つうしんエラー　に　よって
-ＷｉーＦｉコネクション　から
+Ｗｉ－Ｆｉコネクション　から
 せつだん　されました</language>
 		<language name="JPN_KANJI" width="216">つうしんエラー　に　よって
-ＷｉーＦｉコネクション　から
+Ｗｉ－Ｆｉコネクション　から
 せつだん　されました</language>
 	</row>
 
@@ -559,13 +559,13 @@
 
 	<row id="dwc_error_0016">
 		<language name="JPN" width="216">エラーが　はっせいした　ため
-ＷｉーＦｉコネクションの　きのうを
+Ｗｉ－Ｆｉコネクションの　きのうを
 しよう　できません
 でんげんを　きって
 やりなおして　ください
 （[2:04:５桁:0]）</language>
 		<language name="JPN_KANJI" width="216">エラーが　はっせいした　ため
-ＷｉーＦｉコネクションの　きのうを
+Ｗｉ－Ｆｉコネクションの　きのうを
 しよう　できません
 でんげんを　きって
 やりなおして　ください
@@ -575,64 +575,64 @@
 	<row id="dwc_message_0001">
 		<comment>専用ウインドウ</comment>
 		<language name="JPN" width="192">ＤＳほんたい　の
-ＷｉーＦｉユーザーじょうほう　が
+Ｗｉ－Ｆｉユーザーじょうほう　が
 きえた　かのうせい　が　あります
 
-ＷｉーＦｉコネクションせってい　で
+Ｗｉ－Ｆｉコネクションせってい　で
 せつぞくさきの　せってい　を
 ごかくにん　ください</language>
 		<language name="JPN_KANJI" width="192">ＤＳほんたい　の
-ＷｉーＦｉユーザーじょうほう　が
+Ｗｉ－Ｆｉユーザーじょうほう　が
 きえた　かのうせい　が　あります
 
-ＷｉーＦｉコネクションせってい　で
+Ｗｉ－Ｆｉコネクションせってい　で
 せつぞくさきの　せってい　を
 ごかくにん　ください</language>
 	</row>
 
 	<row id="dwc_message_0002">
 		<comment>進行ウインドウ</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクション　に
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　に
 せつぞく　しますか？</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクション　に
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　に
 せつぞく　しますか？</language>
 	</row>
 
 	<row id="dwc_message_0003">
 		<comment>専用ウインドウ</comment>
-		<language name="JPN" width="192">ＷｉーＦｉコネクション　では
+		<language name="JPN" width="192">Ｗｉ－Ｆｉコネクション　では
 ＤＳカード　と　ＤＳほんたい　を
 セットで　あつかいます
 ＤＳカードに　ＤＳほんたいの
-ＷｉーＦｉユーザーじょうほう　を
+Ｗｉ－Ｆｉユーザーじょうほう　を
 ほぞん　して
-ＷｉーＦｉコネクション　に
+Ｗｉ－Ｆｉコネクション　に
 せつぞく　しますか？</language>
-		<language name="JPN_KANJI" width="192">ＷｉーＦｉコネクション　では
+		<language name="JPN_KANJI" width="192">Ｗｉ－Ｆｉコネクション　では
 ＤＳカード　と　ＤＳほんたい　を
 セットで　あつかいます
 ＤＳカードに　ＤＳほんたいの
-ＷｉーＦｉユーザーじょうほう　を
+Ｗｉ－Ｆｉユーザーじょうほう　を
 ほぞん　して
-ＷｉーＦｉコネクション　に
+Ｗｉ－Ｆｉコネクション　に
 せつぞく　しますか？</language>
 	</row>
 
 	<row id="dwc_message_0004">
 		<comment>専用ウインドウ</comment>
 		<language name="JPN" width="192">この　ＤＳほんたい　の
-ＷｉーＦｉユーザーじょうほう　を
+Ｗｉ－Ｆｉユーザーじょうほう　を
 ＤＳカード　に　ほぞん　しました
 
-こんごの　ＷｉーＦｉコネクションへの
+こんごの　Ｗｉ－Ｆｉコネクションへの
 せつぞく　は
 この　ＤＳほんたい　を
 おつかい　ください</language>
 		<language name="JPN_KANJI" width="192">この　ＤＳほんたい　の
-ＷｉーＦｉユーザーじょうほう　を
+Ｗｉ－Ｆｉユーザーじょうほう　を
 ＤＳカード　に　ほぞん　しました
 
-こんごの　ＷｉーＦｉコネクションへの
+こんごの　Ｗｉ－Ｆｉコネクションへの
 せつぞく　は
 この　ＤＳほんたい　を
 おつかい　ください</language>
@@ -641,33 +641,33 @@
 	<row id="dwc_message_0005">
 		<comment>専用ウインドウ</comment>
 		<language name="JPN" width="192">ＤＳほんたい　と　ＤＳカード　の
-ＷｉーＦｉユーザーじょうほう　が
+Ｗｉ－Ｆｉユーザーじょうほう　が
 ちがう　ため
-ＷｉーＦｉコネクション　に
+Ｗｉ－Ｆｉコネクション　に
 せつぞく　できません</language>
 		<language name="JPN_KANJI" width="192">ＤＳほんたい　と　ＤＳカード　の
-ＷｉーＦｉユーザーじょうほう　が
+Ｗｉ－Ｆｉユーザーじょうほう　が
 ちがう　ため
-ＷｉーＦｉコネクション　に
+Ｗｉ－Ｆｉコネクション　に
 せつぞく　できません</language>
 	</row>
 
 	<row id="dwc_message_0006">
 		<comment>専用ウインドウ</comment>
 		<language name="JPN" width="192">ＤＳカード　に　ほぞん　されている
-ＷｉーＦｉユーザーじょうほう　を
+Ｗｉ－Ｆｉユーザーじょうほう　を
 こうしん　しますか？
-ＷｉーＦｉユーザーじょうほう　を
+Ｗｉ－Ｆｉユーザーじょうほう　を
 こうしん　すると
-ＷｉーＦｉコネクションで　これまで
+Ｗｉ－Ｆｉコネクションで　これまで
 おつかいに　なっていた　データは
 うしなわれてしまいます</language>
 		<language name="JPN_KANJI" width="192">ＤＳカード　に　ほぞん　されている
-ＷｉーＦｉユーザーじょうほう　を
+Ｗｉ－Ｆｉユーザーじょうほう　を
 こうしん　しますか？
-ＷｉーＦｉユーザーじょうほう　を
+Ｗｉ－Ｆｉユーザーじょうほう　を
 こうしん　すると
-ＷｉーＦｉコネクションで　これまで
+Ｗｉ－Ｆｉコネクションで　これまで
 おつかいに　なっていた　データは
 うしなわれてしまいます</language>
 	</row>
@@ -692,22 +692,22 @@
 
 	<row id="dwc_message_0008">
 		<comment>進行ウインドウ</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクション　に　せつぞく
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　に　せつぞく
 しています。しばらく　おまち　ください</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクション　に　せつぞく
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　に　せつぞく
 しています。しばらく　おまち　ください</language>
 	</row>
 
 	<row id="dwc_message_0009">
 		<comment>専用ウインドウ</comment>
 		<language name="JPN" width="192">おつかいの　なまえ　では
-ＷｉーＦｉコネクション　を
+Ｗｉ－Ｆｉコネクション　を
 りよう　できません
 
 なまえを　へんこう　して
 せつぞく　しなおして　ください</language>
 		<language name="JPN_KANJI" width="192">おつかいの　なまえ　では
-ＷｉーＦｉコネクション　を
+Ｗｉ－Ｆｉコネクション　を
 りよう　できません
 
 なまえを　へんこう　して
@@ -716,25 +716,25 @@
 
 	<row id="dwc_message_0010">
 		<comment>進行ウインドウ</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクション　から
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだん　しても　よろしい　ですか？</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクション　から
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだん　しても　よろしい　ですか？</language>
 	</row>
 
 	<row id="dwc_message_0011">
 		<comment>進行ウインドウ</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクション　から
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだん　しています</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクション　から
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだん　しています</language>
 	</row>
 
 	<row id="dwc_message_0012">
 		<comment>進行ウインドウ</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクション　から
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだん　しました</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクション　から
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだん　しました</language>
 	</row>
 
@@ -774,12 +774,12 @@
 	</row>
 
 	<row id="dwc_lobby_0001">
-		<comment>「ＷｉーＦｉひろば」での通信エラーメッセージ
+		<comment>「Ｗｉ－Ｆｉひろば」での通信エラーメッセージ
 プラチナで追加。</comment>
-		<language name="JPN" font=" 1:small" width="216">ＷｉーＦｉひろばで　つうしんエラーが
+		<language name="JPN" font=" 1:small" width="216">Ｗｉ－Ｆｉひろばで　つうしんエラーが
 はっせい　しました
 （[2:04:５桁:0]）</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ＷｉーＦｉひろばで　つうしんエラーが
+		<language name="JPN_KANJI" font=" 1:small" width="216">Ｗｉ－Ｆｉひろばで　つうしんエラーが
 はっせい　しました
 （[2:04:５桁:0]）</language>
 	</row>
