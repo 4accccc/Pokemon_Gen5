@@ -793,6 +793,26 @@
 		<language name="JPN_KANJI" width="216">メイド</language>
 	</row>
 
+	<row id="MSG_TRTYPE_BCHAMP">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_CHAMPION">
+		<language name="JPN" width="216">チャンピオン</language>
+		<language name="JPN_KANJI" width="216">チャンピオン</language>
+	</row>
+
+	<row id="MSG_TRTYPE_CYCLINGM">
+		<language name="JPN" width="216">サイクリング</language>
+		<language name="JPN_KANJI" width="216">サイクリング</language>
+	</row>
+
+	<row id="MSG_TRTYPE_CYCLINGW">
+		<language name="JPN" width="216">サイクリング</language>
+		<language name="JPN_KANJI" width="216">サイクリング</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

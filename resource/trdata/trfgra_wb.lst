@@ -83,3 +83,7 @@ trwb_swimmerm,PTL_SEX_MALE
 trwb_swimmerw,PTL_SEX_FEMALE
 trwb_police,PTL_SEX_MALE
 trwb_maid,PTL_SEX_FEMALE
+trwb_bchamp,PTL_SEX_MALE
+trwb_champion,PTL_SEX_MALE
+trwb_cyclingm,PTL_SEX_MALE
+trwb_cyclingw,PTL_SEX_FEMALE

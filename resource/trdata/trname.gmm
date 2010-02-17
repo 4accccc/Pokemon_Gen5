@@ -2388,6 +2388,26 @@
 		<language name="JPN_KANJI" width="216">ブラッカー</language>
 	</row>
 
+	<row id="bchamp_01">
+		<language name="JPN" width="216">サトシ</language>
+		<language name="JPN_KANJI" width="216">サトシ</language>
+	</row>
+
+	<row id="champion_01">
+		<language name="JPN" width="216">サトシ</language>
+		<language name="JPN_KANJI" width="216">サトシ</language>
+	</row>
+
+	<row id="cyclingm_01">
+		<language name="JPN" width="216">サトシ</language>
+		<language name="JPN_KANJI" width="216">サトシ</language>
+	</row>
+
+	<row id="cyclingw_01">
+		<language name="JPN" width="216">ハルカ</language>
+		<language name="JPN_KANJI" width="216">ハルカ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
