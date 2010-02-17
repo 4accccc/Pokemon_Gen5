@@ -13,6 +13,8 @@
 #include "field/fieldmap_call.h"  //FIELDMAP_Create/FIELDMAP_Main/FIELDMAP_Delete
 
 #include "field/zonedata.h" //ZONEDATA_IsUnionRoom
+#include "system/net_err.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -95,7 +97,8 @@ static GFL_PROC_RESULT FieldMapProcInit
     {
       GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
       u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
-      if(ZONEDATA_IsUnionRoom(zone_id) == FALSE && ZONEDATA_IsColosseum(zone_id) == FALSE){
+      if(ZONEDATA_IsUnionRoom(zone_id) == FALSE && ZONEDATA_IsColosseum(zone_id) == FALSE
+          && GFL_NET_IsInit() == FALSE && NetErr_App_CheckError() == NET_ERR_CHECK_NONE){
         if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE){
           if(GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
             OS_TPrintf("常時通信モードの為、サーチ起動\n");
