@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-01-22T18:55:06"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T18:50:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -419,13 +419,13 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]との　きろく</language>
 	</row>
 
-	<row id="msg_finfo_backmsg">
+	<row id="msg_finfo_backmsg" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ともだちとの記録</comment>
 		<language name="JPN" width="216">[BD:02:Ｘセンタリング]Ａ：まえの　がめんに　もどります</language>
 		<language name="JPN_KANJI" width="216">[BD:02:Ｘセンタリング]Ａ：まえの　がめんに　もどります</language>
 	</row>
 
-	<row id="msg_finfo_grp01">
+	<row id="msg_finfo_grp01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ともだちとの記録</comment>
 		<language name="JPN" font=" 1:small" width="216">グループ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">グループ</language>
@@ -510,147 +510,147 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]／[2:01:２桁:1]／[2:01:２桁:2]</language>
 	</row>
 
-	<row id="msg_wifi_note_36">
+	<row id="msg_wifi_note_36" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バトルタワーの項目表示
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">バトルタワー</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">バトルタワー</language>
 	</row>
 
-	<row id="msg_wifi_note_37">
+	<row id="msg_wifi_note_37" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バトルファクトリーの項目表示
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">バトルファクトリー</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">バトルファクトリー</language>
 	</row>
 
-	<row id="msg_wifi_note_38">
+	<row id="msg_wifi_note_38" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バトルキャッスルの項目表示
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">バトルキャッスル</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">バトルキャッスル</language>
 	</row>
 
-	<row id="msg_wifi_note_39">
+	<row id="msg_wifi_note_39" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バトルステージの項目表示
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">バトルステージ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">バトルステージ</language>
 	</row>
 
-	<row id="msg_wifi_note_40">
+	<row id="msg_wifi_note_40" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バトルルーレットの項目表示
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">バトルルーレット</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">バトルルーレット</language>
 	</row>
 
-	<row id="msg_finfo_frprm_win01">
+	<row id="msg_finfo_frprm_win01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>「ぜんかい」の項目
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">ぜんかい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ぜんかい</language>
 	</row>
 
-	<row id="msg_finfo_frprm_win02">
+	<row id="msg_finfo_frprm_win02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>「げんざい」の項目
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">げんざい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">げんざい</language>
 	</row>
 
-	<row id="msg_finfo_frprm_win03">
+	<row id="msg_finfo_frprm_win03" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>「さいこう」の項目
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">さいこう</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">さいこう</language>
 	</row>
 
-	<row id="msg_finfo_frprm_wnum">
+	<row id="msg_finfo_frprm_wnum" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>連勝数
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]れんしょう</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]れんしょう</language>
 	</row>
 
-	<row id="msg_wifi_note_43">
+	<row id="msg_wifi_note_43" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バトルファクトリーの「レベル５０」の項目
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">レベル５０</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">レベル５０</language>
 	</row>
 
-	<row id="msg_wifi_note_44">
+	<row id="msg_wifi_note_44" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バトルファクトリーの「オープンレベル」の項目
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">オープンレベル</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">オープンレベル</language>
 	</row>
 
-	<row id="msg_wifi_note_45">
+	<row id="msg_wifi_note_45" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バトルファクトリーの「レンタル／こうかん」の項目
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">レンタル／こうかん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">レンタル／こうかん</language>
 	</row>
 
-	<row id="msg_wifi_note_46">
+	<row id="msg_wifi_note_46" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バトルキャッスルの「キャッスルポイント」の項目
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:]キャッスルポイント</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:]キャッスルポイント</language>
 	</row>
 
-	<row id="msg_wifi_note_47">
+	<row id="msg_wifi_note_47" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バトルステージの最後に挑戦したポケモン名
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">[1:01:ポケモン種族名:0]の　きろく</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:01:ポケモン種族名:0]の　きろく</language>
 	</row>
 
-	<row id="msg_wifi_note_49">
+	<row id="msg_wifi_note_49" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>レンタル、交換回数
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:][2:03:４桁:0]かい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:][2:03:４桁:0]かい</language>
 	</row>
 
-	<row id="msg_wifi_note_50">
+	<row id="msg_wifi_note_50" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>キャッスルポイント数
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:][2:03:４桁:0]ＣＰ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:][2:03:４桁:0]ＣＰ</language>
 	</row>
 
-	<row id="msg_wifi_note_51">
+	<row id="msg_wifi_note_51" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>キャッスルの部屋クリア数
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]れんしょう</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]れんしょう</language>
 	</row>
 
-	<row id="msg_wifi_note_57">
+	<row id="msg_wifi_note_57" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ルーレットの部屋クリア数
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]ゲーム　クリア</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]ゲーム　クリア</language>
 	</row>
 
-	<row id="msg_wifi_note_52">
+	<row id="msg_wifi_note_52" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ミニゲームの項目表示
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">ひろばゲームのかいすう</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ひろばゲームのかいすう</language>
 	</row>
 
-	<row id="msg_wifi_note_53">
+	<row id="msg_wifi_note_53" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ミニゲームの項目表示
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">\[1:40:広場ミニゲーム:0\]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">\[1:40:広場ミニゲーム:0\]</language>
 	</row>
 
-	<row id="msg_wifi_note_56">
+	<row id="msg_wifi_note_56" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ミニゲームを遊んだ回数
 プラチナで追加。</comment>
 		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
