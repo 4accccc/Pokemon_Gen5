@@ -412,3 +412,28 @@ VMCMD_RESULT EvCmdHobbyName( VMHANDLE *core, void *wk )
   WORDSET_RegisterHobbyName( wordset, bufIdx, hobbyID ); 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------------
+/**
+ * @brief Gパワー名をバッファに展開する 
+ *
+ * @param core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT:
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdGPowerName( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
+  u16            idx      = VMGetU8( core );
+  u16            gpower   = SCRCMD_GetVMWorkValue( core, work );
+  SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET*       wordset  = SCRIPT_GetWordSet( sc );
+
+  WORDSET_RegisterGPowerName( wordset, idx, gpower );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
