@@ -5,6 +5,7 @@
 #define DOOR_ID_D01R0101_D01R0201_EXIT01  0
 #define DOOR_ID_D01R0101_D01R0201_EXIT02  1
 #define DOOR_ID_D01R0101_C01_EXIT01       2
+#define DOOR_ID_D01R0101_D01R0201_EXIT03  3
 
 #endif //ZONE_D01R0101_EVD_H
 //このファイルは../data/d01r0101.mevから自動生成されました
@@ -25,6 +26,7 @@
 #define TR_MINI_02                        11
 #define D01R0101_HAKAIM_01                12
 #define D01R0101_ITEM_01                  13
+#define D01R0101_ROCK_01                  14
 
 #endif //ZONE_D01R0101_EVC_H
 //このファイルは../data/d01r0101.mevから自動生成されました
