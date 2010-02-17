@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-17T19:25:07"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-02-17T20:22:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -439,28 +439,28 @@
 	</row>
 
 	<row id="msg_debug_suginaka_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">T02：ゲーチスの演説イベント</language>
-		<language name="JPN_KANJI" width="256">T02：ゲーチスの演説イベント</language>
+		<language name="JPN" width="256">Ｔ０２ゲーチス演説</language>
+		<language name="JPN_KANJI" width="256">Ｔ０２ゲーチス演説</language>
 	</row>
 
 	<row id="msg_debug_suginaka_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">D03R0101：チャンピオンイベント</language>
-		<language name="JPN_KANJI" width="256">D03R0101：チャンピオンイベント</language>
+		<language name="JPN" width="256">Ｄ０３Ｒ０１０１イベント</language>
+		<language name="JPN_KANJI" width="256">Ｄ０３Ｒ０１０１イベント</language>
 	</row>
 
 	<row id="msg_debug_suginaka_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">C03：ライバルの案内イベント</language>
-		<language name="JPN_KANJI" width="256">C03：ライバルの案内イベント</language>
+		<language name="JPN" width="256">Ｃ０３ライバルの案内</language>
+		<language name="JPN_KANJI" width="256">Ｃ０３ライバルの案内</language>
 	</row>
 
 	<row id="msg_debug_suginaka_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">N01R0502：ラストバトル前</language>
-		<language name="JPN_KANJI" width="256">N01R0502：ラストバトル前</language>
+		<language name="JPN" width="256">Ｎ０１Ｒ０５０２ラストバトル前</language>
+		<language name="JPN_KANJI" width="256">Ｎ０１Ｒ０５０２ラストバトル前</language>
 	</row>
 
 	<row id="msg_debug_suginaka_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">N01R0502：ライトストーン所持フラグ</language>
-		<language name="JPN_KANJI" width="256">N01R0502：ライトストーン所持フラグ</language>
+		<language name="JPN" width="256">Ｎ０１Ｒ０５０２ライトストーン</language>
+		<language name="JPN_KANJI" width="256">Ｎ０１Ｒ０５０２ライトストーン</language>
 	</row>
 
 	<row id="msg_debug_murakami_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
