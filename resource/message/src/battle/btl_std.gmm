@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-16T23:49:44"/>
+	<create user="taya" host="W00146" date="2010-02-17T13:24:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1410,6 +1410,12 @@
 		<comment>ダルマモード解除</comment>
 		<language name="JPN" width="216">ダルマモード　かいじょ！</language>
 		<language name="JPN_KANJI" width="216">ダルマモード　解除！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_CombiWazaExe">
+		<comment>合体ワザ成功</comment>
+		<language name="JPN" width="216">２つのわざが　ひとつになった！</language>
+		<language name="JPN_KANJI" width="216">２つのワザが　ひとつになった！</language>
 	</row>
 
 	<flowchart-group-list>
