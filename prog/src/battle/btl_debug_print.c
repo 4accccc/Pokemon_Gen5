@@ -91,6 +91,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_CmdLimitTimeEnable:  return "コマンド選択制限時間が有効 -> %d sec\n";
   case DBGSTR_CLIENT_CmdLimitTimeOver:    return "コマンド選択タイムアップ ... 強制終了フラグON\n";
   case DBGSTR_CLIENT_ForcePokeChange:     return "強制入れ替え %d/%d PosIdx=%d, MemberIdx=%d\n";
+  case DBGSTR_CLIENT_UpdateEnemyBaseHP:   return "相手ポケ基準HP値を更新 ->%d  (Poke=%d)\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 

@@ -120,15 +120,16 @@ struct _BTL_CLIENT {
 
 
   HEAPID heapID;
-  u8  myID;
-  u8  myType;
-  u8  myState;
-  u8  commWaitInfoOn;
-  u8  bagMode;
-  u8  shooterEnergy;
-  u8  escapeClientID;
-  u8  change_escape_code;
-  u8  fForceQuitSelAct;
+  u8   myID;
+  u8   myType;
+  u8   myState;
+  u8   commWaitInfoOn;
+  u8   bagMode;
+  u8   shooterEnergy;
+  u8   escapeClientID;
+  u8   change_escape_code;
+  u8   fForceQuitSelAct;
+  u16  EnemyPokeHPBase;
 
   u8          myChangePokeCnt;
   u8          myPuttablePokeCnt;
@@ -144,6 +145,9 @@ struct _BTL_CLIENT {
 static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd );
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq );
+static void EnemyPokeHPBase_Update( BTL_CLIENT* wk );
+static u32 EnemyPokeHPBase_CheckRatio( BTL_CLIENT* wk );
+static const BTL_POKEPARAM* EnemyPokeHPBase_GetTargetPoke( BTL_CLIENT* wk );
 static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq );
 static BtlRotateDir decideNextDirRandom( BtlRotateDir prevDir );
 static BOOL SubProc_REC_SelectRotation( BTL_CLIENT* wk, int* seq );
@@ -196,8 +200,11 @@ static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_NotifyTimeUp( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
+static BOOL scProc_ACT_MemberOutMsg( BTL_CLIENT* wk, int* seq, const int* args );
+static u16 CheckMemberOutStrID( BTL_CLIENT* wk, u8 clientID, BOOL* fClientArg );
 static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
+static u16 CheckMemberPutStrID( BTL_CLIENT* wk );
 static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_StdSE( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args );
@@ -304,6 +311,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->prevRotateDir = BTL_ROTATEDIR_NONE;
   wk->weather = BTL_WEATHER_NONE;
   wk->viewCore = NULL;
+  wk->EnemyPokeHPBase = 0;
   wk->cmdQue = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER_CMD_QUE) );
 
   wk->myState = 0;
@@ -544,6 +552,8 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
           BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_GAME_TIME, TRUE, TRUE );
         }
       }
+
+      EnemyPokeHPBase_Update( wk );
       return TRUE;
     }
     break;
@@ -559,6 +569,40 @@ static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq )
   }
   return TRUE;
 }
+//------------------------------------------------------------------------------------------------------
+// 敵先頭ポケモンの基準HP値を記録（ポケモン引っ込めメッセージ用：非通信、シングル戦のみ）
+//------------------------------------------------------------------------------------------------------
+static void EnemyPokeHPBase_Update( BTL_CLIENT* wk )
+{
+  const BTL_POKEPARAM* bpp = EnemyPokeHPBase_GetTargetPoke( wk );
+  if( bpp ){
+    wk->EnemyPokeHPBase = BPP_GetValue( bpp, BPP_HP );
+    BTL_N_Printf( DBGSTR_CLIENT_UpdateEnemyBaseHP, wk->EnemyPokeHPBase, BPP_GetID(bpp) );
+  }
+}
+static u32 EnemyPokeHPBase_CheckRatio( BTL_CLIENT* wk )
+{
+  const BTL_POKEPARAM* bpp = EnemyPokeHPBase_GetTargetPoke( wk );
+  if( bpp ){
+    u32 hp = BPP_GetValue( bpp, BPP_HP );
+    if( hp >= wk->EnemyPokeHPBase ){
+      return 0;
+    }
+    return ((wk->EnemyPokeHPBase - hp) * 100) / hp;
+  }
+  return 0;
+}
+static const BTL_POKEPARAM* EnemyPokeHPBase_GetTargetPoke( BTL_CLIENT* wk )
+{
+  if( (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE)
+  &&  (BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_COMM)
+  ){
+    u8 clientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, wk->myID, 0 );
+    return BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, clientID, 0 );
+  }
+  return NULL;
+}
+
 
 
 //------------------------------------------------------------------------------------------------------
@@ -2342,6 +2386,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_CONF_DMG,          scProc_ACT_ConfDamage     },
     { SC_ACT_DEAD,              scProc_ACT_Dead           },
     { SC_ACT_RELIVE,            scProc_ACT_Relive         },
+    { SC_ACT_MEMBER_OUT_MSG,    scProc_ACT_MemberOutMsg   },
     { SC_ACT_MEMBER_OUT,        scProc_ACT_MemberOut      },
     { SC_ACT_MEMBER_IN,         scProc_ACT_MemberIn       },
     { SC_ACT_RANKUP,            scProc_ACT_RankUp         },
@@ -2468,7 +2513,118 @@ restart:
 
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * メンバー引き上げメッセージ表示
+ *
+ * @param   wk
+ * @param   seq
+ * @param   args    [0]:ClientID, [1]:pokeID
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL scProc_ACT_MemberOutMsg( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      BOOL fClientArg;
+      u16  strID;
+      strID = CheckMemberOutStrID( wk, args[0], &fClientArg );
 
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
+      if( fClientArg ){
+        BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
+      }
+      BTLV_STRPARAM_AddArg( &wk->strParam, args[1] );
+
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      ++(*seq);
+    }
+    break;
+
+  case 1:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * メンバー引き上げメッセージ（●●　もどれ！など）のIDを取得
+ *
+ * @param   wk
+ * @param   clientID
+ * @param   fClientArg    [out] 文字列の引数としてクライアントIDを使うケースでTRUEが入る
+ *
+ * @retval  u16   文字列ID
+ */
+//----------------------------------------------------------------------------------
+static u16 CheckMemberOutStrID( BTL_CLIENT* wk, u8 clientID, BOOL* fClientArg )
+{
+  // 自分が対象
+  if( clientID == wk->myID )
+  {
+    *fClientArg = FALSE;
+
+    // シングル＆非通信なら相手に与えたダメージ量に応じてメッセージを変える
+    if( (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE)
+    &&  (BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE)
+    ){
+      u32 dmg_per = EnemyPokeHPBase_CheckRatio( wk );
+      if( dmg_per >= 75 ){
+        return BTL_STRID_STD_BackChange5;
+      }
+      if( dmg_per > 50 ){
+        return BTL_STRID_STD_BackChange4;
+      }
+      if( dmg_per > 25 ){
+        return BTL_STRID_STD_BackChange3;
+      }
+      if( dmg_per > 0 ){
+        return BTL_STRID_STD_BackChange2;
+      }
+      return BTL_STRID_STD_BackChange1;
+    }
+    else
+    {
+      return BTL_STRID_STD_BackChange2;
+    }
+  }
+  // 自分以外が対象
+  else
+  {
+    *fClientArg = TRUE;
+
+    // 味方（マルチ）
+    if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myID, clientID) )
+    {
+      return BTL_STRID_STD_BackChange_Player;
+    }
+    else
+    {
+      if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_COMM ){
+        return BTL_STRID_STD_BackChange_Player;
+      }
+      return BTL_STRID_STD_BackChange_NPC;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * メンバー引き上げアクション
+ *
+ * @param   wk
+ * @param   seq
+ * @param   args
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
 static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ){
@@ -2489,6 +2645,17 @@ static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * メンバー入場アクション
+ *
+ * @param   wk
+ * @param   seq
+ * @param   args
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
 static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 {
   u8 clientID  = args[0];
@@ -2505,8 +2672,18 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 
       if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myID, clientID) )
       {
-        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle );
-        BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+        if( wk->myID == clientID )
+        {
+          u16 strID = CheckMemberPutStrID( wk );
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
+          BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+        }
+        else
+        {
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle_Player );
+          BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+          BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+        }
       }
       else
       {
@@ -2544,11 +2721,50 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
   case 2:
     if( BTLV_WaitMemberChangeAct(wk->viewCore) )
     {
+      EnemyPokeHPBase_Update( wk );
       return TRUE;
     }
     break;
   }
   return FALSE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * メンバー繰り出しメッセージ（ゆけっ！●●など）のIDを取得
+ *
+ * @param   wk
+ *
+ * @retval  u16
+ */
+//----------------------------------------------------------------------------------
+static u16 CheckMemberPutStrID( BTL_CLIENT* wk )
+{
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE )
+  {
+    u8 opponentClientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, wk->myID, 0 );
+    const BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, opponentClientID, 0 );
+
+    fx32 hp_ratio = BPP_GetHPRatio( bpp );
+    OS_TPrintf("MyHPRatio=%08x,   border=%08x,  %08x,  %08x,  %08x\n",
+          hp_ratio, FX32_CONST(77.5), FX32_CONST(55), FX32_CONST(32.5), FX32_CONST(10) );
+
+    if( hp_ratio >= FX32_CONST(77.5) ){
+      return BTL_STRID_STD_PutSingle;
+    }
+    if( hp_ratio >= FX32_CONST(55) ){
+      return BTL_STRID_STD_PutChange1;
+    }
+    if( hp_ratio >= FX32_CONST(32.5) ){
+      return BTL_STRID_STD_PutChange2;
+    }
+    if( hp_ratio >= FX32_CONST(10) ){
+      return BTL_STRID_STD_PutChange3;
+    }
+    return BTL_STRID_STD_PutChange4;
+  }
+  // シングル戦以外は共通
+  return BTL_STRID_STD_PutSingle;
 }
 
 static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args )

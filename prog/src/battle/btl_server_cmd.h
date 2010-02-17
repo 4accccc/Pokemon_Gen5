@@ -80,6 +80,7 @@ typedef enum {
   SC_ACT_RANKDOWN,          ///< yƒ‰ƒ“ƒNƒ_ƒEƒ“Œø‰Êz ››‚Ì~~~‚ª‚³‚ª‚Á‚½I[ ClientID, statusType, volume ]
   SC_ACT_DEAD,              ///< yƒ|ƒPƒ‚ƒ“‚Ð‚ñ‚µz
   SC_ACT_RELIVE,            ///< yƒ|ƒPƒ‚ƒ“¶‚«•Ô‚èz
+  SC_ACT_MEMBER_OUT_MSG,    ///< yƒ|ƒPƒ‚ƒ“‘ÞêƒƒbƒZ[ƒWz[ ClientID, pokeID ]
   SC_ACT_MEMBER_OUT,        ///< yƒ|ƒPƒ‚ƒ“‘Þêz[ ClientID, memberIdx ]
   SC_ACT_MEMBER_IN,         ///< yƒ|ƒPƒ‚ƒ“ƒCƒ“z[ ClientID, posIdx, memberIdx ]
   SC_ACT_WEATHER_DMG,       ///< “VŒó‚É‚æ‚éˆêÄƒ_ƒ[ƒWˆ—[ weather, pokeCnt ]
@@ -407,6 +408,11 @@ static inline void SCQUE_PUT_ACT_Dead( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 static inline void SCQUE_PUT_ACT_RelivePoke( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_ACT_RELIVE, pokeID );
+}
+// yƒAƒNƒVƒ‡ƒ“zƒ|ƒPƒ‚ƒ“‘ÞêƒƒbƒZ[ƒW•\Ž¦
+static inline void SCQUE_PUT_ACT_MemberOutMsg( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_ACT_MEMBER_OUT_MSG, clientID, pokeID );
 }
 // yƒAƒNƒVƒ‡ƒ“zƒ|ƒPƒ‚ƒ“‘Þê
 static inline void SCQUE_PUT_ACT_MemberOut( BTL_SERVER_CMD_QUE* que, BtlPokePos pos )

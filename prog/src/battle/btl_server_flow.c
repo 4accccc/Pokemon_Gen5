@@ -2306,8 +2306,9 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
 static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   u8 pokeID = BPP_GetID( bpp );
-  // @@@ ホントは状況に応じてメッセージ別ける
-  SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_MemberOut1, pokeID );
+  u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+
+  SCQUE_PUT_ACT_MemberOutMsg( wk->que, clientID, pokeID );
 }
 //----------------------------------------------------------------------------------
 /**
