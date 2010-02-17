@@ -480,6 +480,7 @@ VMCMD_RESULT EvCmdSetSpLocationDirect( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdChangeMapReplaceFlag( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK* work = wk;
+  GAMESYS_WORK * gamesys = SCRCMD_WORK_GetGameSysWork( wk );
   GAMEDATA*        gamedata = SCRCMD_WORK_GetGameData( wk );
 
   u16 id = SCRCMD_GetVMWorkValue( core, work );
@@ -490,7 +491,7 @@ VMCMD_RESULT EvCmdChangeMapReplaceFlag( VMHANDLE * core, void *wk )
   if ( direct )
   {
     MAP_MATRIX * pMat = GAMEDATA_GetMapMatrix( gamedata );
-    MAP_MATRIX_CheckReplace( pMat, gamedata );
+    MAP_MATRIX_CheckReplace( pMat, gamesys );
   }
   return VMCMD_RESULT_CONTINUE;
 }

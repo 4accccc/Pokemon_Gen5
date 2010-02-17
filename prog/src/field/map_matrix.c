@@ -314,14 +314,14 @@ static void MapMatrix_Replace(
 /**
  * @brief マップ書き換えチェック＆反映
  * @param	pMat MAP_MATRIX
- * @param gamedata
+ * @param gamesys
  */
 //--------------------------------------------------------------
 void MAP_MATRIX_CheckReplace(
-    MAP_MATRIX *pMat, GAMEDATA * gamedata )
+    MAP_MATRIX *pMat, GAMESYS_WORK * gamesys )
 {
   int count ,data_max;
-  MAPREPLACE_CTRL * ctrl = MAPREPLACE_Create( pMat->heapID, gamedata );
+  MAPREPLACE_CTRL * ctrl = MAPREPLACE_Create( pMat->heapID, gamesys );
   data_max = MAPREPLACE_GetDataMax( ctrl );
   for ( count = 0; count < data_max; count ++ )
   {

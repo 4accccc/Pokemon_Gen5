@@ -50,7 +50,7 @@ typedef struct _MAPREPLACE_CTRL MAPREPLACE_CTRL;
 //--------------------------------------------------------------
 //  マップ置き換え制御：生成
 //--------------------------------------------------------------
-extern MAPREPLACE_CTRL * MAPREPLACE_Create( HEAPID heapID, GAMEDATA * gamedata );
+extern MAPREPLACE_CTRL * MAPREPLACE_Create( HEAPID heapID, GAMESYS_WORK * gamesys );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------

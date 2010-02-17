@@ -13,7 +13,7 @@
 
 #include <gflib.h>
 
-#include "gamesystem/game_data.h"
+#include "gamesystem/gamesystem.h"
 //======================================================================
 //	define
 //======================================================================
@@ -57,7 +57,7 @@ extern void MAP_MATRIX_SetTableSize(
     MAP_MATRIX *pMat, u8 xsize, u8 zsize );
 
 extern void MAP_MATRIX_CheckReplace(
-    MAP_MATRIX *pMat, GAMEDATA * gamedata );
+    MAP_MATRIX *pMat, GAMESYS_WORK * gamework );
 //--------------------------------------------------------------
 /**
  * @brief   MAP_MATRIX‚Ö‚Ìƒ|ƒCƒ“ƒ^Žæ“¾

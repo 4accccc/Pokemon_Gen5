@@ -10,8 +10,9 @@
 #include "system/gfl_use.h"
 #include "arc_def.h"
 
-#include "gamesystem/game_data.h"
+#include "gamesystem/gamesystem.h"
 #include "field/map_matrix.h"
+#include "field/field_comm/intrude_work.h"
 
 #include "arc/fieldmap/map_replace.naix"
 #include "arc/fieldmap/map_replace.h"
@@ -93,7 +94,7 @@ struct _MAPREPLACE_CTRL {
 //======================================================================
 //======================================================================
 
-static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMEDATA * gamedata );
+static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMESYS_WORK * gamesystem );
 static int getReplaceTablePos( MAPREPLACE_TYPE rep_type );
 
 //======================================================================
@@ -109,7 +110,7 @@ static int getReplaceTablePos( MAPREPLACE_TYPE rep_type );
  * @param ctrl  制御ワークへのポインタ
  */
 //--------------------------------------------------------------
-MAPREPLACE_CTRL * MAPREPLACE_Create( HEAPID heapID, GAMEDATA * gamedata )
+MAPREPLACE_CTRL * MAPREPLACE_Create( HEAPID heapID, GAMESYS_WORK * gamesys )
 {
   u16 size;
   MAPREPLACE_CTRL * ctrl = GFL_HEAP_AllocClearMemory( heapID, sizeof(MAPREPLACE_CTRL) );
@@ -125,7 +126,7 @@ MAPREPLACE_CTRL * MAPREPLACE_Create( HEAPID heapID, GAMEDATA * gamedata )
   GF_ASSERT( size % MAPREPLACE_DATASIZE == 0 );
 
   //置き換えオフセット値を事前に算出しておく
-  MAPREPLACE_makeReplaceOffset( &ctrl->offsets, gamedata );
+  MAPREPLACE_makeReplaceOffset( &ctrl->offsets, gamesys );
   return ctrl;
 }
 //--------------------------------------------------------------
@@ -289,18 +290,21 @@ static int getReplaceTablePos( MAPREPLACE_TYPE rep_type )
 /**
  * @brief 書き換え条件オフセットの生成
  * @param offsets
- * @param gamedata
+ * @param gamesystem
  *
  * @todo  イベントフラグの対応を行う必要がある
  */
 //--------------------------------------------------------------
-static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMEDATA * gamedata )
+static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMESYS_WORK * gamesystem )
 {
   int i;
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gamesystem );
   EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
   int season = GAMEDATA_GetSeasonID( gamedata );
+  GAME_COMM_SYS_PTR commsys = GAMESYSTEM_GetGameCommSysPtr( gamesystem );
+  
   offsets->season_pos = season;
-  offsets->version_pos = GetVersion() == VERSION_BLACK? 0 : 1;
+  offsets->version_pos = Intrude_GetRomVersion( commsys ) == VERSION_BLACK? 0 : 1;
   if (offsets->version_pos == 0 )
   {
     offsets->season_ver_pos = 0;

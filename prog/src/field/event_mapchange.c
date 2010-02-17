@@ -1756,7 +1756,7 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
     MAP_MATRIX * matrix = GAMEDATA_GetMapMatrix( gamedata );
     u16 matID = ZONEDATA_GetMatrixID( loc_req->zone_id );
     MAP_MATRIX_Init( matrix, matID, loc_req->zone_id );
-    MAP_MATRIX_CheckReplace( matrix, gamedata );
+    MAP_MATRIX_CheckReplace( matrix, gsys );
   }
 
   //フィールド技 マップ効果
