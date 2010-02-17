@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file  gtsnego_proc.c
+ * @file  wifilogin_proc.c
  * @bfief GTSネゴシエーションProcState
  * @author  k.ohno
  * @date  2009.11.14
@@ -12,6 +12,7 @@
 
 #include "arc_def.h"
 #include "net_app/wifi_login.h"
+#include "net_app/connect_anm.h"
 #include "net/network_define.h"
 #include "net/dwc_rap.h"
 

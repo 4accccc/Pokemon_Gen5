@@ -36,6 +36,7 @@
 #include "wifilogin_local.h"
 //#include "msg/msg_gtsnego.h"
 #include "wifi_login.naix"
+#include "net_app/connect_anm.h"
 
 #include "gsync.naix"
 #include "../gsync/gsync_obj_NANR_LBLDEFS.h"
@@ -83,7 +84,7 @@ struct _WIFILOGIN_DISP_WORK {
   u32 mainchar;
   WIFILOGIN_BG  bg;
   HEAPID heapID;
-
+  CONNECT_BG_PALANM cbp;
   GFL_CLUNIT	*cellUnit;
   GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
   u32 cellRes[CEL_RESOURCE_MAX];
@@ -169,6 +170,9 @@ void WIFILOGIN_DISP_Main(WIFILOGIN_DISP_WORK* pWork)
   if(pWork->bg == WIFILOGIN_BG_DREAM_WORLD){
     dispOamMain(pWork);
   }
+  else{
+    ConnectBGPalAnm_Main(&pWork->cbp);
+  }
 }
 
 void WIFILOGIN_DISP_End(WIFILOGIN_DISP_WORK* pWork)
@@ -176,7 +180,9 @@ void WIFILOGIN_DISP_End(WIFILOGIN_DISP_WORK* pWork)
   if(pWork->bg == WIFILOGIN_BG_DREAM_WORLD){
     dispOamEnd(pWork);
   }
-
+  else{
+    ConnectBGPalAnm_End(&pWork->cbp);
+  }
 
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME2_S, 1, 0);
@@ -299,6 +305,10 @@ static void dispInit(WIFILOGIN_DISP_WORK* pWork)
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
 
+
+    //パレットアニメシステム作成
+    ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_wifi_login_conect_anm_NCLR, pWork->heapID);
+  
     GFL_ARC_CloseDataHandle(p_handle);
 }
 
