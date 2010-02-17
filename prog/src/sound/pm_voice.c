@@ -40,6 +40,7 @@ typedef struct {
 	void*				waveData;
 	u32					waveSize;
 	int					waveRate;
+	void*				waveDataBegin;
 
 	NNSSndWaveOutHandle waveHandle;	
 	NNSSndWaveOutHandle waveHandleSub;	
@@ -332,6 +333,7 @@ static void resetPlayerWork( PMVOICE_PLAYER* voicePlayer )
 	voicePlayer->speedSubDiff = 0;
 	voicePlayer->pan = 64;
 	voicePlayer->subWaveUse = FALSE;
+	voicePlayer->waveDataBegin = 0;
 }
 
 static void initPlayerWork( PMVOICE_PLAYER* voicePlayer )
@@ -365,9 +367,26 @@ static BOOL loadWave( PMVOICE_PLAYER* voicePlayer, int waveNo )
 	if( result == -1 ){ return FALSE; }				// 読み込み失敗
 	if( result != waveFileSize ){ return FALSE; }	// 読み込みサイズ不整合
 
-	voicePlayer->waveSize = waveFileSize;
-	//voicePlayer->waveRate = VOICE_RATE_DEFAULT;
-	voicePlayer->speed = VOICE_SPEED_DEFAULT;
+	{
+		SNDWaveArc*		waveArc = voicePlayer->waveData;
+		SNDWaveData*	waveData = (SNDWaveData*)((u32)waveArc + waveArc->waveOffset[0]);
+		u32 len, begin, end, waveCount;
+		u32 waveDataIdx = 0;
+
+		waveCount = SND_GetWaveDataCount( waveArc );
+    begin = waveArc->waveOffset[0];
+    end = waveArc->fileHeader.fileSize;
+    len = end - begin;
+
+		//OS_Printf("soundData rate %d, speed %d\n", waveData->param.rate, waveData->param.timer );
+
+		voicePlayer->waveDataBegin = (void*)(waveData->samples);
+		voicePlayer->waveSize = len;
+
+		voicePlayer->waveRate = waveData->param.rate;
+		voicePlayer->speed = 
+			(u64)SND_TIMER_CLOCK * 0x8000 / waveData->param.rate / waveData->param.timer;
+	}
 
 	return TRUE;
 }
@@ -388,9 +407,11 @@ static BOOL playWave( PMVOICE_PLAYER* voicePlayer )
 	voicePlayer->waveHandle = NNS_SndWaveOutAllocChannel(voicePlayer->channel);		
 	if( voicePlayer->waveHandle == NNS_SND_WAVEOUT_INVALID_HANDLE ){ return FALSE; } 
 
+	//OS_Printf("soundData play rate %d, speed %d\n", voicePlayer->waveRate, voicePlayer->speed);
+
 	result = NNS_SndWaveOutStart(	voicePlayer->waveHandle,	// 波形再生ハンドル
 									NNS_SND_WAVE_FORMAT_PCM8,	// 波形データフォーマット
-									voicePlayer->waveData,		// 波形データアドレス
+									voicePlayer->waveDataBegin,		// 波形データアドレス
 									FALSE, 0,									// ループフラグ,開始位置
 									voicePlayer->waveSize,		// 波形データサンプル数
 									voicePlayer->waveRate,		// 波形データサンプリングレート
@@ -413,7 +434,7 @@ static BOOL playWave( PMVOICE_PLAYER* voicePlayer )
 
 		result = NNS_SndWaveOutStart(	voicePlayer->waveHandleSub,	// 波形再生ハンドル
 										NNS_SND_WAVE_FORMAT_PCM8,	// 波形データフォーマット
-										voicePlayer->waveData,		// 波形データアドレス
+										voicePlayer->waveDataBegin,		// 波形データアドレス
 										FALSE, 0,									// ループフラグ,開始位置
 										voicePlayer->waveSize,		// 波形データサンプル数
 										voicePlayer->waveRate,		// 波形データサンプリングレート

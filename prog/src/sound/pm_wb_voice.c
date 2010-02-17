@@ -101,7 +101,7 @@ BOOL PMV_CustomVoiceWave(	u32			pokeNo,			// [in]ポケモンナンバー
 //	*rate		= VOICE_RATE_DEFAULT;
   GFL_ARC_LoadData( &pvp, ARCID_POKEVOICE_PARAM, pokeNo );
   *volume = pvp.volume;
-  *rate   = pvp.frequency;
+  //*rate   = pvp.frequency;
 
 	if( userParam == NULL ){ return FALSE; }	// 既存waveのみ使用
 
