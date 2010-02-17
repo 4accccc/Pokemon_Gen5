@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-01-12T20:16:37"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T21:40:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="24" top="179" right="729" bottom="799" maximized="no" rayout="Vertical2">
+	<dialog left="1519" top="254" right="2224" bottom="874" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="785" top="169" right="1258" bottom="567" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -347,57 +347,57 @@ Aボタンを　押してください</language>
 	<row id="IRC_BATTLE_MSG_02">
 		<language name="JPN" width="256">おたがいの　えらんでいる
 たいかいが　ちがいます</language>
-		<language name="JPN_KANJI" width="256">おたがいの　えらんでいる
-たいかいが　ちがいます</language>
+		<language name="JPN_KANJI" width="256">お互いの　選んでいる
+大会が　違います</language>
 	</row>
 
 	<row id="IRC_BATTLE_MSG_03">
 		<language name="JPN" width="256">たいせん　あいてが
 みつかりました！</language>
-		<language name="JPN_KANJI" width="256">たいせん　あいてが
+		<language name="JPN_KANJI" width="256">対戦相手が
 みつかりました！</language>
 	</row>
 
 	<row id="IRC_BATTLE_MSG_04">
-		<language name="JPN" width="256">たいせんを　かいしします！
-Aボタンを　おしてください</language>
-		<language name="JPN_KANJI" width="256">たいせんを　かいしします！
-Aボタンを　おしてください</language>
+		<language name="JPN" width="256">たいせんを　かいし　します！
+Ａボタンを　おしてください</language>
+		<language name="JPN_KANJI" width="256">対戦を　開始します！
+Ａボタンを　押してください</language>
 	</row>
 
 	<row id="IRC_BATTLE_MSG_05">
-		<language name="JPN" width="256">あなたの　かちです。</language>
-		<language name="JPN_KANJI" width="256">あなたの　勝ちです。</language>
+		<language name="JPN" width="256">あなたの　かちです</language>
+		<language name="JPN_KANJI" width="256">あなたの　勝ちです</language>
 	</row>
 
 	<row id="IRC_BATTLE_MSG_06">
-		<language name="JPN" width="256">あなたの　まけです。</language>
-		<language name="JPN_KANJI" width="256">あなたの　負けです。</language>
+		<language name="JPN" width="256">あなたの　まけです</language>
+		<language name="JPN_KANJI" width="256">あなたの　負けです</language>
 	</row>
 
 	<row id="IRC_BATTLE_MSG_07">
-		<language name="JPN" width="256">ひきわけ　です。</language>
-		<language name="JPN_KANJI" width="256">引き分け　です。</language>
+		<language name="JPN" width="256">ひきわけ　です</language>
+		<language name="JPN_KANJI" width="256">引き分け　です</language>
 	</row>
 
 	<row id="IRC_BATTLE_MSG_WAIT_COMM">
-		<language name="JPN" width="256">つうしんたいきちゅう</language>
-		<language name="JPN_KANJI" width="256">つうしんたいきちゅう</language>
+		<language name="JPN" width="256">つうしん　たいきちゅう</language>
+		<language name="JPN_KANJI" width="256">通信待機中</language>
 	</row>
 
 	<row id="IRC_CHAMPIONSHIP_MSG_0">
-		<language name="JPN" width="256">Wi-Fiたいかいに　さんか</language>
-		<language name="JPN_KANJI" width="256">Wi-Fiたいかいに　さんか</language>
+		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいに　さんか</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会に　参加</language>
 	</row>
 
 	<row id="IRC_CHAMPIONSHIP_MSG_1">
 		<language name="JPN" width="256">イベントたいかいに　さんか</language>
-		<language name="JPN_KANJI" width="256">イベントたいかいに　さんか</language>
+		<language name="JPN_KANJI" width="256">イベント大会に　参加</language>
 	</row>
 
 	<row id="IRC_CHAMPIONSHIP_MSG_2">
 		<language name="JPN" width="256">デジタルせんしゅしょうを　みる</language>
-		<language name="JPN_KANJI" width="256">デジタルせんしゅしょうを　みる</language>
+		<language name="JPN_KANJI" width="256">デジタル選手証を　みる</language>
 	</row>
 
 	<row id="IRC_CHAMPIONSHIP_MSG_3">
