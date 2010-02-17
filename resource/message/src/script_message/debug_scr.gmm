@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-02-15T12:30:02"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-02-17T19:25:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="516" top="76" right="1221" bottom="694" maximized="yes" rayout="Vertical2">
+	<dialog left="50" top="224" right="755" bottom="842" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="445"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="1126"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="666"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="3" style="0000" width="548"/>
+		<band id="3" index="4" style="0000" width="147"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -439,18 +439,28 @@
 	</row>
 
 	<row id="msg_debug_suginaka_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｔ０２ゲーチス演説イベント</language>
-		<language name="JPN_KANJI" width="256">Ｔ０２ゲーチス演説イベント</language>
+		<language name="JPN" width="256">T02：ゲーチスの演説イベント</language>
+		<language name="JPN_KANJI" width="256">T02：ゲーチスの演説イベント</language>
 	</row>
 
 	<row id="msg_debug_suginaka_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｄ０３Ｒ０１０１チャンピオンイベント</language>
-		<language name="JPN_KANJI" width="256">Ｄ０３Ｒ０１０１チャンピオンイベント</language>
+		<language name="JPN" width="256">D03R0101：チャンピオンイベント</language>
+		<language name="JPN_KANJI" width="256">D03R0101：チャンピオンイベント</language>
 	</row>
 
 	<row id="msg_debug_suginaka_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｃ０３ライバル誘導イベント</language>
-		<language name="JPN_KANJI" width="256">Ｃ０３ライバル誘導イベント</language>
+		<language name="JPN" width="256">C03：ライバルの案内イベント</language>
+		<language name="JPN_KANJI" width="256">C03：ライバルの案内イベント</language>
+	</row>
+
+	<row id="msg_debug_suginaka_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">N01R0502：ラストバトル前</language>
+		<language name="JPN_KANJI" width="256">N01R0502：ラストバトル前</language>
+	</row>
+
+	<row id="msg_debug_suginaka_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">N01R0502：ライトストーン所持フラグ</language>
+		<language name="JPN_KANJI" width="256">N01R0502：ライトストーン所持フラグ</language>
 	</row>
 
 	<row id="msg_debug_murakami_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
