@@ -218,6 +218,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk )
 static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -233,6 +234,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR43, debugMenuCallProc_Jump },            //ジャンプ（ユニオン等）
   { DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },   //ゾーン選択ジャンプ
   { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},  //四季ジャンプ
+  { DEBUG_FIELD_STR05_b,   debugMenuCallProc_DebugZoneJump }, //ゾーンジャンプ
 
   { DEBUG_FIELD_TITLE_02, (void*)BMPMENULIST_LABEL },       //○フィールド
   { DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },    //座標をみる
@@ -5193,6 +5195,102 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
   return FALSE;
 }
 
+//======================================================================
+//  デバッグメニュー ゾーンジャンプ
+//======================================================================
+#include "debug/debug_zone_jump.h"
+FS_EXTERN_OVERLAY(debug_zone_jump);
+static GMEVENT_RESULT debugMenuZoneJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+//-------------------------------------
+/// デバッグ国連データ作成用ワーク  
+//=====================================
+typedef struct 
+{
+  HEAPID HeapID;
+  GAMESYS_WORK    *gsys;
+  GMEVENT         *Event;
+  FIELDMAP_WORK *FieldWork;
+  PROCPARAM_DEBUG_ZONE_JUMP p_work;
+} DEBUG_ZONE_JUMP_EVENT_WORK;
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ゾーンジャンプ
+ *
+ *  @param  DEBUG_MENU_EVENT_WORK *wk   ワーク
+ *
+ *  @return TRUEイベント継続  FALSE終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  GAMESYS_WORK  *gsys  = p_wk->gmSys;
+  GMEVENT       *event    = p_wk->gmEvent;
+  FIELDMAP_WORK *fieldWork  = p_wk->fieldWork;
+  HEAPID heapID = HEAPID_PROC;
+  DEBUG_ZONE_JUMP_EVENT_WORK *evt_work;
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
+
+  //イベントチェンジ
+  GMEVENT_Change( event, debugMenuZoneJump, sizeof(DEBUG_ZONE_JUMP_EVENT_WORK) );
+  evt_work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( evt_work, sizeof(DEBUG_ZONE_JUMP_EVENT_WORK) );
+  
+  //ワーク設定
+  evt_work->gsys = gsys;
+  evt_work->Event = event;
+  evt_work->FieldWork = fieldWork;
+  evt_work->HeapID = heapID;
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグゾーンジャンプイベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuZoneJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_CALL_PROC,
+    SEQ_PROC_RESULT,
+    SEQ_PROC_END,
+  };
+
+  DEBUG_ZONE_JUMP_EVENT_WORK *evt_work = p_wk_adrs;
+
+  switch(*p_seq )
+  { 
+  case SEQ_CALL_PROC:
+    GMEVENT_CallEvent( evt_work->Event, EVENT_FieldSubProc( evt_work->gsys, evt_work->FieldWork,
+        FS_OVERLAY_ID(debug_zone_jump), &ProcData_DebugZoneJump, &evt_work->p_work ) );
+    *p_seq  = SEQ_PROC_RESULT;
+    break;
+  case SEQ_PROC_RESULT:
+    if ( evt_work->p_work.Ret )
+    {
+      GMEVENT * mapchange_event;
+      OS_Printf("ゾーンID　%d にジャンプ\n", evt_work->p_work.ZoneID);
+      mapchange_event = DEBUG_EVENT_QuickChangeMapDefaultPos( evt_work->gsys, evt_work->FieldWork, evt_work->p_work.ZoneID );
+      GMEVENT_ChangeEvent( p_event, mapchange_event );
+    }
+    else *p_seq  = SEQ_PROC_END;
+    break;
+  case SEQ_PROC_END:
+    return GMEVENT_RES_FINISH;
+    break;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
 
 //======================================================================
 //  デバッグメニュー　図鑑
