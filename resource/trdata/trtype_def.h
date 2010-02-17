@@ -3,7 +3,7 @@
  * @file	trtype_def.h
  * @bfief	トレーナータイプ定義
  * @author	TrainerDataConverter
- * @date	2010-02-09
+ * @date	2010-02-16
  * @author	このファイルは、コンバータが吐き出したファイルです
 */
 //============================================================================================
@@ -93,4 +93,9 @@
 #define	TRTYPE_BIGFOUR2    ( 79 )    //してんのう
 #define	TRTYPE_BIGFOUR4    ( 80 )    //してんのう
 #define	TRTYPE_SAGE1    ( 81 )    //プラズマだん
-#define	TRTYPE_MAX	( 82 )
+#define	TRTYPE_RAIL    ( 82 )    //てつどういん
+#define	TRTYPE_SWIMMERM    ( 83 )    //かいパンやろう
+#define	TRTYPE_SWIMMERW    ( 84 )    //ビキニのおねえさん
+#define	TRTYPE_POLICE    ( 85 )    //おまわりさん
+#define	TRTYPE_MAID    ( 86 )    //メイド
+#define	TRTYPE_MAX	( 87 )
