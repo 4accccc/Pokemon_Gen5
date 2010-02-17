@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-02T21:09:14"/>
+	<create user="taya" host="W00146" date="2010-02-17T23:59:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -542,11 +542,11 @@
 	</row>
 
 	<row id="DBGF_ITEM_SUBWAY_OFF">
-		<language name="JPN" width="256">オフ</language>
+		<language name="JPN" width="256">－</language>
 	</row>
 
 	<row id="DBGF_ITEM_SUBWAY_ON">
-		<language name="JPN" width="256">オン</language>
+		<language name="JPN" width="256">○</language>
 	</row>
 
 	<row id="DBGF_ITEM_REC_OFF">
