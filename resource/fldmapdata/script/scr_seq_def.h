@@ -2454,6 +2454,8 @@
  *  @retval SCR_WILD_BTL_RET_CAPTURE  捕まえた
  *  @retval SCR_WILD_BTL_RET_ESCAPE   逃げた
  *  @retval SCR_WILD_BTL_RET_WIN      倒した
+ *  
+ *  @note このコマンドは使用場所をリストアップしています。使う場合は斉藤マに使用場所を教えてください。
  */
 //--------------------------------------------------------------
 #define  _WILD_RETRY_CHECK(  ret_wk ) \
