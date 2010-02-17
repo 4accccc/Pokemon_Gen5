@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2009-12-24T19:39:37"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T12:45:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -606,7 +606,7 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">ポケモン　グローバル　こうかん
 こうしょうを　かいし　しますか？</language>
 		<language name="JPN_KANJI" width="256">ポケモン　グローバル　交換
-交渉を　開始　しますか？</language>
+交渉を　開始しますか？</language>
 	</row>
 
 	<row id="msg_gterminal_gtsnego_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
