@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T22:15:30"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T13:01:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="26" top="171" right="731" bottom="792" maximized="no" rayout="Vertical2">
+	<dialog left="1491" top="283" right="2196" bottom="904" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -353,11 +353,11 @@
 というわけで　トレーナーさん▼
 アナタ　いろんな　ひとと
 ポケモンこうかん　してますカ？</language>
-		<language name="JPN_KANJI" width="256">ポケモン交換　で
+		<language name="JPN_KANJI" width="256">ポケモン交換で
 世界と　つながる！▽
 世界は　ひろがる！▼
-いろんな　人　と
-ポケモン交換　すれば▽
+いろんな　人と
+ポケモン交換すれば▽
 アナタ　ハッピーに　なれるヨ！▼
 なぜなら　わたしが
 いい　ものを　あげるからネ！▼
@@ -389,7 +389,7 @@
 ポケモンこうかん　したか▽
 わたしが　チェックするヨ！▼</language>
 		<language name="JPN_KANJI" width="256">おう　いいですネ▼
-では　どれだけ　おおくの　人と
+では　どれだけ　多くの　人と
 ポケモン交換　したか▽
 わたしが　チェックするヨ！▼</language>
 	</row>
