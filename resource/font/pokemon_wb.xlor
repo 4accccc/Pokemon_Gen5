@@ -3,9 +3,9 @@
 
 <letter-order version="1.0">
 	<head>
-		<create user="hatamoto_minoru" date="2005-02-18T10:51:13" />
-		<title>Japanese Level 1 (JIS X 0208)</title>
-		<comment>JIS半角文字と第一水準漢字までのJIS全角文字をJISコード順に出力します</comment>
+		<create user="masao taya" date="2010-02-17T18:09:13" />
+		<title>pokemon wb japanese</title>
+		<comment>海外版も含めたDP以降の全文字種＋中学生漢字＋ハングル</comment>
 	</head>
 
 	<body>„
