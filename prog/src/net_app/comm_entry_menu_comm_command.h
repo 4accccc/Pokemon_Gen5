@@ -38,9 +38,9 @@ enum COLOSSEUM_CMD{
 extern void CommEntryMenu_AddCommandTable(COMM_ENTRY_MENU_PTR em);
 extern void CommEntryMenu_DelCommandTable(void);
 
-extern BOOL CemSend_Entry(const MYSTATUS *myst, BOOL force_entry);
-extern BOOL CemSend_EntryOK(NetID send_id);
-extern BOOL CemSend_EntryNG(NetID send_id);
-extern BOOL CemSend_GameStart(void);
-extern BOOL CemSend_GameCancel(void);
-extern BOOL CemSend_MemberInfo(const ENTRYMENU_MEMBER_INFO *member_info, u8 send_bit);
+extern BOOL CemSend_Entry(const MYSTATUS *myst, BOOL force_entry, BOOL comm_mp);
+extern BOOL CemSend_EntryOK(NetID send_id, BOOL comm_mp);
+extern BOOL CemSend_EntryNG(NetID send_id, BOOL comm_mp);
+extern BOOL CemSend_GameStart(BOOL comm_mp);
+extern BOOL CemSend_GameCancel(BOOL comm_mp);
+extern BOOL CemSend_MemberInfo(const ENTRYMENU_MEMBER_INFO *member_info, u8 send_bit, BOOL comm_mp);

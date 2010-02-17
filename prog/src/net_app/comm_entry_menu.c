@@ -185,7 +185,7 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   u8 member_info_recv;                          ///<TRUE:参加者情報を受信した
   u8 game_start;                                ///<TRUE:ゲーム開始受信
   u8 game_cancel;                               ///<TRUE:ゲームキャンセル受信
-  u8 padding;
+  u8 mp_mode;                                   ///<TRUE:MP通信  FALSE:DS通信
   
   u8 min_num;         ///<最少人数
   u8 max_num;         ///<最大人数
@@ -364,7 +364,11 @@ COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fie
 
   GFL_NET_SetNoChildErrorCheck(FALSE);  //子機が勝手にいなくなってもエラーとしない
   CommEntryMenu_AddCommandTable(em);
-
+  
+  if(game_type == COMM_ENTRY_GAMETYPE_MUSICAL){
+    em->mp_mode = TRUE;
+  }
+  
   return em;
 }
 
@@ -513,6 +517,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
   case _SEQ_FIRST_CONNECT_WAIT:
     if(GFL_NET_SystemGetConnectNum() > 1){
       if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
+        OS_TPrintf("ネゴシエーション送信\n");
         em->seq++;
       }
     }
@@ -528,7 +533,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     }
     break;
   case _SEQ_ENTRY_SEND:
-    if(CemSend_Entry(&em->mine_mystatus, TRUE) == TRUE){
+    if(CemSend_Entry(&em->mine_mystatus, TRUE, em->mp_mode) == TRUE){
       em->seq++;
     }
     break;
@@ -577,13 +582,13 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     }
     break;
   case _SEQ_SEND_GAMESTART:
-    if(CemSend_GameStart() == TRUE){
+    if(CemSend_GameStart(em->mp_mode) == TRUE){
       em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
       em->seq = _SEQ_FINISH;
     }
     break;
   case _SEQ_SEND_GAMECANCEL:
-    if(CemSend_GameCancel() == TRUE){
+    if(CemSend_GameCancel(em->mp_mode) == TRUE){
       em->entry_result = COMM_ENTRY_RESULT_CANCEL;
       em->seq = _SEQ_FINISH;
     }
@@ -760,7 +765,7 @@ static BOOL _Update_ChildParentConnect(COMM_ENTRY_MENU_PTR em)
     em->seq++;
     break;
   case _SEQ_FORCE_ENTRY_SEND:
-    if(CemSend_Entry(&em->mine_mystatus, TRUE) == TRUE){
+    if(CemSend_Entry(&em->mine_mystatus, TRUE, em->mp_mode) == TRUE){
       em->seq++;
     }
     break;
@@ -861,7 +866,7 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
     break;
   case _SEQ_PARENT_ENTRY:
     em->entry_parent_answer = ENTRY_PARENT_ANSWER_NULL;
-    if(CemSend_Entry(&em->mine_mystatus, FALSE) == TRUE){
+    if(CemSend_Entry(&em->mine_mystatus, FALSE, em->mp_mode) == TRUE){
       em->seq = _SEQ_PARENT_ANSWER_WAIT;
     }
     break;
@@ -948,12 +953,12 @@ static void _SendUpdate_Parent(COMM_ENTRY_MENU_PTR em)
   
   for(net_id = 0; net_id < COMM_ENTRY_USER_MAX; net_id++){
     if(em->send_bit_entry_ok & (1 << net_id)){
-      if(CemSend_EntryOK(net_id) == TRUE){
+      if(CemSend_EntryOK(net_id, em->mp_mode) == TRUE){
         em->send_bit_entry_ok ^= 1 << net_id;
       }
     }
     else if(em->send_bit_entry_ng & (1 << net_id)){
-      if(CemSend_EntryNG(net_id) == TRUE){
+      if(CemSend_EntryNG(net_id, em->mp_mode) == TRUE){
         em->send_bit_entry_ng ^= 1 << net_id;
       }
     }
@@ -962,7 +967,7 @@ static void _SendUpdate_Parent(COMM_ENTRY_MENU_PTR em)
   if(em->update_member_info == TRUE && em->member_info_sending == FALSE){
     u8 send_bit = _MemberInfoSendBufCreate(em);
     if(send_bit > 1){
-      if(CemSend_MemberInfo(&em->member_info, send_bit) == TRUE){
+      if(CemSend_MemberInfo(&em->member_info, send_bit, em->mp_mode) == TRUE){
         em->update_member_info = FALSE;
         em->member_info_sending = TRUE;
       }
@@ -1833,7 +1838,7 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
     if( GFL_NET_HANDLE_IsNegotiation( GFL_NET_HANDLE_GetCurrentHandle() ) == TRUE ){
       OS_TPrintf("ネゴシエーション完了\n");
       em->entry_parent_answer = ENTRY_PARENT_ANSWER_NULL;
-      if(CemSend_Entry(&em->mine_mystatus, FALSE) == TRUE){
+      if(CemSend_Entry(&em->mine_mystatus, FALSE, em->mp_mode) == TRUE){
         psl->local_seq = _SEQ_PARENT_ANSWER_WAIT;
         OS_TPrintf("親にエントリーを送信\n");
       }

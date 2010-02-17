@@ -135,10 +135,11 @@ static void _CemRecv_Entry(const int netID, const int size, const void* pData, v
  * データ送信：親へエントリーを通知
  * @param   mystatus      MYSTATUS
  * @param   force_entry   TRUE:強制参加   FALSE:親に参加していいか判断してもらう
+ * @param   BOOL    TRUE:MP通信　FALSE:DS通信
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL CemSend_Entry(const MYSTATUS *myst, BOOL force_entry)
+BOOL CemSend_Entry(const MYSTATUS *myst, BOOL force_entry, BOOL comm_mp)
 {
   CEM_SEND_ENTRY send_entry;
   
@@ -147,8 +148,14 @@ BOOL CemSend_Entry(const MYSTATUS *myst, BOOL force_entry)
   OS_GetMacAddress(send_entry.mac_address);
   send_entry.force_entry = force_entry;
   
-  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
-    ENTRYMENU_CMD_ENTRY, sizeof(CEM_SEND_ENTRY), &send_entry, FALSE, FALSE, FALSE);
+  if(comm_mp == TRUE){
+    return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+      ENTRYMENU_CMD_ENTRY, sizeof(CEM_SEND_ENTRY), &send_entry, FALSE, FALSE, FALSE);
+  }
+  else{
+    return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
+      ENTRYMENU_CMD_ENTRY, sizeof(CEM_SEND_ENTRY), &send_entry, FALSE, FALSE, FALSE);
+  }
 }
 
 //==============================================================================
@@ -169,20 +176,29 @@ static void _CemRecv_EntryOK(const int netID, const int size, const void* pData,
 {
   COMM_ENTRY_MENU_PTR em = pWork;
 
+  OS_TPrintf("Recv : EntryOK\n");
   CommEntryMenu_SetEntryAnswer(em, ENTRY_PARENT_ANSWER_OK);
 }
 
 //==================================================================
 /**
- * データ送信：エントリーOK
+ * データ送信：エントリーOK(親機用)
  * @param   send_id   送信先
+ * @param   BOOL    TRUE:MP通信　FALSE:DS通信
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL CemSend_EntryOK(NetID send_id)
+BOOL CemSend_EntryOK(NetID send_id, BOOL comm_mp)
 {
-  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_id, 
-    ENTRYMENU_CMD_ENTRY_OK, 0, NULL, FALSE, FALSE, FALSE);
+  OS_TPrintf("Send : EntryOK net_id=%d\n", send_id);
+  if(comm_mp == TRUE){
+    return GFL_NET_SendDataEx(GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER), send_id, 
+      ENTRYMENU_CMD_ENTRY_OK, 0, NULL, FALSE, FALSE, FALSE);
+  }
+  else{
+    return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_id, 
+      ENTRYMENU_CMD_ENTRY_OK, 0, NULL, FALSE, FALSE, FALSE);
+  }
 }
 
 //==============================================================================
@@ -208,15 +224,22 @@ static void _CemRecv_EntryNG(const int netID, const int size, const void* pData,
 
 //==================================================================
 /**
- * データ送信：エントリーNG
+ * データ送信：エントリーNG(親機用)
  * @param   send_id   送信先
+ * @param   BOOL    TRUE:MP通信　FALSE:DS通信
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL CemSend_EntryNG(NetID send_id)
+BOOL CemSend_EntryNG(NetID send_id, BOOL comm_mp)
 {
-  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_id, 
-    ENTRYMENU_CMD_ENTRY_NG, 0, NULL, FALSE, FALSE, FALSE);
+  if(comm_mp == TRUE){
+    return GFL_NET_SendDataEx(GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER), send_id, 
+      ENTRYMENU_CMD_ENTRY_NG, 0, NULL, FALSE, FALSE, FALSE);
+  }
+  else{
+    return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_id, 
+      ENTRYMENU_CMD_ENTRY_NG, 0, NULL, FALSE, FALSE, FALSE);
+  }
 }
 
 //==============================================================================
@@ -242,14 +265,21 @@ static void _CemRecv_GameStart(const int netID, const int size, const void* pDat
 
 //==================================================================
 /**
- * データ送信：ゲーム開始を通知
+ * データ送信：ゲーム開始を通知(親機用)
+ * @param   BOOL    TRUE:MP通信　FALSE:DS通信
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL CemSend_GameStart(void)
+BOOL CemSend_GameStart(BOOL comm_mp)
 {
-  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    ENTRYMENU_CMD_GAME_START, 0, NULL);
+  if(comm_mp == TRUE){
+    return GFL_NET_SendData(GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER), 
+      ENTRYMENU_CMD_GAME_START, 0, NULL);
+  }
+  else{
+    return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+      ENTRYMENU_CMD_GAME_START, 0, NULL);
+  }
 }
 
 //==============================================================================
@@ -275,14 +305,21 @@ static void _CemRecv_GameCancel(const int netID, const int size, const void* pDa
 
 //==================================================================
 /**
- * データ送信：ゲーム中止を通知
+ * データ送信：ゲーム中止を通知(親機用)
+ * @param   BOOL    TRUE:MP通信　FALSE:DS通信
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL CemSend_GameCancel(void)
+BOOL CemSend_GameCancel(BOOL comm_mp)
 {
-  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    ENTRYMENU_CMD_GAME_CANCEL, 0, NULL);
+  if(comm_mp == TRUE){
+    return GFL_NET_SendData(GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER), 
+      ENTRYMENU_CMD_GAME_CANCEL, 0, NULL);
+  }
+  else{
+    return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+      ENTRYMENU_CMD_GAME_CANCEL, 0, NULL);
+  }
 }
 
 //==============================================================================
@@ -317,16 +354,24 @@ static void _CemRecv_MemberInfo(const int netID, const int size, const void* pDa
 
 //==================================================================
 /**
- * データ送信：参加者情報
+ * データ送信：参加者情報(親機用)
  * @param   member_info   
+ * @param   BOOL    TRUE:MP通信　FALSE:DS通信
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL CemSend_MemberInfo(const ENTRYMENU_MEMBER_INFO *member_info, u8 send_bit)
+BOOL CemSend_MemberInfo(const ENTRYMENU_MEMBER_INFO *member_info, u8 send_bit, BOOL comm_mp)
 {
   OS_TPrintf("SEND:参加者情報 send_bit = %d\n", send_bit);
-  return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), send_bit, 
-    ENTRYMENU_CMD_MEMBER_INFO, CommEntryMenu_GetMemberInfoSize(), member_info, 
-    FALSE, FALSE, TRUE);
+  if(comm_mp == TRUE){
+    return GFL_NET_SendDataExBit(GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER), send_bit, 
+      ENTRYMENU_CMD_MEMBER_INFO, CommEntryMenu_GetMemberInfoSize(), member_info, 
+      FALSE, FALSE, TRUE);
+  }
+  else{
+    return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), send_bit, 
+      ENTRYMENU_CMD_MEMBER_INFO, CommEntryMenu_GetMemberInfoSize(), member_info, 
+      FALSE, FALSE, TRUE);
+  }
 }
 
