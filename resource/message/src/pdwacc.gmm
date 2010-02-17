@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-12-11T15:13:34"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T19:28:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,13 +334,13 @@
 
 
 	<row id="PDWACC_001">
-		<language name="JPN" width="256">GAME　SYNC</language>
-		<language name="JPN_KANJI" width="256">GAME　SYNC</language>
+		<language name="JPN" width="256">ＧＡＭＥ　ＳＹＮＣ</language>
+		<language name="JPN_KANJI" width="256">ＧＡＭＥ　ＳＹＮＣ</language>
 	</row>
 
 	<row id="PDWACC_002">
-		<language name="JPN" width="256">Wi-Fi せってい</language>
-		<language name="JPN_KANJI" width="256">Wi-Fi設定</language>
+		<language name="JPN" width="256">Ｗｉ－Ｆｉせってい</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ設定</language>
 	</row>
 
 	<row id="PDWACC_003">
@@ -394,8 +394,8 @@
 	</row>
 
 	<row id="PDWACC_009">
-		<language name="JPN" width="256">ゲームシンクIDコード</language>
-		<language name="JPN_KANJI" width="256">ゲームシンクIDコード</language>
+		<language name="JPN" width="256">ゲームシンクＩＤコード</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクＩＤコード</language>
 	</row>
 
 	<flowchart-group-list>
