@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T16:50:35"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T19:51:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -367,16 +367,16 @@
 
 	<row id="msg_wifilobby_001">
 		<comment>Wi-Fi接続開始の確認メッセージ</comment>
-		<language name="JPN" width="216">ＷｉーＦｉせつぞくを　かいしします</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉせつぞくを　かいしします</language>
+		<language name="JPN" width="216">Ｗｉ－Ｆｉせつぞくを　かいしします</language>
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉせつぞくを　かいしします</language>
 	</row>
 
 	<row id="msg_wifilobby_002">
 		<comment>WI-FIコネクションに接続処理中の
 メッセージ</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクションに　せつぞくして
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクションに　せつぞくして
 います。　しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクションに　せつぞくして
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクションに　せつぞくして
 います。　しばらく　おまちください</language>
 	</row>
 
@@ -440,9 +440,9 @@
 	<row id="msg_wifilobby_009">
 		<comment>Wi-Fi接続を終了する項目を
 選択したときのメッセージ</comment>
-		<language name="JPN" width="216">ＷｉーＦｉせつぞくを
+		<language name="JPN" width="216">Ｗｉ－Ｆｉせつぞくを
 しゅうりょう　しますか？</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉせつぞくを
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉせつぞくを
 しゅうりょう　しますか？</language>
 	</row>
 
@@ -522,8 +522,8 @@
 
 	<row id="msg_wifilobby_018">
 		<comment>Wi-Fiコネクションに接続するときのタイトル</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクションに　せつぞく</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクションに　せつぞく</language>
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクションに　せつぞく</language>
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクションに　せつぞく</language>
 	</row>
 
 	<row id="msg_wifilobby_019">
@@ -588,8 +588,8 @@
 
 	<row id="msg_wifilobby_029">
 		<comment>Wi-Fi接続を切断するための項目名</comment>
-		<language name="JPN" width="216">ＷｉーＦｉせつぞくを　やめる</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉせつぞくを　やめる</language>
+		<language name="JPN" width="216">Ｗｉ－Ｆｉせつぞくを　やめる</language>
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉせつぞくを　やめる</language>
 	</row>
 
 	<row id="msg_wifilobby_030">
@@ -751,16 +751,16 @@
 	</row>
 
 	<row id="msg_wifilobby_051">
-		<language name="JPN" width="216">でんげんを　きって　ＷｉーＦｉせっていを
+		<language name="JPN" width="216">でんげんを　きって　Ｗｉ－Ｆｉせっていを
 おこない　ますか？</language>
-		<language name="JPN_KANJI" width="216">でんげんを　きって　ＷｉーＦｉせっていを
+		<language name="JPN_KANJI" width="216">でんげんを　きって　Ｗｉ－Ｆｉせっていを
 おこない　ますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_052">
-		<language name="JPN" width="216">もういちど　ＷｉーＦｉコネクションに
+		<language name="JPN" width="216">もういちど　Ｗｉ－Ｆｉコネクションに
 せつぞく　しますか？</language>
-		<language name="JPN_KANJI" width="216">もういちど　ＷｉーＦｉコネクションに
+		<language name="JPN_KANJI" width="216">もういちど　Ｗｉ－Ｆｉコネクションに
 せつぞく　しますか？</language>
 	</row>
 
