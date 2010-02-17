@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-02-11T20:03:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T22:09:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="390" top="183" right="1088" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1490" top="271" right="2187" bottom="894" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="532" visible="no"/>
-		<band id="0" index="0" style="0000" width="523"/>
+		<band id="0" index="0" style="0000" width="522"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="690"/>
-		<band id="3" index="3" style="0000" width="690"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="689"/>
+		<band id="3" index="3" style="0000" width="689"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,7 +335,7 @@
 
 	<row id="POKETRADE_STR_01">
 		<language name="JPN" width="256">こうかんにだす</language>
-		<language name="JPN_KANJI" width="256">こうかんにだす</language>
+		<language name="JPN_KANJI" width="256">交換にだす</language>
 	</row>
 
 	<row id="POKETRADE_STR_02">
@@ -345,7 +345,7 @@
 
 	<row id="POKETRADE_STR_03">
 		<language name="JPN" width="256">あいてにみせる</language>
-		<language name="JPN_KANJI" width="256">あいてにみせる</language>
+		<language name="JPN_KANJI" width="256">相手にみせる</language>
 	</row>
 
 	<row id="POKETRADE_STR_04">
@@ -355,7 +355,7 @@
 
 	<row id="POKETRADE_STR_05">
 		<language name="JPN" width="256">こうかんする</language>
-		<language name="JPN_KANJI" width="256">こうかんする</language>
+		<language name="JPN_KANJI" width="256">交換する</language>
 	</row>
 
 	<row id="POKETRADE_STR_06">
@@ -366,15 +366,15 @@
 	<row id="POKETRADE_STR_09">
 		<language name="JPN" width="256">つうしん　たいきちゅう！
 しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">つうしん　たいきちゅう！
-しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">通信待機中！
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="POKETRADE_STR_10">
 		<language name="JPN" width="256">パートナーとなる　ともだちに
-せきがいせんを　むけて　ください</language>
-		<language name="JPN_KANJI" width="256">パートナーとなる友達に
-赤外線を向けて下さい</language>
+せきがいせんを　むけてください</language>
+		<language name="JPN_KANJI" width="256">パートナーとなる　友達に
+赤外線を　向けてください</language>
 	</row>
 
 	<row id="POKETRADE_STR_11">
@@ -384,14 +384,14 @@
 
 	<row id="POKETRADE_STR_12">
 		<language name="JPN" width="256">たいせん　あいての　リーダーに
-せきがいせんを　むけて　ください</language>
-		<language name="JPN_KANJI" width="256">対戦相手のリーダーに
-赤外線を向けて下さい</language>
+せきがいせんを　むけてください</language>
+		<language name="JPN_KANJI" width="256">対戦相手の　リーダーに
+赤外線を　向けてください</language>
 	</row>
 
 	<row id="POKETRADE_STR_13">
 		<language name="JPN" width="256">しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">しばらく　お待ちください</language>
 	</row>
 
 	<row id="POKETRADE_STR_14">
@@ -405,15 +405,15 @@
 	</row>
 
 	<row id="POKETRADE_STR_16">
-		<language name="JPN" width="256">ちゅうだんしますか？</language>
+		<language name="JPN" width="256">ちゅうだん　しますか？</language>
 		<language name="JPN_KANJI" width="256">中断しますか？</language>
 	</row>
 
 	<row id="POKETRADE_STR_17">
 		<language name="JPN" width="256">こうかんする　ともだちに
-せきがいせんを　むけて　ください</language>
-		<language name="JPN_KANJI" width="256">交換する友達に
-赤外線を向けて下さい</language>
+せきがいせんを　むけてください</language>
+		<language name="JPN_KANJI" width="256">交換する　友達に
+赤外線を　向けてください</language>
 	</row>
 
 	<row id="POKETRADE_STR_18">
@@ -450,21 +450,21 @@
 
 	<row id="POKETRADE_STR_24">
 		<language name="JPN" width="256">しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">しばらくお待ちください</language>
+		<language name="JPN_KANJI" width="256">しばらく　お待ちください</language>
 	</row>
 
 	<row id="POKETRADE_STR_25">
 		<language name="JPN" width="256">あそぶないようが　ちがったので
 さいしょに　もどります</language>
-		<language name="JPN_KANJI" width="256">遊ぶ内容が違ったので
-最初に戻ります</language>
+		<language name="JPN_KANJI" width="256">遊ぶ内容が　違ったので
+最初に　戻ります</language>
 	</row>
 
 	<row id="POKETRADE_STR_26">
 		<language name="JPN" width="256">ここまでの　かつやくを
 ポケモンレポートに　かきこみますか？</language>
-		<language name="JPN_KANJI" width="256">ここまでの　かつやくを
-ポケモンレポートに　書き込みますか？</language>
+		<language name="JPN_KANJI" width="256">ここまでの　活躍を
+ポケモンレポートに　書きこみますか？</language>
 	</row>
 
 	<row id="POKETRADE_STR_27">
@@ -479,9 +479,9 @@
 
 	<row id="POKETRADE_STR_29">
 		<language name="JPN" width="256">セーブしています
-しばらくおまちください</language>
+しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="256">セーブしています
-しばらくおまちください</language>
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="POKETRADE_STR_30">
@@ -582,24 +582,24 @@
 	<row id="POKETRADE_STR_49">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]から[1:02:ポケモンニックネーム:1]が
 おくられてきた[BE:02:ウェイト変更（単発）:60][BE:00:ページ切り替え（行送り）]
-[1:02:ポケモンニックネーム:1]をかわいがって あげてね！</language>
+[1:02:ポケモンニックネーム:1]を　かわいがって あげてね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]から[1:02:ポケモンニックネーム:1]が
-おくられてきた[BE:02:ウェイト変更（単発）:60][BE:00:ページ切り替え（行送り）]
-[1:02:ポケモンニックネーム:1]をかわいがって あげてね！</language>
+送られてきた[BE:02:ウェイト変更（単発）:60][BE:00:ページ切り替え（行送り）]
+[1:02:ポケモンニックネーム:1]を　可愛がって　あげてね！</language>
 	</row>
 
 	<row id="POKETRADE_STR_51">
-		<language name="JPN" width="256">つうしんしています
-しばらくおまちください</language>
-		<language name="JPN_KANJI" width="256">つうしんしています
-しばらくおまちください</language>
+		<language name="JPN" width="256">つうしん　しています
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">通信しています
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="POKETRADE_STR_52">
-		<language name="JPN" width="256">みつけたい　ポケモンの　かしらもじを
-えらんでください</language>
-		<language name="JPN_KANJI" width="256">みつけたい　ポケモンの　かしらもじを
-えらんでください</language>
+		<language name="JPN" width="256">みつけたい　ポケモンの
+かしらもじを　えらんでください</language>
+		<language name="JPN_KANJI" width="256">みつけたい　ポケモンの
+頭文字を　選んでください</language>
 	</row>
 
 	<row id="POKETRADE_STR_53">
@@ -825,55 +825,55 @@
 	<row id="POKETRADE_STR_97">
 		<language name="JPN" width="256">こうかんは
 キャンセル　されました</language>
-		<language name="JPN_KANJI" width="256">こうかんは
+		<language name="JPN_KANJI" width="256">交換は
 キャンセル　されました</language>
 	</row>
 
 	<row id="POKETRADE_STR_98">
 		<language name="JPN" width="256">そのポケモンを　こうかんすると
 ぼうけん　できなくなっちゃうよ！</language>
-		<language name="JPN_KANJI" width="256">そのポケモンを　こうかんすると
-ぼうけん　できなくなっちゃうよ！</language>
+		<language name="JPN_KANJI" width="256">そのポケモンを　交換すると
+冒険できなく　なっちゃうよ！</language>
 	</row>
 
 	<row id="POKETRADE_STR2_01">
 		<language name="JPN" width="256">あいてが　こうかんできない
 ポケモンを　だしています</language>
-		<language name="JPN_KANJI" width="256">あいてが　こうかんできない
+		<language name="JPN_KANJI" width="256">あいてが　交換できない
 ポケモンを　だしています</language>
 	</row>
 
 	<row id="POKETRADE_STR2_02">
 		<language name="JPN" width="256">じぶんが こうかんできない
 ポケモンを　だして　います</language>
-		<language name="JPN_KANJI" width="256">じぶんが こうかんできない
-ポケモンを　だして　います</language>
+		<language name="JPN_KANJI" width="256">自分が 交換できない
+ポケモンを　だしています</language>
 	</row>
 
-	<row id="POKETRADE_STR2_03">
-		<language name="JPN" width="256">ひでんわざを　おぼえているので
+	<row id="POKETRADE_STR2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,">
+		<comment>仮メッセージ</comment>
+		<language name="JPN" width="256">とくしゅな　わざを　おぼえているので
 てもちから　はずせません</language>
-		<language name="JPN_KANJI" width="256">ひでんわざを　おぼえているので
-てもちから　はずせません</language>
+		<language name="JPN_KANJI" width="256">特殊な技を　おぼえているので
+手持ち　から　はずせません</language>
 	</row>
 
 	<row id="POKETRADE_STR2_04">
-		<language name="JPN" width="256">ともだちは　ポケモンの
-こうかんを　したいようです！</language>
-		<language name="JPN_KANJI" width="256">ともだちは　ポケモンの
-こうかんを　したいようです</language>
+		<language name="JPN" width="256">ともだちは
+ポケモンこうかんを　したいようです</language>
+		<language name="JPN_KANJI" width="256">友達は
+ポケモン交換を　したいようです</language>
 	</row>
 
 	<row id="POKETRADE_STR2_05">
 		<language name="JPN" width="256">こうかんを　やめますか？</language>
-		<language name="JPN_KANJI" width="256">こうかんを　やめますか？</language>
+		<language name="JPN_KANJI" width="256">交換を　やめますか？</language>
 	</row>
 
 	<row id="POKETRADE_STR2_06">
 		<language name="JPN" width="256">ともだちの　しゅうりょうを
 まっています……</language>
-		<language name="JPN_KANJI" width="256">ともだちの　しゅうりょうを
-まっています……</language>
+		<language name="JPN_KANJI" width="256">友達の　終了を　待っています……</language>
 	</row>
 
 	<row id="POKETRADE_STR2_07">
@@ -884,51 +884,51 @@
 	<row id="POKETRADE_STR2_08">
 		<language name="JPN" width="256">ポケモンが　もっている　メールを
 パソコンに　てんそう　しますか？</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　もっている　メールを
-パソコンに　てんそう　しますか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　持っている　メールを
+パソコンに　転送しますか？</language>
 	</row>
 
 	<row id="POKETRADE_STR2_09">
 		<language name="JPN" width="256">メールを　すてますが
-よろしい　ですか？</language>
-		<language name="JPN_KANJI" width="256">メールを　すてますが
-よろしい　ですか？</language>
+よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">メールを　捨てますが
+よろしいですか？</language>
 	</row>
 
 	<row id="POKETRADE_STR2_10">
 		<language name="JPN" width="256">メールボックスが　いっぱいです
 せいりしますか？</language>
-		<language name="JPN_KANJI" width="256">メールボックスが　いっぱいです
-せいりしますか？</language>
+		<language name="JPN_KANJI" width="256">メールボックスが　一杯です
+整理しますか？</language>
 	</row>
 
 	<row id="POKETRADE_STR2_11">
 		<language name="JPN" width="256">メールを　すてました</language>
-		<language name="JPN_KANJI" width="256">メールを　すてました</language>
+		<language name="JPN_KANJI" width="256">メールを　捨てました</language>
 	</row>
 
 	<row id="POKETRADE_STR2_12">
-		<language name="JPN" width="256">とった　メールを　パソコンに
-てんそう　しました</language>
-		<language name="JPN_KANJI" width="256">とった　メールを　パソコンに
-てんそう　しました</language>
+		<language name="JPN" width="256">とった　メールを
+パソコンに　てんそう　しました</language>
+		<language name="JPN_KANJI" width="256">取った　メールを
+パソコンに　転送しました</language>
 	</row>
 
 	<row id="POKETRADE_STR2_13">
 		<language name="JPN" width="256">あいてと　こうかんしたい　ポケモンを
 ３ひき　えらんでください</language>
-		<language name="JPN_KANJI" width="256">あいてと　こうかんしたい　ポケモンを
-３ひき　えらんでください</language>
+		<language name="JPN_KANJI" width="256">相手と　交換したい　ポケモンを
+３匹　選んでください</language>
 	</row>
 
 	<row id="POKETRADE_STR2_14">
 		<language name="JPN" width="256">えらびちゅう</language>
-		<language name="JPN_KANJI" width="256">えらびちゅう</language>
+		<language name="JPN_KANJI" width="256">選択中</language>
 	</row>
 
 	<row id="POKETRADE_STR2_15">
 		<language name="JPN" width="256">けっていずみ</language>
-		<language name="JPN_KANJI" width="256">けっていずみ</language>
+		<language name="JPN_KANJI" width="256">決定済み</language>
 	</row>
 
 	<row id="POKETRADE_STR2_16">
@@ -985,7 +985,7 @@
 
 	<row id="POKETRADE_STR2_26">
 		<language name="JPN" width="256">けってい</language>
-		<language name="JPN_KANJI" width="256">けってい</language>
+		<language name="JPN_KANJI" width="256">決定</language>
 	</row>
 
 	<row id="POKETRADE_STR2_27">
@@ -996,14 +996,14 @@
 	<row id="POKETRADE_STR2_28">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を[1:00:トレーナー名:1]へ　おくります！！
 バイバイ　[1:02:ポケモンニックネーム:0]！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を[1:00:トレーナー名:1]へ　おくります！！
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を[1:00:トレーナー名:1]へ　送ります！！
 バイバイ　[1:02:ポケモンニックネーム:0]！</language>
 	</row>
 
 	<row id="POKETRADE_STR2_29">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を [1:00:トレーナー名:1]に　かえします！
 ありがとう　[1:02:ポケモンニックネーム:0]！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を [1:00:トレーナー名:1]に　かえします！
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を [1:00:トレーナー名:1]に　返します！
 ありがとう　[1:02:ポケモンニックネーム:0]！</language>
 	</row>
 
