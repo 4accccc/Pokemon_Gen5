@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-02-01T11:35:06"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T21:21:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="332" top="184" right="1037" bottom="812" maximized="no" rayout="Vertical2">
+	<dialog left="1471" top="286" right="2176" bottom="914" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,10 +334,10 @@
 
 
 	<row id="msg_record_01_01">
-		<language name="JPN" width="256">いまの　しょうぶを　バトルビデオに
-きろく　しますか？</language>
-		<language name="JPN_KANJI" width="256">いまの　しょうぶを　バトルビデオに
-きろく　しますか？</language>
+		<language name="JPN" width="256">いまの　しょうぶを
+バトルビデオに　きろく　しますか？</language>
+		<language name="JPN_KANJI" width="256">今の　勝負を
+バトルビデオに　記録しますか？</language>
 	</row>
 
 	<row id="msg_record_01_yes">
@@ -353,7 +353,7 @@
 	<row id="msg_record_02_01">
 		<language name="JPN" width="256">しょうぶの　きろくは　きえますが
 よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">しょうぶの　きろくは　きえますが
+		<language name="JPN_KANJI" width="256">勝負の　記録は　消えますが
 よろしいですか？</language>
 	</row>
 
@@ -370,8 +370,8 @@
 	<row id="msg_record_03_01">
 		<language name="JPN" width="256">ぜんかいの　バトルビデオを　けして
 うわがき　しても　よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">ぜんかいの　バトルビデオを　けして
-うわがき　しても　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">前回の　バトルビデオを　消して
+上書きしても　よろしいですか？</language>
 	</row>
 
 	<row id="msg_record_03_yes">
@@ -385,29 +385,29 @@
 	</row>
 
 	<row id="msg_record_04_01">
-		<language name="JPN" width="256">きろくちゅうです！
-しばらく　おまち　ください！</language>
-		<language name="JPN_KANJI" width="256">きろくちゅうです！
-しばらく　おまち　ください！</language>
+		<language name="JPN" width="256">きろくちゅう　です！
+しばらく　おまちください！</language>
+		<language name="JPN_KANJI" width="256">記録中です！
+しばらく　お待ちください！</language>
 	</row>
 
 	<row id="msg_record_05_01">
 		<language name="JPN" width="256">たたかいが　きろく　されました！</language>
-		<language name="JPN_KANJI" width="256">たたかいが　きろく　されました！</language>
+		<language name="JPN_KANJI" width="256">戦いが　記録されました！</language>
 	</row>
 
 	<row id="msg_record_06_01">
 		<language name="JPN" width="256">ふぐあいにより
 きろく　できませんでした</language>
-		<language name="JPN_KANJI" width="256">ふぐあいにより
-きろく　できませんでした</language>
+		<language name="JPN_KANJI" width="256">不具合により
+記録できませんでした</language>
 	</row>
 
 	<row id="msg_record_07_01">
 		<language name="JPN" width="256">あいてを　まっています
 しばらく　おまち　ください！</language>
-		<language name="JPN_KANJI" width="256">あいてを　まっています
-しばらく　おまち　ください！</language>
+		<language name="JPN_KANJI" width="256">相手を　待っています
+しばらく　お待ちください！</language>
 	</row>
 
 	<row id="msg_record_time01">
@@ -430,14 +430,14 @@
 
 	<row id="msg_record_10_01">
 		<language name="JPN" width="256">ぜんかいの　きろく</language>
-		<language name="JPN_KANJI" width="256">ぜんかいの　きろく</language>
+		<language name="JPN_KANJI" width="256">前回の記録</language>
 	</row>
 
 	<row id="msg_record_title01">
 		<language name="JPN" width="256">コロシアム　シングル
 せいげんなし</language>
 		<language name="JPN_KANJI" width="256">コロシアム　シングル
-せいげんなし</language>
+制限なし</language>
 	</row>
 
 	<row id="msg_record_title02">
@@ -451,7 +451,7 @@
 		<language name="JPN" width="256">コロシアム　シングル
 せいげんなし シューターあり</language>
 		<language name="JPN_KANJI" width="256">コロシアム　シングル
-せいげんなし シューターあり</language>
+制限なし シューターあり</language>
 	</row>
 
 	<row id="msg_record_title04">
@@ -465,7 +465,7 @@
 		<language name="JPN" width="256">コロシアム　ダブル
 せいげんなし</language>
 		<language name="JPN_KANJI" width="256">コロシアム　ダブル
-せいげんなし</language>
+制限なし</language>
 	</row>
 
 	<row id="msg_record_title06">
@@ -479,7 +479,7 @@
 		<language name="JPN" width="256">コロシアム　ダブル
 せいげんなし シューターあり</language>
 		<language name="JPN_KANJI" width="256">コロシアム　ダブル
-せいげんなし シューターあり</language>
+制限なし シューターあり</language>
 	</row>
 
 	<row id="msg_record_title08">
@@ -493,7 +493,7 @@
 		<language name="JPN" width="256">コロシアム　トリプル
 せいげんなし</language>
 		<language name="JPN_KANJI" width="256">コロシアム　トリプル
-せいげんなし</language>
+制限なし</language>
 	</row>
 
 	<row id="msg_record_title10">
@@ -507,7 +507,7 @@
 		<language name="JPN" width="256">コロシアム　トリプル
 せいげんなし シューターあり</language>
 		<language name="JPN_KANJI" width="256">コロシアム　トリプル
-せいげんなし シューターあり</language>
+制限なし シューターあり</language>
 	</row>
 
 	<row id="msg_record_title12">
@@ -521,7 +521,7 @@
 		<language name="JPN" width="256">コロシアム　ローテーション
 せいげんなし</language>
 		<language name="JPN_KANJI" width="256">コロシアム　ローテーション
-せいげんなし</language>
+制限なし</language>
 	</row>
 
 	<row id="msg_record_title14">
@@ -535,7 +535,7 @@
 		<language name="JPN" width="256">コロシアム　ローテーション
 せいげんなし シューターあり</language>
 		<language name="JPN_KANJI" width="256">コロシアム　ローテーション
-せいげんなし シューターあり</language>
+制限なし シューターあり</language>
 	</row>
 
 	<row id="msg_record_title16">
@@ -549,7 +549,7 @@
 		<language name="JPN" width="256">コロシアム　マルチ
 せいげんなし</language>
 		<language name="JPN_KANJI" width="256">コロシアム　マルチ
-せいげんなし</language>
+制限なし</language>
 	</row>
 
 	<row id="msg_record_title18">
@@ -563,7 +563,7 @@
 		<language name="JPN" width="256">コロシアム　マルチ
 せいげんなし シューターあり</language>
 		<language name="JPN_KANJI" width="256">コロシアム　マルチ
-せいげんなし シューターあり</language>
+制限なし シューターあり</language>
 	</row>
 
 	<row id="msg_record_title20">
@@ -667,56 +667,56 @@
 	<row id="msg_record_title34">
 		<language name="JPN" width="256">たいかい　シングル
 シューターなし</language>
-		<language name="JPN_KANJI" width="256">たいかい　シングル
+		<language name="JPN_KANJI" width="256">大会　シングル
 シューターなし</language>
 	</row>
 
 	<row id="msg_record_title35">
 		<language name="JPN" width="256">たいかい　シングル
 シューターあり</language>
-		<language name="JPN_KANJI" width="256">たいかい　シングル
+		<language name="JPN_KANJI" width="256">大会　シングル
 シューターあり</language>
 	</row>
 
 	<row id="msg_record_title36">
 		<language name="JPN" width="256">たいかい　ダブル
 シューターなし</language>
-		<language name="JPN_KANJI" width="256">たいかい　ダブル
+		<language name="JPN_KANJI" width="256">大会　ダブル
 シューターなし</language>
 	</row>
 
 	<row id="msg_record_title37">
 		<language name="JPN" width="256">たいかい　ダブル
 シューターあり</language>
-		<language name="JPN_KANJI" width="256">たいかい　ダブル
+		<language name="JPN_KANJI" width="256">大会　ダブル
 シューターあり</language>
 	</row>
 
 	<row id="msg_record_title38">
 		<language name="JPN" width="256">たいかい　トリプル
 シューターなし</language>
-		<language name="JPN_KANJI" width="256">たいかい　トリプル
+		<language name="JPN_KANJI" width="256">大会　トリプル
 シューターなし</language>
 	</row>
 
 	<row id="msg_record_title39">
 		<language name="JPN" width="256">たいかい　トリプル
 シューターあり</language>
-		<language name="JPN_KANJI" width="256">たいかい　トリプル
+		<language name="JPN_KANJI" width="256">大会　トリプル
 シューターあり</language>
 	</row>
 
 	<row id="msg_record_title40">
 		<language name="JPN" width="256">たいかい　ローテーション
 シューターなし</language>
-		<language name="JPN_KANJI" width="256">たいかい　ローテーション
+		<language name="JPN_KANJI" width="256">大会　ローテーション
 シューターなし</language>
 	</row>
 
 	<row id="msg_record_title41">
 		<language name="JPN" width="256">たいかい　ローテーション
 シューターあり</language>
-		<language name="JPN_KANJI" width="256">たいかい　ローテーション
+		<language name="JPN_KANJI" width="256">大会　ローテーション
 シューターあり</language>
 	</row>
 
