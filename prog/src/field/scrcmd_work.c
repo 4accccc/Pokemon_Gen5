@@ -496,7 +496,7 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
 	  menuWork->menuFunc = FLDMENUFUNC_AddEventMenuList(
       fmb, &menuH, menuWork->listData,
       BmpMenu_CallbackFunc, work,
-      0, 0, menuWork->cancel );
+      0, menuWork->cursor, menuWork->cancel );
   }
 }
 
