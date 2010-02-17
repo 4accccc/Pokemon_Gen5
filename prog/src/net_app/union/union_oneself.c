@@ -3163,7 +3163,7 @@ static BOOL OneselfSeq_ColosseumStandPosition(UNION_SYSTEM_PTR unisys, UNION_MY_
   
   switch(*seq){
   case 0:
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_012);
+//    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_012);
     (*seq)++;
     break;
   case 1:
@@ -3182,12 +3182,41 @@ static BOOL OneselfSeq_ColosseumStandPosition(UNION_SYSTEM_PTR unisys, UNION_MY_
       ret = Colosseum_Mine_GetAnswerStandingPosition(clsys);
       if(ret == TRUE){
         OS_TPrintf("立ち位置OK\n");
-        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_USE_PARTY_SELECT);
-        return TRUE;
+        (*seq)++;
       }
       else if(ret == FALSE){
         OS_TPrintf("立ち位置NG\n");
         UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
+        return TRUE;
+      }
+    }
+    break;
+  case 3: //立ち位置OK
+    {
+      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
+      MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
+      int stand_pos, anm_code;
+      
+      if(MMDL_CheckPossibleAcmd(player_mmdl) == TRUE){
+        ColosseumTool_CheckStandingPosition(
+          fieldWork, UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select), &stand_pos);
+        anm_code = (stand_pos & 1) ? AC_DIR_L : AC_DIR_R;
+        MMDL_SetAcmd(player_mmdl, anm_code);
+        (*seq)++;
+      }
+      else{
+        OS_TPrintf("MMDL_CheckPossibleAcmd待ち\n");
+      }
+    }
+    break;
+  case 4:
+    {
+      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
+      MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
+
+      if(MMDL_CheckEndAcmd(player_mmdl) == TRUE){
+        MMDL_EndAcmd(player_mmdl);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_USE_PARTY_SELECT);
         return TRUE;
       }
     }
@@ -3711,12 +3740,20 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     break;
   case 1:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      GFL_NET_HANDLE_TimeSyncStart(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_POKELIST_BEFORE, WB_NET_UNION);
+      (*seq)++;
+    }
+    break;
+  case 2:
+		if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 
+		    UNION_TIMING_COLOSSEUM_POKELIST_BEFORE, WB_NET_UNION) == TRUE){
       UnionMsg_AllDel(unisys);
       (*seq)++;
     }
     break;
   
-  case 2: //ポケモンリスト画面呼び出し
+  case 3: //ポケモンリスト画面呼び出し
     parent_list = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(UNION_SUBPROC_PARENT_POKELIST));
 
     plist = &parent_list->plist;
@@ -3768,7 +3805,7 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 
     (*seq)++;
     break;
-  case 3:
+  case 4:
     if(UnionSubProc_IsExits(unisys) == TRUE){
       break;
     }
@@ -3813,7 +3850,7 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
       break;
     }
     break;
-  case 4:
+  case 5:
     GFL_HEAP_FreeMemory(unisys->parent_work);
     unisys->parent_work = NULL;
     return TRUE;

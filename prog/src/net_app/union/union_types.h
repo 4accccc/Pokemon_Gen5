@@ -187,6 +187,7 @@ enum{
   UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER,   ///<コロシアム：通信テーブルを追加後
   UNION_TIMING_COLOSSEUM_CARD_BEFORE,   ///<コロシアム：全員分のトレーナーカード交換前
   UNION_TIMING_BATTLE_STANDINGPOS_BEFORE,     ///<コロシアム：全員の立ち位置送信前
+  UNION_TIMING_COLOSSEUM_POKELIST_BEFORE,     ///<コロシアム：ポケモンリスト呼び出し前
   UNION_TIMING_COLOSSEUM_PROC_AFTER,    ///<コロシアム終了後の同期取り
   UNION_TIMING_COLOSSEUM_LEAVE,         ///<コロシアム：退出
   
