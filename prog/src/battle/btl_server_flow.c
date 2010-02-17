@@ -69,6 +69,19 @@ typedef enum {
 
 }FlowFlag;
 
+/**
+ *  命令無視パターン
+ */
+typedef enum {
+
+  SABOTAGE_NONE = 0,    ///< 命令無視しない
+  SABOTAGE_OTHER_WAZA,  ///< 他のワザを勝手に出す
+  SABOTAGE_GO_SLEEP,    ///< 眠ってしまう
+  SABOTAGE_CONFUSE,     ///< 自分を攻撃
+  SABOTAGE_DONT_ANY,    ///< 何もしない（メッセージランダム表示）
+  SABOTAGE_SLEEPING,    ///< 眠ったまま命令無視（メッセージ表示）
+
+}SabotageType;
 
 /**
  *  ふきとばし系のワザ処理パターン
@@ -223,6 +236,7 @@ struct _BTL_SVFLOW_WORK {
   HANDLER_EXHIBISION_MANAGER  HEManager;
   BPP_WAZADMG_REC             wazaDamageRec;
   WazaID                      prevExeWaza;
+  SabotageType                currentSabotageType;
 
   u8          flowFlags[ FLOWFLG_BYTE_MAX ];
   u8          handlerTmpWork[ EVENT_HANDLER_TMP_WORK_SIZE ];
@@ -252,6 +266,7 @@ static u8 ActOrderTool_GetIndex( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* a
 static int ActOrderTool_Intr( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex );
 static void ActOrderTool_SendToLast( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
 static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder );
+static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
 static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
@@ -1722,6 +1737,7 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
           FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
         }
         BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, action.fight.waza, action.fight.targetPos);
+        wk->currentSabotageType = CheckSabotageType( wk, bpp );
         scproc_Fight( wk, bpp, &action );
         break;
       case BTL_ACTION_ITEM:
@@ -1769,6 +1785,72 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * 命令無視チェック
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  SabotageType
+ */
+//----------------------------------------------------------------------------------
+static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  if( (BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_COMM)
+  &&  (BTL_MAINUTIL_PokeIDtoClientID(BPP_GetID(bpp)) == (BTL_MAIN_GetPlayerClientID(wk->mainModule)))
+  ){
+    const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
+    const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
+    if( !PP_IsMatchOya(pp, status) )
+    {
+      u8 badgeCnt = BTL_MAIN_GetPlayerBadgeCount( wk->mainModule );
+      if( badgeCnt < 8 )
+      {
+        u16 lv_poke = BPP_GetValue( bpp, BPP_LEVEL );
+        u16 lv_border = (1 + badgeCnt) * 10;
+        u16 sum, rand;
+
+        if( lv_poke <= lv_border ){
+          return SABOTAGE_NONE;
+        }
+        rand = BTL_CALC_GetRand( (lv_poke + lv_border + 1) );
+        if( rand < lv_border ){
+          return SABOTAGE_NONE;
+        }
+
+        if( BPP_CheckSick(bpp, WAZASICK_NEMURI) ){
+          return SABOTAGE_DONT_ANY;
+        }
+
+        rand = BTL_CALC_GetRand( (lv_poke + lv_border + 1) );
+        if( rand < lv_border ){
+          if( BPP_WAZA_GetUsableCount(bpp) > 1 ){
+            return SABOTAGE_OTHER_WAZA;
+          }
+        }
+
+        rand = BTL_CALC_GetRand( 256 );
+        if( rand < (lv_poke - lv_border) )
+        {
+          if( !scEvent_StdSick_CheckFail(wk, bpp, POKESICK_NEMURI) ){
+            return SABOTAGE_GO_SLEEP;
+          }
+        }
+
+        rand -= (lv_poke - lv_border);
+        if( rand < (lv_poke - lv_border) ){
+          return SABOTAGE_CONFUSE;
+        }
+
+        return SABOTAGE_DONT_ANY;
+      }
+    }
+  }
+  return SABOTAGE_NONE;
+
+}
+
 //----------------------------------------------------------------------------------
 /**
  * [Event] アクション実行の終了
@@ -4464,6 +4546,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
       cause = SV_WAZAFAIL_KONRAN;
       break;
     }
+
     // メロメロ判定
     if( scproc_Fight_CheckMeroMero(wk, attacker) ){
       cause = SV_WAZAFAIL_MEROMERO;
@@ -4504,6 +4587,16 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
     // その他の失敗チェック
     cause = scEvent_CheckWazaExecute1ST( wk, attacker, waza, cause );
     if( cause != SV_WAZAFAIL_NULL ){  break; }
+
+    // 命令無視判定
+    if( wk->currentSabotageType == SABOTAGE_DONT_ANY ){
+      cause = SV_WAZAFAIL_SABOTAGE;
+      break;
+    }
+    if( wk->currentSabotageType == SABOTAGE_GO_SLEEP ){
+      cause = SV_WAZAFAIL_SABOTAGE_GO_SLEEP;
+      break;
+    }
 
     // ひるみによる失敗チェック
     if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_SHRINK) ){
@@ -4579,6 +4672,11 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKE
 //----------------------------------------------------------------------------------
 static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker )
 {
+  if( wk->currentSabotageType == SABOTAGE_CONFUSE ){
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Sabotage1, BPP_GetID(attacker) );
+    return TRUE;
+  }
+
   if( BPP_CheckSick(attacker, WAZASICK_KONRAN) )
   {
     if( BPP_CheckKonranWakeUp(attacker) ){
@@ -4668,13 +4766,24 @@ static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
         return;
       }
     }
-  }else{
+  }
+  else
+  {
     switch( fail_cause ){
     case SV_WAZAFAIL_NEMURI:     scPut_EffectByPokePos( wk, attacker, BTLEFF_NEMURI ); break;
     case SV_WAZAFAIL_MAHI:       scPut_EffectByPokePos( wk, attacker, BTLEFF_MAHI ); break;
     case SV_WAZAFAIL_KOORI:      scPut_EffectByPokePos( wk, attacker, BTLEFF_KOORI ); break;
     case SV_WAZAFAIL_MEROMERO:   scPut_EffectByPokePos( wk, attacker, BTLEFF_MEROMERO ); break;
+
+    case SV_WAZAFAIL_SABOTAGE_GO_SLEEP:
+      {
+        BPP_SICK_CONT cont = BTL_CALC_MakeDefaultPokeSickCont( POKESICK_NEMURI );
+        scPut_AddSick( wk, attacker, POKESICK_NEMURI, cont );
+        scPut_EffectByPokePos( wk, attacker, BTLEFF_NEMURI );
+      }
+      break;
     }
+
     scPut_WazaExecuteFailMsg( wk, attacker, waza, fail_cause );
   }
 
@@ -4736,6 +4845,18 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
   case SV_WAZAFAIL_JURYOKU:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_JyuryokuWazaFail, pokeID, waza );
     break;
+  case SV_WAZAFAIL_SABOTAGE:
+    if( BPP_CheckSick(bpp, WAZASICK_NEMURI) ){
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Sabotage_Sleeping, pokeID  );
+    }else{
+      u8 rnd = BTL_CALC_GetRand( 4 );
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Sabotage1 + rnd, pokeID  );
+    }
+    break;
+  case SV_WAZAFAIL_SABOTAGE_GO_SLEEP:
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Sabotage_GoSleep, pokeID  );
+    break;
+
   case SV_WAZAFAIL_TOKUSEI:
     // とくせいの場合、各ハンドラに任せる
     break;

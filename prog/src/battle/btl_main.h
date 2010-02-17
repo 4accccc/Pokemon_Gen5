@@ -18,6 +18,7 @@ extern BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk );
 extern BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk );
 extern BtlCommMode BTL_MAIN_GetCommMode( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsWazaEffectEnable( const BTL_MAIN_MODULE* wk );
+extern u8 BTL_MAIN_GetPlayerBadgeCount( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsExpSeqEnable( const BTL_MAIN_MODULE* wk );
 extern BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk );
 extern const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE* wk );
@@ -87,6 +88,12 @@ static inline BtlSide BTL_MAINUTIL_PosToSide( BtlPokePos pos )
 {
   return pos & 1;
 }
+
+/*------------------------------------------------------------------------------*/
+/* 野生戦エンカウント時の文字列ID                                               */
+/*------------------------------------------------------------------------------*/
+extern BOOL BTL_MAIN_GetSetupStatusFlag( const BTL_MAIN_MODULE* wk, BTL_STATUS_FLAG flag );
+
 
 /*------------------------------------------------------------------------------*/
 /* フィールドへ引き継ぐ情報の取得・通知                                         */

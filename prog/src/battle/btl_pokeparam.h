@@ -233,6 +233,7 @@ extern const POKEMON_PARAM* BPP_GetViewSrcData( const BTL_POKEPARAM* bpp );
 
 extern u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* pp );
 extern u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* pp );
+extern u8 BPP_WAZA_GetUsableCount( const BTL_POKEPARAM* bpp );
 extern WazaID BPP_WAZA_GetID( const BTL_POKEPARAM* pp, u8 idx );
 extern WazaID BPP_WAZA_GetParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax );
 extern u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza );

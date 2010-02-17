@@ -1623,6 +1623,20 @@ BOOL BTL_MAIN_IsWazaEffectEnable( const BTL_MAIN_MODULE* wk )
 }
 //=============================================================================================
 /**
+ * プレイヤー取得済みバッジ数を返す
+ *
+ * @param   wk
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_MAIN_GetPlayerBadgeCount( const BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->badgeCount;
+}
+
+//=============================================================================================
+/**
  * 文字出力のwait値を返す
  *
  * @param   wk
@@ -3659,6 +3673,22 @@ static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID
 
   PokeParty_Copy( wk->tmpParty, srcParty );
 }
+
+
+//=============================================================================================
+/**
+ * セットアップパラメータのステータスフラグを取得
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_GetSetupStatusFlag( const BTL_MAIN_MODULE* wk, BTL_STATUS_FLAG flag )
+{
+  return BATTLE_PARAM_CheckBtlStatusFlag( wk->setupParam, flag );
+}
+
 //----------------------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------------------

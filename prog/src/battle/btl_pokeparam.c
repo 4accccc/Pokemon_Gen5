@@ -458,6 +458,18 @@ u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* bpp )
   return cnt;
 }
 
+u8 BPP_WAZA_GetUsableCount( const BTL_POKEPARAM* bpp )
+{
+  u8 cnt, i;
+  for(i=0, cnt=0; i<bpp->wazaCnt; ++i)
+  {
+    if( bpp->waza[i].pp ){
+      ++cnt;
+    }
+  }
+  return cnt;
+}
+
 WazaID BPP_WAZA_GetID( const BTL_POKEPARAM* bpp, u8 idx )
 {
   GF_ASSERT(idx < bpp->wazaCnt);

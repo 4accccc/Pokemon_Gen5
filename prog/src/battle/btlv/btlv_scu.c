@@ -211,6 +211,7 @@ static BOOL btlin_skip_single( BTLV_SCU* wk, int* seq );
 static BOOL btlin_skip_double( BTLV_SCU* wk, int* seq );
 static BOOL btlin_skip_triple( BTLV_SCU* wk, int* seq );
 static BOOL btlin_wild_single( int* seq, void* wk_adrs );
+static u16 GetWildSingleEncountStrID( BTLV_SCU* wk );
 static BOOL btlin_trainer_single( int* seq, void* wk_adrs );
 static BOOL btlin_comm_single( int* seq, void* wk_adrs );
 static BOOL btlin_wild_double( int* seq, void* wk_adrs );
@@ -643,6 +644,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 2:
     if( !BTLV_EFFECT_CheckExecute() )
     {
+      u16 strID = GetWildSingleEncountStrID( wk );
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_Wild1, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
@@ -709,6 +711,23 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   }
   return FALSE;
 }
+/**
+ * 野生シングルエンカウント時の文字列IDを取得（セットアップパラメータ参照）
+ */
+static u16 GetWildSingleEncountStrID( BTLV_SCU* wk )
+{
+  if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_MOVE_POKE) ){
+    return BTL_STRID_STD_Encount_Wild_Move;
+  }
+  if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_LEGEND) ){
+    return BTL_STRID_STD_Encount_Wild_Talk;
+  }
+  if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_SYMBOL) ){
+    return BTL_STRID_STD_Encount_Wild_Symbol;
+  }
+  return BTL_STRID_STD_Encount_Wild1;
+}
+
 //--------------------------------------------------------------------------
 /**
  * 戦闘画面セットアップ完了までの演出（ゲーム内トレーナー／シングル）
