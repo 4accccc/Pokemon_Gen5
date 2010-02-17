@@ -41,6 +41,7 @@ static GPOWER_SYSTEM GPowerSys = {0};
 //  プロトタイプ宣言
 //==============================================================================
 static void _OccurPowerClear(GPOWER_TYPE type);
+static void _ErrorCheck(void);
 
 
 
@@ -78,6 +79,7 @@ void GPOWER_SYSTEM_Update(void)
       GPowerSys.life[type]--;
     }
   }
+  _ErrorCheck();
 }
 
 //==================================================================
@@ -254,6 +256,24 @@ void GPOWER_PowerData_Unload(POWER_CONV_DATA *powerdata)
 GPOWER_TYPE GPOWER_ID_to_Type(const POWER_CONV_DATA *powerdata, GPOWER_ID gpower_id)
 {
   return powerdata[gpower_id].type;
+}
+
+//Gパワーがバグっていないか簡易的なチェック
+//※check 将来的には各タイプ毎にセットされるIDは決まっているので、
+//        それ以外のIDが入っていた場合はNULL化するなどのケアまで入れた方が良い
+static void _ErrorCheck(void)
+{
+  GPOWER_TYPE type;
+  int zero_count = 0;
+  
+  for(type = 0; type < GPOWER_TYPE_MAX; type++){
+    if(GPowerSys.occur_power[type] == 0){
+      zero_count++;
+    }
+  }
+  if(zero_count == GPOWER_TYPE_MAX){
+    GF_ASSERT(0);
+  }
 }
 
 
