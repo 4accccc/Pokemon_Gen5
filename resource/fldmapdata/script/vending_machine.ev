@@ -23,7 +23,11 @@ EVENT_START ev_vending_machine01
   DEFINE_LOCAL item
   DEFINE_LOCAL gold
   DEFINE_LOCAL loop
+  DEFINE_LOCAL cur_pos
+  DEFINE_LOCAL bag_full
 
+  //バッグいっぱい状態初期化  
+  $bag_full = FALSE
   //自動販売機処理ループON
   $loop = TRUE
 
@@ -32,10 +36,13 @@ EVENT_START ev_vending_machine01
 
   //「自販機あるで」
   _SYSWIN_MSG_DOWN( msg_vender_01 )
-  
+
+  //カーソル位置初期化
+  $cur_pos = 0
+
   WHILE $loop == TRUE
     //選択肢
-    _BMPMENU_INIT_EX( 1,5,0,1,select_item )
+    _BMPMENU_INIT_EX( 1,5,cur_pos,1,select_item )
     _BMPMENU_MAKE_LIST( msg_vender_select_01, 1 )    //おいしい水
     _BMPMENU_MAKE_LIST( msg_vender_select_02, 2 )    //サイコソーダ
     _BMPMENU_MAKE_LIST( msg_vender_select_03, 3 )    //ミックスオレ
@@ -57,12 +64,15 @@ EVENT_START ev_vending_machine01
       CASE 1 THEN      //おいしい水
         $item = ITEM_OISIIMIZU
         $gold = 200      //200円
+        $cur_pos = 0    //カーソル位置保存
       CASE 2 THEN      //サイコソーダ
         $item = ITEM_SAIKOSOODA
         $gold = 300      //300円
+        $cur_pos = 1    //カーソル位置保存
       CASE 3 THEN      //ミックスオレ
         $item = ITEM_MIKKUSUORE
         $gold = 350      //350円
+        $cur_pos = 2    //カーソル位置保存
       ENDSWITCH
     ENDIF
     
@@ -71,7 +81,8 @@ EVENT_START ev_vending_machine01
       _ADD_ITEM_CHK( item, 1, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE  THEN //バッグはいらない
         //「バッグがいっぱい」
-        _SYSWIN_MSG_DOWN( msg_item_get_fail_nowait )
+        _CHG_COMMON_SCR SCRID_ITEM_EVENT_FAIL_NOWAIT
+        $bag_full = TRUE
         $loop = FALSE
       ELSE    //バッグはいる
         //所持金は？
@@ -113,9 +124,11 @@ EVENT_START ev_vending_machine01
     ENDIF //$loop  
   ENDWHILE
 
-  _LAST_KEYWAIT()
-  //ウィンドウ閉じる
-  _SYSWIN_CLOSE()
+  IF $bag_full == FALSE THEN
+    _LAST_KEYWAIT()
+    //ウィンドウ閉じる
+    _SYSWIN_CLOSE()
+  ENDIF
 
   //所持金表示オフ
   _GOLD_WIN_CLOSE()
