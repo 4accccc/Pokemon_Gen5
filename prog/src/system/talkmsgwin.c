@@ -1204,6 +1204,8 @@ static void calcTailData( const TALKMSGWIN_SYS* tmsgwinSys,
 	VEC_Set(&tmsgwin->tailData.trans, pTailVtx0->x, pTailVtx0->y, pTailVtx0->z);
 	tmsgwin->tailData.scale = scale;
 
+
+
 	VEC_Fx16Set(&tmsgwin->tailData.vtxTail0, 0, 0, 0);
 	VEC_Fx16Set(&tmsgwin->tailData.vtxTail1, 
 							FX_Div(vecTail1.x,scale), FX_Div(vecTail1.y,scale), FX_Div(vecTail1.z,scale));
@@ -1270,7 +1272,12 @@ static void settingCamera( TALKMSGWIN_SYS* tmsgwinSys, int mode )
 	if( mode == 0 )
   {
 		//•ÏŠ·¸“x‚ğã‚°‚é‚½‚ßnear‚Ì‹——£‚ğ‚Æ‚é
-		fx32 near = 64* FX32_ONE;
+		fx32 near = (64* FX32_ONE);
+
+    // Near–Ê‚æ‚è‚à‘å‚«‚È’l‚É‚È‚é‚æ‚¤‚É’²® 10.02.17
+    if( near <= tmsgwinSys->camNearBackUp ){
+      near = tmsgwinSys->camNearBackUp + FX32_ONE;
+    }
 
 		GFL_G3D_CAMERA_SetPos(tmsgwinSys->setup.g3Dcamera, &pos);
 		GFL_G3D_CAMERA_SetCamUp(tmsgwinSys->setup.g3Dcamera, &up);
