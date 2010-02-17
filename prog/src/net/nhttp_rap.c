@@ -26,6 +26,13 @@
 #include "msg/msg_d_ohno.h"
 
 
+//#include <nitroWiFi/soc.h>
+extern SOCCaInfo DWCca_nintendo_class2;
+static SOCCaInfo* nintendoCA[] = {
+    &DWCca_nintendo_class2,
+};
+
+
 #define _EVILSERVER_PROTO (0)  //トークン検査が出来てない時に１
 
 
@@ -54,7 +61,8 @@ const static char ACCOUNT_URL[] ="https://pokemon-ds.basementfactorysystems.com/
 const static char BTL_DL_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=worldbattle.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0"; //GET
 const static char BTL_UP_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=worldbattle.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0"; //POST
 
-const static char POKECHK_URL[] ="http://125.206.241.227/pokemon/validate"; //POST
+//const static char POKECHK_URL[] ="http://125.206.241.227/pokemon/validate"; //POST
+const static char POKECHK_URL[] ="https://pkvldttest.nintendo.co.jp/pokemon/validate"; //POST
 
 
 
@@ -456,12 +464,12 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 
 
 
-#if 0
-  if ( 0 > ( err = (NHTTPError)NHTTP_SetRootCA( handle, (const char *)cainfos, sizeof(cainfos)/sizeof(CPSCaInfo*) )))
+  if ( 0 > ( err = (NHTTPError)NHTTP_SetRootCA( handle, (const char *)nintendoCA, sizeof(nintendoCA)/sizeof(CPSCaInfo*) )))
   {
     GF_ASSERT_MSG(0," NHTTP_SetRootCA(%d)\n",err);
     return FALSE;
   }
+#if 0
   if(0!=NHTTP_AddHeaderField(handle, "Accept", "*/*" )){
     GF_ASSERT(0);
     return FALSE;

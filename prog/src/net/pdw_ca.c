@@ -1,5 +1,6 @@
 #include <nitro.h>
-#include "net/nitrowifidummy.h"
+#include <nitroWiFi/soc.h>
+//#include "net/nitrowifidummy.h"
 
 #if 1
 static char ca_name[] = "JP, Tokyo, Minato-ku, bfs, pokemon-ds.basementfactorysystems.com";

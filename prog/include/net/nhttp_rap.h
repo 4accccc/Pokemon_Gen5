@@ -12,6 +12,7 @@
 #include <nitro.h>
 #include "gflib.h"
 #include <nitroWiFi/nhttp.h>
+#include <nitroWiFi/soc.h>
 #include "nitrowifidummy.h"
 #include "dreamworld_netdata.h"
 #include "webresp_defs.h"

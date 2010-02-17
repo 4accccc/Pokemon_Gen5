@@ -1,7 +1,7 @@
 #pragma once
 
 //ライブラリに含まれていなかったのでダミー定義
-
+/*
 typedef struct
 {
     char*   dn;             // distinguished name
@@ -10,5 +10,5 @@ typedef struct
     int     exponent_len;   // length of public exponent
     u8*     exponent;       // public exponent
 } CPSCaInfo;
-
+*/
 
