@@ -3,7 +3,7 @@
 static const WARPDATA WarpData[] = {
 	{
 		SYS_FLAG_ARRIVE_T01,
-		FALSE,TRUE ,
+		TRUE ,TRUE ,
 		ZONE_ID_T01R0101    ,   6,   9,
 		ZONE_ID_T01         , 782, 748,
 		ZONE_ID_T01         , 782, 748,
