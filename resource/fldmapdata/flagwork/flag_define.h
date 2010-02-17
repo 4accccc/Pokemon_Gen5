@@ -637,7 +637,7 @@
 #define FV_D08R0901_EVENT_01               613 /* 0x0265 リュウラセンの塔７：ライバル、C07ジムリーダー（ハチク） */
 #define FV_C02_STONEEVENT_01               614 /* 0x0266 C02フィールド：ライト/ダークストーン入手イベント 博士（父・娘）、チャンピオン、サポート、C02ジムリーダー（アロエ） */
 #define FV_C04R0111_PARTNER                615 /* 0x0267 バトルサブウェイ、ホーム：パートナー */
-#define FV_C04R0111_NPC                    616 /* 0x0268 バトルサブウェイ、ホーム：NPC */
+#define FV_BSUBWAY_RECEIPT_PARTNER         616 /* 0x0268 バトルサブウェイ、受付：パートナー */
 #define FV_N01R0502_EVENT_01               617 /* 0x0269 N城謁見の間：ゲーチス、ライバル、チャンピオン */
 #define FV_D04R0101_SUNGLASSES_01          618 /* 0x026a D04遺跡のサングラス */
 #define FV_C08_SAGE1_01                    619 /* 0x026b ソウリュウシティ：ゲーヂス・ジムリーダー・チャンピオン・聴衆 */
@@ -675,19 +675,19 @@
 #define FV_D02R0201_LEGEND3                651 /* 0x028b 伝説ポケモン：アラミス */
 #define FV_D09_ROCK1                       652 /* 0x028c ポルトスのダンジョンを塞ぐ岩 */
 #define FV_D02_ROCK1                       653 /* 0x028d アラミスのダンジョンを塞ぐ岩 */
-#define FV_BSUBWAY_RECEIPT_PARTNER         654 /* 0x028e バトルサブウェイ、受付：パートナー */
+#define FV_C04R0111_NPC_00                 654 /* 0x028e バトルサブウェイ、ホーム：NPC */
 #define FV_D06R0101_HAKAI                  655 /* 0x028f 電気洞窟内のダークトリニティ３人 */
 #define FV_T01R0401_HAKASE1                656 /* 0x0290 カノコタウン研究所：博士（父） */
 #define FV_POSTMAN                         657 /* 0x0291 不思議な贈り物配達員 */
 #define FV_R07_RIVAL_01                    658 /* 0x0292 ７番道路：ライバルとチャンピオン */
 #define FV_D08R0101_HAKAI                  659 /* 0x0293 リュウラセンの塔入り口（破壊前）：プラズマ団 */
-		/* not used   660(0x0294) */
-		/* not used   661(0x0295) */
-		/* not used   662(0x0296) */
-		/* not used   663(0x0297) */
-		/* not used   664(0x0298) */
-		/* not used   665(0x0299) */
-		/* not used   666(0x029a) */
+#define FV_C04R0111_NPC_01                 660 /* 0x0294 バトルサブウェイ、ホーム：NPC */
+#define FV_C04R0111_NPC_02                 661 /* 0x0295 バトルサブウェイ、ホーム：NPC */
+#define FV_C04R0111_NPC_03                 662 /* 0x0296 バトルサブウェイ、ホーム：NPC */
+#define FV_C04R0111_NPC_04                 663 /* 0x0297 バトルサブウェイ、ホーム：NPC */
+#define FV_C04R0111_NPC_05                 664 /* 0x0298 バトルサブウェイ、ホーム：NPC */
+#define FV_C04R0111_NPC_06                 665 /* 0x0299 バトルサブウェイ、ホーム：NPC */
+#define FV_C04R0111_NPC_07                 666 /* 0x029a バトルサブウェイ、ホーム：NPC */
 		/* not used   667(0x029b) */
 		/* not used   668(0x029c) */
 		/* not used   669(0x029d) */
