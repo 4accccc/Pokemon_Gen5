@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-12T20:32:26"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T21:34:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,7 +266,7 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
-			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP">
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
 				<parameter number="0" japanese="モード" english="モード" type="int8"/>
 				<comment language="japanese">ユーザConfig設定に応じて
 相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
@@ -327,14 +327,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1540" top="283" right="2245" bottom="903" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -357,93 +357,93 @@
 
 	<row id="msg_guru2_00">
 		<comment>ぐるぐる交換　ゲームメイン</comment>
-		<language name="JPN" font=" 1:font_system" width="216">そのまま　おまちください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">そのまま　おまちください</language>
+		<language name="JPN" font=" 1:small" width="216">そのまま　おまちください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">そのまま　お待ちください</language>
 	</row>
 
 	<row id="msg_guru2_01">
 		<comment>タマゴの持ち主名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[1:02:ポケモンニックネーム:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]</language>
 	</row>
 
 	<row id="msg_guru2_02">
-		<language name="JPN" font=" 1:font_system" width="216">[1:02:ポケモンニックネーム:1]は
+		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:1]は
 [1:02:ポケモンニックネーム:2]の　タマゴを　もらった！</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:02:ポケモンニックネーム:1]は
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:1]は
 [1:02:ポケモンニックネーム:2]の　タマゴを　もらった！</language>
 	</row>
 
 	<row id="msg_guru2_03">
-		<language name="JPN" font=" 1:font_system" width="216">おまけエリアに　とまったので
+		<language name="JPN" font=" 1:small" width="216">おまけエリアに　とまったので
 [1:09:どうぐ名:0]を　もらった！</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">おまけエリアに　とまったので
+		<language name="JPN_KANJI" font=" 1:small" width="216">おまけエリアに　とまったので
 [1:09:どうぐ名:0]を　もらった！</language>
 	</row>
 
 	<row id="msg_guru2_04">
-		<language name="JPN" font=" 1:font_system" width="216">ざんねん　バッグが　いっぱいだ・・・
+		<language name="JPN" font=" 1:small" width="216">ざんねん！　バッグが　いっぱいだ……
 きのみを　もらうのを　あきらめた</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ざんねん　バッグが　いっぱいだ・・・
+		<language name="JPN_KANJI" font=" 1:small" width="216">残念！　バッグが　一杯だ……
 きのみを　もらうのを　あきらめた</language>
 	</row>
 
 	<row id="msg_guru2_05">
-		<language name="JPN" font=" 1:font_system" width="216">つうしん　たいきちゅうです
-しばらく　おまち　ください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしん　たいきちゅうです
-しばらく　おまち　ください</language>
+		<language name="JPN" font=" 1:small" width="216">つうしん　たいきちゅう　です
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信　待機中です
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="msg_guru2_06">
-		<language name="JPN" font=" 1:font_system" width="216">つごうのつかない　メンバーがいたので
+		<language name="JPN" font=" 1:small" width="216">つごうのつかない　メンバーがいたので
 ぐるぐるこうかんを　ちゅうし　します</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つごうのつかない　メンバーがいたので
-ぐるぐるこうかんを　ちゅうし　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">都合のつかない　メンバーがいたので
+ぐるぐるこうかんを　中止します</language>
 	</row>
 
 	<row id="msg_guru2_07">
-		<language name="JPN" font=" 1:font_system" width="216">リーダーの　つごうが　つかないので
+		<language name="JPN" font=" 1:small" width="216">リーダーの　つごうが　つかないので
 ぐるぐるこうかんを　ちゅうし　します</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">リーダーの　つごうが　つかないので
-ぐるぐるこうかんを　ちゅうし　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">リーダーの　都合が　つかないので
+ぐるぐるこうかんを　中止します</language>
 	</row>
 
 	<row id="msg_guru2_08">
-		<language name="JPN" font=" 1:font_system" width="216">つうしんエラーが　はっせい　しました
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせい　しました
 ぐるぐるこうかんを　ちゅうし　します</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしんエラーが　はっせい　しました
-ぐるぐるこうかんを　ちゅうし　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました
+ぐるぐるこうかんを　中止します</language>
 	</row>
 
 	<row id="msg_guru2_09">
-		<language name="JPN" font=" 1:font_system" width="216">じかんぎれのため　しめきられました
+		<language name="JPN" font=" 1:small" width="216">じかんぎれのため　しめきられました
 ぐるぐるこうかんを　ちゅうし　します</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">じかんぎれのため　しめきられました
-ぐるぐるこうかんを　ちゅうし　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">時間切れのため　締め切られました
+ぐるぐるこうかんを　中止します</language>
 	</row>
 
 	<row id="msg_guru2_10">
-		<language name="JPN" font=" 1:font_system" width="216">つうしん　たいきちゅうです
-しばらく　おまち　ください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしん　たいきちゅうです
-しばらく　おまち　ください</language>
+		<language name="JPN" font=" 1:small" width="216">つうしん　たいきちゅう　です
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信　待機中です
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="msg_guru2_11">
-		<language name="JPN" font=" 1:font_system" width="216">ポケモンレポートに　かきこんでいます
-しばらく　おまち　ください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモンレポートに　かきこんでいます
-しばらく　おまち　ください</language>
+		<language name="JPN" font=" 1:small" width="216">ポケモンレポートに　かきこんでいます
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンレポートに　書きこんでいます
+しばらく　お待ちください</language>
 	</row>
 
-	<row id="msg_guru2_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,">
+	<row id="msg_guru2_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>ダメタマゴが含まれていたときの
 交換中止メッセージ。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">こうかんできない　タマゴが　あるので
+		<language name="JPN" font=" 1:small" width="216">こうかんできない　タマゴが　あるので
 ぐるぐるこうかんを　ちゅうし　します</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">こうかんできない　タマゴが　あるので
-ぐるぐるこうかんを　ちゅうし　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">交換できない　タマゴが　あるので
+ぐるぐるこうかんを　中止します</language>
 	</row>
 
 	<flowchart-group-list>
