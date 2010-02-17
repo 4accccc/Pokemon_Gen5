@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2009-12-28T13:20:19"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T19:47:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -605,8 +605,8 @@ msg_waza_omoi_01へ
 
 	<row id="msg_waza_oboe_01_04" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>画面レイアウト用</comment>
-		<language name="JPN" font=" 1:small" width="216">PP</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">PP</language>
+		<language name="JPN" font=" 1:small" width="216">ＰＰ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＰＰ</language>
 	</row>
 
 	<row id="msg_waza_oboe_01_05" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -641,8 +641,8 @@ msg_waza_omoi_01へ
 
 	<row id="msg_waza_oboe_01_10" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>技のＰＰ　「ＰＰ　　９９／９９」</comment>
-		<language name="JPN" font=" 1:small" width="216">[2:01:２桁:0]/[2:01:２桁:1]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]/[2:01:２桁:1]</language>
+		<language name="JPN" font=" 1:small" width="216">[2:01:２桁:0]／[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]／[2:01:２桁:1]</language>
 	</row>
 
 	<row id="msg_waza_oboe_01_11" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -653,8 +653,8 @@ msg_waza_omoi_01へ
 
 	<row id="msg_waza_oboe_01_12" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>特殊な威力、命中</comment>
-		<language name="JPN" font=" 1:small" width="216">ーーー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ーーー</language>
+		<language name="JPN" font=" 1:small" width="216">―――</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">―――</language>
 	</row>
 
 	<row id="msg_exp_back" back-color="#80ffff,,,,,,,,,,,,,,,,,">
