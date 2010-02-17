@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-17T20:47:30"/>
+	<create user="taya" host="W00146" date="2010-02-17T23:35:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1519,6 +1519,50 @@
 		<comment>合体ワザ成功</comment>
 		<language name="JPN" width="216">２つのわざが　ひとつになった！</language>
 		<language name="JPN_KANJI" width="216">２つのワザが　ひとつになった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Sabotage1">
+		<comment>命令無視１</comment>
+		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　いうことを　きかない！</language>
+		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　言うことを　聞かない！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Sabotage2">
+		<comment>命令無視２</comment>
+		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　なまけている！</language>
+		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　怠けている！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Sabotage3">
+		<comment>命令無視３</comment>
+		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　そっぽをむいた！</language>
+		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　そっぽをむいた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Sabotage4">
+		<comment>命令無視４</comment>
+		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　しらんぷりした！</language>
+		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　しらんぷりした！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Sabotage_OtherWaza">
+		<comment>命令無視（他のワザを出す）</comment>
+		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　めいれいを　むしした！</language>
+		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　命令を　無視した！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Sabotage_GoSleep">
+		<comment>命令無視（ねむってしまう）</comment>
+		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　ひるねを　はじめた！</language>
+		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　昼寝を　始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Sabotage_Sleeping">
+		<comment>命令無視（ねむり中）</comment>
+		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　ねむったまま
+めいれいを　むしした！</language>
+		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　眠ったまま
+命令を　無視した！</language>
 	</row>
 
 	<flowchart-group-list>
