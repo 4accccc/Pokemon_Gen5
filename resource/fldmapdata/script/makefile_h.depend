@@ -111,6 +111,9 @@ vending_machine_def.h: vending_machine.ev
 elevator_def.h: elevator.ev
 	$(EV_DEF) elevator.ev $(SCR_OFFS_ID_H)
 
+gpower_scr_def.h: gpower_scr.ev
+	$(EV_DEF) gpower_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
