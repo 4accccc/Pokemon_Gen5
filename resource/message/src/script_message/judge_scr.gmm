@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-23T19:18:08"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T12:34:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1474" top="304" right="2179" bottom="924" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -344,9 +344,9 @@
 		<language name="JPN" width="256">ボクの　なまえは　ジャッジ！▼
 ほんとうの　なまえは　ちがうけれど
 みんな　ジャッジって　よんでくれるよ▼
-なぜかというと
-ボクには　ポケモンの　のうりょくを▽
-みきわめる……　つまり　ジャッジする▽
+なぜかというと　ボクには
+ポケモンの　のうりょくを　みきわめる▼
+つまり　ジャッジする
 ふしぎな　ちからが　あるからなんだ▼
 きみも　よかったら
 のうりょくが　きになる　ポケモンを▽
@@ -354,9 +354,9 @@
 		<language name="JPN_KANJI" width="256">ボクの　名前は　ジャッジ！▼
 ほんとうの　名前は　ちがうけれど
 みんな　ジャッジって　よんでくれるよ▼
-なぜかというと
-ボクには　ポケモンの　能力を▽
-見極める……　つまり　ジャッジする▽
+なぜかというと　ボクには
+ポケモンの　能力を　見極める……▼
+つまり　ジャッジする
 不思議な　力が　あるからなんだ▼
 きみも　よかったら
 能力が　気になる　ポケモンを▽
