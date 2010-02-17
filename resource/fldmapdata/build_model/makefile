@@ -10,7 +10,7 @@
 #------------------------------------------------------------------------------
 USERS	=	 lee_hyunjung fuchino tamada nakatsui ibe_mana tanoue_reiko \
 				 fujiwara_maiko ohkubo_tomohiko unno james_turner tomoya_takahashi iwasawa \
-				 obata_toshihiro
+				 obata_toshihiro ohnishi_shinichi
 
 #------------------------------------------------------------------------------
 #Å¶Ç±Ç±Ç…çÏê¨Ç∑ÇÈnarcñºÇèëÇ≠
