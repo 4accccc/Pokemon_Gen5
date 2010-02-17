@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-01-26T19:46:01"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T21:42:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="194" top="258" right="899" bottom="878" maximized="no" rayout="Vertical2">
+	<dialog left="1488" top="289" right="2193" bottom="909" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="597" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,8 +292,8 @@
 		<comment>おえかきチャット：
 誰かが入ってきたときのメッセージ
 ０：入ってきた人</comment>
-		<language name="JPN">[1:00:トレーナー名:0]さんが　はいって　きました</language>
-		<language name="JPN_KANJI">[1:00:トレーナー名:0]さんが　はいって　きました</language>
+		<language name="JPN">[1:00:トレーナー名:0]さんが　はいってきました</language>
+		<language name="JPN_KANJI">[1:00:トレーナー名:0]さんが　入ってきました</language>
 	</row>
 
 	<row id="msg_oekaki_02">
@@ -301,7 +301,7 @@
 お絵かきをやめるときのメッセージ
 この後、はい・いいえの選択</comment>
 		<language name="JPN">おえかきを　やめますか？</language>
-		<language name="JPN_KANJI">おえかきを　やめますか？</language>
+		<language name="JPN_KANJI">お絵描きを　やめますか？</language>
 	</row>
 
 	<row id="msg_oekaki_03">
@@ -309,7 +309,7 @@
 誰かが帰ったときのメッセージ
 ０：帰った人の名前</comment>
 		<language name="JPN">[1:00:トレーナー名:0]さんが　かえりました</language>
-		<language name="JPN_KANJI">[1:00:トレーナー名:0]さんが　かえりました</language>
+		<language name="JPN_KANJI">[1:00:トレーナー名:0]さんが　帰りました</language>
 	</row>
 
 	<row id="msg_oekaki_04">
@@ -319,7 +319,7 @@
 		<language name="JPN">リーダーの　[1:00:トレーナー名:0]さんが
 ぬけたので　かいさん　します</language>
 		<language name="JPN_KANJI">リーダーの　[1:00:トレーナー名:0]さんが
-ぬけたので　かいさん　します</language>
+抜けたので　解散します</language>
 	</row>
 
 	<row id="msg_oekaki_05">
@@ -328,7 +328,7 @@
 この後、はい・いいえの選択</comment>
 		<language name="JPN">リーダーが　やめると　かいさんに
 なりますが　よろしいですか？</language>
-		<language name="JPN_KANJI">リーダーが　やめると　かいさんに
+		<language name="JPN_KANJI">リーダーが　やめると　解散に
 なりますが　よろしいですか？</language>
 	</row>
 
@@ -345,7 +345,7 @@
 		<comment>おえかきチャット：
 お絵かきをやめた後のメッセージ</comment>
 		<language name="JPN">おえかきを　やめました</language>
-		<language name="JPN_KANJI">おえかきを　やめました</language>
+		<language name="JPN_KANJI">お絵描きを　やめました</language>
 	</row>
 
 	<row id="msg_oekaki_08">
@@ -381,7 +381,7 @@
 「よろしいですか？」で「いいえ」を選んだとき</comment>
 		<language name="JPN">あたらしく　サインを
 かきなおしますか？</language>
-		<language name="JPN_KANJI">あたらしく　サインを
+		<language name="JPN_KANJI">新しく　サインを
 かきなおしますか？</language>
 	</row>
 
@@ -394,7 +394,7 @@
 
 	<row id="msg_oekaki_14">
 		<language name="JPN">おえかきに　さんかしました！</language>
-		<language name="JPN_KANJI">おえかきに　さんかしました！</language>
+		<language name="JPN_KANJI">お絵描きに　参加しました！</language>
 	</row>
 
 	<flowchart-group-list>
