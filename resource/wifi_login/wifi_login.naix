@@ -12,13 +12,14 @@
 
 enum {
 	NARC_wifi_login_conect_NCLR = 0,
-	NARC_wifi_login_conect_NCGR = 1,
-	NARC_wifi_login_conect_sub_NCGR = 2,
-	NARC_wifi_login_conect_01_NSCR = 3,
-	NARC_wifi_login_conect_02_NSCR = 4,
-	NARC_wifi_login_conect_02a_NSCR = 5,
-	NARC_wifi_login_conect_03_NSCR = 6,
-	NARC_wifi_login_conect_sub_NSCR = 7
+	NARC_wifi_login_conect_anm_NCLR = 1,
+	NARC_wifi_login_conect_NCGR = 2,
+	NARC_wifi_login_conect_sub_NCGR = 3,
+	NARC_wifi_login_conect_01_NSCR = 4,
+	NARC_wifi_login_conect_02_NSCR = 5,
+	NARC_wifi_login_conect_02a_NSCR = 6,
+	NARC_wifi_login_conect_03_NSCR = 7,
+	NARC_wifi_login_conect_sub_NSCR = 8
 };
 
 /* NARC_WIFI_LOGIN_NAIX_ */
