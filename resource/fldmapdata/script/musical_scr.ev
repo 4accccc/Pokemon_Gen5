@@ -19,6 +19,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_musical_recept_single
+_EVENT_DATA		ev_musical_recept_comm
 _EVENT_DATA		ev_musical_change_program
 _EVENT_DATA		ev_musical_fan_01
 _EVENT_DATA		ev_musical_fan_02
@@ -37,6 +38,8 @@ DEFINE_LOCAL fan_number	// ファンの番号
 /*						一人用　受付						 */
 /*************************************************************/
 EVENT_START	ev_musical_recept_single
+
+	_MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
 
   _TALK_OBJ_START()
 
@@ -58,7 +61,157 @@ EVENT_START	ev_musical_recept_single
     _BALLOONWIN_CLOSE()
 
   ENDIF
+  
+  _CALL ev_musical_exit_common
 
+EVENT_END
+
+
+/*************************************************************/
+/*						通信　受付							 */
+/*************************************************************/
+EVENT_START	ev_musical_recept_comm
+
+	_MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
+
+	_CALL ev_musical_recept_comm_core
+
+EVENT_END
+
+
+/*************************************************************/
+/*						通信　受付コア							 */
+/*************************************************************/
+EVENT_START	ev_musical_recept_comm_core
+
+  DEFINE_LOCAL ret
+  
+  //ワイヤレス通信開始しますか
+  _SYSWIN_MSG_DOWN( msg_musical_test_01 )
+  _YES_NO_WIN( ret )
+  
+  IF $ret == SCR_NO THEN //やめる
+    _RET
+  ENDIF
+  
+  //フィールド通信切断
+  _FIELD_COMM_EXIT_EVENT_CALL( ret )
+  
+  IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
+    $ret = FALSE
+  ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
+    $ret = FALSE
+  ELSE
+    $ret = TRUE
+  ENDIF
+  
+  IF $ret == FALSE THEN //切断失敗
+    _SYSWIN_MSG_DOWN( msg_musical_test_01 )
+    _RET
+  ENDIF
+
+  //通信前レポート
+  _REPORT_EVENT_CALL_WIRELESS( ret )
+  
+  IF $ret != SCR_REPORT_OK THEN //レポートしない
+    _RET
+  ENDIF
+  
+  //親になるか子になるか
+  _SYSWIN_MSG_DOWN( msg_musical_test_01 )
+  
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
+  _BMPMENU_MAKE_LIST( msg_msucail_program_01, 0 ) //リーダー
+  _BMPMENU_MAKE_LIST( msg_msucail_program_02, 1 ) //グループ
+  _BMPMENU_MAKE_LIST( msg_msucail_program_07, 2 ) //やめる
+  _BMPMENU_START()
+  
+  IF $ret == 2 THEN //やめる
+    _CALL ev_musical_exit_common
+    _RET
+  ENDIF
+  
+  _SYSWIN_CLOSE()
+
+  //通信開始
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
+
+  //リーダー、グループ別参加処理
+  IF $ret == 0 THEN //リーダー
+    _CALL ev_musical_receipt_comm_connect_parent
+  ELSE //グループ
+    _CALL ev_musical_receipt_comm_connect_child
+  ENDIF
+
+  IF $SCWK_ANSWER == FALSE THEN //接続失敗
+    _CALL ev_musical_exit_comm_common
+    _RET
+  ENDIF
+
+	//通信同期(お友達の選択を待っています)
+	_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_FIRST, 0, 0 )
+
+    _CALL ev_musical_exit_comm_common
+
+EVENT_END
+
+
+//--------------------------------------------------------------
+//  受付　通信　リーダー接続
+//  @retval SCWK_ANSWER FALSE=接続無し
+//--------------------------------------------------------------
+ev_musical_receipt_comm_connect_parent:
+{
+  //親参加メニュー
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_PARENT_CONNECT, 0, 0, SCWK_ANSWER )
+  
+  SWITCH $SCWK_ANSWER
+  CASE MUSICAL_COMM_ENTRY_PARENT_OK THEN //OK
+    $SCWK_ANSWER = TRUE
+  CASE MUSICAL_COMM_ENTRY_PARENT_CANCEL THEN //キャンセル
+    $SCWK_ANSWER = FALSE
+  CASE MUSICAL_COMM_ENTRY_PARENT_ERROR THEN //エラー
+    $SCWK_ANSWER = FALSE
+  ENDSWITCH
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付　通信　グループ接続
+//  @retval SCWK_ANSWER FALSE=接続無し
+//--------------------------------------------------------------
+ev_musical_receipt_comm_connect_child:
+{
+  //子参加メニュー
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_CHILD_CONNECT, 0, 0, SCWK_ANSWER )
+
+  SWITCH $SCWK_ANSWER
+  CASE MUSICAL_COMM_ENTRY_CHILD_OK THEN //OK
+    $SCWK_ANSWER = TRUE
+  CASE MUSICAL_COMM_ENTRY_CHILD_CANCEL THEN //NG
+    $SCWK_ANSWER = FALSE
+  ENDSWITCH
+  _RET
+}
+
+
+/*************************************************************/
+/*						共通終了処理(通信					 */
+/*************************************************************/
+EVENT_START	ev_musical_exit_comm_common
+	_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 0, 0, 0 )
+	_CALL ev_musical_exit_common
+EVENT_END
+/*************************************************************/
+/*						共通終了処理							 */
+/*************************************************************/
+EVENT_START	ev_musical_exit_common
+	_MUSICAL_TOOLS( MUSICAL_TOOL_EXIT, 0,0,0 )
+  
+  _SYSWIN_MSG_DOWN( msg_musical_test_03 ) //また　おこしください
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+  
 EVENT_END
 
 

@@ -114,11 +114,12 @@ struct _MUS_COMM_WORK
   BOOL isStartGame;
   u8   befMemberNum;
   
-  MUS_COMM_BEACON beacon;
+  COMM_ENTRY_BEACON beacon;
   MUS_COMM_MODE mode;   //親か子か？
   MUS_COMM_STATE commState; //もっと細かい分岐
 
   GAME_COMM_SYS_PTR gameComm;
+  GAMEDATA *gameData;
   MYSTATUS *myStatus;
   
   MUS_COMM_USER_DATA userData[MUSICAL_COMM_MEMBER_NUM];
@@ -193,6 +194,74 @@ static const NetRecvFuncTable MusCommRecvTable[] =
   { MUS_COMM_Post_ScriptData , MUS_COMM_Post_ScriptDataBuff },
 };
 
+static const GFLNetInitializeStruct aGFLNetInitMusical = 
+{
+  MusCommRecvTable, //NetSamplePacketTbl,  // 受信関数テーブル
+  NELEMS(MusCommRecvTable), // 受信テーブル要素数
+  NULL,    ///< ハードで接続した時に呼ばれる
+  NULL, ///< ネゴシエーション完了時にコール
+  MUS_COMM_GetUserData, // ユーザー同士が交換するデータのポインタ取得関数
+  MUS_COMM_GetUserDataSize, // ユーザー同士が交換するデータのサイズ取得関数
+  MUS_COMM_GetBeaconData,   // ビーコンデータ取得関数  
+  MUS_COMM_GetBeaconSize,   // ビーコンデータサイズ取得関数 
+  MUS_COMM_BeacomCompare, // ビーコンのサービスを比較して繋いで良いかどうか判断する
+  NULL, // 通信不能なエラーが起こった場合呼ばれる
+  NULL, //FatalError
+  NULL, // 通信切断時に呼ばれる関数(終了時
+  NULL,                   // オート接続で親になった場合
+#if GFL_NET_WIFI
+  NULL,                   ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+  NULL,                   ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+  NULL,                   ///< wifiフレンドリスト削除コールバック
+  NULL,                   ///< DWC形式の友達リスト  
+  NULL,                   ///< DWCのユーザデータ（自分のデータ）
+  0,                      ///< DWCへのHEAPサイズ
+  TRUE,                   ///< デバック用サーバにつなぐかどうか
+#endif  //GFL_NET_WIFI
+  0x333,                  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+  GFL_HEAPID_APP,         //元になるheapid
+  HEAPID_NETWORK,         //通信用にcreateされるHEAPID
+  HEAPID_WIFI,            //wifi用にcreateされるHEAPID
+  HEAPID_NETWORK,         //
+  GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
+  MUSICAL_COMM_MEMBER_NUM,        //_MAXNUM,  //最大接続人数
+  24,                     //_MAXSIZE, //最大送信バイト数
+  MUS_COMM_BEACON_MAX,    //_BCON_GET_NUM,  // 最大ビーコン収集数
+  TRUE,                   // CRC計算
+  TRUE,                  // MP通信＝親子型通信モードかどうか
+  GFL_NET_TYPE_WIRELESS,  //通信タイプの指定
+  TRUE,                   // 親が再度初期化した場合、つながらないようにする場合TRUE
+  WB_NET_MUSICAL,     //GameServiceID
+#if GFL_NET_IRC
+  IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
+#endif
+  512 - 4*24,//MP親最大サイズ 512まで
+  0,//dummy
+};  
+  
+#pragma mark [>script func
+MUS_COMM_WORK* MUS_COMM_InitField( HEAPID heapId , GAMEDATA *gameData )
+{
+  MUS_COMM_WORK* work = GFL_HEAP_AllocClearMemory( heapId , sizeof( MUS_COMM_WORK ));
+  work->gameData = gameData;
+  work->myStatus = GAMEDATA_GetMyStatus( gameData );
+
+  MyStatus_Copy( work->myStatus, &work->beacon.mystatus );
+  OS_GetMacAddress( work->beacon.mac_address );
+
+  GFL_NET_Init( &aGFLNetInitMusical , MUS_COMM_FinishNetInitCallback , (void*)work );
+
+  return work;
+
+}
+
+void MUS_COMM_ExitField( MUS_COMM_WORK *work )
+{
+  GFL_HEAP_FreeMemory( work );
+}
+
+
+#pragma mark [>func
 //--------------------------------------------------------------
 //	ワーク作成
 //--------------------------------------------------------------
@@ -255,50 +324,7 @@ void MUS_COMM_DeleteWork( MUS_COMM_WORK* work )
 //--------------------------------------------------------------
 void MUS_COMM_InitComm( MUS_COMM_WORK* work )
 {
-  GFLNetInitializeStruct aGFLNetInit = 
-  {
-    MusCommRecvTable, //NetSamplePacketTbl,  // 受信関数テーブル
-    NELEMS(MusCommRecvTable), // 受信テーブル要素数
-    NULL,    ///< ハードで接続した時に呼ばれる
-    NULL, ///< ネゴシエーション完了時にコール
-    MUS_COMM_GetUserData, // ユーザー同士が交換するデータのポインタ取得関数
-    MUS_COMM_GetUserDataSize, // ユーザー同士が交換するデータのサイズ取得関数
-    MUS_COMM_GetBeaconData,   // ビーコンデータ取得関数  
-    MUS_COMM_GetBeaconSize,   // ビーコンデータサイズ取得関数 
-    MUS_COMM_BeacomCompare, // ビーコンのサービスを比較して繋いで良いかどうか判断する
-    NULL, // 通信不能なエラーが起こった場合呼ばれる
-    NULL, //FatalError
-    NULL, // 通信切断時に呼ばれる関数(終了時
-    NULL,                   // オート接続で親になった場合
-#if GFL_NET_WIFI
-    NULL,                   ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
-    NULL,                   ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-    NULL,                   ///< wifiフレンドリスト削除コールバック
-    NULL,                   ///< DWC形式の友達リスト  
-    NULL,                   ///< DWCのユーザデータ（自分のデータ）
-    0,                      ///< DWCへのHEAPサイズ
-    TRUE,                   ///< デバック用サーバにつなぐかどうか
-#endif  //GFL_NET_WIFI
-    0x333,                  //ggid  DP=0x333,RANGER=0x178,WII=0x346
-    GFL_HEAPID_APP,         //元になるheapid
-    HEAPID_NETWORK,         //通信用にcreateされるHEAPID
-    HEAPID_WIFI,            //wifi用にcreateされるHEAPID
-    HEAPID_NETWORK,         //
-    GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
-    MUSICAL_COMM_MEMBER_NUM,        //_MAXNUM,  //最大接続人数
-    24,                     //_MAXSIZE, //最大送信バイト数
-    MUS_COMM_BEACON_MAX,    //_BCON_GET_NUM,  // 最大ビーコン収集数
-    TRUE,                   // CRC計算
-    TRUE,                  // MP通信＝親子型通信モードかどうか
-    GFL_NET_TYPE_WIRELESS,  //通信タイプの指定
-    TRUE,                   // 親が再度初期化した場合、つながらないようにする場合TRUE
-    WB_NET_MUSICAL,     //GameServiceID
-#if GFL_NET_IRC
-    IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
-#endif
-    512 - 4*24,//MP親最大サイズ 512まで
-    0,//dummy
-  };  
+
   
   u8 i;
   
@@ -340,7 +366,7 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
   work->isReqSendState = FALSE;
   work->useButtonAttentionPoke = MUSICAL_COMM_MEMBER_NUM;
   
-  GFL_NET_Init( &aGFLNetInit , MUS_COMM_FinishNetInitCallback , (void*)work );
+  GFL_NET_Init( &aGFLNetInitMusical , MUS_COMM_FinishNetInitCallback , (void*)work );
 
 }
 
@@ -402,6 +428,7 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
 
     //子機
   case MCS_CHILD_SEARCH:
+/*
     {
       u16 i=0;
       void* beacon;
@@ -418,6 +445,7 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
         MUS_COMM_SetCommState( work , MCS_CHILD_REQ_NEGOTIATION);
       }
     }
+*/
     break;
 
   case MCS_CHILD_REQ_NEGOTIATION:
@@ -631,6 +659,7 @@ MYSTATUS* MUS_COMM_GetPlayerMyStatus( MUS_COMM_WORK* work , u8 idx )
 static void*  MUS_COMM_GetBeaconData(void* pWork)
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+
   return (void*)&work->beacon;
 }
 
@@ -639,7 +668,7 @@ static void*  MUS_COMM_GetBeaconData(void* pWork)
 //--------------------------------------------------------------
 static int MUS_COMM_GetBeaconSize(void *pWork)
 {
-  return sizeof( MUS_COMM_BEACON );
+  return sizeof( COMM_ENTRY_BEACON );
 }
 
 //--------------------------------------------------------------

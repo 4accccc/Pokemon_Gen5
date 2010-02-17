@@ -26,6 +26,7 @@
 #define C04R0201_GIRL3_01                 13
 #define C04R0201_MIDDLEMAN1_01            14
 #define C04R0201_GENTLEMAN_01             15
+#define MUSICAL_RECEPT_COMM               16
 
 #endif //ZONE_C04R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

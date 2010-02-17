@@ -3729,11 +3729,12 @@
  *  @param ret_val  –ß‚è’l
  */
 //--------------------------------------------------------------
-#define _MUSICAL_TOOLS( val1, val2, ret_val ) \
-    _ASM_MUSICAL_TOOLS  val1, val2, ret_val 
+#define _MUSICAL_TOOLS( type, val1, val2, ret_val ) \
+    _ASM_MUSICAL_TOOLS  type, val1, val2, ret_val 
 
-  .macro  _ASM_MUSICAL_TOOLS  val1, val2, ret_val 
+  .macro  _ASM_MUSICAL_TOOLS  type, val1, val2, ret_val 
   .short EV_SEQ_MUSICAL_TOOLS
+  .short \type
   .short \val1
   .short \val2
   .short \ret_val

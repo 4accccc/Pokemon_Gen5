@@ -6,9 +6,10 @@
  * @data	09/02/10
  */
 //======================================================================
-#ifndef MUSICAL_SYSTEM_H__
-#define MUSICAL_SYSTEM_H__
+#pragma once
+
 #include "musical_define.h"
+#include "net_app/comm_entry_menu.h"
 #include "savedata/save_control.h"
 #include "gamesystem/game_comm.h"
 
@@ -20,6 +21,16 @@ typedef struct
   SAVE_CONTROL_WORK *saveCtrl;
   GAME_COMM_SYS_PTR gameComm;
 }MUSICAL_INIT_WORK;
+
+typedef struct
+{
+  void *eventWork;  //MUSICAL_EVENT_WORK
+  void *commWork;   //MUS_COMM_WORK
+  
+  COMM_ENTRY_MENU_PTR entryWork;
+  u16                 *scriptRet;
+  u16                 commSyncNo;
+}MUSICAL_SCRIPT_WORK;
 
 extern GFL_PROC_DATA Musical_ProcData;
 
@@ -34,5 +45,3 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID
 MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPokeParam( u16 monsno , u8 sex , u8 form , u8 rare , HEAPID heapId );
 
 
-
-#endif MUSICAL_SYSTEM_H__

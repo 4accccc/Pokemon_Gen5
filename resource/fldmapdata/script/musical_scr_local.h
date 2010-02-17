@@ -64,15 +64,6 @@
 #define MUSICAL_VALUE_LAST_CONDITION_2ND (10) //最終コンディション(２位)(同点はその他で返る
 #define MUSICAL_VALUE_COUNT_MUSICAL_POKE (11) //参加可能なポケがいるか？
 #define MUSICAL_VALUE_CHECK_MUSICAL_POKE (12) //Partyでポケが参加できるか？
-
-//_GET_MUSICAL_FAN_VALUE 用
-#define MUSICAL_VALUE_FAN_TYPE (0)  //見た目
-#define MUSICAL_VALUE_FAN_CHEER_MSG (1) //応援メッセージ
-#define MUSICAL_VALUE_FAN_GIFT_MSG  (2) //プレゼントメッセージ
-#define MUSICAL_VALUE_FAN_GIFT_TYPE (3) //プレゼント種類
-#define MUSICAL_VALUE_FAN_GIFT_NUMBER (4) //プレゼント番号
-
-//_GET_MUSICAL_WAITROOM_VALUE
 //全部※(控え室のみ有効です！)
 //しかもそれぞれドレスアップ後・ショー後のみ有効な物があるので有泉以外使用禁止
 #define MUSICAL_VALUE_WR_SELF_IDX  (30) //自分の参加番号
@@ -85,4 +76,30 @@
 #define MUSICAL_VALUE_WR_POS_TO_RANK (37) //順位に対応した参加番号
 #define MUSICAL_VALUE_WR_POKE_MAX_POINT_CON (38) //最も点が高かったコンディション
 
+//_GET_MUSICAL_FAN_VALUE 用
+#define MUSICAL_VALUE_FAN_TYPE (0)  //見た目
+#define MUSICAL_VALUE_FAN_CHEER_MSG (1) //応援メッセージ
+#define MUSICAL_VALUE_FAN_GIFT_MSG  (2) //プレゼントメッセージ
+#define MUSICAL_VALUE_FAN_GIFT_TYPE (3) //プレゼント種類
+#define MUSICAL_VALUE_FAN_GIFT_NUMBER (4) //プレゼント番号
 
+//_MUSICAL_TOOLS 用
+
+#define MUSICAL_TOOL_INIT (0) //ミュージカル処理の開始
+#define MUSICAL_TOOL_EXIT (1) //ミュージカル処理の終了
+
+#define MUSICAL_TOOL_COMM_INIT (10) //通信開始
+#define MUSICAL_TOOL_COMM_EXIT (11) //通信終了
+#define MUSICAL_TOOL_COMM_PARENT_CONNECT (12) //親機接続
+#define MUSICAL_TOOL_COMM_CHILD_CONNECT (13) //子機接続
+#define MUSICAL_TOOL_COMM_TIMESYNC (14)   //通信同期
+
+//通信エントリー用返り値
+#define MUSICAL_COMM_ENTRY_PARENT_OK (0)
+#define MUSICAL_COMM_ENTRY_PARENT_CANCEL (1)
+#define MUSICAL_COMM_ENTRY_PARENT_ERROR (2)
+#define MUSICAL_COMM_ENTRY_CHILD_OK (3)
+#define MUSICAL_COMM_ENTRY_CHILD_CANCEL (4)
+
+//タイミングシンク用番号
+#define MUSICAL_COMM_SYNC_FIRST (10)

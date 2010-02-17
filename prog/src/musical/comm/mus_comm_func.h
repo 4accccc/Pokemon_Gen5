@@ -12,6 +12,7 @@
 
 #include "musical/musical_define.h"
 #include "musical/musical_local.h"
+#include "musical/musical_comm_field.h"
 #include "gamesystem/game_comm.h"
 #include "savedata/save_control.h"
 #include "savedata/mystatus.h"
@@ -63,7 +64,6 @@ typedef struct
   STRCODE name[BUFLEN_PERSON_NAME+EOM_SIZE];
 }MUS_COMM_BEACON;
 
-typedef struct _MUS_COMM_WORK MUS_COMM_WORK;
 
 //======================================================================
 //	proto
