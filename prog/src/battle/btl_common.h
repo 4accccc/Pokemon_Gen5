@@ -38,6 +38,11 @@ enum {
 
   BTL_CLIENTID_NULL = BTL_CLIENT_MAX,
   BTL_CLIENTID_COMM_SUPPORT = BTL_CLIENTID_NULL,
+
+  BTL_CLIENTID_SA_PLAYER = 0,
+  BTL_CLIENTID_SA_ENEMY1 = 1,
+  BTL_CLIENTID_SA_FRIEND = 2,
+  BTL_CLIENTID_SA_ENEMY2 = 3,
 };
 
 //--------------------------------------------------------------

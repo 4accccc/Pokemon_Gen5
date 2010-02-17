@@ -46,6 +46,7 @@
 //--------------------------------------------------------
 enum {
   HANDLER_EXHIBISION_WORK_TOTALSIZE = 512,    ///< ハンドラ反応情報を格納するワークのトータルサイズ
+  NIGERU_COUNT_MAX = 30,                      ///< 「にげる」選択回数カウンタの最大値
 };
 
 //--------------------------------------------------------
@@ -200,6 +201,7 @@ struct _BTL_SVFLOW_WORK {
   u8      escapeClientID;
   u8      getPokePos;
   u8      numRelivePoke;
+  u8      nigeruCount;
   u8      relivedPokeID[ BTL_POKEID_MAX ];
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
   u8      pokeInFlag [ BTL_POKEID_MAX ];
@@ -702,6 +704,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->bagMode = bagMode;
   wk->escapeClientID = BTL_CLIENTID_NULL;
   wk->getPokePos = BTL_POS_NULL;
+  wk->nigeruCount = 0;
   wk->sinkaArcHandle = SHINKA_GetArcHandle( heapID );
   BTL_WAZAREC_Init( &wk->wazaRec );
   BTL_DEADREC_Init( &wk->deadRec );
@@ -1736,7 +1739,10 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
           wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
           wk->escapeClientID = actOrder->clientID;
         } else {
-          //SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
+          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
+        }
+        if( ++(wk->nigeruCount) > NIGERU_COUNT_MAX ){
+          wk->nigeruCount = NIGERU_COUNT_MAX;
         }
         break;
       case BTL_ACTION_MOVE:
@@ -2054,10 +2060,21 @@ static BOOL scproc_NigeruCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
   if( !fSkipNigeruCalc )
   {
-    // @@@ 本来はココで逃げる計算
-    // @@@ 今はすばやさ計算をせず誰でも逃げられるようにしている
-    // SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
-    // return FALSE;
+    const BTL_POKEPARAM* bppEnemy = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, BTL_CLIENTID_SA_ENEMY1, 0 );
+    if( bppEnemy )
+    {
+      u16 myAgi = BPP_GetValue_Base( bpp, BPP_AGILITY );
+      u16 enemyAgi = BPP_GetValue_Base( bppEnemy, BPP_AGILITY );
+
+      if( myAgi <= enemyAgi )
+      {
+        u32 value = ((myAgi << FX32_SHIFT) / enemyAgi * 128) >> FX32_SHIFT;
+        value += (wk->nigeruCount * 30 );
+        if( BTL_CALC_GetRand(256) >= value ){
+          return FALSE;
+        }
+      }
+    }
   }
 
   return scproc_NigeruCore( wk, bpp );
@@ -2109,7 +2126,6 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     if( scEvent_NigeruExMessage(wk, bpp) ){
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     }else{
-//      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeSuccess );
       SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
     }
     Hem_PopState( &wk->HEManager, hem_state );
@@ -5001,7 +5017,6 @@ static u32 svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     if( fPluralHitCheck )
     {
       if( !scEvent_CheckHit(wk, attacker, defender, wazaParam) ){
-        OS_TPrintf("途中でハズレた\n");
         break;
       }
     }
@@ -9883,6 +9898,7 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* calc_attacker = attacker;
     fx32 ratio;
     u16 power;
+
     BTL_EVENTVAR_Push();
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
@@ -10000,9 +10016,9 @@ static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 
   BTL_EVENTVAR_Push();
   {
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_GEN_FLAG, f_match );
     BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, ratio );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, f_match );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_TYPEMATCH_RATIO );
     ratio = (fx32)BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
   }
