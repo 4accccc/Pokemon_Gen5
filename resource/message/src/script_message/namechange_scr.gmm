@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T17:43:47"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T13:00:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="25" top="184" right="730" bottom="804" maximized="no" rayout="Vertical2">
+	<dialog left="1464" top="332" right="2169" bottom="952" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -339,8 +339,8 @@
 	<row id="msg_namechange_01">
 		<comment>♂：姓名判断師
 ・はい／いいえの選択肢表示
-　はい→msg_namechange_02
-　いいえ→msg_namechange_06</comment>
+　はい→namechange_02
+　いいえ→namechange_06</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">はい　はい！
 わたしは　せいめい　はんだんし▼
@@ -354,11 +354,11 @@
 
 	<row id="msg_namechange_02">
 		<comment>♂：姓名判断師
-・選んだ→msg_namechange_03
+・選んだ→namechange_03
 ・選んだが他人のポケモンだった
-　→msg_namechange_08
-・タマゴ→msg_namechange_09
-・いいえ→msg_namechange_06</comment>
+　→namechange_08
+・タマゴ→namechange_09
+・いいえ→namechange_06</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">どの　ポケモンの
 ニックネームを　うらなうかね？</language>
@@ -369,10 +369,9 @@
 	<row id="msg_namechange_03">
 		<comment>♂：姓名判断師
 ・はい／いいえの選択肢表示
-　はい→msg_namechange_04
-　いいえ→msg_namechange_06
-
-0＝ニックネーム</comment>
+　はい→namechange_04
+　いいえ→namechange_06
+・0＝ニックネーム</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">うーむ
 [1:02:ポケモンニックネーム:0]か……▼
@@ -393,25 +392,24 @@
 	<row id="msg_namechange_04">
 		<comment>♂：姓名判断師
 ・名前入力画面に
-　変えた→msg_namechange_05
-　変えなかった→msg_namechange_07</comment>
+　変えた→namechange_05
+　変えなかった→namechange_07</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">そうか　では
+		<language name="JPN" width="256">うむ　それでは
 どんな　ニックネームに　しようかな</language>
-		<language name="JPN_KANJI" width="256">そうか　では
+		<language name="JPN_KANJI" width="256">うむ　それでは
 どんな　ニックネームに　しようかな</language>
 	</row>
 
 	<row id="msg_namechange_05">
 		<comment>♂：姓名判断師
-
-0＝ニックネーム</comment>
+・0＝ニックネーム</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">よし　これから
+		<language name="JPN" width="256">よし！　これから
 この　ポケモンは　[1:02:ポケモンニックネーム:0]だ！▼
 まえより　いい　なまえ　じゃないか
 よかったな！</language>
-		<language name="JPN_KANJI" width="256">よし　これから
+		<language name="JPN_KANJI" width="256">よし！　これから
 この　ポケモンは　[1:02:ポケモンニックネーム:0]だ！▼
 前より　いい　名前じゃないか
 よかったな！</language>
@@ -428,8 +426,7 @@
 
 	<row id="msg_namechange_07">
 		<comment>♂：姓名判断師
-
-0＝ニックネーム</comment>
+・0＝ニックネーム</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">よし　これから
 この　ポケモンは　[1:02:ポケモンニックネーム:0]だ！▼
@@ -446,8 +443,7 @@
 	<row id="msg_namechange_08">
 		<comment>♂：姓名判断師
 ・親が他人のポケモン
-
-0＝ニックネーム</comment>
+・0＝ニックネーム</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">うーむ
 [1:02:ポケモンニックネーム:0]か！▼
