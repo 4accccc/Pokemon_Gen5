@@ -28,7 +28,13 @@ enum {
 	NARC_wifileadingchar_hero_gts_NCGR = 14,
 	NARC_wifileadingchar_heroine_gts_NCER = 15,
 	NARC_wifileadingchar_heroine_gts_NANR = 16,
-	NARC_wifileadingchar_heroine_gts_NCGR = 17
+	NARC_wifileadingchar_heroine_gts_NCGR = 17,
+	NARC_wifileadingchar_hero_simple_NCER = 18,
+	NARC_wifileadingchar_hero_simple_NANR = 19,
+	NARC_wifileadingchar_hero_simple_NCGR = 20,
+	NARC_wifileadingchar_heroine_simple_NCER = 21,
+	NARC_wifileadingchar_heroine_simple_NANR = 22,
+	NARC_wifileadingchar_heroine_simple_NCGR = 23
 };
 
 /* NARC_WIFILEADINGCHAR_NAIX_ */
