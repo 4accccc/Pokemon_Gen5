@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T12:45:59"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:05:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -295,7 +295,7 @@
 	<row id="msg_wifi_counter_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>受付カウンターに話しかけたときのメッセージ
 
-・ＷｉーＦｉコネクションへ　いく
+・Ｗｉ－Ｆｉコネクションへ　いく
 　仮ID、かつ登録が０ならば
 　→msg_wifi_club_01_05
 　本ID、かつ登録が０ならば
@@ -315,9 +315,9 @@
 
 	<row id="msg_wifi_counter_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉコネクションを
+		<language name="JPN" width="256">Ｗｉ－Ｆｉコネクションを
 ごりよう　ですか？</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉコネクションを
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉコネクションを
 ご利用　ですか？</language>
 	</row>
 
@@ -339,9 +339,9 @@
 「いいえ」
 →msg_wifi_club_01_02</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉ　せつぞくを
+		<language name="JPN" width="256">Ｗｉ－Ｆｉ　せつぞくを
 かいし　しますか？</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉ　接続を
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ　接続を
 開始しますか？</language>
 	</row>
 
@@ -360,7 +360,7 @@ Wi-Fi P2P接続画面へ</comment>
 		<comment>msg_wifi_club_01_01での選択肢の
 「せつめいを　きく」選択時</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉコネクション　では
+		<language name="JPN" width="256">Ｗｉ－Ｆｉコネクション　では
 ともだちてちょうに　とうろくした▽
 ひと　どうしで　ポケモンこうかんや▽
 つうしんたいせんを　たのしめます▼
@@ -371,9 +371,9 @@ Wi-Fi P2P接続画面へ</comment>
 「レベル５０」や「レベル１００」では
 さんかした　ポケモン　すべてが▽
 そのレベルに　そろえられます▼
-ＷｉーＦｉコネクションを
+Ｗｉ－Ｆｉコネクションを
 ごりよう　ですか？</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉコネクション　では
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉコネクション　では
 ともだちてちょうに　登録した▽
 人　同士で　ポケモン交換や▽
 通信対戦を　楽しめます▼
@@ -384,7 +384,7 @@ Wi-Fi P2P接続画面へ</comment>
 「レベル５０」や「レベル１００」では
 参加した　ポケモン　すべてが▽
 そのレベルに　そろえられます▼
-ＷｉーＦｉコネクションを
+Ｗｉ－Ｆｉコネクションを
 ご利用ですか？</language>
 	</row>
 
