@@ -55,6 +55,8 @@ enum{
 	POKEGRA_NCEC,
 
   POKEGRA_MAX,
+
+  POKEGRA_PLTT_ONLY_MAX = 2,  //フォルム違いのデータがパレットのみの時の総数
 };
 
 //-------------------------------------
