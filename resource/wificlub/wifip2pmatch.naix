@@ -50,21 +50,15 @@ enum {
 	NARC_wifip2pmatch_wf_match_btm_button_NSCR = 36,
 	NARC_wifip2pmatch_wf_match_btm_etc_NSCR = 37,
 	NARC_wifip2pmatch_wf_match_btm_result00_NSCR = 38,
-	NARC_wifip2pmatch_wf_match_btm_result01_NSCR = 39,
-	NARC_wifip2pmatch_wf_match_btm_result02_NSCR = 40,
-	NARC_wifip2pmatch_wf_match_btm_result03_NSCR = 41,
-	NARC_wifip2pmatch_wf_match_btm_result04_NSCR = 42,
-	NARC_wifip2pmatch_wf_match_btm_result05_NSCR = 43,
-	NARC_wifip2pmatch_wf_match_btm_result06_NSCR = 44,
-	NARC_wifip2pmatch_wf_match_top_room_1_NSCR = 45,
-	NARC_wifip2pmatch_wf_match_top_room_2_NSCR = 46,
-	NARC_wifip2pmatch_wf_match_top_room_3_NSCR = 47,
-	NARC_wifip2pmatch_wf_match_top_room_4_NSCR = 48,
-	NARC_wifip2pmatch_wifi_check_bg_NSCR = 49,
-	NARC_wifip2pmatch_conect_NANR = 50,
-	NARC_wifip2pmatch_wf_match_btm_button_NANR = 51,
-	NARC_wifip2pmatch_wf_match_btm_oam_NANR = 52,
-	NARC_wifip2pmatch_wf_match_top_room_obj_NANR = 53
+	NARC_wifip2pmatch_wf_match_top_room_1_NSCR = 39,
+	NARC_wifip2pmatch_wf_match_top_room_2_NSCR = 40,
+	NARC_wifip2pmatch_wf_match_top_room_3_NSCR = 41,
+	NARC_wifip2pmatch_wf_match_top_room_4_NSCR = 42,
+	NARC_wifip2pmatch_wifi_check_bg_NSCR = 43,
+	NARC_wifip2pmatch_conect_NANR = 44,
+	NARC_wifip2pmatch_wf_match_btm_button_NANR = 45,
+	NARC_wifip2pmatch_wf_match_btm_oam_NANR = 46,
+	NARC_wifip2pmatch_wf_match_top_room_obj_NANR = 47
 };
 
 /* NARC_WIFIP2PMATCH_NAIX_ */
