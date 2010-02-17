@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T18:28:49"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T22:24:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1530" top="279" right="2235" bottom="899" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -351,8 +351,8 @@
 	<row id="GAMESYNC_004">
 		<language name="JPN" width="256">ここまでの　かつやくを
 ポケモンレポートに　かきこみますか？</language>
-		<language name="JPN_KANJI" width="256">ここまでの　かつやくを
-ポケモンレポートに　書き込みますか？</language>
+		<language name="JPN_KANJI" width="256">ここまでの　活躍を
+ポケモンレポートに　書きこみますか？</language>
 	</row>
 
 	<row id="GAMESYNC_005">
@@ -367,21 +367,21 @@
 
 	<row id="GAMESYNC_007">
 		<language name="JPN" width="256">セーブしています
-しばらくおまちください</language>
+しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="256">セーブしています
-しばらくおまちください</language>
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="GSYNC_001">
-		<language name="JPN" width="256">ねかしつけているところです
-しばらくおまちください</language>
+		<language name="JPN" width="256">ねかしつけている　ところです
+しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="256">寝かしつけている所です
-しばらくお待ちください。</language>
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="GSYNC_002">
 		<language name="JPN" width="256">ゲームシンクが かんりょう しました</language>
-		<language name="JPN_KANJI" width="256">ゲームシンクが完了しました</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクが　完了しました</language>
 	</row>
 
 	<row id="GSYNC_003">
@@ -393,7 +393,7 @@
 
 	<row id="GSYNC_004">
 		<language name="JPN" width="256">ぽけもんを　おこしています</language>
-		<language name="JPN_KANJI" width="256">ポケモンを起こしています。</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　起こしています</language>
 	</row>
 
 	<row id="GSYNC_005">
@@ -401,10 +401,10 @@
 
 なにかを　てに　にぎって いたようです
 ポケモンセンターに　いってみよう！</language>
-		<language name="JPN_KANJI" width="256">ゲームシンクが完了しました。
+		<language name="JPN_KANJI" width="256">ゲームシンクが　完了しました
 
-なにかを手に握っていたようです。
-ポケモンセンターで受け取ってください。</language>
+なにかを　手に握っていたようです
+ポケモンセンターで　受け取ってください</language>
 	</row>
 
 	<flowchart-group-list>
