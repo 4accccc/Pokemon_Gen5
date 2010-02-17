@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T12:53:21"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:03:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1488" top="94" right="2176" bottom="874" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="513"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="526"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="680"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -295,7 +295,7 @@
 	<row id="msg_wifi_club_01_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>受付カウンターに話しかけたときのメッセージ
 
-・ＷｉーＦｉクラブへ　いく
+・Ｗｉ－Ｆｉクラブへ　いく
 　仮ID、かつ登録が０ならば
 　→msg_wifi_club_01_05
 　本ID、かつ登録が０ならば
@@ -309,13 +309,13 @@
 ・やめる
 　→msg_wifi_club_01_02</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ポケモン　ＷｉーＦｉ　クラブ　へ
+		<language name="JPN" width="256">ポケモン　Ｗｉ－Ｆｉ　クラブ　へ
 ようこそ！▼
-ＷｉーＦｉコネクションを
+Ｗｉ－Ｆｉコネクションを
 ごりよう　ですか？</language>
-		<language name="JPN_KANJI" width="256">ポケモン　ＷｉーＦｉ　クラブ　へ
+		<language name="JPN_KANJI" width="256">ポケモン　Ｗｉ－Ｆｉ　クラブ　へ
 ようこそ！▼
-ＷｉーＦｉコネクションを
+Ｗｉ－Ｆｉコネクションを
 ご利用ですか？</language>
 	</row>
 
@@ -337,9 +337,9 @@
 「いいえ」
 →msg_wifi_club_01_02</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉ　せつぞくを
+		<language name="JPN" width="256">Ｗｉ－Ｆｉ　せつぞくを
 かいし　しますか？</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉ接続を
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ接続を
 開始しますか？</language>
 	</row>
 
@@ -368,7 +368,7 @@ Wi-Fi P2P接続画面へ</comment>
 おきゃくさまは
 まだ　ともだちてちょうに▽
 おともだちを　とうろく　してませんね▼
-ＷｉーＦｉクラブは
+Ｗｉ－Ｆｉクラブは
 ともだちてちょうに▽
 おともだちを　とうろく　していないと▽
 ごりよう　できません▼
@@ -378,7 +378,7 @@ Wi-Fi P2P接続画面へ</comment>
 お客さまは
 まだ　ともだちてちょうに▽
 お友達を　登録してませんね▼
-ＷｉーＦｉクラブは
+Ｗｉ－Ｆｉクラブは
 ともだちてちょうに▽
 お友達を　登録していないと▽
 ご利用できません▼
@@ -395,7 +395,7 @@ Wi-Fi P2P接続画面へ</comment>
 おきゃくさまは
 まだ　ともだちてちょうに▽
 おともだちを　とうろく　してませんね▼
-ＷｉーＦｉクラブは
+Ｗｉ－Ｆｉクラブは
 ともだちてちょうに▽
 おともだちを　とうろく　していないと▽
 ごりよう　できません▼
@@ -405,7 +405,7 @@ Wi-Fi P2P接続画面へ</comment>
 お客さまは
 まだ　ともだちてちょうに▽
 お友達を　登録してませんね▼
-ＷｉーＦｉクラブは
+Ｗｉ－Ｆｉクラブは
 ともだちてちょうに▽
 お友達を　登録していないと▽
 ご利用できません▼
@@ -417,7 +417,7 @@ Wi-Fi P2P接続画面へ</comment>
 		<comment>msg_wifi_club_01_01での選択肢の
 「せつめいを　きく」選択時</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉクラブ　では
+		<language name="JPN" width="256">Ｗｉ－Ｆｉクラブ　では
 ともだちてちょうに　とうろくした▽
 ひと　どうしで　ポケモンこうかんや▽
 つうしんたいせんを　たのしめます▼
@@ -428,9 +428,9 @@ Wi-Fi P2P接続画面へ</comment>
 「レベル５０」や「レベル１００」では
 さんかした　ポケモン　すべてが▽
 そのレベルに　そろえられます▼
-ＷｉーＦｉコネクションを
+Ｗｉ－Ｆｉコネクションを
 ごりよう　ですか？</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉクラブ　では
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉクラブ　では
 ともだちてちょうに　登録した▽
 人　同士で　ポケモン交換や▽
 通信対戦を　たのしめます▼
@@ -441,7 +441,7 @@ Wi-Fi P2P接続画面へ</comment>
 「レベル５０」や「レベル１００」では
 参加した　ポケモン　すべてが▽
 そのレベルに　そろえられます▼
-ＷｉーＦｉコネクションを
+Ｗｉ－Ｆｉコネクションを
 ご利用ですか？</language>
 	</row>
 
@@ -476,8 +476,8 @@ C-Gear入手前</comment>
 	<row id="msg_wifi_club_01_win01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉクラブへ　いく</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉクラブへ　いく</language>
+		<language name="JPN" width="256">Ｗｉ－Ｆｉクラブへ　いく</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉクラブへ　いく</language>
 	</row>
 
 	<row id="msg_wifi_club_01_win02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -497,20 +497,20 @@ C-Gear入手前</comment>
 	<row id="msg_pcugwifi_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>●選択メニュー表示
 
-・ＷｉーＦｉひろばへ　いく
+・Ｗｉ－Ｆｉひろばへ　いく
  →msg_pcugwifi_02
 ・せつめいを　きく
 　→msg_pcugwifi_05
 ・やめる
 →msg_pcugwifi_04</comment>
 		<attribute name="キャラ指定">ひろば受付</attribute>
-		<language name="JPN" width="256">ポケモンセンター　ＷｉーＦｉひろばへの
+		<language name="JPN" width="256">ポケモンセンター　Ｗｉ－Ｆｉひろばへの
 ごあんないは　こちらです！▼
-ＷｉーＦｉコネクションを
+Ｗｉ－Ｆｉコネクションを
 ごりよう　ですか？[2:00:１桁:0]</language>
-		<language name="JPN_KANJI" width="256">ポケモンセンター　ＷｉーＦｉひろばへの
+		<language name="JPN_KANJI" width="256">ポケモンセンター　Ｗｉ－Ｆｉひろばへの
 ご案内は　こちらです！▼
-ＷｉーＦｉコネクションを
+Ｗｉ－Ｆｉコネクションを
 ご利用ですか？[2:00:１桁:0]</language>
 	</row>
 
@@ -525,9 +525,9 @@ C-Gear入手前</comment>
 「いいえ」
 →msg_pcugwifi_04</comment>
 		<attribute name="キャラ指定">ひろば受付</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉ　せつぞくを
+		<language name="JPN" width="256">Ｗｉ－Ｆｉ　せつぞくを
 かいし　しますか？[2:00:１桁:0]</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉ接続を
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ接続を
 開始しますか？[2:00:１桁:0]</language>
 	</row>
 
@@ -555,45 +555,45 @@ Wi-Fi P2P接続画面へ</comment>
 	<row id="msg_pcugwifi_05">
 		<comment>●メッセージ終了後
 
-・ＷｉーＦｉひろばへ　いく
+・Ｗｉ－Ｆｉひろばへ　いく
  →msg_pcugwifi_02
 ・せつめいを　きく
 　→msg_pcugwifi_05
 ・やめる
 →msg_pcugwifi_04</comment>
 		<attribute name="キャラ指定">ひろば受付</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉひろば　は　
+		<language name="JPN" width="256">Ｗｉ－Ｆｉひろば　は　
 せかいの　ポケモントレーナーと▽
 こうりゅう　できる　しせつです▼
 おしゃべり　や　ひろばゲーム
-ＷｉーＦｉひろば　だけの　どうぐ▽
+Ｗｉ－Ｆｉひろば　だけの　どうぐ▽
 タッチトイ　などで　あそべます▼
-なお　ＷｉーＦｉひろば　は
+なお　Ｗｉ－Ｆｉひろば　は
 １かいの　せつぞくで　あそべる▽
 じかんが　きまって　います▼
 しゅうりょう　までの　あいだ
 たくさん　たのしんで　くださいね！▼
-ＷｉーＦｉコネクションを
+Ｗｉ－Ｆｉコネクションを
 ごりよう　ですか？[2:00:１桁:0]</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉひろば　は　
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉひろば　は　
 世界の　ポケモントレーナーと▽
 交流できる　施設です▼
 おしゃべり　や　ひろばゲーム
-ＷｉーＦｉひろば　だけの　道具▽
+Ｗｉ－Ｆｉひろば　だけの　道具▽
 タッチトイ　などで　遊べます▼
-なお　ＷｉーＦｉひろば　は
+なお　Ｗｉ－Ｆｉひろば　は
 １回の　接続で　遊べる▽
 時間が　決まっています▼
 終了までの　あいだ
 たくさん　たのしんで　くださいね！▼
-ＷｉーＦｉコネクションを
+Ｗｉ－Ｆｉコネクションを
 ご利用ですか？[2:00:１桁:0]</language>
 	</row>
 
 	<row id="msg_pcugwifiwin_01">
 		<attribute name="キャラ指定">ひろば受付</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉひろばへ　いく</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉひろばへ　いく</language>
+		<language name="JPN" width="256">Ｗｉ－Ｆｉひろばへ　いく</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉひろばへ　いく</language>
 	</row>
 
 	<row id="msg_pcugwifiwin_02">
@@ -621,11 +621,11 @@ Wi-Fi P2P接続画面へ</comment>
 もらったあと、→msg_wifi_club_10_03</comment>
 		<attribute name="キャラ指定">案内役アオナ</attribute>
 		<language name="JPN" width="256">はじめまして！▼
-ポケモン　ＷｉーＦｉ　クラブの
+ポケモン　Ｗｉ－Ｆｉ　クラブの
 あんないやく　アオナと　もうします▼
 まずは　こちらを　どうぞ！▼</language>
 		<language name="JPN_KANJI" width="256">はじめまして！▼
-ポケモン　ＷｉーＦｉ　クラブの
+ポケモン　Ｗｉ－Ｆｉ　クラブの
 案内役　アオナと　申します▼
 まずは　こちらを　どうぞ！▼</language>
 	</row>
@@ -639,14 +639,14 @@ Wi-Fi P2P接続画面へ</comment>
 		<attribute name="キャラ指定">案内役アオナ</attribute>
 		<language name="JPN" width="256">この　ともだちてちょうに
 とうろくした　おともだちと▽
-ＷｉーＦｉコネクションを　つかって▼
+Ｗｉ－Ｆｉコネクションを　つかって▼
 ポケモンたいせんや
 ポケモンこうかんなどを▽
 たのしむことが　できます▼
 くわしい　せつめいを　ききますか？[2:00:１桁:0]</language>
 		<language name="JPN_KANJI" width="256">この　ともだちてちょうに
 登録した　お友達と▽
-ＷｉーＦｉコネクションを　利用して▼
+Ｗｉ－Ｆｉコネクションを　利用して▼
 ポケモン対戦や
 ポケモン交換などを▽
 たのしむことが　できます▼
@@ -688,9 +688,9 @@ Wi-Fi P2P接続画面へ</comment>
 選択したときのメッセージ。
 このメッセージ後、フィールドに戻る。</comment>
 		<attribute name="キャラ指定">案内役アオナ</attribute>
-		<language name="JPN" width="256">それでは　ＷｉーＦｉコネクションを
+		<language name="JPN" width="256">それでは　Ｗｉ－Ｆｉコネクションを
 おたのしみ　ください！</language>
-		<language name="JPN_KANJI" width="256">それでは　ＷｉーＦｉコネクションを
+		<language name="JPN_KANJI" width="256">それでは　Ｗｉ－Ｆｉコネクションを
 おたのしみ　ください！</language>
 	</row>
 
@@ -704,10 +704,10 @@ Wi-Fi P2P接続画面へ</comment>
 「いいえ」
 →msg_wifi_club_10_05</comment>
 		<attribute name="キャラ指定">案内役アオナ</attribute>
-		<language name="JPN" width="256">ポケモンセンター　ＷｉーＦｉ　クラブへ
+		<language name="JPN" width="256">ポケモンセンター　Ｗｉ－Ｆｉ　クラブへ
 ようこそ！▼
 なにか　おこまりですか？[2:00:１桁:0]</language>
-		<language name="JPN_KANJI" width="256">ポケモンセンター　ＷｉーＦｉ　クラブへ
+		<language name="JPN_KANJI" width="256">ポケモンセンター　Ｗｉ－Ｆｉ　クラブへ
 ようこそ！▼
 なにか　おこまりですか？[2:00:１桁:0]</language>
 	</row>
@@ -719,23 +719,23 @@ Wi-Fi P2P接続画面へ</comment>
 「もう　わかった！」
 　→msg_wifi_club_10_05</comment>
 		<attribute name="キャラ指定">案内役アオナ</attribute>
-		<language name="JPN" width="256">ポケモン　ＷｉーＦｉ　クラブでの
+		<language name="JPN" width="256">ポケモン　Ｗｉ－Ｆｉ　クラブでの
 あそびかたを　せつめい　します！▼
 ちゅうおうの　カウンターから
-ＷｉーＦｉコネクション　に▽
+Ｗｉ－Ｆｉコネクション　に▽
 せつぞく　することが　できます！▼
-ＷｉーＦｉコネクション　では
+Ｗｉ－Ｆｉコネクション　では
 ともだちてちょう　に▽
 とうろく　してある　おともだちと▼
 つうしんたいせん　や
 つうしんこうかん　などを▽
 たのしむことが　できます！[2:00:１桁:0]</language>
-		<language name="JPN_KANJI" width="256">ポケモン　ＷｉーＦｉ　クラブでの
+		<language name="JPN_KANJI" width="256">ポケモン　Ｗｉ－Ｆｉ　クラブでの
 遊び方を　説明します！▼
 中央の　カウンターから
-ＷｉーＦｉコネクション　に▽
+Ｗｉ－Ｆｉコネクション　に▽
 接続することが　できます！▼
-ＷｉーＦｉコネクション　では
+Ｗｉ－Ｆｉコネクション　では
 ともだちてちょう　に▽
 登録してある　お友達と▼
 通信対戦　や
