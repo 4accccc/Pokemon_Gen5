@@ -98,6 +98,7 @@ struct _BTL_MAIN_MODULE {
   BTL_POKE_CONTAINER    pokeconForServer;
   POKEPARTY*            srcParty[ BTL_CLIENT_MAX ];
   POKEPARTY*            tmpParty;
+  POKEMON_PARAM*        ppIllusionZoroArc;
 
   GFL_STD_RandContext   randomContext;
   BTLNET_SERVER_NOTIFY_PARAM  serverNotifyParam;
@@ -236,6 +237,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->LimitTimeCommand = wk->setupParam->LimitTimeCommand;
 
       wk->bonusMoney = calcBonusMoneyBase( setup_param );
+      wk->ppIllusionZoroArc = NULL;
 
       if( !(wk->setupParam->fRecordPlay) ){
         GFL_STD_RandGeneralInit( &wk->randomContext );
@@ -325,6 +327,10 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
     break;
   case 2:
     BTL_Printf("クリーンアッププロセス１\n");
+    if( wk->ppIllusionZoroArc ){
+      GFL_HEAP_FreeMemory( wk->ppIllusionZoroArc );
+      wk->ppIllusionZoroArc = NULL;
+    }
     BTL_CALC_QuitSys();
     srcParty_Quit( wk );
     trainerParam_Clear( wk );
@@ -2913,6 +2919,54 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
   if( fIllusion && (poke_count>1)){
     pp = PokeParty_GetMemberPointer( party_src, 0 );
     BPP_SetViewSrcData( pokecon->pokeParam[ pokeID-1 ], pp );
+  }
+
+  // 野生ゾロアークのイリュージョンなら特殊処理
+  if( (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_WILD) && (clientID != 0) )
+  {
+    enum {
+      MONSNO_NULL = 0,
+    };
+    BTL_POKEPARAM* bpp;
+
+    pokeID = ClientBasePokeID[ clientID ];
+    for(i=0; i<poke_count; ++i, ++pokeID)
+    {
+      bpp = pokecon->pokeParam[ pokeID ];
+      if( (BPP_GetMonsNo(bpp) == MONSNO_ZOROAAKU)
+      &&  (BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON)
+      ){
+        const POKEPARTY* party_player = srcParty_Get( wk, 0 );
+        u8 player_poke_cnt = PokeParty_GetPokeCount( party_player );
+        u8 p;
+        u16 monsno, monsno_illusion = MONSNO_NULL;
+
+        for(p=0; p<player_poke_cnt; ++p)
+        {
+          pp = PokeParty_GetMemberPointer( party_player, p );
+          monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+          if( monsno == MONSNO_RAIKOU ){
+            monsno_illusion = MONSNO_ENTEI;
+            break;
+          }
+          if( monsno == MONSNO_ENTEI ){
+            monsno_illusion = MONSNO_SUIKUN;
+            break;
+          }
+          if( monsno == MONSNO_SUIKUN ){
+            monsno_illusion = MONSNO_RAIKOU;
+            break;
+          }
+        }
+
+        if( monsno_illusion != MONSNO_NULL )
+        {
+          u32 level = BPP_GetValue( bpp, BPP_LEVEL );
+          wk->ppIllusionZoroArc = PP_Create( monsno_illusion, level, 0, wk->heapID );
+          BPP_SetViewSrcData( bpp, wk->ppIllusionZoroArc );
+        }
+      }
+    }
   }
 
   BTL_PARTY_MoveAlivePokeToFirst( party );
