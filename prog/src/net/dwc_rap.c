@@ -17,7 +17,7 @@
 #if GFL_NET_WIFI
 
 // デバッグ出力を大量に吐き出す場合定義
-#if defined(DEBUG_ONLY_FOR_ohno)
+#if defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_toru_nagihashi)
 #define DEBUGPRINT_ON (1)
 #else
 #define DEBUGPRINT_ON (0)
