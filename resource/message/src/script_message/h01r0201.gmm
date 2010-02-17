@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-16T12:53:32"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T20:06:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1408" top="326" right="2113" bottom="946" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="288" right="1995" bottom="915" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -361,14 +361,14 @@
 		<language name="JPN" width="256">そう！　そのとおり
 ポケモンセンターだよね▼
 ヒウンシティの　ポケモンセンターは
-ゲートをでて　そのまま
+ゲートをでて　そのまま▽
 まっすぐ　すすめば　すぐらしいよ▼
 ということで
 おさきに！▼</language>
 		<language name="JPN_KANJI" width="256">そう！　そのとおり
 ポケモンセンターだよね▼
 ヒウンシティの　ポケモンセンターは
-ゲートをでて　そのまま
+ゲートをでて　そのまま▽
 まっすぐ　進めば　すぐらしいよ▼
 ということで
 おさきに！▼</language>
@@ -382,17 +382,18 @@
 		<language name="JPN" width="256">ポケモンジム……？
 ずいぶんと　もえているんだね▼
 でも　さいしょに　いくべきなのは
+ポケモンセンターだと　おもうな▼
 ヒウンシティの　ポケモンセンターは
-ゲートをでて　そのまま
+ゲートをでて　そのまま▽
 まっすぐ　すすめば　すぐらしいよ▼
 ということで
 おさきに！▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンジム……？
 ずいぶんと　燃えているんだね▼
 でも　最初に　行くべきなのは
-ポケモンセンターだと　思うよ▼
+ポケモンセンターだと　思うな▼
 ヒウンシティの　ポケモンセンターは
-ゲートをでて　そのまま
+ゲートをでて　そのまま▽
 まっすぐ　進めば　すぐらしいよ▼
 ということで
 おさきに！▼</language>
