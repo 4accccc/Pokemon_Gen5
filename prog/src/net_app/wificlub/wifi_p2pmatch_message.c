@@ -7,6 +7,15 @@
  */
 //============================================================================================
 
+#include "net_app/union/union_beacon_tool.h"
+#include "system/tr2dgra.h"
+
+
+#define _TOUCHBAR_BG_PALPOS (12)     //タッチバーの色   （１）本
+#define _TOUCHBAR_OBJ_PALPOS (12)     //タッチバーの色  （１）本
+
+#define CLACT_PALNUM_TRGRA (0)
+
 static const BMPWIN_YESNO_DAT _yesNoBmpDat = {
   GFL_BG_FRAME2_M, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY,
   FLD_YESNO_WIN_PAL, FLD_YESNO_WIN_CGX
@@ -25,6 +34,10 @@ static const BMPWIN_YESNO_DAT _yesNoBmpDatSys2 = {
   GFL_BG_FRAME1_M, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY+6,
   FLD_YESNO_WIN_PAL, FRAME1_YESNO_WIN_CGX
   };
+
+static void _TouchResExit( WIFIP2PMATCH_WORK *wk );
+static void _TrainerOAMFree( WIFIP2PMATCH_WORK *wk );
+
 
 //------------------------------------------------------------------
 /**
@@ -964,6 +977,9 @@ static void FreeMessageWork( WIFIP2PMATCH_WORK *wk )
 {
   int i;
 
+  _TouchResExit(wk);
+  _TrainerOAMFree(wk);
+
 
   GFL_STR_DeleteBuffer( wk->TitleString );
   GFL_STR_DeleteBuffer( wk->TalkString );
@@ -999,24 +1015,21 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
   sex = WifiList_GetFriendInfo( wk->pList,
                                 wk->view.touch_friendNo - 1, WIFILIST_FRIEND_SEX );
 
-  if(sex == PM_FEMALE){
-    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_GIRL;
-  }else{
-    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_MAN;
-  }
+//  if(sex == PM_FEMALE){
+//    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_GIRL;
+//  }else{
+//    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_MAN;
+//  }
   GFL_BG_LoadScreenBufferOfs( GFL_BG_FRAME2_S, wk->view.p_userscrn[0]->rawData,
                      wk->view.p_userscrn[0]->szByte,0 );
   //  GFL_BG_ScreenBufSet( GFL_BG_FRAME2_S, wk->view.p_userscrn[wk->view.user_dispno]->rawData,
   //      wk->view.p_userscrn[wk->view.user_dispno]->szByte );
 
-  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0,
-                              32, 24, pal );
+//  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0,
+  //                            32, 24, pal );
 
   // BG３面のスクリーンをクリア
   GFL_BG_ClearFrame( GFL_BG_FRAME3_S);
-
-  MCVSys_UserDispDrawFrontierOffScrn( wk ); // 非表示スクリーン設定
-
 
   // その人のことを描画
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.userWin), 0x0 );
@@ -1035,27 +1048,127 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
 }
 
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  TOUCHBAR初期化
+ *  @param  POKEMON_TRADE_WORK
+ *  @return none
+ */
+//-----------------------------------------------------------------------------
+
+
+  //トレーナーグラフィック
+static void _TrainerOAMDraw( WIFIP2PMATCH_WORK *wk, int friendNo, u32 heapID )
+{
+  ARCHANDLE * ah;
+  u32 num;
+
+  GFL_CLWK_DATA clearadd = {
+    56,80,
+    0,
+    0,0,
+  };
+
+  num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_UNION_GRA );
+  num = UnionView_GetTrType( num );
+
+  ah = TR2DGRA_OpenHandle( heapID );
+  wk->trRes[0] = TR2DGRA_OBJ_CGR_Register( ah, num, CLSYS_DRAW_SUB, heapID );
+  wk->trRes[1] = TR2DGRA_OBJ_PLTT_Register( ah, num, CLSYS_DRAW_SUB, CLACT_PALNUM_TRGRA*0x20, heapID );
+  wk->trRes[2] = TR2DGRA_OBJ_CELLANM_Register( num, APP_COMMON_MAPPING_128K, CLSYS_DRAW_SUB, heapID );
+  GFL_ARC_CloseDataHandle( ah );
+
+  wk->pTrgra = GFL_CLACT_WK_Create(
+    wk->clactSet,
+    wk->trRes[0],
+    wk->trRes[1],
+    wk->trRes[2],
+    &clearadd, CLSYS_DEFREND_SUB, heapID );
+  
+}
+
+
+static void _TrainerOAMFree( WIFIP2PMATCH_WORK *wk )
+{
+  if(wk->trRes[0]){
+    GFL_CLACT_WK_Remove(wk->pTrgra);
+    GFL_CLGRP_CGR_Release(wk->trRes[0]);
+    GFL_CLGRP_PLTT_Release(wk->trRes[1]);
+    GFL_CLGRP_CELLANIM_Release(wk->trRes[2]);
+    wk->trRes[0]=0;
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  TOUCHBAR初期化
+ *  @param  POKEMON_TRADE_WORK
+ *  @return none
+ */
+//-----------------------------------------------------------------------------
+
+static void _TOUCHBAR_Init(WIFIP2PMATCH_WORK *wk,HEAPID heapID)
+{
+  //アイコンの設定
+  //数分作る
+  TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]  =
+  {
+    {
+      TOUCHBAR_ICON_RETURN,
+      { TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
+    },
+  };
+
+  TOUCHBAR_SETUP  touchbar_setup;
+  GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
+
+  touchbar_setup.p_item   = touchbar_icon_tbl;        //上の窓情報
+  touchbar_setup.item_num = NELEMS(touchbar_icon_tbl);//いくつ窓があるか
+  touchbar_setup.p_unit   = wk->clactSet;                    //OBJ読み込みのためのCLUNIT
+  touchbar_setup.is_notload_bg = FALSE;  //BGはなし
+  touchbar_setup.bar_frm  = GFL_BG_FRAME0_S;            //BG読み込みのためのBG面上下画面判定にも必要
+  touchbar_setup.bg_plt   = _TOUCHBAR_BG_PALPOS;      //BGﾊﾟﾚｯﾄ
+  touchbar_setup.obj_plt  = _TOUCHBAR_OBJ_PALPOS;      //OBJﾊﾟﾚｯﾄ
+  touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
+
+  wk->pTouchWork = TOUCHBAR_Init(&touchbar_setup, heapID);
+  
+}
+
+
+static void _TouchResExit( WIFIP2PMATCH_WORK *wk )
+{
+  if(wk->pTouchWork){
+    TOUCHBAR_Exit(wk->pTouchWork);
+    wk->pTouchWork=NULL;
+  }
+}
+
 // PAGE 1
 #define MCV_USERD_NAME_X  ( 32-8 )
-#define MCV_USERD_NAME_Y  ( 8 )
+#define MCV_USERD_NAME_Y  ( 8-8 )
 #define MCV_USERD_ST_X  ( 104-8 )
-#define MCV_USERD_ST_Y  ( 8 )
+#define MCV_USERD_ST_Y  ( 8-8 )
 #define MCV_USERD_GR_X  ( 8-8 )
 #define MCV_USERD_GR_Y  ( 32 )
-#define MCV_USERD_VS_X  ( 8-8 )
-#define MCV_USERD_VS_Y  ( 56 )
-#define MCV_USERD_VS_WIN_X  ( 120-8 )
+#define MCV_USERD_VS_X  ( 88+16 )
+#define MCV_USERD_VS_Y  ( 56-24 )
+#define MCV_USERD_VS_WIN_X  ( 192-8 )
 #define MCV_USERD_VS_WIN_Y  ( 56 )
-#define MCV_USERD_VS_LOS_X  ( 184-8 )
-#define MCV_USERD_TR_X    ( 8-8 )
-#define MCV_USERD_TR_Y    ( 80 )
-#define MCV_USERD_TRNUM_X ( 152 )
+#define MCV_USERD_VS_LOS_X  ( 192-8 )
+#define MCV_USERD_VS_LOS_Y  ( 56+16 )
+#define MCV_USERD_TR_X    ( 88+16 )
+#define MCV_USERD_TR_Y    ( 144-16*3 )
+#define MCV_USERD_TRNUM_X ( 180 )
 #define MCV_USERD_DAY_X   ( 8-8 )
 #define MCV_USERD_DAY_Y   ( 128 )
 #define MCV_USERD_DAYNUM_X  ( 152 )
 #define MCV_USERD_ICON_X  ( 2 )
 #define MCV_USERD_VCTICON_X ( 28 )
-#define MCV_USERD_ICON_Y  ( 2 )
+#define MCV_USERD_ICON_Y  ( 1 )
 
 
 // 通常
@@ -1077,11 +1190,12 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
   sex = WifiList_GetFriendInfo( wk->pList, friendNo, WIFILIST_FRIEND_SEX );
 
   // トレーナー名
-  if( sex == PM_MALE ){
-    _COL_N_BLUE;
-  }else{
-    _COL_N_RED;
-  }
+ // if( sex == PM_MALE ){
+ //   _COL_N_BLUE;
+ // }else{
+ //   _COL_N_RED;
+ // }
+  _COL_N_WHITE;
   MCVSys_FriendNameSet(wk, friendNo);
   GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_033, wk->pExpStrBuf );
   WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
@@ -1095,6 +1209,7 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
   // 状態
   msg_id = MCVSys_StatusMsgIdGet( status, gamemode, &col );
+  _COL_N_WHITE;
   GFL_MSG_GetString(wk->MsgManager, msg_id, wk->pExpStrBuf);
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_ST_X, MCV_USERD_ST_Y,
                   wk->pExpStrBuf, wk->fontHandle);
@@ -1117,7 +1232,7 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
     WORDSET_RegisterNumber(wk->view.p_wordset, 0, num, 4, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
     GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_037, wk->pExpStrBuf );
     WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_LOS_X, MCV_USERD_VS_WIN_Y,
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_LOS_X, MCV_USERD_VS_LOS_Y,
                     wk->TitleString, wk->fontHandle);
   }
   // ポケモン交換
@@ -1157,7 +1272,7 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
   }
   GFL_BMPWIN_MakeScreen(wk->view.userWin);
   GFL_BMPWIN_TransVramCharacter(wk->view.userWin);
-  GFL_BG_LoadScreenReq(GFL_BG_FRAME3_S);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 
   // アイコン
   WifiP2PMatchFriendListStIconWrite(  &wk->icon, GFL_BG_FRAME2_S,
@@ -1172,44 +1287,14 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
                                    MCV_USERD_VCTICON_X, MCV_USERD_ICON_Y,
                                    vct_icon, 0 );
 
+  _TrainerOAMDraw( wk, friendNo,  heapID );
+
+  _TOUCHBAR_Init(wk,heapID);
+
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  
 }
 
-// フロンティア非表示スクリーン描画
-#define MCV_USERD_NOFR_SCRN_X   ( 0x1a )
-#define MCV_USERD_NOFR_SCRN_Y   ( 0 )
-#define MCV_USERD_NOFR_SCRN_SIZX  ( 0x1 )
-#define MCV_USERD_NOFR_SCRN_SIZY  ( 0x1 )
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  フロンティア非表示モードのスクリーンに変更
- *
- *  @param  wk    ワーク
- */
-//-----------------------------------------------------------------------------
-static void MCVSys_UserDispDrawFrontierOffScrn( WIFIP2PMATCH_WORK *wk )
-{
-  int i;
-  int roop;
-
-  // フロンティア施設数取得
-  roop = 1;//WF_USERDISPTYPE_NUM - WF_USERDISPTYPE_BLTW;
-
-  for( i=0; i<roop; i++ ){
-    GFL_BG_WriteScreenExpand( GFL_BG_FRAME2_S,
-                              MCV_USERD_NOFR_SCRN_X+(MCV_USERD_NOFR_SCRN_SIZX*i), MCV_USERD_NOFR_SCRN_Y,
-                              MCV_USERD_NOFR_SCRN_SIZX, MCV_USERD_NOFR_SCRN_SIZY,
-                              wk->view.p_useretcscrn->rawData,
-                              0, 0,
-                              wk->view.p_useretcscrn->screenWidth/8, wk->view.p_useretcscrn->screenHeight/8 );
-  }
-
-  // パレット変更
-  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S,
-                              MCV_USERD_NOFR_SCRN_X, MCV_USERD_NOFR_SCRN_Y,
-                              (MCV_USERD_NOFR_SCRN_SIZX*roop), MCV_USERD_NOFR_SCRN_SIZY,
-                              MCV_PAL_BTTN+MCV_PAL_BTTN_NONE );
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -1262,8 +1347,8 @@ static void _battleCustomSelectMenu( WIFIP2PMATCH_WORK *wk )
 {
 
   _parentCustomInfoMenuList[0].str_id = msg_wifilobby_0571 + wk->battleMode;
-  _parentCustomInfoMenuList[1].str_id =  msg_wifilobby_060 + wk->battleRule;
-  _parentCustomInfoMenuList[2].str_id =  msg_wifilobby_062 + (1-wk->battleShooter);
+  _parentCustomInfoMenuList[1].str_id = msg_wifilobby_060 + wk->battleRule;
+  _parentCustomInfoMenuList[2].str_id = msg_wifilobby_062 + (1-wk->battleShooter);
 
   _modeSelectMenuBase(wk, &_parentCustomMenuListHeader, _parentCustomInfoMenuList,
                       elementof(_parentCustomInfoMenuList), _MENUTYPE_BATTLE_CUSTOM,19);

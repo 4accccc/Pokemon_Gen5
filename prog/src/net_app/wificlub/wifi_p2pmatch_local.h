@@ -30,6 +30,7 @@
 #include "poke_tool/poke_regulation.h"
 
 #include "wifi_p2pmatchroom.h"
+#include "ui/touchbar.h"
 
 
 #define WIFIP2PMATCH_MEMBER_MAX  (WIFILIST_FRIEND_MAX)
@@ -266,7 +267,7 @@ typedef struct {
 	NNSG2dScreenData* p_userscrn[1];
 
 	void* p_useretcbuff;
-	NNSG2dScreenData* p_useretcscrn;
+//	NNSG2dScreenData* p_useretcscrn;
 	
 	GFL_BUTTON_MAN* p_bttnman;	// ボタン管理システム
 	u8 bttnfriendNo[ MATCHROOM_IN_NPCNUM ];
@@ -328,7 +329,7 @@ struct _WIFIP2PMATCH_WORK{
   BMPMENULIST_WORK* sublw;		// BMPメニューワーク
 //  GFL_BG_INI		*bgl;									// GF_BGL_INI
   SAVE_CONTROL_WORK*  pSaveData;
-GAMEDATA* pGameData;
+  GAMEDATA* pGameData;
   POKEPARTY* pMyPoke;
   void* pEmail;
   void* pFrontier;
@@ -351,6 +352,9 @@ GAMEDATA* pGameData;
 
   GFL_CLUNIT* clactSet;								// セルアクターセット
   GFL_CLSYS_REND*          renddata;						// 簡易レンダーデータ
+
+  GFL_CLWK* pTrgra;   //トレーナーの大きい絵
+  u32 trRes[3];       //トレーナーのリソース
 
   GFL_BMPWIN*			MsgWin;									// 会話ウインドウ
   GFL_BMPWIN*			MyInfoWin;								// 自分の状態表示
@@ -392,6 +396,10 @@ GAMEDATA* pGameData;
 	MCR_MOVEOBJ*	p_matchMoveObj[ MATCHROOM_IN_OBJNUM ];
 	WIFIP2PMATCH_ICON icon;	// アイコングラフィック
 	WIFIP2PMATCH_VIEW view;	// 友達データビューアー
+  u32 bgchrSubButton;
+  u32 bgchrSubBack;
+  TOUCHBAR_WORK* pTouchWork;
+
 
 	BOOL friend_request_wait;	// 友達募集中にTRUEになるフラグ
 	

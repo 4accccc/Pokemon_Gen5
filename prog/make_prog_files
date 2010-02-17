@@ -1056,6 +1056,7 @@ SRCS_OVERLAY_VS_MULTI_LIST = battle/app/vs_multi_list.c
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
 							net_app/wificlub/comm_command_wfp2pmf.c \
 							net_app/wificlub/comm_command_wfp2pmf_func.c \

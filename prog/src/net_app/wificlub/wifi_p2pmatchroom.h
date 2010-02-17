@@ -169,7 +169,9 @@ typedef struct {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 hero_view, u32 friendNum,ARCID arcID );
+extern void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 hero_view, u32 friendNum, u32 arcID ,
+                           GFL_CLUNIT* pUnit,
+                           GFL_CLSYS_REND* renddata);
 extern void WIFI_MCR_Dest( WIFI_MATCHROOM* p_mcr );
 extern BOOL WIFI_MCR_GetInitFlag( const WIFI_MATCHROOM* cp_mcr );
 

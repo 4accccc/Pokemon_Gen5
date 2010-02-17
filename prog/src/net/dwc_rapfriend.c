@@ -207,6 +207,8 @@ void GFL_NET_DWC_FriendDataWrite(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFri
   }
   pBuf =  GFL_STR_CreateBuffer(120, heapID );
   GFL_STR_DeleteBuffer(pBuf);
+  NET_PRINT("%d TRVIEW \n",MyStatus_GetTrainerView(pMyStatus));
+  
   WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_UNION_GRA, MyStatus_GetTrainerView(pMyStatus));
 
 }

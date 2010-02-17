@@ -60,6 +60,7 @@ FS_EXTERN_OVERLAY(wifi2dmap);
 FS_EXTERN_OVERLAY(battle);
 FS_EXTERN_OVERLAY(wificlub);
 FS_EXTERN_OVERLAY(pokelist);
+FS_EXTERN_OVERLAY(ui_common);
 FS_EXTERN_OVERLAY(pokemon_trade);
 #define _LOCALMATCHNO (100)
 //----------------------------------------------------------------
@@ -272,6 +273,8 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     break;
   case P2P_MATCH_BOARD:
     GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+
     WIFI_STATUS_SetMyMac(ep2p->pMatchParam->pMatch);
 
     ep2p->pMatchParam->pPokeParty[0] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //お互いのPartyを受信
@@ -288,6 +291,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
       _pokmeonListWorkFree(ep2p);      // ポケモンリストが終わったら要らない
     }
     ep2p->bSingle = aNextMatchKindTbl[ep2p->pMatchParam->seq].bSingle;
+    GFL_OVERLAY_Unload(FS_OVERLAY_ID(ui_common));
     GFL_OVERLAY_Unload(FS_OVERLAY_ID(wificlub));
     break;
   case P2P_BATTLE:

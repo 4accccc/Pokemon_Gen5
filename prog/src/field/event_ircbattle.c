@@ -202,12 +202,10 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     break;
   case _PLAY_EVENT_BGM:
-    //@todo ”ö”¨ŒN‚ÉŽ¿–â‚·‚é
 //    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE ) );
     dbw->push=TRUE;
-    (*seq) ++;
-    break;
-  case _CALL_BATTLE:
+//    (*seq) ++;
+//    break;
     switch(dbw->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
@@ -238,6 +236,10 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       break;
     }
     BATTLE_PARAM_SetPokeParty( dbw->para, dbw->pParty, BTL_CLIENT_PLAYER );
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE ) );
+    (*seq) ++;
+    break;
+  case _CALL_BATTLE:
     {
 #if 1
       int i;
@@ -251,7 +253,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, dbw->para);
 #endif
     }
-   
     //    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
     (*seq)++;
     break;

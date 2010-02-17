@@ -113,6 +113,7 @@ enum{	// 方向
 #define MCR_EFFECTRES_OFS_X		(8)// Y座標補正地
 #define MCR_EFFECTWAKURES_OFS_Y		(0)// Y座標補正地
 #define MCR_EFFECTWAKURES_OFS_X		(8)// Y座標補正地
+#define MCR_EFFECTRES_CIRCLE	(254)// BG優先順位
 
 // リソース管理ID
 #define MCR_EFFECTRES_CONTID	( 50 )	// エフェクトリソース管理ID
@@ -292,7 +293,7 @@ static void WcrPCANM_UseEndReq( MCR_PCANM* p_wk );
  *	@param	friendNum	友達の総数
  */
 //-----------------------------------------------------------------------------
-void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 hero_view, u32 friendNum, u32 arcID )
+void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 hero_view, u32 friendNum, u32 arcID ,GFL_CLUNIT* pUnit,GFL_CLSYS_REND* renddata)
 {
 	WF2DMAP_POS map_siz;
 	u32 map_no=0;
@@ -304,9 +305,12 @@ void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 
     }
 
 	p_mcr->use_heap = heapID;
+  p_mcr->clact.clactSet = pUnit;
+  p_mcr->clact.renddata = renddata;
+
+  
 //	p_mcr->p_bgl	= p_bgl;
 	
-	// CLACT INIT
 	WcrClactInit( &p_mcr->clact, p_mcr->use_heap, p_handle );
 
 	// BGL　初期化
@@ -1153,33 +1157,17 @@ static void WcrScrnDrawInit( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_han
 		NARC_wifip2pmatch_wf_match_top_room_1_NSCR,
 		FALSE
 	};
-    //-------------------------------------
-    ///	独自レンダラー作成用
-    /// サーフェースデータ構造体
-    //=====================================
-    GFL_REND_SURFACE_INIT sini[] ={
-    {
-        0,0,			// サーフェース左上ｘ座標			// サーフェース左上ｙ座標
-        255,				// サーフェース幅
-        192,				// サーフェース高さ
-        CLSYS_DRAW_MAIN,	// サーフェースタイプ(CLSYS_DRAW_TYPE)
-    },
-    {
-        0,MCR_CLACTSUBSURFACE_Y,			// サーフェース左上ｘ座標			// サーフェース左上ｙ座標
-        255,				// サーフェース幅
-        192,				// サーフェース高さ
-        CLSYS_DRAW_SUB,	// サーフェースタイプ(CLSYS_DRAW_TYPE)
-    }};
 
 	// グラフィックデータを設定
 	init.dataid_scrn += map_no;
- //   p_mcr->clact.renddata = GFL_CLACT_USERREND_Create(sizeof(GFL_CLSYS_REND));
 
-     p_mcr->clact.renddata =  GFL_CLACT_USERREND_Create( sini, NELEMS(sini), heapID );
-    GFL_CLACT_UNIT_SetUserRend(p_mcr->clact.clactSet, p_mcr->clact.renddata);
+//  p_mcr->clact.renddata =  GFL_CLACT_USERREND_Create( sini, NELEMS(sini), heapID );
+//  GFL_CLACT_UNIT_SetUserRend(p_mcr->clact.clactSet, p_mcr->clact.renddata);
 
-	p_mcr->p_scrdraw = WF2DMAP_SCRDrawSysInit( 
-			p_mcr->clact.renddata, p_mcr->p_bgl, &init, heapID );
+ // p_mcr->clact.renddata=testGFLCLACT(p_mcr->clact.clactSet);
+  p_mcr->p_scrdraw = WF2DMAP_SCRDrawSysInit( //testGFLCLACT(p_mcr->clact.clactSet),
+                                                 p_mcr->clact.renddata,
+                                             p_mcr->p_bgl, &init, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -1191,27 +1179,8 @@ static void WcrScrnDrawInit( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_han
 //-----------------------------------------------------------------------------
 static void WcrScrnDrawExit( WIFI_MATCHROOM* p_mcr )
 {
-    GFL_CLACT_USERREND_Delete(p_mcr->clact.renddata);
 	WF2DMAP_SCRDrawSysExit( p_mcr->p_scrdraw );
 }
-
-static GFL_DISP_VRAM _defVBTbl = {
-        GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-        GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-
-        GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-        GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-
-//        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-        GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-
-        GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-        GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-
-        GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-        GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
-        };
 
 
 //----------------------------------------------------------------------------
@@ -1225,24 +1194,6 @@ static GFL_DISP_VRAM _defVBTbl = {
 //-----------------------------------------------------------------------------
 static void WcrClactInit( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 {
-	const u8 CELL_MAX = 17*4;
-	GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
-
-    cellSysInitData.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL; //通信アイコンの分
-	cellSysInitData.oamnum_main = 64-GFL_CLSYS_OAMMAN_INTERVAL;
-	cellSysInitData.oamst_sub = 16; 
-	cellSysInitData.oamnum_sub = 128-16;
-	
-	GFL_CLACT_SYS_Create( &cellSysInitData , &_defVBTbl, heapID );
-	p_clact->clactSet  = GFL_CLACT_UNIT_Create( CELL_MAX , 0, heapID );
-	GFL_CLACT_UNIT_SetDefaultRend( p_clact->clactSet );
-
-    // セルアクターセット作成
-//    CLACT_U_SetSubSurfaceMatrix( &p_clact->renddata, 0, MCR_CLACTSUBSURFACE_Y );
-    {
-   //     GFL_CLACTPOS cp_pos = {0, MCR_CLACTSUBSURFACE_Y};
-    //    GFL_CLACT_USERREND_SetSurfacePos( p_clact->renddata, 0, &cp_pos);
-    }
 
 	// 人物リソース読み込みとキャラクタパレットの転送
 	// エフェクトリソース読み込みとキャラクタパレットの転送
@@ -1250,30 +1201,6 @@ static void WcrClactInit( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 
 	// アクターの登録
 	WcrClactAdd( p_clact, heapID );
-
-
-#if 0
-
-    int i;
-
-
-   
-	// セルアクターセット作成
-	p_clact->clactSet = CLACT_U_SetEasyInit( MCR_CLACT_OBJNUM, &p_clact->renddata, heapID );
-    CLACT_U_SetSubSurfaceMatrix( &p_clact->renddata, 0, MCR_CLACTSUBSURFACE_Y );
-
-	// キャラとパレットのリソースマネージャ作成
-	for( i=0; i<MCR_CLACT_RESNUM; i++ ){
-		p_clact->resMan[i] = CLACT_U_ResManagerInit(MCR_CLACT_LOADRESNUM, i, heapID);
-	}
-
-	// 人物リソース読み込みとキャラクタパレットの転送
-	// エフェクトリソース読み込みとキャラクタパレットの転送
-	WcrClactResLoad( p_clact, heapID, p_handle );
-
-	// アクターの登録
-	WcrClactAdd( p_clact, heapID );
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1293,16 +1220,7 @@ static void WcrClactDest( MCR_CLACT* p_clact )
 	// リソース破棄
 	WcrClactResRelease( p_clact );
 
-#if 0
-	// リソースマネージャ破棄
-	for( i=0; i<MCR_CLACT_RESNUM; i++ ){
-		CLACT_U_ResManagerDelete( p_clact->resMan[i] );
-	}
-#endif
 
-	// セルアクターセット破棄
-//	CLACT_DestSet( p_clact->clactSet );
-    GFL_CLACT_UNIT_Delete(p_clact->clactSet);
 }
 
 //----------------------------------------------------------------------------
@@ -1528,21 +1446,7 @@ static void WcrClactResEffectRelease( MCR_CLACT* p_clact )
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectAdd( MCR_CLACT* p_clact, u32 heapID )
 {
-    GFL_CLWK_DATA param;
-    
-        
-//	CLACT_ADD add;
-
-	// ０クリア
-//	memset( &add, 0, sizeof(CLACT_ADD) );
-	
-//	add.ClActSet = p_clact->clactSet;
-//	add.ClActHeader = &p_clact->effect.header;
-//	add.DrawArea = NNS_G2D_VRAM_TYPE_2DMAIN;
-//	add.sca.x = FX32_ONE;
-//	add.sca.y = FX32_ONE;
-//	add.pri = MCR_EFFECTRES_SOFTPRI;
-//	add.heap  = heapID;
+  GFL_CLWK_DATA param;
 
 	param.pos_x =1;				// ｘ座標
 	param.pos_y = 1;				// ｙ座標
@@ -1550,34 +1454,30 @@ static void WcrClactResEffectAdd( MCR_CLACT* p_clact, u32 heapID )
 	param.softpri = MCR_EFFECTRES_SOFTPRI;			// ソフト優先順位	0>0xff
 	param.bgpri = 0;				// BG優先順位
     
-    p_clact->effect.exit_cursor = GFL_CLACT_WK_Create(p_clact->clactSet,
-                                                      p_clact->effect.CGRid,
-                                                      p_clact->effect.CLRid,
-                                                      p_clact->effect.CERid,
-                                                      &param,0,heapID);
-    p_clact->effect.obj_waku = GFL_CLACT_WK_Create(p_clact->clactSet,
-                                                   p_clact->effect.CGRid,
-                                                   p_clact->effect.CLRid,
-                                                   p_clact->effect.CERid,
-                                                   &param,0,heapID);
-    
-//	p_clact->effect.exit_cursor = CLACT_Add( &add );
-//	p_clact->effect.obj_waku = CLACT_Add( &add );
+  p_clact->effect.exit_cursor = GFL_CLACT_WK_Create(p_clact->clactSet,
+                                                    p_clact->effect.CGRid,
+                                                    p_clact->effect.CLRid,
+                                                    p_clact->effect.CERid,
+                                                    &param,CLSYS_DRAW_MAIN,heapID);
 
+	param.anmseq = 2;				// アニメーションシーケンス
+	param.softpri = MCR_EFFECTRES_CIRCLE;			// ソフト優先順位	0>0xff
+  param.bgpri = 2;//WF2DMAP_BGPRI_DEF	(2)	// 基本ＢＧ優先順位
+
+  p_clact->effect.obj_waku = GFL_CLACT_WK_Create(p_clact->clactSet,
+                                                 p_clact->effect.CGRid,
+                                                 p_clact->effect.CLRid,
+                                                 p_clact->effect.CERid,
+                                                 &param,CLSYS_DRAW_MAIN,heapID);
+  
 	// 表示OFF
-//	CLACT_SetDrawFlag( p_clact->effect.exit_cursor, FALSE );
-//	CLACT_SetDrawFlag( p_clact->effect.obj_waku, FALSE );
-    GFL_CLACT_WK_SetDrawEnable( p_clact->effect.exit_cursor, FALSE );
-    GFL_CLACT_WK_SetDrawEnable( p_clact->effect.obj_waku, FALSE );
+  GFL_CLACT_WK_SetDrawEnable( p_clact->effect.exit_cursor, FALSE );
+  GFL_CLACT_WK_SetDrawEnable( p_clact->effect.obj_waku, FALSE );
 
 	// カーソルはオートアニメ
-//	CLACT_SetAnmFlag( p_clact->effect.exit_cursor, TRUE );
-    GFL_CLACT_WK_SetAutoAnmFlag( p_clact->effect.exit_cursor, TRUE );
-
-	// 枠はアニメ１
-//	CLACT_AnmChg( p_clact->effect.obj_waku, 1 );
-    GFL_CLACT_WK_SetAnmSeq( p_clact->effect.obj_waku, 1 );
-
+  GFL_CLACT_WK_SetAutoAnmFlag( p_clact->effect.exit_cursor, TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( p_clact->effect.obj_waku, TRUE );
+  
 }
 
 //----------------------------------------------------------------------------
