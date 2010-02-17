@@ -167,6 +167,7 @@ typedef enum {
 
   SELITEM_BTL_TYPE,
   SELITEM_COMM_MODE,
+  SELITEM_BADGE,
   SELITEM_SAVE,
   SELITEM_LOAD,
   SELITEM_MSGSPEED,
@@ -174,6 +175,7 @@ typedef enum {
   SELITEM_SUBWAYMODE,
   SELITEM_REC_MODE,
   SELITEM_REC_BUF,
+
 
   SELITEM_MUST_TUIKA,
   SELITEM_MUST_TOKU,
@@ -239,6 +241,7 @@ enum {
 
   LAYOUT_LABEL_BTLTYPE_X  = 8,
   LAYOUT_LABEL_COMM_X = 8,
+  LAYOUT_LABEL_BADGE_X = 8,
   LAYOUT_LABEL_MSGSPEED_X = 144,
   LAYOUT_LABEL_WAZAEFF_X  = 144,
 
@@ -337,6 +340,7 @@ static const LABEL_LAYOUT LabelLayout_Page1[] = {
   { DBGF_LABEL_ENEMY2,  LAYOUT_PARTY_LINE4_X,    LAYOUT_PARTY_LABEL_LINE_Y },
   { DBGF_LABEL_TYPE,    LAYOUT_LABEL_BTLTYPE_X,  LAYOUT_PARAM_LINE_Y1      },
   { DBGF_LABEL_COMM,    LAYOUT_LABEL_COMM_X,     LAYOUT_PARAM_LINE_Y2,     },
+  { DBGF_LABEL_BADGE,   LAYOUT_LABEL_BADGE_X,    LAYOUT_PARAM_LINE_Y3,     },
   { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1      },
   { DBGF_LABEL_WAZAEFF, LAYOUT_LABEL_WAZAEFF_X,  LAYOUT_PARAM_LINE_Y2      },
   { DBGF_LABEL_SUBWAY,  LAYOUT_LABEL_SUBWAY_X,   LAYOUT_LABEL_SUBWAY_Y     },
@@ -428,6 +432,7 @@ static const ITEM_LAYOUT ItemLayout_Page1[] = {
 
   { SELITEM_BTL_TYPE,       LAYOUT_LABEL_BTLTYPE_X  +30, LAYOUT_PARAM_LINE_Y1,   },
   { SELITEM_COMM_MODE,      LAYOUT_LABEL_COMM_X     +40, LAYOUT_PARAM_LINE_Y2,   },
+  { SELITEM_BADGE,          LAYOUT_LABEL_BADGE_X    +40, LAYOUT_PARAM_LINE_Y3,   },
   { SELITEM_MSGSPEED,       LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1,   },
   { SELITEM_WAZAEFF,        LAYOUT_LABEL_WAZAEFF_X  +64, LAYOUT_PARAM_LINE_Y2,   },
   { SELITEM_SUBWAYMODE,     LAYOUT_LABEL_SUBWAY_X   +48, LAYOUT_LABEL_SUBWAY_Y,  },
@@ -540,7 +545,7 @@ typedef struct {
   u32  landForm        : 4;
   u32  season          : 2;
   u32  weather         : 3;
-  u32  dmy             : 4;
+  u32  badgeCount      : 4;
 
   u32  fMustTuika    : 1;
   u32  fMustToku     : 1;
@@ -1027,6 +1032,7 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   saveData->msgSpeed = MSGSPEED_FAST;
   saveData->fWazaEff = 0;
   saveData->fSubway = 0;
+  saveData->badgeCount = 8;
 
   saveData->backGround = 0;
   saveData->landForm = 0;
@@ -1158,6 +1164,10 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
 
   case SELITEM_COMM_MODE:
     save->commMode ^= 1;
+    break;
+
+  case SELITEM_BADGE:
+    save->badgeCount = loopValue( save->badgeCount+incValue, 0, 8 );
     break;
 
   case SELITEM_MSGSPEED:
@@ -1408,6 +1418,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_LIMIT_GAME_MIN:  printItem_Number( wk, wk->saveData.LimitTimeGameMinute, wk->strbuf ); break;
         case SELITEM_LIMIT_GAME_SEC:  printItem_Number( wk, wk->saveData.LimitTimeGameSec, wk->strbuf ); break;
         case SELITEM_LIMIT_COMMAND:   printItem_Number( wk, wk->saveData.LimitTimeCommand, wk->strbuf ); break;
+        case SELITEM_BADGE:           printItem_Number( wk, wk->saveData.badgeCount, wk->strbuf ); break;
 
 
         default:
@@ -1906,6 +1917,14 @@ FS_EXTERN_OVERLAY(battle);
       CONFIG_SetMsgSpeed( config, wk->saveData.msgSpeed );
       CONFIG_SetWazaEffectMode( config, wk->saveData.fWazaEff );
     }
+    {
+      MISC* misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(wk->gameData) );
+      u8 i;
+      for(i=0; i<wk->saveData.badgeCount; ++i){
+        MISC_SetBadgeFlag( misc, i );
+      }
+    }
+
     BATTLE_PARAM_Init( &wk->setupParam );
     savework_SetParty( &wk->saveData, wk );
 
