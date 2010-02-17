@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/17 18:10:14
+#save date:2010/02/17 22:32:19
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0502.wms
 #SECTION START:OBJ_EVENT
@@ -71,7 +71,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -456
+8 0 -504
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -456
+-8 0 -504
 #event number: 3
 #type
 1
@@ -133,24 +133,24 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -456
+24 0 -504
 #event number: 4
 #type
 1
 #ID name
-N01R0502_SHIN_01
+N01R0502_WKOBJCODE01_01
 #OBJ CODE Number
-POKE7
+WKOBJCODE01
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_N01R0502_EVENT_01
+FV_N01R0502_LEGEND_02
 #Event Script Name
-SCRID_N01R0502_SHIN_01
+SCRID_N01R0502_WKOBJCODE01_01
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -164,22 +164,22 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -280
+8 0 -344
 #event number: 5
 #type
 1
 #ID name
-N01R0502_MU_01
+N01R0502_WKOBJCODE00_01
 #OBJ CODE Number
-POKE8
+WKOBJCODE00
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_N01R0502_EVENT_01
+FV_N01R0502_LEGEND_01
 #Event Script Name
-SCRID_N01R0502_MU_01
+SCRID_N01R0502_WKOBJCODE00_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number

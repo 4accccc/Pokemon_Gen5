@@ -313,25 +313,16 @@ EVENT_START   ev_debug_suginaka
 		//メニュー作成
 		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 		//リスト追加
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_01, 0 )	//くさ
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_02, 1 )	//みず
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_03, 2 )	//ほのお
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 3 )	//演説イベント
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 4 )	//D03R0101のイベント
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 5 )	//C03の誘導イベント
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 6 )	//ラストバトル前に移動
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 7 )	//ライトストーン所持
-		_BMPMENU_MAKE_LIST( msg_debug_00, 8 )	//やめる
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 0 )	//演説イベント
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 1 )	//D03R0101のイベント
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 2 )	//C03の誘導イベント
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 3 )	//ラストバトル前に移動
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 4 )	//ライトストーン所持
+		_BMPMENU_MAKE_LIST( msg_debug_00, 5 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 	
 		IF $SCWK_ANSWER == 0 THEN
-			$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_KUSA
-		ELSIF $SCWK_ANSWER == 1 THEN
-			$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
-		ELSIF $SCWK_ANSWER == 2 THEN
-			$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_HONOO
-		ELSIF $SCWK_ANSWER == 3 THEN
 			//=========フラグワーク操作==========//
 	
 			//博士案内イベント終了
@@ -360,7 +351,7 @@ EVENT_START   ev_debug_suginaka
 			
 			$SCWK_TEMP0 = 428
 		
-		ELSIF $SCWK_ANSWER == 4 THEN
+		ELSIF $SCWK_ANSWER == 1 THEN
 			
 			//========================================/
 	
@@ -393,7 +384,7 @@ EVENT_START   ev_debug_suginaka
 			
 			$SCWK_TEMP0 = 428
 			
-		ELSIF $SCWK_ANSWER == 5 THEN
+		ELSIF $SCWK_ANSWER == 2 THEN
 		
 			//アーティ・ライバル削除
 			_FLAG_RESET( FV_C03_GUIDE_01 )
@@ -406,14 +397,14 @@ EVENT_START   ev_debug_suginaka
 			
 			$SCWK_TEMP0 = 428
 
-		ELSIF $SCWK_ANSWER == 6 THEN
+		ELSIF $SCWK_ANSWER == 3 THEN
 
 			//マップチェンジ
 			_MAP_CHANGE( ZONE_ID_N01R0502, 16, 58, DIR_UP )
 			
 			$SCWK_TEMP0 = 428
 
-		ELSIF $SCWK_ANSWER == 7 THEN
+		ELSIF $SCWK_ANSWER == 4 THEN
 
 			$LOCALWORK10 = 3
 			

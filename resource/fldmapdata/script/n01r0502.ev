@@ -19,15 +19,31 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA		ev_zone_n01r0502
 _EVENT_DATA		ev_pos_n01r0502_lastbtl_01
 _EVENT_DATA		ev_pos_n01r0502_lastbtl_02
 _EVENT_DATA		ev_pos_n01r0502_lastbtl_03
 _EVENT_DATA		ev_scene_n01r0502_lastbtl_04
 _EVENT_DATA		ev_n01r0502_boss_01
-_EVENT_DATA		ev_n01r0502_shin_01
-_EVENT_DATA		ev_n01r0502_mu_01
+_EVENT_DATA		ev_n01r0502_wkobjcode00_01
+_EVENT_DATA		ev_n01r0502_wkobjcode01_01
 _EVENT_DATA		ev_scene_n01r0502_lastbtl_05
 _EVENT_DATA_END
+
+/**************************************************************/
+/*               フィールド初期化スクリプト                         */
+/**************************************************************/
+INIT_EVENT_START ev_zone_n01r0502
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	IF $SCWK_ANSWER == VERSION_WHITE THEN
+		$OBJCHRWORK0 = POKE7	//シン
+		$OBJCHRWORK1 = POKE8	//ム
+	ELSE
+		$OBJCHRWORK0 = POKE8	//シン
+		$OBJCHRWORK1 = POKE7	//ム
+	ENDIF
+
+INIT_EVENT_END
 
 /************************************************************/
 /*	最終イベント１	WK_SCENE_N01R0502=0起動					*/
@@ -224,11 +240,6 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 }
 
 	//【仮】デモ再生：シン（ム）が謁見の間に突っ込んでくるデモ
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
 	
 	_MAP_FADE_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
@@ -239,19 +250,11 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 	//【仮】シン（ム）が謁見の間に突っ込んでくるデモ。現状はＮ城出現デモで代用
 	_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
 	
-	//フラグセット
-	_FLAG_RESET( FV_N01R0502_EVENT_01 )
-{
-	DEFINE_LOCAL	LWK_ROM
-	_GET_ROM_VERSION( LWK_ROM )
-		IF $LWK_ROM == VERSION_WHITE THEN
-			_OBJ_ADD( N01R0502_SHIN_01 )
-			_OBJ_POS_CHANGE( N01R0502_SHIN_01, 16, 0, 33, DIR_DOWN )
-		ELSE
-			_OBJ_ADD( N01R0502_MU_01 )
-			_OBJ_POS_CHANGE( N01R0502_MU_01, 16, 0, 33, DIR_DOWN )
-		ENDIF
-}
+	//フラグリセット
+	_FLAG_RESET( FV_N01R0502_LEGEND_01 )
+
+	_OBJ_ADD( N01R0502_WKOBJCODE00_01 )
+	
 	//==========================================================
 	
 	_MAP_FADE_BLACK_IN()
@@ -304,17 +307,14 @@ IF $LOCALWORK10 == 4 THEN
 	{
 	DEFINE_LOCAL	LWK_ROM
 	_GET_ROM_VERSION( LWK_ROM )	
+	
 		IF $LWK_ROM == VERSION_WHITE THEN
-			_OBJ_ADD( N01R0502_MU_01 )
-			_OBJ_POS_CHANGE( N01R0502_MU_01, 16, 0, 37, DIR_UP )
-			_OBJ_POS_CHANGE( N01R0502_SHIN_01, 16, 0, 34, DIR_DOWN )
-			_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 34, DIR_DOWN )
+			_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 34, DIR_DOWN )
+			_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 35, DIR_DOWN )
 			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 38, DIR_UP )
 		ELSE
-			_OBJ_ADD( N01R0502_SHIN_01 )
-			_OBJ_POS_CHANGE( N01R0502_SHIN_01, 16, 0, 37, DIR_UP )
-			_OBJ_POS_CHANGE( N01R0502_MU_01, 16, 0, 34, DIR_DOWN )
-			_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 34, DIR_DOWN )
+			_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 34, DIR_DOWN )
+			_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 35, DIR_DOWN )
 			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 38, DIR_UP )
 		ENDIF
 	}
@@ -357,11 +357,6 @@ IF $LOCALWORK10 == 4 THEN
 			_SYSWIN_CLOSE()
 }
 	//【仮】デモ再生：ム（シン）石から復活デモ
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
 	
 	_MAP_FADE_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
@@ -369,6 +364,10 @@ IF $LOCALWORK10 == 4 THEN
 	//【仮】ム（シン）石から復活デモ。現状はＮ城出現デモで代用
 	_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )	
 	//==========================================================
+	
+	//フラグセット
+	_FLAG_RESET( FV_N01R0502_LEGEND_02 )
+	_OBJ_ADD( N01R0502_WKOBJCODE01_01 )
 	
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
@@ -378,17 +377,9 @@ IF $LOCALWORK10 == 4 THEN
 	_MSGWIN_CLOSE()
 	
 	//シン（ム）が自機の方を見る
-{
-	DEFINE_LOCAL	LWK_ROM
-	_GET_ROM_VERSION( LWK_ROM )
-	IF $LWK_ROM == VERSION_WHITE THEN
-		_OBJ_ANIME( N01R0502_MU_01, anm_package_dir )
-		_OBJ_ANIME_WAIT()
-	ELSE
-		_OBJ_ANIME( N01R0502_SHIN_01, anm_package_dir )
-		_OBJ_ANIME_WAIT()
-	ENDIF
-}
+	_OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_package_dir )
+	_OBJ_ANIME_WAIT()
+	
 	//シンと　ムは……　もとは　ひとつの　いのち
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_09w, msg_n01r0502_boss_09b, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
@@ -401,6 +392,9 @@ IF $LOCALWORK10 == 4 THEN
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10w, msg_n01r0502_boss_10b, N01R0502_BOSS_01, WIN_NONE )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
+	
+	//回復
+	_TEMOTI_POKEMON_KAIFUKU()
 
 	//========================================/
 	
@@ -426,15 +420,18 @@ _ANIME_LABEL	anm_package_dir
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_n_move
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
-/*	最終イベント６	シン話しかけ起動						*/
+/*	最終イベント６	奥	WHITE⇒シン	BLACK⇒ム				*/
 /************************************************************/
-EVENT_START		ev_n01r0502_shin_01
+EVENT_START		ev_n01r0502_wkobjcode00_01
 _TALK_OBJ_START()
+	
 	//WHITE版の場合
 {
 	DEFINE_LOCAL	LWK_ROM
@@ -443,8 +440,25 @@ _TALK_OBJ_START()
 			_VOICE_PLAY( MONSNO_650, 0 )
 			_VOICE_WAIT()
 		ELSE
+			_VOICE_PLAY( MONSNO_651, 0 )
+			_VOICE_WAIT()
+		ENDIF
+}
+
+EVENT_END
+
+/************************************************************/
+/*	最終イベント６	手前	WHITE⇒ム	BLACK⇒シン			*/
+/************************************************************/
+EVENT_START		ev_n01r0502_wkobjcode01_01
+_TALK_OBJ_START()
+	//WHITE版の場合
+{
+	DEFINE_LOCAL	LWK_ROM
+	_GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_BLACK THEN
 			_VOICE_PLAY( MONSNO_650, 0 )
-			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01b , N01R0502_SHIN_01, WIN_NONE )
+			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01b , N01R0502_WKOBJCODE01_01, WIN_NONE )
 			_MSGWIN_CLOSE()
 			_VOICE_WAIT()
 			
@@ -456,10 +470,13 @@ _TALK_OBJ_START()
 				//========================================/
 				
 				//シンのOBJ削除
-				_OBJ_DEL( N01R0502_SHIN_01 )
+				_OBJ_DEL( N01R0502_WKOBJCODE01_01 )
 				
 				//WKの値を6にし、イベント終了
 				$LOCALWORK10 = 6
+				
+				//自機の位置調整
+				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
 				
 				//========================================/
 				
@@ -471,27 +488,9 @@ _TALK_OBJ_START()
 			ELSE
 				_WILD_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
-			
-		ENDIF
-}
-
-EVENT_END
-
-/************************************************************/
-/*	最終イベント６	ム話しかけ起動							*/
-/************************************************************/
-EVENT_START		ev_n01r0502_mu_01
-_TALK_OBJ_START()
-	//WHITE版の場合
-{
-	DEFINE_LOCAL	LWK_ROM
-	_GET_ROM_VERSION( LWK_ROM )
-		IF $LWK_ROM == VERSION_BLACK THEN
-			_VOICE_PLAY( MONSNO_651, 0 )
-			_VOICE_WAIT()
 		ELSE
 			_VOICE_PLAY( MONSNO_651, 0 )
-			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01w , N01R0502_MU_01, WIN_NONE )
+			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01w , N01R0502_WKOBJCODE01_01, WIN_NONE )
 			_MSGWIN_CLOSE()
 			_VOICE_WAIT()
 			
@@ -503,11 +502,14 @@ _TALK_OBJ_START()
 				//========================================/
 				
 				//ムのOBJ削除
-				_OBJ_DEL( N01R0502_MU_01 )
+				_OBJ_DEL( N01R0502_WKOBJCODE01_01 )
 				
 				//WKの値を6にし、イベント終了
 				$LOCALWORK10 = 6
 				
+				//自機の位置調整
+				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
+
 				//========================================/
 				
 				_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
@@ -574,7 +576,10 @@ EVENT_START		ev_scene_n01r0502_lastbtl_05
 	_OBJ_ANIME_WAIT()
 
 	//ゲーチス：登場
+	_FLAG_RESET( FV_N01R0502_EVENT_01 )
 	_OBJ_ADD( N01R0502_SAGE1_01 )
+	_OBJ_ADD( N01R0502_CHAMPION_01 )
+	_OBJ_ADD( N01R0502_RIVAL_01 )
 
 	//ゲーチス『おお！　わが　おうよ！　プラズマだん……　いや』
 	_GIZAWIN_OBJMSG_POS( msg_n01r0502_sage1_01 , N01R0502_SAGE1_01, WIN_NONE )
@@ -594,9 +599,11 @@ EVENT_START		ev_scene_n01r0502_lastbtl_05
 	_MSGWIN_CLOSE()
 	
 	//自機・Ｎ：ゲーチスのほうを向く　ゲーチス：Ｎに近づく
-	_OBJ_ANIME( N01R0502_BOSS_01, anm_dir_r )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_gcis_come2 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_dir_r )
 	_OBJ_ANIME_WAIT()
 	
 	//しょせん　わたくしが　したてあげた
@@ -605,6 +612,7 @@ EVENT_START		ev_scene_n01r0502_lastbtl_05
 	
 	//ゲーチス：主人公の方を向いて
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_gcis_come3 )
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_dir_d )
 	_OBJ_ANIME_WAIT()
 	
 	//そして　おめでとう！　しちけんじんと　ジムリーダーの　たたかいは
@@ -659,6 +667,9 @@ EVENT_START		ev_scene_n01r0502_lastbtl_05
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_sage1_08w, msg_n01r0502_sage1_08b, N01R0502_SAGE1_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 
+	//BGM終了
+	_END_EVENT_BGM()
+
 	//【仮】戦闘呼び出し　全滅処理が未定
 	_TRAINER_BTL_SET( TRID_SAGE1_01, 0 )
 	//敗戦チェック
@@ -668,15 +679,15 @@ EVENT_START		ev_scene_n01r0502_lastbtl_05
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
-	
-	//なぜだー
-	_GIZAWIN_OBJMSG_POS( msg_n01r0502_sage1_09 , N01R0502_SAGE1_01, WIN_NONE )
-	_MSGWIN_CLOSE()
 
 	//ゲーチス・自機：気圧されるアニメ
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_keosu )
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_gcis_keosu )
 	_OBJ_ANIME_WAIT()
+
+	//なぜだー
+	_GIZAWIN_OBJMSG_POS( msg_n01r0502_sage1_09 , N01R0502_SAGE1_01, WIN_NONE )
+	_MSGWIN_CLOSE()
 	
 	//ライバル：ゲーチスをどつく
 	_OBJ_ANIME( N01R0502_RIVAL_01, anm_rival_dotsuku )
@@ -740,7 +751,7 @@ EVENT_START		ev_scene_n01r0502_lastbtl_05
 
 	//プレイヤー名！
 	_PLAYER_NAME( 0 )
-	_SYSWIN_MSG_DOWN( msg_n01r0502_boss_17 )
+	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_17 )
 	_PLAINWIN_CLOSE()
 
 	//はいと　答えた回数でメッセージ分岐
@@ -751,50 +762,48 @@ EVENT_START		ev_scene_n01r0502_lastbtl_05
 		//ホワイトバージョンでかつ
 		IF $LWK_ROM == VERSION_WHITE THEN
 			
-			/*SWITCH $WK_OTHER_N_COUNT
-			//0回の場合
+			SWITCH $WK_OTHER_N_COUNT
 			CASE 0 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_01 )
+				_PLAINWIN_CLOSE()
 			//1回の場合
 			CASE 1 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_02 )
+				_PLAINWIN_CLOSE()
 			//2回の場合
 			CASE 2 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_03 )
+				_PLAINWIN_CLOSE()
 			//3回の場合
 			CASE 3 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_04 )
-    		DEFAULT  
-    		ENDSWITCH
+				_PLAINWIN_CLOSE()
+			ENDSWITCH
 
 		ELSE
 			SWITCH $WK_OTHER_N_COUNT
-			//0回の場合
 			CASE 0 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
+				_PLAINWIN_CLOSE()
 			//1回の場合
 			CASE 1 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_06 )
+				_PLAINWIN_CLOSE()
 			//2回の場合
 			CASE 2 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_07 )
+				_PLAINWIN_CLOSE()
 			//3回の場合
 			CASE 3 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_08 )
-    		DEFAULT  
-    		ENDSWITCH*/
+				_PLAINWIN_CLOSE()
+    		ENDSWITCH
 		ENDIF
 }
-
 	//Ｎのアップ絵終了
 	_END_FACEUP()
 
 	//【仮】デモ再生：シン（ム）の咆哮
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
 	
 	_MAP_FADE_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
@@ -812,15 +821,14 @@ EVENT_START		ev_scene_n01r0502_lastbtl_05
 	DEFINE_LOCAL	LWK_ROM
 	_GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
-			_OBJ_ANIME( N01R0502_SHIN_01, anm_package_lastscene )
+			_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_package_lastscene )
 			_VOICE_PLAY( MONSNO_650, 0 )
 		ELSE
-			_OBJ_ANIME( N01R0502_MU_01, anm_package_lastscene )
+			_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_package_lastscene )
 			_VOICE_PLAY( MONSNO_651, 0 )
 		ENDIF
 }
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lastscene )
-	_OBJ_ANIME( N01R0502_CHAMPION_01, anm_champion_lastscene )
 	_OBJ_ANIME_WAIT()
 	_VOICE_WAIT()
 
@@ -855,12 +863,12 @@ _ANIME_LABEL	anm_dir_l
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_gcis_come
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_gcis_come2
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -869,7 +877,7 @@ _ANIME_LABEL	anm_gcis_come3
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_gcis_come4
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_L_16F,2
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -879,30 +887,26 @@ _ANIME_LABEL	anm_gcis_come5
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_come
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_chanpion_come
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_gcis_keosu
-	_ANIME_DATA	AC_WALK_D_4F,3
+	_ANIME_DATA	AC_WALK_D_4F,2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_keosu
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_D_4F,3
+	_ANIME_DATA	AC_WALK_D_4F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_dotsuku
 	_ANIME_DATA	AC_WALK_U_4F,1
 	_ANIME_DATA	AC_WALK_L_2F,1
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_R_2F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_gcis_dotsuku
@@ -929,16 +933,18 @@ _ANIME_LABEL	anm_gcis_tsureteku2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_champion_tsureteku2
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_champion_ayumi
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_ayumi
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_n_ayumi
