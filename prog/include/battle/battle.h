@@ -246,6 +246,7 @@ typedef struct {
 
   // 各種ステータスフラグ
   u8          btl_status_flag;  ///<各種ステータスフラグ(定義値 BTL_STATUS_FLAG型)
+  u8          badgeCount;       ///< プレイヤー取得済みバッジ数
 
   // デバッグ系
   u16         DebugFlagBit;          ///< 各種デバッグフラグ

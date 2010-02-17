@@ -126,7 +126,7 @@ POKEPARTY* BATTLE_PARAM_GetPokePartyPointer( BATTLE_SETUP_PARAM* bp, BTL_CLIENT_
  */
 void BATTLE_PARAM_SetBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG status_f)
 {
-  bp->btl_status_flag |= status_f; 
+  bp->btl_status_flag |= status_f;
 }
 
 /*
@@ -246,7 +246,10 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   {
     // @todo いずれSAVE_CONTROL_WORKに直アクセスしないように書き換える？
     SAVE_CONTROL_WORK* saveCtrl = GAMEDATA_GetSaveControlWork( gameData );
+    const MISC* miscData = SaveData_GetMiscConst( saveCtrl );
+
     dst->configData = SaveData_GetConfig( saveCtrl );
+    dst->badgeCount = MISC_GetBadgeCount( miscData );
   }
   MI_CpuCopy8( sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
 
@@ -254,7 +257,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   dst->musicPinch = SEQ_BGM_BATTLEPINCH;
 
   dst->result = BTL_RESULT_WIN;
-  
+
   //ボックス開発者に会っているかフラグ
   if( EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork( gameData ), SYS_FLAG_PCNAME)){
     BATTLE_PARAM_SetBtlStatusFlag( dst, BTL_STATUS_FLAG_PCNAME_OPEN );
@@ -391,9 +394,9 @@ void BTL_SETUP_CaptureDemo( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData,
 {
   BATTLE_PARAM_Init( bp );
   setup_common( bp, gameData, (BTL_FIELD_SITUATION*)sit );
-  
+
   setup_player_param( bp, gameData, heapID );
- 
+
   if( partyMine != NULL ){
     PokeParty_Copy( partyMine, bp->party[ BTL_CLIENT_PLAYER ] );
   }
