@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-08T18:01:28"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T12:42:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,9 +307,9 @@
 		</language>
 	</columns>
 
-	<dialog left="168" top="2" right="881" bottom="781" maximized="no" rayout="Vertical2">
+	<dialog left="1408" top="129" right="2121" bottom="908" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1035" top="132" right="1508" bottom="530" visible="yes"/>
+		<tag-palette left="807" top="132" right="1280" bottom="530" visible="yes"/>
 		<band id="0" index="1" style="0000" width="538"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="548"/>
@@ -628,7 +628,7 @@
 おきゃくさまは　まだ▽
 ユニオンルームに　はいれません</language>
 		<language name="JPN_KANJI" width="256">申し訳ございませんが
-お客様は　まだ▽
+お客さまは　まだ▽
 ユニオンルームに　入れません</language>
 	</row>
 
@@ -655,29 +655,29 @@
 ひとから　みたときに▼
 その　イメージ　どおりに
 みえるかも　しれませんよ▼
-たとえば　[1:0E:トレーナー種別名:0]
-なんて　いかがでしょう！？▼
+たとえば　[1:0E:トレーナー種別名:0]なんて
+いかが　でしょう！？▼
 わたしから　みた　いんしょうですが
 とりあえず　かきこんでおきますね！▼
 きにいらなければ　トレーナーカードで
 イメージを　タッチ！▼
 そうすれば　イメージは
-いつでも　へんこうできますよ</language>
-		<language name="JPN_KANJI" width="256">そういえば　おきゃくさま▼
-トレーナーカードに　ごじぶんの
+いつでも　へんこう　できますよ</language>
+		<language name="JPN_KANJI" width="256">そういえば　お客さま▼
+トレーナーカードに　ご自分の
 イメージを　かいていませんね？▼
-じぶんの　イメージを　かいておくと
-ひとから　みたときに▼
-その　イメージ　どおりに
+自分の　イメージを　かいておくと
+人から　みたときに▼
+その　イメージどおりに
 みえるかも　しれませんよ▼
-たとえば　[1:0E:トレーナー種別名:0]
-なんて　いかがでしょう！？▼
-わたしから　みた　いんしょうですが
+たとえば　[1:0E:トレーナー種別名:0]なんて
+いかが　でしょう！？▼
+わたしから　みた　印象ですが
 とりあえず　かきこんでおきますね！▼
-きにいらなければ　トレーナーカードで
+気に入らなければ　トレーナーカードで
 イメージを　タッチ！▼
 そうすれば　イメージは
-いつでも　へんこうできますよ</language>
+いつでも　変更できますよ</language>
 	</row>
 
 	<flowchart-group-list>
