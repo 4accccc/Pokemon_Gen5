@@ -30,6 +30,7 @@
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
 
 #include "debug/debug_str_conv.h"
+#include "system/poke2dgra.h"
 
 
 //============================================================================================
@@ -135,16 +136,6 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 	// BG設定
 	BgInit(  );
 
-	// 3D設定
-	WorldTrade_MyPoke_G3D_Init( wk );
-	{	
-		VecFx32	pos;
-		pos.x	= 13<<FX32_SHIFT;
-		pos.y	= 7<<FX32_SHIFT;
-		pos.z	= 0;
-		wk->pokeMcss	= WorldTrade_MyPoke_MCSS_Create( wk, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst((POKEMON_PARAM*)wk->UploadPokemonData.postData.data), &pos );
-	}
-
 	// BGグラフィック転送
 	BgGraphicSet( wk );
 
@@ -212,8 +203,6 @@ int WorldTrade_MyPoke_Main(WORLDTRADE_WORK *wk, int seq)
 	
 	ret = (*Functable[wk->subprocess_seq])( wk );
 
-	WorldTrade_MyPoke_G3D_Draw( wk );
-
 	return ret;
 }
 
@@ -235,9 +224,6 @@ int WorldTrade_MyPoke_End(WORLDTRADE_WORK *wk, int seq)
 	FreeWork( wk );
 	
 	BmpWinDelete( wk );
-	
-	WorldTrade_MyPoke_MCSS_Delete( wk, wk->pokeMcss );
-	WorldTrade_MyPoke_G3D_Exit( wk );
 
 	BgExit(  );
 
@@ -421,7 +407,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->PokemonActWork,1);
 	GFL_CLACT_WK_SetAnmSeq( wk->PokemonActWork, 37 );
 	GFL_CLACT_WK_SetBgPri(wk->PokemonActWork, 1 );
-	GFL_CLACT_WK_SetDrawEnable(wk->PokemonActWork, 0 );
+	GFL_CLACT_WK_SetDrawEnable(wk->PokemonActWork, 1 );
 	WirelessIconEasy();
 
 }
@@ -1118,34 +1104,33 @@ void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN *win[], STRC
 //------------------------------------------------------------------
 void WorldTrade_TransPokeGraphic( POKEMON_PARAM *pp )
 {
+  { 
+    void *p_char_buff;
+    NNSG2dCharacterData *p_chara;
 
-//MCSSで描画するようになったので使用しなくなりました
-#if 0
-	SOFT_SPRITE_ARC ssa;
-	u8  *char_work = GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, POKEGRA_VRAM_SIZE );
+    p_char_buff	= POKE2DGRA_LoadCharacterPPP( &p_chara, PP_GetPPPPointer(pp), POKEGRA_DIR_FRONT, HEAPID_WORLDTRADE );
 
-	// ポケモンの画像を読み込む（ただしソフトウェアスプライト用のテクスチャ状態）
-	PokeGraArcDataGetPP(&ssa, pp, PARA_FRONT);
+    DC_FlushRange( p_chara->pRawData, POKEGRA_POKEMON_CHARA_SIZE );	// 転送前にメモリ安定
 
-	// テクスチャをOAM用の並びに変換する
-	{
-		int rnd    = PP_Get( pp, ID_PARA_personal_rnd, NULL );
-		int monsno = PP_Get( pp, ID_PARA_monsno, NULL );
-		Ex_ChangesInto_OAM_from_PokeTex(ssa.arc_no, ssa.index_chr, HEAPID_WORLDTRADE, 0, 0, 10, 10, char_work, 
-										rnd, 0, PARA_FRONT, monsno);
-	}
-//	ChangesInto_OAM_from_PokeTex(ssa.arc_no, ssa.index_chr, HEAPID_WORLDTRADE, 0, 0, 10, 10, char_work);
-	DC_FlushRange( char_work,POKEGRA_VRAM_SIZE );	// 転送前にメモリ安定
+    // OAM用VRAMに転送
+    GX_LoadOBJ( p_chara->pRawData, POKEGRA_VRAM_OFFSET, POKEGRA_POKEMON_CHARA_SIZE );
 
-	// OAM用VRAMに転送
-	GX_LoadOBJ( char_work, POKEGRA_VRAM_OFFSET, POKEGRA_VRAM_SIZE );
+    // ワーク解放
+    GFL_HEAP_FreeMemory(p_char_buff);
+  }
 
 	// パレット転送
-	GFL_ARC_UTIL_TransVramPalette( ssa.arc_no, ssa.index_pal, PALTYPE_MAIN_OBJ, 0x20*13, 32, HEAPID_WORLDTRADE );
+  { 
+    ARCDATID  pal = POKEGRA_GetPalArcIndex( PP_Get( pp, ID_PARA_monsno,	NULL ), 
+          PP_Get( pp, ID_PARA_form_no,NULL ),
+          PP_Get( pp, ID_PARA_sex,	NULL ),
+          PP_CheckRare( pp ),
+          POKEGRA_DIR_FRONT,
+          FALSE );
+
+    GFL_ARC_UTIL_TransVramPalette( POKEGRA_GetArcID(), pal, PALTYPE_MAIN_OBJ, 0x20*13, 32, HEAPID_WORLDTRADE );
+  }
 	
-	// ワーク解放
-	GFL_HEAP_FreeMemory(char_work);
-#endif 
 }
 
 
@@ -1171,125 +1156,3 @@ static void WantPokePrintReWrite( WORLDTRADE_WORK *wk )
 
 }
 
-//=============================================================================
-/**
- *	WBでポケモンがMCSSになったため3D処理追加
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	G3D関係とMCSSの初期化
- *
- *	@param	WORLDTRADE_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-void WorldTrade_MyPoke_G3D_Init( WORLDTRADE_WORK *wk )
-{	
-		const VecFx32 cam_pos = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(101.0f)};
-		const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(-100.0f)};
-		const VecFx32 cam_up = {0,FX32_ONE,0};
-		//エッジマーキングカラー
-		 const GXRgb edge_color_table[8]=
-		{ GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
-
-		//G3Dの初期化--------
-		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
-									0, HEAPID_WORLDTRADE, NULL );
-
-		//正射影カメラ
-		wk->camera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH,
-																						FX32_ONE*12.0f,
-																						0,
-																						0,
-																						FX32_ONE*16.0f,
-																						(FX32_ONE),
-																						(FX32_ONE*200),
-																						NULL,
-																						&cam_pos,
-																						&cam_up,
-																						&cam_target,
-																						HEAPID_WORLDTRADE );
-
-		GFL_G3D_CAMERA_Switching( wk->camera );
-		//エッジマーキングカラーセット
-		G3X_SetEdgeColorTable( edge_color_table );
-		G3X_EdgeMarking( TRUE );
-
-		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );	
-
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, TRUE );
-
-
-		//MCSSの初期化--------
-		wk->mcssSys = MCSS_Init( 2 , HEAPID_WORLDTRADE );
-		MCSS_SetTextureTransAdrs( wk->mcssSys , 0 );
-		MCSS_SetOrthoMode( wk->mcssSys );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	G3D関係とMCSSの破棄
- *
- *	@param	WORLDTRADE_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-void WorldTrade_MyPoke_G3D_Exit( WORLDTRADE_WORK *wk )
-{	
-	MCSS_Exit(wk->mcssSys);
-
-	GFL_G3D_CAMERA_Delete(wk->camera);
-	GFL_G3D_Exit();
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	G3D関係とMCSSの描画
- *
- *	@param	WORLDTRADE_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-void WorldTrade_MyPoke_G3D_Draw( WORLDTRADE_WORK *wk )
-{	
-	GFL_G3D_DRAW_Start();
-	GFL_G3D_DRAW_SetLookAt();
-	MCSS_Main( wk->mcssSys );
-	MCSS_Draw( wk->mcssSys );
-	GFL_G3D_DRAW_End();
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	ポケモン１体分のMCSS作成
- *
- *	@param	WORLDTRADE_WORK *wk		ワーク
- *	@param	VecFx32 *pos					位置
- *
- *	@return	ポケモン1体分おMCSS
- */
-//-----------------------------------------------------------------------------
-MCSS_WORK * WorldTrade_MyPoke_MCSS_Create( WORLDTRADE_WORK *wk, POKEMON_PASO_PARAM *ppp, const VecFx32 *pos )
-{	
-	MCSS_WORK *poke;
-	MCSS_ADD_WORK addWork;
-
-	VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
-
-	MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_FRONT );
-	poke = MCSS_Add( wk->mcssSys , pos->x, pos->y , pos->z, &addWork );
-	MCSS_SetScale( poke , &scale );
-	return poke;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	ポケモン１体分のMCSS破棄
- *
- *	@param	WORLDTRADE_WORK *wk		ワーク
- *	@param	*poke									破棄するポケモン
- */
-//-----------------------------------------------------------------------------
-void WorldTrade_MyPoke_MCSS_Delete( WORLDTRADE_WORK *wk, MCSS_WORK *poke )
-{
-	MCSS_SetVanishFlag( poke );
-	MCSS_Del(wk->mcssSys,poke);
-}

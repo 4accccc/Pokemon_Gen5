@@ -471,6 +471,7 @@ static void getBitmapView(sample6_WORK* sw)
 															0,									// int rare
 															POKEGRA_DIR_BACK,		// int dir
                               0,
+                              0,
 															TEXT_FRAME_M,				// u32 frm
 															chrOffs,						// u32 chr_offs
 															TEXT_PLTTID,				// u32 plt_offs

@@ -1028,7 +1028,7 @@ static void POKEGRA_ReLoad( POKEGRA_WORK *p_wk, GFL_CLUNIT *clunit, const POKEGR
       { 
         sex = PTL_SEX_FEMALE;
       }
-      p_wk->res[RESID_OBJ_PM1_CHR + i]  = POKE2DGRA_OBJ_CGR_Register( p_handle, cp_data->mons_no, cp_data->form_no, sex, cp_data->rare, dir, FALSE, CLSYS_DRAW_SUB, heapID );
+      p_wk->res[RESID_OBJ_PM1_CHR + i]  = POKE2DGRA_OBJ_CGR_Register( p_handle, cp_data->mons_no, cp_data->form_no, sex, cp_data->rare, dir, FALSE, 0x88888888,CLSYS_DRAW_SUB, heapID );
       p_wk->res[RESID_OBJ_PM1_PLT + i]  = POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_data->mons_no, cp_data->form_no, sex, cp_data->rare, dir, FALSE, CLSYS_DRAW_SUB, (i+PLTID_OBJ_POKE1_S)*0x20, heapID );
       p_wk->res[RESID_OBJ_PM1_CEL + i]  = POKE2DGRA_OBJ_CELLANM_Register( cp_data->mons_no, cp_data->form_no, sex, cp_data->rare, dir, FALSE, APP_COMMON_MAPPING_128K, CLSYS_DRAW_SUB, heapID );
     }

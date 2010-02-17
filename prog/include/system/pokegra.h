@@ -78,10 +78,18 @@ enum{
 
 //=============================================================================
 /**
- *					プロトタイプ宣言
+ *					外部公開
 */
 //=============================================================================
+
+//-------------------------------------
+///	アーカイブ取得
+//=====================================
 extern ARCID POKEGRA_GetArcID( void );
+
+//-------------------------------------
+///	リソース取得
+//=====================================
 //NCGR
 extern ARCDATID POKEGRA_GetCgrArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
 //NCBR
@@ -98,3 +106,15 @@ extern ARCDATID POKEGRA_GetMCelArcIndex( int mons_no, int form_no, int sex, int 
 extern ARCDATID POKEGRA_GetMAnmArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
 //NCEC MCSS用ファイル
 extern ARCDATID POKEGRA_GetNcecArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
+
+
+//-------------------------------------
+///	加工
+//=====================================
+//以下、2D用キャラはセル分割のため、並び替えされているので、
+//それをBGで使えるように並び直す関数
+extern void POKEGRA_SortBGCharacter( NNSG2dCharacterData *p_chara, HEAPID heapID );
+//並び直したものをもとの並びに戻す関数
+extern void POKEGRA_SortOBJCharacter( NNSG2dCharacterData *p_chara, HEAPID heapID );
+//パッチールのぶちをキャラに書き込む（BGキャラ座標の場合）
+extern void POKEGRA_MakePattiiruBuchi( NNSG2dCharacterData *p_chara, u32 personal_rnd );

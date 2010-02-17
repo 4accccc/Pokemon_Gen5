@@ -32,8 +32,6 @@
 #include "worldtrade_input.h"
 #include "sound/pm_sndsys.h"
 #include "worldtrade_adapter.h"
-#include "system/mcss.h"
-#include "system/mcss_tool.h"
 #include "net/nhttp_rap.h"
 
 // Proc_Mainシーケンス定義
@@ -556,9 +554,6 @@ typedef struct _WORLDTRADE_WORK{
 	void * task_wk;												///< タスク用ワーク
 	void * task_wk_area;									///< タスクワーク作成用エリア
 	WT_PRINT	print;
-	GFL_G3D_CAMERA    * camera;						///< MCSSでポケモン表示するための正射影カメラ
-	MCSS_SYS_WORK *mcssSys;								///< MCSS本体
-	MCSS_WORK     *pokeMcss;							///< 一匹分
   void * sub_proc_wk;                   ///< WIFILOGINやデモなどサブプロセスのワーク
 
   NHTTP_RAP_WORK  *nhttp;             ///<認証キーや不正検査で使う
@@ -672,13 +667,6 @@ extern void WorldTrade_PokeInfoPrint( 	GFL_MSGDATA *MsgManager,
 							WT_PRINT *print );
 extern void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN *win[], STRCODE *name, POKEMON_PARAM *pp, GFL_BMPWIN* oya_win[], WT_PRINT *print );
 extern void WorldTrade_TransPokeGraphic( POKEMON_PARAM *pp );
-//以下、ポケモン表示をMCSSに変更するために作成nagihashi
-extern void WorldTrade_MyPoke_G3D_Init( WORLDTRADE_WORK *wk );
-extern void WorldTrade_MyPoke_G3D_Exit( WORLDTRADE_WORK *wk );
-extern void WorldTrade_MyPoke_G3D_Draw( WORLDTRADE_WORK *wk );
-extern MCSS_WORK * WorldTrade_MyPoke_MCSS_Create( WORLDTRADE_WORK *wk, POKEMON_PASO_PARAM *ppp, const VecFx32 *pos );
-extern void WorldTrade_MyPoke_MCSS_Delete( WORLDTRADE_WORK *wk, MCSS_WORK *poke );
-//ここまで
 
 // worldtrade_partner.c
 extern int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq);

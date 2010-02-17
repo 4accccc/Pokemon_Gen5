@@ -28,6 +28,7 @@
 #include "arc_def.h"
 //#include "config_gra.naix"
 #include "ui/msgsearch.h"
+#include "arc/wifileadingchar.naix"
 
 //  print
 #include "font/font.naix"
@@ -36,8 +37,14 @@
 #include "print/gf_font.h"
 #include "print/printsys.h"
 
+//MCSS
+#include "system/mcss.h"
+#include "system/mcss_tool.h"
+#include "ui/ui_easy_clwk.h"
+
 //  mine
 #include "debug_template.h"
+#include "debug/debug_nagihashi.h"
 
 #include "debug/debug_str_conv.h"
 
@@ -64,36 +71,6 @@ FS_EXTERN_OVERLAY(ui_debug);
 */
 //=============================================================================
 //-------------------------------------
-/// ユニコードデバッグプリント
-//=====================================
-static inline void DEBUG_STRBUF_Print( const STRBUF *cp_str )
-{
-  int i;
-  char str[3] = {0};
-  int     len;
-  const STRCODE *cp_code;
-
-  len     = GFL_STR_GetBufferLength(cp_str);
-  cp_code = GFL_STR_GetStringCodePointer( cp_str );
-
-  for( i = 0; i < len; i++ )
-  {
-    DEB_STR_CONV_StrcodeToSjis( &cp_code[i] , str , 1 );
-    NAGI_Printf( "%s ", str );
-  }
-  NAGI_Printf("\n");
-
-}
-
-// 処理時間の表示
-
-static OSTick s_DUN_TICK_DRAW_start;
-
-
-#define TICK_DRAW_PrintStart  (s_DUN_TICK_DRAW_start = OS_GetTick())
-#define TICK_DRAW_PrintEnd    NAGI_Printf("line[%d] time=%dmicro\n",__LINE__,OS_TicksToMicroSeconds(OS_GetTick() - s_DUN_TICK_DRAW_start) )
-
-//-------------------------------------
 /// フレーム
 //=====================================
 enum
@@ -116,6 +93,7 @@ enum
 
   //メインOBJ
   PLTID_OBJ_POKEMON_M   = 0,
+  PLTID_OBJ_HERO_M      = 1,
   PLTID_OBJ_TOUCHBAR_M  = 13,
 };
 //-------------------------------------
@@ -142,6 +120,17 @@ enum
  *          構造体宣言
 */
 //=============================================================================
+
+//-------------------------------------
+///	ポケモン描画
+//=====================================
+typedef struct 
+{
+  u32           objres[OBJRESID_MAX];
+  GFL_CLWK      *p_clwk;
+} POKEOBJ_WORK;
+
+
 //-------------------------------------
 /// シーケンス管理
 //=====================================
@@ -160,6 +149,12 @@ struct _SEQ_WORK
 //=====================================
 typedef struct
 {
+  u32         pokeID;
+
+ 	//MCSS
+	MCSS_SYS_WORK							*p_mcss_sys;
+	MCSS_WORK									*p_mcss_wk; 
+
   //グラフィックモジュール
   UI_TEMPLATE_GRAPHIC_WORK  *p_graphic;
 
@@ -170,8 +165,7 @@ typedef struct
   TOUCHBAR_WORK *p_touchbar;
 
   //ポケモン正面OBJ
-  u32           objres[OBJRESID_MAX];
-  GFL_CLWK      *p_clwk;
+  POKEOBJ_WORK  pokeobj;
 
   //共通で使うフォント
   GFL_FONT      *p_font;
@@ -188,6 +182,11 @@ typedef struct
   STRBUF          *p_strbuf;
   MSGSEARCH_RESULT result_tbl[MSGSEARCH_RESULT_MAX];
   GFL_MSGDATA     *p_msg[ MSGDATA_MAX ];
+
+  //主人公OBJ
+  UI_EASY_CLWK_RES  hero_res;
+  GFL_CLWK          *p_hero;
+  u32               hero_anm;
 }TEMPLATE_WORK;
 //=============================================================================
 /**
@@ -223,6 +222,22 @@ static void SEQFUNC_FadeOut( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_Search( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
+
+//-------------------------------------
+///	POKE２D
+//=====================================
+static void POKEOBJ_Init( POKEOBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, const POKEMON_PASO_PARAM  *cp_ppp, HEAPID heapID );
+static void POKEOBJ_Exit( POKEOBJ_WORK *p_wk );
+
+//-------------------------------------
+///	MCSS
+//=====================================
+static MCSS_SYS_WORK * POKE3D_Init( u16 wk_max, HEAPID heapID );
+static void POKE3D_Exit( MCSS_SYS_WORK * mcss );
+static void POKE3D_Draw( MCSS_SYS_WORK * mcss );
+static MCSS_WORK * POKE3D_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos );
+static void POKE3D_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk );
+
 //=============================================================================
 /**
  *          外部公開
@@ -277,6 +292,7 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
   //プロセスワーク作成
   p_wk  = GFL_PROC_AllocWork( p_proc, sizeof(TEMPLATE_WORK), HEAPID_NAGI_DEBUG_SUB );
   GFL_STD_MemClear( p_wk, sizeof(TEMPLATE_WORK) );
+  p_wk->pokeID  = 0x88888888;
 
   //共通モジュールの作成
   p_wk->p_font    = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
@@ -327,60 +343,73 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
     touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;
 
     p_wk->p_touchbar  = TOUCHBAR_Init( &touchbar_setup, HEAPID_NAGI_DEBUG_SUB );
-
   }
+
+#if 0
+  {   
+    UI_EASY_CLWK_RES_PARAM param;
+    GFL_STD_MemClear( &param, sizeof(UI_EASY_CLWK_RES_PARAM) );
+    param.draw_type = CLSYS_DRAW_MAIN;
+    param.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
+    param.arc_id  = ARCID_WIFILEADING;
+    param.pltt_id = NARC_wifileadingchar_hero_NCLR;
+    param.ncg_id  = NARC_wifileadingchar_hero_gts_NCGR;
+    param.cell_id = NARC_wifileadingchar_hero_gts_NCER;
+    param.anm_id  = NARC_wifileadingchar_hero_gts_NANR;
+    param.pltt_line     = PLTID_OBJ_HERO_M;
+    param.pltt_src_ofs  = 0;
+    param.pltt_src_num  = 1;
+
+    UI_EASY_CLWK_LoadResource( &p_wk->hero_res, &param, NULL, HEAPID_NAGI_DEBUG_SUB );
+    p_wk->p_hero  = UI_EASY_CLWK_CreateCLWK( &p_wk->hero_res, UI_TEMPLATE_GRAPHIC_GetClunit( p_wk->p_graphic ), 128, 96, 0, HEAPID_NAGI_DEBUG_SUB );
+    GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_hero, TRUE );
+  }
+#endif
 
   //ポケモンOBJ
-  {
+  { 
+    POKEMON_PARAM*  p_pp;
     POKEMON_PASO_PARAM  *p_ppp;
-    ARCHANDLE           *p_handle;
+    u32 pow_val;
 
-    p_ppp = (POKEMON_PASO_PARAM *)PP_Create( 490, 0, 0, HEAPID_NAGI_DEBUG_SUB );
-    PPP_Put( p_ppp,ID_PARA_tamago_flag, TRUE );
+    //パッチール作る
+    p_pp  = PP_Create( MONSNO_PATTIIRU, 100, PTL_SETUP_ID_AUTO, HEAPID_NAGI_DEBUG_SUB );
+    PP_SetupEx( p_pp, MONSNO_PATTIIRU, 100, PTL_SETUP_ID_AUTO, PTL_SETUP_POW_AUTO, p_wk->pokeID );
+    p_ppp = PP_GetPPPPointer( p_pp );
 
-    p_handle  = POKE2DGRA_OpenHandle( HEAPID_NAGI_DEBUG_SUB );
-    p_wk->objres[ OBJRESID_PM_CHR ] = POKE2DGRA_OBJ_CGR_RegisterPPP( p_handle, p_ppp, POKEGRA_DIR_BACK, CLSYS_DRAW_MAIN, HEAPID_NAGI_DEBUG_SUB );
-    p_wk->objres[ OBJRESID_PM_PLT ] = POKE2DGRA_OBJ_PLTT_RegisterPPP( p_handle, p_ppp, POKEGRA_DIR_BACK ,CLSYS_DRAW_MAIN,  PLTID_OBJ_POKEMON_M,  HEAPID_NAGI_DEBUG_SUB );
-    p_wk->objres[ OBJRESID_PM_CEL ] = POKE2DGRA_OBJ_CELLANM_RegisterPPP( p_ppp, POKEGRA_DIR_BACK, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, HEAPID_NAGI_DEBUG_SUB );
-    GFL_ARC_CloseDataHandle( p_handle );
+    {
+      POKEOBJ_Init( &p_wk->pokeobj, UI_TEMPLATE_GRAPHIC_GetClunit( p_wk->p_graphic ), p_ppp, HEAPID_NAGI_DEBUG_SUB );
+    }
 
-    GFL_HEAP_FreeMemory( p_ppp );
+    //ポケモンBG
+    /*
+       {
+       POKEMON_PASO_PARAM  *p_ppp;
 
-  }
-  {
-    GFL_CLUNIT          *p_unit;
-    GFL_CLWK_DATA cldata;
-    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+       p_ppp = (POKEMON_PASO_PARAM *)PP_Create( 6, 0, 0, HEAPID_NAGI_DEBUG_SUB );
+       PPP_Put( p_ppp,ID_PARA_tamago_flag, TRUE );
+       PPP_Put( p_ppp,ID_PARA_sex, PTL_SEX_FEMALE );
 
-    cldata.pos_x  = 188;
-    cldata.pos_y  = 96;
+       GFL_BG_FillCharacter( BG_FRAME_POKEMON_M, 0, 1,  0 );
 
-    p_unit  = UI_TEMPLATE_GRAPHIC_GetClunit( p_wk->p_graphic );
-    p_wk->p_clwk  = GFL_CLACT_WK_Create( p_unit,
-        p_wk->objres[OBJRESID_PM_CHR],
-        p_wk->objres[OBJRESID_PM_PLT],
-        p_wk->objres[OBJRESID_PM_CEL],
-        &cldata,
-        CLSYS_DEFREND_MAIN, HEAPID_NAGI_DEBUG_SUB );
-  }
+       POKE2DGRA_BG_TransResourcePPP( p_ppp, POKEGRA_DIR_BACK, BG_FRAME_POKEMON_M,
+       1, PLTID_BG_POKEMON_M, HEAPID_NAGI_DEBUG_SUB );
 
-  //ポケモンBG
-  {
-    POKEMON_PASO_PARAM  *p_ppp;
+       POKE2DGRA_BG_WriteScreen( BG_FRAME_POKEMON_M, 1, PLTID_BG_POKEMON_M, 0, 4 );
+       GFL_BG_LoadScreenReq( BG_FRAME_POKEMON_M );
 
-    p_ppp = (POKEMON_PASO_PARAM *)PP_Create( 6, 0, 0, HEAPID_NAGI_DEBUG_SUB );
-    PPP_Put( p_ppp,ID_PARA_tamago_flag, TRUE );
-    PPP_Put( p_ppp,ID_PARA_sex, PTL_SEX_FEMALE );
+       GFL_HEAP_FreeMemory( p_ppp );
+       }*/
 
-    GFL_BG_FillCharacter( BG_FRAME_POKEMON_M, 0, 1,  0 );
+    //MCSS初期化&ワーク作成
+    p_wk->p_mcss_sys	= POKE3D_Init( 1, HEAPID_NAGI_DEBUG_SUB );
 
-    POKE2DGRA_BG_TransResourcePPP( p_ppp, POKEGRA_DIR_BACK, BG_FRAME_POKEMON_M,
-        1, PLTID_BG_POKEMON_M, HEAPID_NAGI_DEBUG_SUB );
+    {
+      VecFx32 pos	= { -FX32_ONE*5, 0, 0	};
+      p_wk->p_mcss_wk		= POKE3D_CreateWkPP( p_wk->p_mcss_sys, p_pp, &pos );
+    }
 
-    POKE2DGRA_BG_WriteScreen( BG_FRAME_POKEMON_M, 1, PLTID_BG_POKEMON_M, 0, 4 );
-    GFL_BG_LoadScreenReq( BG_FRAME_POKEMON_M );
-
-    GFL_HEAP_FreeMemory( p_ppp );
+    GFL_HEAP_FreeMemory( p_pp );
   }
 
   return GFL_PROC_RES_FINISH;
@@ -403,20 +432,23 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 
   p_wk  = p_wk_adrs;
 
+  //MCSS破棄
+  POKE3D_DeleteWk( p_wk->p_mcss_sys, p_wk->p_mcss_wk );
+	POKE3D_Exit( p_wk->p_mcss_sys );
+
   //ポケモンBG破棄
-  {
+ /* {
     GFL_BG_FillCharacterRelease( BG_FRAME_POKEMON_M, 1, 0 );
-  }
+  }*/
 
   //ポケモンOBJ破棄
-  {
-    GFL_CLACT_WK_Remove( p_wk->p_clwk );
-    GFL_CLGRP_PLTT_Release( p_wk->objres[ OBJRESID_PM_PLT ] );
-    GFL_CLGRP_CGR_Release( p_wk->objres[ OBJRESID_PM_CHR ] );
-    GFL_CLGRP_CELLANIM_Release( p_wk->objres[ OBJRESID_PM_CEL ] );
-  }
-
+  POKEOBJ_Exit( &p_wk->pokeobj );
+#if 0
   //モジュール破棄
+  GFL_CLACT_WK_Remove( p_wk->p_hero );
+  UI_EASY_CLWK_UnLoadResource( &p_wk->hero_res );
+#endif
+
   TOUCHBAR_Exit( p_wk->p_touchbar );
   INFOWIN_Exit();
   SEQ_Exit( &p_wk->seq );
@@ -461,6 +493,10 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
   //描画
   UI_TEMPLATE_GRAPHIC_2D_Draw( p_wk->p_graphic );
 
+	//3D描画
+	UI_TEMPLATE_GRAPHIC_3D_StartDraw( p_wk->p_graphic );
+	POKE3D_Draw( p_wk->p_mcss_sys );
+	UI_TEMPLATE_GRAPHIC_3D_EndDraw( p_wk->p_graphic );
   //INFO
   INFOWIN_Update();
 
@@ -678,15 +714,92 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
 
   TEMPLATE_WORK *p_wk = p_param;
+  BOOL is_update  = FALSE;
+  const int trg = GFL_UI_KEY_GetTrg();
+  const int cont = GFL_UI_KEY_GetCont();
 
   if( GFL_UI_TP_GetTrg() )
   {
     SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
   }
 
-  if( GFL_UI_KEY_GetTrg() )
+  if( trg )
+  { 
+    //AA BB XX YY
+
+    u32 bit = 0;
+    if( cont & PAD_BUTTON_A )
+    { 
+      bit = 24;
+    }
+    else if( cont & PAD_BUTTON_B )
+    { 
+      bit = 16;
+    }
+    else if( cont & PAD_BUTTON_X )
+    { 
+      bit = 8;
+    }
+    else if( cont & PAD_BUTTON_Y )
+    { 
+      bit = 0;
+    }
+
+    if( trg & PAD_KEY_UP )
+    {
+      p_wk->hero_anm++;
+      p_wk->hero_anm  = MATH_CLAMP( p_wk->hero_anm, 0, 6 );
+      //NAGI_Printf( "hero anm%d\n", p_wk->hero_anm);
+      //GFL_CLACT_WK_SetAnmSeq( p_wk->p_hero, p_wk->hero_anm );
+
+      p_wk->pokeID -= 0x10 << bit;
+    }
+    else if( trg & PAD_KEY_DOWN )
+    { 
+      p_wk->hero_anm--;
+      p_wk->hero_anm  = MATH_CLAMP( p_wk->hero_anm, 0, 6 );
+      //NAGI_Printf( "hero anm%d\n", p_wk->hero_anm);
+      //GFL_CLACT_WK_SetAnmSeq( p_wk->p_hero, p_wk->hero_anm );
+
+      p_wk->pokeID += 0x10 << bit;
+    }
+    else if( trg & PAD_KEY_LEFT )
+    { 
+      p_wk->pokeID -= 0x01 << bit;
+    }
+    else if( trg & PAD_KEY_RIGHT )
+    { 
+      p_wk->pokeID += 0x01 << bit;
+    }
+    NAGI_Printf( "RND=[0x%x]\n", p_wk->pokeID );
+
+    is_update = TRUE;
+  }
+
+  if( is_update )
   {
-    SEQ_SetNext( p_seqwk, SEQFUNC_Search );
+    POKEMON_PARAM*  p_pp;
+    POKEMON_PASO_PARAM  *p_ppp;
+
+    //パッチール作る
+    p_pp  = PP_Create( MONSNO_PATTIIRU, 100, PTL_SETUP_ID_AUTO, HEAPID_NAGI_DEBUG_SUB );
+    PP_SetupEx( p_pp, MONSNO_PATTIIRU, 100, PTL_SETUP_ID_AUTO, PTL_SETUP_POW_AUTO, p_wk->pokeID );
+    p_ppp = PP_GetPPPPointer( p_pp );
+
+    //ポケモンOBJ作り直し
+    POKEOBJ_Exit( &p_wk->pokeobj );
+    {
+      POKEOBJ_Init( &p_wk->pokeobj, UI_TEMPLATE_GRAPHIC_GetClunit( p_wk->p_graphic ), p_ppp, HEAPID_NAGI_DEBUG_SUB );
+    }
+
+    //ポケモンMCSS作り直し
+    POKE3D_DeleteWk( p_wk->p_mcss_sys, p_wk->p_mcss_wk );
+    { 
+      VecFx32 pos	= { -FX32_ONE*5, 0, 0	};
+      p_wk->p_mcss_wk		= POKE3D_CreateWkPP( p_wk->p_mcss_sys, p_pp, &pos );
+    }
+
+    GFL_HEAP_FreeMemory( p_pp );
   }
 }
 
@@ -762,10 +875,10 @@ static void SEQFUNC_Search( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
         GFL_SKB_PickStr( p_wk->p_skb );
 
-        TICK_DRAW_PrintStart;
+        DEBUG_TICK_PrintStart;
         max = MSGSEARCH_SearchAll( p_wk->p_search, p_wk->p_strbuf, p_wk->result_tbl, MSGSEARCH_RESULT_MAX );
         //max = MSGSEARCH_Search( p_wk->p_search, 0, 0, p_wk->p_strbuf, p_wk->result_tbl, MSGSEARCH_RESULT_MAX );
-        TICK_DRAW_PrintEnd;
+        DEBUG_TICK_PrintEnd;
 
         NAGI_Printf( "検索最大数 max=%d\n", max );
         NAGI_Printf( "検索文字=" );
@@ -797,4 +910,149 @@ static void SEQFUNC_Search( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     SEQ_SetNext( p_seqwk, SEQFUNC_Main );
     break;
   }
+}
+//=============================================================================
+/**
+ *  POKEOBJ
+ */
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンOBJ作成
+ *  
+ *	@param	POKEOBJ_WORK *p_wk      ワーク
+ *	@param  GFL_CLUNIT    *p_clunit セルアクター登録ユニット
+ *	@param	POKEMON_PASO_PARAM  *cp_ppp 表示させるポケモンデータ
+ *	@param	heapID                      ヒープ
+ */
+//-----------------------------------------------------------------------------
+static void POKEOBJ_Init( POKEOBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, const POKEMON_PASO_PARAM  *cp_ppp, HEAPID heapID )
+{ 
+  //リソース読み込み
+  { 
+    ARCHANDLE           *p_handle;
+    p_handle  = POKE2DGRA_OpenHandle( HEAPID_NAGI_DEBUG_SUB );
+    p_wk->objres[ OBJRESID_PM_CHR ] = POKE2DGRA_OBJ_CGR_RegisterPPP( p_handle, cp_ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, HEAPID_NAGI_DEBUG_SUB );
+    p_wk->objres[ OBJRESID_PM_PLT ] = POKE2DGRA_OBJ_PLTT_RegisterPPP( p_handle, cp_ppp, POKEGRA_DIR_FRONT ,CLSYS_DRAW_MAIN,  PLTID_OBJ_POKEMON_M,  HEAPID_NAGI_DEBUG_SUB );
+    p_wk->objres[ OBJRESID_PM_CEL ] = POKE2DGRA_OBJ_CELLANM_RegisterPPP( cp_ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, HEAPID_NAGI_DEBUG_SUB );
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+  //ワーク作成
+  {
+    GFL_CLUNIT          *p_unit;
+    GFL_CLWK_DATA cldata;
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+    cldata.pos_x  = 192 + 16;
+    cldata.pos_y  = 90;
+
+    p_wk->p_clwk  = GFL_CLACT_WK_Create( p_clunit,
+        p_wk->objres[OBJRESID_PM_CHR],
+        p_wk->objres[OBJRESID_PM_PLT],
+        p_wk->objres[OBJRESID_PM_CEL],
+        &cldata,
+        CLSYS_DEFREND_MAIN, HEAPID_NAGI_DEBUG_SUB );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンOBJ破棄
+ *
+ *	@param	POKEOBJ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void POKEOBJ_Exit( POKEOBJ_WORK *p_wk )
+{ 
+  //ポケモンOBJ破棄
+  {
+    GFL_CLACT_WK_Remove( p_wk->p_clwk );
+    GFL_CLGRP_PLTT_Release( p_wk->objres[ OBJRESID_PM_PLT ] );
+    GFL_CLGRP_CGR_Release( p_wk->objres[ OBJRESID_PM_CHR ] );
+    GFL_CLGRP_CELLANIM_Release( p_wk->objres[ OBJRESID_PM_CEL ] );
+  }
+}
+
+//=============================================================================
+/**
+ *		MCSS
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	MCSS初期化
+ *
+ *	@param	u16 wk_max		MCSSのワーク作成最大数
+ *	@param	heapID				ヒープID
+ *
+ *	@return	MCSS_SYS
+ */
+//-----------------------------------------------------------------------------
+static MCSS_SYS_WORK * POKE3D_Init( u16 wk_max, HEAPID heapID )
+{	
+	MCSS_SYS_WORK *mcss;
+	mcss = MCSS_Init( wk_max , heapID );
+	MCSS_SetTextureTransAdrs( mcss, 0 );
+	MCSS_SetOrthoMode( mcss );
+	return mcss;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	MCSS破棄
+ *
+ *	@param	MCSS_SYS_WORK * mcss	MCSS＿SYS
+ */
+//-----------------------------------------------------------------------------
+static void POKE3D_Exit( MCSS_SYS_WORK * mcss )
+{	
+	MCSS_Exit(mcss);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	MCSS描画
+ *
+ *	@param	MCSS_SYS_WORK * mcss MCSS＿SYS
+ */
+//-----------------------------------------------------------------------------
+static void POKE3D_Draw( MCSS_SYS_WORK * mcss )
+{	
+	MCSS_Main( mcss );
+	MCSS_Draw( mcss );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	MCSSワーク作成
+ *
+ *	@param	MCSS_SYS_WORK * mcss	MCSS_SYS
+ *	@param	*ppp					ポケモンパーソナルパラメータ
+ *	@param	VecFx32 *pos	位置
+ *
+ *	@return	MCSS_WK
+ */
+//-----------------------------------------------------------------------------
+static MCSS_WORK * POKE3D_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos )
+{	
+	MCSS_WORK *poke;
+	MCSS_ADD_WORK addWork;
+
+	VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
+
+	MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );
+	poke = MCSS_Add( mcss, pos->x, pos->y , pos->z, &addWork );
+	MCSS_SetScale( poke , &scale );
+	return poke;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	MCSSワーク破棄
+ *
+ *	@param	MCSS_SYS_WORK * mcss	MCSS_SYS
+ *	@param	*wk										ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void POKE3D_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk )
+{	
+	MCSS_SetVanishFlag( wk );
+	MCSS_Del(mcss,wk);
 }

@@ -22,11 +22,21 @@
 //外部参照
 #include "system/pokegra.h"
 
+//パッチールブチ作成
+#include "../battle/btlv/data/patch.cdat"
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
+#define POKEGRA_CELL01_X  8
+#define POKEGRA_CELL01_Y  8
+#define POKEGRA_CELL02_X  4
+#define POKEGRA_CELL02_Y  8
+#define POKEGRA_CELL03_X  8
+#define POKEGRA_CELL03_Y  4
+#define POKEGRA_CELL04_X  4
+#define POKEGRA_CELL04_Y  4
 
 //=============================================================================
 /**
@@ -228,6 +238,172 @@ ARCDATID POKEGRA_GetNcecArcIndex( int mons_no, int form_no, int sex, int rare, i
 	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL, NULL );
 
 	return mons_offset + dir_offset + POKEGRA_NCEC;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  2D用キャラはセル分割のため、並び替えされているので、
+ *          それをBGで使えるように並び直す関数
+ *
+ *	@param	NNSG2dCharacterData *p_chara キャラ
+ *	@param  heapID  テンポラリ作成用ヒープ
+ */
+//-----------------------------------------------------------------------------
+void POKEGRA_SortBGCharacter( NNSG2dCharacterData *p_chara, HEAPID heapID )
+{ 
+  //テンポラリにキャラをコピー
+  u8 *p_buff  = p_chara->pRawData;
+  u8 *p_temp  = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapID), POKEGRA_POKEMON_CHARA_SIZE );
+  MI_CpuCopyFast( p_buff, p_temp, POKEGRA_POKEMON_CHARA_SIZE );
+
+  //8x8,4*8,8*4,4*4の4つのOAMにあわせるように転送
+  {
+    int i;
+    u32 dst_pos, src_pos;
+
+    dst_pos = 0;
+    src_pos = 0;
+
+    //8*8を転送
+    for( i = 0; i < POKEGRA_CELL01_Y; i++ )
+    { 
+      dst_pos = (i * POKEGRA_POKEMON_CHARA_WIDTH) * GFL_BG_1CHRDATASIZ;
+      MI_CpuCopyFast( &p_temp[src_pos], &p_buff[dst_pos], POKEGRA_CELL01_X*GFL_BG_1CHRDATASIZ );
+      src_pos += POKEGRA_CELL01_X*GFL_BG_1CHRDATASIZ;
+    }
+    //4*8を転送
+    for( i = 0; i < POKEGRA_CELL02_Y; i++ )
+    { 
+      dst_pos = (POKEGRA_CELL01_X + i * POKEGRA_POKEMON_CHARA_WIDTH) * GFL_BG_1CHRDATASIZ;
+      MI_CpuCopyFast( &p_temp[src_pos], &p_buff[dst_pos], POKEGRA_CELL02_X*GFL_BG_1CHRDATASIZ );
+      src_pos += POKEGRA_CELL02_X*GFL_BG_1CHRDATASIZ;
+    }
+    //8*4を転送
+    for( i = 0; i < POKEGRA_CELL03_Y; i++ )
+    { 
+      dst_pos = ((POKEGRA_CELL01_Y + i) * POKEGRA_POKEMON_CHARA_WIDTH) * GFL_BG_1CHRDATASIZ;
+      MI_CpuCopyFast( &p_temp[src_pos], &p_buff[dst_pos], POKEGRA_CELL03_X*GFL_BG_1CHRDATASIZ );
+      src_pos += POKEGRA_CELL03_X*GFL_BG_1CHRDATASIZ;
+    }
+    //4*4を転送
+    for( i = 0; i < POKEGRA_CELL04_Y; i++ )
+    { 
+      dst_pos = (POKEGRA_CELL03_X + (POKEGRA_CELL02_Y + i) 
+                * POKEGRA_POKEMON_CHARA_WIDTH) * GFL_BG_1CHRDATASIZ;
+      MI_CpuCopyFast( &p_temp[src_pos], &p_buff[dst_pos], POKEGRA_CELL04_X*GFL_BG_1CHRDATASIZ );
+      src_pos += POKEGRA_CELL04_X*GFL_BG_1CHRDATASIZ;
+    }
+  }
+
+  //一時バッファ削除
+  GFL_HEAP_FreeMemory( p_temp );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  上記で並び直したものをもとの並びに戻す関数
+ *
+ *	@param	NNSG2dCharacterData *p_chara キャラ
+ *	@param  heapID  テンポラリ作成用ヒープ
+ */
+//-----------------------------------------------------------------------------
+void POKEGRA_SortOBJCharacter( NNSG2dCharacterData *p_chara, HEAPID heapID )
+{ 
+  //テンポラリにキャラをコピー
+  u8 *p_buff  = p_chara->pRawData;
+  u8 *p_temp  = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapID), POKEGRA_POKEMON_CHARA_SIZE );
+  MI_CpuCopyFast( p_buff, p_temp, POKEGRA_POKEMON_CHARA_SIZE );
+
+  //8x8,4*8,8*4,4*4の4つのOAMにあわせるように転送
+  {
+    int i;
+    u32 dst_pos, src_pos;
+
+    dst_pos = 0;
+    src_pos = 0;
+
+    //8*8を転送
+    for( i = 0; i < POKEGRA_CELL01_Y; i++ )
+    { 
+      src_pos = (i * POKEGRA_POKEMON_CHARA_WIDTH) * GFL_BG_1CHRDATASIZ;
+      MI_CpuCopyFast( &p_temp[src_pos], &p_buff[dst_pos], POKEGRA_CELL01_X*GFL_BG_1CHRDATASIZ );
+      dst_pos += POKEGRA_CELL01_X*GFL_BG_1CHRDATASIZ;
+    }
+    //4*8を転送
+    for( i = 0; i < POKEGRA_CELL02_Y; i++ )
+    { 
+      src_pos = (POKEGRA_CELL01_X + i * POKEGRA_POKEMON_CHARA_WIDTH) * GFL_BG_1CHRDATASIZ;
+      MI_CpuCopyFast( &p_temp[src_pos], &p_buff[dst_pos], POKEGRA_CELL02_X*GFL_BG_1CHRDATASIZ );
+      dst_pos += POKEGRA_CELL02_X*GFL_BG_1CHRDATASIZ;
+    }
+    //8*4を転送
+    for( i = 0; i < POKEGRA_CELL03_Y; i++ )
+    { 
+      src_pos = ((POKEGRA_CELL01_Y + i) * POKEGRA_POKEMON_CHARA_WIDTH) * GFL_BG_1CHRDATASIZ;
+      MI_CpuCopyFast( &p_temp[src_pos], &p_buff[dst_pos], POKEGRA_CELL03_X*GFL_BG_1CHRDATASIZ );
+      dst_pos += POKEGRA_CELL03_X*GFL_BG_1CHRDATASIZ;
+    }
+    //4*4を転送
+    for( i = 0; i < POKEGRA_CELL04_Y; i++ )
+    { 
+      src_pos = (POKEGRA_CELL03_X + (POKEGRA_CELL02_Y + i) 
+                * POKEGRA_POKEMON_CHARA_WIDTH) * GFL_BG_1CHRDATASIZ;
+      MI_CpuCopyFast( &p_temp[src_pos], &p_buff[dst_pos], POKEGRA_CELL04_X*GFL_BG_1CHRDATASIZ );
+      dst_pos += POKEGRA_CELL04_X*GFL_BG_1CHRDATASIZ;
+    }
+  }
+
+  //一時バッファ削除
+  GFL_HEAP_FreeMemory( p_temp );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パッチールのためのブチをキャラに書き込み
+ *
+ *	@param	NNSG2dCharacterData *p_chara  キャラデータ
+ */
+//-----------------------------------------------------------------------------
+void POKEGRA_MakePattiiruBuchi( NNSG2dCharacterData *p_chara, u32 personal_rnd )
+{ 
+  const	PATTIIRU_BUCHI_DATA	*pbd;
+  int i, j;
+  u8	setx, sety, cnt;
+  int	pos[ 2 ];
+  u32 rnd = personal_rnd;
+  u8  *buf = p_chara->pRawData;
+
+  for( i = 0 ; i < 4 ; i++ )
+  {
+    pbd = pbd_table[ i ];
+    cnt=0;
+    while( pbd[ cnt ].posx != 0xff )
+    {
+      setx = pbd[ cnt ].posx +   ( ( (rnd) & 0x0f ) - 8 );
+      sety = pbd[ cnt ].posy + ( ( ( (rnd) & 0xf0 ) >> 4 ) - 8 );
+      pos[ 0 ] = setx / 2 + sety * 128;
+      pos[ 1 ] = setx / 2 + ( sety + 40 ) * 128;
+      for( j = 0 ; j < 2 ; j++ )
+      { 
+        if( setx & 1)
+        {
+          if( ( ( buf[ pos[ j ] ] & 0xf0 ) >= 0x10 ) && ( ( buf[ pos[ j ] ] & 0xf0 ) <= 0x30) )
+          {
+            buf[ pos[ j ] ] += 0x50;
+          }
+        }
+        else
+        {
+          if( ( ( buf[ pos[ j ] ] & 0x0f ) >= 0x01 ) && ( ( buf[ pos[ j ] ] & 0x0f ) <= 0x03 ) )
+          {
+            buf[ pos[ j ] ] += 0x05;
+          }
+        }
+      }
+      cnt++;
+    }
+    (rnd) = (rnd) >> 8;
+  }
+
 }
 
 //=============================================================================

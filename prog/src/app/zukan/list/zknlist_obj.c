@@ -683,7 +683,7 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons )
 		ah = POKE2DGRA_OpenHandle( HEAPID_ZUKAN_LIST_L );
 		wk->chrRes[prm.chrRes] = POKE2DGRA_OBJ_CGR_Register(
 															ah, mons, form, sex, rare, POKEGRA_DIR_FRONT,
-															FALSE, CLSYS_DRAW_MAIN, HEAPID_ZUKAN_LIST );
+															FALSE, 0x88888888,CLSYS_DRAW_MAIN, HEAPID_ZUKAN_LIST );
 		wk->palRes[prm.palRes] = POKE2DGRA_OBJ_PLTT_Register(
 															ah, mons, form, sex, rare, POKEGRA_DIR_FRONT,
 															FALSE, CLSYS_DRAW_MAIN, pal, HEAPID_ZUKAN_LIST );

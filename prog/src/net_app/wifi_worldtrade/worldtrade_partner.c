@@ -149,16 +149,6 @@ int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq)
 	// BG設定
    	BgInit(  -wk->DrawOffset-32 );
 
-	// 3D設定
-	WorldTrade_MyPoke_G3D_Init( wk );
-	{	
-		VecFx32	pos;
-		pos.x	= 13<<FX32_SHIFT;
-		pos.y	= 7<<FX32_SHIFT;
-		pos.z	= 0;
-		wk->pokeMcss	= WorldTrade_MyPoke_MCSS_Create( wk, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst((POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data), &pos );
-	}
-
 	// BGグラフィック転送
 	BgGraphicSet( wk );
 
@@ -245,17 +235,9 @@ int WorldTrade_Partner_Main(WORLDTRADE_WORK *wk, int seq)
 									wk->SubActY[i][1]+wk->DrawOffset+32 );
 	}
 	// メイン画面のポケモン画像を移動させる処理
-	//WorldTrade_CLACT_PosChange( wk->PokemonActWork, PARTNER_POKEMON_X, 
-		//											PARTNER_POKEMON_Y-wk->DrawOffset );
-	{
-		VecFx32	pos;
-		pos.x	= 13<< FX32_SHIFT;
-		pos.y	= 7<< FX32_SHIFT - wk->DrawOffset;
-		pos.z	= 0;
-		MCSS_SetPosition( wk->pokeMcss, &pos );
-	}
+	WorldTrade_CLACT_PosChange( wk->PokemonActWork, PARTNER_POKEMON_X, 
+													PARTNER_POKEMON_Y-wk->DrawOffset );
 	WorldTrade_SetPartnerCursorPos( wk, wk->TouchTrainerPos, wk->DrawOffset );
-	WorldTrade_MyPoke_G3D_Draw( wk );
 
 	return ret;
 }
@@ -282,9 +264,6 @@ int WorldTrade_Partner_End(WORLDTRADE_WORK *wk, int seq)
 	
 	BmpWinDelete( wk );
 	
-	WorldTrade_MyPoke_MCSS_Delete( wk, wk->pokeMcss );
-	WorldTrade_MyPoke_G3D_Exit( wk );
-
 	BgExit();
 
 	// 「DSの下画面をみてねアイコン」非表示
@@ -451,7 +430,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->PokemonActWork,1);
 	GFL_CLACT_WK_SetAnmSeq( wk->PokemonActWork, 37 );
-	GFL_CLACT_WK_SetDrawEnable( wk->PokemonActWork, 0 );
+	GFL_CLACT_WK_SetDrawEnable( wk->PokemonActWork, 1 );
 
 
 	WirelessIconEasy();

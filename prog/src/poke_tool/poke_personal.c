@@ -74,6 +74,8 @@ void POKE_PERSONAL_LoadData( u16 mons_no, u16 form_no, POKEMON_PERSONAL_DATA* pp
 	u32 data_ofs;
 	u16 personalID = get_personalID( mons_no, form_no );
 
+  NAGI_Printf( "mons_no%d form_no%d\n", mons_no, form_no );
+
 	data_ofs = GFL_ARC_GetDataOfsByHandle( ArcHandle, personalID );
 	GFL_ARC_SeekDataByHandle( ArcHandle, data_ofs );
 	GFL_ARC_LoadDataByHandleContinue( ArcHandle, sizeof(POKEMON_PERSONAL_DATA), ppd );
