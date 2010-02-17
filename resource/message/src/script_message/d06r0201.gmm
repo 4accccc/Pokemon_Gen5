@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-05T21:24:36"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T21:11:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1523" top="295" right="2228" bottom="915" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -359,7 +359,7 @@
 	</lock>
 
 
-	<row id="msg_d06r0201_gold1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0201_gold1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・どちらに話しかけても、このメッセージから開始
 ・続けてgold2_01</comment>
@@ -370,7 +370,7 @@
 きんのたま　おじさん　兄！▼</language>
 	</row>
 
-	<row id="msg_d06r0201_gold2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d06r0201_gold2_01">
 		<comment>♂
 ・
 ・続けてgold1_02</comment>
@@ -381,7 +381,7 @@
 きんのたま　おじさん　弟！▼</language>
 	</row>
 
-	<row id="msg_d06r0201_gold1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0201_gold1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 ・続けてgold2_02</comment>
@@ -392,7 +392,7 @@
 きみに　これを　あげちゃうよ！▼</language>
 	</row>
 
-	<row id="msg_d06r0201_gold2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d06r0201_gold2_02">
 		<comment>♂
 ・アイテム入手処理</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
@@ -400,7 +400,7 @@
 		<language name="JPN_KANJI" width="256">わたしも　これを　あげちゃうよ！▼</language>
 	</row>
 
-	<row id="msg_d06r0201_gold1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0201_gold1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
@@ -414,7 +414,7 @@
 おじさんの　きんのたま　だからね！</language>
 	</row>
 
-	<row id="msg_d06r0201_gold2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d06r0201_gold2_03">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
@@ -426,41 +426,6 @@
 有効に　活用してくれ！▼
 なんたって　兄より　立派な
 おじさんの　きんのたま　だからね！</language>
-	</row>
-
-	<row id="msg_d06r0201_boss_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d06r0201_boss_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d06r0201_boss_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d06r0201_boss_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d06r0201_boss_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
