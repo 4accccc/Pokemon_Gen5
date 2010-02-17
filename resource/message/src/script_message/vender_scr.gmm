@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-15T18:32:08"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T12:54:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1404" top="187" right="2109" bottom="807" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -343,7 +343,6 @@
 　サイコソーダ　３００円
 　ミックスオレ　３５０円
 　やめる
-
 ・購入可能→msg_vender_02
 ・料金不足→msg_vender_04
 ・キャンセル→msg_vender_05</comment>
@@ -357,7 +356,6 @@
 	<row id="msg_vender_02">
 		<comment>自動販売機
 ・購入可能
-
 ・当たりかどうかの判定をおこないます
 　当たり確率１／３２（暫定）
 ・運が良ければ連続して当たります

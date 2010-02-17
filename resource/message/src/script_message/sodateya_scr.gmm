@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T11:35:03"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T12:56:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1420" top="302" right="2125" bottom="930" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -343,12 +343,12 @@
 		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">わしは　そだてや　じいさんじゃ▼
 ここで　みんなの　だいじな
-ポケモンの　めんどうを　みておるよ▼
+ポケモンの　せわを　しておるよ▼
 なにか　そだてて　ほしければ
 ばあさんに　たのんで　おくれ</language>
 		<language name="JPN_KANJI" width="256">わしは　育て屋じいさんじゃ▼
 ここで　みんなの　大事な
-ポケモンの　めんどうを　みておるよ▼
+ポケモンの　世話を　しておるよ▼
 なにか　育てて　ほしければ
 ばあさんに　頼んで　おくれ</language>
 	</row>
@@ -435,7 +435,7 @@
 ポケモンが　タマゴを
 持っておったんじゃ！▼
 どこから　持ってきたか　わからんが
-あんたの　ポケモンが　もっていた▽
+あんたの　ポケモンが　持っていた▽
 タマゴ　なんじゃ▼
 やっぱり　ほしいじゃろ？</language>
 	</row>
@@ -650,14 +650,14 @@
 ※ハマリ防止策として、
 　交換用に２匹未満にできないようにする</comment>
 		<language name="JPN" width="256">おや？　おまえさん
-その　ポケモンを　あずけると▽
-ぜんぶで　ポケモンが　１ひき　だけに▽
+その　ポケモンを　あずけると▼
+ぜんぶで　ポケモンが　１ひき　だけに
 なってしまう　みたいじゃな▼
 もっと　たくさん　つかまえてから
 きてみては　どうじゃ？</language>
 		<language name="JPN_KANJI" width="256">おや？　おまえさん
-その　ポケモンを　預けると▽
-全部で　ポケモンが　１匹だけに▽
+その　ポケモンを　預けると▼
+全部で　ポケモンが　１匹だけに
 なってしまう　みたいじゃな▼
 もっと　たくさん　捕まえてから
 来てみては　どうじゃ？</language>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-02-16T16:28:28"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T12:54:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="370"/>
+		<comment position="1" width="267"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1537" top="207" right="2242" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="787" top="36" right="1260" bottom="434" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -399,7 +399,8 @@
 
 	<row id="msg_union_info_01_04_01" text-color="#ff78ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>説明お姉さん：説明するのメッセージ
-・たいせん（msg_union_info_01_04の続き。システムバッファに収まらない為分割）</comment>
+・たいせん（msg_union_info_01_04の続き。
+システムバッファに収まらない為分割）</comment>
 		<language name="JPN" width="216" line="2">ローテーションバトルは
 ポケモンを　まえに　２ひき
 うしろに　１ひき　だしながら[BE:00:ページ切り替え（行送り）]
