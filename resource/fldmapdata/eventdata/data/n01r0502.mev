@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/21 19:57:31
+#save date:2010/02/17 18:10:14
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0502.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0502.wms
 #hold event type:
 1
 #hold event number:
-4
+6
 #event number: 0
 #type
 1
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_N01R0502_BOSS_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -312
+8 0 -136
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -472
+8 0 -456
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -488
+-8 0 -456
 #event number: 3
 #type
 1
@@ -133,7 +133,69 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -472
+24 0 -456
+#event number: 4
+#type
+1
+#ID name
+N01R0502_SHIN_01
+#OBJ CODE Number
+POKE7
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_N01R0502_EVENT_01
+#Event Script Name
+SCRID_N01R0502_SHIN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 -280
+#event number: 5
+#type
+1
+#ID name
+N01R0502_MU_01
+#OBJ CODE Number
+POKE8
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_N01R0502_EVENT_01
+#Event Script Name
+SCRID_N01R0502_MU_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 -280
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -153,7 +215,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+6
 #event number: 0
 #Pos Event Label
 POS_N01R0502_LASTBTL_01
@@ -162,15 +224,100 @@ SCRID_POS_N01R0502_LASTBTL_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK0
+LOCALWORK10
 #Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -520
+#size
+3 1
+#event number: 1
+#Pos Event Label
+POS_N01R0502_LASTBTL_02
+#Pos Script Name
+SCRID_POS_N01R0502_LASTBTL_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
 -8 0 -376
 #size
 3 1
+#event number: 2
+#Pos Event Label
+POS_N01R0502_LASTBTL_03a
+#Pos Script Name
+SCRID_POS_N01R0502_LASTBTL_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -344
+#size
+1 1
+#event number: 3
+#Pos Event Label
+POS_N01R0502_LASTBTL_03d
+#Pos Script Name
+SCRID_POS_N01R0502_LASTBTL_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 -360
+#size
+1 1
+#event number: 4
+#Pos Event Label
+POS_N01R0502_LASTBTL_03c
+#Pos Script Name
+SCRID_POS_N01R0502_LASTBTL_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 -344
+#size
+1 1
+#event number: 5
+#Pos Event Label
+POS_N01R0502_LASTBTL_03b
+#Pos Script Name
+SCRID_POS_N01R0502_LASTBTL_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 -328
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

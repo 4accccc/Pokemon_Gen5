@@ -319,7 +319,9 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 3 )	//演説イベント
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 4 )	//D03R0101のイベント
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 5 )	//C03の誘導イベント
-		_BMPMENU_MAKE_LIST( msg_debug_00, 4 )	//やめる
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 6 )	//ラストバトル前に移動
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 7 )	//ライトストーン所持
+		_BMPMENU_MAKE_LIST( msg_debug_00, 8 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 	
@@ -404,8 +406,23 @@ EVENT_START   ev_debug_suginaka
 			
 			$SCWK_TEMP0 = 428
 
-		ELSE
+		ELSIF $SCWK_ANSWER == 6 THEN
+
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_N01R0502, 16, 58, DIR_UP )
+			
 			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 7 THEN
+
+			$LOCALWORK10 = 3
+			
+			$SCWK_TEMP0 = 428
+
+		ELSE
+
+			$SCWK_TEMP0 = 428
+			
 		ENDIF
 	
 	ENDWHILE

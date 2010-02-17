@@ -67,7 +67,6 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	//OBJ_ADDのタイミングは個別にとっています
 	_FLAG_RESET( FV_N01R0101_LEADERS_01 )
 	
-	
 	//主人公：前へ進む
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
 	_OBJ_ANIME_WAIT()
@@ -82,30 +81,45 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	
 	
 	//天に従うものは
+	_OBJ_ANIME( N01R0101_SAGE2_02, anm_walk_d )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage2_01, N01R0101_SAGE2_02, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//仮メッセージ
+	_OBJ_ANIME( N01R0101_SAGE2_03, anm_walk_d )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage3_01, N01R0101_SAGE2_03, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//仮メッセージ
+	_OBJ_ANIME( N01R0101_SAGE2_04, anm_walk_d )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage4_01, N01R0101_SAGE2_04, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//仮メッセージ
+	_OBJ_ANIME( N01R0101_SAGE2_05, anm_walk_d )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage5_01, N01R0101_SAGE2_05, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//仮メッセージ
+	_OBJ_ANIME( N01R0101_SAGE2_06, anm_walk_d )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage6_01, N01R0101_SAGE2_06, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//仮メッセージ
+	_OBJ_ANIME( N01R0101_SAGE2_07, anm_walk_d )
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage7_01, N01R0101_SAGE2_07, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
-	
+	//７人衆２：前へ
+
+	_OBJ_ANIME( N01R0101_SAGE2_02, anm_sage2_move_01 )
+	_TIME_WAIT( 16 )
 	//七人衆：主人公を囲む
 	//７人衆３：前へ
 	_OBJ_ANIME( N01R0101_SAGE2_03, anm_sage3_move_01 )
@@ -117,15 +131,11 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_OBJ_ANIME( N01R0101_SAGE2_06, anm_sage6_move_01 )
 	//７人衆７：前へ
 	_OBJ_ANIME( N01R0101_SAGE2_07, anm_sage7_move_01 )
-	//７人衆２：前へ
-	_TIME_WAIT( 8 )
-	_OBJ_ANIME( N01R0101_SAGE2_02, anm_sage2_move_01 )
 	_OBJ_ANIME_WAIT()
 	
 	//われら６人を相手に勝ち残れるとは思えん
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage2_02, N01R0101_SAGE2_02, WIN_NONE )
 	_MSGWIN_CLOSE()
-	
 	
 	//???だいじょうぶだろうよ
 	_PLAINWIN_MSG_DOWN( msg_n01r0101_leader5_01 )
@@ -137,7 +147,6 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
 	
-	
 	//ヤーコン：登場
 	_OBJ_ADD( N01R0101_LEADER5_01 )
 	_OBJ_ANIME( N01R0101_LEADER5_01, anm_leader5_come_01 )
@@ -148,11 +157,13 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader5_02, N01R0101_LEADER5_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
+	_OBJ_ANIME( N01R0101_SAGE2_02, anm_back_u )
+	_OBJ_ANIME_WAIT()
+	
 	//きさまホドモエの！？
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage2_03, N01R0101_SAGE2_02, WIN_NONE )
 	_MSGWIN_CLOSE()
-	
-	
+		
 	//フン！俺さまだけじゃない
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader5_03, N01R0101_LEADER5_01, WIN_NONE )
 	_MSGWIN_CLOSE()
@@ -175,12 +186,17 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_OBJ_ADD( N01R0101_LEADER8B_01 )
 	_OBJ_ANIME( N01R0101_LEADER8B_01, anm_leader8b_come_01 )
 	_OBJ_ANIME_WAIT()
-	
+
+	_OBJ_ANIME( N01R0101_SAGE2_03, anm_back_u )
+	_OBJ_ANIME( N01R0101_SAGE2_04, anm_back_u )
+	_OBJ_ANIME( N01R0101_SAGE2_05, anm_back_u )
+	_OBJ_ANIME( N01R0101_SAGE2_06, anm_back_u )
+	_OBJ_ANIME( N01R0101_SAGE2_07, anm_back_u )
+	_OBJ_ANIME_WAIT()
 	
 	//わるいわねぇ
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader2_01, N01R0101_LEADER2_01, WIN_NONE )
 	_MSGWIN_CLOSE()
-	
 	
 	//７人衆３仮メッセージ
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage3_02, N01R0101_SAGE2_03, WIN_NONE )
@@ -190,7 +206,6 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader4_01, N01R0101_LEADER4_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
-	
 	//女の子に頼まれちゃったから
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader3_01, N01R0101_LEADER3_01, WIN_NONE )
 	_MSGWIN_CLOSE()	
@@ -199,7 +214,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader7_01, N01R0101_LEADER7_01, WIN_NONE )
 	_MSGWIN_CLOSE()	
 	
-	//だいじょうぶだって（フウロとアイリスが同時に発言？）
+	//【仮】だいじょうぶだって（フウロとアイリスが同時に発言？）
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader6_01, N01R0101_LEADER6_01, WIN_UP )
 	_MSGWIN_CLOSE()	
 	
@@ -211,14 +226,12 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
-	
 	//========================================//
 	
 	//シーンチェンジ無効
 	$WK_SCENE_N01R0101 = 1
 	
 	//========================================//
-	
 	
 EVENT_END
 
@@ -310,62 +323,124 @@ _ANIME_LABEL	anm_leader8b_come_01
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//共通アニメ：一歩前へ・ステイウォーク・方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_back_u
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*							七人衆２						*/
 /************************************************************/
 EVENT_START	ev_n01r0101_sage2_02
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_sage2_04 )
-EVENT_END
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_SAGE2_02, anm_stay_d )
+	_OBJ_ANIME_WAIT()
 
+	_BALLOONWIN_OBJMSG( msg_n01r0101_sage2_04 , N01R0101_SAGE2_02 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
 /************************************************************/
 /*							七人衆３						*/
 /************************************************************/
 EVENT_START	ev_n01r0101_sage2_03
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_sage3_03 )
-EVENT_END
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_SAGE2_03, anm_stay_d )
+	_OBJ_ANIME_WAIT()
 
+	_BALLOONWIN_OBJMSG( msg_n01r0101_sage3_03 , N01R0101_SAGE2_03 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
 /************************************************************/
 /*							七人衆４						*/
 /************************************************************/
 EVENT_START	ev_n01r0101_sage2_04
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_sage4_02 )
-EVENT_END
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_SAGE2_04, anm_stay_d )
+	_OBJ_ANIME_WAIT()
 
+	_BALLOONWIN_OBJMSG( msg_n01r0101_sage4_02 , N01R0101_SAGE2_04 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
 /************************************************************/
 /*							七人衆５						*/
 /************************************************************/
 EVENT_START	ev_n01r0101_sage2_05
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_sage5_02 )
-EVENT_END
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_SAGE2_05, anm_stay_d )
+	_OBJ_ANIME_WAIT()
 
+	_BALLOONWIN_OBJMSG( msg_n01r0101_sage5_02 , N01R0101_SAGE2_05 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
 /************************************************************/
 /*							七人衆６						*/
 /************************************************************/
 EVENT_START	ev_n01r0101_sage2_06
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_sage6_02 )
-EVENT_END
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_SAGE2_06, anm_stay_d )
+	_OBJ_ANIME_WAIT()
 
+	_BALLOONWIN_OBJMSG( msg_n01r0101_sage6_02 , N01R0101_SAGE2_06 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
 /************************************************************/
 /*							七人衆７						*/
 /************************************************************/
 EVENT_START	ev_n01r0101_sage2_07
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_sage7_02 )
-EVENT_END
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_SAGE2_07, anm_stay_d )
+	_OBJ_ANIME_WAIT()
 
+	_BALLOONWIN_OBJMSG( msg_n01r0101_sage7_02 , N01R0101_SAGE2_07 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
 /************************************************************/
 /*					ジムリーダー２（アロエ）				*/
 /************************************************************/
 EVENT_START	ev_n01r0101_leader2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_leader2_02 )
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_LEADER2_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_n01r0101_leader2_02 , N01R0101_LEADER2_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 
@@ -373,15 +448,26 @@ EVENT_END
 /*					ジムリーダー３（アーティ）				*/
 /************************************************************/
 EVENT_START	ev_n01r0101_leader3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_leader3_02 )
-EVENT_END
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_LEADER3_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
 
+	_BALLOONWIN_OBJMSG( msg_n01r0101_leader3_02 , N01R0101_LEADER3_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
 /************************************************************/
 /*					ジムリーダー４（カミツレ）				*/
 /************************************************************/
 EVENT_START	ev_n01r0101_leader4_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_leader4_02 )
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_LEADER4_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_n01r0101_leader4_02 , N01R0101_LEADER4_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 
@@ -389,7 +475,13 @@ EVENT_END
 /*					ジムリーダー５（ヤーコン）				*/
 /************************************************************/
 EVENT_START	ev_n01r0101_leader5_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_leader5_02 )
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_LEADER5_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_n01r0101_leader5_04 , N01R0101_LEADER5_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 
@@ -397,7 +489,13 @@ EVENT_END
 /*					ジムリーダー６（フウロ）				*/
 /************************************************************/
 EVENT_START	ev_n01r0101_leader6_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_leader6_02 )
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_LEADER6_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_n01r0101_leader6_02 , N01R0101_LEADER6_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 
@@ -405,7 +503,13 @@ EVENT_END
 /*					ジムリーダー７（ハチク）				*/
 /************************************************************/
 EVENT_START	ev_n01r0101_leader7_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_leader7_02 )
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_LEADER7_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_n01r0101_leader7_02 , N01R0101_LEADER7_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 
@@ -413,7 +517,13 @@ EVENT_END
 /*				ジムリーダー８WHITE（アイリス）				*/
 /************************************************************/
 EVENT_START	ev_n01r0101_leader8w_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_leader8b_02 )
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_LEADER8W_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_n01r0101_leader8b_02 , N01R0101_LEADER8W_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 
@@ -421,7 +531,13 @@ EVENT_END
 /*				ジムリーダー８BLACK（シャガ）				*/
 /************************************************************/
 EVENT_START	ev_n01r0101_leader8b_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0101_leader8a_02 )
+_TALK_START_TURN_NOT()
+	_OBJ_ANIME( N01R0101_LEADER8B_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_n01r0101_leader8a_02 , N01R0101_LEADER8B_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 

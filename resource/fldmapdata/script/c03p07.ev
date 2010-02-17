@@ -22,6 +22,7 @@
 _EVENT_DATA		ev_c03p07_veteranm_01
 _EVENT_DATA		ev_c03p07_trainerw_01
 _EVENT_DATA		ev_scene_c03p07_tvt_01
+_EVENT_DATA		ev_pos_c03p07_rival_01
 _EVENT_DATA_END
 
 
@@ -59,7 +60,102 @@ EVENT_START		ev_scene_c03p07_tvt_01
 	_PLAYER_NAME(0)
 	_PLAINWIN_MSG_DOWN( msg_c03p07_tvt_01 )
 	_PLAINWIN_CLOSE()
-	$WK_SCENE_C03P07 = 2
+	$WK_SCENE_C03P07 = 3
 	
 EVENT_END
+
+/**************************************************************/
+/*		C03P07	ライバル	POSイベント						  */
+/**************************************************************/
+EVENT_START		ev_pos_c03p07_rival_01
+//WK_SCENE_C03P07が０のときに起動
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+	//ライバル出現
+	_OBJ_ADD_EX( 23,48,DIR_LEFT,MMDL_ID_EVENTOBJ_00,RIVEL,MV_DMY )
+
+	//自機を押してライバルが１歩進む
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_move )
+	_OBJ_ANIME_WAIT()
+
+	//やあ　アーティさんに　いどんだけれど
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_c03p07_black_01 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：ジムのほうを見る
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+	
+	//さすが　ジムリーダーだね
+	_BALLOONWIN_OBJMSG( msg_c03p07_black_02 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：自機のほうをみる
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
+	//ぼくはいちど　ポケモンセンターに　もどる
+	_BALLOONWIN_OBJMSG( msg_c03p07_black_03 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//ライバル：下へ移動　自機：ライバルを見送る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_leave )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_leave )
+	_OBJ_ANIME_WAIT()
+
+	//ライバルのOBJ削除
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+	//========================================/
+	
+	//ライバルジムイベント終了
+	$WK_SCENE_C03P07 = 1
+	
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ライバル・自機：アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL anm_rival_move
+	_ANIME_DATA		AC_WAIT_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,2
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_move
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_L_8F,2
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_leave
+	_ANIME_DATA		AC_WALK_D_8F,12
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_leave
+	_ANIME_DATA		AC_DIR_D,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_u
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_d
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_r
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_l
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
 

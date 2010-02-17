@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/18 19:48:01
+#save date:2010/02/16 19:16:14
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h01.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,100 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h01.wms
 #hold event type:
 1
 #hold event number:
+3
+#event number: 0
+#type
+1
+#ID name
+H01_GIRL2_01
+#OBJ CODE Number
+GIRL2
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_H01_GIRL2_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+7 4 1
+#event number: 1
+#type
+1
+#ID name
+H01_TRAINERM_01
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RAIL_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H01_TRAINERM_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+4
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+15 27 1
+#event number: 2
+#type
+1
+#ID name
+H01_BACKPACKERW_01
+#OBJ CODE Number
+BACKPACKERW
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H01_BACKPACKERW_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+3 20 -1
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -57,6 +150,8 @@ EVENTDATA_POSTYPE_RAIL
 13 0 -3
 #size
 1 7
+#rail way
+DIR_UP
 #event number: 1
 #Door Event Label
 DOOR_ID_H01_H01R0201_EXIT01
@@ -74,5 +169,7 @@ EVENTDATA_POSTYPE_RAIL
 12 4 -2
 #size
 1 5
+#rail way
+DIR_UP
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

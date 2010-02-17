@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/15 11:41:03
+#save date:2010/02/17 15:47:42
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h01r0201.wms
 #SECTION START:OBJ_EVENT
@@ -104,7 +104,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POSID_H01R0201_RIVAL_01
+#Pos Script Name
+SCRID_POS_H01R0201_RIVAL_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_H01R0201
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 136
+#size
+4 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

@@ -19,10 +19,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_h01r0201
 _EVENT_DATA		ev_bg_h01r0201_board_01
 _EVENT_DATA		ev_h01r0201_informationw_01
 _EVENT_DATA		ev_h01r0201_woman2_01
+_EVENT_DATA		ev_pos_h01r0201_rival_01
 _EVENT_DATA_END
 
 
@@ -31,13 +31,6 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_zone_h01r0201:
 //  _END
-
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_h01r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
 
 /**************************************************************/
 /*  電光掲示板のイベントスクリプト*/
@@ -61,3 +54,176 @@ EVENT_END
 EVENT_START		ev_h01r0201_woman2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01r0201_woman2_01 )
 EVENT_END
+
+/**************************************************************/
+/*	H01R0201	ライバルＰＯＳイベント						  */
+/**************************************************************/
+EVENT_START		ev_pos_h01r0201_rival_01
+
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+	//ライバル出現
+	_OBJ_ADD_EX( 9,11,DIR_UP,MMDL_ID_EVENTOBJ_00,RIVEL,MV_DMY )
+
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
+	
+	//座標による分岐
+	
+	SWITCH $LWK_POSX
+	CASE 8 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_come8 )
+		_OBJ_ANIME_WAIT()
+	CASE 9 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_come9 )
+		_OBJ_ANIME_WAIT()
+	CASE 10 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_come10 )
+		_OBJ_ANIME_WAIT()
+	CASE 11 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_come11 )
+		_OBJ_ANIME_WAIT()
+		
+	ENDSWITCH
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_stay )
+	_OBJ_ANIME_WAIT()
+
+	//やあ
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_h01r0201_black_01 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	//きいたよ　ヤグルマのもり　でのこと
+	_BALLOONWIN_OBJMSG( msg_h01r0201_black_02 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	//それは　さておき……
+	_BALLOONWIN_OBJMSG( msg_h01r0201_black_03 , MMDL_ID_EVENTOBJ_00 )
+
+	DEFINE_LOCAL  LWK_WIN
+
+	//選択肢表示
+   	_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_WIN )
+
+	_BMPMENU_MAKE_LIST( msg_h01r0201_black_win01, 0 )	//『ポケモンセンター』
+	_BMPMENU_MAKE_LIST( msg_h01r0201_black_win02, 1 )	//『ポケモンジム』
+
+	// メニュー表示
+	_BMPMENU_START()
+	_MSGWIN_CLOSE()
+
+		//ポケモンセンター
+		IF $LWK_WIN == 0 THEN
+			//そう！　そのとおり
+			_BALLOONWIN_OBJMSG( msg_h01r0201_black_04 , MMDL_ID_EVENTOBJ_00 )
+			_MSGWIN_CLOSE()
+		
+		//ポケモンジム
+		ELSE
+			//ポケモンジム……？
+			_BALLOONWIN_OBJMSG( msg_h01r0201_black_05 , MMDL_ID_EVENTOBJ_00 )
+			_MSGWIN_CLOSE()
+			
+		ENDIF
+
+	SWITCH $LWK_POSX
+	CASE 8 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_leave8 )
+		_OBJ_ANIME_WAIT()
+	CASE 9 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_leave9 )
+		_OBJ_ANIME_WAIT()
+	CASE 10 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_leave10 )
+		_OBJ_ANIME_WAIT()
+	CASE 11 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_leave11 )
+		_OBJ_ANIME_WAIT()
+		
+	ENDSWITCH
+
+	//ライバルの動作モデルを削除する
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+	//階段ＳＥ再生
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	//========================================/
+	
+	//ＰＯＳイベント終了
+	$WK_SCENE_H01R0201 = 1
+	
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ライバル：自機に近づく
+//--------------------------------------------------------------------
+_ANIME_LABEL anm_rival_come8
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,3
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_come9
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,3
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_come10
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,3
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_come11
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,3
+	_ANIME_DATA		AC_WALK_R_8F,2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_stay
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL anm_rival_leave8
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,4
+	_ANIME_DATA		AC_WALK_L_8F,8
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_leave9
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,4
+	_ANIME_DATA		AC_WALK_L_8F,7
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_leave10
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,4
+	_ANIME_DATA		AC_WALK_L_8F,8
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_leave11
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,4
+	_ANIME_DATA		AC_WALK_L_8F,9
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0

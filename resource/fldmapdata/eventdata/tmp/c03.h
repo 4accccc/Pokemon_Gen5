@@ -41,8 +41,7 @@
 #define C03_OL4_01                         7
 #define C03_OL3_01                         8
 #define C03_OL5_01                         9
-#define C03_RIVAL_01                      10
-#define C03_LEADER3_01                    11
+#define C03_LEADER3_01                    10
 
 #endif //ZONE_C03_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
