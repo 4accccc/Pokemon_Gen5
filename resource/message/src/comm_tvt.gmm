@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-15T20:17:26"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:23:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -430,7 +430,7 @@
 
 	<row id="COMM_TVT_CALL_03">
 		<language name="JPN">[2:00:１桁:0]／４</language>
-		<language name="JPN_KANJI">[2:00:１桁:0]/4</language>
+		<language name="JPN_KANJI">[2:00:１桁:0]／４</language>
 	</row>
 
 	<row id="COMM_TVT_CALL_04">
