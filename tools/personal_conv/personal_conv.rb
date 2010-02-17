@@ -526,6 +526,7 @@ end
   oshie = []
   pokelist = []
   chihou_zukan = []
+  chihou_zukan << 0
   
   form[ 0 ] = FORM::new
   read_data.size.times {|i|
