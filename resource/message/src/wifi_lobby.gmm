@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2010-01-29T18:57:16"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T16:50:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -67,6 +67,11 @@
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
@@ -76,6 +81,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
 				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -234,6 +242,20 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+				<comment language="japanese">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+				<comment language="english">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
 		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
@@ -254,11 +276,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -283,7 +315,7 @@
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
-			<font default=" 0:large" position="4" width="109">
+			<font default=" 0:large" position="4" width="55">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
@@ -294,7 +326,7 @@
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
 			<message position="3" width="246"/>
-			<font default=" 0:large" position="5" width="106">
+			<font default=" 0:large" position="5" width="54">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
@@ -897,7 +929,7 @@
 ＢＧＭを　ＯＮに　しました▼</language>
 	</row>
 
-	<row id="msg_wifilobby_test_001" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_test_001" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,#808080,#808080,,,#808080,,">
 		<comment>テスト用</comment>
 		<language name="JPN" width="216">つうしんエラーが　はっせいしました
 [2:04:５桁:0]</language>
@@ -905,61 +937,61 @@
 [2:04:５桁:0]</language>
 	</row>
 
-	<row id="msg_wifilobby_test_002" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_test_002" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,#808080,#808080,,,#808080,,">
 		<comment>テスト用</comment>
 		<language name="JPN" width="216">ちえんONになります▼</language>
 		<language name="JPN_KANJI" width="216">ちえんONになります▼</language>
 	</row>
 
-	<row id="msg_wifilobby_test_003" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_test_003" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,#808080,#808080,,,#808080,,">
 		<comment>テスト用</comment>
 		<language name="JPN" width="216">ちえんOFF＝つうじょうになります▼</language>
 		<language name="JPN_KANJI" width="216">ちえんOFF＝つうじょうになります▼</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_00" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_debug_00" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,#808080,#808080,,,#808080,,">
 		<comment>テスト用
 プラチナで追加</comment>
 		<language name="JPN" width="216">あるきまわり</language>
 		<language name="JPN_KANJI" width="216">あるきまわり</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_01" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_debug_01" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,#808080,#808080,,,#808080,,">
 		<comment>テスト用
 プラチナで追加</comment>
 		<language name="JPN" width="216">マルチバトル</language>
 		<language name="JPN_KANJI" width="216">マルチバトル</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_02" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_debug_02" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,#808080,#808080,,,#808080,,">
 		<comment>テスト用プラチナで追加</comment>
 		<language name="JPN" width="216">２ＢＩＴＡＤＰＣＭ</language>
 		<language name="JPN_KANJI" width="216">２ＢＩＴＡＤＰＣＭ</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_03" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_debug_03" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,#808080,#808080,,,#808080,,">
 		<comment>テスト用プラチナで追加</comment>
 		<language name="JPN" width="216">３ＢＩＴＡＤＰＣＭ</language>
 		<language name="JPN_KANJI" width="216">３ＢＩＴＡＤＰＣＭ</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_04" back-color=",,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_debug_04" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,#808080,#808080,,,#808080,,">
 		<comment>テスト用プラチナで追加</comment>
 		<language name="JPN" width="216">４ＢＩＴＡＤＰＣＭ</language>
 		<language name="JPN_KANJI" width="216">４ＢＩＴＡＤＰＣＭ</language>
 	</row>
 
-	<row id="msg_wifilobby_debug_05" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_debug_05" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">バケット</language>
 		<language name="JPN_KANJI" width="216">バケット</language>
 	</row>
 
-	<row id="msg_wifilobby_076" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_076" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">TVトランシーバー</language>
 		<language name="JPN_KANJI" width="216">TVトランシーバー</language>
 	</row>
 
-	<row id="msg_wifilobby_077" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_077" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>未知の状態を拾ったとき</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんは
 いそがしい　みたい　です</language>
@@ -967,34 +999,34 @@
 いそがしい　みたい　です</language>
 	</row>
 
-	<row id="msg_wifilobby_078" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_078" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんは
 ボイスチャット　したいようです</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんは
 ボイスチャット　したいようです</language>
 	</row>
 
-	<row id="msg_wifilobby_079" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_079" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんは
 TVトランシーバーちゅう　です</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんは
 TVトランシーバーちゅう　です</language>
 	</row>
 
-	<row id="msg_wifilobby_080" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_080" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんは　TVトランシーバー
 あいてを　ぼしゅうちゅう　です</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんは　TVトランシーバー
 あいてを　ぼしゅうちゅう　です</language>
 	</row>
 
-	<row id="msg_wifilobby_081" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_081" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>立っている人に話しかけて接続するメニューに使用</comment>
 		<language name="JPN" width="216">せつぞくする</language>
 		<language name="JPN_KANJI" width="216">せつぞくする</language>
 	</row>
 
-	<row id="msg_wifilobby_082" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_082" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>待機中の自分に
 友達が話しかけてきたときのメッセージ</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
@@ -1003,69 +1035,69 @@ TVトランシーバーちゅう　です</language>
 はなしかけて　きました！</language>
 	</row>
 
-	<row id="msg_wifilobby_083" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_083" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
 あそびますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
 あそびますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_084" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_084" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
 なにをしますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
 なにをしますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_085" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_085" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
 ボイスチャットをしますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
 ボイスチャットをしますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_086" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_086" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
 TVトランシーバをしますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
 TVトランシーバをしますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_087" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_087" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
 こうかんをしますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
 こうかんをしますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_096" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_096" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">けってい</language>
 		<language name="JPN_KANJI" width="216">けってい</language>
 	</row>
 
-	<row id="msg_wifilobby_097" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_097" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">ルールをみる</language>
 		<language name="JPN_KANJI" width="216">ルールをみる</language>
 	</row>
 
-	<row id="msg_wifilobby_098" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_098" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">てもち</language>
 		<language name="JPN_KANJI" width="216">てもち</language>
 	</row>
 
-	<row id="msg_wifilobby_099" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_099" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">バトルボックス</language>
 		<language name="JPN_KANJI" width="216">バトルボックス</language>
 	</row>
 
-	<row id="msg_wifilobby_100" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_100" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">じょうけんを　みたして　いないので
 たいせん　できません▼</language>
 		<language name="JPN_KANJI" width="216">じょうけんを　みたして　いないので
 たいせん　できません▼</language>
 	</row>
 
-	<row id="msg_wifilobby_1001" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1001" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
 たいせんを　もうしこんできました[BE:01:ページ切り替え（クリア）]
 シングルバトルの
@@ -1076,7 +1108,7 @@ TVトランシーバをしますか？</language>
 せいげんなしを　しますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_1002" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1002" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
 たいせんを　もうしこんできました[BE:01:ページ切り替え（クリア）]
 ダブルバトルの
@@ -1087,7 +1119,7 @@ TVトランシーバをしますか？</language>
 せいげんなしを　しますか</language>
 	</row>
 
-	<row id="msg_wifilobby_1003" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1003" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
 たいせんを　もうしこんできました[BE:01:ページ切り替え（クリア）]
 トリプルバトルの
@@ -1098,7 +1130,7 @@ TVトランシーバをしますか？</language>
 せいげんなしをしますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_1004" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1004" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
 たいせんを　もうしこんできました[BE:01:ページ切り替え（クリア）]
 ローテーションバトルの
@@ -1109,7 +1141,7 @@ TVトランシーバをしますか？</language>
 せいげんなしをしますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_1005" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1005" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
 たいせんを　もうしこんできました[BE:01:ページ切り替え（クリア）]
 シングルバトルの
@@ -1120,7 +1152,7 @@ TVトランシーバをしますか？</language>
 フラットルールをしますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_1006" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1006" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
 たいせんを　もうしこんできました[BE:01:ページ切り替え（クリア）]
 ダブルバトルの
@@ -1131,7 +1163,7 @@ TVトランシーバをしますか？</language>
 フラットルールをしますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_1007" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1007" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
 たいせんを　もうしこんできました[BE:01:ページ切り替え（クリア）]
 トリプルバトルの
@@ -1142,7 +1174,7 @@ TVトランシーバをしますか？</language>
 フラットルールをしますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_1008" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1008" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
 たいせんを　もうしこんできました[BE:01:ページ切り替え（クリア）]
 ローテーションバトルの
@@ -1153,26 +1185,26 @@ TVトランシーバをしますか？</language>
 フラットルールをしますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_1009" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1009" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">てもちか　バトルボックスかの
 どちらを　つかうか　えらんでください</language>
 		<language name="JPN_KANJI" width="216">てもちか　バトルボックスかの
 どちらを　つかうか　えらんでください</language>
 	</row>
 
-	<row id="msg_wifilobby_1010" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1010" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">おさそいを　ことわりました</language>
 		<language name="JPN_KANJI" width="216">おさそいを　ことわりました</language>
 	</row>
 
-	<row id="msg_wifilobby_1011" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1011" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと　つづけて
 あそびますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと　つづけて
 あそびますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_1012" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1012" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">ペアレンタルコントローラーの
 せっていにより　しゃしんデータの[BE:00:ページ切り替え（行送り）]
 そうじゅしんが　せいげんされます[BE:01:ページ切り替え（クリア）]
@@ -1187,37 +1219,38 @@ TVトランシーバをしますか？</language>
 せいげんを　かいじょ　してください</language>
 	</row>
 
-	<row id="msg_wifilobby_1013" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1013" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">こうかん　するには　ポケモンが
 ２ひき　いじょう　ひつようです</language>
 		<language name="JPN_KANJI" width="216">こうかん　するには　ポケモンが
 ２ひき　いじょう　ひつようです</language>
 	</row>
 
-	<row id="msg_wifilobby_1014" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1014" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">もうしこみちゅう</language>
 		<language name="JPN_KANJI" width="216">もうしこみちゅう</language>
 	</row>
 
-	<row id="msg_wifilobby_1015" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1015" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">Aボタンで　ボイスチャットを
 しゅうりょう　できます</language>
 		<language name="JPN_KANJI" width="216">Aボタンで　ボイスチャットを
 しゅうりょう　できます</language>
 	</row>
 
-	<row id="msg_wifilobby_1016" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1016" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">ともだちは　いそがしいようです
 つうしんを　しゅうりょうします</language>
-		<language name="JPN_KANJI" width="216"></language>
+		<language name="JPN_KANJI" width="216">ともだちは　いそがしいようです
+つうしんを　しゅうりょうします</language>
 	</row>
 
-	<row id="msg_wifilobby_1017" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1017" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">かいわを　しゅうりょうしました</language>
-		<language name="JPN_KANJI" width="216"></language>
+		<language name="JPN_KANJI" width="216">かいわを　しゅうりょうしました</language>
 	</row>
 
-	<row id="msg_wifilobby_1018" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1018" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>待機中の友達に
 話しかけたときのメッセージ</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんに
@@ -1226,76 +1259,76 @@ TVトランシーバをしますか？</language>
 はなしかけて　います！</language>
 	</row>
 
-	<row id="msg_wifilobby_1019" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1019" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>待機中の状態表示項目</comment>
 		<language name="JPN" width="216">たいきちゅう</language>
 		<language name="JPN_KANJI" width="216">たいきちゅう</language>
 	</row>
 
-	<row id="msg_wifilobby_1020" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1020" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>ボイスチャット中の状態表示項目</comment>
 		<language name="JPN" width="216">ボイスチャットちゅう</language>
 		<language name="JPN_KANJI" width="216">ボイスチャットちゅう</language>
 	</row>
 
-	<row id="msg_wifilobby_1021" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1021" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>ＴＶトランシーバーするときの項目名</comment>
 		<language name="JPN" width="216">ＴＶトランシーバー</language>
 		<language name="JPN_KANJI" width="216">ＴＶトランシーバー</language>
 	</row>
 
-	<row id="msg_wifilobby_1022" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1022" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>ＴＶトランシーバー中の状態表示項目</comment>
 		<language name="JPN" width="216">ＴＶトランシーバーちゅう</language>
 		<language name="JPN_KANJI" width="216">ＴＶトランシーバーちゅう</language>
 	</row>
 
-	<row id="msg_wifilobby_1023" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1023" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>シングルを選んだときの表題</comment>
-		<language name="JPN" width="216">たいせんけいしき：[FF:00:色:2]シングルバトル</language>
-		<language name="JPN_KANJI" width="216">たいせんけいしき：[FF:00:色:2]シングルバトル</language>
+		<language name="JPN" width="216">たいせんけいしき[BD:05:X指定:115]：[FF:00:色:2]シングルバトル</language>
+		<language name="JPN_KANJI" width="216">対戦形式[BD:05:X指定:115]：[FF:00:色:2]シングルバトル</language>
 	</row>
 
-	<row id="msg_wifilobby_1024" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1024" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>ダブルを選んだときの表題</comment>
-		<language name="JPN" width="216">たいせんけいしき：[FF:00:色:2]ダブルバトル</language>
-		<language name="JPN_KANJI" width="216">たいせんけいしき：[FF:00:色:2]ダブルバトル</language>
+		<language name="JPN" width="216">たいせんけいしき[BD:05:X指定:115]：[FF:00:色:2]ダブルバトル</language>
+		<language name="JPN_KANJI" width="216">対戦形式[BD:05:X指定:115]：[FF:00:色:2]ダブルバトル</language>
 	</row>
 
-	<row id="msg_wifilobby_1025" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1025" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>トリプルを選んだときの表題</comment>
-		<language name="JPN" width="216">たいせんけいしき：[FF:00:色:2]トリプルバトル</language>
-		<language name="JPN_KANJI" width="216">たいせんけいしき：[FF:00:色:2]トリプルバトル</language>
+		<language name="JPN" width="216">たいせんけいしき[BD:05:X指定:115]：[FF:00:色:2]トリプルバトル</language>
+		<language name="JPN_KANJI" width="216">対戦形式[BD:05:X指定:115]：[FF:00:色:2]トリプルバトル</language>
 	</row>
 
-	<row id="msg_wifilobby_1026" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1026" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>ローテーションを選んだときの表題</comment>
-		<language name="JPN" width="216">たいせんけいしき：[FF:00:色:2]ローテーションバトル</language>
-		<language name="JPN_KANJI" width="216">たいせんけいしき：[FF:00:色:2]ローテーションバトル</language>
+		<language name="JPN" width="216">たいせんけいしき[BD:05:X指定:115]：[FF:00:色:2]ローテーションバトル</language>
+		<language name="JPN_KANJI" width="216">対戦形式[BD:05:X指定:115]：[FF:00:色:2]ローテーションバトル</language>
 	</row>
 
-	<row id="msg_wifilobby_1028" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1028" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>「制限無し」を選んだときの表題</comment>
-		<language name="JPN" width="216">たいせんルール：[FF:00:色:2]せいげんなし</language>
-		<language name="JPN_KANJI" width="216">たいせんルール：[FF:00:色:2]せいげんなし</language>
+		<language name="JPN" width="216">たいせんルール[BD:05:X指定:115]：[FF:00:色:2]せいげんなし</language>
+		<language name="JPN_KANJI" width="216">対戦ルール[BD:05:X指定:115]：[FF:00:色:2]せいげんなし</language>
 	</row>
 
-	<row id="msg_wifilobby_1029" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1029" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>「フラット」を選んだときの表題</comment>
-		<language name="JPN" width="216">たいせんルール：[FF:00:色:2]フラットルール</language>
-		<language name="JPN_KANJI" width="216">たいせんルール：[FF:00:色:2]フラットルール</language>
+		<language name="JPN" width="216">たいせんルール[BD:05:X指定:115]：[FF:00:色:2]フラットルール</language>
+		<language name="JPN_KANJI" width="216">対戦ルール[BD:05:X指定:115]：[FF:00:色:2]フラットルール</language>
 	</row>
 
-	<row id="msg_wifilobby_1030" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1030" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>「サポートシューター有」を選んだときの表題</comment>
-		<language name="JPN" width="216">サポートシューター：[FF:00:色:2]あり</language>
-		<language name="JPN_KANJI" width="216">サポートシューター：[FF:00:色:2]あり</language>
+		<language name="JPN" width="216">サポートシューター[BD:05:X指定:115]：[FF:00:色:2]あり</language>
+		<language name="JPN_KANJI" width="216">サポートシューター[BD:05:X指定:115]：[FF:00:色:2]あり</language>
 	</row>
 
-	<row id="msg_wifilobby_1031" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+	<row id="msg_wifilobby_1031" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>「サポートシューター無」を選んだときの表題</comment>
-		<language name="JPN" width="216">サポートシューター：[FF:00:色:2]なし</language>
-		<language name="JPN_KANJI" width="216">サポートシューター：[FF:00:色:2]なし</language>
+		<language name="JPN" width="216">サポートシューター[BD:05:X指定:115]：[FF:00:色:2]なし</language>
+		<language name="JPN_KANJI" width="216">サポートシューター[BD:05:X指定:115]：[FF:00:色:2]なし</language>
 	</row>
 
 	<flowchart-group-list>
