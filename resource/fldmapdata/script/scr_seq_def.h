@@ -2903,7 +2903,7 @@
   .short  EV_SEQ_BMPMENU_INIT
   .byte  \x
   .byte  \y
-  .byte  \cursor
+  .short \cursor
   .byte  \cancel
   .short  \ret_wk
   .endm
@@ -2925,7 +2925,7 @@
   .short  EV_SEQ_BMPMENU_INIT_EX
   .byte  \x
   .byte  \y
-  .byte  \cursor
+  .short \cursor
   .byte  \cancel
   .short  \ret_wk
   .endm
