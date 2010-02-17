@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T21:37:09"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T22:19:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1432" top="306" right="2137" bottom="926" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -396,7 +396,7 @@
 いいえ（募集枠に余裕なし）　→msg_guru2_receipt_01_02</comment>
 		<language name="JPN" width="216" line="2">ぐるぐるこうかんを
 ちゅうし　しますか？</language>
-		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかんを
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐる交換を
 中止しますか？</language>
 	</row>
 
@@ -405,7 +405,7 @@
 レコード交換終了。ユニオンルームへ戻る。</comment>
 		<language name="JPN" width="216" line="2">それでは　ぐるぐるこうかんを
 ちゅうし　します</language>
-		<language name="JPN_KANJI" width="216" line="2">それでは　ぐるぐるこうかんを
+		<language name="JPN_KANJI" width="216" line="2">それでは　ぐるぐる交換を
 中止します</language>
 	</row>
 
@@ -424,7 +424,7 @@
 		<language name="JPN" width="216" line="2">メンバーが　いなくなりました
 ぐるぐるこうかんを　ちゅうし　します</language>
 		<language name="JPN_KANJI" width="216" line="2">メンバーが　いなくなりました
-ぐるぐるこうかんを　中止します</language>
+ぐるぐる交換を　中止します</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_07">
@@ -444,7 +444,7 @@
 		<language name="JPN" width="216" line="2">つごうのつかない　メンバーがいたので
 ぐるぐるこうかんを　ちゅうし　します</language>
 		<language name="JPN_KANJI" width="216" line="2">都合のつかない　メンバーがいたので
-ぐるぐるこうかんを　中止します</language>
+ぐるぐる交換を　中止します</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_09">
@@ -453,7 +453,7 @@
 はい　　→msg_guru2_receipt_01_10
 いいえ　→msg_guru2_receipt_01_07</comment>
 		<language name="JPN" width="216" line="2">ぐるぐるこうかんを　やめますか？</language>
-		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかんを　やめますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐる交換を　やめますか？</language>
 	</row>
 
 	<row id="msg_guru2_receipt_01_10">
@@ -461,7 +461,7 @@
 メッセージ表示後に終了。ユニオンルームへ戻る。</comment>
 		<language name="JPN" width="216" line="2">それでは　ぐるぐるこうかんを
 ちゅうし　します</language>
-		<language name="JPN_KANJI" width="216" line="2">それでは　ぐるぐるこうかんを
+		<language name="JPN_KANJI" width="216" line="2">それでは　ぐるぐる交換を
 中止します</language>
 	</row>
 
@@ -480,7 +480,7 @@
 表示後、ユニオンルームへ戻ります。</comment>
 		<language name="JPN" width="216" line="2">ぐるぐるこうかんが　おわりました！
 ユニオンルームへ　いどうします</language>
-		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかんが　終わりました！
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐる交換が　終わりました！
 ユニオンルームへ　移動します</language>
 	</row>
 
@@ -513,13 +513,13 @@
 	<row id="msg_guru2_receipt_title_01">
 		<comment>レコード交換の待機中に、画面上部に表示。</comment>
 		<language name="JPN" font=" 1:small" width="216">ぐるぐるこうかん　ぼしゅうちゅう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ぐるぐるこうかん　募集中！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ぐるぐる交換　募集中！</language>
 	</row>
 
 	<row id="msg_guru2_receipt_title_02">
 		<comment>レコード交換開始からユニオンに戻るまで、画面上部に表示。</comment>
 		<language name="JPN" font=" 1:small" width="216">ぐるぐるこうかんちゅう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ぐるぐるこうかん中！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ぐるぐる交換中！</language>
 	</row>
 
 	<row id="msg_guru2_receipt_res_01">
