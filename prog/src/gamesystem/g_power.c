@@ -28,6 +28,8 @@ typedef struct{
   u8 occur_power[GPOWER_TYPE_MAX];  ///<発生中のGパワーID(TYPE順に発動中のIDが入っている)
   s16 life[GPOWER_TYPE_MAX];        ///<発生寿命
   u16 powerdata_data[GPOWER_TYPE_MAX];  ///<発生中のGパワーのPOWER_CONV_DATA.data
+  u8 my_power_type;                 ///<自分が発動しているパワーのタイプ
+  u8 padding[3];
 }GPOWER_SYSTEM;
 
 
@@ -94,6 +96,7 @@ void GPOWER_Clear_AllPower(void)
   for(type = 0; type < GPOWER_TYPE_MAX; type++){
     _OccurPowerClear(type);
   }
+  GPowerSys.my_power_type = GPOWER_TYPE_NULL;
 }
 
 //==================================================================
@@ -101,9 +104,11 @@ void GPOWER_Clear_AllPower(void)
  * 発動するGパワーIDをセット
  *
  * @param   gpower_id		
+ * @param   powerdata   パワーデータへのポインタ
+ * @param   my_power    TRUE:自分のパワーである　FALSE:他人のパワーである
  */
 //==================================================================
-void GPOWER_Set_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata)
+void GPOWER_Set_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata, BOOL my_power)
 {
   GPOWER_TYPE type;
   
@@ -116,6 +121,13 @@ void GPOWER_Set_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata)
   GPowerSys.occur_power[type] = gpower_id;
   GPowerSys.life[type] = powerdata[gpower_id].time * ONE_MINUTE_FRAME;
   GPowerSys.powerdata_data[type] = powerdata[gpower_id].data;
+  if(GPowerSys.my_power_type == type){
+    GPowerSys.my_power_type = GPOWER_TYPE_NULL;
+  }
+  if(my_power == TRUE){
+    GPowerSys.my_power_type = type;
+  }
+  
   OS_TPrintf("GPower Set id=%d\n", gpower_id);
   
   //同時に発動しないパワーのチェック
@@ -169,6 +181,21 @@ GPOWER_ID GPOWER_Check_OccurType(GPOWER_TYPE type, const POWER_CONV_DATA *powerd
 
 //==================================================================
 /**
+ * 自分のパワーが発動しているかチェック
+ *
+ * @retval  BOOL		TRUE:自分のパワーが発動している　FALSE:発動していない
+ */
+//==================================================================
+BOOL GPOWER_Check_MyPower(void)
+{
+  if(GPowerSys.my_power_type == GPOWER_TYPE_NULL){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//==================================================================
+/**
  * Finish待ちになっているGパワーIDを取得する
  *
  * @retval  GPOWER_ID		GパワーID(Finish待ちが1つも無い場合はGPOWER_ID_NULL)
@@ -215,6 +242,9 @@ static void _OccurPowerClear(GPOWER_TYPE type)
   }
   GPowerSys.occur_power[type] = GPOWER_ID_NULL;
   GPowerSys.life[type] = 0;
+  if(GPowerSys.my_power_type == type){
+    GPowerSys.my_power_type = GPOWER_TYPE_NULL;
+  }
   OS_TPrintf("GPower Clear type=%d\n", type);
 }
 

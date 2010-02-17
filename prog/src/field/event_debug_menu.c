@@ -4920,7 +4920,7 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
       }
       
       if(ret < GPOWER_ID_MAX){
-        GPOWER_Set_OccurID(ret, work->powerdata);
+        GPOWER_Set_OccurID(ret, work->powerdata, FALSE);
       }
       else{
         GPOWER_Clear_AllPower();
