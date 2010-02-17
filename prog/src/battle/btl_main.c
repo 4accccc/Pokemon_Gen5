@@ -2961,8 +2961,11 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
 
         if( monsno_illusion != MONSNO_NULL )
         {
-          u32 level = BPP_GetValue( bpp, BPP_LEVEL );
-          wk->ppIllusionZoroArc = PP_Create( monsno_illusion, level, 0, wk->heapID );
+          if( wk->ppIllusionZoroArc == NULL )
+          {
+            u32 level = BPP_GetValue( bpp, BPP_LEVEL );
+            wk->ppIllusionZoroArc = PP_Create( monsno_illusion, level, 0, wk->heapID );
+          }
           BPP_SetViewSrcData( bpp, wk->ppIllusionZoroArc );
         }
       }
