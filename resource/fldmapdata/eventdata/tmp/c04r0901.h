@@ -10,7 +10,7 @@
 #ifndef ZONE_C04R0901_EVC_H
 #define ZONE_C04R0901_EVC_H
 
-#define C04R0901_VETERANM_01               0
+#define C04R0901_RECEPTION_01              0
 
 #endif //ZONE_C04R0901_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0901.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
