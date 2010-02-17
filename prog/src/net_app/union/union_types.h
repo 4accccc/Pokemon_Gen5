@@ -248,6 +248,15 @@ typedef enum{
   UNION_MINIGAME_ENTRY_ANSWER_NG,     ///<乱入NG
 }UNION_MINIGAME_ENTRY_ANSWER;
 
+///チャットの表示タイプ
+typedef enum{
+  UNION_CHAT_TYPE_NORMAL,               ///<簡易会話メッセージを表示
+  UNION_CHAT_TYPE_RECRUIT_BATTLE,       ///<バトル募集
+  UNION_CHAT_TYPE_RECRUIT_TRADE,        ///<交換募集
+  UNION_CHAT_TYPE_RECRUIT_PICTURE,      ///<お絵かき募集
+  UNION_CHAT_TYPE_RECRUIT_GURUGURU,     ///<ぐるぐる募集
+}UNION_CHAT_TYPE;
+
 
 //==============================================================================
 //  構造体定義
@@ -304,7 +313,7 @@ typedef struct{
 typedef struct{
   u8 connect_mac_address[6];  ///<接続したい人へのMacAddress
   u8 connect_num;             ///<現在の接続人数
-  u8 padding;
+  u8 chat_type;               ///<UNION_CHAT_TYPE_xxx
   
   u8 pm_version;              ///<PM_VERSION
   u8 language;                ///<PM_LANG
@@ -396,7 +405,8 @@ typedef struct{
   PMS_DATA chat_pmsdata;      ///<自分の発言(チャット)
   u16 chat_pms_rand;          ///<チャットの識別コード
   u8 chat_upload;             ///<TRUE:自分の発言更新あり
-  u8 padding3[3];
+  u8 chat_type;               ///<UNION_CHAT_TYPE_xxx
+  u8 padding3[2];
   
   //↓構造体内の一部のデータのみを送信データに含める
   UNION_MY_COMM mycomm;         ///<送受信で変更するパラメータ類(フリー動作で初期化される)
@@ -446,7 +456,8 @@ typedef struct{
   u16 rand;                                     ///<多重ログ表示防止用のランダムコード 2
   u8 mac_address[6];                            ///<MacAddress 6
   u8 sex;                                       ///<性別
-  u8 padding[3];
+  u8 chat_type;                                 ///<UNION_CHAT_TYPE_xxx
+  u8 padding[2];
 }UNION_CHAT_DATA;
 
 ///チャットログ管理

@@ -69,7 +69,7 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   
   //チャット
-  UnionChat_AddChat(unisys, bpc, NULL);
+  UnionChat_AddChat(unisys, bpc, NULL, UNION_CHAT_TYPE_NORMAL);
 
   if(situ->union_status == UNION_STATUS_NORMAL){
     //接続要求チェック

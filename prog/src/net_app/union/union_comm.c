@@ -654,7 +654,8 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   
   beacon->trainer_view = MyStatus_GetTrainerView( unisys->uniparent->mystatus );
   beacon->sex = MyStatus_GetMySex(unisys->uniparent->mystatus);
-
+  
+  beacon->chat_type = situ->chat_type;
   beacon->pmsdata = situ->chat_pmsdata;
   beacon->pms_rand = situ->chat_pms_rand;
   
@@ -799,6 +800,7 @@ void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
   GFL_STD_MemClear(situ, sizeof(UNION_MY_SITUATION));
   PMSDAT_SetupDefaultUnionMessage(&situ->chat_pmsdata);
   situ->chat_pms_rand = GFUser_GetPublicRand(0xffff);
+  situ->chat_type = UNION_CHAT_TYPE_NORMAL;
   situ->union_status = UNION_STATUS_ENTER;
   UnionMyComm_Init(unisys, &situ->mycomm);
 }
@@ -952,6 +954,25 @@ void UnionChat_SetMyPmsData(UNION_SYSTEM_PTR unisys, const PMS_DATA *pmsdata)
   UNION_MY_SITUATION *situ = &unisys->my_situation;
 
   situ->chat_pmsdata = *pmsdata;
+  situ->chat_type = UNION_CHAT_TYPE_NORMAL;
+  situ->chat_pms_rand++;
+  situ->chat_upload = TRUE;
+}
+
+//==================================================================
+/**
+ * 自分のチャットデータ(募集メッセージ)をセットする
+ *
+ * @param   unisys		
+ * @param   chat_type		
+ */
+//==================================================================
+void UnionChat_SetRecruit(UNION_SYSTEM_PTR unisys, UNION_CHAT_TYPE chat_type)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  
+  GF_ASSERT(chat_type != UNION_CHAT_TYPE_NORMAL);
+  situ->chat_type = chat_type;
   situ->chat_pms_rand++;
   situ->chat_upload = TRUE;
 }

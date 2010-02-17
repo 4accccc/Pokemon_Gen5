@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T16:11:49"/>
+	<create user="matsuda" host="W00142" date="2010-02-17T19:02:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3817,25 +3817,25 @@ msg_connect_union_08からの分岐メッセージ
 いまは　とりこみちゅうの　ようだ</language>
 	</row>
 
-	<row id="msg_union_appeal_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+	<row id="msg_union_appeal_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>タッチバーにある「対戦」マークを押すと、掲示板にメッセージ表示</comment>
 		<language name="JPN" width="216" line="2">たいせん　したいひと　ジャンプして！</language>
 		<language name="JPN_KANJI" width="216" line="2">たいせん　したいひと　ジャンプして！</language>
 	</row>
 
-	<row id="msg_union_appeal_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+	<row id="msg_union_appeal_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>タッチバーにある「交換」マークを押すと、掲示板にメッセージ表示</comment>
 		<language name="JPN" width="216" line="2">こうかん　したいひと　ジャンプして！</language>
 		<language name="JPN_KANJI" width="216" line="2">こうかん　したいひと　ジャンプして！</language>
 	</row>
 
-	<row id="msg_union_appeal_03" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+	<row id="msg_union_appeal_03" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>タッチバーにある「お絵かき」マークを押すと、掲示板にメッセージ表示</comment>
 		<language name="JPN" width="216" line="2">おえかき　したいひと　ジャンプして！</language>
 		<language name="JPN_KANJI" width="216" line="2">おえかき　したいひと　ジャンプして！</language>
 	</row>
 
-	<row id="msg_union_appeal_04" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+	<row id="msg_union_appeal_04" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>タッチバーにある「ぐるぐる交換」マークを押すと、掲示板にメッセージ表示</comment>
 		<language name="JPN" width="216" line="2">ぐるぐるこうかん　したいひと
 ジャンプして！</language>

@@ -24,6 +24,8 @@
 #include "system/pms_draw.h"
 #include "sound/pm_sndsys.h"
 #include "union_snd_def.h"
+#include "msg/msg_union_sub_disp.h"
+#include "message.naix"
 
 
 //==============================================================================
@@ -153,6 +155,15 @@ enum{
 ///メニューバーのCGXサイズ
 #define MENUBAR_CGX_SIZE    (4*0x20)
 
+///チャットのフォント色
+#define _CHAT_FONT_LSB      (PRINTSYS_MACRO_LSB(1,2,0))
+
+typedef enum{
+  _PRINT_TYPE_PMS,    ///<簡易会話
+  _PRINT_TYPE_MSG,    ///<通常メッセージ
+}_PRINT_TYPE;
+
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -184,7 +195,10 @@ typedef struct _UNION_SUBDISP{
   
   PRINT_QUE *printQue;
   GFL_FONT *font_handle;
+  GFL_MSGDATA *msgdata;
   GFL_BMPWIN *bmpwin_chat[UNION_CHAT_VIEW_LOG_NUM];
+  _PRINT_TYPE print_type[UNION_CHAT_VIEW_LOG_NUM];
+  PRINT_UTIL print_util[UNION_CHAT_VIEW_LOG_NUM];
   PMS_DRAW_WORK *pmsdraw;   ///<簡易会話表示システム
 }UNION_SUBDISP;
 
@@ -200,18 +214,16 @@ static void _UniSub_ActorResouceLoad(UNION_SUBDISP_PTR unisub, ARCHANDLE *handle
 static void _UniSub_ActorResourceUnload(UNION_SUBDISP_PTR unisub);
 static void _UniSub_ActorCreate(UNION_SUBDISP_PTR unisub, ARCHANDLE *handle);
 static void _UniSub_ActorDelete(UNION_SUBDISP_PTR unisub);
-static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub);
-static void _UniSub_IconPalChange(UNION_SUBDISP_PTR unisub, int act_index);
 static void _UniSub_MenuBarLoad(UNION_SUBDISP_PTR unisub);
 static void _UniSub_MenuBarFree(UNION_SUBDISP_PTR unisub);
 static void _UniSub_BmpWinCreate(UNION_SUBDISP_PTR unisub);
 static void _UniSub_BmpWinDelete(UNION_SUBDISP_PTR unisub);
-static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub);
+static BOOL _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub);
 static void _UniSub_IconPalChange(UNION_SUBDISP_PTR unisub, int act_index);
 static void _UniSub_PrintChatUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
 static void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 write_pos);
 static void _UniSub_Chat_DispAllWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
-static void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos);
+static void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos, UNION_CHAT_LOG *log);
 static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, s32 offset);
 static BOOL _UniSub_ScrollBar_TouchCheck(UNION_SUBDISP_PTR unisub);
 static void _UniSub_ScrollBar_Update(UNION_SYSTEM_PTR unisys, UNION_SUBDISP_PTR unisub);
@@ -349,19 +361,24 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub, BOOL bActive)
 
 	PRINTSYS_QUE_Main(unisub->printQue);
   PMS_DRAW_Main(unisub->pmsdraw);
+  for(i = 0; i < UNION_CHAT_VIEW_LOG_NUM; i++){
+    if(unisub->print_type[i] == _PRINT_TYPE_MSG){
+      PRINT_UTIL_Trans( &unisub->print_util[i], unisub->printQue );
+    }
+  }
   
   //チャット処理
   if(unisys != NULL){
     UNION_MY_SITUATION *situ = &unisys->my_situation;
     if(situ->chat_upload == TRUE){
-      UnionChat_AddChat(unisys, NULL, &situ->chat_pmsdata);
+      UnionChat_AddChat(unisys, NULL, &situ->chat_pmsdata, situ->chat_type);
       situ->chat_upload = FALSE;
     }
   #if PM_DEBUG
     else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
 //      PMSDAT_SetDebugRandom(&situ->chat_pmsdata);
       PMSDAT_SetDebugRandomDeco( &situ->chat_pmsdata, HEAPID_FIELDMAP );
-      UnionChat_AddChat(unisys, NULL, &situ->chat_pmsdata);
+      UnionChat_AddChat(unisys, NULL, &situ->chat_pmsdata, UNION_CHAT_TYPE_NORMAL);
     }
   #endif
     _UniSub_PrintChatUpdate(unisub, &unisys->chat_log);
@@ -371,7 +388,25 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub, BOOL bActive)
   }
   
   if(bActive == TRUE){
-    _UniSub_TouchUpdate(unisub);
+    u32 icon_update;
+    
+    icon_update = _UniSub_TouchUpdate(unisub);
+    if(unisys != NULL && icon_update == TRUE){
+      switch(unisub->appeal_no){
+      case UNION_APPEAL_BATTLE:      //戦闘
+        UnionChat_SetRecruit(unisys, UNION_CHAT_TYPE_RECRUIT_BATTLE);
+        break;
+      case UNION_APPEAL_TRADE:       //交換
+        UnionChat_SetRecruit(unisys, UNION_CHAT_TYPE_RECRUIT_TRADE);
+        break;
+      case UNION_APPEAL_PICTURE:     //お絵かき
+        UnionChat_SetRecruit(unisys, UNION_CHAT_TYPE_RECRUIT_PICTURE);
+        break;
+      case UNION_APPEAL_GURUGURU:    //ぐるぐる交換
+        UnionChat_SetRecruit(unisys, UNION_CHAT_TYPE_RECRUIT_GURUGURU);
+        break;
+      }
+    }
 
     unisub->scrollbar_touch = _UniSub_ScrollBar_TouchCheck(unisub);
     if(unisub->scrollbar_touch == FALSE){
@@ -424,6 +459,8 @@ static void _UniSub_SystemSetup(UNION_SUBDISP_PTR unisub)
   unisub->printQue = PRINTSYS_QUE_Create(HEAPID_FIELDMAP);
   unisub->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
     GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_FIELDMAP );
+  unisub->msgdata = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, 
+    ARCID_MESSAGE, NARC_message_union_sub_disp_dat, HEAPID_FIELDMAP );
 }
 
 //--------------------------------------------------------------
@@ -435,6 +472,7 @@ static void _UniSub_SystemSetup(UNION_SUBDISP_PTR unisub)
 //--------------------------------------------------------------
 static void _UniSub_SystemExit(UNION_SUBDISP_PTR unisub)
 {
+  GFL_MSG_Delete(unisub->msgdata);
   GFL_FONT_Delete(unisub->font_handle);
   PRINTSYS_QUE_Delete(unisub->printQue);
   GFL_CLACT_UNIT_Delete(unisub->clunit);
@@ -604,8 +642,8 @@ static void _UniSub_BmpWinCreate(UNION_SUBDISP_PTR unisub)
       UNION_BMPWIN_START_X / 8, (UNION_BMPWIN_START_Y + UNION_BMPWIN_SIZE_Y * i) / 8, 
       UNION_BMPWIN_SIZE_X / 8, UNION_BMPWIN_SIZE_Y / 8, 
       UNION_SUBBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B);
+    PRINT_UTIL_Setup( &unisub->print_util[i], unisub->bmpwin_chat[i] );
   }
-
 }
 
 //--------------------------------------------------------------
@@ -724,7 +762,7 @@ static void _UniSub_ActorDelete(UNION_SUBDISP_PTR unisub)
  * @param   unisub		
  */
 //--------------------------------------------------------------
-static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub)
+static BOOL _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub)
 {
   u32 x, y;
   int i;
@@ -737,7 +775,7 @@ static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub)
   }crect;
   
   if(GFL_UI_TP_GetPointTrg(&x, &y) == FALSE){
-    return;
+    return FALSE;
   }
   
   for(i = UNISUB_ACTOR_APPEAL_CHAT; i <= UNISUB_ACTOR_APPEAL_GURUGURU; i++){
@@ -755,11 +793,14 @@ static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub)
       }
       else{
         _UniSub_IconPalChange(unisub, i);
+//        if(unisub->appeal_no != UNION_APPEAL_NULL 
       }
       PMSND_PlaySE(UNION_SE_APPEAL_ICON_TOUCH);
-      return;
+      return TRUE;
     }
   }
+  
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -814,6 +855,13 @@ static void _UniSub_PrintChatUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
   if(PMS_DRAW_IsPrintEnd(unisub->pmsdraw) == FALSE){
     return;
   }
+  for(i = 0; i < UNION_CHAT_VIEW_LOG_NUM; i++){
+    if(unisub->print_type[i] == _PRINT_TYPE_MSG 
+        && PRINT_UTIL_Trans( &unisub->print_util[i], unisub->printQue ) == FALSE){
+      return;
+    }
+  }
+  
   
   if(log->chat_log_count < UNION_CHAT_VIEW_LOG_NUM){ //まだスクロールが発生しない状態
     UNION_CHAT_DATA *chat;
@@ -870,22 +918,59 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
     STRBUF *buf_name;
     GFL_POINT point = {0, 16+4};
     
-    if(PMS_DRAW_IsPrinting(unisub->pmsdraw, write_pos) == TRUE){
-      PMS_DRAW_Clear(unisub->pmsdraw, write_pos, TRUE);
+    if(unisub->print_type[write_pos] == _PRINT_TYPE_PMS){
+      if(PMS_DRAW_IsPrinting(unisub->pmsdraw, write_pos) == TRUE){
+        PMS_DRAW_Clear(unisub->pmsdraw, write_pos, TRUE);
+      }
+    }
+    else if(unisub->print_type[write_pos] == _PRINT_TYPE_MSG){
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[write_pos]), 0 );
+      GFL_BMPWIN_TransVramCharacter( unisub->bmpwin_chat[write_pos] );
     }
     
+    //本文
+    if(chat->chat_type == UNION_CHAT_TYPE_NORMAL){
+      //簡易会話
+      PMS_DRAW_PrintOffset(unisub->pmsdraw, unisub->bmpwin_chat[write_pos], 
+        &chat->pmsdata, write_pos, &point);
+      unisub->print_type[write_pos] = _PRINT_TYPE_PMS;
+    }
+    else{
+      STRBUF *buf_msg;
+      
+      switch(chat->chat_type){
+      case UNION_CHAT_TYPE_RECRUIT_BATTLE:       //バトル募集
+        buf_msg = GFL_MSG_CreateString( unisub->msgdata, msg_union_appeal_01 );
+        break;
+      case UNION_CHAT_TYPE_RECRUIT_TRADE:        //交換募集
+        buf_msg = GFL_MSG_CreateString( unisub->msgdata, msg_union_appeal_02 );
+        break;
+      case UNION_CHAT_TYPE_RECRUIT_PICTURE:      //お絵かき募集
+        buf_msg = GFL_MSG_CreateString( unisub->msgdata, msg_union_appeal_03 );
+        break;
+      case UNION_CHAT_TYPE_RECRUIT_GURUGURU:     //ぐるぐる募集
+        buf_msg = GFL_MSG_CreateString( unisub->msgdata, msg_union_appeal_04 );
+        break;
+      default:
+        GF_ASSERT(0);
+        return;
+      }
+    	GFL_BMPWIN_MakeScreen( unisub->bmpwin_chat[write_pos] );
+    	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(unisub->bmpwin_chat[write_pos]) );
+      PRINT_UTIL_PrintColor( &unisub->print_util[write_pos], unisub->printQue, 0, point.y, 
+        buf_msg, unisub->font_handle, _CHAT_FONT_LSB );
+      GFL_STR_DeleteBuffer(buf_msg);
+      unisub->print_type[write_pos] = _PRINT_TYPE_MSG;
+    }
+
     //名前
     buf_name = GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, HEAPID_FIELDMAP);
     GFL_STR_SetStringCode(buf_name, chat->name);
-    PRINTSYS_PrintQue( unisub->printQue, GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[write_pos]), 
-      0, 0, buf_name, unisub->font_handle);
+    PRINTSYS_PrintQueColor( unisub->printQue, GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[write_pos]), 
+      0, 0, buf_name, unisub->font_handle, _CHAT_FONT_LSB);
     GFL_STR_DeleteBuffer(buf_name);
     
     //友達手帳の名前  ※check　まだ未作成 2009.08.24(月)
-    
-    //簡易会話
-    PMS_DRAW_PrintOffset(unisub->pmsdraw, unisub->bmpwin_chat[write_pos], 
-      &chat->pmsdata, write_pos, &point);
   }
 }
 
@@ -927,7 +1012,7 @@ void _UniSub_Chat_DispAllWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log)
  * @param   dest_pos		コピー先描画位置
  */
 //--------------------------------------------------------------
-void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos)
+static void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos, UNION_CHAT_LOG *log)
 {
   u16 *src_plate_screen, *dest_plate_screen;
 
@@ -940,7 +1025,21 @@ void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos)
   GFL_BG_LoadScreenV_Req(UNION_FRAME_S_PLATE);
   
   //BMPのコピー
-  PMS_DRAW_Copy(unisub->pmsdraw, src_pos, dest_pos);
+  if(unisub->print_type[src_pos] == _PRINT_TYPE_PMS 
+      && unisub->print_type[dest_pos] == _PRINT_TYPE_PMS){
+    PMS_DRAW_Copy(unisub->pmsdraw, src_pos, dest_pos);
+  }
+  else if(unisub->print_type[src_pos] == _PRINT_TYPE_MSG 
+      && unisub->print_type[dest_pos] == _PRINT_TYPE_MSG){
+    GFL_BMP_Copy( GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[src_pos]), 
+      GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[dest_pos]) );
+    GFL_BMPWIN_TransVramCharacter(unisub->bmpwin_chat[dest_pos]);
+  }
+  else{
+    UNION_CHAT_DATA *chat;
+    chat = UnionChat_GetReadBuffer(log, log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM-1) + src_pos);
+    _UniSub_Chat_DispWrite(unisub, chat, dest_pos);
+  }
 }
 
 //--------------------------------------------------------------
@@ -954,7 +1053,7 @@ void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos)
  * コピーで済むものはコピーで済ませるのが(_UniSub_Chat_DispAllWriteとの違い)
  */
 //--------------------------------------------------------------
-void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, s32 offset)
+static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, s32 offset)
 {
   int src_pos, dest_pos;
   int i, write_pos;
@@ -964,7 +1063,7 @@ void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, s32 
     dest_pos = 0;
     src_pos = dest_pos + offset;
     while(src_pos < UNION_CHAT_VIEW_LOG_NUM){
-      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos);
+      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log);
       dest_pos++;
       src_pos++;
     }
@@ -980,7 +1079,7 @@ void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, s32 
     dest_pos = UNION_CHAT_VIEW_LOG_NUM - 1;
     src_pos = dest_pos + offset;
     while(src_pos > -1){
-      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos);
+      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log);
       dest_pos--;
       src_pos--;
     }

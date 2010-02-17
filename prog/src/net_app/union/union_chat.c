@@ -27,11 +27,12 @@ static BOOL UnionChat_CheckSameLog(UNION_CHAT_LOG *log, const u8 *mac_address, u
  * チャット登録
  *
  * @param   unisub		
- * @param   bpc		
- * @param   mine_pmsdata		
+ * @param   bpc		          発言したプレイヤー(自分の発言の場合はNULL指定)
+ * @param   mine_pmsdata		自分の発言(自分ではない人の発言の場合はNULL指定)
+ * @param   mine_chat_type	自分の発言のチャットタイプ(自分ではない人の発言の場合は無視)
  */
 //==================================================================
-void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_DATA *mine_pmsdata)
+void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_DATA *mine_pmsdata, UNION_CHAT_TYPE mine_chat_type)
 {
   UNION_CHAT_LOG *log = &unisys->chat_log;
   UNION_CHAT_DATA *dest;
@@ -49,7 +50,9 @@ void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_
   if(bpc == NULL){
     MYSTATUS *myst = unisys->uniparent->mystatus;
     MyStatus_CopyNameStrCode(myst, dest->name, PERSON_NAME_SIZE + EOM_SIZE);
+    GF_ASSERT(mine_pmsdata != NULL || (mine_pmsdata==NULL && mine_chat_type != UNION_CHAT_TYPE_NORMAL));
     dest->pmsdata = *mine_pmsdata;
+    dest->chat_type = mine_chat_type;
     dest->rand = 0;
     OS_GetMacAddress(dest->mac_address);
     dest->sex = MyStatus_GetMySex(myst);
@@ -57,6 +60,7 @@ void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_
   else{
     STRTOOL_Copy(bpc->beacon.name, dest->name, PERSON_NAME_SIZE + EOM_SIZE);
     dest->pmsdata = bpc->beacon.pmsdata;
+    dest->chat_type = bpc->beacon.chat_type;
     dest->rand = bpc->beacon.pms_rand;
     GFL_STD_MemCopy(bpc->mac_address, dest->mac_address, 6);
     dest->sex = bpc->beacon.sex;
