@@ -204,7 +204,7 @@ struct _TAG_FLDMSGWIN_STREAM
 	GFL_BMPWIN *bmpwin;
 	FLDMSGPRINT_STREAM *msgPrintStream;
   FLDMSGPRINT *msgPrint;
-  const GFL_MSGDATA *msgData; //ユーザーから
+  GFL_MSGDATA *msgData; //ユーザーから
   STRBUF *strBuf;
 	FLDMSGBG *fmb;
    
@@ -221,7 +221,7 @@ struct _TAG_FLDSYSWIN_STREAM
 	GFL_BMPWIN *bmpwin;
 	FLDMSGPRINT_STREAM *msgPrintStream;
   FLDMSGPRINT *msgPrint;
-  const GFL_MSGDATA *msgData; //ユーザーから
+  GFL_MSGDATA *msgData; //ユーザーから
   STRBUF *strBuf;
 	FLDMSGBG *fmb;
    
@@ -1959,7 +1959,7 @@ BOOL FLDMSGPRINT_STREAM_ProcPrint( FLDMSGPRINT_STREAM *stm )
  */
 //--------------------------------------------------------------
 FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
-    FLDMSGBG *fmb, const GFL_MSGDATA *msgData,
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData,
     u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
 {
   FLDMSGWIN_STREAM *msgWin;
@@ -2210,7 +2210,7 @@ BOOL FLDMSGWIN_STREAM_CheckAllPrintTrans( FLDMSGWIN_STREAM *msgWin )
  */
 //--------------------------------------------------------------
 FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
-    FLDMSGBG *fmb, const GFL_MSGDATA *msgData, u16 bmppos_y )
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y )
 {
   FLDSYSWIN_STREAM *sysWin;
 	
@@ -2526,7 +2526,7 @@ static void fldTalkMsgWin_Add(
 //--------------------------------------------------------------
 FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
-    const GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type )
+    GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type )
 {
   FLDTALKMSGWIN *tmsg = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDTALKMSGWIN) );
@@ -2785,13 +2785,14 @@ static void fldPlainMsgWin_Add( FLDMSGBG *fmb,
  */
 //--------------------------------------------------------------
 FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add(
-    FLDMSGBG *fmb,  const GFL_MSGDATA *msgData,
+    FLDMSGBG *fmb,  GFL_MSGDATA *msgData,
     u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
 {
   TALKMSGWIN_TYPE type = TEST_TALKMSGWIN_TYPE;
   FLDPLAINMSGWIN *plnwin = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDPLAINMSGWIN) );
   plnwin->fmb = fmb;
+  plnwin->msgData = msgData;
   plnwin->strBuf = GFL_STR_CreateBuffer(
 					FLDMSGBG_STRLEN, fmb->heapID );
   fldPlainMsgWin_Add( fmb, plnwin, bmppos_x, bmppos_y,
@@ -3092,7 +3093,7 @@ static void fldSubMsgWin_Add(
  */
 //--------------------------------------------------------------
 void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,
-    const GFL_MSGDATA *msgData, u32 msgID,
+    GFL_MSGDATA *msgData, u32 msgID,
     int id, u8 x, u8 y, u8 sx, u8 sy )
 {
   int idx;

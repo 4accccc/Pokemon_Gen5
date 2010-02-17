@@ -293,7 +293,7 @@ extern BOOL FLDMSGPRINT_STREAM_ProcPrint( FLDMSGPRINT_STREAM *stm );
 
 //メッセージウィンドウ　プリントストリーム
 extern FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
-    FLDMSGBG *fmb, const GFL_MSGDATA *msgData,
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData,
     u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );
 extern void FLDMSGWIN_STREAM_Delete( FLDMSGWIN_STREAM *msgWin );
 extern void FLDMSGWIN_STREAM_PrintStart(
@@ -312,7 +312,7 @@ extern BOOL FLDMSGWIN_STREAM_CheckAllPrintTrans( FLDMSGWIN_STREAM *msgWin );
 
 //システムウィンドウ　プリントストリーム
 extern FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
-    FLDMSGBG *fmb, const GFL_MSGDATA *msgData, u16 bmppos_y );
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y );
 extern void FLDSYSWIN_STREAM_Delete( FLDSYSWIN_STREAM *sysWin );
 extern void FLDSYSWIN_STREAM_PrintStart(
     FLDSYSWIN_STREAM *sysWin, u16 x, u16 y, u32 strID );
@@ -331,7 +331,7 @@ extern BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin );
 //吹き出しメッセージウィンドウ
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
-    const GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type );
+    GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type );
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
     STRBUF *strBuf, TALKMSGWIN_TYPE type );
@@ -342,7 +342,7 @@ extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
 
 //プレーンウィンドウ
 extern FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add(
-    FLDMSGBG *fmb,  const GFL_MSGDATA *msgData,
+    FLDMSGBG *fmb,  GFL_MSGDATA *msgData,
     u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );
 extern void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin );
 extern void FLDPLAINMSGWIN_ClearMessage( FLDPLAINMSGWIN *plnwin );
@@ -363,7 +363,7 @@ extern BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin );
 
 //サブウィンドウ
 extern void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,
-    const GFL_MSGDATA *msgData, u32 msgID,
+    GFL_MSGDATA *msgData, u32 msgID,
     int id, u8 x, u8 y, u8 sx, u8 sy );
 extern void FLDSUBMSGWIN_AddStrBuf( FLDMSGBG *fmb,
     const STRBUF *strBuf, int id, u8 x, u8 y, u8 sx, u8 sy );
