@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T16:16:38"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T18:46:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1453" top="191" right="2158" bottom="811" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -336,11 +336,17 @@
 	<row id="msg_c06gym0201_leader_04">
 		<comment>アイテム入手処理</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
-		<language name="JPN" width="256">あと　すごく　こうふんする
+		<language name="JPN" width="256">すごい！　それだけ　バッジがあれば
+レベル７０までの　ポケモンは▽
+あなたの　いうことを　むししないわ！▼
+あと　すごく　こうふんする
 ポケモンしょうぶを　させてくれた[BE:00:ページ切り替え（行送り）]
 おれいに　この　わざマシン[BE:00:ページ切り替え（行送り）]
 もらってくれるかな[BE:01:ページ切り替え（クリア）]　</language>
-		<language name="JPN_KANJI" width="256">あと　すごく　興奮する
+		<language name="JPN_KANJI" width="256">すごい！　それだけ　バッジがあれば
+レベル７０までの　ポケモンは▽
+あなたの　いうことを　無視しないわ！▼
+あと　すごく　興奮する
 ポケモン勝負を　させてくれた[BE:00:ページ切り替え（行送り）]
 お礼に　この　わざマシン[BE:00:ページ切り替え（行送り）]
 もらってくれるかな[BE:01:ページ切り替え（クリア）]　</language>

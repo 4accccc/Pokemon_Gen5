@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:11:53"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T18:51:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="951" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1482" top="368" right="2185" bottom="988" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="528"/>
@@ -352,9 +352,17 @@
 　アイテム入手処理</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アイリス</attribute>
-		<language name="JPN" width="256">ねーねー
+		<language name="JPN" width="256">ジムバッジが　８こ！
+すごいすごい！▼
+どんな　ポケモンでも　ぜったいに
+あなたの　おねがい　きいてくれるよ！▼
+ねーねー
 この　わざマシンも　あげるー！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ねーねー
+		<language name="JPN_KANJI" width="256">ジムバッジが　８こ！
+すごいすごい！▼
+どんな　ポケモンでも　ぜったいに
+あなたの　おねがい　きいてくれるよ！▼
+ねーねー
 この　わざマシンも　あげるー！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -460,11 +468,19 @@
 　アイテム入手処理</comment>
 		<attribute name="キャラ指定">ジムリーダー
 シャガ</attribute>
-		<language name="JPN" width="256">これも　もらってくれたまえ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ふむ！　イッシュ　すべての
+ジムバッジを　てにしたか▼
+いまの　きみなら　どんなポケモンも
+すなおに　したがってくれるだろう！▼
+これも　もらってくれたまえ[BE:01:ページ切り替え（クリア）]
 わたしが　すきな
 わざマシンの　ひとつ[BE:01:ページ切り替え（クリア）]
 そのなも　ドラゴンテール[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">これも　もらってくれたまえ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ふむ！　イッシュ　全ての
+ジムバッジを　てにしたか▼
+今の　きみなら　どんなポケモンも
+素直に　従ってくれるだろう！▼
+これも　もらってくれたまえ[BE:01:ページ切り替え（クリア）]
 わたしが　好きな
 技マシンの　ひとつ[BE:01:ページ切り替え（クリア）]
 その名も　ドラゴンテール[BE:01:ページ切り替え（クリア）]</language>

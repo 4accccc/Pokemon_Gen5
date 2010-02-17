@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T21:48:07"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T18:43:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1304" top="257" right="2009" bottom="885" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -336,14 +336,16 @@
 		<comment>♀
 ・アイテム入手処理</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
-		<language name="JPN" width="256">ボルトバッジが　あれば
-レベル５０までの　ポケモンは[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">ボルトバッジを　ふくめ
+４つの　バッジが　あれば▼
+レベル５０までの　ポケモンは
 アナタに　したがってくれる[BE:01:ページ切り替え（クリア）]
 それと　これは
 ワタシの　すきな　わざ……[BE:00:ページ切り替え（行送り）]
 よければ　アナタも　つかって[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ボルトバッジが　あれば
-レベル５０までの　ポケモンは[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">ボルトバッジを　含め
+４つの　バッジが　あれば▼
+レベル５０までの　ポケモンは
 アナタに　従ってくれる[BE:01:ページ切り替え（クリア）]
 それと　これは
 ワタシの　好きな　技……[BE:00:ページ切り替え（行送り）]

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T16:17:51"/>
+	<create user="matsumiya" host="W00224" date="2010-02-17T18:48:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="947" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1397" top="235" right="2096" bottom="855" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="524"/>
@@ -320,9 +320,15 @@
 	<row id="msg_c07gym0101_leader_04">
 		<comment>アイテム入手処理</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">この　わざマシンには
+		<language name="JPN" width="256">……バッジが　７つ▼
+なるほど　レベル８０までの　ポケモンは
+めいれいを　すなおに　きいてくれる▼
+この　わざマシンには
 わたしの　おもいが　こめられている[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">この　わざマシンには
+		<language name="JPN_KANJI" width="256">……バッジが　７つ▼
+なるほど　レベル８０までの　ポケモンは
+命令を　素直に　きいてくれる▼
+この　わざマシンには
 わたしの　想いが　こめられている[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
