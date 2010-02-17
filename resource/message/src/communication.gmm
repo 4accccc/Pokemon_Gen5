@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-05-29T16:14:58"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:08:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,12 +334,12 @@
 
 
 	<row id="Msg_CommErrorNo">
-		<language name="JPN" font=" 1:font_system" width="216">つごうが　わるいみたい…　[2:04:５桁:9]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つごうが　わるいみたい…　[2:04:５桁:9]</language>
+		<language name="JPN" font=" 1:small" width="216">つごうが　わるいみたい…　[2:04:５桁:9]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">つごうが　わるいみたい…　[2:04:５桁:9]</language>
 	</row>
 
 	<row id="Msg_CommError">
-		<language name="JPN" font=" 1:font_system" width="216">つうしんエラーが
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが
 はっせいしました
 
 ユニオンルームの　ばあいは
@@ -348,7 +348,7 @@
 さいごに　レポートをかいた
 ばしょに　もどります
 Ａボタンを　おしてください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしんエラーが
+		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんエラーが
 はっせいしました
 
 ユニオンルームの　ばあいは
@@ -360,7 +360,7 @@
 	</row>
 
 	<row id="Msg_CommFatalError">
-		<language name="JPN" font=" 1:font_system" width="216">つうしんちゅう　に　エラーが
+		<language name="JPN" font=" 1:small" width="216">つうしんちゅう　に　エラーが
 はっせい　しました（[2:04:５桁:0]）
 でんげんを　きって
 いれなおして　ください
@@ -369,7 +369,7 @@
 このメッセージが　でるときは
 サポートセンターに
 おといあわせ　ください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしんちゅう　に　エラーが
+		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんちゅう　に　エラーが
 はっせい　しました（[2:04:５桁:0]）
 でんげんを　きって
 いれなおして　ください
@@ -381,12 +381,12 @@
 	</row>
 
 	<row id="Msg_CommErrorMystery">
-		<language name="JPN" font=" 1:font_system" width="216">つうしんエラーが
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが
 はっせいしました
 
 タイトルがめんに　もどります
 Ａボタンを　おしてください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしんエラーが
+		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんエラーが
 はっせいしました
 
 タイトルがめんに　もどります
@@ -394,24 +394,24 @@
 	</row>
 
 	<row id="Msg_CommErrorGTSbusy">
-		<language name="JPN" font=" 1:font_system" width="216">ただいま　ＧＴＳが　こみあっています
+		<language name="JPN" font=" 1:small" width="216">ただいま　ＧＴＳが　こみあっています
 しばらく　じかんを　おいて
 もういちど　おためし　ください
 
-ＷｉーＦｉコネクション　から
+Ｗｉ－Ｆｉコネクション　から
 せつだん　しました
 Ａボタンを　おしてください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">ただいま　ＧＴＳが　こみあっています
+		<language name="JPN_KANJI" font=" 1:small" width="216">ただいま　ＧＴＳが　こみあっています
 しばらく　じかんを　おいて
 もういちど　おためし　ください
 
-ＷｉーＦｉコネクション　から
+Ｗｉ－Ｆｉコネクション　から
 せつだん　しました
 Ａボタンを　おしてください</language>
 	</row>
 
 	<row id="Msg_CommFatalError02">
-		<language name="JPN" font=" 1:font_system" width="216">つうしんちゅう　に　エラーが
+		<language name="JPN" font=" 1:small" width="216">つうしんちゅう　に　エラーが
 はっせい　しました
 でんげんを　きって
 いれなおして　ください
@@ -420,7 +420,7 @@
 このメッセージが　でるときは
 サポートセンターに
 おといあわせ　ください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしんちゅう　に　エラーが
+		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんちゅう　に　エラーが
 はっせい　しました
 でんげんを　きって
 いれなおして　ください
@@ -431,39 +431,39 @@
 おといあわせ　ください</language>
 	</row>
 
-	<row id="Msg_WiFi_CommError" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="Msg_WiFi_CommError" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>プラチナで追加。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">つうしんエラーが
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが
 はっせいしました
 
-ＷｉーＦｉコネクション　から
+Ｗｉ－Ｆｉコネクション　から
 せつだん　しました
 さいごに　レポートをかいた
 ばしょに　もどります
 Ａボタンを　おしてください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしんエラーが
+		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんエラーが
 はっせいしました
 
-ＷｉーＦｉコネクション　から
+Ｗｉ－Ｆｉコネクション　から
 せつだん　しました
 さいごに　レポートをかいた
 ばしょに　もどります
 Ａボタンを　おしてください</language>
 	</row>
 
-	<row id="Msg_WiFi_CommErrorMystery" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="Msg_WiFi_CommErrorMystery" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>プラチナで追加。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">つうしんエラーが
+		<language name="JPN" font=" 1:small" width="216">つうしんエラーが
 はっせいしました
 
-ＷｉーＦｉコネクション　から
+Ｗｉ－Ｆｉコネクション　から
 せつだん　しました
 タイトルがめんに　もどります
 Ａボタンを　おしてください</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">つうしんエラーが
+		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんエラーが
 はっせいしました
 
-ＷｉーＦｉコネクション　から
+Ｗｉ－Ｆｉコネクション　から
 せつだん　しました
 タイトルがめんに　もどります
 Ａボタンを　おしてください</language>
