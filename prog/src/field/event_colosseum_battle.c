@@ -189,6 +189,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
   para->partyPartner = setup->partyPartner; ///< 2vs2時の味方AI（不要ならnull）
   para->partyEnemy2 = setup->partyEnemy2;    ///< 2vs2時の２番目敵AI用（不要ならnull）
 #endif
+  BTL_SETUP_AllocRecBuffer(para, GFL_HEAPID_APP); //録画バッファ確保
   return event;
 }
 
