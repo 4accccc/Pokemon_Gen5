@@ -299,9 +299,9 @@ GMEVENT * EVENT_CallGameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_wo
 #endif
     GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_data));
     //適当に手持ちポケモンをAdd
-    DEBUG_MyPokeAdd( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
-    //デバッグアイテム追加
-    DEBUG_MYITEM_MakeBag( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
+    //デバッグアイテム追加などなど…
+    DEBUG_SetStartData( GAMESYSTEM_GetGameData( gsys ), GFL_HEAPID_APP );
+
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
     
     LOCATION_DEBUG_SetDefaultPos(&fmw->loc_req, game_init_work->mapid);
