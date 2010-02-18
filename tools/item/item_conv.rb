@@ -27,9 +27,13 @@ end
 
   label = LabelMake.new
   read_data = []
-  cnt = 0
+  cnt = -1
   open( ARGV[ ARGV_READ_FILE ] ) {|fp_r|
     while str = fp_r.gets
+      if cnt = -1
+        cnt += 1
+        next
+      end
       str = str.tosjis
       str = str.tr( "\"\r\n", "" )
       split_data = str.split(/,/)
