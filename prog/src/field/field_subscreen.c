@@ -19,6 +19,7 @@
 #include "c_gear/c_gear.h"
 #include "c_gear/no_gear.h"
 #include "field_menu.h"
+#include "dowsing/dowsing.h"
 
 #include "sound/snd_viewer.h"
 #include "sound/pm_sndsys.h"
@@ -70,6 +71,7 @@ struct _FIELD_SUBSCREEN_WORK {
     UNION_SUBDISP_PTR unisubWork;
     INTRUDE_SUBDISP_PTR intsubWork;
     BEACON_VIEW_PTR beaconViewWork;
+    DOWSING_WORK* dowsingWork;
     GFL_CAMADJUST * gflCamAdjust;
     GFL_SNDVIEWER * gflSndViewer;
     void * checker;
@@ -147,6 +149,11 @@ static void init_soundviewer_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSC
 static void update_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
+static void init_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE prevMode );
+static void exit_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
+static void draw_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
+
 static FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode);
 
 //-----------------------------------------------------------------------------
@@ -206,6 +213,15 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     NULL ,
     exit_nogear_subscreen,
     actioncallback_nogear_subscreen,
+  },
+  { // ダウジング
+    FIELD_SUBSCREEN_DOWSING,
+    init_dowsing_subscreen,
+    update_dowsing_subscreen,
+    draw_dowsing_subscreen,
+    NULL,
+    exit_dowsing_subscreen,
+    NULL,
   },
   { // デバッグライト制御パネル
     FIELD_SUBSCREEN_DEBUG_LIGHT,  
@@ -1097,4 +1113,51 @@ static void exit_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork )
   pWork->gflSndViewer = NULL;
 }
 
+
+//=============================================================================
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ダウジング画面の初期化
+ */
+//-----------------------------------------------------------------------------
+static void init_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE prevMode )
+{
+  pWork->dowsingWork = DOWSING_Init( HEAPID_FIELD_SUBSCREEN, pWork->heapID, pWork, pWork->fieldmap );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ダウジング画面の破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+  DOWSING_Exit( pWork->dowsingWork );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ダウジング画面の更新
+ */
+//-----------------------------------------------------------------------------
+static void update_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive )
+{
+  DOWSING_Update( pWork->dowsingWork, bActive );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ダウジング画面の描画
+ */
+//-----------------------------------------------------------------------------
+static void draw_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+  DOWSING_Draw( pWork->dowsingWork, bActive );
+}
+
+
+//=============================================================================
+//=============================================================================
 

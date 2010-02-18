@@ -39,6 +39,7 @@ typedef enum {
   FIELD_SUBSCREEN_INTRUDE,            // 侵入
   FIELD_SUBSCREEN_BEACON_VIEW,        // すれ違い結果画面
   FIELD_SUBSCREEN_NOGEAR,             // Cギアの未取得時
+  FIELD_SUBSCREEN_DOWSING,            // ダウジング
 #if PM_DEBUG
   FIELD_SUBSCREEN_DEBUG_LIGHT,        // デバッグライト制御パネル
   FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA,  // デバッグカメラ
@@ -69,6 +70,8 @@ typedef enum {
   FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR, ///< サブスクリーンをCGEAR画面に変更
   FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_INTRUDE,     ///< サブスクリーン
   FIELD_SUBSCREEN_ACTION_BEACON_DETAIL,  ///<ビーコン詳細画面呼び出し
+  FIELD_SUBSCREEN_ACTION_DOWSING_INIT,         ///< ダウジング起動
+  FIELD_SUBSCREEN_ACTION_DOWSING_EXIT,         ///< ダウジング終了
   
   FIELD_SUBSCREEN_ACTION_MAX,
 

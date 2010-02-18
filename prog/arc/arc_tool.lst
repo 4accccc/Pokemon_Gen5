@@ -275,3 +275,4 @@
   ARCID_RESEARCH_RADAR_GRAPHIC "research_radar_graphic.narc"  # 調査レーダー グラフィック
   ARCID_UN_SELECT_GRA "un_select_gra.narc" #国連フロア選択
   ARCID_POKEVOICE_PARAM "pokevoice_param.narc" #ポケモン鳴き声パラメータ
+  ARCID_DOWSING_GRA "dowsing_gra.narc"  # ダウジング

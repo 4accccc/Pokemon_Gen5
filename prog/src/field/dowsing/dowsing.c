@@ -1,0 +1,1026 @@
+//============================================================================
+/**
+ *  @file   dowsing.c
+ *  @brief  ダウジング
+ *  @author Koji Kawada
+ *  @data   2010.02.16
+ *  @note   フィールドのサブ画面
+ *  モジュール名：DOWSING
+ */
+//============================================================================
+#define DEBUG_KAWADA
+
+
+// インクルード
+#include <gflib.h>
+#include "system/gfl_use.h"
+#include "system/main.h"
+
+#include "gamesystem/gamesystem.h"
+#include "sound/pm_sndsys.h"
+#include "infowin/infowin.h"
+#include "field/fldmmdl.h"
+#include "field/fldmmdl.h"
+#include "field/fieldmap.h"
+#include "../script_hideitem.h"
+#include "../../../../resource/fldmapdata/flagwork/flag_define.h"  // FLAG_HIDEITEM_AREA_START参照のため
+
+#include "../field_subscreen.h" 
+#include "dowsing.h"             // field_subscreen.hをインクルードしてから、このファイルをインクルードして下さい。
+
+// アーカイブ
+#include "arc_def.h"
+#include "dowsing_gra.naix"
+
+// サウンド
+#include "sound/wb_sound_data.sadl"
+
+// オーバーレイ
+
+
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+
+
+//=============================================================================
+/**
+ *  アイテムサーチ
+ */
+//=============================================================================
+// オーバーレイ
+FS_EXTERN_OVERLAY(notwifi);
+// ダウジングが起動するときは、notwifiが既にロードされている。
+
+// アイテムデータ
+typedef struct
+{
+  u16 index;
+  u8 world_flag;
+  u8 revival_flag;
+  u16 zone_id;
+  u16 x, z;
+}
+ITEM_DATA;
+// 取り敢えずHIDE_ITEM_DATAと同じ中身にしておく
+
+// ワーク
+typedef struct
+{
+  const EVENTWORK*  event_wk;
+  const ITEM_DATA*  item_data;
+  u16               item_data_num;
+  u16               search_no;  // 次はitem_data[search_no]からサーチする
+}
+ITEM_SEARCH_WORK;
+
+// 初期化処理
+static ITEM_SEARCH_WORK* ItemSearchInit( HEAPID heap_id, const EVENTWORK* event_wk )
+{
+  ITEM_SEARCH_WORK* work = GFL_HEAP_AllocClearMemory( heap_id, sizeof(ITEM_SEARCH_WORK) );
+
+  work->event_wk         = event_wk;
+  work->item_data        = HIDEITEM_GetTable( &(work->item_data_num) );
+  work->search_no        = 0;
+
+  return work;
+}
+
+// 終了処理
+static void ItemSearchExit( ITEM_SEARCH_WORK* work )
+{
+  GFL_HEAP_FreeMemory( work );
+}
+
+// TRUEのときアイテムが存在する
+// FALSEのときアイテムが存在しない
+// アイテムが存在するか確認する
+static BOOL ItemSearchExist( ITEM_SEARCH_WORK* work, u16 item_data_index )
+{
+  u16 iflag = FLAG_HIDEITEM_AREA_START + item_data_index;
+  return ( EVENTWORK_CheckEventFlag( (EVENTWORK*)(work->event_wk), iflag ) == FALSE );
+}
+
+// 最初からサーチし直し
+static void ItemSearchRestart( ITEM_SEARCH_WORK* work )
+{
+  work->search_no = 0;
+}
+
+// TRUEのとき有効なアイテムデータをdataにいれている
+// FALSEのときもうアイテムデータがなくdataは不定
+// アイテムデータを得る
+static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, const ITEM_DATA** data )
+{
+  BOOL find = FALSE;
+  const ITEM_DATA* idata;
+
+  do
+  {
+    if( work->search_no >= work->item_data_num ) break;
+
+    idata = &( work->item_data[ work->search_no ] );
+    if( ItemSearchExist( work, idata->index ) )  // アイテムが存在する
+    {
+      *data = idata;
+      find = TRUE;
+    }
+    work->search_no++;
+  }
+  while( !find );
+
+  return find;
+}
+
+
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+
+
+//=============================================================================
+/**
+*  定数定義
+*/
+//=============================================================================
+// BGフレーム
+#define BG_FRAME_S_REAR              (GFL_BG_FRAME3_S)        // プライオリティ3
+#define BG_FRAME_S_TOUCHBAR          (GFL_BG_FRAME0_S)        // プライオリティ0
+// BGフレーム優先度
+#define BG_FRAME_PRIO_S_REAR         (3)
+#define BG_FRAME_PRIO_S_TOUCHBAR     (0)
+
+// BGパレット
+// 本数
+enum
+{
+  BG_PAL_NUM_S_REAR          = 1,
+  BG_PAL_NUM_S_TOUCHBAR      = 1,
+  BG_PAL_NUM_S_INFOWIN       = 1,
+};
+// 位置
+enum
+{
+  BG_PAL_POS_S_REAR          = 0, 
+  BG_PAL_POS_S_TOUCHBAR      = 1,
+  BG_PAL_POS_S_INFOWIN       = 2,
+};
+
+// OBJパレット
+// 本数
+enum
+{
+  OBJ_PAL_NUM_S_KIT          = 1,
+  OBJ_PAL_NUM_S_TOUCHBAR     = 3,
+};
+// 位置
+enum
+{
+  OBJ_PAL_POS_S_KIT          = 0,
+  OBJ_PAL_POS_S_TOUCHBAR     = 1,
+};
+
+// メインシーケンス(init, exitは1フレームで済ませるのでシーケンス番号なしでいい)
+enum
+{
+  SEQ_START,
+  SEQ_HEADBAR_APPEAR,
+  SEQ_HEADBAR_WAIT,
+  SEQ_HEADBAR_DISAPPEAR,
+  SEQ_END,
+};
+
+// 表示するOBJ
+enum
+{
+  KIT_ROD_L,
+  KIT_ROD_R,
+  KIT_ARROW,
+  KIT_ITEM,
+  KIT_MAX,
+};
+
+static const struct 
+{
+  u8         cgr;
+  u8         cell;
+  u8         anim;
+}
+kit_data[KIT_MAX]	=
+{
+  {
+	  NARC_dowsing_gra_dowsing_obj01_NCGR,
+	  NARC_dowsing_gra_dowsing_obj01_NCER,
+	  NARC_dowsing_gra_dowsing_obj01_NANR,
+  },
+  {
+	  NARC_dowsing_gra_dowsing_obj01_NCGR,
+	  NARC_dowsing_gra_dowsing_obj01_NCER,
+	  NARC_dowsing_gra_dowsing_obj01_NANR,
+  },
+  {
+	  NARC_dowsing_gra_dowsing_obj02_NCGR,
+	  NARC_dowsing_gra_dowsing_obj02_NCER,
+	  NARC_dowsing_gra_dowsing_obj02_NANR,
+  },
+  {
+	  NARC_dowsing_gra_dowsing_obj03_NCGR,
+	  NARC_dowsing_gra_dowsing_obj03_NCER,
+	  NARC_dowsing_gra_dowsing_obj03_NANR,
+  },
+};
+
+// ロッドの状態
+#include "../../../../resource/dowsing_gra/dowsing_rod_enum.h"  // RODやROD_MAXが定義されているヘッダーファイル
+
+static const struct
+{
+  u32            rod_l_anmseq :3;
+  u32            rod_r_anmseq :3;
+  u32            arrow_anmseq :3;
+  u32            arrow_pos_x  :8;
+  u32            arrow_pos_y  :8;
+  u32            pan          :7;  // ( ( pan -8 ) * 16 )を使う( 0(-128) ... 8(0) ... 16(127) )
+}
+kid_info[ROD_MAX] =
+{
+  // rod_l_anmseq, rod_r_anmseq, arrow_anmseq, arrow_pos_x, arrow_pos_y,   pan 
+  {             0,            0,            0,         128,          88,     8 }, 
+  {             1,            1,            1,         128,         104,     8 }, 
+  {             3,            3,            3,         128,          64,     0 }, 
+  {             2,            2,            2,         128,          64,    16 }, 
+  {             5,            5,            5,         128,          88,     4 }, 
+  {             7,            7,            7,         128,         104,     4 }, 
+  {             4,            4,            4,         128,          88,    12 }, 
+  {             6,            6,            6,         128,         104,    12 }, 
+  {             4,            5,            0,         128,         144,     0 },  // アイテム表示
+  {             5,            4,            0,         128,          88,     0 },  // 矢印非表示
+};
+
+// アイテムを見付けていないとき
+#define  ITEM_NONE    (0xFFFF)
+
+// 状態
+typedef enum
+{
+  STATE_NEED_SEARCH,        // アイテムを探す必要あり
+  STATE_SEARCH_IF_CHANGE,   // プレイヤーが移動したり、見つけていたアイテムがなくなったりしたら、アイテムを探す
+}
+STATE;
+
+// 真上にいるときのSEを鳴らす値
+#define ABOVE_SE_PITCH (384)
+#define ABOVE_SE_WAIT  (6)
+
+
+//=============================================================================
+/**
+ *					ＢＧ設定
+*/
+//=============================================================================
+//-------------------------------------
+///	BG面設定
+//=====================================
+static const struct 
+{
+	u32									frame;
+	GFL_BG_BGCNT_HEADER	bgcnt_header;
+	u32									mode;
+	BOOL								is_visible;
+}	sc_bgsetup[]	=
+{	
+	//SUB---------------------------
+	{	
+		BG_FRAME_S_TOUCHBAR,	//設定するフレーム
+		{
+			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
+			GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_128x128,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
+			GX_BG_EXTPLTT_01, BG_FRAME_PRIO_S_TOUCHBAR, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
+		},
+		GFL_BG_MODE_TEXT,	//BGの種類
+		TRUE,	//初期表示
+	},
+	{	
+		BG_FRAME_S_REAR,	//設定するフレーム
+		{
+			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
+			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x128,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
+			GX_BG_EXTPLTT_01, BG_FRAME_PRIO_S_REAR, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
+		},
+		GFL_BG_MODE_TEXT,//BGの種類
+		TRUE,	//初期表示
+	},
+};
+
+//=============================================================================
+/**
+ *					ＯＢＪ設定
+*/
+//=============================================================================
+//-------------------------------------
+///	ワーク作成最大数
+//=====================================
+#define GRAPHIC_OBJ_CLWK_CREATE_MAX	(8)
+
+
+//=============================================================================
+/**
+*  構造体宣言
+*/
+//=============================================================================
+//-------------------------------------
+/// OBJで使うもの
+//=====================================
+typedef struct
+{
+  u32         ncg;
+  u32         nce;
+  GFL_CLWK*   clwk;
+}
+KIT_SET;
+
+//-------------------------------------
+/// ワーク
+//=====================================
+struct _DOWSING_WORK
+{
+  // 他から借用
+  HEAPID                      heap_id;
+  HEAPID                      tempHeapId;  // 一時確保用ヒープ  // 関数内で確保して解放するようなときはこれを使用する
+  FIELD_SUBSCREEN_WORK*       subscreen_wk;
+  FIELDMAP_WORK*              fieldmap_wk;
+
+  // ここで作成
+  GFL_CLUNIT*                 clunit;
+
+  GFL_ARCUTIL_TRANSINFO       rear_tinfo;
+
+  u32                         kit_ncl;
+  KIT_SET                     kit_set[KIT_MAX];
+
+  u8*                         item_rod_table;
+
+  ROD                         rod_prev;
+  ROD                         rod_curr;
+  u16                         item_prev;
+  u16                         item_curr;
+  s32                         player_grid_pos_x_prev;
+  s32                         player_grid_pos_y_prev;
+  s32                         player_grid_pos_z_prev;
+
+  STATE                       state;
+
+  SEPLAYER_ID                 above_seplayer_id;
+  BOOL                        above_se_flag;      // 再生中はTRUE
+  u16                         above_se_wait;      // 待つフレーム数
+
+  // VBlank中TCB
+  GFL_TCB*                    vblank_tcb;
+
+  // アイテムサーチ
+  ITEM_SEARCH_WORK*           item_search_wk;
+};
+
+
+//=============================================================================
+/**
+*  ローカル関数のプロトタイプ宣言
+*/
+//=============================================================================
+// VBlank関数
+static void Dowsing_VBlankFunc( GFL_TCB* tcb, void* wk );
+
+// グラフィック
+static void Dowsing_GraphicInit( DOWSING_WORK* work );
+static void Dowsing_GraphicExit( DOWSING_WORK* work );
+
+// BG
+static void Dowsing_BgInit( DOWSING_WORK* work );
+static void Dowsing_BgExit( DOWSING_WORK* work );
+
+// OBJ
+static void Dowsing_ObjInit( DOWSING_WORK* work );
+static void Dowsing_ObjExit( DOWSING_WORK* work );
+
+// タッチバー
+static void Dowsing_TouchbarInit( DOWSING_WORK* work );
+static void Dowsing_TouchbarExit( DOWSING_WORK* work );
+static void Dowsing_TouchbarMain( DOWSING_WORK* work );
+
+
+//=============================================================================
+/**
+*  外部公開関数定義
+*/
+//=============================================================================
+//------------------------------------------------------------------
+/**
+ *  @brief           init
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+DOWSING_WORK*    DOWSING_Init(
+                            HEAPID                  heap_id,
+                            HEAPID                  tempHeapId,
+                            FIELD_SUBSCREEN_WORK*   subscreen_wk,
+                            FIELDMAP_WORK*          fieldmap_wk    )
+{
+  DOWSING_WORK* work;
+
+#ifdef DEBUG_KAWADA
+  {
+    OS_Printf( "DOWSING_Init\n" );
+  }
+#endif
+
+  // ワーク
+  work = GFL_HEAP_AllocClearMemory( heap_id, sizeof(DOWSING_WORK) );
+
+  // 引数
+  {
+    work->heap_id            = heap_id;
+    work->tempHeapId         = tempHeapId;
+    work->subscreen_wk       = subscreen_wk;
+    work->fieldmap_wk        = fieldmap_wk;
+  }
+
+  // グラフィック
+  Dowsing_GraphicInit( work );
+  // BG
+  Dowsing_BgInit( work );
+  // OBJ
+  Dowsing_ObjInit( work );
+  // タッチバー
+  Dowsing_TouchbarInit( work );
+
+  // アイテムの位置とロッドの状態の対応テーブル
+  {
+    u32 size;
+    work->item_rod_table = GFL_ARC_UTIL_LoadEx(
+             ARCID_DOWSING_GRA, NARC_dowsing_gra_dowsing_area_dat,
+             FALSE, work->heap_id, &size );
+  }
+
+  // VBlank中TCB
+  work->vblank_tcb = GFUser_VIntr_CreateTCB( Dowsing_VBlankFunc, work, 1 );
+
+  // 初期状態にする
+  work->rod_prev     = ROD_MAX;  // 初期状態で描画が更新されるように、rod_currとは異なる値にしておく
+  work->rod_curr     = ROD_NONE;
+  work->item_prev    = ITEM_NONE;
+  work->item_curr    = ITEM_NONE;
+
+  work->player_grid_pos_x_prev    = 0;
+  work->player_grid_pos_y_prev    = 0;
+  work->player_grid_pos_z_prev    = 0;
+
+  work->state        = STATE_NEED_SEARCH;
+
+  // 初期状態で描画を更新しておく
+  DOWSING_Draw( work, TRUE );
+
+  // アイテムサーチ
+  {
+    GAMESYS_WORK*   gs_wk;
+    GAMEDATA*       gamedata;
+    EVENTWORK*      event_wk;
+
+    gs_wk     = FIELDMAP_GetGameSysWork( work->fieldmap_wk );
+    gamedata  = GAMESYSTEM_GetGameData( gs_wk );
+    event_wk  = GAMEDATA_GetEventWork( gamedata );
+
+    work->item_search_wk   = ItemSearchInit( work->heap_id, event_wk );
+  }
+
+  return work;
+}
+
+
+//------------------------------------------------------------------
+/**
+ *  @brief           exit
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+void DOWSING_Exit( DOWSING_WORK* work )
+{
+#ifdef DEBUG_KAWADA
+  {
+    OS_Printf( "DOWSING_Exit\n" );
+  }
+#endif
+
+  // アイテムサーチ
+  ItemSearchExit( work->item_search_wk );
+
+  // VBlank中TCB
+  GFL_TCB_DeleteTask( work->vblank_tcb );
+
+  // アイテムの位置とロッドの状態の対応テーブル
+  {
+    GFL_HEAP_FreeMemory( work->item_rod_table );
+  }
+
+  // タッチバー
+  Dowsing_TouchbarExit( work );
+  // OBJ
+  Dowsing_ObjExit( work );
+  // BG
+  Dowsing_BgExit( work );
+  // グラフィック
+  Dowsing_GraphicExit( work );
+
+  // ワーク
+  GFL_HEAP_FreeMemory( work );
+}
+
+
+//------------------------------------------------------------------
+/**
+ *  @brief           update
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+void DOWSING_Update( DOWSING_WORK* work, BOOL active )
+{
+  GAMESYS_WORK*   gs_wk;
+  PLAYER_WORK*    player_wk;
+  const VecFx32*  player_pos;
+  s32             player_grid_pos_x;
+  s32             player_grid_pos_y;
+  s32             player_grid_pos_z;
+
+  BOOL            search = FALSE;
+
+  // 前回の状態を覚えておく
+  work->rod_prev = work->rod_curr;
+  work->item_prev = work->item_curr;
+
+  // 今回
+  gs_wk       = FIELDMAP_GetGameSysWork( work->fieldmap_wk );
+  player_wk   = GAMESYSTEM_GetMyPlayerWork( gs_wk );
+  player_pos  = PLAYERWORK_getPosition( player_wk );
+
+  player_grid_pos_x = SIZE_GRID_FX32( player_pos->x );
+  player_grid_pos_y = SIZE_GRID_FX32( player_pos->y );
+  player_grid_pos_z = SIZE_GRID_FX32( player_pos->z );
+
+  if( work->state == STATE_NEED_SEARCH )
+  {
+    work->state = STATE_SEARCH_IF_CHANGE;
+    search = TRUE;
+  }
+  else
+  {
+    if(    player_grid_pos_x != work->player_grid_pos_x_prev
+        || player_grid_pos_y != work->player_grid_pos_y_prev
+        || player_grid_pos_z != work->player_grid_pos_z_prev )  // プレイヤーが移動したら
+    {
+      search = TRUE;
+    }
+    else if( !ItemSearchExist( work->item_search_wk, work->item_prev ) )  // 前回見つけていたアイテムがなくなっていたら
+    {
+      work->item_prev = ITEM_NONE;
+      search = TRUE;
+    }
+  }
+
+  // アイテムサーチ
+  if( search ) 
+  {
+    u32 distance_sq_min = 0xFFFFFFFF;
+    const ITEM_DATA* distance_min_item_data = NULL;
+    
+    s32 rect_x_min = player_grid_pos_x - AREA_ORIGIN_X;  // rect_x_min<= <rect_x_max
+    s32 rect_x_max = player_grid_pos_x + (AREA_WIDTH -1) - AREA_ORIGIN_X;
+                     // 右端1列はROD_NONEになっているので、サーチ範囲の矩形からはずしておく
+    s32 rect_z_min = player_grid_pos_z - AREA_ORIGIN_Y;  // rect_z_min<= <rect_z_max
+    s32 rect_z_max = player_grid_pos_z + AREA_HEIGHT - AREA_ORIGIN_Y;
+
+    const ITEM_DATA* item_data;
+    ItemSearchRestart( work->item_search_wk );
+    
+    while( ItemSearchGet( work->item_search_wk, &item_data ) )
+    {
+      // 自分を囲むサーチ範囲の矩形の中にあるか
+      if( !(    rect_x_min<=item_data->x && item_data->x<rect_x_max
+             && rect_z_min<=item_data->z && item_data->z<rect_z_max ) )
+      {
+        continue;
+      }
+
+      // 最も近いか
+      {
+        u32 distance_sq =   ( item_data->x - player_grid_pos_x ) * ( item_data->x - player_grid_pos_x ) \
+                          + ( item_data->z - player_grid_pos_z ) * ( item_data->z - player_grid_pos_z );
+        if( distance_sq < distance_sq_min )
+        {
+          distance_sq_min = distance_sq;
+          distance_min_item_data = item_data;
+        }
+      }
+    }
+
+    // 今回の状態
+    if( distance_min_item_data )
+    {
+      u16 idx =   ( distance_min_item_data->z - player_grid_pos_z + AREA_ORIGIN_Y ) * AREA_WIDTH \
+                + ( distance_min_item_data->x - player_grid_pos_x + AREA_ORIGIN_X );
+      work->rod_curr = work->item_rod_table[ idx ];
+      work->item_curr = distance_min_item_data->index;
+    }
+    else
+    {
+      work->rod_curr = ROD_NONE;
+      work->item_curr = ITEM_NONE;
+    }
+  }
+
+  // 今回の状態に必要な処理を行う
+  {
+    BOOL can_play_se = TRUE;
+
+    // 真上にいるとき音を鳴らす
+    if( can_play_se )
+    {
+      if( work->rod_curr == ROD_ABOVE )
+      {
+        BOOL play = FALSE;
+        if( !(work->above_se_flag) )
+        {
+          // 真上にいるとき音を初めて鳴らす
+          play = TRUE;
+          work->above_se_flag = TRUE;
+        }
+        else
+        {
+          // 真上にいるとき音を鳴らし中
+          if( work->above_se_wait == ABOVE_SE_WAIT )
+          {
+            if( !PMSND_CheckPlaySE_byPlayerID( work->above_seplayer_id ) )
+            {
+              work->above_se_wait--;
+            }
+          }
+          else if( work->above_se_wait == 0 )
+          {
+            play = TRUE;
+          }
+          else
+          {
+            work->above_se_wait--;
+          }
+        }
+        if( play )
+        {
+          int pitch = ABOVE_SE_PITCH;
+          work->above_seplayer_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_FLD_120 );
+          PMSND_PlaySE_byPlayerID( SEQ_SE_FLD_120, work->above_seplayer_id );
+          PMSND_SetStatusSE_byPlayerID( work->above_seplayer_id, PMSND_NOEFFECT, pitch, PMSND_NOEFFECT );
+              // 値の範囲は、-32768～32767です。pitchは正の値で高い方へ、負の値で低い方へ変化します。±64でちょうど半音変化します。
+          
+          work->above_se_wait = ABOVE_SE_WAIT;
+        }
+        can_play_se = FALSE;
+      }
+      else
+      {
+        // 真上にいるとき音はもう鳴らさない
+        work->above_se_flag = FALSE;
+      }
+    }
+
+    // 今回初めて見付けたとき、もしくは、違うアイテムを見付けたとき
+    // 見付けた音を鳴らす
+    if( can_play_se )
+    {
+      if( work->rod_curr != ROD_ABOVE )
+      {
+        if( work->item_curr != ITEM_NONE )
+        {
+          if( work->item_prev != work->item_curr )
+          {
+            SEPLAYER_ID seplayer_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_FLD_120 );
+            int pan = ( (int)( kid_info[work->rod_curr].pan ) -8 ) * 16;
+            if( pan < -127 )      pan = -127;  // 本当は-128までOKだが、右と合わせて-127までにしておく
+            else if( pan >  127 ) pan =  127;
+            PMSND_PlaySE_byPlayerID( SEQ_SE_FLD_120, seplayer_id );
+            PMSND_SetStatusSE_byPlayerID( seplayer_id, PMSND_NOEFFECT, PMSND_NOEFFECT, pan );
+                // 値の範囲は、-128～127です。正の値で右の方へ、負の値で左の方へ移動します。
+            can_play_se = FALSE;
+          }
+        }
+      }
+    }
+
+    // ロッドが動いた音を鳴らす
+    if( can_play_se )
+    {
+      if( work->rod_prev != work->rod_curr )
+      {
+        PMSND_PlaySE( SEQ_SE_FLD_122 );
+        can_play_se = FALSE;
+      }
+    }
+  }
+
+  // 今回の状態を次の前回の状態として覚えておく
+  work->player_grid_pos_x_prev    = player_grid_pos_x;
+  work->player_grid_pos_y_prev    = player_grid_pos_y;
+  work->player_grid_pos_z_prev    = player_grid_pos_z;
+
+  // タッチバー
+  Dowsing_TouchbarMain( work );
+
+  // デバッグ
+  {
+    int trg = GFL_UI_KEY_GetTrg();
+    if( trg & PAD_BUTTON_X )
+    {
+      FIELD_SUBSCREEN_SetAction( work->subscreen_wk, FIELD_SUBSCREEN_ACTION_DOWSING_EXIT );
+    }
+  }
+}
+
+
+//------------------------------------------------------------------
+/**
+ *  @brief           draw
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+void DOWSING_Draw( DOWSING_WORK* work, BOOL active )
+{
+  // 前回のOBJの表示と今回のOBJの表示が異なる場合、描画を更新する
+  if( work->rod_prev != work->rod_curr )
+  {
+    GFL_CLACTPOS  pos;
+
+    // 表示/非表示
+    GFL_CLACT_WK_SetDrawEnable( work->kit_set[KIT_ARROW].clwk, (work->rod_curr!=ROD_NONE)  );
+    GFL_CLACT_WK_SetDrawEnable( work->kit_set[KIT_ITEM].clwk,  (work->rod_curr==ROD_ABOVE) );
+   
+    // 位置
+    pos.x = kid_info[work->rod_curr].arrow_pos_x;
+    pos.y = kid_info[work->rod_curr].arrow_pos_y;
+    GFL_CLACT_WK_SetPos( work->kit_set[KIT_ARROW].clwk, &pos, CLSYS_DEFREND_SUB );
+   
+    // アニメ
+    GFL_CLACT_WK_SetAnmSeq( work->kit_set[KIT_ROD_L].clwk, kid_info[work->rod_curr].rod_l_anmseq );
+    GFL_CLACT_WK_SetAnmSeq( work->kit_set[KIT_ROD_R].clwk, kid_info[work->rod_curr].rod_r_anmseq );
+    GFL_CLACT_WK_SetAnmSeq( work->kit_set[KIT_ARROW].clwk, kid_info[work->rod_curr].arrow_anmseq );
+  }
+}
+
+
+//=============================================================================
+/**
+*  ローカル関数定義
+*/
+//=============================================================================
+//-------------------------------------
+/// VBlank関数
+//=====================================
+static void Dowsing_VBlankFunc( GFL_TCB* tcb, void* wk )
+{
+  DOWSING_WORK* work = (DOWSING_WORK*)wk;
+}
+
+// グラフィック
+static void Dowsing_GraphicInit( DOWSING_WORK* work )
+{
+  // pokemon_wb/prog/src/field/fieldmap.c
+  // fldmapdata_dispVram
+
+  // BG
+	//BG面設定
+	{	
+		int i;
+		for( i = 0; i < NELEMS(sc_bgsetup); i++ )
+		{	
+			GFL_BG_SetBGControl( sc_bgsetup[i].frame, &sc_bgsetup[i].bgcnt_header, sc_bgsetup[i].mode );
+			GFL_BG_ClearFrame( sc_bgsetup[i].frame );
+			GFL_BG_SetVisible( sc_bgsetup[i].frame, sc_bgsetup[i].is_visible );
+		}
+	}
+
+  // OBJ
+	//システム作成
+	work->clunit	= GFL_CLACT_UNIT_Create( GRAPHIC_OBJ_CLWK_CREATE_MAX, 0, work->heap_id );
+	GFL_CLACT_UNIT_SetDefaultRend( work->clunit );
+
+	//表示
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+}
+static void Dowsing_GraphicExit( DOWSING_WORK* work )
+{
+  // OBJ
+	//システム破棄
+	GFL_CLACT_UNIT_Delete( work->clunit );
+
+  // BG
+	//BG面破棄
+	{	
+		int i;
+		for( i = 0; i < NELEMS(sc_bgsetup); i++ )
+		{	
+			GFL_BG_FreeBGControl( sc_bgsetup[i].frame );
+		}
+	}
+}
+
+// BG
+static void Dowsing_BgInit( DOWSING_WORK* work )
+{
+  HEAPID  tempHeapId   = work->tempHeapId;
+  
+  GFL_ARCUTIL_TRANSINFO  tinfo;
+  ARCHANDLE*  handle;
+
+  // 読み込んで転送
+  handle = GFL_ARC_OpenDataHandle( ARCID_DOWSING_GRA, tempHeapId );
+
+  GFL_ARCHDL_UTIL_TransVramPaletteEx(
+             handle,
+             NARC_dowsing_gra_dowsing_bg01_NCLR,
+             PALTYPE_SUB_BG,
+             0                  * 0x20,
+             BG_PAL_POS_S_REAR  * 0x20,
+             BG_PAL_NUM_S_REAR  * 0x20,
+             tempHeapId );
+
+  tinfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
+                            handle,
+                            NARC_dowsing_gra_dowsing_bg01_NCGR,
+                            BG_FRAME_S_REAR,
+                            0,
+                            FALSE,
+                            tempHeapId );
+  GF_ASSERT_MSG( tinfo != GFL_ARCUTIL_TRANSINFO_FAIL, "DOWSING : BGキャラ領域が足りませんでした。\n" );
+
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
+        handle,
+        NARC_dowsing_gra_dowsing_bg01_NSCR,
+        BG_FRAME_S_REAR,
+        0,
+        GFL_ARCUTIL_TRANSINFO_GetPos( tinfo ),
+        0,
+        FALSE,
+        tempHeapId );
+
+  GFL_ARC_CloseDataHandle( handle );
+
+  GFL_BG_LoadScreenV_Req( BG_FRAME_S_REAR );
+
+  work->rear_tinfo = tinfo;
+}
+static void Dowsing_BgExit( DOWSING_WORK* work )
+{
+  GFL_BG_FreeCharacterArea(
+      BG_FRAME_S_REAR,
+      GFL_ARCUTIL_TRANSINFO_GetPos( work->rear_tinfo ),
+      GFL_ARCUTIL_TRANSINFO_GetSize( work->rear_tinfo ) );
+}
+
+// OBJ
+static void Dowsing_ObjInit( DOWSING_WORK* work )
+{
+  u8  i;
+
+  ARCHANDLE*  handle;
+
+  handle = GFL_ARC_OpenDataHandle( ARCID_DOWSING_GRA, work->tempHeapId );
+
+  work->kit_ncl = GFL_CLGRP_PLTT_RegisterEx(
+            handle,
+            NARC_dowsing_gra_dowsing_obj01_NCLR,
+            CLSYS_DRAW_SUB,
+            OBJ_PAL_POS_S_KIT  * 0x20,
+            0,
+            OBJ_PAL_NUM_S_KIT,
+            work->heap_id );
+
+  for( i=0; i<KIT_MAX; i++ )
+  {
+    GFL_CLWK_DATA  clwk_data = { 0 };  // 0で初期化
+
+    work->kit_set[i].ncg = GFL_CLGRP_CGR_Register(
+               handle,
+	             kit_data[i].cgr,
+               FALSE,
+               CLSYS_DRAW_SUB,
+               work->heap_id );
+
+    work->kit_set[i].nce = GFL_CLGRP_CELLANIM_Register(
+               handle,
+	             kit_data[i].cell,
+	             kit_data[i].anim, 
+               work->heap_id );
+
+    work->kit_set[i].clwk = GFL_CLACT_WK_Create(
+                            work->clunit,
+                            work->kit_set[i].ncg,
+                            work->kit_ncl,
+                            work->kit_set[i].nce,
+                            &clwk_data,
+                            CLSYS_DEFREND_SUB,
+                            work->heap_id );
+    
+    GFL_CLACT_WK_SetAutoAnmFlag( work->kit_set[i].clwk, TRUE );
+  }
+  
+  GFL_ARC_CloseDataHandle( handle );
+
+  // 位置が固定のものは、ここで設定しておく
+  {
+    GFL_CLACTPOS  pos;
+
+    pos.x =  80;  pos.y =  96;
+    GFL_CLACT_WK_SetPos( work->kit_set[KIT_ROD_L].clwk, &pos, CLSYS_DEFREND_SUB );
+    pos.x = 176;  pos.y =  96;
+    GFL_CLACT_WK_SetPos( work->kit_set[KIT_ROD_R].clwk, &pos, CLSYS_DEFREND_SUB );
+    pos.x = 128;  pos.y =  96;
+    GFL_CLACT_WK_SetPos( work->kit_set[KIT_ITEM].clwk,  &pos, CLSYS_DEFREND_SUB );
+  }
+}
+static void Dowsing_ObjExit( DOWSING_WORK* work )
+{
+  u8 i;
+  for( i=0; i<KIT_MAX; i++ )
+  {
+    GFL_CLACT_WK_Remove( work->kit_set[i].clwk );
+    
+    GFL_CLGRP_CELLANIM_Release( work->kit_set[i].nce );
+    GFL_CLGRP_CGR_Release( work->kit_set[i].ncg );
+  }
+
+  GFL_CLGRP_PLTT_Release( work->kit_ncl );
+}
+
+// タッチバー
+static void Dowsing_TouchbarInit( DOWSING_WORK* work )
+{
+  // INFOWIN
+  {
+    GAMESYS_WORK*      gs_wk       = FIELDMAP_GetGameSysWork( work->fieldmap_wk );
+    GAME_COMM_SYS_PTR  gcs_ptr     = GAMESYSTEM_GetGameCommSysPtr( gs_wk );
+
+    INFOWIN_Init( BG_FRAME_S_TOUCHBAR, BG_PAL_POS_S_INFOWIN, gcs_ptr, work->heap_id );
+  }
+
+  // タッチバー
+  {
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+}
+static void Dowsing_TouchbarExit( DOWSING_WORK* work )
+{
+  // タッチバー
+  {
+  }
+
+  // INFOWIN
+  {
+    INFOWIN_Exit();
+  }
+}
+static void Dowsing_TouchbarMain( DOWSING_WORK* work )
+{
+  // INFOWIN
+  {
+    INFOWIN_Update();
+  }
+
+  // タッチバー
+  {
+  }
+}
+

@@ -18,7 +18,6 @@
 #include "app/app_menu_common.h"
 
 #include "arc_def.h"
-#include "zukan_data.naix"
 #include "p_status_gra.naix"
 
 #include "p_sta_sys.h"
@@ -166,11 +165,11 @@ PSTATUS_INFO_WORK* PSTATUS_INFO_Init( PSTATUS_WORK *work )
   infoWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PSTATUS_INFO_WORK) );
   infoWork->isUpdateStr = FALSE;
   infoWork->isDisp = FALSE;
-  infoWork->localZukanNoList = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_chihou_no_dat, FALSE, work->heapId, &size );
+  infoWork->localZukanNoList = POKE_PERSONAL_GetZenkokuToChihouArray( work->heapId, NULL );
 
 //  {
 //    int i;
-//    for( i=0;i<size/2;i++ )
+//    for( i=0;i<=MONSNO_END;i++ )
 //    {
 //      OS_TPrintf("[%3d->%3d]\n",i,infoWork->localZukanNoList[i]);
 //    }

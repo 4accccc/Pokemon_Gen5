@@ -18,15 +18,8 @@
 #include "system/main.h"
 
 #include "gamesystem/gamedata_def.h"
-#include "gamesystem/msgspeed.h"
-#include "system/palanm.h"
-#include "system/bmp_winframe.h"
-#include "system/bmp_menu.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
-#include "print/wordset.h"
-#include "poke_tool/poke_tool.h"
-#include "sound/pm_sndsys.h"
 
 #include "zukan_detail_def.h"
 #include "zukan_detail_graphic.h"
@@ -43,11 +36,8 @@
 // アーカイブ
 #include "arc_def.h"
 #include "font/font.naix"
-#include "script_message.naix"
-#include "msg/script/msg_egg_event.h"
 
 // サウンド
-#include "sound/wb_sound_data.sadl"
 
 // オーバーレイ
 
@@ -58,108 +48,6 @@
 */
 //=============================================================================
 #define HEAP_SIZE              (0x50000)               ///< ヒープサイズ
-
-// BGフレーム
-#define BG_FRAME_M_BACK              (GFL_BG_FRAME2_M)        // プライオリティ2
-#define BG_FRAME_M_POKEMON           (GFL_BG_FRAME0_M)        // プライオリティ1
-#define BG_FRAME_M_TEXT              (GFL_BG_FRAME1_M)        // プライオリティ0
-
-#define BG_FRAME_S_BACK              (GFL_BG_FRAME0_S)        // プライオリティ0
-
-// BGパレット
-// 本数
-enum
-{
-  BG_PAL_NUM_M_BACKDROP      = 1,
-  BG_PAL_NUM_M_TEXT_FONT     = 1,
-  BG_PAL_NUM_M_TEXT_FRAME    = 1,
-  BG_PAL_NUM_M_TM            = 1,  // 使用せず
-  BG_PAL_NUM_M_BACK          = 1,
-};
-// 位置
-enum
-{
-  BG_PAL_POS_M_BACKDROP      = 0,                                                         // 0
-  BG_PAL_POS_M_TEXT_FONT     = BG_PAL_POS_M_BACKDROP    + BG_PAL_NUM_M_BACKDROP        ,  // 1
-  BG_PAL_POS_M_TEXT_FRAME    = BG_PAL_POS_M_TEXT_FONT   + BG_PAL_NUM_M_TEXT_FONT       ,  // 2
-  BG_PAL_POS_M_TM            = BG_PAL_POS_M_TEXT_FRAME  + BG_PAL_NUM_M_TEXT_FRAME      ,  // 3  // 使用せず
-  BG_PAL_POS_M_BACK          = BG_PAL_POS_M_TM          + BG_PAL_NUM_M_TM              ,  // 4
-  BG_PAL_POS_M_MAX           = BG_PAL_POS_M_BACK        + BG_PAL_NUM_M_BACK            ,  // 5  // ここから空き
-};
-// 本数
-enum
-{
-  BG_PAL_NUM_S_BACK          = 1,
-};
-// 位置
-enum
-{
-  BG_PAL_POS_S_BACK          = 0                                                      ,  // 0
-  BG_PAL_POS_S_MAX           = BG_PAL_POS_S_BACK        + BG_PAL_NUM_S_BACK           ,  // 1  // ここから空き
-};
-
-// OBJパレット
-// 本数
-enum
-{
-  OBJ_PAL_NUM_M_             = 1,
-};
-// 位置
-enum
-{
-  OBJ_PAL_POS_M_MAX          = 0                                                      ,       // ここから空き
-};
-// 本数
-enum
-{
-  OBJ_PAL_NUM_S_             = 1,
-};
-// 位置
-enum
-{
-  OBJ_PAL_POS_S_MAX          = 0                                                      ,      // ここから空き
-};
-
-// TEXT
-#define TEXT_WININ_BACK_COLOR        (15)
-
-// フェード
-#define FADE_IN_WAIT           (2)         ///< フェードインのスピード
-#define FADE_OUT_WAIT          (2)         ///< フェードアウトのスピード
-
-#define NAMEIN_FADE_OUT_WAIT   (0)         ///< 名前入力へ移行するためのフェードアウトのスピード
-
-// 白く飛ばす演出のためのパレットフェード
-#define PFADE_TCBSYS_TASK_MAX  (8)
-#define PFADE_WAIT_TO_WHITE    (2)
-#define PFADE_WAIT_FROM_WHITE  (4)
-
-// 上下に黒帯を表示するためのwnd
-#define WND_UP_Y_APPEAR   ( 20)
-#define WND_DOWN_Y_APPEAR (130)
-
-// はい・いいえウィンドウ
-typedef enum
-{
-  TM_RESULT_NO,
-  TM_RESULT_YES,
-  TM_RESULT_SEL,
-}
-TM_RESULT;
-
-// 文字数
-#define STRBUF_LENGTH                (256)  // この文字数で足りるかbuflen.hで要確認
-#define NAMEIN_STRBUF_LENGTH         ( 32)  // この文字数で足りるかbuflen.hで要確認
-
-// メインシーケンス(init, exitは1フレームで済ませるのでシーケンス番号なしでいい)
-enum
-{
-  SEQ_START,
-  SEQ_HEADBAR_APPEAR,
-  SEQ_HEADBAR_WAIT,
-  SEQ_HEADBAR_DISAPPEAR,
-  SEQ_END,
-};
 
 
 //=============================================================================
@@ -193,9 +81,6 @@ typedef struct
   void*                       zkndtl_proc_param;
   // 次の図鑑詳細画面共通PROC
   ZUKAN_DETAIL_TYPE           zkndtl_proc_next_type;
-
-  // 開発中だけ
-  u32                         tmp_count;
 }
 ZUKAN_DETAIL_WORK;
 

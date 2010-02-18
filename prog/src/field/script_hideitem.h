@@ -27,3 +27,9 @@ extern u16 HIDEITEM_GetFlagNoByScriptID( u16 scr_id );
 //--------------------------------------------------------------
 extern void HIDEITEM_Revival( EVENTWORK * ev );
 
+
+//--------------------------------------------------------------
+// 隠しアイテムテーブルを得る
+//--------------------------------------------------------------
+extern const void* HIDEITEM_GetTable( u16* num );
+
