@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T21:23:23"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T17:16:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1304" top="256" right="2009" bottom="884" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -417,12 +417,32 @@
 
 	<row id="msg_c02r0301_poke_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ポケモン
-・暫定
 ・あわせて鳴き声SE</comment>
 		<attribute name="キャラ指定">ポケモン
-・未定</attribute>
-		<language name="JPN" width="256">ポケモン『ぷぎゃー！</language>
-		<language name="JPN_KANJI" width="256">ポケモン『ぷぎゃー！</language>
+チュリネ</attribute>
+		<language name="JPN" width="256">きゅっきゅ！</language>
+		<language name="JPN_KANJI" width="256">きゅっきゅ！</language>
+	</row>
+
+	<row id="msg_c02r0301_boy1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">BOY1</attribute>
+		<language name="JPN" width="256">ひとと　こうかんした
+ポケモンは　はやく　そだつ！▼
+だけど　ちゅうい！▼
+こうかんした　ポケモンは
+そだちすぎると　トレーナーの▽
+いうことを　きかなくなっちゃう▼
+もっとも　たくさん　ジムバッジを
+もっていれば　だいじょうぶ　だけど</language>
+		<language name="JPN_KANJI" width="256">ひとと　こうかんした
+ポケモンは　はやく　そだつ！▼
+だけど　ちゅうい！▼
+こうかんした　ポケモンは
+そだちすぎると　トレーナーの▽
+いうことを　きかなくなっちゃう▼
+もっとも　たくさん　ジムバッジを
+もっていれば　だいじょうぶ　だけど</language>
 	</row>
 
 	<flowchart-group-list>
