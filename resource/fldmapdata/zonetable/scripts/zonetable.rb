@@ -277,9 +277,9 @@ class ZoneDataFile < OutputFile
 			end
     placename_flag = if column[@cl.cPLACENAMEFLAG] == "○" then 1 else 0 end
 
-		maptype = column[@cl.cMAPCHGTYPE]
-		if !(maptype =~ /^MC_TYPE_/) then
-			STDERR.puts "マップ切り替えタイプの指定がおかしい!:#{maptype}:\n"
+		map_chg_type = column[@cl.cMAPCHGTYPE]
+		if !(map_chg_type =~ /^MC_TYPE_/) then
+			STDERR.puts "マップ切り替えタイプの指定がおかしい!:#{map_chg_type}:\n"
 		end
 		dash_flag = ox2bool column[@cl.cDASH], id
 		bicycle_flag = ox2bool column[@cl.cBICYCLE], id
@@ -307,7 +307,7 @@ class ZoneDataFile < OutputFile
 		#{placename_flag},
 		#{weather},
 		#{camera},
-		#{maptype},
+		#{map_chg_type},
 		#{battle_bg},
 		#{bicycle_flag},
 		#{dash_flag},
