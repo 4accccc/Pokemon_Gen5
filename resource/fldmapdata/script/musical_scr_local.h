@@ -93,6 +93,8 @@
 #define MUSICAL_TOOL_COMM_PARENT_CONNECT (12) //親機接続
 #define MUSICAL_TOOL_COMM_CHILD_CONNECT (13) //子機接続
 #define MUSICAL_TOOL_COMM_TIMESYNC (14)   //通信同期
+#define MUSICAL_TOOL_COMM_WAIT_POST_PROGRAM (15)   //プログラム受信待ち
+#define MUSICAL_TOOL_COMM_WAIT_NET_INIT (16)  //通信初期化待ち
 
 //通信エントリー用返り値
 #define MUSICAL_COMM_ENTRY_PARENT_OK (0)

@@ -20,6 +20,7 @@
 #include "system/net_err.h"
 #include "system/main.h"
 #include "field/zonedata.h"
+#include "musical/musical_comm_field.h"
 
 
 //==============================================================================
@@ -159,6 +160,15 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     UnionComm_ExitWait,   //exit_wait
     UnionMain_Callback_FieldCreate,       //field_create
     UnionMain_Callback_FieldDelete,       //field_delete
+  },
+  {
+    MUS_COMM_InitGameComm,       //init
+    NULL,       //init_wait
+    MUS_COMM_UpdateGameComm,     //update
+    MUS_COMM_ExitGameComm,       //exit
+    NULL,       //exit_wait
+    NULL,       //field_create
+    NULL,       //field_delete
   },
   //GAME_COMM_NO_DEBUG_SCANONLY
   {

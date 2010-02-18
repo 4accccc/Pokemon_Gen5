@@ -64,7 +64,7 @@ static void DEBUG_FLG_InitFlg( void )
   //ここにはデフォルトでONにしたい物を設定してください。
   
 #if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko) /*| defined(DEBUG_ONLY_FOR_iwao_kazumasa)*/
-  DEBUG_FLG_FlgOn( DEBUG_FLG_MusicalEventSkip );
+  //DEBUG_FLG_FlgOn( DEBUG_FLG_MusicalEventSkip );
 #endif
 
 }

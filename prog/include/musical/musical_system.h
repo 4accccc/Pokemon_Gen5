@@ -15,25 +15,14 @@
 
 typedef struct
 {
-  BOOL          isComm;
-  BOOL          isDebug; //Musicalの終了時に勝手にInitWorkとPPを開放する
-  POKEMON_PARAM *pokePara;
-  SAVE_CONTROL_WORK *saveCtrl;
-  GAME_COMM_SYS_PTR gameComm;
-}MUSICAL_INIT_WORK;
-
-typedef struct
-{
   void *eventWork;  //MUSICAL_EVENT_WORK
   void *commWork;   //MUS_COMM_WORK
   
+  //スクリプト内で使用
   COMM_ENTRY_MENU_PTR entryWork;
   u16                 *scriptRet;
   u16                 commSyncNo;
 }MUSICAL_SCRIPT_WORK;
-
-extern GFL_PROC_DATA Musical_ProcData;
-
 
 //ミュージカルの参加資格があるか調べる
 const BOOL	MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara );

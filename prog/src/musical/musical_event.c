@@ -78,6 +78,7 @@ typedef enum
   MES_RETURN_FIELD,
   MES_FINIHS_EVENT,
 
+  MES_ENTER_WAITROOM_FIRST_BEF_COMM,
   MES_ENTER_WAITROOM_FIRST,
   MES_WAITROOM_FIRST,
   MES_EXIT_WAITROOM_FIRST,
@@ -101,13 +102,15 @@ typedef enum
 struct _MUSICAL_EVENT_WORK
 {
   GAMESYS_WORK *gsys;
+  GAMEDATA *gameData;
+  MUSICAL_SCRIPT_WORK *scriptWork;
 
   MUSICAL_EVENT_STATE state;
   u8 subSeq;
   
   BOOL          isComm;
   POKEMON_PARAM *pokePara;
-  SAVE_CONTROL_WORK *saveCtrl;
+  SAVE_CONTROL_WORK *saveCtrl;    //消してGAMEDATA使う!
   GAME_COMM_SYS_PTR gameComm;
   
   MUSICAL_DISTRIBUTE_DATA *distData;
@@ -152,20 +155,26 @@ static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *e
 //--------------------------------------------------------------
 //  イベント作成
 //--------------------------------------------------------------
-GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL isComm )
+GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 pokeIdx , const BOOL isComm , MUSICAL_SCRIPT_WORK *scriptWork )
 {
   GMEVENT *event;
   MUSICAL_EVENT_WORK *evWork;
+  
+  ARI_TPrintf("CreateMusicalEvent[%d]\n",isComm);
   
   event = GMEVENT_Create(
       gsys, NULL, MUSICAL_MainEvent, sizeof(MUSICAL_EVENT_WORK) );
   evWork = GMEVENT_GetEventWork( event );
   
   evWork->gsys = gsys;
+  evWork->gameData = gdata;
   evWork->isComm = isComm;
 
   evWork->saveCtrl = GAMEDATA_GetSaveControlWork( gdata );
   evWork->gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+  evWork->scriptWork = scriptWork;
+  evWork->scriptWork->eventWork = evWork;
+  evWork->commWork = scriptWork->commWork;
   //FIXME 仮生成処理
   evWork->pokePara = PP_Create(
       MONSNO_MUNNA , 20, PTL_SETUP_POW_AUTO , HEAPID_PROC );
@@ -175,37 +184,46 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL
   evWork->shotInitWork = NULL;
   evWork->musSave = MUSICAL_SAVE_GetMusicalSave( evWork->saveCtrl );
   
-  evWork->state = MES_ENTER_WAITROOM_FIRST;
-  evWork->subSeq = 0;
-  
-  //ミュージカルの配置入れ替え
+  if( evWork->isComm == TRUE )
   {
-    u8 i,j;
-    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    evWork->state = MES_ENTER_WAITROOM_FIRST_BEF_COMM;
+    evWork->subSeq = 0;
+    MUS_COMM_InitMusical( evWork->commWork , GAMEDATA_GetMyStatus(evWork->gameData) , evWork->gameComm , HEAPID_PROC_WRAPPER );
+  }
+  else
+  {
+    //ミュージカルの配置入れ替え
+    //通信時は別で行ったものを取得する
     {
-      evWork->musicalIndex[i] = i;
-    }
-    for( j=0;j<10;j++ )
-    {
+      u8 i,j;
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
       {
-        u8 swapIdx = GFUser_GetPublicRand0(MUSICAL_POKE_MAX);
-        u8 temp = evWork->musicalIndex[i];
-        evWork->musicalIndex[i] = evWork->musicalIndex[swapIdx];
-        evWork->musicalIndex[swapIdx] = temp;
+        evWork->musicalIndex[i] = i;
       }
-    }
-    
-    //FIXME とりあえず非通信でプレイヤー0番を自分に
-    for( i=0;i<MUSICAL_POKE_MAX;i++ )
-    {
-      if( evWork->musicalIndex[i] == 0 )
+      for( j=0;j<10;j++ )
       {
-        evWork->selfIdx = i;
+        for( i=0;i<MUSICAL_POKE_MAX;i++ )
+        {
+          u8 swapIdx = GFUser_GetPublicRand0(MUSICAL_POKE_MAX);
+          u8 temp = evWork->musicalIndex[i];
+          evWork->musicalIndex[i] = evWork->musicalIndex[swapIdx];
+          evWork->musicalIndex[swapIdx] = temp;
+        }
+      }
+      
+      for( i=0;i<MUSICAL_POKE_MAX;i++ )
+      {
+        if( evWork->musicalIndex[i] == 0 )
+        {
+          evWork->selfIdx = i;
+        }
       }
     }
+    evWork->state = MES_ENTER_WAITROOM_FIRST;
+    evWork->subSeq = 0;
   }
   
+
   return event;
 }
 
@@ -217,6 +235,20 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   MUSICAL_EVENT_WORK *evWork = work;
   switch( evWork->state )
   {
+  case MES_ENTER_WAITROOM_FIRST_BEF_COMM:
+    if( MUS_COMM_IsPostAllMyStatus( evWork->scriptWork->commWork ) == TRUE )
+    {
+      u8 i;
+      evWork->state = MES_ENTER_WAITROOM_FIRST;
+      //ここでIDXの取得
+      for( i=0;i<MUSICAL_POKE_MAX;i++ )
+      {
+        evWork->musicalIndex[i] = MUS_COMM_GetMusicalIndex( evWork->scriptWork->commWork , i );
+      }
+      evWork->selfIdx = MUS_COMM_GetSelfMusicalIndex( evWork->scriptWork->commWork );
+    }
+    break;
+    
   case MES_ENTER_WAITROOM_FIRST:
     GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
     MUSICAL_EVENT_JumpWaitingRoom( event , evWork );
@@ -395,15 +427,26 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
 //--------------------------------------------------------------
 static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork )
 {
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x80000 );
   //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_PROC|HEAPDIR_MASK, 0x8000 );
 
   evWork->musPoke = MUSICAL_SYSTEM_InitMusPoke( evWork->pokePara , HEAPID_PROC_WRAPPER );
   evWork->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_PROC_WRAPPER );
-  MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
-  evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
-  evWork->commWork = NULL;
+  
+  if( evWork->isComm == FALSE )
+  {
+    MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
+    evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
+  }
+  else
+  {
+    if( MUS_COMM_GetMode( evWork->scriptWork->commWork ) == MCM_PARENT )
+    {
+      MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
+      
+    }
+    MUS_COMM_StartSendProgram( evWork->scriptWork->commWork , evWork->distData );
+  }
 }
 
 //--------------------------------------------------------------
@@ -411,11 +454,6 @@ static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork )
 //--------------------------------------------------------------
 static void MUSICAL_EVENT_TermMusical( MUSICAL_EVENT_WORK *evWork )
 {
-  if( evWork->commWork != NULL )
-  {
-    MUS_COMM_DeleteWork( evWork->commWork );
-    evWork->commWork = NULL;
-  }
   if( evWork->dupInitWork != NULL )
   {
     MUSICAL_DRESSUP_DeleteInitWork( evWork->dupInitWork );
@@ -433,12 +471,10 @@ static void MUSICAL_EVENT_TermMusical( MUSICAL_EVENT_WORK *evWork )
   GFL_HEAP_FreeMemory( evWork->musPoke );
   
   MUSICAL_PROGRAM_TermProgramData( evWork->progWork );
+  evWork->scriptWork->eventWork = NULL;
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
   //GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_PROC );
 
-  GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical));
-  
-    
 }
 
 //--------------------------------------------------------------
@@ -848,7 +884,7 @@ static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *e
     newEvent = SCRIPT_SetEventScript( evWork->gsys, scriptId , NULL , HEAPID_FIELDMAP );
     scWork = SCRIPT_GetScriptWorkFromEvent( newEvent );
     
-    SCRIPT_SetMemberWork_Musical( scWork , evWork );
+    SCRIPT_SetMemberWork_Musical( scWork , evWork->scriptWork );
     GMEVENT_CallEvent(event, newEvent);
   }
 }
@@ -956,4 +992,10 @@ const u8 MUSICAL_EVENT_GetMaxPointCondition( MUSICAL_EVENT_WORK *evWork , const 
   }
   
   return maxType;
+}
+
+//演目データ受信後に数値を計算する
+void MUSICAL_EVENT_CalcProgramData( MUSICAL_EVENT_WORK *evWork )
+{
+  evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
 }

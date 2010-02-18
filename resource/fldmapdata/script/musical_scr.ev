@@ -52,8 +52,11 @@ EVENT_START	ev_musical_recept_single
     _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_02 )
     _BALLOONWIN_CLOSE()
 
-    _MUSICAL_CALL(0,0) //ミュージカル呼び出し
-
+	//FIXME ポケモンインデックス設定！
+    _MUSICAL_CALL(MUSICAL_CALL_LOCAL,0) //ミュージカル呼び出し
+	//ここから処理は帰ってきません。
+	//細かい開放はプログラムで行います。
+	
   ELSE
 
     _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_03 )
@@ -62,7 +65,6 @@ EVENT_START	ev_musical_recept_single
 
   ENDIF
   
-  _CALL ev_musical_exit_common
 
 EVENT_END
 
@@ -135,6 +137,7 @@ EVENT_START	ev_musical_recept_comm_core
 
   //通信開始
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
 
   //リーダー、グループ別参加処理
   IF $ret == 0 THEN //リーダー
@@ -150,6 +153,11 @@ EVENT_START	ev_musical_recept_comm_core
 
 	//通信同期(お友達の選択を待っています)
 	_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_FIRST, 0, 0 )
+
+	//FIXME ポケモンインデックス設定！
+    _MUSICAL_CALL(MUSICAL_CALL_COMM,0) //ミュージカル呼び出し
+	//ここから処理は帰ってきません。
+	//細かい開放はプログラムで行います。
 
     _CALL ev_musical_exit_comm_common
 

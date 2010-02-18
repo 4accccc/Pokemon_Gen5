@@ -102,10 +102,10 @@ typedef struct
 //  proto
 //======================================================================
 #pragma mark [> proto
+/*
 static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT MusicalProc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
-
 
 GFL_PROC_DATA Musical_ProcData =
 {
@@ -113,6 +113,7 @@ GFL_PROC_DATA Musical_ProcData =
   MusicalProc_Main,
   MusicalProc_Term
 };
+*/
 
 static const u16 musPokeArr[]=
 {
@@ -277,6 +278,7 @@ void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , cons
 }
 
 #pragma mark [>proc 
+/*
 static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   MUSICAL_INIT_WORK *initWork = pwk;
@@ -644,3 +646,4 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
   return GFL_PROC_RES_CONTINUE;
 }
 
+*/

@@ -1074,7 +1074,6 @@ typedef struct {
   
   POKEMON_PARAM *pokePara;
   MUSICAL_POKE_PARAM *musPoke;
-  MUSICAL_INIT_WORK *musInitWork;
   DRESSUP_INIT_WORK *dupInitWork;
   u8  menuRet;
 }DEBUG_MENU_EVENT_MUSICAL_SELECT_WORK, DEB_MENU_MUS_WORK;
@@ -1082,7 +1081,6 @@ static GMEVENT_RESULT debugMenuMusicalSelectEvent( GMEVENT *event, int *seq, voi
 
 static void setupMusicalDressup(DEB_MENU_MUS_WORK * work);
 static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work);
-static void setupMusicarAll(DEB_MENU_MUS_WORK * work);
 
 //--------------------------------------------------------------
 /**
@@ -1108,7 +1106,6 @@ static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
     work->gmEvent = event;
     work->heapID = heapID;
     work->fieldWork = fieldWork;
-    work->musInitWork = NULL;
     work->dupInitWork = NULL;
     work->musPoke = NULL;
     work->pokePara = NULL;
@@ -1118,7 +1115,6 @@ static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_MusicalMenuList[3] =
 {
-  { DEBUG_FIELD_STR_MUSICAL3, (void*)setupMusicarAll },
   { DEBUG_FIELD_STR_MUSICAL1, (void*)setupMusicalDressup },
   { DEBUG_FIELD_STR_MUSICAL2, (void*)setupMusicarShowPart },
 };
@@ -1181,12 +1177,6 @@ static GMEVENT_RESULT debugMenuMusicalSelectEvent(
     (*seq)++;
     break;
   case 3:
-    if( work->musInitWork != NULL )
-    {
-      GFL_HEAP_FreeMemory( work->musInitWork->pokePara );
-      GFL_HEAP_FreeMemory( work->musInitWork );
-      work->musInitWork = NULL;
-    }
     if( work->dupInitWork != NULL )
     {
       MUSICAL_DRESSUP_DeleteInitWork( work->dupInitWork );
@@ -1232,22 +1222,6 @@ static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work)
   work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
         FS_OVERLAY_ID(musical), &MusicalStage_ProcData, NULL );
 }
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void setupMusicarAll(DEB_MENU_MUS_WORK * work)
-{
-  work->musInitWork = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(MUSICAL_INIT_WORK));
-  work->musInitWork->saveCtrl = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(work->gmSys) ); 
-  work->musInitWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , HEAPID_PROC );
-  work->musInitWork->isComm = FALSE;
-  work->musInitWork->isDebug = FALSE;
-  work->musInitWork->gameComm = GAMESYSTEM_GetGameCommSysPtr(work->gmSys);
-  work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
-        NO_OVERLAY_ID, &Musical_ProcData, work->musInitWork );
-}
-
-
 
 //======================================================================
 //  デバッグメニュー　カメラ操作

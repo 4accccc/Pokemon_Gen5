@@ -7,49 +7,18 @@
 #include "poke_tool/monsno_def.h"
 FS_EXTERN_OVERLAY(musical);
 
-static BOOL TESTMODE_ITEM_SelectFuncMusical( TESTMODE_WORK *work , const int idx );
-static BOOL TESTMODE_ITEM_SelectFuncMusical_Comm( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx );
 
 static TESTMODE_MENU_LIST menuMusical[] = 
 {
-	{L"ミュージカル(通し・通信)",TESTMODE_ITEM_SelectFuncMusical_Comm },
-	{L"ミュージカル(通し)"		  ,TESTMODE_ITEM_SelectFuncMusical },
 	{L"ドレスアップ"		,TESTMODE_ITEM_SelectFuncDressUp },
 	{L"ステージ"			,TESTMODE_ITEM_SelectFuncStage },
 	{L"ミュージカルショット"			,TESTMODE_ITEM_SelectFuncShot },
 	
 	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
 };
-
-static BOOL TESTMODE_ITEM_SelectFuncMusical( TESTMODE_WORK *work , const int idx )
-{
-  MUSICAL_INIT_WORK *initWork;
-	initWork = GFL_HEAP_AllocMemory( GFL_HEAPID_APP|HEAPDIR_MASK , sizeof(MUSICAL_INIT_WORK));
-	initWork->saveCtrl = SaveControl_GetPointer();
-	initWork->pokePara = PP_Create( MONSNO_KOROMORI , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP|HEAPDIR_MASK );
-  initWork->isComm = FALSE;
-  initWork->gameComm = NULL;
-  initWork->isDebug = TRUE;
-	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &Musical_ProcData, initWork);
-	return TRUE;
-}
-
-static BOOL TESTMODE_ITEM_SelectFuncMusical_Comm( TESTMODE_WORK *work , const int idx )
-{
-  MUSICAL_INIT_WORK *initWork;
-	initWork = GFL_HEAP_AllocMemory( GFL_HEAPID_APP|HEAPDIR_MASK , sizeof(MUSICAL_INIT_WORK));
-	initWork->saveCtrl = SaveControl_GetPointer();
-	initWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP|HEAPDIR_MASK );
-  initWork->isComm = TRUE;
-  initWork->gameComm = NULL;
-  initWork->isDebug = TRUE;
-
-	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &Musical_ProcData, initWork);
-	return TRUE;
-}
 
 static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx )
 {
