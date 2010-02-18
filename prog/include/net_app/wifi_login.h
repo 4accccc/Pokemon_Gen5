@@ -11,6 +11,7 @@
 #pragma once
 
 #include <gflib.h>
+#include "net/network_define.h"
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
@@ -49,6 +50,8 @@ typedef struct
   GAMEDATA      *gamedata;    //[in ]ゲームデータ
   WIFILOGIN_BG  bg;           //[in ]使用する背景
   WIFILOGIN_DISPLAY display;  //[in ]どちらの画面を使うか
+  NetworkServiceID_e nsid;    //[in ]ネットワークサービスID
+  DWCSvlResult* pSvl;          //[in ]任天堂SVL認証構造体 DWCSvlResultは自前で確保してください
   WIFILOGIN_RESULT  result;   //[out]終了方法
 } WIFILOGIN_PARAM;
 
@@ -56,6 +59,7 @@ typedef struct
 typedef struct _WIFILOGIN_WORK  WIFILOGIN_WORK;
 
 extern const GFL_PROC_DATA WiFiLogin_ProcData;
+
 
 FS_EXTERN_OVERLAY(wifi_login);
 

@@ -139,6 +139,7 @@ WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id, WIFILOGIN_BG bg, WIFILOGIN_D
   GFL_DISP_GX_SetVisibleControlDirect(0);		//‘SBG&OBJ‚Ì•\Ž¦OFF
   GFL_DISP_GXS_SetVisibleControlDirect(0);
 
+  G2_BlendNone();
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
   GXS_DispOn();
   GX_DispOn();

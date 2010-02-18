@@ -145,7 +145,7 @@ extern u32 GFLR_NET_GetGGID(void);
 //==============================================================================
 
 /// ゲームの種類を区別する為の定義   初期化構造体のgsidとして渡してください
-enum NetworkServiceID_e {
+typedef enum  {
   WB_NET_NOP_SERVICEID = 0,
   WB_NET_BATTLE_SERVICEID,       ///< バトル用ID
   WB_NET_PALACE_SERVICEID,       ///< パレス
@@ -189,7 +189,7 @@ enum NetworkServiceID_e {
   WB_NET_BSUBWAY,         ///<バトルサブウェイ
   
   WB_NET_SERVICEID_MAX   // 終端
-};
+} NetworkServiceID_e;
 
 ///通信コマンドを区別する為の定義  コールバックテーブルを渡すときにIDとして定義してください
 /// 上の定義と同じ並びで書いてください

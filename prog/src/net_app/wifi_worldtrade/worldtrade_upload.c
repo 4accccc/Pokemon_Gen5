@@ -698,7 +698,7 @@ static int Subseq_SvlStart( WORLDTRADE_WORK *wk )
 {
   BOOL ret;
   wk->nhttp = NHTTP_RAP_Init(HEAPID_WORLDTRADE ,MyStatus_GetProfileID( wk->param->mystatus ) );
-  ret = NHTTP_RAP_SvlGetTokenStart(wk->nhttp);
+  ret = NHTTP_RAP_SvlGetTokenStart(wk->nhttp, NULL);  //@todo‰¼
 
   GF_ASSERT( ret );
 

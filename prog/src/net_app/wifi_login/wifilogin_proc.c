@@ -15,6 +15,7 @@
 #include "net_app/connect_anm.h"
 #include "net/network_define.h"
 #include "net/dwc_rap.h"
+#include "net/nhttp_rap.h"
 
 #include "system/main.h"
 #include "system/wipe.h"
@@ -157,6 +158,7 @@ struct _WIFILOGIN_WORK {
   BOOL receive_ok;
   BOOL bInitMessage;
   BOOL bSaving;
+  NHTTP_RAP_WORK* pNHTTP;
   SAVE_CONTROL_WORK* pSave;
   WIFILOGIN_YESNO_WORK* pSelectWork;  //選択肢
   WIFILOGIN_DISP_WORK* pDispWork;  // 描画系
@@ -174,6 +176,8 @@ struct _WIFILOGIN_WORK {
 static void _changeState(WIFILOGIN_WORK* pWork,StateFunc* state);
 static void _changeStateDebug(WIFILOGIN_WORK* pWork,StateFunc* state, int line);
 static void _profileIDCheck(WIFILOGIN_WORK* pWork);
+static void _modeSvlGetStart(WIFILOGIN_WORK* pWork);
+static void _modeSvlGetMain(WIFILOGIN_WORK* pWork);
 
 
 
@@ -500,7 +504,12 @@ static void _saveEndWait(WIFILOGIN_WORK* pWork)
 {
   if(GFL_UI_KEY_GetTrg()  || GFL_UI_TP_GetTrg()){
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
-    _CHANGE_STATE(pWork, _modeFadeStart);  //接続完了
+    if(pWork->dbw->pSvl){
+      _CHANGE_STATE(pWork, _modeSvlGetStart);  //認証
+    }
+    else{
+      _CHANGE_STATE(pWork, _modeFadeStart);  //接続完了
+    }
   }
 }
 
@@ -520,7 +529,12 @@ static void _connectingCommonWait(WIFILOGIN_WORK* pWork)
       _CHANGE_STATE(pWork, _saveEndWait);
     }
     else{
-      _CHANGE_STATE(pWork, _modeFadeStart);  //接続完了
+      if(pWork->dbw->pSvl){
+        _CHANGE_STATE(pWork, _modeSvlGetStart);  //認証
+      }
+      else{
+        _CHANGE_STATE(pWork, _modeFadeStart);  //接続完了
+      }
     }
   }
   else if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
@@ -612,6 +626,9 @@ static void _connectionStart(WIFILOGIN_WORK* pWork)
   }
   GFL_NET_Init(&aGFLNetInit, NULL, pWork);	//通信初期化
   GFL_NET_StateWifiEnterLogin();
+  GFL_NET_ReloadIcon();
+  GFL_NET_WirelessIconEasy_HoldLCD(TRUE, pWork->heapID);
+  GFL_NET_ReloadIcon();
 
   WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0008);
 
@@ -833,6 +850,28 @@ static void _FadeWait(WIFILOGIN_WORK* pWork)
 }
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   SVL認証
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeSvlGetStart(WIFILOGIN_WORK* pWork)
+{
+  pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID, MyStatus_GetProfileID(GAMEDATA_GetMyStatus(pWork->gamedata)) );
+  if( NHTTP_RAP_SvlGetTokenStart(pWork->pNHTTP, pWork->dbw->pSvl)){
+    _CHANGE_STATE(pWork, _modeSvlGetMain);
+  }
+}
+
+
+static void _modeSvlGetMain(WIFILOGIN_WORK* pWork)
+{
+  if(NHTTP_RAP_SvlGetTokenMain(pWork->pNHTTP)){
+    _CHANGE_STATE(pWork, _modeFadeStart);
+  }
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -884,6 +923,7 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
     pWork->pSave = GAMEDATA_GetSaveControlWork(pEv->gamedata);
     pWork->pList = GAMEDATA_GetWiFiList(pEv->gamedata);
 
+//    GFL_NET_ChangeIconPosition
 
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );

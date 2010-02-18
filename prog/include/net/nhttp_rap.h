@@ -54,10 +54,12 @@ extern void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork);
 /**
  * @brief   認証キー作成開始
  * @param   NHTTP_RAP_WORK* pWork,  ワーク
+ * @param   認証構造体
  * @retval  TRUEなら成功
  */
 //------------------------------------------------------------------------------
-extern BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork);
+extern BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork, DWCSvlResult* pSvl);
+//extern BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork);
 
 //------------------------------------------------------------------------------
 /**
@@ -112,6 +114,10 @@ extern void NHTTP_RAP_PokemonEvilCheckDelete(NHTTP_RAP_WORK* pWork);
  */
 //------------------------------------------------------------------------------
 extern void NHTTP_RAP_RESPONSE_PokemonEvilCheck(NHTTP_RAP_WORK* pWork);
+
+
+
+
 
 
 #if PM_DEBUG

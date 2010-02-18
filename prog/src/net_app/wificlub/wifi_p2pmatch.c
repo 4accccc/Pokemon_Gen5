@@ -1694,12 +1694,6 @@ static void WifiP2PMatchFriendListIconWrite(WIFIP2PMATCH_ICON* p_data, u32 frm, 
   u16* p_scrndata = (u16*)p_data->p_scrn->rawData;
 
   pal = WifiP2PMatchBglFrmIconPalGet( frm );
-  
-  OS_TPrintf("%d--\n",PLAYER_DISP_ICON_SCRN_X*(icon_type % PLAYER_DISP_ICON_IDX_NUM));
-  OS_TPrintf("%d--\n",2 * (icon_type / PLAYER_DISP_ICON_IDX_NUM));
-  OS_TPrintf("%d--\n",p_data->p_scrn->screenWidth/8);
-  OS_TPrintf("%d--\n",p_data->p_scrn->screenHeight/8 );
-
   datax = PLAYER_DISP_ICON_SCRN_X*(icon_type % PLAYER_DISP_ICON_IDX_NUM);
   datay = 2 * (icon_type / PLAYER_DISP_ICON_IDX_NUM);
   width = p_data->p_scrn->screenWidth/8;
@@ -1709,23 +1703,6 @@ static void WifiP2PMatchFriendListIconWrite(WIFIP2PMATCH_ICON* p_data, u32 frm, 
       GFL_BG_ScrSetDirect( frm, j+cx,i+cy,  ((p_scrndata[ width*(datay+i) + datax+j ] + ( pal << 12 ))));
     }
   }
-#if 0
-  GFL_BG_WriteScreenExpand(frm, cx, cy,
-                           PLAYER_DISP_ICON_SCRN_X, PLAYER_DISP_ICON_SCRN_Y,
-                           p_data->p_scrn->rawData,
-                           PLAYER_DISP_ICON_SCRN_X*(icon_type % PLAYER_DISP_ICON_IDX_NUM),
-                           2 * (icon_type / PLAYER_DISP_ICON_IDX_NUM),
-                           p_data->p_scrn->screenWidth/8, p_data->p_scrn->screenHeight/8 );
-
-  // パレット
-  pal = WifiP2PMatchBglFrmIconPalGet( frm );
-
-  // パレットナンバーをあわせる
-  GFL_BG_ChangeScreenPalette( frm, cx, cy,
-//                              PLAYER_DISP_ICON_SCRN_X, PLAYER_DISP_ICON_SCRN_Y, pal+col );
-                              PLAYER_DISP_ICON_SCRN_X, PLAYER_DISP_ICON_SCRN_Y, pal );
-#endif
-
   // 転送
   GFL_BG_LoadScreenV_Req( frm );
 }
@@ -1734,48 +1711,55 @@ static void WifiP2PMatchFriendListIconWrite(WIFIP2PMATCH_ICON* p_data, u32 frm, 
 
 static u8 _gamemode2icon(  u32 gamemode,u32 status )
 {
-  u8 scrn_idx=0;
+  u8 scrn_idx = PLAYER_DISP_ICON_IDX_NONE;
 
-  if( gamemode == WIFI_GAME_VCT){      // VCT中
+  switch(gamemode){
+  case WIFI_GAME_VCT:
     if(status == WIFI_STATUS_RECRUIT){
       scrn_idx = PLAYER_DISP_ICON_IDX_VCT;
     }
     else{
       scrn_idx = PLAYER_DISP_ICON_IDX_VCT_ACT;
     }
-  }
-  if( gamemode == WIFI_GAME_TVT){      // TVT中
+    break;
+  case WIFI_GAME_TVT:      // TVT中
     if(status == WIFI_STATUS_RECRUIT){
       scrn_idx = PLAYER_DISP_ICON_IDX_TVT;
     }
     else{
       scrn_idx = PLAYER_DISP_ICON_IDX_TVT_ACT;
     }
-  }
-  else if(_modeIsBattleStatus(gamemode)){
-    if(status == WIFI_STATUS_RECRUIT){
-      scrn_idx = PLAYER_DISP_ICON_IDX_FIGHT;
-    }
-    else{
-      scrn_idx = PLAYER_DISP_ICON_IDX_FIGHT_ACT;
-    }
-  }
-  else if( gamemode == WIFI_GAME_TRADE){          // 交換中
+    break;
+  case WIFI_GAME_TRADE:
     if(status == WIFI_STATUS_RECRUIT){
       scrn_idx = PLAYER_DISP_ICON_IDX_CHANGE;
     }
     else{
       scrn_idx = PLAYER_DISP_ICON_IDX_CHANGE_ACT;
     }
-  }
-  else if(WIFI_GAME_LOGIN_WAIT == gamemode){    // 待機中　ログイン直後はこれ
+    break;
+  case WIFI_GAME_LOGIN_WAIT:
     scrn_idx = PLAYER_DISP_ICON_IDX_NORMAL;
-  }
-  else if(WIFI_GAME_NONE == gamemode){    // 何も無い
+    break;
+  case WIFI_GAME_NONE:
     scrn_idx = PLAYER_DISP_ICON_IDX_NONE;
-  }
-  else if(gamemode >= WIFI_GAME_UNKNOWN){    // 新たに作ったらこの番号以上になる
-    scrn_idx = PLAYER_DISP_ICON_IDX_UNK;
+    break;
+  case WIFI_GAME_UNIONMATCH:
+    scrn_idx = PLAYER_DISP_ICON_IDX_NORMAL_ACT;
+    break;
+  default:
+    if(_modeIsBattleStatus(gamemode)){
+      if(status == WIFI_STATUS_RECRUIT){
+        scrn_idx = PLAYER_DISP_ICON_IDX_FIGHT;
+      }
+      else{
+        scrn_idx = PLAYER_DISP_ICON_IDX_FIGHT_ACT;
+      }
+    }
+    else if(gamemode >= WIFI_GAME_UNKNOWN){    // 新たに作ったらこの番号以上になる
+      scrn_idx = PLAYER_DISP_ICON_IDX_UNK;
+    }
+    break;
   }
   return scrn_idx;
 }
@@ -4110,18 +4094,19 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   case WIFI_GAME_TVT:
     Snd_SePlay(_SE_DESIDE);
-#if defined(SDK_TWL)
-    if(OS_IsRunOnTwl() && OS_IsRestrictPhotoExchange()){   // ペアレンタルコントロール
-      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1012, FALSE);
-      _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
-    }
-#else
-    if(0){
-    }
-#endif
-    else{
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-    }
+
+//#if defined(SDK_TWL)
+//    if(OS_IsRunOnTwl() && OS_IsRestrictPhotoExchange()){   // ペアレンタルコントロール
+//      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1012, FALSE);
+//      _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
+//    }
+//#else
+//    if(0){
+//    }
+//#endif
+//    else{
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+//    }
     break;
   }
   WifiP2PMatch_CommWifiBattleStart( wk, -1 );

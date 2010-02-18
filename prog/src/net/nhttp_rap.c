@@ -350,10 +350,9 @@ void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep)
 
 
 
-BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork)
+BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork, DWCSvlResult* pSvl)
 {
-  return DWC_SVLGetTokenAsync("",  &pWork->svl);
-
+  return DWC_SVLGetTokenAsync("",  pSvl);
 }
 
 
