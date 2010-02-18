@@ -487,7 +487,7 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
   pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
   pWork->pGameData = pParent->gameData;
   pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
-  pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID);
+  pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID, NULL);
 
   switch(pParent->type){
   case PDWACC_GETACC:

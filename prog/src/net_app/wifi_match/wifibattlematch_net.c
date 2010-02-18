@@ -3462,7 +3462,7 @@ void WIFIBATTLEMATCH_NET_StartRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTA
 { 
   GF_ASSERT( p_wk->p_nhttp == NULL );
   p_wk->seq = 0;
-  p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(p_mystatus));
+  p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(p_mystatus), NULL);
 }
 //----------------------------------------------------------------------------
 /**
@@ -3568,7 +3568,7 @@ void WIFIBATTLEMATCH_NET_GetRecvGpfData( const WIFIBATTLEMATCH_NET_WORK *cp_wk, 
 void WIFIBATTLEMATCH_NET_StartSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTATUS *p_mystatus, const DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA *cp_send, HEAPID heapID )
 { 
   GF_ASSERT( p_wk->p_nhttp == NULL );
-  p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(p_mystatus));
+  p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(p_mystatus), NULL);
   p_wk->gdb_write_data  = *cp_send;
   p_wk->seq = 0;
 }
