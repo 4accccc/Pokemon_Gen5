@@ -2834,7 +2834,7 @@ static void scchg_WndSwap(GFL_TCB * tcb, void* work)
 
 	for(i=0;i<swc->wnd_data_num;i++){
 		one = scchg_h_WndIdxDataGet(swc, i);		// インデックスのデータ取得
-		GFL_STD_MemCopy(one->wnd_data, one->wnd_tmp, sizeof(short)*2*192);	// sizeof(short)*2*192
+		GFL_STD_MemCopy(one->wnd_tmp, one->wnd_data, sizeof(short)*2*192);	// sizeof(short)*2*192 
 	}
 	GFL_TCB_DeleteTask( tcb );
 }
@@ -3649,7 +3649,7 @@ static void scchg_WndCircleSum(WIPE_TYPE_WND_CIRCLE* work)
 		}
 		
 		one->wnd_tmp[0][i] = st;
-		one->wnd_tmp[1][i] = ed;
+		one->wnd_tmp[1][i] = ed; 
 	}
 }
 
