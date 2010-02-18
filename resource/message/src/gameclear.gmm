@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-12-16T23:33:45"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T11:10:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,15 +364,14 @@
 ・１秒間自動表示
 　セーブ効果音
 ・全てのウインドウ消去（メニューに復帰しない）
-
-0＝主人公名</comment>
+・0＝主人公名</comment>
 		<language name="JPN">[1:03:ポケモンタイプ:0]は
 レポートに　しっかり　かきのこした！</language>
 		<language name="JPN_KANJI">[1:03:ポケモンタイプ:0]は
 レポートに　しっかり　書き残した！</language>
 	</row>
 
-	<row id="msg_gameclear_report_03">
+	<row id="msg_gameclear_report_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>レポート実行時に失敗
 ・いずれ任天堂の
 　ガイドラインにあわしたテキストに修正</comment>
