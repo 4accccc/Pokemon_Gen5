@@ -55,11 +55,11 @@ enum {
 #include "../script/script_seq.naix"      //script ID 定義ファイル
 #include "../../message/script_message.naix"     //message archive ID定義ファイル
 #include "..\..\message\dst\msg_place_name.h"   //地名表示用文字列ID定義ファイル
-#include "header/maptype.h"
 #include "../../encount/encount_data_w.naix"  //エンカウントデータID定義ファイル
 #include "../eventdata/binary/eventdata.naix"      //eventdata ID 定義ファイル
 #include "../../../prog/include/battle/battle_bg_def.h"  //戦闘背景ID定義
 #include "../camera_scroll/camera_scroll.naix"//カメラエリアデータ
+#include "../../../prog/src/field/map_change_type.h" //マップ切り替えタイプ定義ファイル
 
 enum {
 	enc_dummy = 0xffff,

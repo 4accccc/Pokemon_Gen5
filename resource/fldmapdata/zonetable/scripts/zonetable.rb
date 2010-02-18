@@ -32,7 +32,7 @@ class ColumnID
 	#attr :cSCRIPT, true
 	#attr :cMSG, true
 	attr :cENCOUNT, true
-	attr :cMAPTYPE, true
+	attr :cMAPCHGTYPE, true
 	attr :cBICYCLE, true
 	attr :cDASH, true
 	attr :cESCAPE, true
@@ -72,8 +72,8 @@ class ColumnID
 				@cSZ = c_count
 			when "encount"
 				@cENCOUNT = c_count
-			when "maptype"
-				@cMAPTYPE = c_count
+			when "map_chg_type"
+				@cMAPCHGTYPE = c_count
 			when "bicycle"
 				@cBICYCLE = c_count
 			when "dash"
@@ -277,9 +277,9 @@ class ZoneDataFile < OutputFile
 			end
     placename_flag = if column[@cl.cPLACENAMEFLAG] == "○" then 1 else 0 end
 
-		maptype = column[@cl.cMAPTYPE]
-		if !(maptype =~ /^MAPTYPE_/) then
-			STDERR.puts "マップタイプの指定がおかしい!:#{maptype}:\n"
+		maptype = column[@cl.cMAPCHGTYPE]
+		if !(maptype =~ /^MC_TYPE_/) then
+			STDERR.puts "マップ切り替えタイプの指定がおかしい!:#{maptype}:\n"
 		end
 		dash_flag = ox2bool column[@cl.cDASH], id
 		bicycle_flag = ox2bool column[@cl.cBICYCLE], id
