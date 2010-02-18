@@ -48,6 +48,8 @@ typedef struct
   u32    buffPos;
   
   char   *msgBuffer;
+  
+  u16    dataCnt;
 }DEB_SD_PRINT_WORK;
 
 //======================================================================
@@ -79,6 +81,7 @@ void DEB_SD_PRINT_InitSystem( const HEAPID heapId )
     FS_InitFatDriver();
     {
       sdPrintWork->buffPos = 0;
+      sdPrintWork->dataCnt = 1;
       sdPrintWork->isEnable = TRUE;
       sdPrintWork->isCallAssert = FALSE;
       DEB_SD_PRINT_OpenFile();
@@ -115,7 +118,7 @@ void DEB_SD_PRINT_UpdateSystem(void)
       FS_WriteFile( &sdPrintWork->writeFile , sdPrintWork->msgBuffer , sdPrintWork->buffPos );
       sdPrintWork->buffPos = 0;
       
-      if( sdPrintWork->fileSize > 1024*32 )
+      if( sdPrintWork->fileSize > 1024*128 )
       {
         const BOOL ret = FS_CloseFile(&sdPrintWork->writeFile);
 #if DEB_SD_PRINT_ENABLE_ASSERT
@@ -123,6 +126,7 @@ void DEB_SD_PRINT_UpdateSystem(void)
 #else
         if( ret == FALSE ){ sdPrintWork->isEnable = FALSE; return; }
 #endif
+        sdPrintWork->dataCnt++;
         DEB_SD_PRINT_OpenFile();
       }
     }
@@ -141,13 +145,14 @@ static void DEB_SD_PRINT_OpenFile(void)
     char fileName[64];
     sdPrintWork->fileSize = 0;
     GFL_RTC_GetDateTime(&date,&time);
-    STD_TSPrintf( fileName , "sdmc:/%02d%02d%02d_%02d%02d%02d.txt",
+    STD_TSPrintf( fileName , "sdmc:/%02d%02d%02d_%02d%02d%02d_%03d.txt",
                                 date.year ,
                                 date.month ,
                                 date.day ,
                                 time.hour ,
                                 time.minute ,
-                                time.second );
+                                time.second ,
+                                sdPrintWork->dataCnt );
     ret = FS_CreateFile(fileName, FS_PERMIT_R|FS_PERMIT_W );
 #if DEB_SD_PRINT_ENABLE_ASSERT
     GF_ASSERT_MSG( ret , "SDCard Error Create[%d]\n",FS_GetArchiveResultCode("sdmc:/"));
