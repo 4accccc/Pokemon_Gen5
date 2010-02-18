@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T18:13:41"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T10:26:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="189" top="231" right="894" bottom="851" maximized="no" rayout="Vertical2">
+	<dialog left="1442" top="267" right="2147" bottom="887" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -377,14 +377,14 @@
 		<language name="JPN" width="256">たいせん　あいてと
 せきがいせんつうしんを　してください</language>
 		<language name="JPN_KANJI" width="256">対戦相手と
-赤外線通信をして下さい</language>
+赤外線通信を　してください</language>
 	</row>
 
 	<row id="IRCBTL_STR_10">
 		<language name="JPN" width="256">パートナーとなる　ともだちと
 せきがいせんつうしんを　してください</language>
-		<language name="JPN_KANJI" width="256">パートナーとなる友達と
-赤外線通信をして下さい</language>
+		<language name="JPN_KANJI" width="256">パートナーとなる　友達と
+赤外線通信を　してください</language>
 	</row>
 
 	<row id="IRCBTL_STR_11">
@@ -395,13 +395,13 @@
 	<row id="IRCBTL_STR_12">
 		<language name="JPN" width="256">たいせん　あいての　リーダーと
 せきがいせんつうしんを　してください</language>
-		<language name="JPN_KANJI" width="256">対戦相手のリーダーと
-赤外線通信をして下さい</language>
+		<language name="JPN_KANJI" width="256">対戦相手の　リーダーと
+赤外線通信を　してください</language>
 	</row>
 
 	<row id="IRCBTL_STR_13">
 		<language name="JPN" width="256">しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">しばらく　お待ちください</language>
 	</row>
 
 	<row id="IRCBTL_STR_14">
@@ -424,8 +424,8 @@
 	<row id="IRCBTL_STR_17">
 		<language name="JPN" width="256">こうかんする　ともだちと
 せきがいせんつうしんを　してください</language>
-		<language name="JPN_KANJI" width="256">交換する友達と
-赤外線通信をして下さい</language>
+		<language name="JPN_KANJI" width="256">交換する　友達と
+赤外線通信を　してください</language>
 	</row>
 
 	<row id="IRCBTL_STR_18">
@@ -466,15 +466,15 @@
 	<row id="IRCBTL_STR_25">
 		<language name="JPN" width="256">あそぶないようが　ちがったので
 さいしょに　もどります</language>
-		<language name="JPN_KANJI" width="256">遊ぶ内容が違ったので
-最初に戻ります</language>
+		<language name="JPN_KANJI" width="256">遊ぶ内容が　違ったので
+最初に　戻ります</language>
 	</row>
 
 	<row id="IRCBTL_STR_26">
 		<language name="JPN" width="256">ここまでの　かつやくを
 ポケモンレポートに　かきこみますか？</language>
-		<language name="JPN_KANJI" width="256">ここまでの　かつやくを
-ポケモンレポートに　書き込みますか？</language>
+		<language name="JPN_KANJI" width="256">ここまでの　活躍を
+ポケモンレポートに　書きこみますか？</language>
 	</row>
 
 	<row id="IRCBTL_STR_27">
@@ -489,23 +489,23 @@
 
 	<row id="IRCBTL_STR_29">
 		<language name="JPN" width="256">レポートを　かいています
-しばらくおまちください</language>
+しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="256">レポートを　書いています
-しばらくおまちください</language>
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="IRCBTL_STR_30">
-		<language name="JPN" width="256">こうかんをかいしします
-しばらくおまちください</language>
-		<language name="JPN_KANJI" width="256">交換を開始します
-しばらくおまちください</language>
+		<language name="JPN" width="256">こうかんを　かいしします
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">交換を　開始します
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="IRCBTL_STR_31">
-		<language name="JPN" width="256">たいせんをかいしします
-しばらくおまちください</language>
-		<language name="JPN_KANJI" width="256">対戦を開始します
-しばらくおまちください</language>
+		<language name="JPN" width="256">たいせんを　かいしします
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">対戦を　開始します
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="IRCBTL_STR_32">
