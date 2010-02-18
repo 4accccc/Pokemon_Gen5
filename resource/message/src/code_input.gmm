@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-03-26T18:55:27"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T11:08:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="143" top="397" right="848" bottom="935" maximized="no" rayout="Vertical2">
+	<dialog left="1341" top="395" right="2046" bottom="933" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,12 +335,12 @@
 
 	<row id="msg_01">
 		<language name="JPN">ともだちコードを　いれてください</language>
-		<language name="JPN_KANJI">友達コードを入れてください</language>
+		<language name="JPN_KANJI">友達コードを　入れてください</language>
 	</row>
 
 	<row id="msg_02">
 		<language name="JPN">データナンバーを　いれてください</language>
-		<language name="JPN_KANJI">データナンバーを入れてください</language>
+		<language name="JPN_KANJI">データナンバーを　入れてください</language>
 	</row>
 
 	<row id="msg_03">
