@@ -127,7 +127,7 @@ void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work )
     ARI_TPrintf("Script Delay[%d]!!\n",subVCount-1);
 #if DEB_ARI
     //コマ送りチェック用
-    //if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
     {
       subVCount = 1;
     }

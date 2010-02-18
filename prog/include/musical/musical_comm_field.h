@@ -20,6 +20,7 @@ extern void MUS_COMM_ExitField( MUS_COMM_WORK *work );
 
 extern void* MUS_COMM_InitGameComm(int *seq, void *pwk);
 extern BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork);
+extern BOOL MUS_COMM_ExitWaitGameComm(int *seq, void *pwk, void *pWork);
 
 extern void MUS_COMM_UpdateGameComm(int *seq, void *pwk, void *pWork);
 

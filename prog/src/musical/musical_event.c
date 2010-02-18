@@ -440,12 +440,14 @@ static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork )
   }
   else
   {
+    u32 conPointArr = 0;
     if( MUS_COMM_GetMode( evWork->scriptWork->commWork ) == MCM_PARENT )
     {
       MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
-      
+      evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
+      conPointArr = MUSICAL_PROGRAM_GetConditionPointArr( evWork->progWork );
     }
-    MUS_COMM_StartSendProgram( evWork->scriptWork->commWork , evWork->distData );
+    MUS_COMM_StartSendProgram( evWork->scriptWork->commWork , evWork->distData , conPointArr );
   }
 }
 
@@ -491,7 +493,10 @@ static void MUSICAL_EVENT_InitDressUp( MUSICAL_EVENT_WORK *evWork )
 //--------------------------------------------------------------
 static void MUSICAL_EVENT_TermDressUp( MUSICAL_EVENT_WORK *evWork )
 {
-  //現在処理無し
+  if( evWork->isComm == TRUE )
+  {
+    MUS_COMM_StartSendPoke( evWork->commWork , evWork->musPoke );
+  }
 }
 
 //--------------------------------------------------------------
@@ -501,17 +506,37 @@ static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork )
 {
   u8 i;
   evWork->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_PROC_WRAPPER , evWork->commWork );
-  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  if( evWork->isComm == FALSE )
   {
-    if( evWork->musicalIndex[i] == 0 )
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      //プレイヤー
-      MUSICAL_STAGE_SetData_Player( evWork->actInitWork , i , evWork->musPoke );
+      if( evWork->musicalIndex[i] == 0 )
+      {
+        //プレイヤー
+        MUSICAL_STAGE_SetData_Player( evWork->actInitWork , i , evWork->musPoke );
+      }
+      else
+      {
+        //NPC
+        MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , i , evWork->musicalIndex[i]-1 , HEAPID_PROC_WRAPPER );
+      }
     }
-    else
+  }
+  else
+  {
+    u8 npcIdx = 0;
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      //NPC
-      MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , i , evWork->musicalIndex[i]-1 , HEAPID_PROC_WRAPPER );
+      MUSICAL_POKE_PARAM *musPoke = MUS_COMM_GetMusPokeParam( evWork->commWork , i );
+      if( musPoke != NULL )
+      {
+        MUSICAL_STAGE_SetData_Comm( evWork->actInitWork , i , musPoke );
+      }
+      else
+      {
+        MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , i , npcIdx , HEAPID_PROC_WRAPPER );
+        npcIdx++;
+      }
     }
   }
 
@@ -997,5 +1022,7 @@ const u8 MUSICAL_EVENT_GetMaxPointCondition( MUSICAL_EVENT_WORK *evWork , const 
 //演目データ受信後に数値を計算する
 void MUSICAL_EVENT_CalcProgramData( MUSICAL_EVENT_WORK *evWork )
 {
+  u32 conPointArr = MUS_COMM_GetConditionPointArr( evWork->commWork );
   evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
+  MUSICAL_PROGRAM_SetConditionPointArr( evWork->progWork , conPointArr );
 }

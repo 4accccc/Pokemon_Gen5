@@ -204,6 +204,28 @@ const u8 MUSICAL_PROGRAM_GetConditionPoint( MUSICAL_PROGRAM_WORK* progWork , MUS
 {
   return progWork->condition[conType];
 }
+u32 MUSICAL_PROGRAM_GetConditionPointArr( MUSICAL_PROGRAM_WORK* progWork )
+{
+  u32 pointArr = progWork->condition[0] + 
+                 (progWork->condition[1]<<8) + 
+                 (progWork->condition[2]<<16) + 
+                 (progWork->condition[3]<<24);
+  return pointArr;
+}
+void MUSICAL_PROGRAM_SetConditionPointArr( MUSICAL_PROGRAM_WORK* progWork , const u32 pointArr )
+{
+  progWork->condition[0] = (pointArr&0x000000FF);
+  progWork->condition[1] = (pointArr&0x0000FF00)>>8;
+  progWork->condition[2] = (pointArr&0x00FF0000)>>16;
+  progWork->condition[3] = (pointArr&0xFF000000)>>24;
+
+  ARI_TPrintf("--FinalCondition(CommSync!)--\n");
+  ARI_TPrintf("Cool   [%3d]\n",progWork->condition[0]);
+  ARI_TPrintf("Cute   [%3d]\n",progWork->condition[1]);
+  ARI_TPrintf("Elegant[%3d]\n",progWork->condition[2]);
+  ARI_TPrintf("Unique [%3d]\n",progWork->condition[3]);
+  ARI_TPrintf("--FinalCondition(CommSync!)--\n");
+}
 
 //--------------------------------------------------------------
 //	最高コンディションの取得

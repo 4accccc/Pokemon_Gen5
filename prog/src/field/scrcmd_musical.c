@@ -65,6 +65,7 @@ typedef struct
 {
   GMEVENT *event;
   MUSICAL_SCRIPT_WORK *musScriptWork;
+  BOOL isComm;
 }EVENT_MUSICAL_WORK;
 
 typedef struct
@@ -95,7 +96,8 @@ static BOOL EvCmdMusicalEntryChild( VMHANDLE *core, void *wk );
 static BOOL EvCmdMusicalCommTimingSync( VMHANDLE *core, void *wk );
 static BOOL EvCmdMusicalWaitPostProgram( VMHANDLE *core, void *wk );
 static BOOL EvCmdMusicalWaitInitNet( VMHANDLE *core, void *wk );
-
+static BOOL EvCmdMusicalWaitExitNet( VMHANDLE *core, void *wk );
+static BOOL EvCmdMusicalWaitPostAllPoke( VMHANDLE *core, void *wk );
 //======================================================================
 //  スクリプトコマンド　ミュージカル
 //======================================================================
@@ -132,6 +134,7 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
     
     ev_musical_work->event = MUSICAL_CreateEvent( gsys, gdata , pokeIdx , isComm , musScriptWork );
     ev_musical_work->musScriptWork = musScriptWork;
+    ev_musical_work->isComm = isComm;
     //スクリプト終了後、指定したイベントに遷移する
     SCRIPT_EntryNextEvent( sc, call_event );
     
@@ -698,6 +701,8 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   case MUSICAL_TOOL_COMM_EXIT: //通信終了
     {
       EvCmdMusical_ExitCommon_Comm( musScriptWork );
+      VMCMD_SetWait( core, EvCmdMusicalWaitExitNet );
+      return( VMCMD_RESULT_SUSPEND );
     }
     break;
     
@@ -745,6 +750,15 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   case MUSICAL_TOOL_COMM_WAIT_NET_INIT:
     VMCMD_SetWait( core, EvCmdMusicalWaitInitNet );
     return( VMCMD_RESULT_SUSPEND );
+    break;
+  case MUSICAL_TOOL_COMM_WAIT_POST_ALLPOKE:
+    //非通信ならスルー
+    if( musScriptWork->commWork != NULL )
+    {
+      VMCMD_SetWait( core, EvCmdMusicalWaitPostAllPoke );
+      return( VMCMD_RESULT_SUSPEND );
+    }
+    
     break;
   }
 
@@ -818,6 +832,18 @@ static GMEVENT_RESULT event_Musical(
     (*seq)++;
     break;
   case 2:
+    {
+      GAMESYS_WORK *gsys =  GMEVENT_GetGameSysWork( event );
+      GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+      
+      if( ev_musical_work->isComm == FALSE ||
+          GameCommSys_BootCheck( gameComm ) == GAME_COMM_NO_NULL )
+      {
+        (*seq)++;
+      }
+    }
+    break;
+  case 3:
     if( GFL_NET_IsExit() == TRUE )
     {
       EvCmdMusical_ExitCommon( ev_musical_work->musScriptWork );
@@ -961,7 +987,6 @@ static BOOL EvCmdMusicalWaitPostProgram( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
   
-  MUS_COMM_UpdateComm( musScriptWork->commWork );
   if( MUS_COMM_IsPostScriptData( musScriptWork->commWork ) == TRUE )
   {
     MUSICAL_EVENT_CalcProgramData( musScriptWork->eventWork );
@@ -989,6 +1014,49 @@ static BOOL EvCmdMusicalWaitInitNet( VMHANDLE *core, void *wk )
   if( GFL_NET_IsInit() == TRUE )
   {
     musScriptWork->commWork = GameCommSys_GetAppWork(gameComm);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ネット終了待ち
+ * @param core VMHANDLE
+ * @param wk script work
+ * @retval BOOL
+ */
+//--------------------------------------------------------------
+static BOOL EvCmdMusicalWaitExitNet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+  MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+
+  if( GameCommSys_BootCheck( gameComm ) == GAME_COMM_NO_NULL )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+//--------------------------------------------------------------
+/**
+ * ぽけ受信待ち
+ * @param core VMHANDLE
+ * @param wk script work
+ * @retval BOOL
+ */
+//--------------------------------------------------------------
+static BOOL EvCmdMusicalWaitPostAllPoke( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+  
+  if( MUS_COMM_IsPostAllPoke( musScriptWork->commWork ) == TRUE )
+  {
     return TRUE;
   }
   return FALSE;

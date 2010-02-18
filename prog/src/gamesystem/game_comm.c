@@ -166,7 +166,7 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     NULL,       //init_wait
     MUS_COMM_UpdateGameComm,     //update
     MUS_COMM_ExitGameComm,       //exit
-    NULL,       //exit_wait
+    MUS_COMM_ExitWaitGameComm,   //exit_wait
     NULL,       //field_create
     NULL,       //field_delete
   },

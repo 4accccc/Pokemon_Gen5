@@ -95,6 +95,7 @@
 #define MUSICAL_TOOL_COMM_TIMESYNC (14)   //通信同期
 #define MUSICAL_TOOL_COMM_WAIT_POST_PROGRAM (15)   //プログラム受信待ち
 #define MUSICAL_TOOL_COMM_WAIT_NET_INIT (16)  //通信初期化待ち
+#define MUSICAL_TOOL_COMM_WAIT_POST_ALLPOKE (17)  //ポケ受信待ち
 
 //通信エントリー用返り値
 #define MUSICAL_COMM_ENTRY_PARENT_OK (0)
