@@ -505,7 +505,7 @@ BOOL ZONEDATA_BicycleEnable( u16 zone_id )
 //------------------------------------------------------------------
 BOOL ZONEDATA_BicycleBGMEnable( u16 zone_id )
 {
-  // @todo ゾーンテーブルを参照する
+  // @todo 実装
   return TRUE;
 }
 
@@ -934,6 +934,21 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
   return ZONEDATA_NO_SCENEAREA_ID;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief マップ切り替えタイプの取得
+ *
+ * @param zone_id ゾーンID
+ *
+ * @return 指定したゾーンのマップ切り替えタイプ ( MC_TYPE_xxxx )
+ */
+//-----------------------------------------------------------------------------
+u8 ZONEDATA_GetMapChangeType(u16 zone_id)
+{
+  // @todo 実装
+  return 0;
+}
+
 
 //============================================================================================
 //============================================================================================
@@ -978,8 +993,4 @@ const char * ZONEDATA_GetAllZoneName(HEAPID heapID)
         ARCID_ZONEDATA, NARC_result_zonedata_zonename_bin, heapID);
   }
   return namedata;
-}
-
-
-
-
+} 

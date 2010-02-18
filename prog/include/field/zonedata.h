@@ -269,3 +269,8 @@ extern u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id);
 //return 
 //------------------------------------------------------------------
 extern u32 ZONEDATA_GetSceneAreaID(u16 zone_id);
+
+//------------------------------------------------------------------
+// マップ切り替えタイプの取得
+//------------------------------------------------------------------
+extern u8 ZONEDATA_GetMapChangeType(u16 zone_id);
