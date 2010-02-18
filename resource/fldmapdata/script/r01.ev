@@ -93,13 +93,10 @@ EVENT_START   ev_r01_poke_getdemo_01
 	
 	_OBJ_ANIME_WAIT()
 
-	//【仮】ポケモン捕獲デモ。仮処理で画面フェードを入れています。
-	_WHITE_OUT()
-	_DISP_FADE_END_CHECK()
-	_WHITE_IN()
-	_DISP_FADE_END_CHECK()
+	//捕獲デモ呼び出し[100216斉藤マ]
+	_CAPTURE_DEMO_SET()
 	
-//博士、メッセージ＋退場アニメ
+	//博士、メッセージ＋退場アニメ
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget1a )
 	_OBJ_ANIME_WAIT()
 	
@@ -533,7 +530,6 @@ _ANIME_LABEL	anm_R01_pokeget1
 //	R01　捕獲デモ用：博士、草むらからでる
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_R01_pokeget1a
-	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
