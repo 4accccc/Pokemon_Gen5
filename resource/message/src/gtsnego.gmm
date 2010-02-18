@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-17T14:01:10"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T11:13:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="2048" top="404" right="2753" bottom="1032" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -405,9 +405,9 @@
 
 	<row id="GTSNEGO_019">
 		<language name="JPN" width="256">きぼうにそった　こうかんあいてを
-さがしています　……</language>
+さがしています……</language>
 		<language name="JPN_KANJI" width="256">きぼうにそった　こうかんあいてを
-さがしています　……</language>
+さがしています……</language>
 	</row>
 
 	<row id="GTSNEGO_020">
@@ -541,7 +541,7 @@
 		<language name="JPN" width="256">あいてに　さしだすポケモンを
 ３ひき　えらんでください[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI" width="256">相手に差し出すポケモンを
-３匹選んで下さい[BE:02:ウェイト変更（単発）:60]</language>
+３匹選んでください[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="gtsnego_info_02" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
@@ -562,7 +562,7 @@
 		<language name="JPN" width="256">ともだちの　せんたくを　まっています
 しばらく　おまちください……[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI" width="256">友達の選択を待っています
-しばらくお待ち下さい……[BE:02:ウェイト変更（単発）:60]</language>
+しばらくお待ちください……[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="gtsnego_info_04" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
@@ -630,7 +630,7 @@
 もういちど　えらびなおしてください[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI" width="256">選んだポケモンの中に
 交換できない　ポケモンがいました[BE:02:ウェイト変更（単発）:60]
-もう一度　選び直して下さい[BE:02:ウェイト変更（単発）:60]</language>
+もう一度　選び直してください[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="gtsnego_info_11" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -643,7 +643,7 @@
 もういちど　えらびなおしてください[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI" width="256">相手に交換できない
 ポケモンが　いました[BE:02:ウェイト変更（単発）:60]
-もう一度　選び直して下さい[BE:02:ウェイト変更（単発）:60]</language>
+もう一度　選び直してください[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="gtsnego_info_12" back-color="#ffff00,,,,,,,,,,,,,,,,,">
@@ -652,7 +652,7 @@
 		<language name="JPN" width="256">ほしいポケモンを　あいてのポケモンから
 １ひき　えらんでください</language>
 		<language name="JPN_KANJI" width="256">欲しいポケモンを　相手のポケモンから
-１匹選んで下さい</language>
+１匹選んでください</language>
 	</row>
 
 	<row id="gtsnego_info_13" back-color="#ffff00,,,#80ff80,,,,,,,,,,,,,,">
@@ -675,7 +675,7 @@
 		<language name="JPN_KANJI" width="256">相手が交換を
 キャンセル　しました[BE:02:ウェイト変更（単発）:60]
 もう一度　差し出すポケモンを
-選び直して下さい[BE:02:ウェイト変更（単発）:60]</language>
+選び直してください[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="gtsnego_info_15" back-color="#ffff00,,,,,,,,,,,,,,,,,">
@@ -696,7 +696,7 @@
 えらびなおして　ください[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI" width="256">交換をキャンセルしました[BE:02:ウェイト変更（単発）:60]
 もう一度　差し出すポケモンを
-選び直して下さい[BE:02:ウェイト変更（単発）:60]</language>
+選び直してください[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="gtsnego_info_17" back-color="#ffff00,,,,,,,,,,,,,,,,,">
@@ -707,7 +707,7 @@
 		<language name="JPN" width="256">こうかんを　キャンセルしました
 もういちど　１ひき　えらびなおしてください[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI" width="256">交換をキャンセルしました
-もう一度　１匹選び直して下さい[BE:02:ウェイト変更（単発）:60]</language>
+もう一度　１匹選び直してください[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="gtsnego_info_18" back-color="#ffff00,,,,,,,,,,,,,,,,,">
@@ -718,7 +718,7 @@
 		<language name="JPN" width="256">あいてが　こうかんを　キャンセルしました
 もういちど　１ひき　えらびなおしてください[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI" width="256">相手が交換をキャンセルしました
-もう一度　１匹選び直して下さい[BE:02:ウェイト変更（単発）:60]</language>
+もう一度　１匹選び直してください[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<flowchart-group-list>
