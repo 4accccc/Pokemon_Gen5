@@ -104,6 +104,9 @@
 #include "savedata/situation.h"
 #include "gamesystem/g_power.h" //GPOWER_Calc_Hatch
 
+#include "savedata/intrude_save_field.h"  //ISC_SAVE_CheckItem
+#include "event_intrude_secret_item.h"    //
+
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
 extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
@@ -140,6 +143,7 @@ typedef struct {
   u16 reserved_scr_id;        ///<予約スクリプトのID
   int key_trg;                ///<キー情報（トリガー）
   int key_cont;               ///<キー情報（）
+  u16 key_direction;          ///<キー入力の方向
   const VecFx32 * now_pos;        ///<現在のプレイヤー位置
   u32 mapattr;                  ///<足元のアトリビュート情報
 
@@ -478,7 +482,22 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
         return event;
       }
-
+    }
+    {
+      INTRUDE_SAVE_WORK * intsave;
+      s16 gx,gy,gz;
+      int result;
+      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+      MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+      intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( req.gamedata ) );
+      gx = MMDL_GetGridPosX( mmdl );
+      gy = MMDL_GetGridPosY( mmdl );
+      gz = MMDL_GetGridPosZ( mmdl );
+      result = ISC_SAVE_CheckItem( intsave, FIELDMAP_GetZoneID( fieldWork ), gx, gy, gz );
+      if ( result != ISC_SAVE_SEARCH_NONE )
+      {
+        return EVENT_IntrudeSecretItem( gsys, req.heapID, result );
+      }
     }
   }
 
@@ -1142,6 +1161,17 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 
   req->key_trg = GFL_UI_KEY_GetTrg();
   req->key_cont = GFL_UI_KEY_GetCont();
+  req->key_direction = DIR_NOT;
+  if ( req->key_cont & PAD_KEY_UP    ) {
+    req->key_direction = DIR_UP;
+  } else if ( req->key_cont & PAD_KEY_DOWN  ) {
+    req->key_direction = DIR_DOWN;
+  } else if ( req->key_cont & PAD_KEY_LEFT  ) {
+    req->key_direction = DIR_LEFT;
+  } else if ( req->key_cont & PAD_KEY_RIGHT ) {
+    req->key_direction = DIR_RIGHT;
+  }
+
 
   req->fieldWork = fieldWork;
   req->field_player = FIELDMAP_GetFieldPlayer( fieldWork );
