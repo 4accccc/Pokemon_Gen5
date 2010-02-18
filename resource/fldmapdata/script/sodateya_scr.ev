@@ -251,7 +251,7 @@ EVENT_START ev_sodateya_grandma
     ENDIF
 
     // 所持金表示
-    _GOLD_WIN_OPEN( 17, 1 )
+    _GOLD_WIN_OPEN( 21, 1 )
 
     // メニュー作成
     _BMPMENU_INIT_EX( 1, 1, 0, 1, menu_select )
@@ -485,7 +485,7 @@ take_back_pokemon_core:
    ENDIF
 
    // 所持金表示
-   _GOLD_WIN_OPEN( 17, 1 )
+   _GOLD_WIN_OPEN( 21, 1 )
 
    // 質問「引き取るかい?」
    _SODATEYA_NICK_NAME( 0, select_sodateya_pos )

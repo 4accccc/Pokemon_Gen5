@@ -31,9 +31,9 @@
 #define DEBUG_BWINTYPE TALKMSGWIN_TYPE_NORMAL
 
 // 所持金表示ウィンドウ
-#define GOLD_WIN_WIDTH (14) // 幅(キャラクタ単位)
+#define GOLD_WIN_WIDTH  (9) // 幅(キャラクタ単位)
 #define GOLD_WIN_HEIGHT (2) // 高さ(キャラクタ単位)
-#define GOLD_WIN_KETA   (6) // 所持金数値の桁数
+#define GOLD_WIN_KETA   (7) // 所持金数値の桁数
 
 //======================================================================
 //  proto
