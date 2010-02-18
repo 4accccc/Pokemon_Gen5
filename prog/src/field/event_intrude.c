@@ -261,7 +261,6 @@ BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTR
           iedw->seq++;
           break;
         }
-        MMDL_SetAcmd(player_mmdl, player_anm_tbl[iedw->anm_no]);
         iedw->anm_no = (iedw->anm_no + 1) % NELEMS(player_anm_tbl);
         iedw->wait = iedw->wait_max;
         if(iedw->loop == 0){
@@ -279,6 +278,7 @@ BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTR
             iedw->wait_max++;
           }
         }
+        MMDL_SetAcmd(player_mmdl, player_anm_tbl[iedw->anm_no]);
       }
     }
     break;
