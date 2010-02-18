@@ -1228,8 +1228,15 @@ void BEACONINFO_Set_ZukanComplete(GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Set_ThankyouOver(u32 thankyou_count)
 {
-  BEACONINFO_Set_ThankyouOver(&GameBeaconSys->send.info, thankyou_count);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  static const u8 regu_count[] = {10, 30, 50, 100, 200};
+  int i;
+  for(i = 0; i < NELEMS(regu_count); i++){
+    if(thankyou_count == regu_count[i]){
+      BEACONINFO_Set_ThankyouOver(&GameBeaconSys->send.info, thankyou_count);
+      SendBeacon_SetCommon(&GameBeaconSys->send);
+      return;
+    }
+  }
 }
 
 //==================================================================
