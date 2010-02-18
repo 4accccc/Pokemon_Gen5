@@ -1,10 +1,10 @@
 //======================================================================
 /**
- * @file  fld_inst_btl_tool.c
+ * @file  fld_btl_inst_tool.c
  * @brief  施設バトル呼び出し等の共通部分
  *
  * @note  施設：institution
- * モジュール名：
+ * モジュール名：FBI_TOOL_
  */
 //======================================================================
 #include <gflib.h>
@@ -25,7 +25,7 @@
 #include "field/field_msgbg.h"
 #include "message.naix"
 
-#include "fld_inst_btl_tool.h"
+#include "fld_btl_inst_tool.h"
 
 //--------------------------------------------------------------
 /// ポケモンリスト選択イベント
@@ -59,7 +59,7 @@ static GMEVENT_RESULT PokeSelEvt( GMEVENT *event, int *seq, void *wk );
  * @retval GMEVENT      イベントポインタ
  */
 //--------------------------------------------------------------
-GMEVENT *FIB_TOOL_CreatePokeListEvt(
+GMEVENT *FBI_TOOL_CreatePokeListEvt(
     GAMESYS_WORK *gsys,
     const int inType, const int inReg, POKEPARTY *pp,
     u8 *outSelNoAry, PL_SELECT_POS *outResult, PL_RETURN_TYPE *outRetMode )

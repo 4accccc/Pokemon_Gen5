@@ -245,7 +245,7 @@ SRCS  +=    $(SOUNDSRC) \
 		system/ds_system.c \
         savedata/undata_update.c \
         system/scroll_bar.c \
-        field/fld_inst_btl_tool.c
+        field/fld_btl_inst_tool.c
 
 
 #================================================
