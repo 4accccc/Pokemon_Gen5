@@ -927,10 +927,22 @@ EVENT_START   ev_pos_c02_stone_01
 	_OBJ_ANIME( C02_HAKASE1_01, anm_common_turn_l )
 	_OBJ_ANIME_WAIT()
 	
-	//チャンピオンが去っていく
- 	_OBJ_ANIME( C02_CHAMPION_01,  anm_champion_saru_01 )
-	_OBJ_ANIME_WAIT()
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	//カメラ操作　チャンピオンの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,42041344,0,38305792,10 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//チャンピオン：そらをとぶアニメ
+	_CALL_NPCFLY_CUTIN(C02_CHAMPION_01)
 
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 10 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
 	//博士（父）が主人公の方を向く
 	_OBJ_ANIME( C02_HAKASE1_01, anm_common_turn_d )
 	_OBJ_ANIME_WAIT()
@@ -957,7 +969,6 @@ EVENT_START   ev_pos_c02_stone_01
     
 	//==============フラグワーク操作==============//
 	_OBJ_DEL( C02_HAKASE1_01 )
-	_OBJ_DEL( C02_CHAMPION_01 )
 	_OBJ_DEL( C02_HAKASE2_01 )
 	
 	_FLAG_SET(FV_C02_STONEEVENT_01)
@@ -981,7 +992,7 @@ _ANIME_LABEL	anm_common_gyoe
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_r
 
-	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -989,7 +1000,7 @@ _ANIME_LABEL	anm_common_turn_r
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_l
 
-	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -997,7 +1008,7 @@ _ANIME_LABEL	anm_common_turn_l
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_d
 
-	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -1005,11 +1016,11 @@ _ANIME_LABEL	anm_common_turn_d
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_u
 
-	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：POSの為の位置調整A                     
+//主人公：POSの為の位置調整x640                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c02_guide_x640
 	_ANIME_DATA AC_WALK_R_8F,4,1
@@ -1017,7 +1028,7 @@ _ANIME_LABEL	anm_c02_guide_x640
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：POSの為の位置調整A                     
+//主人公：POSの為の位置調整x641                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c02_guide_x641
 	_ANIME_DATA AC_WALK_R_8F,3,1
@@ -1025,7 +1036,7 @@ _ANIME_LABEL	anm_c02_guide_x641
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：POSの為の位置調整A                     
+//主人公：POSの為の位置調整x642                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c02_guide_x642
 	_ANIME_DATA AC_WALK_R_8F,2,1
@@ -1033,7 +1044,7 @@ _ANIME_LABEL	anm_c02_guide_x642
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：POSの為の位置調整A                     
+//主人公：POSの為の位置調整x643                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c02_guide_x643
 	_ANIME_DATA AC_WALK_R_8F,1,1
@@ -1041,14 +1052,14 @@ _ANIME_LABEL	anm_c02_guide_x643
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：POSの為の位置調整A                     
+//主人公：POSの為の位置調整x644                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c02_guide_x644
 	_ANIME_DATA AC_WALK_U_8F,1,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：POSの為の位置調整A                     
+//主人公：POSの為の位置調整x645                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c02_guide_x645
 	_ANIME_DATA AC_WALK_L_8F,1,1
@@ -1056,7 +1067,7 @@ _ANIME_LABEL	anm_c02_guide_x645
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：POSの為の位置調整A                     
+//主人公：POSの為の位置調整x646                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c02_guide_x646
 	_ANIME_DATA AC_WALK_L_8F,2,1
@@ -1064,7 +1075,7 @@ _ANIME_LABEL	anm_c02_guide_x646
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：POSの為の位置調整A                     
+//主人公：POSの為の位置調整x647                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c02_guide_x647
 	_ANIME_DATA AC_WALK_L_8F,3,1
@@ -1072,7 +1083,7 @@ _ANIME_LABEL	anm_c02_guide_x647
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：POSの為の位置調整A                     
+//主人公：POSの為の位置調整x648                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c02_guide_x648
 	_ANIME_DATA AC_WALK_L_8F,4,1

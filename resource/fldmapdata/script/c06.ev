@@ -257,7 +257,9 @@ EVENT_START    ev_pos_c06_hakase1_01
 
 	//博士とジムリーダーを消す
 	_FLAG_SET( FV_C06_ZUKANCHK_01 )
-
+	
+	//博士をT01にて出現させる
+	_FLAG_RESET(FV_T01R0401_HAKASE1)
 	//========================================//
 
 EVENT_END
