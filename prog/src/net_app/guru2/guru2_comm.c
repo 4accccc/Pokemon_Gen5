@@ -373,8 +373,8 @@ static void CommCB_Receipt_EndChild(
         break;
       }
     
-//      Guru2Comm_SendData( g2c, G2COMM_RC_END_CHILD,
-//        &trans_work, sizeof(GURU2COMM_END_CHILD_WORK) );
+      Guru2Comm_SendData( g2c, G2COMM_RC_END_CHILD,
+        &trans_work, sizeof(GURU2COMM_END_CHILD_WORK) );
       #ifdef D_GURU2_PRINTF_ON
       OS_Printf("q‹@%d‚©‚ç—£’E‚ğó‚¯æ‚Á‚½¨‘—M\n",netID);
       #endif

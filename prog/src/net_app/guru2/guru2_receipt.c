@@ -8,6 +8,10 @@
  *
  */
 //******************************************************************************
+//  ARCID_WIFILEADING     "wifileadingchar.narc"
+//  ARCID_WIFIUNIONCHAR   "wifi_unionobj.narc"
+
+
 #include <gflib.h>
 #include "system/main.h"
 #include "arc/arc_def.h"
@@ -28,6 +32,9 @@
 
 #include "guru2_local.h"
 #include "guru2_receipt.h"
+#include "arc/wifileadingchar.naix"
+#include "arc/wifi_unionobj.naix"
+#include "arc/wifi_unionobj_plt.cdat"
 //#include "comm_command_record.h"
 
 // SE用定義
@@ -73,6 +80,7 @@ static void BgExit( void );
 static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle );
 static void InitCellActor(GURU2RC_WORK *wk, ARCHANDLE* p_handle);
 static void SetCellActor(GURU2RC_WORK *wk);
+static void ReleaseCellActor( GURU2RC_WORK *wk );
 static void BmpWinInit(GURU2RC_WORK *wk );
 static void BmpWinDelete( GURU2RC_WORK *wk );
 static void SetCursor_Pos( GFL_CLWK *act, int x, int y );
@@ -93,7 +101,7 @@ static void SequenceChange_MesWait( GURU2RC_WORK *wk, int next );
 static void TrainerObjFunc( GURU2RC_WORK *wk );
 static void LoadFieldObjData( GURU2RC_WORK *wk, ARCHANDLE* p_handle );
 static void FreeFieldObjData( GURU2RC_WORK *wk );
-static void TransFieldObjData( NNSG2dCharacterData *CharaData[2], NNSG2dPaletteData *PalData[2], int id, int view, int sex );
+static void TransFieldObjData( GURU2RC_WORK *wk, NNSG2dPaletteData *PalData, int id, int view, int sex );
 static void TransPal( GFL_TCB* tcb, void *work );
 static int  GetTalkSpeed( GURU2RC_WORK *wk );
 static int  RecordCorner_BeaconControl( GURU2RC_WORK *wk, int plus );
@@ -370,6 +378,9 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
 }
 
 
+
+
+
 #define DEFAULT_NAME_MAX    18
 
 // ダイヤ・パールで変わるんだろう
@@ -397,27 +408,8 @@ GFL_PROC_RESULT Guru2ReceiptProc_End( GFL_PROC * proc, int *seq, void *pwk, void
   PRINTSYS_QUE_Delete( wk->printQue );
   GFL_TCBL_Exit( wk->pMsgTcblSys );
 
-  // セルアクターリソース解放
-
-  // キャラ破棄
-  GFL_CLGRP_CGR_Release( wk->resObjTbl[GURU2_CLACT_RES_CHR] );
-
-  // パレット破棄
-  GFL_CLGRP_PLTT_Release( wk->resObjTbl[GURU2_CLACT_RES_PLTT] );
-  
-  // セル・アニメ破棄
-  GFL_CLGRP_CELLANIM_Release( wk->resObjTbl[GURU2_CLACT_RES_CELL] );
-  
-  // キャラ・パレット・セル・セルアニメのリソースマネージャー破棄
-  //for(i=0;i<CLACT_RESOURCE_NUM;i++){
-  //  CLACT_U_ResManagerDelete(wk->resMan[i]);
-  //}
-  
-  // セルアクターセット破棄
-  GFL_CLACT_UNIT_Delete( wk->clUnit );
-
-  //OAMレンダラー破棄
-  GFL_CLACT_SYS_Delete();
+  // セルアクター終了
+  ReleaseCellActor( wk );
 
   // BMPウィンドウ開放
   BmpWinDelete( wk );
@@ -798,7 +790,14 @@ static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
 }
 
 
+// 主人公OAMリソースの男女別定義
+static const int res_tbl[][2]={
+  { NARC_wifileadingchar_hero_simple_NCGR, NARC_wifileadingchar_heroine_simple_NCGR  },
+  { NARC_wifileadingchar_hero_NCLR,        NARC_wifileadingchar_heroine_NCLR         },
+  { NARC_wifileadingchar_hero_simple_NCER, NARC_wifileadingchar_heroine_simple_NCER, },
+  { NARC_wifileadingchar_hero_simple_NANR, NARC_wifileadingchar_heroine_simple_NANR, },
 
+};
 //------------------------------------------------------------------
 /**
  * レーダー画面用セルアクター初期化
@@ -811,44 +810,68 @@ static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
 static void InitCellActor(GURU2RC_WORK *wk, ARCHANDLE* p_handle)
 {
   int i;
-  
-  
-  // 共有OAMマネージャ作成
-  // レンダラ用OAMマネージャ作成
-  // ここで作成したOAMマネージャをみんなで共有する
-  
-  GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &Guru2DispVramDat, HEAPID_GURU2 );
+  MYSTATUS *my = GAMEDATA_GetMyStatus( wk->g2p->param.gamedata);
+  int gender   = MyStatus_GetMySex( my );
+  // 主人公セルデータオープン
+  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_WIFILEADING, HEAPID_GURU2 );
   
   // セルアクター初期化
+  GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &Guru2DispVramDat, HEAPID_GURU2 );
+  
   wk->clUnit = GFL_CLACT_UNIT_Create( 30, 1, HEAPID_GURU2 );
   GF_ASSERT( wk->clUnit );
   
   //---------上画面人物OBJ読み込み-------------------
-
-  //chara読み込み
-  wk->resObjTbl[GURU2_CLACT_RES_CHR] = GFL_CLGRP_CGR_Register( p_handle, NARC_guru2_2d_record_s_obj_NCGR, 0, 
-                                                               CLSYS_DRAW_MAIN, HEAPID_GURU2 );
-  //pal読み込み
-  wk->resObjTbl[GURU2_CLACT_RES_PLTT] = GFL_CLGRP_PLTT_Register( p_handle, NARC_guru2_2d_record_s_obj_NCLR,
-                                                               CLSYS_DRAW_MAIN, 0, HEAPID_GURU2 );
-//  CLACT_U_ResManagerResAddArcPltt_ArcHandle(wk->resMan[CLACT_U_PLTT_RES],
-//              p_handle, NARC_guru2_2d_record_s_obj_NCLR, 0, 2, NNS_G2D_VRAM_TYPE_2DMAIN, 15, HEAPID_GURU2);
-
+  for(i=0;i<PLAYER_OAM_NUM;i++){
+    //chara読み込み
+    wk->resObjTbl[GURU2_CLACT_OBJ0_RES_CHR+i] = GFL_CLGRP_CGR_Register( handle,  res_tbl[0][gender], 
+                                                                 0, CLSYS_DRAW_MAIN, HEAPID_GURU2 );
+    //pal読み込み
+    wk->resObjTbl[GURU2_CLACT_OBJ0_RES_PLTT+i] = GFL_CLGRP_PLTT_RegisterEx( handle, res_tbl[1][gender],
+                                                                 CLSYS_DRAW_MAIN, i*32, 0, 1, 
+                                                                 HEAPID_GURU2 );
+  }
   //cell読み込み
-  wk->resObjTbl[GURU2_CLACT_RES_CELL] = GFL_CLGRP_CELLANIM_Register( p_handle, 
-                                            NARC_guru2_2d_record_s_obj_NCER, 
-                                            NARC_guru2_2d_record_s_obj_NANR, 
+  wk->resObjTbl[GURU2_CLACT_RES_CELL] = GFL_CLGRP_CELLANIM_Register( handle, 
+                                            res_tbl[2][gender], res_tbl[3][gender],
                                             HEAPID_GURU2 );
+  GFL_ARC_CloseDataHandle( handle );
 
-//  CLACT_U_ResManagerResAddArcKindCell_ArcHandle(wk->resMan[CLACT_U_CELL_RES],
-//              p_handle, NARC_guru2_2d_obj_s_lz_ncer, 1, 2, CLACT_U_CELL_RES,HEAPID_GURU2);
-
-  //同じ関数でanim読み込み
-//  wk->resObjTbl[CHARA_RES][CLACT_U_CELLANM_RES] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(wk->resMan[CLACT_U_CELLANM_RES],
-//              p_handle, NARC_guru2_2d_obj_s_lz_nanr, 1, 2, CLACT_U_CELLANM_RES,HEAPID_GURU2);
+  // ユニオンOBJリソースのハンドルオープン
+  wk->union_handle = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, HEAPID_GURU2 );
+}
 
 
-  // リソースマネージャーから転送
+//----------------------------------------------------------------------------------
+/**
+ * @brief セルアクター周り解放処理
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void ReleaseCellActor( GURU2RC_WORK *wk )
+{
+  int i;
+  
+  // ユニオンOBJリソースハンドルクローズ
+  GFL_ARC_CloseDataHandle( wk->union_handle );
+
+  // セルアクターリソース解放
+  for(i=0;i<PLAYER_OAM_NUM;i++){
+    // キャラ破棄
+    GFL_CLGRP_CGR_Release( wk->resObjTbl[GURU2_CLACT_OBJ0_RES_PLTT+i] );
+    // パレット破棄
+    GFL_CLGRP_PLTT_Release( wk->resObjTbl[GURU2_CLACT_OBJ0_RES_CHR+i] );
+  }
+  // セル・アニメ破棄
+  GFL_CLGRP_CELLANIM_Release( wk->resObjTbl[GURU2_CLACT_RES_CELL] );
+  
+  // セルアクターセット破棄
+  GFL_CLACT_UNIT_Delete( wk->clUnit );
+
+  //OAMレンダラー破棄
+  GFL_CLACT_SYS_Delete();
+
 }
 
 #define TRAINER_NAME_POS_X    ( 24 )
@@ -891,16 +914,16 @@ static void SetCellActor(GURU2RC_WORK *wk)
     //セルアクター表示開始
 
     // メイン画面用(人物の登録）
-    for(i=0;i<5;i++){
+    for(i=0;i<PLAYER_OAM_NUM;i++){
       add.pos_x = obj_pos_tbl[i+1][0];
       add.pos_y = obj_pos_tbl[i+1][1];
       wk->MainActWork[i+1] = GFL_CLACT_WK_Create( wk->clUnit, 
-                                               wk->resObjTbl[GURU2_CLACT_RES_CHR],
-                                               wk->resObjTbl[GURU2_CLACT_RES_PLTT],
+                                               wk->resObjTbl[GURU2_CLACT_OBJ0_RES_CHR+i],
+                                               wk->resObjTbl[GURU2_CLACT_OBJ0_RES_PLTT+i],
                                                wk->resObjTbl[GURU2_CLACT_RES_CELL],
                                                &add, CLSYS_DEFREND_MAIN, HEAPID_GURU2);
       GFL_CLACT_WK_SetAutoAnmFlag( wk->MainActWork[i+1],1 );
-      GFL_CLACT_WK_SetAnmSeq( wk->MainActWork[i+1], 27+(i-1)*2 );
+      GFL_CLACT_WK_SetAnmSeq( wk->MainActWork[i+1], 0 );
       GFL_CLACT_WK_SetDrawEnable( wk->MainActWork[i+1], 0 );
     }
 
@@ -1433,14 +1456,14 @@ static int Record_EndSelectWait( GURU2RC_WORK *wk, int seq )
       if(GFL_NET_SystemGetCurrentID()==0){
         int flag = GURU2COMM_BAN_NONE;
         // 離脱禁止解除通達
-          Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
+        Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
 //        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
 
         // 接続人数制限OFF
         //ChangeConnectMax( wk, 1 );
       }
-      
-      SequenceChange_MesWait( wk, RECORD_MODE_INIT );
+      wk->seq = RECORD_MODE_INIT;
+//      SequenceChange_MesWait( wk, RECORD_MODE_INIT );
     }else{
       if(GFL_NET_SystemGetCurrentID()==0){    
         SequenceChange_MesWait( wk, RECORD_MODE_END_SELECT_PARENT );
@@ -1449,7 +1472,7 @@ static int Record_EndSelectWait( GURU2RC_WORK *wk, int seq )
         GURU2COMM_END_CHILD_WORK crec;
         
         MI_CpuClear8(&crec, sizeof(GURU2COMM_END_CHILD_WORK));
-        crec.request = CREC_REQ_RIDATU_CHECK;
+        crec.request   = CREC_REQ_RIDATU_CHECK;
         crec.ridatu_id = GFL_NET_SystemGetCurrentID();
         
         wk->status_end = TRUE;
@@ -2720,7 +2743,7 @@ static void TrainerObjFunc( GURU2RC_WORK *wk )
     switch(wk->TrainerReq[i]){
     case RECORD_EXIST_NO:
       break;
-    case RECORD_EXIST_APPEAR_REQ:
+    case RECORD_EXIST_APPEAR_REQ:   // 乱入されたのでＯＢＪ登場
       {
         int view,sex;
         GF_ASSERT(wk->TrainerStatus[i][0]!=NULL);
@@ -2729,26 +2752,26 @@ static void TrainerObjFunc( GURU2RC_WORK *wk )
         view  = MyStatus_GetTrainerView( wk->TrainerStatus[i][0] );
         if(GFL_NET_SystemGetCurrentID()==i){
           // 主人公OBJ用のアニメ
-          GFL_CLACT_WK_SetAnmSeq( wk->MainActWork[i+1], 38+sex*2 );
+          GFL_CLACT_WK_SetAnmSeq( wk->MainActWork[i+1], 4 );
         }else{
           // フィールドOBJ用のアニメ
-          TransFieldObjData( wk->FieldObjCharaData, wk->FieldObjPalData,  i, view, sex );
-          GFL_CLACT_WK_SetAnmSeq( wk->MainActWork[i+1], 27+i*2 );
+          TransFieldObjData( wk, wk->UnionObjPalData,  i, view, sex );
+          GFL_CLACT_WK_SetAnmSeq( wk->MainActWork[i+1], 4 );
         }
 
       }
-      GFL_CLACT_WK_SetDrawEnable(wk->MainActWork[i+1], 1);
+      GFL_CLACT_WK_SetDrawEnable( wk->MainActWork[i+1], 1 );
       wk->TrainerReq[i] = RECORD_EXIST_APPEAR;
       seflag = 1;
       break;
     case RECORD_EXIST_APPEAR:
       break;
-    case RECORD_EXIST_BYE_REQ:
+    case RECORD_EXIST_BYE_REQ:     // 切断されたのでサヨナラＯＢＪ
       if(GFL_NET_SystemGetCurrentID()==i){
         int sex = MyStatus_GetMySex( wk->TrainerStatus[i][0] );
-        GFL_CLACT_WK_SetAnmSeq( wk->MainActWork[i+1], 38+sex*2+1 );
+        GFL_CLACT_WK_SetAnmSeq( wk->MainActWork[i+1], 5 );
       }else{
-        GFL_CLACT_WK_SetAnmSeq( wk->MainActWork[i+1], 27+i*2+1 );
+        GFL_CLACT_WK_SetAnmSeq( wk->MainActWork[i+1], 5 );
       }
       wk->TrainerReq[i] = RECORD_EXIST_NO;
       break;
@@ -2774,14 +2797,36 @@ static void TrainerObjFunc( GURU2RC_WORK *wk )
 static void LoadFieldObjData( GURU2RC_WORK *wk, ARCHANDLE* p_handle )
 {
   // パレット読み込み
-  wk->FieldObjPalBuf[0] = GFL_ARC_UTIL_LoadPalette(    ARCID_WORLDTRADE_GRA, NARC_worldtrade_hero_nclr, &(wk->FieldObjPalData[0]), HEAPID_GURU2 );
-  wk->FieldObjPalBuf[1] = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_guru2_2d_union_chara_NCLR, &(wk->FieldObjPalData[1]), HEAPID_GURU2 );
+  wk->UnionObjPalBuf = GFL_ARC_UTIL_LoadPalette( ARCID_WIFIUNIONCHAR, 
+                                                 NARC_wifi_unionobj_wifi_union_obj_NCLR, 
+                                                 &wk->UnionObjPalData, HEAPID_GURU2 );
+//  wk->FieldObjPalBuf[1] = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_guru2_2d_union_chara_NCLR, &(wk->FieldObjPalData[1]), HEAPID_GURU2 );
 
   // 画像読み込み
-  wk->FieldObjCharaBuf[0] = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_WORLDTRADE_GRA, NARC_worldtrade_hero_lz_ncgr, 1, &(wk->FieldObjCharaData[0]), HEAPID_GURU2 );
-  wk->FieldObjCharaBuf[1] = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, NARC_guru2_2d_union_chara_NCGR,  0, &(wk->FieldObjCharaData[1]), HEAPID_GURU2 );
+//  wk->FieldObjCharaBuf[0] = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_WORLDTRADE_GRA, NARC_worldtrade_hero_lz_ncgr, 1, &(wk->FieldObjCharaData[0]), HEAPID_GURU2 );
+//  wk->FieldObjCharaBuf[1] = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, NARC_guru2_2d_union_chara_NCGR,  0, &(wk->FieldObjCharaData[1]), HEAPID_GURU2 );
 
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief   フィールドOBJ画像解放
+ *
+ * @param   wk    
+ *
+ * @retval  none    
+ */
+//------------------------------------------------------------------
+static void FreeFieldObjData( GURU2RC_WORK *wk )
+{
+
+  GFL_HEAP_FreeMemory( wk->UnionObjPalBuf  );
+//  GFL_HEAP_FreeMemory( wk->FieldObjPalBuf[1]  );
+                      
+//  GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf[0] );
+//  GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf[1] );
+}
+
 
 #define OBJ_TRANS_SIZE  ( 3 * 4*4 )
 static const u16 obj_offset[]={
@@ -2807,14 +2852,10 @@ static int _pal_no = 0;
  * @retval  none    
  */
 //------------------------------------------------------------------
-static void TransFieldObjData( NNSG2dCharacterData *CharaData[2], NNSG2dPaletteData *PalData[2], int id, int view, int sex )
+static void TransFieldObjData( GURU2RC_WORK *wk, NNSG2dPaletteData *PalData, int id, int view, int sex )
 {
-  int pos;
+/*
   u8 *chara, *pal;
-  
-  // ユニオンキャラを転送
-
-//  pos   = UnionView_GetCharaNo( sex, view );
   pos   = view;
 
   chara = (u8*)CharaData[1]->pRawData;
@@ -2822,31 +2863,31 @@ static void TransFieldObjData( NNSG2dCharacterData *CharaData[2], NNSG2dPaletteD
 
   GX_LoadOBJ( &chara[OBJ_TRANS_SIZE*pos*0x20], obj_offset[id], OBJ_TRANS_SIZE*0x20 );
   GX_LoadOBJPltt( &pal[pos*32], (id+FIELDOBJ_PAL_START)*32, 32 );
+*/
+  void *chrbuf;
+  NNSG2dCharacterData *data;
+  int offset = sex*8+view;    // 男女８人計１６人分のファイルアクセス
+  u16 *pal = (u16*)PalData->pRawData;
+  
+  // パレット転送
+//  GFL_CLGRP_PLTT_Replace( wk->resObjTbl[GURU2_CLACT_OBJ0_RES_PLTT+id], 
+//                          &PalData->rawData[sc_wifi_unionobj_plt[offset]*32], 1 );
+  // パレットデータを直接転送
+  GX_LoadOBJPltt( &pal[sc_wifi_unionobj_plt[offset]*16], id*32, 32 );
 
-  OS_Printf("ID=%d のユニオン見た目は %d アイコン番号は %d\n", id, view, pos);
+
+  // キャラ転送
+  chrbuf = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_WIFIUNIONCHAR, NARC_wifi_unionobj_normal00_NCGR+offset,
+                                       0, &data, HEAPID_GURU2 );  
+  GFL_CLGRP_CGR_Replace( wk->resObjTbl[GURU2_CLACT_OBJ0_RES_CHR+id], data );
+
+  GFL_HEAP_FreeMemory( chrbuf );
+  OS_Printf("ID=%d のユニオン見た目は %d\n", id, view);
 
   
   
 }
 
-//------------------------------------------------------------------
-/**
- * @brief   フィールドOBJ画像解放
- *
- * @param   wk    
- *
- * @retval  none    
- */
-//------------------------------------------------------------------
-static void FreeFieldObjData( GURU2RC_WORK *wk )
-{
-
-  GFL_HEAP_FreeMemory( wk->FieldObjPalBuf[0]  );
-  GFL_HEAP_FreeMemory( wk->FieldObjPalBuf[1]  );
-                      
-  GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf[0] );
-  GFL_HEAP_FreeMemory( wk->FieldObjCharaBuf[1] );
-}
 
 //------------------------------------------------------------------
 /**

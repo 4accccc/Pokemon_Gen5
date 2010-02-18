@@ -1302,6 +1302,8 @@ GFL_PROC_RESULT Guru2MainProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
   // 3DリソースUTIL削除
   GFL_G3D_UTIL_Delete( g2m->g3dUtil );
 
+  GFL_G3D_Exit();
+
   //グラフィック削除
   guru2_DrawDelete( g2m );
   GFL_TCB_DeleteTask( g2m->vintr_tcb );  // VBlank関数解除
@@ -3163,8 +3165,8 @@ static void _g3d_setup( void )
     GURU2_EDGE_COLOR, GURU2_EDGE_COLOR, GURU2_EDGE_COLOR, GURU2_EDGE_COLOR, };
 
   G3X_SetShading( GX_SHADING_TOON );  //シェード
-  G3X_AntiAlias(  TRUE );               //アンチエイリアス
-  G3X_AlphaTest(  FALSE, 0 );          //アルファテスト　
+  G3X_AntiAlias(  TRUE );             //アンチエイリアス
+  G3X_AlphaTest(  FALSE, 0 );         //アルファテスト　
   G3X_AlphaBlend( TRUE );             //アルファブレンド
   
   G3X_EdgeMarking( TRUE );            // エッジマーキング設定
@@ -3213,7 +3215,7 @@ static void guru2_3DDrawInit( GURU2MAIN_WORK *g2m )
 
   //カメラ設定
   { 
-    static const VecFx32 cam_pos    = { 0,0,0x100*FX32_ONE};
+    static const VecFx32 cam_pos    = { 0,0,0x80*FX32_ONE};
     static const VecFx32 cam_target = { CAMERA_TARGET_X,CAMERA_TARGET_Y,CAMERA_TARGET_Z};
     cm->gf_camera = GFL_G3D_CAMERA_CreateDefault( &cam_pos, &cam_target, HEAPID_GURU2 );
     
@@ -3479,9 +3481,7 @@ static void guru2_PlttFadeInit( GURU2MAIN_WORK *g2m )
   g2m->pfd = PaletteFadeInit( HEAPID_GURU2 );
   PaletteTrans_AutoSet(g2m->pfd,TRUE);
   PaletteFadeWorkAllocSet( g2m->pfd, FADE_MAIN_BG, 0x200, HEAPID_GURU2);
-  PaletteFadeWorkAllocSet( g2m->pfd, FADE_MAIN_OBJ,0x200, HEAPID_GURU2);
   PaletteFadeWorkAllocSet( g2m->pfd, FADE_SUB_BG,  0x200, HEAPID_GURU2);
-  PaletteFadeWorkAllocSet( g2m->pfd, FADE_SUB_OBJ, 0x200, HEAPID_GURU2);
 }
 
 //--------------------------------------------------------------
@@ -3494,9 +3494,7 @@ static void guru2_PlttFadeInit( GURU2MAIN_WORK *g2m )
 static void guru2_PlttFadeDelete( GURU2MAIN_WORK *g2m )
 {
   PaletteFadeWorkAllocFree( g2m->pfd, FADE_MAIN_BG  );
-  PaletteFadeWorkAllocFree( g2m->pfd, FADE_MAIN_OBJ );
   PaletteFadeWorkAllocFree( g2m->pfd, FADE_SUB_BG   );
-  PaletteFadeWorkAllocFree( g2m->pfd, FADE_SUB_OBJ  );
   PaletteFadeFree( g2m->pfd );  
 }
 
@@ -3942,52 +3940,6 @@ static void Guru2NameWin_Clear( GURU2MAIN_WORK *g2m, int no )
 //==============================================================================
 //  カメラ
 //==============================================================================
-#if 0
-//--------------------------------------------------------------
-/**
- * カメラ初期化
- * @param g2m GURU2MAIN_WORK
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void guru2_CameraInit( GURU2MAIN_WORK *g2m )
-{
-  CAMERAWORK *cm = &g2m->camera;
-  
-  cm->gf_camera = GFC_AllocCamera( HEAPID_GURU2 );
-  
-  {
-    VecFx32 up;
-    
-    cm->target_pos.x = CAMERA_TARGET_X;
-    cm->target_pos.y = CAMERA_TARGET_Y;
-    cm->target_pos.z = CAMERA_TARGET_Z;
-    
-    cm->angle.x = CAMERA_ANGLE_X;
-    cm->angle.y = CAMERA_ANGLE_Y;
-    cm->angle.z = CAMERA_ANGLE_Z;
-    
-    cm->distance = CAMERA_DISTANCE;
-    cm->persp = CAMERA_PERSP;
-    
-    GFC_InitCameraTDA(
-      &cm->target_pos,
-      cm->distance,
-      &cm->angle,
-      cm->persp,
-      GF_CAMERA_PERSPECTIV, //PERSPECTIV=透視射影 ORTHO=正射影
-      TRUE,
-      cm->gf_camera );  
-    
-    up.x = 0;
-    up.y = FX32_ONE;
-    up.z = 0;
-    GFC_SetCamUp( &up, cm->gf_camera );
-  
-    GFC_AttachCamera( cm->gf_camera );
-  }
-}
-#endif
 
 //--------------------------------------------------------------
 /**

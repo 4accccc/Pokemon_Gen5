@@ -22,9 +22,9 @@
 #define NAMEIN_SUB_ACTOR_DISTANCE   (256*FX32_ONE)
 
 // CellActorに処理させるリソースマネージャの種類の数（＝マルチセル・マルチセルアニメは使用しない）
-#define CLACT_RESOURCE_NUM    (  4 )
+#define CLACT_RESOURCE_NUM  (  4 )
 #define NAMEIN_OAM_NUM      ( 14 )
-
+#define PLAYER_OAM_NUM      (  5 )
 
 // メッセージ表示後のWAIT
 #define RECORD_CORNER_MESSAGE_END_WAIT  ( 60 )
@@ -77,6 +77,7 @@ enum{
 #define SUB_LCD   ( GF_BGL_SUB_DISP )   // １なんですが。
 #define CHARA_RES ( 2 )
 
+
 // シーケンス定義
 enum{
   RECORD_EXIST_NO=0,
@@ -86,9 +87,17 @@ enum{
 };
 
 enum{
-  GURU2_CLACT_RES_PLTT,
-  GURU2_CLACT_RES_CHR,
-  GURU2_CLACT_RES_CELL,
+  GURU2_CLACT_OBJ0_RES_PLTT,   // ユニオンキャラOBJ_PLTT0
+  GURU2_CLACT_OBJ1_RES_PLTT,   // ユニオンキャラOBJ_PLTT1
+  GURU2_CLACT_OBJ2_RES_PLTT,   // ユニオンキャラOBJ_PLTT2
+  GURU2_CLACT_OBJ3_RES_PLTT,   // ユニオンキャラOBJ_PLTT3
+  GURU2_CLACT_OBJ4_RES_PLTT,   // ユニオンキャラOBJ_PLTT4
+  GURU2_CLACT_OBJ0_RES_CHR,    // ユニオンキャラOBJ_CHARA0
+  GURU2_CLACT_OBJ1_RES_CHR,    // ユニオンキャラOBJ_CHARA1
+  GURU2_CLACT_OBJ2_RES_CHR,    // ユニオンキャラOBJ_CHARA2
+  GURU2_CLACT_OBJ3_RES_CHR,    // ユニオンキャラOBJ_CHARA3
+  GURU2_CLACT_OBJ4_RES_CHR,    // ユニオンキャラOBJ_CHARA4
+  GURU2_CLACT_RES_CELL,   // ユニオンキャラOBJ_CELL(主人公のアニメだけど）
   GURU2_CLACT_RES_NUM,
 };
 
@@ -126,14 +135,15 @@ struct GURU2RC_WORK{
   VTRANS_PAL_WORK   palwork;        // パレットアニメ用ワーク
   GFL_TCB     *trans_tcb;
   GFL_TCB     *vintr_tcb;           // Vblank処理
+  ARCHANDLE   *union_handle;        // ユニオンOBJリソースのファイルハンドル
   
   GFL_FONT    *font;
-  WORDSET     *WordSet;               // メッセージ展開用ワークマネージャー
-  GFL_MSGDATA *MsgManager;              // 名前入力メッセージデータマネージャー
+  WORDSET     *WordSet;             // メッセージ展開用ワークマネージャー
+  GFL_MSGDATA *MsgManager;          // 名前入力メッセージデータマネージャー
   STRBUF      *TrainerName[RECORD_CORNER_MEMBER_MAX];   // 名前
-  STRBUF      *EndString;               // 文字列「やめる」
-  STRBUF      *TalkString;              // 会話メッセージ用
-  STRBUF      *TitleString;             // タイトルメッセージ用
+  STRBUF      *EndString;           // 文字列「やめる」
+  STRBUF      *TalkString;          // 会話メッセージ用
+  STRBUF      *TitleString;         // タイトルメッセージ用
   int       MsgIndex;               // 終了検出用ワーク
   
   GFL_CLUNIT  *clUnit;               // セルアクターセット
@@ -141,20 +151,20 @@ struct GURU2RC_WORK{
   GFL_CLWK    *MainActWork[NAMEIN_OAM_NUM];   // セルアクターワークポインタ配列
 
   GFL_BMPWIN    *TrainerNameWin;     // お絵かき画面用BMPウインドウ
-  GFL_BMPWIN    *MsgWin;                 // 会話ウインドウ
-  GFL_BMPWIN    *EndWin;                 // やめる
-  GFL_BMPWIN    *TitleWin;               // 「レコードコーナー　ぼしゅうちゅう！」など
-  GFL_BMPWIN    *YesNoWin[2];             // はい・いいえウインドウのポインタ
+  GFL_BMPWIN    *MsgWin;             // 会話ウインドウ
+  GFL_BMPWIN    *EndWin;             // やめる
+  GFL_BMPWIN    *TitleWin;           // 「レコードコーナー　ぼしゅうちゅう！」など
+  GFL_BMPWIN    *YesNoWin[2];        // はい・いいえウインドウのポインタ
   BMPMENU_WORK  *YesNoMenuWork;
   PRINT_QUE     *printQue;
   PRINT_STREAM  *printStream;
   GFL_TCBLSYS   *pMsgTcblSys;       // メッセージ表示用タスクシステム
   PRINT_UTIL    printUtil;
 
-  void*         FieldObjCharaBuf[2];          // 人物OBJキャラファイルデータ
-  NNSG2dCharacterData*  FieldObjCharaData[2];         // 人物OBJキャラデータの実ポインタ        
-  void*         FieldObjPalBuf[2];            // 人物OBJパレットァイルデータ
-  NNSG2dPaletteData*    FieldObjPalData[2];           // 人物OBJパレットファイルデータ
+  void*                 FieldObjCharaBuf[2];  // 人物OBJキャラファイルデータ
+  NNSG2dCharacterData*  FieldObjCharaData[2]; // 人物OBJキャラデータの実ポインタ        
+  void*                 UnionObjPalBuf;       // 人物OBJパレットァイルデータ
+  NNSG2dPaletteData*    UnionObjPalData;      // 人物OBJパレットファイルデータ
 
   int           seq;                  // 現在の文字入力状態（入力OK/アニメ中）など
   int           nextseq;
@@ -164,7 +174,7 @@ struct GURU2RC_WORK{
   const MYSTATUS *TrainerStatus[RECORD_CORNER_MEMBER_MAX][2];
   int           TrainerReq[RECORD_CORNER_MEMBER_MAX];
 
-  int           saveseq_work;             // セーブシーケンス管理用ワーク
+  int           saveseq_work;         // セーブシーケンス管理用ワーク
 
   u16           CursorPal;
   u16           *ObjPaletteTable;
