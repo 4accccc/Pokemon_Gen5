@@ -200,3 +200,58 @@ GPOWER_ID ISC_SAVE_GetGPowerID(INTRUDE_SAVE_WORK *intsave)
 {
   return intsave->gpower_id;
 }
+
+//==============================================================================
+//  配布専用Gパワー受信bit
+//==============================================================================
+//==================================================================
+/**
+ * 配布専用GパワーのbitをONにする
+ *
+ * @param   intsave		  
+ * @param   gpower_id		Gパワー
+ */
+//==================================================================
+void ISC_SAVE_SetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id)
+{
+  int dis_no, flag_no, bit_no;
+  
+  dis_no = gpower_id - (GPOWER_ID_MAX - 10);
+  if(dis_no < 0){
+    GF_ASSERT(0);
+    return;
+  }
+  
+  flag_no = dis_no / 8;
+  bit_no = dis_no % 8;
+  intsave->gpower_distribution_bit[flag_no] |= 1 << bit_no;
+}
+
+//==================================================================
+/**
+ * 配布専用Gパワーのbitがセットされているかチェック
+ *
+ * @param   intsave		
+ * @param   gpower_id		GパワーID
+ *
+ * @retval  BOOL		TRUE:ONされている　FALSE:OFF
+ */
+//==================================================================
+BOOL ISC_SAVE_GetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id)
+{
+  int dis_no, flag_no, bit_no;
+  
+  dis_no = gpower_id - (GPOWER_ID_MAX - 10);
+  if(dis_no < 0){
+    GF_ASSERT(0);
+    return FALSE;
+  }
+  
+  flag_no = dis_no / 8;
+  bit_no = dis_no % 8;
+  if(intsave->gpower_distribution_bit[flag_no] & (1 << bit_no)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
