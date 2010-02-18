@@ -11,6 +11,4 @@
 #include <gflib.h>
 #include "gamesystem/game_data.h"
 
-extern void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID);
-extern void DEBUG_MYITEM_MakeBag(GAMEDATA * gamedata, int heapID);
-
+extern void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID );

@@ -21,6 +21,14 @@
 #include "waza_tool/wazano_def.h"  //デバッグポケ生成用
 #include "savedata/zukan_savedata.h"		// 図鑑捕獲フラグ設定
 
+#include "savedata/intrude_save_field.h"
+#include "savedata/intrude_save.h"
+
+#include "arc_def.h"  //ARCID_MESSAGE
+#include "message.naix" //NARC_message_debugname_dat
+#include "msg/msg_debugname.h"  //DEBUG_NAME_RAND_M_000
+#include "system/gfl_use.h"   //GFUser_GetPublicRand
+
 #ifdef PM_DEBUG
 //============================================================================================
 //============================================================================================
@@ -30,7 +38,7 @@
  * @param   gamedata  GAMEDATAへのポインタ		
  */
 //--------------------------------------------------------------
-void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
+static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
 {
   MYSTATUS *myStatus;
 	POKEPARTY *party;
@@ -83,6 +91,8 @@ void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
 	GFL_HEAP_FreeMemory(pp);
 }
 
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 /**
  * @brief	デバッグ用：適当に手持ちを生成する
@@ -158,7 +168,7 @@ static const ITEM_ST DebugItem[] = {
  * @param   heapID    利用するヒープIDの指定
  */
 //--------------------------------------------------------------
-void DEBUG_MYITEM_MakeBag(GAMEDATA * gamedata, int heapID)
+static void DEBUG_MYITEM_MakeBag(GAMEDATA * gamedata, HEAPID heapID)
 {
 	u32	i;
   MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
@@ -168,5 +178,61 @@ void DEBUG_MYITEM_MakeBag(GAMEDATA * gamedata, int heapID)
 		MYITEM_AddItem( myitem, DebugItem[i].id, DebugItem[i].no, heapID );
 	}
 }
+
+//============================================================================================
+//============================================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void addIntrudeSecretItem(
+    GFL_MSGDATA * msgman, INTRUDE_SAVE_WORK * intsave, u16 item_no, u16 tbl_no)
+{
+  INTRUDE_SECRET_ITEM_SAVE intrude_item = {
+    { 0 },
+    ITEM_OMAMORIKOBAN,
+    0,
+    0
+  };
+  STRBUF * namebuf;
+
+  namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_RAND_M_000 + GFUser_GetPublicRand(8) );
+  GFL_STR_GetStringCode( namebuf, intrude_item.name, PERSON_NAME_SIZE + EOM_SIZE );
+  intrude_item.item = item_no;
+  intrude_item.tbl_no = tbl_no;
+  ISC_SAVE_SetItem( intsave, &intrude_item );
+
+  GFL_STR_DeleteBuffer( namebuf );
+}
+//--------------------------------------------------------------
+/**
+ * @brief   デバッグ用に隠されアイテムを加える
+ * @param   gamedata  GAMEDATAへのポインタ		
+ * @param   heapID    利用するヒープIDの指定
+ */
+//--------------------------------------------------------------
+static void DEBUG_INTRUDE_MakeSecretItem( GAMEDATA * gamedata, HEAPID heapID )
+{
+  GFL_MSGDATA * msgman;
+  INTRUDE_SAVE_WORK * intsave;
+    
+  msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, heapID );
+
+  intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
+  addIntrudeSecretItem( msgman, intsave, ITEM_OMAMORIKOBAN, 0 );
+  addIntrudeSecretItem( msgman, intsave, ITEM_WAZAMASIN05 ,1 );
+  addIntrudeSecretItem( msgman, intsave, ITEM_KODAWARIHATIMAKI ,0 );
+
+  GFL_MSG_Delete( msgman );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
+{
+  DEBUG_INTRUDE_MakeSecretItem( gamedata, heapID );
+  DEBUG_MYITEM_MakeBag( gamedata, heapID );
+  DEBUG_MyPokeAdd( gamedata, heapID );
+}
+
+
 
 #endif  // PM_DEBUG
