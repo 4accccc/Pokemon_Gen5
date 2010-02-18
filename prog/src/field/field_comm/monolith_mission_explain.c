@@ -71,7 +71,6 @@ const GFL_PROC_DATA MonolithAppProc_Up_MissionExplain = {
 };
 
 ///街番号からミッションタイプを取得するテーブル
-#if 0
 const u32 TownNo_to_Type[] = {
   MISSION_TYPE_PERSONALITY, ///<性格
   MISSION_TYPE_VICTORY,     ///<勝利(LV)
@@ -82,18 +81,6 @@ const u32 TownNo_to_Type[] = {
   MISSION_TYPE_ITEM,        ///<道具
   MISSION_TYPE_ATTRIBUTE,   ///<属性
 };
-#else
-const u32 TownNo_to_Type[] = {
-  MISSION_TYPE_BASIC,       ///<基礎
-  MISSION_TYPE_ITEM,        ///<道具
-  MISSION_TYPE_BASIC,       ///<基礎
-  MISSION_TYPE_ITEM,        ///<道具
-  MISSION_TYPE_BASIC,       ///<基礎
-  MISSION_TYPE_ITEM,        ///<道具
-  MISSION_TYPE_BASIC,       ///<基礎
-  MISSION_TYPE_ITEM,        ///<道具
-};
-#endif
 
 
 //==============================================================================
