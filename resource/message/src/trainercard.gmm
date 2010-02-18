@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T11:17:16"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-18T15:58:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -234,7 +234,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="179"/>
+		<comment position="1" width="204"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1732" top="127" right="2102" bottom="747" maximized="no" rayout="Vertical2">
+	<dialog left="955" top="297" right="1660" bottom="925" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="123" top="147" right="596" bottom="545" visible="no"/>
 		<band id="0" index="0" style="0000" width="445"/>
-		<band id="1" index="1" style="0000" width="362"/>
-		<band id="2" index="2" style="0000" width="362"/>
-		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="1" index="1" style="0000" width="250"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,13 +301,14 @@
 	</row>
 
 	<row id="MSG_TCARD_03">
-		<comment>カード表面項目。おこづかい。単位「円」の表示は画像で行う。</comment>
+		<comment>カード表面項目。性格。単位はなし。</comment>
 		<language name="JPN" width="256">せいかく</language>
 		<language name="JPN_KANJI" width="256">せいかく</language>
 	</row>
 
 	<row id="MSG_TCARD_04">
-		<comment>カード表面項目。ポケモン図鑑。単位「匹」の表示は画像で行う。</comment>
+		<comment>カード表面項目。ポケモン図鑑。
+単位「匹」の表示は画像で行う。</comment>
 		<language name="JPN" width="256">ずかん</language>
 		<language name="JPN_KANJI" width="256">ずかん</language>
 	</row>
@@ -319,58 +320,75 @@
 	</row>
 
 	<row id="MSG_TCARD_06">
-		<comment>カード表面項目。プレイ時間。時間と分の間を「：」で区切る。単位なし。</comment>
+		<comment>カード表面項目。プレイ時間。
+時間と分の間を「：」で区切る。単位なし。</comment>
 		<language name="JPN" width="256">IDNo．</language>
 		<language name="JPN_KANJI" width="256">IDNo．</language>
 	</row>
 
 	<row id="MSG_TCARD_07">
-		<comment>カード表面項目。冒険を始めた時。単位「年」、「月」、「日」の表示は画像で行う。</comment>
+		<comment>カード表面項目。おこづかい。
+単位「円」の表示は画像で行う。</comment>
 		<language name="JPN" width="256">おこづかい</language>
 		<language name="JPN_KANJI" width="256">おこづかい</language>
 	</row>
 
 	<row id="MSG_TCARD_08">
-		<comment>カード裏面項目。初めての殿堂入り。単位「年」、「月」、「日」の表示は画像で行う。時間と分の間を「：」で区切る</comment>
+		<comment>カード表面項目。冒険を始めた時。
+単位「年」、「月」、「日」の表示は画像で行う。</comment>
 		<language name="JPN" width="256">ぼうけんを　はじめたとき</language>
 		<language name="JPN_KANJI" width="256">ぼうけんを　はじめたとき</language>
 	</row>
 
 	<row id="MSG_TCARD_09">
+		<comment>カード裏面項目。初めての殿堂入り。
+単位「年」、「月」、「日」の表示は画像で行う。時間と分の間を「：」で区切る</comment>
 		<language name="JPN" width="256">はじめての　でんどういり</language>
 		<language name="JPN_KANJI" width="256">はじめての　でんどういり</language>
 	</row>
 
 	<row id="MSG_TCARD_10">
-		<comment>カード裏面項目。通信した回数。単位「回」の表示は画像で行う。</comment>
+		<comment>カード裏面項目。通信した回数。
+単位「回」の表示は画像で行う。
+→単位はなしにします。</comment>
 		<language name="JPN" width="256">つうしんした　かいすう</language>
 		<language name="JPN_KANJI" width="256">つうしんした　かいすう</language>
 	</row>
 
 	<row id="MSG_TCARD_11_1">
-		<comment>カード裏面項目。通信対戦の戦績。小項目「かち」、「まけ」の表示は画像で行う。</comment>
+		<comment>カード裏面項目。通信対戦の戦績。
+→単位はなしにします。</comment>
 		<language name="JPN" width="256">つうしんたいせん</language>
 		<language name="JPN_KANJI" width="256">つうしんたいせん</language>
 	</row>
 
 	<row id="MSG_TCARD_11_2">
+		<comment>カード裏面項目。
+通信対戦の勝利回数。
+→単位はなしにします。</comment>
 		<language name="JPN" width="256">つうしんたいせん　かち</language>
 		<language name="JPN_KANJI" width="256">つうしんたいせん　かち</language>
 	</row>
 
 	<row id="MSG_TCARD_11_3">
-		<comment>カード裏面項目。通信交換した回数。単位「回」の表示は画像で行う。</comment>
+		<comment>カード裏面項目。
+通信対戦の敗北回数。
+→単位はなしにします。</comment>
 		<language name="JPN" width="256">つうしんたいせん　まけ</language>
 		<language name="JPN_KANJI" width="256">つうしんたいせん　まけ</language>
 	</row>
 
 	<row id="MSG_TCARD_11_4">
+		<comment>カード裏面項目。通信交換した回数。
+単位「回」の表示は画像で行う。
+→単位はなしにします。</comment>
 		<language name="JPN" width="256">つうしん　こうかん</language>
 		<language name="JPN_KANJI" width="256">つうしん　こうかん</language>
 	</row>
 
 	<row id="MSG_TCARD_12">
-		<comment>カード時間表記用項目。時間と分の間の「：」で区切り。</comment>
+		<comment>カード時間表記用項目。
+時間と分の間の「：」で区切り。</comment>
 		<language name="JPN" width="256">:</language>
 		<language name="JPN_KANJI" width="256">:</language>
 	</row>
@@ -390,51 +408,73 @@
 	</row>
 
 	<row id="MSG_TCARD_15" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>カード裏面項目。野生エンカウント回数。ＤＰで既にカウントされていた項目を利用。項目名と回数を2行に分けて表示。単位はなし。</comment>
+		<comment>カード裏面項目。野生エンカウント回数。
+項目名と回数を2行に分けて表示。
+単位はなし。</comment>
 		<language name="JPN" width="256">とびだしてきた　ポケモンの　かず</language>
 		<language name="JPN_KANJI" width="256">とびだしてきた　ポケモンの　かず</language>
 	</row>
 
 	<row id="MSG_TCARD_16" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>カード裏面項目。トレーナーエンカウント回数。ＤＰで既にカウントされていた項目を利用。トレーナーエンカウント回数。（対人戦・サブウェイは除く）項目名と回数を2行に分けて表示。単位はなし。</comment>
+		<comment>カード裏面項目。
+トレーナーエンカウント回数。（対人戦・サブウェイは除く）
+項目名と回数を2行に分けて表示。
+単位はなし。</comment>
 		<language name="JPN" width="256">トレーナーと　めが　あった　かいすう</language>
 		<language name="JPN_KANJI" width="256">トレーナーと　めが　あった　かいすう</language>
 	</row>
 
 	<row id="MSG_TCARD_17" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>カード裏面項目。すれ違い通信した回数。単位はなし。</comment>
+		<comment>カード裏面項目。すれ違い通信した回数。
+単位はなし。</comment>
 		<language name="JPN" width="256">すれちがい　つうしん</language>
 		<language name="JPN_KANJI" width="256">すれちがい　つうしん</language>
 	</row>
 
 	<row id="MSG_TCARD_18" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>カード裏面項目。相性チェックを最後までやった回数。単位はなし。</comment>
+		<comment>カード裏面項目。相性チェックを最後までやった回数。
+単位はなし。</comment>
 		<language name="JPN" width="256">フィーリング　チェック</language>
 		<language name="JPN_KANJI" width="256">フィーリング　チェック</language>
 	</row>
 
 	<row id="MSG_TCARD_19" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>カード裏面項目。パレスのモノリスの現在のレベル。単位はなし。</comment>
+		<comment>カード裏面項目。
+パレスのモノリスの現在のレベル。
+単位はなし。</comment>
 		<language name="JPN" width="256">モノリスレベル</language>
 		<language name="JPN_KANJI" width="256">モノリスレベル</language>
 	</row>
 
 	<row id="MSG_TCARD_20" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>カード裏面項目。ミュージカル参加回数。（個人・通信の合計。）単位はなし。</comment>
+		<comment>カード裏面項目。ミュージカル参加回数。
+（個人・通信の合計。）単位はなし。</comment>
 		<language name="JPN" width="256">ミュージカル　さんか</language>
 		<language name="JPN_KANJI" width="256">ミュージカル　さんか</language>
 	</row>
 
 	<row id="MSG_TCARD_21" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>カード裏面項目。パルゲートの最高得点。単位はなし。</comment>
+		<comment>カード裏面項目。パルゲートの最高得点。
+単位はなし。</comment>
 		<language name="JPN" width="256">パルゲート　ハイスコア</language>
 		<language name="JPN_KANJI" width="256">パルゲート　ハイスコア</language>
 	</row>
 
 	<row id="MSG_TCARD_22" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>カード裏面項目。トライアルハウスのバトル検定最高得点。単位はなし。</comment>
+		<comment>カード裏面項目。
+トライアルハウスのバトル検定最高得点。
+単位はなし。</comment>
 		<language name="JPN" width="256">バトルけんてい　ハイスコア</language>
 		<language name="JPN_KANJI" width="256">バトルけんてい　ハイスコア</language>
+	</row>
+
+	<row id="MSG_TCARD_23" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>カード裏面項目。
+トライアルハウスのバトル検定の現在ランク
+「バトルけんてい」の文字列から位１文字分
+空けて「○○○○ランク」と入れる。</comment>
+		<language name="JPN" width="256">バトルけんてい</language>
+		<language name="JPN_KANJI" width="256">バトルけんてい</language>
 	</row>
 
 	<row id="MSG_TCARD_BACK">
@@ -457,13 +497,13 @@
 		<language name="JPN" width="256">トレーナーカードに
 サインを　かきますか？</language>
 		<language name="JPN_KANJI" width="256">トレーナーカードに
-サインを　書きますか？</language>
+サインを　描きますか？</language>
 	</row>
 
 	<row id="MSG_TCARD_SIGN02">
 		<language name="JPN" width="256">いま　かかれている　サインは
 きえますが　よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">いま　書かれている　サインは
+		<language name="JPN_KANJI" width="256">いま　描かれている　サインは
 消えますが　よろしいですか？</language>
 	</row>
 
@@ -609,7 +649,7 @@
 
 	<row id="MSG_BADGE_LEADER1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c01ジムリーダー
-1ウインドウ目</comment>
+1～2行目</comment>
 		<language name="JPN" width="256">サンヨウシティ　ジムリーダー
 ポッド　デント　コーン</language>
 		<language name="JPN_KANJI" width="256">サンヨウシティ　ジムリーダー
@@ -618,14 +658,14 @@
 
 	<row id="MSG_BADGE_LEADER1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c01ジムリーダー
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">さんすくみ　さんにんぐみ</language>
 		<language name="JPN_KANJI" width="256">さんすくみ　さんにんぐみ</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c01ジムリーダー
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">ポケモンしょうぶの　きほんは
 タイプあいしょう！　これ　だいじ！</language>
 		<language name="JPN_KANJI" width="256">ポケモン勝負の　基本は
@@ -634,7 +674,7 @@
 
 	<row id="MSG_BADGE_LEADER2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c02ジムリーダー
-1ウインドウ目</comment>
+1～2行目</comment>
 		<language name="JPN" width="256">シッポウシティ　ジムリーダー
 アロエ</language>
 		<language name="JPN_KANJI" width="256">シッポウシティ　ジムリーダー
@@ -643,14 +683,14 @@
 
 	<row id="MSG_BADGE_LEADER2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c02ジムリーダー
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">ナチュラル　ボーン　ママ</language>
 		<language name="JPN_KANJI" width="256">ナチュラル　ボーン　ママ</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c02ジムリーダー
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">こうきしんは　じんせいの　スパイス
 なくすと　あじけなく　なっちゃうよ！</language>
 		<language name="JPN_KANJI" width="256">好奇心は　人生の　スパイス
@@ -659,7 +699,7 @@
 
 	<row id="MSG_BADGE_LEADER3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c03ジムリーダー
-1ウインドウ目</comment>
+1～2行目</comment>
 		<language name="JPN" width="256">ヒウンシティ　ジムリーダー
 アーティ</language>
 		<language name="JPN_KANJI" width="256">ヒウンシティ　ジムリーダー
@@ -668,14 +708,14 @@
 
 	<row id="MSG_BADGE_LEADER3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c03ジムリーダー
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">モスト　インセクト　アーティスト</language>
 		<language name="JPN_KANJI" width="256">モスト　インセクト　アーティスト</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c03ジムリーダー
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">あー　そーだねー　キミ
 むしポケモン　つかいなよ</language>
 		<language name="JPN_KANJI" width="256">あー　そーだねー　キミ
@@ -684,7 +724,7 @@
 
 	<row id="MSG_BADGE_LEADER4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c04ジムリーダー
-1ウインドウ目</comment>
+1～2行目</comment>
 		<language name="JPN" width="256">ライモンシティ　ジムリーダー
 カミツレ</language>
 		<language name="JPN_KANJI" width="256">ライモンシティ　ジムリーダー
@@ -693,14 +733,14 @@
 
 	<row id="MSG_BADGE_LEADER4_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c04ジムリーダー
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">シャイニング　ビューティ</language>
 		<language name="JPN_KANJI" width="256">シャイニング　ビューティ</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER4_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c04ジムリーダー
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">あなたが　これからも　まわりを
 かがやかせる　ひとで　ありますように</language>
 		<language name="JPN_KANJI" width="256">あなたが　これからも　周りを
@@ -709,7 +749,7 @@
 
 	<row id="MSG_BADGE_LEADER5_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c05ジムリーダー
-1ウインドウ目</comment>
+1～2行目</comment>
 		<language name="JPN" width="256">ホドモエシティ　ジムリーダー
 ヤーコン</language>
 		<language name="JPN_KANJI" width="256">ホドモエシティ　ジムリーダー
@@ -718,14 +758,14 @@
 
 	<row id="MSG_BADGE_LEADER5_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c05ジムリーダー
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">アンダーグラウンド　ボス</language>
 		<language name="JPN_KANJI" width="256">アンダーグラウンド　ボス</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER5_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c05ジムリーダー
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">いつだって　じぶんと　ポケモンには
 しょうじきに　いきていたいよな</language>
 		<language name="JPN_KANJI" width="256">いつだって　自分と　ポケモンには
@@ -734,7 +774,7 @@
 
 	<row id="MSG_BADGE_LEADER6_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c06ジムリーダー
-1ウインドウ目</comment>
+1～2行目</comment>
 		<language name="JPN" width="256">フキヨセシティ　ジムリーダー
 フウロ</language>
 		<language name="JPN_KANJI" width="256">フキヨセシティ　ジムリーダー
@@ -743,14 +783,14 @@
 
 	<row id="MSG_BADGE_LEADER6_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c06ジムリーダー
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">おおぞらの　オテンバガール</language>
 		<language name="JPN_KANJI" width="256">大空の　オテンバガール</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER6_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c06ジムリーダー
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">キミが　みてる　そらのした
 みんなが　わらってるんだよ！</language>
 		<language name="JPN_KANJI" width="256">キミが　見てる　空の下
@@ -759,7 +799,7 @@
 
 	<row id="MSG_BADGE_LEADER7_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c07ジムリーダー
-1ウインドウ目</comment>
+1～2行目</comment>
 		<language name="JPN" width="256">セッカシティ　ジムリーダー
 ハチク</language>
 		<language name="JPN_KANJI" width="256">セッカシティ　ジムリーダー
@@ -768,14 +808,14 @@
 
 	<row id="MSG_BADGE_LEADER7_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c07ジムリーダー
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">アイス　マスク</language>
 		<language name="JPN_KANJI" width="256">アイス　マスク</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER7_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c07ジムリーダー
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">あついだけでなく　つめたいだけでなく
 ふたつを　じざいに　コントロールせよ</language>
 		<language name="JPN_KANJI" width="256">熱いだけでなく　冷たいだけでなく
@@ -784,7 +824,7 @@
 
 	<row id="MSG_BADGE_LEADER8B_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c08ジムリーダーBLACKver
-1ウインドウ目</comment>
+1～2行目</comment>
 		<language name="JPN" width="256">ソウリュウシティ　ジムリーダー
 シャガ</language>
 		<language name="JPN_KANJI" width="256">ソウリュウシティ　ジムリーダー
@@ -793,14 +833,14 @@
 
 	<row id="MSG_BADGE_LEADER8B_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c08ジムリーダーBLACKver
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">スパルタン　メイヤー</language>
 		<language name="JPN_KANJI" width="256">スパルタン　メイヤー</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER8B_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c08ジムリーダーBLACKver
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">まっすぐな　こころの　トレーナーよ
 そのまま　たくましくなれ！</language>
 		<language name="JPN_KANJI" width="256">まっすぐな　心の　トレーナーよ
@@ -809,7 +849,7 @@
 
 	<row id="MSG_BADGE_LEADER8W_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c08ジムリーダーWHITEver
-1ウインドウ目</comment>
+1～2行目</comment>
 		<language name="JPN" width="256">ソウリュウシティ　ジムリーダー
 アイリス</language>
 		<language name="JPN_KANJI" width="256">ソウリュウシティ　ジムリーダー
@@ -818,14 +858,14 @@
 
 	<row id="MSG_BADGE_LEADER8W_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c08ジムリーダーWHITEver
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">りゅうの　こころを　しる　むすめ</language>
 		<language name="JPN_KANJI" width="256">竜の心を　知る　娘</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER8W_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>c08ジムリーダーWHITEver
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">アイリスねー！　とっても　つよかった
 きみのこと　ぜったいに　わすれない！</language>
 		<language name="JPN_KANJI" width="256">アイリスねー！　とっても　つよかった
@@ -834,15 +874,17 @@
 
 	<row id="MSG_LEAGUE_BADGE1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c01リーグバッジ
-1ウインドウ目
+1～2行目
 バッジ名の下に獲得年月日</comment>
-		<language name="JPN" width="256">トライバッジ</language>
-		<language name="JPN_KANJI" width="256">トライバッジ</language>
+		<language name="JPN" width="256">トライバッジ
+00ねん00がつ00にち　かくとく</language>
+		<language name="JPN_KANJI" width="256">トライバッジ
+00年00月00日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c01リーグバッジ
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">ひとから　もらった
 レベル20　までの　ポケモンが</language>
 		<language name="JPN_KANJI" width="256">人から　もらった
@@ -851,22 +893,24 @@
 
 	<row id="MSG_LEAGUE_BADGE1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c01リーグバッジ
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">いうことを　きいてくれる</language>
-		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">言うことを　聞いてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE2_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c02リーグバッジ
-1ウインドウ目
+1～2行目
 バッジ名の下に獲得年月日</comment>
-		<language name="JPN" width="256">ベーシックバッジ</language>
-		<language name="JPN_KANJI" width="256">ベーシックバッジ</language>
+		<language name="JPN" width="256">ベーシックバッジ
+00ねん00月00日　かくとく</language>
+		<language name="JPN_KANJI" width="256">ベーシックバッジ
+00年00月00日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c02リーグバッジ
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">ひとから　もらった
 レベル30　までの　ポケモンが</language>
 		<language name="JPN_KANJI" width="256">人から　もらった
@@ -875,22 +919,24 @@
 
 	<row id="MSG_LEAGUE_BADGE2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c02リーグバッジ
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">いうことを　きいてくれる</language>
-		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">言うことを　聞いてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE3_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c03リーグバッジ
-1ウインドウ目
+1～2行目
 バッジ名の下に獲得年月日</comment>
-		<language name="JPN" width="256">ビートルバッジ</language>
-		<language name="JPN_KANJI" width="256">ビートルバッジ</language>
+		<language name="JPN" width="256">ビートルバッジ
+00ねん00がつ00にち　かくとく</language>
+		<language name="JPN_KANJI" width="256">ビートルバッジ
+00年00月00日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE3_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c03リーグバッジ
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">ひとから　もらった
 レベル40　までの　ポケモンが</language>
 		<language name="JPN_KANJI" width="256">人から　もらった
@@ -899,22 +945,24 @@
 
 	<row id="MSG_LEAGUE_BADGE3_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c03リーグバッジ
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">いうことを　きいてくれる</language>
-		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">言うことを　聞いてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE4_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c04リーグバッジ
-1ウインドウ目
+1～2行目
 バッジ名の下に獲得年月日</comment>
-		<language name="JPN" width="256">ボルトバッジ</language>
-		<language name="JPN_KANJI" width="256">ボルトバッジ</language>
+		<language name="JPN" width="256">ボルトバッジ
+00ねん00がつ00にち　かくとく</language>
+		<language name="JPN_KANJI" width="256">ボルトバッジ
+00年00月00日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE4_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c04リーグバッジ
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">ひとから　もらった
 レベル50　までの　ポケモンが</language>
 		<language name="JPN_KANJI" width="256">人から　もらった
@@ -923,22 +971,24 @@
 
 	<row id="MSG_LEAGUE_BADGE4_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c04リーグバッジ
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">いうことを　きいてくれる</language>
-		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">言うことを　聞いてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE5_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c05リーグバッジ
-1ウインドウ目
+1～2行目
 バッジ名の下に獲得年月日</comment>
-		<language name="JPN" width="256">クエイクバッジ</language>
-		<language name="JPN_KANJI" width="256">クエイクバッジ</language>
+		<language name="JPN" width="256">クエイクバッジ
+00ねん00がつ00にち　かくとく</language>
+		<language name="JPN_KANJI" width="256">クエイクバッジ
+00年00月00日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE5_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c05リーグバッジ
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">ひとから　もらった
 レベル60　までの　ポケモンが</language>
 		<language name="JPN_KANJI" width="256">人から　もらった
@@ -947,22 +997,24 @@
 
 	<row id="MSG_LEAGUE_BADGE5_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c05リーグバッジ
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">いうことを　きいてくれる</language>
-		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">言うことを　聞いてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE6_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c06リーグバッジ
-1ウインドウ目
+1～2行目
 バッジ名の下に獲得年月日</comment>
-		<language name="JPN" width="256">ジェットバッジ</language>
-		<language name="JPN_KANJI" width="256">ジェットバッジ</language>
+		<language name="JPN" width="256">ジェットバッジ
+00ねん00がつ00にち　かくとく</language>
+		<language name="JPN_KANJI" width="256">ジェットバッジ
+00年00月00日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE6_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c06リーグバッジ
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">ひとから　もらった
 レベル70　までの　ポケモンが</language>
 		<language name="JPN_KANJI" width="256">人から　もらった
@@ -971,22 +1023,24 @@
 
 	<row id="MSG_LEAGUE_BADGE6_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c06リーグバッジ
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">いうことを　きいてくれる</language>
-		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">言うことを　聞いてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE7_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c07リーグバッジ
-1ウインドウ目
+1～2行目
 バッジ名の下に獲得年月日</comment>
-		<language name="JPN" width="256">アイシクルバッジ</language>
-		<language name="JPN_KANJI" width="256">アイシクルバッジ</language>
+		<language name="JPN" width="256">アイシクルバッジ
+00ねん00がつ00にち　かくとく</language>
+		<language name="JPN_KANJI" width="256">アイシクルバッジ
+00年00月00日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE7_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c07リーグバッジ
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">ひとから　もらった
 レベル80　までの　ポケモンが</language>
 		<language name="JPN_KANJI" width="256">人から　もらった
@@ -995,22 +1049,24 @@
 
 	<row id="MSG_LEAGUE_BADGE7_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c07リーグバッジ
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">いうことを　きいてくれる</language>
-		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">言うことを　聞いてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE8_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c08リーグバッジ
-1ウインドウ目
+1～2行目
 バッジ名の下に獲得年月日</comment>
-		<language name="JPN" width="256">レジェンドバッジ</language>
-		<language name="JPN_KANJI" width="256">レジェンドバッジ</language>
+		<language name="JPN" width="256">レジェンドバッジ
+00ねん00がつ00にち　かくとく</language>
+		<language name="JPN_KANJI" width="256">レジェンドバッジ
+00年00月00日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE8_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c08リーグバッジ
-2ウインドウ目</comment>
+3～4行目</comment>
 		<language name="JPN" width="256">ひとから　もらった
 すべての　ポケモンが</language>
 		<language name="JPN_KANJI" width="256">人から　もらった
@@ -1019,9 +1075,9 @@
 
 	<row id="MSG_LEAGUE_BADGE8_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c08リーグバッジ
-3ウインドウ目</comment>
+5～6行目</comment>
 		<language name="JPN" width="256">いうことを　きいてくれる</language>
-		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">言うことを　聞いてくれる</language>
 	</row>
 
 	<flowchart-group-list>
