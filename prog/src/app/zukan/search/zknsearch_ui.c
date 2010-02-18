@@ -20,6 +20,12 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
+#define	TB_SX			( 24 )
+#define	TB_SY			( 24 )
+#define	TB_PY			( TOUCHBAR_ICON_Y )
+#define	TB_PX07		( TOUCHBAR_ICON_X_07 )
+#define	TB_PX06		( TB_PX07 - TB_SX )
+#define	TB_PX05		( TB_PX06 - TB_SX )
 
 
 //============================================================================================
@@ -45,12 +51,12 @@ static const CURSORMOVE_DATA MainCursorMoveData[] =
 	{ 16,  6, 16, 3,	1, 3, 2, 2,	{  48,  71, 128, 255 } },		// 02: タイプ
 	{ 16,  9, 16, 3,	2, 4, 3, 3,	{  72,  95, 128, 255 } },		// 03: 色
 	{ 16, 12, 16, 5,	3, 5, 4, 4,	{  96, 135, 128, 255 } },		// 04: 形
-	{ 16, 18, 16, 3,	4, 0, 6, 6,	{ 144, 167, 128, 255 } },		// 05: スタート
-	{  0, 18, 16, 3,	4, 0, 5, 5,	{ 144, 167,   0, 127 } },		// 06: リセット
+	{ 14, 18, 18, 3,	4, 0, 6, 6,	{ 144, 167, 113, 255 } },		// 05: スタート
+	{  0, 18,  7, 3,	4, 0, 5, 5,	{ 144, 167,   0,  50 } },		// 06: リセット
 
-	{ 0, 0, 0, 0,	7, 7, 7, 7, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 } },	// 07: Ｙ
-	{ 0, 0, 0, 0,	8, 8, 8, 8, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },	// 08: Ｘ
-	{ 0, 0, 0, 0,	9, 9, 9, 9, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },	// 09: 戻る
+	{ 0, 0, 0, 0,	7, 7, 7, 7, { TB_PY, TB_PY+TB_SY-1, TB_PX05, TB_PX05+TB_SX-1 } },		// 07: Ｙ
+	{ 0, 0, 0, 0,	8, 8, 8, 8, { TB_PY, TB_PY+TB_SY-1, TB_PX06, TB_PX06+TB_SX-1 } },		// 08: Ｘ
+	{ 0, 0, 0, 0,	9, 9, 9, 9, { TB_PY, TB_PY+TB_SY-1, TB_PX07, TB_PX07+TB_SX-1 } },		// 09: 戻る
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -121,8 +127,8 @@ void ZKNSEARCHUI_ChangeCursorPalette( ZKNSEARCHMAIN_WORK * wk, u32 pos, u32 pal 
 {
 	if( pos <= ZKNSEARCHUI_RESET ){
 		const CURSORMOVE_DATA * dat = CURSORMOVE_GetMoveData( wk->cmwk, pos );
-		GFL_BG_ChangeScreenPalette( GFL_BG_FRAME1_M, dat->px, dat->py, dat->sx, dat->sy, pal );
-		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
+		GFL_BG_ChangeScreenPalette( GFL_BG_FRAME0_M, dat->px, dat->py, dat->sx, dat->sy, pal );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
 	}
 }
 

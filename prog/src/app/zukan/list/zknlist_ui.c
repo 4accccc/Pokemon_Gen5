@@ -17,6 +17,17 @@
 
 
 //============================================================================================
+//	定数定義
+//============================================================================================
+#define	TB_SX			( 24 )
+#define	TB_SY			( 24 )
+#define	TB_PY			( TOUCHBAR_ICON_Y )
+#define	TB_PX07		( TOUCHBAR_ICON_X_07 )
+#define	TB_PX06		( TB_PX07 - TB_SX )
+#define	TB_PX05		( TB_PX06 - TB_SX )
+
+
+//============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
 
@@ -45,9 +56,9 @@ static const GFL_UI_TP_HITTBL TouchHitTbl[] =
 	{ 168, 191,  72, 135 },		// 11: セレクト
 //	{ 168, 191, 136, 159 },		// 12: 左
 //	{ 168, 191, 160, 183 },		// 13: 右
-	{ TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 },		// 14: Ｙ
-	{ TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 },		// 15: Ｘ
-	{ TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 },		// 16: 戻る
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX05, TB_PX05+TB_SX-1 },		// 14: Ｙ
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX06, TB_PX06+TB_SX-1 },		// 15: Ｘ
+	{ TB_PY, TB_PY+TB_SY-1, TB_PX07, TB_PX07+TB_SX-1 },		// 16: 戻る
 
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };

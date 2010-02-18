@@ -265,7 +265,7 @@ static int MainSeq_Wipe( ZKNSEARCHMAIN_WORK * wk )
 
 static int MainSeq_InitMenu( ZKNSEARCHMAIN_WORK * wk )
 {
-	ZKNSEARCHMAIN_SetBlendAlpha( FALSE );
+	ZKNSEARCHMAIN_SetBlendAlpha( TRUE );
 
 	ZKNSEARCHMAIN_LoadMenuPageScreen( wk );
 
@@ -273,6 +273,7 @@ static int MainSeq_InitMenu( ZKNSEARCHMAIN_WORK * wk )
 //	ZKNSEARCHOBJ_VanishAll( wk );
 	ZKNSEARCHOBJ_PutMainPage( wk );
 
+	ZKNSEARCHMAIN_ChangeBgPriorityMenu();
 	ZKNSEARCHMAIN_ListBGOn( wk );
 
 	if( wk->page == 0xff ){
@@ -433,6 +434,7 @@ static int MainSeq_InitRow( ZKNSEARCHMAIN_WORK * wk )
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
 			ZKNSEARCHOBJ_PutRowPage( wk );
 			ZKNSEARCHMAIN_LoadRowListPageScreen( wk );
+			ZKNSEARCHMAIN_ChangeBgPriorityList();
 			ZKNSEARCHMAIN_ListBGOn( wk );
 			wk->pageSeq = 0;
 			return MAINSEQ_MAIN_ROW;
@@ -515,6 +517,7 @@ static int MainSeq_InitName( ZKNSEARCHMAIN_WORK * wk )
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
 			ZKNSEARCHOBJ_PutNamePage( wk );
 			ZKNSEARCHMAIN_LoadNameListPageScreen( wk );
+			ZKNSEARCHMAIN_ChangeBgPriorityList();
 			ZKNSEARCHMAIN_ListBGOn( wk );
 			wk->pageSeq = 0;
 			return MAINSEQ_MAIN_NAME;
@@ -599,6 +602,7 @@ static int MainSeq_InitType( ZKNSEARCHMAIN_WORK * wk )
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
 			ZKNSEARCHOBJ_PutTypePage( wk );
 			ZKNSEARCHMAIN_LoadTypeListPageScreen( wk );
+			ZKNSEARCHMAIN_ChangeBgPriorityList();
 			ZKNSEARCHMAIN_ListBGOn( wk );
 			wk->pageSeq = 0;
 			return MAINSEQ_MAIN_TYPE;
@@ -682,6 +686,7 @@ static int MainSeq_InitColor( ZKNSEARCHMAIN_WORK * wk )
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
 			ZKNSEARCHOBJ_PutColorPage( wk );
 			ZKNSEARCHMAIN_LoadColorListPageScreen( wk );
+			ZKNSEARCHMAIN_ChangeBgPriorityList();
 			ZKNSEARCHMAIN_ListBGOn( wk );
 			wk->pageSeq = 0;
 			return MAINSEQ_MAIN_COLOR;
@@ -765,6 +770,7 @@ static int MainSeq_InitForm( ZKNSEARCHMAIN_WORK * wk )
 		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
 			ZKNSEARCHOBJ_PutFormPage( wk );
 			ZKNSEARCHMAIN_LoadFormListPageScreen( wk );
+			ZKNSEARCHMAIN_ChangeBgPriorityList();
 			ZKNSEARCHMAIN_ListBGOn( wk );
 			wk->pageSeq = 0;
 			return MAINSEQ_MAIN_FORM;

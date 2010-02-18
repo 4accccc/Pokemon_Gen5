@@ -158,6 +158,10 @@ extern void ZKNSEARCHMAIN_InitVram(void);
 extern const GFL_DISP_VRAM * ZKNSEARCHMAIN_GetVramBankData(void);
 extern void ZKNSEARCHMAIN_InitBg(void);
 extern void ZKNSEARCHMAIN_ExitBg(void);
+
+extern void ZKNSEARCHMAIN_ChangeBgPriorityMenu(void);
+extern void ZKNSEARCHMAIN_ChangeBgPriorityList(void);
+
 extern void ZKNSEARCHMAIN_LoadBgGraphic(void);
 
 //--------------------------------------------------------------------------------------------

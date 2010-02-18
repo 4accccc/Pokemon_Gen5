@@ -34,6 +34,9 @@
 #define	BLEND_EV1		( 6 )				// ブレンド係数
 #define	BLEND_EV2		( 10 )			// ブレンド係数
 
+#define	MENU_BLEND_EV1	( 16 )	// ブレンド係数
+#define	MENU_BLEND_EV2	( 6 )		// ブレンド係数
+
 #define	TOUCH_BAR_PX		( 0 )
 #define	TOUCH_BAR_PY		( 21 )
 #define	TOUCH_BAR_SX		( 32 )
@@ -240,16 +243,16 @@ void ZKNSEARCHMAIN_InitBg(void)
 	{	// メイン画面：タッチバー
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x4000,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &cnth, GFL_BG_MODE_TEXT );
 	}
-	{	// メイン画面：リスト
+	{	// メイン画面：
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, 0x8000,
-			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
@@ -258,16 +261,16 @@ void ZKNSEARCHMAIN_InitBg(void)
 	{	// メイン画面：背景
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x08000, 0x4000,
 			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &cnth, GFL_BG_MODE_TEXT );
 	}
-	{	// メイン画面：文字
+	{	// メイン画面：
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x18000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
@@ -334,6 +337,19 @@ void ZKNSEARCHMAIN_ExitBg(void)
 	GFL_BG_Exit();
 }
 
+void ZKNSEARCHMAIN_ChangeBgPriorityMenu(void)
+{
+	GFL_BG_SetPriority( GFL_BG_FRAME0_M, 1 );
+	GFL_BG_SetPriority( GFL_BG_FRAME1_M, 0 );
+}
+
+void ZKNSEARCHMAIN_ChangeBgPriorityList(void)
+{
+	GFL_BG_SetPriority( GFL_BG_FRAME0_M, 0 );
+	GFL_BG_SetPriority( GFL_BG_FRAME1_M, 1 );
+}
+
+
 void ZKNSEARCHMAIN_LoadBgGraphic(void)
 {
 	ARCHANDLE * ah;
@@ -342,9 +358,9 @@ void ZKNSEARCHMAIN_LoadBgGraphic(void)
 	ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_zukan_gra_search_search_bgd_NCLR, PALTYPE_MAIN_BG, 0, 0x20*5, HEAPID_ZUKAN_SEARCH );
+		ah, NARC_zukan_gra_search_search_bgd_NCLR, PALTYPE_MAIN_BG, 0, 0x20*6, HEAPID_ZUKAN_SEARCH );
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_zukan_gra_search_search_bgu_NCLR, PALTYPE_SUB_BG, 0, 0x20*4, HEAPID_ZUKAN_SEARCH );
+		ah, NARC_zukan_gra_search_search_bgu_NCLR, PALTYPE_SUB_BG, 0, 0x20*5, HEAPID_ZUKAN_SEARCH );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
 		ah, NARC_zukan_gra_search_searchframe_bgd_NCGR, GFL_BG_FRAME0_M, 0, FALSE, HEAPID_ZUKAN_SEARCH );
@@ -354,14 +370,16 @@ void ZKNSEARCHMAIN_LoadBgGraphic(void)
 		ah, NARC_zukan_gra_search_searchframe_bgd_NCGR, GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_search_searchbase_bgd_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_search_searchframe_bgd_NCGR, GFL_BG_FRAME1_S, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_search_searchbase_bgu_NCGR, GFL_BG_FRAME2_S, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
-
+/*
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_search_main_bgd_NSCR,
 		GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+*/
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_searchbase_bgd_NSCR,
 		GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
@@ -427,6 +445,10 @@ void ZKNSEARCHMAIN_LoadBgGraphic(void)
 void ZKNSEARCHMAIN_SetBlendAlpha( BOOL flg )
 {
 	if( flg == TRUE ){
+		G2_SetBlendAlpha(
+			GX_BLEND_PLANEMASK_BG3,
+			GX_BLEND_PLANEMASK_BG2,
+			MENU_BLEND_EV1, MENU_BLEND_EV2 );
 		G2S_SetBlendAlpha(
 			GX_BLEND_PLANEMASK_BG1,
 			GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2,
@@ -502,7 +524,11 @@ void ZKNSEARCHMAIN_LoadMenuPageScreen( ZKNSEARCHMAIN_WORK * wk )
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_search_main_bgd_NSCR,
-		GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_zukan_gra_search_search_main2_bgd_NSCR,
+		GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 
 	GFL_ARC_CloseDataHandle( ah );
 }
@@ -513,7 +539,7 @@ void ZKNSEARCHMAIN_LoadRowListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_list_row_bgd_NSCR,
-		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+		GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 
 	GFL_ARC_CloseDataHandle( ah );
 }
@@ -524,7 +550,7 @@ void ZKNSEARCHMAIN_LoadNameListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_list_name_bgd_NSCR,
-		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+		GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 
 	GFL_ARC_CloseDataHandle( ah );
 }
@@ -535,7 +561,7 @@ void ZKNSEARCHMAIN_LoadTypeListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_list_type_bgd_NSCR,
-		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+		GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 
 	GFL_ARC_CloseDataHandle( ah );
 }
@@ -546,7 +572,7 @@ void ZKNSEARCHMAIN_LoadColorListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_list_color_bgd_NSCR,
-		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+		GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 
 	GFL_ARC_CloseDataHandle( ah );
 }
@@ -557,13 +583,13 @@ void ZKNSEARCHMAIN_LoadFormListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_list_form_bgd_NSCR,
-		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+		GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 
 	GFL_ARC_CloseDataHandle( ah );
 }
 
 #define	LOAD_WIN_PX		( 0 )
-#define	LOAD_WIN_PY		( 18 )
+#define	LOAD_WIN_PY		( 17 )
 #define	LOAD_WIN_SX		( 32 )
 #define	LOAD_WIN_SY		( 6 )
 
@@ -573,24 +599,33 @@ void ZKNSEARCHMAIN_LoadingWindowOn( ZKNSEARCHMAIN_WORK * wk )
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_load_win_NSCR,
-		GFL_BG_FRAME3_M, 32*LOAD_WIN_PY, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+		GFL_BG_FRAME1_M, 32*LOAD_WIN_PY, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 
 	GFL_ARC_CloseDataHandle( ah );
 
-	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, FALSE );
-	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, FALSE );
-	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, FALSE );
+	ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_OFF );
+	ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, APP_COMMON_BARICON_EXIT_OFF );
+	if( GAMEDATA_GetShortCut( wk->dat->gamedata, SHORTCUT_ID_ZUKAN_SEARCH ) == TRUE ){
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_ON_PASSIVE );
+	}else{
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_OFF_PASSIVE );
+	}
 }
 
 void ZKNSEARCHMAIN_LoadingWindowOff( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_LOADING_BAR, FALSE );
-	GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0, LOAD_WIN_PX, LOAD_WIN_PY, LOAD_WIN_SX, LOAD_WIN_SY, 0 );
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+	GFL_BG_FillScreen( GFL_BG_FRAME1_M, 0, LOAD_WIN_PX, LOAD_WIN_PY, LOAD_WIN_SX, LOAD_WIN_SY, 0 );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
 
-	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, TRUE );
-	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, TRUE );
-	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, TRUE );
+	ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN );
+	ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, APP_COMMON_BARICON_EXIT );
+	if( GAMEDATA_GetShortCut( wk->dat->gamedata, SHORTCUT_ID_ZUKAN_SEARCH ) == TRUE ){
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_ON );
+	}else{
+		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_OFF );
+	}
+
 	ZKNSEARCHBMP_PutResetStart( wk );
 //	ZKNSEARCHMAIN_LoadMenuPageScreen( wk );
 }

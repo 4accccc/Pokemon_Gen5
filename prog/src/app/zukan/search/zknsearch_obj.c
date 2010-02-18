@@ -62,7 +62,7 @@
 #define	FORMPAGE_FORM_PY	( 104 )
 
 #define	LOADING_BAR_PX		( 8 )
-#define	LOADING_BAR_PY		( 176 )
+#define	LOADING_BAR_PY		( 168 )
 #define	LOADING_BAR_MVX		( 2 )
 
 
@@ -129,12 +129,12 @@ static const ZKNCOMM_CLWK_DATA ClactParamTbl[] =
 		0, CLSYS_DRAW_MAIN
 	},
 	{	// マーク１
-		{ 0, 0, 2, 0, 2 },
+		{ 0, 0, 2, 0, 1 },
 		ZKNSEARCHOBJ_CHRRES_SCROLL_BAR, ZKNSEARCHOBJ_PALRES_SCROLL_BAR, ZKNSEARCHOBJ_CELRES_SCROLL_BAR,
 		0, CLSYS_DRAW_MAIN
 	},
 	{	// マーク２
-		{ 0, 0, 2, 0, 2 },
+		{ 0, 0, 2, 0, 1 },
 		ZKNSEARCHOBJ_CHRRES_SCROLL_BAR, ZKNSEARCHOBJ_PALRES_SCROLL_BAR, ZKNSEARCHOBJ_CELRES_SCROLL_BAR,
 		0, CLSYS_DRAW_MAIN
 	},
@@ -152,7 +152,7 @@ static const ZKNCOMM_CLWK_DATA ClactParamTbl[] =
 
 // フォルムセルアクターデータ（メイン画面）
 static const ZKNCOMM_CLWK_DATA FormClactParamMain = {
-	{ 0, 0, 0, 0, 2 },
+	{ 0, 0, 0, 0, 1 },
 	ZKNSEARCHOBJ_CHRRES_FORM_M, ZKNSEARCHOBJ_PALRES_FORM_M, ZKNSEARCHOBJ_CELRES_FORM,
 	0, CLSYS_DRAW_MAIN
 };
