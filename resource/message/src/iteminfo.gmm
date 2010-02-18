@@ -5706,6 +5706,15 @@
 しまえる　きれいで　すてきなケース。</language>
 	</row>
 
+	<row id="ITEMINFO_620">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

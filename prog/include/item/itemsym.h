@@ -606,8 +606,9 @@
 #define ITEM_KIREINAISI		( 617 )		// きれいないし
 #define ITEM_POKEZYARASI		( 618 )		// ポケじゃらし
 #define ITEM_GUZZUKEESU		( 619 )		// グッズケース
+#define ITEM_PARESUDAMA		( 620 )		// パレスだま
 
-#define ITEM_DATA_MAX		( 619 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 620 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数
