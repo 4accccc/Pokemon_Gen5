@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T21:42:36"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T10:29:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1488" top="289" right="2193" bottom="909" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="597" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<language name="JPN">メンバーが　いなくなったので
 かいさん　します</language>
 		<language name="JPN_KANJI">メンバーが　いなくなったので
-かいさん　します</language>
+解散します</language>
 	</row>
 
 	<row id="msg_oekaki_07">
