@@ -10,6 +10,7 @@
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/questionnaire_save.h"
+#include "app/research_radar/questionnaire_index.h"
 
 
 //==============================================================================
@@ -17,7 +18,7 @@
 //==============================================================================
 ///質問のバリエーション数
 #define QUESTIONNAIRE_ITEM_NUM       (30)
-///回答のバリエーション数
+///回答のバリエーション数(無回答を除く)
 #define QUESTIONNAIRE_ANSWER_NUM     (150)
 
 ///本日の調査人数最大数
@@ -119,16 +120,17 @@ QUESTIONNAIRE_ANSWER_WORK * Questionnaire_GetAnswerWork(QUESTIONNAIRE_SAVE_WORK 
  * アンケート回答を読み取る
  *
  * @param   qanswer		  回答ワークへのポインタ
- * @param   start_bit		読み取り開始bit位置
- * @param   bit_size		読み取りbitサイズ
+ * @param   question_id 質問ID
  *
  * @retval  u32		回答
  *
  * 自分の回答データの読み取り、ビーコンに入っている回答データの読み取りに使用
  */
 //==================================================================
-u32 QuestionnaireAnswer_ReadBit(const QUESTIONNAIRE_ANSWER_WORK *qanswer, u32 start_bit, u32 bit_size)
+u32 QuestionnaireAnswer_ReadBit(const QUESTIONNAIRE_ANSWER_WORK *qanswer, u8 question_id)
 {
+  u32 start_bit = QUESTIONNAIRE_INDEX_GetBitCountOffset(question_id);
+  u32 bit_size = QUESTIONNAIRE_INDEX_GetBitCount(question_id);
   u32 buf_no = start_bit / 8;
   u32 buf_bit = start_bit % 8;
   u32 ret = 0;
@@ -155,15 +157,16 @@ u32 QuestionnaireAnswer_ReadBit(const QUESTIONNAIRE_ANSWER_WORK *qanswer, u32 st
  * アンケート回答を書き込む
  *
  * @param   qanswer		  回答ワークへのポインタ
- * @param   start_bit		書き込み開始bit位置
- * @param   bit_size		書き込みbitサイズ
+ * @param   question_id 質問ID
  * @param   data		    回答
  * 
  * 自分の回答データの読み取り、ビーコンに入っている回答データの読み取りに使用
  */
 //==================================================================
-void QuestionnaireAnswer_WriteBit(QUESTIONNAIRE_ANSWER_WORK *qanswer, u32 start_bit, u32 bit_size, u32 data)
+void QuestionnaireAnswer_WriteBit(QUESTIONNAIRE_ANSWER_WORK *qanswer, u8 question_id, u32 data)
 {
+  u32 start_bit = QUESTIONNAIRE_INDEX_GetBitCountOffset(question_id);
+  u32 bit_size = QUESTIONNAIRE_INDEX_GetBitCount(question_id);
   u32 buf_no = start_bit / 8;
   u32 buf_bit = start_bit % 8;
   u32 ret = 0;
@@ -275,21 +278,45 @@ void QuestionnaireWork_AddTotalCount(QUESTIONNAIRE_SAVE_WORK *qsw, int question_
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * 質問IDと項目Noから対象のバッファの要素番号を取得する
+ *
+ * @param   question_id		
+ * @param   answer_type		
+ *
+ * @retval  u32		
+ */
+//--------------------------------------------------------------
+static u32 _Get_AnswerNo(int question_id, int answer_type)
+{
+  u32 answer_no;
+  
+  answer_no = QUESTIONNAIRE_INDEX_GetAnswerNumOffset(question_id);
+  answer_no += answer_type - 1; //無回答を除いたデータ構造になっているため、-1
+  GF_ASSERT(answer_no < QUESTIONNAIRE_ANSWER_NUM);
+  return answer_no;
+}
+
 //==================================================================
 /**
  * 指定項目の答えた人数を取得：今日の答え
  *
  * @param   qsw		        アンケートセーブワークへのポインタ
  * @param   question_id		質問ID
- * @param   answer_type		質問ID毎の項目No
+ * @param   answer_type		質問ID毎の項目No ※0:回答0  1:回答1  2:回答2...
  *
  * @retval  u8		回答人数
  */
 //==================================================================
 u8 QuestionnaireWork_GetTodayAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id, int answer_type)
 {
-  //※check　質問IDからのbit位置、項目位置が参照できるテーブルが出来るまで後回し
-  return qsw->today_answer[0];
+  if(answer_type == 0){ //回答0は無回答の為、固定で0を返す
+    GF_ASSERT(0); //無回答は加算していくデータではない為、要求される事はおかしい
+    return 0;
+  }
+  
+  return qsw->today_answer[ _Get_AnswerNo(question_id, answer_type) ];
 }
 
 //==================================================================
@@ -298,14 +325,26 @@ u8 QuestionnaireWork_GetTodayAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int questio
  *
  * @param   qsw		        アンケートセーブワークへのポインタ
  * @param   question_id		質問ID
- * @param   answer_type		質問ID毎の項目No
+ * @param   answer_type		質問ID毎の項目No ※0:回答0  1:回答1  2:回答2...
  * @param   add_count     加算数
  */
 //==================================================================
 void QuestionnaireWork_AddTodayAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id, int answer_type, int add_count)
 {
-  //※check　質問IDからのbit位置、項目位置が参照できるテーブルが出来るまで後回し
-  return;
+  u32 answer_no;
+
+  if(answer_type == 0){
+    GF_ASSERT(0); //無回答は加算していくデータではない為、要求される事はおかしい
+    return;
+  }
+
+  answer_no = _Get_AnswerNo(question_id, answer_type);
+  if(qsw->today_answer[answer_no] + add_count > QUESTIONNAIRE_TODAY_ANSWER_COUNT_MAX){
+    qsw->today_answer[answer_no] = QUESTIONNAIRE_TODAY_ANSWER_COUNT_MAX;
+  }
+  else{
+    qsw->today_answer[answer_no] += add_count;
+  }
 }
 
 //==================================================================
@@ -321,8 +360,12 @@ void QuestionnaireWork_AddTodayAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int quest
 //==================================================================
 u8 QuestionnaireWork_GetTotalAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id, int answer_type)
 {
-  //※check　質問IDからの項目位置が参照できるテーブルが出来るまで後回し
-  return qsw->total_answer[0];
+  if(answer_type == 0){ //回答0は無回答の為、固定で0を返す
+    GF_ASSERT(0); //無回答は加算していくデータではない為、要求される事はおかしい
+    return 0;
+  }
+  
+  return qsw->total_answer[ _Get_AnswerNo(question_id, answer_type) ];
 }
 
 //==================================================================
@@ -339,8 +382,20 @@ u8 QuestionnaireWork_GetTotalAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int questio
 //==================================================================
 void QuestionnaireWork_AddTotalAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id, int answer_type, int add_count)
 {
-  //※check　質問IDからの項目位置が参照できるテーブルが出来るまで後回し
-  return;
+  u32 answer_no;
+
+  if(answer_type == 0){
+    GF_ASSERT(0); //無回答は加算していくデータではない為、要求される事はおかしい
+    return;
+  }
+
+  answer_no = _Get_AnswerNo(question_id, answer_type);
+  if(qsw->total_answer[answer_no] + add_count > QUESTIONNAIRE_TOTAL_ANSWER_COUNT_MAX){
+    qsw->total_answer[answer_no] = QUESTIONNAIRE_TOTAL_ANSWER_COUNT_MAX;
+  }
+  else{
+    qsw->total_answer[answer_no] += add_count;
+  }
 }
 
 //==================================================================
