@@ -30,6 +30,8 @@
 #include "field/beacon_view.h"
 #include "net_app/union/union_main.h"
 
+#include "report.h"
+
 //-----------------------------------------------------------------------------
 /**
  *          定数宣言
@@ -75,6 +77,7 @@ struct _FIELD_SUBSCREEN_WORK {
     GFL_CAMADJUST * gflCamAdjust;
     GFL_SNDVIEWER * gflSndViewer;
     void * checker;
+		REPORT_WORK * reportWork;
   };
   u16 angle_h;
   u16 angle_v;
@@ -156,6 +159,12 @@ static void draw_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 
 static FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode);
 
+static void init_report_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
+static void exit_report_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+static void draw_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
@@ -221,6 +230,15 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     draw_dowsing_subscreen,
     NULL,
     exit_dowsing_subscreen,
+    NULL,
+  },
+	{	// レポート画面
+		FIELD_SUBSCREEN_REPORT,
+    init_report_subscreen,
+    update_report_subscreen,
+    draw_report_subscreen,
+    NULL,
+    exit_report_subscreen,
     NULL,
   },
   { // デバッグライト制御パネル
@@ -1158,6 +1176,56 @@ static void draw_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 }
 
 
+
+
+
+
+
+
+
+
+
+
 //=============================================================================
 //=============================================================================
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief  レポート画面の初期化
+ *  @param  heapID  ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+static void init_report_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
+{
+	pWork->reportWork = REPORT_Init( FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork->heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  レポート画面の破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_report_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+	REPORT_Exit( pWork->reportWork );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  レポート画面の更新
+ */
+//-----------------------------------------------------------------------------
+static void update_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+	REPORT_Update( pWork->reportWork );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  レポート画面の描画
+ */
+//-----------------------------------------------------------------------------
+static void draw_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+//  FIELD_MENU_DrawMenu( pWork->fieldMenuWork );
+}

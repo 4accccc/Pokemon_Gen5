@@ -1,0 +1,3 @@
+"base_bg_lz.NSCR"
+"base_bg_lz.NCGR"
+"base_bg.NCLR"

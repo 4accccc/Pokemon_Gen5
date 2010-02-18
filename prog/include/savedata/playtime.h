@@ -40,4 +40,11 @@ extern u8 PLAYTIME_GetSecond(const PLAYTIME * ptime);
 
 extern void PLAYTIME_Set(PLAYTIME * ptime, u32 hour, u32 min, u32 sec);
 
+extern void PLAYTIME_SetSaveTime( PLAYTIME * ptime );
+extern u32 PLAYTIME_GetSaveYear( const PLAYTIME * ptime );
+extern u32 PLAYTIME_GetSaveMonth( const PLAYTIME * ptime );
+extern u32 PLAYTIME_GetSaveDay( const PLAYTIME * ptime );
+extern u32 PLAYTIME_GetSaveHour( const PLAYTIME * ptime );
+extern u32 PLAYTIME_GetSaveMinute( const PLAYTIME * ptime );
+
 #endif	//__PLAYTIME_H__

@@ -40,6 +40,7 @@ typedef enum {
   FIELD_SUBSCREEN_BEACON_VIEW,        // すれ違い結果画面
   FIELD_SUBSCREEN_NOGEAR,             // Cギアの未取得時
   FIELD_SUBSCREEN_DOWSING,            // ダウジング
+  FIELD_SUBSCREEN_REPORT,             // レポート画面
 #if PM_DEBUG
   FIELD_SUBSCREEN_DEBUG_LIGHT,        // デバッグライト制御パネル
   FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA,  // デバッグカメラ

@@ -148,7 +148,8 @@ SUBDIRS	=	wmi \
 			egg_demo \
 			kokuren \
 			pokevoice \
-			dowsing_gra
+			dowsing_gra \
+            report
 
 include $(RESOURCE_MACRO)
 

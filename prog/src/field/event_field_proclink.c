@@ -42,6 +42,8 @@
 //アーカイブ
 #include "message.naix"
 #include "msg/msg_fldmapmenu.h"
+#include "script_message.naix"
+#include "msg/script/msg_common_scr.h"
 
 //その他
 #include "item/item.h"  //ITEM_GetMailDesign
@@ -1969,9 +1971,15 @@ typedef struct
   FLDMSGBG *msgBG;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
+	FLDMSGWIN_STREAM * msgStream;
+	FLDMENUFUNC * ynMenu;
   GAMESYS_WORK *gsys;
   FIELDMAP_WORK *fieldWork;
+	SAVE_CONTROL_WORK * sv;
+	STRBUF * strBuff;
 }FMENU_REPORT_EVENT_WORK;
+
+#define	REPORT_STR_LEN		( 512 )		// 文字列バッファの長さ
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -1989,6 +1997,7 @@ static GMEVENT * createFMenuReportEvent(
   work->heapID = heapID;
   work->gsys = gsys;
   work->fieldWork = fieldWork;
+	work->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(work->gsys) );
   return msgEvent;
 }
 
@@ -1998,8 +2007,208 @@ static GMEVENT * createFMenuReportEvent(
  * @retval
  */
 //--------------------------------------------------------------
+enum {
+	REPORT_SEQ_SUBDISP_SET = 0,					// サブ画面セット
+	REPORT_SEQ_INIT_MESSAGE,						// 初期メッセージ
+	REPORT_SEQ_WRITE_YESNO_SET,					// セーブしますか？【はい・いいえ】セット
+	REPORT_SEQ_WRITE_YESNO_WAIT,				// セーブしますか？【はい・いいえ】待ち
+	REPORT_SEQ_OVERWRITE_YESNO_SET,			// 上書きしますか？【はい・いいえ】セット
+	REPORT_SEQ_OVERWRITE_YESNO_WAIT,		// 上書きしますか？【はい・いいえ】待ち
+	REPORT_SEQ_SAVE_INIT,								// セーブ初期設定
+	REPORT_SEQ_SAVE_MAIN,								// セーブ実行
+	REPORT_SEQ_RESULT_OK_WAIT,					// セーブ成功メッセージ待ち
+	REPORT_SEQ_RESULT_SE_WAIT,					// ＳＥ待ち
+	REPORT_SEQ_RESULT_NG_WAIT,					// セーブ失敗メッセージ待ち
+	REPORT_SEQ_END_TRG_WAIT,						// セーブ後のキー待ち
+	REPORT_SEQ_SUBDISP_RESET,						// サブ画面リセット
+	REPORT_SEQ_END,											// 終了
+};
+
+static void SetReportMsg( FMENU_REPORT_EVENT_WORK * wk, u32 strIdx );
+static void SetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work );
+static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work );
+
+
 static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
 {
+	FMENU_REPORT_EVENT_WORK * work = wk;
+
+	switch( (*seq) ){
+	case REPORT_SEQ_SUBDISP_SET:						// サブ画面セット
+		FIELD_SUBSCREEN_Change( FIELDMAP_GetFieldSubscreenWork(work->fieldWork), FIELD_SUBSCREEN_REPORT );
+		*seq = REPORT_SEQ_INIT_MESSAGE;
+		break;
+
+	case REPORT_SEQ_INIT_MESSAGE:						// 初期メッセージ
+		work->msgData = GFL_MSG_Create(
+											GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
+											NARC_script_message_common_scr_dat, work->heapID );
+		work->msgStream = FLDMSGWIN_STREAM_AddTalkWin( work->msgBG, work->msgData );
+		work->strBuff = GFL_STR_CreateBuffer( REPORT_STR_LEN, work->heapID );
+		SetReportMsg( work, msg_common_report_01 );
+//		FLDMSGWIN_STREAM_PrintStart( work->msgStream, 0, 0, msg_common_report_01 );
+		*seq = REPORT_SEQ_WRITE_YESNO_SET;
+		break;
+
+	case REPORT_SEQ_WRITE_YESNO_SET:				// セーブしますか？【はい・いいえ】セット
+		if( FLDMSGWIN_STREAM_Print( work->msgStream ) == TRUE ){
+			work->ynMenu = FLDMENUFUNC_AddYesNoMenu( work->msgBG, FLDMENUFUNC_YESNO_YES );
+			*seq = REPORT_SEQ_WRITE_YESNO_WAIT;
+		}
+		break;
+
+	case REPORT_SEQ_WRITE_YESNO_WAIT:				// セーブしますか？【はい・いいえ】待ち
+		switch( FLDMENUFUNC_ProcYesNoMenu(work->ynMenu) ){
+		case FLDMENUFUNC_YESNO_YES:		// はい
+			FLDMENUFUNC_DeleteMenu( work->ynMenu );
+//			FLDMSGWIN_STREAM_ClearMessage( work->msgStream );
+			// 通信中でセーブできない
+      if( GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(work->gsys)) == GAME_COMM_NO_INVASION ){
+				SetReportMsg( work, msg_common_report_13 );
+//				FLDMSGWIN_STREAM_PrintStart( work->msgStream, 0, 0, msg_common_report_13 );
+				*seq = REPORT_SEQ_RESULT_NG_WAIT;
+			// 違うセーブデータがある
+			}else if( SaveControl_IsOverwritingOtherData(work->sv) == TRUE ){
+				SetReportMsg( work, msg_common_report_08 );
+//				FLDMSGWIN_STREAM_PrintStart( work->msgStream, 0, 0, msg_common_report_08 );
+				*seq = REPORT_SEQ_RESULT_NG_WAIT;
+			// セーブデータがある
+			}else if( SaveData_GetExistFlag(work->sv) == TRUE ){
+				SetReportMsg( work, msg_common_report_02 );
+//				FLDMSGWIN_STREAM_PrintStart( work->msgStream, 0, 0, msg_common_report_02 );
+				*seq = REPORT_SEQ_OVERWRITE_YESNO_SET;
+			// セーブ
+			}else{
+				SetReportMsg( work, msg_common_report_03 );
+//				FLDMSGWIN_STREAM_PrintStart( work->msgStream, 0, 0, msg_common_report_03 );
+				*seq = REPORT_SEQ_SAVE_INIT;
+			}
+			break;
+
+		case FLDMENUFUNC_YESNO_NO:		// いいえ
+			FLDMENUFUNC_DeleteMenu( work->ynMenu );
+			*seq = REPORT_SEQ_SUBDISP_RESET;
+			break;
+
+		case FLDMENUFUNC_YESNO_NULL:	// 選択中
+			break;
+		}
+		break;
+
+	case REPORT_SEQ_OVERWRITE_YESNO_SET:		// 上書きしますか？【はい・いいえ】セット
+		if( FLDMSGWIN_STREAM_Print( work->msgStream ) == TRUE ){
+			work->ynMenu = FLDMENUFUNC_AddYesNoMenu( work->msgBG, FLDMENUFUNC_YESNO_YES );
+			*seq = REPORT_SEQ_OVERWRITE_YESNO_WAIT;
+		}
+		break;
+
+	case REPORT_SEQ_OVERWRITE_YESNO_WAIT:		// 上書きしますか？【はい・いいえ】待ち
+		switch( FLDMENUFUNC_ProcYesNoMenu(work->ynMenu) ){
+		case FLDMENUFUNC_YESNO_YES:		// はい
+			FLDMENUFUNC_DeleteMenu( work->ynMenu );
+			SetReportMsg( work, msg_common_report_03 );
+//			FLDMSGWIN_STREAM_ClearMessage( work->msgStream );
+//			FLDMSGWIN_STREAM_PrintStart( work->msgStream, 0, 0, msg_common_report_03 );
+			*seq = REPORT_SEQ_SAVE_INIT;
+			break;
+
+		case FLDMENUFUNC_YESNO_NO:		// いいえ
+			FLDMENUFUNC_DeleteMenu( work->ynMenu );
+			*seq = REPORT_SEQ_SUBDISP_RESET;
+			break;
+
+		case FLDMENUFUNC_YESNO_NULL:	// 選択中
+			break;
+		}
+		break;
+
+	case REPORT_SEQ_SAVE_INIT:							// セーブ初期設定
+		if( FLDMSGWIN_STREAM_Print( work->msgStream ) == TRUE ){
+			PLAYTIME_SetSaveTime( SaveData_GetPlayTime(work->sv) );
+			SetReportPlayerAnime( work );
+			GAMEDATA_SaveAsyncStart( GAMESYSTEM_GetGameData(work->gsys) );
+			*seq = REPORT_SEQ_SAVE_MAIN;
+		}
+		break;
+
+	case REPORT_SEQ_SAVE_MAIN:							// セーブ実行
+		switch( GAMEDATA_SaveAsyncMain(GAMESYSTEM_GetGameData(work->gsys)) ){
+		case SAVE_RESULT_CONTINUE:
+		case SAVE_RESULT_LAST:
+			break;
+      
+		case SAVE_RESULT_OK:
+			ResetReportPlayerAnime( work );
+			FLDMSGWIN_STREAM_ClearMessage( work->msgStream );
+			{
+				WORDSET * wset;
+				STRBUF * str;
+				wset = WORDSET_Create( work->heapID );
+				str  = GFL_MSG_CreateString( work->msgData, msg_common_report_04 );
+				WORDSET_RegisterPlayerName( wset, 0, GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(work->gsys)) );
+				WORDSET_ExpandStr( wset, work->strBuff, str );
+				GFL_STR_DeleteBuffer( str );
+				WORDSET_Delete( wset );
+			}
+			FLDMSGWIN_STREAM_PrintStrBufStart( work->msgStream, 0, 0, work->strBuff );
+//			FLDMSGWIN_STREAM_PrintStart( work->msgStream, 0, 0, msg_common_report_04 );
+			*seq = REPORT_SEQ_RESULT_OK_WAIT;
+			break;
+
+		case SAVE_RESULT_NG:
+			ResetReportPlayerAnime( work );
+			SetReportMsg( work, msg_common_report_06 );
+//			FLDMSGWIN_STREAM_ClearMessage( work->msgStream );
+//			FLDMSGWIN_STREAM_PrintStart( work->msgStream, 0, 0, msg_common_report_06 );
+			*seq = REPORT_SEQ_RESULT_NG_WAIT;
+			break;
+		}
+		break;
+
+	case REPORT_SEQ_RESULT_OK_WAIT:		// セーブ成功メッセージ待ち
+		if( FLDMSGWIN_STREAM_Print( work->msgStream ) == TRUE ){
+			PMSND_PlaySE( SEQ_SE_SAVE );
+			*seq = REPORT_SEQ_RESULT_SE_WAIT;
+		}
+		break;
+
+	case REPORT_SEQ_RESULT_SE_WAIT:		// ＳＥ待ち
+		if( PMSND_CheckPlayingSEIdx(SEQ_SE_SAVE) == FALSE ){
+			*seq = REPORT_SEQ_END_TRG_WAIT;
+		}
+		break;
+
+	case REPORT_SEQ_RESULT_NG_WAIT:		// セーブ失敗メッセージ待ち
+		if( FLDMSGWIN_STREAM_Print( work->msgStream ) == TRUE ){
+			*seq = REPORT_SEQ_END_TRG_WAIT;
+		}
+		break;
+
+	case REPORT_SEQ_END_TRG_WAIT:			// セーブ後のキー待ち
+		if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ){
+			*seq = REPORT_SEQ_SUBDISP_RESET;
+		}
+		break;
+
+	case REPORT_SEQ_SUBDISP_RESET:					// サブ画面リセット
+		GFL_STR_DeleteBuffer( work->strBuff );
+		FLDMSGWIN_STREAM_Delete( work->msgStream );
+    GFL_MSG_Delete( work->msgData );
+		FIELD_SUBSCREEN_Change( FIELDMAP_GetFieldSubscreenWork(work->fieldWork), FIELD_SUBSCREEN_TOPMENU );
+		*seq = REPORT_SEQ_END;
+		break;
+
+	case REPORT_SEQ_END:										// 終了
+		return GMEVENT_RES_FINISH;
+	}
+
+	return GMEVENT_RES_CONTINUE;
+
+
+
+
+
+#if 0
   FMENU_REPORT_EVENT_WORK *work = wk;
   
   switch( (*seq) ){
@@ -2039,12 +2248,15 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
 
         FLDMSGWIN_Print( work->msgWin, 0, 0, FLDMAPMENU_STR14 );
         //本来ならレポート用への切り替え？
-        //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
+       //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
         GXS_SetMasterBrightness(-16);
         (*seq)++;
       }
     }
     break;
+
+
+
   case 1:
     if( FLDMSGWIN_CheckPrintTrans(work->msgWin) == TRUE ){
       GAMEDATA_SaveAsyncStart(GAMESYSTEM_GetGameData(work->gsys));
@@ -2149,6 +2361,48 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
   }
 
   return( GMEVENT_RES_CONTINUE );
+
+#endif
+
 }
 
+static void SetReportMsg( FMENU_REPORT_EVENT_WORK * wk, u32 strIdx )
+{
+  GFL_MSG_GetString( wk->msgData, strIdx, wk->strBuff );
+	FLDMSGWIN_STREAM_ClearMessage( wk->msgStream );
+	FLDMSGWIN_STREAM_PrintStrBufStart( wk->msgStream, 0, 0, wk->strBuff );
+}
 
+/*
+static void DelReportMsg( FMENU_REPORT_EVENT_WORK * wk )
+{
+	FLDMSGPRINT_STREAM_Delete( wk->msgStream );
+	GFL_STR_DeleteBuffer( wk->str );
+}
+*/
+
+
+
+// 自機レポートに
+static void SetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work )
+{
+	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( work->fieldWork );
+	if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
+		MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+		FIELD_PLAYER_SetRequest( fld_player, FIELD_PLAYER_REQBIT_REPORT );
+		FIELD_PLAYER_UpdateRequest( fld_player );
+		//ポーズを解除しアニメするように
+		MMDL_OffMoveBitMoveProcPause( mmdl );
+		MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_ANM );
+	}
+}
+
+// 自機元に戻す
+static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work )
+{
+	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( work->fieldWork );
+	if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
+		FIELD_PLAYER_SetRequest( fld_player, FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM );
+		FIELD_PLAYER_UpdateRequest( fld_player );
+	}
+}

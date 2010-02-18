@@ -28,6 +28,12 @@ void PLAYTIME_Init(PLAYTIME * ptime)
 	ptime->hour = 0;
 	ptime->minute = 0;
 	ptime->second = 0;
+
+	ptime->save_year = 0;
+	ptime->save_month = 0;
+	ptime->save_day = 0;
+	ptime->save_hour = 0;
+	ptime->save_minute = 0;
 }
 
 //---------------------------------------------------------------------------
@@ -131,3 +137,85 @@ u8 PLAYTIME_GetSecond(const PLAYTIME * ptime)
 	return ptime->second;
 }
 
+
+//---------------------------------------------------------------------------
+/**
+ * @brief		セーブした日付と時間を設定
+ * @param		ptime		プレイ時間へのポインタ
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+void PLAYTIME_SetSaveTime( PLAYTIME * ptime )
+{
+	RTCDate	date;
+	RTCTime	time;
+
+	RTC_GetDate( &date );
+	RTC_GetTime( &time );
+
+	ptime->save_year = date.year;
+	ptime->save_month = date.month;
+	ptime->save_day = date.day;
+	ptime->save_hour = time.hour;
+	ptime->save_minute = time.minute;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief		セーブした年を取得
+ * @param		ptime		プレイ時間へのポインタ
+ * @return	年
+ */
+//---------------------------------------------------------------------------
+u32 PLAYTIME_GetSaveYear( const PLAYTIME * ptime )
+{
+	return ptime->save_year;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief		セーブした月を取得
+ * @param		ptime		プレイ時間へのポインタ
+ * @return	月
+ */
+//---------------------------------------------------------------------------
+u32 PLAYTIME_GetSaveMonth( const PLAYTIME * ptime )
+{
+	return ptime->save_month;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief		セーブした日を取得
+ * @param		ptime		プレイ時間へのポインタ
+ * @return	日
+ */
+//---------------------------------------------------------------------------
+u32 PLAYTIME_GetSaveDay( const PLAYTIME * ptime )
+{
+	return ptime->save_day;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief		セーブした時を取得
+ * @param		ptime		プレイ時間へのポインタ
+ * @return	時
+ */
+//---------------------------------------------------------------------------
+u32 PLAYTIME_GetSaveHour( const PLAYTIME * ptime )
+{
+	return ptime->save_hour;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief		セーブした分を取得
+ * @param		ptime		プレイ時間へのポインタ
+ * @return	分
+ */
+//---------------------------------------------------------------------------
+u32 PLAYTIME_GetSaveMinute( const PLAYTIME * ptime )
+{
+	return ptime->save_minute;
+}
