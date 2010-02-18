@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-08T18:01:19"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T11:17:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="910" top="382" right="1600" bottom="1002" maximized="no" rayout="Vertical2">
+	<dialog left="1732" top="127" right="2102" bottom="747" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="123" top="147" right="596" bottom="545" visible="no"/>
-		<band id="0" index="0" style="0000" width="515"/>
-		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="682"/>
-		<band id="3" index="3" style="0000" width="682"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="0" index="0" style="0000" width="445"/>
+		<band id="1" index="1" style="0000" width="362"/>
+		<band id="2" index="2" style="0000" width="362"/>
+		<band id="3" index="3" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -454,10 +454,10 @@
 	</row>
 
 	<row id="MSG_TCARD_SIGN01">
-		<language name="JPN" width="256">トレーナーカードに　サインを
-かきますか？</language>
-		<language name="JPN_KANJI" width="256">トレーナーカードに　サインを
-書きますか？</language>
+		<language name="JPN" width="256">トレーナーカードに
+サインを　かきますか？</language>
+		<language name="JPN_KANJI" width="256">トレーナーカードに
+サインを　書きますか？</language>
 	</row>
 
 	<row id="MSG_TCARD_SIGN02">
@@ -852,8 +852,8 @@
 	<row id="MSG_LEAGUE_BADGE1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c01リーグバッジ
 3ウインドウ目</comment>
-		<language name="JPN" width="256">いうことを　きくようになる</language>
-		<language name="JPN_KANJI" width="256">言うことを　聞くようになる</language>
+		<language name="JPN" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE2_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -876,8 +876,8 @@
 	<row id="MSG_LEAGUE_BADGE2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c02リーグバッジ
 3ウインドウ目</comment>
-		<language name="JPN" width="256">いうことを　きくようになる</language>
-		<language name="JPN_KANJI" width="256">言うことを　聞くようになる</language>
+		<language name="JPN" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE3_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -900,8 +900,8 @@
 	<row id="MSG_LEAGUE_BADGE3_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c03リーグバッジ
 3ウインドウ目</comment>
-		<language name="JPN" width="256">いうことを　きくようになる</language>
-		<language name="JPN_KANJI" width="256">言うことを　聞くようになる</language>
+		<language name="JPN" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE4_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -924,8 +924,8 @@
 	<row id="MSG_LEAGUE_BADGE4_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c04リーグバッジ
 3ウインドウ目</comment>
-		<language name="JPN" width="256">いうことを　きくようになる</language>
-		<language name="JPN_KANJI" width="256">言うことを　聞くようになる</language>
+		<language name="JPN" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE5_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -948,8 +948,8 @@
 	<row id="MSG_LEAGUE_BADGE5_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c05リーグバッジ
 3ウインドウ目</comment>
-		<language name="JPN" width="256">いうことを　きくようになる</language>
-		<language name="JPN_KANJI" width="256">言うことを　聞くようになる</language>
+		<language name="JPN" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE6_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -972,8 +972,8 @@
 	<row id="MSG_LEAGUE_BADGE6_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c06リーグバッジ
 3ウインドウ目</comment>
-		<language name="JPN" width="256">いうことを　きくようになる</language>
-		<language name="JPN_KANJI" width="256">言うことを　聞くようになる</language>
+		<language name="JPN" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE7_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -996,8 +996,8 @@
 	<row id="MSG_LEAGUE_BADGE7_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c07リーグバッジ
 3ウインドウ目</comment>
-		<language name="JPN" width="256">いうことを　きくようになる</language>
-		<language name="JPN_KANJI" width="256">言うことを　聞くようになる</language>
+		<language name="JPN" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE8_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -1020,8 +1020,8 @@
 	<row id="MSG_LEAGUE_BADGE8_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>c08リーグバッジ
 3ウインドウ目</comment>
-		<language name="JPN" width="256">いうことを　きくようになる</language>
-		<language name="JPN_KANJI" width="256">言うことを　聞くようになる</language>
+		<language name="JPN" width="256">いうことを　きいてくれる</language>
+		<language name="JPN_KANJI" width="256">いうことを　きいてくれる</language>
 	</row>
 
 	<flowchart-group-list>
