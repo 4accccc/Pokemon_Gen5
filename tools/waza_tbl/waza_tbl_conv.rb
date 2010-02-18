@@ -121,19 +121,20 @@ end
   fp_hash = open( "wazano_hash.rb", "w" )
   fp_hash.printf("#! ruby -Ks\n\n" )
   fp_hash.printf("\t$wazano_hash = {\n" )
+  fp_hash.printf("\t\t\"－－－－－－－\"=>0,\n" )
 
   #GMM
   wazaname_gmm = GMM::new
   wazaname_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "wazaname.gmm" )
-  wazaname_gmm.make_row_index( "WAZANAME_", 0, "－－－－－" )
+  wazaname_gmm.make_row_index_kanji( "WAZANAME_", 0, "―――――", "―――――" )
   wazainfo_gmm = GMM::new
   wazainfo_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "wazainfo.gmm" )
-  wazainfo_gmm.make_row_index_kanji( "WAZAINFO_", 0, "－\r－\r－\r－\r－", "－\r－\r－\r－\r－" )
+  wazainfo_gmm.make_row_index_kanji( "WAZAINFO_", 0, "―\r―\r―\r―\r―", "―\r―\r―\r―\r―" )
   atkmsg_gmm = GMM::new
   atkmsg_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "btl_attack.gmm" )
-  atkmsg_gmm.make_row_index( "ATKMSG_M_", 0, "！" )
-  atkmsg_gmm.make_row_index( "ATKMSG_Y_", 0, "！" )
-  atkmsg_gmm.make_row_index( "ATKMSG_E_", 0, "！" )
+  atkmsg_gmm.make_row_index_kanji( "ATKMSG_M_", 0, "！", "！" )
+  atkmsg_gmm.make_row_index_kanji( "ATKMSG_Y_", 0, "！", "！" )
+  atkmsg_gmm.make_row_index_kanji( "ATKMSG_E_", 0, "！", "！" )
 
   #タメ技リスト
   tame_waza = []
@@ -161,7 +162,7 @@ end
     end
     fp_wazano.printf( "( %d )\t\t//%s\n", cnt, split_data[ PARA::WAZANAME ] )
     fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::WAZANAME ], cnt )
-    wazaname_gmm.make_row_index( "WAZANAME_", cnt, split_data[ PARA::WAZANAME ] )
+    wazaname_gmm.make_row_index_kanji( "WAZANAME_", cnt, split_data[ PARA::WAZANAME ], split_data[ PARA::WAZANAME ] )
     info = split_data[ PARA::INFO1 ] + "\r\n" + split_data[ PARA::INFO2 ] + "\r\n" + split_data[ PARA::INFO3 ] + "\r\n" + split_data[ PARA::INFO4 ] + "\r\n" + split_data[ PARA::INFO5 ]
     #@todo 漢字説明文ありなんですが、現状データがないので、同じ文字列で生成
     wazainfo_gmm.make_row_index_kanji( "WAZAINFO_", cnt, info, info )
@@ -169,11 +170,11 @@ end
       p split_data[ PARA::ATKMSG ]
     end
     atkmsg = minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
-    atkmsg_gmm.make_row_index( "ATKMSG_M_", cnt, atkmsg )
+    atkmsg_gmm.make_row_index_kanji( "ATKMSG_M_", cnt, atkmsg, atkmsg )
     atkmsg = "やせいの　" + minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
-    atkmsg_gmm.make_row_index( "ATKMSG_Y_", cnt, atkmsg )
+    atkmsg_gmm.make_row_index_kanji( "ATKMSG_Y_", cnt, atkmsg, atkmsg )
     atkmsg = "あいての　" + minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
-    atkmsg_gmm.make_row_index( "ATKMSG_E_", cnt, atkmsg )
+    atkmsg_gmm.make_row_index_kanji( "ATKMSG_E_", cnt, atkmsg, atkmsg )
     cnt += 1
   }
 

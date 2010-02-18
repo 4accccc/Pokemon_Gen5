@@ -61,6 +61,7 @@ end
   fp_hash = open( "item_hash.rb", "w" )
   fp_hash.printf("#! ruby -Ks\n\n" )
   fp_hash.printf("\t$item_hash = {\n" )
+  fp_hash.printf("\t\t\"||||||||\"=>0,\n" )
 
 =begin
   #GMM
