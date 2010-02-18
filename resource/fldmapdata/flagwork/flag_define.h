@@ -684,11 +684,11 @@
 #define FV_N01R0502_LEGEND_01              660 /* 0x0294 N城謁見の間：奥側に表示するパッケージポケモン */
 #define FV_N01R0502_LEGEND_02              661 /* 0x0295 N城謁見の間：手前側に表示するパッケージポケモン */
 		/* not used   662(0x0296) */
-		/* not used   663(0x0297) */
-		/* not used   664(0x0298) */
-		/* not used   665(0x0299) */
-		/* not used   666(0x029a) */
-		/* not used   667(0x029b) */
+#define FV_D03R0101_DARUMA_01              663 /* 0x0297 砂漠のゴリダルマ(瞑想モード)その１ */
+#define FV_D03R0101_DARUMA_02              664 /* 0x0298 砂漠のゴリダルマ(瞑想モード)その２ */
+#define FV_D03R0101_DARUMA_03              665 /* 0x0299 砂漠のゴリダルマ(瞑想モード)その３ */
+#define FV_D03R0101_DARUMA_04              666 /* 0x029a 砂漠のゴリダルマ(瞑想モード)その４ */
+#define FV_D03R0101_DARUMA_05              667 /* 0x029b 砂漠のゴリダルマ(瞑想モード)その５ */
 		/* not used   668(0x029c) */
 		/* not used   669(0x029d) */
 		/* not used   670(0x029e) */
