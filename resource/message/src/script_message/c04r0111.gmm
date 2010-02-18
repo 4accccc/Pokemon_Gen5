@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00180" date="2010-01-29T21:29:37"/>
+	<create user="kagaya" host="W00143" date="2010-02-17T17:41:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="258" top="180" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="283" top="232" right="978" bottom="848" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="520"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="533"/>
@@ -293,115 +293,100 @@
 
 
 	<row id="msg_c04r0111_00">
-		<comment>？？？</comment>
-		<language name="JPN" width="256">ライモンシティに　もどりますか？</language>
-		<language name="JPN_KANJI" width="256">ライモンシティに　もどりますか？</language>
-	</row>
-
-	<row id="msg_c04r0111_01">
-		<language name="JPN" width="256">では　ライモンシティへ　もどります</language>
-		<language name="JPN_KANJI" width="256">では　ライモンシティへ　もどります</language>
-	</row>
-
-	<row id="msg_c04r0111_02">
-		<language name="JPN" width="256">どうなさいますか？</language>
-		<language name="JPN_KANJI" width="256">どうなさいますか？</language>
-	</row>
-
-	<row id="msg_c04r0111_03">
-		<comment>メニュー</comment>
-		<language name="JPN" width="256">つづけて　チャレンジ</language>
-		<language name="JPN_KANJI" width="256">つづけて　チャレンジ</language>
-	</row>
-
-	<row id="msg_c04r0111_04">
-		<comment>メニュー</comment>
-		<language name="JPN" width="256">ライモンシティに　もどる</language>
-		<language name="JPN_KANJI" width="256">ライモンシティに　もどる</language>
-	</row>
-
-	<row id="msg_c04r0111_05">
-		<comment>メニュー</comment>
-		<language name="JPN" width="256">まだ　ここにいる</language>
-		<language name="JPN_KANJI" width="256">まだ　ここにいる</language>
-	</row>
-
-	<row id="msg_c04r0111_06">
-		<language name="JPN" width="256">では　いったん　ライモンシティへ
-もどります</language>
-		<language name="JPN_KANJI" width="256">では　いったん　ライモンシティへ
-もどります</language>
-	</row>
-
-	<row id="msg_c04r0111_07">
-		<language name="JPN" width="256">ごあんないする　まえに
-レポートを　かきます</language>
-		<language name="JPN_KANJI" width="256">ごあんないする　まえに
-レポートを　かきます</language>
-	</row>
-
-	<row id="msg_c04r0111_08">
-		<language name="JPN" width="256">おめでとう　ございます！[BE:01:ページ切り替え（クリア）]
-みごと　７にんぬき　たっせいです[BE:01:ページ切り替え（クリア）]
-７にんぬきを　たっせい　しましたので
-バトルポイントを　しんてい　します！</language>
-		<language name="JPN_KANJI" width="256">おめでとう　ございます！[BE:01:ページ切り替え（クリア）]
-みごと　７にんぬき　たっせいです[BE:01:ページ切り替え（クリア）]
-７にんぬきを　たっせい　しましたので
-バトルポイントを　しんてい　します！</language>
-	</row>
-
-	<row id="msg_c04r0111_point_get">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　バトルポイントを
 [2:01:２桁:1]BP　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　バトルポイントを
 [2:01:２桁:1]BP　てにいれた！</language>
 	</row>
 
-	<row id="msg_c04r0111_09">
+	<row id="msg_c04r0111_01">
+		<language name="JPN" width="256">せいせきを　レポートに　かきますので
+おまちください</language>
+		<language name="JPN_KANJI" width="256">せいせきを　レポートに　かきますので
+おまちください</language>
+	</row>
+
+	<row id="msg_c04r0111_02">
+		<language name="JPN" width="256">ごあんないする　まえに
+レポートを　かきます</language>
+		<language name="JPN_KANJI" width="256">ごあんないする　まえに
+レポートを　かきます</language>
+	</row>
+
+	<row id="msg_c04r0111_03">
+		<language name="JPN" width="256">おめでとう　ございます！
+みごと　７にんぬき　たっせいです！[BE:01:ページ切り替え（クリア）]
+７にんぬきを　たっせい　しましたので
+バトルポイントを　しんてい　します！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おめでとう　ございます！
+みごと　７にんぬき　たっせいです！[BE:01:ページ切り替え（クリア）]
+７にんぬきを　たっせい　しましたので
+バトルポイントを　しんてい　します！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04r0111_04">
 		<language name="JPN" width="256">おめでとう　ございます！[BE:01:ページ切り替え（クリア）]
 ７れんしょうを　たっせいし
 みごと　サブウェイマスターを[BE:00:ページ切り替え（行送り）]
 たおしましたので　バトルポイントを[BE:00:ページ切り替え（行送り）]
-しんてい　いたします</language>
+しんてい　いたします[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おめでとう　ございます！[BE:01:ページ切り替え（クリア）]
 ７れんしょうを　たっせいし
 みごと　サブウェイマスターを[BE:00:ページ切り替え（行送り）]
 たおしましたので　バトルポイントを[BE:00:ページ切り替え（行送り）]
-しんてい　いたします</language>
+しんてい　いたします[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04r0111_05">
+		<language name="JPN" width="256">そして　○○○○○さまは
+スーパーシングルトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
+できるように　なりました！</language>
+		<language name="JPN_KANJI" width="256">そして　○○○○○さまは
+スーパーシングルトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
+できるように　なりました！</language>
+	</row>
+
+	<row id="msg_c04r0111_06">
+		<language name="JPN" width="256">そして　○○○○○さまは
+スーパーダブルトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
+できるように　なりました！</language>
+		<language name="JPN_KANJI" width="256">そして　○○○○○さまは
+スーパーダブルトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
+できるように　なりました！</language>
+	</row>
+
+	<row id="msg_c04r0111_07">
+		<language name="JPN" width="256">そして　○○○○○さまは
+スーパーマルチトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
+できるように　なりました！</language>
+		<language name="JPN_KANJI" width="256">そして　○○○○○さまは
+スーパーマルチトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
+できるように　なりました！</language>
+	</row>
+
+	<row id="msg_c04r0111_08">
+		<language name="JPN" width="256">そして　みごと　○○○○○を
+たおしましたので[BE:01:ページ切り替え（クリア）]
+きねんに　トロフィを　さしあげます
+ごじたくに　おかざり　ください！</language>
+		<language name="JPN_KANJI" width="256">そして　みごと　○○○○○を
+たおしましたので[BE:01:ページ切り替え（クリア）]
+きねんに　トロフィを　さしあげます
+ごじたくに　おかざり　ください！</language>
+	</row>
+
+	<row id="msg_c04r0111_09">
+		<language name="JPN" width="256">それでは　ごゆっくり　どうぞ[BE:01:ページ切り替え（クリア）]
+つつげて　チャレンジしたい　ばあいや
+いったん　ライモンシティに　もどる[BE:00:ページ切り替え（行送り）]
+ばあいは　おこえを　かけて　ください</language>
+		<language name="JPN_KANJI" width="256">それでは　ごゆっくり　どうぞ[BE:01:ページ切り替え（クリア）]
+つつげて　チャレンジしたい　ばあいや
+いったん　ライモンシティに　もどる[BE:00:ページ切り替え（行送り）]
+ばあいは　おこえを　かけて　ください</language>
 	</row>
 
 	<row id="msg_c04r0111_10">
-		<language name="JPN" width="256">そして　プレイヤーは
-スーパーシングルトレイン</language>
-		<language name="JPN_KANJI" width="256">そして　プレイヤーは
-スーパーシングルトレイン</language>
-	</row>
-
-	<row id="msg_c04r0111_11">
-		<language name="JPN" width="256">みごと　？をたおしたのでトロフィ</language>
-		<language name="JPN_KANJI" width="256">みごと　？をたおしたのでトロフィ</language>
-	</row>
-
-	<row id="msg_c04r0111_12">
-		<language name="JPN" width="256">せいせきを　レポートに　かきこみますので
-おまちください</language>
-		<language name="JPN_KANJI" width="256">せいせきを　レポートに　かきこみますので
-おまちください</language>
-	</row>
-
-	<row id="msg_c04r0111_13">
-		<language name="JPN" width="256">それでは　ごゆっくり　どうぞ[BE:01:ページ切り替え（クリア）]
-つづけて　チャレンジしたい　ばあいや
-いったん　ライモンシティに　もどる[BE:00:ページ切り替え（行送り）]
-ばあいは　また　おこえを　かけて　ください</language>
-		<language name="JPN_KANJI" width="256">それでは　ごゆっくり　どうぞ[BE:01:ページ切り替え（クリア）]
-つづけて　チャレンジしたい　ばあいや
-いったん　ライモンシティに　もどる[BE:00:ページ切り替え（行送り）]
-ばあいは　また　おこえを　かけて　ください</language>
-	</row>
-
-	<row id="msg_c04r0111_14">
 		<language name="JPN" width="256">シングルトレインは　ここで
 しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
 ライモンシティに　もどる　ばあいは
@@ -414,7 +399,7 @@
 それでは　ごゆっくり　どうぞ</language>
 	</row>
 
-	<row id="msg_c04r0111_15">
+	<row id="msg_c04r0111_11">
 		<language name="JPN" width="256">ダブルトレインは　ここで
 しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
 ライモンシティに　もどる　ばあいは
@@ -427,24 +412,117 @@
 それでは　ごゆっくり　どうぞ</language>
 	</row>
 
+	<row id="msg_c04r0111_12">
+		<language name="JPN" width="256">マルチトレインは　ここで
+しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
+ライモンシティに　もどる　ばあいは
+また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+それでは　ごゆっくり　どうぞ</language>
+		<language name="JPN_KANJI" width="256">マルチトレインは　ここで
+しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
+ライモンシティに　もどる　ばあいは
+また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+それでは　ごゆっくり　どうぞ</language>
+	</row>
+
+	<row id="msg_c04r0111_13">
+		<language name="JPN" width="256">ライモンシティに　もどりますか？</language>
+		<language name="JPN_KANJI" width="256">ライモンシティに　もどりますか？</language>
+	</row>
+
+	<row id="msg_c04r0111_14">
+		<language name="JPN" width="256">では　ライモンシティへ　もどります</language>
+		<language name="JPN_KANJI" width="256">では　ライモンシティへ　もどります</language>
+	</row>
+
+	<row id="msg_c04r0111_15">
+		<language name="JPN" width="256">どうなさいますか？</language>
+		<language name="JPN_KANJI" width="256">どうなさいますか？</language>
+	</row>
+
 	<row id="msg_c04r0111_16">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<comment>メニュー</comment>
+		<language name="JPN" width="256">つづけてチャレンジ</language>
+		<language name="JPN_KANJI" width="256">つづけてチャレンジ</language>
 	</row>
 
 	<row id="msg_c04r0111_17">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<comment>メニュー</comment>
+		<language name="JPN" width="256">ライモンシティにもどる</language>
+		<language name="JPN_KANJI" width="256">ライモンシティにもどる</language>
 	</row>
 
 	<row id="msg_c04r0111_18">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<comment>メニュー</comment>
+		<language name="JPN" width="256">まだここにいる</language>
+		<language name="JPN_KANJI" width="256">まだここにいる</language>
 	</row>
 
 	<row id="msg_c04r0111_19">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<comment>通信マルチ</comment>
+		<language name="JPN" width="256">おともだちの　せんたくを　まっています……</language>
+		<language name="JPN_KANJI" width="256">おともだちの　せんたくを　まっています……</language>
+	</row>
+
+	<row id="msg_c04r0111_20">
+		<comment>通信マルチ</comment>
+		<language name="JPN" width="256">ライモンシティにもどるが
+えらばれたので　ちょうせんを[BE:00:ページ切り替え（行送り）]
+いったん　ちゅうだんします</language>
+		<language name="JPN_KANJI" width="256">ライモンシティにもどるが
+えらばれたので　ちょうせんを[BE:00:ページ切り替え（行送り）]
+いったん　ちゅうだんします</language>
+	</row>
+
+	<row id="msg_c04r0111_21">
+		<comment>WiFi</comment>
+		<language name="JPN" width="256">そして　○○○○○さんは
+ランク○に　なりました！</language>
+		<language name="JPN_KANJI" width="256">そして　○○○○○さんは
+ランク○に　なりました！</language>
+	</row>
+
+	<row id="msg_c04r0111_22">
+		<comment>WiFi</comment>
+		<language name="JPN" width="256">こんかいの　せいせきを　Ｗｉ-Ｆｉ
+コネクションに　おくりますか？</language>
+		<language name="JPN_KANJI" width="256">こんかいの　せいせきを　Ｗｉ-Ｆｉ
+コネクションに　おくりますか？</language>
+	</row>
+
+	<row id="msg_c04r0111_23">
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト</language>
+	</row>
+
+	<row id="msg_c04r0111_24">
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト</language>
+	</row>
+
+	<row id="msg_c04r0111_25">
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト</language>
+	</row>
+
+	<row id="msg_c04r0111_26">
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト</language>
+	</row>
+
+	<row id="msg_c04r0111_27">
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト</language>
+	</row>
+
+	<row id="msg_c04r0111_28">
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト</language>
+	</row>
+
+	<row id="msg_c04r0111_29">
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト</language>
 	</row>
 
 	<row id="msg_c04r0111_boy2_1">

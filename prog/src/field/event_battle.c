@@ -315,7 +315,11 @@ GMEVENT * EVENT_BSubwayTrainerBattle(
 
   bew = GMEVENT_GetEventWork(event);
   BEW_Initialize( bew, gsys, bp );
+#if 0
   bew->is_sub_event = TRUE; //サブイベント呼び出し
+#else
+  bew->is_sub_event = FALSE; //戦闘後のフェードイン目当て
+#endif
   bew->is_no_lose = TRUE; //敗戦処理無し
   //エンカウントエフェクトセット(サブウェイ固有)
   bew->EncEffNo = ENCEFFID_SUBWAY;
@@ -408,7 +412,7 @@ static GMEVENT_RESULT fieldBattleEvent(
   GAMEDATA * gamedata = bew->gamedata;
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FIELD_SOUND * fsnd = GAMEDATA_GetFieldSound( gamedata );
-
+  
   switch (*seq) {
   case 0:
     // 戦闘用ＢＧＭセット

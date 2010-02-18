@@ -605,7 +605,7 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
     gjiki->dash_play_se_count = 0;
   }else{
     int dash_count;
-    u32 se,dash_flag;
+    u32 se,dash_flag,init_flag;
     VecFx32 pos;
     const ATTR_FLAG_SE *p0;
     const ATTR_VALUE_SE *p1;
@@ -617,6 +617,7 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
     se = SEQ_SE_DUMMY;
     dash_count = 0;
     
+    init_flag = TRUE;
     dash_flag = 0;
     
     if( FIELD_PLAYER_CORE_GetMoveForm(
@@ -676,12 +677,13 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
           if( gjiki->dash_play_se_count != 0 &&
               gjiki->dash_play_se_count < dash_count ){
             se = SEQ_SE_DUMMY;
+            init_flag = FALSE; //再生SEはあるが条件満たさず
           }
           
           if( gjiki->dash_play_se_count >= dash_count ){
             gjiki->dash_play_se_count = 0;
           }
-
+          
           gjiki->dash_play_se_count++;
         }
       }
@@ -736,6 +738,7 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
           if( gjiki->dash_play_se_count != 0 &&
               gjiki->dash_play_se_count < dash_count ){
             se = SEQ_SE_DUMMY;
+            init_flag = FALSE; //再生SEはあるが条件満たさず
           }
           
           if( gjiki->dash_play_se_count >= dash_count ){
@@ -752,7 +755,7 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
       }
     }
     
-    { //再生無し　カウントクリア
+    if( init_flag == TRUE ){ //再生無し　カウントクリア
       gjiki->dash_play_se = SEQ_SE_DUMMY;
       gjiki->dash_play_se_count = 0;
     }

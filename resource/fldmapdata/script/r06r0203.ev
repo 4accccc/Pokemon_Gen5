@@ -80,7 +80,7 @@ sub_legend1_escaped:
 
     _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_disappear_01 )
     _OBJ_ANIME_WAIT()
-    _OBJ_DEL_EX( MMDL_ID_EVENTOBJ_00 )
+    _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
     _RET
 
 /**************************************************************/
@@ -102,7 +102,7 @@ sub_legend1_captured:
 
     _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_disappear_03 )
     _OBJ_ANIME_WAIT()
-    _OBJ_DEL_EX( MMDL_ID_EVENTOBJ_00 )
+    _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
     _RET
 
 /**************************************************************/

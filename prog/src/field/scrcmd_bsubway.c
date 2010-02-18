@@ -256,8 +256,15 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
       
       FIELD_PLAYER_GetPos( fld_player, &pos );
-      LOCATION_SetDirect( &loc, FIELDMAP_GetZoneID(fieldmap),
-          FIELD_PLAYER_GetDir(fld_player), pos.x, pos.y, pos.z );
+      
+      {
+        static const u16 DIR_ROT[DIR_MAX4] = {0,0x8000,0x4000,0xC000};
+        u16 dir = FIELD_PLAYER_GetDir( fld_player );
+        dir = DIR_ROT[dir];
+        LOCATION_SetDirect( &loc, FIELDMAP_GetZoneID(fieldmap),
+            dir, pos.x, pos.y, pos.z );
+      }
+      
       GAMEDATA_SetSpecialLocation( gdata, &loc );
       EVENTWORK_SetEventFlag( event, SYS_FLAG_SPEXIT_REQUEST );
       
@@ -302,11 +309,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     if( bsway_CheckRegulation(param0,gsys) == FALSE ){
       *ret_wk = 1;
     }
-    break;
-  //プレイモード取得
-  case BSWTOOL_GET_PLAY_MODE:
-    *ret_wk = BSUBWAY_PLAYDATA_GetData(
-        playData, BSWAY_PLAYDATA_ID_playmode, NULL );
     break;
   //現在ラウンド数取得
   case BSWTOOL_GET_NOW_ROUND:
@@ -400,6 +402,35 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     case BSWAY_MODE_S_COMM_MULTI:
       *ret_wk = TRUE;
       break;
+    }
+    break;
+  //指定OBJの高さ取得をOFF
+  case BSWTOOL_OBJ_HEIGHT_OFF:
+    {
+      u16 id = param0;
+      fx32 height = GRID_SIZE_FX32( param1 );
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+      GF_ASSERT( mmdl != NULL );
+      if( mmdl != NULL ){
+        VecFx32 pos;
+        MMDL_GetVectorPos( mmdl, &pos );
+        pos.y = height;
+        MMDL_InitPosition( mmdl, &pos, MMDL_GetDirDisp(mmdl) );
+        MMDL_SetStatusBitHeightGetOFF( mmdl, TRUE );
+      }
+    }
+    break;
+  //指定OBJの高さ取得をON
+  case BSWTOOL_OBJ_HEIGHT_ON:
+    {
+      u16 id = param0;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+      GF_ASSERT( mmdl != NULL );
+      if( mmdl != NULL ){
+        MMDL_SetStatusBitHeightGetOFF( mmdl, FALSE );
+      }
     }
     break;
   //----TOOL Wifi関連
@@ -591,6 +622,9 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_GET_WIFI_RANK:
     *ret_wk = BSUBWAY_SCRWORK_SetWifiRank(
             bsw_scr, gsys, BSWAY_SETMODE_get );
+    break;
+  //ホーム、OBJセット
+  case BSWSUB_SET_HOME_OBJ:
     break;
   //----ワーク依存　通信関連
   //通信開始

@@ -381,6 +381,7 @@ VMCMD_RESULT EvCmdObjAddEvent( VMHANDLE *core, void *wk )
  * @return  VMCMD_RESULT
  */
 //--------------------------------------------------------------
+#if 0
 VMCMD_RESULT EvCmdObjDelEvent( VMHANDLE *core, void *wk )
 {
   MMDL *mmdl;
@@ -396,6 +397,7 @@ VMCMD_RESULT EvCmdObjDelEvent( VMHANDLE *core, void *wk )
   MMDL_DeleteEvent( mmdl, evwork );
   return( VMCMD_RESULT_CONTINUE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -444,6 +446,29 @@ static BOOL EvCmdSxyPosChange( VM_MACHINE *core, void *wk )
 	return 0;
 }
 #endif
+
+//--------------------------------------------------------------
+/**
+ * OBJに指定されているイベントフラグを取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdObjEventFlagGet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, work );
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+  GF_ASSERT( mmdl != NULL && "OBJ GET EVENT FLAG 対象のOBJが居ません\n" );
+  
+  if( mmdl != NULL ){
+    *ret_wk = MMDL_GetEventFlag( mmdl );
+  }
+  
+  return( VMCMD_RESULT_CONTINUE );
+}
 
 //======================================================================
 //  動作モデル　イベント関連

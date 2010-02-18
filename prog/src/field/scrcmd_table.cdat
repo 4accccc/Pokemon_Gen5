@@ -207,10 +207,10 @@
 
   DEF_CMD( EvCmdPlayerPosGet, EV_SEQ_PLAYER_POS_GET )
   DEF_CMD( EvCmdObjAdd, EV_SEQ_OBJ_ADD )
-  DEF_CMD( EvCmdObjDel, EV_SEQ_OBJ_DEL )
+  DEF_CMD( EvCmdObjEventFlagGet, EV_SEQ_OBJ_EV_FLAG_GET )
   DEF_CMD( EvCmdObjAddEvent, EV_SEQ_OBJ_ADD_EV )
 
-  DEF_CMD( EvCmdObjDelEvent, EV_SEQ_OBJ_DEL_EV )
+  DEF_CMD( EvCmdObjDel, EV_SEQ_OBJ_DEL )
 	DEF_CMD( EvCmdObjPosChange, EV_SEQ_OBJ_POS_CHANGE )
   DEF_CMD( EvCmdPlayerDirGet, EV_SEQ_PLAYER_DIR_GET )
   DEF_CMD( EvCmdGetFrontObjID, EV_SEQ_GET_FRONT_OBJID )

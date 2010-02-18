@@ -105,9 +105,8 @@ sub_bsw_receipt_guide:
   ELSE //やめる
     _CALL sub_receipt_common_exit
   ENDIF
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付話し掛け　案内　wifi
@@ -144,17 +143,16 @@ sub_bsw_receipt_guide_wifi:
   ELSE //やめる
     _CALL sub_receipt_common_exit
   ENDIF
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付話し掛け　案内　wifiアップロード
 //--------------------------------------------------------------
 sub_bsw_receipt_guide_wifi_upload:
 {
-  _RET
 }
+_RET
 
 //=====================================================================
 //  受付　挑戦メニュー
@@ -180,9 +178,8 @@ sub_receipt_menu_challenge:
       _CALL sub_receipt_msg_account
     ENDIF
   ENDWHILE
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　挑戦メニュー　wifi
@@ -205,9 +202,8 @@ sub_receipt_menu_challenge_wifi:
       _CALL sub_receipt_msg_account
     ENDIF
   ENDWHILE
-  
-  _RET
 }
+_RET
 
 //=====================================================================
 //  受付　バトルサブウェイ挑戦
@@ -348,7 +344,7 @@ sub_receipt_challenge_multi:
 }
 
 //--------------------------------------------------------------
-//  受付　挑戦処理　AIマルチ kaga
+//  受付　挑戦処理　AIマルチ
 //--------------------------------------------------------------
 sub_receipt_challenge_multi_ai:
 {
@@ -732,6 +728,10 @@ ev_bsw_report_error:
 //--------------------------------------------------------------
 ev_bsw_game_cancel:
 {
+  //マップフェード
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
   //フラグクリア
   _CALL sub_receipt_flag_clear
   
@@ -743,8 +743,8 @@ ev_bsw_game_cancel:
   _CALL sub_receipt_common_exit
   
   _CHG_LOCAL_SCR
-  _END
 }
+_END
 
 //=====================================================================
 //  受付　対戦終了後の戻り
@@ -754,6 +754,10 @@ ev_bsw_game_cancel:
 //--------------------------------------------------------------
 ev_bsw_game_after:
 {
+  //マップフェード
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
   //お疲れ様でした
   _SYSWIN_MSG_DOWN( msg_bsw_scr_35 )
   _AB_KEYWAIT()
@@ -762,8 +766,8 @@ ev_bsw_game_after:
   _CALL sub_receipt_common_exit
   
   _CHG_LOCAL_SCR
-  _END
 }
+_END
 
 //=====================================================================
 //  受付　メッセージ関連
@@ -825,9 +829,8 @@ sub_receipt_msg_ask_geton:
   CASE BSWAY_MODE_S_MULTI THEN
     _SYSWIN_MSG_DOWN( msg_bsw_scr_19 )
   ENDSWITCH
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　プレイモード別にサブウェイ説明メッセージ
@@ -857,8 +860,8 @@ sub_receipt_msg_account:
   ENDSWITCH
   
   _AB_KEYWAIT()
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　プレイモード別に乗車下さいメッセージ
@@ -867,7 +870,7 @@ sub_receipt_msg_geton_train:
 {
   DEFINE_LOCAL play_mode
   
-  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //プレイモード別　乗車メッセージ
   SWITCH $play_mode
@@ -893,8 +896,8 @@ sub_receipt_msg_geton_train:
   
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付話し掛け　手持ちポケモンエラーメッセージ
@@ -904,8 +907,8 @@ sub_receipt_msg_poke_error:
   _SYSWIN_MSG_DOWN( msg_bsw_scr_21 )
   _AB_KEYWAIT()
   _SYSWIN_MSG_DOWN( msg_bsw_scr_22 )
-  _RET
 }
+_RET
 
 //=====================================================================
 //  受付　ワーク処理
@@ -924,9 +927,8 @@ sub_receipt_flag_clear:
   _FLAG_SET( FV_BSUBWAY_RECEIPT_PARTNER )
   _FLAG_SET( FV_C04R0111_PARTNER )
   _FLAG_SET( FV_C04R0111_NPC )
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　乗車始めにフラグセット
@@ -939,9 +941,8 @@ sub_receipt_flag_set_geton_first:
   _FLAG_SET( FV_BSUBWAY_RECEIPT_PARTNER )
   _FLAG_SET( FV_C04R0111_PARTNER )
   _FLAG_SET( FV_C04R0111_NPC )
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　再度乗車にフラグセット
@@ -954,9 +955,8 @@ sub_receipt_flag_set_geton_continue:
   _FLAG_SET( FV_BSUBWAY_RECEIPT_PARTNER )
   _FLAG_SET( FV_C04R0111_PARTNER )
   _FLAG_SET( FV_C04R0111_NPC )
-  
-  _RET
 }
+_RET
 
 //=====================================================================
 //  受付　アニメ、デモ
@@ -1012,8 +1012,8 @@ sub_receipt_anm_geton_train:
   ENDSWITCH
   
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 //アニメデータ　乗車　受付
 _ANIME_LABEL anm_receipt_geton_receipt
@@ -1074,8 +1074,8 @@ sub_receipt_anm_partner_in:
   ENDIF
   
   _AB_KEYWAIT()
-  _RET
 }
+_RET
 
 //アニメデータ　パートナー登場　パートナー
 _ANIME_LABEL anm_receipt_partner_in_partner
@@ -1103,8 +1103,8 @@ sub_receipt_anm_partner_out:
 
   //サポート削除
   _CALL sub_receipt_common_del_partner
-  _RET
 }
+_RET
 
 //アニメデータ　パートナー登場　パートナー
 _ANIME_LABEL anm_receipt_partner_out_partner
@@ -1121,8 +1121,8 @@ sub_receipt_demo_start_train:
 {
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_HOME, BSW_NULL, BSW_NULL )
   _TIME_WAIT( 24 ) //アニメを少し見せてフェードアウト
-  _RET
 }
+_RET
 
 //=====================================================================
 //  受付　共通処理
@@ -1140,8 +1140,8 @@ sub_receipt_common_exit:
   _SYSWIN_CLOSE()
   
   _BSUBWAY_WORK_RELEASE() //ワーク開放
- _RET 
 }
+_RET 
 
 //--------------------------------------------------------------
 //  受付　通信切断して終了処理
@@ -1150,8 +1150,8 @@ sub_receipt_common_comm_exit:
 {
   _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
   _CALL sub_receipt_common_exit
- _RET 
 }
+_RET 
 
 //--------------------------------------------------------------
 //  受付　レポートエラー
@@ -1167,8 +1167,8 @@ sub_receipt_common_report_error:
   
   //またのご利用を
   _CALL sub_receipt_common_exit
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　列車内へ移動
@@ -1179,8 +1179,8 @@ sub_receipt_common_map_change_train:
   _MAP_FADE_END_CHECK()
   _OBJ_ANIME_WAIT()
   _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　手持ち、もしくはバトルボックス選択
@@ -1205,9 +1205,9 @@ sub_receipt_common_select_temoti_bbox:
     _CALL sub_receipt_msg_poke_error
     _CALL sub_receipt_common_exit
   ENDIF
-  
-  _RET
 }
+_RET
+
 
 //--------------------------------------------------------------
 //  受付　ポケモン参加選択
@@ -1227,9 +1227,8 @@ sub_receipt_common_pokemon_select:
   _BSUBWAY_TOOL( BSWSUB_SELECT_POKE, BSW_NULL, BSW_NULL, BSW_NULL )
   //ポケモン選択結果
   _BSUBWAY_TOOL( BSWSUB_GET_ENTRY_POKE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　連勝中であれば連勝中メッセージ表示
@@ -1248,9 +1247,8 @@ sub_receipt_common_renshou_msg:
     _SYSWIN_MSG_DOWN( msg_bsw_scr_08 ) //連勝中です
     _AB_KEYWAIT()
   ENDIF
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　レポート処理
@@ -1267,9 +1265,8 @@ sub_receipt_common_save:
   IF $SCWK_ANSWER == 1 THEN //キャンセル
     _CALL sub_receipt_common_exit
   ENDIF
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　オートセーブ
@@ -1280,9 +1277,8 @@ sub_receipt_common_auto_save:
   
   _SYSWIN_MSG_DOWN( msg_bsw_scr_78 )
   _REPORT_CALL( ret )
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　受付OBJID取得
@@ -1308,9 +1304,8 @@ sub_receipt_common_get_objid_receipt:
   CASE ZONE_ID_C04R0108 THEN
     $SCWK_ANSWER = C04R0108_RECEIPT
   ENDSWITCH
-
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　パートナーOBJID取得 ※パートナーOBJはマルチ、Sマルチのみ存在する
@@ -1326,9 +1321,8 @@ sub_receipt_common_get_objid_partner:
   CASE ZONE_ID_C04R0107 THEN
     $SCWK_ANSWER = C04R0107_PARTNER
   ENDSWITCH
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　デモ　パートナーOBJ追加
@@ -1343,9 +1337,8 @@ sub_receipt_common_add_partner:
   
   _FLAG_RESET( FV_BSUBWAY_RECEIPT_PARTNER )
   _OBJ_ADD( objid )
-  
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　デモ　パートナーOBJ削除
@@ -1359,9 +1352,8 @@ sub_receipt_common_del_partner:
   
   _OBJ_DEL( objid )
   _FLAG_SET( FV_BSUBWAY_RECEIPT_PARTNER )
-  
-  _RET
 }
+_RET
 
 //=====================================================================
 //  バトルサブウェイ共通処理
@@ -1374,29 +1366,29 @@ ev_bsw_retmap_receipt:
   DEFINE_LOCAL play_mode
   
   //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0102, 13, 0, 13, DIR_RIGHT )
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0102, 11, 0, 15, DIR_RIGHT )
   CASE BSWAY_MODE_S_SINGLE THEN
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0103, 13, 0, 13, DIR_RIGHT )
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0103, 11, 0, 15, DIR_RIGHT )
   CASE BSWAY_MODE_DOUBLE THEN
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0104, 13, 0, 13, DIR_RIGHT )
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0104, 11, 0, 15, DIR_RIGHT )
   CASE BSWAY_MODE_S_DOUBLE THEN
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0105, 13, 0, 13, DIR_RIGHT )
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0105, 11, 0, 15, DIR_RIGHT )
   CASE BSWAY_MODE_MULTI THEN
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0106, 13, 0, 13, DIR_RIGHT )
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0106, 11, 0, 15, DIR_RIGHT )
   CASE BSWAY_MODE_COMM_MULTI THEN
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0106, 13, 0, 13, DIR_RIGHT )
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0106, 11, 0, 15, DIR_RIGHT )
   CASE BSWAY_MODE_S_MULTI THEN
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0107, 13, 0, 13, DIR_RIGHT )
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0107, 11, 0, 15, DIR_RIGHT )
   CASE BSWAY_MODE_S_COMM_MULTI THEN
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0107, 13, 0, 13, DIR_RIGHT )
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0107, 11, 0, 15, DIR_RIGHT )
   CASE BSWAY_MODE_WIFI THEN
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0108, 13, 0, 13, DIR_RIGHT )
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0108, 11, 0, 15, DIR_RIGHT )
   ENDSWITCH
   
   _CHG_LOCAL_SCR
-  _END
 }
+_RET

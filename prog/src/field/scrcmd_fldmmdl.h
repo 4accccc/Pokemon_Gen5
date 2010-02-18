@@ -27,6 +27,7 @@ extern VMCMD_RESULT EvCmdObjDel( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjAddEvent( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjDelEvent( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjPosChange( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdObjEventFlagGet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetObjID( VMHANDLE *core, void *wk );

@@ -14,10 +14,12 @@
 //--------------------------------------------------------------
 //  スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA ev_init_c04r0111_home //初期化
-_EVENT_DATA ev_recover_c04r0111_home //復帰
+_EVENT_DATA ev_init_c04r0111_home     //初期化
+_EVENT_DATA ev_recover_c04r0111_home  //復帰
 _EVENT_DATA ev_c04r0111_receipt_talk  //受付話し掛け
-_EVENT_DATA ev_c04r0111_home  //ゲームクリア後のホーム
+_EVENT_DATA ev_c04r0111_partner_talk  //パートナー話し掛け
+_EVENT_DATA ev_c04r0111_npc_talk      //NPC話し掛け
+_EVENT_DATA ev_c04r0111_home          //ゲームクリア後のホーム
 _EVENT_DATA_END
 
 //======================================================================
@@ -32,11 +34,18 @@ INIT_EVENT_START ev_init_c04r0111_home
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_HOME, BSW_NULL )
   
-  _OBJ_POS_CHANGE( C04R0111_RECEIPT1, 17, 0, 13, DIR_DOWN )
-  _OBJ_POS_CHANGE( C04R0111_RECEIPT2, 76, 0, 14, DIR_RIGHT )
+  //受付座標を変更
+  _OBJ_POS_CHANGE( C04R0111_RECEIPT1, 17, 0, 13, DIR_RIGHT )
+  _OBJ_POS_CHANGE( C04R0111_RECEIPT2, 76, 0, 14, DIR_LEFT )
   
-  IF $WK_OTHER_BSUBWAY_HOME == WK_OTHER_BSUBWAY_HOME THEN
+  //ゲームクリア直後か
+  IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_GAME_CLEAR THEN
+    //デモ用初期化　自機非表示
     _BSUBWAY_TOOL( BSWTOOL_PLAYER_VANISH, TRUE, BSW_NULL, BSW_NULL )
+    //自機高さを固定化
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, MMDL_ID_PLAYER, 0, BSW_NULL )
+    //周回に合わせてNPC追加
+    _BSUBWAY_TOOL( BSWSUB_SET_HOME_OBJ, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
 }
 INIT_EVENT_END
@@ -63,17 +72,17 @@ EVENT_START ev_c04r0111_receipt_talk
   _TALK_OBJ_START()
   
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_NON THEN //途中駅
-    _SYSWIN_MSG_DOWN( msg_c04r0111_02 ) //どうしますか
+    _SYSWIN_MSG_DOWN( msg_c04r0111_15 ) //どうしますか
     _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
-    _BMPMENU_MAKE_LIST( msg_c04r0111_03, 0 ) //続ける
-    _BMPMENU_MAKE_LIST( msg_c04r0111_04, 1 ) //ライモン
-    _BMPMENU_MAKE_LIST( msg_c04r0111_05, 2 ) //まだここにいる
+    _BMPMENU_MAKE_LIST( msg_c04r0111_16, 0 ) //続ける
+    _BMPMENU_MAKE_LIST( msg_c04r0111_17, 1 ) //ライモン
+    _BMPMENU_MAKE_LIST( msg_c04r0111_18, 2 ) //まだここにいる
     _BMPMENU_START()
     _SYSWIN_CLOSE()
     
     SWITCH $SCWK_ANSWER
     CASE 0 THEN //続けて挑戦
-      _CALL sub_challenge_continue
+      _CALL sub_challenge_continue_mode
     CASE 1 THEN //ライモン戻り
       _CALL sub_mapchg_receipt
     ENDSWITCH
@@ -84,11 +93,44 @@ EVENT_START ev_c04r0111_receipt_talk
 EVENT_END
 
 //--------------------------------------------------------------
+//  受付話し掛け　続けて挑戦　モード別処理へ  
+//--------------------------------------------------------------
+sub_challenge_continue_mode:
+{
+  DEFINE_LOCAL play_mode
+
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  SWITCH $play_mode
+  CASE BSWAY_MODE_SINGLE THEN
+    _CALL sub_challenge_continue
+  CASE BSWAY_MODE_S_SINGLE THEN
+    _CALL sub_challenge_continue
+  CASE BSWAY_MODE_DOUBLE THEN
+    _CALL sub_challenge_continue
+  CASE BSWAY_MODE_S_DOUBLE THEN
+    _CALL sub_challenge_continue
+  CASE BSWAY_MODE_MULTI THEN
+    _CALL sub_challenge_continue
+  CASE BSWAY_MODE_S_MULTI THEN
+    _CALL sub_challenge_continue
+  CASE BSWAY_MODE_COMM_MULTI THEN
+    _CALL sub_challenge_continue_comm_multi
+  CASE BSWAY_MODE_S_COMM_MULTI THEN
+    _CALL sub_challenge_continue_comm_multi
+  ENDSWITCH
+}
+_RET
+
+//--------------------------------------------------------------
 //  バトルサブウェイ　ホーム　受付話し掛け  続けてチャレンジ
+//  シングル、ダブル、AIマルチ
 //--------------------------------------------------------------
 sub_challenge_continue:
 {
-  _SYSWIN_MSG_DOWN( msg_c04r0111_07 )
+  DEFINE_LOCAL play_mode
+   
+  _SYSWIN_MSG_DOWN( msg_c04r0111_02 ) //ご案内する前にレポート
   _AB_KEYWAIT()
   
   //受付をエラー状態に
@@ -98,14 +140,16 @@ sub_challenge_continue:
   $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_FIRST
   
   //ワーク初期化
-  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, SCWK_ANSWER )
-  
-  //ポケモンメンバーロード
-  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_WORK_CREATE( BSWAY_PLAY_CHALLENGE_CONTINUE, play_mode )
   
   //戻り場所を受付に
   _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+  //トレーナー抽選
+  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //ポケモンメンバーロード
+  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL)
   
   //レポート
   _REPORT_CALL( SCWK_ANSWER )
@@ -115,7 +159,14 @@ sub_challenge_continue:
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 10, 0, 4, DIR_UP )
-  _RET
+}
+_RET
+
+//--------------------------------------------------------------
+//  受付　続けてチャレンジ　commマルチ
+//--------------------------------------------------------------
+sub_challenge_continue_comm_multi:
+{
 }
 
 //--------------------------------------------------------------
@@ -124,12 +175,12 @@ sub_challenge_continue:
 sub_mapchg_receipt:
 {
   //ライモンシティに戻るか
-  _SYSWIN_MSG_DOWN( msg_c04r0111_00 )
+  _SYSWIN_MSG_DOWN( msg_c04r0111_13 )
   _YES_NO_WIN( SCWK_ANSWER )
   
   IF $SCWK_ANSWER == 0 THEN
     //戻ります
-    _SYSWIN_MSG_DOWN( msg_c04r0111_01 )
+    _SYSWIN_MSG_DOWN( msg_c04r0111_14 )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
     
@@ -146,6 +197,29 @@ sub_mapchg_receipt:
     _SYSWIN_CLOSE()
   ENDIF
 }
+_RET
+
+//======================================================================
+//  バトルサブウェイ　ホーム　パートナー話し掛け
+//======================================================================
+//--------------------------------------------------------------
+//  バトルサブウェイ　ホーム　パートナー話し掛け
+//--------------------------------------------------------------
+EVENT_START ev_c04r0111_partner_talk
+{
+}
+EVENT_END
+
+//======================================================================
+//  バトルサブウェイ　ホーム　NPC話し掛け
+//======================================================================
+//--------------------------------------------------------------
+//  バトルサブウェイ　ホーム　NPC話し掛け
+//--------------------------------------------------------------
+EVENT_START ev_c04r0111_npc_talk
+{
+}
+EVENT_END
 
 //======================================================================
 //  バトルサブウェイ　ホーム　対戦終了後の戻り
@@ -160,6 +234,9 @@ EVENT_START ev_c04r0111_home
   //ホーム制御　無しに
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
   
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
   //トレインアニメ
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 2, BTRAIN_POS_RECEIPT, BSW_NULL )
   
@@ -167,14 +244,42 @@ EVENT_START ev_c04r0111_home
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
   
+  _TIME_WAIT( 45 ) //アニメを待つ
+  
   //自機登場
   _BSUBWAY_TOOL( BSWTOOL_PLAYER_VANISH, FALSE, BSW_NULL, BSW_NULL )
+  
+  //自機移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_jiki_train_out )
+  _OBJ_ANIME_WAIT()
 
+  //高さ固定を戻す
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, MMDL_ID_PLAYER, 0, BSW_NULL )
+  
+  //マルチならパートナー出現
+  SWITCH $play_mode
+  CASE BSWAY_MODE_MULTI THEN
+    $OBJCHRWORK0 = SUPPORT
+    _FLAG_RESET( FV_C04R0111_PARTNER )
+    _OBJ_ADD( C04R0111_PARTNER )
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, C04R0111_PARTNER, 0, BSW_NULL )
+    _OBJ_POS_CHANGE( C04R0111_PARTNER, 75, 0, 14, DIR_DOWN )
+    _OBJ_ANIME( C04R0111_PARTNER, anm_partner_train_out )
+    _OBJ_ANIME_WAIT()
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, C04R0111_PARTNER, 0, BSW_NULL )
+  CASE BSWAY_MODE_S_MULTI THEN
+     $OBJCHRWORK0 = SUPPORT
+    _FLAG_RESET( FV_C04R0111_PARTNER )
+    _OBJ_ADD( C04R0111_PARTNER )
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, C04R0111_PARTNER, 0, BSW_NULL )
+    _OBJ_POS_CHANGE( C04R0111_PARTNER, 75, 0, 14, DIR_DOWN )
+    _OBJ_ANIME( C04R0111_PARTNER, anm_partner_train_out )
+    _OBJ_ANIME_WAIT()
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, C04R0111_PARTNER, 0, BSW_NULL )
+  ENDSWITCH
+  
   //戻り先を無効に
   _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSW_NULL, BSW_NULL,BSW_NULL )
-  
-  //プレイモード取得
-  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //ボスを倒したか
   _BSUBWAY_TOOL( BSWSUB_GET_BOSS_CLEAR_FLAG, BSW_NULL, BSW_NULL, SCWK_ANSWER )
@@ -183,52 +288,61 @@ EVENT_START ev_c04r0111_home
     _BSUBWAY_TOOL( BSWSUB_CHK_S_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     
     IF $SCWK_ANSWER == TRUE THEN //スーパーボスである
-      _SYSWIN_MSG_DOWN( 0 ) //おめでとうございます
+      _SYSWIN_MSG_DOWN( msg_c04r0111_04 ) //おめでとうございます
+      _AB_KEYWAIT()
       
+      _PLAYER_NAME( 0 )
+      _NUMBER( 1, 50, 2 )
+      _SYSWIN_MSG_DOWN( msg_c04r0111_00 ) //BPを手に入れた
+      _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
+      _ME_WAIT()
+
       _BSUBWAY_TOOL( BSWTOOL_GET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
       
        IF $SCWK_ANSWER == 0 THEN //初めて倒した
-        _SYSWIN_MSG_DOWN( 0 ) //トロフィを差し上げます
+        _SYSWIN_MSG_DOWN( msg_c04r0111_08 ) //トロフィを差し上げます
         _AB_KEYWAIT()
         _BSUBWAY_TOOL( BSWTOOL_SET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
       ENDIF
       
       //レポート
-      _SYSWIN_MSG_DOWN( 0 )
+      _SYSWIN_MSG_DOWN( msg_c04r0111_01 )
       _REPORT_CALL( SCWK_ANSWER )
       
       //また話し掛けてくれ
-      _SYSWIN_MSG_DOWN( 0 )
+      _SYSWIN_MSG_DOWN( msg_c04r0111_09 )
       _LAST_KEYWAIT()
       _SYSWIN_CLOSE()
     ELSE  //ノーマルボスである
-      _SYSWIN_MSG_DOWN( 0 ) //おめでとうございます
+      _SYSWIN_MSG_DOWN( msg_c04r0111_04 ) //おめでとうございます
       _AB_KEYWAIT()
-      
+
+      _PLAYER_NAME( 0 )
+      _NUMBER( 1, 50, 2 )
+      _SYSWIN_MSG_DOWN( msg_c04r0111_00 ) //BPを手に入れた
+      _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
+      _ME_WAIT()
+     
       _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
       
       IF $SCWK_ANSWER == 0 THEN //初めて倒した
-        _SYSWIN_MSG_DOWN( 0 ) //スーパーに挑戦出来ます
+        _SYSWIN_MSG_DOWN( msg_c04r0111_05 ) //スーパーに挑戦出来ます
         _AB_KEYWAIT()
         _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
       ENDIF
       
       //レポート
-      _SYSWIN_MSG_DOWN( 0 )
+      _SYSWIN_MSG_DOWN( msg_c04r0111_01 )
       _REPORT_CALL( SCWK_ANSWER )
 
       //終点メッセージ
       SWITCH $play_mode
       CASE BSWAY_MODE_SINGLE THEN
-        _SYSWIN_MSG_DOWN( 0 )
+        _SYSWIN_MSG_DOWN( msg_c04r0111_10 )
       CASE BSWAY_MODE_DOUBLE THEN
-        _SYSWIN_MSG_DOWN( 0 )
+        _SYSWIN_MSG_DOWN( msg_c04r0111_11 )
       CASE BSWAY_MODE_MULTI THEN
-        _SYSWIN_MSG_DOWN( 0 )
-      CASE BSWAY_MODE_COMM_MULTI THEN
-        _SYSWIN_MSG_DOWN( 0 )
-      CASE BSWAY_MODE_WIFI THEN
-        _SYSWIN_MSG_DOWN( 0 )
+        _SYSWIN_MSG_DOWN( msg_c04r0111_12 )
       ENDSWITCH
       
       _LAST_KEYWAIT()
@@ -238,20 +352,43 @@ EVENT_START ev_c04r0111_home
       $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
     ENDIF
   ELSE //倒していない
-    _SYSWIN_MSG_DOWN( 0 ) //おめでとうございます
+    _SYSWIN_MSG_DOWN( msg_c04r0111_03 ) //おめでとうございます
     _AB_KEYWAIT()
     
+    _PLAYER_NAME( 0 )
+    _NUMBER( 1, 50, 2 )
+    _SYSWIN_MSG_DOWN( msg_c04r0111_00 ) //BPを手に入れた
+    _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
+    _ME_WAIT()
+    
     //レポート
-    _SYSWIN_MSG_DOWN( 0 )
+    _SYSWIN_MSG_DOWN( msg_c04r0111_01 )
     _REPORT_CALL( SCWK_ANSWER )
     
     //また話し掛けてくれ
-    _SYSWIN_MSG_DOWN( 0 )
+    _SYSWIN_MSG_DOWN( msg_c04r0111_09 )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
   ENDIF
+  
+  //ワーク開放
+  _BSUBWAY_WORK_RELEASE()
 }
 EVENT_END
+
+//--------------------------------------------------------------
+//  アニメ　自機、パートナー、車両から出てくる
+//--------------------------------------------------------------
+_ANIME_LABEL anm_jiki_train_out
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_partner_train_out
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //======================================================================
 //======================================================================

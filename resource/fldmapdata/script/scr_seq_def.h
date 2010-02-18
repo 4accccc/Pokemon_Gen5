@@ -1529,7 +1529,23 @@
 
 //--------------------------------------------------------------
 /**
- * _OBJ_ADD_EX OBJを追加
+ * _GET_OBJ_EV_FLAG 指定のOBJに指定されているイベントフラグを取得
+ * @param id OBJ ID
+ * @param ret_id フラグ格納先
+ */
+//--------------------------------------------------------------
+#define _GET_OBJ_EV_FLAG( id, ret_id ) \
+  _ASM_GET_OBJ_EV_FLAG id, ret_id
+
+  .macro _ASM_GET_OBJ_EV_FLAG id, ret_id
+  .short EV_SEQ_OBJ_EV_FLAG_GET   
+  .short \id
+  .short \ret_id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * _OBJ_ADD_EX OBJを追加。
  * @param x 表示するグリッドX座標
  * @param z 表示するグリッドZ座標
  * @param dir 方向 DIR_UP等
@@ -1551,20 +1567,6 @@
   .short \move
 .endm
 
- 
-//--------------------------------------------------------------
-/**
- * _OBJ_DEL_EX OBJを削除
- * @param id 削除するOBJ ID
- */
-//--------------------------------------------------------------
-#define _OBJ_DEL_EX( id ) _ASM_OBJ_DEL_EX id
-
-.macro  _ASM_OBJ_DEL_EX id
-  .short EV_SEQ_OBJ_DEL
-  .short \id
-.endm
- 
 //--------------------------------------------------------------
 /**
  * _OBJ_ADD ゾーン内で配置されているOBJ一覧内、指定のIDを持つOBJを追加
@@ -1581,17 +1583,16 @@
 
 //--------------------------------------------------------------
 /**
- * ！！使用禁止です！！　タイミングをみてコマンドを削除予定
- * _OBJ_DEL_EV 指定のOBJ_IDを持ったOBJを削除。
- * 削除時、対象OBJで指定されているイベントフラグをONにする。
+ * _OBJ_DEL 指定のOBJ_IDを持ったOBJを削除。
  * @param id 配置OBJ内で追加するOBJ ID
+ * @attention OBJを削除するのみのコマンド。OBJが持つフラグ等の操作は無し。
  */
 //--------------------------------------------------------------
 #define _OBJ_DEL( id )  \
     _ASM_OBJ_DEL id
 
   .macro _ASM_OBJ_DEL id
-  .short EV_SEQ_OBJ_DEL_EV
+  .short EV_SEQ_OBJ_DEL
   .short \id
   .endm
 

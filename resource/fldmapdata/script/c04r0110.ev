@@ -284,7 +284,7 @@ sub_train_battle:
   
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
-  //対戦
+  //対戦へ
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
     _CALL sub_battle_single_double
@@ -306,9 +306,13 @@ sub_train_battle:
     _CALL sub_battle_comm_multi
   ENDSWITCH
   
+  //戦闘復帰　マップフェードイン
+//  _MAP_FADE_BLACK_IN()
+//  _MAP_FADE_END_CHECK()
+  
   //回復
   _TEMOTI_POKEMON_KAIFUKU()
-
+  
   //対戦結果
   IF $SCWK_ANSWER == 0 THEN //負け
     _CALL sub_retmap_lose_retire
@@ -378,7 +382,7 @@ sub_train_battle_win_clear:
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_GAME_CLEAR //クリア状態に
   
   //マップ遷移
-  _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0111, 75, 0, 14, DIR_DOWN )
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0111, 75, 0, 12, DIR_DOWN )
   _RET
 }
 
@@ -394,7 +398,7 @@ sub_anm_train_battle_win_clear:
   _RET
 }
 
-_ANIME_LABEL  anm_train_battle_win_clear_trainer 
+_ANIME_LABEL  anm_train_battle_win_clear_trainer
   _ANIME_DATA  AC_WAIT_4F,1
   _ANIME_DATA  AC_WALK_U_8F,2
   _ANIME_DATA  AC_STAY_WALK_D_8F,1
