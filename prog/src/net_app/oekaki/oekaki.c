@@ -30,6 +30,7 @@
 #include "gamesystem/msgspeed.h"
 #include "print/printsys.h"
 #include "sound/pm_sndsys.h"
+#include "app/app_menu_common.h"
 //#include "field/fieldobj.h"
 
 #include "net_app/oekaki.h"
@@ -46,13 +47,12 @@
 //============================================================================================
 
 // 文字列描画用のパレット定義
-#define NAME_COL_MINE   ( PRINTSYS_LSB_Make( 3, 4,0)     )  // 自分の名前
-#define NAME_COL_NORMAL ( PRINTSYS_LSB_Make(0xe,0xd,0xf) )  // 参加メンバーの名前
-#define STRING_COL_END  ( PRINTSYS_LSB_Make(0x7,0x1,0x0) )  // 「やめる」
+#define NAME_COL_MINE   ( PRINTSYS_LSB_Make(  3,  4,  0) )  // 自分の名前
+#define NAME_COL_NORMAL ( PRINTSYS_LSB_Make(0x1,0x2,0xf) )  // 参加メンバーの名前
 #define STRING_COL_MSG  ( PRINTSYS_LSB_Make(0x1,0x2,0xf) )  // 「やめる」
 
 #define MESFRAME_PAL      ( 10 )   // メッセージウインドウ
-#define MENUFRAME_PAL ( 11 )   // メニューウインドウ
+#define MENUFRAME_PAL     ( 11 )   // メニューウインドウ
 
 // SE定義
 #define OEKAKI_DECIDE_SE     ( SEQ_SE_SELECT1 )
@@ -117,7 +117,7 @@ static int Oekaki_NewMemberWait( OEKAKI_WORK *wk, int seq );
 static int Oekaki_NewMember( OEKAKI_WORK *wk, int seq );
 static int Oekaki_NewMemberEnd( OEKAKI_WORK *wk, int seq );
 static void PalButtonAppearChange( GFL_CLWK *act[], int no);
-static void EndButtonAppearChange( GFL_CLWK *act[], BOOL flag );
+static void EndButtonAppearChange( GFL_CLWK *act, BOOL flag );
 static void _BmpWinPrint_Rap(
       GFL_BMPWIN * win, void * src,
       int src_x, int src_y, int src_dx, int src_dy,
@@ -135,6 +135,8 @@ static void SetTouchpanelData( TOUCH_INFO *touchResult, TP_ONE_DATA *tpData, int
 static int _get_connect_bit( OEKAKI_WORK *wk );
 static int _get_connect_num( OEKAKI_WORK *wk );
 static void _disp_on( void );
+static void OEKAKI_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork);
+static void OEKAKI_leave_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork);
 
 
 typedef struct{
@@ -327,9 +329,14 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
   
   switch( *seq ){
   case SEQ_IN:
+    // ワイプ処理待ち
     if( WIPE_SYS_EndCheck() ){
-      // ワイプ処理待ち
+      // 乱入OK状態にする
+      Union_App_Parent_ResetEntryBlock( wk->param->uniapp );
 
+      // 乱入・退出コールバック登録
+      Union_App_SetCallback( wk->param->uniapp, OEKAKI_entry_callback, OEKAKI_leave_callback, wk);
+#if 0
       // 自分が子機で接続台数が２台以上だった場合はもう絵が描かれている
       if(GFL_NET_SystemGetCurrentID()!=0){
         if( (MyStatusGetNum(wk)>2) ){
@@ -343,6 +350,10 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
         //親はメインへ
         *seq = SEQ_MAIN;
       }
+#endif
+      //親はメインへ
+      *seq = SEQ_MAIN;
+
     }
     break;
 
@@ -384,7 +395,7 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
   PRINTSYS_QUE_Main( wk->printQue );
   {
     int i;
-    for(i=0;i<OEKAKI_PRINT_UTIL_END+1;i++)
+    for(i=0;i<OEKAKI_PRINT_UTIL_NAME_WIN4+1;i++)
     PRINT_UTIL_Trans( &wk->printUtil[i], wk->printQue );
   }
   
@@ -421,13 +432,18 @@ GFL_PROC_RESULT OekakiProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk
     GFL_TCB_DeleteTask( wk->vblankTcb );
 
     // セルアクターリソース解放
-    GFL_CLGRP_CGR_Release(  wk->resObjTbl[CLACT_RES_M_CHR] );     // メイン面
-    GFL_CLGRP_PLTT_Release( wk->resObjTbl[CLACT_RES_M_PLTT] );
-    GFL_CLGRP_CELLANIM_Release( wk->resObjTbl[CLACT_RES_M_CELL] );
-
     GFL_CLGRP_CGR_Release(  wk->resObjTbl[CLACT_RES_S_CHR] );     // サブ面
     GFL_CLGRP_PLTT_Release( wk->resObjTbl[CLACT_RES_S_PLTT] );
     GFL_CLGRP_CELLANIM_Release( wk->resObjTbl[CLACT_RES_S_CELL] );
+    
+    GFL_CLGRP_CGR_Release(  wk->resObjTbl[CLACT_RES_SYS_CHR] );     // システムアイコン
+    GFL_CLGRP_PLTT_Release( wk->resObjTbl[CLACT_RES_SYS_PLTT] );
+    GFL_CLGRP_CELLANIM_Release( wk->resObjTbl[CLACT_RES_SYS_CELL] );
+
+    GFL_CLGRP_CGR_Release(  wk->resObjTbl[CLACT_RES_M_CHR] );     // メイン面
+    GFL_CLGRP_PLTT_Release( wk->resObjTbl[CLACT_RES_M_PLTT] );
+    GFL_CLGRP_CELLANIM_Release( wk->resObjTbl[CLACT_RES_M_CELL] );
+    
     
     // セルアクターユニット破棄
     GFL_CLACT_UNIT_Delete( wk->clUnit );
@@ -510,6 +526,56 @@ static void VBlankFunc( GFL_TCB *tcb, void * work )
   
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【ユニオン乱入コールバック】乱入処理
+ *
+ * @param   net_id      接続ＩＤ
+ * @param   mystatus    MYSTATUS
+ * @param   userwork    OEKAKI_WORK*
+ */
+//----------------------------------------------------------------------------------
+static void OEKAKI_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork)
+{
+  OEKAKI_WORK  *wk    = (OEKAKI_WORK  *)userwork;
+  if(net_id==0){
+    OS_Printf("親は乱入扱いにしない net_id=%d\n", net_id);
+  }
+  
+  // 別な子機の乱入に対処
+  if(GFL_NET_SystemGetCurrentID()==0){
+    // 一台目の子機
+    if(wk->firstChild==0 && net_id!=0){
+      OS_Printf("おえかき開始時の子機なので送信の必要なし net_id=%d\n", net_id);
+      wk->firstChild=1;
+    }else{
+      int ret;
+      u8 id  = net_id;
+      // 2台目以降の子機の乱入
+      // 全台に「これから絵を送るので止まってください」と送信する
+      ret=GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_STOP, 1, &id);
+      
+      if(ret==FALSE){
+        GF_ASSERT("乱入コールバック送信失敗\n");
+      }
+    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【ユニオン退出コールバック】退出時処理
+ *
+ * @param   net_id      接続ＩＤ
+ * @param   mystatus    MYSTATUS
+ * @param   userwork    OEKAKI_WORK*
+ */
+//----------------------------------------------------------------------------------
+static void OEKAKI_leave_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork)
+{
+  OS_Printf("離脱コールバック net_id=%d\n", net_id);
+}
 
 //--------------------------------------------------------------------------------------------
 // VRAM設定data
@@ -799,7 +865,7 @@ static void BgGraphicSet( OEKAKI_WORK * wk, ARCHANDLE* p_handle )
 static void InitCellActor(OEKAKI_WORK *wk, ARCHANDLE* p_handle)
 {
   int i;
-  
+  ARCHANDLE *c_handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_OEKAKI );
   // セルアクター初期化
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &OekakiDispVramDat, HEAPID_OEKAKI );
   
@@ -807,8 +873,7 @@ static void InitCellActor(OEKAKI_WORK *wk, ARCHANDLE* p_handle)
   // セルアクター初期化
   wk->clUnit = GFL_CLACT_UNIT_Create( 50+3, 1,  HEAPID_OEKAKI );
   
-//  CLACT_U_SetSubSurfaceMatrix( &wk->renddata, 0, NAMEIN_SUB_ACTOR_DISTANCE );
-
+  
   
   //---------上画面用-------------------
 
@@ -824,6 +889,22 @@ static void InitCellActor(OEKAKI_WORK *wk, ARCHANDLE* p_handle)
   wk->resObjTbl[CLACT_RES_M_CELL] = GFL_CLGRP_CELLANIM_Register( p_handle, 
                                                                  NARC_oekaki_oekaki_m_obj_NCER, 
                                                                  NARC_oekaki_oekaki_m_obj_NANR, 
+                                                                 HEAPID_OEKAKI );
+
+  //---------上画面用-------------------
+
+  //chara読み込み
+  wk->resObjTbl[CLACT_RES_SYS_CHR] = GFL_CLGRP_CGR_Register( c_handle, APP_COMMON_GetBarIconCharArcIdx(), 0, 
+                                                           CLSYS_DRAW_MAIN, HEAPID_OEKAKI );
+
+  //pal読み込み
+  wk->resObjTbl[CLACT_RES_SYS_PLTT] = GFL_CLGRP_PLTT_RegisterEx( c_handle, APP_COMMON_GetBarIconPltArcIdx(), 
+                                                                 CLSYS_DRAW_MAIN, 5*32, 0, 4, HEAPID_OEKAKI );
+
+  //cell読み込み
+  wk->resObjTbl[CLACT_RES_SYS_CELL] = GFL_CLGRP_CELLANIM_Register( c_handle, 
+                                                                 APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_32K), 
+                                                                 APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_32K), 
                                                                  HEAPID_OEKAKI );
 
   //---------下画面用-------------------
@@ -847,6 +928,10 @@ static void InitCellActor(OEKAKI_WORK *wk, ARCHANDLE* p_handle)
 #define TRAINER_NAME_POS_X    ( 24 )
 #define TRAINER_NAME_POS_Y    ( 32 )
 #define TRAINER_NAME_POS_SPAN ( 32 )
+
+#define END_ICON_X  ( 212 )
+#define END_ICON_Y  ( 160 )
+
 
 static const u16 pal_button_oam_table[][3]={
   {13     , 171, 5},    // 黒
@@ -945,10 +1030,25 @@ static void SetCellActor(OEKAKI_WORK *wk)
       GFL_CLACT_WK_SetDrawEnable( wk->SubActWork[i],  0 );
       
     }
+
+    // アプリ共通素材戻るボタンの表示
+    add.pos_x = END_ICON_X;
+    add.pos_y = END_ICON_Y;
+    wk->EndIconActWork = GFL_CLACT_WK_Create( wk->clUnit,
+                                              wk->resObjTbl[CLACT_RES_SYS_CHR],
+                                              wk->resObjTbl[CLACT_RES_SYS_PLTT],
+                                              wk->resObjTbl[CLACT_RES_SYS_CELL],
+                                              &add, CLSYS_DEFREND_MAIN, HEAPID_OEKAKI );
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->EndIconActWork, 1 );
+    GFL_CLACT_WK_SetAnmSeq( wk->EndIconActWork,      1 );
+    GFL_CLACT_WK_SetDrawEnable( wk->EndIconActWork,  TRUE );
     
   } 
-  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON ); //メイン画面OBJ面ＯＮ
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON ); //サブ画面OBJ面ＯＮ
+
+  //メイン・サブ画面OBJ面ＯＮ
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON ); 
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON ); 
+ 
   
 }
 
@@ -1006,24 +1106,10 @@ static void BmpWinInit( OEKAKI_WORK *wk, GFL_PROC* proc )
                                    OEKAKI_BOARD_W, OEKAKI_BOARD_H, 0, GFL_BMP_CHRAREA_GET_B);
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->OekakiBoard), 0x0202 );
 
-  // BG1面BMP（やめる）ウインドウ確保・描画
-  wk->EndWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
-                              OEKAKI_END_BMP_X, OEKAKI_END_BMP_Y, 
-                              OEKAKI_END_BMP_W, OEKAKI_END_BMP_H, 13,  GFL_BMP_CHRAREA_GET_B );
-
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->EndWin), 0x0000 );
-
   // メッセージ表示システム用初期化 
   wk->pMsgTcblSys = GFL_TCBL_Init( HEAPID_OEKAKI, HEAPID_OEKAKI, 32 , 32 );
   wk->printQue    = PRINTSYS_QUE_Create( HEAPID_OEKAKI );
 
-  // 描画
-  PRINT_UTIL_Setup( &wk->printUtil[OEKAKI_PRINT_UTIL_END], wk->EndWin );
-//  GF_STR_PrintColor( wk->EndWin, FONT_TALK, wk->EndString, 0, 0, MSG_ALLPUT, STRING_COL_END ,NULL);
-  PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_END], wk->printQue, 
-                         0, 0, wk->EndString, wk->font, STRING_COL_END );
-  // 表示
-  GFL_BMPWIN_MakeTransWindow( wk->EndWin );
   
   // ----------- サブ画面名前表示BMP確保 ------------------
   {
@@ -1073,7 +1159,6 @@ static void BmpWinDelete( OEKAKI_WORK *wk )
   for(i=0;i<OEKAKI_MEMBER_MAX;i++){
     GFL_BMPWIN_Delete( wk->TrainerNameWin[i] );
   }
-  GFL_BMPWIN_Delete( wk->EndWin );
   GFL_BMPWIN_Delete( wk->OekakiBoard );
   GFL_BMPWIN_Delete( wk->MsgWin );
 
@@ -1238,7 +1323,7 @@ static void NormalTouchFunc(OEKAKI_WORK *wk)
           // 「おえかきをやめますか？」
           EndMessagePrint( wk, msg_oekaki_02, 1 );
           SetNextSequence( wk, OEKAKI_MODE_END_SELECT );
-          EndButtonAppearChange( wk->ButtonActWork, TRUE );
+          EndButtonAppearChange( wk->EndIconActWork, TRUE );
           decide = TRUE;
           PMSND_PlaySE(OEKAKI_DECIDE_SE);
         }else{
@@ -1249,7 +1334,7 @@ static void NormalTouchFunc(OEKAKI_WORK *wk)
             // 「おえかきをやめますか？」
             EndMessagePrint( wk, msg_oekaki_02, 1 );
             SetNextSequence( wk, OEKAKI_MODE_END_SELECT );
-            EndButtonAppearChange( wk->ButtonActWork, TRUE );
+            EndButtonAppearChange( wk->EndIconActWork, TRUE );
             decide = TRUE;
             PMSND_PlaySE(OEKAKI_DECIDE_SE);
           }
@@ -1305,6 +1390,11 @@ static void NormalTouchFunc(OEKAKI_WORK *wk)
       if(decide == TRUE){
         wk->MyTouchResult.size = 0;
       }
+    }else{
+      tpData.Size = 0;
+      tpData.TPDataTbl[0].x = 0;
+      tpData.TPDataTbl[0].y = 0;
+      SetTouchpanelData( &wk->MyTouchResult, &tpData, wk->brush_color, wk->brush );
     }
   }
 
@@ -1346,12 +1436,12 @@ static void PalButtonAppearChange( GFL_CLWK *act[], int no )
  * @retval  none    
  */
 //------------------------------------------------------------------
-static void EndButtonAppearChange( GFL_CLWK *act[], BOOL flag )
+static void EndButtonAppearChange( GFL_CLWK *act, BOOL flag )
 {
   if(flag==TRUE){
-    GFL_CLACT_WK_SetAnmSeq( act[8], pal_button_oam_table[8][2]+1 );
+    GFL_CLACT_WK_SetAnmSeq( act, 9 );
   }else{
-    GFL_CLACT_WK_SetAnmSeq( act[8], pal_button_oam_table[8][2] );
+    GFL_CLACT_WK_SetAnmSeq( act, 1 );
   }
 }
 
@@ -1586,7 +1676,7 @@ static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
     break;
   case TOUCH_SW_RET_NO:           //いいえ
     SetNextSequence( wk, OEKAKI_MODE );
-    EndButtonAppearChange( wk->ButtonActWork, FALSE );
+    EndButtonAppearChange( wk->EndIconActWork, FALSE );
     BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
     OekakiResetYesNoWin(wk);
 
@@ -1690,7 +1780,7 @@ static int Oekaki_EndSelectAnswerNG( OEKAKI_WORK *wk, int seq )
 
   wk->status_end = FALSE;
   SetNextSequence( wk, OEKAKI_MODE );
-  EndButtonAppearChange( wk->ButtonActWork, FALSE );
+  EndButtonAppearChange( wk->EndIconActWork, FALSE );
   
   OS_TPrintf("==========離脱強制キャンセル！===========\n");
   
@@ -1838,7 +1928,7 @@ static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
     break;
   case TOUCH_SW_RET_NO:           //いいえ
     SetNextSequence( wk, OEKAKI_MODE );
-    EndButtonAppearChange( wk->ButtonActWork, FALSE );
+    EndButtonAppearChange( wk->EndIconActWork, FALSE );
     BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
     OekakiResetYesNoWin(wk);
 
@@ -1898,7 +1988,6 @@ static int Oekaki_ForceEndWait( OEKAKI_WORK *wk, int seq )
     GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),
                                   OEKAKI_SYNCHRONIZE_END, WB_NET_PICTURE);
     OS_Printf("同期開始\n");
-    
   }
 
   EndSequenceCommonFunc( wk );    //終了選択時の共通処理
@@ -2003,7 +2092,7 @@ static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
   if( EndMessageWait( wk->printStream ) ){
     //表示中のメッセージがある場合は強制停止
     //GF_STR_PrintForceStop(wk->MsgIndex);
-     PRINTSYS_PrintStreamDelete( wk->printStream );
+    PRINTSYS_PrintStreamDelete( wk->printStream );
 
   }
 
@@ -2101,7 +2190,7 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
     if(wk->seq==OEKAKI_MODE_END_SELECT_WAIT || wk->seq==OEKAKI_MODE_END_SELECT_PARENT_WAIT){
       OekakiResetYesNoWin(wk);
     }
-    EndButtonAppearChange( wk->ButtonActWork, FALSE );
+    EndButtonAppearChange( wk->EndIconActWork, FALSE );
     // 指定の子機の名前をWORDSETに登録（離脱・乱入時)
     WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(wk->param->uniapp, id) );  
     wk->newMemberId = id;
@@ -2130,7 +2219,7 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
       //おえかき再描画
       GFL_BMPWIN_MakeTransWindow( wk->OekakiBoard );
     }
-    EndButtonAppearChange( wk->ButtonActWork, FALSE );
+    EndButtonAppearChange( wk->EndIconActWork, FALSE );
     break;
   case OEKAKI_MODE_FORCE_END:
     break;
@@ -2382,6 +2471,14 @@ static void DrawPoint_to_Line(
 
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 描画終了後のタッチ座標を保存用ワークに格納する
+ *
+ * @param   all   
+ * @param   stock 
+ */
+//----------------------------------------------------------------------------------
 static void Stock_OldTouch( TOUCH_INFO *all, OLD_TOUCH_INFO *stock )
 {
   int i;
@@ -2436,7 +2533,7 @@ static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, OLD_TOUCH_INFO *old
   }
   
   // 今回の最終座標のバックアップを取る   
-    Stock_OldTouch(all, old);
+  Stock_OldTouch(all, old);
   for(i=0;i<OEKAKI_MEMBER_MAX;i++){
     all[i].size = 0;    // 一度描画したら座標情報は捨てる
   }

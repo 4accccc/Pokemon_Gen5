@@ -102,12 +102,16 @@ enum{
 };
 
 enum{
-  CLACT_RES_M_PLTT,
-  CLACT_RES_M_CHR,
-  CLACT_RES_M_CELL,
-  CLACT_RES_S_PLTT,
-  CLACT_RES_S_CHR,
-  CLACT_RES_S_CELL,
+  CLACT_RES_M_PLTT,   // メイン画面パレット
+  CLACT_RES_M_CHR,    // メイン画面キャラ
+  CLACT_RES_M_CELL,   // メイン画面セル
+  CLACT_RES_SYS_PLTT,   // メイン画面システムアイコンパレット
+  CLACT_RES_SYS_CHR,    // メイン画面システムアイコンキャラ
+  CLACT_RES_SYS_CELL,   // メイン画面システムアイコンセル
+  CLACT_RES_S_PLTT,   // サブ画面パレット
+  CLACT_RES_S_CHR,    // サブ画面キャラ
+  CLACT_RES_S_CELL,   // サブ画面セル
+
   CLACT_RES_OEKAKI_MAX,
 };
 
@@ -166,7 +170,6 @@ enum{
   OEKAKI_PRINT_UTIL_NAME_WIN2,
   OEKAKI_PRINT_UTIL_NAME_WIN3,
   OEKAKI_PRINT_UTIL_NAME_WIN4,
-  OEKAKI_PRINT_UTIL_END,
   OEKAKI_PRINT_UTIL_BOARD,
   OEKAKI_PRINT_UTIL_MSG,
   OEKAKI_PRINT_UTIL_MAX,
@@ -201,6 +204,7 @@ struct OEKAKI_WORK{
   GFL_CLWK      *MainActWork[NAMEIN_OAM_NUM];        // セルアクターワークポインタ配列
   GFL_CLWK      *SubActWork[NAMEIN_OAM_NUM];       // セルアクターワークポインタ配列
   GFL_CLWK      *ButtonActWork[12];  // ボタンアクターポインタ
+  GFL_CLWK      *EndIconActWork;     // 「×」APP共通アイコン
 
   GFL_BMPWIN    *TrainerNameWin[BMP_OEKAKI_MAX];     // お絵かき画面用BMPウインドウ
   GFL_BMPWIN    *OekakiBoard;
