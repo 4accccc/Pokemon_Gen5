@@ -36,6 +36,7 @@ SUBDIRS	=
 #NARCに必要なscrファイル名
 SCRFILE = pokegra_wb.scr
 OTHERFILE = otherform_wb.scr
+OTHERPLTTFILE = otherpltt_wb.scr
 
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ./conv/
@@ -97,8 +98,8 @@ ncl: $(notdir $(NCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_DIR)%.ncl
 	perl $(SCRIPT_DIR)ncl.pl $< $(CNV_DIR)
 
-$(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLFILE:.ncl=.NCLR)) $(SCRFILE) $(OTHERFILE)
-	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE) -S $(OTHERFILE)
+$(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLFILE:.ncl=.NCLR)) $(SCRFILE) $(OTHERFILE) $(OTHERPLTTFILE)
+	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE) -S $(OTHERFILE) -S $(OTHERPLTTFILE)
 	$(NAIXCUT) $(NAIXNAME)
 
 endif
