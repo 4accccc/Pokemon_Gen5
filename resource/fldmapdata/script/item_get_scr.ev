@@ -6,7 +6,7 @@
 	.text
 	.include	"scr_seq_def.h"
 
-  .include  "../../message/dst/script/msg_item_get_scr.h"
+  .include  "msg_item_get_scr.h"
 	
 //--------------------------------------------------------------------
 //					     スクリプト本体
@@ -23,13 +23,16 @@ _EVENT_DATA   ev_pocket_me_set
 _EVENT_DATA   ev_item_get_player_form_set
 _EVENT_DATA   ev_item_get_player_form_return
 _EVENT_DATA   ev_item_event_hideitem
+_EVENT_DATA   ev_item_event_intrude_secret
 _EVENT_DATA_END //終了
 
 
 //====================================================================
 ///  アイテム入手共通処理
 //====================================================================
-//--------------------------------------------------------------
+//====================================================================
+//  簡易アイテム入手イベント
+//
 //  SCWK_PARAM0 itemno
 //  SCWK_PARAM1 num
 //  SCWK_PARAM2 flag
@@ -37,7 +40,7 @@ _EVENT_DATA_END //終了
 //  SCWK_PARAM4 finish_msg
 //  SCWK_PARAM5 after_msg
 //  SCWK_PARAM6 メッセージアーカイブ指定ID
-//--------------------------------------------------------------
+//====================================================================
 //_ASM_EASY_ITEM_EVENT itemno, num, flag, before_msg, finish_msg, after_msg
 ev_easy_item_event:
 {
@@ -81,10 +84,10 @@ ev_easy_item_event:
 _CHG_LOCAL_SCR
 
 //====================================================================
-//				アイテム取得イベント(成功)(送りカーソル待ちあり)
+//	アイテム取得イベント(成功)(送りカーソル待ちあり)
 //
-//	SCWK_TEMP0	アイテムナンバー
-//	SCWK_TEMP1	個数
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
 //====================================================================
 ev_item_event_success_keywait:
   $SCWK_TEMP0 = $SCWK_PARAM0
@@ -94,10 +97,10 @@ ev_item_event_success_keywait:
 	_END
 
 //====================================================================
-///				アイテム取得イベント(成功)(送りカーソル待ちなし)
+//	アイテム取得イベント(成功)(送りカーソル待ちなし)
 //
-//	SCWK_TEMP0	アイテムナンバー
-//	SCWK_TEMP1	個数
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
 //====================================================================
 ev_item_event_success_nowait:
   $SCWK_TEMP0 = $SCWK_PARAM0
@@ -107,7 +110,10 @@ ev_item_event_success_nowait:
 	_END
 
 //====================================================================
-//				アイテム取得イベント(送りカーソル待ちあり)
+//	アイテム取得イベント(送りカーソル待ちあり)
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
 //====================================================================
 ev_item_event_keywait:
   _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, SCWK_ANSWER)
@@ -126,7 +132,10 @@ ev_item_event_keywait:
   _END
 
 //====================================================================
-//				アイテム取得イベント(LAST_KEYWAIT)
+//	アイテム取得イベント(LAST_KEYWAIT)
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
 //====================================================================
 ev_item_event_nowait:
 {
@@ -137,11 +146,11 @@ ev_item_event_nowait:
     $SCWK_TEMP1 = $SCWK_PARAM1
     _CALL   sub_item_event_fail_nowait
   ELSE
-	  _CALL		sub_pocket_me_set									//MEセット
-
     //入手成功システムメッセージ
     $SCWK_TEMP0 = $SCWK_PARAM0
     $SCWK_TEMP1 = $SCWK_PARAM1
+	  _CALL		sub_pocket_me_set									//MEセット
+
     _CALL   sub_item_event_nowait
   ENDIF
 }
@@ -149,7 +158,10 @@ _CHG_LOCAL_SCR
 _END
 
 //====================================================================
-//				アイテム取得イベント(フィールドアイテム&LAST_KEYWAIT)
+//	アイテム取得イベント(フィールドアイテム&LAST_KEYWAIT)
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
 //====================================================================
 ev_item_event_field:
 _CALL ev_item_event_field_core
@@ -157,7 +169,11 @@ _CHG_LOCAL_SCR
 _END
 
 //====================================================================
-//				隠しアイテム取得イベント(フィールドアイテム&LAST_KEYWAIT)
+//	隠しアイテム取得イベント(フィールドアイテム&LAST_KEYWAIT)
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
+//  SCWK_PARAM2 対応フラグナンバー
 //====================================================================
 ev_item_event_hideitem:
   _CALL ev_item_event_field_core
@@ -168,17 +184,23 @@ ev_item_event_hideitem:
 _CHG_LOCAL_SCR
 _END
 
+//--------------------------------------------------------------------
+//  アイテム取得イベント（共通処理）
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
+//--------------------------------------------------------------------
 ev_item_event_field_core:
 {
   DEFINE_LOCAL  i_get
-
-  _CALL sub_pocket_me_set
-  _CALL sub_item_get_player_form_set
 
   _DEBUG_PRINT_WK( SCWK_PARAM0 )
   _DEBUG_PRINT_WK( SCWK_PARAM1 )
   $SCWK_TEMP0 = $SCWK_PARAM0
   $SCWK_TEMP1 = $SCWK_PARAM1
+
+  _CALL sub_pocket_me_set
+  _CALL sub_item_get_player_form_set
 
   _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, i_get)
   _CALL sub_item_event_get_field_msg
@@ -209,32 +231,36 @@ ev_item_event_field_core:
 }
 
 //====================================================================
-//				アイテム取得イベント(失敗)(送りキー待ち有り)
+//	アイテム取得イベント(失敗)(送りキー待ち有り)
+//  メッセージ「ざんねん！バッグがいっぱいだ！」
 //====================================================================
 ev_item_event_fail_keywait:
 	_CALL			sub_item_event_fail_keywait
 	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
 _END
 
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
 sub_item_event_fail_keywait:
 {
-	//「ざんねん！バッグがいっぱいだ！▼」
   _SYSWIN_MSG_DOWN(	msg_item_get_fail_keywait )
   _SYSWIN_CLOSE()
 }
 _RET
 
 //====================================================================
-//				アイテム取得イベント(失敗)(LAST_KEYWAIT)
+//	アイテム取得イベント(失敗)(LAST_KEYWAIT)
+//  メッセージ「ざんねん！バッグがいっぱいだ！」
 //====================================================================
 ev_item_event_fail_nowait:
 	_CALL			sub_item_event_fail_nowait
 	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
 _END
 
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
 sub_item_event_fail_nowait:
 {
-	//「ざんねん！バッグがいっぱいだ！」
   _SYSWIN_MSG_DOWN(	msg_item_get_fail_nowait )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
@@ -243,7 +269,10 @@ _RET
 
 
 //--------------------------------------------------------------------
-//	送りカーソルあり
+//	アイテム取得イベント(成功)(送りカーソル待ちあり)
+//
+//	SCWK_TEMP0	アイテムナンバー
+//	SCWK_TEMP1	個数
 //--------------------------------------------------------------------
 sub_item_event_keywait:
 {
@@ -267,7 +296,11 @@ sub_item_event_keywait:
 _RET
 
 //--------------------------------------------------------------------
-//	送りカーソルなし(必ず最後のメッセージになる！)
+//	アイテム取得イベント(成功)(送りカーソル待ちなし)
+//	送りカーソルなし＝必ず最後のメッセージになる！
+//
+//	SCWK_TEMP0	アイテムナンバー
+//	SCWK_TEMP1	個数
 //--------------------------------------------------------------------
 sub_item_event_nowait:
 {
@@ -293,43 +326,76 @@ sub_item_event_nowait:
 _RET
 
 //--------------------------------------------------------------------
+//  成功メッセージ「～をてにいれた！」
+//	SCWK_TEMP0	アイテムナンバー
 //--------------------------------------------------------------------
 sub_item_event_get_msg:
 {
   //ポケットナンバーをSCWK_ANSWERに代入
   _GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
 
-  IF  $SCWK_ANSWER  == BAG_POCKET_EVENT THEN
-    _PLAYER_NAME(	0 )
-    _ITEM_NAME(	1,SCWK_TEMP0 )
-    _SYSWIN_MSG_DOWN(	msg_item_get_03 )		//たいせつなもの
-  ELSE
-    _ITEM_NAME(	0,SCWK_TEMP0 )
-    _SYSWIN_MSG_DOWN(	msg_item_get_01 )
-  ENDIF
+  SWITCH  $SCWK_ANSWER
+  CASE BAG_POCKET_WAZA THEN
+    //わざマシンの場合
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, SCWK_TEMP0 )
+    _ITEM_WAZA_NAME( 2, SCWK_TEMP0 )
+    _SYSWIN_MSG_DOWN( msg_item_get_04 )
+
+  CASE BAG_POCKET_EVENT THEN
+    //大事なものの場合
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, SCWK_TEMP0 )
+    _SYSWIN_MSG_DOWN( msg_item_get_02 )
+
+  DEFAULT
+    //それ以外の場合
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, SCWK_TEMP0 )
+    _SYSWIN_MSG_DOWN( msg_item_get_01 )
+
+  ENDSWITCH
 }
 _RET
 
+//--------------------------------------------------------------------
+//  メッセージ「～をみつけた！」
+//	SCWK_TEMP0	アイテムナンバー
+//--------------------------------------------------------------------
 sub_item_event_get_field_msg:
 {
   //ポケットナンバーをSCWK_ANSWERに代入
   _GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
 
-  IF  $SCWK_ANSWER  == BAG_POCKET_EVENT THEN
-    _PLAYER_NAME(	0 )
-    _ITEM_NAME(	1,SCWK_TEMP0 )
-    _SYSWIN_MSG_DOWN(	msg_item_get_field_02 )		//たいせつなもの
-  ELSE
-    _ITEM_NAME(	0,SCWK_TEMP0 )
-    _SYSWIN_MSG_DOWN(	msg_item_get_field_01 )
-  ENDIF
+  SWITCH  $SCWK_ANSWER
+  CASE BAG_POCKET_WAZA THEN
+    //わざマシンの場合
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, SCWK_TEMP0 )
+    _ITEM_WAZA_NAME( 2, SCWK_TEMP0 )
+    _SYSWIN_MSG_DOWN( msg_item_get_field_03 )
+
+  CASE BAG_POCKET_EVENT THEN
+    //大事なものの場合
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, SCWK_TEMP0 )
+    _SYSWIN_MSG_DOWN( msg_item_get_field_01 )
+  DEFAULT
+    //それ以外の場合
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, SCWK_TEMP0 )
+    _SYSWIN_MSG_DOWN( msg_item_get_field_02 )
+
+  ENDSWITCH
 }
 _RET
 
 
-//--------------------------------------------------------------------
+//====================================================================
 //	アイテム取得MEセット
-//--------------------------------------------------------------------
+//
+//	SCWK_TEMP0	アイテムナンバー
+//====================================================================
 ev_pocket_me_set:
 {
   _CALL sub_pocket_me_set
@@ -337,6 +403,8 @@ ev_pocket_me_set:
 _CHG_LOCAL_SCR
 _END
 
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
 sub_pocket_me_set:
 {
 	//ポケットナンバーをSCWK_ANSWERに代入
@@ -357,19 +425,24 @@ sub_pocket_me_set:
 }
 _RET
 
-//--------------------------------------------------------------------
-//自機アイテム取得アニメーション
-//--------------------------------------------------------------------
+//====================================================================
+//自機アニメーションセット：アイテム取得
+//====================================================================
 ev_item_get_player_form_set:
   _CALL sub_item_get_player_form_set
 _CHG_LOCAL_SCR
 _END
 
+//====================================================================
+//自機アニメーション解除：アイテム取得
+//====================================================================
 ev_item_get_player_form_return:
   _CALL sub_item_get_player_form_return
 _CHG_LOCAL_SCR
 _END
 
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
 sub_item_get_player_form_set:
 {
   _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_ITEMGET )
@@ -378,6 +451,8 @@ sub_item_get_player_form_set:
 }
 _RET
 
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
 sub_item_get_player_form_return:
 {
   _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
@@ -388,4 +463,55 @@ _RET
 _ANIME_LABEL  anm_hero_itemget
   _ANIME_DATA AC_HERO_ITEMGET,1
   _ANIME_DATA ACMD_END,0
+
+
+//====================================================================
+//    侵入：隠されアイテム取得処理
+//
+//    IN: SCWK_PARAM0    アイテムナンバー
+//    index 2 に隠した人の名前をWORDSET済み
+//====================================================================
+EVENT_START ev_item_event_intrude_secret
+{
+  DEFINE_LOCAL  i_get
+
+  _DEBUG_PRINT_WK( SCWK_PARAM0 )
+  _DEBUG_PRINT_WK( SCWK_PARAM1 )
+  $SCWK_TEMP0 = $SCWK_PARAM0
+  $SCWK_TEMP1 = $SCWK_PARAM1
+
+  _CALL sub_pocket_me_set
+  _CALL sub_item_get_player_form_set
+
+//  メッセージ「～をみつけた！」
+  _CALL sub_item_event_get_field_msg
+  _ME_WAIT()
+  _CALL sub_item_get_player_form_return
+
+  _ADD_ITEM_CHK( SCWK_PARAM0, 1, i_get)
+  _DEBUG_PRINT_WK( i_get )
+  IF $i_get == FALSE THEN
+    //入手失敗システムメッセージ
+    _SYSWIN_MSG_DOWN(	msg_intrude_secret_item_fail )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+  ELSE
+    //アイテム追加
+    _ADD_ITEM( SCWK_PARAM0, 1, SCWK_ANSWER )
+    _BEACON_SET_REQ_ITEM_GET( SCWK_PARAM0 ) 
+
+    //入手成功システムメッセージ
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, SCWK_PARAM0 )
+    _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
+    _POCKET_NAME( 2, SCWK_ANSWER )
+
+    _SYSWIN_MSG_DOWN(	msg_item_get_pocket_keywait )
+    _SYSWIN_MSG_DOWN( msg_intrude_secret_item_01 )
+    _LAST_KEYWAIT()
+  ENDIF
+  _SYSWIN_CLOSE()
+  $SCWK_ANSWER = $i_get
+}
+EVENT_END
 

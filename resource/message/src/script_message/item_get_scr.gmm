@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T22:32:16"/>
+	<create user="tamada" host="W00139" date="2010-02-18T22:46:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,11 +336,13 @@
 	</lock>
 
 
-	<row id="msg_item_get_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_item_get_01">
 		<comment>アイテムゲット時……ノーマル
 0＝アイテム名</comment>
-		<language name="JPN" width="256">[1:09:どうぐ名:0]を　てにいれた！</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　手に入れた！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　手に入れた！</language>
 	</row>
 
 	<row id="msg_item_get_02">
@@ -348,19 +350,19 @@
 0＝主人公名
 1＝道具名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
+[FF:00:色:1][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　手に入れた！</language>
+[FF:00:色:1][1:09:どうぐ名:1][FF:00:色:0]を　手に入れた！</language>
 	</row>
 
-	<row id="msg_item_get_03">
+	<row id="msg_item_get_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>アイテムゲット時……フィールドメニューに関係する物
 0＝主人公名
 1＝道具名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　てにいれた！</language>
+[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　手に入れた！</language>
+[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　手に入れた！</language>
 	</row>
 
 	<row id="msg_item_get_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
@@ -375,16 +377,17 @@
 	</row>
 
 	<row id="msg_item_get_field_01">
-		<comment>アイテムゲット時……フィールドアイテム
-0＝道具名</comment>
+		<comment>アイテムゲット時……フィールドアイテムたいせつなもの
+0＝主人公名
+1＝道具名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　みつけた！</language>
+[FF:00:色:1][1:09:どうぐ名:1][FF:00:色:0]を　みつけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　みつけた！</language>
+[FF:00:色:1][1:09:どうぐ名:1][FF:00:色:0]を　みつけた！</language>
 	</row>
 
 	<row id="msg_item_get_field_02">
-		<comment>アイテムゲット時……フィールドアイテムたいせつなもの
+		<comment>アイテムゲット時……フィールドアイテム　ノーマル
 0＝主人公名
 1＝道具名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
@@ -460,6 +463,28 @@
 アクセサリーいれに　しまった[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　[1:1F:アクセサリー名:1]を
 アクセサリーいれに　しまった[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_intrude_secret_item_01">
+		<comment>隠されアイテム入手後メッセージ
+3＝隠したトレーナー名</comment>
+		<language name="JPN" width="256">どうやら　[1:00:トレーナー名:3]が
+かくしていった　ようだ</language>
+		<language name="JPN_KANJI" width="256">どうやら　[1:00:トレーナー名:3]が
+かくしていった　ようだ</language>
+	</row>
+
+	<row id="msg_intrude_secret_item_fail">
+		<comment>隠されアイテム入手できなかったときのメッセージ
+0＝主人公名</comment>
+		<language name="JPN" width="256">ざんねん！
+バッグが　いっぱい　だ！▼
+[1:00:トレーナー名:0]は
+アイテムをあきらめた</language>
+		<language name="JPN_KANJI" width="256">残念！
+バッグが　一杯だ！▼
+[1:00:トレーナー名:0]は
+アイテムをあきらめた</language>
 	</row>
 
 	<flowchart-group-list>
