@@ -47,19 +47,17 @@ extern BOOL NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork);
 extern NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork);
 extern void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork);
 
-extern NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid);
+extern NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid, DWCSvlResult* pSvl);
 extern void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork);
 
 //------------------------------------------------------------------------------
 /**
  * @brief   認証キー作成開始
  * @param   NHTTP_RAP_WORK* pWork,  ワーク
- * @param   認証構造体
  * @retval  TRUEなら成功
  */
 //------------------------------------------------------------------------------
-extern BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork, DWCSvlResult* pSvl);
-//extern BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork);
+extern BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork);
 
 //------------------------------------------------------------------------------
 /**

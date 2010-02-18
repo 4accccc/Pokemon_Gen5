@@ -105,7 +105,7 @@ static CPSCaInfo* cainfos[] = {
 struct _NHTTP_RAP_WORK {
   u8* pData;
   int length;
-  DWCSvlResult svl;
+  DWCSvlResult* pSvl;
   NHTTPConnectionHandle   handle;
   char getbuffer[_GET_MAXSIZE];
   char urlbuff[_URL_BUFFER];
@@ -322,11 +322,11 @@ void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork)
 
 
 
-NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid)
+NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid, DWCSvlResult* pSvl)
 {
   NHTTP_RAP_WORK* pWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(NHTTP_RAP_WORK) );
   pWork->profileid=profileid;
-
+  pWork->pSvl = pSvl;
   return pWork;
 }
 
@@ -350,9 +350,10 @@ void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep)
 
 
 
-BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork, DWCSvlResult* pSvl)
+BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork)
 {
-  return DWC_SVLGetTokenAsync("",  pSvl);
+  GF_ASSERT(pWork->pSvl);
+  return DWC_SVLGetTokenAsync("",  pWork->pSvl);
 }
 
 
@@ -366,9 +367,9 @@ BOOL NHTTP_RAP_SvlGetTokenMain(NHTTP_RAP_WORK* pWork)
   state = DWC_SVLProcess();
   if(state == DWC_SVL_STATE_SUCCESS) {
     NET_PRINT("Succeeded to get SVL Status\n");
-    NET_PRINT("status = %s\n", pWork->svl.status==TRUE ? "TRUE" : "FALSE");
-    NET_PRINT("svlhost = %s\n", pWork->svl.svlhost);
-    NET_PRINT("svltoken = %s\n", pWork->svl.svltoken);
+    NET_PRINT("status = %s\n", pWork->pSvl->status==TRUE ? "TRUE" : "FALSE");
+    NET_PRINT("svlhost = %s\n", pWork->pSvl->svlhost);
+    NET_PRINT("svltoken = %s\n", pWork->pSvl->svltoken);
     return TRUE;
   }
   else if(state == DWC_SVL_STATE_ERROR) {
@@ -389,9 +390,9 @@ void NHTTP_RAP_PokemonEvilCheckReset(NHTTP_RAP_WORK* pWork,NHTTP_POKECHK_ENUM ty
   u16 typeu16 = type;
 
   pWork->length = 0;
-  while( pWork->svl.svltoken[pWork->length] != 0 )
+  while( pWork->pSvl->svltoken[pWork->length] != 0 )
   { 
-    pWork->pData[pWork->length] = (u8)pWork->svl.svltoken[pWork->length];
+    pWork->pData[pWork->length] = (u8)pWork->pSvl->svltoken[pWork->length];
     pWork->length++;
   }
   pWork->pData[pWork->length++] = 0;

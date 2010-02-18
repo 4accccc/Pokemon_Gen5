@@ -859,8 +859,10 @@ static void _FadeWait(WIFILOGIN_WORK* pWork)
 
 static void _modeSvlGetStart(WIFILOGIN_WORK* pWork)
 {
-  pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID, MyStatus_GetProfileID(GAMEDATA_GetMyStatus(pWork->gamedata)) );
-  if( NHTTP_RAP_SvlGetTokenStart(pWork->pNHTTP, pWork->dbw->pSvl)){
+  pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID,
+                                 MyStatus_GetProfileID(GAMEDATA_GetMyStatus(pWork->gamedata)),
+                                                       pWork->dbw->pSvl );
+  if( NHTTP_RAP_SvlGetTokenStart(pWork->pNHTTP)){
     _CHANGE_STATE(pWork, _modeSvlGetMain);
   }
 }
@@ -869,6 +871,7 @@ static void _modeSvlGetStart(WIFILOGIN_WORK* pWork)
 static void _modeSvlGetMain(WIFILOGIN_WORK* pWork)
 {
   if(NHTTP_RAP_SvlGetTokenMain(pWork->pNHTTP)){
+    NHTTP_RAP_End(pWork->pNHTTP);
     _CHANGE_STATE(pWork, _modeFadeStart);
   }
 }
