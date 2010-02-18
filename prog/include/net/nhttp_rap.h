@@ -18,7 +18,9 @@
 #include "webresp_defs.h"
 #include "net/network_define.h"
 
-
+//-------------------------------------
+///	NHTTP_RAPハンドル
+//=====================================
 typedef struct _NHTTP_RAP_WORK NHTTP_RAP_WORK;
 
 
@@ -102,6 +104,15 @@ extern BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork);
  */
 //------------------------------------------------------------------------------
 extern void NHTTP_RAP_PokemonEvilCheckDelete(NHTTP_RAP_WORK* pWork);
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモン不正検査 領域破棄
+ * @param   NHTTP_RAP_WORK* pWork,  ワーク
+ */
+//------------------------------------------------------------------------------
+extern void NHTTP_RAP_RESPONSE_PokemonEvilCheck(NHTTP_RAP_WORK* pWork);
+
 
 #if PM_DEBUG
 void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep);

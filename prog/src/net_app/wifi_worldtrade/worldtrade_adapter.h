@@ -279,10 +279,6 @@ extern void PokeReplace( const POKEMON_PASO_PARAM *ppp, POKEMON_PARAM *pp );
 extern POKEMON_PASO_PARAM* PPPPointerGet( POKEMON_PARAM *pp );
 
 
-extern void EMAILSAVE_DCProfileCreate_Update( SAVE_CONTROL_WORK * savedata, Dpw_Common_Profile * profile );
-
-
-
 //=============================================================================
 /**
  *					BGWINFRM

@@ -327,7 +327,8 @@ SRCS  +=    $(SOUNDSRC) \
 SRCS_OVERLAY_DEV_WIFILIB   = net/net_devwifi.c \
                 net/dwc_rap.c \
                 net/dwc_rapinitialize.c \
-                net/dwc_rapcommon.c
+                net/dwc_rapcommon.c \
+                net/dwc_error.c
 
 
 # アンチWIFIプログラム
@@ -1236,7 +1237,9 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 #LIB=>          libdpwbt.$HYB.a
 #LIB=>          libdwcenc.$HYB.a
 SRCS_OVERLAY_DPW_COMMON   = 							net/pdw_ca.c \
-							net/nhttp_rap.c
+							net/nhttp_rap.c \
+              net/nhttp_rap_evilcheck.c \
+              net/dpw_rap.c
 
 
 

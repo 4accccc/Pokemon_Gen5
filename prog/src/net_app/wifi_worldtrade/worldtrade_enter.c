@@ -44,8 +44,7 @@
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
 #include "wifip2pmatch.naix"			// グラフィックアーカイブ定義
-//#include "savedata/email_savedata.h"
-//TODO
+#include "net/dpw_rap.h"
 
 
 //============================================================================================
@@ -918,7 +917,7 @@ static int Enter_ServerResult( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_ProfileStart( WORLDTRADE_WORK *wk )
 {
-	EMAILSAVE_DCProfileCreate_Update(wk->param->savedata, &wk->dc_profile);
+  DPW_RAP_CreateProfile( &wk->dc_profile, wk->param->mystatus );
 	Dpw_Tr_SetProfileAsync(&wk->dc_profile, &wk->dc_profile_result);
 
 	OS_TPrintf("Dpw Trade プロフィール(Eメール)送信\n");

@@ -155,48 +155,6 @@ POKEMON_PASO_PARAM* PPPPointerGet( POKEMON_PARAM *pp )
   return (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst( pp );
 }
 
-//----------------------------------------------------------------------------
-/**
- *  @brief  プロファイルを作成
- *
- *  @param  SAVE_CONTROL_WORK * savedata  セーブデータ
- *  @param  * profile                     プロファイル
- *
- */
-//-----------------------------------------------------------------------------
-static void EMAILSAVE_DCProfileCreateCommon( SAVE_CONTROL_WORK *sv, Dpw_Common_Profile *dc_profile )
-{
-  WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
-  MYSTATUS *my = SaveData_GetMyStatus(sv);
-  //char *email_address = EMAILSAVE_AddressGet(sv);
-
-  GFL_STD_MemClear(dc_profile, sizeof(Dpw_Common_Profile));
-
-  dc_profile->version = PM_VERSION;
-  dc_profile->language = PM_LANG;
-  dc_profile->countryCode = MyStatus_GetMyNation(my);
-  dc_profile->localCode = MyStatus_GetMyArea(my);
-  dc_profile->playerId = MyStatus_GetID(my);
-
-  STRTOOL_Copy( MyStatus_GetMyName(my), dc_profile->playerName, DPW_TR_NAME_SIZE );
-
-  dc_profile->flag = 0; //ハングル文字を表示できるか
-//  dc_profile->macAddr   ライブラリ内で格納するのでセットの必要なし
-
-  //strcpy(dc_profile->mailAddr, email_address);
-
-#if 0
-  dc_profile->mailRecvFlag = FALSE;////EMAILSAVE_ParamGet(sv, EMAIL_PARAM_RECV_FLAG);
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_EMAIL)
-  SVLD_SetCrc(GMDATA_ID_EMAIL);
-#endif //CRC_LOADCHECK
-#endif
-}
-void EMAILSAVE_DCProfileCreate_Update( SAVE_CONTROL_WORK * savedata, Dpw_Common_Profile * profile )
-{
-  EMAILSAVE_DCProfileCreateCommon( savedata, profile );
-}
-
 //=============================================================================
 /**
  *          プリントフォント周り

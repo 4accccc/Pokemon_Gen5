@@ -30,8 +30,6 @@
 //-------------------------------------
 /// 保存データ
 //=====================================
-
-//対戦者情報
 typedef struct 
 {
   u8        mystatus[MYSTATUS_SAVE_SIZE];
@@ -47,6 +45,25 @@ typedef struct
 
 //対戦者情報のサイズ
 #define WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE (sizeof(WIFIBATTLEMATCH_ENEMYDATA) + PokeParty_GetWorkSize())
+
+//-------------------------------------
+/// ポケモンデータ＋署名
+//=====================================
+typedef struct 
+{
+
+  u8        mystatus[MYSTATUS_SAVE_SIZE];
+  u32       win_cnt;
+  u32       lose_cnt;
+  u32       btl_cnt;
+  u32       rate;
+  PMS_DATA  pms;
+  u32       wificup_no;
+  u32       btl_server_version;
+  u8        pokeparty[0]; //後尾にポケパーティのデータがつく
+} WIFIBATTLEMATCH_POKEDATA;
+
+
 
 #include "arc_def.h"
 #include "message.naix"
