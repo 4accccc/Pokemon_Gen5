@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-16T19:54:54"/>
+	<create user="taya" host="W00146" date="2010-02-18T23:47:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -84,6 +84,11 @@
 			</tag>
 			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="16" japanese="Gパワー名称" english="Gパワー名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">Gパワーの名称です</comment>
+				<comment language="english">Gパワーの名称です</comment>
 			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -249,7 +254,7 @@
 				<comment language="english">描画X座標を加算します。
 使用は許可制です。</comment>
 			</tag>
-			<tag entry="05" japanese="X指定" english="X指定" view="EP">
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
 				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
 				<comment language="japanese">描画Ｘ座標を指定値に変更。
 使用は許可制です。</comment>
