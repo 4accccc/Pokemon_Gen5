@@ -34,5 +34,17 @@ extern VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk );
 //--------------------------------------------------------------------
 extern VMCMD_RESULT EvCmdCheckGPowerFinish( VMHANDLE* core, void* wk );
 
+//--------------------------------------------------------------------
+/**
+ * @brief Gパワーフィールドエフェクト
+ *
+ * @param core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT:
+ */
+//--------------------------------------------------------------------
+extern VMCMD_RESULT EvCmdGPowerUseEffect( VMHANDLE* core, void* wk );
+
 
 

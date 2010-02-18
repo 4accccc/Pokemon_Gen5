@@ -12,10 +12,17 @@
 
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_beacon.h"
+#include "gamesystem/game_event.h"
 #include "gamesystem/g_power.h"
+
+#include "event_gpower.h"
 
 #include "script_def.h"
 #include "scrcmd.h"
+#include "script.h"
+#include "script_local.h"
+
+#include "scrcmd_beacon.h"
 
 //--------------------------------------------------------------------
 /**
@@ -74,5 +81,26 @@ VMCMD_RESULT EvCmdCheckGPowerFinish( VMHANDLE* core, void* wk )
     *ret_next = FALSE;
   }
   return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------------
+/**
+ * @brief Gパワーフィールドエフェクト
+ *
+ * @param core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT:
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdGPowerUseEffect( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
+
+  SCRIPT_CallEvent( sc, EVENT_GPowerUseEffect( gsys ));
+
+  return VMCMD_RESULT_SUSPEND;
 }
 

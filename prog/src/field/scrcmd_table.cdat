@@ -875,7 +875,7 @@
   //ビーコン&Gパワー関連
   DEF_CMD( EvCmdBeaconSetRequest, EV_SEQ_BEACON_SET_REQUEST )
   DEF_CMD( EvCmdCheckGPowerFinish, EV_SEQ_CHECK_GPOWER_FINISH )
-  NO_CMD()
+  DEF_CMD( EvCmdGPowerUseEffect, EV_SEQ_GPOWER_USE_EFFECT )
   NO_CMD()
 
   NO_CMD()

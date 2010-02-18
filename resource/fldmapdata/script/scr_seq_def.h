@@ -6453,6 +6453,19 @@
   .short \ret_next
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _GPOWER_USE_EFFECT
+ * @brief 居合い切りエフェクト表示
+ */
+//--------------------------------------------------------------
+#define _GPOWER_USE_EFFECT() \
+    _ASM_GPOWER_USE_EFFECT
+  
+  .macro _ASM_GPOWER_USE_EFFECT
+  .short EV_SEQ_GPOWER_USE_EFFECT
+  .endm
+
 //======================================================================
 //
 //  簡易コマンド

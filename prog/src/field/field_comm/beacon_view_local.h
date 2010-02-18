@@ -18,6 +18,9 @@
 #include "app/app_keycursor.h"
 #include "msg/msg_beacon_status.h"
 
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
+
 enum{
   SEQ_MAIN,
   SEQ_VIEW_UPDATE,

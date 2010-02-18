@@ -22,3 +22,10 @@ extern GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, GPOWER_ID g_power, 
  */
 extern GMEVENT* EVENT_GPowerEffectEnd( GAMESYS_WORK * gsys );
 
+/*
+ *  @brief  Gパワー効果発動エフェクト
+ */
+extern GMEVENT* EVENT_GPowerUseEffect( GAMESYS_WORK * gsys );
+
+
+
