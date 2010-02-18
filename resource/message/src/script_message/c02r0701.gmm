@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-14T16:01:41"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T17:34:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,15 +229,15 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="195"/>
+		<id position="0" width="173"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="177"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="127">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1423" top="388" right="2128" bottom="969" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,31 @@
 	</lock>
 
 
-	<row id="msg_c02r0701_???_01">
-		<comment>（ゲート）</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c02r0701_infomationw_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">こんにちは！
+トレーナーさん▼
+たびのおともに　キズぐすりは
+だいじ　だと　おもいまーす！</language>
+		<language name="JPN_KANJI" width="256">こんにちは！
+トレーナーさん▼
+旅のお供に　キズぐすりは
+大事だと　思いまーす！</language>
+	</row>
+
+	<row id="msg_c02r0701_GIRL2_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">もっと　モンスターボールを
+かっておけば　よかった！▼
+さっき　つかまえたい
+ポケモンが　とびだしてきたのに！</language>
+		<language name="JPN_KANJI" width="256">もっと　モンスターボールを
+買っておけば　よかった！▼
+さっき　捕まえたい
+ポケモンが　飛びだしてきたのに！</language>
 	</row>
 
 	<flowchart-group-list>
