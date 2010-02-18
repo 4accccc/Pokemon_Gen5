@@ -130,6 +130,7 @@ SRCS  +=    $(SOUNDSRC) \
         poke_tool/shinka_check.c \
         poke_tool/pokefoot.c \
         poke_tool/natsuki.c \
+        poke_tool/pokepara_conv.c \
         pokeicon/pokeicon.c \
         waza_tool/waza_tool.c \
         print/printsys.c \
