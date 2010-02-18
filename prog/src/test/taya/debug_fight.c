@@ -2111,12 +2111,27 @@ FS_EXTERN_OVERLAY(battle);
           BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
             &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
           BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
-        }else{
+        }
+        else
+        {
           TrainerID  trID2 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+          TrainerID  trID3 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
 
-          BTL_SETUP_Tag_Trainer( &wk->setupParam, wk->gameData, &wk->fieldSit, trID, trID2, HEAPID_BTL_DEBUG_SYS );
-          BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
-          BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+          if( PokeParty_GetPokeCount(wk->partyFriend) )
+          {
+            BTL_SETUP_AIMulti_Trainer( &wk->setupParam, wk->gameData, &wk->fieldSit,
+              trID3, trID, trID2, HEAPID_BTL_DEBUG_SYS );
+
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyFriend, BTL_CLIENT_PARTNER );
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+          }
+          else
+          {
+            BTL_SETUP_Tag_Trainer( &wk->setupParam, wk->gameData, &wk->fieldSit, trID, trID2, HEAPID_BTL_DEBUG_SYS );
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+          }
         }
         break;
       case BTL_RULE_TRIPLE:
