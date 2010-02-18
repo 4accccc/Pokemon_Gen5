@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-06T13:27:52"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T21:00:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1360" top="288" right="2065" bottom="908" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="278" right="1998" bottom="906" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -624,8 +624,13 @@
 		<comment>♂
 ・WHITEver
 ・クリアまで繰り返し
-※場合によってはドラゴン最強技教え
-　「dragon_skill.gmm」に</comment>
+
+・WHITEver
+　ジムリーダー「アイリス」
+　クリア後の技教え「シャガ」
+・BLACKver
+　ジムリーダー「シャガ」
+　クリア後の技教え「アイリス」</comment>
 		<attribute name="キャラ指定">ジムリーダー
 シャガ</attribute>
 		<language name="JPN" width="256">シャガ『……ひとと　ポケモンの
@@ -647,15 +652,61 @@
 	<row id="msg_c08r0101_leader8a_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・BLACKver
-・クリアまで繰り返し
-※場合によってはドラゴン最強技教え
-　「dragon_skill.gmm」に</comment>
+・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アイリス</attribute>
 		<language name="JPN" width="256">アイリス『ポケモンも　ひとも
 みんな　なかよしで　いいんだよね！</language>
 		<language name="JPN_KANJI" width="256">アイリス『ポケモンも　ひとも
 みんな　なかよしで　いいんだよね！</language>
+	</row>
+
+	<row id="msg_c08r0101_veteranw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・クリア前</comment>
+		<attribute name="キャラ指定">VETERANW</attribute>
+		<language name="JPN" width="256">あたくし　アイリスさまの
+コーチを　しております▼
+といっても　アイリスさまは
+ここに　いらしたときから▽
+あたくしより　つよくって……！</language>
+		<language name="JPN_KANJI" width="256">あたくし　アイリスさまの
+コーチを　しております▼
+といっても　アイリスさまは
+ここに　いらしたときから▽
+あたくしより　強くって……！</language>
+	</row>
+
+	<row id="msg_c08r0101_veteranw_02w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・クリア後＋WHITEver</comment>
+		<attribute name="キャラ指定">VETERANW</attribute>
+		<language name="JPN" width="256">シャガさまが　おしえてくださる
+りゅうせいぐんは▽
+ドラゴンタイプ　さいきょうの　わざ▼
+ただし　つかったあと
+とくこうが　がくっと　さがります</language>
+		<language name="JPN_KANJI" width="256">シャガさまが　教えてくださる
+りゅうせいぐんは▽
+ドラゴンタイプ　最強の　技▼
+ただし　使ったあと
+特攻が　がくっと　下がります</language>
+	</row>
+
+	<row id="msg_c08r0101_veteranw_02b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・クリア後＋BLACKver</comment>
+		<attribute name="キャラ指定">VETERANW</attribute>
+		<language name="JPN" width="256">アイリスさまが　おしえてくださる
+りゅうせいぐんは▽
+ドラゴンタイプ　さいきょうの　わざ▼
+ただし　つかったあと
+とくこうが　がくっと　さがります</language>
+		<language name="JPN_KANJI" width="256">アイリスさまが　教えてくださる
+りゅうせいぐんは▽
+ドラゴンタイプ　最強の　技▼
+ただし　使ったあと
+特攻が　がくっと　下がります</language>
 	</row>
 
 	<flowchart-group-list>
