@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:03:40"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T11:59:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1348" top="279" right="2053" bottom="907" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -410,7 +410,7 @@ Wi-Fi P2P接続画面へ</comment>
 お友達を　登録していないと▽
 ご利用できません▼
 お友達を　登録してから
-お越しください</language>
+おこしください</language>
 	</row>
 
 	<row id="msg_wifi_club_01_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -452,7 +452,7 @@ C-Gear入手前</comment>
 		<language name="JPN" width="256">ただいま　じゅうびちゅう　です！
 また　あとで　おこしください</language>
 		<language name="JPN_KANJI" width="256">ただいま　準備中です！
-また　あとで　お越しください</language>
+また　あとで　おこしください</language>
 	</row>
 
 	<row id="msg_wifi_club_01_err02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -461,7 +461,7 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">てもちに　つれていけない
 ポケモンが　います</language>
-		<language name="JPN_KANJI" width="256">手持ちに　連れて行けない
+		<language name="JPN_KANJI" width="256">手持ちに　連れていけない
 ポケモンが　います</language>
 	</row>
 

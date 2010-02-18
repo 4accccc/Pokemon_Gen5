@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:05:28"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T11:58:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1458" top="294" right="2163" bottom="922" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -318,7 +318,7 @@
 		<language name="JPN" width="256">Ｗｉ－Ｆｉコネクションを
 ごりよう　ですか？</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉコネクションを
-ご利用　ですか？</language>
+ご利用ですか？</language>
 	</row>
 
 	<row id="msg_wifi_counter_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -378,7 +378,7 @@ Wi-Fi P2P接続画面へ</comment>
 人　同士で　ポケモン交換や▽
 通信対戦を　楽しめます▼
 ここでの　通信対戦は
-シングルと　ダブルの　２しゅるいで▼
+シングルと　ダブルの　２種類で▼
 それぞれに　「フリー」「レベル５０」
 「レベル１００」を　選べます▼
 「レベル５０」や「レベル１００」では
@@ -985,14 +985,14 @@ C-Gear入手前</comment>
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">シングルバトルは
 戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
-てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+手持ちポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
 ３匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
-連れて行く　ポケモンは　すべて　違う
+連れていく　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 持たせる　道具も　すべて　違う
 道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　特別な　ポケモンや　タマゴは
-連れて行くことは　できません[BE:01:ページ切り替え（クリア）]</language>
+連れていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_04_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1010,14 +1010,14 @@ C-Gear入手前</comment>
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ダブルバトルは
 戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
-てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+手持ちポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
 ４匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
-連れて行く　ポケモンは　すべて　違う
+連れていく　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 持たせる　道具も　すべて　違う
 道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　特別な　ポケモンや　タマゴは
-連れて行くことは　できません[BE:01:ページ切り替え（クリア）]</language>
+連れていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_04_exp03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1035,14 +1035,14 @@ C-Gear入手前</comment>
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">トリプルバトルは
 戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
-てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+手持ちポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
 ６匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
-連れて行く　ポケモンは　すべて　違う
+連れていく　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 持たせる　道具も　すべて　違う
 道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　特別な　ポケモンや　タマゴは
-連れて行くことは　できません[BE:01:ページ切り替え（クリア）]</language>
+連れていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_04_exp04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1060,14 +1060,14 @@ C-Gear入手前</comment>
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ローテーションバトルは
 戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
-てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+手持ちポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
 ５匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
-連れて行く　ポケモンは　すべて　違う
+連れていく　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 持たせる　道具も　すべて　違う
 道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　特別な　ポケモンや　タマゴは
-連れて行くことは　できません[BE:01:ページ切り替え（クリア）]</language>
+連れていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_04_exp05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1091,12 +1091,12 @@ C-Gear入手前</comment>
 戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
 てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
 ６匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
-連れて行く　ポケモンは　すべて　違う
+連れていく　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 持たせる　道具も　すべて　違う
 道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
 また　特別な　ポケモンや　タマゴは
-連れて行くことは　できません[BE:01:ページ切り替え（クリア）]</language>
+連れていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1104,7 +1104,7 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">てもちか　バトルボックスの
 どちらを　つかうか　えらんでください</language>
-		<language name="JPN_KANJI" width="256">てもちか　バトルボックスの
+		<language name="JPN_KANJI" width="256">手持ちか　バトルボックスの
 どちらを　使うか　選んでください</language>
 	</row>
 
@@ -1134,7 +1134,7 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">てもちか　バトルボックスの
 どちらを　つかうか　えらんでください</language>
-		<language name="JPN_KANJI" width="256">てもちか　バトルボックスの
+		<language name="JPN_KANJI" width="256">手持ちか　バトルボックスの
 どちらを　使うか　選んでください</language>
 	</row>
 

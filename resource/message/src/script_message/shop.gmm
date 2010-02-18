@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-02-10T17:52:15"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T12:03:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -358,8 +358,8 @@
 		<comment>買う画面、売る画面から戻ってきたとき</comment>
 		<language name="JPN" width="256">その　ほかに　わたしどもで
 なにか　おちからに　なれることは？</language>
-		<language name="JPN_KANJI" width="256">その　ほかに　わたしどもで
-なにか　おちからに　なれることは？</language>
+		<language name="JPN_KANJI" width="256">その他に　私どもで
+何か　お力に　なれることは？</language>
 	</row>
 
 	<row id="mes_shop_02_01">
@@ -450,13 +450,13 @@
 	<row id="mes_shop_04_01">
 		<comment>左上のウィンドウに、表示する１番目の項目</comment>
 		<language name="JPN" width="256">かいに　きた</language>
-		<language name="JPN_KANJI" width="256">かいに　きた</language>
+		<language name="JPN_KANJI" width="256">買いにきた</language>
 	</row>
 
 	<row id="mes_shop_04_02">
 		<comment>左上のウィンドウに、表示する２番目の項目</comment>
 		<language name="JPN" width="256">うりに　きた</language>
-		<language name="JPN_KANJI" width="256">うりに　きた</language>
+		<language name="JPN_KANJI" width="256">売りにきた</language>
 	</row>
 
 	<row id="mes_shop_04_03">
