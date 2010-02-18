@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-22T00:47:26"/>
+	<create user="taya" host="W00146" date="2010-02-18T16:42:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -316,6 +316,16 @@
 	<row id="BTLMSG_UI_SEL_NEXT_POKE">
 		<language name="JPN" width="128">つぎの　ポケモンを　つかう</language>
 		<language name="JPN_KANJI" width="128">次の　ポケモンを　使う</language>
+	</row>
+
+	<row id="BTLMSG_UI_SEL_IREKAE_YES">
+		<language name="JPN" width="128">ポケモンを　いれかえる</language>
+		<language name="JPN_KANJI" width="128">ポケモンを　入れ替える</language>
+	</row>
+
+	<row id="BTLMSG_UI_SEL_IREKAE_NO">
+		<language name="JPN" width="128">そのまま　たたかう</language>
+		<language name="JPN_KANJI" width="128">そのまま　戦う</language>
 	</row>
 
 	<row id="BTLMSG_UI_SEL_WAZA">
