@@ -123,9 +123,9 @@ EVENT_START	ev_musical_recept_comm_core
   _SYSWIN_MSG_DOWN( msg_musical_test_01 )
   
   _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
-  _BMPMENU_MAKE_LIST( msg_msucail_program_01, 0 ) //リーダー
-  _BMPMENU_MAKE_LIST( msg_msucail_program_02, 1 ) //グループ
-  _BMPMENU_MAKE_LIST( msg_msucail_program_07, 2 ) //やめる
+  _BMPMENU_MAKE_LIST( msg_musical_program_01, 0 ) //リーダー
+  _BMPMENU_MAKE_LIST( msg_musical_program_02, 1 ) //グループ
+  _BMPMENU_MAKE_LIST( msg_musical_program_07, 2 ) //やめる
   _BMPMENU_START()
   
   IF $ret == 2 THEN //やめる
@@ -234,12 +234,12 @@ EVENT_START	ev_musical_change_program
 	//メニュー作成
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 	//リスト追加
-	_BMPMENU_MAKE_LIST( msg_msucail_program_01, 0 )
-	_BMPMENU_MAKE_LIST( msg_msucail_program_02, 1 )
-	_BMPMENU_MAKE_LIST( msg_msucail_program_03, 2 )
-	_BMPMENU_MAKE_LIST( msg_msucail_program_04, 3 )
-	_BMPMENU_MAKE_LIST( msg_msucail_program_05, 4 )
-	_BMPMENU_MAKE_LIST( msg_msucail_program_06, 5 )	//やめる
+	_BMPMENU_MAKE_LIST( msg_musical_program_01, 0 )
+	_BMPMENU_MAKE_LIST( msg_musical_program_02, 1 )
+	_BMPMENU_MAKE_LIST( msg_musical_program_03, 2 )
+	_BMPMENU_MAKE_LIST( msg_musical_program_04, 3 )
+	_BMPMENU_MAKE_LIST( msg_musical_program_05, 4 )
+	_BMPMENU_MAKE_LIST( msg_musical_program_06, 5 )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
 	_BALLOONWIN_CLOSE()
@@ -265,7 +265,7 @@ fan_main_routine:
 	//本来見た目の処理はココでやるべきではないと思うが、仮処理
 	_GET_MUSICAL_FAN_VALUE_TYPE( fan_number , fan_type )
 	IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
-		_BALLOONWIN_TALKOBJ_MSG( msg_msucail_fan_none )
+		_BALLOONWIN_TALKOBJ_MSG( msg_musical_fan_none )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ELSE
@@ -295,7 +295,7 @@ fan_main_routine:
 			_BALLOONWIN_CLOSE()
 			
 			//仮メッセージ
-						_SYSWIN_MSG_DOWN( msg_msucail_fan_get_goods )
+						_SYSWIN_MSG_DOWN( msg_musical_fan_get_goods )
 				_LAST_KEYWAIT()
 			_SYSWIN_CLOSE()
 			
