@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-04T19:18:17"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T15:11:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,10 +357,10 @@
 
 	<row id="CROWD_MSG01">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">やあ！　トレーナー！
-きみの　ポケモン　げんきかい？</language>
-		<language name="JPN_KANJI" width="256">やあ！　トレーナー！
-きみの　ポケモン　元気かい？</language>
+		<language name="JPN" width="256">みんな　あるくのが
+うまいでしょ！　はやいでしょ！</language>
+		<language name="JPN_KANJI" width="256">みんな　歩くのが
+うまいでしょ！　早いでしょ！</language>
 	</row>
 
 	<row id="CROWD_MSG02">
@@ -397,10 +397,10 @@
 		<comment>群集用</comment>
 		<language name="JPN" width="256">……どこで　さぼろうかな▼
 いやいや　さばるじゃないな
-ちょっと　きゅうけい　だよ</language>
+ちょっと　きゅうけい　だね</language>
 		<language name="JPN_KANJI" width="256">……どこで　さぼろうかな▼
 いやいや　さばるじゃないな
-ちょっと　休憩だよ</language>
+ちょっと　休憩だね</language>
 	</row>
 
 	<row id="CROWD_MSG07">
@@ -429,8 +429,10 @@
 
 	<row id="CROWD_MSG10">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">わたしは　たたかう　ビジネスマン</language>
-		<language name="JPN_KANJI" width="256">私は　闘う　ビジネスマン</language>
+		<language name="JPN" width="256">わたしは　あるく……
+きょうも　あしたも　あさっても</language>
+		<language name="JPN_KANJI" width="256">私は　歩く……
+今日も　明日も　明後日も</language>
 	</row>
 
 	<row id="CROWD_MSG11">

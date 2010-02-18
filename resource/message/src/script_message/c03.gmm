@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T13:14:32"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T15:01:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -720,12 +720,12 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">OL
 </attribute>
-		<language name="JPN" width="256">ヒウンシティって　すごく
-おおくの　ひとが　いるでしょ▼
+		<language name="JPN" width="256">ヒウンシティって　とても
+たくさんの　ひとが　いるでしょ▼
 じぶんにしか　きょうみのない
 ひとも　たまに　いるのよね</language>
-		<language name="JPN_KANJI" width="256">ヒウンシティって　すごく
-多くの　人が　いるでしょ▼
+		<language name="JPN_KANJI" width="256">ヒウンシティって　とても
+たくさんの　人が　いるでしょ▼
 自分にしか　興味のない
 人も　たまに　いるのよね</language>
 	</row>
@@ -735,9 +735,9 @@
 		<attribute name="キャラ指定">OL
 </attribute>
 		<language name="JPN" width="256">はとばで　ふねを　ながめるのが
-アタシの　ひるやすみの　スタイルよ</language>
+アタシなりの　ひるやすみよ</language>
 		<language name="JPN_KANJI" width="256">波止場で　船を　ながめるのが
-アタシの　昼休みの　スタイルよ</language>
+アタシの　昼休みスタイルよ</language>
 	</row>
 
 	<row id="msg_c03_ol3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -767,9 +767,9 @@
 		<attribute name="キャラ指定">OL
 </attribute>
 		<language name="JPN" width="256">つぎこそ！　つぎこそは
-ヒウンアイスを　たべたいわ！</language>
+ヒウンアイスを　たべたーい！</language>
 		<language name="JPN_KANJI" width="256">次こそ！　次こそは
-ヒウンアイスを　食べたいわ！</language>
+ヒウンアイスを　食べたーい！</language>
 	</row>
 
 	<flowchart-group-list>
