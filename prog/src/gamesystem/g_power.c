@@ -438,7 +438,7 @@ s32 GPOWER_Calc_HPRestore(POKEPARTY *party)
       }
       PP_FastModeOff( pp, flag );
     }
-    GPowerSys.occur_power[GPOWER_TYPE_HP_RESTORE] = GPOWER_ID_NULL; //効果は一度なのでクリア
+    _OccurPowerClear(GPOWER_TYPE_HP_RESTORE);   //効果は一度なのでクリア
     return pos;
   }
   return GPOWER_OCCUR_NONE;
@@ -483,7 +483,7 @@ s32 GPOWER_Calc_PPRestore(POKEPARTY *party)
       }
       PP_FastModeOff( pp, flag );
     }
-    GPowerSys.occur_power[GPOWER_TYPE_PP_RESTORE] = GPOWER_ID_NULL; //効果は一度なのでクリア
+    _OccurPowerClear(GPOWER_TYPE_PP_RESTORE);   //効果は一度なのでクリア
     return pos;
   }
   return GPOWER_OCCUR_NONE;
