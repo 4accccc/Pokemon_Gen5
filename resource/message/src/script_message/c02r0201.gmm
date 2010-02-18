@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T15:31:39"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T16:55:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="167"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="106">
 		</attribute>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1462" top="375" right="2160" bottom="995" maximized="no" rayout="Vertical2">
+	<dialog left="1472" top="362" right="2177" bottom="990" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="523"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="536"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="690"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,16 +296,12 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MUSICAN
 ミュージシャン</attribute>
-		<language name="JPN" width="256">まいにち　ギターを　ひいても
-まだ　うまくなれるって　おもうよ▼
-ポケモンしょうぶも　おんなじ！
-どれだけ　たたかっても▽
-まだ　つよくなれるって　おもうね</language>
-		<language name="JPN_KANJI" width="256">毎日毎日　ギターを弾いても
-まだ　うまくなれるって　思うよ▼
-ポケモン勝負も　おんなじ！
-どれだけ　戦っても▽
-まだ　強くなれるって　思うね</language>
+		<language name="JPN" width="256">まいにち　ギターを　ひくのも
+ポケモンしょうぶを　するのも▽
+だいすきだから　つづけるのさ！</language>
+		<language name="JPN_KANJI" width="256">毎日　ギターを　弾くのも
+ポケモン勝負を　するのも▽
+大好きだから　続けるのさ！</language>
 	</row>
 
 	<row id="msg_c02r0201_babyboy1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -313,10 +309,12 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BABYBOY1
 男の子</attribute>
-		<language name="JPN" width="256">どの　どうぐを　ポケモンにもたせるか
-うーん　むずかしい　もんだい　だよね</language>
-		<language name="JPN_KANJI" width="256">どの道具を　ポケモンに持たせるか
-うーん　難しい　問題だよね</language>
+		<language name="JPN" width="256">おなじ　ポケモンでも
+せいかくは　ちがうんだ！▽
+ぼく　はじめて　しったよ！</language>
+		<language name="JPN_KANJI" width="256">おなじ　ポケモンでも
+せいかくは　ちがうんだ！▽
+ぼく　はじめて　しったよ！</language>
 	</row>
 
 	<flowchart-group-list>
