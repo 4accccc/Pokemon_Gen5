@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T22:45:43"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T10:41:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,14 +337,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -462,7 +462,7 @@
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが　ボイスチャットを
 もうしこんで　きました！</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが　ボイスチャットを
-申しこんできました！</language>
+申し込んできました！</language>
 	</row>
 
 	<row id="msg_wifilobby_012">
@@ -490,7 +490,7 @@
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんに
 もうしこみちゅう　です……</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんに
-申しこみ中　です……</language>
+申し込み中です……</language>
 	</row>
 
 	<row id="msg_wifilobby_015">
@@ -595,7 +595,7 @@
 	<row id="msg_wifilobby_030">
 		<comment>募集中の友達に申し込むときの項目名</comment>
 		<language name="JPN" width="216">もうしこむ</language>
-		<language name="JPN_KANJI" width="216">申しこむ</language>
+		<language name="JPN_KANJI" width="216">申し込む</language>
 	</row>
 
 	<row id="msg_wifilobby_031">
@@ -696,9 +696,9 @@
 		<comment>友達が申し込みをしてきたときに
 接続準備をしている状態のメッセージ</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
-もうしこみを　してきました！</language>
+もうしこんで　きました！</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-申しこみを　してきました！</language>
+申し込んで　きました！</language>
 	</row>
 
 	<row id="msg_wifilobby_044">
@@ -813,7 +813,7 @@
 
 	<row id="msg_wifilobby_060">
 		<language name="JPN" width="216">せいげんなし</language>
-		<language name="JPN_KANJI" width="216">せいげんなし</language>
+		<language name="JPN_KANJI" width="216">制限なし</language>
 	</row>
 
 	<row id="msg_wifilobby_061">
@@ -845,9 +845,9 @@
 		<comment>対戦に入る前の暗転時に表示する
 待機メッセージ</comment>
 		<language name="JPN" width="216">つうしん　たいきちゅう　です
-しばらく　おまち　ください　……</language>
-		<language name="JPN_KANJI" width="216">つうしん　たいきちゅう　です
-しばらく　おまち　ください　……</language>
+しばらく　おまちください　……</language>
+		<language name="JPN_KANJI" width="216">通信待機中です
+しばらく　お待ちください　……</language>
 	</row>
 
 	<row id="msg_wifilobby_067">
@@ -892,7 +892,7 @@
 	<row id="msg_wifilobby_071">
 		<language name="JPN" width="216">もうしこみを
 ちゅうだん　しました</language>
-		<language name="JPN_KANJI" width="216">申しこみを
+		<language name="JPN_KANJI" width="216">申し込みを
 中断しました</language>
 	</row>
 
@@ -1103,7 +1103,7 @@ TVトランシーバー中です</language>
 シングルバトルの
 せいげんなしを　しますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-対戦を　申しこんできました[BE:01:ページ切り替え（クリア）]
+対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]
 シングルバトルの
 制限なしを　しますか？</language>
 	</row>
@@ -1114,7 +1114,7 @@ TVトランシーバー中です</language>
 ダブルバトルの
 せいげんなしを　しますか</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-対戦を　申しこんできました[BE:01:ページ切り替え（クリア）]
+対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]
 ダブルバトルの
 制限なしを　しますか？</language>
 	</row>
@@ -1125,7 +1125,7 @@ TVトランシーバー中です</language>
 トリプルバトルの
 せいげんなしをしますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-対戦を　申しこんできました[BE:01:ページ切り替え（クリア）]
+対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]
 トリプルバトルの
 制限なしを　しますか？</language>
 	</row>
@@ -1136,7 +1136,7 @@ TVトランシーバー中です</language>
 ローテーションバトルの
 せいげんなしを　しますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-対戦を　申しこんできました[BE:01:ページ切り替え（クリア）]
+対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]
 ローテーションバトルの
 制限なしを　しますか？</language>
 	</row>
@@ -1147,7 +1147,7 @@ TVトランシーバー中です</language>
 シングルバトルの
 フラットルールを　しますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-対戦を　申しこんできました[BE:01:ページ切り替え（クリア）]
+対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]
 シングルバトルの
 フラットルールを　しますか？</language>
 	</row>
@@ -1158,7 +1158,7 @@ TVトランシーバー中です</language>
 ダブルバトルの
 フラットルールを　しますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-対戦を　申しこんできました[BE:01:ページ切り替え（クリア）]
+対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]
 ダブルバトルの
 フラットルールを　しますか？</language>
 	</row>
@@ -1169,7 +1169,7 @@ TVトランシーバー中です</language>
 トリプルバトルの
 フラットルールを　しますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-対戦を　申しこんできました[BE:01:ページ切り替え（クリア）]
+対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]
 トリプルバトルの
 フラットルールを　しますか？</language>
 	</row>
@@ -1180,7 +1180,7 @@ TVトランシーバー中です</language>
 ローテーションバトルの
 フラットルールを　しますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-対戦を　申しこんできました[BE:01:ページ切り替え（クリア）]
+対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]
 ローテーションバトルの
 フラットルールを　しますか？</language>
 	</row>
@@ -1209,13 +1209,13 @@ TVトランシーバー中です</language>
 せっていにより　しゃしんデータの[BE:00:ページ切り替え（行送り）]
 そうじゅしんが　せいげんされます[BE:01:ページ切り替え（クリア）]
 カメラを　つかえるように　するには
-ほんたいせっていにもどり[BE:00:ページ切り替え（行送り）]
+ほんたいせっていに　もどり[BE:00:ページ切り替え（行送り）]
 せいげんを　かいじょ　してください</language>
 		<language name="JPN_KANJI" width="216">ペアレンタルコントローラーの
 設定により　写真データの[BE:00:ページ切り替え（行送り）]
 送受信が　制限されます[BE:01:ページ切り替え（クリア）]
 カメラを　使えるように　するには
-本体設定にもどり[BE:00:ページ切り替え（行送り）]
+本体設定に　もどり[BE:00:ページ切り替え（行送り）]
 制限を　解除してください</language>
 	</row>
 
