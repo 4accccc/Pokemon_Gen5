@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-02-15T15:11:07"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T11:32:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1470" top="229" right="2175" bottom="849" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -361,9 +361,9 @@
 	</row>
 
 	<row id="str_select_direction">
-		<language name="JPN">ポケモンWBを　どうやって　あそんで
+		<language name="JPN">ポケモンＷＢを　どうやって　あそんで
 いるか　３こうもくで　ちょうさします</language>
-		<language name="JPN_KANJI">ポケモンWBを　どうやって　遊んでいるか
+		<language name="JPN_KANJI">ポケモンＷＢを　どうやって　遊んでいるか
 ３項目で　調査します</language>
 	</row>
 
