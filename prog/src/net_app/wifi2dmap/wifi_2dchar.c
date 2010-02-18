@@ -973,6 +973,21 @@ void WF_2DC_WkDrawFlagSet( WF_2DCWK* p_wk, BOOL flag )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brie	影のみ表示非表示設定
+ *
+ *	@param	p_wk	ワーク
+ *	@param	flag	フラグ
+ */
+//-----------------------------------------------------------------------------
+void WF_2DC_WkShadowDrawFlagSet( WF_2DCWK* p_wk, BOOL flag )
+{
+	if( p_wk->p_shadow ){
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_shadow, flag );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	表示非表示取得
  *
  *	@param	cp_wk	ワーク

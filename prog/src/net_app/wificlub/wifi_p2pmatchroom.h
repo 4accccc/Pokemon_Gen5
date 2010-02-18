@@ -181,6 +181,7 @@ extern u8 WIFI_MCR_PlayerSelect( const WIFI_MATCHROOM* cp_mcr );
 extern u32 WIFI_MCR_GetPlayerOnMapParam( const WIFI_MATCHROOM* cp_mcr );
 extern u32 WIFI_MCR_GetPlayerOnUnderMapParam( const WIFI_MATCHROOM* cp_mcr );
 extern void WIFI_MCR_CursorOn( WIFI_MATCHROOM* p_mcr, const MCR_MOVEOBJ* cp_obj );
+extern void WIFI_MCR_ShadowOn( WIFI_MATCHROOM* p_mcr, const MCR_MOVEOBJ* cp_obj );
 extern void WIFI_MCR_CursorOff( WIFI_MATCHROOM* p_mcr );
 extern void WIFI_MCR_PlayerMovePause( WIFI_MATCHROOM* p_mcr, BOOL flag );
 extern BOOL WIFI_MCR_PlayerMovePauseGet( const WIFI_MATCHROOM* cp_mcr );

@@ -319,7 +319,7 @@ typedef struct{  // スクリーン用RECT構造体
 #define PLAYER_DISP_VCTICON_POS_X ( 26 )
 #define PLAYER_DISP_VCTICON_POS_Y ( 1 )
 enum{
-  PLAYER_DISP_ICON_IDX_NONE = 0,  //空
+  PLAYER_DISP_ICON_IDX_NONE_NUKI = 0,  //抜き色
   PLAYER_DISP_ICON_IDX_NORMAL,
   PLAYER_DISP_ICON_IDX_NORMAL_ACT,
   PLAYER_DISP_ICON_IDX_VCTBIG,
@@ -333,13 +333,15 @@ enum{
   PLAYER_DISP_ICON_IDX_VCTNOT,
   PLAYER_DISP_ICON_IDX_VCT,
   PLAYER_DISP_ICON_IDX_UNK,      //その他不明
+  PLAYER_DISP_ICON_IDX_UNK_ACT,      //その他不明
+  PLAYER_DISP_ICON_IDX_NONE,  //空
   PLAYER_DISP_ICON_IDX_NUM,    //数
 };
 
 
 #define PLAYER_DISP_ICON_MYMODE (PLAYER_DISP_ICON_IDX_NUM*3)
-#define PLAYER_DISP_ICON_TOUCHMODE (0)
-#define PLAYER_DISP_ICON_NAMEMODE (PLAYER_DISP_ICON_IDX_NUM*1)
+#define PLAYER_DISP_ICON_TOUCHMODE (PLAYER_DISP_ICON_IDX_NUM*1)
+#define PLAYER_DISP_ICON_NAMEMODE (0)
 #define PLAYER_DISP_ICON_CARDMODE (PLAYER_DISP_ICON_IDX_NUM*2)
 
 
@@ -433,7 +435,7 @@ enum{
 };
 // アイコンの転送位置
 #define MCV_ICON_CGX  (0)
-#define MCV_ICON_CGSIZ  (28*4)
+#define MCV_ICON_CGSIZ  (32*4)
 #define MCV_ICON_PAL    (PLAYER_DISP_ICON_PLTTOFS_SUB)
 
 #define MCV_CGX_BTTN2 (MCV_ICON_CGX+MCV_ICON_CGSIZ) // FRAME2ユーザーデータ
@@ -477,7 +479,7 @@ enum{
 #define MCV_BUTTON_VCTICON_OFS_X  ( 13 )
 #define MCV_BUTTON_ICON_OFS_Y ( 1 )
 
-#define MCV_BUTTON_FRAME_NUM  (4) // ボタンアニメフレーム数
+#define MCV_BUTTON_FRAME_NUM  (16) // ボタンアニメフレーム数
 
 enum{
   MCV_BUTTON_TYPE_GIRL,
@@ -2423,7 +2425,6 @@ static int _retryWait( WIFIP2PMATCH_WORK *wk, int seq )
   int i;
   int ret;
 
-  GFL_FONTSYS_SetDefaultColor();
   ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   if(ret == BMPMENU_NULL)
@@ -3159,6 +3160,24 @@ static void MCRSYS_SetFriendObj( WIFIP2PMATCH_WORK* wk, u32 heapID )
   MCRSYS_ContFriendStatus( wk, heapID );
 }
 
+//------------------------------------------------------------------
+/**
+ * $brief   影の表示を元に戻す
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static void MCRSYS_ReloadShadow( WIFIP2PMATCH_WORK* wk )
+{
+  int i;
+
+  for( i=0; i<MATCHROOM_IN_OBJNUM; i++ ){
+    if( wk->p_matchMoveObj[i] ){
+      WIFI_MCR_ShadowOn(&wk->matchroom, wk->p_matchMoveObj[i]);  //影を出す
+    }
+  }
+}
 
 //------------------------------------------------------------------
 /**
@@ -3237,9 +3256,11 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
       if( p_obj ){
         WIFI_MCR_CursorOn( &wk->matchroom, p_obj );
       }else{
+        MCRSYS_ReloadShadow(wk);
         WIFI_MCR_CursorOff( &wk->matchroom );
       }
     }else{
+      MCRSYS_ReloadShadow(wk);
       WIFI_MCR_CursorOff( &wk->matchroom );
     }
 
@@ -3649,7 +3670,7 @@ static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
     }
     else{
       WifiP2PMatchFriendListIconWrite(   &wk->icon, GFL_BG_FRAME1_M,
-                                         PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCT+PLAYER_DISP_ICON_MYMODE, 0 );
+                                         PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCT + PLAYER_DISP_ICON_MYMODE, 0 );
     }
   }
 
@@ -3694,7 +3715,6 @@ static int WifiP2PMatch_VCTConnectEndWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int i;
   int ret;
-  GFL_FONTSYS_SetDefaultColor();
   ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
@@ -3962,7 +3982,6 @@ static int _parentModeSelectRelYesNo( WIFIP2PMATCH_WORK* wk, int seq )
   WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
   if( WifiP2PMatchMessageEndCheck(wk) ){
     // はいいいえウインドウを出す
-    GFL_FONTSYS_SetDefaultColor();
     _yenowinCreateM2(wk);
 
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_WAIT);
@@ -5425,7 +5444,7 @@ static int _exitWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int i;
   int ret;
-  GFL_FONTSYS_SetDefaultColor();
+
   ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   if( !WifiP2PMatchMessageEndCheck(wk) ){
@@ -5570,7 +5589,6 @@ static int _nextBattleWait( WIFIP2PMATCH_WORK *wk, int seq )
     _errorDisp(wk);
   }
   else{
-    GFL_FONTSYS_SetDefaultColor();
     ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
     if(ret == BMPMENU_NULL){  // まだ選択中
       return seq;
@@ -5640,7 +5658,6 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
     _errorDisp(wk);
   }
   else{
-    GFL_FONTSYS_SetDefaultColor();
     ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
     if(ret == BMPMENU_NULL){  // まだ選択中
       return seq;
@@ -5819,6 +5836,7 @@ static void WifiP2PMatch_UserDispOn( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 he
 static void WifiP2PMatch_UserDispOff( WIFIP2PMATCH_WORK *wk, u32 heapID )
 {
   MCVSys_UserDispOff( wk );
+  MCRSYS_ReloadShadow(wk);
   WIFI_MCR_CursorOff( &wk->matchroom );
 
   // 再描画
@@ -6020,6 +6038,9 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
     // ボタンメイン
     GFL_BMN_Main( wk->view.p_bttnman );
 
+    // ボタンアニメ処理
+		MCVSys_BttnAnmMan( wk );
+
     // 表示メイン
     if( wk->view.button_on == TRUE ){
       MCVSys_BttnDraw( wk );
@@ -6182,16 +6203,52 @@ static void MCVSys_BttnCallBack( u32 bttnid, u32 event, void* p_work )
     // 動作していないので何もしない
     return ;
   }
+	// すでにボタン動作中なので反応しない
+	if( wk->view.touch_friendNo != 0 ){
+		return ;
+	}
 
   switch( event ){
   case GFL_BMN_EVENT_TOUCH:   ///< 触れた瞬間
     wk->view.touch_friendNo = friendNo;
-    wk->view.user_disp = MCV_USERDISP_INIT;
+//    wk->view.touch_frame  = 2;
+//    wk->view.user_disp = MCV_USERDISP_INIT;
     Snd_SePlay( _SE_DESIDE );
     break;
-
   default:
     break;
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンアニメメイン
+ *
+ *	@param	wk		システムワーク
+ */
+//-----------------------------------------------------------------------------
+static void MCVSys_BttnAnmMan( WIFIP2PMATCH_WORK *wk )
+{
+	static const u8 BttnAnmFrame[ MCV_BUTTON_FRAME_NUM ] = {
+		1, 1,1,1, 2,2,2,2,
+		1, 1,1,1, 2,2,2,2,
+	};
+
+	// 動作しているかチェック
+	if( wk->view.touch_friendNo == 0 ){
+		return ;
+	}
+
+	// 動作
+  wk->view.touch_frame = BttnAnmFrame[wk->view.button_count];
+  wk->view.button_count ++;
+  wk->view.button_on = TRUE;
+  // 終了チェック
+  if( wk->view.button_count >= MCV_BUTTON_FRAME_NUM ){
+    wk->view.button_count = 0;
+    wk->view.touch_frame = 0;
+    wk->view.user_disp = MCV_USERDISP_INIT;
   }
 }
 
@@ -6551,7 +6608,8 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
         GFL_BMPWIN_MakeScreen(wk->view.nameWin[i]);
         GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 
-        MCVSys_BttnStatusWinDraw( wk, wk->view.statusWin[i], friend_no, frame, MCV_BUTTON_DEFX+(MCV_BUTTON_OFSX*x), MCV_BUTTON_DEFY+(MCV_BUTTON_OFSY*y) );
+        MCVSys_BttnStatusWinDraw( wk, wk->view.statusWin[i], friend_no, frame,
+                                  MCV_BUTTON_DEFX+(MCV_BUTTON_OFSX*x), MCV_BUTTON_DEFY+(MCV_BUTTON_OFSY*y) );
       }else{
 
         // 透明にする
@@ -6650,16 +6708,34 @@ static void MCVSys_BttnWrite( WIFIP2PMATCH_WORK *wk, u8 cx, u8 cy, u8 type, u8 f
   u16 reed_x, reed_y;
   u16* p_buff;
 
-  GF_ASSERT( frame < 4 );
 
+#if 1
+
+  if(type == MCV_BUTTON_TYPE_NONE){
+    reed_x = MCV_BUTTON_SIZX * 0;
+    reed_y = MCV_BUTTON_SIZY * 3;
+  }
+  else{
+    reed_x = MCV_BUTTON_SIZX * type;
+    reed_y = MCV_BUTTON_SIZY * frame;
+  }
+
+  GFL_BG_WriteScreenExpand( GFL_BG_FRAME2_S,
+                            cx, cy, MCV_BUTTON_SIZX, MCV_BUTTON_SIZY,
+                            wk->view.p_bttnscrn->rawData,
+                            reed_x, reed_y,
+                            32, 24 );
+
+  
+#else
   // frame 3のときは1を表示する
   if( frame == 3 ){
     frame = 1;
   }
 
   if( (frame < 2) ){
-    reed_x = MCV_BUTTON_SIZX * frame;
-    reed_y = MCV_BUTTON_SIZY * type;
+    reed_x = MCV_BUTTON_SIZX * type;
+    reed_y = MCV_BUTTON_SIZY * frame;
 
     GFL_BG_WriteScreenExpand( GFL_BG_FRAME2_S,
                               cx, cy, MCV_BUTTON_SIZX, MCV_BUTTON_SIZY,
@@ -6679,8 +6755,9 @@ static void MCVSys_BttnWrite( WIFIP2PMATCH_WORK *wk, u8 cx, u8 cy, u8 type, u8 f
   }
 
   // パレットカラーを合わせる
-  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, cx, cy,
-                              MCV_BUTTON_SIZX, MCV_BUTTON_SIZY, type+MCV_PAL_BTTN );
+//  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, cx, cy,
+  //                            MCV_BUTTON_SIZX, MCV_BUTTON_SIZY, type+MCV_PAL_BTTN );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -6704,14 +6781,14 @@ static void MCVSys_BttnWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN* p_bmp, u32 fr
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_bmp), 0 );
 
   //y座標を取得
-  y = ViewButtonFrame_y[ frame ];
+  y = 8;//ViewButtonFrame_y[ frame ];
 
   _COL_N_WHITE;
   MCVSys_FriendNameSet(wk, friendNo-1);
   GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_033, wk->pExpStrBuf );
   WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_bmp),
-                  0,  y,
+                  2,  y,
                   wk->TitleString, wk->fontHandle);
   GFL_BMPWIN_TransVramCharacter( p_bmp );
 }
@@ -6732,19 +6809,22 @@ static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbm
   int i;
   int vct_icon;
   WIFI_STATUS* p_status;
-  u32 status,gamemode;
+  u32 status,gamemode,mode;
 
+  if(frame==0){
+    mode = PLAYER_DISP_ICON_NAMEMODE;
+  }
+  else{
+    mode = PLAYER_DISP_ICON_TOUCHMODE;
+  }
   p_status = WifiFriendMatchStatusGet( friendNo - 1 );
   status = _WifiMyStatusGet( wk, p_status );
   gamemode = _WifiMyGameModeGet( wk, p_status );
 
-
-#if 0
-#else
-
   WifiP2PMatchFriendListStIconWrite( &wk->icon, GFL_BG_FRAME2_S,
                                      x+2, y+2,
-                                     status,gamemode, PLAYER_DISP_ICON_NAMEMODE);
+                                     status,gamemode, mode);
+
   if( WIFI_STATUS_GetVChatStatus(p_status) ){
     vct_icon = PLAYER_DISP_ICON_IDX_NONE;
   }else{
@@ -6752,10 +6832,9 @@ static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbm
   }
   WifiP2PMatchFriendListIconWrite(  &wk->icon, GFL_BG_FRAME2_S,
                                     x+12, y+2,
-                                    vct_icon+PLAYER_DISP_ICON_NAMEMODE, 0 );
+                                    vct_icon+mode, 0 );
 
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
-#endif
   
 }
 

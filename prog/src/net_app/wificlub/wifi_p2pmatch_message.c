@@ -51,6 +51,7 @@ static void _TrainerOAMFree( WIFIP2PMATCH_WORK *wk );
 
 static void _yenowinCreateM2(WIFIP2PMATCH_WORK *wk)
 {
+  GFL_FONTSYS_SetDefaultColor();
   wk->pYesNoWork =
     BmpMenu_YesNoSelectInit( &_yesNoBmpDat, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
 }
@@ -66,6 +67,7 @@ static void _yenowinCreateM2(WIFIP2PMATCH_WORK *wk)
 
 static void _yenowinCreateM1(WIFIP2PMATCH_WORK *wk)
 {
+  GFL_FONTSYS_SetDefaultColor();
   wk->pYesNoWork =
     BmpMenu_YesNoSelectInit( &_yesNoBmpDatSys2, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m1), MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
 }
@@ -82,6 +84,7 @@ static void _yenowinCreateM1(WIFIP2PMATCH_WORK *wk)
 
 static void _yenowinCreateSys(WIFIP2PMATCH_WORK *wk)
 {
+  GFL_FONTSYS_SetDefaultColor();
   wk->pYesNoWork =
     BmpMenu_YesNoSelectInit( &_yesNoBmpDatSys, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
 }
@@ -850,9 +853,9 @@ static void _userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
                                      PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y,
                                      status,gamemode, PLAYER_DISP_ICON_MYMODE);
   if( WIFI_STATUS_GetVChatStatus(wk->pMatch) ){
-    vct_icon = PLAYER_DISP_ICON_IDX_NONE+PLAYER_DISP_ICON_MYMODE;
+    vct_icon = PLAYER_DISP_ICON_IDX_NONE;
   }else{
-    vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT+PLAYER_DISP_ICON_MYMODE;
+    vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT;
   }
 
   WifiP2PMatchFriendListIconWrite(  &wk->icon, GFL_BG_FRAME1_M,
@@ -1157,13 +1160,13 @@ static void _TouchResExit( WIFIP2PMATCH_WORK *wk )
 #define MCV_USERD_GR_Y  ( 32 )
 #define MCV_USERD_VS_X  ( 88+16 )
 #define MCV_USERD_VS_Y  ( 56-24 )
-#define MCV_USERD_VS_WIN_X  ( 192-8 )
+#define MCV_USERD_VS_WIN_X  ( 192-8-8 )
 #define MCV_USERD_VS_WIN_Y  ( 56 )
-#define MCV_USERD_VS_LOS_X  ( 192-8 )
+#define MCV_USERD_VS_LOS_X  ( 192-8-8 )
 #define MCV_USERD_VS_LOS_Y  ( 56+16 )
 #define MCV_USERD_TR_X    ( 88+16 )
 #define MCV_USERD_TR_Y    ( 144-16*3 )
-#define MCV_USERD_TRNUM_X ( 180 )
+#define MCV_USERD_TRNUM_X ( 180+8 )
 #define MCV_USERD_DAY_X   ( 8 )
 #define MCV_USERD_DAY_Y   ( 128 )
 #define MCV_USERD_DAYNUM_X  ( 152 )

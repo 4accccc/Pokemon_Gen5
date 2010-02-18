@@ -591,6 +591,20 @@ void WF2DMAP_OBJDrawWkDrawFlagSet( WF2DMAP_OBJDRAWWK* p_wk, BOOL flag )
 	WF_2DC_WkDrawFlagSet( p_wk->p_drawwk, flag );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	表示非表示設定
+ *
+ *	@param	p_wk		ワーク
+ *	@param	flag		フラグ
+ */
+//-----------------------------------------------------------------------------
+void WF2DMAP_OBJShadowDrawWkDrawFlagSet( WF2DMAP_OBJDRAWWK* p_wk, BOOL flag )
+{
+	WF_2DC_WkShadowDrawFlagSet( p_wk->p_drawwk, flag );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	表示優先順位の取得

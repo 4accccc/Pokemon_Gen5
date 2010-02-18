@@ -170,6 +170,7 @@ extern void WF_2DC_WkDrawPriSet( WF_2DCWK* p_wk, u16 pri );
 extern u16 WF_2DC_WkDrawPriGet( const WF_2DCWK* cp_wk );
 extern void WF_2DC_WkAnmAddFrame( WF_2DCWK* p_wk, fx32 frame );
 extern void WF_2DC_WkDrawFlagSet( WF_2DCWK* p_wk, BOOL flag );
+extern void WF_2DC_WkShadowDrawFlagSet( WF_2DCWK* p_wk, BOOL flag );
 extern BOOL WF_2DC_WkDrawFlagGet( const WF_2DCWK* cp_wk );
 extern WF_2DC_MOVETYPE WF_2DC_WkMoveTypeGet( const WF_2DCWK* cp_wk );
 extern WF_2DC_ANMTYPE WF_2DC_WkAnmTypeGet( const WF_2DCWK* cp_wk );

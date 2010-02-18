@@ -557,6 +557,22 @@ void WIFI_MCR_CursorOn( WIFI_MATCHROOM* p_mcr, const MCR_MOVEOBJ* cp_obj )
   pri = WF2DMAP_OBJDrawWkDrawPriGet( cp_obj->p_draw );
   pri --;
   WcrClactResEffectCursorDrawOn( p_mcr, pos, pri-1 );
+
+  WF2DMAP_OBJShadowDrawWkDrawFlagSet(cp_obj->p_draw, FALSE);  //影を消す
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	影表示
+ *
+ *	@param	p_mcr			システムワーク
+ *	@param	cp_obj			オブジェクトワーク
+ */
+//-----------------------------------------------------------------------------
+void WIFI_MCR_ShadowOn( WIFI_MATCHROOM* p_mcr, const MCR_MOVEOBJ* cp_obj )
+{
+  WF2DMAP_OBJShadowDrawWkDrawFlagSet(cp_obj->p_draw, TRUE);  //影を出す
 }
 
 //----------------------------------------------------------------------------
@@ -569,6 +585,7 @@ void WIFI_MCR_CursorOn( WIFI_MATCHROOM* p_mcr, const MCR_MOVEOBJ* cp_obj )
 void WIFI_MCR_CursorOff( WIFI_MATCHROOM* p_mcr )
 {
   WcrClactResEffectCursorDrawOff( p_mcr );
+
 }
 
 //----------------------------------------------------------------------------
@@ -1507,6 +1524,7 @@ static void WcrClactResEffectCursorDrawOn( WIFI_MATCHROOM* p_mcr, WF2DMAP_POS po
   // その座標で表示ON
   //	CLACT_SetDrawFlag( p_mcr->clact.effect.obj_waku, TRUE );
   GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.obj_waku, TRUE );
+
 }
 
 //----------------------------------------------------------------------------

@@ -99,6 +99,7 @@ extern void WF2DMAP_OBJDrawWkMatrixSet( WF2DMAP_OBJDRAWWK* p_wk, WF2DMAP_POS pos
 // 表示・非表示
 extern BOOL WF2DMAP_OBJDrawWkDrawFlagGet( const WF2DMAP_OBJDRAWWK* cp_wk );
 extern void WF2DMAP_OBJDrawWkDrawFlagSet( WF2DMAP_OBJDRAWWK* p_wk, BOOL flag );
+extern void WF2DMAP_OBJShadowDrawWkDrawFlagSet( WF2DMAP_OBJDRAWWK* p_wk, BOOL flag );
 
 // 表示優先順位の取得
 extern u16 WF2DMAP_OBJDrawWkDrawPriGet( const WF2DMAP_OBJDRAWWK* cp_wk );
