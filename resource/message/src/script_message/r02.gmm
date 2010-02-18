@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T19:31:01"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T21:53:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,12 +292,13 @@
 	</lock>
 
 
-	<row id="msg_r02_tvt_01" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r02_tvt_01" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・POSを踏むとコ
 　ＴＶトランシーバーのコール音再生＋
 　主人公頭上に「！」マーク表示
 ・続けてメッセージ表示後
-　tvt.gmmのmsg_transceiver_r02_01呼び出し
+　tvt_event_02.gmmの
+　msg_transceiver_r02_01呼び出し
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">システム
 TVトランシーバー</attribute>
