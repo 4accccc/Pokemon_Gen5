@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T18:01:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="263"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1543" top="261" right="2248" bottom="881" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,36 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c03r1101_man1_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">MAN1</attribute>
+		<language name="JPN" width="256">ポケモンは　ふしぎな　いきもの▼
+とくせい　とよばれる
+ふしぎなちからを　もっているんだ</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　不思議な　いきもの▼
+とくせい　と呼ばれる
+不思議な力を　備えているんだ</language>
+	</row>
+
+	<row id="msg_c03r1101_woman1_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN1</attribute>
+		<language name="JPN" width="256">ミネズミの　とくせいは　するどいめ！▼
+えんまくや　すなかけを　くらっても
+めいちゅうりつが　さがらないのよ！</language>
+		<language name="JPN_KANJI" width="256">ミネズミの　とくせいは　するどいめ！▼
+えんまくや　すなかけを　くらっても
+命中率が　下がらないのよ！</language>
+	</row>
+
+	<row id="msg_c03r1101_pokemon_01">
+		<comment>ポケモン
+・メッセージ表示とともに鳴き声再生</comment>
+		<attribute name="キャラ指定">ポケモン</attribute>
+		<language name="JPN" width="256">ミネズミ『きりっ！！</language>
+		<language name="JPN_KANJI" width="256">ミネズミ『きりっ！！</language>
 	</row>
 
 	<flowchart-group-list>
