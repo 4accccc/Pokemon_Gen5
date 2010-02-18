@@ -1,5 +1,6 @@
 #! ruby -Ks
 
+  require File.dirname(__FILE__) + '/../constant'
   require File.dirname(__FILE__) + '/../gmm_make/gmm_make'
   require File.dirname(__FILE__) + '/../hash/monsno_hash.rb'
   require File.dirname(__FILE__) + '/../hash/wazano_hash.rb'
@@ -55,8 +56,8 @@ class TD
 end
 
 	if ARGV.size != 3
-		print "error: ruby btl_subway_conv.rb poke_data trainer_data template_gmm\n"
-		print "poke_data:ポケモンデータファイル\n"
+		print "error: ruby btl_subway_conv.rb poke_data_list trainer_data template_gmm\n"
+		print "poke_data_list:ポケモンデータファイルリスト\n"
 		print "trainer_data:トレーナーデータファイル\n"
 		print "template_gmm:GMMファイルを生成する元になるファイル\n"
 		exit( 1 )
@@ -66,6 +67,7 @@ end
   ARGV_TD_FILE = 1
   ARGV_GMM_FILE = 2
 
+  pd_list = []
   pd_data = []
   td_data = []
   gmm = GMM::new
@@ -75,20 +77,28 @@ end
   cnt = 0
   open( ARGV[ ARGV_PD_FILE ] ) {|fp_r|
     while str = fp_r.gets
-      str = str.tr( "\"\r\n", "" )
-      split_data = str.split(/,/)
-      next if split_data.size <= 1       #サーバからのエクスポートでゴミレコードが入ることがあるので、排除する
-      pd_data[ cnt ] = str
+      pd_list[ cnt ] = str
       cnt += 1
     end
+  }
+
+  pd_list.size.times {|i|
+    data = Array.new
+    open( pd_list[ i ].tr( "\r\n", "" ) ) {|fp_r|
+      while str = fp_r.gets
+        str = str.tr( "\"\r\n", "" )
+        split_data = str.split(/\t/)
+        data << str
+      end
+    }
+    pd_data << data
   }
 
   cnt = 0
   open( ARGV[ ARGV_TD_FILE ] ) {|fp_r|
     while str = fp_r.gets
       str = str.tr( "\"\r\n", "" )
-      split_data = str.split(/,/)
-      next if split_data.size <= 1       #サーバからのエクスポートでゴミレコードが入ることがあるので、排除する
+      split_data = str.split(/\t/)
       td_data[ cnt ] = str
       cnt += 1
     end
@@ -112,15 +122,38 @@ end
   print "bspd_000.bin 生成終了\n"
 
   cnt = 1
-  pd_data.size.times {|i|
-    split_data = pd_data[ i ].split(/\t/)
-    if i == 0
-      next if split_data[ PD::GRA_NO ] == "BTDMPD"
-      print "バトルサブウェイ用のポケモンデータではありません\n"
-      exit( 1 )
-    end
+  for i in 0..999
+    find = 0
+    find_j = 0
+    pd_list.size.times {|j|
+      split_data = pd_data[ j ][ i ].split(/\t/)
+      if i == 0
+        if split_data[ PD::GRA_NO ] != "BTDMPD"
+          print "バトルサブウェイ用のポケモンデータではありません\n"
+          exit( 1 )
+        end
+      else
+        if split_data[ PD::GRA_NO ] != "999"
+          if find == 0
+            find = 1
+            find_j = j
+          else
+            print "データ競合が起きています\n"
+            printf( "No:%d file1:%s file2:%s\n", i, pd_list[ find_j ].tr( "\r\n", "" ), pd_list[ j ].tr( "\r\n", "" ) )
+            exit( 1 )
+          end
+        end
+      end
+    }
 
-    monsno  = $gra2zukan_hash[ split_data[ PD::GRA_NO ] ]
+    next if i == 0
+
+    split_data = pd_data[ find_j ][ i ].split(/\t/)
+    if split_data[ PD::GRA_NO ] != "999"
+      monsno = $gra2zukan_hash[ split_data[ PD::GRA_NO ] ]
+    else
+      monsno = 0
+    end
 
     waza1   = $wazano_hash[ split_data[ PD::WAZA1 ] ]
     waza2   = $wazano_hash[ split_data[ PD::WAZA2 ] ]
@@ -129,7 +162,7 @@ end
 
     exp = 0
     for j in 0..5
-      exp   |= split_data[ PD::HP_EXP + j ] << j
+      exp |= split_data[ PD::HP_EXP + j ].to_i << j
     end
 
     seikaku = split_data[ PD::SEIKAKU ].to_i
@@ -141,27 +174,32 @@ end
     next if monsno == nil
 
     if waza1 == nil
-      print "不明な技が設定されています\n"
+      print "waza1:不明な技が設定されています\n"
+      printf( "%s\n", split_data[ PD::WAZA1 ] )
       exit( 1 )
     end
 
     if waza2 == nil
-      print "不明な技が設定されています\n"
+      print "waza2:不明な技が設定されています\n"
+      printf( "%s\n", split_data[ PD::WAZA2 ] )
       exit( 1 )
     end
 
     if waza3 == nil
-      print "不明な技が設定されています\n"
+      print "waza3:不明な技が設定されています\n"
+      printf( "%s\n", split_data[ PD::WAZA3 ] )
       exit( 1 )
     end
 
     if waza4 == nil
-      print "不明な技が設定されています\n"
+      print "waza4:不明な技が設定されています\n"
+      printf( "%s\n", split_data[ PD::WAZA4 ] )
       exit( 1 )
     end
 
     if item == nil
       print "不明なアイテムが設定されています\n"
+      printf( "%s\n", split_data[ PD::ITEM ] )
       exit( 1 )
     end
 
@@ -178,7 +216,7 @@ end
     fp_bspd.close
     printf( "bspd_%03d.bin 生成終了\n", cnt )
     cnt += 1
-  }
+  end
 
   print "トレーナーデータ生成中\n"
   #bstd_???.bin生成
