@@ -26,6 +26,7 @@
 
 #include "field/zonedata.h"
 
+#include "system/playtime_ctrl.h"  //PLAYTIMECTRL_
 
 
 
@@ -248,6 +249,7 @@ static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK *
 {
 	GAMESYS_WORK_Init(gsys, heapID, init_param);
 	GAMEBEACON_Setting(gsys->gamedata);
+  PLAYTIMECTRL_Init(); //プレイ時間カウント処理を初期化
 }
 
 //------------------------------------------------------------------
@@ -288,6 +290,9 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
   }
 	// ISSシステムメイン
 	ISS_SYS_Update( gsys->iss_sys );
+
+  //プレイ時間　カウントアップ
+  PLAYTIMECTRL_Countup();
 
 	if(GAMEDATA_IsFrameSpritMode(gsys->gamedata)) //フレーム分割状態にいる場合
 	{

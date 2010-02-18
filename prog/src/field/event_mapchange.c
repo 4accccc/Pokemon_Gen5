@@ -56,6 +56,7 @@
 
 #include "net_app/union/union_main.h" // for UNION_CommBoot
 
+#include "system/playtime_ctrl.h" //for PLAYTIMECTRL_Start
 #include "savedata/gametime.h"  // for GMTIME
 #include "gamesystem/pm_season.h"  // for PMSEASON_TOTAL
 #include "ev_time.h"  //EVTIME_Update
@@ -309,6 +310,8 @@ GMEVENT * EVENT_CallGameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_wo
     break;
 #endif //PM_DEBUG
   }
+  //プレイ時間カウント　開始
+  PLAYTIMECTRL_Start( SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork( fmw->gamedata ) ) );
 
   return event;
 }
