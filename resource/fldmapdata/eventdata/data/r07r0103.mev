@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/06 19:13:05
+#save date:2010/02/18 16:50:42
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r07r0103.wms
 #SECTION START:OBJ_EVENT
@@ -18,17 +18,17 @@ TR_ESPW_05
 #OBJ CODE Number
 ESPW
 #MOVE CODE Number
-MV_DMY
+MV_RND_DL
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ALT
 #Flag Name
 0
 #Event Script Name
 SCRID_TRID_ESPW_05
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
-2
+3
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -40,7 +40,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 8
+120 0 40
 #event number: 1
 #type
 1
@@ -49,9 +49,9 @@ TR_ESPM_02
 #OBJ CODE Number
 ESPM
 #MOVE CODE Number
-MV_DMY
+MV_RND_UDL
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ALT
 #Flag Name
 0
 #Event Script Name
@@ -80,9 +80,9 @@ TR_ESPW_03
 #OBJ CODE Number
 ESPM
 #MOVE CODE Number
-MV_DMY
+MV_SPIN_R
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ALT
 #Flag Name
 0
 #Event Script Name
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 40
+-72 0 40
 #event number: 3
 #type
 1
@@ -111,9 +111,9 @@ TR_ESPM_03
 #OBJ CODE Number
 ESPM
 #MOVE CODE Number
-MV_DMY
+MV_RND_ULR
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ALT
 #Flag Name
 0
 #Event Script Name
@@ -121,7 +121,7 @@ SCRID_TRID_ESPM_03
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
-2
+1
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -133,7 +133,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -24
+72 0 -24
 #event number: 4
 #type
 1

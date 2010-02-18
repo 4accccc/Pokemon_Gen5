@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/06 19:03:50
+#save date:2010/02/18 14:34:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r07r0102.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ TR_MIDLLEWOMAN_01
 #OBJ CODE Number
 MIDDLEWOMAN1
 #MOVE CODE Number
-MV_RND_ULR
+MV_RND_UL
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -26,9 +26,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_DAISUKIW_01
 #Direction Type Number
-DIR_RIGHT
+DIR_UP
 #Parameter 0 Number
-2
+3
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -40,7 +40,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 8
+-88 0 8
 #event number: 1
 #type
 1
@@ -49,7 +49,7 @@ TR_MIDLLEMAN_01
 #OBJ CODE Number
 WOMAN1
 #MOVE CODE Number
-MV_DMY
+MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -57,9 +57,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_DAISUKIM_01
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
-1
+3
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -80,7 +80,7 @@ TR_ESPW_02
 #OBJ CODE Number
 ESPW
 #MOVE CODE Number
-MV_RND_H
+MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -102,7 +102,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 -40
+-72 0 -40
 #event number: 3
 #type
 1
@@ -111,7 +111,7 @@ TR_R07R0102_DUMMY_06
 #OBJ CODE Number
 GIRL2
 #MOVE CODE Number
-MV_DMY
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -121,7 +121,7 @@ SCRID_TRID_MINI_04
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
-2
+0
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -133,7 +133,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 104
+-88 0 104
 #event number: 4
 #type
 1
@@ -142,7 +142,7 @@ TR_BADMAN_01
 #OBJ CODE Number
 BADMAN
 #MOVE CODE Number
-MV_DMY
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -150,7 +150,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_HEADS_03
 #Direction Type Number
-DIR_RIGHT
+DIR_LEFT
 #Parameter 0 Number
 3
 #Parameter 1 Number
@@ -164,7 +164,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 0 -88
+104 0 -40
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
