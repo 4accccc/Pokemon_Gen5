@@ -16,7 +16,7 @@
 //===============================================================================
 struct _BG_FONT
 {
-  BG_FONT_PARAM param;
+  BG_FONT_PARAM param;    // 基本パラメータ
   GFL_FONT*     font;     // 使用するフォント
   GFL_MSGDATA*  message;  // 参照するメッセージデータ
   GFL_BMPWIN*   bmpWin;   // ビットマップウィンドウ
@@ -92,6 +92,9 @@ void BG_FONT_SetString( BG_FONT* BGFont, u32 strID )
   color   = PRINTSYS_LSB_Make( param->colorNo_L, param->colorNo_S, param->colorNo_B );
   strbuf  = GFL_MSG_CreateString( BGFont->message, strID );
   bmpData = GFL_BMPWIN_GetBmp( BGFont->bmpWin );
+
+  // クリア
+  GFL_BMP_Clear( bmpData, BGFont->param.colorNo_B );
 
   // 書き込み
   PRINTSYS_PrintColor( bmpData, 

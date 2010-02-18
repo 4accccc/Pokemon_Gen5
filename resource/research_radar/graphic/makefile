@@ -37,6 +37,7 @@ OBJ_ANM_DEF_DEST = $(PROJECT_PROGDIR)src/app/research_radar/
 GRAPHIC_DATA = $(GRAPHIC_BIN)/bgd.NCLR \
 							 $(GRAPHIC_BIN)/bgd.NCGR \
 							 $(GRAPHIC_BIN)/bgd_base.NSCR \
+							 $(GRAPHIC_BIN)/bgd_title.NSCR \
 							 $(GRAPHIC_BIN)/bgd_topbtn.NSCR \
 							 $(GRAPHIC_BIN)/bgd_searchbtn.NSCR \
 							 $(GRAPHIC_BIN)/bgu.NCLR \
@@ -71,6 +72,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd.ncl -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd.ncg -bg -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd_base.nsc -o/$(GRAPHIC_BIN)
+	g2dcvtr $(GRAPHIC_SOURCE)/bgd_title.nsc -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd_topbtn.nsc -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd_searchbtn.nsc -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu.ncl -o/$(GRAPHIC_BIN)

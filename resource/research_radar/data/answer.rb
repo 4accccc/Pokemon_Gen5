@@ -15,6 +15,7 @@ class Answer
 
   def initialize
     @ID              = 0    # 回答ID
+    @stringID_lavel  = nil  # gmm内ラベル名
     @stringJPN       = nil  # 回答文字列 (かな)
     @stringJPN_KANJI = nil  # 回答文字列 (漢字)
     @color_lavel     = nil  # 表示色 (ラベル 0x000000-0xffffff)
@@ -23,13 +24,21 @@ class Answer
     @colorB          = 0    # 表示色 (青 0-31)
   end
 
-  attr_reader :ID, :stringJPN, :stringJPN_KANJI, :color_lavel, :colorR, :colorG, :colorB
+  attr_reader :ID, :stringID_lavel, :stringJPN, :stringJPN_KANJI, 
+              :color_lavel, :colorR, :colorG, :colorB
 
   #----------------------------
   # □brief: 回答IDを設定する
   # □param: id 回答ID
   def SetID( id )
     @ID = id
+  end
+
+  #----------------------------------
+  # □brief: gmm内ラベル名を設定する
+  # □param: lavel
+  def SetStringIDLavel( lavel )
+    @stringID_lavel = lavel
   end
 
   #--------------------------------------------
@@ -64,6 +73,7 @@ class Answer
     # 出力データ作成
     outData = Array.new
     outData << "ID              = #{@ID}"
+    outData << "stringID_lavel  = #{@stringID_lavel}"
     outData << "stringJPN       = #{@stringJPN}"
     outData << "stringJPN_KANJI = #{@stringJPN_KANJI}"
     outData << "color           = #{@color_lavel}(%d %d %d)" % [@colorR, @colorG, @colorB]

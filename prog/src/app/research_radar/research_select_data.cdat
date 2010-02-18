@@ -25,7 +25,7 @@ static const u32 MessageDataID[ MESSAGE_NUM ] =
 {
   NARC_message_research_radar_dat,  // 定型文
   NARC_message_questionnaire_dat,   // アンケート関連
-};
+}; 
 
 
 //==============================================================================================
@@ -66,6 +66,24 @@ static const GFL_BG_BGCNT_HEADER SubBGControl_FONT =
   GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
   GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
   SUB_BG_PRIORITY_FONT,   // 表示プライオリティー
+  0,							        // エリアオーバーフラグ
+  0,							        // DUMMY
+  FALSE,						      // モザイク設定
+}; 
+
+// MAIN-BG ( バー面 )
+static const GFL_BG_BGCNT_HEADER MainBGControl_BAR = 
+{
+  0, 0,					          // 初期表示位置
+  0x800,						      // スクリーンバッファサイズ
+  0,							        // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+  GX_BG_COLORMODE_16,			// カラーモード
+  GX_BG_SCRBASE_0x1800,		// スクリーンベースブロック
+  GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+  MAIN_BG_BAR_PRIORITY,   // 表示プライオリティー
   0,							        // エリアオーバーフラグ
   0,							        // DUMMY
   FALSE,						      // モザイク設定
@@ -159,6 +177,81 @@ static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] =
     MESSAGE_STATIC,
     str_select_direction,
   }, 
+  { // 上画面 調査項目名
+    SUB_BG_FONT,
+    TOPIC_TITLE_X,
+    TOPIC_TITLE_Y,
+    TOPIC_TITLE_WIDTH,
+    TOPIC_TITLE_HEIGHT,
+    TOPIC_TITLE_STRING_OFFSET_X,
+    TOPIC_TITLE_STRING_OFFSET_Y,
+    SUB_BG_PALETTE_FONT,
+    TOPIC_TITLE_STRING_COLOR_L,
+    TOPIC_TITLE_STRING_COLOR_S,
+    TOPIC_TITLE_STRING_COLOR_B,
+    MESSAGE_QUESTIONNAIRE,
+    0,
+  }, 
+  { // 上画面 調査項目の補足文
+    SUB_BG_FONT,
+    TOPIC_CAPTION_X,
+    TOPIC_CAPTION_Y,
+    TOPIC_CAPTION_WIDTH,
+    TOPIC_CAPTION_HEIGHT,
+    TOPIC_CAPTION_STRING_OFFSET_X,
+    TOPIC_CAPTION_STRING_OFFSET_Y,
+    SUB_BG_PALETTE_FONT,
+    TOPIC_CAPTION_STRING_COLOR_L,
+    TOPIC_CAPTION_STRING_COLOR_S,
+    TOPIC_CAPTION_STRING_COLOR_B,
+    MESSAGE_QUESTIONNAIRE,
+    0,
+  }, 
+  { // 上画面 質問1
+    SUB_BG_FONT,
+    QUESTION_1_X,
+    QUESTION_1_Y,
+    QUESTION_1_WIDTH,
+    QUESTION_1_HEIGHT,
+    QUESTION_1_STRING_OFFSET_X,
+    QUESTION_1_STRING_OFFSET_Y,
+    SUB_BG_PALETTE_FONT,
+    QUESTION_1_STRING_COLOR_L,
+    QUESTION_1_STRING_COLOR_S,
+    QUESTION_1_STRING_COLOR_B,
+    MESSAGE_QUESTIONNAIRE,
+    0,
+  }, 
+  { // 上画面 質問2
+    SUB_BG_FONT,
+    QUESTION_2_X,
+    QUESTION_2_Y,
+    QUESTION_2_WIDTH,
+    QUESTION_2_HEIGHT,
+    QUESTION_2_STRING_OFFSET_X,
+    QUESTION_2_STRING_OFFSET_Y,
+    SUB_BG_PALETTE_FONT,
+    QUESTION_2_STRING_COLOR_L,
+    QUESTION_2_STRING_COLOR_S,
+    QUESTION_2_STRING_COLOR_B,
+    MESSAGE_QUESTIONNAIRE,
+    0,
+  }, 
+  { // 上画面 質問3
+    SUB_BG_FONT,
+    QUESTION_3_X,
+    QUESTION_3_Y,
+    QUESTION_3_WIDTH,
+    QUESTION_3_HEIGHT,
+    QUESTION_3_STRING_OFFSET_X,
+    QUESTION_3_STRING_OFFSET_Y,
+    SUB_BG_PALETTE_FONT,
+    QUESTION_3_STRING_COLOR_L,
+    QUESTION_3_STRING_COLOR_S,
+    QUESTION_3_STRING_COLOR_B,
+    MESSAGE_QUESTIONNAIRE,
+    0,
+  }, 
 };
 
 static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] = 
@@ -176,7 +269,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_title_0,
+    str_topic_0_title,
   }, 
   { // 調査項目1
     MAIN_BG_FONT,
@@ -191,7 +284,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_title_1,
+    str_topic_1_title,
   }, 
   { // 調査項目2
     MAIN_BG_FONT,
@@ -206,7 +299,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_title_2,
+    str_topic_2_title,
   }, 
   { // 調査項目3
     MAIN_BG_FONT,
@@ -221,7 +314,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_title_3,
+    str_topic_3_title,
   }, 
   { // 調査項目4
     MAIN_BG_FONT,
@@ -236,7 +329,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_title_4,
+    str_topic_4_title,
   }, 
   { // 調査項目5
     MAIN_BG_FONT,
@@ -251,7 +344,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_title_5,
+    str_topic_5_title,
   }, 
   { // 調査項目6
     MAIN_BG_FONT,
@@ -266,7 +359,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_title_6,
+    str_topic_6_title,
   }, 
   { // 調査項目7
     MAIN_BG_FONT,
@@ -281,7 +374,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_title_7,
+    str_topic_7_title,
   }, 
   { // 調査項目8
     MAIN_BG_FONT,
@@ -296,7 +389,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_title_8,
+    str_topic_8_title,
   }, 
   { // 調査項目9
     MAIN_BG_FONT,
@@ -311,7 +404,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_title_9,
+    str_topic_9_title,
   }, 
 };
 
@@ -378,16 +471,52 @@ typedef struct
 
 static const CLWK_INIT_DATA ClactWorkInitData[ CLWK_NUM ] = 
 {
-  { // "new" アイコン
-    CLWK_NEW_ICON_POS_X,          // x 座標
-    CLWK_NEW_ICON_POS_Y,          // y 座標
-    CLWK_NEW_ICON_ANIME_SEQ,      // アニメーションシーケンス
-    CLWK_NEW_ICON_SOFT_PRIORITY,  // ソフト優先順位
-    CLWK_NEW_ICON_BG_PRIORITY,    // BG 優先順位
-    CLUNIT_MAIN_OBJ,              // 所属ユニット
-    OBJ_RESOURCE_MAIN_CHARACTER,  // キャラクタ リソース
-    OBJ_RESOURCE_MAIN_PALETTE,    // パレット リソース
-    OBJ_RESOURCE_MAIN_CELL_ANIME, // セルアニメ リソース
-    CLSYS_DEFREND_MAIN,           // サーフェス指定
+  { // スクロールバー
+    CLWK_SCROLL_CONTROL_POS_X,         // x 座標
+    CLWK_SCROLL_CONTROL_POS_Y,         // y 座標
+    CLWK_SCROLL_CONTROL_ANIME_SEQ,     // アニメーションシーケンス
+    CLWK_SCROLL_CONTROL_SOFT_PRIORITY, // ソフト優先順位
+    CLWK_SCROLL_CONTROL_BG_PRIORITY,   // BG 優先順位
+    CLUNIT_MAIN_OBJ,                   // 所属ユニット
+    OBJ_RESOURCE_MAIN_CHARACTER,       // キャラクタ リソース
+    OBJ_RESOURCE_MAIN_PALETTE,         // パレット リソース
+    OBJ_RESOURCE_MAIN_CELL_ANIME,      // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,                // サーフェス指定
+  },
+  { // 調査項目選択アイコン0
+    CLWK_SELECT_ICON_POS_X,          // x 座標
+    CLWK_SELECT_ICON_POS_Y,          // y 座標
+    CLWK_SELECT_ICON_ANIME_SEQ,      // アニメーションシーケンス
+    CLWK_SELECT_ICON_SOFT_PRIORITY,  // ソフト優先順位
+    CLWK_SELECT_ICON_BG_PRIORITY,    // BG 優先順位
+    CLUNIT_MAIN_OBJ,                 // 所属ユニット
+    OBJ_RESOURCE_MAIN_CHARACTER,     // キャラクタ リソース
+    OBJ_RESOURCE_MAIN_PALETTE,       // パレット リソース
+    OBJ_RESOURCE_MAIN_CELL_ANIME,    // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,              // サーフェス指定
+  },
+  { // 調査項目選択アイコン1
+    CLWK_SELECT_ICON_POS_X,          // x 座標
+    CLWK_SELECT_ICON_POS_Y,          // y 座標
+    CLWK_SELECT_ICON_ANIME_SEQ,      // アニメーションシーケンス
+    CLWK_SELECT_ICON_SOFT_PRIORITY,  // ソフト優先順位
+    CLWK_SELECT_ICON_BG_PRIORITY,    // BG 優先順位
+    CLUNIT_MAIN_OBJ,                 // 所属ユニット
+    OBJ_RESOURCE_MAIN_CHARACTER,     // キャラクタ リソース
+    OBJ_RESOURCE_MAIN_PALETTE,       // パレット リソース
+    OBJ_RESOURCE_MAIN_CELL_ANIME,    // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,              // サーフェス指定
+  },
+  { // 調査項目選択アイコン2
+    CLWK_SELECT_ICON_POS_X,          // x 座標
+    CLWK_SELECT_ICON_POS_Y,          // y 座標
+    CLWK_SELECT_ICON_ANIME_SEQ,      // アニメーションシーケンス
+    CLWK_SELECT_ICON_SOFT_PRIORITY,  // ソフト優先順位
+    CLWK_SELECT_ICON_BG_PRIORITY,    // BG 優先順位
+    CLUNIT_MAIN_OBJ,                 // 所属ユニット
+    OBJ_RESOURCE_MAIN_CHARACTER,     // キャラクタ リソース
+    OBJ_RESOURCE_MAIN_PALETTE,       // パレット リソース
+    OBJ_RESOURCE_MAIN_CELL_ANIME,    // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,              // サーフェス指定
   },
 };

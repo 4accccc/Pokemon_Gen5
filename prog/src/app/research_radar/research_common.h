@@ -15,6 +15,7 @@
 //=============================================================================== 
 #define PRINT_TARGET (2)  // デバッグ出力先
 
+#define DOT_PER_CHARA (8)  // 1キャラ = 8ドット
 #define ONE_CHARA_SIZE    (0x20)                   // 1キャラクターデータのサイズ [Byte]
 #define ONE_PALETTE_SIZE  (0x20)                   // 1パレット(16色分)のサイズ [Byte]
 #define FULL_PALETTE_SIZE (ONE_PALETTE_SIZE * 16)  // 16パレットのサイズ [Byte]

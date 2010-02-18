@@ -25,8 +25,15 @@
 #include "arc/font/font.naix"               // for NARC_font_xxxx
 #include "arc/message.naix"                 // for NARC_message_xxxx
 #include "msg/msg_research_radar.h"         // for str_xxxx
+#include "msg/msg_questionnaire.h"          // for str_xxxx
 #include "obj_NANR_LBLDEFS.h"               // for NANR_obj_xxxx
 #include "topic_id.h"                       // for TOPIC_ID_xxxx
+#include "question_id.h"                    // for QUESTION_ID_xxxx
+
+#include "question_id_topic.cdat"        // for QuestionX_topic[]
+#include "string_id_question.cdat"       // for StringID_question[]
+#include "string_id_topic_title.cdat"    // for StringID_topicTitle[]
+#include "string_id_topic_caption.cdat"  // for StringID_topicCaption[]
 
 
 //==============================================================================================
@@ -34,19 +41,22 @@
 //==============================================================================================
 struct _RESEARCH_SELECT_WORK
 { 
-  RESEARCH_SELECT_SEQ    seq;            // 処理シーケンス
-  RESEARCH_SELECT_RESULT result;         // 画面終了結果
+  HEAPID    heapID;  // ヒープID
+  GFL_FONT* font;    // フォント
+
+  RESEARCH_SELECT_SEQ    seq;    // 処理シーケンス
+  RESEARCH_SELECT_RESULT result; // 画面終了結果
 
   // メニュー項目
   MENU_ITEM menuCursorPos;  // カーソル位置
 
   // 調査項目
-  u8 topicCursorPos;                            // カーソル位置
   u8 selectedTopicIDs[ SELECT_TOPIC_MAX_NUM ];  // 選択した調査項目ID
   u8 selectedTopicNum;                          // 選択した調査項目の数
 
-  HEAPID    heapID;  // ヒープID
-  GFL_FONT* font;    // フォント
+  u8  topicCursorPos;         // カーソル位置
+  u8  topicCursorNextPos;     // 移動後のカーソル位置 
+  int topicScrollFrameCount;  // スクロール フレームカウンタ
 
   // メッセージ
   GFL_MSGDATA* message[ MESSAGE_NUM ];
@@ -62,91 +72,124 @@ struct _RESEARCH_SELECT_WORK
 };
 
 
-//==============================================================================================
-// ■非公開関数
-//==============================================================================================
+//----------------------------------------------------------------------------------------------
+// □LAYER 3 シーケンス動作
+//----------------------------------------------------------------------------------------------
 // シーケンス処理
-static RESEARCH_SELECT_SEQ Main_SETUP   ( RESEARCH_SELECT_WORK* work );
-static RESEARCH_SELECT_SEQ Main_KEY_WAIT( RESEARCH_SELECT_WORK* work );
-static RESEARCH_SELECT_SEQ Main_CLEAN_UP( RESEARCH_SELECT_WORK* work );
+static RESEARCH_SELECT_SEQ Main_SETUP      ( RESEARCH_SELECT_WORK* work );
+static RESEARCH_SELECT_SEQ Main_KEY_WAIT   ( RESEARCH_SELECT_WORK* work );
+static RESEARCH_SELECT_SEQ Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work );
+static RESEARCH_SELECT_SEQ Main_TO_CONFIRM ( RESEARCH_SELECT_WORK* work );
+static RESEARCH_SELECT_SEQ Main_CONFIRM    ( RESEARCH_SELECT_WORK* work );
+static RESEARCH_SELECT_SEQ Main_DETERMINE  ( RESEARCH_SELECT_WORK* work );
+static RESEARCH_SELECT_SEQ Main_CLEAN_UP   ( RESEARCH_SELECT_WORK* work );
+
 // シーケンス制御
-static void SwitchSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq );
-static void SetSeq   ( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ seq );
-// メニュー項目
-static void MoveMenuCursorUp  ( RESEARCH_SELECT_WORK* work );
-static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work );
-static void MoveMenuCursor    ( RESEARCH_SELECT_WORK* work, int stride );
-// 調査項目
-static void InitSelectedTopicIDs( RESEARCH_SELECT_WORK* work );
-static void SelectTopicID( RESEARCH_SELECT_WORK* work, u8 topicID );
-static void CancelTopicID( RESEARCH_SELECT_WORK* work, u8 topicID );
-static BOOL IsTopicIDSelected( const RESEARCH_SELECT_WORK* work, u8 topicID );
-static void MoveTopicCursorUp  ( RESEARCH_SELECT_WORK* work );
-static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work );
-static void MoveTopicCursor    ( RESEARCH_SELECT_WORK* work, int stride );
-static void SetTopicActive  ( u8 topicID );
-static void SetTopicInactive( u8 topicID );
-static void SetTopicSelected( u8 topicID );
-static void SetTopicNotSelected( u8 topicID );
-static u8 GetTopicScreenPosLeft( u8 topicID, BOOL selected );
-static u8 GetTopicScreenPosTop ( u8 topicID, BOOL selected );
-// 画面終了結果
-static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result );
+static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result ); // 画面終了結果を設定する
+static void SwitchSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // 処理シーケンスを変更する
+static void SetSequence   ( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ seq );     // 処理シーケンスを設定する
 
-// フォント
-static void InitFont  ( RESEARCH_SELECT_WORK* work );
-static void CreateFont( RESEARCH_SELECT_WORK* work );
-static void DeleteFont( RESEARCH_SELECT_WORK* work );
-// メッセージ
-static void InitMessages  ( RESEARCH_SELECT_WORK* work );
-static void CreateMessages( RESEARCH_SELECT_WORK* work );
-static void DeleteMessages( RESEARCH_SELECT_WORK* work );
+// VBlank
+static void VBlankFunc( void );
 
-// BG
-static void SetupBG  ( RESEARCH_SELECT_WORK* work );
-static void CleanUpBG( RESEARCH_SELECT_WORK* work );
-// SUB-BG ( ウィンドウ面 )
-static void SetupSubBG_WINDOW  ( RESEARCH_SELECT_WORK* work );
-static void CleanUpSubBG_WINDOW( RESEARCH_SELECT_WORK* work );
-// SUB-BG ( フォント面 )
-static void SetupSubBG_FONT  ( RESEARCH_SELECT_WORK* work );
-static void CleanUpSubBG_FONT( RESEARCH_SELECT_WORK* work );
-// MAIN-BG ( ウィンドウ面 )
-static void SetupMainBG_WINDOW  ( RESEARCH_SELECT_WORK* work );
-static void CleanUpMainBG_WINDOW( RESEARCH_SELECT_WORK* work );
-// MAIN-BG ( フォント面 )
-static void SetupMainBG_FONT  ( RESEARCH_SELECT_WORK* work );
-static void CleanUpMainBG_FONT( RESEARCH_SELECT_WORK* work );
+//----------------------------------------------------------------------------------------------
+// □LAYER 3 入力に対する反応
+//---------------------------------------------------------------------------------------------- 
+// メニュー項目カーソルの移動
+static void MoveMenuCursorUp  ( RESEARCH_SELECT_WORK* work ); // 上へ移動する
+static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work ); // 下へ移動する
 
-// 文字列描画オブジェクト
-static void InitBGFonts  ( RESEARCH_SELECT_WORK* work );
-static void CreateBGFonts( RESEARCH_SELECT_WORK* work );
-static void DeleteBGFonts( RESEARCH_SELECT_WORK* work );
+// 調査項目カーソルの移動
+static void MoveTopicCursorUp  ( RESEARCH_SELECT_WORK* work ); // 上へ移動する
+static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work ); // 下へ移動する
 
-// OBJ システム
-static void CreateClactSystem( RESEARCH_SELECT_WORK* work );
-static void DeleteClactSystem( RESEARCH_SELECT_WORK* work );
-// SUB-OBJ リソース
-static void RegisterSubObjResources( RESEARCH_SELECT_WORK* work );
-static void ReleaseSubObjResources ( RESEARCH_SELECT_WORK* work );
-// MAIN-OBJ リソース
-static void RegisterMainObjResources( RESEARCH_SELECT_WORK* work );
-static void ReleaseMainObjResources ( RESEARCH_SELECT_WORK* work );
-// セルアクターユニット
-static void InitClactUnits  ( RESEARCH_SELECT_WORK* work );
-static void CreateClactUnits( RESEARCH_SELECT_WORK* work );
-static void DeleteClactUnits( RESEARCH_SELECT_WORK* work );
-// セルアクターワーク
-static void InitClactWorks  ( RESEARCH_SELECT_WORK* work );
-static void CreateClactWorks( RESEARCH_SELECT_WORK* work );
-static void DeleteClactWorks( RESEARCH_SELECT_WORK* work );
-// OBJ アクセス
-static u32 GetObjResourceRegisterIndex( const RESEARCH_SELECT_WORK* work, OBJ_RESOURCE_ID resID );
-static GFL_CLUNIT* GetClactUnit( const RESEARCH_SELECT_WORK* work, CLUNIT_INDEX unitIdx );
-static GFL_CLWK*   GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkIdx );
+// 調査項目の選択
+static void SelectTopic( RESEARCH_SELECT_WORK* work ); // 調査項目を選択する
+
+//----------------------------------------------------------------------------------------------
+// □LAYER 2 個別操作
+//---------------------------------------------------------------------------------------------- 
+// カーソル位置の変更
+static void ShiftMenuCursorPos( RESEARCH_SELECT_WORK* work, int stride ); // メニュー項目カーソル位置を変更する
+static void SetTopicCursorNextPos( RESEARCH_SELECT_WORK* work, int stride ); // 調査項目カーソルの移動先を設定する
+static void TopicCursorScrollStart( RESEARCH_SELECT_WORK* work );  // 調査項目カーソルのスクロールを開始する
+
+// 調査項目IDの登録
+static void RegisterTopicID( RESEARCH_SELECT_WORK* work ); // 調査項目IDを登録する
+static void ReleaseTopicID ( RESEARCH_SELECT_WORK* work ); // 調査項目IDを解除する
+static BOOL IsTopicIDRegistered( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 選択済みかを判定する
+
+// 調査項目の表示操作
+static void SetTopicCursorOn ( const RESEARCH_SELECT_WORK* work ); // カーソルが乗っている状態にする
+static void SetTopicCursorOff( const RESEARCH_SELECT_WORK* work ); // カーソルが乗っていない状態にする
+static void SetTopicSelected   ( const RESEARCH_SELECT_WORK* work ); // 選択されている状態にする
+static void SetTopicNotSelected( const RESEARCH_SELECT_WORK* work ); // 選択されていない状態にする
+static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work ); // 上画面のカーソル依存文字列表示を更新する
+static void UpdateTopicScroll( RESEARCH_SELECT_WORK* work );       // スクロール更新
+static BOOL IsTopicScrollEnd ( const RESEARCH_SELECT_WORK* work ); // スクロール終了検出
+static u8  CalcTopicScreenPosLeft ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目の左上x座標を算出する (スクリーン単位)
+static u8  CalcTopicScreenPosTop  ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目の左上y座標を算出する (スクリーン単位)
+static int CalcTopicDisplayPosLeft( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目の左上x座標を算出する (ドット単位)
+static int CalcTopicDisplayPosTop ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目の左上y座標を算出する (ドット単位)
+static int CalcScreenScrollY      ( const RESEARCH_SELECT_WORK* work );             // y軸方向のスクロール量を算出する
+
+// OBJ 表示
+static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work );  // スクロールバーのつまみ部分の位置を更新する
+static void UpdateTopicSelectIcons( const RESEARCH_SELECT_WORK* work );  // 調査項目選択アイコンの表示状態を更新する
+
+//----------------------------------------------------------------------------------------------
+// □LAYER 1 データアクセス
+//----------------------------------------------------------------------------------------------
+// データアクセス
+static u32 GetObjResourceRegisterIndex( const RESEARCH_SELECT_WORK* work, OBJ_RESOURCE_ID resID ); // OBJリソースの登録インデックス
+static GFL_CLUNIT* GetClactUnit( const RESEARCH_SELECT_WORK* work, CLUNIT_INDEX unitIdx ); // セルアクターユニット
+static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkIdx ); // セルアクターワーク
+
+//----------------------------------------------------------------------------------------------
+// □LAYER 0 初期化処理/終了処理
+//----------------------------------------------------------------------------------------------
+// 画面の準備/後片付け ( BG )
+static void SetupBG  ( RESEARCH_SELECT_WORK* work ); // BG 準備
+static void CleanUpBG( RESEARCH_SELECT_WORK* work ); // BG 後片付け
+static void SetupSubBG_WINDOW  ( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ウィンドウ面 ) 準備
+static void CleanUpSubBG_WINDOW( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ウィンドウ面 ) 後片付け
+static void SetupSubBG_FONT  ( RESEARCH_SELECT_WORK* work ); // SUB-BG ( フォント面 ) 準備
+static void CleanUpSubBG_FONT( RESEARCH_SELECT_WORK* work ); // SUB-BG ( フォント面 ) 後片付け
+static void SetupMainBG_BAR  ( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( バー面 ) 準備
+static void CleanUpMainBG_BAR( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( バー面 ) 後片付け
+static void SetupMainBG_WINDOW  ( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ウィンドウ面 ) 準備
+static void CleanUpMainBG_WINDOW( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ウィンドウ面 ) 後片付け
+static void SetupMainBG_FONT  ( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( フォント面 ) 準備
+static void CleanUpMainBG_FONT( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( フォント面 ) 後片付け
+
+// 画面の準備/後片付け ( OBJ )
+static void CreateClactSystem( RESEARCH_SELECT_WORK* work ); // OBJ システム 生成
+static void DeleteClactSystem( RESEARCH_SELECT_WORK* work ); // OBJ システム 破棄
+static void RegisterSubObjResources( RESEARCH_SELECT_WORK* work ); // SUB-OBJ リソース 登録
+static void ReleaseSubObjResources ( RESEARCH_SELECT_WORK* work ); // SUB-OBJ リソース 解放
+static void RegisterMainObjResources( RESEARCH_SELECT_WORK* work ); // MAIN-OBJ リソース 登録
+static void ReleaseMainObjResources ( RESEARCH_SELECT_WORK* work ); // MAIN-OBJ リソース 解放
+static void InitClactUnits  ( RESEARCH_SELECT_WORK* work ); // セルアクターユニット 初期化
+static void CreateClactUnits( RESEARCH_SELECT_WORK* work ); // セルアクターユニット 生成
+static void DeleteClactUnits( RESEARCH_SELECT_WORK* work ); // セルアクターユニット 破棄
+static void InitClactWorks  ( RESEARCH_SELECT_WORK* work ); // セルアクターワーク 初期化
+static void CreateClactWorks( RESEARCH_SELECT_WORK* work ); // セルアクターワーク 生成
+static void DeleteClactWorks( RESEARCH_SELECT_WORK* work ); // セルアクターワーク 破棄
+
+// データの初期化/生成/破棄
+static void InitFont  ( RESEARCH_SELECT_WORK* work ); // フォント 初期化
+static void CreateFont( RESEARCH_SELECT_WORK* work ); // フォント 生成
+static void DeleteFont( RESEARCH_SELECT_WORK* work ); // フォント 破棄
+static void InitMessages  ( RESEARCH_SELECT_WORK* work ); // メッセージ 初期化
+static void CreateMessages( RESEARCH_SELECT_WORK* work ); // メッセージ 生成
+static void DeleteMessages( RESEARCH_SELECT_WORK* work ); // メッセージ 破棄
+static void InitBGFonts  ( RESEARCH_SELECT_WORK* work ); // 文字列描画オブジェクト 初期化
+static void CreateBGFonts( RESEARCH_SELECT_WORK* work ); // 文字列描画オブジェクト 生成
+static void DeleteBGFonts( RESEARCH_SELECT_WORK* work ); // 文字列描画オブジェクト 破棄
+static void InitSelectedTopicIDs( RESEARCH_SELECT_WORK* work ); // 選択した調査項目ID
 
 // DEBUG:
-static void DebugPrint_SelectedTopicIDs( const RESEARCH_SELECT_WORK* work );
+static void DebugPrint_SelectedTopicIDs( const RESEARCH_SELECT_WORK* work );  // 登録済みの調査項目IDを出力する
 
 
 //==============================================================================================
@@ -169,12 +212,16 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( HEAPID heapID )
   work = GFL_HEAP_AllocMemory( heapID, sizeof(RESEARCH_SELECT_WORK) );
 
   // 初期化
-  work->seq            = RESEARCH_SELECT_SEQ_SETUP;
-  work->result         = RESEARCH_SELECT_RESULT_NONE;
-  work->heapID         = heapID;
-  work->menuCursorPos  = MENU_ITEM_DETERMINATION_OK;
-  work->topicCursorPos = 0;
+  work->seq                   = RESEARCH_SELECT_SEQ_SETUP;
+  work->result                = RESEARCH_SELECT_RESULT_NONE;
+  work->heapID                = heapID;
+  work->menuCursorPos         = MENU_ITEM_DETERMINATION_OK;
+  work->topicCursorPos        = 0;
+  work->topicCursorNextPos    = 0;
+  work->topicScrollFrameCount = 0;
+
   for( i=0; i<OBJ_RESOURCE_NUM; i++ ){ work->objResRegisterIdx[i] = 0; }
+
   InitMessages( work );
   InitFont( work );
   InitBGFonts( work );
@@ -222,20 +269,40 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
   // シーケンスごとの処理
   switch( work->seq )
   {
-  case RESEARCH_SELECT_SEQ_SETUP:     nextSeq = Main_SETUP   ( work );  break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:  nextSeq = Main_KEY_WAIT( work );  break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:  nextSeq = Main_CLEAN_UP( work );  break;
-  case RESEARCH_SELECT_SEQ_FINISH:    return work->result;
+  case RESEARCH_SELECT_SEQ_SETUP:        nextSeq = Main_SETUP   ( work );     break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:     nextSeq = Main_KEY_WAIT( work );     break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  nextSeq = Main_SCROLL_WAIT( work );  break;
+  case RESEARCH_SELECT_SEQ_TO_CONFIRM:   nextSeq = Main_TO_CONFIRM( work );   break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:      nextSeq = Main_CONFIRM( work );      break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:    nextSeq = Main_DETERMINE( work );    break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:     nextSeq = Main_CLEAN_UP( work );     break;
+  case RESEARCH_SELECT_SEQ_FINISH:       return work->result;
   default:  GF_ASSERT(0);
   }
 
   // シーケンス更新
-  SwitchSeq( work, nextSeq );
+  SwitchSequence( work, nextSeq );
 
   // セルアクターシステム メイン処理
   GFL_CLACT_SYS_Main();
 
   return RESEARCH_SELECT_RESULT_CONTINUE;
+}
+
+
+//==============================================================================================
+// ■VBlank
+//==============================================================================================
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief VBlank 割り込み処理
+ */
+//----------------------------------------------------------------------------------------------
+static void VBlankFunc( void )
+{
+  GFL_BG_VBlankFunc();
+  GFL_CLACT_SYS_VBlankFunc();
 }
 
 
@@ -262,6 +329,7 @@ static RESEARCH_SELECT_SEQ Main_SETUP( RESEARCH_SELECT_WORK* work )
   SetupBG           ( work );
   SetupSubBG_WINDOW ( work );
   SetupSubBG_FONT   ( work );
+  SetupMainBG_BAR   ( work );
   SetupMainBG_WINDOW( work );
   SetupMainBG_FONT  ( work );
 
@@ -305,6 +373,7 @@ static RESEARCH_SELECT_SEQ Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
   if( trg & PAD_KEY_UP )
   {
     MoveTopicCursorUp( work );
+    nextSeq = RESEARCH_SELECT_SEQ_SCROLL_WAIT;  // シーケンス遷移
   }
 
   //--------
@@ -312,22 +381,14 @@ static RESEARCH_SELECT_SEQ Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
   if( trg & PAD_KEY_DOWN )
   {
     MoveTopicCursorDown( work );
+    nextSeq = RESEARCH_SELECT_SEQ_SCROLL_WAIT;  // シーケンス遷移
   }
 
   //----------
   // A ボタン
   if( trg & PAD_BUTTON_A )
   {
-    if( IsTopicIDSelected( work, work->topicCursorPos ) )
-    {
-      CancelTopicID( work, work->topicCursorPos );
-      SetTopicNotSelected( work->topicCursorPos );
-    }
-    else
-    {
-      SelectTopicID( work, work->topicCursorPos );
-      SetTopicSelected( work->topicCursorPos );
-    }
+    SelectTopic( work );
   }
 
   //----------
@@ -337,6 +398,97 @@ static RESEARCH_SELECT_SEQ Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
     SetResult( work, RESEARCH_SELECT_RESULT_TO_MENU );  // 画面終了結果を決定
     nextSeq = RESEARCH_SELECT_SEQ_CLEAN_UP;             // シーケンス遷移
   }
+
+  return nextSeq;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief スクロール完了待ちシーケンス ( RESEARCH_SELECT_SEQ_SCROLL_WAIT ) の処理
+ *
+ * @param work
+ *
+ * @return シーケンスが変化する場合 次のシーケンス番号
+ *         シーケンスが継続する場合 現在のシーケンス番号
+ */
+//----------------------------------------------------------------------------------------------
+static RESEARCH_SELECT_SEQ Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
+{
+  RESEARCH_SELECT_SEQ nextSeq;
+
+  nextSeq = work->seq;
+
+  // スクロール処理
+  UpdateTopicScroll( work );       // 調査項目ボタン
+  UpdateScrollControlPos( work );  // スクロールバーのつまみ部分
+  UpdateTopicSelectIcons( work );  // 調査項目選択アイコン
+  work->topicScrollFrameCount++;
+
+  // スクロール終了
+  if( IsTopicScrollEnd(work) )
+  {
+    work->topicCursorPos = work->topicCursorNextPos;
+    UpdateSubDisplayStrings( work );  // 上画面のカーソル依存文字列を更新
+    SetTopicCursorOn( work );
+    nextSeq = RESEARCH_SELECT_SEQ_KEY_WAIT;
+  }
+
+  return nextSeq;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目確定の確認シーケンスへの準備シーケンス ( RESEARCH_SELECT_SEQ_TO_CONFIRM ) の処理
+ *
+ * @param work
+ *
+ * @return シーケンスが変化する場合 次のシーケンス番号
+ *         シーケンスが継続する場合 現在のシーケンス番号
+ */
+//----------------------------------------------------------------------------------------------
+static RESEARCH_SELECT_SEQ Main_TO_CONFIRM( RESEARCH_SELECT_WORK* work )
+{
+  RESEARCH_SELECT_SEQ nextSeq;
+
+  nextSeq = work->seq;
+
+  return nextSeq;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目確定の確認シーケンス ( RESEARCH_SELECT_SEQ_CONFIRM ) の処理
+ *
+ * @param work
+ *
+ * @return シーケンスが変化する場合 次のシーケンス番号
+ *         シーケンスが継続する場合 現在のシーケンス番号
+ */
+//----------------------------------------------------------------------------------------------
+static RESEARCH_SELECT_SEQ Main_CONFIRM( RESEARCH_SELECT_WORK* work )
+{
+  RESEARCH_SELECT_SEQ nextSeq;
+
+  nextSeq = work->seq;
+
+  return nextSeq;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目確定シーケンス ( RESEARCH_SELECT_SEQ_DETERMINE ) の処理
+ *
+ * @param work
+ *
+ * @return シーケンスが変化する場合 次のシーケンス番号
+ *         シーケンスが継続する場合 現在のシーケンス番号
+ */
+//----------------------------------------------------------------------------------------------
+static RESEARCH_SELECT_SEQ Main_DETERMINE( RESEARCH_SELECT_WORK* work )
+{
+  RESEARCH_SELECT_SEQ nextSeq;
+
+  nextSeq = work->seq;
 
   return nextSeq;
 }
@@ -365,6 +517,7 @@ static RESEARCH_SELECT_SEQ Main_CLEAN_UP( RESEARCH_SELECT_WORK* work )
 
   // BG 後片付け
   CleanUpMainBG_FONT  ( work );
+  CleanUpMainBG_BAR   ( work );
   CleanUpMainBG_WINDOW( work );
   CleanUpSubBG_FONT   ( work );
   CleanUpSubBG_WINDOW ( work );
@@ -389,13 +542,13 @@ static RESEARCH_SELECT_SEQ Main_CLEAN_UP( RESEARCH_SELECT_WORK* work )
  * @param nextSeq 変更後のシーケンス
  */
 //----------------------------------------------------------------------------------------------
-static void SwitchSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
+static void SwitchSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
 {
   // 変化なし
   if( work->seq == nextSeq){ return; }
 
   // 変更
-  SetSeq( work, nextSeq ); 
+  SetSequence( work, nextSeq ); 
 } 
 
 //----------------------------------------------------------------------------------------------
@@ -406,8 +559,9 @@ static void SwitchSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
  * @parma seq  設定するシーケンス
  */
 //----------------------------------------------------------------------------------------------
-static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ seq )
+static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ seq )
 {
+  // 更新
   work->seq = seq;
 
   // DEBUG:
@@ -428,7 +582,7 @@ static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ seq )
 //----------------------------------------------------------------------------------------------
 static void MoveMenuCursorUp( RESEARCH_SELECT_WORK* work )
 { 
-  MoveMenuCursor( work, -1 );
+  ShiftMenuCursorPos( work, -1 );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -440,7 +594,7 @@ static void MoveMenuCursorUp( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work )
 {
-  MoveMenuCursor( work, 1 );
+  ShiftMenuCursorPos( work, 1 );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -451,7 +605,7 @@ static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work )
  * @param stride 移動量
  */
 //----------------------------------------------------------------------------------------------
-static void MoveMenuCursor( RESEARCH_SELECT_WORK* work, int stride )
+static void ShiftMenuCursorPos( RESEARCH_SELECT_WORK* work, int stride )
 {
   int nowPos;
   int nextPos;
@@ -462,13 +616,40 @@ static void MoveMenuCursor( RESEARCH_SELECT_WORK* work, int stride )
   work->menuCursorPos = nextPos; 
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: move menu cursor ==> %d\n", work->menuCursorPos );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: move menu cursor ==> %d\n", nextPos );
 }
 
 
 //==============================================================================================
 // ■調査項目
 //==============================================================================================
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief カーソル位置にある調査項目を選択する。
+ *        すでに選択済みなら登録を解除する。
+ *        そうでなければ, 登録する。
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void SelectTopic( RESEARCH_SELECT_WORK* work )
+{
+  // 登録済み
+  if( IsTopicIDRegistered( work, work->topicCursorPos ) ) 
+  {
+    SetTopicNotSelected( work );  // 選択していない状態に戻す
+    ReleaseTopicID( work );       // 登録していた項目IDを解除する
+  }
+  else
+  {
+    SetTopicSelected( work );  // 選択している状態にする
+    RegisterTopicID( work );   // 項目IDを登録する
+  }
+
+  // 調査項目選択アイコンを更新
+  UpdateTopicSelectIcons( work );
+}
 
 //----------------------------------------------------------------------------------------------
 /**
@@ -496,19 +677,21 @@ static void InitSelectedTopicIDs( RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief 指定した調査項目を選択する
+ * @brief カーソル位置にある調査項目を選択する
  *
  * @param work
- * @param topicID 調査項目ID
  */
 //----------------------------------------------------------------------------------------------
-static void SelectTopicID( RESEARCH_SELECT_WORK* work, u8 topicID )
+static void RegisterTopicID( RESEARCH_SELECT_WORK* work )
 {
+  int topicID;
   int registerPos;
 
-  // 登録場所
+  // 選択対象と その登録場所を決定
+  topicID     = work->topicCursorPos;
   registerPos = work->selectedTopicNum;
 
+  // エラーチェック
   GF_ASSERT( registerPos < SELECT_TOPIC_MAX_NUM ); // 選択数オーバー
   GF_ASSERT( work->selectedTopicIDs[ registerPos ] == TOPIC_ID_DUMMY );  // 処理の整合性が取れていない
 
@@ -522,31 +705,34 @@ static void SelectTopicID( RESEARCH_SELECT_WORK* work, u8 topicID )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief 指定した調査項目を選択解除する
+ * @brief カーソル位置にある調査項目の選択をキャンセルする
  *
  * @param work
- * @parma topicID 調査項目ID
  */
 //----------------------------------------------------------------------------------------------
-static void CancelTopicID( RESEARCH_SELECT_WORK* work, u8 topicID )
+static void ReleaseTopicID( RESEARCH_SELECT_WORK* work )
 {
-  int i;
+  int topicID;
+  int shiftPos;
   int registerPos;
 
-  // 検索
+  // キャンセル対象を決定
+  topicID = work->topicCursorPos;
+
+  // 選択されているIDの中から, カーソル位置にある項目のIDを検索
   for( registerPos=0; registerPos < work->selectedTopicNum; registerPos++ )
   {
     // 発見
     if( work->selectedTopicIDs[ registerPos ] == topicID ){ break; }
   }
 
-  // 選択されていない
-  GF_ASSERT( registerPos < SELECT_TOPIC_MAX_NUM );
+  // エラーチェック
+  GF_ASSERT( registerPos < SELECT_TOPIC_MAX_NUM ); // 選択されていない
 
   // 解除
-  for( i=registerPos; i < SELECT_TOPIC_MAX_NUM - 1; i++ )
+  for( shiftPos = registerPos; shiftPos < SELECT_TOPIC_MAX_NUM - 1; shiftPos++ )
   {
-    work->selectedTopicIDs[i] = work->selectedTopicIDs[ i + 1 ];
+    work->selectedTopicIDs[ shiftPos ] = work->selectedTopicIDs[ shiftPos + 1 ];
   }
   work->selectedTopicIDs[ SELECT_TOPIC_MAX_NUM - 1 ] = TOPIC_ID_DUMMY;
   work->selectedTopicNum--;
@@ -557,7 +743,7 @@ static void CancelTopicID( RESEARCH_SELECT_WORK* work, u8 topicID )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief 調査項目が選択されているかどうかを取得する
+ * @brief 調査項目が選択されているかどうかを判定する
  *
  * @param work
  * @parma topicID 調査項目ID
@@ -566,12 +752,16 @@ static void CancelTopicID( RESEARCH_SELECT_WORK* work, u8 topicID )
  *         そうでなければ FALSE
  */
 //----------------------------------------------------------------------------------------------
-static BOOL IsTopicIDSelected( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static BOOL IsTopicIDRegistered( const RESEARCH_SELECT_WORK* work, u8 topicID )
 {
   int idx;
+  int selectedNum;
 
-  // 検索
-  for( idx=0; idx < work->selectedTopicNum; idx++ )
+  // 選択済み調査項目の数
+  selectedNum = work->selectedTopicNum;
+
+  // 選択済み調査項目リストから, 指定された項目を検索
+  for( idx=0; idx < selectedNum; idx++ )
   {
     // 発見
     if( work->selectedTopicIDs[ idx ] == topicID )
@@ -591,7 +781,9 @@ static BOOL IsTopicIDSelected( const RESEARCH_SELECT_WORK* work, u8 topicID )
 //----------------------------------------------------------------------------------------------
 static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work )
 {
-  MoveTopicCursor( work, -1 );
+  SetTopicCursorOff( work );          // 移動前の項目を元に戻す
+  SetTopicCursorNextPos( work, -1 );  // 移動先を設定
+  TopicCursorScrollStart( work );     // スクロール開始
 }
 
 //----------------------------------------------------------------------------------------------
@@ -603,102 +795,125 @@ static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work )
 {
-  MoveTopicCursor( work, 1 );
+  SetTopicCursorOff( work );          // 移動前の項目を元に戻す
+  SetTopicCursorNextPos( work, 1 );   // 移動先を設定
+  TopicCursorScrollStart( work );     // スクロール開始
 }
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief 調査項目カーソルを移動する
+ * @brief 調査項目カーソルの移動先を設定する
  *
  * @param work
  * @param stride 移動量
  */
 //----------------------------------------------------------------------------------------------
-static void MoveTopicCursor( RESEARCH_SELECT_WORK* work, int stride )
+static void SetTopicCursorNextPos( RESEARCH_SELECT_WORK* work, int stride )
 {
-  int nowPos;
-  int nextPos;
+  int nowPos, nextPos;
 
-  // カーソル位置を更新
+  // 移動後のカーソル位置を算出
   nowPos  = work->topicCursorPos;
   nextPos = (nowPos + stride + TOPIC_ID_NUM) % TOPIC_ID_NUM;
-  work->topicCursorPos = nextPos;
 
-  // 調査項目のウィンドウを更新
-  SetTopicInactive( nowPos );
-  SetTopicActive( nextPos );
+  // カーソルの移動先を設定
+  work->topicCursorNextPos = nextPos;
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: move topic cursor ==> %d\n", nextPos );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set topic cursor next pos ==> %d\n", nextPos );
 }
 
 //----------------------------------------------------------------------------------------------
 /**
- * @biref 調査項目を選択状態にする
+ * @brief 調査項目カーソルのスクロールを開始する
  *
- * @param topicID 選択状態にする調査項目ID
+ * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void SetTopicActive( u8 topicID )
+static void TopicCursorScrollStart( RESEARCH_SELECT_WORK* work )
 {
+  // フレームカウンタをリセット
+  work->topicScrollFrameCount = 0;
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: topic cursor scroll start\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @biref カーソル位置にある調査項目を, カーソルが乗っている状態にする
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void SetTopicCursorOn( const RESEARCH_SELECT_WORK* work )
+{
+  u8 topicID;
   u8 BGFrame;
-  u8 x, y, width, height;
+  u8 left, top, width, height;
   u8 paletteNo;
 
-  // パラメータを決定
-  BGFrame   = MAIN_BG_WINDOW;
-  x         = TOPIC_BUTTON_X;
-  y         = TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * topicID;
+  // スクリーン更新パラメータを決定
+  topicID   = work->topicCursorPos;
+  left      = CalcTopicScreenPosLeft( work, topicID );
+  top       = CalcTopicScreenPosTop( work, topicID );
   width     = TOPIC_BUTTON_WIDTH;
-  height    = TOPIC_BUTTON_HEIGHT;
+  height    = TOPIC_BUTTON_HEIGHT; 
+  BGFrame   = MAIN_BG_WINDOW;
   paletteNo = MAIN_BG_PALETTE_WINDOW_ON;
 
   // スクリーン更新
-  GFL_BG_ChangeScreenPalette( BGFrame, x, y, width, height, paletteNo );
+  GFL_BG_ChangeScreenPalette( BGFrame, left, top, width, height, paletteNo );
   GFL_BG_LoadScreenReq( BGFrame );
 }
 
 //----------------------------------------------------------------------------------------------
 /**
- * @biref 調査項目を非選択状態にする
+ * @biref カーソル位置にある調査項目を, カーソルが乗っていない状態にする
  *
- * @param topicID 非選択状態にする調査項目ID
+ * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void SetTopicInactive( u8 topicID )
+static void SetTopicCursorOff( const RESEARCH_SELECT_WORK* work )
 {
+  u8 topicID;
   u8 BGFrame;
-  u8 x, y, width, height;
+  u8 left, top, width, height;
   u8 paletteNo;
 
-  // パラメータを決定
-  BGFrame   = MAIN_BG_WINDOW;
-  x         = TOPIC_BUTTON_X;
-  y         = TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * topicID;
+  // スクリーン更新パラメータを決定
+  topicID   = work->topicCursorPos;
+  left      = CalcTopicScreenPosLeft( work, topicID );
+  top       = CalcTopicScreenPosTop( work, topicID );
   width     = TOPIC_BUTTON_WIDTH;
-  height    = TOPIC_BUTTON_HEIGHT;
+  height    = TOPIC_BUTTON_HEIGHT; 
+  BGFrame   = MAIN_BG_WINDOW;
   paletteNo = MAIN_BG_PALETTE_WINDOW_OFF;
 
   // スクリーン更新
-  GFL_BG_ChangeScreenPalette( BGFrame, x, y, width, height, paletteNo );
+  GFL_BG_ChangeScreenPalette( BGFrame, left, top, width, height, paletteNo );
   GFL_BG_LoadScreenReq( BGFrame );
 }
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief 指定した調査項目を選択された状態にする
+ * @brief カーソル位置にある調査項目を 選択された状態にする
  *
- * @param topicID 調査項目ID
- * @param heapID  使用するヒープID
+ * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void SetTopicSelected( u8 topicID )
+static void SetTopicSelected( const RESEARCH_SELECT_WORK* work )
 {
-  u16* screenBuffer;
+  u8 topicID;
+  u16* screenBuffer1;
+  u16* screenBuffer2;
   int xOffset, yOffset;
 
+  topicID = work->topicCursorPos;
+
   // スクリーンバッファを取得
-  screenBuffer = GFL_BG_GetScreenBufferAdrs( MAIN_BG_WINDOW );
+  screenBuffer1 = GFL_BG_GetScreenBufferAdrs( MAIN_BG_WINDOW );
+  screenBuffer2 = GFL_BG_GetScreenBufferAdrs( MAIN_BG_FONT );
 
   // 該当するスクリーンデータを左に1キャラ分シフトする
   for( yOffset=0; yOffset < TOPIC_BUTTON_HEIGHT; yOffset++ )
@@ -708,33 +923,70 @@ static void SetTopicSelected( u8 topicID )
       int left, top, x, y;
       int srcPos, destPos;
 
-      left = TOPIC_BUTTON_X;
-      top  = TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * topicID;
-      x = left + xOffset;
-      y = top  + yOffset;
+      left    = CalcTopicScreenPosLeft( work, topicID );
+      top     = CalcTopicScreenPosTop( work, topicID );
+      x       = left + xOffset;
+      y       = top  + yOffset;
       srcPos  = 32 * y + x;
       destPos = srcPos - 1;
 
-      screenBuffer[ destPos ] = screenBuffer[ srcPos ];
+      screenBuffer1[ destPos ] = screenBuffer1[ srcPos ];
+      screenBuffer2[ destPos ] = screenBuffer2[ srcPos ];
     }
   }
+
+  // 移動して空になったスクリーンをクリア
+  {
+    int left, top, x, y;
+    int srcPos, destPos;
+
+    left    = CalcTopicScreenPosLeft( work, topicID );
+    top     = CalcTopicScreenPosTop( work, topicID );
+    x       = left + TOPIC_BUTTON_WIDTH - 1;
+    y       = top;
+    srcPos  = 0;
+    destPos = 32 * y + x;
+
+    screenBuffer1[ destPos ] = screenBuffer1[ srcPos ];
+    screenBuffer2[ destPos ] = screenBuffer2[ srcPos ];
+
+    y++;
+    srcPos  = 0;
+    destPos = 32 * y + x;
+
+    screenBuffer1[ destPos ] = screenBuffer1[ srcPos ];
+    screenBuffer2[ destPos ] = screenBuffer2[ srcPos ];
+
+    y++;
+    srcPos  = 0;
+    destPos = 32 * y + x;
+
+    screenBuffer1[ destPos ] = screenBuffer1[ srcPos ];
+    screenBuffer2[ destPos ] = screenBuffer2[ srcPos ];
+  }
+  GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
+  GFL_BG_LoadScreenReq( MAIN_BG_FONT );
 }
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief 指定した調査項目を選択されていない状態にする
+ * @brief カーソル位置にある調査項目を 選択されていない状態にする
  *
- * @param topicID 調査項目ID
- * @param heapID  使用するヒープID
+ * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void SetTopicNotSelected( u8 topicID )
+static void SetTopicNotSelected( const RESEARCH_SELECT_WORK* work )
 {
-  u16* screenBuffer;
+  u8 topicID;
+  u16* screenBuffer1;
+  u16* screenBuffer2;
   int xOffset, yOffset;
 
+  topicID = work->topicCursorPos;
+
   // スクリーンバッファを取得
-  screenBuffer = GFL_BG_GetScreenBufferAdrs( MAIN_BG_WINDOW );
+  screenBuffer1 = GFL_BG_GetScreenBufferAdrs( MAIN_BG_WINDOW );
+  screenBuffer2 = GFL_BG_GetScreenBufferAdrs( MAIN_BG_FONT );
 
   // 該当するスクリーンデータを右に1キャラ分シフトする
   for( yOffset=TOPIC_BUTTON_HEIGHT-1; 0 <= yOffset; yOffset-- )
@@ -744,29 +996,62 @@ static void SetTopicNotSelected( u8 topicID )
       int left, top, x, y;
       int srcPos, destPos;
 
-      left = TOPIC_BUTTON_X - 1;
-      top  = TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * topicID;
-      x = left + xOffset;
-      y = top  + yOffset;
+      left    = CalcTopicScreenPosLeft( work, topicID );
+      top     = CalcTopicScreenPosTop( work, topicID );
+      x       = left + xOffset;
+      y       = top  + yOffset;
       srcPos  = 32 * y + x;
       destPos = srcPos + 1;
 
-      screenBuffer[ destPos ] = screenBuffer[ srcPos ];
+      screenBuffer1[ destPos ] = screenBuffer1[ srcPos ];
+      screenBuffer2[ destPos ] = screenBuffer2[ srcPos ];
     }
   }
+
+  // 移動して空になったスクリーンをクリア
+  {
+    int left, top, x, y;
+    int srcPos, destPos;
+
+    left    = CalcTopicScreenPosLeft( work, topicID );
+    top     = CalcTopicScreenPosTop( work, topicID );
+    x       = left;
+    y       = top;
+    srcPos  = 0;
+    destPos = 32 * y + x;
+
+    screenBuffer1[ destPos ] = screenBuffer1[ srcPos ];
+    screenBuffer2[ destPos ] = screenBuffer2[ srcPos ];
+
+    y++;
+    srcPos  = 0;
+    destPos = 32 * y + x;
+
+    screenBuffer1[ destPos ] = screenBuffer1[ srcPos ];
+    screenBuffer2[ destPos ] = screenBuffer2[ srcPos ];
+
+    y++;
+    srcPos  = 0;
+    destPos = 32 * y + x;
+
+    screenBuffer1[ destPos ] = screenBuffer1[ srcPos ];
+    screenBuffer2[ destPos ] = screenBuffer2[ srcPos ];
+  }
+  GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
+  GFL_BG_LoadScreenReq( MAIN_BG_FONT );
 }
 
 //----------------------------------------------------------------------------------------------
 /**
  * @brief 調査項目のスクリーン x 座標を取得する
  *
- * @param topicID  調査項目ID
- * @param selected 調査項目が選択されている状態かどうか
+ * @param work
+ * @param topicID 調査項目ID
  *
- * @return 指定した調査項目IDが該当するスクリーン範囲の左上x座標
+ * @return 指定した調査項目IDが該当するスクリーン範囲の左上x座標 (スクリーン単位)
  */
 //----------------------------------------------------------------------------------------------
-static u8 GetTopicScreenPosLeft( u8 topicID, BOOL selected )
+static u8 CalcTopicScreenPosLeft( const RESEARCH_SELECT_WORK* work, u8 topicID )
 {
   u8 left;
 
@@ -774,7 +1059,7 @@ static u8 GetTopicScreenPosLeft( u8 topicID, BOOL selected )
   left = TOPIC_BUTTON_X;
 
   // 選択されている場合, 1キャラ分左にある
-  if( selected ){ left - 1; }
+  if( IsTopicIDRegistered( work, topicID ) ){ left -= 1; }
 
   return left;
 }
@@ -783,21 +1068,143 @@ static u8 GetTopicScreenPosLeft( u8 topicID, BOOL selected )
 /**
  * @brief 調査項目のスクリーン y 座標を取得する
  *
- * @param topicID  調査項目ID
- * @param selected 調査項目が選択されている状態かどうか
+ * @param work
+ * @param topicID 調査項目ID
  *
- * @return 指定した調査項目IDが該当するスクリーン範囲の左上y座標
+ * @return 指定した調査項目IDが該当するスクリーン範囲の左上y座標 (スクリーン単位)
  */
 //----------------------------------------------------------------------------------------------
-static u8 GetTopicScreenPosTop ( u8 topicID, BOOL selected )
+static u8 CalcTopicScreenPosTop( const RESEARCH_SELECT_WORK* work, u8 topicID )
 {
   u8 top;
 
   // デフォルトの位置
   top = TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * topicID;
 
-  // 
   return top;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目の左上x座標を取得する (ドット単位)
+ *
+ * @param work
+ * @param topicID 調査項目ID
+ *
+ * @return 指定した調査項目の左上x座標 (ドット単位)
+ */
+//----------------------------------------------------------------------------------------------
+static int CalcTopicDisplayPosLeft( const RESEARCH_SELECT_WORK* work, u8 topicID )
+{
+  int left;
+
+  // デフォルトの位置を算出
+  left = CalcTopicScreenPosLeft( work, topicID ) * DOT_PER_CHARA;
+
+  // BGスクロールの分を考慮する
+  left -= GFL_BG_GetScreenScrollX( MAIN_BG_WINDOW );
+
+  return left;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目の左上y座標を取得する (ドット単位)
+ *
+ * @param work
+ * @param topicID 調査項目ID
+ *
+ * @return 指定した調査項目の左上y座標 (ドット単位)
+ */
+//----------------------------------------------------------------------------------------------
+static int CalcTopicDisplayPosTop( const RESEARCH_SELECT_WORK* work, u8 topicID )
+{
+  int top;
+
+  // デフォルトの位置を算出
+  top = CalcTopicScreenPosTop( work, topicID ) * DOT_PER_CHARA;
+
+  // BGスクロールの分を考慮する
+  top -= CalcScreenScrollY( work );
+
+  return top;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目のスクロール状態を更新する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdateTopicScroll( RESEARCH_SELECT_WORK* work )
+{
+  int scrollSize;
+
+  // スクロール量を算出
+  scrollSize = CalcScreenScrollY( work );
+
+  // スクロールリクエスト
+  GFL_BG_SetScrollReq( MAIN_BG_WINDOW, GFL_BG_SCROLL_Y_SET, scrollSize );
+  GFL_BG_SetScrollReq( MAIN_BG_FONT,   GFL_BG_SCROLL_Y_SET, scrollSize );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief スクロールが終了したかどうかを判定する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static BOOL IsTopicScrollEnd ( const RESEARCH_SELECT_WORK* work )
+{
+  return ( SCROLL_FRAME < work->topicScrollFrameCount);
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief y軸方向のスクロール量を算出する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static int CalcScreenScrollY( const RESEARCH_SELECT_WORK* work )
+{
+  int scrollSize;
+  int frame;
+  int start, end, now;
+  int screenTop, screenBottom;
+  int min, max;
+
+
+  // スクロール終了済み
+  if( IsTopicScrollEnd(work) )
+  {
+    frame = SCROLL_FRAME;
+  }
+  else
+  {
+    frame = work->topicScrollFrameCount;
+  }
+
+  start        = (TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * work->topicCursorPos) * DOT_PER_CHARA;
+  end          = (TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * work->topicCursorNextPos) * DOT_PER_CHARA;
+  now          = start + (end - start) * frame / SCROLL_FRAME ;
+  screenTop    = GFL_BG_GetScreenScrollY( MAIN_BG_WINDOW );
+  screenBottom = screenTop + 192;
+  min          = screenTop + SCROLL_TOP_MARGIN;
+  max          = screenBottom - SCROLL_BOTTOM_MARGIN;
+  scrollSize   = screenTop;
+
+  if( now < min )
+  {
+    scrollSize = now - SCROLL_TOP_MARGIN;
+  }
+  else if( max < now )
+  {
+    scrollSize = now - 192 + SCROLL_BOTTOM_MARGIN; 
+  } 
+  return scrollSize;
 }
 
 
@@ -979,6 +1386,7 @@ static void SetupBG( RESEARCH_SELECT_WORK* work )
   // BG コントロール
   GFL_BG_SetBGControl( SUB_BG_WINDOW,  &SubBGControl_WINDOW,  GFL_BG_MODE_TEXT );
   GFL_BG_SetBGControl( SUB_BG_FONT,    &SubBGControl_FONT,    GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( MAIN_BG_BAR,    &MainBGControl_BAR,    GFL_BG_MODE_TEXT );
   GFL_BG_SetBGControl( MAIN_BG_WINDOW, &MainBGControl_WINDOW, GFL_BG_MODE_TEXT );
   GFL_BG_SetBGControl( MAIN_BG_FONT,   &MainBGControl_FONT,   GFL_BG_MODE_TEXT );
 
@@ -988,6 +1396,7 @@ static void SetupBG( RESEARCH_SELECT_WORK* work )
   GFL_BG_SetVisible( SUB_BG_WINDOW,  VISIBLE_ON );
   GFL_BG_SetVisible( SUB_BG_FONT,    VISIBLE_ON );
   GFL_BG_SetVisible( MAIN_BG_BACK,   VISIBLE_ON );
+  GFL_BG_SetVisible( MAIN_BG_BAR,    VISIBLE_ON );
   GFL_BG_SetVisible( MAIN_BG_WINDOW, VISIBLE_ON );
   GFL_BG_SetVisible( MAIN_BG_FONT,   VISIBLE_ON );
 
@@ -999,6 +1408,12 @@ static void SetupBG( RESEARCH_SELECT_WORK* work )
 
   // ビットマップウィンドウ システム初期化
   GFL_BMPWIN_Init( work->heapID );
+
+  // ウィンドウ有効化
+  G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ, TRUE );
+  G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1, TRUE );
+  G2_SetWnd0Position( WND0_LEFT, WND0_TOP, WND0_RIGHT, WND0_BOTTOM );
+  GX_SetVisibleWnd( GX_WNDMASK_W0 );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup BG\n" );
@@ -1013,6 +1428,9 @@ static void SetupBG( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void CleanUpBG( RESEARCH_SELECT_WORK* work )
 {
+  // ウィンドウ無効化
+  GX_SetVisibleWnd( GX_WNDMASK_NONE );
+
   GFL_BMPWIN_Exit();
 
   GFL_BG_FreeBGControl( MAIN_BG_FONT );
@@ -1120,6 +1538,56 @@ static void CleanUpSubBG_FONT( RESEARCH_SELECT_WORK* work )
 }
 
 
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 下画面 バーBG面 準備
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void SetupMainBG_BAR( RESEARCH_SELECT_WORK* work )
+{
+  // データ読み込み
+  {
+    ARCHANDLE* handle;
+
+    // ハンドルオープン
+    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
+
+    // スクリーンデータ
+    {
+      void* src;
+      ARCDATID datID;
+      NNSG2dScreenData* data;
+      datID = NARC_research_radar_graphic_bgd_title_NSCR;
+      src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
+      NNS_G2dGetUnpackedScreenData( src, &data );
+      GFL_BG_WriteScreen( MAIN_BG_BAR, data->rawData, 0, 0, 32, 24 );
+      GFL_BG_LoadScreenReq( MAIN_BG_BAR );
+      GFL_HEAP_FreeMemory( src );
+    }
+
+    // ハンドルクローズ
+    GFL_ARC_CloseDataHandle( handle );
+  } 
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup MAIN-BG-BAR\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 下画面 バーBG面 後片付け
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void CleanUpMainBG_BAR( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up MAIN-BG-BAR\n" );
+}
+
 //==============================================================================================
 // ■下画面 ウィンドウBG面
 //==============================================================================================
@@ -1148,7 +1616,7 @@ static void SetupMainBG_WINDOW( RESEARCH_SELECT_WORK* work )
       datID = NARC_research_radar_graphic_bgd_searchbtn_NSCR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
       NNS_G2dGetUnpackedScreenData( src, &data );
-      GFL_BG_WriteScreen( MAIN_BG_WINDOW, data->rawData, 0, 0, 32, 24 );
+      GFL_BG_WriteScreen( MAIN_BG_WINDOW, data->rawData, 0, 0, 32, 32 );
       GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
       GFL_HEAP_FreeMemory( src );
     }
@@ -1367,7 +1835,7 @@ static void CreateClactSystem( RESEARCH_SELECT_WORK* work )
   GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
 
   // VBlank 割り込み関数を登録
-  GFUser_SetVIntrFunc( GFL_CLACT_SYS_VBlankFunc );
+  GFUser_SetVIntrFunc( VBlankFunc );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create clact system\n" );
@@ -1731,6 +2199,118 @@ static GFL_CLUNIT* GetClactUnit( const RESEARCH_SELECT_WORK* work, CLUNIT_INDEX 
 static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkIdx )
 {
   return work->clactWork[ wkIdx ];
+}
+
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 上画面のカーソル依存文字列表示を更新する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work )
+{
+  int nowPos;
+
+  nowPos = work->topicCursorPos;
+
+  // 調査項目 題名/補足
+  BG_FONT_SetString( work->BGFont[ BG_FONT_TOPIC_TITLE ],   StringID_topicTitle[ nowPos ] );
+  BG_FONT_SetString( work->BGFont[ BG_FONT_TOPIC_CAPTION ], StringID_topicCaption[ nowPos ] );
+
+  // 質問
+  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_1 ], StringID_question[ Question1_topic[ nowPos ] ] );
+  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_2 ], StringID_question[ Question2_topic[ nowPos ] ] );
+  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_3 ], StringID_question[ Question3_topic[ nowPos ] ] );
+}
+
+
+//==============================================================================================
+// ■OBJ 表示
+//==============================================================================================
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief スクロールバーのつまみ部分の位置を更新する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work )
+{
+  GFL_CLWK* clactWork;
+  GFL_CLACTPOS pos;
+  u16 setSurface;
+  int frame;
+  int start, end;
+
+  // セルアクターワークを取得
+  clactWork  = GetClactWork( work, CLWK_SCROLL_CONTROL ); 
+  setSurface = ClactWorkInitData[ CLWK_SCROLL_CONTROL ].setSurface;
+
+  // スクロール開始位置と終了位置を算出
+  frame = work->topicScrollFrameCount;
+  start = SCROLL_CONTROL_TOP 
+        + (SCROLL_CONTROL_BOTTOM - SCROLL_CONTROL_TOP) * work->topicCursorPos / (SCROLL_CONTROL_STEP_NUM - 1); 
+  end   = SCROLL_CONTROL_TOP 
+        + (SCROLL_CONTROL_BOTTOM - SCROLL_CONTROL_TOP) * work->topicCursorNextPos / (SCROLL_CONTROL_STEP_NUM - 1);
+
+  // 表示位置を算出
+  pos.x = SCROLL_CONTROL_LEFT;
+  pos.y = start + (end - start) * frame / SCROLL_FRAME;
+
+  // 表示位置を変更
+  GFL_CLACT_WK_SetPos( clactWork, &pos, setSurface );
+  GFL_CLACT_WK_SetDrawEnable( clactWork, TRUE );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目選択アイコンの表示状態を更新する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdateTopicSelectIcons( const RESEARCH_SELECT_WORK* work )
+{
+  int idx;
+  int selectedTopicNum = work->selectedTopicNum;
+  CLWK_INDEX iconClactWorkIdx[ SELECT_TOPIC_MAX_NUM ] = 
+  {
+    CLWK_SELECT_ICON_0,
+    CLWK_SELECT_ICON_1,
+    CLWK_SELECT_ICON_2,
+  };
+
+  // 全アイコンを消去
+  for( idx=0; idx < SELECT_TOPIC_MAX_NUM; idx++ )
+  {
+    GFL_CLWK* clactWork;
+    CLWK_INDEX wkIdx;
+
+    wkIdx     = iconClactWorkIdx[ idx ];
+    clactWork = GetClactWork( work, wkIdx );
+    GFL_CLACT_WK_SetDrawEnable( clactWork, FALSE );
+  }
+
+  // 選択項目の数だけ表示
+  for( idx=0; idx < selectedTopicNum; idx++ )
+  { 
+    GFL_CLACTPOS pos;
+    GFL_CLWK* clactWork;
+    CLWK_INDEX wkIdx;
+    u16 setSurface;
+
+    wkIdx      = iconClactWorkIdx[ idx ];
+    clactWork  = GetClactWork( work, wkIdx );
+    pos.x      = CalcTopicDisplayPosLeft( work, work->selectedTopicIDs[ idx ] ) + SELECT_ICON_DRAW_OFFSET_X;
+    pos.y      = CalcTopicDisplayPosTop( work, work->selectedTopicIDs[ idx ] ) + SELECT_ICON_DRAW_OFFSET_Y;
+    setSurface = ClactWorkInitData[ wkIdx ].setSurface;
+    GFL_CLACT_WK_SetPos( clactWork, &pos, setSurface );
+    GFL_CLACT_WK_SetAutoAnmFlag( clactWork, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( clactWork, TRUE );
+  }
 }
 
 

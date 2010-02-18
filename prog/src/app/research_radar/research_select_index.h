@@ -11,10 +11,14 @@
 
 // 処理シーケンス
 typedef enum {
-  RESEARCH_SELECT_SEQ_SETUP,    // 準備
-  RESEARCH_SELECT_SEQ_KEY_WAIT, // キー入力待ち
-  RESEARCH_SELECT_SEQ_CLEAN_UP, // 後片付け
-  RESEARCH_SELECT_SEQ_FINISH,   // 終了
+  RESEARCH_SELECT_SEQ_SETUP,       // 準備
+  RESEARCH_SELECT_SEQ_KEY_WAIT,    // キー入力待ち
+  RESEARCH_SELECT_SEQ_SCROLL_WAIT, // スクロール完了待ち
+  RESEARCH_SELECT_SEQ_TO_CONFIRM,  // 調査項目確定の確認シーケンスへの準備
+  RESEARCH_SELECT_SEQ_CONFIRM,     // 調査項目確定の確認
+  RESEARCH_SELECT_SEQ_DETERMINE,   // 調査項目確定
+  RESEARCH_SELECT_SEQ_CLEAN_UP,    // 後片付け
+  RESEARCH_SELECT_SEQ_FINISH,      // 終了
 } RESEARCH_SELECT_SEQ;
 
 // 選択項目
@@ -33,8 +37,13 @@ typedef enum {
 
 // BGFont オブジェクト
 typedef enum {
-  BG_FONT_TITLE,      // 上画面 タイトル
-  BG_FONT_DIRECTION,  // 上画面 説明文
+  BG_FONT_TITLE,         // 上画面 タイトル
+  BG_FONT_DIRECTION,     // 上画面 説明文
+  BG_FONT_TOPIC_TITLE,   // 上画面 調査項目名
+  BG_FONT_TOPIC_CAPTION, // 上画面 調査項目の補足文
+  BG_FONT_QUESTION_1,    // 上画面 質問1
+  BG_FONT_QUESTION_2,    // 上画面 質問2
+  BG_FONT_QUESTION_3,    // 上画面 質問3
   BG_FONT_NUM,
 } BG_FONT_INDEX;
 
@@ -58,6 +67,9 @@ typedef enum {
 
 // セルアクターワーク
 typedef enum {
-  CLWK_NEW_ICON,  // "new" アイコン
-  CLWK_NUM,       // 総数
+  CLWK_SCROLL_CONTROL,// スクロールバーのつまみ
+  CLWK_SELECT_ICON_0, // 調査項目選択アイコン0
+  CLWK_SELECT_ICON_1, // 調査項目選択アイコン1
+  CLWK_SELECT_ICON_2, // 調査項目選択アイコン2
+  CLWK_NUM,           // 総数
 } CLWK_INDEX; 

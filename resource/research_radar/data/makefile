@@ -42,6 +42,11 @@ DATA_DEBUG        = debug
 GMM_QUESTIONNAIRE = questionnaire.gmm
 GMM_HOBBY         = hobby.gmm
 TOPIC_ID_DEF      = topic_id.h
+QUESTION_ID_DEF   = question_id.h
+STRID_QUESTION    = string_id_question.cdat
+STRID_TOPIC_C     = string_id_topic_caption.cdat
+STRID_TOPIC_T     = string_id_topic_title.cdat
+QUESTION_ID_TOPIC = question_id_topic.cdat
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -55,7 +60,15 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE) $(GMM_COPY_DIR)/$(GMM_HOBBY) $(DEF_COPY_DIR)/$(TOPIC_ID_DEF)
+do-build:	subdir \
+	        $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE) \
+					$(GMM_COPY_DIR)/$(GMM_HOBBY) \
+					$(DEF_COPY_DIR)/$(TOPIC_ID_DEF) \
+					$(DEF_COPY_DIR)/$(QUESTION_ID_DEF) \
+					$(DEF_COPY_DIR)/$(STRID_QUESTION) \
+					$(DEF_COPY_DIR)/$(STRID_TOPIC_C) \
+					$(DEF_COPY_DIR)/$(STRID_TOPIC_T) \
+					$(DEF_COPY_DIR)/$(QUESTION_ID_TOPIC)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -80,6 +93,22 @@ $(GMM_COPY_DIR)/$(GMM_HOBBY): $(GMM_HOBBY)
 # def コピー
 $(DEF_COPY_DIR)/$(TOPIC_ID_DEF): $(TOPIC_ID_DEF)
 	$(COPY) $(TOPIC_ID_DEF) $(DEF_COPY_DIR)
+
+$(DEF_COPY_DIR)/$(QUESTION_ID_DEF): $(QUESTION_ID_DEF)
+	$(COPY) $(QUESTION_ID_DEF) $(DEF_COPY_DIR)
+
+# strid コピー
+$(DEF_COPY_DIR)/$(STRID_QUESTION): $(STRID_QUESTION)
+	$(COPY) $(STRID_QUESTION) $(DEF_COPY_DIR)
+
+$(DEF_COPY_DIR)/$(STRID_TOPIC_C): $(STRID_TOPIC_C)
+	$(COPY) $(STRID_TOPIC_C) $(DEF_COPY_DIR)
+
+$(DEF_COPY_DIR)/$(STRID_TOPIC_T): $(STRID_TOPIC_T)
+	$(COPY) $(STRID_TOPIC_T) $(DEF_COPY_DIR)
+
+$(DEF_COPY_DIR)/$(QUESTION_ID_TOPIC): $(QUESTION_ID_TOPIC)
+	$(COPY) $(QUESTION_ID_TOPIC) $(DEF_COPY_DIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 endif

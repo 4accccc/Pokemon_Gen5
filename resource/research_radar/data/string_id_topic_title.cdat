@@ -1,0 +1,14 @@
+// コンバータにより生成
+static const u32 StringID_topicTitle[ TOPIC_ID_NUM ] = 
+{
+  str_topic_0_title,  // [TOPIC_ID_STYLE]
+  str_topic_1_title,  // [TOPIC_ID_PERSONAL]
+  str_topic_2_title,  // [TOPIC_ID_POKEMON]
+  str_topic_3_title,  // [TOPIC_ID_TREND]
+  str_topic_4_title,  // [TOPIC_ID_PARTNER]
+  str_topic_5_title,  // [TOPIC_ID_FAVARITE]
+  str_topic_6_title,  // [TOPIC_ID_HOBBY]
+  str_topic_7_title,  // [TOPIC_ID_SCOOL]
+  str_topic_8_title,  // [TOPIC_ID_PLAY]
+  str_topic_9_title,  // [TOPIC_ID_DETAIL]
+};

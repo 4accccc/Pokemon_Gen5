@@ -331,28 +331,28 @@
         <language name="JPN" width="256">いろいろ</language>
         <language name="JPN_KANJI" width="256">いろいろ</language>
       </row><row id="hobby_1">
-        <language name="JPN" width="256">うんどう</language>
+        <language name="JPN" width="256">str_answer_091</language>
         <language name="JPN_KANJI" width="256">うんどう</language>
       </row><row id="hobby_2">
-        <language name="JPN" width="256">どくしょ</language>
+        <language name="JPN" width="256">str_answer_092</language>
         <language name="JPN_KANJI" width="256">どくしょ</language>
       </row><row id="hobby_3">
-        <language name="JPN" width="256">おんがく</language>
+        <language name="JPN" width="256">str_answer_093</language>
         <language name="JPN_KANJI" width="256">おんがく</language>
       </row><row id="hobby_4">
-        <language name="JPN" width="256">えいが</language>
+        <language name="JPN" width="256">str_answer_094</language>
         <language name="JPN_KANJI" width="256">えいが</language>
       </row><row id="hobby_5">
-        <language name="JPN" width="256">りょこう</language>
+        <language name="JPN" width="256">str_answer_095</language>
         <language name="JPN_KANJI" width="256">りょこう</language>
       </row><row id="hobby_6">
-        <language name="JPN" width="256">りょうり</language>
+        <language name="JPN" width="256">str_answer_096</language>
         <language name="JPN_KANJI" width="256">りょうり</language>
       </row><row id="hobby_7">
-        <language name="JPN" width="256">つり</language>
+        <language name="JPN" width="256">str_answer_097</language>
         <language name="JPN_KANJI" width="256">つり</language>
       </row><row id="hobby_8">
-        <language name="JPN" width="256">ゲーム</language>
+        <language name="JPN" width="256">str_answer_098</language>
         <language name="JPN_KANJI" width="256">ゲーム</language>
       </row>
 

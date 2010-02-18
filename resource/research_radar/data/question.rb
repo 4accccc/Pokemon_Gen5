@@ -16,6 +16,7 @@ class Question
   def initialize
     @ID              = 0          # 質問ID
     @ID_lavel        = nil        # 質問ID (ラベル名)
+    @stringID_lavel  = nil        # gmm内ラベル名
     @stringJPN       = nil        # 質問文字列 (かな)
     @stringJPN_KANJI = nil        # 質問文字列 (漢字)
     @answerNum       = 0          # 回答選択肢の数
@@ -23,7 +24,8 @@ class Question
     @answers         = Array.new  # 回答配列
   end
 
-  attr_reader :ID, :ID_lavel, :stringJPN, :stringJPN_KANJI, :answerNum, :bitCount, :answears
+  attr_reader :ID, :ID_lavel, :stringID_lavel, :stringJPN, :stringJPN_KANJI, 
+              :answerNum, :bitCount, :answears
 
   #----------------------------------
   # □brief: 質問IDを設定する
@@ -32,6 +34,13 @@ class Question
   def SetID( id, lavel )
     @ID       = id
     @ID_lavel = lavel
+  end
+
+  #----------------------------------
+  # □brief: gmm内ラベル名を設定する
+  # □param: lavel
+  def SetStringIDLavel( lavel )
+    @stringID_lavel = lavel
   end
 
   #-------------------------------------------
@@ -72,6 +81,7 @@ class Question
     outData = Array.new
     outData << "ID              = #{@ID}"
     outData << "ID_lavel        = #{@ID_lavel}"
+    outData << "stringID_lavel  = #{@stringID_lavel}"
     outData << "stringJPN       = #{@stringJPN}"
     outData << "stringJPN_KANJI = #{@stringJPN_KANJI}"
     outData << "answerNum       = #{@answerNum}"
