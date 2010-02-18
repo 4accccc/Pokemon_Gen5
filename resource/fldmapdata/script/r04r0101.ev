@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r04r0101
+_EVENT_DATA		ev_r04r0101_middlewoman2_01
+_EVENT_DATA		ev_r04r0101_pokemon_01
 _EVENT_DATA_END
 
 
@@ -30,9 +31,59 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*		R04R0101	回復処理	MIDDLEWOMAN2				  */
 /**************************************************************/
-ev_r04r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_r04r0101_middlewoman2_01
+
+	//手持ちポケモンの総数をカウント
+	DEFINE_LOCAL	LWK_TEMOCHI
+	DEFINE_LOCAL	LWK_HP
+	DEFINE_LOCAL	LWK_POKE
+	_GET_PARTY_POKE_COUNT( LWK_TEMOCHI  , POKECOUNT_MODE_TOTAL )
+	
+	$LWK_HP = 0 //LWK_HPを０に定義
+	
+	//手持ちポケモンのＨＰをチェック
+	WHILE $LWK_HP == $LWK_TEMOCHI
+		_DEBUG_PRINT_WK( LWK_POKE )
+		_DEBUG_PRINT_WK( LWK_TEMOCHI )
+		_DEBUG_PRINT_WK( LWK_HP )
+		//LWK_KAIFUKUが手持ちの数と同じになるまで繰り返し
+		_CHECK_TEMOTI_HP( LWK_POKE, LWK_HP )
+		
+			//LWK_HPのポケモンが満タンの場合
+			IF $LWK_POKE == TRUE THEN
+				$LWK_HP += 1
+			//ポケモンのHPが減っていた場合
+			ELSE
+				_TEMOTI_POKEMON_KAIFUKU()
+				$LWK_HP += 1
+				_SE_PLAY( SEQ_SE_KAIDAN )
+				_SE_WAIT()
+				_SE_PLAY( SEQ_SE_KAIDAN )
+				_SE_WAIT()
+				
+			ENDIF
+
+	ENDWHILE
+	
+	//回復した場合
+	IF $LWK_POKE == FALSE THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_middlewoman2_02 )
+
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_middlewoman2_01 )
+	
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/*		R04R0101	ワルビル								  */
+/**************************************************************/
+EVENT_START		ev_r04r0101_pokemon_01
+	_EASY_TALK_POKEVOICE( MONSNO_505, msg_r04r0101_pokemon_01 )
+EVENT_END
 

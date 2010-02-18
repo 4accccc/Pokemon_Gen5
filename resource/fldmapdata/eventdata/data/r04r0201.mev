@@ -1,20 +1,51 @@
 #event data
-#save date:2009/07/29 19:21:23
+#save date:2010/02/18 21:24:02
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r04r0201.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/29 19:21:23
+#save date:
 2
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+R04R0201_WORKMAN_01
+#OBJ CODE Number
+WORKMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_R04R0201_WORKMAN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/29 19:21:23
+#save date:
 2
 #hold event type:
 1
@@ -24,7 +55,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r04r0201.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/29 19:21:23
+#save date:
 2
 #hold event type:
 1
@@ -34,12 +65,12 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r04r0201.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/29 19:21:23
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-4
+1
 #event number: 0
 #Door Event Label
 DOOR_ID_R04R0201_R04_EXIT01
@@ -51,46 +82,11 @@ DOOR_ID_R04_R04R0201_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--152 0 88
-#event number: 1
-#Door Event Label
-DOOR_ID_R04R0201_R04_EXIT02
-#Next Zone ID Name
-ZONE_ID_R04
-#Next Door ID Name
-DOOR_ID_R04_R04R0201_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
--136 0 88
-#event number: 2
-#Door Event Label
-DOOR_ID_R04R0201_R04_EXIT03
-#Next Zone ID Name
-ZONE_ID_R04
-#Next Door ID Name
-DOOR_ID_R04_R04R0201_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
--120 0 88
-#event number: 3
-#Door Event Label
-DOOR_ID_R04R0201_R04R0202_EXIT01
-#Next Zone ID Name
-ZONE_ID_R04R0202
-#Next Door ID Name
-DOOR_ID_R04R0202_R04R0201_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_STAIRS
-#position
--120 0 216
+-200 0 88
+#size
+3 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

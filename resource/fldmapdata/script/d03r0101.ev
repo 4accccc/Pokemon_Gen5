@@ -25,6 +25,10 @@ _EVENT_DATA		ev_d03r0101_rival_02
 _EVENT_DATA		ev_scene_d03r0101_plasmaevent_01
 _EVENT_DATA		ev_pos_d03r0101_hakase2_01
 _EVENT_DATA		ev_d03r0101_daruma_01
+_EVENT_DATA		ev_d03r0101_daruma_02
+_EVENT_DATA		ev_d03r0101_daruma_03
+_EVENT_DATA		ev_d03r0101_daruma_04
+_EVENT_DATA		ev_d03r0101_daruma_05
 _EVENT_DATA		ev_d03r0101_backpackerm_01
 _EVENT_DATA_END
 
@@ -431,29 +435,245 @@ _ANIME_LABEL	anm_player_back
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*		ゴリダルマ		D03R0101							  */
+/*		ヒヒダルマ１		D03R0101						  */
 /**************************************************************/
 EVENT_START		ev_d03r0101_daruma_01
-
-	//ゴリダルマを目覚めさせるどうぐを持っている場合
-	IF FLAG_ON( FH_01) THEN
-	
-		//
-		_BALLOONWIN_OBJMSG( msg_d03r0101_daruma_02 , D03R0101_DARUMA_01 )
-		_YES_NO_WIN( SCWK_ANSWER )
+_TALK_START_TURN_NOT()
+	//ヒヒダルマを目覚めさせるどうぐを持っている場合
+	DEFINE_LOCAL	LWK_ITEM
+	//いかりまんじゅうを持っている場合
+	_ITEM_CHK( ITEM_IKARIMANZYUU, 1, LWK_ITEM )
+	IF $LWK_ITEM == TRUE THEN
 		
+		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_02 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_SYSWIN_CLOSE()
 		//はいの場合
 		IF $SCWK_ANSWER == SCR_YES THEN
-			_MSGWIN_CLOSE()
+
+			DEFINE_LOCAL	LWK_SUB
+			_SUB_ITEM( ITEM_IKARIMANZYUU,1,LWK_SUB )
+			//１個消費処理
+			IF $LWK_SUB == TRUE THEN
+				_FLAG_SET( FV_D03R0101_DARUMA_01 )
+				_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_03 )
+				_SYSWIN_CLOSE()
+				
+				DEFINE_LOCAL	LWK_LOSE
+				_WILD_BTL_SET( MONSNO_503 , 35 ) //ヒヒダルマ
+    			_WILD_LOSE_CHECK( LWK_LOSE )
+
+				IF $LWK_LOSE == SCR_BATTLE_RESULT_WIN THEN
+					_OBJ_DEL( D03R0101_DARUMA_01 )
+					_WILD_WIN()
+				ELSE
+					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+				ENDIF
+			ENDIF
 			
-			_BALLOONWIN_OBJMSG( msg_d03r0101_daruma_03 , D03R0101_DARUMA_01 )
-			_MSGWIN_CLOSE()
-		
 		ENDIF
 		
 	ELSE
 	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_daruma_01 )
+		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_01 )
+		_LAST_KEYWAIT()
+		_SYSWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		ヒヒダルマ２		D03R0101						  */
+/**************************************************************/
+EVENT_START		ev_d03r0101_daruma_02
+_TALK_START_TURN_NOT()
+	//ヒヒダルマを目覚めさせるどうぐを持っている場合
+	DEFINE_LOCAL	LWK_ITEM2
+	//いかりまんじゅうを持っている場合
+	_ITEM_CHK( ITEM_IKARIMANZYUU, 1, LWK_ITEM2 )
+	IF $LWK_ITEM2 == TRUE THEN
+		
+		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_02 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_SYSWIN_CLOSE()
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+
+			DEFINE_LOCAL	LWK_SUB2
+			_SUB_ITEM( ITEM_IKARIMANZYUU,1,LWK_SUB2 )
+			//１個消費処理
+			IF $LWK_SUB2 == TRUE THEN
+				_FLAG_SET( FV_D03R0101_DARUMA_02 )
+				_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_03 )
+				_SYSWIN_CLOSE()
+				
+				DEFINE_LOCAL	LWK_LOSE2
+				_WILD_BTL_SET( MONSNO_503 , 35 ) //ヒヒダルマ
+    			_WILD_LOSE_CHECK( LWK_LOSE2 )
+
+				IF $LWK_LOSE2 == SCR_BATTLE_RESULT_WIN THEN
+					_OBJ_DEL( D03R0101_DARUMA_02 )
+					_WILD_WIN()
+				ELSE
+					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+				ENDIF
+			ENDIF
+			
+		ENDIF
+		
+	ELSE
+	
+		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_01 )
+		_LAST_KEYWAIT()
+		_SYSWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		ヒヒダルマ３		D03R0101						  */
+/**************************************************************/
+EVENT_START		ev_d03r0101_daruma_03
+_TALK_START_TURN_NOT()
+	//ヒヒダルマを目覚めさせるどうぐを持っている場合
+	DEFINE_LOCAL	LWK_ITEM3
+	//いかりまんじゅうを持っている場合
+	_ITEM_CHK( ITEM_IKARIMANZYUU, 1, LWK_ITEM3 )
+	IF $LWK_ITEM3 == TRUE THEN
+		
+		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_02 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_SYSWIN_CLOSE()
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+
+			DEFINE_LOCAL	LWK_SUB3
+			_SUB_ITEM( ITEM_IKARIMANZYUU,1,LWK_SUB3 )
+			//１個消費処理
+			IF $LWK_SUB3 == TRUE THEN
+				_FLAG_SET( FV_D03R0101_DARUMA_03 )
+				_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_03 )
+				_SYSWIN_CLOSE()
+				
+				DEFINE_LOCAL	LWK_LOSE3
+				_WILD_BTL_SET( MONSNO_503 , 35 ) //ヒヒダルマ
+    			_WILD_LOSE_CHECK( LWK_LOSE3 )
+
+				IF $LWK_LOSE3 == SCR_BATTLE_RESULT_WIN THEN
+					_OBJ_DEL( D03R0101_DARUMA_03 )
+					_WILD_WIN()
+				ELSE
+					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+				ENDIF
+			ENDIF
+			
+		ENDIF
+		
+	ELSE
+	
+		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_01 )
+		_LAST_KEYWAIT()
+		_SYSWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		ヒヒダルマ４		D03R0101						  */
+/**************************************************************/
+EVENT_START		ev_d03r0101_daruma_04
+_TALK_START_TURN_NOT()
+	//ヒヒダルマを目覚めさせるどうぐを持っている場合
+	DEFINE_LOCAL	LWK_ITEM4
+	//いかりまんじゅうを持っている場合
+	_ITEM_CHK( ITEM_IKARIMANZYUU, 1, LWK_ITEM4 )
+	IF $LWK_ITEM4 == TRUE THEN
+		
+		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_02 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_SYSWIN_CLOSE()
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+
+			DEFINE_LOCAL	LWK_SUB4
+			_SUB_ITEM( ITEM_IKARIMANZYUU,1,LWK_SUB4 )
+			//１個消費処理
+			IF $LWK_SUB4 == TRUE THEN
+				_FLAG_SET( FV_D03R0101_DARUMA_04 )
+				_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_03 )
+				_SYSWIN_CLOSE()
+				
+				DEFINE_LOCAL	LWK_LOSE4
+				_WILD_BTL_SET_LEGEND( MONSNO_503 , 35 ) //ヒヒダルマ
+    			_WILD_LOSE_CHECK( LWK_LOSE4 )
+
+				IF $LWK_LOSE4 == SCR_BATTLE_RESULT_WIN THEN
+					_OBJ_DEL( D03R0101_DARUMA_04 )
+					_WILD_WIN()
+				ELSE
+					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+				ENDIF
+			ENDIF
+			
+		ENDIF
+		
+	ELSE
+	
+		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_01 )
+		_LAST_KEYWAIT()
+		_SYSWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		ヒヒダルマ５		D03R0101						  */
+/**************************************************************/
+EVENT_START		ev_d03r0101_daruma_05
+_TALK_START_TURN_NOT()
+	//ヒヒダルマを目覚めさせるどうぐを持っている場合
+	DEFINE_LOCAL	LWK_ITEM5
+	//いかりまんじゅうを持っている場合
+	_ITEM_CHK( ITEM_IKARIMANZYUU, 1, LWK_ITEM5 )
+	IF $LWK_ITEM5 == TRUE THEN
+		
+		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_02 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_SYSWIN_CLOSE()
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+
+			DEFINE_LOCAL	LWK_SUB5
+			_SUB_ITEM( ITEM_IKARIMANZYUU,1,LWK_SUB5 )
+			//１個消費処理
+			IF $LWK_SUB5 == TRUE THEN
+				_FLAG_SET( FV_D03R0101_DARUMA_05 )
+				_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_03 )
+				_SYSWIN_CLOSE()
+				
+				DEFINE_LOCAL	LWK_LOSE5
+				_WILD_BTL_SET_LEGEND( MONSNO_503 , 35 ) //ヒヒダルマ
+    			_WILD_LOSE_CHECK( LWK_LOSE5 )
+
+				IF $LWK_LOSE5 == SCR_BATTLE_RESULT_WIN THEN
+					_OBJ_DEL( D03R0101_DARUMA_05 )
+					_WILD_WIN()
+				ELSE
+					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+				ENDIF
+			ENDIF
+			
+		ENDIF
+		
+	ELSE
+	
+		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_01 )
+		_LAST_KEYWAIT()
+		_SYSWIN_CLOSE()
 	
 	ENDIF
 
