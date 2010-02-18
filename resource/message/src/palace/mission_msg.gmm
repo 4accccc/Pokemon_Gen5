@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-17T23:34:44"/>
+	<create user="ohmori" host="W00223" date="2010-02-18T14:53:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="2061" top="668" right="2766" bottom="1288" maximized="no" rayout="Vertical2">
+	<dialog left="1967" top="94" right="2672" bottom="714" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="780" top="163" right="1253" bottom="787" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -367,40 +367,84 @@
 		<language name="JPN_KANJI" width="256">なんでもない！　バイバイ！</language>
 	</row>
 
-	<row id="msg_invasion_mission000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">げんざい　ミッションは　ありません</language>
 		<language name="JPN_KANJI" width="256">現在　ミッションは　ありません</language>
 	</row>
 
-	<row id="msg_invasion_mission001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">WHITEミッション：
 ６０びょうで　[1:00:トレーナー名:0]　と　であい　たすけよ</language>
 		<language name="JPN_KANJI" width="256">WHITEミッション：
 ６０秒で　[1:00:トレーナー名:0]　と　出会い　助けよ</language>
 	</row>
 
-	<row id="msg_invasion_mission001_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission001_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">BLACKミッション：
 ６０びょうで　[1:00:トレーナー名:0]　と　であい　たすけよ</language>
 		<language name="JPN_KANJI" width="256">BLACKミッション：
 ６０秒で　[1:00:トレーナー名:0]　と　出会い　助けよ</language>
 	</row>
 
-	<row id="msg_invasion_mission001_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission001_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">ミッションたっせい！
 [1:00:トレーナー名:0]を　かいふくさせた！</language>
 		<language name="JPN_KANJI" width="256">ミッション達成！
 [1:00:トレーナー名:0]を　回復させた！</language>
 	</row>
 
-	<row id="msg_invasion_mission001_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission001_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は　[1:00:トレーナー名:0]を
 かいふくさせた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は　[1:00:トレーナー名:0]を
 回復させた！</language>
 	</row>
 
-	<row id="msg_talk_life_m_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション開始までの待ち時間</comment>
+		<language name="JPN" width="256">ミッションさんかを　うけつけています
+かいしまで　しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">ミッションさんかを　うけつけています
+かいしまで　しばらく　おまちください</language>
+	</row>
+
+	<row id="msg_invasion_mission_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッションスタート時の表示</comment>
+		<language name="JPN" width="256">ミッション　スタート！！</language>
+		<language name="JPN_KANJI" width="256">ミッション　スタート！！</language>
+	</row>
+
+	<row id="msg_invasion_mission_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション終了時の表示（成功）</comment>
+		<language name="JPN" width="256">ミッション　せいこう！</language>
+		<language name="JPN_KANJI" width="256">ミッション　せいこう！</language>
+	</row>
+
+	<row id="msg_invasion_mission_04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション終了時の表示（失敗）</comment>
+		<language name="JPN" width="256">ミッション　しっぱい……</language>
+		<language name="JPN_KANJI" width="256">ミッション　しっぱい……</language>
+	</row>
+
+	<row id="msg_invasion_mission_clear_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション終了時の　獲得ポイント表示</comment>
+		<language name="JPN" width="256">パレスポイント　をにゅうしゅした！</language>
+		<language name="JPN_KANJI" width="256">パレスポイント　をにゅうしゅした！</language>
+	</row>
+
+	<row id="msg_invasion_mission_clear_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション終了時の　獲得ブラックレベルの表示</comment>
+		<language name="JPN" width="256">パレスの　ブラックレベルが　あがった！</language>
+		<language name="JPN_KANJI" width="256">パレスの　ブラックレベルが　あがった！</language>
+	</row>
+
+	<row id="msg_invasion_mission_clear_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション終了時の　獲得ホワイトレベルの表示</comment>
+		<language name="JPN" width="256">パレスの　ホワイトレベルが　あがった！</language>
+		<language name="JPN_KANJI" width="256">パレスの　ホワイトレベルが　あがった！</language>
+	</row>
+
+	<row id="msg_talk_life_m_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>戦闘回復：話しかけた側
 
 主人公男
@@ -419,7 +463,7 @@
 たすかったよ！　ありがとう！！</language>
 	</row>
 
-	<row id="msg_talk_life_w_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_life_w_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>戦闘回復：話しかけた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
@@ -437,7 +481,7 @@
 たすかったよ！　ありがとう！！</language>
 	</row>
 
-	<row id="msg_talk_life_pika_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_life_pika_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>戦闘回復：話しかけた側
 ピカチュウ
 ※タグの数値はmission.gmmに合わせること</comment>
@@ -2432,7 +2476,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 	<row id="mis_m04_03_m4" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 4＝トレーナー男子（相手が）
-相手が戦闘じゃない状態で、話しかけたとき、ミッション側にでるメッセージ</comment>
+相手が戦闘じゃない状態で、話しかけられたとき、ミッション側にでるメッセージ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
@@ -2442,7 +2486,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 	<row id="mis_m04_03_m5" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5=トレーナー女子（相手が）
-相手が戦闘じゃない状態で、話しかけたとき、ミッション側にでるメッセージ</comment>
+相手が戦闘じゃない状態で、話しかけられたとき、ミッション側にでるメッセージ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
