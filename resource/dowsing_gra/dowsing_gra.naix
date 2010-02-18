@@ -1,0 +1,31 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: dowsing_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_DOWSING_GRA_NAIX_
+#define NARC_DOWSING_GRA_NAIX_
+
+enum {
+	NARC_dowsing_gra_dowsing_bg01_NCLR = 0,
+	NARC_dowsing_gra_dowsing_obj01_NCLR = 1,
+	NARC_dowsing_gra_dowsing_bg01_NCGR = 2,
+	NARC_dowsing_gra_dowsing_obj01_NCGR = 3,
+	NARC_dowsing_gra_dowsing_obj01_NCER = 4,
+	NARC_dowsing_gra_dowsing_obj02_NCER = 5,
+	NARC_dowsing_gra_dowsing_obj03_NCER = 6,
+	NARC_dowsing_gra_dowsing_bg01_NSCR = 7,
+	NARC_dowsing_gra_dowsing_obj01_NANR = 8,
+	NARC_dowsing_gra_dowsing_obj02_NANR = 9,
+	NARC_dowsing_gra_dowsing_obj03_NANR = 10,
+	NARC_dowsing_gra_dowsing_obj02_NCGR = 11,
+	NARC_dowsing_gra_dowsing_obj03_NCGR = 12,
+	NARC_dowsing_gra_dowsing_area_dat = 13
+};
+
+/* NARC_DOWSING_GRA_NAIX_ */
+#endif
