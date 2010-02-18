@@ -12,6 +12,10 @@
 //======================================================================
 //  define
 //======================================================================
+#ifdef DEBUG_ONLY_FOR_matsuda
+
+#endif
+
 //--------------------------------------------------------------
 /// ビルボード共通オフセット表示座標
 //--------------------------------------------------------------
@@ -1184,8 +1188,9 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
       work->offs_frame = 0;
       GFL_BBDACT_SetAnimeIdx( actSys,work->actID, work->set_anm_dir );
     }
+#ifndef DEBUG_ONLY_FOR_matsuda
     TsurePoke_SetAnmAndOffset( mmdl, work, dir );
-    
+#endif    
     MMDL_GetDrawVectorPos( mmdl, &pos );
     
     blact_SetCommonOffsPos( &pos );
@@ -1329,11 +1334,13 @@ static void DrawTsurePokeFly_Draw( MMDL *mmdl )
       }
     }
     
+#ifndef DEBUG_ONLY_FOR_matsuda
     pos.x = 0;
     pos.y = work->offs_y;
     pos.z = 0;
 	  MMDL_SetVectorDrawOffsetPos( mmdl, &pos );
-    
+#endif 
+
     MMDL_GetDrawVectorPos( mmdl, &pos );
     blact_SetCommonOffsPos( &pos );
     GFL_BBD_SetObjectTrans(
