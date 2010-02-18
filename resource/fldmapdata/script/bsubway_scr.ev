@@ -484,11 +484,11 @@ sub_receipt_challenge_multi_comm:
   
   SWITCH $SCWK_ANSWER
   CASE 1 THEN //同じポケモン 1
-    _NOP
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_54 )
   CASE 2 THEN //同じポケモン 2
-    _NOP
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_54 )
   CASE 3 THEN //同じポケモン 3
-    _NOP
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_54 )
   ENDSWITCH
   
   IF $ret != 0 THEN
@@ -800,8 +800,8 @@ sub_receipt_msg_greet:
   ENDSWITCH
   
   _AB_KEYWAIT()
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　プレイモード別に乗車しますか？メッセージ

@@ -470,13 +470,30 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       
       switch( bsw_scr->play_mode ){
       case BSWAY_MODE_SINGLE:
-        LOCATION_SetDirect( &loc, ZONE_ID_C04R0102, DIR_RIGHT, 13, 0, 13 );
+        LOCATION_SetDirect( &loc, ZONE_ID_C04R0102, DIR_RIGHT, 11, 0, 15 );
+        break;
+      case BSWAY_MODE_S_SINGLE:
+        LOCATION_SetDirect( &loc, ZONE_ID_C04R0103, DIR_RIGHT, 11, 0, 15 );
         break;
       case BSWAY_MODE_DOUBLE:
-        LOCATION_SetDirect( &loc, ZONE_ID_C04R0104, DIR_RIGHT, 13, 0, 13 );
+        LOCATION_SetDirect( &loc, ZONE_ID_C04R0104, DIR_RIGHT, 11, 0, 15 );
+        break;
+      case BSWAY_MODE_S_DOUBLE:
+        LOCATION_SetDirect( &loc, ZONE_ID_C04R0105, DIR_RIGHT, 11, 0, 15 );
+        break;
+      case BSWAY_MODE_MULTI:
+      case BSWAY_MODE_COMM_MULTI:
+        LOCATION_SetDirect( &loc, ZONE_ID_C04R0106, DIR_RIGHT, 11, 0, 15 );
+        break;
+      case BSWAY_MODE_S_MULTI:
+      case BSWAY_MODE_S_COMM_MULTI:
+        LOCATION_SetDirect( &loc, ZONE_ID_C04R0107, DIR_RIGHT, 11, 0, 15 );
+        break;
+      case BSWAY_MODE_WIFI:
+        LOCATION_SetDirect( &loc, ZONE_ID_C04R0108, DIR_RIGHT, 11, 0, 15 );
+        break;
       default:
         GF_ASSERT( 0 );
-        break;
       }
       
       GAMEDATA_SetSpecialLocation( gdata, &loc );

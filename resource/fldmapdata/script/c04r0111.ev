@@ -156,9 +156,11 @@ sub_challenge_continue:
   _SYSWIN_CLOSE()
   
   //ŽÔ“à‚Ö
+  
+  //ƒ}ƒbƒvˆÚ“®
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
-  _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 10, 0, 4, DIR_UP )
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
 }
 _RET
 
