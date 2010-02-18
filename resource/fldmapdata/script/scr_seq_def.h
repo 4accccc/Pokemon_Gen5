@@ -2046,6 +2046,20 @@
   .short \hobbyID
   .endm
   
+//--------------------------------------------------------------
+/**
+ *  GPower名を指定タグにセット
+ * @param idx セットするタグナンバー
+ * @param gpower_id   GPOWER_ID
+ */
+//--------------------------------------------------------------
+#define _GPOWER_NAME( idx, gpower_id )  _ASM_GPOWER_NAME idx, gpower_id
+
+  .macro  _ASM_GPOWER_NAME idx, gpower_id
+  .short  EV_SEQ_GPOWER_NAME
+  .byte   \idx
+  .short  \gpower_id
+  .endm
   
 
 //======================================================================
@@ -6421,6 +6435,21 @@
   .short EV_SEQ_BEACON_SET_REQUEST
   .short \beacon_id
   .short \value 
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_GPOWER_FINISH
+ * @brief Gパワーフィニッシュチェック
+ */
+//--------------------------------------------------------------
+#define _CHECK_GPOWER_FINISH( ret_gpower, ret_next ) \
+    _ASM_CHECK_GPOWER_FINISH ret_gpower, ret_next
+  
+  .macro _ASM_CHECK_GPOWER_FINISH ret_gpower, ret_next 
+  .short EV_SEQ_CHECK_GPOWER_FINISH
+  .short \ret_gpower
+  .short \ret_next
   .endm
 
 //======================================================================

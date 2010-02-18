@@ -33,6 +33,7 @@
 #include "event_gsync.h"         //EVENT_GSync
 #include "event_cg_wireless.h"         //EVENT_CG_Wireless
 #include "event_beacon_detail.h"         //EVENT_BeaconDetail
+#include "event_gpower.h"         //EVENT_CheckGPower
 #include "event_fieldtalk.h"      //EVENT_FieldTalk
 #include "event_fieldmap_menu.h"  //EVENT_FieldMapMenu
 #include "rail_editor.h"
@@ -142,17 +143,6 @@ typedef struct {
   const VecFx32 * now_pos;        ///<現在のプレイヤー位置
   u32 mapattr;                  ///<足元のアトリビュート情報
 
-#if 0
-  BOOL talkRequest; ///<話しかけキー操作があったかどうか
-  BOOL menuRequest; ///<メニューオープン操作があったかどうか
-  BOOL moveRequest; ///<一歩移動終了タイミングかどうか
-  BOOL stepRequest; ///<振り向きor一歩移動終了タイミングかどうか
-  BOOL dirPosRequest; ///<方向つきPOSイベントのチェックをするタイミングか？
-  BOOL pushRequest; ///<押し込み操作があったかどうか
-  BOOL convRequest; ///<便利ボタン操作があったかどうか
-
-  BOOL debugRequest;  ///<デバッグ操作があったかどうか
-#else
   u32 talkRequest:1; ///<話しかけキー操作があったかどうか
   u32 menuRequest:1; ///<メニューオープン操作があったかどうか
   u32 moveRequest:1; ///<一歩移動終了タイミングかどうか
@@ -161,10 +151,11 @@ typedef struct {
   u32 pushRequest:1; ///<押し込み操作があったかどうか
   u32 convRequest:1; ///<便利ボタン操作があったかどうか
   u32 subscreenRequest:1; ///<サブスクリーンイベントを起動してよいタイミングか？
+
   u32 debugRequest:1;  ///<デバッグ操作があったかどうか
+  u32 exMoveRequest:1;  ///<波乗り開始時等moveReqが検出しない一歩移動の検出
+  u32 req_dmy:22;
 
-
-#endif
 }EV_REQUEST;
 
 //======================================================================
@@ -181,6 +172,7 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
 static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckEffectEncount( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
+static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys );
 static void updatePartyEgg( POKEPARTY* party );
 static BOOL checkPartyEgg( POKEPARTY* party );
 
@@ -336,11 +328,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     if( event != NULL ) {
       return event;
     }
-    //汎用一歩移動イベントチェック群
-    event = checkMoveEvent(&req, fieldWork);
-    if ( event != NULL) {
-      return event;
-    }
+  }
+  //汎用一歩移動イベントチェック群
+  event = checkMoveEvent(&req, fieldWork);
+  if ( event != NULL) {
+    return event;
   }
 
 //☆☆☆ステップチェック（一歩移動or振り向き）がここから
@@ -576,10 +568,15 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
    * 新サブスクリーンからのイベント起動チェックが全て完成したら消す予定です
    */
 	event = checkSubScreenEvent(gsys, fieldWork);
-	if( event != NULL )
-  {
+	if( event != NULL ){
 		return event;
 	}
+
+  //Gパワー効果終了チェック
+  event = CheckGPowerEffectEnd( gsys );
+  if( event != NULL ){
+    return event;
+  }
   
 	
 	//デバッグ：パレスで木に触れたらワープ
@@ -1186,18 +1183,16 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   }
   
   req->moveRequest = 0;
+  req->exMoveRequest = 0;
 
   if( req->player_value == PLAYER_MOVE_VALUE_WALK ){
     req->moveRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
   }
-
+  if(FIELD_PLAYER_CheckNaminoriEventEnd( req->field_player )){
+    req->exMoveRequest = TRUE; 
+  }
   req->stepRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
 
-  if( req->moveRequest ){
-    IWASAWA_Printf( "Req->MoveRequst\n");
-  }else if( req->stepRequest ) {
-    IWASAWA_Printf( "Req->StepRequst\n");
-  }
   req->dirPosRequest = FALSE;
   if ( req->player_state != PLAYER_MOVE_STATE_END && req->player_value == PLAYER_MOVE_VALUE_TURN )
   {
@@ -1546,9 +1541,18 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
   GMEVENT*     event = NULL;
 
-  //エンカウントエフェクト起動監視
-  event = CheckEffectEncount( fieldWork, gsys, gdata );
-  if( event != NULL) return event;
+  //波乗り開始時等の特殊一歩移動も検出
+  if( req->moveRequest || req->exMoveRequest ){
+  
+    //エンカウントエフェクト起動監視
+    event = CheckEffectEncount( fieldWork, gsys, gdata );
+    if( event != NULL) return event;
+  }
+
+  //以下は通常一歩移動のみ検出
+  if( !req->moveRequest ){
+    return NULL;
+  }
 
   //育て屋チェック
   event = CheckSodateya( fieldWork, gsys, gdata );
@@ -1716,6 +1720,19 @@ static GMEVENT* CheckEffectEncount( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsy
   //エフェクトエンカウント起動チェック
   EFFECT_ENC_CheckEffectEncountStart( encount );
 	return NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * リアルタイムクロックによるGパワー効果終了チェック
+ */
+//--------------------------------------------------------------
+static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys )
+{
+  if( GPOWER_Get_FinishWaitID() == GPOWER_ID_NULL ){
+    return NULL;
+  }
+  return EVENT_GPowerEffectEnd( gsys );
 }
 
 //======================================================================

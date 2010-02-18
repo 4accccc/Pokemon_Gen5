@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-16T22:50:46"/>
+	<create user="iwasawa" host="W00157" date="2010-02-18T12:30:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -262,7 +262,7 @@
 
 	<dialog left="92" top="28" right="797" bottom="643" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="249" top="689" right="722" bottom="1313" visible="yes"/>
+		<tag-palette left="785" top="91" right="1258" bottom="715" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -292,17 +292,27 @@
 		<comment>Ｇパワー使用時のメッセージ
 この後画面フラッシュ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　Ｇパワー
-「[1:1C:簡易会話単語:2]」を　はつどうした！</language>
+「[1:1C:簡易会話単語:2]」を　はつどうした！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　Ｇパワー
-「[1:1C:簡易会話単語:2]」を　発動した！</language>
+「[1:1C:簡易会話単語:2]」を　発動した！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_wonderpower_02">
-		<comment>一定時間たち、効果が切れたときのメッセージ</comment>
+	<row id="msg_wonderpower_02_00">
+		<comment>&quot;一定時間たち、効果が切れたときのメッセージ
+同時に切れるパワーがもうない時</comment>
 		<language name="JPN" width="256">「[1:1C:簡易会話単語:2]」の
 こうかが　きれた</language>
 		<language name="JPN_KANJI" width="256">「[1:1C:簡易会話単語:2]」の
 効果が切れた</language>
+	</row>
+
+	<row id="msg_wonderpower_02_01">
+		<comment>一定時間たち、効果が切れたときのメッセージ
+同時に切れるパワーがまだあるとき</comment>
+		<language name="JPN" width="256">「[1:1C:簡易会話単語:2]」の
+こうかが　きれた[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">「[1:1C:簡易会話単語:2]」の
+効果が切れた[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wonderpower_effect_01">

@@ -22,3 +22,17 @@
 //--------------------------------------------------------------------
 extern VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk );
 
+//--------------------------------------------------------------------
+/**
+ * @brief フィニッシュ待ちのGパワーチェック 
+ *
+ * @param core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT:
+ */
+//--------------------------------------------------------------------
+extern VMCMD_RESULT EvCmdCheckGPowerFinish( VMHANDLE* core, void* wk );
+
+
+

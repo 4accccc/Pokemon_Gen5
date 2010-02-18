@@ -22,6 +22,7 @@
 #include "message.naix"
 #include "field/event_beacon_detail.h"
 #include "field/event_subscreen.h"
+#include "field/event_gpower.h"
 
 #include "beacon_status.naix"
 #include "wifi_unionobj.naix"
@@ -246,6 +247,10 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   case EV_CALL_DETAIL_VIEW:
     event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
     break;
+  case EV_GPOWER_USE:
+    event = EVENT_GPowerEffectStart( wk->gsys, wk->ctrl.g_power, wk->ctrl.mine_power_f );
+    wk->ctrl.g_power = GPOWER_ID_NULL;
+    break;
   default:
     return NULL;
   }
@@ -374,10 +379,13 @@ static int seq_Main( BEACON_VIEW_PTR wk )
  */
 static int seq_ViewUpdate( BEACON_VIEW_PTR wk )
 {
-  if( wk->eff_task_ct == 0){
-    return SEQ_MAIN;
+  if( wk->eff_task_ct ){
+    return SEQ_VIEW_UPDATE;
   }
-  return SEQ_VIEW_UPDATE;
+  if( wk->ctrl.g_power != GPOWER_ID_NULL){
+    event_Request( wk, EV_GPOWER_USE );
+  }
+  return SEQ_MAIN;
 }
 
 /*
@@ -385,10 +393,13 @@ static int seq_ViewUpdate( BEACON_VIEW_PTR wk )
  */
 static int seq_GPowerUse( BEACON_VIEW_PTR wk )
 {
-  if( BeaconView_SubSeqGPower( wk )){
-    return SEQ_MAIN;
+  if( !BeaconView_SubSeqGPower( wk )){
+    return SEQ_GPOWER_USE;
   }
-  return SEQ_GPOWER_USE;
+  if( wk->ctrl.g_power != GPOWER_ID_NULL){
+    event_Request( wk, EV_GPOWER_USE );
+  }
+  return SEQ_MAIN;
 }
 
 /*
@@ -494,7 +505,7 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   }else{
     wk->ctrl.view_max = PANEL_VIEW_MAX;
   }
-  wk->ctrl.next_panel = 0;
+  wk->ctrl.g_power = GPOWER_ID_NULL;
 
   //メッセージスピード取得
   wk->msg_spd  = MSGSPEED_GetWait();

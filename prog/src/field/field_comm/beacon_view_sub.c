@@ -1598,6 +1598,9 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u32 tr_id,
   twk = GFL_TCBL_GetWork(tcb);
   MI_CpuClear8( twk, sizeof( TASKWK_WIN_GPOWER ));
 
+  wk->ctrl.g_power = GPOWER_ID_NULL;
+  wk->ctrl.mine_power_f = ( type == GPOWER_USE_MINE);
+
   twk->bvp = wk;
   twk->wait = POPUP_WAIT;
   twk->g_power = g_power;
@@ -1660,6 +1663,9 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
     }else{
       print_GetMsgToBuf( bvp, msg_sys_gpower_use02 );
       print_PopupWindow( bvp, bvp->str_expand, bvp->msg_spd );
+
+      //使うGパワーを覚えておく
+      bvp->ctrl.g_power = twk->g_power;
 
       twk->seq++;
     }

@@ -42,6 +42,7 @@ typedef enum{
  EV_NONE,
  EV_RETURN_CGEAR,
  EV_CALL_DETAIL_VIEW,
+ EV_GPOWER_USE,
 }BEACON_DETAIL_EVENT;
 
 /////////////////////////////////////
@@ -70,8 +71,8 @@ typedef enum{
 #define BG_PALANM_AREA    (FONT_PAL+1)  //フォントパレット用領域までパレットアニメ影響下に置く
 
 #define ACT_PAL_FONT      (3)
-#define ACT_PAL_PANEL     (4)
-#define ACT_PAL_UNION     (9)
+#define ACT_PAL_PANEL     (4)   //5本占有
+#define ACT_PAL_UNION     (9)   //5本占有
 #define ACT_PAL_WMI       (14)  //通信アイコン占有領域
 #define ACT_PAL_LOCALIZE  (15)  //ローカライズ用空きパレット
 
@@ -429,6 +430,9 @@ typedef struct _LOG_CTRL{
   u8  view_btm;
   u8  view_max;
   u8  target;
+
+  u8  g_power;
+  u8  mine_power_f;
 
   u8  panel_list[PANEL_VIEW_MAX];
 }LOG_CTRL;

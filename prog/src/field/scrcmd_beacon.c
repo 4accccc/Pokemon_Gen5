@@ -24,7 +24,7 @@
  * @param core 仮想マシン制御構造体へのポインタ
  * @param wk   SCRCMD_WORKへのポインタ
  *
- * @retval VMCMD_RESULT:w
+ * @retval VMCMD_RESULT:
  */
 //--------------------------------------------------------------------
 VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
@@ -45,4 +45,34 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------------
+/**
+ * @brief フィニッシュ待ちのGパワーチェック 
+ *
+ * @param core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT:
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckGPowerFinish( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
+  u16*           ret_power  = SCRCMD_GetVMWork( core, work );
+  u16*           ret_next   = SCRCMD_GetVMWork( core, work );
+
+  *ret_power = GPOWER_Get_FinishWaitID();
+
+  if((*ret_power) != GPOWER_ID_NULL){
+    POWER_CONV_DATA * p_data = GPOWER_PowerData_LoadAlloc( GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+    GPOWER_Set_Finish( *ret_power, p_data );
+    GPOWER_PowerData_Unload( p_data );
+  
+    //次があるかチェックしておく
+    *ret_next = (GPOWER_Get_FinishWaitID() != GPOWER_ID_NULL);
+  }else{
+    *ret_next = FALSE;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
 
