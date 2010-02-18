@@ -51,7 +51,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .bin
 
 #パーソナルデータ生成
-do-build: narc
+do-build: binmake narc
+
+binmake:
+	ruby ../../tools/btl_subway/btl_subway_conv.rb pd_list.txt bts_wb_tr.tdm ../../resource/message/template.gmm
 
 narc:
 $(BTL_SW_PD): $(PDFILES)
