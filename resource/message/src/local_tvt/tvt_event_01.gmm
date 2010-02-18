@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-10T14:24:02"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T21:51:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="279" top="259" right="984" bottom="879" maximized="no" rayout="Vertical2">
+	<dialog left="1449" top="285" right="2154" bottom="905" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -337,30 +337,28 @@
 
 
 	<row id="msg_transceiver_r01_01">
-		<comment>■　12月ROM用
-■　r01：一番道路イベント用メッセージ
+		<comment>■　r01：一番道路イベント用メッセージ
 ・トランシーバー画面に切り替え
 　まず左上に博士の顔グラフィック
 ・サポート、ライバル、主人公の順で
 　顔グラフィック表示
-・博士の口ぱくアニメーション再生
-・続けて</comment>
+・博士の口ぱくアニメーション再生</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">ハーイ！
 みんな　げんき？▼
 そろそろ　ポケモンと
 なかよくなった　ころでしょ！▼</language>
 		<language name="JPN_KANJI" width="256">ハーイ！
-みんな　げんき？▼
+みんな　元気？▼
 そろそろ　ポケモンと
-なかよくなった　ころでしょ！▼</language>
+仲良くなった　ころでしょ！▼</language>
 	</row>
 
 	<row id="msg_transceiver_r01_02">
 		<comment>・サポートの口ぱくアニメーション再生</comment>
 		<attribute name="キャラ指定">サポート</attribute>
 		<language name="JPN">あっ　はかせ！▼</language>
-		<language name="JPN_KANJI">あっ　はかせ！▼</language>
+		<language name="JPN_KANJI">あっ　博士！▼</language>
 	</row>
 
 	<row id="msg_transceiver_r01_03">
@@ -372,7 +370,7 @@
 みんな　はやく　おいでよ！▼</language>
 		<language name="JPN_KANJI">いま　カラクサタウンの
 ポケモンセンターに　いるの！▼
-あんない　してあげるから
+案内してあげるから
 みんな　はやく　おいでよ！▼</language>
 	</row>
 
@@ -388,7 +386,7 @@
 	<row id="msg_transceiver_r01_05">
 		<comment>・博士の口ぱくアニメーション再生
 ・TVトランシーバー終了処理
-・フィールドに復帰すると</comment>
+・フィールドに復帰する</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN">オッケイ！
 それじゃーねー！▼</language>
