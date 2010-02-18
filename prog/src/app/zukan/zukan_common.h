@@ -18,6 +18,12 @@
 //	定数定義
 //============================================================================================
 
+// 上下バーのスクロールスピード
+#define ZKNCOMM_BAR_SPEED   (1)     // 毎フレームZKNCOMM_BAR_SPEEDだけ移動する
+// フェードイン/アウトのスピード
+#define ZKNCOMM_FADE_WAIT   (0)     // PaletteFadeReqWriteのwaitに渡せる値
+
+
 // セルアクターデータ
 typedef struct {
 	GFL_CLWK_DATA	dat;
