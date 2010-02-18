@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-06T13:11:09"/>
+	<create user="matsumiya" host="W00224" date="2010-02-18T20:35:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="264"/>
+		<comment position="4" width="289"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1440" top="268" right="2145" bottom="888" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="278" right="1998" bottom="906" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,8 +292,10 @@
 	</lock>
 
 
-	<row id="msg_d03r0101_hakase2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
+※d08r0901イベント後から
+　c02のストーン入手まで、このイベントは発生しない（暫定）
 ・遺跡の入り口前のpos（GRIDX=61、GRIDZ=30）を
 　踏むと遺跡から出現
 ・主人公、一歩下がり、続けてhakase2_02
@@ -303,133 +305,144 @@
 		<language name="JPN_KANJI" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・続けてhakase2_03</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
-		<language name="JPN" width="256">遺跡の　入り口と　ともに
-ポケモンの　像が　発見されたので▽
-起源を　調べに　来たんだ！▼</language>
+		<language name="JPN" width="256">いせきの　いりぐちと　ともに
+ポケモンの　ぞうが　みつかったので▽
+きげんを　しらべに　きたんだ！▼</language>
 		<language name="JPN_KANJI" width="256">遺跡の　入り口と　ともに
 ポケモンの　像が　発見されたので▽
 起源を　調べに　来たんだ！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・GRIDX=60、GRIDZ=31に
 　移動してからメッセージ表示
 ・続けてhakase2_04</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
-		<language name="JPN" width="256">ちなみに
-これらの　ポケモン像の　正体は▼
-ゴリダルマっていう　ポケモンね
-眠って　固まっている　状態なの▼</language>
+		<language name="JPN" width="256">ちなみに　これらの
+ポケモンぞうの　しょうたいは▽
+ヒヒダルマっていう　ポケモンね▼
+ねむって　かたまっている
+じょうたい　なの▼</language>
 		<language name="JPN_KANJI" width="256">ちなみに
 これらの　ポケモン像の　正体は▼
-ゴリダルマっていう　ポケモンね
+ヒヒダルマっていう　ポケモンね
 眠って　固まっている　状態なの▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・主人公のほうを向いてメッセージ表示
 ・続けてhakase2_05</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
-		<language name="JPN" width="256">いつから　存在していたのか
-ざっと　測定したところ……▼
-なんと！　２５００年ほど前！
-そのころ　眠りに　ついたみたいね▼
-この遺跡……　古代の城が
-栄えていた時代と　ほぼ同じってこと▼
-ひょっとして
-街を　守っていたのかも▼</language>
+		<language name="JPN" width="256">いつから　そんざい　していたのか
+ざっと　そくてい　したところ……▼
+なんと！　２５００ねんほど　まえ！
+そのころ　ねむりに　ついたみたいね▼
+この　いせき……
+こだいのしろが　さかえていた▽
+じだいと　ほぼ　おなじってこと▼
+ひょっとしたら
+まちを　まもっていたのかも▼</language>
 		<language name="JPN_KANJI" width="256">いつから　存在していたのか
 ざっと　測定したところ……▼
 なんと！　２５００年ほど前！
 そのころ　眠りに　ついたみたいね▼
 この遺跡……　古代の城が
 栄えていた時代と　ほぼ同じってこと▼
-ひょっとして
+ひょっとしたら
 街を　守っていたのかも▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・さらにGRIDX=63、GRIDZ=33に
 　移動してメッセージ表示
-・続けてhakase2_06</comment>
+・アイテム入手処理
+　No504「いかりまんじゅう」×５個入手
+・続けてhakase2_06
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">この　ポケモンたち……▼
-眠っている　というか
-メイソウしている　状態だから▽
-起ききれば　再び　活動するわよ▼
-ただし　特殊な　道具でないと
-起こせない　みたいね▽
-眠りが　長すぎるのかも▼</language>
+ねむっている　というか
+メイソウしている　じょうたいだから▽
+おきれば　ふたたび　かつどうするわよ▼
+で　ヒヒダルマを　おこす
+どうぐが　なんと　この！▼
+いかりまんじゅう　なのです！！▼
+ということで　[1:00:トレーナー名:0]にも
+わけてあげまーす！▼</language>
 		<language name="JPN_KANJI" width="256">この　ポケモンたち……▼
 眠っている　というか
 メイソウしている　状態だから▽
-起ききれば　再び　活動するわよ▼
-ただし　特殊な　道具でないと
-起こせない　みたいね▽
-眠りが　長すぎるのかも▼</language>
+起きれば　再び　活動するわよ▼
+で　ヒヒダルマを　起こすための
+道具が　なんと　この！▼
+いかりまんじゅう　なのです！！▼
+ということで　[1:00:トレーナー名:0]にも
+わけてあげまーす！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・主人公と向き合ってメッセージ表示
 ・メッセージ表示後、画面下に移動
 　画面外に消えると主人公、操作可能に</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">じゃあ　アタシは
-ポケモン研究所に　戻ります▽
+ポケモンけんきゅうじょに　もどるから▽
 バイバーイ！！▼</language>
 		<language name="JPN_KANJI" width="256">じゃあ　アタシは
-ポケモン研究所に　戻ります▽
+ポケモン研究所に　戻るから▽
 バイバーイ！！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_daruma_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d03r0101_daruma_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ポケモン
-・道具「未定」を持っていない
+・道具「いかりまんじゅう」を持っていない
 ・GRIDX=58、GRIDZ=33
 ・GRIDX=59、GRIDZ=35
 ・GRIDX=60、GRIDZ=32
 ・GRIDX=63、GRIDZ=34
-・GRIDX=67、GRIDZ=31に配置</comment>
+・GRIDX=67、GRIDZ=31に配置
+※「いかりまんじゅう」を持っていてもアララギのセリフ
+　hakase2_06が表示されない限り、このメッセージ</comment>
 		<attribute name="キャラ指定">ゴリダルマ
 （瞑想モード）</attribute>
-		<language name="JPN" width="256">ゴリダルマという
+		<language name="JPN" width="256">ヒヒダルマという
 ポケモンが　ねむっている　すがただ</language>
-		<language name="JPN_KANJI" width="256">ゴリダルマという
-ポケモンが　ねむっている　すがただ</language>
+		<language name="JPN_KANJI" width="256">ヒヒダルマという
+ポケモンが　眠っている　姿だ</language>
 	</row>
 
-	<row id="msg_d03r0101_daruma_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d03r0101_daruma_02">
 		<comment>ポケモン
-・道具「未定」を持っているとき
+・道具「いかりまんじゅう」を持っているとき
 ・はい/いいえの選択肢表示
 　はい→daruma_03
 　いいえ→終了</comment>
 		<attribute name="キャラ指定">ゴリダルマ
 （瞑想モード）</attribute>
-		<language name="JPN" width="256">ねむっている　ゴリダルマに
-？？？？？？？？を　つかいますか？</language>
-		<language name="JPN_KANJI" width="256">ねむっている　ゴリダルマに
-？？？？？？？？を　つかいますか？</language>
+		<language name="JPN" width="256">ねむっている　ヒヒダルマに
+いかりまんじゅうを　あげますか？</language>
+		<language name="JPN_KANJI" width="256">眠っている　ヒヒダルマに
+いかりまんじゅうを　あげますか？</language>
 	</row>
 
-	<row id="msg_d03r0101_daruma_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d03r0101_daruma_03">
 		<comment>ポケモン
 ・メッセージ後、野生ポケモンとの戦闘に
 ・戦闘後、フィールド復帰時に動作モデルを削除</comment>
 		<attribute name="キャラ指定">ゴリダルマ
 （瞑想モード）</attribute>
-		<language name="JPN" width="256">めざめた　ゴリダルマが
+		<language name="JPN" width="256">めざめた　ヒヒダルマが
 おそいかかってきた！▼</language>
-		<language name="JPN_KANJI" width="256">めざめた　ゴリダルマが
-おそいかかってきた！▼</language>
+		<language name="JPN_KANJI" width="256">目覚めた　ヒヒダルマが
+襲いかかってきた！▼</language>
 	</row>
 
 	<row id="msg_d03r0101_rival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -439,9 +452,9 @@
 　主人公に隣接してメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『こだいのしろは
-ここから　きたのほう　だってよ[BE:01:ページ切り替え（クリア）]</language>
+ここから　きたのほう　だって[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『古代の城は
-ここから　北のほう　だってよ[BE:01:ページ切り替え（クリア）]</language>
+ここから　北のほう　だって[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d03r0101_rival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -450,23 +463,23 @@
 ・表示後、画面上方向に移動
 　画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">……アデクさん　さきに　いったからさ
-いそぐぜ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……アデクさん　先に行ったからさ
-急ぐぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">……アデクさん　さきに　いったよ
+ぼくたちも　いそごう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……アデクさん　先に行ったよ
+ぼくたちも　急ごう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d03r0101_rival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：d04r0601のイベント後
 ・画面暗転から復帰後メッセージ自動で表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……はああ！
-なんていうか　やるせねーな[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『……うまく　いえない▼
+だけど　ぜったいに　ゆるせない▼
 なにが　ぜつぼうする
 その　しゅんかんを　みるのが[BE:00:ページ切り替え（行送り）]
 だいすき　だよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『……はああ！
-なんていうか　やるせねーな[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレン『……うまく　いえない▼
+だけど　絶対に　許せない▼
 なにが　絶望する
 その　瞬間を　みるのが[BE:00:ページ切り替え（行送り）]
 至福の時……　だよ！[BE:01:ページ切り替え（クリア）]</language>
@@ -491,10 +504,10 @@
 		<comment>♂：d04r0601のイベント後
 ・メッセージ後、ＴＶトランシーバー画面に切り替え（仮）</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！　おまえの
-ＴＶトランシーバー　なってるぜ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！　おまえの
-ＴＶトランシーバー　鳴ってるぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！　きみの
+ＴＶトランシーバー　なっているよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！　きみの
+ＴＶトランシーバー　鳴っているよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d03r0101_champion_02" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
@@ -514,21 +527,20 @@
 
 	<row id="msg_d03r0101_rival_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：d04r0601のイベント後
-・
 ・c02gym0101でダークストーン（ライトストーン）入手で
 　ここから削除</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……オレ
-もういちど　このなかを　さがす[BE:01:ページ切り替え（クリア）]
-おまえは　シッポウシティの
-はくぶつかんに　むかいな！</language>
-		<language name="JPN_KANJI" width="256">チェレン『……オレ
-もう一度　この中を　探す[BE:01:ページ切り替え（クリア）]
-おまえは　シッポウシティの
-博物館に　向かいな！</language>
+		<language name="JPN" width="256">チェレン『……ぼくは
+もういちど　このなかを　さがすよ[BE:01:ページ切り替え（クリア）]
+きみは　シッポウシティの
+はくぶつかんに　むかいなよ</language>
+		<language name="JPN_KANJI" width="256">チェレン『……ぼくは
+もう一度　この中を　探すよ[BE:01:ページ切り替え（クリア）]
+きみは　シッポウシティの
+博物館に　向かいなよ！</language>
 	</row>
 
-	<row id="msg_d03r0101_fighterm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d03r0101_fighterm_01">
 		<comment>♂
 ・ゲート近くに配置</comment>
 		<attribute name="キャラ指定">FIGHTERM
@@ -543,7 +555,7 @@
 もう　ボロボロだよ……</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_sunglasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・GRIDX=75、GRIDZ=48に配置
 ・「じてんしゃ」入手処理</comment>
@@ -559,7 +571,7 @@
 じてんしゃ　あげます！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_sunglasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・「じてんしゃ」入手後、自動でメッセージ
 ・以降、遺跡（＝d04r0101）に入るまでは
@@ -578,7 +590,7 @@
 えんりょなく　どうぞ▼</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_sunglasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・d04r0101に入ってからは
 　このメッセージ</comment>
@@ -596,7 +608,7 @@
 つくった　くにの　あとち　らしいね</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_sunglasses_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・d08竜の塔でのイベント後
 　いける範囲が広がっていることをアナウンス
@@ -618,7 +630,7 @@
 ばしょにも　すすめるらしいね！</language>
 	</row>
 
-	<row id="msg_d03r0101_backpackerm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d03r0101_backpackerm_01">
 		<comment>♂
 ・すごい端に配置してくれれば</comment>
 		<attribute name="キャラ指定">BACKPACKERM
