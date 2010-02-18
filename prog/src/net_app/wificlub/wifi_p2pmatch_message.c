@@ -11,6 +11,7 @@
 #include "system/tr2dgra.h"
 
 
+
 #define _TOUCHBAR_BG_PALPOS (12)     //タッチバーの色   （１）本
 #define _TOUCHBAR_OBJ_PALPOS (12)     //タッチバーの色  （１）本
 
@@ -218,7 +219,7 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
     GFL_BG_FRAME2_M,
     COMM_MSG_WIN_PX, COMM_MSG_WIN_PY,
     COMM_MSG_WIN_SX, COMM_MSG_WIN_SY,
-    COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+    MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
   if(bSystem){
     GFL_MSG_GetString(  wk->SysMsgManager, msgno, wk->pExpStrBuf );
   }
@@ -239,7 +240,7 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
   //BmpWinFrame_CgxSet(GFL_BG_FRAME2_M,COMM_TALK_WIN_CGX_NUM, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-                                0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
+                                0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
 
   // システムウインドウ枠描画
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->MsgWin), WINCLR_COL(FBMP_COL_WHITE) );
@@ -373,12 +374,12 @@ static void _systemMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno )
     GFL_BG_FRAME2_M,
     COMM_SYS_WIN_PX, COMM_SYS_WIN_PY,
     COMM_SYS_WIN_SX, COMM_SYS_WIN_SY,
-    COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+    MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
 
 //  BmpWinFrame_CgxSet(GFL_BG_FRAME2_M,COMM_SYS_WIN_CGX, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-                                0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
+                                0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
 
   // システムウインドウ枠描画
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->SysMsgWin), WINCLR_COL(FBMP_COL_WHITE) );
@@ -619,7 +620,7 @@ static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plist
   wk->SubListWin = _BmpWinDel(wk->SubListWin);
   //BMPウィンドウ生成
   wk->SubListWin = GFL_BMPWIN_Create(
-    GFL_BG_FRAME2_M, 32-width-1, PARENTMENU_Y, width, length * 2, FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+    GFL_BG_FRAME2_M, 32-width-1, PARENTMENU_Y, width, length * 2, MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
   //    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  COMM_TALK_WIN_CGX_NUM, MENU_WIN_PAL );
   BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_OFF, GFL_ARCUTIL_TRANSINFO_GetPos(wk->talkwin_m2), COMM_MESFRAME_PAL );
   GFL_BMPWIN_MakeTransWindow(wk->SubListWin);
@@ -744,7 +745,7 @@ static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
     //BMPウィンドウ生成
     wk->SubListWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME2_M, 16, 11+ ((3-length)*2), 15  , length * 2,
-      FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+      MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
     //    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  MENU_WIN_CGX_NUM, MENU_WIN_PAL );
     BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
     list_h.list = wk->submenulist;
@@ -847,16 +848,16 @@ static void _userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
   // Frame1の対応する位置にアイコンを転送
   WifiP2PMatchFriendListStIconWrite( &wk->icon, GFL_BG_FRAME1_M,
                                      PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y,
-                                     status,gamemode );
+                                     status,gamemode, PLAYER_DISP_ICON_MYMODE);
   if( WIFI_STATUS_GetVChatStatus(wk->pMatch) ){
-    vct_icon = PLAYER_DISP_ICON_IDX_NONE;
+    vct_icon = PLAYER_DISP_ICON_IDX_NONE+PLAYER_DISP_ICON_MYMODE;
   }else{
-    vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT;
+    vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT+PLAYER_DISP_ICON_MYMODE;
   }
 
   WifiP2PMatchFriendListIconWrite(  &wk->icon, GFL_BG_FRAME1_M,
                                     PLAYER_DISP_VCTICON_POS_X, PLAYER_DISP_VCTICON_POS_Y,
-                                    vct_icon, 0 );
+                                    vct_icon+PLAYER_DISP_ICON_MYMODE, 0 );
 
   GFL_BMPWIN_ClearScreen(wk->MyInfoWin);
   GFL_BMPWIN_MakeScreen(wk->MyInfoWin);
@@ -880,7 +881,7 @@ static void MainMenuMsgInit(WIFIP2PMATCH_WORK *wk)
 
   _BmpWinDel(wk->MyInfoWinBack);
   wk->MyInfoWinBack = GFL_BMPWIN_Create(GFL_BG_FRAME3_M, 5, 1, 22, 2,
-                                        _NUKI_FONT_PALNO,  GFL_BMP_CHRAREA_GET_B );
+                                        MCV_SYSFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
   GFL_BMPWIN_MakeScreen( wk->MyInfoWinBack );
   GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_018, wk->TitleString );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->MyInfoWinBack), 0, 0, wk->TitleString, wk->fontHandle);
@@ -1163,7 +1164,7 @@ static void _TouchResExit( WIFIP2PMATCH_WORK *wk )
 #define MCV_USERD_TR_X    ( 88+16 )
 #define MCV_USERD_TR_Y    ( 144-16*3 )
 #define MCV_USERD_TRNUM_X ( 180 )
-#define MCV_USERD_DAY_X   ( 8-8 )
+#define MCV_USERD_DAY_X   ( 8 )
 #define MCV_USERD_DAY_Y   ( 128 )
 #define MCV_USERD_DAYNUM_X  ( 152 )
 #define MCV_USERD_ICON_X  ( 2 )
@@ -1277,11 +1278,11 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
   // アイコン
   WifiP2PMatchFriendListStIconWrite(  &wk->icon, GFL_BG_FRAME2_S,
                                       MCV_USERD_ICON_X, MCV_USERD_ICON_Y,
-                                      status,gamemode );
+                                      status, gamemode , PLAYER_DISP_ICON_CARDMODE);
   if( WIFI_STATUS_GetVChatStatus(p_status) ){
-    vct_icon = PLAYER_DISP_ICON_IDX_NONE;
+    vct_icon = PLAYER_DISP_ICON_IDX_NONE + PLAYER_DISP_ICON_CARDMODE;
   }else{
-    vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT;
+    vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT + PLAYER_DISP_ICON_CARDMODE;
   }
   WifiP2PMatchFriendListIconWrite( &wk->icon, GFL_BG_FRAME2_S,
                                    MCV_USERD_VCTICON_X, MCV_USERD_ICON_Y,
@@ -1467,7 +1468,7 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
     COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B);
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-                                0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
+                                0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
 
   // システムウインドウ枠描画
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->SysMsgWin), WINCLR_COL(FBMP_COL_WHITE) );

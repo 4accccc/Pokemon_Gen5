@@ -146,29 +146,6 @@ extern WIFI_DEBUG_BATTLE_WK WIFI_DEBUG_BATTLE_Work;
 
 
 
-/// ＢＧパレット定義 2005/09/15
-//
-//  0 ～ 5  : フィールドマップＢＧ用
-//  6       : 天候
-//  7       : 地名ウインドウ
-//  8       : 看板ウインドウ（マップ、標識など）
-//  9       : 看板ウインドウ（枠、フォント）
-//  10      : メッセージウインドウ
-//  11      : メニューウインドウ
-//  12      : メッセージフォント
-//  13      : システムフォント
-//  14    : 未使用（ローカライズ用）
-//  15    : デバッグ用（製品版では未使用）
-#define FLD_WEATHER_PAL      (  6 )     //  天候
-#define FLD_PLACENAME_PAL    (  7 )         //  地名ウインドウ
-#define FLD_BOARD1FRAME_PAL  (  8 )         //  看板ウインドウ（マップ、標識など）
-#define FLD_BOARD2FRAME_PAL  (  9 )         //  看板ウインドウ（枠、フォント）
-#define FLD_MESFRAME_PAL     ( 10 )         //  メッセージウインドウ
-#define FLD_MENUFRAME_PAL    ( 11 )         //  メニューウインドウ
-#define FLD_MESFONT_PAL      ( 12 )         //  メッセージフォント
-#define FLD_SYSFONT_PAL      ( 13 )         //  システムフォント
-#define FLD_LOCALIZE_PAL     ( 14 )         //  未使用（ローカライズ用）
-#define FLD_DEBUG_PAL        ( 15 )         //  デバッグ用（製品版では未使用）
 
 /*********************************************************************************************
   メイン画面のCGX割り振り   2006/01/12
@@ -190,22 +167,21 @@ extern WIFI_DEBUG_BATTLE_WK WIFI_DEBUG_BATTLE_Work;
 // 会話ウィンドウキャラ
 #define TALK_WIN_CGX_SIZE ( 18+12 )
 #define TALK_WIN_CGX_NUM  ( 512 - TALK_WIN_CGX_SIZE )
-#define TALK_WIN_PAL    ( 10 )
 
 // メニューウィンドウキャラ
 #define MENU_WIN_CGX_SIZE ( 9 )
 #define MENU_WIN_CGX_NUM  ( TALK_WIN_CGX_NUM - MENU_WIN_CGX_SIZE )
-#define MENU_WIN_PAL    ( 11 )
+//#define MENU_WIN_PAL    ( 11 )
 
 // 地名ウィンドウキャラ
 #define PLACE_WIN_CGX_SIZE  ( 10 )
 #define PLACE_WIN_CGX_NUM ( MENU_WIN_CGX_NUM - PLACE_WIN_CGX_SIZE )
-#define PLACE_WIN_PAL   ( 7 )
+//#define PLACE_WIN_PAL   ( 7 )
 
 // 看板ウィンドウキャラ
 #define BOARD_WIN_CGX_SIZE  ( 18+12 + 24 )
 #define BOARD_WIN_CGX_NUM ( PLACE_WIN_CGX_NUM - BOARD_WIN_CGX_SIZE )
-#define BOARD_WIN_PAL   ( FLD_BOARD2FRAME_PAL )
+//#define BOARD_WIN_PAL   ( FLD_BOARD2FRAME_PAL )
 
 /*********************************************************************************************
   BMPウィンドウ
@@ -215,63 +191,13 @@ extern WIFI_DEBUG_BATTLE_WK WIFI_DEBUG_BATTLE_Work;
 #define FLD_MSG_WIN_PY    ( 19 )
 #define FLD_MSG_WIN_SX    ( 27 )
 #define FLD_MSG_WIN_SY    ( 4 )
-#define FLD_MSG_WIN_PAL   ( FLD_MESFONT_PAL )
 #define FLD_MSG_WIN_CGX   ( BOARD_WIN_CGX_NUM - ( FLD_MSG_WIN_SX * FLD_MSG_WIN_SY ) )
-
-// 看板ウィンドウ（メイン）（会話と同じ位置（会話より小さい））
-#define FLD_BOARD_WIN_PX  ( 9 )
-#define FLD_BOARD_WIN_PY  ( 19 )
-#define FLD_BOARD_WIN_SX  ( 20 )
-#define FLD_BOARD_WIN_SY  ( 4 )
-#define FLD_BOARD_WIN_PAL ( FLD_BOARD2FRAME_PAL )
-#define FLD_BOARD_WIN_CGX ( FLD_MSG_WIN_CGX )
-
-// メニューウィンドウ（メイン）
-#define FLD_MENU_WIN_PX   ( 20 )
-#define FLD_MENU_WIN_PY   ( 1 )
-#define FLD_MENU_WIN_SX   ( 11 )
-#define FLD_MENU_WIN_SY   ( 22 )
-#define FLD_MENU_WIN_PAL  ( FLD_SYSFONT_PAL )
-#define FLD_MENU_WIN_CGX  ( FLD_MSG_WIN_CGX - ( FLD_MENU_WIN_SX * FLD_MENU_WIN_SY ) )
-
 // はい/いいえウィンドウ（メイン）（メニューと同じ位置（メニューより小さい））
 #define FLD_YESNO_WIN_PX  ( 24 )
 #define FLD_YESNO_WIN_PY  ( 13 )
 #define FLD_YESNO_WIN_SX  ( 6 )
 #define FLD_YESNO_WIN_SY  ( 4 )
-#define FLD_YESNO_WIN_PAL ( FLD_SYSFONT_PAL )
 #define FLD_YESNO_WIN_CGX ( FLD_MSG_WIN_CGX - ( FLD_YESNO_WIN_SX * FLD_YESNO_WIN_SY ) )
-
-// 地名ウィンドウ（メニューと同じ位置（メニューより小さい））
-#define FLD_PLACE_WIN_PX  ( 0 )
-#define FLD_PLACE_WIN_PY  ( 0 )
-#define FLD_PLACE_WIN_SX  ( 32 )
-#define FLD_PLACE_WIN_SY  ( 3 )
-#define FLD_PLACE_WIN_CGX ( FLD_MSG_WIN_CGX - ( FLD_PLACE_WIN_SX * FLD_PLACE_WIN_SY ) )
-
-
-
-// メッセージウィンドウ（サブ）
-#define FLD_MSG_WIN_S_PX  ( 2  )
-#define FLD_MSG_WIN_S_PY  ( 19 )
-#define FLD_MSG_WIN_S_PAL ( FLD_MESFONT_PAL )
-#define FLD_MSG_WIN_S_CGX ( MENU_WIN_CGX_NUM - ( FLD_MSG_WIN_SX * FLD_MSG_WIN_SY ) )
-
-// 看板ウィンドウ（サブ）
-#define FLD_BOARD_WIN_S_PX  ( 9 )
-#define FLD_BOARD_WIN_S_PY  ( 19 )
-#define FLD_BOARD_WIN_S_SX  ( 21 )
-#define FLD_BOARD_WIN_S_SY  ( 4 )
-#define FLD_BOARD_WIN_S_PAL ( FLD_BOARD2FRAME_PAL )
-#define FLD_BOARD_WIN_S_CGX ( FLD_MSG_WIN_S_CGX )
-
-// メニューウィンドウ（サブ）
-#define FLD_MENU_WIN_S_PX ( 25 )
-#define FLD_MENU_WIN_S_PY ( 1 )
-#define FLD_MENU_WIN_S_SX ( 6 )
-#define FLD_MENU_WIN_S_SY ( 16 )
-#define FLD_MENU_WIN_S_PAL  ( FLD_SYSFONT_PAL )
-#define FLD_MENU_WIN_S_CGX  ( MENU_WIN_CGX_NUM - ( FLD_MENU_WIN_SX * FLD_MENU_WIN_SY ) )
 
 
 
@@ -364,10 +290,25 @@ typedef struct{  // スクリーン用RECT構造体
 // FRAME1に転送するユーザーデータ背景
 #define _CGX_USET_BACK_BOTTOM ( MENU_WIN_CGX_NUM - WIFIP2PMATCH_PLAYER_DISP_WINSIZ )
 
+
 // FRAME1に転送するICONデータ
 #define PLAYER_DISP_ICON_PLTTOFS  (8)
-#define PLAYER_DISP_ICON_PLTTOFS_SUB (13)
-#define PLAYER_DISP_ICON_PLTTNUM  (2)
+#define PLAYER_DISP_ICON_PLTTOFS_SUB (8)  //9-10-11-12
+
+#define COMM_MESFONT_PAL      ( 14 )     //  ウインドウのパレット
+#define MCV_SYSFONT_PAL       ( 15 )     // システムフォントのパレット
+#define COMM_MESFRAME_PAL     ( 14 )         //  ウインドウ
+#define FLD_YESNO_WIN_PAL     ( 15 )  //フォントのパレット
+#define MENU_WIN_PAL          ( 14 )   //ウインドウ
+
+
+//MCV_SYSFONT_PAL
+
+
+
+#define PLAYER_DISP_ICON_PLTTNUM  (4)
+
+
 #define PLAYER_DISP_ICON_CG_SIZX  (12)
 #define PLAYER_DISP_ICON_CG_SIZY  (4)
 #define PLAYER_DISP_ICON_CGX    ( 0 )
@@ -378,24 +319,34 @@ typedef struct{  // スクリーン用RECT構造体
 #define PLAYER_DISP_VCTICON_POS_X ( 26 )
 #define PLAYER_DISP_VCTICON_POS_Y ( 1 )
 enum{
-  PLAYER_DISP_ICON_IDX_NONE00 = 0,
-  PLAYER_DISP_ICON_IDX_VCTNOT ,
-  PLAYER_DISP_ICON_IDX_VCTBIG,
-  PLAYER_DISP_ICON_IDX_VCT,
+  PLAYER_DISP_ICON_IDX_NONE = 0,  //空
   PLAYER_DISP_ICON_IDX_NORMAL,
-  PLAYER_DISP_ICON_IDX_UNK,
+  PLAYER_DISP_ICON_IDX_NORMAL_ACT,
+  PLAYER_DISP_ICON_IDX_VCTBIG,
+  PLAYER_DISP_ICON_IDX_VCT_ACT,
+  PLAYER_DISP_ICON_IDX_TVT,
+  PLAYER_DISP_ICON_IDX_TVT_ACT,
   PLAYER_DISP_ICON_IDX_FIGHT,
+  PLAYER_DISP_ICON_IDX_FIGHT_ACT,
   PLAYER_DISP_ICON_IDX_CHANGE,
-  PLAYER_DISP_ICON_IDX_NONE,
-  PLAYER_DISP_ICON_IDX_NUM,
+  PLAYER_DISP_ICON_IDX_CHANGE_ACT,
+  PLAYER_DISP_ICON_IDX_VCTNOT,
+  PLAYER_DISP_ICON_IDX_VCT,
+  PLAYER_DISP_ICON_IDX_UNK,      //その他不明
+  PLAYER_DISP_ICON_IDX_NUM,    //数
 };
 
 
+#define PLAYER_DISP_ICON_MYMODE (PLAYER_DISP_ICON_IDX_NUM*3)
+#define PLAYER_DISP_ICON_TOUCHMODE (0)
+#define PLAYER_DISP_ICON_NAMEMODE (PLAYER_DISP_ICON_IDX_NUM*1)
+#define PLAYER_DISP_ICON_CARDMODE (PLAYER_DISP_ICON_IDX_NUM*2)
+
+
 // 会話ウィンドウ FRAME2
-#define COMM_MESFRAME_PAL     ( 10 )         //  メッセージウインドウ
-#define COMM_MENUFRAME_PAL    ( 11 )         //  メニューウインドウ
-#define COMM_MESFONT_PAL      ( 12 )         //  メッセージフォント
-#define COMM_SYSFONT_PAL    ( 13 )         //  システムフォント
+//#define COMM_MENUFRAME_PAL    ( 11 )         //  メニューウインドウ
+//#define COMM_SYSFONT_PAL    ( 13 )         //  システムフォント
+
 #define COMM_TALK_WIN_CGX_SIZE  ( 18+12 )
 //#define COMM_TALK_WIN_CGX_NUM ( 512 - COMM_TALK_WIN_CGX_SIZE)
 #define COMM_TALK_WIN_CGX_NUM ( 48 )
@@ -464,10 +415,10 @@ enum{
 };
 #define MCV_PAL_BACK    ( 0 ) // 背景パレットの開始位置
 #define MCV_PAL_FRMNO   ( 0 ) // 背景のバットパレット開始位置
-#define MCV_PAL_BTTN    ( 1 ) // ボタンパレットの開始位置
+#define MCV_PAL_BTTN    ( 0 ) // ボタンパレットの開始位置
 enum{
-  MCV_PAL_BACK_0 = 0,
-  MCV_PAL_BACK_NUM,
+//  MCV_PAL_BACK_0 = 0,
+  //MCV_PAL_BACK_NUM,
 
   MCV_PAL_BTTN_GIRL = 0,
   MCV_PAL_BTTN_MAN,
@@ -476,17 +427,17 @@ enum{
   MCV_PAL_BTTNST_MAN,
   MCV_PAL_BTTNST_DUMMY1,
   MCV_PAL_BTTNST_DUMMY2,
+  MCV_PAL_BTTNST_DUMMY3,
   MCV_PAL_BTTN_NUM  // 今のところ余りは
     // MCV_PAL_BTTN+MCV_PAL_BTTN_NUM～(PLAYER_DISP_ICON_PLTTOFS_SUB-1まで
 };
 // アイコンの転送位置
 #define MCV_ICON_CGX  (0)
-#define MCV_ICON_CGSIZ  (48)
+#define MCV_ICON_CGSIZ  (28*4)
 #define MCV_ICON_PAL    (PLAYER_DISP_ICON_PLTTOFS_SUB)
 
 #define MCV_CGX_BTTN2 (MCV_ICON_CGX+MCV_ICON_CGSIZ) // FRAME2ユーザーデータ
 #define MCV_CGX_BACK  (0)// FRAME0背景
-#define MCV_SYSFONT_PAL ( 15 )  // システムフォント
 // WIN設定
 #define MCV_NAMEWIN_CGX   ( 1 ) // 名前ウィンドウ開始位置
 #define MCV_NAMEWIN_DEFX  ( 4 ) // 基本位置
@@ -705,7 +656,7 @@ static MCR_MOVEOBJ* MCRSYS_GetMoveObjWork( WIFIP2PMATCH_WORK* wk, u32 friendNo )
 static void WifiP2PMatchFriendListIconLoad( WIFIP2PMATCH_ICON* p_data, ARCHANDLE* p_handle, u32 heapID );
 static void WifiP2PMatchFriendListIconRelease( WIFIP2PMATCH_ICON* p_data );
 static void WifiP2PMatchFriendListIconWrite(  WIFIP2PMATCH_ICON* p_data, u32 frm, u8 cx, u8 cy, u32 icon_type, u32 col );
-static void WifiP2PMatchFriendListStIconWrite( WIFIP2PMATCH_ICON* p_data, u32 frm, u8 cx, u8 cy, u32 status,u32 gamemode );
+static void WifiP2PMatchFriendListStIconWrite( WIFIP2PMATCH_ICON* p_data, u32 frm, u8 cx, u8 cy, u32 status,u32 gamemode, u32 iconmode  );
 static void WifiP2PMatchFriendListBmpIconWrite(  GFL_BMPWIN* p_bmp, WIFIP2PMATCH_ICON* p_data, u16 x, u16 y, u32 icon_type, u32 col,int pal );
 static void WifiP2PMatchFriendListBmpStIconWrite( GFL_BMPWIN* p_bmp, WIFIP2PMATCH_ICON* p_data, u16 x, u16 y, u32 status,u32 gamemode,int pal );
 static int WifiP2PMatchBglFrmIconPalGet( u32 frm );
@@ -752,7 +703,7 @@ static void MCVSys_UserDispNumDraw( WIFIP2PMATCH_WORK *wk, u32 strid, u32 num, u
 static void MCVSys_BttnWrite( WIFIP2PMATCH_WORK *wk, u8 cx, u8 cy, u8 type, u8 frame );
 static u32 MCVSys_StatusMsgIdGet( u32 status,u32 gamemode, int* col );
 static void MCVSys_BttnWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN* p_bmp, u32 friendNo, u32 frame, u32 area_id );
-static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbmp, u32 friendNo, u32 frame, u32 area_id );
+static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbmp, u32 friendNo, u32 frame, u32 x, u32 y );
 static void MCVSys_OamBttnOn( WIFIP2PMATCH_WORK *wk );
 static void MCVSys_OamBttnOnNoBack( WIFIP2PMATCH_WORK *wk );
 static void MCVSys_OamBttnOff( WIFIP2PMATCH_WORK *wk );
@@ -1669,25 +1620,6 @@ static void WifiP2PMatchFriendListIconLoad( WIFIP2PMATCH_ICON* p_data, ARCHANDLE
                                                  NARC_wifip2pmatch_wf_match_all_icon_NCGR,
                                                  GFL_BG_FRAME2_S, 0, 0, heapID);
 
-/*
-  if(p_data->wf_match_all_iconcgx1m){
-    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_M, PLAYER_DISP_ICON_CGX, p_data->wf_match_all_iconcgx1m);
-  }
-  if(p_data->wf_match_all_iconcgx2s){
-    GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S, PLAYER_DISP_ICON_CGX,  p_data->wf_match_all_iconcgx2s);
-  }
-   */
-/*  {
-    u16 oneCharSize = GFL_BG_GetBaseCharacterSize(GFL_BG_FRAME1_M);
-    p_data->wf_match_all_iconcgx1m = GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCGR,
-                                                     GFL_BG_FRAME1_M, PLAYER_DISP_ICON_CGX, 0, FALSE, heapID );
-    GFL_BG_ReserveCharacterArea(GFL_BG_FRAME1_M, PLAYER_DISP_ICON_CGX, p_data->wf_match_all_iconcgx1m/oneCharSize*2);
-
-    p_data->wf_match_all_iconcgx2s = GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCGR,
-                                                     GFL_BG_FRAME2_S, PLAYER_DISP_ICON_CGX, 0, FALSE, heapID );
-    GFL_BG_ReserveCharacterArea(GFL_BG_FRAME2_S, PLAYER_DISP_ICON_CGX,  p_data->wf_match_all_iconcgx2s/oneCharSize);
-  }
-*/
   // さらにキャラクタデータを保存しておく
   if( p_data->p_charbuff == NULL ){
     p_data->p_charbuff = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCGR,
@@ -1748,23 +1680,49 @@ static void WifiP2PMatchFriendListIconRelease( WIFIP2PMATCH_ICON* p_data )
  *  @param  col     0=灰 1=赤
  */
 //-----------------------------------------------------------------------------
+
+
 static void WifiP2PMatchFriendListIconWrite(WIFIP2PMATCH_ICON* p_data, u32 frm, u8 cx, u8 cy, u32 icon_type, u32 col )
 {
   int pal;
   // 書き込み
+  int i,j;
+  int datax,datay;
+  int width;
+  u16* p_scrndata = (u16*)p_data->p_scrn->rawData;
+
+  pal = WifiP2PMatchBglFrmIconPalGet( frm );
+  
+  OS_TPrintf("%d--\n",PLAYER_DISP_ICON_SCRN_X*(icon_type % PLAYER_DISP_ICON_IDX_NUM));
+  OS_TPrintf("%d--\n",2 * (icon_type / PLAYER_DISP_ICON_IDX_NUM));
+  OS_TPrintf("%d--\n",p_data->p_scrn->screenWidth/8);
+  OS_TPrintf("%d--\n",p_data->p_scrn->screenHeight/8 );
+
+  datax = PLAYER_DISP_ICON_SCRN_X*(icon_type % PLAYER_DISP_ICON_IDX_NUM);
+  datay = 2 * (icon_type / PLAYER_DISP_ICON_IDX_NUM);
+  width = p_data->p_scrn->screenWidth/8;
+
+  for(i = 0;i < PLAYER_DISP_ICON_SCRN_Y;i++){
+    for(j = 0;j < PLAYER_DISP_ICON_SCRN_X;j++){
+      GFL_BG_ScrSetDirect( frm, j+cx,i+cy,  ((p_scrndata[ width*(datay+i) + datax+j ] + ( pal << 12 ))));
+    }
+  }
+#if 0
   GFL_BG_WriteScreenExpand(frm, cx, cy,
                            PLAYER_DISP_ICON_SCRN_X, PLAYER_DISP_ICON_SCRN_Y,
                            p_data->p_scrn->rawData,
-                           PLAYER_DISP_ICON_SCRN_X*icon_type, 0,
+                           PLAYER_DISP_ICON_SCRN_X*(icon_type % PLAYER_DISP_ICON_IDX_NUM),
+                           2 * (icon_type / PLAYER_DISP_ICON_IDX_NUM),
                            p_data->p_scrn->screenWidth/8, p_data->p_scrn->screenHeight/8 );
-
 
   // パレット
   pal = WifiP2PMatchBglFrmIconPalGet( frm );
 
   // パレットナンバーをあわせる
   GFL_BG_ChangeScreenPalette( frm, cx, cy,
-                              PLAYER_DISP_ICON_SCRN_X, PLAYER_DISP_ICON_SCRN_Y, pal+col );
+//                              PLAYER_DISP_ICON_SCRN_X, PLAYER_DISP_ICON_SCRN_Y, pal+col );
+                              PLAYER_DISP_ICON_SCRN_X, PLAYER_DISP_ICON_SCRN_Y, pal );
+#endif
 
   // 転送
   GFL_BG_LoadScreenV_Req( frm );
@@ -1772,18 +1730,41 @@ static void WifiP2PMatchFriendListIconWrite(WIFIP2PMATCH_ICON* p_data, u32 frm, 
 
 
 
-static u8 _gamemode2icon(  u32 gamemode )
+static u8 _gamemode2icon(  u32 gamemode,u32 status )
 {
   u8 scrn_idx=0;
 
   if( gamemode == WIFI_GAME_VCT){      // VCT中
-    scrn_idx = PLAYER_DISP_ICON_IDX_VCT;
+    if(status == WIFI_STATUS_RECRUIT){
+      scrn_idx = PLAYER_DISP_ICON_IDX_VCT;
+    }
+    else{
+      scrn_idx = PLAYER_DISP_ICON_IDX_VCT_ACT;
+    }
+  }
+  if( gamemode == WIFI_GAME_TVT){      // TVT中
+    if(status == WIFI_STATUS_RECRUIT){
+      scrn_idx = PLAYER_DISP_ICON_IDX_TVT;
+    }
+    else{
+      scrn_idx = PLAYER_DISP_ICON_IDX_TVT_ACT;
+    }
   }
   else if(_modeIsBattleStatus(gamemode)){
-    scrn_idx = PLAYER_DISP_ICON_IDX_FIGHT;
+    if(status == WIFI_STATUS_RECRUIT){
+      scrn_idx = PLAYER_DISP_ICON_IDX_FIGHT;
+    }
+    else{
+      scrn_idx = PLAYER_DISP_ICON_IDX_FIGHT_ACT;
+    }
   }
   else if( gamemode == WIFI_GAME_TRADE){          // 交換中
-    scrn_idx = PLAYER_DISP_ICON_IDX_CHANGE;
+    if(status == WIFI_STATUS_RECRUIT){
+      scrn_idx = PLAYER_DISP_ICON_IDX_CHANGE;
+    }
+    else{
+      scrn_idx = PLAYER_DISP_ICON_IDX_CHANGE_ACT;
+    }
   }
   else if(WIFI_GAME_LOGIN_WAIT == gamemode){    // 待機中　ログイン直後はこれ
     scrn_idx = PLAYER_DISP_ICON_IDX_NORMAL;
@@ -1810,18 +1791,18 @@ static u8 _gamemode2icon(  u32 gamemode )
  *  @param  vctIcon   ボイスチャットONOFFフラグ
  */
 //-----------------------------------------------------------------------------
-static void WifiP2PMatchFriendListStIconWrite(  WIFIP2PMATCH_ICON* p_data, u32 frm, u8 cx, u8 cy, u32 status,u32 gamemode )
+static void WifiP2PMatchFriendListStIconWrite(  WIFIP2PMATCH_ICON* p_data, u32 frm, u8 cx, u8 cy, u32 status,u32 gamemode, u32 iconmode )
 {
   u8 col=0;
   u8 scrn_idx=0;
 
-  scrn_idx = _gamemode2icon(gamemode);
-  if(status == WIFI_STATUS_RECRUIT){
-    col = 1;
-  }
+  scrn_idx = _gamemode2icon(gamemode, status);
+//  if(status == WIFI_STATUS_RECRUIT){
+ //   col = 1;
+//  }
 
   // 書き込み
-  WifiP2PMatchFriendListIconWrite( p_data, frm, cx, cy, scrn_idx, col );
+  WifiP2PMatchFriendListIconWrite( p_data, frm, cx, cy, scrn_idx + iconmode, col );
 }
 
 
@@ -1842,10 +1823,10 @@ static void WifiP2PMatchFriendListBmpStIconWrite( GFL_BMPWIN* p_bmp, WIFIP2PMATC
   u8 col=0;
   u8 scrn_idx=0;
 
-  if(status == WIFI_STATUS_RECRUIT){
-    col = 1;
-  }
-  scrn_idx = _gamemode2icon(gamemode);
+//  if(status == WIFI_STATUS_RECRUIT){
+  //  col = 1;
+//  }
+  scrn_idx = _gamemode2icon(gamemode, status);
 
   WifiP2PMatchFriendListBmpIconWrite( p_bmp, p_data, x, y, scrn_idx, col,pal );
 }
@@ -1946,7 +1927,7 @@ static void BgGraphicSet( WIFIP2PMATCH_WORK * wk, ARCHANDLE* p_handle )
   // 会話フォントパレット転送
   //    TalkFontPaletteLoad( PALTYPE_MAIN_BG, _NUKI_FONT_PALNO*0x20, HEAPID_WIFIP2PMATCH );
   //    TalkFontPaletteLoad( PALTYPE_MAIN_BG, COMM_MESFONT_PAL*0x20, HEAPID_WIFIP2PMATCH );
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , 13*0x20, 16*2, HEAPID_WIFIP2PMATCH );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , MCV_SYSFONT_PAL*0x20, 16*2, HEAPID_WIFIP2PMATCH );
 
 /*
   // メイン画面BG2キャラ転送
@@ -2440,7 +2421,10 @@ static int _retryYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 static int _retryWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int i;
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  int ret;
+
+  GFL_FONTSYS_SetDefaultColor();
+  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   if(ret == BMPMENU_NULL)
   {  // まだ選択中
@@ -2776,7 +2760,7 @@ static void _userDataDisp(WIFIP2PMATCH_WORK* wk)
   }
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-                                0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
+                                0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
 
   wk->MyInfoWinBack = _BmpWinDel(wk->MyInfoWinBack);
 
@@ -2784,14 +2768,14 @@ static void _userDataDisp(WIFIP2PMATCH_WORK* wk)
     GFL_BG_FRAME3_M,
     WIFIP2PMATCH_PLAYER_DISP_X, WIFIP2PMATCH_PLAYER_DISP_Y,
     WIFIP2PMATCH_PLAYER_DISP_SIZX, WIFIP2PMATCH_PLAYER_DISP_SIZY,
-    COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B );
+    MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B );
 
 
   wk->MyInfoWinBack=GFL_BMPWIN_Create(
     GFL_BG_FRAME2_M,
     WIFIP2PMATCH_PLAYER_DISP_X, WIFIP2PMATCH_PLAYER_DISP_Y,
     WIFIP2PMATCH_PLAYER_DISP_SIZX, WIFIP2PMATCH_PLAYER_DISP_SIZY,
-    COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B );
+    MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B );
 
   // 初期化
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MyInfoWin), WINCLR_COL(FBMP_COL_WHITE) );
@@ -3661,11 +3645,11 @@ static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
     // アイコン書き換え
     if(GFL_NET_DWC_IsSendVoiceAndInc()){
       WifiP2PMatchFriendListIconWrite(   &wk->icon, GFL_BG_FRAME1_M,
-                                         PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCTBIG, 0 );
+                                         PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCTBIG +PLAYER_DISP_ICON_MYMODE, 0 );
     }
     else{
       WifiP2PMatchFriendListIconWrite(   &wk->icon, GFL_BG_FRAME1_M,
-                                         PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCT, 0 );
+                                         PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCT+PLAYER_DISP_ICON_MYMODE, 0 );
     }
   }
 
@@ -3709,7 +3693,9 @@ static int WifiP2PMatch_VCTConnectEndYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 static int WifiP2PMatch_VCTConnectEndWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int i;
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  int ret;
+  GFL_FONTSYS_SetDefaultColor();
+  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
     if((GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_DISCONNECTING)
@@ -3976,6 +3962,7 @@ static int _parentModeSelectRelYesNo( WIFIP2PMATCH_WORK* wk, int seq )
   WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
   if( WifiP2PMatchMessageEndCheck(wk) ){
     // はいいいえウインドウを出す
+    GFL_FONTSYS_SetDefaultColor();
     _yenowinCreateM2(wk);
 
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_WAIT);
@@ -3995,7 +3982,8 @@ static int _parentModeSelectRelYesNo( WIFIP2PMATCH_WORK* wk, int seq )
 static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
 {
   int i;
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  int ret;
+  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
 
@@ -5436,7 +5424,9 @@ static int _exitYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 static int _exitWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int i;
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  int ret;
+  GFL_FONTSYS_SetDefaultColor();
+  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
@@ -5580,6 +5570,7 @@ static int _nextBattleWait( WIFIP2PMATCH_WORK *wk, int seq )
     _errorDisp(wk);
   }
   else{
+    GFL_FONTSYS_SetDefaultColor();
     ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
     if(ret == BMPMENU_NULL){  // まだ選択中
       return seq;
@@ -5649,6 +5640,7 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
     _errorDisp(wk);
   }
   else{
+    GFL_FONTSYS_SetDefaultColor();
     ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
     if(ret == BMPMENU_NULL){  // まだ選択中
       return seq;
@@ -6219,8 +6211,8 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
 
   // BG設定
   // パレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_btm_NCLR,  // 背景用
-                                    PALTYPE_SUB_BG, MCV_PAL_BACK*32, MCV_PAL_BACK_NUM*32, heapID );
+//  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_btm_NCLR,  // 背景用
+  //                                  PALTYPE_SUB_BG, MCV_PAL_BACK*32, MCV_PAL_BACK_NUM*32, heapID );
   GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_btm_button_NCLR, // ボタン用
                                     PALTYPE_SUB_BG, MCV_PAL_BTTN*32, MCV_PAL_BTTN_NUM*32, heapID );
 
@@ -6256,7 +6248,7 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 
 		MCV_SYSFONT_PAL*32, 0x20, heapID);
 //  TalkFontPaletteLoad( PALTYPE_SUB_BG, MCV_SYSFONT_PAL*32, heapID );
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , 13*0x20, 16*2, heapID );
+  //GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , 13*0x20, 16*2, heapID );
 
   // ビットマップ作成
   for( i=0; i<WCR_MAPDATA_1BLOCKOBJNUM; i++ ){
@@ -6281,7 +6273,7 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
         MCV_STATUSWIN_DEFX+(MCV_STATUSWIN_OFSX*x)+(j*MCV_STATUSWIN_VCHATX),
         MCV_STATUSWIN_DEFY+(MCV_STATUSWIN_OFSY*y),
         MCV_STATUSWIN_SIZX, MCV_STATUSWIN_SIZY,
-        PLAYER_DISP_ICON_PLTTOFS_SUB,
+        MCV_SYSFONT_PAL,
         GFL_BMP_CHRAREA_GET_B );
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.statusWin[i][j]), 0 );
       GFL_BMPWIN_TransVramCharacter( wk->view.statusWin[i][j] );
@@ -6559,7 +6551,7 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
         GFL_BMPWIN_MakeScreen(wk->view.nameWin[i]);
         GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 
-        //MCVSys_BttnStatusWinDraw( wk, wk->view.statusWin[i], friend_no, frame, i );
+        MCVSys_BttnStatusWinDraw( wk, wk->view.statusWin[i], friend_no, frame, MCV_BUTTON_DEFX+(MCV_BUTTON_OFSX*x), MCV_BUTTON_DEFY+(MCV_BUTTON_OFSY*y) );
       }else{
 
         // 透明にする
@@ -6735,9 +6727,8 @@ static void MCVSys_BttnWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN* p_bmp, u32 fr
  *  @param  area_id   配置ID
  */
 //-----------------------------------------------------------------------------
-static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbmp, u32 friendNo, u32 frame, u32 area_id )
+static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbmp, u32 friendNo, u32 frame, u32 x, u32 y )
 {
-  int y;
   int i;
   int vct_icon;
   WIFI_STATUS* p_status;
@@ -6747,33 +6738,25 @@ static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbm
   status = _WifiMyStatusGet( wk, p_status );
   gamemode = _WifiMyGameModeGet( wk, p_status );
 
-  // アイコン表示
-  y = ViewButtonFrame_y[ frame ];
 
-  for( i=0; i<WF_VIEW_STATUS_NUM; i++ ){
-    // 画面クリーン
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_stbmp[i]), WINCLR_COL(FBMP_COL_WHITE) );
-    if( i==0 ){
-      int pal = WifiP2PMatchBglFrmIconPalGet( GFL_BMPWIN_GetFrame(p_stbmp[i]) );
-      WifiP2PMatchFriendListBmpStIconWrite( p_stbmp[i], &wk->icon,
-                                            0, y,
-                                            status,gamemode,pal );
-    }else{
-      // パレットNo取得
-      int pal = WifiP2PMatchBglFrmIconPalGet( frame );
+#if 0
+#else
 
-      if( WIFI_STATUS_GetVChatStatus(p_status) ){
-        vct_icon = PLAYER_DISP_ICON_IDX_NONE;
-      }else{
-        vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT;
-      }
-      WifiP2PMatchFriendListBmpIconWrite( p_stbmp[i], &wk->icon,
-                                          0, y,
-                                          vct_icon, 0, pal );
-    }
-    GFL_BMPWIN_TransVramCharacter( p_stbmp[i] );
+  WifiP2PMatchFriendListStIconWrite( &wk->icon, GFL_BG_FRAME2_S,
+                                     x+2, y+2,
+                                     status,gamemode, PLAYER_DISP_ICON_NAMEMODE);
+  if( WIFI_STATUS_GetVChatStatus(p_status) ){
+    vct_icon = PLAYER_DISP_ICON_IDX_NONE;
+  }else{
+    vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT;
   }
+  WifiP2PMatchFriendListIconWrite(  &wk->icon, GFL_BG_FRAME2_S,
+                                    x+12, y+2,
+                                    vct_icon+PLAYER_DISP_ICON_NAMEMODE, 0 );
 
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
+#endif
+  
 }
 
 

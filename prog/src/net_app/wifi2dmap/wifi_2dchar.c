@@ -93,6 +93,11 @@ static const u8 sc_WF_2DC_ANMRES_ANMCONTID[ WF_2DC_ANMRES_ANM_NUM ] = {
 #define WF_2DC_ARC_GETCEL(x)	(WF_2DC_ARC_ANMIDX+((x)*2))	// セルdataidゲット
 #define WF_2DC_ARC_GETANM(x)	(WF_2DC_ARC_GETCEL(x)+1)		// アニメdataidゲット
 
+#define WF_2DC_HERO_PLTT_START   ( 8 ) // HEROキャラクタが使用するパレットスタート位置
+#define WF_2DC_HERO_PLTT_NUM		( 2 )	// HEROキャラクタが使用するパレット本数
+
+#define WF_2DC_HERO_KAGE_PLTT_START (10)
+#define WF_2DC_HERO_KAGE_PLTT_NUM (1)
 
 
 // ユニオンキャラクター
@@ -1279,7 +1284,7 @@ static void WF_2DC_CharResLoadNml( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 
   p_sys->chrres[ char_no ].resid[ 1 ] = GFL_CLGRP_PLTT_RegisterEx(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
                                                                   WF_2DC_ARC_GETNCL( char_no-WB_HERO ),
-                                                                  draw_type, 8*0x20, 0, 2, heap);
+                                                                  draw_type, WF_2DC_HERO_PLTT_START*0x20, 0, WF_2DC_HERO_PLTT_NUM, heap);
 
 
   
@@ -1472,7 +1477,7 @@ static void WF_2DC_ShResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 heap )
 
       p_sys->shadowres.resid[1] = GFL_CLGRP_PLTT_RegisterEx(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
                                                  NARC_wifileadingchar_hero_ine_kage_NCLR,
-                                                 draw_type, 11*0x20, 0, 1,heap);
+                                                 draw_type, WF_2DC_HERO_KAGE_PLTT_START*0x20, 0, WF_2DC_HERO_KAGE_PLTT_NUM,heap);
 }
 
 //----------------------------------------------------------------------------

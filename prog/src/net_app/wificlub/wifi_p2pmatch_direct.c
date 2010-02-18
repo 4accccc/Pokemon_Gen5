@@ -64,8 +64,11 @@ static int _playerDirectInit2( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectInit3( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  int ret;
   u8 command;
+
+  GFL_FONTSYS_SetDefaultColor();
+  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
     return seq;
@@ -331,8 +334,10 @@ static int _playerDirectSub1( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  int ret;
   u8 command;
+  GFL_FONTSYS_SetDefaultColor();
+  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
     return seq;
@@ -911,8 +916,10 @@ static int _playerDirectBattleGO2( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectBattleGO3( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  int ret;
   u8 command;
+  GFL_FONTSYS_SetDefaultColor();
+  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
     return seq;
@@ -1205,8 +1212,10 @@ static int _playerDirectFailed2( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectFailed3( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  int ret;
   u8 command;
+  GFL_FONTSYS_SetDefaultColor();
+  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
     return seq;

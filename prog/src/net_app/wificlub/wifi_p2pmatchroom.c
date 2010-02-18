@@ -42,7 +42,7 @@
  *						１文字目は大文字
  *				・関数内変数
  *						小文字と”＿”と数字を使用する 関数の引数もこれと同じ
-*/
+ */
 //-----------------------------------------------------------------------------
 #ifdef PM_DEBUG
 //#define MCR_DEBUG_2CCHAR_CHECK	// 2DMAPSYSTEMの表示チェック用
@@ -58,7 +58,7 @@ static u32 s_MCR_DEBUG_2CCHAR_VIEW_COUNT = 0;
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
-*/
+ */
 //-----------------------------------------------------------------------------
 // 登録位置データ
 #define MCR_MOVEOBJ_ADD_POSNUM	(52)
@@ -72,22 +72,22 @@ static u32 s_MCR_DEBUG_2CCHAR_VIEW_COUNT = 0;
 
 // 動作状態
 enum{
-	MCR_MOVEOBJ_ST_PL_KEYWAIT,		// プレイヤー通常動作
-	MCR_MOVEOBJ_ST_KURUKURU,		// 落ちる処理
-	MCR_MOVEOBJ_ST_KURUKURU_DEL,	// 上る処理
-	MCR_MOVEOBJ_ST_NPC,				// NPC動作
-	MCR_MOVEOBJ_ST_NPC_JUMP,		// NPC募集中
-	MCR_MOVEOBJ_ST_NPC_PAUSE,		// NPC動作停止
-	MCR_MOVEOBJ_ST_NUM,
+  MCR_MOVEOBJ_ST_PL_KEYWAIT,		// プレイヤー通常動作
+  MCR_MOVEOBJ_ST_KURUKURU,		// 落ちる処理
+  MCR_MOVEOBJ_ST_KURUKURU_DEL,	// 上る処理
+  MCR_MOVEOBJ_ST_NPC,				// NPC動作
+  MCR_MOVEOBJ_ST_NPC_JUMP,		// NPC募集中
+  MCR_MOVEOBJ_ST_NPC_PAUSE,		// NPC動作停止
+  MCR_MOVEOBJ_ST_NUM,
 };
 
 
 enum{	// 方向
-	MCR_MOVEOBJ_WAY_TOP = WF2DMAP_WAY_UP,
-	MCR_MOVEOBJ_WAY_BOTTOM = WF2DMAP_WAY_DOWN,
-	MCR_MOVEOBJ_WAY_LEFT = WF2DMAP_WAY_LEFT,
-	MCR_MOVEOBJ_WAY_RIGHT = WF2DMAP_WAY_RIGHT,
-	MCR_MOVEOBJ_WAY_NUM
+  MCR_MOVEOBJ_WAY_TOP = WF2DMAP_WAY_UP,
+  MCR_MOVEOBJ_WAY_BOTTOM = WF2DMAP_WAY_DOWN,
+  MCR_MOVEOBJ_WAY_LEFT = WF2DMAP_WAY_LEFT,
+  MCR_MOVEOBJ_WAY_RIGHT = WF2DMAP_WAY_RIGHT,
+  MCR_MOVEOBJ_WAY_NUM
 };
 #define MCR_MOVEOBJ_BG_PRI	( 3 )
 #define MCR_MOVEOBJ_PLAYER_FRIENDNO	(0)
@@ -121,55 +121,59 @@ enum{	// 方向
 
 // PCアニメーション
 enum{
-	// 待機中のアニメ
-	MCR_PCANM_ALL_SEQ_OFF,
-	MCR_PCANM_ALL_SEQ_ON,
-	MCR_PCANM_ALL_SEQ_NUM,
+  // 待機中のアニメ
+  MCR_PCANM_ALL_SEQ_OFF,
+  MCR_PCANM_ALL_SEQ_ON,
+  MCR_PCANM_ALL_SEQ_NUM,
 
-	// 実行中のアニメ
-	MCR_PCANM_USE_SEQ_NONE = 0,
-	MCR_PCANM_USE_SEQ_ON00,
-	MCR_PCANM_USE_SEQ_OFF01,
-	MCR_PCANM_USE_SEQ_ON01,
-	MCR_PCANM_USE_SEQ_WAIT,
-	MCR_PCANM_USE_SEQ_OFF02,
-	MCR_PCANM_USE_SEQ_ON02,
-	MCR_PCANM_USE_SEQ_OFF03,
-	MCR_PCANM_USE_SEQ_NUM,
+  // 実行中のアニメ
+  MCR_PCANM_USE_SEQ_NONE = 0,
+  MCR_PCANM_USE_SEQ_ON00,
+  MCR_PCANM_USE_SEQ_OFF01,
+  MCR_PCANM_USE_SEQ_ON01,
+  MCR_PCANM_USE_SEQ_WAIT,
+  MCR_PCANM_USE_SEQ_OFF02,
+  MCR_PCANM_USE_SEQ_ON02,
+  MCR_PCANM_USE_SEQ_OFF03,
+  MCR_PCANM_USE_SEQ_NUM,
 
-	// カラータイプ
-	MCR_PCANM_COL_ON = 0,
-	MCR_PCANM_COL_OFF,
-	MCR_PCANM_COL_WAIT,
+  // カラータイプ
+  MCR_PCANM_COL_ON = 0,
+  MCR_PCANM_COL_OFF,
+  MCR_PCANM_COL_WAIT,
 };
 #define MCR_PCANM_BGPLTT	( 7 )	// アニメさせるパレット
 #define MCR_PCANM_BGPLTTOFS	(1)		// アニメさせるパレットの開始オフセット
 #define MCR_PCANM_PCNUM			(4)	// PCの数
 #define MCR_PCANM_DESTPL(x)	( (MCR_PCANM_BGPLTT*32) + (((x)+MCR_PCANM_BGPLTTOFS)*2) )	// パレット転送先アドレス取得
 
+
+#define MCR_OTHEROAM_PALL_START (11)   //矢印やサークルのパレット番号
+#define MCR_OTHEROAM_PALL_NUM (2)   //矢印やサークルのパレット数
+
 //-------------------------------------
 ///	アニメデータ
 //=====================================
 typedef struct {
-	u8 flag;		// カウント有無
-	u8 count_num;	// カウント値
-	u8 trans;		// 転送有無
-	u8 trans_flag;	// 転送フラグ
+  u8 flag;		// カウント有無
+  u8 count_num;	// カウント値
+  u8 trans;		// 転送有無
+  u8 trans_flag;	// 転送フラグ
 } MCR_PCANM_DATA;
 static const MCR_PCANM_DATA AnmData[ MCR_PCANM_USE_SEQ_NUM ] = {
-	{ FALSE,	0,	FALSE,	MCR_PCANM_COL_OFF },
-	{ TRUE,		2, TRUE,	MCR_PCANM_COL_ON },
-	{ TRUE,		4, TRUE,	MCR_PCANM_COL_OFF },
-	{ TRUE,		2, TRUE,	MCR_PCANM_COL_ON },
-	{ FALSE,	0,	FALSE,	MCR_PCANM_COL_OFF },
-	{ TRUE,		2, TRUE,	MCR_PCANM_COL_OFF },
-	{ TRUE,		4, TRUE,	MCR_PCANM_COL_ON },
-	{ TRUE,		3, TRUE,	MCR_PCANM_COL_OFF },
+  { FALSE,	0,	FALSE,	MCR_PCANM_COL_OFF },
+  { TRUE,		2, TRUE,	MCR_PCANM_COL_ON },
+  { TRUE,		4, TRUE,	MCR_PCANM_COL_OFF },
+  { TRUE,		2, TRUE,	MCR_PCANM_COL_ON },
+  { FALSE,	0,	FALSE,	MCR_PCANM_COL_OFF },
+  { TRUE,		2, TRUE,	MCR_PCANM_COL_OFF },
+  { TRUE,		4, TRUE,	MCR_PCANM_COL_ON },
+  { TRUE,		3, TRUE,	MCR_PCANM_COL_OFF },
 };
 
 static const u16 AllAnmData[ MCR_PCANM_ALL_SEQ_NUM ] = {
-	3,
-	2,
+  3,
+  2,
 };
 
 
@@ -183,21 +187,21 @@ static const u16 AllAnmData[ MCR_PCANM_ALL_SEQ_NUM ] = {
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
-*/
+ */
 //-----------------------------------------------------------------------------
 //-------------------------------------
 ///	動作オブジェクト登録位置
 //=====================================
 typedef struct {
-	s16	x;
-	s16	y;
+  s16	x;
+  s16	y;
 } MCR_MOVEOBJ_ONPOS;
 
 
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
-*/
+ */
 //-----------------------------------------------------------------------------
 
 static void WcrMoveObjAllDel( WIFI_MATCHROOM* p_mcr );
@@ -295,53 +299,53 @@ static void WcrPCANM_UseEndReq( MCR_PCANM* p_wk );
 //-----------------------------------------------------------------------------
 void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 hero_view, u32 friendNum, u32 arcID ,GFL_CLUNIT* pUnit,GFL_CLSYS_REND* renddata)
 {
-	WF2DMAP_POS map_siz;
-	u32 map_no=0;
-	
-	GFL_STD_MemFill( p_mcr, 0, sizeof(WIFI_MATCHROOM) );
+  WF2DMAP_POS map_siz;
+  u32 map_no=0;
 
-    if(friendNum != 0){
-        map_no = (friendNum-1) / WCR_MAPDATA_1BLOCKOBJNUM;
-    }
+  GFL_STD_MemFill( p_mcr, 0, sizeof(WIFI_MATCHROOM) );
 
-	p_mcr->use_heap = heapID;
+  if(friendNum != 0){
+    map_no = (friendNum-1) / WCR_MAPDATA_1BLOCKOBJNUM;
+  }
+
+  p_mcr->use_heap = heapID;
   p_mcr->clact.clactSet = pUnit;
   p_mcr->clact.renddata = renddata;
 
-  
-//	p_mcr->p_bgl	= p_bgl;
-	
-	WcrClactInit( &p_mcr->clact, p_mcr->use_heap, p_handle );
 
-	// BGL　初期化
-	WcrBgContInit( p_mcr->p_bgl, heapID );
+  //	p_mcr->p_bgl	= p_bgl;
 
-	// マップデータ初期化
-	map_siz = WcrMapGridSizGet( map_no );
-	p_mcr->p_mapsys = WF2DMAP_MAPSysInit( map_siz.x, map_siz.y, heapID );
-	WF2DMAP_MAPSysDataSet( p_mcr->p_mapsys, WcrMapDataGet( map_no ) );
+  WcrClactInit( &p_mcr->clact, p_mcr->use_heap, p_handle );
 
-	// オブジェクト管理システム作成
-	p_mcr->p_objsys = WF2DMAP_OBJSysInit( MCR_MOVEOBJNUM, heapID );
+  // BGL　初期化
+  WcrBgContInit( p_mcr->p_bgl, heapID );
 
-	// オブジェクト表示システム生成
-	WcrObjDrawInit( p_mcr, hero_view, heapID );
+  // マップデータ初期化
+  map_siz = WcrMapGridSizGet( map_no );
+  p_mcr->p_mapsys = WF2DMAP_MAPSysInit( map_siz.x, map_siz.y, heapID );
+  WF2DMAP_MAPSysDataSet( p_mcr->p_mapsys, WcrMapDataGet( map_no ) );
 
-	// スクロールデータ初期化
-	WF2DMAP_SCROLLSysDataInit( &p_mcr->scroll );
+  // オブジェクト管理システム作成
+  p_mcr->p_objsys = WF2DMAP_OBJSysInit( MCR_MOVEOBJNUM, heapID );
 
-	// スクロール描画システム初期化
-	WcrScrnDrawInit( p_mcr, heapID, p_handle, map_no );
-	WcrBgSet( p_mcr->p_bgl, heapID, p_handle,arcID );
+  // オブジェクト表示システム生成
+  WcrObjDrawInit( p_mcr, hero_view, heapID );
 
-	// PCあにめ初期化
-	WcrPCANM_Init( p_mcr, &p_mcr->pc_anm, p_handle,arcID );
+  // スクロールデータ初期化
+  WF2DMAP_SCROLLSysDataInit( &p_mcr->scroll );
 
-	// リクエストコマンドキュー生成
-	p_mcr->p_reqcmdQ = WF2DMAP_REQCMDQSysInit( MCR_REQCMDQ_NUM, heapID );
-	
-	// 初期化完了
-	p_mcr->init = TRUE;
+  // スクロール描画システム初期化
+  WcrScrnDrawInit( p_mcr, heapID, p_handle, map_no );
+  WcrBgSet( p_mcr->p_bgl, heapID, p_handle,arcID );
+
+  // PCあにめ初期化
+  WcrPCANM_Init( p_mcr, &p_mcr->pc_anm, p_handle,arcID );
+
+  // リクエストコマンドキュー生成
+  p_mcr->p_reqcmdQ = WF2DMAP_REQCMDQSysInit( MCR_REQCMDQ_NUM, heapID );
+
+  // 初期化完了
+  p_mcr->init = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -353,48 +357,48 @@ void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 
 //-----------------------------------------------------------------------------
 void WIFI_MCR_Dest( WIFI_MATCHROOM* p_mcr )
 {
-	// リクエストコマンドキュー破棄
-	WF2DMAP_REQCMDQSysExit( p_mcr->p_reqcmdQ );
-	
-	// スクロール描画システムはき
-	WcrScrnDrawExit( p_mcr );
+  // リクエストコマンドキュー破棄
+  WF2DMAP_REQCMDQSysExit( p_mcr->p_reqcmdQ );
 
-	// PCあにめ破棄
-	WcrPCANM_Delete( p_mcr, &p_mcr->pc_anm );
+  // スクロール描画システムはき
+  WcrScrnDrawExit( p_mcr );
 
-	// 全動作オブジェクト破棄
-	WcrMoveObjAllDel( p_mcr );
+  // PCあにめ破棄
+  WcrPCANM_Delete( p_mcr, &p_mcr->pc_anm );
 
-	// オブジェクト表示システム破棄
-	WcrObjDrawExit( p_mcr );
+  // 全動作オブジェクト破棄
+  WcrMoveObjAllDel( p_mcr );
 
-	// オブジェクトシステムはき
-	WF2DMAP_OBJSysExit( p_mcr->p_objsys );
+  // オブジェクト表示システム破棄
+  WcrObjDrawExit( p_mcr );
 
-	// マップデータはき
-	WF2DMAP_MAPSysExit( p_mcr->p_mapsys );
+  // オブジェクトシステムはき
+  WF2DMAP_OBJSysExit( p_mcr->p_objsys );
 
-	// セルアクター破棄
-	WcrClactDest( &p_mcr->clact );
+  // マップデータはき
+  WF2DMAP_MAPSysExit( p_mcr->p_mapsys );
 
-	// BGL破棄
-	WcrBgContDest( p_mcr->p_bgl );
+  // セルアクター破棄
+  WcrClactDest( &p_mcr->clact );
 
-	GFL_STD_MemFill( p_mcr, 0, sizeof(WIFI_MATCHROOM) );
+  // BGL破棄
+  WcrBgContDest( p_mcr->p_bgl );
+
+  GFL_STD_MemFill( p_mcr, 0, sizeof(WIFI_MATCHROOM) );
 }
 
 //----------------------------------------------------------------------------
 /**
  *	@brief
  *
- *	@param	const WIFI_MATCHROOM* cp_mcr 
+ *	@param	const WIFI_MATCHROOM* cp_mcr
  *
  *	@return
  */
 //-----------------------------------------------------------------------------
 BOOL WIFI_MCR_GetInitFlag( const WIFI_MATCHROOM* cp_mcr )
 {
-	return cp_mcr->init;
+  return cp_mcr->init;
 }
 
 
@@ -412,64 +416,64 @@ BOOL WIFI_MCR_GetInitFlag( const WIFI_MATCHROOM* cp_mcr )
 //-----------------------------------------------------------------------------
 u32 WIFI_MCR_Main( WIFI_MATCHROOM* p_mcr )
 {
-	BOOL result;
+  BOOL result;
 
-	// オブジェクト動作
-	WF2DMAP_OBJSysMain( p_mcr->p_objsys );
+  // オブジェクト動作
+  WF2DMAP_OBJSysMain( p_mcr->p_objsys );
 
-	// コマンド発行処理
-	WcrMoveObjCmdReq( p_mcr );
+  // コマンド発行処理
+  WcrMoveObjCmdReq( p_mcr );
 
-	// コマンド判断処理＆コマンド実行処理
-	WcrMoveObjCmdJudgeAndCmdMove( p_mcr );
-	
-	// スクロール処理
-	WF2DMAP_SCRContSysMain( &p_mcr->scroll, p_mcr->p_player->p_obj );	
-	
-	// スクロール表示処理
-	WF2DMAP_SCRDrawSysMain( p_mcr->p_scrdraw, &p_mcr->scroll );	
+  // コマンド判断処理＆コマンド実行処理
+  WcrMoveObjCmdJudgeAndCmdMove( p_mcr );
 
-	// オブジェクト表示データ更新処理
-	WF2DMAP_OBJDrawSysUpdata( p_mcr->p_objdraw );
+  // スクロール処理
+  WF2DMAP_SCRContSysMain( &p_mcr->scroll, p_mcr->p_player->p_obj );
 
-	// イベントオブジェクト表示データ更新処理
-	WcrMoveObjDraw( p_mcr );
+  // スクロール表示処理
+  WF2DMAP_SCRDrawSysMain( p_mcr->p_scrdraw, &p_mcr->scroll );
 
-	// チェック前に出口を消す
-	WcrClactResEffectExitDrawOff( p_mcr );
+  // オブジェクト表示データ更新処理
+  WF2DMAP_OBJDrawSysUpdata( p_mcr->p_objdraw );
 
-	// キー入力処理
-	if( WcrMoveObjKeyInputCheck( p_mcr ) == TRUE ){
+  // イベントオブジェクト表示データ更新処理
+  WcrMoveObjDraw( p_mcr );
 
-		// 出口マットの上に立っているかチェック
-		result = WcrExitCheck( p_mcr );
+  // チェック前に出口を消す
+  WcrClactResEffectExitDrawOff( p_mcr );
 
-		if( result == TRUE ){
+  // キー入力処理
+  if( WcrMoveObjKeyInputCheck( p_mcr ) == TRUE ){
 
-			// マットの上で下を向いているので、矢印を出す
-			WcrClactResEffectExitDrawOn( p_mcr );
+    // 出口マットの上に立っているかチェック
+    result = WcrExitCheck( p_mcr );
 
-			// さらに下を押したら、部屋を出る
-		//	if( sys.cont & PAD_KEY_DOWN ){
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
-				return MCR_RET_CANCEL;
-			}
-		}
-//		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
-			// 他人を選択したかチェック
-			if( WIFI_MCR_PlayerSelect( p_mcr ) > 0 ){
-				return MCR_RET_SELECT;
+    if( result == TRUE ){
 
-			}else if( WcrMoveObjPCSelectCheck( p_mcr ) == TRUE ){
+      // マットの上で下を向いているので、矢印を出す
+      WcrClactResEffectExitDrawOn( p_mcr );
 
-				// 目の前ならPCならリストを出す
-				return MCR_RET_MYSELECT;
-			}
-		}
-	}
-	
-	return MCR_RET_NONE;
+      // さらに下を押したら、部屋を出る
+      //	if( sys.cont & PAD_KEY_DOWN ){
+      if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
+        return MCR_RET_CANCEL;
+      }
+    }
+    //		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+      // 他人を選択したかチェック
+      if( WIFI_MCR_PlayerSelect( p_mcr ) > 0 ){
+        return MCR_RET_SELECT;
+
+      }else if( WcrMoveObjPCSelectCheck( p_mcr ) == TRUE ){
+
+        // 目の前ならPCならリストを出す
+        return MCR_RET_MYSELECT;
+      }
+    }
+  }
+
+  return MCR_RET_NONE;
 }
 
 //----------------------------------------------------------------------------
@@ -481,9 +485,9 @@ u32 WIFI_MCR_Main( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 void WIFI_MCR_Draw( WIFI_MATCHROOM* p_mcr )
 {
-	if( p_mcr->init ){
-//		CLACT_Draw( p_mcr->clact.clactSet );
-	}
+  if( p_mcr->init ){
+    //		CLACT_Draw( p_mcr->clact.clactSet );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -495,8 +499,8 @@ void WIFI_MCR_Draw( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 u8 WIFI_MCR_PlayerSelect( const WIFI_MATCHROOM* cp_mcr )
 {
-	GF_ASSERT( cp_mcr->p_player != NULL );	// 主人公がいるのか？
-	return cp_mcr->p_player->accesFriend;
+  GF_ASSERT( cp_mcr->p_player != NULL );	// 主人公がいるのか？
+  return cp_mcr->p_player->accesFriend;
 }
 
 //----------------------------------------------------------------------------
@@ -510,12 +514,12 @@ u8 WIFI_MCR_PlayerSelect( const WIFI_MATCHROOM* cp_mcr )
 //-----------------------------------------------------------------------------
 u32 WIFI_MCR_GetPlayerOnMapParam( const WIFI_MATCHROOM* cp_mcr )
 {
-	WF2DMAP_POS pos;
-	
-	GF_ASSERT( cp_mcr->p_player != NULL );	// 主人公がいるのか？
+  WF2DMAP_POS pos;
 
-	pos = WF2DMAP_OBJWkMatrixGet( cp_mcr->p_player->p_obj );
-	return WF2DMAP_MAPSysParamGet( cp_mcr->p_mapsys, WF2DMAP_POS2GRID(pos.x), WF2DMAP_POS2GRID(pos.y) );
+  GF_ASSERT( cp_mcr->p_player != NULL );	// 主人公がいるのか？
+
+  pos = WF2DMAP_OBJWkMatrixGet( cp_mcr->p_player->p_obj );
+  return WF2DMAP_MAPSysParamGet( cp_mcr->p_mapsys, WF2DMAP_POS2GRID(pos.x), WF2DMAP_POS2GRID(pos.y) );
 }
 
 //----------------------------------------------------------------------------
@@ -529,12 +533,12 @@ u32 WIFI_MCR_GetPlayerOnMapParam( const WIFI_MATCHROOM* cp_mcr )
 //-----------------------------------------------------------------------------
 u32 WIFI_MCR_GetPlayerOnUnderMapParam( const WIFI_MATCHROOM* cp_mcr )
 {
-	WF2DMAP_POS pos;
-	
-	GF_ASSERT( cp_mcr->p_player != NULL );	// 主人公がいるのか？
+  WF2DMAP_POS pos;
 
-	pos = WF2DMAP_OBJWkMatrixGet( cp_mcr->p_player->p_obj );
-	return WF2DMAP_MAPSysParamGet( cp_mcr->p_mapsys, WF2DMAP_POS2GRID(pos.x), WF2DMAP_POS2GRID(pos.y)+1 );
+  GF_ASSERT( cp_mcr->p_player != NULL );	// 主人公がいるのか？
+
+  pos = WF2DMAP_OBJWkMatrixGet( cp_mcr->p_player->p_obj );
+  return WF2DMAP_MAPSysParamGet( cp_mcr->p_mapsys, WF2DMAP_POS2GRID(pos.x), WF2DMAP_POS2GRID(pos.y)+1 );
 }
 
 //----------------------------------------------------------------------------
@@ -547,24 +551,24 @@ u32 WIFI_MCR_GetPlayerOnUnderMapParam( const WIFI_MATCHROOM* cp_mcr )
 //-----------------------------------------------------------------------------
 void WIFI_MCR_CursorOn( WIFI_MATCHROOM* p_mcr, const MCR_MOVEOBJ* cp_obj )
 {
-	WF2DMAP_POS pos;
-	u32 pri;
-	pos = WF2DMAP_OBJWkMatrixGet( cp_obj->p_obj );
-	pri = WF2DMAP_OBJDrawWkDrawPriGet( cp_obj->p_draw );
-	pri --;
-	WcrClactResEffectCursorDrawOn( p_mcr, pos, pri-1 );
+  WF2DMAP_POS pos;
+  u32 pri;
+  pos = WF2DMAP_OBJWkMatrixGet( cp_obj->p_obj );
+  pri = WF2DMAP_OBJDrawWkDrawPriGet( cp_obj->p_draw );
+  pri --;
+  WcrClactResEffectCursorDrawOn( p_mcr, pos, pri-1 );
 }
 
 //----------------------------------------------------------------------------
 /**
  *	@brief	カーソル非表示
  *
- *	@param	p_mcr 
+ *	@param	p_mcr
  */
 //-----------------------------------------------------------------------------
 void WIFI_MCR_CursorOff( WIFI_MATCHROOM* p_mcr )
 {
-	WcrClactResEffectCursorDrawOff( p_mcr );
+  WcrClactResEffectCursorDrawOff( p_mcr );
 }
 
 //----------------------------------------------------------------------------
@@ -572,12 +576,12 @@ void WIFI_MCR_CursorOff( WIFI_MATCHROOM* p_mcr )
  *	@brief	プレイヤーの動作を停止設定する
  *
  *	@param	p_mcr		マッチングルームデータ
- *	@param	flag 
+ *	@param	flag
  */
 //-----------------------------------------------------------------------------
 void WIFI_MCR_PlayerMovePause( WIFI_MATCHROOM* p_mcr, BOOL flag )
 {
-	p_mcr->player_pause = flag;
+  p_mcr->player_pause = flag;
 }
 
 //----------------------------------------------------------------------------
@@ -592,7 +596,7 @@ void WIFI_MCR_PlayerMovePause( WIFI_MATCHROOM* p_mcr, BOOL flag )
 //-----------------------------------------------------------------------------
 BOOL WIFI_MCR_PlayerMovePauseGet( const WIFI_MATCHROOM* cp_mcr )
 {
-	return cp_mcr->player_pause;
+  return cp_mcr->player_pause;
 }
 
 
@@ -609,41 +613,41 @@ BOOL WIFI_MCR_PlayerMovePauseGet( const WIFI_MATCHROOM* cp_mcr )
 //-----------------------------------------------------------------------------
 MCR_MOVEOBJ* WIFI_MCR_SetPlayer( WIFI_MATCHROOM* p_mcr, u32 view )
 {
-	MCR_MOVEOBJ* p_obj;
-	MCR_MOVEOBJ_ONPOS pos;
+  MCR_MOVEOBJ* p_obj;
+  MCR_MOVEOBJ_ONPOS pos;
 
-	// 空いているオブジェ取得
-	p_obj = WcrMoveObj_GetClean( p_mcr );
-	
-	// 主人公は取っておく
-	p_mcr->p_player = p_obj;
+  // 空いているオブジェ取得
+  p_obj = WcrMoveObj_GetClean( p_mcr );
 
-	WcrMapGetPlayerSetPos( p_mcr, &pos );
+  // 主人公は取っておく
+  p_mcr->p_player = p_obj;
+
+  WcrMapGetPlayerSetPos( p_mcr, &pos );
 
 #ifdef MCR_DEBUG_2CCHAR_CHECK
-	// 動作設定
-	WcrMoveObj_SetUpMove( p_mcr, p_obj, &pos, 
-			MCR_MOVEOBJ_PLAYER_FRIENDNO, PLAMBRELLA, MCR_MOVEOBJ_WAY_TOP, WF2DMAP_OBJST_NONE );
-	s_MCR_DEBUG_2CCHAR_VIEW_ID = PLAMBRELLA;
+  // 動作設定
+  WcrMoveObj_SetUpMove( p_mcr, p_obj, &pos,
+                        MCR_MOVEOBJ_PLAYER_FRIENDNO, PLAMBRELLA, MCR_MOVEOBJ_WAY_TOP, WF2DMAP_OBJST_NONE );
+  s_MCR_DEBUG_2CCHAR_VIEW_ID = PLAMBRELLA;
 #else
-	// 動作設定
-	WcrMoveObj_SetUpMove( p_mcr, p_obj, &pos, 
-			MCR_MOVEOBJ_PLAYER_FRIENDNO, view, MCR_MOVEOBJ_WAY_TOP, WF2DMAP_OBJST_NONE );
+  // 動作設定
+  WcrMoveObj_SetUpMove( p_mcr, p_obj, &pos,
+                        MCR_MOVEOBJ_PLAYER_FRIENDNO, view, MCR_MOVEOBJ_WAY_TOP, WF2DMAP_OBJST_NONE );
 #endif
 
-	// プレイヤー動作設定
-	WcrMoveObj_SetMoveFuncPlayer( p_mcr, p_obj );
+  // プレイヤー動作設定
+  WcrMoveObj_SetMoveFuncPlayer( p_mcr, p_obj );
 
-	// グラフィック設定
-	WcrMoveObj_SetUpGraphic( p_mcr, p_obj, TRUE );
+  // グラフィック設定
+  WcrMoveObj_SetUpGraphic( p_mcr, p_obj, TRUE );
 
-	// プレイヤーが登録されたら一度スクロールをあわせる
-	// スクロール処理
-	WF2DMAP_SCRContSysMain( &p_mcr->scroll, p_mcr->p_player->p_obj );	
-	// スクロール表示処理
-	WF2DMAP_SCRDrawSysMain( p_mcr->p_scrdraw, &p_mcr->scroll );	
-	
-	return p_obj;
+  // プレイヤーが登録されたら一度スクロールをあわせる
+  // スクロール処理
+  WF2DMAP_SCRContSysMain( &p_mcr->scroll, p_mcr->p_player->p_obj );
+  // スクロール表示処理
+  WF2DMAP_SCRDrawSysMain( p_mcr->p_scrdraw, &p_mcr->scroll );
+
+  return p_obj;
 }
 
 //----------------------------------------------------------------------------
@@ -660,40 +664,40 @@ MCR_MOVEOBJ* WIFI_MCR_SetPlayer( WIFI_MATCHROOM* p_mcr, u32 view )
 //-----------------------------------------------------------------------------
 MCR_MOVEOBJ* WIFI_MCR_SetNpc( WIFI_MATCHROOM* p_mcr, u32 view, u8 friendNo )
 {
-	MCR_MOVEOBJ* p_obj;
-	MCR_MOVEOBJ_ONPOS pos;
-	WF2DMAP_POS hero_pos;
+  MCR_MOVEOBJ* p_obj;
+  MCR_MOVEOBJ_ONPOS pos;
+  WF2DMAP_POS hero_pos;
 
   NET_PRINT("WIFI_MCR_SetNpc%d %d\n",view, friendNo);
 
-	// 空いているオブジェ取得
-	p_obj = WcrMoveObj_GetClean( p_mcr );
-	
-	// 登録場所を探す
-	// -1しているのは主人公を０番とした友達番号構成になっているため
-	WcrMapGetNpcSetPos( p_mcr, &pos, friendNo - 1 );
+  // 空いているオブジェ取得
+  p_obj = WcrMoveObj_GetClean( p_mcr );
 
-	// その場所に主人公がいないかチェック
-	if( p_mcr->p_player ){
-		hero_pos = WF2DMAP_OBJWkMatrixGet( p_mcr->p_player->p_obj );
-		if( (hero_pos.x == pos.x) &&
-			(hero_pos.y == pos.y) ){
-			return NULL;
-		}
-	}
+  // 登録場所を探す
+  // -1しているのは主人公を０番とした友達番号構成になっているため
+  WcrMapGetNpcSetPos( p_mcr, &pos, friendNo - 1 );
 
-	// 動作設定
-	WcrMoveObj_SetUpMove( p_mcr, p_obj, &pos, 
-			friendNo, view, MCR_MOVEOBJ_WAY_BOTTOM, WF2DMAP_OBJST_BUSY );
+  // その場所に主人公がいないかチェック
+  if( p_mcr->p_player ){
+    hero_pos = WF2DMAP_OBJWkMatrixGet( p_mcr->p_player->p_obj );
+    if( (hero_pos.x == pos.x) &&
+        (hero_pos.y == pos.y) ){
+      return NULL;
+    }
+  }
 
-	// 動作関数
-	WcrMoveObj_SetMoveFuncKuruKuruInit( p_mcr, p_obj );
+  // 動作設定
+  WcrMoveObj_SetUpMove( p_mcr, p_obj, &pos,
+                        friendNo, view, MCR_MOVEOBJ_WAY_BOTTOM, WF2DMAP_OBJST_BUSY );
+
+  // 動作関数
+  WcrMoveObj_SetMoveFuncKuruKuruInit( p_mcr, p_obj );
 
 
-	// グラフィック設定
-	WcrMoveObj_SetUpGraphic( p_mcr, p_obj, FALSE );
-	
-	return p_obj;
+  // グラフィック設定
+  WcrMoveObj_SetUpGraphic( p_mcr, p_obj, FALSE );
+
+  return p_obj;
 }
 
 //----------------------------------------------------------------------------
@@ -705,23 +709,23 @@ MCR_MOVEOBJ* WIFI_MCR_SetNpc( WIFI_MATCHROOM* p_mcr, u32 view, u8 friendNo )
 //-----------------------------------------------------------------------------
 void WIFI_MCR_DelPeopleReq( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	s32 way;
+  s32 way;
 
-	way = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_WAY );
-	
-	p_obj->pMove = WcrMoveObj_MoveFuncKuruKuruDel;
-	p_obj->pDraw = WcrMoveObj_DrawFuncKuruKuru;
-	p_obj->move_st	= MCR_MOVEOBJ_ST_KURUKURU_DEL;
-	p_obj->move_count = 0;
+  way = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_WAY );
 
-	// コマンド実行OFF
-	WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, FALSE );
-	  
-	// くるくるアニメスタート
-	WF2DMAP_OBJDrawWkKuruAnimeStart( p_obj->p_draw );
+  p_obj->pMove = WcrMoveObj_MoveFuncKuruKuruDel;
+  p_obj->pDraw = WcrMoveObj_DrawFuncKuruKuru;
+  p_obj->move_st	= MCR_MOVEOBJ_ST_KURUKURU_DEL;
+  p_obj->move_count = 0;
 
-	// 忙しい状態に変更する
-	WcrMoveObj_ReqCmdSetEasy( p_mcr, WF2DMAP_OBJST_BUSY, p_obj );
+  // コマンド実行OFF
+  WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, FALSE );
+
+  // くるくるアニメスタート
+  WF2DMAP_OBJDrawWkKuruAnimeStart( p_obj->p_draw );
+
+  // 忙しい状態に変更する
+  WcrMoveObj_ReqCmdSetEasy( p_mcr, WF2DMAP_OBJST_BUSY, p_obj );
 }
 
 //----------------------------------------------------------------------------
@@ -733,13 +737,13 @@ void WIFI_MCR_DelPeopleReq( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 //-----------------------------------------------------------------------------
 void WIFI_MCR_DelPeople( MCR_MOVEOBJ* p_obj )
 {
-	// 2Dキャラクタ破棄
-	WF2DMAP_OBJDrawWkDel( p_obj->p_draw );
+  // 2Dキャラクタ破棄
+  WF2DMAP_OBJDrawWkDel( p_obj->p_draw );
 
-	// オブジェクト管理破棄
-	WF2DMAP_OBJWkDel( p_obj->p_obj );
+  // オブジェクト管理破棄
+  WF2DMAP_OBJWkDel( p_obj->p_obj );
 
-	GFL_STD_MemFill( p_obj, 0, sizeof(MCR_MOVEOBJ) );
+  GFL_STD_MemFill( p_obj, 0, sizeof(MCR_MOVEOBJ) );
 }
 
 //----------------------------------------------------------------------------
@@ -753,7 +757,7 @@ void WIFI_MCR_DelPeople( MCR_MOVEOBJ* p_obj )
 //-----------------------------------------------------------------------------
 u8	WIFI_MCR_GetFriendNo( const MCR_MOVEOBJ* cp_obj )
 {
-	return WF2DMAP_OBJWkDataGet( cp_obj->p_obj, WF2DMAP_OBJPM_PLID );
+  return WF2DMAP_OBJWkDataGet( cp_obj->p_obj, WF2DMAP_OBJPM_PLID );
 }
 
 //----------------------------------------------------------------------------
@@ -767,7 +771,7 @@ u8	WIFI_MCR_GetFriendNo( const MCR_MOVEOBJ* cp_obj )
 //-----------------------------------------------------------------------------
 u32	WIFI_MCR_GetView( const MCR_MOVEOBJ* cp_obj )
 {
-	return WF2DMAP_OBJWkDataGet( cp_obj->p_obj, WF2DMAP_OBJPM_CHARA );
+  return WF2DMAP_OBJWkDataGet( cp_obj->p_obj, WF2DMAP_OBJPM_CHARA );
 }
 
 //----------------------------------------------------------------------------
@@ -781,10 +785,10 @@ u32	WIFI_MCR_GetView( const MCR_MOVEOBJ* cp_obj )
 //-----------------------------------------------------------------------------
 WF2DMAP_WAY	WIFI_MCR_GetRetWay( const MCR_MOVEOBJ* cp_obj )
 {
-	WF2DMAP_WAY way;
+  WF2DMAP_WAY way;
 
-	way = WF2DMAP_OBJWkDataGet( cp_obj->p_obj, WF2DMAP_OBJPM_WAY );
-	return WF2DMPA_OBJToolRetWayGet( way );
+  way = WF2DMAP_OBJWkDataGet( cp_obj->p_obj, WF2DMAP_OBJPM_WAY );
+  return WF2DMPA_OBJToolRetWayGet( way );
 }
 
 //----------------------------------------------------------------------------
@@ -798,29 +802,29 @@ WF2DMAP_WAY	WIFI_MCR_GetRetWay( const MCR_MOVEOBJ* cp_obj )
 //-----------------------------------------------------------------------------
 void WIFI_MCR_NpcPauseOn( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, WF2DMAP_WAY way )
 {
-	u32 playid;
-	WF2DMAP_POS mat;
+  u32 playid;
+  WF2DMAP_POS mat;
 
-	// 今の動作関数を保存しておく
-	p_obj->pMoveTmp = p_obj->pMove;
-	p_obj->pMove = WcrMoveObj_MoveFuncNpcPause;
+  // 今の動作関数を保存しておく
+  p_obj->pMoveTmp = p_obj->pMove;
+  p_obj->pMove = WcrMoveObj_MoveFuncNpcPause;
 
-	p_obj->move_st_tmp	= p_obj->move_st;
-	p_obj->move_st		= MCR_MOVEOBJ_ST_NPC_PAUSE;
+  p_obj->move_st_tmp	= p_obj->move_st;
+  p_obj->move_st		= MCR_MOVEOBJ_ST_NPC_PAUSE;
 
-	playid = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_PLID );
-	WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_CMD_NONE, way, playid );
+  playid = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_PLID );
+  WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_CMD_NONE, way, playid );
 
-	// 表示も強制定期に変更
-	// まず更新停止
-	WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, FALSE );
-	WF2DMAP_OBJDrawWkWaySet( p_obj->p_draw, way );
+  // 表示も強制定期に変更
+  // まず更新停止
+  WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, FALSE );
+  WF2DMAP_OBJDrawWkWaySet( p_obj->p_draw, way );
 
-	// なんかしているときもあるので
-	// 座標を元に戻す
-	mat.x = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_X );
-	mat.y = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_Y );
-	WF2DMAP_OBJDrawWkMatrixSet( p_obj->p_draw, mat );
+  // なんかしているときもあるので
+  // 座標を元に戻す
+  mat.x = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_X );
+  mat.y = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_Y );
+  WF2DMAP_OBJDrawWkMatrixSet( p_obj->p_draw, mat );
 }
 
 //----------------------------------------------------------------------------
@@ -833,18 +837,18 @@ void WIFI_MCR_NpcPauseOn( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, WF2DMAP_WAY
 //-----------------------------------------------------------------------------
 void WIFI_MCR_NpcPauseOff( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	// 080708	tomoya
-	// NULLならなんもせん
-	if( p_obj == NULL ){
-		return ;
-	}
-	if( p_obj->pMoveTmp == NULL ){
-		return ;	// もうポーズ状態を回避している
-	}
-	p_obj->pMove = p_obj->pMoveTmp;
-	p_obj->pMoveTmp = NULL;
-	p_obj->move_st	= p_obj->move_st_tmp;
-	WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, TRUE );
+  // 080708	tomoya
+  // NULLならなんもせん
+  if( p_obj == NULL ){
+    return ;
+  }
+  if( p_obj->pMoveTmp == NULL ){
+    return ;	// もうポーズ状態を回避している
+  }
+  p_obj->pMove = p_obj->pMoveTmp;
+  p_obj->pMoveTmp = NULL;
+  p_obj->move_st	= p_obj->move_st_tmp;
+  WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -857,17 +861,17 @@ void WIFI_MCR_NpcPauseOff( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 //-----------------------------------------------------------------------------
 void WIFI_MCR_NpcMoveSet( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, MCR_NPC_MOVETYPE moveID )
 {
-	BOOL result;
-	
-	// くるくる動作完了しているかチェック
-	result = WcrMoveObj_MoveSetOkCheck( p_obj );
-	if( result == FALSE ){
-		// フラグだけ設定しておく
-		p_obj->moveID = moveID;
-	}else{
-		// 今設定しても大丈夫
-		WcrMoveObj_MoveSet( p_mcr, p_obj, moveID );
-	}
+  BOOL result;
+
+  // くるくる動作完了しているかチェック
+  result = WcrMoveObj_MoveSetOkCheck( p_obj );
+  if( result == FALSE ){
+    // フラグだけ設定しておく
+    p_obj->moveID = moveID;
+  }else{
+    // 今設定しても大丈夫
+    WcrMoveObj_MoveSet( p_mcr, p_obj, moveID );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -879,20 +883,20 @@ void WIFI_MCR_NpcMoveSet( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, MCR_NPC_MOV
 //-----------------------------------------------------------------------------
 void WIFI_MCR_PCAnmStart( WIFI_MATCHROOM* p_mcr )
 {
-	s8 map_param;
-	// PCの前にいるか？
-	if( WcrMoveObjPCSelectCheck( p_mcr ) == TRUE ){
-		// 何番PCか？
-		map_param = WIFI_MCR_GetPlayerOnUnderMapParam( p_mcr );
-		map_param -= MCR_MAPPM_MAP00;
-		GF_ASSERT( (map_param >= 0) && (map_param < 4) );
+  s8 map_param;
+  // PCの前にいるか？
+  if( WcrMoveObjPCSelectCheck( p_mcr ) == TRUE ){
+    // 何番PCか？
+    map_param = WIFI_MCR_GetPlayerOnUnderMapParam( p_mcr );
+    map_param -= MCR_MAPPM_MAP00;
+    GF_ASSERT( (map_param >= 0) && (map_param < 4) );
 
-		// 開始！
-		WcrPCANM_UseStart( &p_mcr->pc_anm, map_param );
-		return;
-	}
+    // 開始！
+    WcrPCANM_UseStart( &p_mcr->pc_anm, map_param );
+    return;
+  }
 
-	GF_ASSERT( 0 );
+  GF_ASSERT( 0 );
 }
 
 //----------------------------------------------------------------------------
@@ -904,7 +908,7 @@ void WIFI_MCR_PCAnmStart( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 void WIFI_MCR_PCAnmOff( WIFI_MATCHROOM* p_mcr )
 {
-	WcrPCANM_UseEndReq( &p_mcr->pc_anm );
+  WcrPCANM_UseEndReq( &p_mcr->pc_anm );
 }
 
 //----------------------------------------------------------------------------
@@ -916,8 +920,8 @@ void WIFI_MCR_PCAnmOff( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 void WIFI_MCR_PCAnmMain( WIFI_MATCHROOM* p_mcr )
 {
-	// パソコンアニメ
-	WcrPCANM_Main( p_mcr, &p_mcr->pc_anm );
+  // パソコンアニメ
+  WcrPCANM_Main( p_mcr, &p_mcr->pc_anm );
 }
 
 
@@ -936,14 +940,14 @@ void WIFI_MCR_PCAnmMain( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static void WcrMoveObjAllDel( WIFI_MATCHROOM* p_mcr )
 {
-	int i;
+  int i;
 
-	for( i=0; i<MCR_MOVEOBJNUM; i++ ){
-		if( p_mcr->moveObj[i].p_obj != NULL ){
-			WIFI_MCR_DelPeople( &p_mcr->moveObj[i] );
-		}
-	}
-}	
+  for( i=0; i<MCR_MOVEOBJNUM; i++ ){
+    if( p_mcr->moveObj[i].p_obj != NULL ){
+      WIFI_MCR_DelPeople( &p_mcr->moveObj[i] );
+    }
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -957,13 +961,13 @@ static void WcrMoveObjAllDel( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static BOOL WcrMoveObjKeyInputCheck( const WIFI_MATCHROOM* cp_mcr )
 {
-	s32 status;
+  s32 status;
 
-	status = WF2DMAP_OBJWkDataGet( cp_mcr->p_player->p_obj, WF2DMAP_OBJPM_ST );
-	if( status == WF2DMAP_OBJST_NONE ){
-		return TRUE;
-	}
-	return FALSE;
+  status = WF2DMAP_OBJWkDataGet( cp_mcr->p_player->p_obj, WF2DMAP_OBJPM_ST );
+  if( status == WF2DMAP_OBJST_NONE ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -978,23 +982,23 @@ static BOOL WcrMoveObjKeyInputCheck( const WIFI_MATCHROOM* cp_mcr )
 //-----------------------------------------------------------------------------
 static BOOL WcrMoveObjPCSelectCheck( const WIFI_MATCHROOM* cp_mcr )
 {
-	u32 param;
-	WF2DMAP_POS pos;
-	WF2DMAP_WAY way;
+  u32 param;
+  WF2DMAP_POS pos;
+  WF2DMAP_WAY way;
 
-	pos = WF2DMAP_OBJWkMatrixGet( cp_mcr->p_player->p_obj );
-	way = WF2DMAP_OBJWkDataGet( cp_mcr->p_player->p_obj, WF2DMAP_OBJPM_WAY );
-	pos = WF2DMAP_OBJToolWayPosGet( pos, way );
-	param = WF2DMAP_MAPSysParamGet( cp_mcr->p_mapsys, WF2DMAP_POS2GRID(pos.x), WF2DMAP_POS2GRID(pos.y) );
+  pos = WF2DMAP_OBJWkMatrixGet( cp_mcr->p_player->p_obj );
+  way = WF2DMAP_OBJWkDataGet( cp_mcr->p_player->p_obj, WF2DMAP_OBJPM_WAY );
+  pos = WF2DMAP_OBJToolWayPosGet( pos, way );
+  param = WF2DMAP_MAPSysParamGet( cp_mcr->p_mapsys, WF2DMAP_POS2GRID(pos.x), WF2DMAP_POS2GRID(pos.y) );
 
-	// 上を向いている必要がある
-	if( way == WF2DMAP_WAY_UP ){
-		if( param == MCR_MAPPM_PC ){
-			return TRUE;
-		}
-	}
+  // 上を向いている必要がある
+  if( way == WF2DMAP_WAY_UP ){
+    if( param == MCR_MAPPM_PC ){
+      return TRUE;
+    }
+  }
 
-	return FALSE;
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1006,17 +1010,17 @@ static BOOL WcrMoveObjPCSelectCheck( const WIFI_MATCHROOM* cp_mcr )
 //-----------------------------------------------------------------------------
 static void WcrMoveObjCmdJudgeAndCmdMove( WIFI_MATCHROOM* p_mcr )
 {
-	WF2DMAP_REQCMD req;
-	WF2DMAP_ACTCMD act;
-	BOOL result;
+  WF2DMAP_REQCMD req;
+  WF2DMAP_ACTCMD act;
+  BOOL result;
 
-	// コマンドが間コマンドを実行
-	while( WF2DMAP_REQCMDQSysCmdPop( p_mcr->p_reqcmdQ, &req ) == TRUE ){
-		result = WF2DMAP_JUDGESysCmdJudge( p_mcr->p_mapsys, p_mcr->p_objsys, &req, &act );
-		if( result == TRUE ){
-			WF2DMAP_OBJSysCmdSet( p_mcr->p_objsys, &act );
-		}
-	}
+  // コマンドが間コマンドを実行
+  while( WF2DMAP_REQCMDQSysCmdPop( p_mcr->p_reqcmdQ, &req ) == TRUE ){
+    result = WF2DMAP_JUDGESysCmdJudge( p_mcr->p_mapsys, p_mcr->p_objsys, &req, &act );
+    if( result == TRUE ){
+      WF2DMAP_OBJSysCmdSet( p_mcr->p_objsys, &act );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1028,20 +1032,20 @@ static void WcrMoveObjCmdJudgeAndCmdMove( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static void WcrMoveObjCmdReq( WIFI_MATCHROOM* p_mcr )
 {
-	// 動作関数をまわす
-	int i;
-	BOOL ret;
+  // 動作関数をまわす
+  int i;
+  BOOL ret;
 
-	for( i=0; i<MCR_MOVEOBJNUM; i++ ){
-		if( p_mcr->moveObj[i].p_obj != NULL ){
-			
-			ret = p_mcr->moveObj[i].pMove( p_mcr, &p_mcr->moveObj[i] );
-			if( ret == TRUE ){
-				// 破棄
-				WIFI_MCR_DelPeople( &p_mcr->moveObj[i] );
-			}
-		}
-	}
+  for( i=0; i<MCR_MOVEOBJNUM; i++ ){
+    if( p_mcr->moveObj[i].p_obj != NULL ){
+
+      ret = p_mcr->moveObj[i].pMove( p_mcr, &p_mcr->moveObj[i] );
+      if( ret == TRUE ){
+        // 破棄
+        WIFI_MCR_DelPeople( &p_mcr->moveObj[i] );
+      }
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1053,13 +1057,13 @@ static void WcrMoveObjCmdReq( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static void WcrMoveObjDraw( WIFI_MATCHROOM* p_mcr )
 {
-	int i;
+  int i;
 
-	for( i=0; i<MCR_MOVEOBJNUM; i++ ){
-		if( p_mcr->moveObj[i].p_obj != NULL ){
-			p_mcr->moveObj[i].pDraw( p_mcr, &p_mcr->moveObj[i] );
-		}
-	}
+  for( i=0; i<MCR_MOVEOBJNUM; i++ ){
+    if( p_mcr->moveObj[i].p_obj != NULL ){
+      p_mcr->moveObj[i].pDraw( p_mcr, &p_mcr->moveObj[i] );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1073,22 +1077,22 @@ static void WcrMoveObjDraw( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static const MCR_MOVEOBJ* WcrMoveObjGetHitCheck( const WIFI_MATCHROOM* cp_mcr, const MCR_MOVEOBJ* cp_obj, WF2DMAP_WAY way )
 {
-	const WF2DMAP_OBJWK* cp_wk;
-	int i;
-	
+  const WF2DMAP_OBJWK* cp_wk;
+  int i;
 
-	cp_wk = WF2DMAP_OBJSysHitCheck( cp_obj->p_obj, cp_mcr->p_objsys, way );
-	
-	if( cp_wk != NULL ){
-		// そのオブジェを持ってるオブジェを探す
-		for( i=0; i<MCR_MOVEOBJNUM; i++ ){
-			if( cp_mcr->moveObj[i].p_obj == cp_wk ){
-				return &cp_mcr->moveObj[i];
-			}
-		}
-	}
 
-	return NULL;
+  cp_wk = WF2DMAP_OBJSysHitCheck( cp_obj->p_obj, cp_mcr->p_objsys, way );
+
+  if( cp_wk != NULL ){
+    // そのオブジェを持ってるオブジェを探す
+    for( i=0; i<MCR_MOVEOBJNUM; i++ ){
+      if( cp_mcr->moveObj[i].p_obj == cp_wk ){
+        return &cp_mcr->moveObj[i];
+      }
+    }
+  }
+
+  return NULL;
 }
 
 //----------------------------------------------------------------------------
@@ -1101,21 +1105,21 @@ static const MCR_MOVEOBJ* WcrMoveObjGetHitCheck( const WIFI_MATCHROOM* cp_mcr, c
 //-----------------------------------------------------------------------------
 static void WcrObjDrawInit( WIFI_MATCHROOM* p_mcr, u32 hero_view, u32 heapID )
 {
-	int i;
-	
+  int i;
+
 #ifdef MCR_DEBUG_2CCHAR_CHECK
-	p_mcr->p_objdraw = WF2DMAP_OBJDrawSysInit( p_mcr->clact.clactSet, NULL, MCR_MOVEOBJNUM, 
-			CLSYS_DRAW_MAIN, heapID );
+  p_mcr->p_objdraw = WF2DMAP_OBJDrawSysInit( p_mcr->clact.clactSet, NULL, MCR_MOVEOBJNUM,
+                                             CLSYS_DRAW_MAIN, heapID );
 
 
-	WF2DMAP_OBJDrawSysResSet( p_mcr->p_objdraw, PLAMBRELLA, WF_2DC_MOVENORMAL, heapID );
+  WF2DMAP_OBJDrawSysResSet( p_mcr->p_objdraw, PLAMBRELLA, WF_2DC_MOVENORMAL, heapID );
 #else
-	p_mcr->p_objdraw = WF2DMAP_OBJDrawSysInit_Shadow( p_mcr->clact.clactSet, NULL, MCR_MOVEOBJNUM, 
-			hero_view, WF_2DC_MOVERUN, CLSYS_DRAW_MAIN/*NNS_G2D_VRAM_TYPE_2DMAIN*/, heapID );
+  p_mcr->p_objdraw = WF2DMAP_OBJDrawSysInit_Shadow( p_mcr->clact.clactSet, NULL, MCR_MOVEOBJNUM,
+                                                    hero_view, WF_2DC_MOVERUN, CLSYS_DRAW_MAIN/*NNS_G2D_VRAM_TYPE_2DMAIN*/, heapID );
 
-	// キャラクタデータの登録
-	// UNIONキャラクタ
-	WF2DMAP_OBJDrawSysUniResSet( p_mcr->p_objdraw, WF_2DC_MOVETURN, heapID );	
+  // キャラクタデータの登録
+  // UNIONキャラクタ
+  WF2DMAP_OBJDrawSysUniResSet( p_mcr->p_objdraw, WF_2DC_MOVETURN, heapID );
 #endif
 
 
@@ -1130,7 +1134,7 @@ static void WcrObjDrawInit( WIFI_MATCHROOM* p_mcr, u32 hero_view, u32 heapID )
 //-----------------------------------------------------------------------------
 static void WcrObjDrawExit( WIFI_MATCHROOM* p_mcr )
 {
-	WF2DMAP_OBJDrawSysExit( p_mcr->p_objdraw );
+  WF2DMAP_OBJDrawSysExit( p_mcr->p_objdraw );
 }
 
 //----------------------------------------------------------------------------
@@ -1144,29 +1148,29 @@ static void WcrObjDrawExit( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static void WcrScrnDrawInit( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 map_no )
 {
-	WF2DMAP_SCRDRAWINIT init = {
-		CLSYS_DRAW_MAIN,
-		GFL_BG_FRAME0_M,
-		GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xe000,
-		GX_BG_CHARBASE_0x00000,
-		GX_BG_EXTPLTT_01,
-		MCR_MOVEOBJ_BG_PRI,
-		FALSE,
-		ARCID_WIFIP2PMATCH,
-		NARC_wifip2pmatch_wf_match_top_room_1_NSCR,
-		FALSE
-	};
+  WF2DMAP_SCRDRAWINIT init = {
+    CLSYS_DRAW_MAIN,
+    GFL_BG_FRAME0_M,
+    GX_BG_COLORMODE_16,
+    GX_BG_SCRBASE_0xe000,
+    GX_BG_CHARBASE_0x00000,
+    GX_BG_EXTPLTT_01,
+    MCR_MOVEOBJ_BG_PRI,
+    FALSE,
+    ARCID_WIFIP2PMATCH,
+    NARC_wifip2pmatch_wf_match_top_room_1_NSCR,
+    FALSE
+    };
 
-	// グラフィックデータを設定
-	init.dataid_scrn += map_no;
+  // グラフィックデータを設定
+  init.dataid_scrn += map_no;
 
-//  p_mcr->clact.renddata =  GFL_CLACT_USERREND_Create( sini, NELEMS(sini), heapID );
-//  GFL_CLACT_UNIT_SetUserRend(p_mcr->clact.clactSet, p_mcr->clact.renddata);
+  //  p_mcr->clact.renddata =  GFL_CLACT_USERREND_Create( sini, NELEMS(sini), heapID );
+  //  GFL_CLACT_UNIT_SetUserRend(p_mcr->clact.clactSet, p_mcr->clact.renddata);
 
- // p_mcr->clact.renddata=testGFLCLACT(p_mcr->clact.clactSet);
+  // p_mcr->clact.renddata=testGFLCLACT(p_mcr->clact.clactSet);
   p_mcr->p_scrdraw = WF2DMAP_SCRDrawSysInit( //testGFLCLACT(p_mcr->clact.clactSet),
-                                                 p_mcr->clact.renddata,
+                                             p_mcr->clact.renddata,
                                              p_mcr->p_bgl, &init, heapID );
 }
 
@@ -1175,11 +1179,11 @@ static void WcrScrnDrawInit( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_han
  *	@brief	スクロール表示システム破棄
  *
  *	@param	p_mcr		ワーク
- */	
+ */
 //-----------------------------------------------------------------------------
 static void WcrScrnDrawExit( WIFI_MATCHROOM* p_mcr )
 {
-	WF2DMAP_SCRDrawSysExit( p_mcr->p_scrdraw );
+  WF2DMAP_SCRDrawSysExit( p_mcr->p_scrdraw );
 }
 
 
@@ -1195,30 +1199,30 @@ static void WcrScrnDrawExit( WIFI_MATCHROOM* p_mcr )
 static void WcrClactInit( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 {
 
-	// 人物リソース読み込みとキャラクタパレットの転送
-	// エフェクトリソース読み込みとキャラクタパレットの転送
-	WcrClactResLoad( p_clact, heapID, p_handle );
+  // 人物リソース読み込みとキャラクタパレットの転送
+  // エフェクトリソース読み込みとキャラクタパレットの転送
+  WcrClactResLoad( p_clact, heapID, p_handle );
 
-	// アクターの登録
-	WcrClactAdd( p_clact, heapID );
+  // アクターの登録
+  WcrClactAdd( p_clact, heapID );
 }
 
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターデータ破棄
- *	
+ *
  *	@param	p_clact		セルアクターワーク
  */
 //-----------------------------------------------------------------------------
 static void WcrClactDest( MCR_CLACT* p_clact )
 {
-	int i;
+  int i;
 
-	// アクターの破棄
-	WcrClactDel( p_clact );
-	
-	// リソース破棄
-	WcrClactResRelease( p_clact );
+  // アクターの破棄
+  WcrClactDel( p_clact );
+
+  // リソース破棄
+  WcrClactResRelease( p_clact );
 
 
 }
@@ -1234,8 +1238,8 @@ static void WcrClactDest( MCR_CLACT* p_clact )
 //-----------------------------------------------------------------------------
 static void WcrClactResLoad( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 {
-	//　エフェクトリソース読込み
-	WcrClactResEffectLoad( p_clact, heapID, p_handle );
+  //　エフェクトリソース読込み
+  WcrClactResEffectLoad( p_clact, heapID, p_handle );
 }
 
 //----------------------------------------------------------------------------
@@ -1247,8 +1251,8 @@ static void WcrClactResLoad( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle
 //-----------------------------------------------------------------------------
 static void WcrClactResRelease( MCR_CLACT* p_clact )
 {
-	// エフェクトリソース破棄
-	WcrClactResEffectRelease( p_clact );
+  // エフェクトリソース破棄
+  WcrClactResEffectRelease( p_clact );
 }
 
 //----------------------------------------------------------------------------
@@ -1261,19 +1265,19 @@ static void WcrClactResRelease( MCR_CLACT* p_clact )
 //-----------------------------------------------------------------------------
 static void WcrClactAdd( MCR_CLACT* p_clact, u32 heapID )
 {
-	WcrClactResEffectAdd( p_clact, heapID );
+  WcrClactResEffectAdd( p_clact, heapID );
 }
 
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターワーク破棄
- *	
+ *
  *	@param	p_clact		セルアクターデータワーク
  */
 //-----------------------------------------------------------------------------
 static void WcrClactDel( MCR_CLACT* p_clact )
 {
-	WcrClactResEffectDel( p_clact );
+  WcrClactResEffectDel( p_clact );
 }
 
 //----------------------------------------------------------------------------
@@ -1310,24 +1314,24 @@ static void WcrBgContDest( GFL_BG_INI* p_bgl )
 //-----------------------------------------------------------------------------
 static void WcrBgSet( GFL_BG_INI* p_bgl, u32 heapID, ARCHANDLE* p_handle,ARCID arcID )
 {
-	// パレット転送
-	// 使用してよいパレットはMAX　8
-//	ArcUtil_HDL_PalSet( p_handle, NARC_wifip2pmatch_wf_match_top_room_NCLR, PALTYPE_MAIN_BG, 0, 8*32, heapID );	
+  // パレット転送
+  // 使用してよいパレットはMAX　8
+  //	ArcUtil_HDL_PalSet( p_handle, NARC_wifip2pmatch_wf_match_top_room_NCLR, PALTYPE_MAIN_BG, 0, 8*32, heapID );
 
-    GFL_ARC_UTIL_TransVramPalette(arcID , NARC_wifip2pmatch_wf_match_top_room_NCLR,
-                                  PALTYPE_MAIN_BG, 0, 8*32, heapID);
+  GFL_ARC_UTIL_TransVramPalette(arcID , NARC_wifip2pmatch_wf_match_top_room_NCLR,
+                                PALTYPE_MAIN_BG, 0, 8*32, heapID);
 
-    // バックグラウンドカラーは変えない
-	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0 );
+  // バックグラウンドカラーは変えない
+  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0 );
 
-    // メイン画面BG2キャラ転送
-//    ArcUtil_HDL_BgCharSet( p_handle, NARC_wifip2pmatch_wf_match_top_room_NCGR, p_bgl,
+  // メイン画面BG2キャラ転送
+  //    ArcUtil_HDL_BgCharSet( p_handle, NARC_wifip2pmatch_wf_match_top_room_NCGR, p_bgl,
   //                     GF_BGL_FRAME0_M, 0, 0, 0, heapID);
 
-    GFL_ARC_UTIL_TransVramBgCharacter( arcID, NARC_wifip2pmatch_wf_match_top_room_NCGR,
-                                       GFL_BG_FRAME0_M, 0, 0, FALSE, heapID);
+  GFL_ARC_UTIL_TransVramBgCharacter( arcID, NARC_wifip2pmatch_wf_match_top_room_NCGR,
+                                     GFL_BG_FRAME0_M, 0, 0, FALSE, heapID);
 
-    /*
+  /*
     // メイン画面BG2スクリーン転送
     ArcUtil_HDL_ScrnSet(   p_handle, NARC_wifip2pmatch_wf_match_top_room_1_NSCR+map_no, p_bgl,
                        GF_BGL_FRAME0_M, 0, 0, 0, heapID);
@@ -1345,69 +1349,20 @@ static void WcrBgSet( GFL_BG_INI* p_bgl, u32 heapID, ARCHANDLE* p_handle,ARCID a
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectLoad( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 {
-#if 0
-    BOOL result;
-	
-	p_clact->effect.resobj[0] = 
-		CLACT_U_ResManagerResAddArcChar_ArcHandle( p_clact->resMan[0], 
-				p_handle, NARC_wifip2pmatch_wf_match_top_room_obj_NCGR,
-				FALSE, MCR_EFFECTRES_CONTID, NNS_G2D_VRAM_TYPE_2DMAIN, heapID );
 
-	p_clact->effect.resobj[1] = 
-		CLACT_U_ResManagerResAddArcPltt_ArcHandle( p_clact->resMan[1], 
-				p_handle, NARC_wifip2pmatch_wf_match_top_room_obj_NCLR,
-				FALSE, MCR_EFFECTRES_CONTID, NNS_G2D_VRAM_TYPE_2DMAIN, 1, heapID );
-
-	p_clact->effect.resobj[2] = 
-		CLACT_U_ResManagerResAddArcKindCell_ArcHandle( p_clact->resMan[2], 
-				p_handle, NARC_wifip2pmatch_wf_match_top_room_obj_NCER,
-				FALSE, MCR_EFFECTRES_CONTID, CLACT_U_CELL_RES, heapID );
-
-	p_clact->effect.resobj[3] = 
-		CLACT_U_ResManagerResAddArcKindCell_ArcHandle( p_clact->resMan[3], 
-				p_handle, NARC_wifip2pmatch_wf_match_top_room_obj_NANR,
-				FALSE, MCR_EFFECTRES_CONTID, CLACT_U_CELLANM_RES, heapID );
-
-	// Vram転送
-	result = CLACT_U_CharManagerSetAreaCont( p_clact->effect.resobj[0] );
-	GF_ASSERT( result == TRUE );
-	result = CLACT_U_PlttManagerSetCleanArea( p_clact->effect.resobj[1] );
-	GF_ASSERT( result == TRUE );
-	
-	// メモリからリソースを破棄
-	CLACT_U_ResManagerResOnlyDelete( p_clact->effect.resobj[0] );
-	CLACT_U_ResManagerResOnlyDelete( p_clact->effect.resobj[1] );
-
-	// ヘッダー作成
-	CLACT_U_MakeHeader( &p_clact->effect.header, 
-			 MCR_EFFECTRES_CONTID, MCR_EFFECTRES_CONTID, 
-			 MCR_EFFECTRES_CONTID, MCR_EFFECTRES_CONTID,
-			 CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
-			 0, MCR_EFFECTRES_BGPRI, 
-			 p_clact->resMan[0], p_clact->resMan[1],
-			 p_clact->resMan[2], p_clact->resMan[3],
-			 NULL, NULL );
-
-#endif
-
-    p_clact->effect.CGRid = GFL_CLGRP_CGR_Register(p_handle,
-                                      NARC_wifip2pmatch_wf_match_top_room_obj_NCGR,
-                                      FALSE,CLSYS_DRAW_MAIN, heapID);
-
-//    p_clact->effect.CLRid = GFL_CLGRP_PLTT_Register(p_handle,
-  //                                    NARC_wifip2pmatch_wf_match_top_room_obj_NCLR,
-    //                                  CLSYS_DRAW_MAIN, 0, heapID);
+  p_clact->effect.CGRid = GFL_CLGRP_CGR_Register(p_handle,
+                                                 NARC_wifip2pmatch_wf_match_top_room_obj_NCGR,
+                                                 FALSE,CLSYS_DRAW_MAIN, heapID);
 
   p_clact->effect.CLRid = GFL_CLGRP_PLTT_RegisterEx(p_handle,
                                                     NARC_wifip2pmatch_wf_match_top_room_obj_NCLR,
-                                                    CLSYS_DRAW_MAIN, 10*0x20, 0, 1, heapID);
+                                                    CLSYS_DRAW_MAIN, MCR_OTHEROAM_PALL_START * 0x20, 0, MCR_OTHEROAM_PALL_NUM, heapID);
 
 
-  
-    p_clact->effect.CERid = GFL_CLGRP_CELLANIM_Register(p_handle,
-                                           NARC_wifip2pmatch_wf_match_top_room_obj_NCER,
-                                           NARC_wifip2pmatch_wf_match_top_room_obj_NANR,
-                                           heapID);
+  p_clact->effect.CERid = GFL_CLGRP_CELLANIM_Register(p_handle,
+                                                      NARC_wifip2pmatch_wf_match_top_room_obj_NCER,
+                                                      NARC_wifip2pmatch_wf_match_top_room_obj_NANR,
+                                                      heapID);
 
 
 }
@@ -1421,18 +1376,11 @@ static void WcrClactResEffectLoad( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectRelease( MCR_CLACT* p_clact )
 {
-	int i;
+  int i;
 
-//	CLACT_U_CharManagerDelete( p_clact->effect.resobj[0] );
-//	CLACT_U_PlttManagerDelete( p_clact->effect.resobj[1] );
-	
-//	for( i=0; i<4; i++ ){
-//		CLACT_U_ResManagerResDelete( p_clact->resMan[i], p_clact->effect.resobj[i] );
-//	}
-
-    GFL_CLGRP_CGR_Release( p_clact->effect.CGRid );
-    GFL_CLGRP_PLTT_Release( p_clact->effect.CLRid );
-    GFL_CLGRP_CELLANIM_Release( p_clact->effect.CERid );
+  GFL_CLGRP_CGR_Release( p_clact->effect.CGRid );
+  GFL_CLGRP_PLTT_Release( p_clact->effect.CLRid );
+  GFL_CLGRP_CELLANIM_Release( p_clact->effect.CERid );
 
 }
 
@@ -1448,36 +1396,36 @@ static void WcrClactResEffectAdd( MCR_CLACT* p_clact, u32 heapID )
 {
   GFL_CLWK_DATA param;
 
-	param.pos_x =1;				// ｘ座標
-	param.pos_y = 1;				// ｙ座標
-	param.anmseq = 0;				// アニメーションシーケンス
-	param.softpri = MCR_EFFECTRES_SOFTPRI;			// ソフト優先順位	0>0xff
-	param.bgpri = 0;				// BG優先順位
-    
+  param.pos_x =1;				// ｘ座標
+  param.pos_y = 1;				// ｙ座標
+  param.anmseq = 0;				// アニメーションシーケンス
+  param.softpri = MCR_EFFECTRES_SOFTPRI;			// ソフト優先順位	0>0xff
+  param.bgpri = 0;				// BG優先順位
+
   p_clact->effect.exit_cursor = GFL_CLACT_WK_Create(p_clact->clactSet,
                                                     p_clact->effect.CGRid,
                                                     p_clact->effect.CLRid,
                                                     p_clact->effect.CERid,
                                                     &param,CLSYS_DRAW_MAIN,heapID);
 
-	param.anmseq = 2;				// アニメーションシーケンス
-	param.softpri = MCR_EFFECTRES_CIRCLE;			// ソフト優先順位	0>0xff
-  param.bgpri = 2;//WF2DMAP_BGPRI_DEF	(2)	// 基本ＢＧ優先順位
+  param.anmseq = 2;				// アニメーションシーケンス
+  param.softpri = MCR_EFFECTRES_CIRCLE;			// ソフト優先順位	0>0xff
+  param.bgpri = 3;//WF2DMAP_BGPRI_DEF	(2)	// 基本ＢＧ優先順位
 
   p_clact->effect.obj_waku = GFL_CLACT_WK_Create(p_clact->clactSet,
                                                  p_clact->effect.CGRid,
                                                  p_clact->effect.CLRid,
                                                  p_clact->effect.CERid,
                                                  &param,CLSYS_DRAW_MAIN,heapID);
-  
-	// 表示OFF
+
+  // 表示OFF
   GFL_CLACT_WK_SetDrawEnable( p_clact->effect.exit_cursor, FALSE );
   GFL_CLACT_WK_SetDrawEnable( p_clact->effect.obj_waku, FALSE );
 
-	// カーソルはオートアニメ
+  // カーソルはオートアニメ
   GFL_CLACT_WK_SetAutoAnmFlag( p_clact->effect.exit_cursor, TRUE );
   GFL_CLACT_WK_SetAutoAnmFlag( p_clact->effect.obj_waku, TRUE );
-  
+
 }
 
 //----------------------------------------------------------------------------
@@ -1489,11 +1437,8 @@ static void WcrClactResEffectAdd( MCR_CLACT* p_clact, u32 heapID )
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectDel( MCR_CLACT* p_clact )
 {
-//	CLACT_Delete( p_clact->effect.exit_cursor );
-//	CLACT_Delete( p_clact->effect.obj_waku );
-    
-	GFL_CLACT_WK_Remove( p_clact->effect.exit_cursor );
-	GFL_CLACT_WK_Remove( p_clact->effect.obj_waku );
+  GFL_CLACT_WK_Remove( p_clact->effect.exit_cursor );
+  GFL_CLACT_WK_Remove( p_clact->effect.obj_waku );
 }
 
 //----------------------------------------------------------------------------
@@ -1505,26 +1450,22 @@ static void WcrClactResEffectDel( MCR_CLACT* p_clact )
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectExitDrawOn( WIFI_MATCHROOM* p_mcr )
 {
-	MCR_MOVEOBJ_ONPOS pos;
-//	VecFx32 mat;
-    GFL_CLACTPOS clp;
-	
-	// 出口座標を取得 補正してアクターに設定
-	WcrMapGetPlayerSetPos( p_mcr, &pos );
+  MCR_MOVEOBJ_ONPOS pos;
+  //	VecFx32 mat;
+  GFL_CLACTPOS clp;
 
-	pos.x += MCR_EFFECTRES_OFS_X;
-	pos.y += MCR_EFFECTRES_OFS_Y;
-//	mat.x = pos.x << FX32_SHIFT;
-//	mat.y = pos.y << FX32_SHIFT;
-    clp.x = pos.x;
-    clp.y = pos.y;
-//	CLACT_SetMatrix( p_mcr->clact.effect.exit_cursor, &mat );
-	GFL_CLACT_WK_SetWldPos( p_mcr->clact.effect.exit_cursor, &clp );
-	
-	
-	// その座標で表示ON
-//	CLACT_SetDrawFlag( p_mcr->clact.effect.exit_cursor, TRUE );
-	GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.exit_cursor, TRUE );
+  // 出口座標を取得 補正してアクターに設定
+  WcrMapGetPlayerSetPos( p_mcr, &pos );
+
+  pos.x += MCR_EFFECTRES_OFS_X;
+  pos.y += MCR_EFFECTRES_OFS_Y;
+  clp.x = pos.x;
+  clp.y = pos.y;
+  GFL_CLACT_WK_SetWldPos( p_mcr->clact.effect.exit_cursor, &clp );
+
+
+  // その座標で表示ON
+  GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.exit_cursor, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -1536,8 +1477,8 @@ static void WcrClactResEffectExitDrawOn( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectExitDrawOff( WIFI_MATCHROOM* p_mcr )
 {
-//	CLACT_SetDrawFlag( p_mcr->clact.effect.exit_cursor, FALSE );
-	GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.exit_cursor, FALSE );
+  //	CLACT_SetDrawFlag( p_mcr->clact.effect.exit_cursor, FALSE );
+  GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.exit_cursor, FALSE );
 }
 
 //----------------------------------------------------------------------------
@@ -1547,38 +1488,38 @@ static void WcrClactResEffectExitDrawOff( WIFI_MATCHROOM* p_mcr )
  *	@param	p_mcr		システムワーク
  *	@param	pos			カーソル座標
  *	@param	pri			表示優先順位
- */	
+ */
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectCursorDrawOn( WIFI_MATCHROOM* p_mcr, WF2DMAP_POS pos, u32 pri )
 {
-//	VecFx32 mat;
-    GFL_CLACTPOS clp;
+  //	VecFx32 mat;
+  GFL_CLACTPOS clp;
 
-    clp.x = pos.x + MCR_EFFECTWAKURES_OFS_X;
-    clp.y = pos.y + MCR_EFFECTWAKURES_OFS_Y;
-    
-//	CLACT_SetMatrix( p_mcr->clact.effect.obj_waku, &mat );
-    GFL_CLACT_WK_SetWldPos( p_mcr->clact.effect.obj_waku, &clp);
+  clp.x = pos.x + MCR_EFFECTWAKURES_OFS_X;
+  clp.y = pos.y + MCR_EFFECTWAKURES_OFS_Y;
 
-//	CLACT_DrawPriorityChg( p_mcr->clact.effect.obj_waku, pri );
-    GFL_CLACT_WK_SetSoftPri( p_mcr->clact.effect.obj_waku, pri );
-	
-	// その座標で表示ON
-//	CLACT_SetDrawFlag( p_mcr->clact.effect.obj_waku, TRUE );
-    GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.obj_waku, TRUE );
+  //	CLACT_SetMatrix( p_mcr->clact.effect.obj_waku, &mat );
+  GFL_CLACT_WK_SetWldPos( p_mcr->clact.effect.obj_waku, &clp);
+
+  //	CLACT_DrawPriorityChg( p_mcr->clact.effect.obj_waku, pri );
+  GFL_CLACT_WK_SetSoftPri( p_mcr->clact.effect.obj_waku, pri );
+
+  // その座標で表示ON
+  //	CLACT_SetDrawFlag( p_mcr->clact.effect.obj_waku, TRUE );
+  GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.obj_waku, TRUE );
 }
 
 //----------------------------------------------------------------------------
 /**
  *	@brief	カーソルOFF
  *
- *	@param	p_mcr 
+ *	@param	p_mcr
  */
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectCursorDrawOff( WIFI_MATCHROOM* p_mcr )
 {
-//	CLACT_SetDrawFlag( p_mcr->clact.effect.obj_waku, FALSE );
-    GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.obj_waku, FALSE );
+  //	CLACT_SetDrawFlag( p_mcr->clact.effect.obj_waku, FALSE );
+  GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.obj_waku, FALSE );
 }
 
 
@@ -1595,30 +1536,30 @@ static void WcrClactResEffectCursorDrawOff( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static BOOL WcrExitCheck( WIFI_MATCHROOM* p_mcr )
 {
-	WF2DMAP_POS pos;
-	u32 map_param;
-	WF2DMAP_WAY	way;
-	
-	// 主人公がいるかチェック
-	if( p_mcr->p_player == NULL ){
-		return FALSE;
-	}
+  WF2DMAP_POS pos;
+  u32 map_param;
+  WF2DMAP_WAY	way;
 
-	// 座標を取得
-	pos = WF2DMAP_OBJWkMatrixGet( p_mcr->p_player->p_obj );
+  // 主人公がいるかチェック
+  if( p_mcr->p_player == NULL ){
+    return FALSE;
+  }
 
-	// 方向を取得
-	way = WF2DMAP_OBJWkDataGet( p_mcr->p_player->p_obj, WF2DMAP_OBJPM_WAY );
+  // 座標を取得
+  pos = WF2DMAP_OBJWkMatrixGet( p_mcr->p_player->p_obj );
 
-	// 足元のマップデータ取得
-	map_param = WF2DMAP_MAPSysParamGet( p_mcr->p_mapsys, WF2DMAP_POS2GRID(pos.x), WF2DMAP_POS2GRID(pos.y) );
+  // 方向を取得
+  way = WF2DMAP_OBJWkDataGet( p_mcr->p_player->p_obj, WF2DMAP_OBJPM_WAY );
 
-	// 出口の上で下を向いていたら終了
-	if( (map_param == MCR_MAPPM_EXIT) && (way == WF2DMAP_WAY_DOWN) ){
-		return TRUE;
-	}
+  // 足元のマップデータ取得
+  map_param = WF2DMAP_MAPSysParamGet( p_mcr->p_mapsys, WF2DMAP_POS2GRID(pos.x), WF2DMAP_POS2GRID(pos.y) );
 
-	return FALSE;
+  // 出口の上で下を向いていたら終了
+  if( (map_param == MCR_MAPPM_EXIT) && (way == WF2DMAP_WAY_DOWN) ){
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 
@@ -1633,81 +1574,81 @@ static BOOL WcrExitCheck( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static void WcrMapGetNpcSetPos( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ_ONPOS* p_pos, u32 friendNo )
 {
-	u32 block_num;
-	u32 block_idx;
-	int i, j;
-	u32 map_grid_x, map_grid_y;
-	u32 param;
-	u32 block_no;
+  u32 block_num;
+  u32 block_idx;
+  int i, j;
+  u32 map_grid_x, map_grid_y;
+  u32 param;
+  u32 block_no;
 
-	block_num = friendNo / WCR_MAPDATA_1BLOCKOBJNUM;
-	block_idx = friendNo % WCR_MAPDATA_1BLOCKOBJNUM;
+  block_num = friendNo / WCR_MAPDATA_1BLOCKOBJNUM;
+  block_idx = friendNo % WCR_MAPDATA_1BLOCKOBJNUM;
 
-	map_grid_x = WF2DMAP_MAPSysGridXGet( p_mcr->p_mapsys );
-	map_grid_y = WF2DMAP_MAPSysGridYGet( p_mcr->p_mapsys );
-	
-	// block_numのblock_idxのマップ位置を取得する
-	for( i=0; i<map_grid_y; i++ ){
-		for( j=0; j<map_grid_x; j++ ){
-			param = WF2DMAP_MAPSysParamGet( p_mcr->p_mapsys, j, i );
-			if( param == MCR_MAPPM_OBJ00+block_idx ){
-				// その下にブロックNoが入っているのでチェック
-				block_no = WF2DMAP_MAPSysParamGet( p_mcr->p_mapsys, j, i+1 );
-				if( block_no == block_num+MCR_MAPPM_MAP00 ){
-					// みつかった！
-					p_pos->x =  WF2DMAP_GRID2POS( j );
-					p_pos->y =  WF2DMAP_GRID2POS( i );
-					return ;
-				}
-			}
-		}
-	}
+  map_grid_x = WF2DMAP_MAPSysGridXGet( p_mcr->p_mapsys );
+  map_grid_y = WF2DMAP_MAPSysGridYGet( p_mcr->p_mapsys );
 
-	// なかたった
-	GF_ASSERT_MSG( 0, "frinedno=%d\n", friendNo );
+  // block_numのblock_idxのマップ位置を取得する
+  for( i=0; i<map_grid_y; i++ ){
+    for( j=0; j<map_grid_x; j++ ){
+      param = WF2DMAP_MAPSysParamGet( p_mcr->p_mapsys, j, i );
+      if( param == MCR_MAPPM_OBJ00+block_idx ){
+        // その下にブロックNoが入っているのでチェック
+        block_no = WF2DMAP_MAPSysParamGet( p_mcr->p_mapsys, j, i+1 );
+        if( block_no == block_num+MCR_MAPPM_MAP00 ){
+          // みつかった！
+          p_pos->x =  WF2DMAP_GRID2POS( j );
+          p_pos->y =  WF2DMAP_GRID2POS( i );
+          return ;
+        }
+      }
+    }
+  }
+
+  // なかたった
+  GF_ASSERT_MSG( 0, "frinedno=%d\n", friendNo );
 }
 
 //----------------------------------------------------------------------------
 /**
  *	@brief	プレイヤー登録座標を取得
- *	
+ *
  *	@param	p_mcr	システムワーク
  *	@param	p_pos	座標格納先
  */
 //-----------------------------------------------------------------------------
 static void WcrMapGetPlayerSetPos( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ_ONPOS* p_pos )
 {
-	int i, j;
-	u32 map_grid_x, map_grid_y;
-	u32 param;
+  int i, j;
+  u32 map_grid_x, map_grid_y;
+  u32 param;
 
-	map_grid_x = WF2DMAP_MAPSysGridXGet( p_mcr->p_mapsys );
-	map_grid_y = WF2DMAP_MAPSysGridYGet( p_mcr->p_mapsys );
-	
-	// block_numのblock_idxのマップ位置を取得する
-	for( i=0; i<map_grid_y; i++ ){
-		for( j=0; j<map_grid_x; j++ ){
-			param = WF2DMAP_MAPSysParamGet( p_mcr->p_mapsys, j, i );
+  map_grid_x = WF2DMAP_MAPSysGridXGet( p_mcr->p_mapsys );
+  map_grid_y = WF2DMAP_MAPSysGridYGet( p_mcr->p_mapsys );
+
+  // block_numのblock_idxのマップ位置を取得する
+  for( i=0; i<map_grid_y; i++ ){
+    for( j=0; j<map_grid_x; j++ ){
+      param = WF2DMAP_MAPSysParamGet( p_mcr->p_mapsys, j, i );
 #ifdef WFP2P_DEBUG_PLON_PC
-			if( param == MCR_MAPPM_PC ){
-				// みつかった！
-				p_pos->x =  WF2DMAP_GRID2POS( j );
-				p_pos->y =  WF2DMAP_GRID2POS( i+1 );
-				return ;
-			}
+      if( param == MCR_MAPPM_PC ){
+        // みつかった！
+        p_pos->x =  WF2DMAP_GRID2POS( j );
+        p_pos->y =  WF2DMAP_GRID2POS( i+1 );
+        return ;
+      }
 #else
-			if( param == MCR_MAPPM_EXIT ){
-				// みつかった！
-				p_pos->x =  WF2DMAP_GRID2POS( j );
-				p_pos->y =  WF2DMAP_GRID2POS( i );
-				return ;
-			}
+      if( param == MCR_MAPPM_EXIT ){
+        // みつかった！
+        p_pos->x =  WF2DMAP_GRID2POS( j );
+        p_pos->y =  WF2DMAP_GRID2POS( i );
+        return ;
+      }
 #endif
-		}
-	}
+    }
+  }
 
-	// なかたった
-	GF_ASSERT(0);
+  // なかたった
+  GF_ASSERT(0);
 }
 
 
@@ -1722,15 +1663,15 @@ static void WcrMapGetPlayerSetPos( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ_ONPOS* p_p
 //-----------------------------------------------------------------------------
 static MCR_MOVEOBJ* WcrMoveObj_GetClean( WIFI_MATCHROOM* p_mcr )
 {
-	int i;
+  int i;
 
-	for( i=0; i<MCR_MOVEOBJNUM; i++ ){
-		if( p_mcr->moveObj[i].p_obj == NULL ){
-			return &p_mcr->moveObj[i];
-		}
-	}
-	GF_ASSERT(0);
-	return NULL;
+  for( i=0; i<MCR_MOVEOBJNUM; i++ ){
+    if( p_mcr->moveObj[i].p_obj == NULL ){
+      return &p_mcr->moveObj[i];
+    }
+  }
+  GF_ASSERT(0);
+  return NULL;
 }
 
 
@@ -1745,19 +1686,19 @@ static MCR_MOVEOBJ* WcrMoveObj_GetClean( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_SetUpGraphic( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, BOOL hero )
 {
-	// 表示データの登録
-	p_obj->p_draw = WF2DMAP_OBJDrawWkNew( p_mcr->p_objdraw, p_obj->p_obj, hero, p_mcr->use_heap );
+  // 表示データの登録
+  p_obj->p_draw = WF2DMAP_OBJDrawWkNew( p_mcr->p_objdraw, p_obj->p_obj, hero, p_mcr->use_heap );
 
-	if( hero == FALSE ){
-		// まず更新停止
-		WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, FALSE );
+  if( hero == FALSE ){
+    // まず更新停止
+    WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, FALSE );
 
-		// くるくるアニメスタート
-		WF2DMAP_OBJDrawWkKuruAnimeStart( p_obj->p_draw );
+    // くるくるアニメスタート
+    WF2DMAP_OBJDrawWkKuruAnimeStart( p_obj->p_draw );
 
-		// OBJ表示OFF
-		WF2DMAP_OBJDrawWkDrawFlagSet( p_obj->p_draw, FALSE );
-	}
+    // OBJ表示OFF
+    WF2DMAP_OBJDrawWkDrawFlagSet( p_obj->p_draw, FALSE );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1775,16 +1716,16 @@ static void WcrMoveObj_SetUpGraphic( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, 
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_SetUpMove( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, const MCR_MOVEOBJ_ONPOS* cp_pos, u32 friendNo, u16 charaid, u8 way, WF2DMAP_OBJST status )
 {
-	WF2DMAP_OBJDATA add;
+  WF2DMAP_OBJDATA add;
 
-	// オブジェクト初期化
-	add.x = cp_pos->x;
-	add.y = cp_pos->y;
-	add.playid = friendNo;
-	add.status = status;
-	add.way = way;
-	add.charaid = charaid;
-	p_obj->p_obj = WF2DMAP_OBJWkNew( p_mcr->p_objsys, &add );
+  // オブジェクト初期化
+  add.x = cp_pos->x;
+  add.y = cp_pos->y;
+  add.playid = friendNo;
+  add.status = status;
+  add.way = way;
+  add.charaid = charaid;
+  p_obj->p_obj = WF2DMAP_OBJWkNew( p_mcr->p_objsys, &add );
 }
 
 //----------------------------------------------------------------------------
@@ -1799,23 +1740,23 @@ static void WcrMoveObj_SetUpMove( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, con
 //-----------------------------------------------------------------------------
 static BOOL WcrMoveObj_CheckAccess( const MCR_MOVEOBJ* cp_obj )
 {
-	switch( cp_obj->move_st ){
-	// OK
-	case MCR_MOVEOBJ_ST_PL_KEYWAIT:		// プレイヤー通常動作
-	case MCR_MOVEOBJ_ST_NPC:				// NPC動作
-	case MCR_MOVEOBJ_ST_NPC_JUMP:		// NPC募集中
-		return TRUE;
-		
-	// NG
-	case MCR_MOVEOBJ_ST_KURUKURU:		// 落ちる処理
-	case MCR_MOVEOBJ_ST_KURUKURU_DEL:	// 上る処理
-	case MCR_MOVEOBJ_ST_NPC_PAUSE:		// NPC動作停止
-		return FALSE;
-		
-	default:
-		break;
-	}
-	return FALSE;
+  switch( cp_obj->move_st ){
+    // OK
+  case MCR_MOVEOBJ_ST_PL_KEYWAIT:		// プレイヤー通常動作
+  case MCR_MOVEOBJ_ST_NPC:				// NPC動作
+  case MCR_MOVEOBJ_ST_NPC_JUMP:		// NPC募集中
+    return TRUE;
+
+    // NG
+  case MCR_MOVEOBJ_ST_KURUKURU:		// 落ちる処理
+  case MCR_MOVEOBJ_ST_KURUKURU_DEL:	// 上る処理
+  case MCR_MOVEOBJ_ST_NPC_PAUSE:		// NPC動作停止
+    return FALSE;
+
+  default:
+    break;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1827,13 +1768,13 @@ static BOOL WcrMoveObj_CheckAccess( const MCR_MOVEOBJ* cp_obj )
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_SetMoveFuncPlayer( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	p_obj->pMove = WcrMoveObj_MoveFuncPlayerKeyWait;
-	p_obj->pDraw = WcrMoveObj_DrawFuncDefault;
+  p_obj->pMove = WcrMoveObj_MoveFuncPlayerKeyWait;
+  p_obj->pDraw = WcrMoveObj_DrawFuncDefault;
 
-	p_obj->move_st	= MCR_MOVEOBJ_ST_PL_KEYWAIT;
+  p_obj->move_st	= MCR_MOVEOBJ_ST_PL_KEYWAIT;
 
-	// 状態を通常に戻す
-	WcrMoveObj_ReqCmdSetEasy( p_mcr, WF2DMAP_OBJST_NONE, p_obj );
+  // 状態を通常に戻す
+  WcrMoveObj_ReqCmdSetEasy( p_mcr, WF2DMAP_OBJST_NONE, p_obj );
 }
 
 //----------------------------------------------------------------------------
@@ -1845,11 +1786,11 @@ static void WcrMoveObj_SetMoveFuncPlayer( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_SetMoveFuncKuruKuruInit( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	p_obj->pMove = WcrMoveObj_MoveFuncKuruKuru;
-	p_obj->pDraw = WcrMoveObj_DrawFuncKuruKuru;
-	p_obj->move_count = MCR_MOVEOBJ_KURU_COUNT;
+  p_obj->pMove = WcrMoveObj_MoveFuncKuruKuru;
+  p_obj->pDraw = WcrMoveObj_DrawFuncKuruKuru;
+  p_obj->move_count = MCR_MOVEOBJ_KURU_COUNT;
 
-	p_obj->move_st	= MCR_MOVEOBJ_ST_KURUKURU;
+  p_obj->move_st	= MCR_MOVEOBJ_ST_KURUKURU;
 }
 
 //----------------------------------------------------------------------------
@@ -1861,17 +1802,17 @@ static void WcrMoveObj_SetMoveFuncKuruKuruInit( WIFI_MATCHROOM* p_mcr, MCR_MOVEO
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_SetMoveFuncNpc( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	p_obj->pMove = WcrMoveObj_MoveFuncNpc;
-	p_obj->pDraw = WcrMoveObj_DrawFuncDefault;
-	p_obj->move_count = MCR_MOVEOBJ_NPC_RAND_S + GFUser_GetPublicRand(MCR_MOVEOBJ_NPC_RAND_M);
+  p_obj->pMove = WcrMoveObj_MoveFuncNpc;
+  p_obj->pDraw = WcrMoveObj_DrawFuncDefault;
+  p_obj->move_count = MCR_MOVEOBJ_NPC_RAND_S + GFUser_GetPublicRand(MCR_MOVEOBJ_NPC_RAND_M);
 
-	p_obj->move_st	= MCR_MOVEOBJ_ST_NPC;
+  p_obj->move_st	= MCR_MOVEOBJ_ST_NPC;
 
-	// 状態を通常に戻す
-	WcrMoveObj_ReqCmdSetEasy( p_mcr, WF2DMAP_OBJST_NONE, p_obj );
+  // 状態を通常に戻す
+  WcrMoveObj_ReqCmdSetEasy( p_mcr, WF2DMAP_OBJST_NONE, p_obj );
 
-	// 描画更新有効
-	WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, TRUE );
+  // 描画更新有効
+  WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -1884,36 +1825,36 @@ static void WcrMoveObj_SetMoveFuncNpc( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_SetMoveFuncNpcJump( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	p_obj->pMove = WcrMoveObj_MoveFuncNpcJump;
-	p_obj->pDraw = WcrMoveObj_DrawFuncNpcJump;
-	p_obj->move_count = MCR_MOVEOBJ_NPC_JUMP_COUNT;
+  p_obj->pMove = WcrMoveObj_MoveFuncNpcJump;
+  p_obj->pDraw = WcrMoveObj_DrawFuncNpcJump;
+  p_obj->move_count = MCR_MOVEOBJ_NPC_JUMP_COUNT;
 
-	p_obj->move_st	= MCR_MOVEOBJ_ST_NPC_JUMP;
+  p_obj->move_st	= MCR_MOVEOBJ_ST_NPC_JUMP;
 
 
-	// 状態を通常に戻す
-	WcrMoveObj_ReqCmdSetEasy( p_mcr, WF2DMAP_OBJST_BUSY, p_obj );
+  // 状態を通常に戻す
+  WcrMoveObj_ReqCmdSetEasy( p_mcr, WF2DMAP_OBJST_BUSY, p_obj );
 
-	// 描画更新無効
-	WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, FALSE );
+  // 描画更新無効
+  WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, FALSE );
 }
 
 //----------------------------------------------------------------------------
 /**
  *	@brief	方向の逆を取得
- *		
+ *
  *	@param	way		方向
  */
 //-----------------------------------------------------------------------------
 static u32 WcrMoveObj_GetRetWay( u32 way )
 {
-	static const u32 RetWay[] = {
-		MCR_MOVEOBJ_WAY_BOTTOM,
-		MCR_MOVEOBJ_WAY_TOP,
-		MCR_MOVEOBJ_WAY_RIGHT,
-		MCR_MOVEOBJ_WAY_LEFT,
-	};
-	return RetWay[ way ];
+  static const u32 RetWay[] = {
+    MCR_MOVEOBJ_WAY_BOTTOM,
+    MCR_MOVEOBJ_WAY_TOP,
+    MCR_MOVEOBJ_WAY_RIGHT,
+    MCR_MOVEOBJ_WAY_LEFT,
+  };
+  return RetWay[ way ];
 }
 
 //----------------------------------------------------------------------------
@@ -1934,24 +1875,24 @@ static void WcrMoveObj_DrawFuncDefault( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_ob
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_DrawFuncKuruKuru( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	WF2DMAP_POS mat, shadow_mat;
+  WF2DMAP_POS mat, shadow_mat;
 
-	WF2DMAP_OBJDrawWkKuruAnimeMain( p_obj->p_draw );
+  WF2DMAP_OBJDrawWkKuruAnimeMain( p_obj->p_draw );
 
-	// 非表示なら表示にする
-	if( WF2DMAP_OBJDrawWkDrawFlagGet( p_obj->p_draw ) == FALSE ){
-		WF2DMAP_OBJDrawWkDrawFlagSet( p_obj->p_draw, TRUE );
-	}
+  // 非表示なら表示にする
+  if( WF2DMAP_OBJDrawWkDrawFlagGet( p_obj->p_draw ) == FALSE ){
+    WF2DMAP_OBJDrawWkDrawFlagSet( p_obj->p_draw, TRUE );
+  }
 
-	// 位置を上から落としてくる
-	mat.x = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_X );
-	mat.y = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_Y );
-	shadow_mat = mat;
-	mat.y += FX_Mul( GFL_CALC_Sin360( p_obj->move_count ), MCR_MOVEOBJ_KURU_DIST*FX32_ONE ) >> FX32_SHIFT;
-	WF2DMAP_OBJDrawWkMatrixSet( p_obj->p_draw, mat );
+  // 位置を上から落としてくる
+  mat.x = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_X );
+  mat.y = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_Y );
+  shadow_mat = mat;
+  mat.y += FX_Mul( GFL_CALC_Sin360( p_obj->move_count ), MCR_MOVEOBJ_KURU_DIST*FX32_ONE ) >> FX32_SHIFT;
+  WF2DMAP_OBJDrawWkMatrixSet( p_obj->p_draw, mat );
 
-	// 陰は地面の位置に出しっぱなし
-	WF2DMAP_OBJDrawWkShadowMatrixSet( p_obj->p_draw, shadow_mat );
+  // 陰は地面の位置に出しっぱなし
+  WF2DMAP_OBJDrawWkShadowMatrixSet( p_obj->p_draw, shadow_mat );
 }
 
 //----------------------------------------------------------------------------
@@ -1961,36 +1902,36 @@ static void WcrMoveObj_DrawFuncKuruKuru( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_o
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_DrawFuncNpcJump( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	u32 r;
-	WF2DMAP_POS mat, shadow_mat;
-	s16 count;
+  u32 r;
+  WF2DMAP_POS mat, shadow_mat;
+  s16 count;
 
-	mat.x = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_X );
-	mat.y = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_Y );
-	shadow_mat = mat;
+  mat.x = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_X );
+  mat.y = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_Y );
+  shadow_mat = mat;
 
-	// カウント値取得
-	count = p_obj->move_count - MCR_MOVEOBJ_NPC_JUMP_WAITCOUNT;
+  // カウント値取得
+  count = p_obj->move_count - MCR_MOVEOBJ_NPC_JUMP_WAITCOUNT;
 
-	// count > 0　だとジャンプ中	それ以外は次のジャンプまでのウエイト
-	if( count > 0 ){
+  // count > 0　だとジャンプ中	それ以外は次のジャンプまでのウエイト
+  if( count > 0 ){
 
-		count = count % MCR_MOVEOBJ_NPC_JUMP_EFFCOUNT;
+    count = count % MCR_MOVEOBJ_NPC_JUMP_EFFCOUNT;
 
-		// SINカーブの角度を取得
-		r = (MCR_MOVEOBJ_NPC_JUMP_RMAX*count) / MCR_MOVEOBJ_NPC_JUMP_EFFCOUNT;
+    // SINカーブの角度を取得
+    r = (MCR_MOVEOBJ_NPC_JUMP_RMAX*count) / MCR_MOVEOBJ_NPC_JUMP_EFFCOUNT;
 
-		// ジャンプ
-		mat.y -= FX_Mul( GFL_CALC_Sin360(r), MCR_MOVEOBJ_NPC_JUMP_DIS*FX32_ONE ) >> FX32_SHIFT;
-	}
+    // ジャンプ
+    mat.y -= FX_Mul( GFL_CALC_Sin360(r), MCR_MOVEOBJ_NPC_JUMP_DIS*FX32_ONE ) >> FX32_SHIFT;
+  }
 
-	WF2DMAP_OBJDrawWkMatrixSet( p_obj->p_draw, mat );
+  WF2DMAP_OBJDrawWkMatrixSet( p_obj->p_draw, mat );
 
-	// 陰は地面の位置に出しっぱなし
-	WF2DMAP_OBJDrawWkShadowMatrixSet( p_obj->p_draw, shadow_mat );
+  // 陰は地面の位置に出しっぱなし
+  WF2DMAP_OBJDrawWkShadowMatrixSet( p_obj->p_draw, shadow_mat );
 
-	// 下を向かせる
-	WF2DMAP_OBJDrawWkWaySet( p_obj->p_draw, WF2DMAP_WAY_DOWN );
+  // 下を向かせる
+  WF2DMAP_OBJDrawWkWaySet( p_obj->p_draw, WF2DMAP_WAY_DOWN );
 }
 
 
@@ -2007,161 +1948,161 @@ static void WcrMoveObj_DrawFuncNpcJump( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_ob
 // 主人公用
 static BOOL WcrMoveObj_MoveFuncPlayerKeyWait( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	s32 way;
-	s32 playid;
-	s32 status;
-	s32 cmd;
-	const MCR_MOVEOBJ* cp_wk;
+  s32 way;
+  s32 playid;
+  s32 status;
+  s32 cmd;
+  const MCR_MOVEOBJ* cp_wk;
 
-	way = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_WAY );
-	playid = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_PLID );
+  way = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_WAY );
+  playid = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_PLID );
 
-	// 待機状態でなければならない
-	status = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_ST );
-	if( status != WF2DMAP_OBJST_NONE ){
-		return FALSE;
-	}
+  // 待機状態でなければならない
+  status = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_ST );
+  if( status != WF2DMAP_OBJST_NONE ){
+    return FALSE;
+  }
 
 
 
-	// 選択関係
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+  // 選択関係
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 
-		// 目の前に人がいるかチェック
-		cp_wk = WcrMoveObjGetHitCheck( p_mcr, p_obj, way );
-		
-		if( cp_wk != NULL ){
-			// その人は忙しくないかチェック
-			if( WcrMoveObj_CheckAccess( cp_wk ) == TRUE ){
-				// そのfriendNOを設定
-				p_obj->accesFriend = WF2DMAP_OBJWkDataGet( cp_wk->p_obj, WF2DMAP_OBJPM_PLID );
-			}else{
-				// 通信バグ602対処	tomoya
-				p_obj->accesFriend = 0;
-			}
-		}else{
-			p_obj->accesFriend = 0;
-		}
-	}
+    // 目の前に人がいるかチェック
+    cp_wk = WcrMoveObjGetHitCheck( p_mcr, p_obj, way );
 
-	// 移動停止状態かチェック
-	if( p_mcr->player_pause == TRUE ){	
-		return FALSE;
-	}
+    if( cp_wk != NULL ){
+      // その人は忙しくないかチェック
+      if( WcrMoveObj_CheckAccess( cp_wk ) == TRUE ){
+        // そのfriendNOを設定
+        p_obj->accesFriend = WF2DMAP_OBJWkDataGet( cp_wk->p_obj, WF2DMAP_OBJPM_PLID );
+      }else{
+        // 通信バグ602対処	tomoya
+        p_obj->accesFriend = 0;
+      }
+    }else{
+      p_obj->accesFriend = 0;
+    }
+  }
 
-	// 歩くか走るか
-	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B ){
-		cmd = WF2DMAP_OBJST_RUN;
-	}else{
-		cmd = WF2DMAP_OBJST_WALK;
-	}
-	
-	// 移動関係
-	if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
-		if( way == MCR_MOVEOBJ_WAY_TOP ){
-			WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
-		}else{
-			WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_TOP, playid );
-		}
-	}else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
-		if( way == MCR_MOVEOBJ_WAY_BOTTOM ){
-			WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
-		}else{
-			WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_BOTTOM, playid );
-		}
-	}else if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
-		if( way == MCR_MOVEOBJ_WAY_LEFT ){
-			WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
-		}else{
-			WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_LEFT, playid );
-		}
-	}else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
-		if( way == MCR_MOVEOBJ_WAY_RIGHT ){
-			WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
-		}else{
-			WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_RIGHT, playid );
-		}
-	}
-	
-	return FALSE;
+  // 移動停止状態かチェック
+  if( p_mcr->player_pause == TRUE ){
+    return FALSE;
+  }
+
+  // 歩くか走るか
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B ){
+    cmd = WF2DMAP_OBJST_RUN;
+  }else{
+    cmd = WF2DMAP_OBJST_WALK;
+  }
+
+  // 移動関係
+  if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
+    if( way == MCR_MOVEOBJ_WAY_TOP ){
+      WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
+    }else{
+      WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_TOP, playid );
+    }
+  }else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
+    if( way == MCR_MOVEOBJ_WAY_BOTTOM ){
+      WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
+    }else{
+      WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_BOTTOM, playid );
+    }
+  }else if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
+    if( way == MCR_MOVEOBJ_WAY_LEFT ){
+      WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
+    }else{
+      WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_LEFT, playid );
+    }
+  }else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
+    if( way == MCR_MOVEOBJ_WAY_RIGHT ){
+      WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
+    }else{
+      WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_RIGHT, playid );
+    }
+  }
+
+  return FALSE;
 }
 
 // くるくる
 static BOOL WcrMoveObj_MoveFuncKuruKuru( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	s32 way;
-	u32 playid, myplayid;
-	
-	p_obj->move_count --;
-	if( p_obj->move_count <= 0 ){
+  s32 way;
+  u32 playid, myplayid;
 
-		// くるくるアニメ終了
-		WF2DMAP_OBJDrawWkKuruAnimeEnd( p_obj->p_draw );
+  p_obj->move_count --;
+  if( p_obj->move_count <= 0 ){
 
-		// アップデート開始
-		WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, TRUE );
+    // くるくるアニメ終了
+    WF2DMAP_OBJDrawWkKuruAnimeEnd( p_obj->p_draw );
 
-		playid = WF2DMAP_OBJWkDataGet( p_mcr->p_player->p_obj, WF2DMAP_OBJPM_PLID );
-		myplayid = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_PLID );
-		
-		// 初期化完了
-		if( myplayid == playid ){
+    // アップデート開始
+    WF2DMAP_OBJDrawWkUpdataFlagSet( p_obj->p_draw, TRUE );
 
-			// プレイヤー
-			WcrMoveObj_SetMoveFuncPlayer( p_mcr, p_obj );
-		}else{
-			// NPC
-			WcrMoveObj_MoveSet( p_mcr, p_obj, p_obj->moveID );
-		}
-	}
-	return FALSE;
+    playid = WF2DMAP_OBJWkDataGet( p_mcr->p_player->p_obj, WF2DMAP_OBJPM_PLID );
+    myplayid = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_PLID );
+
+    // 初期化完了
+    if( myplayid == playid ){
+
+      // プレイヤー
+      WcrMoveObj_SetMoveFuncPlayer( p_mcr, p_obj );
+    }else{
+      // NPC
+      WcrMoveObj_MoveSet( p_mcr, p_obj, p_obj->moveID );
+    }
+  }
+  return FALSE;
 }
 
 static BOOL WcrMoveObj_MoveFuncKuruKuruDel( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	p_obj->move_count ++;
-	if( p_obj->move_count > MCR_MOVEOBJ_KURU_COUNT ){
-		return TRUE;
-	}
-	return FALSE;
+  p_obj->move_count ++;
+  if( p_obj->move_count > MCR_MOVEOBJ_KURU_COUNT ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 // NPC動作
 static BOOL WcrMoveObj_MoveFuncNpc( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	u32 way;
-	u32 playid;
-	
-	p_obj->move_count --;
-	if( p_obj->move_count <= 0 ){
+  u32 way;
+  u32 playid;
 
-		p_obj->move_count = MCR_MOVEOBJ_NPC_RAND_S + GFUser_GetPublicRand(MCR_MOVEOBJ_NPC_RAND_M);
-	
-		// ランダムで方向を変える
-		way = GFUser_GetPublicRand(MCR_MOVEOBJ_WAY_NUM);
-			
-		// リクエストコマンド設定
-		// その方向に変更
-		playid = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_PLID );
-		WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_CMD_NONE, way, playid );
-	}
-	return FALSE;
+  p_obj->move_count --;
+  if( p_obj->move_count <= 0 ){
+
+    p_obj->move_count = MCR_MOVEOBJ_NPC_RAND_S + GFUser_GetPublicRand(MCR_MOVEOBJ_NPC_RAND_M);
+
+    // ランダムで方向を変える
+    way = GFUser_GetPublicRand(MCR_MOVEOBJ_WAY_NUM);
+
+    // リクエストコマンド設定
+    // その方向に変更
+    playid = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_PLID );
+    WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_CMD_NONE, way, playid );
+  }
+  return FALSE;
 }
 
 // NPC動作　ジャンプ
 static BOOL WcrMoveObj_MoveFuncNpcJump( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	p_obj->move_count --;
-	if( p_obj->move_count < 0 ){
-		p_obj->move_count = MCR_MOVEOBJ_NPC_JUMP_COUNT;
-	}
-	return FALSE;
+  p_obj->move_count --;
+  if( p_obj->move_count < 0 ){
+    p_obj->move_count = MCR_MOVEOBJ_NPC_JUMP_COUNT;
+  }
+  return FALSE;
 }
 
 // NPC動作停止
 static BOOL WcrMoveObj_MoveFuncNpcPause( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 {
-	return FALSE;
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -2176,12 +2117,12 @@ static BOOL WcrMoveObj_MoveFuncNpcPause( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_o
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_ReqCmdSet( WIFI_MATCHROOM* p_mcr, s32 cmd, s32 way, s32 playid )
 {
-	WF2DMAP_REQCMD reqcmd;
-	
-	reqcmd.cmd = cmd;
-	reqcmd.way = way;
-	reqcmd.playid = playid;
-	WF2DMAP_REQCMDQSysCmdPush( p_mcr->p_reqcmdQ, &reqcmd );
+  WF2DMAP_REQCMD reqcmd;
+
+  reqcmd.cmd = cmd;
+  reqcmd.way = way;
+  reqcmd.playid = playid;
+  WF2DMAP_REQCMDQSysCmdPush( p_mcr->p_reqcmdQ, &reqcmd );
 }
 
 //----------------------------------------------------------------------------
@@ -2195,13 +2136,13 @@ static void WcrMoveObj_ReqCmdSet( WIFI_MATCHROOM* p_mcr, s32 cmd, s32 way, s32 p
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_ReqCmdSetEasy( WIFI_MATCHROOM* p_mcr, s32 cmd, const MCR_MOVEOBJ* cp_obj )
 {
-	s32 way;
-	s32 playid;
+  s32 way;
+  s32 playid;
 
-	way = WF2DMAP_OBJWkDataGet( cp_obj->p_obj, WF2DMAP_OBJPM_WAY );
-	playid = WF2DMAP_OBJWkDataGet( cp_obj->p_obj, WF2DMAP_OBJPM_PLID );
+  way = WF2DMAP_OBJWkDataGet( cp_obj->p_obj, WF2DMAP_OBJPM_WAY );
+  playid = WF2DMAP_OBJWkDataGet( cp_obj->p_obj, WF2DMAP_OBJPM_PLID );
 
-	WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
+  WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
 }
 
 //----------------------------------------------------------------------------
@@ -2216,11 +2157,11 @@ static void WcrMoveObj_ReqCmdSetEasy( WIFI_MATCHROOM* p_mcr, s32 cmd, const MCR_
 //-----------------------------------------------------------------------------
 static BOOL WcrMoveObj_MoveSetOkCheck( const MCR_MOVEOBJ* cp_obj )
 {
-	// くるくる描画中はだめ
-	if( (u32)cp_obj->pDraw == (u32)WcrMoveObj_DrawFuncKuruKuru ){
-		return FALSE;
-	}
-	return TRUE;
+  // くるくる描画中はだめ
+  if( (u32)cp_obj->pDraw == (u32)WcrMoveObj_DrawFuncKuruKuru ){
+    return FALSE;
+  }
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -2232,23 +2173,23 @@ static BOOL WcrMoveObj_MoveSetOkCheck( const MCR_MOVEOBJ* cp_obj )
  */
 //-----------------------------------------------------------------------------
 static void WcrMoveObj_MoveSet( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, MCR_NPC_MOVETYPE moveID )
-{	
-	// 描画関数を変更
-	switch( moveID ){
-	case MCR_NPC_MOVE_NORMAL:
-		WcrMoveObj_SetMoveFuncNpc( p_mcr, p_obj );
-		break;
-		
-	case MCR_NPC_MOVE_JUMP:
-		WcrMoveObj_SetMoveFuncNpcJump( p_mcr, p_obj );
-		break;
+{
+  // 描画関数を変更
+  switch( moveID ){
+  case MCR_NPC_MOVE_NORMAL:
+    WcrMoveObj_SetMoveFuncNpc( p_mcr, p_obj );
+    break;
 
-	default:
-		// そんなもんない
-		GF_ASSERT( 0 );
-		break;
-	}
-	p_obj->moveID = moveID;
+  case MCR_NPC_MOVE_JUMP:
+    WcrMoveObj_SetMoveFuncNpcJump( p_mcr, p_obj );
+    break;
+
+  default:
+    // そんなもんない
+    GF_ASSERT( 0 );
+    break;
+  }
+  p_obj->moveID = moveID;
 }
 
 //----------------------------------------------------------------------------
@@ -2262,20 +2203,20 @@ static void WcrMoveObj_MoveSet( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, MCR_N
 //-----------------------------------------------------------------------------
 static void WcrPCANM_Init( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk, ARCHANDLE* p_handle,ARCID id )
 {
-	// ワークのクリア
-	GFL_STD_MemClear( p_wk, sizeof(MCR_PCANM) );
-	
-	// リソース読込み
-//	p_wk->p_plbuff = ArcUtil_HDL_PalDataGet( p_handle, 
-//			NARC_wifip2pmatch_wf_match_top_room_pc_NCLR, &p_wk->p_pltt, p_sys->use_heap );
-    p_wk->p_plbuff = GFL_ARC_UTIL_LoadPalette( id, 
-            NARC_wifip2pmatch_wf_match_top_room_pc_NCLR, &p_wk->p_pltt, p_sys->use_heap );
+  // ワークのクリア
+  GFL_STD_MemClear( p_wk, sizeof(MCR_PCANM) );
 
-    
-	// 全PCアニメ開始
-	p_wk->all_pcbitmap = (1<<0) | (1<<1) | (1<<2) | (1<<3);
-	p_wk->all_seq = MCR_PCANM_ALL_SEQ_OFF;
-	p_wk->all_count = AllAnmData[p_wk->all_seq];
+  // リソース読込み
+  //	p_wk->p_plbuff = ArcUtil_HDL_PalDataGet( p_handle,
+  //			NARC_wifip2pmatch_wf_match_top_room_pc_NCLR, &p_wk->p_pltt, p_sys->use_heap );
+  p_wk->p_plbuff = GFL_ARC_UTIL_LoadPalette( id,
+                                             NARC_wifip2pmatch_wf_match_top_room_pc_NCLR, &p_wk->p_pltt, p_sys->use_heap );
+
+
+  // 全PCアニメ開始
+  p_wk->all_pcbitmap = (1<<0) | (1<<1) | (1<<2) | (1<<3);
+  p_wk->all_seq = MCR_PCANM_ALL_SEQ_OFF;
+  p_wk->all_count = AllAnmData[p_wk->all_seq];
 }
 
 //----------------------------------------------------------------------------
@@ -2288,9 +2229,9 @@ static void WcrPCANM_Init( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk, ARCHANDLE* p_
 //-----------------------------------------------------------------------------
 static void WcrPCANM_Delete( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk )
 {
-	// ワークの破棄
-	GFL_HEAP_FreeMemory( p_wk->p_plbuff );
-	GFL_STD_MemClear( p_wk, sizeof(MCR_PCANM) );
+  // ワークの破棄
+  GFL_HEAP_FreeMemory( p_wk->p_plbuff );
+  GFL_STD_MemClear( p_wk, sizeof(MCR_PCANM) );
 }
 
 //----------------------------------------------------------------------------
@@ -2303,11 +2244,11 @@ static void WcrPCANM_Delete( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk )
 //-----------------------------------------------------------------------------
 static void WcrPCANM_Main( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk )
 {
-	// 待機アニメメイン
-	WcrPCANM_AllMain( p_wk );	
+  // 待機アニメメイン
+  WcrPCANM_AllMain( p_wk );
 
-	// 使用中アニメメイン
-	WcrPCANM_UseMain( p_wk );
+  // 使用中アニメメイン
+  WcrPCANM_UseMain( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -2319,36 +2260,36 @@ static void WcrPCANM_Main( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk )
 //-----------------------------------------------------------------------------
 static void WcrPCANM_AllMain( MCR_PCANM* p_wk )
 {
-	int i;
-	u32 on_off;
+  int i;
+  u32 on_off;
 
-	// 待機アニメ
-	p_wk->all_count --;
-	if( p_wk->all_count <= 0 ){
-		p_wk->all_seq = (p_wk->all_seq + 1) % MCR_PCANM_ALL_SEQ_NUM;
-		p_wk->all_count = AllAnmData[p_wk->all_seq];
+  // 待機アニメ
+  p_wk->all_count --;
+  if( p_wk->all_count <= 0 ){
+    p_wk->all_seq = (p_wk->all_seq + 1) % MCR_PCANM_ALL_SEQ_NUM;
+    p_wk->all_count = AllAnmData[p_wk->all_seq];
 
-		// パレット転送
-		if( p_wk->all_seq == MCR_PCANM_ALL_SEQ_ON ){
-			on_off = MCR_PCANM_COL_WAIT;
-		}else{
-			on_off = MCR_PCANM_COL_OFF;
-		}
-		for( i=0; i<MCR_PCANM_PCNUM; i++ ){
-			if( p_wk->all_pcbitmap & (1<<i) ){
+    // パレット転送
+    if( p_wk->all_seq == MCR_PCANM_ALL_SEQ_ON ){
+      on_off = MCR_PCANM_COL_WAIT;
+    }else{
+      on_off = MCR_PCANM_COL_OFF;
+    }
+    for( i=0; i<MCR_PCANM_PCNUM; i++ ){
+      if( p_wk->all_pcbitmap & (1<<i) ){
 #if 0
-				AddVramTransferManager( NNS_GFD_DST_2D_BG_PLTT_MAIN, 
-						MCR_PCANM_DESTPL(i), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
+        AddVramTransferManager( NNS_GFD_DST_2D_BG_PLTT_MAIN,
+                                MCR_PCANM_DESTPL(i), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
 #endif
-                NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN, 
-						MCR_PCANM_DESTPL(i), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
+        NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN,
+                                            MCR_PCANM_DESTPL(i), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
 
 
-                
-//				TOMOYA_PRINT( "転送処理 %d dest[0x%x] src[0x%x] \n", on_off, MCR_PCANM_DESTPL(i), WcrPCANM_GetAnmSrc(p_wk, on_off ) );
-			}
-		}
-	}
+
+        //				TOMOYA_PRINT( "転送処理 %d dest[0x%x] src[0x%x] \n", on_off, MCR_PCANM_DESTPL(i), WcrPCANM_GetAnmSrc(p_wk, on_off ) );
+      }
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2360,57 +2301,57 @@ static void WcrPCANM_AllMain( MCR_PCANM* p_wk )
 //-----------------------------------------------------------------------------
 static void WcrPCANM_UseMain( MCR_PCANM* p_wk )
 {
-	BOOL trans = FALSE;
-	u32 on_off = FALSE;
-	BOOL next = FALSE;
+  BOOL trans = FALSE;
+  u32 on_off = FALSE;
+  BOOL next = FALSE;
 
 
-	// 基本的にはAnmDataのカウント分進むと次のアニメデータに進んでいきます。
-	// カウントが無いデータの時は、use_pc_nextフラグが設定されたら次に進みます。
-	// パレットの転送はAnmDataのtransメンバとtrans_flagメンバを見て決めます
+  // 基本的にはAnmDataのカウント分進むと次のアニメデータに進んでいきます。
+  // カウントが無いデータの時は、use_pc_nextフラグが設定されたら次に進みます。
+  // パレットの転送はAnmDataのtransメンバとtrans_flagメンバを見て決めます
 
-	// カウントシステム
-	if( AnmData[ p_wk->use_pc_seq ].flag == TRUE ){
-		p_wk->use_pc_count --;
-		if( p_wk->use_pc_count <= 0 ){
-			next = TRUE;
-		}
-	}else{
-		// 次に進むフラグが足っていたら次へ
-		if( p_wk->use_pc_next ){
-			p_wk->use_pc_next = FALSE;
-			next = TRUE;
-		}
-	}
+  // カウントシステム
+  if( AnmData[ p_wk->use_pc_seq ].flag == TRUE ){
+    p_wk->use_pc_count --;
+    if( p_wk->use_pc_count <= 0 ){
+      next = TRUE;
+    }
+  }else{
+    // 次に進むフラグが足っていたら次へ
+    if( p_wk->use_pc_next ){
+      p_wk->use_pc_next = FALSE;
+      next = TRUE;
+    }
+  }
 
-	// 次のシーケンスへ
-	if( next ){
-		p_wk->use_pc_seq ++;
+  // 次のシーケンスへ
+  if( next ){
+    p_wk->use_pc_seq ++;
 
-		// 終了チェック
-		if( p_wk->use_pc_seq >= MCR_PCANM_USE_SEQ_NUM ){
-			WcrPCANM_UseAnmEnd( p_wk );
-			return ;
-		}
+    // 終了チェック
+    if( p_wk->use_pc_seq >= MCR_PCANM_USE_SEQ_NUM ){
+      WcrPCANM_UseAnmEnd( p_wk );
+      return ;
+    }
 
-		// カウント数など設定
-		p_wk->use_pc_count = AnmData[ p_wk->use_pc_seq ].count_num;
-		trans = AnmData[ p_wk->use_pc_seq ].trans;
-		on_off = AnmData[ p_wk->use_pc_seq ].trans_flag;
-	}
-	
+    // カウント数など設定
+    p_wk->use_pc_count = AnmData[ p_wk->use_pc_seq ].count_num;
+    trans = AnmData[ p_wk->use_pc_seq ].trans;
+    on_off = AnmData[ p_wk->use_pc_seq ].trans_flag;
+  }
 
-	// 転送処理
-	if( trans ){
+
+  // 転送処理
+  if( trans ){
 #if 0
-		AddVramTransferManager( NNS_GFD_DST_2D_BG_PLTT_MAIN, 
-				MCR_PCANM_DESTPL(p_wk->use_pc), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
+    AddVramTransferManager( NNS_GFD_DST_2D_BG_PLTT_MAIN,
+                            MCR_PCANM_DESTPL(p_wk->use_pc), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
 #endif
-        NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN, 
-				MCR_PCANM_DESTPL(p_wk->use_pc), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
-    
-        //		TOMOYA_PRINT( "転送処理 %d dest[0x%x] src[0x%x] \n", on_off, MCR_PCANM_DESTPL(p_wk->use_pc), WcrPCANM_GetAnmSrc(p_wk, on_off ) );
-	}
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN,
+                                        MCR_PCANM_DESTPL(p_wk->use_pc), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
+
+    //		TOMOYA_PRINT( "転送処理 %d dest[0x%x] src[0x%x] \n", on_off, MCR_PCANM_DESTPL(p_wk->use_pc), WcrPCANM_GetAnmSrc(p_wk, on_off ) );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2423,12 +2364,12 @@ static void WcrPCANM_UseMain( MCR_PCANM* p_wk )
 //-----------------------------------------------------------------------------
 static void* WcrPCANM_GetAnmSrc( MCR_PCANM* p_wk, u32 on_off )
 {
-	u16* p_data;
+  u16* p_data;
 
-	// データ取得
-	p_data = (u16*)p_wk->p_pltt->pRawData;
+  // データ取得
+  p_data = (u16*)p_wk->p_pltt->pRawData;
 
-	return &p_data[ on_off+MCR_PCANM_BGPLTTOFS ];
+  return &p_data[ on_off+MCR_PCANM_BGPLTTOFS ];
 }
 
 //----------------------------------------------------------------------------
@@ -2440,13 +2381,13 @@ static void* WcrPCANM_GetAnmSrc( MCR_PCANM* p_wk, u32 on_off )
 //-----------------------------------------------------------------------------
 static void WcrPCANM_UseAnmEnd( MCR_PCANM* p_wk )
 {
-	// 待機アニメに合流させる
-	p_wk->all_pcbitmap |= 1<<p_wk->use_pc;
-	
-	p_wk->use_pc = 0;
-	p_wk->use_pc_seq = MCR_PCANM_USE_SEQ_NONE;
-	p_wk->use_pc_count = 0;
-	p_wk->use_pc_next = 0;
+  // 待機アニメに合流させる
+  p_wk->all_pcbitmap |= 1<<p_wk->use_pc;
+
+  p_wk->use_pc = 0;
+  p_wk->use_pc_seq = MCR_PCANM_USE_SEQ_NONE;
+  p_wk->use_pc_count = 0;
+  p_wk->use_pc_next = 0;
 }
 
 //----------------------------------------------------------------------------
@@ -2458,7 +2399,7 @@ static void WcrPCANM_UseAnmEnd( MCR_PCANM* p_wk )
 //-----------------------------------------------------------------------------
 static void WcrPCANM_UseAnmNext( MCR_PCANM* p_wk )
 {
-	p_wk->use_pc_next = TRUE;
+  p_wk->use_pc_next = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -2471,18 +2412,18 @@ static void WcrPCANM_UseAnmNext( MCR_PCANM* p_wk )
 //-----------------------------------------------------------------------------
 static void WcrPCANM_UseStart( MCR_PCANM* p_wk, u8 pc_no )
 {
-	// 今途中のものがあるか
-	if( p_wk->use_pc_seq != MCR_PCANM_USE_SEQ_NONE ){
-		// 今実行中のものを終わらせる
-		WcrPCANM_UseAnmEnd( p_wk );
-	}
+  // 今途中のものがあるか
+  if( p_wk->use_pc_seq != MCR_PCANM_USE_SEQ_NONE ){
+    // 今実行中のものを終わらせる
+    WcrPCANM_UseAnmEnd( p_wk );
+  }
 
-	// 開始
-	p_wk->all_pcbitmap ^= 1<<pc_no;
-	p_wk->use_pc = pc_no;
-	WcrPCANM_UseAnmNext( p_wk );
+  // 開始
+  p_wk->all_pcbitmap ^= 1<<pc_no;
+  p_wk->use_pc = pc_no;
+  WcrPCANM_UseAnmNext( p_wk );
 
-//	TOMOYA_PRINT( "use anm start\n" );
+  //	TOMOYA_PRINT( "use anm start\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -2494,8 +2435,8 @@ static void WcrPCANM_UseStart( MCR_PCANM* p_wk, u8 pc_no )
 //-----------------------------------------------------------------------------
 static void WcrPCANM_UseEndReq( MCR_PCANM* p_wk )
 {
-	if( p_wk->use_pc_seq != MCR_PCANM_USE_SEQ_NONE ){
-		WcrPCANM_UseAnmNext( p_wk );
-//		TOMOYA_PRINT( "use anm end req\n" );
-	}
+  if( p_wk->use_pc_seq != MCR_PCANM_USE_SEQ_NONE ){
+    WcrPCANM_UseAnmNext( p_wk );
+    //		TOMOYA_PRINT( "use anm end req\n" );
+  }
 }
