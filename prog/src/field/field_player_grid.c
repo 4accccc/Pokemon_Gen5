@@ -600,7 +600,10 @@ static const ATTR_FLAG_SE data_PlaySE_NextFlag[] =
 static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
     JIKI_MOVEORDER set, u16 dir )
 {
-  if( set == JIKI_MOVEORDER_WALK ){
+  if( set != JIKI_MOVEORDER_WALK ){
+    gjiki->dash_play_se = SEQ_SE_DUMMY;
+    gjiki->dash_play_se_count = 0;
+  }else{
     int dash_count;
     u32 se,dash_flag;
     VecFx32 pos;
@@ -688,7 +691,6 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
           return;
       }
     }
-    
   
     MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
     
@@ -748,6 +750,11 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
         PMSND_PlaySE( se );
         return;
       }
+    }
+    
+    { //再生無し　カウントクリア
+      gjiki->dash_play_se = SEQ_SE_DUMMY;
+      gjiki->dash_play_se_count = 0;
     }
   }
 }
