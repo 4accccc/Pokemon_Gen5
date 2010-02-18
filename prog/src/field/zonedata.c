@@ -31,6 +31,7 @@
 #include "field/field_zonefog.h"
 #include "field/fieldskill_mapeff.h"
 
+#include "map_change_type.h"
 
 #include "sound/wb_sound_data.sadl" //SEQ_BGM_C_08_～
 
@@ -751,18 +752,6 @@ BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id)
 
 //------------------------------------------------------------------
 /**
- * @brief 指定ゾーンのマップタイプ取得
- */
-//------------------------------------------------------------------
-static u16 getMapType(u16 zone_id)
-{
-  ZONEDATA* zoneData;
-  zoneData = loadZoneData( zone_id );
-  return zoneData->maptype;
-}
-
-//------------------------------------------------------------------
-/**
  * @brief 指定ゾーンがフィールドマップのマトリックス指定かどうかを判定
  * @param  zone_id 判定するゾーンのID
  * @return  BOOL TRUEのとき、フィールドマップのマトリックス指定
@@ -945,8 +934,9 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
 //-----------------------------------------------------------------------------
 u8 ZONEDATA_GetMapChangeType(u16 zone_id)
 {
-  // @todo 実装
-  return 0;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->map_change_type;
 }
 
 
