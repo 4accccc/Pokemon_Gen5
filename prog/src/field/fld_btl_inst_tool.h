@@ -14,6 +14,6 @@
 
 extern GMEVENT *FBI_TOOL_CreatePokeListEvt(
     GAMESYS_WORK *gsys,
-    const int inType, const int inReg, POKEPARTY *pp,
+    const PL_LIST_TYPE inType, const int inReg, POKEPARTY *pp,
     u8 *outSelNoAry, PL_SELECT_POS *outResult, PL_RETURN_TYPE *outRetMode );
 

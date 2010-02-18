@@ -37,6 +37,7 @@ typedef struct
   
   PSTATUS_DATA StatusData;
   PLIST_DATA ListData;
+  REGULATION Regulation;
   
   PL_RETURN_TYPE *ReturnMode;
   PL_SELECT_POS *ResultSelect;
@@ -61,7 +62,7 @@ static GMEVENT_RESULT PokeSelEvt( GMEVENT *event, int *seq, void *wk );
 //--------------------------------------------------------------
 GMEVENT *FBI_TOOL_CreatePokeListEvt(
     GAMESYS_WORK *gsys,
-    const int inType, const int inReg, POKEPARTY *pp,
+    const PL_LIST_TYPE inType, const int inReg, POKEPARTY *pp,
     u8 *outSelNoAry, PL_SELECT_POS *outResult, PL_RETURN_TYPE *outRetMode )
 {
   GMEVENT *event;
@@ -81,8 +82,9 @@ GMEVENT *FBI_TOOL_CreatePokeListEvt(
   work->ReturnMode = outRetMode;
   {
     PLIST_DATA *list = &work->ListData;
+    PokeRegulation_LoadData(inReg, &work->Regulation);  //レギュレーションロード
     list->pp = pp;
-    list->reg = (void*)PokeRegulation_LoadDataAlloc( inReg, HEAPID_PROC );
+    list->reg = &work->Regulation;
     list->type = inType;
   }
   {
@@ -143,7 +145,6 @@ static GMEVENT_RESULT PokeSelEvt( GMEVENT *event, int *seq, void *wk )
     MI_CpuCopy8( work->ListData.in_num, work->ResultNoAry, 6 );
     *work->ResultSelect = work->ListData.ret_sel;
     *work->ReturnMode = work->ListData.ret_mode;
-    GFL_HEAP_FreeMemory( work->ListData.reg );
     (*seq)++;
     break;
   case 5:
