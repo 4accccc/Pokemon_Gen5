@@ -167,6 +167,7 @@ typedef enum {
 
   SELITEM_BTL_TYPE,
   SELITEM_COMM_MODE,
+  SELITEM_BTL_RULE,
   SELITEM_BADGE,
   SELITEM_SAVE,
   SELITEM_LOAD,
@@ -241,12 +242,17 @@ enum {
 
   LAYOUT_LABEL_BTLTYPE_X  = 8,
   LAYOUT_LABEL_COMM_X = 8,
-  LAYOUT_LABEL_BADGE_X = 8,
+  LAYOUT_LABEL_RULE_X = 8,
+  LAYOUT_LABEL_RULE_Y = LAYOUT_PARAM_LINE_Y3,
   LAYOUT_LABEL_MSGSPEED_X = 144,
   LAYOUT_LABEL_WAZAEFF_X  = 144,
 
   LAYOUT_LOAD_X = 4,
-  LAYOUT_SAVE_X = 38,
+  LAYOUT_SAVE_X = 32,
+
+  LAYOUT_LABEL_BADGE_X = 72,
+  LAYOUT_LABEL_BADGE_Y = LAYOUT_PARAM_LINE_Y4,
+
 
   LAYOUT_LABEL_SUBWAY_X = 144,
   LAYOUT_LABEL_SUBWAY_Y = LAYOUT_PARAM_LINE_Y3,
@@ -340,7 +346,8 @@ static const LABEL_LAYOUT LabelLayout_Page1[] = {
   { DBGF_LABEL_ENEMY2,  LAYOUT_PARTY_LINE4_X,    LAYOUT_PARTY_LABEL_LINE_Y },
   { DBGF_LABEL_TYPE,    LAYOUT_LABEL_BTLTYPE_X,  LAYOUT_PARAM_LINE_Y1      },
   { DBGF_LABEL_COMM,    LAYOUT_LABEL_COMM_X,     LAYOUT_PARAM_LINE_Y2,     },
-  { DBGF_LABEL_BADGE,   LAYOUT_LABEL_BADGE_X,    LAYOUT_PARAM_LINE_Y3,     },
+  { DBGF_LABEL_RULE,    LAYOUT_LABEL_RULE_X,     LAYOUT_LABEL_RULE_Y       },
+  { DBGF_LABEL_BADGE,   LAYOUT_LABEL_BADGE_X,    LAYOUT_LABEL_BADGE_Y,     },
   { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1      },
   { DBGF_LABEL_WAZAEFF, LAYOUT_LABEL_WAZAEFF_X,  LAYOUT_PARAM_LINE_Y2      },
   { DBGF_LABEL_SUBWAY,  LAYOUT_LABEL_SUBWAY_X,   LAYOUT_LABEL_SUBWAY_Y     },
@@ -432,7 +439,8 @@ static const ITEM_LAYOUT ItemLayout_Page1[] = {
 
   { SELITEM_BTL_TYPE,       LAYOUT_LABEL_BTLTYPE_X  +30, LAYOUT_PARAM_LINE_Y1,   },
   { SELITEM_COMM_MODE,      LAYOUT_LABEL_COMM_X     +40, LAYOUT_PARAM_LINE_Y2,   },
-  { SELITEM_BADGE,          LAYOUT_LABEL_BADGE_X    +40, LAYOUT_PARAM_LINE_Y3,   },
+  { SELITEM_BTL_RULE,       LAYOUT_LABEL_RULE_X     +34, LAYOUT_PARAM_LINE_Y3    },
+  { SELITEM_BADGE,          LAYOUT_LABEL_BADGE_X    +30, LAYOUT_LABEL_BADGE_Y,   },
   { SELITEM_MSGSPEED,       LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1,   },
   { SELITEM_WAZAEFF,        LAYOUT_LABEL_WAZAEFF_X  +64, LAYOUT_PARAM_LINE_Y2,   },
   { SELITEM_SUBWAYMODE,     LAYOUT_LABEL_SUBWAY_X   +48, LAYOUT_LABEL_SUBWAY_Y,  },
@@ -556,6 +564,7 @@ typedef struct {
   u32  fHit100Per    : 1;
   u32  fDmgRandomOff : 1;
   u32  fSkipBtlIn    : 1;
+  u32  btlRule       : 1;
 
   u16  LimitTimeCommand;
   u8   LimitTimeGameMinute;
@@ -629,6 +638,7 @@ static POKEMON_PARAM* savework_GetPokeParaArea( DEBUG_BTL_SAVEDATA* saveData, u3
 static void savework_SetParty( DEBUG_BTL_SAVEDATA* saveData, DEBUG_BTL_WORK* wk );
 static void setMainProc( DEBUG_BTL_WORK* wk, pMainProc nextProc );
 static inline BOOL selItem_IsPoke( u16 itemID );
+static inline BOOL selItem_IsLimitTime( u16 itemID );
 static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue );
 static int loopValue( int value, int min, int max );
 static BOOL btltype_IsComm( BtlType type );
@@ -639,6 +649,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect );
 static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf );
 static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_CommMode( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_BtlRule( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_WazaEff( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_SubwayMode( DEBUG_BTL_WORK* wk, STRBUF* buf );
@@ -1033,6 +1044,7 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   saveData->fWazaEff = 0;
   saveData->fSubway = 0;
   saveData->badgeCount = 8;
+  saveData->btlRule = 0;
 
   saveData->backGround = 0;
   saveData->landForm = 0;
@@ -1164,6 +1176,10 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
 
   case SELITEM_COMM_MODE:
     save->commMode ^= 1;
+    break;
+
+  case SELITEM_BTL_RULE:
+    save->btlRule ^= 1;
     break;
 
   case SELITEM_BADGE:
@@ -1389,6 +1405,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         switch( itemID ){
         case SELITEM_BTL_TYPE:    printItem_BtlType( wk, wk->strbuf ); break;
         case SELITEM_COMM_MODE:   printItem_CommMode( wk, wk->strbuf ); break;
+        case SELITEM_BTL_RULE:    printItem_BtlRule( wk, wk->strbuf ); break;
         case SELITEM_MSGSPEED:    printItem_MsgSpeed( wk, wk->strbuf ); break;
         case SELITEM_WAZAEFF:     printItem_WazaEff( wk, wk->strbuf ); break;
         case SELITEM_SUBWAYMODE:  printItem_SubwayMode( wk, wk->strbuf ); break;
@@ -1449,6 +1466,10 @@ static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf )
 static void printItem_CommMode( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, DBGF_ITEM_COMM_CHILD+wk->saveData.commMode, buf );
+}
+static void printItem_BtlRule( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_RULE_1+wk->saveData.btlRule, buf );
 }
 static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
@@ -1621,15 +1642,16 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_POKE_ENEMY2_5,  SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY2_6, SELITEM_POKE_SELF_5,   SELITEM_POKE_FRIEND_5 },
       { SELITEM_POKE_ENEMY2_6,  SELITEM_POKE_ENEMY2_5, SELITEM_MSGSPEED,      SELITEM_POKE_SELF_6,   SELITEM_POKE_FRIEND_6 },
       { SELITEM_BTL_TYPE,       SELITEM_POKE_SELF_6,   SELITEM_COMM_MODE,     SELITEM_MSGSPEED,      SELITEM_MSGSPEED,     },
-      { SELITEM_COMM_MODE,      SELITEM_BTL_TYPE,      SELITEM_BADGE,         SELITEM_WAZAEFF,       SELITEM_WAZAEFF       },
-      { SELITEM_BADGE,          SELITEM_COMM_MODE,     SELITEM_SAVE,          SELITEM_SUBWAYMODE,    SELITEM_NULL          },
+      { SELITEM_COMM_MODE,      SELITEM_BTL_TYPE,      SELITEM_BTL_RULE,      SELITEM_WAZAEFF,       SELITEM_WAZAEFF       },
+      { SELITEM_BTL_RULE,       SELITEM_COMM_MODE,     SELITEM_SAVE,          SELITEM_SUBWAYMODE,    SELITEM_SUBWAYMODE    },
+      { SELITEM_BADGE,          SELITEM_BTL_RULE,      SELITEM_NULL,          SELITEM_REC_MODE,      SELITEM_SAVE          },
       { SELITEM_MSGSPEED,       SELITEM_POKE_ENEMY2_6, SELITEM_WAZAEFF,       SELITEM_BTL_TYPE,      SELITEM_BTL_TYPE      },
       { SELITEM_WAZAEFF,        SELITEM_MSGSPEED,      SELITEM_SUBWAYMODE,    SELITEM_BTL_TYPE,      SELITEM_BTL_TYPE      },
       { SELITEM_SUBWAYMODE,     SELITEM_WAZAEFF,       SELITEM_REC_MODE,      SELITEM_LOAD,          SELITEM_SAVE          },
-      { SELITEM_REC_MODE,       SELITEM_SUBWAYMODE,    SELITEM_POKE_ENEMY2_1, SELITEM_REC_BUF,       SELITEM_SAVE          },
+      { SELITEM_REC_MODE,       SELITEM_SUBWAYMODE,    SELITEM_POKE_ENEMY2_1, SELITEM_REC_BUF,       SELITEM_BADGE         },
       { SELITEM_REC_BUF,        SELITEM_SUBWAYMODE,    SELITEM_POKE_ENEMY2_1, SELITEM_LOAD,          SELITEM_REC_MODE      },
-      { SELITEM_SAVE,           SELITEM_BADGE,         SELITEM_POKE_SELF_1,   SELITEM_REC_MODE,      SELITEM_LOAD          },
-      { SELITEM_LOAD,           SELITEM_COMM_MODE,     SELITEM_POKE_SELF_1,   SELITEM_SAVE,          SELITEM_REC_BUF       },
+      { SELITEM_SAVE,           SELITEM_BTL_RULE,      SELITEM_POKE_SELF_1,   SELITEM_BADGE,         SELITEM_LOAD          },
+      { SELITEM_LOAD,           SELITEM_BTL_RULE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,          SELITEM_REC_BUF       },
   /*    CurrentItem,            Up-Item,               Down-Item,             Right-Item,            Left-Item */
       { SELITEM_MUST_TUIKA,     SELITEM_SKIP_BTLIN,    SELITEM_MUST_TOKU,     SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_MUST_TOKU,      SELITEM_MUST_TUIKA,    SELITEM_MUST_ITEM,     SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
@@ -1917,6 +1939,7 @@ FS_EXTERN_OVERLAY(battle);
       CONFIG* config = SaveData_GetConfig( GAMEDATA_GetSaveControlWork(wk->gameData) );
       CONFIG_SetMsgSpeed( config, wk->saveData.msgSpeed );
       CONFIG_SetWazaEffectMode( config, wk->saveData.fWazaEff );
+      CONFIG_SetBattleRule( config, wk->saveData.btlRule );
     }
     {
       MISC* misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(wk->gameData) );
