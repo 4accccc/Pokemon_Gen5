@@ -122,7 +122,7 @@ ARCDATID POKEGRA_GetPalArcIndex( int mons_no, int form_no, int sex, int rare, in
 {	
   u32 mons_offset;
   u32 rare_offset;
-  u32 pltt_only;
+  u32 pltt_only = 0;
   PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, NULL, NULL, &rare_offset, &pltt_only );
   if( pltt_only )
   { 
