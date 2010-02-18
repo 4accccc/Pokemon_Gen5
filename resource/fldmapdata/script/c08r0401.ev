@@ -18,8 +18,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA   ev_c08r0401_gentleman_01
-_EVENT_DATA   ev_c08r0401_lady_01
+_EVENT_DATA   ev_c08r0401_boy2_01
+_EVENT_DATA   ev_c08r0401_oldman1_01
 _EVENT_DATA   ev_c08r0401_girl4_01
 _EVENT_DATA_END //データ終端を指定しています。
 
@@ -28,14 +28,14 @@ _EVENT_DATA_END //データ終端を指定しています。
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-EVENT_START   ev_c08r0401_gentleman_01
+EVENT_START   ev_c08r0401_boy2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0401_gentleman_01 )
 EVENT_END
 
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-EVENT_START   ev_c08r0401_lady_01
+EVENT_START   ev_c08r0401_oldman1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0401_lady_01 )
 EVENT_END
 
