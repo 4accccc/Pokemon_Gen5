@@ -794,10 +794,11 @@
 #define BIGROCK (0x2003) //8195(3,total 776) かいりきの岩
 #define JUNK (0x2004) //8196(4,total 777) 機械
 #define BIGROCK2 (0x2005) //8197(5,total 778) かいりきの岩２
-#define OBJCODEEND_MDL (0x2006) //8198(total 779) モデルコード終端
-#define OBJCODECOUNT_MDL (0x6) //6 モデルコード数
+#define DRAGONBONE (0x2006) //8198(6,total 779) カイリューの頭骨
+#define OBJCODEEND_MDL (0x2007) //8199(total 780) モデルコード終端
+#define OBJCODECOUNT_MDL (0x7) //7 モデルコード数
 
-#define OBJCODETOTAL (0x30b) //779 コード総数
+#define OBJCODETOTAL (0x30c) //780 コード総数
 #define OBJCODEMAX (0xffff) //65535 無効コード
 
 #endif //__FLDMMDL_OBJCODE__
