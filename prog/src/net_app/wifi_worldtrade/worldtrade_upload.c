@@ -273,13 +273,6 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 ///強制タイムアウトまでの時間
 #define TIMEOUT_TIME			(30*60*2)	//2分
 
-static u32 NHTTP_RAP_EVILCHECK_Get( const NHTTP_RAP_EVILCHECK_RESPONSE_DATA * data )
-{
-  //ポケモンチェックの値はネットワークバイトオーダーで帰ってくる
-		return (u32)((data->poke_check1 << 24) | (data->poke_check2 << 16)
-        | (data->poke_check3 << 8) | (data->poke_check4 << 0));
-}
-
 //============================================================================================
 //	プロセス関数
 //============================================================================================
@@ -744,7 +737,7 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
   
   POKEMON_PASO_PARAM  *pp = PPPPointerGet( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
 
-  NHTTP_RAP_PokemonEvilCheckCreate( wk->nhttp, HEAPID_WORLDTRADE, NHTTP_RAP_EVILCHECK_BUFF_SIZE, NHTTP_POKECHK_GTS);
+  NHTTP_RAP_PokemonEvilCheckCreate( wk->nhttp, HEAPID_WORLDTRADE, POKETOOL_GetPPPWorkSize(), NHTTP_POKECHK_GTS);
 
   OS_TPrintf( "PPPサイズ %d\n", POKETOOL_GetPPPWorkSize() );
   NHTTP_RAP_PokemonEvilCheckAdd( wk->nhttp, pp, POKETOOL_GetPPPWorkSize() );
@@ -773,10 +766,15 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
   error = NHTTP_RAP_Process( wk->nhttp );
   if( NHTTP_ERROR_NONE == error )
   { 
-    NHTTP_RAP_EVILCHECK_RESPONSE_DATA *p_data;
+    void *p_data;
     p_data  = NHTTP_RAP_GetRecvBuffer(wk->nhttp);
 
-    GFL_STD_MemCopy( p_data, &wk->evilcheck_data, sizeof(NHTTP_RAP_EVILCHECK_RESPONSE_DATA) );
+    wk->evilcheck_data.status_code  = NHTTP_RAP_EVILCHECK_GetStatusCode( p_data );
+    wk->evilcheck_data.poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, 0 );
+    { 
+      const s8 *cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_data, 1 );
+      GFL_STD_MemCopy( cp_sign, wk->evilcheck_data.sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+    }
 
     NHTTP_RAP_PokemonEvilCheckDelete(wk->nhttp);
     NHTTP_RAP_End(wk->nhttp);
@@ -791,13 +789,13 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
       if( NHTTP_RAP_EVILCHECK_Get(&wk->evilcheck_data) == 0 )
 #endif
       { 
-        OS_TPrintf( "不正検査完了！\n" );
+        OS_TPrintf( "不正検査終了！=[%d]\n", wk->evilcheck_data.poke_result );
         wk->subprocess_seq = wk->evilcheck_mode;
       }
       else
       { 
         // 「このポケモンはあずける事ができません」→タイトルへ
-        OS_TPrintf( "不正検査NG！=[%d]\n", NHTTP_RAP_EVILCHECK_Get(&wk->evilcheck_data) );
+        OS_TPrintf( "不正検査NG！=[%d]\n", wk->evilcheck_data.poke_result );
         wk->ConnectErrorNo = DPW_TR_ERROR_CHEAT_DATA;
         wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
       }

@@ -33,6 +33,7 @@
 #include "sound/pm_sndsys.h"
 #include "worldtrade_adapter.h"
 #include "net/nhttp_rap.h"
+#include "net/nhttp_rap_evilcheck.h"
 
 // Proc_Mainシーケンス定義
 enum {
@@ -318,20 +319,12 @@ enum{
 //	構造体定義
 //============================================================================================
 
-//libdpw/poke_validate_srv_10100129.pdfの「2.4不正チェック結果の解析」より定義
-#define NHTTP_RAP_EVILCHECK_RESPONSE_CODE_SUCCES  200
-#define NHTTP_RAP_EVILCHECK_RESPONSE_CODE_DIRTY_GAMEMODE  400
-#define NHTTP_RAP_EVILCHECK_RESPONSE_CODE_DIRTY_TOKEN  401
-#define NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN 128
 #define NHTTP_RAP_EVILCHECK_BUFF_SIZE (POKETOOL_GetPPPWorkSize() * 1)
 typedef struct {
   u8 status_code;
-  u8 poke_check1;
-  u8 poke_check2;
-  u8 poke_check3;
-  u8 poke_check4;
+  u32 poke_result;
   u8 sign[NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN];
-} NHTTP_RAP_EVILCHECK_RESPONSE_DATA;
+} WIFIWORLDTRATE_EVILCHECK_DATA;
 
 // ポケモンを預ける際の情報
 typedef struct{
@@ -557,7 +550,7 @@ typedef struct _WORLDTRADE_WORK{
   void * sub_proc_wk;                   ///< WIFILOGINやデモなどサブプロセスのワーク
 
   NHTTP_RAP_WORK  *nhttp;             ///<認証キーや不正検査で使う
-  NHTTP_RAP_EVILCHECK_RESPONSE_DATA evilcheck_data; ///<認証コードが入った不正チェックデータ
+  WIFIWORLDTRATE_EVILCHECK_DATA evilcheck_data; ///<認証コードが入った不正チェックデータ
 
 #ifdef PM_DEBUG
 	int 					frame;									//

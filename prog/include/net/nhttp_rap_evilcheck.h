@@ -131,18 +131,6 @@ extern NHTTP_RAP_EVILCHECK_RESULT NHTTP_RAP_EVILCHECK_GetPokeResult( const void 
 //-----------------------------------------------------------------------------
 extern const s8 * NHTTP_RAP_EVILCHECK_GetSign( const void *cp_data, int poke_max );
 
-//----------------------------------------------------------------------------
-/**
- *	@brief  ポケモン不正検査  署名とポケモンが正しいかを検知する
- *
- *  @param    cp_data     NHTTP_RAP_GetRecvBufferの中身
- *  @param    poke_max    不正チェックのときに送ったポケモンの最大数
- *
- *	@return 署名へのアドレス  コピーする場合、ここからNHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN分、memcpyしてください
- */
-//-----------------------------------------------------------------------------
-extern const s8 * NHTTP_RAP_EVILCHECK_GetSign( const void *cp_data, int poke_max );
-
 //=============================================================================
 /**
  *  署名とポケモンの証明をする関数
