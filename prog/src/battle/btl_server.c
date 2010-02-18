@@ -77,6 +77,7 @@ struct _BTL_SERVER {
   BTL_RECTOOL           recTool;
   STRBUF*               strbuf;
 
+  u8          enemyPutPokeID;
   u8          quitStep;
   u32         escapeClientID;
   u32         exitTimer;
@@ -102,7 +103,9 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq );
-static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq );
+static BOOL Irekae_IsNeedConfirm( BTL_SERVER* server );
+static u8 Irekae_GetEnemyPutPokeID( BTL_SERVER* server );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
@@ -113,7 +116,8 @@ static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize );
 static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
-static BOOL WaitAdapterCmd( BTL_SERVER* server );
+static void SetAdapterCmdSingle( BTL_SERVER* server, BtlAdapterCmd cmd, u8 clientID, const void* sendData, u32 dataSize );
+static BOOL WaitAllAdapterReply( BTL_SERVER* server );
 static void ResetAdapterCmd( BTL_SERVER* server );
 static void Svcl_Clear( SVCL_WORK* clwk );
 static BOOL Svcl_IsEnable( const SVCL_WORK* clwk );
@@ -288,7 +292,7 @@ void BTL_SERVER_Main( BTL_SERVER* sv )
   }
   else
   {
-    WaitAdapterCmd( sv );
+    WaitAllAdapterReply( sv );
   }
 }
 
@@ -346,7 +350,7 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
     (*seq)++;
     /* fallthru */
   case 1:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
 
@@ -372,7 +376,7 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
     }
     break;
   case 2:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
       (*seq)++;
@@ -405,7 +409,7 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
     break;
 
   case 1:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       const BtlRotateDir  *dir;
       u32 i;
@@ -429,7 +433,7 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
     break;
 
   case 2:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
       (*seq)++;
@@ -442,7 +446,7 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
     break;
 
   case 4:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
       setMainProc( server, ServerMain_SelectAction );
@@ -475,7 +479,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     break;
 
   case 1:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       BTL_Printf( DBGSTR_SERVER_ShooterChargeCmdDoneAll );
       ResetAdapterCmd( server );
@@ -490,7 +494,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     break;
 
   case 3:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       BTL_N_Printf( DBGSTR_SERVER_ActionSelectDoneAll );
       ResetAdapterCmd( server );
@@ -513,7 +517,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     break;
 
   case 4:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       BTL_N_Printf( DBGSTR_SVFL_RecDataSendComped );
       ResetAdapterCmd( server );
@@ -528,7 +532,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       break;
 
   case 6:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       BTL_N_Printf( DBGSTR_SVFL_AllClientCmdPlayComplete, server->flowResult);
       BTL_MAIN_SyncServerCalcData( server->mainModule );
@@ -546,7 +550,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           if( (competitor == BTL_COMPETITOR_WILD) &&  (rule == BTL_RULE_SINGLE) ){
             setMainProc( server, ServerMain_ConfirmChangeOrEscape );
           }else{
-            setMainProc( server, ServerMain_SelectPokemonIn );
+            setMainProc( server, ServerMain_SelectPokemonCover );
           }
         }
         break;
@@ -596,14 +600,14 @@ static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq )
     (*seq)++;
     break;
   case 1:
-    if( WaitAdapterCmd(server) ){
+    if( WaitAllAdapterReply(server) ){
       u8 clientID = BTL_MAIN_GetPlayerClientID( server->mainModule );
       const u8* result;
 
       ResetAdapterCmd( server );
       result = BTL_ADAPTER_GetReturnData( server->client[clientID].adapter, NULL );
       if( (*result) == BTL_CLIENTASK_CHANGE ){
-        setMainProc( server, ServerMain_SelectPokemonIn );
+        setMainProc( server, ServerMain_SelectPokemonCover );
       }else{
         server->flowResult = BTL_SVFLOW_CreatePlayerEscapeCommand( server->flowWork );
         SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
@@ -612,13 +616,13 @@ static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq )
     }
     break;
   case 2:
-    if( WaitAdapterCmd(server) ){
+    if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
 
       if( server->flowResult ){
         return TRUE;
       }else{
-        setMainProc( server, ServerMain_SelectPokemonIn );
+        setMainProc( server, ServerMain_SelectPokemonCover );
       }
     }
     break;
@@ -635,7 +639,7 @@ static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq )
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
+static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
@@ -646,10 +650,23 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
     break;
 
   case 1:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
-      BTL_Printf("入場ポケモン選択後\n");
+      if( Irekae_IsNeedConfirm(server) )
+      {
+        server->enemyPutPokeID = Irekae_GetEnemyPutPokeID( server );
+        SetAdapterCmdSingle( server, BTL_ACMD_CONFIRM_IREKAE, BTL_CLIENTID_SA_PLAYER,
+                &server->enemyPutPokeID, sizeof(server->enemyPutPokeID) );
+      }
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    if( WaitAllAdapterReply(server) )
+    {
       ResetAdapterCmd( server );
+
       SCQUE_Init( server->que );
       server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
@@ -662,20 +679,20 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
     }
     break;
 
-  case 2:
-    if( WaitAdapterCmd(server) ){
+  case 3:
+    if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
       (*seq)++;
     }
     break;
 
-  case 3:
+  case 4:
     SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
     (*seq)++;
     break;
 
-  case 4:
-    if( WaitAdapterCmd(server) )
+  case 5:
+    if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
       BTL_MAIN_SyncServerCalcData( server->mainModule );
@@ -700,6 +717,47 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
 
   return FALSE;
 }
+/**
+ *  スタンドアロン入れ替え戦にて、プレイヤー側に入れ替えを確認する必要があるか判定
+ */
+static BOOL Irekae_IsNeedConfirm( BTL_SERVER* server )
+{
+  if( BTL_MAIN_IsIrekaeMode(server->mainModule) )
+  {
+    if( server->changePokeCnt )
+    {
+      u32 i;
+      for(i=0; i<server->changePokeCnt; ++i)
+      {
+        // プレイヤー側も瀕死リクエストがある場合、入れ替え確認の必要なし
+        if( BTL_MAIN_BtlPosToClientID(server->mainModule, server->changePokePos[i]) == BTL_CLIENTID_SA_PLAYER){
+          return FALSE;
+        }
+      }
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+/**
+ *  スタンドアロン入れ替え戦にて、敵側が次にくり出すポケモンIDを取得
+ */
+static u8 Irekae_GetEnemyPutPokeID( BTL_SERVER* server )
+{
+  SVCL_WORK*  svcl = &server->client[ BTL_CLIENTID_SA_ENEMY1 ];
+
+  if( Svcl_IsEnable(svcl) )
+  {
+    const BTL_ACTION_PARAM* actParam = BTL_ADAPTER_GetReturnData( svcl->adapter, NULL );
+    if( BTL_ACTION_GetAction(actParam) == BTL_ACTION_CHANGE )
+    {
+      const BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeDataConst(
+                  server->pokeCon, BTL_CLIENTID_SA_ENEMY1, actParam->change.memberIdx );
+      return BPP_GetID( bpp );
+    }
+  }
+  return BTL_POKEID_NULL;
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -722,7 +780,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     break;
 
   case 1:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
@@ -738,7 +796,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     break;
 
   case 2:
-    if( WaitAdapterCmd(server) ){
+    if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
       (*seq)++;
     }
@@ -750,7 +808,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     break;
 
   case 4:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
       BTL_MAIN_SyncServerCalcData( server->mainModule );
@@ -761,7 +819,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
         break;
 
       case SVFLOW_RESULT_POKE_COVER:
-        setMainProc( server, ServerMain_SelectPokemonIn );
+        setMainProc( server, ServerMain_SelectPokemonCover );
         break;
       case SVFLOW_RESULT_BTL_SHOWDOWN:
         setMainProc( server, ServerMain_ExitBattle );
@@ -797,7 +855,7 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
     (*seq)++;
     break;
   case 1:
-    if( WaitAdapterCmd(server) )
+    if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
       setMainProc( server, ServerMain_ExitBattle );
@@ -869,7 +927,7 @@ static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq )
     (*seq)++;
     break;
   case 1:
-    if( WaitAdapterCmd(server) ){
+    if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
       (*seq)++;
     }
@@ -904,7 +962,7 @@ static BOOL SendActionRecord( BTL_SERVER* server )
   u32   recDataSize;
   recData = MakeSelectActionRecord( server, &recDataSize );
   if( recData != NULL ){
-//    BTL_Printf("アクション記録データを送信する (%dbytes)\n", recDataSize);
+//  BTL_Printf("アクション記録データを送信する (%dbytes)\n", recDataSize);
     SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
     return TRUE;
   }
@@ -982,11 +1040,31 @@ static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize )
 }
 
 
+//=================================================================================================
+//=================================================================================================
+
+//----------------------------------------------------------------------------------
+/**
+ * 全クライアントへコマンドリクエスト
+ *
+ * @param   server
+ * @param   cmd
+ */
+//----------------------------------------------------------------------------------
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd )
 {
   SetAdapterCmdEx( server, cmd, NULL, 0 );
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * 全クライアントへコマンドリクエスト（拡張情報あり）
+ *
+ * @param   server
+ * @param   cmd
+ * @param   sendData
+ * @param   dataSize
+ */
+//----------------------------------------------------------------------------------
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize )
 {
   int i;
@@ -1002,8 +1080,37 @@ static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* 
 
   BTL_ADAPTERSYS_EndSetCmd();
 }
+//----------------------------------------------------------------------------------
+/**
+ * 指定クライアントへのみコマンドリクエスト
+ *
+ * @param   server
+ * @param   cmd
+ * @param   clientID
+ */
+//----------------------------------------------------------------------------------
+static void SetAdapterCmdSingle( BTL_SERVER* server, BtlAdapterCmd cmd, u8 clientID, const void* sendData, u32 dataSize )
+{
+  SVCL_WORK* svcl = &server->client[ clientID ];
 
-static BOOL WaitAdapterCmd( BTL_SERVER* server )
+  if( Svcl_IsEnable(svcl) ){
+    BTL_ADAPTER_ResetCmd( svcl->adapter );
+    BTL_ADAPTER_SetCmd( svcl->adapter, cmd, sendData, dataSize );
+  }
+  else{
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * 接続している全クライアントからの返信を待つ
+ *
+ * @param   server
+ *
+ * @retval  BOOL    全クライアントからの返信が揃ったらTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL WaitAllAdapterReply( BTL_SERVER* server )
 {
   int i;
   BOOL ret = TRUE;
@@ -1018,7 +1125,13 @@ static BOOL WaitAdapterCmd( BTL_SERVER* server )
   }
   return ret;
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * コマンドリクエスト処理リセット
+ *
+ * @param   server
+ */
+//----------------------------------------------------------------------------------
 static void ResetAdapterCmd( BTL_SERVER* server )
 {
   int i;
@@ -1029,6 +1142,10 @@ static void ResetAdapterCmd( BTL_SERVER* server )
     }
   }
 }
+
+
+//=================================================================================================
+//=================================================================================================
 
 //----------------------------------------------------------------------------------
 /**
@@ -1206,3 +1323,4 @@ void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos )
     server->changePokePos[ server->changePokeCnt++ ] = pos;
   }
 }
+

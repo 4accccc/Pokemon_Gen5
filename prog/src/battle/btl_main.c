@@ -1634,6 +1634,25 @@ u8 BTL_MAIN_GetPlayerBadgeCount( const BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->badgeCount;
 }
+//=============================================================================================
+/**
+ * 戦闘ルール「いれかえ」を採用するか
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsIrekaeMode( const BTL_MAIN_MODULE* wk )
+{
+  if( (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_TRAINER)
+  &&  (BTL_MAIN_GetRule(wk) == BTL_RULE_SINGLE)
+  &&  (CONFIG_GetBattleRule(wk->setupParam->configData) == BATTLERULE_IREKAE)
+  ){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 //=============================================================================================
 /**
@@ -3693,6 +3712,7 @@ BOOL BTL_MAIN_GetSetupStatusFlag( const BTL_MAIN_MODULE* wk, BTL_STATUS_FLAG fla
 //
 //----------------------------------------------------------------------------------------------
 
+
 //=============================================================================================
 /**
  * クライアント側でレベルアップ処理を行った後、サーバ側パラメータに書き戻す
@@ -3712,6 +3732,9 @@ void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
     BTL_SERVER_NotifyPokemonLevelUp( wk->server, bpp );
   }
 }
+
+
+
 //----------------------------------------------------------------------------------
 /**
  * バトル内パーティデータを、結果としてセットアップパラメータに書き戻す

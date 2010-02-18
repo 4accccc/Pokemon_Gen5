@@ -49,4 +49,5 @@ extern void BTL_SERVER_InitChangePokemonReq( BTL_SERVER* server );
 extern void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos );
 extern BOOL BTL_SERVER_IsFrontPokemon( BTL_SERVER* server, const BTL_POKEPARAM* bpp );
 
+
 #endif

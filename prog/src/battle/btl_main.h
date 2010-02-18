@@ -19,6 +19,7 @@ extern BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk );
 extern BtlCommMode BTL_MAIN_GetCommMode( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsWazaEffectEnable( const BTL_MAIN_MODULE* wk );
 extern u8 BTL_MAIN_GetPlayerBadgeCount( const BTL_MAIN_MODULE* wk );
+extern BOOL BTL_MAIN_IsIrekaeMode( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsExpSeqEnable( const BTL_MAIN_MODULE* wk );
 extern BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk );
 extern const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE* wk );

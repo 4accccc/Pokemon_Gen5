@@ -245,7 +245,7 @@ BOOL BTL_ADAPTER_WaitCmd( BTL_ADAPTER* wk )
  * [SERVER用] クライアントから帰ってきたデータへのポインタを取得
  *
  * @param   wk        アダプタモジュール
- * @param   size      [out] データサイズ
+ * @param   size      [out] データサイズを取得する変数ポインタ（不要ならNULL）
  *
  * @retval  const void*   データポインタ
  */
@@ -381,9 +381,9 @@ BtlAdapterCmd BTL_ADAPTER_RecvCmd( BTL_ADAPTER* wk )
  * [CLIENT用] アダプタコマンド実データ部受信
  *
  * @param   wk
- * @param   ppRecv
+ * @param   ppRecv  [out] データアドレスを受け取るためのポインタアドレス
  *
- * @retval  u32
+ * @retval  u32   データサイズ
  */
 //--------------------------------------------------------------------------------------
 u32 BTL_ADAPTER_GetRecvData( BTL_ADAPTER* wk, const void** ppRecv )
@@ -402,10 +402,9 @@ u32 BTL_ADAPTER_GetRecvData( BTL_ADAPTER* wk, const void** ppRecv )
     return sendBuf_getData( &wk->sendDataBuffer, ppRecv );
   }
 }
-
-//=============================================================================================
+//--------------------------------------------------------------------------------------
 /**
- * クライアント→サーバへコマンド返信
+ * [CLIENT用] サーバへコマンド返信
  *
  * @param   wk
  * @param   data    返信データアドレス
@@ -413,7 +412,7 @@ u32 BTL_ADAPTER_GetRecvData( BTL_ADAPTER* wk, const void** ppRecv )
  *
  * @retval  BOOL    成功時TRUE（成功するまで毎フレーム呼ぶこと）
  */
-//=============================================================================================
+//--------------------------------------------------------------------------------------
 BOOL BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size )
 {
   // 通信時
@@ -433,6 +432,7 @@ BOOL BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size )
     return TRUE;
   }
 }
+
 
 
 

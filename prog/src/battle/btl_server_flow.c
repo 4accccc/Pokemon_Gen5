@@ -324,7 +324,7 @@ static u8 ShooterEff_ItemDrop( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8 nextPokeIdx );
 static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
-static BOOL scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
+static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action );
 static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
@@ -886,16 +886,33 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
 
   wk->numActOrder = sortClientAction( wk, wk->actOrder, NELEMS(wk->actOrder) );
   wk->numEndActOrder = 0;
+
+  // まずは入れ替え側を処理
   for(i=0; i<wk->numActOrder; i++)
   {
     action = &wk->actOrder[i].action;
     if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
     if( action->change.depleteFlag ){ continue; }
 
-    BTL_Printf("クライアント_%d の位置_%d へ、%d番目のポケを出す\n",
-          wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx );
-    scproc_MemberInForChange( wk, wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx, TRUE );
+    if( !BPP_IsDead(wk->actOrder[i].bpp) ){
+      OS_TPrintf("入れ替えしました ... memIdx=%d\n", action->change.memberIdx);
+      scproc_MemberChange( wk, wk->actOrder[i].bpp, action->change.memberIdx );
+      wk->actOrder[i].fDone = TRUE;
+    }
   }
+  // 続けて空きを埋める繰り出し
+  for(i=0; i<wk->numActOrder; i++)
+  {
+    action = &wk->actOrder[i].action;
+    if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
+    if( action->change.depleteFlag ){ continue; }
+
+    if( BPP_IsDead(wk->actOrder[i].bpp) ){
+      scproc_MemberInForChange( wk, wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx, TRUE );
+      wk->actOrder[i].fDone = TRUE;
+    }
+  }
+
   scproc_AfterMemberIn( wk );
   reqChangePokeForServer( wk );
 
@@ -1747,6 +1764,7 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
       case BTL_ACTION_CHANGE:
         BTL_Printf( DBGSTR_SVFL_ActOrder_Change, action.change.posIdx, action.change.memberIdx);
         scproc_MemberChange( wk, bpp, action.change.memberIdx );
+        scproc_AfterMemberIn( wk );
         break;
       case BTL_ACTION_ESCAPE:
         BTL_N_Printf( DBGSTR_SVFL_ActOrder_Escape );
@@ -1809,7 +1827,7 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
       {
         u16 lv_poke = BPP_GetValue( bpp, BPP_LEVEL );
         u16 lv_border = (1 + badgeCnt) * 10;
-        u16 sum, rand;
+        u16 rand;
 
         if( lv_poke <= lv_border ){
           return SABOTAGE_NONE;
@@ -2309,10 +2327,12 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   }
 
   if( posIdx != nextPokeIdx ){
+    OS_TPrintf("Client(%d) メンバー入場につき入れ替わり %d <-> %d\n", clientID, posIdx, nextPokeIdx);
     BTL_PARTY_SwapMembers( clwk->party, posIdx, nextPokeIdx );
   }
   bpp = BTL_PARTY_GetMemberData( clwk->party, posIdx );
   pokeID = BPP_GetID( bpp );
+  OS_TPrintf("新しく出たPoke=%d\n", pokeID);
 
 
   BTL_HANDLER_TOKUSEI_Add( bpp );
@@ -2947,8 +2967,9 @@ static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8
     pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, outPokeID );
     BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, pos, &clientID, &posIdx );
 
+    OS_TPrintf("pos=%d, clientID=%d, posIdx=%d\n", pos, clientID, posIdx);
+
     scproc_MemberInForChange( wk, clientID, posIdx, nextPokeIdx, TRUE );
-    scproc_AfterMemberIn( wk );
   }
 }
 //----------------------------------------------------------------------------------
@@ -2974,9 +2995,8 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
 
   if( !BPP_IsDead(outPoke) )
   {
-    if( scproc_MemberOutCore(wk, outPoke) ){
-      return TRUE;
-    }
+    scproc_MemberOutCore( wk, outPoke );
+    return TRUE;
   }
 
   return FALSE;
@@ -2988,10 +3008,9 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
  * @param   wk
  * @param   outPoke
  *
- * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke )
+static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke )
 {
   scPut_MemberOut( wk, outPoke );
   BPP_Clear_ForOut( outPoke );
@@ -3006,8 +3025,6 @@ static BOOL scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke )
 
   BTL_POSPOKE_PokeOut( &wk->pospokeWork, BPP_GetID(outPoke) );
   scproc_ClearPokeDependEffect( wk, outPoke );
-
-  return TRUE;
 }
 //----------------------------------------------------------------------------------
 /**
