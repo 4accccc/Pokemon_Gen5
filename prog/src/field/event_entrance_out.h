@@ -20,6 +20,7 @@
  * @param gameData
  * @param fieldmap
  * @param location          ‘JˆÚæw’è
+ * @param prevZoneID        ‘JˆÚ‘O‚Ìƒ][ƒ“
  * @param seasonDisplayFlag ‹Gß•\¦‚ğs‚¤‚©‚Ç‚¤‚©
  * @param startSeason       Å‰‚É•\¦‚·‚é‹Gß
  * @param endtSeason        ÅŒã‚É•\¦‚·‚é‹Gß
@@ -32,6 +33,7 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
                             GAMEDATA* gameData, 
                             FIELDMAP_WORK* fieldmap, 
                             LOCATION location,
+                            u16 prevZoneID,
                             BOOL seasonDisplayFlag,
                             u8 startSeason,
                             u8 endSeason );

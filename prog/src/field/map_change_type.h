@@ -20,5 +20,6 @@ typedef enum {
   MC_TYPE_GATE,       ///<マップ切り替え指定：ゲート
   MC_TYPE_DUNGEON,    ///<マップ切り替え指定：ダンジョン
   MC_TYPE_BRIDGE,     ///<マップ切り替え指定：橋
+  MC_TYPE_NUM,        ///<総数
 }MC_TYPE;
 

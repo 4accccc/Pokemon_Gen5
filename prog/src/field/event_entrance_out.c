@@ -47,11 +47,13 @@ typedef struct
   GAMEDATA*                gameData;
   FIELDMAP_WORK*           fieldmap;
   LOCATION                 location;          // 遷移先指定
+  u16                      prevZoneID;        // 遷移前のゾーン
   EXIT_TYPE                exitType;          // 出入り口タイプ
   BOOL                     seasonDisplayFlag; // 季節表示を行うかどうか
   u8                       startSeason;       // 最初に表示する季節
   u8                       endSeason;         // 最後に表示する季節
   ENTRANCE_CAMERA_SETTINGS cameraSettings;    // 特殊出入り口のカメラ設定データ
+  FIELD_FADE_TYPE          fadeInType;        // 季節表示がない場合のF/Iタイプ
 } EVENT_WORK;
 
 
@@ -79,6 +81,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT* event, int* s
  * @param gameData
  * @param fieldmap
  * @param location          遷移先指定
+ * @param prevZoneID        遷移前のゾーン
  * @param seasonDisplayFlag 季節表示を行うかどうか
  * @param startSeason       最初に表示する季節
  * @param endtSeason        最後に表示する季節
@@ -91,6 +94,7 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
                             GAMEDATA* gameData, 
                             FIELDMAP_WORK* fieldmap, 
                             LOCATION location,
+                            u16 prevZoneID,
                             BOOL seasonDisplayFlag,
                             u8 startSeason,
                             u8 endSeason )
@@ -159,15 +163,17 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
   event = GMEVENT_Create( gameSystem, parent, eventFuncTable[ exitType ], sizeof( EVENT_WORK ) );
 
   // イベント・ワークを初期化
-  work                     = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->gameSystem         = gameSystem;
-  work->gameData           = gameData;
-  work->fieldmap           = fieldmap;
-  work->location           = location;
-  work->exitType           = exitType;
-  work->seasonDisplayFlag  = seasonDisplayFlag;
-  work->startSeason        = startSeason;
-  work->endSeason          = endSeason;
+  work                    = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->gameSystem        = gameSystem;
+  work->gameData          = gameData;
+  work->fieldmap          = fieldmap;
+  work->prevZoneID        = prevZoneID;
+  work->location          = location;
+  work->exitType          = exitType;
+  work->seasonDisplayFlag = seasonDisplayFlag;
+  work->startSeason       = startSeason;
+  work->endSeason         = endSeason;
+  work->fadeInType        = FIELD_FADE_GetFadeInType( prevZoneID, location.zone_id );
 
   return event;
 }
@@ -204,8 +210,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone( GMEVENT* event, int* 
           EVENT_FieldFadeIn_Season( gameSystem, fieldmap, work->startSeason, work->endSeason ) );
     }
     else
-    { // クロスフェード
-      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Cross( gameSystem, fieldmap ) );
+    { // 基本フェード
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeIn( gameSystem, fieldmap, work->fadeInType, FIELD_FADE_WAIT, TRUE, 0, 0 ) );
     }
     (*seq)++;
     break;
@@ -237,7 +244,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor( GMEVENT* event, int* 
     // ドア退出イベント
     GMEVENT_CallEvent( event, 
         EVENT_FieldDoorOutAnime( gameSystem, fieldmap, TRUE, 
-                                 work->seasonDisplayFlag, work->startSeason, work->endSeason ) );
+                                 work->seasonDisplayFlag, work->startSeason, work->endSeason, work->fadeInType ) );
     (*seq)++;
     break;
   case 1:
@@ -275,7 +282,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
     }
     else
     { // クロスフェード
-      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Cross( gameSystem, fieldmap ) );
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeIn( gameSystem, fieldmap, work->fadeInType, FIELD_FADE_WAIT, TRUE, 0, 0 ) );
     }
     (*seq)++;
     break;
@@ -406,7 +414,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
   case SEQ_DOOR_OUT_ANIME:
     GMEVENT_CallEvent( event, 
         EVENT_FieldDoorOutAnime( gameSystem, fieldmap, FALSE, 
-                                 work->seasonDisplayFlag, work->startSeason, work->endSeason ) );
+                                 work->seasonDisplayFlag, work->startSeason, work->endSeason, work->fadeInType ) );
 
     if( work->cameraSettings.validFlag_OUT )
     {

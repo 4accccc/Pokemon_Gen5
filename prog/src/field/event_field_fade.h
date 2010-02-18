@@ -14,6 +14,7 @@
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
+#include "map_change_type.h"
 
 
 //============================================================================================
@@ -26,6 +27,7 @@ typedef enum {
 	FIELD_FADE_WHITE,  // 輝度フェード(ホワイト)
   FIELD_FADE_CROSS,  // クロスフェード
   FIELD_FADE_SEASON, // 季節フェード
+  FIELD_FADE_WIPE,   // ワイプ
 } FIELD_FADE_TYPE;
 
 // フェード処理完了待ちフラグ
@@ -34,11 +36,39 @@ typedef enum{
   FIELD_FADE_NO_WAIT, // フェード完了を待たない
 } FIELD_FADE_WAIT_FLAG;
 
-// BG初期化をイベント内で行うかどうか
+// BG 初期化をイベント内で行うかどうか
 typedef enum{
   FIELD_FADE_BG_INIT,       // 初期化する
   FIELD_FADE_NOT_BG_INIT,   // 初期化しない
 } FIELD_FADE_BG_INIT_FLAG;
+
+
+//============================================================================================
+// ■フェード判定関数
+//============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 前後のゾーンIDから, フェードアウトの種類を決定する
+ *
+ * @param prevZoneID 遷移後のゾーンID
+ * @param nextZoneID 遷移前のゾーンID
+ *
+ * @return 指定したゾーン間を遷移する際のフェードアウトの種類
+ */
+//--------------------------------------------------------------------------------------------
+extern FIELD_FADE_TYPE FIELD_FADE_GetFadeOutType( u16 prevZoneID, u16 nextZoneID );
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 前後のゾーンIDから, フェードインの種類を決定する
+ *
+ * @param prevZoneID 遷移後のゾーンID
+ * @param nextZoneID 遷移前のゾーンID
+ *
+ * @return 指定したゾーン間を遷移する際のフェードインの種類
+ */
+//--------------------------------------------------------------------------------------------
+extern FIELD_FADE_TYPE FIELD_FADE_GetFadeInType( u16 prevZoneID, u16 nextZoneID );
 
 
 //============================================================================================
@@ -73,6 +103,9 @@ extern GMEVENT* EVENT_FieldFadeOut( GAMESYS_WORK *gameSystem, FIELDMAP_WORK * fi
 // 季節フェード
 #define EVENT_FieldFadeOut_Season( gsys, fieldmap, wait ) \
         EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_BLACK, wait )
+// ワイプアウト
+#define EVENT_FieldFadeOut_Wipe( gsys, fieldmap ) \
+        EVENT_FieldFadeOut( gsys, fieldamp, FIELD_FADE_WIPE, 0 )
 
 
 //--------------------------------------------------------------------------------------------

@@ -49,6 +49,7 @@ typedef struct {
   BOOL season_disp_flag; //<<<四季表示を行うかどうか
   u8 start_season;       //<<<最初に表示する季節 ( 四季表示を行う場合のみ有効 )
   u8 end_season;         //<<<最後に表示する季節 ( 四季表示を行う場合のみ有効 )
+  FIELD_FADE_TYPE fadeType;  //<<<季節表示を行わない場合のフェードタイプ
 
   //以下はシーケンス動作中にセットされる
   //FIELD_BMODEL * entry;
@@ -117,8 +118,9 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
           EVENT_FieldFadeIn_Season(gsys, fieldmap, fdaw->start_season, fdaw->end_season) );
     }
     else
-    { // クロスフェード
-      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Cross(gsys, fieldmap) );
+    { // 基本フェード
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeIn(gsys, fieldmap, fdaw->fadeType, FIELD_FADE_WAIT, TRUE, 0, 0) );
     }
     *seq = SEQ_DOOROUT_CAMERA_ACT;
     break;
@@ -206,7 +208,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 //------------------------------------------------------------------
 GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, 
                                     BOOL cam_anm_flag,
-                                    BOOL season_disp_flag, u8 start_season, u8 end_season )
+                                    BOOL season_disp_flag, u8 start_season, u8 end_season,
+                                    FIELD_FADE_TYPE fadeType )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * fdaw;
@@ -220,6 +223,7 @@ GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldma
   fdaw->season_disp_flag = season_disp_flag;
   fdaw->start_season = start_season;
   fdaw->end_season = end_season;
+  fdaw->fadeType = fadeType;
 
   return event;
 }
@@ -307,8 +311,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
       GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Black(gsys, fieldmap, FIELD_FADE_WAIT) );
     }
     else
-    { // クロスフェード
-      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Cross(gsys, fieldmap) );
+    { // 基本フェード
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeOut(gsys, fieldmap, fdaw->fadeType, FIELD_FADE_WAIT) );
     }
     *seq = SEQ_DOORIN_END;
     break;
@@ -335,7 +340,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
 //------------------------------------------------------------------
 GMEVENT * EVENT_FieldDoorInAnime ( 
     GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, const LOCATION * loc, 
-    BOOL cam_anm_flag, BOOL season_disp_flag )
+    BOOL cam_anm_flag, BOOL season_disp_flag, FIELD_FADE_TYPE fadeType )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * fdaw;
@@ -348,6 +353,7 @@ GMEVENT * EVENT_FieldDoorInAnime (
   fdaw->ctrl = NULL;
   fdaw->cam_anm_flag = cam_anm_flag;
   fdaw->season_disp_flag = season_disp_flag;
+  fdaw->fadeType = fadeType;
 
   return event;
 }

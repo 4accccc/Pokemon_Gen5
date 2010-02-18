@@ -17,7 +17,7 @@
 #include "event_entrance_in.h"
 
 #include "entrance_camera_settings.h"  // for ENTRANCE_CAMERA_SETTINGS
-#include "event_fieldmap_control.h"    // for EVENT_FieldFadeOut
+#include "event_fieldmap_control.h"    // for EVENT_FieldFadeOut_xxxx
 #include "event_entrance_effect.h"     // for EVENT_FieldDoorInAnime
 #include "event_fldmmdl_control.h"     // for EVENT_PlayerOneStepAnime
 #include "event_disappear.h"           // for EVENT_DISAPPEAR_xxxx
@@ -47,6 +47,7 @@ typedef struct
   EXIT_TYPE               exitType;           // 出入り口タイプ
   BOOL                    seasonDisplayFlag;  // 季節表示を行うかどうか
   ENTRANCE_CAMERA_SETTINGS cameraSettings;    // 特殊出入り口のカメラ設定データ
+  FIELD_FADE_TYPE          fadeOutType;       // 季節表示がない場合のF/Oタイプ
 
 } EVENT_WORK;
 
@@ -92,6 +93,8 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
 {
   GMEVENT* event;
   EVENT_WORK* work;
+  u16 prevZoneID, nextZoneID;
+  FIELD_FADE_TYPE fadeOutType;
 
   // イベントテーブル
   const GMEVENT_FUNC eventFuncTable[] = 
@@ -135,17 +138,23 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
     EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EXIT_TYPE_SP30
   };
 
+  // 基本フェードアウトの種類を決定
+  prevZoneID  = FIELDMAP_GetZoneID( fieldmap );
+  nextZoneID  = nextLocation.zone_id;
+  fadeOutType = FIELD_FADE_GetFadeOutType( prevZoneID, nextZoneID );
+
   // イベント作成
   event = GMEVENT_Create( gameSystem, parent, eventFuncTable[ exitType ], sizeof( EVENT_WORK ) );
 
   // イベントワーク初期化
-  work                     = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->gameSystem         = gameSystem;
-  work->gameData           = gameData;
-  work->fieldmap           = fieldmap;
-  work->nextLocation       = nextLocation;
-  work->exitType           = exitType;
-  work->seasonDisplayFlag  = seasonDisplayFlag;
+  work                    = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->gameSystem        = gameSystem;
+  work->gameData          = gameData;
+  work->fieldmap          = fieldmap;
+  work->nextLocation      = nextLocation;
+  work->exitType          = exitType;
+  work->seasonDisplayFlag = seasonDisplayFlag;
+  work->fadeOutType       = fadeOutType;
 
   return event;
 }
@@ -170,8 +179,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone( GMEVENT * event, int *
 
   switch ( *seq )
   {
+  // BGM再生準備
   case 0:
-    // BGM再生準備
     { 
       u16 nowZoneID;
 
@@ -180,19 +189,23 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone( GMEVENT * event, int *
     }
     (*seq)++;
     break;
+
+  // 画面フェードアウト
   case 1:
-    // 画面フェードアウト
     if( work->seasonDisplayFlag )
     { // 季節フェード
       GMEVENT_CallEvent( event, 
           EVENT_FieldFadeOut_Season( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
     }
     else
-    { // クロスフェード
-      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Cross( gameSystem, fieldmap ) );
+    { // 基本フェード
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeOut( gameSystem, fieldmap, work->fadeOutType, FIELD_FADE_WAIT ) );
     }
     (*seq)++;
     break;
+
+  // イベント終了
   case 2:
     return GMEVENT_RES_FINISH;
   }
@@ -216,7 +229,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor( GMEVENT* event, int* s
     // ドア進入イベント
     GMEVENT_CallEvent( event, 
         EVENT_FieldDoorInAnime( 
-          gameSystem, fieldmap, &(work->nextLocation), TRUE, work->seasonDisplayFlag ) );
+          gameSystem, fieldmap, &(work->nextLocation), TRUE, work->seasonDisplayFlag, work->fadeOutType ) );
     (*seq)++;
     break;
   case 1:
@@ -288,8 +301,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
           EVENT_FieldFadeOut_Season( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
     }
     else
-    { // クロスフェード
-      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Cross( gameSystem, fieldmap ) );
+    { // 基本フェード
+      GMEVENT_CallEvent( event,
+          EVENT_FieldFadeOut( gameSystem, fieldmap, work->fadeOutType, FIELD_FADE_WAIT ) );
     }
     (*seq)++;
     break;
@@ -321,10 +335,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp( GMEVENT* event, int* s
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
-}
-
-
-
+} 
 
 //---------------------------------------------------------------------------------------
 /**
@@ -441,7 +452,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
   case SEQ_DOOR_IN_ANIME:
     GMEVENT_CallEvent( event, 
         EVENT_FieldDoorInAnime( 
-          gameSystem, fieldmap, &work->nextLocation, FALSE, work->seasonDisplayFlag ) );
+          gameSystem, fieldmap, &work->nextLocation, FALSE, work->seasonDisplayFlag, work->fadeOutType ) );
     *seq = SEQ_EXIT;
     break;
 

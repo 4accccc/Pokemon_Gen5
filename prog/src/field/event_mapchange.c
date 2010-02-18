@@ -582,7 +582,7 @@ static GMEVENT_RESULT EVENT_MapChange( GMEVENT* event, int* seq, void* wk )
   case 2:
     // 入口退出イベント
     GMEVENT_CallEvent( event, 
-        EVENT_EntranceOut( event, gameSystem, gameData, fieldmap, work->loc_req, 
+        EVENT_EntranceOut( event, gameSystem, gameData, fieldmap, work->loc_req, work->before_zone_id,
                            work->seasonUpdateOccur, 
                            PMSEASON_GetNextSeasonID(work->prevSeason), work->nextSeason ) );
     (*seq)++;
