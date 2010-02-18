@@ -34,6 +34,7 @@ _EVENT_DATA    ev_bg_c05_board_02
 _EVENT_DATA    ev_c05_boy2_01
 _EVENT_DATA    ev_c05_rangerw_01
 _EVENT_DATA    ev_c05_mountain_01
+_EVENT_DATA    ev_pos_c05_support_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -143,7 +144,7 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
 	//カメラ操作　サポートの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,13918208,0,26509312,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 9688,0,970752,13918208,0,26509312,30 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//ゲーヂスとジムリーダー会話
@@ -194,7 +195,7 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_OBJ_DEL(C05_SAGE_01)
 	_OBJ_DEL(C05_SAGE_02)
 	
-		//自機にカメラを戻す
+	//自機にカメラを戻す
 	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
@@ -275,7 +276,174 @@ _ANIME_LABEL	anm_c05_gymleader_01
 _ANIME_LABEL	anm_c05_rival_02
 	_ANIME_DATA	AC_WALK_L_8F,9
 	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*POSイベント：サポート登場                            */
+/**************************************************************/
+EVENT_START   ev_pos_c05_support_01
 
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//サポート：しっぽなしメッセージ表示
+	_PLAINWIN_MSG_DOWN( msg_c05_white_01 )
+	_MSGWIN_CLOSE()
+	
+	//サポート表示
+	_OBJ_ADD_EX( 181, 414, DIR_UP, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+	
+	//サポート曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	
+	//サポート主人公に隣接
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c05_support_hello )
+	_OBJ_ANIME_WAIT()
+
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//主人公座標に応じてサポートに隣接
+	SWITCH $POSZ
+	CASE 404 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz404 )
+		_OBJ_ANIME_WAIT()
+	CASE 405 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz405 )
+	_OBJ_ANIME_WAIT()
+	CASE 406 THEN  //目の前に立った時
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz406 )
+		 _OBJ_ANIME_WAIT()
+	CASE 407 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz407 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz405 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//サポート：ねえねえ！ひょっとして
+	_BALLOONWIN_OBJMSG(msg_c05_white_02,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//「！」マーク表示
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c05_support_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//サポート：ダメダメ！
+	_BALLOONWIN_OBJMSG(msg_c05_white_03,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//【仮】戦闘処理
+	
+	//サポート：ひさびさのポケモン勝負だったけど
+	_BALLOONWIN_OBJMSG(msg_c05_white_04,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//退場アニメ（１）
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c05_support_goodbye01 )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_look_support_down )
+	_OBJ_ANIME_WAIT()
+	
+	//サポート：あのね！
+	_BALLOONWIN_OBJMSG(msg_c05_white_05,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//退場アニメ（２）
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c05_support_goodbye02 )
+	_OBJ_ANIME_WAIT()
+	
+	//サポートOBJ消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	//サポート曲停止
+	_END_EVENT_BGM()
+
+	//============フラグワーク操作=============//
+	
+	//フラグ操作：C05のPOSをすべて無効に
+	$WK_SCENE_C05 = 5
+
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	サポート登場：主人公に隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_support_hello
+	_ANIME_DATA	AC_WALK_U_8F,9
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート登場：主人公、z座標に応じてサポートに隣接z404
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_to_supportz404
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート登場：主人公、z座標に応じてサポートに隣接z405
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_to_supportz405
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート登場：主人公、z座標に応じてサポートに隣接z406
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_to_supportz406
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート登場：主人公、z座標に応じてサポートに隣接z407
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_to_supportz407
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート登場：[!]マーク表示
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_support_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート登場：退場（1)
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_support_goodbye01
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート登場：主人公退場するサポートを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_look_support_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート登場：退場（２)
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_support_goodbye02
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /*  C05 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/

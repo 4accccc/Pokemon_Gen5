@@ -32,12 +32,39 @@ EVENT_START   ev_pos_r10_rival_01
 	//OBJ作成
 	_FLAG_RESET( FV_R10_RIVAL_01 )
 	_OBJ_ADD( R10_RIVAL_01 )
+	_OBJ_ADD( R10_SUPPORT_01 )
 	
 	//ライバルかけよって来る
 	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_come )
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r10_player_turn )
+	
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//主人公座標に応じてライバルに隣接
+	SWITCH $POSZ
+	CASE 117 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z117 )
+		_OBJ_ANIME_WAIT()
+	CASE 118 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z118 )
+		_OBJ_ANIME_WAIT()
+	CASE 119 THEN  //目の前に立った時
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z119 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z118 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//サポートちょっと遅れてかけよってくる
+	_OBJ_ANIME( R10_SUPPORT_01 , anm_r10_support_come )
 	_OBJ_ANIME_WAIT()
+	
+	//ライバル：アテグさん…チャンピオンリーグに向かったんだって？
 	_BALLOONWIN_OBJMSG( msg_r10_black_01 , R10_RIVAL_01 )
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
@@ -53,14 +80,84 @@ EVENT_START   ev_pos_r10_rival_01
 	_BALLOONWIN_CLOSE()
 	ENDIF
 	
-	//頼んだぞ！と言い残して退場
+	//ライバル：ぼくは つよくなりたかったくせに
 	_BALLOONWIN_OBJMSG( msg_r10_black_04 , R10_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
+	
+	//サポート：こんなことしかできないけれど
+	_BALLOONWIN_OBJMSG( msg_r10_white_01 , R10_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//サポート隣接
+	_OBJ_ANIME( R10_SUPPORT_01 , anm_r10_support_gift_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r10_player_gift_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//アイテム入手処理、かいふくのくすり×2
+	_ITEM_EVENT_KEYWAIT ( ITEM_KAIHUKUNOKUSURI , 2  )
+	
+	//サポート離れる
+	_OBJ_ANIME( R10_SUPPORT_01 , anm_r10_support_gift_02 )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r10_support_look_rival_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//サポート：それにしても おもしろいね
+	_BALLOONWIN_OBJMSG( msg_r10_white_02 , R10_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル：おもしろい？
+	_BALLOONWIN_OBJMSG( msg_r10_black_05 , R10_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//サポート、ライバルを見る
+	_OBJ_ANIME( R10_SUPPORT_01 , anm_r10_support_look_rival_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//サポート：すこしは わらいなさいよ
+	_BALLOONWIN_OBJMSG( msg_r10_white_03 , R10_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル、サポートを見る
+	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_look_support_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：そういうことか
+	_BALLOONWIN_OBJMSG( msg_r10_black_06 , R10_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル、主人公をを見る
+	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_look_player_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：ぼくもすぐにおいつく！
+	_BALLOONWIN_OBJMSG( msg_r10_black_07 , R10_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル退場
 	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_bye )
+	//ライバルの去った方を見る
+	_OBJ_ANIME( R10_SUPPORT_01 , anm_r10_support_look_rival_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//サポート：いっちゃった！
+	_BALLOONWIN_OBJMSG( msg_r10_white_04 , R10_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//サポート、主人公のほうを向く
+	_OBJ_ANIME( R10_SUPPORT_01 , anm_r10_support_look_player_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//サポート：あたしも できることするね
+	_BALLOONWIN_OBJMSG( msg_r10_white_05 , R10_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//サポート退場
+	_OBJ_ANIME( R10_SUPPORT_01 , anm_r10_support_bye )
 	_OBJ_ANIME_WAIT()
 	
 	//OBJ削除
 	_OBJ_DEL( R10_RIVAL_01 )
+	_OBJ_DEL( R10_SUPPORT_01 )
 	
 	//==================================//
 	//バニッシュフラグ操作
@@ -72,6 +169,119 @@ EVENT_START   ev_pos_r10_rival_01
 	
 EVENT_END
 
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：ライバル登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_rival_come
+	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：サポート登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_support_come
+	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：プレイヤー振り向くz117
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_player_turn_z117
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：プレイヤー振り向くz118
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_player_turn_z118
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：プレイヤー振り向くz119
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_player_turn_z119
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：サポート隣接してアイテムくれる01
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_support_gift_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：サポート隣接してアイテムくれる02
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_support_gift_02
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：サポートからアイテムを受け取る01
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_player_gift_01
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：ライバル、サポートを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_rival_look_support_01
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：サポート、ライバルを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_support_look_rival_01
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：ライバル、主人公を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_rival_look_player_01
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：ライバル退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_rival_bye
+	_ANIME_DATA	AC_WALK_L_4F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：サポート、ライバルを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_support_look_rival_02
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：サポート、主人公を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_support_look_player_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：サポート退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_support_bye
+	_ANIME_DATA	AC_WALK_L_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+
 /**************************************************************/
 /*看板01（10番道路用）                                        */
 /**************************************************************/
@@ -79,26 +289,3 @@ EVENT_START  ev_bg_r10_board_01
 	_EASY_BGWIN_MSG  	( msg_r10_sign1_01 , TYPE_ROAD )
 EVENT_END
 
-//--------------------------------------------------------------
-//	R10ライバル心配イベント：ライバル登場
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_r10_rival_come
-	_ANIME_DATA	AC_WALK_R_8F,9
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R10ライバル心配イベント：プレイヤー振り向く
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_r10_player_turn
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------
-//	R10ライバル心配イベント：ライバル退場
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_r10_rival_bye
-	_ANIME_DATA	AC_WALK_L_8F,9
-	_ANIME_DATA	ACMD_END,0

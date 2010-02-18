@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/09 12:00:14
+#save date:2010/02/18 12:27:24
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04.wms
 #SECTION START:OBJ_EVENT
@@ -16,7 +16,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04.wms
 #ID name
 H04_WHISLE
 #OBJ CODE Number
-ACCORDION
+GRASSSOUND
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -47,7 +47,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 H04_GUITER
 #OBJ CODE Number
-ACCORDION
+GUITAR
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -78,7 +78,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 H04_VOICE
 #OBJ CODE Number
-ACCORDION
+MIDDLEMAN2
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -109,7 +109,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 H04_LEADERSINGER
 #OBJ CODE Number
-ACCORDION
+MIDDLEMAN1
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number

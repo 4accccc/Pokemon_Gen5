@@ -136,9 +136,9 @@
 #define WK_SCENE_D02                     16524 /* 0x408c ヤグルマの森（フィールド）：イベント用ワーク */
 #define WK_SCENE_D02R0101                16525 /* 0x408d ヤグルマの森：イベント用ワーク */
 #define WK_SCENE_C04P01                  16526 /* 0x408e ライモンシティ遊園地：イベント用ワーク */
-#define WK_SCENE_C05                     16527 /* 0x408f C05：イベント用ワーク */
+#define WK_SCENE_C05                     16527 /* 0x408f ホモエドシティ：イベント用ワーク */
 #define WK_SCENE_D05                     16528 /* 0x4090 D05：イベント用ワーク */
-#define WK_SCENE_C05_TOBRIDGE            16529 /* 0x4091 C05：H02側ストッパー用ワーク */
+		/* not used 16529(0x4091) */
 #define WK_SCENE_C02                     16530 /* 0x4092 C02フィールド：イベント用ワーク */
 #define WK_SCENE_R05                     16531 /* 0x4093 ５番道路：イベント用ワーク */
 #define WK_SCENE_D01R0101_POKE           16532 /* 0x4094 廃墟：夢ポケモン探しイベント用ワーク */

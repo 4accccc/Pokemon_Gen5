@@ -18,6 +18,7 @@
 #define TR_ELITEM_02                       5
 #define TR_VETERANM_01                     6
 #define TR_VETERANW_01                     7
+#define R10_SUPPORT_01                     8
 
 #endif //ZONE_R10_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r10.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

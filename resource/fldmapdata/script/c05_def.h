@@ -20,5 +20,6 @@
 #define SCRID_C05_BOY2_01 (13)
 #define SCRID_C05_RANGERW_01 (14)
 #define SCRID_C05_MOUNTAIN_01 (15)
+#define SCRID_POS_C05_SUPPORT_01 (16)
 
 #endif //_C05_DEF_H_
