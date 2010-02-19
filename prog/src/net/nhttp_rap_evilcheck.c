@@ -57,15 +57,12 @@ u8 NHTTP_RAP_EVILCHECK_GetStatusCode( const void *cp_data )
 //------------------------------------------------------------------------------
 NHTTP_RAP_EVILCHECK_RESULT NHTTP_RAP_EVILCHECK_GetPokeResult( const void *cp_data, int poke_index )
 { 
-  u32 result;
-
   //バイト位置 1+poke_index*4 サイズ4
-  result  = *((const u32*)(((const u8*)cp_data)+1+poke_index*4));
+  const u8 *p_result  = (((const u8*)cp_data)+1+poke_index*4);
 
   //ポケモンチェックの値はネットワークバイトオーダーで帰ってくるので
   //リトルエンディアンに直す
-  return (((result>>24)&0xFF)<<0) | (((result>>16)&0xFF)<<8)
-        | (((result>>8)&0xFF)<<16) | (((result>>0)&0xFF)<<24);
+  return (u32)( (p_result[0] << 24) | (p_result[1] << 16) | (p_result[2] << 8) | ( p_result[3] << 0 ) );
 }
 
 //----------------------------------------------------------------------------

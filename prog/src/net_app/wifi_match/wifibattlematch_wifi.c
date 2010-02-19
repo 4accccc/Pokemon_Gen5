@@ -301,24 +301,17 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Init( GFL_PROC *p_proc, int *p_
 	p_wk->p_word	= WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, HEAPID_WIFIBATTLEMATCH_CORE );
 
 	//モジュールの作成
-	{	
-    DWCUserData *p_user_data;
-    WIFI_LIST   *p_wifilist;
-    p_wifilist  = GAMEDATA_GetWiFiList( p_param->p_param->p_game_data );
-    p_user_data = WifiList_GetMyUserInfo( p_wifilist );
+  p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( p_param->p_param->p_game_data, p_param->p_svl_result, HEAPID_WIFIBATTLEMATCH_CORE );
+  p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_TEXT, PLT_FONT_M, PLT_TEXT_M, CGR_OFS_M_TEXT, p_wk->p_que, p_wk->p_font, HEAPID_WIFIBATTLEMATCH_CORE );
+  p_wk->p_seq   = WBM_SEQ_Init( p_wk, WbmWifiSeq_Init, HEAPID_WIFIBATTLEMATCH_CORE );
+  p_wk->p_subseq   = WBM_SEQ_Init( p_wk, NULL, HEAPID_WIFIBATTLEMATCH_CORE );
 
-    p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( p_user_data, p_wifilist, HEAPID_WIFIBATTLEMATCH_CORE );
-    p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_TEXT, PLT_FONT_M, PLT_TEXT_M, CGR_OFS_M_TEXT, p_wk->p_que, p_wk->p_font, HEAPID_WIFIBATTLEMATCH_CORE );
-    p_wk->p_seq   = WBM_SEQ_Init( p_wk, WbmWifiSeq_Init, HEAPID_WIFIBATTLEMATCH_CORE );
-    p_wk->p_subseq   = WBM_SEQ_Init( p_wk, NULL, HEAPID_WIFIBATTLEMATCH_CORE );
-
-    { 
-      GFL_CLUNIT  *p_unit;
-      p_unit  = WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
-      p_wk->p_wait  = WBM_WAITICON_Init( p_unit, p_wk->p_res, HEAPID_WIFIBATTLEMATCH_CORE );
-      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-    }
-	}
+  { 
+    GFL_CLUNIT  *p_unit;
+    p_unit  = WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
+    p_wk->p_wait  = WBM_WAITICON_Init( p_unit, p_wk->p_res, HEAPID_WIFIBATTLEMATCH_CORE );
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+  }
 
   PMSND_PlayBGM( SEQ_BGM_WCS );
 	
@@ -712,12 +705,8 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
 
   case SEQ_START_DOWNLOAD_GPF_DATA:
-    { 
-      MYSTATUS    *p_my;
-      p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
-      WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, p_my, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq = SEQ_WAIT_DOWNLOAD_GPF_DATA;
-    }
+    WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, HEAPID_WIFIBATTLEMATCH_CORE );
+    *p_seq = SEQ_WAIT_DOWNLOAD_GPF_DATA;
     break;
 
   case SEQ_WAIT_DOWNLOAD_GPF_DATA:
@@ -933,12 +922,10 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_START_WRITE_GPF:
     { 
-      MYSTATUS    *p_my;
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
-      p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_RETIRE;
-      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, p_my, &data, HEAPID_WIFIBATTLEMATCH_CORE );
+      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE );
       *p_seq  = SEQ_WAIT_WRITE_GPF;
     }
     break;
@@ -1272,12 +1259,10 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_SEND_GPF_CUPSTATUS:
     //GPFサーバへ大会開催状況を転送する
     { 
-      MYSTATUS    *p_my;
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
-      p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_SIGNUP;
-      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, p_my, &data, HEAPID_WIFIBATTLEMATCH_CORE );
+      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE );
       *p_seq  = SEQ_WAIT_GPF_CUPSTATUS;
     }
     break;
@@ -1696,12 +1681,10 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_SEND_GPF_CUPSTATUS:
     { 
-      MYSTATUS    *p_my;
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
-      p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_ENTRY;
-      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, p_my, &data, HEAPID_WIFIBATTLEMATCH_CORE );
+      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE );
     }
     *p_seq  = SEQ_WAIT_GPF_CUPSTATUS;
     break;
@@ -2292,12 +2275,8 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_START_RECVDATA_GPF:
-    { 
-      MYSTATUS    *p_my;
-      p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
-      WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, p_my, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq        = SEQ_WAIT_RECVDATA_GPF;
-    }
+    WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, HEAPID_WIFIBATTLEMATCH_CORE );
+    *p_seq        = SEQ_WAIT_RECVDATA_GPF;
     break;
   case SEQ_WAIT_RECVDATA_GPF:
     { 
@@ -2787,12 +2766,10 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_SEND_GPF_CUPSTATUS:
     { 
-      MYSTATUS    *p_my;
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
-      p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_END;
-      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, p_my, &data, HEAPID_WIFIBATTLEMATCH_CORE ); 
+      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE ); 
       *p_seq  = SEQ_WAIT_GPF_CUPSTATUS;
     }
     break;
@@ -2946,12 +2923,10 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
   case SEQ_SEND_GPF_CUPSTATUS:
     { 
-      MYSTATUS    *p_my;
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
-      p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
       GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_RETIRE;
-      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, p_my, &data, HEAPID_WIFIBATTLEMATCH_CORE ); 
+      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE ); 
       *p_seq  = SEQ_WAIT_GPF_CUPSTATUS;
     }
     break;

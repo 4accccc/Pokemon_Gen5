@@ -30,7 +30,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *					リスト後プロセス
- *					    タイミングをとってバトルパラムを送るだけ
+ *					    タイミングをとってPokePartyを送るだけ
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //=============================================================================
@@ -111,15 +111,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_LISTAFTER_PROC_Init( GFL_PROC *p_proc, in
   p_param->result  = WIFIBATTLEMATCH_LISTAFTER_RESULT_SUCCESS;
 
   //ネットモジュールの作成
-	{	
-    DWCUserData *p_user_data;
-    WIFI_LIST   *p_wifilist;
-    p_wifilist  = GAMEDATA_GetWiFiList( p_param->p_param->p_game_data );
-    p_user_data = WifiList_GetMyUserInfo( p_wifilist );
-
-    p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( p_user_data, p_wifilist, HEAPID_WIFIBATTLEMATCH_SUB );
-  }
-
+  p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( p_param->p_param->p_game_data, NULL, HEAPID_WIFIBATTLEMATCH_SUB );
 	return GFL_PROC_RES_FINISH;
 }
 

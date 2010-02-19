@@ -302,7 +302,7 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
     {
       char *res;
       BOOL ret = NHTTP_GetHeaderAll( pWork->handle, &res );
-      OS_TPrintf( "%s\nok? %d", res, ret);
+      OS_TPrintf( "%s\nok? %d\n", res, ret);
     }
 
     NHTTPDeleteConnection(pWork->handle);

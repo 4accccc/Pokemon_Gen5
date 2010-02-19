@@ -19,6 +19,7 @@
 #include "net/nhttp_rap.h"
 #include "savedata/wifilist.h"
 #include "system/net_err.h"
+#include "net/nhttp_rap_evilcheck.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -157,7 +158,7 @@ typedef struct _WIFIBATTLEMATCH_NET_WORK WIFIBATTLEMATCH_NET_WORK;
 //-------------------------------------
 ///	ワーク作成
 //=====================================
-extern WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( const DWCUserData *cp_user_data, WIFI_LIST *p_wifilist, HEAPID heapID );
+extern WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl_result, HEAPID heapID );
 extern void WIFIBATTLEMATCH_NET_Exit( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern void WIFIBATTLEMATCH_NET_Main( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
@@ -308,7 +309,7 @@ typedef enum
   WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR,
 } WIFIBATTLEMATCH_RECV_GPFDATA_RET;
 
-extern void WIFIBATTLEMATCH_NET_StartRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTATUS *p_mystatus, HEAPID heapID );
+extern void WIFIBATTLEMATCH_NET_StartRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, HEAPID heapID );
 extern WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, NHTTPError *p_error );
 extern void WIFIBATTLEMATCH_NET_GetRecvGpfData( const WIFIBATTLEMATCH_NET_WORK *cp_wk, DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_recv );
 
@@ -320,7 +321,7 @@ typedef enum
   WIFIBATTLEMATCH_SEND_GPFDATA_RET_ERROR,
 } WIFIBATTLEMATCH_SEND_GPFDATA_RET;
 
-extern void WIFIBATTLEMATCH_NET_StartSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTATUS *p_mystatus, const DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA *cp_send, HEAPID heapID );
+extern void WIFIBATTLEMATCH_NET_StartSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, const DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA *cp_send, HEAPID heapID );
 extern WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, NHTTPError *p_error );
 
 
@@ -331,7 +332,23 @@ extern void WIFIBATTLEMATCH_NET_StartBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, co
 extern BOOL WIFIBATTLEMATCH_NET_WaitBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL *p_is_bad_word );
 
 //-------------------------------------
-///	ポケモン不正チェック
+///	ポケモン不正チェック  (NHTTP)
 //=====================================
-extern void WIFIBATTLEMATCH_NET_StartEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, const POKEPARTY *cp_party );
-extern BOOL WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk );
+//結果コード
+typedef enum
+{
+  WIFIBATTLEMATCH_NET_EVILCHECK_RET_UPDATE,
+  WIFIBATTLEMATCH_NET_EVILCHECK_RET_SUCCESS,
+  WIFIBATTLEMATCH_NET_EVILCHECK_RET_ERROR,
+} WIFIBATTLEMATCH_NET_EVILCHECK_RET;
+//データ
+typedef struct 
+{
+  u8 status_code;
+  u32 poke_result;
+  s8 sign[ NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN ];
+} WIFIBATTLEMATCH_NET_EVILCHECK_DATA;
+
+
+extern void WIFIBATTLEMATCH_NET_StartEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, const POKEMON_PARAM *cp_pp );
+extern WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_NET_EVILCHECK_DATA *p_data );

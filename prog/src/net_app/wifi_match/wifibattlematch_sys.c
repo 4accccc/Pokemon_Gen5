@@ -25,7 +25,6 @@
 #include "field/event_battle_call.h"
 #include "net_app/wifi_login.h"
 #include "title/title.h"
-#include "battle/btl_net.h"
 
 //セーブデータ
 #include "savedata/battle_box_save.h"
@@ -112,6 +111,8 @@ typedef struct
   //以下システム層に置いておくデータ
   WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
   WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;
+
+  DWCSvlResult                svl_result;
 #if 0
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_gpf_data;
   WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   *p_sake_data;
@@ -306,47 +307,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 
   //データバッファ作成
   DATA_CreateBuffer( p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
-
-  //自分のデータ設定( レートはまだ )
-  { 
-    WIFIBATTLEMATCH_ENEMYDATA *p_player;
-
-    p_player  = p_wk->p_player_data;
-
-    p_player->btl_server_version  = BTL_NET_SERVER_VERSION;
-    {
-      MYSTATUS  *p_my;
-      p_my  = GAMEDATA_GetMyStatus(p_wk->param.p_game_data);
-      GFL_STD_MemCopy( p_my, p_player->mystatus, MyStatus_GetWorkSize() );
-    }
-    { 
-      const MYPMS_DATA *cp_mypms;
-      SAVE_CONTROL_WORK *p_sv;
-      p_sv            = GAMEDATA_GetSaveControlWork(p_wk->param.p_game_data);
-      cp_mypms        = SaveData_GetMyPmsDataConst( p_sv );
-      MYPMS_GetPms( cp_mypms, MYPMS_PMS_TYPE_INTRODUCTION, &p_player->pms );
-    }
-    {
-      POKEPARTY *p_temoti;
-      switch( p_wk->param.poke )
-      {
-      case WIFIBATTLEMATCH_POKE_TEMOTI:
-        p_temoti = GAMEDATA_GetMyPokemon(p_wk->param.p_game_data);
-        GFL_STD_MemCopy( p_temoti, p_player->pokeparty, PokeParty_GetWorkSize() );
-        break;
-
-      case WIFIBATTLEMATCH_POKE_BTLBOX:
-        { 
-          SAVE_CONTROL_WORK*	p_sv	= GAMEDATA_GetSaveControlWork(p_wk->param.p_game_data);
-          BATTLE_BOX_SAVE *p_btlbox_sv = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-          p_temoti  = BATTLE_BOX_SAVE_MakePokeParty( p_btlbox_sv, GFL_HEAP_LOWID(HEAPID_WIFIBATTLEMATCH_SYS) );
-          GFL_STD_MemCopy( p_temoti, p_player->pokeparty, PokeParty_GetWorkSize() );
-          GFL_HEAP_FreeMemory( p_temoti );
-        }
-        break;
-      }
-    }
-  }
 
   //モジュール作成
 	SUBPROC_Init( &p_wk->subproc, sc_subproc_data, p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
@@ -668,6 +628,7 @@ static void *WBM_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs )
   p_param->btl_result     = p_wk->btl_result;
   p_param->p_player_data  = p_wk->p_player_data;
   p_param->p_enemy_data   = p_wk->p_enemy_data;
+  p_param->p_svl_result   = &p_wk->svl_result;
   p_param->p_rndmatch     = SaveData_GetRndMatch( GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data ) );
 		
 	return p_param;
@@ -694,6 +655,10 @@ static BOOL WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   
   case WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN:
     SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
+    break;
+
+  case WIFIBATTLEMATCH_CORE_RESULT_FINISH:
+    //何もなくなると終了するので何も呼ばない
     break;
   }
 
@@ -862,7 +827,7 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
   GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
 
   //録画バッファ作成
-  //BTL_SETUP_AllocRecBuffer( p_param->btl_setup_prm, heapID );
+  BTL_SETUP_AllocRecBuffer( p_param->btl_setup_prm, heapID );
 
 	//ランダムバトルのバトル設定
   if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_RANDOM )
@@ -998,6 +963,8 @@ static void *LOGIN_AllocParam( HEAPID heapID, void *p_wk_adrs )
   p_param->gamedata = p_wk->param.p_game_data;
   p_param->bg       = WIFILOGIN_BG_NORMAL;
   p_param->display  = WIFILOGIN_DISPLAY_UP;
+  p_param->pSvl     = &p_wk->svl_result;
+  p_param->nsid     = WB_NET_WIFIMATCH;
 
   return p_param;
 }

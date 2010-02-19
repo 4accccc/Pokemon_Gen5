@@ -14,6 +14,8 @@
 #include "battle/battle.h"
 #include "wifibattlematch_data.h"
 #include "savedata/rndmatch_savedata.h"
+
+#include <dwc.h>
 //=============================================================================
 /**
  *					定数宣言
@@ -67,6 +69,7 @@ typedef struct
   //以下、[in ]常駐データ置き場
   WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
   WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;
+  DWCSvlResult                *p_svl_result;
 
 } WIFIBATTLEMATCH_CORE_PARAM;
 

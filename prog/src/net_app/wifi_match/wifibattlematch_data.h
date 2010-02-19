@@ -14,6 +14,9 @@
 #include "buflen.h"
 #include "system/pms_data.h"
 #include "savedata/mystatus.h"
+#include "net/nhttp_rap_evilcheck.h"
+#include "pm_define.h"
+
 
 //=============================================================================
 /**
@@ -40,30 +43,12 @@ typedef struct
   PMS_DATA  pms;
   u32       wificup_no;
   u32       btl_server_version;
+  s8        sign[TEMOTI_POKEMAX][ NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN ]; //６体分の署名
   u8        pokeparty[0]; //後尾にポケパーティのデータがつく
 } WIFIBATTLEMATCH_ENEMYDATA;
 
 //対戦者情報のサイズ
 #define WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE (sizeof(WIFIBATTLEMATCH_ENEMYDATA) + PokeParty_GetWorkSize())
-
-//-------------------------------------
-/// ポケモンデータ＋署名
-//=====================================
-typedef struct 
-{
-
-  u8        mystatus[MYSTATUS_SAVE_SIZE];
-  u32       win_cnt;
-  u32       lose_cnt;
-  u32       btl_cnt;
-  u32       rate;
-  PMS_DATA  pms;
-  u32       wificup_no;
-  u32       btl_server_version;
-  u8        pokeparty[0]; //後尾にポケパーティのデータがつく
-} WIFIBATTLEMATCH_POKEDATA;
-
-
 
 #include "arc_def.h"
 #include "message.naix"

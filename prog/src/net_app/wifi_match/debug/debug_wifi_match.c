@@ -198,7 +198,7 @@ static void INPUTWIN_GetRange( u32 key, INPUTWIN_PARAM *p_wk );
 //-------------------------------------
 ///	SAKE
 //=====================================
-static void SAKE_Init( DEBUG_SAKE_WORK *p_wk,WIFI_LIST *p_wifilist, HEAPID heapID );
+static void SAKE_Init( DEBUG_SAKE_WORK *p_wk, GAMEDATA *p_gamedata, HEAPID heapID );
 static void SAKE_Exit( DEBUG_SAKE_WORK *p_wk );
 static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk );
 static void Sake_CreateDisplay( DEBUG_SAKE_WORK *p_wk, HEAPID heapID );
@@ -208,7 +208,7 @@ static void Sake_UpdateDisplay( DEBUG_SAKE_WORK *p_wk );
 //-------------------------------------
 ///	ATLAS
 //=====================================
-static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, WIFI_LIST *p_wifilist, SAVE_CONTROL_WORK* p_save, HEAPID heapID );
+static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, GAMEDATA *p_gamedata, HEAPID heapID );
 static void ATLAS_Exit( DEBUG_ATLAS_WORK *p_wk );
 static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk );
 static void Atlas_CreateRecvDisplay( DEBUG_ATLAS_WORK *p_wk, HEAPID heapID );
@@ -350,17 +350,13 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_DEBUG_PROC_Init
 				PALTYPE_SUB_BG, PLT_FONT_S*0x20, 0, HEAPID_WIFIMATCH_DEBUG );
 	}
 
+  if( p_param->mode == DEBUG_WIFIBATTLEMATCH_MODE_ATLAS )
   { 
-    WIFI_LIST *p_wifilist = GAMEDATA_GetWiFiList( p_param->p_gamedata );
-
-    if( p_param->mode == DEBUG_WIFIBATTLEMATCH_MODE_ATLAS )
-    { 
-      ATLAS_Init( &p_wk->atlas, p_wifilist, p_param->p_save, HEAPID_WIFIMATCH_DEBUG );
-    }
-    else if( p_param->mode == DEBUG_WIFIBATTLEMATCH_MODE_SAKE )
-    { 
-      SAKE_Init( &p_wk->sake, p_wifilist, HEAPID_WIFIMATCH_DEBUG );
-    }
+    ATLAS_Init( &p_wk->atlas, p_param->p_gamedata, HEAPID_WIFIMATCH_DEBUG );
+  }
+  else if( p_param->mode == DEBUG_WIFIBATTLEMATCH_MODE_SAKE )
+  { 
+    SAKE_Init( &p_wk->sake, p_param->p_gamedata, HEAPID_WIFIMATCH_DEBUG );
   }
 
 
@@ -493,7 +489,7 @@ static void INPUTWIN_GetRange( u32 key, INPUTWIN_PARAM *p_wk )
  *	@param	heapID ƒq[ƒv
  */
 //-----------------------------------------------------------------------------
-static void SAKE_Init( DEBUG_SAKE_WORK *p_wk,WIFI_LIST *p_wifilist, HEAPID heapID )
+static void SAKE_Init( DEBUG_SAKE_WORK *p_wk, GAMEDATA *p_gamedata, HEAPID heapID )
 { 
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_SAKE_WORK) );
   p_wk->heapID    = heapID;
@@ -503,10 +499,7 @@ static void SAKE_Init( DEBUG_SAKE_WORK *p_wk,WIFI_LIST *p_wifilist, HEAPID heapI
   p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
   p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, p_wk->p_que, p_wk->p_font, heapID );
   Sake_CreateDisplay( p_wk, heapID );
-  { 
-    DWCUserData *p_user_data  = WifiList_GetMyUserInfo( p_wifilist );
-    p_wk->p_net = WIFIBATTLEMATCH_NET_Init( p_user_data, p_wifilist, heapID );
-  }
+  p_wk->p_net = WIFIBATTLEMATCH_NET_Init( p_gamedata, NULL, heapID );
 
   NUMINPUT_Init( &p_wk->numinput, BG_FRAME_S_NUM, 10, 10, 6, 2, PLT_FONT_S, p_wk->p_font, heapID );
   GFL_BG_SetVisible( BG_FRAME_S_NUM, FALSE );
@@ -812,22 +805,18 @@ static void Sake_UpdateDisplay( DEBUG_SAKE_WORK *p_wk )
  *	@param	heapID                    ƒq[ƒvID
  */
 //-----------------------------------------------------------------------------
-static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, WIFI_LIST *p_wifilist, SAVE_CONTROL_WORK* p_save, HEAPID heapID )
+static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, GAMEDATA *p_gamedata, HEAPID heapID )
 { 
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_ATLAS_WORK) );
   p_wk->heapID    = heapID;
-  p_wk->p_save    = p_save;
+  p_wk->p_save    = GAMEDATA_GetSaveControlWork( p_gamedata );
 	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   p_wk->p_strbuf  = GFL_STR_CreateBuffer( 255, heapID );
   p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
   p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, p_wk->p_que, p_wk->p_font, heapID );
   Atlas_CreateReportDisplay( p_wk, heapID );
-
-  { 
-    DWCUserData *p_user_data  = WifiList_GetMyUserInfo( p_wifilist );
-    p_wk->p_net = WIFIBATTLEMATCH_NET_Init( p_user_data, p_wifilist, heapID );
-  }
+  p_wk->p_net = WIFIBATTLEMATCH_NET_Init( p_gamedata, NULL, heapID );
 
   NUMINPUT_Init( &p_wk->numinput, BG_FRAME_S_NUM, 10, 10, 6, 2, PLT_FONT_S, p_wk->p_font, heapID );
   GFL_BG_SetVisible( BG_FRAME_S_NUM, FALSE );

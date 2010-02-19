@@ -14,12 +14,15 @@
 
 //	システム
 #include "system/main.h"
+#include "gamesystem/game_data.h"
 
 //  ネットワーク
 #include "net/network_define.h"
 #include "net/dwc_rap.h"
 #include "system/net_err.h"
 #include "net/dwc_error.h"
+#include "net/nhttp_rap.h"
+#include "net/nhttp_rap_evilcheck.h"
 
 //  セーブデータ
 #include "savedata/system_data.h"
@@ -223,7 +226,10 @@ typedef struct
 struct _WIFIBATTLEMATCH_NET_WORK
 { 
   const DWCUserData *cp_user_data;
-  WIFI_LIST *p_wifilist;
+  WIFI_LIST         *p_wifilist;
+  GAMEDATA          *p_gamedata;
+  s32               pid;
+  DWCSvlResult      *p_svl_result;
 
   //マッチング
   u32 seq_matchmake;
@@ -248,7 +254,9 @@ struct _WIFIBATTLEMATCH_NET_WORK
   DWCRAP_SC_CREATE_REPORT_CORE_FUNC SC_CreateReportCoreFunc;
   DWCScResult       result;
 
-
+  //ポケモン不正検査で使う
+  const POKEMON_PARAM *cp_pp;
+  NHTTP_RAP_WORK  *nhttp;
 
   //gdb
   void *p_get_wk;
@@ -438,19 +446,25 @@ static const NetRecvFuncTable sc_net_recv_tbl[] =
 /**
  *	@brief  初期化
  *
+ *  @param  GAMEDATA        WiFIListやMystatus取得用
+ *  @param  DWCSvlResult    WiFILoginからもらったSVL。不正サーバーを使わないならばNULLでもよい
  *	@param	HEAPID heapID   ヒープID
  *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( const DWCUserData *cp_user_data, WIFI_LIST *p_wifilist, HEAPID heapID )
+extern WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl_result, HEAPID heapID )
 { 
   WIFIBATTLEMATCH_NET_WORK *p_wk;
 
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_NET_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_NET_WORK) );
-  p_wk->cp_user_data  = cp_user_data;
-  p_wk->p_wifilist    = p_wifilist;
+
+  p_wk->p_wifilist    = GAMEDATA_GetWiFiList( p_gamedata );
+  p_wk->cp_user_data  = WifiList_GetMyUserInfo( p_wk->p_wifilist );
+  p_wk->pid           = MyStatus_GetProfileID( GAMEDATA_GetMyStatus( p_gamedata ) );
+  p_wk->p_gamedata    = p_gamedata;
+  p_wk->p_svl_result  = p_svl_result;
 
   p_wk->magic_num = 0x573;
 
@@ -2175,6 +2189,12 @@ static void DwcRap_Sc_RecvPlayerData(const int netID, const int size, const void
 static void WifiBattleMatch_RecvEnemyData(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle)
 { 
   WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
+  const WIFIBATTLEMATCH_ENEMYDATA *cp_recv = cp_data_adrs;
+
+  //相手と自分のマイステータスをゲームデータに格納する
+  MYSTATUS *p_mystatus  = GAMEDATA_GetMyStatusPlayer( p_wk->p_gamedata, netID );
+  GFL_STD_MemCopy( cp_recv->mystatus, p_mystatus, MyStatus_GetWorkSize() );
+  DEBUG_NET_Printf( "MyStatusをセット！netID=%d size=%d \n", netID, size );
 
   if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
   {
@@ -3458,11 +3478,11 @@ static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servere
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTATUS *p_mystatus, HEAPID heapID )
+void WIFIBATTLEMATCH_NET_StartRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, HEAPID heapID )
 { 
   GF_ASSERT( p_wk->p_nhttp == NULL );
   p_wk->seq = 0;
-  p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(p_mystatus), NULL);
+  p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(GAMEDATA_GetMyStatus(p_wk->p_gamedata)), p_wk->p_svl_result);
 }
 //----------------------------------------------------------------------------
 /**
@@ -3560,15 +3580,14 @@ void WIFIBATTLEMATCH_NET_GetRecvGpfData( const WIFIBATTLEMATCH_NET_WORK *cp_wk, 
  *	@brief  GPFサーバーへ書き込み 初期化
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk                        ワーク
- *	@param	*p_mystatus                                           自分のステータス
  *	@param	DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *cp_send    書き込みデータ
  *	@param	heapID                                                ヒープID
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTATUS *p_mystatus, const DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA *cp_send, HEAPID heapID )
+void WIFIBATTLEMATCH_NET_StartSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, const DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA *cp_send, HEAPID heapID )
 { 
   GF_ASSERT( p_wk->p_nhttp == NULL );
-  p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(p_mystatus), NULL);
+  p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(GAMEDATA_GetMyStatus(p_wk->p_gamedata)), p_wk->p_svl_result);
   p_wk->gdb_write_data  = *cp_send;
   p_wk->seq = 0;
 }
@@ -3718,4 +3737,91 @@ BOOL WIFIBATTLEMATCH_NET_WaitBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL *p_is
     *p_is_bad_word  = p_wk->badword_num;
   }
   return ret;
+}
+
+//=============================================================================
+/**
+ *    ポケモン不正チェック
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン不正チェック  開始
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	POKEPARTY *cp_party チェックするポケモンパーティ
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_NET_StartEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, const POKEMON_PARAM *cp_pp )
+{ 
+  p_wk->seq = 0;
+  p_wk->cp_pp  = cp_pp;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン不正チェック  処理待ち
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
+ *	@param  WIFIBATTLEMATCH_NET_EVILCHECK_DATA  データ
+ *
+ *	@return WIFIBATTLEMATCH_NET_EVILCHECK_RET
+ */
+//-----------------------------------------------------------------------------
+WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_NET_EVILCHECK_DATA *p_data )
+{ 
+  enum
+  { 
+    SEQ_EVILCHECL_START,
+    SEQ_EVILCHECL_WAIT,
+    SEQ_END,
+  };
+
+  switch( p_wk->seq )
+  { 
+  case SEQ_EVILCHECL_START:
+    { 
+      BOOL ret;
+      NHTTP_RAP_PokemonEvilCheckCreate( p_wk->p_nhttp, p_wk->heapID, POKETOOL_GetWorkSize(), NHTTP_POKECHK_RANDOMMATCH);
+      NHTTP_RAP_PokemonEvilCheckAdd( p_wk->p_nhttp, (void*)p_wk->cp_pp, POKETOOL_GetWorkSize() );
+
+      ret = NHTTP_RAP_PokemonEvilCheckConectionCreate( p_wk->p_nhttp );
+      GF_ASSERT( ret );
+
+      ret = NHTTP_RAP_StartConnect( p_wk->p_nhttp );  
+      GF_ASSERT( ret );
+
+      OS_TPrintf( "不正チェック開始\n" );
+    }
+    p_wk->seq++;
+    break;
+
+  case SEQ_EVILCHECL_WAIT:
+    { 
+      NHTTPError error;
+      error = NHTTP_RAP_Process( p_wk->p_nhttp );
+      if( NHTTP_ERROR_NONE == error )
+      {
+        p_wk->seq++;
+      }
+    }
+    break;
+
+  case SEQ_END:
+    { 
+      void *p_buff;
+      const s8 *cp_sign;
+      p_buff  = NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+
+      p_data->status_code  = NHTTP_RAP_EVILCHECK_GetStatusCode( p_buff );
+      p_data->poke_result = NHTTP_RAP_EVILCHECK_GetPokeResult( p_buff, 0 );
+      cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_buff, 1 );
+      GFL_STD_MemCopy( cp_sign, p_data->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+
+      NHTTP_RAP_PokemonEvilCheckDelete(p_wk->p_nhttp);
+      NHTTP_RAP_End(p_wk->p_nhttp);
+    }
+    return WIFIBATTLEMATCH_NET_EVILCHECK_RET_SUCCESS;
+  }
+
+  return WIFIBATTLEMATCH_NET_EVILCHECK_RET_UPDATE;
 }
