@@ -2153,6 +2153,7 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(unit->win_name) , 0 );
 
+#if 0
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 0, unit->str_trname, font );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 1, unit->str_trname, font );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 2, unit->str_trname, font );
@@ -2161,20 +2162,19 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 2, 0, unit->str_trname, font );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 2, 1, unit->str_trname, font );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 2, 2, unit->str_trname, font );
+#endif
   
   if( unit->trsex == PM_MALE )
   {
     // ’jˆ—
-    GFL_FONTSYS_SetColor( 0x7, 0x6, 0x5 );
+    GFL_FONTSYS_SetColor( 0x7, 0x5, 0x5 );
   }
   else
   {
     // —ˆ—
-    GFL_FONTSYS_SetColor( 0x7, 0x4, 0x3 );
+    GFL_FONTSYS_SetColor( 0x7, 0x3, 0x3 );
   }
-
-//  GFL_FONTSYS_SetColor( 0x7, 0x4, 0x5 );
-
+    
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 1, unit->str_trname, font );
   GFL_BMPWIN_MakeTransWindow_VBlank( unit->win_name );
 }
