@@ -133,10 +133,14 @@ GMEVENT * EVENT_FieldMapMenu(
 	mwk->link.wk_adrs		= mwk;
 	mwk->link.data			= EVENT_PROCLINK_DATA_NONE;
 
-  if(FIELD_SUBSCREEN_GetMode(subscreen) == FIELD_SUBSCREEN_INTRUDE){
+  switch(FIELD_SUBSCREEN_GetMode(subscreen)){
+  case FIELD_SUBSCREEN_INTRUDE:
     mwk->return_subscreen_mode = FIELD_SUBSCREEN_INTRUDE;
-  }
-  else{
+    break;
+  case FIELD_SUBSCREEN_BEACON_VIEW:
+    mwk->return_subscreen_mode = FIELD_SUBSCREEN_BEACON_VIEW;
+    break;
+  default:
     mwk->return_subscreen_mode = FIELD_SUBSCREEN_NORMAL;
   }
 

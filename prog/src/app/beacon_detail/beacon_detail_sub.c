@@ -156,6 +156,7 @@ int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
   TOUCHBAR_ICON icon = TOUCHBAR_GetTrg( wk->touchbar );
 	
   if( icon == TOUCHBAR_ICON_RETURN || icon == TOUCHBAR_ICON_CLOSE ){
+    wk->param->ret_mode = ( icon == TOUCHBAR_ICON_CLOSE );
     return SEQ_FADEOUT;
   }
   if( icon == TOUCHBAR_ICON_CUR_U && wk->list_top > 0 ){

@@ -99,9 +99,11 @@ static GMEVENT_RESULT EVENT_BeaconDetailMain(GMEVENT * event, int *  seq, void *
   case _FIELD_FADEIN:
     {
       GMEVENT* fade_event;
-      FIELD_SUBSCREEN_WORK * subscreen;
 
-      subscreen = FIELDMAP_GetFieldSubscreenWork(fwork);
+      if( bdw->prm.ret_mode ){
+        FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fwork);
+        FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_NORMAL );
+      }
 /*
       if(bdw->selectType==CG_WIRELESS_RETURNMODE_PALACE){
         if(NULL==Intrude_Check_CommConnect(pComm)){ //‚Â‚È‚ª‚Á‚Ä‚È‚¢
