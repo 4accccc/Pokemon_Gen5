@@ -21,7 +21,7 @@
 #include "br_codein.h"
 
 #define CODE_OAM_MAX		( 12 )					///< 文字コード数
-#define BAR_OAM_MAX			( CODE_BLOCK_MAX - 1 )	///< ブロック
+#define BAR_OAM_MAX			( BR_CODE_BLOCK_MAX - 1 )	///< ブロック
 #define CUR_OAM_MAX			( 3 )
 #define BTN_OAM_MAX			( 2 )
 
@@ -236,15 +236,15 @@ typedef struct {
 //	メインワーク
 //
 // -----------------------------------------
-struct _CODEIN_WORK{
+struct _BR_CODEIN_WORK{
 	
 	CODE_OAM		code[ CODE_OAM_MAX ];
 	CODE_OAM		bar[ BAR_OAM_MAX ];
 	CODE_OAM		cur[ CUR_OAM_MAX ];
 	CODE_OAM		btn[ BTN_OAM_MAX ];
 	
-	s16				x_tbl[ CODE_BLOCK_MAX + 1 ];
-	u16				b_tbl[ CODE_BLOCK_MAX + 1 ][ 2 ];
+	s16				x_tbl[ BR_CODE_BLOCK_MAX + 1 ];
+	u16				b_tbl[ BR_CODE_BLOCK_MAX + 1 ][ 2 ];
 	
 	int				seq;
 	int				wait;
@@ -263,63 +263,63 @@ struct _CODEIN_WORK{
 	CODEIN_SYS		sys;			///< システム
 	CODEIN_STATE	state;			///< 状態
 
-	CODEIN_PARAM	param;			///< 外側からもらうパラメータ
+	BR_CODEIN_PARAM	param;			///< 外側からもらうパラメータ
 	
   HEAPID          heapID;     //ヒープ
-  CODEIN_SELECT   select;     //選択
+  BR_CODEIN_SELECT   select;     //選択
 };
 
 ///< codein_pv.c
-extern void CI_pv_ParamInit( CODEIN_WORK* wk );
-extern BOOL CI_pv_MainUpdate( CODEIN_WORK* wk );
-extern void CI_pv_ButtonManagerInit( CODEIN_WORK* wk );
+extern void CI_pv_ParamInit( BR_CODEIN_WORK* wk );
+extern BOOL CI_pv_MainUpdate( BR_CODEIN_WORK* wk );
+extern void CI_pv_ButtonManagerInit( BR_CODEIN_WORK* wk );
 extern void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work );
 
-extern void CI_pv_StateUpdate( CODEIN_WORK* wk );
-extern void CI_pv_StateInit( CODEIN_WORK* wk );
-extern void CI_pv_FocusSet( CODEIN_WORK* wk, int next_focus );
+extern void CI_pv_StateUpdate( BR_CODEIN_WORK* wk );
+extern void CI_pv_StateInit( BR_CODEIN_WORK* wk );
+extern void CI_pv_FocusSet( BR_CODEIN_WORK* wk, int next_focus );
 
-extern void CI_pv_SeqChange( CODEIN_WORK* wk, int seq );
-extern BOOL CI_pv_MainInit( CODEIN_WORK* wk );
-extern BOOL CI_pv_MainInput( CODEIN_WORK* wk );
-extern BOOL CI_pv_MainFocusMove( CODEIN_WORK* wk );
-extern BOOL CI_pv_MainEnd( CODEIN_WORK* wk );
+extern void CI_pv_SeqChange( BR_CODEIN_WORK* wk, int seq );
+extern BOOL CI_pv_MainInit( BR_CODEIN_WORK* wk );
+extern BOOL CI_pv_MainInput( BR_CODEIN_WORK* wk );
+extern BOOL CI_pv_MainFocusMove( BR_CODEIN_WORK* wk );
+extern BOOL CI_pv_MainEnd( BR_CODEIN_WORK* wk );
 
-extern int CI_pv_FocusTopSerach( CODEIN_WORK* wk, int next );
-extern int CI_pv_FocusBottomSerach( CODEIN_WORK* wk, int next );
-extern void CI_KEY_Main( CODEIN_WORK* wk );
+extern int CI_pv_FocusTopSerach( BR_CODEIN_WORK* wk, int next );
+extern int CI_pv_FocusBottomSerach( BR_CODEIN_WORK* wk, int next );
+extern void CI_KEY_Main( BR_CODEIN_WORK* wk );
 
-extern void CI_pv_Input_back( CODEIN_WORK* wk );
-extern void CI_pv_Input_End( CODEIN_WORK* wk );
+extern void CI_pv_Input_back( BR_CODEIN_WORK* wk );
+extern void CI_pv_Input_End( BR_CODEIN_WORK* wk );
 
 ///< codein_disp.c
-extern void CI_pv_disp_CodeRes_Load( CODEIN_WORK* wk );
-extern void CI_pv_disp_CodeOAM_Create( CODEIN_WORK* wk );
+extern void CI_pv_disp_CodeRes_Load( BR_CODEIN_WORK* wk );
+extern void CI_pv_disp_CodeOAM_Create( BR_CODEIN_WORK* wk );
 extern int	CI_pv_disp_CodeAnimeGet( int state, BOOL size );
-extern void CI_pv_disp_SizeFlagSet( CODEIN_WORK* wk );
-extern void CI_pv_disp_MovePosSet( CODEIN_WORK* wk, int mode );
+extern void CI_pv_disp_SizeFlagSet( BR_CODEIN_WORK* wk );
+extern void CI_pv_disp_MovePosSet( BR_CODEIN_WORK* wk, int mode );
 
-extern void CI_pv_disp_HitTableSet( CODEIN_WORK* wk );
+extern void CI_pv_disp_HitTableSet( BR_CODEIN_WORK* wk );
 
-extern void CI_pv_disp_CurOAM_Create( CODEIN_WORK* wk );
-extern void CI_pv_disp_BtnOAM_Create( CODEIN_WORK* wk );
+extern void CI_pv_disp_CurOAM_Create( BR_CODEIN_WORK* wk );
+extern void CI_pv_disp_BtnOAM_Create( BR_CODEIN_WORK* wk );
 
-extern void CI_pv_disp_CurBar_PosSet( CODEIN_WORK* wk, int id );
-extern void CI_pv_disp_CurSQ_PosSet( CODEIN_WORK* wk, int id );
-extern void CI_pv_disp_CurSQ_PosSetEx( CODEIN_WORK* wk, int id, int cur_id );
-extern void CI_pv_disp_CurUpdate( CODEIN_WORK* wk );
-extern void CI_pv_disp_CurOAM_AnimeChange( CODEIN_WORK* wk, int no, int anime );
+extern void CI_pv_disp_CurBar_PosSet( BR_CODEIN_WORK* wk, int id );
+extern void CI_pv_disp_CurSQ_PosSet( BR_CODEIN_WORK* wk, int id );
+extern void CI_pv_disp_CurSQ_PosSetEx( BR_CODEIN_WORK* wk, int id, int cur_id );
+extern void CI_pv_disp_CurUpdate( BR_CODEIN_WORK* wk );
+extern void CI_pv_disp_CurOAM_AnimeChange( BR_CODEIN_WORK* wk, int no, int anime );
 
-extern void CI_pv_disp_CurOAM_Visible( CODEIN_WORK* wk, int no, BOOL flag );
-extern BOOL CI_pv_disp_CurOAM_VisibleGet( CODEIN_WORK* wk, int no );
+extern void CI_pv_disp_CurOAM_Visible( BR_CODEIN_WORK* wk, int no, BOOL flag );
+extern BOOL CI_pv_disp_CurOAM_VisibleGet( BR_CODEIN_WORK* wk, int no );
 
-extern void CI_pv_FontOam_SysInit( CODEIN_WORK* wk );
-extern void CI_pv_FontOam_SysDelete( CODEIN_WORK* wk );
-extern void CI_pv_FontOam_ResourceLoad( CODEIN_WORK* wk );
-extern void CI_pv_FontOam_Add( CODEIN_WORK* wk );
-extern void CI_pv_FontOam_Enable( CODEIN_WORK* wk, BOOL flag );
-extern void CI_pv_FontOam_Create( CODEIN_WORK* wk, int no, int x, int y, int pal_offset );
+extern void CI_pv_FontOam_SysInit( BR_CODEIN_WORK* wk );
+extern void CI_pv_FontOam_SysDelete( BR_CODEIN_WORK* wk );
+extern void CI_pv_FontOam_ResourceLoad( BR_CODEIN_WORK* wk );
+extern void CI_pv_FontOam_Add( BR_CODEIN_WORK* wk );
+extern void CI_pv_FontOam_Enable( BR_CODEIN_WORK* wk, BOOL flag );
+extern void CI_pv_FontOam_Create( BR_CODEIN_WORK* wk, int no, int x, int y, int pal_offset );
 
-extern void CI_pv_disp_CodeRes_Delete( CODEIN_WORK* wk );
+extern void CI_pv_disp_CodeRes_Delete( BR_CODEIN_WORK* wk );
 
 #endif	///< __CODEIN_PV_H__

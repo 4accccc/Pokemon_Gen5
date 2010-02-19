@@ -36,7 +36,7 @@
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_CodeRes_Load( CODEIN_WORK* wk )
+void CI_pv_disp_CodeRes_Load( BR_CODEIN_WORK* wk )
 {
 	ARCHANDLE*		hdl;
 	GFL_CLUNIT		*cellUnit;
@@ -84,7 +84,7 @@ void CI_pv_disp_CodeRes_Load( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_CodeRes_Delete( CODEIN_WORK* wk )
+void CI_pv_disp_CodeRes_Delete( BR_CODEIN_WORK* wk )
 {
 	int i;
 	
@@ -114,7 +114,7 @@ void CI_pv_disp_CodeRes_Delete( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_CodeOAM_Create( CODEIN_WORK* wk )
+void CI_pv_disp_CodeOAM_Create( BR_CODEIN_WORK* wk )
 {
 	int i;
 	int i_c = 0;
@@ -171,7 +171,7 @@ void CI_pv_disp_CodeOAM_Create( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_CurOAM_Create( CODEIN_WORK* wk )
+void CI_pv_disp_CurOAM_Create( BR_CODEIN_WORK* wk )
 {	
 	GFL_CLWK_DATA	clwkInit;
 	GFL_CLUNIT 		*cellUnit;
@@ -235,7 +235,7 @@ void CI_pv_disp_CurOAM_Create( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_BtnOAM_Create( CODEIN_WORK* wk )
+void CI_pv_disp_BtnOAM_Create( BR_CODEIN_WORK* wk )
 {	
 	GFL_CLWK_DATA	clwkInit;
 	GFL_CLUNIT 		*cellUnit;
@@ -291,7 +291,7 @@ void CI_pv_disp_BtnOAM_Create( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_CurOAM_Visible( CODEIN_WORK* wk, int no, BOOL flag )
+void CI_pv_disp_CurOAM_Visible( BR_CODEIN_WORK* wk, int no, BOOL flag )
 {
 	GFL_CLACT_WK_SetDrawEnable( wk->cur[ no ].clwk , flag );
 }
@@ -307,7 +307,7 @@ void CI_pv_disp_CurOAM_Visible( CODEIN_WORK* wk, int no, BOOL flag )
  *
  */
 //--------------------------------------------------------------
-BOOL CI_pv_disp_CurOAM_VisibleGet( CODEIN_WORK* wk, int no )
+BOOL CI_pv_disp_CurOAM_VisibleGet( BR_CODEIN_WORK* wk, int no )
 {
 	return 	GFL_CLACT_WK_GetDrawEnable( wk->cur[ no ].clwk );
 }
@@ -325,7 +325,7 @@ BOOL CI_pv_disp_CurOAM_VisibleGet( CODEIN_WORK* wk, int no )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_CurOAM_AnimeChange( CODEIN_WORK* wk, int no, int anime )
+void CI_pv_disp_CurOAM_AnimeChange( BR_CODEIN_WORK* wk, int no, int anime )
 {
 	GFL_CLACT_WK_SetAnmSeq( wk->cur[ no ].clwk, anime );
 }
@@ -342,7 +342,7 @@ void CI_pv_disp_CurOAM_AnimeChange( CODEIN_WORK* wk, int no, int anime )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_CurBar_PosSet( CODEIN_WORK* wk, int id )
+void CI_pv_disp_CurBar_PosSet( BR_CODEIN_WORK* wk, int id )
 {
 	GFL_CLACTPOS pos;
 	GFL_CLWK *clwk;
@@ -367,7 +367,7 @@ void CI_pv_disp_CurBar_PosSet( CODEIN_WORK* wk, int id )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_CurSQ_PosSet( CODEIN_WORK* wk, int id )
+void CI_pv_disp_CurSQ_PosSet( BR_CODEIN_WORK* wk, int id )
 {
 	GFL_CLACTPOS pos;
   int w;
@@ -394,7 +394,7 @@ void CI_pv_disp_CurSQ_PosSet( CODEIN_WORK* wk, int id )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_CurSQ_PosSetEx( CODEIN_WORK* wk, int id, int cur_id )
+void CI_pv_disp_CurSQ_PosSetEx( BR_CODEIN_WORK* wk, int id, int cur_id )
 {
 	GFL_CLACTPOS pos;
   int w;
@@ -421,7 +421,7 @@ void CI_pv_disp_CurSQ_PosSetEx( CODEIN_WORK* wk, int id, int cur_id )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_CurUpdate( CODEIN_WORK* wk )
+void CI_pv_disp_CurUpdate( BR_CODEIN_WORK* wk )
 {
 	
 	int id = 2;
@@ -523,7 +523,7 @@ int CI_pv_disp_CodeAnimeGet( int state, BOOL size )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_SizeFlagSet( CODEIN_WORK* wk )
+void CI_pv_disp_SizeFlagSet( BR_CODEIN_WORK* wk )
 {
 	int i;
 	
@@ -551,7 +551,7 @@ void CI_pv_disp_SizeFlagSet( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_MovePosSet( CODEIN_WORK* wk, int mode )
+void CI_pv_disp_MovePosSet( BR_CODEIN_WORK* wk, int mode )
 {
 	int i;
 	int bp;
@@ -640,7 +640,7 @@ void CI_pv_disp_MovePosSet( CODEIN_WORK* wk, int mode )
  *
  */
 //--------------------------------------------------------------
-static inline void CODE_HitRectSet( CODEIN_WORK* wk, int no, s16 sx, s16 sy )
+static inline void CODE_HitRectSet( BR_CODEIN_WORK* wk, int no, s16 sx, s16 sy )
 {
 	GFL_CLACTPOS pos;
 	CODE_OAM* code;	
@@ -666,7 +666,7 @@ static inline void CODE_HitRectSet( CODEIN_WORK* wk, int no, s16 sx, s16 sy )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_disp_HitTableSet( CODEIN_WORK* wk )
+void CI_pv_disp_HitTableSet( BR_CODEIN_WORK* wk )
 {
 	int i;
 	s16 sx;
@@ -699,7 +699,7 @@ void CI_pv_disp_HitTableSet( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_FontOam_SysInit(CODEIN_WORK* wk)
+void CI_pv_FontOam_SysInit(BR_CODEIN_WORK* wk)
 {
 	wk->sys.bmpoam_sys = BmpOam_Init( wk->heapID , wk->sys.cellUnit );
 }
@@ -714,7 +714,7 @@ void CI_pv_FontOam_SysInit(CODEIN_WORK* wk)
  *
  */
 //--------------------------------------------------------------
-void CI_pv_FontOam_SysDelete(CODEIN_WORK* wk)
+void CI_pv_FontOam_SysDelete(BR_CODEIN_WORK* wk)
 {
 
 	BmpOam_ActorDel( wk->sys.bmp_obj[0] );
@@ -733,7 +733,7 @@ void CI_pv_FontOam_SysDelete(CODEIN_WORK* wk)
  *
  */
 //--------------------------------------------------------------
-void CI_pv_FontOam_ResourceLoad(CODEIN_WORK* wk)
+void CI_pv_FontOam_ResourceLoad(BR_CODEIN_WORK* wk)
 {
 	ARCHANDLE *hdl = GFL_ARC_OpenDataHandle( ARCID_FONT , wk->heapID );
 	GFL_ARC_CloseDataHandle( hdl );
@@ -749,7 +749,7 @@ void CI_pv_FontOam_ResourceLoad(CODEIN_WORK* wk)
  *
  */
 //--------------------------------------------------------------
-void CI_pv_FontOam_Add( CODEIN_WORK* wk )
+void CI_pv_FontOam_Add( BR_CODEIN_WORK* wk )
 {
 	CI_pv_FontOam_ResourceLoad(wk);
 	CI_pv_FontOam_Create(wk, 0,  32, 8, 0);
@@ -767,7 +767,7 @@ void CI_pv_FontOam_Add( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_FontOam_Enable(CODEIN_WORK* wk, BOOL flag)
+void CI_pv_FontOam_Enable(BR_CODEIN_WORK* wk, BOOL flag)
 {
 }
 
@@ -785,7 +785,7 @@ void CI_pv_FontOam_Enable(CODEIN_WORK* wk, BOOL flag)
  *
  */
 //--------------------------------------------------------------
-void CI_pv_FontOam_Create(CODEIN_WORK* wk, int no, int x, int y, int pal_offset)
+void CI_pv_FontOam_Create(BR_CODEIN_WORK* wk, int no, int x, int y, int pal_offset)
 {
   static const int sc_msgID[ ]=
   { 

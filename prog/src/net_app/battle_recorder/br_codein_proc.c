@@ -44,12 +44,12 @@
 //=====================================
 typedef struct 
 {
-  CODEIN_PARAM  *p_codein_param;
-  CODEIN_WORK   *p_codein_wk;
+  BR_CODEIN_PARAM  *p_codein_param;
+  BR_CODEIN_WORK   *p_codein_wk;
   BR_TEXT_WORK  *p_text;
   PRINT_QUE     *p_que;
 	HEAPID        heapID;
-} BR_CODEIN_WORK;
+} BR_BR_CODEIN_WORK;
 
 
 //=============================================================================
@@ -107,7 +107,7 @@ const GFL_PROC_DATA BR_CODEIN_ProcData =
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT BR_CODEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
-	BR_CODEIN_WORK				*p_wk;
+	BR_BR_CODEIN_WORK				*p_wk;
 	BR_CODEIN_PROC_PARAM	*p_param	= p_param_adrs;
 
   GFL_FONT *p_font;
@@ -117,8 +117,8 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
 
 	//プロセスワーク作成
-	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_CODEIN_WORK), BR_PROC_SYS_GetHeapID( p_param->p_procsys ) );
-	GFL_STD_MemClear( p_wk, sizeof(BR_CODEIN_WORK) );	
+	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_BR_CODEIN_WORK), BR_PROC_SYS_GetHeapID( p_param->p_procsys ) );
+	GFL_STD_MemClear( p_wk, sizeof(BR_BR_CODEIN_WORK) );	
 	p_wk->heapID	= BR_PROC_SYS_GetHeapID( p_param->p_procsys );
 
   //グラフィック
@@ -129,10 +129,10 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
 
   //モジュール
   {
-    int block[CODE_BLOCK_MAX];
-    CodeIn_BlockDataMake_2_5_5( block );
+    int block[BR_CODE_BLOCK_MAX];
+    Br_CodeIn_BlockDataMake_2_5_5( block );
     p_wk->p_codein_param  = CodeInput_ParamCreate( p_wk->heapID, 12, p_param->p_unit, p_param->p_res, block );
-    p_wk->p_codein_wk     = CODEIN_Init( p_wk->p_codein_param, p_wk->heapID );
+    p_wk->p_codein_wk     = BR_CODEIN_Init( p_wk->p_codein_param, p_wk->heapID );
   }
   { 
     p_wk->p_que   = PRINTSYS_QUE_Create( p_wk->heapID );
@@ -156,13 +156,13 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT BR_CODEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
-	BR_CODEIN_WORK				*p_wk	= p_wk_adrs;
+	BR_BR_CODEIN_WORK				*p_wk	= p_wk_adrs;
 	BR_CODEIN_PROC_PARAM	*p_param	= p_param_adrs;
 
 	//モジュール破棄
   { 
     BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
-    CODEIN_Exit( p_wk->p_codein_wk );
+    BR_CODEIN_Exit( p_wk->p_codein_wk );
     CodeInput_ParamDelete( p_wk->p_codein_param );
     PRINTSYS_QUE_Delete( p_wk->p_que );
   }
@@ -202,7 +202,7 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
     SEQ_FADEOUT_WAIT,
     SEQ_END,
   }; 
-	BR_CODEIN_WORK	*p_wk	= p_wk_adrs;
+	BR_BR_CODEIN_WORK	*p_wk	= p_wk_adrs;
 	BR_CODEIN_PROC_PARAM	*p_param	= p_param_adrs;
 
   //プロセス処理
@@ -223,21 +223,21 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
   case SEQ_MAIN:
     { 
       //コードイン
-      CODEIN_Main( p_wk->p_codein_wk );
+      BR_CODEIN_Main( p_wk->p_codein_wk );
 
       //
       { 
-        CODEIN_SELECT select;
-        select  = CODEIN_GetSelect( p_wk->p_codein_wk );
+        BR_CODEIN_SELECT select;
+        select  = BR_CODEIN_GetSelect( p_wk->p_codein_wk );
         switch( select )
         { 
-        case CODEIN_SELECT_CANCEL:
+        case BR_CODEIN_SELECT_CANCEL:
           NAGI_Printf( "CODEIN: Exit!\n" );
           BR_PROC_SYS_Pop( p_param->p_procsys );
           *p_seq  = SEQ_FADEOUT_START;
           break;
 
-        case CODEIN_SELECT_DECIDE:
+        case BR_CODEIN_SELECT_DECIDE:
           NAGI_Printf( "CODEIN: Exit!\n" );
           BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_RECORD );
           *p_seq  = SEQ_FADEOUT_START;

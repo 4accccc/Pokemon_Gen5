@@ -43,7 +43,7 @@
  *
  */
 //--------------------------------------------------------------
-void CI_pv_FocusSet( CODEIN_WORK* wk, int next_focus )
+void CI_pv_FocusSet( BR_CODEIN_WORK* wk, int next_focus )
 {
 	int index;
 	wk->focus_old = wk->focus_now;
@@ -89,7 +89,7 @@ void CI_pv_FocusSet( CODEIN_WORK* wk, int next_focus )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_ParamInit( CODEIN_WORK* wk )
+void CI_pv_ParamInit( BR_CODEIN_WORK* wk )
 {
 	int i;
 	
@@ -109,7 +109,7 @@ void CI_pv_ParamInit( CODEIN_WORK* wk )
 	CI_pv_FocusSet( wk, 1 );
 
 	///< block ‘”‚©‚çcode‚ÌÅ‘å”‚ð‹‚ß‚é
-	for ( i = 0; i < CODE_BLOCK_MAX; i++ ){
+	for ( i = 0; i < BR_CODE_BLOCK_MAX; i++ ){
 		
 		wk->code_max += wk->param.block[ i ];
 	}
@@ -117,14 +117,14 @@ void CI_pv_ParamInit( CODEIN_WORK* wk )
 	///< table ì¬
 	{
 		int sw = 0;
-		const x_tbl[][ CODE_BLOCK_MAX ] = {
+		const x_tbl[][ BR_CODE_BLOCK_MAX ] = {
 			{ POS_4_4_4_p1, POS_4_4_4_p2, POS_4_4_4_p3 },
 			{ POS_2_5_5_p1, POS_2_5_5_p2, POS_2_5_5_p3 },
 		};
 		if ( wk->param.block[ 0 ] != 4 ){
 			sw = 1;
 		}
-		for ( i = 0; i < CODE_BLOCK_MAX; i++ ){
+		for ( i = 0; i < BR_CODE_BLOCK_MAX; i++ ){
 			
 			wk->x_tbl[ i ] = x_tbl[ sw ][ i ];
 		}
@@ -171,7 +171,7 @@ void CI_pv_ParamInit( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_SeqChange( CODEIN_WORK* wk, int seq )
+void CI_pv_SeqChange( BR_CODEIN_WORK* wk, int seq )
 {
 	wk->seq			= seq;
 	wk->wait		= 0;
@@ -189,7 +189,7 @@ void CI_pv_SeqChange( CODEIN_WORK* wk, int seq )
  *
  */
 //--------------------------------------------------------------
-BOOL CI_pv_MainInit( CODEIN_WORK* wk )
+BOOL CI_pv_MainInit( BR_CODEIN_WORK* wk )
 {
 	
 	CI_pv_disp_CodeRes_Load( wk );	
@@ -224,7 +224,7 @@ BOOL CI_pv_MainInit( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-BOOL CI_pv_MainEnd( CODEIN_WORK* wk )
+BOOL CI_pv_MainEnd( BR_CODEIN_WORK* wk )
 {
 	return TRUE;
 }
@@ -240,7 +240,7 @@ BOOL CI_pv_MainEnd( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-BOOL CI_pv_MainInput( CODEIN_WORK* wk )
+BOOL CI_pv_MainInput( BR_CODEIN_WORK* wk )
 {
 	switch ( wk->gene_seq ){
 	case 0:
@@ -268,7 +268,7 @@ BOOL CI_pv_MainInput( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-BOOL CI_pv_MainFocusMove( CODEIN_WORK* wk )
+BOOL CI_pv_MainFocusMove( BR_CODEIN_WORK* wk )
 {
 	int i;
 	static fx32 scale_l[] = {
@@ -396,7 +396,7 @@ BOOL CI_pv_MainFocusMove( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-static BOOL (* const CI_pv_MainTable[])( CODEIN_WORK* wk ) = {
+static BOOL (* const CI_pv_MainTable[])( BR_CODEIN_WORK* wk ) = {
 	CI_pv_MainInit,
 	CI_pv_MainInput,
 	CI_pv_MainFocusMove,
@@ -414,7 +414,7 @@ static BOOL (* const CI_pv_MainTable[])( CODEIN_WORK* wk ) = {
  *
  */
 //--------------------------------------------------------------
-BOOL CI_pv_MainUpdate( CODEIN_WORK* wk )
+BOOL CI_pv_MainUpdate( BR_CODEIN_WORK* wk )
 {
 	BOOL bActive;
 	
@@ -439,7 +439,7 @@ BOOL CI_pv_MainUpdate( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_KEY_Main( CODEIN_WORK* wk )
+void CI_KEY_Main( BR_CODEIN_WORK* wk )
 {
 	const int key_tbl[][ 5 ] = {
 		{ 0, 1, 2, 3, 4 },
@@ -677,7 +677,7 @@ void CI_KEY_Main( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_Input_End( CODEIN_WORK* wk )
+void CI_pv_Input_End( BR_CODEIN_WORK* wk )
 {
 	int i;
 	u32 num = 0;
@@ -704,7 +704,7 @@ void CI_pv_Input_End( CODEIN_WORK* wk )
 	
 	CI_pv_SeqChange( wk, eSEQ_END );
 
-  wk->select  = CODEIN_SELECT_DECIDE;
+  wk->select  = BR_CODEIN_SELECT_DECIDE;
 }
 
 //--------------------------------------------------------------
@@ -717,7 +717,7 @@ void CI_pv_Input_End( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_Input_back( CODEIN_WORK* wk )
+void CI_pv_Input_back( BR_CODEIN_WORK* wk )
 {	///< –ß‚é
 					
 	int cur_p;
@@ -763,7 +763,7 @@ void CI_pv_Input_back( CODEIN_WORK* wk )
 	}
   else
   { 
-    wk->select =CODEIN_SELECT_CANCEL;
+    wk->select =BR_CODEIN_SELECT_CANCEL;
   }
 }
 
@@ -778,7 +778,7 @@ void CI_pv_Input_back( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_ButtonManagerInit( CODEIN_WORK* wk )
+void CI_pv_ButtonManagerInit( BR_CODEIN_WORK* wk )
 {
 	int i;
 	
@@ -832,7 +832,7 @@ void CI_pv_ButtonManagerInit( CODEIN_WORK* wk )
 //--------------------------------------------------------------
 void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
 {
-	CODEIN_WORK* wk = work;
+	BR_CODEIN_WORK* wk = work;
 	
 	///< “ü—Í‚¶‚á‚È‚¯‚ê‚Î”ò‚Î‚·
 	if ( wk->seq != eSEQ_INPUT ){ return; }
@@ -958,7 +958,7 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_StateUpdate( CODEIN_WORK* wk )
+void CI_pv_StateUpdate( BR_CODEIN_WORK* wk )
 {
 	switch ( wk->state.param ){
 	
@@ -998,7 +998,7 @@ void CI_pv_StateUpdate( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-void CI_pv_StateInit( CODEIN_WORK* wk )
+void CI_pv_StateInit( BR_CODEIN_WORK* wk )
 {	
 	wk->state.param		= eSTATE_INPUT;
 	wk->state.target	= 0;	
@@ -1017,7 +1017,7 @@ void CI_pv_StateInit( CODEIN_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-int CI_pv_FocusTopSerach( CODEIN_WORK* wk, int next )
+int CI_pv_FocusTopSerach( BR_CODEIN_WORK* wk, int next )
 {
 	int i;
 	
@@ -1043,7 +1043,7 @@ int CI_pv_FocusTopSerach( CODEIN_WORK* wk, int next )
  *
  */
 //--------------------------------------------------------------
-int CI_pv_FocusBottomSerach( CODEIN_WORK* wk, int next )
+int CI_pv_FocusBottomSerach( BR_CODEIN_WORK* wk, int next )
 {
 	int i;
 	int block = 0;

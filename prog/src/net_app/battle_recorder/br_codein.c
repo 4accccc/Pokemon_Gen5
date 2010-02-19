@@ -41,7 +41,7 @@ static void CI_VBlank( GFL_TCB *tcb, void *work );
 /**
  *	@brief  コードイン初期化
  *
- *	@param	const CODEIN_PARAM *cp_param  パラメータ
+ *	@param	const BR_CODEIN_PARAM *cp_param  パラメータ
  *	@param	heapID                        ヒープID 
  *
  *	@return ワーク
@@ -49,12 +49,12 @@ static void CI_VBlank( GFL_TCB *tcb, void *work );
  * PROCで出来ていたCODEINをシステムに置き換えた
  */
 //-----------------------------------------------------------------------------
-CODEIN_WORK * CODEIN_Init( const CODEIN_PARAM *cp_param, HEAPID heapID )
+BR_CODEIN_WORK * BR_CODEIN_Init( const BR_CODEIN_PARAM *cp_param, HEAPID heapID )
 {
-	CODEIN_WORK* wk;
+	BR_CODEIN_WORK* wk;
 	
-  wk  = GFL_HEAP_AllocMemory( heapID, sizeof(CODEIN_WORK) );
-	GFL_STD_MemFill( wk, 0, sizeof( CODEIN_WORK ) );
+  wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BR_CODEIN_WORK) );
+	GFL_STD_MemFill( wk, 0, sizeof( BR_CODEIN_WORK ) );
   wk->param = *cp_param;
   wk->heapID  = heapID;
   wk->sys.cellUnit  = cp_param->p_unit;
@@ -83,13 +83,13 @@ CODEIN_WORK * CODEIN_Init( const CODEIN_PARAM *cp_param, HEAPID heapID )
 /**
  *	@brief  コードインメイン処理
  *
- *	@param	CODEIN_WORK *p_wk わーく
+ *	@param	BR_CODEIN_WORK *p_wk わーく
  *	@param  TRUEならば終了  FALSEならばまだ
  *
  * PROCで出来ていたCODEINをシステムに置き換えた
  */
 //-----------------------------------------------------------------------------
-void CODEIN_Main( CODEIN_WORK *wk )
+void BR_CODEIN_Main( BR_CODEIN_WORK *wk )
 {
 	BOOL bUpdate;
 	
@@ -102,12 +102,12 @@ void CODEIN_Main( CODEIN_WORK *wk )
 /**
  *	@brief  コードイン入力検知
  *
- *	@param	const CODEIN_WORK *wk   ワーク
+ *	@param	const BR_CODEIN_WORK *wk   ワーク
  *
  *	@return 選択したもの
  */
 //-----------------------------------------------------------------------------
-CODEIN_SELECT CODEIN_GetSelect( const CODEIN_WORK *wk )
+BR_CODEIN_SELECT BR_CODEIN_GetSelect( const BR_CODEIN_WORK *wk )
 { 
   return  wk->select;
 }
@@ -116,12 +116,12 @@ CODEIN_SELECT CODEIN_GetSelect( const CODEIN_WORK *wk )
 /**
  *	@brief  コードイン  終了
  *
- *	@param	CODEIN_WORK *p_wk わーく
+ *	@param	BR_CODEIN_WORK *p_wk わーく
  *
  * PROCで出来ていたCODEINをシステムに置き換えた
  */
 //-----------------------------------------------------------------------------
-void CODEIN_Exit( CODEIN_WORK *wk )
+void BR_CODEIN_Exit( BR_CODEIN_WORK *wk )
 {
 	GFL_TCB_DeleteTask( wk->sys.vBlankTcb );
 	
@@ -140,28 +140,28 @@ void CODEIN_Exit( CODEIN_WORK *wk )
 
 //--------------------------------------------------------------
 /**
- * @brief	CODEIN_PARAM のワークを作成する
+ * @brief	BR_CODEIN_PARAM のワークを作成する
  *
  * @param	heap_id	
  * @param	word_len	
  * @param	block	
  *
- * @retval	CODEIN_PARAM*	
+ * @retval	BR_CODEIN_PARAM*	
  *
  */
 //--------------------------------------------------------------
-CODEIN_PARAM*	CodeInput_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, int block[] )
+BR_CODEIN_PARAM*	CodeInput_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, int block[] )
 {
 	int i;
-	CODEIN_PARAM* wk = NULL;
+	BR_CODEIN_PARAM* wk = NULL;
 	
-	wk = GFL_HEAP_AllocMemory( heap_id, sizeof( CODEIN_PARAM ) );
+	wk = GFL_HEAP_AllocMemory( heap_id, sizeof( BR_CODEIN_PARAM ) );
   wk->p_unit    = p_unit;
   wk->p_res     = p_res;
 	wk->word_len 	= word_len;	
 	wk->strbuf		= GFL_STR_CreateBuffer( word_len + 1, heap_id );
 	
-	for ( i = 0; i < CODE_BLOCK_MAX; i++ ){
+	for ( i = 0; i < BR_CODE_BLOCK_MAX; i++ ){
 		wk->block[ i ] = block[ i ];
 		OS_Printf( "block %d = %d\n", i, wk->block[ i ] );
 	}
@@ -172,7 +172,7 @@ CODEIN_PARAM*	CodeInput_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_un
 
 //--------------------------------------------------------------
 /**
- * @brief	CODEIN_PARAM のワークを解放
+ * @brief	BR_CODEIN_PARAM のワークを解放
  *
  * @param	codein_param	
  *
@@ -180,7 +180,7 @@ CODEIN_PARAM*	CodeInput_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_un
  *
  */
 //--------------------------------------------------------------
-void CodeInput_ParamDelete( CODEIN_PARAM* codein_param )
+void CodeInput_ParamDelete( BR_CODEIN_PARAM* codein_param )
 {
 	GF_ASSERT( codein_param->strbuf != NULL );
 	GF_ASSERT( codein_param != NULL );
@@ -203,5 +203,5 @@ void CodeInput_ParamDelete( CODEIN_PARAM* codein_param )
 //--------------------------------------------------------------
 static void CI_VBlank( GFL_TCB *tcb, void *work )
 {
-	CODEIN_WORK* wk = work;
+	BR_CODEIN_WORK* wk = work;
 }
