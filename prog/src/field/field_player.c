@@ -1154,7 +1154,6 @@ BOOL FIELD_PLAYER_CheckNaminoriEventEnd( FIELD_PLAYER *fld_player )
   }
   
   OS_Printf( "rail not support\n" );
-  GF_ASSERT(0);
   return( FALSE );
 }
 
