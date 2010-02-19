@@ -41,7 +41,6 @@ EVENT_START ev_tri_house_reception
   ELSE
     //「チャレンジする？」
     _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_001)
-    _BALLOONWIN_CLOSE()
   ENDIF
 
   WHILE $loop == TRUE

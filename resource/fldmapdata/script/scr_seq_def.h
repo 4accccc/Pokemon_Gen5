@@ -8224,7 +8224,7 @@
  * @param   mode
  */
 //--------------------------------------------------------------
-#define _TH_SET_PLAY_MODE( mode ) _ASM_TH_END mode
+#define _TH_SET_PLAY_MODE( mode ) _ASM_TH_SET_PLAY_MODE mode
   
   .macro _ASM_TH_SET_PLAY_MODE mode
   .short EV_SEQ_TH_SET_PLAY_MODE
