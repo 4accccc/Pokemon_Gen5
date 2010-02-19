@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-17T01:25:21"/>
+	<create user="taya" host="W00146" date="2010-02-19T20:58:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1424,6 +1424,21 @@
 [1:09:どうぐ名:1]を　ひろってきた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　ひろってきた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SlowStartON">
+		<comment>スロースタート</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+ちょうしが　あがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+調子が　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SlowStartOFF">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+ちょうしを　とりもどした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+調子を　取り戻した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SkillSwap" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
