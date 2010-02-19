@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-02-18T21:21:51"/>
+	<create user="matsumiya" host="W00224" date="2010-02-19T18:23:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="99" top="111" right="804" bottom="731" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="254" right="2004" bottom="882" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -475,6 +475,67 @@
 もらった　わざマシンの　解説</language>
 	</row>
 
+	<row id="msg_r07_oldwoman_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・pos(GRIDX = 130 GRIDZ = 243)を踏むと、
+民家(R07R0301)からおばあさんが登場。
+扉の前で、このセリフを喋る。
+</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">ありゃりゃー
+ポケモンさんが　やってきおったのうー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ありゃりゃー
+ポケモンさんが　やってきおったのうー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07_oldwoman_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・主人公の隣に移動して、このセリフを喋る。
+
+※主人公を右側へ１グリッド移動させて、
+おばあさんが移動できる場所を空ける。</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">おやおや　あんた
+くさむら　なんかに[BE:00:ページ切り替え（行送り）]
+はいったら　いかんぞー[BE:00:ページ切り替え（行送り）]
+ポケモンさんに　どつかれるでー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おやおや　あんた
+くさむら　なんかに[BE:00:ページ切り替え（行送り）]
+入ったら　いかんぞー[BE:00:ページ切り替え（行送り）]
+ポケモンさんに　どつかれるでー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07_oldwoman_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・フキダシを出し直して、このセリフを喋る。
+
+・セリフ後、主人公を連れて家に入る。</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">こんな　あめかぜの　したで
+たちばなしも　なんじゃろなー[BE:01:ページ切り替え（クリア）]
+なーんも　ない　いえじゃが
+ちと　よっていきなさいなー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">こんな　雨風の　下で
+立ち話も　なんじゃろなー[BE:01:ページ切り替え（クリア）]
+なーんも　ない　家じゃが
+ちと　寄っていきなさいなー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07_pokemon_01w" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>ポケモン
+・メッセージ表示とともに鳴き声再生
+・このあと、飛び去る。</comment>
+		<attribute name="キャラ指定">カザカミ</attribute>
+		<language name="JPN" width="256">しゅるばばばーっ！！▼</language>
+		<language name="JPN_KANJI" width="256">しゅるばばばーっ！！▼</language>
+	</row>
+
+	<row id="msg_r07_pokemon_01b" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>ポケモン
+・メッセージ表示とともに鳴き声再生
+・このあと、飛び去る。</comment>
+		<attribute name="キャラ指定">ライカミ</attribute>
+		<language name="JPN" width="256">ばりゅるるるるーっ！！▼</language>
+		<language name="JPN_KANJI" width="256">ばりゅるるるるーっ！！▼</language>
+	</row>
+
 	<row id="msg_r07_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
@@ -503,63 +564,6 @@
 弱い　ポケモンを　倒しても▽
 もらえる　経験値は▽
 ちょっと　少なくなります</language>
-	</row>
-
-	<row id="msg_r07_oldwoman_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>・pos(GRIDX = 130 GRIDZ = 243)を踏むと、
-民家(R07R0301)からおばあさんが登場。
-扉の前で、このセリフを喋る。
-</comment>
-		<attribute name="キャラ指定">おばあさん</attribute>
-		<language name="JPN" width="256">ありゃりゃー
-ポケモンさんが　やってきおったのうー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ありゃりゃー
-ポケモンさんが　やってきおったのうー[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r07_oldwoman_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>・主人公の隣に移動して、このセリフを喋る。
-
-※主人公を右側へ１グリッド移動させて、
-おばあさんが移動できる場所を空ける。</comment>
-		<attribute name="キャラ指定">おばあさん</attribute>
-		<language name="JPN" width="256">おやおや　あんた
-くさむら　なんかに[BE:00:ページ切り替え（行送り）]
-はいったら　いかんぞー[BE:00:ページ切り替え（行送り）]
-ポケモンさんに　どつかれるでー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おやおや　あんた
-くさむら　なんかに[BE:00:ページ切り替え（行送り）]
-はいったら　いかんぞー[BE:00:ページ切り替え（行送り）]
-ポケモンさんに　どつかれるでー[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r07_oldwoman_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>・フキダシを出し直して、このセリフを喋る。
-
-・セリフ後、主人公を連れて家に入る。</comment>
-		<attribute name="キャラ指定">おばあさん</attribute>
-		<language name="JPN" width="256">こんな　あめかぜの　したで
-たちばなしも　なんじゃろなー[BE:01:ページ切り替え（クリア）]
-なーんも　ない　いえじゃが
-ちと　よっていきなさいなー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こんな　あめかぜの　したで
-たちばなしも　なんじゃろなー[BE:01:ページ切り替え（クリア）]
-なーんも　ない　いえじゃが
-ちと　よっていきなさいなー[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r07_pokemon_01w" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<comment>・このあと、飛び去る。</comment>
-		<attribute name="キャラ指定">カザカミ</attribute>
-		<language name="JPN" width="256">しゅるばばばーっ！！</language>
-		<language name="JPN_KANJI" width="256">しゅるばばばーっ！！</language>
-	</row>
-
-	<row id="msg_r07_pokemon_01b" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<comment>・このあと、飛び去る。</comment>
-		<attribute name="キャラ指定">ライカミ</attribute>
-		<language name="JPN" width="256">ばりゅるるるるーっ！！</language>
-		<language name="JPN_KANJI" width="256">ばりゅるるるるーっ！！</language>
 	</row>
 
 	<flowchart-group-list>
