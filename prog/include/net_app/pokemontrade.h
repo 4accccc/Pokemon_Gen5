@@ -53,6 +53,7 @@ typedef struct{
   POKEPARTY* pParty;
   u16 selectBoxno;
   u16 selectIndex;
+  BOOL bDebug;
   SHINKA_DEMO_PARAM* shinka_param;
 } POKEMONTRADE_PARAM;
 

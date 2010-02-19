@@ -352,35 +352,15 @@ void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep)
 
 BOOL NHTTP_RAP_SvlGetTokenStart(NHTTP_RAP_WORK* pWork)
 {
-  GF_ASSERT(pWork->pSvl);
-  return DWC_SVLGetTokenAsync("",  pWork->pSvl);
+  //‚¢‚ç‚È‚­‚È‚Á‚½
+  return TRUE;
 }
 
 
 BOOL NHTTP_RAP_SvlGetTokenMain(NHTTP_RAP_WORK* pWork)
 {
-	DWCSvlState		state;
-	DWCError		dwcerror;
-	DWCErrorType	dwcerrortype;
-	int				errorcode;
-
-  state = DWC_SVLProcess();
-  if(state == DWC_SVL_STATE_SUCCESS) {
-    NET_PRINT("Succeeded to get SVL Status\n");
-    NET_PRINT("status = %s\n", pWork->pSvl->status==TRUE ? "TRUE" : "FALSE");
-    NET_PRINT("svlhost = %s\n", pWork->pSvl->svlhost);
-    NET_PRINT("svltoken = %s\n", pWork->pSvl->svltoken);
-    return TRUE;
-  }
-  else if(state == DWC_SVL_STATE_ERROR) {
-    dwcerror = DWC_GetLastErrorEx(&errorcode, &dwcerrortype);
-    NET_PRINT("Failed to get SVL Token\n");
-    NET_PRINT("DWCError = %d, errorcode = %d, DWCErrorType = %d\n", dwcerror, errorcode, dwcerrortype);
-  }
-  else if(state == DWC_SVL_STATE_CANCELED) {
-    NET_PRINT("SVL canceled.\n");
-  }
-  return FALSE;
+  //‚¢‚ç‚È‚­‚È‚Á‚½
+  return TRUE;
 }
 
 

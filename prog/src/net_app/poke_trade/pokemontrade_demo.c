@@ -306,8 +306,8 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
   pWork->pD2Fade->pal_end = -16;
 
   if(pWork->modelno!=-1){
-    pWork->pModelFade = _createPaletteFade(GFL_G3D_UTIL_GetResHandle(pWork->g3dUtil,0), pWork->heapID);
-    _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
+//    pWork->pModelFade = _createPaletteFade(GFL_G3D_UTIL_GetResHandle(pWork->g3dUtil,0), pWork->heapID);
+//    _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
   }
 
   // ポケモン中央に移動開始

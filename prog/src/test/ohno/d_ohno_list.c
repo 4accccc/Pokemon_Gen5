@@ -531,6 +531,7 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 static void * _PokeTradeGtsNegoCreate(D_OHNO_WORK *wk)
 {
 	EVENT_GTSNEGO_WORK *pWork;
+  MYSTATUS* pFriend;
 
   
 	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EVENT_GTSNEGO_WORK));
@@ -541,9 +542,11 @@ static void * _PokeTradeGtsNegoCreate(D_OHNO_WORK *wk)
   pWork->aUser[1].selectLV=0;
     
   pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
-  pWork->pStatus[0] = MyStatus_AllocWork(GFL_HEAPID_APP);
-  pWork->pStatus[1] = MyStatus_AllocWork(GFL_HEAPID_APP);
+//  pWork->pStatus[0] = MyStatus_AllocWork(GFL_HEAPID_APP);
+//  pWork->pStatus[1] = MyStatus_AllocWork(GFL_HEAPID_APP);
   
+  pFriend = GAMEDATA_GetMyStatusPlayer(pWork->gamedata, 1);
+  GFL_STD_MemCopy(MyStatus_AllocWork(GFL_HEAPID_APP),pFriend,MyStatus_GetWorkSize() );
   
   return pWork;
 }
@@ -553,6 +556,7 @@ static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
 {
 	POKEMONTRADE_PARAM *pWork2;
 	EVENT_GTSNEGO_WORK *pWork;
+  MYSTATUS* pFriend;
 
 	pWork2 = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_PARAM));
   
@@ -564,9 +568,13 @@ static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
   pWork->aUser[0].selectLV=0;
   pWork->aUser[1].selectLV=0;
     
-  pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
-  pWork->pStatus[0] = MyStatus_AllocWork(GFL_HEAPID_APP);
-  pWork->pStatus[1] = MyStatus_AllocWork(GFL_HEAPID_APP);
+  pWork2->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
+  pWork2->bDebug=TRUE;
+  pWork->gamedata = pWork2->gamedata ;
+//  pWork->pStatus[0] = MyStatus_AllocWork(GFL_HEAPID_APP);
+//  pWork->pStatus[1] = MyStatus_AllocWork(GFL_HEAPID_APP);
+  pFriend = GAMEDATA_GetMyStatusPlayer(pWork2->gamedata, 1);
+  GFL_STD_MemCopy(MyStatus_AllocWork(GFL_HEAPID_APP),pFriend,MyStatus_GetWorkSize() );
   
   
   return pWork2;

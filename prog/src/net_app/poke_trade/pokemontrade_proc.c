@@ -2578,7 +2578,7 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
  */
 //------------------------------------------------------------------------------
 
-static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData)
+static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL bDebug)
 {
   pWork->TempBuffer[0] = GFL_HEAP_AllocClearMemory( HEAPID_IRCBATTLE, POKETOOL_GetWorkSize() );
   pWork->TempBuffer[1] = GFL_HEAP_AllocClearMemory( HEAPID_IRCBATTLE, POKETOOL_GetWorkSize() );
@@ -2599,11 +2599,12 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData)
     }
   }
 #if PM_DEBUG
-  else{
-    pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
-    pWork->pMy = MyStatus_AllocWork(pWork->heapID);
+  if(bDebug){
 
-    MyStatus_Init(pWork->pMy);
+    pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
+ //   pWork->pMy = MyStatus_AllocWork(pWork->heapID);
+
+//    MyStatus_Init(pWork->pMy);
     
     pWork->pMailBlock = GFL_HEAP_AllocClearMemory(pWork->heapID,MAIL_GetBlockWorkSize());
     MAIL_Init(pWork->pMailBlock);
@@ -2614,12 +2615,12 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData)
       pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, HEAPID_IRCBATTLE);
 
       for(i=0;i < 3;i++){
-        for(j=0;j < 2;j++){
+        for(j=0;j < 30;j++){
           u16 oyaName[5] = {L'デ',L'バ',L'ッ',L'グ',0xFFFF};
           POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(MONSNO_MARIRU+i, 0, GFL_HEAPID_APP);
           u32 ret = POKE_PERSONAL_GetParam(ppd,POKEPER_ID_sex);
-
-          PP_SetupEx(pp, 90+i+j, i+j, 123456,PTL_SETUP_POW_AUTO, ret);
+          int monsno = GFUser_GetPublicRand(200)+1;
+          PP_SetupEx(pp, monsno, i+j, 123456,PTL_SETUP_POW_AUTO, ret);
           PP_Put( pp , ID_PARA_oyaname_raw , (u32)oyaName );
           PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex(  pWork->pMy ) );
           PP_Put( pp , ID_PARA_item , 18 );
@@ -2767,7 +2768,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->recvPoke[1] = GFL_HEAP_AllocClearMemory(pWork->heapID, POKETOOL_GetWorkSize());
 
   if(pParentWork){
-    _savedataHeapInit(pWork,pParentWork->gamedata);
+    _savedataHeapInit(pWork,pParentWork->gamedata,pParentWork->bDebug);
   }
   _maxTrayNumInit(pWork);
   _mcssSystemHeapInit(pWork);
