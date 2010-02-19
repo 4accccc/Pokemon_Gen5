@@ -233,25 +233,28 @@ static const FLDMENUFUNC_HEADER DATA_MenuHeader =
  *	@param	GAMESYS_WORK *p_gsys	ゲームシステム
  *	@param	*p_field							フィールドマップ
  *	@param	p_msg_bg							メッセージBG
- *	@param	*p_event							親イベント
  *	@param	heapID								ヒープID
  */
 //-----------------------------------------------------------------------------
-void EVENT_DebugBeacon( GAMESYS_WORK *p_gsys, FIELDMAP_WORK *p_field, FLDMSGBG *p_msg_bg, GMEVENT *p_event, HEAPID heapID )
+GMEVENT * EVENT_DebugBeacon( GAMESYS_WORK *p_gsys, void * work )
 {	
+  FIELDMAP_WORK *p_field = (FIELDMAP_WORK *)work;
+  GMEVENT * new_event;
 	DEBUG_BEACON_WORK	*p_wk;
 
-	GMEVENT_Change( p_event, EVENT_DebugBeaconMain, sizeof(DEBUG_BEACON_WORK) );
-  p_wk = GMEVENT_GetEventWork(p_event);
+	new_event = GMEVENT_Create( p_gsys, NULL, EVENT_DebugBeaconMain, sizeof(DEBUG_BEACON_WORK) );
+  p_wk = GMEVENT_GetEventWork(new_event);
 
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_BEACON_WORK) );
 	p_wk->p_gamedata	= GAMESYSTEM_GetGameData( p_gsys );
 	p_wk->p_gsys		= p_gsys;
 	p_wk->p_field		= p_field;
-	p_wk->p_msg_bg	= p_msg_bg;
-	p_wk->heapID		= heapID;
+	p_wk->p_msg_bg	= FIELDMAP_GetFldMsgBG( p_field );
+	p_wk->heapID		= FIELDMAP_GetHeapID( p_field );
 
 	BEACON_DATA_Init( &p_wk->my_beacon, p_wk->p_gamedata );
+
+  return new_event;
 }
 
 //----------------------------------------------------------------------------

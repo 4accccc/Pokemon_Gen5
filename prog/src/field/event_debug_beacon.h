@@ -15,4 +15,6 @@
  *					äOïîåˆäJä÷êî
 */
 //=============================================================================
-extern void EVENT_DebugBeacon( GAMESYS_WORK *p_gsys, FIELDMAP_WORK *p_field, FLDMSGBG *p_msg_bg, GMEVENT *p_event, HEAPID heapID );
+extern GMEVENT * EVENT_DebugBeacon( GAMESYS_WORK *p_gsys, void *work );
+
+FS_EXTERN_OVERLAY( debug_beacon );

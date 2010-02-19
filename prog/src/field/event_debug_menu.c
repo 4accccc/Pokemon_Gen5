@@ -3241,7 +3241,11 @@ static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk )
 { 
-  EVENT_DebugBeacon( wk->gmSys, wk->fieldWork, FIELDMAP_GetFldMsgBG( wk->fieldWork ), wk->gmEvent, wk->heapID );
+  GMEVENT * new_event;
+  new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_beacon ), EVENT_DebugBeacon, wk->fieldWork );
+  //new_event = EVENT_DebugBeacon( wk->gmSys, wk->fieldWork );
+  GMEVENT_ChangeEvent( wk->gmEvent, new_event );
   return TRUE;
 }
 
