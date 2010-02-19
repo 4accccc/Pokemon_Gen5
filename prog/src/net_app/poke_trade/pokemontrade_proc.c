@@ -355,6 +355,7 @@ static void _CatchPokemonPositionActive(POKEMON_TRADE_WORK *pWork,GFL_CLWK* pCL,
       
       NET_PRINT("POSX %d %d %d\n",x,pWork->aDifferencePos.x,pWork->aCatchOldPos.x);
       NET_PRINT("POSY %d %d %d\n",y,pWork->aDifferencePos.y,pWork->aCatchOldPos.y);
+      NET_PRINT("lineindex %d %d \n",line , index);
       pos.x = x + pWork->aDifferencePos.x;
       pos.y = y + pWork->aDifferencePos.y;
 
@@ -1215,7 +1216,7 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
           IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->workBoxno, pWork->workPokeIndex,pWork);
         _CatchPokemonPositionRewind(pWork);          //今のつかんでる物を元の位置に戻す
         if(ppp && PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) != 0 ){
-
+          line=POKETRADE_Line2RingLineIconGet(line);
           _CatchPokemonPositionActive(pWork,pCL, line, index, ppp);
 
           IRC_POKETRADE_CursorEnable(pWork,line, index);  //OAMカーソル移動
@@ -2395,21 +2396,19 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
     }
     else{
-      _CHANGE_STATE(pWork, _changeMenuOpen);
+      if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+        _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
+      }
+      else{
+        _CHANGE_STATE(pWork, _changeMenuOpen);
+      }
     }
     return;
     break;
   default:
     break;
-  }
-  if(pWork->pAppTask){  //GTS決定ボタン
-    if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-      int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-      POKETRADE_MESSAGE_AppMenuClose(pWork);
-      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
-      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
-      _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
-    }
   }
 }
 

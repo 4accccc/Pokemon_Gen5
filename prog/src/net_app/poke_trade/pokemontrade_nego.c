@@ -234,10 +234,10 @@ BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxn
 #endif
   GFL_HEAP_FreeMemory(pp);
 
-  if(pWork->pAppTask==NULL){
-    int msg[]={POKETRADE_STR2_26};
-    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
-  }
+//  if(pWork->pAppTask==NULL){
+  //  int msg[]={POKETRADE_STR2_26};
+    //POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
+//  }
 
   return TRUE;
 }
