@@ -266,6 +266,17 @@ BOOL MAPATTR_VALUE_CheckTV( const MAPATTR_VALUE val )
 
 //--------------------------------------------------------------
 /**
+ * @brief アトリビュートバリュー　自動販売機
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckVendorMachine( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_AUTO_SELL_01 );
+}
+//--------------------------------------------------------------
+/**
  * アトリビュートバリュー チェック 本棚その１
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う

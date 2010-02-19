@@ -66,6 +66,7 @@ extern BOOL MAPATTR_VALUE_CheckMat( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckPC( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckMap( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckTV( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckVendorMachine( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckBookShelf1( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckBookShelf2( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckBookShelf3( const MAPATTR_VALUE val );

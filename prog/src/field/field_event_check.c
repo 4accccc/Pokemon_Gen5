@@ -82,6 +82,7 @@
 #include "../../../resource/fldmapdata/script/eggevent_scr_def.h"   // for SCRID_EGG_BIRTH
 #include "../../../resource/fldmapdata/script/pasokon_def.h" // for SCRID_PC
 #include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLE_EV_SPRAY_EFFECT_END
+#include "../../../resource/fldmapdata/script/vending_machine_def.h" // for SCRID_VENDING_MACHINE01
 
 #include "debug/debug_flg.h" //DEBUG_FLG_Å`
 
@@ -2882,19 +2883,20 @@ typedef struct {
 static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
 {
   static const MAPATTR_EVENTDATA check_attr_data[] = {
-    { MAPATTR_VALUE_CheckPC,          0,  SCRID_PC },
-    { MAPATTR_VALUE_CheckMap,         0,  EVENTDATA_ID_NONE },
-    { MAPATTR_VALUE_CheckTV,          0,  EVENTDATA_ID_NONE },
-    { MAPATTR_VALUE_CheckBookShelf1,  0,  SCRID_BG_MSG_BOOK1_01 },
-    { MAPATTR_VALUE_CheckBookShelf2,  0,  SCRID_BG_MSG_BOOK2_01 },
-    { MAPATTR_VALUE_CheckBookShelf3,  0,  SCRID_BG_MSG_BOOKRACK1_01 },
-    { MAPATTR_VALUE_CheckBookShelf4,  0,  SCRID_BG_MSG_BOOKRACK2_01 },
-    { MAPATTR_VALUE_CheckVase,        0,  SCRID_BG_MSG_SCRAP_01 },
-    { MAPATTR_VALUE_CheckDustBox,     0,  SCRID_BG_MSG_SCRAP_01 },
-    { MAPATTR_VALUE_CheckShopShelf1,  0,  SCRID_BG_MSG_SHOPRACK1_01 },
-    { MAPATTR_VALUE_CheckShopShelf2,  0,  SCRID_BG_MSG_SHOPRACK2_01 },
-    { MAPATTR_VALUE_CheckShopShelf3,  0,  SCRID_BG_MSG_SHOPRACK2_01 },
-    { MAPATTR_VALUE_CheckWaterFall,   0,  SCRID_HIDEN_TAKINOBORI },
+    { MAPATTR_VALUE_CheckPC,            0,  SCRID_PC },
+    { MAPATTR_VALUE_CheckMap,           0,  EVENTDATA_ID_NONE },
+    { MAPATTR_VALUE_CheckTV,            0,  EVENTDATA_ID_NONE },
+    { MAPATTR_VALUE_CheckBookShelf1,    0,  SCRID_BG_MSG_BOOK1_01 },
+    { MAPATTR_VALUE_CheckBookShelf2,    0,  SCRID_BG_MSG_BOOK2_01 },
+    { MAPATTR_VALUE_CheckBookShelf3,    0,  SCRID_BG_MSG_BOOKRACK1_01 },
+    { MAPATTR_VALUE_CheckBookShelf4,    0,  SCRID_BG_MSG_BOOKRACK2_01 },
+    { MAPATTR_VALUE_CheckVase,          0,  SCRID_BG_MSG_SCRAP_01 },
+    { MAPATTR_VALUE_CheckDustBox,       0,  SCRID_BG_MSG_SCRAP_01 },
+    { MAPATTR_VALUE_CheckShopShelf1,    0,  SCRID_BG_MSG_SHOPRACK1_01 },
+    { MAPATTR_VALUE_CheckShopShelf2,    0,  SCRID_BG_MSG_SHOPRACK2_01 },
+    { MAPATTR_VALUE_CheckShopShelf3,    0,  SCRID_BG_MSG_SHOPRACK2_01 },
+    { MAPATTR_VALUE_CheckWaterFall,     0,  SCRID_HIDEN_TAKINOBORI },
+    { MAPATTR_VALUE_CheckVendorMachine, 0,  SCRID_VENDING_MACHINE01 },
   };
   int i;
 
