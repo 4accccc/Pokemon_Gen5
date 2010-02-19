@@ -9,11 +9,13 @@
 #include <gflib.h>
 #include "bg_font.h"
 #include "research_select_index.h"
-#include "topic_id.h"                // for TOPIC_ID_xxxx
-#include "obj_NANR_LBLDEFS.h"        // for NANR_obj_xxxx
-#include "arc/message.naix"          // for NARC_message_xxxx
-#include "msg/msg_research_radar.h"  // for str_xxxx
-#include "msg/msg_questionnaire.h"   // for str_xxxx
+#include "arc/arc_def.h"                    // for ARCID_xxxx
+#include "topic_id.h"                       // for TOPIC_ID_xxxx
+#include "obj_NANR_LBLDEFS.h"               // for NANR_obj_xxxx
+#include "arc/message.naix"                 // for NARC_message_xxxx
+#include "arc/research_radar_graphic.naix"  // for NARC_research_radar_xxxx
+#include "msg/msg_research_radar.h"         // for str_xxxx
+#include "msg/msg_questionnaire.h"          // for str_xxxx
 
 
 //==============================================================================================
@@ -37,6 +39,13 @@ static const RESEARCH_SELECT_SEQ MenuItemNextSequence[ MENU_ITEM_NUM ] =
 {
   RESEARCH_SELECT_SEQ_DETERMINE,   //「けってい」
   RESEARCH_SELECT_SEQ_TO_KEY_WAIT, //「やめる」
+};
+
+// 対応するBMP-OAMアクターのインデックス
+static const BMPOAM_ACTOR_INDEX BmpOamIndexOfMenu[ MENU_ITEM_NUM ] = 
+{
+  BMPOAM_ACTOR_OK,     //「けってい」
+  BMPOAM_ACTOR_CANCEL, //「やめる」
 };
 
 
@@ -603,16 +612,18 @@ static const BMPOAM_ACTOR_INIT_DATA BmpOamActorInitData[ BMPOAM_ACTOR_NUM ] =
 // 初期化データ
 typedef struct
 {
-  int           width;           // x サイズ ( キャラ単位 )
-  int           height;          // y サイズ ( キャラ単位 )
-  int           colorMode;       // カラーモード GFL_BMP_16_COLOR or GFL_BMP_256_COLOR
-  MESSAGE_INDEX messageIdx;      // 参照するメッセージデータ
-  u32           stringID;        // 書き込むメッセージID
-  int           stringDrawPosX;  // 書き込み先 x 座標 ( ドット単位 )
-  int           stringDrawPosY;  // 書き込み先 y 座標 ( ドット単位 )
-  u8            colorNo_L;       // 文字のカラー番号
-  u8            colorNo_S;       // 影のカラー番号
-  u8            colorNo_B;       // 背景のカラー番号
+  int           width;             // x サイズ ( キャラ単位 )
+  int           height;            // y サイズ ( キャラ単位 )
+  int           colorMode;         // カラーモード GFL_BMP_16_COLOR or GFL_BMP_256_COLOR
+  MESSAGE_INDEX messageIdx;        // 参照するメッセージデータ
+  u32           stringID;          // 書き込むメッセージID
+  int           stringDrawPosX;    // 書き込み先 x 座標 ( ドット単位 )
+  int           stringDrawPosY;    // 書き込み先 y 座標 ( ドット単位 )
+  u8            colorNo_L;         // 文字のカラー番号
+  u8            colorNo_S;         // 影のカラー番号
+  u8            colorNo_B;         // 背景のカラー番号
+  ARCID         charaDataArcID;    // 背景のキャラクタデータ参照アーカイブID
+  ARCDATID      charaDataArcDatID; // 背景のキャラクタデータ参照アーカイブ内データインデックス
 
 } BITMAP_INIT_DATA;
 
@@ -629,6 +640,8 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     BMPOAM_ACTOR_CONFIRM_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_CONFIRM_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_CONFIRM_STRING_COLOR_B, // 背景のカラー番号
+    ARCID_RESEARCH_RADAR_GRAPHIC,
+    NARC_research_radar_graphic_obj_window1_NCGR,
   },
   { //「けってい」
     BMPOAM_ACTOR_OK_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
@@ -641,6 +654,8 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     BMPOAM_ACTOR_OK_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_OK_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_OK_STRING_COLOR_B, // 背景のカラー番号
+    ARCID_RESEARCH_RADAR_GRAPHIC,
+    NARC_research_radar_graphic_obj_window2_NCGR,
   },
   { //「やめる」
     BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
@@ -653,17 +668,21 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     BMPOAM_ACTOR_CANCEL_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_CANCEL_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_CANCEL_STRING_COLOR_B, // 背景のカラー番号
+    ARCID_RESEARCH_RADAR_GRAPHIC,
+    NARC_research_radar_graphic_obj_window3_NCGR,
   },
   { //「ちょうさを　かいしします！」
     BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
     BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_Y,   // y サイズ ( キャラ単位 )
     GFL_BMP_16_COLOR,                      // カラーモード
     MESSAGE_STATIC,                        // 参照するメッセージデータ
-    str_select_confirm,                    // 書き込むメッセージID
+    str_select_determine,                  // 書き込むメッセージID
     0,                                     // 書き込み先 x 座標 ( ドット単位 )
     0,                                     // 書き込み先 y 座標 ( ドット単位 )
     BMPOAM_ACTOR_DETERMINE_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_DETERMINE_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_DETERMINE_STRING_COLOR_B, // 背景のカラー番号
+    ARCID_RESEARCH_RADAR_GRAPHIC,
+    NARC_research_radar_graphic_obj_window4_NCGR,
   },
 };

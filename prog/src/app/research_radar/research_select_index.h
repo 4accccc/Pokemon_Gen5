@@ -11,15 +11,15 @@
 
 // 処理シーケンス
 typedef enum {
-  RESEARCH_SELECT_SEQ_SETUP,       // 準備
-  RESEARCH_SELECT_SEQ_KEY_WAIT,    // キー入力待ち
-  RESEARCH_SELECT_SEQ_SCROLL_WAIT, // スクロール完了待ち
-  RESEARCH_SELECT_SEQ_TO_CONFIRM,  // 調査項目確定の確認シーケンスへの準備
-  RESEARCH_SELECT_SEQ_CONFIRM,     // 調査項目確定の確認
-  RESEARCH_SELECT_SEQ_TO_KEY_WAIT, // キー入力待ちに戻る
-  RESEARCH_SELECT_SEQ_DETERMINE,   // 調査項目確定
-  RESEARCH_SELECT_SEQ_CLEAN_UP,    // 後片付け
-  RESEARCH_SELECT_SEQ_FINISH,      // 終了
+  RESEARCH_SELECT_SEQ_SETUP,        // 準備
+  RESEARCH_SELECT_SEQ_KEY_WAIT,     // キー入力待ち
+  RESEARCH_SELECT_SEQ_SCROLL_WAIT,  // スクロール完了待ち
+  RESEARCH_SELECT_SEQ_TO_CONFIRM,   // 調査項目確定の確認シーケンスへの準備
+  RESEARCH_SELECT_SEQ_CONFIRM,      // 調査項目確定の確認
+  RESEARCH_SELECT_SEQ_TO_KEY_WAIT,  // キー入力待ちに戻る
+  RESEARCH_SELECT_SEQ_DETERMINE,    // 調査項目確定
+  RESEARCH_SELECT_SEQ_CLEAN_UP,     // 後片付け
+  RESEARCH_SELECT_SEQ_FINISH,       // 終了
 } RESEARCH_SELECT_SEQ;
 
 // 選択項目

@@ -46,8 +46,9 @@ struct _RESEARCH_SELECT_WORK
   HEAPID    heapID;  // ヒープID
   GFL_FONT* font;    // フォント
 
-  RESEARCH_SELECT_SEQ    seq;    // 処理シーケンス
-  RESEARCH_SELECT_RESULT result; // 画面終了結果
+  RESEARCH_SELECT_SEQ    seq;      // 処理シーケンス
+  u32                    seqCount; // シーケンスカウンタ
+  RESEARCH_SELECT_RESULT result;   // 画面終了結果
 
   // VBlank
   GFL_TCBSYS* VBlankTCBSystem; // VBlank期間中のタスク管理システム
@@ -102,7 +103,7 @@ static RESEARCH_SELECT_SEQ Main_CLEAN_UP   ( RESEARCH_SELECT_WORK* work ); // RE
 // シーケンス制御
 static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result ); // 画面終了結果を設定する
 static void SwitchSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // 処理シーケンスを変更する
-static void SetSequence   ( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ seq );     // 処理シーケンスを設定する
+static void SetSequence   ( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // 処理シーケンスを設定する
 
 // シーケンス初期化処理
 void InitSequence_SETUP      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
@@ -144,6 +145,10 @@ static void RegisterTopicID( RESEARCH_SELECT_WORK* work ); // 調査項目IDを登録す
 static void ReleaseTopicID ( RESEARCH_SELECT_WORK* work ); // 調査項目IDを解除する
 static BOOL IsTopicIDRegistered( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 選択済みかを判定する
 
+// メニュー項目の表示
+static void SetMenuCursorOn( RESEARCH_SELECT_WORK* work ); // カーソルが乗っている状態にする
+static void SetMenuCursorOff( RESEARCH_SELECT_WORK* work ); // カーソルが乗っていない状態にする
+
 // 調査項目の表示
 static void SetTopicCursorOn ( const RESEARCH_SELECT_WORK* work ); // カーソルが乗っている状態にする
 static void SetTopicCursorOff( const RESEARCH_SELECT_WORK* work ); // カーソルが乗っていない状態にする
@@ -167,7 +172,6 @@ static void UpdateTopicSelectIcons( const RESEARCH_SELECT_WORK* work );  // 調査
 static void StartPaletteFadeOut( RESEARCH_SELECT_WORK* work ); // パレットのフェードアウトを開始する
 static void StartPaletteFadeIn ( RESEARCH_SELECT_WORK* work ); // パレットのフェードインを開始する
 static BOOL IsPaletteFadeEnd   ( RESEARCH_SELECT_WORK* work ); // パレットのフェードが完了したかどうかを判定する
-static void ResetPaletteFade   ( RESEARCH_SELECT_WORK* work ); // パレットをフェード前の状態に戻す
 
 // BMP-OAM
 static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable );  // 表示するかどうかを設定する
@@ -179,6 +183,9 @@ static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX 
 static u32 GetObjResourceRegisterIndex( const RESEARCH_SELECT_WORK* work, OBJ_RESOURCE_ID resID ); // OBJリソースの登録インデックス
 static GFL_CLUNIT* GetClactUnit( const RESEARCH_SELECT_WORK* work, CLUNIT_INDEX unitIdx ); // セルアクターユニット
 static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkIdx ); // セルアクターワーク
+
+// BMP-OAM
+static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // メニュー項目に対応するBMP-OAMアクター
 
 //----------------------------------------------------------------------------------------------
 // □LAYER 0 初期化処理/終了処理
@@ -267,6 +274,7 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( HEAPID heapID )
 
   // 初期化
   work->seq                   = RESEARCH_SELECT_SEQ_SETUP;
+  work->seqCount              = 0;
   work->result                = RESEARCH_SELECT_RESULT_NONE;
   work->heapID                = heapID;
   work->menuCursorPos         = MENU_ITEM_DETERMINATION_OK;
@@ -337,6 +345,9 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
   case RESEARCH_SELECT_SEQ_FINISH:       return work->result;
   default:  GF_ASSERT(0);
   }
+
+  // シーケンスカウンタ更新
+  work->seqCount++;
 
   // シーケンス更新
   SwitchSequence( work, nextSeq );
@@ -591,8 +602,12 @@ static RESEARCH_SELECT_SEQ Main_DETERMINE( RESEARCH_SELECT_WORK* work )
 
   nextSeq = work->seq;
 
-  // TEMP:
-  nextSeq = RESEARCH_SELECT_SEQ_CLEAN_UP;
+  // 一定時間が経過
+  if( SEQ_DETERMINE_WAIT_FRAMES < work->seqCount )
+  {
+    // 後片付けシーケンスへ
+    nextSeq = RESEARCH_SELECT_SEQ_CLEAN_UP;
+  } 
   return nextSeq;
 }
 
@@ -688,16 +703,13 @@ static void SwitchSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ next
  * @brief シーケンスを設定する
  *
  * @param work
- * @parma seq  設定するシーケンス
+ * @parma nextSeq 設定するシーケンス
  */
 //----------------------------------------------------------------------------------------------
-static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ seq )
-{
-  // 更新
-  work->seq = seq;
-
+static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
+{ 
   // シーケンスごとの初期化
-  switch( work->seq )
+  switch( nextSeq )
   {
   case RESEARCH_SELECT_SEQ_SETUP:        InitSequence_SETUP( work );       break;
   case RESEARCH_SELECT_SEQ_KEY_WAIT:     InitSequence_KEY_WAIT( work );    break;
@@ -711,8 +723,25 @@ static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ seq )
   default:  GF_ASSERT(0);
   }
 
+  // 更新
+  work->seq = nextSeq;
+  work->seqCount = 0;
+
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set seq ==> %d\n", seq );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set seq ==> " );
+  switch( nextSeq )
+  {
+  case RESEARCH_SELECT_SEQ_SETUP:        OS_TFPrintf( PRINT_TARGET, "SETUP\n" );       break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:     OS_TFPrintf( PRINT_TARGET, "KEY_WAIT\n" );    break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT\n" ); break;
+  case RESEARCH_SELECT_SEQ_TO_CONFIRM:   OS_TFPrintf( PRINT_TARGET, "TO_CONFIRM\n" );  break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:      OS_TFPrintf( PRINT_TARGET, "CONFIRM\n" );     break;
+  case RESEARCH_SELECT_SEQ_TO_KEY_WAIT:  OS_TFPrintf( PRINT_TARGET, "TO_KEY_WAIT\n" ); break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:    OS_TFPrintf( PRINT_TARGET, "DETERMINE\n" );   break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:     OS_TFPrintf( PRINT_TARGET, "CLEAN_UP\n" );    break;
+  case RESEARCH_SELECT_SEQ_FINISH:       OS_TFPrintf( PRINT_TARGET, "FINISH\n" );      break;
+  default:  GF_ASSERT(0);
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -843,9 +872,6 @@ void InitSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 void InitSequence_CLEAN_UP( RESEARCH_SELECT_WORK* work )
 {
-  // パレットを元に戻す
-  ResetPaletteFade( work );
-
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CLEAN_UP\n" );
 }
@@ -882,7 +908,9 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
 //----------------------------------------------------------------------------------------------
 static void MoveMenuCursorUp( RESEARCH_SELECT_WORK* work )
 { 
-  ShiftMenuCursorPos( work, -1 );
+  SetMenuCursorOff( work );         // カーソルが乗っていない状態にする
+  ShiftMenuCursorPos( work, -1 );   // カーソル移動
+  SetMenuCursorOn( work );          // カーソルが乗っている状態にする
 }
 
 //----------------------------------------------------------------------------------------------
@@ -894,7 +922,9 @@ static void MoveMenuCursorUp( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work )
 {
-  ShiftMenuCursorPos( work, 1 );
+  SetMenuCursorOff( work );        // カーソルが乗っていない状態にする
+  ShiftMenuCursorPos( work, 1 );   // カーソル移動
+  SetMenuCursorOn( work );         // カーソルが乗っている状態にする
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1088,6 +1118,42 @@ static BOOL IsTopicIDRegistered( const RESEARCH_SELECT_WORK* work, u8 topicID )
     }
   }
   return FALSE;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief カーソル位置にあるメニュー項目を, カーソルが乗っている状態にする
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void SetMenuCursorOn( RESEARCH_SELECT_WORK* work )
+{
+  BMPOAM_ACT_PTR BmpOamActor;
+
+  // カーソル位置のメニュー項目に対応するBMP-OAM アクターを取得
+  BmpOamActor = GetBmpOamActorOfMenuItem( work, work->menuCursorPos );
+
+  // BMP-OAM アクターのパレットオフセットを変更
+  BmpOam_ActorSetPaletteOffset( BmpOamActor, MAIN_OBJ_PALETTE_MENU_ITEM_ON );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief カーソル位置にあるメニュー項目を, メニュー項目をカーソルが乗っている状態にする
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void SetMenuCursorOff( RESEARCH_SELECT_WORK* work )
+{
+  BMPOAM_ACT_PTR BmpOamActor;
+
+  // カーソル位置のメニュー項目に対応するBMP-OAM アクターを取得
+  BmpOamActor = GetBmpOamActorOfMenuItem( work, work->menuCursorPos );
+
+  // BMP-OAM アクターのパレットオフセットを変更
+  BmpOam_ActorSetPaletteOffset( BmpOamActor, MAIN_OBJ_PALETTE_MENU_ITEM_OFF );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1349,6 +1415,9 @@ static void FinishTopicScroll( RESEARCH_SELECT_WORK* work )
   work->topicCursorPos = work->topicCursorNextPos; // カーソル位置を更新
   UpdateSubDisplayStrings( work );                 // 上画面のカーソル依存文字列を更新
   SetTopicCursorOn( work );                        // カーソルが乗っている状態にする
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish topic scroll\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -2554,27 +2623,23 @@ static void SetupBitmapDatas( RESEARCH_SELECT_WORK* work )
 {
   int idx;
 
-  // TEST:
-  {
-    GFL_BMP_DATA* bmp;
-    bmp = GFL_BMP_LoadCharacter( ARCID_RESEARCH_RADAR_GRAPHIC, 
-                                 NARC_research_radar_graphic_obj_window1_NCGR,
-                                 FALSE, work->heapID );
-    GFL_BMP_Print( bmp, work->BmpData[ BMPOAM_ACTOR_CONFIRM ], 0, 0, 0, 0, 240, 40, 0 );
-    OS_Printf( "sizeX = %d\n", GFL_BMP_GetSizeX( bmp ) );
-    OS_Printf( "sizeY = %d\n", GFL_BMP_GetSizeY( bmp ) );
-    GFL_BMP_Delete( bmp );
-  }
-
   for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
   {
+    GFL_BMP_DATA* bmp;
     const BITMAP_INIT_DATA* data;
     GFL_MSGDATA* msgData;
     STRBUF* strbuf;
     PRINTSYS_LSB color;
+    
+    // 初期化データ取得
+    data = &BitmapInitData[ idx ]; 
+
+    // 背景のキャラクタをコピーする
+    bmp = GFL_BMP_LoadCharacter( data->charaDataArcID, data->charaDataArcDatID, FALSE, work->heapID );
+    GFL_BMP_Print( bmp, work->BmpData[ idx ], 0, 0, 0, 0, 
+                   data->width * DOT_PER_CHARA, data->height * DOT_PER_CHARA, data->colorNo_B );
 
     // 文字列を書き込む
-    data    = &BitmapInitData[ idx ]; 
     msgData = work->message[ data->messageIdx ];
     color   = PRINTSYS_LSB_Make( data->colorNo_L, data->colorNo_S, data->colorNo_B );
     strbuf  = GFL_MSG_CreateString( msgData, data->stringID );
@@ -2584,6 +2649,7 @@ static void SetupBitmapDatas( RESEARCH_SELECT_WORK* work )
                          strbuf, work->font, color ); 
 
     GFL_HEAP_FreeMemory( strbuf );
+    GFL_BMP_Delete( bmp );
   }
 
   // DEBUG:
@@ -2846,6 +2912,27 @@ static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkId
   return work->clactWork[ wkIdx ];
 }
 
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief メニュー項目に対応するBMP-OAMアクター
+ * 
+ * @param work
+ * @param menuItem メニュー項目のインデックス
+ *
+ * @return 指定したメニュー項目に対応するBMP-OAM アクター
+ */
+//----------------------------------------------------------------------------------------------
+static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
+{
+  BMPOAM_ACTOR_INDEX BmpOamActorIdx;
+
+  // BMP-OAM アクターのインデックスを取得
+  BmpOamActorIdx = BmpOamIndexOfMenu[ menuItem ];
+
+  // BMP-OAM アクターを返す
+  return work->BmpOamActor[ BmpOamActorIdx ];
+}
+
 
 //==============================================================================================
 // ■OBJ 表示
@@ -2884,9 +2971,6 @@ static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work )
   // 表示位置を変更
   GFL_CLACT_WK_SetPos( clactWork, &pos, setSurface );
   GFL_CLACT_WK_SetDrawEnable( clactWork, TRUE );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update scroll control pos\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -3019,34 +3103,6 @@ static void StartPaletteFadeIn( RESEARCH_SELECT_WORK* work )
 static BOOL IsPaletteFadeEnd( RESEARCH_SELECT_WORK* work )
 {
   return PaletteFadeCheck( work->paletteFadeSystem );
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief パレットをフェード前の状態に戻す
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void ResetPaletteFade( RESEARCH_SELECT_WORK* work )
-{
-  u16* originalPaletteData;
-  u32 dataSize;
-
-  // MAIN-BG
-  dataSize = sizeof(u16) * 16;
-  originalPaletteData = PaletteWorkDefaultWorkGet( work->paletteFadeSystem, FADE_MAIN_BG );
-  DC_FlushRange( originalPaletteData, dataSize );
-  GX_LoadBGPltt( originalPaletteData, 0, dataSize );
-
-  // MAIN-OBJ
-  dataSize = sizeof(u16) * 16;
-  originalPaletteData = PaletteWorkDefaultWorkGet( work->paletteFadeSystem, FADE_MAIN_OBJ );
-  DC_FlushRange( originalPaletteData, dataSize );
-  GX_LoadOBJPltt( originalPaletteData, 0, dataSize );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: reset palette fade\n" );
 }
 
 //----------------------------------------------------------------------------------------------

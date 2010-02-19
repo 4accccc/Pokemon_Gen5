@@ -25,7 +25,10 @@ enum {
 	NARC_research_radar_graphic_obj_NCGR = 11,
 	NARC_research_radar_graphic_obj_NCLR = 12,
 	NARC_research_radar_graphic_obj_NANR = 13,
-	NARC_research_radar_graphic_obj_window1_NCGR = 14
+	NARC_research_radar_graphic_obj_window1_NCGR = 14,
+	NARC_research_radar_graphic_obj_window2_NCGR = 15,
+	NARC_research_radar_graphic_obj_window3_NCGR = 16,
+	NARC_research_radar_graphic_obj_window4_NCGR = 17
 };
 
 /* NARC_RESEARCH_RADAR_GRAPHIC_NAIX_ */

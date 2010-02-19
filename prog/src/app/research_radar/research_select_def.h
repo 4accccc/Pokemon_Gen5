@@ -10,53 +10,6 @@
 
 
 //===============================================================================
-// ■動作
-//===============================================================================
-#define SELECT_TOPIC_MAX_NUM (3)  // 選択する調査項目の数
-
-// 調査項目のスクロール
-#define SCROLL_TOP_MARGIN    (24)  // 上方スクロールの余白
-#define SCROLL_BOTTOM_MARGIN (48)  // 下方スクロールの余白
-#define SCROLL_FRAME         (4)   // スクロールに要するフレーム数
-
-// スクロールバーつまみ部分
-#define SCROLL_CONTROL_LEFT     (248)  // x 座標
-#define SCROLL_CONTROL_TOP      (32)   // 上辺 y 座標
-#define SCROLL_CONTROL_BOTTOM   (160)  // 底辺 y 座標
-#define SCROLL_CONTROL_STEP_NUM (TOPIC_ID_NUM)  // 移動範囲の分割数
-
-// 調査項目選択アイコン
-#define SELECT_ICON_DRAW_OFFSET_X (0)  // 調査項目ボタン左上x座標からのオフセット
-#define SELECT_ICON_DRAW_OFFSET_Y (10) // 調査項目ボタン左上y座標からのオフセット
-
-// パレットフェード ( アウト )
-#define MAIN_BG_PALETTE_FADE_OUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
-#define MAIN_BG_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
-#define MAIN_BG_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
-
-#define MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK (0xfffd) // フェード対象パレット番号のマスク
-#define MAIN_OBJ_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
-#define MAIN_OBJ_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
-
-// パレットフェード ( イン )
-#define MAIN_BG_PALETTE_FADE_IN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
-#define MAIN_BG_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
-#define MAIN_BG_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
-
-#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK (0xfffd)  // フェード対象パレット番号のマスク
-#define MAIN_OBJ_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
-#define MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
-
-
-//===============================================================================
 // ■BG
 //===============================================================================
 
@@ -223,6 +176,15 @@
 // ■OBJ
 //===============================================================================
 
+//----------------
+// □パレット番号
+//----------------
+// MAIN-OBJ
+#define MAIN_OBJ_PALETTE_FADE_OBJ      (0x0)  // フェード操作対象のOBJ
+#define MAIN_OBJ_PALETTE_NONE_FADE_OBJ (0x1)  // フェード操作非対象のOBJ
+#define MAIN_OBJ_PALETTE_MENU_ITEM_ON  (0xe)  // メニュー項目選択時
+#define MAIN_OBJ_PALETTE_MENU_ITEM_OFF (0xf)  // メニュー項目非選択時
+
 //------------------------
 // □セルアクターユニット
 //------------------------
@@ -271,7 +233,7 @@
 #define BMPOAM_ACTOR_CONFIRM_STRING_COLOR_B (0)   // 背景のカラー番号
 //「けってい」
 #define BMPOAM_ACTOR_OK_CHARA_SIZE_X   (10)   // x サイズ ( キャラ単位 )
-#define BMPOAM_ACTOR_OK_CHARA_SIZE_Y   (2)    // y サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_OK_CHARA_SIZE_Y   (3)    // y サイズ ( キャラ単位 )
 #define BMPOAM_ACTOR_OK_POS_X          (160)  // 左上x座標
 #define BMPOAM_ACTOR_OK_POS_Y          (152)  // 左上y座標
 #define BMPOAM_ACTOR_OK_PALETTE_OFFSET (1)    // パレットオフセット
@@ -282,10 +244,10 @@
 #define BMPOAM_ACTOR_OK_STRING_COLOR_B (0)    // 背景のカラー番号
 //「やめる」
 #define BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X   (10)   // x サイズ ( キャラ単位 )
-#define BMPOAM_ACTOR_CANCEL_CHARA_SIZE_Y   (2)    // y サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_CANCEL_CHARA_SIZE_Y   (3)    // y サイズ ( キャラ単位 )
 #define BMPOAM_ACTOR_CANCEL_POS_X          (160)  // 左上x座標
 #define BMPOAM_ACTOR_CANCEL_POS_Y          (168)  // 左上y座標
-#define BMPOAM_ACTOR_CANCEL_PALETTE_OFFSET (0)    // パレットオフセット
+#define BMPOAM_ACTOR_CANCEL_PALETTE_OFFSET (1)    // パレットオフセット
 #define BMPOAM_ACTOR_CANCEL_SOFT_PRIORITY  (0)    // ソフトプライオリティ
 #define BMPOAM_ACTOR_CANCEL_BG_PRIORITY    (0)    // BGプライオリティ
 #define BMPOAM_ACTOR_CANCEL_STRING_COLOR_L (1)    // 文字のカラー番号
@@ -296,9 +258,57 @@
 #define BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_Y   (5)  // y サイズ ( キャラ単位 )
 #define BMPOAM_ACTOR_DETERMINE_POS_X          (8)  // 左上x座標
 #define BMPOAM_ACTOR_DETERMINE_POS_Y          (76) // 左上y座標
-#define BMPOAM_ACTOR_DETERMINE_PALETTE_OFFSET (0)  // パレットオフセット
+#define BMPOAM_ACTOR_DETERMINE_PALETTE_OFFSET (1)  // パレットオフセット
 #define BMPOAM_ACTOR_DETERMINE_SOFT_PRIORITY  (0)  // ソフトプライオリティ
 #define BMPOAM_ACTOR_DETERMINE_BG_PRIORITY    (0)  // BGプライオリティ
 #define BMPOAM_ACTOR_DETERMINE_STRING_COLOR_L (1)  // 文字のカラー番号
 #define BMPOAM_ACTOR_DETERMINE_STRING_COLOR_S (2)  // 影のカラー番号
 #define BMPOAM_ACTOR_DETERMINE_STRING_COLOR_B (0)  // 背景のカラー番号
+
+
+//===============================================================================
+// ■動作
+//===============================================================================
+#define SELECT_TOPIC_MAX_NUM      (3)  // 選択する調査項目の数
+#define SEQ_DETERMINE_WAIT_FRAMES (60) // 調査項目確定シーケンスの待ち時間
+
+// 調査項目のスクロール
+#define SCROLL_TOP_MARGIN    (24)  // 上方スクロールの余白
+#define SCROLL_BOTTOM_MARGIN (48)  // 下方スクロールの余白
+#define SCROLL_FRAME         (4)   // スクロールに要するフレーム数
+
+// スクロールバーつまみ部分
+#define SCROLL_CONTROL_LEFT     (248)  // x 座標
+#define SCROLL_CONTROL_TOP      (32)   // 上辺 y 座標
+#define SCROLL_CONTROL_BOTTOM   (160)  // 底辺 y 座標
+#define SCROLL_CONTROL_STEP_NUM (TOPIC_ID_NUM)  // 移動範囲の分割数
+
+// 調査項目選択アイコン
+#define SELECT_ICON_DRAW_OFFSET_X (0)  // 調査項目ボタン左上x座標からのオフセット
+#define SELECT_ICON_DRAW_OFFSET_Y (10) // 調査項目ボタン左上y座標からのオフセット
+
+// パレットフェード ( アウト )
+#define MAIN_BG_PALETTE_FADE_OUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
+#define MAIN_BG_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
+#define MAIN_BG_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
+
+#define MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK (0x0001) // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
+
+// パレットフェード ( イン )
+#define MAIN_BG_PALETTE_FADE_IN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
+#define MAIN_BG_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
+#define MAIN_BG_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
+
+#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK (0x0001)  // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
