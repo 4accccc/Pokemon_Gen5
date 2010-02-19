@@ -6171,7 +6171,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
     // キャンセルチェック
     if( p_wk->p_namein->cancel == 0 ){
       // 次へ
-      GFL_PROC_LOCAL_CallProc( p_wk->p_subproc , NO_OVERLAY_ID ,
+      GFL_PROC_LOCAL_CallProc( p_wk->p_subproc , FS_OVERLAY_ID(codein),
         &CodeInput_ProcData, p_wk->p_codein );
       p_data->subseq = SEQ_CODEIN_CODEIN_WAIT;
     }else{

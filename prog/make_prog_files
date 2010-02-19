@@ -116,6 +116,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/event_colosseum_battle.c \
         field/event_battle_call.c \
         field/event_bsubway.c \
+        field/event_wifi_bsubway.c \
         field/field_comm/bingo_system.c \
         field/field_light_status.c \
         net_app/union/comm_player.c \
@@ -229,6 +230,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/scrcmd_network.c \
 				system/shortcut_data.c \
         app/bag/bag_param.c\
+        app/codein/codein_param.c\
         field/event_poke_status.c \
         system/screentex.c \
         debug/debug_flg.c \
@@ -618,32 +620,11 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/trial_house.c \
         field/scrcmd_trial_house.c
 
-# フィールド天気
-#===> SRCS_OVERLAY_FIELDMAP
-SRCS_OVERLAY_FIELD_WEATHER_SUNNY = field/weather_sunny.c
-
-#===> SRCS_OVERLAY_FIELDMAP
-SRCS_OVERLAY_FIELD_WEATHER_SNOW = field/weather_snow.c
-
-#===> SRCS_OVERLAY_FIELDMAP
-SRCS_OVERLAY_FIELD_WEATHER_RAIN = field/weather_rain.c
-
-#===> SRCS_OVERLAY_FIELDMAP
-SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
-                  field/weather_mirage.c
-
-#===> SRCS_OVERLAY_FIELDMAP
-SRCS_OVERLAY_FIELD_WEATHER_MIST = field/weather_mist.c
-
 
 #下画面のオーバーレイレイヤー
 
 # フィールドマップ上でのみ使用する侵入関連のソース
-#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
-#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
-#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
-#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
-#===> SRCS_OVERLAY_FIELD_WEATHER_MIST
+#===> SRCS_OVERLAY_FIELDMAP
 SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
 				field/field_comm/intrude_minimono.c \
 				field/field_comm/intrude_monolith.c \
@@ -655,11 +636,7 @@ SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
         field/field_comm/intrude_mission_field.c \
         field/scrcmd_intrude_field.c
 
-#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
-#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
-#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
-#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
-#===> SRCS_OVERLAY_FIELD_WEATHER_MIST
+#===> SRCS_OVERLAY_FIELDMAP
 SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
                           net_app/union/union_receive.c \
                           net_app/union/union_event_check.c \
@@ -668,6 +645,8 @@ SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
                           net_app/union/union_tool.c \
                           net_app/union/union_eff.c \
                           net_app/union/colosseum_tool.c
+
+
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> SRCS_OVERLAY_DEV_IRC
@@ -679,36 +658,78 @@ SRCS_OVERLAY_OEKAKI = net_app/oekaki/comm_command_oekaki.c \
 		      net_app/oekaki/oekaki.c
 
 
-#----- 下画面　レイヤー -------
-#CGEAR
+# フィールド天気
 #===> SRCS_OVERLAY_UNION_ROOM
 #===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_WEATHER_SUNNY = field/weather_sunny.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_WEATHER_SNOW = field/weather_snow.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_WEATHER_RAIN = field/weather_rain.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
+                  field/weather_mirage.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_WEATHER_MIST = field/weather_mist.c
+
+
+
+#----- 下画面　レイヤー -------
+#CGEAR
+#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
+#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
+#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
+#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
+#===> SRCS_OVERLAY_FIELD_WEATHER_MIST
 SRCS_OVERLAY_CGEAR = field/c_gear/c_gear.c
 
 #NO GEAR
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
+#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
+#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
+#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
+#===> SRCS_OVERLAY_FIELD_WEATHER_MIST
 SRCS_OVERLAY_NO_GEAR = field/c_gear/no_gear.c
 
 #Union SubDisp
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
+#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
+#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
+#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
+#===> SRCS_OVERLAY_FIELD_WEATHER_MIST
 SRCS_OVERLAY_UNION_SUBDISP = net_app/union/union_subdisp.c
 
 #BeaconView
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
+#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
+#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
+#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
+#===> SRCS_OVERLAY_FIELD_WEATHER_MIST
 SRCS_OVERLAY_BEACON_VIEW = field/field_comm/beacon_view_sub.c \
         field/field_comm/beacon_view.c
 
 #Dowsing
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
+#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
+#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
+#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
+#===> SRCS_OVERLAY_FIELD_WEATHER_MIST
 SRCS_OVERLAY_DOWSING = field/dowsing/dowsing.c
 
 #Report
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
+#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
+#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
+#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
+#===> SRCS_OVERLAY_FIELD_WEATHER_MIST
 SRCS_OVERLAY_REPORT = field/report.c
  
 
@@ -1365,6 +1386,13 @@ SRCS_OVERLAY_WIFI_LOGIN =  net_app/wifi_login/wifilogin_proc.c \
 
 
 
+# WiFiバトルサブウェイ
+#===> SRCS_OVERLAY_WIFI_LOGIN
+SRCS_OVERLAY_WIFI_BSUBWAY =  net_app/wifi_bsubway/wifi_bsubway.c
+
+
+
+
 # ポケモン交換
 #===> SRCS_OVERLAY_DPW_COMMON
 SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/pokemontrade_proc.c \
@@ -1461,10 +1489,15 @@ SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_WIFI2DMAP
-SRCS_OVERLAY_WIFINOTE = app/wifi_note/wifi_note.c \
-        app/codein/codein.c \
+SRCS_OVERLAY_WIFINOTE = app/wifi_note/wifi_note.c
+
+# CODEIN
+#===> SRCS_OVERLAY_WIFINOTE
+#===> SRCS_OVERLAY_WIFI_BSUBWAY
+SRCS_OVERLAY_CODEIN = app/codein/codein.c \
         app/codein/codein_pv.c \
         app/codein/codein_disp.c
+
 
 
 # 松田デバッグ

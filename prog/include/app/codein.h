@@ -34,6 +34,8 @@ typedef struct {
 
 extern const GFL_PROC_DATA CodeInput_ProcData;
 
+FS_EXTERN_OVERLAY(codein);
+
 extern CODEIN_PARAM*	CodeInput_ParamCreate( int heap_id, int word_len, int block[] );
 extern void				CodeInput_ParamDelete( CODEIN_PARAM* codein_param );
 
