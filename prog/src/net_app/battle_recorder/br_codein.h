@@ -68,8 +68,8 @@ extern void BR_CODEIN_Main( BR_CODEIN_WORK *wk );
 extern BR_CODEIN_SELECT BR_CODEIN_GetSelect( const BR_CODEIN_WORK *wk );
 
 //à¯êîçÏê¨
-extern BR_CODEIN_PARAM*	CodeInput_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, int block[] );
-extern void	 CodeInput_ParamDelete( BR_CODEIN_PARAM* codein_param );
+extern BR_CODEIN_PARAM*	BR_CODEIN_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, int block[] );
+extern void	 BR_CODEIN_ParamDelete( BR_CODEIN_PARAM* codein_param );
 
 
 //--------------------------------------------------------------
@@ -82,7 +82,7 @@ extern void	 CodeInput_ParamDelete( BR_CODEIN_PARAM* codein_param );
  *
  */
 //--------------------------------------------------------------
-static inline void Br_CodeIn_BlockDataMake_4_4_4( int block[] )
+static inline void BR_CODEIN_BlockDataMake_4_4_4( int block[] )
 {
 #if 1
 	block[ 0 ] = 4;
@@ -106,7 +106,7 @@ static inline void Br_CodeIn_BlockDataMake_4_4_4( int block[] )
  *
  */
 //--------------------------------------------------------------
-static inline void Br_CodeIn_BlockDataMake_2_5_5( int block[] )
+static inline void BR_CODEIN_BlockDataMake_2_5_5( int block[] )
 {
 	block[ 0 ] = 2;
 	block[ 1 ] = 5;

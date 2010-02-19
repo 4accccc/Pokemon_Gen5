@@ -150,7 +150,7 @@ void BR_CODEIN_Exit( BR_CODEIN_WORK *wk )
  *
  */
 //--------------------------------------------------------------
-BR_CODEIN_PARAM*	CodeInput_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, int block[] )
+BR_CODEIN_PARAM*	BR_CODEIN_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, int block[] )
 {
 	int i;
 	BR_CODEIN_PARAM* wk = NULL;
@@ -180,7 +180,7 @@ BR_CODEIN_PARAM*	CodeInput_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p
  *
  */
 //--------------------------------------------------------------
-void CodeInput_ParamDelete( BR_CODEIN_PARAM* codein_param )
+void BR_CODEIN_ParamDelete( BR_CODEIN_PARAM* codein_param )
 {
 	GF_ASSERT( codein_param->strbuf != NULL );
 	GF_ASSERT( codein_param != NULL );

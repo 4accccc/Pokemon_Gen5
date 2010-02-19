@@ -130,8 +130,8 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   //ƒ‚ƒWƒ…[ƒ‹
   {
     int block[BR_CODE_BLOCK_MAX];
-    Br_CodeIn_BlockDataMake_2_5_5( block );
-    p_wk->p_codein_param  = CodeInput_ParamCreate( p_wk->heapID, 12, p_param->p_unit, p_param->p_res, block );
+    BR_CODEIN_BlockDataMake_2_5_5( block );
+    p_wk->p_codein_param  = BR_CODEIN_ParamCreate( p_wk->heapID, 12, p_param->p_unit, p_param->p_res, block );
     p_wk->p_codein_wk     = BR_CODEIN_Init( p_wk->p_codein_param, p_wk->heapID );
   }
   { 
@@ -163,7 +163,7 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
   { 
     BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
     BR_CODEIN_Exit( p_wk->p_codein_wk );
-    CodeInput_ParamDelete( p_wk->p_codein_param );
+    BR_CODEIN_ParamDelete( p_wk->p_codein_param );
     PRINTSYS_QUE_Delete( p_wk->p_que );
   }
 
