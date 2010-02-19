@@ -244,8 +244,7 @@ SRCS  +=    $(SOUNDSRC) \
 		debug/debug_sd_print.c \
 		system/ds_system.c \
         savedata/undata_update.c \
-        system/scroll_bar.c \
-        field/fld_btl_inst_tool.c
+        system/scroll_bar.c 
 
 
 #================================================
@@ -380,8 +379,9 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         debug/debug_mystery_card.c \
         field/event_research_radar.c \
         app/research_radar/questionnaire_index.c \
-        field/bsubway_comm.c
-
+        field/bsubway_comm.c \
+        field/fld_btl_inst_tool.c \
+        field/trial_house_st.c
 
 # wifiプログラム
 #===> SRCS_OVERLAY_DEV_WIFILIB
@@ -623,7 +623,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_gimmick_bsubway.c \
         field/fldeff_hide.c \
         field/dowsing/dowsing.c \
-        field/report.c
+        field/report.c \
+        field/trial_house.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

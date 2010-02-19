@@ -20,6 +20,7 @@
 
 #include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
+
 #include "field/eventdata_system.h"
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
@@ -123,6 +124,7 @@ struct _GAMEDATA{
 
   CALENDER* calender;  // カレンダー
   UNSV_WORK UnsvWork;      //国連ワーク
+  TRIAL_HOUSE_WORK_PTR  TrialHouseWorkPtr;    //トライアルハウスワーク
 };
 
 //==============================================================================
@@ -249,6 +251,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   // カレンダー生成
   gd->calender = CALENDER_Create( gd, heapID );
+
+  //トライアルハウスワークポインタをＮＵＬＬ初期化
+  gd->TrialHouseWorkPtr = NULL;
 
   return gd;
 }
@@ -1636,3 +1641,16 @@ MUSICAL_SAVE *GAMEDATA_GetMusicalSavePtr(GAMEDATA * gamedata)
 {
   return SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_MUSICAL);
 }
+
+//----------------------------------------------------------
+/**
+ * @brief   トライアルハウスワークへのポインタ取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  トライアルハウスワークへのポインタ
+ */
+//----------------------------------------------------------
+TRIAL_HOUSE_WORK_PTR *GAMEDATA_GetTrialHouseWorkPtr(GAMEDATA * gamedata)
+{
+  return &gamedata->TrialHouseWorkPtr;
+}
+

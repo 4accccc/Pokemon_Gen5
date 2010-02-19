@@ -42,6 +42,8 @@
 #include "field/calender.h"
 #include "savedata/un_savedata.h"
 
+#include "field/trial_house_ptr.h"
+
 //============================================================================================
 //============================================================================================
 
@@ -641,5 +643,15 @@ extern UNSV_WORK *GAMEDATA_GetUnsvWorkPtr(GAMEDATA * gamedata);
  */
 //----------------------------------------------------------
 extern MUSICAL_SAVE *GAMEDATA_GetMusicalSavePtr(GAMEDATA * gamedata);
+
+//----------------------------------------------------------
+/**
+ * @brief   トライアルハウスワークへのポインタ取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  トライアルワークへのポインタ
+ */
+//----------------------------------------------------------
+extern TRIAL_HOUSE_WORK_PTR *GAMEDATA_GetTrialHouseWorkPtr(GAMEDATA * gamedata);
+
 
 
