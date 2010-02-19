@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="fujiwara_maiko" host="W00194" date="2010-02-19T14:26:46" source="riza_bridge_01.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="121"
+	tool_start_frame="0"
+	tool_end_frame="120"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="off" material_size="7 7"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="121">
+	0.000000 0.000732 0.001709 0.002441 0.003418 0.004150 0.004883 0.005859 0.006592 0.007568
+	0.008301 0.009277 0.010010 0.010742 0.011719 0.012451 0.013428 0.014160 0.014893 0.015869
+	0.016602 0.017578 0.018311 0.019287 0.020020 0.020752 0.021729 0.022461 0.023438 0.024170
+	0.024902 0.025879 0.026611 0.027588 0.028320 0.029053 0.030029 0.030762 0.031738 0.032471
+	0.033447 0.034180 0.034912 0.035889 0.036621 0.037598 0.038330 0.039063 0.040039 0.040771
+	0.041748 0.042480 0.043213 0.044189 0.044922 0.045898 0.046631 0.047607 0.048340 0.049072
+	0.050049 0.050781 0.051758 0.052490 0.053223 0.054199 0.054932 0.055908 0.056641 0.057617
+	0.058350 0.059082 0.060059 0.060791 0.061768 0.062500 0.063232 0.064209 0.064941 0.065918
+	0.066650 0.067383 0.068359 0.069092 0.070068 0.070801 0.071777 0.072510 0.073242 0.074219
+	0.074951 0.075928 0.076660 0.077393 0.078369 0.079102 0.080078 0.080811 0.081787 0.082520
+	0.083252 0.084229 0.084961 0.085938 0.086670 0.087402 0.088379 0.089111 0.090088 0.090820
+	0.091553 0.092529 0.093262 0.094238 0.094971 0.095947 0.096680 0.097412 0.098389 0.099121
+	0.100098
+</tex_translate_data>
+
+<tex_srt_anm_array size="1">
+	<tex_srt_anm index="0" material_name="haikei01">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="121" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>
