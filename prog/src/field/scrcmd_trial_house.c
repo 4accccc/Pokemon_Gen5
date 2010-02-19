@@ -101,7 +101,7 @@ VMCMD_RESULT EvCmdTH_SetPlayMode( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdTH_SelectPoke( VMHANDLE *core, void *wk )
 {
   u16 *ret;
-  u16 btl_type;
+  u16 reg_type;
   u16 party_type;
   GMEVENT* event;
 
@@ -112,12 +112,11 @@ VMCMD_RESULT EvCmdTH_SelectPoke( VMHANDLE *core, void *wk )
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
   TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
 
-  ret = SCRCMD_GetVMWork( core, work );
-  btl_type = SCRCMD_GetVMWorkValue( core, work );
+  reg_type = SCRCMD_GetVMWorkValue( core, work );
   party_type = SCRCMD_GetVMWorkValue( core, work );
+  ret = SCRCMD_GetVMWork( core, work );
   
-  event = TRIAL_HOUSE_CreatePokeSelEvt(gsys, *ptr, btl_type, party_type, ret );
-
+  event = TRIAL_HOUSE_CreatePokeSelEvt(gsys, *ptr, reg_type, party_type, ret );
   SCRIPT_CallEvent( sc, event );
 
   return VMCMD_RESULT_SUSPEND;

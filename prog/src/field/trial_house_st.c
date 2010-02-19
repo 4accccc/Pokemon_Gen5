@@ -14,6 +14,8 @@
 #include "poke_tool/regulation_def.h"
 #include "event_battle.h" //for EVENT_BSubwayTrainerBattle
 
+#include "script_def.h"
+
 //------------------------------------------------------------------
 /**
  * @brief ポケモン選択ワーク
@@ -42,7 +44,7 @@ static GMEVENT_RESULT PokeSelEvt(GMEVENT * event, int * seq, void * work);
 /**
  * ポケモン選択イベント作成
  * @param gsys          ゲームシステムポインタ
- * @param inListType    バトルタイプ　シングルＯＲダブル
+ * @param inRegType    バトルレギュレーションタイプ　シングルＯＲダブル
  * @param inPartyType   パーティタイプ　手持ちＯＲバトルボックス
  * @param outRet        リストの結果    中止のときFALSE
  *
@@ -50,7 +52,7 @@ static GMEVENT_RESULT PokeSelEvt(GMEVENT * event, int * seq, void * work);
  */
 //--------------------------------------------------------------
 GMEVENT *TRIAL_HOUSE_CreatePokeSelEvt(  GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr,
-                                        const int inBtlType, const int inPartyType, u16 *outRet )
+                                        const int inRegType, const int inPartyType, u16 *outRet )
 {
   GMEVENT* event;
 	TH_POKESEL_WORK* work;
@@ -65,19 +67,31 @@ GMEVENT *TRIAL_HOUSE_CreatePokeSelEvt(  GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PT
   work->ModeType = PL_MODE_BATTLE;
 
   work->HouseWorkPtr = ptr;
-  if (inBtlType)
+
+  if ( (inRegType == REG_SUBWAY_SINGLE)||(inRegType == REG_SUBWAY_DOUBLE) )
   {
-    work->ListType = PL_TYPE_SINGLE;
-    work->Reg = REG_SUBWAY_SINGLE;
+    if (inRegType == REG_SUBWAY_SINGLE)
+    {
+      work->ListType = PL_TYPE_SINGLE;
+      work->Reg = REG_SUBWAY_SINGLE;
+    }
+    else  //REG_SUBWAY_DOUBLE
+    {
+      work->ListType = PL_TYPE_DOUBLE;
+      work->Reg = REG_SUBWAY_DOUBLE;
+    }
   }
   else
   {
-    work->ListType = PL_TYPE_DOUBLE;
-    work->Reg = REG_SUBWAY_DOUBLE;
+    GF_ASSERT_MSG(0,"reg error %d",inRegType);
+    work->ListType = PL_TYPE_SINGLE;
+    work->Reg = REG_SUBWAY_SINGLE;
   }
 
-  if ( inPartyType ) work->Party = GAMEDATA_GetMyPokemon( gdata );  //手持ち
-  else work->Party = GAMEDATA_GetMyPokemon( gdata );                //バトルボックス @todo
+  if ( inPartyType == SCR_BTL_PARTY_SELECT_TEMOTI)
+    work->Party = GAMEDATA_GetMyPokemon( gdata );  //手持ち
+  else
+    work->Party = GAMEDATA_GetMyPokemon( gdata );  //バトルボックス @todo
 
   return event;
 }
