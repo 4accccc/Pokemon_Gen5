@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T16:22:16"/>
+	<create user="matsumiya" host="W00224" date="2010-02-19T17:14:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1453" top="293" right="2156" bottom="913" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="134" right="2006" bottom="762" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -319,6 +319,8 @@
 	<row id="msg_c09r0201_bigfour2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：クリア前
 ・戦闘後：フィールド</comment>
+		<attribute name="キャラ指定">四天王：悪
+ギーマ</attribute>
 		<language name="JPN" width="256">ぜんりょくを　つくそうと
 うんが　あろうと　なかろうと▽
 まけは　まけ……▼
@@ -338,6 +340,8 @@
 	<row id="msg_c09r0201_bigfour2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：クリア前
 ・bigfour2_02表示後に再度会話</comment>
+		<attribute name="キャラ指定">四天王：悪
+ギーマ</attribute>
 		<language name="JPN" width="256">そう　いまの　オレは
 ぶざまな　はいぼくしゃ……▽
 それいじょうでも　いかでもない▼
@@ -359,6 +363,8 @@
 ・条件（＝四天王全員に勝利）を満たしていれば
 　戦闘後フィールド復帰時に自動で表示
 ・チャンピオン部屋に行くまで繰り返し</comment>
+		<attribute name="キャラ指定">四天王：悪
+ギーマ</attribute>
 		<language name="JPN" width="256">……すごいね▼
 きみは　ポケモンリーグ　すべての
 してんのうに　しょうりした▼
@@ -366,7 +372,7 @@
 きみの　その　つよさを　しめすべき
 あいてが　もうひとり　いる▼
 ……Ｎという　おとこ
-あいつに　かてると　おもうなら……▽
+アイツに　かてると　おもうなら……▽
 いや　かたねばならぬと　きめたなら▼
 エレベータに　のり
 さいごの　へやに　すすむが　いいさ</language>
@@ -387,68 +393,76 @@
 		<comment>♂：クリア後
 ・戦闘前：フィールド
 　メッセージ表示後、トレーナー戦闘に</comment>
-		<language name="JPN" width="256">やあ
-ちょうせんしゃ▼
-しょうりの　めがみに
-あいされているか　たしかめに▽
-ここまで　きたんだろ？▼
-いいさ……
-かったものが　すべてを　てにいれ▽
+		<attribute name="キャラ指定">四天王：悪
+ギーマ</attribute>
+		<language name="JPN" width="256">じんせいは　あたえられた
+カードでの　しんけんしょうぶ▼
+くばられた　カードに
+もんくを　いうよりも▽
+どう　つかいこなすかが　だいじなのさ▼
+さあ　はじめよう……▼
+かったものが　すべてを　てにいれ
 まけたものには　なにも　のこらない▼
 そんな　しょうぶ　こそが
 いきている　あかし……▼</language>
-		<language name="JPN_KANJI" width="256">やあ
-ちょうせんしゃ▼
-しょうりの　めがみに
-あいされているか　たしかめに▽
-ここまで　きたんだろ？▼
-いいさ……
-かったものが　すべてを　てにいれ▽
-まけたものには　なにも　のこらない▼
-そんな　しょうぶ　こそが
-いきている　あかし……▼</language>
+		<language name="JPN_KANJI" width="256">人生は　与えられた
+カードでの　真剣勝負▼
+配られた　カードに
+文句を　いうよりも▽
+どう使いこなすかが　大事なのさ▼
+さあ　はじめよう……▼
+勝ったものが　すべてを　手に入れ
+負けたものには　なにも　残らない▼
+そんな　勝負こそが
+生きている　証……▼</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_06">
 		<comment>♂：クリア後
 ・戦闘後：フィールド</comment>
+		<attribute name="キャラ指定">四天王：悪
+ギーマ</attribute>
 		<language name="JPN" width="256">さて　よのなか　には
 わるい　かちかた……▽
-いい　まけかた　も　あってね▼
+いい　まけかたも　あってね▼
 そう　かんたんに　わりきれないのが
-おもしろい　ところ　じゃないかな？▼
-コインだってさ
-かならず　うらか　おもての▼
-ふたつじゃ　ないんだよね……</language>
-		<language name="JPN_KANJI" width="256">さて　よのなか　には
-わるい　かちかた……▽
-いい　まけかた　も　あってね▼
-そう　かんたんに　わりきれないのが
-おもしろい　ところ　じゃないかな？▼
-コインだってさ
-かならず　うらか　おもての▼
-ふたつじゃ　ないんだよね……</language>
+おもしろく　なやましい　ところさ▼
+なげた　コインだって
+かならず　オモテか　ウラの▽
+どちらかに　なるわけじゃない▼
+おちてこないことだって　あるだろ</language>
+		<language name="JPN_KANJI" width="256">さて　世の中には
+悪い　勝ち方……▽
+いい　負け方も　あってね▼
+そう　簡単に　わりきれないのが
+おもしろく　悩ましいところさ▼
+投げた　コインだって
+必ず　表か　裏の▽
+どちらかに　なるわけじゃない▼
+落ちてこないことだって　あるだろ</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_07">
 		<comment>♂：クリア後
 ・bigfour2_06表示後に再度会話</comment>
-		<language name="JPN" width="256">おみごと……▼
+		<attribute name="キャラ指定">四天王：悪
+ギーマ</attribute>
+		<language name="JPN" width="256">おみごと……！▼
 ポケモンしょうぶの　いいところは
 まけた　ものにも▽
 なにかを　おしえてくれること　かな？▼
 さて……
 きみの　その　つよさ……▼
-ほかの　してんのう　あいてに
-ためすが　いい</language>
-		<language name="JPN_KANJI" width="256">おみごと……▼
-ポケモンしょうぶの　いいところは
-まけた　ものにも▽
-なにかを　おしえてくれること　かな？▼
+ほかの　してんのう　あいてにも
+つうじるか　ためすが　いい！</language>
+		<language name="JPN_KANJI" width="256">おみごと……！▼
+ポケモン勝負の　いいところは
+敗れた　トレーナーにも▽
+なにかを　教えてくれること　かな？▼
 さて……
-きみの　その　つよさ……▼
-ほかの　してんのう　あいてに
-ためすが　いい</language>
+きみの　その　強さ……▼
+他の　四天王　相手にも
+通じるか　試すが　いい！</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_08">
@@ -456,6 +470,8 @@
 ・条件（＝四天王全員に勝利）を満たしていれば
 　戦闘後フィールド復帰時に自動で表示
 ・チャンピオン部屋に行くまで繰り返し</comment>
+		<attribute name="キャラ指定">四天王：悪
+ギーマ</attribute>
 		<language name="JPN" width="256">……すごいね▼
 きみは　ポケモンリーグ　すべての
 してんのうに　しょうりした▼
@@ -466,12 +482,12 @@
 さいごの　へやに　すすむが　いいさ</language>
 		<language name="JPN_KANJI" width="256">……すごいね▼
 きみは　ポケモンリーグ　すべての
-してんのうに　しょうりした▼
-だが　まだ　おわりではない！▼
-きみの　その　つよさを　しめすべき
-あいてが　もうひとり　いる▼
+四天王に　勝利した▼
+だが　まだ　終わりではない！▼
+きみの　その　強さを　示すべき
+相手が　もう一人　いる▼
 エレベータに　のり
-さいごの　へやに　すすむが　いいさ</language>
+最後の部屋に　進むが　いいさ</language>
 	</row>
 
 	<flowchart-group-list>
