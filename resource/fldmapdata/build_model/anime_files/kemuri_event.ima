@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ima version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2010-02-19T17:05:10" source="kemuri_event01.mb"/>
+	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<mat_color_info
+	frame_size="91"
+	tool_start_frame="0"
+	tool_end_frame="90"
+	interpolation="linear"
+	interp_end_to_start="off"
+	compress_material="on" material_size="1 1"
+	frame_step_mode="1"
+	tolerance_color="2"
+/>
+
+<mat_color_data size="93">
+	25 0 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 30 28
+	27 26 25 23 22 21 19 18 17 16
+	14 13 12 10 9 8 6 5 4 3
+	1 0 0
+</mat_color_data>
+
+<mat_color_anm_array size="1">
+	<mat_color_anm index="0" material_name="lambert2">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="1" data_size="91" data_head="2"/>
+	</mat_color_anm>
+</mat_color_anm_array>
+
+</body>
+
+</ima>

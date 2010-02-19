@@ -138,3 +138,4 @@
 "nsbmdfiles/d5ktmr_003.nsbmd"
 "nsbmdfiles/c09_dendo.nsbmd"
 "nsbmdfiles/in06_kairyu.nsbmd"
+"nsbmdfiles/kemuri_event.nsbmd"

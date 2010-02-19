@@ -203,7 +203,8 @@ DEP_TEXSET_IMD_INDOOR003 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd
+	$(SRCDIR)/shelf06.imd \
+	$(SRCDIR)/kemuri_event.imd
 
 texset/indoor003.imd: $(DEP_TEXSET_IMD_INDOOR003) texset/tmp/indoor003.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor003.list
