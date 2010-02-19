@@ -174,6 +174,12 @@ struct _ACTING_WORK
   
   BOOL isEditorMode;
   
+  //観客顔パレットフェード
+  u16 palAnmCnt;
+  u16 basePal[16];
+  s8 ofsCol[3][16];
+  u16 transPal[16];
+  
 #if MUSICAL_ACT_DL_TEST
   void* seqData;
   void* bankData;
@@ -197,6 +203,7 @@ static void STA_ACT_SetupPokemon( ACTING_WORK *work );
 static void STA_ACT_SetupItem( ACTING_WORK *work );
 static void STA_ACT_SetupEffect( ACTING_WORK *work );
 static void STA_ACT_SetupMessage( ACTING_WORK *work );
+static void STA_ACT_UpdatePalAnm( ACTING_WORK *work );
 
 static void STA_ACT_UpdateScroll( ACTING_WORK *work );
 static void STA_ACT_UpdateMessage( ACTING_WORK *work );
@@ -307,6 +314,8 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->useItemPoke = MUSICAL_POKE_MAX;
   work->useItemCnt = 0;
   work->useItemReq = FALSE;
+  
+  work->palAnmCnt = 0;
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
     work->useItemFlg[i] = FALSE;
@@ -575,6 +584,8 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   STA_ACT_UpdateAttention( work );
   STA_AUDI_UpdateSystem( work->audiSys );
 
+  STA_ACT_UpdatePalAnm( work );
+
   //3D描画  
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();
@@ -830,9 +841,29 @@ static void STA_ACT_SetupBg( ACTING_WORK *work )
   GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_stage_gra_sub_audi_face_NCGR ,
                     ACT_FRAME_SUB_AUDI_FACE , 0 , 0, FALSE , work->heapId );
 
-
-  GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_MASK);
-  GFL_BG_LoadScreenReq(ACT_FRAME_SUB_BG);
+  //アニメ用に、パレットをもらう
+  {
+    u8 i;
+    u16 endPal[16];
+    GFL_STD_MemCopy16( (void*)(HW_DB_BG_PLTT), work->basePal , 16*2 );
+    GFL_STD_MemCopy16( (void*)(HW_DB_BG_PLTT+32), endPal , 16*2 );
+    
+    for( i=0;i<16;i++ )
+    {
+      const u8 sr = (work->basePal[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+      const u8 sg = (work->basePal[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+      const u8 sb = (work->basePal[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+      const u8 er = (endPal[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+      const u8 eg = (endPal[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+      const u8 eb = (endPal[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+      work->ofsCol[0][i] = er-sr;
+      work->ofsCol[1][i] = eg-sg;
+      work->ofsCol[2][i] = eb-sb;
+    }
+    
+    GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_MASK);
+    GFL_BG_LoadScreenReq(ACT_FRAME_SUB_BG);
+  }
   
   work->bgSys = STA_BG_InitSystem( work->heapId , work );
 
@@ -1129,6 +1160,39 @@ void STA_ACT_StartSubScript( ACTING_WORK *work , const u8 scriptNo , const u8 po
   void *scriptData = GFL_ARCHDL_UTIL_Load( work->arcHandle , NARC_stage_gra_sub_script_00_bin + scriptNo , FALSE , work->heapId );
   STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , 0 , pokeTrgBit );
   
+}
+
+static void STA_ACT_UpdatePalAnm( ACTING_WORK *work )
+{
+  static const u16 anmSpd = 0x160;
+  
+  if( work->palAnmCnt + anmSpd >= 0x10000 )
+  {
+    work->palAnmCnt = work->palAnmCnt+anmSpd-0x10000;
+  }
+  else
+  {
+    work->palAnmCnt += anmSpd;
+  }
+  
+  {
+    u8 i;
+    const fx32 sin = (FX_SinIdx(work->palAnmCnt)+FX32_ONE)/2;
+    for( i=0;i<16;i++ )
+    {
+      const u8 sr = (work->basePal[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+      const u8 sg = (work->basePal[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+      const u8 sb = (work->basePal[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+      const s8 or = (work->ofsCol[0][i] * sin)>>FX32_SHIFT;
+      const s8 og = (work->ofsCol[1][i] * sin)>>FX32_SHIFT;
+      const s8 ob = (work->ofsCol[2][i] * sin)>>FX32_SHIFT;
+      OS_TFPrintf(2,"[%d:%d][%d:%d][%d:%d]\n",sr,or , sg,og , sb,ob);
+      work->transPal[i] = GX_RGB( sr+or , sg+og , sb+ob );
+    }
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        0 ,
+                                        work->transPal , 2*16 );
+  }
 }
 
 #pragma mark [> message func
