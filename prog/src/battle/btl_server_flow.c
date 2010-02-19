@@ -441,6 +441,8 @@ static void scproc_Fight_Damage_Kickback( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* at
 static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str );
 static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckItemEquipFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
+static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
+static void scEvent_ConsumeItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
 static void scproc_KillPokemon( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_Fight_Damage_AddSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
 static WazaSick scEvent_CheckWazaAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
@@ -6216,9 +6218,9 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     scproc_HandEx_Root( wk, itemID );
 
     Hem_PopState( &wk->HEManager, hem_state_2nd );
-    if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) ){
-      scPut_ConsumeItem( wk, bpp );
-      scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
+    if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) )
+    {
+      scproc_ConsumeItem( wk, bpp, itemID );
     }
   }
   else
@@ -6253,6 +6255,45 @@ static BOOL scEvent_CheckItemEquipFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
   BTL_EVENTVAR_Pop();
   return failFlag;
 }
+//----------------------------------------------------------------------------------
+/**
+ * 装備アイテム消費処理
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   itemID
+ */
+//----------------------------------------------------------------------------------
+static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
+{
+  scPut_ConsumeItem( wk, bpp );
+  scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
+
+  {
+    u32 hem_state = Hem_PushState( &wk->HEManager );
+    scEvent_ConsumeItem( wk, bpp, itemID );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] 装備アイテム消費後
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   itemID
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_ConsumeItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_ITEM, itemID );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ITEM_CONSUMED );
+  BTL_EVENTVAR_Pop();
+}
+
 
 //---------------------------------------------------------------------------------------------
 // ポケモンを強制的に瀕死にする
@@ -8985,7 +9026,7 @@ static void scPut_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaSick 
 
   // 状態異常アイコン付加
   if( sick < POKESICK_MAX ){
-    if( (sick == POKESICK_DOKU) && BPP_SICKCONT_IsNull(sickCont) ){
+    if( (sick == POKESICK_DOKU) && BPP_SICKCONT_IsMoudokuCont(sickCont) ){
       sick = POKESICK_MAX;
     }
     SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, sick );
@@ -9996,15 +10037,17 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CRITICAL_CHECK );
     if( !BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG ) )
     {
-      if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_MUST_CRITICAL) ){
-        return TRUE;
-      }
       if( WAZADATA_IsMustCritical(waza) ){
         flag = TRUE;
       }else{
         rank = roundMax( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_RANK), BTL_CALC_CRITICAL_MAX );
         flag = BTL_CALC_CheckCritical( rank );
       }
+
+      if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_MUST_CRITICAL) ){
+        flag = TRUE;
+      }
+
     }
     else{
       flag = FALSE;
@@ -10498,6 +10541,7 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_VID, vid );
     BTL_EVENTVAR_SetValue( BTL_EVAR_VID_SWAP_CNT, 0 );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
+
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DEFENDER_GUARD_PREV );
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_VID_SWAP_CNT) & 1 ){
       vid = (vid == BPP_DEFENCE)? BPP_SP_DEFENCE : BPP_DEFENCE;

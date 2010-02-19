@@ -318,6 +318,9 @@ static void handler_Pressure_MemberIN( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void handler_Pressure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicGuard( u32* numElems );
 static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_Karuwaza( u32* numElems );
+static void handler_Karuwaza_Consumed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Karuwaza_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Monohiroi( u32* numElems );
 static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_WaruiTeguse( u32* numElems );
@@ -541,6 +544,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_MAJIKKUGAADO,     HAND_TOK_ADD_MagicGuard    },
     { POKETOKUSEI_NAITOMEA,         HAND_TOK_ADD_Nightmare     },
     { POKETOKUSEI_MONOHIROI,        HAND_TOK_ADD_Monohiroi     },
+    { POKETOKUSEI_KARUWAZA,         HAND_TOK_ADD_Karuwaza      },
 
     { POKETOKUSEI_WARUITEGUSE,      HAND_TOK_ADD_WaruiTeguse   },
     { POKETOKUSEI_TIKARAZUKU,       HAND_TOK_ADD_Tikarazuku    },
@@ -4803,6 +4807,50 @@ static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, FALSE );
   }
 }
+//------------------------------------------------------------------------------
+/**
+ * とくせい「かるわざ」
+ *
+ * 持っている道具がなくなると、身軽になり素早さの元の値を２倍にする。
+ * 道具をまた持つと下がる。
+ * 最初から道具がない場合は発動しない。
+ */
+//------------------------------------------------------------------------------
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_Karuwaza( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_ITEM_CONSUMED,  handler_Karuwaza_Consumed }, // 装備アイテム消費後ハンドラ
+    { BTL_EVENT_CALC_AGILITY,   handler_Karuwaza_Agility  }, // すばやさ計算ハンドラ
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
+}
+// 装備アイテム消費後ハンドラ
+static void handler_Karuwaza_Consumed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    work[0] = 1;    // アイテム消費したらフラグON
+  }
+}
+// すばやさ計算ハンドラ
+static void handler_Karuwaza_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    // フラグON でアイテム所持していない状態ならすばやさ２倍
+    if( work[0] == 1 )
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( BPP_GetItem(bpp) == ITEM_DUMMY_DATA )
+      {
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+      }
+    }
+  }
+}
+
+
 
 //------------------------------------------------------------------------------
 /**

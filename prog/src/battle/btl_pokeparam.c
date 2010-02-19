@@ -733,7 +733,6 @@ int BPP_GetValue_Critical( const BTL_POKEPARAM* bpp, BppValueID vid )
   BOOL fFlatParam = FALSE;
   BppValueID  vid_org = vid;
 
-  // @todo ‚±‚ê‚¾‚Æ BPP_GetValue_Base ‚ğŒÄ‚Ño‚µ‚Ä‚¢‚é‚Ì‚ÅÄ•ÏŠ·‚ª‹N‚±‚è‚Ü‚¸‚¢
   vid = ConvertValueID( bpp, vid_org );
 
   switch( vid ){
