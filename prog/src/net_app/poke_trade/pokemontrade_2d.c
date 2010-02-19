@@ -1704,6 +1704,19 @@ void IRC_POKETRADE_InitBoxCursor(POKEMON_TRADE_WORK* pWork)
       GFL_CLGRP_CELLANIM_Register(
         p_handle , NARC_trade_wb_trade_obj01_NCER, NARC_trade_wb_trade_obj01_NANR , pWork->heapID  );
 
+
+
+    pWork->cellRes[CHAR_SCROLLBAR_UP] =
+      GFL_CLGRP_CGR_Register( p_handle , NARC_trade_wb_trade_obj01_NCGR ,
+                              FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
+    pWork->cellRes[PAL_SCROLLBAR_UP] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,NARC_trade_wb_trade_obj_NCLR , CLSYS_DRAW_MAIN ,
+        _OBJPLT_BOX_OFFSET,0, _OBJPLT_BOX, pWork->heapID  );
+    pWork->cellRes[ANM_SCROLLBAR_UP] =
+      GFL_CLGRP_CELLANIM_Register(
+        p_handle , NARC_trade_wb_trade_obj01_NCER, NARC_trade_wb_trade_obj01_NANR , pWork->heapID  );
+    
     GFL_ARC_CloseDataHandle( p_handle );
 
   }
@@ -2628,4 +2641,134 @@ void POKEMONTRADE_2D_AlphaSet(POKEMON_TRADE_WORK* pWork)
   G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
                    GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3,
                    8,8);
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   タッチアイコンを表示
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_StartFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo)
+{
+  GFL_CLWK_DATA cellInitData;
+
+  cellInitData.pos_x = GTSFACEICON_POSX+faceNo*GTSFACEICON_HEIGHT;
+  cellInitData.pos_y = GTSFACEICON_POSY;
+  cellInitData.anmseq = 11+faceNo;
+  cellInitData.softpri = 0;
+  cellInitData.bgpri = 0;
+
+  pWork->faceButtonGTS[faceNo] =
+    GFL_CLACT_WK_Create( pWork->cellUnit ,
+                         pWork->cellRes[CHAR_SCROLLBAR],
+                         pWork->cellRes[PAL_SCROLLBAR],
+                         pWork->cellRes[ANM_SCROLLBAR],
+                         &cellInitData ,CLSYS_DRAW_SUB, pWork->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->faceButtonGTS[faceNo] ,TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->faceButtonGTS[faceNo], TRUE );
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   タッチアイコンを消去
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_RemoveFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo)
+{
+  GFL_CLACT_WK_Remove(pWork->faceButtonGTS[faceNo] );
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   タッチアイコンアニメタッチ
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_TouchFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo)
+{
+  GFL_CLACT_WK_SetAnmSeq(pWork->faceButtonGTS[faceNo] , 15+faceNo);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   上画面に噴出し＋アイコンを表示
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_StartEruptedGTS(POKEMON_TRADE_WORK* pWork, int faceNo, int index)
+{
+  GFL_CLWK_DATA cellInitData;
+
+  cellInitData.pos_x = 8 + index*(216);
+  cellInitData.pos_y = 192-24-8;
+  cellInitData.anmseq = 23;
+  cellInitData.softpri = 1;
+  cellInitData.bgpri = 0;
+
+  if(!pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2]){
+    pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2] =
+      GFL_CLACT_WK_Create( pWork->cellUnit ,
+                           pWork->cellRes[CHAR_SCROLLBAR_UP],
+                           pWork->cellRes[PAL_SCROLLBAR_UP],
+                           pWork->cellRes[ANM_SCROLLBAR_UP],
+                           &cellInitData ,CLSYS_DRAW_MAIN, pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2] ,TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2], TRUE );
+  }
+  if(!pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2]){
+    cellInitData.softpri = 0;
+    cellInitData.anmseq = 19+faceNo;
+    pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2] =
+      GFL_CLACT_WK_Create( pWork->cellUnit ,
+                           pWork->cellRes[CHAR_SCROLLBAR_UP],
+                           pWork->cellRes[PAL_SCROLLBAR_UP],
+                           pWork->cellRes[ANM_SCROLLBAR_UP],
+                           &cellInitData ,CLSYS_DRAW_MAIN, pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2] ,TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2], TRUE );
+  }
+  else{
+    GFL_CLACT_WK_SetAnmSeq(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2] , 19+faceNo);
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   上画面に噴出し＋アイコンを削除
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_RemoveEruptedGTS(POKEMON_TRADE_WORK* pWork,int index)
+{
+  if(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2]!=0){
+    GFL_CLACT_WK_Remove(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2] );
+    GFL_CLACT_WK_Remove(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2] );
+    pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2]=0;
+    pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2]=0;
+  }
+  
 }

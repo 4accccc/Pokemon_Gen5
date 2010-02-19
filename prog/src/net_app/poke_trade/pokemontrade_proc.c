@@ -98,6 +98,7 @@ static void _recvThreePokemon3(const int netID, const int size, const void* pDat
 static void _recvThreePokemonEnd(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvThreePokemonCancel(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _scrollResetAndIconReset(POKEMON_TRADE_WORK* pWork);
+static void _recvFriendFaceIcon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 
 ///通信コマンドテーブル
@@ -115,6 +116,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvThreePokemonEnd,   NULL},    ///_NETCMD_THREE_SELECT_END ポケモン３匹みせあい
   {_recvThreePokemonCancel,   NULL},    ///_NETCMD_THREE_SELECT_CANCEL キャンセル
   {_recvFriendScrollBar, NULL}, //_NETCMD_SCROLLBAR
+  {_recvFriendFaceIcon, NULL},//_NETCMD_FACEICON
 
 };
 
@@ -654,6 +656,33 @@ static void _recvFriendScrollBar(const int netID, const int size, const void* pD
   }
   pWork->FriendBoxScrollNum = pRecvData[0];
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   相手の顔アイコン情報が送られてきた
+ *          _NETCMD_SCROLLBAR
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+//
+static void _recvFriendFaceIcon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  u8* pRecvData = (u8*)pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_SystemGetCurrentID()){
+    return; //自分のデータは要らない
+  }
+  POKE_GTS_InitEruptedIcon(pWork, pRecvData[0], 1);
+}
+
+
+
+
 
 //_NETCMD_LOOKATPOKE
 static void _recvLookAtPoke(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
@@ -2225,6 +2254,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
   _vectorUpMath(pWork);         // 上にポケモンを登録するかどうかの判定
   _CatchPokemonMoveFunc(pWork); // タッチ中のポケモン移動処理
   _padUDLRFunc(pWork);   //スクロールキー処理
+  POKE_GTS_FaceIconFunc(pWork);    //顔アイコンの処理
 
   //決定処理
   if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_DECIDE){
@@ -2692,10 +2722,12 @@ void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
   POKETRADE_2D_GTSPokemonIconResetAll(pWork);
   IRC_POKETRADEDEMO_RemoveModel( pWork);
   POKE_GTS_ReleasePokeIconResource(pWork);
+  POKE_GTS_DeleteEruptedIcon(pWork);
+
   IRC_POKETRADE_ResetBoxNameWindow(pWork);
   IRCPOKETRADE_PokeDeleteMcss(pWork,1);
 
-
+  POKE_GTS_DeleteFaceIcon(pWork);
   POKETRADE_MESSAGE_SixStateDelete(pWork);
 
   IRC_POKETRADE_AllDeletePokeIconResource(pWork);
@@ -2826,6 +2858,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
     POKE_GTS_StatusMessageDisp(pWork);
     POKE_GTS_SelectStatusMessageDisp(pWork,0,FALSE);
     POKE_GTS_SelectStatusMessageDisp(pWork,1,FALSE);
+    POKE_GTS_InitFaceIcon(pWork);
     _CHANGE_STATE(pWork, _gtsFirstMsgState);
   }
 

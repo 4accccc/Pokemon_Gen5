@@ -197,13 +197,15 @@ typedef enum
 {
   PLT_POKEICON,   //ARCID_POKEICON
   PAL_SCROLLBAR, //ARCID_POKETRADE
+  PAL_SCROLLBAR_UP, //ARCID_POKETRADE
   PLT_COMMON,
   PLT_POKECREATE,
-  PLT_POKEICON_GRAY,
+ // PLT_POKEICON_GRAY,
   PLT_GTS_POKEICON,
   PLT_RESOURCE_MAX,
 
   CHAR_SCROLLBAR = PLT_RESOURCE_MAX,    //ARCID_POKETRADE
+  CHAR_SCROLLBAR_UP,    //ARCID_POKETRADE
   CHAR_SELECT_POKEICON1, //選択中ポケモンアイコン１
   CHAR_SELECT_POKEICON2, //選択中ポケモンアイコン１
   CHAR_COMMON,
@@ -212,6 +214,7 @@ typedef enum
 
   ANM_POKEICON = CHAR_RESOURCE_MAX,  //ARCID_POKEICON
   ANM_SCROLLBAR, //ARCID_POKETRADE
+  ANM_SCROLLBAR_UP, //ARCID_POKETRADE
   ANM_COMMON,
   ANM_POKECREATE,
   ANM_GTS_POKEICON,
@@ -245,6 +248,24 @@ enum
   SETUP_INDEX_MAX
 };
 
+
+// 顔噴出し
+enum{
+  GTS_ERUPTED_BUTTON_BASE,
+  GTS_ERUPTED_BUTTON_MARK,
+  GTS_ERUPTED_BUTTON_NUM,
+};
+
+// 顔マークボタン
+enum{
+  GTS_FACE_BUTTON_GOOD,
+  GTS_FACE_BUTTON_BAD,
+  GTS_FACE_BUTTON_HART,
+  GTS_FACE_BUTTON_ACK,
+  GTS_FACE_BUTTON_NUM,
+};
+
+
 // ポケモンステータスを自分と相手を切り替える際のCELLの位置
 #define _POKEMON_SELECT1_CELLX  (128-32)
 #define _POKEMON_SELECT1_CELLY  (12)
@@ -258,6 +279,12 @@ enum
 #define GTS_NEGO_POKESLT_MAX  (3)
 #define GTS_NEGO_UPSTATUSMSG_MAX (6)
 #define GTS_PLAYER_WORK_NUM  (2)
+
+
+#define GTSFACEICON_POSX (8)
+#define GTSFACEICON_POSY (144)
+#define GTSFACEICON_HEIGHT (24)
+#define GTSFACEICON_WIDTH (24)
 
 /// @brief 3Dモデルカラーフェード
 typedef struct
@@ -522,6 +549,9 @@ struct _POKEMON_TRADE_WORK{
   int modelno;  ///< 表示しているモデルの番号
   int pokemonselectno;  ///< 自分と相手のポケモン選択中のどちらを指しているか
 
+  GFL_CLWK* eruptedButtonGTS[GTS_ERUPTED_BUTTON_NUM];  //顔噴出し
+  GFL_CLWK* faceButtonGTS[GTS_FACE_BUTTON_NUM];  //顔マークボタン
+  
   u16* scrTray;
   u16* scrTemoti;
   u8* pCharMem;
@@ -535,6 +565,7 @@ struct _POKEMON_TRADE_WORK{
   u8 bEncountMessageEach; //受け取りIDと受信ポケモン一致
   u8 bByebyeNoJump;
   u8 bEncountNoJump;
+  u8 timerErupted[2]; //顔文字消去タイマー
 } ;
 
 
@@ -690,6 +721,9 @@ extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 #define _CLACT_SOFTPRI_POKELIST  (16)
 #define _CLACT_SOFTPRI_MARK (19)
 
+// 顔をだす時間
+#define _TIMER_ERUPTED_NUM (60)
+
 
 ///通信コマンド
 typedef enum {
@@ -706,6 +740,7 @@ typedef enum {
   _NETCMD_THREE_SELECT_END,
   _NETCMD_THREE_SELECT_CANCEL,
   _NETCMD_SCROLLBAR,
+  _NETCMD_FACEICON,
 } _POKEMON_TRADE_SENDCMD;
 
 
@@ -746,6 +781,10 @@ extern void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,i
 extern void POKETRADE_2D_GTSPokemonIconReset(POKEMON_TRADE_WORK* pWork,int side, int no);
 
 
+extern void POKEMONTRADE_StartFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo);
+extern void POKEMONTRADE_RemoveFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo);
+
+
 //ポケモンプロセス ir union wifi用
 extern void POKETRADE_PROC_PokemonStatusStart(POKEMON_TRADE_WORK* pWork);
 extern void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork);
@@ -772,3 +811,14 @@ extern BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_RemovePokemonCursor(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_2D_AlphaSet(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE2D_IconAllGray(POKEMON_TRADE_WORK* pWork,BOOL bGray);
+
+
+extern void POKE_GTS_InitFaceIcon(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_DeleteFaceIcon(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_FaceIconFunc(POKEMON_TRADE_WORK* pWork);
+extern void POKEMONTRADE_TouchFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo);
+extern void POKEMONTRADE_StartEruptedGTS(POKEMON_TRADE_WORK* pWork, int faceNo, int index);
+extern void POKEMONTRADE_RemoveEruptedGTS(POKEMON_TRADE_WORK* pWork,int index);
+
+extern void POKE_GTS_DeleteEruptedIcon(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_InitEruptedIcon(POKEMON_TRADE_WORK* pWork,int faceNo, int index);

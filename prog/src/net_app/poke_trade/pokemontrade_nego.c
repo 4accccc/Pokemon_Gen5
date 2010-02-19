@@ -277,9 +277,11 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
 
   pWin = pWork->GTSInfoWindow;
   GFL_FONTSYS_SetColor( 0xe, 0xf, 0x0 );
-  
+
+  GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_31 , pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 8,  2, pWork->pStrBuf, pWork->pFontHandle);
   GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_22 + pWork->GTSlv[0], pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 64,  2, pWork->pStrBuf, pWork->pFontHandle);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 100,  2, pWork->pStrBuf, pWork->pFontHandle);
 
   GFL_FONTSYS_SetColor( 4, 1, 0x0 );
   
@@ -850,3 +852,136 @@ void POKE_GTS_DeletePokemonState(POKEMON_TRADE_WORK* pWork)
 }
 
 
+#define GTSFACEICON_POSX (8)
+#define GTSFACEICON_POSY (144)
+#define GTSFACEICON_HEIGHT (24)
+#define GTSFACEICON_WIDTH (24)
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイコン表示
+ * @param   
+ * @param   
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKE_GTS_InitFaceIcon(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    for(i = 0; i < GTS_FACE_BUTTON_NUM;i++){
+      POKEMONTRADE_StartFaceButtonGTS(pWork, i);
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイコン消去
+ * @param   
+ * @param   
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKE_GTS_DeleteFaceIcon(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    for(i = 0; i < GTS_FACE_BUTTON_NUM;i++){
+      POKEMONTRADE_RemoveFaceButtonGTS(pWork, i);
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイコンタッチ判定
+ * @param   
+ * @param   
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKE_GTS_FaceIconFunc(POKEMON_TRADE_WORK* pWork)    //顔アイコンの処理
+{
+  u32 x,y;
+  u8 index;
+  int i;
+
+  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+    return;
+  }
+    
+  if(GFL_UI_TP_GetPointCont(&x,&y)){     // パネルスクロール
+    if(pWork->touchON){
+      if((x >=  GTSFACEICON_POSX) && ((GTS_FACE_BUTTON_NUM*GTSFACEICON_WIDTH+GTSFACEICON_POSX) > x)){
+        if((y >=  GTSFACEICON_POSY) && ((GTSFACEICON_POSY+GTSFACEICON_HEIGHT) > y)){
+          index = (x-GTSFACEICON_POSX)/GTSFACEICON_WIDTH;
+          if(index >= GTS_FACE_BUTTON_NUM){
+            index = GTS_FACE_BUTTON_NUM-1;
+          }
+          POKEMONTRADE_TouchFaceButtonGTS( pWork, index);
+          if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
+            POKE_GTS_InitEruptedIcon(pWork,index,0);
+          }
+          else{
+            GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_FACEICON, 1, &index);
+          }
+        }
+      }
+    }
+  }
+  for(i=0;i< 2;i++){
+    if(pWork->timerErupted[i]!=0){
+      pWork->timerErupted[i]--;
+      if(pWork->timerErupted[i]==0){
+        POKEMONTRADE_RemoveEruptedGTS(pWork, i);
+      }
+    }
+    
+  }
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイコン表示
+ * @param   
+ * @param   
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKE_GTS_InitEruptedIcon(POKEMON_TRADE_WORK* pWork,int faceNo, int index)
+{
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    POKEMONTRADE_StartEruptedGTS(pWork, faceNo, index);
+    pWork->timerErupted[index] = _TIMER_ERUPTED_NUM;
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイコン消去
+ * @param   
+ * @param   
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKE_GTS_DeleteEruptedIcon(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+  
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    for(i = 0; i < 2;i++){
+      POKEMONTRADE_RemoveEruptedGTS(pWork, i);
+    }
+  }
+}
