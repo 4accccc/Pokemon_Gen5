@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T16:25:31"/>
+	<create user="matsumiya" host="W00224" date="2010-02-19T17:17:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -326,7 +326,7 @@
 		<language name="JPN" width="256">さすが　だな！▼
 ほかの　してんのう　とも　たたかい
 さらなる　たかみを　めざせ……！</language>
-		<language name="JPN_KANJI" width="256">流石　だな！▼
+		<language name="JPN_KANJI" width="256">流石だな！▼
 他の　四天王とも　戦い
 さらなる　高みを　めざせ……！</language>
 	</row>
@@ -432,7 +432,7 @@
 		<language name="JPN" width="256">……せかいかっこくを　めぐり
 ただ　ひたすらに▽
 つよさを　おいもとめた　ひび……▼
-アデクさまと　であい
+ししょうと　であい
 つよさをのみこむ　おおきさをしり▼
 ここで　してんのうに　なると
 きめた　あのひ……▼
@@ -441,7 +441,7 @@
 		<language name="JPN_KANJI" width="256">……世界各国を　めぐり
 ただ　ひたすらに▽
 強さを　追い求めた　日々……▼
-アデクさまと　出会い
+師匠と　出会い
 強さを飲み込む　大きさを教わり▼
 ここで　四天王に　なると
 誓った　あの日……▼
