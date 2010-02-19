@@ -8226,22 +8226,26 @@
 //--------------------------------------------------------------
 #define _TH_SET_PLAY_MODE( mode ) _ASM_TH_END mode
   
-  .macro _ASM_TH_SET_PLAY_MODE
+  .macro _ASM_TH_SET_PLAY_MODE mode
   .short EV_SEQ_TH_SET_PLAY_MODE
-  .short mode
+  .short \mode
   .endm
   
 //--------------------------------------------------------------
 /**
  * @brief トライアルハウス　ポケモン選択
+ * @param   reg_type      REG_SUBWAY_SINGLE or REG_SUBWAY_DOUBLE
+ * @param   party_type    SCR_BTL_PARTY_SELECT_TEMOTI or SCR_BTL_PARTY_SELECT_BTLBOX
  * @param   ret     選択結果  FALSE：キャンセル
  */
 //--------------------------------------------------------------
-#define _TH_SEL_POKE( ret ) _ASM_TH_SEL_POKE ret
+#define _TH_SEL_POKE( reg_type, party_type, ret ) _ASM_TH_SEL_POKE reg_type, party_type, ret
   
-  .macro _ASM_TH_SEL_POKE
+  .macro _ASM_TH_SEL_POKE reg_type, party_type, ret
   .short EV_SEQ_TH_SEL_POKE
-  .short ret
+  .short \reg_type
+  .short \party_type
+  .short \ret
   .endm
  
 //--------------------------------------------------------------
@@ -8253,10 +8257,10 @@
 //--------------------------------------------------------------
 #define _TH_SET_TR( round, obj_id ) _ASM_TH_SET_TR round, obj_id
   
-  .macro _ASM_TH_SET_TR
+  .macro _ASM_TH_SET_TR round, obj_id
   .short EV_SEQ_TH_SET_TR
-  .short round
-  .short obj_id
+  .short \round
+  .short \obj_id
   .endm
   
 //--------------------------------------------------------------

@@ -1,0 +1,255 @@
+//======================================================================
+//                trial_house_scr.ev
+//
+//    スクリプトファイル：トライアルハウス　trial_house_scr用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "../../message/dst/script/msg_trialhouse.h"
+
+//----------------------------------------------------------------------
+//               スクリプトテーブル
+//----------------------------------------------------------------------
+
+_EVENT_DATA   ev_tri_house_reception
+_EVENT_DATA_END
+
+DEFINE_LOCAL exit
+
+//受付
+EVENT_START ev_tri_house_reception
+
+  DEFINE_LOCAL first_list_ret
+  DEFINE_LOCAL loop
+
+  //トライアルハウススタート
+  _TH_START()
+
+  _TALK_OBJ_START()
+  
+  //ループ初期化
+  $loop = TRUE
+
+  $SCWK_ANSWER = 0//@todo
+  //マスターランクになったか？ @todo
+  IF $SCWK_ANSWER != 0 THEN
+    //「ししょう！チャレンジする？」
+  ELSE
+    //「チャレンジする？」
+    _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_001)
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
+  WHILE $loop == TRUE
+    $loop = FALSE
+    //リスト作成
+    _BMPMENU_INIT_EX( 1,1,0,1,first_list_ret )
+    _BMPMENU_MAKE_LIST( msg_trialhouse_str1, 0 )    //チャレンジ
+    _BMPMENU_MAKE_LIST( msg_trialhouse_str2, 1 )    //せつめい
+    _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 2 )    //やめる
+     _BMPMENU_START()
+    //ウィンドウ閉じる
+    _BALLOONWIN_CLOSE()
+    IF $first_list_ret == EV_WIN_B_CANCEL THEN//キャンセル
+      //やめるフラグＯＮ
+      $exit = TRUE
+    ELSE
+      SWITCH $first_list_ret
+      CASE 0 THEN   //チャレンジ
+        _CALL charange
+      CASE 1 THEN //説明聴く
+        $loop = TRUE      //ループフラグ立てる
+        //説明メッセージコール
+        _CALL explanation
+      CASE 2 THEN //やめる
+        //やめるフラグＯＮ
+        $exit = TRUE
+      ENDSWITCH
+    ENDIF
+  ENDWHILE
+
+  IF $exit == TRUE THEN
+    //「またこんど」
+    _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_005)
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
+  //トライアルハウス終了
+  _TH_END()
+
+EVENT_END
+
+//説明
+explanation:
+  //説明メッセージ
+  _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_001)  //@todo
+_RET
+
+charange:
+  DEFINE_LOCAL    list_ret
+  DEFINE_LOCAL    party_sel
+  DEFINE_LOCAL    regulation
+  //「チャレンジするのね。ちょっとまって」
+  _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_003)
+  _BALLOONWIN_CLOSE()
+
+  //ビーコンサーチ処理  @todo
+
+  //トレーナーデータのモードをセット  @todo
+//  TRIAL_HOUSE_SET_TRDATA_MODE(trdata_mode)
+
+  //シングル？ダブル?
+  _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_006)
+  //リスト作成
+  _BMPMENU_INIT_EX( 1,1,0,1,first_list_ret )
+  _BMPMENU_MAKE_LIST( msg_trialhouse_str4, 0 )    //シングル
+  _BMPMENU_MAKE_LIST( msg_trialhouse_str5, 1 )    //ダブル
+  _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 2 )    //やめる
+  _BMPMENU_START()
+  //ウィンドウ閉じる
+  _BALLOONWIN_CLOSE()
+
+  IF $list_ret == EV_WIN_B_CANCEL THEN  //キャンセル
+    //やめるフラグＯＮ
+    $exit = TRUE
+    _RET
+  ELSE
+    DEFINE_LOCAL mode
+    SWITCH $list_ret
+    CASE 0 THEN   //シングル
+      $regulation = REG_SUBWAY_SINGLE   //バトルサブウェイシングルレギュレーションで代用
+      $mode = TH_PLAYMODE_SINGLE 
+    CASE 1 THEN //ダブル
+      $regulation = REG_SUBWAY_SINGLE   //バトルサブウェイダブルレギュレーションで代用
+      $mode = TH_PLAYMODE_DOUBLE
+    CASE 2 THEN //やめる
+      //やめるフラグＯＮ
+      $exit = TRUE
+     _RET
+    ENDSWITCH
+    //戦闘モードセット
+    _TH_SET_PLAY_MODE( mode )
+  ENDIF
+
+  //「早速はじめる」
+  _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_011)
+  _BALLOONWIN_CLOSE()
+
+  //手持ちかバトルボックスか選ぶウィンドウ表示(メンバチェック込み)
+  _BTL_UTIL_PARTY_SELECT_CALL( regulation, party_sel )
+
+  IF $party_sel == SCR_BTL_PARTY_SELECT_CANCEL THEN //キャンセル
+    //やめるフラグＯＮ
+    $exit = TRUE
+  ELSIF $party_sel == SCR_BTL_PARTY_SELECT_NG THEN
+    //参加できるポケモンがいません
+    _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( regulation )
+    _RET
+  ENDIF
+
+/**
+  //リスト作成
+  _BMPMENU_INIT_EX( 1,1,0,1,list_ret )
+  _BMPMENU_MAKE_LIST( msg_vender_select_01, 0 )    //手持ち
+  _BMPMENU_MAKE_LIST( msg_vender_select_02, 1 )    //バトルボックス
+  _BMPMENU_MAKE_LIST( msg_vender_select_03, 2 )    //やめる
+  _BMPMENU_START()
+  //ウィンドウ閉じる
+  _SYSWIN_CLOSE()
+
+  IF $list_ret == EV_WIN_B_CANCEL THEN  //キャンセル
+    //やめるフラグＯＮ
+    $exit = TRUE
+    _RET
+  ELSE
+    SWITCH $list_ret
+    CASE 0 THEN   //手持ち
+      ;
+    CASE 1 THEN //バトルボックス
+      ;
+    CASE 2 THEN //やめる
+      //やめるフラグＯＮ
+      $exit = TRUE
+      _RET
+    ENDSWITCH
+  ENDIF
+  //条件にあったポケがいるか？  //@todo
+
+
+
+  IF $SCWK_ANSWER == FALSE THEN
+    //「ポケいないよ」
+
+    _RET
+  ELSE
+    //「さんかポケえらんで」
+    
+    //ポケモンリストコール
+
+  ENDIF
+*/
+
+  //ポケモンリストコール
+  _TH_SEL_POKE(regulation, party_sel, SCWK_ANSWER)
+
+  IF $SCWK_ANSWER == FALSE THEN   //キャンセルした
+    //やめるフラグＯＮ
+    $exit = TRUE
+    _RET
+  ENDIF
+
+  //「でははじめるよ」
+  _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_013)
+  _BALLOONWIN_CLOSE()
+  //自機バトル場に移動
+
+  _CALL battle
+
+  //自機受付に戻る
+
+  IF $SCWK_ANSWER == TRUE THEN
+    //評価アプリ起動 @todo
+
+    //ラストメッセージ
+  ENDIF
+  
+_RET
+
+battle:
+  DEFINE_LOCAL btl_count
+  DEFINE_LOCAL obj_id
+  DEFINE_LOCAL id
+
+  $btl_count = 0
+  WHILE $btl_count < 5
+    //トレーナー抽選
+    _TH_SET_TR(btl_count, obj_id)
+    //ＯＢＪ追加
+    _OBJ_ADD_EX( 7, 0, DIR_DOWN, id , obj_id, MV_DMY )
+    //ＯＢＪ移動
+    //バトル
+    _TH_CALL_BATTLE()
+    //ＯＢＪ退出
+    //ＯＢＪ削除
+    _OBJ_DEL(id)
+    //戦闘回数加算
+    $btl_count += 1
+
+    {
+      DEFINE_LOCAL retire
+      //リタイアする？
+      _YES_NO_WIN( retire )
+      IF $retire == SCR_YES THEN //リタイア
+        $SCWK_ANSWER = TRUE     //リタイアなので、評価無し
+        _RET
+      ENDIF
+    }
+  ENDWHILE
+  //５戦後の処理
+
+  $SCWK_ANSWER = TRUE     //５戦消化したので評価してもらう
+_RET
