@@ -2450,8 +2450,12 @@ static BOOL debugMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event = wk->gmEvent;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   GAMESYS_WORK  *gameSys  = wk->gmSys;
+  GMEVENT * child_event;
 
-  EVENT_DebugItemMake(gameSys, fieldWork, event, wk->heapID);
+  child_event = GMEVENT_CreateOverlayEventCall(
+      gameSys, FS_OVERLAY_ID( debug_item ), EVENT_DebugItemMake, NULL );
+  //child_event = EVENT_DebugItemMake(gameSys, wk->heapID);
+  GMEVENT_ChangeEvent( event, child_event );
 
   return( TRUE );
 }

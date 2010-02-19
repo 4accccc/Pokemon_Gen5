@@ -46,9 +46,9 @@ typedef void (StateFunc)(EVENT_DEBUGITEM_WORK* wk);
 
 struct _DEBUGITEM_PARAM {
   StateFunc* state;      ///< ハンドルのプログラム状態
-  GMEVENT * event;
+//  GMEVENT * event;
   GAMESYS_WORK * gsys;
-  FIELDMAP_WORK * fieldmap;
+//  FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   GFL_BMPWIN* win;
   GFL_SKB*      skb;
@@ -616,19 +616,19 @@ static GMEVENT_RESULT EVENT_DebugItemMain(GMEVENT * event, int *  seq, void * wo
 //------------------------------------------------------------------------------
 
 
-void EVENT_DebugItemMake(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event, HEAPID heapID)
+GMEVENT* EVENT_DebugItemMake( GAMESYS_WORK * gsys, void * work )
 {
-  GMEVENT * child_event;
+  GMEVENT * new_event;
   EVENT_DEBUGITEM_WORK * wk;
+  HEAPID heapID = HEAPID_FIELDMAP;
 
-  GMEVENT_Change( event, EVENT_DebugItemMain, sizeof(EVENT_DEBUGITEM_WORK) );
-  wk = GMEVENT_GetEventWork(event);
+  new_event = GMEVENT_Create( gsys, NULL, EVENT_DebugItemMain, sizeof( EVENT_DEBUGITEM_WORK ) );
+  wk = GMEVENT_GetEventWork(new_event);
   GFL_STD_MemClear(wk, sizeof(EVENT_DEBUGITEM_WORK));
   wk->ctrl = SaveControl_GetPointer();
   wk->gsys = gsys;
-  wk->fieldmap = fieldmap;
-  wk->event = event;
   wk->heapID = heapID;
   wk->itemnum = 1;
+  return new_event;
 }
 

@@ -452,7 +452,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/fldmmdl_railmove_0.c \
         field/field_rail_loader.c \
 				field/event_fieldtalk.c \
-				field/event_debug_item.c \
 				field/fldmmdl_draw_0.c \
 				field/fldmmdl_draw_1.c \
 				field/field_fog.c \
@@ -1501,6 +1500,24 @@ SRCS_OVERLAY_D_NUMINPUT = field/event_debug_numinput.c
 #===> SRCS_OVERLAY_FIELD_GIMMICK_H01
 #===> SRCS_OVERLAY_FIELD_GIMMICK_H03
 SRCS_OVERLAY_D_IWASAWA = field/event_debug_mvpoke.c
+
+#DEBUG_ITEMライブラリ
+#===> SRCS_OVERLAY_PL_BOAT_SETUP
+#===> SRCS_OVERLAY_FIELD_GYM_INIT
+#===> SRCS_OVERLAY_FIELD_GYM_INSECT
+#===> SRCS_OVERLAY_FIELD_GYM_ELEC
+#===> SRCS_OVERLAY_FIELD_GYM_NORMAL
+#===> SRCS_OVERLAY_FIELD_GYM_FLY
+#===> SRCS_OVERLAY_FIELD_GYM_ANTI
+#===> SRCS_OVERLAY_FIELD_GYM_GROUND
+#===> SRCS_OVERLAY_FIELD_GYM_GROUND_ENT
+#===> SRCS_OVERLAY_FIELD_GYM_ICE
+#===> SRCS_OVERLAY_FIELD_GYM_DRAGON
+#===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
+#===> SRCS_OVERLAY_FIELD_GIMMICK_GATE
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H01
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H03
+SRCS_OVERLAY_DEBUG_ITEM = field/event_debug_item.c
 
 #マイクテスト
 #===> SRCS_OVERLAY_DEV_IRC
