@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T15:59:44"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-02-19T18:52:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,12 +274,12 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="136"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="82"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1301" top="132" right="2006" bottom="760" maximized="no" rayout="Vertical2">
+	<dialog left="146" top="195" right="851" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -333,38 +333,72 @@
 	</lock>
 
 
-	<row id="str_menu_title">
+	<row id="str_menu_title" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<language name="JPN">ちょうさ　レーダー</language>
 		<language name="JPN_KANJI">調査レーダー</language>
 	</row>
 
-	<row id="str_menu_caption">
+	<row id="str_menu_caption" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<language name="JPN">すれちがった　みんなのいけんを
 ちょうさすることが　できます</language>
 		<language name="JPN_KANJI">すれ違った　みんなの意見を
 調査することが　できます</language>
 	</row>
 
-	<row id="str_menu_button_change">
+	<row id="str_menu_button_change" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<language name="JPN">ちょうさないようの　けってい</language>
 		<language name="JPN_KANJI">調査内容の決定</language>
 	</row>
 
-	<row id="str_menu_button_check">
+	<row id="str_menu_button_check" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<language name="JPN">ちょうさほうこくを　みる</language>
 		<language name="JPN_KANJI">調査報告を見る</language>
 	</row>
 
-	<row id="str_select_title">
+	<row id="str_select_title" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN">－ちょうさ　ないよう－</language>
 		<language name="JPN_KANJI">－調査内容－</language>
 	</row>
 
-	<row id="str_select_direction">
+	<row id="str_select_direction" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN">ポケモンＷＢを　どう　あそんでいるか
 ３つの　こうもくで　ちょうさします</language>
 		<language name="JPN_KANJI">ポケモンＷＢを　どう　遊んでいるか
 ３項目で　調査します</language>
+	</row>
+
+	<row id="str_select_confirm" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN">この　ないようを
+ちょうさ　しますか？</language>
+		<language name="JPN_KANJI">この内容を
+調査しますか？</language>
+	</row>
+
+	<row id="str_select_confirm_ok" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN">けってい</language>
+		<language name="JPN_KANJI">決定</language>
+	</row>
+
+	<row id="str_select_confirm_cancel" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN">やめる</language>
+		<language name="JPN_KANJI">やめる</language>
+	</row>
+
+	<row id="str_select_determine" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN">ちょうさを　かいしします！</language>
+		<language name="JPN_KANJI">調査を開始します!</language>
+	</row>
+
+	<row id="str_check_examining" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">ただいま
+ちょうさちゅう！</language>
+		<language name="JPN_KANJI">ただいま
+　　調査中！</language>
+	</row>
+
+	<row id="str_check_analyzing" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">……かいせきちゅう……</language>
+		<language name="JPN_KANJI">……解析中……</language>
 	</row>
 
 	<flowchart-group-list>
