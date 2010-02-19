@@ -107,6 +107,7 @@ enum {
 	APP_COMMON_ST_ICON_DOKU,				// 毒
 	APP_COMMON_ST_ICON_YAKEDO,			// 火傷
 	APP_COMMON_ST_ICON_HINSI,				// 瀕死
+  APP_COMMON_ST_ICON_DOKUDOKU,    // 毒々
 	APP_COMMON_ST_ICON_NONE					// なし（アニメ番号的にもなし）
 };
 
