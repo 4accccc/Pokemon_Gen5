@@ -34,6 +34,7 @@ typedef struct{
 //  外部データ
 //==============================================================================
 extern const INTRUDE_SECRET_ITEM_POSDATA IntrudeSecretItemPosDataTbl[];
+extern const u32 IntrudeSecretItemPosDataMax;
 
 
 //==============================================================================

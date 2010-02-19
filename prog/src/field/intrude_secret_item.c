@@ -19,7 +19,7 @@
 //==============================================================================
 #include "intrude_secret_item.cdat"
 
-
+const u32 IntrudeSecretItemPosDataMax = INTRUDE_SECRET_ITEM_POSDATA_MAX;
 
 //==============================================================================
 //
