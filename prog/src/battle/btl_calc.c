@@ -625,7 +625,7 @@ BOOL BTL_CALC_TOK_CheckCantChange( PokeTokusei tok )
 {
   static const u16 prohibits[] = {
     POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_MARUTITAIPU,
-    POKETOKUSEI_SUROOSUTAATO, POKETOKUSEI_TENKIYA,
+    POKETOKUSEI_TENKIYA,
   };
   u16 i;
   for(i=0; i<NELEMS(prohibits); ++i)
