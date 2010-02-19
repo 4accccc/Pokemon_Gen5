@@ -1321,6 +1321,8 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
     //ÉJÅ[É\Éã
     for( i = CLWKID_CURSOR_TOP; i < CLWKID_CURSOR_END; i++ )
     { 
+      cldata.pos_x  = -32;  //ç≈èâå©Ç¶ÇÈÇÃÇ≈Ç©Ç≠ÇµÇƒÇ®Ç≠
+      cldata.pos_y  = -32;
       cldata.anmseq = 3 + i - CLWKID_CURSOR_TOP;
       p_wk->p_clwk[i] =   GFL_CLACT_WK_Create( p_clunit,
           p_wk->res[RESID_OBJ_COMMON_CHR],
@@ -3923,25 +3925,25 @@ static BOOL Keyboard_KeyReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
   GFL_POINT pos;
   BOOL is_move  = FALSE;
 
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
   { 
     pos.x = 0;
     pos.y = -1;
     is_move = TRUE;
   }
-  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
   { 
     pos.x = 0;
     pos.y = 1;
     is_move = TRUE;
   }
-  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
   { 
     pos.x = -1;
     pos.y = 0;
     is_move = TRUE;
   }
-  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
   { 
     pos.x = 1;
     pos.y = 0;
