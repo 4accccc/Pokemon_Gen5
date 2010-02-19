@@ -454,7 +454,7 @@ BOOL UnionSend_MinigameEntryReq(UNION_SYSTEM_PTR unisys)
   unisys->minigame_entry_answer = UNION_MINIGAME_ENTRY_ANSWER_NULL;
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
     UNION_CMD_MINIGAME_ENTRY_REQ, MyStatus_GetWorkSize(), 
-    GAMEDATA_GetMyStatus(unisys->uniparent->game_data), FALSE, FALSE, FALSE);
+    GAMEDATA_GetMyStatus(unisys->uniparent->game_data), TRUE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -489,9 +489,10 @@ static void _UnionRecv_MinigameEntryReqAnswerNG(const int netID, const int size,
 //==================================================================
 BOOL UnionSend_MinigameEntryReqAnswerNG(u8 send_bit)
 {
+  OS_TPrintf("SEND: MinigameEntryReqAnswerNG send_bit=%d\n", send_bit);
   return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_bit, 
-    UNION_CMD_MINIGAME_ENTRY_REQ_ANSWER_NG, 0, NULL, FALSE, FALSE, FALSE);
+    UNION_CMD_MINIGAME_ENTRY_REQ_ANSWER_NG, 0, NULL, TRUE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -526,9 +527,10 @@ static void _UnionRecv_MinigameEntryReqAnswerOK(const int netID, const int size,
 //==================================================================
 BOOL UnionSend_MinigameEntryReqAnswerOK(u8 send_bit)
 {
+  OS_TPrintf("SEND: MinigameEntryReqAnswerOK send_bit=%d\n", send_bit);
   return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_bit, 
-    UNION_CMD_MINIGAME_ENTRY_REQ_ANSWER_OK, 0, NULL, FALSE, FALSE, FALSE);
+    UNION_CMD_MINIGAME_ENTRY_REQ_ANSWER_OK, 0, NULL, TRUE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -573,7 +575,7 @@ BOOL UnionSend_MinigameBasicStatusReq(void)
 {
   OS_TPrintf("SEND MinigameBasicStatusReq\n");
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
-    UNION_CMD_MINIGAME_BASIC_STATUS_REQ, 0, NULL, FALSE, FALSE, FALSE);
+    UNION_CMD_MINIGAME_BASIC_STATUS_REQ, 0, NULL, TRUE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -617,11 +619,11 @@ static void _UnionRecv_MinigameBasicStatus(const int netID, const int size, cons
 //==================================================================
 BOOL UnionSend_MinigameBasicStatus(const UNION_APP_BASIC *app_basic, u8 send_bit)
 {
-  OS_TPrintf("SEND APP_BASIC\n");
+  OS_TPrintf("SEND APP_BASIC send_bit=%d\n", send_bit);
   return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_bit, 
     UNION_CMD_MINIGAME_BASIC_STATUS, UnionAppSystem_GetBasicSize(), app_basic, 
-    FALSE, FALSE, FALSE);
+    TRUE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -641,13 +643,19 @@ BOOL UnionSend_MinigameBasicStatus(const UNION_APP_BASIC *app_basic, u8 send_bit
 static void _UnionRecv_MinigameMystatusReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   UNION_SYSTEM_PTR unisys = pWork;
-
+  const MYSTATUS *pMyst = pData;
+  
   if(unisys->alloc.uniapp == NULL){
     GF_ASSERT(0);
     return;
   }
   
   OS_TPrintf("ミニゲーム用MYSTATUS Req受信 netID = %d\n", netID);
+
+  //乱入者用にReqしてきた人自身の基本情報もここで受け取る
+  //最初の二人は2回両方リクエストしているので再度受け取るけど問題は無い
+  UnionAppSystem_SetMystatus(unisys->alloc.uniapp, netID, pMyst);
+  //リクエスト命令なので、当然返す。これも乱入者用
   UnionAppSystem_ReqMystatus(unisys->alloc.uniapp, netID);
 }
 
@@ -655,14 +663,15 @@ static void _UnionRecv_MinigameMystatusReq(const int netID, const int size, cons
 /**
  * データ送信：ミニゲーム用MYSTATUS要求
  * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @param   myst    自分のMYSTATUS
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL UnionSend_MinigameMystatusReq(u8 send_bit)
+BOOL UnionSend_MinigameMystatusReq(u8 send_bit, const MYSTATUS *myst)
 {
-  OS_TPrintf("SEND ミニゲーム用MYSTATUS Req\n");
+  OS_TPrintf("SEND ミニゲーム用MYSTATUS Req send_bit=%d\n", send_bit);
   return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
-    send_bit, UNION_CMD_MINIGAME_MYSTATUS_REQ, 0, NULL, FALSE, FALSE, FALSE);
+    send_bit, UNION_CMD_MINIGAME_MYSTATUS_REQ, MyStatus_GetWorkSize(), myst, TRUE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -704,7 +713,7 @@ BOOL UnionSend_MinigameMystatus(u8 send_bit, const MYSTATUS *myst)
 {
   OS_TPrintf("SEND ミニゲーム用MYSTATUS\n");
   return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
-    send_bit, UNION_CMD_MINIGAME_MYSTATUS, MyStatus_GetWorkSize(), myst, FALSE, FALSE, FALSE);
+    send_bit, UNION_CMD_MINIGAME_MYSTATUS, MyStatus_GetWorkSize(), myst, TRUE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -724,7 +733,8 @@ BOOL UnionSend_MinigameMystatus(u8 send_bit, const MYSTATUS *myst)
 static void _UnionRecv_MinigameIntrudeReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   UNION_SYSTEM_PTR unisys = pWork;
-
+  const MYSTATUS *myst = pData;
+  
 	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return; //自分のデータなので無視
   }
@@ -735,6 +745,7 @@ static void _UnionRecv_MinigameIntrudeReady(const int netID, const int size, con
   }
   
   OS_TPrintf("ミニゲーム 乱入準備完了受信 netID = %d\n", netID);
+  UnionAppSystem_SetMystatus(unisys->alloc.uniapp, netID, myst);
   UnionAppSystem_SetIntrudeReady(unisys->alloc.uniapp, netID);
 }
 
@@ -749,7 +760,7 @@ BOOL UnionSend_MinigameIntrudeReady(u8 send_bit)
 {
   OS_TPrintf("SEND ミニゲーム 乱入準備完了\n");
   return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
-    send_bit, UNION_CMD_MINIGAME_INTRUDE_READY, 0, NULL, FALSE, FALSE, FALSE);
+    send_bit, UNION_CMD_MINIGAME_INTRUDE_READY, 0, NULL, TRUE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -796,5 +807,5 @@ BOOL UnionSend_MinigameLeaveChild(u8 send_bit, NetID leave_netid)
   OS_TPrintf("SEND ミニゲームで子機が離脱 離脱NetID=%d\n", leave_netid);
   return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_bit, UNION_CMD_MINIGAME_LEAVE_CHILD, sizeof(leave_netid), &leave_netid, 
-    FALSE, FALSE, FALSE);
+    TRUE, FALSE, FALSE);
 }

@@ -393,12 +393,12 @@ BOOL UnionAppSystem_CheckMystatus(UNION_APP_PTR uniapp)
 //==================================================================
 void UnionAppSystem_SetIntrudeReady(UNION_APP_PTR uniapp, NetID net_id)
 {
-  if((uniapp->recv_mystatus_bit & (1 << net_id)) && (uniapp->basic_status.member_bit & (1 << net_id))){
+  if((uniapp->recv_mystatus_bit & (1 << net_id)) && (uniapp->entry_reserve_bit & (1 << net_id))){
     uniapp->recv_intrude_ready_bit |= 1 << net_id;
   }
   else{
-    GF_ASSERT_MSG(0, "recv_mystbit=%d, member_bit=%d, net_id=%d\n", 
-      uniapp->recv_mystatus_req_bit, uniapp->basic_status.member_bit, net_id);
+    GF_ASSERT_MSG(0, "recv_mystbit=%d, entry_reserve_bit=%d, net_id=%d\n", 
+      uniapp->recv_mystatus_bit, uniapp->entry_reserve_bit, net_id);
   }
 }
 
@@ -471,6 +471,7 @@ BOOL Union_App_Parent_EntryBlock(UNION_APP_PTR uniapp)
   if(uniapp->entry_reserve_bit == 0){
     GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
     uniapp->entry_block = TRUE;
+    OS_TPrintf("uniapp —“ü‹Ö~‚É‚µ‚Ü‚µ‚½\n");
     return TRUE;
   }
   
@@ -488,6 +489,7 @@ void Union_App_Parent_ResetEntryBlock(UNION_APP_PTR uniapp)
 {
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);
   uniapp->entry_block = FALSE;
+  OS_TPrintf("uniapp —“üOK‚É‚µ‚Ü‚µ‚½\n");
 }
 
 //==================================================================

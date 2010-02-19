@@ -550,7 +550,7 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
         (*seq)++;
       }
     }
-    //break;
+    break;
   case _SEQ_TIMING:
     //本来ならフェードアウト後の真っ暗な画面で同期取りをしたくないが
     //union_appのオーバーレイ配置がfieldmapと並列の為、ここで通信TblAdd後の同期を行う
@@ -576,7 +576,8 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     }
     break;
   case _SEQ_MYSTATUS_SEND:
-    if(UnionSend_MinigameMystatusReq(Union_App_GetMemberNetBit(unisys->alloc.uniapp)) == TRUE){
+    if(UnionSend_MinigameMystatusReq(Union_App_GetMemberNetBit(unisys->alloc.uniapp),
+        GAMEDATA_GetMyStatus(unisys->uniparent->game_data)) == TRUE){
       (*seq)++;
     }
     break;
