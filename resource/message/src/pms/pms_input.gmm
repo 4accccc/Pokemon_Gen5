@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T10:28:36"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-19T19:13:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1628" top="210" right="2332" bottom="838" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="529"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="696"/>
-		<band id="3" index="3" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -333,7 +333,7 @@
 	</lock>
 
 
-	<row id="info00">
+	<row id="info00" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="216">ことばを　えらんでね！</language>
 		<language name="JPN_KANJI" width="216">言葉を　選んでね！</language>
 	</row>
@@ -363,27 +363,27 @@
 		<language name="JPN_KANJI" width="216">ユニオンあいさつを　考えよう</language>
 	</row>
 
-	<row id="msg_00">
+	<row id="msg_00" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="216">これで　いいですか？</language>
 		<language name="JPN_KANJI" width="216">これで　いいですか？</language>
 	</row>
 
-	<row id="msg_01">
+	<row id="msg_01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="216">なにか　ことばを　いれてください！</language>
 		<language name="JPN_KANJI" width="216">なにか　言葉を　入れてください！</language>
 	</row>
 
-	<row id="msg_02">
+	<row id="msg_02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="216">なにも　しないで　やめますか？</language>
 		<language name="JPN_KANJI" width="216">なにも　しないで　やめますか？</language>
 	</row>
 
-	<row id="str_yes">
+	<row id="str_yes" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="64">はい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="64">はい</language>
 	</row>
 
-	<row id="str_no">
+	<row id="str_no" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="64">いいえ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="64">いいえ</language>
 	</row>
@@ -435,6 +435,58 @@
 	<row id="select01_03">
 		<language name="JPN" width="216">やめる</language>
 		<language name="JPN_KANJI" width="216">やめる</language>
+	</row>
+
+	<row id="info_01">
+		<language name="JPN" width="216">メッセージとうろくリスト：
+つかいたい　メッセージを
+えらんで　ください！</language>
+		<language name="JPN_KANJI" width="216">メッセージとうろくリスト：
+つかいたい　メッセージを
+えらんで　ください！</language>
+	</row>
+
+	<row id="info_02">
+		<language name="JPN" width="216">メッセージの　しゅるいや
+ことばをいれる　ばしょを
+えらんで　ください！</language>
+		<language name="JPN_KANJI" width="216">メッセージの　しゅるいや
+ことばをいれる　ばしょを
+えらんで　ください！</language>
+	</row>
+
+	<row id="info_03">
+		<language name="JPN" width="216">ことばをいれる　ばしょを
+えらんで　ください！</language>
+		<language name="JPN_KANJI" width="216">ことばをいれる　ばしょを
+えらんで　ください！</language>
+	</row>
+
+	<row id="info_04">
+		<language name="JPN" width="216">グループモード：
+グループの　なかから
+ことばを　えらんで　ください！</language>
+		<language name="JPN_KANJI" width="216">グループモード：
+グループの　なかから
+ことばを　えらんで　ください！</language>
+	</row>
+
+	<row id="info_05">
+		<language name="JPN" width="216">あいうえおモード
+もじを　えらんで
+ことばを　しぼりこんで　ください！</language>
+		<language name="JPN_KANJI" width="216">あいうえおモード
+もじを　えらんで
+ことばを　しぼりこんで　ください！</language>
+	</row>
+
+	<row id="info_06">
+		<language name="JPN" width="216">あいうえおモード：
+しぼりこんだ　なかから
+ことばを　えらんで　ください！</language>
+		<language name="JPN_KANJI" width="216">あいうえおモード：
+しぼりこんだ　なかから
+ことばを　えらんで　ください！</language>
 	</row>
 
 	<flowchart-group-list>
