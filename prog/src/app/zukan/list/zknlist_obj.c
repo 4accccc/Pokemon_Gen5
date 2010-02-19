@@ -29,7 +29,7 @@
 
 // パレット定義（メイン画面）
 #define	PALNUM_ZKNOBJ			( 0 )																	// パレット番号：　図鑑用ＯＢＪ
-#define	PALSIZ_ZKNOBJ			( 3 )																	// パレットサイズ：図鑑用ＯＢＪ
+#define	PALSIZ_ZKNOBJ			( 4 )																	// パレットサイズ：図鑑用ＯＢＪ
 #define	PALNUM_POKEICON		( PALNUM_ZKNOBJ+PALSIZ_ZKNOBJ )				// パレット番号：　ポケモンアイコン
 #define	PALSIZ_POKEICON		( POKEICON_PAL_MAX )									// パレットサイズ：ポケモンアイコン
 #define	PALNUM_TOUCH_BAR	( PALNUM_POKEICON+PALSIZ_POKEICON )		// パレット番号：　タッチバー

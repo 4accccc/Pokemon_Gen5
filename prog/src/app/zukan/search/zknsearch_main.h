@@ -12,10 +12,13 @@
 
 #include "system/cursor_move.h"
 #include "system/blink_palanm.h"
+#include "system/bgwinfrm.h"
+#include "system/palanm.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "ui/frame_list.h"
 
+#include "../zukan_common.h"
 #include "zukansearch.h"
 #include "zknsearch_bmp_def.h"
 #include "zknsearch_obj_def.h"
@@ -60,9 +63,13 @@ typedef struct {
 	GFL_TCB * vtask;		// TCB ( VBLANK )
 	GFL_TCB * htask;		// TCB ( HBLANK )
 
+	PALETTE_FADE_PTR	pfd;		// パレットフェードデータ
+
 	int	mainSeq;		// メインシーケンス
 	int	nextSeq;		// 次のシーケンス
 	int	funcSeq;		// フェードなど特定の処理の後のシーケンス
+
+	BGWINFRM_WORK * wfrm;
 
 	// OBJ
 	GFL_CLUNIT * clunit;
@@ -98,6 +105,9 @@ typedef struct {
 	u8	btnCnt;
 
 	u32	BaseScroll;
+
+	u16	frameScrollCnt;			// 開始・終了時のスクロールカウンタ
+	s16	frameScrollVal;			// 開始・終了時のスクロール値
 
 }ZKNSEARCHMAIN_WORK;
 
@@ -166,6 +176,41 @@ extern void ZKNSEARCHMAIN_LoadBgGraphic(void);
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		パレットフェード初期化
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNSEARCHMAIN_InitPaletteFade( ZKNSEARCHMAIN_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェード解放
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNSEARCHMAIN_ExitPaletteFade( ZKNSEARCHMAIN_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェードリクエスト
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		start		開始濃度
+ * @param		end			終了濃度
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNSEARCHMAIN_SetPalFadeSeq( ZKNSEARCHMAIN_WORK * wk, u8 start, u8 end );
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		アルファブレンド設定
  *
  * @param		flg		ON/OFF
@@ -202,6 +247,9 @@ extern void ZKNSEARCHMAIN_ExitMsg( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHMAIN_InitBlinkAnm( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHMAIN_ExitBlinkAnm( ZKNSEARCHMAIN_WORK * wk );
 
+extern void ZKNSEARCHMAIN_InitBgWinFrame( ZKNSEARCHMAIN_WORK * wk );
+extern void ZKNSEARCHMAIN_ExitBgWinFrame( ZKNSEARCHMAIN_WORK * wk );
+
 extern void ZKNSEARCHMAIN_LoadMenuPageScreen( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHMAIN_LoadRowListPageScreen( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHMAIN_LoadNameListPageScreen( ZKNSEARCHMAIN_WORK * wk );
@@ -214,3 +262,7 @@ extern void ZKNSEARCHMAIN_LoadingWindowOff( ZKNSEARCHMAIN_WORK * wk );
 
 extern void ZKNSEARCHMAIN_ListBGOn( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHMAIN_ListBGOff( ZKNSEARCHMAIN_WORK * wk );
+
+extern void ZKNSEARCHMAIN_InitFrameScroll( ZKNSEARCHMAIN_WORK * wk );
+extern void ZKNSEARCHMAIN_SetFrameScrollParam( ZKNSEARCHMAIN_WORK * wk, s16 val );
+extern BOOL ZKNSEARCHMAIN_MainSrameScroll( ZKNSEARCHMAIN_WORK * wk );

@@ -206,6 +206,9 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 	G2S_BlendNone();
 	// サブ画面をメインに
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+	// 輝度を最低にしておく
+	GX_SetMasterBrightness( -16 );
+	GXS_SetMasterBrightness( -16 );
 
 	ZKNSEARCHMAIN_InitVram();
 	ZKNSEARCHMAIN_InitBg();
@@ -220,6 +223,12 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_ZUKAN_SEARCH );
 	GFL_NET_ReloadIcon();
 
+	ZKNSEARCHMAIN_InitBgWinFrame( wk );
+	ZKNSEARCHMAIN_InitFrameScroll( wk );
+
+	ZKNSEARCHMAIN_InitPaletteFade( wk );
+	ZKNSEARCHMAIN_SetPalFadeSeq( wk, 16, 16 );
+
 	ZKNSEARCHMAIN_InitVBlank( wk );
 	ZKNSEARCHMAIN_InitHBlank( wk );
 
@@ -230,8 +239,16 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 
 static int MainSeq_Release( ZKNSEARCHMAIN_WORK * wk )
 {
+	if( ZKNSEARCHMAIN_MainSrameScroll(wk) == TRUE || PaletteFadeCheck(wk->pfd) != 0 ){
+		return MAINSEQ_RELEASE;
+	}
+
 	ZKNSEARCHMAIN_ExitHBlank( wk );
 	ZKNSEARCHMAIN_ExitVBlank( wk );
+
+	ZKNSEARCHMAIN_ExitBgWinFrame( wk );
+
+	ZKNSEARCHMAIN_ExitPaletteFade( wk );
 
 	ZKNSEARCHMAIN_ExitBlinkAnm( wk );
 
@@ -241,6 +258,9 @@ static int MainSeq_Release( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHMAIN_ExitMsg( wk );
 	ZKNSEARCHMAIN_ExitBg();
 
+	// 輝度を最低にしておく
+	GX_SetMasterBrightness( -16 );
+	GXS_SetMasterBrightness( -16 );
 	// ブレンド初期化
 	G2_BlendNone();
 	G2S_BlendNone();
@@ -255,7 +275,7 @@ static int MainSeq_Release( ZKNSEARCHMAIN_WORK * wk )
 
 static int MainSeq_Wipe( ZKNSEARCHMAIN_WORK * wk )
 {
-	if( WIPE_SYS_EndCheck() == TRUE ){
+	if( PaletteFadeCheck(wk->pfd) == 0 ){
 		return wk->funcSeq;
 	}
 	return MAINSEQ_WIPE;
@@ -265,6 +285,10 @@ static int MainSeq_Wipe( ZKNSEARCHMAIN_WORK * wk )
 
 static int MainSeq_InitMenu( ZKNSEARCHMAIN_WORK * wk )
 {
+	if( PaletteFadeCheck(wk->pfd) != 0 ){
+		return MAINSEQ_INIT_MENU;
+	}
+
 	ZKNSEARCHMAIN_SetBlendAlpha( TRUE );
 
 	ZKNSEARCHMAIN_LoadMenuPageScreen( wk );
@@ -278,7 +302,12 @@ static int MainSeq_InitMenu( ZKNSEARCHMAIN_WORK * wk )
 
 	if( wk->page == 0xff ){
 		ZKNSEARCHUI_MainCursorMoveInit( wk, 0 );
-		return SetWipeIn( wk, MAINSEQ_MAIN_MENU );
+		GX_SetMasterBrightness( 0 );
+		GXS_SetMasterBrightness( 0 );
+		ZKNSEARCHMAIN_SetFrameScrollParam( wk, -ZKNCOMM_BAR_SPEED );
+		ZKNSEARCHMAIN_SetPalFadeSeq( wk, 16, 0 );
+		return MAINSEQ_MAIN_MENU;
+//		return SetWipeIn( wk, MAINSEQ_MAIN_MENU );
 	}
 	ZKNSEARCHUI_MainCursorMoveInit( wk, wk->page );
 	return MAINSEQ_MAIN_MENU;
@@ -286,6 +315,10 @@ static int MainSeq_InitMenu( ZKNSEARCHMAIN_WORK * wk )
 
 static int MainSeq_MainMenu( ZKNSEARCHMAIN_WORK * wk )
 {
+	if( ZKNSEARCHMAIN_MainSrameScroll(wk) == TRUE || PaletteFadeCheck(wk->pfd) != 0 ){
+		return MAINSEQ_MAIN_MENU;
+	}
+
 	switch( ZKNSEARCHUI_MenuMain(wk) ){
 	case ZKNSEARCHUI_ROW:
 		PMSND_PlaySE( ZKNSEARCH_SE_DECIDE );
@@ -883,8 +916,11 @@ static int MainSeq_ButtonAnm( ZKNSEARCHMAIN_WORK * wk )
 static int MainSeq_EndSet( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHUI_CursorMoveExit( wk );
+	ZKNSEARCHMAIN_SetFrameScrollParam( wk, ZKNCOMM_BAR_SPEED );
+	ZKNSEARCHMAIN_SetPalFadeSeq( wk, 0, 16 );
+	return MAINSEQ_RELEASE;
 
-	return SetWipeOut( wk, MAINSEQ_RELEASE );
+//	return SetWipeOut( wk, MAINSEQ_RELEASE );
 }
 
 
@@ -1011,14 +1047,16 @@ static void ResetSortForm( ZKNSEARCHMAIN_WORK * wk )
 
 static int SetWipeIn( ZKNSEARCHMAIN_WORK * wk, int next )
 {
-	ZKNCOMM_SetFadeIn( HEAPID_ZUKAN_SEARCH );
+//	ZKNCOMM_SetFadeIn( HEAPID_ZUKAN_SEARCH );
+	ZKNSEARCHMAIN_SetPalFadeSeq( wk, 16, 0 );
 	wk->funcSeq = next;
 	return MAINSEQ_WIPE;
 }
 
 static int SetWipeOut( ZKNSEARCHMAIN_WORK * wk, int next )
 {
-	ZKNCOMM_SetFadeOut( HEAPID_ZUKAN_SEARCH );
+//	ZKNCOMM_SetFadeOut( HEAPID_ZUKAN_SEARCH );
+	ZKNSEARCHMAIN_SetPalFadeSeq( wk, 0, 16 );
 	wk->funcSeq = next;
 	return MAINSEQ_WIPE;
 }

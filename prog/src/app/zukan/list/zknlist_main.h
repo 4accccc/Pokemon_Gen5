@@ -13,6 +13,7 @@
 #include "system/main.h"
 #include "system/bgwinfrm.h"
 #include "system/cursor_move.h"
+#include "system/palanm.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "ui/frame_list.h"
@@ -70,6 +71,8 @@ typedef struct {
 	GFL_TCB * vtask;		// TCB ( VBLANK )
 	GFL_TCB * htask;		// TCB ( HBLANK )
 
+	PALETTE_FADE_PTR	pfd;		// パレットフェードデータ
+
 //	int	key_repeat_speed;
 //	int	key_repeat_wait;
 
@@ -106,10 +109,14 @@ typedef struct {
 	u16	iconPutSub;					// ポケアイコン表示状況（サブ）
 
 	FRAMELIST_WORK * lwk;		// リストワーク
+	u32	listInit;					// リスト初期化シーケンス
 
 	u16 * localNo;					// 地方図鑑番号リスト
 
 	u32	BaseScroll;					// 背景スクロールカウンタ
+
+	u16	frameScrollCnt;			// 開始・終了時のスクロールカウンタ
+	s16	frameScrollVal;			// 開始・終了時のスクロール値
 
 }ZKNLISTMAIN_WORK;
 
@@ -124,7 +131,7 @@ typedef int (*pZKNLIST_FUNC)(ZKNLISTMAIN_WORK*);
 /**
  * @brief		VBLANK関数設定
  *
- * @param		wk		図鑑リストワーク
+ * @param		wk		図鑑リスト画面ワーク
  *
  * @return	none
  */
@@ -135,7 +142,7 @@ extern void ZKNLISTMAIN_InitVBlank( ZKNLISTMAIN_WORK * wk );
 /**
  * @brief		VBLANK関数削除
  *
- * @param		wk		図鑑リストワーク
+ * @param		wk		図鑑リスト画面ワーク
  *
  * @return	none
  */
@@ -151,6 +158,41 @@ extern const GFL_DISP_VRAM * ZKNLISTMAIN_GetVramBankData(void);
 extern void ZKNLISTMAIN_InitBg(void);
 extern void ZKNLISTMAIN_ExitBg(void);
 extern void ZKNLISTMAIN_LoadBgGraphic(void);
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェード初期化
+ *
+ * @param		wk		図鑑リスト画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNLISTMAIN_InitPaletteFade( ZKNLISTMAIN_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェード解放
+ *
+ * @param		wk		図鑑リスト画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNLISTMAIN_ExitPaletteFade( ZKNLISTMAIN_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェードリクエスト
+ *
+ * @param		wk			図鑑リスト画面ワーク
+ * @param		start		開始濃度
+ * @param		end			終了濃度
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNLISTMAIN_SetPalFadeSeq( ZKNLISTMAIN_WORK * wk, u8 start, u8 end );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -209,3 +251,7 @@ extern void ZKNLISTMAIN_FreeList( ZKNLISTMAIN_WORK * wk );
 
 extern void ZKNLISTMAIN_LoadLocalNoList( ZKNLISTMAIN_WORK * wk );
 extern void ZKNLISTMAIN_FreeLocalNoList( ZKNLISTMAIN_WORK * wk );
+
+extern void ZKNLISTMAIN_InitFrameScroll( ZKNLISTMAIN_WORK * wk );
+extern void ZKNLISTMAIN_SetFrameScrollParam( ZKNLISTMAIN_WORK * wk, s16 val );
+extern BOOL ZKNLISTMAIN_MainSrameScroll( ZKNLISTMAIN_WORK * wk );

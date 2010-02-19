@@ -80,7 +80,7 @@ static const GFL_DISP_VRAM VramTbl = {
 /**
  * @brief		VBLANK関数設定
  *
- * @param		wk		図鑑リストワーク
+ * @param		wk		図鑑リスト画面ワーク
  *
  * @return	none
  */
@@ -94,7 +94,7 @@ void ZKNLISTMAIN_InitVBlank( ZKNLISTMAIN_WORK * wk )
 /**
  * @brief		VBLANK関数削除
  *
- * @param		wk		図鑑リストワーク
+ * @param		wk		図鑑リスト画面ワーク
  *
  * @return	none
  */
@@ -109,19 +109,19 @@ void ZKNLISTMAIN_ExitVBlank( ZKNLISTMAIN_WORK * wk )
  * @brief		VBLANK処理
  *
  * @param		tcb			GFL_TCB
- * @param		wk			図鑑リストワーク
+ * @param		wk			図鑑リスト画面ワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
 static void VBlankTask( GFL_TCB * tcb, void * work )
 {
-//	ZKNLISTMAIN_WORK * wk = work;
+	ZKNLISTMAIN_WORK * wk = work;
 
 	GFL_BG_VBlankFunc();
 	GFL_CLACT_SYS_VBlankFunc();
 
-//	PaletteFadeTrans( syswk->app->pfd );
+	PaletteFadeTrans( wk->pfd );
 
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
@@ -290,7 +290,7 @@ void ZKNLISTMAIN_LoadBgGraphic(void)
 	GFL_ARCHDL_UTIL_TransVramPalette(
 		ah, NARC_zukan_gra_list_list_bgd_NCLR, PALTYPE_MAIN_BG, 0, 0x20*4, HEAPID_ZUKAN_LIST );
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_zukan_gra_list_list_bgu_NCLR, PALTYPE_SUB_BG, 0, 0x20*4, HEAPID_ZUKAN_LIST );
+		ah, NARC_zukan_gra_list_list_bgu_NCLR, PALTYPE_SUB_BG, 0, 0x20*5, HEAPID_ZUKAN_LIST );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_list_listframe_bgd_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_ZUKAN_LIST );
@@ -341,6 +341,64 @@ void ZKNLISTMAIN_LoadBgGraphic(void)
 		ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
 		ZKNLISTMAIN_SBG_PAL_FONT*0x20, 0x20, HEAPID_ZUKAN_LIST );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェード初期化
+ *
+ * @param		wk		図鑑リスト画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTMAIN_InitPaletteFade( ZKNLISTMAIN_WORK * wk )
+{
+	wk->pfd = PaletteFadeInit( HEAPID_ZUKAN_LIST );
+
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_MAIN_BG, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_LIST );
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_BG, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_LIST );
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_LIST );
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_OBJ, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_LIST );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェード解放
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTMAIN_ExitPaletteFade( ZKNLISTMAIN_WORK * wk )
+{
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_BG );
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_BG );
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_OBJ );
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_OBJ );
+
+	PaletteFadeFree( wk->pfd );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェードリクエスト
+ *
+ * @param		wk			図鑑リスト画面ワーク
+ * @param		start		開始濃度
+ * @param		end			終了濃度
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTMAIN_SetPalFadeSeq( ZKNLISTMAIN_WORK * wk, u8 start, u8 end )
+{
+	PaletteFadeReq( wk->pfd, PF_BIT_MAIN_BG,  0xbfff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( wk->pfd, PF_BIT_SUB_BG,   0xffef, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( wk->pfd, PF_BIT_MAIN_OBJ, 0xf878, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( wk->pfd, PF_BIT_SUB_OBJ,  0xbfff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -623,11 +681,59 @@ void ZKNLISTMAIN_FreeList( ZKNLISTMAIN_WORK * wk )
 
 void ZKNLISTMAIN_LoadLocalNoList( ZKNLISTMAIN_WORK * wk )
 {
-	wk->localNo = GFL_ARC_UTIL_Load(
-									ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_chihou_no_dat, FALSE, HEAPID_ZUKAN_LIST );
+	wk->localNo = POKE_PERSONAL_GetZenkokuToChihouArray( HEAPID_ZUKAN_LIST, NULL );
 }
 
 void ZKNLISTMAIN_FreeLocalNoList( ZKNLISTMAIN_WORK * wk )
 {
 	GFL_HEAP_FreeMemory( wk->localNo );
+}
+
+
+
+
+#define	FRAME_SCROLL_COUNT	( 48 )
+
+void ZKNLISTMAIN_InitFrameScroll( ZKNLISTMAIN_WORK * wk )
+{
+	s16	x, y;
+	u32	i;
+
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, FRAME_SCROLL_COUNT );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, -FRAME_SCROLL_COUNT );
+
+	for( i=ZKNLISTOBJ_IDX_TB_RETURN; i<=ZKNLISTOBJ_IDX_TB_START; i++ ){
+		ZKNLISTOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_MAIN );
+		y += FRAME_SCROLL_COUNT;
+		ZKNLISTOBJ_SetPos( wk, i, x, y, CLSYS_DRAW_MAIN );
+	}
+}
+
+void ZKNLISTMAIN_SetFrameScrollParam( ZKNLISTMAIN_WORK * wk, s16 val )
+{
+	wk->frameScrollCnt = FRAME_SCROLL_COUNT;
+	wk->frameScrollVal = val;
+}
+
+BOOL ZKNLISTMAIN_MainSrameScroll( ZKNLISTMAIN_WORK * wk )
+{
+	s16	x, y;
+	u32	i;
+
+	if( wk->frameScrollCnt == 0 ){
+		return FALSE;
+	}
+
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_INC, wk->frameScrollVal );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_DEC, wk->frameScrollVal );
+
+	for( i=ZKNLISTOBJ_IDX_TB_RETURN; i<=ZKNLISTOBJ_IDX_TB_START; i++ ){
+		ZKNLISTOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_MAIN );
+		y += wk->frameScrollVal;
+		ZKNLISTOBJ_SetPos( wk, i, x, y, CLSYS_DRAW_MAIN );
+	}
+
+	wk->frameScrollCnt -= GFL_STD_Abs(wk->frameScrollVal);
+
+	return TRUE;
 }

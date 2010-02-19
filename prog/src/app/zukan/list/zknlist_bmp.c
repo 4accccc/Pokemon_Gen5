@@ -47,7 +47,7 @@
 #define	BMPWIN_TITLE_PY			( 0 )
 #define	BMPWIN_TITLE_SX			( 17 )
 #define	BMPWIN_TITLE_SY			( 3 )
-#define	BMPWIN_TITLE_PAL		( 0 )
+#define	BMPWIN_TITLE_PAL		( 4 )
 
 // å©Ç¬ÇØÇΩêî
 #define	BMPWIN_SEENUM_FRM		( GFL_BG_FRAME1_S )
@@ -55,7 +55,7 @@
 #define	BMPWIN_SEENUM_PY		( 3 )
 #define	BMPWIN_SEENUM_SX		( 13 )
 #define	BMPWIN_SEENUM_SY		( 3 )
-#define	BMPWIN_SEENUM_PAL		( 0 )
+#define	BMPWIN_SEENUM_PAL		( 4 )
 
 // ïﬂÇ‹Ç¶ÇΩêî
 #define	BMPWIN_GETNUM_FRM		( GFL_BG_FRAME1_S )
@@ -63,7 +63,7 @@
 #define	BMPWIN_GETNUM_PY		( 3 )
 #define	BMPWIN_GETNUM_SX		( 15 )
 #define	BMPWIN_GETNUM_SY		( 3 )
-#define	BMPWIN_GETNUM_PAL		( 0 )
+#define	BMPWIN_GETNUM_PAL		( 4 )
 
 
 //============================================================================================

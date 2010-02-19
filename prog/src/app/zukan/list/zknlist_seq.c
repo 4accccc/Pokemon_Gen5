@@ -11,6 +11,7 @@
 #include <gflib.h>
 
 #include "system/wipe.h"
+#include "system/gfl_use.h"
 #include "sound/pm_sndsys.h"
 #include "app/app_menu_common.h"
 
@@ -60,6 +61,7 @@ static int MainSeq_ButtonAnm( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_ItemAnm( ZKNLISTMAIN_WORK * wk );
 static int MainSeq_EndSet( ZKNLISTMAIN_WORK * wk );
 
+static void SetInitPalFade( ZKNLISTMAIN_WORK * wk );
 static int SetFadeIn( ZKNLISTMAIN_WORK * wk, int next );
 static int SetFadeOut( ZKNLISTMAIN_WORK * wk, int next );
 static int SetButtonAnm( ZKNLISTMAIN_WORK * wk, u32 id, u32 anm, int next );
@@ -118,8 +120,13 @@ static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 	// ブレンド初期化
 	G2_BlendNone();
 	G2S_BlendNone();
+	// 輝度を最低にしておく
+	GX_SetMasterBrightness( -16 );
+	GXS_SetMasterBrightness( -16 );
 	// サブ画面をメインに
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+
+	ZKNLISTMAIN_InitPaletteFade( wk );
 
 	ZKNLISTMAIN_InitVram();
 	ZKNLISTMAIN_InitBg();
@@ -144,6 +151,8 @@ static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 
 	ZKNLISTMAIN_SetBlendAlpha();
 
+	ZKNLISTMAIN_InitFrameScroll( wk );
+
 	ZKNLISTMAIN_InitVBlank( wk );
 	ZKNLISTMAIN_InitHBlank( wk );
 
@@ -152,6 +161,10 @@ static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 
 static int MainSeq_Release( ZKNLISTMAIN_WORK * wk )
 {
+	if( ZKNLISTMAIN_MainSrameScroll( wk ) == TRUE || PaletteFadeCheck(wk->pfd) != 0 ){
+		return MAINSEQ_RELEASE;
+	}
+
 	ZKNLISTMAIN_ExitHBlank( wk );
 	ZKNLISTMAIN_ExitVBlank( wk );
 
@@ -165,6 +178,11 @@ static int MainSeq_Release( ZKNLISTMAIN_WORK * wk )
 	ZKNLISTMAIN_ExitMsg( wk );
 	ZKNLISTMAIN_ExitBg();
 
+	ZKNLISTMAIN_ExitPaletteFade( wk );
+
+	// 輝度を最低にしておく
+	GX_SetMasterBrightness( -16 );
+	GXS_SetMasterBrightness( -16 );
 	// ブレンド初期化
 	G2_BlendNone();
 	G2S_BlendNone();
@@ -179,7 +197,7 @@ static int MainSeq_Release( ZKNLISTMAIN_WORK * wk )
 
 static int MainSeq_Wipe( ZKNLISTMAIN_WORK * wk )
 {
-	if( WIPE_SYS_EndCheck() == TRUE ){
+	if( PaletteFadeCheck(wk->pfd) == 0 ){
 		return wk->wipeSeq;
 	}
 	return MAINSEQ_WIPE;
@@ -190,10 +208,33 @@ static int MainSeq_Wipe( ZKNLISTMAIN_WORK * wk )
 
 static int MainSeq_InitListWait( ZKNLISTMAIN_WORK * wk )
 {
-	if( FRAMELIST_Init( wk->lwk ) == FALSE ){
-		ZKNLISTOBJ_SetPutPokeIconFlag( wk );
-		return SetFadeIn( wk, MAINSEQ_MAIN );
+	switch( wk->listInit ){
+	case 0:
+		if( FRAMELIST_Init( wk->lwk ) == FALSE ){
+			ZKNLISTOBJ_SetPutPokeIconFlag( wk );
+			SetInitPalFade( wk );
+			wk->listInit++;
+		}
+		break;
+
+	case 1:
+		if( PaletteFadeCheck(wk->pfd) == 0 ){
+			GX_SetMasterBrightness( 0 );
+			GXS_SetMasterBrightness( 0 );
+			ZKNLISTMAIN_SetPalFadeSeq( wk, 16, 0 );
+			ZKNLISTMAIN_SetFrameScrollParam( wk, -ZKNCOMM_BAR_SPEED );
+			wk->listInit++;
+//			return SetFadeIn( wk, MAINSEQ_MAIN );
+		}
+		break;
+
+	case 2:
+		if( ZKNLISTMAIN_MainSrameScroll( wk ) == FALSE && PaletteFadeCheck(wk->pfd) == 0 ){
+			wk->listInit = 0;
+			return MAINSEQ_MAIN;
+		}
 	}
+
 	return MAINSEQ_INIT_LIST_WAIT;
 }
 
@@ -396,24 +437,37 @@ static int MainSeq_ItemAnm( ZKNLISTMAIN_WORK * wk )
 
 static int MainSeq_EndSet( ZKNLISTMAIN_WORK * wk )
 {
-	return SetFadeOut( wk, MAINSEQ_RELEASE );
+//	wk->frameScroll = 2;
+//	return SetFadeOut( wk, MAINSEQ_RELEASE );
+
+	ZKNLISTMAIN_SetPalFadeSeq( wk, 0, 16 );
+	ZKNLISTMAIN_SetFrameScrollParam( wk, ZKNCOMM_BAR_SPEED );
+	return MAINSEQ_RELEASE;
 }
 
 
 
 
+static void SetInitPalFade( ZKNLISTMAIN_WORK * wk )
+{
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_BG, 0, FADE_PAL_ALL_SIZE );
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 0, FADE_PAL_ALL_SIZE );
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ALL_SIZE );
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 0, FADE_PAL_ALL_SIZE );
 
+	ZKNLISTMAIN_SetPalFadeSeq( wk, 16, 16 );
+}
 
 static int SetFadeIn( ZKNLISTMAIN_WORK * wk, int next )
 {
-	ZKNCOMM_SetFadeIn( HEAPID_ZUKAN_LIST );
+	ZKNLISTMAIN_SetPalFadeSeq( wk, 16, 0 );
 	wk->wipeSeq = next;
 	return MAINSEQ_WIPE;
 }
 
 static int SetFadeOut( ZKNLISTMAIN_WORK * wk, int next )
 {
-	ZKNCOMM_SetFadeOut( HEAPID_ZUKAN_LIST );
+	ZKNLISTMAIN_SetPalFadeSeq( wk, 0, 16 );
 	wk->wipeSeq = next;
 	return MAINSEQ_WIPE;
 }

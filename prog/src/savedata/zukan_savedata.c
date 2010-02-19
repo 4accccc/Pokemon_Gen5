@@ -1805,7 +1805,7 @@ u16 ZUKANSAVE_GetLocalPokeGetCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 
   zukan_incorrect(zw);
 
-  buf = GFL_ARC_UTIL_Load( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_chihou_no_dat, FALSE, heapID );
+	buf = POKE_PERSONAL_GetZenkokuToChihouArray( heapID, NULL );
   num = 0;
 
   for( i=1; i<=MONSNO_END; i++ ){
@@ -1901,7 +1901,7 @@ u16 ZUKANSAVE_GetLocalPokeSeeCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 
   zukan_incorrect(zw);
 
-  buf = GFL_ARC_UTIL_Load( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_chihou_no_dat, FALSE, heapID );
+	buf = POKE_PERSONAL_GetZenkokuToChihouArray( heapID, NULL );
   num = 0;
 
   for( i=1; i<=MONSNO_END; i++ ){
@@ -2109,7 +2109,7 @@ u16 ZUKANSAVE_GetLocalGetCompCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
   u16 i;
   u16 num=0;
 
-  buf = GFL_ARC_UTIL_Load( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_chihou_no_dat, FALSE, heapID );
+	buf = POKE_PERSONAL_GetZenkokuToChihouArray( heapID, NULL );
 
   for( i=1; i<=ZUKANSAVE_ZENKOKU_MONSMAX; i++ ){
     if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){

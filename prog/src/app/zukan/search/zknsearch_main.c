@@ -122,16 +122,14 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 	GFL_BG_VBlankFunc();
 	GFL_CLACT_SYS_VBlankFunc();
 
-//	PaletteFadeTrans( syswk->app->pfd );
+	PaletteFadeTrans( wk->pfd );
 
 	if( wk->bgVanish == 1 ){
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_ON );
-//		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_ON );
 		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
 		wk->bgVanish = 0;
 	}else if( wk->bgVanish == 2 ){
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_OFF );
-//		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_OFF );
 		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
 		wk->bgVanish = 0;
 	}
@@ -186,6 +184,7 @@ static void HBlankTask( GFL_TCB * tcb, void * work )
 
 	vcount = GX_GetVCount();
 
+	// 上画面半透明
 	if( wk->page == ZKNSEARCHMAIN_PAGE_FORM ){
 		if( vcount >= 152 ){
 			G2S_ChangeBlendAlpha( 11, 5 );
@@ -221,6 +220,7 @@ static void HBlankTask( GFL_TCB * tcb, void * work )
 
 void ZKNSEARCHMAIN_InitVram(void)
 {
+	GFL_DISP_ClearVRAM( 0 );
 	GFL_DISP_SetBank( &VramTbl );
 }
 
@@ -375,6 +375,8 @@ void ZKNSEARCHMAIN_LoadBgGraphic(void)
 		ah, NARC_zukan_gra_search_searchframe_bgd_NCGR, GFL_BG_FRAME1_S, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_search_searchbase_bgu_NCGR, GFL_BG_FRAME2_S, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(
+		ah, NARC_zukan_gra_search_searchbase_bgu_NCGR, GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 /*
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_search_main_bgd_NSCR,
@@ -431,6 +433,68 @@ void ZKNSEARCHMAIN_LoadBgGraphic(void)
 	GFL_ARC_UTIL_TransVramPalette(
 		ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
 		ZKNSEARCHMAIN_SBG_PAL_FONT*0x20, 0x20, HEAPID_ZUKAN_SEARCH );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェード初期化
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNSEARCHMAIN_InitPaletteFade( ZKNSEARCHMAIN_WORK * wk )
+{
+	wk->pfd = PaletteFadeInit( HEAPID_ZUKAN_SEARCH );
+
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_MAIN_BG, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_SEARCH );
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_BG, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_SEARCH );
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_SEARCH );
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_OBJ, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_SEARCH );
+
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_BG, 0, FADE_PAL_ALL_SIZE );
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 0, FADE_PAL_ALL_SIZE );
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ALL_SIZE );
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 0, FADE_PAL_ALL_SIZE );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェード解放
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNSEARCHMAIN_ExitPaletteFade( ZKNSEARCHMAIN_WORK * wk )
+{
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_BG );
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_BG );
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_OBJ );
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_OBJ );
+
+	PaletteFadeFree( wk->pfd );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェードリクエスト
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		start		開始濃度
+ * @param		end			終了濃度
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNSEARCHMAIN_SetPalFadeSeq( ZKNSEARCHMAIN_WORK * wk, u8 start, u8 end )
+{
+	PaletteFadeReq( wk->pfd, PF_BIT_MAIN_BG,  0xbfff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( wk->pfd, PF_BIT_SUB_BG,   0x7fef, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( wk->pfd, PF_BIT_MAIN_OBJ, 0xfe1f, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( wk->pfd, PF_BIT_SUB_OBJ,  0xbfff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -515,6 +579,26 @@ void ZKNSEARCHMAIN_InitBlinkAnm( ZKNSEARCHMAIN_WORK * wk )
 void ZKNSEARCHMAIN_ExitBlinkAnm( ZKNSEARCHMAIN_WORK * wk )
 {
 	BLINKPALANM_Exit( wk->blink );
+}
+
+void ZKNSEARCHMAIN_InitBgWinFrame( ZKNSEARCHMAIN_WORK * wk )
+{
+	u16 * scr = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
+
+	wk->wfrm = BGWINFRM_Create( BGWINFRM_TRANS_VBLANK, 1, HEAPID_ZUKAN_SEARCH );
+	BGWINFRM_Add( wk->wfrm, 0, GFL_BG_FRAME0_M, ZKNSEARCHMAIN_TOUCH_BAR_SX, ZKNSEARCHMAIN_TOUCH_BAR_SY );
+	BGWINFRM_FrameSet( wk->wfrm, 0, &scr[ZKNSEARCHMAIN_TOUCH_BAR_PY*ZKNSEARCHMAIN_TOUCH_BAR_SX] );
+
+	GFL_BG_FillScreen(
+		GFL_BG_FRAME0_M, 0,
+		ZKNSEARCHMAIN_TOUCH_BAR_PX, ZKNSEARCHMAIN_TOUCH_BAR_PY,
+		ZKNSEARCHMAIN_TOUCH_BAR_SX, ZKNSEARCHMAIN_TOUCH_BAR_SY, 0 );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
+}
+
+void ZKNSEARCHMAIN_ExitBgWinFrame( ZKNSEARCHMAIN_WORK * wk )
+{
+	BGWINFRM_Exit( wk->wfrm );
 }
 
 
@@ -664,6 +748,58 @@ void ZKNSEARCHMAIN_ListBGOff( ZKNSEARCHMAIN_WORK * wk )
 
 
 
+#define	FRAME_SCROLL_COUNT	( 48 )
+
+void ZKNSEARCHMAIN_InitFrameScroll( ZKNSEARCHMAIN_WORK * wk )
+{
+	s16	x, y;
+	u32	i;
+
+	GFL_BG_SetScrollReq( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, FRAME_SCROLL_COUNT );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, FRAME_SCROLL_COUNT );
+
+	BGWINFRM_FramePut( wk->wfrm, 0, 0, 27 );
+	BGWINFRM_MoveMain( wk->wfrm );
+
+	for( i=ZKNSEARCHOBJ_IDX_TB_RETURN; i<=ZKNSEARCHOBJ_IDX_TB_Y_BUTTON; i++ ){
+		ZKNSEARCHOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_MAIN );
+		y += FRAME_SCROLL_COUNT;
+		ZKNSEARCHOBJ_SetPos( wk, i, x, y, CLSYS_DRAW_MAIN );
+	}
+}
+
+void ZKNSEARCHMAIN_SetFrameScrollParam( ZKNSEARCHMAIN_WORK * wk, s16 val )
+{
+	wk->frameScrollCnt = FRAME_SCROLL_COUNT;
+	wk->frameScrollVal = val;
+
+	BGWINFRM_MoveInit( wk->wfrm, 0, 0, val/GFL_STD_Abs(val), FRAME_SCROLL_COUNT/GFL_STD_Abs(val) );
+}
+
+BOOL ZKNSEARCHMAIN_MainSrameScroll( ZKNSEARCHMAIN_WORK * wk )
+{
+	s16	x, y;
+	u32	i;
+
+	if( wk->frameScrollCnt == 0 ){
+		return FALSE;
+	}
+
+	BGWINFRM_MoveMain( wk->wfrm );
+
+	GFL_BG_SetScrollReq( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_INC, wk->frameScrollVal );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_INC, wk->frameScrollVal );
+
+	for( i=ZKNSEARCHOBJ_IDX_TB_RETURN; i<=ZKNSEARCHOBJ_IDX_TB_Y_BUTTON; i++ ){
+		ZKNSEARCHOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_MAIN );
+		y += wk->frameScrollVal;
+		ZKNSEARCHOBJ_SetPos( wk, i, x, y, CLSYS_DRAW_MAIN );
+	}
+
+	wk->frameScrollCnt -= GFL_STD_Abs(wk->frameScrollVal);
+
+	return TRUE;
+}
 
 
 
