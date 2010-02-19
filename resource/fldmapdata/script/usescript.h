@@ -109,6 +109,10 @@
 // 趣味ID
 #include "../../research_radar/data/hobby_id.h"
 
+//トライアルハウス
+#include "../../../prog/src/field/trial_house_scr_def.h"
+
+
 //スクリプト内共通定義ヘッダファイル
 //最初の3体タイプわけなど
 #include "user_define.h"
