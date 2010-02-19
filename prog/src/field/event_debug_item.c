@@ -410,7 +410,7 @@ static void _windowCreate(EVENT_DEBUGITEM_WORK* wk)
 static void _windowRewrite(EVENT_DEBUGITEM_WORK* wk, int type)
 {
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->win), WINCLR_COL(FBMP_COL_WHITE) );
-  GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_STR35, wk->pStrBuf );
+  GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_ITEM_STR3, wk->pStrBuf );
   //id0 アイテム番号
   //id1 アイテム名
   //id2 アイテム数
@@ -427,7 +427,7 @@ static void _windowRewrite(EVENT_DEBUGITEM_WORK* wk, int type)
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win), 1, 10, wk->pExpStrBuf, wk->fontHandle);
 
 
-  GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_STR33, wk->pStrBuf );
+  GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_ITEM_STR1, wk->pStrBuf );
   //id0 アイテム番号
   //id1 アイテム名
   //id2 アイテム数
@@ -439,7 +439,7 @@ static void _windowRewrite(EVENT_DEBUGITEM_WORK* wk, int type)
 
 
 
-  GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_STR34, wk->pStrBuf );
+  GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_ITEM_STR2, wk->pStrBuf );
 
   WORDSET_RegisterNumber(wk->WordSet, 2, wk->itemnum,
                          3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
