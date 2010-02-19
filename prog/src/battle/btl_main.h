@@ -100,6 +100,7 @@ extern void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos 
 extern void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume );
 extern void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID );
 extern u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk );
+extern u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk );
 extern BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk );
 
 

@@ -2469,7 +2469,7 @@ static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
     if( BTLV_WaitMsg(wk->viewCore) )
     {
       u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
-      u32 getMoney = BTL_MAIN_GetBonusMoney( wk->mainModule );
+      u32 getMoney = BTL_MAIN_FixBonusMoney( wk->mainModule );
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_GetMoney );
       BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
       BTLV_STRPARAM_AddArg( &wk->strParam, getMoney );

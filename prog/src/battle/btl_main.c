@@ -13,6 +13,7 @@
 #include "tr_tool/trtype_def.h"
 #include "tr_tool/tr_tool.h"
 #include "gamesystem/msgspeed.h"
+#include "gamesystem/g_power.h"
 
 #include "gamesystem/btl_setup.h"
 #include "battle/battle.h"
@@ -124,6 +125,7 @@ struct _BTL_MAIN_MODULE {
   u8        ImServer;
   u8        fWazaEffectEnable;
   u8        changeMode;
+  u8        fBonusMoneyFixed;
 
 };
 
@@ -235,6 +237,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
       wk->LimitTimeGame = wk->setupParam->LimitTimeGame;
       wk->LimitTimeCommand = wk->setupParam->LimitTimeCommand;
+      wk->fBonusMoneyFixed = FALSE;
 
       wk->bonusMoney = calcBonusMoneyBase( setup_param );
       wk->ppIllusionZoroArc = NULL;
@@ -2863,9 +2866,12 @@ void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
 //=============================================================================================
 void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
 {
-  wk->bonusMoney += volume;
-  if( wk->bonusMoney > BTL_BONUS_MONEY_MAX ){
-    wk->bonusMoney = BTL_BONUS_MONEY_MAX;
+  if( wk->fBonusMoneyFixed == FALSE )
+  {
+    wk->bonusMoney += volume;
+    if( wk->bonusMoney > BTL_BONUS_MONEY_MAX ){
+      wk->bonusMoney = BTL_BONUS_MONEY_MAX;
+    }
   }
 }
 //=============================================================================================
@@ -2881,6 +2887,22 @@ u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk )
 {
   return wk->bonusMoney;
 }
+//=============================================================================================
+/**
+ * おこずかいボーナス額を現在の値で決定する
+ *
+ * @param   wk
+ */
+//=============================================================================================
+u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk )
+{
+  if( wk->fBonusMoneyFixed == FALSE ){
+    wk->bonusMoney = GPOWER_Calc_Money( wk->bonusMoney );
+    wk->fBonusMoneyFixed = TRUE;
+  }
+  return wk->bonusMoney;
+}
+
 //=============================================================================================
 /**
  * プレイヤー側が勝ったか判定
