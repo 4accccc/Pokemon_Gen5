@@ -122,13 +122,13 @@ def print_scene(file, dir)
       file.puts "static const GFL_G3D_UTIL_RES res_" + dir + "_unit" + sprintf("%02d",cnt) + "[] = {\n";
 
       #imdを先に書き出し
-      file.puts "\t{ " + ARC_ID + ", NARC_demo3d_" + imd.sub(/.imd/,"_nsbmd") + ", GFL_G3D_UTIL_RESARC },";
+      file.puts "\t{ " + ARC_ID + ", NARC_demo3d_" + imd.sub(/\.imd/,"_nsbmd") + ", GFL_G3D_UTIL_RESARC },";
       
       #UNIT項目書き出し
       val.each{|i|
         #imdは既に出力したので飛ばす
         if i.slice(/...\z/m) != "imd"
-          line = "\t{ " + ARC_ID + ", NARC_demo3d_" + i.sub(/.i/,"_nsb") + ", GFL_G3D_UTIL_RESARC },";
+          line = "\t{ " + ARC_ID + ", NARC_demo3d_" + i.sub(/\.i/,"_nsb") + ", GFL_G3D_UTIL_RESARC },";
           file.puts line
           anm_cnt += 1
         end
@@ -190,7 +190,7 @@ def print_access_table(file,dir)
     if check_ext(i)
       # 2文字の数値チェック
       if i.slice(/camera/) == "camera"
-          line = "\t{ " + dir + "_setup, NELEMS(" + dir + "_setup), NARC_demo3d_" + i.sub(/.ica/,"_bin") + ", "
+          line = "\t{ " + dir + "_setup, NELEMS(" + dir + "_setup), NARC_demo3d_" + i.sub(/\.ica/,"_bin") + ", "
           line += param[0].to_s + ", " + param[1].to_s + ", " + param[2].to_s + ", " + param[3].to_s + ", " + " },"
           file.puts line        
       end
