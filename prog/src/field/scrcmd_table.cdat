@@ -889,9 +889,14 @@
   NO_CMD()
 
   //トライアルハウス関連
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdTH_Start, EV_SEQ_TH_START )
+  DEF_CMD( EvCmdTH_End, EV_SEQ_TH_END )
+  DEF_CMD( EvCmdTH_SetPlayMode, EV_SEQ_TH_SET_PLAY_MODE )
+  DEF_CMD( EvCmdTH_SelectPoke, EV_SEQ_TH_SEL_POKE )
+
+  DEF_CMD( EvCmdTH_SetTrainer, EV_SEQ_TH_SET_TR )
+  DEF_CMD( EvCmdTH_DispBeforeMsg, EV_SEQ_TH_DISP_BEFORE_MSG )
+  DEF_CMD( EvCmdTH_CallBattle, EV_SEQ_TH_CALL_BATTLE )
   NO_CMD()
 
   NO_CMD()

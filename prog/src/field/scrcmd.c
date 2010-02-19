@@ -86,6 +86,7 @@
 #include "scrcmd_postman.h"
 #include "scrcmd_beacon.h"
 #include "scrcmd_elevator.h"
+#include "scrcmd_trial_house.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

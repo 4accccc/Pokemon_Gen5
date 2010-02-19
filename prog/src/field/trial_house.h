@@ -13,10 +13,10 @@
 
 extern TRIAL_HOUSE_WORK_PTR TRIAL_HOUSE_Start( void );
 extern void TRIAL_HOUSE_End( TRIAL_HOUSE_WORK_PTR *ptr );
-extern void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const BSWAY_PLAYMODE inPlayMode );
+extern void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const u32 inPlayMode );
 
 extern u16 TRIAL_HOUSE_GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr );
-extern void TRIAL_HOUSE_DispBtlBeforeMsg( TRIAL_HOUSE_WORK_PTR ptr );
+extern GMEVENT *TRIAL_HOUSE_CreateBeforeMsgEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr );
 
 extern int TRIAL_HOUSE_MakeTrainer( TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount );
 

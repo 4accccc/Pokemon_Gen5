@@ -8195,3 +8195,90 @@
   .short \word2
   .short \ret
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス開始
+ */
+//--------------------------------------------------------------
+#define _TH_START() _ASM_TH_START
+  
+  .macro _ASM_TH_START
+  .short EV_SEQ_TH_START
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス終了
+ */
+//--------------------------------------------------------------
+#define _TH_END() _ASM_TH_END
+  
+  .macro _ASM_TH_END
+  .short EV_SEQ_TH_END
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　プレイモードセット（シングルＯＲダブル）
+ * @param   mode
+ */
+//--------------------------------------------------------------
+#define _TH_SET_PLAY_MODE( mode ) _ASM_TH_END mode
+  
+  .macro _ASM_TH_SET_PLAY_MODE
+  .short EV_SEQ_TH_SET_PLAY_MODE
+  .short mode
+  .endm
+  
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　ポケモン選択
+ * @param   ret     選択結果  FALSE：キャンセル
+ */
+//--------------------------------------------------------------
+#define _TH_SEL_POKE( ret ) _ASM_TH_SEL_POKE ret
+  
+  .macro _ASM_TH_SEL_POKE
+  .short EV_SEQ_TH_SEL_POKE
+  .short ret
+  .endm
+ 
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　対戦相手セット
+ * @param   round   対戦回数　0～4
+ * poaram   obj_id  セットしたトレーナーのＯＢＪＩＤを格納するバッファ
+ */
+//--------------------------------------------------------------
+#define _TH_SET_TR( round, obj_id ) _ASM_TH_SET_TR round, obj_id
+  
+  .macro _ASM_TH_SET_TR
+  .short EV_SEQ_TH_SET_TR
+  .short round
+  .short obj_id
+  .endm
+  
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　戦闘前メッセージ表示
+ */
+//--------------------------------------------------------------
+#define _TH_DISP_BEFORE_MSG() _ASM_TH_DISP_BEFORE_MSG
+  
+  .macro _ASM_TH_DISP_BEFORE_MSG
+  .short EV_SEQ_TH_DISP_BEFORE_MSG
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　戦闘呼び出し
+ */
+//--------------------------------------------------------------
+#define _TH_CALL_BATTLE() _ASM_TH_CALL_BATTLE
+  
+  .macro _ASM_TH_CALL_BATTLE
+  .short EV_SEQ_TH_CALL_BATTLE
+  .endm
+
+

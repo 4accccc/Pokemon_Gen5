@@ -12,6 +12,8 @@
 #include "system/main.h"  //for HEAPID_APP_CONTROL
 #include "fld_btl_inst_tool.h"
 
+#include  "trial_house_scr_def.h"
+
 //#include "../../../resource/fldmapdata/script/c03r0801_def.h"  //for SCRID_～
 //#include "script.h"     //for SCRIPT_SetEventScript
 
@@ -58,25 +60,35 @@ void TRIAL_HOUSE_End( TRIAL_HOUSE_WORK_PTR *ptr )
 /**
  * @brief	トライアルハウス プレイモードのセット
  * @param	ptr      TRIAL_HOUSE_WORK_PTR
- * @param inPlayMode     
+ * @param inPlayMode     プレイモード　 TH_PLAYMODE_SINGLE or TH_PLAYMODE_DOUBLE
+ * @note  trial_house_scr_def.h参照
  * @retval		none
 */
 //--------------------------------------------------------------
-void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const BSWAY_PLAYMODE inPlayMode )
+void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const u32 inPlayMode )
 {
+  BSWAY_PLAYMODE mode;
   if ( ptr == NULL )
   {
     GF_ASSERT(0);
     return;
   }
 
-  if ( (inPlayMode == BSWAY_PLAYMODE_SINGLE)||(inPlayMode == BSWAY_PLAYMODE_DOUBLE) )
+  if ( (inPlayMode == TH_PLAYMODE_SINGLE)||(inPlayMode == TH_PLAYMODE_DOUBLE) )
   {
     //シングル3　それ以外（ダブル）4
-    if ( inPlayMode == BSWAY_PLAYMODE_SINGLE ) ptr->MemberNum = 3;
-    else ptr->MemberNum = 4;
+    if ( inPlayMode == TH_PLAYMODE_SINGLE )
+    {
+      mode = BSWAY_PLAYMODE_SINGLE; //バトルサブウェイのシングルモードをセット
+      ptr->MemberNum = 3;
+    }
+    else
+    {
+      mode = BSWAY_PLAYMODE_DOUBLE; //バトルサブウェイのダブルモードをセット
+      ptr->MemberNum = 4;
+    }
 
-    ptr->PlayMode = inPlayMode;
+    ptr->PlayMode = mode;
   }
   else
   {
@@ -171,7 +183,11 @@ u16 TRIAL_HOUSE_GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr )
  * @retval		none
 */
 //--------------------------------------------------------------
-void TRIAL_HOUSE_DispBtlBeforeMsg( TRIAL_HOUSE_WORK_PTR ptr )
+GMEVENT *TRIAL_HOUSE_CreateBeforeMsgEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
 {
-  ;
+  GMEVENT *event;
+
+  event = FBI_TOOL_CreateTrainerBeforeMsgEvt(gsys, &ptr->TrData );
+
+  return event;
 }

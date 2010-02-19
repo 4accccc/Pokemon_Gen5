@@ -143,11 +143,39 @@ VMCMD_RESULT EvCmdTH_SetTrainer( VMHANDLE *core, void *wk )
   TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
 
   btl_count = SCRCMD_GetVMWorkValue( core, work );
+  obj_id = SCRCMD_GetVMWork( core, work );
 
   *obj_id = TRIAL_HOUSE_MakeTrainer( *ptr, btl_count );
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * トライアルハウス 対戦前メッセージ表示
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTH_DispBeforeMsg( VMHANDLE *core, void *wk )
+{
+  GMEVENT* event;
+
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+  TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
+
+  event = TRIAL_HOUSE_CreateBeforeMsgEvt(gsys, *ptr);
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+
+}
+
 
 //--------------------------------------------------------------
 /**

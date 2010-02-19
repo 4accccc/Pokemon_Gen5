@@ -15,4 +15,5 @@ extern VMCMD_RESULT EvCmdTH_End( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_SetPlayMode( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_SelectPoke( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_SetTrainer( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdTH_DispBeforeMsg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_CallBattle( VMHANDLE *core, void *wk );
