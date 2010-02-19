@@ -103,5 +103,6 @@
 #define MATTR_SHOPSHELF_01        (0xdf)		//デパート＆ショップの棚１
 #define MATTR_SHOPSHELF_02        (0xe0)		//デパート＆ショップの棚２
 #define MATTR_SHOPSHELF_03        (0xe1)		//デパート＆ショップの棚３
+#define MATTR_AUTO_SELL_01        (0xe2)		//自動販売機
 #define MATTR_NO_ATTR             (0xff)		//アトリビュートなし
 
