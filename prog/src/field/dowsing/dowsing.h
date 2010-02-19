@@ -17,7 +17,7 @@
 #include <gflib.h>
 
 // オーバーレイ
-FS_EXTERN_OVERLAY(fieldmap);
+FS_EXTERN_OVERLAY(dowsing);
 
 
 //=============================================================================

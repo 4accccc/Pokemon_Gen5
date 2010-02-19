@@ -17,6 +17,8 @@
 #include "gamesystem/game_event.h"
 #include "field/fieldmap.h"
 
+FS_EXTERN_OVERLAY(no_gear);
+
 typedef struct _NO_GEAR_WORK  NO_GEAR_WORK;
 
 extern NO_GEAR_WORK* NOGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys );

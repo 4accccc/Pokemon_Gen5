@@ -3,6 +3,9 @@
 
 #include "gamesystem/gamesystem.h"
 
+// オーバーレイ
+FS_EXTERN_OVERLAY(report);
+
 
 typedef struct _REPORT_WORK	REPORT_WORK;
 

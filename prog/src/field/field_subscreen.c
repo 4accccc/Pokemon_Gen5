@@ -639,6 +639,9 @@ void * FIELD_SUBSCREEN_DEBUG_GetControl(FIELD_SUBSCREEN_WORK * pWork)
 //-----------------------------------------------------------------------------
 static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
+  // Overlay
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
+  
   pWork->cgearWork = CGEAR_Init(CGEAR_SV_GetCGearSaveData(
     GAMEDATA_GetSaveControlWork(
     GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap))
@@ -653,6 +656,9 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
 static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
   CGEAR_Exit(pWork->cgearWork);
+
+  // Overlay
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(cgear) );
 }
 
 //----------------------------------------------------------------------------
@@ -687,6 +693,9 @@ static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 //-----------------------------------------------------------------------------
 static void init_nogear_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
+  // Overlay
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(no_gear) );
+  
   pWork->nogearWork = NOGEAR_Init(CGEAR_SV_GetCGearSaveData(
     GAMEDATA_GetSaveControlWork(
     GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap))
@@ -701,6 +710,9 @@ static void init_nogear_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
 static void exit_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
   NOGEAR_Exit(pWork->nogearWork);
+
+  // Overlay
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(no_gear) );
 }
 
 //----------------------------------------------------------------------------
@@ -915,6 +927,8 @@ void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD
 //-----------------------------------------------------------------------------
 static void init_union_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
+  // Overlay
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(union_subdisp) );
   pWork->unisubWork = UNION_SUBDISP_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap));
 }
 
@@ -926,6 +940,9 @@ static void init_union_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_M
 static void exit_union_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
   UNION_SUBDISP_Exit(pWork->unisubWork);
+
+  // Overlay
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(union_subdisp) );
 }
 
 //----------------------------------------------------------------------------
@@ -1014,6 +1031,8 @@ static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 //-----------------------------------------------------------------------------
 static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode)
 {
+  // Overlay
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(beacon_view) );
   pWork->beaconViewWork = BEACON_VIEW_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork);
 }
 
@@ -1025,6 +1044,9 @@ static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSC
 static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
   BEACON_VIEW_Exit(pWork->beaconViewWork);
+
+  // Overlay
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(beacon_view) );
 }
 
 //----------------------------------------------------------------------------
@@ -1144,6 +1166,7 @@ static void exit_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void init_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(dowsing));
   pWork->dowsingWork = DOWSING_Init( HEAPID_FIELD_SUBSCREEN, pWork->heapID, pWork, pWork->fieldmap );
 }
 
@@ -1155,6 +1178,8 @@ static void init_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN
 static void exit_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
   DOWSING_Exit( pWork->dowsingWork );
+
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(dowsing));
 }
 
 //----------------------------------------------------------------------------
@@ -1199,6 +1224,7 @@ static void draw_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 //-----------------------------------------------------------------------------
 static void init_report_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(report));
 	pWork->reportWork = REPORT_Init( FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork->heapID );
 }
 
@@ -1210,6 +1236,7 @@ static void init_report_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
 static void exit_report_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
 	REPORT_Exit( pWork->reportWork );
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(report));
 }
 
 //----------------------------------------------------------------------------
