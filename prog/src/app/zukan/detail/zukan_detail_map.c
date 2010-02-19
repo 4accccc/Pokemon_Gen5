@@ -45,6 +45,59 @@
 #define BG_FRAME_PRI_M_ROOT       (1)
 #define BG_FRAME_PRI_M_MAP        (2)
 
+// メインBGパレット
+// 本数
+enum
+{
+  BG_PAL_NUM_M_              = 0,
+};
+// 位置
+enum
+{
+  BG_PAL_POS_M_              = 0,
+};
+
+// サブOBJパレット
+// 本数
+enum
+{
+  OBJ_PAL_NUM_M_             = 0,
+};
+// 位置
+enum
+{
+  OBJ_PAL_POS_M_             = 0,
+};
+
+// サブBGフレーム
+#define BG_FRAME_S_REAR           (GFL_BG_FRAME0_S)
+// サブBGフレームのプライオリティ
+#define BG_FRAME_PRI_S_REAR       (3)
+
+// サブBGパレット
+// 本数
+enum
+{
+  BG_PAL_NUM_S_REAR              = ZKNDTL_COMMON_REAR_BG_PAL_NUM,
+};
+// 位置
+enum
+{
+  BG_PAL_POS_S_REAR              = 0,
+};
+
+// サブOBJパレット
+// 本数
+enum
+{
+  OBJ_PAL_NUM_S_             = 0,
+};
+// 位置
+enum
+{
+  OBJ_PAL_POS_S_             = 0,
+};
+
 
 // ProcMainのシーケンス
 enum
@@ -176,7 +229,7 @@ typedef struct
   PRINT_QUE*                  print_que;
 
   // ここで作成するもの
-  u32                         tmp_count;
+  ZKNDTL_COMMON_REAR_WORK*    rear_wk_s;
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
@@ -202,6 +255,10 @@ static void Zukan_Detail_Map_VBlankFunc( GFL_TCB* tcb, void* wk );
 // アフィン拡張BG
 static void Zukan_Detail_Map_AffineExBGInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_AffineExBGExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+// タウンマップOBJ
+static void Zukan_Detail_Map_TownmapObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_TownmapObjExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 
 //=============================================================================
@@ -308,6 +365,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcExit( ZKNDTL_PROC* proc, int* seq
   ZUKAN_DETAIL_MAP_PARAM*    param    = (ZUKAN_DETAIL_MAP_PARAM*)pwk;
   ZUKAN_DETAIL_MAP_WORK*     work     = (ZUKAN_DETAIL_MAP_WORK*)mywk;
 
+  // 最背面
+  ZKNDTL_COMMON_RearExit( work->rear_wk_s );
+
   // フェード
   {
     ZKNDTL_COMMON_FadeExit( work->fade_wk_s );
@@ -385,11 +445,15 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
         GFL_BG_SetPriority( BG_FRAME_M_MAP, BG_FRAME_PRI_M_MAP );
         
         // サブBG
-        //GFL_BG_SetPriority( BG_FRAME_S_, BG_FRAME_PRI_S_ );
+        GFL_BG_SetPriority( BG_FRAME_S_REAR, BG_FRAME_PRI_S_REAR );
       }
 
       // アフィン拡張BG
       Zukan_Detail_Map_AffineExBGInit( param, work, cmn );
+
+      // 最背面
+      work->rear_wk_s = ZKNDTL_COMMON_RearInit( param->heap_id, ZKNDTL_COMMON_REAR_TYPE_MAP,
+          BG_FRAME_S_REAR, BG_PAL_POS_S_REAR +0, BG_PAL_POS_S_REAR +1 );
     }
     break;
   case SEQ_PREPARE:
@@ -505,6 +569,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
       return ZKNDTL_PROC_RES_FINISH;
     }
     break;
+  }
+
+  // 最背面
+  if( *seq >= SEQ_PREPARE )
+  {
+    ZKNDTL_COMMON_RearMain( work->rear_wk_s );
   }
 
   // フェード
@@ -635,5 +705,15 @@ static void Zukan_Detail_Map_AffineExBGInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKA
 static void Zukan_Detail_Map_AffineExBGExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   // 特に何もしなくてよい
+}
+
+//-------------------------------------
+/// タウンマップOBJ
+//-------------------------------------
+static void Zukan_Detail_Map_TownmapObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+}
+static void Zukan_Detail_Map_TownmapObjExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
 }
 
