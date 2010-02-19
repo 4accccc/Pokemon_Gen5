@@ -3109,6 +3109,7 @@ static  int   EFFVM_GetPokePosition( VMHANDLE *vmh, int pos_flag, BtlvMcssPos* p
     pos[ 0 ] = bevw->defence_pos;
     if( pos[ 0 ] == BTLV_MCSS_POS_ERROR )
     { 
+      OS_TPrintf("range:%d\n", bevw->param.waza_range);
       if( bevw->attack_pos & 1 )
       { 
         if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_AA ) == TRUE )
@@ -3448,9 +3449,6 @@ static  int EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
  * @param[in] emit  エミッタワーク構造体へのポインタ
  */
 //============================================================================================
-#ifdef PM_DEBUG
-vu32  emit_init = 0;
-#endif
 static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 {
   BTLV_EFFVM_EMIT_INIT_WORK *beeiw = ( BTLV_EFFVM_EMIT_INIT_WORK* )GFL_PTC_GetTempPtr();
@@ -3689,9 +3687,6 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   GFL_PTC_SetEmitterPosition( emit, &src );
 
   GFL_HEAP_FreeMemory( beeiw );
-#ifdef PM_DEBUG
-  emit_init = 0;
-#endif
 }
 
 //============================================================================================
@@ -4348,7 +4343,7 @@ static  void  TCB_EFFVM_ChangeVolume( GFL_TCB* tcb, void* work )
  * @param[in] vmh 仮想マシン制御構造体へのポインタ
  */
 //============================================================================================
-void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd, BTLV_EFFVM_PARAM *param )
+void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd, BTLV_EFFVM_PARAM* param, BTLV_EFFVM_EXECUTE_EFF_TYPE type )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
   int *start_ofs = (int *)&start[ script_table[ from ][ to ] ] ;
@@ -4370,7 +4365,7 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
                     GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
                     0, 0 );
 
-  bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
+  bevw->execute_effect_type = type;
 
   //BGMのマスターボリュームを下げる
   { 
