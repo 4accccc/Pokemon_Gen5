@@ -12,10 +12,6 @@
 //======================================================================
 //  define
 //======================================================================
-#ifdef DEBUG_ONLY_FOR_matsuda
-
-#endif
-
 //--------------------------------------------------------------
 /// ビルボード共通オフセット表示座標
 //--------------------------------------------------------------
@@ -1187,10 +1183,15 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
       work->set_anm_dir = dir;
       work->offs_frame = 0;
       GFL_BBDACT_SetAnimeIdx( actSys,work->actID, work->set_anm_dir );
+      
+      { //描画オフセットもクリア
+        VecFx32 offs = {0,0,0};
+        MMDL_GetVectorDrawOffsetPos( mmdl, &offs );
+      }
     }
-#ifndef DEBUG_ONLY_FOR_matsuda
+    
     TsurePoke_SetAnmAndOffset( mmdl, work, dir );
-#endif    
+    
     MMDL_GetDrawVectorPos( mmdl, &pos );
     
     blact_SetCommonOffsPos( &pos );
@@ -1216,15 +1217,15 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   
   if( pause_f || anmcmd_f ){
     //Yオフセットのみ引き継ぐ
-    MMDL_GetDrawVectorPos( mmdl, &vec );
+    MMDL_GetVectorDrawOffsetPos( mmdl, &vec );
     vec.x = vec.z = 0;
   }
 
   //向きから描画オフセットをセット
   TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
-
+  
   //ジャンプオフセットセット
-
+  
   if( anmcmd_f ){
     work->offs_frame++; 
   }else if( !pause_f ){
@@ -1319,6 +1320,7 @@ static void DrawTsurePokeFly_Draw( MMDL *mmdl )
       init_flag = TRUE;
       work->set_anm_dir = dir;
       work->offs_frame = 0;
+      work->offs_y = 0; //描画オフセットもクリア
       GFL_BBDACT_SetAnimeIdx( actSys, work->actID, work->set_anm_dir );
     }
     
@@ -1334,13 +1336,11 @@ static void DrawTsurePokeFly_Draw( MMDL *mmdl )
       }
     }
     
-#ifndef DEBUG_ONLY_FOR_matsuda
     pos.x = 0;
     pos.y = work->offs_y;
     pos.z = 0;
 	  MMDL_SetVectorDrawOffsetPos( mmdl, &pos );
-#endif 
-
+    
     MMDL_GetDrawVectorPos( mmdl, &pos );
     blact_SetCommonOffsPos( &pos );
     GFL_BBD_SetObjectTrans(
