@@ -36,6 +36,8 @@
 //簡易CLWK読み込み＆開放ユーティリティー
 #include "ui/ui_easy_clwk.h"
 
+#include "ui/print_tool.h" // for 
+
 //タッチバー
 #include "ui/touchbar.h"
 
@@ -60,11 +62,12 @@
 #include "message.naix"
 #include "un_select_gra.naix"	// アーカイブ
 
+#include "savedata/wifihistory.h" // for WIFIHISTORY_CheckCountryBit, WIFI_COUNTRY_MAX
+
 // サウンド
 #include "sound/pm_sndsys.h"
 
-//@TODO
-#include "msg/msg_mictest.h"  // GMM
+#include "msg/msg_wifi_place_msg_UN.h"  // GMM
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
@@ -78,11 +81,257 @@ FS_EXTERN_OVERLAY(ui_common);
  *								定数定義
  */
 //=============================================================================
+
+//--------------------------------------------------------------
+///	フロアテーブル
+//==============================================================
+static const int g_FloorTable[]={
+	country001,	//アフガニスタン
+	country093,	//アイスランド
+	country098,	//アイルランド
+	country014,	//アゼルバイジャン
+	country220,	//アメリカ
+	country004,	//アメリカりょうサモア
+	country221,	//アメリカりょうバージンしょとう
+	country218,	//アラブしゅちょうこく
+	country003,	//アルジェリア
+	country009,	//アルゼンチン
+	country011,	//アルバ
+	country002,	//アルバニア
+	country010,	//アルメニア
+	country007,	//アンギラ
+	country006,	//アンゴラ
+	country008,	//アンティグア・バーブーダ
+	country005,	//アンドラ
+	country231,	//イエメン
+	country219,	//イギリス
+	country029,	//イギリスりょうバージンしょとう
+	country100,	//イスラエル
+	country101,	//イタリア
+	country097,	//イラク
+	country096,	//イラン
+	country094,	//インド
+	country095,	//インドネシア
+	country216,	//ウガンダ
+	country217,	//ウクライナ
+	country223,	//ウズベキスタン
+	country222,	//ウルグアイ
+	country060,	//エクアドル
+	country061,	//エジプト
+	country065,	//エストニア
+	country066,	//エチオピア
+	country064,	//エリトリア
+	country062,	//エルサルバドル
+	country012,	//オーストラリア
+	country013,	//オーストリア
+	country157,	//オマーン
+	country146,	//オランダ
+	country147,	//オランダりょうアンティル
+	country078,	//ガーナ
+	country037,	//カーボベルデ
+	country088,	//ガイアナ
+	country106,	//カザフスタン
+	country105,	//カシミール
+	country169,	//カタール
+	country036,	//カナダ
+	country074,	//ガボン
+	country035,	//カメルーン
+	country110,	//かんこく
+	country075,	//ガンビア
+	country034,	//カンボジア
+	country109,	//きたちょうせん
+	country155,	//きたマリアナしょとう
+	country086,	//ギニア
+	country087,	//ギニアビサウ
+	country054,	//キプロス
+	country053,	//キューバ
+	country080,	//ギリシャ
+	country108,	//キリバス
+	country112,	//キルギス
+	country085,	//グアテマラ
+	country083,	//グアドループとう
+	country084,	//グアム
+	country111,	//クウェート
+	country049,	//クックしょとう
+	country081,	//グリーンランド
+	country044,	//クリスマスとう
+	country076,	//グルジア
+	country082,	//グレナダ
+	country052,	//クロアチア
+	country038,	//ケイマンしょとう
+	country107,	//ケニア
+	country051,	//コートジボワール
+	country050,	//コスタリカ
+	country046,	//コモロ
+	country045,	//コロンビア
+	country048,	//コンゴきょうわこく
+	country047,	//コンゴみんしゅきょうわこく
+	country182,	//サウジアラビア
+	country179,	//サモア
+	country181,	//サントメ・プリンシペ
+	country232,	//ザンビア
+	country177,	//サンピエール・ミクロン
+	country180,	//サンマリノ
+	country186,	//シエラレオネ
+	country057,	//ジブチ
+	country079,	//ジブラルタル
+	country102,	//ジャマイカ
+	country201,	//シリア
+	country187,	//シンガポール
+	country233,	//ジンバブエ
+	country200,	//スイス
+	country199,	//スウェーデン
+	country195,	//スーダン
+	country197,	//スバールバル・ヤンマンエンとう
+	country193,	//スペイン
+	country196,	//スリナム
+	country194,	//スリランカ
+	country188,	//スロバキア
+	country189,	//スロベニア
+	country198,	//スワジランド
+	country185,	//セーシェル
+	country063,	//せきどうギニア
+	country183,	//セネガル
+	country184,	//セルビア・モンテネグロ
+	country175,	//セントクリストファー・ネービス
+	country178,	//セントビンセント・グレナディーン
+	country174,	//セントヘレナとう
+	country176,	//セントルシア
+	country191,	//ソマリア
+	country190,	//ソロモンしょとう
+	country214,	//タークス・カイコスしょとう
+	country205,	//タイ
+	country202,	//たいわん
+	country203,	//タジキスタン
+	country204,	//タンザニア
+	country055,	//チェコ
+	country040,	//チャド
+	country041,	//チャネルしょとう
+	country039,	//ちゅうおうアフリカ
+	country043,	//ちゅうごく
+	country211,	//チュニジア
+	country042,	//チリ
+	country215,	//ツバル
+	country056,	//デンマーク
+	country077,	//ドイツ
+	country207,	//トーゴ
+	country208,	//トケラウ
+	country058,	//ドミニカ
+	country059,	//ドミニカきょうわこく
+	country210,	//トリニダード・トバゴ
+	country213,	//トルクメニスタン
+	country212,	//トルコ
+	country209,	//トンガ
+	country152,	//ナイジェリア
+	country144,	//ナウル
+	country143,	//ナミビア
+	country153,	//ニウエ
+	country150,	//ニカラグア
+	country151,	//ニジェール
+	country230,	//にしサハラ
+	country103,	//にほん
+	country148,	//ニューカレドニア
+	country149,	//ニュージーランド
+	country145,	//ネパール
+	country154,	//ノーフォークとう
+	country156,	//ノルウェー
+	country016,	//バーレーン
+	country089,	//ハイチ
+	country158,	//パキスタン
+	country225,	//バチカン
+	country160,	//パナマ
+	country224,	//バヌアツ
+	country015,	//バハマ
+	country161,	//パプアニューギニア
+	country023,	//バミューダ
+	country159,	//パラオ
+	country162,	//パラグアイ
+	country018,	//バルバドス
+	country229,	//パレスチナじちく
+	country092,	//ハンガリー
+	country017,	//バングラデシュ
+	country206,	//ひがしティモール
+	country165,	//ピトケアン
+	country069,	//フィジーしょとう
+	country164,	//フィリピン
+	country070,	//フィンランド
+	country024,	//ブータン
+	country168,	//プエルトリコ
+	country067,	//フェローしょとう
+	country068,	//フォークランド（マルビナス)しょとう
+	country028,	//ブラジル
+	country071,	//フランス
+	country072,	//フランスりょうギアナ
+	country073,	//フランスりょうポリネシア
+	country031,	//ブルガリア
+	country032,	//ブルキナファソ
+	country030,	//ブルネイ
+	country033,	//ブルンジ
+	country227,	//ベトナム
+	country022,	//ベナン
+	country226,	//ベネズエラ
+	country019,	//ベラルーシ
+	country021,	//ベリーズ
+	country163,	//ペルー
+	country020,	//ベルギー
+	country166,	//ポーランド
+	country026,	//ボスニア・ヘルツェゴビナ
+	country027,	//ボツワナ
+	country025,	//ボリビア
+	country167,	//ポルトガル
+	country091,	//ホンコン
+	country090,	//ホンジュラス
+	country130,	//マーシャルしょとう
+	country122,	//マカオ
+	country123,	//マケドニアきゅうユーゴスラビア
+	country124,	//マダガスカル
+	country134,	//マヨット
+	country125,	//マラウイ
+	country128,	//マリ
+	country129,	//マルタ
+	country131,	//マルチニーク
+	country126,	//マレーシア
+	country099,	//マンとう
+	country136,	//ミクロネシア
+	country192,	//みなみアフリカ
+	country142,	//ミャンマー
+	country135,	//メキシコ
+	country133,	//モーリシャス
+	country132,	//モーリタニア
+	country141,	//モザンビーク
+	country138,	//モナコ
+	country127,	//モルディブ
+	country137,	//モルドバ
+	country140,	//モロッコ
+	country139,	//モンゴル
+	country104,	//ヨルダン
+	country113,	//ラオス
+	country114,	//ラトビア
+	country120,	//リトアニア
+	country118,	//リビア
+	country119,	//リヒテンシュタイン
+	country117,	//リベリア
+	country171,	//ルーマニア
+	country121,	//ルクセンブルク
+	country173,	//ルワンダ
+	country116,	//レソト
+	country115,	//レバノン
+	country170,	//レユニオン
+	country172,	//ロシア
+	country228,	//ワリス・フテュナしょとう
+};
+
+
+//=============================================================================
+/**
+ *								定数定義
+ */
+//=============================================================================
 enum
 { 
   UN_SELECT_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
 
-  UN_LIST_MAX = 20, ///< 項目数
+  UN_LIST_MAX = WIFI_COUNTRY_MAX, //20, ///< 項目数
 };
 
 // パッシブ定数
@@ -90,6 +339,11 @@ enum
 #define YESNO_MASK_PLANE ( PLANEMASK_BG3 | PLANEMASK_OBJ | PLANEMASK_BD )
 #define BRIGHT_PASSIVE_SYNC (8)
 #define BRIGHT_PASSIVE_VOL (-8)
+
+// フォントカラー
+#define FCOL_WP01WN		( PRINTSYS_LSB_Make(14,15,0) )	// フォントカラー：明日
+
+//両用０１白抜
 
 //--------------------------------------------------------------
 ///	アプリ終了モード
@@ -113,6 +367,7 @@ enum
   BG_FRAME_LIST_S = GFL_BG_FRAME1_S,
 	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
 };
+
 //-------------------------------------
 ///	パレット
 //=====================================
@@ -138,6 +393,7 @@ enum
   PLTID_OBJ_POKE_M = 12,
   PLTID_OBJ_BALLICON_M = 13, // 1本使用
 	PLTID_OBJ_TOWNMAP_M	= 14,		
+
 	//サブOBJ
   PLTID_OBJ_PMS_DRAW = 0, // 5本使用
 };
@@ -177,6 +433,8 @@ typedef struct
   PRINT_STREAM* print_stream;
   GFL_BMPWIN    *win_talk;
 
+  STRBUF* name[ UN_LIST_MAX ]; ///< 名前バッファ
+
 } UN_SELECT_MSG_CNT_WORK;
 
 //--------------------------------------------------------------
@@ -212,7 +470,6 @@ typedef struct
 
   FRAMELIST_WORK* lwk;
   
-
 } UN_SELECT_MAIN_WORK;
 
 //=============================================================================
@@ -332,6 +589,9 @@ static GFL_MSGDATA* MSG_CNT_GetMsgData( UN_SELECT_MSG_CNT_WORK* wk );
 static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm );
 static void app_end( UN_SELECT_MAIN_WORK* wk, END_MODE end_mode );
 
+static void LIST_Make( UN_SELECT_MAIN_WORK* wk );
+static void LIST_Delete( UN_SELECT_MAIN_WORK* wk );
+
 //=============================================================================
 /**
  *								外部公開
@@ -410,9 +670,9 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
   {
      return GFL_PROC_RES_CONTINUE;
   }
-  
-  // フレームリスト 開放
-  FRAMELIST_Exit( wk->lwk );
+    
+  // リスト開放
+  LIST_Delete( wk ); 
 
   // シーンコントーラ削除
   UI_SCENE_CNT_Delete( wk->cnt_scene );
@@ -623,7 +883,7 @@ static APP_TASKMENU_WORK * UNSelect_TASKMENU_Init( APP_TASKMENU_RES *menu_res, G
 	//窓の設定
 	for( i = 0; i < NELEMS(item); i++ )
 	{	
-		item[i].str	      = GFL_MSG_CreateString( msg, 0 );	//文字列
+		item[i].str	      = GFL_MSG_CreateString( msg, un_reception_msg_02 + i );	//文字列
 		item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;	//文字色
 		item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL;	//窓の種類
 	}
@@ -828,6 +1088,34 @@ static void MSG_CNT_Main( UN_SELECT_MSG_CNT_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  リスト項目描画
+ *
+ *	@param	UN_SELECT_MSG_CNT_WORK* wk
+ *	@param	util 
+ *	@pawram itemNum
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MSG_CNT_DrawListElem( UN_SELECT_MSG_CNT_WORK* wk, PRINT_UTIL* util, u32 itemNum )
+{
+  GF_ASSERT(wk);
+
+  // フロア表示
+  GFL_MSG_GetString( wk->msghandle, un_reception_msg_04, wk->strbuf );
+  WORDSET_RegisterNumber( wk->wordset, 0, itemNum, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_ExpandStr( wk->wordset, wk->exp_strbuf, wk->strbuf );
+
+  PRINTTOOL_PrintColor( util, wk->print_que, 0, 4, wk->exp_strbuf, wk->font, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
+
+  // 国名 表示
+  PRINTTOOL_PrintColor( util, wk->print_que, 0, 4, wk->name[itemNum], wk->font, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
+
+  return;
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  メッセージ管理クラス メッセージプリント リクエスト
  *
  *	@param	UN_SELECT_MSG_CNT_WORK* wk
@@ -994,7 +1282,21 @@ static GFL_MSGDATA* MSG_CNT_GetMsgData( UN_SELECT_MSG_CNT_WORK* wk )
   return wk->msghandle;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ワードセット
+ *
+ *	@param	UN_SELECT_MSG_CNT_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static WORDSET* MSG_CNT_GetWordset( UN_SELECT_MSG_CNT_WORK* wk )
+{
+  GF_ASSERT(wk);
 
+  return wk->wordset;
+}
 
 //=============================================================================
 //
@@ -1021,25 +1323,22 @@ static const FRAMELIST_CALLBACK	FRMListCallBack = {
 //==============================================================
 static const FRAMELIST_TOUCH_DATA TouchHitTbl[] =
 {
-	{ {   0,  23, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 00: ポケモンアイコン
-	{ {  24,  47, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 01: ポケモンアイコン
-	{ {  48,  71, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 02: ポケモンアイコン
-	{ {  72,  95, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 03: ポケモンアイコン
-	{ {  96, 119, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 04: ポケモンアイコン
-	{ { 120, 143, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 05: ポケモンアイコン
-	{ { 144, 167, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 06: ポケモンアイコン
+	{ { 0,    8*5-1,  8*12, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 00: 
+	{ { 8*5,  8*10-1, 8*12, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 01: 
+	{ { 8*10, 8*15-1, 8*12, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 02: 
+	{ { 8*15, 8*20-1, 8*12, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 03: 
 
-	{ {   8, 159, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },					// 07: レール
+	{ { 8, 159, 240, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },					// 07: レール
 
-	{ { 168, 191, 136, 159 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },			// 08: 左
-	{ { 168, 191, 160, 183 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },		// 09: 右
+	{ { 168, 191, 16, 16+3*8-1 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },			// 08: 左
+	{ { 168, 191, 80, 80+3*8-1 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },		// 09: 右
 
 	{ { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  リスト描画
  *
  *	@param	void * work
  *	@param	itemNum
@@ -1053,6 +1352,20 @@ static const FRAMELIST_TOUCH_DATA TouchHitTbl[] =
 static void ListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp )
 { 
   UN_SELECT_MAIN_WORK* wk = work;
+  u32 prm;
+	
+  prm = FRAMELIST_GetItemParam( wk->lwk, itemNum );
+
+  {
+    PRINT_QUE * que;
+    GFL_FONT* font;
+    WORDSET* wset;
+    
+    que = FRAMELIST_GetPrintQue( wk->lwk );
+    font = MSG_CNT_GetFont( wk->cnt_msg );
+
+  }
+
   HOSAKA_Printf("draw!\n");
 }
 
@@ -1089,6 +1402,15 @@ static void ListCallBack_Scroll( void * work, s8 mv )
   HOSAKA_Printf("scroll!\n");
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  リスト生成
+ *
+ *	@param	UN_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 {
   ARCHANDLE* ah;
@@ -1097,7 +1419,7 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
     BG_FRAME_LIST_M,
     BG_FRAME_LIST_S,
 
-    12,					// 項目フレーム表示開始Ｘ座標
+    11,					// 項目フレーム表示開始Ｘ座標
     0,					// 項目フレーム表示開始Ｙ座標
     18,					// 項目フレーム表示Ｘサイズ
     5,					// 項目フレーム表示Ｙサイズ
@@ -1119,7 +1441,7 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 
     0,							// 初期位置
     4,							// カーソル移動範囲
-    0,							// 初期スクロール値
+    UN_LIST_MAX-5,  // 初期スクロール値 //@TODO
 
     TouchHitTbl,			// タッチデータ
 
@@ -1127,9 +1449,6 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
     NULL,
   };
 
-  //@TODO
-//  header.initPos = 0;
-//  header.initScroll = 4;
   header.cbWork = wk;
 
   wk->lwk = FRAMELIST_Create( &header, wk->heap_id );
@@ -1144,12 +1463,19 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 	// 点滅アニメパレット設定
 	FRAMELIST_LoadBlinkPalette( wk->lwk, ah, NARC_un_select_gra_kokuren_bg_NCLR, 2, 3 );
 
+//  FRAMELIST_ChangePosPalette(
+
   // アーカイブ クローズ
   GFL_ARC_CloseDataHandle( ah );
 				
   // リスト項目生成
   {
     int i;
+    GFL_MSGDATA* mman;
+    
+    mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+        NARC_message_wifi_place_msg_UN_dat, wk->heap_id );
+
     for( i=0; i<UN_LIST_MAX; i++)
     {
       int type;
@@ -1159,26 +1485,50 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 
       // パラメータは純粋に順列ID
       FRAMELIST_AddItem( wk->lwk, type, i );
-    }
-  }
-  
-#if 0
-	{	// 名前文字列取得
-		u32	i;
 
-		for( i=1; i<=MONSNO_END; i++ ){
-			if( ( i % 3 ) == 0 ){
-				wk->name[i-1] = GFL_MSG_CreateString( wk->mman, str_name_01 );
-			}else{
-				STRBUF * srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, i );
-				wk->name[i-1] = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
-				GFL_STR_DeleteBuffer( srcStr );
-			}
-		}
-	}
-#endif
+      // 項目あり
+      if( type == 0 )
+      {
+        // 項目用文字列 取得
+        wk->cnt_msg->name[i] = GFL_MSG_CreateString( mman, i );
+      }
+      // 項目なし
+      else
+      {
+        // 項目用文字列 取得
+        wk->cnt_msg->name[i] = GFL_MSG_CreateString( mman, un_reception_msg_05 );
+      }
+    }
+      
+    // メッセージ生成
+//    MSG_CNT_CreateNameBuffer( wk->cnt_msg, i, buf );
+    
+    GFL_MSG_Delete( mman );
+  }
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  リスト開放
+ *
+ *	@param	UN_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void LIST_Delete( UN_SELECT_MAIN_WORK* wk )
+{
+  int i;
+  
+  for( i=0; i<UN_LIST_MAX; i++)
+  {
+    // 項目用文字列 開放
+    GFL_STR_DeleteBuffer( wk->cnt_msg->name[i] );
+  }
+  
+  // フレームリスト 開放
+  FRAMELIST_Exit( wk->lwk );
+}
   
 //-----------------------------------------------------------------------------
 /**
@@ -1421,8 +1771,7 @@ static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work )
     TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_RETURN, FALSE );
 #endif
 
-    //@TODO str_id
-    MSG_CNT_SetPrint( wk->cnt_msg, 0 );
+    MSG_CNT_SetPrint( wk->cnt_msg, un_reception_msg_01 );
     UI_SCENE_CNT_IncSubSeq( cnt );
     break;
 
