@@ -277,3 +277,4 @@
   ARCID_POKEVOICE_PARAM "pokevoice_param.narc" #ポケモン鳴き声パラメータ
   ARCID_DOWSING_GRA "dowsing_gra.narc"  # ダウジング
   ARCID_REPORT_GRA  "report_gra.narc" #レポート画面グラフィック
+  ARCID_WIFI_EARTH  "wifi_earth.narc" #WI-FI地球データ
