@@ -473,7 +473,15 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
                                                         bgw->status_charID, bgw->status_plttID, bgw->status_cellID,
                                                         &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( bgw->bgcl[ pos ].status_clwk, TRUE );
-    BTLV_GAUGE_SetStatus( bgw, BPP_GetPokeSick( bpp ), pos );
+    if( ( BPP_SICKCONT_IsMoudokuCont( BPP_GetSickCont( bpp, WAZASICK_DOKU ) ) == TRUE ) &&
+        ( BPP_GetPokeSick( bpp ) == POKESICK_DOKU ) )
+    { 
+      BTLV_GAUGE_SetStatus( bgw, POKESICK_MAX, pos );
+    }
+    else
+    { 
+      BTLV_GAUGE_SetStatus( bgw, BPP_GetPokeSick( bpp ), pos );
+    }
     if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_3vs3 ) )
     {
       bgw->bgcl[ pos ].exp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
@@ -1497,6 +1505,7 @@ void  BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos
     APP_COMMON_ST_ICON_KOORI,       // •X
     APP_COMMON_ST_ICON_YAKEDO,      // ‰Î
     APP_COMMON_ST_ICON_DOKU,        // “Å
+    APP_COMMON_ST_ICON_DOKUDOKU,    // ‚Ç‚­‚Ç‚­
   };
   //ƒQ[ƒW‚ª‘¶Ý‚µ‚È‚¢‚Æ‚«‚Í‚È‚É‚à‚¹‚¸‚ÉƒŠƒ^[ƒ“
   if( bgw->bgcl[ pos ].status_clwk == NULL )
