@@ -175,20 +175,3 @@ void TRIAL_HOUSE_DispBtlBeforeMsg( TRIAL_HOUSE_WORK_PTR ptr )
 {
   ;
 }
-
-//--------------------------------------------------------------
-/**
- * @brief	êÌì¨äJén
- * @param	ptr      TRIAL_HOUSE_WORK_PTR
- * @retval		none
-*/
-//--------------------------------------------------------------
-void TRIAL_HOUSE_Battle( TRIAL_HOUSE_WORK_PTR ptr )
-{
-  ;
-}
-
-
-
-
-

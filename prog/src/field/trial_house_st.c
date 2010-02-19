@@ -24,7 +24,7 @@ typedef struct
 	GAMESYS_WORK*      gsys;  // ゲームシステム
 	FIELDMAP_WORK* fieldmap;  // フィールドマップ
   PLIST_DATA*      PokeListlData;  // ポケモンリスト
-  BOOL*            RetDecide;  // 選択したかのチェック
+  u16*            RetDecide;  // 選択したかのチェック
   PL_LIST_TYPE ListType;
   PL_MODE_TYPE ModeType;
   int Reg;
@@ -50,7 +50,7 @@ static GMEVENT_RESULT PokeSelEvt(GMEVENT * event, int * seq, void * work);
  */
 //--------------------------------------------------------------
 GMEVENT *TRIAL_HOUSE_CreatePokeSelEvt(  GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr,
-                                        const int inBtlType, const int inPartyType, BOOL *outRet )
+                                        const int inBtlType, const int inPartyType, u16 *outRet )
 {
   GMEVENT* event;
 	TH_POKESEL_WORK* work;

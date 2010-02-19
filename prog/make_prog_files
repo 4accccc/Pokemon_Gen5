@@ -623,7 +623,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_hide.c \
         field/dowsing/dowsing.c \
         field/report.c \
-        field/trial_house.c
+        field/trial_house.c \
+        field/scrcmd_trial_house.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
