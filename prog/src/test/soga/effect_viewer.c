@@ -20,6 +20,8 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
+#include "tr_tool/trtype_def.h"
+
 #include "sound/pm_sndsys.h"
 
 #include "field/zonedata.h"
@@ -116,6 +118,7 @@ typedef struct
   int           mcs_enable;
   POKEMON_PARAM *pp;
   int           mons_no;
+  int           tr_type;
   int           waza_no;
   int           bgm_no;
   int           se_no;
@@ -141,6 +144,8 @@ typedef struct
 
   void          *sequence_data;
   void          *resource_data;
+
+  BOOL          viewer_mode;
 
   GFL_PTC_PTR   ptc;
 
@@ -287,6 +292,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
   }
 
   evw->mons_no = MONSNO_WARUBIRU;
+  evw->tr_type = TRTYPE_HERO;
   set_pokemon( evw );
 
   //2D‰æ–Ê‰Šú‰»
@@ -407,34 +413,67 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
   EffectViewerSequence( evw );
   BTLV_EFFECT_Main();
 
-  if( ( rep & PAD_KEY_UP ) && ( evw->mons_no <= MONSNO_END ) )
+  if( evw->viewer_mode )
   { 
-    evw->mons_no++;
-    del_pokemon( evw );
-    set_pokemon( evw );
-  }
-  if( ( rep & PAD_KEY_DOWN ) && ( evw->mons_no ) )
-  { 
-    evw->mons_no--;
-    del_pokemon( evw );
-    set_pokemon( evw );
-  }
-
-  if( ( rep & PAD_KEY_RIGHT ) && ( evw->mons_no + 10 <=  MONSNO_END ) )
-  { 
-    evw->mons_no += 10;
-    del_pokemon( evw );
-    set_pokemon( evw );
-  }
-  if( rep & PAD_KEY_LEFT )
-  { 
-    evw->mons_no -= 10;
-    if( evw->mons_no < 0 )
+    if( ( rep & PAD_KEY_UP ) && ( evw->tr_type < TRTYPE_MAX - 1 ) )
     { 
-      evw->mons_no = 0;
+      evw->tr_type++;
+      del_pokemon( evw );
+      set_pokemon( evw );
     }
-    del_pokemon( evw );
-    set_pokemon( evw );
+    if( ( rep & PAD_KEY_DOWN ) && ( evw->tr_type ) )
+    { 
+      evw->tr_type--;
+      del_pokemon( evw );
+      set_pokemon( evw );
+    }
+    if( ( rep & PAD_KEY_RIGHT ) && ( evw->tr_type + 10 <= TRTYPE_MAX - 1 ) )
+    { 
+      evw->tr_type += 10;
+      del_pokemon( evw );
+      set_pokemon( evw );
+    }
+    if( rep & PAD_KEY_LEFT )
+    { 
+      evw->tr_type -= 10;
+      if( evw->tr_type < 0 )
+      { 
+        evw->tr_type = 0;
+      }
+      del_pokemon( evw );
+      set_pokemon( evw );
+    }
+  }
+  else
+  { 
+    if( ( rep & PAD_KEY_UP ) && ( evw->mons_no <= MONSNO_END ) )
+    { 
+      evw->mons_no++;
+      del_pokemon( evw );
+      set_pokemon( evw );
+    }
+    if( ( rep & PAD_KEY_DOWN ) && ( evw->mons_no ) )
+    { 
+      evw->mons_no--;
+      del_pokemon( evw );
+      set_pokemon( evw );
+    }
+    if( ( rep & PAD_KEY_RIGHT ) && ( evw->mons_no + 10 <=  MONSNO_END ) )
+    { 
+      evw->mons_no += 10;
+      del_pokemon( evw );
+      set_pokemon( evw );
+    }
+    if( rep & PAD_KEY_LEFT )
+    { 
+      evw->mons_no -= 10;
+      if( evw->mons_no < 0 )
+      { 
+        evw->mons_no = 0;
+      }
+      del_pokemon( evw );
+      set_pokemon( evw );
+    }
   }
 
   if( trg & PAD_BUTTON_SELECT )
@@ -445,6 +484,13 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
     BTLV_EFFVM_Stop( BTLV_EFFECT_GetVMHandle() );
     BTLV_CAMERA_GetDefaultCameraPosition( &cam_pos, &cam_target );
     BTLV_CAMERA_MoveCameraPosition( BTLV_EFFECT_GetCameraWork(), &cam_pos, &cam_target );
+    del_pokemon( evw );
+    set_pokemon( evw );
+  }
+
+  if( trg & PAD_BUTTON_L )
+  { 
+    evw->viewer_mode ^= 1;
     del_pokemon( evw );
     set_pokemon( evw );
   }
@@ -558,10 +604,10 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     if( ( evw->sequence_data != NULL ) && ( evw->resource_data != NULL ) )
     {
       if( cont == PAD_BUTTON_A ){
-        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->sequence_data, evw->resource_data, NULL );
+        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
       }
       else if( cont == PAD_BUTTON_B ){
-        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, NULL );
+        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
       }
       else if( cont == PAD_BUTTON_Y ){
         BTLV_EFFVM_PARAM param;
@@ -570,7 +616,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
         param.yure_cnt = GFUser_GetPublicRand( 4 );
         param.get_success = FALSE;
 
-        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param );
+        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param, evw->viewer_mode );
       }
       else if( cont == PAD_BUTTON_X ){
         BTLV_EFFVM_PARAM param;
@@ -579,7 +625,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
         param.yure_cnt = 3;
         param.get_success = TRUE;
 
-        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param );
+        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param, evw->viewer_mode );
       }
     }
     evw->seq_no++;
@@ -1415,27 +1461,38 @@ static  void  MoveCamera( EFFECT_VIEWER_WORK *evw )
 
 static  void  set_pokemon( EFFECT_VIEWER_WORK *evw )
 {
-  //POKEMON_PARAM¶¬
-  POKEMON_PARAM *pp = GFL_HEAP_AllocMemory( evw->heapID, POKETOOL_GetWorkSize() );
-  PP_SetupEx( pp, 0, 0, 0, 0, 255 );
+  if( evw->viewer_mode == FALSE )
+  { 
+    //POKEMON_PARAM¶¬
+    POKEMON_PARAM *pp = GFL_HEAP_AllocMemory( evw->heapID, POKETOOL_GetWorkSize() );
+    PP_SetupEx( pp, 0, 0, 0, 0, 255 );
+  
+    PP_Put( pp, ID_PARA_monsno, evw->mons_no );
+    PP_Put( pp, ID_PARA_id_no, 0x10 );
+    BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
+    BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
 
-  PP_Put( pp, ID_PARA_monsno, evw->mons_no );
-  PP_Put( pp, ID_PARA_id_no, 0x10 );
-  BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
-  BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
-
-  GFL_HEAP_FreeMemory( pp );
+    GFL_HEAP_FreeMemory( pp );
+  }
+  else
+  { 
+    BTLV_EFFECT_SetTrainer( evw->tr_type, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
+  }
 }
 
 static  void  del_pokemon( EFFECT_VIEWER_WORK *evw )
 {
   if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_AA ) == TRUE )
   { 
-    BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_AA );
+    BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_AA );
   }
   if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_BB ) == TRUE )
   { 
-    BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB );
+    BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_BB );
+  }
+  if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_TR_BB ) == TRUE )
+  { 
+    BTLV_EFFECT_DelTrainer( BTLV_MCSS_POS_TR_BB );
   }
 }
 
