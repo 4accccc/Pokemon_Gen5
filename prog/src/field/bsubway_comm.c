@@ -32,17 +32,20 @@
 //--------------------------------------------------------------
 enum
 {
-  FC_BSUBWAY_PLAYER_DATA,
+  FC_BSUBWAY_PLAYER_DATA = GFL_NET_CMD_BSUBWAY,
   FC_BSUBWAY_TR_DATA,
   FC_BSUBWAY_RETIRE_SELECT,
   FC_BSUBWAY_MAX,
 };
 
+//コマンドテーブル要素数
+#define FC_BSUBWAY_CMD_MAX  (FC_BSUBWAY_MAX-GFL_NET_CMD_BSUBWAY)
+
 //======================================================================
 //  struct
 //======================================================================
 
-//======================================================================
+//=====================================================================
 //  proto
 //======================================================================
 static void * get_BeaconData( void *pWork );
@@ -66,7 +69,7 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
 //--------------------------------------------------------------
 //  通信コマンドテーブル
 //--------------------------------------------------------------
-static const NetRecvFuncTable data_RecvFuncTbl[FC_BSUBWAY_MAX] = {
+static const NetRecvFuncTable data_RecvFuncTbl[FC_BSUBWAY_CMD_MAX] = {
   {commCmd_RecvBufPlayerData, NULL},
   {commCmd_FrWiFiCounterTowerRecvBufTrainerData, NULL},
   {commCmd_FrWiFiCounterTowerRecvBufRetireSelect, NULL},
@@ -85,7 +88,7 @@ static const NetRecvFuncTable data_RecvFuncTbl[FC_BSUBWAY_MAX] = {
 //--------------------------------------------------------------
 static const GFLNetInitializeStruct data_NetInit = {
   data_RecvFuncTbl, // 受信関数テーブル
-  FC_BSUBWAY_MAX, // 受信テーブル要素数
+  FC_BSUBWAY_CMD_MAX, // 受信テーブル要素数
   NULL, // ハードで接続した時に呼ばれる
   NULL, // ネゴシエーション完了時にコール
   NULL, // ユーザー同士が交換するデータのポインタ取得関数
@@ -127,10 +130,11 @@ static const GFLNetInitializeStruct data_NetInit = {
   FALSE,    // 親が再度初期化した場合、つながらないようにする場合TRUE
   
   WB_NET_BSUBWAY,  //GameServiceID
-
+  
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD,  // 赤外線タイムアウト時間
 #endif
+  
   0,//MP親最大サイズ 512まで
   0,//dummy
 };
@@ -429,7 +433,7 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
   int command,size;
   GAMEDATA *gdata  = bsw_scr->gdata;
   
-  OS_Printf( "通信マルチデータ送信\n" );
+  OS_Printf( "通信マルチデータ送信開始\n" );
   
   switch( mode ){
   case BSWAY_COMM_PLAYER_DATA:  //ポケモン選択
@@ -455,6 +459,7 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
   
   if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),
         command,size,bsw_scr->send_buf) == TRUE ){
+    OS_Printf( "通信マルチデータ送信完了\n" );
     return( TRUE );
   }
   
@@ -484,7 +489,8 @@ void BSUBWAY_SCRWORK_CommRecieveDataStart(
 BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf )
 {
   u8 check_num;
-
+  
+  //データ受信待ち
   if( bsw_scr->comm_mode == BSWAY_COMM_TR_DATA ){
     check_num = 1;
   }else{
@@ -493,7 +499,7 @@ BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf )
   
   if( bsw_scr->comm_recieve_count == check_num ){
     bsw_scr->comm_recieve_count = 0;
-
+    
     if( ret_buf != NULL ){
       *ret_buf = bsw_scr->comm_check_work;
     }

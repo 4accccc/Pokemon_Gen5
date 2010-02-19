@@ -69,8 +69,8 @@ sub_init_add_trainer:
   $OBJCHRWORK3 = $OBJCHRWORK2
   
   _OBJ_ADD_EX( 9, 4, DIR_LEFT, BSW_TRAIN_OBJID_TRAINER_0, WKOBJCODE02, MV_DMY )
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  列車内、初期化　トレーナー配置　マルチ
@@ -95,8 +95,8 @@ sub_init_add_trainer_multi:
   $OBJCHRWORK3 = $OBJCHRWORK2
   _OBJ_ADD_EX( 9, 4, DIR_LEFT, BSW_TRAIN_OBJID_TRAINER_0, WKOBJCODE02, MV_DMY )
   _OBJ_ADD_EX( 9, 3, DIR_LEFT, BSW_TRAIN_OBJID_TRAINER_1, WKOBJCODE03, MV_DMY )
-  _RET
 }
+_RET
 
 //======================================================================
 //  列車内　ゲーム初回
@@ -139,8 +139,8 @@ sub_anm_player_in_first:
   _OBJ_ADD_EX( 2, 8, DIR_UP, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_player_in_first )
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 _ANIME_LABEL  anm_player_in_first
   _ANIME_DATA AC_WAIT_4F,1
@@ -166,8 +166,8 @@ sub_anm_player_in_first_multi:
   _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_player_in_first_multi_2 )
   _OBJ_ANIME_WAIT()
   
-  _RET
 }
+_RET
 
 _ANIME_LABEL  anm_player_in_first_multi_0
   _ANIME_DATA AC_WAIT_4F,1
@@ -226,8 +226,8 @@ sub_anm_player_in_continue:
   _OBJ_ADD_EX( 0, 4, DIR_RIGHT, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_player_in_continue )
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 _ANIME_LABEL  anm_player_in_continue
   _ANIME_DATA AC_WAIT_4F,1
@@ -253,8 +253,8 @@ sub_anm_player_in_continue_multi:
   _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_player_in_continue_multi2 )
   _OBJ_ANIME_WAIT()
 
-  _RET
 }
+_RET
 
 _ANIME_LABEL  anm_player_in_continue_multi0
   _ANIME_DATA AC_WAIT_4F,1
@@ -320,8 +320,8 @@ sub_train_battle:
     _CALL sub_train_battle_win
   ENDIF
   
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  対戦　勝ち
@@ -340,8 +340,8 @@ sub_train_battle_win:
     _CALL sub_train_battle_win_next
   ENDIF
   
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  対戦　勝ち　クリア
@@ -383,8 +383,8 @@ sub_train_battle_win_clear:
   
   //マップ遷移
   _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0111, 75, 0, 12, DIR_DOWN )
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  対戦　勝ち　クリア　自機退場アニメ
@@ -395,8 +395,8 @@ sub_anm_train_battle_win_clear:
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_train_battle_win_clear_trainer )
   
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 _ANIME_LABEL  anm_train_battle_win_clear_trainer
   _ANIME_DATA  AC_WAIT_4F,1
@@ -423,8 +423,8 @@ sub_anm_train_battle_win_clear_multi:
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_1, anm_train_battle_win_clear_multi_trainer1 )
   
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 _ANIME_LABEL  anm_train_battle_win_clear_multi_trainer0
   _ANIME_DATA  AC_WAIT_4F,1
@@ -460,7 +460,6 @@ _ANIME_LABEL  anm_train_battle_win_clear_multi_partner
 //--------------------------------------------------------------
 sub_train_battle_win_next:
 {
-  DEFINE_LOCAL loop
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL multi_flag
   
@@ -479,6 +478,29 @@ sub_train_battle_win_next:
   _ME_PLAY( SEQ_ME_ASA )
   _ME_WAIT()
   
+  IF $play_mode == BSWAY_MODE_COMM_MULTI THEN
+    _CALL sub_train_battle_win_next_menu //通信専用
+  ELSIF $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
+    _CALL sub_train_battle_win_next_menu //通信専用
+  ELSE
+    _CALL sub_train_battle_win_next_menu //通常メニュー
+  ENDIF
+}
+_RET
+
+//--------------------------------------------------------------
+//  対戦　勝ち　メニュー処理　シングル、ダブル、マルチ、WiFi
+//--------------------------------------------------------------
+sub_train_battle_win_next_menu:
+{
+  DEFINE_LOCAL loop
+  DEFINE_LOCAL play_mode
+  DEFINE_LOCAL multi_flag
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_CHK_MODE_MULTI, play_mode, BSW_NULL, multi_flag )
+  
   $loop = 1
   
   WHILE $loop == 1
@@ -488,6 +510,7 @@ sub_train_battle_win_next:
     _BSUBWAY_TOOL( BSWTOOL_GET_NEXT_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     _NUMBER( 1, SCWK_ANSWER, 1 )
     _SYSWIN_MSG_DOWN( msg_c04r0110_01 )
+    
     
     _BMPMENU_INIT_EX( 21, 8, 0, 0, SCWK_ANSWER ) //Bキャンセル無効
     _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
@@ -556,9 +579,108 @@ sub_train_battle_win_next:
       ENDIF
     ENDSWITCH
   ENDWHILE
-  
-  _RET
 }
+_RET
+
+//--------------------------------------------------------------
+//  対戦　勝ち　メニュー処理　通信マルチ
+//--------------------------------------------------------------
+sub_train_battle_win_next_menu_comm_multi:
+{
+  DEFINE_LOCAL loop
+  DEFINE_LOCAL play_mode
+  DEFINE_LOCAL multi_flag
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_CHK_MODE_MULTI, play_mode, BSW_NULL, multi_flag )
+  
+  $loop = 1
+  
+  WHILE $loop == 1
+    //ただいま？連勝…次は？両目　対戦を続けますか
+    _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
+    _NUMBER( 0, SCWK_ANSWER, 4 )
+    _BSUBWAY_TOOL( BSWTOOL_GET_NEXT_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+    _NUMBER( 1, SCWK_ANSWER, 1 )
+    _SYSWIN_MSG_DOWN( msg_c04r0110_01 )
+    
+    _BMPMENU_INIT_EX( 21, 8, 0, 0, SCWK_ANSWER ) //Bキャンセル無効
+    _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
+    _BMPMENU_MAKE_LIST( msg_c04r0110_05, 3 )  //リタイア
+    _BMPMENU_START()
+    _SYSWIN_CLOSE()
+    
+    $LOCALWORK0 = 0
+    
+    SWITCH $SCWK_ANSWER
+    CASE 0 THEN //続ける
+      //お友達の選択を待っています
+      _SYSWIN_MSG_DOWN( msg_c04r0110_10 )
+      
+      //選択待ち通信同期
+      _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_NEXT_SELECT, BSW_NULL, BSW_NULL )
+    
+      //選択結果送信
+      _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, 2, LOCALWORK0, BSW_NULL )
+      //選択結果受信
+      _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, 2, BSW_NULL, LOCALWORK0 )
+      
+      _SYSWIN_CLOSE()
+      
+      IF $LOCALWORK0 == 1 THEN //リタイア
+        _SYSWIN_MSG_DOWN( msg_c04r0110_12 )
+        _TIME_WAIT( 30 )
+        _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RETIRE_WAIT, BSW_NULL, BSW_NULL )
+        _SYSWIN_CLOSE()
+        _CALL sub_retmap_lose_retire //受付へ
+      ELSE //続ける
+        //移動アニメ
+        _CALL sub_anm_jiki_next_car_multi
+        //フェードアウト
+        _MAP_FADE_BLACK_OUT()
+        _MAP_FADE_END_CHECK()
+        //OBJバニッシュ
+        _CALL sub_set_obj_vanish_flag
+        //シーン制御を継続に
+        $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_CONTINUE
+        //マップチェンジ
+        _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
+      ENDIF
+      
+      $loop = 0
+    CASE 3 THEN //リタイア
+      $LOCALWORK0 = 1
+      
+      //リタイアするか
+      _SYSWIN_MSG_DOWN( msg_c04r0110_06 )
+      _YES_NO_WIN( SCWK_ANSWER )
+      _SYSWIN_CLOSE()
+      
+      IF $SCWK_ANSWER == 0 THEN
+        //お友達の選択を待っています
+        _SYSWIN_MSG_DOWN( msg_c04r0110_10 )
+      
+        //選択待ち通信同期
+        _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_NEXT_SELECT, BSW_NULL, BSW_NULL )
+    
+        //選択結果送信
+        _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, 2, LOCALWORK0, BSW_NULL )
+        //選択結果受信
+        _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, 2, BSW_NULL, LOCALWORK0 )
+        
+        //戻ります
+        _SYSWIN_MSG_DOWN( msg_c04r0110_12 )
+        _TIME_WAIT( 30 )
+        _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RETIRE_WAIT, BSW_NULL, BSW_NULL )
+        _SYSWIN_CLOSE()
+        _CALL sub_retmap_lose_retire //受付へ
+        $loop = 0
+      ENDIF
+    ENDSWITCH
+  ENDWHILE
+}
+_RET
 
 //--------------------------------------------------------------
 //  対戦　勝ち　PC回復移動アニメ
@@ -568,8 +690,8 @@ ev_anm_train_battle_win_heal:
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_train_battle_win_heal_trainer )
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_train_battle_win_heal_jiki )
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 _ANIME_LABEL  anm_train_battle_win_heal_trainer
   _ANIME_DATA  AC_WAIT_4F,1
@@ -593,8 +715,8 @@ ev_anm_train_battle_win_heal_multi:
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_train_battle_win_heal_jiki )
   _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_train_battle_win_heal_multi_pt )
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 _ANIME_LABEL  anm_train_battle_win_heal_multi_tr0
   _ANIME_DATA  AC_WAIT_4F,1
@@ -622,16 +744,16 @@ sub_anm_jiki_next_car:
 {
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_jiki_next_car )
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 sub_anm_jiki_next_car_multi:
 {
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_jiki_next_car )
   _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_jiki_next_car_pt )
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 _ANIME_LABEL anm_jiki_next_car
   _ANIME_DATA AC_WALK_D_8F,2
@@ -666,8 +788,8 @@ sub_battle_single_double:
   
   //結果をSCWK_ANSWERへ
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  マルチバトル
@@ -685,16 +807,30 @@ sub_battle_multi:
   
   //結果をSCWK_ANSWERへ
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  通信マルチバトル
 //--------------------------------------------------------------
 sub_battle_comm_multi:
 {
-  _RET
+  //対戦前台詞
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //互いに近づく
+  _CALL sub_anm_battle_start_multi
+  
+  //通信同期
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_BATTLE_START, BSW_NULL, BSW_NULL )
+  
+  //バトル呼び出し
+  _BSUBWAY_TOOL( BSWSUB_LOCAL_BTL_CALL, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //結果をSCWK_ANSWERへ
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
 }
+_RET
 
 //======================================================================
 //  共通処理
@@ -708,16 +844,31 @@ sub_set_obj_vanish_flag:
   _FLAG_SET( FV_C04R0110_TRAINER )
   _FLAG_SET( FV_C04R0110_PLAYER )
 */
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  敗北、リタイア共通　受付戻り
 //--------------------------------------------------------------
 sub_retmap_lose_retire:
 {
+  DEFINE_LOCAL play_mode
+  
   //受付制御　ゲーム後に
   $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
+  
+  //ゲームモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //通信マルチの際は終了同期
+  IF $play_mode == BSWAY_MODE_COMM_MULTI || $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
+	  _TIME_WAIT( 30 )
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_EXIT_WAIT, BSW_NULL, BSW_NULL )
+    
+    //通信切断
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_SIO_END, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
+  ENDIF
   
   //マップフェードアウト
   _MAP_FADE_BLACK_OUT()
@@ -728,8 +879,8 @@ sub_retmap_lose_retire:
   
   //マップ遷移　受付へ戻る
   _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
-  _RET
 }
+_RET
 
 //======================================================================
 //  共通処理　アニメ
@@ -742,8 +893,8 @@ sub_anm_battle_start:
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_battle_start_jiki )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_battle_start_trainer )
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  アニメ　自機とトレーナーが近づく　マルチ用
@@ -755,8 +906,8 @@ sub_anm_battle_start_multi:
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_battle_start_trainer )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_1, anm_battle_start_trainer )
   _OBJ_ANIME_WAIT()
-  _RET
 }
+_RET
 
 _ANIME_LABEL  anm_battle_start_jiki
   _ANIME_DATA  AC_WALK_R_8F,1

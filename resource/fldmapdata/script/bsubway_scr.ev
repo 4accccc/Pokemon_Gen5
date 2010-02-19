@@ -230,8 +230,8 @@ sub_receipt_challenge:
     _CALL sub_receipt_challenge_wifi
   ENDSWITCH
   
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　挑戦処理　シングル、ダブル
@@ -285,8 +285,8 @@ sub_receipt_challenge_single_double:
   //マップ遷移
   _CALL sub_receipt_common_map_change_train
   
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　挑戦処理　マルチ
@@ -340,8 +340,8 @@ sub_receipt_challenge_multi:
     _CALL sub_receipt_challenge_multi_comm
   ENDIF
   
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　挑戦処理　AIマルチ
@@ -397,8 +397,8 @@ sub_receipt_challenge_multi_ai:
   //マップ遷移
   _CALL sub_receipt_common_map_change_train
   
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　挑戦処理　通信マルチ
@@ -479,10 +479,10 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //お互いが選んだポケモンデータを交換
-  _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSW_NULL, BSW_NULL, BSW_NULL )
-  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSW_NULL, BSW_NULL, ret )
+  _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, 0, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, 0, BSW_NULL, ret )
   
-  SWITCH $SCWK_ANSWER
+  SWITCH $ret
   CASE 1 THEN //同じポケモン 1
     _SYSWIN_MSG_DOWN( msg_bsw_scr_54 )
   CASE 2 THEN //同じポケモン 2
@@ -491,6 +491,8 @@ sub_receipt_challenge_multi_comm:
     _SYSWIN_MSG_DOWN( msg_bsw_scr_54 )
   ENDSWITCH
   
+  $ret = 0 //kari
+
   IF $ret != 0 THEN
     _CALL sub_receipt_common_comm_exit
     _RET
@@ -541,8 +543,8 @@ sub_receipt_challenge_multi_comm:
   //マップ遷移
   _CALL sub_receipt_common_map_change_train
   
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　挑戦処理　通信マルチ　リーダー接続
@@ -562,8 +564,8 @@ sub_receipt_challenge_multi_comm_connect_leader:
     $SCWK_ANSWER = FALSE
   ENDSWITCH
   
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　挑戦処理　通信マルチ　グループ接続
@@ -581,8 +583,8 @@ sub_receipt_challenge_multi_comm_connect_group:
     $SCWK_ANSWER = FALSE
   ENDSWITCH
   
-  _RET
 }
+_RET
 
 //--------------------------------------------------------------
 //  受付　挑戦処理　wifi
@@ -632,8 +634,8 @@ sub_receipt_challenge_wifi:
   //マップ遷移
   _CALL sub_receipt_common_map_change_train
 
-  _RET
 }
+_RET
 
 //=====================================================================
 //  受付　挑戦再開
@@ -699,8 +701,8 @@ ev_bsw_game_continue:
   _CALL sub_receipt_common_map_change_train
   
   _CHG_LOCAL_SCR
-  _RET
 }
+_RET
 
 //=====================================================================
 //  受付　レポートエラー
@@ -717,8 +719,8 @@ ev_bsw_report_error:
   _CALL sub_receipt_common_report_error
   
   _CHG_LOCAL_SCR
-  _END
 }
+_END
 
 //=====================================================================
 //  受付　対戦キャンセル戻り

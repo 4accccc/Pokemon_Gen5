@@ -778,7 +778,6 @@ static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk )
     (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_ERROR;
     return( TRUE );
   }
-   
   
   return( FALSE );
 }
