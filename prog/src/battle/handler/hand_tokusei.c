@@ -5993,15 +5993,12 @@ static void handler_Sousyoku_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 // ダメージワザ回復化決定ハンドラ
 static void handler_Sousyoku_Fix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_DmgToRecover_Fix( flowWk, pokeID, work, 4 );
-  {
-    BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+  BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
 
-    param->poke_cnt = 1;
-    param->pokeID[0] = pokeID;
-    param->rankType = BPP_SP_ATTACK;
-    param->rankVolume = 1;
-  }
+  param->poke_cnt = 1;
+  param->pokeID[0] = pokeID;
+  param->rankType = BPP_SP_ATTACK;
+  param->rankVolume = 1;
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sousyoku( u32* numElems )
 {
