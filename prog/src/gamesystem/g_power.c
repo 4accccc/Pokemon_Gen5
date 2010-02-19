@@ -530,21 +530,19 @@ u32 GPOWER_Calc_Money(u32 money)
 /**
  * Gƒpƒ[ŒvŽZF•ßŠl—¦
  *
- * @param   hokakuritu		“G‚ÌHP‚Æƒ{[ƒ‹‚Å‚ÌŒvŽZŒã‚Ì•ßŠl—¦(ãŒÀF255%)
+ * @param   hokakuritu		“G‚ÌHP‚Æƒ{[ƒ‹‚Å‚ÌŒvŽZŒã‚Ì•ßŠl—¦
  *
- * @retval  u32		Gƒpƒ[‰e‹¿Œã‚Ì•ßŠl—¦(ãŒÀF255%)
+ * @retval  fx32		Gƒpƒ[‰e‹¿Œã‚Ì•ßŠl—¦
  */
 //==================================================================
-u32 GPOWER_Calc_Capture(u32 hokakuritu)
+fx32 GPOWER_Calc_Capture(fx32 hokakuritu)
 {
-  u32 calc;
+  fx64 calc;
   
   if(GPowerSys.occur_power[GPOWER_TYPE_CAPTURE_UP] != GPOWER_ID_NULL){
-    calc = ((GPowerSys.powerdata_data[GPOWER_TYPE_CAPTURE_UP] * hokakuritu) + 0x80) >> 8;
-    if(calc > 255){
-      calc = 255;
-    }
-    return calc;
+    calc = GPowerSys.powerdata_data[GPOWER_TYPE_CAPTURE_UP];
+    calc = ((calc * hokakuritu) + 0x80) >> 8;
+    return (fx32)calc;
   }
   return hokakuritu;
 }

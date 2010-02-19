@@ -57,6 +57,6 @@ extern s32 GPOWER_Calc_HPRestore(POKEPARTY *party);
 extern s32 GPOWER_Calc_PPRestore(POKEPARTY *party);
 extern u32 GPOWER_Calc_Exp(u32 exp);
 extern u32 GPOWER_Calc_Money(u32 money);
-extern u32 GPOWER_Calc_Capture(u32 hokakuritu);
+extern fx32 GPOWER_Calc_Capture(fx32 hokakuritu);
 extern void GPOWER_Calc_Distribution(void);
 
