@@ -2708,7 +2708,10 @@ static BOOL CalcBallEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, co
   //  OS_TPrintf("捕獲値：最終 %08x(%d)\n",
 //          capture_value, capture_value>>FX32_SHIFT);
 
+    // Ｇパワー補正
+    capture_value = GPOWER_Calc_Capture( capture_value );
 
+    // クリティカルチェック
     *fCritical = CheckCaptureCritical( wk, capture_value );
 
     if( capture_value >= FX32_CONST(255) ){
