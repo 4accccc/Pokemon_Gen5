@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T14:19:50"/>
+	<create user="matsushima" host="W00181" date="2010-02-19T14:28:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="186" right="1992" bottom="814" maximized="no" rayout="Vertical2">
+	<dialog left="22" top="127" right="735" bottom="804" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="1" style="0000" width="538"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="551"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="705"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -332,6 +332,289 @@
 チュリネ</attribute>
 		<language name="JPN" width="256">ちゅりゅりゅ♪</language>
 		<language name="JPN_KANJI" width="256">ちゅりゅりゅ♪</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_00" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●移動ポケモンイベント起動前のセリフ。
+
+●台所に立っている。</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">やさいを　たっぷり　にこんで
+おいしい　スープを　つくるんじゃー</language>
+		<language name="JPN_KANJI" width="256">やさいを　たっぷり　にこんで
+おいしい　スープを　つくるんじゃー</language>
+	</row>
+
+	<row id="msg_r07r0301_oldman_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●移動ポケモンイベント起動前のセリフ。
+
+●テーブルの右脇に配置。</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
+		<language name="JPN" width="256">りょうりを　している　ときは
+おしゃべりが　とまるからな[BE:00:ページ切り替え（行送り）]
+わしも　らくちんなんじゃよ</language>
+		<language name="JPN_KANJI" width="256">りょうりを　している　ときは
+おしゃべりが　とまるからな[BE:00:ページ切り替え（行送り）]
+わしも　らくちんなんじゃよ</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>・主人公をテーブルまで移動させてから、セリフ。
+
+・「はい／いいえ」選択肢
+
+●はい　→msg_r07r0301_oldwoman_02
+●いいえ→msg_r07r0301_oldwoman_03</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">わけえ　からってな
+つめてー　あめに　うたれとったら[BE:00:ページ切り替え（行送り）]
+カゼさんに　なっちまうぞー[BE:01:ページ切り替え（クリア）]
+スープでも　のむかー？
+くちに　あうか　わからんがのー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わけえ　からってな
+つめてー　あめに　うたれとったら[BE:00:ページ切り替え（行送り）]
+カゼさんに　なっちまうぞー[BE:01:ページ切り替え（クリア）]
+スープでも　のむかー？
+くちに　あうか　わからんがのー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●「はい」の場合
+
+・喋った後、台所まで移動。
+
+●ｗの場合はmsg_r07r0301_oldwoman_04w
+●ｂの場合はmsg_r07r0301_oldwoman_04b</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">それで　ええのじゃー
+わかい　うちは　えんりょなんか[BE:00:ページ切り替え（行送り）]
+するもんじゃ　ねえぞー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">それで　ええのじゃー
+わかい　うちは　えんりょなんか[BE:00:ページ切り替え（行送り）]
+するもんじゃ　ねえぞー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●「いいえ」の場合
+
+・喋った後、台所まで移動。
+
+●ｗの場合はmsg_r07r0301_oldwoman_04w
+●ｂの場合はmsg_r07r0301_oldwoman_04b</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">そう　いわんと　すこし　のめばええー[BE:01:ページ切り替え（クリア）]
+ばあちゃんの　はなしに
+すこし　つきあって　くれんかのー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">そう　いわんと　すこし　のめばええー[BE:01:ページ切り替え（クリア）]
+ばあちゃんの　はなしに
+すこし　つきあって　くれんかのー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_04w" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●ｗのセリフ
+
+・喋ったあと主人公の隣（上）まで移動。
+</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">イッシュちほう　にはなー
+こんな　あらしを　おこす[BE:00:ページ切り替え（行送り）]
+カザカミ　って　なまえの[BE:00:ページ切り替え（行送り）]
+ポケモンさんが　おるんじゃよー[BE:01:ページ切り替え（クリア）]
+このちほうを　ぐるぐる　とびまわって
+すんげー　かぜと　あめを[BE:00:ページ切り替え（行送り）]
+ざんざか　ふらしているんじゃー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">イッシュちほう　にはなー
+こんな　あらしを　おこす[BE:00:ページ切り替え（行送り）]
+カザカミ　って　なまえの[BE:00:ページ切り替え（行送り）]
+ポケモンさんが　おるんじゃよー[BE:01:ページ切り替え（クリア）]
+このちほうを　ぐるぐる　とびまわって
+すんげー　かぜと　あめを[BE:00:ページ切り替え（行送り）]
+ざんざか　ふらしているんじゃー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_04b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●ｂのセリフ
+
+・喋ったあと主人公の隣（上）まで移動。</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">イッシュちほう　にはなー
+こんな　あらしを　おこす[BE:00:ページ切り替え（行送り）]
+ライカミ　って　なまえの[BE:00:ページ切り替え（行送り）]
+ポケモンさんが　おるんじゃよー[BE:01:ページ切り替え（クリア）]
+このちほうを　ぐるぐる　とびまわって
+すんげー　かぜと　かみなりを[BE:00:ページ切り替え（行送り）]
+ごろんごろん　ならすんじゃー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">イッシュちほう　にはなー
+こんな　あらしを　おこす[BE:00:ページ切り替え（行送り）]
+ライカミ　って　なまえの[BE:00:ページ切り替え（行送り）]
+ポケモンさんが　おるんじゃよー[BE:01:ページ切り替え（クリア）]
+このちほうを　ぐるぐる　とびまわって
+すんげー　かぜと　かみなりを[BE:00:ページ切り替え（行送り）]
+ごろんごろん　ならすんじゃー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>・喋った後、小さなアクション（手渡し）
+・主人公も応じてアクション</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">ほれ　のんでみなさいー
+あったまるぞー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ほれ　のんでみなさいー
+あったまるぞー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07r0301_narration_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>・「！」表示後、メッセージ。</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">やさいが　たっぷりの　スープ！
+とっても　おいしい！</language>
+		<language name="JPN_KANJI" width="256">やさいが　たっぷりの　スープ！
+とっても　おいしい！</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>・続けてこのセリフ。</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">だいじに　そだてとった　さくもつが
+おおあめで　ダメに　なるんよー[BE:01:ページ切り替え（クリア）]
+ほんとに　こまった　ポケモンじゃー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">だいじに　そだてとった　さくもつが
+おおあめで　ダメに　なるんよー[BE:01:ページ切り替え（クリア）]
+ほんとに　こまった　ポケモンじゃー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>・フキダシを出し直して、このセリフを喋る。</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">つまかえようと　おもってもなー
+あっちこっち　とびまわっとって[BE:00:ページ切り替え（行送り）]
+みつけたー　おもっても[BE:00:ページ切り替え（行送り）]
+すぐに　にげて　しまうんじゃー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">つまかえようと　おもってもなー
+あっちこっち　とびまわっとって[BE:00:ページ切り替え（行送り）]
+みつけたー　おもっても[BE:00:ページ切り替え（行送り）]
+すぐに　にげて　しまうんじゃー[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>・フキダシを出し直して、このセリフを喋る。
+
+●イベント起動後～捕獲まで、
+このセリフを繰り返します。</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">１にち　かけて　イッシュちほうを
+ぐるっと　１しゅう　するんじゃー[BE:01:ページ切り替え（クリア）]
+あさは　みなみの　とち
+よるは　きたの　とちに　いるんじゃと[BE:01:ページ切り替え（クリア）]
+このあたりは　ゆうがた　ごろに
+やってくるんじゃよー</language>
+		<language name="JPN_KANJI" width="256">１にち　かけて　イッシュちほうを
+ぐるっと　１しゅう　するんじゃー[BE:01:ページ切り替え（クリア）]
+あさは　みなみの　とち
+よるは　きたの　とちに　いるんじゃと[BE:01:ページ切り替え（クリア）]
+このあたりは　ゆうがた　ごろに
+やってくるんじゃよー</language>
+	</row>
+
+	<row id="msg_r07r0301_oldwoman_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>●移動ポケモン捕獲後～ツチノカミイベント起動
+までのセリフ。
+
+●ツチノカミイベント起動後に話し掛けると、
+
+msg_r07r0301_oldwoman_00
+
+になります。</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
+		<language name="JPN" width="256">どこぞの　だれかが
+ポケモンさんを　こらしめたようじゃー[BE:01:ページ切り替え（クリア）]
+もしかしたら
+あの　ポケモンさんかのー？</language>
+		<language name="JPN_KANJI" width="256">どこぞの　だれかが
+ポケモンさんを　こらしめたようじゃー[BE:01:ページ切り替え（クリア）]
+もしかしたら
+あの　ポケモンさんかのー？</language>
+	</row>
+
+	<row id="msg_r07r0301_oldman_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●ｗのセリフ。
+●移動ポケモンイベントが起動後のセリフ。
+</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
+		<language name="JPN" width="256">わしが　ムッキムキの　びだんし
+ばあさんも　ピッチピチの　むすめっこ[BE:00:ページ切り替え（行送り）]
+そんな　じだいの　はなしじゃ[BE:01:ページ切り替え（クリア）]
+すぐ　ちかくで　ある　ポケモンが
+あめと　かぜで　わるさする[BE:00:ページ切り替え（行送り）]
+カザカミを　こらしめたんじゃ[BE:01:ページ切り替え（クリア）]
+それから　３０ねんほどは
+カザカミも　おとなしかったんじゃが[BE:00:ページ切り替え（行送り）]
+このあたりに　かくれておったんじゃな</language>
+		<language name="JPN_KANJI" width="256">わしが　ムッキムキの　びだんし
+ばあさんも　ピッチピチの　むすめっこ[BE:00:ページ切り替え（行送り）]
+そんな　じだいの　はなしじゃ[BE:01:ページ切り替え（クリア）]
+すぐ　ちかくで　ある　ポケモンが
+あめと　かぜで　わるさする[BE:00:ページ切り替え（行送り）]
+カザカミを　こらしめたんじゃ[BE:01:ページ切り替え（クリア）]
+それから　３０ねんほどは
+カザカミも　おとなしかったんじゃが[BE:00:ページ切り替え（行送り）]
+このあたりに　かくれておったんじゃな</language>
+	</row>
+
+	<row id="msg_r07r0301_oldman_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●ｂのセリフ。
+●移動ポケモンイベントが起動後のセリフ。
+</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
+		<language name="JPN" width="256">わしが　ムッキムキの　びだんし
+ばあさんも　ピッチピチの　むすめっこ[BE:00:ページ切り替え（行送り）]
+そんな　じだいの　はなしじゃ[BE:01:ページ切り替え（クリア）]
+すぐ　ちかくで　ある　ポケモンが
+あめと　カミナリで　わるさする[BE:00:ページ切り替え（行送り）]
+ライカミを　こらしめたんじゃ[BE:01:ページ切り替え（クリア）]
+それから　３０ねんほどは
+ライカミも　おとなしかったんじゃが[BE:00:ページ切り替え（行送り）]
+このあたりに　かくれておったんじゃな</language>
+		<language name="JPN_KANJI" width="256">わしが　ムッキムキの　びだんし
+ばあさんも　ピッチピチの　むすめっこ[BE:00:ページ切り替え（行送り）]
+そんな　じだいの　はなしじゃ[BE:01:ページ切り替え（クリア）]
+すぐ　ちかくで　ある　ポケモンが
+あめと　カミナリで　わるさする[BE:00:ページ切り替え（行送り）]
+ライカミを　こらしめたんじゃ[BE:01:ページ切り替え（クリア）]
+それから　３０ねんほどは
+ライカミも　おとなしかったんじゃが[BE:00:ページ切り替え（行送り）]
+このあたりに　かくれておったんじゃな</language>
+	</row>
+
+	<row id="msg_r07r0301_oldman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●イベント起動後～捕獲まで、繰り返しのセリフ。</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
+		<language name="JPN" width="256">あらしに　なっとる　みちに　いけば
+くさむらで　とびだしてくるじゃろう</language>
+		<language name="JPN_KANJI" width="256">あらしに　なっとる　みちに　いけば
+くさむらで　とびだしてくるじゃろう</language>
+	</row>
+
+	<row id="msg_r07r0301_oldman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●移動ポケモン捕獲後～ツチノカミイベント起動
+までのセリフ。
+
+●ツチノカミイベント起動後に話し掛けると、
+
+msg_r07r0301_oldman_00
+
+になります。</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
+		<language name="JPN" width="256">わるさを　していた　カザカミを
+こらしめる　ポケモンが　いるんじゃ[BE:01:ページ切り替え（クリア）]
+たしか…　１３ばんどうろ　あたりに
+その　ポケモンを　まつった　ほこらが[BE:00:ページ切り替え（行送り）]
+あったと　きいたことが　あるのう…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わるさを　していた　カザカミを
+こらしめる　ポケモンが　いるんじゃ[BE:01:ページ切り替え（クリア）]
+たしか…　１３ばんどうろ　あたりに
+その　ポケモンを　まつった　ほこらが[BE:00:ページ切り替え（行送り）]
+あったと　きいたことが　あるのう…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
