@@ -519,6 +519,7 @@ DOWSING_WORK*    DOWSING_Init(
     work->item_search_wk   = ItemSearchInit( work->heap_id, event_wk );
   }
 
+/*
   // OBJをアルファブレンドする
   {
     int obj_alpha = 8;
@@ -529,6 +530,15 @@ DOWSING_WORK*    DOWSING_Init(
         GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BG3,
         obj_alpha,
         16 - obj_alpha );
+  }
+*/
+  // OBJをアルファブレンドする
+  {
+    G2S_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_OBJ,
+        GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BG3,
+        1,
+        7 );  // 足して16にならないけど、デザイナーさん指定のこの数字で！
   }
 
   return work;
