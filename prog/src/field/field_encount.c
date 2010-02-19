@@ -622,6 +622,9 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
     BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );
     BTL_SETUP_Wild( bsp, enc->gdata, partyEnemy, &sit, BTL_RULE_SINGLE+efp->enc_double_f, heapID );
 
+    if( efp->location == ENC_LOCATION_GROUND_H ){
+      BATTLE_PARAM_SetBtlStatusFlag( bsp, BTL_STATUS_FLAG_HIGH_LV_ENC );
+    }
     GFL_HEAP_FreeMemory( pp );
     GFL_HEAP_FreeMemory( partyEnemy );
   }

@@ -153,6 +153,7 @@ typedef enum {
   BTL_STATUS_FLAG_LEGEND = 0x04,      ///<伝説級ポケモンとのエンカウントならTRUE
   BTL_STATUS_FLAG_MOVE_POKE = 0x08,   ///<移動ポケモンとのエンカウントならTRUE
   BTL_STATUS_FLAG_SYMBOL = 0x10,      ///<PDW連動のシンボルエンカウントならTRUE
+  BTL_STATUS_FLAG_HIGH_LV_ENC = 0x20, ///<野生ハイレベルエンカウントならTRUE
 }BTL_STATUS_FLAG;
 
 //-----------------------------------------------------------------------------------
