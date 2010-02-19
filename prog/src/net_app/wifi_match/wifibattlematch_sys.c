@@ -50,7 +50,6 @@
 ///	PROCエクスターン
 //=====================================
 
-
 //=============================================================================
 /**
  *					定数宣言
@@ -957,8 +956,8 @@ static void *LOGIN_AllocParam( HEAPID heapID, void *p_wk_adrs )
 { 
   WIFILOGIN_PARAM *p_param;
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
-  p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_PARAM) );
-	GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_PARAM) );
+  p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFILOGIN_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(WIFILOGIN_PARAM) );
 
   p_param->gamedata = p_wk->param.p_game_data;
   p_param->bg       = WIFILOGIN_BG_NORMAL;
