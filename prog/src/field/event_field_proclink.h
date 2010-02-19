@@ -59,6 +59,7 @@ typedef enum
   EVENT_PROCLINK_RESULT_EXIT,       //メニューも抜けて歩ける状態まで戻る
   EVENT_PROCLINK_RESULT_SKILL,      //メニューを抜けてフィールド技を使う
   EVENT_PROCLINK_RESULT_ITEM,       //メニューを抜けてアイテムを使う
+  EVENT_PROCLINK_RESULT_DOWSINGMACHINE,       //メニューを抜けてダウジングマシンを使いながら歩ける状態になる
 } EVENT_PROCLINK_RESULT;
 
 //=============================================================================

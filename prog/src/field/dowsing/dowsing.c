@@ -19,9 +19,12 @@
 #include "gamesystem/gamesystem.h"
 #include "sound/pm_sndsys.h"
 #include "infowin/infowin.h"
+#include "app/app_menu_common.h"
+#include "ui/touchbar.h"  // アイコンの座標や幅、アニメ番号の定数値だけ拝借
 #include "field/fldmmdl.h"
 #include "field/fldmmdl.h"
 #include "field/fieldmap.h"
+#include "field/zonedata.h"
 #include "../script_hideitem.h"
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h"  // FLAG_HIDEITEM_AREA_START参照のため
 
@@ -157,7 +160,7 @@ static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, const ITEM_DATA** data )
 enum
 {
   BG_PAL_NUM_S_REAR          = 1,
-  BG_PAL_NUM_S_TOUCHBAR      = 1,
+  BG_PAL_NUM_S_TOUCHBAR      = APP_COMMON_BAR_PLT_NUM,    // 1
   BG_PAL_NUM_S_INFOWIN       = 1,
 };
 // 位置
@@ -173,7 +176,7 @@ enum
 enum
 {
   OBJ_PAL_NUM_S_KIT          = 1,
-  OBJ_PAL_NUM_S_TOUCHBAR     = 3,
+  OBJ_PAL_NUM_S_TOUCHBAR     = APP_COMMON_BARICON_PLT_NUM,    // 3
 };
 // 位置
 enum
@@ -186,19 +189,27 @@ enum
 enum
 {
   SEQ_START,
-  SEQ_HEADBAR_APPEAR,
-  SEQ_HEADBAR_WAIT,
-  SEQ_HEADBAR_DISAPPEAR,
+  SEQ_,
   SEQ_END,
 };
+
+// タッチバーの状態
+typedef enum
+{
+  TB_STATE_WAIT,
+  TB_STATE_ANIM,
+  TB_STATE_TRIG,
+  TB_STATE_END,
+}
+TB_STATE;
 
 // 表示するOBJ
 enum
 {
-  KIT_ROD_L,
-  KIT_ROD_R,
-  KIT_ARROW,
-  KIT_ITEM,
+  KIT_ROD_L    = 0,
+  KIT_ROD_R    = 1,  // KIT_ROD_RはKIT_ROD_Lのリソースを借りているので、この順番は変更不可。
+  KIT_ARROW    = 2,
+  KIT_ITEM     = 3,
   KIT_MAX,
 };
 
@@ -255,7 +266,7 @@ kid_info[ROD_MAX] =
   {             7,            7,            7,         128,         104,     4 }, 
   {             4,            4,            4,         128,          88,    12 }, 
   {             6,            6,            6,         128,         104,    12 }, 
-  {             4,            5,            0,         128,         144,     0 },  // アイテム表示
+  {             4,            5,            0,         128,         152,     0 },  // アイテム表示
   {             5,            4,            0,         128,          88,     0 },  // 矢印非表示
 };
 
@@ -359,6 +370,13 @@ struct _DOWSING_WORK
 
   GFL_ARCUTIL_TRANSINFO       rear_tinfo;
 
+  GFL_ARCUTIL_TRANSINFO       touchbar_tinfo;
+  u32                         touchbar_ncl;
+  u32                         touchbar_ncg;
+  u32                         touchbar_nce;
+  GFL_CLWK*                   touchbar_clwk;
+  TB_STATE                    tb_state;
+
   u32                         kit_ncl;
   KIT_SET                     kit_set[KIT_MAX];
 
@@ -366,6 +384,7 @@ struct _DOWSING_WORK
 
   ROD                         rod_prev;
   ROD                         rod_curr;
+  ROD                         rod_draw_prev;
   u16                         item_prev;
   u16                         item_curr;
   s32                         player_grid_pos_x_prev;
@@ -472,10 +491,11 @@ DOWSING_WORK*    DOWSING_Init(
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Dowsing_VBlankFunc, work, 1 );
 
   // 初期状態にする
-  work->rod_prev     = ROD_MAX;  // 初期状態で描画が更新されるように、rod_currとは異なる値にしておく
-  work->rod_curr     = ROD_NONE;
-  work->item_prev    = ITEM_NONE;
-  work->item_curr    = ITEM_NONE;
+  work->rod_prev       = ROD_MAX;    // 初期状態で描画が更新されるように、rod_currとは異なる値にしておく
+  work->rod_curr       = ROD_NONE;
+  work->rod_draw_prev  = ROD_MAX;    // 初期状態で描画が更新されるように、rod_currとは異なる値にしておく
+  work->item_prev      = ITEM_NONE;
+  work->item_curr      = ITEM_NONE;
 
   work->player_grid_pos_x_prev    = 0;
   work->player_grid_pos_y_prev    = 0;
@@ -499,6 +519,18 @@ DOWSING_WORK*    DOWSING_Init(
     work->item_search_wk   = ItemSearchInit( work->heap_id, event_wk );
   }
 
+  // OBJをアルファブレンドする
+  {
+    int obj_alpha = 8;
+    G2S_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_OBJ,
+        //GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BD,
+        // ↑の設定だと、半透明設定していないOBJ(タッチバーのXアイコンや通信アイコン)まで、何故か半透明になってしまったので、下記のようにした。 
+        GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BG3,
+        obj_alpha,
+        16 - obj_alpha );
+  }
+
   return work;
 }
 
@@ -519,6 +551,11 @@ void DOWSING_Exit( DOWSING_WORK* work )
     OS_Printf( "DOWSING_Exit\n" );
   }
 #endif
+
+  // OBJをアルファブレンドしていたのを元に戻す
+  {
+    G2S_BlendNone();
+  }
 
   // アイテムサーチ
   ItemSearchExit( work->item_search_wk );
@@ -550,6 +587,8 @@ void DOWSING_Exit( DOWSING_WORK* work )
  *  @brief           update
  *
  *  @param[in,out]   
+ *  @param[in]       active    TRUE:下画面アクティブ状態
+ *                             FALSE:非アクティブ(他のイベント中：操作を受け付けてはいけない)
  *
  *  @retval          
  */
@@ -562,8 +601,11 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
   s32             player_grid_pos_x;
   s32             player_grid_pos_y;
   s32             player_grid_pos_z;
+  u32             zone_id;
 
-  BOOL            search = FALSE;
+  BOOL            search;
+
+  if( !active ) return;
 
   // 前回の状態を覚えておく
   work->rod_prev = work->rod_curr;
@@ -577,6 +619,20 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
   player_grid_pos_x = SIZE_GRID_FX32( player_pos->x );
   player_grid_pos_y = SIZE_GRID_FX32( player_pos->y );
   player_grid_pos_z = SIZE_GRID_FX32( player_pos->z );
+
+  {
+    GAMEDATA*     gamedata    = GAMESYSTEM_GetGameData( gs_wk );
+    MAP_MATRIX*   map_mat     = GAMEDATA_GetMapMatrix( gamedata );
+
+    zone_id = MAP_MATRIX_ZONE_ID_NON;
+
+    if( MAP_MATRIX_CheckVectorPosRange( map_mat, player_pos->x, player_pos->z ) == TRUE )
+    {
+      zone_id = MAP_MATRIX_GetVectorPosZoneID( map_mat, player_pos->x, player_pos->z );
+    }
+  }
+  
+  search = FALSE;
 
   if( work->state == STATE_NEED_SEARCH )
   {
@@ -602,11 +658,11 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
   if( search ) 
   {
     u32 distance_sq_min = 0xFFFFFFFF;
-    const ITEM_DATA* distance_min_item_data = NULL;
+    const ITEM_DATA* distance_min_item_data = NULL;  // 最小を見付けたときNULLでなくなる
+    u16 distance_min_table_idx;
     
     s32 rect_x_min = player_grid_pos_x - AREA_ORIGIN_X;  // rect_x_min<= <rect_x_max
-    s32 rect_x_max = player_grid_pos_x + (AREA_WIDTH -1) - AREA_ORIGIN_X;
-                     // 右端1列はROD_NONEになっているので、サーチ範囲の矩形からはずしておく
+    s32 rect_x_max = player_grid_pos_x + AREA_WIDTH - AREA_ORIGIN_X;
     s32 rect_z_min = player_grid_pos_z - AREA_ORIGIN_Y;  // rect_z_min<= <rect_z_max
     s32 rect_z_max = player_grid_pos_z + AREA_HEIGHT - AREA_ORIGIN_Y;
 
@@ -615,9 +671,42 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     
     while( ItemSearchGet( work->item_search_wk, &item_data ) )
     {
+      u16 table_idx;  // item_rod_tableのインデックス
+
+      // 自分のいるゾーンIDとアイテムのゾーンIDが同じか
+      if( zone_id == MAP_MATRIX_ZONE_ID_NON )
+      {
+        continue;
+      }
+      else
+      {
+         if( zone_id != (u32)(item_data->zone_id) )
+         {
+           if(    (item_data->world_flag)
+               && ZONEDATA_IsFieldMatrixID( (u16)zone_id ) )
+           {
+             // ゾーンIDは違うが、フィールドマップなので同じ座標系
+           }
+           else
+           {
+             continue;
+           }
+         }
+      }
+
       // 自分を囲むサーチ範囲の矩形の中にあるか
       if( !(    rect_x_min<=item_data->x && item_data->x<rect_x_max
              && rect_z_min<=item_data->z && item_data->z<rect_z_max ) )
+      {
+        continue;
+      }
+
+      // 自分を囲むサーチ範囲の矩形の中にあるので、item_rod_tableのインデックスを求められる
+      table_idx =   ( item_data->z - player_grid_pos_z + AREA_ORIGIN_Y ) * AREA_WIDTH \
+                  + ( item_data->x - player_grid_pos_x + AREA_ORIGIN_X );
+
+      // その場所はROD_NONE(NN)ではないか
+      if( work->item_rod_table[ table_idx ] == ROD_NONE )
       {
         continue;
       }
@@ -630,6 +719,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
         {
           distance_sq_min = distance_sq;
           distance_min_item_data = item_data;
+          distance_min_table_idx = table_idx;
         }
       }
     }
@@ -637,9 +727,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     // 今回の状態
     if( distance_min_item_data )
     {
-      u16 idx =   ( distance_min_item_data->z - player_grid_pos_z + AREA_ORIGIN_Y ) * AREA_WIDTH \
-                + ( distance_min_item_data->x - player_grid_pos_x + AREA_ORIGIN_X );
-      work->rod_curr = work->item_rod_table[ idx ];
+      work->rod_curr = work->item_rod_table[ distance_min_table_idx ];
       work->item_curr = distance_min_item_data->index;
     }
     else
@@ -649,7 +737,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     }
   }
 
-  // 今回の状態に必要な処理を行う
+  // 今回の状態に必要な音の処理を行う
   {
     BOOL can_play_se = TRUE;
 
@@ -744,15 +832,6 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
 
   // タッチバー
   Dowsing_TouchbarMain( work );
-
-  // デバッグ
-  {
-    int trg = GFL_UI_KEY_GetTrg();
-    if( trg & PAD_BUTTON_X )
-    {
-      FIELD_SUBSCREEN_SetAction( work->subscreen_wk, FIELD_SUBSCREEN_ACTION_DOWSING_EXIT );
-    }
-  }
 }
 
 
@@ -761,14 +840,18 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
  *  @brief           draw
  *
  *  @param[in,out]   
+ *  @param[in]       active    TRUE:下画面アクティブ状態
+ *                             FALSE:非アクティブ(他のイベント中：操作を受け付けてはいけない)
  *
  *  @retval          
  */
 //------------------------------------------------------------------
 void DOWSING_Draw( DOWSING_WORK* work, BOOL active )
 {
+  if( !active ) return;
+
   // 前回のOBJの表示と今回のOBJの表示が異なる場合、描画を更新する
-  if( work->rod_prev != work->rod_curr )
+  if( work->rod_draw_prev != work->rod_curr )
   {
     GFL_CLACTPOS  pos;
 
@@ -785,6 +868,9 @@ void DOWSING_Draw( DOWSING_WORK* work, BOOL active )
     GFL_CLACT_WK_SetAnmSeq( work->kit_set[KIT_ROD_L].clwk, kid_info[work->rod_curr].rod_l_anmseq );
     GFL_CLACT_WK_SetAnmSeq( work->kit_set[KIT_ROD_R].clwk, kid_info[work->rod_curr].rod_r_anmseq );
     GFL_CLACT_WK_SetAnmSeq( work->kit_set[KIT_ARROW].clwk, kid_info[work->rod_curr].arrow_anmseq );
+
+    // 今回のOBJの表示を次の前回のOBJの表示として覚えておく
+    work->rod_draw_prev = work->rod_curr;
   }
 }
 
@@ -812,11 +898,18 @@ static void Dowsing_GraphicInit( DOWSING_WORK* work )
 	//BG面設定
 	{	
 		int i;
+    for( i=GFL_BG_FRAME0_S; i<=GFL_BG_FRAME3_S; i++ )
+    {
+			GFL_BG_SetVisible( i, VISIBLE_OFF );
+    }
 		for( i = 0; i < NELEMS(sc_bgsetup); i++ )
 		{	
 			GFL_BG_SetBGControl( sc_bgsetup[i].frame, &sc_bgsetup[i].bgcnt_header, sc_bgsetup[i].mode );
 			GFL_BG_ClearFrame( sc_bgsetup[i].frame );
 			GFL_BG_SetVisible( sc_bgsetup[i].frame, sc_bgsetup[i].is_visible );
+
+      GFL_BG_SetScroll( sc_bgsetup[i].frame, GFL_BG_SCROLL_X_SET, 0 );
+      GFL_BG_SetScroll( sc_bgsetup[i].frame, GFL_BG_SCROLL_Y_SET, 0 );
 		}
 	}
 
@@ -920,18 +1013,29 @@ static void Dowsing_ObjInit( DOWSING_WORK* work )
   {
     GFL_CLWK_DATA  clwk_data = { 0 };  // 0で初期化
 
-    work->kit_set[i].ncg = GFL_CLGRP_CGR_Register(
-               handle,
-	             kit_data[i].cgr,
-               FALSE,
-               CLSYS_DRAW_SUB,
-               work->heap_id );
+    if( i == KIT_ROD_R )  // KIT_ROD_L のを借りる
+    {
+      work->kit_set[i].ncg = work->kit_set[KIT_ROD_L].ncg;
+      work->kit_set[i].nce = work->kit_set[KIT_ROD_L].nce;
+    }
+    else
+    {
+      work->kit_set[i].ncg = GFL_CLGRP_CGR_Register(
+                 handle,
+	               kit_data[i].cgr,
+                 FALSE,
+                 CLSYS_DRAW_SUB,
+                 work->heap_id );
 
-    work->kit_set[i].nce = GFL_CLGRP_CELLANIM_Register(
-               handle,
-	             kit_data[i].cell,
-	             kit_data[i].anim, 
-               work->heap_id );
+      work->kit_set[i].nce = GFL_CLGRP_CELLANIM_Register(
+                 handle,
+	               kit_data[i].cell,
+	               kit_data[i].anim, 
+                 work->heap_id );
+    }
+
+    clwk_data.softpri = i;  // OBJのアルファブレンドはできないので、どれが上に表示されるか、優先度を決めておく。
+                            // TWL_ProgramingManual.pdf    6.7 カラー特殊効果    OBJ 同士のαブレンディングはできません。
 
     work->kit_set[i].clwk = GFL_CLACT_WK_Create(
                             work->clunit,
@@ -943,6 +1047,7 @@ static void Dowsing_ObjInit( DOWSING_WORK* work )
                             work->heap_id );
     
     GFL_CLACT_WK_SetAutoAnmFlag( work->kit_set[i].clwk, TRUE );
+    GFL_CLACT_WK_SetObjMode( work->kit_set[i].clwk, GX_OAM_MODE_XLU );  // 半透明OBJ
   }
   
   GFL_ARC_CloseDataHandle( handle );
@@ -965,9 +1070,15 @@ static void Dowsing_ObjExit( DOWSING_WORK* work )
   for( i=0; i<KIT_MAX; i++ )
   {
     GFL_CLACT_WK_Remove( work->kit_set[i].clwk );
-    
-    GFL_CLGRP_CELLANIM_Release( work->kit_set[i].nce );
-    GFL_CLGRP_CGR_Release( work->kit_set[i].ncg );
+   
+    if( i == KIT_ROD_R )  // KIT_ROD_L のを借りているだけなので、何もしない
+    {
+    }
+    else
+    {
+      GFL_CLGRP_CELLANIM_Release( work->kit_set[i].nce );
+      GFL_CLGRP_CGR_Release( work->kit_set[i].ncg );
+    }
   }
 
   GFL_CLGRP_PLTT_Release( work->kit_ncl );
@@ -976,35 +1087,125 @@ static void Dowsing_ObjExit( DOWSING_WORK* work )
 // タッチバー
 static void Dowsing_TouchbarInit( DOWSING_WORK* work )
 {
+  HEAPID  tempHeapId   = work->tempHeapId;
+  
   // INFOWIN
   {
     GAMESYS_WORK*      gs_wk       = FIELDMAP_GetGameSysWork( work->fieldmap_wk );
     GAME_COMM_SYS_PTR  gcs_ptr     = GAMESYSTEM_GetGameCommSysPtr( gs_wk );
 
-    INFOWIN_Init( BG_FRAME_S_TOUCHBAR, BG_PAL_POS_S_INFOWIN, gcs_ptr, work->heap_id );
+    INFOWIN_Init( BG_FRAME_S_TOUCHBAR, BG_PAL_POS_S_INFOWIN, gcs_ptr, work->heap_id );  // GFL_BG_AllocCharacterArea でキャラの領域を確保している
   }
 
   // タッチバー
   {
+    u16 pal_offset   = BG_PAL_POS_S_TOUCHBAR << 12;
+
+    void*             buf;
+    NNSG2dScreenData* screen;
+
+    GFL_CLWK_DATA  clwk_data = { 0 };  // 0で初期化
+
+    // ハンドルオープン
+    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), tempHeapId );
+    
+    // BG
+    // パレット
+    GFL_ARCHDL_UTIL_TransVramPalette(
+        handle,
+        APP_COMMON_GetBarPltArcIdx(), 
+        PALTYPE_SUB_BG, BG_PAL_POS_S_TOUCHBAR * 0x20, 
+        BG_PAL_NUM_S_TOUCHBAR * 0x20,
+        tempHeapId );
+    // キャラ
+    work->touchbar_tinfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
+                                handle,
+                                APP_COMMON_GetBarCharArcIdx(), 
+                                BG_FRAME_S_TOUCHBAR,
+                                0, FALSE, tempHeapId );  // 4 * GFL_BG_1CHRDATASIZ しかない
+    GF_ASSERT_MSG( work->touchbar_tinfo != GFL_ARCUTIL_TRANSINFO_FAIL, "DOWSING : BGキャラ領域が足りませんでした。\n" );
+
+    // スクリーン読み込み
+    buf = GFL_ARCHDL_UTIL_LoadScreen(
+              handle, APP_COMMON_GetBarScrnArcIdx(),
+              FALSE, &screen, tempHeapId );
+    // スクリーン加工
+    {
+      u16  i;
+      u16* scr = (u16*)(screen->rawData);
+      u16  chara_offset = GFL_ARCUTIL_TRANSINFO_GetPos( work->touchbar_tinfo );
+
+      for( i=0; i<32*24; i++ )
+      {
+        scr[i] &= 0x0FFF;
+        scr[i] = ( scr[i] + chara_offset ) | pal_offset;
+      }
+    }
+    // スクリーン書き込み＆転送
+    GFL_BG_WriteScreenExpand( BG_FRAME_S_TOUCHBAR,
+                              0, 21, 32,  3,
+                              screen->rawData,
+                              0, 21, 32, 24 );
+    GFL_BG_LoadScreenV_Req( BG_FRAME_S_TOUCHBAR );
+
+    GFL_HEAP_FreeMemory( buf );
 
 
+    // OBJ
+    work->touchbar_ncl = GFL_CLGRP_PLTT_RegisterEx(
+                             handle,
+                             APP_COMMON_GetBarIconPltArcIdx(), 
+                             CLSYS_DRAW_SUB,
+                             OBJ_PAL_POS_S_TOUCHBAR * 0x20,
+                             0,
+                             OBJ_PAL_NUM_S_TOUCHBAR,
+                             work->heap_id );
+  
+    work->touchbar_ncg = GFL_CLGRP_CGR_Register(
+                             handle, 
+                             APP_COMMON_GetBarIconCharArcIdx(),
+                             FALSE, CLSYS_DRAW_SUB, work->heap_id );
+    
+    work->touchbar_nce = GFL_CLGRP_CELLANIM_Register( handle, 
+                             APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_32K),
+                             APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_32K),
+                             work->heap_id );
 
+    clwk_data.pos_x = TOUCHBAR_ICON_X_07;
+    clwk_data.pos_y = TOUCHBAR_ICON_Y;
+    work->touchbar_clwk = GFL_CLACT_WK_Create(
+                              work->clunit,
+                              work->touchbar_ncg,
+                              work->touchbar_ncl,
+                              work->touchbar_nce,
+                              &clwk_data,
+                              CLSYS_DEFREND_SUB,
+                              work->heap_id );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->touchbar_clwk, TRUE );
+    GFL_CLACT_WK_SetAnmSeq( work->touchbar_clwk, APP_COMMON_BARICON_EXIT );  // active
 
+    // ハンドルクローズ
+    GFL_ARC_CloseDataHandle( handle );
 
-
-
-
-
-
-
-
-
+    // タッチバーの状態
+    work->tb_state = TB_STATE_WAIT;
   }
 }
 static void Dowsing_TouchbarExit( DOWSING_WORK* work )
 {
   // タッチバー
   {
+    // OBJ
+    GFL_CLACT_WK_Remove( work->touchbar_clwk );
+    GFL_CLGRP_CELLANIM_Release( work->touchbar_nce );
+    GFL_CLGRP_CGR_Release( work->touchbar_ncg );
+    GFL_CLGRP_PLTT_Release( work->touchbar_ncl );
+
+    // BG
+    GFL_BG_FreeCharacterArea(
+        BG_FRAME_S_TOUCHBAR,
+        GFL_ARCUTIL_TRANSINFO_GetPos( work->touchbar_tinfo ),
+        GFL_ARCUTIL_TRANSINFO_GetSize( work->touchbar_tinfo ) );
   }
 
   // INFOWIN
@@ -1021,6 +1222,69 @@ static void Dowsing_TouchbarMain( DOWSING_WORK* work )
 
   // タッチバー
   {
+    switch( work->tb_state )
+    {
+    case TB_STATE_WAIT:
+      {
+        BOOL input_finish = FALSE;
+        
+        // タッチ判定
+        if( !input_finish )
+        {
+          u32 x, y;
+          if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+          {
+            if(    TOUCHBAR_ICON_X_07<=x && x<TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH
+                && TOUCHBAR_ICON_Y   <=y && y<TOUCHBAR_ICON_Y   +TOUCHBAR_ICON_HEIGHT )
+            {
+    				  GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+              input_finish = TRUE;
+            }
+          }
+        }
+        // キー判定
+        if( !input_finish ) 
+        {
+          int trg = GFL_UI_KEY_GetTrg();
+          if( trg & PAD_BUTTON_X )
+          {
+            GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+            input_finish = TRUE;
+          }
+        }
+
+        // 入力があったとき
+        if( input_finish )
+        {
+          work->tb_state = TB_STATE_ANIM;
+          GFL_CLACT_WK_SetAnmSeq( work->touchbar_clwk, APP_COMMON_BARICON_EXIT_ON );  // push
+          PMSND_PlaySE( TOUCHBAR_SE_CLOSE );
+        }
+      }
+      break;
+    case TB_STATE_ANIM:
+      {
+        if( !GFL_CLACT_WK_CheckAnmActive( work->touchbar_clwk ) )
+        {
+          work->tb_state = TB_STATE_TRIG;
+          //GFL_CLACT_WK_SetAnmSeq( work->touchbar_clwk, APP_COMMON_BARICON_EXIT_OFF );  // noactive
+          GFL_CLACT_WK_SetAnmSeq( work->touchbar_clwk, APP_COMMON_BARICON_EXIT );  // active
+        }
+      }
+      break;
+    case TB_STATE_TRIG:
+      {
+        // 1フレームだけ
+			  FIELD_SUBSCREEN_Change( work->subscreen_wk, FIELD_SUBSCREEN_NORMAL );
+        work->tb_state = TB_STATE_END;
+      }
+      break;
+    case TB_STATE_END:
+      {
+        // 何もしないで終了を待つ
+      }
+      break;
+    }
   }
 }
 

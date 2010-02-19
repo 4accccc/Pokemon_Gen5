@@ -40,6 +40,7 @@ enum BAG_NEXTPROC_ENUM
   BAG_NEXTPROC_TURIZAO,       // つりざお
   BAG_NEXTPROC_BATTLERECORDER,// バトルレコーダー
   BAG_NEXTPROC_MAILVIEW,      // メール閲覧
+  BAG_NEXTPROC_DOWSINGMACHINE,      // ダウジングマシン
 };
 
 

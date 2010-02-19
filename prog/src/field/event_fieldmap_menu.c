@@ -245,7 +245,8 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
       MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( mwk->fieldWork );
       MMDLSYS_ClearPauseMoveProc( fldMdlSys );
 			//Exitの場合はCallbackの中で戻されるので行わない
-			if( mwk->link.result != EVENT_PROCLINK_RESULT_EXIT )
+			if( mwk->link.result != EVENT_PROCLINK_RESULT_EXIT
+       && mwk->link.result != EVENT_PROCLINK_RESULT_DOWSINGMACHINE ) // DOWSINGMACHINEの場合もCallbackの中で変えられるので行わない
 			{	
 				FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
 			}
@@ -307,6 +308,10 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 		{	
 			mwk->state	= FMENUSTATE_USE_SKILL;
 		}
+    else if( mwk->link.result == EVENT_PROCLINK_RESULT_DOWSINGMACHINE )
+    {
+			mwk->state	= FMENUSTATE_EXIT_MENU;
+    }
 		break;
 
 		//-------------------------------------
@@ -397,6 +402,10 @@ static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *w
 			FIELD_SUBSCREEN_ChangeForce(subscreen, mwk->return_subscreen_mode );
 		}
 	}
+  else if( param->result == EVENT_PROCLINK_RESULT_DOWSINGMACHINE )
+  {
+    FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_DOWSING );
+  }
 	else
 	{	
 		//メニューに戻る場合

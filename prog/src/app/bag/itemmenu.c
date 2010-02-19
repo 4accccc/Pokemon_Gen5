@@ -890,6 +890,7 @@ static int _check_AmaiMitu( FIELD_ITEMMENU_WORK *pWork );
 static int _check_TomodatiTechou( FIELD_ITEMMENU_WORK *pWork );
 static int _check_TownMap( FIELD_ITEMMENU_WORK *pWork );
 static int _check_Cycle( FIELD_ITEMMENU_WORK *pWork );
+static int _check_DowsingMachine( FIELD_ITEMMENU_WORK *pWork );
 
 // アララギ博士のどうぐ使えないよメッセージ
 #define MSGID_ITEMUSE_ERROR_ARARAGI   ( msg_bag_059 )
@@ -1080,6 +1081,43 @@ static int _check_MailView( FIELD_ITEMMENU_WORK *pWork )
   
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【道具使用可能チェック・発動】ダウジングマシン
+ */
+//----------------------------------------------------------------------------------
+static int _check_DowsingMachine( FIELD_ITEMMENU_WORK* pWork )
+{
+  if( BAG_MENU_TSUKAU == pWork->ret_code2 )
+  {
+    //if( ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_???? ) )
+    if( 1 ) 
+    {
+      pWork->ret_code = BAG_NEXTPROC_DOWSINGMACHINE;  // バッグもメニューも閉じて、ダウジングマシンを使う
+      _CHANGE_STATE( pWork, NULL );
+      return TRUE;
+    }
+    else
+    {
+      // 使えない
+      GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
+      WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+      _CHANGE_STATE(pWork,_itemInnerUseError);
+      return FALSE;
+    }
+  }
+  return FALSE;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ *
+ */
+//----------------------------------------------------------------------------------
 typedef struct{
   u16 item;
   u16 num;
@@ -1115,7 +1153,10 @@ static const ITEMUSE_FUNC_DATA ItemUseFuncTable[]={
     ITEM_GURASUMEERU,  11,
     _check_MailView,
   },
-
+  { // ダウジングマシン
+    ITEM_DAUZINGUMASIN,  1,
+    _check_DowsingMachine,
+  },
 };
 
 #define ITEMUSE_MAX (NELEMS(ItemUseFuncTable))
@@ -2897,6 +2938,13 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
           tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
         }
       }
+
+      // ダウジングマシン
+      if( item->id == ITEM_DAUZINGUMASIN )
+      {
+        tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
+      }
+
     }
 
     // もたせる
