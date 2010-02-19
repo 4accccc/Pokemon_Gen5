@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T15:01:21"/>
+	<create user="matsumiya" host="W00224" date="2010-02-19T18:00:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="134" right="2006" bottom="762" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -295,90 +295,50 @@
 	<row id="msg_c03_black_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_black_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">きいたよ
-ヤグルマのもり　でのこと▼
-おかしな　プラズマだんを
-きみが　こらしめて　くれて▽
-うれしい　かぎりさ▼</language>
-		<language name="JPN_KANJI" width="256">きいたよ
-ヤグルマの森　でのこと▼
-おかしな　プラズマだんを
-きみが　こらしめて　くれて▽
-うれしい　かぎりさ▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">それは　さておき……▼
-シッポウシティでも
-アドバイス　したけれど▼
-あたらしい　まちに　ついたら
-さいしょに　むかうべき　なのは……？</language>
-		<language name="JPN_KANJI" width="256">それは　さておき……▼
-シッポウシティでも
-アドバイス　したけれど▼
-新しい　街に　着いたら
-最初に　向かうべき　なのは……？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_black_win01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">ポケモンセンター</language>
-		<language name="JPN_KANJI" width="256">ポケモンセンター</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_black_win02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">ポケモンジム</language>
-		<language name="JPN_KANJI" width="256">ポケモンジム</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_black_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">そう！　そのとおり
-ポケモンセンターだよね▼
-この　ヒウンシティの
-ポケモンセンターは　こっちなんだ▼
-ついておいで！
-あんない　するから▼</language>
-		<language name="JPN_KANJI" width="256">そう！　そのとおり
-ポケモンセンターだよね▼
-この　ヒウンシティの
-ポケモンセンターは　こっちなんだ▼
-ついておいで！
-案内するから▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_black_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ポケモンジム……？
-ずいぶんと　もえているんだね▼
-でも　さいしょに　いくべきなのは
-ポケモンセンターだと　おもうよ▼
-この　ヒウンシティの
-ポケモンセンターは　こっちなんだ▼
-ついておいで！
-あんない　するから▼</language>
-		<language name="JPN_KANJI" width="256">ポケモンジム……？
-ずいぶんと　燃えているんだね▼
-でも　最初に　行くべきなのは
-ポケモンセンターだと　思うよ▼
-この　ヒウンシティの
-ポケモンセンターは　こっちなんだ▼
-ついておいで！
-案内するから▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_black_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -532,16 +492,8 @@
 ・画面外に消えると主人公操作可能に
 ※r04に出現</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『ボクは　いちど
-ポケモンセンターに　もどる▼
-そのあとは　４ばんどうろで
-ポケモンたちを　きたえる　つもり▼
-それでは　けんとうを　いのるよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『ぼくは　一度
-ポケモンセンターに　戻るよ▼
-そのあとは　４番道路で
-ポケモンたちを　鍛える　つもり▼
-それでは　健闘を　祈るよ▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_businessman1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -623,8 +575,8 @@
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">１・２！　１・２！</language>
-		<language name="JPN_KANJI" width="256">１・２！　１・２！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_businessman7_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -632,8 +584,8 @@
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">タイム　イズ　マネー</language>
-		<language name="JPN_KANJI" width="256">タイム　イズ　マネー</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_businessman8_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -641,8 +593,8 @@
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">あいかわらず　ひとが　おおい……</language>
-		<language name="JPN_KANJI" width="256">あいかわらず　人が　多い……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_businessman9_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -650,8 +602,8 @@
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">……どこで　さぼろうかな</language>
-		<language name="JPN_KANJI" width="256">……どこで　さぼろうかな</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_businessman10_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -659,10 +611,8 @@
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">この　まちは
-ねむらない　まち……</language>
-		<language name="JPN_KANJI" width="256">この　街は
-眠らない　街……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_businessman11_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -670,10 +620,8 @@
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">あしたも　この　みちを　あるくだろう
-あさっても　しあさっても……</language>
-		<language name="JPN_KANJI" width="256">明日も　この道を　歩くだろう
-明後日も　明明後日も……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_businessman12_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -681,10 +629,8 @@
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">おとくいさま
-まっているだろうなあ……</language>
-		<language name="JPN_KANJI" width="256">お得意様
-待っているだろうなあ……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_businessman13_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -692,8 +638,8 @@
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">わたしは　たたかう　ビジネスマン</language>
-		<language name="JPN_KANJI" width="256">私は　闘う　ビジネスマン</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_businessman14_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -701,19 +647,17 @@
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">がんばれ！　おれ！！</language>
-		<language name="JPN_KANJI" width="256">がんばれ！　おれ！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03_businessman15_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c03_businessman15_01" text-color="#ffffff,,,#ffffff,,#ffffff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">こんどの　やすみは
-ベースボールかんせん　だな</language>
-		<language name="JPN_KANJI" width="256">今度の　休みは
-ベースボール観戦だな</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_ol1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
