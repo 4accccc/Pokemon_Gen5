@@ -159,6 +159,13 @@ typedef enum
 //=====================================
 //バーの数
 #define OBJ_BAR_NUM (16)
+//カーソルの数
+enum
+{
+  OBJ_CURSOR_L,
+  OBJ_CURSOR_R,
+  OBJ_CURSOR_MAX,
+};
 
 //-------------------------------------
 /// CLWK
@@ -168,6 +175,8 @@ typedef enum
   CLWKID_BAR_TOP,
   CLWKID_BAR_END  = CLWKID_BAR_TOP + OBJ_BAR_NUM,
   CLWKID_PC,
+  CLWKID_CURSOR_TOP,
+  CLWKID_CURSOR_END = CLWKID_CURSOR_TOP + OBJ_CURSOR_MAX,
   CLWKID_MAX,
 } CLWKID;
 
@@ -400,6 +409,8 @@ typedef struct
   BOOL        is_start;   //開始フラグ
   BOOL        is_shift;   //シフト押下フラグ
   NAMEIN_INPUTTYPE mode;  //モード
+  GFL_CLWK    *p_cursor[OBJ_CURSOR_MAX];  //カーソルOBJ
+  GFL_CLACTPOS  cursor_pos[OBJ_CURSOR_MAX];//OBJ用座標
 } KEYANM_WORK;
 
 //-------------------------------------
@@ -599,11 +610,10 @@ static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, CLWKID clwkID );
 //-------------------------------------
 /// パレットアニメ
 //=====================================
-static void KEYANM_Init( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, HEAPID heapID );
+static void KEYANM_Init( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, const OBJ_WORK *cp_obj, HEAPID heapID );
 static void KEYANM_Exit( KEYANM_WORK *p_wk );
 static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *cp_rect, BOOL is_shift, NAMEIN_INPUTTYPE mode );
 static void KEYANM_Main( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, const GFL_RECT *cp_rect );
-static void KEYANM_Reset( KEYANM_WORK *p_wk );
 static BOOL KeyAnm_PltFade( u16 *p_buff, u16 *p_cnt, u16 add, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );
 //-------------------------------------
 /// STRINPUT
@@ -647,7 +657,7 @@ static KEYMAP_KEYTYPE KeyMap_QWERTY_GetKeyType( const GFL_POINT *cp_cursor, GFL_
 //-------------------------------------
 /// KEYBOARD_WORK
 //=====================================
-static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT *p_font, PRINT_QUE *p_que, NAMEIN_KEYMAP_HANDLE *p_keymap_handle, HEAPID heapID );
+static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT *p_font, PRINT_QUE *p_que, NAMEIN_KEYMAP_HANDLE *p_keymap_handle, const OBJ_WORK *cp_obj, HEAPID heapID );
 static void KEYBOARD_Exit( KEYBOARD_WORK *p_wk );
 static void KEYBOARD_Main( KEYBOARD_WORK *p_wk, const STRINPUT_WORK *cp_strinput );
 static KEYBOARD_STATE KEYBOARD_GetState( const KEYBOARD_WORK *cp_wk );
@@ -1007,7 +1017,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   //モジュール作成
   SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_WaitPrint );
   STRINPUT_Init( &p_wk->strinput, p_param->strbuf, p_param->wordmax, p_wk->p_font, p_wk->p_que, &p_wk->obj, HEAPID_NAME_INPUT );
-  KEYBOARD_Init( &p_wk->keyboard, mode, p_wk->p_font, p_wk->p_que, p_wk->p_keymap_handle, HEAPID_NAME_INPUT );
+  KEYBOARD_Init( &p_wk->keyboard, mode, p_wk->p_font, p_wk->p_que, p_wk->p_keymap_handle, &p_wk->obj, HEAPID_NAME_INPUT );
   MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, p_wk->p_word, HEAPID_NAME_INPUT );
   PS_Init( &p_wk->ps, HEAPID_NAME_INPUT );
   //文字描画
@@ -1283,6 +1293,8 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
     int i;
     GFL_CLWK_DATA cldata;
     GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+    //バー
     cldata.anmseq = 0;
     for( i = CLWKID_BAR_TOP; i < CLWKID_BAR_END; i++ )
     { 
@@ -1295,6 +1307,7 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
           heapID );
     }
 
+    //パソコン
     cldata.anmseq = 1;
     p_wk->p_clwk[CLWKID_PC] =   GFL_CLACT_WK_Create( p_clunit,
         p_wk->res[RESID_OBJ_COMMON_CHR],
@@ -1304,6 +1317,21 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
         CLSYS_DEFREND_MAIN,
         heapID );
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CLWKID_PC], FALSE );
+
+    //カーソル
+    for( i = CLWKID_CURSOR_TOP; i < CLWKID_CURSOR_END; i++ )
+    { 
+      cldata.anmseq = 3 + i - CLWKID_CURSOR_TOP;
+      p_wk->p_clwk[i] =   GFL_CLACT_WK_Create( p_clunit,
+          p_wk->res[RESID_OBJ_COMMON_CHR],
+          p_wk->res[RESID_OBJ_COMMON_PLT],
+          p_wk->res[RESID_OBJ_COMMON_CEL],
+          &cldata,
+          CLSYS_DEFREND_MAIN,
+          heapID );
+      GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+    }
   }
 }
 //----------------------------------------------------------------------------
@@ -1362,7 +1390,7 @@ static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, CLWKID clwkID )
  *  @param  heapID            ヒープID
  */
 //-----------------------------------------------------------------------------
-static void KEYANM_Init( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, HEAPID heapID )
+static void KEYANM_Init( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, const OBJ_WORK *cp_obj, HEAPID heapID )
 { 
   void *p_buff;
   NNSG2dPaletteData *p_plt;
@@ -1370,6 +1398,15 @@ static void KEYANM_Init( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, HEAPID heapID
   //クリア
   GFL_STD_MemClear( p_wk, sizeof(KEYANM_WORK) );
   p_wk->mode  = mode;
+
+  //OBJ取得
+  {
+    int i;
+    for( i = 0; i < OBJ_CURSOR_MAX; i++ )
+    { 
+      p_wk->p_cursor[i] = OBJ_GetClwk( cp_obj, CLWKID_CURSOR_TOP + i );
+    }
+  }
 
   //もとのパレットから色情報を保存
   p_buff  = GFL_ARC_UTIL_LoadPalette( ARCID_NAMEIN_GRA, NARC_namein_gra_name_bg_NCLR, &p_plt, heapID );
@@ -1453,12 +1490,40 @@ static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *c
   { 
     p_wk->range = *cp_rect;
     
-    GFL_BG_ChangeScreenPalette( BG_FRAME_BTN_M, cp_rect->left, cp_rect->top,
-        cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
-        PLT_BG_KEY_NORMAL_M + type );
-    GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, cp_rect->left, cp_rect->top,
-        cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
-        PLT_BG_KEY_NORMAL_M + type );
+    //決定のときしか光らない
+    if( type == KEYANM_TYPE_DECIDE )
+    { 
+      GFL_BG_ChangeScreenPalette( BG_FRAME_BTN_M, cp_rect->left, cp_rect->top,
+          cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
+          PLT_BG_KEY_NORMAL_M + type );
+
+      GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, cp_rect->left, cp_rect->top,
+          cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
+          PLT_BG_KEY_NORMAL_M + type );
+    }
+
+    //OBJを表示することになったので、cp_rectからobjの座標へ変換
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
+    { 
+      const u32 x_ofs = 7;
+      const u32 y_ofs = 3;
+
+      p_wk->cursor_pos[OBJ_CURSOR_L].x = cp_rect->left * 8 + x_ofs;
+      p_wk->cursor_pos[OBJ_CURSOR_L].y = cp_rect->top * 8 + (cp_rect->bottom - cp_rect->top) * 4 - y_ofs;
+      p_wk->cursor_pos[OBJ_CURSOR_R].x = cp_rect->right * 8 - x_ofs;
+      p_wk->cursor_pos[OBJ_CURSOR_R].y = cp_rect->top * 8 + (cp_rect->bottom - cp_rect->top) * 4 - y_ofs;
+
+      GFL_CLACT_WK_ResetAnm( p_wk->p_cursor[OBJ_CURSOR_L] );
+      GFL_CLACT_WK_ResetAnm( p_wk->p_cursor[OBJ_CURSOR_R] );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor[OBJ_CURSOR_L], TRUE );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor[OBJ_CURSOR_R], TRUE );
+    }
+  }
+
+  if( type == KEYANM_TYPE_NONE )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor[OBJ_CURSOR_L], FALSE );
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor[OBJ_CURSOR_R], FALSE );
   }
 
   //スクリーンリクエスト
@@ -1487,10 +1552,29 @@ static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *c
 //-----------------------------------------------------------------------------
 static void KEYANM_Main( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, const GFL_RECT *cp_rect )
 { 
+  enum
+  { 
+    KEY_MOVE_PLTFADE_SPEED  = 0x51E,
+  };
+
   u8 plt_num;
   u16 add;
   int i;
   BOOL is_end;
+
+  static int s_add = KEY_MOVE_PLTFADE_SPEED;
+#if 0
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+  { 
+    s_add += 0x1;
+    OS_Printf( "anm speed 0x%x\n", s_add );
+  }
+  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+  { 
+    s_add -= 0x1;
+    OS_Printf( "anm speed 0x%x\n", s_add );
+  }
+#endif
 
   //モード別おす処理
   if( p_wk->is_start )
@@ -1500,7 +1584,7 @@ static void KEYANM_Main( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, const GFL_REC
     { 
     case KEYANM_TYPE_MOVE:  
       plt_num = PLT_BG_KEY_MOVE_M;
-      add     = 0x400;
+      add     = s_add;
       break;
 
     case KEYANM_TYPE_DECIDE:
@@ -1534,6 +1618,17 @@ static void KEYANM_Main( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, const GFL_REC
     }
   }
 
+  //OBJ座標設定（BGスクロールに合わせる）
+  { 
+    GFL_CLACTPOS  pos;
+    pos = p_wk->cursor_pos[OBJ_CURSOR_L];
+    pos.y -= GFL_BG_GetScrollY( BG_FRAME_BTN_M ) * 8;
+    GFL_CLACT_WK_SetPos( p_wk->p_cursor[OBJ_CURSOR_L], &pos, CLSYS_DEFREND_MAIN );
+    pos = p_wk->cursor_pos[OBJ_CURSOR_R];
+    pos.y -= GFL_BG_GetScrollY( BG_FRAME_BTN_M ) * 8;
+    GFL_CLACT_WK_SetPos( p_wk->p_cursor[OBJ_CURSOR_R], &pos, CLSYS_DEFREND_MAIN );
+  }
+
   //モード切替時のリフレッシュ
   if( p_wk->mode != mode )
   { 
@@ -1549,17 +1644,6 @@ static void KEYANM_Main( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, const GFL_REC
       KEYANM_Start( p_wk, KEYANM_TYPE_NONE, &p_wk->range, p_wk->is_shift, mode );
     }
   }
-}
-//----------------------------------------------------------------------------
-/**
- *  @brief  キーアニメ  リセット
- *
- *  @param  KEYANM_WORK *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void KEYANM_Reset( KEYANM_WORK *p_wk )
-{ 
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -3354,7 +3438,7 @@ static KEYMAP_KEYTYPE KeyMap_QWERTY_GetKeyType( const GFL_POINT *cp_cursor, GFL_
  *  @param  heapID  ヒープID
  */
 //-----------------------------------------------------------------------------
-static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT *p_font, PRINT_QUE *p_que, NAMEIN_KEYMAP_HANDLE *p_keymap_handle, HEAPID heapID )
+static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT *p_font, PRINT_QUE *p_que, NAMEIN_KEYMAP_HANDLE *p_keymap_handle, const OBJ_WORK *cp_obj, HEAPID heapID )
 { 
   //クリア
   GFL_STD_MemClear( p_wk, sizeof(KEYBOARD_WORK) );
@@ -3384,7 +3468,7 @@ static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT 
   GFL_BG_LoadScreenReq( BG_FRAME_KEY_M );
 
   //キーアニメ作成
-  KEYANM_Init( &p_wk->keyanm, mode, heapID );
+  KEYANM_Init( &p_wk->keyanm, mode, cp_obj, heapID );
 
   //キーマップ作成
   KEYMAP_Create( &p_wk->keymap, mode, p_wk->p_keymap_handle, heapID );
@@ -3863,6 +3947,16 @@ static BOOL Keyboard_KeyReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
     pos.y = 0;
     is_move = TRUE;
   }
+  else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+  {
+    //決定ボタンに移動するだけ
+    pos.x = 0;
+    pos.y = 0;
+    is_move = TRUE;
+
+    KEYMAP_GetCursorByKeyType( &p_wk->keymap, KEYMAP_KEYTYPE_DECIDE, &p_wk->cursor );
+    KEYMAP_MoveCursor( &p_wk->keymap, &p_wk->cursor, &pos );
+  }
 
   if( is_move )
   { 
@@ -3934,7 +4028,6 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
     //アニメ
     KEYMAP_GetCursorByKeyType( &p_wk->keymap, p_req->type, &p_wk->cursor );
     p_req->anm_pos  = p_wk->cursor;
-    //キー入力を決定
     ret = TRUE;
   }
 
