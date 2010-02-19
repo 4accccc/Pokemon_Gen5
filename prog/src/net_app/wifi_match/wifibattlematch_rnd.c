@@ -1254,7 +1254,8 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     //=====================================
   case SEQ_START_SAVE_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_017, WBM_TEXT_TYPE_STREAM );
-    *p_seq       = SEQ_START_SAVE;
+    *p_seq = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
     break;
   case SEQ_START_SAVE:
     GAMEDATA_SaveAsyncStart(p_param->p_param->p_game_data);
