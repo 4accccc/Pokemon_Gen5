@@ -60,7 +60,8 @@ struct _TAG_BSUBWAY_SCRWORK
   u8 retire_f:1;  ///<リタイアフラグ
   u8 prize_f:1;  ///<ご褒美フラグ
   u8 partner:3;  ///<パートナーNo
-  u8 padding0; ///<余り
+  u8 comm_sio_f:1; ///<通信中フラグ
+  u8 padding0:7; ///<余り
   u8 padding1; ///<余り
   
   u16 pare_poke[2];  ///<通信マルチパートナーが持つポケモンNo

@@ -229,7 +229,6 @@ sub_receipt_challenge:
   CASE BSWAY_MODE_WIFI THEN
     _CALL sub_receipt_challenge_wifi
   ENDSWITCH
-  
 }
 _RET
 
@@ -339,7 +338,6 @@ sub_receipt_challenge_multi:
   ELSE //通信マルチ
     _CALL sub_receipt_challenge_multi_comm
   ENDIF
-  
 }
 _RET
 
@@ -456,7 +454,7 @@ sub_receipt_challenge_multi_comm:
   ENDIF
   
   _SYSWIN_CLOSE()
-
+  
   //通信開始
   _BSUBWAY_TOOL( BSWSUB_COMM_START, BSW_NULL, BSW_NULL, BSW_NULL )
   
@@ -471,6 +469,9 @@ sub_receipt_challenge_multi_comm:
     _CALL sub_receipt_common_comm_exit
     _RET
   ENDIF
+  
+  //通信中フラグON
+  _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, TRUE, BSW_NULL, BSW_NULL )
   
 	//通信同期(お友達の選択を待っています)
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_POKE_SELECT, BSW_NULL, BSW_NULL )
@@ -510,11 +511,8 @@ sub_receipt_challenge_multi_comm:
     //受信バッファクリア
     _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
     //子機に選んだデータを送信
-    $ret = 0
-    
-    WHILE $ret == 0
-      _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, ret )
-    ENDWHILE
+
+    _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, ret )
   ELSE //子機は親からデータを受け取る
     _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, LOCALWORK0 ) 
   ENDIF
@@ -563,7 +561,6 @@ sub_receipt_challenge_multi_comm_connect_leader:
   CASE BSWAY_COMM_PERENT_ENTRY_ERROR THEN //エラー
     $SCWK_ANSWER = FALSE
   ENDSWITCH
-  
 }
 _RET
 
@@ -972,14 +969,14 @@ sub_receipt_anm_geton_train:
   DEFINE_LOCAL objid_receipt
   DEFINE_LOCAL objid_partner
   
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
   _CALL sub_receipt_common_get_objid_receipt
   $objid_receipt = $SCWK_ANSWER
   
   _CALL sub_receipt_common_get_objid_partner
   $objid_partner = $SCWK_ANSWER
-  
-  //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
    
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
@@ -998,12 +995,12 @@ sub_receipt_anm_geton_train:
     _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
     _OBJ_ANIME( objid_partner, anm_receipt_geton_partner )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
-  CASE BSWAY_MODE_COMM_MULTI THEN
-    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
   CASE BSWAY_MODE_S_MULTI THEN
     _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
     _OBJ_ANIME( objid_partner, anm_receipt_geton_partner )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  CASE BSWAY_MODE_COMM_MULTI THEN
+    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
   CASE BSWAY_MODE_S_COMM_MULTI THEN
     _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
@@ -1012,7 +1009,7 @@ sub_receipt_anm_geton_train:
     _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
   ENDSWITCH
-  
+
   _OBJ_ANIME_WAIT()
 }
 _RET
@@ -1149,7 +1146,17 @@ _RET
 //  受付　通信切断して終了処理
 //--------------------------------------------------------------
 sub_receipt_common_comm_exit:
-{
+{ 
+  DEFINE_LOCAL comm_flag
+  
+  _BSUBWAY_TOOL( BSWSUB_GET_COMM_FLAG, BSW_NULL, BSW_NULL, comm_flag )
+  
+  //通信中であれば同期して切断
+  IF $comm_flag == TRUE THEN
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_SIO_END, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+  ENDIF
+  
   _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
   _CALL sub_receipt_common_exit
 }

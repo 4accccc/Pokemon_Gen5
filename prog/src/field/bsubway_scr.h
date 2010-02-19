@@ -59,12 +59,14 @@ extern void BSUBWAY_COMM_Exit( BSUBWAY_SCRWORK *bsw_scr );
 extern void BSUBWAY_COMM_TimingSyncStart( u8 no );
 extern BOOL BSUBWAY_COMM_IsTimingSync( u8 no );
 
+#if 0
 extern u16 BSUBWAY_SCRWORK_CommReceivePlayerData(
     BSUBWAY_SCRWORK *bsw_scr, const u16 *recv_buf );
 extern u16 BSUBWAY_SCRWORK_CommReciveTrainerData(
     BSUBWAY_SCRWORK *bsw_scr, const u16* recv_buf );
 extern u16 BSUBWAY_SCRWORK_CommReciveRetireSelect(
     BSUBWAY_SCRWORK *bsw_scr, const u16 *recv_buf );
+#endif
 extern void BSUBWAY_SCRWORK_CommSendPlayerData(
     BSUBWAY_SCRWORK *bsw_scr, GAMEDATA *gdata );
 extern void BSUBWAY_SCRWORK_CommSendTrainerData( BSUBWAY_SCRWORK *bsw_scr );

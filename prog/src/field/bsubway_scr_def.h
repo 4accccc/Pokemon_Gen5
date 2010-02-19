@@ -22,7 +22,6 @@
 ///バトルサブウェイ初期化モード
 #define BSWAY_PLAY_NEW (0)
 #define BSWAY_PLAY_CONTINUE (1)
-#define BSWAY_PLAY_CHALLENGE_CONTINUE (2)
 
 ///バトルサブウェイ　クリアラウンド数
 #define BSWAY_CLEAR_WINCNT  (7)
@@ -125,8 +124,9 @@
 
 //ホーム制御
 #define BSWAY_SCENE_HOME_NON (0) //何も無し
-#define BSWAY_SCENE_HOME_GAME_CLEAR (1) //ゲームクリア
-#define BSWAY_SCENE_HOME_TERMINUS (2) //ホーム終点
+#define BSWAY_SCENE_HOME_GAME_CLEAR (1) //ゲームクリア直後
+#define BSWAY_SCENE_HOME_STOPOVER (2) //途中駅
+#define BSWAY_SCENE_HOME_TERMINUS (3) //ホーム終点
 
 //--------------------------------------------------------------
 /// バトルサブウェイコマンドツールID
@@ -204,7 +204,9 @@
 #define BSWSUB_WIFI_RANK_DOWN (BSWSUB_START_NO+27)
 #define BSWSUB_GET_WIFI_RANK (BSWSUB_START_NO+28)
 #define BSWSUB_SET_HOME_OBJ (BSWSUB_START_NO+29)
-#define BSWSUB_END_NO (BSWSUB_START_NO+30)
+#define BSWSUB_SET_COMM_FLAG (BSWSUB_START_NO+30)
+#define BSWSUB_GET_COMM_FLAG (BSWSUB_START_NO+31)
+#define BSWSUB_END_NO (BSWSUB_START_NO+32)
 
 #define BSWSUB_COMM_START_NO (200)
 #define BSWSUB_COMM_START (BSWSUB_COMM_START_NO+0)
@@ -230,7 +232,8 @@
 #define BSW_COMM_MULTI_NEXT_SELECT    5
 #define BSW_COMM_MULTI_EXIT_WAIT      6
 #define BSW_COMM_MULTI_RETIRE_WAIT    7
-#define BSW_COMM_MULTI_SIO_END      8
+#define BSW_COMM_MULTI_NEXT_CHALLENGE 8
+#define BSW_COMM_MULTI_SIO_END      9
 
 //--------------------------------------------------------------
 //  通信マルチ　参加メニュー結果
@@ -282,6 +285,8 @@
 #define BSWAY_COMM_PLAYER_DATA    (0)
 #define BSWAY_COMM_TR_DATA      (1)
 #define BSWAY_COMM_RETIRE_SELECT  (2)
+#define BSWAY_COMM_CHALLENGE_CONTINUE (3)
+#define BSWAY_COMM_GAME_END (4)
 
 //D31R0205_HERO kari
 #define HERO_OBJ (0)

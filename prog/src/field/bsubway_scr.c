@@ -121,7 +121,7 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     
     BSUBWAY_PLAYDATA_SetData(
         bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, &buf8 );
-  }else if( init == BSWAY_PLAY_CONTINUE ){ //続き
+  }else{ //続き
     bsw_scr->play_mode = (u8)BSUBWAY_PLAYDATA_GetData(
         bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, NULL );
     
@@ -135,47 +135,6 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
         BSWAY_PLAYDATA_ID_trainer, bsw_scr->trainer);
     
-    if( bsw_scr->play_mode == BSWAY_MODE_MULTI ||
-        bsw_scr->play_mode == BSWAY_MODE_S_MULTI ){
-      bsw_scr->partner = (u8)BSUBWAY_PLAYDATA_GetData(
-          bsw_scr->playData, BSWAY_PLAYDATA_ID_partner, NULL );
-      
-      //パートナートレーナーデータ再生成
-      BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
-          BSWAY_PLAYDATA_ID_pare_poke,
-          &(bsw_scr->five_poke[bsw_scr->partner]) );
-      
-      BSUBWAY_SCRWORK_MakePartnerRomData(
-          bsw_scr, &bsw_scr->five_data[bsw_scr->partner],
-        BSUBWAY_FIVE_FIRST + bsw_scr->partner,
-        BSUBWAY_PLAYDATA_GetData(bsw_scr->playData,
-          BSWAY_PLAYDATA_ID_pare_itemfix, NULL ),
-        &(bsw_scr->five_poke[bsw_scr->partner]),
-        bsw_scr->heapID );
-    }
-  }else{ //続けてチャレンジ
-    bsw_scr->play_mode = (u8)BSUBWAY_PLAYDATA_GetData(
-        bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, NULL );
-    
-    bsw_scr->member_num = get_MemberNum( bsw_scr->play_mode );
-    
-    //選ばれているポケモンNo
-    BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
-        BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
-    
-    for(i = 0;i < BSUBWAY_STOCK_TRAINER_MAX;i++){
-      bsw_scr->trainer[i] = BSWAY_NULL_TRAINER;
-    }
-    
-    //プレイデータ初期化
-    BSUBWAY_PLAYDATA_Init( bsw_scr->playData );
-    BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
-    
-    buf8 = bsw_scr->play_mode; //プレイモード
-    
-    BSUBWAY_PLAYDATA_SetData(
-        bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, &buf8 );
-      
     if( bsw_scr->play_mode == BSWAY_MODE_MULTI ||
         bsw_scr->play_mode == BSWAY_MODE_S_MULTI ){
       bsw_scr->partner = (u8)BSUBWAY_PLAYDATA_GetData(
@@ -246,6 +205,18 @@ void BSUBWAY_SCRWORK_ReleaseWork(
 //--------------------------------------------------------------
 void BSUBWAY_SCRWORK_ChangeCommMultiMode( BSUBWAY_SCRWORK *bsw_scr )
 {
+  u8 buf[4];
+
+  if( bsw_scr->play_mode == BSWAY_MODE_MULTI ){
+    buf[0] = BSWAY_MODE_COMM_MULTI;
+  }else if( bsw_scr->play_mode == BSWAY_MODE_S_MULTI ){
+    buf[0] = BSWAY_MODE_S_COMM_MULTI;
+  }
+  
+  bsw_scr->play_mode = buf[0];
+
+  BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
+      BSWAY_PLAYDATA_ID_playmode, buf );
 }
 
 //--------------------------------------------------------------

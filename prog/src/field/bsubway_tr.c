@@ -348,7 +348,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   
   {
     BTL_FIELD_SITUATION_Init( &sit );
-    
+      
 //  dst->netID = 0;
     dst->netHandle = NULL;
     dst->commMode = BTL_COMM_NONE;
@@ -365,7 +365,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
       break;
     case BSWAY_PLAYMODE_COMM_MULTI:
     case BSWAY_PLAYMODE_S_COMM_MULTI:
-      dst->multiMode = 1;
+      dst->multiMode = TRUE;
       dst->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
       dst->commMode = BTL_COMM_DS;
       
@@ -408,7 +408,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   }
   
   BTL_SETUP_SetSubwayMode( dst );
-
+  
   switch( play_mode )
   {
   case BSWAY_MODE_SINGLE:

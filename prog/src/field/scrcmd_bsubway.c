@@ -553,6 +553,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //現在のプレイモードを取得
   case BSWSUB_GET_PLAY_MODE:
     *ret_wk = bsw_scr->play_mode;
+    KAGAYA_Printf( "BSWSUB GET PLAY_MODE = %d\n", *ret_wk );
     break;
   //ボスクリアフラグをセット
   case BSWSUB_SET_BOSS_CLEAR_FLAG:
@@ -643,6 +644,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //ホーム、OBJセット
   case BSWSUB_SET_HOME_OBJ:
     break;
+  //通信中フラグをセット
+  case BSWSUB_SET_COMM_FLAG:
+    bsw_scr->comm_sio_f = param0;
+    break;
+  //通信中フラグを取得
+  case BSWSUB_GET_COMM_FLAG:
+    *ret_wk = bsw_scr->comm_sio_f;
+    break;
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:
@@ -654,6 +663,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //通信同期
   case BSWSUB_COMM_TIMSYNC:
+    KAGAYA_Printf( "BSUBWAY 通信同期 No.%d\n", param0 );
     bsw_scr->comm_timing_no = param0;
     BSUBWAY_COMM_TimingSyncStart( bsw_scr->comm_timing_no );
     VMCMD_SetWait( core, evCommTimingSync );
@@ -701,7 +711,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   default:
     OS_Printf( "渡されたcom_id = %d\n", com_id );
     GF_ASSERT( 0 && "com_idが未対応です！" );
-    *ret_wk = 0;
     break;
   }
   

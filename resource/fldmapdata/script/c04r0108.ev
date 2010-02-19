@@ -56,6 +56,6 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_c04r0108_game_after
 {
-  _CHG_COMMON_SCR SCRID_BSW_REPORT_ERROR
+  _CHG_COMMON_SCR SCRID_BSW_GAME_AFTER
 }
 EVENT_END

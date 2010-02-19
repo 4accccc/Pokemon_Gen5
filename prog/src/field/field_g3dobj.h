@@ -33,16 +33,23 @@ typedef struct _TAG_FLD_G3DOBJ_CTRL FLD_G3DOBJ_CTRL;
 
 //--------------------------------------------------------------
 /// FLD_G3DOBJ_RES_HEADER
+//  使用方法
+//  1:FLD_G3DOBJ_RES_HEADERを定義
+//  2:FLD_G3DOBJ_RES_HEADER_Init()で初期化
+//  3:FLD_G3DOBJ_RES_HEADER_SetMdl()で読み込むモデルを指定する
+//  4:テクスチャ用のリソースがある場合はFLD_G3DOBJ_RES_HEADER_SetTex()を呼ぶ
+//  5:アニメを指定する際はFLD_G3DOBJ_RES_HEADER_SetAnmArcHandle()で
+//  　ハンドルをセットし、FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx()を呼ぶ。
 //--------------------------------------------------------------
 typedef struct
 {
-  ARCHANDLE *arcHandleMdl;
+  ARCHANDLE *arcHandleMdl; //モデルリソース取得用アーカイブハンドル
   ARCHANDLE *arcHandleTex; //arcHandleMdl内テクスチャ参照の際はNULL
-  ARCHANDLE *arcHandleAnm;
-  u16 arcIdxMdl;
-  u16 arcIdxTex;
-  u16 arcIdxAnmTbl[FLD_G3DOBJ_ANM_MAX];
-  u8 anmCount;
+  ARCHANDLE *arcHandleAnm; //アニメリソース取得用アーカイブハンドル
+  u16 arcIdxMdl; //モデル用アーカイブインデックス
+  u16 arcIdxTex; //テクスチャ用アーカイブインデックス
+  u16 arcIdxAnmTbl[FLD_G3DOBJ_ANM_MAX]; //アニメ用アーカイブインデックス
+  u8 anmCount; //アニメ総数
   u8 padding[3]; //byte rest
 }FLD_G3DOBJ_RES_HEADER;
   

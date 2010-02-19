@@ -158,6 +158,8 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
       break;
     case BSWAY_MODE_MULTI:
     case BSWAY_MODE_S_MULTI:
+    case BSWAY_MODE_COMM_MULTI:
+    case BSWAY_MODE_S_COMM_MULTI:
       reg = REG_SUBWAY_MALTI;
       type = PL_TYPE_MULTI;
       break;

@@ -69,7 +69,8 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
 //--------------------------------------------------------------
 //  通信コマンドテーブル
 //--------------------------------------------------------------
-static const NetRecvFuncTable data_RecvFuncTbl[FC_BSUBWAY_CMD_MAX] = {
+static const NetRecvFuncTable data_RecvFuncTbl[FC_BSUBWAY_CMD_MAX] =
+{
   {commCmd_RecvBufPlayerData, NULL},
   {commCmd_FrWiFiCounterTowerRecvBufTrainerData, NULL},
   {commCmd_FrWiFiCounterTowerRecvBufRetireSelect, NULL},
@@ -269,6 +270,7 @@ BOOL BSUBWAY_COMM_IsTimingSync( const u8 no )
 //======================================================================
 //  バトルサブウェイ　通信データ関連
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  * @brief  バトルサブウェイ　送られてきたプレイヤーデータを受け取る
@@ -359,7 +361,8 @@ u16 BSUBWAY_SCRWORK_CommReciveRetireSelect(
   
   return( 0 );
 }
-  
+#endif
+
 //--------------------------------------------------------------
 /**
  * @brief  バトルサブウェイ　自機性別とモンスターNoを送信
@@ -433,8 +436,6 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
   int command,size;
   GAMEDATA *gdata  = bsw_scr->gdata;
   
-  OS_Printf( "通信マルチデータ送信開始\n" );
-  
   switch( mode ){
   case BSWAY_COMM_PLAYER_DATA:  //ポケモン選択
     command = FC_BSUBWAY_PLAYER_DATA;
@@ -448,9 +449,16 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
     command = FC_BSUBWAY_RETIRE_SELECT;
     BSUBWAY_SCRWORK_CommSendRetireSelect( bsw_scr, param );
     break;
+  case BSWAY_COMM_CHALLENGE_CONTINUE: //続けて挑戦する
+    break;
+  case BSWAY_COMM_GAME_END: //ゲームを終了する
+    break;
+  default:
+    GF_ASSERT( 0 );
   }
   
-  OS_Printf( ">>btwr send = %d,%d,%d\n",
+  OS_Printf( "bsubway comn send : cmdNo(%d) buf 0:%d, 1:%d, 2:%d\n",
+      command-GFL_NET_CMD_BSUBWAY,
       bsw_scr->send_buf[0], bsw_scr->send_buf[1], bsw_scr->send_buf[2] );
   
 //  BSUBWAY_COMM_AddCommandTable( bsw_scr );
@@ -685,6 +693,9 @@ static void commCmd_RecvBufPlayerData(
   num = 0;
   bsw_scr->comm_recieve_count++;
   
+  OS_Printf( "bsw_scr->comm_recieve_count = %d\n",
+      bsw_scr->comm_recieve_count );
+
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
     return;
@@ -793,6 +804,9 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
   num = 0;
   bsw_scr->comm_check_work = 0;
   bsw_scr->comm_recieve_count++;
+
+  OS_Printf( "bsw_scr->comm_recieve_count = %d\n",
+      bsw_scr->comm_recieve_count );
 
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
