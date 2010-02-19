@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-02-19T14:28:08"/>
+	<create user="matsumiya" host="W00224" date="2010-02-19T18:10:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="245"/>
+		<comment position="4" width="338"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,8 @@
 	</lock>
 
 
-	<row id="msg_r07r0301_middlewoman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀：回復処理
-・はい／いいえの選択肢表示
-　はい　→middlewoman1_02
-　いいえ→middlewoman1_03</comment>
+	<row id="msg_r07r0301_middlewoman1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1</attribute>
 		<language name="JPN" width="256">なんだか　つかれているようね……
 すこし　やすんで　いきなさい</language>
@@ -304,10 +301,8 @@
 すこし　やすんで　いきなさい</language>
 	</row>
 
-	<row id="msg_r07r0301_middlewoman1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀：回復処理
-・はい選択
-　回復処理実行後にこのメッセージを表示</comment>
+	<row id="msg_r07r0301_middlewoman1_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1</attribute>
 		<language name="JPN" width="256">あなたも　ポケモンも
 すっかり　げんきに　なったわね！</language>
@@ -315,9 +310,8 @@
 すっかり　げんきに　なったわね！</language>
 	</row>
 
-	<row id="msg_r07r0301_middlewoman1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀：回復処理
-・いいえ選択</comment>
+	<row id="msg_r07r0301_middlewoman1_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1</attribute>
 		<language name="JPN" width="256">わかいからって　むりは　きんもつよ
 やすめるときには　やすみなさい</language>
@@ -325,16 +319,15 @@
 やすめるときには　やすみなさい</language>
 	</row>
 
-	<row id="msg_r07r0301_pokemon_01">
-		<comment>ポケモン
-・メッセージ表示とともに鳴き声再生</comment>
+	<row id="msg_r07r0301_pokemon_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">POKEMON
 チュリネ</attribute>
 		<language name="JPN" width="256">ちゅりゅりゅ♪</language>
 		<language name="JPN_KANJI" width="256">ちゅりゅりゅ♪</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_00" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_00" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●移動ポケモンイベント起動前のセリフ。
 
 ●台所に立っている。</comment>
@@ -345,7 +338,7 @@
 おいしい　スープを　つくるんじゃー</language>
 	</row>
 
-	<row id="msg_r07r0301_oldman_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r07r0301_oldman_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
 		<comment>●移動ポケモンイベント起動前のセリフ。
 
 ●テーブルの右脇に配置。</comment>
@@ -358,7 +351,7 @@
 わしも　らくちんなんじゃよ</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>・主人公をテーブルまで移動させてから、セリフ。
 
 ・「はい／いいえ」選択肢
@@ -378,7 +371,7 @@
 くちに　あうか　わからんがのー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●「はい」の場合
 
 ・喋った後、台所まで移動。
@@ -394,7 +387,7 @@
 するもんじゃ　ねえぞー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●「いいえ」の場合
 
 ・喋った後、台所まで移動。
@@ -410,7 +403,7 @@
 すこし　つきあって　くれんかのー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_04w" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_04w" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●ｗのセリフ
 
 ・喋ったあと主人公の隣（上）まで移動。
@@ -432,7 +425,7 @@
 ざんざか　ふらしているんじゃー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_04b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_04b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●ｂのセリフ
 
 ・喋ったあと主人公の隣（上）まで移動。</comment>
@@ -453,7 +446,7 @@
 ごろんごろん　ならすんじゃー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>・喋った後、小さなアクション（手渡し）
 ・主人公も応じてアクション</comment>
 		<attribute name="キャラ指定">おばあさん</attribute>
@@ -463,7 +456,7 @@
 あったまるぞー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r07r0301_narration_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+	<row id="msg_r07r0301_narration_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,#ffffff,,">
 		<comment>・「！」表示後、メッセージ。</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
 		<language name="JPN" width="256">やさいが　たっぷりの　スープ！
@@ -472,7 +465,7 @@
 とっても　おいしい！</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>・続けてこのセリフ。</comment>
 		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">だいじに　そだてとった　さくもつが
@@ -483,7 +476,7 @@
 ほんとに　こまった　ポケモンじゃー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>・フキダシを出し直して、このセリフを喋る。</comment>
 		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">つまかえようと　おもってもなー
@@ -496,7 +489,7 @@
 すぐに　にげて　しまうんじゃー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>・フキダシを出し直して、このセリフを喋る。
 
 ●イベント起動後～捕獲まで、
@@ -516,7 +509,7 @@
 やってくるんじゃよー</language>
 	</row>
 
-	<row id="msg_r07r0301_oldwoman_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r07r0301_oldwoman_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●移動ポケモン捕獲後～ツチノカミイベント起動
 までのセリフ。
 
@@ -536,7 +529,7 @@ msg_r07r0301_oldwoman_00
 あの　ポケモンさんかのー？</language>
 	</row>
 
-	<row id="msg_r07r0301_oldman_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r07r0301_oldman_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
 		<comment>●ｗのセリフ。
 ●移動ポケモンイベントが起動後のセリフ。
 </comment>
@@ -561,7 +554,7 @@ msg_r07r0301_oldwoman_00
 このあたりに　かくれておったんじゃな</language>
 	</row>
 
-	<row id="msg_r07r0301_oldman_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r07r0301_oldman_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
 		<comment>●ｂのセリフ。
 ●移動ポケモンイベントが起動後のセリフ。
 </comment>
@@ -586,7 +579,7 @@ msg_r07r0301_oldwoman_00
 このあたりに　かくれておったんじゃな</language>
 	</row>
 
-	<row id="msg_r07r0301_oldman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r07r0301_oldman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
 		<comment>●イベント起動後～捕獲まで、繰り返しのセリフ。</comment>
 		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">あらしに　なっとる　みちに　いけば
@@ -595,7 +588,7 @@ msg_r07r0301_oldwoman_00
 くさむらで　とびだしてくるじゃろう</language>
 	</row>
 
-	<row id="msg_r07r0301_oldman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r07r0301_oldman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
 		<comment>●移動ポケモン捕獲後～ツチノカミイベント起動
 までのセリフ。
 
