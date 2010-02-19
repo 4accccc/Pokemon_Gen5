@@ -223,7 +223,7 @@ static void IRC_BATTLE_SUBPROC_InitListData( IRC_BATTLE_WORK *work , IRC_BATTLE_
   plData->tvwk = NULL;
   plData->reg = reg;
   
-  plData->place = 0;
+  plData->zone_id = 0;
   plData->mode = PL_MODE_BATTLE;
   switch( reg->BATTLE_TYPE )
   {

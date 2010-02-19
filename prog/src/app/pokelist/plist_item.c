@@ -565,7 +565,7 @@ void PLIST_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work )
   work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, target);
 
   PLIST_ITEM_MSG_UseItemFunc( work );
-  STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
+  STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->zone_id , work->heapId );
   PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
 }
 

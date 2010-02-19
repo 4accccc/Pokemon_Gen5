@@ -1099,7 +1099,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
         work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, target);
 
         PLIST_ITEM_MSG_UseItemFunc( work );
-        STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
+        STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->zone_id , work->heapId );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
 
         work->nextMainSeq = work->mainSeq;
@@ -1328,7 +1328,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           const PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_MSG_UseItemFunc( work );
           
           //実際に適用
-          STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
+          STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->zone_id , work->heapId );
           if( useType == ITEM_TYPE_LV_UP )
           {
             //レベルだけ表示HP変わるのでResetParamを使う
@@ -2759,7 +2759,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
         PLIST_ITEM_MSG_UseItemFunc( work );
         
         //実際に消費と適用
-        STATUS_RCV_Recover( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->plData->place , work->heapId );
+        STATUS_RCV_Recover( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->plData->zone_id , work->heapId );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
         PLIST_SubBagItem( work , work->plData->item );
         PMSND_PlaySystemSE( PLIST_SND_RECOVER );

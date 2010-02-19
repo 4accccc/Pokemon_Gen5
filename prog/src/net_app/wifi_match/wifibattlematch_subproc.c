@@ -303,7 +303,7 @@ static void WIFIBATTLEMATCH_SUBPROC_InitListData( WIFIBATTLEMATCH_SUBPROC_PARAM 
   plData->tvwk = NULL;
   plData->reg = reg;
   
-  plData->place = 0;
+  plData->zone_id = 0;
   plData->mode = PL_MODE_BATTLE;
   switch( reg->BATTLE_TYPE )
   {

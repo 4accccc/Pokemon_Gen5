@@ -15,6 +15,7 @@
 #include "poke_tool/poke_tool.h"
 #include "waza_tool/waza_tool.h"
 #include "waza_tool/wazadata.h"
+#include "poke_tool/natsuki.h"
 #include "poke_tool/monsno_def.h"
 #include "item/item.h"
 
@@ -42,7 +43,7 @@ static u8 PP_Recover( POKEMON_PARAM * pp, u32 pos, u32 rcv );
 static u8 PP_Up( POKEMON_PARAM * pp, u32 pos, u32 cnt );
 static void HP_Recover( POKEMON_PARAM * pp, u32 hp, u32 max, u32 rcv );
 static s32 PrmExp_Up( s32 exp, s32 other, s32 up );
-static u8 Friend_Up( POKEMON_PARAM * pp, s32 now, s32 prm, u16 place, u32 heap );
+static u8 Friend_Up( POKEMON_PARAM * pp, s32 now, s32 prm, u16 itemNo , u16 place, u32 heap );
 static u8 Friend_UpCheck( POKEMON_PARAM * pp, ITEMDATA * dat );
 
 
@@ -572,7 +573,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
     if( ITEM_GetBufParam( dat, ITEM_PRM_FRIEND1 ) != 0 ){
       //TODO どうする機嫌値
       //CalcHumor_ItemHumorUp(pp, item);  //機嫌値増減
-      if( Friend_Up( pp, tmp[0], ITEM_GetBufParam(dat,ITEM_PRM_FRIEND1_POINT), place, heap_id ) == FALSE ){
+      if( Friend_Up( pp, tmp[0], ITEM_GetBufParam(dat,ITEM_PRM_FRIEND1_POINT), item ,place, heap_id ) == FALSE ){
         GFL_HEAP_FreeMemory( dat );
         return use_flg;
       }
@@ -582,7 +583,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
     if( ITEM_GetBufParam( dat, ITEM_PRM_FRIEND2 ) != 0 ){
       //TODO どうする機嫌値
       //CalcHumor_ItemHumorUp(pp, item);  //機嫌値増減
-      if( Friend_Up( pp, tmp[0], ITEM_GetBufParam(dat,ITEM_PRM_FRIEND2_POINT), place, heap_id ) == FALSE ){
+      if( Friend_Up( pp, tmp[0], ITEM_GetBufParam(dat,ITEM_PRM_FRIEND2_POINT), item ,place, heap_id ) == FALSE ){
         GFL_HEAP_FreeMemory( dat );
         return use_flg;
       }
@@ -592,7 +593,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
     if( ITEM_GetBufParam( dat, ITEM_PRM_FRIEND3 ) != 0 ){
       //TODO どうする機嫌値
       //CalcHumor_ItemHumorUp(pp, item);  //機嫌値増減
-      if( Friend_Up( pp, tmp[0], ITEM_GetBufParam(dat,ITEM_PRM_FRIEND3_POINT), place, heap_id ) == FALSE ){
+      if( Friend_Up( pp, tmp[0], ITEM_GetBufParam(dat,ITEM_PRM_FRIEND3_POINT), item ,place, heap_id ) == FALSE ){
         GFL_HEAP_FreeMemory( dat );
         return use_flg;
       }
@@ -875,7 +876,7 @@ static u8 Friend_UpCheck( POKEMON_PARAM * pp, ITEMDATA * dat )
  * @retval  "FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-static u8 Friend_Up( POKEMON_PARAM * pp, s32 now, s32 prm, u16 place, u32 heap )
+static u8 Friend_Up( POKEMON_PARAM * pp, s32 now, s32 prm, u16 itemNo , u16 place, u32 heap )
 {
   if( now == PTL_FRIEND_MAX && prm > 0 ){
     return FALSE;
@@ -883,7 +884,7 @@ static u8 Friend_Up( POKEMON_PARAM * pp, s32 now, s32 prm, u16 place, u32 heap )
   if( now == 0 && prm < 0 ){
     return FALSE;
   }
-
+/*
   if( prm > 0 ){
     // 捕獲ボール
     if( PP_Get( pp, ID_PARA_get_ball, NULL ) == ITEM_GOOZYASUBOORU ){
@@ -907,6 +908,8 @@ static u8 Friend_Up( POKEMON_PARAM * pp, s32 now, s32 prm, u16 place, u32 heap )
     prm = 0;
   }
   PP_Put( pp, ID_PARA_friend, prm );
+*/
+  NATSUKI_CalcUseItem( pp , itemNo , place , heap );
   return TRUE;
 }
 

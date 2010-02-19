@@ -165,7 +165,7 @@ typedef struct
 
 //  今回フィールドから取れないので必要なものを個別で持つ
 //  void * fsys;    // フィールドワーク
-  u16 place;        //場所：アイテム使用時に参照
+  ZONEID zone_id;        //場所：アイテム使用時に参照
 
   PL_MODE_TYPE  mode;     // リストモード
   PL_LIST_TYPE  type;     // リストタイプ

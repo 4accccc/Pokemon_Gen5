@@ -17,6 +17,7 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_comm.h"
 #include "poke_tool/monsno_def.h"
+#include "poke_tool/natsuki.h"
 #include "field/fieldmap.h"
 #include "field/event_fieldmap_control.h"
 #include "field/event_mapchange.h"
@@ -717,6 +718,13 @@ static void MUSICAL_EVENT_SetSaveData( MUSICAL_EVENT_WORK *evWork )
       MUSICAL_SAVE_SetBefCondition( evWork->musSave , i , conTemp[i] );
     }
     MUS_ITEM_DATA_ExitSystem( itemDataSys );
+  }
+  
+  //‚È‚Â‚«“xã¸
+  {
+    const ZONEID zoneId = GAMEDATA_GetMyPlayerWork(evWork->gameData)->zoneID;
+    NATSUKI_Calc( evWork->pokePara , CALC_NATSUKI_MUSICAL , zoneId , HEAPID_PROC );
+    
   }
 }
 
