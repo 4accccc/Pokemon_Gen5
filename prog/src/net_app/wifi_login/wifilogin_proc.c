@@ -860,7 +860,7 @@ static void _FadeWait(WIFILOGIN_WORK* pWork)
 
 static void _modeSvlStart2(WIFILOGIN_WORK* pWork)
 {
-  if( NHTTP_RAP_SvlGetTokenStart(pWork->pNHTTP)){
+  if( DWC_SVLGetTokenAsync("", pWork->dbw->pSvl) ){
     _CHANGE_STATE(pWork, _modeSvlGetMain);
   }
 }
@@ -868,17 +868,37 @@ static void _modeSvlStart2(WIFILOGIN_WORK* pWork)
 
 static void _modeSvlGetStart(WIFILOGIN_WORK* pWork)
 {
-  pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID,
-                                 MyStatus_GetProfileID(GAMEDATA_GetMyStatus(pWork->gamedata)),
-                                 pWork->dbw->pSvl );
+//  pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID,
+  //                               MyStatus_GetProfileID(GAMEDATA_GetMyStatus(pWork->gamedata)),
+    //                             pWork->dbw->pSvl );
   _CHANGE_STATE(pWork, _modeSvlStart2);
 }
 
 
 static void _modeSvlGetMain(WIFILOGIN_WORK* pWork)
 {
-  if(NHTTP_RAP_SvlGetTokenMain(pWork->pNHTTP)){
-    NHTTP_RAP_End(pWork->pNHTTP);
+	DWCSvlState		state;
+	DWCError		dwcerror;
+	DWCErrorType	dwcerrortype;
+	int				errorcode;
+  DWCSvlResult* pSvl = pWork->dbw->pSvl;
+
+  state = DWC_SVLProcess();
+  if(state == DWC_SVL_STATE_SUCCESS) {
+    NET_PRINT("Succeeded to get SVL Status\n");
+    NET_PRINT("status = %s\n", pSvl->status==TRUE ? "TRUE" : "FALSE");
+    NET_PRINT("svlhost = %s\n", pSvl->svlhost);
+    NET_PRINT("svltoken = %s\n", pSvl->svltoken);
+    _CHANGE_STATE(pWork, _modeFadeStart);
+  }
+  else if(state == DWC_SVL_STATE_ERROR) {
+    dwcerror = DWC_GetLastErrorEx(&errorcode, &dwcerrortype);
+    _CHANGE_STATE(pWork, _modeFadeStart);
+    NET_PRINT("Failed to get SVL Token\n");
+    NET_PRINT("DWCError = %d, errorcode = %d, DWCErrorType = %d\n", dwcerror, errorcode, dwcerrortype);
+  }
+  else if(state == DWC_SVL_STATE_CANCELED) {
+    NET_PRINT("SVL canceled.\n");
     _CHANGE_STATE(pWork, _modeFadeStart);
   }
 }
