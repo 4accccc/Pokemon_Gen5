@@ -225,7 +225,7 @@ ev_d01r0101_pokecount:
 		
 			//Žè‚É“ü‚ê‚½
 			_ME_PLAY( SEQ_ME_POKEGET )
-			_SYSWIN_MSG_ALLPUT_DOWN(msg_d01r0101_girl_08)
+			_SYSWIN_MSG_ALLPUT(msg_d01r0101_girl_08, WIN_DOWN)
 			_ME_WAIT()
 			_SYSWIN_CLOSE()
 			

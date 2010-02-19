@@ -879,16 +879,20 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  _SYSWIN_MSG_UP 展開メッセージを表示(1byte)　ウィンドウ上
- *  @param  msg_id  表示するメッセージID
+ * @def _SYSWIN_MSG
+ * @brief システムウィンドウでのメッセージ表示
+ * @param msg_id  表示するメッセージID
+ * @param pos     ウィンドウ表示位置の指定
  */
 //--------------------------------------------------------------
-#define _SYSWIN_MSG_UP( msg_id ) _ASM_SYSWIN_MSG msg_id,WIN_UP
+#define _SYSWIN_MSG( msg_id, pos )  _ASM_SYSWIN_MSG msg_id, pos
 
 //--------------------------------------------------------------
 /**
  *  _SYSWIN_MSG_DOWN 展開メッセージを表示(1byte)　ウィンドウ上
  *  @param  msg_id  表示するメッセージID
+ *
+ *  廃止予定です。
  */
 //--------------------------------------------------------------
 #define _SYSWIN_MSG_DOWN( msg_id ) _ASM_SYSWIN_MSG msg_id,WIN_DOWN
@@ -901,17 +905,20 @@
 
 //--------------------------------------------------------------
 /**
- *  _SYSWIN_MSG_ALLPUT_UP 展開メッセージを一括表示(1byte) ウィンドウ上
+ *  _SYSWIN_MSG_ALLPUT 展開メッセージを一括表示
  *  @param  msg_id  表示するメッセージid
+ *  @param pos     ウィンドウ表示位置の指定
  */
 //--------------------------------------------------------------
-#define _SYSWIN_MSG_ALLPUT_UP( msg_id ) \
-    _ASM_SYSWIN_MSG_ALLPUT msg_id, WIN_UP
+#define _SYSWIN_MSG_ALLPUT( msg_id, pos ) \
+    _ASM_SYSWIN_MSG_ALLPUT msg_id, pos
 
 //--------------------------------------------------------------
 /**
  *  _SYSWIN_MSG_ALLPUT_DOWN 展開メッセージを一括表示(1byte) ウィンドウ下
  *  @param  msg_id  表示するメッセージid
+ *
+ *  _SYSWIN_MSG_ALLPUTに統合し、_SYSWIN_MSG_ALLPUT_DOWNは廃止予定です。
  */
 //--------------------------------------------------------------
 #define _SYSWIN_MSG_ALLPUT_DOWN( msg_id ) \
