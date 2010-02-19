@@ -4790,7 +4790,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       }
       break;
     case ICON_TYPE_RIVAL:
-      //@todoライバルのリソースとの下向き番号　主人公は３だが…。
+      //ライバルのリソース　（ライバル名入力はなくなりました＋ライバルのリソースまだ呼んでませんが念のため残しておきます）
       CLWK_TransNSBTX( p_wk->p_clwk, ARCID_MMDL_RES, NARC_fldmmdl_mdlres_hero_nsbtx, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DEFREND_MAIN, heapID );
     case ICON_TYPE_PERSON:
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
@@ -5032,7 +5032,7 @@ static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode
     return GFL_STR_CreateCopyBuffer( cp_wk->p_param->strbuf, heapID );
 
   case NAMEIN_RIVALNAME:
-    //@todoライバル名
+    //ライバル名 //ライバル名入力はなくなりました(まだ)
     return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
 
   case NAMEIN_GREETING_WORD:
