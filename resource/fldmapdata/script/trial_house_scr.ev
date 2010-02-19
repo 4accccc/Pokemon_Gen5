@@ -9,6 +9,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_trialhouse.h"
+  .include  "c04r0901.h"
 
 //----------------------------------------------------------------------
 //               スクリプトテーブル
@@ -205,13 +206,28 @@ charange:
   //「でははじめるよ」
   _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_013)
   _BALLOONWIN_CLOSE()
-  //自機バトル場に移動
 
+  //受付係はける
+  _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_open )
+  _OBJ_ANIME_WAIT()
+  //自機バトル場に移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov )
+  _OBJ_ANIME_WAIT()
   _CALL battle
 
   //自機受付に戻る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ret )
+  _OBJ_ANIME_WAIT()
+  //受付係もどる
+  _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_close )
+  _OBJ_ANIME_WAIT()
+
+  
 
   IF $SCWK_ANSWER == TRUE THEN
+    //「おつかれさま」
+    _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_014)
+    _BALLOONWIN_CLOSE()
     //評価アプリ起動 @todo
 
     //ラストメッセージ
@@ -250,6 +266,65 @@ battle:
     }
   ENDWHILE
   //５戦後の処理
-
   $SCWK_ANSWER = TRUE     //５戦消化したので評価してもらう
 _RET
+
+
+
+//--------------------------------------------------------------------
+//受付係はける
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_recep_open
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機定位置へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_mov
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//対戦相手定位置へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_enemy_mov
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//対戦相手もどる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_enemy_ret
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機もどる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_ret
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,4
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//受付係もどる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_recep_close
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+ 
+  
+
+  
+
+
