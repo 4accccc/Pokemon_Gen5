@@ -70,7 +70,7 @@ static u8 Personal_GetTokuseiCount( POKEMON_PERSONAL_DATA* ppd );
 static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
 static void change_monsno_sub_sex( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
 static  PokeType  get_type_from_item( u16 item );
-static void	PokeParaWazaDelPos(POKEMON_PARAM *pp,u32 pos);
+static void PokeParaWazaDelPos(POKEMON_PARAM *pp,u32 pos);
 
 //============================================================================================
 /**
@@ -557,121 +557,121 @@ BOOL PPP_ChangeFormNo( POKEMON_PASO_PARAM* ppp, u16 next_formno )
 /**
  * @brief   ロトムをフォルムチェンジする
  *
- * @param   pp					セットするPOKEMON_PARAM構造体へのポインタ
- * @param   new_form_no			新しいフォルム番号
- * @param   del_waza_pos		対応技を覚えさせる為、技を削除する位置
- * 								(対応技の削除が行われた場合、そこに新しい対応技を差し込む)
+ * @param   pp          セットするPOKEMON_PARAM構造体へのポインタ
+ * @param   new_form_no     新しいフォルム番号
+ * @param   del_waza_pos    対応技を覚えさせる為、技を削除する位置
+ *                (対応技の削除が行われた場合、そこに新しい対応技を差し込む)
  *
  * @retval  TRUE:フォルムチェンジ成功
- * @retval	FALSE:ロトムではない
+ * @retval  FALSE:ロトムではない
  */
 //--------------------------------------------------------------
 BOOL PP_ChangeRotomFormNo(POKEMON_PARAM *pp, int new_form_no, int del_waza_pos)
 {
-	int monsno;
-	
-	monsno = PP_Get(pp, ID_PARA_monsno, NULL);
-	if(monsno != MONSNO_ROTOMU){
-		return FALSE;
-	}
-	
-	{
-		int i, s, new_wazano, wazano;
-		const u16 rotom_waza_tbl[] = {
-			0,
-			WAZANO_OOBAAHIITO,
-			WAZANO_HAIDOROPONPU,
-			WAZANO_HUBUKI,
-			WAZANO_EASURASSYU,
-			WAZANO_RIIHUSUTOOMU,
-		};
+  int monsno;
 
-		new_wazano = rotom_waza_tbl[new_form_no];
-		
-		//対応技を全て忘れさせる
-		for(i = 0; i < 4; i++)
+  monsno = PP_Get(pp, ID_PARA_monsno, NULL);
+  if(monsno != MONSNO_ROTOMU){
+    return FALSE;
+  }
+
+  {
+    int i, s, new_wazano, wazano;
+    const u16 rotom_waza_tbl[] = {
+      0,
+      WAZANO_OOBAAHIITO,
+      WAZANO_HAIDOROPONPU,
+      WAZANO_HUBUKI,
+      WAZANO_EASURASSYU,
+      WAZANO_RIIHUSUTOOMU,
+    };
+
+    new_wazano = rotom_waza_tbl[new_form_no];
+
+    //対応技を全て忘れさせる
+    for(i = 0; i < 4; i++)
     {
-			wazano = PP_Get(pp, ID_PARA_waza1 + i, NULL);
-			for(s = 1; s < NELEMS(rotom_waza_tbl); s++)
+      wazano = PP_Get(pp, ID_PARA_waza1 + i, NULL);
+      for(s = 1; s < NELEMS(rotom_waza_tbl); s++)
       {
-				if(wazano != 0 && wazano == rotom_waza_tbl[s])
+        if(wazano != 0 && wazano == rotom_waza_tbl[s])
         {
-					if(new_wazano != 0)
+          if(new_wazano != 0)
           {
-						//新しいフォルムの技と入れ替える
+            //新しいフォルムの技と入れ替える
             PP_SetWazaPos( pp, new_wazano, i );
-						new_wazano = 0;
-						break;
-					}
-					else
-          {	//技忘れ
-						PokeParaWazaDelPos(pp, i);
-						i--;
-						break;
-					}
-				}
-			}
-		}
-		
-		//対応技を覚えていなかった場合はここで技入れ替え
-		if(new_wazano != 0)
+            new_wazano = 0;
+            break;
+          }
+          else
+          { //技忘れ
+            PokeParaWazaDelPos(pp, i);
+            i--;
+            break;
+          }
+        }
+      }
+    }
+
+    //対応技を覚えていなかった場合はここで技入れ替え
+    if(new_wazano != 0)
     {
-			for(i = 0; i < 4; i++)
+      for(i = 0; i < 4; i++)
       {
-				if(PP_Get(pp, ID_PARA_waza1 + i, NULL) == 0)
+        if(PP_Get(pp, ID_PARA_waza1 + i, NULL) == 0)
         {
           PP_SetWazaPos( pp, new_wazano, i );
-					break;
-				}
-			}
-			if(i == 4)
+          break;
+        }
+      }
+      if(i == 4)
       {
         PP_SetWazaPos( pp, new_wazano, del_waza_pos );
-			}
-		}
-		
-		//対応技を忘れさせた結果手持ちの技が0になっていたら電機ショックを覚えさせる
-		if(PP_Get(pp, ID_PARA_waza1, NULL) == 0)
+      }
+    }
+
+    //対応技を忘れさせた結果手持ちの技が0になっていたら電機ショックを覚えさせる
+    if(PP_Get(pp, ID_PARA_waza1, NULL) == 0)
     {
       PP_SetWazaPos( pp, WAZANO_DENKISYOKKU, 0 );
-		}
-	}
+    }
+  }
 
   PP_ChangeFormNo( pp, new_form_no );
-	
-	return TRUE;
+
+  return TRUE;
 }
 
 //============================================================================================
 /**
  * 指定位置の技をクリアして、シフトする
  *
- * @param[in]	pp		クリアする構造体のポインタ
- * @param[in]	pos		クリア位置
+ * @param[in] pp    クリアする構造体のポインタ
+ * @param[in] pos   クリア位置
  */
 //============================================================================================
-static void	PokeParaWazaDelPos(POKEMON_PARAM *pp,u32 pos)
+static void PokeParaWazaDelPos(POKEMON_PARAM *pp,u32 pos)
 {
-	u32	i;
-	u16	waza_no;
-	u8	pp_now;
-	u8	pp_count;
+  u32 i;
+  u16 waza_no;
+  u8  pp_now;
+  u8  pp_count;
 
-	for(i=pos;i<3;i++){
-		waza_no  = PP_Get(pp,ID_PARA_waza1+i+1,NULL);
-		pp_now   = PP_Get(pp,ID_PARA_pp1+i+1,NULL);
-		pp_count = PP_Get(pp,ID_PARA_pp_count1+i+1,NULL);
-		
-		PP_Put(pp,ID_PARA_waza1+i,waza_no);
-		PP_Put(pp,ID_PARA_pp1+i,pp_now);
-		PP_Put(pp,ID_PARA_pp_count1+i,pp_count);
-	}
-	waza_no  = 0;
-	pp_now   = 0;
-	pp_count = 0;
-	PP_Put(pp,ID_PARA_waza4,waza_no);
-	PP_Put(pp,ID_PARA_pp4,pp_now);
-	PP_Put(pp,ID_PARA_pp_count4,pp_count);
+  for(i=pos;i<3;i++){
+    waza_no  = PP_Get(pp,ID_PARA_waza1+i+1,NULL);
+    pp_now   = PP_Get(pp,ID_PARA_pp1+i+1,NULL);
+    pp_count = PP_Get(pp,ID_PARA_pp_count1+i+1,NULL);
+
+    PP_Put(pp,ID_PARA_waza1+i,waza_no);
+    PP_Put(pp,ID_PARA_pp1+i,pp_now);
+    PP_Put(pp,ID_PARA_pp_count1+i,pp_count);
+  }
+  waza_no  = 0;
+  pp_now   = 0;
+  pp_count = 0;
+  PP_Put(pp,ID_PARA_waza4,waza_no);
+  PP_Put(pp,ID_PARA_pp4,pp_now);
+  PP_Put(pp,ID_PARA_pp_count4,pp_count);
 }
 
 //----------------------------------------------------------------------------------
@@ -1689,78 +1689,78 @@ u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex )
 
 //============================================================================================
 /**
- *	指定されたパラメータになるように個性乱数を計算する（特性、レア指定可能版）
+ *  指定されたパラメータになるように個性乱数を計算する（特性、レア指定可能版）
  *
- * @param[in] id					トレーナーID
- * @param[in] mons_no			個性乱数を計算するモンスターナンバー
+ * @param[in] id          トレーナーID
+ * @param[in] mons_no     個性乱数を計算するモンスターナンバー
  * @param[in] form_no     フォルムーナンバー（不要なら PTR_FORM_NONE）
- * @param[in] sex					性別
- * @param[in] tokusei			特性（ 0 or 1 で指定 ）進化後に特性１or特性２になるかを指定するためのものです
- * @param[in] rare_flag		レアにするかどうか( FALSE:レアではない　TRUE:レアにする ）
+ * @param[in] sex         性別
+ * @param[in] tokusei     特性（ 0 or 1 で指定 ）進化後に特性１or特性２になるかを指定するためのものです
+ * @param[in] rare_flag   レアにするかどうか( FALSE:レアではない　TRUE:レアにする ）
  *
- * @retval	計算した個性乱数
+ * @retval  計算した個性乱数
  */
 //============================================================================================
-u32		POKETOOL_CalcPersonalRandEx( u32 id, u16 mons_no, u16 form_no, u8 sex, u8 tokusei, BOOL rare_flag )
-{	
-	u32	rnd;
+u32   POKETOOL_CalcPersonalRandEx( u32 id, u16 mons_no, u16 form_no, u8 sex, u8 tokusei, BOOL rare_flag )
+{
+  u32 rnd;
 
-	//特性ナンバーではないので、2以上はアサートにする
-	GF_ASSERT( tokusei < 2 );
-	//性別にPTL_SEX_UNKNOWNは指定できないのでアサート
-	GF_ASSERT( sex != PTL_SEX_UNKNOWN );
+  //特性ナンバーではないので、2以上はアサートにする
+  GF_ASSERT( tokusei < 2 );
+  //性別にPTL_SEX_UNKNOWNは指定できないのでアサート
+  GF_ASSERT( sex != PTL_SEX_UNKNOWN );
 
-	if( rare_flag )
-	{	
-		u32	mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
+  if( rare_flag )
+  {
+    u32 mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
 
-		rnd = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
+    rnd = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
     if( ( rnd & 0x00000001 ) != tokusei )
-    { 
-			if( sex == PTL_SEX_MALE )
-      { 
+    {
+      if( sex == PTL_SEX_MALE )
+      {
         rnd++;
       }
       else
-      { 
+      {
         //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
         if( rnd )
-        { 
+        {
           rnd--;
         }
       }
     }
-		rnd |= ( mask ^ ( rnd & 0x0000ffff ) ) << 16;
-	}
-	else
-	{	
+    rnd |= ( mask ^ ( rnd & 0x0000ffff ) ) << 16;
+  }
+  else
+  {
     POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
     u8 per_sex = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
 
-		rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
-		rnd = ( rnd ^ 0xff00 ) << 16;
+    rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
+    rnd = ( rnd ^ 0xff00 ) << 16;
 
     if( PokePersonal_SexVecTypeGet( per_sex ) != POKEPER_SEXTYPE_FIX )
-		{	
-			rnd |= per_sex;
-			if( sex == PTL_SEX_MALE )
-			{	
-				if( ( rnd & 1 ) != tokusei )
-				{	
+    {
+      rnd |= per_sex;
+      if( sex == PTL_SEX_MALE )
+      {
+        if( ( rnd & 1 ) != tokusei )
+        {
           rnd++;
-				}
-			}
-			else
-			{	
+        }
+      }
+      else
+      {
         rnd--;
-				if( ( rnd & 1 ) != tokusei )
-				{	
-					rnd--;
-				}
-			}
-		}
-	}
-	return rnd;
+        if( ( rnd & 1 ) != tokusei )
+        {
+          rnd--;
+        }
+      }
+    }
+  }
+  return rnd;
 }
 
 //=============================================================================================
@@ -2693,6 +2693,40 @@ static  void  pp_putAct( POKEMON_PARAM *pp, int paramID, u32 arg )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * 努力値格納時の調節処理（個別値、合計値ともに上限を超えないように）
+ *
+ * @param   ppp1
+ * @param   currentExp  現在の努力値
+ * @param   nextExp     格納リクエストのあった努力値
+ *
+ * @retval  u32         格納する努力値
+ */
+//----------------------------------------------------------------------------------
+static inline u32 adjustExp( POKEMON_PASO_PARAM1* ppp1, u32 currentExp, u32 nextExp )
+{
+  u32 sum, margin;
+
+  sum = ppp1->hp_exp
+      + ppp1->pow_exp
+      + ppp1->def_exp
+      + ppp1->agi_exp
+      + ppp1->spepow_exp
+      + ppp1->spedef_exp;
+
+  margin = PARA_EXP_TOTAL_MAX - sum;
+  if( nextExp > margin ){
+    nextExp = margin;
+  }
+
+  if( nextExp > PARA_EXP_MAX ){
+    nextExp = PARA_EXP_MAX;
+  }
+
+  return nextExp;
+}
+
 //--------------------------------------------------------------------------
 /**
  *  復号済みボックスポケモンパラメータ構造体に任意で値を格納
@@ -2759,22 +2793,22 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
       ppp1->country_code = arg;
       break;
     case ID_PARA_hp_exp:
-      ppp1->hp_exp = arg;
+      ppp1->hp_exp = adjustExp( ppp1, ppp1->hp_exp, arg );
       break;
     case ID_PARA_pow_exp:
-      ppp1->pow_exp = arg;
+      ppp1->pow_exp = adjustExp( ppp1, ppp1->pow_exp, arg );
       break;
     case ID_PARA_def_exp:
-      ppp1->def_exp = arg;
+      ppp1->def_exp = adjustExp( ppp1, ppp1->def_exp, arg );
       break;
     case ID_PARA_agi_exp:
-      ppp1->agi_exp = arg;
+      ppp1->agi_exp = adjustExp( ppp1, ppp1->agi_exp, arg );
       break;
     case ID_PARA_spepow_exp:
-      ppp1->spepow_exp = arg;
+      ppp1->spepow_exp = adjustExp( ppp1, ppp1->spepow_exp, arg );
       break;
     case ID_PARA_spedef_exp:
-      ppp1->spedef_exp = arg;
+      ppp1->spedef_exp = adjustExp( ppp1, ppp1->spedef_exp, arg );
       break;
     case ID_PARA_style:
       ppp1->style = arg;
