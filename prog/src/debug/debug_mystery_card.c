@@ -14,6 +14,7 @@
 //モジュール
 #include "poke_tool/monsno_def.h"
 #include "item/itemsym.h"
+#include "field/gpower_id.h"
 
 //セーブデータ
 #include "savedata/mystery_data.h"
@@ -101,7 +102,7 @@ void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data, u32 event_id )
   //道具作成
   { 
     GIFT_PRESENT_POWER  *p_gpower = &p_data->data.gpower;
-    p_gpower->type  = 1;
+    p_gpower->type  = GPOWER_ID_MAX - 1;  //GPOWER_ID_MAX - 10 からMAXまでが配布用
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_POWER;
 
