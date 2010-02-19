@@ -178,7 +178,7 @@ const GFL_PROC_DATA	DigitalCard_ProcData =
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	WIFIバトルマッチ画面	コアプロセス初期化
+ *	@brief	デジタルカード確認画面	コアプロセス初期化
  *
  *	@param	GFL_PROC *p_proc	プロセス
  *	@param	*p_seq						シーケンス
@@ -238,7 +238,7 @@ static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Init( GFL_PROC *p_proc, int *p_seq,
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	WIFIバトルマッチ画面	コアプロセス破棄
+ *	@brief	デジタルカード確認画面	コアプロセス破棄
  *
  *	@param	GFL_PROC *p_proc	プロセス
  *	@param	*p_seq						シーケンス
@@ -280,14 +280,12 @@ static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Exit( GFL_PROC *p_proc, int *p_seq,
 	
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 
-  GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, NULL );
-
 	return GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	WIFIバトルマッチ画面	メインプロセス処理
+ *	@brief	デジタルカード確認画面	メインプロセス処理
  *
  *	@param	GFL_PROC *p_proc	プロセス
  *	@param	*p_seq						シーケンス

@@ -184,7 +184,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Main
 ///	WIFI大会シーケンス関数
 //=====================================
 static void WbmWifiSeq_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void WbmWifiSeq_Join( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void WbmWifiSeq_Join( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );  //以前はメニューはここでしていましたが、
+                                                                                    //battle_championshipの中でおこなうことになりました
 static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -509,8 +510,7 @@ static void WbmWifiSeq_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
   switch( p_param->mode )
   { 
   case WIFIBATTLEMATCH_CORE_MODE_START:
-    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Join );
-    break;
+    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_RecvDigCard );    break;
 
   case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE:
     WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_EndBattle );
@@ -684,7 +684,7 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   case SEQ_WAIT_NONE_MSG:
     if( WBM_TEXT_IsEnd( p_wk->p_text ) )
     {
-      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Join );
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_DisConnextEnd );
     }
     break;
 

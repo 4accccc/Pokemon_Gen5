@@ -73,24 +73,6 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
-//ステート
-typedef enum
-{
-  BCS_FADEIN,
-  BCS_FADEIN_WAIT,
-
-  BCS_FIRSTMSG_SHOW,
-  BCS_FIRSTMSG_WAIT,
-
-  BCS_FIRSTMENU_OPEN,
-  BCS_FIRSTMENU_WAIT,
-  
-  BCS_INFOMSG_SHOW,
-  BCS_INFOMSG_WAIT,
-
-  BCS_FADEOUT,
-  BCS_FADEOUT_WAIT,
-}BATTLE_CHAMPIONSHIP_STATE;
 
 //切り替え先Proc種類
 typedef enum
@@ -98,7 +80,6 @@ typedef enum
   BCNP_TITLE,
   BCNP_WIFI_BATTLE,
   BCNP_EVENT_BATTLE,
-  BCNP_DIGITAL_MEMBERSHIP,
   
 }BATTLE_CHAMPIONSHIP_NEXT_PROC;
 
@@ -113,8 +94,6 @@ typedef enum
   BC_TEXT_TYPE_MAX,    //c内部にて使用
 } BC_TEXT_TYPE;
 
-
-
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -128,6 +107,11 @@ typedef struct _BC_TEXT_WORK BC_TEXT_WORK;
 //-------------------------------------
 ///	選択リスト
 //=====================================
+typedef enum
+{ 
+  BC_LIST_POS_CENTER,
+  BC_LIST_POS_RIGHTDOWN,
+}BC_LIST_POS;
 typedef struct 
 {
   GFL_MSGDATA *p_msg;
@@ -140,14 +124,29 @@ typedef struct
   u16 font_plt;
   u16 frm_plt;
   u16 frm_chr;
+  BC_LIST_POS pos;
 } BC_LIST_SETUP;
 typedef struct _BC_LIST_WORK BC_LIST_WORK;
 
-//メインワーク
+//-------------------------------------
+///	シーケンスワーク
+//=====================================
+typedef struct _BC_SEQ_WORK BC_SEQ_WORK;
+typedef void (*BC_SEQ_FUNCTION)( BC_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+struct _BC_SEQ_WORK
+{
+	BC_SEQ_FUNCTION	seq_function;		//実行中のシーケンス関数
+	int seq;											//実行中のシーケンス関数の中のシーケンス
+	void *p_wk_adrs;							//実行中のシーケンス関数に渡すワーク
+  int reserv_seq;               //予約シーケンス
+} ;
+
+//-------------------------------------
+///	メインワーク
+//=====================================
 typedef struct
 {
   HEAPID heapId;
-  BATTLE_CHAMPIONSHIP_STATE state;
   BATTLE_CHAMPIONSHIP_NEXT_PROC nextProcType;
   
   //大会情報
@@ -158,6 +157,9 @@ typedef struct
   GFL_FONT        *fontHandle;
   GFL_MSGDATA     *msgHandle;
   PRINT_QUE       *taskMenuQue;
+
+  //シーケンス管理
+  BC_SEQ_WORK     seq;
   
   //taskmenu
   BC_LIST_WORK    *list;
@@ -184,78 +186,120 @@ static const GFL_DISP_VRAM vramBank = {
   GX_OBJVRAMMODE_CHAR_1D_128K
 };
 
+//-------------------------------------
+///	プロセス
+//=====================================
 static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcInit( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcTerm( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcMain( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 
-static void BATTLE_CHAMPIONSHIP_ChangeProcInit( BATTLE_CHAMPIONSHIP_WORK *work );
-static void BATTLE_CHAMPIONSHIP_ChangeProcTerm( BATTLE_CHAMPIONSHIP_WORK *work );
-
-static void BATTLE_CHAMPIONSHIP_InitGraphic( BATTLE_CHAMPIONSHIP_WORK *work );
+//-------------------------------------
+///	グラフィック
+//=====================================
+static void BATTLE_CHAMPIONSHIP_InitGraphic( BATTLE_CHAMPIONSHIP_WORK *p_wk );
 static void BATTLE_CHAMPIONSHIP_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
-static void BATTLE_CHAMPIONSHIP_TermGraphic( BATTLE_CHAMPIONSHIP_WORK *work );
-static void BATTLE_CHAMPIONSHIP_LoadResource( BATTLE_CHAMPIONSHIP_WORK *work );
-static void BATTLE_CHAMPIONSHIP_ReleaseResource( BATTLE_CHAMPIONSHIP_WORK *work );
+static void BATTLE_CHAMPIONSHIP_TermGraphic( BATTLE_CHAMPIONSHIP_WORK *p_wk );
+static void BATTLE_CHAMPIONSHIP_LoadResource( BATTLE_CHAMPIONSHIP_WORK *p_wk );
+static void BATTLE_CHAMPIONSHIP_ReleaseResource( BATTLE_CHAMPIONSHIP_WORK *p_wk );
 
-static void BATTLE_CHAMPIONSHIP_InitMessage( BATTLE_CHAMPIONSHIP_WORK *work );
-static void BATTLE_CHAMPIONSHIP_TermMessage( BATTLE_CHAMPIONSHIP_WORK *work );
-static void BATTLE_CHAMPIONSHIP_UpdateMessage( BATTLE_CHAMPIONSHIP_WORK *work );
-static void BATTLE_CHAMPIONSHIP_ShowMessage( BATTLE_CHAMPIONSHIP_WORK *work  , const u16 msgNo );
-static const BOOL BATTLE_CHAMPIONSHIP_IsFinishMessage( BATTLE_CHAMPIONSHIP_WORK *work );
+//-------------------------------------
+///	メッセージ
+//=====================================
+static void BATTLE_CHAMPIONSHIP_InitMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk );
+static void BATTLE_CHAMPIONSHIP_TermMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk );
+static void BATTLE_CHAMPIONSHIP_UpdateMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk );
+static void BATTLE_CHAMPIONSHIP_ShowMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk  , const u16 msgNo );
+static const BOOL BATTLE_CHAMPIONSHIP_IsFinishMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk );
 
-static void BATTLE_CHAMPIONSHIP_OpenFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work );
-static void BATTLE_CHAMPIONSHIP_CloseFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work );
-static const u32 BATTLE_CHAMPIONSHIP_UpdateFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work );
+//-------------------------------------
+///	メニュー
+//=====================================
+typedef enum
+{ 
+  BC_MENU_TYPE_FIRST,
+  BC_MENU_TYPE_WIFI,
+  BC_MENU_TYPE_LIVE,
+  BC_MENU_TYPE_YESNO,
+}BC_MENU_TYPE;
+static void BATTLE_CHAMPIONSHIP_OpenFirstMenu( BATTLE_CHAMPIONSHIP_WORK *p_wk, BC_MENU_TYPE type );
+static void BATTLE_CHAMPIONSHIP_CloseFirstMenu( BATTLE_CHAMPIONSHIP_WORK *p_wk );
+static const u32 BATTLE_CHAMPIONSHIP_UpdateFirstMenu( BATTLE_CHAMPIONSHIP_WORK *p_wk );
 
 //-------------------------------------
 ///	テキスト
 //=====================================
-extern BC_TEXT_WORK * BC_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID );
-extern void BC_TEXT_Exit( BC_TEXT_WORK* p_wk );
-extern void BC_TEXT_Main( BC_TEXT_WORK* p_wk );
-extern void BC_TEXT_Print( BC_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, BC_TEXT_TYPE type );
-extern void BC_TEXT_PrintBuf( BC_TEXT_WORK* p_wk, const STRBUF *cp_strbuf, BC_TEXT_TYPE type );
-extern BOOL BC_TEXT_IsEndPrint( const BC_TEXT_WORK *cp_wk );
-extern void BC_TEXT_WriteWindowFrame( BC_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_plt );
+static BC_TEXT_WORK * BC_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID );
+static void BC_TEXT_Exit( BC_TEXT_WORK* p_wk );
+static void BC_TEXT_Main( BC_TEXT_WORK* p_wk );
+static void BC_TEXT_Print( BC_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, BC_TEXT_TYPE type );
+static void BC_TEXT_PrintBuf( BC_TEXT_WORK* p_wk, const STRBUF *cp_strbuf, BC_TEXT_TYPE type );
+static BOOL BC_TEXT_IsEndPrint( const BC_TEXT_WORK *cp_wk );
+static void BC_TEXT_WriteWindowFrame( BC_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_plt );
 
 //-------------------------------------
 ///	LIST
 //=====================================
-extern BC_LIST_WORK * BC_LIST_Init( const BC_LIST_SETUP *cp_setup, HEAPID heapID );
-extern void BC_LIST_Exit( BC_LIST_WORK *p_wk );
-extern u32 BC_LIST_Main( BC_LIST_WORK *p_wk );
+static BC_LIST_WORK * BC_LIST_Init( const BC_LIST_SETUP *cp_setup, HEAPID heapID );
+static void BC_LIST_Exit( BC_LIST_WORK *p_wk );
+static u32 BC_LIST_Main( BC_LIST_WORK *p_wk );
 
+//-------------------------------------
+///	シーケンス
+//=====================================
+static void BC_SEQ_Init( BC_SEQ_WORK *p_wk, void *p_wk_adrs, BC_SEQ_FUNCTION seq_function, HEAPID heapID );
+static void BC_SEQ_Exit( BC_SEQ_WORK *p_wk );
+static void BC_SEQ_Main( BC_SEQ_WORK *p_wk );
+static BOOL BC_SEQ_IsEnd( const BC_SEQ_WORK *cp_wk );
+static void BC_SEQ_SetNext( BC_SEQ_WORK *p_wk, BC_SEQ_FUNCTION seq_function );
+static void BC_SEQ_End( BC_SEQ_WORK *p_wk );
+static void BC_SEQ_SetReservSeq( BC_SEQ_WORK *p_wk, int seq );
+static void BC_SEQ_NextReservSeq( BC_SEQ_WORK *p_wk );
 
+//-------------------------------------
+///	シーケンス関数
+//=====================================
+static void SEQFUNC_Start( BC_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_End( BC_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_FadeIn( BC_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_FadeOut( BC_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_MainMenu( BC_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_Info( BC_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_WifiMenu( BC_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_WifiInfo( BC_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_DigitalCard( BC_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+
+//--------------------------------------------------------------
+//  外部公開プロセス
+//--------------------------------------------------------------
 GFL_PROC_DATA BATTLE_CHAMPIONSHIP_ProcData =
 {
   BATTLE_CHAMPIONSHIP_ProcInit,
   BATTLE_CHAMPIONSHIP_ProcMain,
   BATTLE_CHAMPIONSHIP_ProcTerm
 };
-
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
 #pragma mark [>proc 
 static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcInit( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
-  BATTLE_CHAMPIONSHIP_WORK *work;
+  BATTLE_CHAMPIONSHIP_WORK *p_wk;
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_CHAMPIONSHIP, 0x18000 );
 
-  work = GFL_PROC_AllocWork( proc, sizeof(BATTLE_CHAMPIONSHIP_WORK), HEAPID_BATTLE_CHAMPIONSHIP );
-  GFL_STD_MemClear( work, sizeof(BATTLE_CHAMPIONSHIP_WORK) );
-  work->nextProcType  = BCNP_TITLE;
-  work->heapId = HEAPID_BATTLE_CHAMPIONSHIP;
+  p_wk = GFL_PROC_AllocWork( proc, sizeof(BATTLE_CHAMPIONSHIP_WORK), HEAPID_BATTLE_CHAMPIONSHIP );
+  GFL_STD_MemClear( p_wk, sizeof(BATTLE_CHAMPIONSHIP_WORK) );
+  p_wk->nextProcType  = BCNP_TITLE;
+  p_wk->heapId = HEAPID_BATTLE_CHAMPIONSHIP;
 
-  BATTLE_CHAMPIONSHIP_InitGraphic( work );
-  BATTLE_CHAMPIONSHIP_LoadResource( work );
-  BATTLE_CHAMPIONSHIP_InitMessage( work );
+  BATTLE_CHAMPIONSHIP_InitGraphic( p_wk );
+  BATTLE_CHAMPIONSHIP_LoadResource( p_wk );
+  BATTLE_CHAMPIONSHIP_InitMessage( p_wk );
+
+  BC_SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeIn, HEAPID_BATTLE_CHAMPIONSHIP );
   
-  work->state = BCS_FADEIN;
-
   //仮データ作成
   {
-    BATTLE_CHAMPIONSHIP_SetDebugData( &work->csData , work->heapId );
+    BATTLE_CHAMPIONSHIP_SetDebugData( &p_wk->csData , p_wk->heapId );
   }
   
   return GFL_PROC_RES_FINISH;
@@ -263,16 +307,18 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcInit( GFL_PROC * proc, int * seq 
 
 static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcTerm( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
-  BATTLE_CHAMPIONSHIP_WORK *work = mywk;
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = mywk;
 
   //仮データ破棄
-  BATTLE_CHAMPIONSHIP_TermDebugData( &work->csData );
+  BATTLE_CHAMPIONSHIP_TermDebugData( &p_wk->csData );
 
-  BATTLE_CHAMPIONSHIP_TermMessage( work );
-  BATTLE_CHAMPIONSHIP_ReleaseResource( work );
-  BATTLE_CHAMPIONSHIP_TermGraphic( work );
+  BC_SEQ_Exit( &p_wk->seq);
 
-  switch( work->nextProcType )
+  BATTLE_CHAMPIONSHIP_TermMessage( p_wk );
+  BATTLE_CHAMPIONSHIP_ReleaseResource( p_wk );
+  BATTLE_CHAMPIONSHIP_TermGraphic( p_wk );
+
+  switch( p_wk->nextProcType )
   { 
   default:
     GF_ASSERT(0);
@@ -289,9 +335,6 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcTerm( GFL_PROC * proc, int * seq 
       GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMatch_ProcData, p_param );
     }
     break;
-  case BCNP_DIGITAL_MEMBERSHIP:
-    GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(wifibattlematch_core), &DigitalCard_ProcData, NULL );
-    break;
 
   case BCNP_EVENT_BATTLE:
     GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &IRC_BATTLE_ProcData, NULL);
@@ -306,116 +349,20 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcTerm( GFL_PROC * proc, int * seq 
 
 static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcMain( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
-  BATTLE_CHAMPIONSHIP_WORK *work = mywk;
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = mywk;
   
-  switch( work->state )
-  {
-  case BCS_FADEIN:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->state = BCS_FADEIN_WAIT;
-    break;
-    
-  case BCS_FADEIN_WAIT:
-    if( WIPE_SYS_EndCheck() == TRUE )
-    {
-      work->state = BCS_FIRSTMSG_SHOW;
-    }
-    break;
+  BC_SEQ_Main( &p_wk->seq );
 
-  case BCS_FIRSTMSG_SHOW:
-    BATTLE_CHAMPIONSHIP_ShowMessage( work, BC_STR_01 );
-    work->state = BCS_FIRSTMSG_WAIT;
-    break;
-
-  case BCS_FIRSTMSG_WAIT:
-    BATTLE_CHAMPIONSHIP_UpdateMessage( work );
-    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( work ) == TRUE )
-    {
-      work->state = BCS_FIRSTMENU_OPEN;
-    }
-    break;
-
-  case BCS_FIRSTMENU_OPEN:
-    BATTLE_CHAMPIONSHIP_OpenFirstMenu( work );
-    work->state = BCS_FIRSTMENU_WAIT;
-    break;
-
-  case BCS_FIRSTMENU_WAIT:
-    {
-      const u32 ret = BATTLE_CHAMPIONSHIP_UpdateFirstMenu( work );
-      if( ret != BC_LIST_SELECT_NULL )
-      {
-        switch( ret )
-        {
-        case 0: //WiFi大会
-          work->nextProcType = BCNP_WIFI_BATTLE;
-          work->state = BCS_FADEOUT;
-          break;
-        case 1: //イベント大会
-          work->nextProcType = BCNP_EVENT_BATTLE;
-          work->state = BCS_FADEOUT;
-          break;
-        case 2: //デジタル選手証
-          work->nextProcType = BCNP_DIGITAL_MEMBERSHIP;
-          work->state = BCS_FADEOUT;
-          break;
-        case 3: //説明をきく
-          work->state = BCS_INFOMSG_SHOW;
-          break;
-        case 4: //やめる
-          work->state = BCS_FADEOUT;
-          break;
-        }
-        BATTLE_CHAMPIONSHIP_CloseFirstMenu( work );
-      }
-    }
-    break;
-
-  case BCS_INFOMSG_SHOW:
-    BATTLE_CHAMPIONSHIP_ShowMessage( work, BC_STR_02 );
-    work->state = BCS_INFOMSG_WAIT;
-    break;
-  
-    break;
-  case BCS_INFOMSG_WAIT:
-    BATTLE_CHAMPIONSHIP_UpdateMessage( work );
-    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( work ) == TRUE )
-    {
-      work->state = BCS_FIRSTMSG_SHOW;
-    }
-    break;
-
-  case BCS_FADEOUT:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->state = BCS_FADEOUT_WAIT;
-    break;
-    
-  case BCS_FADEOUT_WAIT:
-    if( WIPE_SYS_EndCheck() == TRUE )
-    {
-      return GFL_PROC_RES_FINISH;
-    }
-    break;
+  if( BC_SEQ_IsEnd( &p_wk->seq ) )
+  { 
+    return GFL_PROC_RES_FINISH;
   }
 
   return GFL_PROC_RES_CONTINUE;
 }
 
-#pragma mark [>change proc func
-static void BATTLE_CHAMPIONSHIP_ChangeProcInit( BATTLE_CHAMPIONSHIP_WORK *work )
-{
-  
-}
-
-static void BATTLE_CHAMPIONSHIP_ChangeProcTerm( BATTLE_CHAMPIONSHIP_WORK *work )
-{
-  
-}
-
 #pragma mark [>graphic func
-static void BATTLE_CHAMPIONSHIP_InitGraphic( BATTLE_CHAMPIONSHIP_WORK *work )
+static void BATTLE_CHAMPIONSHIP_InitGraphic( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 {
   GFL_DISP_GX_InitVisibleControl();
   GFL_DISP_GXS_InitVisibleControl();
@@ -430,8 +377,8 @@ static void BATTLE_CHAMPIONSHIP_InitGraphic( BATTLE_CHAMPIONSHIP_WORK *work )
   GFL_DISP_SetBank( &vramBank );
 
   //BG系の初期化
-  GFL_BG_Init( work->heapId );
-  GFL_BMPWIN_Init( work->heapId );
+  GFL_BG_Init( p_wk->heapId );
+  GFL_BMPWIN_Init( p_wk->heapId );
 
   //Vram割り当ての設定
   {
@@ -499,7 +446,7 @@ static void BATTLE_CHAMPIONSHIP_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont ,
   GFL_BG_LoadScreenReq( bgPlane );
 }
 
-static void BATTLE_CHAMPIONSHIP_TermGraphic( BATTLE_CHAMPIONSHIP_WORK *work )
+static void BATTLE_CHAMPIONSHIP_TermGraphic( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 {
   GFL_BG_FreeBGControl( BATTLE_CHAMPIONSHIP_FRAME_SUB_BG );
   GFL_BG_FreeBGControl( BATTLE_CHAMPIONSHIP_FRAME_MENU );
@@ -509,114 +456,140 @@ static void BATTLE_CHAMPIONSHIP_TermGraphic( BATTLE_CHAMPIONSHIP_WORK *work )
   GFL_BG_Exit();
 }
 
-static void BATTLE_CHAMPIONSHIP_LoadResource( BATTLE_CHAMPIONSHIP_WORK *work )
+static void BATTLE_CHAMPIONSHIP_LoadResource( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 {
-  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_BATTLE_CHAMPIONSHIP , work->heapId );
+  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_BATTLE_CHAMPIONSHIP , p_wk->heapId );
 
   ////BGリソース
   //上画面背景
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_battle_championship_connect_NCLR , 
-                    PALTYPE_MAIN_BG , 0, 0x20 * 10, work->heapId );
+                    PALTYPE_MAIN_BG , 0, 0x20 * 10, p_wk->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_battle_championship_connect_sub_NCGR ,
-                    BATTLE_CHAMPIONSHIP_FRAME_BG , 0 , 0, FALSE , work->heapId );
+                    BATTLE_CHAMPIONSHIP_FRAME_BG , 0 , 0, FALSE , p_wk->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_battle_championship_connect_sub_NSCR , 
-                    BATTLE_CHAMPIONSHIP_FRAME_BG ,  0 , 0, FALSE , work->heapId );
+                    BATTLE_CHAMPIONSHIP_FRAME_BG ,  0 , 0, FALSE , p_wk->heapId );
   //下画面背景
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_battle_championship_connect_NCLR , 
-                    PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+                    PALTYPE_SUB_BG , 0 , 0 , p_wk->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_battle_championship_connect_NCGR ,
-                    BATTLE_CHAMPIONSHIP_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
+                    BATTLE_CHAMPIONSHIP_FRAME_SUB_BG , 0 , 0, FALSE , p_wk->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_battle_championship_connect_01_NSCR , 
-                    BATTLE_CHAMPIONSHIP_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+                    BATTLE_CHAMPIONSHIP_FRAME_SUB_BG ,  0 , 0, FALSE , p_wk->heapId );
 
   GFL_ARC_CloseDataHandle( arcHandle );
 
   //フレーム枠
   GFL_BG_FillCharacter( BATTLE_CHAMPIONSHIP_FRAME_STR, 0, 1, 0 );
-  BmpWinFrame_GraphicSet( BATTLE_CHAMPIONSHIP_FRAME_STR, BATTLE_CHAMPIONSHIP_FRAME_MENU_CGX, BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME, MENU_TYPE_SYSTEM, work->heapId );
+  BmpWinFrame_GraphicSet( BATTLE_CHAMPIONSHIP_FRAME_STR, BATTLE_CHAMPIONSHIP_FRAME_MENU_CGX, BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME, MENU_TYPE_SYSTEM, p_wk->heapId );
   GFL_BG_FillCharacter( BATTLE_CHAMPIONSHIP_FRAME_MENU, 0, 1, 0 );
-  BmpWinFrame_GraphicSet( BATTLE_CHAMPIONSHIP_FRAME_MENU, BATTLE_CHAMPIONSHIP_FRAME_STR_CGX, BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME, MENU_TYPE_SYSTEM, work->heapId );
+  BmpWinFrame_GraphicSet( BATTLE_CHAMPIONSHIP_FRAME_MENU, BATTLE_CHAMPIONSHIP_FRAME_STR_CGX, BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME, MENU_TYPE_SYSTEM, p_wk->heapId );
   
 
   //フォント
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , BATTLE_CHAMPIONSHIP_BG_PAL_FONT*0x20, 0x20, work->heapId );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , BATTLE_CHAMPIONSHIP_BG_PAL_FONT*0x20, 0x20, p_wk->heapId );
   
 }
 
-static void BATTLE_CHAMPIONSHIP_ReleaseResource( BATTLE_CHAMPIONSHIP_WORK *work )
+static void BATTLE_CHAMPIONSHIP_ReleaseResource( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 {
   GFL_BG_FillCharacterRelease( BATTLE_CHAMPIONSHIP_FRAME_MENU, 1, 0 );
   GFL_BG_FillCharacterRelease( BATTLE_CHAMPIONSHIP_FRAME_STR, 1, 0 );
 }
 
 #pragma mark [>message func
-static void BATTLE_CHAMPIONSHIP_InitMessage( BATTLE_CHAMPIONSHIP_WORK *work )
+static void BATTLE_CHAMPIONSHIP_InitMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 {
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  p_wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , p_wk->heapId );
   
-  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_battle_championship_dat , work->heapId );
+  p_wk->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_battle_championship_dat , p_wk->heapId );
   
-  work->taskMenuQue = PRINTSYS_QUE_Create( work->heapId );
+  p_wk->taskMenuQue = PRINTSYS_QUE_Create( p_wk->heapId );
   
   //メッセージ
-  work->text    = BC_TEXT_Init( BATTLE_CHAMPIONSHIP_FRAME_STR, BATTLE_CHAMPIONSHIP_BG_PAL_FONT, work->taskMenuQue, work->fontHandle, work->heapId );
-  BC_TEXT_WriteWindowFrame( work->text, BATTLE_CHAMPIONSHIP_FRAME_STR_CGX, BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME );
+  p_wk->text    = BC_TEXT_Init( BATTLE_CHAMPIONSHIP_FRAME_STR, BATTLE_CHAMPIONSHIP_BG_PAL_FONT, p_wk->taskMenuQue, p_wk->fontHandle, p_wk->heapId );
+  BC_TEXT_WriteWindowFrame( p_wk->text, BATTLE_CHAMPIONSHIP_FRAME_STR_CGX, BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME );
 }
 
-static void BATTLE_CHAMPIONSHIP_TermMessage( BATTLE_CHAMPIONSHIP_WORK *work )
+static void BATTLE_CHAMPIONSHIP_TermMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 {
-  BC_TEXT_Exit( work->text );
+  BC_TEXT_Exit( p_wk->text );
 
-  PRINTSYS_QUE_Delete( work->taskMenuQue );
+  PRINTSYS_QUE_Delete( p_wk->taskMenuQue );
   
-  GFL_MSG_Delete( work->msgHandle );
-  GFL_FONT_Delete( work->fontHandle );
+  GFL_MSG_Delete( p_wk->msgHandle );
+  GFL_FONT_Delete( p_wk->fontHandle );
 }
 
-static void BATTLE_CHAMPIONSHIP_UpdateMessage( BATTLE_CHAMPIONSHIP_WORK *work )
+static void BATTLE_CHAMPIONSHIP_UpdateMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 {
-  BC_TEXT_Main( work->text );
-  PRINTSYS_QUE_Main( work->taskMenuQue );
+  BC_TEXT_Main( p_wk->text );
+  PRINTSYS_QUE_Main( p_wk->taskMenuQue );
 }
-static void BATTLE_CHAMPIONSHIP_ShowMessage( BATTLE_CHAMPIONSHIP_WORK *work  , const u16 msgNo )
+static void BATTLE_CHAMPIONSHIP_ShowMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk  , const u16 msgNo )
 {
-  BC_TEXT_Print( work->text, work->msgHandle, msgNo, BC_TEXT_TYPE_STREAM );
+  BC_TEXT_Print( p_wk->text, p_wk->msgHandle, msgNo, BC_TEXT_TYPE_STREAM );
 }
 
-static const BOOL BATTLE_CHAMPIONSHIP_IsFinishMessage( BATTLE_CHAMPIONSHIP_WORK *work )
+static const BOOL BATTLE_CHAMPIONSHIP_IsFinishMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 {
-  return BC_TEXT_IsEndPrint( work->text );
+  return BC_TEXT_IsEndPrint( p_wk->text );
 }
 
 #pragma mark [>menu func
-static void BATTLE_CHAMPIONSHIP_OpenFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work )
+static void BATTLE_CHAMPIONSHIP_OpenFirstMenu( BATTLE_CHAMPIONSHIP_WORK *p_wk, BC_MENU_TYPE type )
 {
   BC_LIST_SETUP  setup;
   GFL_STD_MemClear( &setup, sizeof(BC_LIST_SETUP) );
-  setup.p_msg   = work->msgHandle;
-  setup.p_font  = work->fontHandle;
-  setup.p_que   = work->taskMenuQue;
-  setup.strID[0]= BC_SELECT_01;
-  setup.strID[1]= BC_SELECT_02;
-  setup.strID[2]= BC_SELECT_03;
-  setup.strID[3]= BC_SELECT_04;
-  setup.strID[4]= BC_SELECT_05;
-  setup.list_max= 5;
+  setup.p_msg   = p_wk->msgHandle;
+  setup.p_font  = p_wk->fontHandle;
+  setup.p_que   = p_wk->taskMenuQue;
+
+
+  switch( type )
+  { 
+  case BC_MENU_TYPE_FIRST:
+    setup.strID[0]= BC_SELECT_01;
+    setup.strID[1]= BC_SELECT_02;
+    setup.strID[2]= BC_SELECT_04;
+    setup.strID[3]= BC_SELECT_05;
+    setup.list_max= 4;
+    setup.pos     = BC_LIST_POS_CENTER;
+    break;
+  case BC_MENU_TYPE_WIFI:
+    setup.strID[0]= BC_SELECT_06;
+    setup.strID[1]= BC_SELECT_04;
+    setup.strID[2]= BC_SELECT_03;
+    setup.strID[3]= BC_SELECT_05;
+    setup.list_max= 4;
+    setup.pos     = BC_LIST_POS_CENTER;
+    break;
+  case BC_MENU_TYPE_LIVE:
+    setup.strID[0]= BC_SELECT_05;
+    setup.list_max= 1;
+    setup.pos     = BC_LIST_POS_CENTER;
+    break;
+  case BC_MENU_TYPE_YESNO:
+    setup.strID[0]= BC_SELECT_07;
+    setup.strID[1]= BC_SELECT_08;
+    setup.list_max= 2;
+    setup.pos     = BC_LIST_POS_RIGHTDOWN;
+    break;
+  }
   setup.frm     = BATTLE_CHAMPIONSHIP_FRAME_MENU;
   setup.font_plt= BATTLE_CHAMPIONSHIP_BG_PAL_FONT;
   setup.frm_plt = BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME;
   setup.frm_chr = BATTLE_CHAMPIONSHIP_FRAME_MENU_CGX;
-  work->list  = BC_LIST_Init( &setup, work->heapId );
+  p_wk->list  = BC_LIST_Init( &setup, p_wk->heapId );
 }
 
-static void BATTLE_CHAMPIONSHIP_CloseFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work )
+static void BATTLE_CHAMPIONSHIP_CloseFirstMenu( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 {
-  BC_LIST_Exit( work->list );
+  BC_LIST_Exit( p_wk->list );
 }
 
-static const u32 BATTLE_CHAMPIONSHIP_UpdateFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work )
+static const u32 BATTLE_CHAMPIONSHIP_UpdateFirstMenu( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 {
-  return BC_LIST_Main( work->list );;
+  return BC_LIST_Main( p_wk->list );;
 }
 
 #pragma mark [>debug
@@ -979,12 +952,27 @@ BC_LIST_WORK * BC_LIST_Init( const BC_LIST_SETUP *cp_setup, HEAPID heapID )
 
   //BMPWIN作成
   { 
-    //右下、テキストボックスの上に位置するため
-    //表示項目から位置、高さを計算
-    const u8 w  = BC_LIST_W;
-    const u8 h  = cp_setup->list_max * 2;
-    const u8 x  = 32 / 2 - w / 2; //1はフレーム分
-    const u8 y  = (24 - 6) / 2 - h / 2; //１は自分のフレーム分と6はテキスト分
+    u8 w,h,x,y;
+    switch( cp_setup->pos)
+    { 
+    case BC_LIST_POS_CENTER:
+      //中央に位置するため
+      //表示項目から位置、高さを計算
+      w  = BC_LIST_W;
+      h  = cp_setup->list_max * 2;
+      x  = 32 / 2 - w / 2; 
+      y  = (24 - 6) / 2 - h / 2;
+      break;
+    case BC_LIST_POS_RIGHTDOWN:
+      //右下、テキストボックスの上に位置するため
+      //表示項目から位置、高さを計算
+      w  = 8;
+      h  = cp_setup->list_max * 2;
+      x  = 32 - w - 1;
+      y  = 24 - 6 - h - 1;
+      break;
+    }
+
     p_wk->p_bmpwin  = GFL_BMPWIN_Create( cp_setup->frm, x, y, w, h, cp_setup->font_plt, GFL_BMP_CHRAREA_GET_B );
     BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_OFF, cp_setup->frm_chr, cp_setup->frm_plt );
     GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
@@ -1086,3 +1074,547 @@ u32 BC_LIST_Main( BC_LIST_WORK *p_wk )
   return BmpMenuList_Main( p_wk->p_list );
 }
 
+//-------------------------------------
+///	シーケンス
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	初期化
+ *
+ *	@param	BC_SEQ_WORK *p_wk	ワーク
+ *	@param	*p_param				パラメータ
+ *	@param	seq_function		シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+void BC_SEQ_Init( BC_SEQ_WORK *p_wk, void *p_wk_adrs, BC_SEQ_FUNCTION seq_function, HEAPID heapID )
+{	
+	//作成
+	GFL_STD_MemClear( p_wk, sizeof(BC_SEQ_WORK) );
+
+	//初期化
+	p_wk->p_wk_adrs	= p_wk_adrs;
+
+	//セット
+	BC_SEQ_SetNext( p_wk, seq_function );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	破棄
+ *
+ *	@param	BC_SEQ_WORK *p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+void BC_SEQ_Exit( BC_SEQ_WORK *p_wk )
+{
+	GFL_STD_MemClear( p_wk, sizeof(BC_SEQ_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	メイン処理
+ *
+ *	@param	BC_SEQ_WORK *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void BC_SEQ_Main( BC_SEQ_WORK *p_wk )
+{	
+	if( p_wk->seq_function )
+	{	
+		p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	終了取得
+ *
+ *	@param	const BC_SEQ_WORK *cp_wk		ワーク
+ *
+ *	@return	TRUEならば終了	FALSEならば処理中
+ */	
+//-----------------------------------------------------------------------------
+BOOL BC_SEQ_IsEnd( const BC_SEQ_WORK *cp_wk )
+{	
+	return cp_wk->seq_function == NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	次のシーケンスを設定
+ *
+ *	@param	BC_SEQ_WORK *p_wk	ワーク
+ *	@param	seq_function		シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+void BC_SEQ_SetNext( BC_SEQ_WORK *p_wk, BC_SEQ_FUNCTION seq_function )
+{	
+	p_wk->seq_function	= seq_function;
+	p_wk->seq	= 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	終了
+ *
+ *	@param	BC_SEQ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void BC_SEQ_End( BC_SEQ_WORK *p_wk )
+{	
+  BC_SEQ_SetNext( p_wk, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEQ 次のシーケンスを予約
+ *
+ *	@param	BC_SEQ_WORK *p_wk  ワーク
+ *	@param	seq             次のシーケンス
+ */
+//-----------------------------------------------------------------------------
+void BC_SEQ_SetReservSeq( BC_SEQ_WORK *p_wk, int seq )
+{ 
+  p_wk->reserv_seq  = seq;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEQ 予約されたシーケンスへ飛ぶ
+ *
+ *	@param	BC_SEQ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BC_SEQ_NextReservSeq( BC_SEQ_WORK *p_wk )
+{ 
+  p_wk->seq = p_wk->reserv_seq;
+}
+//=============================================================================
+/**
+ *  シーケンス関数
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	開始
+ *
+ *	@param	BC_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_Start( BC_SEQ_WORK *p_seqwk, int *p_seq, void *p_seqwk_adrs )
+{ 
+  BC_SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	終了
+ *
+ *	@param	BC_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_seqwk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_End( BC_SEQ_WORK *p_seqwk, int *p_seq, void *p_seqwk_adrs )
+{ 
+  //終了
+  BC_SEQ_End( p_seqwk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フェードイン
+ *
+ *	@param	BC_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_seqwk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_FadeIn( BC_SEQ_WORK *p_seqwk, int *p_seq, void *p_seqwk_adrs )
+{ 
+	enum
+	{	
+		SEQ_FADEOUT_START,
+		SEQ_FADEOUT_WAIT,
+		SEQ_END,
+	};
+
+	switch( *p_seq )
+	{	
+	case SEQ_FADEOUT_START:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+		*p_seq	= SEQ_FADEOUT_WAIT;
+		break;
+
+	case SEQ_FADEOUT_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= SEQ_END;
+		}
+		break;
+
+	case SEQ_END:
+		BC_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
+		break;
+
+	default:
+		GF_ASSERT(0);
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フェードアウト
+ *
+ *	@param	BC_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_FadeOut( BC_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+	enum
+	{
+		SEQ_FADEIN_START,
+		SEQ_FADEIN_WAIT,
+		SEQ_EXIT,
+	};	
+
+	switch( *p_seq )
+	{	
+	case SEQ_FADEIN_START:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+		*p_seq	= SEQ_FADEIN_WAIT;
+		break;
+
+	case SEQ_FADEIN_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= SEQ_EXIT;
+		}
+		break;
+
+	case SEQ_EXIT:
+		BC_SEQ_SetNext( p_seqwk, SEQFUNC_End );
+		break;
+
+	default:
+		GF_ASSERT(0);
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メインメニュー
+ *
+ *	@param	BC_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_MainMenu( BC_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  { 
+    SEQ_START_FIRSTMSG,
+    SEQ_WAIT_FIRSTMSG,
+    SEQ_START_MENU,
+    SEQ_WAIT_MENU,
+  };
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_FIRSTMSG:
+    BATTLE_CHAMPIONSHIP_ShowMessage( p_wk, BC_STR_01 );
+    *p_seq = SEQ_WAIT_FIRSTMSG;
+    break;
+
+  case SEQ_WAIT_FIRSTMSG:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( p_wk );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( p_wk ) == TRUE )
+    {
+      *p_seq = SEQ_START_MENU;
+    }
+    break;
+
+  case SEQ_START_MENU:
+    BATTLE_CHAMPIONSHIP_OpenFirstMenu( p_wk, BC_MENU_TYPE_FIRST );
+    *p_seq = SEQ_WAIT_MENU;
+    break;
+
+  case SEQ_WAIT_MENU:
+    {
+      const u32 ret = BATTLE_CHAMPIONSHIP_UpdateFirstMenu( p_wk );
+      if( ret != BC_LIST_SELECT_NULL )
+      {
+        switch( ret )
+        {
+        case 0: //WiFi大会
+          BC_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
+          break;
+        case 1: //イベント大会
+          //BC_SEQ_SetNext( p_seqwk, SEQFUNC_LiveMenu );
+          BC_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
+          break;
+        case 2: //説明をきく
+          BC_SEQ_SetNext( p_seqwk, SEQFUNC_Info );
+          break;
+        case 3: //やめる
+          BC_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
+          break;
+        }
+        BATTLE_CHAMPIONSHIP_CloseFirstMenu( p_wk );
+      }
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	説明画面
+ *
+ *	@param	BC_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_Info( BC_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_INFOMSG,
+    SEQ_WAIT_INFOMSG,
+  };
+
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_INFOMSG:
+    BATTLE_CHAMPIONSHIP_ShowMessage( p_wk, BC_STR_02 );
+    *p_seq  = SEQ_WAIT_INFOMSG;
+    break;
+  
+    break;
+  case SEQ_WAIT_INFOMSG:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( p_wk );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( p_wk ) == TRUE )
+    {
+      BC_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Wifiメニュー
+ *
+ *	@param	BC_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_WifiMenu( BC_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_WIFIMSG,
+    SEQ_WAIT_WIFIMSG,
+    SEQ_START_WIFIMENU,
+    SEQ_WAIT_WIFIMENU,
+
+    SEQ_START_CANCELMSG,
+    SEQ_WAIT_CANCELMSG,
+    SEQ_START_CANCELMENU,
+    SEQ_WAIT_CANCELMENU,
+  };
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_WIFIMSG:
+    BATTLE_CHAMPIONSHIP_ShowMessage( p_wk, BC_STR_04 );
+    *p_seq = SEQ_WAIT_WIFIMSG;
+    break;
+
+  case SEQ_WAIT_WIFIMSG:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( p_wk );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( p_wk ) == TRUE )
+    {
+      *p_seq = SEQ_START_WIFIMENU;
+    }
+    break;
+
+  case SEQ_START_WIFIMENU:
+    BATTLE_CHAMPIONSHIP_OpenFirstMenu( p_wk, BC_MENU_TYPE_WIFI );
+    *p_seq = SEQ_WAIT_WIFIMENU;
+    break;
+
+  case SEQ_WAIT_WIFIMENU:
+    {
+      const u32 ret = BATTLE_CHAMPIONSHIP_UpdateFirstMenu( p_wk );
+      if( ret != BC_LIST_SELECT_NULL )
+      {
+        switch( ret )
+        {
+        case 0: //さんかする
+          BC_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
+          p_wk->nextProcType = BCNP_WIFI_BATTLE;
+          break;
+        case 1: //説明を聞く
+          BC_SEQ_SetNext( p_seqwk, SEQFUNC_WifiInfo );
+          break;
+        case 2: //デジタル選手証をみる
+          BC_SEQ_SetNext( p_seqwk, SEQFUNC_DigitalCard );
+          break;
+        case 3: //やめる
+          *p_seq  = SEQ_START_CANCELMSG;
+          break;
+        }
+        BATTLE_CHAMPIONSHIP_CloseFirstMenu( p_wk );
+      }
+    }
+    break;
+
+  case SEQ_START_CANCELMSG:
+    BATTLE_CHAMPIONSHIP_ShowMessage( p_wk, BC_STR_05 );
+    *p_seq = SEQ_WAIT_CANCELMSG;
+    break;
+
+  case SEQ_WAIT_CANCELMSG:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( p_wk );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( p_wk ) == TRUE )
+    {
+      *p_seq = SEQ_START_CANCELMENU;
+    }
+    break;
+
+  case SEQ_START_CANCELMENU:
+    BATTLE_CHAMPIONSHIP_OpenFirstMenu( p_wk, BC_MENU_TYPE_YESNO );
+    *p_seq = SEQ_WAIT_CANCELMENU;
+    break;
+
+  case SEQ_WAIT_CANCELMENU:
+    {
+      const u32 ret = BATTLE_CHAMPIONSHIP_UpdateFirstMenu( p_wk );
+      if( ret != BC_LIST_SELECT_NULL )
+      {
+        switch( ret )
+        {
+        case 0: //はい
+          BC_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
+          break;
+        case 1: //いいえ
+          *p_seq  =SEQ_START_WIFIMSG;
+          break;
+        }
+        BATTLE_CHAMPIONSHIP_CloseFirstMenu( p_wk );
+      }
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Wifi説明画面
+ *
+ *	@param	BC_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_WifiInfo( BC_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_INFOMSG,
+    SEQ_WAIT_INFOMSG,
+  };
+
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_INFOMSG:
+    BATTLE_CHAMPIONSHIP_ShowMessage( p_wk, BC_STR_03 );
+    *p_seq  = SEQ_WAIT_INFOMSG;
+    break;
+  
+    break;
+  case SEQ_WAIT_INFOMSG:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( p_wk );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( p_wk ) == TRUE )
+    {
+      BC_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デジタル選手証
+ *
+ *	@param	BC_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_DigitalCard( BC_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+		SEQ_FADEIN_START,
+		SEQ_FADEIN_WAIT,
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_END,
+		SEQ_FADEOUT_START,
+		SEQ_FADEOUT_WAIT,
+  };
+
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+	case SEQ_FADEIN_START:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    (*p_seq)++;
+		break;
+
+	case SEQ_FADEIN_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			(*p_seq)++;
+		}
+		break;
+
+  case SEQ_INIT:
+    BATTLE_CHAMPIONSHIP_TermMessage( p_wk );
+    BATTLE_CHAMPIONSHIP_ReleaseResource( p_wk );
+    BATTLE_CHAMPIONSHIP_TermGraphic( p_wk );
+
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifibattlematch_core), &DigitalCard_ProcData, NULL );
+    (*p_seq)++;
+    break;
+
+  case SEQ_MAIN:
+    (*p_seq)++;
+    break;
+
+  case SEQ_END:
+
+    BATTLE_CHAMPIONSHIP_InitGraphic( p_wk );
+    BATTLE_CHAMPIONSHIP_LoadResource( p_wk );
+    BATTLE_CHAMPIONSHIP_InitMessage( p_wk );
+
+    (*p_seq)++;
+    break;
+
+	case SEQ_FADEOUT_START:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+		*p_seq	= SEQ_FADEOUT_WAIT;
+		break;
+
+	case SEQ_FADEOUT_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+      BC_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
+		}
+		break;
+  }
+}
