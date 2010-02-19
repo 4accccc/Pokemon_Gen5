@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-19T19:13:20"/>
+	<create user="matsumiya" host="W00224" date="2010-02-19T19:18:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1429" top="244" right="2134" bottom="872" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -441,25 +441,25 @@
 		<language name="JPN" width="216">メッセージとうろくリスト：
 つかいたい　メッセージを
 えらんで　ください！</language>
-		<language name="JPN_KANJI" width="216">メッセージとうろくリスト：
-つかいたい　メッセージを
-えらんで　ください！</language>
+		<language name="JPN_KANJI" width="216">メッセージ登録リスト：
+使いたい　メッセージを
+選んでください！</language>
 	</row>
 
 	<row id="info_02">
 		<language name="JPN" width="216">メッセージの　しゅるいや
 ことばをいれる　ばしょを
 えらんで　ください！</language>
-		<language name="JPN_KANJI" width="216">メッセージの　しゅるいや
-ことばをいれる　ばしょを
-えらんで　ください！</language>
+		<language name="JPN_KANJI" width="216">メッセージの　種類や
+言葉を　いれる　場所を
+選んでください！</language>
 	</row>
 
 	<row id="info_03">
 		<language name="JPN" width="216">ことばをいれる　ばしょを
 えらんで　ください！</language>
-		<language name="JPN_KANJI" width="216">ことばをいれる　ばしょを
-えらんで　ください！</language>
+		<language name="JPN_KANJI" width="216">言葉を　いれる　場所を
+選んでください！</language>
 	</row>
 
 	<row id="info_04">
@@ -467,17 +467,17 @@
 グループの　なかから
 ことばを　えらんで　ください！</language>
 		<language name="JPN_KANJI" width="216">グループモード：
-グループの　なかから
-ことばを　えらんで　ください！</language>
+グループの　中から
+言葉を　選んでください！</language>
 	</row>
 
 	<row id="info_05">
 		<language name="JPN" width="216">あいうえおモード
 もじを　えらんで
-ことばを　しぼりこんで　ください！</language>
+ことばを　しぼりこんでください！</language>
 		<language name="JPN_KANJI" width="216">あいうえおモード
-もじを　えらんで
-ことばを　しぼりこんで　ください！</language>
+文字を　選んで
+言葉を　しぼりこんでください！</language>
 	</row>
 
 	<row id="info_06">
@@ -485,8 +485,8 @@
 しぼりこんだ　なかから
 ことばを　えらんで　ください！</language>
 		<language name="JPN_KANJI" width="216">あいうえおモード：
-しぼりこんだ　なかから
-ことばを　えらんで　ください！</language>
+しぼりこんだ　中から
+言葉を　選んでください！</language>
 	</row>
 
 	<flowchart-group-list>
