@@ -99,6 +99,12 @@ enum
 #define UNION_CHAR_MAX  (16)
 
 ///////////////////////////////////////////////////
+//SEŠÖ˜A
+
+#define BDETAIL_SE_DECIDE (SEQ_SE_DECIDE1)
+#define BDETAIL_SE_POPUP  (SEQ_SE_DECIDE2)
+
+///////////////////////////////////////////////////
 //BMPŠÖ˜A
 
 /////////////////////////////////
@@ -188,7 +194,7 @@ enum{
 
 #define ACT_TRAINER_PX  (27*8+4)
 #define ACT_TRAINER_PY  (5*8+4)
-#define ACT_RANK_PX     (25*8+4)
+#define ACT_RANK_PX     (25*8)
 #define ACT_RANK_PY     (10*8)
 #define ACT_TRAINER_BGPRI (0)
 

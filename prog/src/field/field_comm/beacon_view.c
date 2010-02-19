@@ -357,20 +357,22 @@ static int seq_Main( BEACON_VIEW_PTR wk )
 {
   int ret;
 
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-    return SEQ_CALL_DETAIL_VIEW;
-  }
   //メイン入力チェック
   ret = BeaconView_CheckInput( wk );
   if( ret != SEQ_MAIN ){
     return ret;
   }
 
+  if( wk->io_interval ){
+    wk->io_interval--;
+    return SEQ_MAIN;
+  }
+  
   //スタックチェック
   if( BeaconView_CheckStack( wk ) == FALSE){
     return SEQ_MAIN;
   }
-
+  wk->io_interval = 30*5; //インターバルを設定
   return SEQ_VIEW_UPDATE;
 }
 
@@ -517,6 +519,9 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
     wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv);
     wk->my_data.power = 1;
   }
+  wk->misc_sv = (MISC*)SaveData_GetMiscConst( save );
+  wk->log_count = MISC_CrossComm_GetSuretigaiCount( wk->misc_sv );
+
   {
     MYSTATUS* my = SaveData_GetMyStatus(save);
     wk->my_data.tr_id = MyStatus_GetID( my ) & 0xFFFF;  //下位2byte
@@ -1152,6 +1157,7 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
     wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
     wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
     pp->px+ACT_RANK_OX, pp->py+ACT_RANK_OY, ACTANM_RANK, OBJ_BG_PRI, OBJ_SPRI_RANK+idx);
+  GFL_CLACT_WK_SetAutoAnmFlag( pp->cRank, FALSE );
 
   //Unionオブジェアクター
   pp->cUnion = obj_ObjAdd( wk,

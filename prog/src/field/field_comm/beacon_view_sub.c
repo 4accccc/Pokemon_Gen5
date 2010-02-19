@@ -133,6 +133,7 @@ static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id );
 
 static void sub_GameBeaconWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id);
 static u32 sub_GetBeaconMsgID(const GAMEBEACON_INFO *info);
+static void sub_PlaySE( u16 se_no );
 static void sub_PlttVramTrans( u16* p_data, u16 pos, u16 num );
 
 static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y );
@@ -285,14 +286,16 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     if(pp != NULL){ //ターゲットパネル書換え
       panel_Draw( wk, pp, wk->tmpInfo );
       effReq_SetIconEffect( wk, pp, wk->tmpInfo, FALSE );
+      sub_PlaySE( BVIEW_SE_ICON );
     }
     return TRUE;
   }
   //新規
-  wk->log_count++;
+  wk->log_count = MISC_CrossComm_IncSuretigaiCount( wk->misc_sv );
   draw_LogNumWindow( wk );
   draw_MenuWindow( wk, msg_sys_now_record );
   obj_ThanksViewSet( wk );
+
   if( wk->ctrl.view_top > 0){ //描画リストがトップでない時はスクロールのみ
     ofs = wk->ctrl.view_top-1;
     GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, ofs );
@@ -300,6 +303,7 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   }
   //スクロールリクエスト
   list_ScrollReq( wk, wk->tmpInfo, ofs, idx, SCROLL_DOWN, (wk->ctrl.view_top == 0));
+  sub_PlaySE( BVIEW_SE_NEW_PLAYER );
   return TRUE;
 }
 
@@ -614,6 +618,8 @@ static int touchin_CheckUpDown( BEACON_VIEW_PTR wk, POINT* tp )
       tri.p[1] = tbl[i][point[j][1]];
       tri.p[2] = tbl[i][point[j][2]];
       if( calc_PointInTriangle( tp, &tri )){
+        act_AnmStart( wk->pAct[ACT_UP+i], ACTANM_UP_ANM+(i*3) );
+        sub_PlaySE( BVIEW_SE_UPDOWN );
         return i;
       }
     }
@@ -629,6 +635,7 @@ static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp )
   int i, ret;
   u8  enable = 4;
   GFL_UI_TP_HITTBL tbl[2];
+  static const u16 se_tbl[] = { BVIEW_SE_DECIDE, BVIEW_SE_DECIDE, BVIEW_SE_CANCEL };
 
   if( wk->my_data.power != GPOWER_ID_NULL ){
     enable |= 1;
@@ -649,6 +656,7 @@ static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp )
 
     ret = GFL_UI_TP_HitSelf( tbl, tp->x, tp->y );
     if(ret != GFL_UI_TP_HIT_NONE) {
+      sub_PlaySE( se_tbl[i] );
       return i;
     }
   }
@@ -787,6 +795,11 @@ static int tmenu_YnUpdate( BEACON_VIEW_PTR wk )
   for( i = 0;i < TMENU_MAX;i++){
     if( APP_TASKMENU_WIN_IsTrg( wk->tmenu[i].work )){
       APP_TASKMENU_WIN_SetDecide( wk->tmenu[i].work, TRUE );
+      if(i == 0){
+        sub_PlaySE( BVIEW_SE_DECIDE );
+      }else{
+        sub_PlaySE( BVIEW_SE_CANCEL );
+      }
       ret |= (i+1);
     }
     APP_TASKMENU_WIN_Update( wk->tmenu[i].work );
@@ -887,6 +900,14 @@ static u32 sub_GetBeaconMsgID(const GAMEBEACON_INFO *info)
     return msg_beacon_001;
   }
   return msg_beacon_001 + action - GAMEBEACON_ACTION_SEARCH;
+}
+
+/*
+ *  @brief  SE再生
+ */
+static void sub_PlaySE( u16 se_no )
+{
+  PMSND_PlaySEVolume( se_no, 127 );
 }
 
 /*
@@ -1077,18 +1098,15 @@ static void panel_IconObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 icon)
  */
 static u8 panel_FrameColorGet( GAMEBEACON_INFO* info )
 {
-  u16 thanks = GAMEBEACON_Get_ThanksRecvCount( info );
+  int version = GAMEBEACON_Get_PmVersion(info);
 
-  if( thanks < 11 ){
+  switch( version ){
+  case VERSION_BLACK:
     return 0;
-  }else if( thanks < 21 ){
+  case VERSION_WHITE:
     return 1;
-  }else if( thanks < 41 ){
-    return 2;
-  }else if( thanks < 71 ){
-    return 3;
   }
-  return 4;
+  return 2;
 }
 
 /*
@@ -1101,9 +1119,9 @@ static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
   
   //パネルフレームカラー
   col = panel_FrameColorGet( info );
-  pal[0] = wk->resPlttPanel.dat[ col*16+1 ];
-  pal[1] = wk->resPlttPanel.dat[ col*16+2 ];
-  pal[2] = wk->resPlttPanel.dat[ col*16+3 ];
+  pal[0] = wk->resPlttPanel.dat[ col*16+0 ];
+  pal[1] = wk->resPlttPanel.dat[ col*16+1 ];
+  pal[2] = wk->resPlttPanel.dat[ col*16+2 ];
   
   //パネルベースカラー
   GAMEBEACON_Get_FavoriteColor((GXRgb*)&pal[3], info);
@@ -1127,7 +1145,7 @@ static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str )
  */
 static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
 {
-  pp->rank = 6;
+  pp->rank = 1;
 
   if(pp->rank == 0){
     GFL_CLACT_WK_SetAnmFrame( pp->cRank, 0);
@@ -1467,6 +1485,11 @@ static void effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
   case GAMEBEACON_ACTION_GPOWER:
     effReq_PopupMsgGPower( wk, info );
     break;
+  case GAMEBEACON_ACTION_THANKYOU:
+    //御礼を受けた回数インクリメント
+    GAMEBEACON_Set_ThankyouOver( MISC_CrossComm_IncThanksRecvCount( wk->misc_sv ) );
+
+    //ブレイクスルー
   default:
     effReq_PopupMsgFromInfo( wk, info );
     break;
@@ -1785,6 +1808,7 @@ static void effReq_SetPanelFlash( BEACON_VIEW_PTR wk, u8 target_ofs )
   
   pp = panel_GetPanelFromDataIndex( wk, idx );
   taskAdd_PanelFlash( wk, pp, &wk->eff_task_ct );
+  sub_PlaySE( BVIEW_SE_DECIDE );
 }
 
 /*

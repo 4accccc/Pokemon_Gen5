@@ -550,6 +550,13 @@ static void _sub_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID )
 	GFL_ARCHDL_UTIL_TransVramScreen(	tmap_h, NARC_townmap_gra_tmap_map_d_NSCR,
 						BG_FRAME_MAP02_M, 0, 0x800, 0, heapID );	
 
+  //ウィンドウカラー再転送用パレット
+  wk->resPlttPanel.buf = GFL_ARC_LoadDataAllocByHandle( wk->handle, 
+                              NARC_beacon_status_bstatus_panel_nclr, wk->heapID );
+
+  NNS_G2dGetUnpackedPaletteData( wk->resPlttPanel.buf, &wk->resPlttPanel.p_pltt );
+  wk->resPlttPanel.dat = (u16*)wk->resPlttPanel.p_pltt->pRawData;
+
   GFL_ARC_CloseDataHandle( tmap_h );
 
   G2_SetBlendAlpha( ALPHA_1ST_M, ALPHA_2ND_M, ALPHA_EV1_M, ALPHA_EV2_M);
@@ -568,6 +575,7 @@ static void _sub_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void _sub_BGResRelease( BEACON_DETAIL_WORK* wk )
 {
+  GFL_HEAP_FreeMemory( wk->resPlttPanel.buf );
   G2S_BlendNone();
   G2_BlendNone();
 }

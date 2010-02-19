@@ -14,6 +14,7 @@
 #include "system/palanm.h"
 #include "system/gfl_use.h"
 #include "savedata/intrude_save.h"
+#include "savedata/misc.h"
 #include "app/app_taskmenu.h"
 #include "app/app_keycursor.h"
 #include "msg/msg_beacon_status.h"
@@ -122,6 +123,16 @@ typedef enum{
  MENU_ST_ANM,
  MENU_ST_OFF,
 }MENU_STATE;
+
+///////////////////////////////////////////////////
+//SE関連
+#define BVIEW_SE_DECIDE (SEQ_SE_DECIDE1)
+#define BVIEW_SE_SELECT (SEQ_SE_SELECT1)
+#define BVIEW_SE_CANCEL (SEQ_SE_CANCEL1)
+#define BVIEW_SE_UPDOWN (SEQ_SE_DECIDE2)
+#define BVIEW_SE_NEW_PLAYER (SEQ_SE_DECIDE3)
+#define BVIEW_SE_ICON   (SEQ_SE_SELECT2)
+#define BVIEW_SE_THANKS (SEQ_SE_DECIDE1)
 
 ///////////////////////////////////////////////////
 //BMP関連
@@ -428,7 +439,7 @@ typedef struct _PANEL_WORK{
 typedef struct _LOG_CTRL{
   u8  max;  //ログ数
   u8  top;  //今描画されている先頭index
-  u8  next_panel; //次にデータが来た時書き込むパネルindex
+//  u8  next_panel; //次にデータが来た時書き込むパネルindex
   u8  view_top;
   u8  view_btm;
   u8  view_max;
@@ -437,7 +448,7 @@ typedef struct _LOG_CTRL{
   u8  g_power;
   u8  mine_power_f;
 
-  u8  panel_list[PANEL_VIEW_MAX];
+ // u8  panel_list[PANEL_VIEW_MAX];
 }LOG_CTRL;
 
 /*
@@ -457,6 +468,7 @@ typedef struct _BEACON_VIEW{
   GAMEDATA* gdata;
   FIELDMAP_WORK* fieldWork; 
   FIELD_SUBSCREEN_WORK *subscreen;
+  MISC* misc_sv;
 
   ////////////////////////////////////////
   BEACON_STATUS* b_status;

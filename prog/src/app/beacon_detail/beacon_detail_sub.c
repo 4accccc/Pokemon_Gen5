@@ -105,8 +105,10 @@ static const BEACON_DETAIL DATA_BeaconDetail[] = {
 //プロトタイプ
 static BOOL input_CheckHitTrIcon( BEACON_DETAIL_WORK* wk );
 
+static void sub_PlaySE( u16 se_no );
 static void sub_PlttVramTrans( u16* p_data, u8 target, u16 pos, u16 num );
 static void sub_UpDownButtonActiveControl( BEACON_DETAIL_WORK* wk );
+static u8 sub_WinFrameColorGet( GAMEBEACON_INFO* info );
 static const BEACON_DETAIL* sub_GetBeaconDetailParam( GAMEBEACON_ACTION action );
 static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset );
 
@@ -167,6 +169,7 @@ int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
 
   //キャラアイコンあたり判定
   if( input_CheckHitTrIcon(wk) ){
+    sub_PlaySE( BDETAIL_SE_DECIDE );
     effReq_PopupMsg( wk );
     return SEQ_EFF_WAIT; 
   }
@@ -189,6 +192,14 @@ static BOOL input_CheckHitTrIcon( BEACON_DETAIL_WORK* wk )
     }
   }
   return FALSE;
+}
+
+/*
+ *  @brief  SE再生
+ */
+static void sub_PlaySE( u16 se_no )
+{
+  PMSND_PlaySEVolume( se_no, 127 );
 }
 
 /*
@@ -232,6 +243,22 @@ static void sub_UpDownButtonActiveControl( BEACON_DETAIL_WORK* wk )
   }else{
     TOUCHBAR_SetActive( wk->touchbar,  TOUCHBAR_ICON_CUR_D, FALSE );
   }
+}
+
+/*
+ *  @brief  ウィンドウパネルカラーゲット 
+ */
+static u8 sub_WinFrameColorGet( GAMEBEACON_INFO* info )
+{
+  int version = GAMEBEACON_Get_PmVersion(info);
+
+  switch( version ){
+  case VERSION_BLACK:
+    return 0;
+  case VERSION_WHITE:
+    return 1;
+  }
+  return 2;
 }
 
 /*
@@ -423,11 +450,15 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
 
   //パネルベースカラー
   {
+    u8  col_idx;
     u16 pal[2];
     GAMEBEACON_Get_FavoriteColor((GXRgb*)&pal[0], info);
     SoftFade(&pal[0], &pal[1], 1, 3, 0x0000); //補色を作成
  
-    sub_PlttVramTrans( pal, FADE_SUB_BG, 16*idx+1, 2);
+    sub_PlttVramTrans( pal, FADE_SUB_BG, 16*idx+0x01, 2);
+
+    col_idx = sub_WinFrameColorGet( info );
+    sub_PlttVramTrans( &wk->resPlttPanel.dat[3*col_idx], FADE_SUB_BG, 16*idx+0x0B, 1);
   }
 
   //プレイヤー名
@@ -606,6 +637,8 @@ static void taskAdd_MsgUpdown( BEACON_DETAIL_WORK* wk, u8 dir, int* task_ct )
     twk->diff = -POPUP_DIFF;
   }
   twk->frame = POPUP_COUNT;
+
+  sub_PlaySE( BDETAIL_SE_POPUP );
 
   twk->task_ct = task_ct;
   (*task_ct)++;

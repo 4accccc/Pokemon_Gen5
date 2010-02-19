@@ -23,6 +23,9 @@
 #include "app/townmap_data_sys.h"
 #include "app/townmap_util.h"
 
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
+
 #include "beacon_detail_def.h"
 
 //=============================================================================
@@ -116,6 +119,7 @@ typedef struct
   
   RES2D_CHAR  resCharUnion[UNION_CHAR_MAX];
   RES2D_PLTT  resPlttUnion;
+  RES2D_PLTT  resPlttPanel;
 
 	//タッチバー
 	TOUCHBAR_WORK							*touchbar;
