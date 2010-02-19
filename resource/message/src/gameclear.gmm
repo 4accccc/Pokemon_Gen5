@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T11:10:05"/>
+	<create user="matsumiya" host="W00224" date="2010-02-19T16:02:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="280" top="46" right="985" bottom="666" maximized="no" rayout="Vertical2">
+	<dialog left="1348" top="367" right="2053" bottom="987" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="126" right="1209" bottom="524" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -365,9 +365,9 @@
 　セーブ効果音
 ・全てのウインドウ消去（メニューに復帰しない）
 ・0＝主人公名</comment>
-		<language name="JPN">[1:03:ポケモンタイプ:0]は
+		<language name="JPN">[1:00:トレーナー名:0]は
 レポートに　しっかり　かきのこした！</language>
-		<language name="JPN_KANJI">[1:03:ポケモンタイプ:0]は
+		<language name="JPN_KANJI">[1:00:トレーナー名:0]は
 レポートに　しっかり　書き残した！</language>
 	</row>
 
