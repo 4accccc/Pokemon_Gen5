@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-02-19T13:20:30"/>
+	<create user="matsumiya" host="W00224" date="2010-02-19T15:01:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -345,7 +345,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1446" top="265" right="2151" bottom="885" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -353,7 +353,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -384,7 +384,7 @@
 こちらを　どうぞ！▼</language>
 		<language name="JPN_KANJI" width="256">おはよう　ございます
 [1:00:トレーナー名:0]さん　ですね▼
-プレゼントを　おあずかり　しています
+プレゼントを　お預かりしています
 こちらを　どうぞ！▼</language>
 	</row>
 
@@ -398,7 +398,7 @@
 こちらを　どうぞ！▼</language>
 		<language name="JPN_KANJI" width="256">こんにちは
 [1:00:トレーナー名:0]さん　ですね▼
-プレゼントを　おあずかり　しています
+プレゼントを　お預かりしています
 こちらを　どうぞ！▼</language>
 	</row>
 
@@ -412,7 +412,7 @@
 こちらを　どうぞ！▼</language>
 		<language name="JPN_KANJI" width="256">こんばんは
 [1:00:トレーナー名:0]さん　ですね▼
-プレゼントを　おあずかり　しています
+プレゼントを　お預かりしています
 こちらを　どうぞ！▼</language>
 	</row>
 
@@ -424,10 +424,10 @@
 もう　ありません▼
 またの　ごりようを
 おまちして　おります</language>
-		<language name="JPN_KANJI" width="256">おあずかり　してる　プレゼントは
+		<language name="JPN_KANJI" width="256">お預かりしている　プレゼントは
 もう　ありません▼
-またの　ごりようを
-おまちして　おります</language>
+またの　ご利用を
+お待ちしております</language>
 	</row>
 
 	<row id="msg_postman_05">
@@ -435,8 +435,8 @@
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">またの　ごりようを
 おまちしております</language>
-		<language name="JPN_KANJI" width="256">またの　ごりようを
-おまちしております</language>
+		<language name="JPN_KANJI" width="256">またの　ご利用を
+お待ちしております</language>
 	</row>
 
 	<row id="msg_postman_06">
@@ -445,17 +445,17 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [1:01:ポケモン種族名:1]を　うけとった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[1:01:ポケモン種族名:1]を　うけとった！</language>
+[1:01:ポケモン種族名:1]を　受け取った！</language>
 	</row>
 
 	<row id="msg_postman_07">
 		<comment>ポケモンやタマゴを受け取ろうとしたときに
 てもちがいっぱいだったときのメッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">てもちポケモンが　いっぱい　で
-わたす　ことが　できません</language>
-		<language name="JPN_KANJI" width="256">てもちポケモンが　いっぱい　で
-わたす　ことが　できません</language>
+		<language name="JPN" width="256">てもちポケモンが　いっぱいで
+わたすことが　できません</language>
+		<language name="JPN_KANJI" width="256">手持ちポケモンが　一杯で
+渡すことが　できません</language>
 	</row>
 
 	<row id="msg_postman_08">
@@ -475,9 +475,9 @@
 ０：どうぐの名前</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]が　いっぱいで
-わたす　ことが　できません</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]が　いっぱいで
-わたす　ことが　できません</language>
+わたすことが　できません</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]が　一杯で
+渡すことが　できません</language>
 	</row>
 
 	<row id="msg_postman_10">
