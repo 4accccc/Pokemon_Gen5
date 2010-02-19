@@ -157,6 +157,7 @@ typedef enum {
   DBGSTR_SV_PokeInReqForEmptyPos,
   DBGSTR_SV_StartChangePokeInfo,
 
+  DBGSTR_EVENT_AddFactorInfo,
   DBGSTR_EV_AddFactor,
   DBGSTR_EV_DelFactor,
   DBGSTR_EV_LinkInfoHeader,

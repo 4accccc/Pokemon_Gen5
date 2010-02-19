@@ -784,7 +784,6 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
     clientCoverPos[3] = 1;
     wk->numClients++;
   }
-  OS_TPrintf("NumClients=%d\n", wk->numClients);
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
@@ -826,7 +825,6 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
     if( fClientEnable[i] ){
-      OS_TPrintf("Client(%d) Enable, numCoverPos=%d\n", i, clientCoverPos[i]);
       wk->client[i] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, i, clientCoverPos[i],
                 (i==0)?BTL_CLIENT_TYPE_UI : BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
     }

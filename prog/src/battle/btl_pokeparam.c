@@ -1414,7 +1414,6 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BO
     pWaza->ppMax = ppMax;
   }
   pWaza->pp = pWaza->ppMax;
-//  OS_TPrintf("ワザ上書き: ppMax指定=%d, 実値:%d\n", ppMax, pWaza->ppMax);
 }
 //=============================================================================================
 /**
@@ -2832,7 +2831,6 @@ void BPP_CombiWaza_SetParam( BTL_POKEPARAM* bpp, u8 combiPokeID, WazaID combiUse
 {
   bpp->combiPokeID = combiPokeID;
   bpp->combiWazaID = combiUsedWaza;
-  OS_TPrintf("ポケ(%d：%p）に合体パラメセット .. combiPoke=%d\n", bpp->coreParam.myID, bpp, bpp->combiPokeID);
 }
 //=============================================================================================
 /**
@@ -2881,7 +2879,6 @@ void BPP_CombiWaza_ClearParam( BTL_POKEPARAM* bpp )
   {
     bpp->combiPokeID = BTL_POKEID_NULL;
     bpp->combiWazaID = WAZANO_NULL;
-    OS_TPrintf("ポケ(%d）に合体パラメクリア\n", bpp->coreParam.myID);
   }
 }
 

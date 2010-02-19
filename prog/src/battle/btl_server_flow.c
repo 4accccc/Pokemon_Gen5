@@ -383,6 +383,7 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
   const SVFL_WAZAPARAM* wazaParam );
 static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos );
 static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza );
+static void scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_POKESET* targetRec, WazaID waza );
 static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaLock );
 static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
@@ -910,7 +911,6 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
     if( action->change.depleteFlag ){ continue; }
 
     if( !BPP_IsDead(wk->actOrder[i].bpp) ){
-      OS_TPrintf("入れ替えしました ... memIdx=%d\n", action->change.memberIdx);
       scproc_MemberChange( wk, wk->actOrder[i].bpp, action->change.memberIdx );
       wk->actOrder[i].fDone = TRUE;
     }
@@ -2342,12 +2342,10 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   }
 
   if( posIdx != nextPokeIdx ){
-    OS_TPrintf("Client(%d) メンバー入場につき入れ替わり %d <-> %d\n", clientID, posIdx, nextPokeIdx);
     BTL_PARTY_SwapMembers( clwk->party, posIdx, nextPokeIdx );
   }
   bpp = BTL_PARTY_GetMemberData( clwk->party, posIdx );
   pokeID = BPP_GetID( bpp );
-  OS_TPrintf("新しく出たPoke=%d\n", pokeID);
 
 
   BTL_HANDLER_TOKUSEI_Add( bpp );
@@ -4773,18 +4771,14 @@ static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
       {
         BPP_SICK_CONT  sickCont = BPP_SICKCONT_MakeTurnParam( 2, waza );
         scPut_AddSick( wk, attacker, WAZASICK_TAMELOCK, sickCont );
-        SCQUE_PUT_ACT_WazaEffectEx( wk->que, atPos, BTL_POS_NULL, waza, BTLV_WAZAEFF_TURN_TAME );
-        {
-          u32 hem_state = Hem_PushState( &wk->HEManager );
-          scEvent_TameStart( wk, attacker, targetRec, waza );
-          scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-          Hem_PopState( &wk->HEManager, hem_state );
-        }
+
+        scproc_TameStartTurn( wk, attacker, atPos, targetRec, waza );
         // スキップできない時はここでreturn
         return TRUE;
       }
 
-      SCQUE_PUT_ACT_WazaEffectEx( wk->que, atPos, BTL_POS_NULL, waza, BTLV_WAZAEFF_TURN_TAME );
+//      SCQUE_PUT_ACT_WazaEffectEx( wk->que, atPos, BTL_POS_NULL, waza, BTLV_WAZAEFF_TURN_TAME );
+      scproc_TameStartTurn( wk, attacker, atPos, targetRec, waza );
       {
         u32 hem_state = Hem_PushState( &wk->HEManager );
         scEvent_TameSkip( wk, attacker, waza );
@@ -4805,6 +4799,29 @@ static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
   }
   return FALSE;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * 溜め開始ターン処理
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   atPos
+ * @param   targetRec
+ * @param   waza
+ */
+//----------------------------------------------------------------------------------
+static void scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_POKESET* targetRec, WazaID waza )
+{
+  SCQUE_PUT_ACT_WazaEffectEx( wk->que, atPos, BTL_POS_NULL, waza, BTLV_WAZAEFF_TURN_TAME );
+  {
+    u32 hem_state = Hem_PushState( &wk->HEManager );
+    scEvent_TameStart( wk, attacker, targetRec, waza );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * ワザ出し失敗チェック
@@ -8968,6 +8985,9 @@ static void scPut_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaSick 
 
   // 状態異常アイコン付加
   if( sick < POKESICK_MAX ){
+    if( (sick == POKESICK_DOKU) && BPP_SICKCONT_IsNull(sickCont) ){
+      sick = POKESICK_MAX;
+    }
     SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, sick );
   }
 }

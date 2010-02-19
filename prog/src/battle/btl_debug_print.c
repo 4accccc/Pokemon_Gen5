@@ -205,6 +205,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SC_ReadMsgParam:          return "[QUE] READ MSG SC=%d, StrID=%d";
   case DBGSTR_SC_PutMsg_SE:             return "  SE_ID=%d\n";
   case DBGSTR_SC_ArgsEqual:             return " args = ";
+  case DBGSTR_EVENT_AddFactorInfo:      return "FactorType=%x, subPri=%x, TotalPriority=%x\n";
   case DBGSTR_EV_AddFactor:             return "[ADD] Factor=%p Depend=%d Type=%d, Pri=%06x [ADD]\n";
   case DBGSTR_EV_DelFactor:             return "[DEL] DEL Factor=%p Depend=%d, Type=%d [DEL]\n";
   case DBGSTR_EV_LinkInfoHeader:        return "***** [[EV Chain]] *****\n";

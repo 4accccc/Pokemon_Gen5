@@ -222,7 +222,9 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
   if( newFactor )
   {
     newFactor->priority = calcFactorPriority( factorType, priority );
-    OS_TPrintf("FactorType=%x, subPri=%x, TotalPriority=%x\n", factorType, priority, newFactor->priority);
+
+    BTL_N_Printf( DBGSTR_EVENT_AddFactorInfo, factorType, priority, newFactor->priority);
+
     newFactor->factorType = factorType;
     newFactor->prev = NULL;
     newFactor->next = NULL;

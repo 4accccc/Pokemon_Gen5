@@ -7238,7 +7238,6 @@ static void handler_AsaNoHizasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     default:
       ratio = FX32_CONST( 0.5 );
     }
-    OS_TPrintf("‚±‚¤‚²‚¤‚¹‚¢RATIO=%08x\n", ratio);
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, ratio );
   }
@@ -7918,18 +7917,14 @@ static BOOL isReqWazaForbid( WazaID waza, const u16* exTbl, u32 exTblElems )
   };
 
   if( isWazaExclude( ReqWazaExcludeTbl, NELEMS(ReqWazaExcludeTbl), waza ) ){
-    OS_TPrintf("WAZA %d = Basic Forbid\n", waza);
     return TRUE;
   }
 
   if( exTbl != NULL ){
     if( isWazaExclude( exTbl, exTblElems, waza ) ){
-      OS_TPrintf("WAZA %d = Basic Forbid\n", waza);
       return TRUE;
     }
   }
-
-  OS_TPrintf("WAZA %d = Usable!!\n", waza);
 
   return FALSE;
 }
@@ -8108,8 +8103,6 @@ static void handler_Nekonote( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     {
       u8 idx = BTL_CALC_GetRand( wazaCnt );
       BtlPokePos  pos= BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, wazaAry[idx] );
-
-      OS_TPrintf("Usable WazaMax = %d,  randIdx=%d, waza=%d\n", wazaCnt, idx, wazaAry[idx]);
 
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  wazaAry[idx] );
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, pos );
