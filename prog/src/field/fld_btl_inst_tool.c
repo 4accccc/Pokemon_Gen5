@@ -46,6 +46,9 @@ typedef struct
   PL_RETURN_TYPE *ReturnMode;
   PL_SELECT_POS *ResultSelect;
   u8 *ResultNoAry;
+
+  POKEPARTY *SrcParty;
+  POKEPARTY *DstParty;
 }EVENT_WORK_POKE_LIST;
 
 static GMEVENT_RESULT PokeSelEvt( GMEVENT *event, int *seq, void *wk );
@@ -56,18 +59,19 @@ static GMEVENT_RESULT PokeSelEvt( GMEVENT *event, int *seq, void *wk );
  * @param gsys          ゲームシステムポインタ
  * @param inType        リストタイプ
  * @param inReg         レギュレーション
- * @param pp            ポケパーティポインタ
+ * @param pp            対象ポケパーティポインタ
  * @param outSelNum     選択リスト番号配列へのポインタ
  * @param outResult     リスト結果
  * @param outRetMode    リスト戻りタイプ
+ * @param outParty      ＮＵＬＬでない場合、結果を格納するポケパーティ
  *
  * @retval GMEVENT      イベントポインタ
  */
 //--------------------------------------------------------------
 GMEVENT *FBI_TOOL_CreatePokeListEvt(
     GAMESYS_WORK *gsys,
-    const PL_LIST_TYPE inType, const int inReg, POKEPARTY *pp,
-    u8 *outSelNoAry, PL_SELECT_POS *outResult, PL_RETURN_TYPE *outRetMode )
+    const PL_LIST_TYPE inType, const int inReg, POKEPARTY *inTargetParty,
+    u8 *outSelNoAry, PL_SELECT_POS *outResult, PL_RETURN_TYPE *outRetMode, POKEPARTY *outParty )
 {
   GMEVENT *event;
   FIELDMAP_WORK *fieldmap;
@@ -84,10 +88,12 @@ GMEVENT *FBI_TOOL_CreatePokeListEvt(
   work->ResultNoAry = outSelNoAry;
   work->ResultSelect = outResult;
   work->ReturnMode = outRetMode;
+  work->SrcParty = inTargetParty;
+  work->DstParty = outParty;
   {
     PLIST_DATA *list = &work->ListData;
     PokeRegulation_LoadData(inReg, &work->Regulation);  //レギュレーションロード
-    list->pp = pp;
+    list->pp = inTargetParty;
     list->reg = &work->Regulation;
     list->type = inType;
   }
@@ -96,9 +102,9 @@ GMEVENT *FBI_TOOL_CreatePokeListEvt(
     GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
     ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( gdata );
     MI_CpuClear8( st, sizeof(PSTATUS_DATA) );
-    st->ppd = pp;
+    st->ppd = inTargetParty;
     st->ppt = PST_PP_TYPE_POKEPARTY;
-    st->max = PokeParty_GetPokeCount( pp );
+    st->max = PokeParty_GetPokeCount( inTargetParty );
     st->mode = PST_MODE_NORMAL;
     st->page = PPT_INFO;
     st->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
@@ -149,6 +155,25 @@ static GMEVENT_RESULT PokeSelEvt( GMEVENT *event, int *seq, void *wk )
     MI_CpuCopy8( work->ListData.in_num, work->ResultNoAry, 6 );
     *work->ResultSelect = work->ListData.ret_sel;
     *work->ReturnMode = work->ListData.ret_mode;
+
+    //ポケパーティにデータセット
+    if (work->DstParty != NULL){
+      int i;
+      int num = PokeParty_GetPokeCountMax( work->DstParty );
+      NOZOMU_Printf("party num %d\n", num);
+      for( i=0;i < num; i++ )
+      {
+        POKEMON_PARAM *param;
+        int pos;
+        pos = work->ResultNoAry[i]-1;
+        if( pos >= 6 ){
+          GF_ASSERT( 0 );
+          work->ResultNoAry[i] = 1;
+        }
+        param = PokeParty_GetMemberPointer( work->SrcParty, pos );
+        PokeParty_Add( work->DstParty, param );
+      }
+    }
     (*seq)++;
     break;
   case 5:

@@ -35,7 +35,8 @@ TRIAL_HOUSE_WORK_PTR TRIAL_HOUSE_Start(void)
   NOZOMU_Printf("TrialHouseWorkSize = 0x%x\n",size);
   ptr = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, size);
   ptr->HeapID = HEAPID_APP_CONTROL;//HEAPID_PROC;
-
+  //パーティ作成
+  ptr->Party = PokeParty_AllocPartyWork( ptr->HeapID );
   return ptr;
 }
 
@@ -50,6 +51,7 @@ void TRIAL_HOUSE_End( TRIAL_HOUSE_WORK_PTR *ptr )
 {
   if ( *ptr != NULL )
   {
+    GFL_HEAP_FreeMemory((*ptr)->Party);
     GFL_HEAP_FreeMemory( *ptr );
     *ptr = NULL;
   }
@@ -96,6 +98,9 @@ void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const u32 inPlayMode )
     ptr->PlayMode = BSWAY_PLAYMODE_SINGLE;
     ptr->MemberNum = 3;
   }
+
+  //パーティの最大匹数をセットして初期化
+  PokeParty_Init( ptr->Party, ptr->MemberNum );
 }
 
 

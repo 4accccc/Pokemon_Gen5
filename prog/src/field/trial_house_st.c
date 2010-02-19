@@ -97,25 +97,21 @@ static GMEVENT_RESULT PokeSelEvt(GMEVENT * event, int * seq, void * work)
       call_event = FBI_TOOL_CreatePokeListEvt(
           gsys,
           evt_wk->ListType, evt_wk->Reg, evt_wk->Party, evt_wk->SelAry,
-          &evt_wk->Select, &evt_wk->RetType );
+          &evt_wk->Select, &evt_wk->RetType, evt_wk->HouseWorkPtr->Party );
       GMEVENT_CallEvent(event, call_event);
     }
     *seq = 1;
 		break;
   case 1:
-    //結果の格納
+    //結果の分岐
     if( evt_wk->RetType != PL_RET_NORMAL ||
       evt_wk->Select == PL_SEL_POS_EXIT ||
       evt_wk->Select == PL_SEL_POS_EXIT2 )
     {
       *(evt_wk->RetDecide) = FALSE;          //キャンセル
     }
-    else
-    {
-      *(evt_wk->RetDecide) = TRUE;           //ポケモンを選択して、けっていした
-      //シングル３体、ダブル４体をトライアルハウスポケパーティにセット
-      ;
-    }
+    else *(evt_wk->RetDecide) = TRUE;           //ポケモンを選択して、けっていした
+    
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;

@@ -16,8 +16,8 @@
 
 extern GMEVENT *FBI_TOOL_CreatePokeListEvt(
     GAMESYS_WORK *gsys,
-    const PL_LIST_TYPE inType, const int inReg, POKEPARTY *pp,
-    u8 *outSelNoAry, PL_SELECT_POS *outResult, PL_RETURN_TYPE *outRetMode );
+    const PL_LIST_TYPE inType, const int inReg, POKEPARTY *inTargetParty,
+    u8 *outSelNoAry, PL_SELECT_POS *outResult, PL_RETURN_TYPE *outRetMode, POKEPARTY *outParty );
 
 extern GMEVENT * FBI_TOOL_CreateTrainerBeforeMsgEvt(
     GAMESYS_WORK *gsys, BSUBWAY_PARTNER_DATA *tr_data );
