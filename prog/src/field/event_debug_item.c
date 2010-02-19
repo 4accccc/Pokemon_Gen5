@@ -33,18 +33,36 @@
 #include "debug/debug_wordsearch.h"  //DEBUG_WORDSEARCH_sub_search
 
 //------------------------------------------------------------------
+//  隠されアイテム用追加分
+//------------------------------------------------------------------
+#include "field/intrude_secret_item.h"  //IntrudeSecretItemPosDataMax
+#include "savedata/intrude_save_field.h"
+#include "savedata/intrude_save.h"
+
+#include "message.naix" //NARC_message_debugname_dat
+#include "msg/msg_debugname.h"  //DEBUG_NAME_RAND_M_000
+#include "system/gfl_use.h"   //GFUser_GetPublicRand
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 #include "system/main.h"      //GFL_HEAPID_APP参照
 
 //============================================================================================
 //============================================================================================
 
+//-----------------------------------------------
+//-----------------------------------------------
 #define DEBUG_ITEMDISP_FRAME ( FLDBG_MFRM_MSG )
+
+typedef enum {
+  DEBUGITEM_MODE_MYBAG,
+  DEBUGITEM_MODE_SECRETITEM,
+}DEBUGITEM_MODE;
 
 typedef struct _DEBUGITEM_PARAM EVENT_DEBUGITEM_WORK;
 typedef void (StateFunc)(EVENT_DEBUGITEM_WORK* wk);
 
 struct _DEBUGITEM_PARAM {
+  DEBUGITEM_MODE mode;
   StateFunc* state;      ///< ハンドルのプログラム状態
 //  GMEVENT * event;
   GAMESYS_WORK * gsys;
@@ -64,6 +82,7 @@ struct _DEBUGITEM_PARAM {
   int backupDisp;
   int itemid;
   int itemnum;
+  int itemmax;
   int curpos;
   int index;   //サブ画面のアイテムindex
   HEAPID heapID;
@@ -88,6 +107,7 @@ static void _windowRewrite(EVENT_DEBUGITEM_WORK* wk, int type);
 static void _itemNumSelectMenu(EVENT_DEBUGITEM_WORK* wk);
 static void _itemKindSelectMenu(EVENT_DEBUGITEM_WORK* wk);
 
+static void _addIntrudeSecretItem( GAMEDATA * gamedata, HEAPID heapID, u16 item_no, u16 tbl_no);
 
 #ifdef _NET_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
@@ -323,19 +343,26 @@ static void _itemNumSelectMenu(EVENT_DEBUGITEM_WORK* wk)
   if(GFL_UI_KEY_GetTrg()==PAD_KEY_LEFT){
     wk->itemnum -= 10;
   }
-  if(wk->itemnum > 999){
+  if(wk->itemnum > wk->itemmax){
     wk->itemnum = 0;
   }
   if(wk->itemnum < 0){
-    wk->itemnum = 999;
+    wk->itemnum = wk->itemmax;
   }
   if(id != wk->itemnum){
     _windowRewrite(wk,1);
   }
 
   if(GFL_UI_KEY_GetTrg()==PAD_BUTTON_DECIDE){  //追加
-    MYITEM_PTR pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(wk->gsys));
-    MYITEM_AddItem(pMyItem,wk->itemid, wk->itemnum,wk->heapID);
+    if (wk->mode == DEBUGITEM_MODE_MYBAG )
+    {
+      MYITEM_PTR pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(wk->gsys));
+      MYITEM_AddItem(pMyItem,wk->itemid, wk->itemnum,wk->heapID);
+    } else if (wk->mode == DEBUGITEM_MODE_SECRETITEM) {
+      _addIntrudeSecretItem(
+          GAMESYSTEM_GetGameData(wk->gsys),
+          wk->heapID,wk->itemid,wk->itemnum);
+    }
     PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );
     _windowRewrite(wk,0);
     _CHANGE_STATE(wk,_itemKindSelectMenu);
@@ -439,7 +466,12 @@ static void _windowRewrite(EVENT_DEBUGITEM_WORK* wk, int type)
 
 
 
-  GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_ITEM_STR2, wk->pStrBuf );
+  if (wk->mode == DEBUGITEM_MODE_MYBAG )
+  {
+    GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_ITEM_STR2, wk->pStrBuf );
+  } else {
+    GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_ITEM_STR4, wk->pStrBuf );
+  }
 
   WORDSET_RegisterNumber(wk->WordSet, 2, wk->itemnum,
                          3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
@@ -458,6 +490,33 @@ static void _windowRewrite(EVENT_DEBUGITEM_WORK* wk, int type)
 }
 
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void _addIntrudeSecretItem( GAMEDATA * gamedata, HEAPID heapID, u16 item_no, u16 tbl_no)
+{
+  GFL_MSGDATA * msgman;
+  INTRUDE_SAVE_WORK * intsave;
+    
+  INTRUDE_SECRET_ITEM_SAVE intrude_item = {
+    { 0 },  //owner name
+    0,  //item_id
+    0,  // position id
+    0   // pudding
+  };
+  STRBUF * namebuf;
+
+  msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, heapID );
+  intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
+
+  namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_RAND_M_000 + GFUser_GetPublicRand(8) );
+  GFL_STR_GetStringCode( namebuf, intrude_item.name, PERSON_NAME_SIZE + EOM_SIZE );
+  intrude_item.item = item_no;
+  intrude_item.tbl_no = tbl_no;
+  ISC_SAVE_SetItem( intsave, &intrude_item );
+
+  GFL_STR_DeleteBuffer( namebuf );
+  GFL_MSG_Delete( msgman );
+}
 //------------------------------------------------------------------------------
 /**
  * @brief   デバッグプロセス初期化
@@ -609,13 +668,12 @@ static GMEVENT_RESULT EVENT_DebugItemMain(GMEVENT * event, int *  seq, void * wo
 
 //------------------------------------------------------------------------------
 /**
- * @brief   アイテムを作る
- * @param   heapSize    WIFI用のメモリ確保サイズ
- * @retval  none
+ * @brief   デバッグ：アイテムを作るイベント
+ * @param   gsys
+ * @param   work
+ * @return  GMEVENT 生成したイベント
  */
 //------------------------------------------------------------------------------
-
-
 GMEVENT* EVENT_DebugItemMake( GAMESYS_WORK * gsys, void * work )
 {
   GMEVENT * new_event;
@@ -625,10 +683,38 @@ GMEVENT* EVENT_DebugItemMake( GAMESYS_WORK * gsys, void * work )
   new_event = GMEVENT_Create( gsys, NULL, EVENT_DebugItemMain, sizeof( EVENT_DEBUGITEM_WORK ) );
   wk = GMEVENT_GetEventWork(new_event);
   GFL_STD_MemClear(wk, sizeof(EVENT_DEBUGITEM_WORK));
+  wk->mode = DEBUGITEM_MODE_MYBAG;
   wk->ctrl = SaveControl_GetPointer();
   wk->gsys = gsys;
   wk->heapID = heapID;
   wk->itemnum = 1;
+  wk->itemmax = 999;
+  return new_event;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   デバッグ：侵入の隠されアイテムを作るイベント
+ * @param   gsys
+ * @param   work
+ * @return  GMEVENT 生成したイベント
+ */
+//------------------------------------------------------------------------------
+GMEVENT* EVENT_DebugSecretItemMake( GAMESYS_WORK * gsys, void * work )
+{
+  GMEVENT * new_event;
+  EVENT_DEBUGITEM_WORK * wk;
+  HEAPID heapID = HEAPID_FIELDMAP;
+
+  new_event = GMEVENT_Create( gsys, NULL, EVENT_DebugItemMain, sizeof( EVENT_DEBUGITEM_WORK ) );
+  wk = GMEVENT_GetEventWork(new_event);
+  GFL_STD_MemClear(wk, sizeof(EVENT_DEBUGITEM_WORK));
+  wk->mode = DEBUGITEM_MODE_SECRETITEM;
+  wk->ctrl = SaveControl_GetPointer();
+  wk->gsys = gsys;
+  wk->heapID = heapID;
+  wk->itemnum = 1;
+  wk->itemmax = IntrudeSecretItemPosDataMax;
   return new_event;
 }
 
