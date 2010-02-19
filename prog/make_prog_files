@@ -95,7 +95,6 @@ SRCS  +=    $(SOUNDSRC) \
         map/dp3format.c \
         field/zonedata.c \
         field/areadata.c \
-        field/warpdata.c \
         field/location.c \
         field/field_location.c \
         field/field_status.c \
@@ -343,6 +342,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
 				net_app/mystery/mystery_createdata.c \
 				field/map_matrix.c \
         field/map_replace.c \
+        field/warpdata.c \
         field/event_poke_status.c \
         field/scrcmd_sodateya.c \
         field/event_cg_wireless.c \
