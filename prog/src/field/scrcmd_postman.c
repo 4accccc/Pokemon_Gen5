@@ -37,25 +37,49 @@
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
 
+#include "savedata/intrude_save.h"
+
 //======================================================================
 //======================================================================
 
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef BOOL (* MP_FUNC_ADD_CHECK)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
+typedef void (* MP_FUNC_ADD)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
+typedef u16 (* MP_FUNC_SUCCESS_MSG)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
+typedef u16 (* MP_FUNC_FAILURE_MSG)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
+
+//--------------------------------------------------------------
+/**
+ */
 //--------------------------------------------------------------
 typedef struct {
-  BOOL (*add_check_func)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-  void (*add_func)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-  u16 (*set_success_words)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
-  u16 (*set_failure_words)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
+  MP_FUNC_ADD_CHECK add_check_func;
+  MP_FUNC_ADD       add_func;
+  MP_FUNC_SUCCESS_MSG set_success_words;
+  MP_FUNC_FAILURE_MSG set_failure_words;
 }POSTMAN_FUNC_TABLE;
 
+
+//======================================================================
+//======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static MMDL * searchPOSTMANOBJ( FIELDMAP_WORK * fieldWork );
 static int searchEventDataPostmanObj( GAMEDATA * gamedata );
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ];
 
+static BOOL MP_Command_AddCheck(
+    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
+static u16 MP_Command_SuccessMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work );
+static u16 MP_Command_FailureMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work );
+static BOOL MP_Command_Receive(
+    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
+static u16 MP_Command_ObjStatus( FIELDMAP_WORK * fieldmap );
+static u16 MP_Command_ObjID( FIELDMAP_WORK * fieldmap, GAMEDATA * gamedata );
 
 //======================================================================
 //
@@ -76,9 +100,6 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
 
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
-
   MYSTERY_DATA * fd = SaveData_GetMysteryData( GAMEDATA_GetSaveControlWork( gamedata ) );
   int index;
   GIFT_PACK_DATA * gpd = FIELD_MYSTERYDATA_GetGiftData( fd, &index );
@@ -97,62 +118,36 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
     }
     break;
   case SCR_POSTMAN_REQ_ENABLE:
-    {
-      BOOL result;
-      result = PostmanFuncTable[gift_type].add_check_func( work, gamedata, gpd );
-      *ret_wk = result;
-    }
+    *ret_wk = MP_Command_AddCheck( gift_type, work, gamedata, gpd );
     break;
+
   case SCR_POSTMAN_REQ_OK_MSG:
-    {
-      u16 msg_id;
-      msg_id = PostmanFuncTable[gift_type].set_success_words( wordset, gpd, work );
-      *ret_wk = msg_id;
-    }
+    *ret_wk = MP_Command_SuccessMsg( gift_type, gpd, work );
     break;
+
   case SCR_POSTMAN_REQ_NG_MSG:
-    {
-      u16 msg_id;
-      msg_id = PostmanFuncTable[gift_type].set_failure_words( wordset, gpd, work );
-      *ret_wk = msg_id;
-    }
+    *ret_wk = MP_Command_FailureMsg( gift_type, gpd, work );
     break;
+
   case SCR_POSTMAN_REQ_RECEIVE:
-    //手に入れる処理
-    PostmanFuncTable[gift_type].add_func( work, gamedata, gpd );
-    FIELD_MYSTERYDATA_SetReceived( fd, index );
+    { //手に入れる処理
+      if ( MP_Command_Receive( gift_type, work, gamedata, gpd ) == TRUE )
+      {
+        FIELD_MYSTERYDATA_SetReceived( fd, index );
+      }
+    }
     *ret_wk = 0;
     break;
   case SCR_POSTMAN_REQ_OBJID:
     {
       FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( SCRCMD_WORK_GetGameSysWork( work ) );
-      MMDL * mmdl = searchPOSTMANOBJ( fieldmap );
-      if ( mmdl != NULL )
-      {
-        *ret_wk = MMDL_GetOBJID( mmdl );
-      }
-      else
-      {
-        int obj_id = searchEventDataPostmanObj( gamedata );
-        if ( obj_id >= 0 )
-        {
-          *ret_wk = obj_id;
-        }
-      }
+      *ret_wk = MP_Command_ObjID( fieldmap, gamedata );
     }
     break;
   case SCR_POSTMAN_REQ_OBJSTAT:
     {
       FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( SCRCMD_WORK_GetGameSysWork( work ) );
-      MMDL * mmdl = searchPOSTMANOBJ( fieldmap );
-      if ( mmdl == NULL )
-      {
-        *ret_wk = SCR_POSTMAN_OBJ_NONE;
-      }
-      else 
-      {
-        *ret_wk = SCR_POSTMAN_OBJ_EXISTS;
-      }
+      *ret_wk = MP_Command_ObjStatus( fieldmap );
     }
     break;
   default:
@@ -165,6 +160,126 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
+/// スクリプトコマンド：贈り物を受け取れるか？チェック
+//--------------------------------------------------------------
+static BOOL MP_Command_AddCheck(
+    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{
+  MP_FUNC_ADD_CHECK func;
+  func = PostmanFuncTable[gift_type].add_check_func;
+  if ( gpd != NULL && func )
+  {
+    return func( work, gamedata, gpd );
+  }
+  else
+  {
+    return FALSE;
+  }
+}
+
+//--------------------------------------------------------------
+/// スクリプトコマンド：贈り物を受け取れるか？チェック
+//--------------------------------------------------------------
+static u16 MP_Command_SuccessMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work )
+{
+  MP_FUNC_SUCCESS_MSG func;
+  u16 msg_id;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+
+  func = PostmanFuncTable[gift_type].set_success_words;
+  if ( gpd != NULL && func )
+  {
+    msg_id = func( wordset, gpd, work );
+    return msg_id;
+  }
+  else
+  {
+    return 0;  //とりあえずのエラー回避用
+  }
+}
+//--------------------------------------------------------------
+/// スクリプトコマンド：贈り物を受け取ったメッセージ
+//--------------------------------------------------------------
+static u16 MP_Command_FailureMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work )
+{
+  MP_FUNC_FAILURE_MSG func;
+  u16 msg_id;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+
+  func = PostmanFuncTable[gift_type].set_failure_words;
+  if ( gpd != NULL && func )
+  {
+    msg_id = func( wordset, gpd, work );
+    return msg_id;
+  }
+  else
+  {
+    return 0;  //とりあえずのエラー回避用
+  }
+}
+//--------------------------------------------------------------
+/// スクリプトコマンド：贈り物を受け取れなかったメッセージ
+//--------------------------------------------------------------
+static BOOL MP_Command_Receive(
+    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{ //手に入れる処理
+  MP_FUNC_ADD func;
+  func = PostmanFuncTable[gift_type].add_func;
+  if ( gpd != NULL && func )
+  {
+    func( work, gamedata, gpd );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/// スクリプトコマンド：配達員のOBJID取得
+//--------------------------------------------------------------
+static u16 MP_Command_ObjID( FIELDMAP_WORK * fieldmap, GAMEDATA * gamedata )
+{
+  MMDL * mmdl = searchPOSTMANOBJ( fieldmap );
+  if ( mmdl != NULL )
+  {
+    return MMDL_GetOBJID( mmdl );
+  }
+  else
+  {
+    int obj_id = searchEventDataPostmanObj( gamedata );
+    if ( obj_id >= 0 )
+    {
+      return obj_id;
+    }
+  }
+  GF_ASSERT_MSG( 0, "配達員が存在しない！！\n" );
+  return 0;
+}
+//--------------------------------------------------------------
+/// スクリプトコマンド：配達員OBJがいるかどうか？チェック
+//--------------------------------------------------------------
+static u16 MP_Command_ObjStatus( FIELDMAP_WORK * fieldmap )
+{
+  MMDL * mmdl = searchPOSTMANOBJ( fieldmap );
+  if ( mmdl == NULL )
+  {
+    return SCR_POSTMAN_OBJ_NONE;
+  }
+  else 
+  {
+    return SCR_POSTMAN_OBJ_EXISTS;
+  }
+}
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 配達員OBJ検索
+ *
+ * 現在存在している動作モデルデータから配達員を検索しポインタを返す
+ */
 //--------------------------------------------------------------
 static MMDL * searchPOSTMANOBJ( FIELDMAP_WORK * fieldWork )
 {
@@ -179,6 +294,11 @@ static MMDL * searchPOSTMANOBJ( FIELDMAP_WORK * fieldWork )
   return NULL;
 }
 //--------------------------------------------------------------
+/**
+ * @brief 配達員OBJデータ検索
+ *
+ * イベントデータから、配達員OBJを検索しobj_idを返す
+ */
 //--------------------------------------------------------------
 static int searchEventDataPostmanObj( GAMEDATA * gamedata )
 {
@@ -195,7 +315,9 @@ static int searchEventDataPostmanObj( GAMEDATA * gamedata )
   }
   return -1;
 }
+
 //======================================================================
+//  ポケモン取得用関数
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -256,6 +378,9 @@ static u16  PFuncSetFailurePokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd
   return msg_postman_07;
 }
 
+//======================================================================
+//  アイテム取得用関数
+//======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static BOOL PFuncCheckItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
@@ -301,20 +426,58 @@ static u16  PFuncSetFailureItemWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, S
   return msg_postman_09;
 }
 
+//======================================================================
+/// GPower取得用関数
+//======================================================================
 //--------------------------------------------------------------
+/// GPower取得出来るか？チェック
 //--------------------------------------------------------------
-static BOOL PFuncCheckPokemon( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-static void PFuncAddPokemon( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-static u16  PFuncSetSuccessPokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );  //msg_postman_06,
-static u16  PFuncSetFailurePokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );  //msg_postman_07,
-
-static BOOL PFuncCheckItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-static void PFuncAddItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-static u16  PFuncSetSuccessItemWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work ); //msg_postman_08,
-static u16  PFuncSetFailureItemWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work ); //msg_postman_09,
-
+static BOOL PFuncCheckGPower( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{
+  //GPowerは無条件に取得する
+  return TRUE;
+}
 
 //--------------------------------------------------------------
+/// GPower取得
+//--------------------------------------------------------------
+static void PFuncAddGPower( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{
+  INTRUDE_SAVE_WORK * intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GPOWER_ID gpower_id = gpd->data.gpower.type;
+  ISC_SAVE_SetDistributionGPower( intsave, gpower_id );
+}
+
+//--------------------------------------------------------------
+/// GPower取得：成功メッセージ
+//--------------------------------------------------------------
+static u16  PFuncSetSuccessGPowerWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work )
+{
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  INTRUDE_SAVE_WORK * intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
+  MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
+  GPOWER_ID gpower_id = gpd->data.gpower.type;
+  WORDSET_RegisterPlayerName( wordset, 0, mystatus );
+  WORDSET_RegisterGPowerName( wordset, 1, gpower_id );
+  return msg_postman_10;
+}
+
+//--------------------------------------------------------------
+/// GPower取得：失敗
+//--------------------------------------------------------------
+static u16  PFuncSetFailureGPowerWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work )
+{
+  //このメッセージを表示することはないはず
+  return msg_postman_11;
+}
+
+//======================================================================
+//
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+//  贈り物の種類毎の分岐用テーブル
 //--------------------------------------------------------------
 static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ] = {
   { //MYSTERYGIFT_TYPE_NONE		
@@ -326,14 +489,20 @@ static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ] = {
   { //MYSTERYGIFT_TYPE_POKEMON	
     PFuncCheckPokemon,
     PFuncAddPokemon,
-    PFuncSetSuccessPokemonWords,  //msg_postman_06,
-    PFuncSetFailurePokemonWords,  //msg_postman_07,
+    PFuncSetSuccessPokemonWords,  //msg_postman_06
+    PFuncSetFailurePokemonWords,  //msg_postman_07
   },
   { //MYSTERYGIFT_TYPE_ITEM		
     PFuncCheckItem,
     PFuncAddItem,
-    PFuncSetSuccessItemWords, //msg_postman_08,
-    PFuncSetFailureItemWords, //msg_postman_09,
+    PFuncSetSuccessItemWords, //msg_postman_08
+    PFuncSetFailureItemWords, //msg_postman_09
+  },
+  { //MYSTERYGIFT_TYPE_POWER
+    PFuncCheckGPower,
+    PFuncAddGPower,
+    PFuncSetSuccessGPowerWords, //msg_postman_10
+    PFuncSetFailureGPowerWords, //msg_postman_11
   },
 };
 

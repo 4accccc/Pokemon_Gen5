@@ -13,8 +13,15 @@
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
+/**
+ * @brief
+ * @param fd
+ * @param index
+ * @retval  GIFT_PACK_DATA  利用可能な贈り物データへのポインタ
+ * @retval  NULL  利用可能でない場合
+ */
 //--------------------------------------------------------------
-GIFT_PACK_DATA * getEnableGiftData( MYSTERY_DATA * fd, int index )
+static GIFT_PACK_DATA * getEnableGiftData( MYSTERY_DATA * fd, int index )
 {
   GIFT_PACK_DATA * gpd;
   if ( MYSTERYDATA_IsExistsCard( fd, index ) == FALSE ) return NULL;
@@ -22,6 +29,8 @@ GIFT_PACK_DATA * getEnableGiftData( MYSTERY_DATA * fd, int index )
   gpd = MYSTERYDATA_GetCardData( fd, index );
   if ( gpd == NULL ) return NULL;
   if ( gpd->gift_type == MYSTERYGIFT_TYPE_NONE ) return NULL;
+  //今のところ対応するデータはGPowerまで
+  if ( gpd->gift_type > MYSTERYGIFT_TYPE_POWER ) return NULL;
 
   return gpd;
 }
