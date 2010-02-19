@@ -241,16 +241,19 @@ static void _Update_IntrudeReadyCallback(UNION_APP_PTR uniapp)
 {
   int net_id;
   
-  if(uniapp->recv_intrude_ready_bit > 0 && uniapp->entry_callback != NULL){
+  if(uniapp->recv_intrude_ready_bit > 0){
     for(net_id = 0; net_id < UNION_APP_MEMBER_MAX; net_id++){
       if(uniapp->recv_intrude_ready_bit & (1 << net_id)){
         if((uniapp->recv_mystatus_bit & (1 << net_id)) 
             && uniapp->entry_reserve_bit & (1 << net_id)){
-          OS_TPrintf("—“üCallBack NetID=%d\n", net_id);
-          uniapp->entry_callback(net_id, uniapp->mystatus[net_id], uniapp->userwork);
           //—\–ñó‘Ô‚©‚ç³‹Kƒƒ“ƒo[‚Ö‚ÆˆÚ‚·
           uniapp->entry_reserve_bit ^= 1 << net_id;
           uniapp->basic_status.member_bit |= 1 << net_id;
+          
+          if(uniapp->entry_callback != NULL){
+            OS_TPrintf("—“üCallBack NetID=%d\n", net_id);
+            uniapp->entry_callback(net_id, uniapp->mystatus[net_id], uniapp->userwork);
+          }
         }
         uniapp->recv_intrude_ready_bit ^= 1 << net_id;
       }
@@ -269,13 +272,15 @@ static void _Update_LeaveCallback(UNION_APP_PTR uniapp)
 {
   int net_id;
   
-  if(uniapp->recv_leave_bit > 0 && uniapp->leave_callback != NULL){
+  if(uniapp->recv_leave_bit > 0){
     for(net_id = 0; net_id < UNION_APP_MEMBER_MAX; net_id++){
       if(uniapp->recv_leave_bit & (1 << net_id)){
         if((uniapp->recv_mystatus_bit & (1 << net_id)) 
             && uniapp->basic_status.member_bit & (1 << net_id)){
-          OS_TPrintf("—£’ECallBack NetID=%d\n", net_id);
-          uniapp->leave_callback(net_id, uniapp->mystatus[net_id], uniapp->userwork);
+          if(uniapp->leave_callback != NULL){
+            OS_TPrintf("—£’ECallBack NetID=%d\n", net_id);
+            uniapp->leave_callback(net_id, uniapp->mystatus[net_id], uniapp->userwork);
+          }
           //³‹Kƒƒ“ƒo[‚Ìbit‚ğ—‚Æ‚·
           uniapp->basic_status.member_bit ^= 1 << net_id;
           uniapp->recv_mystatus_bit ^= 1 << net_id;
@@ -393,12 +398,18 @@ BOOL UnionAppSystem_CheckMystatus(UNION_APP_PTR uniapp)
 //==================================================================
 void UnionAppSystem_SetIntrudeReady(UNION_APP_PTR uniapp, NetID net_id)
 {
-  if((uniapp->recv_mystatus_bit & (1 << net_id)) && (uniapp->entry_reserve_bit & (1 << net_id))){
-    uniapp->recv_intrude_ready_bit |= 1 << net_id;
+  if(GFL_NET_IsParentMachine() == TRUE){
+    if((uniapp->recv_mystatus_bit & (1 << net_id)) && (uniapp->entry_reserve_bit & (1 << net_id))){
+      uniapp->recv_intrude_ready_bit |= 1 << net_id;
+    }
+    else{
+      GF_ASSERT_MSG(0, "recv_mystbit=%d, entry_reserve_bit=%d, net_id=%d\n", 
+        uniapp->recv_mystatus_bit, uniapp->entry_reserve_bit, net_id);
+    }
   }
   else{
-    GF_ASSERT_MSG(0, "recv_mystbit=%d, entry_reserve_bit=%d, net_id=%d\n", 
-      uniapp->recv_mystatus_bit, uniapp->entry_reserve_bit, net_id);
+    uniapp->entry_reserve_bit |= 1 << net_id; //¦check@‚±‚±‚ç•Ó‚ÍŒã‚Åƒtƒ‰ƒO‚ÌˆÓ–¡‚ª‘½d‚È‚Ì‚Å®—
+    uniapp->recv_intrude_ready_bit |= 1 << net_id;
   }
 }
 
