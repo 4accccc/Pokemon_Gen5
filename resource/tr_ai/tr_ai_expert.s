@@ -279,22 +279,42 @@ ExpertAISeq_end:
 
 ExpertAI_1:	//眠らせる
 	//アタック側の誤りと思われるので変更：DEFENCE→ATTACKへ2006.6.6
-	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,8,ExpertAI_1_2	//ゆめくい
-	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,107,ExpertAI_1_2	//あくむ
-	JUMP		ExpertAI_1_3
-	
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,8,ExpertAI_1_4	//ゆめくい
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,107,ExpertAI_1_4	//あくむ
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,97,ExpertAI_1_2	//ねごと
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,183,ExpertAI_1_3	//マジックコート
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,92,ExpertAI_1_3	//いびき
+
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_NOOGAADO,ExpertAI_1_4	  	// ノーガード
+	IF_EQUAL	TOKUSYU_HAYAOKI,ExpertAI_1_3	  	// はやおき
+
+	JUMP		ExpertAI_1_end
+
 ExpertAI_1_2:
-	IF_RND_UNDER	128,ExpertAI_1_3
+	INCDEC		-1
+ExpertAI_1_3:
+	IF_RND_UNDER	128,ExpertAI_1_end
+	INCDEC		-1
+	JUMP		ExpertAI_1_end
+
+ExpertAI_1_4:
+	IF_RND_UNDER	128,ExpertAI_1_end
 	INCDEC		+1
 
-ExpertAI_1_3:
+ExpertAI_1_end:
 	AIEND
+
 //---------------------------------------------------------------------------
 
 ExpertAI_3:	//すいとる
 	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_3_1
 	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_3_1
 	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_3_1
+
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_HEDOROEKI,ExpertAI_3_1
+
 	JUMP		ExpertAI_3_2
 	
 ExpertAI_3_1:
@@ -342,6 +362,10 @@ ExpertAI_7_4:
 	INCDEC		-1
 ExpertAI_7_5:
 	AIEND
+
+
+ExpertAI_7_poke_table:
+
 
 //---------------------------------------------------------------------------
 
