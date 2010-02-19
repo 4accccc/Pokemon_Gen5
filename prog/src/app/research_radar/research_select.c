@@ -17,6 +17,8 @@
 #include "print/gf_font.h"           // for GFL_FONT_xxxx
 #include "print/printsys.h"          // for PRINTSYS_xxxx
 #include "system/gfl_use.h"          // for GFUser_xxxx
+#include "system/palanm.h"           // for PaletteFadeXxxx
+#include "system/bmp_oam.h"          // for BmpOam_xxxx
 #include "gamesystem/game_beacon.h"  // for GAMEBEACON_xxxx
 
 #include "system/main.h"                    // for HEAPID_xxxx
@@ -47,6 +49,10 @@ struct _RESEARCH_SELECT_WORK
   RESEARCH_SELECT_SEQ    seq;    // ˆ—ƒV[ƒPƒ“ƒX
   RESEARCH_SELECT_RESULT result; // ‰æ–ÊI—¹Œ‹‰Ê
 
+  // VBlank
+  GFL_TCBSYS* VBlankTCBSystem; // VBlankŠúŠÔ’†‚Ìƒ^ƒXƒNŠÇ—ƒVƒXƒeƒ€
+  GFL_TCB*    VBlankTask;      // VBlankƒ^ƒCƒ~ƒ“ƒO’†‚És‚¤ƒ^ƒXƒN
+
   // ƒƒjƒ…[€–Ú
   MENU_ITEM menuCursorPos;  // ƒJ[ƒ\ƒ‹ˆÊ’u
 
@@ -69,78 +75,107 @@ struct _RESEARCH_SELECT_WORK
   u32         objResRegisterIdx[ OBJ_RESOURCE_NUM ];  // ƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX
   GFL_CLUNIT* clactUnit[ CLUNIT_NUM ];                // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg
   GFL_CLWK*   clactWork[ CLWK_NUM ];                  // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN
+
+  // BMP-OAM
+  BMPOAM_SYS_PTR BmpOamSystem;                     // BMP-OAM ƒVƒXƒeƒ€
+  BMPOAM_ACT_PTR BmpOamActor[ BMPOAM_ACTOR_NUM ];  // BMP-OAMƒAƒNƒ^[
+  GFL_BMP_DATA*  BmpData[ BMPOAM_ACTOR_NUM ];      // ŠeƒAƒNƒ^[‚É‘Î‰‚·‚éƒrƒbƒgƒ}ƒbƒvƒf[ƒ^
+
+  // ƒJƒ‰[ƒpƒŒƒbƒg
+  PALETTE_FADE_PTR paletteFadeSystem; // ƒpƒŒƒbƒgƒtƒF[ƒhˆ—ƒVƒXƒeƒ€
 };
 
 
 //----------------------------------------------------------------------------------------------
-//  LAYER 3 ƒV[ƒPƒ“ƒX“®ì
+//  LAYER 4 ƒV[ƒPƒ“ƒX“®ì
 //----------------------------------------------------------------------------------------------
 // ƒV[ƒPƒ“ƒXˆ—
-static RESEARCH_SELECT_SEQ Main_SETUP      ( RESEARCH_SELECT_WORK* work );
-static RESEARCH_SELECT_SEQ Main_KEY_WAIT   ( RESEARCH_SELECT_WORK* work );
-static RESEARCH_SELECT_SEQ Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work );
-static RESEARCH_SELECT_SEQ Main_TO_CONFIRM ( RESEARCH_SELECT_WORK* work );
-static RESEARCH_SELECT_SEQ Main_CONFIRM    ( RESEARCH_SELECT_WORK* work );
-static RESEARCH_SELECT_SEQ Main_DETERMINE  ( RESEARCH_SELECT_WORK* work );
-static RESEARCH_SELECT_SEQ Main_CLEAN_UP   ( RESEARCH_SELECT_WORK* work );
+static RESEARCH_SELECT_SEQ Main_SETUP      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static RESEARCH_SELECT_SEQ Main_KEY_WAIT   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static RESEARCH_SELECT_SEQ Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static RESEARCH_SELECT_SEQ Main_TO_CONFIRM ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_CONFIRM
+static RESEARCH_SELECT_SEQ Main_CONFIRM    ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static RESEARCH_SELECT_SEQ Main_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_KEY_WAIT
+static RESEARCH_SELECT_SEQ Main_DETERMINE  ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static RESEARCH_SELECT_SEQ Main_CLEAN_UP   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP
 
 // ƒV[ƒPƒ“ƒX§Œä
 static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result ); // ‰æ–ÊI—¹Œ‹‰Ê‚ğİ’è‚·‚é
 static void SwitchSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // ˆ—ƒV[ƒPƒ“ƒX‚ğ•ÏX‚·‚é
 static void SetSequence   ( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ seq );     // ˆ—ƒV[ƒPƒ“ƒX‚ğİ’è‚·‚é
 
-// VBlank
-static void VBlankFunc( void );
+// ƒV[ƒPƒ“ƒX‰Šú‰»ˆ—
+void InitSequence_SETUP      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+void InitSequence_KEY_WAIT   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+void InitSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_CONFIRM
+void InitSequence_CONFIRM    ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+void InitSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_KEY_WAIT
+void InitSequence_DETERMINE  ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+void InitSequence_CLEAN_UP   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP
+
+// VBlankƒ^ƒXƒN
+static void VBlankFunc( GFL_TCB* tcb, void* wk );  // VBlank’†‚Ìˆ—
 
 //----------------------------------------------------------------------------------------------
-//  LAYER 3 “ü—Í‚É‘Î‚·‚é”½‰
+//  LAYER 3 ‹@”\
 //---------------------------------------------------------------------------------------------- 
-// ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®
+// ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹
 static void MoveMenuCursorUp  ( RESEARCH_SELECT_WORK* work ); // ã‚ÖˆÚ“®‚·‚é
 static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work ); // ‰º‚ÖˆÚ“®‚·‚é
 
-// ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®
+// ’²¸€–ÚƒJ[ƒ\ƒ‹
 static void MoveTopicCursorUp  ( RESEARCH_SELECT_WORK* work ); // ã‚ÖˆÚ“®‚·‚é
 static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work ); // ‰º‚ÖˆÚ“®‚·‚é
-
-// ’²¸€–Ú‚Ì‘I‘ğ
-static void SelectTopic( RESEARCH_SELECT_WORK* work ); // ’²¸€–Ú‚ğ‘I‘ğ‚·‚é
+static BOOL SelectTopic( RESEARCH_SELECT_WORK* work ); // ’²¸€–Ú‚ğ‘I‘ğ‚·‚é
 
 //----------------------------------------------------------------------------------------------
 //  LAYER 2 ŒÂ•Ê‘€ì
 //---------------------------------------------------------------------------------------------- 
-// ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì•ÏX
+// ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹
 static void ShiftMenuCursorPos( RESEARCH_SELECT_WORK* work, int stride ); // ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹ˆÊ’u‚ğ•ÏX‚·‚é
+
+// ’²¸€–ÚƒJ[ƒ\ƒ‹
 static void SetTopicCursorNextPos( RESEARCH_SELECT_WORK* work, int stride ); // ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è‚·‚é
 static void TopicCursorScrollStart( RESEARCH_SELECT_WORK* work );  // ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌƒXƒNƒ[ƒ‹‚ğŠJn‚·‚é
 
-// ’²¸€–ÚID‚Ì“o˜^
+// ‘I‘ğ‚µ‚½’²¸€–ÚID
 static void RegisterTopicID( RESEARCH_SELECT_WORK* work ); // ’²¸€–ÚID‚ğ“o˜^‚·‚é
 static void ReleaseTopicID ( RESEARCH_SELECT_WORK* work ); // ’²¸€–ÚID‚ğ‰ğœ‚·‚é
 static BOOL IsTopicIDRegistered( const RESEARCH_SELECT_WORK* work, u8 topicID ); // ‘I‘ğÏ‚İ‚©‚ğ”»’è‚·‚é
 
-// ’²¸€–Ú‚Ì•\¦‘€ì
+// ’²¸€–Ú‚Ì•\¦
 static void SetTopicCursorOn ( const RESEARCH_SELECT_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 static void SetTopicCursorOff( const RESEARCH_SELECT_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 static void SetTopicSelected   ( const RESEARCH_SELECT_WORK* work ); // ‘I‘ğ‚³‚ê‚Ä‚¢‚éó‘Ô‚É‚·‚é
 static void SetTopicNotSelected( const RESEARCH_SELECT_WORK* work ); // ‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work ); // ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ•\¦‚ğXV‚·‚é
-static void UpdateTopicScroll( RESEARCH_SELECT_WORK* work );       // ƒXƒNƒ[ƒ‹XV
-static BOOL IsTopicScrollEnd ( const RESEARCH_SELECT_WORK* work ); // ƒXƒNƒ[ƒ‹I—¹ŒŸo
+static void UpdateTopicScroll( RESEARCH_SELECT_WORK* work );       // ’²¸€–Ú‚ÌƒXƒNƒ[ƒ‹ó‘Ô‚ğXV‚·‚é
+static void FinishTopicScroll( RESEARCH_SELECT_WORK* work );       // ’²¸€–Ú‚ÌƒXƒNƒ[ƒ‹ó‘Ô‚ğŠ®—¹‚³‚¹‚é
+static BOOL IsTopicScrollEnd ( const RESEARCH_SELECT_WORK* work ); // ’²¸€–Ú‚ÌƒXƒNƒ[ƒ‹‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
 static u8  CalcTopicScreenPosLeft ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // ’²¸€–Ú‚Ì¶ãxÀ•W‚ğZo‚·‚é (ƒXƒNƒŠ[ƒ“’PˆÊ)
 static u8  CalcTopicScreenPosTop  ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // ’²¸€–Ú‚Ì¶ãyÀ•W‚ğZo‚·‚é (ƒXƒNƒŠ[ƒ“’PˆÊ)
 static int CalcTopicDisplayPosLeft( const RESEARCH_SELECT_WORK* work, u8 topicID ); // ’²¸€–Ú‚Ì¶ãxÀ•W‚ğZo‚·‚é (ƒhƒbƒg’PˆÊ)
 static int CalcTopicDisplayPosTop ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // ’²¸€–Ú‚Ì¶ãyÀ•W‚ğZo‚·‚é (ƒhƒbƒg’PˆÊ)
 static int CalcScreenScrollY      ( const RESEARCH_SELECT_WORK* work );             // y²•ûŒü‚ÌƒXƒNƒ[ƒ‹—Ê‚ğZo‚·‚é
 
-// OBJ •\¦
+// OBJ‚Ì•\¦
 static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work );  // ƒXƒNƒ[ƒ‹ƒo[‚Ì‚Â‚Ü‚İ•”•ª‚ÌˆÊ’u‚ğXV‚·‚é
 static void UpdateTopicSelectIcons( const RESEARCH_SELECT_WORK* work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚Ì•\¦ó‘Ô‚ğXV‚·‚é
+
+// ƒpƒŒƒbƒgƒtƒF[ƒh
+static void StartPaletteFadeOut( RESEARCH_SELECT_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
+static void StartPaletteFadeIn ( RESEARCH_SELECT_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+static BOOL IsPaletteFadeEnd   ( RESEARCH_SELECT_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒh‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
+static void ResetPaletteFade   ( RESEARCH_SELECT_WORK* work ); // ƒpƒŒƒbƒg‚ğƒtƒF[ƒh‘O‚Ìó‘Ô‚É–ß‚·
+
+// BMP-OAM
+static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable );  // •\¦‚·‚é‚©‚Ç‚¤‚©‚ğİ’è‚·‚é
 
 //----------------------------------------------------------------------------------------------
 //  LAYER 1 ƒf[ƒ^ƒAƒNƒZƒX
 //----------------------------------------------------------------------------------------------
-// ƒf[ƒ^ƒAƒNƒZƒX
+// OBJ
 static u32 GetObjResourceRegisterIndex( const RESEARCH_SELECT_WORK* work, OBJ_RESOURCE_ID resID ); // OBJƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX
 static GFL_CLUNIT* GetClactUnit( const RESEARCH_SELECT_WORK* work, CLUNIT_INDEX unitIdx ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg
 static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkIdx ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN
@@ -175,6 +210,25 @@ static void DeleteClactUnits( RESEARCH_SELECT_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒ
 static void InitClactWorks  ( RESEARCH_SELECT_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN ‰Šú‰»
 static void CreateClactWorks( RESEARCH_SELECT_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN ¶¬
 static void DeleteClactWorks( RESEARCH_SELECT_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN ”jŠü
+
+// BMP-OAM ‚Ì€”õ/Œã•Ğ•t‚¯
+static void InitBitmapDatas  ( RESEARCH_SELECT_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^ ‰Šú‰»
+static void CreateBitmapDatas( RESEARCH_SELECT_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^ ì¬
+static void SetupBitmapDatas ( RESEARCH_SELECT_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^ €”õ
+static void DeleteBitmapDatas( RESEARCH_SELECT_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^ ”jŠü
+static void SetupBmpOamSystem  ( RESEARCH_SELECT_WORK* work ); // BMP-OAM ƒVƒXƒeƒ€ €”õ
+static void CleanUpBmpOamSystem( RESEARCH_SELECT_WORK* work ); // BMP-OAM ƒVƒXƒeƒ€ Œã•Ğ•t‚¯
+static void CreateBmpOamActors( RESEARCH_SELECT_WORK* work ); // BMP-OAM ƒAƒNƒ^[ ì¬
+static void DeleteBmpOamActors( RESEARCH_SELECT_WORK* work ); // BMP-OAM ƒAƒNƒ^[ ”jŠü
+
+// VBlankƒ^ƒXƒN‚Ì“o˜^/‰ğœ
+static void RegisterVBlankTask( RESEARCH_SELECT_WORK* work );
+static void ReleaseVBlankTask ( RESEARCH_SELECT_WORK* work );
+
+// ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚Ì€”õ/Œã•Ğ•t‚¯
+static void InitPaletteFadeSystem   ( RESEARCH_SELECT_WORK* work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€ ‰Šú‰»
+static void SetupPaletteFadeSystem  ( RESEARCH_SELECT_WORK* work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€ €”õ
+static void CleanUpPaletteFadeSystem( RESEARCH_SELECT_WORK* work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€ Œã•Ğ•t‚¯
 
 // ƒf[ƒ^‚Ì‰Šú‰»/¶¬/”jŠü
 static void InitFont  ( RESEARCH_SELECT_WORK* work ); // ƒtƒHƒ“ƒg ‰Šú‰»
@@ -219,6 +273,7 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( HEAPID heapID )
   work->topicCursorPos        = 0;
   work->topicCursorNextPos    = 0;
   work->topicScrollFrameCount = 0;
+  work->VBlankTCBSystem       = GFUser_VIntr_GetTCBSYS();
 
   for( i=0; i<OBJ_RESOURCE_NUM; i++ ){ work->objResRegisterIdx[i] = 0; }
 
@@ -228,6 +283,8 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( HEAPID heapID )
   InitClactUnits( work );
   InitClactWorks( work );
   InitSelectedTopicIDs( work );
+  InitPaletteFadeSystem( work );
+  InitBitmapDatas( work );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create work\n" );
@@ -274,6 +331,7 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
   case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  nextSeq = Main_SCROLL_WAIT( work );  break;
   case RESEARCH_SELECT_SEQ_TO_CONFIRM:   nextSeq = Main_TO_CONFIRM( work );   break;
   case RESEARCH_SELECT_SEQ_CONFIRM:      nextSeq = Main_CONFIRM( work );      break;
+  case RESEARCH_SELECT_SEQ_TO_KEY_WAIT:  nextSeq = Main_TO_KEY_WAIT( work );  break;
   case RESEARCH_SELECT_SEQ_DETERMINE:    nextSeq = Main_DETERMINE( work );    break;
   case RESEARCH_SELECT_SEQ_CLEAN_UP:     nextSeq = Main_CLEAN_UP( work );     break;
   case RESEARCH_SELECT_SEQ_FINISH:       return work->result;
@@ -290,24 +348,11 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
 }
 
 
-//==============================================================================================
-// ¡VBlank
-//==============================================================================================
 
-//----------------------------------------------------------------------------------------------
-/**
- * @brief VBlank Š„‚è‚İˆ—
- */
-//----------------------------------------------------------------------------------------------
-static void VBlankFunc( void )
-{
-  GFL_BG_VBlankFunc();
-  GFL_CLACT_SYS_VBlankFunc();
-}
 
 
 //==============================================================================================
-// ¡ƒV[ƒPƒ“ƒXˆ—
+// ¡LAYER 4 ƒV[ƒPƒ“ƒX“®ì
 //==============================================================================================
 
 //----------------------------------------------------------------------------------------------
@@ -343,6 +388,18 @@ static RESEARCH_SELECT_SEQ Main_SETUP( RESEARCH_SELECT_WORK* work )
   CreateClactUnits( work );
   CreateClactWorks( work );
 
+  // BMP-OAM €”õ
+  CreateBitmapDatas( work );
+  SetupBitmapDatas( work );
+  SetupBmpOamSystem( work );
+  CreateBmpOamActors( work );
+
+  // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€ €”õ
+  SetupPaletteFadeSystem( work );
+
+  // VBkankƒ^ƒXƒN“o˜^
+  RegisterVBlankTask( work );
+
   // ‰æ–ÊƒtƒF[ƒhƒCƒ“
   GFL_FADE_SetMasterBrightReq(
       GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0);
@@ -368,35 +425,32 @@ static RESEARCH_SELECT_SEQ Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
   nextSeq = work->seq;
   trg     = GFL_UI_KEY_GetTrg();
 
-  //--------
-  // ã ƒL[
-  if( trg & PAD_KEY_UP )
+
+  if( trg & PAD_KEY_UP ) // ã ƒL[
   {
     MoveTopicCursorUp( work );
-    nextSeq = RESEARCH_SELECT_SEQ_SCROLL_WAIT;  // ƒV[ƒPƒ“ƒX‘JˆÚ
+    nextSeq = RESEARCH_SELECT_SEQ_SCROLL_WAIT;  // --> ƒXƒNƒ[ƒ‹‘Ò‚¿ƒV[ƒPƒ“ƒX‚Ö
   }
-
-  //--------
-  // ‰º ƒL[
-  if( trg & PAD_KEY_DOWN )
+  else if( trg & PAD_KEY_DOWN ) // ‰º ƒL[
   {
     MoveTopicCursorDown( work );
-    nextSeq = RESEARCH_SELECT_SEQ_SCROLL_WAIT;  // ƒV[ƒPƒ“ƒX‘JˆÚ
-  }
-
-  //----------
-  // A ƒ{ƒ^ƒ“
-  if( trg & PAD_BUTTON_A )
+    nextSeq = RESEARCH_SELECT_SEQ_SCROLL_WAIT;  // --> ƒXƒNƒ[ƒ‹‘Ò‚¿ƒV[ƒPƒ“ƒX‚Ö
+  } 
+  else if( trg & PAD_BUTTON_A ) // A ƒ{ƒ^ƒ“
   {
-    SelectTopic( work );
-  }
-
-  //----------
-  // B ƒ{ƒ^ƒ“
-  if( trg & PAD_BUTTON_B )
+    // Å‘å”‚Ì’²¸€–Ú‚ğ‘I‘ğ
+    if( SelectTopic(work) && (work->selectedTopicNum == SELECT_TOPIC_MAX_NUM) )
+    {
+      nextSeq = RESEARCH_SELECT_SEQ_TO_CONFIRM;   // --> ’²¸€–ÚŠm”FƒV[ƒPƒ“ƒX‚Ö
+    }
+  } 
+  else if( trg & PAD_BUTTON_B ) // B ƒ{ƒ^ƒ“
   {
-    SetResult( work, RESEARCH_SELECT_RESULT_TO_MENU );  // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
-    nextSeq = RESEARCH_SELECT_SEQ_CLEAN_UP;             // ƒV[ƒPƒ“ƒX‘JˆÚ
+    nextSeq = RESEARCH_SELECT_SEQ_CLEAN_UP;   // --> Œã•Ğ•t‚¯ƒV[ƒPƒ“ƒX‚Ö
+  }
+  else if( trg & PAD_BUTTON_DEBUG )  // ƒfƒoƒbƒOƒ{ƒ^ƒ“
+  {
+    BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, TRUE );
   }
 
   return nextSeq;
@@ -427,9 +481,7 @@ static RESEARCH_SELECT_SEQ Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
   // ƒXƒNƒ[ƒ‹I—¹
   if( IsTopicScrollEnd(work) )
   {
-    work->topicCursorPos = work->topicCursorNextPos;
-    UpdateSubDisplayStrings( work );  // ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ‚ğXV
-    SetTopicCursorOn( work );
+    FinishTopicScroll( work );
     nextSeq = RESEARCH_SELECT_SEQ_KEY_WAIT;
   }
 
@@ -452,6 +504,11 @@ static RESEARCH_SELECT_SEQ Main_TO_CONFIRM( RESEARCH_SELECT_WORK* work )
 
   nextSeq = work->seq;
 
+  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ªŠ®—¹
+  if( IsPaletteFadeEnd( work ) )
+  {
+    nextSeq = RESEARCH_SELECT_SEQ_CONFIRM;
+  } 
   return nextSeq;
 }
 
@@ -468,9 +525,53 @@ static RESEARCH_SELECT_SEQ Main_TO_CONFIRM( RESEARCH_SELECT_WORK* work )
 static RESEARCH_SELECT_SEQ Main_CONFIRM( RESEARCH_SELECT_WORK* work )
 {
   RESEARCH_SELECT_SEQ nextSeq;
+  int trg;
+
+  nextSeq = work->seq;
+  trg     = GFL_UI_KEY_GetTrg();
+
+
+  if( trg & PAD_KEY_UP ) // ã ƒL[
+  {
+    MoveMenuCursorUp( work );
+  }
+  else if( trg & PAD_KEY_DOWN ) // ‰º ƒL[
+  {
+    MoveMenuCursorDown( work );
+  } 
+  else if( trg & PAD_BUTTON_A ) // A ƒ{ƒ^ƒ“
+  {
+    nextSeq = MenuItemNextSequence[ work->menuCursorPos ]; // ƒJ[ƒ\ƒ‹ˆÊ’u‚É‰‚¶‚½ƒV[ƒPƒ“ƒX‘JˆÚ
+  } 
+  else if( trg & PAD_BUTTON_B ) // B ƒ{ƒ^ƒ“
+  {
+    nextSeq = RESEARCH_SELECT_SEQ_KEY_WAIT;    // ƒV[ƒPƒ“ƒX‘JˆÚ
+  }
+
+  return nextSeq;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒL[“ü—Í‘Ò‚¿‚Ö–ß‚éƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_TO_KEY_WAIT ) ‚Ìˆ—
+ *
+ * @param work
+ *
+ * @return ƒV[ƒPƒ“ƒX‚ª•Ï‰»‚·‚éê‡ Ÿ‚ÌƒV[ƒPƒ“ƒX”Ô†
+ *         ƒV[ƒPƒ“ƒX‚ªŒp‘±‚·‚éê‡ Œ»İ‚ÌƒV[ƒPƒ“ƒX”Ô†
+ */
+//----------------------------------------------------------------------------------------------
+static RESEARCH_SELECT_SEQ Main_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+{
+  RESEARCH_SELECT_SEQ nextSeq;
 
   nextSeq = work->seq;
 
+  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ªŠ®—¹
+  if( IsPaletteFadeEnd( work ) )
+  {
+    nextSeq = RESEARCH_SELECT_SEQ_KEY_WAIT;
+  } 
   return nextSeq;
 }
 
@@ -490,6 +591,8 @@ static RESEARCH_SELECT_SEQ Main_DETERMINE( RESEARCH_SELECT_WORK* work )
 
   nextSeq = work->seq;
 
+  // TEMP:
+  nextSeq = RESEARCH_SELECT_SEQ_CLEAN_UP;
   return nextSeq;
 }
 
@@ -504,7 +607,18 @@ static RESEARCH_SELECT_SEQ Main_DETERMINE( RESEARCH_SELECT_WORK* work )
  */
 //----------------------------------------------------------------------------------------------
 static RESEARCH_SELECT_SEQ Main_CLEAN_UP( RESEARCH_SELECT_WORK* work )
-{
+{ 
+  // VBlankƒ^ƒXƒN‚ğ‰ğœ
+  ReleaseVBlankTask( work );
+
+  // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€ Œã•Ğ•t‚¯
+  CleanUpPaletteFadeSystem( work );
+
+  // BMP-OAM Œã•Ğ•t‚¯
+  DeleteBitmapDatas( work );
+  DeleteBmpOamActors( work );
+  CleanUpBmpOamSystem( work );
+
   // OBJ Œã•Ğ•t‚¯
   DeleteClactWorks( work );
   DeleteClactUnits( work );
@@ -526,13 +640,31 @@ static RESEARCH_SELECT_SEQ Main_CLEAN_UP( RESEARCH_SELECT_WORK* work )
   DeleteMessages( work );
   DeleteFont( work );
 
+  // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
+  SetResult( work, RESEARCH_SELECT_RESULT_TO_MENU );  
+
   return RESEARCH_SELECT_SEQ_FINISH;
 }
 
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ‰æ–Ê‚ÌI—¹Œ‹‰Ê‚ğŒˆ’è‚·‚é
+ *
+ * @param work
+ * @param result Œ‹‰Ê
+ */
+//----------------------------------------------------------------------------------------------
+static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result )
+{
+  // ‘½dİ’è
+  GF_ASSERT( work->result == RESEARCH_SELECT_RESULT_NONE );
 
-//==============================================================================================
-// ¡ƒV[ƒPƒ“ƒX§Œä
-//==============================================================================================
+  // İ’è
+  work->result = result;
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set result (%d)\n", result );
+}
 
 //----------------------------------------------------------------------------------------------
 /**
@@ -564,13 +696,181 @@ static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ seq )
   // XV
   work->seq = seq;
 
+  // ƒV[ƒPƒ“ƒX‚²‚Æ‚Ì‰Šú‰»
+  switch( work->seq )
+  {
+  case RESEARCH_SELECT_SEQ_SETUP:        InitSequence_SETUP( work );       break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:     InitSequence_KEY_WAIT( work );    break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  InitSequence_SCROLL_WAIT( work ); break;
+  case RESEARCH_SELECT_SEQ_TO_CONFIRM:   InitSequence_TO_CONFIRM( work );  break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:      InitSequence_CONFIRM( work );     break;
+  case RESEARCH_SELECT_SEQ_TO_KEY_WAIT:  InitSequence_TO_KEY_WAIT( work ); break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:    InitSequence_DETERMINE( work );   break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:     InitSequence_CLEAN_UP( work );    break;
+  case RESEARCH_SELECT_SEQ_FINISH:                                         break;
+  default:  GF_ASSERT(0);
+  }
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set seq ==> %d\n", seq );
 }
 
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_SETUP )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+void InitSequence_SETUP( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SETUP\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_KEY_WAIT )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+void InitSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq KEY_WAIT\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_SCROLL_WAIT )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SCROLL_WAIT\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_TO_CONFIRM )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+void InitSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work )
+{
+  // ƒpƒŒƒbƒgƒtƒF[ƒhƒAƒEƒgŠJn
+  StartPaletteFadeOut( work );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq TO_CONFIRM\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_CONFIRM )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+void InitSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
+{
+  // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğ‰Šú‰»
+  work->menuCursorPos = MENU_ITEM_DETERMINATION_OK;
+
+  // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğ•\¦
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, TRUE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, TRUE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
+
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CONFIRM\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_TO_KEY_WAIT )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+void InitSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+{ 
+  // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğÁ‹
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, FALSE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
+
+  // ƒpƒŒƒbƒgƒtƒF[ƒhƒCƒ“ŠJn
+  StartPaletteFadeIn( work );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq TO_KEY_WAIT" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_DETERMINE )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+void InitSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
+{
+  // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğÁ‹
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, FALSE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
+
+  //u‚¿‚å‚¤‚³‚ğ@‚©‚¢‚µ‚µ‚Ü‚·Iv‚ğ•\¦
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_DETERMINE, TRUE ); 
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq DETERMINE\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_CLEAN_UP )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+void InitSequence_CLEAN_UP( RESEARCH_SELECT_WORK* work )
+{
+  // ƒpƒŒƒbƒg‚ğŒ³‚É–ß‚·
+  ResetPaletteFade( work );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CLEAN_UP\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief VBlank Š„‚è‚İˆ—
+ *
+ * @param tcb
+ * @parma wk
+ */
+//----------------------------------------------------------------------------------------------
+static void VBlankFunc( GFL_TCB* tcb, void* wk )
+{
+  RESEARCH_SELECT_WORK* work = (RESEARCH_SELECT_WORK*)wk;
+
+  GFL_BG_VBlankFunc();
+  GFL_CLACT_SYS_VBlankFunc();
+  PaletteFadeTrans( work->paletteFadeSystem );
+}
+
+
 
 //==============================================================================================
-// ¡ƒƒjƒ…[€–Ú
+// ¡LAYER 3 ‹@”\
 //==============================================================================================
 
 //----------------------------------------------------------------------------------------------
@@ -599,6 +899,41 @@ static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
+ * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ğã‚ÉˆÚ“®‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work )
+{
+  SetTopicCursorOff( work );          // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
+  SetTopicCursorNextPos( work, -1 );  // ˆÚ“®æ‚ğİ’è
+  TopicCursorScrollStart( work );     // ƒXƒNƒ[ƒ‹ŠJn
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ğ‰º‚ÉˆÚ“®‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work )
+{
+  SetTopicCursorOff( work );          // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
+  SetTopicCursorNextPos( work, 1 );   // ˆÚ“®æ‚ğİ’è
+  TopicCursorScrollStart( work );     // ƒXƒNƒ[ƒ‹ŠJn
+}
+
+
+
+
+//==============================================================================================
+//  LAYER 2 ŒÂ•Ê‘€ì
+//==============================================================================================
+
+//----------------------------------------------------------------------------------------------
+/**
  * @brief ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹‚ğˆÚ“®‚·‚é
  *
  * @parma work
@@ -619,60 +954,43 @@ static void ShiftMenuCursorPos( RESEARCH_SELECT_WORK* work, int stride )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: move menu cursor ==> %d\n", nextPos );
 }
 
-
-//==============================================================================================
-// ¡’²¸€–Ú
-//==============================================================================================
-
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ƒJ[ƒ\ƒ‹ˆÊ’u‚É‚ ‚é’²¸€–Ú‚ğ‘I‘ğ‚·‚éB
- *        ‚·‚Å‚É‘I‘ğÏ‚İ‚È‚ç“o˜^‚ğ‰ğœ‚·‚éB
- *        ‚»‚¤‚Å‚È‚¯‚ê‚Î, “o˜^‚·‚éB
+ * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è‚·‚é
  *
  * @param work
+ * @param stride ˆÚ“®—Ê
  */
 //----------------------------------------------------------------------------------------------
-static void SelectTopic( RESEARCH_SELECT_WORK* work )
+static void SetTopicCursorNextPos( RESEARCH_SELECT_WORK* work, int stride )
 {
-  // “o˜^Ï‚İ
-  if( IsTopicIDRegistered( work, work->topicCursorPos ) ) 
-  {
-    SetTopicNotSelected( work );  // ‘I‘ğ‚µ‚Ä‚¢‚È‚¢ó‘Ô‚É–ß‚·
-    ReleaseTopicID( work );       // “o˜^‚µ‚Ä‚¢‚½€–ÚID‚ğ‰ğœ‚·‚é
-  }
-  else
-  {
-    SetTopicSelected( work );  // ‘I‘ğ‚µ‚Ä‚¢‚éó‘Ô‚É‚·‚é
-    RegisterTopicID( work );   // €–ÚID‚ğ“o˜^‚·‚é
-  }
+  int nowPos, nextPos;
 
-  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
-  UpdateTopicSelectIcons( work );
+  // ˆÚ“®Œã‚ÌƒJ[ƒ\ƒ‹ˆÊ’u‚ğZo
+  nowPos  = work->topicCursorPos;
+  nextPos = (nowPos + stride + TOPIC_ID_NUM) % TOPIC_ID_NUM;
+
+  // ƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è
+  work->topicCursorNextPos = nextPos;
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set topic cursor next pos ==> %d\n", nextPos );
 }
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ‘I‘ğÏ‚İ’²¸€–ÚIDƒŠƒXƒg‚ğ‰Šú‰»‚·‚é
+ * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌƒXƒNƒ[ƒ‹‚ğŠJn‚·‚é
  *
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSelectedTopicIDs( RESEARCH_SELECT_WORK* work )
+static void TopicCursorScrollStart( RESEARCH_SELECT_WORK* work )
 {
-  int i;
-
-  // ‘I‘ğÏ‚İ’²¸€–ÚID‚ğ‰Šú‰»
-  for( i=0; i < SELECT_TOPIC_MAX_NUM; i++ )
-  { 
-    work->selectedTopicIDs[i] = TOPIC_ID_DUMMY;
-  }
-
-  // ‘I‘ğ‚µ‚½’²¸€–Ú‚Ì”‚ğ‰Šú‰»
-  work->selectedTopicNum = 0;
+  // ƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^‚ğƒŠƒZƒbƒg
+  work->topicScrollFrameCount = 0;
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init select topic IDs\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: topic cursor scroll start\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -770,73 +1088,6 @@ static BOOL IsTopicIDRegistered( const RESEARCH_SELECT_WORK* work, u8 topicID )
     }
   }
   return FALSE;
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ğã‚ÉˆÚ“®‚·‚é
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work )
-{
-  SetTopicCursorOff( work );          // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
-  SetTopicCursorNextPos( work, -1 );  // ˆÚ“®æ‚ğİ’è
-  TopicCursorScrollStart( work );     // ƒXƒNƒ[ƒ‹ŠJn
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ğ‰º‚ÉˆÚ“®‚·‚é
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work )
-{
-  SetTopicCursorOff( work );          // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
-  SetTopicCursorNextPos( work, 1 );   // ˆÚ“®æ‚ğİ’è
-  TopicCursorScrollStart( work );     // ƒXƒNƒ[ƒ‹ŠJn
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è‚·‚é
- *
- * @param work
- * @param stride ˆÚ“®—Ê
- */
-//----------------------------------------------------------------------------------------------
-static void SetTopicCursorNextPos( RESEARCH_SELECT_WORK* work, int stride )
-{
-  int nowPos, nextPos;
-
-  // ˆÚ“®Œã‚ÌƒJ[ƒ\ƒ‹ˆÊ’u‚ğZo
-  nowPos  = work->topicCursorPos;
-  nextPos = (nowPos + stride + TOPIC_ID_NUM) % TOPIC_ID_NUM;
-
-  // ƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è
-  work->topicCursorNextPos = nextPos;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set topic cursor next pos ==> %d\n", nextPos );
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌƒXƒNƒ[ƒ‹‚ğŠJn‚·‚é
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void TopicCursorScrollStart( RESEARCH_SELECT_WORK* work )
-{
-  // ƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^‚ğƒŠƒZƒbƒg
-  work->topicScrollFrameCount = 0;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: topic cursor scroll start\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1043,6 +1294,77 @@ static void SetTopicNotSelected( const RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
+ * @brief ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ•\¦‚ğXV‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work )
+{
+  int nowPos;
+
+  nowPos = work->topicCursorPos;
+
+  // ’²¸€–Ú ‘è–¼/•â‘«
+  BG_FONT_SetString( work->BGFont[ BG_FONT_TOPIC_TITLE ],   StringID_topicTitle[ nowPos ] );
+  BG_FONT_SetString( work->BGFont[ BG_FONT_TOPIC_CAPTION ], StringID_topicCaption[ nowPos ] );
+
+  // ¿–â
+  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_1 ], StringID_question[ Question1_topic[ nowPos ] ] );
+  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_2 ], StringID_question[ Question2_topic[ nowPos ] ] );
+  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_3 ], StringID_question[ Question3_topic[ nowPos ] ] );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update sub display strings \n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ’²¸€–Ú‚ÌƒXƒNƒ[ƒ‹ó‘Ô‚ğXV‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdateTopicScroll( RESEARCH_SELECT_WORK* work )
+{
+  int scrollSize;
+
+  // ƒXƒNƒ[ƒ‹—Ê‚ğZo
+  scrollSize = CalcScreenScrollY( work );
+
+  // ƒXƒNƒ[ƒ‹ƒŠƒNƒGƒXƒg
+  GFL_BG_SetScrollReq( MAIN_BG_WINDOW, GFL_BG_SCROLL_Y_SET, scrollSize );
+  GFL_BG_SetScrollReq( MAIN_BG_FONT,   GFL_BG_SCROLL_Y_SET, scrollSize );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ’²¸€–ÚƒXƒNƒ[ƒ‹Š®—¹‚Ìˆ—‚ğs‚¤
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void FinishTopicScroll( RESEARCH_SELECT_WORK* work )
+{
+  work->topicCursorPos = work->topicCursorNextPos; // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
+  UpdateSubDisplayStrings( work );                 // ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ‚ğXV
+  SetTopicCursorOn( work );                        // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒXƒNƒ[ƒ‹‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static BOOL IsTopicScrollEnd ( const RESEARCH_SELECT_WORK* work )
+{
+  return ( SCROLL_FRAME < work->topicScrollFrameCount);
+}
+
+//----------------------------------------------------------------------------------------------
+/**
  * @brief ’²¸€–Ú‚ÌƒXƒNƒŠ[ƒ“ x À•W‚ğæ“¾‚·‚é
  *
  * @param work
@@ -1130,36 +1452,6 @@ static int CalcTopicDisplayPosTop( const RESEARCH_SELECT_WORK* work, u8 topicID 
   return top;
 }
 
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ’²¸€–Ú‚ÌƒXƒNƒ[ƒ‹ó‘Ô‚ğXV‚·‚é
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void UpdateTopicScroll( RESEARCH_SELECT_WORK* work )
-{
-  int scrollSize;
-
-  // ƒXƒNƒ[ƒ‹—Ê‚ğZo
-  scrollSize = CalcScreenScrollY( work );
-
-  // ƒXƒNƒ[ƒ‹ƒŠƒNƒGƒXƒg
-  GFL_BG_SetScrollReq( MAIN_BG_WINDOW, GFL_BG_SCROLL_Y_SET, scrollSize );
-  GFL_BG_SetScrollReq( MAIN_BG_FONT,   GFL_BG_SCROLL_Y_SET, scrollSize );
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ƒXƒNƒ[ƒ‹‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static BOOL IsTopicScrollEnd ( const RESEARCH_SELECT_WORK* work )
-{
-  return ( SCROLL_FRAME < work->topicScrollFrameCount);
-}
 
 //----------------------------------------------------------------------------------------------
 /**
@@ -1208,29 +1500,96 @@ static int CalcScreenScrollY( const RESEARCH_SELECT_WORK* work )
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //==============================================================================================
-// ¡‰æ–ÊI—¹Œ‹‰Ê
+// ¡’²¸€–Ú
 //==============================================================================================
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ‰æ–Ê‚ÌI—¹Œ‹‰Ê‚ğŒˆ’è‚·‚é
+ * @brief ƒJ[ƒ\ƒ‹ˆÊ’u‚É‚ ‚é’²¸€–Ú‚ğ‘I‘ğ‚·‚éB
+ *        ‚·‚Å‚É‘I‘ğÏ‚İ‚È‚ç“o˜^‚ğ‰ğœ‚·‚éB
+ *        ‚»‚¤‚Å‚È‚¯‚ê‚Î, “o˜^‚·‚éB
  *
  * @param work
- * @param result Œ‹‰Ê
+ *
+ * @return V‚µ‚¢€–Ú‚ğ‘I‘ğ‚µ‚½ê‡ TRUE
+ *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
  */
 //----------------------------------------------------------------------------------------------
-static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result )
+static BOOL SelectTopic( RESEARCH_SELECT_WORK* work )
 {
-  // ‘½dİ’è
-  GF_ASSERT( work->result == RESEARCH_SELECT_RESULT_NONE );
+  BOOL select = FALSE;  // V‚µ‚¢€–Ú‚ğ‘I‘ğ‚µ‚½‚©‚Ç‚¤‚©
 
-  // İ’è
-  work->result = result;
+
+  if( IsTopicIDRegistered( work, work->topicCursorPos ) ) // “o˜^Ï‚İ
+  {
+    SetTopicNotSelected( work );  // ‘I‘ğ‚µ‚Ä‚¢‚È‚¢ó‘Ô‚É–ß‚·
+    ReleaseTopicID( work );       // “o˜^‚µ‚Ä‚¢‚½€–ÚID‚ğ‰ğœ‚·‚é
+  }
+  else if( work->selectedTopicNum == SELECT_TOPIC_MAX_NUM ) // ‚·‚Å‚ÉÅ‘å”‚ğ‘I‘ğÏ‚İ
+  {
+  }
+  else // V‚µ‚¢€–Ú‚ğ‘I‘ğ
+  {
+    SetTopicSelected( work );  // ‘I‘ğ‚µ‚Ä‚¢‚éó‘Ô‚É‚·‚é
+    RegisterTopicID( work );   // €–ÚID‚ğ“o˜^‚·‚é
+    select = TRUE;
+  }
+
+  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
+  UpdateTopicSelectIcons( work );
+
+  return select;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ‘I‘ğÏ‚İ’²¸€–ÚIDƒŠƒXƒg‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitSelectedTopicIDs( RESEARCH_SELECT_WORK* work )
+{
+  int i;
+
+  // ‘I‘ğÏ‚İ’²¸€–ÚID‚ğ‰Šú‰»
+  for( i=0; i < SELECT_TOPIC_MAX_NUM; i++ )
+  { 
+    work->selectedTopicIDs[i] = TOPIC_ID_DUMMY;
+  }
+
+  // ‘I‘ğ‚µ‚½’²¸€–Ú‚Ì”‚ğ‰Šú‰»
+  work->selectedTopicNum = 0;
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set result (%d)\n", result );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init select topic IDs\n" );
 }
+
+
+
+
+
+//==============================================================================================
+// ¡‰æ–ÊI—¹Œ‹‰Ê
+//==============================================================================================
+
 
 
 //==============================================================================================
@@ -1409,12 +1768,6 @@ static void SetupBG( RESEARCH_SELECT_WORK* work )
   // ƒrƒbƒgƒ}ƒbƒvƒEƒBƒ“ƒhƒE ƒVƒXƒeƒ€‰Šú‰»
   GFL_BMPWIN_Init( work->heapID );
 
-  // ƒEƒBƒ“ƒhƒE—LŒø‰»
-  G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ, TRUE );
-  G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1, TRUE );
-  G2_SetWnd0Position( WND0_LEFT, WND0_TOP, WND0_RIGHT, WND0_BOTTOM );
-  GX_SetVisibleWnd( GX_WNDMASK_W0 );
-
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup BG\n" );
 }
@@ -1428,13 +1781,11 @@ static void SetupBG( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void CleanUpBG( RESEARCH_SELECT_WORK* work )
 {
-  // ƒEƒBƒ“ƒhƒE–³Œø‰»
-  GX_SetVisibleWnd( GX_WNDMASK_NONE );
-
   GFL_BMPWIN_Exit();
 
   GFL_BG_FreeBGControl( MAIN_BG_FONT );
   GFL_BG_FreeBGControl( MAIN_BG_WINDOW );
+  GFL_BG_FreeBGControl( MAIN_BG_BAR );
   GFL_BG_FreeBGControl( SUB_BG_FONT );
   GFL_BG_FreeBGControl( SUB_BG_WINDOW );
 
@@ -1834,9 +2185,6 @@ static void CreateClactSystem( RESEARCH_SELECT_WORK* work )
   // ƒVƒXƒeƒ€ì¬
   GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
 
-  // VBlank Š„‚è‚İŠÖ”‚ğ“o˜^
-  GFUser_SetVIntrFunc( VBlankFunc );
-
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create clact system\n" );
 }
@@ -1849,10 +2197,7 @@ static void CreateClactSystem( RESEARCH_SELECT_WORK* work )
  */
 //----------------------------------------------------------------------------------------------
 static void DeleteClactSystem( RESEARCH_SELECT_WORK* work )
-{
-  // VBkank Š„‚è‚İŠÖ”‚ğ‰ğœ
-  GFUser_ResetVIntrFunc();
-
+{ 
   // ƒVƒXƒeƒ€”jŠü
   GFL_CLACT_SYS_Delete();
 
@@ -2151,6 +2496,306 @@ static void DeleteClactWorks( RESEARCH_SELECT_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete clact works\n" );
 }
 
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitBitmapDatas( RESEARCH_SELECT_WORK* work )
+{
+  int idx;
+
+  // ‰Šú‰»
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    work->BmpData[ idx ] = NULL;
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init bitmap datas\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğì¬‚·‚é
+ *
+ * @parma work
+ */
+//----------------------------------------------------------------------------------------------
+static void CreateBitmapDatas( RESEARCH_SELECT_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    const BITMAP_INIT_DATA* data;
+
+    // ‰Šú‰»ƒf[ƒ^‚ğæ“¾
+    data = &BitmapInitData[ idx ]; 
+
+    // ì¬
+    work->BmpData[ idx ] = GFL_BMP_Create( data->width, data->height, data->colorMode, work->heapID );
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create bitmap datas\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚Ì€”õ‚ğs‚¤
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void SetupBitmapDatas( RESEARCH_SELECT_WORK* work )
+{
+  int idx;
+
+  // TEST:
+  {
+    GFL_BMP_DATA* bmp;
+    bmp = GFL_BMP_LoadCharacter( ARCID_RESEARCH_RADAR_GRAPHIC, 
+                                 NARC_research_radar_graphic_obj_window1_NCGR,
+                                 FALSE, work->heapID );
+    GFL_BMP_Print( bmp, work->BmpData[ BMPOAM_ACTOR_CONFIRM ], 0, 0, 0, 0, 240, 40, 0 );
+    OS_Printf( "sizeX = %d\n", GFL_BMP_GetSizeX( bmp ) );
+    OS_Printf( "sizeY = %d\n", GFL_BMP_GetSizeY( bmp ) );
+    GFL_BMP_Delete( bmp );
+  }
+
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    const BITMAP_INIT_DATA* data;
+    GFL_MSGDATA* msgData;
+    STRBUF* strbuf;
+    PRINTSYS_LSB color;
+
+    // •¶š—ñ‚ğ‘‚«‚Ş
+    data    = &BitmapInitData[ idx ]; 
+    msgData = work->message[ data->messageIdx ];
+    color   = PRINTSYS_LSB_Make( data->colorNo_L, data->colorNo_S, data->colorNo_B );
+    strbuf  = GFL_MSG_CreateString( msgData, data->stringID );
+
+    PRINTSYS_PrintColor( work->BmpData[ idx ],
+                         data->stringDrawPosX, data->stringDrawPosY,
+                         strbuf, work->font, color ); 
+
+    GFL_HEAP_FreeMemory( strbuf );
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup bitmap datas\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ”jŠü‚·‚é
+ *
+ * @parma work
+ */
+//----------------------------------------------------------------------------------------------
+static void DeleteBitmapDatas( RESEARCH_SELECT_WORK* work )
+{
+  int idx;
+
+  // ”jŠü
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    GFL_BMP_Delete( work->BmpData[ idx ] );
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete bitmap datas\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief BMP-OAM ƒVƒXƒeƒ€‚Ì€”õ‚ğs‚¤
+ *
+ * @parma work
+ */
+//----------------------------------------------------------------------------------------------
+static void SetupBmpOamSystem( RESEARCH_SELECT_WORK* work )
+{
+  // BMP-OAM ƒVƒXƒeƒ€‚ğì¬
+  work->BmpOamSystem = BmpOam_Init( work->heapID, work->clactUnit[ CLUNIT_BMPOAM ] );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup BMP-OAM system\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief BMP-OAM ƒVƒXƒeƒ€‚ÌŒã•Ğ•t‚¯‚ğs‚¤
+ *
+ * @parma work
+ */
+//----------------------------------------------------------------------------------------------
+static void CleanUpBmpOamSystem( RESEARCH_SELECT_WORK* work )
+{
+  // BMP-OAM ƒVƒXƒeƒ€‚ğ”jŠü
+  BmpOam_Exit( work->BmpOamSystem );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up BMP-OAM system\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief BMP-OAM ƒAƒNƒ^[‚ğì¬‚·‚é
+ *
+ * @parma work
+ */
+//----------------------------------------------------------------------------------------------
+static void CreateBmpOamActors( RESEARCH_SELECT_WORK* work )
+{
+  int idx;
+  BMPOAM_ACT_DATA head;
+
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    // ‰Šúƒpƒ‰ƒ[ƒ^‚ğì¬
+    head.bmp        = work->BmpData[ idx ];
+    head.x          = BmpOamActorInitData[ idx ].x;
+    head.y          = BmpOamActorInitData[ idx ].y;
+    head.pltt_index = GetObjResourceRegisterIndex( work, BmpOamActorInitData[ idx ].paletteResID );
+    head.pal_offset = BmpOamActorInitData[ idx ].paletteOffset;
+    head.soft_pri   = BmpOamActorInitData[ idx ].softPriority;
+    head.bg_pri     = BmpOamActorInitData[ idx ].BGPriority;
+    head.setSerface = BmpOamActorInitData[ idx ].setSurface;
+    head.draw_type  = BmpOamActorInitData[ idx ].drawType;
+
+    // BMP-OAM ƒAƒNƒ^[‚ğ’Ç‰Á
+    work->BmpOamActor[ idx ] = BmpOam_ActorAdd( work->BmpOamSystem, &head );
+
+    // ”ñ•\¦‚Éİ’è
+    BmpOam_ActorSetDrawEnable( work->BmpOamActor[ idx ], FALSE );
+
+    BmpOam_ActorBmpTrans( work->BmpOamActor[ idx ] );
+
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create BMP-OAM actors\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief BMP-OAM ƒAƒNƒ^[‚ğ”jŠü‚·‚é
+ *
+ * @parma work
+ */
+//----------------------------------------------------------------------------------------------
+static void DeleteBmpOamActors( RESEARCH_SELECT_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    BmpOam_ActorDel( work->BmpOamActor[ idx ] );
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete BMP-OAM actors\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief VBlankŠúŠÔ’†‚Ìƒ^ƒXƒN‚ğ“o˜^‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void RegisterVBlankTask( RESEARCH_SELECT_WORK* work )
+{
+  work->VBlankTask = GFUser_VIntr_CreateTCB( VBlankFunc, work, 0 );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: register VBlank task\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief VBlankŠúŠÔ’†‚Ìƒ^ƒXƒN‚ğ‰ğœ‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void ReleaseVBlankTask( RESEARCH_SELECT_WORK* work )
+{ 
+  GFL_TCB_DeleteTask( work->VBlankTask );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: release VBlank task\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitPaletteFadeSystem( RESEARCH_SELECT_WORK* work )
+{ 
+  // ‰Šú‰»
+  work->paletteFadeSystem = NULL;
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init palette fade system\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ€”õ‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void SetupPaletteFadeSystem( RESEARCH_SELECT_WORK* work )
+{
+  u32 tcbWorkSize;
+
+  // ‘½d¶¬
+  GF_ASSERT( work->paletteFadeSystem == NULL );
+
+  // ƒtƒF[ƒhˆ—ƒVƒXƒeƒ€ì¬
+  work->paletteFadeSystem = PaletteFadeInit( work->heapID ); 
+
+  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ÌƒŠƒNƒGƒXƒgƒ[ƒN‚ğ¶¬
+  PaletteFadeWorkAllocSet( work->paletteFadeSystem, FADE_MAIN_BG,  FULL_PALETTE_SIZE, work->heapID );
+  PaletteFadeWorkAllocSet( work->paletteFadeSystem, FADE_MAIN_OBJ, FULL_PALETTE_SIZE, work->heapID );
+
+  // ƒŠƒNƒGƒXƒgƒ[ƒN‰Šú‰»
+  PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_BG,  0, FULL_PALETTE_SIZE );
+  PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_OBJ, 0, FULL_PALETTE_SIZE );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup palette fade system\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ÌŒã•Ğ•t‚¯‚ğs‚¤
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void CleanUpPaletteFadeSystem( RESEARCH_SELECT_WORK* work )
+{ 
+  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ÌƒŠƒNƒGƒXƒgƒ[ƒN‚ğ”jŠü
+  PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_BG );
+
+  // ƒtƒF[ƒhŠÇ—ƒVƒXƒeƒ€‚ğ”jŠü
+  PaletteFadeFree( work->paletteFadeSystem );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up palette fade system\n" );
+}
+
 
 //==============================================================================================
 // ¡OBJ ƒAƒNƒZƒX
@@ -2202,30 +2847,6 @@ static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkId
 }
 
 
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ•\¦‚ğXV‚·‚é
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work )
-{
-  int nowPos;
-
-  nowPos = work->topicCursorPos;
-
-  // ’²¸€–Ú ‘è–¼/•â‘«
-  BG_FONT_SetString( work->BGFont[ BG_FONT_TOPIC_TITLE ],   StringID_topicTitle[ nowPos ] );
-  BG_FONT_SetString( work->BGFont[ BG_FONT_TOPIC_CAPTION ], StringID_topicCaption[ nowPos ] );
-
-  // ¿–â
-  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_1 ], StringID_question[ Question1_topic[ nowPos ] ] );
-  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_2 ], StringID_question[ Question2_topic[ nowPos ] ] );
-  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_3 ], StringID_question[ Question3_topic[ nowPos ] ] );
-}
-
-
 //==============================================================================================
 // ¡OBJ •\¦
 //==============================================================================================
@@ -2263,6 +2884,9 @@ static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work )
   // •\¦ˆÊ’u‚ğ•ÏX
   GFL_CLACT_WK_SetPos( clactWork, &pos, setSurface );
   GFL_CLACT_WK_SetDrawEnable( clactWork, TRUE );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update scroll control pos\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -2311,6 +2935,140 @@ static void UpdateTopicSelectIcons( const RESEARCH_SELECT_WORK* work )
     GFL_CLACT_WK_SetAutoAnmFlag( clactWork, TRUE );
     GFL_CLACT_WK_SetDrawEnable( clactWork, TRUE );
   }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update topic select icons\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void StartPaletteFadeOut( RESEARCH_SELECT_WORK* work )
+{
+  // MAIN-BG
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_BG,
+                  MAIN_BG_PALETTE_FADE_OUT_TARGET_BITMASK,
+                  MAIN_BG_PALETTE_FADE_OUT_WAIT,
+                  MAIN_BG_PALETTE_FADE_OUT_START_STRENGTH,
+                  MAIN_BG_PALETTE_FADE_OUT_END_STRENGTH,
+                  MAIN_BG_PALETTE_FADE_OUT_COLOR,
+                  work->VBlankTCBSystem );
+
+  // MAIN-OBJ
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_OBJ,
+                  MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK,
+                  MAIN_OBJ_PALETTE_FADE_OUT_WAIT,
+                  MAIN_OBJ_PALETTE_FADE_OUT_START_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADE_OUT_END_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADE_OUT_COLOR,
+                  work->VBlankTCBSystem );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: start palette fade out\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void StartPaletteFadeIn( RESEARCH_SELECT_WORK* work )
+{
+  // MAIN-BG
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_BG,
+                  MAIN_BG_PALETTE_FADE_IN_TARGET_BITMASK,
+                  MAIN_BG_PALETTE_FADE_IN_WAIT,
+                  MAIN_BG_PALETTE_FADE_IN_START_STRENGTH,
+                  MAIN_BG_PALETTE_FADE_IN_END_STRENGTH,
+                  MAIN_BG_PALETTE_FADE_IN_COLOR,
+                  work->VBlankTCBSystem );
+
+  // MAIN-OBJ
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_OBJ,
+                  MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK,
+                  MAIN_OBJ_PALETTE_FADE_IN_WAIT,
+                  MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADE_IN_COLOR,
+                  work->VBlankTCBSystem );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: start palette fade in\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒg‚ÌƒtƒF[ƒh‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
+ *
+ * @param work
+ *
+ * @return ƒpƒŒƒbƒgƒtƒF[ƒh‚ªŠ®—¹‚µ‚Ä‚¢‚éê‡ TRUE
+ *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
+ */
+//----------------------------------------------------------------------------------------------
+static BOOL IsPaletteFadeEnd( RESEARCH_SELECT_WORK* work )
+{
+  return PaletteFadeCheck( work->paletteFadeSystem );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒg‚ğƒtƒF[ƒh‘O‚Ìó‘Ô‚É–ß‚·
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void ResetPaletteFade( RESEARCH_SELECT_WORK* work )
+{
+  u16* originalPaletteData;
+  u32 dataSize;
+
+  // MAIN-BG
+  dataSize = sizeof(u16) * 16;
+  originalPaletteData = PaletteWorkDefaultWorkGet( work->paletteFadeSystem, FADE_MAIN_BG );
+  DC_FlushRange( originalPaletteData, dataSize );
+  GX_LoadBGPltt( originalPaletteData, 0, dataSize );
+
+  // MAIN-OBJ
+  dataSize = sizeof(u16) * 16;
+  originalPaletteData = PaletteWorkDefaultWorkGet( work->paletteFadeSystem, FADE_MAIN_OBJ );
+  DC_FlushRange( originalPaletteData, dataSize );
+  GX_LoadOBJPltt( originalPaletteData, 0, dataSize );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: reset palette fade\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief BMP-OAM ‚Ì•\¦ó‘Ô‚ğİ’è‚·‚é
+ *
+ * @param work
+ * @param actorIdx İ’è‘ÎÛ‚ÌBMP-OAM‚ğw’è
+ * @param enable   •\¦‚·‚é‚©‚Ç‚¤‚©
+ */
+//----------------------------------------------------------------------------------------------
+static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX actorIdx, BOOL enable )
+{
+  // ƒCƒ“ƒfƒbƒNƒXƒGƒ‰[
+  GF_ASSERT( actorIdx < BMPOAM_ACTOR_NUM );
+
+  // •\¦ó‘Ô‚ğ•ÏX
+  BmpOam_ActorSetDrawEnable( work->BmpOamActor[ actorIdx ], enable );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, 
+              "RESEARCH-SELECT: set draw enable BMP-OAM [%d] ==> %d\n", actorIdx, enable );
 }
 
 

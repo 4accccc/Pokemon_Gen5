@@ -16,6 +16,7 @@ typedef enum {
   RESEARCH_SELECT_SEQ_SCROLL_WAIT, // スクロール完了待ち
   RESEARCH_SELECT_SEQ_TO_CONFIRM,  // 調査項目確定の確認シーケンスへの準備
   RESEARCH_SELECT_SEQ_CONFIRM,     // 調査項目確定の確認
+  RESEARCH_SELECT_SEQ_TO_KEY_WAIT, // キー入力待ちに戻る
   RESEARCH_SELECT_SEQ_DETERMINE,   // 調査項目確定
   RESEARCH_SELECT_SEQ_CLEAN_UP,    // 後片付け
   RESEARCH_SELECT_SEQ_FINISH,      // 終了
@@ -62,6 +63,7 @@ typedef enum {
 typedef enum {
   CLUNIT_SUB_OBJ,  // SUB-OBJ
   CLUNIT_MAIN_OBJ, // MAIN-OBJ
+  CLUNIT_BMPOAM,   // BMP-OAM アクターで使用
   CLUNIT_NUM,      // 総数
 } CLUNIT_INDEX;
 
@@ -73,3 +75,12 @@ typedef enum {
   CLWK_SELECT_ICON_2, // 調査項目選択アイコン2
   CLWK_NUM,           // 総数
 } CLWK_INDEX; 
+
+// BMP-OAM
+typedef enum {
+  BMPOAM_ACTOR_CONFIRM,    // 確認メッセージ
+  BMPOAM_ACTOR_OK,         //「けってい」
+  BMPOAM_ACTOR_CANCEL,     //「やめる」
+  BMPOAM_ACTOR_DETERMINE,  //「ちょうさを　かいしします！」
+  BMPOAM_ACTOR_NUM,        // 総数
+} BMPOAM_ACTOR_INDEX;

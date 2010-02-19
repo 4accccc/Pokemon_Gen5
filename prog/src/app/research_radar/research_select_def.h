@@ -29,6 +29,32 @@
 #define SELECT_ICON_DRAW_OFFSET_X (0)  // 調査項目ボタン左上x座標からのオフセット
 #define SELECT_ICON_DRAW_OFFSET_Y (10) // 調査項目ボタン左上y座標からのオフセット
 
+// パレットフェード ( アウト )
+#define MAIN_BG_PALETTE_FADE_OUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
+#define MAIN_BG_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
+#define MAIN_BG_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
+
+#define MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK (0xfffd) // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
+
+// パレットフェード ( イン )
+#define MAIN_BG_PALETTE_FADE_IN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
+#define MAIN_BG_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
+#define MAIN_BG_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
+
+#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK (0xfffd)  // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
+
 
 //===============================================================================
 // ■BG
@@ -63,12 +89,12 @@
 // □MAIN-BG
 //-----------
 // BG フレーム
-#define MAIN_BG_BAR    (GFL_BG_FRAME1_M)  // バー面
+#define MAIN_BG_BAR    (GFL_BG_FRAME0_M)  // バー面
 #define MAIN_BG_WINDOW (GFL_BG_FRAME2_M)  // ウィンドウ面
 #define MAIN_BG_FONT   (GFL_BG_FRAME3_M)  // フォント面
 
 // 表示優先順位
-#define MAIN_BG_BAR_PRIORITY    (3)  // バー面
+#define MAIN_BG_BAR_PRIORITY    (0)  // バー面
 #define MAIN_BG_WINDOW_PRIORITY (2)  // ウィンドウ面
 #define MAIN_BG_FONT_PRIORITY   (1)  // フォント面
 
@@ -206,7 +232,11 @@
 
 // MAIN-OBJ
 #define CLUNIT_MAIN_OBJ_WORK_SIZE (10)  // 最大ワーク数
-#define CLUNIT_MAIN_OBJ_PRIORITY  (0)   // 描画優先順位
+#define CLUNIT_MAIN_OBJ_PRIORITY  (1)   // 描画優先順位
+
+// BMP-OAM
+#define CLUNIT_BMPOAM_WORK_SIZE (60)  // 最大ワーク数
+#define CLUNIT_BMPOAM_PRIORITY  (0)   // 描画優先順位
 
 //----------------------
 // □セルアクターワーク
@@ -224,3 +254,51 @@
 #define CLWK_SELECT_ICON_ANIME_SEQ (NANR_obj_search)  // アニメーションシーケンス
 #define CLWK_SELECT_ICON_SOFT_PRIORITY (0)  // ソフト優先順位 0>0xff
 #define CLWK_SELECT_ICON_BG_PRIORITY   (0)  // BG 優先順位
+
+//-------------------
+// □BMP-OAM アクター
+//-------------------
+// 確認メッセージ
+#define BMPOAM_ACTOR_CONFIRM_CHARA_SIZE_X   (20)  // x サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_CONFIRM_CHARA_SIZE_Y   (5)   // y サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_CONFIRM_POS_X          (0)   // 左上x座標
+#define BMPOAM_ACTOR_CONFIRM_POS_Y          (152) // 左上y座標
+#define BMPOAM_ACTOR_CONFIRM_PALETTE_OFFSET (1)   // パレットオフセット
+#define BMPOAM_ACTOR_CONFIRM_SOFT_PRIORITY  (0)   // ソフトプライオリティ
+#define BMPOAM_ACTOR_CONFIRM_BG_PRIORITY    (0)   // BGプライオリティ
+#define BMPOAM_ACTOR_CONFIRM_STRING_COLOR_L (1)   // 文字のカラー番号
+#define BMPOAM_ACTOR_CONFIRM_STRING_COLOR_S (2)   // 影のカラー番号
+#define BMPOAM_ACTOR_CONFIRM_STRING_COLOR_B (0)   // 背景のカラー番号
+//「けってい」
+#define BMPOAM_ACTOR_OK_CHARA_SIZE_X   (10)   // x サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_OK_CHARA_SIZE_Y   (2)    // y サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_OK_POS_X          (160)  // 左上x座標
+#define BMPOAM_ACTOR_OK_POS_Y          (152)  // 左上y座標
+#define BMPOAM_ACTOR_OK_PALETTE_OFFSET (1)    // パレットオフセット
+#define BMPOAM_ACTOR_OK_SOFT_PRIORITY  (0)    // ソフトプライオリティ
+#define BMPOAM_ACTOR_OK_BG_PRIORITY    (0)    // BGプライオリティ
+#define BMPOAM_ACTOR_OK_STRING_COLOR_L (1)    // 文字のカラー番号
+#define BMPOAM_ACTOR_OK_STRING_COLOR_S (2)    // 影のカラー番号
+#define BMPOAM_ACTOR_OK_STRING_COLOR_B (0)    // 背景のカラー番号
+//「やめる」
+#define BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X   (10)   // x サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_CANCEL_CHARA_SIZE_Y   (2)    // y サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_CANCEL_POS_X          (160)  // 左上x座標
+#define BMPOAM_ACTOR_CANCEL_POS_Y          (168)  // 左上y座標
+#define BMPOAM_ACTOR_CANCEL_PALETTE_OFFSET (0)    // パレットオフセット
+#define BMPOAM_ACTOR_CANCEL_SOFT_PRIORITY  (0)    // ソフトプライオリティ
+#define BMPOAM_ACTOR_CANCEL_BG_PRIORITY    (0)    // BGプライオリティ
+#define BMPOAM_ACTOR_CANCEL_STRING_COLOR_L (1)    // 文字のカラー番号
+#define BMPOAM_ACTOR_CANCEL_STRING_COLOR_S (2)    // 影のカラー番号
+#define BMPOAM_ACTOR_CANCEL_STRING_COLOR_B (0)    // 背景のカラー番号
+//「ちょうさを　かいしします！」
+#define BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_X   (30) // x サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_Y   (5)  // y サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_DETERMINE_POS_X          (8)  // 左上x座標
+#define BMPOAM_ACTOR_DETERMINE_POS_Y          (76) // 左上y座標
+#define BMPOAM_ACTOR_DETERMINE_PALETTE_OFFSET (0)  // パレットオフセット
+#define BMPOAM_ACTOR_DETERMINE_SOFT_PRIORITY  (0)  // ソフトプライオリティ
+#define BMPOAM_ACTOR_DETERMINE_BG_PRIORITY    (0)  // BGプライオリティ
+#define BMPOAM_ACTOR_DETERMINE_STRING_COLOR_L (1)  // 文字のカラー番号
+#define BMPOAM_ACTOR_DETERMINE_STRING_COLOR_S (2)  // 影のカラー番号
+#define BMPOAM_ACTOR_DETERMINE_STRING_COLOR_B (0)  // 背景のカラー番号

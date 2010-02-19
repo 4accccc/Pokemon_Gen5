@@ -29,6 +29,18 @@ static const u32 MessageDataID[ MESSAGE_NUM ] =
 
 
 //==============================================================================================
+// ■メニュー
+//==============================================================================================
+
+// 選択時の遷移先シーケンス
+static const RESEARCH_SELECT_SEQ MenuItemNextSequence[ MENU_ITEM_NUM ] = 
+{
+  RESEARCH_SELECT_SEQ_DETERMINE,   //「けってい」
+  RESEARCH_SELECT_SEQ_TO_KEY_WAIT, //「やめる」
+};
+
+
+//==============================================================================================
 // ■BG
 //==============================================================================================
 
@@ -79,7 +91,7 @@ static const GFL_BG_BGCNT_HEADER MainBGControl_BAR =
   0,							        // スクリーンバッファオフセット
   GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
   GX_BG_COLORMODE_16,			// カラーモード
-  GX_BG_SCRBASE_0x1800,		// スクリーンベースブロック
+  GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
   GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
   GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
   GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
@@ -115,7 +127,7 @@ static const GFL_BG_BGCNT_HEADER MainBGControl_FONT =
   0,							        // スクリーンバッファオフセット
   GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
   GX_BG_COLORMODE_16,			// カラーモード
-  GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
+  GX_BG_SCRBASE_0x1800,		// スクリーンベースブロック
   GX_BG_CHARBASE_0x10000,	// キャラクタベースブロック
   GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
   GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
@@ -440,6 +452,7 @@ static const u16 ClactUnitWorkSize[ CLUNIT_NUM ] =
 {
   CLUNIT_SUB_OBJ_WORK_SIZE,   // index CLUNIT_SUB_OBJ
   CLUNIT_MAIN_OBJ_WORK_SIZE,  // index CLUNIT_MAIN_OBJ
+  CLUNIT_BMPOAM_WORK_SIZE,    // index CLUNIT_BMPOAM
 };
 
 // 描画優先順位
@@ -447,6 +460,7 @@ static const u8 ClactUnitPriority[ CLUNIT_NUM ] =
 {
   CLUNIT_SUB_OBJ_PRIORITY,   // index CLUNIT_SUB_OBJ
   CLUNIT_MAIN_OBJ_PRIORITY,  // index CLUNIT_MAIN_OBJ
+  CLUNIT_BMPOAM_PRIORITY,    // index CLUNIT_BMPOAM
 };
 
 //-----------------------
@@ -518,5 +532,138 @@ static const CLWK_INIT_DATA ClactWorkInitData[ CLWK_NUM ] =
     OBJ_RESOURCE_MAIN_PALETTE,       // パレット リソース
     OBJ_RESOURCE_MAIN_CELL_ANIME,    // セルアニメ リソース
     CLSYS_DEFREND_MAIN,              // サーフェス指定
+  },
+};
+
+//-------------------
+// □BMP-OAM アクター
+//-------------------
+
+// 初期化データ
+typedef struct 
+{
+  s16             x;             // 左上x座標
+  s16             y;             // 左上y座標
+  OBJ_RESOURCE_ID paletteResID;  // 適用するパレットリソースID
+  u32             paletteOffset; // パレットオフセット [0, 16]
+  u8              softPriority;  // ソフト優先順位
+  u8              BGPriority;    // BG 優先順位
+  u16             setSurface;    // サーフェス指定
+  CLSYS_DRAW_TYPE drawType;      // 描画タイプ
+
+} BMPOAM_ACTOR_INIT_DATA; 
+
+static const BMPOAM_ACTOR_INIT_DATA BmpOamActorInitData[ BMPOAM_ACTOR_NUM ] = 
+{
+  { // 確認メッセージ
+    BMPOAM_ACTOR_CONFIRM_POS_X,          // 左上x座標
+    BMPOAM_ACTOR_CONFIRM_POS_Y,          // 左上y座標
+    OBJ_RESOURCE_MAIN_PALETTE,           // 適用するパレットリソースID
+    BMPOAM_ACTOR_CONFIRM_PALETTE_OFFSET, // パレットオフセット
+    BMPOAM_ACTOR_CONFIRM_SOFT_PRIORITY,  // ソフト優先順位
+    BMPOAM_ACTOR_CONFIRM_BG_PRIORITY,    // BG 優先順位
+    CLSYS_DEFREND_MAIN,                  // サーフェス指定
+    CLSYS_DRAW_MAIN,                     // 描画タイプ
+  },
+  { //「けってい」
+    BMPOAM_ACTOR_OK_POS_X,          // 左上x座標
+    BMPOAM_ACTOR_OK_POS_Y,          // 左上y座標
+    OBJ_RESOURCE_MAIN_PALETTE,      // 適用するパレットリソースID
+    BMPOAM_ACTOR_OK_PALETTE_OFFSET, // パレットオフセット
+    BMPOAM_ACTOR_OK_SOFT_PRIORITY,  // ソフト優先順位
+    BMPOAM_ACTOR_OK_BG_PRIORITY,    // BG 優先順位
+    CLSYS_DEFREND_MAIN,             // サーフェス指定
+    CLSYS_DRAW_MAIN,                // 描画タイプ
+  },
+  { //「やめる」
+    BMPOAM_ACTOR_CANCEL_POS_X,          // 左上x座標
+    BMPOAM_ACTOR_CANCEL_POS_Y,          // 左上y座標
+    OBJ_RESOURCE_MAIN_PALETTE,          // 適用するパレットリソースID
+    BMPOAM_ACTOR_CANCEL_PALETTE_OFFSET, // パレットオフセット
+    BMPOAM_ACTOR_CANCEL_SOFT_PRIORITY,  // ソフト優先順位
+    BMPOAM_ACTOR_CANCEL_BG_PRIORITY,    // BG 優先順位
+    CLSYS_DEFREND_MAIN,                 // サーフェス指定
+    CLSYS_DRAW_MAIN,                    // 描画タイプ
+  },
+  { //「ちょうさを　かいしします！」
+    BMPOAM_ACTOR_DETERMINE_POS_X,          // 左上x座標
+    BMPOAM_ACTOR_DETERMINE_POS_Y,          // 左上y座標
+    OBJ_RESOURCE_MAIN_PALETTE,             // 適用するパレットリソースID
+    BMPOAM_ACTOR_DETERMINE_PALETTE_OFFSET, // パレットオフセット
+    BMPOAM_ACTOR_DETERMINE_SOFT_PRIORITY,  // ソフト優先順位
+    BMPOAM_ACTOR_DETERMINE_BG_PRIORITY,    // BG 優先順位
+    CLSYS_DEFREND_MAIN,                    // サーフェス指定
+    CLSYS_DRAW_MAIN,                       // 描画タイプ
+  },
+};
+
+//---------------------
+// □ビットマップデータ
+//---------------------
+// 初期化データ
+typedef struct
+{
+  int           width;           // x サイズ ( キャラ単位 )
+  int           height;          // y サイズ ( キャラ単位 )
+  int           colorMode;       // カラーモード GFL_BMP_16_COLOR or GFL_BMP_256_COLOR
+  MESSAGE_INDEX messageIdx;      // 参照するメッセージデータ
+  u32           stringID;        // 書き込むメッセージID
+  int           stringDrawPosX;  // 書き込み先 x 座標 ( ドット単位 )
+  int           stringDrawPosY;  // 書き込み先 y 座標 ( ドット単位 )
+  u8            colorNo_L;       // 文字のカラー番号
+  u8            colorNo_S;       // 影のカラー番号
+  u8            colorNo_B;       // 背景のカラー番号
+
+} BITMAP_INIT_DATA;
+
+static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] = 
+{
+  { // 確認メッセージ
+    BMPOAM_ACTOR_CONFIRM_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
+    BMPOAM_ACTOR_CONFIRM_CHARA_SIZE_Y,   // y サイズ ( キャラ単位 )
+    GFL_BMP_16_COLOR,                    // カラーモード
+    MESSAGE_STATIC,                      // 参照するメッセージデータ
+    str_select_confirm,                  // 書き込むメッセージID
+    0,                                   // 書き込み先 x 座標 ( ドット単位 )
+    0,                                   // 書き込み先 y 座標 ( ドット単位 )
+    BMPOAM_ACTOR_CONFIRM_STRING_COLOR_L, // 文字のカラー番号
+    BMPOAM_ACTOR_CONFIRM_STRING_COLOR_S, // 影のカラー番号
+    BMPOAM_ACTOR_CONFIRM_STRING_COLOR_B, // 背景のカラー番号
+  },
+  { //「けってい」
+    BMPOAM_ACTOR_OK_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
+    BMPOAM_ACTOR_OK_CHARA_SIZE_Y,   // y サイズ ( キャラ単位 )
+    GFL_BMP_16_COLOR,               // カラーモード
+    MESSAGE_STATIC,                 // 参照するメッセージデータ
+    str_select_confirm_ok,          // 書き込むメッセージID
+    0,                              // 書き込み先 x 座標 ( ドット単位 )
+    0,                              // 書き込み先 y 座標 ( ドット単位 )
+    BMPOAM_ACTOR_OK_STRING_COLOR_L, // 文字のカラー番号
+    BMPOAM_ACTOR_OK_STRING_COLOR_S, // 影のカラー番号
+    BMPOAM_ACTOR_OK_STRING_COLOR_B, // 背景のカラー番号
+  },
+  { //「やめる」
+    BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
+    BMPOAM_ACTOR_CANCEL_CHARA_SIZE_Y,   // y サイズ ( キャラ単位 )
+    GFL_BMP_16_COLOR,                   // カラーモード
+    MESSAGE_STATIC,                     // 参照するメッセージデータ
+    str_select_confirm_cancel,          // 書き込むメッセージID
+    0,                                  // 書き込み先 x 座標 ( ドット単位 )
+    0,                                  // 書き込み先 y 座標 ( ドット単位 )
+    BMPOAM_ACTOR_CANCEL_STRING_COLOR_L, // 文字のカラー番号
+    BMPOAM_ACTOR_CANCEL_STRING_COLOR_S, // 影のカラー番号
+    BMPOAM_ACTOR_CANCEL_STRING_COLOR_B, // 背景のカラー番号
+  },
+  { //「ちょうさを　かいしします！」
+    BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
+    BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_Y,   // y サイズ ( キャラ単位 )
+    GFL_BMP_16_COLOR,                      // カラーモード
+    MESSAGE_STATIC,                        // 参照するメッセージデータ
+    str_select_confirm,                    // 書き込むメッセージID
+    0,                                     // 書き込み先 x 座標 ( ドット単位 )
+    0,                                     // 書き込み先 y 座標 ( ドット単位 )
+    BMPOAM_ACTOR_DETERMINE_STRING_COLOR_L, // 文字のカラー番号
+    BMPOAM_ACTOR_DETERMINE_STRING_COLOR_S, // 影のカラー番号
+    BMPOAM_ACTOR_DETERMINE_STRING_COLOR_B, // 背景のカラー番号
   },
 };
