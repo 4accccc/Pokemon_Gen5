@@ -359,6 +359,15 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/map25_09.3dppack \
 	$(DIR_OUTPUT)/map25_10.3dppack \
 	$(DIR_OUTPUT)/map24_10.3dppack \
+	$(DIR_OUTPUT)/map24_08.3dppack \
+	$(DIR_OUTPUT)/map25_08.3dppack \
+	$(DIR_OUTPUT)/map24_07.3dppack \
+	$(DIR_OUTPUT)/map25_07.3dppack \
+	$(DIR_OUTPUT)/map26_07.3dppack \
+	$(DIR_OUTPUT)/map26_08.3dppack \
+	$(DIR_OUTPUT)/map26_09.3dppack \
+	$(DIR_OUTPUT)/map26_10.3dppack \
+	$(DIR_OUTPUT)/map25_10.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \

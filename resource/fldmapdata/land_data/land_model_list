@@ -359,6 +359,15 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/map25_09.nsbmd \
 	$(DIR_TEMP)/map25_10.nsbmd \
 	$(DIR_TEMP)/map24_10.nsbmd \
+	$(DIR_TEMP)/map24_08.nsbmd \
+	$(DIR_TEMP)/map25_08.nsbmd \
+	$(DIR_TEMP)/map24_07.nsbmd \
+	$(DIR_TEMP)/map25_07.nsbmd \
+	$(DIR_TEMP)/map26_07.nsbmd \
+	$(DIR_TEMP)/map26_08.nsbmd \
+	$(DIR_TEMP)/map26_09.nsbmd \
+	$(DIR_TEMP)/map26_10.nsbmd \
+	$(DIR_TEMP)/map25_10.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
