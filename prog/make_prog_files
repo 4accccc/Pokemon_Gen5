@@ -97,8 +97,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/areadata.c \
         field/warpdata.c \
         field/location.c \
-				field/map_matrix.c \
-        field/map_replace.c \
         field/field_location.c \
         field/field_status.c \
         field/event_gameover.c \
@@ -231,7 +229,6 @@ SRCS  +=    $(SOUNDSRC) \
 				system/shortcut_data.c \
         app/bag/bag_param.c\
         app/codein/codein_param.c\
-        field/event_poke_status.c \
         system/screentex.c \
         debug/debug_flg.c \
         debug/debug_hudson.c \
@@ -239,7 +236,6 @@ SRCS  +=    $(SOUNDSRC) \
    		debug/debug_str_conv.c \
         gamesystem/comm_player_support.c \
         gamesystem/pm_season.c \
-        field/scrcmd_sodateya.c \
 		net/ctvt_beacon.c \
         system/blink_palanm.c \
         system/font2tex.c \
@@ -345,6 +341,10 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         musical/stage/musical_stage_sys.c \
         musical/musical_program.c \
 				net_app/mystery/mystery_createdata.c \
+				field/map_matrix.c \
+        field/map_replace.c \
+        field/event_poke_status.c \
+        field/scrcmd_sodateya.c \
         field/event_cg_wireless.c \
         field/event_fieldmap_menu.c \
 				field/event_shortcut_menu.c \
@@ -616,7 +616,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_btrain.c \
         field/field_gimmick_bsubway.c \
         field/fldeff_hide.c \
-        field/report.c \
         field/trial_house.c \
         field/scrcmd_trial_house.c
 
