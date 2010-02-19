@@ -383,7 +383,7 @@ void MB_CAP_POKE_SetSleep( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
   {
     VecFx32 effPos = pokeWork->pos;
     effPos.y -= MB_CAP_POKE_DOWN_EFF_OFS;
-    effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
+    effPos.z = FX32_CONST(MB_CAP_EFFECT_ZZZ_Z);
     pokeWork->downEff = MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_ZZZ );
     MB_CAP_EFFECT_SetIsLoop( pokeWork->downEff , TRUE );
     pokeWork->state = MCPS_SLEEP_WAIT_GRASS;
@@ -752,18 +752,19 @@ static void MB_CAP_POKE_StateDown(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
     {
       VecFx32 effPos = pokeWork->pos;
       effPos.y -= MB_CAP_POKE_DOWN_EFF_OFS;
-      effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
 
       pokeWork->height = 0;
       pokeWork->cnt = 0;
       if( pokeWork->state == MCPS_DOWN_MOVE )
       {
+        effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
         pokeWork->downEff = MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_DOWN );
         MB_CAP_EFFECT_SetIsLoop( pokeWork->downEff , TRUE );
         pokeWork->state = MCPS_DOWN_WAIT;
       }
       else
       {
+        effPos.z = FX32_CONST(MB_CAP_EFFECT_ZZZ_Z);
         pokeWork->downEff = MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_ZZZ );
         MB_CAP_EFFECT_SetIsLoop( pokeWork->downEff , TRUE );
         pokeWork->state = MCPS_SLEEP_WAIT;

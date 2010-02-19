@@ -30,6 +30,8 @@
 #define MB_MSG_MSGWIN_LEFT   (3)
 #define MB_MSG_MSGWIN_HEIGHT (8)
 #define MB_MSG_MSGWIN_WIDTH  (26)
+#define MB_MSG_MSGWIN_TOP_L    (2)
+#define MB_MSG_MSGWIN_HEIGHT_L (18)
 
 #define MB_MSG_MSGWIN_SEL_TOP    (21)
 #define MB_MSG_MSGWIN_SEL_LEFT   (1)
@@ -58,6 +60,7 @@ typedef enum
 {
   MMWT_NONE ,
   MMWT_NORMAL,  //âÊñ íÜâõ
+  MMWT_LARGE,   //âÊñ íÜâõ(ëÂ)
   MMWT_1LINE,   //âÊñ â∫ÇPçs
   MMWT_2LINE,   //âÊñ â∫ÇQçs
 

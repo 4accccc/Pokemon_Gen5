@@ -613,7 +613,7 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
   //3Dの初期化
   
   { //3D系の設定
-    static const VecFx32 cam_pos = {0,0,FX32_CONST(300.0f)};
+    static const VecFx32 cam_pos = {0,0,FX32_CONST(512.0f)};
     static const VecFx32 cam_target = {0,0,0};
     static const VecFx32 cam_up = {0,FX32_ONE,0};
     //エッジマーキングカラー
@@ -630,7 +630,7 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
                        0,
                        FX32_ONE*256.0f,
                        FX32_ONE,
-                       FX32_ONE*350,
+                       FX32_ONE*600,
                        0,
                        &cam_pos,
                        &cam_up,
@@ -753,7 +753,7 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_32x32 ,
-      GFL_BBD_TEXSIZDEF_32x32 ,
+      GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_64x32 ,
       GFL_BBD_TEXSIZDEF_256x32 ,
       GFL_BBD_TEXSIZDEF_256x32 ,
@@ -1387,8 +1387,9 @@ void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork )
     }
   }
   {
-    static const u32 fogTable[8] = {0x40404040,0x40404040,0x40404040,0x40404040,0x40404040,0x40404040,0x40404040,0x40404040};
-    G3X_SetFog( TRUE , GX_FOGBLEND_COLOR_ALPHA , GX_FOGSLOPE_0x0800 , 0 );
+    //static const u32 fogTable[8] = {0x40404040,0x40404040,0x40404040,0x40404040,0x40404040,0x40404040,0x40404040,0x40404040};
+    static const u32 fogTable[8] = {0,0,0,0,0x40404040,0x40404040,0x40404040,0x40404040};
+    G3X_SetFog( TRUE , GX_FOGBLEND_COLOR_ALPHA , GX_FOGSLOPE_0x8000 , 0 );
     G3X_SetFogTable( fogTable );
   }
   

@@ -22,6 +22,8 @@
 #pragma mark [> define
 #define MB_CAP_OBJ_ANM_SPD (4)
 #define MB_CAP_OBJ_ANM_FRAME (4)
+#define MB_CAP_OBJ_STAR_ANM_SPD (16)
+#define MB_CAP_OBJ_STAR_ANM_FRAME (3)
 
 #define MB_CAP_OBJ_STAR_SPD (FX32_CONST(0.33))
 #define MB_CAP_OBJ_STAR_ROT (0x400)
@@ -191,6 +193,18 @@ void MB_CAP_OBJ_UpdateObject_Star( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWor
   pos.y = objWork->pos.y+objWork->height;
   
   GFL_BBD_SetObjectTrans( bbdSys , objWork->objIdx , &pos );
+  
+  {
+    u16 frame = objWork->anmCnt/MB_CAP_OBJ_STAR_ANM_SPD;
+    objWork->anmCnt++;
+    if( objWork->anmCnt >= MB_CAP_OBJ_STAR_ANM_SPD*MB_CAP_OBJ_STAR_ANM_FRAME )
+    {
+      objWork->anmCnt = 0;
+      frame = 0;
+    }
+    GFL_BBD_SetObjectCelIdx( bbdSys , objWork->objIdx , &frame );
+  }
+
 }
 
 

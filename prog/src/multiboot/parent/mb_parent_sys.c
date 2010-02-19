@@ -859,6 +859,8 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
       {
         MP_PARENT_SendImage_MBPInit( work );
 
+        MB_MSG_MessageHide( work->msgWork );
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
         MB_MSG_MessageCreateWordset( work->msgWork );
         MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
@@ -873,6 +875,8 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
     break;
 
   case MPSS_SEND_IMAGE_WAIT_BOOT_INIT:
+    MB_MSG_MessageHide( work->msgWork );
+    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
     MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_02 , MSGSPEED_GetWait() );
     GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
     work->subState = MPSS_SEND_IMAGE_WAIT_BOOT;
@@ -1106,7 +1110,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
         MB_MSG_ClearYesNo( work->msgWork );
         MB_MSG_MessageHide( work->msgWork );
         
-        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
         MB_MSG_MessageCreateWordset( work->msgWork );
         MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
