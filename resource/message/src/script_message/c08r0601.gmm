@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-12T11:41:06"/>
+	<create user="matsumiya" host="W00224" date="2010-02-19T19:03:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,9 +235,9 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="224"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="123">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="263"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1376" top="258" right="2081" bottom="878" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -291,6 +291,62 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_c08r0601_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ジムバッジがそろうまえ</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">このさき　チャンピオンロードですが
+ジムバッジが　８こ　そろっていないと▽
+さいごまで　すすめませんよ</language>
+		<language name="JPN_KANJI" width="256">このさき　チャンピオンロードですが
+ジムバッジが　８こ　そろっていないと▽
+さいごまで　すすめませんよ</language>
+	</row>
+
+	<row id="msg_c08r0601_infomationw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ジムバッジがそろったとき
+・pos起動（GRIDX=1~7GRIDZ=11）
+・メッセージ後、カウンターに隣接し
+　続けてinfomationw_03</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">あっ！　トレーナーさん！
+ちょっと　いいですか？▼</language>
+		<language name="JPN_KANJI" width="256">あっ！　トレーナーさん！
+ちょっと　いいですか？▼</language>
+	</row>
+
+	<row id="msg_c08r0601_infomationw_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ジムバッジがそろったとき
+・直接話しかけたとき</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">さきほど　ＴＶトランシーバーで
+きいた　はなし　なんですけど▽
+７ばんどうろで　あらし　ですって！▼
+しかも　しぜんげんしょう　とは
+ちがうみたいなんです！　ふしぎ！！</language>
+		<language name="JPN_KANJI" width="256">さきほど　ＴＶトランシーバーで
+きいた　話なんですけど▽
+７番道路で　暴風雨　ですって！▼
+しかも　どうやら　自然現象とは
+違うみたいなんです！　不思議！！</language>
+	</row>
+
+	<row id="msg_c08r0601_infomationw_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・r07での伝説ポケモンイベント後</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">７ばんどうろの　あらし　って
+ポケモンが　おこしたそうですね！</language>
+		<language name="JPN_KANJI" width="256">７番道路の　暴風雨って
+ポケモンが　起こしたそうですね！</language>
+	</row>
 
 	<row id="msg_c08r0601_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
