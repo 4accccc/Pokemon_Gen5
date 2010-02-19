@@ -246,6 +246,8 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
     }
   }
 
+  GFL_UI_SetTouchOrKey( work->ktst );
+
   if( work->calcPP != NULL )
   {
     GFL_HEAP_FreeMemory( work->calcPP );
@@ -1346,6 +1348,14 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
     {
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE3] , SBA_PAGE3_OFF );
     }
+    if( work->shortCutCheck[ work->page ] == TRUE )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_ON_PASSIVE );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_OFF_PASSIVE );
+    }
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_OFF );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_OFF );
     if( PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
@@ -1372,6 +1382,15 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
     {
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE3] , SBA_PAGE3_NORMAL );
     }
+    if( work->shortCutCheck[ work->page ] == TRUE )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_ON );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_OFF );
+    }
+
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
     if( PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
