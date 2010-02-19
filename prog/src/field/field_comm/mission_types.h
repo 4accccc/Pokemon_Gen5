@@ -49,10 +49,13 @@ typedef enum{
 
 ///会話タイプ
 typedef enum{
-  TALK_TYPE_NORMAL,    ///<主人公の性別に依存(MAN or WOMANに分岐)
-  TALK_TYPE_MAN,       ///<主人公：男
-  TALK_TYPE_WOMAN,     ///<主人公：女
-  TALK_TYPE_PIKACHU,   ///<ピカチュウ
+  TALK_TYPE_CUTE,         ///<可愛い系のポケモン
+  TALK_TYPE_FRIGHTENING,  ///<怖い系のポケモン
+  TALK_TYPE_RETICENCE,    ///<無口なポケモン
+  TALK_TYPE_MAN,          ///<主人公：男
+  TALK_TYPE_WOMAN,        ///<主人公：女
+  
+  TALK_TYPE_MAX,
 }TALK_TYPE;
 
 //==============================================================================
@@ -69,6 +72,8 @@ typedef struct{
   u16 msg_id_contents_monolith;   ///<ミッション内容モノリスgmmのmsg_id
 
   u16 obj_id[4];      ///<変化OBJ ID
+  u8 obj_sex[4];         ///<変化OBJの性別
+  u8 talk_type[4];       ///<変化OBJの会話タイプ(TALK_TYPE_xxx)
 
   u16 data[3];        ///<データ(ミッション系統毎に扱いが変化)
   u16 time;           ///<時間(秒)

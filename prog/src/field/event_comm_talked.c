@@ -12,6 +12,7 @@
 
 #include "message.naix"
 #include "msg/msg_invasion.h"
+#include "msg/msg_mission_msg.h"
 
 #include "script.h"
 #include "event_fieldtalk.h"

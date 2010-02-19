@@ -24,6 +24,7 @@
 #include "field/field_comm/intrude_message.h"
 #include "msg/msg_invasion.h"
 #include "msg/msg_mission_monolith.h"
+#include "msg/msg_mission_msg.h"
 #include "field/field_comm/intrude_battle.h"
 #include "field/event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "item/itemsym.h"
@@ -102,6 +103,118 @@ const u16 MissionBasicMsgID[] = {
   msg_talk_life_w_000,          //TALK_TYPE_WOMAN
   msg_talk_life_pika_000,       //TALK_TYPE_PIKA
 };
+
+#if 1
+///ミッションBasicのメッセージID ※TALK_TYPE順
+static const struct{
+  u16 target_talked[TALK_TYPE_MAX];         ///<自分がターゲットで話しかけられた
+  u16 target_talk[TALK_TYPE_MAX];           ///<自分がターゲットで話しかけた
+  u16 target_talk_battle[TALK_TYPE_MAX];    ///<自分がターゲットで戦闘状態の相手に話しかけた
+  u16 target_item[TALK_TYPE_MAX];           ///<自分がターゲットでアイテムをもらった
+  u16 target_not_talk[TALK_TYPE_MAX];       ///<自分がターゲットで相手が話しかけられない状態
+  u16 mission_talked[TALK_TYPE_MAX];        ///<自分がミッション実行者で話しかけられた
+  u16 mission_talk[TALK_TYPE_MAX];          ///<自分がミッション実行者で話しかけた
+  u16 mission_talk_battle[TALK_TYPE_MAX];   ///<自分がミッション実行者で戦闘状態の相手に話しかけた
+  u16 mission_talk_challenger[TALK_TYPE_MAX];  ///<自分がミッション実行者で話しかけた相手も実行者
+  u16 mission_item[TALK_TYPE_MAX];          ///<自分がミッション実行者でアイテムをあげた
+  u16 mission_not_talk[TALK_TYPE_MAX];      ///<自分がミッション実行者で相手が話しかけられない状態
+  u16 free_talk_mission[TALK_TYPE_MAX];     ///<自分がフリーで相手がミッション実行者
+  u16 free_talk_target[TALK_TYPE_MAX];      ///<自分がフリーで相手がターゲット
+}MissionBasicMsgID3 = {
+  { //自分がターゲットで話しかけられた
+    mis_m01_01_t1,
+    mis_m01_01_t2,
+    mis_m01_01_t3,
+    mis_m01_01_t4,
+    mis_m01_01_t5,
+  },
+  { //自分がターゲットで話しかけた
+    mis_m01_02_t1,
+    mis_m01_02_t2,
+    mis_m01_02_t3,
+    mis_m01_02_t4,
+    mis_m01_02_t5,
+  },
+  { //自分がターゲットで戦闘状態の相手に話しかけた
+    mis_btl_01_t1,
+    mis_btl_01_t2,
+    mis_btl_01_t3,
+    mis_btl_01_t4,
+    mis_btl_01_t5,
+  },
+  { //自分がターゲットでアイテムをもらった
+    mis_m01_03_t1,
+    mis_m01_03_t2,
+    mis_m01_03_t3,
+    mis_m01_03_t4,
+    mis_m01_03_t5,
+  },
+  { //自分がターゲットで相手が話しかけられない状態
+    mis_std_01_t1,
+    mis_std_01_t2,
+    mis_std_01_t3,
+    mis_std_01_t4,
+    mis_std_01_t5,
+  },
+  { //自分がミッション実行者で話しかけられた
+    mis_m01_01_m1,
+    mis_m01_01_m2,
+    mis_m01_01_m3,
+    mis_m01_01_m4,
+    mis_m01_01_m5,
+  },
+  { //自分がミッション実行者で話しかけた
+    mis_m01_02_m1,
+    mis_m01_02_m2,
+    mis_m01_02_m3,
+    mis_m01_02_m4,
+    mis_m01_02_m5,
+  },
+  { //自分がミッション実行者で戦闘状態の相手に話しかけた
+    mis_btl_01_m1,
+    mis_btl_01_m2,
+    mis_btl_01_m3,
+    mis_btl_01_m4,
+    mis_btl_01_m5,
+  },
+  { //自分がミッション実行者で話しかけた相手も実行者
+    mis_m01_04_m1,
+    mis_m01_04_m2,
+    mis_m01_04_m3,
+    mis_m01_04_m4,
+    mis_m01_04_m5,
+  },
+  { //自分がミッション実行者でアイテムをあげた
+    mis_m01_03_m1,
+    mis_m01_03_m2,
+    mis_m01_03_m3,
+    mis_m01_03_m4,
+    mis_m01_03_m5,
+  },
+  { //自分がミッション実行者で相手が話しかけられない状態
+    mis_std_01_m1,
+    mis_std_01_m2,
+    mis_std_01_m3,
+    mis_std_01_m4,
+    mis_std_01_m5,
+  },
+  { //自分がフリーで相手がミッション実行者  ※check メッセージが存在していない
+    0,
+    0,
+    0,
+    0,
+    0,
+  },
+  { //自分がフリーで相手がターゲット  ※check メッセージが存在していない
+    0,
+    0,
+    0,
+    0,
+    0,
+  },
+};
+#endif
+
 
 
 //======================================================================

@@ -82,7 +82,7 @@ enum{
 #define MISSION_NO_NULL     (0xff)
 
 ///巨大データ受信バッファサイズ
-#define INTRUDE_HUGE_RECEIVE_BUF_SIZE   (600)
+#define INTRUDE_HUGE_RECEIVE_BUF_SIZE   (644)
 
 
 //==============================================================================

@@ -21,6 +21,7 @@
 #include "field_comm/intrude_mission.h"
 #include "field_comm/intrude_message.h"
 #include "msg/msg_invasion.h"
+#include "msg/msg_mission_msg.h"
 
 
 

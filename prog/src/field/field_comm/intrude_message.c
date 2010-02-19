@@ -12,7 +12,7 @@
 #include "field/scrcmd.h"
 #include "intrude_message.h"
 #include "message.naix"
-#include "msg/msg_invasion.h"
+#include "msg/msg_mission_msg.h"
 #include "field/field_comm/intrude_types.h"
 #include "intrude_mission.h"
 
@@ -60,7 +60,7 @@ void IntrudeEventPrint_SetupFieldMsg(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *g
   iem->wordset = WORDSET_Create(INTRUDE_EVENT_HEAPID);
   iem->msgbuf = GFL_STR_CreateBuffer( INTRUDE_EVENT_MSGBUF_SIZE, INTRUDE_EVENT_HEAPID );
   iem->tmpbuf = GFL_STR_CreateBuffer( INTRUDE_EVENT_MSGBUF_SIZE, INTRUDE_EVENT_HEAPID );
-  iem->msgdata = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
+  iem->msgdata = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_msg_dat );
   iem->msgdata_mission = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_dat );
   iem->msgdata_mission_mono = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_monolith_dat );
   iem->msgBG = msgBG;
@@ -148,7 +148,7 @@ static void _StartStream(INTRUDE_EVENT_MSGWORK *iem, STRBUF *strbuf)
 
 //--------------------------------------------------------------
 /**
- * プリントストリーム出力：invasion.gmm用
+ * プリントストリーム出力：mission_msg.gmm用
  *
  * @param   iem		
  * @param   msg_id		

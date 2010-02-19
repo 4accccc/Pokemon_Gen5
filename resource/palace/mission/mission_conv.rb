@@ -36,6 +36,16 @@ class MISSION_DATA
     for i in 0..OBJID_MAX
       @obj_id[i] = "BOY1";      #変化OBJ ID
     end
+
+    @obj_sex = [];
+    for i in 0..OBJID_MAX
+      @obj_sex[i] = "男";       #変化OBJの性別
+    end
+
+    @talk_type = [];
+    for i in 0..OBJID_MAX
+      @talk_type[i] = "可愛い"  #変化OBJの会話タイプ
+    end
     
     @data = [];
     for i in 0..DATA_MAX
@@ -55,7 +65,8 @@ class MISSION_DATA
   end
 
   attr_accessor :mission_no, :type, :level, :odds, :msg_id_contents, :msg_id_contents_monolith;
-  attr_accessor :obj_id, :data, :time, :reward, :confirm_type, :limit_run, :limit_talk;
+  attr_accessor :obj_id, :obj_sex, :talk_type, :data, :time, :reward, :confirm_type;
+  attr_accessor :limit_run, :limit_talk;
 end
 
 
@@ -113,6 +124,10 @@ def CsvConvFileCheck()
     for g in 0..OBJID_MAX-1
       MissionData[s].obj_id[g] = line[cell];
       cell += 1;
+      MissionData[s].obj_sex[g] = line[cell];
+      cell += 1;
+      MissionData[s].talk_type[g] = line[cell];
+      cell += 1;
     end
     
     for g in 0..DATA_MAX-1
@@ -155,6 +170,28 @@ def DataConv()
     for s in 0..OBJID_MAX-1
       if(MissionData[i].obj_id[s] =~ /.*-.*/)
         MissionData[i].obj_id[s] = "0";
+      end
+    end
+
+    for s in 0..OBJID_MAX-1
+      if(MissionData[i].obj_sex[s] =~ /男/)
+        MissionData[i].obj_sex[s] = "0";
+      elsif(MissionData[i].obj_sex[s] =~ /女/)
+        MissionData[i].obj_sex[s] = "1";
+      end
+    end
+
+    for s in 0..OBJID_MAX-1
+      if(MissionData[i].talk_type[s] =~ /可愛い/)
+        MissionData[i].talk_type[s] = "TALK_TYPE_CUTE";
+      elsif(MissionData[i].talk_type[s] =~ /怖い/)
+        MissionData[i].talk_type[s] = "TALK_TYPE_FRIGHTENING";
+      elsif(MissionData[i].talk_type[s] =~ /無口/)
+        MissionData[i].talk_type[s] = "TALK_TYPE_RETICENCE";
+      elsif(MissionData[i].talk_type[s] =~ /人間男/)
+        MissionData[i].talk_type[s] = "TALK_TYPE_MAN";
+      elsif(MissionData[i].talk_type[s] =~ /人間女/)
+        MissionData[i].talk_type[s] = "TALK_TYPE_WOMAN";
       end
     end
     
@@ -216,6 +253,18 @@ def DataFileOutput()
         file.printf("%s,", MissionData[i].obj_id[s]);
       end
       file.printf("},\t\t//obj_id\n");
+
+      file.printf("\t\t{");
+      for s in 0..OBJID_MAX-1
+        file.printf("%s,", MissionData[i].obj_sex[s]);
+      end
+      file.printf("},\t\t//obj_sex\n");
+
+      file.printf("\t\t{");
+      for s in 0..OBJID_MAX-1
+        file.printf("%s,", MissionData[i].talk_type[s]);
+      end
+      file.printf("},\t\t//talk_type\n");
 
       file.printf("\t\t{");
       for s in 0..DATA_MAX-1

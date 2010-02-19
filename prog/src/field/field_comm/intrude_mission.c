@@ -12,6 +12,7 @@
 #include "intrude_mission.h"
 #include "intrude_comm_command.h"
 #include "msg/msg_invasion.h"
+#include "msg/msg_mission_msg.h"
 #include "intrude_main.h"
 #include "intrude_work.h"
 #include "print/wordset.h"
