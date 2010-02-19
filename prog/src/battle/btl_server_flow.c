@@ -308,6 +308,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
 static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
 static BOOL CalcBallEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID,
     u8* yure_cnt, u8* fCritical );
+static fx32 GetKusamuraCaptureRatio( BTL_SVFLOW_WORK* wk );
 static fx32 CalcBallCaptureRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID );
 static BOOL CheckCaptureCritical( BTL_SVFLOW_WORK* wk, fx32 capture_value );
 static u8 ItemEff_SleepRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
@@ -2661,7 +2662,12 @@ static BOOL CalcBallEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, co
 
 //    OS_TPrintf("捕獲値：初期 %08x(%d) ..MaxHPx3=%d, HPVal=%d\n", capture_value, capture_value>>FX32_SHIFT, hp_base, hp_value );
 
-    //@todo 草むら補正が必要
+    // 草むらＢ補正
+    if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_HIGH_LV_ENC) )
+    {
+      fx32 kusa_ratio = GetKusamuraCaptureRatio( wk );
+      capture_value = FX_Mul( capture_value, kusa_ratio );
+    }
 
     // 種族ごとの捕獲値計算
     {
@@ -2735,6 +2741,32 @@ static BOOL CalcBallEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, co
       return TRUE;
     }
   }
+}
+/**
+ *  草むら補正率を取得
+ */
+static fx32 GetKusamuraCaptureRatio( BTL_SVFLOW_WORK* wk )
+{
+  u32 capturedPokeCnt = BTL_MAIN_GetZukanCapturedCount( wk->mainModule );
+
+  if( capturedPokeCnt > 600 ){
+    return FX32_CONST(1);
+  }
+  if( capturedPokeCnt > 450 ){
+    return FX32_CONST(0.9f);
+  }
+  if( capturedPokeCnt > 300 ){
+    return FX32_CONST(0.8f);
+  }
+  if( capturedPokeCnt > 150 ){
+    return FX32_CONST(0.7f);
+  }
+  if( capturedPokeCnt > 30 ){
+    return FX32_CONST(0.5f);
+  }
+
+  return FX32_CONST(0.3f);
+
 }
 /**
  *  ボールによる捕獲率計算
