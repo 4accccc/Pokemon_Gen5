@@ -3867,7 +3867,8 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
 //---------------------------------------------------------------------------------------
 /**
  *  モンスターボール投げつけ
- *  args .. [0]:対象ポケ位置  [1]:ゆれ回数  [2]:捕獲成功フラグ [3]: 図鑑登録フラグ [4]:ボールのアイテムナンバー
+ *  args .. [0]:対象ポケ位置  [1]:ゆれ回数  [2]:捕獲成功フラグ [3]: 図鑑登録フラグ [4]:クリティカルフラグ
+ *           [5]:ボールのアイテムナンバー
  */
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
@@ -3876,7 +3877,7 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
-      BTLV_EFFECT_BallThrow( vpos, args[4], args[1], args[2] );
+      BTLV_EFFECT_BallThrow( vpos, args[5], args[1], args[2] );
       (*seq)++;
     }
     break;

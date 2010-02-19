@@ -461,9 +461,10 @@ static inline void SCQUE_PUT_ACT_AddExp( BTL_SERVER_CMD_QUE* que, u8 pokeID, u32
 {
   SCQUE_PUT_Common( que, SC_ACT_EXP, pokeID, exp );
 }
-static inline void SCQUE_PUT_ACT_BallThrow( BTL_SERVER_CMD_QUE* que, BtlPokePos pos, u8 yureCnt, u8 fSuccess, u8 fZukanRegister, u16 ballItemID )
+static inline void SCQUE_PUT_ACT_BallThrow( BTL_SERVER_CMD_QUE* que, BtlPokePos pos, u8 yureCnt,
+    u8 fSuccess, u8 fZukanRegister, u8 fCritical, u16 ballItemID )
 {
-  SCQUE_PUT_Common( que, SC_ACT_BALL_THROW, pos, yureCnt, fSuccess, fZukanRegister, ballItemID );
+  SCQUE_PUT_Common( que, SC_ACT_BALL_THROW, pos, yureCnt, fSuccess, fZukanRegister, fCritical, ballItemID );
 }
 static inline void SCQUE_PUT_ACT_Rotation( BTL_SERVER_CMD_QUE* que, u8 clientID, BtlRotateDir dir )
 {

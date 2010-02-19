@@ -297,6 +297,10 @@ static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_MemberOut( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx );
 static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
+static BOOL CalcBallEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID,
+    u8* yure_cnt, u8* fCritical );
+static fx32 CalcBallCaptureRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID );
+static BOOL CheckCaptureCritical( BTL_SVFLOW_WORK* wk, fx32 capture_value );
 static u8 ItemEff_SleepRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_PoisonRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_YakedoRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
@@ -2599,20 +2603,9 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
 
     if( targetPos != BTL_POS_NULL )
     {
-      u8 yure_cnt, fSuccess, fZukanRegister;
+      u8 yure_cnt, fSuccess, fCritical, fZukanRegister;
 
-      // @todo ここで捕獲成否チェック＆失敗なら揺れ数を計算する。今は適当。
-      if( itemID == ITEM_MASUTAABOORU ){
-        yure_cnt = 3;
-        fSuccess = TRUE;
-      }else{
-        fSuccess = BTL_CALC_GetRand(100) < 75;
-        if( fSuccess ){
-          yure_cnt = 3;
-        }else{
-          yure_cnt = BTL_CALC_GetRand( 4 );
-        }
-      }
+      fSuccess = CalcBallEffect( wk, bpp, targetPoke, itemID, &yure_cnt, &fCritical );
 
       if( fSuccess ){
         wk->flowResult = SVFLOW_RESULT_POKE_GET;
@@ -2623,10 +2616,237 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
         fZukanRegister = FALSE;
       }
 
-      SCQUE_PUT_ACT_BallThrow( wk->que, targetPos, yure_cnt, fSuccess, fZukanRegister, itemID );
+      SCQUE_PUT_ACT_BallThrow( wk->que, targetPos, yure_cnt, fSuccess, fZukanRegister, fCritical, itemID );
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * ボール投げ効果計算
+ *
+ * @param   wk
+ * @param   myPoke
+ * @param   targetPoke
+ * @param   ballID
+ * @param   yure_cnt    [out] 揺れ演出の発生回数
+ * @param   fCritical   [out] クリティカルフラグ
+ *
+ * @retval  BOOL    捕獲できる場合はTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL CalcBallEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke,u16 ballID,
+    u8* yure_cnt, u8* fCritical )
+{
+  *fCritical = FALSE;
+
+  if( ballID == ITEM_MASUTAABOORU ){
+    *yure_cnt = BTL_CAPTURE_BALL_YURE_CNT_MAX;
+    return TRUE;
+  }
+  else
+  {
+    u32 hp_base = BPP_GetValue( targetPoke, BPP_MAX_HP ) * 3;
+    u32 hp_value = ( hp_base - BPP_GetValue(targetPoke, BPP_HP) * 2 );
+    fx32 capture_value = FX32_CONST( hp_value );
+
+//    OS_TPrintf("捕獲値：初期 %08x(%d) ..MaxHPx3=%d, HPVal=%d\n", capture_value, capture_value>>FX32_SHIFT, hp_base, hp_value );
+
+    //@todo 草むら補正が必要
+
+    // 種族ごとの捕獲値計算
+    {
+      u16 mons_no = BPP_GetMonsNo( targetPoke );
+      u16 form_no = BPP_GetValue( targetPoke, BPP_FORM );
+      u16 ratio = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_get_rate );
+      capture_value *= ratio;
+//      OS_TPrintf("捕獲値：種族補正 %08x(%d) ..（monsno=%d, ratio=%d)\n",
+//          capture_value, capture_value>>FX32_SHIFT, mons_no, ratio);
+    }
+
+    // ボールによる捕獲率補正
+    {
+      fx32 ball_ratio = CalcBallCaptureRatio( wk, myPoke, targetPoke, ballID );
+      capture_value = FX_Mul( capture_value, ball_ratio );
+
+//      OS_TPrintf("捕獲値：ボール補正 %08x(%d) ..（BallID=%d, ratio=%08x)\n",
+//          capture_value, capture_value>>FX32_SHIFT, ballID, ball_ratio);
+    }
+
+    capture_value /= hp_base;
+//    OS_TPrintf("捕獲値：基本 %08x(%d) .. (MaxHPx3 = %d)\n",
+//          capture_value, capture_value>>FX32_SHIFT, hp_base);
+
+
+    // 状態異常による補正
+    switch( BPP_GetPokeSick(targetPoke) ){
+    case POKESICK_NEMURI:
+    case POKESICK_KOORI:
+      capture_value = FX_Mul( capture_value, FX32_CONST(2.5) );
+      break;
+    case POKESICK_DOKU:
+    case POKESICK_MAHI:
+    case POKESICK_YAKEDO:
+      capture_value = FX_Mul( capture_value, FX32_CONST(1.5) );
+      break;
+    }
+  //  OS_TPrintf("捕獲値：最終 %08x(%d)\n",
+//          capture_value, capture_value>>FX32_SHIFT);
+
+
+    *fCritical = CheckCaptureCritical( wk, capture_value );
+
+    if( capture_value >= FX32_CONST(255) ){
+      *yure_cnt = (*fCritical)? 1 : BTL_CAPTURE_BALL_YURE_CNT_MAX;
+      return TRUE;
+    }
+    else
+    {
+      s32 check_value;
+      u32 check_count, captured_count, i;
+
+      check_count = (*fCritical)? 1 : BTL_CAPTURE_BALL_YURE_CNT_MAX;
+
+      capture_value = FX_Div( FX32_CONST(255), capture_value );
+      capture_value = FX_Sqrt( capture_value );
+      capture_value = FX_Sqrt( capture_value );
+
+      capture_value = FX_Div( FX32_CONST(65536), capture_value );
+      check_value = FX_Whole( capture_value );
+//      OS_TPrintf("CheckValue=%08x(%d)\n", capture_value, check_value);
+      *yure_cnt = 0;
+      for(i=0; i<check_count; ++i)
+      {
+        if( BTL_CALC_GetRand(65536) < check_value ){
+          ++(*yure_cnt);
+        }else{
+          return FALSE;
+        }
+      }
+      return TRUE;
+    }
+  }
+}
+/**
+ *  ボールによる捕獲率計算
+ */
+static fx32 CalcBallCaptureRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID )
+{
+  switch( ballID ){
+  case ITEM_SUUPAABOORU:  return FX32_CONST(1.5f);
+  case ITEM_HAIPAABOORU:  return FX32_CONST(2.0f);
+
+  case ITEM_NETTOBOORU: // ネットボール
+    if( BPP_IsMatchType(targetPoke, POKETYPE_MIZU) || BPP_IsMatchType(targetPoke, POKETYPE_MUSHI) ){
+      return FX32_CONST(3);
+    }
+    break;
+
+  case ITEM_DAIBUBOORU: // ネットボール
+    if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_FISHING) ){
+      return FX32_CONST(3.5f);
+    }
+    {
+      const BTL_FIELD_SITUATION* fldSit = BTL_MAIN_GetFieldSituation( wk->mainModule );
+      if( fldSit->bgAttr == BATTLE_BG_ATTR_WATER ){
+        return FX32_CONST(3.5f);
+      }
+    }
+    break;
+
+  case ITEM_NESUTOBOORU: // ネストボール
+    {
+      u16 targetLevel = BPP_GetValue( targetPoke, BPP_LEVEL );
+
+      if( targetLevel < 30 )
+      {
+        u16 levelDiff = 41 - targetLevel;
+        if( levelDiff > 40 ){
+          levelDiff = 40;
+        }
+        return FX32_CONST(levelDiff) / 10;
+      }
+    }
+    break;
+
+  case ITEM_RIPIITOBOORU: // リピートボール
+    if( BTL_MAIN_IsZukanRegistered(wk->mainModule, targetPoke) ){
+      return FX32_CONST(3);
+    }
+    break;
+
+  case ITEM_TAIMAABOORU:  // タイマーボール
+    {
+      fx32 ratio = FX32_CONST(1) + FX32_CONST(0.3f) * wk->turnCount;
+      if( ratio > FX32_CONST(4) ){
+        ratio = FX32_CONST(4);
+      }
+      return ratio;
+    }
+    break;
+
+  case ITEM_DAAKUBOORU:  // ダークボール
+    {
+      const BTL_FIELD_SITUATION* fldSit = BTL_MAIN_GetFieldSituation( wk->mainModule );
+      if( (fldSit->bgType == BATTLE_BG_TYPE_CAVE) || (fldSit->bgType == BATTLE_BG_TYPE_CAVE_DARK) ){
+        return FX32_CONST(3.5);
+      }
+      // @ todo 時間帯による暗さも対象か？
+//      if( (fldSit->bgType != BATTLE_BG_TYPE_ROOM) ||
+    }
+    break;
+
+  case ITEM_KUIKKUBOORU:  // クイックボール
+    if( wk->turnCount == 0 )
+    {
+      return FX32_CONST(5);
+    }
+    break;
+
+  }
+  return FX32_CONST(1);
+}
+//----------------------------------------------------------------------------------
+/**
+ * 捕獲クリティカル発生チェック
+ *
+ * @param   wk
+ * @param   capture_value   計算後の捕獲変数（固定小数 0～255）
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL CheckCaptureCritical( BTL_SVFLOW_WORK* wk, fx32 capture_value )
+{
+  u32 capturedPokeCnt = BTL_MAIN_GetZukanCapturedCount( wk->mainModule );
+
+  fx32 ratio = 0;
+
+  if( capturedPokeCnt > 600 ){
+    ratio = FX32_CONST(2.5);
+  }else if(  capturedPokeCnt > 450 ){
+    ratio = FX32_CONST(2.0f);
+  }else if(  capturedPokeCnt > 300 ){
+    ratio = FX32_CONST(1.5f);
+  }else if(  capturedPokeCnt > 150 ){
+    ratio = FX32_CONST(1.0f);
+  }else if(  capturedPokeCnt > 30 ){
+    ratio = FX32_CONST(0.5f);
+  }else{
+    return FALSE;
+  }
+
+  if( capture_value > FX32_CONST(255) ){
+    capture_value = FX32_CONST(255);
+  }
+  capture_value = FX_Mul( capture_value, ratio ) / 6;
+  if( BTL_CALC_GetRand(256) < FX_Whole(capture_value) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 
 // アイテム効果：ねむり回復
 static u8 ItemEff_SleepRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )

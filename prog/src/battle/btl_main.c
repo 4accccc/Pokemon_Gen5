@@ -1833,6 +1833,19 @@ BOOL BTL_MAIN_IsZukanRegistered( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM*
   u16 monsno = BPP_GetMonsNo( bpp );
   return ZUKANSAVE_GetPokeGetFlag( wk->setupParam->zukanData, monsno );
 }
+//=============================================================================================
+/**
+ * }ŠÓ“o˜^i•ßŠlj‚³‚ê‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“”‚ð•Ô‚·
+ *
+ * @param   wk
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_MAIN_GetZukanCapturedCount( const BTL_MAIN_MODULE* wk )
+{
+  return ZUKANSAVE_GetPokeGetCount( wk->setupParam->zukanData );
+}
 
 //=============================================================================================
 /**

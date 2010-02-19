@@ -35,6 +35,7 @@ enum {
   BTL_TURNCOUNT_MAX = 9999, ///< カウントするターン数の最大
   BTL_SHOOTER_ENERGY_MAX = 14,  ///< シューターの蓄積エネルギー最大値
   BTL_ROTATE_NUM = 3,       ///< ローテーション対象ポケ数
+  BTL_CAPTURE_BALL_YURE_CNT_MAX = 3,  ///< 捕獲時にボールが揺れる最大回数
 
   BTL_CLIENTID_NULL = BTL_CLIENT_MAX,
   BTL_CLIENTID_COMM_SUPPORT = BTL_CLIENTID_NULL,
