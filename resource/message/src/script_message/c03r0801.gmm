@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-10T19:46:24"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-02-18T19:59:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,22 +462,38 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・長い話前</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">ながい　はなし　です
-……　……　というわけで[BE:00:ページ切り替え（行送り）]
-……　……　なんだ！[BE:00:ページ切り替え（行送り）]
-それでさ　……　……　なんだって[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">長い　話です
-……　……　というわけで[BE:00:ページ切り替え（行送り）]
-……　……　なんだ！[BE:00:ページ切り替え（行送り）]
-それでさ　……　……　なんだって！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">やあやあ！　よくきたね
+はなし　あいてが　ほしかったんだ！[BE:00:ページ切り替え（行送り）]
+きいてくれよ　ぼくの　はなしをさ[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なんだけどさ[BE:01:ページ切り替え（クリア）]
+それがね　……　……　……
+……　……　……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なんだよね！</language>
+		<language name="JPN_KANJI" width="256">やあやあ！　良く来たね
+話し相手が　ほしかったんだ！[BE:00:ページ切り替え（行送り）]
+聞いてくれよ　ぼくの　話をさ[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なんだけどさ[BE:01:ページ切り替え（クリア）]
+それがね　……　……　……
+……　……　……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なんだよね！</language>
 	</row>
 
 	<row id="msg_c03r0801_businessman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>お客さん
 ・長い話後</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">……とても　じかんが　たってしまった</language>
-		<language name="JPN_KANJI" width="256">……とても　時間が　経ってしまった</language>
+		<language name="JPN" width="256">あぁ！　きてきが　なってる！
+ごめんよ　ひきとめちゃって……[BE:01:ページ切り替え（クリア）]
+でも　はなしが　できて
+おもしろかったよ　ありがとう！</language>
+		<language name="JPN_KANJI" width="256">あぁ！　汽笛が　鳴ってる！
+ごめんよ　引き止めちゃって……[BE:01:ページ切り替え（クリア）]
+でも　話しが　できて
+面白かったよ　ありがとう！</language>
 	</row>
 
 	<row id="msg_c03r0801_businessman_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -485,7 +501,7 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
 		<language name="JPN" width="256">しごとの　あいまの　ひとしょうぶ
 もちろん　やって　くれるよね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">しごとの　あいまの　ひとしょうぶ
+		<language name="JPN_KANJI" width="256">仕事の　合間の　一勝負
 もちろん　やって　くれるよね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -494,8 +510,8 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
 		<language name="JPN" width="256">しごとの　あいまに
 いい　しょうぶが　できたよ</language>
-		<language name="JPN_KANJI" width="256">しごとの　あいまに
-いい　しょうぶが　できたよ</language>
+		<language name="JPN_KANJI" width="256">仕事の　合間に
+いい　勝負が　できたよ</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -638,26 +654,22 @@ msg_c03r0801_hint_02</comment>
 わたしの　はなしを　きいてくれる？[BE:01:ページ切り替え（クリア）]
 このまえ　ライモンシティに
 いったのね　わたし！[BE:01:ページ切り替え（クリア）]
-そこで　なんと！
-きになる？　きになるよね！[BE:01:ページ切り替え（クリア）]
-あの　ゆうめいな　スポーツせんしゅ
-ウッディに　あったの　ウッディよ！[BE:01:ページ切り替え（クリア）]
-かれの　ボールを　うつ
-あの　フォームが　すごく　みりょくてきで[BE:01:ページ切り替え（クリア）]
-テレビで　かれを　みるたびに　ためいきで
-がめんが　しろく　なっちゃうの！</language>
+……　……　……　……　……
+……　……　……　そうなんだ[BE:01:ページ切り替え（クリア）]
+それで　……　……　……
+……　……　……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なんです！</language>
 		<language name="JPN_KANJI" width="256">ねえねえ！
-わたしの　はなしを　きいてくれる？[BE:01:ページ切り替え（クリア）]
-このまえ　ライモンシティに
-いったのね　わたし！[BE:01:ページ切り替え（クリア）]
-そこで　なんと！
-きになる？　きになるよね！[BE:01:ページ切り替え（クリア）]
-あの　ゆうめいな　スポーツせんしゅ
-ウッディに　あったの　ウッディよ！[BE:01:ページ切り替え（クリア）]
-かれの　ボールを　うつ
-あの　フォームが　すごく　みりょくてきで[BE:01:ページ切り替え（クリア）]
-テレビで　かれを　みるたびに　ためいきで
-がめんが　しろく　なっちゃうの！</language>
+私の　話しを　聞いてくれる？[BE:01:ページ切り替え（クリア）]
+この前　ライモンシティに
+行ったのね　私！[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　そうなんだ[BE:01:ページ切り替え（クリア）]
+それで　……　……　……
+……　……　……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なんです！</language>
 	</row>
 
 	<row id="msg_c03r0801_girl2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -666,10 +678,12 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">あ！　きてき！[BE:01:ページ切り替え（クリア）]
 ごめんね　わたしの　はなしに
-つきあわせちゃって</language>
-		<language name="JPN_KANJI" width="256">あ！　きてき！[BE:01:ページ切り替え（クリア）]
-ごめんね　わたしの　はなしに
-つきあわせちゃって</language>
+つきあわせちゃって……[BE:00:ページ切り替え（行送り）]
+でも　たのしかった　ありがと！</language>
+		<language name="JPN_KANJI" width="256">あ！　汽笛！[BE:01:ページ切り替え（クリア）]
+ごめんね　私の　話しに
+付き合わせちゃって……[BE:00:ページ切り替え（行送り）]
+でも　楽しかった　ありがと！</language>
 	</row>
 
 	<row id="msg_c03r0801_girl2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -678,9 +692,9 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">わたし　そとのうみ　から
 やってきた　トレーナーなの！[BE:00:ページ切り替え（行送り）]
 めずらしい　ポケモン　みせてあげる！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">わたし　そとのうみ　から
+		<language name="JPN_KANJI" width="256">わたし　外の海から
 やってきた　トレーナーなの！[BE:00:ページ切り替え（行送り）]
-めずらしい　ポケモン　みせてあげる！[BE:01:ページ切り替え（クリア）]</language>
+珍しい　ポケモン　みせてあげる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0801_girl2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -688,7 +702,7 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">めずらしかった？
 わたしの　ポケモン！</language>
-		<language name="JPN_KANJI" width="256">めずらしかった？
+		<language name="JPN_KANJI" width="256">珍しかった？
 わたしの　ポケモン！</language>
 	</row>
 
@@ -800,22 +814,36 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・長い話前</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
-		<language name="JPN" width="256">ながい　はなし　です
-……　……　というわけで[BE:00:ページ切り替え（行送り）]
-……　……　なんだ！[BE:00:ページ切り替え（行送り）]
-それでさ　……　……　なんだって[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">長い　話です
-……　……　というわけで[BE:00:ページ切り替え（行送り）]
-……　……　なんだ！[BE:00:ページ切り替え（行送り）]
-それでさ　……　……　なんだって！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">おー　かわいい　おきゃくさんだ
+ちょっと　おちゃでも　のんでいくか？[BE:00:ページ切り替え（行送り）]
+ささっ　そこに　すわって！[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なのだが[BE:01:ページ切り替え（クリア）]
+それが　……　……　……
+……　……　……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なんですよ</language>
+		<language name="JPN_KANJI" width="256">おー　かわいい　お客さんだ
+ちょっと　お茶でも　飲んでいくか？[BE:00:ページ切り替え（行送り）]
+ささっ　そこに　座って！[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なのだが[BE:01:ページ切り替え（クリア）]
+それが　……　……　……
+……　……　……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なんですよ</language>
 	</row>
 
 	<row id="msg_c03r0801_gentleman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>お客さん
 ・長い話後</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
-		<language name="JPN" width="256">……とても　じかんが　たってしまった</language>
-		<language name="JPN_KANJI" width="256">……とても　時間が　経ってしまった</language>
+		<language name="JPN" width="256">すまん　すまん
+ついつい　はなしこんで　しまった[BE:00:ページ切り替え（行送り）]
+たのしかったよ　ありがとう！</language>
+		<language name="JPN_KANJI" width="256">すまん　すまん
+ついつい　話しこんで　しまった[BE:00:ページ切り替え（行送り）]
+楽しかったよ　ありがとう！</language>
 	</row>
 
 	<row id="msg_c03r0801_gentleman_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -824,8 +852,8 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">せんしつで　くつろぐのも　いいが
 ポケモンしょうぶで　たのしむのは[BE:00:ページ切り替え（行送り）]
 もっと　よいですな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">せんしつで　くつろぐのも　いいが
-ポケモンしょうぶで　たのしむのは[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">船室で　くつろぐのも　いいが
+ポケモン勝負で　楽しむのは[BE:00:ページ切り替え（行送り）]
 もっと　よいですな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -834,8 +862,8 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">にて　さんて　うえをいく
 あなたに　わたしは　かんぱいです</language>
-		<language name="JPN_KANJI" width="256">にて　さんて　うえをいく
-あなたに　わたしは　かんぱいです</language>
+		<language name="JPN_KANJI" width="256">二手　三手　上を行く
+あなたに　わたしは　完敗です</language>
 	</row>
 
 	<row id="msg_c03r0801_lady_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -850,22 +878,34 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・長い話前</comment>
 		<attribute name="キャラ指定">LADY</attribute>
-		<language name="JPN" width="256">ながい　はなし　です
-……　……　というわけで[BE:00:ページ切り替え（行送り）]
-……　……　なんだ！[BE:00:ページ切り替え（行送り）]
-それでさ　……　……　なんだって[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">長い　話です
-……　……　というわけで[BE:00:ページ切り替え（行送り）]
-……　……　なんだ！[BE:00:ページ切り替え（行送り）]
-それでさ　……　……　なんだって！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">あらあら　まぁまぁ！
+かわいい　おきゃくさん　ですこと
+……　……　……　……　……
+……　……　……　ですわ！[BE:01:ページ切り替え（クリア）]
+それで　……　……　……
+……　……　……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　というわけなの</language>
+		<language name="JPN_KANJI" width="256">あらあら　まぁまぁ！
+かわいい　お客さん　ですこと
+……　……　……　……　……
+……　……　……　ですわ！[BE:01:ページ切り替え（クリア）]
+それで　……　……　……
+……　……　……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　というわけなの</language>
 	</row>
 
 	<row id="msg_c03r0801_lady_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>お客さん
 ・長い話後</comment>
 		<attribute name="キャラ指定">LADY</attribute>
-		<language name="JPN" width="256">……とても　じかんが　たってしまった</language>
-		<language name="JPN_KANJI" width="256">……とても　時間が　経ってしまった</language>
+		<language name="JPN" width="256">あらやだ！　きてきのおと！
+ごめんなさいね[BE:00:ページ切り替え（行送り）]
+ついつい　はなしこんじゃった！</language>
+		<language name="JPN_KANJI" width="256">あらやだ！　汽笛の音！
+ごめんなさいね[BE:00:ページ切り替え（行送り）]
+ついつい　話しこんじゃった！</language>
 	</row>
 
 	<row id="msg_c03r0801_lady_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -900,22 +940,38 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・長い話前</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
-		<language name="JPN" width="256">ながい　はなし　です
-……　……　というわけで[BE:00:ページ切り替え（行送り）]
-……　……　なんだ！[BE:00:ページ切り替え（行送り）]
-それでさ　……　……　なんだって[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">長い　話です
-……　……　というわけで[BE:00:ページ切り替え（行送り）]
-……　……　なんだ！[BE:00:ページ切り替え（行送り）]
-それでさ　……　……　なんだって！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きみ！　おじさんに　はなしかけたのかい
+ちょうど　よかった！[BE:01:ページ切り替え（クリア）]
+すごく　おもしろい　はなしが　あってね
+ぜひ　だれかに　きいてもらいたかった[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なのだ[BE:01:ページ切り替え（クリア）]
+それでね　……　……　……
+……　……　……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　というわけさ</language>
+		<language name="JPN_KANJI" width="256">きみ！　おじさんに　話しかけたのかい
+ちょうど　よかった！[BE:01:ページ切り替え（クリア）]
+すごく　面白い　話しが　あってね
+ぜひ　だれかに　聞いてもらいたかった[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　なのだ[BE:01:ページ切り替え（クリア）]
+それでね　……　……　……
+……　……　……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……　……　……
+……　……　……　というわけさ</language>
 	</row>
 
 	<row id="msg_c03r0801_man3_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>お客さん
 ・長い話後</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
-		<language name="JPN" width="256">……とても　じかんが　たってしまった</language>
-		<language name="JPN_KANJI" width="256">……とても　時間が　経ってしまった</language>
+		<language name="JPN" width="256">……こんなに　しゃべってしまったか
+ごめんごめん　でも[BE:00:ページ切り替え（行送り）]
+すごく　たのしかった　ありがとう！</language>
+		<language name="JPN_KANJI" width="256">……こんなに　しゃべってしまったか
+ごめんごめん　でも[BE:00:ページ切り替え（行送り）]
+すごく　楽しかった　ありがとう！</language>
 	</row>
 
 	<row id="msg_c03r0801_maid_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
