@@ -1676,7 +1676,7 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     SEQ_WAIT_MSG,
   };
 
-  WIFIBATTLEMATCH_RND_WORK	      *p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
 
   switch( *p_seq )
@@ -1847,7 +1847,6 @@ static void WbmRndSeq_DisConnectEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_WAIT_DISCONNECT,
     SEQ_END,
   };
-
   WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
 
@@ -1868,7 +1867,7 @@ static void WbmRndSeq_DisConnectEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_WAIT_DISCONNECT:
-    if( !GFL_NET_IsInit( ) )
+    if( GFL_NET_IsExit( ) )
     { 
       *p_seq  = SEQ_END;
     }

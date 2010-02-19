@@ -522,7 +522,13 @@ void WIFIBATTLEMATCH_NET_Main( WIFIBATTLEMATCH_NET_WORK *p_wk )
 //-----------------------------------------------------------------------------
 BOOL WIFIBATTLEMATCH_NET_CheckError( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
-  return GFL_NET_DWC_ERROR_ReqErrorDisp();
+  //下記関数はdev_wifilibのオーバーレイにあるので、GFL_NETが解放されるとよばれなくなる
+  if( GFL_NET_IsInit() )
+  { 
+    return GFL_NET_DWC_ERROR_ReqErrorDisp();
+  }
+
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
