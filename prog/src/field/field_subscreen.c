@@ -37,6 +37,7 @@
  *          ’è”éŒ¾
 */
 //-----------------------------------------------------------------------------
+FS_EXTERN_OVERLAY(soundview);
 
 #define FLD_SUBSCR_FADE_DIV (1)
 #define FLD_SUBSCR_FADE_SYNC (1)
@@ -1111,7 +1112,7 @@ static void init_soundviewer_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSC
     PMSND_CheckOnReverb,
     GFL_SNDVIEWER_CONTROL_ENABLE | GFL_SNDVIEWER_CONTROL_EXIT,
   };
-
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(soundview));
   pWork->gflSndViewer = GFL_SNDVIEWER_Create( &sndStatusData, pWork->heapID );
 
 }
@@ -1129,6 +1130,7 @@ static void exit_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 { 
   GFL_SNDVIEWER_Delete( pWork->gflSndViewer );
   pWork->gflSndViewer = NULL;
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(soundview));
 }
 
 

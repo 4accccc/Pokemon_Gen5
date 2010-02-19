@@ -52,7 +52,6 @@
 #include "msg/msg_wifi_lobby.h"
 #include "msg/msg_wifi_system.h"
 
-#include "field/fldmmdl_pl_code.h" //クリーチャー
 #include "sound/pm_sndsys.h"  //SOUND関連
 
 
@@ -2169,15 +2168,6 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
   WIFI_STATUS_SetSex(wk->pMatch, MyStatus_GetMySex(pMyStatus));
   WIFI_STATUS_SetTrainerView(wk->pMatch,MyStatus_GetTrainerView(pMyStatus));
 
-#if PM_DEBUG
-  if(MyStatus_GetMySex(pMyStatus) == PM_MALE){
-    WIFI_STATUS_SetTrainerView(wk->pMatch,PLBOY1);
-  }
-  else{
-    WIFI_STATUS_SetTrainerView(wk->pMatch,PLGORGGEOUSW);
-  }
-#endif
-
   _myStatusChange_not_send(wk, status, gamemode); // BGM状態などを調整
   WIFI_STATUS_SetMyNation(wk->pMatch, MyStatus_GetMyNation(pMyStatus));
   WIFI_STATUS_SetMyArea(wk->pMatch, MyStatus_GetMyArea(pMyStatus));
@@ -3259,10 +3249,8 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
         status = _WifiMyStatusGet( wk, WifiFriendMatchStatusGet( n ) );
         gamemode = _WifiMyGameModeGet( wk, WifiFriendMatchStatusGet( n ) );
         wk->friendNo = n + 1;
-
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALLGAME_INIT);
         return seq;
-
       }
     }
   }

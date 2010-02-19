@@ -29,6 +29,8 @@ static int _playerDirectInit1( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT2);
   }
   else{
+    _friendNameExpand(wk,  wk->friendNo - 1);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1018, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   }
   return seq;

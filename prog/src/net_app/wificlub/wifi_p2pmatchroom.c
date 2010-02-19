@@ -15,14 +15,11 @@
 
 #include "wifi_p2pmatch_se.h"
 
-//#include "system/snd_tool.h"  //sndTOOL
 
 #include "wifip2pmatch.naix"			// グラフィックアーカイブ定義
 
-//#include "include/system/pm_debug_wifi.h"
 
 #include "net_app/wificlub/wifi_p2pmatch_def.h"
-#include "src/field/fldmmdl_pl_code.h"
 
 #include "wifi_p2pmatchroom.h"
 #include "system/gfl_use.h"

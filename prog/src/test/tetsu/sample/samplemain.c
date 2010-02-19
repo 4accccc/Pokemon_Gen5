@@ -32,6 +32,7 @@ BOOL	SampleMain( void );
  */
 //------------------------------------------------------------------
 FS_EXTERN_OVERLAY(fieldmap);
+FS_EXTERN_OVERLAY(soundview);
 
 //============================================================================================
 //
@@ -237,6 +238,7 @@ SAMPLE_WORK* sampleWork;
 //------------------------------------------------------------------
 void	SampleBoot( HEAPID heapID )
 {
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(soundview));
 	sampleWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(SAMPLE_WORK) );
 	sampleWork->heapID = heapID;
 
@@ -250,6 +252,7 @@ void	SampleEnd( void )
 	GFL_SKB_DeleteSjisCodeBuffer( sampleWork->skbStrBuf );
 
 	GFL_HEAP_FreeMemory( sampleWork );
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(soundview));
 }
 
 //------------------------------------------------------------------

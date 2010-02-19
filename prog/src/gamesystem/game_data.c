@@ -1417,9 +1417,15 @@ SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata)
   //ビーコンのスキャンを即時停止
   WIH_DWC_Stop();
 
+  //リセット禁止
+  GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_SVLD);
+
   //セーブ実行
   sr = SaveControl_Save(gamedata->sv_control_ptr);
 
+  //リセット許可
+  GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);
+  
   //ビーコンのスキャンを再開
   WIH_DWC_Restart();
 
@@ -1445,6 +1451,9 @@ void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata)
 
   //セーブ中フラグON
   gamedata->is_save = TRUE;
+
+  //リセット禁止
+  GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_SVLD);
   
   //セーブ開始
   SaveControl_SaveAsyncInit(gamedata->sv_control_ptr);
@@ -1471,6 +1480,9 @@ SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata)
   sr = SaveControl_SaveAsyncMain(gamedata->sv_control_ptr);
 
   if(sr==SAVE_RESULT_OK){
+
+    //リセット許可
+    GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);
     //ビーコンのスキャンを再開
     WIH_DWC_Restart();
     //セーブ中フラグOFF

@@ -46,6 +46,7 @@
  *
  */
 //============================================================================================
+FS_EXTERN_OVERLAY(soundview);
 //------------------------------------------------------------------
 /**
  * @brief ƒf[ƒ^‚h‚m‚c‚d‚w
@@ -454,6 +455,7 @@ static void SoundWorkInitialize(SOUNDTEST_WORK* sw)
   int i;
 
   //sw->skbStrBuf = GFL_SKB_CreateSjisCodeBuffer(sw->heapID);
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(soundview));
   sw->seq = 0;
 
   sw->bgmPauseSw = FALSE;
@@ -512,6 +514,7 @@ static void SoundWorkFinalize(SOUNDTEST_WORK* sw)
     PMVOICE_PlayerHeapRelease();
   }
 	StopExBGM(sw);
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(soundview));
 }
 
 //------------------------------------------------------------------

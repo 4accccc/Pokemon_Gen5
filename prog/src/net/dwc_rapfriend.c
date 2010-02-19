@@ -186,6 +186,7 @@ void GFL_NET_DWC_FriendDataWrite(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFri
   WIFI_LIST* pList = GAMEDATA_GetWiFiList(pGameData);
   DWCFriendData *keyList  = WifiList_GetDwcDataPtr(pList, addListIndex);
   STRBUF* pBuf;
+  u8 tr;
 
   if(overWrite != 2){
     //        pFriend = CommInfoGetDWCFriendCode(netID);
@@ -207,9 +208,11 @@ void GFL_NET_DWC_FriendDataWrite(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFri
   }
   pBuf =  GFL_STR_CreateBuffer(120, heapID );
   GFL_STR_DeleteBuffer(pBuf);
-  NET_PRINT("%d TRVIEW \n",MyStatus_GetTrainerView(pMyStatus));
-  
-  WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_UNION_GRA, MyStatus_GetTrainerView(pMyStatus));
+
+  tr = MyStatus_GetTrainerView(pMyStatus);
+  NET_PRINT("%d TRVIEW \n",tr);
+  GF_ASSERT(63!=tr);
+  WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_UNION_GRA, tr);
 
 }
 
