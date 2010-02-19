@@ -324,3 +324,7 @@ void MB_SEL_POKE_SetIdx( MB_SEL_POKE *pokeWork , u8 idx )
 {
   pokeWork->idx = idx;
 }
+POKEMON_PASO_PARAM* MB_SEL_POKE_GetPpp( MB_SEL_POKE *pokeWork )
+{
+  return pokeWork->ppp;
+}

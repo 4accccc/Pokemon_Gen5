@@ -21,4 +21,4 @@ extern void* MB_DATA_GS_GetBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , cons
 extern u16*  MB_DATA_GS_GetBoxName( MB_DATA_WORK *dataWork , const u8 tray );
 extern void  MB_DATA_GS_ClearBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx );
 extern void  MB_DATA_GS_AddItem( MB_DATA_WORK *dataWork , u16 itemNo );
-
+extern const u16 MB_DATA_GS_GetItemNum( MB_DATA_WORK *dataWork , const u16 itemNo );

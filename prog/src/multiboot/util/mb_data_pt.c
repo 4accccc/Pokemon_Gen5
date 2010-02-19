@@ -55,6 +55,7 @@ static u8 MB_DATA_PT_CompareFooterData( PT_SAVE_FOOTER *fData , BOOL fCorr ,
                        u8 *pos );
 static const BOOL MB_DATA_PT_AddItemFunc( MB_DATA_WORK *dataWork , u16 itemNo , PT_MINEITEM *mineItem , const u16 arrMax );
 static void MB_DATA_PT_SortItem( MB_DATA_WORK *dataWork , PT_MINEITEM *mineItem , const u16 arrMax );
+static const u16 MB_DATA_PT_GetItemNumFunc( MB_DATA_WORK *dataWork , u16 itemNo , PT_MINEITEM *mineItem , const u16 arrMax );
 
 
 
@@ -747,8 +748,6 @@ void  MB_DATA_PT_AddItem( MB_DATA_WORK *dataWork , u16 itemNo )
     MB_DATA_PT_AddItemFunc( dataWork , itemNo , myItem->MyBattleItem , PT_BAG_BATTLE_ITEM_MAX );
     break;
   }
-  
-  
 }
 
 static const BOOL MB_DATA_PT_AddItemFunc( MB_DATA_WORK *dataWork , u16 itemNo , PT_MINEITEM *mineItem , const u16 arrMax )
@@ -804,4 +803,55 @@ static void MB_DATA_PT_SortItem( MB_DATA_WORK *dataWork , PT_MINEITEM *mineItem 
       }
     }
   }
+}
+
+const u16 MB_DATA_PT_GetItemNum( MB_DATA_WORK *dataWork , const u16 itemNo )
+{
+  PT_MYITEM *myItem = (PT_MYITEM*)dataWork->pItemData;
+  GF_ASSERT( dataWork->pItemData != NULL );
+  
+  switch( gsItemPocketArr[itemNo] )
+  {
+  case MB_ITEM_POCKET_NONE:
+    GF_ASSERT_MSG(0,"ItemTypeInvalid!\n");
+    break;
+  case MB_ITEM_POCKET_NORMAL:
+    return MB_DATA_PT_GetItemNumFunc( dataWork , itemNo , myItem->MyNormalItem , PT_BAG_NORMAL_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_EVENT:
+    return MB_DATA_PT_GetItemNumFunc( dataWork , itemNo , myItem->MyEventItem , PT_BAG_EVENT_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_WAZA:
+    return MB_DATA_PT_GetItemNumFunc( dataWork , itemNo , myItem->MySkillItem , PT_BAG_WAZA_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_SEAL:
+    return MB_DATA_PT_GetItemNumFunc( dataWork , itemNo , myItem->MySealItem , PT_BAG_SEAL_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_DRUG:
+    return MB_DATA_PT_GetItemNumFunc( dataWork , itemNo , myItem->MyDrugItem , PT_BAG_DRUG_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_NUTS:
+    return MB_DATA_PT_GetItemNumFunc( dataWork , itemNo , myItem->MyNutsItem , PT_BAG_NUTS_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_BALL:
+    return MB_DATA_PT_GetItemNumFunc( dataWork , itemNo , myItem->MyBallItem , PT_BAG_BALL_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_BATTLE:
+    return MB_DATA_PT_GetItemNumFunc( dataWork , itemNo , myItem->MyBattleItem , PT_BAG_BATTLE_ITEM_MAX );
+    break;
+  }
+  return 0;
+}
+
+static const u16 MB_DATA_PT_GetItemNumFunc( MB_DATA_WORK *dataWork , u16 itemNo , PT_MINEITEM *mineItem , const u16 arrMax )
+{
+  u16 i;
+  for( i=0;i<arrMax;i++ )
+  {
+    if( mineItem[i].id == itemNo )
+    {
+      return mineItem[i].no;
+    }
+  }
+  return 0;
 }

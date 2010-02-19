@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "poke_tool/monsno_def.h"
+#include "poke_tool/poke_personal.h"
 
 #include "mb_capture_gra.naix"
 
@@ -209,11 +210,17 @@ MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
   //ディグダ・反転チェック
   {
     const u32 monsno = PPP_Get( initWork->ppp , ID_PARA_monsno , NULL );
-    if( monsno == MONSNO_DHIGUDA ||
-        monsno == MONSNO_DAGUTORIO )
+    const u32 formno = PPP_Get( initWork->ppp , ID_PARA_form_no , NULL );
+    POKEMON_PERSONAL_DATA *personalData = POKE_PERSONAL_OpenHandle( monsno , formno ,heapId );
+    if( POKE_PERSONAL_GetParam( personalData ,  POKEPER_ID_no_jump ) == TRUE )
     {
       pokeWork->isGround = TRUE;
     }
+    if( POKE_PERSONAL_GetParam( personalData , POKEPER_ID_reverse ) == TRUE )
+    {
+      pokeWork->isNoFlip = TRUE;
+    }
+    POKE_PERSONAL_CloseHandle( personalData );
   }
   
 

@@ -127,22 +127,20 @@ void MBP_Init(u32 ggid, u32 tgid )
      * ここではIPLで登録されたユーザ情報をMB親機情報として設定しますが、*
      * ゲーム内で設定した名前をセットする場合もあるかもしれません。     *
      * ただし2バイトコードで設定するのを忘れないでください。            */
-#if ( SDK_NVRAM_FORMAT >= 100 )
+#if (defined(SDK_TWL))
+    OSOwnerInfoEx info;
+    OS_GetOwnerInfoEx(&info);
+    myUser.favoriteColor = info.favoriteColor;
+    myUser.nameLength = (u8)info.nickNameLength;
+    MI_CpuCopy8(info.nickName, myUser.name, (u32)(info.nickNameLength * 2));
+#else
     OSOwnerInfo info;
-
     OS_GetOwnerInfo(&info);
     myUser.favoriteColor = info.favoriteColor;
     myUser.nameLength = (u8)info.nickNameLength;
     MI_CpuCopy8(info.nickName, myUser.name, (u32)(info.nickNameLength * 2));
-#else  // 旧IPL用
-    NVRAMConfig *info = (NVRAMConfig *)(OS_GetSystemWork()->nvramUserInfo);
-
-#define DEFAULT_FAVORIT_COLOR    1
-    myUser.favoriteColor = DEFAULT_FAVORIT_COLOR;
-    myUser.nameLength = (u8)info->ncd.owner.nickname.length;
-  //@@OO TWLDSKに代わったのでNVRAMConfig構造体のメンバにnameがなくなったらしい
-    //GFL_STD_MemCopy(info->ncd.owner.nickname.name, myUser.name, NVRAM_CONFIG_NICKNAME_LENGTH * 2);
 #endif
+
 
     myUser.playerNo = 0;               // 親機は0番
 

@@ -12,6 +12,7 @@
 
 #include "multiboot/mb_local_def.h"
 #include "multiboot/mb_data_def.h"
+#include "multiboot/mb_data_main.h"
 #include "poke_tool/poke_tool.h"
 
 //======================================================================
@@ -33,6 +34,7 @@ typedef struct
   int msgSpeed;
   HEAPID parentHeap;
   DLPLAY_CARD_TYPE cardType;
+  MB_DATA_WORK *dataWork;
   
   //ボックスデータ
   STRCODE *boxName[MB_POKE_BOX_TRAY];

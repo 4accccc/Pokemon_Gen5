@@ -257,6 +257,25 @@ void MB_DATA_AddItem( MB_DATA_WORK *dataWork , const u16 itemNo )
   }
 }
 
+//アイテム所持個数チェック
+const u16 MB_DATA_GetItemNum( MB_DATA_WORK *dataWork , const u16 itemNo )
+{
+  switch( dataWork->cardType )
+  {
+  case CARD_TYPE_DP:
+    return MB_DATA_PT_GetItemNum( dataWork , itemNo );
+    break;
+
+  case CARD_TYPE_PT:
+    return MB_DATA_PT_GetItemNum( dataWork , itemNo );
+    break;
+
+  case CARD_TYPE_GS:
+    return MB_DATA_GS_GetItemNum( dataWork , itemNo );
+    break;
+  }
+}
+
 
 //ダイパプラチナで共通化するための関数
 u32   MB_DATA_GetStartAddress( const u16 id , DLPLAY_CARD_TYPE type )

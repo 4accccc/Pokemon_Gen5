@@ -246,6 +246,10 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_PARENT_VBlankFunc , work , 8 );
   GFUser_SetVIntrFunc( MB_PARENT_VSync );
+
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+  GFL_NET_ReloadIcon();
+
 }
 
 //--------------------------------------------------------------
@@ -394,6 +398,14 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     break;
     
   case MPS_WAIT_SELBOX:
+    if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
+    {
+      //“Ç‚Ýž‚ÝƒGƒ‰[‚ª”­¶‚µ‚½
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
+      MB_COMM_ReqDisconnect( work->commWork );
+      work->state = MPS_EXIT_COMM;
+    }
+    else
     if( MB_COMM_GetChildState(work->commWork) == MCCS_SELECT_BOX )
     {
       if( work->isSendGameData == FALSE )
@@ -930,6 +942,7 @@ static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
   mbGameList.gameIntroductionp = work->romInfoStr;
   MBP_Init( MB_DEF_GGID , MB_TGID_AUTO );
   MBP_Start( &mbGameList , channel );
+  
 }
 
 static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )

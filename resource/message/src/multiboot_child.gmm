@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-16T14:41:06"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-19T18:52:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="174" top="276" right="879" bottom="904" maximized="no" rayout="Vertical2">
+	<dialog left="42" top="276" right="747" bottom="904" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -409,6 +409,26 @@
 ポケシフターを　終了します。▼</language>
 	</row>
 
+	<row id="MSG_MB_CHILD_10" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>Ariizumi追加0219
+
+初期ロード失敗</comment>
+		<language name="JPN" width="208">データのよみこみに　
+しっぱいしました。
+ポケシフターを　しゅうりょうします。▼</language>
+		<language name="JPN_KANJI" width="208">データの読み込みに　失敗しました。
+ポケシフターを　終了します。▼</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_11" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>Ariizumi追加0219
+初期接続タイムアウト</comment>
+		<language name="JPN" width="208">もうひとつの　DSの
+せつぞくに　しっぱいしました▼</language>
+		<language name="JPN_KANJI" width="208">もうひとつの　DSの
+接続に　失敗しました▼</language>
+	</row>
+
 	<row id="MSG_MB_CHILD_SYS_01">
 		<language name="JPN" width="208">はい</language>
 		<language name="JPN_KANJI" width="208">はい</language>
@@ -477,6 +497,26 @@
 ベリー　デンジャラスッ！▼
 元の　場所に　いるほうが
 ピチューに　とっても　ベストだろう！</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_SEL_07" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>Ariizumi追加0219
+
+アイテム持ってる</comment>
+		<language name="JPN" width="240">もっている　どうぐは　バッグに
+もどりますが　よろしいですか？</language>
+		<language name="JPN_KANJI" width="240">持っている　道具は　バッグに
+戻りますが　よろしいですか？</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_SEL_08" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>Ariizumi追加0219
+
+アイテム一杯</comment>
+		<language name="JPN" width="240">バッグに　いっぱいな　どうぐは
+きえてしまいますが　よろしいですか？</language>
+		<language name="JPN_KANJI" width="240">バッグに　一杯な　道具は
+消えてしまいますが　よろしいですか？</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_CAP_01">

@@ -84,3 +84,5 @@ extern const BOOL MB_SEL_POKE_isValid( const MB_SEL_POKE *pokeWork );
 extern const MB_SEL_POKE_TYPE MB_SEL_POKE_GetType( const MB_SEL_POKE *pokeWork );
 extern void MB_SEL_POKE_SetIdx( MB_SEL_POKE *pokeWork , u8 idx );
 extern const u8 MB_SEL_POKE_GetIdx( const MB_SEL_POKE *pokeWork );
+
+extern POKEMON_PASO_PARAM* MB_SEL_POKE_GetPpp( MB_SEL_POKE *pokeWork );

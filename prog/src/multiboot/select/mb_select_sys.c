@@ -85,6 +85,11 @@ typedef enum
   MSS_CONFIRM_INIT,
   MSS_CONFIRM_WAIT,
   MSS_CONFIRM_RETURN,
+
+  MSS_CONFIRM_ITEM_INIT,
+  MSS_CONFIRM_ITEM_WAIT,
+  MSS_CONFIRM_ITEMFULL_INIT,
+  MSS_CONFIRM_ITEMFULL_WAIT,
   
 }MB_SELECT_STATE;
 
@@ -174,7 +179,12 @@ static void MB_SELECT_ClearPokeInfo( MB_SELECT_WORK *work );
 static void MB_SELECT_InitComfirm( MB_SELECT_WORK *work );
 static void MB_SELECT_UpdateInitComfirm( MB_SELECT_WORK *work );
 static void MB_SELECT_UpdateConfirm( MB_SELECT_WORK *work );
+static void MB_SELECT_InitReturnComfirm( MB_SELECT_WORK *work );
 static void MB_SELECT_UpdateReturnComfirm( MB_SELECT_WORK *work );
+
+static const BOOL MB_SELECT_CheckHaveItem(  MB_SELECT_WORK *work );
+static const BOOL MB_SELECT_CheckFullItem(  MB_SELECT_WORK *work );
+
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
@@ -411,6 +421,70 @@ static const BOOL MB_SELECT_Main( MB_SELECT_WORK *work )
   case MSS_CONFIRM_RETURN:
     MB_SELECT_UpdateReturnComfirm( work );
     break;
+
+  //アイテムはずれるけどOK？
+  case MSS_CONFIRM_ITEM_INIT:
+    MB_MSG_MessageHide( work->msgWork );
+    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+    MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_SEL_07 );
+    
+    MB_MSG_ClearYesNo( work->msgWork );
+    MB_MSG_DispYesNo( work->msgWork , MMYT_MID );
+    work->state = MSS_CONFIRM_ITEM_WAIT;
+    break;
+    
+  case MSS_CONFIRM_ITEM_WAIT:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNo( work->msgWork );
+      if( ret == MMYR_RET1 )
+      {
+        //はい
+        if( MB_SELECT_CheckFullItem( work ) == FALSE )
+        {
+          work->state = MSS_FADEOUT;
+        }
+        else
+        {
+          work->state = MSS_CONFIRM_ITEMFULL_INIT;
+        }
+      }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        //いいえ
+        MB_SELECT_InitReturnComfirm( work );
+      }
+    }
+    break;
+    
+  //アイテム一杯だけどOK?
+  case MSS_CONFIRM_ITEMFULL_INIT:
+    MB_MSG_MessageHide( work->msgWork );
+    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+    MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_SEL_08 );
+    
+    MB_MSG_ClearYesNo( work->msgWork );
+    MB_MSG_DispYesNo( work->msgWork , MMYT_MID );
+    work->state = MSS_CONFIRM_ITEMFULL_WAIT;
+    break;
+    
+  case MSS_CONFIRM_ITEMFULL_WAIT:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNo( work->msgWork );
+      if( ret == MMYR_RET1 )
+      {
+        //はい
+        work->state = MSS_FADEOUT;
+      }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        //いいえ
+        MB_SELECT_InitReturnComfirm( work );
+      }
+    }
+    break;
+  
   }
 
   //OBJの更新
@@ -1411,27 +1485,42 @@ static void MB_SELECT_UpdateConfirm( MB_SELECT_WORK *work )
   if( ret == MMYR_RET1 )
   {
     //はい
-    work->state = MSS_FADEOUT;
+    if( MB_SELECT_CheckHaveItem( work ) == FALSE )
+    {
+      work->state = MSS_FADEOUT;
+    }
+    else
+    {
+      work->state = MSS_CONFIRM_ITEM_INIT;
+    }
   }
   else
   if( ret == MMYR_RET2 )
   {
-    u8 i;
     //いいえ
-    work->state = MSS_CONFIRM_RETURN;
-    work->anmCnt = 0;
-    MB_MSG_ClearYesNo( work->msgWork );
-    MB_MSG_MessageHide( work->msgWork );
-    for( i=0;i<MB_CAP_POKE_NUM;i++ )
-    {
-      const int posX = MB_SEL_POKE_GetPosX( work->selPoke[i] );
-      const int posY = MB_SEL_POKE_GetPosY( work->selPoke[i] );
-      
-      MB_SEL_POKE_SetMove( work , work->selPoke[i] , 
-                           posX-MB_SEL_CONF_MOVE_LEN , posY ,
-                           posX , posY , 
-                           MB_SEL_CONF_MOVE_CNT , FALSE );
-    }
+    MB_SELECT_InitReturnComfirm( work );
+  }
+}
+
+//--------------------------------------------------------------
+//  確認画面キャンセル時戻り初期化
+//--------------------------------------------------------------
+static void MB_SELECT_InitReturnComfirm( MB_SELECT_WORK *work )
+{
+  u8 i;
+  work->state = MSS_CONFIRM_RETURN;
+  work->anmCnt = 0;
+  MB_MSG_ClearYesNo( work->msgWork );
+  MB_MSG_MessageHide( work->msgWork );
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    const int posX = MB_SEL_POKE_GetPosX( work->selPoke[i] );
+    const int posY = MB_SEL_POKE_GetPosY( work->selPoke[i] );
+    
+    MB_SEL_POKE_SetMove( work , work->selPoke[i] , 
+                         posX-MB_SEL_CONF_MOVE_LEN , posY ,
+                         posX , posY , 
+                         MB_SEL_CONF_MOVE_CNT , FALSE );
   }
 }
 
@@ -1480,6 +1569,60 @@ static void MB_SELECT_UpdateReturnComfirm( MB_SELECT_WORK *work )
       work->initWork->selectPoke[5][1] = 0xFF;
     }
   }
+}
+
+#pragma mark [>chekc item func
+static const BOOL MB_SELECT_CheckHaveItem(  MB_SELECT_WORK *work )
+{
+  u8 i;
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    POKEMON_PASO_PARAM *ppp = MB_SEL_POKE_GetPpp( work->selPoke[i] );
+    const u32 itemNo = PPP_Get( ppp , ID_PARA_item , NULL );
+    if( itemNo != 0 )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+static const BOOL MB_SELECT_CheckFullItem(  MB_SELECT_WORK *work )
+{
+//マルチブート用きり分け
+#ifdef MULTI_BOOT_MAKE   //DL子機時処理
+  u8 i,j;
+  u16 itemArr[MB_CAP_POKE_NUM];
+  
+  //同じアイテムを複数個持っていると、998個+2個とかあるので・・・
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    POKEMON_PASO_PARAM *ppp = MB_SEL_POKE_GetPpp( work->selPoke[i] );
+    itemArr[i] = PPP_Get( ppp , ID_PARA_item , NULL );
+  }
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    if( itemArr[i] != 0 )
+    {
+      u16 num = MB_DATA_GetItemNum( work->initWork->dataWork , itemArr[i] );
+      for( j=0;j<MB_CAP_POKE_NUM;j++ )
+      {
+        if( itemArr[i] == itemArr[j] )
+        {
+          num++;
+        }
+      }
+      if( num > 999 )
+      {
+        return TRUE;
+      }
+      
+    }
+  }
+#endif //MULTI_BOOT_MAKE  
+
+  return FALSE;
+  
 }
 
 #pragma mark [>proc func

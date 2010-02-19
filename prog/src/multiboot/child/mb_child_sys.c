@@ -16,6 +16,7 @@
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 #include "system/net_err.h"
+#include "poke_tool/pokepara_conv.h"
 
 #include "arc_def.h"
 #include "mb_child_gra.naix"
@@ -42,6 +43,8 @@
 #define MB_CHILD_FRAME_SUB_MSG  (GFL_BG_FRAME1_S)
 #define MB_CHILD_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
 
+#define MB_CHILD_FIRST_TIMEOUT (60*15) //通常5秒以内で接続するのができなかった。
+
 //======================================================================
 //	enum
 //======================================================================
@@ -59,6 +62,9 @@ typedef enum
   MCS_SELECT_ROM, //デバッグ用
   MCS_LOAD_DATA,
   MCS_DATA_CONV,
+
+  MCS_LOAD_ERROR,
+  MCS_POKE_LACK,  //初期ポケ不足
   
   //選択画面
   MCS_SELECT_FADEOUT,
@@ -132,6 +138,7 @@ typedef struct
   GFL_PROCSYS   *procSys;
   u8 captureNum;
   u8 saveWaitCnt;
+  u16 timeoutCnt;
   
   POKEMON_PASO_PARAM *boxPoke[MB_POKE_BOX_TRAY][MB_POKE_BOX_POKE];
   STRCODE *boxName[MB_POKE_BOX_TRAY];
@@ -201,7 +208,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 
   MB_CHILD_InitGraphic( work );
   MB_CHILD_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , TRUE );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   
@@ -215,6 +222,8 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
   
   work->procSys = GFL_PROC_LOCAL_boot( work->heapId );
   work->captureNum = 0;
+  work->timeoutCnt = 0;
+  work->initData = NULL;
   
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
@@ -323,6 +332,16 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     break;
   
   case MCS_WAIT_CONNECT:
+    work->timeoutCnt++;
+    if( work->timeoutCnt >= MB_CHILD_FIRST_TIMEOUT )
+    {
+      //初期接続タイムアウト
+      //MsgSpeedが受信できてない！
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_11 , 1 );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+    }
+    else
     if( MB_CHILD_ErrCheck( work , FALSE ) == FALSE )
     {
       if( MB_COMM_IsPostInitData( work->commWork ) == TRUE )
@@ -379,14 +398,42 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_LOAD_DATA:
     if( MB_DATA_LoadDataFirst( work->dataWork ) == TRUE )
     {
-      work->state = MCS_DATA_CONV;
+      if( MB_DATA_GetErrorState( work->dataWork ) == DES_NONE )
+      {
+        work->state = MCS_DATA_CONV;
+      }
+      else
+      {
+        work->state = MCS_LOAD_ERROR;
+      }
     }
     break;
 
   case MCS_DATA_CONV:
     MB_CHILD_DataConvert( work );
-    work->state = MCS_SELECT_FADEOUT;
+    if( MB_CHILD_GetLeastPoke( work ) < MB_CAP_POKE_NUM )
+    {
+      work->state = MCS_POKE_LACK;
+    }
+    else
+    {
+      work->state = MCS_SELECT_FADEOUT;
+    }
     MB_CHILD_ErrCheck( work , FALSE );
+    break;
+    
+  case MCS_LOAD_ERROR:
+    //読み込み失敗
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_10 , work->initData->msgSpeed );
+    MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+    work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+    break;
+    
+  case MCS_POKE_LACK:
+    //初期ポケ不足
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_09 , work->initData->msgSpeed );
+    MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+    work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
     break;
   
   //--------------------------------------------------------
@@ -410,6 +457,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       //InitWorkのpppは最初に入れている
       work->selInitWork.parentHeap = work->heapId;
       work->selInitWork.cardType = work->cardType;
+      work->selInitWork.dataWork = work->dataWork;
       work->selInitWork.msgSpeed = work->initData->msgSpeed;
       for( i=0;i<MB_POKE_BOX_TRAY;i++ )
       {
@@ -739,7 +787,10 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_WAIT_NEXT_GAME_ERROR_MSG:
     if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
     {
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , work->initData->msgSpeed );
+      //初期タイムアウトから来るとmsgSpdもらってない。
+      const int msgSpd = ( work->initData!= NULL ? work->initData->msgSpeed : 1 );
+      MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , msgSpd );
       MB_COMM_ReqDisconnect( work->commWork );
       work->state = MCS_WAIT_EXIT_COMM;
     }
@@ -927,7 +978,7 @@ static void MB_CHILD_DataConvert( MB_CHILD_WORK *work )
   {
     u16 *strSrc = MB_DATA_GetBoxName( work->dataWork,i );
     
-    MB_UTIL_ConvertStr( strSrc , work->boxName[i] , 10 , work->cardType );
+    PPCONV_ConvertStr( strSrc , work->boxName[i] , 10 );
   }
 }
 
