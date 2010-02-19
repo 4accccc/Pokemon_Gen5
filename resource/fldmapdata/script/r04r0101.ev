@@ -34,47 +34,59 @@ _EVENT_DATA_END
 /*		R04R0101	回復処理	MIDDLEWOMAN2				  */
 /**************************************************************/
 EVENT_START		ev_r04r0101_middlewoman2_01
-
+_TALK_OBJ_START()
 	//手持ちポケモンの総数をカウント
 	DEFINE_LOCAL	LWK_TEMOCHI
-	DEFINE_LOCAL	LWK_HP
+	DEFINE_LOCAL	LWK_POS
 	DEFINE_LOCAL	LWK_POKE
+	DEFINE_LOCAL	LWK_FULL
 	_GET_PARTY_POKE_COUNT( LWK_TEMOCHI  , POKECOUNT_MODE_TOTAL )
 	
-	$LWK_HP = 0 //LWK_HPを０に定義
+	$LWK_POS = 0 //LWK_POSを０に定義
+	$LWK_FULL = 0
 	
 	//手持ちポケモンのＨＰをチェック
-	WHILE $LWK_HP == $LWK_TEMOCHI
+	WHILE $LWK_POS < $LWK_TEMOCHI
 		_DEBUG_PRINT_WK( LWK_POKE )
 		_DEBUG_PRINT_WK( LWK_TEMOCHI )
-		_DEBUG_PRINT_WK( LWK_HP )
+		_DEBUG_PRINT_WK( LWK_POS )
 		//LWK_KAIFUKUが手持ちの数と同じになるまで繰り返し
-		_CHECK_TEMOTI_HP( LWK_POKE, LWK_HP )
+		_CHECK_TEMOTI_HP( LWK_POKE, LWK_POS )
 		
-			//LWK_HPのポケモンが満タンの場合
+			//LWK_POSのポケモンが満タンの場合
 			IF $LWK_POKE == TRUE THEN
-				$LWK_HP += 1
+				$LWK_POS += 1
 			//ポケモンのHPが減っていた場合
 			ELSE
 				_TEMOTI_POKEMON_KAIFUKU()
-				$LWK_HP += 1
-				_SE_PLAY( SEQ_SE_KAIDAN )
-				_SE_WAIT()
-				_SE_PLAY( SEQ_SE_KAIDAN )
-				_SE_WAIT()
+				$LWK_POS += 1
+				$LWK_FULL += 1
 				
 			ENDIF
 
 	ENDWHILE
 	
 	//回復した場合
-	IF $LWK_POKE == FALSE THEN
+	IF $LWK_FULL == 0 THEN
 	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_middlewoman2_02 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_middlewoman2_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 
 	ELSE
-	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_middlewoman2_01 )
+
+
+		_BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_middlewoman2_02 )
+		_MSGWIN_CLOSE()
+
+		//暗転して手持ちポケモンを回復
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+		_ME_PLAY( SEQ_ME_ASA )
+		_ME_WAIT()
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
 	
 	ENDIF
 	
