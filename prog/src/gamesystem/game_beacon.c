@@ -273,7 +273,7 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
   
   GFL_STD_MemClear(setlog, sizeof(GAMEBEACON_LOG));
   setlog->info = *info;
-  bsys->update_log |= 1 < bsys->end_log;
+  bsys->update_log |= 1 << bsys->end_log;
   if(bsys->log_num < GAMEBEACON_SYSTEM_LOG_MAX){
     bsys->log_num++;
   }
@@ -342,7 +342,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     BeaconInfo_Set(bsys, info);
     bsys->new_entry = TRUE;
     bsys->log_count++;
-    OS_TPrintf("セット完了 %d件目\n", bsys->log_count);
+    OS_TPrintf("セット完了 %d件目 id=%d\n", bsys->log_count, info->trainer_id);
   }
   
 #if 0
