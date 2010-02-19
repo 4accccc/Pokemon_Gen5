@@ -416,6 +416,25 @@ void BmpOam_ActorSetBgPriority( BMPOAM_ACT_PTR bact, u8 bg_pri )
 	}
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPOAMアクターのパレットオフセットをセット
+ *
+ *	@param	BMPOAM_ACT_PTR bact
+ *	@param	pal_offset パレットオフセット(0～15)
+ */
+//-----------------------------------------------------------------------------
+void BmpOam_ActorSetPaletteOffset( BMPOAM_ACT_PTR bact, u8 pal_offset )
+{ 
+	int num_y, num_x;
+	for(num_y = 0; num_y < bact->act_num_y; num_y++){
+		for(num_x = 0; num_x < bact->act_num_x; num_x++){
+			GFL_CLACT_WK_SetPlttOffs(
+          bact->cap[num_x + num_y*bact->act_num_x], pal_offset, CLWK_PLTTOFFS_MODE_OAM_COLOR);
+		}
+	}
+}
+
 //==============================================================================
 //	ローカル関数
 //==============================================================================
