@@ -57,8 +57,6 @@ PL_BOAT_WORK_PTR PL_BOAT_Init(void)
   work->TrNumSingle = 0;
   work->TrNumDouble = 0;
   work->GameEnd = FALSE;
-  //@todo イベント時間テーブルをロードするかも
-  ;
   GFL_OVERLAY_Load( FS_OVERLAY_ID(pl_boat_setup) );
   PL_BOAT_SETUP_EntryTrainer(work);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(pl_boat_setup) );
