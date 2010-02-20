@@ -88,6 +88,10 @@ static void reflectBlAct_Update(
 
 static const FLDEFF_TASK_HEADER data_reflectTaskHeader;
 
+#ifdef PM_DEBUG
+static BOOL debug_CheckMMdl( const MMDL *mmdl );
+#endif
+
 //======================================================================
 //  映り込み　システム
 //======================================================================
@@ -174,6 +178,10 @@ void FLDEFF_REFLECT_SetMMdl( MMDLSYS *mmdlsys,
   head.eff_reflect = FLDEFF_CTRL_GetEffectWork(
       fectrl, FLDEFF_PROCID_REFLECT );
    
+#ifdef PM_DEBUG
+  debug_CheckMMdl( mmdl );
+#endif
+
   FLDEFF_CTRL_AddTask( fectrl, &data_reflectTaskHeader, NULL, 0, &head, 0 );
 }
 
@@ -200,6 +208,10 @@ static void reflectTask_Init( FLDEFF_TASK *task, void *wk )
   }
   
   MMDL_InitCheckSameData( head->mmdl, &work->samedata ); 
+  
+#ifdef PM_DEBUG
+  debug_CheckMMdl( work->head.mmdl );
+#endif
   
 //  //即動作...は親のフラグ初期化タイミングが間に合わない事を考慮して無し
 //  FLDEFF_TASK_CallUpdate( task );
@@ -241,20 +253,12 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
     return;
   }
   
-  {
-    //何故か映り込み対象以外のOBJに対して
-    //映り込みが発生する現象が起きている、現在調査中
-    //それまでの暫定対処
-    MMDL *mmdl = work->head.mmdl;
-    u16 code = MMDL_GetOBJCode( mmdl );
-    const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl, code );
-    
-    if( prm->reflect_type == MMDL_REFLECT_NON ){
-      OS_Printf( "FLDEFF REFLECT NOT REFLECT OBJ\n" );
-      return;
-    }
+#ifdef PM_DEBUG
+  if( debug_CheckMMdl(work->head.mmdl) == TRUE ){
+    return;
   }
-  
+#endif
+
   actID = MMDL_CallDrawGetProc( work->head.mmdl, 0 );
 
   if( work->flag_initact == FALSE ){
@@ -328,7 +332,7 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   
   ret = GFL_BBDACT_GetDrawEnable( bbdactsys, m_actID );
   GFL_BBDACT_SetDrawEnable( bbdactsys, actID, ret );
-
+  
 #if 0  
   ret = GFL_BBDACT_GetAnimeEnable( bbdactsys, m_actID );
   GFL_BBDACT_SetAnimeEnable( bbdactsys, actID, ret );
@@ -428,3 +432,34 @@ static const FLDEFF_TASK_HEADER data_reflectTaskHeader =
   reflectTask_Update,
   reflectTask_Draw,
 };
+
+
+//======================================================================
+//  define
+//======================================================================
+#ifdef PM_DEBUG
+//--------------------------------------------------------------
+//  何故か映り込み対象以外のOBJに対して
+//  映り込みが発生する現象が起きている、現在調査中
+//  それまでの暫定対処
+//  →イベントデータ絡みかもしれない。
+//　ひとまずチェックとしてこの部分はデバッグ用に機能させておく。
+//--------------------------------------------------------------
+static BOOL debug_CheckMMdl( const MMDL *mmdl )
+{
+  u16 code = MMDL_GetOBJCode( mmdl );
+  const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl, code );
+    
+  if( prm->draw_type != MMDL_DRAWTYPE_BLACT ){
+    GF_ASSERT( 0 && "FLDEFF REFLECT NOT REFLECT OBJ" );
+    return( TRUE );
+  }
+  
+  if( prm->reflect_type == MMDL_REFLECT_NON ){
+    GF_ASSERT( 0 && "FLDEFF REFLECT NOT REFLECT OBJ" );
+    return( TRUE );
+  }
+  return( FALSE );
+}
+#endif
+
