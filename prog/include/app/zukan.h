@@ -30,7 +30,8 @@ typedef struct {
 
 // 呼び出しモード
 enum {
-	ZUKAN_MODE_LIST = 0,		// リスト画面
+	ZUKAN_MODE_TOP = 0,			// トップ画面
+	ZUKAN_MODE_LIST,				// リスト画面
 	ZUKAN_MODE_INFO,				// 情報
 	ZUKAN_MODE_MAP,					// 分布
 	ZUKAN_MODE_VOICE,				// 鳴き声

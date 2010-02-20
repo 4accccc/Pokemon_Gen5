@@ -346,7 +346,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		SetZukanData( wk, 0 );
 		wk->zkn_data.gamedata = wk->gamedata;
 		wk->zkn_data.savedata = GAMEDATA_GetZukanSave( wk->gamedata );
-		wk->zkn_data.callMode = ZUKAN_MODE_LIST;
+		wk->zkn_data.callMode = ZUKAN_MODE_TOP;
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan), &ZUKAN_ProcData, &wk->zkn_data );
 		wk->main_seq = MAIN_SEQ_END;
 		break;

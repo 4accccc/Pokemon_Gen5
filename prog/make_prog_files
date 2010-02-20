@@ -1931,8 +1931,8 @@ SRCS_OVERLAY_ZUKAN_DETAIL = app/zukan/detail/zukan_detail_procsys.c \
                             app/zukan/detail/zukan_detail_form.c
 
 # }ŠÓƒŠƒXƒg
-#===> SRCS_OVERLAY_BATTLE_RETURN
 #===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_ZUKAN_TOROKU
 SRCS_OVERLAY_ZUKAN_LIST = app/zukan/list/zukanlist.c \
                           app/zukan/list/zknlist_main.c \
                           app/zukan/list/zknlist_seq.c \
@@ -1942,7 +1942,8 @@ SRCS_OVERLAY_ZUKAN_LIST = app/zukan/list/zukanlist.c \
                           app/zukan/list/zknlist_bgwfrm.c
 
 # }ŠÓŒŸõ
-#===> SRCS_OVERLAY_ZUKAN_LIST
+#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_ZUKAN_TOROKU
 SRCS_OVERLAY_ZUKAN_SEARCH = app/zukan/search/zukansearch.c \
                             app/zukan/search/zknsearch_main.c \
                             app/zukan/search/zknsearch_seq.c \
@@ -1951,11 +1952,18 @@ SRCS_OVERLAY_ZUKAN_SEARCH = app/zukan/search/zukansearch.c \
                             app/zukan/search/zknsearch_ui.c \
                             app/zukan/search/zknsearch_list.c
 
+#}ŠÓƒgƒbƒv‰æ–Ê
+#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_ZUKAN_TOROKU
+SRCS_OVERLAY_ZUKAN_TOP = app/zukan/top/zukantop.c \
+                         app/zukan/top/zkntop_main.c
+
 # }ŠÓ
 #===> SRCS_OVERLAY_ZUKAN_TOROKU
 #===> SRCS_OVERLAY_ZUKAN_LIST
 #===> SRCS_OVERLAY_ZUKAN_SEARCH
 #===> SRCS_OVERLAY_ZUKAN_DETAIL
+#===> SRCS_OVERLAY_ZUKAN_TOP
 SRCS_OVERLAY_ZUKAN = app/zukan/zukan.c \
                      app/zukan/zukan_common.c \
                      app/zukan/search/zukan_search_engine.c
