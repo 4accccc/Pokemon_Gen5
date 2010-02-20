@@ -234,6 +234,20 @@ SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
 	return result;
 }
 
+//==================================================================
+/**
+ * SaveControl_SaveAsyncMainで実行中のセーブが何バイト目まで書き込んだかを取得する
+ *
+ * @param   ctrl		
+ *
+ * @retval  u32	  書き込みが完了したサイズ(SaveControl_GetActualSizeのactual_size * 2(両面サイズ))
+ */
+//==================================================================
+u32 SaveControl_GetSaveAsyncMain_WritingSize(SAVE_CONTROL_WORK *ctrl)
+{
+  return GFL_BACKUP_SAVEASYNC_Main_WritingSize(ctrl->sv_normal);
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   通常セーブデータの各セーブワークのポインタを取得する
