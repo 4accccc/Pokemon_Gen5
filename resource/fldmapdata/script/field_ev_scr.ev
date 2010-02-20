@@ -38,7 +38,7 @@ DEFINE_LOCAL  reg_return
 //==============================================================
 EVENT_START ev_fld_ev_spray_effect_end
 {
-  _SYSWIN_MSG_DOWN( msg_fld_ev_spray_01 )
+  _SYSWIN_MSG( msg_fld_ev_spray_01 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
@@ -53,7 +53,7 @@ EVENT_END
 //==============================================================
 EVENT_START ev_fld_ev_amaikaori_enc_failed
 {
-  _SYSWIN_MSG_DOWN( msg_fld_ev_amaikaori_01 )
+  _SYSWIN_MSG( msg_fld_ev_amaikaori_01 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
@@ -61,7 +61,7 @@ EVENT_END
 
 EVENT_START ev_fld_ev_amaikaori_weather_error
 {
-  _SYSWIN_MSG_DOWN( msg_fld_ev_amaikaori_02 )
+  _SYSWIN_MSG( msg_fld_ev_amaikaori_02 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
@@ -92,7 +92,7 @@ EVENT_END
 //エンカウント成功
 EVENT_START ev_fld_ev_fishing_success
 {
-  _SYSWIN_MSG_DOWN( msg_fld_ev_fishing_01 )
+  _SYSWIN_MSG( msg_fld_ev_fishing_01 , WIN_DOWN )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
@@ -101,7 +101,7 @@ EVENT_END
 //エンカウント失敗
 EVENT_START ev_fld_ev_fishing_failed_encount
 {
-  _SYSWIN_MSG_DOWN( msg_fld_ev_fishing_02 )
+  _SYSWIN_MSG( msg_fld_ev_fishing_02 , WIN_DOWN )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
@@ -110,7 +110,7 @@ EVENT_END
 //エンカウント失敗　早すぎた
 EVENT_START ev_fld_ev_fishing_failed_too_early
 {
-  _SYSWIN_MSG_DOWN( msg_fld_ev_fishing_03 )
+  _SYSWIN_MSG( msg_fld_ev_fishing_03 , WIN_DOWN )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
@@ -119,7 +119,7 @@ EVENT_END
 //エンカウント失敗　遅すぎた　
 EVENT_START ev_fld_ev_fishing_failed_too_slow
 {
-  _SYSWIN_MSG_DOWN( msg_fld_ev_fishing_04 )
+  _SYSWIN_MSG( msg_fld_ev_fishing_04 , WIN_DOWN )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }

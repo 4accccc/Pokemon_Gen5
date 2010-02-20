@@ -242,7 +242,7 @@ ev_report_event_call:
   //_TIME_WAIT(5)
 
   //「かいても いいですか？」
-  _SYSWIN_MSG_DOWN( msg_common_report_01 )
+  _SYSWIN_MSG( msg_common_report_01 , WIN_DOWN )
   _YES_NO_WIN( SCWK_PARAM5 )
   IF $SCWK_PARAM5 == 0 THEN //『はい』
     $SCWK_PARAM1 = TRUE
@@ -251,7 +251,7 @@ ev_report_event_call:
 
   //「すでに べつの レポートが…」
   IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 == TRUE) THEN
-      _SYSWIN_MSG_DOWN( msg_common_report_08 )
+      _SYSWIN_MSG( msg_common_report_08 , WIN_DOWN )
     _AB_KEYWAIT()
     _SYSWIN_CLOSE()
     $SCWK_PARAM1 = FALSE
@@ -259,7 +259,7 @@ ev_report_event_call:
 
   //「うえから かいても いいですか？」
   IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 != TRUE) THEN
-      _SYSWIN_MSG_DOWN( msg_common_report_02 )
+      _SYSWIN_MSG( msg_common_report_02 , WIN_DOWN )
     _YES_NO_WIN( SCWK_PARAM5 )
     _SYSWIN_CLOSE()
     IF $SCWK_PARAM5 == 1 THEN //『いいえ』
@@ -272,11 +272,11 @@ ev_report_event_call:
     //「かきこんでいます」
     SWITCH $SCWK_PARAM4 
     CASE 0 THEN 
-      _SYSWIN_MSG_DOWN( msg_common_report_10 )
+      _SYSWIN_MSG( msg_common_report_10 , WIN_DOWN )
     CASE 1 THEN
-      _SYSWIN_MSG_DOWN( msg_common_report_11 )
+      _SYSWIN_MSG( msg_common_report_11 , WIN_DOWN )
     CASE 2 THEN
-      _SYSWIN_MSG_DOWN( msg_common_report_12 )
+      _SYSWIN_MSG( msg_common_report_12 , WIN_DOWN )
     ENDSWITCH
     _REPORT_CALL( SCWK_PARAM5 ) // 実セーブ処理
     _SYSWIN_CLOSE()
@@ -285,14 +285,14 @@ ev_report_event_call:
       _SE_PLAY( SEQ_SE_SAVE )
       //「しっかり かきのこした！」
       _PLAYER_NAME(0)
-          _SYSWIN_MSG_DOWN( msg_common_report_04 )
+          _SYSWIN_MSG( msg_common_report_04 , WIN_DOWN )
       _AB_KEYWAIT()
       _SYSWIN_CLOSE()
       $SCWK_PARAM0 = SCR_REPORT_OK
     // 書き込みに失敗
     ELSE
       //「かけませんでした」
-          _SYSWIN_MSG_DOWN( msg_common_report_06 )
+          _SYSWIN_MSG( msg_common_report_06 , WIN_DOWN )
       _AB_KEYWAIT()
       _SYSWIN_CLOSE() 
       $SCWK_PARAM0 = SCR_REPORT_CANCEL  // 結果を返す
@@ -333,14 +333,14 @@ sub_field_comm_exit_main:
 
   IF $SCWK_ANSWER == GAME_COMM_NO_INVASION THEN
     //パレス時は同意を得るまで切断しない
-    _SYSWIN_MSG_DOWN( msg_common_fldcomm_exit_01)
+    _SYSWIN_MSG( msg_common_fldcomm_exit_01, WIN_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
 
     IF $SCWK_ANSWER == SCR_NO THEN
       $SCWK_PARAM0 = SCR_FIELD_COMM_EXIT_CANCEL
       _RET
     ENDIF
-    _SYSWIN_MSG_DOWN( msg_common_fldcomm_exit_02)
+    _SYSWIN_MSG( msg_common_fldcomm_exit_02, WIN_DOWN )
     _FIELD_COMM_EXIT( SCWK_PARAM0 )
     _SYSWIN_CLOSE()
   ELSE

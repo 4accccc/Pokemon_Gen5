@@ -36,7 +36,7 @@ EVENT_START ev_deox_change
     _CALL end_msg
   ELSE
     //隕石に近づける？
-    _SYSWIN_MSG_DOWN(msg_deoxys_01)
+    _SYSWIN_MSG(msg_deoxys_01, WIN_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
     IF $SCWK_ANSWER == 0 THEN
@@ -51,7 +51,7 @@ EVENT_START ev_deox_change
         ENDIF
       ELSE  //複数発見
         //「デオキシス選んで」
-        _SYSWIN_MSG_DOWN(msg_deoxys_02)
+        _SYSWIN_MSG(msg_deoxys_02, WIN_DOWN )
         _SYSWIN_CLOSE()
         //ポケモン選択
         _SELECT_TEMOTI_POKE( SCWK_ANSWER , SEL_POS , 0 )
@@ -126,7 +126,7 @@ _RET
 
 //最終メッセージ共通処理
 end_msg:
-  _SYSWIN_MSG_DOWN( END_MSG )
+  _SYSWIN_MSG( END_MSG , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 _RET

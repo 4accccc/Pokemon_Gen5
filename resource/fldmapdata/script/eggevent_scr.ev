@@ -38,7 +38,7 @@ ev_egg_birth:
   DEFINE_LOCAL ret
 
   //「おや？……」
-  _SYSWIN_MSG_DOWN( egg_evemt_01 )
+  _SYSWIN_MSG( egg_evemt_01 , WIN_DOWN )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 
