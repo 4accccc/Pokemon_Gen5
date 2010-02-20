@@ -44,7 +44,7 @@ _EVENT_DATA_END
 /*			SCENE_CHANGE_LABEL　ゲーム開始イベント			*/
 /************************************************************/
 EVENT_START	ev_scene_t01r0102_gamestart
-
+	
 	//手紙を読む
 	_PLAYER_NAME( 0 )		//主人公名取得
 	_SPWIN_MSG( msg_t01r0102_letter_01, 4, 2, SPWIN_LETTER )
@@ -58,11 +58,11 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_PLAYER_NAME( 0 )		//主人公名取得
 	_BALLOONWIN_OBJMSG( msg_t01r0102_black_01 , T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
-
+	
 	//サポート：表示
 	_FLAG_RESET( FV_T01R0102_SUPPORT )
 	_OBJ_ADD( T01R0102_SUPPORT_01 )
-
+	
 	//階段ＳＥ
 	_SE_PLAY(SEQ_SE_KAIDAN)
 
@@ -112,7 +112,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 
 	//イベント曲終了
 	_END_EVENT_BGM()
-
+	
 //================フラグ操作==================//
 
 	//シーンチェンジラベル無効
@@ -522,10 +522,21 @@ ev_t01r0102_poke_battle:
 		//初期３匹で水タイプを選択
 		_TRAINER_BTL_SP_SET( TRID_SUPPORT_03, 0, SCR_BATTLE_MODE_NOLOSE )
 	ENDIF
-
+	
 	//戦闘復帰処理
 	_TRAINER_WIN()
-
+	
+	//ローカル変数定義
+	DEFINE_LOCAL	BM_ANIME_ID1
+	//けむり演出のアニメコントローラを作成
+	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_EVENT, 8, 1 )
+	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
+//	_BMODEL_ANIME_SET( BM_ANIME_ID1, 1 )
+	
+	//けむりが晴れるの待ち
+	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
+	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
+	
 	//【仮】勝敗によるメッセージ分岐
 	//サポート会話：つよいねー
 	_BALLOONWIN_OBJMSG( msg_t01r0102_white_11, T01R0102_SUPPORT_01 )

@@ -2226,9 +2226,9 @@
 /**
  *  @def  _TRAINER_MULTI_BTL_SET
  *  @brief  トレーナー戦闘（マルチバトル）呼び出し
- *  @param partner_id パートナーID
- *  @param tr_id_0 トレーナーID0
- *  @param tr_id_1 トレーナーID1
+ *  @param partner_id パートナーのトレーナーID
+ *  @param tr_id_0 対戦相手(左)のトレーナーID
+ *  @param tr_id_1 対戦相手(右)のトレーナーID
  */
 //--------------------------------------------------------------
 #define _TRAINER_MULTI_BTL_SET( partner_id, tr_id_0, tr_id_1 ) \
