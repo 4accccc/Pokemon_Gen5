@@ -118,6 +118,7 @@ typedef struct
 	u16	active_anmseq;			// ボタンのアクティブ時アニメシーケンス
 	u16	noactive_anmseq;		// ボタンのノンアクティブ時アニメシーケンス
 	u16	push_anmseq;				// ボタンを押したときのアニメシーケンス
+  u16 dummy_anmseq;       // .c内部で使用されています。設定の必要はありません
 	u32	key;								// 指定されたキーのボタンを押したときにアイコンも押されたことにする(PAD_KEY_UP等をいれてください ０だと行わない) 
 	u32	se;									// SE　0だと行わない
 

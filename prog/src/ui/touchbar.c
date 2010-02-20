@@ -64,12 +64,14 @@ typedef enum
 //=====================================
 typedef struct _ICON_WORK ICON_WORK;
 typedef void (*PUSH_FUNC)( ICON_WORK *p_wk );
+typedef void (*ACTIVE_FUNC)( ICON_WORK *p_wk, BOOL is_active );
 struct _ICON_WORK
 {
 	GFL_CLWK						*p_clwk;		
 	BOOL								is_active;		//アクティブか
 	u32									now_anmseq;		//現在のアニメ
 	PUSH_FUNC						push_func;		//押された時の動作
+  ACTIVE_FUNC         active_func;  //アクティブ、パッシブ切替時動作
 	TOUCHBAR_ICON_MOVETYPE	movetype;	//動作タイプ
 	TOUCHBAR_ITEM_ICON			data;			//ボタン情報
 } ;
@@ -136,8 +138,11 @@ static void ICON_SetSoftPriority( ICON_WORK *p_wk, u8 pri );
 static u8 ICON_GetSoftPriority( const ICON_WORK *p_wk );
 static void ICON_SetBGPriority( ICON_WORK *p_wk, u8 bg_prio );
 static u8 ICON_GetBGPriority( const ICON_WORK *p_wk );
+//以下モード別関数
 static void Icon_PushFuncNormal( ICON_WORK *p_wk );
 static void Icon_PushFuncFlip( ICON_WORK *p_wk );
+static void Icon_ActiveFuncNormal( ICON_WORK *p_wk, BOOL is_active );
+static void Icon_ActiveFuncFlip( ICON_WORK *p_wk, BOOL is_active );
 
 //=============================================================================
 /**
@@ -150,9 +155,23 @@ static void Icon_PushFuncFlip( ICON_WORK *p_wk );
 //=====================================
 static const struct
 {	
-	u16 active_anmseq;
-	u16 noactive_anmseq;
-	u16 push_anmseq;
+  union
+  { 
+    struct
+    { 
+      u16 active_anmseq;
+      u16 noactive_anmseq;
+      u16 push_anmseq;
+      u16 dummy_anmseq;
+    };
+    struct
+    { 
+      u16 off_active_anmseq;
+      u16 off_noactive_anmseq;
+      u16 on_active_anmseq;
+      u16 on_noactive_anmseq;
+    };
+  };
 	u16 se;
 	u32	key;
 	TOUCHBAR_ICON_MOVETYPE	movetype;
@@ -160,63 +179,84 @@ static const struct
 {	
 	//TOUCHBAR_ICON_CLOSE,	//×ボタン
 	{	
-		APP_COMMON_BARICON_EXIT,
-		APP_COMMON_BARICON_EXIT_OFF,
-		APP_COMMON_BARICON_EXIT_ON,
-		TOUCHBAR_SE_CLOSE,
+    { 
+      APP_COMMON_BARICON_EXIT,
+      APP_COMMON_BARICON_EXIT_OFF,
+      APP_COMMON_BARICON_EXIT_ON,
+      0,
+    },
+    TOUCHBAR_SE_CLOSE,
 		PAD_BUTTON_X,
 		TOUCHBAR_ICON_MOVETYPE_PUSH,
 	},
 	//TOUCHBAR_ICON_RETURN,	//←┘ボタン
 	{	
-		APP_COMMON_BARICON_RETURN,
-		APP_COMMON_BARICON_RETURN_OFF,
-		APP_COMMON_BARICON_RETURN_ON,
+    { 
+      APP_COMMON_BARICON_RETURN,
+      APP_COMMON_BARICON_RETURN_OFF,
+      APP_COMMON_BARICON_RETURN_ON,
+      0,
+    },
 		TOUCHBAR_SE_CANCEL,
 		PAD_BUTTON_B,
 		TOUCHBAR_ICON_MOVETYPE_PUSH,
 	},
 	//TOUCHBAR_ICON_CUR_D,	//↓ボタン
 	{	
-		APP_COMMON_BARICON_CURSOR_DOWN,
-		APP_COMMON_BARICON_CURSOR_DOWN_OFF,
-		APP_COMMON_BARICON_CURSOR_DOWN_ON,
+    { 
+      APP_COMMON_BARICON_CURSOR_DOWN,
+      APP_COMMON_BARICON_CURSOR_DOWN_OFF,
+      APP_COMMON_BARICON_CURSOR_DOWN_ON,
+      0,
+    },
 		TOUCHBAR_SE_DECIDE,
 		PAD_KEY_DOWN,
 		TOUCHBAR_ICON_MOVETYPE_PUSH,
 	},
 	//TOUCHBAR_ICON_CUR_U,	//↑ボタン
 	{	
-		APP_COMMON_BARICON_CURSOR_UP,
-		APP_COMMON_BARICON_CURSOR_UP_OFF,
-		APP_COMMON_BARICON_CURSOR_UP_ON,
+    { 
+      APP_COMMON_BARICON_CURSOR_UP,
+      APP_COMMON_BARICON_CURSOR_UP_OFF,
+      APP_COMMON_BARICON_CURSOR_UP_ON,
+      0,
+    },
 		TOUCHBAR_SE_DECIDE,
 		PAD_KEY_UP,
 		TOUCHBAR_ICON_MOVETYPE_PUSH,
 	},
 	//TOUCHBAR_ICON_CUR_L,	//←ボタン
 	{	
-		APP_COMMON_BARICON_CURSOR_LEFT,
-		APP_COMMON_BARICON_CURSOR_LEFT_OFF,
-		APP_COMMON_BARICON_CURSOR_LEFT_ON,
+    { 
+      APP_COMMON_BARICON_CURSOR_LEFT,
+      APP_COMMON_BARICON_CURSOR_LEFT_OFF,
+      APP_COMMON_BARICON_CURSOR_LEFT_ON,
+      0,
+    },
 		TOUCHBAR_SE_DECIDE,
 		PAD_KEY_LEFT,
 		TOUCHBAR_ICON_MOVETYPE_PUSH,
 	},
-	//TOUCHBAR_ICON_CUR_R,	//→ボタ
+	//TOUCHBAR_ICON_CUR_R,	//→ボタン
 	{	
-		APP_COMMON_BARICON_CURSOR_RIGHT,
-		APP_COMMON_BARICON_CURSOR_RIGHT_OFF,
-		APP_COMMON_BARICON_CURSOR_RIGHT_ON,
+    { 
+      APP_COMMON_BARICON_CURSOR_RIGHT,
+      APP_COMMON_BARICON_CURSOR_RIGHT_OFF,
+      APP_COMMON_BARICON_CURSOR_RIGHT_ON,
+      0,
+    },
 		TOUCHBAR_SE_DECIDE,
 		PAD_KEY_RIGHT,
 		TOUCHBAR_ICON_MOVETYPE_PUSH,
 	},
 	//TOUCHBAR_ICON_CHECK,	//ちぇっくボタン
 	{	
-		APP_COMMON_BARICON_CHECK_OFF,
-		APP_COMMON_BARICON_CHECK_NONE,
-		APP_COMMON_BARICON_CHECK_ON,
+    { 
+      APP_COMMON_BARICON_CHECK_OFF,
+      APP_COMMON_BARICON_CHECK_OFF_PASSIVE,
+      APP_COMMON_BARICON_CHECK_ON,
+      APP_COMMON_BARICON_CHECK_ON_PASSIVE,
+    },
 		TOUCHBAR_SE_Y_REG,
 		PAD_BUTTON_Y,
 		TOUCHBAR_ICON_MOVETYPE_FLIP,
@@ -1013,6 +1053,7 @@ static void ICON_Init( ICON_WORK *p_wk, GFL_CLUNIT* p_unit, const RES_WORK *cp_r
 			p_wk->data.active_anmseq		= sc_common_icon_data[ cp_setup->icon ].active_anmseq;
 			p_wk->data.noactive_anmseq	= sc_common_icon_data[ cp_setup->icon ].noactive_anmseq;
 			p_wk->data.push_anmseq			= sc_common_icon_data[ cp_setup->icon ].push_anmseq;
+			p_wk->data.dummy_anmseq			= sc_common_icon_data[ cp_setup->icon ].dummy_anmseq;
 			p_wk->data.key							= sc_common_icon_data[ cp_setup->icon ].key;
 			p_wk->data.se								= sc_common_icon_data[ cp_setup->icon ].se;
 			p_wk->movetype							= sc_common_icon_data[ cp_setup->icon ].movetype;
@@ -1032,9 +1073,11 @@ static void ICON_Init( ICON_WORK *p_wk, GFL_CLUNIT* p_unit, const RES_WORK *cp_r
 		{	
 		case TOUCHBAR_ICON_MOVETYPE_PUSH:	//押されたら、押されるアニメになるボタン
 			p_wk->push_func	= Icon_PushFuncNormal;
+      p_wk->active_func = Icon_ActiveFuncNormal;
 			break;
 		case TOUCHBAR_ICON_MOVETYPE_FLIP:	//押されたら、ONとOFFが切り替るボタン
-			p_wk->push_func	= Icon_PushFuncFlip;
+			p_wk->push_func	  = Icon_PushFuncFlip;
+      p_wk->active_func = Icon_ActiveFuncFlip;
 			break;
 		default:
 			GF_ASSERT_MSG( 0, "TOUCHBAR:動作タイプが不適切です%d", p_wk->movetype );
@@ -1170,21 +1213,7 @@ static BOOL ICON_GetVisible( const ICON_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 static void ICON_SetActive( ICON_WORK *p_wk, BOOL is_active )
 {	
-	p_wk->is_active	= is_active;
-
-	if( is_active )
-	{	
-		//アクティブになった瞬間にアニメ開始にならないようにする
-		if( p_wk->now_anmseq == p_wk->data.push_anmseq )
-		{	
-			p_wk->now_anmseq	= p_wk->data.active_anmseq;
-		}	
-		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->now_anmseq );
-	}
-	else
-	{	
-		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->data.noactive_anmseq );
-	}
+  p_wk->active_func( p_wk, is_active );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1281,7 +1310,8 @@ static void ICON_SetFlip( ICON_WORK *p_wk, BOOL is_flip )
 //-----------------------------------------------------------------------------
 static BOOL ICON_GetFlip( const ICON_WORK *cp_wk )
 {	
-	return cp_wk->now_anmseq	== cp_wk->data.push_anmseq;
+	return cp_wk->now_anmseq	== cp_wk->data.push_anmseq ||
+          cp_wk->now_anmseq == cp_wk->data.dummy_anmseq;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1374,5 +1404,66 @@ static void Icon_PushFuncFlip( ICON_WORK *p_wk )
 	if( p_wk->data.se != 0 )
 	{	
 		PMSND_PlaySE( p_wk->data.se );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンが押された時の動作関数	通常版
+ *
+ *	@param	ICON_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Icon_ActiveFuncNormal( ICON_WORK *p_wk, BOOL is_active )
+{	
+	p_wk->is_active	= is_active;
+
+	if( is_active )
+	{	
+		//アクティブになった瞬間にアニメ開始にならないようにする
+		if( p_wk->now_anmseq == p_wk->data.push_anmseq )
+		{	
+			p_wk->now_anmseq	= p_wk->data.active_anmseq;
+		}	
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->now_anmseq );
+	}
+	else
+	{	
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->data.noactive_anmseq );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンが押された時の動作関数	フリップ版
+ *
+ *	@param	ICON_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Icon_ActiveFuncFlip( ICON_WORK *p_wk, BOOL is_active )
+{	
+	p_wk->is_active	= is_active;
+
+	if( is_active )
+	{	
+		if( p_wk->now_anmseq == p_wk->data.push_anmseq )
+		{	
+			p_wk->now_anmseq	= p_wk->data.dummy_anmseq;
+		}	
+    else if( p_wk->now_anmseq == p_wk->data.noactive_anmseq )
+    { 
+			p_wk->now_anmseq	= p_wk->data.active_anmseq;
+    }
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->now_anmseq );
+	}
+	else
+	{	
+		if( p_wk->now_anmseq == p_wk->data.dummy_anmseq )
+		{	
+			p_wk->now_anmseq	= p_wk->data.push_anmseq;
+		}	
+    else if( p_wk->now_anmseq == p_wk->data.active_anmseq )
+    { 
+			p_wk->now_anmseq	= p_wk->data.noactive_anmseq;
+    }
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->data.noactive_anmseq );
 	}
 }
