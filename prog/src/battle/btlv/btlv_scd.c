@@ -868,7 +868,7 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
   while( count-- )
   {
     bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, *pos );
-    pp  = BPP_GetSrcData( bpp );
+    pp  = BPP_GetViewSrcData( bpp );
     vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, *pos );
     BTL_Printf(" count[%d]: pos=%d -> vpos=%d, pokeID=%d\n", count, *pos, vpos, BPP_GetID(bpp));
     vpos -= BTLV_MCSS_POS_A;
