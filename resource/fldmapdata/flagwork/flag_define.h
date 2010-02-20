@@ -186,7 +186,7 @@
 #define FE_PALACE01_OLDMANTALK             170 /* 0x00aa パレスじじい初回会話フラグ */
 #define FE_C09R0501_CHAMPION               171 /* 0x00ab チャンピオンリーグ：アデク初回会話フラグ */
 #define FE_MEZAPA_FIRSTTALK                172 /* 0x00ac めざめるパワーのタイプチェックする人の初回会話フラグ */
-		/* not used   173(0x00ad) */
+#define FE_T01R0102_SUPPORTBTL             173 /* 0x00ad 自宅２Ｆサポートとの戦闘終了フラグ */
 		/* not used   174(0x00ae) */
 		/* not used   175(0x00af) */
 		/* not used   176(0x00b0) */
