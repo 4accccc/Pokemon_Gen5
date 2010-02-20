@@ -167,8 +167,6 @@ typedef struct {
 
 typedef int (*pCommDemoFunc)(CDEMO_WORK*);
 
-#define	HEAPID_COMMAND_DEMO		( HEAPID_BOX_SYS )
-
 
 //============================================================================================
 //	プロトタイプ宣言
