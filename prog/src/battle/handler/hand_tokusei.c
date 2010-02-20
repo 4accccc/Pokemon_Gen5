@@ -5552,6 +5552,11 @@ static void handler_Boujin_CalcDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   ){
     if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_FLAG, TRUE) )
     {
+      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+
+      param->header.tokwin_flag = TRUE;
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Boujin );
+      HANDEX_STR_AddArg( &param->str, pokeID );
 //      BTL_EVENT
     }
   }

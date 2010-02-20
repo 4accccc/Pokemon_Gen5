@@ -7993,7 +7993,7 @@ static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet 
       ){
         u32 hem_state = Hem_PushState( &wk->HEManager );
         int  damage = BTL_CALC_RecvWeatherDamage( bpp, weather );
-        scEvent_CheckWeatherReaction( wk, bpp, weather, damage );
+        damage = scEvent_CheckWeatherReaction( wk, bpp, weather, damage );
         if( !scproc_HandEx_Root(wk, ITEM_DUMMY_DATA) )
         {
           if( damage ){
