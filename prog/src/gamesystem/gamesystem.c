@@ -302,7 +302,7 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 
   //通信エラー画面呼び出しチェック
   if(gsys->proc_result == GFL_PROC_MAIN_CHANGE || gsys->proc_result == GFL_PROC_MAIN_NULL){
-    NetErr_DispCall();
+    NetErr_DispCall(FALSE);
   }
   
 	if (gsys->proc_result == GFL_PROC_MAIN_NULL && gsys->event == NULL)
