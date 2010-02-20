@@ -382,7 +382,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         app/research_radar/questionnaire_index.c \
         field/bsubway_comm.c \
         field/fld_btl_inst_tool.c \
-        field/trial_house_st.c
+        field/trial_house_st.c \
+		field/report_event.c
 
 # wifiƒvƒƒOƒ‰ƒ€
 #===> SRCS_OVERLAY_DEV_WIFILIB

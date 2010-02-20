@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-02-17T19:13:31"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-02-19T19:37:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -428,6 +428,16 @@
 	<row id="REPORT_STR_13">
 		<language name="JPN" width="256">[2:01:２桁:0]：[2:01:２桁:1]</language>
 		<language name="JPN_KANJI" width="256">[2:01:２桁:0]：[2:01:２桁:1]</language>
+	</row>
+
+	<row id="REPORT_STR_14">
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
+	</row>
+
+	<row id="REPORT_STR_15">
+		<language name="JPN" width="256">いいえ</language>
+		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
 	<flowchart-group-list>

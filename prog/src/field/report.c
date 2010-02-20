@@ -1,4 +1,13 @@
-
+//============================================================================================
+/**
+ * @file		report.c
+ * @brief		レポート下画面
+ * @author	Hiroyuki Nakamura
+ * @date		10.02.18
+ *
+ *	モジュール名：REPORT
+ */
+//============================================================================================
 #include <gflib.h>
 
 #include "arc_def.h"
@@ -18,15 +27,9 @@
 #include "msg/msg_report.h"
 
 
-
-// タイトル					15x3 = 45
-// 日付							13x2 = 26
-// 場所							15x2 = 30
-// ジムバッジ				12x2 = 24
-// 図鑑							11x2 = 22
-// プレイ時間				15x2 = 30
-// 前回のレポート		26x2 = 52
-/* 合計：229 */
+//============================================================================================
+//	定数定義
+//============================================================================================
 
 // タイトル
 #define	BMPWIN_TITLE_FRM	( GFL_BG_FRAME1_S )
@@ -90,12 +93,57 @@ enum {
 	BMPWIN_MAX
 };
 
+enum {
+	// キャラリソース
+	CHRRES_POKE1 = 0,
+	CHRRES_POKE2,
+	CHRRES_POKE3,
+	CHRRES_POKE4,
+	CHRRES_POKE5,
+	CHRRES_POKE6,
+	CHRRES_TIME,
+	CHRRES_MAX,
+	// パレットリソース
+	PALRES_POKE,
+	PALRES_TIME,
+	PALRES_MAX,
+	// セルリソース
+	CELRES_POKE,
+	CELRES_TIME,
+	CELRES_MAX,
+};
+
+// OBJ ID
+enum {
+	OBJID_POKE1 = 0,
+	OBJID_POKE2,
+	OBJID_POKE3,
+	OBJID_POKE4,
+	OBJID_POKE5,
+	OBJID_POKE6,
+	OBJID_TIME01,
+	OBJID_TIME02,
+	OBJID_TIME03,
+	OBJID_TIME04,
+	OBJID_TIME05,
+	OBJID_TIME06,
+	OBJID_TIME07,
+	OBJID_TIME08,
+	OBJID_TIME09,
+	OBJID_TIME10,
+	OBJID_MAX,
+};
+
 #define FCOL_P00WN		( PRINTSYS_LSB_Make(15,14,0) )	// フォントカラー：００白抜
 
 // ポケモンアイコン表示座標
 #define	POKEICON_PX		( 40 )
 #define	POKEICON_PY		( 104 )
 #define	POKEICON_SX		( 32 )
+// セーブ状況マーク表示座標
+#define	TIMEMARK_PX		( 70 )
+#define	TIMEMARK_PY		( 174 )
+#define	TIMEMARK_SX		( 12 )
 
 
 struct _REPORT_WORK {
@@ -106,10 +154,15 @@ struct _REPORT_WORK {
 
 	// OBJ
 	GFL_CLUNIT * clunit;
-	GFL_CLWK * clwk[TEMOTI_POKEMAX];
-	u32	chrRes[TEMOTI_POKEMAX];
-	u32	palRes;
-	u32	celRes;
+	GFL_CLWK * clwk[OBJID_MAX];
+	u32	chrRes[CHRRES_MAX];
+	u32	palRes[PALRES_MAX];
+	u32	celRes[CELRES_MAX];
+
+	// セーブ状況
+	BOOL	save_start;
+	u32	save_num;
+	u32	save_max;
 
 	int	seq;
 
@@ -117,7 +170,9 @@ struct _REPORT_WORK {
 };
 
 
-
+//============================================================================================
+//	プロトタイプ宣言
+//============================================================================================
 static void InitBg( HEAPID heapID );
 static void ExitBg(void);
 static void LoadBgGraphic( HEAPID heapID );
@@ -126,6 +181,10 @@ static void ExitBmp( REPORT_WORK * wk );
 static void InitObj( REPORT_WORK * wk );
 static void ExitObj( REPORT_WORK * wk );
 
+
+//============================================================================================
+//	グローバル
+//============================================================================================
 
 // BMPWIN DATA
 static const u8 BmpWinData[][6] =
@@ -162,23 +221,22 @@ static const u8 BmpWinData[][6] =
 
 // OBJ DATA
 static const GFL_CLWK_DATA	PokeIconData = { POKEICON_PX, POKEICON_PY, POKEICON_ANM_DEATH, 0, 0 };
+static const GFL_CLWK_DATA	TimeMarkData = { TIMEMARK_PX, TIMEMARK_PY, 0, 0, 0 };
 
 
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * レポート下画面初期化
+ *
+ * @param		gs			GAMESYS_WORK
+ * @param		heapID	ヒープＩＤ
+ *
+ * @return	レポート下画面ワーク
+ */
+//--------------------------------------------------------------------------------------------
 REPORT_WORK * REPORT_Init( GAMESYS_WORK * gs, HEAPID heapID )
 {
-/*
-	名前
-	現在の時間
-	現在地
-	手持ちポケモン
-	バッジ数
-	図鑑登録数
-	プレイ時間
-	前回のレポート時間
-*/
 	REPORT_WORK * wk;
 
 	wk = GFL_HEAP_AllocMemory( heapID, sizeof(REPORT_WORK) );
@@ -195,6 +253,15 @@ REPORT_WORK * REPORT_Init( GAMESYS_WORK * gs, HEAPID heapID )
 	return wk;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * レポート下画面削除
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void REPORT_Exit( REPORT_WORK * wk )
 {
 	ExitBmp( wk );
@@ -204,7 +271,30 @@ void REPORT_Exit( REPORT_WORK * wk )
 	GFL_HEAP_FreeMemory( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * レポート下画面アップデート処理
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void REPORT_Update( REPORT_WORK * wk )
+{
+//	OS_Printf( "レポート：アップデートきました\n" );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * レポート下画面描画処理
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void REPORT_Draw( REPORT_WORK * wk )
 {
 	u32	i;
 
@@ -216,7 +306,7 @@ void REPORT_Update( REPORT_WORK * wk )
 			{
 				POKEPARTY * party;
 				party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(wk->gameSys) );
-				for( i=0; i<PokeParty_GetPokeCount(party); i++ ){
+				for( i=OBJID_POKE1; i<OBJID_POKE1+PokeParty_GetPokeCount(party); i++ ){
 					GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
 				}
 			}
@@ -228,11 +318,42 @@ void REPORT_Update( REPORT_WORK * wk )
 	for( i=0; i<BMPWIN_MAX; i++ ){
 		PRINT_UTIL_Trans( &wk->win[i], wk->que );
 	}
+
+//	OS_Printf( "レポート：DRAWきました\n" );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * セーブ開始
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void REPORT_StartSave( REPORT_WORK * wk )
+{
+	u32	i;
+
+	wk->save_start = TRUE;
+
+	GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[BMPWIN_REPORT].win );
+
+	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
+	}
 }
 
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * ＢＧ初期化
+ *
+ * @param		heapID		ヒープＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitBg( HEAPID heapID )
 {
 	GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
@@ -275,6 +396,15 @@ static void InitBg( HEAPID heapID )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * ＢＧ削除
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitBg(void)
 {
 	GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
@@ -286,12 +416,22 @@ static void ExitBg(void)
 	GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * ＢＧグラフィック読み込み
+ *
+ * @param		heapID		ヒープＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void LoadBgGraphic( HEAPID heapID )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_REPORT_GRA, heapID );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
 		ah, NARC_report_gra_base_bg_NCLR, PALTYPE_SUB_BG, 0, 0x20, heapID );
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_report_gra_base_bg_lz_NCGR, GFL_BG_FRAME0_S, 0, 0, TRUE, heapID );
@@ -302,6 +442,15 @@ static void LoadBgGraphic( HEAPID heapID )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * ＢＭＰ初期化
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitBmp( REPORT_WORK * wk )
 {
 	GFL_MSGDATA * mman;
@@ -450,6 +599,15 @@ static void InitBmp( REPORT_WORK * wk )
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * ＢＭＰ削除
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitBmp( REPORT_WORK * wk )
 {
 	u32	i;
@@ -461,6 +619,15 @@ static void ExitBmp( REPORT_WORK * wk )
 	PRINTSYS_QUE_Delete( wk->que );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * ＯＢＪ初期化
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitObj( REPORT_WORK * wk )
 {
   ARCHANDLE * ah;
@@ -472,32 +639,48 @@ static void InitObj( REPORT_WORK * wk )
 	party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(wk->gameSys) );
 	max   = PokeParty_GetPokeCount( party );
 
-	wk->clunit = GFL_CLACT_UNIT_Create( max, 0, wk->heapID );
+	wk->clunit = GFL_CLACT_UNIT_Create( OBJID_MAX, 0, wk->heapID );
 
 	ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, wk->heapID );
 
 	// キャラ
-	for( i=0; i<max; i++ ){
+	for( i=CHRRES_POKE1; i<CHRRES_POKE1+max; i++ ){
 		POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, i );
 		wk->chrRes[i] = GFL_CLGRP_CGR_Register(
 											ah, POKEICON_GetCgxArcIndex(PP_GetPPPPointerConst(pp)),
 											FALSE, CLSYS_DRAW_SUB, wk->heapID );
 	}
 	// パレット
-  wk->palRes = GFL_CLGRP_PLTT_RegisterComp(
-								ah, POKEICON_GetPalArcIndex(), CLSYS_DRAW_SUB, 0, wk->heapID );
+  wk->palRes[PALRES_POKE] = GFL_CLGRP_PLTT_RegisterComp(
+															ah, POKEICON_GetPalArcIndex(), CLSYS_DRAW_SUB, 0, wk->heapID );
 	// セル・アニメ
-  wk->celRes = GFL_CLGRP_CELLANIM_Register(
-								ah, POKEICON_GetCellArcIndex(), POKEICON_GetAnmArcIndex(), wk->heapID );
+  wk->celRes[CELRES_POKE] = GFL_CLGRP_CELLANIM_Register(
+															ah, POKEICON_GetCellArcIndex(), POKEICON_GetAnmArcIndex(), wk->heapID );
+
+  GFL_ARC_CloseDataHandle( ah );
+
+	ah = GFL_ARC_OpenDataHandle( ARCID_REPORT_GRA, wk->heapID );
+	// キャラ
+	wk->chrRes[CHRRES_TIME] = GFL_CLGRP_CGR_Register(
+															ah, NARC_report_gra_time_obj_lz_NCGR,
+															TRUE, CLSYS_DRAW_SUB, wk->heapID );
+	// パレット
+  wk->palRes[PALRES_TIME] = GFL_CLGRP_PLTT_RegisterEx(
+															ah, NARC_report_gra_time_obj_NCLR, CLSYS_DRAW_SUB, 0x20*3, 0, 1, wk->heapID );
+	// セル・アニメ
+  wk->celRes[CELRES_TIME] = GFL_CLGRP_CELLANIM_Register(
+															ah, NARC_report_gra_time_obj_NCER, NARC_report_gra_time_obj_NANR, wk->heapID );
+  GFL_ARC_CloseDataHandle( ah );
+
 
 	dat = PokeIconData;
-	for( i=0; i<max; i++ ){
+	for( i=OBJID_POKE1; i<OBJID_POKE1+max; i++ ){
 		POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, i );
 		wk->clwk[i] = GFL_CLACT_WK_Create(
 										wk->clunit,
-										wk->chrRes[i],
-										wk->palRes,
-										wk->celRes, 
+										wk->chrRes[CHRRES_POKE1+i-OBJID_POKE1],
+										wk->palRes[PALRES_POKE],
+										wk->celRes[CELRES_POKE], 
 										&dat, CLSYS_DRAW_SUB, wk->heapID );
 		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
 		dat.pos_x += POKEICON_SX;
@@ -506,9 +689,28 @@ static void InitObj( REPORT_WORK * wk )
 			wk->clwk[i], POKEICON_GetPalNumGetByPPP(PP_GetPPPPointerConst(pp)), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 	}
 
-  GFL_ARC_CloseDataHandle( ah );
+	dat = TimeMarkData;
+	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
+		wk->clwk[i] = GFL_CLACT_WK_Create(
+										wk->clunit,
+										wk->chrRes[CHRRES_TIME],
+										wk->palRes[PALRES_TIME],
+										wk->celRes[CELRES_TIME], 
+										&dat, CLSYS_DRAW_SUB, wk->heapID );
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
+		dat.pos_x += TIMEMARK_SX;
+	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * ＯＢＪ削除
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitObj( REPORT_WORK * wk )
 {
 	POKEPARTY * party;
@@ -516,13 +718,19 @@ static void ExitObj( REPORT_WORK * wk )
 
 	party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(wk->gameSys) );
 
-	for( i=0; i<PokeParty_GetPokeCount(party); i++ ){
+	for( i=OBJID_POKE1; i<OBJID_POKE1+PokeParty_GetPokeCount(party); i++ ){
 		GFL_CLACT_WK_Remove( wk->clwk[i] );
-		GFL_CLGRP_CGR_Release( wk->chrRes[i] );
+		GFL_CLGRP_CGR_Release( wk->chrRes[CHRRES_POKE1+i-OBJID_POKE1] );
 	}
+	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
+		GFL_CLACT_WK_Remove( wk->clwk[i] );
+	}
+	GFL_CLGRP_CGR_Release( wk->chrRes[CHRRES_TIME] );
 
-	GFL_CLGRP_PLTT_Release( wk->palRes );
-	GFL_CLGRP_CELLANIM_Release( wk->celRes );
+	GFL_CLGRP_PLTT_Release( wk->palRes[PALRES_POKE] );
+	GFL_CLGRP_PLTT_Release( wk->palRes[PALRES_TIME] );
+	GFL_CLGRP_CELLANIM_Release( wk->celRes[CELRES_POKE] );
+	GFL_CLGRP_CELLANIM_Release( wk->celRes[CELRES_TIME] );
 
 	GFL_CLACT_UNIT_Delete( wk->clunit );
 }

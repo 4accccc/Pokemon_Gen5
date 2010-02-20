@@ -1203,16 +1203,6 @@ static void draw_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 }
 
 
-
-
-
-
-
-
-
-
-
-
 //=============================================================================
 //=============================================================================
 
@@ -1256,5 +1246,11 @@ static void update_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 //-----------------------------------------------------------------------------
 static void draw_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-//  FIELD_MENU_DrawMenu( pWork->fieldMenuWork );
+	REPORT_Draw( pWork->reportWork );
+}
+
+// セーブ開始
+void FIELD_SUBSCREEN_SetReportStart( FIELD_SUBSCREEN_WORK * pWork )
+{
+	REPORT_StartSave( pWork->reportWork );
 }

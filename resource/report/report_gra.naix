@@ -13,7 +13,11 @@
 enum {
 	NARC_report_gra_base_bg_lz_NSCR = 0,
 	NARC_report_gra_base_bg_lz_NCGR = 1,
-	NARC_report_gra_base_bg_NCLR = 2
+	NARC_report_gra_base_bg_NCLR = 2,
+	NARC_report_gra_time_obj_lz_NCGR = 3,
+	NARC_report_gra_time_obj_NCLR = 4,
+	NARC_report_gra_time_obj_NCER = 5,
+	NARC_report_gra_time_obj_NANR = 6
 };
 
 /* NARC_REPORT_GRA_NAIX_ */
