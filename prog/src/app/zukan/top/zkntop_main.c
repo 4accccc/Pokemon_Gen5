@@ -39,6 +39,8 @@ typedef int (*pZKNTOP_FUNC)(ZKNTOPMAIN_WORK*);
 
 #define	HEAPID_ZUKAN_TOP_L	( GFL_HEAP_LOWID(HEAPID_ZUKAN_TOP) )
 
+#define	AUTO_START_TIME		( 60*5 )
+
 
 static int MainSeq_Init( ZKNTOPMAIN_WORK * wk );
 static int MainSeq_Release( ZKNTOPMAIN_WORK * wk );
@@ -139,7 +141,7 @@ static void InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 27*8, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,
-			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 2, 1, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
@@ -148,7 +150,7 @@ static void InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 1, 1, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
@@ -157,7 +159,7 @@ static void InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 0, 1, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
@@ -167,7 +169,7 @@ static void InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 1, 1, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
@@ -176,7 +178,7 @@ static void InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 3*8, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 0, 1, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME1_S );
@@ -232,7 +234,7 @@ static void LoadBgGraphic(void)
 		ah, NARC_zukan_gra_top_zkn_top_sub_bg_NSCR,
 		GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
 	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, NARC_zukan_gra_top_zkn_top_cover_NSCR,
+		ah, NARC_zukan_gra_top_zkn_top_cover_u_NSCR,
 		GFL_BG_FRAME1_S, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
 
 	GFL_ARC_CloseDataHandle( ah );
@@ -314,19 +316,30 @@ static int MainSeq_WipeOut( ZKNTOPMAIN_WORK * wk )
 
 static int MainSeq_Main( ZKNTOPMAIN_WORK * wk )
 {
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-		wk->dat->retMode = ZKNTOP_RET_LIST;
-		ZKNCOMM_SetFadeOut( HEAPID_ZUKAN_TOP );
-		return MAINSEQ_WIPE_OUT;
+	if( wk->time == AUTO_START_TIME ){
+		return MAINSEQ_DEMO;
+	}
+	wk->time++;
+
+	if( GFL_UI_TP_GetCont() == TRUE ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+		return MAINSEQ_DEMO;
 	}
 
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		return MAINSEQ_DEMO;
+	}
+
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		wk->dat->retMode = ZKNTOP_RET_EXIT;
 		ZKNCOMM_SetFadeOut( HEAPID_ZUKAN_TOP );
 		return MAINSEQ_WIPE_OUT;
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		wk->dat->retMode = ZKNTOP_RET_EXIT_X;
 		ZKNCOMM_SetFadeOut( HEAPID_ZUKAN_TOP );
 		return MAINSEQ_WIPE_OUT;
@@ -335,7 +348,43 @@ static int MainSeq_Main( ZKNTOPMAIN_WORK * wk )
 	return MAINSEQ_MAIN;
 }
 
+#define	DEMO_SCROLL_SPEED				( 8 )
+#define	DEMO_SCROLL_COUNT				( 192/DEMO_SCROLL_SPEED )
+#define	DEMO_SCROLL_END_WAIT		( 32 )
+
+
 static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk )
 {
+	switch( wk->demoSeq ){
+	case 0:
+		if( wk->demoCnt == DEMO_SCROLL_COUNT ){
+			// SE
+			wk->demoCnt = 0;
+			wk->demoSeq++;
+			break;
+		}
+		GFL_BG_SetScrollReq( GFL_BG_FRAME0_M, GFL_BG_SCROLL_Y_DEC, DEMO_SCROLL_SPEED );
+		GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_DEC, DEMO_SCROLL_SPEED );
+		GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_DEC, DEMO_SCROLL_SPEED );
+		GFL_BG_SetScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_DEC, DEMO_SCROLL_SPEED );
+		wk->demoCnt++;
+		break;
+
+	case 1:
+		if( wk->demoCnt == DEMO_SCROLL_END_WAIT ){
+			// SE
+			wk->demoCnt = 0;
+			wk->demoSeq++;
+			break;
+		}
+		wk->demoCnt++;
+		break;
+
+	case 2:
+		wk->dat->retMode = ZKNTOP_RET_LIST;
+		ZKNCOMM_SetFadeOut( HEAPID_ZUKAN_TOP );
+		return MAINSEQ_WIPE_OUT;
+	}
+
 	return MAINSEQ_DEMO;
 }

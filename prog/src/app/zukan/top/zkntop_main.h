@@ -22,6 +22,11 @@ typedef struct {
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
 
+	u16	time;
+
+	u8	demoCnt;
+	u8	demoSeq;
+
 	int	mainSeq;
 
 }ZKNTOPMAIN_WORK;
