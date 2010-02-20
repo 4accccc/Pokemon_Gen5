@@ -1203,7 +1203,7 @@ static GFL_PROC_RESULT MB_CHILD_ProcTerm( GFL_PROC * proc, int * seq , void *pwk
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MULTIBOOT );
 
-  NetErr_DispCall();
+  NetErr_DispCall(FALSE);
   
   return GFL_PROC_RES_FINISH;
 }

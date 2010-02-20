@@ -107,7 +107,7 @@ static const int asd[]={1,2,3,4,5};
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-static BOOL NetErr_DispMain(void);
+static BOOL NetErr_DispMain(BOOL fatal_error);
 static void Local_ErrDispInit(void);
 static void Local_ErrDispExit(void);
 static BOOL Local_SystemOccCheck(void);
@@ -216,7 +216,7 @@ void NetErr_Main(void)
 //==================================================================
 BOOL NetErr_DispCall(BOOL fatal_error)
 {
-  return NetErr_DispMain();
+  return NetErr_DispMain(fatal_error);
 }
 
 //==================================================================
@@ -404,11 +404,13 @@ void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea )
 /**
  * @brief   通信エラー画面制御メイン
  *
+ * @param   fatal_error   TRUE:リセットを促すエラー(Aで抜けられない) 
+ * 
  * @retval  TRUE:エラー画面を呼び出した
  * @retval  FALSE:呼び出していない
  */
 //--------------------------------------------------------------
-static BOOL NetErr_DispMain(void)
+static BOOL NetErr_DispMain(BOOL fatal_error)
 {
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 	
@@ -416,6 +418,12 @@ static BOOL NetErr_DispMain(void)
 		return FALSE;
 	}
 
+  if(fatal_error == TRUE){
+		//エラー画面描画
+  	Local_ErrDispInit();
+		while(1){}
+	}
+  
 	if(nes->status == NET_ERR_STATUS_REQ){
     //通信ライブラリ終了待ち  ※check　軽度エラーの場合は終了処理を入れない
     GFL_NET_Exit(NULL);
