@@ -19,8 +19,12 @@
 
 // セーブデータ
 struct _ZUKANWP_SAVEDATA {
-	u8	chr[ZUKANWP_SAVEDATA_CHAR_SIZE_X*ZUKANWP_SAVEDATA_CHAR_SIZE_Y*0x20];
-	u16	pal[16];
+	// カスタムグラフィックキャラ
+	u8	customChar[ZUKANWP_SAVEDATA_CHAR_SIZE_X*ZUKANWP_SAVEDATA_CHAR_SIZE_Y*0x20];
+	// カスタムグラフィックパレット
+	u16	customPalette[16];
+	// フレームパレット
+	u16	framePalette[16];
 };
 
 
