@@ -1139,7 +1139,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     SEQ_WAIT_MSG,
   };
 
-  WIFIBATTLEMATCH_RND_WORK	      *p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
 
   switch( *p_seq )

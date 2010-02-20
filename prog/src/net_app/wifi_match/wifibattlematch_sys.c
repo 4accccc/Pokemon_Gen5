@@ -825,9 +825,6 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
 
-  //録画バッファ作成
-  BTL_SETUP_AllocRecBuffer( p_param->btl_setup_prm, heapID );
-
 	//ランダムバトルのバトル設定
   if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_RANDOM )
   { 
@@ -904,6 +901,8 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
 
 
   BATTLE_PARAM_SetPokeParty( p_param->btl_setup_prm, p_wk->p_player_btl_party, BTL_CLIENT_PLAYER ); 
+
+  BTL_SETUP_AllocRecBuffer( p_param->btl_setup_prm, heapID );
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 

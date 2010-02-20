@@ -1561,7 +1561,7 @@ static void PlayerInfo_TRAINER_Cleate( PLAYERINFO_WORK * p_wk, u32 trainerID, GF
 		p_handle	= GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, heapID );
 
 		p_wk->res[ PLAYERINFO_RESID_TRAINER_PLT ]	= GFL_CLGRP_PLTT_RegisterEx( p_handle,
-        WBM_CARD_TRAINER_RES_NCLR, p_wk->cl_draw_type, PLAYERINFO_PLT_OBJ_TRAINER*0x20,
+        WBM_CARD_TRAINER_RES_NCLR, p_wk->cl_draw_type, p_wk->trainer_plt*0x20,
         WBM_CARD_TRAINER_RES_PLT_OFS(trainerID), 1, heapID );
 
 		p_wk->res[ PLAYERINFO_RESID_TRAINER_CGR ]		= GFL_CLGRP_CGR_Register( 

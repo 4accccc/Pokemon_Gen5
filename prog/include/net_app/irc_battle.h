@@ -9,7 +9,6 @@
  */
 //======================================================================
 #pragma once
-#include "battle_championship/battle_championship_def.h"
 #include "gamesystem/game_data.h"
 
 //======================================================================
@@ -29,7 +28,7 @@
 #pragma mark [> struct
 typedef struct
 {
-  BATTLE_CHAMPIONSHIP_DATA *csData;
+  //BATTLE_CHAMPIONSHIP_DATA *csData;
   GAMEDATA *gameData;
 }IRC_BATTLE_INIT_WORK;
 

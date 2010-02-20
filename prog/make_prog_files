@@ -1555,13 +1555,11 @@ SRCS_OVERLAY_GURU2 = net_app/guru2/guru2.c \
 
 
 # バトル大会メニュー
-#===> SRCS_OVERLAY_BATTLE
-#===> SRCS_OVERLAY_BATTLE_BAG
-#===> SRCS_OVERLAY_BATTLE_PLIST
-#===> SRCS_OVERLAY_VS_MULTI_LIST
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = battle_championship/battle_championship.c \
 				net_app/irc_battle/irc_battle_main.c \
-				net_app/irc_battle/irc_battle_subproc.c
+				net_app/irc_battle/irc_battle_subproc.c \
+        net_app/wifi_match/digitalcardcheck.c
 
 # 小幡デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
@@ -1746,7 +1744,7 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
 SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
                                     net_app/wifi_match/wifibattlematch_subproc.c
 
-# WIFIバトルマッチング表示周り部分
+# WIFIバトルマッチングフロー周り＋ネット部分
 #===> SRCS_OVERLAY_DPW_COMMON
 #===> SRCS_OVERLAY_UI_COMMON
 #LIB=>          libdwcgssake.$HYB.a
@@ -1757,14 +1755,16 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
 SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
                 net_app/wifi_match/wifibattlematch_rnd.c \
                 net_app/wifi_match/wifibattlematch_wifi.c \
-                net_app/wifi_match/wifibattlematch_graphic.c \
-								net_app/wifi_match/wifibattlematch_view.c \
                 net_app/wifi_match/wifibattlematch_net.c \
                 net_app/wifi_match/atlas_syachi2ds_v1.c \
-                net_app/wifi_match/wifibattlematch_util.c \
-                net_app/wifi_match/digitalcardcheck.c \
                 net_app/wifi_match/debug/debug_wifi_match.c \
                 net_app/wifi_match/wifibattlematch_utilproc.c
+
+#バトルマッチ描画＋汎用モジュール部分
+#===> SRCS_OVERLAY_WIFIBATTLEMATCH_CORE
+SRCS_OVERLAY_WIFIBATTLEMATCH_VIEW = net_app/wifi_match/wifibattlematch_graphic.c \
+								net_app/wifi_match/wifibattlematch_view.c \
+                net_app/wifi_match/wifibattlematch_util.c
 
 # コマンドデモ
 #===> SRCS_OVERLAY_DEV_WIFI

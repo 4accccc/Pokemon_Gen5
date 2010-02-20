@@ -75,7 +75,7 @@ static const GFL_DISP_VRAM vramBank = {
 static GFL_PROC_RESULT IRC_BATTLE_ProcInit( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT IRC_BATTLE_ProcTerm( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
-static void IRC_BATTLE_CreateCompareData( BATTLE_CHAMPIONSHIP_DATA *csData , IRC_BATTLE_COMPARE_MATCH *compareData );
+static void IRC_BATTLE_CreateCompareData( void *csData , IRC_BATTLE_COMPARE_MATCH *compareData );
 static const BOOL IRC_BATTLE_CompareMatchData( IRC_BATTLE_WORK *work );
 static const BOOL IRC_BATTLE_CompareMatchDataFunc( IRC_BATTLE_COMPARE_MATCH *data1 , IRC_BATTLE_COMPARE_MATCH *data2 );
 static void* IRC_BATTLE_CreateBattleData( IRC_BATTLE_WORK *work , void *battleData );
@@ -141,8 +141,8 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcInit( GFL_PROC * proc, int * seq , void *p
   {
     u8 i;
     work->initWork = GFL_HEAP_AllocClearMemory( work->heapId , sizeof(IRC_BATTLE_INIT_WORK) );
-    work->initWork->csData = GFL_HEAP_AllocClearMemory( work->heapId , sizeof(BATTLE_CHAMPIONSHIP_DATA) );
-    BATTLE_CHAMPIONSHIP_SetDebugData( work->initWork->csData , work->heapId );
+    //work->initWork->csData = GFL_HEAP_AllocClearMemory( work->heapId , sizeof(BATTLE_CHAMPIONSHIP_DATA) );
+    //BATTLE_CHAMPIONSHIP_SetDebugData( work->initWork->csData , work->heapId );
     work->initWork->gameData = GAMEDATA_Create( work->heapId );
   }
   else
@@ -180,8 +180,8 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcTerm( GFL_PROC * proc, int * seq , void *p
   if( pwk == NULL )
   {
     GAMEDATA_Delete( work->initWork->gameData );
-    BATTLE_CHAMPIONSHIP_TermDebugData( work->initWork->csData );
-    GFL_HEAP_FreeMemory( work->initWork->csData );
+    //BATTLE_CHAMPIONSHIP_TermDebugData( work->initWork->csData );
+    //GFL_HEAP_FreeMemory( work->initWork->csData );
     GFL_HEAP_FreeMemory( work->initWork );
   }
   GFL_PROC_FreeWork( proc );
@@ -515,10 +515,10 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
 }
 
 //比較用データの作成
-static void IRC_BATTLE_CreateCompareData( BATTLE_CHAMPIONSHIP_DATA *csData , IRC_BATTLE_COMPARE_MATCH *compareData )
+static void IRC_BATTLE_CreateCompareData( void *csData , IRC_BATTLE_COMPARE_MATCH *compareData )
 {
-  compareData->championsipNumber = csData->number;
-  compareData->championsipLeague = csData->league;
+//  compareData->championsipNumber = csData->number;
+//  compareData->championsipLeague = csData->league;
 }
 
 //データの比較
@@ -558,7 +558,7 @@ static void* IRC_BATTLE_CreateBattleData( IRC_BATTLE_WORK *work , void *battleDa
   {
     //Party
     POKEPARTY *pokeParty = (POKEPARTY*)((u32)battleData + sizeof(IRC_BATTLE_BATTLE_DATA));
-    PokeParty_Init( pokeParty , CHAMPIONSHIP_POKE_NUM );
+/*   PokeParty_Init( pokeParty , CHAMPIONSHIP_POKE_NUM );
     for( i=0;i<CHAMPIONSHIP_POKE_NUM;i++ )
     {
       if( PPP_Get( work->initWork->csData->ppp[i] , ID_PARA_poke_exist , NULL ) )
@@ -568,7 +568,7 @@ static void* IRC_BATTLE_CreateBattleData( IRC_BATTLE_WORK *work , void *battleDa
         GFL_HEAP_FreeMemory( pp );
       }
     }
-  }
+*/  }
 
   return battleData;
 }
@@ -980,7 +980,7 @@ static const BOOL IRC_BATTLE_Send_CompareMatchData( IRC_BATTLE_WORK* work )
   ARI_TPrintf("Send MatchData \n");
 
   //データ作成
-  IRC_BATTLE_CreateCompareData( work->initWork->csData , &work->selfCmpareData );
+ // IRC_BATTLE_CreateCompareData( work->initWork->csData , &work->selfCmpareData );
   {
     GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
     BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER ,

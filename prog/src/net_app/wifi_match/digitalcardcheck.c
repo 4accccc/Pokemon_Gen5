@@ -30,6 +30,7 @@
 
 //  セーブデータ
 #include "savedata/regulation.h"
+#include "savedata/rndmatch_savedata.h"
 
 //  WIFIバトルマッチのモジュール
 #include "wifibattlematch_graphic.h"
@@ -45,8 +46,6 @@
 //-------------------------------------
 ///	オーバーレイ
 //=====================================
-FS_EXTERN_OVERLAY(ui_common);
-FS_EXTERN_OVERLAY(battle_championship);
 
 //-------------------------------------
 ///	デバッグ
@@ -192,9 +191,6 @@ static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Init( GFL_PROC *p_proc, int *p_seq,
 {	
 	DIGITALCARDCHECK_WORK	*p_wk;
 
-
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_DIGITALCARD_CHECK, 0x30000 );
 
@@ -278,8 +274,6 @@ static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Exit( GFL_PROC *p_proc, int *p_seq,
 	//ヒープ破棄
 	GFL_HEAP_DeleteHeap( HEAPID_DIGITALCARD_CHECK );
 	
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
-
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -936,6 +930,7 @@ static void Util_PlayerInfo_Create( DIGITALCARDCHECK_WORK *p_wk )
     GFL_CLUNIT	*p_unit;
     SAVE_CONTROL_WORK *p_sv;
     BATTLE_BOX_SAVE   *p_bbox_save;
+    const RNDMATCH_DATA *cp_match_save;
 
     PLAYERINFO_WIFICUP_DATA info_setup;
 
@@ -946,6 +941,7 @@ static void Util_PlayerInfo_Create( DIGITALCARDCHECK_WORK *p_wk )
     p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
     p_sv    = GAMEDATA_GetSaveControlWork( p_wk->p_game_data );
     p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+    cp_match_save  = SaveData_GetRndMatchConst( p_sv );
 
 
     //自分のデータを表示
@@ -966,8 +962,11 @@ static void Util_PlayerInfo_Create( DIGITALCARDCHECK_WORK *p_wk )
 
     info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
 
-    info_setup.rate = 0;    //@todo
-    info_setup.btl_cnt = 0;//@todo
+    {
+      info_setup.rate = RNDMATCH_GetParam( cp_match_save, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE );
+      info_setup.btl_cnt = RNDMATCH_GetParam( cp_match_save, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN )
+        + RNDMATCH_GetParam( cp_match_save, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE );
+    }
 
     p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_bbox_save, TRUE, HEAPID_DIGITALCARD_CHECK );
   }

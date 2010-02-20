@@ -74,7 +74,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 //=====================================
 typedef enum
 {
-  //大会期間チェックの戻り値
+  //登録解除処理
   WBM_WIFI_SUBSEQ_UNREGISTER_RET_TRUE  = 0,//登録解除した
   WBM_WIFI_SUBSEQ_UNREGISTER_RET_FALSE,   //解除しなかった
   WBM_WIFI_SUBSEQ_UNREGISTER_RET_NONE,   //登録されていない
@@ -657,6 +657,10 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     *p_seq  = SEQ_CHECK_GPF;
     break;
     
+
+    //-------------------------------------
+    ///	GPF登録チェック
+    //=====================================
   case SEQ_CHECK_GPF:
     { 
       SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
@@ -688,6 +692,9 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     }
     break;
 
+    //-------------------------------------
+    ///	ネット初期化
+    //=====================================
   case SEQ_START_NET_INIT:
     WIFIBATTLEMATCH_NET_StartInitialize( p_wk->p_net );
     *p_seq  = SEQ_WAIT_NET_INIT;
@@ -704,6 +711,9 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     }
     break;
 
+    //-------------------------------------
+    ///	GPFデータ取得
+    //=====================================
   case SEQ_START_DOWNLOAD_GPF_DATA:
     WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, HEAPID_WIFIBATTLEMATCH_CORE );
     *p_seq = SEQ_WAIT_DOWNLOAD_GPF_DATA;
@@ -728,6 +738,9 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     }
     break;
 
+    //-------------------------------------
+    ///	SAKEデータ取得
+    //=====================================
   case SEQ_START_DOWNLOAD_SAKE_DATA:
     WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_GET_WIFI_SCORE, &p_wk->sake_data );
     *p_seq = SEQ_WAIT_DOWNLOAD_SAKE_DATA;
@@ -2203,11 +2216,6 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     SEQ_START_CARDIN,
     SEQ_WAIT_CARDIN,
 
-    //録画確認
-    SEQ_START_SELECT_BTLREC_MSG,
-    SEQ_START_SELECTBTLREC,
-    SEQ_WAIT_SELECTBTLREC,
-
     //大会期間チェック
     SEQ_START_SUBSEQ_CUPDATE,
     SEQ_WAIT_SUBSEQ_CUPDATE,
@@ -2325,38 +2333,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       ret = Util_PlayerInfo_Move( p_wk );
       if( ret )
       { 
-        *p_seq  = SEQ_START_SELECT_BTLREC_MSG;
-      }
-    }
-    break;
-    //-------------------------------------
-    ///	録画確認
-    //=====================================
-  case SEQ_START_SELECT_BTLREC_MSG:
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_014, WBM_TEXT_TYPE_STREAM );
-    *p_seq = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SELECTBTLREC ); 
-    break;
-  case SEQ_START_SELECTBTLREC:
-    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
-    *p_seq     = SEQ_WAIT_SELECTBTLREC;   
-    break;
-  case SEQ_WAIT_SELECTBTLREC:
-    {
-      const u32 select  = Util_List_Main( p_wk );
-      if( select != WBM_LIST_SELECT_NULL )
-      { 
-        Util_List_Delete( p_wk );
-        switch( select )
-        { 
-        case 0:
-          //@todo
-          *p_seq = SEQ_START_SUBSEQ_CUPDATE;
-          break;
-        case 1:
-          *p_seq = SEQ_START_SUBSEQ_CUPDATE;
-          break;
-        }
+        *p_seq  = SEQ_START_SUBSEQ_CUPDATE;
       }
     }
     break;
@@ -3017,12 +2994,10 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 
     const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_game_data ));
 
-
     p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
     p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
     p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_game_data );
     p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-
 
     //自分のデータを表示
     GFL_STD_MemClear( &info_setup, sizeof(PLAYERINFO_WIFICUP_DATA) );

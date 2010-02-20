@@ -14,6 +14,7 @@
 #include "app/p_status.h"
 #include "poke_tool/pokeparty.h"
 #include "savedata/mystatus.h"
+#include "savedata/regulation.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
 
@@ -79,7 +80,8 @@ IRC_BATTLE_SUBPROC_WORK* IRC_BATTLE_SUBPROC_InitSubProc( IRC_BATTLE_WORK *work )
   procWork->procSys = GFL_PROC_LOCAL_boot( work->heapId );
 
   procWork->pokeParty = PokeParty_AllocPartyWork( work->heapId );
-  for( i=0;i<CHAMPIONSHIP_POKE_NUM;i++ )
+#if 0
+  for( i=0;i<6/*CHAMPIONSHIP_POKE_NUM*/;i++ )
   {
     if( PPP_Get( work->initWork->csData->ppp[i] , ID_PARA_poke_exist , NULL ) )
     {
@@ -88,6 +90,7 @@ IRC_BATTLE_SUBPROC_WORK* IRC_BATTLE_SUBPROC_InitSubProc( IRC_BATTLE_WORK *work )
       GFL_HEAP_FreeMemory( pp );
     }
   }
+#endif
   
   IRC_BATTLE_SUBPROC_InitListData( work , procWork , &procWork->plData );
   IRC_BATTLE_SUBPROC_InitStatusData( work , procWork , &procWork->psData );
@@ -106,7 +109,8 @@ void IRC_BATTLE_SUBPROC_TermSubProc( IRC_BATTLE_WORK *work , IRC_BATTLE_SUBPROC_
   u8 i;
   //パーティーのセット
   work->battleParty = PokeParty_AllocPartyWork( work->heapId );
-  for( i=0;i<CHAMPIONSHIP_POKE_NUM;i++ )
+#if 0
+  for( i=0;i<6/*CHAMPIONSHIP_POKE_NUM*/;i++ )
   {
     const u8 num = procWork->plData.in_num[i];
     if( num > 0 )
@@ -116,7 +120,7 @@ void IRC_BATTLE_SUBPROC_TermSubProc( IRC_BATTLE_WORK *work , IRC_BATTLE_SUBPROC_
       GFL_HEAP_FreeMemory( pp );
     }
   }
-  
+#endif
 
 
   GFL_HEAP_FreeMemory( procWork->pokeParty );
@@ -212,7 +216,7 @@ static void IRC_BATTLE_SUBPROC_InitListData( IRC_BATTLE_WORK *work , IRC_BATTLE_
   u8 i;
   const u8 netId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   const u8 enemyId = (netId == 0 ? 1 : 0 );
-  REGULATION *reg = work->initWork->csData->regulation;
+  REGULATION *reg = NULL; //= work->initWork->csData->regulation;
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(work->initWork->gameData);
   IRC_BATTLE_BATTLE_DATA *enemyBtlData = work->postBattleData[enemyId];
   
@@ -221,7 +225,7 @@ static void IRC_BATTLE_SUBPROC_InitListData( IRC_BATTLE_WORK *work , IRC_BATTLE_
   plData->mailblock = NULL;
   plData->cfg = SaveData_GetConfig(svWork);
   plData->tvwk = NULL;
-  plData->reg = reg;
+//  plData->reg = reg;
   
   plData->zone_id = 0;
   plData->mode = PL_MODE_BATTLE;

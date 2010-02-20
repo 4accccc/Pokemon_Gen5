@@ -30,7 +30,7 @@
  *        定義
 */
 //=============================================================================
-
+FS_EXTERN_OVERLAY(wifibattlematch_view);
 
 //=============================================================================
 /**
@@ -83,6 +83,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Init( GFL_PROC *p_proc, int *p_
 {	
   WIFIBATTLEMATCH_CORE_PARAM *p_param  = p_param_adrs;
 
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(wifibattlematch_view) );
+
   switch( p_param->p_param->mode )
   { 
   case WIFIBATTLEMATCH_MODE_RANDOM:  //ランダム対戦
@@ -114,23 +116,30 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Init( GFL_PROC *p_proc, int *p_
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {
+  GFL_PROC_RESULT ret;
   WIFIBATTLEMATCH_CORE_PARAM *p_param  = p_param_adrs;
 
   switch( p_param->p_param->mode )
   { 
   case WIFIBATTLEMATCH_MODE_RANDOM:  //ランダム対戦
-    return WifiBattleMatchRnd_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    ret = WifiBattleMatchRnd_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    break;
 
   case WIFIBATTLEMATCH_MODE_WIFI:    //WIFI大会
-    return WifiBattleMatchWifi_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    ret = WifiBattleMatchWifi_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    break;
 
   case WIFIBATTLEMATCH_MODE_LIVE:    //ライブ大会
-    return WifiBattleMatchRnd_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    ret = WifiBattleMatchRnd_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    break;
 
   default:
     GF_ASSERT( 0 );
-    return 0;
   }
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifibattlematch_view) );
+
+  return ret;
 }
 
 //----------------------------------------------------------------------------
