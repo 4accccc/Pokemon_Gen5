@@ -55,6 +55,7 @@
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
 
 #include "net_app/union/union_main.h" // for UNION_CommBoot
+#include "field/fieldmap_proc.h"  // FLDMAP_BASESSYS_GRID
 
 #include "system/playtime_ctrl.h" //for PLAYTIMECTRL_Start
 #include "savedata/gametime.h"  // for GMTIME
@@ -1207,6 +1208,73 @@ GMEVENT* EVENT_ChangeMapFromUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
   return event;
 } 
 
+static setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
+//------------------------------------------------------------------
+/**
+ * @brief パレスマップに移動するとき
+ */
+//------------------------------------------------------------------
+GMEVENT* EVENT_ChangeMapToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32* pos )
+{
+  GMEVENT * event;
+  FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+
+  //裏フィールド以外から、パレスへ飛ぶ場合通常フィールドへの戻り先を記録しておく
+  if (GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE && zone_id == ZONE_ID_PALACE01 )
+  {
+    LOCATION return_loc;
+    setNowLoaction( &return_loc, fieldWork );
+    GAMEDATA_SetPalaceReturnLocation(gamedata, &return_loc);
+  }
+  event = EVENT_ChangeMapPos(gsys, fieldWork, zone_id, pos, DIR_UP, FALSE);
+  return event;
+}
+//------------------------------------------------------------------
+/**
+ * @brief パレスから自分のフィールドに戻るとき
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
+{
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem );
+  //覚えておいた戻り先をそのまま代入
+  work->loc_req = *(GAMEDATA_GetPalaceReturnLocation( GAMESYSTEM_GetGameData(gameSystem) ) );
+  work->exit_type          = EXIT_TYPE_NONE;
+  work->seasonUpdateEnable = FALSE;
+
+  return event;
+}
+
+//------------------------------------------------------------------
+/// 現在位置をLOCATIONにセット（GRID/RAIL両対応）
+//------------------------------------------------------------------
+static setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap)
+{
+  FIELD_PLAYER * field_player = FIELDMAP_GetFieldPlayer( fieldmap );
+  if ( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_GRID )
+  {
+    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( field_player );
+    const VecFx32 * now_pos = MMDL_GetVectorPosAddress( fmmdl );
+    LOCATION_SetDirect( return_loc, FIELDMAP_GetZoneID(fieldmap), DIR_DOWN,
+        now_pos->x, now_pos->y, now_pos->z );
+  }
+  else
+  {
+    RAIL_LOCATION rail_loc;
+    FIELD_PLAYER_GetNoGridLocation( field_player, &rail_loc );
+    LOCATION_SetDirectRail( return_loc,
+        FIELDMAP_GetZoneID(fieldmap), EXIT_DIR_DOWN,
+        rail_loc.rail_index, rail_loc.line_grid, rail_loc.width_grid);
+  }
+}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT* EVENT_ChangeMapByConnect( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
