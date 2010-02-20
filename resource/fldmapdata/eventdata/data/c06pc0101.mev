@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/16 14:56:42
+#save date:2010/02/20 20:15:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06pc0101.wms
 #hold event type:
 1
 #hold event number:
-8
+9
 #event number: 0
 #type
 1
@@ -258,6 +258,37 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -40
+#event number: 8
+#type
+1
+#ID name
+C06PC0101_DELIVERY
+#OBJ CODE Number
+DELIVERY
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_POSTMAN
+#Event Script Name
+SCRID_POSTMAN
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

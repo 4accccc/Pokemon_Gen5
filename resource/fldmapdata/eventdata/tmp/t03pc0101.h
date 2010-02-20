@@ -9,6 +9,7 @@
 #ifndef ZONE_T03PC0101_EVC_H
 #define ZONE_T03PC0101_EVC_H
 
+#define T03PC0101_DELIVERY                 0
 
 #endif //ZONE_T03PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t03pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

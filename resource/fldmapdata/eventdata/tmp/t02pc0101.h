@@ -18,6 +18,7 @@
 #define T02PC0101_CONNECT_00               6
 #define T02PC0101_CONNECT_01               7
 #define T02PC0101_CONNECT_02               8
+#define T02PC0101_DELIVERY                 9
 
 #endif //ZONE_T02PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t02pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

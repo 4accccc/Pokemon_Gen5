@@ -18,6 +18,7 @@
 #define C07PC0101_CONNECT_01               4
 #define C07PC0101_CONNECT_02               5
 #define C07PC0101_SHOPM_02                 6
+#define C07PC0101_DELIVERY                 7
 
 #endif //ZONE_C07PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

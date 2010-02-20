@@ -17,6 +17,7 @@
 #define C05PC0101_CONNECT_01               5
 #define C05PC0101_CONNECT_02               6
 #define C05PC0101_SHOPM_02                 7
+#define C05PC0101_DELIVERY                 8
 
 #endif //ZONE_C05PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

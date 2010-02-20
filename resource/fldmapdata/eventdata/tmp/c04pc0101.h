@@ -18,6 +18,7 @@
 #define C04PC0101_CONNECT_00               6
 #define C04PC0101_CONNECT_01               7
 #define C04PC0101_CONNECT_02               8
+#define C04PC0101_DELIVERY                 9
 
 #endif //ZONE_C04PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

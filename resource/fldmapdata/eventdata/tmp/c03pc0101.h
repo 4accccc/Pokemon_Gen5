@@ -17,6 +17,7 @@
 #define C03PC0101_PCWOMAN                  5
 #define C03PC0101_SHOPM1_01                6
 #define C03PC0101_SHOPM1_02                7
+#define C03PC0101_DELIVERY                 8
 
 #endif //ZONE_C03PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

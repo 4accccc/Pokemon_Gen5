@@ -8,6 +8,7 @@
 #ifndef ZONE_WC10PCR0101_EVC_H
 #define ZONE_WC10PCR0101_EVC_H
 
+#define WC10PC0101_DELIVERY                0
 
 #endif //ZONE_WC10PCR0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/wc10pcr0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
