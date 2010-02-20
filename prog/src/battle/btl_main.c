@@ -2995,34 +2995,33 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
   const POKEPARTY* party_src = srcParty_Get( wk, clientID );
   BTL_PARTY* party = &pokecon->party[ clientID ];
   u32 poke_count = PokeParty_GetPokeCount( party_src );
-  u8 pokeID = ClientBasePokeID[ clientID ];
-  u8  fIllusion = FALSE;
+  u8 pokeID_Start = ClientBasePokeID[ clientID ];
+  u8 pokeID;
 
   POKEMON_PARAM* pp;
   u8 i;
 
+  pokeID = pokeID_Start;
   for(i=0; i<poke_count; ++i, ++pokeID)
   {
     pp = PokeParty_GetMemberPointer( party_src, i );
     pokecon->pokeParam[ pokeID ] = BTL_POKEPARAM_Create( pp, pokeID, HEAPID_BTL_SYSTEM );
-
-    // １個前のポケがイリュージョン使いなら、自分のSrcPPデータを見せかけ用データとしてセットする
-    if( fIllusion ){
-      BPP_SetViewSrcData( pokecon->pokeParam[ pokeID-1 ], pp );
-    }
-    fIllusion = (BPP_GetValue( pokecon->pokeParam[pokeID], BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON);
-
     BTL_PARTY_AddMember( party, pokecon->pokeParam[ pokeID ] );
   }
 
-  // 最後の１体がイリュージョン使いなら、先頭のSrcPPを見せかけデータにする
-  if( fIllusion && (poke_count>1)){
-    pp = PokeParty_GetMemberPointer( party_src, 0 );
-    BPP_SetViewSrcData( pokecon->pokeParam[ pokeID-1 ], pp );
+  // 最後以外のポケモンがイリュージョン使いなら、最後のSrcPPを見せかけデータにする
+  pokeID = pokeID_Start;
+  for(i=0; i<(poke_count-1); ++i, ++pokeID)
+  {
+    if( BPP_GetValue(pokecon->pokeParam[pokeID], BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON )
+    {
+      pp = PokeParty_GetMemberPointer( party_src, (poke_count - 1) );
+      BPP_SetViewSrcData( pokecon->pokeParam[ pokeID ], pp );
+    }
   }
 
   // 野生ゾロアークのイリュージョンなら特殊処理
-  if( (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_WILD) && (clientID != 0) )
+  if( (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_WILD) && (clientID == BTL_CLIENTID_SA_ENEMY1) )
   {
     enum {
       MONSNO_NULL = 0,
@@ -3036,6 +3035,11 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
       if( (BPP_GetMonsNo(bpp) == MONSNO_ZOROAAKU)
       &&  (BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON)
       ){
+        /*
+         * 自分の手持ちに ライコウ がいれば エンテイ に化ける。
+         * 同じく手持ちに エンテイ がいれば スイクン に、
+         *                スイクン がいれば ライコウ にそれぞれ化ける
+         */
         const POKEPARTY* party_player = srcParty_Get( wk, 0 );
         u8 player_poke_cnt = PokeParty_GetPokeCount( party_player );
         u8 p;
@@ -3552,17 +3556,15 @@ int BTL_PARTY_FindMemberByPokeID( const BTL_PARTY* party, u8 pokeID )
 //----------------------------------------------------------------------
 void BTL_PARTY_SetFakeSrcMember( BTL_PARTY* party, u8 memberIdx )
 {
-  if( (party->memberCount > memberIdx)
+  if( (memberIdx < (party->memberCount -1 ))
   &&  (party->memberCount > 1)
   ){
     BTL_POKEPARAM* bpp = party->member[ memberIdx ];
     if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON )
     {
       BTL_POKEPARAM* refPoke;
-      u8 idx = memberIdx + 1;
-      if( idx >= party->memberCount ){
-        idx = 0;
-      }
+      u8 idx = party->memberCount - 1;
+
       refPoke = party->member[idx];
       BPP_SetViewSrcData( bpp, BPP_GetSrcData(refPoke) );
       BTL_Printf("%d番目にいるイリュージョン持ちポケモン[%d]の参照ポケを\n", memberIdx, BPP_GetID(bpp));
