@@ -32,6 +32,8 @@ _EVENT_DATA ev_hiden_takinobori_menu
 _EVENT_DATA ev_hiden_flash_menu
 _EVENT_DATA ev_hiden_teleport_menu
 _EVENT_DATA ev_hiden_anawohoru_menu
+_EVENT_DATA ev_hiden_diving
+_EVENT_DATA ev_hiden_diving_menu
 _EVENT_DATA_END
 
 
@@ -79,7 +81,7 @@ EVENT_START ev_hiden_kairiki
     IF $SCWK_ANSWER == 6 THEN
       _CALL ev_hiden_kairiki_ng
     ELSE
-      _SYSWIN_MSG_DOWN( msg_kairiki_01 )
+      _SYSWIN_MSG( msg_kairiki_01 , WIN_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
       _SYSWIN_CLOSE()
       
@@ -92,14 +94,14 @@ EVENT_END
 
 //すでにかいりきをつかっている場合
 ev_hiden_kairiki_already:
-  _SYSWIN_MSG_DOWN( msg_kairiki_04 )
+  _SYSWIN_MSG( msg_kairiki_04 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   _END
 
 //秘伝わざもっていない場合
 ev_hiden_kairiki_ng:
-  _SYSWIN_MSG_DOWN( msg_kairiki_03 )
+  _SYSWIN_MSG( msg_kairiki_03 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   _END
@@ -111,7 +113,7 @@ ev_hiden_kairiki_02:
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
   
   _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
-  _SYSWIN_MSG_DOWN( msg_kairiki_05 )
+  _SYSWIN_MSG( msg_kairiki_05 , WIN_DOWN )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -120,7 +122,7 @@ ev_hiden_kairiki_02:
   _CALL sub_cutin_player_player_form_return
 //  _TALK_CLOSE    //カットインでMSG用BGがクリアされている対処
   
-  _SYSWIN_MSG_DOWN( msg_kairiki_06 )
+  _SYSWIN_MSG( msg_kairiki_06 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 
@@ -138,7 +140,7 @@ EVENT_START ev_hiden_kairiki_menu
   ELSE
     _FLAG_SET( SYS_FLAG_KAIRIKI )      //かいりきフラグセット
     _TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
-    _SYSWIN_MSG_DOWN( msg_kairiki_05 )
+    _SYSWIN_MSG( msg_kairiki_05 , WIN_DOWN )
     _SYSWIN_CLOSE()
 
     _CALL sub_curin_player_form_set
@@ -147,7 +149,7 @@ EVENT_START ev_hiden_kairiki_menu
 
 
     
-      _SYSWIN_MSG_DOWN( msg_kairiki_06 )
+      _SYSWIN_MSG( msg_kairiki_06 , WIN_DOWN )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
 //    _GET_NOW_ZONE_ID  SCWK_TEMP0
@@ -171,7 +173,7 @@ EVENT_START ev_hiden_naminori
 //  _SYS_FLAG_PAIR_GET    SCWK_ANSWER
 //  _IFVAL_JUMP    SCWK_ANSWER,EQ,1, ev_hiden_naminori_pair_ng
     
-      _SYSWIN_MSG_DOWN( msg_naminori_01 )
+      _SYSWIN_MSG( msg_naminori_01 , WIN_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
     
@@ -183,7 +185,7 @@ EVENT_END
 
 //秘伝わざもっていない場合
 ev_hiden_naminori_ng:
-  _SYSWIN_MSG_DOWN( msg_naminori_03 )
+  _SYSWIN_MSG( msg_naminori_03 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   _RET
@@ -202,7 +204,7 @@ ev_hiden_naminori_02:
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
   _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
   
-  _SYSWIN_MSG_DOWN( msg_naminori_02 )
+  _SYSWIN_MSG( msg_naminori_02 , WIN_DOWN )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -220,7 +222,7 @@ ev_hiden_naminori_02:
 //SCWK_PARAM0に使用したポケモンの位置番号
 EVENT_START ev_hiden_naminori_menu
   _TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
-  _SYSWIN_MSG_DOWN( msg_naminori_02 )
+  _SYSWIN_MSG( msg_naminori_02 , WIN_DOWN )
   _SYSWIN_CLOSE()
   
 //_OBJ_PAUSE_CLEAR  FLDOBJ_ID_PLAYER
@@ -243,7 +245,7 @@ EVENT_START ev_hiden_iaigiri
   IF $SCWK_ANSWER == 6 THEN
     _CALL ev_hiden_iaigiri_ng
   ELSE
-      _SYSWIN_MSG_DOWN( msg_iai_01 )
+      _SYSWIN_MSG( msg_iai_01 , WIN_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
     
     IF $SCWK_ANSWER == 0 THEN
@@ -256,7 +258,7 @@ EVENT_END
 
 //居合い切り　秘伝わざもっていない場合
 ev_hiden_iaigiri_ng:
-	_SYSWIN_MSG_DOWN( msg_iai_03 )
+	_SYSWIN_MSG( msg_iai_03 , WIN_DOWN )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
 	_RET
@@ -268,7 +270,7 @@ ev_hiden_iaigiri_02:
   _LDWK( SCWK_TEMP0,SCWK_ANSWER )
   
   _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
-  _SYSWIN_MSG_DOWN( msg_iai_02 )
+  _SYSWIN_MSG( msg_iai_02 , WIN_DOWN )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -302,7 +304,7 @@ EVENT_START ev_hiden_iaigiri_menu
   _TALK_OBJ_START()
   
 	_TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
-	_SYSWIN_MSG_DOWN( msg_iai_02 )
+	_SYSWIN_MSG( msg_iai_02 , WIN_DOWN )
 	_SYSWIN_CLOSE()
   
   //カットイン
@@ -347,7 +349,7 @@ EVENT_START ev_hiden_takinobori
     _CALL ev_hiden_takinobori_ng
   ELSE
     
-      _SYSWIN_MSG_DOWN( msg_taki_01 )
+      _SYSWIN_MSG( msg_taki_01 , WIN_DOWN )
 	  _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
     
@@ -359,7 +361,7 @@ EVENT_END
 
 //秘伝わざもっていない場合
 ev_hiden_takinobori_ng:
-	_SYSWIN_MSG_DOWN( msg_taki_03 )
+	_SYSWIN_MSG( msg_taki_03 , WIN_DOWN )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
 	_RET
@@ -370,7 +372,7 @@ ev_hiden_takinobori_02:
 	_LDWK( SCWK_TEMP0,SCWK_ANSWER )
 	_TEMOTI_NICK_NAME( 0,SCWK_ANSWER )
   
-	_SYSWIN_MSG_DOWN( msg_taki_02 )
+	_SYSWIN_MSG( msg_taki_02 , WIN_DOWN )
 	_SYSWIN_CLOSE()
   
   _CALL sub_curin_player_form_set
@@ -387,7 +389,7 @@ ev_hiden_takinobori_02:
 //メニューから「たきのぼり」発動
 EVENT_START ev_hiden_takinobori_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
-	_SYSWIN_MSG_DOWN( msg_taki_02 )
+	_SYSWIN_MSG( msg_taki_02 , WIN_DOWN )
 	_SYSWIN_CLOSE()
   
 //	_OBJ_PAUSE_CLEAR	FLDOBJ_ID_PLAYER
@@ -405,13 +407,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_hiden_flash_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
-	_SYSWIN_MSG_DOWN( msg_flash_01 )
+	_SYSWIN_MSG( msg_flash_01 , WIN_DOWN )
 	_SYSWIN_CLOSE()
 
-//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
   _CALL sub_curin_player_form_set
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
-//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
   _CALL sub_cutin_player_player_form_return
 
 EVENT_END
@@ -421,13 +421,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_hiden_teleport_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
-	_SYSWIN_MSG_DOWN( msg_teleport_01 )
+	_SYSWIN_MSG( msg_teleport_01 , WIN_DOWN )
 	_SYSWIN_CLOSE()
 
-//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
   _CALL sub_curin_player_form_set
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
-//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
   _CALL sub_cutin_player_player_form_return
 
 EVENT_END
@@ -437,16 +435,33 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_hiden_anawohoru_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
-	_SYSWIN_MSG_DOWN( msg_anawohoru_01 )
+	_SYSWIN_MSG( msg_anawohoru_01 , WIN_DOWN )
 	_SYSWIN_CLOSE()
 
-//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
   _CALL sub_curin_player_form_set
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
-//  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
   _CALL sub_cutin_player_player_form_return
 
 EVENT_END
 
 
+/**************************************************************/
+/*							ダイビング								*/
+/**************************************************************/
+EVENT_START ev_hiden_diving
+EVENT_END
+
+/**************************************************************/
+/*							ダイビング								*/
+/**************************************************************/
+EVENT_START ev_hiden_diving_menu
+	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
+	_SYSWIN_MSG( msg_teleport_01 , WIN_DOWN )
+	_SYSWIN_CLOSE()
+
+  _CALL sub_curin_player_form_set
+	_CALL_POKE_CUTIN(SCWK_PARAM0)
+  _CALL sub_cutin_player_player_form_return
+
+EVENT_END
 
