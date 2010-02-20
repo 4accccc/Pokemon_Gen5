@@ -65,7 +65,7 @@ ev_itemget_flditem_true:
   _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
   _POCKET_NAME( 2, SCWK_ANSWER )
 
-  _SYSWIN_MSG_DOWN( msg_item_get_pocket_nowait )
+  _SYSWIN_MSG( msg_item_get_pocket_nowait , WIN_DOWN )
   _LAST_KEYWAIT()
   
   //ç≈å„Ç…ê¨å˜ÇµÇΩÇ±Ç∆ÇSCWK_ANSWERÇ…ë„ì¸ÇµÇƒÇ®Ç≠ÅI
@@ -86,7 +86,7 @@ ev_itemget_flditem_yes_wazam:
   _PLAYER_NAME( 0 )
   _ITEM_NAME( 1,SCWK_TEMP0 )
   _ITEM_WAZA_NAME( 2,SCWK_TEMP0)
-  _SYSWIN_MSG_DOWN( msg_item_get_field_03 )
+  _SYSWIN_MSG( msg_item_get_field_03 , WIN_DOWN )
 }
 _RET
 
@@ -95,7 +95,7 @@ ev_itemget_flditem_no_wazam:
 {
   _PLAYER_NAME(  0 )
   _ITEM_NAME( 1,SCWK_TEMP0 )
-  _SYSWIN_MSG_DOWN( msg_item_get_field_02 )
+  _SYSWIN_MSG( msg_item_get_field_02 , WIN_DOWN )
 }
 _RET
 
@@ -105,7 +105,7 @@ _RET
 ev_itemget_flditem_false:
 {
   _ITEM_NAME( 0,SCWK_TEMP0 )
-  _SYSWIN_MSG_DOWN( msg_item_get_fail_field )
+  _SYSWIN_MSG( msg_item_get_fail_field , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 
