@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c09r0601.h"
-  //.include  "c09r0601.h"
+  .include  "c09r0601.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,86 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c09r0601
+_EVENT_DATA     ev_reserve_c09r0601_champion_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*入室時発動イベント：殿堂入り処理         */
 /**************************************************************/
-//ev_c09r0601_flag_change:
-//  _END
+EVENT_START   ev_reserve_c09r0601_champion_01
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c09r0601:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//初回話しかけかチェック
+	IF FLAG_OFF( FE_C09R0501_CHAMPION ) THEN
+		//初回会話
+		_BALLOONWIN_OBJMSG( msg_c09r0601_champion_01, C09R0601_CHAMPION_01 )
+		_MSGWIN_CLOSE()
+	ELSE
+		//２回目以降
+		_BALLOONWIN_OBJMSG( msg_c09r0601_champion_02, C09R0601_CHAMPION_01 )
+		_MSGWIN_CLOSE()
+	ENDIF
+	
+	//マシンの前へ
+	_OBJ_ANIME(C09R0601_CHAMPION_01,anm_c09r0601_walk_up_01)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_c09r0601_walk_up_01)
+	_OBJ_ANIME_WAIT()
+	
+	//チャンピオン、ふりむく
+	_OBJ_ANIME(C09R0601_CHAMPION_01,anm_c09r0601_champion_look_player)
+	_OBJ_ANIME_WAIT()
+	
+	//性別が格納されるローカル変数を定義
+	DEFINE_LOCAL SCWK_SEX
+	_GET_MY_SEX(SCWK_SEX)
+	
+	//男性だった場合
+	IF $SCWK_SEX == PM_MALE THEN
+	
+	_BALLOONWIN_OBJMSG( msg_c09r0601_champion_03 , C09R0601_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//女性だった場合
+	ELSE
+	
+	_BALLOONWIN_OBJMSG( msg_c09r0601_champion_04 , C09R0601_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+	//チャンピオン、マシンを見る
+	_OBJ_ANIME(C09R0601_CHAMPION_01,anm_c09r0601_champion_look_up)
+	_OBJ_ANIME_WAIT()
+	
+	//チャンピオン：この でんどういりのへやに
+	_BALLOONWIN_OBJMSG( msg_c09r0601_champion_05 , C09R0601_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//殿堂入り処理
+	_GOTO_GAMECLEAR_DEMO( 0 )
 
+EVENT_END
+
+//--------------------------------------------------------------
+//	でんどういり：マシンの前に移動
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c09r0601_walk_up_01
+	_ANIME_DATA	AC_WALK_U_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	でんどういり：チャンピオン主人公を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c09r0601_champion_look_player
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	でんどういり：マシンを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c09r0601_champion_look_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0

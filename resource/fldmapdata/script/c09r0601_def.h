@@ -5,6 +5,6 @@
 #define _C09R0601_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C09R0601 (1)
+#define SCRID_RESERVE_C09R0601_CHAMPION_01 (1)
 
 #endif //_C09R0601_DEF_H_

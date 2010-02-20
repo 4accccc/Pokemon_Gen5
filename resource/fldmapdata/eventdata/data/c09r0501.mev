@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/20 17:01:43
+#save date:2010/02/20 19:34:07
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c09r0501.wms
 #SECTION START:OBJ_EVENT
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_C09R0501_CHAMPION_02
 #Event Script Name
-SCRID_C09R0501_CHAMPION_02
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -153,7 +153,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 POS_C09R0501_N_01
@@ -169,6 +169,23 @@ WK_SCENE_C09R0501
 EVENTDATA_POSTYPE_GRID
 #position
 -8 8 24
+#size
+3 1
+#event number: 1
+#Pos Event Label
+POS_C09R0501_CHAMPION_02
+#Pos Script Name
+SCRID_POS_C09R0501_CHAMPION_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C09R0501
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 8
 #size
 3 1
 #Map Event List Data End

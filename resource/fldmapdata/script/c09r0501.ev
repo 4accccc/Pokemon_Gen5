@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c09r0501.h"
   .include  "c09r0501.h"
+  .include  "c09r0601_def.h"
+
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,7 +23,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_c09r0501_n_01
 _EVENT_DATA    ev_c09r0501_champion_01		//クリア前
-_EVENT_DATA    ev_c09r0501_champion_02		//クリア後（戦闘あり）
+_EVENT_DATA    ev_pos_c09r0501_champion_02		//クリア後（戦闘あり）
 _EVENT_DATA    ev_c09r0501_rival_01
 _EVENT_DATA_END
 
@@ -234,10 +236,134 @@ EVENT_END
 /************************************************************/
 /*					チャンピオン（クリア後）				*/
 /************************************************************/
-EVENT_START	ev_c09r0501_champion_02
+EVENT_START	ev_pos_c09r0501_champion_02
+
+	//主人公：チャンピオンの前まで自動で進む
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_01 )
+	_OBJ_ANIME_WAIT()
 	
+		//自機座標取得
+	DEFINE_LOCAL  LCW_POSX
+    DEFINE_LOCAL  LCW_POSZ
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    
+    //自機の位置をチャンピオンの正面に移動
+    SWITCH $LCW_POSX
+	CASE 15 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_z15 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 16 THEN
+		//正面なので処理なし
+	CASE 17 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_stairs_up_z17 )
+	_OBJ_ANIME_WAIT()
+	
+    DEFAULT
+		//正面なので処理なし
+    ENDSWITCH
+	
+	//初回話しかけかチェック
+	IF FLAG_OFF( FE_C09R0501_CHAMPION ) THEN
+		//初回会話
+		_BALLOONWIN_OBJMSG( msg_c09r0501_champion_10, C09R0501_CHAMPION_02 )
+		_MSGWIN_CLOSE()
+	ELSE
+		//２回目以降
+		_BALLOONWIN_OBJMSG( msg_c09r0501_champion_11, C09R0501_CHAMPION_02 )
+		_MSGWIN_CLOSE()
+	ENDIF
+		
+	
+	//主人公とチャンピオン、隣接
+	_OBJ_ANIME( C09R0501_CHAMPION_02, anm_vs_champion_champ_to_player_01 )
+	_OBJ_ANIME_WAIT()
+	
+	/*
+	//【仮】戦闘処理
+	_TRAINER_BTL_SET( TRID_CHAMPION_01, 0 )
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+	*/
+	
+	//チャンピオン：あっぱれ！まさにてんかむそうなり！
+	_BALLOONWIN_OBJMSG( msg_c09r0501_champion_12, C09R0501_CHAMPION_02 )
+	_MSGWIN_CLOSE()
+	
+	//チャンピオン移動
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_champ_walk_up_01 )
+	_OBJ_ANIME( C09R0501_CHAMPION_02, anm_vs_champion_player_walk_up_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//チャンピオンOBJ削除
+	_OBJ_DEL( C09R0501_CHAMPION_02 )
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vs_champion_player_walk_up_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//マップチェンジ後以下のスクリプトを起動する
+	_RESERVE_SCRIPT( SCRID_RESERVE_C09R0601_CHAMPION_01 )
+
+	//殿堂入り部屋へシーン切り替え
+	_MAP_CHANGE( ZONE_ID_C09R0601, 8, 16, DIR_UP )
+
 EVENT_END
 
+//--------------------------------------------------------------------
+//主人公：オートで階段を上る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vs_champion_stairs_up_01
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：オートで階段を上る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vs_champion_stairs_up_z15
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：オートで階段を上る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vs_champion_stairs_up_z17
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//チャンピオン：主人公に隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vs_champion_champ_to_player_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//チャンピオン：殿堂入り部屋へ01
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vs_champion_champ_walk_up_01
+	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：殿堂入り部屋へ02
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vs_champion_player_walk_up_01
+	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：殿堂入り部屋へ02
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vs_champion_player_walk_up_02
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*						ライバル							*/

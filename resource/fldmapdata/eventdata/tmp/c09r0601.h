@@ -9,6 +9,7 @@
 #ifndef ZONE_C09R0601_EVC_H
 #define ZONE_C09R0601_EVC_H
 
+#define C09R0601_CHAMPION_01               0
 
 #endif //ZONE_C09R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c09r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
