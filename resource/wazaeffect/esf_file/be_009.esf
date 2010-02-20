@@ -1,6 +1,5 @@
 EFFSEQ
-$0004
-C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_normal_1.spa
+$0003
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_157.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_kaiten.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
@@ -53,7 +52,7 @@ SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 エフェクト終了待ち	ポケモン
 トレーナー削除	POS_BB
 タイマーによるウエイト	5
-パーティクルデータ削除	be_m_ball_00_kaiten
+パーティクルデータ削除	be_m_ball_01_kaiten
 制御モード変更	継続
 SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_3
