@@ -1,9 +1,11 @@
 EFFSEQ
-$0004
+$0006
 c:\home\pokemon_wb\resource\particle\wazaeffect\be_000_ec001_1a.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_00_kaiten.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_normal_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_157.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_kaiten.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 #001
 %00
 制御モード変更	継続
@@ -32,22 +34,22 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_157.spa
 ポケモン影バニッシュ	POS_F	バニッシュオン
 ラベル	NO_EXIST_F_1
 制御モード変更	逐次
-パーティクルデータロード	be_m_ball_00_kaiten
-パーティクルデータロード	be_ball_normal_1
+パーティクルデータロード	be_m_ball_01_kaiten
+パーティクルデータロード	be_ball_001_1
 パーティクルデータロード	w_157
 SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 制御モード変更	継続
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_2
-パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_BB	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	POS_BB	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_BB_2
 立ち位置チェック	POS_B	いない	NO_EXIST_B_2
-パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_B	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	POS_B	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_B_2
 立ち位置チェック	POS_D	いない	NO_EXIST_D_2
-パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_D	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	POS_D	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_D_2
 立ち位置チェック	POS_F	いない	NO_EXIST_F_2
-パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_F	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	POS_F	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_F_2
 ポケモンα値	POS_TR_BB	追従	2	20	0	0
 エフェクト終了待ち	ポケモン
@@ -57,33 +59,33 @@ SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 制御モード変更	継続
 SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_3
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_BB	方向無し	4:0:0	1:1:1	1
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_BB	方向無し	4:0:0	1:1:1	1
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_BB	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_BB	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_BB	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_BB	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_BB	16	16	0	31:31:31
 ポケモン拡縮	POS_BB	追従	1.2	1.2	32	0	0
 ポケモン鳴き声	POS_BB
 ラベル	NO_EXIST_BB_3
 立ち位置チェック	POS_B	いない	NO_EXIST_B_3
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_B	方向無し	4:0:0	1:1:1	1
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_B	方向無し	4:0:0	1:1:1	1
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_B	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_B	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_B	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_B	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_B	16	16	0	31:31:31
 ポケモン拡縮	POS_B	追従	1.2	1.2	32	0	0
 ポケモン鳴き声	POS_B
 ラベル	NO_EXIST_B_3
 立ち位置チェック	POS_D	いない	NO_EXIST_D_3
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_D	方向無し	4:0:0	1:1:1	1
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_D	方向無し	4:0:0	1:1:1	1
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_D	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_D	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_D	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_D	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_D	16	16	0	31:31:31
 ポケモン拡縮	POS_D	追従	1.2	1.2	32	0	0
 ポケモン鳴き声	POS_D
 ラベル	NO_EXIST_D_3
 立ち位置チェック	POS_F	いない	NO_EXIST_F_3
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_F	方向無し	4:0:0	1:1:1	1
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_F	方向無し	4:0:0	1:1:1	1
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_F	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_F	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_F	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_F	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_F	16	16	0	31:31:31
 ポケモン拡縮	POS_F	追従	1.2	1.2	32	0	0
 ポケモン鳴き声	POS_F
