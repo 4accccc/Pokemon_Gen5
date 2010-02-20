@@ -2812,6 +2812,23 @@ u8 BPP_CONFRONT_REC_GetPokeID( const BTL_POKEPARAM* bpp, u8 idx )
   }
   return BTL_POKEID_NULL;
 }
+//=============================================================================================
+/**
+ * 捕獲された時のボールアイテムIDをセットする
+ *
+ * @param   bpp
+ * @param   ballItemID
+ */
+//=============================================================================================
+void BPP_SetCaptureBallID( const BTL_POKEPARAM* bpp, u16 ballItemID )
+{
+  BALL_ID  ballID = ITEM_GetBallID( ballItemID );
+  if( ballID == BALLID_NULL ){
+    ballID = BALLID_MONSUTAABOORU;
+  }
+  PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_get_ball, ballID );
+}
+
 
 //---------------------------------------------------------------------------------------------
 // 合体ワザ関連

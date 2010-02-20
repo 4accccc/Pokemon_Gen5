@@ -420,6 +420,7 @@ extern BOOL BPP_MIGAWARI_AddDamage( BTL_POKEPARAM* bpp, u16 damage );
 extern void BPP_CONFRONT_REC_Set( BTL_POKEPARAM* bpp, u8 pokeID );
 extern u8 BPP_CONFRONT_REC_GetCount( const BTL_POKEPARAM* bpp );
 extern u8 BPP_CONFRONT_REC_GetPokeID( const BTL_POKEPARAM* bpp, u8 idx );
+extern void BPP_SetCaptureBallID( const BTL_POKEPARAM* bpp, u16 ballItemID );
 
 
 extern void BPP_CombiWaza_SetParam( BTL_POKEPARAM* bpp, u8 combiPokeID, WazaID combiUsedWaza );

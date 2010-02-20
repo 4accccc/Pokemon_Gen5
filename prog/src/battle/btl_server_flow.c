@@ -306,7 +306,7 @@ static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_MemberOut( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx );
 static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
-static BOOL CalcBallEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID,
+static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID,
     u8* yure_cnt, u8* fCritical );
 static fx32 GetKusamuraCaptureRatio( BTL_SVFLOW_WORK* wk );
 static fx32 CalcBallCaptureRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID );
@@ -2616,12 +2616,13 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     {
       u8 yure_cnt, fSuccess, fCritical, fZukanRegister;
 
-      fSuccess = CalcBallEffect( wk, bpp, targetPoke, itemID, &yure_cnt, &fCritical );
+      fSuccess = CalcCapturePokemon( wk, bpp, targetPoke, itemID, &yure_cnt, &fCritical );
 
       if( fSuccess ){
         wk->flowResult = SVFLOW_RESULT_POKE_GET;
         wk->getPokePos = targetPos;
         fZukanRegister = !BTL_MAIN_IsZukanRegistered( wk->mainModule, targetPoke );
+        BPP_SetCaptureBallID( targetPoke, itemID );
         BTL_SERVER_NotifyPokemonCapture( wk->server, targetPoke );
       }else{
         fZukanRegister = FALSE;
@@ -2645,7 +2646,7 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
  * @retval  BOOL    ïﬂälÇ≈Ç´ÇÈèÍçáÇÕTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL CalcBallEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke,u16 ballID,
+static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke,u16 ballID,
     u8* yure_cnt, u8* fCritical )
 {
   *fCritical = FALSE;
