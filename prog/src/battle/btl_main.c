@@ -2655,6 +2655,35 @@ BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos )
     return result;
   }
 }
+//-------------------------------------------------------------------
+/**
+ *  トリプルバトル時にセンター位置かどうかを判定
+ */
+//-------------------------------------------------------------------
+BOOL BTL_MAINUTIL_IsTripleCenterPos( BtlPokePos pos )
+{
+  return (pos == BTL_POS_1ST_1) || (pos == BTL_POS_2ND_1);
+}
+//-------------------------------------------------------------------
+/**
+ *  トリプルバトル時に相手の反対端にあたる位置を取得
+ *
+ * @param   myPos   自分位置
+ * @param   farPos  [out] 相手の反対端にあたる位置を格納する変数ポインタ
+ *
+ * @retval  BOOL    取得できたらTRUE／取得できない（自分位置がCenterの）場合 FALSE
+ */
+//-------------------------------------------------------------------
+BOOL BTL_MAINUTIL_GetTripleFarPos( BtlPokePos myPos, BtlPokePos* farPos )
+{
+  if( !BTL_MAINUTIL_IsTripleCenterPos(myPos) )
+  {
+    u8 myPosIdx = btlPos_to_sidePosIdx( myPos );
+    *farPos = BTL_MAINUTIL_GetOpponentPokePos( BTL_RULE_TRIPLE, myPos, myPosIdx );
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 //=============================================================================================

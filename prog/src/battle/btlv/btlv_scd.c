@@ -769,6 +769,19 @@ static void stw_setConfirmField( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* ma
   stw->confirmCount = num;
   stw->confirmType = STW_CONFIRM_FIELD;
 }
+// 遠隔ヒットワザなら、自分から見て遠隔地に居るポケモンを追加する
+static void stw_addFarPoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, WazaID waza, BtlPokePos myPos )
+{
+  if( (BTL_MAIN_GetRule(mainModule) == BTL_RULE_TRIPLE)
+  &&  (WAZADATA_GetFlag(waza, WAZAFLAG_TripleFar))
+  ){
+    BtlPokePos  farPos;
+    if( BTL_MAINUTIL_GetTripleFarPos(myPos, &farPos) )
+    {
+      stw->pos[ stw->selectablePokeCount++ ] = farPos;
+    }
+  }
+}
 //
 static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MAIN_MODULE* mainModule, BtlPokePos* targetPos )
 {
@@ -838,7 +851,9 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
                                                BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) )
                                              );
   bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+
   //@todo ただしく遠隔フラグが立っていないので、今回は見送る
+  //       -> WAZA_TARGET_LONG_SELECTはどこも対応していない。この処理自体、不要になった 2010.02.20 taya
 #if 0
   if( bisp.waza_target == WAZA_TARGET_OTHER_SELECT )
   {
@@ -1047,9 +1062,11 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
   switch( target ){
   case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
     stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_OTHERS, basePos) );
+    stw_addFarPoke( stw, wk->mainModule, waza, basePos );
     break;
   case WAZA_TARGET_ENEMY_SELECT:        ///< 敵１体（選択）
     stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_ENEMY, basePos) );
+    stw_addFarPoke( stw, wk->mainModule, waza, basePos );
     break;
   case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方ポケ（選択）
     stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_MYTEAM, basePos) );

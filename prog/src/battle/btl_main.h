@@ -221,14 +221,8 @@ typedef struct {
 extern const BTL_TRIPLE_ATTACK_AREA* BTL_MAINUTIL_GetTripleAttackArea( BtlPokePos pos );
 extern BOOL BTL_MAINUTIL_CheckTripleHitArea( BtlPokePos attackerPos, BtlPokePos targetPos );
 
-
-/**
- *  トリプルバトル時にセンター位置かどうかを判定
- */
-static inline BOOL BTL_MAINUTIL_IsTripleCenterPos( BtlPokePos pos )
-{
-  return (pos == BTL_POS_1ST_1) || (pos == BTL_POS_2ND_1);
-}
+extern BOOL BTL_MAINUTIL_IsTripleCenterPos( BtlPokePos pos );
+extern BOOL BTL_MAINUTIL_GetTripleFarPos( BtlPokePos myPos, BtlPokePos* farPos );
 
 //----------------------------------------------------------------------------------------------
 /*
