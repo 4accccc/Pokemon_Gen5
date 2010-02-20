@@ -149,28 +149,17 @@ extern BOOL BTL_SVFRET_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID
 
 
 
-
 /**
- * 特殊優先順コードA（ワザ優先順より上位：0～7に収まるように！）
+ * 特殊優先順コード（素早さより上位、ワザ優先順より下位：0～7に収まるように！）
  */
 typedef enum {
 
-  BTL_SPPRI_A_LOW     = 0,
-  BTL_SPPRI_A_DEFAULT = 1,
-  BTL_SPPRI_A_HIGH    = 2,
+  BTL_SPPRI_LOW     = 0,
+  BTL_SPPRI_DEFAULT = 1,
+  BTL_SPPRI_HIGH    = 2,
 
-}BtlSpecialPriA;
+}BtlSpecialPri;
 
-/**
- * 特殊優先順コードB（ワザ優先順より下位：：0～7に収まるように！）
- */
-typedef enum {
-
-  BTL_SPPRI_B_LOW     = 0,
-  BTL_SPPRI_B_DEFAULT = 1,
-  BTL_SPPRI_B_HIGH    = 2,
-
-}BtlSpPriA;
 
 /**
  *  状態異常指定の拡張コード

@@ -151,7 +151,9 @@ static void handler_common_WeakAff_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVF
 static void handler_PinchReactCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_IbanNomi( u32* numElems );
-static void handler_IbanNomi_SpPriority( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_IbanNomi_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_IbanNomi_SpPriorityWorked( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_IbanNomi_ActStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_IbanNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems );
 static void handler_MikuruNomi_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -176,7 +178,10 @@ static void handler_HikarinoKona( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KyouseiGipusu( u32* numElems );
 static void handler_KyouseiGipusu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SenseiNoTume( u32* numElems );
-static void handler_SenseiNoTume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_SenseiNoTume_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_SenseiNoTume_SpPriorityWorked( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_SenseiNoTume_ActStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_SenseiNoTume_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KoukouNoSippo( u32* numElems );
 static void handler_KoukouNoSippo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_OujaNoSirusi( u32* numElems );
@@ -1996,14 +2001,16 @@ static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n )
 static const BtlEventHandlerTable* HAND_ADD_ITEM_IbanNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_SP_PRIORITY,    handler_IbanNomi_SpPriority },  // 特殊行動プライオリティチェック
-    { BTL_EVENT_USE_ITEM,             handler_IbanNomi_Use        },  // アイテム使用ハンドラ
+    { BTL_EVENT_CHECK_SP_PRIORITY,    handler_IbanNomi_SpPriorityCheck  },  // 特殊行動プライオリティチェック
+    { BTL_EVENT_WORKED_SP_PRIORITY,   handler_IbanNomi_SpPriorityWorked },  // 特殊行動プライオリティ効果発生
+    { BTL_EVENT_ACTPROC_START,        handler_IbanNomi_ActStart         },  // アクション開始ハンドラ
+    { BTL_EVENT_USE_ITEM,             handler_IbanNomi_Use              },  // アイテム使用ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
 // 特殊行動プライオリティチェック
-static void handler_IbanNomi_SpPriority( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_IbanNomi_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
@@ -2013,11 +2020,28 @@ static void handler_IbanNomi_SpPriority( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     u16 hp_border = BTL_CALC_QuotMaxHP( bpp, quot );
     if( hp <= hp_border )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY_A, BTL_SPPRI_A_HIGH );
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY, BTL_SPPRI_HIGH );
     }
   }
 }
+// 特殊行動プライオリティ効果発生
+static void handler_IbanNomi_SpPriorityWorked( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    work[0] = 1;
+  }
+}
+// アクション開始ハンドラ
+static void handler_IbanNomi_ActStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (work[0] == 1)
+  ){
+    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+  }
+}
+
 // アイテム使用ハンドラ
 static void handler_IbanNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -2028,6 +2052,8 @@ static void handler_IbanNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_PriorityUpOnce );
     HANDEX_STR_AddArg( &param->str, pokeID );
     HANDEX_STR_AddArg( &param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+
+    work[0] = 0;
   }
 }
 
@@ -2313,22 +2339,59 @@ static void handler_KyouseiGipusu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SenseiNoTume( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_SP_PRIORITY,      handler_SenseiNoTume },
+    { BTL_EVENT_CHECK_SP_PRIORITY,    handler_SenseiNoTume_SpPriorityCheck  },  // 特殊行動プライオリティチェック
+    { BTL_EVENT_WORKED_SP_PRIORITY,   handler_SenseiNoTume_SpPriorityWorked },  // 特殊行動プライオリティ効果発生
+    { BTL_EVENT_ACTPROC_START,        handler_SenseiNoTume_ActStart         },  // アクション開始ハンドラ
+    { BTL_EVENT_USE_ITEM,             handler_SenseiNoTume_Use              },  // アイテム使用ハンドラ
+
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-static void handler_SenseiNoTume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// 特殊行動プライオリティチェック
+static void handler_SenseiNoTume_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     u8 per = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
     if( Item_IsExePer(flowWk, per) )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY_A, BTL_SPPRI_A_HIGH );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY, BTL_SPPRI_HIGH );
     }
   }
 }
+// 特殊行動プライオリティ効果発生
+static void handler_SenseiNoTume_SpPriorityWorked( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    work[0] = 1;
+  }
+}
+// アクション開始ハンドラ
+static void handler_SenseiNoTume_ActStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (work[0] == 1)
+  ){
+    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+  }
+}
+// アイテム使用ハンドラ
+static void handler_SenseiNoTume_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_PriorityUpOnce );
+    HANDEX_STR_AddArg( &param->str, pokeID );
+    HANDEX_STR_AddArg( &param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+
+    work[0] = 0;
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  *  こうこうのしっぽ、まんぷくおこう
@@ -2346,7 +2409,7 @@ static void handler_KoukouNoSippo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY_B, BTL_SPPRI_B_LOW );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY, BTL_SPPRI_LOW );
   }
 }
 //------------------------------------------------------------------------------

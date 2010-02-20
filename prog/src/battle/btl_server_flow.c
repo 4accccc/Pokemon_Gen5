@@ -112,11 +112,12 @@ typedef struct {
   BTL_ACTION_PARAM   action;
   u32                priority;
 
-  u8  clientID;   ///< クライアントID
-  u8  pokeIdx;    ///< そのクライアントの、何体目？ 0～
+  u8                 clientID; ///< クライアントID
+  u8                 pokeIdx;  ///< そのクライアントの、何体目？ 0～
+  u8                 fDone;    ///< 処理終了フラグ
+  u8                 fIntr;    ///< 割り込み許可フラグ
 
-  u8                 fDone;   ///< 処理終了フラグ
-  u8                 fIntr;   ///< 割り込み許可フラグ
+  u8                 defaultIdx;  ///< 特殊優先処理前の処理順（0～）
 
 }ACTION_ORDER_WORK;
 
@@ -263,8 +264,12 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk );
 static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk );
 static BOOL scproc_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility );
+static inline u8 ActPri_GetWazaPri( u32 priValue );
+static inline u8 ActPri_GetSpPri( u32 priValue );
+static inline u32 ActPri_SetSpPri( u32 priValue, u8 spPri );
 static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 orderMax );
-static void reqWazaUseForCalcActOrder( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order );
+static void sortActionSub( ACTION_ORDER_WORK* order, u32 numOrder );
 static u8 scEvent_GetWazaPriority( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp );
 static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BOOL fTrickRoomEnable );
 static inline WazaID ActOrder_GetWazaID( const ACTION_ORDER_WORK* wk );
@@ -275,8 +280,10 @@ static u8 ActOrderTool_GetIndex( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* a
 static int ActOrderTool_Intr( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex );
 static void ActOrderTool_SendToLast( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
 static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder );
-static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scproc_ActStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd );
+static void scEvent_ActProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd );
 static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
 static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
 static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza );
@@ -306,7 +313,7 @@ static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_MemberOut( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx );
 static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
-static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID,
+static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke,u16 ballID,
     u8* yure_cnt, u8* fCritical );
 static fx32 GetKusamuraCaptureRatio( BTL_SVFLOW_WORK* wk );
 static fx32 CalcBallCaptureRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID );
@@ -399,10 +406,6 @@ static void scproc_Fight_Damage_ToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
   const SVFL_WAZAPARAM* wazaParam, BTL_POKESET* targets );
 static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker,
   BTL_POKESET* targets, fx32 dmg_ratio );
-static void scproc_Fight_Damage_Determine( BTL_SVFLOW_WORK* wk,
-  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
-static void scEvent_WazaDamageDetermine( BTL_SVFLOW_WORK* wk,
-  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static u32 scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
       BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
       fx32 targetDmgRatio, BtlTypeAff affinity );
@@ -413,6 +416,10 @@ static void scPut_DamageAff( BTL_SVFLOW_WORK* wk, BtlTypeAff affinity );
 static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
     BTL_POKEPARAM* attacker, BTL_POKESET* targets, BtlTypeAff* affAry, const SVFL_WAZAPARAM* wazaParam, fx32 dmg_ratio );
 static u32 MarumeDamage( const BTL_POKEPARAM* bpp, u32 damage );
+static void scproc_Fight_Damage_Determine( BTL_SVFLOW_WORK* wk,
+  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
+static void scEvent_WazaDamageDetermine( BTL_SVFLOW_WORK* wk,
+  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BppKoraeruCause scEvent_CheckKoraeru( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, u16* damage );
 static void scproc_Koraeru( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKoraeruCause cause );
@@ -463,7 +470,8 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
 static BtlWeather scEvent_GetWeather( BTL_SVFLOW_WORK* wk );
 static BOOL scEvent_StdSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  );
 static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick );
-static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, PokeSick sick, BPP_SICK_CONT sickCont );
+static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker,
+  PokeSick sick, BPP_SICK_CONT sickCont );
 static void scEvent_WazaSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, WazaSick sick );
 static void scEvent_IekiFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target );
 static void scproc_Fight_Damage_AddEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
@@ -521,8 +529,8 @@ static void CurePokeDependSick_CallBack( void* wk_ptr, BTL_POKEPARAM* bpp, WazaS
 static void scproc_CheckExpGet( BTL_SVFLOW_WORK* wk );
 static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke );
 static void getexp_calc( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result );
-static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
 static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke );
+static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
 static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_EXP_WORK* calcExp );
 static inline u32 _calc_adjust_level_sub( u32 val );
 static inline int roundValue( int val, int min, int max );
@@ -541,7 +549,6 @@ static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSic
 static void scPut_WazaMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWazaSickEx exSickCode, BPP_SICK_CONT* oldCont );
 static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx exCode );
-static void scPut_ResetSameWazaCounter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_WazaFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scPut_WazaAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, WazaID waza );
 static void scput_WazaNoEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
@@ -574,7 +581,8 @@ static void scPut_ResetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTur
 static BOOL scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* outPoke );
 static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   WazaID orgWazaid, BtlPokePos orgTargetPos, REQWAZA_WORK* reqWaza );
-static void scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8* spePriA, u8* spePriB );
+static u8 scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
+static void scEvent_SpecialActPriorityWorked( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static void scEvent_BeforeFight( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaID waza );
 static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckWazaMsgCustom( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
@@ -1364,6 +1372,32 @@ static BOOL scEvent_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
   }
 }
 
+static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility )
+{
+  /*
+    行動優先順  ...  3 BIT
+    ワザ優先順  ...  6 BIT
+    特殊優先順  ...  3 BIT
+    素早さ      ... 16 BIT
+  */
+
+  return ( ((actPri&0x07)<<25) | ((wazaPri&0x3f)<<19) | ((spPri&0x07)<<16) | (agility&0xffff) );
+}
+static inline u8 ActPri_GetWazaPri( u32 priValue )
+{
+  return ((priValue >>19) & 0x3f);
+}
+static inline u8 ActPri_GetSpPri( u32 priValue )
+{
+  return ((priValue >> 16) & 0x07);
+}
+static inline u32 ActPri_SetSpPri( u32 priValue, u8 spPri )
+{
+  priValue &= ~(0x07 << 16);
+  priValue |= ((spPri & 0x07) << 16);
+  return priValue;
+}
+
 //----------------------------------------------------------------------------------
 /**
  *
@@ -1378,22 +1412,12 @@ static BOOL scEvent_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 //----------------------------------------------------------------------------------
 static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 orderMax )
 {
-  /*
-    行動優先順  ...  3 BIT
-    特殊優先順A ...  3 BIT
-    ワザ優先順  ...  6 BIT
-    特殊優先順B ...  3 BIT
-    素早さ      ... 16 BIT
-  */
-  #define MakePriValue( actPri, spePriA, wazaPri, spePriB, agility )  \
-            ( ((actPri&0x07)<<28) | ((spePriA&0x07)<<25) | ((wazaPri&0x3f)<<19) | ((spePriB&0x07)<<16) | (agility&0xffff) )
-
   SVCL_WORK* clwk;
   const BTL_ACTION_PARAM* actParam;
   const BTL_POKEPARAM* bpp;
   u32   hem_state;
   u16 agility;
-  u8  action, actionPri, wazaPri, spPri_A, spPri_B;
+  u8  action, actionPri, wazaPri;
   u8  i, j, p, numPoke;
 
 // 全ポケモンの行動内容をワークに格納
@@ -1437,25 +1461,24 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
       break;
     }
     // 「たたかう」場合はワザによる優先順、アイテム装備による優先フラグを全て見る
-    if( actParam->gen.cmd == BTL_ACTION_FIGHT ){
+    if( actParam->gen.cmd == BTL_ACTION_FIGHT )
+    {
       WazaID  waza;
       waza = ActOrder_GetWazaID( &order[i] );
       BTL_Printf("ポケ[%d]のワザ優先チェック .. waza=%d\n", BPP_GetID(bpp), waza);
       wazaPri = scEvent_GetWazaPriority( wk, waza, bpp );
-      // アイテム装備など、特殊な優先フラグ
-      scEvent_CheckSpecialActPriority( wk, bpp, &spPri_A, &spPri_B );
 
-    // 「ムーブ」の場合、アイテム装備等による優先フラグを見る
-    }else if( actParam->gen.cmd == BTL_ACTION_MOVE ){
+    // 「ムーブ」の場合、ワザ優先度フラットで計算
+    }
+    else if( actParam->gen.cmd == BTL_ACTION_MOVE )
+    {
       wazaPri = 0 - WAZAPRI_MIN;
-      scEvent_CheckSpecialActPriority( wk, bpp, &spPri_A, &spPri_B );
 
     // それ以外は行動優先順のみで判定
     }else{
       wazaPri = 0;
-      spPri_A = BTL_SPPRI_A_DEFAULT;
-      spPri_B = BTL_SPPRI_B_DEFAULT;
     }
+
     // すばやさ
     agility = scEvent_CalcAgility( wk, bpp, TRUE );
 
@@ -1466,12 +1489,68 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
     Hem_PopState( &wk->HEManager, hem_state );
 
     // プライオリティ値とクライアントIDを対にして配列に保存
-    order[i].priority = MakePriValue( actionPri, spPri_A, wazaPri, spPri_B, agility );
+    order[i].priority = ActPri_Make( actionPri, wazaPri, BTL_SPPRI_DEFAULT, agility );
   }
-// プライオリティ値によるソート
-  for(i=0; i<numPoke; i++)
+
+  // プライオリティ値によるソート
+  sortActionSub( order, numPoke );
+
+  // この時点での処理順をワークに記憶する
+  for(i=0; i<numPoke; ++i){
+    order[i].defaultIdx = i;
+  }
+
+  // プライオリティ操作イベント呼び出し
+  for(i=0; i<numPoke; ++i)
   {
-    for(j=i+1; j<numPoke; j++)
+    if( (order[i].action.gen.cmd == BTL_ACTION_FIGHT)
+    ||  (order[i].action.gen.cmd == BTL_ACTION_MOVE)
+    ){
+      u8 spPri = scEvent_CheckSpecialActPriority( wk, order[i].bpp );
+      order[i].priority = ActPri_SetSpPri( order[i].priority, spPri );
+    }
+  }
+
+  // 再度、プライオリティ値によるソート
+  sortActionSub( order, numPoke );
+
+  for(i=0; i<numPoke; ++i)
+  {
+    if( ActPri_GetSpPri(order[i].priority) == BTL_SPPRI_HIGH )
+    {
+      for(j=i+1; j<numPoke; ++j)
+      {
+        // 本来は自分より高優先度だったポケモンが自分の下にいたら、
+        // プライオリティ操作効果発生イベント呼び出し
+        if( order[i].defaultIdx > order[j].defaultIdx )
+        {
+          u32 hem_state = Hem_PushState( &wk->HEManager );
+          scEvent_SpecialActPriorityWorked( wk, order[i].bpp );
+          Hem_PopState( &wk->HEManager, hem_state );
+          break;
+        }
+      }
+    }
+  }
+
+  return p;
+}
+//----------------------------------------------------------------------------------
+/**
+ * アクション内容ワークをプライオリティ値降順にソートする
+ *
+ * @param   order
+ * @param   numOrder
+ */
+//----------------------------------------------------------------------------------
+static void sortActionSub( ACTION_ORDER_WORK* order, u32 numOrder )
+{
+  ACTION_ORDER_WORK tmp;
+  u32 i, j;
+
+  for(i=0; i<numOrder; ++i)
+  {
+    for(j=i+1; j<numOrder; ++j)
     {
       if( order[i].priority > order[j].priority ){
         continue;
@@ -1482,16 +1561,13 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
         }
       }
 
-      {
-        ACTION_ORDER_WORK tmp = order[i];
-        order[i] = order[j];
-        order[j] = tmp;
-      }
+      tmp = order[i];
+      order[i] = order[j];
+      order[j] = tmp;
     }
   }
-
-  return p;
 }
+
 //----------------------------------------------------------------------------------
 /**
  * [Event] ワザプライオリティ取得
@@ -1764,6 +1840,8 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
 
       BTL_N_Printf( DBGSTR_SVFL_ActOrderStart, BPP_GetID(bpp), BPP_GetMonsNo(bpp));
 
+      scproc_ActStart( wk, bpp, actOrder->action.gen.cmd );
+
       switch( action.gen.cmd ){
       case BTL_ACTION_FIGHT:
         if( !FlowFlg_Get(wk, FLOWFLG_FIRST_FIGHT) ){
@@ -1820,6 +1898,55 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * アクション実行開始通知処理
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   actionCmd
+ */
+//----------------------------------------------------------------------------------
+static void scproc_ActStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+  scEvent_ActProcStart( wk, bpp, actionCmd );
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  Hem_PopState( &wk->HEManager, hem_state );
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] アクション実行開始
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   actionCmd
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_ActProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_ACTION, actionCmd );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ACTPROC_START );
+  BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] アクション実行の終了
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ACTPROC_END );
+  BTL_EVENTVAR_Pop();
+}
+
 //----------------------------------------------------------------------------------
 /**
  * 命令無視チェック
@@ -1886,21 +2013,6 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 
 }
 
-//----------------------------------------------------------------------------------
-/**
- * [Event] アクション実行の終了
- *
- * @param   wk
- * @param   bpp
- */
-//----------------------------------------------------------------------------------
-static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ACTPROC_END );
-  BTL_EVENTVAR_Pop();
-}
 //--------------------------------------------------------------
 /**
  *  アクションの割り込み実行（ポケモンID指定）
@@ -9337,22 +9449,38 @@ static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacke
  *
  * @param   wk
  * @param   attacker
- * @param   spePriA     [out] 特殊優先度Aを受け取る（ワザより高い判定レベル）
- * @param   spePriB     [out] 特殊優先度Bを受け取る（ワザより低い判定レベル）
  *
  */
 //----------------------------------------------------------------------------------
-static void scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8* spePriA, u8* spePriB )
+static u8 scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
+{
+  u8 spPri;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_SP_PRIORITY, BTL_SPPRI_DEFAULT );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_SP_PRIORITY );
+    spPri = BTL_EVENTVAR_GetValue( BTL_EVAR_SP_PRIORITY );
+  BTL_EVENTVAR_Pop();
+
+  return spPri;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] 特殊優先度の効果が発生した
+ *
+ * @param   wk
+ * @param   attacker
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_SpecialActPriorityWorked( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_SP_PRIORITY_A, BTL_SPPRI_A_DEFAULT );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_SP_PRIORITY_B, BTL_SPPRI_B_DEFAULT );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_SP_PRIORITY );
-    *spePriA = BTL_EVENTVAR_GetValue( BTL_EVAR_SP_PRIORITY_A );
-    *spePriB = BTL_EVENTVAR_GetValue( BTL_EVAR_SP_PRIORITY_B );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WORKED_SP_PRIORITY );
   BTL_EVENTVAR_Pop();
 }
+
 //----------------------------------------------------------------------------------
 /**
  * [Event] ターン最初のワザ処理シーケンス直前

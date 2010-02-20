@@ -28,6 +28,7 @@
 typedef enum {
   BTL_EVENT_NULL = 0,
 
+  BTL_EVENT_ACTPROC_START,          ///< アクション処理１件開始
   BTL_EVENT_ACTPROC_END,            ///< アクション処理１件終了
   BTL_EVENT_WAZASEQ_START,          ///< ワザ処理開始
   BTL_EVENT_WAZASEQ_END,            ///< ワザ処理終了
@@ -39,7 +40,8 @@ typedef enum {
   BTL_EVENT_SKIP_NIGERU_FORBID,     ///< にげる封じスキップチェック
   BTL_EVENT_NIGERU_FORBID,          ///< にげる封じチェック
   BTL_EVENT_NIGERU_EXMSG,           ///< にげる特殊メッセージ
-  BTL_EVENT_CHECK_SP_PRIORITY,      ///< とくしゅ優先度チェック
+  BTL_EVENT_CHECK_SP_PRIORITY,      ///< 特殊優先度チェック
+  BTL_EVENT_WORKED_SP_PRIORITY,     ///< 特殊優先度効果発生した
   BTL_EVENT_GET_WAZA_PRI,           ///< ワザプライオリティ取得
   BTL_EVENT_CHECK_FLYING,           ///< 浮遊チェック
   BTL_EVENT_CALC_AGILITY,           ///< すばやさ計算
@@ -197,11 +199,11 @@ typedef enum {
   BTL_EVAR_POKEID_TARGET4,
   BTL_EVAR_POKEID_TARGET5,
   BTL_EVAR_POKEID_TARGET6,
+  BTL_EVAR_ACTION,
   BTL_EVAR_POKEPOS,
   BTL_EVAR_POKEPOS_ORG,
   BTL_EVAR_TOKUSEI,
-  BTL_EVAR_SP_PRIORITY_A,
-  BTL_EVAR_SP_PRIORITY_B,
+  BTL_EVAR_SP_PRIORITY,
   BTL_EVAR_WAZAID,
   BTL_EVAR_POKE_TYPE,
   BTL_EVAR_WAZA_TYPE,
