@@ -210,6 +210,13 @@ extern void GAMEDATA_SetEscapeLocation(GAMEDATA * gamedata, const LOCATION * loc
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+extern const LOCATION * GAMEDATA_GetPalaceReturnLocation(const GAMEDATA * gamedata);
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern void GAMEDATA_SetPalaceReturnLocation(GAMEDATA * gamedata, const LOCATION * loc);
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 extern void GAMEDATA_SetWarpID(GAMEDATA * gamedata, u16 warp_id);
 //--------------------------------------------------------------
 //--------------------------------------------------------------

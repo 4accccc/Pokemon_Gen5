@@ -70,6 +70,7 @@ struct _GAMEDATA{
   LOCATION *entrance_loc;
   LOCATION *special_loc;    ///<特殊接続先位置
   LOCATION *escape_loc;     ///<脱出先位置
+  LOCATION palace_return_loc; ///<パレスからの戻り先位置
 
   BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
   MYITEM_PTR myitem;      ///<手持ちアイテムセーブデータへのポインタ
@@ -493,6 +494,19 @@ const LOCATION * GAMEDATA_GetEscapeLocation(const GAMEDATA * gamedata)
 void GAMEDATA_SetEscapeLocation(GAMEDATA * gamedata, const LOCATION * loc)
 {
   *(gamedata->escape_loc) = *loc;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+const LOCATION * GAMEDATA_GetPalaceReturnLocation(const GAMEDATA * gamedata)
+{
+  return &gamedata->palace_return_loc;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void GAMEDATA_SetPalaceReturnLocation(GAMEDATA * gamedata, const LOCATION * loc)
+{
+  gamedata->palace_return_loc = * loc;
 }
 
 //--------------------------------------------------------------
