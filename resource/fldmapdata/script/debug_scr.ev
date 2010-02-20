@@ -295,6 +295,29 @@ ev_change_mapmatrix:
 _RET
 
 
+//イベントジャンプ-----------------------------------------------
+ev_event_jump:
+	{
+	DEFINE_LOCAL LWK_EVTJUMP
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, LWK_EVTJUMP )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_10, 1 )	//自宅２Fゲーム開始イベント
+	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+	
+	IF $LWK_EVTJUMP == 1 THEN
+		//自宅２階のゲーム開始イベントを起動
+		_MAP_CHANGE( ZONE_ID_T01R0102, 4, 5, DIR_DOWN )
+		
+	ENDIF
+	}
+	
+_RET
+
+
+
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
@@ -645,11 +668,12 @@ EVENT_START ev_debug_common
 	WHILE $SCWK_TEMP0 != 555
 		
 		//メニュー作成
-		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+		_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
 		//リスト追加
 		_BMPMENU_MAKE_LIST( msg_debug_common_00, 0 )	//ゲームクリア
 		_BMPMENU_MAKE_LIST( msg_debug_common_01, 1 )	//ジムバッジ全部
 		_BMPMENU_MAKE_LIST( msg_debug_common_02, 2 )	//到着フラグ
+		_BMPMENU_MAKE_LIST( msg_debug_08, 70 )	//イベントジャンプ
 		_BMPMENU_MAKE_LIST( msg_debug_05, 80 )	//イベントＯＦＦ
 		_BMPMENU_MAKE_LIST( msg_debug_07, 90 )	//マップ差し替え
 		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
@@ -685,6 +709,11 @@ EVENT_START ev_debug_common
 			_FLAG_SET( SYS_FLAG_ARRIVE_C08 )
 			_FLAG_SET( SYS_FLAG_ARRIVE_C09 )
 			_FLAG_SET( SYS_FLAG_ARRIVE_T03 )
+			
+		ELSIF $SCWK_ANSWER == 70 THEN
+			//イベントジャンプ
+			_CALL	ev_event_jump
+			$SCWK_TEMP0 = 555
 			
 		ELSIF $SCWK_ANSWER == 80 THEN
 			//イベントＯＦＦ
