@@ -32,39 +32,89 @@ _EVENT_DATA_END
 /**************************************************************/
 /* POS：【仮】チャンピオンとジムリーダー                       */
 /**************************************************************/
-
-//OBJ位置とアニメーションは仮
-//OBJ_DEL、FLAG_SETなどを行う必要あり
-//SUB_WINの処理が仮
-
 //ジム挑戦可能になるまで表示
 EVENT_START   ev_pos_c08_champions_01
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 
-	//チャンピオン隣接して発言
+	//チャンピオン隣接
+	_OBJ_ANIME( C08_CHAMPION_01, anm_c08_champion_come_01 )
+	_OBJ_ANIME_WAIT()
+	
+		//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//プレイヤー座標に応じて主人公に隣接
+	SWITCH $POSZ
+	CASE 173 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z173 )
+		_OBJ_ANIME_WAIT()
+	CASE 174 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z174 )
+	_OBJ_ANIME_WAIT()
+	CASE 175 THEN  //目の前に立った時
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z175 )
+		 _OBJ_ANIME_WAIT()
+	CASE 176 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z176 )
+		_OBJ_ANIME_WAIT()
+	CASE 177 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z177 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z175 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	
+	//チャンピオン：おお（主人公）か、こちらだ
 	_BALLOONWIN_OBJMSG( msg_c08_champion_01 , C08_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 
 	//チャンピオン誘導アニメーション
+	_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01 )
+	_OBJ_ANIME_WAIT()
 	
 	//上を向いてゲーヂスにコメント
 	_BALLOONWIN_OBJMSG( msg_c08_champion_02 , C08_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
 	//カメラ操作　ゲーヂス中心に
+	_CAMERA_MOVE( 9688,0,970752,26562560,0,11419648,30 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_G_CIS )
 	
 	//ゲーヂスの演説　
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_01 , C08_SAGE1_01 )
 	
+	//群集お互いを見る
+	_OBJ_ANIME( C08_OLDMAN_01, anm_c08_croud_panic_d )
+	_OBJ_ANIME( C08_CROWD_03,anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_WOMAN2_01, anm_c08_croud_panic_r )
+	_OBJ_ANIME( C08_CROWD_02,anm_c08_croud_panic_l )
+	_OBJ_ANIME( C08_CROWD_04, anm_c08_croud_panic_r )
+	_OBJ_ANIME( C08_CROWD_05,anm_c08_croud_panic_l )
+	_OBJ_ANIME_WAIT()
+	
+	
+	
 	//群集反応	サブウィンドウ表示
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_c08_crowd1_01 , 10 , 15 , 1 ) 
+	_SUBWIN_MSG( msg_c08_crowd1_01 , 3 , 9 , 1 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_c08_crowd2_01 , 5 , 20 , 2 )
+	_SUBWIN_MSG( msg_c08_crowd2_01 , 10 , 14 , 2 )
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_c08_crowd3_01 , 18 , 20 , 3 )
+	_SUBWIN_MSG( msg_c08_crowd3_01 , 20 , 10 , 3 )
 	
 	//10フレーム待機した後ウィンドウを消す
 	_TIME_WAIT( 10 )
@@ -76,15 +126,32 @@ EVENT_START   ev_pos_c08_champions_01
 	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 3 )
 	
+	//群集上を見る
+	_OBJ_ANIME( C08_OLDMAN_01, anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_CROWD_03,anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_WOMAN2_01, anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_CROWD_02,anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_CROWD_04, anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_CROWD_05,anm_c08_croud_panic_u )
+	_OBJ_ANIME_WAIT()
 	
 	//ゲーヂスの演説その２
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_02 , C08_SAGE1_01 )
 	
+	//群集お互いを見る
+	_OBJ_ANIME( C08_OLDMAN_01, anm_c08_croud_panic_d )
+	_OBJ_ANIME( C08_CROWD_03,anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_WOMAN2_01, anm_c08_croud_panic_r )
+	_OBJ_ANIME( C08_CROWD_02,anm_c08_croud_panic_l )
+	_OBJ_ANIME( C08_CROWD_04, anm_c08_croud_panic_r )
+	_OBJ_ANIME( C08_CROWD_05,anm_c08_croud_panic_l )
+	_OBJ_ANIME_WAIT()
+	
 	//群集反応
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_c08_crowd1_02 , 15 , 15 , 4 )
+	_SUBWIN_MSG( msg_c08_crowd1_02 , 3 , 8 , 4 )
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_c08_crowd3_02 , 20 , 20 , 5 )
+	_SUBWIN_MSG( msg_c08_crowd3_02 , 17 , 15 , 5 )
 	
 	
 	//10フレーム待機した後ウィンドウを消す
@@ -94,11 +161,35 @@ EVENT_START   ev_pos_c08_champions_01
 	_SUBWIN_CLOSE( 4 )
 	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 5 )
+
+	//群集上を見る
+	_OBJ_ANIME( C08_OLDMAN_01, anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_CROWD_03,anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_WOMAN2_01, anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_CROWD_02,anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_CROWD_04, anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_CROWD_05,anm_c08_croud_panic_u )
+	_OBJ_ANIME_WAIT()
 	
 	//ゲーヂスの演説
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_03 , C08_SAGE1_01 )
 	_BALLOONWIN_CLOSE()
 	
+	//ゲーヂス去ってゆく
+	_OBJ_ANIME( C08_SAGE1_01,anm_c08_sage1_goodbye_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//BGM終了
+	_END_EVENT_BGM()
+	
+	//群集お互いを見る
+	_OBJ_ANIME( C08_OLDMAN_01, anm_c08_croud_panic_d )
+	_OBJ_ANIME( C08_CROWD_03,anm_c08_croud_panic_u )
+	_OBJ_ANIME( C08_WOMAN2_01, anm_c08_croud_panic_r )
+	_OBJ_ANIME( C08_CROWD_02,anm_c08_croud_panic_l )
+	_OBJ_ANIME( C08_CROWD_04, anm_c08_croud_panic_r )
+	_OBJ_ANIME( C08_CROWD_05,anm_c08_croud_panic_l )
+	_OBJ_ANIME_WAIT()
 	
 	//群集反応
 	_BALLOONWIN_OBJMSG( msg_c08_crowd1_03 , C08_OLDMAN_01 )
@@ -108,10 +199,44 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_OBJMSG( msg_c08_crowd3_03 , C08_WOMAN2_01 )
 	_BALLOONWIN_CLOSE()
 	
+	//画面暗転・プラズマ団OB削除
+	_BLACK_OUT()
+	
 	//群集散ってゆくアニメーション
+	_OBJ_ANIME( C08_CROWD_01, anm_c08_croud_goodbye_01 )
+	_OBJ_ANIME( C08_OLDMAN_01,anm_c08_croud_goodbye_01 )
+	_OBJ_ANIME( C08_MAN3_01, anm_c08_croud_goodbye_01 )
+	//群集散ってゆくアニメーション
+	_OBJ_ANIME( C08_WOMAN2_01,anm_c08_croud_goodbye_02 )
+	_OBJ_ANIME( C08_CROWD_02, anm_c08_croud_goodbye_02 )
+	//群集散ってゆくアニメーション
+	_OBJ_ANIME( C08_CROWD_03,anm_c08_croud_goodbye_03 )
+	//群集散ってゆくアニメーション
+	_OBJ_ANIME( C08_CROWD_04,anm_c08_croud_goodbye_04 )
+	_OBJ_ANIME( C08_CROWD_05,anm_c08_croud_goodbye_04 )
+	_OBJ_ANIME_WAIT()
+	
+	//暗転終了
+	_DISP_FADE_END_CHECK()
 	
 	//群集・ゲーヂスOBJ削除
+	_OBJ_DEL( C08_OLDMAN_01 )
+	_OBJ_DEL( C08_MAN3_01 )
+	_OBJ_DEL( C08_WOMAN2_01 )
+	_OBJ_DEL( C08_CROWD_01 )
+	_OBJ_DEL( C08_CROWD_02 )
+	_OBJ_DEL( C08_CROWD_03 )
+	_OBJ_DEL( C08_CROWD_04 )
+	_OBJ_DEL( C08_CROWD_05 )
+	_OBJ_DEL( C08_SAGE1_01 )
 	
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	//アイリスとジャガ、向き合う
+	_OBJ_ANIME( C08_LEADER8B_01,anm_c08_leadersb_look_a_01 )
+	_OBJ_ANIME( C08_LEADER8A_01,anm_c08_leadersa_look_b_01 )
+	_OBJ_ANIME_WAIT()
 	
 	//アイリスとシャガ
 	_BALLOONWIN_OBJMSG( msg_c08_leader8b_01 , C08_LEADER8B_01 )
@@ -119,11 +244,27 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_OBJMSG( msg_c08_leader8a_01 , C08_LEADER8A_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//チャンピオン、リーダーの方に歩み寄る
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
+	//チャンピオンと主人公、リーダーの方に歩み寄る
+	_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_to_leaders_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_leaders_01 )
+	_OBJ_ANIME_WAIT()
 	
 	//チャンピオン、アイリス＆シャガと会話
 	_BALLOONWIN_OBJMSG( msg_c08_champion_03 , C08_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
+	
+	//リーダー、チャンピオンを見る
+	_OBJ_ANIME( C08_LEADER8B_01,anm_c08_leaders_look_champion_01 )
+	_OBJ_ANIME( C08_LEADER8A_01,anm_c08_leaders_look_champion_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//リーダーとチャンピオン、会話
 	_BALLOONWIN_OBJMSG( msg_c08_leader8b_02 , C08_LEADER8B_01 )
 	_BALLOONWIN_CLOSE()
 	_BALLOONWIN_OBJMSG( msg_c08_leader8a_02 , C08_LEADER8A_01 )
@@ -139,7 +280,9 @@ EVENT_START   ev_pos_c08_champions_01
 	IF $LCWK_VERSION == VERSION_WHITE THEN
 	
 		//アイリスその場ジャンプ
-		
+		_OBJ_ANIME( C08_LEADER8B_01,anm_c08_leader_b_jump_01 )
+		_OBJ_ANIME_WAIT()
+	
 		//アイリス発言
 		_BALLOONWIN_OBJMSG( msg_c08_leader8b_03w , C08_LEADER8B_01 )
 		_BALLOONWIN_CLOSE()
@@ -158,16 +301,36 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_CLOSE()
 	
 	//チャンピオン主人公に向き合う
+	_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_to_player_02 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_02 )
+	_OBJ_ANIME_WAIT()
 	
 	//チャンピオン発言
 	_BALLOONWIN_OBJMSG( msg_c08_champion_06 , C08_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//チャンピオン退場
+	_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_goodbye_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_look_leaders_01 )
+	_OBJ_ANIME_WAIT()
 	
-	//シャガ発言
+	//アイリス発言
+	_BALLOONWIN_OBJMSG( msg_c08_leader8b_04 , C08_LEADER8B_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//シャガ、アイリスを見る
+	_OBJ_ANIME( C08_LEADER8A_01,anm_c08_leadersa_look_b_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//シャガ話す
 	_BALLOONWIN_OBJMSG( msg_c08_leader8a_04 , C08_LEADER8A_01 )
 	_BALLOONWIN_CLOSE()
+	
+	//シャガ、主人公を見る
+	_OBJ_ANIME( C08_LEADER8A_01,anm_c08_leaders_look_champion_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//シャガ：さて
 	_BALLOONWIN_OBJMSG( msg_c08_leader8a_05 , C08_LEADER8A_01 )
 	_BALLOONWIN_CLOSE()
 
@@ -185,15 +348,14 @@ EVENT_START   ev_pos_c08_champions_01
 	ENDIF
 	
 	//シャガ・アイリス退場
+	_OBJ_ANIME( C08_LEADER8B_01,anm_c08_leaders_goodbye_01 )
+	_OBJ_ANIME( C08_LEADER8A_01,anm_c08_leaders_goodbye_01 )
+	_OBJ_ANIME_WAIT()
 	
 	//イベント関連OBJ削除
 	_OBJ_DEL( C08_LEADER8A_01 )
 	_OBJ_DEL( C08_LEADER8B_01 )
-	_OBJ_DEL( C08_SAGE1_01 )
 	_OBJ_DEL( C08_CHAMPION_01 )
-	_OBJ_DEL( C08_OLDMAN_01 )
-	_OBJ_DEL( C08_MAN3_01 )
-	_OBJ_DEL( C08_WOMAN2_01 )
 	
 	//======================================//
 	
@@ -209,6 +371,212 @@ EVENT_START   ev_pos_c08_champions_01
 	//======================================//
 
 EVENT_END
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：チャンピオン隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_champion_come_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：主人公、z座標に応じてチャンピオンに隣接z173
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_champion_z173
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：主人公、z座標に応じてチャンピオンに隣接z174
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_champion_z174
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：主人公、z座標に応じてチャンピオンに隣接z175
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_champion_z175
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：主人公、z座標に応じてチャンピオンに隣接z176
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_champion_z176
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：主人公、z座標に応じてチャンピオンに隣接z177
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_champion_z177
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集の後ろにつく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_crowd_01
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集、お互いの顔を見るD
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_croud_panic_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集、お互いの顔を見るU
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_croud_panic_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集、お互いの顔を見るL
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_croud_panic_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集、お互いの顔を見るR
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_croud_panic_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：ゲーヂス去ってゆく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_sage1_goodbye_01
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集去ってゆく（1）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_croud_goodbye_01
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集去ってゆく（2）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_croud_goodbye_02
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集去ってゆく（3）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_croud_goodbye_03
+	_ANIME_DATA	AC_WALK_L_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集去ってゆく（4）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_croud_goodbye_04
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：チャンピオン、リーダーに歩み寄る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_champion_to_leaders_01
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：主人公、リーダーに歩み寄る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_leaders_01
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：ジャガ、アイリスを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_leadersa_look_b_01
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：アイリス、ジャガを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_leadersb_look_a_01
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：リーダー達、チャンピオンを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_leaders_look_champion_01
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：アイリス、ジャンプ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_leader_b_jump_01
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：チャンピオン主人公に向き合う
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_champion_to_player_02
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：主人公チャンピオンに向き合う
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_champion_02
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：チャンピオン退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_champion_goodbye_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：リーダー退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_leaders_goodbye_01
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：主人公チャンピオンに向き合う
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_look_leaders_01
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
 
 
 /**************************************************************/

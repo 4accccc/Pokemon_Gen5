@@ -30,6 +30,11 @@
 #define C08_OLDMAN_01                     10
 #define C08_MAN3_01                       11
 #define C08_WOMAN2_01                     12
+#define C08_CROWD_01                      13
+#define C08_CROWD_02                      14
+#define C08_CROWD_03                      15
+#define C08_CROWD_04                      16
+#define C08_CROWD_05                      17
 
 #endif //ZONE_C08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
