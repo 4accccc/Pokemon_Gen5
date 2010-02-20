@@ -102,7 +102,8 @@ static GFL_PROC_RESULT CommDemoProc_Init( GFL_PROC * proc, int * seq, void * pwk
 
 	OS_Printf( "↓↓↓↓↓　コマンドデモ処理開始　↓↓↓↓↓\n" );
 
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMMAND_DEMO, 0x80000 );
+//	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMMAND_DEMO, 0x80000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMMAND_DEMO, 0x40000 );
 
 	wk = GFL_PROC_AllocWork( proc, sizeof(CDEMO_WORK), HEAPID_COMMAND_DEMO );
 	GFL_STD_MemClear( wk, sizeof(CDEMO_WORK) );
@@ -166,7 +167,7 @@ static GFL_PROC_RESULT CommDemoProc_End( GFL_PROC * proc, int * seq, void * pwk,
 */
 
 	GFL_PROC_FreeWork( proc );
-	GFL_HEAP_DeleteHeap( HEAPID_BOX_SYS );
+	GFL_HEAP_DeleteHeap( HEAPID_COMMAND_DEMO );
 
 	OS_Printf( "↑↑↑↑↑　コマンドデモ処理終了　↑↑↑↑↑\n" );
 
