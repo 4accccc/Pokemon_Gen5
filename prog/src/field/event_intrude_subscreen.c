@@ -69,7 +69,8 @@ GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, in
   warp_zone_id = Intrude_GetPalaceTownZoneID(town_tblno);
   Intrude_GetPalaceTownRandPos(town_tblno, &pos, palace_area);
   
-  event = EVENT_ChangeMapPos(gsys, fieldWork, warp_zone_id, &pos, DIR_UP, FALSE);
+  event = EVENT_ChangeMapToPalace( gsys, warp_zone_id, &pos );
+  //event = EVENT_ChangeMapPos(gsys, fieldWork, warp_zone_id, &pos, DIR_UP, FALSE);
   return event;
 }
 
