@@ -53,6 +53,7 @@ endif
 #------------------------------------------------------------------------------
 
 clean:
+	@$(MAKE_SUBDIR)
 	rm -f $(TARGETDIR)/$(TARGETFILENAME)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(TARGETFILENAME)
