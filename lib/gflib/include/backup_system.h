@@ -155,6 +155,17 @@ extern void GFL_BACKUP_SAVEASYNC_Cancel(GFL_SAVEDATA * sv);
 
 //==================================================================
 /**
+ * GFL_BACKUP_SAVEASYNC_Mainで何バイト目までを書き込んだかを調べる
+ *
+ * @param   sv		
+ *
+ * @retval  u32		書き込みサイズ(Save_GetActualSizeのactual_size)
+ */
+//==================================================================
+extern u32 GFL_BACKUP_SAVEASYNC_Main_WritingSize(GFL_SAVEDATA * sv);
+
+//==================================================================
+/**
  * 分割セーブ時、カードがロックされているか調べる
  *
  * @param   none		
