@@ -1042,7 +1042,7 @@ static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_C
   else
   { 
     //メニューから呼ばれたときはリストモード
-    prm->callMode = ZUKAN_MODE_LIST;
+    prm->callMode = ZUKAN_MODE_TOP;
   }
 
   return prm;
