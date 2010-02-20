@@ -63,8 +63,8 @@ enum {
   ITEM_PRM_SIZENNOMEGUMI_TYPE,  // しぜんのめぐみタイプ
   ITEM_PRM_BTL_POCKET,      // 戦闘保存先（ポケット番号）
   ITEM_PRM_W_TYPE,        // ワークタイプ
-	ITEM_PRM_ITEM_TYPE,			// アイテム種類
-	ITEM_PRM_ITEM_SPEND,		// 消費するか
+  ITEM_PRM_ITEM_TYPE,     // アイテム種類
+  ITEM_PRM_ITEM_SPEND,    // 消費するか
 
   ITEM_PRM_SLEEP_RCV,       // 眠り回復
   ITEM_PRM_POISON_RCV,      // 毒回復
@@ -316,12 +316,12 @@ extern s32 ITEM_GetBufParam( ITEMDATA * item, u16 param );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		技マシンかどうか
+ * @brief   技マシンかどうか
  *
- * @param		item  アイテム番号
+ * @param   item  アイテム番号
  *
- * @retval	"TRUE = 技マシン"
- * @retval	"FALSE = それ以外"
+ * @retval  "TRUE = 技マシン"
+ * @retval  "FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL ITEM_CheckWazaMachine( u16 item );
@@ -357,7 +357,7 @@ extern BOOL ITEM_CheckHidenWaza( u16 waza );
  *
  * @return  技マシン番号
  *
- * @li	秘伝マシンは通常の技マシンの後にカウントされる
+ * @li  秘伝マシンは通常の技マシンの後にカウントされる
  */
 //--------------------------------------------------------------------------------------------
 extern u8 ITEM_GetWazaMashineNo( u16 item );
@@ -500,5 +500,17 @@ extern BOOL ITEM_CheckPokeAdd( u16 item );
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL ITEM_CheckEnable( u16 item );
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムID -> ボールID 変換
+ *
+ * @param   itemID    アイテムID
+ *
+ * @retval  BALL_ID   ボールID（指定されたアイテムIDがボール以外の場合、BALLID_NULL）
+ */
+//--------------------------------------------------------------------------------------------
+extern BALL_ID ITEM_GetBallID( u16 itemID );
 
 

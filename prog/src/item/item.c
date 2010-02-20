@@ -23,8 +23,8 @@
 //  定数定義
 //============================================================================================
 #define NORMAL_WAZAMACHINE_MAX  ( 101 )   // 通常の技マシン数
-#define HIDENWAZA_MAX						( 8 )			// 秘伝技数
-#define HIDENWAZA_START_POS			( 92 )		// 秘伝マシン開始位置
+#define HIDENWAZA_MAX           ( 8 )     // 秘伝技数
+#define HIDENWAZA_START_POS     ( 92 )    // 秘伝マシン開始位置
 
 
 //==============================================================================
@@ -306,40 +306,40 @@ s32 ITEM_GetParam( u16 item, u16 param, HEAPID heap_id )
 s32 ITEM_GetBufParam( ITEMDATA * item, u16 param )
 {
   switch( param ){
-  case ITEM_PRM_PRICE:							// 買値
+  case ITEM_PRM_PRICE:              // 買値
     return (s32)item->price;
-  case ITEM_PRM_EQUIP:							// 装備効果
+  case ITEM_PRM_EQUIP:              // 装備効果
     return (s32)item->eqp;
-  case ITEM_PRM_ATTACK:							// 威力
+  case ITEM_PRM_ATTACK:             // 威力
     return (s32)item->atc;
-  case ITEM_PRM_EVENT:							// 重要
+  case ITEM_PRM_EVENT:              // 重要
     return (s32)item->imp;
-  case ITEM_PRM_CNV:								// 便利ボタン
+  case ITEM_PRM_CNV:                // 便利ボタン
     return (s32)item->cnv_btn;
-  case ITEM_PRM_POCKET:							// 保存先（ポケット番号）
+  case ITEM_PRM_POCKET:             // 保存先（ポケット番号）
     return (s32)item->fld_pocket;
-  case ITEM_PRM_FIELD:							// field機能
+  case ITEM_PRM_FIELD:              // field機能
     return (s32)item->field_func;
-  case ITEM_PRM_BATTLE:							// battle機能
+  case ITEM_PRM_BATTLE:             // battle機能
     return (s32)item->battle_func;
-  case ITEM_PRM_TUIBAMU_EFF:				// ついばむ効果
+  case ITEM_PRM_TUIBAMU_EFF:        // ついばむ効果
     return (s32)item->tuibamu_eff;
-  case ITEM_PRM_NAGETUKERU_EFF:			// なげつける効果
+  case ITEM_PRM_NAGETUKERU_EFF:     // なげつける効果
     return (s32)item->nage_eff;
-  case ITEM_PRM_NAGETUKERU_ATC:			// なげつける威力
+  case ITEM_PRM_NAGETUKERU_ATC:     // なげつける威力
     return (s32)item->nage_atc;
   case ITEM_PRM_SIZENNOMEGUMI_ATC:  // しぜんのめぐみ威力
     return (s32)item->sizen_atc;
   case ITEM_PRM_SIZENNOMEGUMI_TYPE: // しぜんのめぐみタイプ
     return (s32)item->sizen_type;
-  case ITEM_PRM_BTL_POCKET:					// 戦闘保存先（ポケット番号）
+  case ITEM_PRM_BTL_POCKET:         // 戦闘保存先（ポケット番号）
     return (s32)item->btl_pocket;
-  case ITEM_PRM_W_TYPE:							// ワークタイプ
+  case ITEM_PRM_W_TYPE:             // ワークタイプ
     return (s32)item->work_type;
-	case ITEM_PRM_ITEM_TYPE:					// アイテム種類
-		return (s32)item->type;
-	case ITEM_PRM_ITEM_SPEND:					// 消費するか
-		return (s32)item->spend;
+  case ITEM_PRM_ITEM_TYPE:          // アイテム種類
+    return (s32)item->type;
+  case ITEM_PRM_ITEM_SPEND:         // 消費するか
+    return (s32)item->spend;
 
   default:              // 汎用ワーク
     switch( item->work_type ){
@@ -467,21 +467,21 @@ static s32 ItemParamRcvGet( ITEMPARAM_RCV * rcv, u16 param )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		技マシンかどうか
+ * @brief   技マシンかどうか
  *
- * @param		item  アイテム番号
+ * @param   item  アイテム番号
  *
- * @retval	"TRUE = 技マシン"
- * @retval	"FALSE = それ以外"
+ * @retval  "TRUE = 技マシン"
+ * @retval  "FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
 BOOL ITEM_CheckWazaMachine( u16 item )
 {
-	if( ( item >= ITEM_WAZAMASIN01 && item <= ITEM_HIDENMASIN08 ) ||
-			( item >= ITEM_WAZAMASIN93 && item <= ITEM_WAZAMASIN101 ) ){
-		return TRUE;
-	}
-	return FALSE;
+  if( ( item >= ITEM_WAZAMASIN01 && item <= ITEM_HIDENMASIN08 ) ||
+      ( item >= ITEM_WAZAMASIN93 && item <= ITEM_WAZAMASIN101 ) ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -495,15 +495,15 @@ BOOL ITEM_CheckWazaMachine( u16 item )
 //--------------------------------------------------------------------------------------------
 const u16 ITEM_GetWazaNo( u16 item )
 {
-	if( ITEM_CheckWazaMachine( item ) == FALSE ){
+  if( ITEM_CheckWazaMachine( item ) == FALSE ){
     return WAZANO_NULL;
   }
 
-	if( item >= ITEM_WAZAMASIN93 ){
-		item = item - ITEM_WAZAMASIN93 + HIDENWAZA_START_POS + HIDENWAZA_MAX;
-	}else{
-		item -= ITEM_WAZAMASIN01;
-	}
+  if( item >= ITEM_WAZAMASIN93 ){
+    item = item - ITEM_WAZAMASIN93 + HIDENWAZA_START_POS + HIDENWAZA_MAX;
+  }else{
+    item -= ITEM_WAZAMASIN01;
+  }
   return MachineNo[ item ];
 }
 
@@ -537,20 +537,20 @@ BOOL ITEM_CheckHidenWaza( u16 waza )
  *
  * @return  技マシン番号
  *
- * @li	秘伝マシンは通常の技マシンの後にカウントされる
+ * @li  秘伝マシンは通常の技マシンの後にカウントされる
  */
 //--------------------------------------------------------------------------------------------
 u8 ITEM_GetWazaMashineNo( u16 item )
 {
-	if( ITEM_CheckWazaMachine( item ) == FALSE ){
+  if( ITEM_CheckWazaMachine( item ) == FALSE ){
     return 0;
   }
 
-	if( item >= ITEM_WAZAMASIN93 ){
-		return ( item - ITEM_WAZAMASIN93 + HIDENWAZA_START_POS );
-	}else if( item >= ITEM_HIDENMASIN01 ){
-		return ( item - ITEM_HIDENMASIN01 + NORMAL_WAZAMACHINE_MAX );
-	}
+  if( item >= ITEM_WAZAMASIN93 ){
+    return ( item - ITEM_WAZAMASIN93 + HIDENWAZA_START_POS );
+  }else if( item >= ITEM_HIDENMASIN01 ){
+    return ( item - ITEM_HIDENMASIN01 + NORMAL_WAZAMACHINE_MAX );
+  }
   return ( item - ITEM_WAZAMASIN01 );
 }
 
@@ -565,9 +565,9 @@ u8 ITEM_GetWazaMashineNo( u16 item )
 //--------------------------------------------------------------------------------------------
 u8 ITEM_GetHidenMashineNo( u16 item )
 {
-	if( item >= ITEM_HIDENMASIN01 && item <= ITEM_HIDENMASIN08 ){
-		return ( item - ITEM_HIDENMASIN01 );
-	}
+  if( item >= ITEM_HIDENMASIN01 && item <= ITEM_HIDENMASIN08 ){
+    return ( item - ITEM_HIDENMASIN01 );
+  }
   return 0xff;
 }
 
@@ -805,4 +805,55 @@ BOOL ITEM_CheckEnable( u16 item )
   return (ItemDataIndex[item].arc_cgx != NARC_item_icon_item_dumy_NCGR);
 }
 
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムID -> ボールID 変換
+ *
+ * @param   itemID    アイテムID
+ *
+ * @retval  BALL_ID   ボールID（指定されたアイテムIDがボール以外の場合、BALLID_NULL）
+ */
+//--------------------------------------------------------------------------------------------
+BALL_ID ITEM_GetBallID( u16 itemID )
+{
+  static const struct {
+    u16 itemID;
+    u16 ballID;
+  }convertTbl[] = {
+    { ITEM_MASUTAABOORU,  BALLID_MASUTAABOORU   }, //01 マスターボール
+    { ITEM_HAIPAABOORU,   BALLID_HAIPAABOORU    }, //02 ハイパーボール
+    { ITEM_SUUPAABOORU,   BALLID_SUUPAABOORU    }, //03 スーパーボール
+    { ITEM_MONSUTAABOORU, BALLID_MONSUTAABOORU  }, //04 モンスターボール
+    { ITEM_SAFARIBOORU,   BALLID_SAFARIBOORU    }, //05 サファリボール
+    { ITEM_NETTOBOORU,    BALLID_NETTOBOORU     }, //06 ネットボール
+    { ITEM_DAIBUBOORU,    BALLID_DAIBUBOORU     }, //07 ダイブボール
+    { ITEM_NESUTOBOORU,   BALLID_NESUTOBOORU    }, //08 ネストボール
+    { ITEM_RIPIITOBOORU,  BALLID_RIPIITOBOORU   }, //09 リピートボール
+    { ITEM_TAIMAABOORU,   BALLID_TAIMAABOORU    }, //10 タイマーボール
+    { ITEM_GOOZYASUBOORU, BALLID_GOOZYASUBOORU  }, //11 ゴージャスボール
+    { ITEM_PUREMIABOORU,  BALLID_PUREMIABOORU   }, //12 プレミアボール
+    { ITEM_DAAKUBOORU,    BALLID_DAAKUBOORU     }, //13 ダークボール
+    { ITEM_HIIRUBOORU,    BALLID_HIIRUBOORU     }, //14 ヒールボール
+    { ITEM_KUIKKUBOORU,   BALLID_KUIKKUBOORU    }, //15 クイックボール
+    { ITEM_PURESYASUBOORU,BALLID_PURESYASUBOORU }, //16 プレシャスボール
+    { ITEM_SUPIIDOBOORU,  BALLID_SUPIIDOBOORU   }, //17 スピードボール
+    { ITEM_REBERUBOORU,   BALLID_REBERUBOORU    }, //18 レベルボール
+    { ITEM_RUAABOORU,     BALLID_RUAABOORU      }, //19 ルアーボール
+    { ITEM_HEBIIBOORU,    BALLID_HEBIIBOORU     }, //20 ヘビーボール
+    { ITEM_RABURABUBOORU, BALLID_RABURABUBOORU  }, //21 ラブラブボール
+    { ITEM_HURENDOBOORU,  BALLID_HURENDOBOORU   }, //22 フレンドボール
+    { ITEM_MUUNBOORU,     BALLID_MUUNBOORU      }, //23 ムーンボール
+    { ITEM_KONPEBOORU,    BALLID_KONPEBOORU     }, //24 コンペボール
+  };
+
+  u32 i;
+  for(i=0; i<NELEMS(convertTbl); ++i)
+  {
+    if( convertTbl[i].itemID == itemID ){
+      return convertTbl[i].ballID;
+    }
+  }
+  return BALLID_NULL;
+}
 
