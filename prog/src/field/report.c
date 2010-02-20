@@ -12,6 +12,7 @@
 
 #include "arc_def.h"
 #include "pm_define.h"
+#include "system/gfl_use.h"
 #include "system/main.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -148,6 +149,7 @@ enum {
 
 struct _REPORT_WORK {
 	GAMESYS_WORK * gameSys;				// ゲームシステム
+	SAVE_CONTROL_WORK * sv;
 
 	PRINT_QUE * que;							// プリントキュー
 	PRINT_UTIL	win[BMPWIN_MAX];	// BMPWIN
@@ -160,9 +162,12 @@ struct _REPORT_WORK {
 	u32	celRes[CELRES_MAX];
 
 	// セーブ状況
+	GFL_TCB * vtask;		// TCB ( VBLANK )
 	BOOL	save_start;
-	u32	save_num;
-	u32	save_max;
+	u32	actualSize;
+	u32	totalSize;
+	u32	timeSize;
+	u32	objCount;
 
 	int	seq;
 
@@ -180,6 +185,8 @@ static void InitBmp( REPORT_WORK * wk );
 static void ExitBmp( REPORT_WORK * wk );
 static void InitObj( REPORT_WORK * wk );
 static void ExitObj( REPORT_WORK * wk );
+
+static void VBlankTask_SaveTimeMarkObj( GFL_TCB * tcb, void * work );
 
 
 //============================================================================================
@@ -250,6 +257,8 @@ REPORT_WORK * REPORT_Init( GAMESYS_WORK * gs, HEAPID heapID )
 	InitObj( wk );
 	InitBmp( wk );
 
+	wk->vtask = GFUser_VIntr_CreateTCB( VBlankTask_SaveTimeMarkObj, wk, 0 );
+
 	return wk;
 }
 
@@ -264,6 +273,8 @@ REPORT_WORK * REPORT_Init( GAMESYS_WORK * gs, HEAPID heapID )
 //--------------------------------------------------------------------------------------------
 void REPORT_Exit( REPORT_WORK * wk )
 {
+	GFL_TCB_DeleteTask( wk->vtask );
+
 	ExitBmp( wk );
 	ExitObj( wk );
 	ExitBg();
@@ -335,12 +346,39 @@ void REPORT_StartSave( REPORT_WORK * wk )
 {
 	u32	i;
 
+	wk->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->gameSys) );
+	SaveControl_GetActualSize( wk->sv, &wk->actualSize, &wk->totalSize );
+	wk->timeSize  = wk->actualSize * 2 / 10;
+	wk->totalSize = wk->timeSize;
+	wk->objCount  = 0;
+
 	wk->save_start = TRUE;
 
 	GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[BMPWIN_REPORT].win );
 
 	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
 		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * セーブ終了
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void REPORT_EndSave( REPORT_WORK * wk )
+{
+	u32	i;
+
+	wk->save_start = FALSE;
+
+	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
+		GFL_CLACT_WK_SetAnmFrame( wk->clwk[i], 0 );
+		GFL_CLACT_WK_SetAnmSeq( wk->clwk[i], 1 );
 	}
 }
 
@@ -733,4 +771,30 @@ static void ExitObj( REPORT_WORK * wk )
 	GFL_CLGRP_CELLANIM_Release( wk->celRes[CELRES_TIME] );
 
 	GFL_CLACT_UNIT_Delete( wk->clunit );
+}
+
+
+static void VBlankTask_SaveTimeMarkObj( GFL_TCB * tcb, void * work )
+{
+	REPORT_WORK * wk;
+	u32	now_size;
+	
+	wk = work;
+
+	if( wk->save_start == FALSE ){ return; }
+
+	now_size = SaveControl_GetSaveAsyncMain_WritingSize( wk->sv );
+
+	if( now_size >= wk->totalSize ){
+		if( wk->objCount < 10 ){
+			GFL_CLACT_WK_SetAnmFrame( wk->clwk[OBJID_TIME01+wk->objCount], 0 );
+			GFL_CLACT_WK_SetAnmSeq( wk->clwk[OBJID_TIME01+wk->objCount], 1 );
+			GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[OBJID_TIME01+wk->objCount], TRUE );
+			wk->objCount++;
+		}
+		wk->totalSize += wk->timeSize;
+	}
+
+	GFL_CLACT_SYS_Main();
+	GFL_CLACT_SYS_VBlankFunc();
 }

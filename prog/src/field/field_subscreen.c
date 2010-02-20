@@ -1254,3 +1254,9 @@ void FIELD_SUBSCREEN_SetReportStart( FIELD_SUBSCREEN_WORK * pWork )
 {
 	REPORT_StartSave( pWork->reportWork );
 }
+
+// セーブ終了
+void FIELD_SUBSCREEN_SetReportEnd( FIELD_SUBSCREEN_WORK * pWork )
+{
+	REPORT_EndSave( pWork->reportWork );
+}

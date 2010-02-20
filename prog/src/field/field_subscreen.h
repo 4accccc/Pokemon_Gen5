@@ -113,6 +113,7 @@ extern const FIELD_MENU_ITEM_TYPE FIELD_SUBSCREEN_GetTopMenuItemNo( FIELD_SUBSCR
 extern void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD_MENU_ITEM_TYPE itemType );
 
 extern void FIELD_SUBSCREEN_SetReportStart( FIELD_SUBSCREEN_WORK * pWork );
+extern void FIELD_SUBSCREEN_SetReportEnd( FIELD_SUBSCREEN_WORK * pWork );
 
 
 #ifdef  PM_DEBUG

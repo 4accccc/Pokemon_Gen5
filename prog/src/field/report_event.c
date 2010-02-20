@@ -193,6 +193,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			break;
       
 		case SAVE_RESULT_OK:
+			FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
 			ResetReportPlayerAnime( wk );
 			{
 				WORDSET * wset;
@@ -209,6 +210,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			break;
 
 		case SAVE_RESULT_NG:
+			FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
 			ResetReportPlayerAnime( wk );
 			SetReportMsg( wk, msg_common_report_06 );
 			*seq = REPORT_SEQ_RESULT_NG_WAIT;
