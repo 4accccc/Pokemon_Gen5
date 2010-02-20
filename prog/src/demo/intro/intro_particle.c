@@ -106,7 +106,7 @@ INTRO_PARTICLE_WORK* INTRO_PARTICLE_Create( INTRO_GRAPHIC_WORK* graphic, HEAPID 
   //@TODO キメウチでボールリソースをロード
   {
     void *res;
-    res = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_be_ball_normal_1_spa, wk->heap_id );
+    res = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_be_ball_004_1_spa, wk->heap_id );
     GFL_PTC_SetResource( wk->ptc, res, TRUE, NULL );
   }
 
