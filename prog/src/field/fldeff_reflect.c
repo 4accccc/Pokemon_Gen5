@@ -241,6 +241,20 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
     return;
   }
   
+  {
+    //‰½ŒÌ‚©‰f‚èž‚Ý‘ÎÛˆÈŠO‚ÌOBJ‚É‘Î‚µ‚Ä
+    //‰f‚èž‚Ý‚ª”­¶‚·‚éŒ»Û‚ª‹N‚«‚Ä‚¢‚éAŒ»Ý’²¸’†
+    //‚»‚ê‚Ü‚Å‚ÌŽb’è‘Îˆ
+    MMDL *mmdl = work->head.mmdl;
+    u16 code = MMDL_GetOBJCode( mmdl );
+    const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl, code );
+    
+    if( prm->reflect_type == MMDL_REFLECT_NON ){
+      OS_Printf( "FLDEFF REFLECT NOT REFLECT OBJ\n" );
+      return;
+    }
+  }
+  
   actID = MMDL_CallDrawGetProc( work->head.mmdl, 0 );
 
   if( work->flag_initact == FALSE ){

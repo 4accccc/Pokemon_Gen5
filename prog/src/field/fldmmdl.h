@@ -34,25 +34,28 @@
 //	debug
 //--------------------------------------------------------------
 #define MMDL_PL_NULL	//定義でプラチナで行っていた処理無効化
-//#define MMDL_BLACT_HEAD3_TEST //定義で三頭身テスト
-#define DEBUG_MMDL	//定義でデバッグ機能有効
-//#define DEBUG_MMDL_FRAME_60 //定義で1/60フレームで動く事を想定
 
+#ifdef PM_DEBUG       //debug
+#define DEBUG_MMDL	  //定義でデバッグ機能有効
+#endif
+
+//----
 #ifdef DEBUG_MMDL
+//----
 #define DEBUG_MMDL_PRINT //定義でデバッグ出力有効
+//#define DEBUG_MMDL_FRAME_60 //定義で1/60フレームで動く事を想定
+#define DEBUG_MMDL_RESOURCE_MEMORY_SIZE // ONでメモリサイズを計算
 
 #ifdef DEBUG_ONLY_FOR_kagaya
 #define DEBUG_MMDL_DEVELOP ///<作業者のみ有効なデバッグ処理
 #endif
 
-
-#define DEBUG_MMDL_RESOURCE_MEMORY_SIZE // ONでメモリサイズを計算
-
-#endif
-
 #define DEBUG_OBJCODE_STR_LENGTH (16) //動作モデルOBJコード文字列長さ
 
 //#define MMDL_BBD_DRAW_OFFS_Z_USE //有効でビルボード表示位置Z補正有り
+//----
+#endif //DEBUG
+//----
 
 //--------------------------------------------------------------
 //	fx
@@ -400,6 +403,12 @@ typedef enum
 //--------------------------------------------------------------
 #define MMDL_HEADER_POSBUF_SIZE ( 8 )
 
+//--------------------------------------------------------------
+/// モデルリソース関連シンボル
+//--------------------------------------------------------------
+#define MMDL_MDLRES_ANM_MAX (3) //アニメ総数
+#define MMDL_MDLRES_NOTIDX (0xffff) //非リソースインデックス
+
 //======================================================================
 //	struct
 //======================================================================
@@ -622,7 +631,7 @@ typedef struct
 {
   u16 res_idx_mdl;
   u16 res_idx_tex;
-  u16 res_idx_anm[3];
+  u16 res_idx_anm[MMDL_MDLRES_ANM_MAX];
   u8 padding[2];
 }OBJCODE_PARAM_BUF_MDL;
 

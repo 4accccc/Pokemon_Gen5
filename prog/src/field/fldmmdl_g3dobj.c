@@ -230,6 +230,7 @@ static u16 rescode_GetOBJCode( MMDL_G3DOBJCONT *objcont, u16 r_idx )
 static u16 rescode_AddResource(
     MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont, const u16 code )
 {
+  int i;
   u16 res_idx;
   const OBJCODE_PARAM *prm;
   const OBJCODE_PARAM_BUF_MDL *prm_mdl;
@@ -241,25 +242,24 @@ static u16 rescode_AddResource(
   
   FLD_G3DOBJ_RES_HEADER_Init( &head );
   
-  if( prm_mdl->res_idx_mdl != 0xffff ){
+  if( prm_mdl->res_idx_mdl != MMDL_MDLRES_NOTIDX ){
     FLD_G3DOBJ_RES_HEADER_SetMdl( &head, handle, prm_mdl->res_idx_mdl );
   }
   
-  if( prm_mdl->res_idx_tex != 0xffff ){
+  if( prm_mdl->res_idx_tex != MMDL_MDLRES_NOTIDX ){
     FLD_G3DOBJ_RES_HEADER_SetMdl( &head, handle, prm_mdl->res_idx_tex );
   }
   
-  if( prm_mdl->res_idx_anm[0] != 0xffff ){
-    int i;
-    FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
     
-    for( i = 0; prm_mdl->res_idx_anm[i] != 0xffff; i++ ){
+  for( i = 0; i < MMDL_MDLRES_ANM_MAX; i++ ){
+    if( prm_mdl->res_idx_anm[i] != MMDL_MDLRES_NOTIDX ){
       FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx( &head, prm_mdl->res_idx_anm[i] );
     }
   }
   
   KAGAYA_Printf(
-      "“®ìƒ‚ƒfƒ‹ G3DObject’Ç‰Á code=%dH, mdl idx = %d, anm count =%xH\n",
+      "“®ìƒ‚ƒfƒ‹ G3D OBJRES’Ç‰Á code=%dH, mdl idx = %d, anm count =%xH\n",
       code, head.arcIdxMdl, head.anmCount );
 
   res_idx = FLD_G3DOBJ_CTRL_CreateResource(

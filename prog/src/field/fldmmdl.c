@@ -2395,7 +2395,9 @@ void MMDL_CallMoveInitProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->move_proc_list );
   GF_ASSERT( mmdl->move_proc_list->init_proc );
-  mmdl->move_proc_list->init_proc( mmdl );
+  if( mmdl->move_proc_list->init_proc != NULL ){
+    mmdl->move_proc_list->init_proc( mmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -2409,7 +2411,9 @@ void MMDL_CallMoveProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->move_proc_list );
   GF_ASSERT( mmdl->move_proc_list->move_proc );
-  mmdl->move_proc_list->move_proc( mmdl );
+  if( mmdl->move_proc_list->move_proc != NULL ){
+    mmdl->move_proc_list->move_proc( mmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -2423,7 +2427,9 @@ void MMDL_CallMoveDeleteProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->move_proc_list );
   GF_ASSERT( mmdl->move_proc_list->delete_proc );
-  mmdl->move_proc_list->delete_proc( mmdl );
+  if( mmdl->move_proc_list->delete_proc != NULL ){
+    mmdl->move_proc_list->delete_proc( mmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -2437,7 +2443,9 @@ void MMDL_CallMovePopProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->move_proc_list );
   GF_ASSERT( mmdl->move_proc_list->recover_proc );
-  mmdl->move_proc_list->recover_proc( mmdl );
+  if( mmdl->move_proc_list->recover_proc != NULL ){
+    mmdl->move_proc_list->recover_proc( mmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -2451,7 +2459,9 @@ void MMDL_CallDrawInitProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->draw_proc_list );
   GF_ASSERT( mmdl->draw_proc_list->init_proc );
-  mmdl->draw_proc_list->init_proc( mmdl );
+  if( mmdl->draw_proc_list->init_proc != NULL ){
+    mmdl->draw_proc_list->init_proc( mmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -2465,7 +2475,9 @@ void MMDL_CallDrawProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->draw_proc_list );
   GF_ASSERT( mmdl->draw_proc_list->draw_proc );
-  mmdl->draw_proc_list->draw_proc( mmdl );
+  if( mmdl->draw_proc_list->draw_proc != NULL ){
+    mmdl->draw_proc_list->draw_proc( mmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -2479,7 +2491,9 @@ void MMDL_CallDrawDeleteProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->draw_proc_list );
   GF_ASSERT( mmdl->draw_proc_list->delete_proc );
-  mmdl->draw_proc_list->delete_proc( mmdl );
+  if( mmdl->draw_proc_list->delete_proc != NULL ){
+    mmdl->draw_proc_list->delete_proc( mmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -2493,7 +2507,9 @@ void MMDL_CallDrawPushProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->draw_proc_list );
   GF_ASSERT( mmdl->draw_proc_list->push_proc );
-  mmdl->draw_proc_list->push_proc( mmdl );
+  if( mmdl->draw_proc_list->push_proc != NULL ){
+    mmdl->draw_proc_list->push_proc( mmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -2507,7 +2523,9 @@ void MMDL_CallDrawPopProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->draw_proc_list );
   GF_ASSERT( mmdl->draw_proc_list->pop_proc );
-  mmdl->draw_proc_list->pop_proc( mmdl );
+  if( mmdl->draw_proc_list->pop_proc != NULL ){
+    mmdl->draw_proc_list->pop_proc( mmdl );
+  }
 }
 
 //--------------------------------------------------------------
@@ -2522,7 +2540,10 @@ u32 MMDL_CallDrawGetProc( MMDL *mmdl, u32 state )
 {
   GF_ASSERT( mmdl->draw_proc_list );
   GF_ASSERT( mmdl->draw_proc_list->get_proc );
-  return( mmdl->draw_proc_list->get_proc(mmdl,state) );
+  if( mmdl->draw_proc_list->get_proc != NULL ){
+    return( mmdl->draw_proc_list->get_proc(mmdl,state) );
+  }
+  return( 0 );
 }
 
 //--------------------------------------------------------------
