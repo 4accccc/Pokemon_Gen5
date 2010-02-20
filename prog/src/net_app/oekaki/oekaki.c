@@ -395,8 +395,11 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
   PRINTSYS_QUE_Main( wk->printQue );
   {
     int i;
-    for(i=0;i<OEKAKI_PRINT_UTIL_NAME_WIN4+1;i++)
-    PRINT_UTIL_Trans( &wk->printUtil[i], wk->printQue );
+    for(i=0;i<OEKAKI_PRINT_UTIL_NAME_WIN4+1;i++){
+      PRINT_UTIL_Trans( &wk->printUtil[i], wk->printQue );
+    }
+    PRINT_UTIL_Trans( &wk->printUtil[OEKAKI_PRINT_UTIL_MSG], wk->printQue );
+
   }
   
   return GFL_PROC_RES_CONTINUE;
@@ -546,10 +549,10 @@ static void OEKAKI_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *
   // 別な子機の乱入に対処
   if(GFL_NET_SystemGetCurrentID()==0){
     // 一台目の子機
-    if(wk->firstChild==0 && net_id!=0){
-      OS_Printf("おえかき開始時の子機なので送信の必要なし net_id=%d\n", net_id);
-      wk->firstChild=1;
-    }else{
+//    if(wk->firstChild==0 && net_id!=0){
+//      OS_Printf("おえかき開始時の子機なので送信の必要なし net_id=%d\n", net_id);
+//      wk->firstChild=1;
+//    }else{
       int ret;
       u8 id  = net_id;
       // 2台目以降の子機の乱入
@@ -559,7 +562,7 @@ static void OEKAKI_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *
       if(ret==FALSE){
         GF_ASSERT("乱入コールバック送信失敗\n");
       }
-    }
+//    }
   }
 }
 
@@ -1099,6 +1102,8 @@ static void BmpWinInit( OEKAKI_WORK *wk, GFL_PROC* proc )
                                   OEKAKI_TALK_X, OEKAKI_TALK_Y, 
                                   MSG_WIN_W, MSG_WIN_H, 13, GFL_BMP_CHRAREA_GET_B );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0f0f );
+  
+  PRINT_UTIL_Setup( &wk->printUtil[OEKAKI_PRINT_UTIL_MSG], wk->MsgWin );
 
   // BG1面用BMP（お絵かき画像）ウインドウ確保
   wk->OekakiBoard = GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
@@ -2192,7 +2197,7 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
     }
     EndButtonAppearChange( wk->EndIconActWork, FALSE );
     // 指定の子機の名前をWORDSETに登録（離脱・乱入時)
-    WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(wk->param->uniapp, id) );  
+//    WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(wk->param->uniapp, id) );  
     wk->newMemberId = id;
     wk->ridatu_bit = 0;
     OS_Printf("新しい人のID %d\n",id);
@@ -2676,6 +2681,7 @@ static void NameCheckPrint( GFL_BMPWIN *win[], PRINTSYS_LSB color, OEKAKI_WORK *
   for(i=0;i<OEKAKI_MEMBER_MAX;i++){
     if(wk->TrainerStatus[i][0]!=NULL){
       MyStatus_CopyNameString( wk->TrainerStatus[i][0], wk->TrainerName[i] );
+      OS_Printf("name print id=%d\n", i);
       if(id==i){
 //        GF_STR_PrintColor(  &win[i], FONT_TALK, wk->TrainerName[i], 0, 0, MSG_NO_PUT, 
 //                            NAME_COL_MINE,NULL);
@@ -2775,13 +2781,13 @@ static int ConnectCheck( OEKAKI_WORK *wk )
 static void LineDataSendRecv( OEKAKI_WORK *wk )
 {
   if( GFL_NET_SystemGetCurrentID()==0 ){
-    GFL_NETHANDLE *pNet = GFL_NET_InitHandle(GFL_NET_NETID_SERVER);
+    GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
     // 親機は自分のタッチパネル情報を追加して送信する
     if(GFL_NET_IsEmptySendData(pNet)){  // パケットが空いてるなら
       wk->MyTouchResult.banFlag    = wk->banFlag;
       wk->ParentTouchResult[0] = wk->MyTouchResult;
-      GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_LINEPOS_SERVER, 
+      GFL_NET_SendData( pNet, CO_OEKAKI_LINEPOS_SERVER, 
                         COMM_SEND_5TH_PACKET_MAX*OEKAKI_MEMBER_MAX, wk->ParentTouchResult );
     }
   }else{

@@ -171,7 +171,7 @@ static void CommOekakiBoardLinePos(
   OEKAKI_WORK *wk     = (OEKAKI_WORK*)pWk;
   TOUCH_INFO  *result = (TOUCH_INFO*)pData;
 
-  OS_Printf("id[%d]line pos recv\n", netID);
+//  OS_Printf("id[%d]line pos recv\n", netID);
   // 子機から貰ったデータを格納する
   if(netID!=0){
     wk->ParentTouchResult[netID] = *result;
