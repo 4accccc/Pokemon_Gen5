@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T14:57:39"/>
+	<create user="matsumiya" host="W00224" date="2010-02-20T19:06:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1378" top="318" right="2081" bottom="930" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="170" right="2001" bottom="798" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -535,7 +535,7 @@
 仲間を　探すことだな！</language>
 	</row>
 
-	<row id="msg_d02r0101_hakaiw1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d02r0101_hakaiw1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=45、GRIDZ=74辺りに配置
 　必ず戦闘するようにしてください
@@ -548,7 +548,7 @@
 なにか　お探し　かしら？▼</language>
 	</row>
 
-	<row id="msg_d02r0101_hakaiw1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d02r0101_hakaiw1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・戦闘後、フィールドに復帰すると
 　このメッセージ表示
@@ -601,7 +601,7 @@
 おれたちの　仲間　逃げちまうぜ！</language>
 	</row>
 
-	<row id="msg_d02r0101_hakaim3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d02r0101_hakaim3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=43、GRIDZ=29辺りに配置
 ・戦闘前</comment>
@@ -619,7 +619,7 @@
 おれが　相手だ！▼</language>
 	</row>
 
-	<row id="msg_d02r0101_hakaim3_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d02r0101_hakaim3_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・戦闘後、フィールドに復帰すると
 　このメッセージ表示
@@ -632,7 +632,7 @@
 盗んだ　ホネは　返す！▼</language>
 	</row>
 
-	<row id="msg_d02r0101_hakaim3_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d02r0101_hakaim3_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてsage5_01</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
@@ -660,7 +660,7 @@
 誓った　大切な　仲間よ▼</language>
 	</row>
 
-	<row id="msg_d02r0101_hakaim3_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d02r0101_hakaim3_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・
 ・続けてsage5_02</comment>
