@@ -1555,9 +1555,13 @@ static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_
     }
   }
 
-  // 残PPが全て0なら「わるあがき」
-  for(i=0; i<wazaCount; ++i){
-    if( BPP_WAZA_GetPP(bpp, i) ){
+  // 使えるワザのPPが全て0なら「わるあがき」
+  for(i=0; i<wazaCount; ++i)
+  {
+    if( is_unselectable_waza( wk, bpp, BPP_WAZA_GetID(bpp,i), NULL ) ){
+      continue;
+    }
+    if( BPP_WAZA_GetPP(bpp, i) != 0 ){
       break;
     }
   }
