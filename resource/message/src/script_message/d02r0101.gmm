@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-20T19:06:49"/>
+	<create user="matsumiya" host="W00224" date="2010-02-20T20:10:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -660,41 +660,41 @@
 誓った　大切な　仲間よ▼</language>
 	</row>
 
-	<row id="msg_d02r0101_hakaim3_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d02r0101_hakaim3_04" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・
 ・続けてsage5_02</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『しちにんしゅう　さま！▼
+		<language name="JPN" width="256">プラズマだん『しちけんじん　さま！▼
 せっかく　てにいれた　ホネを
 みすみす　うばわれるとは　むねんです▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『七人衆さま！▼
+		<language name="JPN_KANJI" width="256">プラズマ団『七賢人さま！▼
 せっかく　手に入れた　ホネを
 みすみす　奪われるとは　無念です▼</language>
 	</row>
 
-	<row id="msg_d02r0101_sage5_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d02r0101_sage5_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・プラズマ団と向き合いながら
 ・続けてsage5_03</comment>
 		<attribute name="キャラ指定">SAGE5
 七賢人５</attribute>
 		<language name="JPN" width="256">？？？『いいのです▼
-こっかくひょうほん　ですが
+ドラゴンのホネ　ですが
 こんかいは　あきらめましょう▼
 ちょうさの　けっか
 でんせつの　ポケモンと▽
 むかんけい　でしたから▼</language>
 		<language name="JPN_KANJI" width="256">？？？『いいのです▼
-骨格標本　ですが
+ドラゴンのホネ　ですが
 今回は　あきらめましょう▼
-調査の　結果
+調査の結果
 伝説の　ポケモンと▽
-無関係　でしたから▼</language>
+無関係でしたから▼</language>
 	</row>
 
-	<row id="msg_d02r0101_sage5_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d02r0101_sage5_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・主人公を見ながら
 ・続けてleader3_06</comment>
@@ -706,7 +706,7 @@
 いたいめに　あってもらいましょう▼</language>
 		<language name="JPN_KANJI" width="256">ですが　我々への
 妨害は　見逃せません▼
-二度と　ジャマ立て　できないよう
+二度と　ジャマだて　できないよう
 痛い目に　あってもらいましょう▼</language>
 	</row>
 
