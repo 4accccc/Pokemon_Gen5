@@ -175,6 +175,7 @@ extern  PALETTE_FADE_PTR  BTLV_EFFECT_GetPfd( void );
 extern  BTLV_CLACT_WORK*  BTLV_EFFECT_GetCLWK( void );
 extern  BTLV_BG_WORK*     BTLV_EFFECT_GetBGWork( void );
 extern  BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void );
+extern  BtlRule           BTLV_EFFECT_GetBtlRule( void );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
