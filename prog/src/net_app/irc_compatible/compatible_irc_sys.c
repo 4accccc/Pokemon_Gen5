@@ -70,6 +70,7 @@ typedef struct
 	COMPATIBLE_STATUS	*p_send_status;
 	COMPATIBLE_STATUS	*p_my_status;
 	COMPATIBLE_STATUS	*p_you_status;
+
 } MENUNET_WORK;
 
 //-------------------------------------
@@ -77,6 +78,7 @@ typedef struct
 //=====================================
 struct _COMPATIBLE_IRC_SYS
 {	
+  GAMEDATA  *p_gamedata;
 	MENUNET_WORK	menu;
 
 	COMPATIBLE_SCENE	my_scene;
@@ -265,7 +267,7 @@ static const NetRecvFuncTable	sc_recv_tbl[]	=
  *	@return	システムハンドル
  */
 //-----------------------------------------------------------------------------
-COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, HEAPID heapID, BOOL is_only_play )
+COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, GAMEDATA  *p_gamedata, HEAPID heapID, BOOL is_only_play )
 {	
 	COMPATIBLE_IRC_SYS *p_sys;
 	//ワーク作成
@@ -276,6 +278,7 @@ COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, HEAPID heapID
 	p_sys->heapID		= heapID;
 	p_sys->is_init	= FALSE;
 	p_sys->is_only_play	= is_only_play;
+  p_sys->p_gamedata = p_gamedata;
 
 	return p_sys;
 }
@@ -1702,7 +1705,18 @@ static void NETRECV_StartProcTiming( const int netID, const int size, const void
 //-----------------------------------------------------------------------------
 static void NETRECV_SendStatus( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
 {	
-	MENUNET_WORK *p_wk	= p_work;
+	MENUNET_WORK            *p_wk   = p_work;
+  const COMPATIBLE_STATUS *cp_recv =cp_data;
+
+  //相手と自分のマイステータスをゲームデータに格納する
+  if( p_wk->p_irc->p_gamedata )
+  { 
+    MYSTATUS *p_mystatus  = GAMEDATA_GetMyStatusPlayer( p_wk->p_irc->p_gamedata, netID );
+    GFL_STD_MemCopy( cp_recv->my_status, p_mystatus, MyStatus_GetWorkSize() );
+    OS_Printf( "MyStatusをセット！netID=%d size=%d \n", netID, size );
+  }
+
+
 
 	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
 	{

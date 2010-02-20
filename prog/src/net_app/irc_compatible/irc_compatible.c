@@ -267,7 +267,15 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 		is_debug	= p_wk->p_param->is_only_play;
 #endif
 
-		p_wk->p_irc	= COMPATIBLE_IRC_CreateSystem( 0xFFFFFFFF, HEAPID_IRCCOMPATIBLE_SYSTEM, is_debug );
+    {
+      GAMEDATA  *p_gamedata = NULL;
+
+      if( p_wk->p_param->p_gamesys )
+      { 
+        p_gamedata  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+      }
+      p_wk->p_irc	= COMPATIBLE_IRC_CreateSystem( 0xFFFFFFFF, p_gamedata, HEAPID_IRCCOMPATIBLE_SYSTEM, is_debug );
+    }
 	}
 
 	p_wk->is_init	= TRUE;
