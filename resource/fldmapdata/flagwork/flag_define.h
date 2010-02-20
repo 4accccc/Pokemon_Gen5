@@ -185,7 +185,7 @@
 #define FE_D06R0201_GOLDGET                169 /* 0x00a9 電気洞窟内：きんのたま入手フラグ */
 #define FE_PALACE01_OLDMANTALK             170 /* 0x00aa パレスじじい初回会話フラグ */
 #define FE_C09R0501_CHAMPION               171 /* 0x00ab チャンピオンリーグ：アデク初回会話フラグ */
-		/* not used   172(0x00ac) */
+#define FE_MEZAPA_FIRSTTALK                172 /* 0x00ac めざめるパワーのタイプチェックする人の初回会話フラグ */
 		/* not used   173(0x00ad) */
 		/* not used   174(0x00ae) */
 		/* not used   175(0x00af) */
