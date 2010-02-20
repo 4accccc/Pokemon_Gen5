@@ -850,10 +850,12 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
   bisp.pos         = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
                                                BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) )
                                              );
-  bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
 
-  //@todo ただしく遠隔フラグが立っていないので、今回は見送る
-  //       -> WAZA_TARGET_LONG_SELECTはどこも対応していない。この処理自体、不要になった 2010.02.20 taya
+
+  bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+  // @todo ↑トリプル＆遠隔ワザ有効であれば、選択可能範囲を示す枠の絵を用意する必要がありそう
+
+
 #if 0
   if( bisp.waza_target == WAZA_TARGET_OTHER_SELECT )
   {
