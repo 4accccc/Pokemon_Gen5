@@ -205,6 +205,8 @@ void NetErr_Main(void)
 /**
  * エラーが発生していればエラー画面を一発呼び出し
  *
+ * @param   fatal_error   TRUE:リセットを促すエラー(Aで抜けられない) 
+ * 
  * @retval  TRUE:エラー画面を呼び出した
  * @retval  FALSE:呼び出していない
  * 
@@ -212,7 +214,7 @@ void NetErr_Main(void)
  * この関数内で無限ループします。
  */
 //==================================================================
-BOOL NetErr_DispCall(void)
+BOOL NetErr_DispCall(BOOL fatal_error)
 {
   return NetErr_DispMain();
 }

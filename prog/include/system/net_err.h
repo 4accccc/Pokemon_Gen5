@@ -53,7 +53,7 @@ extern void NetErr_SystemCreate(int heap_id);
 extern void NetErr_SystemExit(void);
 extern void NetErr_Main(void);
 extern void NetErr_ErrorSet(void);
-extern BOOL NetErr_DispCall(void);
+extern BOOL NetErr_DispCall(BOOL fatal_error);
 extern void NetErr_DispCallPushPop(void);
 extern void NetErr_DispCallFatal(void);
 
