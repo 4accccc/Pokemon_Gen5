@@ -2303,6 +2303,11 @@ void FIELD_BMODEL_DEBUG_ScriptPrintInfo( const FIELD_BMODEL * bmodel )
     "BMANIME_TYPE_TIMEZONE",
   };
   
+  if ( bmodel == NULL )
+  {
+    OS_TPrintf( "address == NULL :配置モデルが存在しません！\n" );
+    return;
+  }
   OS_TPrintf( "配置モデル ID　      %d\n", bmodel->objHdl.res->bmInfo->bm_id+1 );
   OS_TPrintf( "配置モデルアニメ ID　%d\n", bmodel->objHdl.res->bmInfo->anm_id+1 );
   OS_TPrintf( "配置モデル位置　x[%d] y[%d] z[%d]\n", FX_Whole(bmodel->g3dObjStatus.trans.x), FX_Whole(bmodel->g3dObjStatus.trans.y), FX_Whole(bmodel->g3dObjStatus.trans.z) );
