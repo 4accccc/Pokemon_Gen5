@@ -11554,7 +11554,7 @@ void BTL_SVFRET_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode
 BOOL BTL_SVFRET_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID )
 {
   if( (BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE)
-  &&  (BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_STANDALONE_PLAYER_CLIENT_ID)
+  &&  (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER)
   ){
     BTL_SERVER_AddBonusMoney( wk->server, volume );
     return TRUE;
