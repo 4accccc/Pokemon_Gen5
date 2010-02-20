@@ -639,7 +639,7 @@ def convert_line_mdl( no, line, wfile, idxfile, file_symbol, flag_selres )
   wfile.write( ary.pack("C*") )
   
   #‰f‚è‚İ 1 (7)
-  ret = 1 #”ñ•\¦
+  ret = 0 #”ñ•\¦
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
