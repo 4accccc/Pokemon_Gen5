@@ -13,6 +13,7 @@
 #include <heapsys.h>
 
 #include "poke_tool/poketype.h"
+#include "arc_tool.h"
 
 //------------------------------------------------------------------------------
 //
@@ -323,6 +324,10 @@ typedef enum {
 }WazaDataParam;
 
 
+
+extern  u32 WAZADATA_GetWorkSize( void );
+extern  ARCHANDLE*  WAZADATA_OpenDataHandle( HEAPID heapID );
+extern  int WAZADATA_HANDLE_GetParam( ARCHANDLE* handle, WazaID wazaID, WazaDataParam param );
 
 extern int WAZADATA_GetParam( WazaID id, WazaDataParam param );
 
