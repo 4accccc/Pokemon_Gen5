@@ -83,6 +83,37 @@ static inline WAZA_DATA* loadWazaDataTmp( WazaID id )
   return &gWazaData;
 }
 
+static inline WAZA_DATA* loadWazaDataTmpHandle( ARCHANDLE* handle, WazaID id )
+{
+  GFL_ARC_LoadDataByHandle( handle, id, &gWazaData );
+  return &gWazaData;
+}
+
+//=============================================================================================
+/**
+ * WAZA_DATA構造体のサイズ取得
+ */
+//=============================================================================================
+u32 WAZADATA_GetWorkSize( void )
+{ 
+  return sizeof( WAZA_DATA );
+}
+
+//=============================================================================================
+/**
+ * ワザパラメータ取得用ハンドルオープン
+ *
+ * @param   arcID
+ * @param   heapID
+ *
+ * @retval  ARCHANDLE
+ */
+//=============================================================================================
+ARCHANDLE*  WAZADATA_OpenDataHandle( HEAPID heapID )
+{ 
+  return  GFL_ARC_OpenDataHandle( ARCID_WAZA_TBL, heapID );
+}
+
 //=============================================================================================
 /**
  * ワザパラメータ取得（簡易版）
@@ -105,6 +136,31 @@ int WAZADATA_GetParam( WazaID wazaID, WazaDataParam param )
     return result;
   }
 }
+
+//=============================================================================================
+/**
+ * ワザパラメータ取得（ハンドル版）
+ *
+ * @param   id
+ * @param   param
+ *
+ * @retval  int
+ */
+//=============================================================================================
+int WAZADATA_HANDLE_GetParam( ARCHANDLE* handle, WazaID wazaID, WazaDataParam param )
+{
+  GF_ASSERT(handle != NULL);
+  GF_ASSERT(wazaID < WAZANO_MAX);
+  GF_ASSERT(wazaID != WAZANO_NULL);
+  GF_ASSERT(param < WAZAPARAM_MAX);
+
+  {
+    WAZA_DATA* wp = loadWazaDataTmpHandle( handle, wazaID );
+    int result = WAZADATA_PTR_GetParam( wp, param );
+    return result;
+  }
+}
+
 //=============================================================================================
 /**
  * ワザパラメータ取得（ポインタ版）
