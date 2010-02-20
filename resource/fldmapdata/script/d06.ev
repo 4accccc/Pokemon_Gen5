@@ -70,7 +70,7 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START    ev_d06_stopper_01
 	
-	_SYSWIN_MSG_DOWN(msg_d06_stopper_01) 
+	_SYSWIN_MSG(msg_d06_stopper_01, WIN_DOWN ) 
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE() 
 

@@ -69,7 +69,7 @@ EVENT_END
 /*  •ß‚Ü‚¦‚»‚±‚È‚Á‚½‚Æ‚«                                      */
 /**************************************************************/
 sub_legend1_escaped:
-    _SYSWIN_MSG_DOWN( msg_r06r0203_legend1_02 )
+    _SYSWIN_MSG( msg_r06r0203_legend1_02 , WIN_DOWN )
     _AB_KEYWAIT()
     _SYSWIN_CLOSE()
 

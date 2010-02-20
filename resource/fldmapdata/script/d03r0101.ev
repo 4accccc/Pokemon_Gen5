@@ -445,7 +445,7 @@ _TALK_START_TURN_NOT()
 	_ITEM_CHK( ITEM_IKARIMANZYUU, 1, LWK_ITEM )
 	IF $LWK_ITEM == TRUE THEN
 		
-		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_02 )
+		_SYSWIN_MSG( msg_d03r0101_daruma_02 , WIN_DOWN )
 		_YES_NO_WIN( SCWK_ANSWER )
 		_SYSWIN_CLOSE()
 		//ÇÕÇ¢ÇÃèÍçá
@@ -456,7 +456,7 @@ _TALK_START_TURN_NOT()
 			//ÇPå¬è¡îÔèàóù
 			IF $LWK_SUB == TRUE THEN
 				_FLAG_SET( FV_D03R0101_DARUMA_01 )
-				_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_03 )
+				_SYSWIN_MSG( msg_d03r0101_daruma_03 , WIN_DOWN )
 				_SYSWIN_CLOSE()
 				
 				DEFINE_LOCAL	LWK_LOSE
@@ -475,7 +475,7 @@ _TALK_START_TURN_NOT()
 		
 	ELSE
 	
-		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_01 )
+		_SYSWIN_MSG( msg_d03r0101_daruma_01 , WIN_DOWN )
 		_LAST_KEYWAIT()
 		_SYSWIN_CLOSE()
 	
@@ -494,7 +494,7 @@ _TALK_START_TURN_NOT()
 	_ITEM_CHK( ITEM_IKARIMANZYUU, 1, LWK_ITEM2 )
 	IF $LWK_ITEM2 == TRUE THEN
 		
-		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_02 )
+		_SYSWIN_MSG( msg_d03r0101_daruma_02 , WIN_DOWN )
 		_YES_NO_WIN( SCWK_ANSWER )
 		_SYSWIN_CLOSE()
 		//ÇÕÇ¢ÇÃèÍçá
@@ -505,7 +505,7 @@ _TALK_START_TURN_NOT()
 			//ÇPå¬è¡îÔèàóù
 			IF $LWK_SUB2 == TRUE THEN
 				_FLAG_SET( FV_D03R0101_DARUMA_02 )
-				_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_03 )
+				_SYSWIN_MSG( msg_d03r0101_daruma_03 , WIN_DOWN )
 				_SYSWIN_CLOSE()
 				
 				DEFINE_LOCAL	LWK_LOSE2
@@ -524,7 +524,7 @@ _TALK_START_TURN_NOT()
 		
 	ELSE
 	
-		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_01 )
+		_SYSWIN_MSG( msg_d03r0101_daruma_01 , WIN_DOWN )
 		_LAST_KEYWAIT()
 		_SYSWIN_CLOSE()
 	
@@ -543,7 +543,7 @@ _TALK_START_TURN_NOT()
 	_ITEM_CHK( ITEM_IKARIMANZYUU, 1, LWK_ITEM3 )
 	IF $LWK_ITEM3 == TRUE THEN
 		
-		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_02 )
+		_SYSWIN_MSG( msg_d03r0101_daruma_02 , WIN_DOWN )
 		_YES_NO_WIN( SCWK_ANSWER )
 		_SYSWIN_CLOSE()
 		//ÇÕÇ¢ÇÃèÍçá
@@ -554,7 +554,7 @@ _TALK_START_TURN_NOT()
 			//ÇPå¬è¡îÔèàóù
 			IF $LWK_SUB3 == TRUE THEN
 				_FLAG_SET( FV_D03R0101_DARUMA_03 )
-				_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_03 )
+				_SYSWIN_MSG( msg_d03r0101_daruma_03 , WIN_DOWN )
 				_SYSWIN_CLOSE()
 				
 				DEFINE_LOCAL	LWK_LOSE3
@@ -573,7 +573,7 @@ _TALK_START_TURN_NOT()
 		
 	ELSE
 	
-		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_01 )
+		_SYSWIN_MSG( msg_d03r0101_daruma_01 , WIN_DOWN )
 		_LAST_KEYWAIT()
 		_SYSWIN_CLOSE()
 	
@@ -592,7 +592,7 @@ _TALK_START_TURN_NOT()
 	_ITEM_CHK( ITEM_IKARIMANZYUU, 1, LWK_ITEM4 )
 	IF $LWK_ITEM4 == TRUE THEN
 		
-		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_02 )
+		_SYSWIN_MSG( msg_d03r0101_daruma_02 , WIN_DOWN )
 		_YES_NO_WIN( SCWK_ANSWER )
 		_SYSWIN_CLOSE()
 		//ÇÕÇ¢ÇÃèÍçá
@@ -603,7 +603,7 @@ _TALK_START_TURN_NOT()
 			//ÇPå¬è¡îÔèàóù
 			IF $LWK_SUB4 == TRUE THEN
 				_FLAG_SET( FV_D03R0101_DARUMA_04 )
-				_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_03 )
+				_SYSWIN_MSG( msg_d03r0101_daruma_03 , WIN_DOWN )
 				_SYSWIN_CLOSE()
 				
 				DEFINE_LOCAL	LWK_LOSE4
@@ -622,7 +622,7 @@ _TALK_START_TURN_NOT()
 		
 	ELSE
 	
-		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_01 )
+		_SYSWIN_MSG( msg_d03r0101_daruma_01 , WIN_DOWN )
 		_LAST_KEYWAIT()
 		_SYSWIN_CLOSE()
 	
@@ -641,7 +641,7 @@ _TALK_START_TURN_NOT()
 	_ITEM_CHK( ITEM_IKARIMANZYUU, 1, LWK_ITEM5 )
 	IF $LWK_ITEM5 == TRUE THEN
 		
-		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_02 )
+		_SYSWIN_MSG( msg_d03r0101_daruma_02 , WIN_DOWN )
 		_YES_NO_WIN( SCWK_ANSWER )
 		_SYSWIN_CLOSE()
 		//ÇÕÇ¢ÇÃèÍçá
@@ -652,7 +652,7 @@ _TALK_START_TURN_NOT()
 			//ÇPå¬è¡îÔèàóù
 			IF $LWK_SUB5 == TRUE THEN
 				_FLAG_SET( FV_D03R0101_DARUMA_05 )
-				_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_03 )
+				_SYSWIN_MSG( msg_d03r0101_daruma_03 , WIN_DOWN )
 				_SYSWIN_CLOSE()
 				
 				DEFINE_LOCAL	LWK_LOSE5
@@ -671,7 +671,7 @@ _TALK_START_TURN_NOT()
 		
 	ELSE
 	
-		_SYSWIN_MSG_DOWN( msg_d03r0101_daruma_01 )
+		_SYSWIN_MSG( msg_d03r0101_daruma_01 , WIN_DOWN )
 		_LAST_KEYWAIT()
 		_SYSWIN_CLOSE()
 	

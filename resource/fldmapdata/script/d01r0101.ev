@@ -230,7 +230,7 @@ ev_d01r0101_pokecount:
 			_SYSWIN_CLOSE()
 			
 			//ñºëOÇÇ¬ÇØÇ‹Ç∑Ç©ÅH
-			_SYSWIN_MSG_DOWN(msg_d01r0101_girl_09)
+			_SYSWIN_MSG(msg_d01r0101_girl_09, WIN_DOWN )
 			DEFINE_LOCAL NAME_YESNO01
 			_YES_NO_WIN( NAME_YESNO01 )
 			_SYSWIN_CLOSE()

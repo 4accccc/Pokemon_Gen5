@@ -133,16 +133,16 @@ EVENT_START	ev_bg_c05gym0201_statue_01
 	//ジムバッジフラグによって分岐
 	IF $SCWK_TEMP0 == 0 THEN
 		//バッジ入手前なら
-		_SYSWIN_MSG_DOWN( msg_c05gym0201_statue_01 )
+		_SYSWIN_MSG( msg_c05gym0201_statue_01 , WIN_DOWN )
 
 	ELSE
 		//バッジ入手後なら　【仮】イベント進行で分岐（？？後友達の名前も入る）
 		IF FLAG_OFF( FH_01) THEN
 			//イベント進行前
-			_SYSWIN_MSG_DOWN( msg_c05gym0201_statue_02 )
+			_SYSWIN_MSG( msg_c05gym0201_statue_02 , WIN_DOWN )
 		ELSE
 			//イベント進行後
-			_SYSWIN_MSG_DOWN( msg_c05gym0201_statue_03 )
+			_SYSWIN_MSG( msg_c05gym0201_statue_03 , WIN_DOWN )
 		ENDIF
 
 	ENDIF
@@ -160,7 +160,7 @@ EVENT_END
 EVENT_START	ev_bg_c05gym0201_lift_01
 	_TALK_START_SE_PLAY()
 	
-	_SYSWIN_MSG_DOWN( msg_c05gym0201_swicth_01 )
+	_SYSWIN_MSG( msg_c05gym0201_swicth_01 , WIN_DOWN )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 

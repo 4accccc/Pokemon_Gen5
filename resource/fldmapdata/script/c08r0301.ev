@@ -118,7 +118,7 @@ EVENT_START   ev_c08r0301_gentleman_01
 				
 				//アイテム入手メッセージ
 				_ME_PLAY( SEQ_ME_ITEM )
-				_SYSWIN_MSG_DOWN(msg_c08r0301_add_goods_01)
+				_SYSWIN_MSG(msg_c08r0301_add_goods_01, WIN_DOWN )
 				_ME_WAIT()
 				_LAST_KEYWAIT()
 				_SYSWIN_CLOSE()

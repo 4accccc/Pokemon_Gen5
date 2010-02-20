@@ -71,7 +71,7 @@ EVENT_START   ev_t02r0401_girl4_01
 		_TALK_START_TURN_NOT()
 		
 		//Ç¶ÇÒÇªÇ§Ç… ÇﬁÇøÇ„Ç§ÇæÅI
-		_SYSWIN_MSG_DOWN( msg_t02r0401_girl4_04 )
+		_SYSWIN_MSG( msg_t02r0401_girl4_04 , WIN_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
@@ -142,7 +142,7 @@ EVENT_START   ev_t02r0401_man2_01
 		_TALK_START_TURN_NOT()
 		
 		//Ç¶ÇÒÇªÇ§Ç… ÇﬁÇøÇ„Ç§ÇæÅI
-		_SYSWIN_MSG_DOWN( msg_t02r0401_man2_04 )
+		_SYSWIN_MSG( msg_t02r0401_man2_04 , WIN_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	

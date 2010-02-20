@@ -123,13 +123,13 @@ EVENT_START	ev_bg_c03gym0101_statue_01
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG_DOWN( msg_c03gym0101_statue_01 )
+		_SYSWIN_MSG( msg_c03gym0101_statue_01 , WIN_DOWN )
 	
 	//ジムバッジを取得している場合
 	ELSE
 		
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG_DOWN( msg_c03gym0101_statue_02 )
+		_SYSWIN_MSG( msg_c03gym0101_statue_02 , WIN_DOWN )
 		
 	ENDIF
 	
@@ -149,13 +149,13 @@ EVENT_START	ev_bg_c03gym0101_statue_02
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG_DOWN( msg_c03gym0101_statue_01 )
+		_SYSWIN_MSG( msg_c03gym0101_statue_01 , WIN_DOWN )
 	
 	//ジムバッジを取得している場合
 	ELSE
 		
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG_DOWN( msg_c03gym0101_statue_02 )
+		_SYSWIN_MSG( msg_c03gym0101_statue_02 , WIN_DOWN )
 		
 	ENDIF
 
@@ -235,7 +235,7 @@ ev_leader3_btl:
 	_ME_WAIT()
 	
 	//～～はベーシックバッジを入手した！
-	_SYSWIN_MSG_DOWN( msg_c03gym0101_leader_03 )
+	_SYSWIN_MSG( msg_c03gym0101_leader_03 , WIN_DOWN )
 	_SYSWIN_CLOSE()
 
 	//ビードルバッジ　かっこいいでしょ！

@@ -53,7 +53,7 @@ EVENT_START	ev_pos_d08r0301_demo_01
 	_OBJ_ANIME_WAIT()
 	
 	//Ç»Ç…Ç©Ç™ÅcÅ@Ç∆Ç§ÇÃÅ@Ç§Ç¶Ç≈
-	_SYSWIN_MSG_DOWN(msg_d08r0301_demo_01)
+	_SYSWIN_MSG(msg_d08r0301_demo_01, WIN_DOWN )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	

@@ -74,10 +74,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c01r0501_board_01
 	//こくばんに　ポケモンが　たたかっているときに　おこる
-	_SYSWIN_MSG_DOWN( msg_c01r0501_board_01 )
+	_SYSWIN_MSG( msg_c01r0501_board_01 , WIN_DOWN )
 		
 	//どれについて　みますか？
-	_SYSWIN_MSG_DOWN( msg_c01r0501_board_02 )
+	_SYSWIN_MSG( msg_c01r0501_board_02 , WIN_DOWN )
 		
 	//ローカル変数を定義
 	DEFINE_LOCAL	LWK_STATE_SELECT
@@ -101,35 +101,35 @@ EVENT_START   ev_bg_c01r0501_board_01
 		IF $LWK_STATE_SELECT == 0 THEN
 			
 			//どくを　うけると　たいりょくが　へっていきます
-			_SYSWIN_MSG_DOWN( msg_c01r0501_board_03 )
+			_SYSWIN_MSG( msg_c01r0501_board_03 , WIN_DOWN )
 			_SYSWIN_CLOSE()
 				
 		//まひ選択
 		ELSIF $LWK_STATE_SELECT == 1 THEN
 			
 			//まひすると　すばやさが　さがり
-			_SYSWIN_MSG_DOWN( msg_c01r0501_board_04 )
+			_SYSWIN_MSG( msg_c01r0501_board_04 , WIN_DOWN )
 			_SYSWIN_CLOSE()
 				
 		//ねむり選択
 		ELSIF $LWK_STATE_SELECT == 2 THEN
 		
 			//ねむって　しまうと　その　あいだ　こうげき　できません
-			_SYSWIN_MSG_DOWN( msg_c01r0501_board_05 )
+			_SYSWIN_MSG( msg_c01r0501_board_05 , WIN_DOWN )
 			_SYSWIN_CLOSE()
 			
 		//やけど選択
 		ELSIF $LWK_STATE_SELECT == 3 THEN
 			
 			//やけどに　なると　こうげきりょくが　さがるだけでなく
-			_SYSWIN_MSG_DOWN( msg_c01r0501_board_06 )
+			_SYSWIN_MSG( msg_c01r0501_board_06 , WIN_DOWN )
 			_SYSWIN_CLOSE()
 			
 		//こおり選択
 		ELSIF $LWK_STATE_SELECT == 4 THEN
 			
 			//こおって　しまうと　なにも　できなくなります
-			_SYSWIN_MSG_DOWN( msg_c01r0501_board_07 )
+			_SYSWIN_MSG( msg_c01r0501_board_07 , WIN_DOWN )
 			_SYSWIN_CLOSE()
 			
 		//やめる

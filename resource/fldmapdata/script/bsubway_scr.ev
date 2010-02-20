@@ -120,7 +120,7 @@ sub_bsw_receipt_guide_wifi:
   
   IF $ret == TRUE THEN //未アップロードデータあり
     //アップロードするか？
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_50 )
+    _SYSWIN_MSG( msg_bsw_scr_50 , WIN_DOWN )
     _YES_NO_WIN( ret )
     
     IF $ret == SCR_YES THEN //アップロードする
@@ -133,7 +133,7 @@ sub_bsw_receipt_guide_wifi:
   _CALL sub_receipt_msg_greet
    
   //wifiランクメッセージ
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_49 )
+  _SYSWIN_MSG( msg_bsw_scr_49 , WIN_DOWN )
   
   //選択メニュー
   _CALL sub_receipt_menu_challenge_wifi
@@ -307,7 +307,7 @@ sub_receipt_challenge_multi:
   ENDIF
   
   //お友達と一緒に対戦？
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_48 )
+  _SYSWIN_MSG( msg_bsw_scr_48 , WIN_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )
   
   //通信ならワーク切り替え
@@ -350,7 +350,7 @@ sub_receipt_challenge_multi_ai:
   _CALL sub_receipt_anm_partner_in
   
   //どんなポケモンを参加させる？ 性別切り替え必要
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_61 )
+  _SYSWIN_MSG( msg_bsw_scr_61 , WIN_DOWN )
   
   _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
   _BMPMENU_MAKE_LIST( msg_bsw_scr_63, 0 ) //攻撃重視
@@ -361,16 +361,16 @@ sub_receipt_challenge_multi_ai:
   
   SWITCH $SCWK_ANSWER
   CASE 0 THEN //攻撃
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_66 )  //性別切り替えが必要
+    _SYSWIN_MSG( msg_bsw_scr_66 , WIN_DOWN )  //性別切り替えが必要
     _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 0, BSW_NULL, BSW_NULL )
   CASE 1 THEN //防御
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_67 )  //性別切り替えが必要
+    _SYSWIN_MSG( msg_bsw_scr_67 , WIN_DOWN )  //性別切り替えが必要
     _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 0, BSW_NULL, BSW_NULL )
   CASE 2 THEN //バランス
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_68 )  //性別切り替えが必要
+    _SYSWIN_MSG( msg_bsw_scr_68 , WIN_DOWN )  //性別切り替えが必要
     _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 0, BSW_NULL, BSW_NULL )
   CASE 3 THEN //やめる
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_72 ) //さよなら
+    _SYSWIN_MSG( msg_bsw_scr_72 , WIN_DOWN ) //さよなら
     _AB_KEYWAIT()
     //サポート退場、終了
     _CALL sub_receipt_anm_partner_out
@@ -406,7 +406,7 @@ sub_receipt_challenge_multi_comm:
   DEFINE_LOCAL ret
   
   //ワイヤレス通信開始しますか
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_76 )
+  _SYSWIN_MSG( msg_bsw_scr_76 , WIN_DOWN )
   _YES_NO_WIN( ret )
   
   IF $ret == SCR_NO THEN //やめる
@@ -426,7 +426,7 @@ sub_receipt_challenge_multi_comm:
   ENDIF
   
   IF $ret == FALSE THEN //切断失敗
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_77 )
+    _SYSWIN_MSG( msg_bsw_scr_77 , WIN_DOWN )
     _CALL sub_receipt_common_exit
     _RET
   ENDIF
@@ -440,7 +440,7 @@ sub_receipt_challenge_multi_comm:
   ENDIF
   
   //親になるか子になるか
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_53 )
+  _SYSWIN_MSG( msg_bsw_scr_53 , WIN_DOWN )
   
   _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
   _BMPMENU_MAKE_LIST( msg_bsw_scr_74, 0 ) //リーダー
@@ -485,11 +485,11 @@ sub_receipt_challenge_multi_comm:
   
   SWITCH $ret
   CASE 1 THEN //同じポケモン 1
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_54 )
+    _SYSWIN_MSG( msg_bsw_scr_54 , WIN_DOWN )
   CASE 2 THEN //同じポケモン 2
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_54 )
+    _SYSWIN_MSG( msg_bsw_scr_54 , WIN_DOWN )
   CASE 3 THEN //同じポケモン 3
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_54 )
+    _SYSWIN_MSG( msg_bsw_scr_54 , WIN_DOWN )
   ENDSWITCH
   
   $ret = 0 //kari
@@ -655,7 +655,7 @@ ev_bsw_game_continue:
   ENDIF
   
   //おまちしておりました
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_32 )
+  _SYSWIN_MSG( msg_bsw_scr_32 , WIN_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )
   
   IF $SCWK_ANSWER != SCR_YES THEN //やめる
@@ -684,7 +684,7 @@ ev_bsw_game_continue:
   _REPORT_CALL( SCWK_ANSWER )
   
   //それでは中断した所まで案内します
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_34 )
+  _SYSWIN_MSG( msg_bsw_scr_34 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -735,7 +735,7 @@ ev_bsw_game_cancel:
   _CALL sub_receipt_flag_clear
   
   //成績をレポートに
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_36 )
+  _SYSWIN_MSG( msg_bsw_scr_36 , WIN_DOWN )
   _REPORT_CALL( SCWK_ANSWER )
   
   //またのご利用を
@@ -758,7 +758,7 @@ ev_bsw_game_after:
   _MAP_FADE_END_CHECK()
   
   //お疲れ様でした
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_35 )
+  _SYSWIN_MSG( msg_bsw_scr_35 , WIN_DOWN )
   _AB_KEYWAIT()
   
   //またのご利用を
@@ -783,19 +783,19 @@ sub_receipt_msg_greet:
   //プレイモード別　挨拶
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_00 )
+    _SYSWIN_MSG( msg_bsw_scr_00 , WIN_DOWN )
   CASE BSWAY_MODE_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_01 )
+    _SYSWIN_MSG( msg_bsw_scr_01 , WIN_DOWN )
   CASE BSWAY_MODE_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_02 )
+    _SYSWIN_MSG( msg_bsw_scr_02 , WIN_DOWN )
   CASE BSWAY_MODE_WIFI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_03 )
+    _SYSWIN_MSG( msg_bsw_scr_03 , WIN_DOWN )
   CASE BSWAY_MODE_S_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_04 )
+    _SYSWIN_MSG( msg_bsw_scr_04 , WIN_DOWN )
   CASE BSWAY_MODE_S_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_05 )
+    _SYSWIN_MSG( msg_bsw_scr_05 , WIN_DOWN )
   CASE BSWAY_MODE_S_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_06 )
+    _SYSWIN_MSG( msg_bsw_scr_06 , WIN_DOWN )
   ENDSWITCH
   
   _AB_KEYWAIT()
@@ -814,19 +814,19 @@ sub_receipt_msg_ask_geton:
   //プレイモード別　乗車を尋ねるメッセージ
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_13 )
+    _SYSWIN_MSG( msg_bsw_scr_13 , WIN_DOWN )
   CASE BSWAY_MODE_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_14 )
+    _SYSWIN_MSG( msg_bsw_scr_14 , WIN_DOWN )
   CASE BSWAY_MODE_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_15 )
+    _SYSWIN_MSG( msg_bsw_scr_15 , WIN_DOWN )
   CASE BSWAY_MODE_WIFI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_16 )
+    _SYSWIN_MSG( msg_bsw_scr_16 , WIN_DOWN )
   CASE BSWAY_MODE_S_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_17 )
+    _SYSWIN_MSG( msg_bsw_scr_17 , WIN_DOWN )
   CASE BSWAY_MODE_S_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_18 )
+    _SYSWIN_MSG( msg_bsw_scr_18 , WIN_DOWN )
   CASE BSWAY_MODE_S_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_19 )
+    _SYSWIN_MSG( msg_bsw_scr_19 , WIN_DOWN )
   ENDSWITCH
 }
 _RET
@@ -843,19 +843,19 @@ sub_receipt_msg_account:
   //プレイモード別　説明
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_09 )
+    _SYSWIN_MSG( msg_bsw_scr_09 , WIN_DOWN )
   CASE BSWAY_MODE_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_10 )
+    _SYSWIN_MSG( msg_bsw_scr_10 , WIN_DOWN )
   CASE BSWAY_MODE_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_11 )
+    _SYSWIN_MSG( msg_bsw_scr_11 , WIN_DOWN )
   CASE BSWAY_MODE_WIFI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_12 )
+    _SYSWIN_MSG( msg_bsw_scr_12 , WIN_DOWN )
   CASE BSWAY_MODE_S_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_09 )
+    _SYSWIN_MSG( msg_bsw_scr_09 , WIN_DOWN )
   CASE BSWAY_MODE_S_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_10 )
+    _SYSWIN_MSG( msg_bsw_scr_10 , WIN_DOWN )
   CASE BSWAY_MODE_S_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_11 )
+    _SYSWIN_MSG( msg_bsw_scr_11 , WIN_DOWN )
   ENDSWITCH
   
   _AB_KEYWAIT()
@@ -874,23 +874,23 @@ sub_receipt_msg_geton_train:
   //プレイモード別　乗車メッセージ
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_24 )
+    _SYSWIN_MSG( msg_bsw_scr_24 , WIN_DOWN )
   CASE BSWAY_MODE_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_25 )
+    _SYSWIN_MSG( msg_bsw_scr_25 , WIN_DOWN )
   CASE BSWAY_MODE_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_26 )
+    _SYSWIN_MSG( msg_bsw_scr_26 , WIN_DOWN )
   CASE BSWAY_MODE_COMM_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_26 )
+    _SYSWIN_MSG( msg_bsw_scr_26 , WIN_DOWN )
   CASE BSWAY_MODE_WIFI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_27 )
+    _SYSWIN_MSG( msg_bsw_scr_27 , WIN_DOWN )
   CASE BSWAY_MODE_S_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_28 )
+    _SYSWIN_MSG( msg_bsw_scr_28 , WIN_DOWN )
   CASE BSWAY_MODE_S_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_29 )
+    _SYSWIN_MSG( msg_bsw_scr_29 , WIN_DOWN )
   CASE BSWAY_MODE_S_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_30 )
+    _SYSWIN_MSG( msg_bsw_scr_30 , WIN_DOWN )
   CASE BSWAY_MODE_S_COMM_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_30 )
+    _SYSWIN_MSG( msg_bsw_scr_30 , WIN_DOWN )
   ENDSWITCH
   
   _LAST_KEYWAIT()
@@ -903,9 +903,9 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_msg_poke_error:
 {
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_21 )
+  _SYSWIN_MSG( msg_bsw_scr_21 , WIN_DOWN )
   _AB_KEYWAIT()
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_22 )
+  _SYSWIN_MSG( msg_bsw_scr_22 , WIN_DOWN )
 }
 _RET
 
@@ -1066,10 +1066,10 @@ sub_receipt_anm_partner_in:
   _BSUBWAY_TOOL( BSWTOOL_GET_SUPPORT_ENCOUNT_END, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
   IF $SCWK_ANSWER == 0 THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_57 ) //始めまして 性別切り替え必要
+    _SYSWIN_MSG( msg_bsw_scr_57 , WIN_DOWN ) //始めまして 性別切り替え必要
     _BSUBWAY_TOOL( BSWTOOL_SET_SUPPORT_ENCOUNT_END, BSW_NULL, BSW_NULL, BSW_NULL )
   ELSE
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_59 ) //またあったね 性別切り替え必要
+    _SYSWIN_MSG( msg_bsw_scr_59 , WIN_DOWN ) //またあったね 性別切り替え必要
   ENDIF
   
   _AB_KEYWAIT()
@@ -1134,7 +1134,7 @@ sub_receipt_common_exit:
   //ステートクリア
   _CALL sub_receipt_flag_clear
   
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_38 ) //またのご利用を
+  _SYSWIN_MSG( msg_bsw_scr_38 , WIN_DOWN ) //またのご利用を
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -1168,7 +1168,7 @@ _RET
 sub_receipt_common_report_error:
 {
   //お客様！
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_37 )
+  _SYSWIN_MSG( msg_bsw_scr_37 , WIN_DOWN )
   _AB_KEYWAIT()
   
   //不正終了時のパラメータ処理
@@ -1228,7 +1228,7 @@ sub_receipt_common_pokemon_select:
   _TEMOTI_POKEMON_KAIFUKU()
   
   //それでは参加するポケモンを
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_23 )
+  _SYSWIN_MSG( msg_bsw_scr_23 , WIN_DOWN )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
     
@@ -1253,7 +1253,7 @@ sub_receipt_common_renshou_msg:
   IF $count != 0 THEN
     _PLAYER_NAME( 0 )
     _NUMBER( 1, count, 3 )
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_08 ) //連勝中です
+    _SYSWIN_MSG( msg_bsw_scr_08 , WIN_DOWN ) //連勝中です
     _AB_KEYWAIT()
   ENDIF
 }
@@ -1284,7 +1284,7 @@ sub_receipt_common_auto_save:
 {
   DEFINE_LOCAL ret
   
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_78 )
+  _SYSWIN_MSG( msg_bsw_scr_78 , WIN_DOWN )
   _REPORT_CALL( ret )
 }
 _RET

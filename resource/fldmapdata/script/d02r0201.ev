@@ -50,7 +50,7 @@ EVENT_START ev_d02r0201_legend3
     SWITCH $SCWK_ANSWER
     CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
     //èüóòÇµÇΩèÍçáÅAÇ†ÇÈÇ¢ÇÕì¶Ç∞ÇΩèÍçá
-        _SYSWIN_MSG_DOWN( msg_d02r0201_legend3_02 )
+        _SYSWIN_MSG( msg_d02r0201_legend3_02 , WIN_DOWN )
         _AB_KEYWAIT()
         _SYSWIN_CLOSE()
         

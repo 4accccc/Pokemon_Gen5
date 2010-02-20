@@ -79,7 +79,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_r06_sign4_01
 	
-  	_SYSWIN_MSG_DOWN   ( msg_r06_sign3_02)
+  	_SYSWIN_MSG( msg_r06_sign3_02, WIN_DOWN )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
     	

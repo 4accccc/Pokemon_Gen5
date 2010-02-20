@@ -166,7 +166,7 @@ EVENT_START		ev_bg_c01gym0101_pokezou
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG_DOWN( msg_c01gym0101_statue_01 )
+		_SYSWIN_MSG( msg_c01gym0101_statue_01 , WIN_DOWN )
 		
 	//ジムバッジを取得している場合
 	ELSE
@@ -174,12 +174,12 @@ EVENT_START		ev_bg_c01gym0101_pokezou
 		//分岐処理・C02到着していないなら
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG_DOWN( msg_c01gym0101_statue_02 )
+			_SYSWIN_MSG( msg_c01gym0101_statue_02 , WIN_DOWN )
 		
 		//C02到着している場合
 		ELSE
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG_DOWN( msg_c01gym0101_statue_03 )
+			_SYSWIN_MSG( msg_c01gym0101_statue_03 , WIN_DOWN )
 			
 		ENDIF
 	
@@ -567,7 +567,7 @@ EVENT_START		ev_c01gym0101_leader1b_01
 			_ME_WAIT()
 			
 			//～～は　コーンから　トライバッジを　もらった
-			_SYSWIN_MSG_DOWN( msg_c01gym0101_leader1_07b )
+			_SYSWIN_MSG( msg_c01gym0101_leader1_07b , WIN_DOWN )
 			_SYSWIN_CLOSE()
 
 			//コーン：デントの場所へ移動
@@ -688,7 +688,7 @@ EVENT_START		ev_c01gym0101_leader1a_01
 			_ME_WAIT()
 
 			//～～は　ポッドから　トライバッジを　もらった
-			_SYSWIN_MSG_DOWN( msg_c01gym0101_leader1_07a )
+			_SYSWIN_MSG( msg_c01gym0101_leader1_07a , WIN_DOWN )
 			_SYSWIN_CLOSE()
 		
 			//ポッド：デントの場所へ移動
@@ -816,7 +816,7 @@ EVENT_START		ev_c01gym0101_leader1c_01
 			_ME_WAIT()
 
 			//～～は　デントから　トライバッジを　もらった
-			_SYSWIN_MSG_DOWN( msg_c01gym0101_leader1_07c )
+			_SYSWIN_MSG( msg_c01gym0101_leader1_07c , WIN_DOWN )
 			_SYSWIN_CLOSE()
 		
 			//ジムバッジは　トレーナーの　つよさの　あかし！

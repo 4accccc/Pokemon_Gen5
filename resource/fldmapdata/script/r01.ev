@@ -335,7 +335,7 @@ IF $SCWK_ANSWER == SCR_YES THEN
 	_PLAYER_NAME(0)
 	
 	//システムメッセージ
-	_SYSWIN_MSG_DOWN( msg_r01_tvt_01 )
+	_SYSWIN_MSG( msg_r01_tvt_01 , WIN_DOWN )
 	_SYSWIN_CLOSE()
 	
 	

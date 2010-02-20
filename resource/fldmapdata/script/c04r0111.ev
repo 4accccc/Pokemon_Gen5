@@ -87,7 +87,7 @@ EVENT_START ev_c04r0111_receipt_talk
   _TALK_OBJ_START()
   
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN //途中駅
-    _SYSWIN_MSG_DOWN( msg_c04r0111_15 ) //どうしますか
+    _SYSWIN_MSG( msg_c04r0111_15 , WIN_DOWN ) //どうしますか
     _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
     _BMPMENU_MAKE_LIST( msg_c04r0111_16, 0 ) //続ける
     _BMPMENU_MAKE_LIST( msg_c04r0111_17, 1 ) //ライモン
@@ -145,7 +145,7 @@ sub_challenge_continue:
 {
   DEFINE_LOCAL play_mode
    
-  _SYSWIN_MSG_DOWN( msg_c04r0111_02 ) //ご案内する前にレポート
+  _SYSWIN_MSG( msg_c04r0111_02 , WIN_DOWN ) //ご案内する前にレポート
   _AB_KEYWAIT()
   
   //受付をエラー状態に
@@ -187,7 +187,7 @@ sub_challenge_continue_comm_multi:
   DEFINE_LOCAL ret
   DEFINE_LOCAL play_mode
 
-  _SYSWIN_MSG_DOWN( msg_c04r0111_02 ) //ご案内する前にレポート
+  _SYSWIN_MSG( msg_c04r0111_02 , WIN_DOWN ) //ご案内する前にレポート
   _AB_KEYWAIT()
   
   //受付をエラー状態に
@@ -248,12 +248,12 @@ sub_mapchg_receipt:
   DEFINE_LOCAL comm_flag
   
   //ライモンシティに戻るか
-  _SYSWIN_MSG_DOWN( msg_c04r0111_13 )
+  _SYSWIN_MSG( msg_c04r0111_13 , WIN_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )
   
   IF $SCWK_ANSWER == 0 THEN
     //戻ります
-    _SYSWIN_MSG_DOWN( msg_c04r0111_14 )
+    _SYSWIN_MSG( msg_c04r0111_14 , WIN_DOWN )
     _LAST_KEYWAIT()
     
     //プレイモード取得
@@ -263,7 +263,7 @@ sub_mapchg_receipt:
     _BSUBWAY_TOOL( BSWSUB_GET_COMM_FLAG, BSW_NULL, BSW_NULL, comm_flag )
     
     IF $comm_flag == TRUE THEN
-      _SYSWIN_MSG_DOWN( msg_c04r0111_19 )
+      _SYSWIN_MSG( msg_c04r0111_19 , WIN_DOWN )
       
        //選択待ち通信同期
       _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RETIRE_WAIT, BSW_NULL, BSW_NULL )
@@ -279,7 +279,7 @@ sub_mapchg_receipt:
       _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
       
       //戻ります
-      _SYSWIN_MSG_DOWN( msg_c04r0111_20 )
+      _SYSWIN_MSG( msg_c04r0111_20 , WIN_DOWN )
       _TIME_WAIT( 30 )
       
       //通信切断
@@ -398,19 +398,19 @@ EVENT_START ev_c04r0111_home
     _BSUBWAY_TOOL( BSWSUB_CHK_S_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     
     IF $SCWK_ANSWER == TRUE THEN //スーパーボスである
-      _SYSWIN_MSG_DOWN( msg_c04r0111_04 ) //おめでとうございます
+      _SYSWIN_MSG( msg_c04r0111_04 , WIN_DOWN ) //おめでとうございます
       _AB_KEYWAIT()
       
       _PLAYER_NAME( 0 )
       _NUMBER( 1, 50, 2 )
-      _SYSWIN_MSG_DOWN( msg_c04r0111_00 ) //BPを手に入れた
+      _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
       _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
       _ME_WAIT()
 
       _BSUBWAY_TOOL( BSWTOOL_GET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
       
        IF $SCWK_ANSWER == 0 THEN //初めて倒した
-        _SYSWIN_MSG_DOWN( msg_c04r0111_08 ) //トロフィを差し上げます
+        _SYSWIN_MSG( msg_c04r0111_08 , WIN_DOWN ) //トロフィを差し上げます
         _AB_KEYWAIT()
         _BSUBWAY_TOOL( BSWTOOL_SET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
       ENDIF
@@ -419,27 +419,27 @@ EVENT_START ev_c04r0111_home
       $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_STOPOVER
 
       //レポート
-      _SYSWIN_MSG_DOWN( msg_c04r0111_01 )
+      _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
       _REPORT_CALL( SCWK_ANSWER )
       
       //また話し掛けてくれ
-      _SYSWIN_MSG_DOWN( msg_c04r0111_09 )
+      _SYSWIN_MSG( msg_c04r0111_09 , WIN_DOWN )
       _LAST_KEYWAIT()
       _SYSWIN_CLOSE()
     ELSE  //ノーマルボスである
-      _SYSWIN_MSG_DOWN( msg_c04r0111_04 ) //おめでとうございます
+      _SYSWIN_MSG( msg_c04r0111_04 , WIN_DOWN ) //おめでとうございます
       _AB_KEYWAIT()
 
       _PLAYER_NAME( 0 )
       _NUMBER( 1, 50, 2 )
-      _SYSWIN_MSG_DOWN( msg_c04r0111_00 ) //BPを手に入れた
+      _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
       _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
       _ME_WAIT()
      
       _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
       
       IF $SCWK_ANSWER == 0 THEN //初めて倒した
-        _SYSWIN_MSG_DOWN( msg_c04r0111_05 ) //スーパーに挑戦出来ます
+        _SYSWIN_MSG( msg_c04r0111_05 , WIN_DOWN ) //スーパーに挑戦出来ます
         _AB_KEYWAIT()
         _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
       ENDIF
@@ -448,29 +448,29 @@ EVENT_START ev_c04r0111_home
       $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
       
       //レポート
-      _SYSWIN_MSG_DOWN( msg_c04r0111_01 )
+      _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
       _REPORT_CALL( SCWK_ANSWER )
 
       //終点メッセージ
       SWITCH $play_mode
       CASE BSWAY_MODE_SINGLE THEN
-        _SYSWIN_MSG_DOWN( msg_c04r0111_10 )
+        _SYSWIN_MSG( msg_c04r0111_10 , WIN_DOWN )
       CASE BSWAY_MODE_DOUBLE THEN
-        _SYSWIN_MSG_DOWN( msg_c04r0111_11 )
+        _SYSWIN_MSG( msg_c04r0111_11 , WIN_DOWN )
       CASE BSWAY_MODE_MULTI THEN
-        _SYSWIN_MSG_DOWN( msg_c04r0111_12 )
+        _SYSWIN_MSG( msg_c04r0111_12 , WIN_DOWN )
       ENDSWITCH
       
       _LAST_KEYWAIT()
       _SYSWIN_CLOSE()
     ENDIF
   ELSE //倒していない
-    _SYSWIN_MSG_DOWN( msg_c04r0111_03 ) //おめでとうございます
+    _SYSWIN_MSG( msg_c04r0111_03 , WIN_DOWN ) //おめでとうございます
     _AB_KEYWAIT()
     
     _PLAYER_NAME( 0 )
     _NUMBER( 1, 50, 2 )
-    _SYSWIN_MSG_DOWN( msg_c04r0111_00 ) //BPを手に入れた
+    _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
     _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
     _ME_WAIT()
     
@@ -478,11 +478,11 @@ EVENT_START ev_c04r0111_home
     $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_STOPOVER
 
     //レポート
-    _SYSWIN_MSG_DOWN( msg_c04r0111_01 )
+    _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
     _REPORT_CALL( SCWK_ANSWER )
     
     //また話し掛けてくれ
-    _SYSWIN_MSG_DOWN( msg_c04r0111_09 )
+    _SYSWIN_MSG( msg_c04r0111_09 , WIN_DOWN )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
   ENDIF
@@ -559,7 +559,7 @@ ev_bsubway_seq_challenge:
   //_LDVAL( WK_OTHER_SCENE_C04R0110, 1 )
   //_LDVAL( WK_OTHER_SCENE_C04R0111, 0 )
 
-  _SYSWIN_MSG_DOWN( msg_c04r0111_07 )
+  _SYSWIN_MSG( msg_c04r0111_07 , WIN_DOWN )
   _AB_KEYWAIT()
  
   _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
@@ -602,7 +602,7 @@ ev_c04r0111_receipt_talk:
 //  _IFVAL_JUMP WK_OTHER_SCENE_C04R0111,EQ,2,ev_receipt_talk_boss_clear
   
   //どうしますか
-  _SYSWIN_MSG_DOWN( msg_c04r0111_02 )
+  _SYSWIN_MSG( msg_c04r0111_02 , WIN_DOWN )
   _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
   _BMPMENU_MAKE_LIST( msg_c04r0111_03, 0 ) //続ける
   _BMPMENU_MAKE_LIST( msg_c04r0111_04, 1 ) //ライモン
@@ -623,7 +623,7 @@ ev_c04r0111_receipt_continue:
 //ライモン戻る
 ev_c04r0111_receipt_map_change:
   //一旦戻る
-  _SYSWIN_MSG_DOWN( msg_c04r0111_06 )
+  _SYSWIN_MSG( msg_c04r0111_06 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   _JUMP ev_bsubway_seq_map_change
@@ -632,12 +632,12 @@ ev_c04r0111_receipt_map_change:
 //クリア時
 ev_receipt_talk_boss_clear:
   //ライモンシティに戻るか
-  _SYSWIN_MSG_DOWN( msg_c04r0111_00 )
+  _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_receipt_talk_first_clear_no
   
   //もどります
-  _SYSWIN_MSG_DOWN( msg_c04r0111_01 )
+  _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   _JUMP ev_bsubway_seq_map_change
@@ -678,13 +678,13 @@ ev_normal_clear_7:
   _PLAYER_NAME( 0 )
   
   //おめでとうございます
-  _SYSWIN_MSG_DOWN( msg_c04r0111_08 )
+  _SYSWIN_MSG( msg_c04r0111_08 , WIN_DOWN )
   _AB_KEYWAIT()
   
   //ファンファーレ
   _PLAYER_NAME( 0 )
   _NUMBER( 1, SCWK_ANSWER, 2 )
-  _SYSWIN_MSG_DOWN( msg_c04r0111_point_get )
+  _SYSWIN_MSG( msg_c04r0111_point_get , WIN_DOWN )
   _ME_PLAY( SEQ_ME_ITEM )
   _ME_WAIT()
   
@@ -693,7 +693,7 @@ ev_normal_clear_7:
   _REPORT_CALL( SCWK_ANSWER )
 
   //ごゆっくり
-  _SYSWIN_MSG_DOWN( msg_c04r0111_13 )
+  _SYSWIN_MSG( msg_c04r0111_13 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -714,13 +714,13 @@ ev_normal_clear_boss:
   _PLAYER_NAME( 0 )
   
   //おめでとうございます
-  _SYSWIN_MSG_DOWN( msg_c04r0111_09 )
+  _SYSWIN_MSG( msg_c04r0111_09 , WIN_DOWN )
   _AB_KEYWAIT()
   
   //ファンファーレ
   _PLAYER_NAME( 0 )
   _NUMBER( 1, 20, 2 )
-  _SYSWIN_MSG_DOWN( msg_c04r0111_point_get )
+  _SYSWIN_MSG( msg_c04r0111_point_get , WIN_DOWN )
   _ME_PLAY( SEQ_ME_ITEM )
   _ME_WAIT()
   
@@ -732,7 +732,7 @@ ev_normal_clear_boss_first:
   //スーパートレイン解除フラグを立てる
   
   //スーパーシングルトレインにチャレンジ可能
-//  _SYSWIN_MSG_DOWN( msg_c04r0111_10 )
+//  _SYSWIN_MSG( msg_c04r0111_10 , WIN_DOWN )
 //  _AB_KEYWAIT()
   
 ev_normal_clear_boss_save:
@@ -743,7 +743,7 @@ ev_normal_clear_boss_save:
   _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0111_12 )
   _REPORT_CALL( SCWK_ANSWER )
 
-  _SYSWIN_MSG_DOWN( msg_c04r0111_14 )
+  _SYSWIN_MSG( msg_c04r0111_14 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -762,13 +762,13 @@ ev_super_clear_boss:
   _PLAYER_NAME( 0 )
   
   //おめでとうございます
-  _SYSWIN_MSG_DOWN( msg_c04r0111_09 )
+  _SYSWIN_MSG( msg_c04r0111_09 , WIN_DOWN )
   _AB_KEYWAIT()
   
   //ファンファーレ
   _PLAYER_NAME( 0 )
   _NUMBER( 1, SCWK_ANSWER, 2 )
-  _SYSWIN_MSG_DOWN( msg_c04r0111_point_get )
+  _SYSWIN_MSG( msg_c04r0111_point_get , WIN_DOWN )
   _ME_PLAY( SEQ_ME_ITEM )
   _ME_WAIT()
   
@@ -780,7 +780,7 @@ ev_super_clear_boss_first:
   //トロフィー追加
   
   //トロフィーをさしあげます
-  _SYSWIN_MSG_DOWN( msg_c04r0111_11 )
+  _SYSWIN_MSG( msg_c04r0111_11 , WIN_DOWN )
   _AB_KEYWAIT()
   
 ev_super_clear_boss_save:
@@ -788,7 +788,7 @@ ev_super_clear_boss_save:
   _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0111_12 )
   _REPORT_CALL( SCWK_ANSWER )
   
-  _SYSWIN_MSG_DOWN( msg_c04r0111_14 )
+  _SYSWIN_MSG( msg_c04r0111_14 , WIN_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   
