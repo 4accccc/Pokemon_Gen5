@@ -3191,9 +3191,9 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
       case WAZA_TARGET_FRIEND_SELECT:       ///< 自分以外の味方ポケ（１体選択）
       case WAZA_TARGET_ENEMY_SELECT:        ///< 相手側ポケ（１体選択）
       case WAZA_TARGET_UNKNOWN:             ///< ゆびをふるなど特殊型
-      case WAZA_TARGET_LONG_SELECT:         ///<対象選択表示用に定義
       case WAZA_TARGET_USER:                ///< 自分のみ
       case WAZA_TARGET_ENEMY_RANDOM:        ///< 相手ポケ１体ランダム
+      //case WAZA_TARGET_LONG_SELECT:         ///<対象選択表示用に定義
         //本来この選択範囲でBTLV_MCSS_POS_ERRORになることはないはず
         GF_ASSERT( 0 );
         break;
