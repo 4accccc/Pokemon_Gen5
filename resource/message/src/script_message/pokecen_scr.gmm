@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T12:04:48"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-20T15:46:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
+	<dialog left="42" top="410" right="542" bottom="1038" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="132" right="1280" bottom="530" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="1124" top="184" right="1597" bottom="582" visible="yes"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="325"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -641,43 +641,51 @@
 ポケモンが　います</language>
 	</row>
 
-	<row id="msg_pc_union_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffff80,,,#ffff80,,#80ff80,#ffff80,,,#ffff80,,">
-		<comment>初めてユニオンに接続する際に
-トレーナーカード内で予め隠してある
-トレーナータイプを告知
+	<row id="msg_pc_union_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>初めてユニオンに接続する際にそれまで一度も
+トレーナーカード内のトレーナータイプを変更して
+いない場合、店員が隠してあるトレーナータイプを告知
+
+事前にトレーナータイプを触っていた場合は起こさない
 
 ・0:トレーナータイプ</comment>
 		<attribute name="キャラ指定">ユニオン受付</attribute>
 		<language name="JPN" width="256">そういえば　おきゃくさま▼
-トレーナーカードに　ごじぶんの
-イメージを　かいていませんね？▼
-じぶんの　イメージを　かいておくと
-ひとから　みたときに▼
-その　イメージ　どおりに
-みえるかも　しれませんよ▼
-たとえば　[1:0E:トレーナー種別名:0]なんて
-いかが　でしょう！？▼
-わたしから　みた　いんしょうですが
-とりあえず　かきこんでおきますね！▼
-きにいらなければ　トレーナーカードで
-イメージを　タッチ！▼
-そうすれば　イメージは
-いつでも　へんこう　できますよ</language>
+トレーナーカードに　かいてある
+ごじぶんの　イメージが▼
+ポケモントレーナーの　ままですね？▼
+トレーナーカードの　オモテめんで
+じぶんの　イメージを　かえておくと▼
+ひとからみた　おきゃくさまの　すがたが
+その　イメージどおりに　みえますよ▼
+そうですねー
+･･････▼
+たとえば　[1:0E:トレーナー種別名:0]
+など　いかがでしょうか？▼
+わたしから　みた　いんしょう　ですが
+まずは　イメージを　かえてみましょう▼
+おきに　めさない　ようでしたら
+トレーナーカードで　イメージを　タッチ！▼
+ユニオンルーム　いがいの　ばしょなら
+イメージは　いつでも　へんこうできます</language>
 		<language name="JPN_KANJI" width="256">そういえば　お客さま▼
-トレーナーカードに　ご自分の
-イメージを　かいていませんね？▼
-自分の　イメージを　かいておくと
-人から　みたときに▼
-その　イメージどおりに
-みえるかも　しれませんよ▼
-たとえば　[1:0E:トレーナー種別名:0]なんて
-いかが　でしょう！？▼
-わたしから　みた　印象ですが
-とりあえず　かきこんでおきますね！▼
-気に入らなければ　トレーナーカードで
-イメージを　タッチ！▼
-そうすれば　イメージは
-いつでも　変更できますよ</language>
+トレーナーカードに　書いてある
+ご自分の　イメージが▼
+ポケモントレーナーの　ままですね？▼
+トレーナーカードの　オモテ面で
+自分の　イメージを　変えておくと▼
+人から見た　お客さまの姿が
+その　イメージ通りに　見えますよ▼
+そうですねー
+･･････▼
+たとえば　[1:0E:トレーナー種別名:0]
+など　いかがでしょうか？▼
+私から見た　印象ですが
+まずは　イメージを　変えてみましょう▼
+お気に召さない　ようでしたら
+トレーナーカードで　イメージを　タッチ！▼
+ユニオンルーム　以外の　場所なら
+イメージは　いつでも　変更できます</language>
 	</row>
 
 	<flowchart-group-list>
