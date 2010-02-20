@@ -71,6 +71,9 @@ typedef struct {
 #endif	// PM_DEBUG
 */
 
+// [ HEAPID_COMMAND_DEMO ] 後方確保用定義
+#define	HEAPID_COMMAND_DEMO_L		( GFL_HEAP_LOWID(HEAPID_COMMAND_DEMO) )
+
 
 //============================================================================================
 //	グローバル

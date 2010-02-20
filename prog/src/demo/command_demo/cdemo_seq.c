@@ -577,12 +577,12 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 	case 0:
 		{
 			void * buf;
-			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin, TRUE, HEAPID_COMMAND_DEMO );
+			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin, TRUE, HEAPID_COMMAND_DEMO_L );
 			DC_FlushRange( buf, 256*170*2 );
 	    GX_LoadBG2Bmp( buf, 256*11*2, 256*170*2 );
 			GFL_HEAP_FreeMemory( buf );
 			wk->bgsa_num += 1;
-			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO );
+			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
 			DC_FlushRange( buf, 256*170*2 );
 	    GX_LoadBG3Bmp( buf, 256*11*2, 256*170*2 );
 			GFL_HEAP_FreeMemory( buf );
@@ -610,7 +610,7 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 		GFL_BG_SetPriority( GFL_BG_FRAME2_M+((wk->bgsa_load+1)&1), 1 );
 		if( wk->bgsa_num < wk->bgsa_max ){
 			void * buf;
-			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO );
+			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
 			DC_FlushRange( buf, 256*170*2 );
 			if( ((wk->bgsa_load+1)&1) == 0 ){
 		    GX_LoadBG2Bmp( buf, 256*11*2, 256*170*2 );

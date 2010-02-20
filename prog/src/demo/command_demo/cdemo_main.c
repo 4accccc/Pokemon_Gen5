@@ -111,7 +111,7 @@ void CDEMOMAIN_BgInit( CDEMO_WORK * wk )
 	G2_SetBG3ControlDCBmp( GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x20000 );
 
 	{	// スクリーンクリア
-		void * buf = GFL_HEAP_AllocClearMemory( HEAPID_COMMAND_DEMO, 256*192*2 );
+		void * buf = GFL_HEAP_AllocClearMemory( HEAPID_COMMAND_DEMO_L, 256*192*2 );
     GX_LoadBG2Bmp( buf, 0, 256*192*2 );
     GX_LoadBG3Bmp( buf, 0, 256*192*2 );
 		GFL_HEAP_FreeMemory( buf );
@@ -296,8 +296,7 @@ void CDEMOMAIN_LoadPaletteRequest( CDEMO_WORK * wk, u32 frm, u32 id )
 	void * arc_data;
 	CDEMO_PALETTE * pltt;
 	
-//	arc_data = ArcUtil_HDL_PalDataGet( wk->gra_ah, id, &pal_data, HEAPID_COMMAND_DEMO );
-	arc_data = GFL_ARCHDL_UTIL_LoadPalette( wk->gra_ah, id, &pal_data, HEAPID_COMMAND_DEMO );
+	arc_data = GFL_ARCHDL_UTIL_LoadPalette( wk->gra_ah, id, &pal_data, HEAPID_COMMAND_DEMO_L );
 
 	pltt = &wk->pltt[ frm - GFL_BG_FRAME0_M ];
 	pltt->size = pal_data->szByte;
