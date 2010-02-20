@@ -64,6 +64,7 @@ struct  _BTLV_MCSS
   GFL_TCB*        tcb;
   int             mons_no;
   int             form_no;
+  int             capture_ball;
   u32             personal_rnd;
   u32             status_flag;
   u16             weight;
@@ -386,6 +387,9 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
 
   //個性乱数を取得しておく
   bmw->btlv_mcss[ index ].personal_rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
+
+  //捕獲ボールを取得しておく
+  bmw->btlv_mcss[ index ].capture_ball = PP_Get( pp, ID_PARA_get_ball, NULL );
 
   BTLV_MCSS_MakeMAW( pp, &bmw->btlv_mcss[ index ].maw, position );
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
@@ -1319,6 +1323,21 @@ void  BTLV_MCSS_SetRotation( BTLV_MCSS_WORK* bmw, int side, int dir )
   bmw->mcss_tcb_rotation_execute = 1;
 
   GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_Rotation, bmrw, 0 );
+}
+
+//============================================================================================
+/**
+ * @brief 捕獲ボール取得
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  取得したいポケモンの立ち位置
+ */
+//============================================================================================
+int   BTLV_MCSS_GetCaptureBall( BTLV_MCSS_WORK *bmw, int position )
+{
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  return bmw->btlv_mcss[ index ].capture_ball;
 }
 
 //============================================================================================

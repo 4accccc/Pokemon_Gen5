@@ -296,6 +296,17 @@
 #define BTLEFF_MIGAWARI_OFF     ( 0 )   // みがわりOFF
 #define BTLEFF_MIGAWARI_ON      ( 1 )   // みがわりON
 
+//ボールモード
+#define BTLEFF_CAPTURE_BALL_POS_AA  ( 0 )
+#define BTLEFF_CAPTURE_BALL_POS_BB  ( 1 )
+#define BTLEFF_CAPTURE_BALL_POS_A   ( 2 )
+#define BTLEFF_CAPTURE_BALL_POS_B   ( 3 )
+#define BTLEFF_CAPTURE_BALL_POS_C   ( 4 )
+#define BTLEFF_CAPTURE_BALL_POS_D   ( 5 )
+#define BTLEFF_CAPTURE_BALL_POS_E   ( 6 )
+#define BTLEFF_CAPTURE_BALL_POS_F   ( 7 )
+#define BTLEFF_USE_BALL             ( 8 )
+
 #endif //__BTLV_EFFVM_DEF_H_
 
 //====================================================================================
@@ -421,9 +432,11 @@ ex)
 #define	EC_MIGAWARI						        ( 53 )
 #define	EC_HENSHIN						        ( 54 )
 #define	EC_NAKIGOE						        ( 55 )
+#define	EC_BALL_MODE						      ( 56 )
+#define	EC_BALLOBJ_SET						    ( 57 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  ( 56 )
+#define	EC_SEQ_END									  ( 58 )
 
 #ifndef __C_NO_DEF_
 
@@ -1929,6 +1942,57 @@ ex)
   .short  EC_NAKIGOE
 	.long		\pos
 	.endm
+
+//======================================================================
+/**
+ * @brief ボールモード
+ *
+ * パーティクルorOBJでボールを出すときにオフセットにするパラメータを指定
+ *
+ * #param_num	1
+ * @param type  オフセットタイプ
+ *
+ * #param	COMBOBOX_TEXT 使用アイテム 捕獲ボールAA 捕獲ボールBB 捕獲ボールA 捕獲ボールB 捕獲ボールC 捕獲ボールD 捕獲ボールE 捕獲ボールF
+ * #param	COMBOBOX_VALUE	BTLEFF_USE_BALL BTLEFF_CAPTURE_BALL_POS_AA BTLEFF_CAPTURE_BALL_POS_BB BTLEFF_CAPTURE_BALL_POS_A BTLEFF_CAPTURE_BALL_POS_B BTLEFF_CAPTURE_BALL_POS_C BTLEFF_CAPTURE_BALL_POS_D BTLEFF_CAPTURE_BALL_POS_E BTLEFF_CAPTURE_BALL_POS_F
+ *
+ */
+//======================================================================
+	.macro	BALL_MODE pos
+  .short  EC_BALL_MODE
+	.long		\pos
+	.endm
+
+//======================================================================
+/**
+ * @brief	ボールOBJのセット
+ *
+ * #param_num	6
+ * @param	index   管理用インデックス（0-3）
+ * @param pos     表示する座標
+ * @param ofs_x   オフセットX座標
+ * @param ofs_y   オフセットY座標
+ * @param scale_x オフセットX座標
+ * @param scale_y オフセットY座標
+ *
+ * #param	VALUE_INT インデックス
+ * #param	COMBOBOX_TEXT	攻撃側	防御側	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F POS_TR_AA POS_TR_BB POS_TR_A  POS_TR_B  POS_TR_C  POS_TR_D 
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK  BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_POS_AA	BTLEFF_POKEMON_POS_BB	BTLEFF_POKEMON_POS_A	BTLEFF_POKEMON_POS_B	BTLEFF_POKEMON_POS_C	BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A BTLEFF_TRAINER_POS_B BTLEFF_TRAINER_POS_C BTLEFF_TRAINER_POS_D
+ * #param VALUE_FX32  オフセットX座標
+ * #param VALUE_FX32  オフセットY座標
+ * #param VALUE_FX32  スケールX値
+ * #param VALUE_FX32  スケールY値
+ */
+//======================================================================
+  .macro  BALLOBJ_SET index, pos, ofs_x, ofs_y, scale_x, scale_y
+  .short  EC_BALLOBJ_SET
+  .long   \index
+  .long   \pos
+  .long   \ofs_x
+  .long   \ofs_y
+  .long   \scale_x
+  .long   \scale_y
+  .endm
+
 
 //======================================================================
 /**

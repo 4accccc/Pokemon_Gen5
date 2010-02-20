@@ -144,6 +144,7 @@ extern  void            BTLV_MCSS_SetMosaic( BTLV_MCSS_WORK *bmw, int position, 
 extern  void            BTLV_MCSS_CopyMAW( BTLV_MCSS_WORK *bmw, int src, int dst );
 extern  void            BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int pos );
 extern  void            BTLV_MCSS_SetRotation( BTLV_MCSS_WORK* bmw, int side, int dir );
+extern  int             BTLV_MCSS_GetCaptureBall( BTLV_MCSS_WORK *bmw, int position );
 
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
