@@ -49,6 +49,7 @@ typedef struct {
   const POKEMON_PARAM*  ppFake;
   u32   exp;
   u16   monsno;
+  u16   hpMax;        ///< 最大HP
   u16   hp;
   u16   item;
   u16   usedItem;
@@ -66,7 +67,6 @@ typedef struct {
 typedef struct {
 
   u16 monsno;       ///< ポケモンナンバー
-  u16 hpMax;        ///< 最大HP
 
   u16 attack;       ///< こうげき
   u16 defence;      ///< ぼうぎょ
@@ -202,6 +202,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.monsno = PP_Get( pp, ID_PARA_monsno, 0 );
   bpp->coreParam.ppSrc = pp;
   bpp->coreParam.hp = PP_Get( pp, ID_PARA_hp, 0 );
+  bpp->coreParam.hpMax = PP_Get( pp, ID_PARA_hpmax, 0 );
   bpp->coreParam.item = PP_Get( pp, ID_PARA_item, NULL );
   bpp->coreParam.usedItem = ITEM_DUMMY_DATA;
   bpp->coreParam.fHensin = FALSE;
@@ -305,7 +306,6 @@ static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   bpp->baseParam.type2 = PP_Get( srcPP, ID_PARA_type2, 0 );
   bpp->baseParam.sex = PP_GetSex( srcPP );
   bpp->baseParam.level = PP_Get( srcPP, ID_PARA_level, 0 );
-  bpp->baseParam.hpMax = PP_Get( srcPP, ID_PARA_hpmax, 0 );
   bpp->baseParam.attack = PP_Get( srcPP, ID_PARA_pow, 0 );
   bpp->baseParam.defence = PP_Get( srcPP, ID_PARA_def, 0 );
   bpp->baseParam.sp_attack = PP_Get( srcPP, ID_PARA_spepow, 0 );
@@ -699,9 +699,10 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
   case BPP_AVOID_RATIO:     return bpp->varyParam.avoid;
 
   case BPP_LEVEL:           return bpp->baseParam.level;
-  case BPP_HP:              return bpp->coreParam.hp;
-  case BPP_MAX_HP:          return bpp->baseParam.hpMax;
   case BPP_SEX:             return bpp->baseParam.sex;
+
+  case BPP_HP:              return bpp->coreParam.hp;
+  case BPP_MAX_HP:          return bpp->coreParam.hpMax;
 
   case BPP_TOKUSEI_EFFECTIVE:
     if( BPP_CheckSick(bpp, WAZASICK_IEKI) ){
@@ -904,11 +905,11 @@ BOOL BPP_CONTFLAG_Get( const BTL_POKEPARAM* pp, BppContFlag flagID )
 //=============================================================================================
 BppHpBorder BPP_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp )
 {
-  if( hp <= (pp->baseParam.hpMax / 8) )
+  if( hp <= (pp->coreParam.hpMax / 8) )
   {
     return BPP_HPBORDER_RED;
   }
-  if( hp <= (pp->baseParam.hpMax / 3) )
+  if( hp <= (pp->coreParam.hpMax / 3) )
   {
     return BPP_HPBORDER_YELLOW;
   }
@@ -939,7 +940,7 @@ BppHpBorder BPP_GetHPBorder( const BTL_POKEPARAM* pp )
 //=============================================================================================
 fx32 BPP_GetHPRatio( const BTL_POKEPARAM* pp )
 {
-  double r = (double)(pp->coreParam.hp * 100) / (double)(pp->baseParam.hpMax);
+  double r = (double)(pp->coreParam.hp * 100) / (double)(pp->coreParam.hpMax);
   return FX32_CONST( r );
 }
 //=============================================================================================
@@ -1311,9 +1312,9 @@ void BPP_HpMinus( BTL_POKEPARAM* pp, u16 value )
 void BPP_HpPlus( BTL_POKEPARAM* pp, u16 value )
 {
   pp->coreParam.hp += value;
-  if( pp->coreParam.hp > pp->baseParam.hpMax )
+  if( pp->coreParam.hp > pp->coreParam.hpMax )
   {
-    pp->coreParam.hp = pp->baseParam.hpMax;
+    pp->coreParam.hp = pp->coreParam.hpMax;
   }
 }
 //=============================================================================================
@@ -1853,7 +1854,7 @@ int BPP_CalcSickDamage( const BTL_POKEPARAM* bpp, WazaSick sick )
     case WAZASICK_DOKU:
       // 「どくどく」状態ならターン数でダメージ増加
       if( BPP_SICKCONT_IsMoudokuCont(bpp->sickCont[sick]) ){
-        return (bpp->baseParam.hpMax / 16) * bpp->wazaSickCounter[sick];
+        return (bpp->coreParam.hpMax / 16) * bpp->wazaSickCounter[sick];
       }else{
         return BTL_CALC_QuotMaxHP( bpp, 8 );
       }
@@ -2456,7 +2457,7 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
     if( expSum >= expBorder )
     {
       u32 expAdd = (expBorder - expNow);
-      u16 prevHP   = bpp->baseParam.hpMax;
+      u16 prevHP   = bpp->coreParam.hpMax;
       info->atk    = bpp->baseParam.attack;
       info->def    = bpp->baseParam.defence;
       info->sp_atk = bpp->baseParam.sp_attack;
@@ -2467,8 +2468,8 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->coreParam.exp );
       PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
 
+      bpp->coreParam.hpMax = PP_Get( bpp->coreParam.ppSrc, ID_PARA_hpmax, 0 );
       bpp->baseParam.level = PP_Get( bpp->coreParam.ppSrc, ID_PARA_level, 0 );
-      bpp->baseParam.hpMax = PP_Get( bpp->coreParam.ppSrc, ID_PARA_hpmax, 0 );
       bpp->baseParam.attack = PP_Get( bpp->coreParam.ppSrc, ID_PARA_pow, 0 );
       bpp->baseParam.defence = PP_Get( bpp->coreParam.ppSrc, ID_PARA_def, 0 );
       bpp->baseParam.sp_attack = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spepow, 0 );
@@ -2476,7 +2477,7 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       bpp->baseParam.agility = PP_Get( bpp->coreParam.ppSrc, ID_PARA_agi, 0 );
 
       info->level  = bpp->baseParam.level;
-      info->hp     = bpp->baseParam.hpMax - prevHP;
+      info->hp     = bpp->coreParam.hpMax - prevHP;
       info->atk    = bpp->baseParam.attack - info->atk;
       info->def    = bpp->baseParam.defence - info->def;
       info->sp_atk = bpp->baseParam.sp_attack - info->sp_atk;
@@ -2528,9 +2529,11 @@ u32 BPP_GetExpMargin( const BTL_POKEPARAM* bpp )
 void BPP_ReflectLevelup( BTL_POKEPARAM* bpp, u8 nextLevel, u8 hpMax, u8 atk, u8 def, u8 spAtk, u8 spDef, u8 agi )
 {
   bpp->coreParam.exp = POKETOOL_GetMinExp( bpp->coreParam.monsno, bpp->formNo, nextLevel );
-  bpp->coreParam.hp += hpMax;
+
+  bpp->coreParam.hp     += hpMax;
+  bpp->coreParam.hpMax  += hpMax;
+
   bpp->baseParam.level = nextLevel;
-  bpp->baseParam.hpMax      += hpMax;
   bpp->baseParam.attack     += atk;
   bpp->baseParam.defence    += def;
   bpp->baseParam.sp_attack  += spAtk;
