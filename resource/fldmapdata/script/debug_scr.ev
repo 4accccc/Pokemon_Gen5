@@ -47,20 +47,24 @@ _EVENT_DATA   ev_debug_matsushima
 _EVENT_DATA   ev_debug_common
 _EVENT_DATA_END
 
-
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
 EVENT_START ev_debug_test
 {
-  _MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
+  //_MAP_CHANGE( ZONE_ID_D09R1501, 5, 7, DIR_UP )
+  _MAP_CHANGE( ZONE_ID_D02R0201, 10, 10, DIR_UP )
+  //_MAP_CHANGE( ZONE_ID_C03R0301, 7, 7, DIR_LEFT )
+  //_MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
+  //_GLOBAL_CALL  SCRID_ELEVATOR
+  //_SXY_MOVE_EXIT_EVENT( DOOR_ID_T01_EXIT03, 786, 0, 757 )
+  //_FLAG_RESET( FV_D02R0201_LEGEND3 )
   //_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_HUSIGIDANE, 0, TOKUSYU_NULL, 10, 0 )
   //$SCWK_ANSWER = 255
   //_DEBUG_PRINT_WK( SCWK_ANSWER )
   //_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_RIZAADON, 0, TOKUSYU_NULL, 10, 0 )
   //_SET_TEMOTI_NATSUKI( 1, 255 )
   //_GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
-  //_SXY_MOVE_EXIT_EVENT( DOOR_ID_T01_EXIT03, 786, 0, 757 )
   //_SXY_MOVE_BG_EVENT( BG_T01_BOARD_01, 787, 0, 753 )
   //_SET_BADGE_FLAG( BADGE_ID_03 )
   //_SET_GYM_VICTORY_INFO( BADGE_ID_03 )
@@ -72,16 +76,17 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_debug_tamada
 {
-  _TRAINER_BTL_SET( TRID_VETERANW_03, 0 )
+  _MAP_CHANGE( ZONE_ID_C03R0301, 7, 7, DIR_LEFT )
+  //_TRAINER_BTL_SET( TRID_VETERANW_03, 0 )
   //_TRAINER_MULTI_BTL_SET( TRID_SUPPORT_01, TRID_RIVAL_01, TRID_MINI_01 )
-  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
-  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-    _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-  ELSE
-    _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-  ENDIF
-  _SET_GYM_VICTORY_INFO( BADGE_ID_01 )
-  _SET_FAVORITE_POKEMON( 0 )
+  //_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  //IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    //_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+  //ELSE
+    //_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  //ENDIF
+  //_SET_GYM_VICTORY_INFO( BADGE_ID_01 )
+  //_SET_FAVORITE_POKEMON( 0 )
   //DEFINE_LOCAL  LWK_X
   //DEFINE_LOCAL  LWK_Z
 

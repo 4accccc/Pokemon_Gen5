@@ -399,7 +399,7 @@ sub_skillteacher_system:
 
     _TEMOTI_NICK_NAME( 0, select_pos )
     _WAZA_NAME( 1, teach_waza_id )
-    _SYSWIN_MSG_DOWN( msg_skillteach_system_01 )
+    _SYSWIN_MSG( msg_skillteach_system_01 , WIN_DOWN )
     _ME_PLAY( SEQ_ME_LVUP )
     _AB_KEYWAIT()
     _ME_WAIT()
@@ -438,7 +438,7 @@ sub_skillteacher_system:
 sub_skillteacher_wasure_ask_retire:
   //"それでは　～をおぼえさせるのをあきらめますか？"
   _WAZA_NAME( 0, teach_waza_id )
-  _SYSWIN_MSG_DOWN( msg_skillteach_system_03 )
+  _SYSWIN_MSG( msg_skillteach_system_03 , WIN_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )
   _SYSWIN_CLOSE()
 
@@ -446,7 +446,7 @@ sub_skillteacher_wasure_ask_retire:
     //"～は　～を　おぼえずにおわった！"
     _TEMOTI_NICK_NAME( 0, select_pos )
     _WAZA_NAME( 1, teach_waza_id )
-    _SYSWIN_MSG_DOWN( msg_skillteach_system_04 )
+    _SYSWIN_MSG( msg_skillteach_system_04 , WIN_DOWN )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
     $user_result = TRUE //終了
@@ -464,7 +464,7 @@ sub_skillteacher_wasure_core:
 		//"あたらしくおぼえたい…しかしすでに～"
     _TEMOTI_NICK_NAME( 0, select_pos )
     _WAZA_NAME( 1, teach_waza_id )
-		_SYSWIN_MSG_DOWN( msg_skillteach_system_02 )
+		_SYSWIN_MSG( msg_skillteach_system_02 , WIN_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
 		_SYSWIN_CLOSE()
     IF $SCWK_ANSWER == SCR_NO THEN
@@ -479,8 +479,8 @@ sub_skillteacher_wasure_core:
     _GET_TEMOTI_WAZA_ID( waza_id , select_pos , waza_pos )
     _WAZA_NAME( 0 , waza_id )
     //"～をわすれさせて　よろしいですね？"
-    _SYSWIN_MSG_DOWN( msg_skillteach_system_05 )
-    //_SYSWIN_MSG_DOWN( msg_skillteach_system_05 )
+    _SYSWIN_MSG( msg_skillteach_system_05 , WIN_DOWN )
+    //_SYSWIN_MSG( msg_skillteach_system_05 , WIN_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
 
@@ -493,7 +493,7 @@ sub_skillteacher_wasure_core:
     _WAZA_NAME( 1 , waza_id )
     _WAZA_NAME( 2 , teach_waza_id )
     //"1　２　のポカン！"
-    _SYSWIN_MSG_DOWN( msg_skillteach_system_06 )
+    _SYSWIN_MSG( msg_skillteach_system_06 , WIN_DOWN )
     _ME_PLAY( SEQ_ME_LVUP )
     _AB_KEYWAIT()
     _ME_WAIT()

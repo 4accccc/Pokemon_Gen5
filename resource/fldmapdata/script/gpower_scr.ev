@@ -32,7 +32,7 @@ EVENT_START ev_gpower_effect_start
   //GPowerを発動しました
   _PLAYER_NAME( 0 )
   _GPOWER_NAME( 2, i_gpower )
-  _SYSWIN_MSG_DOWN( msg_wonderpower_01 )
+  _SYSWIN_MSG( msg_wonderpower_01 , WIN_DOWN )
   _SYSWIN_CLOSE()
   
   //フラッシュエフェクト
@@ -41,7 +41,7 @@ EVENT_START ev_gpower_effect_start
   //効果メッセージ取得
   $i_power_type += msg_wonderpower_effect_01
 
-  _SYSWIN_MSG_DOWN( i_power_type )
+  _SYSWIN_MSG( i_power_type , WIN_DOWN )
   _LAST_KEYWAIT()
 
   _SYSWIN_CLOSE()
@@ -62,7 +62,7 @@ EVENT_START ev_gpower_effect_end
     //GPowerの効果が切れました
     _GPOWER_NAME( 2, i_gpower )
     $i_next += msg_wonderpower_02_00
-    _SYSWIN_MSG_DOWN( i_next )
+    _SYSWIN_MSG( i_next , WIN_DOWN )
   ENDWHILE
 
   _LAST_KEYWAIT()

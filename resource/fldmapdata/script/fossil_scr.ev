@@ -222,7 +222,7 @@ get_poke:
     //ポケモン名をタグ1にセット
     _MONS_NAME(1, RECOVER_POKE)
     //システム：「プレーヤーはポケモンを手に入れた」
-    _SYSWIN_MSG_DOWN( msg_kaseki_08 )
+    _SYSWIN_MSG( msg_kaseki_08 , WIN_DOWN )
     
     //ポケモン入手ＭＥを再生 [091228斉藤マ]
     _ME_PLAY( SEQ_ME_POKEGET )
@@ -234,7 +234,7 @@ get_poke:
     //ポケモン名をタグ0にセット
     _MONS_NAME(0, RECOVER_POKE)
     //システム：「ニックネームつける？」
-    _SYSWIN_MSG_DOWN( msg_kaseki_09 )
+    _SYSWIN_MSG( msg_kaseki_09 , WIN_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
     IF $SCWK_ANSWER == 0 THEN   //ニックネームつける

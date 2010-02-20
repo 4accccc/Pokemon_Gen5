@@ -35,7 +35,7 @@ EVENT_START ev_vending_machine01
   _GOLD_WIN_OPEN( 1, 1 )
 
   //「自販機あるで」
-  _SYSWIN_MSG_DOWN( msg_vender_01 )
+  _SYSWIN_MSG( msg_vender_01 , WIN_DOWN )
 
   //カーソル位置初期化
   $cur_pos = 0
@@ -53,11 +53,11 @@ EVENT_START ev_vending_machine01
 
     IF $select_item == EV_WIN_B_CANCEL THEN     //キャンセル
       //「やめた」
-      _SYSWIN_MSG_DOWN( msg_vender_05 )
+      _SYSWIN_MSG( msg_vender_05 , WIN_DOWN )
       $loop = FALSE
     ELSIF $select_item == 0 THEN                //「やめる」選択
       //「やめた」
-      _SYSWIN_MSG_DOWN( msg_vender_05 )
+      _SYSWIN_MSG( msg_vender_05 , WIN_DOWN )
       $loop = FALSE
     ELSE                                        //それ以外(商品選択)
       SWITCH $select_item
@@ -95,7 +95,7 @@ EVENT_START ev_vending_machine01
           //タグ０番にアイテムセット
           _ITEM_NAME( 0, item )
           //「○○がでてきた！」
-          _SYSWIN_MSG_DOWN( msg_vender_02 )
+          _SYSWIN_MSG( msg_vender_02 , WIN_DOWN )
           _SYSWIN_CLOSE()
           //アイテム取得
           _ITEM_EVENT_SUCCESS_KEYWAIT(item, 1)
@@ -107,17 +107,17 @@ EVENT_START ev_vending_machine01
             _GET_RND( ans, 32 )
             IF $ans == 0 THEN //あたり
               //「あたり！もう一本」
-              _SYSWIN_MSG_DOWN( msg_vender_03 )
+              _SYSWIN_MSG( msg_vender_03 , WIN_DOWN )
               _SYSWIN_CLOSE()
               //アイテム加算
               _ITEM_EVENT_SUCCESS_KEYWAIT(item, 1)
             ENDIF 
           ENDIF
           //もう一本かう？
-          _SYSWIN_MSG_DOWN( msg_vender_06 ) //このメッセージのあとリスト選択に戻る
+          _SYSWIN_MSG( msg_vender_06 , WIN_DOWN ) //このメッセージのあとリスト選択に戻る
         ELSE       //足りない
           //「おかねがない」
-          _SYSWIN_MSG_DOWN( msg_vender_04 )
+          _SYSWIN_MSG( msg_vender_04 , WIN_DOWN )
           $loop = FALSE
         ENDIF
       ENDIF
