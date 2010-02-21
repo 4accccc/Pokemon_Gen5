@@ -698,7 +698,7 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
     WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
   }
   
-  if( idx == FLDTALKMSGWIN_IDX_AUTO ){
+  if( idx != FLDTALKMSGWIN_IDX_LOWER && idx != FLDTALKMSGWIN_IDX_UPPER ){
     idx = FLDTALKMSGWIN_IDX_LOWER;
     
     {
