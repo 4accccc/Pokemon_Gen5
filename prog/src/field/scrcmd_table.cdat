@@ -899,8 +899,9 @@
   DEF_CMD( EvCmdTH_CallBattle, EV_SEQ_TH_CALL_BATTLE )
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
+  //ŒŸ’èƒ‰ƒ“ƒLƒ“ƒOŠÖ˜A
+  DEF_CMD( EvCmdTH_SetRank, EV_SEQ_TH_SET_RANK )
+  DEF_CMD( EvCmdTH_GetRank, EV_SEQ_TH_GET_RANK )
   NO_CMD()
   NO_CMD()
 
