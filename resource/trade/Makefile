@@ -73,7 +73,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 
 .ncl.NCLR:
-	g2dcvtr $< -pcm
+	g2dcvtr $< 
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
