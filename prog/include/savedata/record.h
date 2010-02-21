@@ -48,6 +48,9 @@ extern u32 RECORD_Get(RECORD * rec, int id);
 //値を足す
 extern u32 RECORD_Add(RECORD * rec, int id, u32 add_value);
 
+extern void RECORD_SetRank(RECORD * rec, u8 inRank);
+extern u8 RECORD_GetRank(RECORD * rec);
+
 #ifdef PM_DEBUG
 //スコアのセット
 extern void RECORD_Score_DebugSet(RECORD * rec, const u32 inScore);

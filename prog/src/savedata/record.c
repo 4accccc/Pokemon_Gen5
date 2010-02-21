@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include "savedata/save_tbl.h"
 #include "savedata/record.h"
+#include "savedata/th_rank_def.h"
 
 
 //============================================================================================
@@ -20,16 +21,17 @@ typedef struct{
 }RECORD_CRC;
 
 struct RECORD{
-	u32 large_rec[LARGE_REC_NUM];
-	u16 small_rec[SMALL_REC_NUM];
-	u16 padding;
+	u32 large_rec[LARGE_REC_NUM]; //(70+1)x4 byte = 284 byte
+	u16 small_rec[SMALL_REC_NUM]; //(49+28)x2 byte = 154 byte
+	u8 Rank; //WBトライアルハウスランキングデータ　1 byte   th_rank_def.h 参照
+  u8 padding; //1 byte
 	
 	//これは必ず最後
-	RECORD_CRC crc;		//CRC & 暗号化キー
+	RECORD_CRC crc;		//CRC & 暗号化キー   4 byte
 };
 #ifdef _NITRO
 // 構造体が想定のサイズとなっているかチェック
-SDK_COMPILER_ASSERT(sizeof(RECORD) == 332+108+4);	//+=プラチナ追加分
+SDK_COMPILER_ASSERT(sizeof(RECORD) == 284+154+1+1+4);	//+=プラチナ追加分
 #endif
 
 //==============================================================================
@@ -474,6 +476,35 @@ void RECORD_Score_AddZukanScore(RECORD * rec, const ZUKAN_WORK * zw, u16 const i
 	}
 }
 */
+
+//----------------------------------------------------------
+/**
+ * @brief	ランクのセット
+ * @param	rec		  RECORDへのポインタ
+ * @param inRank  ランク th_rank_def.h 参照
+ * @return	none
+ */
+//----------------------------------------------------------
+void RECORD_SetRank(RECORD * rec, u8 inRank)
+{
+  if (inRank < TH_RANK_NUM)
+  {
+    rec->Rank = inRank;
+  }
+  else GF_ASSERT_MSG( 0,"rank error %d", inRank );
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	ランクの取得
+ * @param	rec		RECORDへのポインタ
+ * @return	u8		現在のランク    th_rank_def.h 参照
+ */
+//----------------------------------------------------------
+u8 RECORD_GetRank(RECORD * rec)
+{
+	return rec->Rank;
+}
 
 #ifdef PM_DEBUG
 //----------------------------------------------------------

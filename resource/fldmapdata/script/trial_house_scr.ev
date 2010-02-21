@@ -25,6 +25,7 @@ EVENT_START ev_tri_house_reception
 
   DEFINE_LOCAL first_list_ret
   DEFINE_LOCAL loop
+  DEFINE_LOCAL rank
 
   //トライアルハウススタート
   _TH_START()
@@ -34,10 +35,12 @@ EVENT_START ev_tri_house_reception
   //ループ初期化
   $loop = TRUE
 
-  $SCWK_ANSWER = 0//@todo
-  //マスターランクになったか？ @todo
-  IF $SCWK_ANSWER != 0 THEN
+  //ランク取得
+  _TH_GET_RANK(rank)
+  //マスターランクになったか？
+  IF $rank == TH_RANK_MASTER THEN
     //「ししょう！チャレンジする？」
+    _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_002)
   ELSE
     //「チャレンジする？」
     _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_001)
@@ -181,12 +184,50 @@ charange:
   
 
   IF $SCWK_ANSWER == TRUE THEN
+   DEFINE_LOCAL result_rank
+   DEFINE_LOCAL rank_msg
     //「おつかれさま」
     _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_014)
     _BALLOONWIN_CLOSE()
     //評価アプリ起動 @todo
 
-    //ラストメッセージ @todo
+    $result_rank = TH_RANK_BEGINNER //@todo
+
+    SWITCH $result_rank
+    CASE TH_RANK_BEGINNER THEN
+      //「ビギナー」
+      $rank_msg = msg_trialhouse_021
+    CASE TH_RANK_NOVICE THEN
+      //「ノービス」
+      $rank_msg = msg_trialhouse_020
+    CASE TH_RANK_NORMAL THEN
+      //「ノーマル」
+      $rank_msg = msg_trialhouse_019
+    CASE TH_RANK_SUPER THEN
+      //「スーパー」
+      $rank_msg = msg_trialhouse_018
+    CASE TH_RANK_HYPER THEN
+      //「ハイパー」
+      $rank_msg = msg_trialhouse_017
+    CASE TH_RANK_ELITE THEN
+      //「エリート」
+      $rank_msg = msg_trialhouse_016
+    CASE TH_RANK_MASTER THEN
+      //「マスター」
+      $rank_msg = msg_trialhouse_015
+    DEFAULT
+      //ここにはこないがビギナーをセットしておく
+      $rank_msg = msg_trialhouse_021
+    ENDSWITCH
+
+    //ランクセット
+    _TH_SET_RANK( result_rank )
+
+    //ラストメッセージ
+    _BALLOONWIN_TALKOBJ_MSG_DOWN(rank_msg)
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
   ENDIF
   
 _RET

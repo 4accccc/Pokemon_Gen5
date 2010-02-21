@@ -2,6 +2,7 @@
 /**
  * @file	th_rank_def.h
  * @brief	トライアルハウスランキング定義
+ * @note    スクリプトでも参照します
  * @author	Nozomu Saito
  */
 //==============================================================================================
@@ -15,4 +16,6 @@
 #define TH_RANK_HYPER     (4)   //ハイパーランク
 #define TH_RANK_ELITE     (5)   //エリートランク
 #define TH_RANK_MASTER    (6)   //マスターランク
+
+#define TH_RANK_NUM    (7)   //ランクの総数
 

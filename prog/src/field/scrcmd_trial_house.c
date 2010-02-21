@@ -26,6 +26,8 @@
 #include "scrcmd_trial_house.h"
 #include "trial_house.h"
 
+#include "savedata/record.h"
+
 //--------------------------------------------------------------
 /**
  * トライアルハウス開始
@@ -210,6 +212,11 @@ VMCMD_RESULT EvCmdTH_SetRank( VMHANDLE *core, void *wk )
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
 
   rank = SCRCMD_GetVMWorkValue( core, work );
+  {
+    RECORD *rec;
+    rec = SaveData_GetRecord( GAMEDATA_GetSaveControlWork( gamedata ) );
+    RECORD_SetRank(rec, rank);
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -231,7 +238,12 @@ VMCMD_RESULT EvCmdTH_GetRank( VMHANDLE *core, void *wk )
 
   rank = SCRCMD_GetVMWork( core, work );
 
-  rank = 0;//@todo
+  {
+    RECORD *rec;
+    rec = SaveData_GetRecord( GAMEDATA_GetSaveControlWork( gamedata ) );
+    *rank = RECORD_GetRank(rec);
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 
