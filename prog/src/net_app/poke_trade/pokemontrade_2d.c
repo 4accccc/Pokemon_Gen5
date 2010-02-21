@@ -1816,7 +1816,7 @@ void IRC_POKETRADE_SetSubStatusIcon(POKEMON_TRADE_WORK* pWork)
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = 128;
     cellInitData.pos_y = _POKEMON_SELECT1_CELLY + 4;
-    cellInitData.anmseq = 3;
+    cellInitData.anmseq = 19;
     cellInitData.softpri = _CLACT_SOFTPRI_SCROLL_BAR;
     cellInitData.bgpri = 1;
     pWork->curIcon[CELL_CUR_POKE_BASEPANEL] = GFL_CLACT_WK_Create( pWork->cellUnit ,
