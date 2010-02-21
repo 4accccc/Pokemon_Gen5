@@ -41,6 +41,5 @@
 #define BG_C02GYM0101_PLATE_05            5
 #define BG_C02GYM0101_PLATE_06            6
 #define BG_DEOX_CHANGE_01                 7
-#define BG_C02GYM0101_VENDING_MACHINE_01  8
 
 #endif //ZONE_C02GYM0101_EVB_H
