@@ -92,6 +92,7 @@
 #include "gamesystem/pm_weather.h"
 
 #include "debug/debug_mystery_card.h"
+#include "event_wifi_bsubway.h"
 
 FS_EXTERN_OVERLAY( d_iwasawa );
 
@@ -4702,6 +4703,10 @@ enum
 {
   DEBUG_BSWAY_DEMO_HOME = 0xfff0,
   DEBUG_BSWAY_DEMO_HOME_LAST,
+
+  DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD,
+  DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD,
+  DEBUG_BSWAY_WIFI_UPLOAD,
 };
 
 static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
@@ -4717,6 +4722,9 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   { DEBUG_FIELD_BSW_09, (void*)ZONE_ID_C04R0111 },
   { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_DEMO_HOME },
   { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_DEMO_HOME_LAST },
+  { DEBUG_FIELD_WIFI_BSW_01, (void*)DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD },
+  { DEBUG_FIELD_WIFI_BSW_02, (void*)DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD },
+  { DEBUG_FIELD_WIFI_BSW_03, (void*)DEBUG_BSWAY_WIFI_UPLOAD },
 };
 
 #define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
@@ -4754,6 +4762,7 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
   case 1:
     {
       u32 ret;
+      GMEVENT* next_event;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
       
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
@@ -4769,14 +4778,37 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
       switch( ret ){
       case DEBUG_BSWAY_DEMO_HOME:
         ret = ZONE_ID_C04R0111;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, ret );
         break;
       case DEBUG_BSWAY_DEMO_HOME_LAST:
         ret = ZONE_ID_C04R0111;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, ret );
+        break;
+      default:
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, ret );
+        break;
+
+      // WiFi系イベントの起動
+      case DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD:  // ゲームデータダウンロード
+        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys, 
+            WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD );
+        break;
+        
+      case DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD:  // 履歴ダウンロード
+        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys, 
+            WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD );
+        break;
+        
+      case DEBUG_BSWAY_WIFI_UPLOAD: // ゲームデータアップロード
+        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys, 
+            WIFI_BSUBWAY_MODE_SCORE_UPLOAD );
         break;
       }
 
-      GMEVENT_CallEvent( event, DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, ret ) );
+      GMEVENT_CallEvent( event, next_event );
       (*seq)++;
     }
     break;

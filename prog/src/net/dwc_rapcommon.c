@@ -18,6 +18,28 @@
 
 #include "net/dwc_rapcommon.h"
 
+ 
+
+// メモリの残量表示処理 1:ON  0:OFF
+#if GFL_NET_DEBUG
+
+#define NET_MEMORY_DEBUG  (0)
+
+#else // GFL_NET_DEBUG
+
+#define NET_MEMORY_DEBUG  (0)
+
+#endif// GFL_NET_DEBUG 
+
+
+#if NET_MEMORY_DEBUG
+#define NET_MEMORY_PRINT(...) \
+  if(GFL_NET_DebugGetPrintOn()) (void) ((OS_TPrintf(__VA_ARGS__)))
+#else   //NET_MEMORY_DEBUG
+#define NET_MEMORY_PRINT(...)           ((void) 0)
+#endif  // NET_MEMORY_DEBUG
+
+
 typedef struct{
 	NNSFndHeapHandle headHandle;
   void *heapPtr;
@@ -51,6 +73,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
     return NULL;
   }
+  NET_MEMORY_PRINT( "alloc memory size=%d rest=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle) );
   return ptr;
 
 
@@ -72,6 +95,7 @@ void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
   if ( !ptr ){
     return;  //NULL開放を認める
   }
+  NET_MEMORY_PRINT( "free memory size=%d\n", size );
   {
     OSIntrMode  enable = OS_DisableInterrupts();
     NNS_FndFreeToExpHeap( pDwcRapWork->headHandle, ptr );

@@ -899,7 +899,7 @@ static void ROOM_DATA_LoadRoomData( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR*
   WIFI_BSUBWAY_Printf( "Room Load \n" );
 
   p_wk->room_no = room_no;
-  GF_ASSERT( p_wk->room_no < p_wk->room_num );
+  GF_ASSERT( p_wk->room_no <= p_wk->room_num );
 	Dpw_Bt_DownloadRoomAsync( p_wk->rank, p_wk->room_no, &p_wk->bt_roomdata );
   ERROR_DATA_GetAsyncStart( p_error );
 }
@@ -1208,6 +1208,7 @@ static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_B
   result = NHTTP_RAP_StartConnect( p_wk->p_nhttp );  
   GF_ASSERT( result );
 
+
   // タイムアウトチェック開始
   ERROR_DATA_StartOnlyTimeOut( p_error );
 }
@@ -1228,6 +1229,8 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
   NHTTPError error;
 
   GF_ASSERT( p_wk->p_nhttp );
+
+  WIFI_BSUBWAY_Printf( "." );
   
   error = NHTTP_RAP_Process( p_wk->p_nhttp );
   if( NHTTP_ERROR_BUSY != error )
@@ -1261,11 +1264,17 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
           break;
         }
       }
+      if( i==p_wk->poke_num ){
+        WIFI_BSUBWAY_Printf( "認証　OK\n" );
+      }else{
+        WIFI_BSUBWAY_Printf( "認証　Error\n" );
+      }
     }
     else
     {
       // 認証確認失敗
       ERROR_DATA_SetNhttpError( p_error, BSUBWAY_NHTTP_ERROR_DISCONNECTED );
+      WIFI_BSUBWAY_Printf( "認証　Error\n" );
     }
 
     NHTTP_RAP_PokemonEvilCheckDelete( p_wk->p_nhttp );
@@ -1273,6 +1282,7 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
     p_wk->p_nhttp = NULL;
 
 
+    WIFI_BSUBWAY_Printf( "\n" );
     return TRUE;
   }
 
@@ -1299,6 +1309,7 @@ static void PERSONAL_DATA_UploadPersonalData( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_
     win = BSUBWAY_SCOREDATA_GetWifiNum( p_wk->cp_bsubway_score );
 
   	Dpw_Bt_UploadPlayerAsync(  rank,  room_no,  win, &p_wk->bt_player, p_wk->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+    WIFI_BSUBWAY_Printf( "Start\n" );
     ERROR_DATA_GetAsyncStart( p_error );
   }
 }
@@ -1922,7 +1933,9 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEA
     break;
   case SCORE_UPLOAD_SEQ_PERSON_UPDATE_WAIT:
     if( PERSONAL_DATA_UploadPersonalDataWait( &p_wk->personaldata, &p_wk->bt_error ) ){
-      p_wk->seq++;
+      if( VIEW_PrintMain( &p_wk->view ) ){
+        p_wk->seq++;
+      }
     }
     break;
 
@@ -1933,10 +1946,8 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEA
 
   case SCORE_UPLOAD_SEQ_SAVE_WAIT:
     if( SAVE_Main(p_wk) ){
-      if( VIEW_PrintMain( &p_wk->view ) ){
-        VIEW_PrintStream( &p_wk->view, msg_wifi_bt_009 );
-        p_wk->seq++;
-      }
+      VIEW_PrintStream( &p_wk->view, msg_wifi_bt_009 );
+      p_wk->seq++;
     }
     break;
 
@@ -2075,7 +2086,9 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
   case SCORE_UPLOAD_SEQ_GAMEDATA_DOWNLOAD_ROOM_WAIT:
     if( ROOM_DATA_LoadRoomDataWait( &p_wk->roomdata, &p_wk->bt_error ) ){
       
-      p_wk->seq ++;
+      if( VIEW_PrintMain( &p_wk->view ) ){
+        p_wk->seq ++;
+      }
     }
     break;
 
@@ -2086,10 +2099,8 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
 
   case SCORE_UPLOAD_SEQ_GAMEDATA_WAIT:
     if( SAVE_Main(p_wk) ){
-      if( VIEW_PrintMain( &p_wk->view ) ){
-        VIEW_PrintStream( &p_wk->view, msg_wifi_bt_004 );
-        p_wk->seq ++;
-      }
+      VIEW_PrintStream( &p_wk->view, msg_wifi_bt_004 );
+      p_wk->seq ++;
     }
     break;
 
@@ -2288,7 +2299,9 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
 
   case SCORE_UPLOAD_SEQ_SUCCESSDATA_DOWNLOAD_ROOM_WAIT:
     if( ROOM_DATA_LoadRoomDataWait( &p_wk->roomdata, &p_wk->bt_error ) ){
-      p_wk->seq ++;
+      if( VIEW_PrintMain( &p_wk->view ) ){
+        p_wk->seq ++;
+      }
     }
     break;
 
@@ -2299,10 +2312,8 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
 
   case SCORE_UPLOAD_SEQ_SUCCESSDATA_WAIT:
     if( SAVE_Main(p_wk) ){
-      if( VIEW_PrintMain( &p_wk->view ) ){
-        VIEW_PrintStream( &p_wk->view, msg_wifi_bt_004 );
-        p_wk->seq ++;
-      }
+      VIEW_PrintStream( &p_wk->view, msg_wifi_bt_004 );
+      p_wk->seq++;  
     }
     break;
 
