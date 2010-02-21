@@ -9,10 +9,14 @@
 　ファイルの出力を行っている。
 
 　使っている範囲だけで出力しているので、A列や1行目が空行だと、B行や2列目から出力されるので注意。
+　
+　tab_out_direct.rb <ファイル名> : TAB区切り
+　tab_out_direct.rb <ファイル名> -c : カンマ区切り
 =end
 
 
 require 'win32ole'
+
 
 module Worksheet
   def [] y,x
@@ -27,6 +31,11 @@ end
 
 
 filename = getAbsolutePath(ARGV[0])
+sep = "\t"
+if ARGV[1] == "-c"
+  sep = ","
+end
+
 
 xl = WIN32OLE.new('Excel.Application')
 
@@ -49,7 +58,7 @@ begin
       1.upto(colNum) do |colNo|
         if useRange.Cells(rowNo,colNo).Value != nil
           print useRange.Cells(rowNo,colNo).Value
-          print "\t"
+          print sep
         end
       end
       print "\n"
