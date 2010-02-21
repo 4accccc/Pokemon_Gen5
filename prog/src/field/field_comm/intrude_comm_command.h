@@ -73,7 +73,7 @@ extern BOOL IntrudeSend_ProfileReq(void);
 extern BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_DeleteProfile(INTRUDE_COMM_SYS_PTR intcomm, int leave_netid);
 extern BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_STATUS *send_status);
-extern BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id);
+extern BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, const MISSION_DATA *mdata, INTRUDE_TALK_TYPE intrude_talk_type);
 extern BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer);
 extern BOOL IntrudeSend_TalkCancel(int send_net_id);
 extern BOOL IntrudeSend_BingoIntrusion(int send_net_id);

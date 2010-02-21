@@ -48,3 +48,18 @@ MISSION_STATUS MISSION_FIELD_CheckStatus(MISSION_SYSTEM *mission)
   }
   return MISSION_STATUS_NOT_ENTRY;
 }
+
+//==================================================================
+/**
+ * w’èNetID‚ÌTALK_TYPE‚ğæ“¾‚·‚é
+ *
+ * @param   intcomm		
+ * @param   net_id		
+ *
+ * @retval  TALK_TYPE		
+ */
+//==================================================================
+TALK_TYPE MISSION_FIELD_GetTalkType(INTRUDE_COMM_SYS_PTR intcomm, NetID net_id)
+{
+  return intcomm->intrude_status[net_id].disguise_type;
+}

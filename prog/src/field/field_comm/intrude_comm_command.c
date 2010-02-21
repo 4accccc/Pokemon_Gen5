@@ -461,7 +461,7 @@ static void _IntrudeRecv_Talk(const int netID, const int size, const void* pData
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id)
+BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, const MISSION_DATA *mdata, INTRUDE_TALK_TYPE intrude_talk_type)
 {
   INTRUDE_TALK_FIRST_ATTACK first_attack;
   
@@ -470,13 +470,8 @@ BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id)
   }
   
   GFL_STD_MemClear(&first_attack, sizeof(INTRUDE_TALK_FIRST_ATTACK));
-  if(MISSION_CheckMissionTargetNetID(&intcomm->mission, send_net_id) == TRUE){
-    first_attack.talk_type = INTRUDE_TALK_TYPE_MISSION;
-    first_attack.mdata = *(MISSION_GetRecvData(&intcomm->mission));
-  }
-  else{
-    first_attack.talk_type = INTRUDE_TALK_TYPE_NORMAL;
-  }
+  first_attack.talk_type = intrude_talk_type;
+  first_attack.mdata = *mdata;
 
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_TALK, sizeof(INTRUDE_TALK_FIRST_ATTACK), &first_attack, FALSE, FALSE, FALSE);
@@ -517,7 +512,8 @@ BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRU
   if(_OtherPlayerExistence() == FALSE){
     return FALSE;
   }
-
+  
+  OS_TPrintf("話しかけの返事送信 answer=%d\n", answer);
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_TALK_ANSWER, sizeof(INTRUDE_TALK_STATUS), &answer, FALSE, FALSE, FALSE);
 }
@@ -1018,7 +1014,7 @@ static void _IntrudeRecv_MissionData(const int netID, const int size, const void
   }
 #endif
 
-  new_mission = MISSION_SetMissionData(&intcomm->mission, mdata);
+  new_mission = MISSION_SetMissionData(intcomm, &intcomm->mission, mdata);
   if(new_mission == TRUE){  //連続受信で上書きされないように直接代入はしない
     intcomm->new_mission_recv = TRUE;
     GameCommInfo_MessageEntry_Mission(intcomm->game_comm, mdata->accept_netid);
@@ -1250,7 +1246,7 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
   }
 
   OS_TPrintf("受信：ミッション結果\n");
-  MISSION_SetResult(&intcomm->mission, mresult);
+  MISSION_SetResult(intcomm, &intcomm->mission, mresult);
 }
 
 //==================================================================

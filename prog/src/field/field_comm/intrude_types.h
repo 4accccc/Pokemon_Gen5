@@ -48,8 +48,75 @@ typedef enum{
 
 ///会話タイプ
 typedef enum{
-  INTRUDE_TALK_TYPE_NORMAL,         ///<通常会話
-  INTRUDE_TALK_TYPE_MISSION,        ///<ミッション用の会話
+  INTRUDE_TALK_TYPE_NORMAL,               ///<通常会話
+  
+  INTRUDE_TALK_TYPE_MISSION_N_to_M,       ///<共通：傍観者＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_N_to_T,       ///<共通：傍観者＞ターゲット
+  
+  //ミッション会話のオフセット (※ミッション以外の会話はこれより前に配置する事!!)
+  // ※ミッション会話以降はEventCommFuncTalkTbl, EventCommFuncTalkedTblと並びを一致させること！！
+  INTRUDE_TALK_TYPE_MISSION_OFFSET_START,
+  INTRUDE_TALK_TYPE_MISSION_OFFSET_M_to_T = INTRUDE_TALK_TYPE_MISSION_OFFSET_START,    ///<ミッション実施者＞ターゲット
+  INTRUDE_TALK_TYPE_MISSION_OFFSET_M_to_M,    ///<ミッション実施者＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_OFFSET_M_to_N,    ///<ミッション実施者＞傍観者
+  INTRUDE_TALK_TYPE_MISSION_OFFSET_T_to_M,    ///<ターゲット＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_OFFSET_T_to_N,    ///<ターゲット＞傍観者
+
+  INTRUDE_TALK_TYPE_MISSION_VICTORY_START,
+  INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_T = INTRUDE_TALK_TYPE_MISSION_VICTORY_START, ///<ミッション実施者＞ターゲット
+  INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_M, ///<ミッション実施者＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_N, ///<ミッション実施者＞傍観者
+  INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_M, ///<ターゲット＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_N, ///<ターゲット＞傍観者
+
+  INTRUDE_TALK_TYPE_MISSION_SKILL_START,
+  INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_T = INTRUDE_TALK_TYPE_MISSION_SKILL_START, ///<ミッション実施者＞ターゲット
+  INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_M, ///<ミッション実施者＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_N, ///<ミッション実施者＞傍観者
+  INTRUDE_TALK_TYPE_MISSION_SKILL_T_to_M, ///<ターゲット＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_SKILL_T_to_N, ///<ターゲット＞傍観者
+
+  INTRUDE_TALK_TYPE_MISSION_BASIC_START,
+  INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_T = INTRUDE_TALK_TYPE_MISSION_BASIC_START, ///<ミッション実施者＞ターゲット
+  INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_M, ///<ミッション実施者＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_N, ///<ミッション実施者＞傍観者
+  INTRUDE_TALK_TYPE_MISSION_BASIC_T_to_M, ///<ターゲット＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_BASIC_T_to_N, ///<ターゲット＞傍観者
+
+  INTRUDE_TALK_TYPE_MISSION_SIZE_START,
+  INTRUDE_TALK_TYPE_MISSION_SIZE_M_to_T = INTRUDE_TALK_TYPE_MISSION_SIZE_START, ///<ミッション実施者＞ターゲット
+  INTRUDE_TALK_TYPE_MISSION_SIZE_M_to_M, ///<ミッション実施者＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_SIZE_M_to_N, ///<ミッション実施者＞傍観者
+  INTRUDE_TALK_TYPE_MISSION_SIZE_T_to_M, ///<ターゲット＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_SIZE_T_to_N, ///<ターゲット＞傍観者
+
+  INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_START,
+  INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_T = INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_START, ///<ミッション実施者＞ターゲット
+  INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_M, ///<ミッション実施者＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_N, ///<ミッション実施者＞傍観者
+  INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_T_to_M, ///<ターゲット＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_T_to_N, ///<ターゲット＞傍観者
+
+  INTRUDE_TALK_TYPE_MISSION_ITEM_START,
+  INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_T = INTRUDE_TALK_TYPE_MISSION_ITEM_START, ///<ミッション実施者＞ターゲット
+  INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_M, ///<ミッション実施者＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_N, ///<ミッション実施者＞傍観者
+  INTRUDE_TALK_TYPE_MISSION_ITEM_T_to_M, ///<ターゲット＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_ITEM_T_to_N, ///<ターゲット＞傍観者
+
+  INTRUDE_TALK_TYPE_MISSION_OCCUR_START,
+  INTRUDE_TALK_TYPE_MISSION_OCCUR_M_to_T = INTRUDE_TALK_TYPE_MISSION_OCCUR_START, ///<ミッション実施者＞ターゲット
+  INTRUDE_TALK_TYPE_MISSION_OCCUR_M_to_M, ///<ミッション実施者＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_OCCUR_M_to_N, ///<ミッション実施者＞傍観者
+  INTRUDE_TALK_TYPE_MISSION_OCCUR_T_to_M, ///<ターゲット＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_OCCUR_T_to_N, ///<ターゲット＞傍観者
+
+  INTRUDE_TALK_TYPE_MISSION_PERSONALITY_START,
+  INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_T = INTRUDE_TALK_TYPE_MISSION_PERSONALITY_START, ///<ミッション実施者＞ターゲット
+  INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_M, ///<ミッション実施者＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_N, ///<ミッション実施者＞傍観者
+  INTRUDE_TALK_TYPE_MISSION_PERSONALITY_T_to_M, ///<ターゲット＞ミッション実施者
+  INTRUDE_TALK_TYPE_MISSION_PERSONALITY_T_to_N, ///<ターゲット＞傍観者
 }INTRUDE_TALK_TYPE;
 
 ///会話ステータス
@@ -101,7 +168,11 @@ typedef struct{
   u8 palace_area;   ///<パレスエリア
   u8 action_status; ///<実行中のアクション(INTRUDE_ACTION_???)
   u16 disguise_no;   ///<変装番号
-  u8 padding[2];
+  u8 disguise_type:4; ///<変装タイプ(TALK_TYPE_xxx)
+  u8 disguise_sex:1;  ///<変装中の性別
+  u8 mission_entry:1; ///<TRUE:ミッションに参加している
+  u8        :2;
+  u8 padding;
 }INTRUDE_STATUS;
 
 ///プロフィールデータ(送信のみに使用。受信は各々のバッファに分かれる)

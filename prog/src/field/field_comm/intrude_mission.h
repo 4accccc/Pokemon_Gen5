@@ -20,11 +20,11 @@ extern void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission
 extern void MISSION_Set_ListSendReq(MISSION_SYSTEM *mission, int palace_area);
 extern void MISSION_Set_DataSendReq(MISSION_SYSTEM *mission);
 extern BOOL MISSION_SetEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_REQ *req, int accept_netid);
-extern BOOL MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src);
+extern BOOL MISSION_SetMissionData(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_DATA *src);
 extern void MISSION_RecvMissionStart(MISSION_SYSTEM *mission);
 extern BOOL MISSION_RecvCheck(const MISSION_SYSTEM *mission);
 extern MISSION_DATA * MISSION_GetRecvData(MISSION_SYSTEM *mission);
-extern void MISSION_SetMissionEntry(MISSION_SYSTEM *mission);
+extern void MISSION_SetMissionEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 extern BOOL MISSION_GetMissionEntry(const MISSION_SYSTEM *mission);
 extern u16 MISSION_GetMissionMsgID(const MISSION_SYSTEM *mission);
 extern u16 MISSION_GetAchieveMsgID(const MISSION_SYSTEM *mission, int my_netid);
@@ -33,7 +33,7 @@ extern BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *md
 extern MISSION_ACHIEVE MISSION_GetAchieveAnswer(MISSION_SYSTEM *mission);
 extern void MISSION_ClearAchieveAnswer(MISSION_SYSTEM *mission);
 extern void MISSION_SetParentAchieve(MISSION_SYSTEM *mission, MISSION_ACHIEVE achieve);
-extern void MISSION_SetResult(MISSION_SYSTEM *mission, const MISSION_RESULT *cp_result);
+extern void MISSION_SetResult(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_RESULT *cp_result);
 extern BOOL MISSION_CheckRecvResult(const MISSION_SYSTEM *mission);
 extern BOOL MISSION_Talk_CheckAchieve(const MISSION_SYSTEM *mission, int talk_netid);
 extern MISSION_TYPE MISSION_GetMissionType(const MISSION_SYSTEM *mission);

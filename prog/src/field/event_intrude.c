@@ -24,6 +24,7 @@
 #include "field/field_comm/intrude_message.h"
 #include "msg/msg_invasion.h"
 #include "msg/msg_mission_monolith.h"
+#include "msg/msg_mission_msg.h"
 #include "field/field_comm/intrude_battle.h"
 #include "field/event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "item/itemsym.h"
@@ -182,9 +183,10 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
   case SEQ_DISGUISE_START:
     {
       GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
-      
+      NetID my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
       IntrudeEvent_Sub_DisguiseEffectSetup(&dis_wk->iedw, gsys, dis_wk->fieldWork, 
-        dis_wk->mdata.cdata.obj_id[GAMEDATA_GetIntrudeMyID(gamedata)]);
+        dis_wk->mdata.cdata.obj_id[my_net_id], dis_wk->mdata.cdata.talk_type[my_net_id],
+        dis_wk->mdata.cdata.obj_sex[my_net_id]);
       (*seq)++;
     }
     break;
@@ -215,14 +217,18 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
  * @param   fieldWork		
  * @param   disguise_code		変装するOBJCODE
  *                  (DISGUISE_NO_NULLの場合は通常の姿、DISGUISE_NO_NORMALの場合はパレス時の標準姿)
+ * @param   disguise_type   変装タイプ(TALK_TYPE_xxx)
+ * @param   disguise_sex    変装後の性別
  */
 //==================================================================
-void IntrudeEvent_Sub_DisguiseEffectSetup(INTRUDE_EVENT_DISGUISE_WORK *iedw, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 disguise_code)
+void IntrudeEvent_Sub_DisguiseEffectSetup(INTRUDE_EVENT_DISGUISE_WORK *iedw, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 disguise_code, u8 disguise_type, u8 disguise_sex)
 {
   GFL_STD_MemClear(iedw, sizeof(INTRUDE_EVENT_DISGUISE_WORK));
   iedw->gsys = gsys;
   iedw->fieldWork = fieldWork;
   iedw->disguise_code =disguise_code;
+  iedw->disguise_type =disguise_type;
+  iedw->disguise_sex =disguise_sex;
   iedw->wait_max = DISGUISE_ANM_WAIT_MAX;
   iedw->wait = iedw->wait_max;
 }
@@ -268,7 +274,8 @@ BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTR
           if(iedw->wait_max <= DISGUISE_ANM_WAIT_MIN){
             GAMEDATA *gamedata = GAMESYSTEM_GetGameData(iedw->gsys);
             if(intcomm != NULL){
-              IntrudeField_PlayerDisguise(intcomm, iedw->gsys, iedw->disguise_code);
+              IntrudeField_PlayerDisguise(intcomm, iedw->gsys, 
+                iedw->disguise_code, iedw->disguise_type, iedw->disguise_sex);
             }
             iedw->loop++;
           }
@@ -288,3 +295,144 @@ BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTR
   
   return FALSE;
 }
+
+
+//==============================================================================
+//
+//  
+//
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * 会話を始める時の最初の相手のリアクション待ちなどの処理を一括して行う
+ *
+ * @param   iem		
+ * @param   seq		
+ *
+ * @retval  FIRST_TALK_RET		
+ */
+//--------------------------------------------------------------
+FIRST_TALK_RET EVENT_INTRUDE_FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, COMMTALK_COMMON_EVENT_WORK *ccew, u8 *seq)
+{
+  enum{
+    SEQ_FIRST_TALK,
+    SEQ_TALK_SEND,
+    SEQ_TALK_WAIT,
+    SEQ_TALK_RECV_WAIT,
+    SEQ_TALK_NG,
+    SEQ_TALK_NG_MSGWAIT,
+    SEQ_TALK_NG_LAST,
+    SEQ_END_OK,
+    SEQ_END_NG,
+    SEQ_END_CANCEL,
+  };
+  
+  switch(*seq){
+	case SEQ_FIRST_TALK:
+    IntrudeEventPrint_StartStream(&ccew->iem, msg_intrude_000);
+		(*seq)++;
+		break;
+	case SEQ_TALK_SEND:
+	  if(IntrudeSend_Talk(intcomm, intcomm->talk.talk_netid, &ccew->mdata, ccew->intrude_talk_type) == TRUE){
+      (*seq)++;
+    }
+    break;
+	case SEQ_TALK_WAIT:
+    if(IntrudeEventPrint_WaitStream(&ccew->iem) == TRUE){
+			(*seq)++;
+		}
+		break;
+	case SEQ_TALK_RECV_WAIT:
+	  {
+      INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(intcomm);
+      switch(talk_status){
+      case INTRUDE_TALK_STATUS_OK:
+        *seq = SEQ_END_OK;
+        break;
+      case INTRUDE_TALK_STATUS_NG:
+      case INTRUDE_TALK_STATUS_CANCEL:
+        *seq = SEQ_TALK_NG;
+        break;
+      default:  //まだ返事が来ていない
+        if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
+          if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
+            *seq = SEQ_END_CANCEL;
+          }
+        }
+        break;
+      }
+    }
+		break;
+
+  case SEQ_TALK_NG:   //断られた
+    IntrudeEventPrint_StartStream(&ccew->iem, msg_intrude_002);
+		(*seq)++;
+    break;
+  case SEQ_TALK_NG_MSGWAIT:
+    if(IntrudeEventPrint_WaitStream(&ccew->iem) == TRUE){
+			(*seq)++;
+		}
+		break;
+	case SEQ_TALK_NG_LAST:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+			(*seq) = SEQ_END_NG;
+		}
+	  break;
+	
+	case SEQ_END_OK:
+	  return FIRST_TALK_RET_OK;
+	case SEQ_END_NG:
+	  return FIRST_TALK_RET_NG;
+	case SEQ_END_CANCEL:
+	  return FIRST_TALK_RET_CANCEL;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+  
+  return FIRST_TALK_RET_NULL;
+}
+
+#if 0
+
+  u16 target_talk_battle[TALK_TYPE_MAX];    ///<自分がターゲットで戦闘状態の相手に話しかけた
+  u16 target_not_talk[TALK_TYPE_MAX];       ///<自分がターゲットで相手が話しかけられない状態
+  u16 mission_talk_battle[TALK_TYPE_MAX];   ///<自分がミッション実行者で戦闘状態の相手に話しかけた
+  u16 mission_talk_challenger[TALK_TYPE_MAX];  ///<自分がミッション実行者で話しかけた相手も実行者
+  u16 mission_not_talk[TALK_TYPE_MAX];      ///<自分がミッション実行者で相手が話しかけられない状態
+  { //自分がターゲットで戦闘状態の相手に話しかけた
+    mis_btl_01_t1,
+    mis_btl_01_t2,
+    mis_btl_01_t3,
+    mis_btl_01_t4,
+    mis_btl_01_t5,
+  },
+  { //自分がターゲットで相手が話しかけられない状態
+    mis_std_01_t1,
+    mis_std_01_t2,
+    mis_std_01_t3,
+    mis_std_01_t4,
+    mis_std_01_t5,
+  },
+  { //自分がミッション実行者で戦闘状態の相手に話しかけた
+    mis_btl_01_m1,
+    mis_btl_01_m2,
+    mis_btl_01_m3,
+    mis_btl_01_m4,
+    mis_btl_01_m5,
+  },
+  { //自分がミッション実行者で話しかけた相手も実行者
+    mis_m01_04_m1,
+    mis_m01_04_m2,
+    mis_m01_04_m3,
+    mis_m01_04_m4,
+    mis_m01_04_m5,
+  },
+  { //自分がミッション実行者で相手が話しかけられない状態
+    mis_std_01_m1,
+    mis_std_01_m2,
+    mis_std_01_m3,
+    mis_std_01_m4,
+    mis_std_01_m5,
+  },
+#endif

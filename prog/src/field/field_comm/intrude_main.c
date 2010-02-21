@@ -761,14 +761,17 @@ BOOL Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
     if(intcomm->talk.talk_netid == INTRUDE_NETID_NULL){
       intcomm->talk.talk_netid = net_id;
       intcomm->talk.talk_status = INTRUDE_TALK_STATUS_OK;
+      OS_TPrintf("talk_ok\n");
       return TRUE;
     }
     else{
       intcomm->answer_talk_ng_bit |= 1 << net_id;
+      OS_TPrintf("talk_ng field\n");
     }
     break;
   default:
     intcomm->answer_talk_ng_bit |= 1 << net_id;
+    OS_TPrintf("talk_ng\n");
     break;
   }
   
@@ -964,7 +967,7 @@ INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm)
  * @retval  u16		OBJCODE
  */
 //==================================================================
-u16 Intrude_GetNormalDisguiseObjCode(const MYSTATUS *myst)
+void Intrude_GetNormalDisguiseObjCode(const MYSTATUS *myst, u16 *objcode, u8 *disguise_type, u8 *disguise_sex)
 {
   static const u16 NormalDisguise_Male[] = {
     BOY1,
@@ -985,9 +988,15 @@ u16 Intrude_GetNormalDisguiseObjCode(const MYSTATUS *myst)
   sex = MyStatus_GetMySex(myst);
   tbl_no = ((trainer_id >> 16) + (trainer_id & 0xffff)) % NELEMS(NormalDisguise_Male);
   if(sex == PM_MALE){
-    return NormalDisguise_Male[tbl_no];
+    *objcode = NormalDisguise_Male[tbl_no];
+    *disguise_type = TALK_TYPE_MAN;
+    *disguise_sex = PM_MALE;
   }
-  return NormalDisguise_Female[tbl_no];
+  else{
+    *objcode = NormalDisguise_Female[tbl_no];
+    *disguise_type = TALK_TYPE_WOMAN;
+    *disguise_sex = PM_FEMALE;
+  }
 }
 
 //==================================================================
@@ -1003,6 +1012,7 @@ u16 Intrude_GetNormalDisguiseObjCode(const MYSTATUS *myst)
 u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
 {
   u16 obj_code;
+  u8 disguise_type, disguise_sex;
 
 #if 0
   if(sta->disguise_no == 0 || sta->disguise_no >= NELEMS(DisguiseObjCodeTbl)){
@@ -1012,7 +1022,7 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
     obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? HERO : HEROINE;
   }
   else if(sta->disguise_no == DISGUISE_NO_NORMAL){
-    obj_code = Intrude_GetNormalDisguiseObjCode(myst);
+    Intrude_GetNormalDisguiseObjCode(myst, &obj_code, &disguise_type, &disguise_sex);
   }
   else{
     obj_code = sta->disguise_no;

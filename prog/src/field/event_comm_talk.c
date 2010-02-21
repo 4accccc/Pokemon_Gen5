@@ -35,15 +35,6 @@
 #include "poke_tool/status_rcv.h"
 
 
-//======================================================================
-//	define
-//======================================================================
-typedef enum{
-  FIRST_TALK_RET_NULL,      ///<シーケンス実行中
-  FIRST_TALK_RET_OK,        ///<OKで終了
-  FIRST_TALK_RET_NG,        ///<NGで終了
-  FIRST_TALK_RET_CANCEL,    ///<キャンセルした
-}FIRST_TALK_RET;
 
 //======================================================================
 //	typedef struct
@@ -72,6 +63,7 @@ typedef struct
 	u8 padding[3];
 	
 	INTRUDE_EVENT_DISGUISE_WORK iedw;
+	COMMTALK_COMMON_EVENT_WORK ccew;
 }COMMTALK_EVENT_WORK;
 
 
@@ -103,117 +95,6 @@ const u16 MissionBasicMsgID[] = {
   msg_talk_life_w_000,          //TALK_TYPE_WOMAN
   msg_talk_life_pika_000,       //TALK_TYPE_PIKA
 };
-
-#if 1
-///ミッションBasicのメッセージID ※TALK_TYPE順
-static const struct{
-  u16 target_talked[TALK_TYPE_MAX];         ///<自分がターゲットで話しかけられた
-  u16 target_talk[TALK_TYPE_MAX];           ///<自分がターゲットで話しかけた
-  u16 target_talk_battle[TALK_TYPE_MAX];    ///<自分がターゲットで戦闘状態の相手に話しかけた
-  u16 target_item[TALK_TYPE_MAX];           ///<自分がターゲットでアイテムをもらった
-  u16 target_not_talk[TALK_TYPE_MAX];       ///<自分がターゲットで相手が話しかけられない状態
-  u16 mission_talked[TALK_TYPE_MAX];        ///<自分がミッション実行者で話しかけられた
-  u16 mission_talk[TALK_TYPE_MAX];          ///<自分がミッション実行者で話しかけた
-  u16 mission_talk_battle[TALK_TYPE_MAX];   ///<自分がミッション実行者で戦闘状態の相手に話しかけた
-  u16 mission_talk_challenger[TALK_TYPE_MAX];  ///<自分がミッション実行者で話しかけた相手も実行者
-  u16 mission_item[TALK_TYPE_MAX];          ///<自分がミッション実行者でアイテムをあげた
-  u16 mission_not_talk[TALK_TYPE_MAX];      ///<自分がミッション実行者で相手が話しかけられない状態
-  u16 free_talk_mission[TALK_TYPE_MAX];     ///<自分がフリーで相手がミッション実行者
-  u16 free_talk_target[TALK_TYPE_MAX];      ///<自分がフリーで相手がターゲット
-}MissionBasicMsgID3 = {
-  { //自分がターゲットで話しかけられた
-    mis_m01_01_t1,
-    mis_m01_01_t2,
-    mis_m01_01_t3,
-    mis_m01_01_t4,
-    mis_m01_01_t5,
-  },
-  { //自分がターゲットで話しかけた
-    mis_m01_02_t1,
-    mis_m01_02_t2,
-    mis_m01_02_t3,
-    mis_m01_02_t4,
-    mis_m01_02_t5,
-  },
-  { //自分がターゲットで戦闘状態の相手に話しかけた
-    mis_btl_01_t1,
-    mis_btl_01_t2,
-    mis_btl_01_t3,
-    mis_btl_01_t4,
-    mis_btl_01_t5,
-  },
-  { //自分がターゲットでアイテムをもらった
-    mis_m01_03_t1,
-    mis_m01_03_t2,
-    mis_m01_03_t3,
-    mis_m01_03_t4,
-    mis_m01_03_t5,
-  },
-  { //自分がターゲットで相手が話しかけられない状態
-    mis_std_01_t1,
-    mis_std_01_t2,
-    mis_std_01_t3,
-    mis_std_01_t4,
-    mis_std_01_t5,
-  },
-  { //自分がミッション実行者で話しかけられた
-    mis_m01_01_m1,
-    mis_m01_01_m2,
-    mis_m01_01_m3,
-    mis_m01_01_m4,
-    mis_m01_01_m5,
-  },
-  { //自分がミッション実行者で話しかけた
-    mis_m01_02_m1,
-    mis_m01_02_m2,
-    mis_m01_02_m3,
-    mis_m01_02_m4,
-    mis_m01_02_m5,
-  },
-  { //自分がミッション実行者で戦闘状態の相手に話しかけた
-    mis_btl_01_m1,
-    mis_btl_01_m2,
-    mis_btl_01_m3,
-    mis_btl_01_m4,
-    mis_btl_01_m5,
-  },
-  { //自分がミッション実行者で話しかけた相手も実行者
-    mis_m01_04_m1,
-    mis_m01_04_m2,
-    mis_m01_04_m3,
-    mis_m01_04_m4,
-    mis_m01_04_m5,
-  },
-  { //自分がミッション実行者でアイテムをあげた
-    mis_m01_03_m1,
-    mis_m01_03_m2,
-    mis_m01_03_m3,
-    mis_m01_03_m4,
-    mis_m01_03_m5,
-  },
-  { //自分がミッション実行者で相手が話しかけられない状態
-    mis_std_01_m1,
-    mis_std_01_m2,
-    mis_std_01_m3,
-    mis_std_01_m4,
-    mis_std_01_m5,
-  },
-  { //自分がフリーで相手がミッション実行者  ※check メッセージが存在していない
-    0,
-    0,
-    0,
-    0,
-    0,
-  },
-  { //自分がフリーで相手がターゲット  ※check メッセージが存在していない
-    0,
-    0,
-    0,
-    0,
-    0,
-  },
-};
-#endif
 
 
 
@@ -290,97 +171,6 @@ GMEVENT * EVENT_CommTalk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 
 //--------------------------------------------------------------
 /**
- * 会話を始める時の最初の相手のリアクション待ちなどの処理を一括して行う
- *
- * @param   iem		
- * @param   seq		
- *
- * @retval  FIRST_TALK_RET		
- */
-//--------------------------------------------------------------
-static FIRST_TALK_RET _FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_EVENT_MSGWORK *iem, u8 *seq)
-{
-  enum{
-    SEQ_FIRST_TALK,
-    SEQ_TALK_SEND,
-    SEQ_TALK_WAIT,
-    SEQ_TALK_RECV_WAIT,
-    SEQ_TALK_NG,
-    SEQ_TALK_NG_MSGWAIT,
-    SEQ_TALK_NG_LAST,
-    SEQ_END_OK,
-    SEQ_END_NG,
-    SEQ_END_CANCEL,
-  };
-  
-  switch(*seq){
-	case SEQ_FIRST_TALK:
-    IntrudeEventPrint_StartStream(iem, msg_intrude_000);
-		(*seq)++;
-		break;
-	case SEQ_TALK_SEND:
-	  if(IntrudeSend_Talk(intcomm, intcomm->talk.talk_netid) == TRUE){
-      (*seq)++;
-    }
-    break;
-	case SEQ_TALK_WAIT:
-    if(IntrudeEventPrint_WaitStream(iem) == TRUE){
-			(*seq)++;
-		}
-		break;
-	case SEQ_TALK_RECV_WAIT:
-	  {
-      INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(intcomm);
-      switch(talk_status){
-      case INTRUDE_TALK_STATUS_OK:
-        *seq = SEQ_END_OK;
-        break;
-      case INTRUDE_TALK_STATUS_NG:
-      case INTRUDE_TALK_STATUS_CANCEL:
-        *seq = SEQ_TALK_NG;
-        break;
-      default:  //まだ返事が来ていない
-        if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-          if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
-            *seq = SEQ_END_CANCEL;
-          }
-        }
-        break;
-      }
-    }
-		break;
-
-  case SEQ_TALK_NG:   //断られた
-    IntrudeEventPrint_StartStream(iem, msg_intrude_002);
-		(*seq)++;
-    break;
-  case SEQ_TALK_NG_MSGWAIT:
-    if(IntrudeEventPrint_WaitStream(iem) == TRUE){
-			(*seq)++;
-		}
-		break;
-	case SEQ_TALK_NG_LAST:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
-			(*seq) = SEQ_END_NG;
-		}
-	  break;
-	
-	case SEQ_END_OK:
-	  return FIRST_TALK_RET_OK;
-	case SEQ_END_NG:
-	  return FIRST_TALK_RET_NG;
-	case SEQ_END_CANCEL:
-	  return FIRST_TALK_RET_CANCEL;
-  default:
-    GF_ASSERT(0);
-    break;
-  }
-  
-  return FIRST_TALK_RET_NULL;
-}
-
-//--------------------------------------------------------------
-/**
  * フィールド話し掛けイベント
  * @param	event	GMEVENT
  * @param	seq		シーケンス
@@ -426,7 +216,7 @@ static GMEVENT_RESULT CommTalkEvent( GMEVENT *event, int *seq, void *wk )
 	switch( *seq ){
 	case SEQ_FIRST_TALK:
 	  {
-      FIRST_TALK_RET first_ret = _FirstTalkSeq(intcomm, &talk->iem, &talk->first_talk_seq);
+      FIRST_TALK_RET first_ret = EVENT_INTRUDE_FirstTalkSeq(intcomm, &talk->ccew, &talk->first_talk_seq);
       switch(first_ret){
       case FIRST_TALK_RET_OK:
         *seq = SEQ_TALK_OK;
@@ -805,7 +595,7 @@ static GMEVENT_RESULT CommMissionItemEvent( GMEVENT *event, int *seq, void *wk )
 	switch( *seq ){
 	case SEQ_FIRST_TALK:
 	  {
-      FIRST_TALK_RET first_ret = _FirstTalkSeq(intcomm, &talk->iem, &talk->first_talk_seq);
+      FIRST_TALK_RET first_ret = EVENT_INTRUDE_FirstTalkSeq(intcomm, &talk->ccew, &talk->first_talk_seq);
       switch(first_ret){
       case FIRST_TALK_RET_OK:
         *seq = SEQ_SEND_ACHIEVE;
@@ -1063,7 +853,8 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     break;
 
   case SEQ_DISGUISE_START:  //変装戻す
-    IntrudeEvent_Sub_DisguiseEffectSetup(&talk->iedw, gsys, talk->fieldWork, DISGUISE_NO_NORMAL);
+    IntrudeEvent_Sub_DisguiseEffectSetup(&talk->iedw, gsys, talk->fieldWork, 
+      DISGUISE_NO_NORMAL, 0, 0);
     (*seq)++;
     break;
   case SEQ_DISGUISE_MAIN:

@@ -852,9 +852,11 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
  * @param   gsys		
  * @param   disguise_code      変装後のOBJCODE 
  *                  (DISGUISE_NO_NULLの場合は通常の姿、DISGUISE_NO_NORMALの場合はパレス時の標準姿)
+ * @param   disguise_type      変装後のタイプ(TALK_TYPE_xxx)
+ * @param   disguise_sex       変装後の性別
  */
 //==================================================================
-void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsys, u32 disguise_code)
+void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsys, u32 disguise_code, u8 disguise_type, u8 disguise_sex)
 {
   FIELDMAP_WORK *fieldWork;
   FIELD_PLAYER *fld_player;
@@ -868,6 +870,8 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 
   intcomm->intrude_status_mine.disguise_no = disguise_code;
+  intcomm->intrude_status_mine.disguise_type = disguise_type;
+  intcomm->intrude_status_mine.disguise_sex = disguise_sex;
   intcomm->send_status = TRUE;
 
   obj_code = Intrude_GetObjCode(&intcomm->intrude_status_mine, 

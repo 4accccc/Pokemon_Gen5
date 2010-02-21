@@ -112,14 +112,14 @@ typedef struct{
 
 ///ミッション系統毎に異なるdataの構造体：SKILL
 typedef struct{
-  u16 pms_id;            ///<簡易会話用単語ID
-  u16 num;               ///<回数
-  u16 padding;
+  u16 item;
+  u16 padding[2];
 }MISSION_TYPEDATA_SKILL;
 
 ///ミッション系統毎に異なるdataの構造体：BASIC
 typedef struct{
-  u16 padding[3];
+  u16 item;
+  u16 padding[2];
 }MISSION_TYPEDATA_BASIC;
 
 ///ミッション系統毎に異なるdataの構造体：ATTRIBUTE

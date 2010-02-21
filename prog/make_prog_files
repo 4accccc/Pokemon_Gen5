@@ -634,7 +634,11 @@ SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
         field/field_comm/intrude_subdisp.c \
         field/field_comm/intrude_message.c \
         field/field_comm/intrude_mission_field.c \
-        field/scrcmd_intrude_field.c
+        field/scrcmd_intrude_field.c \
+				field/event_comm_common.c \
+				field/event_mission_normal.c \
+				field/event_mission_talk.c \
+				field/event_mission_talked.c
 
 #===> SRCS_OVERLAY_FIELDMAP
 SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \

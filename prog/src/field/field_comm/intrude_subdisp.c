@@ -1658,7 +1658,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     _SetRect(ENTRY_BUTTON_POS_X, ENTRY_BUTTON_POS_Y, 
       ENTRY_BUTTON_HITRANGE_HALF_X, ENTRY_BUTTON_HITRANGE_HALF_Y, &rect);
     if(_CheckRectHit(x, y, &rect) == TRUE){
-      MISSION_SetMissionEntry(&intcomm->mission);
+      MISSION_SetMissionEntry(intcomm, &intcomm->mission);
       FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_ENTRY);
     }
   }

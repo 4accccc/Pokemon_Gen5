@@ -28,6 +28,7 @@
 #include "event_comm_talk.h"
 #include "system/main.h"
 #include "item/itemsym.h"
+#include "event_comm_common.h"
 
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
@@ -61,6 +62,7 @@ typedef struct
 
 	INTRUDE_BATTLE_PARENT ibp;
 	u32 talk_netid;
+	COMMTALK_COMMON_EVENT_WORK ccew;
 }COMMTALK_EVENT_WORK;
 
 
@@ -97,7 +99,7 @@ GMEVENT * EVENT_CommWasTalkedTo(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	INTRUDE_TALK_TYPE talk_type;
 	
 	talk_type = intcomm->recv_talk_first_attack.talk_type;
-	if(talk_type == INTRUDE_TALK_TYPE_MISSION){
+	if(talk_type == INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_T){
     switch(intcomm->recv_talk_first_attack.mdata.cdata.type){
     case MISSION_TYPE_ITEM:
     	event = GMEVENT_Create(
@@ -119,7 +121,7 @@ GMEVENT * EVENT_CommWasTalkedTo(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
     	event = GMEVENT_Create(
     		gsys, NULL,	CommWasTalkedTo, sizeof(COMMTALK_EVENT_WORK) );
       break;
-    case INTRUDE_TALK_TYPE_MISSION: //ã‚Åˆ—‚ªÏ‚ñ‚Å‚¢‚é
+    case INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_T: //ã‚Åˆ—‚ªÏ‚ñ‚Å‚¢‚é
       break;
     }
   }

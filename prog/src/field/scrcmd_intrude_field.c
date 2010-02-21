@@ -286,9 +286,10 @@ static GMEVENT_RESULT _event_PalaceInDisguise( GMEVENT * event, int * seq, void 
     {
       const MYSTATUS *myst = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) );
       u16 disguise_code;
-      
-      disguise_code = Intrude_GetNormalDisguiseObjCode(myst);
-      IntrudeEvent_Sub_DisguiseEffectSetup(&pidw->ev_diswork, gsys, fieldWork, disguise_code);
+      u8 disguise_type, disguise_sex;
+      Intrude_GetNormalDisguiseObjCode(myst, &disguise_code, &disguise_type, &disguise_sex);
+      IntrudeEvent_Sub_DisguiseEffectSetup(
+        &pidw->ev_diswork, gsys, fieldWork, disguise_code, disguise_type, disguise_sex);
     }
     (*seq)++;
     break;

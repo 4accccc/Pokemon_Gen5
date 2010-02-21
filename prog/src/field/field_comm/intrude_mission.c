@@ -37,12 +37,13 @@ enum{
 //  プロトタイプ宣言
 //==============================================================================
 static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
-static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid);
+static void MISSION_SetMissionFail(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, int fail_netid);
 static int _TragetNetID_Choice(INTRUDE_COMM_SYS_PTR intcomm, int accept_netid);
 static void MISSION_Update_EntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 static void MISSION_Update_AchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 static void MISSION_ClearTargetInfo(MISSION_TARGET_INFO *target);
 static s32 _GetMissionTime(MISSION_SYSTEM *mission);
+static void MISSION_ClearMissionEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 
 
 
@@ -114,7 +115,7 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
     else{
       if(_GetMissionTime(mission) > mission->data.cdata.time){
         GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
-        MISSION_SetMissionFail(mission, GAMEDATA_GetIntrudeMyID(gamedata));
+        MISSION_SetMissionFail(intcomm, mission, GAMEDATA_GetIntrudeMyID(gamedata));
       }
     }
   }
@@ -294,7 +295,7 @@ void MISSION_SetMissionList(MISSION_SYSTEM *mission, const MISSION_CHOICE_LIST *
  * @retval  new_mission   TRUE:新規に受信したミッション　FALSE:受信済み or 無効なミッション
  */
 //==================================================================
-BOOL MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
+BOOL MISSION_SetMissionData(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_DATA *src)
 {
   MISSION_DATA *mdata = &mission->data;
   BOOL new_mission = FALSE;
@@ -306,7 +307,7 @@ BOOL MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
   
   //親の場合、既にmisison_noはセットされているので判定の前に受信フラグをセット
   mission->start_timer = GFL_RTC_GetTimeBySecond();
-  mission->mine_entry = FALSE;
+  MISSION_ClearMissionEntry(intcomm, mission);
   if(mdata->accept_netid != INTRUDE_NETID_NULL){
     return new_mission;
   }
@@ -419,11 +420,29 @@ MISSION_DATA * MISSION_GetRecvData(MISSION_SYSTEM *mission)
  * @param   mission		
  */
 //==================================================================
-void MISSION_SetMissionEntry(MISSION_SYSTEM *mission)
+void MISSION_SetMissionEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
 {
   if(MISSION_RecvCheck(mission) == TRUE){
     mission->mine_entry = TRUE;
+    intcomm->intrude_status_mine.mission_entry = FALSE;
+    intcomm->send_status = TRUE;
     OS_TPrintf("ミッション参加フラグセット\n");
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション参加フラグをリセットする
+ *
+ * @param   mission		
+ */
+//--------------------------------------------------------------
+static void MISSION_ClearMissionEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
+{
+  if(mission->mine_entry == TRUE){
+    mission->mine_entry = FALSE;
+    intcomm->intrude_status_mine.mission_entry = FALSE;
+    intcomm->send_status = TRUE;
   }
 }
 
@@ -623,7 +642,7 @@ void MISSION_SetParentAchieve(MISSION_SYSTEM *mission, MISSION_ACHIEVE achieve)
  * @param   fail_netid		
  */
 //--------------------------------------------------------------
-static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid)
+static void MISSION_SetMissionFail(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, int fail_netid)
 {
   MISSION_RESULT *result = &mission->result;
   MISSION_DATA *mdata = &mission->data;
@@ -639,7 +658,7 @@ static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid)
   result->mission_fail = TRUE;
   mission->result_send_req = TRUE;
   mission->send_mission_start = _SEND_MISSION_START_NULL;
-  mission->mine_entry = FALSE;
+  MISSION_ClearMissionEntry(intcomm, mission);
   OS_TPrintf("ミッション失敗をセット\n");
 }
 
@@ -651,13 +670,14 @@ static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid)
  * @param   cp_result		
  */
 //==================================================================
-void MISSION_SetResult(MISSION_SYSTEM *mission, const MISSION_RESULT *cp_result)
+void MISSION_SetResult(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_RESULT *cp_result)
 {
   MISSION_RESULT *result = &mission->result;
   
   GF_ASSERT(mission->parent_achieve_recv == FALSE);
   *result = *cp_result;
   mission->parent_achieve_recv = TRUE;
+  MISSION_ClearMissionEntry(intcomm, mission);
 }
 
 //==================================================================

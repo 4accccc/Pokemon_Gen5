@@ -98,7 +98,7 @@ extern INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm);
 extern int Intrude_GetPalaceTownZoneID(int town_tblno);
 extern void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec, int palace_area);
 extern INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm);
-extern u16 Intrude_GetNormalDisguiseObjCode(const MYSTATUS *myst);
+extern void Intrude_GetNormalDisguiseObjCode(const MYSTATUS *myst, u16 *objcode, u8 *disguise_type, u8 *disguise_sex);
 extern u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst);
 extern BOOL Intrude_OtherPlayerExistence(void);
 

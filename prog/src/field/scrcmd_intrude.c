@@ -221,7 +221,7 @@ static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, vo
     break;
   case SEQ_END:
     if(intcomm != NULL){
-      IntrudeField_PlayerDisguise(intcomm, gsys, 20);
+      IntrudeField_PlayerDisguise(intcomm, gsys, 20, 0, 0);
     }
     IntrudeEventPrint_ExitFieldMsg(&ems->iem);
     return GMEVENT_RES_FINISH;
