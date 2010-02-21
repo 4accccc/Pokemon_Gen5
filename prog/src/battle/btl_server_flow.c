@@ -489,6 +489,8 @@ static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
 static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP );
 static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
+static void scproc_Ichigeki_Succeed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target );
+static void scproc_Ichigeki_Korae( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BppKoraeruCause korae_cause, u16 damage );
 static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
   BOOL fForceChange, BTL_HANDEX_STR_PARAMS* succeedMsg );
@@ -562,7 +564,6 @@ static void scPut_TokWin_In( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_TokWin_Out( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_RankEffectLimit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaRankEffect effect, int volume );
 static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRankEffect effect, int volume, u16 itemID, BOOL fStdMsg );
-static void scPut_Ichigeki( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target );
 static void scPut_SimpleHp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, int value, BOOL fEffectEnable );
 static void scPut_KillPokemon( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 effType );
 static void scPut_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaSick sick, BPP_SICK_CONT sickCont );
@@ -7288,9 +7289,18 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
 
         if( scEvent_IchigekiCheck(wk, attacker, target, wazaParam->wazaID) )
         {
+          u16  damage = BPP_GetValue( target, BPP_HP );
+          BppKoraeruCause  korae_cause = scEvent_CheckKoraeru( wk, attacker, target, &damage );
+
           wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
-          scPut_Ichigeki( wk, target );
-          scproc_CheckDeadCmd( wk, target );
+
+          if( korae_cause == BPP_KORAE_NONE ){
+            scproc_Ichigeki_Succeed( wk, target );
+            scproc_CheckDeadCmd( wk, target );
+          }else{
+            scproc_Ichigeki_Korae( wk, target, korae_cause, damage );
+          }
+
         }
         else
         {
@@ -7304,6 +7314,33 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
     }
   }
 }
+//--------------------------------------------------------------------------
+/**
+ * 一撃必殺ワザ成功
+ */
+//--------------------------------------------------------------------------
+static void scproc_Ichigeki_Succeed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target )
+{
+  u8 pokeID = BPP_GetID( target );
+
+  SCQUE_PUT_ACT_WazaIchigeki( wk->que, pokeID );
+
+  BPP_HpZero( target );
+  SCQUE_PUT_OP_HpZero( wk->que, pokeID );
+
+}
+//--------------------------------------------------------------------------
+/**
+ * 一撃必殺ワザこらえた
+ */
+//--------------------------------------------------------------------------
+static void scproc_Ichigeki_Korae( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BppKoraeruCause korae_cause, u16 damage )
+{
+  scPut_DecreaseHP( wk, target, damage );
+  SCQUE_PUT_ACT_SimpleHP( wk->que, BPP_GetID(target) );
+  scproc_Koraeru( wk, target, korae_cause );
+}
+
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：ふきとばしワザ処理
 //---------------------------------------------------------------------------------------------
@@ -9085,18 +9122,6 @@ static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRa
     SCQUE_PUT_ACT_RankDown( wk->que, pokeID, effect, volume );
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankdown_ATK, pokeID, effect, volume );
   }
-}
-//--------------------------------------------------------------------------
-/**
- * [Put] 一撃必殺ワザ成功
- */
-//--------------------------------------------------------------------------
-static void scPut_Ichigeki( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target )
-{
-  u8 pokeID = BPP_GetID( target );
-  BPP_HpZero( target );
-  SCQUE_PUT_OP_HpZero( wk->que, pokeID );
-  SCQUE_PUT_ACT_WazaIchigeki( wk->que, pokeID );
 }
 //--------------------------------------------------------------------------
 /**
