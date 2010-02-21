@@ -41,6 +41,8 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 ELF2BIN		= $(PROJECT_ROOT)/tools/celf2bin.exe
 XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb
+XLSDIRECT = ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out_direct.rb
+
 DATAFILE	= パレス_ミッションデータ.xls
 DATATXT = $(DATAFILE:.xls=.csv)
 
@@ -56,6 +58,10 @@ FLDMMDL_CODE_H		= fldmmdl_objcode.h
 
 ITEM_DIR		= ../../../prog/include/item/
 ITEM_H		= itemsym.h
+
+MONSNO_DIR		= ../../../prog/include/poke_tool/
+MONSNO_H		= monsno_def.h
+MONSNUM_H		= monsnum_def.h
 
 FIELDCOMM_DIR		= ../../../prog/src/field/field_comm/
 MISSION_TYPES_H		= mission_types.h
@@ -76,8 +82,8 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-#do-build:	$(ZONETABLE_DIR)$(ZONEID_H) $(MESSAGE_INC_DIR)$(MSG_MISSION_H) $(MESSAGE_INC_DIR)$(MSG_MISSION_MONO_H) $(FLDMMDL_DIR)$(FLDMMDL_CODE_H) $(ITEM_DIR)$(ITEM_H) $(FIELDCOMM_DIR)$(MISSION_TYPES_H) subdir $(TARGETDIR)/$(targetname).narc
-#do-build:	subdir $(TARGETDIR)/$(targetname).narc $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MISSION_TYPES_H)
+#do-build:	$(ZONETABLE_DIR)$(ZONEID_H) $(MESSAGE_INC_DIR)$(MSG_MISSION_H) $(MESSAGE_INC_DIR)$(MSG_MISSION_MONO_H) $(FLDMMDL_DIR)$(FLDMMDL_CODE_H) $(ITEM_DIR)$(ITEM_H) $(MONSNO_DIR)$(MONSNO_H) $(MONSNO_DIR)$(MONSNUM_H) $(FIELDCOMM_DIR)$(MISSION_TYPES_H) subdir $(TARGETDIR)/$(targetname).narc
+#do-build:	subdir $(TARGETDIR)/$(targetname).narc $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MONSNO_H) $(MONSNUM_H) $(MISSION_TYPES_H)
 do-build:	subdir $(TARGETDIR)/$(targetname).narc
 
 subdir:
@@ -91,7 +97,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(TARGETDIR)/$(targetname).narc $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MISSION_TYPES_H) makefile mission_data.bin mission_conv.rb
+$(targetname).narc: $(TARGETDIR)/$(targetname).narc $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MONSNO_H) $(MONSNUM_H) $(MISSION_TYPES_H) makefile mission_data.bin mission_conv.rb
 	-ls *.bin > $(LIST_FILE)
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(LIST_FILE)
 	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
@@ -115,19 +121,26 @@ $(FLDMMDL_CODE_H): $(FLDMMDL_DIR)$(FLDMMDL_CODE_H)
 $(ITEM_H): $(ITEM_DIR)$(ITEM_H)
 	$(COPY)	$(ITEM_DIR)$(ITEM_H) $(ITEM_H)
 
+$(MONSNO_H): $(MONSNO_DIR)$(MONSNO_H)
+	$(COPY)	$(MONSNO_DIR)$(MONSNO_H) $(MONSNO_H)
+
+$(MONSNUM_H): $(MONSNO_DIR)$(MONSNUM_H)
+	$(COPY)	$(MONSNO_DIR)$(MONSNUM_H) $(MONSNUM_H)
+
 $(MISSION_TYPES_H): $(FIELDCOMM_DIR)$(MISSION_TYPES_H)
 	$(COPY)	$(FIELDCOMM_DIR)$(MISSION_TYPES_H) $(MISSION_TYPES_H)
 
-$(DATATXT):	$(DATAFILE) $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MISSION_TYPES_H)
-	$(XLS2TAB) -c -n 2 $(DATAFILE) > $(DATATXT)
-
+$(DATATXT):	$(DATAFILE) $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MONSNO_H) $(MONSNUM_H) $(MISSION_TYPES_H)
+#	$(XLS2TAB) -c -n 2 $(DATAFILE) > $(DATATXT)
+	$(XLSDIRECT) $(DATAFILE) -c > $(DATATXT)
+	
 #%.bin: %.c
 #mission_data.bin: mission_data.cdat
 mission_data.bin: $(DATATXT)
 	@ruby mission_conv.rb $(DATATXT) 
 	@echo "mission data convert"
 	@echo "//" > temp.c
-	@cat sdk_header.h $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MISSION_TYPES_H) mission_data.cdat |unix2dos > temp.c
+	@cat sdk_header.h $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MONSNO_H) $(MONSNUM_H) $(MISSION_TYPES_H) mission_data.cdat |unix2dos > temp.c
 	@$(CC) $(INCLUDES) $(INCPATH)  -c temp.c -MD -o temp.o
 	@$(MWLD) -dis -o mission_data.elf temp.o
 	@$(ELF2BIN) mission_data.elf
@@ -150,6 +163,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(MSG_MISSION_MONO_H)
 	rm -f $(FLDMMDL_CODE_H)
 	rm -f $(ITEM_H)
+	rm -f $(MONSNO_H)
+	rm -f $(MONSNUM_H)
 	rm -f $(MISSION_TYPES_H)
 	rm -f $(MISSION_TYPES_H)
 	rm -f *.csv

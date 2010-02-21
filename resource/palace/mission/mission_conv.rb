@@ -178,6 +178,8 @@ def DataConv()
         MissionData[i].obj_sex[s] = "0";
       elsif(MissionData[i].obj_sex[s] =~ /èó/)
         MissionData[i].obj_sex[s] = "1";
+      else
+        MissionData[i].obj_sex[s] = "0";
       end
     end
 
