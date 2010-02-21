@@ -26,3 +26,11 @@ extern VMCMD_RESULT EvCmdSkillTeachCheckPokemon( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdSkillTeachSelectPokemon( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdSkillTeachGetWazaID( VMHANDLE * core, void * wk );
 
+extern VMCMD_RESULT EvCmdCheckTemotiPokerus( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGetMezameruPowerType( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdPartyPokeNameInput( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdPartyPokeWazaSelect( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFieldPokeTradeCheck( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk );
+

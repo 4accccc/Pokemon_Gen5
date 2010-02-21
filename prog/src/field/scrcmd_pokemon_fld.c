@@ -31,6 +31,13 @@
 
 #include "waza_tool/wazano_def.h" // for WAZANO_xxxx
 #include "event_poke_status.h" // for EvCmdPartyPokeSelect
+
+#include "event_name_input.h" // for EVENT_NameInput_PartyPoke
+#include "event_egg_birth.h"  // for EVENT_EggBirth
+#include "fld_trade.h"  // for EVENT_FieldPokeTrade
+
+
+#include "fieldmap.h"
 //======================================================================
 //  define
 //======================================================================
@@ -686,6 +693,258 @@ VMCMD_RESULT EvCmdSkillTeachSelectPokemon( VMHANDLE * core, void * wk )
     SCRIPT_CallEvent( scw, event );
   }
   
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+//======================================================================
+//
+//
+//    特定イベント関連
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 手持ちにポケルス状態のポケモンがいるか？のチェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckTemotiPokerus( VMHANDLE * core, void *wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = FALSE;
+
+  {
+    GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
+    POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
+    u32 max = PokeParty_GetPokeCount( party );
+    int idx;
+
+    for (idx = 0; idx < max; idx ++)
+    {
+      u32 result;
+      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, idx );
+      result = PP_Get( pp, ID_PARA_pokerus, NULL );
+      if (result != 0)
+      {
+        *ret_wk = TRUE;
+        break;
+      }
+    }
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 「めざめるパワー」のタイプを取得する
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * @todo  わざマシン１０＝＝１０を指定するなのか？10-1なのか？確認
+ *
+ * めざめるパワー＝わざマシン１０
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetMezameruPowerType( VMHANDLE * core, void *wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );  //結果格納ワーク
+  u16 pos = SCRCMD_GetVMWorkValue( core, wk );  //ポケモンの位置
+  POKEMON_PARAM * pp;
+  if ( SCRCMD_GetTemotiPP( wk, pos, &pp ) == FALSE )
+  { //エラー対処
+    *ret_wk = 0xffff;
+  }
+  else if (PP_CheckWazaMachine( pp, 10 - 1 ) == FALSE)
+  {
+    *ret_wk = 0xffff;
+  }
+  else
+  {
+    *ret_wk = POKETOOL_GetMezaPa_Type( pp );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモンの名前入力画面を呼び出す
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdPartyPokeNameInput( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  u16*        ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16          index = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+
+  // イベントを呼び出す
+  SCRIPT_CallEvent( scw, EVENT_NameInput_PartyPoke(gsys, ret_wk, index) );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 技を選択する
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPartyPokeWazaSelect( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16*         ret_decide = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第2引数
+  u16             pokePos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
+  u16               value = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数(予備値)
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  
+  {
+    GMEVENT *event = EVENT_CreateWazaSelect( gsys , fieldmap , pokePos , ret_decide , ret_wk );
+    SCRIPT_CallEvent( scw, event );
+  }
+  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 手持ちのタマゴを孵化させる
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  MYSTATUS*            my = GAMEDATA_GetMyStatus( gdata );
+  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+  int          poke_count = PokeParty_GetPokeCount( party );
+
+
+  for( i=0; i<poke_count; i++ )
+  {
+    POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, i );
+    u32      tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+
+    if( tamago_flag )
+    {
+      // 孵化イベント
+      SCRIPT_CallEvent( scw, EVENT_EggBirth( gsys, fieldmap, param ) );
+      *ret_wk = i;
+      return VMCMD_RESULT_SUSPEND;
+    }
+  }
+  return VMCMD_RESULT_CONTINUE; 
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ゲーム内交換が可能かどうかをチェックする
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdFieldPokeTradeCheck( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第一引数
+  u16            trade_no = SCRCMD_GetVMWorkValue( core, work );  // コマンド第二引数
+  u16           party_pos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第三引数
+  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+  POKEMON_PARAM*     poke = PokeParty_GetMemberPointer( party, party_pos );
+  FLD_TRADE_WORK*   trade = FLD_TRADE_WORK_Create( heap_id, trade_no );
+ 
+  // 全チェックをパスすれば交換可能
+  *ret_wk = FLD_TRADE_ENABLE;
+
+  // タマゴチェック
+  if( *ret_wk == FLD_TRADE_ENABLE )
+  {
+    u32 tamago_flag = PP_Get( poke, ID_PARA_tamago_flag, NULL );
+    if( tamago_flag == TRUE )
+    {
+      *ret_wk = FLD_TRADE_DISABLE_EGG;
+    }
+  }
+  // モンスターNo.チェック
+  if( *ret_wk == FLD_TRADE_ENABLE )
+  {
+    u32 monsno = PP_Get( poke, ID_PARA_monsno, NULL );
+    if( monsno != FLD_TRADE_WORK_GetChangeMonsno(trade) )
+    {
+      *ret_wk = FLD_TRADE_DISABLE_MONSNO;
+    }
+  }
+  // 性別チェック
+  if( *ret_wk == FLD_TRADE_ENABLE )
+  {
+    if( FLD_TRADE_WORK_GetChangeMonsSex(trade) != PM_NEUTRAL )
+    {
+      u32 sex = PP_Get( poke, ID_PARA_sex, NULL );
+      if( sex != FLD_TRADE_WORK_GetChangeMonsSex(trade) )
+      {
+        *ret_wk = FLD_TRADE_DISABLE_SEX;
+      }
+    } 
+  } 
+
+  FLD_TRADE_WORK_Delete( trade );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief ゲーム内交換イベントを呼ぶ
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  u16       trade_no = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  u16      party_pos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+  
+  {
+    GMEVENT *event = EVENT_FieldPokeTrade( gsys, trade_no, party_pos );
+    SCRIPT_CallEvent( scw, event );
+  } 
   return VMCMD_RESULT_SUSPEND;
 }
 

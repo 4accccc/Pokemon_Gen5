@@ -20,8 +20,6 @@ extern BOOL SCRCMD_CheckTemotiWaza( const POKEMON_PARAM * pp, u16 wazano );
 //======================================================================
 //      ƒRƒ}ƒ“ƒh
 //======================================================================
-extern VMCMD_RESULT EvCmdCheckTemotiPokerus( VMHANDLE * core, void *wk );
-extern VMCMD_RESULT EvCmdGetMezameruPowerType( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetPartyPokeType( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetParamEXP( VMHANDLE *core, void *wk );
 
@@ -46,17 +44,12 @@ extern VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk );
 
-extern VMCMD_RESULT EvCmdPartyPokeNameInput( VMHANDLE *core, void *wk );
 
-extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPartyPokeSelect( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetPokemonWazaNum( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdPartyPokeWazaSelect( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetPokemonWazaID( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdSetPokemonWaza( VMHANDLE *core, void *wk );
 
-extern VMCMD_RESULT EvCmdFieldPokeTradeCheck( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdChgFormNo( VMHANDLE *core, void *wk );
