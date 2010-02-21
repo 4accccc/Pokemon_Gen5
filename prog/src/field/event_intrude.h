@@ -63,3 +63,8 @@ extern BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *ied
 //  
 //--------------------------------------------------------------
 extern FIRST_TALK_RET EVENT_INTRUDE_FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, COMMTALK_COMMON_EVENT_WORK *ccew, u8 *seq);
+
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+extern GMEVENT * EVENT_IntrudeWarpMyPalace(GAMESYS_WORK *gsys);

@@ -390,7 +390,8 @@ static GMEVENT_RESULT CommMissionTalk_MtoT_Talked( GMEVENT *event, int *seq, voi
   	
   	//ミッション失敗：パレスへ戻される
   	if(intcomm != NULL){
-      //※check　後で
+      GMEVENT_ChangeEvent(event, EVENT_IntrudeWarpMyPalace(gsys));
+      return GMEVENT_RES_CONTINUE;
     }
     return GMEVENT_RES_FINISH;
   }
