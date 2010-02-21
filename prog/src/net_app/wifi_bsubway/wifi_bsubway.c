@@ -125,6 +125,8 @@ enum{
   SCORE_UPLOAD_SEQ_GAMEDATA_CODEIN_ROOM_NO_WAIT,
   SCORE_UPLOAD_SEQ_GAMEDATA_CODEIN_FADEIN_WAIT,
   SCORE_UPLOAD_SEQ_GAMEDATA_DOWNLOAD_ROOM_WAIT,
+  SCORE_UPLOAD_SEQ_GAMEDATA_SAVE,
+  SCORE_UPLOAD_SEQ_GAMEDATA_WAIT,
   SCORE_UPLOAD_SEQ_GAMEDATA_MSG_02,
   SCORE_UPLOAD_SEQ_GAMEDATA_DOWNLOAD_END,
 
@@ -1903,16 +1905,13 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEA
     break;
 
   case SCORE_UPLOAD_SEQ_SAVE:
-    GAMEDATA_SaveAsyncStart(p_wk->p_gamedata);
+    SAVE_Start(p_wk);
     p_wk->seq++;
     break;
 
   case SCORE_UPLOAD_SEQ_SAVE_WAIT:
-    {
-      SAVE_RESULT result = GAMEDATA_SaveAsyncMain(pWork->gamedata);
-      if( (result == SAVE_RESULT_OK) ){
-        p_wk->seq++;
-      }
+    if( SAVE_Main(p_wk) ){
+      p_wk->seq++;
     }
     break;
 
@@ -2056,6 +2055,12 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
         p_wk->seq ++;
       }
     }
+    break;
+
+  case SCORE_UPLOAD_SEQ_GAMEDATA_SAVE:
+    break;
+
+  case SCORE_UPLOAD_SEQ_GAMEDATA_WAIT:
     break;
 
   case SCORE_UPLOAD_SEQ_GAMEDATA_MSG_02:
@@ -2850,15 +2855,18 @@ static void SAVE_Start( WIFI_BSUBWAY* p_wk )
 //-----------------------------------------------------------------------------
 static BOOL SAVE_Main( WIFI_BSUBWAY* p_wk )
 {
+  SAVE_RESULT result;
+
   if( p_wk->save_do == FALSE ){
     return TRUE;
   }
 
-  SAVE_RESULT result = GAMEDATA_SaveAsyncMain(pWork->gamedata);
+  result = GAMEDATA_SaveAsyncMain(p_wk->p_gamedata);
   if( (result == SAVE_RESULT_OK) ){
-    p_wk->seq++;
+    p_wk->save_do = FALSE;
+    return TRUE;
   }
-
+  return FALSE;
 }
 
 
