@@ -45,7 +45,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
 
 .ncl.NCLR:
-	g2dcvtr $< -pcm
+	g2dcvtr $<
 
 .ncg.NCGR:
 	g2dcvtr $< -bg

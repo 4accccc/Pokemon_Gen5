@@ -629,9 +629,6 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
     modelset[pWork->modelno].setCamera(pWork);
   }
 
-   _panelLoad(pWork,25);
-
-  
 }
 
 
@@ -665,6 +662,17 @@ void IRC_POKETRADEDEMO_End( POKEMON_TRADE_WORK* pWork )
   _demoExit();
   _panelRelease(pWork);
 
+}
+
+
+//============================================================================================
+/**
+ * @brief カラーテクスチャーを作る関数
+ */
+//============================================================================================
+void IRC_POKETRADE3D_SetColorTex( POKEMON_TRADE_WORK* pWork)
+{
+   _panelLoad(pWork,25);
 }
 
 //============================================================================================
@@ -883,10 +891,14 @@ void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  )
 #if 1
 
 static const u16 pal_16plett[] = {
-  GX_RGB(4,4,4), GX_RGB(31,0,0), GX_RGB(0,31,0), GX_RGB(0,0,31),
-  GX_RGB(31,31,0), GX_RGB(31,0,31), GX_RGB(0,31,31), GX_RGB(15,0,0),
-  GX_RGB(0,15,0), GX_RGB(0,0,15), GX_RGB(15,31,0), GX_RGB(31,15,0),
-  GX_RGB(0,31,15), GX_RGB(0,15,31), GX_RGB(31,0,15), GX_RGB(15,0,31),
+  GX_RGB(0,0,0), GX_RGB(31,0,0),
+  GX_RGB(0,31,0), GX_RGB(0,0,31),
+  GX_RGB(31,31,0), GX_RGB(0,31,31),
+  GX_RGB(19,9,19), GX_RGB(15,0,0),
+  GX_RGB(0,15,0), GX_RGB(31,19,18),
+  GX_RGB(31,31,31), GX_RGB(16,16,16), //
+  GX_RGB(19,9,0), GX_RGB(0,0,0),    //茶黒
+  GX_RGB(31,0,0), GX_RGB(0,0,31),    //赤青
 };
 
 
@@ -940,17 +952,18 @@ static void tex_coord(int idx)
 static const  u32     myTexAddr = 0x03000;       // a texture image at 0x1000 of the texture image slots
 static const  u32     myTexPlttAddr = 0x02000;   // a texture palette at 0x1000 of the texture palette slots
 
+static const  u32     myTexSize = 512;   // a texture palette at 0x1000 of the texture palette slots
 
 
 static void _printColorSquear(u8* tempBuff, int x, int y, int colno)
 {
   int i,j;
-  int xstart = x*10+2;
-  int ystart = y*10+4;
+  int xstart = x*5+1;
+  int ystart = y*5+2;
     
-  for(i = ystart ; i < (ystart + 8); i++){  //y座標
-    for(j = xstart; j < (xstart + 8); j++){  //x座標
-      int pos = j/2+i*32;
+  for(i = ystart ; i < (ystart + 4); i++){  //y座標
+    for(j = xstart; j < (xstart + 4); j++){  //x座標
+      int pos = j/2+i*16;
 
       if((j % 2)==0){
         tempBuff[pos] = (0xf0 & tempBuff[pos]) + colno;
@@ -963,7 +976,7 @@ static void _printColorSquear(u8* tempBuff, int x, int y, int colno)
 }
 
 
-
+//全部のテクスチャーを作る
 static void _panelLoad(POKEMON_TRADE_WORK *pWork,int num)
 {
   u8* tempBuff;
@@ -974,21 +987,29 @@ static void _panelLoad(POKEMON_TRADE_WORK *pWork,int num)
   //---------------------------------------------------------------------------
   GX_BeginLoadTex();                 // map the texture image slots onto LCDC address space
 
-  tempBuff = GFL_HEAP_AllocClearMemory(pWork->heapID, 2048);
+  tempBuff = GFL_HEAP_AllocClearMemory(pWork->heapID, myTexSize);
   {
-    int i,num;
-    for(i=0;i<5;i++){
-      GFL_STD_MemFill(tempBuff, 0x0, 2048);
+    int i,index;
+    for(i=0;i < num;i++){
+      GFL_STD_MemFill(tempBuff, 0x0, myTexSize);
 
-      for( num=0;num<30;num++){
-        _printColorSquear(tempBuff, num%6, num/6, num&0xf);
+      if(i==BOX_MAX_TRAY){
+        for( index=0;index<6;index++){
+          _printColorSquear(tempBuff, num%2, num/2, pWork->FriendPokemonCol[1][num*BOX_MAX_POS+index]);
+        }
+      }
+      else{
+        for( index=0;index<30;index++){
+          _printColorSquear(tempBuff, num%6, num/6, pWork->FriendPokemonCol[1][num*BOX_MAX_POS+index]);
+          OS_TPrintf("color %d\n",pWork->FriendPokemonCol[1][num*BOX_MAX_POS+index]);
+        }
       }
         
-      DC_FlushRange(tempBuff,2048);
+      DC_FlushRange(tempBuff,myTexSize);
 
       GX_LoadTex((void *)tempBuff,        // a pointer to the texture data on the main memory(4 bytes aligned)
-                 myTexAddr+2048*i,          // an offset address in the texture image slots
-                 2048                // the size of the texture(s)(in bytes)
+                 myTexAddr+myTexSize*i,          // an offset address in the texture image slots
+                 myTexSize                // the size of the texture(s)(in bytes)
                  );
     }
   }
@@ -1087,12 +1108,12 @@ static void _createBoard(float pos, int index)
 
   G3_TexImageParam(GX_TEXFMT_PLTT16,      // use 16 colors palette texture
                    GX_TEXGEN_TEXCOORD,    // use texcoord
-                   GX_TEXSIZE_S64,        // 64 pixels
-                   GX_TEXSIZE_T64,        // 64 pixels
+                   GX_TEXSIZE_S32,        // 32 pixels
+                   GX_TEXSIZE_T32,        // 32 pixels
                    GX_TEXREPEAT_NONE,     // no repeat
                    GX_TEXFLIP_NONE,       // no flip
                    GX_TEXPLTTCOLOR0_USE,  // use color 0 of the palette
-                   myTexAddr+index*2048     // the offset of the texture image
+                   myTexAddr+index*myTexSize     // the offset of the texture image
                    );
 
   G3_TexPlttBase(myTexPlttAddr,  // the offset of the texture palette

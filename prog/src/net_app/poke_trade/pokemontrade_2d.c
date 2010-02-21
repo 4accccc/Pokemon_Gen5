@@ -1678,6 +1678,61 @@ void IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE type)
 }
 
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   MAIN画面のOBJ
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_InitMainObj(POKEMON_TRADE_WORK* pWork)
+{
+  u8 pltNum,i;
+  GFL_CLACTPOS pos;
+
+  //素材
+  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+
+    pWork->cellRes[CHAR_SCROLLBAR_UP] =
+      GFL_CLGRP_CGR_Register( p_handle , NARC_trade_wb_trade_obj01_NCGR ,
+                              FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
+    pWork->cellRes[PAL_SCROLLBAR_UP] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,NARC_trade_wb_trade_obj_NCLR , CLSYS_DRAW_MAIN ,
+        _OBJPLT_BOX_OFFSET,0, _OBJPLT_BOX, pWork->heapID  );
+    pWork->cellRes[ANM_SCROLLBAR_UP] =
+      GFL_CLGRP_CELLANIM_Register(
+        p_handle , NARC_trade_wb_trade_obj01_NCER, NARC_trade_wb_trade_obj01_NANR , pWork->heapID  );
+    
+    GFL_ARC_CloseDataHandle( p_handle );
+
+  }
+
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   MAIN画面のOBJリソース開放
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_ReleaseMainObj(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->cellRes[CHAR_SCROLLBAR_UP]!=0){
+    GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_SCROLLBAR_UP] );
+    GFL_CLGRP_CGR_Release(pWork->cellRes[PAL_SCROLLBAR_UP] );
+    GFL_CLGRP_CGR_Release(pWork->cellRes[ANM_SCROLLBAR_UP] );
+    pWork->cellRes[CHAR_SCROLLBAR_UP] = 0;
+    pWork->cellRes[PAL_SCROLLBAR_UP] = 0;
+    pWork->cellRes[ANM_SCROLLBAR_UP] = 0;
+  }
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   BOXカーソル表示
@@ -1703,20 +1758,6 @@ void IRC_POKETRADE_InitBoxCursor(POKEMON_TRADE_WORK* pWork)
     pWork->cellRes[ANM_SCROLLBAR] =
       GFL_CLGRP_CELLANIM_Register(
         p_handle , NARC_trade_wb_trade_obj02_NCER, NARC_trade_wb_trade_obj02_NANR , pWork->heapID  );
-
-
-
-    pWork->cellRes[CHAR_SCROLLBAR_UP] =
-      GFL_CLGRP_CGR_Register( p_handle , NARC_trade_wb_trade_obj01_NCGR ,
-                              FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
-    pWork->cellRes[PAL_SCROLLBAR_UP] =
-      GFL_CLGRP_PLTT_RegisterEx(
-        p_handle ,NARC_trade_wb_trade_obj_NCLR , CLSYS_DRAW_MAIN ,
-        _OBJPLT_BOX_OFFSET,0, _OBJPLT_BOX, pWork->heapID  );
-    pWork->cellRes[ANM_SCROLLBAR_UP] =
-      GFL_CLGRP_CELLANIM_Register(
-        p_handle , NARC_trade_wb_trade_obj01_NCER, NARC_trade_wb_trade_obj01_NANR , pWork->heapID  );
-    
     GFL_ARC_CloseDataHandle( p_handle );
 
   }

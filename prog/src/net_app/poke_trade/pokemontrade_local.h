@@ -39,6 +39,7 @@
 #include "progval.h"
 
 #include "net/net_save.h"
+#include "pm_define.h"
 
 ///3Dモデルのタイプ
 typedef enum
@@ -68,6 +69,7 @@ typedef enum
   _TIMING_SAVELAST,
   _TIMING_SAVEEND,
   _TIMING_ANIMEEND,
+  _TIMING_POKECOLOR,
 
 } NET_TIMING_ENUM;
 
@@ -379,7 +381,7 @@ struct _POKEMON_TRADE_WORK{
   PENMOVE_WORK aPanWork;
   POKEMONTRADE_PARAM* pParentWork;
   POKEMONTRADE_DEMO_WORK* pPokemonTradeDemo;
-  u8 FriendPokemonCol[732];         ///< 相手のポケモンBOXにあるポケモン色
+  u8 FriendPokemonCol[2][BOX_POKESET_MAX + TEMOTI_POKEMAX];         ///< 相手のポケモンBOXにあるポケモン色
   GFL_BMPWIN* StatusWin[2];     ///< ステータス表示
   GFL_BMPWIN* GTSInfoWindow;     ///< GTSネゴシエーション説明
   POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
@@ -741,6 +743,7 @@ typedef enum {
   _NETCMD_THREE_SELECT_CANCEL,
   _NETCMD_SCROLLBAR,
   _NETCMD_FACEICON,
+  _NETCMD_POKEMONCOLOR,
 } _POKEMON_TRADE_SENDCMD;
 
 
@@ -822,3 +825,9 @@ extern void POKEMONTRADE_RemoveEruptedGTS(POKEMON_TRADE_WORK* pWork,int index);
 
 extern void POKE_GTS_DeleteEruptedIcon(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_InitEruptedIcon(POKEMON_TRADE_WORK* pWork,int faceNo, int index);
+
+extern void POKE_GTS_InitEruptedIconResource(POKEMON_TRADE_WORK* pWork);
+extern void IRC_POKETRADE_ReleaseMainObj(POKEMON_TRADE_WORK* pWork);
+extern void IRC_POKETRADE_InitMainObj(POKEMON_TRADE_WORK* pWork);
+extern void PokemonTrade_SetMyPokeColor( POKEMON_TRADE_WORK* pWork  );
+extern void IRC_POKETRADE3D_SetColorTex( POKEMON_TRADE_WORK* pWork);

@@ -972,7 +972,7 @@ void POKE_GTS_InitEruptedIcon(POKEMON_TRADE_WORK* pWork,int faceNo, int index)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   アイコン消去
+ * @brief   アイコン消去 リソース消去
  * @param   
  * @param   
  * @retval  none
@@ -987,5 +987,23 @@ void POKE_GTS_DeleteEruptedIcon(POKEMON_TRADE_WORK* pWork)
     for(i = 0; i < 2;i++){
       POKEMONTRADE_RemoveEruptedGTS(pWork, i);
     }
+    IRC_POKETRADE_ReleaseMainObj(pWork);
   }
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイコンリソース初期化
+ * @param   
+ * @param   
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKE_GTS_InitEruptedIconResource(POKEMON_TRADE_WORK* pWork)
+{
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    IRC_POKETRADE_InitMainObj(pWork);
+  }
+}
+
