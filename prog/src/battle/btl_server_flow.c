@@ -232,6 +232,7 @@ struct _BTL_SVFLOW_WORK {
   ACTION_ORDER_WORK   actOrder[ BTL_POS_MAX ];
   ACTION_ORDER_WORK   actOrderTmp;
 
+  BTL_POKESET         pokesetTargetOrg;
   BTL_POKESET         pokesetTarget;
   BTL_POKESET         pokesetSubTarget;
   BTL_POKESET         pokesetDamaged;
@@ -3507,8 +3508,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     if( scproc_Fight_CheckCombiWazaReady(wk, attacker, actWaza, actTargetPos) ){ break; }
 
     // ワザ対象をワークに取得
-    BTL_POKESET_Clear( &wk->pokesetTarget );
-    registerWazaTargets( wk, attacker, actTargetPos, &wk->wazaParam, &wk->pokesetTarget );
+    BTL_POKESET_Clear( &wk->pokesetTargetOrg );
+    registerWazaTargets( wk, attacker, actTargetPos, &wk->wazaParam, &wk->pokesetTargetOrg );
+    BTL_POKESET_Copy( &wk->pokesetTargetOrg, &wk->pokesetTarget );
 
     // ここまで来たらワザが出ることは確定
     BTL_WAZAREC_Add( &wk->wazaRec, actWaza, wk->turnCount, BPP_GetID(attacker) );
@@ -3599,7 +3601,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   if( !fWazaLock ){
     u8 wazaIdx = BPP_WAZA_SearchIdx( attacker, orgWaza );
     if( wazaIdx != PTL_WAZA_MAX ){
-      scproc_decrementPPUsedWaza( wk, attacker, wazaIdx, &wk->pokesetDamaged );
+      scproc_decrementPPUsedWaza( wk, attacker, wazaIdx, &wk->pokesetTargetOrg );
     }
   }
 

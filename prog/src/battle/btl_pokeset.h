@@ -48,6 +48,13 @@ static inline void BTL_POKESET_Clear( BTL_POKESET* set )
   GFL_STD_MemClear( set, sizeof(BTL_POKESET) );
 }
 /**
+ *  コピー
+ */
+static inline void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst )
+{
+  GFL_STD_MemCopy( src, dst, sizeof(BTL_POKESET) );
+}
+/**
  *  ポケモン１体登録（ダメージ記録）
  */
 static inline void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage )
