@@ -8,5 +8,5 @@
 #pragma once
 
 #define TH_PLAYMODE_SINGLE  (0)
-#define TH_PLAYMODE_DOUBLE  (0)
+#define TH_PLAYMODE_DOUBLE  (1)
 

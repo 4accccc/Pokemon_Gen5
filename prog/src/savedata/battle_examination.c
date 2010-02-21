@@ -12,8 +12,14 @@
 #include "savedata/save_tbl.h"
 #include "poke_tool/poke_tool.h"
 
+#include "savedata/save_control.h"
 #include "savedata/battle_examination.h"
+#include "battle/bsubway_battle_data.h"
 
+struct _BATTLE_EXAMINATION_SAVEDATA{
+  BSUBWAY_PARTNER_DATA trainer[BATTLE_EXAMINATION_MAX];
+  u16 crc;
+};
 
 
 //--------------------------------------------------------------------------------------------
@@ -51,6 +57,22 @@ void BATTLE_EXAMINATION_SAVE_Init(BATTLE_EXAMINATION_SAVEDATA* pSV)
   GFL_STD_MemClear(pSV,sizeof(BATTLE_EXAMINATION_SAVEDATA));
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	データのポインタ取得
+ *
+ *	@param	SAVE_CONTROL_WORK * p_sv	セーブデータ保持ワークへのポインタ
+ *
+ *	@return	MISC
+ */
+//-----------------------------------------------------------------------------
+BATTLE_EXAMINATION_SAVEDATA *BATTLE_EXAMINATION_SAVE_GetSvPtr( SAVE_CONTROL_WORK * p_sv)
+{	
+	BATTLE_EXAMINATION_SAVEDATA	*data;
+  data = SaveControl_Extra_DataPtrGet(p_sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
+	return data;
+}
+
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
@@ -59,4 +81,23 @@ void BATTLE_EXAMINATION_SAVE_Init(BATTLE_EXAMINATION_SAVEDATA* pSV)
 //,            SAVE_EXTRA_ID_BATTLE_EXAMINATION, HEAPID_FIELDMAP,
   //                      pCGearWork,SAVESIZE_EXTRA_BATTLE_EXAMINATION)){
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   検定用データを取得する
+ * @param   pSV   セーブデータポインタ
+ * @param   取得インデックス　0～BATTLE_EXAMINATION_MAX-1
+ * @return	データ先頭アドレス
+ */
+//--------------------------------------------------------------------------------------------
+BSUBWAY_PARTNER_DATA *BATTLE_EXAMINATION_SAVE_GetData(BATTLE_EXAMINATION_SAVEDATA* pSV, const u32 inIdx)
+{
+  BSUBWAY_PARTNER_DATA *data;
+  if ( inIdx >= BATTLE_EXAMINATION_MAX ){
+    GF_ASSERT_MSG(0, " idx error $d",inIdx);
+    data = &(pSV->trainer[0]);
+  }
+  else data = &(pSV->trainer[inIdx]);
+
+  return data;
+}
 

@@ -13,16 +13,10 @@
 #include "fld_btl_inst_tool.h"
 
 #include  "trial_house_scr_def.h"
-
-//#include "../../../resource/fldmapdata/script/c03r0801_def.h"  //for SCRID_～
-//#include "script.h"     //for SCRIPT_SetEventScript
-
-//#include "pl_boat_def.h"
-
-//#include "pl_boat_setup.h"
+#include "savedata/battle_examination.h"
 
 static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
-static void SetDownLoadData(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
+static void SetDownLoadData(GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
 static u16 GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr );
 
 //--------------------------------------------------------------
@@ -122,16 +116,17 @@ void TRIAL_HOUSE_SetDLFlg( TRIAL_HOUSE_WORK_PTR ptr, const BOOL inDLFlg )
 //--------------------------------------------------------------
 /**
  * @brief	対戦相手の抽選
+ * @param gsys        ゲームシステムポインタ
  * @param	ptr      TRIAL_HOUSE_WORK_PTR
  * @param inBtlCouont   対戦回数　0～4（最大五戦）
  * @retval	obj_id      OBJ見た目     
 */
 //--------------------------------------------------------------
-int TRIAL_HOUSE_MakeTrainer( TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount )
+int TRIAL_HOUSE_MakeTrainer( GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount )
 {
   int obj_id;
 
-  if ( ptr->DownLoad ) SetDownLoadData(ptr, inBtlCount);
+  if ( ptr->DownLoad ) SetDownLoadData(gsys, ptr, inBtlCount);
   else MakeTrainer(ptr, inBtlCount);
 
   //見た目を取得して返す
@@ -194,56 +189,28 @@ static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
 //--------------------------------------------------------------
 /**
  * @brief	対戦相手のセット(ダウンロードデータ)
+ * @param gsys    ゲームシステムポインタ
  * @param	ptr      TRIAL_HOUSE_WORK_PTR
  * @param inBtlCouont   対戦回数　0～4（最大五戦）
  * @retval	none    
 */
 //--------------------------------------------------------------
-static void SetDownLoadData(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
+static void SetDownLoadData(GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
 {
-  //@todo 実装はまだ
-  
-  int obj_id;
-  int tr_no;
-  int base, band;
-
-  switch(inBtlCount){
-  case 0:
-    base = 0;
-    band = 100;
-    break;
-  case 1:
-    base = 140;
-    band = 20;
-    break;
-  case 2:
-    base = 180;
-    band = 20;
-    break;
-  case 3:
-    base = 220;
-    band = 80;
-    break;
-  case 4:
-    base = 220;
-    band = 80;
-    break;
-  default:
-    GF_ASSERT_MSG(0,"count error %d",inBtlCount);
-    base = 0;
-    band = 100;
+  SAVE_CONTROL_WORK * sv;
+  BATTLE_EXAMINATION_SAVEDATA *exa;
+  BSUBWAY_PARTNER_DATA *data;
+  {
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
+    sv = GAMEDATA_GetSaveControlWork( gdata );
   }
-  //トレーナー抽選
-  tr_no = base + GFUser_GetPublicRand(band);
-  NOZOMU_Printf("entry_tr_no = %d\n",tr_no);
-
-  //データをトライアルハウスワークにセット
-  FBI_TOOL_MakeRomTrainerData(
-      &ptr->TrData,
-      tr_no, ptr->MemberNum,
-      NULL,NULL,NULL, GFL_HEAP_LOWID(ptr->HeapID));
+  //セーブデータにアクセス
+  exa = BATTLE_EXAMINATION_SAVE_GetSvPtr(sv);
+  //データ取得
+  data = BATTLE_EXAMINATION_SAVE_GetData(exa, inBtlCount);
+  //トライアルハウスワークにデータをセット
+  ptr->TrData = *data;
 }
-
 
 //--------------------------------------------------------------
 /**

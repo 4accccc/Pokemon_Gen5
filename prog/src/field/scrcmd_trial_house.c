@@ -141,7 +141,7 @@ VMCMD_RESULT EvCmdTH_SetTrainer( VMHANDLE *core, void *wk )
   btl_count = SCRCMD_GetVMWorkValue( core, work );
   obj_id = SCRCMD_GetVMWork( core, work );
 
-  *obj_id = TRIAL_HOUSE_MakeTrainer( *ptr, btl_count );
+  *obj_id = TRIAL_HOUSE_MakeTrainer( gsys, *ptr, btl_count );
 
   return VMCMD_RESULT_CONTINUE;
 }
