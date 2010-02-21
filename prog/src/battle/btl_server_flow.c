@@ -12442,11 +12442,16 @@ static u8 scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   if( !BPP_IsDead(bpp) )
   {
-    PokeType type_pure = PokeTypePair_GetType1( param->next_type );
-
     SCQUE_PUT_OP_ChangePokeType( wk->que, param->pokeID, param->next_type );
-    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ChangePokeType, param->pokeID, type_pure );
     BPP_ChangePokeType( bpp, param->next_type );
+
+    if( !(param->fStdMsgDisable) )
+    {
+      if( PokeTypePair_IsPure( param->next_type ) ){
+        PokeType type_pure = PokeTypePair_GetType1( param->next_type );
+        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ChangePokeType, param->pokeID, type_pure );
+      }
+    }
 
     return 1;
   }

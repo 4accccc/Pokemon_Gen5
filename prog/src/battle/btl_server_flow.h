@@ -479,6 +479,7 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   PokeTypePair    next_type;
   u8              pokeID;
+  u8              fStdMsgDisable;
 }BTL_HANDEX_PARAM_CHANGE_TYPE;
 
 /**

@@ -8985,6 +8985,7 @@ static void handler_MirrorType( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
     param->pokeID = pokeID;
     param->next_type = BPP_GetPokeType( target );
+    param->fStdMsgDisable = TRUE;
 
     {
       BTL_HANDEX_PARAM_MESSAGE* msg_p = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
