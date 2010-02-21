@@ -2687,7 +2687,10 @@ void POKEMONTRADE_StartFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo)
 
 void POKEMONTRADE_RemoveFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo)
 {
-  GFL_CLACT_WK_Remove(pWork->faceButtonGTS[faceNo] );
+  if(pWork->faceButtonGTS[faceNo]){
+    GFL_CLACT_WK_Remove(pWork->faceButtonGTS[faceNo] );
+    pWork->faceButtonGTS[faceNo] = NULL;
+  }
 }
 
 //------------------------------------------------------------------------------
