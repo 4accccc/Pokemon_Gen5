@@ -54,9 +54,12 @@ typedef enum
   PL_MODE_NPC_TRADE,      // ゲーム内交換
   PL_MODE_PORUTO,         // ポルトを使用選択用
   PL_MODE_GURU2,          // ぐるぐる交換たまご選択
-  PL_MODE_BATTLE_STAGE,   // バトルステージ参加選択用
-  PL_MODE_BATTLE_CASTLE,  // バトルキャッスル参加選択用
-  PL_MODE_BATTLE_ROULETTE = (PL_MODE_BATTLE_CASTLE),  // バトルルーレット参加選択用
+//  PL_MODE_BATTLE_STAGE,   // バトルステージ参加選択用
+//  PL_MODE_BATTLE_CASTLE,  // バトルキャッスル参加選択用
+//  PL_MODE_BATTLE_ROULETTE = (PL_MODE_BATTLE_CASTLE),  // バトルルーレット参加選択用
+
+  PL_MODE_BATTLE_SUBWAY,        //バトルサブウェイ
+  PL_MODE_BATTLE_EXAMINATION,   //トレーナー検定
 
   PL_MODE_SET_WAZA,       // 内部でPL_MODE_SETに置き換わります。
                           // 終了時にはPL_MODE_SET_WAZAに戻します。

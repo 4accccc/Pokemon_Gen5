@@ -1052,12 +1052,6 @@ static void PLIST_InitMode( PLIST_WORK *work )
   switch( work->plData->mode )
   {
   case PL_MODE_BATTLE:
-  /*
-    work->btlMenuWin[0] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
-                              mes_pokelist_01_01 , PLIST_BATTLE_BUTTON_DECIDE_X , PLIST_BATTLE_BUTTON_DECIDE_Y , FALSE );
-    work->btlMenuWin[1] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
-                              mes_pokelist_01_02 , PLIST_BATTLE_BUTTON_CANCEL_X , PLIST_BATTLE_BUTTON_CANCEL_Y , TRUE );
-  */
     //Œˆ’è‚Ì‚Ýì¬
     work->btlMenuWin[0] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
                               mes_pokelist_01_01 , PLIST_BATTLE_BUTTON_DECIDE_X+10 , PLIST_BATTLE_BUTTON_DECIDE_Y , FALSE );
@@ -1066,6 +1060,19 @@ static void PLIST_InitMode( PLIST_WORK *work )
     //‘I‘ð‰æ–Ê‚Ö
     PLIST_InitMode_Select( work );
     work->nextMainSeq = PSMS_SELECT_POKE;
+    break;
+  
+  case PL_MODE_BATTLE_SUBWAY:
+  case PL_MODE_BATTLE_EXAMINATION:
+  
+    work->btlMenuWin[0] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
+                              mes_pokelist_01_01 , PLIST_BATTLE_BUTTON_DECIDE_X , PLIST_BATTLE_BUTTON_DECIDE_Y , FALSE );
+    work->btlMenuWin[1] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
+                              mes_pokelist_01_02 , PLIST_BATTLE_BUTTON_CANCEL_X , PLIST_BATTLE_BUTTON_CANCEL_Y , TRUE );
+    //‘I‘ð‰æ–Ê‚Ö
+    PLIST_InitMode_Select( work );
+    work->nextMainSeq = PSMS_SELECT_POKE;
+  
     break;
   
   case PL_MODE_FIELD:
@@ -1245,6 +1252,12 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
     work->canExit = FALSE;
     break;
+
+  case PL_MODE_BATTLE_SUBWAY:
+  case PL_MODE_BATTLE_EXAMINATION:
+    //‰½‚à‚Å‚È‚¢
+    work->canExit = FALSE;
+    break;
     
   case PL_MODE_ITEMUSE:
   case PL_MODE_SHINKA:
@@ -1301,6 +1314,8 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
   {
   case PL_MODE_FIELD:
   case PL_MODE_BATTLE:
+  case PL_MODE_BATTLE_SUBWAY:
+  case PL_MODE_BATTLE_EXAMINATION:
   case PL_MODE_SODATEYA:
   case PL_MODE_GURU2:
   case PL_MODE_SET_MUSICAL:
@@ -1542,6 +1557,8 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
 
     break;
   case PL_MODE_BATTLE:
+  case PL_MODE_BATTLE_SUBWAY:
+  case PL_MODE_BATTLE_EXAMINATION:
     if( PLIST_PLATE_IsEgg( work , work->plateWork[work->pokeCursor] ) == TRUE )
     {
       itemArr[0] = PMIT_STATSU;
@@ -1844,7 +1861,7 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
       PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[0] , FALSE );
       
       //–ß‚é‚ð“_“”
-      PLIST_MENU_SetDecideMenuWin_BattleMenu( work->btlMenuWin[0] , TRUE );
+      PLIST_MENU_SetDecideMenuWin_BattleMenu( work->btlMenuWin[1] , TRUE );
       work->mainSeq = PSMS_BATTLE_ANM_WAIT;
       work->pokeCursor = PL_SEL_POS_EXIT;
     }
@@ -2068,10 +2085,6 @@ static void PLIST_SelectPokeMain( PLIST_WORK *work )
   {
     work->subSeq = PSSS_TERM;
   }
-  
-	//‚È‚­‚È‚è‚Ü‚µ‚½ nagihashi
-  //APP_TASKMENU_UpdatePalletAnime( &work->btlMenuAnmCnt , &work->btlMenuTransBuf , PLIST_BG_MENU , PLIST_BG_PLT_MENU_ACTIVE );
-
 }
 
 //--------------------------------------------------------------------------
@@ -3056,9 +3069,8 @@ u32 PLIST_UTIL_CheckFieldWaza( const POKEMON_PARAM *pp , const u8 wazaPos )
 const BOOL PLIST_UTIL_IsBattleMenu( const PLIST_WORK *work )
 {
   if( work->plData->mode == PL_MODE_BATTLE ||
-      work->plData->mode == PL_MODE_BATTLE_STAGE  ||
-      work->plData->mode == PL_MODE_BATTLE_CASTLE ||
-      work->plData->mode == PL_MODE_BATTLE_ROULETTE )
+      work->plData->mode == PL_MODE_BATTLE_SUBWAY ||
+      work->plData->mode == PL_MODE_BATTLE_EXAMINATION )
   {
     return TRUE;
   }
