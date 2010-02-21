@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	fldeff_kemuri.c
+ * @file	fldeff_kemu.c
  * @brief	フィールド 土煙
  * @author	kagaya
  * @date	05.07.13
@@ -33,9 +33,7 @@ typedef struct _TAG_FLDEFF_KEMURI FLDEFF_KEMURI;
 struct _TAG_FLDEFF_KEMURI
 {
 	FLDEFF_CTRL *fectrl;
-  
-  GFL_G3D_RES *g3d_res_mdl;
-  GFL_G3D_RES *g3d_res_anm;
+  FLD_G3DOBJ_RESIDX res_idx;
 };
 
 //--------------------------------------------------------------
@@ -43,10 +41,10 @@ struct _TAG_FLDEFF_KEMURI
 //--------------------------------------------------------------
 typedef struct
 {
-  FLDEFF_KEMURI *eff_kemuri;
-  GFL_G3D_OBJ *obj;
-  GFL_G3D_ANM *obj_anm;
-  GFL_G3D_RND *obj_rnd;
+  FLDEFF_KEMURI *eff_kemu;
+  FLD_G3DOBJ_CTRL *obj_ctrl;
+  
+  FLD_G3DOBJ_OBJIDX obj_idx;
 }TASKWORK_KEMURI;
 
 //--------------------------------------------------------------
@@ -54,7 +52,7 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  FLDEFF_KEMURI *eff_kemuri;
+  FLDEFF_KEMURI *eff_kemu;
   VecFx32 pos;
 }TASKHEADER_KEMURI;
 
@@ -116,15 +114,18 @@ void FLDEFF_KEMURI_Delete( FLDEFF_CTRL *fectrl, void *work )
 static void kemuri_InitResource( FLDEFF_KEMURI *kemu )
 {
   ARCHANDLE *handle;
-  
+  FLD_G3DOBJ_RES_HEADER head;
+  FLD_G3DOBJ_CTRL *obj_ctrl;
+
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( kemu->fectrl );
   handle = FLDEFF_CTRL_GetArcHandleEffect( kemu->fectrl );
   
-  kemu->g3d_res_mdl	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_hero_kemu_nsbmd );
-  GFL_G3D_TransVramTexture( kemu->g3d_res_mdl );
-
-  kemu->g3d_res_anm	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_hero_kemu_nsbtp );
+  FLD_G3DOBJ_RES_HEADER_Init( &head );
+  FLD_G3DOBJ_RES_HEADER_SetMdl( &head, handle, NARC_fldeff_hero_kemu_nsbmd );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx( &head, NARC_fldeff_hero_kemu_nsbtp );
+  
+  kemu->res_idx = FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
 }
 
 //--------------------------------------------------------------
@@ -136,8 +137,9 @@ static void kemuri_InitResource( FLDEFF_KEMURI *kemu )
 //--------------------------------------------------------------
 static void kemuri_DeleteResource( FLDEFF_KEMURI *kemu )
 {
- 	GFL_G3D_DeleteResource( kemu->g3d_res_anm );
- 	GFL_G3D_DeleteResource( kemu->g3d_res_mdl );
+  FLD_G3DOBJ_CTRL *obj_ctrl;
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( kemu->fectrl );
+  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, kemu->res_idx );
 }
 
 //======================================================================
@@ -162,7 +164,7 @@ void FLDEFF_KEMURI_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
   pos.z += FX32_ONE*6;
   
   kemu = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_KEMURI );
-  head.eff_kemuri = kemu;
+  head.eff_kemu = kemu;
   head.pos = pos;
   
   FLDEFF_CTRL_AddTask(
@@ -196,7 +198,7 @@ void FLDEFF_KEMURI_SetRailMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
   pos.x += FX_Mul( FX_SinIdx( camera_yaw ), FX32_ONE*12 );
   
   kemu = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_KEMURI );
-  head.eff_kemuri = kemu;
+  head.eff_kemu = kemu;
   head.pos = pos;
   
   FLDEFF_CTRL_AddTask(
@@ -217,20 +219,12 @@ static void kemuriTask_Init( FLDEFF_TASK *task, void *wk )
   const TASKHEADER_KEMURI *head;
   
   head = FLDEFF_TASK_GetAddPointer( task );
-  work->eff_kemuri = head->eff_kemuri;
+  work->eff_kemu = head->eff_kemu;
+  work->obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( work->eff_kemu->fectrl );
   FLDEFF_TASK_SetPos( task, &head->pos );
   
-  work->obj_rnd =
-    GFL_G3D_RENDER_Create(
-        work->eff_kemuri->g3d_res_mdl, 0, work->eff_kemuri->g3d_res_mdl );
-  
-  work->obj_anm =
-    GFL_G3D_ANIME_Create(
-        work->obj_rnd, work->eff_kemuri->g3d_res_anm, 0 );
-  
-  work->obj = GFL_G3D_OBJECT_Create(
-      work->obj_rnd, &work->obj_anm, 1 );
-  GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
+  work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
+      work->obj_ctrl, work->eff_kemu->res_idx, 0, &head->pos );
 }
 
 //--------------------------------------------------------------
@@ -244,9 +238,7 @@ static void kemuriTask_Init( FLDEFF_TASK *task, void *wk )
 static void kemuriTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_KEMURI *work = wk;
-  GFL_G3D_ANIME_Delete( work->obj_anm );
-  GFL_G3D_OBJECT_Delete( work->obj );
-	GFL_G3D_RENDER_Delete( work->obj_rnd );
+  FLD_G3DOBJ_CTRL_DeleteObject( work->obj_ctrl, work->obj_idx );
 }
 
 //--------------------------------------------------------------
@@ -261,7 +253,8 @@ static void kemuriTask_Update( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_KEMURI *work = wk;
   
-  if( GFL_G3D_OBJECT_IncAnimeFrame(work->obj,0,FX32_ONE) == FALSE ){
+  if( FLD_G3DOBJ_CTRL_AnimeObject(
+        work->obj_ctrl,work->obj_idx,FX32_ONE) == FALSE ){
     FLDEFF_TASK_CallDelete( task );
   }
 }
@@ -276,13 +269,15 @@ static void kemuriTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void kemuriTask_Draw( FLDEFF_TASK *task, void *wk )
 {
+#if 0 //field_g3dobjを利用する
   VecFx32 pos;
   TASKWORK_KEMURI *work = wk;
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
-
+  
   MTX_Identity33( &status.rotate );
   FLDEFF_TASK_GetPos( task, &status.trans );
   GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+#endif
 }
 
 //--------------------------------------------------------------

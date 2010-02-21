@@ -441,7 +441,6 @@ BOOL FLD_G3DOBJ_CTRL_AnimeObject(
   return( ret );
 }
 
-
 //--------------------------------------------------------------
 /**
  * オブジェループアニメ
@@ -473,6 +472,38 @@ BOOL FLD_G3DOBJ_CTRL_LoopAnimeObject(
   }
   
   return( ret );
+}
+
+//--------------------------------------------------------------
+/**
+ * オブジェアニメフレーム指定
+ * @param ctrl  fld_g3dobj_ctrl
+ * @param idx 指定するobjインデックス
+ * @param anm_no 何番目のアニメにセットするか FLD_G3DOBJ_ANM_MAX=全部
+ * @param frame セットするフレーム
+ * @retval nothing
+ * @note アニメ指定が無い場合は何もしない。
+ */
+//--------------------------------------------------------------
+void FLD_G3DOBJ_CTRL_SetAnimeFrame(
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, int anm_no, fx32 frame )
+{
+  FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
+  GF_ASSERT( obj->useFlag != OBJ_USE_FALSE );
+  
+  if( obj->useFlag == OBJ_USE_TRUE ){
+    int max = ctrl->pResTbl[obj->resIdx].anm_count;
+    
+    if( anm_no == FLD_G3DOBJ_ANM_MAX ){
+      int i = 0;
+      while( i < max ){
+	      GFL_G3D_OBJECT_SetAnimeFrame( obj->pObj, i, (int*)&frame );
+        i++;
+      }
+    }else if( anm_no < max ){
+	    GFL_G3D_OBJECT_SetAnimeFrame( obj->pObj, anm_no, (int*)&frame );
+    }
+  }
 }
 
 //======================================================================
