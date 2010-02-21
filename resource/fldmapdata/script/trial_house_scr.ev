@@ -96,15 +96,17 @@ charange:
   DEFINE_LOCAL    list_ret
   DEFINE_LOCAL    party_sel
   DEFINE_LOCAL    regulation
+  DEFINE_LOCAL    download
   //「チャレンジするのね。ちょっとまって」
   _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_003)
   _BALLOONWIN_CLOSE()
 
   //ビーコンサーチ処理  @todo
 
-  //トレーナーデータのモードをセット  @todo
-//  TRIAL_HOUSE_SET_TRDATA_MODE(trdata_mode)
+  $download = FALSE    //@todo
 
+  //ダウンロードデータで遊ぶかをセットする
+  _TH_SET_DL_FLG( download )
   //シングル？ダブル?
   _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_006)
   //リスト作成
