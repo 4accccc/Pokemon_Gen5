@@ -92,10 +92,14 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/game_data.c \
         gamesystem/msgspeed.c \
         gamesystem/btl_setup.c \
-        map/dp3format.c \
         field/zonedata.c \
         field/areadata.c \
         field/location.c \
+        field/script_sys.c \
+        field/script_work.c \
+        field/scrcmd.c \
+        field/eventwork.c \
+        field/fldmmdl.c \
         field/field_location.c \
         field/field_status.c \
         field/event_gameover.c \
@@ -128,6 +132,7 @@ SRCS  +=    $(SOUNDSRC) \
         poke_tool/pokefoot.c \
         poke_tool/natsuki.c \
         poke_tool/pokepara_conv.c \
+		    poke_tool/status_rcv.c \
         pokeicon/pokeicon.c \
         waza_tool/waza_tool.c \
         print/printsys.c \
@@ -161,11 +166,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/actor_tool.c \
         system/bmp_oam.c \
         net_app/wifi_earth/wifi_country.c \
-        field/script_sys.c \
-        field/script_work.c \
-        field/scrcmd.c \
-        field/eventwork.c \
-        field/fldmmdl.c \
         test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \
         system/wazatype_icon.c \
@@ -200,7 +200,6 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/pm_weather.c \
         system/ica_anime.c \
         system/ica_camera.c \
-		    poke_tool/status_rcv.c \
         system/bgwinfrm.c \
         poke_tool/gauge_tool.c \
         system/gra_tool.c \
@@ -211,11 +210,7 @@ SRCS  +=    $(SOUNDSRC) \
 				system/tr2dgra.c \
         system/nsbtx_to_clwk.c \
         system/pms_draw.c \
-        field/field_encount_st.c \
-        field/move_pokemon.c \
-        field/field_skill.c \
 	      app/waza_oshie/waza_oshie.c \
-        field/scrcmd_network.c \
 				system/shortcut_data.c \
         app/bag/bag_param.c\
         app/codein/codein_param.c\
@@ -331,6 +326,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         musical/stage/musical_stage_sys.c \
         musical/musical_program.c \
 				net_app/mystery/mystery_createdata.c \
+        map/dp3format.c \
 				field/map_matrix.c \
         field/map_replace.c \
         field/warpdata.c \
@@ -345,6 +341,10 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_wifi_st.c \
         field/scrcmd_gym_init.c \
         field/scrcmd_sodateya.c \
+        field/field_encount_st.c \
+        field/move_pokemon.c \
+        field/field_skill.c \
+        field/scrcmd_network.c \
         field/event_cg_wireless.c \
         field/event_fieldmap_menu.c \
 				field/event_shortcut_menu.c \
