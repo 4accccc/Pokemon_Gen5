@@ -22,13 +22,13 @@ static const u8 TrayPokeDotColorPos[] = {
 };
 
 
-static u8 _getColorIndex(POKEMON_PASO_PARAM * ppp,HEAPID heapID,u8* buf,int i)
+static u8 _getColorIndex(POKEMON_PASO_PARAM * ppp,HEAPID heapID)
 {
 
 	POKEMON_PERSONAL_DATA * ppd;
 	BOOL fast;
   u32	mons;
-  u16	color=0;
+  u16	color=0xf;
 
   {
     fast = PPP_FastModeOn( ppp );
@@ -47,8 +47,6 @@ static u8 _getColorIndex(POKEMON_PASO_PARAM * ppp,HEAPID heapID,u8* buf,int i)
           color = POKEPER_COLOR_WHITE;
         }
       }
-      buf[i]=color;
-      OS_TPrintf("ÉJÉâÅ[%d \n",color);
     }
     PPP_FastModeOff( ppp, fast );
   }
@@ -73,7 +71,7 @@ static void PokemonTrade_TrayPokeDotPut( POKEMON_TRADE_WORK* pWork, u32 tray, u8
 
   for( i = 0; i < BOX_MAX_POS ; i++ ){
     ppp = BOXDAT_GetPokeDataAddress( pWork->pBox, tray, i );
-    buf[i] = _getColorIndex(ppp, pWork->heapID, buf, i);
+    buf[i] = _getColorIndex(ppp, pWork->heapID);
   }
 }
 
@@ -94,7 +92,7 @@ static void PokemonTrade_PartyPokeDotPut( POKEMON_TRADE_WORK* pWork, POKEPARTY* 
 
   for( i = 0; i < PokeParty_GetPokeCount(pParty) ; i++ ){
     ppp = PP_GetPPPPointer( PokeParty_GetMemberPointer( pParty , i ) );
-    buf[i] = _getColorIndex(ppp,pWork->heapID,buf,i);
+    buf[i] = _getColorIndex(ppp,pWork->heapID);
   }
 }
 
@@ -111,6 +109,8 @@ void PokemonTrade_SetMyPokeColor( POKEMON_TRADE_WORK* pWork  )
 {
   int i;
 
+  OS_TPrintf("%d    \n",pWork->BOX_TRAY_MAX);
+  
   for(i = 0; i < pWork->BOX_TRAY_MAX; i++){
     PokemonTrade_TrayPokeDotPut( pWork, i, &pWork->FriendPokemonCol[0][i*BOX_MAX_POS] );
   }

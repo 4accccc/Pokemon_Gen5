@@ -891,14 +891,21 @@ void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  )
 #if 1
 
 static const u16 pal_16plett[] = {
-  GX_RGB(0,0,0), GX_RGB(31,0,0),
-  GX_RGB(0,31,0), GX_RGB(0,0,31),
-  GX_RGB(31,31,0), GX_RGB(0,31,31),
-  GX_RGB(19,9,19), GX_RGB(15,0,0),
-  GX_RGB(0,15,0), GX_RGB(31,19,18),
+  GX_RGB(31,0,0),
+  GX_RGB(0,0,31),
+  GX_RGB(31,31,0),
+  GX_RGB(0,31,0),
+  GX_RGB(31,31,0),
+  GX_RGB(19,9,0),
+  GX_RGB(19,9,19),
+  GX_RGB(16,16,16),
+  GX_RGB(31,31,31),
+  GX_RGB(31,19,18),
+  
+  
   GX_RGB(31,31,31), GX_RGB(16,16,16), //
-  GX_RGB(19,9,0), GX_RGB(0,0,0),    //íÉçï
-  GX_RGB(31,0,0), GX_RGB(0,0,31),    //ê‘ê¬
+  GX_RGB(19,9,0), GX_RGB(0,0,0),    //
+  GX_RGB(31,0,0), GX_RGB(0,0,0), 
 };
 
 
@@ -991,17 +998,17 @@ static void _panelLoad(POKEMON_TRADE_WORK *pWork,int num)
   {
     int i,index;
     for(i=0;i < num;i++){
-      GFL_STD_MemFill(tempBuff, 0x0, myTexSize);
+      GFL_STD_MemFill(tempBuff, 0xf, myTexSize);
 
       if(i==BOX_MAX_TRAY){
         for( index=0;index<6;index++){
-          _printColorSquear(tempBuff, num%2, num/2, pWork->FriendPokemonCol[1][num*BOX_MAX_POS+index]);
+          _printColorSquear(tempBuff, num%2, num/2, pWork->FriendPokemonCol[1][i*BOX_MAX_POS+index]);
         }
       }
       else{
         for( index=0;index<30;index++){
           _printColorSquear(tempBuff, num%6, num/6, pWork->FriendPokemonCol[1][num*BOX_MAX_POS+index]);
-          OS_TPrintf("color %d\n",pWork->FriendPokemonCol[1][num*BOX_MAX_POS+index]);
+          OS_TPrintf("color %d\n",pWork->FriendPokemonCol[1][i*BOX_MAX_POS+index]);
         }
       }
         

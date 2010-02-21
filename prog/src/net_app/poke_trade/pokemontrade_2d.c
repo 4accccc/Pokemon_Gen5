@@ -1723,8 +1723,8 @@ void IRC_POKETRADE_ReleaseMainObj(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->cellRes[CHAR_SCROLLBAR_UP]!=0){
     GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_SCROLLBAR_UP] );
-    GFL_CLGRP_CGR_Release(pWork->cellRes[PAL_SCROLLBAR_UP] );
-    GFL_CLGRP_CGR_Release(pWork->cellRes[ANM_SCROLLBAR_UP] );
+    GFL_CLGRP_PLTT_Release(pWork->cellRes[PAL_SCROLLBAR_UP] );
+    GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_SCROLLBAR_UP] );
     pWork->cellRes[CHAR_SCROLLBAR_UP] = 0;
     pWork->cellRes[PAL_SCROLLBAR_UP] = 0;
     pWork->cellRes[ANM_SCROLLBAR_UP] = 0;
@@ -2810,8 +2810,10 @@ void POKEMONTRADE_RemoveEruptedGTS(POKEMON_TRADE_WORK* pWork,int index)
 {
   if(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2]!=0){
     GFL_CLACT_WK_Remove(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2] );
-    GFL_CLACT_WK_Remove(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2] );
     pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2]=0;
+  }
+  if(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2]!=0){
+    GFL_CLACT_WK_Remove(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2] );
     pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2]=0;
   }
   

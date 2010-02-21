@@ -695,8 +695,8 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
 																				 GFL_BG_FRAME2_M, 0,
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
 																				 pWork->heapID);
-  POKE_GTS_DeleteEruptedIcon(pWork);
   POKE_GTS_DeleteFaceIcon(pWork);
+  POKE_GTS_DeleteEruptedIcon(pWork);
 
 
   GFL_ARC_CloseDataHandle( p_handle );
