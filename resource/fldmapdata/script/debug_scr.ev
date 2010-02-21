@@ -22,6 +22,7 @@
 
   .include "c08r0401_def.h"
   .include "t01.h"
+  .include "hiden_def.h"
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -74,9 +75,12 @@ EVENT_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-EVENT_START ev_debug_tamada
+//EVENT_START ev_debug_tamada
 {
-  _MAP_CHANGE( ZONE_ID_C03R0301, 7, 7, DIR_LEFT )
+ev_debug_tamada:
+  _SET_TEMOTI_WAZA( 0, 0, WAZANO_DAIBINGU )
+  _CHG_COMMON_SCR SCRID_HIDEN_DIVING
+  //_MAP_CHANGE( ZONE_ID_C03R0301, 7, 7, DIR_LEFT )
   //_TRAINER_BTL_SET( TRID_VETERANW_03, 0 )
   //_TRAINER_MULTI_BTL_SET( TRID_SUPPORT_01, TRID_RIVAL_01, TRID_MINI_01 )
   //_TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -135,7 +139,7 @@ EVENT_START ev_debug_masafumi
 		ELSIF $SCWK_TEMP1 == 1 THEN
 			//育て屋じいさんを表示＆タマゴイベントを発生
 			_FLAG_RESET( FV_R03_SODATEYA_01 )
-			$WK_OTHER_R03_EGG = 1
+			$WK_OTHER_DISCOVER_EGG = 1
 			
 			//研究所の博士を表示
 			_FLAG_RESET( FV_T01R0401_HAKASE1 )
