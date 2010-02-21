@@ -207,6 +207,7 @@ static const BtlEventHandlerTable*  ADD_Makituku( u32* numElems );
 static void handler_Makituku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Uzusio( u32* numElems );
 static void handler_Uzusio_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Uzusio_CheckHide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_IkariNoMaeba( u32* numElems );
 static void handler_IkariNoMaeba( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_RyuuNoIkari( u32* numElems );
@@ -2087,12 +2088,24 @@ static void handler_Makituku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_Uzusio( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADD_SICK, handler_Makituku },    // 追加効果による状態異常チェックハンドラ = まきつくと一緒
-    { BTL_EVENT_WAZA_DMG_PROC2, handler_Uzusio_Dmg },
+    { BTL_EVENT_ADD_SICK,        handler_Makituku           }, // 追加効果による状態異常チェックハンドラ = まきつくと一緒
+    { BTL_EVENT_CHECK_POKE_HIDE, handler_Uzusio_CheckHide   }, // 消えポケヒットチェック
+    { BTL_EVENT_WAZA_DMG_PROC2,  handler_Uzusio_Dmg         }, // ダメージ計算ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// 消えポケヒットチェックハンドラ
+static void handler_Uzusio_CheckHide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKE_HIDE) == BPP_CONTFLG_DIVING ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_AVOID_FLAG, FALSE );
+    }
+  }
+}
+// ダメージ計算ハンドラ
 static void handler_Uzusio_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -4209,6 +4222,7 @@ static const BtlEventHandlerTable*  ADD_Kaminari( u32* numElems )
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// 消えポケヒットチェックハンドラ
 static void handler_Kaminari_checkHide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -4218,6 +4232,7 @@ static void handler_Kaminari_checkHide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     }
   }
 }
+// ヒット確率計算スキップハンドラ
 static void handler_Kaminari_excuseHitCalc( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -4227,6 +4242,7 @@ static void handler_Kaminari_excuseHitCalc( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
     }
   }
 }
+// 命中率計算ハンドラ
 static void handler_Kaminari_hitRatio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
