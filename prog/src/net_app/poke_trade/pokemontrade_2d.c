@@ -1694,7 +1694,7 @@ void IRC_POKETRADE_InitBoxCursor(POKEMON_TRADE_WORK* pWork)
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
     pWork->cellRes[CHAR_SCROLLBAR] =
-      GFL_CLGRP_CGR_Register( p_handle , NARC_trade_wb_trade_obj01_NCGR ,
+      GFL_CLGRP_CGR_Register( p_handle , NARC_trade_wb_trade_obj02_NCGR ,
                               FALSE , CLSYS_DRAW_SUB , pWork->heapID );
     pWork->cellRes[PAL_SCROLLBAR] =
       GFL_CLGRP_PLTT_RegisterEx(
@@ -1702,7 +1702,7 @@ void IRC_POKETRADE_InitBoxCursor(POKEMON_TRADE_WORK* pWork)
         _OBJPLT_BOX_OFFSET,0, _OBJPLT_BOX, pWork->heapID  );
     pWork->cellRes[ANM_SCROLLBAR] =
       GFL_CLGRP_CELLANIM_Register(
-        p_handle , NARC_trade_wb_trade_obj01_NCER, NARC_trade_wb_trade_obj01_NANR , pWork->heapID  );
+        p_handle , NARC_trade_wb_trade_obj02_NCER, NARC_trade_wb_trade_obj02_NANR , pWork->heapID  );
 
 
 
@@ -1727,7 +1727,7 @@ void IRC_POKETRADE_InitBoxCursor(POKEMON_TRADE_WORK* pWork)
     cellInitData.pos_y = CONTROL_PANEL_Y;
     cellInitData.anmseq = 2;
     cellInitData.softpri = _CLACT_SOFTPRI_SCROLL_BAR;
-    cellInitData.bgpri = 1;
+    cellInitData.bgpri = 0;
     pWork->curIcon[CELL_CUR_SCROLLBAR] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                              pWork->cellRes[CHAR_SCROLLBAR],
                                              pWork->cellRes[PAL_SCROLLBAR],
@@ -2721,7 +2721,7 @@ void POKEMONTRADE_StartEruptedGTS(POKEMON_TRADE_WORK* pWork, int faceNo, int ind
 
   cellInitData.pos_x = 8 + index*(216);
   cellInitData.pos_y = 192-24-8;
-  cellInitData.anmseq = 23;
+  cellInitData.anmseq = 4;
   cellInitData.softpri = 1;
   cellInitData.bgpri = 0;
 
@@ -2737,7 +2737,7 @@ void POKEMONTRADE_StartEruptedGTS(POKEMON_TRADE_WORK* pWork, int faceNo, int ind
   }
   if(!pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2]){
     cellInitData.softpri = 0;
-    cellInitData.anmseq = 19+faceNo;
+    cellInitData.anmseq = faceNo;
     pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2] =
       GFL_CLACT_WK_Create( pWork->cellUnit ,
                            pWork->cellRes[CHAR_SCROLLBAR_UP],
@@ -2748,7 +2748,7 @@ void POKEMONTRADE_StartEruptedGTS(POKEMON_TRADE_WORK* pWork, int faceNo, int ind
     GFL_CLACT_WK_SetDrawEnable( pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2], TRUE );
   }
   else{
-    GFL_CLACT_WK_SetAnmSeq(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2] , 19+faceNo);
+    GFL_CLACT_WK_SetAnmSeq(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2] , faceNo);
   }
 }
 

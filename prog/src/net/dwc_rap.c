@@ -13,6 +13,7 @@
 #include "sc/dwc_sc.h"
 #include "gdb/dwc_gdb.h"
 #include "net/network_define.h"
+#include "savedata/wifilist.h"
 
 #if GFL_NET_WIFI
 
@@ -39,7 +40,7 @@
 
 
 // フレンドリストのサイズ
-#define FRIENDLIST_MAXSIZE 32
+#define FRIENDLIST_MAXSIZE (WIFILIST_FRIEND_MAX)
 
 // １フレームに何人分のデータを更新するか。
 #define FRIENDINFO_UPDATA_PERFRAME (1)

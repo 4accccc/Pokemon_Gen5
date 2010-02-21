@@ -68,10 +68,12 @@ struct _WIFI_STATUS{
   u8 area;             //  地域                        23
   u8 shooter:1;    //シューター有り無し             24
   u8 VChatStatus:1;       // VChatの状態 
-  u8 sex:2;
+  u8 sex:2;      //性別
   u8 dummybit:4;
-  u8 dummy2;   //上位バージョン用             25
+  u8 callcounter;      //呼びかける際のインクリメント数 25
   u8 dummy3;   //上位バージョン用              26
+  u8 dummy4;   //上位バージョン用              27
+  u8 dummy5;   //上位バージョン用              28
 };
 
 
@@ -106,6 +108,7 @@ static inline void WIFI_STATUS_SetPMVersion(WIFI_STATUS* pStatus,u8 pm_version){
 static inline void WIFI_STATUS_SetPMLang(WIFI_STATUS* pStatus,u8 pm_lang){ pStatus->pm_lang = pm_lang; }
 static inline void WIFI_STATUS_SetSex(WIFI_STATUS* pStatus,u8 sex){ pStatus->sex = sex; }
 static inline u8 WIFI_STATUS_GetSex(WIFI_STATUS* pStatus){ return pStatus->sex; }
+extern u8 WIFI_STATUS_GetCallCounter(WIFI_STATUS* pStatus);
 
 
 //extern void WIFI_STATUS_SetTrainerView(WIFI_STATUS* pStatus,u8 trainer_view);

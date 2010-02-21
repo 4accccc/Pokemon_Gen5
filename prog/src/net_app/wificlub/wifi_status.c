@@ -139,6 +139,7 @@ BOOL WIFI_STATUS_IsVChatMac(const WIFI_STATUS* pMyStatus, const WIFI_STATUS* pFr
 
 void WIFI_STATUS_SetVChatMac(WIFI_STATUS* pStatus, const WIFI_STATUS* pFriendStatus)
 {
+  pStatus->callcounter++;  //次の接続である事を証明する為のカウンタを自動インクリメント
   GFL_STD_MemCopy(pFriendStatus->MyMac,pStatus->VChatMac, 6);
 }
 
@@ -182,3 +183,16 @@ void WIFI_STATUS_SetMyArea(WIFI_STATUS* pStatus,u8 no)
 {
 	pStatus->area = no;
 }
+
+//----------------------------------------------------------
+/**
+ * @brief	自分のコールカウンターを取得
+ * @param	WIFI_STATUS
+ * @return	カウンタ数
+ */
+//----------------------------------------------------------
+u8 WIFI_STATUS_GetCallCounter(WIFI_STATUS* pStatus)
+{
+	return pStatus->callcounter;
+}
+

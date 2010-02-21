@@ -2915,7 +2915,8 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
     MCVSys_Init( wk, p_handle, HEAPID_WIFIP2PMATCH );
   }
 
-
+  //MACアドレスをリセットしておく
+  WIFI_STATUS_ResetVChatMac(wk->pMatch);
   
   // 今の状態を書き込む
   MCVSys_ReWrite( wk, HEAPID_WIFIP2PMATCH );
@@ -3245,12 +3246,17 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     for(j = 0; j < WIFIP2PMATCH_MEMBER_MAX ; j++){
       int n = GFUser_GetPublicRand0(WIFIP2PMATCH_MEMBER_MAX);  //いつも若い順になら無いように乱数検査
       if(WIFI_STATUS_IsVChatMac(wk->pMatch, WifiFriendMatchStatusGet( n ))){
-        //自分が呼び出されているので、接続開始 状態を取得
-        status = _WifiMyStatusGet( wk, WifiFriendMatchStatusGet( n ) );
-        gamemode = _WifiMyGameModeGet( wk, WifiFriendMatchStatusGet( n ) );
-        wk->friendNo = n + 1;
-        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALLGAME_INIT);
-        return seq;
+        u8 callcount = WIFI_STATUS_GetCallCounter(WifiFriendMatchStatusGet( n ));
+        OS_TPrintf("呼び出し %d %d\n",callcount,wk->pParentWork->matchno[n] );
+        if(callcount != wk->pParentWork->matchno[n] ){
+          wk->pParentWork->matchno[n] = callcount;   //前回マッチングした時のno
+          //自分が呼び出されているので、接続開始 状態を取得
+          status = _WifiMyStatusGet( wk, WifiFriendMatchStatusGet( n ) );
+          gamemode = _WifiMyGameModeGet( wk, WifiFriendMatchStatusGet( n ) );
+          wk->friendNo = n + 1;
+          _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALLGAME_INIT);
+          return seq;
+        }
       }
     }
   }
