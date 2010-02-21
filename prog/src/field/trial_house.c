@@ -109,7 +109,7 @@ void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const u32 inPlayMode )
  * @brief	対戦相手の抽選
  * @param	ptr      TRIAL_HOUSE_WORK_PTR
  * @param inBtlCouont   対戦回数　0～4（最大五戦）
- * @retval		none
+ * @retval	obj_id      OBJ見た目     
 */
 //--------------------------------------------------------------
 int TRIAL_HOUSE_MakeTrainer( TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount )
@@ -146,24 +146,17 @@ int TRIAL_HOUSE_MakeTrainer( TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount )
   }
   //トレーナー抽選
   tr_no = base + GFUser_GetPublicRand(band);
+  NOZOMU_Printf("entry_tr_no = %d\n",tr_no);
 
   //データをトライアルハウスワークにセット
-  {
-    BOOL ret;
-    ret = FBI_TOOL_MakeRomTrainerData(
-        &ptr->TrData,
-        tr_no, ptr->MemberNum,
-        NULL,NULL,NULL, GFL_HEAP_LOWID(ptr->HeapID));
-
-    if (!ret)
-    {
-      GF_ASSERT(0);
-    }
-  }
+  FBI_TOOL_MakeRomTrainerData(
+      &ptr->TrData,
+      tr_no, ptr->MemberNum,
+      NULL,NULL,NULL, GFL_HEAP_LOWID(ptr->HeapID));
 
   //見た目を取得して返す
   obj_id = TRIAL_HOUSE_GetTrainerOBJCode( ptr );
-  
+  NOZOMU_Printf("obj_id = %d\n",obj_id); 
   return obj_id;
 }
 

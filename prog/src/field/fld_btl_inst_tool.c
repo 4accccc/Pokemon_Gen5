@@ -31,6 +31,10 @@
 #include "item/itemsym.h"
 #include "waza_tool/wazano_def.h"
 
+#ifdef PM_DEBUG
+static BOOL check_TrainerType(u8 tr_type);
+#endif  //PM_DEBUG
+
 //--------------------------------------------------------------
 /// ポケモンリスト選択イベント
 //--------------------------------------------------------------
@@ -61,7 +65,7 @@ static GMEVENT_RESULT PokeSelEvt( GMEVENT *event, int *seq, void *wk );
  * @param inReg         レギュレーション
  * @param pp            対象ポケパーティポインタ
  * @param outSelNum     選択リスト番号配列へのポインタ
- * @param outResult     リスト結果
+ * @param outResult     リスト結果選択された位置
  * @param outRetMode    リスト戻りタイプ
  * @param outParty      ＮＵＬＬでない場合、結果を格納するポケパーティ
  *
@@ -70,7 +74,8 @@ static GMEVENT_RESULT PokeSelEvt( GMEVENT *event, int *seq, void *wk );
 //--------------------------------------------------------------
 GMEVENT *FBI_TOOL_CreatePokeListEvt(
     GAMESYS_WORK *gsys,
-    const PL_LIST_TYPE inType, const int inReg, POKEPARTY *inTargetParty,
+    const PL_LIST_TYPE inType, const PL_MODE_TYPE inListMode, const int inReg,
+    POKEPARTY *inTargetParty,
     u8 *outSelNoAry, PL_SELECT_POS *outResult, PL_RETURN_TYPE *outRetMode, POKEPARTY *outParty )
 {
   GMEVENT *event;
@@ -96,6 +101,7 @@ GMEVENT *FBI_TOOL_CreatePokeListEvt(
     list->pp = inTargetParty;
     list->reg = &work->Regulation;
     list->type = inType;
+    list->mode = inListMode;
   }
   {
     PSTATUS_DATA *st = &work->StatusData;
@@ -157,7 +163,9 @@ static GMEVENT_RESULT PokeSelEvt( GMEVENT *event, int *seq, void *wk )
     *work->ReturnMode = work->ListData.ret_mode;
 
     //ポケパーティにデータセット
-    if (work->DstParty != NULL){
+    if ( (*work->ResultSelect != PL_SEL_POS_EXIT) &&
+         (*work->ResultSelect != PL_SEL_POS_EXIT2) && 
+         (work->DstParty != NULL) ){
       int i;
       int num = PokeParty_GetPokeCountMax( work->DstParty );
       NOZOMU_Printf("party num %d\n", num);
@@ -956,7 +964,9 @@ static BSUBWAY_TRAINER_ROM_DATA * AllocTrainerRomData(
   
   //トレーナーデータをセット
   tr_data->bt_trd.tr_type=trd->tr_type;
-#if 0  
+
+#ifdef PM_DEBUG  
+#if 1 
   //GSデータからの移植による処理
   //wbでは存在していないタイプを書き換え
   #if 1
@@ -965,6 +975,7 @@ static BSUBWAY_TRAINER_ROM_DATA * AllocTrainerRomData(
   }
   #endif
 #endif        //@todo 果たしてＷＢで必要な処理なのか？  
+#endif  //PM_DEBUG  
   name = GFL_MSG_CreateString( msgdata, tr_no );
   GFL_STR_GetStringCode( name,
       &tr_data->bt_trd.name[0], BUFLEN_PERSON_NAME );
@@ -1186,4 +1197,25 @@ u16 FBI_TOOL_GetTrainerOBJCode( u32 inTrType )
   return BOY1;
 }
 
+#ifdef PM_DEBUG
+//--------------------------------------------------------------
+/**
+ * @brief  トレーナータイプが対応しているか
+ * @param tr_type トレーナータイプ
+ * @retval BOOL TRUE=対応
+ */
+//--------------------------------------------------------------
+static BOOL check_TrainerType(u8 tr_type)
+{
+  int i;
+
+  for( i = 0;i < TRTYPE2OBJCODE_MAX; i++ ){
+    if( btower_trtype2objcode[i][0] == tr_type ){
+      return( TRUE );
+    }
+  }
+  return( FALSE );
+}
+
+#endif  //PM_DEBUG
 

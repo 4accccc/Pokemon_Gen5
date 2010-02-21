@@ -169,7 +169,6 @@ VMCMD_RESULT EvCmdTH_DispBeforeMsg( VMHANDLE *core, void *wk )
 
 }
 
-
 //--------------------------------------------------------------
 /**
  * トライアルハウス 戦闘開始
@@ -194,5 +193,47 @@ VMCMD_RESULT EvCmdTH_CallBattle( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 
 }
+
+//--------------------------------------------------------------
+/**
+ * トライアルハウス ランクセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTH_SetRank( VMHANDLE *core, void *wk )
+{
+  u16 rank;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+
+  rank = SCRCMD_GetVMWorkValue( core, work );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * トライアルハウス ランク取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTH_GetRank( VMHANDLE *core, void *wk )
+{
+  u16 *rank;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+
+  rank = SCRCMD_GetVMWork( core, work );
+
+  rank = 0;//@todo
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 

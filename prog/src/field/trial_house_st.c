@@ -28,10 +28,9 @@ typedef struct
   PLIST_DATA*      PokeListlData;  // ポケモンリスト
   u16*            RetDecide;  // 選択したかのチェック
   PL_LIST_TYPE ListType;
-  PL_MODE_TYPE ModeType;
   int Reg;
   POKEPARTY* Party;
-  PL_SELECT_POS Select;
+  PL_SELECT_POS SelectPos;
   PL_RETURN_TYPE RetType;
   u8 SelAry[6];
   u8 dummy[2];
@@ -64,8 +63,6 @@ GMEVENT *TRIAL_HOUSE_CreatePokeSelEvt(  GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PT
 	work->gsys = gsys;
 	work->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   work->RetDecide = outRet;
-  work->ModeType = PL_MODE_BATTLE;
-
   work->HouseWorkPtr = ptr;
 
   if ( (inRegType == REG_SUBWAY_SINGLE)||(inRegType == REG_SUBWAY_DOUBLE) )
@@ -110,8 +107,8 @@ static GMEVENT_RESULT PokeSelEvt(GMEVENT * event, int * seq, void * work)
       GMEVENT* call_event;
       call_event = FBI_TOOL_CreatePokeListEvt(
           gsys,
-          evt_wk->ListType, evt_wk->Reg, evt_wk->Party, evt_wk->SelAry,
-          &evt_wk->Select, &evt_wk->RetType, evt_wk->HouseWorkPtr->Party );
+          evt_wk->ListType, PL_MODE_BATTLE_EXAMINATION, evt_wk->Reg, evt_wk->Party, evt_wk->SelAry,
+          &evt_wk->SelectPos, &evt_wk->RetType, evt_wk->HouseWorkPtr->Party );
       GMEVENT_CallEvent(event, call_event);
     }
     *seq = 1;
@@ -119,8 +116,8 @@ static GMEVENT_RESULT PokeSelEvt(GMEVENT * event, int * seq, void * work)
   case 1:
     //結果の分岐
     if( evt_wk->RetType != PL_RET_NORMAL ||
-      evt_wk->Select == PL_SEL_POS_EXIT ||
-      evt_wk->Select == PL_SEL_POS_EXIT2 )
+      evt_wk->SelectPos == PL_SEL_POS_EXIT ||
+      evt_wk->SelectPos == PL_SEL_POS_EXIT2 )
     {
       *(evt_wk->RetDecide) = FALSE;          //キャンセル
     }
