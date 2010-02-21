@@ -1206,59 +1206,53 @@ EVENT_START		 ev_bg_c02gym0201_category_19
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
-	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_08)
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-		
+		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_08)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+			
 		IF $WK_SCENE_C02GYM0201 == 6 THEN
 
-			//当たり判定を作っていた、透明OBJが移動
-			
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe )
-    		_OBJ_ANIME_WAIT() 
-    		
-    	    _PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
-    		_LAST_KEYWAIT()
+	    	_OBJ_ANIME_WAIT() 
+	    		
+	        _PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
 			_MSGWIN_CLOSE()
-			
+				
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_switch_03)
 			_MSGWIN_CLOSE()
-			
+				
 			//ギミック発動。本棚が横に移動する
-			
+				
 			//本棚が動く音の開始
 			_SE_PLAY( SEQ_SE_FLD_36)
-			
+				
 			//本棚が動くアニメーション
 			_GYM_NORMAL_MOVE_WALL(0)
 			_SE_STOP()	
-	
+			
+			//当たり判定を作っていた、透明OBJが移動
 			_OBJ_ANIME( C02GYM0201_STOPPER_01, anm_book_open )
 			_OBJ_ANIME_WAIT()
 			
+			//本のメッセージも移動
 			_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_17, 14, 1, 10 )
 			_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_18, 15, 0, 10 )
 			_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_19, 16, 0, 10 )
 			_SXY_MOVE_BG_EVENT( BG_C02GYM0201_CATEGORY_20, 17, 0, 10 )
-			
+				
 			//かいだんが　　あらわれた
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_switch_04)
 			_LAST_KEYWAIT()
-    		_MSGWIN_CLOSE()
-			
+	    	_MSGWIN_CLOSE()
+				
 			//本棚が1度しか動かなくする
 			$WK_SCENE_C02GYM0201 = 7
 		ELSE
-    		
-    		_MSGWIN_CLOSE()
-			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_08)
-			_LAST_KEYWAIT()
-    		_MSGWIN_CLOSE()
-    		
-    	    _PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
-    		_LAST_KEYWAIT()
+	    		
+	    	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
+	    	_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
-    		
+	    		
 		ENDIF
 		
 	ENDIF

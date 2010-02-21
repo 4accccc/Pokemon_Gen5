@@ -10,14 +10,12 @@
 #ifndef ZONE_R08_EVC_H
 #define ZONE_R08_EVC_H
 
-#define R08_BACKPACKERM_01                 0
-#define R08_CAMERAMAN_01                   1
-#define R08_AMBRELLA_01                    2
-#define TR_FISHING_03                      3
-#define TR_RANGERM_05                      4
-#define TR_PARASOL_04                      5
-#define TR_PARASOL_03                      6
-#define TR_RANGERW_05                      7
+#define R08_AMBRELLA_01                    0
+#define TR_FISHING_03                      1
+#define TR_RANGERM_05                      2
+#define TR_PARASOL_04                      3
+#define TR_PARASOL_03                      4
+#define TR_RANGERW_05                      5
 
 #endif //ZONE_R08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

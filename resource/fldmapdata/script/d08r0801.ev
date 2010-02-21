@@ -171,6 +171,21 @@ EVENT_START    ev_pos_d08r0801_hakai_01
 	_OBJ_ANIME(D08R0801_HAKAIM_03,anm_hakaim_03_idou_01)
 	_OBJ_ANIME(D08R0801_HAKAIW_01,anm_hakaiw_01_idou_01)
 	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(5)
+	
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(5)
+	
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(5)
+	
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+	_OBJ_ANIME_WAIT()
 
 
 	//プラズマだん　いがいは
@@ -188,7 +203,8 @@ EVENT_START    ev_pos_d08r0801_hakai_01
 	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim1_01,D08R0801_HAKAIM_01)
 	_BALLOONWIN_CLOSE()
 	
-//	_CALL		ev_boss_btl
+	
+	_CALL		ev_hakaim1_24_btl
 	
 	//く…　こんな　こどもに
 	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim1_03,D08R0801_HAKAIM_01)
@@ -205,7 +221,7 @@ EVENT_START    ev_pos_d08r0801_hakai_01
 	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim2_01,D08R0801_HAKAIM_02)
 	_BALLOONWIN_CLOSE()
 	
-//	_CALL		ev_boss_btl
+	_CALL		ev_hakaim1_25_btl
 	
 	//わたしは　とめられた
 	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim2_02,D08R0801_HAKAIM_02)
@@ -222,7 +238,7 @@ EVENT_START    ev_pos_d08r0801_hakai_01
 	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaiw1_01,D08R0801_HAKAIW_01)
 	_BALLOONWIN_CLOSE()
 	
-//	_CALL		ev_boss_btl
+	_CALL		ev_hakaiw1_10_btl
 	
 	//わたしたちの　おうが
 	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaiw1_02,D08R0801_HAKAIW_01)
@@ -240,16 +256,19 @@ EVENT_START    ev_pos_d08r0801_hakai_01
 	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim3_01,D08R0801_HAKAIM_03)
 	_BALLOONWIN_CLOSE()
 	
-//	_CALL		ev_boss_btl
+	_CALL		ev_hakaim1_26_btl
 	
 	//なんてヤツ……
 	_BALLOONWIN_OBJMSG(msg_d08r0801_hakaim3_02,D08R0801_HAKAIM_03)
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団が移動して、道を空ける
-	_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_02)
-	_OBJ_ANIME(D08R0801_HAKAIM_02,anm_hakaim_02_idou_02)
 	_OBJ_ANIME(D08R0801_HAKAIM_03,anm_hakaim_03_idou_02)
+	_TIME_WAIT(15)
+	_OBJ_ANIME(D08R0801_HAKAIM_01,anm_hakaim_01_idou_02)
+	_TIME_WAIT(10)
+	_OBJ_ANIME(D08R0801_HAKAIM_02,anm_hakaim_02_idou_02)
+	_TIME_WAIT(5)
 	_OBJ_ANIME(D08R0801_HAKAIW_01,anm_hakaiw_01_idou_02)
 	_OBJ_ANIME_WAIT()
 	
@@ -259,12 +278,13 @@ EVENT_START    ev_pos_d08r0801_hakai_01
 	
 	//========================================//
 
-/*	
+EVENT_END
+
 //プラズマ団男1との戦闘
-ev_boss_btl:
+ev_hakaim1_24_btl:
 
 //戦闘処理
-		_TRAINER_BTL_SET ( TRID_BOSS_02, 0 )
+		_TRAINER_BTL_SET ( TRID_HAKAIM1_24, 0 )
 		//敗戦チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -273,11 +293,13 @@ ev_boss_btl:
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF	
 _RET
+EVENT_END
+
 //プラズマ団男2との戦闘
-ev_boss_btl:
+ev_hakaim1_25_btl:
 
 //戦闘処理
-		_TRAINER_BTL_SET ( TRID_BOSS_02, 0 )
+		_TRAINER_BTL_SET ( TRID_HAKAIM1_25, 0 )
 		//敗戦チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -286,11 +308,13 @@ ev_boss_btl:
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF	
 _RET
+EVENT_END
+
 //プラズマ団男3との戦闘
-ev_boss_btl:
+ev_hakaim1_26_btl:
 
 //戦闘処理
-		_TRAINER_BTL_SET ( TRID_BOSS_02, 0 )
+		_TRAINER_BTL_SET ( TRID_HAKAIM1_26, 0 )
 		//敗戦チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -299,11 +323,13 @@ ev_boss_btl:
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF	
 _RET
+EVENT_END
+
 //プラズマ団女1との戦闘
-ev_boss_btl:
+ev_hakaiw1_10_btl:
 
 //戦闘処理
-		_TRAINER_BTL_SET ( TRID_BOSS_02, 0 )
+		_TRAINER_BTL_SET ( TRID_HAKAIW1_10, 0 )
 		//敗戦チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -312,7 +338,6 @@ ev_boss_btl:
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF	
 _RET
-*/
 EVENT_END
 
 //--------------------------------------------------------------------

@@ -11,6 +11,8 @@
 #define ZONE_R08R0201_EVC_H
 
 #define R08R0201_BADMAN_01                 0
+#define R08R0201_ASSISTANTM_01             1
+#define R08R0201_BACKPACKERM_01            2
 
 #endif //ZONE_R08R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r08r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

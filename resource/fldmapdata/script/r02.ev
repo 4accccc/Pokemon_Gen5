@@ -119,8 +119,9 @@ EVENT_START   ev_pos_r02_mama_01
 	
 	//コール音再生
 	_SE_PLAY( SEQ_SE_SYS_35 )
-	//間を作る為のウェイト
-	_TIME_WAIT  ( 30 )
+	_SE_WAIT()
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_bikkuri_mark)
 	_OBJ_ANIME_WAIT()

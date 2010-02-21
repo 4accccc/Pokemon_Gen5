@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/02 21:52:35
+#save date:2010/02/15 21:23:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09r0201.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ R09R0201_WAITRESS_01
 #OBJ CODE Number
 WAITRESS
 #MOVE CODE Number
-MV_LEFT
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 48 -72
+-136 0 24
 #event number: 1
 #type
 1
