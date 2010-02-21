@@ -198,6 +198,30 @@ VMCMD_RESULT EvCmdTH_CallBattle( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * ダウンロードデータで遊ぶかどうかのフラグをセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTH_SetDLFlg( VMHANDLE *core, void *wk )
+{
+  u16 dl;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
+
+  dl = SCRCMD_GetVMWorkValue( core, work );
+
+  TRIAL_HOUSE_SetDLFlg(*ptr, dl);
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//--------------------------------------------------------------
+/**
  * トライアルハウス ランクセット
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
@@ -246,6 +270,7 @@ VMCMD_RESULT EvCmdTH_GetRank( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
 
 
 

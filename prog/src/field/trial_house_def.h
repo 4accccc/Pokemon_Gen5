@@ -19,4 +19,5 @@ typedef struct TRIAL_HOUSE_WORK_tag
   int MemberNum;        //シングル3　ダブル4
   POKEPARTY *Party;
   BSWAY_PLAYMODE PlayMode;
+  BOOL DownLoad;
 }TRIAL_HOUSE_WORK;

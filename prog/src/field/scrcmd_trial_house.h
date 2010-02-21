@@ -17,5 +17,6 @@ extern VMCMD_RESULT EvCmdTH_SelectPoke( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_SetTrainer( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_DispBeforeMsg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_CallBattle( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdTH_SetDLFlg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_SetRank( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_GetRank( VMHANDLE *core, void *wk );

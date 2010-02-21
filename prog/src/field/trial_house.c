@@ -21,6 +21,9 @@
 
 //#include "pl_boat_setup.h"
 
+static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
+static void SetDownLoadData(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
+static u16 GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr );
 
 //--------------------------------------------------------------
 /**
@@ -103,6 +106,18 @@ void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const u32 inPlayMode )
   PokeParty_Init( ptr->Party, ptr->MemberNum );
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief	トライアルハウス プレイモードのセット
+ * @param	ptr      TRIAL_HOUSE_WORK_PTR
+ * @param inDLFlg   ダウンロードデータで遊ぶか？　　TRUE:ダウンロードデータ　FALSE:ROMデータ
+ * @retval		none
+*/
+//--------------------------------------------------------------
+void TRIAL_HOUSE_SetDLFlg( TRIAL_HOUSE_WORK_PTR ptr, const BOOL inDLFlg )
+{
+  ptr->DownLoad = inDLFlg;
+}
 
 //--------------------------------------------------------------
 /**
@@ -115,8 +130,29 @@ void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const u32 inPlayMode )
 int TRIAL_HOUSE_MakeTrainer( TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount )
 {
   int obj_id;
+
+  if ( ptr->DownLoad ) SetDownLoadData(ptr, inBtlCount);
+  else MakeTrainer(ptr, inBtlCount);
+
+  //見た目を取得して返す
+  obj_id = GetTrainerOBJCode( ptr );
+  NOZOMU_Printf("obj_id = %d\n",obj_id); 
+  return obj_id;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	対戦相手の抽選(ＲＯＭデータ)
+ * @param	ptr      TRIAL_HOUSE_WORK_PTR
+ * @param inBtlCouont   対戦回数　0～4（最大五戦）
+ * @retval	none  
+*/
+//--------------------------------------------------------------
+static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
+{
+  int obj_id;
   int tr_no;
-  int base,band;
+  int base, band;
 
   switch(inBtlCount){
   case 0:
@@ -153,12 +189,61 @@ int TRIAL_HOUSE_MakeTrainer( TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount )
       &ptr->TrData,
       tr_no, ptr->MemberNum,
       NULL,NULL,NULL, GFL_HEAP_LOWID(ptr->HeapID));
-
-  //見た目を取得して返す
-  obj_id = TRIAL_HOUSE_GetTrainerOBJCode( ptr );
-  NOZOMU_Printf("obj_id = %d\n",obj_id); 
-  return obj_id;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief	対戦相手のセット(ダウンロードデータ)
+ * @param	ptr      TRIAL_HOUSE_WORK_PTR
+ * @param inBtlCouont   対戦回数　0～4（最大五戦）
+ * @retval	none    
+*/
+//--------------------------------------------------------------
+static void SetDownLoadData(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
+{
+  //@todo 実装はまだ
+  
+  int obj_id;
+  int tr_no;
+  int base, band;
+
+  switch(inBtlCount){
+  case 0:
+    base = 0;
+    band = 100;
+    break;
+  case 1:
+    base = 140;
+    band = 20;
+    break;
+  case 2:
+    base = 180;
+    band = 20;
+    break;
+  case 3:
+    base = 220;
+    band = 80;
+    break;
+  case 4:
+    base = 220;
+    band = 80;
+    break;
+  default:
+    GF_ASSERT_MSG(0,"count error %d",inBtlCount);
+    base = 0;
+    band = 100;
+  }
+  //トレーナー抽選
+  tr_no = base + GFUser_GetPublicRand(band);
+  NOZOMU_Printf("entry_tr_no = %d\n",tr_no);
+
+  //データをトライアルハウスワークにセット
+  FBI_TOOL_MakeRomTrainerData(
+      &ptr->TrData,
+      tr_no, ptr->MemberNum,
+      NULL,NULL,NULL, GFL_HEAP_LOWID(ptr->HeapID));
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -168,7 +253,7 @@ int TRIAL_HOUSE_MakeTrainer( TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount )
  * @retval u16 OBJコード
  */
 //--------------------------------------------------------------
-u16 TRIAL_HOUSE_GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr )
+static u16 GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr )
 {
   return FBI_TOOL_GetTrainerOBJCode( ptr->TrData.bt_trd.tr_type );
 }
