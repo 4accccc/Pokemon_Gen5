@@ -145,9 +145,9 @@ EVENT_START   ev_scene_c07_leader7_01
 	//======================================//
 
 	//ライバルとサポート会話
-	_BALLOONWIN_OBJMSG_POS( msg_c07_black_01 , C07_RIVAL_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c07_black_01 , C07_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_POS( msg_c07_white_01 , C07_SUPPORT_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c07_white_01 , C07_SUPPORT_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//ハチクOBJ表示
@@ -161,19 +161,19 @@ EVENT_START   ev_scene_c07_leader7_01
 	_OBJ_ANIME_WAIT()
 	
 	//リュウラセンの塔が鳴いている、ハチク退場
-	_BALLOONWIN_OBJMSG_POS( msg_c07_leader7_01 , C07_LEADER7_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c07_leader7_01 , C07_LEADER7_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( C07_LEADER7_01 , anm_c07_leader_goodbye )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバルとサポート会話
-	_BALLOONWIN_OBJMSG_POS( msg_c07_black_02 , C07_RIVAL_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c07_black_02 , C07_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_POS( msg_c07_white_03 , C07_SUPPORT_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c07_white_03 , C07_SUPPORT_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( C07_RIVAL_01 , anm_rival_staystep )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG_POS( msg_c07_black_03 , C07_RIVAL_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c07_black_03 , C07_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 
 	//ハチクOBJ削除

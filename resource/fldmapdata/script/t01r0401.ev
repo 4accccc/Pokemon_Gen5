@@ -165,7 +165,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 
 	//ポケモンずかんを手に入れた！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_SYSWIN_MSG( msg_t01r0401_hakase2_13, WIN_UP )
+	_SYSWIN_MSG( msg_t01r0401_hakase2_13, POS_UP )
 
 	//ME鳴らす
 	_ME_PLAY( SEQ_ME_KEYITEM )

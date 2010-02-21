@@ -229,7 +229,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_MSGWIN_CLOSE()
 	
 	//目的をもって
-	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_03 , R05_CHAMPION_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_03 , R05_CHAMPION_01 , POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//ライバル：？マーク
@@ -241,11 +241,11 @@ EVENT_START	ev_pos_r05_rival_01
 	_MSGWIN_CLOSE()
 	
 	//ふむう強くなる か
-	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_04 , R05_CHAMPION_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_04 , R05_CHAMPION_01 , POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//マルチバトルをしてみないかね？
-	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05 , R05_CHAMPION_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05 , R05_CHAMPION_01 , POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//チャンプ：上を見て
@@ -253,7 +253,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//おーいオマエたち！
-	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05_01 , R05_CHAMPION_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05_01 , R05_CHAMPION_01 , POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//子供たち：主人公の前へ
@@ -289,7 +289,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//おまえたち！勝てなかったが…
-	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_06 , R05_CHAMPION_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_06 , R05_CHAMPION_01 , POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//チャンプ：主人公たちを見て
@@ -297,7 +297,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//さて わかものよ
-	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_07 , R05_CHAMPION_01 , WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_07 , R05_CHAMPION_01 , POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//カミツレ：主人公たちを見て

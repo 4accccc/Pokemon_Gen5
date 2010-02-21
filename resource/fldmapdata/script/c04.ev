@@ -761,7 +761,7 @@ EVENT_START	ev_scene_c04_support_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//ちょっと！
-	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_03, C04_SUPPORTPAPA_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_03, C04_SUPPORTPAPA_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//カミツレと申します
@@ -780,7 +780,7 @@ EVENT_START	ev_scene_c04_support_01
 	_MSGWIN_CLOSE()
 	
 	//そうでしょうとも！
-	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_04, C04_SUPPORTPAPA_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_04, C04_SUPPORTPAPA_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//カミツレ：父を見て
@@ -796,7 +796,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	
 	//おねがい！
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_11, C04_SUPPORT_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_11, C04_SUPPORT_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//パパ：下を向いて
@@ -804,7 +804,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	
 	//……むむっ
-	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_05, C04_SUPPORTPAPA_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_05, C04_SUPPORTPAPA_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//パパ：カミツレを見て
@@ -813,7 +813,7 @@ EVENT_START	ev_scene_c04_support_01
 	
 	//ジムリーダーさんに言われて気づいたよ
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_06, C04_SUPPORTPAPA_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_06, C04_SUPPORTPAPA_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//パパ：去る

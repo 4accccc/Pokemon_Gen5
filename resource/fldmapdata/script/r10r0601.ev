@@ -158,7 +158,7 @@ ev_sub_gate_open_demo:
       _SE_WAIT()
 
       //「～バッジをもつものよ！さきにすすみゆうきをしめせ！」
-      _BALLOONWIN_OBJMSG_POS( msg_r10r0601_badge_03, R10R0601_VETERANM, WIN_UP )
+      _BALLOONWIN_OBJMSG_POS( msg_r10r0601_badge_03, R10R0601_VETERANM, POS_UL )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
 

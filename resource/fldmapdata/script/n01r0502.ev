@@ -1091,7 +1091,7 @@ _ANIME_LABEL	anm_champion_lastscene
 	_OBJ_ANIME_WAIT()
 	
 	//これはこれは偉大なチャンピオン
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_05, N01R0502_SAGE1_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_05, N01R0502_SAGE1_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//…なぜポケモンと人の間に
@@ -1099,7 +1099,7 @@ _ANIME_LABEL	anm_champion_lastscene
 	_MSGWIN_CLOSE()
 	
 	//簡単な理由です…
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_06, N01R0502_SAGE1_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_06, N01R0502_SAGE1_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//【仮】ゲーチス：芝居
@@ -1110,7 +1110,7 @@ _ANIME_LABEL	anm_champion_lastscene
 	_OBJ_ANIME_WAIT()
 	
 	//……さていずれ
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_07, N01R0502_SAGE1_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_07, N01R0502_SAGE1_01, POS_UL )
 	_MSGWIN_CLOSE()
 
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_move_03 )
@@ -1118,7 +1118,7 @@ _ANIME_LABEL	anm_champion_lastscene
 	
 	//まずは 君からですね
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_08, N01R0502_SAGE1_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_08, N01R0502_SAGE1_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//【仮】戦闘呼び出し　全滅処理が未定
@@ -1134,7 +1134,7 @@ _ANIME_LABEL	anm_champion_lastscene
 	
 	
 	//なぜだー
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_09, N01R0502_SAGE1_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_09, N01R0502_SAGE1_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//ライバル：ゲーチスの前へ
@@ -1142,11 +1142,11 @@ _ANIME_LABEL	anm_champion_lastscene
 	_OBJ_ANIME_WAIT()
 	
 	//みぐるしいよ
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_black_02, N01R0502_RIVAL_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_black_02, N01R0502_RIVAL_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//むぎゃっ！
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_10, N01R0502_SAGE1_01, WIN_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_sage1_10, N01R0502_SAGE1_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//ライバル：ゲーチスを連れて行く
