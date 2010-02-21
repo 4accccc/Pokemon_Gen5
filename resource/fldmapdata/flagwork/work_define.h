@@ -64,7 +64,7 @@
 #define WK_SYS_MAPREPLACE04              16436 /* 0x4034 マップ置き換え処理用ワーク定義：Nの城の謁見の間 */
 #define WK_SYS_MAPREPLACE05              16437 /* 0x4035 マップ置き換え処理用ワーク定義：りゅうらせんの塔 屋外 */
 #define WK_SYS_MAPREPLACE06              16438 /* 0x4036 マップ置き換え処理用ワーク定義：古代の城 */
-#define WK_SYS_MAPREPLACE07              16439 /* 0x4037 マップ置き換え処理用ワーク定義 */
+#define WK_SYS_MAPREPLACE07              16439 /* 0x4037 マップ置き換え処理用ワーク定義：自分の部屋 */
 #define WK_SYS_MAPREPLACE08              16440 /* 0x4038 マップ置き換え処理用ワーク定義 */
 #define WK_SYS_MAPREPLACE09              16441 /* 0x4039 マップ置き換え処理用ワーク定義 */
 #define WK_SYS_MAPREPLACE10              16442 /* 0x403a マップ置き換え処理用ワーク定義 */
@@ -193,7 +193,7 @@
 #define WK_OTHER_STATION_CONNECT         16694 /* 0x4136 C04とギアステーションの接続イベント用ワーク 00 ギアステーション入場アニメ有効（シーンチェンジスクリプト） 01 ギアステーションからC04にでる階段前のPOSイベント有効 */
 #define WK_OTHER_C03R0201_GALLERY        16695 /* 0x4137 日替わりタイプ指定ポケモン見せ用ワーク */
 #define WK_OTHER_UN                      16696 /* 0x4138 国連イベント用ワーク 00 参加していない（受付がゲートを塞いでいる） 01 参加状態（受付を通過している→受付をどかした状態にする） */
-#define WK_OTHER_R03_EGG                 16697 /* 0x4139 ３番道路：育て屋でタマゴが発見されたときに教えてくれるPOSイベント用のワーク 00 なし 01 POSイベント有効。「おーい！」と声をかけてくれる。 */
+#define WK_OTHER_DISCOVER_EGG            16697 /* 0x4139 ３番道路：育て屋でタマゴが発見されたときに教えてくれるPOSイベント用のワーク 00 なし 01 POSイベント有効。「おーい！」と声をかけてくれる。 */
 #define WK_OTHER_N_COUNT                 16698 /* 0x413a Ｎの質問に「はい」と答えた回数をカウント */
 		/* not used 16699(0x413b) */
 		/* not used 16700(0x413c) */

@@ -1054,7 +1054,7 @@ EVENT_START   ev_pos_r03_sodateya_egg
 	
 	//========================================//
 	//POS‚ð–³Œø‚É‚·‚é
-	$WK_OTHER_R03_EGG = 0
+	$WK_OTHER_DISCOVER_EGG = 0
 	//========================================//
 	
 EVENT_END

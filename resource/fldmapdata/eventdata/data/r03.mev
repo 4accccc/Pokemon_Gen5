@@ -1062,7 +1062,7 @@ SCRID_POS_R03_SODATEYA_EGG
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_OTHER_R03_EGG
+WK_OTHER_DISCOVER_EGG
 #Event Trigger Work Value
 1
 #Pos Type
