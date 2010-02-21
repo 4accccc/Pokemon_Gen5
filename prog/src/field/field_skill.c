@@ -190,6 +190,13 @@ void FLDSKILL_InitCheckWork(
       scwk->enable_skill |= (1 << FLDSKILL_IDX_FLASH);
     }
   }
+
+  { //ここにダイビングの使用可能かチェックを追加する
+    if ( 0 )
+    {
+      scwk->enable_skill |= ( 1 << FLDSKILL_IDX_DIVING );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -913,6 +920,59 @@ static GMEVENT_RESULT GMEVENT_Teleport(GMEVENT *event, int *seq, void *wk )
 }
 
 //======================================================================
+// 13 :ダイビング
+//======================================================================
+static GMEVENT_RESULT GMEVENT_Diving( GMEVENT *event, int *seq, void *wk );
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static FLDSKILL_RET SkillCheck_Diving( const FLDSKILL_CHECK_WORK * scwk )
+{
+	if (IsEnableSkill(scwk, FLDSKILL_IDX_DIVING)) {
+		return FLDSKILL_RET_USE_OK;
+	} else {
+		return FLDSKILL_RET_USE_NG;
+  }
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static GMEVENT *  SkillUse_Diving(
+    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK * scwk )
+{
+  GMEVENT *event;
+  HIDEN_SCR_WORK *hsw;
+  
+  event = GMEVENT_Create( scwk->gsys, NULL, GMEVENT_Diving, sizeof(HIDEN_SCR_WORK) );
+  hsw = GMEVENT_GetEventWork( event );
+  InitHSW( hsw, head, scwk );
+  return event;
+}
+//--------------------------------------------------------------
+/**
+ * ダイビング呼び出しイベント
+ * @param event GMEVENT*
+ * @parama seq シーケンス
+ * @param wk event work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT GMEVENT_Diving( GMEVENT *event, int *seq, void *wk )
+{
+  u16 *scwk;
+  u16 prm0;
+  SCRIPT_WORK *sc;
+  HIDEN_SCR_WORK *hsw = wk;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( hsw->gsys );
+  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+  
+  prm0 = hsw->head.poke_pos;
+  sc = SCRIPT_ChangeScript( event, SCRID_HIDEN_DIVING_MENU, NULL, 0 );
+  SCRIPT_SetScriptWorkParam( sc, prm0, 0, 0, 0 );
+  return GMEVENT_RES_CONTINUE;
+}
+
+
+//======================================================================
 //======================================================================
 //--------------------------------------------------------------
 /**
@@ -1112,4 +1172,5 @@ static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX] =
   {SkillUse_Anawohoru,SkillCheck_Anawohoru},    // 10 :あなをほる
   {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 11 :あまいかおり
   {SkillUse_Dummy,SkillCheck_Dummy},    // 12 :おしゃべり
+  {SkillUse_Diving, SkillCheck_Diving}, // 13 :ダイビング
 };

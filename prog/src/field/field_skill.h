@@ -40,6 +40,7 @@ typedef enum
   FLDSKILL_IDX_ANAWOHORU, // あなをほる
   FLDSKILL_IDX_AMAIKAORI,    // あまいかおり
   FLDSKILL_IDX_OSYABERI,    // おしゃべり
+  FLDSKILL_IDX_DIVING,      //ダイビング
   FLDSKILL_IDX_MAX, //最大
 }FLDSKILL_IDX;
 

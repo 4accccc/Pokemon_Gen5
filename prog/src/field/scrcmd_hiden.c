@@ -23,6 +23,10 @@
 #include "field_player_grid.h"
 #include "fldeff_iaigiri.h"
 
+#include "event_mapchange.h"
+#include "arc/fieldmap/zone_id.h"
+#include "script_local.h" //SCRIPT_CallEvent
+
 //======================================================================
 //  îÈì`ãZîgèÊÇË
 //======================================================================
@@ -142,4 +146,24 @@ VMCMD_RESULT EvCmdIaigiriEffect( VMHANDLE *core, void *wk )
   FLDEFF_IAIGIRI_SetMMdl( mmdl, fectrl );
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @todo  ébíËÉRÉ}ÉìÉhÇ»ÇÃÇ≈ÅAêUÇËï™ÇØÇ»Ç«ÇÉLÉ`ÉìÇ∆Ç∑ÇÈÅI
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdDiving( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  SCRIPT_WORK* scriptWork = SCRCMD_WORK_GetScriptWork( work );
+
+  GMEVENT * event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldmap, ZONE_ID_D20R0101 );
+  SCRIPT_CallEvent( scriptWork, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 

@@ -368,7 +368,7 @@
   DEF_CMD( EvCmdNaminori, EV_SEQ_NAMINORI )
   DEF_CMD( EvCmdTakinobori, EV_SEQ_TAKINOBORI )
   DEF_CMD( EvCmdIaigiriEffect, EV_SEQ_IAIGIRI_EFFECT )
-  NO_CMD()
+  DEF_CMD( EvCmdDiving, EV_SEQ_DIVING )
 
   //ジムギミック関連
   DEF_CMD( EvCmdGymElec_Init, EV_SEQ_GYM_ELEC_INIT )
