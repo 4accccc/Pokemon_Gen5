@@ -506,8 +506,9 @@ BOOL ZONEDATA_BicycleEnable( u16 zone_id )
 //------------------------------------------------------------------
 BOOL ZONEDATA_BicycleBGMEnable( u16 zone_id )
 {
-  // @todo À‘•
-  return TRUE;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->sp_bgm_flag;
 }
 
 //------------------------------------------------------------------
