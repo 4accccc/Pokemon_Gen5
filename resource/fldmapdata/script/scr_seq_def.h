@@ -8292,4 +8292,30 @@
   .short EV_SEQ_TH_CALL_BATTLE
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　ランクセット
+ * @param  rank  セットするランク
+ */
+//--------------------------------------------------------------
+#define _TH_SET_RANK( rank ) _ASM_TH_SET_RANK rank
+  
+  .macro _ASM_TH_SET_RANK rank
+  .short EV_SEQ_TH_SET_RANK
+  .short \rank
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　ランク取得
+ * @param  rank ランク格納バッファ
+ */
+//--------------------------------------------------------------
+#define _TH_GET_RANK( rank ) _ASM_TH_GET_RANK rank
+  
+  .macro _ASM_TH_GET_RANK rank
+  .short EV_SEQ_TH_GET_RANK
+  .short \rank
+  .endm
+
 
