@@ -61,6 +61,7 @@
 
 #include "script.h" //SCRIPT_ChangeScript
 #include "../../../resource/fldmapdata/script/debug_scr_def.h"  //SCRID_DEBUG_COMMON
+#include "../../../resource/fldmapdata/script/hiden_def.h"  //SCRID_HIDEN_DIVING
 
 #include "eventwork.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
@@ -194,6 +195,7 @@ static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Ananukenohimo( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_Diving( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk );
@@ -3969,6 +3971,17 @@ static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *wk )
   return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief  フィールド技：ダイビング
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_Diving( DEBUG_MENU_EVENT_WORK *wk )
+{
+  SCRIPT_ChangeScript( wk->gmEvent, SCRID_HIDEN_DIVING_MENU, NULL, HEAPID_FIELDMAP );
+  return TRUE;
+}
+
 //-----------------------------------------------------------------------------
 /**
  * @brief 3Dデモ再生
@@ -4994,6 +5007,7 @@ static const FLDMENUFUNC_LIST DATA_SubFieldSkillList[] =
   { DEBUG_FIELD_ANANUKENOHIMO, debugMenuCallProc_Ananukenohimo }, //穴ヌケの紐
   { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru },         //穴を掘る
   { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport },           //テレポート
+  { DEBUG_FIELD_FSKILL_01, debugMenuCallProc_Diving },            //ダイビング
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubFieldSkillListSelectData = {

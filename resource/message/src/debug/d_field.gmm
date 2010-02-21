@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-02-19T17:07:13"/>
+	<create user="tamada" host="W00139" date="2010-02-21T16:52:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1250,6 +1250,11 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_FSKILL">
 		<language name="JPN" width="160">フィールドわざ</language>
 		<language name="JPN_KANJI" width="160">フィールド技</language>
+	</row>
+
+	<row id="DEBUG_FIELD_FSKILL_01">
+		<language name="JPN" width="160">ダイビング</language>
+		<language name="JPN_KANJI" width="160">ダイビング</language>
 	</row>
 
 	<row id="DEBUG_FIELD_TITLE_00">
