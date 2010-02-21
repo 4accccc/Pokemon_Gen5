@@ -8333,4 +8333,16 @@
   .short \rank
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　ビーコンサーチ
+ * @param  ret    サーチ結果
+ */
+//--------------------------------------------------------------
+#define _TH_SEARCH_BEACON( ret ) _ASM_TH_SEARCH_BEACON ret
+  
+  .macro _ASM_TH_SEARCH_BEACON ret
+  .short EV_SEQ_TH_SEARCH_BEACON
+  .short \ret
+  .endm
 

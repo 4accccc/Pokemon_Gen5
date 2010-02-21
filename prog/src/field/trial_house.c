@@ -15,9 +15,18 @@
 #include  "trial_house_scr_def.h"
 #include "savedata/battle_examination.h"
 
+//ビーコンサーチワーク
+typedef struct
+{
+  GAMESYS_WORK *gsys;
+  u16 *Ret;
+}EVENT_WORK_BEACON_SEARCH;
+
 static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
 static void SetDownLoadData(GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
 static u16 GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr );
+
+static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk );
 
 //--------------------------------------------------------------
 /**
@@ -241,3 +250,65 @@ GMEVENT *TRIAL_HOUSE_CreateBeforeMsgEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PT
 
   return event;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief	ビーコンサーチ
+ * @param	gsys        ゲームシステムポインタ
+ * @param outRet      サーチ結果格納バッファ
+ * @retval	event     イベントポインタ
+*/
+//--------------------------------------------------------------
+GMEVENT *TRIAL_HOUSE_CreateBeaconSearchEvt( GAMESYS_WORK *gsys, u16* outRet )
+{
+  GMEVENT *event;
+  EVENT_WORK_BEACON_SEARCH *evt_wk;
+  event = GMEVENT_Create( gsys, NULL,
+      BeaconSearchEvt, sizeof(EVENT_WORK_BEACON_SEARCH) );
+  evt_wk = GMEVENT_GetEventWork( event );
+  evt_wk->gsys = gsys;
+  evt_wk->Ret = outRet;
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * ビーコンサーチ  @todoまだ未完成
+ * @param event GMEVENT
+ * @param seq event sequence
+ * @param wk event work
+ * @retval GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_WORK_BEACON_SEARCH *evt_wk = wk;
+  GAMESYS_WORK *gsys = evt_wk->gsys;
+  switch( *seq ){
+  case 0:
+    //ビーコンサーチ開始
+    ;
+    (*seq)++;
+    break;
+  case 1:
+    //データ受け取り待ち
+    if (1)
+    {
+      //受け取りの結果をセット（現行は失敗）@todo
+      *(evt_wk->Ret) = FALSE;
+      (*seq)++;
+    }
+    break;
+  case 2:
+    //終了
+    return( GMEVENT_RES_FINISH );
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
+
+
+
+
+

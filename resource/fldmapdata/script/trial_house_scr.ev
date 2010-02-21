@@ -101,9 +101,8 @@ charange:
   _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_003)
   _BALLOONWIN_CLOSE()
 
-  //ビーコンサーチ処理  @todo
-
-  $download = FALSE    //@todo
+  //ビーコンサーチ処理
+  _TH_SEARCH_BEACON( download )
 
   //ダウンロードデータで遊ぶかをセットする
   _TH_SET_DL_FLG( download )
