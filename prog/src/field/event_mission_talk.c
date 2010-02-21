@@ -75,7 +75,7 @@ static const struct{
 
   u16 mission_talk[TALK_TYPE_MAX];          ///<自分がミッション実行者で話しかけた
   u16 mission_talk_item[TALK_TYPE_MAX];     ///<自分がミッション実行者でアイテムをあげた
-}MissionTalkedMsgID = {
+}MissionTalkMsgID = {
   { //自分がターゲットで話しかけた
     mis_m02_02_t1,
     mis_m02_02_t2,
@@ -197,13 +197,13 @@ static GMEVENT_RESULT CommMissionTalk_MtoT_Talk( GMEVENT *event, int *seq, void 
       WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_basic->item );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionTalkedMsgID.mission_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionTalkMsgID.mission_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-        MissionTalkedMsgID.mission_talk_item[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+        MissionTalkMsgID.mission_talk_item[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
   		(*seq)++;
   	}
 		break;
@@ -287,7 +287,7 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talk( GMEVENT *event, int *seq, void 
       WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_basic->item );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionTalkedMsgID.target_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionTalkMsgID.target_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
@@ -371,7 +371,7 @@ static GMEVENT_RESULT CommMissionTalk_MtoT_Talked( GMEVENT *event, int *seq, voi
       WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_basic->item );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionTalkedMsgID.mission_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionTalkMsgID.mission_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
@@ -463,13 +463,13 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
       WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_basic->item );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionTalkedMsgID.target_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionTalkMsgID.target_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-        MissionTalkedMsgID.target_talked_item[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+        MissionTalkMsgID.target_talked_item[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
   		(*seq)++;
   	}
 		break;
