@@ -102,15 +102,19 @@ void BTL_POKESELECT_RESULT_Init( BTL_POKESELECT_RESULT *result, const BTL_POKESE
  * リザルト構造体に選択結果を１件追加
  *
  * @param   result    [out]
- * @param   idx       選択結果
+ * @param   outPokeIdx   入れ替わりに出て行くポケモンのIndex
+ * @param   selPokeIdx   選択された（入ってくる）ポケモンのIndex
  *
  */
 //=============================================================================================
-void BTL_POKESELECT_RESULT_Push( BTL_POKESELECT_RESULT *result, u8 idx )
+void BTL_POKESELECT_RESULT_Push( BTL_POKESELECT_RESULT *result, u8 outPokeIdx, u8 selPokeIdx )
 {
   if( result->cnt < result->max )
   {
-    result->selIdx[ result->cnt++ ] = idx;
+    result->selIdx[ result->cnt ] = selPokeIdx;
+    result->outPokeIdx[ result->cnt ] = outPokeIdx;
+
+    ++(result->cnt);
   }
   else
   {

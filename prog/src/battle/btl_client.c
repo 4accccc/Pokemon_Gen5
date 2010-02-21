@@ -2035,16 +2035,17 @@ static void storePokeSelResult( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res
   GF_ASSERT_MSG(res->cnt <= wk->myChangePokeCnt, "selCnt=%d, changePokeCnt=%d\n", res->cnt, wk->myChangePokeCnt);
 
   {
-    u8 clientID, posIdx, selIdx, i;
+    u8 clientID, selIdx, outIdx, i;
 
     BTL_N_Printf( DBGSTR_CLIENT_PokeSelCnt, res->cnt);
 
     for(i=0; i<res->cnt; i++)
     {
       selIdx = res->selIdx[i];
-      BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, wk->myChangePokePos[i], &clientID, &posIdx );
-      BTL_N_Printf( DBGSTR_CLIENT_PokeChangeIdx, posIdx, selIdx );
-      BTL_ACTION_SetChangeParam( &wk->actionParam[i], posIdx, selIdx );
+      outIdx = res->outPokeIdx[i];
+//      BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, wk->myChangePokePos[i], &clientID, &posIdx );
+      BTL_N_Printf( DBGSTR_CLIENT_PokeChangeIdx, outIdx, selIdx );
+      BTL_ACTION_SetChangeParam( &wk->actionParam[i], outIdx, selIdx );
     }
     wk->returnDataPtr = &(wk->actionParam[0]);
     wk->returnDataSize = sizeof(wk->actionParam[0]) * res->cnt;

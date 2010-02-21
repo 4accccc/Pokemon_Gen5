@@ -905,7 +905,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
 
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
 
-  BTL_Printf("空き位置にポケモン投入後のサーバーコマンド生成\n");
+  BTL_N_Printf( DBGSTR_SVFL_StartAfterPokeIn );
 
   numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
@@ -921,6 +921,10 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
     if( action->change.depleteFlag ){ continue; }
 
     if( !BPP_IsDead(wk->actOrder[i].bpp) ){
+
+      BTL_N_Printf( DBGSTR_SVFL_AfterPokeIn_Alive,
+              action->change.posIdx, action->change.memberIdx );
+
       scproc_MemberChange( wk, wk->actOrder[i].bpp, action->change.memberIdx );
       wk->actOrder[i].fDone = TRUE;
     }
@@ -932,7 +936,11 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
     if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
     if( action->change.depleteFlag ){ continue; }
 
-    if( BPP_IsDead(wk->actOrder[i].bpp) ){
+    if( BPP_IsDead(wk->actOrder[i].bpp) )
+    {
+      BTL_N_Printf( DBGSTR_SVFL_AfterPokeIn_Dead,
+              action->change.posIdx, action->change.memberIdx );
+
       scproc_MemberInForChange( wk, wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx, TRUE );
       wk->actOrder[i].fDone = TRUE;
     }
@@ -1429,8 +1437,13 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
     numPoke = BTL_SVCL_GetNumActPoke( clwk );
     for(j=0; j<numPoke; j++)
     {
-      order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, j );
       order[p].action = *BTL_SVCL_GetPokeAction( clwk, j );
+      if( BTL_ACTION_GetAction(&order[p].action) != BTL_ACTION_CHANGE ){
+        order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, j );
+      }else{
+        order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, order[p].action.change.posIdx );
+      }
+
       order[p].clientID = i;
       order[p].pokeIdx = j;
       order[p].fDone = FALSE;

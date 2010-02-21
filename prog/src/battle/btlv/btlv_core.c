@@ -1018,7 +1018,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
         for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i)
         {
           if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE ){
-            BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_pos[i] );
+            BTL_POKESELECT_RESULT_Push( wk->pokeselResult, i, wk->plistData.sel_pos[i] );
             {
               u8 storeCnt = BTL_POKESELECT_RESULT_GetCount( wk->pokeselResult );
               BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Sel, i, storeCnt);

@@ -50,10 +50,11 @@ typedef struct {
 //------------------------------------------------------
 typedef struct {
 
-  u8      selIdx[ BTL_POSIDX_MAX ]; ///< 選択したポケモンの並び順（現在の並び順で先頭を0と数える）
-  u8      cnt;                      ///< 選択した数
-  u8      max;                      ///< 選択する数
-  u8      fCancel;                  ///< キャンセルフラグ
+  u8      selIdx[ BTL_POSIDX_MAX ];     ///< 選択したポケモンの並び順（現在の並び順で先頭を0と数える）
+  u8      outPokeIdx[ BTL_POSIDX_MAX ]; ///< 入れ替わりに出て行くポケモンの並び順
+  u8      cnt;                          ///< 選択した数
+  u8      max;                          ///< 選択する数
+  u8      fCancel;                      ///< キャンセルフラグ
 
 }BTL_POKESELECT_RESULT;
 
@@ -65,7 +66,7 @@ extern void BTL_POKESELECT_PARAM_SetProhibit( BTL_POKESELECT_PARAM* param, BtlPo
 extern u8 BTL_POKESELECT_PARAM_GetNumSelect( const BTL_POKESELECT_PARAM* param );
 
 extern void BTL_POKESELECT_RESULT_Init( BTL_POKESELECT_RESULT *result, const BTL_POKESELECT_PARAM* param );
-extern void BTL_POKESELECT_RESULT_Push( BTL_POKESELECT_RESULT *result, u8 idx );
+extern void BTL_POKESELECT_RESULT_Push( BTL_POKESELECT_RESULT *result, u8 outPokeIdx, u8 selPokeIdx );
 extern void BTL_POKESELECT_RESULT_Pop( BTL_POKESELECT_RESULT *result );
 
 extern BOOL BTL_POKESELECT_IsCancel( const BTL_POKESELECT_RESULT* result );

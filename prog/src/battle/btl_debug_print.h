@@ -139,6 +139,9 @@ typedef enum {
   DBGSTR_SVFL_CombiWazaCheck,
   DBGSTR_SVFL_CombiWazaFound,
   DBGSTR_SVFL_CombiDecide,
+  DBGSTR_SVFL_StartAfterPokeIn,
+  DBGSTR_SVFL_AfterPokeIn_Alive,
+  DBGSTR_SVFL_AfterPokeIn_Dead,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
