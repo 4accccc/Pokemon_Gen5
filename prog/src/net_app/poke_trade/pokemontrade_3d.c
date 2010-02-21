@@ -1191,7 +1191,7 @@ static void _polygondraw(POKEMON_TRADE_WORK *pWork)
   
     for(i=0;i<25;i++){
       num = num - i;
-      _createBoard(  3.7 * num ,   i  );
+      _createBoard(  3.6 * num ,   i  );
     }
   }
 
