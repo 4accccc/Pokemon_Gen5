@@ -145,7 +145,7 @@ typedef struct
   WIFIBATTLEMATCH_CORE_PARAM    *p_param;
 
   //サーバーからの受信バッファ
-  WIFIBATTLEMATCH_GDB_RND_SCORE_DATA rnd_score;
+  WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  rnd_score;
 
   //不正チェックのときに使用するバッファ（それ以外は参照しない）
   WIFIBATTLEMATCH_NET_EVILCHECK_DATA  evilecheck_data;
@@ -796,7 +796,7 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     //=====================================
   case SEQ_START_RECVRATE_SAKE:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_000, WBM_TEXT_TYPE_STREAM );
-    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->rnd_score );
+    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->rnd_score );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_WAIT_RECVRATE_SAKE );
     break;
@@ -1190,7 +1190,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     ///	Sakeから取得
     //=====================================
   case SEQ_START_RECVDATA_SAKE:
-    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->rnd_score );
+    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->rnd_score );
     *p_seq = SEQ_WAIT_RECVDATA_SAKE;
     break;
   case SEQ_WAIT_RECVDATA_SAKE:
@@ -1919,7 +1919,7 @@ static void WbmRndSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     { 
       const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( (POKEPARTY*)p_my_data->pokeparty, p_wk->cnt);
 
-      WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, cp_pp );
+      WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, cp_pp, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PP );
       (*p_seq)++;
       NAGI_Printf( "EvilCheck Start\n" );
     }

@@ -616,7 +616,7 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
       const u16 str[] = L"SAKEからデータを取得中";
       WBM_TEXT_PrintDebug( p_wk->p_text, str, NELEMS(str), p_wk->p_font );
     }
-    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->score );
+    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->score );
     p_wk->seq = SEQ_WAIT_RECVDATA;
     break;
 
@@ -1045,7 +1045,7 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
       const u16 str[] = L"SAKEからデータを取得中";
       WBM_TEXT_PrintDebug( p_wk->p_text, str, NELEMS(str), p_wk->p_font );
     }
-    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->score );
+    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->score );
     p_wk->seq = SEQ_WAIT_RECVDATA;
     break;
 

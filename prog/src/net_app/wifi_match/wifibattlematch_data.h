@@ -43,6 +43,7 @@ typedef struct
   PMS_DATA  pms;
   u32       wificup_no;
   u32       btl_server_version;
+  u32       sake_recordID;
   s8        sign[TEMOTI_POKEMAX][ NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN ]; //６体分の署名
   u8        pokeparty[0]; //後尾にポケパーティのデータがつく
 } WIFIBATTLEMATCH_ENEMYDATA;

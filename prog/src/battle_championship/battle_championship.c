@@ -373,7 +373,7 @@ static void BATTLE_CHAMPIONSHIP_OpenFirstMenu( BATTLE_CHAMPIONSHIP_WORK *p_wk, B
     w  = 28;
     h  = setup.list_max * 2;
     x  = 32 / 2  - w /2; 
-    y  = 24 /2  - h /2;
+    y  = (24-6) /2  - h /2;
     break;
   case POS_RIGHT_DOWN:
     w  = 12;

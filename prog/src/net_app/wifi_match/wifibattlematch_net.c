@@ -165,6 +165,7 @@ typedef enum
   WIFIBATTLEMATCH_NET_RECVFLAG_GAMEDATA,
   WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST,
   WIFIBATTLEMATCH_NET_RECVFLAG_POKEPARTY,
+  WIFIBATTLEMATCH_NET_RECVFLAG_DIRTYCNT,
   WIFIBATTLEMATCH_NET_RECVFLAG_MAX
 } WIFIBATTLEMATCH_NET_RECVFLAG;
 
@@ -247,7 +248,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
   BOOL  is_initialize;
   BOOL  is_nd_start;
   u32   wait_cnt;
-  BOOL              is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_MAX];
+  BOOL  is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_MAX];
   
   //SC
   DWC_SC_PLAYERDATA player[2];  //自分は０ 相手は１
@@ -255,7 +256,8 @@ struct _WIFIBATTLEMATCH_NET_WORK
   DWCScResult       result;
 
   //ポケモン不正検査で使う
-  const POKEMON_PARAM *cp_pp;
+  const void *cp_evilcheck_data;
+  WIFIBATTLEMATCH_NET_EVILCHECK_TYPE evilcheck_type;
   NHTTP_RAP_WORK  *nhttp;
 
   //gdb
@@ -272,6 +274,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
   u32 cancel_select_timeout;   //CANCELSELECT_TIMEOUT
   BOOL is_stop_connect;
   BOOL is_auth;
+  int get_recordID;
 
   //SENDDATA系
   u8 recv_buffer[RECV_BUFFER_SIZE];//受信バッファ
@@ -337,6 +340,8 @@ static void WifiBattleMatch_RecvEnemyData(const int netID, const int size, const
 static u8* WifiBattleMatch_RecvBuffAddr(int netID, void* p_wk_adrs, int size);
 static void WifiBattleMatch_RecvMatchCancel(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
 static void WifiBattleMatch_RecvPokeParty(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
+static void WifiBattleMatch_RecvDirtyCnt(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
+
 
 
 //-------------------------------------
@@ -426,6 +431,7 @@ enum
   WIFIBATTLEMATCH_NETCMD_SEND_ENEMYDATA,
   WIFIBATTLEMATCH_NETCMD_SEND_CANCELMATCH,
   WIFIBATTLEMATCH_NETCMD_SEND_POKEPARTY,
+  WIFIBATTLEMATCH_NETCMD_SEND_DIRTYCNT,
   WIFIBATTLEMATCH_NETCMD_MAX,
 };
 static const NetRecvFuncTable sc_net_recv_tbl[] = 
@@ -434,6 +440,7 @@ static const NetRecvFuncTable sc_net_recv_tbl[] =
   {WifiBattleMatch_RecvEnemyData, WifiBattleMatch_RecvBuffAddr },
   {WifiBattleMatch_RecvMatchCancel, NULL},
   {WifiBattleMatch_RecvPokeParty, WifiBattleMatch_RecvBuffAddr },
+  {WifiBattleMatch_RecvDirtyCnt, WifiBattleMatch_RecvBuffAddr },
 };
 
 
@@ -582,7 +589,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
   { 
   case SEQ_START_GET_TABLE_ID:
     *p_result = DWC_GDB_ERROR_NONE;
-    WIFIBATTLEMATCH_GDB_Start( p_wk, WIFIBATTLEMATCH_GDB_GET_RECORDID, &p_wk->sake_record_id );
+    WIFIBATTLEMATCH_GDB_Start( p_wk, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RECORDID, &p_wk->sake_record_id );
     p_wk->init_seq  = SEQ_WAIT_GET_TABLE_ID;
     break;
 
@@ -2298,6 +2305,34 @@ static void WifiBattleMatch_RecvPokeParty(const int netID, const int size, const
   p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_POKEPARTY] = TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正カウンタ受信コールバック
+ *
+ *	@param	int netID     ネットID
+ *	@param	int size      サイズ
+ *	@param	void* pData   データ
+ *	@param	pWk           自分であたえたアドレス
+ *	@param	pNetHandle    ネットハンドル
+ */
+//-----------------------------------------------------------------------------
+static void WifiBattleMatch_RecvDirtyCnt(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle)
+{ 
+  WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
+
+  if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+  {
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if( netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )
+  {
+    return;//自分のは今は受け取らない
+  }
+
+  DEBUG_NET_Printf( "不正カウンタ受信コールバック！netID=%d size=%d \n", netID, size );
+
+  p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_DIRTYCNT] = TRUE;
+}
 //=============================================================================
 /**
  *    データベース
@@ -2310,11 +2345,14 @@ static void WifiBattleMatch_RecvPokeParty(const int netID, const int size, const
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs )
+void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 recordID, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs )
 { 
   p_wk->is_gdb_start  = TRUE;
   p_wk->seq           = 0;
   p_wk->p_get_wk      = p_wk_adrs;
+  p_wk->get_recordID = recordID;
+
+  GF_ASSERT( p_wk->get_recordID );
 
 
   switch( type )
@@ -2340,6 +2378,19 @@ void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_
 
       p_wk->pp_table_name  = sc_get_record_id_tbl;
       p_wk->table_name_num= NELEMS( sc_get_record_id_tbl );
+      p_wk->gdb_get_record_callback = DwcRap_Gdb_RecordID_GetRecordsCallback;
+    }
+    break;
+
+  case WIFIBATTLEMATCH_GDB_GET_PARTY:
+    { 
+      static const char *sc_get_pokemon_tbl[]  =
+      { 
+        SAKE_STAT_WIFICUP_POKEMON_PARTY
+      };
+
+      p_wk->pp_table_name  = sc_get_pokemon_tbl;
+      p_wk->table_name_num= NELEMS( sc_get_pokemon_tbl );
       p_wk->gdb_get_record_callback = DwcRap_Gdb_RecordID_GetRecordsCallback;
     }
     break;
@@ -2379,7 +2430,21 @@ BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p
       break;
 
     case WIFIBATTLEMATCH_GDB_SEQ_GET_START:
-      *p_result = DWC_GdbGetMyRecordsAsync( WIFIBATTLEMATCH_NET_TABLENAME, p_wk->pp_table_name, p_wk->table_name_num, p_wk->gdb_get_record_callback, p_wk->p_get_wk );
+      if( p_wk->get_recordID == WIFIBATTLEMATCH_GDB_MYRECORD )
+      { 
+        //自分のレコード取得の場合
+        *p_result = DWC_GdbGetMyRecordsAsync( WIFIBATTLEMATCH_NET_TABLENAME, p_wk->pp_table_name, p_wk->table_name_num, p_wk->gdb_get_record_callback, p_wk->p_get_wk );
+      }
+      else
+      { 
+        //レコードID指定して取得の場合
+        *p_result = DWC_GdbGetRecordsAsync( WIFIBATTLEMATCH_NET_TABLENAME,
+                                   &p_wk->get_recordID,
+                                   1,
+                                   p_wk->pp_table_name, 
+                                   p_wk->table_name_num, 
+                                   p_wk->gdb_get_record_callback, p_wk->p_get_wk);
+      }
       if( *p_result != DWC_GDB_ERROR_NONE )
       { 
         p_wk->is_gdb_start  = FALSE;
@@ -3083,6 +3148,21 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk, DW
 
   return FALSE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SAKEのレコードIDを取得
+ *
+ *	@param	const WIFIBATTLEMATCH_NET_WORK *cp_wk ワーク
+ *
+ *	@return レコードID
+ */
+//-----------------------------------------------------------------------------
+u32 WIFIBATTLEMATCH_GDB_GetRecordID( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
+{ 
+  return cp_wk->sake_record_id;
+}
+
+
 //=============================================================================
 /**
  *    お互いの情報を送る  SENDDATA系
@@ -3163,6 +3243,46 @@ BOOL WIFIBATTLEMATCH_NET_RecvPokeParty( WIFIBATTLEMATCH_NET_WORK *p_wk, POKEPART
   if( ret )
   { 
     GFL_STD_MemCopy( p_wk->recv_buffer, p_party, PokeParty_GetWorkSize() );
+  }
+  return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正カウントを送り合う
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	dirty_cnt                       不正カウンタ
+ *
+ *	@return TRUEで送信  FALSEで送信していない
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_SendDirtyCnt( WIFIBATTLEMATCH_NET_WORK *p_wk, const u32 *cp_dirty_cnt )
+{ 
+  NetID netID;
+
+  //相手にのみ送信
+  netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+  netID = netID == 0? 1: 0;
+  return GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), netID, WIFIBATTLEMATCH_NETCMD_SEND_DIRTYCNT, sizeof(u32), cp_dirty_cnt, TRUE, TRUE, TRUE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正カウントを受信する
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	*p_dirty_cnt                    受信した不正カウンタ
+ *
+ *	@return TRUEで受信  FALSEで受信中
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_RecvDirtyCnt( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 *p_dirty_cnt )
+{ 
+  BOOL ret;
+  ret = p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_DIRTYCNT];
+
+  if( ret )
+  { 
+    GFL_STD_MemCopy( p_wk->recv_buffer, p_dirty_cnt, sizeof(u32) );
   }
   return ret;
 }
@@ -3758,10 +3878,11 @@ BOOL WIFIBATTLEMATCH_NET_WaitBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL *p_is
  *	@param	POKEPARTY *cp_party チェックするポケモンパーティ
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, const POKEMON_PARAM *cp_pp )
+void WIFIBATTLEMATCH_NET_StartEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, const void *cp_void, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE type )
 { 
   p_wk->seq = 0;
-  p_wk->cp_pp  = cp_pp;
+  p_wk->cp_evilcheck_data = cp_void;
+  p_wk->evilcheck_type    = type;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3787,9 +3908,28 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
   case SEQ_EVILCHECL_START:
     { 
       BOOL ret;
-      NHTTP_RAP_PokemonEvilCheckCreate( p_wk->p_nhttp, p_wk->heapID, POKETOOL_GetWorkSize(), NHTTP_POKECHK_RANDOMMATCH);
-      NHTTP_RAP_PokemonEvilCheckAdd( p_wk->p_nhttp, (void*)p_wk->cp_pp, POKETOOL_GetWorkSize() );
 
+      switch( p_wk->evilcheck_type )
+      { 
+      case WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PP:
+        NHTTP_RAP_PokemonEvilCheckCreate( p_wk->p_nhttp, p_wk->heapID, POKETOOL_GetWorkSize(), NHTTP_POKECHK_RANDOMMATCH);
+        NHTTP_RAP_PokemonEvilCheckAdd( p_wk->p_nhttp, (void*)p_wk->cp_evilcheck_data, POKETOOL_GetWorkSize() );
+        break;
+      case WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PARTY:
+        { 
+          int i;
+          const POKEPARTY *cp_party = p_wk->cp_evilcheck_data;
+          POKEMON_PARAM *p_pp;
+
+          NHTTP_RAP_PokemonEvilCheckCreate( p_wk->p_nhttp, p_wk->heapID, POKETOOL_GetWorkSize() * PokeParty_GetPokeCount(cp_party), NHTTP_POKECHK_RANDOMMATCH);
+          for( i = 0; i < PokeParty_GetPokeCount(cp_party); i++ )
+          { 
+            p_pp  = PokeParty_GetMemberPointer( cp_party, i );
+            NHTTP_RAP_PokemonEvilCheckAdd( p_wk->p_nhttp, p_pp, POKETOOL_GetWorkSize() );
+          }
+        }
+        break;
+      }
       ret = NHTTP_RAP_PokemonEvilCheckConectionCreate( p_wk->p_nhttp );
       GF_ASSERT( ret );
 
