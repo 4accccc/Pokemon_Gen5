@@ -279,6 +279,17 @@
 #define WIN_DOWN (SCRCMD_MSGWIN_DOWN)
 #define WIN_NONE (SCRCMD_MSGWIN_NON)
 
+//システムウィンドウ用位置定義
+#define POS_UP      SCRCMD_MSGWIN_UPLEFT
+#define POS_DL      SCRCMD_MSGWIN_DOWNLEFT
+//ふきだしウィンドウ用位置定義
+#define POS_DOWN    SCRCMD_MSGWIN_UPLEFT
+#define POS_DL      SCRCMD_MSGWIN_DOWNLEFT
+#define POS_UR      SCRCMD_MSGWIN_UPRIGHT
+#define POS_DR      SCRCMD_MSGWIN_DOWNRIGHT
+
+#define POS_DEFAULT SCRCMD_MSGWIN_DEFAULT
+
 //ワイプフェードの基本の値
 #define SCR_WIPE_DIV        (WIPE_DEF_DIV)
 #define SCR_WIPE_SYNC       (WIPE_DEF_SYNC)

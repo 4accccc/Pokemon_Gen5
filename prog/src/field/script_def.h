@@ -192,9 +192,17 @@
 //--------------------------------------------------------------
 /// メッセージウィンドウ上下指定
 //--------------------------------------------------------------
-#define SCRCMD_MSGWIN_UP (0)
-#define SCRCMD_MSGWIN_DOWN (1)
+#define SCRCMD_MSGWIN_UPLEFT    (0)
+#define SCRCMD_MSGWIN_DOWNLEFT  (1)
+#define SCRCMD_MSGWIN_UPRIGHT   (2)
+#define SCRCMD_MSGWIN_DOWNRIGHT (3)
+
+#define SCRCMD_MSGWIN_DEFAULT   (4)
+
+#define SCRCMD_MSGWIN_UP        SCRCMD_MSGWIN_UPLEFT
+#define SCRCMD_MSGWIN_DOWN      SCRCMD_MSGWIN_DOWNLEFT
 #define SCRCMD_MSGWIN_NON (2)
+
 
 //--------------------------------------------------------------
 /// BGウィンドウタイプ
