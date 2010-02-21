@@ -9258,8 +9258,8 @@ static void handler_GiftPass( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       param->pokeID = targetPokeID;
       param->itemID = myItemID;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_GiftPass );
-      HANDEX_STR_AddArg( &param->exStr, targetPokeID );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_AddArg( &param->exStr, targetPokeID );
       HANDEX_STR_AddArg( &param->exStr, myItemID );
     }
   }
