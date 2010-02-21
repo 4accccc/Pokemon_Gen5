@@ -288,3 +288,32 @@ u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm)
   return MyStatus_GetRomCode( myst );
 }
 
+//==================================================================
+/**
+ * Ž©•ª‚ªŒ»Ý‚¢‚éN“üæ‚Ì‹Gß‚ðŽæ“¾
+ *
+ * @param   game_comm		
+ *
+ * @retval  u8		Ž©•ª‚ª‚¢‚éROM‚Ì‹GßID
+ *                (’ÊM‚µ‚Ä‚¢‚È‚¢AN“ü‚µ‚Ä‚¢‚È‚¢A’ÊMƒGƒ‰[’†‚ÍŽ©•ª‚ÌROM‚Ì‹Gß)
+ */
+//==================================================================
+u8 Intrude_GetSeasonID(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  GAMEDATA *gamedata = GameCommSys_GetGameData(game_comm);
+  u8 palace_area;
+  
+  if(intcomm == NULL){
+    return GAMEDATA_GetSeasonID(gamedata);
+  }
+  
+  palace_area = Intrude_GetPalaceArea(intcomm);
+#if 0
+  //¦check ‚Ü‚¾–¢ì¬
+  return intcomm->intrude_status[palace_area].season_id;
+#else
+  return GAMEDATA_GetSeasonID(gamedata);
+#endif
+}
+
