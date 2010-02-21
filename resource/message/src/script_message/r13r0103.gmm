@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsushima" host="W00181" date="2010-02-21T14:05:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,12 +235,12 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="189"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="227"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="204"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="21" top="129" right="726" bottom="772" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,189 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_r13r0103_boy1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・弟を追いかけて、
+主人公の前に立ってからのセリフ。</comment>
+		<attribute name="キャラ指定">兄</attribute>
+		<language name="JPN" width="256">ツチノカミさまの　ほこらに
+イタズラ　すると[BE:00:ページ切り替え（行送り）]
+おおあらしに　なるんだぞー！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ツチノカミさまの　ほこらに
+イタズラ　すると[BE:00:ページ切り替え（行送り）]
+おおあらしに　なるんだぞー！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_boy2_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●WHITE
+
+・主人公の背後から叫ぶ。</comment>
+		<attribute name="キャラ指定">弟</attribute>
+		<language name="JPN" width="256">ちがうもーん！[BE:01:ページ切り替え（クリア）]
+おおあめ　ふらせて
+かぜを　びゅーびゅー　させるのは[BE:00:ページ切り替え（行送り）]
+ほかの　ポケモンだもーん！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ちがうもーん！[BE:01:ページ切り替え（クリア）]
+おおあめ　ふらせて
+かぜを　びゅーびゅー　させるのは[BE:00:ページ切り替え（行送り）]
+ほかの　ポケモンだもーん！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_boy2_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●BLACK
+
+・主人公の背後から叫ぶ。</comment>
+		<attribute name="キャラ指定">弟</attribute>
+		<language name="JPN" width="256">ちがうもーん！[BE:01:ページ切り替え（クリア）]
+おおあめ　ふらせて
+カミナリを　おっことすのは[BE:00:ページ切り替え（行送り）]
+ほかの　ポケモンだもーん！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ちがうもーん！[BE:01:ページ切り替え（クリア）]
+おおあめ　ふらせて
+カミナリを　おっことすのは[BE:00:ページ切り替え（行送り）]
+ほかの　ポケモンだもーん！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_boy1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・叫んでから、
+主人公の背後にいる弟を追いかける。
+・弟は主人公の正面へ逃げる。</comment>
+		<attribute name="キャラ指定">兄</attribute>
+		<language name="JPN" width="256">ちがうよ　バカっ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ちがうよ　バカっ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_boy1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・主人公の背後に回りこんでから。
+逃げた弟に向かって叫ぶ。</comment>
+		<attribute name="キャラ指定">兄</attribute>
+		<language name="JPN" width="256">わるさした　ポケモンを　こらしめた
+ツチノカミさまの　ほこら　なんだぞ！[BE:01:ページ切り替え（クリア）]
+ほこらに　イタズラを　すると
+あらしを　おこす　ポケモンが[BE:00:ページ切り替え（行送り）]
+また　でてきても[BE:00:ページ切り替え（行送り）]
+こらしめて　くれなくなるんだよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わるさした　ポケモンを　こらしめた
+ツチノカミさまの　ほこら　なんだぞ！[BE:01:ページ切り替え（クリア）]
+ほこらに　イタズラを　すると
+あらしを　おこす　ポケモンが[BE:00:ページ切り替え（行送り）]
+また　でてきても[BE:00:ページ切り替え（行送り）]
+こらしめて　くれなくなるんだよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_boy2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>・叫んで、退場。</comment>
+		<attribute name="キャラ指定">弟</attribute>
+		<language name="JPN" width="256">わるさする　ポケモンが　いたら
+ツチノカミさまが　でてきて[BE:00:ページ切り替え（行送り）]
+やっつけて　くれるもーん！[BE:01:ページ切り替え（クリア）]
+にいちゃんの　ほうが
+ばかだもーんっ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わるさする　ポケモンが　いたら
+ツチノカミさまが　でてきて[BE:00:ページ切り替え（行送り）]
+やっつけて　くれるもーん！[BE:01:ページ切り替え（クリア）]
+にいちゃんの　ほうが
+ばかだもーんっ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_boy1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・叫んで、弟を追いかけ退場。</comment>
+		<attribute name="キャラ指定">兄</attribute>
+		<language name="JPN" width="256">まてよ　ばかっ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">まてよ　ばかっ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_girl1_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>・主人公の前まで来てから、セリフ。</comment>
+		<attribute name="キャラ指定">姉</attribute>
+		<language name="JPN" width="256">ほこらは　ツチノカミって　なまえの
+ポケモンを　おまつりしてるの[BE:01:ページ切り替え（クリア）]
+カザカミと　ライカミが
+イッシュちほうの　いえや　はたけを[BE:00:ページ切り替え（行送り）]
+あらしまわった　ときに[BE:00:ページ切り替え（行送り）]
+ツチノカミって　ポケモンが[BE:00:ページ切り替え（行送り）]
+やっつけて　くれたんだって[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ほこらは　ツチノカミって　なまえの
+ポケモンを　おまつりしてるの[BE:01:ページ切り替え（クリア）]
+カザカミと　ライカミが
+イッシュちほうの　いえや　はたけを[BE:00:ページ切り替え（行送り）]
+あらしまわった　ときに[BE:00:ページ切り替え（行送り）]
+ツチノカミって　ポケモンが[BE:00:ページ切り替え（行送り）]
+やっつけて　くれたんだって[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_girl1_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>・主人公の横に移動して、セリフ。</comment>
+		<attribute name="キャラ指定">姉</attribute>
+		<language name="JPN" width="256">あたしの　おじいちゃんが
+こどもだったころの　おはなし[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あたしの　おじいちゃんが
+こどもだったころの　おはなし[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_girl1_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>・段差を降りる途中で振り向いて。</comment>
+		<attribute name="キャラ指定">姉</attribute>
+		<language name="JPN" width="256">カザカミと　ライカミが
+また　ここに　きたら[BE:00:ページ切り替え（行送り）]
+ツチノカミさまが　でてくるかも[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">カザカミと　ライカミが
+また　ここに　きたら[BE:00:ページ切り替え（行送り）]
+ツチノカミさまが　でてくるかも[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_girl1_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>・画面から出た後に、叫ぶ。</comment>
+		<attribute name="キャラ指定">姉</attribute>
+		<language name="JPN" width="256">おじいちゃんが　いってたよーっ！</language>
+		<language name="JPN_KANJI" width="256">おじいちゃんが　いってたよーっ！</language>
+	</row>
+
+	<row id="msg_r13r0103_narration_01">
+		<comment>●カザカミ、ライカミの両方が
+手持ちに無いときのメッセージ。</comment>
+		<attribute name="キャラ指定">ナレーター</attribute>
+		<language name="JPN" width="256">ふるびた　ちいさな　ほこらが　ある…</language>
+		<language name="JPN_KANJI" width="256">ふるびた　ちいさな　ほこらが　ある…</language>
+	</row>
+
+	<row id="msg_r13r0103_narration_02">
+		<comment>●カザカミ、ライカミの両方が
+手持ちにいるときのメッセージ。</comment>
+		<attribute name="キャラ指定">ナレーター</attribute>
+		<language name="JPN" width="256">ふるびた　ちいさな　ほこらが　ある…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ふるびた　ちいさな　ほこらが　ある…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_narration_03">
+		<comment>・「！」表示後のメッセージ。
+・このあとツチノカミが登場。</comment>
+		<attribute name="キャラ指定">ナレーター</attribute>
+		<language name="JPN" width="256">モンスターボールに　はいっている
+カザカミと　ライカミが[BE:00:ページ切り替え（行送り）]
+はげしく　はんのうしている！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">モンスターボールに　はいっている
+カザカミと　ライカミが[BE:00:ページ切り替え（行送り）]
+はげしく　はんのうしている！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_tsutinokami_01">
+		<comment>・登場後、吼える。
+
+・話しかけて戦闘に入るときも、
+このメッセージを使います。</comment>
+		<attribute name="キャラ指定">ツチノカミ</attribute>
+		<language name="JPN" width="256">どろるるるるっ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">どろるるるるっ！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r13r0103_narration_04">
+		<comment>●ツチノカミを倒したとき、主人公が
+逃げたときのメッセージ。</comment>
+		<attribute name="キャラ指定">ナレーター</attribute>
+		<language name="JPN" width="256">ツチノカミは　そらの　かなたへ
+とびさってしまった…</language>
+		<language name="JPN_KANJI" width="256">ツチノカミは　そらの　かなたへ
+とびさってしまった…</language>
 	</row>
 
 	<flowchart-group-list>
