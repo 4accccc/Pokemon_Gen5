@@ -67,5 +67,5 @@ extern BOOL UnionSend_MinigameBasicStatusReq(void);
 extern BOOL UnionSend_MinigameBasicStatus(const UNION_APP_BASIC *app_basic, u8 send_bit);
 extern BOOL UnionSend_MinigameMystatusReq(u8 send_bit, const MYSTATUS *myst);
 extern BOOL UnionSend_MinigameMystatus(u8 send_bit, const MYSTATUS *myst);
-extern BOOL UnionSend_MinigameIntrudeReady(u8 send_bit);
+extern BOOL UnionSend_MinigameIntrudeReady(u8 send_bit, const MYSTATUS *pMyst);
 extern BOOL UnionSend_MinigameLeaveChild(u8 send_bit, NetID leave_netid);

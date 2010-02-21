@@ -589,7 +589,7 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
 
   case _SEQ_START_BEFORE_TIMING:
     if(situ->mycomm.intrude == TRUE){  //—“üŽž‚È‚ç‚Î“¯Šú‚Ì•Ï‚í‚è‚É—“üéŒ¾‚ð‘—M
-      if(UnionSend_MinigameIntrudeReady(Union_App_GetMemberNetBit(unisys->alloc.uniapp)) == TRUE){
+      if(UnionSend_MinigameIntrudeReady(Union_App_GetMemberNetBit(unisys->alloc.uniapp), GAMEDATA_GetMyStatus(unisys->uniparent->game_data)) == TRUE){
         *seq = _SEQ_MINIGAME_PROC;
       }
     }

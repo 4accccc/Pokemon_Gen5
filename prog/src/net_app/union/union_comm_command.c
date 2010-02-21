@@ -756,11 +756,11 @@ static void _UnionRecv_MinigameIntrudeReady(const int netID, const int size, con
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL UnionSend_MinigameIntrudeReady(u8 send_bit)
+BOOL UnionSend_MinigameIntrudeReady(u8 send_bit, const MYSTATUS *pMyst)
 {
   OS_TPrintf("SEND ミニゲーム 乱入準備完了\n");
   return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
-    send_bit, UNION_CMD_MINIGAME_INTRUDE_READY, 0, NULL, TRUE, FALSE, FALSE);
+    send_bit, UNION_CMD_MINIGAME_INTRUDE_READY, MyStatus_GetWorkSize(), pMyst, TRUE, FALSE, FALSE);
 }
 
 //==============================================================================
