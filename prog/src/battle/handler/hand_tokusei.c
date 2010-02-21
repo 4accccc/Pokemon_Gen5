@@ -5397,19 +5397,21 @@ static void handler_AunNoIki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   // Ž©•ª‚ª–hŒä‘¤‚Å
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    // UŒ‚‘¤‚ª–¡•û‚È‚ç–³Œø
+    // UŒ‚‘¤‚ª–¡•ûƒ|ƒPƒ‚ƒ“‚Å
     u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-    if( BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) )
+    if( BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) && (pokeID != atkPokeID ) )
     {
-      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
+      // ƒ_ƒ[ƒWƒƒU‚È‚ç–³Œø‰»
+      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+      if( WAZADATA_IsDamage(waza) )
       {
-        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+        if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
         {
           BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+          param->header.tokwin_flag = TRUE;
           HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_AunNoIki );
           HANDEX_STR_AddArg( &param->str, pokeID );
         }
-        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
       }
     }
   }
