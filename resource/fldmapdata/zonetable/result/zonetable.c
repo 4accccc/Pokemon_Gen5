@@ -8582,9 +8582,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_DUN2001, // camera_area
 		0, // padding
-		5,
 		0,
-		4,
+		0,
+		0,
 	},
 	{//ZONE_ID_D20R0201 = 277
 		RSC_NOGRID_DEFAULT,
@@ -8613,9 +8613,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_DUN2001, // camera_area
 		0, // padding
-		5,
 		0,
-		4,
+		0,
+		0,
 	},
 	{//ZONE_ID_D20R0301 = 278
 		RSC_NOGRID_DEFAULT,
@@ -8644,9 +8644,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_DUN2001, // camera_area
 		0, // padding
-		5,
 		0,
-		4,
+		0,
+		0,
 	},
 	{//ZONE_ID_D20R0401 = 279
 		RSC_NOGRID_DEFAULT,
@@ -8675,9 +8675,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_DUN2001, // camera_area
 		0, // padding
-		5,
 		0,
-		4,
+		0,
+		0,
 	},
 	{//ZONE_ID_D20R0501 = 280
 		RSC_GRID_DEFAULT,
