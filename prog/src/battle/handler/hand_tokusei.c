@@ -560,7 +560,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_DOKUBOUSOU,       HAND_TOK_ADD_Dokubousou    }, // どくぼうそう
     { POKETOKUSEI_NETUBOUSOU,       HAND_TOK_ADD_Netubousou    }, // ねつぼうそう
     { POKETOKUSEI_SYUUKAKU,         HAND_TOK_ADD_Syuukaku      }, // しゅうかく
-    { POKETOKUSEI_AUNNOIKI,         HAND_TOK_ADD_AunNoIki      }, // あうんのいき
+    { POKETOKUSEI_AUNNOIKI,         HAND_TOK_ADD_AunNoIki      }, // テレパシー（旧あうんのいき）
     { POKETOKUSEI_MURAKKE,          HAND_TOK_ADD_Murakke       }, // ムラっけ
     { POKETOKUSEI_BOUJIN,           HAND_TOK_ADD_Boujin        }, // ぼうじん
     { POKETOKUSEI_DOKUSYU,          HAND_TOK_ADD_Dokusyu       }, // どくしゅ
@@ -712,7 +712,7 @@ static void handler_Ikaku_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
       param->fAlmost = TRUE;
 
       {
-        BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+        BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
         BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
 
         param->poke_cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, param->pokeID );
@@ -4882,7 +4882,7 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
         u8 consumedPokeCnt;
       }MONOHIROI_WORK;
 
-      BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+      BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
       BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_OTHERS, myPos );
 
       MONOHIROI_WORK* mwk = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(MONOHIROI_WORK) );
@@ -5386,7 +5386,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Netubousou( u32* numElems )
 }
 //------------------------------------------------------------------------------
 /**
- *  とくせい「あうんのいき」
+ *  とくせい「テレパシー」
  *
  *  味方の攻撃を受けない。
  */
@@ -6313,7 +6313,7 @@ static void common_KinchoukanOff( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work 
   u8 targetPokeID[ BTL_POSIDX_MAX ];
   u8 targetCnt, i;
 
-  BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+  BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
   BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
 
   // work[0] に値を入れて装備アイテム使用チェック機能をオフ

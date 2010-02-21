@@ -263,3 +263,20 @@ BtlPokePos BTL_POSPOKE_GetPokeExistPos( const BTL_POSPOKE_WORK* wk, u8 pokeID )
   return BTL_POS_MAX;
 }
 
+//=============================================================================================
+/**
+ * 指定位置にいるポケモンIDを返す（誰もいなければ BTL_POKEID_NULL）
+ *
+ * @param   wk
+ * @param   pos
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_POSPOKE_GetExistPokeID( const BTL_POSPOKE_WORK* wk, BtlPokePos pos )
+{
+  GF_ASSERT(pos<BTL_POS_MAX);
+  GF_ASSERT(wk->state[pos].fEnable);
+
+  return wk->state[ pos ].existPokeID;
+}

@@ -114,7 +114,8 @@ extern BtlPokePos BTL_SVFLOW_GetCapturedPokePos( const BTL_SVFLOW_WORK* wk );
 //------------------------------------------------
 extern BtlRule BTL_SVFTOOL_GetRule( BTL_SVFLOW_WORK* wk );
 extern BtlCompetitor BTL_SVFTOOL_GetCompetitor( BTL_SVFLOW_WORK* wk );
-extern BtlPokePos BTL_SVFTOOL_GetExistFrontPokeID( BTL_SVFLOW_WORK* server, u8 pokeID );
+extern BtlPokePos BTL_SVFTOOL_GetExistFrontPokePos( BTL_SVFLOW_WORK* server, u8 pokeID );
+extern u8 BTL_SVFTOOL_GetExistPokeID( BTL_SVFLOW_WORK* wk, BtlPokePos pos );
 extern BOOL BTL_SVFTOOL_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei tokusei );
 extern const BTL_POKEPARAM* BTL_SVFTOOL_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern u8 BTL_SVFTOOL_GetAllOpponentFrontPokeID( BTL_SVFLOW_WORK* wk, u8 basePokeID, u8* dst );

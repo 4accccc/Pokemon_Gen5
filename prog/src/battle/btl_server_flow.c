@@ -425,7 +425,7 @@ static BppKoraeruCause scEvent_CheckKoraeru( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, u16* damage );
 static void scproc_Koraeru( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKoraeruCause cause );
 static void scEvent_KoraeruExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKoraeruCause cause );
-static void wazaDmgRec_Add( const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, u16 damage );
+static void wazaDmgRec_Add( BTL_SVFLOW_WORK* wk, BtlPokePos atkPos, const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, u16 damage );
 static void scproc_WazaAdditionalEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage );
 static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
@@ -5492,9 +5492,12 @@ static u32 svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
   u8 fPluralHit = FALSE; // 複数回ヒットフラグ
   u8 fDead = FALSE;
 
-  u8 hitCountMax, fPluralHitCheck, fCritical, fFixDamage, hitCount;
-  u16 damage;
   u32 damage_sum;
+  u16 damage;
+  u8 hitCountMax, fPluralHitCheck, fCritical, fFixDamage, hitCount;
+  BtlPokePos atkPos;
+
+
   int i;
 
   fPluralHit = scEvent_CheckPluralHitParam( wk, attacker, wazaParam->wazaID, &hitCountMax, &fPluralHitCheck );
@@ -5503,6 +5506,7 @@ static u32 svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
   }
 
   wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
+  atkPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) );
   damage_sum = 0;
 
   for(i=0; i<hitCountMax; ++i)
@@ -5523,9 +5527,7 @@ static u32 svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     }
     // ２回目以降はワザエフェクトを追加で発生させる
     else{
-      BtlPokePos atkPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
-      BtlPokePos defPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(defender) );
-
+      BtlPokePos defPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(defender) );
       SCQUE_PUT_ACT_WazaEffect( wk->que, atkPos, defPos, wazaParam->wazaID );
     }
 
@@ -5576,9 +5578,10 @@ static u32 svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 
   BTL_POKESET_AddWithDamage( &wk->pokesetDamaged, defender, damage_sum );
   if( damage_sum ){
-    wazaDmgRec_Add( attacker, defender, wazaParam, damage_sum );
+    wazaDmgRec_Add( wk, atkPos, attacker, defender, wazaParam, damage_sum );
     BPP_TURNFLAG_Set( defender, BPP_TURNFLG_DAMAGED );
   }
+
 
   // ○○回あたった！メッセージ
   if( fPluralHit && (hitCount > 0)){
@@ -5610,6 +5613,7 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
   u8  critical_flg[ BTL_POSIDX_MAX ];
   u8  koraeru_cause[ BTL_POSIDX_MAX ];
   u8 i, poke_cnt, fFixDamage;
+  BtlPokePos atkPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) );
 
   poke_cnt = BTL_POKESET_GetCount( targets );
   GF_ASSERT(poke_cnt <= BTL_POSIDX_MAX);
@@ -5645,7 +5649,7 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
   {
     if( dmg[i] ){
       BTL_POKESET_AddWithDamage( &wk->pokesetDamaged, bpp[i], dmg[i] );
-      wazaDmgRec_Add( attacker, bpp[i], wazaParam, dmg[i] );
+      wazaDmgRec_Add( wk, atkPos, attacker, bpp[i], wazaParam, dmg[i] );
       BPP_TURNFLAG_Set( bpp[i], BPP_TURNFLG_DAMAGED );
     }
   }
@@ -5823,10 +5827,12 @@ static void scEvent_KoraeruExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKora
  * @param   damage
  */
 //----------------------------------------------------------------------------------
-static void wazaDmgRec_Add( const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, u16 damage )
+static void wazaDmgRec_Add( BTL_SVFLOW_WORK* wk, BtlPokePos atkPos, const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, u16 damage )
 {
   BPP_WAZADMG_REC rec;
-  BPP_WAZADMG_REC_Setup( &rec, BPP_GetID(attacker), wazaParam->wazaID, wazaParam->wazaType, damage );
+  u8 pokeID = BPP_GetID( attacker );
+
+  BPP_WAZADMG_REC_Setup( &rec, pokeID, atkPos, wazaParam->wazaID, wazaParam->wazaType, damage );
   BPP_WAZADMGREC_Add( defender, &rec );
 }
 
@@ -11191,10 +11197,25 @@ const BTL_POKEPARAM* BTL_SVFTOOL_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID )
  * @retval  BtlPokePos    出ている場合は戦闘位置ID／出ていない場合はBTL_POS_MAX
  */
 //--------------------------------------------------------------------------------------
-BtlPokePos BTL_SVFTOOL_GetExistFrontPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
+BtlPokePos BTL_SVFTOOL_GetExistFrontPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   return BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
 }
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] 指定位置に存在しているポケIDを返す（存在していない場合は BTL_POKEID_NULL）
+ *
+ * @param   wk
+ * @param   pos
+ *
+ * @retval  u8
+ */
+//--------------------------------------------------------------------------------------
+u8 BTL_SVFTOOL_GetExistPokeID( BTL_SVFLOW_WORK* wk, BtlPokePos pos )
+{
+  return BTL_POSPOKE_GetExistPokeID( &wk->pospokeWork, pos );
+}
+
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] 場に出ている全ての相手側ポケモンIDを配列に格納する

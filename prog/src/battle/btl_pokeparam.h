@@ -181,18 +181,20 @@ enum {
  */
 //--------------------------------------------------------------
 typedef struct {
-  u16      wazaID;    ///< ワザID
-  u16      damage;    ///< ダメージ量
-  u8       wazaType;  ///< ほのお、みず等のタイプ
-  u8       pokeID;    ///< 攻撃したポケモンID
+  u16         wazaID;    ///< ワザID
+  u16         damage;    ///< ダメージ量
+  u8          wazaType;  ///< ほのお、みず等のタイプ
+  u8          pokeID;    ///< 攻撃したポケモンID
+  BtlPokePos  pokePos;   ///< 攻撃したポケモン位置
 }BPP_WAZADMG_REC;
 
-static inline void BPP_WAZADMG_REC_Setup( BPP_WAZADMG_REC* rec, u8 pokeID, u16 wazaID, u8 wazaType, u16 damage )
+static inline void BPP_WAZADMG_REC_Setup( BPP_WAZADMG_REC* rec, u8 pokeID, BtlPokePos pokePos, u16 wazaID, u8 wazaType, u16 damage )
 {
   rec->wazaID = wazaID;
   rec->damage = damage;
   rec->wazaType = wazaType;
   rec->pokeID = pokeID;
+  rec->pokePos = pokePos;
 }
 
 //--------------------------------------------------------------

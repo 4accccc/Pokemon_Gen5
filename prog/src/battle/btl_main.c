@@ -168,7 +168,7 @@ static u8 expandPokePos_triple( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
 static inline clientID_to_side( u8 clientID );
 static inline BtlPokePos getTripleFrontPos( BtlPokePos pos );
 static inline u8 GetFriendCrientID( u8 clientID );
-static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
+static u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
 static u8 PokeID_to_ClientID( u8 pokeID );
@@ -2359,7 +2359,7 @@ static inline u8 GetFriendCrientID( u8 clientID )
  * @retval  inline u8
  */
 //--------------------------------------------------------------------------
-static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos )
+static u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos )
 {
   GF_ASSERT_MSG(btlPos < NELEMS(wk->posCoverClientID), "pos=%d\n", btlPos);
   GF_ASSERT_MSG(wk->posCoverClientID[btlPos] != BTL_CLIENT_MAX, "pos=%d\n", btlPos);

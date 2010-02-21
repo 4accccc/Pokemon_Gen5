@@ -1714,7 +1714,7 @@ static void handler_KuroiKiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
 
     {
-      BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+      BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
       BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ALL, myPos );
 
       reset_param->poke_cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, reset_param->pokeID );
@@ -2497,8 +2497,8 @@ static const BtlEventHandlerTable*  ADD_Counter( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Counter_CheckExe   },    // ワザ出し成功判定
-    { BTL_EVENT_DECIDE_TARGET,       handler_Counter_Target     },    // ターゲット決定
-    { BTL_EVENT_WAZA_DMG_PROC1,      handler_Counter_CalcDamage },    // ダメージ計算最終ハンドラ
+    { BTL_EVENT_DECIDE_TARGET,           handler_Counter_Target     },    // ターゲット決定
+    { BTL_EVENT_WAZA_DMG_PROC1,          handler_Counter_CalcDamage },    // ダメージ計算最終ハンドラ
 
   };
   *numElems = NELEMS( HandlerTable );
@@ -2585,8 +2585,22 @@ static void common_Counter_ExeCheck( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* wo
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BPP_WAZADMG_REC  rec;
 
+    // 指定タイプダメージを受けていないなら失敗
     if( !common_Counter_GetRec(bpp, dmgType, &rec) ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+    }
+    else
+    {
+      u8 targetPokeID = rec.pokeID;
+      // 対象が既に場にいない＆その場に他のポケもいないなら失敗
+      if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, rec.pokeID) == BTL_POS_MAX )
+      {
+        if( (rec.pokePos == BTL_POS_MAX)
+        ||  (BTL_SVFTOOL_GetExistPokeID(flowWk, rec.pokePos) == BTL_POKEID_NULL)
+        ){
+          BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+        }
+      }
     }
   }
 }
@@ -2602,8 +2616,19 @@ static void common_Counter_SetTarget( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* w
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BPP_WAZADMG_REC  rec;
 
-    if( common_Counter_GetRec(bpp, dmgType, &rec) ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, rec.pokeID );
+    if( common_Counter_GetRec(bpp, dmgType, &rec) )
+    {
+      u8 targetPokeID = rec.pokeID;
+      // 対象が既に場にいない場合（とんぼがえりなど）、その位置に現在いるポケを対象にする
+      if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, rec.pokeID) == BTL_POS_MAX )
+      {
+        if( rec.pokePos != BTL_POS_MAX ){
+          targetPokeID = BTL_SVFTOOL_GetExistPokeID( flowWk, rec.pokePos );
+        }else{
+          targetPokeID = BTL_POKEID_NULL;
+        }
+      }
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
     }
   }
 }
@@ -3038,7 +3063,7 @@ static void handler_YadorigiNoTane_Param( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BPP_SICK_CONT cont;
-    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
     cont = BPP_SICKCONT_MakePermanentParam( myPos );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
   }
@@ -3301,7 +3326,7 @@ static void handler_Sawagu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 
       {
         BTL_HANDEX_PARAM_CURE_SICK* cure_param;
-        BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+        BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
         BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ALL, myPos );
 
         HANDWORK_POKEID* idwk = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(HANDWORK_POKEID) );
@@ -8224,7 +8249,7 @@ static void handler_OumuGaesi_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 
     // シングル戦の場合、相手選択の必要がないのでNULLが来る
     if( targetPos == BTL_POS_NULL ){
-      BtlPokePos  myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+      BtlPokePos  myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
       BtlRule  rule = BTL_SVFTOOL_GetRule( flowWk );
       targetPos = BTL_MAINUTIL_GetOpponentPokePos( rule, myPos, 0 );
     }
@@ -8277,7 +8302,7 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 
     // シングル戦の場合、相手選択の必要がないのでNULLが来る
     if( targetPos == BTL_POS_NULL ){
-      BtlPokePos  myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+      BtlPokePos  myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
       BtlRule  rule = BTL_SVFTOOL_GetRule( flowWk );
       targetPos = BTL_MAINUTIL_GetOpponentPokePos( rule, myPos, 0 );
     }
@@ -9168,7 +9193,7 @@ static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 damagedPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    BtlPokePos pos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, damagedPokeID );
+    BtlPokePos pos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, damagedPokeID );
     BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_AREA_FRIENDS, pos );
     u8  targetPokeID[ BTL_POSIDX_MAX ];
     u8  targetCnt;
