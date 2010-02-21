@@ -444,6 +444,19 @@ u32 UnionAppSystem_GetBasicSize(void)
   return sizeof(UNION_APP_BASIC_STATUS);
 }
 
+//==================================================================
+/**
+ * 乱入準備完了時の最終セットアップ
+ *
+ * @param   uniapp		
+ */
+//==================================================================
+void UnionAppSystem_IntrudeReadySetup(UNION_APP_PTR uniapp)
+{
+  //自分のメンバーbitは自分でセット
+  uniapp->basic_status.member_bit |= 1 << GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+}
+
 
 
 //==============================================================================
