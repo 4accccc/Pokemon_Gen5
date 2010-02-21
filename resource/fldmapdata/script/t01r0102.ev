@@ -186,7 +186,7 @@ EVENT_START   ev_t01r0102_poke_get0
 
 	//ポケモン名タグをセット
 	_MONS_NAME( 0, MONSNO_554 )
-	_SYSWIN_MSG_DOWN(msg_t01r0102_ball1_fire_01)
+	_SYSWIN_MSG( msg_t01r0102_ball1_fire_01, WIN_DOWN )
 	_YES_NO_WIN( SCWK_ANSWER )
 	_SYSWIN_CLOSE()
 
@@ -204,7 +204,7 @@ EVENT_START   ev_t01r0102_poke_get1
 
 	//ポケモン名タグをセット
 	_MONS_NAME( 0, MONSNO_551 )
-	_SYSWIN_MSG_DOWN(msg_t01r0102_ball1_grass_01)
+	_SYSWIN_MSG( msg_t01r0102_ball1_grass_01, WIN_DOWN )
 	_YES_NO_WIN( SCWK_ANSWER )
 	_SYSWIN_CLOSE()
 
@@ -222,7 +222,7 @@ EVENT_START   ev_t01r0102_poke_get2
 
 	//ポケモン名タグをセット
 	_MONS_NAME( 0, MONSNO_557 )
-	_SYSWIN_MSG_DOWN(msg_t01r0102_ball1_water_01) 
+	_SYSWIN_MSG( msg_t01r0102_ball1_water_01, WIN_DOWN ) 
 	_YES_NO_WIN( SCWK_ANSWER )
 	_SYSWIN_CLOSE()
 
@@ -252,7 +252,7 @@ ev_t01r0102_poke_get:
 	
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
 	_MONS_NAME( 1, SCWK_TEMP0 )
-	_SYSWIN_MSG_DOWN(msg_t01r0102_ball_get_01)
+	_SYSWIN_MSG( msg_t01r0102_ball_get_01, WIN_DOWN )
 	
 	//ME鳴らす
 	_ME_PLAY( SEQ_ME_POKEGET )

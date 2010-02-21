@@ -30,7 +30,7 @@ EVENT_START   ev_bg_t01r0202_pc_01
 	_TALK_START_SE_PLAY()
 
 	_PLAYER_NAME( 0 ) //ÉvÉåÉCÉÑÅ[ñºÇîΩâf
-	_SYSWIN_MSG_DOWN( msg_t01r0202_pc_01 )
+	_SYSWIN_MSG( msg_t01r0202_pc_01, WIN_DOWN )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
 

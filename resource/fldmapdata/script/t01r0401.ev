@@ -454,7 +454,7 @@ EVENT_START   ev_t01r0401_hakase1_01
 			
 			//全国版にバージョンアップした！【仮】上下自動認識に変える
 			_ME_PLAY( SEQ_ME_KEYITEM )
-			_SYSWIN_MSG_DOWN( msg_t01r0401_hakase1_03 )
+			_SYSWIN_MSG( msg_t01r0401_hakase1_03, WIN_DOWN  )
 			_ME_WAIT()
 			_MSGWIN_CLOSE()
 			
