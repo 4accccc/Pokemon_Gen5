@@ -297,9 +297,9 @@ static void IRC_BATTLE_SUBPROC_InitStatusData( IRC_BATTLE_WORK *work , IRC_BATTL
   psData->game_data = work->initWork->gameData;
   psData->cfg = SaveData_GetConfig(svWork);
 
-  psData->player_name = MyStatus_GetMyName( myStatus );
-  psData->player_id = MyStatus_GetID( myStatus );
-  psData->player_sex = MyStatus_GetMySex( myStatus );
+  //psData->player_name = MyStatus_GetMyName( myStatus );
+  //psData->player_id = MyStatus_GetID( myStatus );
+  //psData->player_sex = MyStatus_GetMySex( myStatus );
   
   psData->ppt = PST_PP_TYPE_POKEPARTY;
   psData->mode = PST_MODE_NO_WAZACHG;

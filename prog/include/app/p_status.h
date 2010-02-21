@@ -24,9 +24,10 @@ typedef struct {
   CONFIG * cfg; // コンフィグデータ
   GAMEDATA *game_data; //ゲームデータ
 
-  const STRCODE * player_name;  // 見ている人の名前
-  u32 player_id;          // 見ている人のID
-  u8  player_sex;         // 見ている人の性別
+  //game_dataから取得するように変更
+  //const STRCODE * player_name;  // 見ている人の名前
+  //u32 player_id;          // 見ている人のID
+  //u8  player_sex;         // 見ている人の性別
 
   u8  ppt;    // パラメータタイプ
   u8  mode;   // モード

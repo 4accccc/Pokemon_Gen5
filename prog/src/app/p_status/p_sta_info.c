@@ -18,7 +18,14 @@
 #include "app/app_menu_common.h"
 
 #include "arc_def.h"
+#include "message.naix"
 #include "p_status_gra.naix"
+
+#include "msg/msg_trainermemo.h"
+#include "msg/msg_place_name.h"
+#include "msg/msg_place_name_out.h"
+#include "msg/msg_place_name_per.h"
+#include "msg/msg_place_name_spe.h"
 
 #include "p_sta_sys.h"
 #include "p_sta_info.h"
@@ -83,7 +90,7 @@
 //上画面
 #define PSTATUS_INFO_MEMO_WIN_TOP  (5)
 #define PSTATUS_INFO_MEMO_WIN_LEFT (4)
-#define PSTATUS_INFO_MEMO_WIN_HEIGHT  (16)
+#define PSTATUS_INFO_MEMO_WIN_HEIGHT  (20)
 #define PSTATUS_INFO_MEMO_WIN_WIDTH (24)
 
 #define PSTATUS_INFO_MEMO_STR_X ( 0+ PSTATUS_STR_OFS_X)
@@ -125,6 +132,12 @@ struct _PSTATUS_INFO_WORK
   GFL_BMPWIN  *bmpWin[SIB_MAX];
   GFL_BMPWIN  *bmpWinUp;
 
+  GFL_MSGDATA *msgMemo;
+  GFL_MSGDATA *msgPlace;
+  GFL_MSGDATA *msgPlaceSp;
+  GFL_MSGDATA *msgPlaceOut;
+  GFL_MSGDATA *msgPlacePerson;
+
   NNSG2dScreenData *scrDataDown;
   void *scrResDown;
   NNSG2dScreenData *scrDataUp;
@@ -139,6 +152,7 @@ struct _PSTATUS_INFO_WORK
 #pragma mark [> proto
 static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *subWork , const POKEMON_PASO_PARAM *ppp );
 static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp );
+static STRBUF* PSTATUS_INFO_GetPlaceStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const u32 place );
 
 static const u8 winPos[SIB_MAX][4] =
 {
@@ -208,6 +222,14 @@ void PSTATUS_INFO_LoadResource( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork
                     FALSE , &infoWork->scrDataUp , work->heapId );
   infoWork->scrResUpTitle = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_infotitle_u_NSCR ,
                     FALSE , &infoWork->scrDataUpTitle , work->heapId );
+
+  //トレーナーメモ
+  infoWork->msgMemo = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_trainermemo_dat , work->heapId );
+  infoWork->msgPlace   = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_place_name_dat , work->heapId );
+  infoWork->msgPlaceSp = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_place_name_spe_dat , work->heapId );
+  infoWork->msgPlaceOut= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_place_name_out_dat , work->heapId );
+  infoWork->msgPlacePerson = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_place_name_per_dat , work->heapId );
+
 }
 
 //--------------------------------------------------------------
@@ -220,6 +242,13 @@ void PSTATUS_INFO_ReleaseResource( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoW
   {
     PSTATUS_INFO_ClearPage( work , infoWork );
   }
+
+  GFL_MSG_Delete( infoWork->msgMemo );
+  GFL_MSG_Delete( infoWork->msgPlace );
+  GFL_MSG_Delete( infoWork->msgPlaceSp );
+  GFL_MSG_Delete( infoWork->msgPlaceOut );
+  GFL_MSG_Delete( infoWork->msgPlacePerson );
+
 
   GFL_HEAP_FreeMemory( infoWork->scrResDown );
   GFL_HEAP_FreeMemory( infoWork->scrResUp );
@@ -517,57 +546,237 @@ static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *info
 //--------------------------------------------------------------
 static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp )
 {
-  u32 height;
+  u32 height = 0;
   const u32 isEgg = PPP_Get( ppp , ID_PARA_tamago_flag , NULL );
+
+  //性格
+  if( isEgg == 0 )
+  {
+    const u32 seikaku = PPP_Get( ppp , ID_PARA_seikaku , NULL );
+    STRBUF *srcStr = GFL_MSG_CreateString( infoWork->msgMemo , trmemo_01_01 + seikaku );
+    
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWinUp ) , 
+            PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y + height, 
+            srcStr , work->fontHandle , PSTATUS_STR_COL_VALUE );
+    GFL_STR_DeleteBuffer( srcStr );
+    
+    height = 16;
+  }
+  
   //メモ
   {
-    //FIXME 場所対応
-    u16 placeName[7] = {L'な',L'ぞ',L'の',L'ば',L'し',L'ょ',0xFFFF};
-
+    BOOL isParent;  //自分のポケか？
+    u16 memoId;
     STRBUF *srcStr;
     STRBUF *dstStr = GFL_STR_CreateBuffer( 256 , work->heapId );
-    STRBUF *placeStr = GFL_STR_CreateBuffer( 8 , work->heapId );
-    WORDSET *wordSet = WORDSET_CreateEx( 10 , WORDSET_DEFAULT_BUFLEN , work->heapId );
-    const u32 year  = PPP_Get( ppp , ID_PARA_get_year , NULL );
-    const u32 month = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
-    const u32 day   = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
-    const u32 place = PPP_Get( ppp , ID_PARA_get_place , NULL );
-    const u32 level = PPP_Get( ppp , ID_PARA_get_level , NULL );
-
-    //場所仮
-    GFL_STR_SetStringCode( placeStr , placeName );
+    STRBUF *placeStr1;
+    STRBUF *placeStr2;
+    WORDSET *wordSet  = WORDSET_CreateEx( 10 , WORDSET_DEFAULT_BUFLEN , work->heapId );
+    const u32 year1   = PPP_Get( ppp , ID_PARA_birth_year , NULL );
+    const u32 month1  = PPP_Get( ppp , ID_PARA_birth_month , NULL )+1;
+    const u32 day1    = PPP_Get( ppp , ID_PARA_birth_day , NULL )+1;
+    const u32 year2   = PPP_Get( ppp , ID_PARA_get_year , NULL );
+    const u32 month2  = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
+    const u32 day2    = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
+    const u32 level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
+    const u32 isEvent = PPP_Get( ppp , ID_PARA_event_get_flag , NULL );
+    //場所はポケシフター対応で書き換える可能性あり。
+    u32 place1  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
+    u32 place2  = PPP_Get( ppp , ID_PARA_get_place , NULL );
     
-    WORDSET_RegisterNumber( wordSet , 0 , year , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordSet , 1 , month , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordSet , 2 , day , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordSet , 3 , level , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterWord( wordSet , 4 , placeStr , 0,TRUE,PM_LANG );
-    WORDSET_RegisterNumber( wordSet , 5 , year , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordSet , 6 , month , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordSet , 7 , day , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterWord( wordSet , 8 , placeStr , 0,TRUE,PM_LANG );
+    //自分のポケかチェック
+    {
+      MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->psData->game_data );
+      isParent = PPP_IsMatchOya( ppp , myStatus );
+    }
+
+    //種類分岐
 
     if( isEgg == 0 )
     {
-      srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_03_03_01_01 ); 
+      if( place2 == 30001 )
+      {
+        //ポケシフター
+        const u32 rom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
+        u16 newRomMsg = trmemo_02_09_01;
+        u16 oldRomMsg = trmemo_02_10_01;
+        if( isEvent == TRUE )
+        {
+          newRomMsg = trmemo_02_11_01;
+          oldRomMsg = trmemo_02_12_01;
+        }
+
+        switch( rom )
+        {
+        case VERSION_SAPPHIRE:  //1	///<	バージョン：AGBサファイア
+        case VERSION_RUBY:		  //2	///<	バージョン：AGBルビー
+        case VERSION_EMERALD:	  //3	///<	バージョン：AGBエメラルド
+          place1 = 30006;
+          memoId = oldRomMsg;
+          break;
+          
+        case VERSION_RED:			  //4	///<	バージョン：AGBファイアーレッド
+        case VERSION_GREEN:		  //5	///<	バージョン：AGBリーフグリーン
+          place1 = 30004;
+          memoId = oldRomMsg;
+          break;
+
+        case VERSION_GOLD:		  //7	///<	バージョン：ゴールド用予約定義
+        case VERSION_SILVER:	  //8	///<	バージョン：シルバー用予約定義
+          place1 = 30005;
+          memoId = newRomMsg;
+          break;
+
+        case VERSION_DIAMOND:	  //10	///<	バージョン：DSダイヤモンド
+        case VERSION_PEARL:		  //11	///<	バージョン：DSパール
+        case VERSION_PLATINUM:  //12	///<	バージョン：DSプラチナ
+          place1 = 30007;
+          memoId = newRomMsg;
+          break;
+
+        case VERSION_COLOSSEUM: //15	///<	バージョン：GCコロシアム
+          place1 = 30008;
+          memoId = oldRomMsg;
+          break;
+
+        default:
+          place1 = 30009;
+          memoId = newRomMsg;
+          break;
+          
+        }
+      }
+      else if( place2 >= 30010 && place2 <= 30013 )
+      {
+        //2010映画
+        switch( place2 )
+        {
+        case 30010:
+          memoId = trmemo_02_13_01;
+          break;
+        case 30011:
+          memoId = trmemo_02_14_01;
+          break;
+        case 30012:
+          memoId = trmemo_02_15_01;
+          break;
+        case 30013:
+          memoId = trmemo_02_16_01;
+          break;
+        }
+      }
+      else
+      {
+        //その他
+        if( isEvent == FALSE )
+        {
+          if( place1 == 0 )
+          {
+            if( place2 == 30002 )
+            {
+              //ゲーム内交換
+              memoId = trmemo_02_01_01;
+            }
+            else
+            {
+              //通常捕獲
+              memoId = trmemo_02_02_01;
+            }
+          }
+          else
+          {
+            if( place1 <= 60000 )
+            {
+              //交換タマゴ孵化
+              memoId = trmemo_02_03_01;
+            }
+            else
+            {
+              //ゲーム内タマゴ孵化
+              memoId = trmemo_02_04_01;
+            }
+          }
+        }
+        else
+        {
+          //イベント配布
+          if( place1 == 0 )
+          {
+            //不思議な贈り物経由
+            memoId = trmemo_02_05_01;
+          }
+          else
+          {
+            //会場配布
+            memoId = trmemo_02_06_01;
+          }
+        }
+      }
+      
+      
+      if( isParent == FALSE )
+      {
+        //タマゴじゃなければ、他人のポケの時のMsgは+1の位置にある。
+        memoId++;
+      }
     }
     else
     {
       //タマゴ
-      srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_03_T_01_02_01 ); 
+      if( isEvent == FALSE )
+      {
+        if( isParent == TRUE )
+        {
+          memoId = trmemo_01_T_01_01;
+        }
+        else
+        {
+          memoId = trmemo_01_T_01_02;
+        }
+      }
+      else
+      {
+        if( isParent == TRUE )
+        {
+          memoId = trmemo_01_T_01_03;
+        }
+        else
+        {
+          memoId = trmemo_01_T_01_04;
+        }
+      }
     }
+
+    
+    //場所
+    placeStr1 = PSTATUS_INFO_GetPlaceStr( work , infoWork , place1 );
+    placeStr2 = PSTATUS_INFO_GetPlaceStr( work , infoWork , place2 );
+    
+    WORDSET_RegisterNumber( wordSet , 0 , year1 , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 1 , month1 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 2 , day1 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 3 , level , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterWord( wordSet , 4 , placeStr1 , 0,TRUE,PM_LANG );
+    WORDSET_RegisterNumber( wordSet , 5 , year2 , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 6 , month2 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 7 , day2 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterWord( wordSet , 8 , placeStr2 , 0,TRUE,PM_LANG );
+
+    srcStr = GFL_MSG_CreateString( infoWork->msgMemo , memoId ); 
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWinUp ) , 
-            PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y , 
+            PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y + height, 
             dstStr , work->fontHandle , PSTATUS_STR_COL_VALUE );
 
     WORDSET_Delete( wordSet );
 
-    height = PRINTSYS_GetStrHeight( dstStr , work->fontHandle );
+    //TODO 許可制の関数
+    height += PRINTSYS_GetLineCount( dstStr )*16;
     //TODO ずれてる・・・？
-    height = 16*4;
+    //height = 16*4;
     
-    GFL_STR_DeleteBuffer( placeStr );
+    GFL_STR_DeleteBuffer( placeStr1 );
+    GFL_STR_DeleteBuffer( placeStr2 );
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
   }
@@ -579,6 +788,7 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
     u8 maxIdx = 0;
     u8 maxRand = 0;
     u32 msgId;
+    STRBUF *srcStr;
     const int paraId[6] = 
     {
       ID_PARA_hp_rnd,               //HP乱数
@@ -599,37 +809,101 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
       }
     }
     
-    msgId = mes_status_03_05_01_00 + maxIdx*5 + maxRand%5;
-    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWinUp , msgId ,
-                          PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y + height , 
-                          PSTATUS_STR_COL_VALUE );
-
+    msgId = trmemo_03_01_00 + maxIdx*5 + maxRand%5;
+    
+    srcStr = GFL_MSG_CreateString( infoWork->msgMemo , msgId );
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWinUp ) , 
+            PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y + height, 
+            srcStr , work->fontHandle , PSTATUS_STR_COL_VALUE );
+    GFL_STR_DeleteBuffer( srcStr );
+    
   }
   else
   {
     //タマゴ
     u16 msgId;
+    STRBUF *srcStr;
     const u32 natuki = PPP_Get( ppp , ID_PARA_friend , NULL );
     if( natuki <= 5 )
     {
-      msgId = mes_status_03_T_02_01;
+      msgId = trmemo_01_T_02_01;
     }
     else
     if( natuki <= 10 )
     {
-      msgId = mes_status_03_T_02_02;
+      msgId = trmemo_01_T_02_02;
     }
     else
     if( natuki <= 40 )
     {
-      msgId = mes_status_03_T_02_03;
+      msgId = trmemo_01_T_02_03;
     }
     else
     {
-      msgId = mes_status_03_T_02_04;
+      msgId = trmemo_01_T_02_04;
     }
-    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWinUp , msgId ,
-                          PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y + height , 
-                          PSTATUS_STR_COL_VALUE );
+
+    srcStr = GFL_MSG_CreateString( infoWork->msgMemo , msgId );
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWinUp ) , 
+            PSTATUS_INFO_MEMO_STR_X , PSTATUS_INFO_MEMO_STR_Y + height, 
+            srcStr , work->fontHandle , PSTATUS_STR_COL_VALUE );
+    GFL_STR_DeleteBuffer( srcStr );
   }
+}
+
+
+//地名変換
+static STRBUF* PSTATUS_INFO_GetPlaceStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const u32 place )
+{
+  if( place <= 30000 )
+  {
+    if( place >= msg_place_name_max )
+    {
+      return GFL_MSG_CreateString( infoWork->msgPlace , MAPNAME_TOOIBASYO ); 
+    }
+    else
+    {
+      return GFL_MSG_CreateString( infoWork->msgPlace , place ); 
+    }
+  }
+  else
+  if( place <= 40000 )
+  {
+    const u32 temp = place-30001;
+    if( temp >= msg_place_name_spe_max )
+    {
+      return GFL_MSG_CreateString( infoWork->msgPlace , MAPNAME_TOOIBASYO ); 
+    }
+    else
+    {
+      return GFL_MSG_CreateString( infoWork->msgPlaceSp , temp ); 
+    }
+  }
+  else
+  if( place <= 60000 )
+  {
+    const u32 temp = place-40001;
+    if( temp >= msg_place_name_out_max )
+    {
+      return GFL_MSG_CreateString( infoWork->msgPlaceOut , MAPNAME_TOOIBASYO_OUT ); 
+    }
+    else
+    {
+      return GFL_MSG_CreateString( infoWork->msgPlaceOut , temp ); 
+    }
+  }
+  else
+  if( place <= 65535 )
+  {
+    const u32 temp = place-60001;
+    if( temp >= msg_place_name_per_max )
+    {
+      return GFL_MSG_CreateString( infoWork->msgPlacePerson , MAPNAME_TOOKUNIIRUHITO ); 
+    }
+    else
+    {
+      return GFL_MSG_CreateString( infoWork->msgPlacePerson , temp ); 
+    }
+  }
+  return GFL_MSG_CreateString( infoWork->msgPlace , MAPNAME_TOOIBASYO ); 
 }

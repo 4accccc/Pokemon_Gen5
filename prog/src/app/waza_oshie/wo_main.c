@@ -3058,9 +3058,9 @@ static int WO_SeqPstCall( WO_WORK * wk )
   wk->psd.page = PPT_INFO;
 //  wk->psd.ev_contest = 1;
 
-  wk->psd.player_name = MyStatus_GetMyName( wk->dat->myst );
-  wk->psd.player_id   = MyStatus_GetID( wk->dat->myst );
-  wk->psd.player_sex  =  MyStatus_GetMySex( wk->dat->myst );
+  //wk->psd.player_name = MyStatus_GetMyName( wk->dat->myst );
+  //wk->psd.player_id   = MyStatus_GetID( wk->dat->myst );
+  //wk->psd.player_sex  =  MyStatus_GetMySex( wk->dat->myst );
 
   wk->psd.zukan_mode = 0;
 //  wk->psd.pokethlon  = FALSE;

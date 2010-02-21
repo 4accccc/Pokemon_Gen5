@@ -373,9 +373,9 @@ static void WIFIBATTLEMATCH_SUBPROC_InitStatusData( WIFIBATTLEMATCH_SUBPROC_PARA
   psData->game_data = p_param->gameData;
   psData->cfg = SaveData_GetConfig(svWork);
 
-  psData->player_name = MyStatus_GetMyName( myStatus );
-  psData->player_id = MyStatus_GetID( myStatus );
-  psData->player_sex = MyStatus_GetMySex( myStatus );
+  //psData->player_name = MyStatus_GetMyName( myStatus );
+  //psData->player_id = MyStatus_GetID( myStatus );
+  //psData->player_sex = MyStatus_GetMySex( myStatus );
   
   psData->ppt = PST_PP_TYPE_POKEPARTY;
   psData->mode = PST_MODE_NO_WAZACHG;

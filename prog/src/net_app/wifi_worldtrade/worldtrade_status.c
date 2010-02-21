@@ -81,9 +81,9 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 	statusParam->cfg	 = wk->param->config;
 	statusParam->game_data	 = GAMESYSTEM_GetGameData( wk->param->gamesys );
 
-	statusParam->player_name	= MyStatus_GetMyName( wk->param->mystatus );
-	statusParam->player_id		= MyStatus_GetID( wk->param->mystatus );
-	statusParam->player_sex	=  MyStatus_GetMySex( wk->param->mystatus );
+	//statusParam->player_name	= MyStatus_GetMyName( wk->param->mystatus );
+	//statusParam->player_id		= MyStatus_GetID( wk->param->mystatus );
+	//statusParam->player_sex	=  MyStatus_GetMySex( wk->param->mystatus );
 
 	statusParam->ppt  =PST_PP_TYPE_POKEPARAM;
 	statusParam->max  = 1;

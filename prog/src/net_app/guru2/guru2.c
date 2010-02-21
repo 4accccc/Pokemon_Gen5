@@ -376,9 +376,9 @@ static BOOL _seq_PokeSelect( GURU2_CALL_WORK *g2call )
       g2call->psd->ppd        = PokeParty_GetMemberPointer(party, ret);
       g2call->psd->game_data  = g2call->gamedata;
       
-      g2call->psd->player_name = MyStatus_GetMyName( mystatus );
-      g2call->psd->player_id   = MyStatus_GetID( mystatus );
-      g2call->psd->player_sex  = MyStatus_GetMySex( mystatus );
+      //g2call->psd->player_name = MyStatus_GetMyName( mystatus );
+      //g2call->psd->player_id   = MyStatus_GetID( mystatus );
+      //g2call->psd->player_sex  = MyStatus_GetMySex( mystatus );
       g2call->psd->ppt  =PST_PP_TYPE_POKEPARAM;
 
       g2call->psd->max  = 1;
