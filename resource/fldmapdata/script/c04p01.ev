@@ -64,13 +64,29 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c04p01_boss_01
 	
-/*	//Ｎ：主人公前へ
-	_OBJ_ANIME( C04P01_BOSS_01, anm_n_come_01 )
-	_TIME_WAIT( 8 )
-	_OBJ_ANIME_WAIT()
-*/	
+	_START_EVENT_BGM( SEQ_BGM_E_N )			//イベント曲再生	
 	
-	_START_EVENT_BGM( SEQ_BGM_E_N )			//イベント曲再生
+	{
+	DEFINE_LOCAL LWK_POSX
+	DEFINE_LOCAL LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+	
+	//Ｎ＆主人公：近づく
+	_OBJ_ANIME( C04P01_BOSS_01, anm_n_meet_01 )
+	//主人公位置で分岐
+	IF $LWK_POSZ == 12 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_meet_01a )
+	ELSIF $LWK_POSZ == 13 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_meet_01b )
+	ELSIF $LWK_POSZ == 14 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_meet_01c )
+	ELSIF $LWK_POSZ == 15 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_meet_01d )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_meet_01e )
+	ENDIF
+	_OBJ_ANIME_WAIT()
 	
 	//キミ プラズマだんを
 	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_01, C04P01_BOSS_01, WIN_NONE )
@@ -85,15 +101,9 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_02, C04P01_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
-	//画面暗転
+	//画面暗転【仮】
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
-	
-	//Ｎ＆主人公：位置変更
-	_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_02 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_02 )
-	_OBJ_ANIME_WAIT()
-	
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
@@ -103,16 +113,25 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_YES_NO_WIN( SCWK_ANSWER )
 	_MSGWIN_CLOSE()
 	
+	//Ｎ：一歩前へ
+	_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//Ｎバストアップ表示開始---------------------------------------------------
+	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
+	
 	//はい/いいえで分岐
 	IF $SCWK_ANSWER == SCR_YES THEN
-		_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_04, C04P01_BOSS_01, WIN_NONE )
+		_PLAINWIN_MSG_DOWN( msg_c04p01_boss_04 )
 		_MSGWIN_CLOSE()
 		
 	ELSE
-		_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_05, C04P01_BOSS_01, WIN_NONE )
+		_PLAINWIN_MSG_DOWN( msg_c04p01_boss_05 )
 		_MSGWIN_CLOSE()
 		
 	ENDIF
+	
+	_END_FACEUP()	//Ｎバストアップ表示終了----------------------------------
 	
 	//Ｎ：戦闘
 	_TRAINER_BTL_SET( TRID_BOSS_03, 0 )
@@ -124,11 +143,21 @@ EVENT_START	ev_pos_c04p01_boss_01
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 	
+	//Ｎ：驚いて後ずさり
+	_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_03 )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 8 )
+	
+	//Ｎバストアップ表示開始---------------------------------------------------
+	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
 	
 	//いま勝負の最中に
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_06, C04P01_BOSS_01, WIN_NONE )
+	_PLAINWIN_MSG_DOWN( msg_c04p01_boss_06 )
 	_MSGWIN_CLOSE()
+	
+	_END_FACEUP()	//Ｎバストアップ表示終了-----------------------------------
 	
 	//Ｎ：去る
 	_OBJ_ANIME( C04P01_BOSS_01, anm_n_goaway_01 )
@@ -136,21 +165,19 @@ EVENT_START	ev_pos_c04p01_boss_01
 	
 	//Ｎ：削除
 	_OBJ_DEL( C04P01_BOSS_01 )
+	//Ｎ非表示
+	_FLAG_SET( FV_C04P01_BOSS_01 )
 	
 	//BGM戻す
 	_END_EVENT_BGM()
 	
 	//========================================//
-	
-	//Ｎ非表示
-	_FLAG_SET( FV_C04P01_BOSS_01 )
-	
 	//POS無効
 	$WK_SCENE_C04P01 = 1
 	
 	//========================================//
 	
-	
+	}
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -161,45 +188,69 @@ _ANIME_LABEL	anm_stay_walk_d
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//Ｎ：主人公横へ
+//Ｎ＆主人公：近づく
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_n_come_01
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,3
-	_ANIME_DATA	AC_WALK_L_8F,1
+_ANIME_LABEL	anm_n_meet_01
+	_ANIME_DATA	AC_WALK_L_8F,5
 	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_meet_01a
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_player_meet_01b
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_player_meet_01c
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_player_meet_01d
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_player_meet_01e
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------------
 //Ｎ＆主人公：観覧車前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_n_move_01
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	AC_WALK_R_8F,20
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,9
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_move_01
 	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	AC_WALK_R_8F,21
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//Ｎ＆主人公：位置変更
+//Ｎ：一歩前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_n_move_02
-	_ANIME_DATA	AC_WALK_L_2F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_player_move_02
-	_ANIME_DATA	AC_WALK_L_2F,1
-	_ANIME_DATA	AC_DIR_R,1
+//--------------------------------------------------------------------
+//Ｎ：驚いて後ずさり
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_n_move_03
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -207,7 +258,9 @@ _ANIME_LABEL	anm_player_move_02
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_n_goaway_01
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,8
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 

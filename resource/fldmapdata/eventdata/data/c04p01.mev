@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/07 18:10:24
+#save date:2010/02/21 22:16:38
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04p01.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ C04P01_CLOWN_01
 #OBJ CODE Number
 CLOWN
 #MOVE CODE Number
-MV_RND
+MV_SPIN_R
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -34,13 +34,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+0
 #Move Limit Z Number
 0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 16 72
+200 16 72
 #event number: 1
 #type
 1
@@ -88,7 +88,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C04P01_GIRL1_01
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -96,13 +96,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+1
 #Move Limit Z Number
 1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 16 8
+248 16 72
 #event number: 3
 #type
 1
@@ -148,7 +148,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_C04P01_BOSS_01
 #Event Script Name
-SCRID_POS_C04P01_BOSS_01
+SCRID_DUMMY
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -164,7 +164,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-376 16 72
+248 16 40
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -199,9 +199,9 @@ WK_SCENE_C04P01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-376 16 72
+104 16 56
 #size
-1 1
+1 5
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
