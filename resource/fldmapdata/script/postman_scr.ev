@@ -131,7 +131,7 @@ sub_postman_main:
   IF $SCWK_ANSWER == TRUE THEN
       //「受け取った！」
       _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OK_MSG, SCWK_ANSWER )
-      _SYSWIN_MSG( SCWK_ANSWER , WIN_DOWN )
+      _SYSWIN_MSG( SCWK_ANSWER , POS_DOWN )
       _ME_PLAY( SEQ_ME_LVUP )
       _AB_KEYWAIT()
       _ME_WAIT()
@@ -146,7 +146,7 @@ sub_postman_main:
   ELSE
       //「受け取れなかった！」
       _POSTMAN_REQUEST( SCR_POSTMAN_REQ_NG_MSG, SCWK_ANSWER )
-      _SYSWIN_MSG( SCWK_ANSWER , WIN_DOWN )
+      _SYSWIN_MSG( SCWK_ANSWER , POS_DOWN )
       _LAST_KEYWAIT()
       _SYSWIN_CLOSE()
   ENDIF

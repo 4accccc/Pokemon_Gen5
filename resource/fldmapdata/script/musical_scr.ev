@@ -89,7 +89,7 @@ EVENT_START	ev_musical_recept_comm_core
   DEFINE_LOCAL ret
   
   //ワイヤレス通信開始しますか
-  _SYSWIN_MSG( msg_musical_test_01 , WIN_DOWN )
+  _SYSWIN_MSG( msg_musical_test_01 , POS_DOWN )
   _YES_NO_WIN( ret )
   
   IF $ret == SCR_NO THEN //やめる
@@ -108,7 +108,7 @@ EVENT_START	ev_musical_recept_comm_core
   ENDIF
   
   IF $ret == FALSE THEN //切断失敗
-    _SYSWIN_MSG( msg_musical_test_01 , WIN_DOWN )
+    _SYSWIN_MSG( msg_musical_test_01 , POS_DOWN )
     _RET
   ENDIF
 
@@ -120,7 +120,7 @@ EVENT_START	ev_musical_recept_comm_core
   ENDIF
   
   //親になるか子になるか
-  _SYSWIN_MSG( msg_musical_test_01 , WIN_DOWN )
+  _SYSWIN_MSG( msg_musical_test_01 , POS_DOWN )
   
   _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
   _BMPMENU_MAKE_LIST( msg_musical_program_01, 0 ) //リーダー
@@ -216,7 +216,7 @@ EVENT_END
 EVENT_START	ev_musical_exit_common
 	_MUSICAL_TOOLS( MUSICAL_TOOL_EXIT, 0,0,0 )
   
-  _SYSWIN_MSG( msg_musical_test_03 , WIN_DOWN ) //また　おこしください
+  _SYSWIN_MSG( msg_musical_test_03 , POS_DOWN ) //また　おこしください
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -295,7 +295,7 @@ fan_main_routine:
 			_BALLOONWIN_CLOSE()
 			
 			//仮メッセージ
-						_SYSWIN_MSG( msg_musical_fan_get_goods , WIN_DOWN )
+						_SYSWIN_MSG( msg_musical_fan_get_goods , POS_DOWN )
 				_LAST_KEYWAIT()
 			_SYSWIN_CLOSE()
 			

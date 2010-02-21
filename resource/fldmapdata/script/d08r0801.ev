@@ -82,7 +82,7 @@ EVENT_START    ev_pos_d08r0801_demo_01
 	ENDIF
 		_VOICE_WAIT()
 	
-	_SYSWIN_MSG(msg_d08r0801_demo_02, WIN_DOWN )
+	_SYSWIN_MSG(msg_d08r0801_demo_02, POS_DOWN )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 

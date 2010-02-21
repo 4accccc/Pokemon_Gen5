@@ -610,7 +610,7 @@ ev_trainer:
     _PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_WIN,LWK_WIN)
     //勝利数と総数が同じならば、システムメッセージを表示
     IF $LWK_TOTAL <= $LWK_WIN THEN
-      _SYSWIN_MSG( msg_c03r0801_sys_01 , WIN_DOWN )
+      _SYSWIN_MSG( msg_c03r0801_sys_01 , POS_DOWN )
 		  _LAST_KEYWAIT()
 		  _SYSWIN_CLOSE()
     ENDIF

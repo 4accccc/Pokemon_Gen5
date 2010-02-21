@@ -126,7 +126,7 @@ EVENT_START   ev_pos_r02_mama_01
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_bikkuri_mark)
 	_OBJ_ANIME_WAIT()
 	
-	_SYSWIN_MSG_ALLPUT( msg_r02_tvt_01, WIN_DOWN )
+	_SYSWIN_MSG_ALLPUT( msg_r02_tvt_01, POS_DOWN )
 	_SYSWIN_CLOSE()
 	
 	_SE_STOP()
@@ -171,7 +171,7 @@ EVENT_START   ev_pos_r02_mama_01
 	//ランニングシューズ入手処理
 	_GET_SHOES()
 	_ME_PLAY( SEQ_ME_KEYITEM )
-	_SYSWIN_MSG_ALLPUT( msg_r02_mama_03, WIN_DOWN )
+	_SYSWIN_MSG_ALLPUT( msg_r02_mama_03, POS_DOWN )
 	_ME_WAIT()
 	_SYSWIN_CLOSE()
 

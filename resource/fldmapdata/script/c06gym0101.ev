@@ -124,7 +124,7 @@ EVENT_START		ev_bg_c06gym0101_pokezou
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG( msg_c06gym0101_statue_01 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c06gym0101_statue_01 , POS_DOWN )
 		
 	//ジムバッジを取得している場合
 	ELSE
@@ -132,12 +132,12 @@ EVENT_START		ev_bg_c06gym0101_pokezou
 		//【仮】分岐処理・フラグの設定が仮
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C07 ) THEN
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG( msg_c06gym0101_statue_02 , WIN_DOWN )
+			_SYSWIN_MSG( msg_c06gym0101_statue_02 , POS_DOWN )
 		
 		//C02到着している場合
 		ELSE
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG( msg_c06gym0101_statue_03 , WIN_DOWN )
+			_SYSWIN_MSG( msg_c06gym0101_statue_03 , POS_DOWN )
 			
 		ENDIF
 	
@@ -190,7 +190,7 @@ _TALK_OBJ_START()
 		_ME_WAIT()
 		
 		//～～は　フウロから　ジェットバッジを　もらった
-		_SYSWIN_MSG( msg_c06gym0101_leader_03 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c06gym0101_leader_03 , POS_DOWN )
 		_SYSWIN_CLOSE()
 
 		//あと　すごく　たのしい　ポケモンしょうぶを

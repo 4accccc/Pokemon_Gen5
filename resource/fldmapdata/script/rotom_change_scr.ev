@@ -46,7 +46,7 @@ EVENT_START ev_rotom_change
     _CALL end_msg
   ELSE
     //ロトムいれる？
-    _SYSWIN_MSG(msg_rotom_02, WIN_DOWN )
+    _SYSWIN_MSG(msg_rotom_02, POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
     IF $SCWK_ANSWER == 0 THEN
@@ -59,7 +59,7 @@ EVENT_START ev_rotom_change
         ENDIF
       ELSE                      //複数発見
           //「ロトム選んで」
-          _SYSWIN_MSG(msg_rotom_04, WIN_DOWN )
+          _SYSWIN_MSG(msg_rotom_04, POS_DOWN )
           _SYSWIN_CLOSE()
           //ポケモン選択
           _SELECT_TEMOTI_POKE( SCWK_ANSWER , SEL_POS , 0 )
@@ -84,7 +84,7 @@ EVENT_END
 
 //最終メッセージ共通処理
 end_msg:
-  _SYSWIN_MSG( END_MSG , WIN_DOWN )
+  _SYSWIN_MSG( END_MSG , POS_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 _RET
@@ -130,7 +130,7 @@ select_elec:
   _TEMOTI_NICK_NAME( 0, SEL_POS )
   WHILE $EXIT == FALSE
     //どの家電？
-    _SYSWIN_MSG(msg_rotom_07, WIN_DOWN )
+    _SYSWIN_MSG(msg_rotom_07, POS_DOWN )
     //リスト作成
     _BMPMENU_INIT_EX( 1,1,0,1,LIST_SEL_RET ) 
     _BMPMENU_MAKE_LIST(msg_rotom_window_01, 1 )          //レンジ
@@ -161,9 +161,9 @@ select_elec:
     //変換したフォルムナンバーと選択したロトムのフォルムナンバーを比較
     IF $FORM_NO == $ELEC_TO_FORM_NO   THEN       //同じ
       IF $FORM_NO == 0 THEN     //現在ノーマルフォルム
-        _SYSWIN_MSG(msg_rotom_10, WIN_DOWN )      //モーターに入ってないよ
+        _SYSWIN_MSG(msg_rotom_10, POS_DOWN )      //モーターに入ってないよ
       ELSE
-        _SYSWIN_MSG(msg_rotom_08, WIN_DOWN )      //既に入ってるよ
+        _SYSWIN_MSG(msg_rotom_08, POS_DOWN )      //既に入ってるよ
       ENDIF
       _SYSWIN_CLOSE()
     ELSE          //違う
@@ -174,7 +174,7 @@ select_elec:
   //選んだのが「元に戻る」
   IF $ELEC_TO_FORM_NO == 0 THEN
     _CALL decide_del_skill_norm
-    _SYSWIN_MSG(msg_rotom_09, WIN_DOWN )      //モーターからでてきた
+    _SYSWIN_MSG(msg_rotom_09, POS_DOWN )      //モーターからでてきた
     _SYSWIN_CLOSE()
     $SCWK_ANSWER = TRUE   //ノーマルフォルムへはいつでも戻れるのでチェンジ可
   ELSE
@@ -242,7 +242,7 @@ decide_del_skill_norm:
       _TEMOTI_NICK_NAME( 0, SEL_POS )
       _WAZA_NAME( 2, NORM_CHECK_SKILL )
       //「旧固有技を忘れた・・」
-      _SYSWIN_MSG( msg_rotom_waza_08 , WIN_DOWN )
+      _SYSWIN_MSG( msg_rotom_waza_08 , POS_DOWN )
       _SYSWIN_CLOSE()
     ENDIF
   ENDIF
@@ -284,7 +284,7 @@ decide_del_skill:
       $SCWK_ANSWER = TRUE               //技スロットに空きがあるので、チェンジ可
       //「新固有技を覚えた」
       _WAZA_NAME( 2, NEW_SKILL )
-      _SYSWIN_MSG( msg_rotom_waza_07 , WIN_DOWN )
+      _SYSWIN_MSG( msg_rotom_waza_07 , POS_DOWN )
       _SYSWIN_CLOSE()
     ENDIF
   ENDIF
@@ -297,7 +297,7 @@ del_skill_msg:
   _WAZA_NAME( 1, OLD_SKILL )
   _WAZA_NAME( 2, NEW_SKILL )
   //「旧固有技を忘れて・・」
-  _SYSWIN_MSG( msg_rotom_waza_06 , WIN_DOWN )
+  _SYSWIN_MSG( msg_rotom_waza_06 , POS_DOWN )
   _SYSWIN_CLOSE()
   //「新固有技を覚えた」
   $END_MSG = msg_rotom_waza_07
@@ -313,7 +313,7 @@ select_del_skill:
     _TEMOTI_NICK_NAME( 0, SEL_POS )
     _WAZA_NAME( 1, NEW_SKILL )
     //固有技を覚えたい。4つでいっぱい。技忘れる？
-    _SYSWIN_MSG( msg_rotom_waza_01 , WIN_DOWN )
+    _SYSWIN_MSG( msg_rotom_waza_01 , POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
     IF $SCWK_ANSWER == 0 THEN   //忘れる
@@ -329,12 +329,12 @@ select_del_skill:
         //忘れる技セット del_skill_msgをコールする準備
         _GET_TEMOTI_WAZA_ID( OLD_SKILL ,SEL_POS ,DEL_SKILL_POS )
         //「選択した技を忘れていい？」
-        _SYSWIN_MSG( msg_rotom_waza_04 , WIN_DOWN )
+        _SYSWIN_MSG( msg_rotom_waza_04 , POS_DOWN )
         _YES_NO_WIN( SCWK_ANSWER )
         _SYSWIN_CLOSE()
         IF $SCWK_ANSWER == 0 THEN     //忘れてOK
           //「ポカン」
-          _SYSWIN_MSG( msg_rotom_waza_05 , WIN_DOWN )
+          _SYSWIN_MSG( msg_rotom_waza_05 , POS_DOWN )
           _SYSWIN_CLOSE()
           _CALL del_skill_msg
           $SCWK_ANSWER = TRUE
@@ -359,7 +359,7 @@ _RET
 
 //技あきらめる？
 stop_del_skill:
-  _SYSWIN_MSG( msg_rotom_waza_02 , WIN_DOWN )
+  _SYSWIN_MSG( msg_rotom_waza_02 , POS_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )
   _SYSWIN_CLOSE()
 _RET

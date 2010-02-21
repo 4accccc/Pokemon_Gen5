@@ -131,7 +131,7 @@ EVENT_START		ev_c05gym0101_leader
 		
 		//ヤーコンからクエイクバッジをもらった
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG( msg_c05gym0101_leader_03 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_leader_03 , POS_DOWN )
 		_SYSWIN_CLOSE()
 
 		//ヤーコンメッセージ
@@ -196,7 +196,7 @@ EVENT_START		ev_bg_c05gym0101_lift_00u
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -222,7 +222,7 @@ EVENT_START		ev_bg_c05gym0101_lift_00d
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -249,7 +249,7 @@ EVENT_START		ev_bg_c05gym0101_lift_01u
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -276,7 +276,7 @@ EVENT_START		ev_bg_c05gym0101_lift_01d
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -303,7 +303,7 @@ EVENT_START		ev_bg_c05gym0101_lift_02u
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -330,7 +330,7 @@ EVENT_START		ev_bg_c05gym0101_lift_02d
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -357,7 +357,7 @@ EVENT_START		ev_bg_c05gym0101_lift_03u
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -384,7 +384,7 @@ EVENT_START		ev_bg_c05gym0101_lift_03d
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -411,7 +411,7 @@ EVENT_START		ev_bg_c05gym0101_lift_04u
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -438,7 +438,7 @@ EVENT_START		ev_bg_c05gym0101_lift_04d
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -465,7 +465,7 @@ EVENT_START		ev_bg_c05gym0101_lift_05u
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_01 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -492,7 +492,7 @@ EVENT_START		ev_bg_c05gym0101_lift_05d
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
-		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_swicth_02 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -543,7 +543,7 @@ EVENT_START	ev_bg_c05gym0101_exitlift_00d
 	_TALK_START_SE_PLAY()
 	
 	//これいじょう下降しません！
-	_SYSWIN_MSG( msg_c05gym0101_swicth_02 , WIN_DOWN )
+	_SYSWIN_MSG( msg_c05gym0101_swicth_02 , POS_DOWN )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 

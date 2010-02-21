@@ -528,7 +528,7 @@ take_back_pokemon_core:
        //「[ニックネーム]を引き取った！」
        _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
        _PLAYER_NAME( 1 )
-       _SYSWIN_MSG( msg_sodateya_oldwoman_15 , WIN_DOWN )
+       _SYSWIN_MSG( msg_sodateya_oldwoman_15 , POS_DOWN )
        _SYSWIN_CLOSE()
 
        // 手持ちポケモンに移動

@@ -253,7 +253,7 @@ omoidashi_exit_disable:
   _JUMP omoidashi_exit
 omoidashi_exit_finish:
   _PLAYER_NAME(0)
-  _SYSWIN_MSG( msg_waza_omoi_10 , WIN_DOWN )  //「ウロコを あげた！」
+  _SYSWIN_MSG( msg_waza_omoi_10 , POS_DOWN )  //「ウロコを あげた！」
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   { // ウロコ減

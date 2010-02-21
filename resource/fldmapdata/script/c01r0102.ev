@@ -324,7 +324,7 @@ EVENT_END
 /*  C01R0102 本棚のイベントスクリプト						  */
 /**************************************************************/
 EVENT_START   ev_c01r0102_books_01
-	_SYSWIN_MSG( msg_c01r0101_books_01 , WIN_DOWN )
+	_SYSWIN_MSG( msg_c01r0101_books_01 , POS_DOWN )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
 EVENT_END
@@ -334,14 +334,14 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c01r0102_books_02
 	//ともだちてちょうに　ついて
-	_SYSWIN_MSG( msg_c01r0101_books2_01 , WIN_DOWN )
+	_SYSWIN_MSG( msg_c01r0101_books2_01 , POS_DOWN )
 	
 	_YES_NO_WIN( SCWK_ANSWER )
 	
 	IF $SCWK_ANSWER == SCR_YES THEN
 	
 		_MSGWIN_CLOSE()
-		_SYSWIN_MSG( msg_c01r0101_books2_02 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c01r0101_books2_02 , POS_DOWN )
 		_MSGWIN_CLOSE()
 	
 	ELSE

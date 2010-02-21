@@ -857,7 +857,7 @@ EVENT_START		ev_pos_d02r0101_event_05
 	//【仮】アロエにホネを渡す	キズグスリで代用
 	_PLAYER_NAME(0)
 	_ITEM_NAME( 1, ITEM_KIZUGUSURI )
-	_SYSWIN_MSG( msg_d02r0101_system_01 , WIN_DOWN )
+	_SYSWIN_MSG( msg_d02r0101_system_01 , POS_DOWN )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
 

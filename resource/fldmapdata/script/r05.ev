@@ -875,12 +875,12 @@ EVENT_START	ev_r05_musician_01
 		
 		//ÇlÇdçƒê∂
 		_ME_PLAY( SEQ_ME_ACCE )
-		_SYSWIN_MSG( msg_r05_add_goods_01 , WIN_DOWN )
+		_SYSWIN_MSG( msg_r05_add_goods_01 , POS_DOWN )
 		_ME_WAIT()
 		_MSGWIN_CLOSE()
 		
 		//Å`Å`ÇÕÅ`Å`ÇÉOÉbÉYÉPÅ[ÉXÇ…ÇµÇ‹Ç¡ÇΩ
-		_SYSWIN_MSG( msg_r05_add_goods_02 , WIN_DOWN )
+		_SYSWIN_MSG( msg_r05_add_goods_02 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		

@@ -51,7 +51,7 @@ ev_btl_util_party_regulation_ng_msg_call:
     $i_msg -= REG_RND_SINGLE 
     $i_msg += msg_btl_util_party_ng_rndmatch01
   ENDIF
-  _SYSWIN_MSG( i_msg , WIN_DOWN )
+  _SYSWIN_MSG( i_msg , POS_DOWN )
 
   //なお　タマゴ　○○は参加できません
   _SET_REGULATION_OUT_POKE_NAME( i_regu, i_num )
@@ -59,10 +59,10 @@ ev_btl_util_party_regulation_ng_msg_call:
   _DEBUG_PRINT_WK( i_msg )
   $i_msg += $i_num
   _DEBUG_PRINT_WK( i_msg )
-  _SYSWIN_MSG( i_msg , WIN_DOWN )
+  _SYSWIN_MSG( i_msg , POS_DOWN )
 
   //準備ができたらまだお越しください
-  _SYSWIN_MSG( msg_btl_util_party_ng_end , WIN_DOWN )
+  _SYSWIN_MSG( msg_btl_util_party_ng_end , POS_DOWN )
 }
 _CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
 _END

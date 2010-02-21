@@ -128,7 +128,7 @@ ev_leader2_btl:
 
 	//～～はベーシックバッジを入手した！
 	_PLAYER_NAME( 0 )
-	_SYSWIN_MSG( msg_c02gym0202_leader_03 , WIN_DOWN )
+	_SYSWIN_MSG( msg_c02gym0202_leader_03 , POS_DOWN )
 	_SYSWIN_CLOSE()
 	//そのバッジがあれば！
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_04 )

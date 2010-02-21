@@ -163,7 +163,7 @@ ev_leader4_btl:
 
 	//～～はボルトバッジを入手した！
 	_PLAYER_NAME( 0 )
-	_SYSWIN_MSG( msg_c04gym0101_leader_03 , WIN_DOWN )
+	_SYSWIN_MSG( msg_c04gym0101_leader_03 , POS_DOWN )
 	_SYSWIN_CLOSE()
 
 	//ボルトバッジがあれば！
@@ -303,7 +303,7 @@ EVENT_END
 ev_swich_message:
 	_PLAYER_NAME( 0 )
 	//コースが変わった！
-	_SYSWIN_MSG( msg_c04gym0101_point_01 , WIN_DOWN )
+	_SYSWIN_MSG( msg_c04gym0101_point_01 , POS_DOWN )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
 	_RET
@@ -595,16 +595,16 @@ EVENT_START	ev_bg_c04gym0101_statue_01
 	//ジムバッジフラグによって分岐
 	IF $SCWK_TEMP0 == 0 THEN
 		//バッジ入手前なら
-		_SYSWIN_MSG( msg_c04gym0101_statue_01 , WIN_DOWN )
+		_SYSWIN_MSG( msg_c04gym0101_statue_01 , POS_DOWN )
 
 	ELSE
 		//バッジ入手後なら　【仮】イベント進行で分岐（？？後友達の名前も入る）
 		IF FLAG_OFF( FH_01) THEN
 			//イベント進行前
-			_SYSWIN_MSG( msg_c04gym0101_statue_02 , WIN_DOWN )
+			_SYSWIN_MSG( msg_c04gym0101_statue_02 , POS_DOWN )
 		ELSE
 			//イベント進行後
-			_SYSWIN_MSG( msg_c04gym0101_statue_03 , WIN_DOWN )
+			_SYSWIN_MSG( msg_c04gym0101_statue_03 , POS_DOWN )
 		ENDIF
 
 	ENDIF
