@@ -124,7 +124,7 @@ charange:
       $regulation = REG_SUBWAY_SINGLE   //バトルサブウェイシングルレギュレーションで代用
       $mode = TH_PLAYMODE_SINGLE 
     CASE 1 THEN //ダブル
-      $regulation = REG_SUBWAY_SINGLE   //バトルサブウェイダブルレギュレーションで代用
+      $regulation = REG_SUBWAY_DOUBLE   //バトルサブウェイダブルレギュレーションで代用
       $mode = TH_PLAYMODE_DOUBLE
     CASE 2 THEN //やめる
       //やめるフラグＯＮ
@@ -150,48 +150,6 @@ charange:
     _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( regulation )
     _RET
   ENDIF
-
-/**
-  //リスト作成
-  _BMPMENU_INIT_EX( 1,1,0,1,list_ret )
-  _BMPMENU_MAKE_LIST( msg_vender_select_01, 0 )    //手持ち
-  _BMPMENU_MAKE_LIST( msg_vender_select_02, 1 )    //バトルボックス
-  _BMPMENU_MAKE_LIST( msg_vender_select_03, 2 )    //やめる
-  _BMPMENU_START()
-  //ウィンドウ閉じる
-  _SYSWIN_CLOSE()
-
-  IF $list_ret == EV_WIN_B_CANCEL THEN  //キャンセル
-    //やめるフラグＯＮ
-    $exit = TRUE
-    _RET
-  ELSE
-    SWITCH $list_ret
-    CASE 0 THEN   //手持ち
-      ;
-    CASE 1 THEN //バトルボックス
-      ;
-    CASE 2 THEN //やめる
-      //やめるフラグＯＮ
-      $exit = TRUE
-      _RET
-    ENDSWITCH
-  ENDIF
-  //条件にあったポケがいるか？  //@todo
-
-
-
-  IF $SCWK_ANSWER == FALSE THEN
-    //「ポケいないよ」
-
-    _RET
-  ELSE
-    //「さんかポケえらんで」
-    
-    //ポケモンリストコール
-
-  ENDIF
-*/
 
   //ポケモンリストコール
   _TH_SEL_POKE(regulation, party_sel, SCWK_ANSWER)
@@ -220,7 +178,6 @@ charange:
   //受付係もどる
   _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_close )
   _OBJ_ANIME_WAIT()
-
   
 
   IF $SCWK_ANSWER == TRUE THEN
@@ -229,7 +186,7 @@ charange:
     _BALLOONWIN_CLOSE()
     //評価アプリ起動 @todo
 
-    //ラストメッセージ
+    //ラストメッセージ @todo
   ENDIF
   
 _RET
@@ -237,23 +194,28 @@ _RET
 battle:
   DEFINE_LOCAL btl_count
   DEFINE_LOCAL obj_id
-  DEFINE_LOCAL id
-
+  
   $btl_count = 0
   WHILE $btl_count < 5
     //トレーナー抽選
     _TH_SET_TR(btl_count, obj_id)
     //ＯＢＪ追加
-    _OBJ_ADD_EX( 7, 0, DIR_DOWN, id , obj_id, MV_DMY )
+    _OBJ_ADD_EX( 7, 0, DIR_DOWN, MMDL_ID_EVENTOBJ_00 , obj_id, MV_DMY )
     //ＯＢＪ移動
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_mov )
+    _OBJ_ANIME_WAIT()
+    //バトル前メッセージ
+    _TH_DISP_BEFORE_MSG()
     //バトル
     _TH_CALL_BATTLE()
     //ＯＢＪ退出
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_ret )
+    _OBJ_ANIME_WAIT()
     //ＯＢＪ削除
-    _OBJ_DEL(id)
+    _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
     //戦闘回数加算
     $btl_count += 1
-
+/**
     {
       DEFINE_LOCAL retire
       //リタイアする？
@@ -263,6 +225,7 @@ battle:
         _RET
       ENDIF
     }
+*/    
   ENDWHILE
   //５戦後の処理
   $SCWK_ANSWER = TRUE     //５戦消化したので評価してもらう
@@ -283,7 +246,7 @@ _ANIME_LABEL	anm_recep_open
 //自機定位置へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_mov
-  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_WALK_U_8F,5
   _ANIME_DATA	AC_WALK_R_8F,2
   _ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -292,7 +255,8 @@ _ANIME_LABEL	anm_player_mov
 //対戦相手定位置へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_enemy_mov
-  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA	AC_WALK_D_8F,4
   _ANIME_DATA	AC_WALK_L_8F,2
   _ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -302,7 +266,8 @@ _ANIME_LABEL	anm_enemy_mov
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_enemy_ret
   _ANIME_DATA	AC_WALK_R_8F,2
-  _ANIME_DATA	AC_WALK_U_8F,3
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -310,7 +275,7 @@ _ANIME_LABEL	anm_enemy_ret
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_ret
   _ANIME_DATA	AC_WALK_L_8F,2
-  _ANIME_DATA	AC_WALK_D_8F,4
+  _ANIME_DATA	AC_WALK_D_8F,5
   _ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
