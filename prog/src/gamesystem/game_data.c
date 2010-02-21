@@ -54,6 +54,7 @@
 #include "savedata/gimmickwork.h"
 #include "savedata/un_savedata_local.h"
 #include "savedata/un_savedata.h"
+#include "savedata/bsubway_savedata.h"
 
 //============================================================================================
 //============================================================================================
@@ -1592,6 +1593,51 @@ void GAMEDATA_SetBSubwayScrWork(GAMEDATA * gamedata, BSUBWAY_SCRWORK *bsw_scr )
 {
   gamedata->bsubway_scrwork = bsw_scr;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルサブウェイ　プレイデータ　を取得
+ *
+ *	@param	gamedata    GAMEDATAへのポインタ
+ *
+ *	@return　BSUBWAY_PLAYDATA
+ */
+//-----------------------------------------------------------------------------
+BSUBWAY_PLAYDATA * GAMEDATA_GetBSubwayPlayData( GAMEDATA* gamedata )
+{
+	return (BSUBWAY_PLAYDATA*)SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_BSUBWAY_PLAYDATA );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルサブウェイ　スコアデータ　を取得
+ *
+ *	@param	gamedata    GAMEDATAへのポインタ
+ *
+ *	@return BSUBWAY_SCOREDATA
+ */
+//-----------------------------------------------------------------------------
+BSUBWAY_SCOREDATA * GAMEDATA_GetBSubwayScoreData( GAMEDATA* gamedata )
+{
+	return (BSUBWAY_SCOREDATA*)SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_BSUBWAY_SCOREDATA );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルサブウェイ　WiFiデータ　を取得
+ *
+ *	@param	gamedata  GAMEDATAへのポインタ
+ *
+ *	@return BSUBWAY_WIFIDATA
+ */
+//-----------------------------------------------------------------------------
+BSUBWAY_WIFI_DATA * GAMEDATA_GetBSubwayWifiData( GAMEDATA* gamedata )
+{
+	return (BSUBWAY_WIFI_DATA*)SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_BSUBWAY_WIFIDATA );
+}
+
 
 //----------------------------------------------------------
 /**

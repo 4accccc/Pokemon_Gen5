@@ -37,7 +37,7 @@ static inline GFDATE GFDATE_Set( u32 year, u32 month, u32 day, int week)
  * @brief   NitroSDK‚Ì\‘¢‘Ì‚©‚çGFDATE‚É•ÏŠ·
  */
 //------------------------------------------------------------------
-static inline GFDATE GFDATE_RTCDate2GFDate( RTCDate *RTCDate)
+static inline GFDATE GFDATE_RTCDate2GFDate( const RTCDate *RTCDate)
 {
 	return GFDATE_Set( RTCDate->year, RTCDate->month, RTCDate->day, RTCDate->week);
 }

@@ -42,6 +42,7 @@ typedef enum {
 typedef enum {
   WIFI_BSUBWAY_RESULT_OK,                   //アップデート・ダウンロード成功
   WIFI_BSUBWAY_RESULT_NG,                   //失敗
+  WIFI_BSUBWAY_RESULT_CANCEL,               //キャンセルした
 
 
   WIFI_BSUBWAY_RESULT_MAX, //処理内で使用

@@ -13,9 +13,12 @@
 //#include "multiboot/src/dl_child/pt_save.h"
 
 #include "system/pms_data.h"
+#include "system/gf_date.h"
 
 #include "battle/bsubway_battle_data.h"
 #include "savedata/bsubway_savedata_def.h"
+#include "savedata/bsubway_savedata.h"
+
 
 //======================================================================
 //  define
@@ -28,18 +31,15 @@
 /// バトルサブウェイ プレイヤーメッセージデータ
 /// 8*4=32byte
 //--------------------------------------------------------------
-#if 0 //wb null
 struct _BSUBWAY_PLAYER_MSG
 {
   PMS_DATA  msg[4];  ///<自分用メッセージ
 };
-#endif
 
 //--------------------------------------------------------------
-/// バトルサブウェイ WIFI プレイヤーデータ
+/// バトルサブウェイ WIFI プレイヤーデータ(Dpw_Bt_Player)
 /// 56*3+60=228byte
 //--------------------------------------------------------------
-#if 0 //wb null
 struct _BSUBWAY_WIFI_PLAYER
 {
   struct _BSUBWAY_POKEMON  poke[3];
@@ -70,17 +70,14 @@ struct _BSUBWAY_WIFI_PLAYER
   u16  lose_word[4];            //敗退メッセージ  
   u16  result;                //成績
 };
-#endif
 
 //--------------------------------------------------------------
 /// バトルサブウェイ WIFI DLデータ
 /// 280byte+1596(228*7)byte+1020(34*30)byte=2836byte
 //--------------------------------------------------------------
-#if 0 //wb null
 struct _BSUBWAY_WIFI_DATA
 {
-//  GF_DATE  day;  ///<DLした日付4byte
-  u32 day;  ///<DLした日付4byte
+  GFDATE  day;  ///<DLした日付4byte
   u8 flags[BSUBWAY_ROOM_DATA_FLAGS_LEN];  ///<DL済みフラグエリア(2000bit)
   u8 player_data_f;  ///<プレイヤーデータが有効かどうか？
   u8 leader_data_f;  ///<リーダーデータが有効かどうか？
@@ -96,7 +93,6 @@ struct _BSUBWAY_WIFI_DATA
   ///リーダーデータ
   struct _BSUBWAY_LEADER_DATA leader[BSUBWAY_STOCK_WIFI_LEADER_MAX];
 };
-#endif
 
 //======================================================================
 //  extern

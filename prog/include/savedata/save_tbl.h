@@ -96,6 +96,7 @@ enum{
 	GMDATA_ID_ENCOUNT,	        // エンカウント関連セーブデータ
   GMDATA_ID_BSUBWAY_PLAYDATA, // バトルサブウェイ　プレイデータ
   GMDATA_ID_BSUBWAY_SCOREDATA,// バトルサブウェイ　スコアデータ
+  GMDATA_ID_BSUBWAY_WIFIDATA, // バトルサブウェイ WiFiデータ
   GMDATA_ID_RNDMATCH,         // ランダムマッチ
   GMDATA_ID_RADAR,            // 調査レーダー
   GMDATA_ID_SYMBOL,           // シンボルエンカウント

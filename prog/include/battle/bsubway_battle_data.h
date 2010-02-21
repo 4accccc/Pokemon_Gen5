@@ -52,6 +52,7 @@ typedef struct
 /// サブウェイ用ポケモンデータ型
 /// セーブデータとやり取りするのでsavedata/b_tower.hにtypedef定義を切り
 /// 不完全ポインタでやり取りできるようにしておく
+//(Dpw_Bt_PokemonData)
 //--------------------------------------------------------------
 struct _BSUBWAY_POKEMON
 {
@@ -141,6 +142,7 @@ struct _BSUBWAY_PARTNER_DATA
 /// Wifiバトルサブウェイリーダーデータ構造体
 /// セーブデータとやり取りするのでsavedata/b_tower.hにtypedef定義を切り
 /// 不完全ポインタでやり取りできるようにしておく
+//(Dpw_Bt_Leader)
 //--------------------------------------------------------------
 struct _BSUBWAY_LEADER_DATA
 {

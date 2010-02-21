@@ -10,6 +10,8 @@
 #ifndef __H_BSUBWAY_SAVEDATA_H__
 #define __H_BSUBWAY_SAVEDATA_H__
 
+#include "gamesystem/game_data.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -28,6 +30,8 @@
 #define BSUBWAY_STOCK_WIFI_LEADER_MAX	(30)
 ///ルームデータのDLフラグエリアバッファ長
 #define BSUBWAY_ROOM_DATA_FLAGS_LEN	(250)
+///WiFi 手持ちポケモン数
+#define BSUBWAY_STOCK_WIFI_MEMBER_MAX	(3)
 
 //kari pt_save.h
 #define	WAZA_TEMOTI_MAX (4) ///<1体のポケモンがもてる技の最大値
@@ -178,6 +182,33 @@ typedef struct _BSUBWAY_POKEMON  BSUBWAY_POKEMON;
 //--------------------------------------------------------------
 typedef struct _BSUBWAY_PARTNER_DATA  BSUBWAY_PARTNER_DATA;
 
+//--------------------------------------------------------------
+///  サブウェイリーダーデータ型
+///  　battle/b_tower_data.hを必要な箇所以外では
+///   includeしないで済むように定義しておく
+//--------------------------------------------------------------
+typedef struct _BSUBWAY_LEADER_DATA  BSUBWAY_LEADER_DATA;
+
+//--------------------------------------------------------------
+/// バトルサブウェイ WIFIデータ型
+//--------------------------------------------------------------
+typedef struct _BSUBWAY_WIFI_DATA  BSUBWAY_WIFI_DATA;
+
+//--------------------------------------------------------------
+/// バトルサブウェイ WIFIプレイヤーデータ型
+//--------------------------------------------------------------
+typedef struct _BSUBWAY_WIFI_PLAYER  BSUBWAY_WIFI_PLAYER;
+
+
+
+//======================================================================
+//  GAMEDATAから取得
+//======================================================================
+extern BSUBWAY_PLAYDATA * GAMEDATA_GetBSubwayPlayData( GAMEDATA* gamedata );
+extern BSUBWAY_SCOREDATA * GAMEDATA_GetBSubwayScoreData( GAMEDATA* gamedata );
+extern BSUBWAY_WIFI_DATA * GAMEDATA_GetBSubwayWifiData( GAMEDATA* gamedata );
+
+
 //======================================================================
 //  extern
 //======================================================================
@@ -242,6 +273,35 @@ extern u8 BSUBWAY_SCOREDATA_GetWifiRank(
     const BSUBWAY_SCOREDATA *bsw_score );
 extern u8 BSUBWAY_SCOREDATA_SetWifiLoseCount(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
+extern void BSUBWAY_SCOREDATA_SetUsePokeData( BSUBWAY_SCOREDATA *bsw_score, BSWAY_SCORE_POKE_DATA mode, const BSUBWAY_POKEMON* poke_tbl );
+extern void BSUBWAY_SCOREDATA_GetUsePokeData( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_SCORE_POKE_DATA mode, BSUBWAY_POKEMON* poke_tbl );
+extern void BSUBWAY_SCOREDATA_SetWifiScore( BSUBWAY_SCOREDATA *bsw_score, const BSUBWAY_PLAYDATA *bsw_play );
+extern void BSUBWAY_SCOREDATA_ClearWifiScore( BSUBWAY_SCOREDATA *bsw_score );
+extern u16 BSUBWAY_SCOREDATA_GetWifiScore( const BSUBWAY_SCOREDATA *bsw_score );
+extern u8 BSUBWAY_SCOREDATA_GetWifiNum( const BSUBWAY_SCOREDATA *bsw_score );
+
+
+
+//BSUBWAY_WIFIDATA
+extern int BSUBWAY_WIFIDATA_GetWorkSize( void );
+extern void BSUBWAY_WIFIDATA_Init( BSUBWAY_WIFI_DATA *bsw_wifi );
+extern void BSUBWAY_WIFIDATA_SetRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room, const RTCDate *day );
+extern void BSUBWAY_WIFIDATA_ClearRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi );
+extern BOOL BSUBWAY_WIFIDATA_CheckRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room, const RTCDate *day );
+extern BOOL BSUBWAY_WIFIDATA_CheckPlayerDataEnable( const BSUBWAY_WIFI_DATA *bsw_wifi );
+extern BOOL BSUBWAY_WIFIDATA_CheckLeaderDataEnable( const BSUBWAY_WIFI_DATA *bsw_wifi );
+extern void BSUBWAY_WIFIDATA_SetPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_WIFI_PLAYER* dat, u8 rank, u8 room );
+extern void BSUBWAY_WIFIDATA_ClearPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi );
+extern u8 BSUBWAY_WIFIDATA_GetPlayerRank( const BSUBWAY_WIFI_DATA *bsw_wifi );
+extern u8 BSUBWAY_WIFIDATA_GetPlayerRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi );
+extern void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBWAY_PARTNER_DATA *player, u8 round );
+
+extern void BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_LEADER_DATA* dat, u8 rank, u8 room );
+extern void BSUBWAY_WIFIDATA_ClearLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi );
+extern u8 BSUBWAY_WIFIDATA_GetLeaderRank( const BSUBWAY_WIFI_DATA *bsw_wifi );
+extern u8 BSUBWAY_WIFIDATA_GetLeaderRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi );
+extern BSUBWAY_LEADER_DATA* BSUBWAY_WIFIDATA_GetLeaderDataAlloc( const BSUBWAY_WIFI_DATA *bsw_wifi, HEAPID heapID );
+
 
 #define BSUBWAY_SCOREDATA_GetRenshouCount(a,b) \
   BSUBWAY_SCOREDATA_GetRenshou(a,b)

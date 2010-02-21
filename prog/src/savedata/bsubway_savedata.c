@@ -117,9 +117,9 @@ struct _BSUBWAY_SCOREDATA
   u8  padding[2];
   
   //WiFiポケモンデータストック
-  struct _BSUBWAY_POKEMON  wifi_poke[3];
+  struct _BSUBWAY_POKEMON  wifi_poke[BSUBWAY_STOCK_WIFI_MEMBER_MAX];
   //トレーナーロード用シングルデータストック
-  struct _BSUBWAY_POKEMON  single_poke[3];
+  struct _BSUBWAY_POKEMON  single_poke[BSUBWAY_STOCK_WIFI_MEMBER_MAX];
 };
 
 //======================================================================
@@ -703,6 +703,474 @@ u8 BSUBWAY_SCOREDATA_SetWifiLoseCount(
   return bsw_score->wifi_lose;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スコアデータ  使用ポケモンを設定
+ *
+ *	@param	bsw_score     スコアワーク
+ *	@param	mode          設定するモード
+ *	@param	poke          ポケモン情報(BSUBWAY_POKEMON * BSUBWAY_STOCK_WIFI_MEMBER_MAX　分のバッファが必要)
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_SCOREDATA_SetUsePokeData( BSUBWAY_SCOREDATA *bsw_score, BSWAY_SCORE_POKE_DATA mode, const BSUBWAY_POKEMON* poke_tbl )
+{
+  if( mode == BSWAY_SCORE_POKE_SINGLE ){
+    GFL_STD_MemCopy( poke_tbl, bsw_score->single_poke, sizeof(BSUBWAY_POKEMON)*BSUBWAY_STOCK_WIFI_MEMBER_MAX );
+  }else{
+    GFL_STD_MemCopy( poke_tbl, bsw_score->wifi_poke, sizeof(BSUBWAY_POKEMON)*BSUBWAY_STOCK_WIFI_MEMBER_MAX );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スコアデータ  使用ポケモンを取得
+ *
+ *	@param	bsw_score     スコアワーク
+ *	@param	mode          設定するモード
+ *	@param	poke          ポケモン情報(BSUBWAY_POKEMON * 3　分のバッファが必要)
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_SCOREDATA_GetUsePokeData( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_SCORE_POKE_DATA mode, BSUBWAY_POKEMON* poke_tbl )
+{
+  if( mode == BSWAY_SCORE_POKE_SINGLE ){
+    GFL_STD_MemCopy( bsw_score->single_poke, poke_tbl, sizeof(BSUBWAY_POKEMON)*BSUBWAY_STOCK_WIFI_MEMBER_MAX );
+  }else{
+    GFL_STD_MemCopy( bsw_score->wifi_poke, poke_tbl, sizeof(BSUBWAY_POKEMON)*BSUBWAY_STOCK_WIFI_MEMBER_MAX );
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スコアデータ Wifi成績操作
+ *
+ *	@param	bsw_score   スコアワーク
+ *	@param	bsw_play    プレイワーク
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_SCOREDATA_SetWifiScore( BSUBWAY_SCOREDATA *bsw_score, const BSUBWAY_PLAYDATA *bsw_play )
+{
+  u16  sa,sb,sc,sd,st;
+  u16  score = 0;
+
+  //ラウンド数は勝ち抜き数+1になっているのでマイナス１して計算する
+  sa = (bsw_play->round-1)*1000;
+  sb = bsw_play->wifi_rec_turn*10;
+  sc = bsw_play->wifi_rec_down*20;
+  if(sb+sc > 950){
+    st = 0;
+  }else{
+    st = 950-(sb+sc);
+  }
+  if(bsw_play->wifi_rec_damage>(1000-30)){
+    sd = 0;
+  }else{
+    sd = (1000-bsw_play->wifi_rec_damage)/30;
+  }
+  score = sa+st+sd;
+  bsw_score->wifi_score = score;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スコアデータ　Wifi成績0クリア
+ *
+ *	@param	bsw_score   ワーク
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_SCOREDATA_ClearWifiScore( BSUBWAY_SCOREDATA *bsw_score )
+{
+  bsw_score->wifi_score = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スコアデータ　Wifi成績取得
+ *
+ *	@param	bsw_score   ワーク
+ *
+ *	@return Wifi成績
+ */
+//-----------------------------------------------------------------------------
+u16 BSUBWAY_SCOREDATA_GetWifiScore( const BSUBWAY_SCOREDATA *bsw_score )
+{
+  return bsw_score->wifi_score;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スコアデータ  Wifi成績から　勝ち抜きすうを取得
+ *
+ *	@param	bsw_score   ワーク
+ *
+ *	@return 勝ち抜きすう
+ */
+//-----------------------------------------------------------------------------
+u8 BSUBWAY_SCOREDATA_GetWifiNum( const BSUBWAY_SCOREDATA *bsw_score )
+{
+  u8 ret = 0;
+  ret = (bsw_score->wifi_score)/1000;
+  return ret;
+}
+
+
+
+
+
+
+
+//======================================================================
+//  BSUBWAY_WIFIDATA
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BSUBWAY_WIFIDATAのサイズを取得
+ *	@return サイズ
+ */ 
+//-----------------------------------------------------------------------------
+int BSUBWAY_WIFIDATA_GetWorkSize( void )
+{
+  return sizeof(BSUBWAY_WIFI_DATA);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WiFiデータ  初期化
+ *
+ *	@param	bsw_wifi  WiFiデータ
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_WIFIDATA_Init( BSUBWAY_WIFI_DATA *bsw_wifi )
+{
+  GFL_STD_MemClear( bsw_wifi, sizeof(BSUBWAY_WIFI_DATA) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WiFiデータ  指定ルームデータの取得フラグを設定する。
+ *
+ *	@param	bsw_wifi  WiFiデータ  
+ *	@param	rank      ランク（1オリジン）
+ *	@param	room      ルーム(1オリジン)
+ *	@param	day       受信時間
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_WIFIDATA_SetRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room, const RTCDate *day )
+{
+  u8  idx,ofs;
+  u8  flag = 1;
+  u16  roomid;
+  
+  if(room == 0 || room > 200){
+    return;
+  }
+  if(rank == 0 || rank > 10){
+    return;
+  }
+  //両方1オリジンなので-1して計算
+  roomid = (rank-1)*200+(room-1);
+  
+  idx = roomid/8;
+  ofs = roomid%8;
+  flag <<= ofs;
+
+  bsw_wifi->flags[idx] |= flag;
+
+  bsw_wifi->day = GFDATE_RTCDate2GFDate(day);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ルームデータ取得フラグをクリアする
+ *
+ *	@param	bsw_wifi  
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_WIFIDATA_ClearRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi )
+{
+  GFL_STD_MemClear(bsw_wifi->flags,BSUBWAY_ROOM_DATA_FLAGS_LEN);
+  GFL_STD_MemClear(&bsw_wifi->day,sizeof(GFDATE));
+}
+
+//--------------------------------------------------------------
+/**
+ *  @brief  日付が変わっているかどうかチェック
+ */
+//--------------------------------------------------------------
+static BOOL check_day(const RTCDate* new,const RTCDate* old)
+{
+  if(new->year > old->year){
+    return TRUE;
+  }
+  if(new->month > old->month){
+    return TRUE;
+  }
+  if(new->day > old->day){
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定ルームの情報がダウンロードされているかチェック
+ *
+ *	@param	bsw_wifi    ワーク
+ *	@param	rank        ランク
+ *	@param	room        ルームナンバー
+ *	@param	day         日付
+ *
+ *	*日付が変わっているとフラグをオールクリアする。
+ *
+ *	@retval TRUE    受信されている
+ *	@retval FALSE   受信されていない
+ */
+//-----------------------------------------------------------------------------
+BOOL BSUBWAY_WIFIDATA_CheckRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room, const RTCDate *day )
+{
+  u8  idx,ofs;
+  u8  flag = 1;
+  u16  roomid;
+  RTCDate old_day;
+  
+  if(room > 200 || rank > 10){
+    return FALSE;
+  }
+
+  //最後にDLした日付から、日が変わっているかどうかチェック
+  GFDATE_GFDate2RTCDate(bsw_wifi->day,&old_day);
+  if(check_day(day,&old_day)){
+    //日が変わっているので、フラグ群をオールクリア
+    BSUBWAY_WIFIDATA_ClearRoomDataFlag(bsw_wifi);
+    return FALSE;
+  }
+  //両方1オリジンなので-1して計算
+  roomid = (rank-1)*200+(room-1);
+  
+  idx = roomid/8;
+  ofs = roomid%8;
+  flag <<= ofs;
+
+  if(bsw_wifi->flags[idx] & flag){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤーデータが存在しているかチェック
+ *
+ *	@param	bsw_wifi  ワーク
+ *
+ *	@retval TRUE    存在している
+ *	@retval FALSE   存在していない
+ */
+//-----------------------------------------------------------------------------
+BOOL BSUBWAY_WIFIDATA_CheckPlayerDataEnable( const BSUBWAY_WIFI_DATA *bsw_wifi )
+{
+  return bsw_wifi->player_data_f;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リーダーデータが存在しているかチェック
+ *
+ *	@param	bsw_wifi  ワーク
+ *
+ *	@retval TRUE    存在している
+ *	@retval FALSE   存在していない
+ */
+//-----------------------------------------------------------------------------
+BOOL BSUBWAY_WIFIDATA_CheckLeaderDataEnable( const BSUBWAY_WIFI_DATA *bsw_wifi )
+{
+  return bsw_wifi->leader_data_f;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤー情報を保存
+ *
+ *	@param	bsw_wifi    ワーク
+ *	@param	dat         プレイヤー情報テーブル
+ *	@param	rank        ランク
+ *	@param	room        部屋No
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_WIFIDATA_SetPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_WIFI_PLAYER* dat, u8 rank, u8 room )
+{
+  GFL_STD_MemCopy( dat, bsw_wifi->player,
+    sizeof(BSUBWAY_WIFI_PLAYER)*BSUBWAY_STOCK_WIFI_PLAYER_MAX );
+  
+  //roomnoとrankを保存
+  bsw_wifi->player_rank = rank;
+  bsw_wifi->player_room = room;
+  bsw_wifi->player_data_f = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤー情報をクリア
+ *
+ *	@param	bsw_wifi    ワーク
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_WIFIDATA_ClearPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi )
+{
+  GFL_STD_MemClear( bsw_wifi->player,
+    sizeof(BSUBWAY_WIFI_PLAYER)*BSUBWAY_STOCK_WIFI_PLAYER_MAX );
+  bsw_wifi->player_data_f = FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤー情報　ランク取得
+ */
+//-----------------------------------------------------------------------------
+u8 BSUBWAY_WIFIDATA_GetPlayerRank( const BSUBWAY_WIFI_DATA *bsw_wifi )
+{
+  GF_ASSERT( bsw_wifi->player_data_f );
+  return bsw_wifi->player_rank;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤー情報　部屋No取得
+ */
+//-----------------------------------------------------------------------------
+u8 BSUBWAY_WIFIDATA_GetPlayerRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi )
+{
+  GF_ASSERT( bsw_wifi->player_data_f );
+  return bsw_wifi->player_room;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤー情報　バトル用パラメータ取得
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBWAY_PARTNER_DATA *player, u8 round )
+{
+  BSUBWAY_TRAINER  *tr;      //トレーナーデータ
+  BSUBWAY_POKEMON  *poke;    //持ちポケモンデータ
+  const BSUBWAY_WIFI_PLAYER* src;
+  GFL_MSGDATA* msgdata;
+
+  tr = &(player->bt_trd);
+  poke = player->btpwd;
+  src = &(bsw_wifi->player[round]);
+
+  //トレーナーパラメータ取得
+  //tr->player_id = BSUBWAY_TRAINER_ID;//src->id_no;  //サブウェイ用IDは固定値 @TODO 仮
+  tr->player_id = 0;//src->id_no;  //サブウェイ用IDは固定値 @TODO 仮
+  tr->tr_type = src->tr_type;
+  //NGネームフラグチェック
+  if(src->ngname_f){
+    // @TODO NGネームの変更処理
+#if 0
+    pMan = MSGMAN_Create(MSGMAN_TYPE_NORMAL,ARC_MSG,
+        NARC_msg_btower_app_dat,HEAPID_WORLD);
+
+    MSGMAN_GetStr(pMan,msg_def_player_name01+src->gender,tr->name);
+    MSGMAN_Delete(pMan);
+#endif
+  }else{
+    GFL_STD_MemCopy(src->name,tr->name,16);
+  }
+  GFL_STD_MemCopy(src->appear_word,tr->appear_word,8);
+  GFL_STD_MemCopy(src->win_word,tr->win_word,8);
+  GFL_STD_MemCopy(src->lose_word,tr->lose_word,8);
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リーダー情報の設定
+ *
+ *	@param	bsw_wifi  ワーク
+ *	@param	dat       リーダー情報テーブル
+ *	@param	rank      ランク
+ *	@param	room      部屋ナンバー
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_LEADER_DATA* dat, u8 rank, u8 room )
+{
+  GFL_STD_MemCopy( dat, &bsw_wifi->leader,
+    sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX );
+  
+  //roomnoとrankを保存
+  bsw_wifi->leader_rank = rank;
+  bsw_wifi->leader_room = room;
+  bsw_wifi->leader_data_f = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リーダー情報のクリア
+ *
+ *	@param	bsw_wifi  ワーク
+ */
+//-----------------------------------------------------------------------------
+void BSUBWAY_WIFIDATA_ClearLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi )
+{
+  MI_CpuClear8(&bsw_wifi->leader,
+    sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX);
+  bsw_wifi->leader_data_f = FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リーダー情報のランク取得
+ *
+ *	@param	bsw_wifi  ワーク
+ *
+ *	@return ランク
+ */
+//-----------------------------------------------------------------------------
+u8 BSUBWAY_WIFIDATA_GetLeaderRank( const BSUBWAY_WIFI_DATA *bsw_wifi )
+{
+  GF_ASSERT( bsw_wifi->leader_data_f );
+  return bsw_wifi->leader_rank;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リーダー情報の部屋ナンバー取得
+ *
+ *	@param	bsw_wifi  ワーク
+ *  
+ *	@return 部屋ナンバー
+ */
+//-----------------------------------------------------------------------------
+u8 BSUBWAY_WIFIDATA_GetLeaderRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi )
+{
+  GF_ASSERT( bsw_wifi->leader_data_f );
+  return bsw_wifi->leader_room;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リーダー情報の取得
+ *
+ *	@param	bsw_wifi  ワーク
+ *	@param	heapID    ヒープID
+ *
+ *	@return メモリ確保して情報をコピーしたワーク
+ */
+//-----------------------------------------------------------------------------
+BSUBWAY_LEADER_DATA* BSUBWAY_WIFIDATA_GetLeaderDataAlloc( const BSUBWAY_WIFI_DATA *bsw_wifi, HEAPID heapID )
+{
+  BSUBWAY_LEADER_DATA* p_dat;
+
+  p_dat = GFL_HEAP_AllocClearMemory( heapID, sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX );
+
+  GFL_STD_MemCopy(bsw_wifi->leader, p_dat, sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX);
+  
+  return p_dat;
+}
+
+
+
+
 //======================================================================
 //  wb null
 //======================================================================
@@ -1106,7 +1574,7 @@ void BSUBWAY_WifiData_SetRoomDataFlag(BSUBWAY_WIFI_DATA* dat,
 void BSUBWAY_WifiData_ClearRoomDataFlag(BSUBWAY_WIFI_DATA* dat)
 {
   MI_CpuClear8(dat->flags,BSUBWAY_ROOM_DATA_FLAGS_LEN);
-  MI_CpuClear8(&dat->day,sizeof(GF_DATE));
+  MI_CpuClear8(&dat->day,sizeof(GFDATE));
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
   SVLD_SetCrc(GMDATA_ID_FRONTIER);
 #endif //CRC_LOADCHECK

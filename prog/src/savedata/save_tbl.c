@@ -393,6 +393,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_GET_SIZE)BSUBWAY_SCOREDATA_GetWorkSize,
     (FUNC_INIT_WORK)BSUBWAY_SCOREDATA_Init,
   },
+  { //バトルサブウェイ　WIFIデータ
+    GMDATA_ID_BSUBWAY_WIFIDATA,
+    (FUNC_GET_SIZE)BSUBWAY_WIFIDATA_GetWorkSize,
+    (FUNC_INIT_WORK)BSUBWAY_WIFIDATA_Init,
+  },
   { 
     //ランダムマッチセーブデータ
     GMDATA_ID_RNDMATCH,
