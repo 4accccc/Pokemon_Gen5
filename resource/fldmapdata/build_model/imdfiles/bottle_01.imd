@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-04-23T12:57:23" source="bottle_01.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-02-21T15:59:20" source="bottle_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-04-23T12:57:23" source="bottle_01.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-02-21T15:59:20" source="bottle_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -38,14 +38,14 @@
 		path="C:/home/wb_data3d/build_model/indoor/bottle_01/tex/bottle_01.tga"
 	>
 		<bitmap size="64">
-			f000 0065 0000 0000 f000 0067 0000 0000
-			f000 0067 0000 0000 f000 0067 0000 0000
-			5f00 06a8 0000 0000 87f0 65a9 0ddd 0000
+			e000 0065 0000 0000 e000 0067 0000 0000
+			e000 0067 0000 0000 e000 0067 0000 0000
+			5e00 06a8 0000 0000 87e0 65a9 0ddd 0000
 			7720 6a74 dbbb 0000 7820 6775 bddd dddd
 			4820 2745 dddd cbbb 4820 2745 cddd 1111
-			4820 2745 1ccc 000e 4820 2747 f113 000e
-			7820 2877 efff 0000 82f0 f288 000e 0000
-			2fe0 ef22 0000 0000 fe00 0eff 0000 0000
+			4820 2745 1ccc efff 4820 2747 f113 00ef
+			782e 2877 ffff 000e 82fe f288 0eff 0000
+			2ffe ff22 00ef 0000 ffe0 efff 000e 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -53,7 +53,7 @@
 <tex_palette_array size="1">
 	<tex_palette index="0" name="bottle_01_pl" color_size="16">
 		7c1f 2108 2108 2508 41eb 460c 2d67 39ca
-		4a4e 4e6f 5ad2 29f3 294d 1cea 3df0 294a
+		4a4e 4e6f 5ad2 29f3 294d 1cea 1ce7 18c6
 	</tex_palette>
 </tex_palette_array>
 
@@ -71,7 +71,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="25 25 25"
+		ambient="31 31 31"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
