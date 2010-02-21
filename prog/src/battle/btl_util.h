@@ -87,32 +87,32 @@ typedef struct  {
   union {
     u32    raw;
     struct {
-      u32  type : 4;
-      u32  _0   : 28;
+      u32  type : 3;
+      u32  _0   : 29;
     };
     struct {
-      u32  type_turn : 4;   ///< ターン数型
+      u32  type_turn : 3;   ///< ターン数型
       u32  count     : 6;   ///< 有効ターン数
       u32  param     : 16;  ///< 汎用パラメータ16bit
       u32  flag      : 1;   ///< 汎用フラグ 1bit
-      u32  _1        : 5;
+      u32  _1        : 6;
     }turn;
     struct {
-      u32  type_poke : 4;   ///< ポケ依存型
+      u32  type_poke : 3;   ///< ポケ依存型
       u32  ID        : 6;   ///< 対象ポケID
       u32  param     : 16;  ///< 汎用パラメータ16bit
       u32  flag      : 1;   ///< 汎用フラグ 1bit
-      u32  _2        : 5;
+      u32  _2        : 6;
     }poke;
     struct {
-      u32  type_perm : 4;   ///< 永続型
+      u32  type_perm : 3;   ///< 永続型
       u32  count_max : 6;   ///< ターンカウントアップ最大数
       u32  param     : 16;  ///< 汎用パラメータ16bit
       u32  flag      : 1;   ///< 汎用フラグ 1bit
-      u32  _3        : 5;
+      u32  _3        : 6;
     }permanent;
     struct {
-      u32 type_poketurn : 4;  ///< ターン数・ポケ依存混合型
+      u32 type_poketurn : 3;  ///< ターン数・ポケ依存混合型
       u32 count         : 6;  ///< 有効ターン数
       u32 pokeID        : 6;  ///< 対象ポケID
       u32 param         : 16; ///< 汎用パラメータ16bit
@@ -366,6 +366,7 @@ static inline BOOL BPP_SICKCONT_GetFlag( BPP_SICK_CONT cont )
     return cont.turn.flag;
   }
   return 0;
+
 }
 /*
  *  継続ターン数増加

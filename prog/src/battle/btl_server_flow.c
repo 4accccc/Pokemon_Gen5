@@ -6465,6 +6465,7 @@ static WazaSick scEvent_CheckWazaAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
 //    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_SICK_TYPE );
 
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, fFail );
+
     BTL_EVENTVAR_SetValue( BTL_EVAR_SICK_CONT, sickCont.raw );
     BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_SICK );
@@ -6475,6 +6476,7 @@ static WazaSick scEvent_CheckWazaAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
       sick = WAZASICK_NULL;
     }
     sickCont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
+
   BTL_EVENTVAR_Pop();
 
   if( !fFail )
