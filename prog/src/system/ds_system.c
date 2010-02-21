@@ -56,7 +56,7 @@ const BOOL DS_SYSTEM_IsRestrictPhotoExchange( void )
 #if (defined(SDK_TWL))
   return OS_IsRestrictPhotoExchange();
 #else
-  return TRUE;
+  return FALSE;
 #endif
 }
 
@@ -76,6 +76,27 @@ const BOOL DS_SYSTEM_IsRestrictUGC( void )
 
 #if (defined(SDK_TWL))
   return OS_IsRestrictUGC();
+#else
+  return FALSE;
+#endif
+}
+
+
+//--------------------------------------------------------------
+//	@berif DSの無線通信設定の取得
+//
+//  @return BOOL TRUE 通信許可 or DS
+//  @return BOOL FALSE 通信不可
+//--------------------------------------------------------------
+const BOOL DS_SYSTEM_IsAvailableWireless( void )
+{
+  if( DEBUG_FLG_GetFlg( DEBUG_FLG_DisableWL ) == TRUE )
+  {
+    return TRUE;
+  }
+
+#if (defined(SDK_TWL))
+  return OS_IsAvailableWireless();
 #else
   return TRUE;
 #endif

@@ -16,13 +16,13 @@
 DEBUG_FLG_DEF( DisableEncount , "EncountOff" )
 DEBUG_FLG_DEF( DisableTrainerEye , "TrainerEyeOff")
 DEBUG_FLG_DEF( DisableEvents , "Pos & Scene Off")
-DEBUG_FLG_DEF( MusicalEventSkip , "MusEveSkip")
+DEBUG_FLG_DEF( MusicalEventSkip , "MusEveSkip")     //ミュージカル控え室演出スキップ
 DEBUG_FLG_DEF( DisableReport , "Report Off")
 DEBUG_FLG_DEF( ReverseVersion , "Reverse Version")
-DEBUG_FLG_DEF( RestricPhoto , "Restric Photo")
-DEBUG_FLG_DEF( RestricUGC , "Restric UGC")
+DEBUG_FLG_DEF( RestricPhoto , "Restric Photo")      //DSi設定ペアレンタルコントロール、写真の送受信不可
+DEBUG_FLG_DEF( RestricUGC , "Restric UGC")          //DSi設定ペアレンタルコントロール、ユーザー作成コンテンツ受信不可
 DEBUG_FLG_DEF( ShortcutBtlIn , "Shortcut BtlIn")
-DEBUG_FLG_DEF( TestFlg9 , "テスト9")
+DEBUG_FLG_DEF( DisableWL , "Disable WL")            //DSi設定無線通信OFF
 //Page2
 DEBUG_FLG_DEF( TestFlg10, "テスト10")
 DEBUG_FLG_DEF( TestFlg11, "テスト11")

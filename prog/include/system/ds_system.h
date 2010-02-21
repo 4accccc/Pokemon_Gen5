@@ -34,3 +34,12 @@ const BOOL DS_SYSTEM_IsRestrictPhotoExchange( void );
 //  @return BOOL FALSE 送受信可 or DS
 //--------------------------------------------------------------
 const BOOL DS_SYSTEM_IsRestrictUGC( void );
+
+
+//--------------------------------------------------------------
+//	@berif DSの無線通信設定の取得
+//
+//  @return BOOL TRUE 通信許可 or DS
+//  @return BOOL FALSE 通信不可
+//--------------------------------------------------------------
+const BOOL DS_SYSTEM_IsAvailableWireless( void );
