@@ -63,7 +63,7 @@ void BATTLE_EXAMINATION_SAVE_Init(BATTLE_EXAMINATION_SAVEDATA* pSV)
  *
  *	@param	SAVE_CONTROL_WORK * p_sv	セーブデータ保持ワークへのポインタ
  *
- *	@return	MISC
+ *	@return	BATTLE_EXAMINATION_SAVEDATA
  */
 //-----------------------------------------------------------------------------
 BATTLE_EXAMINATION_SAVEDATA *BATTLE_EXAMINATION_SAVE_GetSvPtr( SAVE_CONTROL_WORK * p_sv)
