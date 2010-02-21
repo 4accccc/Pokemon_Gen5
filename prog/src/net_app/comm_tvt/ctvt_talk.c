@@ -126,6 +126,8 @@ struct _CTVT_TALK_WORK
   
   //ƒXƒ‰ƒCƒ_[Œn
   u8          sliderPos;
+  u8          sliderBefHit;
+  u8          sliderRepeat;
   
   //˜^‰¹ŠÖŒW  
   CTVT_MIC_WORK *micWork;
@@ -984,30 +986,86 @@ static void CTVT_TALK_UpdateVoiceBar( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
     { 77, 160 , 0 , 48 }, //‰º
     {GFL_UI_TP_HIT_END,0,0,0}
   };
-  const int ret = GFL_UI_TP_HitTrg( hitTbl );
-  BOOL isTouhc = FALSE;
+  const int retTrg = GFL_UI_TP_HitTrg( hitTbl );
+  const int retCont = GFL_UI_TP_HitCont( hitTbl );
+  int ret = GFL_UI_TP_HIT_NONE;
+  BOOL isTouch = FALSE;
   
-  if( ret == 0 || ret == 1 )
+  if( retTrg != GFL_UI_TP_HIT_NONE )
+  {
+    talkWork->sliderRepeat = 0;
+    if( retTrg == 0 || retTrg == 1 )
+    {
+      talkWork->sliderBefHit = 0;
+      ret = 0;
+    }
+    else
+    {
+      talkWork->sliderBefHit = 1;
+      ret = 1;
+    }
+    
+  }
+  else
+  if( retCont != GFL_UI_TP_HIT_NONE  )
+  {
+    BOOL isSame = FALSE;
+    if( retCont == 0 || retCont == 1 )
+    {
+      if( talkWork->sliderBefHit == 0 )
+      {
+        isSame = TRUE;
+      }
+    }
+    else
+    {
+      if( talkWork->sliderBefHit == 1 )
+      {
+        isSame = TRUE;
+      }
+    }
+    
+    if( isSame == TRUE )
+    {
+      talkWork->sliderRepeat++;
+      if( talkWork->sliderRepeat >= 25 )
+      {
+        ret = talkWork->sliderBefHit;
+        //2‰ñ–Ú‚Í’Z‚­
+        talkWork->sliderRepeat = 10;
+      }
+    }
+    else
+    {
+      talkWork->sliderBefHit = 0xFF;
+    }
+  }
+  else
+  {
+      talkWork->sliderBefHit = 0xFF;
+  }
+  
+  if( ret == 0 )
   {
     if( talkWork->sliderPos < CTVT_PITCH_MAX )
     {
-      isTouhc = TRUE;
+      isTouch = TRUE;
       talkWork->sliderPos++;
       GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_PITCH_1+talkWork->sliderPos );
     }
   }
   else
-  if( ret  == 2 )
+  if( ret == 1 )
   {
     if( talkWork->sliderPos > CTVT_PITCH_MIN )
     {
-      isTouhc = TRUE;
+      isTouch = TRUE;
       talkWork->sliderPos--;
       GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_PITCH_1+talkWork->sliderPos );
     }
   }
   
-  if( isTouhc == TRUE )
+  if( isTouch == TRUE )
   {
     const int pitch = (talkWork->sliderPos - CTVT_PITCH_DEFAULT)*64;
     PMSND_PlaySE_byPlayerID( CTVT_SND_TOUCH , SEPLAYER_SE1 );
