@@ -38,6 +38,7 @@ class ColumnID
 	attr :cESCAPE, true
 	attr :cFLY, true
   attr :cBGM_CHG, true
+  attr :cPALACE_OK, true
 	attr :cBGM_SPRING, true
 	attr :cBGM_SUMMER, true
 	attr :cBGM_AUTUMN, true
@@ -84,6 +85,8 @@ class ColumnID
 				@cFLY = c_count
       when "bgm_chg"
         @cBGM_CHG = c_count
+      when "palace_ok"
+        @cPALACE_OK = c_count
 			when "BGM_SPRING"
 				@cBGM_SPRING = c_count
 			when "BGM_SUMMER"
@@ -210,7 +213,7 @@ class ZoneDataFile < OutputFile
 		@fp.puts "};\n"
 	end
 
-	def ox2bool str, id
+	def ox2bool( str, id )
 		case str
 		when "○"
 			"TRUE"
@@ -281,11 +284,12 @@ class ZoneDataFile < OutputFile
 		if !(map_chg_type =~ /^MC_TYPE_/) then
 			STDERR.puts "マップ切り替えタイプの指定がおかしい!:#{map_chg_type}:\n"
 		end
-		dash_flag = ox2bool column[@cl.cDASH], id
-		bicycle_flag = ox2bool column[@cl.cBICYCLE], id
-		escape_flag = ox2bool column[@cl.cESCAPE], id
-		fly_flag = ox2bool column[@cl.cFLY], id
-    bgm_chg_flag = ox2bool column[@cl.cBGM_CHG], id
+		dash_flag = ox2bool( column[@cl.cDASH], id )
+		bicycle_flag = ox2bool( column[@cl.cBICYCLE], id )
+		escape_flag = ox2bool( column[@cl.cESCAPE], id )
+		fly_flag = ox2bool( column[@cl.cFLY], id )
+    bgm_chg_flag = ox2bool( column[@cl.cBGM_CHG], id )
+    palace_ok_flag = ox2bool( column[@cl.cPALACE_OK], id )
 
 
 	@fp.puts <<DOCUMENT
@@ -314,6 +318,7 @@ class ZoneDataFile < OutputFile
 		#{escape_flag},
 		#{fly_flag},
     #{bgm_chg_flag},
+    #{palace_ok_flag},
 		#{camera_area}, // camera_area
 		0, // padding
 		#{column[@cl.cSX]},

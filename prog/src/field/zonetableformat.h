@@ -31,13 +31,14 @@ typedef struct{
 	u16 placename_flag:6;				///<地名メッセージ用のウィンドウ
 	u8 weather_id;						///<天候指定のID
 	u8 camera_id;						  ///<カメラ指定のID
-	u16 map_change_type:6;			///<マップ切り替えタイプの指定(src/field/map_change_type.h参照）
+	u16 map_change_type:5;			///<マップ切り替えタイプの指定(src/field/map_change_type.h参照）
 	u16 battle_bg_type:5;				///<戦闘背景の指定
 	u16 bicycle_flag:1;					///<自転車に乗れるかどうか
 	u16 dash_flag:1;						///<ダッシュできるかどうか
 	u16 escape_flag:1;					///<あなぬけできるかどうか
 	u16 fly_flag:1;             ///<そらをとぶができるかどうか
-  u16 sp_bgm_flag:1;          ///<自転車・なみのりでBGMがかわるかどうか
+  u16 sp_bgm_flag:1;          ///<自転車でBGMがかわるかどうか
+  u16 palace_ok_flag:1;       ///<パレスへゴーが使えるか？
   u16 camera_area;           ///<カメラエリア指定のID
   u16 pad;  ///<予備
 
