@@ -50,7 +50,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_OBJ_ANIME_WAIT()
 	
 	//主人公：ライバルを見る
-	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル会話：博士がポケモンくれるって？
@@ -58,8 +58,10 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_BALLOONWIN_OBJMSG( msg_t01r0102_black_01 , T01R0102_RIVAL_01 )
 	_MSGWIN_CLOSE()
 	
+	_TIME_WAIT( 8 )
+	
 	//ライバル：階段をみて
-	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_u )
+	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル会話：ベルはまた？
@@ -115,13 +117,9 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_l )
 	_OBJ_ANIME_WAIT()
 	
-	//主人公：プレゼントを見る
-	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_d )
-	_OBJ_ANIME_WAIT()
-	
 	//ライバル会話：ボールを調べなよ
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_BALLOONWIN_OBJMSG( msg_t01r0102_black_03, T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_black_03a, T01R0102_RIVAL_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
@@ -173,7 +171,7 @@ _ANIME_LABEL	anm_gamestart_support_move_02
 //ライバル：サポートを見る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_gamestart_rival_look_02
-	_ANIME_DATA	AC_WAIT_8F,5
+	_ANIME_DATA	AC_WAIT_8F,4
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -359,7 +357,7 @@ ev_t01r0102_poke_get:
 	_OBJ_ANIME_WAIT()
 	
 	//サポート会話：ねえねえ！勝負しようよ！
-	_BALLOONWIN_OBJMSG( msg_t01r0102_white_06 , T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_white_06a , T01R0102_SUPPORT_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
@@ -405,9 +403,9 @@ EVENT_START	ev_pos_t01r0102_stopper
 			_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
 			_OBJ_ANIME_WAIT()
 			
-			//サポート会話：どこいくのよぅ
-			_BALLOONWIN_OBJMSG( msg_t01r0102_black_16 , T01R0102_RIVAL_01 )
-			_BALLOONWIN_CLOSE()
+			//サポート会話：ちょっと！
+			_PLAINWIN_MSG_DOWN( msg_t01r0102_black_16 )
+			_MSGWIN_CLOSE()
 			
 			//主人公：一歩戻る
 			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posstop_player_back_01 )
@@ -422,8 +420,8 @@ EVENT_START	ev_pos_t01r0102_stopper
 			_OBJ_ANIME_WAIT()
 			
 			//サポート会話：どこいくのよぅ
-			_BALLOONWIN_OBJMSG( msg_t01r0102_white_07 , T01R0102_SUPPORT_01 )
-			_BALLOONWIN_CLOSE()
+			_PLAINWIN_MSG_UP( msg_t01r0102_white_07 )
+			_MSGWIN_CLOSE()
 			
 			//主人公：一歩戻る
 			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posstop_player_back_01 )
@@ -691,7 +689,7 @@ ev_t01r0102_support_battle:
 	_MSGWIN_CLOSE()
 	
 	//サポート：周りを見て
-	_OBJ_ANIME( T01R0102_RIVAL_01, anm_battle_support_look_01 )
+	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_battle_support_look_01 )
 	_OBJ_ANIME_WAIT()
 	
 	//うわあ！なにこれ！
@@ -768,6 +766,14 @@ ev_t01r0102_support_battle:
 	_BALLOONWIN_OBJMSG( msg_t01r0102_black_15 , T01R0102_RIVAL_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+	
+	_END_EVENT_BGM()
+	
+	//========================================//
+	//サポート戦終了フラグをセット
+	_FLAG_SET( FE_T01R0102_SUPPORTBTL )
+	
+	//========================================//
 	
 _RET
 
