@@ -67,7 +67,7 @@
 	dim  overlayinfo,200,5		;テキスト情報から取り込んだ数値
 	dim  overlaylink,200,100	;オーバーレイ開始アドレスと別オーバーレイの配置状態の関係を格納
 	dim  overlaylinkcount,200	;そのオーバーレイが参照されている回数
-	dim  stack,200				;
+	dim  stack,500			;
 	sdim temp,  512
 	sdim temp2, 256
 	sdim temp3, 512
@@ -78,8 +78,8 @@
 	sdim filename, 512
 
 	OVERLAY_NAME_SIZE = 40
-	IMG_WIDTH         = 6000
-	IMG_HEIGHT        = 1000
+	IMG_WIDTH         = 7000
+	IMG_HEIGHT        = 1300
 
 	screen 2,IMG_WIDTH,IMG_HEIGHT,2,,,1024,900
 	font "Arial",10
@@ -424,12 +424,12 @@
 
 	gWidth  = IMG_WIDTH
 	gHeight = IMG_HEIGHT
-;	DIV_RATE = 540704	;fieldmapが一番大きくみえる
-	DIV_RATE = 850000
-;	DIV_RATE = 2040704	;mainが入る
+;	DIV_RATE = 540704	; fieldmapが一番大きくみえる
+	DIV_RATE = 900000
+;	DIV_RATE = 2040704	; mainが入る
 
-;	DIV_RATE  = 3040704	;プログラムの最後まではいる
-	DIV_NUM   = 150
+;	DIV_RATE  = 3040704	; プログラムの最後まではいる
+	DIV_NUM   = 250		; 棒グラフを画面内で何分割して描画するか
 	BAR_WIDTH = (gWidth/DIV_NUM)
 
 	sizemax=0
