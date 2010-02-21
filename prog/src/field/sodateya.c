@@ -263,7 +263,7 @@ void SODATEYA_DeleteEgg( SODATEYA* sodateya )
  * @param sodateya ポケモンを育てる育て屋さん
  */
 //---------------------------------------------------------------------------------------- 
-void SODATEYA_BreedPokemon( SODATEYA* sodateya )
+BOOL SODATEYA_BreedPokemon( SODATEYA* sodateya )
 {
   // 経験値を加算
   SODATEYA_WORK_AddGrowUpExp( sodateya->work, EXP_PER_WALK );
@@ -273,7 +273,9 @@ void SODATEYA_BreedPokemon( SODATEYA* sodateya )
   {
     // タマゴが産まれたことを記憶
     SODATEYA_WORK_SetEgg( sodateya->work );
+    return TRUE;
   }
+  return FALSE;
 }
 
 

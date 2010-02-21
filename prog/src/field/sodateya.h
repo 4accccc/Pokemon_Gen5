@@ -121,9 +121,10 @@ extern void SODATEYA_DeleteEgg( SODATEYA* sodateya );
  * @brief ポケモンを育てる (1歩分)
  *
  * @param sodateya ポケモンを育てる育て屋さん
+ * @retval  BOOL  TRUEのとき、タマゴが生まれた
  */
 //---------------------------------------------------------------------------------------- 
-extern void SODATEYA_BreedPokemon( SODATEYA* sodateya );
+extern BOOL SODATEYA_BreedPokemon( SODATEYA* sodateya );
 
 
 //========================================================================================

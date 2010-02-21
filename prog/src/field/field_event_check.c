@@ -74,6 +74,7 @@
 #include "field_gimmick_d06.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "../../../resource/fldmapdata/flagwork/work_define.h"  // for WK_OTHER_DISCOVER_EGG
 
 #include "waza_tool/wazano_def.h"
 #include "field/field_comm/intrude_main.h"
@@ -175,7 +176,8 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 //  個別イベントチェック
 //--------------------------------------------------------------
 static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork);
-static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
+static GMEVENT* CheckSodateya(
+    const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckEffectEncount( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys );
@@ -1587,7 +1589,7 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   }
 
   //育て屋チェック
-  event = CheckSodateya( fieldWork, gsys, gdata );
+  event = CheckSodateya( req, fieldWork, gsys, gdata );
   if( event != NULL) return event;
 
   //虫除けスプレーチェック
@@ -1689,14 +1691,20 @@ static BOOL checkPartyEgg( POKEPARTY* party )
  */
 //--------------------------------------------------------------
 static GMEVENT* CheckSodateya( 
-    FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gameSystem, GAMEDATA* gameData )
+    const EV_REQUEST * req, FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gameSystem, GAMEDATA* gameData )
 {
   HEAPID     heapID   = FIELDMAP_GetHeapID( fieldmap );
   POKEPARTY* party    = GAMEDATA_GetMyPokemon( gameData );
   SODATEYA*  sodateya = FIELDMAP_GetSodateya( fieldmap );
 
   // 育て屋: 経験値加算, 子作り判定など1歩分の処理
-  SODATEYA_BreedPokemon( sodateya ); 
+  if ( SODATEYA_BreedPokemon( sodateya ) == TRUE )
+  {
+    //R03のじいさんイベント用：タマゴが生まれたらワークを変更する
+    EVENTWORK *ev = GAMEDATA_GetEventWork( req->gamedata );
+    u16 * work = EVENTWORK_GetEventWorkAdrs( ev, WK_OTHER_DISCOVER_EGG );
+    *work = 1;
+  }
 
   // 手持ちタマゴ: 孵化カウンタ更新
   updatePartyEgg( party );
