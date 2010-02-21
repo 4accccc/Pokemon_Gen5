@@ -305,7 +305,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//さ いきましょ
-	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_04 , R05_LEADER4_01 , WIN_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_04 , R05_LEADER4_01 , POS_DL )
 	_MSGWIN_CLOSE()
 	
 	//カミツレ：先に行く
@@ -319,7 +319,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_TIME_WAIT( 16 )
 	
 	//チャンピオンは強い それ以外にないよ
-	_BALLOONWIN_OBJMSG_POS( msg_r05_black_08 , R05_RIVAL_01 , WIN_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_08 , R05_RIVAL_01 , POS_DL )
 	_MSGWIN_CLOSE()
 	
 	//ライバル：先に行く

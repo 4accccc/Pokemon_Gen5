@@ -55,7 +55,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	//Nが喋る
 	//どう　せかいを　みちびく
-	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_01w, msg_d08r0901_boss_01b, D08R0901_BOSS_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_01w, msg_d08r0901_boss_01b, D08R0901_BOSS_01, POS_DL )
 	_MSGWIN_CLOSE()
 
 	_TIME_WAIT(16)
@@ -66,7 +66,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	//Nが喋る
 	//これから　ボクは
-	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_02w, msg_d08r0901_boss_02b, D08R0901_BOSS_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_02w, msg_d08r0901_boss_02b, D08R0901_BOSS_01, POS_DL )
 	_MSGWIN_CLOSE()
 	
 	//パッケージポケモンが画面外に
@@ -79,14 +79,14 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	//Nが喋る
 	//ぼくたちを　とめられるのは
-	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_03w, msg_d08r0901_boss_03b, D08R0901_BOSS_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_03w, msg_d08r0901_boss_03b, D08R0901_BOSS_01, POS_DL )
 	_MSGWIN_CLOSE()
 	
 	_TIME_WAIT(16)
 	
 	//Nが喋る
 	//さて　どうする？
-	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_04w, msg_d08r0901_boss_04b, D08R0901_BOSS_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_04w, msg_d08r0901_boss_04b, D08R0901_BOSS_01, POS_DL )
 	_MSGWIN_CLOSE()
 
 	_OBJ_POS_CHANGE(MMDL_ID_EVENTOBJ_00,28,0,9,DIR_RIGHT)

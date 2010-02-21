@@ -58,7 +58,7 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 	_OBJ_ANIME_WAIT()
 	
 	//ここがポケモンセンター！
-	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_01, T02PC0101_HAKASE2_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_01, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//博士：カウンターの真横に動く、自機：カウンター前に移動、サポート：自機真横に移動
@@ -75,7 +75,7 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 
 	//ポケモンセンターの凄いところ！
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_02, T02PC0101_HAKASE2_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_02, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
 
 	//BGM終了
@@ -147,7 +147,7 @@ EVENT_START		ev_pos_t02pc0101_kaifuku_01
 	
 	//ちょっと　どこへ　行くのよ！？
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_03, T02PC0101_HAKASE2_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_03, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//自機：一歩戻る
@@ -201,7 +201,7 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_OBJ_ANIME_WAIT()
 	
 	//こいつはパソコン！
-	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_04, T02PC0101_HAKASE2_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_04, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：博士の方に向く
@@ -213,7 +213,7 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_BALLOONWIN_CLOSE()
 	
 	//なるほど……　いい　しつもんだ
-	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_05, T02PC0101_HAKASE2_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_05, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//博士：フレンドリィショップの前（１マス隣）に移動、自機：フレンドリィショップの前に移動
@@ -223,11 +223,11 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_OBJ_ANIME_WAIT()
 	
 	//こちらは　フレンドリィショップ！
-	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_06, T02PC0101_HAKASE2_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_06, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//よーしよしよし！
-	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_07, T02PC0101_HAKASE2_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_07, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//博士、立ち去る

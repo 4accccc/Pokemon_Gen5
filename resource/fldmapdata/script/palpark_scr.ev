@@ -410,7 +410,7 @@ first_anime_evt:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_front )
   _OBJ_ANIME_WAIT()
   //博士「なんどもいっとる・・」
-  _BALLOONWIN_OBJMSG_POS( msg_palpark_first_04, R15R0301_PARK, WIN_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_palpark_first_04, R15R0301_PARK, POS_DL )
   _BALLOONWIN_CLOSE()
   //博士「！」
   _OBJ_ANIME( R15R0301_PARK, anm_gyoe )

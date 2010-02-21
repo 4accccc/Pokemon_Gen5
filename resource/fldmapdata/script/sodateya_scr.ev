@@ -92,14 +92,14 @@ _RET
 //======================================================================
 say:
   _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, WIN_DOWN )
+  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, POS_DL )
   _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 _RET
 
 say_no_wait: // ÉLÅ[ë“ÇøÇ»Çµ
   _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, WIN_DOWN )
+  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE() 
 _RET
 
@@ -112,7 +112,7 @@ _RET
 //======================================================================
 ask:
   _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, WIN_DOWN )
+  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, POS_DL )
   _YES_NO_WIN( ask_retval )
   _BALLOONWIN_CLOSE()
 _RET

@@ -92,12 +92,12 @@ EVENT_START	ev_reserve_d08_hakase1_01
 
 		//博士が喋る
 		//博士（父）：……うむ
-		_BALLOONWIN_OBJMSG_WB( msg_d08_hakase1_08w, msg_d08_hakase1_08b, D08_HAKASE1_01, WIN_DOWN )
+		_BALLOONWIN_OBJMSG_WB( msg_d08_hakase1_08w, msg_d08_hakase1_08b, D08_HAKASE1_01, POS_DL )
 		_MSGWIN_CLOSE()
 		
 		//チャンピオンが喋る
 		//チャンピオン：……ふむう
-		_BALLOONWIN_OBJMSG_WB( msg_d08_champion_03w, msg_d08_champion_03b, D08_CHAMPION_01, WIN_DOWN )
+		_BALLOONWIN_OBJMSG_WB( msg_d08_champion_03w, msg_d08_champion_03b, D08_CHAMPION_01, POS_DL )
 		_MSGWIN_CLOSE()
 		
 		//サポートが喋る

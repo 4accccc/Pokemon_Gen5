@@ -796,7 +796,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//博士（娘）が喋る
 	//ハーイ！　れきしてきに　センセーションで
-	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_01, C02_HAKASE2_01,WIN_DOWN)
+	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_01, C02_HAKASE2_01,POS_DL)
     _BALLOONWIN_CLOSE()
     
     //c02ジムリーダーが博物館から出てくる
@@ -811,22 +811,22 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//c02ジムリーダーが喋る
 	//……これで　いいんでしょ
-	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_sotne_01, C02_LEADER02_02,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_sotne_01, C02_LEADER02_02,POS_DL) 
     _BALLOONWIN_CLOSE()
 
 	//博士（父）が喋る
 	//うむ……　あのあと　リュウラセンのとうを
-	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase1_sotne_01, C02_HAKASE1_01,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase1_sotne_01, C02_HAKASE1_01,POS_DL) 
     _BALLOONWIN_CLOSE()
 
 	//博士（娘）が喋る
 	//……しらべたのは　アタシ　なんですけど
-	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_02, C02_HAKASE2_01,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_02, C02_HAKASE2_01,POS_DL) 
     _BALLOONWIN_CLOSE()
 
 	//サポートが喋る
 	//それにしても　あのとき　プラズマだん　から
-	_BALLOONWIN_OBJMSG_POS( msg_c02_white_sotne_01, C02_SUPPORT_02,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_white_sotne_01, C02_SUPPORT_02,POS_DL) 
     _BALLOONWIN_CLOSE()
   	
   	//アロエがサポートを振り向く
@@ -841,7 +841,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//c02ジムリーダーが喋る
 	//ああ　あのとき
-	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_sotne_02, C02_LEADER02_02,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_sotne_02, C02_LEADER02_02,POS_DL) 
     _BALLOONWIN_CLOSE()
 
   	//博士（父）が主人公に近づく
@@ -854,7 +854,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//博士（父）が喋る
 	//Ｎが　かかげたのは
-	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase1_sotne_02, C02_HAKASE1_01,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase1_sotne_02, C02_HAKASE1_01,POS_DL) 
     _BALLOONWIN_CLOSE()
 	
 	//ROMVerによって、ダークストーンか、ライトストーンを入手
@@ -879,7 +879,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//サポートが喋る
 	//さわったら　うごきましたよね！？
-	_BALLOONWIN_OBJMSG_POS( msg_c02_white_sotne_02, C02_SUPPORT_02,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_white_sotne_02, C02_SUPPORT_02,POS_DL) 
     _BALLOONWIN_CLOSE()
 
 	//サポートがチャンピオンの方を向く
@@ -888,7 +888,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//チャンピオンが喋る
 	//……そうか
-	_BALLOONWIN_OBJMSG_WB( msg_c02_champion_sotne_01w, msg_c02_champion_sotne_01b, C02_CHAMPION_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_WB( msg_c02_champion_sotne_01w, msg_c02_champion_sotne_01b, C02_CHAMPION_01, POS_DL )
 	_MSGWIN_CLOSE()
 
 	//博士（娘）がチャンピオンの方を向く
@@ -897,7 +897,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//博士（娘）が喋る
 	//で　どうすれば
-	_BALLOONWIN_OBJMSG_WB( msg_c02_hakase2_sotne_03w, msg_c02_hakase2_sotne_03b, C02_HAKASE2_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_WB( msg_c02_hakase2_sotne_03w, msg_c02_hakase2_sotne_03b, C02_HAKASE2_01, POS_DL )
 	_MSGWIN_CLOSE()
 
 	//博士（娘）がチャンピオンの方を向く
@@ -906,7 +906,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//チャンピオンが喋る
 	//いま　[1:00:トレーナー名:0]に　はんのう　したであろう……
-	_BALLOONWIN_OBJMSG_POS( msg_c02_champion_sotne_02, C02_CHAMPION_01,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_champion_sotne_02, C02_CHAMPION_01,POS_DL) 
     _BALLOONWIN_CLOSE()
 
 	//博士（父）がみんなの方を向く
@@ -915,12 +915,12 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//博士（父）が喋る
 	//そうだな……
-	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase1_sotne_03, C02_HAKASE1_01,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase1_sotne_03, C02_HAKASE1_01,POS_DL) 
     _BALLOONWIN_CLOSE()
     
 	//チャンピオンが喋る
 	//めざめさせるには　Ｎに……
-	_BALLOONWIN_OBJMSG_POS( msg_c02_champion_sotne_03, C02_CHAMPION_01,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_champion_sotne_03, C02_CHAMPION_01,POS_DL) 
     _BALLOONWIN_CLOSE()
 	
 	//博士（父）がチャンピオンの方を向く
@@ -949,7 +949,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//博士（父）が喋る
 	//おまえさんが　その　ダークストーンを
-	_BALLOONWIN_OBJMSG_WB( msg_c02_hakase1_sotne_04w, msg_c02_hakase1_sotne_04b, C02_HAKASE1_01, WIN_DOWN )
+	_BALLOONWIN_OBJMSG_WB( msg_c02_hakase1_sotne_04w, msg_c02_hakase1_sotne_04b, C02_HAKASE1_01, POS_DL )
 	_MSGWIN_CLOSE()
 	
 	//博士（娘）が主人公を向く
@@ -958,7 +958,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//博士（娘）が喋る
 	//ドラゴンが
-	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_04, C02_HAKASE2_01,WIN_DOWN) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_04, C02_HAKASE2_01,POS_DL) 
     _BALLOONWIN_CLOSE()
     
     //博士（父）が画面外に移動

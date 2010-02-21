@@ -83,7 +83,7 @@ EVENT_START   ev_r09r0201_waitress_01
 
    	
   	//ウェイトレス：いらっしゃいませ！　モーモーミルクは……
- 	_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_01 , R09R0201_WAITRESS_01, WIN_DOWN )
+ 	_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_01 , R09R0201_WAITRESS_01, POS_DL )
   	
   	//【仮】現在、所持金の表示とバールーンウィンドウが同時に表示されると、バルーンウィンドウが半透明になる
   	//対処については、12末ROM以降になります。
@@ -127,14 +127,14 @@ EVENT_START   ev_r09r0201_waitress_01
 
 		
 		IF $LWK_BAG_CHK == 0 THEN 
-		 	_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_03 , R09R0201_WAITRESS_01, WIN_DOWN )
+		 	_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_03 , R09R0201_WAITRESS_01, POS_DL )
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
 			_GOLD_WIN_CLOSE()
 		
 		ELSIF $LWK_GOLD_CHK == 0 THEN
-		 	_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_04 , R09R0201_WAITRESS_01, WIN_DOWN )
+		 	_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_04 , R09R0201_WAITRESS_01, POS_DL )
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()		
 			
@@ -143,11 +143,11 @@ EVENT_START   ev_r09r0201_waitress_01
 		ELSE
 			
 			IF $LWK_MILK_NUM == 1 THEN
-		 		_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_02 , R09R0201_WAITRESS_01, WIN_DOWN )
+		 		_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_02 , R09R0201_WAITRESS_01, POS_DL )
 				_MSGWIN_CLOSE()	
 			
 			ELSE
-		 		_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_06  , R09R0201_WAITRESS_01, WIN_DOWN )
+		 		_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_06  , R09R0201_WAITRESS_01, POS_DL )
 				_MSGWIN_CLOSE()		
 
 			ENDIF
@@ -166,7 +166,7 @@ EVENT_START   ev_r09r0201_waitress_01
 	
 	//モーモーミルクを買わない場合の処理
 	ELSE
-		_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_05  , R09R0201_WAITRESS_01, WIN_DOWN )
+		_BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_05  , R09R0201_WAITRESS_01, POS_DL )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		_GOLD_WIN_CLOSE()	
