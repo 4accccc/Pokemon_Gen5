@@ -99,10 +99,10 @@ static const BOOL PSTATUS_UTIL_CanUseExitButton( PSTATUS_WORK *work );
 void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work );
 #endif
 
-#if USE_DEBUGWIN_SYSTEM
+#if USE_STATUS_DEBUG
 static void PSTATUS_InitDebug( PSTATUS_WORK *work );
 static void PSTATUS_TermDebug( PSTATUS_WORK *work );
-#endif //USE_DEBUGWIN_SYSTEM
+#endif //USE_STATUS_DEBUG
 
 //--------------------------------------------------------------
 //	初期化
@@ -202,7 +202,7 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
   GFL_NET_ReloadIcon();
 
-#if USE_DEBUGWIN_SYSTEM
+#if USE_STATUS_DEBUG
   PSTATUS_InitDebug( work );
 #endif
 
@@ -221,7 +221,7 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
   
   work->psData->pos = work->dataPos;
 
-#if USE_DEBUGWIN_SYSTEM
+#if USE_STATUS_DEBUG
   PSTATUS_TermDebug( work );
 #endif
 
@@ -997,7 +997,7 @@ static void PSTATUS_UpdateBarButton( PSTATUS_WORK *work )
 static void PSTATUS_UpdateUI( PSTATUS_WORK *work )
 {
   BOOL isChangePage;
-#if USE_DEBUGWIN_SYSTEM
+#if USE_STATUS_DEBUG
   if( DEBUGWIN_IsActive() == TRUE ) return;
 #endif
   
@@ -1973,6 +1973,8 @@ void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
 #pragma mark [>debug menu
 
 #define PSTATUS_DEBUG_GROUP_NUMBER (60)
+#define MEMO_DEBUG_GROUP_NUMBER (61)
+#define MEMOINFO_DEBUG_GROUP_NUMBER (62)
 
 static fx32 PSTATUS_DEB_Update_Value( fx32 befValue );
 
@@ -1992,16 +1994,65 @@ static void PSTATUS_DEB_Update_OfsZ( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTATUS_DEB_Draw_OfsZ( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTATUS_DEB_Update_ExitFlg( void* userWork , DEBUGWIN_ITEM* item );
 
+static void PSTD_U_year1( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_year1( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_month1( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_month1( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_day1( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_day1( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_place1( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_place1( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_year2( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_year2( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_month2( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_month2( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_day2( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_day2( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_place2( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_place2( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_level( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_level( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_natsuki( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_natsuki( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_egg( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_egg( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_parent( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_parent( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_event( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_event( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_memo( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_memo( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_getPPP( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_rom( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_rom( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTATUS_InitDebug( PSTATUS_WORK *work )
 {
   VEC_Set( &work->shadowScale , PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z );
   work->shadowRotate = 0xD6C1;
   VEC_Set( &work->shadowOfs , PSTATUS_SUB_SHADOW_OFFSET_X , PSTATUS_SUB_SHADOW_OFFSET_Y , PSTATUS_SUB_SHADOW_OFFSET_Z );
   
+  work->year1 = 0;
+  work->month1 = 0;
+  work->day1 = 0;
+  work->place1 = 0;
+  work->year2 = 0;
+  work->month2 = 0;
+  work->day2 = 0;
+  work->place2 = 0;
+  work->level = 0;
+  work->devRom = 0;
+  work->natsuki = 0;
+  work->isDevEgg = FALSE;
+  work->isDevParent = FALSE;
+  work->isDevEvent = FALSE;
+  work->isDevMemo = FALSE;
+  
   DEBUGWIN_InitProc( PSTATUS_BG_SUB_STR , work->fontHandle );
-  DEBUGWIN_ChangeLetterColor( 0,0,0 );
+  DEBUGWIN_ChangeLetterColor( 0,31,0 );
   
   DEBUGWIN_AddGroupToTop( PSTATUS_DEBUG_GROUP_NUMBER , "ステータス" , work->heapId );
+  DEBUGWIN_AddGroupToGroup( MEMO_DEBUG_GROUP_NUMBER , "トレーナーメモ" , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddGroupToGroup( MEMOINFO_DEBUG_GROUP_NUMBER , "すうち" , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_ScaleX   ,PSTATUS_DEB_Draw_ScaleX   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_ScaleY   ,PSTATUS_DEB_Draw_ScaleY   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
@@ -2010,8 +2061,28 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_OfsX   ,PSTATUS_DEB_Draw_OfsX   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_OfsY   ,PSTATUS_DEB_Draw_OfsY   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_OfsZ   ,PSTATUS_DEB_Draw_OfsZ   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
-  DEBUGWIN_AddItemToGroup( "強制終了" , PSTATUS_DEB_Update_ExitFlg , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_memo  ,PSTD_D_memo  , (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_event ,PSTD_D_event , (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_parent,PSTD_D_parent, (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_egg   ,PSTD_D_egg   , (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_rom   ,PSTD_D_rom   , (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroup( "しゅとく" , PSTD_U_getPPP ,  (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
+
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_year1  ,PSTD_D_year1  , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_month1 ,PSTD_D_month1 , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_day1   ,PSTD_D_day1   , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_place1 ,PSTD_D_place1 , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_year2  ,PSTD_D_year2  , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_month2 ,PSTD_D_month2 , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_day2   ,PSTD_D_day2   , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_place2 ,PSTD_D_place2 , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_level  ,PSTD_D_level  , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_natsuki ,PSTD_D_natsuki , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
+
 }
+
+
 
 static void PSTATUS_TermDebug( PSTATUS_WORK *work )
 {
@@ -2240,11 +2311,297 @@ static void PSTATUS_DEB_Draw_OfsZ( void* userWork , DEBUGWIN_ITEM* item )
   DEBUGWIN_ITEM_SetNameV( item , "Offset_Z[%d.%d]",val1,val2 );  
 }
 
-static void PSTATUS_DEB_Update_ExitFlg( void* userWork , DEBUGWIN_ITEM* item )
+static const BOOL PSTD_UpdateU32( u32 *num )
+{
+  u32 val = 1;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  {
+    val = 10;
+  }
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    val = 10000;
+  }
+  
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    if( *num + val > 0xFFFFFFFF )
+    {
+      *num = 0xFFFFFFFF;
+    }
+    else
+    {
+      *num += val;
+    }
+    return TRUE;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    if( *num < val )
+    {
+      *num = 0;
+    }
+    else
+    {
+      *num -= val;
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+static const BOOL PSTD_UpdateBool( BOOL *val )
+{
+  if( (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) ||
+      (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) ||
+      (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A)  )
+  {
+    *val = (*val == TRUE ? FALSE : TRUE );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+static void PSTD_U_year1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->year1 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_year1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "year1[%d]",work->year1 );  
+}
+static void PSTD_U_month1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->month1 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_month1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "month1[%d]",work->month1 );  
+}
+static void PSTD_U_day1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->day1 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_day1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "day1[%d]",work->day1 );  
+}
+static void PSTD_U_place1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->place1 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_place1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "place1[%d]",work->place1 );  
+}
+
+static void PSTD_U_year2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->year2 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_year2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "year2[%d]",work->year2 );  
+}
+static void PSTD_U_month2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->month2 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_month2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "month2[%d]",work->month2 );  
+}
+static void PSTD_U_day2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->day2 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_day2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "day2[%d]",work->day2 );  
+}
+static void PSTD_U_place2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->place2 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_place2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "place2[%d]",work->place2 );  
+}
+static void PSTD_U_level( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->level ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void PSTD_D_level( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "lavel2[%d]",work->level );  
+}
+
+static void PSTD_U_natsuki( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->natsuki ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_natsuki( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "natsuki[%d]",work->natsuki );  
+}
+
+static void PSTD_U_egg( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateBool( &work->isDevEgg ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_egg( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Egg[%s]",(work->isDevEgg?"ON":"OFF") );  
+}
+
+static void PSTD_U_parent( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateBool( &work->isDevParent ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_parent( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Parent[%s]",(work->isDevParent?"ON":"OFF") );  
+}
+
+static void PSTD_U_event( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateBool( &work->isDevEvent ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_event( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Event[%s]",(work->isDevEvent?"ON":"OFF") );  
+}
+
+static void PSTD_U_memo( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateBool( &work->isDevMemo ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_memo( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Memo[%s]",(work->isDevMemo?"ON":"OFF") );  
+}
+static void PSTD_U_rom( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateU32( &work->devRom ) == TRUE )
+  {
+    if( work->devRom >= 21 )
+    {
+      work->devRom = 21;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_rom( void* userWork , DEBUGWIN_ITEM* item )
+{
+  static const char romName[22][3] = 
+  {
+    "--","Sa","Ru","Em",
+    "FR","LG","--",
+    "HG","SS","--",
+    "D","P","Pl","--","--",
+    "XS","--","--","--","--",
+    "W","B"
+  };
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Rom[%s]",romName[work->devRom] );  
+}
+
+
+static void PSTD_U_getPPP( void* userWork , DEBUGWIN_ITEM* item )
 {
   PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
-    work->psData->isExitRequest = TRUE;
+    const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+    MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->psData->game_data );
+
+    work->natsuki = PPP_Get( ppp , ID_PARA_friend , NULL );
+    work->year1   = PPP_Get( ppp , ID_PARA_birth_year , NULL );
+    work->month1  = PPP_Get( ppp , ID_PARA_birth_month , NULL )+1;
+    work->day1    = PPP_Get( ppp , ID_PARA_birth_day , NULL )+1;
+    work->place1  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
+    work->year2   = PPP_Get( ppp , ID_PARA_get_year , NULL );
+    work->month2  = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
+    work->day2    = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
+    work->place2  = PPP_Get( ppp , ID_PARA_get_place , NULL );
+    work->level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
+    work->devRom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
+    work->isDevEgg   = PPP_Get( ppp , ID_PARA_tamago_flag , NULL );
+    work->isDevParent= PPP_IsMatchOya( ppp , myStatus );
+    work->isDevEvent = PPP_Get( ppp , ID_PARA_event_get_flag , NULL );
   }
 }
+

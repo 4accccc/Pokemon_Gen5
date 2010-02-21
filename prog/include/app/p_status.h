@@ -51,6 +51,8 @@ typedef struct {
 
   BOOL      canExitButton;  //X戻りが使えるか？
   BOOL      isExitRequest;  //時間切れ時、終了リクエストを出す
+  
+
 }PSTATUS_DATA;
 
 // モード

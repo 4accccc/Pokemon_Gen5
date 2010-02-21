@@ -547,12 +547,52 @@ static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *info
 static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp )
 {
   u32 height = 0;
-  const u32 isEgg = PPP_Get( ppp , ID_PARA_tamago_flag , NULL );
+  BOOL isParent;  //自分のポケか？
+  u32 isEgg = PPP_Get( ppp , ID_PARA_tamago_flag , NULL );
+  u32 seikaku = PPP_Get( ppp , ID_PARA_seikaku , NULL );
+  u32 natuki = PPP_Get( ppp , ID_PARA_friend , NULL );
+  u32 year1   = PPP_Get( ppp , ID_PARA_birth_year , NULL );
+  u32 month1  = PPP_Get( ppp , ID_PARA_birth_month , NULL )+1;
+  u32 day1    = PPP_Get( ppp , ID_PARA_birth_day , NULL )+1;
+  u32 year2   = PPP_Get( ppp , ID_PARA_get_year , NULL );
+  u32 month2  = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
+  u32 day2    = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
+  u32 level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
+  u32 isEvent = PPP_Get( ppp , ID_PARA_event_get_flag , NULL );
+  u32 rom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
+  //場所はポケシフター対応で書き換える可能性あり。
+  u32 place1  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
+  u32 place2  = PPP_Get( ppp , ID_PARA_get_place , NULL );
+  //自分のポケかチェック
+  {
+    MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->psData->game_data );
+    isParent = PPP_IsMatchOya( ppp , myStatus );
+  }
+  
+
+#if USE_STATUS_DEBUG
+  if( work->isDevMemo == TRUE )
+  {
+    year1  =work->year1;
+    month1 =work->month1;
+    day1   = work->day1;
+    place1 = work->place1;
+    year2  = work->year2;
+    month2 = work->month2;
+    day2   = work->day2;
+    place2 = work->place2;
+    level = work->level;
+    rom = work->devRom;
+    natuki = work->natsuki;
+    isEgg = work->isDevEgg;
+    isParent = work->isDevParent;
+    isEvent = work->isDevEvent;
+  }
+#endif
 
   //性格
   if( isEgg == 0 )
   {
-    const u32 seikaku = PPP_Get( ppp , ID_PARA_seikaku , NULL );
     STRBUF *srcStr = GFL_MSG_CreateString( infoWork->msgMemo , trmemo_01_01 + seikaku );
     
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWinUp ) , 
@@ -565,30 +605,12 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
   
   //メモ
   {
-    BOOL isParent;  //自分のポケか？
     u16 memoId;
     STRBUF *srcStr;
     STRBUF *dstStr = GFL_STR_CreateBuffer( 256 , work->heapId );
     STRBUF *placeStr1;
     STRBUF *placeStr2;
     WORDSET *wordSet  = WORDSET_CreateEx( 10 , WORDSET_DEFAULT_BUFLEN , work->heapId );
-    const u32 year1   = PPP_Get( ppp , ID_PARA_birth_year , NULL );
-    const u32 month1  = PPP_Get( ppp , ID_PARA_birth_month , NULL )+1;
-    const u32 day1    = PPP_Get( ppp , ID_PARA_birth_day , NULL )+1;
-    const u32 year2   = PPP_Get( ppp , ID_PARA_get_year , NULL );
-    const u32 month2  = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
-    const u32 day2    = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
-    const u32 level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
-    const u32 isEvent = PPP_Get( ppp , ID_PARA_event_get_flag , NULL );
-    //場所はポケシフター対応で書き換える可能性あり。
-    u32 place1  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
-    u32 place2  = PPP_Get( ppp , ID_PARA_get_place , NULL );
-    
-    //自分のポケかチェック
-    {
-      MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->psData->game_data );
-      isParent = PPP_IsMatchOya( ppp , myStatus );
-    }
 
     //種類分岐
 
@@ -597,7 +619,6 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
       if( place2 == 30001 )
       {
         //ポケシフター
-        const u32 rom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
         u16 newRomMsg = trmemo_02_09_01;
         u16 oldRomMsg = trmemo_02_10_01;
         if( isEvent == TRUE )
@@ -823,7 +844,6 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
     //タマゴ
     u16 msgId;
     STRBUF *srcStr;
-    const u32 natuki = PPP_Get( ppp , ID_PARA_friend , NULL );
     if( natuki <= 5 )
     {
       msgId = trmemo_01_T_02_01;

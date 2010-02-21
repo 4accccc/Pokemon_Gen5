@@ -21,6 +21,9 @@
 #include "p_status_gra.naix"
 #include "msg/msg_pokestatus.h"
 
+
+#define USE_STATUS_DEBUG (USE_DEBUGWIN_SYSTEM)
+
 #pragma mark[>define BG
 //BG面定義
 #define PSTATUS_BG_MAIN_BG (GFL_BG_FRAME3_M)
@@ -283,10 +286,28 @@ typedef struct
   PSTATUS_MOSAIC_EFFECT_SEQ mosaicEffSeq;
   u8 mosaicCnt;
   
-#if USE_DEBUGWIN_SYSTEM
+#if USE_STATUS_DEBUG
   VecFx32 shadowScale;
   u16 shadowRotate;
   VecFx32 shadowOfs;
+
+  
+  //デバッグ用
+  u32 year1;
+  u32 month1;
+  u32 day1;
+  u32 place1;
+  u32 year2;
+  u32 month2;
+  u32 day2;
+  u32 place2;
+  u32 level;
+  u32 natsuki;
+  u32 devRom;
+  BOOL isDevEgg;
+  BOOL isDevParent;
+  BOOL isDevEvent;
+  BOOL isDevMemo;
 #endif
 
 }PSTATUS_WORK;

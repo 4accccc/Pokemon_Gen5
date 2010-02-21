@@ -657,13 +657,14 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
           const u8 tray = work->selInitWork.selectPoke[i][0];
           const u8 idx  = work->selInitWork.selectPoke[i][1];
           const u32 itemNo = PPP_Get( work->capInitWork.ppp[i] , ID_PARA_item , NULL );
-          MB_COMM_AddSendPokeData( work->commWork , work->capInitWork.ppp[i] );
           
           if( itemNo != 0 )
           {
             MB_DATA_AddItem( work->dataWork , itemNo );
+            PPP_Put( work->capInitWork.ppp[i] , ID_PARA_item , 0 );
           }
           
+          MB_COMM_AddSendPokeData( work->commWork , work->capInitWork.ppp[i] );
           //Œ³ƒf[ƒ^‚Ìppp‚ğÁ‚·
           MB_DATA_ClearBoxPPP( work->dataWork , tray , idx );
           //“Ç‚ñ‚Å‚¨‚¢‚½•û‚àÁ‚·
