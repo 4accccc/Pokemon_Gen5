@@ -165,14 +165,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/script_work.c \
         field/scrcmd.c \
         field/eventwork.c \
-        field/scrcmd_work.c \
-        field/scrcmd_enviroments.c \
-        field/scrcmd_sxy.c \
-        field/scrcmd_battle.c \
-        field/scrcmd_pokemon.c \
-        field/scrcmd_player.c \
-        field/scrcmd_proc.c \
-        field/scrcmd_wifi_st.c \
         field/fldmmdl.c \
         test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \
@@ -210,7 +202,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/ica_camera.c \
 		    poke_tool/status_rcv.c \
         system/bgwinfrm.c \
-        field/scrcmd_gym_init.c \
         poke_tool/gauge_tool.c \
         system/gra_tool.c \
         field/field_comm/field_beacon_message.c \
@@ -344,6 +335,15 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/map_replace.c \
         field/warpdata.c \
         field/event_poke_status.c \
+        field/scrcmd_work.c \
+        field/scrcmd_enviroments.c \
+        field/scrcmd_sxy.c \
+        field/scrcmd_battle.c \
+        field/scrcmd_pokemon.c \
+        field/scrcmd_player.c \
+        field/scrcmd_proc.c \
+        field/scrcmd_wifi_st.c \
+        field/scrcmd_gym_init.c \
         field/scrcmd_sodateya.c \
         field/event_cg_wireless.c \
         field/event_fieldmap_menu.c \
