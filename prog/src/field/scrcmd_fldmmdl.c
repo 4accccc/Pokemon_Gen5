@@ -312,7 +312,7 @@ VMCMD_RESULT EvCmdObjAdd( VMHANDLE *core, void *wk )
   u16 gz = VMGetU16( core );
   u16 dir = VMGetU16( core );
   u16 id = VMGetU16( core );
-  u16 code = VMGetU16( core );
+  u16 code = SCRCMD_GetVMWorkValue( core, work );
   u16 move = VMGetU16( core );
   int zone_id = FIELDMAP_GetZoneID( fparam->fieldMap );
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
