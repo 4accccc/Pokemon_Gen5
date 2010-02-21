@@ -66,6 +66,16 @@
 
 FS_EXTERN_OVERLAY( dpw_common );
 
+#ifdef PM_DEBUG
+
+#define WIFI_BSUBWAY_Printf( ... )  OS_TPrintf( __VA_ARGS__ )
+
+#else
+
+#define WIFI_BSUBWAY_Printf( ... )  ((void)0)
+
+#endif
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -153,6 +163,8 @@ enum{
   SCORE_UPLOAD_SEQ_SUCCESSDATA_CODEIN_ROOM_NO_WAIT,
   SCORE_UPLOAD_SEQ_SUCCESSDATA_CODEIN_ROOM_NO_FADEIN_WAIT,
   SCORE_UPLOAD_SEQ_SUCCESSDATA_DOWNLOAD_ROOM_WAIT,
+  SCORE_UPLOAD_SEQ_SUCCESSDATA_SAVE,
+  SCORE_UPLOAD_SEQ_SUCCESSDATA_WAIT,
   SCORE_UPLOAD_SEQ_SUCCESSDATA_MSG_03,
   SCORE_UPLOAD_SEQ_SUCCESSDATA_DOWNLOAD_END,
 
@@ -373,6 +385,8 @@ typedef struct
 static GFL_PROC_RESULT WiFiBsubway_ProcInit( GFL_PROC * p_proc, int * p_seq, void * p_param, void * p_work );
 static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, void * p_param, void * p_work );
 static GFL_PROC_RESULT WiFiBsubway_ProcEnd( GFL_PROC * p_proc, int * p_seq, void * p_param, void * p_work );
+
+static BOOL WiFiBsubway_IsErrorCheck( const WIFI_BSUBWAY* cp_wk, int seq );
 
 
 //-------------------------------------
@@ -603,12 +617,12 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
   WIFI_BSUBWAY* p_wk = p_work;
 
   // 通信エラーチェック
-  if( ((*p_seq) <= BSUBWAY_SEQ_MAIN) && (GFL_FADE_CheckFade() == FALSE) && (p_wk->dpw_main_do) ){
+  if( WiFiBsubway_IsErrorCheck( p_wk, (*p_seq) ) ){
     if( ERROR_DATA_IsError( &p_wk->bt_error ) || (NetErr_App_CheckError() != NET_ERR_CHECK_NONE) )
     {
-      TOMOYA_Printf( "ProcMain Error Hit\n" );
-      TOMOYA_Printf( "BtError %d\n", ERROR_DATA_IsError( &p_wk->bt_error ) );
-      TOMOYA_Printf( "NetError %d\n", NetErr_App_CheckError() );
+      WIFI_BSUBWAY_Printf( "ProcMain Error Hit\n" );
+      WIFI_BSUBWAY_Printf( "BtError %d\n", ERROR_DATA_IsError( &p_wk->bt_error ) );
+      WIFI_BSUBWAY_Printf( "NetError %d\n", NetErr_App_CheckError() );
       (*p_seq) = BSUBWAY_SEQ_ERROR;
     }
   }
@@ -790,6 +804,18 @@ static GFL_PROC_RESULT WiFiBsubway_ProcEnd( GFL_PROC * p_proc, int * p_seq, void
 
 
 //-------------------------------------
+///	Errorチェック　を行うか？
+//=====================================
+static BOOL WiFiBsubway_IsErrorCheck( const WIFI_BSUBWAY* cp_wk, int seq )
+{
+  if( (seq <= BSUBWAY_SEQ_MAIN) && (GFL_FADE_CheckFade() == FALSE) && (cp_wk->dpw_main_do) && (cp_wk->save_do == FALSE) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+//-------------------------------------
 ///	RoomData 
 //=====================================
 //----------------------------------------------------------------------------
@@ -817,7 +843,7 @@ static void ROOM_DATA_SetUp( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR* p_erro
 
   p_wk->rank = rank;
 
-  TOMOYA_Printf( "RoomNum Get\n" );
+  WIFI_BSUBWAY_Printf( "RoomNum Get\n" );
 
   // ルーム数を取得
   Dpw_Bt_GetRoomNumAsync( rank );
@@ -870,7 +896,7 @@ static void ROOM_DATA_LoadRoomData( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR*
   GF_ASSERT( p_wk->setup );
   GF_ASSERT( p_wk->in_roomdata == FALSE );
 
-  TOMOYA_Printf( "Room Load \n" );
+  WIFI_BSUBWAY_Printf( "Room Load \n" );
 
   p_wk->room_no = room_no;
   GF_ASSERT( p_wk->room_no < p_wk->room_num );
@@ -1062,7 +1088,7 @@ static void PERSONAL_DATA_SetUpProfile( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p
   p_wk->cp_bsubway_score  = p_bsubway_score;
 
 
-	TOMOYA_Printf("Dpw Bsubway Email 認証\n");
+	WIFI_BSUBWAY_Printf("Dpw Bsubway Email 認証\n");
 }
 
 //----------------------------------------------------------------------------
@@ -1162,7 +1188,7 @@ static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_B
 {
   BOOL result;
   
-  TOMOYA_Printf( "Pokemon　Upload\n" );
+  WIFI_BSUBWAY_Printf( "Pokemon　Upload\n" );
   p_wk->p_nhttp = NHTTP_RAP_Init( heapID,MyStatus_GetProfileID( p_wk->cp_mystatus ), p_svl_result );
  
   
@@ -1263,7 +1289,7 @@ static void PERSONAL_DATA_UploadPersonalData( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_
 {
   GF_ASSERT( p_wk->setup );
 
-  TOMOYA_Printf( "人物情報　Upload\n" );
+  WIFI_BSUBWAY_Printf( "人物情報　Upload\n" );
   {
     s32 rank, room_no;
     s32 win;
@@ -1368,12 +1394,12 @@ static BOOL ERROR_DATA_GetAsyncServerResult( WIFI_BSUBWAY_ERROR* p_wk )
     complete  = TRUE;
 		switch (result){
 		case DPW_TR_STATUS_SERVER_OK:		// 正常に動作している
-			TOMOYA_Printf(" server ok\n");
+			WIFI_BSUBWAY_Printf(" server ok\n");
       p_wk->server_status = result;
 			break;
 		case DPW_TR_STATUS_SERVER_STOP_SERVICE:	// サービス停止中
 		case DPW_TR_STATUS_SERVER_FULL:			// サーバーが満杯
-			TOMOYA_Printf(" server ng\n");
+			WIFI_BSUBWAY_Printf(" server ng\n");
       p_wk->server_status = result;
       break;
 
@@ -1383,7 +1409,7 @@ static BOOL ERROR_DATA_GetAsyncServerResult( WIFI_BSUBWAY_ERROR* p_wk )
 		case DPW_TR_ERROR_SERVER_TIMEOUT:
 		case DPW_TR_ERROR_DISCONNECTED:	
     case DPW_BT_ERROR_ILLIGAL_REQUEST:
-			TOMOYA_Printf(" server ng\n");
+			WIFI_BSUBWAY_Printf(" server ng\n");
       p_wk->error_code = result;
       break;
 
@@ -1437,7 +1463,7 @@ static BOOL ERROR_DATA_GetAsyncResult( WIFI_BSUBWAY_ERROR* p_wk, s32* p_result )
 		case DPW_TR_ERROR_SERVER_TIMEOUT:
 		case DPW_TR_ERROR_DISCONNECTED:	
     case DPW_BT_ERROR_ILLIGAL_REQUEST:
-			TOMOYA_Printf(" recv ng\n");
+			WIFI_BSUBWAY_Printf(" recv ng\n");
       p_wk->error_code = result;
       break;
 
@@ -1448,7 +1474,7 @@ static BOOL ERROR_DATA_GetAsyncResult( WIFI_BSUBWAY_ERROR* p_wk, s32* p_result )
 		default:
       if( result >= 0 )
       {
-  			TOMOYA_Printf(" recv ok\n");
+  			WIFI_BSUBWAY_Printf(" recv ok\n");
         *p_result = result;
       }
       else
@@ -1677,7 +1703,7 @@ static void CODEIN_EndProc( WIFI_BSUBWAY* p_wk )
 {
   if( p_wk->p_codein )
   {
-    TOMOYA_Printf( "CodeIn return %d\n", p_wk->p_codein->end_state );
+    WIFI_BSUBWAY_Printf( "CodeIn return %d\n", p_wk->p_codein->end_state );
     
     CodeInput_ParamDelete( p_wk->p_codein );
     p_wk->p_codein = NULL;
@@ -1896,11 +1922,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEA
     break;
   case SCORE_UPLOAD_SEQ_PERSON_UPDATE_WAIT:
     if( PERSONAL_DATA_UploadPersonalDataWait( &p_wk->personaldata, &p_wk->bt_error ) ){
-
-      if( VIEW_PrintMain( &p_wk->view ) ){
-        VIEW_PrintStream( &p_wk->view, msg_wifi_bt_009 );
-        p_wk->seq++;
-      }
+      p_wk->seq++;
     }
     break;
 
@@ -1911,7 +1933,10 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEA
 
   case SCORE_UPLOAD_SEQ_SAVE_WAIT:
     if( SAVE_Main(p_wk) ){
-      p_wk->seq++;
+      if( VIEW_PrintMain( &p_wk->view ) ){
+        VIEW_PrintStream( &p_wk->view, msg_wifi_bt_009 );
+        p_wk->seq++;
+      }
     }
     break;
 
@@ -2050,17 +2075,22 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
   case SCORE_UPLOAD_SEQ_GAMEDATA_DOWNLOAD_ROOM_WAIT:
     if( ROOM_DATA_LoadRoomDataWait( &p_wk->roomdata, &p_wk->bt_error ) ){
       
+      p_wk->seq ++;
+    }
+    break;
+
+  case SCORE_UPLOAD_SEQ_GAMEDATA_SAVE:
+    SAVE_Start(p_wk);
+    p_wk->seq++;
+    break;
+
+  case SCORE_UPLOAD_SEQ_GAMEDATA_WAIT:
+    if( SAVE_Main(p_wk) ){
       if( VIEW_PrintMain( &p_wk->view ) ){
         VIEW_PrintStream( &p_wk->view, msg_wifi_bt_004 );
         p_wk->seq ++;
       }
     }
-    break;
-
-  case SCORE_UPLOAD_SEQ_GAMEDATA_SAVE:
-    break;
-
-  case SCORE_UPLOAD_SEQ_GAMEDATA_WAIT:
     break;
 
   case SCORE_UPLOAD_SEQ_GAMEDATA_MSG_02:
@@ -2258,14 +2288,23 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
 
   case SCORE_UPLOAD_SEQ_SUCCESSDATA_DOWNLOAD_ROOM_WAIT:
     if( ROOM_DATA_LoadRoomDataWait( &p_wk->roomdata, &p_wk->bt_error ) ){
+      p_wk->seq ++;
+    }
+    break;
 
+  case SCORE_UPLOAD_SEQ_SUCCESSDATA_SAVE:
+    SAVE_Start(p_wk);
+    p_wk->seq++;
+    break;
+
+  case SCORE_UPLOAD_SEQ_SUCCESSDATA_WAIT:
+    if( SAVE_Main(p_wk) ){
       if( VIEW_PrintMain( &p_wk->view ) ){
         VIEW_PrintStream( &p_wk->view, msg_wifi_bt_004 );
         p_wk->seq ++;
       }
     }
     break;
-
 
   case SCORE_UPLOAD_SEQ_SUCCESSDATA_MSG_03:
     if( VIEW_PrintMain( &p_wk->view ) ){
@@ -2337,7 +2376,7 @@ static void WiFiBsubway_Connect( WIFI_BSUBWAY* p_wk )
 	DWCUserData* p_userdata;		// 認証済みのDWCUSERデータしかこないはず
 	s32 profileId;
 
-  TOMOYA_Printf( "Connect Bsuway Start\n" );
+  WIFI_BSUBWAY_Printf( "Connect Bsuway Start\n" );
 
 	// DWCUser構造体取得
 	p_userdata = WifiList_GetMyUserInfo( p_wk->p_wifilist );
@@ -2346,17 +2385,17 @@ static void WiFiBsubway_Connect( WIFI_BSUBWAY* p_wk )
 
 	// 正式なデータを取得
 	profileId = MyStatus_GetProfileID( p_wk->p_mystatus );
-	TOMOYA_Printf("Dpwサーバーログイン情報 profileId=%08x\n", profileId);
+	WIFI_BSUBWAY_Printf("Dpwサーバーログイン情報 profileId=%08x\n", profileId);
 
 	// DPW_BT初期化
 	Dpw_Bt_Init( profileId, DWC_CreateFriendKey( p_userdata ),LIBDPW_SERVER_TYPE );
 
-	TOMOYA_Printf("Dpw Bsubway 初期化\n");
+	WIFI_BSUBWAY_Printf("Dpw Bsubway 初期化\n");
 
 	Dpw_Bt_GetServerStateAsync();
   ERROR_DATA_GetAsyncStart( &p_wk->bt_error );
 
-	TOMOYA_Printf("Dpw Bsubway サーバー状態取得開始\n");
+	WIFI_BSUBWAY_Printf("Dpw Bsubway サーバー状態取得開始\n");
 
   p_wk->dpw_main_do = TRUE;
 }
@@ -2388,7 +2427,7 @@ static void WiFiBsubway_Disconnect( WIFI_BSUBWAY* p_wk )
 {
   if( Dpw_Bt_IsAsyncEnd() == FALSE ){
 
-	  TOMOYA_Printf("Dpw Bsubway 切断\n");
+	  WIFI_BSUBWAY_Printf("Dpw Bsubway 切断\n");
     // キャンセルコール
     Dpw_Bt_CancelAsync();
     ERROR_DATA_GetAsyncStart( &p_wk->bt_error );
@@ -2446,7 +2485,7 @@ static BOOL WiFiBsubway_Error( WIFI_BSUBWAY* p_wk )
   if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE ){
     const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
 
-    TOMOYA_Printf( "not message error %d\n", cp_error->errorRet );
+    WIFI_BSUBWAY_Printf( "not message error %d\n", cp_error->errorRet );
 
 #if 0
     //GDBとSCの切断とFatalエラー以外は、個別処理とするため、検知しない

@@ -1392,7 +1392,8 @@ SRCS_OVERLAY_WIFI_LOGIN =  net_app/wifi_login/wifilogin_proc.c \
 
 # WiFiバトルサブウェイ
 #===> SRCS_OVERLAY_WIFI_LOGIN
-SRCS_OVERLAY_WIFI_BSUBWAY =  net_app/wifi_bsubway/wifi_bsubway.c
+SRCS_OVERLAY_WIFI_BSUBWAY =  net_app/wifi_bsubway/wifi_bsubway.c \
+                            net_app/wifi_bsubway/wifi_bsubway_graphic.c
 
 
 
