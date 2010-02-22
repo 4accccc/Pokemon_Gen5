@@ -7938,17 +7938,17 @@
 		<language name="JPN" width="256">SYS-79</language>
 		<language name="JPN_KANJI" width="256">SYS-79</language>
 	</row>
-	<row id="msg_seq_se_dmy_225">
-		<language name="JPN" width="256">DMY-225</language>
-		<language name="JPN_KANJI" width="256">DMY-225</language>
+	<row id="msg_seq_se_fld_124">
+		<language name="JPN" width="256">FLD-124</language>
+		<language name="JPN_KANJI" width="256">FLD-124</language>
 	</row>
-	<row id="msg_seq_se_dmy_226">
-		<language name="JPN" width="256">DMY-226</language>
-		<language name="JPN_KANJI" width="256">DMY-226</language>
+	<row id="msg_seq_se_fld_125">
+		<language name="JPN" width="256">FLD-125</language>
+		<language name="JPN_KANJI" width="256">FLD-125</language>
 	</row>
-	<row id="msg_seq_se_dmy_227">
-		<language name="JPN" width="256">DMY-227</language>
-		<language name="JPN_KANJI" width="256">DMY-227</language>
+	<row id="msg_seq_se_fld_126">
+		<language name="JPN" width="256">FLD-126</language>
+		<language name="JPN_KANJI" width="256">FLD-126</language>
 	</row>
 	<row id="msg_seq_se_dmy_228">
 		<language name="JPN" width="256">DMY-228</language>
