@@ -77,7 +77,6 @@ NITRO_LIBS		= 									\
 				   libstd$(NITRO_LIBSUFFIX).a		\
 				   libwfs$(NITRO_LIBSUFFIX).a		\
 				   libwm$(NITRO_LIBSUFFIX).a		\
-				   libcrypto$(NITRO_LIBSUFFIX).a	\
 				   libctrdg$(NITRO_LIBSUFFIX).a		\
 			       libcht$(NITRO_LIBSUFFIX).a		\
 				   libwxc$(NITRO_LIBSUFFIX).a		\
@@ -120,7 +119,6 @@ TWL_LIBS		= 									\
 				   libstd$(NITRO_LIBSUFFIX).a		\
 				   libwfs$(NITRO_LIBSUFFIX).a		\
 				   libwm$(NITRO_LIBSUFFIX).a		\
-				   libcrypto$(NITRO_LIBSUFFIX).a	\
 				   libctrdg$(NITRO_LIBSUFFIX).a		\
 			       libcht$(NITRO_LIBSUFFIX).a		\
 				   libwxc$(NITRO_LIBSUFFIX).a		\
@@ -227,7 +225,7 @@ CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimp
 #----------------------------------------------------------------------------
 # 任天堂Cryptライブラリを追加
 #----------------------------------------------------------------------------
-LLIBARIES += libcrypto$(TWL_LIBSUFFIX).a
+##LLIBARIES += libcrypto$(TWL_LIBSUFFIX).a
 
 #----------------------------------------------------------------------------
 #	ロムに含まれるファイルの指定  default.rsfファイルで使用している
