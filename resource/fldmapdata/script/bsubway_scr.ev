@@ -753,7 +753,7 @@ ev_bsw_game_cancel:
   _CALL sub_receipt_flag_clear
   
   //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //AIマルチならばパートナー去る
   IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
@@ -788,7 +788,7 @@ ev_bsw_game_after:
   _CALL sub_receipt_flag_clear
   
   //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //AIマルチならばパートナー去る
   IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
