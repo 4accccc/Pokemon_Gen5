@@ -2817,10 +2817,11 @@ static VMCMD_RESULT VMEC_BALLOBJ_SET( VMHANDLE *vmh, void *context_work )
 
   { 
     ARCDATID  ncgrID, nclrID;
-    ncgrID = NARC_waza_eff_gra_ball_anim_NCER + bevw->param.item_no * 2;
-    nclrID = NARC_waza_eff_gra_ball_anim_NANR + bevw->param.item_no * 2;
+    ncgrID = NARC_waza_eff_gra_ball_01_anim_NCER + bevw->param.item_no * 2;
+    nclrID = NARC_waza_eff_gra_ball_01_anim_NANR + bevw->param.item_no * 2;
     bevw->obj[ index ] = BTLV_CLACT_AddEx( BTLV_EFFECT_GetCLWK(), ARCID_WAZAEFF_GRA,
-                                           ncgrID, nclrID, NARC_waza_eff_gra_ball_anim_NCER, NARC_waza_eff_gra_ball_anim_NANR,
+                                           ncgrID, nclrID,
+                                           NARC_waza_eff_gra_ball_01_anim_NCER, NARC_waza_eff_gra_ball_01_anim_NANR,
                                            pos_x, pos_y, scalex, scaley );
   }
 
