@@ -218,10 +218,12 @@ static void FreeListData( ZUKAN_MAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_CallTop( ZUKAN_MAIN_WORK * wk )
 {
-//	ZUKANTOP_DATA * top;
+	ZUKANTOP_DATA * top;
 
 	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANTOP_DATA) );
-//	top = wk->work;
+	top = wk->work;
+
+	top->gamedata = wk->prm->gamedata;
 
 	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_top), &ZUKANTOP_ProcData, wk->work );
 

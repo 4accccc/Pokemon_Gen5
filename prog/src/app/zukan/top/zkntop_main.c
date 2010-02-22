@@ -14,6 +14,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 #include "system/wipe.h"
+#include "savedata/zukan_wp_savedata.h"
 
 #include "../zukan_common.h"
 #include "zkntop_main.h"
@@ -38,6 +39,9 @@ enum {
 typedef int (*pZKNTOP_FUNC)(ZKNTOPMAIN_WORK*);
 
 #define	HEAPID_ZUKAN_TOP_L	( GFL_HEAP_LOWID(HEAPID_ZUKAN_TOP) )
+
+#define	BG_PALNUM_FRAME		( 1 )
+#define	BG_PALNUM_GRAPHIC	( 2 )
 
 #define	AUTO_START_TIME		( 60*5 )
 
@@ -100,6 +104,8 @@ static void InitVram(void)
 		GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 		GX_OBJVRAMMODE_CHAR_1D_128K		// サブOBJマッピングモード
 	};
+
+	GFL_DISP_ClearVRAM( NULL );
 	GFL_DISP_SetBank( &tbl );
 }
 
@@ -211,9 +217,9 @@ static void LoadBgGraphic(void)
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_TOP_L );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_MAIN_BG, 0, 0x20*3, HEAPID_ZUKAN_TOP );
+		ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_MAIN_BG, 0, 0x20*2, HEAPID_ZUKAN_TOP );
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_SUB_BG, 0, 0x20*3, HEAPID_ZUKAN_TOP );
+		ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_SUB_BG, 0, 0x20*2, HEAPID_ZUKAN_TOP );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_top_zkn_top_cover_NCGR, GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
@@ -240,14 +246,41 @@ static void LoadBgGraphic(void)
 	GFL_ARC_CloseDataHandle( ah );
 }
 
-static void LoadSaveGraphic(void)
+static void LoadSaveGraphic( ZKNTOPMAIN_WORK * wk )
 {
+/*
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_TOP_L );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_top_zkn_top_dummy_NCGR, GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
 
 	GFL_ARC_CloseDataHandle( ah );
+*/
+	SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( wk->dat->gamedata );
+
+	// 外部セーブデータ読み込み
+	if( SaveControl_Extra_Load( sv, SAVE_EXTRA_ID_ZUKAN_WALLPAPER, HEAPID_ZUKAN_TOP_L ) == LOAD_RESULT_OK ){
+		ZUKANWP_SAVEDATA * exsv = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_ZUKAN_WALLPAPER, 0 );
+
+		if( exsv != NULL ){
+			if( ZUKANWP_SAVEDATA_GetDataCheckFlag( exsv ) == TRUE ){
+				u8 * chr;
+				u16 * pal;
+
+				chr = ZUKANWP_SAVEDATA_GetCustomGraphicCharacter( exsv );
+				pal = ZUKANWP_SAVEDATA_GetCustomGraphicPalette( exsv );
+				GFL_BG_LoadCharacter( GFL_BG_FRAME1_M, chr, ZUKANWP_SAVEDATA_CHAR_SIZE, 0 );
+				GFL_BG_LoadPalette(
+					GFL_BG_FRAME1_M, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, BG_PALNUM_GRAPHIC*2 );
+
+				pal = ZUKANWP_SAVEDATA_GetFramePalette( exsv );
+				GFL_BG_LoadPalette(
+					GFL_BG_FRAME1_M, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, BG_PALNUM_FRAME*2 );
+			}
+		}
+	}
+
+	SaveControl_Extra_Unload( sv, SAVE_EXTRA_ID_ZUKAN_WALLPAPER );
 }
 
 
@@ -274,7 +307,7 @@ static int MainSeq_Init( ZKNTOPMAIN_WORK * wk )
 	InitBg();
 
 	LoadBgGraphic();
-	LoadSaveGraphic();
+	LoadSaveGraphic( wk );
 
 	InitVBlank( wk );
 

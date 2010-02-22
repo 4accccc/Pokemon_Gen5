@@ -20,11 +20,13 @@
 // セーブデータ
 struct _ZUKANWP_SAVEDATA {
 	// カスタムグラフィックキャラ
-	u8	customChar[ZUKANWP_SAVEDATA_CHAR_SIZE_X*ZUKANWP_SAVEDATA_CHAR_SIZE_Y*0x20];
+	u8	customChar[ZUKANWP_SAVEDATA_CHAR_SIZE];
 	// カスタムグラフィックパレット
-	u16	customPalette[16];
+	u16	customPalette[ZUKANWP_SAVEDATA_PAL_SIZE];
 	// フレームパレット
-	u16	framePalette[16];
+	u16	framePalette[ZUKANWP_SAVEDATA_PAL_SIZE];
+	// データ有無フラグ
+	BOOL	flg;
 };
 
 
@@ -54,4 +56,61 @@ int ZUKANWP_SAVEDATA_GetWorkSize(void)
 void ZUKANWP_SAVEDATA_InitWork( ZUKANWP_SAVEDATA * sv )
 {
 	GFL_STD_MemClear( sv, ZUKANWP_SAVEDATA_GetWorkSize() );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		壁紙キャラ取得
+ *
+ * @param		sv		セーブデータ
+ *
+ * @return	キャラデータ
+ */
+//--------------------------------------------------------------------------------------------
+u8 * ZUKANWP_SAVEDATA_GetCustomGraphicCharacter( ZUKANWP_SAVEDATA * sv )
+{
+	return sv->customChar;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		壁紙パレット取得
+ *
+ * @param		sv		セーブデータ
+ *
+ * @return	パレットデータ
+ */
+//--------------------------------------------------------------------------------------------
+u16 * ZUKANWP_SAVEDATA_GetCustomGraphicPalette( ZUKANWP_SAVEDATA * sv )
+{
+	return sv->customPalette;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フレームパレット取得
+ *
+ * @param		sv		セーブデータ
+ *
+ * @return	パレットデータ
+ */
+//--------------------------------------------------------------------------------------------
+u16 * ZUKANWP_SAVEDATA_GetFramePalette( ZUKANWP_SAVEDATA * sv )
+{
+	return sv->framePalette;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データ有無フラグ取得
+ *
+ * @param		sv		セーブデータ
+ *
+ * @retval	"TRUE = データあり"
+ * @retval	"FALSE = データなし"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL ZUKANWP_SAVEDATA_GetDataCheckFlag( ZUKANWP_SAVEDATA * sv )
+{
+	return sv->flg;
 }
