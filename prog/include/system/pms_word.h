@@ -49,6 +49,8 @@ typedef enum {
 	PMSW_AISATSU_IT,	// イタリア語
 	PMSW_AISATSU_GE,	// ドイツ語
 	PMSW_AISATSU_SP,	// スペイン語
+	PMSW_AISATSU_KO,	// 韓国語
+	PMSW_AISATSU_NO,	// 不明
 
 	PMSW_AISATSU_HIDE_MAX,
 }PMSW_AISATSU_ID;

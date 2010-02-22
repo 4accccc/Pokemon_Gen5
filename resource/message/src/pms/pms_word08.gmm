@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-22T15:25:35"/>
+	<create user="kawada_koji" host="W00215" date="2010-02-22T16:49:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -585,15 +585,6 @@
 	<row id="pms_word08_48">
 		<language name="JPN" font=" 1:small" width="96">よろしく</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">よろしく</language>
-	</row>
-
-	<row id="pms_word08_100">
-		<comment>無いとエラーを
-吐かれるので
-入れています
-[100222岩尾]</comment>
-		<language name="JPN" font=" 1:small" width="96">ああああ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="96">ああああ</language>
 	</row>
 
 	<flowchart-group-list>

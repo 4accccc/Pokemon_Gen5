@@ -38,15 +38,15 @@ static const u16 PMS_SrcElems[] = {
 	 557,	//わざ名	652 ... 1208
 	  17,	//ポケモンタイプ名	1209 ... 1225
 	 162,	//とくせい名	1226 ... 1387
-	  38,	//トレーナー	1388 ... 1425
-	  38,	//ひと	1426 ... 1463
-	 102,	//あいさつ	1464 ... 1565
-	 104,	//せいかつ	1566 ... 1669
-	  10,	//きもち	1670 ... 1679
-	  32,	//なんかいことば	1680 ... 1711
-	  23,	//ユニオン	1712 ... 1734
-	  10,	//ピクチャ	1735 ... 1744
-	   6,	//こえ	1745 ... 1750
+	  44,	//トレーナー	1388 ... 1431
+	  38,	//ひと	1432 ... 1469
+	  48,	//あいさつ	1470 ... 1517
+	 103,	//せいかつ	1518 ... 1620
+	  47,	//きもち	1621 ... 1667
+	  32,	//なんかいことば	1668 ... 1699
+	  27,	//ユニオン	1700 ... 1726
+	  10,	//ピクチャ	1727 ... 1736
+	  61,	//こえ	1737 ... 1797
 };
 
 //----------------------------------------------------------------
@@ -78,79 +78,59 @@ static const u16 PMS_SrcFileID[] = {
 //----------------------------------------------------------------
 
 static const PMS_WORD DupWord_00[] = {
-	1470,1676,1741,
+	1479,1733,
 };
 
 static const PMS_WORD DupWord_01[] = {
-	1675,1740,
+	1100,1530,
 };
 
 static const PMS_WORD DupWord_02[] = {
-	1100,1577,
+	1028,1396,
 };
 
 static const PMS_WORD DupWord_03[] = {
-	1673,1738,
-};
-
-static const PMS_WORD DupWord_04[] = {
-	1028,1394,
-};
-
-static const PMS_WORD DupWord_05[] = {
 	 93,1216,
 };
 
+static const PMS_WORD DupWord_04[] = {
+	1492,1735,
+};
+
+static const PMS_WORD DupWord_05[] = {
+	1288,1401,
+};
+
 static const PMS_WORD DupWord_06[] = {
-	1509,1678,1743,
+	1470,1728,
 };
 
 static const PMS_WORD DupWord_07[] = {
-	1288,1398,
+	1642,1729,
 };
 
 static const PMS_WORD DupWord_08[] = {
-	1464,1671,1736,
+	1508,1736,
 };
 
 static const PMS_WORD DupWord_09[] = {
-	1677,1742,
-};
-
-static const PMS_WORD DupWord_10[] = {
-	1672,1737,
-};
-
-static const PMS_WORD DupWord_11[] = {
-	1674,1739,
-};
-
-static const PMS_WORD DupWord_12[] = {
-	1532,1679,1744,
-};
-
-static const PMS_WORD DupWord_13[] = {
-	1533,1670,1735,
+	1509,1727,
 };
 
 static const struct {
     const PMS_WORD* data;
     int   count;
 }DupWordTable[] = {
-	{ DupWord_00, 3 },
+	{ DupWord_00, 2 },
 	{ DupWord_01, 2 },
 	{ DupWord_02, 2 },
 	{ DupWord_03, 2 },
 	{ DupWord_04, 2 },
 	{ DupWord_05, 2 },
-	{ DupWord_06, 3 },
+	{ DupWord_06, 2 },
 	{ DupWord_07, 2 },
-	{ DupWord_08, 3 },
+	{ DupWord_08, 2 },
 	{ DupWord_09, 2 },
-	{ DupWord_10, 2 },
-	{ DupWord_11, 2 },
-	{ DupWord_12, 3 },
-	{ DupWord_13, 3 },
 };
 
 //----------------------------------------------------------------

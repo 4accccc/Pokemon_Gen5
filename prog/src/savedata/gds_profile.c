@@ -41,6 +41,11 @@
 #include "net_app/gds/gds_min_max.h"
 
 
+// あいさつの「よろしく」を選んでおく
+#define YOROSHIKU_GMM_ID   (NARC_message_pms_word08_dat)
+#define YOROSHIKU_WORD_ID  (pms_word08_48)
+
+
 //--------------------------------------------------------------
 /**
  * @brief   GDSプロフィールワークをAllocする
@@ -255,7 +260,7 @@ STRBUF * GDS_Profile_GetSelfIntroduction(const GDS_PROFILE_PTR gpp, PMS_DATA *pm
 			PMSDAT_Init( pms_dest, PMS_TYPE_UNION );
 			pms_dest->sentence_id = pmss_union_01;
 			pms_dest->word[0] 
-				= PMSW_GetWordNumberByGmmID( NARC_message_pms_word08_dat, pms_word08_100 );
+				= PMSW_GetWordNumberByGmmID( YOROSHIKU_GMM_ID, YOROSHIKU_WORD_ID );
 			pms_dest->word[1] = PMS_WORD_NULL;
 		}
 		return NULL;

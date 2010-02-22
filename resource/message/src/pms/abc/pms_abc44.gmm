@@ -381,38 +381,63 @@
 	</row>
 
 	<row id="search_abc_02">
+		<language name="JPN" width="216">\x{c548}\x{b155}\x{d558}\x{c138}\x{c694}</language>
+		<language name="JPN_KANJI" width="216">\x{c548}\x{b155}\x{d558}\x{c138}\x{c694}</language>
+	</row>
+
+	<row id="search_abc_03">
 		<language name="JPN" width="216">bonjour</language>
 		<language name="JPN_KANJI" width="216">bonjour</language>
 	</row>
 
-	<row id="search_abc_03">
+	<row id="search_abc_04">
+		<language name="JPN" width="216">C-きあ</language>
+		<language name="JPN_KANJI" width="216">C-きあ</language>
+	</row>
+
+	<row id="search_abc_05">
 		<language name="JPN" width="216">ciao</language>
 		<language name="JPN_KANJI" width="216">ciao</language>
 	</row>
 
-	<row id="search_abc_04">
+	<row id="search_abc_06">
+		<language name="JPN" width="216">Gはわー（かり）</language>
+		<language name="JPN_KANJI" width="216">Gはわー（かり）</language>
+	</row>
+
+	<row id="search_abc_07">
+		<language name="JPN" width="216">GPF</language>
+		<language name="JPN_KANJI" width="216">GPF</language>
+	</row>
+
+	<row id="search_abc_08">
 		<language name="JPN" width="216">GTS</language>
 		<language name="JPN_KANJI" width="216">GTS</language>
 	</row>
 
-	<row id="search_abc_05">
+	<row id="search_abc_09">
 		<language name="JPN" width="216">hallo</language>
 		<language name="JPN_KANJI" width="216">hallo</language>
 	</row>
 
-	<row id="search_abc_06">
+	<row id="search_abc_10">
 		<language name="JPN" width="216">hello</language>
 		<language name="JPN_KANJI" width="216">hello</language>
 	</row>
 
-	<row id="search_abc_07">
+	<row id="search_abc_11">
 		<language name="JPN" width="216">hola</language>
 		<language name="JPN_KANJI" width="216">hola</language>
 	</row>
 
-	<row id="search_abc_08">
-		<language name="JPN" width="216">WiーFi</language>
-		<language name="JPN_KANJI" width="216">WiーFi</language>
+	<row id="search_abc_12">
+		<language name="JPN" width="216">PDW</language>
+		<language name="JPN_KANJI" width="216">PDW</language>
+	</row>
+
+	<row id="search_abc_13">
+		<language name="JPN" width="216">Wi−Fi</language>
+		<language name="JPN_KANJI" width="216">Wi−Fi</language>
 	</row>
 
 	<flowchart-group-list>

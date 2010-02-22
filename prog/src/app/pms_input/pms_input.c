@@ -76,8 +76,6 @@ enum {
 
 enum TOUCH_BUTTON {
 	TOUCH_BUTTON_CHANGE, ///< カテゴリモード切替
-	TOUCH_BUTTON_UP,
-	TOUCH_BUTTON_DOWN,
 
 	TOUCH_BUTTON_NULL,
 };
@@ -252,8 +250,6 @@ struct _PMS_INPUT_WORK{
 	int        touch_button;
 	int        hold_button;
 	GFL_BUTTON_MAN*   bmn;
-	BOOL       button_up_hold_flag;
-	BOOL       button_down_hold_flag;
 
 	u16        cmd_button_pos;
 	u16        edit_pos;
@@ -452,35 +448,14 @@ static void BmnCallBack( u32 buttonID, u32 event, void* wk_ptr )
 	switch( event ){
 	case GFL_BMN_EVENT_TOUCH:
 		wk->touch_button = buttonID;
-		switch(buttonID){
-		case TOUCH_BUTTON_UP:
-			PMSIView_SetCommand( wk->vwk, VCMD_BUTTON_UP_HOLD );
-			break;
-		case TOUCH_BUTTON_DOWN:
-			PMSIView_SetCommand( wk->vwk, VCMD_BUTTON_DOWN_HOLD );
-			break;
-		}
 		break;
 
 	case GFL_BMN_EVENT_RELEASE:
 	case GFL_BMN_EVENT_SLIDEOUT:
-		switch(buttonID){
-		case TOUCH_BUTTON_UP:
-			PMSIView_SetCommand( wk->vwk, VCMD_BUTTON_UP_RELEASE );
-			break;
-		case TOUCH_BUTTON_DOWN:
-			PMSIView_SetCommand( wk->vwk, VCMD_BUTTON_DOWN_RELEASE );
-			break;
-		}
 		wk->touch_button = TOUCH_BUTTON_NULL;
 		break;
 
 	case GFL_BMN_EVENT_HOLD:
-		if(	(buttonID == TOUCH_BUTTON_UP)
-		||	(buttonID == TOUCH_BUTTON_DOWN)
-		){
-			wk->touch_button = buttonID;
-		}
 		break;
 
 	default:
@@ -525,9 +500,6 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
 	// enum TOUCH_BUTTON と一致させる
 	static const GFL_UI_TP_HITTBL hit_tbl[] = {
 		{ BUTTON_CHANGE_TOUCH_TOP, BUTTON_CHANGE_TOUCH_BOTTOM, BUTTON_CHANGE_TOUCH_LEFT, BUTTON_CHANGE_TOUCH_RIGHT },
-//	{ BUTTON_INITIAL_TOUCH_TOP, BUTTON_INITIAL_TOUCH_BOTTOM, BUTTON_INITIAL_TOUCH_LEFT, BUTTON_INITIAL_TOUCH_RIGHT },
-		{ BUTTON_UP_TOUCH_TOP, BUTTON_UP_TOUCH_BOTTOM, BUTTON_UP_TOUCH_LEFT, BUTTON_UP_TOUCH_RIGHT },
-		{ BUTTON_DOWN_TOUCH_TOP, BUTTON_DOWN_TOUCH_BOTTOM, BUTTON_DOWN_TOUCH_LEFT, BUTTON_DOWN_TOUCH_RIGHT },
 		{ GFL_UI_TP_HIT_END, 0, 0, 0 },
 	};
 
@@ -553,8 +525,6 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
 	wk->dwk = PMSI_DATA_Create( HEAPID_PMS_INPUT_SYSTEM, wk->input_param );
 	wk->vwk = PMSIView_Create(wk, wk->dwk);
 	wk->bmn = GFL_BMN_Create( hit_tbl, BmnCallBack, wk, HEAPID_PMS_INPUT_SYSTEM );
-	wk->button_up_hold_flag = FALSE;
-	wk->button_down_hold_flag = FALSE;
 
 	wk->category_mode = CATEGORY_MODE_GROUP;
 	wk->sub_proc = NULL;
@@ -1390,7 +1360,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 				PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );
 				(*seq) = SEQ_EDS_BUTTON_KEYWAIT;
       }
-			else if( (wk->sentence_edit_pos_max) )
+			else if( wk->sentence_edit_pos_max > 1 && wk->edit_pos > 0 )
 			{
 #if PMS_USE_SND
 				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
@@ -1406,7 +1376,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 
-			if( (wk->sentence_edit_pos_max) && (wk->edit_pos < (wk->sentence_edit_pos_max-1)) )
+			if( wk->sentence_edit_pos_max > 1 && wk->edit_pos < wk->sentence_edit_pos_max -1 )
 			{
 				wk->edit_pos++;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_EDITAREA_CURSOR );
@@ -1502,6 +1472,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
 			}else{
         // 「けってい」からエディットエリアへ
+        wk->edit_pos = (wk->sentence_edit_pos_max>0)?(wk->sentence_edit_pos_max-1):(0);  // エディットエリアの一番下の枠へ
 				PMSIView_SetCommand( wk->vwk, VCMD_BUTTON_TO_EDITAREA );
 				(*seq) = SEQ_EDW_KEYWAIT;
 			}
@@ -1513,6 +1484,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 			
       if(wk->cmd_button_pos){
         // 「やめる」からエディットエリアへ
+        wk->edit_pos = (wk->sentence_edit_pos_max>0)?(0):(0);  // エディットエリアの一番上の枠へ
 				PMSIView_SetCommand( wk->vwk, VCMD_BUTTON_TO_EDITAREA );
 				(*seq) = SEQ_EDW_KEYWAIT;
 			}else{
@@ -2695,11 +2667,7 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 	{
 		int result;
 
-		if( wk->touch_button == TOUCH_BUTTON_UP ){
-			result = check_wordwin_scroll_up( &(wk->word_win) );
-		}else if( wk->touch_button == TOUCH_BUTTON_DOWN ){
-			result = check_wordwin_scroll_down( &(wk->word_win) );
-		}else{
+		{
 			result = check_wordwin_key( &(wk->word_win), wk->key_repeat );
 		}
 

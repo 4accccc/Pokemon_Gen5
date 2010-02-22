@@ -47,7 +47,7 @@ enum {
 	WORDWIN_WRITE_LINE_UNIT = 16, 
 	WORDWIN_WRITE_LINE_ROUND_BORDER = WORDWIN_WRITE_LINE_MAX - WORDWIN_WRITE_LINE_UNIT, ///< 描画領域
 
-  WORDWIN_WRITE_DECO_OX = 19,//8*3,  // 左列のデコ文字の開始Xドット座標
+  WORDWIN_WRITE_DECO_OX = 8*3,//19(96のとき),//8*3,  // 左列のデコ文字の開始Xドット座標
 	WORDWIN_WRITE_OX = 0,
 	WORDWIN_WRITE_OY = 0,
 	WORDWIN_WRITE_X_MARGIN = 112,  // 右列の開始Xドット座標は左列の開始Xドット座標から何ドット座標離れているか

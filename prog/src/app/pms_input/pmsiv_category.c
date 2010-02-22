@@ -317,7 +317,7 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
 	G2_SetBlendBrightness( FRM_MAIN_CATEGORY_BLENDMASK, HARD_WINDOW_BLDY );
 	G2_SetWnd0InsidePlane(GX_WND_PLANEMASK_ALL, TRUE);
 	G2_SetWndOutsidePlane(GX_WND_PLANEMASK_ALL^FRM_MAIN_CATEGORY_WNDMASK, TRUE);
-	G2_SetWnd0Position(0,0,255,160);
+	G2_SetWnd0Position(0,0,255,168);
 	GX_SetVisibleWnd( GX_WNDMASK_W0 );
 
 	GFL_BG_LoadScreenReq( FRM_MAIN_CATEGORY );
@@ -881,7 +881,7 @@ void PMSIV_CATEGORY_StartModeChange( PMSIV_CATEGORY* wk )
 
 	  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(p_handle, NARC_pmsi_pms_bg_main1_NSCR,
 		  FRM_MAIN_CATEGORY, 0, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
-	
+
     for(i=0; i<CATEGORY_GROUP_MAX; i++)
 	  {
       GFL_BMPWIN_MakeScreen( wk->winGroup[i] );

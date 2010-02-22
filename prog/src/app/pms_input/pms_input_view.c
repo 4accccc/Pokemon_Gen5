@@ -662,7 +662,7 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 	static const GFL_BG_BGCNT_HEADER header_main3 = {
 		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x08000,0x6000,
+		GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x08000,0x5000,//0x6000,
 		GX_BG_EXTPLTT_01, 3, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
 	// BG0 SUB エディットエリア

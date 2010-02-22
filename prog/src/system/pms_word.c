@@ -270,13 +270,14 @@ void PMSW_InitSaveData( void* wk_ptr )
 	static const struct {
 		u8   lang_code;
 		u8   aisatsu_id;
-	}langTbl[] = {
+	}langTbl[] = {  // PMSW_AISATSU_HIDE_MAX ‚É‚Í•s–¾‚àŠÜ‚Ü‚ê‚Ä‚¢‚é‚Ì‚ÅŽg‚¦‚È‚¢
 		{ LANG_JAPAN,	PMSW_AISATSU_JP },
 		{ LANG_ENGLISH,	PMSW_AISATSU_EN },
 		{ LANG_FRANCE,	PMSW_AISATSU_FR },
 		{ LANG_ITALY,	PMSW_AISATSU_IT },
 		{ LANG_GERMANY,	PMSW_AISATSU_GE },
 		{ LANG_SPAIN,	PMSW_AISATSU_SP },
+    { LANG_KOREA,	PMSW_AISATSU_KO },
 	};
 
 	PMSW_SAVEDATA* wk = wk_ptr;
