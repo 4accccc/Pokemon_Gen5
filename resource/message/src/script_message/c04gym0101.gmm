@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T18:43:53"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T22:49:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -543,13 +543,13 @@ princess_01</attribute>
 このジムは　みてのとおり
 ジェットコースター　なんすよね！！[BE:01:ページ切り替え（クリア）]
 まあ　とりあえずは
-これを　さしあげるッす！</language>
+これを　さしあげるっす！▼</language>
 		<language name="JPN_KANJI" width="256">どうっすか？
 驚いたでしょう！？[BE:01:ページ切り替え（クリア）]
 このジムは　見てのとおり
 ジェットコースター　なんすよね！！[BE:01:ページ切り替え（クリア）]
 まあ　とりあえずは
-これを　さしあげるッす！</language>
+これを　さしあげるっす！▼</language>
 	</row>
 
 	<row id="msg_c04gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">

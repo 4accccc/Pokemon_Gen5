@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T13:11:14"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T22:47:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="216" right="1996" bottom="844" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -732,10 +732,10 @@
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">ジムリーダーさがし
-たいへん　だったッすよね[BE:01:ページ切り替え（クリア）]
+たいへん　だったっすよね[BE:01:ページ切り替え（クリア）]
 これを　さしあげますよ</language>
 		<language name="JPN_KANJI" width="256">ジムリーダー探し
-大変だったッすよね[BE:01:ページ切り替え（クリア）]
+大変だったっすよね[BE:01:ページ切り替え（クリア）]
 これを　さしあげますよ</language>
 	</row>
 
@@ -750,24 +750,24 @@
 あいてのポケモンに　たいして
 ゆうりなタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
 ゆうりなタイプの　わざをえらべば[BE:00:ページ切り替え（行送り）]
-しょうりは　めのまえ　ッすよね▼
+しょうりは　めのまえ　っすよね▼
 ということで　この　ジムは
 カーテンに　かかれた▽
 ポケモンの　タイプに　たいして▼
 あいしょうの　いい　ポケモンの
-タイプの　スイッチを　ふめば▽
+タイプの　スイっチを　ふめば▽
 さきに　すすめるっす！！</language>
 		<language name="JPN_KANJI" width="256">ポケモン勝負の　基本は
 タイプの　相性　なんですよね[BE:01:ページ切り替え（クリア）]
 相手のポケモンに　対して
 有利なタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
 有利なタイプの　技を　選べば[BE:00:ページ切り替え（行送り）]
-勝利は　目前ッすよね▼
+勝利は　目前っすよね▼
 ということで　この　ジムは
 カーテンに　かかれた▽
 ポケモンの　タイプに　対して▼
 相性のいい　ポケモンの　タイプの
-スイッチを　踏めば▽
+スイっチを　踏めば▽
 先に　進めるっす！！</language>
 	</row>
 
@@ -778,10 +778,10 @@
 ダンペイ</attribute>
 		<language name="JPN" width="256">ジムバッジを　てにいれた
 きょう　という　すばらしい　ひを[BE:00:ページ切り替え（行送り）]
-いつまでも　おぼえていてほしいッすね</language>
+いつまでも　おぼえていてほしいっすね</language>
 		<language name="JPN_KANJI" width="256">ジムバッジを　手に入れた
 今日という　素晴らしい日を[BE:00:ページ切り替え（行送り）]
-いつまでも　覚えていてほしいッすね</language>
+いつまでも　覚えていてほしいっすね</language>
 	</row>
 
 	<row id="msg_c01gym0101_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
