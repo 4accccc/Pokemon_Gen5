@@ -42,7 +42,7 @@ EVENT_END
 /*  C05PC0101 GIRL1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c05pc0101_girl1
-	_EASY_TALK_ITEM_EVENT(ITEM_HIDENMASIN03, 1, FE_C05PC0101_WAZA , msg_c05pc0101_girl1_01 , msg_c05pc0101_girl1_02 , msg_c05pc0101_girl1_02 )
+	_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN97, 1, FE_C05PC0101_WAZA , msg_c05pc0101_girl1_01 , msg_c05pc0101_girl1_02 , msg_c05pc0101_girl1_02 )
 EVENT_END
 
 /**************************************************************/

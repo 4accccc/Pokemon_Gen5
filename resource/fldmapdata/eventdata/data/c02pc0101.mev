@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/20 20:10:43
+#save date:2010/02/22 14:48:44
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -293,11 +293,11 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C01PC0201_DELIVERY
+C02PC0201_DELIVERY
 #OBJ CODE Number
 DELIVERY
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name

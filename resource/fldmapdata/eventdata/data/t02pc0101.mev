@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/20 20:17:19
+#save date:2010/02/22 14:42:07
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -297,7 +297,7 @@ T02PC0101_DELIVERY
 #OBJ CODE Number
 DELIVERY
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
