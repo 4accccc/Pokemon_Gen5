@@ -134,6 +134,7 @@ FMMDL_RESLIST_NCGIMD = \
 	whitemonolith.imd \
 	mama.imd \
 	spider.imd \
+	pipe.imd \
 	grasssound.imd \
 	fiddle.imd \
 	babyboy2.imd \
@@ -166,7 +167,10 @@ FMMDL_RESLIST_NCGIMD = \
 	trophy3.imd \
 	prize1.imd \
 	prize2.imd \
+	hidegrass.imd \
+	hideground.imd \
 	flag.imd \
+	keyboard.imd \
 	sprock.imd \
 	tsure_001.imd \
 	tsure_002.imd \

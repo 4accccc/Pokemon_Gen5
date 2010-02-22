@@ -673,6 +673,11 @@
 	@echo convert ncg_imd spider
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/spider.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
 
+#pipe.imd
+./mmdl_res/pipe.imd: ./mmdl_nchara/pipe.ncg ./mmdl_nchara/pipe.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
+	@echo convert ncg_imd pipe
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pipe.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
 #grasssound.imd
 ./mmdl_res/grasssound.imd: ./mmdl_nchara/grasssound.ncg ./mmdl_nchara/grasssound.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd grasssound
@@ -833,10 +838,25 @@
 	@echo convert ncg_imd prize2
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/prize2.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
 
+#hidegrass.imd
+./mmdl_res/hidegrass.imd: ./mmdl_nchara/hidegrass.ncg ./mmdl_nchara/hidegrass.ncl ./mmdl_res/ncg4x4ocell.imd fldmmdl_list.csv
+	@echo convert ncg_imd hidegrass
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hidegrass.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
+
+#hideground.imd
+./mmdl_res/hideground.imd: ./mmdl_nchara/hideground.ncg ./mmdl_nchara/hideground.ncl ./mmdl_res/ncg4x4ocell.imd fldmmdl_list.csv
+	@echo convert ncg_imd hideground
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hideground.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
+
 #flag.imd
 ./mmdl_res/flag.imd: ./mmdl_nchara/flag.ncg ./mmdl_nchara/flag.ncl ./mmdl_res/ncg4x4ocell.imd fldmmdl_list.csv
 	@echo convert ncg_imd flag
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/flag.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
+
+#keyboard.imd
+./mmdl_res/keyboard.imd: ./mmdl_nchara/keyboard.ncg ./mmdl_nchara/keyboard.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
+	@echo convert ncg_imd keyboard
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/keyboard.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #sprock.imd
 ./mmdl_res/sprock.imd: ./mmdl_nchara/sprock.ncg ./mmdl_nchara/sprock.ncl ./mmdl_res/ncg4x4ocell.imd fldmmdl_list.csv
