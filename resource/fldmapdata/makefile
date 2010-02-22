@@ -5,6 +5,16 @@ include $(PROJECT_RSCDIR)\macro_define
 #zonetable/zoneindexが先頭、
 #zonetableが末尾、という順番は変更してはいけない。
 
+ifeq ($(SCRIPT_DEBUGGER_MODE),yes)
+
+SUBDIRS	= flagwork \
+					eventdata/groupdata \
+					eventdata/define \
+					script \
+					eventdata/binary
+
+else
+
 SUBDIRS	=	zonetable/zoneindex \
 					flagwork \
 					area_data \
@@ -33,8 +43,10 @@ SUBDIRS	=	zonetable/zoneindex \
 					pushrock \
 					eventdata/binary \
 					crowd_people \
+					diving_spot \
 					zonetable/fieldskill_mapeffect \
 					zonetable
+endif
 					
 
 .PHONY:	do-build clean

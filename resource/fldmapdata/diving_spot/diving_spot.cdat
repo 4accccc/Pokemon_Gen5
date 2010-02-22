@@ -1,0 +1,19 @@
+static const DIVING_SPOT_TABLE DivingSpotTable[] = {
+	{// No. 1
+		ZONE_ID_D20         , 800, 275,//チェック地点
+		ZONE_ID_D20R0101     //接続先
+	},
+	{// No. 2
+		ZONE_ID_D20         , 785, 289,//チェック地点
+		ZONE_ID_D20R0201     //接続先
+	},
+	{// No. 3
+		ZONE_ID_D20         , 815, 289,//チェック地点
+		ZONE_ID_D20R0301     //接続先
+	},
+	{// No. 4
+		ZONE_ID_D20         , 800, 307,//チェック地点
+		ZONE_ID_D20R0401     //接続先
+	},
+};
+
