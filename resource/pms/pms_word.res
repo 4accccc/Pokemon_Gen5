@@ -24,6 +24,7 @@ enum {
 	PMSW_SRC_NANKAI,
 	PMSW_SRC_UNION,
 	PMSW_SRC_PICTURE,
+	PMSW_SRC_KOE,
 };
 
 //----------------------------------------------------------------
@@ -34,17 +35,18 @@ enum {
 
 static const u16 PMS_SrcElems[] = {
 	 652,	//ポケモン名	0 ... 651
-	 545,	//わざ名	652 ... 1196
-	  17,	//ポケモンタイプ名	1197 ... 1213
-	 160,	//とくせい名	1214 ... 1373
-	  38,	//トレーナー	1374 ... 1411
-	  38,	//ひと	1412 ... 1449
-	 107,	//あいさつ	1450 ... 1556
-	 104,	//せいかつ	1557 ... 1660
-	  10,	//きもち	1661 ... 1670
-	  32,	//なんかいことば	1671 ... 1702
-	  23,	//ユニオン	1703 ... 1725
-	  10,	//ピクチャ	1726 ... 1735
+	 557,	//わざ名	652 ... 1208
+	  17,	//ポケモンタイプ名	1209 ... 1225
+	 162,	//とくせい名	1226 ... 1387
+	  38,	//トレーナー	1388 ... 1425
+	  38,	//ひと	1426 ... 1463
+	 102,	//あいさつ	1464 ... 1565
+	 104,	//せいかつ	1566 ... 1669
+	  10,	//きもち	1670 ... 1679
+	  32,	//なんかいことば	1680 ... 1711
+	  23,	//ユニオン	1712 ... 1734
+	  10,	//ピクチャ	1735 ... 1744
+	   6,	//こえ	1745 ... 1750
 };
 
 //----------------------------------------------------------------
@@ -66,6 +68,7 @@ static const u16 PMS_SrcFileID[] = {
 	NARC_message_pms_word11_dat,
 	NARC_message_pms_word12_dat,
 	NARC_message_pms_picture_dat,
+	NARC_message_pms_word13_dat,
 };
 
 //----------------------------------------------------------------
@@ -75,63 +78,59 @@ static const u16 PMS_SrcFileID[] = {
 //----------------------------------------------------------------
 
 static const PMS_WORD DupWord_00[] = {
-	1460,1667,1732,
+	1470,1676,1741,
 };
 
 static const PMS_WORD DupWord_01[] = {
-	1666,1731,
+	1675,1740,
 };
 
 static const PMS_WORD DupWord_02[] = {
-	1100,1568,
+	1100,1577,
 };
 
 static const PMS_WORD DupWord_03[] = {
-	1664,1729,
+	1673,1738,
 };
 
 static const PMS_WORD DupWord_04[] = {
-	1028,1380,
+	1028,1394,
 };
 
 static const PMS_WORD DupWord_05[] = {
-	 93,1204,
+	 93,1216,
 };
 
 static const PMS_WORD DupWord_06[] = {
-	1500,1669,1734,
+	1509,1678,1743,
 };
 
 static const PMS_WORD DupWord_07[] = {
-	1276,1384,
+	1288,1398,
 };
 
 static const PMS_WORD DupWord_08[] = {
-	1450,1662,1727,
+	1464,1671,1736,
 };
 
 static const PMS_WORD DupWord_09[] = {
-	1668,1733,
+	1677,1742,
 };
 
 static const PMS_WORD DupWord_10[] = {
-	1663,1728,
+	1672,1737,
 };
 
 static const PMS_WORD DupWord_11[] = {
-	1665,1730,
+	1674,1739,
 };
 
 static const PMS_WORD DupWord_12[] = {
-	1523,1670,1735,
+	1532,1679,1744,
 };
 
 static const PMS_WORD DupWord_13[] = {
-	1524,1661,1726,
-};
-
-static const PMS_WORD DupWord_14[] = {
-	796,1364,
+	1533,1670,1735,
 };
 
 static const struct {
@@ -152,7 +151,6 @@ static const struct {
 	{ DupWord_11, 2 },
 	{ DupWord_12, 3 },
 	{ DupWord_13, 3 },
-	{ DupWord_14, 2 },
 };
 
 //----------------------------------------------------------------
@@ -161,7 +159,7 @@ static const struct {
 */
 //----------------------------------------------------------------
 
-#define  PMS_SRCFILE_MAX  (12)
+#define  PMS_SRCFILE_MAX  (13)
 
 #undef __PMS_WORD_RES__
 #endif

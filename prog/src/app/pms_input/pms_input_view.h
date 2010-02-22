@@ -394,6 +394,7 @@ extern BOOL PMSIV_MENU_TaskMenuIsFinish( PMSIV_MENU* wk, u8 pos );
 extern void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on );
 extern void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id );
 extern BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id );
+extern void PMSIV_MENU_ResetDecideCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id );
 extern void PMSIV_MENU_TouchEditButton( PMSIV_MENU* wk, EDIT_BUTTON_ID id );
 
 extern PMSIV_MENU* PMSIView_GetMenuWork( PMS_INPUT_VIEW* vwk );

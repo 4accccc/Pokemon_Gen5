@@ -91,6 +91,18 @@ typedef enum {
   MENU_CLWKICON_MAX,
 } MENU_CLWKICON;
 
+//--------------------------------------------------------------
+///	見せるだけCLWK定義(ボタンのようにタッチするものではなく、見せるだけけのもの)
+//==============================================================
+typedef enum
+{
+  MARK_L,
+  MARK_R,
+  MARK_MAX,
+}
+MARK;
+
+
 //=============================================================================
 /**
  *								構造体定義
@@ -113,6 +125,7 @@ struct _PMSIV_MENU {
   APP_TASKMENU_ITEMWORK   menu_item[ TASKMENU_WIN_MAX ];
   APP_TASKMENU_WIN_WORK*  menu_win[ TASKMENU_WIN_MAX ];
   GFL_CLWK*               clwk_icon[ MENU_CLWKICON_MAX ];
+  GFL_CLWK*               mark_clwk[MARK_MAX];
 };
 
 //=============================================================================
@@ -123,6 +136,8 @@ struct _PMSIV_MENU {
 static void _clwk_create( PMSIV_MENU* wk );
 static void _clwk_delete( PMSIV_MENU* wk );
 static void _clwk_setanm( PMSIV_MENU* wk, MENU_CLWKICON iconIdx, BOOL is_on );
+static void _mark_create( PMSIV_MENU* wk );  // 必ず_clwk_createの後に呼ぶこと
+static void _mark_delete( PMSIV_MENU* wk );  // 必ず_clwk_deleteの前に呼ぶこと
 static TOUCHBAR_WORK* _touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id );
 static void _setup_category_group( PMSIV_MENU* wk );
 static void _setup_category_initial( PMSIV_MENU* wk );
@@ -169,6 +184,8 @@ PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, c
 
   // CLWK
   _clwk_create( wk );
+  // MARK
+  _mark_create( wk );
 
   return wk;
 }
@@ -193,6 +210,7 @@ void PMSIV_MENU_Delete( PMSIV_MENU* wk )
   // タスクメニュー リソース開放
   APP_TASKMENU_RES_Delete( wk->menu_res );
 
+  _mark_delete( wk );
   _clwk_delete( wk );
 
   GFL_MSG_Delete( wk->msgman );
@@ -263,6 +281,12 @@ void PMSIV_MENU_Clear( PMSIV_MENU* wk )
   {
     GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[i], FALSE );
   }
+
+  // MARK
+  for( i=0; i<MARK_MAX; i++ )
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->mark_clwk[i], FALSE );
+  }
  
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
 
@@ -316,6 +340,12 @@ void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
     GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_EDIT_BTL_LOST ], TRUE );
     GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_EDIT_UNION ], TRUE );
     GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_R ], TRUE );
+
+    // MARK
+    for( i=0; i<MARK_MAX; i++ )
+    {
+      GFL_CLACT_WK_SetDrawEnable( wk->mark_clwk[i], TRUE );
+    }
   }
   
   PMSIV_MENU_UpdateEditIcon( wk );
@@ -441,6 +471,11 @@ static void _decide_category_change( PMSIV_MENU* wk )
 static BOOL _wait_category_change( PMSIV_MENU* wk )
 {
   return GFL_CLACT_WK_CheckAnmActive( wk->clwk_icon[ MENU_CLWKICON_CATEGORY_CHANGE ] ) == FALSE;
+}
+
+static void _reset_decide_category_change( PMSIV_MENU* wk )
+{
+  _clwk_setanm( wk, MENU_CLWKICON_CATEGORY_CHANGE, FALSE );
 }
 
 //-----------------------------------------------------------------------------
@@ -599,6 +634,30 @@ BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  決定状態にあったカテゴリモードのメニューの見た目を元に戻しておく
+ *
+ *	@param	PMSIV_MENU* wk 
+ *	@param	id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_ResetDecideCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id )
+{
+  GF_ASSERT( wk );
+
+  switch( id )
+  {
+  case CATEGORY_DECIDE_ID_CHANGE :
+    _reset_decide_category_change( wk );
+    break;
+
+  default : GF_ASSERT(0);
+  }	
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  タスクメニューをアクティブに
  *
  *	@param	PMSIV_MENU* wk
@@ -751,6 +810,13 @@ static void _clwk_create( PMSIV_MENU* wk )
 //-----------------------------------------------------------------------------
 static void _clwk_delete( PMSIV_MENU* wk )
 {
+  // GFL_CLUNITをGFL_CLACT_UNIT_Deleteで破棄するときに、一緒に破棄されるので敢えてGFL_CLACT_WK_Removeは書かなくてもいいのだが、一応書いておく
+  int i;
+  for( i=0; i<MENU_CLWKICON_MAX; i++ )
+  {
+    GFL_CLACT_WK_Remove( wk->clwk_icon[i] );
+  }
+
   // リソース
 //  GFL_CLGRP_PLTT_Release( wk->resCell.pltIdx );
 	GFL_CLGRP_CGR_Release( wk->resCell.ncgIdx );
@@ -800,6 +866,56 @@ static void _clwk_setanm( PMSIV_MENU* wk, MENU_CLWKICON iconIdx, BOOL is_on )
   GF_ASSERT( iconIdx < MENU_CLWKICON_MAX );
     
   GFL_CLACT_WK_SetAnmSeq( wk->clwk_icon[ iconIdx ], anmIdx[ iconIdx ][ is_on ] );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  
+ *
+ *	@param	
+ *	@param	 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _mark_create( PMSIV_MENU* wk )  // 必ず_clwk_createの後に呼ぶこと
+{
+  static const u8 setting_value[MARK_MAX][3] =
+  {
+    //  x,   y, anmseq
+    {   8,  20, NANR_pms2_obj_main_s_yajirushi01 },
+    { 240,  20, NANR_pms2_obj_main_s_yajirushi02 },
+  };
+
+  u8 i;
+  for( i=0; i<MARK_MAX; i++ )
+  {
+    wk->mark_clwk[i] = PMSIView_AddActor(
+                           wk->vwk,
+                           &wk->resCell, 
+                           setting_value[i][0], setting_value[i][1],
+                           0,
+                           NNS_G2D_VRAM_TYPE_2DMAIN );
+    GFL_CLACT_WK_SetAnmSeq( wk->mark_clwk[i], setting_value[i][2] );
+    GFL_CLACT_WK_SetDrawEnable( wk->mark_clwk[i], FALSE );
+  }
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  
+ *
+ *	@param	
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _mark_delete( PMSIV_MENU* wk )  // 必ず_clwk_deleteの前に呼ぶこと
+{
+  u8 i;
+  for( i=0; i<MARK_MAX; i++ )
+  {
+    GFL_CLACT_WK_Remove( wk->mark_clwk[i] );
+  }
 }
 
 //-----------------------------------------------------------------------------

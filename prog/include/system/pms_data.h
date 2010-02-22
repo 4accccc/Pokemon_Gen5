@@ -16,8 +16,8 @@
 //------------------------------------------------------
 #define  PMS_WORD_MAX     (2)       ///< 文中に含まれる単語の最大数
 #define  PMS_WORD_NULL    (0xffff)  ///< 単語として無効な値
-#define  PMS_DECO_WIDTH   ( 84 )  ///< デコ文字の最大幅（ドット）
-#define  PMS_NULL_WIDTH   ( 84 )//(96)  ///< NULL文字の幅（ドット）
+#define  PMS_DECO_WIDTH   ( 96 )//( 84 )  ///< デコ文字の最大幅（ドット）  // gmmを編集するMessageEditorのデコ文字の幅の設定をこれに合わせて変更して、プランナがMessageEditor上で確認できるようにしておくこと。
+#define  PMS_NULL_WIDTH   ( 96 )//( 84 )//(96)  ///< NULL文字の幅（ドット）  // デコ文字の幅と合わせなくてもプログラムとしては問題ないと思うが、合わせておく。
 
 //全開放デバッグ
 #ifdef PM_DEBUG
@@ -31,10 +31,10 @@
  */
 //------------------------------------------------------
 enum  PMS_TYPE {
+  PMS_TYPE_MAIL,      ///< メールあいさつ
   PMS_TYPE_BATTLE_READY,  ///< 対戦開始前
   PMS_TYPE_BATTLE_WON,  ///< 対戦勝ったとき
   PMS_TYPE_BATTLE_LOST, ///< 対戦負けた時
-  PMS_TYPE_MAIL,      ///< メールあいさつ
   PMS_TYPE_UNION,     ///< ユニオンあいさつ
 
 

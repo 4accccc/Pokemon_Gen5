@@ -51,6 +51,7 @@ use constant SRC_GROUP10	=> 8;
 use constant SRC_GROUP11	=> 9;
 use constant SRC_GROUP12	=> 10;
 use constant SRC_PICTURE	=> 11;
+use constant SRC_GROUP13	=> 12;
 
 
 my @TargetGmm = (
@@ -66,6 +67,7 @@ my @TargetGmm = (
 	[ '../message/src/pms/pms_word11.gmm',	'なんかいことば',	 -1, -1, -1, -1,	-1, -1, -1,		'NANKAI'  ],
 	[ '../message/src/pms/pms_word12.gmm',	'ユニオン',			 -1, -1, -1, -1,	-1, -1, -1,		'UNION'   ],
 	[ '../message/src/pms/pms_picture.gmm',	'ピクチャ',			 -1, -1, -1, -1,	-1, -1, -1,		'PICTURE'   ],
+	[ '../message/src/pms/pms_word13.gmm',	'こえ',			 -1, -1, -1, -1,	-1, -1, -1,		'KOE'   ],
 
 );
 
@@ -102,6 +104,7 @@ my @CategoryParam = (
 	[ 'なんかいことば',	'09',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP11  ],
 	[ 'ユニオン',		'10',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP12  ],
 	[ 'ピクチャ',		'11',	0,	CATEGORY_CONV_NORMAL,	SRC_PICTURE  ],
+	[ 'こえ',		'12',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP13  ],
 );
 
 use constant CPELEM_TITLE			=>  0;

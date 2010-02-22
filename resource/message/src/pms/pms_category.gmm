@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:47:01"/>
+	<create user="kawada_koji" host="W00215" date="2010-02-22T11:19:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="118" top="176" right="823" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="118" top="174" right="821" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="528"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="695"/>
+		<band id="3" index="3" style="0000" width="695"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -384,13 +384,18 @@
 	</row>
 
 	<row id="pms_category_11" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN" font=" 1:small" width="72">なんかいことば</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">なんかいことば</language>
+		<language name="JPN" font=" 1:small" width="72">ようご</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ようご</language>
 	</row>
 
 	<row id="pms_category_12" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN" font=" 1:small" width="72">ユニオン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">ユニオン</language>
+		<language name="JPN" font=" 1:small" width="72">つうしん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">つうしん</language>
+	</row>
+
+	<row id="pms_category_13">
+		<language name="JPN" font=" 1:small" width="72">こえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">こえ</language>
 	</row>
 
 	<row id="pms_category_unknown">

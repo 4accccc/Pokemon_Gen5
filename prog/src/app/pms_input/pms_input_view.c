@@ -313,7 +313,7 @@ static void PMSIView_VintrTask( GFL_TCB *tcb, void* wk_adrs )
 //------------------------------------------------------------------
 void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 {
-	GFL_TCB_FUNC *func_tbl[] = {
+	GFL_TCB_FUNC *func_tbl[VCMD_MAX] = {
 		Cmd_Init,
 		Cmd_Quit,
 		Cmd_FadeIn,
@@ -359,7 +359,8 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 
 
 
-	if( cmd < NELEMS(func_tbl) )
+	//if( cmd < NELEMS(func_tbl) )
+	if( cmd < VCMD_MAX )
 	{
 		COMMAND_WORK* cwk = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(COMMAND_WORK) );
 
@@ -1008,6 +1009,8 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 	case 1:
     if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE ) )
     {
+      PMSIV_MENU_ResetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE );
+
       PMSIV_MENU_SetupCategory( vwk->menu_wk );
 
       PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );

@@ -127,6 +127,22 @@ enum {
 	CATEGORY_WIN_UNKNOWN_COL_SHADOW = 0x04,
 };
 
+static const u8 msg_pms_category_str_id[CATEGORY_GROUP_MAX] =
+{
+  pms_category_01,
+  pms_category_02,
+  pms_category_03,
+  pms_category_04,
+  pms_category_05,
+  pms_category_06,
+  pms_category_13,
+  pms_category_07,
+  pms_category_08,
+  pms_category_09,
+  pms_category_11,
+  pms_category_10,
+};
+
 
 //======================================================================
 
@@ -343,7 +359,7 @@ static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 
 		if( PMSI_DATA_GetGroupEnableWordCount(wk->dwk, i) )
 		{
-			str = GFL_MSG_CreateString( msgman, pms_category_01+i );
+			str = GFL_MSG_CreateString( msgman, msg_pms_category_str_id[i] );
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_COL_LETTER, CATEGORY_WIN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
 		else

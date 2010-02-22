@@ -130,16 +130,18 @@ static const struct {
 	CountupFunc      func;			///< 単語カウント関数
 	const PMS_WORD*  src_tbl;		///< 単語テーブルアドレス
 	u32              tbl_elems;		///< 単語テーブル要素数
-}EnableWordCountupParam[] = {
+}EnableWordCountupParam[CATEGORY_GROUP_MAX] = {
 	{ CountupGruopPokemon,  PMS_CategoryTable_01,  PMS_Category_01_MaxNum },	// ポケモン
 	{ CountupGruopDefault,  PMS_CategoryTable_03,  PMS_Category_03_MaxNum },	// ステータス
 	{ CountupGruopSkill,    PMS_CategoryTable_02,  PMS_Category_02_MaxNum },	// わざ
 	{ CountupGruopDefault,  PMS_CategoryTable_04,  PMS_Category_04_MaxNum },	// トレーナー
 	{ CountupGruopDefault,  PMS_CategoryTable_10,  PMS_Category_10_MaxNum },	// ユニオン
 	{ CountupGroupAisatsu,  PMS_CategoryTable_06,  PMS_Category_06_MaxNum },	// あいさつ
+	{ CountupGruopDefault,  PMS_CategoryTable_12,  PMS_Category_12_MaxNum },	// こえ
 	{ CountupGruopDefault,  PMS_CategoryTable_05,  PMS_Category_05_MaxNum },	// ひと
 	{ CountupGruopDefault,  PMS_CategoryTable_07,  PMS_Category_07_MaxNum },	// せいかつ
 	{ CountupGruopDefault,  PMS_CategoryTable_08,  PMS_Category_08_MaxNum },	// きもち
+	{ CountupGruopDefault,  PMS_CategoryTable_09,  PMS_Category_09_MaxNum },	// ようご
 	{ CountupGroupPicture,  PMS_CategoryTable_11,  PMS_Category_11_MaxNum },	// ピクチャ
 };
 

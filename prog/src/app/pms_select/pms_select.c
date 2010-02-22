@@ -35,9 +35,6 @@
 //簡易CLWK読み込み＆開放ユーティリティー
 #include "ui/ui_easy_clwk.h"
 
-//シーンコントローラー
-#include "ui/ui_scene.h"
-
 //タッチバー
 #include "ui/touchbar.h"
 
@@ -50,7 +47,6 @@
 //アーカイブ
 #include "arc_def.h"
 #include "pmsi.naix"
-#include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 #include "message.naix"
 #include "msg/msg_pms_input.h"
 
@@ -83,38 +79,44 @@ enum
 { 
   PMS_SELECT_HEAP_SIZE = 0x1c000,  ///< ヒープサイズ
 
-  SELECT_ID_NULL = 255,
+  SELECT_ID_NULL = 255,  // プレートのどれも選んでいないとき
 };
 
 //--------------------------------------------------------------
 ///	OBJ
 //==============================================================
 enum
-{ 
+{
+  // スクロールバーの左上
   LIST_BAR_STD_PX = 8 * 30,
-  LIST_BAR_STD_PY = 8 * 2,
-  LIST_BAR_ANM_IDX = 16, // バーアイコンのアニメIDX
+  LIST_BAR_STD_PY = 8 *  1,
 
-  LIST_BAR_SY = 26,
+  // バーアイコン
+  LIST_BAR_ANM_IDX = 16,  // バーアイコンのアニメIDX
+  LIST_BAR_SY = 10,  // バーアイコンの長さ
   LIST_BAR_SY_CENTER = LIST_BAR_SY / 2,
 
-  LIST_BAR_TOUCH_MIN = LIST_BAR_STD_PY,
-  LIST_BAR_TOUCH_MAX = GX_LCD_SIZE_Y - 8*4,
+  // スクロールバーのタッチ可能範囲
+  LIST_BAR_TOUCH_MIN = LIST_BAR_STD_PY,     // LIST_BAR_TOUCH_MIN<= <=LIST_BAR_TOUCH_MAX  // ここはMAXも=含みます
+  LIST_BAR_TOUCH_MAX = GX_LCD_SIZE_Y - 8*4 -1,
 
-  LIST_BAR_AREA_MIN  = LIST_BAR_TOUCH_MIN,
-  LIST_BAR_AREA_MAX  = LIST_BAR_TOUCH_MAX - LIST_BAR_SY_CENTER,
-  LIST_BAR_AREA_SIZE = LIST_BAR_AREA_MAX - LIST_BAR_AREA_MIN,
+  // バーアイコンの配置可能範囲
+  LIST_BAR_AREA_MIN  = LIST_BAR_TOUCH_MIN +3 + LIST_BAR_SY_CENTER,  // LIST_BAR_AREA_MIN<= <=LIST_BAR_AREA_MAX  // ここはMAXも=含みます
+  LIST_BAR_AREA_MAX  = LIST_BAR_TOUCH_MAX -2 - LIST_BAR_SY_CENTER,
+  LIST_BAR_AREA_SIZE = LIST_BAR_AREA_MAX - LIST_BAR_AREA_MIN +1,  // MAXを含むので+1しておく
 
-  LIST_BAR_ENABLE_LISTNUM = 3,
+  // バーアイコンが不必要なときのプレートの個数
+  LIST_BAR_ENABLE_LISTNUM = 3,  
 };
 
 //--------------------------------------------------------------
 ///	BG
 //==============================================================
 enum
-{ 
-  PLATE_BG_SX = 29,
-  PLATE_BG_SY = 6,
+{
+  // 簡易会話を表示するプレート
+  PLATE_BG_SX = 29,  // 単位キャラ
+  PLATE_BG_SY = 6,   
   PLATE_BG_START_PY = 1,
   PLATE_BG_PLTT_OFS_BASE = 0x2,
 };
@@ -122,63 +124,57 @@ enum
 //--------------------------------------------------------------
 ///	シーケンス
 //==============================================================
+// メインのシーケンス
+enum
+{
+  // 初期化処理
+  SEQ_INIT                    = 0,
+
+  // プレート選択
+  SEQ_PLATE_SELECT_INIT,
+  SEQ_PLATE_SELECT_MAIN,
+  SEQ_PLATE_SELECT_END,
+
+  // タスクメニュー選択
+  SEQ_CMD_SELECT_INIT,
+  SEQ_CMD_SELECT_MAIN,
+  SEQ_CMD_SELECT_END,
+
+  // 簡易会話入力画面PROCの呼び出し＆復帰
+  SEQ_CALL_EDIT_FADE_OUT_START,
+  SEQ_CALL_EDIT_FADE_OUT_WAIT,
+  SEQ_CALL_EDIT_INIT,
+  SEQ_CALL_EDIT_MAIN,
+  SEQ_CALL_EDIT_END,
+  SEQ_CALL_EDIT_FADE_IN_START,
+  SEQ_CALL_EDIT_FADE_IN_WAIT,
+
+  // 終了処理
+  SEQ_EXIT,
+};
 
 //--------------------------------------------------------------
 ///	SceneFunc
 //==============================================================
 // プレート選択
-static BOOL ScenePlateSelect_Init( UI_SCENE_CNT_PTR cnt, void* work );
-static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work );
-static BOOL ScenePlateSelect_End( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL ScenePlateSelect_Init( int* seq, void* work );
+static BOOL ScenePlateSelect_Main( int* seq, void* work );
+static BOOL ScenePlateSelect_End( int* seq, void* work );
 // コマンド選択
-static BOOL SceneCmdSelect_Init( UI_SCENE_CNT_PTR cnt, void* work );
-static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work );
-static BOOL SceneCmdSelect_End( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneCmdSelect_Init( int* seq, void* work );
+static BOOL SceneCmdSelect_Main( int* seq, void* work );
+static BOOL SceneCmdSelect_End( int* seq, void* work );
 // 入力画面呼び出し＆復帰
-static BOOL SceneCallEdit_Main( UI_SCENE_CNT_PTR cnt, void* work );
-static BOOL SceneCallEdit_End( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneCallEdit_Main( int* seq, void* work );
+static BOOL SceneCallEdit_End( int* seq, void* work );
 
 //--------------------------------------------------------------
 ///	SceneID
 //==============================================================
-typedef enum
-{ 
-  PMSS_SCENE_ID_PLATE_SELECT = 0, ///< プレート選択
-  PMSS_SCENE_ID_CMD_SELECT,       ///< メニュー
-  PMSS_SCENE_ID_CALL_EDIT,        ///< 入力画面呼び出し＆復帰
-
-  PMSS_SCENE_ID_MAX,
-} PMSS_SCENE;
 
 //--------------------------------------------------------------
 ///	SceneTable
 //==============================================================
-static const UI_SCENE_FUNC_SET c_scene_func_tbl[ PMSS_SCENE_ID_MAX ] = 
-{ 
-  // PMSS_SCENE_ID_PLATE_SELECT 
-  {
-    ScenePlateSelect_Init, 
-    NULL,
-    ScenePlateSelect_Main, 
-    NULL, 
-    ScenePlateSelect_End,
-  },
-  // PMSS_SCENE_ID_CMD_SELECT
-  {
-    SceneCmdSelect_Init,
-    NULL,
-    SceneCmdSelect_Main, 
-    NULL,
-    SceneCmdSelect_End,
-  },
-  // PMSS_SCENE_ID_CALL_EDIT
-  {
-    NULL, NULL,
-    SceneCallEdit_Main,
-    NULL, 
-    SceneCallEdit_End,
-  },
-};
 
 //--------------------------------------------------------------
 ///	タスクメニューID
@@ -196,15 +192,14 @@ enum
 enum
 {	
   // MAIN
-	BG_FRAME_MENU_M	  = GFL_BG_FRAME0_M,
-	BG_FRAME_BAR_M	  = GFL_BG_FRAME1_M,
-//	BG_FRAME_TEXT_M	= GFL_BG_FRAME1_M,
-	BG_FRAME_TEXT_M	  = GFL_BG_FRAME2_M,
-	BG_FRAME_BACK_M	  = GFL_BG_FRAME3_M,
+	BG_FRAME_MENU_M	  = GFL_BG_FRAME0_M,  // タスクメニュー
+	BG_FRAME_BAR_M	  = GFL_BG_FRAME1_M,  // タッチバー(下側のもの)
+	BG_FRAME_TEXT_M	  = GFL_BG_FRAME2_M,  // プレート
+	BG_FRAME_BACK_M	  = GFL_BG_FRAME3_M,  // 背景
   // SUB
-	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
-  BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
+	BG_FRAME_BACK_S	= GFL_BG_FRAME0_S,  // 背景
 
+  // タスクメニューが出ているときに、その後ろを暗くする
   BG_MENU_BRIGHT = -8,
   BG_MENU_MASK_PLANE = (PLANEMASK_BG1|PLANEMASK_BG2|PLANEMASK_BG3|PLANEMASK_OBJ),
   BG_MENU_MASK_DISP = (MASK_MAIN_DISPLAY),
@@ -212,11 +207,12 @@ enum
 //-------------------------------------
 ///	パレット
 //=====================================
+// パレット位置
 enum
 {	
 	//メインBG
 	PLTID_BG_COMMON_M			= 0,
-  PLTID_BG_MSG_M        = 7,
+  PLTID_BG_MSG_M        = 8,
 	PLTID_BG_TASKMENU_M		= 12,
 	PLTID_BG_TOUCHBAR_M		= 14,
 
@@ -224,10 +220,49 @@ enum
 	PLTID_BG_BACK_S				=	0,
 
 	//メインOBJ
-	PLTID_OBJ_COMMON_M    = 0, // 3本使用
-  PLTID_OBJ_TOUCHBAR_M	= 3, // 3本使用
-  PLTID_OBJ_PMS_DRAW    = 6, // 5本使用 
+	PLTID_OBJ_COMMON_M    = 0, // 5本使用
+  PLTID_OBJ_TOUCHBAR_M	= 5, // 3本使用
+  PLTID_OBJ_PMS_DRAW    = 8, // 5本使用 
 	//サブOBJ
+};
+
+// パレット個数
+enum
+{
+	//メインBG
+	PLTNUM_BG_COMMON_M			= 8,
+  PLTNUM_BG_MSG_M        = 1,
+	PLTNUM_BG_TASKMENU_M		= 0,  // ?本
+	PLTNUM_BG_TOUCHBAR_M		= 0,  // ?本
+
+	//サブBG
+	PLTNUM_BG_BACK_S				=	0,  // 全転送
+
+	//メインOBJ
+	PLTNUM_OBJ_COMMON_M    = 5,
+  PLTNUM_OBJ_TOUCHBAR_M	= 3,
+  PLTNUM_OBJ_PMS_DRAW    = 5, 
+	//サブOBJ
+};
+
+// 文字パレット内の色
+enum
+{
+  MSG_M_COL_L                =  1,
+  MSG_M_COL_S                =  2,
+  MSG_M_COL_B_SELECTED       = 14,
+  MSG_M_COL_B_NOT_SEL        = 13,
+};
+
+// 色変更
+enum
+{
+  COL_CHANGE_0,    // プレートの枠0
+  COL_CHANGE_1,    // プレートの枠1
+  COL_CHANGE_2,    // プレートの枠2
+  COL_CHANGE_3,    // 文字の背景色SELECTED
+  COL_CHANGE_4,    // 文字の背景色NOT_SEL
+  COL_CHANGE_MAX,
 };
 
 //=============================================================================
@@ -244,7 +279,7 @@ typedef struct
   void*             plateScrnWork;
   NNSG2dScreenData* platescrnData;
   u16   transAnmCnt;
-  GXRgb transCol;
+  GXRgb transCol[COL_CHANGE_MAX];
 } PMS_SELECT_BG_WORK;
 
 #ifdef PMS_SELECT_PMSDRAW
@@ -297,15 +332,19 @@ typedef struct
   PMS_DRAW_WORK*            pms_draw;
 #endif //PMS_SELECT_PMSDRAW
 
-  UI_SCENE_CNT_PTR          cntScene;
   void*                     subproc_work;   ///< サブPROC用ワーク保存領域
-  u8    select_id;        ///< 選択したID
+
+  u8    select_id;        ///< 選択したID  // SELECT_ID_NULLのとき何も選ばれていない
   u8    list_head_id;     ///< リストの先頭ID
-  u8    list_max;         ///< リストの項目数
+  u8    list_max;         ///< リストの項目数  // 「あたらしく　メッセージを　ついかする」は除いた個数
+  u8    list_max_add;     // 「あたらしく　メッセージを　ついかする」を加えた個数  // = list_max or = list_max+1  // これがリストの総数
   u8    b_listbar : 1;    ///< リストバーをタッチしているかフラグ
   u8    padding_bit : 7;
+  
+  int  sub_seq;  // 1階層下のシーケンス 
+  int  sub_res;  // 1階層下の結果
 
-  BOOL bProcChange; ///< PROC切替フラグ
+  BOOL b_touch;  // タッチ操作のときTRUE、キー操作のときFALSE 
 
 } PMS_SELECT_MAIN_WORK;
 
@@ -371,7 +410,7 @@ static void PMSSelect_PMSDRAW_Proc( PMS_SELECT_MAIN_WORK* wk );
 static void PLATE_CNT_Setup( PMS_SELECT_MAIN_WORK* wk );
 static void PLATE_CNT_UpdateAll( PMS_SELECT_MAIN_WORK* wk );
 static void PLATE_CNT_UpdateCore( PMS_SELECT_MAIN_WORK* wk, BOOL is_check_print_end );
-static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk );
+static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk );
 static void PLATE_CNT_Trans( PMS_SELECT_MAIN_WORK* wk );
 static BOOL PLATE_UNIT_Trans( PRINT_QUE* print_que, GFL_BMPWIN* win, BOOL *transReq );
 static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 data_id, BOOL is_select );
@@ -416,9 +455,15 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
-  
+
+  {
+       // 真っ暗にしておく
+      GX_SetMasterBrightness(-16);
+      GXS_SetMasterBrightness(-16);
+  }
+
   // 速度設定
-  GFL_UI_KEY_SetRepeatSpeed( 4, 8 );
+  //GFL_UI_KEY_SetRepeatSpeed( 4, 8 );
 	
 	//引数取得
 	param	= pwk;
@@ -447,36 +492,6 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
   // グラフィックロード
   PMSSelect_GRAPHIC_Load( wk );
   
-  // 初回判定
-  {
-    PMS_DATA* data;
-    int first_scene;
-
-    data = PMSW_GetDataEntry( wk->pmsw_save, 0 );
-
-    if( PMSDAT_IsComplete( data, wk->heapID ) == FALSE )
-    {
-      first_scene = PMSS_SCENE_ID_CALL_EDIT; // いきなり編集画面へ
-
-      // 真っ暗にしておく
-      GX_SetMasterBrightness(16);
-      GXS_SetMasterBrightness(16);
-
-      HOSAKA_Printf("初回なので直接編集画面へ\n");
-    }
-    else
-    {
-      first_scene = PMSS_SCENE_ID_PLATE_SELECT; 
-
-      //@TODO	フェードシーケンスがないので
-      GX_SetMasterBrightness(0);
-      GXS_SetMasterBrightness(0);
-    }
-  
-    // SCENE
-	  wk->cntScene = UI_SCENE_CNT_Create( wk->heapID, c_scene_func_tbl, PMSS_SCENE_ID_MAX, first_scene, wk );
-  }
-
   return GFL_PROC_RES_FINISH;
 }
 
@@ -507,11 +522,8 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 	//FONT
 	GFL_FONT_Delete( wk->font );
 
-  // SCENE
-  UI_SCENE_CNT_Delete( wk->cntScene );
-  
   // 元にもどす
-  GFL_UI_KEY_SetRepeatSpeed( 8, 15 );
+  //GFL_UI_KEY_SetRepeatSpeed( 8, 15 );
 
 	//PROC用メモリ解放
   GFL_PROC_FreeWork( proc );
@@ -534,32 +546,167 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
  *	@retval	終了コード
  */
 //-----------------------------------------------------------------------------
+static void ChangeSeq( int* seq, PMS_SELECT_MAIN_WORK* wk, int s );
+static void ChangeSeq( int* seq, PMS_SELECT_MAIN_WORK* wk, int s )
+{
+  *seq = s;
+  wk->sub_seq = 0;
+  // wk->sub_resは変更してはならない、1シーケンス後で使うこともあるので。
+}
 static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	PMS_SELECT_MAIN_WORK* wk = mywk;
-  
-  if( wk->bProcChange )
+ 
+
+  switch(*seq)
   {
-	  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-    wk->bProcChange = FALSE;
-    HOSAKA_Printf("return! \n");
-  }
-	
-  // SCENE
-  if( UI_SCENE_CNT_Main( wk->cntScene ) )
-  {
-    return GFL_PROC_RES_FINISH;
-  }
-    
-  // PROC
-  if( wk->bProcChange )
-  {
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
-    HOSAKA_Printf("call!\n");
-    return GFL_PROC_RES_CONTINUE;
+  case SEQ_INIT:
+    {
+      // 初回判定
+      PMS_DATA* data;
+      data = PMSW_GetDataEntry( wk->pmsw_save, 0 );
+      if( PMSDAT_IsComplete( data, wk->heapID ) == FALSE )
+      {
+        wk->select_id = 0;  // 0番目のプレートに簡易会話を当てはめるようこれから編集する
+        ChangeSeq( seq, wk, SEQ_CALL_EDIT_INIT ); // いきなり編集画面へ
+       
+        HOSAKA_Printf("初回なので直接編集画面へ\n");
+      }
+      else
+      {
+        //@TODO	フェードシーケンスがないので
+        GX_SetMasterBrightness(0);
+        GXS_SetMasterBrightness(0);
+        
+        ChangeSeq( seq, wk, SEQ_PLATE_SELECT_INIT );
+      }
+    }
+    break;
+  case SEQ_PLATE_SELECT_INIT:
+    {
+      if( ScenePlateSelect_Init( &(wk->sub_seq), wk ) )
+      {
+        ChangeSeq( seq, wk, SEQ_PLATE_SELECT_MAIN );
+      }
+    }
+    break;
+  case SEQ_PLATE_SELECT_MAIN:
+    {
+      if( ScenePlateSelect_Main( &(wk->sub_seq), wk ) )
+      {
+        ChangeSeq( seq, wk, wk->sub_res );
+      }
+    }
+    break;
+  case SEQ_PLATE_SELECT_END:
+    {
+      if( ScenePlateSelect_End( &(wk->sub_seq), wk ) )
+      {
+        ChangeSeq( seq, wk, SEQ_EXIT );
+      }
+    }
+    break;
+  case SEQ_CMD_SELECT_INIT:
+    {
+      if( SceneCmdSelect_Init( &(wk->sub_seq), wk ) )
+      {
+        ChangeSeq( seq, wk, SEQ_CMD_SELECT_MAIN );
+      }
+    }
+    break;
+  case SEQ_CMD_SELECT_MAIN:
+    {
+      if( SceneCmdSelect_Main( &(wk->sub_seq), wk ) )
+      {
+        ChangeSeq( seq, wk, SEQ_CMD_SELECT_END );
+      }
+    }
+    break;
+  case SEQ_CMD_SELECT_END:
+    {
+      if( SceneCmdSelect_End( &(wk->sub_seq), wk ) )
+      {
+        ChangeSeq( seq, wk, wk->sub_res );  // SceneCmdSelect_Mainのwk->sub_resをそのまま残しておき、ここで利用する
+      }
+    }
+    break;
+  case SEQ_CALL_EDIT_FADE_OUT_START:
+    {
+       // フェードイン(見える→黒)
+      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
+      ChangeSeq( seq, wk, SEQ_CALL_EDIT_FADE_OUT_WAIT );
+    }
+    break;
+  case SEQ_CALL_EDIT_FADE_OUT_WAIT:
+    {
+      if( !GFL_FADE_CheckFade() )
+      {
+        ChangeSeq( seq, wk, SEQ_CALL_EDIT_INIT );
+      }
+    }
+    break;
+  case SEQ_CALL_EDIT_INIT:
+    {
+      // グラフィックアンロード
+      PMSSelect_GRAPHIC_UnLoad( wk );
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
+
+      ChangeSeq( seq, wk, SEQ_CALL_EDIT_MAIN );
+      
+      HOSAKA_Printf("call!\n");
+      
+      return GFL_PROC_RES_CONTINUE;
+    }
+    break;
+  case SEQ_CALL_EDIT_MAIN:
+    {
+      if( SceneCallEdit_Main( &(wk->sub_seq), wk ) )
+      {
+        ChangeSeq( seq, wk, SEQ_CALL_EDIT_END );
+      }
+      
+      return GFL_PROC_RES_CONTINUE;
+    }
+    break;
+  case SEQ_CALL_EDIT_END:
+    {
+      if( SceneCallEdit_End( &(wk->sub_seq), wk ) )
+  	  {
+        HOSAKA_Printf("return! \n");
+        
+        GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+        // グラフィックリロード
+        PMSSelect_GRAPHIC_Load( wk );
+      
+        ChangeSeq( seq, wk, SEQ_CALL_EDIT_FADE_IN_START );
+      }
+      
+      return GFL_PROC_RES_CONTINUE;
+    }
+    break;
+  case SEQ_CALL_EDIT_FADE_IN_START:
+    {
+      // フェードイン(黒→見える)
+      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
+      ChangeSeq( seq, wk, SEQ_CALL_EDIT_FADE_IN_WAIT );
+    }
+    break;
+  case SEQ_CALL_EDIT_FADE_IN_WAIT:
+    {
+      if( !GFL_FADE_CheckFade() )
+      {
+        ChangeSeq( seq, wk, SEQ_PLATE_SELECT_INIT );
+      }
+    }
+    break;
+  case SEQ_EXIT:
+    {
+      return GFL_PROC_RES_FINISH;
+    }
+    break;
   }
 
-	// PRINT_QUE
+  // PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
   
   // PLATE転送
@@ -591,6 +738,12 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 //-----------------------------------------------------------------------------
 static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
 { 
+  // 初期状態
+  wk->select_id = SELECT_ID_NULL;  // キー入力でここへ来ていた場合、最初に何かを選んでおいたほうがよさそう
+  wk->list_head_id = 0;  // 簡易会話編集から戻ってきた場合、プレートの見えているものを、編集していたものにしておいたほうがよさそう
+  wk->b_listbar = FALSE;
+  wk->b_touch = TRUE;    // キー入力でここへ来ていた場合、これを適切にしなければならない
+
 	//描画設定初期化
 	wk->graphic	= PMS_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
   
@@ -602,20 +755,23 @@ static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
     prm.draw_type = CLSYS_DRAW_MAIN;
     prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
     prm.arc_id    = ARCID_PMSI_GRAPHIC;
-    prm.pltt_id   = NARC_pmsi_pms2_obj_main_NCLR;
+    prm.pltt_id   = NARC_pmsi_pms_obj_main_NCLR;
     prm.ncg_id    = NARC_pmsi_pms2_obj_main_NCGR;
     prm.cell_id   = NARC_pmsi_pms2_obj_main_NCER;
     prm.anm_id    = NARC_pmsi_pms2_obj_main_NANR;
     prm.pltt_line = PLTID_OBJ_COMMON_M;
     prm.pltt_src_ofs  = 0;
-    prm.pltt_src_num  = 3;
+    prm.pltt_src_num  = PLTNUM_OBJ_COMMON_M;
 
     UI_EASY_CLWK_LoadResource( &wk->clwkres, &prm, clunit, wk->heapID );
 
-    wk->clwk_bar = UI_EASY_CLWK_CreateCLWK( &wk->clwkres, clunit, LIST_BAR_STD_PX, LIST_BAR_STD_PY, LIST_BAR_ANM_IDX ,wk->heapID );
+    wk->clwk_bar = UI_EASY_CLWK_CreateCLWK( &wk->clwkres, clunit, LIST_BAR_STD_PX, LIST_BAR_AREA_MIN, LIST_BAR_ANM_IDX ,wk->heapID );
 
     // タスクメニューの下
     GFL_CLACT_WK_SetBgPri( wk->clwk_bar, 1 );
+
+    // アニメあり 
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_bar, TRUE );
   }
 
 	//BGリソース読み込み
@@ -673,6 +829,7 @@ static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
 	//描画設定破棄
 	PMS_SELECT_GRAPHIC_Exit( wk->graphic );
 }
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  BG管理モジュール リソース読み込み
@@ -690,12 +847,28 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
   handle	= GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, heapID );
 
 	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_pmsi_pms2_bg_main_NCLR, PALTYPE_MAIN_BG, 0x20*PLTID_BG_COMMON_M, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_pmsi_pms2_bg_main_NCLR, PALTYPE_SUB_BG,  0x20*PLTID_BG_BACK_S, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_pmsi_pms2_bg_main_NCLR, PALTYPE_MAIN_BG, 0x20*PLTID_BG_COMMON_M, 0x20*PLTNUM_BG_COMMON_M, heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_pmsi_pms2_bg_main_NCLR, PALTYPE_SUB_BG,  0x20*PLTID_BG_BACK_S, 0x20*PLTNUM_BG_BACK_S, heapID );
 	
   // 会話フォントパレット転送
-//	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0x20*PLTID_BG_MSG_M, 0x20, heapID );
-	
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0x20*PLTID_BG_MSG_M, 0x20*PLTNUM_BG_MSG_M, heapID );
+  {
+    // 足りない色をつくっておく
+    BOOL result;
+
+    wk->transCol[COL_CHANGE_3] = GX_RGB(28, 28, 28);
+    result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                        PLTID_BG_MSG_M * 32 + MSG_M_COL_B_SELECTED * 2 ,
+                                        &(wk->transCol[COL_CHANGE_3]) , 2 );
+    GF_ASSERT( result );
+
+    wk->transCol[COL_CHANGE_4] = GX_RGB(22, 22, 22);
+    result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                        PLTID_BG_MSG_M * 32 + MSG_M_COL_B_NOT_SEL * 2 ,
+                                        &(wk->transCol[COL_CHANGE_4]) , 2 );
+    GF_ASSERT( result );
+  } 
+
   //	----- 上画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_pmsi_pms2_bg_back_NCGR,
 						BG_FRAME_BACK_S, 0, 0, 0, heapID );
@@ -710,9 +883,9 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
 
 	GF_ASSERT( wk->m_back_chr_pos != GFL_ARCUTIL_TRANSINFO_FAIL );
 
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_pmsi_pms2_bg_back01_NSCR, BG_FRAME_BACK_M,
-      GFL_ARCUTIL_TRANSINFO_GetPos( wk->m_back_chr_pos ), 0, 0, heapID );
-	
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs( handle, NARC_pmsi_pms2_bg_back01_NSCR, BG_FRAME_BACK_M,
+        0, GFL_ARCUTIL_TRANSINFO_GetPos( wk->m_back_chr_pos ), 0, 0, heapID );
+
   // プレート
   GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_pmsi_pms2_bg_main_NCGR,
 						BG_FRAME_TEXT_M, 0, 0, 0, heapID );
@@ -791,21 +964,24 @@ static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32
 //プレートのアニメ。sin使うので0～0xFFFFのループ
 #define PLATE_PLTT_ANIME_VALUE (0x400)
 
-#define PLATE_PLTT_ANIME_S_R (0)
-#define PLATE_PLTT_ANIME_S_G (16)
-#define PLATE_PLTT_ANIME_S_B (16)
+typedef struct
+{
+  u16 pal_line_no;        // 16本あるうちの何本目か
+  u16 col_pos_in_line;    // 1本にある16色のうちの何色目か
+  u16 col_s;
+  u16 col_e;
+}
+PAL_ANIM_SET;
 
-#define PLATE_PLTT_ANIME_E_R (31)
-#define PLATE_PLTT_ANIME_E_G (31)
-#define PLATE_PLTT_ANIME_E_B (31)
-
-//プレートのアニメする色
-#define PLATE_PLTT_ANIME_COL (0x5)
-// パレット列
-#define PLATE_PLTT_ANIME_NO  (0x7)
+static const PAL_ANIM_SET pal_anim_set[3] =
+{
+  {  0x7,  0x5, GX_RGB( 0,20,31), GX_RGB(15,31,31) },
+  {  0x7,  0x9, GX_RGB( 4,11,20), GX_RGB( 2,25,31) },
+  {  0x7,  0xA, GX_RGB(10,15,26), GX_RGB( 5,29,31) },
+};
 
 // BGアニメ
-static void _UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 pltNo )
+static void _UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , const PAL_ANIM_SET* anim_set, u8 anim_set_size )
 {
   //プレートアニメ
   if( *anmCnt + PLATE_PLTT_ANIME_VALUE >= 0x10000 )
@@ -819,18 +995,30 @@ static void _UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 pltNo )
   {
     //1～0に変換
     const fx16 cos = (FX_CosIdx(*anmCnt)+FX16_ONE)/2;
-    const u8 r = PLATE_PLTT_ANIME_S_R + (((PLATE_PLTT_ANIME_E_R-PLATE_PLTT_ANIME_S_R)*cos)>>FX16_SHIFT);
-    const u8 g = PLATE_PLTT_ANIME_S_G + (((PLATE_PLTT_ANIME_E_G-PLATE_PLTT_ANIME_S_G)*cos)>>FX16_SHIFT);
-    const u8 b = PLATE_PLTT_ANIME_S_B + (((PLATE_PLTT_ANIME_E_B-PLATE_PLTT_ANIME_S_B)*cos)>>FX16_SHIFT);
-    BOOL result;
-    
-    *transBuf = GX_RGB(r, g, b);
-    
-    result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
-                                        pltNo * 32 + PLATE_PLTT_ANIME_COL*2 ,
-                                        transBuf , 2 );
 
-    GF_ASSERT( result == TRUE );
+    {
+      u8 i;
+      for( i=0; i<anim_set_size; i++ )
+      {
+        const u8 r_s = ( anim_set[i].col_s & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+        const u8 r_e = ( anim_set[i].col_e & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+        const u8 g_s = ( anim_set[i].col_s & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+        const u8 g_e = ( anim_set[i].col_e & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+        const u8 b_s = ( anim_set[i].col_s & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+        const u8 b_e = ( anim_set[i].col_e & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+
+        const u8 r = r_s + (((r_e - r_s)*cos)>>FX16_SHIFT);
+        const u8 g = g_s + (((g_e - g_s)*cos)>>FX16_SHIFT);
+        const u8 b = b_s + (((b_e - b_s)*cos)>>FX16_SHIFT);
+      
+        BOOL result;
+        transBuf[i] = GX_RGB(r, g, b);
+        result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                        anim_set[i].pal_line_no * 32 + anim_set[i].col_pos_in_line * 2 ,
+                                        &(transBuf[i]) , 2 );
+        GF_ASSERT( result == TRUE );
+      }
+    }
   }
 }
 
@@ -846,7 +1034,7 @@ static void _UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 pltNo )
 //-----------------------------------------------------------------------------
 static void PMSSelect_BG_PlateMain( PMS_SELECT_BG_WORK* wk )
 {
-  _UpdatePalletAnime( &wk->transAnmCnt, &wk->transCol, 7 );
+  _UpdatePalletAnime( &wk->transAnmCnt, wk->transCol, pal_anim_set, NELEMS(pal_anim_set) );
 }
 
 //-----------------------------------------------------------------------------
@@ -919,8 +1107,10 @@ static void PMSSelect_BG_PlateFutterTrans( PMS_SELECT_BG_WORK* wk, u32 sentence_
  */
 //-----------------------------------------------------------------------------
 static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_Init( PMS_SELECT_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-	//タッチバーの設定
+{
+  TOUCHBAR_WORK* touchbar_work;
+	
+  //タッチバーの設定
 	
   //アイコンの設定
 	//数分作る
@@ -944,7 +1134,12 @@ static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_Init( PMS_SELECT_MAIN_WORK *wk, GFL_CL
 	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
 	touchbar_setup.mapping	= APP_COMMON_MAPPING_64K;	//マッピングモード
 
-	return TOUCHBAR_Init( &touchbar_setup, heapID );
+	touchbar_work = TOUCHBAR_Init( &touchbar_setup, heapID );
+
+  // タスクメニューの下
+  TOUCHBAR_SetBgPriority( touchbar_work, TOUCHBAR_ICON_RETURN, 1 );
+  
+	return touchbar_work;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1080,16 +1275,27 @@ static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk )
     
     pms = PMSW_GetDataEntry( wk->pmsw_save, i );
       
-    wk->list_max++; // 新規項目を含めるのでこのタイミング
-
     if( PMSDAT_IsComplete( pms, wk->heapID ) == FALSE )
     {
       HOSAKA_Printf( "list_max=%d \n", wk->list_max );
       break;
     }
+    else
+    {
+      wk->list_max++; // 「あたらしく　メッセージを　ついかする」は除いた個数
+    }
   }
+
+  // 「あたらしく　メッセージを　ついかする」を加えた個数 
+  {
+    wk->list_max_add = wk->list_max;
+    if( wk->list_max < PMS_DATA_ENTRY_MAX ) wk->list_max_add++;  // 「あたらしく　メッセージを　ついかする」を加えた個数
+  }
+
   // バーが出現設定
-  GFL_CLACT_WK_SetDrawEnable( wk->clwk_bar, ( wk->list_max > LIST_BAR_ENABLE_LISTNUM ) );
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->clwk_bar, ( wk->list_max_add > LIST_BAR_ENABLE_LISTNUM ) );
+  }
 
   // PMS表示用BMPWIN生成
   for( i=0; i<PMS_SELECT_PMSDRAW_NUM; i++ )
@@ -1214,15 +1420,20 @@ static void PLATE_CNT_UpdateCore( PMS_SELECT_MAIN_WORK* wk, BOOL is_check_print_
     u8 data_id = wk->list_head_id + i;
     BOOL is_select = ( data_id == wk->select_id );
     
-    if( data_id == wk->list_max-1 )
-    {
-      // 「あたらしい　メッセージを　ついかする」
-      PLATE_UNIT_DrawLastMessage( wk, i, NULL, is_select );
-    }
-    else
     {
       // 簡易会話描画
       PLATE_UNIT_DrawNormal( wk, i, data_id, is_select );
+    }
+  }
+  // 「あたらしく　メッセージを　ついかする」を書く
+  {
+    if( wk->list_max < PMS_DATA_ENTRY_MAX && i < PMS_SELECT_PMSDRAW_NUM )
+    {
+      u8 data_id = wk->list_head_id + i;
+      BOOL is_select = ( data_id == wk->select_id );
+
+      // 「あたらしい　メッセージを　ついかする」
+      PLATE_UNIT_DrawLastMessage( wk, i, NULL, is_select );
     }
   }
 }
@@ -1238,17 +1449,21 @@ static void PLATE_CNT_UpdateCore( PMS_SELECT_MAIN_WORK* wk, BOOL is_check_print_
 //-----------------------------------------------------------------------------
 static void LIST_BAR_SetPosFromKey( PMS_SELECT_MAIN_WORK* wk )
 {
+  // wk->list_head_idが正しい値に更新されてから、この関数が呼び出される
+
+  int moveable_num;  // 画面の最上部になることができるプレートの個数
   int pos_id;
   s16 clpos;
   int fx_elem_size;
-  
+ 
   // バーが出現していない場合は処理なし
   if( GFL_CLACT_WK_GetDrawEnable( wk->clwk_bar ) == FALSE )
   {
     return;
   }
 
-  pos_id = wk->select_id;
+  moveable_num = wk->list_max_add - LIST_BAR_ENABLE_LISTNUM +1;  // バーアイコンが出ているなら、ここは必ず正になる
+  pos_id = wk->list_head_id;
   
   // MIN
   if( pos_id == 0 )
@@ -1256,7 +1471,7 @@ static void LIST_BAR_SetPosFromKey( PMS_SELECT_MAIN_WORK* wk )
     clpos = LIST_BAR_AREA_MIN;
   }
   // MAX
-  else if( pos_id == wk->list_max-1 )
+  else if( pos_id == moveable_num -1 )
   {
     clpos = LIST_BAR_AREA_MAX;
   }
@@ -1264,19 +1479,13 @@ static void LIST_BAR_SetPosFromKey( PMS_SELECT_MAIN_WORK* wk )
   else
   {
     // タッチ座標からCLWKの座標を算出
-    fx_elem_size     = FX32_CONST(LIST_BAR_AREA_SIZE) / (wk->list_max-1);
-
-    GF_ASSERT( fx_elem_size ); // ZERO DIV
-
-    clpos = LIST_BAR_AREA_MIN + ( (fx_elem_size * pos_id) >> FX32_SHIFT );
+    //clpos = LIST_BAR_AREA_MIN + LIST_BAR_AREA_SIZE / moveable_num * wk->list_head_id + LIST_BAR_AREA_SIZE / moveable_num / 2;  // 中央に表示しておく
+    clpos = LIST_BAR_AREA_MIN +  ( LIST_BAR_AREA_SIZE * wk->list_head_id ) / moveable_num + LIST_BAR_AREA_SIZE / ( moveable_num * 2 );  // 計算順序を入れ替えておく
    
-    GF_ASSERT( clpos < LIST_BAR_AREA_MAX );
+    if( clpos > LIST_BAR_AREA_MAX ) clpos = LIST_BAR_AREA_MAX;
   }
 
   GFL_CLACT_WK_SetWldTypePos( wk->clwk_bar, clpos, CLSYS_MAT_Y );
-
-  OS_Printf("pos_id=%d, list_max=%d, area_size=%d, fx_elem_size=%f, clpos=%d \n",
-                 pos_id, wk->list_max, LIST_BAR_AREA_SIZE, FX_FX32_TO_F32(fx_elem_size), clpos );
 }
 
 //-----------------------------------------------------------------------------
@@ -1304,12 +1513,11 @@ static BOOL LIST_BAR_SetPosFromTouch( PMS_SELECT_MAIN_WORK* wk )
     return FALSE;
   }
 
-  if( tx > LIST_BAR_STD_PX && tx < GX_LCD_SIZE_X )
+  if( tx >= LIST_BAR_STD_PX && tx < GX_LCD_SIZE_X )
   { 
-    if( ty < LIST_BAR_TOUCH_MAX && ty > LIST_BAR_TOUCH_MIN ) 
+    if( ty <= LIST_BAR_TOUCH_MAX && ty >= LIST_BAR_TOUCH_MIN ) 
     {
       wk->b_listbar = TRUE;
-      wk->select_id = SELECT_ID_NULL; ///< 選択を無効化
       return TRUE;
     }
   }
@@ -1322,28 +1530,54 @@ static BOOL LIST_BAR_SetPosFromTouch( PMS_SELECT_MAIN_WORK* wk )
  *	@brief
  *
  *	@param	u32 py
- *	@param	list_max
- *	@param	out_pos_id
+ *	@param	list_max_add
+ *	@param	out_list_head_id
  *	@param	out_pos_dot 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void LIST_BAR_GetPosDataByTouch( u32 py, int list_max, u16* out_pos_id, s16* out_pos_dot )
-{ 
-  fx32 fx_elem_size;
-  
-  // 範囲制限
-  py = MATH_CLAMP( py, LIST_BAR_TOUCH_MIN, LIST_BAR_TOUCH_MAX );
-  
-  // タッチ座標から選択IDを算出
-  fx_elem_size     = FX32_CONST(LIST_BAR_AREA_SIZE) / (list_max-1);
+static void LIST_BAR_GetPosDataByTouch( u32 py, int list_max_add, u16* out_list_head_id, s16* out_pos_dot )
+{
+  int moveable_num;  // 画面の最上部になることができるプレートの個数
+  int i;
 
-  GF_ASSERT( fx_elem_size ); // ZERO DIV
-  
-  // 出力
-  *out_pos_id = FX_Div( FX32_CONST(py - LIST_BAR_AREA_MIN), fx_elem_size) >> FX32_SHIFT;
-  *out_pos_dot = LIST_BAR_AREA_MIN + ( (fx_elem_size * (*out_pos_id) ) >> FX32_SHIFT );
+  moveable_num = list_max_add - LIST_BAR_ENABLE_LISTNUM +1;  // バーアイコンが出ているなら、ここは必ず正になる
+
+  for( i=0; i<moveable_num; i++ )
+  {
+    int min = LIST_BAR_AREA_MIN + ( LIST_BAR_AREA_SIZE * i ) / moveable_num;  // min<= <max
+    int max = LIST_BAR_AREA_MIN + ( LIST_BAR_AREA_SIZE * (i+1) ) / moveable_num;  // ここのmaxは、次のプレートの位置になるので、=を含まない
+    if( i==0 )
+    {
+      if( py < max )
+      {
+        *out_list_head_id = i;
+        break;
+      }
+    }
+    else if( i==moveable_num -1 )
+    {
+      if( py >= min )
+      {
+        *out_list_head_id = i;
+        break;
+      }
+    }
+    else 
+    {
+      if( min<=py && py<max )
+      {
+        *out_list_head_id = i;
+        break;
+      }
+    }
+  }
+
+  {
+    u32 py_dot = MATH_CLAMP( py, LIST_BAR_AREA_MIN, LIST_BAR_AREA_MAX );
+    *out_pos_dot = py_dot;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1358,9 +1592,8 @@ static void LIST_BAR_GetPosDataByTouch( u32 py, int list_max, u16* out_pos_id, s
 static BOOL LIST_BAR_CheckTouching( PMS_SELECT_MAIN_WORK* wk )
 {
   u32 tx, ty;
-  u16 pos_id;
+  u16 head_id;
   s16 clpos;
-  int select_id_pre;
 
   GF_ASSERT( wk->b_listbar );
 
@@ -1371,18 +1604,14 @@ static BOOL LIST_BAR_CheckTouching( PMS_SELECT_MAIN_WORK* wk )
     return FALSE;
   }
 
-  LIST_BAR_GetPosDataByTouch( ty, wk->list_max, &pos_id, &clpos );
-  select_id_pre = wk->list_head_id;
+  LIST_BAR_GetPosDataByTouch( ty, wk->list_max_add, &head_id, &clpos );
+  GFL_CLACT_WK_SetWldTypePos( wk->clwk_bar, clpos, CLSYS_MAT_Y );  // 右端のスクロールバーのバーアイコンの位置はタッチに追随して常に更新しておく
 
   // 選択IDに変更があった場合はOBJを移動
-  if( pos_id != select_id_pre )
+  if( head_id != wk->list_head_id )
   {
     // 出力
-    GFL_CLACT_WK_SetWldTypePos( wk->clwk_bar, clpos, CLSYS_MAT_Y );
-    wk->list_head_id = pos_id;
-    wk->list_head_id = MATH_CLAMP( wk->list_head_id, 0, (PMS_DATA_ENTRY_MAX-(PMS_SELECT_PMSDRAW_NUM-1)) ); // 実質3個表示なので
-    
-    OS_Printf("list_head_id=%d pos_id=%d \n", wk->list_head_id, pos_id );
+    wk->list_head_id = head_id;
 
     return TRUE;
   }
@@ -1399,26 +1628,34 @@ static BOOL LIST_BAR_CheckTouching( PMS_SELECT_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
+static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
 {
+  BOOL b_decide = FALSE;
+  BOOL b_input = TRUE;
+
+ if( b_input )
+ {
   // セレクト無効状態でキー入力されたら
   if( GFL_UI_KEY_GetTrg() && wk->select_id == SELECT_ID_NULL )
   {
-    //@TODO このままだと、初回移動時に若干ずれてしまう。座標からselect_idを求めれば良いが。
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-    {
-      wk->select_id = wk->list_head_id + (PMS_SELECT_PMSDRAW_NUM-2); //末尾を選択
-    }
-    else
-    {
-      wk->select_id = wk->list_head_id; //先頭を選択
-    }
+    wk->select_id = wk->list_head_id; //先頭を選択
+    wk->b_touch = FALSE;
 
     PLATE_CNT_UpdateAll( wk );
-  }
 
+    b_input = FALSE;
+  }
+ }
+ 
+ if( b_input )
+ {
   // キー入力
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+  {
+    b_decide = TRUE;
+    b_input = FALSE;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
   {
     if( wk->select_id > 0 )
     {
@@ -1443,10 +1680,15 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
       
       HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
     }
+    else
+    {
+      // ブブーって音を鳴らすならここで
+    }
+    b_input = FALSE;
   }
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
   {
-    if( wk->select_id < wk->list_max-1 )
+    if( wk->select_id < wk->list_max_add-1 )
     {
       wk->select_id++;
 
@@ -1466,42 +1708,86 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
      
       HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
     }
-  }
-
-  // タッチ入力
-  {
-    int list_pos = TOUCH_GetListPos();
-
-    // タッチしたプレートを選択
-    if( list_pos != -1 )
-    {
-      wk->select_id =  wk->list_head_id + list_pos;
-
-      HOSAKA_Printf("list_pos = %d, select_id = %d \n", list_pos, wk->select_id );
-      
-      PLATE_CNT_UpdateAll( wk );
-    }
-    // バーをタッチでプレート移動
     else
     {
-      // リストバーが動作していなければ開始判定
-      if( wk->b_listbar == FALSE )
+      // ブブーって音を鳴らすならここで
+    }
+    b_input = FALSE;
+  }
+ }
+
+ if( b_input )
+ {
+  // タッチ入力
+  {
+    // 右端のスライドバーのバーアイコンを操作している最中なら
+    if( wk->b_listbar )
+    {
+      if( LIST_BAR_CheckTouching( wk ) )
       {
-        LIST_BAR_SetPosFromTouch( wk );
+        // 移動があった場合は更新
+        PLATE_CNT_UpdateAll( wk );
       }
-      
-      // 継続チェック
-      if( wk->b_listbar == TRUE )
+      b_input = FALSE;
+    }
+    // 右端のスライドバーのバーアイコンを操作していないなら
+    else
+    {
+      int list_pos = TOUCH_GetListPos();
+
+      // タッチしたところにプレートが存在しているか
+      if( list_pos != -1 )
       {
-        if( LIST_BAR_CheckTouching( wk ) )
+        if( list_pos > wk->list_max_add -1 )
         {
-          // 移動があった場合は更新
-          PLATE_CNT_UpdateAll( wk );
+          // タッチしたところにプレートは存在しないので、list_posを-1に書き換えておく
+          list_pos = -1;
+        }
+      }
+
+      // タッチしたプレートを選択
+      if( list_pos != -1 )
+      {
+        wk->b_touch = TRUE;
+
+        wk->select_id =  wk->list_head_id + list_pos;
+
+        HOSAKA_Printf("list_pos = %d, select_id = %d \n", list_pos, wk->select_id );
+      
+        PLATE_CNT_UpdateAll( wk );
+        
+        b_input = FALSE;
+        b_decide = TRUE;
+      }
+      // バーをタッチでプレート移動
+      else
+      {
+        // リストバーが動作していなければ開始判定
+        if( wk->b_listbar == FALSE )
+        {
+          LIST_BAR_SetPosFromTouch( wk );
+        }
+      
+        // 右端のスライドバーのバーアイコンを操作し始めたなら
+        if( wk->b_listbar == TRUE )
+        {
+          wk->b_touch = TRUE;
+          
+          if( LIST_BAR_CheckTouching( wk ) || wk->select_id != SELECT_ID_NULL )  // 最初のタッチ位置をチェックする
+          {
+            wk->select_id = SELECT_ID_NULL; ///< 右端のスライドバーのバーアイコンをタッチしたので、選択を無効化
+            
+            // 移動があった場合、または、選択されていたものが無効化された場合、は更新
+            PLATE_CNT_UpdateAll( wk );
+          }
+          b_input = FALSE;
         }
       }
     }
   }
+ }
 
+ return b_decide;
 }
 
 //-----------------------------------------------------------------------------
@@ -1579,18 +1865,16 @@ static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id
   // プレート描画
   PMSSelect_BG_PlateTrans( &wk->wk_bg, view_pos_id, 0, is_select );
   
-#if 0
   // 選択状態によって文字描画エリアのカラーを指定
   if( is_select )
   {
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->pms_win[ view_pos_id ] ), 0x2 );
-    color = PRINTSYS_LSB_Make( 0xe, 0xf, 0x2 );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->pms_win[ view_pos_id ] ), MSG_M_COL_B_SELECTED );
+    color = PRINTSYS_LSB_Make( MSG_M_COL_L, MSG_M_COL_S, MSG_M_COL_B_SELECTED );
   }
   else
-#endif
   {
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->pms_win[ view_pos_id ] ), 0x1 );
-    color = PRINTSYS_LSB_Make( 0xe, 0xf, 0x1 );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->pms_win[ view_pos_id ] ), MSG_M_COL_B_NOT_SEL );
+    color = PRINTSYS_LSB_Make( MSG_M_COL_L, MSG_M_COL_S, MSG_M_COL_B_NOT_SEL );
   }
 
   PRINTSYS_PrintQueColor( wk->print_que, GFL_BMPWIN_GetBmp(wk->pms_win[ view_pos_id ]), 0, 0, buf, wk->font, color );
@@ -1631,18 +1915,18 @@ static void PLATE_UNIT_DrawNormal( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 
     PMSSelect_BG_PlateTrans( &wk->wk_bg, view_pos_id, sentence_type, is_select );
   }
 
-#if 0
   // 選択状態によって文字描画エリアの色指定
   if( is_select )
   {
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->pms_win[ view_pos_id ] ), 0x2 );
-    PMS_DRAW_SetPrintColor( wk->pms_draw, PRINTSYS_LSB_Make( 0xe, 0xf, 0x2 ) );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->pms_win[ view_pos_id ] ), MSG_M_COL_B_SELECTED );
+    PMS_DRAW_SetPrintColor( wk->pms_draw, PRINTSYS_LSB_Make( MSG_M_COL_L, MSG_M_COL_S, MSG_M_COL_B_SELECTED ) );
+    PMS_DRAW_SetNullColorPallet( wk->pms_draw, MSG_M_COL_B_SELECTED );
   }
   else
-#endif
   {
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->pms_win[ view_pos_id ] ), 0x1 );
-    PMS_DRAW_SetPrintColor( wk->pms_draw, PRINTSYS_LSB_Make( 0xe, 0xf, 0x1 ) );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->pms_win[ view_pos_id ] ), MSG_M_COL_B_NOT_SEL );
+    PMS_DRAW_SetPrintColor( wk->pms_draw, PRINTSYS_LSB_Make( MSG_M_COL_L, MSG_M_COL_S, MSG_M_COL_B_NOT_SEL ) );
+    PMS_DRAW_SetNullColorPallet( wk->pms_draw, MSG_M_COL_B_NOT_SEL );
   }
 
   //  簡易会話表示
@@ -1660,7 +1944,7 @@ static void PLATE_UNIT_DrawNormal( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 
  *
  *	@param	void
  *
- *	@retval TRUE : している
+ *	@retval 0以上のときタッチしているリストが何番目(画面に見えているリストの中での番号なので、通し番号ではない)か返す、負のときタッチしていない
  */
 //-----------------------------------------------------------------------------
 static int TOUCH_GetListPos( void )
@@ -1669,7 +1953,7 @@ static int TOUCH_GetListPos( void )
 
   if( GFL_UI_TP_GetPointTrg( &px, &py ) )
   {
-    if( px < GX_LCD_SIZE_X - (8*3) && py > PLATE_BG_START_PY * 8 )
+    if( px < GX_LCD_SIZE_X - (8*3) && py >= PLATE_BG_START_PY * 8 )
     {
         // キャラに変換
         py /= 8;
@@ -1703,7 +1987,7 @@ static int TOUCH_GetListPos( void )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL ScenePlateSelect_Init( UI_SCENE_CNT_PTR cnt, void* work )
+static BOOL ScenePlateSelect_Init( int* seq, void* work )
 {
   PMS_SELECT_MAIN_WORK* wk = work;
 
@@ -1723,10 +2007,11 @@ static BOOL ScenePlateSelect_Init( UI_SCENE_CNT_PTR cnt, void* work )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
+static BOOL ScenePlateSelect_Main( int* seq , void* work )
 { 
   PMS_SELECT_MAIN_WORK* wk = work;
   TOUCHBAR_ICON result;
+  BOOL b_decide;
 
   PMSSelect_BG_PlateMain( &wk->wk_bg );
 
@@ -1743,7 +2028,7 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
     // キャンセルフラグON
     wk->out_param->out_cancel_flag  = TRUE;
     wk->out_param->out_pms_data     = NULL;
-    UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
+    wk->sub_res = SEQ_PLATE_SELECT_END;
     return TRUE;
 
   // @TODO 左右と項目アイコン
@@ -1756,10 +2041,10 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
   }
 
   // プレート操作
-  PLATE_CNT_Main( wk );
+  b_decide = PLATE_CNT_Main( wk );
     
   // メニューを開く
-  if( ( TOUCH_GetListPos() != -1 ) || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) )
+  if( b_decide )
   {
     PMS_DATA* pms;
 
@@ -1769,12 +2054,12 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
     if( PMSDAT_IsComplete( pms, wk->heapID ) )
     {
-      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CMD_SELECT );
+      wk->sub_res = SEQ_CMD_SELECT_INIT;
     }
     else
     {
       // 選択領域が新規なら直接ジャンプ
-      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CALL_EDIT );
+      wk->sub_res = SEQ_CALL_EDIT_FADE_OUT_START;
     }
 
     return TRUE;
@@ -1793,7 +2078,7 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL ScenePlateSelect_End( UI_SCENE_CNT_PTR cnt, void* work )
+static BOOL ScenePlateSelect_End( int* seq, void* work )
 {
   PMS_SELECT_MAIN_WORK* wk = work;
   
@@ -1813,7 +2098,7 @@ static BOOL ScenePlateSelect_End( UI_SCENE_CNT_PTR cnt, void* work )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL SceneCmdSelect_Init( UI_SCENE_CNT_PTR cnt, void* work )
+static BOOL SceneCmdSelect_Init( int* seq, void* work )
 {
   PMS_SELECT_MAIN_WORK* wk = work;
 
@@ -1834,7 +2119,7 @@ static BOOL SceneCmdSelect_Init( UI_SCENE_CNT_PTR cnt, void* work )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
+static BOOL SceneCmdSelect_Main( int* seq, void* work )
 {
   PMS_SELECT_MAIN_WORK* wk = work;
 	
@@ -1849,18 +2134,18 @@ static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
     {
     case TASKMENU_ID_DECIDE :
       // けってい → 終了
-      UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
+      wk->sub_res = SEQ_PLATE_SELECT_END;
       // 選択されたPMS_DATAを保存
       wk->out_param->out_pms_data     = PMSW_GetDataEntry( wk->pmsw_save, wk->select_id );
       wk->out_param->out_cancel_flag  = FALSE;
       break;
     case TASKMENU_ID_CALL_EDIT :
       // へんしゅう → 入力画面呼び出し
-      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CALL_EDIT );
+      wk->sub_res = SEQ_CALL_EDIT_FADE_OUT_START;
       break;
     case TASKMENU_ID_CANCEL :
       // キャンセル → 選択に戻る
-      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_PLATE_SELECT );
+      wk->sub_res = SEQ_PLATE_SELECT_MAIN;
       break;
     default : GF_ASSERT(0);
     }
@@ -1881,8 +2166,10 @@ static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL SceneCmdSelect_End( UI_SCENE_CNT_PTR cnt, void* work )
+static BOOL SceneCmdSelect_End( int* seq, void* work )
 { 
+  // wk->sub_resをSceneCmdSelect_Mainの結果から変更せずに残しておく
+
   PMS_SELECT_MAIN_WORK* wk = work;
   
   SetBrightness( 0, BG_MENU_MASK_PLANE, BG_MENU_MASK_DISP );
@@ -1902,23 +2189,18 @@ static BOOL SceneCmdSelect_End( UI_SCENE_CNT_PTR cnt, void* work )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL SceneCallEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
+static BOOL SceneCallEdit_Main( int* seq, void* work )
 {
   PMSI_PARAM* pmsi;
   PMS_SELECT_MAIN_WORK* wk = work;
-  u8 seq = UI_SCENE_CNT_GetSubSeq( cnt );
 
-  switch( seq )
+  switch( *seq )
   {
   case 0:
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
-    UI_SCENE_CNT_IncSubSeq( cnt );
+    (*seq)++; 
     break;
   case 1:
-    if( GFL_FADE_CheckFade() == FALSE )
     {
-      PMSSelect_GRAPHIC_UnLoad( wk );
-
 #if PM_DEBUG
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
       {
@@ -1937,14 +2219,10 @@ static BOOL SceneCallEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
         PMSI_PARAM_SetInitializeDataSentence( pmsi, data );
       }
 
-      if( pmsi )
-
       // PROC切替 入力画面呼び出し
       GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ProcData_PMSInput, pmsi );
       wk->subproc_work = pmsi;
 
-      // PROC切替フラグON
-      wk->bProcChange = TRUE;
       return TRUE;
     }
     break;
@@ -1965,12 +2243,11 @@ static BOOL SceneCallEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL SceneCallEdit_End( UI_SCENE_CNT_PTR cnt, void* work )
+static BOOL SceneCallEdit_End( int* seq, void* work )
 { 
   PMS_SELECT_MAIN_WORK* wk = work;
-  u8 seq = UI_SCENE_CNT_GetSubSeq( cnt );
 
-  switch( seq )
+  switch( *seq )
   {
   case 0:
 
@@ -1987,19 +2264,12 @@ static BOOL SceneCallEdit_End( UI_SCENE_CNT_PTR cnt, void* work )
     // パラメータ削除
     PMSI_PARAM_Delete( wk->subproc_work );
 
-    // グラフィックリロード
-    PMSSelect_GRAPHIC_Load( wk );
-
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
-    UI_SCENE_CNT_IncSubSeq( cnt );
+    (*seq)++;
+    
     break;
 
   case 1:
-    // フェード待ち
-    if( GFL_FADE_CheckFade() == FALSE )
     {
-      // 次のシーンをセット
-      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_PLATE_SELECT );
       return TRUE;
     }
     break;

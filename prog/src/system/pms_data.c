@@ -46,14 +46,24 @@
  *
  */
 //--------------------------------------------------------------
-static const u16 SentenceDatID[] = {
+static const u16 SentenceDatID[PMS_TYPE_MAX] = {
+	NARC_message_pmss_mail_dat,
 	NARC_message_pmss_ready_dat,
 	NARC_message_pmss_won_dat,
 	NARC_message_pmss_lost_dat,
-	NARC_message_pmss_mail_dat,
 	NARC_message_pmss_union_dat,
 
 };
+
+static const u8 SentenceIdMax[PMS_TYPE_MAX] =  // 本当は決め打ち手打ち入力ではなく GFL_MSG_GetStrCount を利用したいところだが
+{
+  20,
+  20,
+  20,
+  20,
+  20,
+};
+
 
 //==============================================================
 // Prototype
@@ -535,11 +545,14 @@ void PMSDAT_Copy( PMS_DATA* dst, const PMS_DATA* src )
 //==============================================================================================
 u32 PMSDAT_GetSentenceIdMax( u32 sentence_type )
 {
-	if( sentence_type < NELEMS(SentenceDatID) )
+	//if( sentence_type < NELEMS(SentenceDatID) )
+	if( sentence_type < PMS_TYPE_MAX )
 	{
-    /// @TODO マジックナンバー
-		// とりあえず現状は全タイプ20個になっているので...
-		return 20;
+//    /// @TODO マジックナンバー
+//		// とりあえず現状は全タイプ20個になっているので...
+//		return 20;
+
+    return SentenceIdMax[sentence_type];
 	}
 	return 0;
 }

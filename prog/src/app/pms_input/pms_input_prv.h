@@ -61,6 +61,7 @@ enum {
   VCMD_INPUTWORD_UPDATE,  ///< カテゴリで入力された文字表示を更新
 	VCMD_SCROLL_WORDWIN_BAR,		///< 単語ウィンドウスクロールバー
 
+  VCMD_MAX
 };
 
 
