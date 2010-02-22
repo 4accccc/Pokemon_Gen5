@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-16T18:24:36"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T21:00:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1311" top="392" right="2016" bottom="1020" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -868,21 +868,36 @@
 興味があるなら　会いにいきな</language>
 	</row>
 
-	<row id="msg_c05_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>看板分類：タウンマップ</comment>
-		<attribute name="キャラクター">看板：街</attribute>
+	<row id="msg_c05_sign1_01" text-color=",,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>橋看板</comment>
+		<attribute name="キャラクター">看板</attribute>
+		<language name="JPN" width="256">ホドモエのはねばし</language>
+		<language name="JPN_KANJI" width="256">ホドモエの跳ね橋</language>
+	</row>
+
+	<row id="msg_c05_sign2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>船のオブジェクト用
+・仮メッセージ</comment>
+		<attribute name="キャラクター">看板</attribute>
+		<language name="JPN" width="256">ようこそ　ホドモエシティへ！</language>
+		<language name="JPN_KANJI" width="256">ようこそ　ホドモエシティへ！</language>
+	</row>
+
+	<row id="msg_c05_sign3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>街看板</comment>
+		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">ホドモエが　あらわしているのは
 ふねの　ほと　うずまく　みずのこと</language>
 		<language name="JPN_KANJI" width="256">ホドモエが　あらわしているのは
 船の帆と　渦巻く水のこと</language>
 	</row>
 
-	<row id="msg_c05_sign2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
-		<comment>船のオブジェクト用
+	<row id="msg_c05_sign4_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>マーケット用
 ・仮メッセージ</comment>
-		<attribute name="キャラクター">看板：街</attribute>
-		<language name="JPN" width="256">ようこそ　ホドモエシティへ！</language>
-		<language name="JPN_KANJI" width="256">ようこそ　ホドモエシティへ！</language>
+		<attribute name="キャラクター">看板</attribute>
+		<language name="JPN" width="256">ホドモエの　マーケット</language>
+		<language name="JPN_KANJI" width="256">ホドモエの　マーケット</language>
 	</row>
 
 	<flowchart-group-list>

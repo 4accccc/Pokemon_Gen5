@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-16T17:41:55"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T20:43:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="164" right="1996" bottom="792" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -447,8 +447,9 @@
 ジムリーダーに　教えてもらったんだ</language>
 	</row>
 
-	<row id="msg_c01_cleaningm_01">
-		<comment>♂</comment>
+	<row id="msg_c01_cleaningm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">はいきょ　にはね
 やせいの　ポケモンが　すみついておる[BE:01:ページ切り替え（クリア）]
@@ -470,7 +471,7 @@
 ポケモンジムが　ある[BE:01:ページ切り替え（クリア）]
 そのため　おとずれる
 しょしんしゃトレーナーが　おおいわ</language>
-		<language name="JPN_KANJI" width="256">この　街には
+		<language name="JPN_KANJI" width="256">この街には
 トレーナーズスクールが　あって[BE:00:ページ切り替え（行送り）]
 ポケモンジムが　ある[BE:01:ページ切り替え（クリア）]
 そのため　訪れる
@@ -486,7 +487,7 @@
 みえない　むせんが　どれほど[BE:00:ページ切り替え（行送り）]
 とびかっているか　わかるんだって！</language>
 		<language name="JPN_KANJI" width="256">Ｃギアって　ツールがあれば
-目には見えない　無線が　どれほど[BE:00:ページ切り替え（行送り）]
+みえない　無線が　どれほど[BE:00:ページ切り替え（行送り）]
 飛び交っているか　わかるんだって！</language>
 	</row>
 
