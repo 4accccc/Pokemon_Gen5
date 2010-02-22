@@ -55,5 +55,6 @@
 #define ZONE_D02R0101_EVB_H
 
 #define BGID_D02R0101_STONE_01            0
+#define BGID_D02R0101_SIGN1_01            1
 
 #endif //ZONE_D02R0101_EVB_H

@@ -21,5 +21,6 @@
 #define D02_HIDE_ITEM_00                  1
 #define D02_HIDE_ITEM_02                  2
 #define D02_HIDE_ITEM_03                  3
+#define BGID_D02_SIGN1_01                 4
 
 #endif //ZONE_D02_EVB_H

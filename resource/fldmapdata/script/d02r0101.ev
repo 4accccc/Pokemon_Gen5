@@ -40,6 +40,7 @@ _EVENT_DATA		ev_d02r0101_hakaiw1_01
 _EVENT_DATA		ev_pos_d02r0101_event_04
 _EVENT_DATA		ev_d02r0101_hakaim2_01
 _EVENT_DATA		ev_pos_d02r0101_event_05
+_EVENT_DATA		ev_bg_d02r0101_sign1_01
 _EVENT_DATA_END
 
 
@@ -1029,3 +1030,10 @@ _ANIME_LABEL	anm_sage5_come
 	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		D02R0101	‚¨‚Æ‚­‚È‚¯‚¢‚¶‚Î‚ñ						  */
+/**************************************************************/
+EVENT_START		ev_bg_d02r0101_sign1_01
+	_EASY_BGWIN_MSG( msg_d02r0101_sign1_01, TYPE_INFO )
+EVENT_END

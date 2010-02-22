@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/19 12:45:36
+#save date:2010/02/22 19:09:26
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02.wms
 #SECTION START:OBJ_EVENT
@@ -81,7 +81,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-4
+5
 #event number: 0
 #Bg Event Label
 BGID_D02_ROCK_01
@@ -134,6 +134,19 @@ SCRID_HIDE_ITEM_008
 EVENTDATA_POSTYPE_GRID
 #position
 552 80 -360
+#event number: 4
+#Bg Event Label
+BGID_D02_SIGN1_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_D02_SIGN1_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 152
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

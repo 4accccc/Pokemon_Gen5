@@ -22,6 +22,7 @@
 _EVENT_DATA		ev_d02_girl2_01
 _EVENT_DATA		ev_pos_d02_stop
 _EVENT_DATA		ev_bg_d02_rock_01
+_EVENT_DATA		ev_bg_d02_sign1_01
 _EVENT_DATA_END
 
 
@@ -95,4 +96,11 @@ EVENT_START		ev_bg_d02_rock_01
 	_PLAINWIN_MSG_DOWN( msg_d02_rock_01 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*	D02			ŠÅ”Â										  */
+/**************************************************************/
+EVENT_START		ev_bg_d02_sign1_01
+	_EASY_BGWIN_MSG( msg_d02_sign1_01, TYPE_ROAD )
 EVENT_END
