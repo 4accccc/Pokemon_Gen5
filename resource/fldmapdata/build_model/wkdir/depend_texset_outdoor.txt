@@ -1221,7 +1221,8 @@ DEP_TEXSET_IMD_OUTDOOR034 = \
 	$(SRCDIR)/tt_train07.imd \
 	$(SRCDIR)/tt_train08.imd \
 	$(SRCDIR)/tt_train09.imd \
-	$(SRCDIR)/tt_train10.imd
+	$(SRCDIR)/tt_train10.imd \
+	$(SRCDIR)/tt_train11.imd
 
 texset/outdoor034.imd: $(DEP_TEXSET_IMD_OUTDOOR034) texset/tmp/outdoor034.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor034.list
