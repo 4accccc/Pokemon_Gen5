@@ -37,6 +37,7 @@ typedef struct
 	GAMESYS_WORK*      gsys;  // ゲームシステム
 	FIELDMAP_WORK* fieldmap;  // フィールドマップ
   PLIST_DATA*      plData;  // ポケモンリスト
+  PSTATUS_DATA*    psData;  // ポケモンステータス
   u16*            retDecide;  // 選択したかのチェック
   u16*            retPos;     // 選択ポケモン番号の格納先ワーク
 }SELECT_POKE_WORK;
@@ -72,6 +73,7 @@ GMEVENT * EVENT_CreatePokeSelect(
 	psw->gsys      = gsys;
 	psw->fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
   psw->plData    = pl_data;
+  psw->psData    = NULL;
   psw->retDecide = retDecide;
   psw->retPos    = retPos;
 	return event;
@@ -110,6 +112,7 @@ GMEVENT * EVENT_CreatePokeSelectWazaOboe(
 	psw->gsys      = gsys;
 	psw->fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
   psw->plData    = pl_data;
+  psw->psData    = NULL;
   psw->retDecide = retDecide;
   psw->retPos    = retPos;
 	return event;
@@ -131,8 +134,10 @@ GMEVENT * EVENT_CreatePokeSelectMusical(
 	GMEVENT* event;
 	SELECT_POKE_WORK* psw;
   PLIST_DATA* pl_data;
+  PSTATUS_DATA* ps_data;
   GAMEDATA*  gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
+  ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( gdata );
 
   // ポケモンリスト生成
   pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
@@ -140,6 +145,17 @@ GMEVENT * EVENT_CreatePokeSelectMusical(
   pl_data->mode = PL_MODE_SET_MUSICAL;
   pl_data->type = PL_TYPE_SINGLE;
   pl_data->ret_sel = 0;
+  
+  //ステータス作成
+  ps_data = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PSTATUS_DATA) );
+  ps_data->ppd = party;
+  ps_data->game_data = gdata;
+  ps_data->ppt = PST_PP_TYPE_POKEPARTY;
+  ps_data->mode = PST_MODE_NO_WAZACHG;
+  ps_data->max = PokeParty_GetPokeCount( party );
+  ps_data->page = PPT_INFO;
+  ps_data->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
+  ps_data->canExitButton = FALSE;
 
   // イベント生成
   event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_PokeSelect, sizeof(SELECT_POKE_WORK));
@@ -147,6 +163,7 @@ GMEVENT * EVENT_CreatePokeSelectMusical(
 	psw->gsys      = gsys;
 	psw->fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
   psw->plData    = pl_data;
+  psw->psData    = ps_data;
   psw->retDecide = retDecide;
   psw->retPos    = retPos;
 	return event;
@@ -188,7 +205,7 @@ static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * w
     *seq = SEQ_SELECT_POKEMON;
 		break;
   case SEQ_SELECT_POKEMON:
-		GMEVENT_CallEvent(event, EVENT_PokeSelect(gsys, psw->fieldmap, psw->plData, NULL));
+		GMEVENT_CallEvent(event, EVENT_PokeSelect(gsys, psw->fieldmap, psw->plData, psw->psData));
     *seq = SEQ_FIELDMAP_OPEN;
     break;
 	case SEQ_FIELDMAP_OPEN: //// フィールドマップ復帰
@@ -216,6 +233,10 @@ static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * w
       *psw->retDecide = FALSE;
     }
     GFL_HEAP_FreeMemory( psw->plData );
+    if( psw->psData != NULL )
+    {
+      GFL_HEAP_FreeMemory( psw->psData );
+    }
 		return GMEVENT_RES_FINISH;
 		
 	}
