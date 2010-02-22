@@ -7950,13 +7950,13 @@
 		<language name="JPN" width="256">FLD-126</language>
 		<language name="JPN_KANJI" width="256">FLD-126</language>
 	</row>
-	<row id="msg_seq_se_dmy_228">
-		<language name="JPN" width="256">DMY-228</language>
-		<language name="JPN_KANJI" width="256">DMY-228</language>
+	<row id="msg_seq_se_fld_127">
+		<language name="JPN" width="256">FLD-127</language>
+		<language name="JPN_KANJI" width="256">FLD-127</language>
 	</row>
-	<row id="msg_seq_se_dmy_229">
-		<language name="JPN" width="256">DMY-229</language>
-		<language name="JPN_KANJI" width="256">DMY-229</language>
+	<row id="msg_seq_se_fld_128">
+		<language name="JPN" width="256">FLD-128</language>
+		<language name="JPN_KANJI" width="256">FLD-128</language>
 	</row>
 	<row id="msg_seq_se_dmy_230">
 		<language name="JPN" width="256">DMY-230</language>
