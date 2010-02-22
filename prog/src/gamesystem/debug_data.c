@@ -44,32 +44,39 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
 	POKEPARTY *party;
 	POKEMON_PARAM *pp;
 	const STRCODE *name;
+  u32 myID;
 	
 	party = GAMEDATA_GetMyPokemon(gamedata);
   myStatus = GAMEDATA_GetMyStatus(gamedata);
   name = MyStatus_GetMyName( myStatus );
+  myID = MyStatus_GetID( myStatus );
+  OS_TPrintf("MYID:%d:%d\n", myID & 0xffff, myID >> 16 );
   
-	pp = PP_Create(MONSNO_MOGURYUU, 100, 123456, heapID);
+	pp = PP_Create(MONSNO_MOGURYUU, 100, myID, heapID);
 
 #ifdef DEBUG_ONLY_for_tamada
-	PP_Setup(pp, MONSNO_MUSYAANA, 2, 123456);
+	PP_Setup(pp, MONSNO_MUSYAANA, 2, myID);
+  PP_Put( pp , ID_PARA_id_no, myID );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 #else
+  PP_Put( pp , ID_PARA_id_no, myID );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 
-	PP_Setup(pp, MONSNO_MUSYAANA, 100, 123456);
+	PP_Setup(pp, MONSNO_MUSYAANA, 100, myID);
+  PP_Put( pp , ID_PARA_id_no, myID );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 
-	PP_Setup(pp, MONSNO_TIRAAMHI, 100, 123456);
+	PP_Setup(pp, MONSNO_TIRAAMHI, 100, myID);
+  PP_Put( pp , ID_PARA_id_no, myID );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
   PP_SetWazaPos( pp , WAZANO_TEREPOOTO , 0 );
@@ -77,7 +84,8 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 
-  PP_Setup(pp, MONSNO_TIRAAMHI, 100, 123456);
+  PP_Setup(pp, MONSNO_TIRAAMHI, 100, myID);
+  PP_Put( pp , ID_PARA_id_no, myID );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
   PP_SetWazaPos( pp , WAZANO_NAMINORI , 0 );
