@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE letter-order SYSTEM "letter-order.dtd">
+
+<letter-order version="1.0">
+	<head>
+		<create user="masao taya" date="2010-02-23T01:52:33" />
+		<title>pokemon wb num font</title>
+		<comment>8x8ドットサイズ数値＆♂♀省略記号フォント</comment>
+	</head>
+
+	<body>
+		<area width="16" />
+
+		<order>
+			<sp/> 0 1 2 3 4 5 6 7 8 9 /   F  M  L  I
+			　    0 1 2 3 4 5 6 7 8 9 ／ ♀ ♂  N  <null/>
+		</order>
+	</body>
+</letter-order>
+

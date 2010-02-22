@@ -45,14 +45,35 @@ GFONTFILE := $(FONTFILE:.nftr=.gftr)
 COLSRCFILE  := $(wildcard *.ncl)
 COLFILE  := $(COLSRCFILE:.ncl=.nclr)
 
+
+do-build:	$(TARGETDIR)/$(NARCNAME)
+
+$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
+	$(COPY)	$(NARCNAME) $(TARGETDIR)
+	$(COPY) $(NAIXNAME) $(TARGETDIR)
+
+
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 
-#bmpデータからの生成ルール
-%.nftr: %.bmp
-	fontcvtrc -i bmp -if $< -io pokemon_wb.xlor -ib 2 -o nitro -of $@
-	xcopy /D /Y $@ w:\font
+font.narc : large.gftr small.gftr small_batt.gftr num.gftr default.nclr talkwin.nclr systemwin.nclr
 
+
+large.nftr : large.bmp
+	fontcvtrc -i bmp -if large.bmp -io pokemon_wb.xlor -ib 2 -o nitro -of large.nftr
+	xcopy /D /Y large.nftr w:\font
+
+small.nftr : small.bmp
+	fontcvtrc -i bmp -if small.bmp -io pokemon_wb.xlor -ib 2 -o nitro -of small.nftr
+	xcopy /D /Y small.nftr w:\font
+
+small_batt.nftr : small_batt.bmp
+	fontcvtrc -i bmp -if small_batt.bmp -io pokemon_wb.xlor -ib 2 -o nitro -of small_batt.nftr
+	xcopy /D /Y small_batt.nftr w:\font
+
+num.nftr : num.bmp
+	fontcvtrc -i bmp -if num.bmp -io pokemon_wb_num.xlor -ib 2 -o nitro -of num.nftr
+	xcopy /D /Y num.nftr w:\font
 
 %.gftr: %.nftr
 	fontex $< $@
@@ -60,7 +81,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 %.nclr: %.ncl
 	g2dcvtr $< -pcm
-
 
 
 
@@ -72,11 +92,6 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(NARCNAME)
-
-$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
-	$(COPY)	$(NARCNAME) $(TARGETDIR)
-	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
 $(NARCNAME): $(FONTFILE) $(GFONTFILE) $(COLFILE) arclist.txt
 	nnsarc -c -l -n -i $(NARCNAME) -S arclist.txt > error
