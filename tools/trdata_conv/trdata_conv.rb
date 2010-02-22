@@ -7,7 +7,6 @@
   require File.dirname(__FILE__) + '/../hash/wazano_hash.rb'
   require File.dirname(__FILE__) + '/../hash/item_hash.rb'
   require File.dirname(__FILE__) + '/../hash/tokusei_hash.rb'
-  require 'date'
 
 =begin
 	u8			data_type;        //データタイプ
@@ -237,7 +236,6 @@ end
   fp_trno.print( " * @file	trno_def.h\n" )
   fp_trno.print( " * @bfief	トレーナーID定義ファイル\n" )
   fp_trno.print( " * @author	TrainerDataConverter\n" )
-  fp_trno.printf( " * @date\t%s\n", Date::today.to_s )
 	fp_trno.print( " * @author	このファイルは、コンバータが吐き出したファイルです\n" )
   fp_trno.print( "*/\n")
   fp_trno.print( "//============================================================================================\n" )
@@ -253,7 +251,6 @@ end
   fp_trtype.print( " * @file	trtype_def.h\n" )
   fp_trtype.print( " * @bfief	トレーナータイプ定義\n");
   fp_trtype.print( " * @author	TrainerDataConverter\n" )
-  fp_trtype.printf( " * @date\t%s\n", Date::today.to_s )
 	fp_trtype.print( " * @author	このファイルは、コンバータが吐き出したファイルです\n" )
   fp_trtype.print( "*/\n")
   fp_trtype.print( "//============================================================================================\n" )
@@ -270,7 +267,6 @@ end
   fp_trtypesex.print( " * @file	trtype_sex.h\n" )
 	fp_trtypesex.print( " * @bfief	トレーナー性別定義\n")
   fp_trtypesex.print( " * @author	TrainerDataConverter\n" )
-  fp_trtypesex.printf( " * @date\t%s\n", Date::today.to_s )
 	fp_trtypesex.print( " * @author	このファイルは、コンバータが吐き出したファイルです\n" )
   fp_trtypesex.print( "*/\n")
   fp_trtypesex.print( "//============================================================================================\n" )
