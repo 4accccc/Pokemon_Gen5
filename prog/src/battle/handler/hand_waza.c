@@ -5693,18 +5693,38 @@ static void handler_Texture2( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     WazaID  waza = BPP_GetPrevWazaID( bpp );
     if( waza != WAZANO_NULL )
     {
+      // 抵抗相性を列挙
       PokeType type = WAZADATA_GetType( waza );
       PokeType *typeArray = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(PokeType)* POKETYPE_NUMS );
       u32 cnt = BTL_CALC_GetResistTypes( type, typeArray );
       if( cnt )
       {
-        BTL_HANDEX_PARAM_CHANGE_TYPE* param;
-        u32 idx = BTL_CALC_GetRand( cnt );
-        PokeType next_type = typeArray[ idx ];
+        const BTL_POKEPARAM* bppSelf = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+        u32 i;
+        // 自分と同じタイプは除外
+        for(i=0; i<cnt; ++i)
+        {
+          if( BPP_IsMatchType(bppSelf, typeArray[i])
+          &&  PokeTypePair_IsPure( BPP_GetPokeType(bppSelf) )
+          ){
+            u32 j = i+1;
+            while( j < cnt ){
+              typeArray[j-1] = typeArray[j++];
+            }
+            --cnt;
+            break;
+          }
+        }
+        if( cnt )
+        {
+          BTL_HANDEX_PARAM_CHANGE_TYPE* param;
+          u32 idx = BTL_CALC_GetRand( cnt );
+          PokeType next_type = typeArray[ idx ];
 
-        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
-        param->next_type = PokeTypePair_MakePure( next_type );
-        param->pokeID = pokeID;
+          param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
+          param->next_type = PokeTypePair_MakePure( next_type );
+          param->pokeID = pokeID;
+        }
       }
     }
   }
