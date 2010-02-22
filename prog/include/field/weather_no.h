@@ -50,8 +50,8 @@ typedef u16 WEATHER_NO;
 #define		WEATHER_NO_DIAMONDDUST	(9)				// ダイヤモンドダスト
 #define		WEATHER_NO_MIST	        (10)		// 霧
 #define		WEATHER_NO_EVENING_RAIN	(11)		// 夕立
-#define		WEATHER_NO_PALACE_WHITE_MIST	(12)		// パレス用霧
-#define		WEATHER_NO_PALACE_BLACK_MIST	(13)		// パレス用霧
+#define		WEATHER_NO_PALACE_WHITE_MIST	(12)		// パレス　White用霧
+#define		WEATHER_NO_PALACE_BLACK_MIST	(13)		// パレス　Black用霧
 
 #define		WEATHER_NO_MIRAGE			(14)				// 蜃気楼
 

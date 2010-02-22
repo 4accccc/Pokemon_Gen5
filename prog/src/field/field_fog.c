@@ -670,6 +670,7 @@ void FIELD_FOG_DEBUG_Exit( FIELD_FOG_WORK* p_wk )
 }
 
 
+#define CONT_OFS_ADD  (0x10)
 void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk )
 {
   s32 offset = FIELD_FOG_GetOffset(p_wk);
@@ -680,9 +681,9 @@ void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk )
 
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
   {
-    if( (offset+0x20) <= 0x7fff )
+    if( (offset+CONT_OFS_ADD) <= 0x7fff )
     {
-      offset += 0x20;
+      offset += CONT_OFS_ADD;
     }
     else
     {
@@ -695,9 +696,9 @@ void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk )
   }
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
   {
-    if( (offset-0x20) >= 0 )
+    if( (offset-CONT_OFS_ADD) >= 0 )
     {
-      offset -= 0x20;
+      offset -= CONT_OFS_ADD;
     }
     else
     {

@@ -246,6 +246,11 @@ extern BOOL WEATHER_TASK_LIGHT_IsColorFade( const WEATHER_TASK* cp_wk );
 
 
 //-------------------------------------
+///	ÉJÉÅÉâèÓïÒÇÃéÊìæ
+//=====================================
+extern u32 WEATHER_TASK_CAMERA_GetType( const WEATHER_TASK* cp_wk );
+
+//-------------------------------------
 ///	3DBGëÄçÏ
 //=====================================
 extern void WEATHER_TASK_3DBG_SetVisible( WEATHER_TASK* p_wk, BOOL visible, WEATHER_TASK_3DBG_TYPE type );

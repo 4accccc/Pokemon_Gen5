@@ -201,6 +201,7 @@ extern void FIELD_CAMERA_SetDefaultParameter( FIELD_CAMERA * camera );
 // 変えると、カメラパラメータを読み込んで設定しなおします。
 //------------------------------------------------------------------
 extern void FIELD_CAMERA_SetCameraType( FIELD_CAMERA * camera, u32 camera_type );
+extern u32 FIELD_CAMERA_GetCameraType( const FIELD_CAMERA * camera );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

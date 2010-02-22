@@ -1274,7 +1274,7 @@ GMEVENT* EVENT_ChangeMapFromUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
   return event;
 } 
 
-static setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
+static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
 //------------------------------------------------------------------
 /**
  * @brief パレスマップに移動するとき
@@ -1322,7 +1322,7 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
 //------------------------------------------------------------------
 /// 現在位置をLOCATIONにセット（GRID/RAIL両対応）
 //------------------------------------------------------------------
-static setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap)
+static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap)
 {
   FIELD_PLAYER * field_player = FIELDMAP_GetFieldPlayer( fieldmap );
   if ( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_GRID )

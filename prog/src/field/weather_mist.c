@@ -29,6 +29,81 @@
 #define	WEATHER_MIST_FOG_TIMING_END	(60)							// に１回フォグテーブルを操作
 #define WEATHER_MIST_FOG_OFS			(-8)
 
+#if 0 // 通常FOGでも、いろんなカメラアングルに対応する必要が出たら。
+static const u8 sc_MIST_FOG_SLOPE[] = {
+  WEATHER_FOG_SLOPE_DEFAULT,    // 通常
+  WEATHER_FOG_SLOPE_DEFAULT,    // H01
+  WEATHER_FOG_SLOPE_DEFAULT,    // C03
+  WEATHER_FOG_SLOPE_DEFAULT,    // ポケセン
+  WEATHER_FOG_SLOPE_DEFAULT,    // H01ゲート前
+  WEATHER_FOG_SLOPE_DEFAULT,    // ポケモンリーグ全景
+  WEATHER_FOG_SLOPE_DEFAULT,    // C03路地（裏路地）
+  WEATHER_FOG_SLOPE_DEFAULT,    // C03中央広場
+  WEATHER_FOG_SLOPE_DEFAULT,    // C03路地（ジム）
+  WEATHER_FOG_SLOPE_DEFAULT,    // H02
+  WEATHER_FOG_SLOPE_DEFAULT,    // H03
+  WEATHER_FOG_SLOPE_DEFAULT,    // チャンピオンロード
+  WEATHER_FOG_SLOPE_DEFAULT,    // C05地面ジム
+  WEATHER_FOG_SLOPE_DEFAULT,    // C03路地（真ん中）
+  WEATHER_FOG_SLOPE_DEFAULT,    // C03路地（ポケセン）
+  WEATHER_FOG_SLOPE_DEFAULT,    // C03路地（アトリエ）
+  WEATHER_FOG_SLOPE_DEFAULT,    // 四天王部屋（ゴースト）
+  WEATHER_FOG_SLOPE_DEFAULT,    // 四天王部屋（あく）
+  WEATHER_FOG_SLOPE_DEFAULT,    // 四天王部屋（格闘）
+  WEATHER_FOG_SLOPE_DEFAULT,    // 四天王部屋（エスパー）
+  WEATHER_FOG_SLOPE_DEFAULT,    // ポケリーグ内部（リフト上）
+  WEATHER_FOG_SLOPE_DEFAULT,    // ポケリーグ内部（リフト下）
+  WEATHER_FOG_SLOPE_DEFAULT,    // WFBC高さ１
+  WEATHER_FOG_SLOPE_DEFAULT,    // WFBC高さ2
+  WEATHER_FOG_SLOPE_DEFAULT,    // WFBC高さ3
+  WEATHER_FOG_SLOPE_DEFAULT,    // C03ベイサイド
+  WEATHER_FOG_SLOPE_DEFAULT,    // H05
+  WEATHER_FOG_SLOPE_DEFAULT,    // C07氷ジム
+  WEATHER_FOG_SLOPE_DEFAULT,    // 四天王部屋（ゴースト）頂上
+  WEATHER_FOG_SLOPE_DEFAULT,    // 四天王部屋（あく）頂上
+  WEATHER_FOG_SLOPE_DEFAULT,    // 四天王部屋（格闘）頂上
+  WEATHER_FOG_SLOPE_DEFAULT,    // 四天王部屋（エスパー）頂上
+  WEATHER_FOG_SLOPE_DEFAULT,    // C08ドラゴンジム
+  WEATHER_FOG_SLOPE_DEFAULT,    // タワーオブヘブン１F～４F
+};
+
+static const u32 sc_MIST_FOG_OFFS[] = {
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // 通常
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // H01
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C03
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // ポケセン
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // H01ゲート前
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // ポケモンリーグ全景
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C03路地（裏路地）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C03中央広場
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C03路地（ジム）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // H02
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // H03
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // チャンピオンロード
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C05地面ジム
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C03路地（真ん中）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C03路地（ポケセン）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C03路地（アトリエ）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // 四天王部屋（ゴースト）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // 四天王部屋（あく）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // 四天王部屋（格闘）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // 四天王部屋（エスパー）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // ポケリーグ内部（リフト上）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // ポケリーグ内部（リフト下）
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // WFBC高さ１
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // WFBC高さ2
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // WFBC高さ3
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C03ベイサイド
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // H05
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C07氷ジム
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // 四天王部屋（ゴースト）頂上
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // 四天王部屋（あく）頂上
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // 四天王部屋（格闘）頂上
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // 四天王部屋（エスパー）頂上
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // C08ドラゴンジム
+  WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS,    // タワーオブヘブン１F～４F
+};
+#endif
 
 
 /*== 霧 ==*/
@@ -36,6 +111,80 @@
 #define	WEATHER_PALACE_MIST_FOG_TIMING_END	(60)							// に１回フォグテーブルを操作
 #define WEATHER_PALACE_MIST_FOG_OFS			(32546)
 #define WEATHER_PALACE_MIST_FOG_SLOPE		(8)
+
+static const u8 sc_PALACE_MIST_FOG_SLOPE[] = {
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // 通常
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // H01
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C03
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // ポケセン
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // H01ゲート前
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // ポケモンリーグ全景
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C03路地（裏路地）
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C03中央広場
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C03路地（ジム）
+  7,    // H02
+  3,    // H03
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // チャンピオンロード
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C05地面ジム
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C03路地（真ん中）
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C03路地（ポケセン）
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C03路地（アトリエ）
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // 四天王部屋（ゴースト）
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // 四天王部屋（あく）
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // 四天王部屋（格闘）
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // 四天王部屋（エスパー）
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // ポケリーグ内部（リフト上）
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // ポケリーグ内部（リフト下）
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // WFBC高さ１
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // WFBC高さ2
+  3,    // WFBC高さ3
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C03ベイサイド
+  8,    // H05
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C07氷ジム
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // 四天王部屋（ゴースト）頂上
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // 四天王部屋（あく）頂上
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // 四天王部屋（格闘）頂上
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // 四天王部屋（エスパー）頂上
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // C08ドラゴンジム
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // タワーオブヘブン１F～４F
+};
+
+static const u32 sc_PALACE_MIST_FOG_OFFS[] = {
+  WEATHER_PALACE_MIST_FOG_OFS,    // 通常
+  WEATHER_PALACE_MIST_FOG_OFS,    // H01
+  WEATHER_PALACE_MIST_FOG_OFS,    // C03
+  WEATHER_PALACE_MIST_FOG_OFS,    // ポケセン
+  WEATHER_PALACE_MIST_FOG_OFS,    // H01ゲート前
+  WEATHER_PALACE_MIST_FOG_OFS,    // ポケモンリーグ全景
+  WEATHER_PALACE_MIST_FOG_OFS,    // C03路地（裏路地）
+  WEATHER_PALACE_MIST_FOG_OFS,    // C03中央広場
+  WEATHER_PALACE_MIST_FOG_OFS,    // C03路地（ジム）
+  32460,    // H02
+  0,    // H03
+  WEATHER_PALACE_MIST_FOG_OFS,    // チャンピオンロード
+  WEATHER_PALACE_MIST_FOG_OFS,    // C05地面ジム
+  WEATHER_PALACE_MIST_FOG_OFS,    // C03路地（真ん中）
+  WEATHER_PALACE_MIST_FOG_OFS,    // C03路地（ポケセン）
+  WEATHER_PALACE_MIST_FOG_OFS,    // C03路地（アトリエ）
+  WEATHER_PALACE_MIST_FOG_OFS,    // 四天王部屋（ゴースト）
+  WEATHER_PALACE_MIST_FOG_OFS,    // 四天王部屋（あく）
+  WEATHER_PALACE_MIST_FOG_OFS,    // 四天王部屋（格闘）
+  WEATHER_PALACE_MIST_FOG_OFS,    // 四天王部屋（エスパー）
+  WEATHER_PALACE_MIST_FOG_OFS,    // ポケリーグ内部（リフト上）
+  WEATHER_PALACE_MIST_FOG_OFS,    // ポケリーグ内部（リフト下）
+  WEATHER_PALACE_MIST_FOG_OFS,    // WFBC高さ１
+  WEATHER_PALACE_MIST_FOG_OFS,    // WFBC高さ2
+  0,    // WFBC高さ3
+  WEATHER_PALACE_MIST_FOG_OFS,    // C03ベイサイド
+  32591,    // H05
+  WEATHER_PALACE_MIST_FOG_OFS,    // C07氷ジム
+  WEATHER_PALACE_MIST_FOG_OFS,    // 四天王部屋（ゴースト）頂上
+  WEATHER_PALACE_MIST_FOG_OFS,    // 四天王部屋（あく）頂上
+  WEATHER_PALACE_MIST_FOG_OFS,    // 四天王部屋（格闘）頂上
+  WEATHER_PALACE_MIST_FOG_OFS,    // 四天王部屋（エスパー）頂上
+  WEATHER_PALACE_MIST_FOG_OFS,    // C08ドラゴンジム
+  WEATHER_PALACE_MIST_FOG_OFS,    // タワーオブヘブン１F～４F
+};
 
 
 
@@ -49,6 +198,9 @@
 //=====================================
 typedef struct {
 	s32 work[10];
+
+  u32 slope;
+  u32 offs;
 } WEATHER_MIST_WORK;
 
 //-------------------------------------
@@ -57,6 +209,9 @@ typedef struct {
 typedef struct {
   s32 weather_no;
 	s32 work[10];
+
+  u32 slope;
+  u32 offs;
 } WEATHER_PALACE_MIST_WORK;
 
 //-----------------------------------------------------------------------------
@@ -261,6 +416,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIST_Init( WEATHER_TASK* p_wk, WEATHER_T
 
 	p_local_wk->work[0] = 0;	// 同じくフォグ用
 
+  p_local_wk->slope = WEATHER_FOG_SLOPE_DEFAULT;
+  p_local_wk->offs = WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS;
+
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 
@@ -280,8 +438,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIST_FadeIn( WEATHER_TASK* p_wk, WEATHER
   if( p_local_wk->work[0] == 0 ){
 
     WEATHER_TASK_FogFadeIn_Init( p_wk,
-        WEATHER_FOG_SLOPE_DEFAULT, 
-        WEATHER_FOG_DEPTH_DEFAULT + WEATHER_MIST_FOG_OFS, 
+        p_local_wk->slope, 
+        p_local_wk->offs, 
         WEATHER_MIST_FOG_TIMING, fog_cont );
 
       // ライト変更
@@ -314,7 +472,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIST_NoFade( WEATHER_TASK* p_wk, WEATHER
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 	
 	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_MIST_FOG_OFS, fog_cont );
+	WEATHER_TASK_FogSet( p_wk, p_local_wk->slope, p_local_wk->offs, fog_cont );
 
   // ライト変更
   WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_MIST ) );
@@ -432,6 +590,7 @@ static void WEATHER_MIST_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_WHITE_MIST_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_PALACE_MIST_WORK* p_local_wk;
+  u32 camera_type = WEATHER_TASK_CAMERA_GetType( p_wk );
 
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
@@ -442,12 +601,21 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_WHITE_MIST_Init( WEATHER_TASK* p_
 	p_local_wk->work[0] = 0;	// 同じくフォグ用
 
   p_local_wk->weather_no = WEATHER_NO_PALACE_WHITE_MIST;
+
+
+  GF_ASSERT( camera_type < NELEMS(sc_PALACE_MIST_FOG_SLOPE) );
+  GF_ASSERT( camera_type < NELEMS(sc_PALACE_MIST_FOG_OFFS) );
+
+  // slope と offsを求める
+  p_local_wk->slope = sc_PALACE_MIST_FOG_SLOPE[ camera_type ];
+  p_local_wk->offs  = sc_PALACE_MIST_FOG_OFFS[ camera_type ];
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_PALACE_MIST_WORK* p_local_wk;
+  u32 camera_type = WEATHER_TASK_CAMERA_GetType( p_wk );
 
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
@@ -457,7 +625,14 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_Init( WEATHER_TASK* p_
 
 	p_local_wk->work[0] = 0;	// 同じくフォグ用
 
-  p_local_wk->weather_no = WEATHER_NO_PALACE_WHITE_MIST;
+  p_local_wk->weather_no = WEATHER_NO_PALACE_BLACK_MIST;
+
+  GF_ASSERT( camera_type < NELEMS(sc_PALACE_MIST_FOG_SLOPE) );
+  GF_ASSERT( camera_type < NELEMS(sc_PALACE_MIST_FOG_OFFS) );
+
+  // slope と offsを求める
+  p_local_wk->slope = sc_PALACE_MIST_FOG_SLOPE[ camera_type ];
+  p_local_wk->offs  = sc_PALACE_MIST_FOG_OFFS[ camera_type ];
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -478,8 +653,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_MIST_FadeIn( WEATHER_TASK* p_wk, 
   if( p_local_wk->work[0] == 0 ){
 
     WEATHER_TASK_FogFadeIn_Init( p_wk,
-        WEATHER_PALACE_MIST_FOG_SLOPE, 
-        WEATHER_PALACE_MIST_FOG_OFS, 
+        p_local_wk->slope, 
+        p_local_wk->offs, 
         WEATHER_PALACE_MIST_FOG_TIMING, fog_cont );
 
       // ライト変更
@@ -512,7 +687,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_MIST_NoFade( WEATHER_TASK* p_wk, 
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 	
 	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_PALACE_MIST_FOG_SLOPE, WEATHER_PALACE_MIST_FOG_OFS, fog_cont );
+	WEATHER_TASK_FogSet( p_wk, p_local_wk->slope, p_local_wk->offs, fog_cont );
 
   // ライト変更
   WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( p_local_wk->weather_no ) );

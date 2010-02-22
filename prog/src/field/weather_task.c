@@ -671,6 +671,21 @@ BOOL WEATHER_TASK_LIGHT_IsColorFade( const WEATHER_TASK* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  今のカメラタイプを取得
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@return カメラタイプ
+ */
+//-----------------------------------------------------------------------------
+u32 WEATHER_TASK_CAMERA_GetType( const WEATHER_TASK* cp_wk )
+{
+  return FIELD_CAMERA_GetCameraType( cp_wk->cp_camera );
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  カラーフェード　1方向のみ
  *
  *	@param	p_wk      ワーク
