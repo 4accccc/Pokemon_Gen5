@@ -664,6 +664,17 @@ BOOL MAPATTR_VALUE_CheckMarsh( const MAPATTR_VALUE val )
 {
   return( val == MATTR_MARSH_01 );
 }
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　深い海
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckDeepSea( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_DEEP_SEA_01 );
+}
 
 //--------------------------------------------------------------
 /**
@@ -712,7 +723,8 @@ BOOL MAPATTR_VALUE_CheckSandType( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckWaterType( const MAPATTR_VALUE val )
 {
-  if( (val == MATTR_WATER_01) || (val == MATTR_WATER_S01) || (val == MATTR_SEA_01) || (val == MATTR_DEEP_MARSH_01) ) {
+  if( (val == MATTR_WATER_01) || (val == MATTR_WATER_S01)
+      || (val == MATTR_SEA_01) || (val == MATTR_DEEP_MARSH_01) || (val == MATTR_DEEP_SEA_01) ) {
     return( TRUE );
   }
   return( FALSE );
@@ -727,7 +739,8 @@ BOOL MAPATTR_VALUE_CheckWaterType( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckWaterTypeSeason( const MAPATTR_VALUE val, u8 season )
 {
-  if( (val == MATTR_WATER_01) || (val == MATTR_SEA_01) || (val == MATTR_DEEP_MARSH_01) ) {
+  if( (val == MATTR_WATER_01) || (val == MATTR_SEA_01)
+      || (val == MATTR_DEEP_MARSH_01) || (val == MATTR_DEEP_SEA_01) ) {
     return( TRUE );
   }
   if( (val == MATTR_WATER_S01) && season != PMSEASON_WINTER ){

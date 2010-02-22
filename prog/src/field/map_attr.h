@@ -100,6 +100,7 @@ extern BOOL MAPATTR_VALUE_CheckSnowType( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckIce( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckIce02( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckMarsh( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckDeepSea( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSand( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckDesert( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSandType( const MAPATTR_VALUE val );
