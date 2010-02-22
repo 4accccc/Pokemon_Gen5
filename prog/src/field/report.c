@@ -335,23 +335,16 @@ void REPORT_Draw( REPORT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * セーブ開始
+ * セーブサイズ設定
  *
  * @param		wk		レポート下画面ワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void REPORT_StartSave( REPORT_WORK * wk )
+void REPORT_SetSaveSize( REPORT_WORK * wk )
 {
 	u32	totalSize;
-	u32	i;
-
-	GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[BMPWIN_REPORT].win );
-
-	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
-		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
-	}
 
 	wk->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->gameSys) );
 	SaveControl_GetActualSize( wk->sv, &wk->actualSize, &totalSize );
@@ -369,6 +362,26 @@ void REPORT_StartSave( REPORT_WORK * wk )
 	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
 	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
 */
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * セーブ開始
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void REPORT_StartSave( REPORT_WORK * wk )
+{
+	u32	i;
+
+	GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[BMPWIN_REPORT].win );
+
+	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
+	}
 
 	wk->save_start = TRUE;
 }

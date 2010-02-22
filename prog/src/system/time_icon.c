@@ -11,6 +11,7 @@
 #include <gflib.h>
 
 #include "arc_def.h"
+#include "system/gfl_use.h"
 #include "system/time_icon.h"
 #include "time_icon_gra.naix"
 
@@ -70,7 +71,7 @@ TIMEICON_WORK * TIMEICON_Create(
 	wk->col    = clear_color;
 	wk->cnt    = 0;
 	wk->wait   = wait;
-	wk->anm    = 0;
+	wk->anm    = GFUser_GetPublicRand( TIMEICON_ANM_MAX );
 
 	wk->src = GFL_BMP_LoadCharacter(
 							ARCID_TIMEICON_GRA, NARC_time_icon_gra_time_icon_lz_NCGR, TRUE, wk->heapID );

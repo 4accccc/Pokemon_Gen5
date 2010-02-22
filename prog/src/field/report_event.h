@@ -17,6 +17,8 @@
 //	定数定義
 //============================================================================================
 
+typedef struct _REPORT_EVENT_LOCAL REPORT_EVENT_LOCAL;	// ローカルワーク
+
 // ワーク
 typedef struct {
 	// 外から渡してください
@@ -26,6 +28,7 @@ typedef struct {
   FLDMSGBG * msgBG;
   HEAPID	heapID;
 
+/*
 	// ↓内部で設定
 	GFL_TCBLSYS * tcbl;
 
@@ -39,6 +42,8 @@ typedef struct {
 	APP_TASKMENU_WORK * ynWork;
 
 	TIMEICON_WORK * timeIcon;
+*/
+	REPORT_EVENT_LOCAL * local;		// ローカルワーク（内部で作成されます）
 
 }FMENU_REPORT_EVENT_WORK;
 

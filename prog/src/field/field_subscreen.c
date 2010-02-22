@@ -1302,6 +1302,12 @@ static void draw_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 	REPORT_Draw( pWork->reportWork );
 }
 
+// セーブサイズ設定
+void FIELD_SUBSCREEN_SetReportSize( FIELD_SUBSCREEN_WORK * pWork )
+{
+	REPORT_SetSaveSize( pWork->reportWork );
+}
+
 // セーブ開始
 void FIELD_SUBSCREEN_SetReportStart( FIELD_SUBSCREEN_WORK * pWork )
 {
