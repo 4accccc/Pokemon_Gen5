@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T22:56:13"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-22T23:04:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="311" right="2001" bottom="939" maximized="no" rayout="Vertical2">
+	<dialog left="150" top="188" right="855" bottom="816" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="606" top="232" right="1079" bottom="630" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -471,8 +471,10 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_13">
 		<comment>通信エラーのときのメッセージ</comment>
-		<language name="JPN" width="256">やりたくなったら　またきてよね！</language>
-		<language name="JPN_KANJI" width="256">やりたくなったら　また来てよね！</language>
+		<language name="JPN" width="256">ぬぐっ！
+つうしんエラーが　おきたみたいだ！▼</language>
+		<language name="JPN_KANJI" width="256">ぬぐっ！
+通信エラーが　起きたみたいだ！▼</language>
 	</row>
 
 	<row id="msg_palpark_first_01">
