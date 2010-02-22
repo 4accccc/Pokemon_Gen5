@@ -11,6 +11,8 @@
 //  ARCID_WIFILEADING     "wifileadingchar.narc"
 //  ARCID_WIFIUNIONCHAR   "wifi_unionobj.narc"
 
+// sharenumを厳密に確認する
+#define CONFIRM_SHARENUM
 
 #include <gflib.h>
 #include "system/main.h"
@@ -306,6 +308,54 @@ static UNION_APP_PTR _get_unionwork(GURU2RC_WORK *wk)
   return wk->g2p->param.uniapp;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【ユニオン乱入コールバック】乱入処理
+ *         乱入コールバックは３台目からの子機しか発生しない
+ *
+ * @param   net_id      接続ＩＤ
+ * @param   mystatus    MYSTATUS
+ * @param   userwork    OEKAKI_WORK*
+ */
+//----------------------------------------------------------------------------------
+static void GURU2RC_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork)
+{
+  GURU2RC_WORK *wk = (GURU2RC_WORK *)userwork;
+  if(net_id==0){
+    OS_Printf("親は乱入扱いにしない net_id=%d\n", net_id);
+  }
+  
+  OS_Printf("乱入コールバック通達 id=%d\n", net_id);
+  // 別な子機の乱入に対処
+  if(GFL_NET_SystemGetCurrentID()==0){
+      int ret;
+      u8 id  = net_id;
+      // 2台目以降の子機の乱入
+      // 全台に「これから絵を送るので止まってください」と送信する
+      ret=Guru2Comm_SendData( wk->g2c, G2COMM_RC_STOP, &id, 1);
+      
+      if(ret==FALSE){
+        GF_ASSERT("乱入コールバック送信失敗\n");
+      }
+//    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【ユニオン退出コールバック】退出時処理
+ *
+ * @param   net_id      接続ＩＤ
+ * @param   mystatus    MYSTATUS
+ * @param   userwork    OEKAKI_WORK*
+ */
+//----------------------------------------------------------------------------------
+static void GURU2RC_leave_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork)
+{
+  OS_Printf("離脱コールバック net_id=%d\n", net_id);
+}
+
+
 //--------------------------------------------------------------
 /**
  * ぐるぐる交換受付　メイン
@@ -326,14 +376,21 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
   case SEQ_IN:  //　ワイプ処理待ち
     if( WIPE_SYS_EndCheck() ){
       wk->proc_seq = SEQ_MAIN;
+      // 乱入OK状態にする
+      Union_App_Parent_ResetEntryBlock( _get_unionwork(wk) );
+      // 乱入・退出コールバック登録
+      Union_App_SetCallback( _get_unionwork(wk), GURU2RC_entry_callback, GURU2RC_leave_callback, wk);
       
-      // 自分が子機で接続台数が２台以上だった場合はもう絵が描かれている
+#if 0
+      // 自分が子機で接続台数が２台以上だった場合はぐるぐる交換に乱入した状態
       if(GFL_NET_SystemGetCurrentID()!=0){
         if(MyStatusGetNum(wk)>2){
           //Guru2Comm_SendData(wk->g2c,G2COMM_RC_CHILD_JOIN, NULL, 0);
         }
       }
+#endif
     }
+
     break;
   case SEQ_MAIN:    // カーソル移動
     // シーケンス毎の動作
@@ -1193,15 +1250,19 @@ static void PadControl( GURU2RC_WORK *wk )
   if(_get_key_trg() & PAD_BUTTON_DECIDE){
     if(GFL_NET_SystemGetCurrentID()==0){
       OS_Printf("currentID =%d\n", GFL_NET_SystemGetCurrentID());
+#ifdef CONFIRM_SHARENUM
       if(MyStatusGetNum(wk)==wk->g2c->shareNum && wk->g2c->ridatu_bit == 0){
+#else
+      if(1){
+#endif
         // 離脱禁止通達(FALSEの場合は進行しない）
-        if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
-//        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+        Union_App_Parent_EntryBlock( _get_unionwork(wk) );
+//        if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
 
-          u8 flag = GURU2COMM_BAN_ON;
+//          u8 flag = GURU2COMM_BAN_ON;
           RecordMessagePrint( wk, msg_guru2_receipt_01_02, 0 );
           SequenceChange_MesWait(wk,RECORD_MODE_START_SELECT);
-        }
+//        }
         
         // 接続人数制限ON
         //ChangeConnectMax( wk, 0 );
@@ -1288,7 +1349,8 @@ static int Record_NewMember( GURU2RC_WORK *wk, int seq )
   // ●●●さんがはいってきました
 //  RecordMessagePrint(wk, msg_oekaki_01);
 //  wk->seq = RECORD_MODE_NEWMEMBER_WAIT;
-  SequenceChange_MesWait(wk, RECORD_MODE_NEWMEMBER_END );
+//  SequenceChange_MesWait(wk, RECORD_MODE_NEWMEMBER_END );
+  wk->seq = RECORD_MODE_NEWMEMBER_END;
 
   // 画像転送状態になったら輝度ダウン
 //  G2_SetBlendBrightness(  GX_BLEND_PLANEMASK_BG1|
@@ -1611,6 +1673,7 @@ static int Record_StartSelectWait( GURU2RC_WORK *wk, int seq )
   int result;
   u32 ret;
 
+#ifdef CONFIRM_SHARENUM
   if(MyStatusGetNum(wk) != wk->g2c->shareNum    //一致していないなら許可しない
       || wk->g2c->ridatu_bit != 0){     //離脱しようとしている子がいるなら許可しない
     if(_get_key_trg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL | PAD_KEY_UP | PAD_KEY_DOWN)){
@@ -1619,6 +1682,7 @@ static int Record_StartSelectWait( GURU2RC_WORK *wk, int seq )
     EndSequenceCommonFunc( wk );    //終了選択時の共通処理
     return seq;
   }
+#endif
     
   ret = BmpMenu_YesNoSelectMain( wk->YesNoMenuWork );
 
@@ -1632,7 +1696,8 @@ static int Record_StartSelectWait( GURU2RC_WORK *wk, int seq )
 
       // ビーコン状態変更
       ////ChangeConnectMax( wk, 1 );
-      SequenceChange_MesWait( wk, RECORD_MODE_INIT );
+//      SequenceChange_MesWait( wk, RECORD_MODE_INIT );
+      wk->seq = RECORD_MODE_INIT;
     }else{
       // 絶対ここにくるのは親だけど
       if(GFL_NET_SystemGetCurrentID()==0){
@@ -1676,6 +1741,7 @@ static int Record_StartRecordCommand( GURU2RC_WORK *wk, int seq )
   if(wk->record_send == 0){
     if(Guru2Comm_SendData(wk->g2c, G2COMM_RC_START, NULL, 0 ) == TRUE){
 //      wk->record_send = TRUE;
+      OS_Printf("ぐるぐる開始を送信\n");
       wk->seq = RECORD_MODE_GURU2_POKESEL_START;
     }
   }
@@ -2870,14 +2936,13 @@ static void TransFieldObjData( GURU2RC_WORK *wk, NNSG2dPaletteData *PalData, int
   u16 *pal = (u16*)PalData->pRawData;
   
   // パレット転送
-//  GFL_CLGRP_PLTT_Replace( wk->resObjTbl[GURU2_CLACT_OBJ0_RES_PLTT+id], 
-//                          &PalData->rawData[sc_wifi_unionobj_plt[offset]*32], 1 );
   // パレットデータを直接転送
-  GX_LoadOBJPltt( &pal[sc_wifi_unionobj_plt[offset]*16], id*32, 32 );
+  GX_LoadOBJPltt( &pal[sc_wifi_unionobj_plt[view]*16], id*32, 32 );
 
+  OS_Printf("id=%d, sex=%d, view=%d, offset=%d\n", id, sex, view, offset);
 
   // キャラ転送
-  chrbuf = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_WIFIUNIONCHAR, NARC_wifi_unionobj_normal00_NCGR+offset,
+  chrbuf = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_WIFIUNIONCHAR, NARC_wifi_unionobj_normal00_NCGR+view,
                                        0, &data, HEAPID_GURU2 );  
   GFL_CLGRP_CGR_Replace( wk->resObjTbl[GURU2_CLACT_OBJ0_RES_CHR+id], data );
 

@@ -52,6 +52,8 @@ static void CommCB_Receipt_EndChild(
     const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void CommCB_Receipt_End(
     const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Receipt_Stop(
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void CommCB_Receipt_ChildJoin(
     const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void CommCB_Receipt_Start(
@@ -94,7 +96,7 @@ static u8 * _getPokePartyRecvBuff( int netID, void *pWork, int size );
   
 ///通信コマンドテーブル
 const NetRecvFuncTable _Guru2CommPacketTbl[] = {
-//  { CommCB_Receipt_Stop,      NULL, },  // G2COMM_RC_STOP,     /
+  { CommCB_Receipt_Stop,      NULL, },  // G2COMM_RC_STOP,     /
 //  { CommCB_Receipt_ReStart,   NULL, },  // G2COMM_RC_RESTART,   
   { CommCB_Receipt_EndChild,  NULL, },  // G2COMM_RC_END_CHILD, 
   { CommCB_Receipt_End,       NULL, },  // G2COMM_RC_END
@@ -317,6 +319,7 @@ static void CommCB_Receipt_Start(
 {
   if( GFL_NET_SystemGetCurrentID() != 0 ){  //親発信 子のシーケンス変更 bug 0212 fix
     GURU2COMM_WORK *wk = pWk;
+    OS_Printf("親からぐるぐる開始を受信\n");
   
     wk->recv_count = 0;
     wk->record_execute = TRUE;
@@ -460,6 +463,36 @@ static void CommCB_Receipt_ChildJoin(
     #endif
   }
 }
+
+//--------------------------------------------------------------
+/**
+ *  受付「子機が乱入してきたので一旦絵を送るよ止まってね」
+ *  と親機が送信してきた時のコールバック
+ * @param   netID   
+ * @param   size    
+ * @param   pBuff   
+ * @param   pWork   
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void CommCB_Receipt_Stop(
+  const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  GURU2COMM_WORK *wk = pWk;
+  u8 id;
+
+  id = *(u8*)pData;
+  Guru2Rc_MainSeqCheckChange( wk->g2p->g2r, RECORD_MODE_NEWMEMBER, id );
+
+  if(GFL_NET_SystemGetCurrentID()==0){  // 親機が画像データ送信を開始する
+    wk->send_num = 0;
+  }
+  
+  #ifdef D_GURU2_PRINTF_ON
+  OS_Printf("親機からの「子機%dに絵を送るから止まってね」通知\n",id);
+  #endif
+}
+
 
 //==============================================================================
 //  コールバック関数　ゲームメイン

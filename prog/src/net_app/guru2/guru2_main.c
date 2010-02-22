@@ -563,9 +563,9 @@ typedef struct _TAG_FRO_OBJ FRO_OBJ;
 //--------------------------------------------------------------
 typedef struct
 {
-  u16 x;
-  u16 y;
-  u16 z;
+  s16 x;
+  s16 y;
+  s16 z;
   u16 dmy;
 }ROTATE;
 
@@ -3215,7 +3215,7 @@ static void guru2_3DDrawInit( GURU2MAIN_WORK *g2m )
 
   //ƒJƒƒ‰Ý’è
   { 
-    static const VecFx32 cam_pos    = { 0,0,0x80*FX32_ONE};
+    static const VecFx32 cam_pos    = { 0,0x10*FX32_ONE,0x70*FX32_ONE};
     static const VecFx32 cam_target = { CAMERA_TARGET_X,CAMERA_TARGET_Y,CAMERA_TARGET_Z};
     cm->gf_camera = GFL_G3D_CAMERA_CreateDefault( &cam_pos, &cam_target, HEAPID_GURU2 );
     
@@ -3710,7 +3710,7 @@ static void guru2_TalkWinFontDelete( GURU2MAIN_WORK *g2m )
 }
 
 
-#define GURU2_DEFAULT_COL  (PRINTSYS_LSB_Make(2,3,0))
+#define GURU2_DEFAULT_COL  (PRINTSYS_LSB_Make(1,2,0))
 
 //--------------------------------------------------------------
 /**
@@ -3728,7 +3728,7 @@ static void Guru2TalkWin_Write( GURU2MAIN_WORK *g2m, u32 msgno )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
   BmpWinFrame_Write( bmpwin,
-    WINDOW_TRANS_OFF, BGF_CHARNO_TALK, BGF_PANO_TALK_WIN );
+    WINDOW_TRANS_OFF, BGF_CHARNO_MENU, BGF_PANO_MENU_WIN );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
@@ -3766,7 +3766,7 @@ static void Guru2TalkWin_WritePlayer(
   GFL_STR_DeleteBuffer( str );
   
   BmpWinFrame_Write( bmpwin,
-    WINDOW_TRANS_OFF, BGF_CHARNO_TALK, BGF_PANO_TALK_WIN );
+    WINDOW_TRANS_OFF, BGF_CHARNO_MENU, BGF_PANO_MENU_WIN );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
@@ -3800,7 +3800,7 @@ static void Guru2TalkWin_WriteItem(
   GFL_STR_DeleteBuffer( str );
   
   BmpWinFrame_Write( bmpwin,
-    WINDOW_TRANS_OFF, BGF_CHARNO_TALK, BGF_PANO_TALK_WIN );
+    WINDOW_TRANS_OFF, BGF_CHARNO_MENU, BGF_PANO_MENU_WIN );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
@@ -4098,6 +4098,7 @@ static void Disc_Update( GURU2MAIN_WORK *g2m )
   AngleAdd( &fa, disc->rotate_offs_fx );
   AngleAdd( &fa, disc->rotate_draw_offs_fx );
   disc->rotate.y = (360 - FX32_NUM( fa )) % 360;    //”½“]‚³‚¹ŽžŒv‰ñ‚è‚É
+  OS_Printf("disc->rotate.y = %d\n", disc->rotate.y);
   
   disc->draw_pos.x = disc->pos.x + disc->offs_egg.x + disc->offs.x;
   disc->draw_pos.y = disc->pos.y + disc->offs_egg.y + disc->offs.y;
@@ -4505,7 +4506,7 @@ static void EggAct_AnglePosSet( EGGACTOR *eact, const VecFx32 *offs )
   eact->pos.y =
     EGG_DISC_CY_FX + eact->offs.y + offs->y;
   eact->pos.z =
-    EGG_DISC_CZ_FX + eact->offs.z + offs->z + (GFL_CALC_Cos360(r)*EGG_DISC_CZS);
+    EGG_DISC_CZ_FX + eact->offs.z + offs->z + (GFL_CALC_Sin360(r)*EGG_DISC_CZS);
   
   eact->rotate.x = FX32_NUM( eact->rotate_fx.x );
   eact->rotate.y = FX32_NUM( eact->rotate_fx.y );
