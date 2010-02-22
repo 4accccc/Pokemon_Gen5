@@ -295,12 +295,19 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           sex, PLAYER_DRAW_FORM_NORMAL );
     }
     break;
-  //自機非表示
-  case BSWTOOL_PLAYER_VANISH:
+  //OBJ表示、非表示
+  case BSWTOOL_OBJ_VANISH:
     {
-      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-      MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-      MMDL_SetStatusBitVanish( mmdl, param0 );
+      u16 id = param0;
+      u16 vanish = param1;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+      if( mmdl == NULL ){
+        OS_Printf( "BSUBWAY MMDL VANISH ERROR OBJID %d\n", id );
+        GF_ASSERT( 0 );
+      }else{
+        MMDL_SetStatusBitVanish( mmdl, vanish );
+      }
     }
     break;
   //レギュレーションチェック
@@ -430,6 +437,18 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       GF_ASSERT( mmdl != NULL );
       if( mmdl != NULL ){
         MMDL_SetStatusBitHeightGetOFF( mmdl, FALSE );
+      }
+    }
+    break;
+  //指定OBJが存在しているかチェック
+  case BSWTOOL_CHK_EXIST_OBJ:
+    {
+      u16 id = param0;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+      *ret_wk = FALSE;
+      if( mmdl != NULL ){
+        *ret_wk = TRUE;
       }
     }
     break;
