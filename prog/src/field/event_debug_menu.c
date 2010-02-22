@@ -145,7 +145,6 @@ static BOOL debugMenuCallProc_GameEnd( DEBUG_MENU_EVENT_WORK * wk );
 
 static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL debugMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -247,7 +246,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera }, //カメラ全部操作
   { DEBUG_FIELD_EVENT_CONTROL, debugMenuCallProc_EventFlagScript }, //イベント操作
   { DEBUG_FIELD_STR03, debugMenuCallProc_ScriptSelect },    //スクリプト実行
-  { DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },      //カメラサンプル
   { DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },        //モデルリスト
   { DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },      //ライト
   { DEBUG_FIELD_STR16, debugMenuCallProc_WeatherList },       //てんき
@@ -636,7 +634,10 @@ static BOOL debugMenuCallProc_GameEnd( DEBUG_MENU_EVENT_WORK * wk )
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GMEVENT_ChangeEvent( wk->gmEvent, DEBUG_EVENT_FLDMENU_JumpEasy( wk->gmSys, wk->heapID ) );
+  GMEVENT * event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_jump ), DEBUG_EVENT_FLDMENU_JumpEasy, NULL );
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+  //GMEVENT_ChangeEvent( wk->gmEvent, DEBUG_EVENT_FLDMENU_JumpEasy( wk->gmSys, NULL ) );
   return TRUE;
 }
 
@@ -649,7 +650,10 @@ static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk )
 //--------------------------------------------------------------
 static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GMEVENT_ChangeEvent( wk->gmEvent, DEBUG_EVENT_FLDMENU_ChangeSeason( wk->gmSys, wk->heapID ) );
+  GMEVENT * event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_jump ), DEBUG_EVENT_FLDMENU_ChangeSeason, NULL );
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+  //GMEVENT_ChangeEvent( wk->gmEvent, DEBUG_EVENT_FLDMENU_ChangeSeason( wk->gmSys, NULL ) );
   return TRUE;
 }
 
@@ -662,7 +666,10 @@ static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GMEVENT_ChangeEvent( wk->gmEvent, DEBUG_EVENT_FLDMENU_JumpAllZone( wk->gmSys, wk->heapID ) );
+  GMEVENT * event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_jump ), DEBUG_EVENT_FLDMENU_JumpAllZone, NULL );
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+  //GMEVENT_ChangeEvent( wk->gmEvent, DEBUG_EVENT_FLDMENU_JumpAllZone( wk->gmSys, NULL ) );
   return TRUE;
 }
 
@@ -1262,167 +1269,6 @@ static GMEVENT_RESULT debugMenuControlLinerCamera(
 static void DampCameraInfo(FIELD_CAMERA * cam);
 static BOOL LinerCamKeyContCtl(DEBUG_CTL_LINERCAMERA_WORK *work, const fx32 inAddVal, fx32 *outVal);
 
-//======================================================================
-//  デバッグメニュー　テストカメラリスト
-//======================================================================
-//--------------------------------------------------------------
-/// DEBUG_TESTCAMERALIST_EVENT_WORK
-//--------------------------------------------------------------
-typedef struct
-{
-  int seq_no;
-  HEAPID heapID;
-  GAMESYS_WORK *gmSys;
-  GMEVENT *gmEvent;
-  FIELDMAP_WORK *fieldWork;
-  GFL_MSGDATA *msgData;
-  FLDMENUFUNC *menuFunc;
-}DEBUG_TESTCAMERALIST_EVENT_WORK;
-
-//--------------------------------------------------------------
-/// proto
-//--------------------------------------------------------------
-static GMEVENT_RESULT debugMenuTestCameraListEvent(
-    GMEVENT *event, int *seq, void *work );
-
-///カメラリスト最大
-#define TESTCAMERALISTMAX (4)
-
-///テストカメラリスト メニューヘッダー
-static const FLDMENUFUNC_HEADER DATA_DebugMenuList_TestCameraList =
-{
-  1,    //リスト項目数
-  4,    //表示最大項目数
-  0,    //ラベル表示Ｘ座標
-  13,   //項目表示Ｘ座標
-  0,    //カーソル表示Ｘ座標
-  0,    //表示Ｙ座標
-  1,    //表示文字色
-  15,   //表示背景色
-  2,    //表示文字影色
-  0,    //文字間隔Ｘ
-  1,    //文字間隔Ｙ
-  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
-  12,   //文字サイズX(ドット
-  12,   //文字サイズY(ドット
-  0,    //表示座標X キャラ単位
-  0,    //表示座標Y キャラ単位
-  0,    //表示サイズX キャラ単位
-  0,    //表示サイズY キャラ単位
-};
-
-///テストカメラメニューリスト
-static const FLDMENUFUNC_LIST DATA_TestCameraMenuList[TESTCAMERALISTMAX] =
-{
-  { DEBUG_FIELD_STR09, (void*)0 },
-  { DEBUG_FIELD_STR10, (void*)1 },
-  { DEBUG_FIELD_STR11, (void*)2 },
-  { DEBUG_FIELD_STR08, (void*)3 },
-};
-
-static const DEBUG_MENU_INITIALIZER DebugCameraMenuListData = {
-  NARC_message_d_field_dat,
-  NELEMS(DATA_TestCameraMenuList),
-  DATA_TestCameraMenuList,
-  &DATA_DebugMenuList_TestCameraList, //流用
-  1, 1, 8, 7,
-  NULL,
-  NULL
-};
-
-//--------------------------------------------------------------
-/**
- * デバッグメニュー呼び出し　テストカメラリスト
- * @param wk  DEBUG_MENU_EVENT_WORK*
- * @retval  BOOL  TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static BOOL debugMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk )
-{
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  DEBUG_TESTCAMERALIST_EVENT_WORK *work;
-  
-  GMEVENT_Change( event,
-    debugMenuTestCameraListEvent, sizeof(DEBUG_TESTCAMERALIST_EVENT_WORK) );
-  
-  work = GMEVENT_GetEventWork( event );
-  GFL_STD_MemClear( work, sizeof(DEBUG_TESTCAMERALIST_EVENT_WORK) );
-  
-  work->gmSys = gsys;
-  work->gmEvent = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-  return( TRUE );
-}
-
-//--------------------------------------------------------------
-/**
- * イベント：テストカメラリスト
- * @param event GMEVENT
- * @param seq   シーケンス
- * @param wk    event work
- * @retval  GMEVENT_RESULT
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT debugMenuTestCameraListEvent(
-    GMEVENT *event, int *seq, void *wk )
-{
-  DEBUG_TESTCAMERALIST_EVENT_WORK *work = wk;
-  
-  switch( (*seq) ){
-  case 0:
-    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugCameraMenuListData );
-    (*seq)++;
-    break;
-  case 1:
-    {
-      u32 ret;
-      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
-      if( ret == FLDMENUFUNC_NULL ){  //操作無し
-        break;
-      }
-      
-      FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
-      if( ret != FLDMENUFUNC_CANCEL ){  //決定
-        static const u16 length[TESTCAMERALISTMAX] =
-          { 0x0090, 0x0078, 0x0080, 0x0078 };
-        static const fx32 height[TESTCAMERALISTMAX] =
-          { 0xae000, 0xa0000, 0xab000, 0xd8000 };
-        FIELD_CAMERA *camera =
-          FIELDMAP_GetFieldCamera( work->fieldWork );
-        VecFx32 vec0, vec1;
-        fx32 cos, len;
-
-        // XZ平面の距離とY方向の高さ情報から
-        // angle角度　距離を求める
-        //
-        // FIELD_CAMERAシステムの処理をangleでの動作に変更したため
-        // 修正
-        len = FX_Mul( length[ret]<<FX32_SHIFT, length[ret]<<FX32_SHIFT ) + FX_Mul( height[ret], height[ret] );
-        len = FX_Sqrt( len );
-
-        VEC_Set( &vec0, 0,0,FX32_ONE );
-        VEC_Set( &vec1, 0,height[ret],length[ret]<<FX32_SHIFT );
-        VEC_Normalize( &vec0, &vec0 );
-        VEC_Normalize( &vec1, &vec1 );
-        cos = VEC_DotProduct( &vec0, &vec1 );
-        
-        FIELD_CAMERA_SetAnglePitch( camera, FX_AcosIdx( cos ) );
-        FIELD_CAMERA_SetAngleLen( camera, len );
-      }
-      
-      return( GMEVENT_RES_FINISH );
-    }
-    break;
-  }
-  
-  return( GMEVENT_RES_CONTINUE );
-}
 
 //======================================================================
 //  デバッグメニュー　動作モデル一覧

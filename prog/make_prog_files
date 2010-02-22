@@ -489,7 +489,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/weather_task.c \
 				field/field_debug.c \
         field/event_debug_menu.c \
-        field/event_debug_menu_jump.c \
         field/event_debug_menu_script.c \
         field/event_debug_menu_musical.c \
         field/event_debug_menu_make_egg.c \
@@ -1479,7 +1478,7 @@ SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 #===> SRCS_OVERLAY_MCS_LIB
 SRCS_OVERLAY_BATTLE_PRINT = battle/btl_debug_print.c
 
-#D_NUMINPUTライブラリ
+#SNDVIEWERライブラリ
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_SOUNDVIEW = sound/snd_viewer.c
 
@@ -1499,6 +1498,10 @@ SRCS_OVERLAY_DEBUG_ITEM = field/event_debug_item.c
 #DEBUG_BEACONライブラリ
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_BEACON = field/event_debug_beacon.c
+
+#DEBUG_JUMPライブラリ
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_JUMP   = field/event_debug_menu_jump.c
 
 #マイクテスト
 #===> SRCS_OVERLAY_DEV_IRC

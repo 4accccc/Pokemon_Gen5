@@ -108,12 +108,12 @@ static const DEBUG_MENU_INITIALIZER DebugZoneSelectData = {
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_FLDMENU_JumpAllZone( GAMESYS_WORK * gsys, HEAPID heapID )
+GMEVENT * DEBUG_EVENT_FLDMENU_JumpAllZone( GAMESYS_WORK * gsys, void * wk )
 {
   GMEVENT * new_event = GMEVENT_Create(
       gsys, NULL, debugMenuZoneSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
   DEBUG_ZONESEL_EVENT_WORK * work = GMEVENT_GetEventWork( new_event );
-  initDZEW( work, gsys, heapID );
+  initDZEW( work, gsys, HEAPID_FIELDMAP );
   return new_event;
 }
 
@@ -197,14 +197,14 @@ static const u16 JumpZoneID_ListTbl[] = {
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_FLDMENU_JumpEasy( GAMESYS_WORK * gsys, HEAPID heapID )
+GMEVENT * DEBUG_EVENT_FLDMENU_JumpEasy( GAMESYS_WORK * gsys, void * wk )
 {
   GMEVENT * new_event;
   DEBUG_ZONESEL_EVENT_WORK *work;
   
   new_event = GMEVENT_Create( gsys, NULL, debugMenuZoneJump, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
   work = GMEVENT_GetEventWork( new_event );
-  initDZEW( work, gsys, heapID );
+  initDZEW( work, gsys, HEAPID_FIELDMAP );
 
   return new_event;
 }
@@ -303,12 +303,12 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent(
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_FLDMENU_ChangeSeason( GAMESYS_WORK * gsys, HEAPID heapID )
+GMEVENT * DEBUG_EVENT_FLDMENU_ChangeSeason( GAMESYS_WORK * gsys, void * wk )
 {
   GMEVENT * new_event = GMEVENT_Create(
       gsys, NULL, debugMenuSeasonSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
   DEBUG_ZONESEL_EVENT_WORK * work = GMEVENT_GetEventWork( new_event );
-  initDZEW( work, gsys, heapID );
+  initDZEW( work, gsys, HEAPID_FIELDMAP );
   return new_event;
 }
 

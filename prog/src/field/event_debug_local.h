@@ -88,6 +88,7 @@ extern FLDMENUFUNC * DEBUGFLDMENU_InitEx(
 //    サブメニューイベント
 //
 //======================================================================
+FS_EXTERN_OVERLAY( debug_jump );
 //--------------------------------------------------------------
 ///サブメニューイベント：デバッグスクリプト選択
 //--------------------------------------------------------------
@@ -96,15 +97,15 @@ extern GMEVENT * DEBUG_EVENT_FLDMENU_DebugScript( const DEBUG_MENU_EVENT_WORK * 
 //--------------------------------------------------------------
 ///サブメニューイベント：マップジャンプ（限定版）
 //--------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_FLDMENU_JumpEasy( GAMESYS_WORK * gsys, HEAPID heapID );
+extern GMEVENT * DEBUG_EVENT_FLDMENU_JumpEasy( GAMESYS_WORK * gsys, void * wk );
 
 //--------------------------------------------------------------
 ///サブメニューイベント：季節変化
 //--------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_FLDMENU_ChangeSeason( GAMESYS_WORK * gsys, HEAPID heapID );
+extern GMEVENT * DEBUG_EVENT_FLDMENU_ChangeSeason( GAMESYS_WORK * gsys, void * wk );
 
 //--------------------------------------------------------------
 ///サブメニューイベント：マップジャンプ（全ゾーンID版）
 //--------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_FLDMENU_JumpAllZone( GAMESYS_WORK * gsys, HEAPID heapID );
+extern GMEVENT * DEBUG_EVENT_FLDMENU_JumpAllZone( GAMESYS_WORK * gsys, void * wk );
 
