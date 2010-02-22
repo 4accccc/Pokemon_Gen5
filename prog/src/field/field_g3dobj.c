@@ -558,11 +558,11 @@ static void setResource(
     }
   }
   
-  if( head->arcHandleAnm != NULL ){
+  if( head->anmCount ){
     int i;
     res->anm_count = head->anmCount;
-    GF_ASSERT( res->anm_count );
     GF_ASSERT( res->anm_count < FLD_G3DOBJ_ANM_MAX );
+    GF_ASSERT( head->arcHandleAnm != NULL );
     
     MI_CpuClear32( res->pResAnmTbl,
         sizeof(GFL_G3D_RES*)*FLD_G3DOBJ_ANM_MAX );
