@@ -440,6 +440,12 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_back )
 	_OBJ_ANIME_WAIT()
 
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　Ｎの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,60 )	//一番最後の引数は移動にかかるフレーム数	
+
 	//どういうこと　だ？
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_06w, msg_n01r0502_boss_06b, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
@@ -493,7 +499,12 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_FLAG_RESET( FV_N01R0502_LEGEND_02 )
 	_OBJ_ADD( N01R0502_WKOBJCODE01_01 )
 	_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 36, DIR_DOWN )
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
 	
+	//カメラ操作　Ｎの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,1 )	//一番最後の引数は移動にかかるフレーム数	
+
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 
@@ -509,9 +520,16 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_09w, msg_n01r0502_boss_09b, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 70 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+
 	//Ｎ：自機の横に移動
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_move )
 	_OBJ_ANIME_WAIT()
+
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 	
 	//こころして　かかりたまえ
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10w, msg_n01r0502_boss_10b, N01R0502_BOSS_01, WIN_NONE )
@@ -720,7 +738,7 @@ ev_last:
 	
 	//イベント曲再生
 	_START_EVENT_BGM( SEQ_BGM_E_G_CIS )
-	
+
 	//自機・Ｎ：ゲーチスのほうを向く　ゲーチス：近づく
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_dir_d )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
@@ -730,10 +748,17 @@ ev_last:
 	//そなたには　この　ぎょくざは
 	_BALLOONWIN_OBJMSG( msg_n01r0502_sage1_02 , N01R0502_SAGE1_01 )
 	_MSGWIN_CLOSE()
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
 	
+	//カメラ操作　Ｎの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,60 )
+
 	//自機・Ｎ：ゲーチスのほうを向く　ゲーチス：Ｎに近づく
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_gcis_come2 )
 	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_dir_r )
@@ -810,6 +835,14 @@ ev_last:
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラのバインドを解く
+	
+		//カメラ操作　Ｎの位置にカメラを合わせる
+		_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,60 )
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
@@ -984,7 +1017,12 @@ ev_last:
 	$WK_SCENE_N01R0502 = 5
 
 	//========================================/
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 10 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 	//ゲームクリア
 	_GOTO_GAMECLEAR_DEMO( 0 )
 
