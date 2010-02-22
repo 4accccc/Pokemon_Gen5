@@ -872,6 +872,45 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
 
 //------------------------------------------------------------------
 /**
+ * @brief 「ワープ」によるマップチェンジ
+ */
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeByWarp( GMEVENT* event, int* seq, void* wk )
+{
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+
+  switch( *seq )
+  {
+  case 0:
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
+    (*seq)++;
+    break;
+  case 1: 
+    // 退場イベント
+    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Warp( event, gameSystem, fieldmap ) );
+    (*seq)++;
+    break;
+  case 2: 
+    // マップチェンジ コアイベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
+    (*seq)++;
+    break;
+  case 3: 
+    // 登場イベント
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Warp( event, gameSystem, fieldmap ) );
+    (*seq)++;
+    break;
+  case 4:
+    return GMEVENT_RES_FINISH; 
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief ユニオンルームからのマップチェンジ
  */
 //------------------------------------------------------------------
@@ -1163,6 +1202,33 @@ GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem )
   LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), work->loc_req.zone_id );
   work->loc_req.type = LOCATION_TYPE_DIRECT;
   work->exit_type    = EXIT_TYPE_NONE;
+
+  return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief マップ遷移イベント生成（ ワープ )
+ * @param gameSystem
+ * @param fieldmap
+ * @param zoneID 
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+GMEVENT* EVENT_ChangeMapByWarp( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                u16 zoneID , const VecFx32 * pos, u16 dir )
+{
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeByWarp, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem );
+  LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z ); 
+  work->exit_type          = EXIT_TYPE_WARP;
+  work->seasonUpdateEnable = FALSE;
 
   return event;
 }

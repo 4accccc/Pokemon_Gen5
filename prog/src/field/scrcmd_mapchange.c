@@ -195,6 +195,44 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * 「ワープ」によるマップ遷移
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapChangeByWarp( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*        work = wk;
+  SCRIPT_WORK*  scriptWork = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gameSystem = SCRIPT_GetGameSysWork( scriptWork );
+  FIELDMAP_WORK*  fieldmap = GAMESYSTEM_GetFieldMapWork( gameSystem );
+
+  VecFx32 appearPos;
+
+  u16 zoneID = VMGetU16( core );  //2byte read  ZONE指定
+  u16 gridX  = VMGetU16( core );  //2byte read  X位置グリッド単位
+  u16 gridZ  = VMGetU16( core );  //2byte read  Z位置グリッド単位
+  u16 dir    = VMGetU16( core );  //2byte read  方向
+  
+  {
+    GMEVENT * event;
+    GMEVENT * parentEvent;
+
+    // 遷移先の座標を設定
+    VEC_Set( &appearPos, GRID_TO_FX32(gridX), GRID_TO_FX32(0), GRID_TO_FX32(gridZ)); 
+    
+    parentEvent = GAMESYSTEM_GetEvent( gameSystem ); //現在のイベント
+    event = EVENT_ChangeMapByWarp( 
+        gameSystem, fieldmap, zoneID, &appearPos, DirToExitDir(dir) );
+
+    GMEVENT_CallEvent( parentEvent, event );
+  }
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 
 //--------------------------------------------------------------
 /**
