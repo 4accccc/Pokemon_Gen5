@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T15:29:56"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T15:59:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1524" top="318" right="2229" bottom="946" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="737" top="230" right="1210" bottom="628" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1409,22 +1409,6 @@ const u8 str_konanoryou[]
 なんの　はんのうも　しめさない</language>
 		<language name="JPN_KANJI" width="160">……ライトストーンは
 なんの　反応も　示さない</language>
-	</row>
-
-	<row id="msg_bag_n_002w" back-color="#80ff80,,,#80ff80,,#80ff80,,#ffff00,,,#ffff00,#80ff80,,,,,,">
-		<comment>ダークストーン</comment>
-		<language name="JPN" width="160">ダークストーンが
-はげしく　かがやきだす……！▼</language>
-		<language name="JPN_KANJI" width="160">ダークストーンが
-はげしく　輝きだす……！▼</language>
-	</row>
-
-	<row id="msg_bag_n_002b" back-color="#80ff80,,,#80ff80,,#80ff80,,#ffff00,,,#ffff00,#80ff80,,,,,,">
-		<comment>ライトストーン</comment>
-		<language name="JPN" width="160">ライトストーンが
-はげしく　かがやきだす……！▼</language>
-		<language name="JPN_KANJI" width="160">ライトストーンが
-はげしく　輝きだす……！▼</language>
 	</row>
 
 	<flowchart-group-list>
