@@ -103,11 +103,11 @@ VMCMD_RESULT EvCmdGetPalparkValue( VMHANDLE *core, void *wk )
     //PALPARK_FINISH_HIGHSOCRE (1)  //捕獲した＋ハイスコア
     //PALPARK_FINISH_NO_GET    (2)  //捕獲できなかった
     //PALPARK_FINISH_ERROR     (3)  //エラー終了
-
+    OS_TPrintf("state = %d\n",*ret_wk);
     break;
   case 1:
     OS_TPrintf("パルパーク数値取得 ハイスコア\n");
-    *ret_wk = MISC_GetPalparkHighscore( miscSave );;
+    *ret_wk = MISC_GetPalparkHighscore( miscSave );
     break;
   }
   //仮処理
