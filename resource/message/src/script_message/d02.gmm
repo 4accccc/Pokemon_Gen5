@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T17:34:18"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T18:59:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1517" top="221" right="2222" bottom="841" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -355,6 +355,15 @@ C03ジムリーダー</attribute>
 ・アイテムを入手したあと（日が変わるまで）</comment>
 		<language name="JPN" width="256">ためしのいわが　ある……</language>
 		<language name="JPN_KANJI" width="256">ためしのいわが　ある……</language>
+	</row>
+
+	<row id="msg_d02_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>･仮メッセージ</comment>
+		<attribute name="キャラ指定">道路看板</attribute>
+		<language name="JPN" width="256">ここは　２ばんどうろ
+このさき　ヤグルマのもり</language>
+		<language name="JPN_KANJI" width="256">ここは　２番道路
+このさき　ヤグルマの森</language>
 	</row>
 
 	<flowchart-group-list>
