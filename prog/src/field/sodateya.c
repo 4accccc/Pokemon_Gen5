@@ -31,7 +31,7 @@
 //========================================================================================
 #define CHARGE_MIN         (100) // 最小料金
 #define CHARGE_PER_LEVEL   (100) // 1レベル毎の引き取り料金
-#define EXP_PER_WALK         (1) // 歩くたびに加算する経験値
+#define EXP_PER_WALK         (0xffffffff) // 歩くたびに加算する経験値 // TEST:
 #define EGG_CHECK_INTERVAL (256) // 産卵判定の頻度
 #define RARE_EGG_CHANCE      (5) // レアタマゴ抽選回数
 
@@ -57,6 +57,7 @@ struct _SODATEYA
 //========================================================================================
 // ■プロトタイプ宣言
 //========================================================================================
+static u32 CalcExpAdd( u32 exp1, u32 exp2 );
 static void GrowUpPokemon( POKEMON_PARAM* poke, u32 exp );
 static void SortSodateyaPokemon( SODATEYA_WORK* work );
 static u32 LoveCheck( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 );
@@ -321,7 +322,7 @@ u8 SODATEYA_GetPokemonNum( const SODATEYA* sodateya )
 u32 SODATEYA_GetPokeLv_Current( const SODATEYA* sodateya, int index )
 {
   u32 monsno, formno;
-  u32 before_exp, after_exp;
+  u64 before_exp, after_exp;
   u32 before_level, after_level;
   const POKEMON_PARAM* poke;
 
@@ -344,7 +345,7 @@ u32 SODATEYA_GetPokeLv_Current( const SODATEYA* sodateya, int index )
   before_level = PP_Get( poke, ID_PARA_level, NULL );
 
   // 現在のレベルを算出
-  after_exp   = before_exp + SODATEYA_WORK_GetGrowUpExp( sodateya->work, index );
+  after_exp   = CalcExpAdd( before_exp, SODATEYA_WORK_GetGrowUpExp( sodateya->work, index ) );
   after_level = POKETOOL_CalcLevel( monsno, formno, after_exp );
 
   // 現在のレベルを返す
@@ -438,9 +439,9 @@ const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int ind
   // 指定インデックスにポケモンがいない場合
   if( SODATEYA_WORK_IsValidPokemon( sodateya->work, index ) != TRUE )
   {
-    OBATA_Printf( "--------------------------------------------------------------------\n" );
-    OBATA_Printf( "SODATEYA_GetPokeLv_Current: 指定インデックスには飼育ポケがいません。\n" );
-    OBATA_Printf( "--------------------------------------------------------------------\n" );
+    OBATA_Printf( "------------------------------------------------------------------\n" );
+    OBATA_Printf( "SODATEYA_GetPokemonParam: 指定インデックスには飼育ポケがいません。\n" );
+    OBATA_Printf( "------------------------------------------------------------------\n" );
   }
 
   return SODATEYA_WORK_GetPokemon( sodateya->work, index );
@@ -469,16 +470,41 @@ SODATEYA_WORK* SODATEYA_GetSodateyaWork( const SODATEYA* sodateya )
 
 //---------------------------------------------------------------------------------------- 
 /**
+ * @brief 経験値の加算を行う
+ *
+ * @param exp1 経験値1
+ * @param exp2 経験値2
+ *
+ * @return 経験値1 + 経験値2
+ *        ( u32 でオーバーフローを起こした場合 最大値である 0xffffffff を返す )
+ */
+//---------------------------------------------------------------------------------------- 
+static u32 CalcExpAdd( u32 exp1, u32 exp2 )
+{
+  u64 sum;
+
+  sum = (u64)exp1 + (u64)exp2;
+
+  // 加算値を補正
+  if( 0xffffffff < sum )
+  {
+    sum = 0xffffffff;
+  } 
+  return sum;
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
  * @brief ポケモンを成長させる
  *
  * @param poke 成長させるポケモン
- * @param exp  加算する経験値
+ * @param addExp  加算する経験値
  */
 //---------------------------------------------------------------------------------------- 
-static void GrowUpPokemon( POKEMON_PARAM* poke, u32 exp )
+static void GrowUpPokemon( POKEMON_PARAM* poke, u32 addExp )
 {
   int i;
-  u32 monsno, formno;
+  u32 monsno, formno, exp;
   int before_lv, after_lv;
   POKEPER_WAZAOBOE_CODE waza_table[POKEPER_WAZAOBOE_TABLE_ELEMS];
 
@@ -490,7 +516,9 @@ static void GrowUpPokemon( POKEMON_PARAM* poke, u32 exp )
   before_lv = PP_Get( poke, ID_PARA_level, NULL ); 
 
   // 経験値を加算し, パラメータを再計算
-  PP_Add( poke, ID_PARA_exp, exp );
+  exp = PP_Get( poke, ID_PARA_exp, NULL );
+  exp = CalcExpAdd( exp, addExp );
+  PP_Put( poke, ID_PARA_exp, exp );
   PP_Renew( poke );
 
   // 成長後のレベルを取得
