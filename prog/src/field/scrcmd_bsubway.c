@@ -29,6 +29,8 @@
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 
+#include "event_battle.h"   //FIELD_BATTLE_IsLoseResult
+
 #include "bsubway_scr.h"
 #include "bsubway_scrwork.h"
 #include "scrcmd_bsubway.h"
@@ -40,6 +42,7 @@
 #include "field_gimmick_bsubway.h"
 
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
+#include "../../../resource/fldmapdata/script/c04r0111_def.h"
 
 //======================================================================
 //  define
@@ -450,6 +453,18 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       if( mmdl != NULL ){
         *ret_wk = TRUE;
       }
+    }
+    break;
+  //ìríÜâwNPCÇÃÉÅÉbÉZÅ[ÉWIDéÊìæ
+  case BSWTOOL_GET_HOME_NPC_MSGID:
+    {
+#if 0
+      u16 id = param0;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+      if( mmdl != 
+      *ret_wk = 0;
+#endif
     }
     break;
   //----TOOL Wifiä÷òA
@@ -895,6 +910,10 @@ static BOOL evCommRecvData( VMHANDLE *core, void *wk )
   
   return( FALSE );
 }
+
+//======================================================================
+//  ìríÜâwNPC
+//======================================================================
 
 //======================================================================
 //  parts
