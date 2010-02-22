@@ -113,10 +113,7 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
-
 	//自機にカメラを戻す
-	
-	//【仮】透明の主人公が移動
 	_CAMERA_RECV_MOVE( 70 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_camera_move2 )
 	_OBJ_ANIME_WAIT()
@@ -304,7 +301,7 @@ _ANIME_LABEL	anm_last3_l
 EVENT_START		ev_scene_n01r0502_lastbtl_04
 
 	//Ｎ：横向き
-	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_r )
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_slow_r )
 	_OBJ_ANIME_WAIT()
 
 	_TIME_WAIT(30)
@@ -312,11 +309,9 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 	//ボクは　すこしだけ　キミのことを　きにいっていたのかも
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_03w, msg_n01r0502_boss_03b, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
-
-	_TIME_WAIT(30)
 	
 	//Ｎ:自機のほうを見る
-	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_d )
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_turn )
 	_OBJ_ANIME_WAIT()
 
 	//だけど　ちがった　いま　すごく　ガッカリしているよ
@@ -350,10 +345,16 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 	
 	//謁見の間、水が干上がった状態のマップに変更
 	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
-	
-	//【仮】シン（ム）が謁見の間に突っ込んでくるデモ。現状はＮ城出現デモで代用
-	_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
-	
+
+{
+	DEFINE_LOCAL	LWK_ROM
+	_GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_WHITE THEN
+			_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_COME_W )
+		ELSE
+			_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_COME_B )
+		ENDIF
+}
 	//フラグリセット
 	_FLAG_RESET( FV_N01R0502_LEGEND_01 )
 
@@ -393,6 +394,15 @@ _ANIME_LABEL	anm_stay_l
 
 _ANIME_LABEL	anm_stay_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_slow_r
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_turn
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
@@ -467,9 +477,16 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	
 	_MAP_FADE_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
-	
-	//【仮】ム（シン）石から復活デモ。現状はＮ城出現デモで代用
-	_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )	
+
+{
+	DEFINE_LOCAL	LWK_ROM
+	_GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_WHITE THEN
+			_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_BORN_W )
+		ELSE
+			_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_BORN_B )
+		ENDIF
+}
 	//==========================================================
 	
 	//フラグセット
@@ -582,6 +599,7 @@ _TALK_OBJ_START()
 			//倒した場合
 			IF $SCWK_ANSWER == 0 THEN
 				
+				
 				//========================================/
 				
 				//シンのOBJ削除
@@ -592,9 +610,9 @@ _TALK_OBJ_START()
 				
 				//========================================/
 				
-				_CALL ev_last
-				
 				_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+				
+				_CALL ev_last
 			
 			//捕獲した場合
 			
@@ -623,10 +641,10 @@ _TALK_OBJ_START()
 
 				//========================================/
 				
-				_CALL ev_last
-				
 				_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-			
+
+				_CALL ev_last
+
 			//捕獲した場合
 			
 			//負けた場合
@@ -666,6 +684,8 @@ ev_last:
 		_MSGWIN_CLOSE()
 	
 	ENDIF
+
+	_TIME_WAIT(30)
 
 	//Ｎのアップ絵表示
 	_START_FACEUP( 0, 0 )
@@ -768,6 +788,8 @@ ev_last:
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_gcis_come4 )
 	_OBJ_ANIME_WAIT()
 
+	_TIME_WAIT(10)
+
 	//さて　いずれは　ジムリーダーたちも　ここに　つどうでしょう……
 	_BALLOONWIN_OBJMSG( msg_n01r0502_sage1_07 , N01R0502_SAGE1_01 )
 	_MSGWIN_CLOSE()
@@ -820,7 +842,9 @@ ev_last:
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_gcis_tsureteku2 )
 	_OBJ_ANIME( N01R0502_CHAMPION_01, anm_champion_tsureteku2 )
 	_OBJ_ANIME_WAIT()
-
+	
+	_TIME_WAIT(20)
+	
 	//むぎゃっ！！
 	_GIZAWIN_OBJMSG_POS( msg_n01r0502_sage1_10 , N01R0502_SAGE1_01, WIN_NONE )
 	_MSGWIN_CLOSE()
@@ -878,18 +902,22 @@ ev_last:
 			SWITCH $WK_OTHER_N_COUNT
 			CASE 0 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_01 )
+				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
 			//1回の場合
 			CASE 1 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_02 )
+				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
 			//2回の場合
 			CASE 2 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_03 )
+				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
 			//3回の場合
 			CASE 3 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_04 )
+				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
 			ENDSWITCH
 
@@ -897,18 +925,22 @@ ev_last:
 			SWITCH $WK_OTHER_N_COUNT
 			CASE 0 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
+				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
 			//1回の場合
 			CASE 1 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_06 )
+				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
 			//2回の場合
 			CASE 2 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_07 )
+				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
 			//3回の場合
 			CASE 3 THEN
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_08 )
+				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
     		ENDSWITCH
 		ENDIF
@@ -984,12 +1016,12 @@ _ANIME_LABEL	anm_dir_l
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_gcis_come
-	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_gcis_come2
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -1004,15 +1036,15 @@ _ANIME_LABEL	anm_gcis_come4
 
 _ANIME_LABEL	anm_gcis_come5
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_come
-	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	AC_WALK_U_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_chanpion_come
-	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	AC_WALK_U_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_gcis_keosu
@@ -1061,11 +1093,11 @@ _ANIME_LABEL	anm_champion_tsureteku2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_champion_ayumi
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_ayumi
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_n_ayumi
