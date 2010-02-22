@@ -9,7 +9,7 @@
 #ifndef __MOVE_POKEMON_DEF_H__
 #define	__MOVE_POKEMON_DEF_H__
 
-#define MOVE_POKE_MAX		(4)	//ライカミ・カザカミ、予備2
+#define MOVE_POKE_MAX		(2)	//ライカミ・カザカミ、予備2
 #define MOVE_POKE_RAIKAMI	    (0)	//ライカミ
 #define MOVE_POKE_KAZAKAMI		(1)	//カザカミ
 
