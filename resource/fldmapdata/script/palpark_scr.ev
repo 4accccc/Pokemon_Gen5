@@ -69,12 +69,20 @@ palpark_main:
       _YES_NO_WIN( SCWK_ANSWER )
       _BALLOONWIN_CLOSE()
       IF $SCWK_ANSWER == 0 THEN          //ＤＳある
-        _CALL save        //output:SCWK_ANSWER
-        IF $SCWK_ANSWER == TRUE THEN
-          _CALL play_palpark
-        ELSE
+        //DSiの通信機能はＯＮになってるか？
+        $SCWK_ANSWER = TRUE   //@todo
+        IF $SCWK_ANSWER != TRUE THEN
+          //システムメッセージ
+          
           _CALL see_you
-        ENDIF
+        ELSE
+          _CALL save        //output:SCWK_ANSWER
+          IF $SCWK_ANSWER == TRUE THEN
+            _CALL play_palpark
+          ELSE
+            _CALL see_you
+          ENDIF
+        ENDIF  
       ELSE                              //ＤＳない
         _CALL see_you
       ENDIF
