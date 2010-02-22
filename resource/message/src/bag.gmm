@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T15:59:12"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T18:46:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="313" right="2000" bottom="940" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="737" top="230" right="1210" bottom="628" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="696"/>
+		<band id="3" index="3" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -647,7 +647,7 @@ const u8 msg_bag_sio_meil[]</comment>
 		<language name="JPN" font=" 1:small">ここで　メールを
 かくことは　できません！</language>
 		<language name="JPN_KANJI" font=" 1:small">ここで　メールを
-かくことは　できません！</language>
+書くことは　できません！</language>
 	</row>
 
 	<row id="msg_bag_044">
@@ -662,7 +662,7 @@ const u8 msg_poke_mine_zero[]</comment>
 const u8 msg_item_move[]
 ０＝道具名</comment>
 		<language name="JPN" font=" 1:small">[1:09:どうぐ名:0]を　いどうさせます</language>
-		<language name="JPN_KANJI" font=" 1:small">[1:09:どうぐ名:0]を　いどうさせます</language>
+		<language name="JPN_KANJI" font=" 1:small">[1:09:どうぐ名:0]を　移動させます</language>
 	</row>
 
 	<row id="msg_bag_046">
@@ -672,7 +672,7 @@ const u8 msg_item_motenai[]
 		<language name="JPN" font=" 1:small">[1:09:どうぐ名:0]を
 もたせることは　できません！</language>
 		<language name="JPN_KANJI" font=" 1:small">[1:09:どうぐ名:0]を
-もたせることは　できません！</language>
+持たせることは　できません！</language>
 	</row>
 
 	<row id="msg_bag_047">
@@ -682,7 +682,7 @@ const u8 msg_item_motenai02[]
 		<language name="JPN" font=" 1:small">ここでは　[1:09:どうぐ名:0]を
 もたせることは　できません！</language>
 		<language name="JPN_KANJI" font=" 1:small">ここでは　[1:09:どうぐ名:0]を
-もたせることは　できません！</language>
+持たせることは　できません！</language>
 	</row>
 
 	<row id="msg_bag_048">
@@ -692,7 +692,7 @@ const u8 msg_item_box_put00[]
 		<language name="JPN" font=" 1:small">[1:09:どうぐ名:0]を
 いくつ　あずけますか？</language>
 		<language name="JPN_KANJI" font=" 1:small">[1:09:どうぐ名:0]を
-いくつ　あずけますか？</language>
+いくつ　預けますか？</language>
 	</row>
 
 	<row id="msg_bag_049">
@@ -703,23 +703,23 @@ const u8 msg_item_box_put01[]
 		<language name="JPN" font=" 1:small">[1:09:どうぐ名:0]を
 [2:01:２桁:1]コ　あずけました</language>
 		<language name="JPN_KANJI" font=" 1:small">[1:09:どうぐ名:0]を
-[2:01:２桁:1]コ　あずけました</language>
+[2:01:２桁:1]コ　預けました</language>
 	</row>
 
 	<row id="msg_bag_050">
 		<comment>バッグ / アイテム関連
 const u8 msg_item_box_put02[]</comment>
 		<language name="JPN" font=" 1:small">これいじょう　あずけられません！</language>
-		<language name="JPN_KANJI" font=" 1:small">これいじょう　あずけられません！</language>
+		<language name="JPN_KANJI" font=" 1:small">これ以上　預けられません！</language>
 	</row>
 
 	<row id="msg_bag_053">
 		<comment>バッグ / アイテム関連
 const u8 msg_item_no_del[]</comment>
-		<language name="JPN" font=" 1:small">これは　とても　たいせつな
-もの　なので　すてられません！</language>
-		<language name="JPN_KANJI" font=" 1:small">これは　とても　たいせつな
-もの　なので　すてられません！</language>
+		<language name="JPN" font=" 1:small">とても　たいせつな　ものなので
+これは　すてられません！</language>
+		<language name="JPN_KANJI" font=" 1:small">とても　大切なもの　なので
+これは　捨てられません！</language>
 	</row>
 
 	<row id="msg_bag_054">
@@ -728,7 +728,7 @@ const u8 msg_item_del01[]
 ０＝道具名
 </comment>
 		<language name="JPN" font=" 1:small">[1:09:どうぐ名:0]を　いくつ　すてますか？</language>
-		<language name="JPN_KANJI" font=" 1:small">[1:09:どうぐ名:0]を　いくつ　すてますか？</language>
+		<language name="JPN_KANJI" font=" 1:small">[1:09:どうぐ名:0]を　いくつ　捨てますか？</language>
 	</row>
 
 	<row id="msg_bag_055">
@@ -739,7 +739,7 @@ const u8 msg_item_del02[]
 		<language name="JPN" font=" 1:small">[1:09:どうぐ名:0]を
 [2:02:３桁:1]コ　すてました</language>
 		<language name="JPN_KANJI" font=" 1:small">[1:09:どうぐ名:0]を
-[2:02:３桁:1]コ　すてました</language>
+[2:02:３桁:1]コ　捨てました</language>
 	</row>
 
 	<row id="msg_bag_056">
@@ -750,38 +750,38 @@ const u8 msg_item_del03[]
 		<language name="JPN" font=" 1:small">[1:09:どうぐ名:0]を
 [2:02:３桁:1]コ　すてても　よろしいですか？</language>
 		<language name="JPN_KANJI" font=" 1:small">[1:09:どうぐ名:0]を
-[2:02:３桁:1]コ　すてても　よろしいですか？</language>
+[2:02:３桁:1]コ　捨てても　よろしいですか？</language>
 	</row>
 
-	<row id="msg_bag_057">
+	<row id="msg_bag_057" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>バッグ / アイテム関連
 const u8 msg_item_use_error[]
 ０＝主人公名
 
 ※変更予定あり</comment>
-		<language name="JPN" font=" 1:small">おとうさんの　ことば……
-[1:00:トレーナー名:0]！　こういうものには▽
-つかいどきが　あるんだ！</language>
-		<language name="JPN_KANJI" font=" 1:small">おとうさんの　ことば……
-[1:00:トレーナー名:0]！　こういうものには▽
-つかいどきが　あるんだ！</language>
+		<language name="JPN" font=" 1:small">アララギの　ことば……
+[1:00:トレーナー名:0]！　こういう　ものには▽
+つかいどきが　あるのよ</language>
+		<language name="JPN_KANJI" font=" 1:small">アララギの　ことば……
+[1:00:トレーナー名:0]！　こういう　ものには▽
+使いどきが　あるのよ</language>
 	</row>
 
 	<row id="msg_bag_058">
 		<comment>バッグ / アイテム関連
 const u8 msg_cycling_road_error[]</comment>
 		<language name="JPN" font=" 1:small">ここでは　おりられない！</language>
-		<language name="JPN_KANJI" font=" 1:small">ここでは　おりられない！</language>
+		<language name="JPN_KANJI" font=" 1:small">ここでは　降りられない！</language>
 	</row>
 
-	<row id="msg_bag_059">
+	<row id="msg_bag_059" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>・イベント配布では窓口で同じものをはねつける</comment>
-		<language name="JPN" font=" 1:small">オーキドの　ことば……
-[1:00:トレーナー名:0]よ！　こういう　ものには▽
-つかいどきが　あるのじゃ！</language>
-		<language name="JPN_KANJI" font=" 1:small">オーキドの　ことば……
-[1:00:トレーナー名:0]よ！　こういう　ものには▽
-つかいどきが　あるのじゃ！</language>
+		<language name="JPN" font=" 1:small">アララギの　ことば……
+[1:00:トレーナー名:0]！　こういう　ものには▽
+つかいどきが　あるのよ</language>
+		<language name="JPN_KANJI" font=" 1:small">アララギの　ことば……
+[1:00:トレーナー名:0]！　こういう　ものには▽
+使いどきが　あるのよ</language>
 	</row>
 
 	<row id="msg_bag_062" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -815,7 +815,7 @@ const u8 msg_waza_machine02[]
 [1:07:わざ名:0]を
 ポケモンに　おぼえさせますか？</language>
 		<language name="JPN_KANJI" font=" 1:small">なかには　[1:07:わざ名:0]が
-きろく　されていた！▼
+記録されていた！▼
 [1:07:わざ名:0]を
 ポケモンに　おぼえさせますか？</language>
 	</row>
@@ -828,7 +828,7 @@ const u8 msg_item_use[]
 		<language name="JPN" font=" 1:small">[1:00:トレーナー名:0]は
 [1:09:どうぐ名:1]を　つかった！</language>
 		<language name="JPN_KANJI" font=" 1:small">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　つかった！</language>
+[1:09:どうぐ名:1]を　使った！</language>
 	</row>
 
 	<row id="msg_bag_067">
@@ -836,8 +836,8 @@ const u8 msg_item_use[]
 const u8 msg_spray_error[]</comment>
 		<language name="JPN" font=" 1:small">まだ　まえに　つかった
 スプレーの　こうかが　のこってます！</language>
-		<language name="JPN_KANJI" font=" 1:small">まだ　まえに　つかった
-スプレーの　こうかが　のこってます！</language>
+		<language name="JPN_KANJI" font=" 1:small">まだ前に　使った
+スプレーの　効果が　残ってます！</language>
 	</row>
 
 	<row id="msg_bag_068">
@@ -850,9 +850,9 @@ const u8 msg_w_vidro[]
 ポケモンと
 そうぐう　しやすくなった！</language>
 		<language name="JPN_KANJI" font=" 1:small">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　つかった！▼
+[1:09:どうぐ名:1]を　使った！▼
 ポケモンと
-そうぐう　しやすくなった！</language>
+遭遇しやすくなった！</language>
 	</row>
 
 	<row id="msg_bag_069">
@@ -865,9 +865,9 @@ const u8 msg_b_vidro[]
 ポケモンと
 そうぐう　しにくくなった！</language>
 		<language name="JPN_KANJI" font=" 1:small">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　つかった！▼
+[1:09:どうぐ名:1]を　使った！▼
 ポケモンと
-そうぐう　しにくくなった！</language>
+遭遇しにくくなった！</language>
 	</row>
 
 	<row id="msg_bag_070">
@@ -958,7 +958,7 @@ const u8 str_konanoryou[]
 		<language name="JPN" width="216" line="2">[1:09:どうぐ名:0]を
 かいとることは　できません</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:09:どうぐ名:0]を
-かいとることは　できません</language>
+買い取ることは　できません</language>
 	</row>
 
 	<row id="mes_shop_094">
@@ -966,7 +966,7 @@ const u8 str_konanoryou[]
 		<language name="JPN" width="216" line="2">[1:09:どうぐ名:0]を
 いくつ　うりますか？</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:09:どうぐ名:0]を
-いくつ　うりますか？</language>
+いくつ　売りますか？</language>
 	</row>
 
 	<row id="mes_shop_095">
@@ -975,15 +975,15 @@ const u8 str_konanoryou[]
 		<language name="JPN" width="216" line="2">それなら　[2:05:６桁:0]円で
 おひきとり　いたしましょう</language>
 		<language name="JPN_KANJI" width="216" line="2">それなら　[2:05:６桁:0]円で
-おひきとり　いたしましょう</language>
+お引き取り　いたしましょう</language>
 	</row>
 
 	<row id="mes_shop_096">
 		<comment>売った道具と、受け取ったお金を表示。</comment>
 		<language name="JPN" width="216" line="2">[1:09:どうぐ名:0]を　わたして
 [2:05:６桁:1]円を　うけとった</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:09:どうぐ名:0]を　わたして
-[2:05:６桁:1]円を　うけとった</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:09:どうぐ名:0]を　渡して
+[2:05:６桁:1]円を　受け取った</language>
 	</row>
 
 	<row id="mes_shop_097">
