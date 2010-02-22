@@ -39,8 +39,8 @@ LIB_DIR = ./lib
 #--------------------------------------- ----------------------------
 do-build:
 	$(MAKE) -C $(RESOURCE_DIR)
-	$(MAKE) -C $(MULTIBOOT_ARC_DIR)
-	$(MAKE) -C $(MULTIBOOT_DIR)
+#	$(MAKE) -C $(MULTIBOOT_ARC_DIR)
+#	$(MAKE) -C $(MULTIBOOT_DIR)
 #	$(MAKE) -C $(MULTIBOOT_DIR) installsrl
 	$(MAKE) -C $(ARC_DIR)
 	$(MAKE) -C $(PROG_DIR)

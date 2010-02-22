@@ -1,26 +1,49 @@
 EFFSEQ
-$0001
+$0010
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_555.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_554.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_545.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_545.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_545.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_545.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_545.spa
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_025_firework.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_025_firework.NSCR
 #001
 %00
+カメラ移動	追従	攻撃側	16	0	8
+BGのロード	bg_025_firework
+BGの表示/非表示	エフェクト	表示
+BGのパレットフェード	すべて	0	16	1	0:0:0
+タイマーによるウエイト	10
+BGの表示/非表示	お盆	非表示
+BGの表示/非表示	フィールド	非表示
+パーティクルデータロード	w_545
+パーティクル再生	w_545	W_545_545_TAME_BALL	攻撃側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_545	W_545_545_TAME_BALL_2	攻撃側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_545	W_545_545_FIRE_BURN_L	攻撃側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_545	W_545_545_FIRE_BURN_S	攻撃側	方向無し	2:0:0	1:1:1	1
+タイマーによるウエイト	40
+ポケモン拡縮	攻撃側	往復	0.4	-0.4	8	0	1
+タイマーによるウエイト	40
 カメラ移動	追従	防御側	16	0	8
-SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
-エフェクト終了待ち	すべて
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	防御側	方向無し	2:0:0	1:1:1	1
-パーティクル再生	w_001	W_001_001_HIT_MARK	防御側	方向無し	2:0:0	1:1:1	1
-制御モード変更	継続
-SE再生	SEQ_SE_W001_01	SE1	0	0	115	0	0
-SE再生	SEQ_SE_W001_01	SE2	8	300	100	0	0
-SEパン	SE1	追従	防御側	防御側	0	40:0:0
-SEパン	SE2	追従	防御側	防御側	0	40:0:0
-制御モード変更	逐次
+タイマーによるウエイト	20
 ポケモンアニメ	防御側	アニメストップ
-ポケモン拡縮	防御側	往復	0.1	-0.1	2	0	1
+パーティクル再生	w_545	W_545_545_FIRE_BOMB	防御側	方向無し	1.5:0:0	1:1:1	1
+タイマーによるウエイト	10
+ポケモン拡縮	防御側	往復	0.3	-0.3	4	0	9
+パーティクル再生	w_545	W_545_545_FIRE_BOMB	防御側	方向無し	2.5:0:0	1:1:1	1
+パーティクル再生	w_545	W_545_545_KEMURI	防御側	方向無し	1:0:0	1:1:1	1
+BGのパレットフェード	エフェクト面	16	0	2	0:0:0
+BGのスクロール	往復	6	0	2	0	20
 エフェクト終了待ち	すべて
-ポケモンアニメ	防御側	アニメスタート
+BGのパレットフェード	エフェクト面	0	16	2	0:0:0
+BGのパレットフェード	お盆＋フィールド	16	0	2	0:0:0
 カメラ移動	追従	初期位置	16	0	8
-SE再生	SEQ_SE_BC02	デフォルト	0	0	100	0	0
+BGの表示/非表示	お盆	表示
+ポケモンアニメ	防御側	アニメスタート
+BGの表示/非表示	フィールド	表示
 エフェクト終了待ち	すべて
 エフェクト終了
 &
