@@ -193,7 +193,7 @@
 #define FE_HYOUKA_ITEMGET_04               177 /* 0x00b1 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび４ */
 #define FE_HYOUKA_ITEMGET_05               178 /* 0x00b2 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび５ */
 #define FE_HYOUKA_ITEMGET_06               179 /* 0x00b3 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび６ */
-		/* not used   180(0x00b4) */
+#define FE_C08R0402_ITEMGET_01             180 /* 0x00b4 過去未来サブイベントのごほうび入手フラグ */
 		/* not used   181(0x00b5) */
 		/* not used   182(0x00b6) */
 		/* not used   183(0x00b7) */
