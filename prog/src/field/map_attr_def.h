@@ -53,6 +53,7 @@
 #define MATTR_WATERFALL_01        (0x40)		//滝
 #define MATTR_SHORE_01            (0x41)		//岸
 #define MATTR_DEEP_MARSH_01       (0x42)		//深い湿原
+#define MATTR_DEEP_SEA_01         (0x43)		//深い海
 #define MATTR_NMOVE_RIGHT         (0x51)		//壁（右方向へ移動不可）
 #define MATTR_NMOVE_LEFT          (0x52)		//壁（左方向へ移動不可）
 #define MATTR_NMOVE_UP            (0x53)		//壁（上方向へ移動不可）
