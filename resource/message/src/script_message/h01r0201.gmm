@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T20:06:45"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T17:53:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="288" right="1995" bottom="915" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_h01r0201_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h01r0201_black_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・pos起動（GRIDZ=8^11、GRIDX=8）に出現
 ・主人公と向き合ってメッセージ表示
@@ -302,7 +302,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼</language>
 	</row>
 
-	<row id="msg_h01r0201_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h01r0201_black_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・画面下を見ながらメッセージ表示
 　（主人公の位置を調整の可能性あり）
@@ -315,12 +315,12 @@
 うれしい　かぎりさ▼</language>
 		<language name="JPN_KANJI" width="256">きいたよ
 ヤグルマの森　でのこと▼
-おかしな　プラズマだんを
+おかしな　プラズマ団を
 きみが　こらしめて　くれて▽
 うれしい　かぎりさ▼</language>
 	</row>
 
-	<row id="msg_h01r0201_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h01r0201_black_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・再度主人公と向き合ってメッセージ表示
 ・以下の選択肢表示
@@ -339,21 +339,21 @@
 最初に　向かうべき　なのは……？</language>
 	</row>
 
-	<row id="msg_h01r0201_black_win01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h01r0201_black_win01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ポケモンセンター</language>
 		<language name="JPN_KANJI" width="256">ポケモンセンター</language>
 	</row>
 
-	<row id="msg_h01r0201_black_win02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h01r0201_black_win02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ポケモンジム</language>
 		<language name="JPN_KANJI" width="256">ポケモンジム</language>
 	</row>
 
-	<row id="msg_h01r0201_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h01r0201_black_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ライバルだけゲートからヒウンに向かう
 ・画面外に消えると主人公、操作可能に</comment>
@@ -374,7 +374,7 @@
 おさきに！▼</language>
 	</row>
 
-	<row id="msg_h01r0201_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h01r0201_black_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ライバルだけゲートからヒウンに向かう
 ・画面外に消えると主人公、操作可能に</comment>
