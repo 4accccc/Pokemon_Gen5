@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T22:54:36"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T22:56:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,13 +312,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1430" top="215" right="2134" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="311" right="2001" bottom="939" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="606" top="232" right="1079" bottom="630" visible="no"/>
-		<band id="0" index="0" style="0000" width="529"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="696"/>
-		<band id="3" index="3" style="0000" width="696"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -517,8 +517,7 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_first_20" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>話した後に足早に階段をかけあがる</comment>
-		<language name="JPN" width="256">パークはかせーーーーーーーーーーーーーー▼
-</language>
+		<language name="JPN" width="256">パークはかせーーーーーーーーーーーーーー▼</language>
 		<language name="JPN_KANJI" width="256">パーク博士ーーーーーーーーーーーーーーー▼</language>
 	</row>
 
