@@ -26,6 +26,11 @@ extern const BOOL PLIST_InitPokeList( PLIST_WORK *work );
 extern const BOOL PLIST_TermPokeList( PLIST_WORK *work );
 extern const BOOL PLIST_UpdatePokeList( PLIST_WORK *work );
 
+extern void PLIST_InitBG0_2DMenu( PLIST_WORK *work );
+extern void PLIST_InitBG0_3DParticle( PLIST_WORK *work );
+extern void PLIST_TermBG0_2DMenu( PLIST_WORK *work );
+extern void PLIST_TermBG0_3DParticle( PLIST_WORK *work );
+
 //--------------------------------------------------------------
 //	指定技箇所にフィールド技があるか？
 //  戻り値はPL_RET_***** 無いときは０

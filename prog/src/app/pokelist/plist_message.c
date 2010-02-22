@@ -18,6 +18,7 @@
 #include "gamesystem\msgspeed.h"
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
+#include "app/app_keycursor.h"
 
 #include "plist_message.h"
 
@@ -67,6 +68,9 @@ struct _PLIST_MSG_WORK
   GFL_TCBLSYS *tcblSys;
   PRINT_STREAM *printHandle;
   STRBUF       *streamStr;
+  APP_KEYCURSOR_WORK *cursorWork;
+  
+  BOOL isWaitKey;
   
   //Que用(瞬間メッセージ
   BOOL  isUpdateMsg;
@@ -95,7 +99,9 @@ PLIST_MSG_WORK* PLIST_MSG_CreateSystem( PLIST_WORK *work )
   msgWork->printHandle = NULL;
   msgWork->winType = PMT_NONE;
   msgWork->isUpdateMsg = FALSE;
+  msgWork->isWaitKey = FALSE;
   msgWork->wordSet = NULL;
+  msgWork->cursorWork = APP_KEYCURSOR_Create( 0x0f , FALSE , TRUE , work->heapId );
   return msgWork;
 }
 
@@ -110,6 +116,7 @@ void PLIST_MSG_DeleteSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
     PLIST_MSG_CloseWindow( work,msgWork );
   }
   
+  APP_KEYCURSOR_Delete( msgWork->cursorWork );
   GFL_TCBL_Exit( msgWork->tcblSys );
   GFL_HEAP_FreeMemory( msgWork );
 }
@@ -124,11 +131,23 @@ void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
   
   if( msgWork->printHandle != NULL )
   {
+    APP_KEYCURSOR_Main( msgWork->cursorWork , msgWork->printHandle , msgWork->bmpWin );
+
     if( PRINTSYS_PrintStreamGetState( msgWork->printHandle ) == PRINTSTREAM_STATE_DONE )
     {
-      PRINTSYS_PrintStreamDelete( msgWork->printHandle );
-      msgWork->printHandle = NULL;
-      GFL_STR_DeleteBuffer( msgWork->streamStr );
+      if( msgWork->isWaitKey == FALSE ||
+          GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
+          GFL_UI_TP_GetTrg() == TRUE )
+      {
+        PRINTSYS_PrintStreamDelete( msgWork->printHandle );
+        msgWork->printHandle = NULL;
+        GFL_STR_DeleteBuffer( msgWork->streamStr );
+      }
+      else
+      {
+        APP_KEYCURSOR_Write( msgWork->cursorWork , GFL_BMPWIN_GetBmp( msgWork->bmpWin ) , 0xF );
+        GFL_BMPWIN_TransVramCharacter( msgWork->bmpWin );
+      }
     }
     else
     if( PRINTSYS_PrintStreamGetState( msgWork->printHandle ) == PRINTSTREAM_STATE_PAUSE )
@@ -137,6 +156,14 @@ void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
           GFL_UI_TP_GetTrg() == TRUE )
       {
         PRINTSYS_PrintStreamReleasePause( msgWork->printHandle );
+      }
+    }
+    else
+    {
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ||
+          GFL_UI_TP_GetCont() == TRUE )
+      {
+        PRINTSYS_PrintStreamShortWait( msgWork->printHandle , 0 );
       }
     }
   }
@@ -270,7 +297,7 @@ void PLIST_MSG_DrawMessageNoWait( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , c
 //--------------------------------------------------------------
 //	メッセージ 描画(ストリーム
 //--------------------------------------------------------------
-void PLIST_MSG_DrawMessageStream( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const u32 msgId )
+void PLIST_MSG_DrawMessageStream( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const u32 msgId , const BOOL isWait )
 {
   STRBUF *str = GFL_MSG_CreateString( work->msgHandle , msgId ); 
   if( msgWork->wordSet != NULL )
@@ -290,7 +317,8 @@ void PLIST_MSG_DrawMessageStream( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , c
     GFL_STR_DeleteBuffer( msgWork->streamStr );
   }
   msgWork->streamStr = str; 
-  
+  msgWork->isWaitKey = isWait;
+
   msgWork->printHandle = PRINTSYS_PrintStream( msgWork->bmpWin , 0 , 0 , msgWork->streamStr ,
             work->fontHandle , MSGSPEED_GetWait() , msgWork->tcblSys , 0 , work->heapId , PLIST_FONT_MSG_BACK );
 }

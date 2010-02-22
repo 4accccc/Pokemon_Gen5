@@ -13,6 +13,14 @@
 #include "plist_local_def.h"
 #include "poke_tool\poke_tool.h"
 
+//プレートサイズ
+#define PLIST_PLATE_WIDTH  (16)
+#define PLIST_PLATE_HEIGHT (6)
+//各表示物の位置
+//プレートの左上からの相対座標
+#define PLIST_PLATE_POKE_POS_X (24)
+#define PLIST_PLATE_POKE_POS_Y (16)
+
 //プレートの色の種類(そのままパレット番号に対応
 typedef enum
 {

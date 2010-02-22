@@ -37,7 +37,9 @@ enum {
 	NARC_pokelist_gra_list_cursor_NCER = 23,
 	NARC_pokelist_gra_bar_icon_NANR = 24,
 	NARC_pokelist_gra_list_ball_NANR = 25,
-	NARC_pokelist_gra_list_cursor_NANR = 26
+	NARC_pokelist_gra_list_cursor_NANR = 26,
+	NARC_pokelist_gra_demo_girathina_spa = 27,
+	NARC_pokelist_gra_demo_sheimi_spa = 28
 };
 
 /* NARC_POKELIST_GRA_NAIX_ */

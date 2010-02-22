@@ -12,16 +12,19 @@
 
 enum {
 	NARC_mb_select_gra_box_bgd_NCLR = 0,
-	NARC_mb_select_gra_box_obj_NCLR = 1,
-	NARC_mb_select_gra_icon_dummy_NCLR = 2,
-	NARC_mb_select_gra_box_bgd_NCGR = 3,
-	NARC_mb_select_gra_box_obj_NCGR = 4,
-	NARC_mb_select_gra_icon_dummy_NCGR = 5,
-	NARC_mb_select_gra_box_bgd_NSCR = 6,
-	NARC_mb_select_gra_box_obj_NCER = 7,
-	NARC_mb_select_gra_icon_dummy_NCER = 8,
-	NARC_mb_select_gra_box_obj_NANR = 9,
-	NARC_mb_select_gra_icon_dummy_NANR = 10
+	NARC_mb_select_gra_box_bgu_NCLR = 1,
+	NARC_mb_select_gra_box_obj_NCLR = 2,
+	NARC_mb_select_gra_icon_dummy_NCLR = 3,
+	NARC_mb_select_gra_box_bgd_NCGR = 4,
+	NARC_mb_select_gra_box_bgu_NCGR = 5,
+	NARC_mb_select_gra_box_obj_NCGR = 6,
+	NARC_mb_select_gra_icon_dummy_NCGR = 7,
+	NARC_mb_select_gra_box_bgd_NSCR = 8,
+	NARC_mb_select_gra_box_bgu_NSCR = 9,
+	NARC_mb_select_gra_box_obj_NCER = 10,
+	NARC_mb_select_gra_icon_dummy_NCER = 11,
+	NARC_mb_select_gra_box_obj_NANR = 12,
+	NARC_mb_select_gra_icon_dummy_NANR = 13
 };
 
 /* NARC_MB_SELECT_GRA_NAIX_ */

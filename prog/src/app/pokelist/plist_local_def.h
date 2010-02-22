@@ -25,6 +25,7 @@
 #define PLIST_BG_PLATE   (GFL_BG_FRAME2_M)
 #define PLIST_BG_PARAM   (GFL_BG_FRAME1_M)
 #define PLIST_BG_MENU    (GFL_BG_FRAME0_M)
+#define PLIST_BG_3D      (GFL_BG_FRAME0_M)
 
 #define PLIST_BG_SUB_BG (GFL_BG_FRAME3_S)
 //バトル上用
@@ -177,6 +178,11 @@ typedef enum
   PSMS_HPANIME,     //HPバー処理中
   PSMS_BATTLE_ANM_WAIT, //バトルメニュー時終了アニメ待ち
   PSMS_DISP_PARAM,      //レベルアップ時・パラメータ表示
+
+  PSMS_FORM_CHANGE_INIT,
+  PSMS_FORM_CHANGE_MAIN,
+  PSMS_FORM_CHANGE_TERM,
+  
   PSMS_FADEOUT,
   PSMS_FADEOUT_FORCE, //強制終了
   PSMS_FADEOUT_WAIT,
@@ -193,6 +199,17 @@ typedef enum
   
   PSCS_MAX,
 }PLIST_SYS_CHANGEPROC_SEQ;
+
+//DEMO用
+#define PLIST_DEMO_EMMITER_MAX (3)
+#define PLIST_DEMO_SCALE (42)
+typedef enum
+{
+  PDT_NONE,
+  PDT_GIRATHINA_TO_ORIGIN,
+  PDT_GIRATHINA_TO_NORMAL,
+  PDT_SHEIMI_TO_SKY,
+}PLIST_DEMO_TYPE;
 
 typedef struct _PLIST_WORK PLIST_WORK;
 typedef struct _PLIST_PLATE_WORK PLIST_PLATE_WORK;
@@ -294,6 +311,12 @@ struct _PLIST_WORK
 
 	//taskmenuリソース
 	APP_TASKMENU_RES *taskres;
+	
+	//3D用
+  GFL_G3D_CAMERA    *camera;
+	PLIST_DEMO_TYPE demoType;
+	void*         effTempWork;
+	GFL_PTC_PTR		ptcWork;
 
   PLIST_DATA *plData;
 #if USE_DEBUGWIN_SYSTEM

@@ -1253,7 +1253,8 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     else if(BAG_MENU_MOTASERU==pWork->ret_code2){ // もたせる
       //@TODO check!!!!
       // ポケモンリスト アイテムを持たせる処理
-      pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
+      pWork->ret_code = BAG_NEXTPROC_HAVE;  //変えました。Ari100222
+      //pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
       _CHANGE_STATE(pWork,NULL);
     }
     else{

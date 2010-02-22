@@ -35,6 +35,7 @@
 #include "plist_menu.h"
 #include "plist_battle.h"
 #include "plist_item.h"
+#include "plist_demo.h"
 #include "plist_snd_def.h"
 #include "poke_tool/status_rcv.h"
 
@@ -137,8 +138,6 @@ static void PLIST_VBlankFunc(GFL_TCB *tcb, void *wk );
 static void PLIST_InitGraphic( PLIST_WORK *work );
 static void PLIST_TermGraphic( PLIST_WORK *work );
 static void PLIST_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
-static void PLIST_InitBG0_2DMenu( PLIST_WORK *work );
-static void PLIST_InitBG0_3DParticle( PLIST_WORK *work );
 
 static void PLIST_InitCell( PLIST_WORK *work );
 static void PLIST_TermCell( PLIST_WORK *work );
@@ -206,6 +205,8 @@ static void PLIST_MSGCB_TakeMailCB( PLIST_WORK *work , const int retVal );
 static void PLIST_MSGCB_TakeMail_Confirm( PLIST_WORK *work );
 static void PLIST_MSGCB_TakeMail_ConfirmCB( PLIST_WORK *work , const int retVal );
 
+static void PLIST_MSGCB_FormChange( PLIST_WORK *work );
+
 //外部数値操作
 static void PLIST_LearnSkillEmpty( PLIST_WORK *work , POKEMON_PARAM *pp );
 static void PLIST_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 pos );
@@ -242,6 +243,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->clwkExitButton = NULL;
   work->btlMenuWin[0] = NULL;
   work->btlMenuWin[1] = NULL; 
+  work->demoType = PDT_NONE;
   work->isCallForceExit = FALSE;
 
   for( i=0;i<PCR_MAX;i++ )
@@ -475,6 +477,18 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
     PLIST_UpdateDispParam( work );
     break;
 
+  case PSMS_FORM_CHANGE_INIT:
+    PLIST_DEMO_DemoInit( work );
+    break;
+
+  case PSMS_FORM_CHANGE_MAIN:
+    PLIST_DEMO_DemoMain( work );
+    break;
+
+  case PSMS_FORM_CHANGE_TERM:
+    PLIST_DEMO_DemoTerm( work );
+    break;
+
   case PSMS_FADEOUT_FORCE:
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
@@ -632,6 +646,7 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
 
   //Vram割り当ての設定
   {
+    //メイン画面は2D/3Dの切り替えで再設定あるので注意
     static const GFL_BG_SYS_HEADER sys_data = {
         GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
     };
@@ -729,7 +744,7 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
 //--------------------------------------------------------------
 //BG0用初期化(BG0面の2D/3D
 //--------------------------------------------------------------
-static void PLIST_InitBG0_2DMenu( PLIST_WORK *work )
+void PLIST_InitBG0_2DMenu( PLIST_WORK *work )
 {
   // BG0 MAIN (メニュー
   static const GFL_BG_BGCNT_HEADER header_main0 = {
@@ -738,13 +753,48 @@ static void PLIST_InitBG0_2DMenu( PLIST_WORK *work )
     GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x18000,0x8000,
     GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
   };
+  GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS , GX_BGMODE_0 , GX_BG0_AS_2D );
   PLIST_SetupBgFunc( &header_main0 , PLIST_BG_MENU , GFL_BG_MODE_TEXT );
 }
 
-static void PLIST_InitBG0_3DParticle( PLIST_WORK *work )
+
+void PLIST_InitBG0_3DParticle( PLIST_WORK *work )
 {
-  GF_ASSERT_MSG( FALSE ,"まだ作ってない!!\n");
+  static const VecFx32 cam_pos = {0,0,FX32_CONST(128.0f)};
+  static const VecFx32 cam_target = {0,0,0};
+  static const VecFx32 cam_up = {0,FX32_ONE,0};
+  //エッジマーキングカラー
+  static  const GXRgb stage_edge_color_table[8]=
+    { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
+
+
+  GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS , GX_BGMODE_0 , GX_BG0_AS_3D );
+  GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
+          0, work->heapId, NULL );
+  GFL_BG_SetBGControl3D( 0 ); //NNS_g3dInitの中で表示優先順位変わる・・・
+
+  G3X_EdgeMarking( TRUE );
+  G3X_AntiAlias( TRUE );
+  G3X_AlphaBlend( TRUE );
+  
+  work->camera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH, 
+                       0,
+                       FX32_ONE*192.0f/PLIST_DEMO_SCALE,
+                       0,
+                       FX32_ONE*256.0f/PLIST_DEMO_SCALE,
+                       FX32_ONE,
+                       FX32_ONE*128,
+                       0,
+                       &cam_pos,
+                       &cam_up,
+                       &cam_target,
+                       work->heapId );
+      GFL_G3D_CAMERA_Switching( work->camera );
+
+	GFL_PTC_Init( work->heapId );
+
 }
+
 
 
 //--------------------------------------------------------------
@@ -754,11 +804,11 @@ static void PLIST_TermGraphic( PLIST_WORK *work )
 {
   NNS_GfdClearVramTransferManagerTask();
   GFL_CLACT_SYS_Delete();
-  
+
+  PLIST_TermBG0_2DMenu( work );
   GFL_BG_FreeBGControl( PLIST_BG_MAIN_BG );
   GFL_BG_FreeBGControl( PLIST_BG_PLATE );
   GFL_BG_FreeBGControl( PLIST_BG_PARAM );
-  GFL_BG_FreeBGControl( PLIST_BG_MENU );
   GFL_BG_FreeBGControl( PLIST_BG_SUB_BG );
   GFL_BG_FreeBGControl( PLIST_BG_SUB_BATTLE_WIN );
   GFL_BG_FreeBGControl( PLIST_BG_SUB_BATTLE_BAR );
@@ -766,6 +816,18 @@ static void PLIST_TermGraphic( PLIST_WORK *work )
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 
+}
+void PLIST_TermBG0_2DMenu( PLIST_WORK *work )
+{
+  GFL_BG_FreeBGControl( PLIST_BG_MENU );
+}
+void PLIST_TermBG0_3DParticle( PLIST_WORK *work )
+{
+	GFL_PTC_Exit();
+  GFL_G3D_CAMERA_Delete( work->camera );
+  GFL_G3D_Exit();
+
+  GFL_BG_FreeBGControl( PLIST_BG_3D );
 }
 
 //--------------------------------------------------------------------------
@@ -1384,7 +1446,6 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
 
   case PL_MODE_ITEMSET:
     {
-      //FIXME メール処理
       const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
       if( itemNo == 0 )
       {
@@ -1401,7 +1462,18 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           PLIST_MSG_CreateWordSet( work , work->msgWork );
           PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
           PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
-          PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ExitCommon );
+
+          if( work->plData->item == ITEM_HAKKINDAMA &&
+              PP_Get( work->selectPokePara , ID_PARA_monsno , NULL ) == MONSNO_GIRATHINA )
+          {
+            //ギラティナ・フォルムチェンジ
+            PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_FormChange );
+            work->demoType = PDT_GIRATHINA_TO_ORIGIN;
+          }
+          else
+          {
+            PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ExitCommon );
+          }
           PLIST_MSG_DeleteWordSet( work , work->msgWork );
           
           PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
@@ -2855,21 +2927,16 @@ static void PLIST_MessageWait( PLIST_WORK *work )
 {
   if( PLIST_MSG_IsFinishMessage( work , work->msgWork ) == TRUE )
   {
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
-        GFL_UI_TP_GetTrg() == TRUE ||
-        work->isMsgWaitKey == FALSE )
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-      {
-        work->ktst = GFL_APP_KTST_KEY;
-      }
-      if( GFL_UI_TP_GetTrg() == TRUE )
-      {
-        work->ktst = GFL_APP_KTST_TOUCH;
-      }
-      
-      work->msgCallBack(work);
+      work->ktst = GFL_APP_KTST_KEY;
     }
+    if( GFL_UI_TP_GetTrg() == TRUE )
+    {
+      work->ktst = GFL_APP_KTST_TOUCH;
+    }
+    
+    work->msgCallBack(work);
   }
 }
 
@@ -2879,7 +2946,7 @@ void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , const BOOL isWaitKey 
   work->isMsgWaitKey = isWaitKey;
   work->msgCallBack = msgCallBack;
   PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MESSAGE );
-  PLIST_MSG_DrawMessageStream( work , work->msgWork , msgId );
+  PLIST_MSG_DrawMessageStream( work , work->msgWork , msgId , isWaitKey );
   GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
   GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_EXIT] , FALSE );
   
@@ -3504,7 +3571,10 @@ static void PLIST_MSGCB_TakeMail_ConfirmCB( PLIST_WORK *work , const int retVal 
   }
 }
 
-
+static void PLIST_MSGCB_FormChange( PLIST_WORK *work )
+{
+  work->mainSeq = PSMS_FORM_CHANGE_INIT;
+}
 #pragma mark [>force exit
 void PLIST_ForceExit_Timeup( PLIST_WORK *work )
 {

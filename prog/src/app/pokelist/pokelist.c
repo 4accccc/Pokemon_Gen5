@@ -87,7 +87,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       for( i=0;i<5;i++ )
       {
         //*
-        static const u8 no[5] = {33,135,32,2,3};
+        static const u8 no[5] = {487,135,32,2,3};
         static const u8 lv[5] = {34,10,15,10,10};
         POKEMON_PARAM *pPara = PP_Create( no[i] , lv[i] , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
   #if DEB_ARI
@@ -185,15 +185,18 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
       {
         //plData->mode = PL_MODE_SHINKA;
-        plData->mode = PL_MODE_ITEMUSE;
+        //plData->mode = PL_MODE_ITEMUSE;
+        plData->mode = PL_MODE_ITEMSET;
         //plData->item = 17; //傷薬
         //plData->item = 26; //E傷薬
         //plData->item = 28; //元気のかけら
         //plData->item = 18; //毒消し
         //plData->item = 47; //ブロムヘキシン
-        plData->item = 38; //PPエイド
+        //plData->item = 38; //PPエイド
         //plData->item = 41; //PPマックス
         //plData->item = 51; //Pアップ
+        plData->item = 112; //白金玉
+        //plData->item = 466; //ぐらでしあ
         
         //plData->item = 44; //聖なる灰
         //plData->item = 174; //マトマの実
