@@ -263,10 +263,14 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
       ep2p->login.display = WIFILOGIN_DISPLAY_UP;
       ep2p->login.bg = WIFILOGIN_BG_NORMAL;
     }
-    GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
+   // GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
     break;
   case P2P_LOGIN:
-      if( ep2p->login.result == WIFILOGIN_RESULT_LOGIN ){
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
+    if( ep2p->login.result == WIFILOGIN_RESULT_LOGIN ){
         ep2p->seq = P2P_MATCH_BOARD;
       }
       else{ 
@@ -283,10 +287,14 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     ep2p->pMatchParam->pPokeParty[1] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //お互いのPartyを受信
     ep2p->pMatchParam->pRegulation = Regulation_AllocWork(GFL_HEAPID_APP);
 
-    GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi2dmap), &WifiP2PMatchProcData, ep2p->pMatchParam);
+    GAMESYSTEM_CallProc(gsys,FS_OVERLAY_ID(wifi2dmap), &WifiP2PMatchProcData, ep2p->pMatchParam);
+//    GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi2dmap), &WifiP2PMatchProcData, ep2p->pMatchParam);
     ep2p->seq ++;
     break;
   case P2P_SELECT:
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
     ep2p->seq = aNextMatchKindTbl[ep2p->pMatchParam->seq].kind;
     NET_PRINT("P2P_SELECT %d %d\n",ep2p->seq,ep2p->pMatchParam->seq);
     if(P2P_BATTLE != ep2p->seq){  // バトル以外はいらない
@@ -299,11 +307,15 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_BATTLE:
     {
       _pokeListWorkMake(ep2p,GAMESYSTEM_GetGameData(pClub->gsys),ep2p->seq );
-      GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
+      //GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
+      GAMESYSTEM_CallProc(gsys,FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
       ep2p->seq++;
     }
     break;
   case P2P_BATTLE2:
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
     {
       _pokeListWorkOut(ep2p,GAMESYSTEM_GetGameData(pClub->gsys),ep2p->seq );
       
@@ -349,6 +361,11 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     ep2p->seq++;
     break;
   case P2P_BATTLE_END:
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
+
+    
     _pokmeonListWorkFree(ep2p);      // 
 
     ep2p->seq = P2P_MATCH_BOARD;
@@ -360,10 +377,15 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     break;
   case P2P_TRADE_MAIN:
     ep2p->aPokeTr.gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
-    GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokemon_trade), &PokemonTradeClubProcData, &ep2p->aPokeTr);
+
+    GAMESYSTEM_CallProc(gsys,FS_OVERLAY_ID(pokemon_trade), &PokemonTradeClubProcData, &ep2p->aPokeTr);
+   // GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokemon_trade), &PokemonTradeClubProcData, &ep2p->aPokeTr);
     ep2p->seq++;
     break;
   case P2P_TRADE_END:
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
     if(ep2p->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
       ep2p->seq = P2P_EVOLUTION;
     }
@@ -377,10 +399,14 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
                                                ep2p->aPokeTr.pParty,
                                                ep2p->aPokeTr.after_mons_no,
                                                0, ep2p->aPokeTr.cond, TRUE );
-    GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ShinkaDemoProcData, ep2p->aPokeTr.shinka_param );
+    GAMESYSTEM_CallProc( gsys, NO_OVERLAY_ID, &ShinkaDemoProcData, ep2p->aPokeTr.shinka_param );
+//    GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ShinkaDemoProcData, ep2p->aPokeTr.shinka_param );
     ep2p->seq = P2P_EVOLUTION_END;
     break;
   case P2P_EVOLUTION_END:
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
     SHINKADEMO_FreeParam( ep2p->aPokeTr.shinka_param );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
     ep2p->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
@@ -389,10 +415,14 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_TVT:
     ep2p->aTVT.gameData = GAMESYSTEM_GetGameData(ep2p->gsys);
     ep2p->aTVT.mode = CTM_WIFI;
-    GFL_PROC_SysCallProc(FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, &ep2p->aTVT);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, &ep2p->aTVT);
+ //   GFL_PROC_SysCallProc(FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, &ep2p->aTVT);
     ep2p->seq++;
     break;
   case P2P_TVT_END:
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
     ep2p->seq = P2P_MATCH_BOARD;
     break;
 

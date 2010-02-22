@@ -232,7 +232,9 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     dbw->boxParam.cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(dbw->boxParam.gamedata));								// コンフィグデータ
     dbw->boxParam.zknMode = 0;								// 図鑑ナンバー表示モード
     dbw->boxParam.callMode = BOX_MODE_SLEEP;	// 寝かせる;					// 呼び出しモード
-    GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &dbw->boxParam );
+   // GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &dbw->boxParam );
+    GMEVENT_CallProc(event,FS_OVERLAY_ID(box), &BOX2_ProcData, &dbw->boxParam );
+
     (*seq)++;
     break;
   case _GAMESYNC_CALLBOX_WAIT:
