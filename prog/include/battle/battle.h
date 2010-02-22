@@ -262,6 +262,20 @@ typedef struct {
   u32         recDataSize;      ///< 録画データサイズ
   GFL_STD_RandContext  recRandContext;    ///< 録画データ用乱数コンテキスト
 
+  u8 TurnNum;       //かかったターン数
+  u8 PokeChgNum;    //交代回数
+  u8 VoidAtcNum;    //効果がない技を出した回数
+  u8 WeakAtcNum;    //ばつぐんの技を出した回数
+  u8 ResistAtcNum;  //いまひとつの技を出した回数
+  u8 VoidNum;       //効果がない技を受けた回数
+  u8 ResistNum;     //いまひとつの技を受けた回数
+  u8 WinTrainerNum; //倒したトレーナー数
+  u8 WinPokeNum;    //倒したポケモン数
+  u8 LosePokeNum;   //倒されたポケモン数
+  u8 RestHpPer;     //残りＨＰ割合
+  u8 UseWazaNum;    //使用した技の数
+
+
 }BATTLE_SETUP_PARAM;
 
 

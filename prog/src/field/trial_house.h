@@ -20,11 +20,15 @@ extern GMEVENT *TRIAL_HOUSE_CreateBeforeMsgEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_
 
 extern TRIAL_HOUSE_MakeTrainer( GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount );
 
+extern void TRIAL_HOUSE_AddBtlPoint( TRIAL_HOUSE_WORK_PTR ptr, BATTLE_SETUP_PARAM *prm );
+
 extern GMEVENT *TRIAL_HOUSE_CreatePokeSelEvt(  GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr,
                                         const int inRegType, const int inPartyType, u16 *outRet );
 extern GMEVENT *TRIAL_HOUSE_CreateBtlEvt( GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr );
 
 extern GMEVENT *TRIAL_HOUSE_CreateBeaconSearchEvt( GAMESYS_WORK *gsys, u16* outRet );
+
+extern void TRIAL_HOUSE_CalcBtlResult( TRIAL_HOUSE_WORK_PTR ptr, u16 *outRank, u16 *outPoint );
 
 
 

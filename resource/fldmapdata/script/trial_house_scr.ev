@@ -186,13 +186,15 @@ charange:
 
   IF $SCWK_ANSWER == TRUE THEN
    DEFINE_LOCAL result_rank
+   DEFINE_LOCAL point
    DEFINE_LOCAL rank_msg
     //「おつかれさま」
     _BALLOONWIN_OBJMSG_POS(msg_trialhouse_014, SCWK_TARGET_OBJID, POS_DL )
     _BALLOONWIN_CLOSE()
-    //評価アプリ起動 @todo
 
-    $result_rank = TH_RANK_BEGINNER //@todo
+    _TH_CALC_BTL_RESULT( result_rank, point )
+
+    //評価アプリ起動 @todo
 
     SWITCH $result_rank
     CASE TH_RANK_BEGINNER THEN

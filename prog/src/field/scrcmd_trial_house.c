@@ -295,6 +295,32 @@ VMCMD_RESULT EvCmdTH_SearchBeacon( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * トライアルハウス 採点
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTH_CalcBtlResult( VMHANDLE *core, void *wk )
+{
+  u16 *rank;
+  u16 *point;
+  GMEVENT* event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
+
+  rank = SCRCMD_GetVMWork( core, work );
+  point = SCRCMD_GetVMWork( core, work );
+  //計算してランクを返す
+  TRIAL_HOUSE_CalcBtlResult( *ptr, rank, point );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 
 

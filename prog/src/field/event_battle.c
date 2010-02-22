@@ -49,6 +49,8 @@
 
 #include "debug/debug_flg.h"
 
+#include "trial_house.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -142,6 +144,8 @@ typedef struct {
 
   /** @brief  敗北処理がないバトルか？のフラグ */
   BOOL is_no_lose;
+
+  BOOL Examination;   //トライアルハウス審査処理を行うか？TRUEで行う
 
   //エンカウントエフェクトナンバー
   int EncEffNo;
@@ -331,6 +335,46 @@ GMEVENT * EVENT_BSubwayTrainerBattle(
 
 //--------------------------------------------------------------
 /**
+ * トライアルハウストレーナーバトルイベント
+ * @param gsys  GAMESYS_WORK
+ * @param fieldmap FIELDMAP_WORK
+ * @param tr_id
+ * @param flags
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_TrialHouseTrainerBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp )
+{
+  GMEVENT * event;
+  BATTLE_EVENT_WORK *bew;
+  
+  event = GMEVENT_Create(
+      gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
+  
+#ifdef PM_DEBUG
+  debug_FieldDebugFlagSet( bp );
+#endif
+
+  bew = GMEVENT_GetEventWork(event);
+  BEW_Initialize( bew, gsys, bp );
+#if 0
+  bew->is_sub_event = TRUE; //サブイベント呼び出し
+#else
+  bew->is_sub_event = FALSE; //戦闘後のフェードイン目当て
+#endif
+  bew->Examination = TRUE;    //採点する
+  bew->is_no_lose = TRUE; //敗戦処理無し
+  //エンカウントエフェクトセット(サブウェイと同じ)
+  bew->EncEffNo = ENCEFFID_SUBWAY;
+
+  //エフェクトエンカウト　エフェクト復帰キャンセル
+  EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
  * フィールド捕獲デモバトルイベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldmap FIELDMAP_WORK
@@ -469,6 +513,14 @@ static GMEVENT_RESULT fieldBattleEvent(
   case 7: 
     //戦闘結果反映処理
     BEW_reflectBattleResult( bew, gamedata );
+
+    //採点処理
+    if (bew->Examination)
+    {
+      TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
+      NOZOMU_Printf("検定採点\n");
+      TRIAL_HOUSE_AddBtlPoint( *ptr, bew->battle_param );
+    }
 
     //勝ち負け判定
     if (bew->is_no_lose == FALSE && BEW_IsLoseResult( bew) == TRUE )
@@ -764,6 +816,7 @@ static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_
   bew->bgm_pushed_flag = FALSE;
   bew->is_sub_event = FALSE;
   bew->is_no_lose = FALSE;
+  bew->Examination = FALSE;
 }
 
 //--------------------------------------------------------------

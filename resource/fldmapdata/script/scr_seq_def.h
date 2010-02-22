@@ -8335,3 +8335,19 @@
   .short \ret
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　採点
+ * @param rank    採点結果のランク格納バッファ
+ * @param point   得点格納バッファ
+ */
+//--------------------------------------------------------------
+#define _TH_CALC_BTL_RESULT( rank, point ) _ASM_TH_CALC_BTL_RESULT rank, point
+  
+  .macro _ASM_TH_CALC_BTL_RESULT rank, point
+  .short EV_SEQ_TH_CALC_BTL_RESULT
+  .short \rank
+  .short \point
+  .endm
+  
+

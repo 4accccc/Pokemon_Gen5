@@ -12,9 +12,11 @@
 
 #include "fld_btl_inst_tool.h"
 #include "poke_tool/regulation_def.h"
-#include "event_battle.h" //for EVENT_BSubwayTrainerBattle
+#include "event_battle.h" //for EVENT_TrialHouseTrainerBattle
 
 #include "script_def.h"
+
+#include "savedata/battle_box_save.h"   //for BATTLE_BOX_SAVE
 
 //------------------------------------------------------------------
 /**
@@ -29,7 +31,8 @@ typedef struct
   u16*            RetDecide;  // 選択したかのチェック
   PL_LIST_TYPE ListType;
   int Reg;
-  POKEPARTY* Party;
+  POKEPARTY* Party;         //指定ポケパーティポインタ（アロックせず、ポインタとして使用）
+  POKEPARTY* BoxParty;      //バトルボックス用ポケパーティ（アロックする）
   PL_SELECT_POS SelectPos;
   PL_RETURN_TYPE RetType;
   u8 SelAry[6];
@@ -86,10 +89,17 @@ GMEVENT *TRIAL_HOUSE_CreatePokeSelEvt(  GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PT
   }
 
   if ( inPartyType == SCR_BTL_PARTY_SELECT_TEMOTI)
+  {
+    work->BoxParty = NULL;
     work->Party = GAMEDATA_GetMyPokemon( gdata );  //手持ち
+  }
   else
-    work->Party = GAMEDATA_GetMyPokemon( gdata );  //バトルボックス @todo
-
+  {
+    SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( gdata );
+    BATTLE_BOX_SAVE* box = BATTLE_BOX_SAVE_GetBattleBoxSave( sv );
+    work->BoxParty = BATTLE_BOX_SAVE_MakePokeParty( box, HEAPID_APP_CONTROL );
+    work->Party = work->BoxParty; //バトルボックス
+  }
   return event;
 }
 
@@ -114,6 +124,10 @@ static GMEVENT_RESULT PokeSelEvt(GMEVENT * event, int * seq, void * work)
     *seq = 1;
 		break;
   case 1:
+    //バトルボックスパーティを解放
+    if (evt_wk->BoxParty != NULL)
+      GFL_HEAP_FreeMemory(evt_wk->BoxParty);
+    
     //結果の分岐
     if( evt_wk->RetType != PL_RET_NORMAL ||
       evt_wk->SelectPos == PL_SEL_POS_EXIT ||
@@ -151,9 +165,33 @@ GMEVENT *TRIAL_HOUSE_CreateBtlEvt( GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr
     bp = FBI_TOOL_CreateBattleParam( gsys, party, mode, tr_data, num  );
   }
 
-  //バトルサブウェイの戦闘イベントを作成
-  event = EVENT_BSubwayTrainerBattle( gsys, fieldmap, bp );
+  //トライアルハウス戦闘イベントを作成
+  event = EVENT_TrialHouseTrainerBattle( gsys, fieldmap, bp );
 
   return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	採点に必要な情報を集める  フィールド復帰前にコールされえるのでこのファイルに置く
+ * @param	ptr       ワークポインタ
+ * @param param     バトルセットアップパラメータポインタ
+ * @retval	none
+*/
+//--------------------------------------------------------------
+void TRIAL_HOUSE_AddBtlPoint( TRIAL_HOUSE_WORK_PTR ptr, BATTLE_SETUP_PARAM *prm )
+{
+  ptr->PointWork.TurnNum += prm->TurnNum;              //かかったターン数
+  ptr->PointWork.PokeChgNum += prm->PokeChgNum;        //交代回数
+  ptr->PointWork.VoidAtcNum += prm->VoidAtcNum;        //効果がない技を出した回数
+  ptr->PointWork.WeakAtcNum += prm->WeakAtcNum;        //ばつぐんの技を出した回数
+  ptr->PointWork.ResistAtcNum += prm->ResistAtcNum;    //いまひとつの技を出した回数
+  ptr->PointWork.VoidNum += prm->VoidNum;              //効果がない技を受けた回数
+  ptr->PointWork.ResistNum += prm->ResistNum;          //いまひとつの技を受けた回数
+  ptr->PointWork.WinTrainerNum += prm->WinTrainerNum;  //倒したトレーナー数
+  ptr->PointWork.WinPokeNum += prm->WinPokeNum;        //倒したポケモン数
+  ptr->PointWork.LosePokeNum += prm->LosePokeNum;      //倒されたポケモン数
+  ptr->PointWork.RestHpPer += prm->RestHpPer;          //残りＨＰ割合
+  ptr->PointWork.UseWazaNum += prm->UseWazaNum;        //使用した技の数
 }
 

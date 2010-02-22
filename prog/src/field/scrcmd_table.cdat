@@ -902,7 +902,7 @@
   DEF_CMD( EvCmdTH_SetRank, EV_SEQ_TH_SET_RANK )
   DEF_CMD( EvCmdTH_GetRank, EV_SEQ_TH_GET_RANK )
   DEF_CMD( EvCmdTH_SearchBeacon, EV_SEQ_TH_SEARCH_BEACON )
-  NO_CMD()
+  DEF_CMD( EvCmdTH_CalcBtlResult, EV_SEQ_TH_CALC_BTL_RESULT )
 
   END_CMD
 
