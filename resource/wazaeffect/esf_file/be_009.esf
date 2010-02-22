@@ -31,31 +31,54 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ポケモン影バニッシュ	POS_F	バニッシュオン
 ラベル	NO_EXIST_F_1
 制御モード変更	逐次
-パーティクルデータロード	be_m_ball_01_kaiten
-パーティクルデータロード	be_ball_001_1
 パーティクルデータロード	w_157
 SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 制御モード変更	継続
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_2
+ボールモード	捕獲ボールBB
+パーティクルデータロード	be_m_ball_01_kaiten
 パーティクル再生	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	POS_BB	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_BB_2
 立ち位置チェック	POS_B	いない	NO_EXIST_B_2
+ボールモード	捕獲ボールB
+パーティクルデータロード	be_m_ball_01_kaiten
 パーティクル再生	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	POS_B	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_B_2
 立ち位置チェック	POS_D	いない	NO_EXIST_D_2
+ボールモード	捕獲ボールD
+パーティクルデータロード	be_m_ball_01_kaiten
 パーティクル再生	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	POS_D	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_D_2
 立ち位置チェック	POS_F	いない	NO_EXIST_F_2
+ボールモード	捕獲ボールF
+パーティクルデータロード	be_m_ball_01_kaiten
 パーティクル再生	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	POS_F	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_F_2
 ポケモンα値	POS_TR_BB	追従	2	20	0	0
 エフェクト終了待ち	ポケモン
 トレーナー削除	POS_BB
 タイマーによるウエイト	5
+立ち位置チェック	POS_BB	いない	NO_DELETE_BB
+ボールモード	捕獲ボールBB
 パーティクルデータ削除	be_m_ball_01_kaiten
+ラベル	NO_DELETE_BB
+立ち位置チェック	POS_B	いない	NO_DELETE_B
+ボールモード	捕獲ボールB
+パーティクルデータ削除	be_m_ball_01_kaiten
+ラベル	NO_DELETE_B
+立ち位置チェック	POS_D	いない	NO_DELETE_D
+ボールモード	捕獲ボールD
+パーティクルデータ削除	be_m_ball_01_kaiten
+ラベル	NO_DELETE_D
+立ち位置チェック	POS_F	いない	NO_DELETE_F
+ボールモード	捕獲ボールF
+パーティクルデータ削除	be_m_ball_01_kaiten
+ラベル	NO_DELETE_F
 制御モード変更	継続
 SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_3
+ボールモード	捕獲ボールBB
+パーティクルデータロード	be_ball_001_1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_BB	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_BB	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_BB	方向無し	4:0:0	1:1:1	1
@@ -64,6 +87,8 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 ポケモン鳴き声	POS_BB
 ラベル	NO_EXIST_BB_3
 立ち位置チェック	POS_B	いない	NO_EXIST_B_3
+ボールモード	捕獲ボールB
+パーティクルデータロード	be_ball_001_1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_B	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_B	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_B	方向無し	4:0:0	1:1:1	1
@@ -72,6 +97,8 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 ポケモン鳴き声	POS_B
 ラベル	NO_EXIST_B_3
 立ち位置チェック	POS_D	いない	NO_EXIST_D_3
+ボールモード	捕獲ボールD
+パーティクルデータロード	be_ball_001_1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_D	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_D	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_D	方向無し	4:0:0	1:1:1	1
@@ -80,6 +107,8 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 ポケモン鳴き声	POS_D
 ラベル	NO_EXIST_D_3
 立ち位置チェック	POS_F	いない	NO_EXIST_F_3
+ボールモード	捕獲ボールF
+パーティクルデータロード	be_ball_001_1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_F	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_F	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_F	方向無し	4:0:0	1:1:1	1
