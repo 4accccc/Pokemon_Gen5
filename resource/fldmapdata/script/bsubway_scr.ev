@@ -1212,7 +1212,7 @@ sub_receipt_demo_arrival_train:
   DEFINE_LOCAL objid_partner
   
   //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //OBJ ID取得
   _CALL sub_receipt_common_get_objid_receipt
@@ -1245,7 +1245,7 @@ sub_receipt_demo_arrival_train:
     _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, objid_partner, 0, BSW_NULL )
   ENDIF
   
-  //受付を電車出口に
+  //受付を電車出口に まだ対応アニメがない
 //  _OBJ_POS_CHANGE( $objid_receipt, 15, 0, 15, DIR_RIGHT )
   
   //マップフェードイン
