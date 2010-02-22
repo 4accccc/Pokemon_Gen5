@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-02-10T21:12:43" source="d5ice01c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-02-22T23:10:31" source="d5ice01c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2010-02-10T21:12:43" source="d5ice01c.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-02-22T23:10:31" source="d5ice01c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -38,22 +38,22 @@
 		path="C:/home/wb_data3d/build_model/indoor/d5ice01/tex/d5miniice01.tga"
 	>
 		<bitmap size="128">
-			0f10 0e0f 0b0d 0f0d 0c0b 0d0c 0e0d 100f
-			0e10 0d0e 090b 0909 0c09 0909 0d0c 070e
-			0d10 0a0a 0909 0707 0707 0707 0c09 070e
-			0d0b 0909 0709 0606 0506 0606 0c09 0307
-			0903 0709 0606 0305 0202 0603 0707 0003
-			0903 0709 0305 0203 0101 0302 0706 0003
-			0a03 0507 0204 0102 0202 0302 0705 0003
-			0300 050a 0203 0301 0302 0302 0905 0007
-			0300 050a 0202 0202 0302 0203 0705 070c
-			0300 020a 0305 0202 0303 0203 0502 070d
-			0300 020a 0203 0202 0205 0502 0502 0e07
-			1003 020a 0202 0505 0505 0205 0502 1007
-			1003 050a 0505 0505 0505 0505 0505 1007
-			1003 070a 0707 0707 0707 0707 0a07 1007
-			0a10 070a 0a07 0a0a 070a 0202 1008 100a
-			1008 0007 0700 0810 0000 0000 0800 1010
+			0f10 0d0f 0d0d 0f0d 0c0b 0d0c 0e0d 100f
+			0e10 0d0e 0d0d 090d 0c09 0909 0d0c 070e
+			0e0e 0d0d 0d0d 090d 0707 0707 0c09 070e
+			0a0d 0d0a 0d0d 0d0d 0609 0202 0c09 0307
+			090d 0909 0d0d 0d0d 090d 0206 0707 0003
+			0909 0607 0d09 0d0d 0d0d 0609 0707 0003
+			0a10 0507 0906 0d0d 0d0d 090d 0706 0003
+			0a10 040a 0602 0d09 0d0d 0d0d 0709 0007
+			0a10 030a 0102 0906 0d0d 0d0d 090d 070c
+			0a10 020a 0205 0602 0d09 0d0d 0d0d 0709
+			0a10 020a 0203 0302 0906 0d0d 0d0d 090d
+			0a10 020a 0202 0505 0602 0d09 0d0d 0d0d
+			0a10 050a 0505 0505 0505 0906 0d0d 0d0d
+			0a10 070a 0707 0707 0707 0605 0d09 0d0d
+			0a10 070a 0a07 0a0a 070a 0707 070a 0d0d
+			1008 1010 1010 1010 1010 1010 0a10 0707
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="d5miniice02"
@@ -329,9 +329,9 @@
 					<tex st="0.000000 0.000000"/>
 					<pos_xz xz="-3.000000 3.000000"/>
 					<tex st="10.875000 0.000000"/>
-					<clr rgb="19 23 23"/>
 					<pos_xy xy="1.080322 6.500000"/>
 					<tex st="0.000000 -10.062500"/>
+					<clr rgb="19 23 23"/>
 					<pos_xz xz="-3.000000 -1.080322"/>
 				</primitive>
 			</primitive_array>
