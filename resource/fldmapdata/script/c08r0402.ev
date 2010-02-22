@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c08r0402.h"
-  //.include  "c08r0402.h"
+  .include  "c08r0402.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c08r0402
+_EVENT_DATA    ev_c08r0402_man1_01
 _EVENT_DATA_END
 
 
@@ -28,11 +28,225 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_c08r0402_flag_change:
 //  _END
-
+ 
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_c08r0402:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		 ev_c08r0402_man1_01
+	
+	DEFINE_LOCAL LWK_POKE_CHECK
+	DEFINE_LOCAL LWK_SEL_POS
+	DEFINE_LOCAL LWK_WAZA_CHECK
+		
+	//【仮】マップにPCを配置して頂けることになったので、アニメはその後につける
+	_TALK_OBJ_START()
+	
+	//アイテム入手フラグ
+	IF FLAG_OFF(FE_C08R0402_ITEMGET_01)	THEN	
+	
+		//ぼくはみらいをしりたい！_ぼくはかこにもどりたい！
+		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_01w,msg_c08_man1_01b, C08R0402_MAN1_01 , WIN_DOWN)
+		_MSGWIN_CLOSE()
+		
+		//どこかにこのまちとにているが
+		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_02w,msg_c08_man1_02b, C08R0402_MAN1_01 , WIN_DOWN)
+		
+		//はい・いいえ
+		_YES_NO_WIN(SCWK_ANSWER)
+		_MSGWIN_CLOSE()
+		
+		_CALL	ev_event_check
+		
+		//じゅうでんを持ったバージョン違いのポケモンがいる場合
+		IF$LWK_POKE_CHECK == 1 THEN
+			
+			//パソコンに向かうアニメ
+			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_come_01)
+			_OBJ_ANIME_WAIT()
+			
+			//さあみらいをみせておくれ
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_06w,msg_c08_man1_06b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_MSGWIN_CLOSE()
+			
+			//SEを鳴らす「キィィィイイン」
+			_SE_PLAY(SEQ_SE_FLD_128)
+			_SE_WAIT()
+			
+			//未来_過去を見て、感動！ジャンプしちゃうかも
+			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_kandou)
+			_OBJ_ANIME_WAIT()
+			
+			//おおっ！　みらいは……
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_07w,msg_c08_man1_07b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_MSGWIN_CLOSE()
+			
+			//元にもどった事を確認するために、周りをきょろきょろ
+			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_kyorokyoro)
+			_OBJ_ANIME_WAIT()
+			
+			//……もとにもどった？
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_08w,msg_c08_man1_08b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_MSGWIN_CLOSE()
+		
+			//そうだ！
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_09w,msg_c08_man1_09b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_MSGWIN_CLOSE()
+			
+			//ポケモンを返しにくるアニメ
+			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_come_02)
+			_OBJ_ANIME_WAIT()
+			
+			//アイテム入手処理
+			_ITEM_EVENT_NOWAIT(ITEM_ORENNOMI, 1)
+
+			//どこかを向いて、感慨深げに喋る
+			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_kangai)
+			_OBJ_ANIME_WAIT()
+			
+			//みらいについて
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_10w,msg_c08_man1_10b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_MSGWIN_CLOSE()
+			
+			//タイムのほうに向かう
+			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_come_03)
+			_OBJ_ANIME_WAIT()
+			
+			_FLAG_SET(FE_C08R0402_ITEMGET_01)
+		
+		ENDIF
+	
+	ELSE
+		
+		//みらいについて
+		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_10w,msg_c08_man1_10b, C08R0402_MAN1_01 , WIN_DOWN)		
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+
+EVENT_END
+
+//手持ちのポケモンをチェック！！
+ev_event_check:
+
+	//はいを選んだとき
+	IF$SCWK_ANSWER == SCR_YES THEN
+		
+		//手持ちのポケモンを選ぶ
+	    _SELECT_TEMOTI_POKE( SCWK_ANSWER, LWK_SEL_POS, 0 )
+	    
+		//バージョンをチェックする
+		//技を覚えているかチェックする
+//		_CHECK_POKE_WAZA( LWK_WAZA_CHECK, WAZANO_ZYUUDEN, LWK_SEL_POS )
+		$LWK_WAZA_CHECK = 1
+		
+		//必要なポケモンがいる
+		IF$SCWK_ANSWER == 1 && $LWK_WAZA_CHECK == 1 THEN
+			//あありがとう！
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_04w,msg_c08_man1_04b,C08R0402_MAN1_01,WIN_DOWN)
+			_MSGWIN_CLOSE()
+			$LWK_POKE_CHECK = 1
+		
+		//必要なポケモンがいない
+		ELSE
+			//あありがとう……ってぼくのおねがいした
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_05w,msg_c08_man1_05b,C08R0402_MAN1_01,WIN_DOWN)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			$LWK_POKE_CHECK = 2
+
+		ENDIF
+		
+	ELSE
+		//そそうかざんねんだな
+		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_03w,msg_c08_man1_03b,C08R0402_MAN1_01,WIN_DOWN)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		$LWK_POKE_CHECK = 3
+	
+	ENDIF
+_RET
+	
+EVENT_END
+//--------------------------------------------------------------------
+// C08R0402_MAN1： PCに向かう                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c08r0402_come_01
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// C08R0402_MAN1： ポケモンを返しにくる                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c08r0402_come_02
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// C08R0402_MAN1： タイムの元に向かう                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c08r0402_come_03
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// C08R0402_MAN1：過去_未来を見て感動する                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c08r0402_kandou
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// C08R0402_MAN1： 感慨深げに歩く                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c08r0402_kangai
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// C08R0402_MAN1：周りを見て、きょろきょろする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c08r0402_kyorokyoro
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_right
+
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_left
+
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_down
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_up
+
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
