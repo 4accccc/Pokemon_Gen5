@@ -63,14 +63,25 @@ typedef enum{
   BTLV_MCSS_PROJ_MAX,
 }BTLV_MCSS_PROJECTION;
 
-#define BTLV_MCSS_MEPACHI_ON  ( MCSS_MEPACHI_ON )
-#define BTLV_MCSS_MEPACHI_OFF ( MCSS_MEPACHI_OFF )
-#define BTLV_MCSS_MEPACHI_FLIP  ( MCSS_MEPACHI_FLIP )
-#define BTLV_MCSS_ANM_STOP_ON ( MCSS_ANM_STOP_ON )
-#define BTLV_MCSS_ANM_STOP_OFF  ( MCSS_ANM_STOP_OFF )
-#define BTLV_MCSS_VANISH_ON   ( MCSS_VANISH_ON )
-#define BTLV_MCSS_VANISH_OFF  ( MCSS_VANISH_OFF )
-#define BTLV_MCSS_VANISH_FLIP ( MCSS_VANISH_FLIP )
+typedef enum
+{ 
+  BTLV_MCSS_MEPACHI_ON    = MCSS_MEPACHI_ON,
+  BTLV_MCSS_MEPACHI_OFF   = MCSS_MEPACHI_OFF,
+  BTLV_MCSS_MEPACHI_FLIP  = MCSS_MEPACHI_FLIP,
+}BTLV_MCSS_MEPACHI_FLAG;
+
+typedef enum
+{ 
+  BTLV_MCSS_VANISH_ON   = MCSS_VANISH_ON,
+  BTLV_MCSS_VANISH_OFF  = MCSS_VANISH_OFF,
+  BTLV_MCSS_VANISH_FLIP = MCSS_VANISH_FLIP,
+}BTLV_MCSS_VANISH_FLAG;
+
+typedef enum
+{ 
+  BTLV_MCSS_ANM_STOP_ON   = MCSS_ANM_STOP_ON,
+  BTLV_MCSS_ANM_STOP_OFF  = MCSS_ANM_STOP_OFF,
+}BTLV_MCSS_ANM_STOP_FLAG;
 
 typedef enum{ 
   BTLV_MCSS_STATUS_FLAG_MIGAWARI = 0x00000001,    //‚Ý‚ª‚í‚èƒtƒ‰ƒO
@@ -109,8 +120,8 @@ extern  void            BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
 extern  void            BTLV_MCSS_SetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
-extern  int             BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position );
-extern  void            BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
+extern  BTLV_MCSS_VANISH_FLAG BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position );
+extern  void            BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, BTLV_MCSS_VANISH_FLAG flag );
 extern  void            BTLV_MCSS_GetPokeDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, int position );
 extern  fx32            BTLV_MCSS_GetPokeDefaultScale( BTLV_MCSS_WORK *bmw, int position );
 extern  fx32            BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_MCSS_WORK *bmw, int position, BTLV_MCSS_PROJECTION proj );

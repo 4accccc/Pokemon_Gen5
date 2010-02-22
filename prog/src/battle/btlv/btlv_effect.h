@@ -167,6 +167,8 @@ extern  int               BTLV_EFFECT_GetTrainerIndex( int position );
 extern  void              BTLV_EFFECT_CreateTimer( int game_time, int command_time );
 extern  void              BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE type, BOOL enable, BOOL init );
 extern  BOOL              BTLV_EFFECT_IsZero( BTLV_TIMER_TYPE type );
+extern  BTLV_MCSS_VANISH_FLAG BTLV_EFFECT_GetMcssVanishFlag( BtlvMcssPos position );
+extern  void              BTLV_EFFECT_SetMcssVanishFlag( BtlvMcssPos position, BTLV_MCSS_VANISH_FLAG flag );
 extern  BTLV_CAMERA_WORK* BTLV_EFFECT_GetCameraWork( void );
 extern  BTLV_MCSS_WORK*   BTLV_EFFECT_GetMcssWork( void );
 extern  VMHANDLE*         BTLV_EFFECT_GetVMHandle( void );

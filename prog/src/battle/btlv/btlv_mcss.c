@@ -235,7 +235,7 @@ static  const fx32 poke_scale_rotate_table[]={
 
 static  const fx32 trainer_scale_table[]={
   0x1030,   //POS_TR_AA
-  0x119b,   //POS_TR_BB
+  0x1300,   //POS_TR_BB
   0x0f00,   //POS_TR_A
   0x10e0,   //POS_TR_B
   0x0d00,   //POS_TR_C
@@ -593,7 +593,7 @@ void  BTLV_MCSS_SetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position, int flag )
  * @param[in] position  フラグ操作させたいポケモンの立ち位置
  */
 //============================================================================================
-int   BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position )
+BTLV_MCSS_VANISH_FLAG   BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position )
 {
   int index = BTLV_MCSS_GetIndex( bmw, position );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
@@ -609,7 +609,7 @@ int   BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position )
  * @param[in] flag    バニッシュフラグ（BTLV_MCSS_VANISH_ON、BTLV_MCSS_VANISH_OFF）
  */
 //============================================================================================
-void  BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, int flag )
+void  BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, BTLV_MCSS_VANISH_FLAG flag )
 {
   int index = BTLV_MCSS_GetIndex( bmw, position );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );

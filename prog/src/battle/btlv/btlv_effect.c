@@ -838,6 +838,31 @@ BOOL  BTLV_EFFECT_IsZero( BTLV_TIMER_TYPE type )
 
 //============================================================================================
 /**
+ *  @brief  指定された立ち位置のMCSSのバニッシュフラグを取得
+ *
+ *  @param[in]  position  取得したい立ち位置
+ */
+//============================================================================================
+BTLV_MCSS_VANISH_FLAG  BTLV_EFFECT_GetMcssVanishFlag( BtlvMcssPos position )
+{ 
+  return  BTLV_MCSS_GetVanishFlag( bew->bmw, position );
+}
+
+//============================================================================================
+/**
+ *  @brief  指定された立ち位置のMCSSにバニッシュフラグをセット
+ *
+ *  @param[in]  position  セットしたい立ち位置
+ *  @param[in]  flag      セットするフラグ
+ */
+//============================================================================================
+void    BTLV_EFFECT_SetMcssVanishFlag( BtlvMcssPos position, BTLV_MCSS_VANISH_FLAG flag )
+{ 
+  BTLV_MCSS_SetVanishFlag( bew->bmw, position, flag );
+}
+
+//============================================================================================
+/**
  * @brief  エフェクトで使用されているカメラ管理構造体のポインタを取得
  *
  * @retval bcw カメラ管理構造体
