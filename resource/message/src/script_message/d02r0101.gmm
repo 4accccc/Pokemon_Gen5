@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T19:00:59"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T19:47:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -953,16 +953,16 @@
 さわると　なんとなく　きもちいい</language>
 	</row>
 
-	<row id="msg_d02r0101_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d02r0101_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>･仮メッセージ</comment>
 		<attribute name="キャラ指定">お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん！▼
+		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 もりの　なかは　みつけにくいですが
-おとしものが　おおい　です▽
+おとしものが　おおい　です！[BE:00:ページ切り替え（行送り）]
 よく　さがして　みましょう！</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
+		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 森の中は　みつけにくいですが
-おとしものが　多いです▽
+おとしものが　多いです！[BE:00:ページ切り替え（行送り）]
 よく　探してみましょう！</language>
 	</row>
 
