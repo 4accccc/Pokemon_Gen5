@@ -41,6 +41,9 @@
 #include "app/box2.h"
 #include "savedata/battle_box_save.h"
 
+#include "c_gear/event_cgearget.h"
+#include "savedata/c_gear_data.h" //
+
 // ボックスプロセスデータとコールバック関数
 static void callback_BoxProc( void* work );
 
@@ -158,6 +161,33 @@ VMCMD_RESULT EvCmdGameClearDemo( VMHANDLE *core, void *wk )
   
   VM_End( core );   //スクリプト終了
 
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief C-GEARの動作モードセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallCGearGetDemo( VMHANDLE *core, void *wk )
+{
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
+  CGEAR_SAVEDATA * cgear_sv = CGEAR_SV_GetCGearSaveData( sv );
+  u16 flag = SCRCMD_GetVMWorkValue( core, wk );
+
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  CGEAR_SV_SetCGearONOFF( cgear_sv, TRUE );
+
+  SCRIPT_CallEvent( sc, CGEARGET_EVENT_Start( gsys ) );
   return VMCMD_RESULT_SUSPEND;
 }
 

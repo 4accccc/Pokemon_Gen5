@@ -28,3 +28,8 @@ extern VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk );
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdGameClearDemo( VMHANDLE *core, void *wk );
 
+//--------------------------------------------------------------
+/// CÉMÉAì¸éËÉfÉÇåƒÇ—èoÇµ
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdCallCGearGetDemo( VMHANDLE *core, void *wk );
+

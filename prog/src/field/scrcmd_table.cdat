@@ -681,7 +681,7 @@
   NO_CMD()
 
   //CGearŠÖ˜A
-  DEF_CMD( EvCmdSetCGearFlag, EV_SEQ_SET_CGEAR_FLAG )
+  DEF_CMD( EvCmdCallCGearGetDemo, EV_SEQ_CALL_CGEAR_GET_DEMO )
   NO_CMD()
   NO_CMD()
   NO_CMD()
