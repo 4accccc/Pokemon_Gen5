@@ -31,5 +31,14 @@ static const DEBUG_NUMINPUT_LIST DNI_UnitedNationsList[] = {
   //gmm_id, param, dni_param
  { dni_country_code, 0, &country_param },
 };
+
+static const DEBUG_NUMINPUT_PARAM gold_param = {
+ 0, MY_GOLD_MAX, DebugGetGold, DebugSetGold,
+};
+static const DEBUG_NUMINPUT_LIST DNI_FortuneList[] = {
+  //gmm_id, param, dni_param
+ { dni_gold, 0, &gold_param },
+};
+
 #endif  //PM_DEBUG
 

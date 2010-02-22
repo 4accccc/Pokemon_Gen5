@@ -102,6 +102,9 @@ static GMEVENT * DEBUG_EVENT_FLDMENU_FlagWork(
 //======================================================================
 //データ定義
 //======================================================================
+static u32 DebugGetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+
 #include "debug_numinput.cdat"
 
 static const DEBUG_NUMINPUT_PARAM DNUM_DATA_EventFlag;
@@ -146,6 +149,9 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_Initializer[D_NUMINPUT_MODE_MAX] = 
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_united = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_UnitedNationsList ), DNI_UnitedNationsList, };
 
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Fortune = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_FortuneList ), DNI_FortuneList, };
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -182,6 +188,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_top_effect_encount, (void*)&DATA_eff_enc },
   { dni_top_scenario, (void*)NULL },
   { dni_top_united_nations, (void*)&DATA_united },
+  { dni_top_fortune, (void*)&DATA_Fortune },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -775,6 +782,32 @@ static GMEVENT * DEBUG_EVENT_FLDMENU_FlagWork(
   new_wk->init = init;
 
   return new_event;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief お小遣い値ゲット
+ */
+//--------------------------------------------------------------
+static u32 DebugGetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  MISC * misc;
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+  misc = SaveData_GetMisc( sv );
+  return MISC_GetGold(misc);  
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief お小遣い値セット
+ */
+//--------------------------------------------------------------
+static void DebugSetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  MISC * misc;
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+  misc = SaveData_GetMisc( sv );
+  MISC_SetGold(misc, value);
 }
 
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="saitou" host="W00158" date="2010-02-08T21:06:08"/>
+	<create user="saitou" host="W00158" date="2010-02-22T19:49:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -348,8 +348,15 @@
 	</row>
 
 	<row id="dni_top_united_nations">
+		<comment>国連の行き先を指定</comment>
 		<language name="JPN" width="240">こくれん　いきさき</language>
 		<language name="JPN_KANJI" width="240">国連　行き先</language>
+	</row>
+
+	<row id="dni_top_fortune">
+		<comment>おこづかいとかをそうさ</comment>
+		<language name="JPN" width="240">おこづかいとか</language>
+		<language name="JPN_KANJI" width="240">お小遣いとか</language>
 	</row>
 
 	<row id="dni_effenc_interval" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -435,8 +442,15 @@
 	</row>
 
 	<row id="dni_country_code" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>国コード入力</comment>
 		<language name="JPN" width="240">くにコード</language>
 		<language name="JPN_KANJI" width="240">国コード</language>
+	</row>
+
+	<row id="dni_gold" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>おこづかいそうさ</comment>
+		<language name="JPN" width="240">おこづかい</language>
+		<language name="JPN_KANJI" width="240">お小遣い</language>
 	</row>
 
 	<flowchart-group-list>
