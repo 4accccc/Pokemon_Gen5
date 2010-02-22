@@ -3,6 +3,7 @@
 #  afterを複数指定できるようにパッチ修正  2009.01.16 k.ohno
 #  TWL専用に改造                          2009.04.15 k.ohno
 #  拡張メモリ対応の為にソース整理         2010.01.13 tamada
+#  オーバーレイグループ記述に対応         2010.02.22 tamada
 #----------------------------------------------------------------------------
 
 
@@ -22,6 +23,7 @@ OUTPUT_OVERLAYTEXT  = OVERLAY_DIR + "/overlaymap.txt"
 
 MATCH_KEYWORD	 = /\A#===>/			# 行頭が「#===>」
 MATCH_LIB        = /^#LIB=>/            # ライブラリを含める場合
+MATCH_GROUP     = /^#GROUP_OVERLAY_/
 MATCH_OVERLAYSRC = /^SRCS_OVERLAY_.*/	# 行頭から「SRCS_OVERLAY_...」
 MATCH_ENDSRC	 = /[\s\t].*\\\z/				# 行末が「\」
 MATCH_ERROR      = /\\\s/
@@ -107,17 +109,40 @@ BOTTOM_LSFFILE2
 #----------------------------------------------------------------------------
 class OverlayInfo
 
-  attr_reader :name, :put_name, :afterList, :source_name, :lib_name
+  attr_reader :name, :put_name, :afterList, :source_name, :lib_name, :group_name
 
-  def initialize( name, afterList, source_name, lib_name )
+  def initialize( name, afterList, source_name, lib_name, group_name )
     @name = name
     @put_name = @name.downcase.sub(/srcs_overlay_/,"")
     @afterList = afterList
     @source_name = source_name
     @lib_name = lib_name
+    @group_name = group_name
   end
 
-  def putOverlaySection()
+  def listup_group_sections( sections, group_name )
+    sections.map{|section|
+      #p section.group_name
+      if section.group_name == group_name then
+        #puts "HIT! #{group_name} in #{section.put_name}"
+        section.put_name
+      end
+    }
+  end
+
+  def putAfters( afterList )
+    output = ""
+    afterList.each{|afline|
+      if afline == nil then next end
+      if DEFAULT_SECTION_NAME.include?( afline ) == false then
+        afline = afline.downcase.sub(/srcs_overlay_/,"")
+      end
+      output += sprintf( "\tAfter\t%s\n", afline )
+    }
+    return output
+  end
+
+  def putOverlaySection( sections )
     
     output = sprintf("Overlay %s\n{\n", @put_name )
 
@@ -125,10 +150,18 @@ class OverlayInfo
     # ターゲットにする。ただし、予約語として「main,ITCM,DTCM」という文字列が定義されているので
     # これらは避けるようにする
     @afterList.each { |afline|
-      if DEFAULT_SECTION_NAME.include?( afline ) == false then
-        afline = afline.downcase.sub(/srcs_overlay_/,"")
+      #グループ名の場合、解析する
+      if afline =~/^GROUP_OVERLAY_/ then
+        lists =listup_group_sections( sections, afline )
+        #p afline
+        #p lists
+        output += putAfters( lists )
+      else
+        if DEFAULT_SECTION_NAME.include?( afline ) == false then
+          afline = afline.downcase.sub(/srcs_overlay_/,"")
+        end
+        output += sprintf( "\tAfter\t%s\n", afline )
       end
-      output += sprintf( "\tAfter\t%s\n", afline )
     }
     output += sprintf("\tObject")
     @source_name.each_with_index{ | name, index |
@@ -170,10 +203,11 @@ end
 #----------------------------------------------------------------------------
 sections = Array.new
 
-section_name = DEFAULT_SECTION_NAME.dup
-source_name          = nil
-lib_name          = Array.new
-afterList = []
+section_name  = DEFAULT_SECTION_NAME.dup
+source_name   = nil
+group_name    = nil
+lib_name      = Array.new
+afterList     = []
 
 USERNAME_SKIP = 1     #解釈しない
 USERNAME_INSERT = 0   #解釈する
@@ -221,7 +255,10 @@ File.readlines(MAKE_PROG_FILE).each_with_index{ |line, line_count|
     _str = m.post_match.split.first.sub(/[\s\t]/,"")
     if section_name.include?(_str) == true then
       afterList << m.post_match.split.first.sub(/[\s\t]/,"")
+    elsif _str =~/^GROUP_OVERLAY_/
+      afterList << _str
     else
+      p _str
       printf "「%s」 というオーバーレイソ\ースは定義されていません\n",_str
       p section_name
       exit 1
@@ -234,6 +271,20 @@ File.readlines(MAKE_PROG_FILE).each_with_index{ |line, line_count|
     line =~ /(\S+)\s+(\S+)/
     lib_name << $2
     next
+  end
+
+  #グループ所属定義の取得
+  if line.match(MATCH_GROUP) then
+    name = line.chomp.sub(MATCH_GROUP, "GROUP_OVERLAY_")
+    if group_name == nil then
+      group_name = name
+      next
+    else
+      printf "Error!!\n"
+      printf "ひとつのオーバーレイセクションに複数のグループ定義があります！\n"
+      printf "(%s) (%s)\n", group_name, name 
+      exit 1
+    end
   end
 
   #上記意外の＃から始まる行はコメントとみなす
@@ -265,8 +316,9 @@ File.readlines(MAKE_PROG_FILE).each_with_index{ |line, line_count|
 
     # 「\」が無い行がでてきたら終わりなので、取得終了
     if line.match(MATCH_ENDSRC)==nil || line=="" then
-      sections << OverlayInfo.new( section_name.last, afterList, source_name, lib_name )
+      sections << OverlayInfo.new( section_name.last, afterList, source_name, lib_name, group_name )
       source_name = nil
+      group_name = nil
       lib_name = []
       afterList = []
     end
@@ -284,7 +336,7 @@ total_output = ""
 total_output += default_lsf
 total_output += "#ここから下はoverlaytool.rbで自動生成されています\n\n"
 sections.each{|overlay_info|
-  total_output += overlay_info.putOverlaySection()
+  total_output += overlay_info.putOverlaySection( sections )
 }
 total_output.gsub!("$EX_MEM_START_ADRS","0x02400000")
 
