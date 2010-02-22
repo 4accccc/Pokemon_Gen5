@@ -57,7 +57,7 @@ extern void WORDSET_RegisterTrTypeName( WORDSET* wordset, u32 bufID, TrainerID t
 extern void WORDSET_RegisterTrainerName( WORDSET* wordset, u32 bufID, TrainerID trID );
 extern void WORDSET_RegisterPokeStatusName( WORDSET* wordset, u32 bufID, u8 statusID );
 extern void WORDSET_RegisterItemPocketName( WORDSET* wordset, u32 bufID, u32 pocketID );
-extern void WORDSET_RegisterPlaceName( WORDSET* wordset, u32 bufID, u32 zoneID );
+extern void WORDSET_RegisterPlaceName( WORDSET* wordset, u32 bufID, u32 placeNameID );
 extern void WORDSET_RegisterBoxName( WORDSET* wordset, u32 bufID, const BOX_MANAGER* box, u32 trayNumber );
 extern void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power );
 extern void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID );
