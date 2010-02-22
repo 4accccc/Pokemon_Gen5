@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:19:21"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T15:29:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="507" top="162" right="1212" bottom="790" maximized="no" rayout="Vertical2">
+	<dialog left="1524" top="318" right="2229" bottom="946" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="737" top="230" right="1210" bottom="628" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1393,6 +1393,38 @@ const u8 str_konanoryou[]
 		<comment>ポケットに何もない時に表示</comment>
 		<language name="JPN" width="160">もっていません</language>
 		<language name="JPN_KANJI" width="160">持っていません</language>
+	</row>
+
+	<row id="msg_bag_n_001w" back-color="#80ff80,,,#80ff80,,#80ff80,,#ffff00,,,#ffff00,#80ff80,,,,,,">
+		<comment>ダークストーン</comment>
+		<language name="JPN" width="160">……ダークストーンは
+なんの　はんのうも　しめさない</language>
+		<language name="JPN_KANJI" width="160">……ダークストーンは
+なんの　反応も　示さない</language>
+	</row>
+
+	<row id="msg_bag_n_001b" back-color="#80ff80,,,#80ff80,,#80ff80,,#ffff00,,,#ffff00,#80ff80,,,,,,">
+		<comment>ライトストーン</comment>
+		<language name="JPN" width="160">……ライトストーンは
+なんの　はんのうも　しめさない</language>
+		<language name="JPN_KANJI" width="160">……ライトストーンは
+なんの　反応も　示さない</language>
+	</row>
+
+	<row id="msg_bag_n_002w" back-color="#80ff80,,,#80ff80,,#80ff80,,#ffff00,,,#ffff00,#80ff80,,,,,,">
+		<comment>ダークストーン</comment>
+		<language name="JPN" width="160">ダークストーンが
+はげしく　かがやきだす……！▼</language>
+		<language name="JPN_KANJI" width="160">ダークストーンが
+はげしく　輝きだす……！▼</language>
+	</row>
+
+	<row id="msg_bag_n_002b" back-color="#80ff80,,,#80ff80,,#80ff80,,#ffff00,,,#ffff00,#80ff80,,,,,,">
+		<comment>ライトストーン</comment>
+		<language name="JPN" width="160">ライトストーンが
+はげしく　かがやきだす……！▼</language>
+		<language name="JPN_KANJI" width="160">ライトストーンが
+はげしく　輝きだす……！▼</language>
 	</row>
 
 	<flowchart-group-list>
