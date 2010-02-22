@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-18T12:02:12"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-22T19:30:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1013" top="111" right="1513" bottom="616" maximized="no" rayout="Vertical2">
+	<dialog left="887" top="110" right="1387" bottom="615" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="1037" top="67" right="1510" bottom="465" visible="no"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="492"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,10 +297,14 @@
 ・ミュージカル確認用
 　テスト受付メッセージ</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN">ポケモンミュージカルへ　ようこそ！
-ミュージカルに　さんかされますか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">ポケモンミュージカルへ　ようこそ！
-ミュージカルに　参加されますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN">ポケモンミュージカルへ　ようこそ！▼
+こちらでは　おひとりさま　からでも
+ミュージカルに　さんかできます▼
+ミュージカルに　さんかされますか？▼</language>
+		<language name="JPN_KANJI">ポケモンミュージカルへ　ようこそ！▼
+こちらでは　お一人さま　からでも
+ミュージカルに　参加できます▼
+ミュージカルに　参加されますか？▼</language>
 	</row>
 
 	<row id="msg_musical_test_02">
@@ -308,8 +312,8 @@
 ・ミュージカル確認用
 　テスト受付メッセージ</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN">それでは　ひかえしつへ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">それでは　控え室へ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN">それでは　ひかえしつへ　どうぞ！▼</language>
+		<language name="JPN_KANJI">それでは　控え室へ　どうぞ！▼</language>
 	</row>
 
 	<row id="msg_musical_test_03">
@@ -333,6 +337,17 @@
 		<language name="JPN_KANJI">やあ　僕　脚本家！[BE:01:ページ切り替え（クリア）]
 参加したい　演目が　あれば
 僕が　演目を　変更するよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_musical_test_05">
+		<comment>受付
+メッセージ後、ポケリストへ
+ポケモン選択後セーブ処理
+やめた場合はmsg_musical_test_03へ</comment>
+		<language name="JPN" width="256">それでは　さんかする　ポケモンを
+えらんでください</language>
+		<language name="JPN_KANJI" width="256">それでは　参加する　ポケモンを
+選んでください</language>
 	</row>
 
 	<row id="msg_musical_fan_cheer_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -575,7 +590,7 @@
 		<language name="JPN_KANJI" width="256">つごうの　悪くなった
 メンバーが　います▼
 もう一度　最初から
-通信を　やり直して下さい</language>
+通信を　やり直してください</language>
 	</row>
 
 	<row id="msg_musical_recept_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -610,7 +625,7 @@
 参加可能な　ポケモンが　いません！▼
 ミュージカルに　参加可能な
 ポケモンを　つれて▼
-もう一度　お越し下さい</language>
+もう一度　お越しください</language>
 	</row>
 
 	<row id="msg_musical_recept_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -620,11 +635,12 @@
 		<language name="JPN" width="256">それでは　さんかする　ポケモンを
 えらんでください</language>
 		<language name="JPN_KANJI" width="256">それでは　参加する　ポケモンを
-選んで下さい</language>
+選んでください</language>
 	</row>
 
 	<row id="msg_musical_recept_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>通信手段選択
+【赤外線か無線かを選択】
 メッセージ後msg_musical_recept_05と
 msg_musical_recept_06を
 選択肢として表示</comment>
@@ -652,7 +668,7 @@ msg_musical_recept_06を
 
 	<row id="msg_musical_recept_ir_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>赤外線通信 
-グループ・リーダー選択
+【グループ・リーダー選択】
 メッセージ後グループ・リーダー選択肢
 選択後msg_musical_recept_ir_02</comment>
 		<language name="JPN" width="256">おともだちと　はなしあって
@@ -671,80 +687,6 @@ msg_musical_recept_06を
 かいししますか？</language>
 		<language name="JPN_KANJI" width="256">赤外線通信を
 開始しますか？</language>
-	</row>
-
-	<row id="msg_musical_recept_ir_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>赤外線通信画移行後
-リーダーのみメッセージ
-タッチパネルにmsg_musical_program_return表示</comment>
-		<language name="JPN" width="256">グループ　ぜんいんと
-つうしん　してください</language>
-		<language name="JPN_KANJI" width="256">グループ　全員と
-通信して下さい</language>
-	</row>
-
-	<row id="msg_musical_recept_ir_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>赤外線通信画移行後
-グループのみメッセージ
-タッチパネルにmsg_musical_program_return表示</comment>
-		<language name="JPN" width="256">リーダーと
-つうしん　してください</language>
-		<language name="JPN_KANJI" width="256">リーダーと
-通信して下さい</language>
-	</row>
-
-	<row id="msg_musical_recept_ir_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>赤外線通信中
-「やめる」を選んだ場合のメッセージ</comment>
-		<language name="JPN" width="256">せきがいせんつうしんを
-ちゅうだん　しますか？</language>
-		<language name="JPN_KANJI" width="256">赤外線通信を
-中断しますか？</language>
-	</row>
-
-	<row id="msg_musical_recept_ir_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>赤外線通信中
-通信成功人数をカウント
-リーダーがグループと一人でも通信が
-成功したらmsg_musical_recept_ir_03の
-代わりに表示
-タッチパネルにmsg_musical_program_okを追加表示</comment>
-		<language name="JPN" width="256">　にんと　つうしんちゅう
-がめん　タッチで　すすめます</language>
-		<language name="JPN_KANJI" width="256">　にんと　通信中
-画面タッチで　進めます</language>
-	</row>
-
-	<row id="msg_musical_recept_ir_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>赤外線通信中
-グループがリーダーと通信が
-成功したらmsg_musical_recept_ir_04の
-代わりに表示</comment>
-		<language name="JPN" width="256">リーダーの　そうさを
-しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">リーダーの　操作を
-しばらく　お待ち下さい</language>
-	</row>
-
-	<row id="msg_musical_recept_ir_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>リーダーが決定or４人集まった場合にリーダーの
-画面のみで表示
-選択肢はい・いいえを表示</comment>
-		<language name="JPN" width="256">このメンバーで　よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">このメンバーで　よろしいですか？</language>
-	</row>
-
-	<row id="msg_musical_recept_ir_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>赤外線通信中
-タッチパネルの「やめる」を押した場合
-選択肢はい・いいえを表示
-中断した場合はmsg_musical_test_03を表示
-既にマッチング済みで中断した場合は
-msg_musical_recept_cancelを他のメンバーに表示</comment>
-		<language name="JPN" width="256">せきがいせんつうしんを
-ちゅうだん　しますか？</language>
-		<language name="JPN_KANJI" width="256">赤外線通信を
-中断しますか？</language>
 	</row>
 
 	<row id="msg_musical_recept_wl_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -770,119 +712,14 @@ msg_musical_recept_cancelを他のメンバーに表示</comment>
 開始しますか？</language>
 	</row>
 
-	<row id="msg_musical_recept_wl_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-リーダーのみメッセージ
-メンバーが居る状態でＡ…msg_musical_recept_wl_05
-メンバーが居ない状態でＡ…msg_musical_recept_wl_11
-Ｂ…msg_musical_recept_wl_07</comment>
-		<language name="JPN" width="256">メンバーが　そろったら
-Ａボタン　…すすむ　Ｂボタン　…やめる</language>
-		<language name="JPN_KANJI" width="256">メンバーが　そろったら
-Ａボタン　…すすむ　Ｂボタン　…やめる</language>
-	</row>
-
-	<row id="msg_musical_recept_wl_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-無線通信中
-グループのみメッセージ
-リーダーを選択でmsg_musical_recept_wl_06</comment>
-		<language name="JPN" width="256">どのグループに　はいりますか？</language>
-		<language name="JPN_KANJI" width="256">どのグループに　入りますか？</language>
-	</row>
-
-	<row id="msg_musical_recept_wl_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-はい…受付終了msg_musical_recept_07
-いいえ…msg_musical_recept_wl_03に戻る</comment>
-		<language name="JPN" width="256">このメンバーで　よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">このメンバーで　よろしいですか？</language>
-	</row>
-
-	<row id="msg_musical_recept_wl_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-リーダー選択後の確認
-はい…msg_musical_recept_wl_10
-いいえ…msg_musical_recept_wl_04</comment>
-		<language name="JPN" width="256">このグループに　はいりますか？</language>
-		<language name="JPN_KANJI" width="256">このグループに　はいりますか？</language>
-	</row>
-
-	<row id="msg_musical_recept_wl_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-はい…msg_musical_recept_wl_13
-いいえ…msg_musical_recept_wl_03</comment>
-		<language name="JPN" width="256">メンバーの　ぼしゅうを　やめますか？</language>
-		<language name="JPN_KANJI" width="256">メンバーの　募集を　やめますか？</language>
-	</row>
-
-	<row id="msg_musical_recept_wl_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-はい…msg_musical_test_03
-いいえ…msg_musical_recept_wl_04</comment>
-		<language name="JPN" width="256">グループに　はいるのを　やめますか？</language>
-		<language name="JPN_KANJI" width="256">グループに　入るのを　やめますか？</language>
-	</row>
-
-	<row id="msg_musical_recept_wl_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-リーダーに応募があった状態
-4人未満ではい…msg_musical_recept_wl_03
-4人ではい…msg_musical_recept_wl_05
-いいえ…msg_musical_recept_wl_03</comment>
-		<language name="JPN" width="256">さんかおうおぼが　きました
-メンバーに　くわえますか？</language>
-		<language name="JPN_KANJI" width="256">参加応募が　きました
-メンバーに　加えますか？</language>
-	</row>
-
-	<row id="msg_musical_recept_wl_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-グループ入り承認後の待ち時間中にグループの
-プレイヤーに対して表示</comment>
-		<language name="JPN" width="256">リーダーの　そうさを
-しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">リーダーの　そうさを
-しばらく　おまちください</language>
-	</row>
-
-	<row id="msg_musical_recept_wl_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-通信相手が1人もいない状態で
-Ａボタンを押した場合
-続いてmsg_musical_recept_wl_07を表示</comment>
-		<language name="JPN" width="256">メンバーが　ひとりも
-あつまっていません！</language>
-		<language name="JPN_KANJI" width="256">メンバーが　１人も
-集まっていません！</language>
-	</row>
-
-	<row id="msg_musical_recept_wl_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-グループに入った後、リーダーからグループ入りを
-拒否された場合
-続いて引き続きmsg_musical_recept_wl_04</comment>
-		<language name="JPN" width="256">メンバーに　はいるのを
-ことわられました</language>
-		<language name="JPN_KANJI" width="256">メンバーに　入るのを
-断られました</language>
-	</row>
-
-	<row id="msg_musical_recept_wl_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>無線通信中
-リーダーが通信をやめた場合
-続いてmsg_musical_test_03を表示し、終了
-通信済みのメンバーにはmsg_musical_cancel</comment>
-		<language name="JPN" width="256">つうしんを　キャンセルしました</language>
-		<language name="JPN_KANJI" width="256">通信を　キャンセルしました</language>
-	</row>
-
 	<row id="msg_musical_recept_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>通信受付
 赤外線通信orワイヤレス通信が成功して終了した場合
 アプリへ移行</comment>
-		<language name="JPN" width="256">それでは　こちらへ　どうぞ！</language>
-		<language name="JPN_KANJI" width="256">それでは　こちらへ　どうぞ！</language>
+		<language name="JPN" width="256">おまたせいたしました
+それでは　こちらへ　どうぞ！▼</language>
+		<language name="JPN_KANJI" width="256">おまたせいたしました
+それでは　こちらへ　どうぞ！▼</language>
 	</row>
 
 	<flowchart-group-list>

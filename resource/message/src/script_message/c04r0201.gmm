@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-02-21T18:35:34"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-21T19:28:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="15" top="8" right="515" bottom="628" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="445"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="250"/>
-		<band id="2" index="3" style="0000" width="286"/>
-		<band id="3" index="4" style="0000" width="409"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="240"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -367,11 +367,13 @@
 		<language name="JPN" width="256">その　グッズケースの　なかに
 ポケモンに　つけてあげられる▽
 グッズが　はいっているんだよ！▼
-それでは　ポケモンを　えらんでくれ！▼</language>
+では　まずは　ポケモンを
+えらんで　みたまえ！▼</language>
 		<language name="JPN_KANJI" width="256">その　グッズケースの　中に
 ポケモンに　つけてあげられる▽
 グッズが　入っているんだよ！▼
-それでは　ポケモンを　選んでくれ！▼</language>
+では　まずは　ポケモンを
+選んで　みたまえ！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_demo_03a" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
@@ -408,29 +410,31 @@
 		<comment>♂
 ・メッセージ表示後、再度ポケモン選択画面へ
 
-[100221斉藤マ追加]仮メッセージです</comment>
+[100221斉藤マ追加]仮メッセージです
+[100221岩尾和昌]メッセージ修正しました。</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">そんなこと　いわずに
-ドレスアップしてくれよ！▼
-それそれ
-れっつ　どれすあっぷ！▼</language>
+ドレスアップ　しておくれよ！▼
+それそれ　きをとりなおして
+レッツ　ドレスアップ！▼</language>
 		<language name="JPN_KANJI" width="256">そんなこと　いわずに
-ドレスアップしてくれよ！▼
-それそれ
-れっつ　どれすあっぷ！▼</language>
+ドレスアップ　しておくれよ！▼
+それそれ　気を取りなおして
+レッツ　ドレスアップ！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_demo_03d" text-color="#ff0000,,,#ff0000,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・メッセージ表示後、再度ポケモン選択画面へ
 
-[100221斉藤マ追加]仮メッセージです</comment>
+[100221斉藤マ追加]仮メッセージです
+[100221岩尾和昌]メッセージ修正しました。</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
-		<language name="JPN" width="256">ではでは
+		<language name="JPN" width="256">それでは　さっそく
 レッツ　ドレスアップ！▼</language>
-		<language name="JPN_KANJI" width="256">ではでは
+		<language name="JPN_KANJI" width="256">それでは　さっそく
 レッツ　ドレスアップ！▼</language>
 	</row>
 
