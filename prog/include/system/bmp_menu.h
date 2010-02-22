@@ -39,6 +39,8 @@ typedef struct {
 	PRINT_UTIL *print_util; //表示に使用するプリントユーティリティ
 	PRINT_QUE *print_que;	//表示に使用するプリントキュー
 	GFL_FONT *font_handle;	//表示に使用するフォントハンドル
+
+  BOOL  b_trans;  // PRINT_QUE処理完了後に転送していればTRUE
 }BMPMENU_HEADER;
 
 typedef struct _BMPMENU_WORK	BMPMENU_WORK;

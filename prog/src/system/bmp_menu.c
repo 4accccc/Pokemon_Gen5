@@ -656,6 +656,9 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
   hed.font_size_x = hed.font_size_y;
   PRINT_UTIL_Setup(hed.print_util, hed.win);
   hed.print_que = PRINTSYS_QUE_Create( heap );
+  
+  hed.b_trans   = FALSE;
+
 //  GFL_MSGDATA *msgdata; //表示に使用するメッセージバッファ
 
   //  GFL_BG_BmpWinAddEx( ini, hed.win, data );
@@ -687,7 +690,13 @@ u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
   //  u32 ret = BmpMenu_MainSE( mw,SE_DECIDE );
   u32 ret = BmpMenu_Main( mw );
 
-  PRINTSYS_QUE_Main(mw->hed.print_que);
+  BOOL b_finish = PRINTSYS_QUE_Main(mw->hed.print_que);
+  
+  if( (!(mw->hed.b_trans)) && b_finish )
+  {
+    GFL_BMPWIN_TransVramCharacter( mw->hed.win );
+    mw->hed.b_trans = TRUE;
+  }
 
   if( ret != BMPMENU_NULL ){
     BmpMenu_YesNoMenuExit( mw );

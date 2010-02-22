@@ -152,7 +152,7 @@ enum
 };
 
 // 1•bŠÔ‚ÌƒtƒŒ[ƒ€”
-#define FPS (30)
+#define FPS (60)
 
 // •¶š”
 #define STRBUF_FIX_TIME_LENGTH       (  8)  // ??:??
