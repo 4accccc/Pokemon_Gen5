@@ -290,7 +290,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_topic_0_title,
+    str_topic_0,
   }, 
   { // í≤ç∏çÄñ⁄1
     MAIN_BG_FONT,
@@ -305,7 +305,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_topic_1_title,
+    str_topic_1,
   }, 
   { // í≤ç∏çÄñ⁄2
     MAIN_BG_FONT,
@@ -320,7 +320,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_topic_2_title,
+    str_topic_2,
   }, 
   { // í≤ç∏çÄñ⁄3
     MAIN_BG_FONT,
@@ -335,7 +335,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_topic_3_title,
+    str_topic_3,
   }, 
   { // í≤ç∏çÄñ⁄4
     MAIN_BG_FONT,
@@ -350,7 +350,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_topic_4_title,
+    str_topic_4,
   }, 
   { // í≤ç∏çÄñ⁄5
     MAIN_BG_FONT,
@@ -365,7 +365,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_topic_5_title,
+    str_topic_5,
   }, 
   { // í≤ç∏çÄñ⁄6
     MAIN_BG_FONT,
@@ -380,7 +380,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_topic_6_title,
+    str_topic_6,
   }, 
   { // í≤ç∏çÄñ⁄7
     MAIN_BG_FONT,
@@ -395,7 +395,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_topic_7_title,
+    str_topic_7,
   }, 
   { // í≤ç∏çÄñ⁄8
     MAIN_BG_FONT,
@@ -410,7 +410,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_topic_8_title,
+    str_topic_8,
   }, 
   { // í≤ç∏çÄñ⁄9
     MAIN_BG_FONT,
@@ -425,7 +425,7 @@ static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] =
     TOPIC_BUTTON_STRING_COLOR_S,
     TOPIC_BUTTON_STRING_COLOR_B,
     MESSAGE_QUESTIONNAIRE,
-    str_topic_9_title,
+    str_topic_9,
   }, 
 };
 

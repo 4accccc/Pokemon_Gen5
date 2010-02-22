@@ -1,0 +1,495 @@
+////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief  調査レーダー 調査内容確認画面のデータ定義
+ * @file   research_check_data.cdat
+ * @author obata
+ * @date   2010.02.13
+ */
+//////////////////////////////////////////////////////////////////////////////////////////////// 
+#include <gflib.h>
+#include "bg_font.h"
+#include "research_check_index.h"
+#include "research_common.h"
+#include "arc/arc_def.h"                    // for ARCID_xxxx
+#include "topic_id.h"                       // for TOPIC_ID_xxxx
+#include "obj_NANR_LBLDEFS.h"               // for NANR_obj_xxxx
+#include "arc/message.naix"                 // for NARC_message_xxxx
+#include "arc/research_radar_graphic.naix"  // for NARC_research_radar_xxxx
+#include "msg/msg_research_radar.h"         // for str_xxxx
+#include "msg/msg_questionnaire.h"          // for str_xxxx
+
+
+//==============================================================================================
+// ■メッセージ
+//==============================================================================================
+
+// 読み込むファイル
+static const u32 MessageDataID[ MESSAGE_NUM ] = 
+{
+  NARC_message_research_radar_dat,  // 定型文
+  NARC_message_questionnaire_dat,   // アンケート関連
+}; 
+
+
+//==============================================================================================
+// ■メニュー項目 表示パラメータ
+//==============================================================================================
+typedef struct
+{ 
+  u8  left_chara;         // 左上 x 座標 ( キャラクタ単位 )
+  u8  top_chara;          // 左上 y 座標 ( キャラクタ単位 )
+  u8  width_chara;        // 幅 ( キャラクタ単位 )
+  u8  height_chara;       // 高さ ( キャラクタ単位 ) 
+  int left_dot;           // 左上 x 座標 ( ドット単位 )
+  int top_dot;            // 左上 y 座標 ( ドット単位 )
+  int width_dot;          // 幅 ( ドット単位 )
+  int height_dot;         // 高さ ( ドット単位 ) 
+  int leftCursorOffsetX;  // 左カーソルの表示 x オフセット ( ドット単位 )
+  int leftCursorOffsetY;  // 左カーソルの表示 y オフセット ( ドット単位 )
+  int rightCursorOffsetX; // 右カーソルの表示 x オフセット ( ドット単位 )
+  int rightCursorOffsetY; // 右カーソルの表示 y オフセット ( ドット単位 )
+
+} MENU_ITEM_DRAW_PARAM;
+
+static const MENU_ITEM_DRAW_PARAM MenuItemDrawParam[ MENU_ITEM_NUM ] = 
+{
+  { // MENU_ITEM_QUESTION - 質問
+    QUESTION_X,
+    QUESTION_Y,
+    QUESTION_WIDTH,
+    QUESTION_HEIGHT,
+    QUESTION_X * DOT_PER_CHARA,
+    QUESTION_Y * DOT_PER_CHARA,
+    QUESTION_WIDTH * DOT_PER_CHARA,
+    QUESTION_HEIGHT * DOT_PER_CHARA,
+    0,
+    0,
+    QUESTION_WIDTH * DOT_PER_CHARA,
+    0,
+  },
+  { // MENU_ITEM_ANSWER - 回答
+    ANSWER_UPPER_X,
+    ANSWER_UPPER_Y,
+    ANSWER_UPPER_WIDTH,
+    ANSWER_UPPER_HEIGHT + ANSWER_LOWER_HEIGHT,
+    ANSWER_UPPER_X * DOT_PER_CHARA,
+    ANSWER_UPPER_Y * DOT_PER_CHARA,
+    ANSWER_UPPER_WIDTH * DOT_PER_CHARA,
+    (ANSWER_UPPER_HEIGHT + ANSWER_LOWER_HEIGHT) * DOT_PER_CHARA,
+    0,
+    0,
+    ANSWER_UPPER_WIDTH * DOT_PER_CHARA,
+    0,
+  },
+  { // MENU_ITEM_MY_ANSWER - 自分の回答
+    MY_ANSWER_X,
+    MY_ANSWER_Y,
+    MY_ANSWER_WIDTH,
+    MY_ANSWER_HEIGHT,
+    MY_ANSWER_X * DOT_PER_CHARA,
+    MY_ANSWER_Y * DOT_PER_CHARA,
+    MY_ANSWER_WIDTH * DOT_PER_CHARA,
+    MY_ANSWER_HEIGHT * DOT_PER_CHARA,
+    0,
+    0,
+    MY_ANSWER_WIDTH * DOT_PER_CHARA,
+    0,
+  },
+  { // MENU_ITEM_COUNT - 回答人数
+    COUNT_X,
+    COUNT_Y,
+    COUNT_WIDTH,
+    COUNT_HEIGHT,
+    COUNT_X * DOT_PER_CHARA,
+    COUNT_Y * DOT_PER_CHARA,
+    COUNT_WIDTH * DOT_PER_CHARA,
+    COUNT_HEIGHT * DOT_PER_CHARA,
+    0,
+    0,
+    COUNT_WIDTH * DOT_PER_CHARA,
+    0,
+  },
+};
+
+
+//==============================================================================================
+// ■BG
+//==============================================================================================
+
+//-------------------
+// □BG コントロール
+//-------------------
+// SUB-BG ( ウィンドウ面 )
+static const GFL_BG_BGCNT_HEADER SubBGControl_WINDOW = 
+{
+  0, 0,					          // 初期表示位置
+  0x800,						      // スクリーンバッファサイズ
+  0,							        // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+  GX_BG_COLORMODE_16,			// カラーモード
+  GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
+  GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+  SUB_BG_PRIORITY_WINDOW, // 表示プライオリティー
+  0,							        // エリアオーバーフラグ
+  0,							        // DUMMY
+  FALSE,						      // モザイク設定
+}; 
+
+// SUB-BG ( フォント面 )
+static const GFL_BG_BGCNT_HEADER SubBGControl_FONT = 
+{
+  0, 0,					          // 初期表示位置
+  0x800,						      // スクリーンバッファサイズ
+  0,							        // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+  GX_BG_COLORMODE_16,			// カラーモード
+  GX_BG_SCRBASE_0x1800,		// スクリーンベースブロック
+  GX_BG_CHARBASE_0x10000,	// キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+  SUB_BG_PRIORITY_FONT,   // 表示プライオリティー
+  0,							        // エリアオーバーフラグ
+  0,							        // DUMMY
+  FALSE,						      // モザイク設定
+}; 
+
+// MAIN-BG ( ウィンドウ面 )
+static const GFL_BG_BGCNT_HEADER MainBGControl_WINDOW = 
+{
+  0, 0,					          // 初期表示位置
+  0x800,						      // スクリーンバッファサイズ
+  0,							        // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+  GX_BG_COLORMODE_16,			// カラーモード
+  GX_BG_SCRBASE_0x0800,		// スクリーンベースブロック
+  GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+  MAIN_BG_WINDOW_PRIORITY,// 表示プライオリティー
+  0,							        // エリアオーバーフラグ
+  0,							        // DUMMY
+  FALSE,						      // モザイク設定
+}; 
+
+// MAIN-BG ( フォント面 )
+static const GFL_BG_BGCNT_HEADER MainBGControl_FONT = 
+{
+  0, 0,					          // 初期表示位置
+  0x800,						      // スクリーンバッファサイズ
+  0,							        // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+  GX_BG_COLORMODE_16,			// カラーモード
+  GX_BG_SCRBASE_0x1800,		// スクリーンベースブロック
+  GX_BG_CHARBASE_0x10000,	// キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+  MAIN_BG_FONT_PRIORITY,  // 表示プライオリティー
+  0,							        // エリアオーバーフラグ
+  0,							        // DUMMY
+  FALSE,						      // モザイク設定
+}; 
+
+//-----------------------
+// □BGFont オブジェクト
+//-----------------------
+typedef struct
+{
+  u8            BGFrame;    // 対象BGフレーム
+  u8            posX;       // x座標 (キャラクター単位)
+  u8            posY;       // x座標 (キャラクター単位)
+  u8            sizeX;      // xサイズ (キャラクター単位)
+  u8            sizeY;      // yサイズ (キャラクター単位)
+  u8            offsetX;    // 書き込み先x座標 (ドット単位)
+  u8            offsetY;    // 書き込み先y座標 (ドット単位)
+  u8            paletteNo;  // 使用パレット番号
+  u8            colorNo_L;  // 文字のカラー番号
+  u8            colorNo_S;  // 影のカラー番号
+  u8            colorNo_B;  // 背景のカラー番号
+  MESSAGE_INDEX messageIdx; // 参照するメッセージデータ
+  u32           stringIdx;  // 使用する文字列
+} BG_FONT_INIT_DATA;
+
+static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] = 
+{
+  { // 上画面 タイトル
+    SUB_BG_FONT,             // 対象BGフレーム
+    TITLE_X,                 // x座標 (キャラクター単位)
+    TITLE_Y,                 // x座標 (キャラクター単位)
+    TITLE_WIDTH,             // xサイズ (キャラクター単位)
+    TITLE_HEIGHT,            // yサイズ (キャラクター単位)
+    TITLE_STRING_OFFSET_X,   // 書き込み先x座標 (ドット単位)
+    TITLE_STRING_OFFSET_Y,   // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,     // 使用パレット番号
+    TITLE_STRING_COLOR_L,    // 文字のカラー番号
+    TITLE_STRING_COLOR_S,    // 影のカラー番号
+    TITLE_STRING_COLOR_B,    // 背景のカラー番号
+    MESSAGE_STATIC,          // 参照するメッセージデータ
+    str_select_title,        // 使用する文字列
+  },
+  { // 上画面 調査項目の補足文
+    SUB_BG_FONT,                    // 対象BGフレーム
+    TOPIC_CAPTION_X,                // x座標 (キャラクター単位)
+    TOPIC_CAPTION_Y,                // x座標 (キャラクター単位)
+    TOPIC_CAPTION_WIDTH,            // xサイズ (キャラクター単位)
+    TOPIC_CAPTION_HEIGHT,           // yサイズ (キャラクター単位)
+    TOPIC_CAPTION_STRING_OFFSET_X,  // 書き込み先x座標 (ドット単位)
+    TOPIC_CAPTION_STRING_OFFSET_Y,  // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,            // 使用パレット番号
+    TOPIC_CAPTION_STRING_COLOR_L,   // 文字のカラー番号
+    TOPIC_CAPTION_STRING_COLOR_S,   // 影のカラー番号
+    TOPIC_CAPTION_STRING_COLOR_B,   // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,          // 参照するメッセージデータ
+    0,                              // 使用する文字列
+  }, 
+  { // 上画面 質問の補足文
+    SUB_BG_FONT,                       // 対象BGフレーム
+    QUESTION_CAPTION_X,                // x座標 (キャラクター単位)
+    QUESTION_CAPTION_Y,                // x座標 (キャラクター単位)
+    QUESTION_CAPTION_WIDTH,            // xサイズ (キャラクター単位)
+    QUESTION_CAPTION_HEIGHT,           // yサイズ (キャラクター単位)
+    QUESTION_CAPTION_STRING_OFFSET_X,  // 書き込み先x座標 (ドット単位)
+    QUESTION_CAPTION_STRING_OFFSET_Y,  // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,               // 使用パレット番号
+    QUESTION_CAPTION_STRING_COLOR_L,   // 文字のカラー番号
+    QUESTION_CAPTION_STRING_COLOR_S,   // 影のカラー番号
+    QUESTION_CAPTION_STRING_COLOR_B,   // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,             // 参照するメッセージデータ
+    0,                                 // 使用する文字列
+  }, 
+  { // 下画面 質問
+    MAIN_BG_FONT,               // 対象BGフレーム
+    QUESTION_X,                 // x座標 (キャラクター単位)
+    QUESTION_Y,                 // x座標 (キャラクター単位)
+    QUESTION_WIDTH,             // xサイズ (キャラクター単位)
+    QUESTION_HEIGHT,            // yサイズ (キャラクター単位)
+    QUESTION_STRING_OFFSET_X,   // 書き込み先x座標 (ドット単位)
+    QUESTION_STRING_OFFSET_Y,   // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,       // 使用パレット番号
+    QUESTION_STRING_COLOR_L,    // 文字のカラー番号
+    QUESTION_STRING_COLOR_S,    // 影のカラー番号
+    QUESTION_STRING_COLOR_B,    // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,      // 参照するメッセージデータ
+    0,                          // 使用する文字列
+  }, 
+  { // 下画面 回答
+    MAIN_BG_FONT,                              // 対象BGフレーム
+    ANSWER_UPPER_X,                            // x座標 (キャラクター単位)
+    ANSWER_UPPER_Y,                            // x座標 (キャラクター単位)
+    ANSWER_UPPER_WIDTH,                        // xサイズ (キャラクター単位)
+    ANSWER_UPPER_HEIGHT + ANSWER_LOWER_HEIGHT, // yサイズ (キャラクター単位)
+    ANSWER_STRING_OFFSET_X,                    // 書き込み先x座標 (ドット単位)
+    ANSWER_STRING_OFFSET_Y,                    // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                      // 使用パレット番号
+    ANSWER_STRING_COLOR_L,                     // 文字のカラー番号
+    ANSWER_STRING_COLOR_S,                     // 影のカラー番号
+    ANSWER_STRING_COLOR_B,                     // 背景のカラー番号
+    MESSAGE_STATIC,                            // 参照するメッセージデータ
+    str_check_answer,                          // 使用する文字列
+  }, 
+  { // 下画面 自分の回答
+    MAIN_BG_FONT,                // 対象BGフレーム
+    MY_ANSWER_X,                 // x座標 (キャラクター単位)
+    MY_ANSWER_Y,                 // x座標 (キャラクター単位)
+    MY_ANSWER_WIDTH,             // xサイズ (キャラクター単位)
+    MY_ANSWER_HEIGHT,            // yサイズ (キャラクター単位)
+    MY_ANSWER_STRING_OFFSET_X,   // 書き込み先x座標 (ドット単位)
+    MY_ANSWER_STRING_OFFSET_Y,   // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,        // 使用パレット番号
+    MY_ANSWER_STRING_COLOR_L,    // 文字のカラー番号
+    MY_ANSWER_STRING_COLOR_S,    // 影のカラー番号
+    MY_ANSWER_STRING_COLOR_B,    // 背景のカラー番号
+    MESSAGE_STATIC,              // 参照するメッセージデータ
+    str_check_my_answer,         // 使用する文字列
+  }, 
+  { // 下画面 回答人数
+    MAIN_BG_FONT,            // 対象BGフレーム
+    COUNT_X,                 // x座標 (キャラクター単位)
+    COUNT_Y,                 // x座標 (キャラクター単位)
+    COUNT_WIDTH,             // xサイズ (キャラクター単位)
+    COUNT_HEIGHT,            // yサイズ (キャラクター単位)
+    COUNT_STRING_OFFSET_X,   // 書き込み先x座標 (ドット単位)
+    COUNT_STRING_OFFSET_Y,   // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,    // 使用パレット番号
+    COUNT_STRING_COLOR_L,    // 文字のカラー番号
+    COUNT_STRING_COLOR_S,    // 影のカラー番号
+    COUNT_STRING_COLOR_B,    // 背景のカラー番号
+    MESSAGE_STATIC,          // 参照するメッセージデータ
+    str_check_count,         // 使用する文字列
+  }, 
+};
+
+
+//==============================================================================================
+// ■OBJ
+//==============================================================================================
+
+//-----------------------
+// □セルアクターシステム
+//-----------------------
+static const GFL_CLSYS_INIT ClactSystemInitData = 
+{
+  0, 0,   // メイン サーフェースの左上座標
+  0, 512, // サブ サーフェースの左上座標
+  4, 124, // メイン画面OAM管理開始位置/管理数 4の倍数
+  4, 124, // サブ画面OAM管理開始位置/管理数 4の倍数
+  0,      // セルVram転送管理数
+  256,    ///< 登録できるキャラデータ数
+  32,     ///< 登録できるパレットデータ数
+  32,     ///< 登録できるセルアニメパターン数
+  32,     ///< 登録できるマルチセルアニメパターン数（※現状未対応）
+  16,     ///< メイン CGR VRAM管理領域 開始オフセット（キャラクタ単位）
+  16,     ///< サブ CGR VRAM管理領域開始オフセット（キャラクタ単位）
+};
+
+//-----------------------
+// □セルアクターユニット
+//-----------------------
+
+// 最大ワーク数
+static const u16 ClactUnitWorkSize[ CLUNIT_NUM ] = 
+{
+  CLUNIT_SUB_OBJ_WORK_SIZE,   // index CLUNIT_SUB_OBJ
+  CLUNIT_MAIN_OBJ_WORK_SIZE,  // index CLUNIT_MAIN_OBJ
+  CLUNIT_BMPOAM_WORK_SIZE,    // index CLUNIT_BMPOAM
+};
+
+// 描画優先順位
+static const u8 ClactUnitPriority[ CLUNIT_NUM ] = 
+{
+  CLUNIT_SUB_OBJ_PRIORITY,   // index CLUNIT_SUB_OBJ
+  CLUNIT_MAIN_OBJ_PRIORITY,  // index CLUNIT_MAIN_OBJ
+  CLUNIT_BMPOAM_PRIORITY,    // index CLUNIT_BMPOAM
+};
+
+//-----------------------
+// □セルアクターワーク
+//-----------------------
+
+// 初期化データ
+typedef struct
+{
+  s16             posX;            // x 座標
+  s16             posY;            // y 座標
+  s16             animeSeq;        // アニメーションシーケンス
+  u8              softPriority;    // ソフト優先順位
+  u8              BGPriority;      // BG 優先順位
+  CLUNIT_INDEX    unitIdx;         // 所属ユニット
+  OBJ_RESOURCE_ID characterResID;  // キャラクタ リソース
+  OBJ_RESOURCE_ID paletteResID;    // パレット リソース
+  OBJ_RESOURCE_ID cellAnimeResID;  // セルアニメ リソース
+  u16             setSurface;      // サーフェス指定
+
+} CLWK_INIT_DATA;
+
+static const CLWK_INIT_DATA ClactWorkInitData[ CLWK_NUM ] = 
+{
+  { // 左カーソル
+    CLWK_CONTROL_CURSOR_L_POS_X,        // x 座標
+    CLWK_CONTROL_CURSOR_L_POS_Y,        // y 座標
+    CLWK_CONTROL_CURSOR_L_ANIME_SEQ,    // アニメーションシーケンス
+    CLWK_CONTROL_CURSOR_L_SOFT_PRIORITY,// ソフト優先順位
+    CLWK_CONTROL_CURSOR_L_BG_PRIORITY,  // BG 優先順位
+    CLUNIT_MAIN_OBJ,                    // 所属ユニット
+    OBJ_RESOURCE_MAIN_CHARACTER,        // キャラクタ リソース
+    OBJ_RESOURCE_MAIN_PALETTE,          // パレット リソース
+    OBJ_RESOURCE_MAIN_CELL_ANIME,       // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,                 // サーフェス指定
+  },
+  { // 右カーソル
+    CLWK_CONTROL_CURSOR_R_POS_X,        // x 座標
+    CLWK_CONTROL_CURSOR_R_POS_Y,        // y 座標
+    CLWK_CONTROL_CURSOR_R_ANIME_SEQ,    // アニメーションシーケンス
+    CLWK_CONTROL_CURSOR_R_SOFT_PRIORITY,// ソフト優先順位
+    CLWK_CONTROL_CURSOR_R_BG_PRIORITY,  // BG 優先順位
+    CLUNIT_MAIN_OBJ,                    // 所属ユニット
+    OBJ_RESOURCE_MAIN_CHARACTER,        // キャラクタ リソース
+    OBJ_RESOURCE_MAIN_PALETTE,          // パレット リソース
+    OBJ_RESOURCE_MAIN_CELL_ANIME,       // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,                 // サーフェス指定
+  },
+  { // 自分の回答アイコン
+    CLWK_MY_ANSWER_ICON_POS_X,          // x 座標
+    CLWK_MY_ANSWER_ICON_POS_Y,          // y 座標
+    CLWK_MY_ANSWER_ICON_ANIME_SEQ,      // アニメーションシーケンス
+    CLWK_MY_ANSWER_ICON_SOFT_PRIORITY,  // ソフト優先順位
+    CLWK_MY_ANSWER_ICON_BG_PRIORITY,    // BG 優先順位
+    CLUNIT_MAIN_OBJ,                    // 所属ユニット
+    OBJ_RESOURCE_MAIN_CHARACTER,        // キャラクタ リソース
+    OBJ_RESOURCE_MAIN_PALETTE,          // パレット リソース
+    OBJ_RESOURCE_MAIN_CELL_ANIME,       // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,                 // サーフェス指定
+  },
+};
+
+//-------------------
+// □BMP-OAM アクター
+//-------------------
+
+// 初期化データ
+typedef struct 
+{
+  s16             x;             // 左上x座標
+  s16             y;             // 左上y座標
+  OBJ_RESOURCE_ID paletteResID;  // 適用するパレットリソースID
+  u32             paletteOffset; // パレットオフセット [0, 16]
+  u8              softPriority;  // ソフト優先順位
+  u8              BGPriority;    // BG 優先順位
+  u16             setSurface;    // サーフェス指定
+  CLSYS_DRAW_TYPE drawType;      // 描画タイプ
+
+} BMPOAM_ACTOR_INIT_DATA; 
+
+static const BMPOAM_ACTOR_INIT_DATA BmpOamActorInitData[ BMPOAM_ACTOR_NUM ] = 
+{
+  { //「…げんざいちょうさちゅう…」
+    BMPOAM_ACTOR_ANALYZING_POS_X,          // 左上x座標
+    BMPOAM_ACTOR_ANALYZING_POS_Y,          // 左上y座標
+    OBJ_RESOURCE_MAIN_PALETTE,             // 適用するパレットリソースID
+    BMPOAM_ACTOR_ANALYZING_PALETTE_OFFSET, // パレットオフセット
+    BMPOAM_ACTOR_ANALYZING_SOFT_PRIORITY,  // ソフト優先順位
+    BMPOAM_ACTOR_ANALYZING_BG_PRIORITY,    // BG 優先順位
+    CLSYS_DEFREND_MAIN,                    // サーフェス指定
+    CLSYS_DRAW_MAIN,                       // 描画タイプ
+  },
+};
+
+//---------------------
+// □ビットマップデータ
+//---------------------
+// 初期化データ
+typedef struct
+{
+  int           width;             // x サイズ ( キャラ単位 )
+  int           height;            // y サイズ ( キャラ単位 )
+  int           colorMode;         // カラーモード GFL_BMP_16_COLOR or GFL_BMP_256_COLOR
+  MESSAGE_INDEX messageIdx;        // 参照するメッセージデータ
+  u32           stringID;          // 書き込むメッセージID
+  int           stringDrawPosX;    // 書き込み先 x 座標 ( ドット単位 )
+  int           stringDrawPosY;    // 書き込み先 y 座標 ( ドット単位 )
+  u8            colorNo_L;         // 文字のカラー番号
+  u8            colorNo_S;         // 影のカラー番号
+  u8            colorNo_B;         // 背景のカラー番号
+  ARCID         charaDataArcID;    // 背景のキャラクタデータ参照アーカイブID
+  ARCDATID      charaDataArcDatID; // 背景のキャラクタデータ参照アーカイブ内データインデックス
+
+} BITMAP_INIT_DATA;
+
+static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] = 
+{
+  { //「…ちょうさをかいしします…」
+    BMPOAM_ACTOR_ANALYZING_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
+    BMPOAM_ACTOR_ANALYZING_CHARA_SIZE_Y,   // y サイズ ( キャラ単位 )
+    GFL_BMP_16_COLOR,                      // カラーモード
+    MESSAGE_STATIC,                        // 参照するメッセージデータ
+    str_select_confirm,                    // 書き込むメッセージID
+    0,                                     // 書き込み先 x 座標 ( ドット単位 )
+    0,                                     // 書き込み先 y 座標 ( ドット単位 )
+    BMPOAM_ACTOR_ANALYZING_STRING_COLOR_L, // 文字のカラー番号
+    BMPOAM_ACTOR_ANALYZING_STRING_COLOR_S, // 影のカラー番号
+    BMPOAM_ACTOR_ANALYZING_STRING_COLOR_B, // 背景のカラー番号
+    ARCID_RESEARCH_RADAR_GRAPHIC,
+    NARC_research_radar_graphic_obj_window4_NCGR,
+  },
+};

@@ -15,6 +15,7 @@
 //=============================================================================== 
 // メイン関数 戻り値
 typedef enum {
+  RESEARCH_CHECK_RESULT_NONE,      // ダミー
   RESEARCH_CHECK_RESULT_CONTINUE,  // 画面継続
   RESEARCH_CHECK_RESULT_TO_MENU,   // メニュー画面へ
 } RESEARCH_CHECK_RESULT;

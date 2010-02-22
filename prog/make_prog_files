@@ -2009,7 +2009,9 @@ SRCS_OVERLAY_RESEARCH_RADAR = app/research_radar/research_main.c \
                               app/research_radar/research_check.c \
                               app/research_radar/research_test.c \
                               app/research_radar/research_common.c \
-                              app/research_radar/bg_font.c
+                              app/research_radar/queue.c \
+                              app/research_radar/bg_font.c \
+                              app/research_radar/circle_graph.c
 
 # ‘˜Aƒrƒ‹
 #===> SRCS_OVERLAY_UI_COMMON

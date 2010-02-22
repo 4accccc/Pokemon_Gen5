@@ -92,7 +92,6 @@ struct _RESEARCH_TEST_WORK
 {
   HEAPID heapID; 
   RESEARCH_TEST_SEQ seq;  // 処理シーケンス
-
 };
 
 

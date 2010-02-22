@@ -106,14 +106,14 @@ static void SwitchSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ next
 static void SetSequence   ( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // 処理シーケンスを設定する
 
 // シーケンス初期化処理
-void InitSequence_SETUP      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-void InitSequence_KEY_WAIT   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-void InitSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_CONFIRM
-void InitSequence_CONFIRM    ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
-void InitSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_KEY_WAIT
-void InitSequence_DETERMINE  ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-void InitSequence_CLEAN_UP   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP
+static void InitSequence_SETUP      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static void InitSequence_KEY_WAIT   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static void InitSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_CONFIRM
+static void InitSequence_CONFIRM    ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static void InitSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_KEY_WAIT
+static void InitSequence_DETERMINE  ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static void InitSequence_CLEAN_UP   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP
 
 // VBlankタスク
 static void VBlankFunc( GFL_TCB* tcb, void* wk );  // VBlank中の処理
@@ -751,7 +751,7 @@ static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-void InitSequence_SETUP( RESEARCH_SELECT_WORK* work )
+static void InitSequence_SETUP( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SETUP\n" );
@@ -764,7 +764,7 @@ void InitSequence_SETUP( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-void InitSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void InitSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq KEY_WAIT\n" );
@@ -777,7 +777,7 @@ void InitSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
+static void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SCROLL_WAIT\n" );
@@ -790,7 +790,7 @@ void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-void InitSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work )
+static void InitSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work )
 {
   // パレットフェードアウト開始
   StartPaletteFadeOut( work );
@@ -806,7 +806,7 @@ void InitSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-void InitSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
+static void InitSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
 {
   // カーソル位置を初期化
   work->menuCursorPos = MENU_ITEM_DETERMINATION_OK;
@@ -828,7 +828,7 @@ void InitSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-void InitSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void InitSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 { 
   // 確認メッセージと選択項目を消去
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
@@ -849,7 +849,7 @@ void InitSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-void InitSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
+static void InitSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
 {
   // 確認メッセージと選択項目を消去
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
@@ -870,7 +870,7 @@ void InitSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-void InitSequence_CLEAN_UP( RESEARCH_SELECT_WORK* work )
+static void InitSequence_CLEAN_UP( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CLEAN_UP\n" );
@@ -2854,6 +2854,7 @@ static void CleanUpPaletteFadeSystem( RESEARCH_SELECT_WORK* work )
 { 
   // パレットフェードのリクエストワークを破棄
   PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_BG );
+  PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_OBJ );
 
   // フェード管理システムを破棄
   PaletteFadeFree( work->paletteFadeSystem );

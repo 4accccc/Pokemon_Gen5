@@ -40,6 +40,9 @@ GRAPHIC_DATA = $(GRAPHIC_BIN)/bgd.NCLR \
 							 $(GRAPHIC_BIN)/bgd_title.NSCR \
 							 $(GRAPHIC_BIN)/bgd_topbtn.NSCR \
 							 $(GRAPHIC_BIN)/bgd_searchbtn.NSCR \
+							 $(GRAPHIC_BIN)/bgd_graphbtn1.NSCR \
+							 $(GRAPHIC_BIN)/bgd_graphbtn2.NSCR \
+							 $(GRAPHIC_BIN)/bgd_graphbtn3.NSCR \
 							 $(GRAPHIC_BIN)/bgu.NCLR \
 							 $(GRAPHIC_BIN)/bgu.NCGR \
 							 $(GRAPHIC_BIN)/bgu_base.NSCR \
@@ -79,6 +82,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd_title.nsc -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd_topbtn.nsc -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgd_searchbtn.nsc -o/$(GRAPHIC_BIN)
+	g2dcvtr $(GRAPHIC_SOURCE)/bgd_graphbtn1.nsc -o/$(GRAPHIC_BIN)
+	g2dcvtr $(GRAPHIC_SOURCE)/bgd_graphbtn2.nsc -o/$(GRAPHIC_BIN)
+	g2dcvtr $(GRAPHIC_SOURCE)/bgd_graphbtn3.nsc -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu.ncl -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu.ncg -bg -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu_base.nsc -o/$(GRAPHIC_BIN)

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-02-19T18:52:33"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-02-20T16:56:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -399,6 +399,26 @@
 	<row id="str_check_analyzing" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN">……かいせきちゅう……</language>
 		<language name="JPN_KANJI">……解析中……</language>
+	</row>
+
+	<row id="str_check_title" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">ちょうさ　ほうこく</language>
+		<language name="JPN_KANJI">　　調査報告　</language>
+	</row>
+
+	<row id="str_check_answer" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">かいとうデータ</language>
+		<language name="JPN_KANJI">回答データ</language>
+	</row>
+
+	<row id="str_check_my_answer" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">じぶんの　かいとうデータ</language>
+		<language name="JPN_KANJI">自分の回答データ</language>
+	</row>
+
+	<row id="str_check_count" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">かいとうにんずう</language>
+		<language name="JPN_KANJI">回答人数</language>
 	</row>
 
 	<flowchart-group-list>

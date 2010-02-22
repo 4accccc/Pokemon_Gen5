@@ -327,34 +327,34 @@
     </target>
   </output>
 
-<row id="str_topic_0_title">
+<row id="str_topic_0">
         <language name="JPN" width="256">ちょうさこうもく1</language>
         <language name="JPN_KANJI" width="256">調査項目1</language>
-      </row><row id="str_topic_1_title">
+      </row><row id="str_topic_1">
         <language name="JPN" width="256">ちょうさこうもく2</language>
         <language name="JPN_KANJI" width="256">調査項目2</language>
-      </row><row id="str_topic_2_title">
+      </row><row id="str_topic_2">
         <language name="JPN" width="256">ちょうさこうもく3</language>
         <language name="JPN_KANJI" width="256">調査項目3</language>
-      </row><row id="str_topic_3_title">
+      </row><row id="str_topic_3">
         <language name="JPN" width="256">ちょうさこうもく4</language>
         <language name="JPN_KANJI" width="256">調査項目4</language>
-      </row><row id="str_topic_4_title">
+      </row><row id="str_topic_4">
         <language name="JPN" width="256">ちょうさこうもく5</language>
         <language name="JPN_KANJI" width="256">調査項目5</language>
-      </row><row id="str_topic_5_title">
+      </row><row id="str_topic_5">
         <language name="JPN" width="256">ちょうさこうもく6</language>
         <language name="JPN_KANJI" width="256">調査項目6</language>
-      </row><row id="str_topic_6_title">
+      </row><row id="str_topic_6">
         <language name="JPN" width="256">ちょうさこうもく7</language>
         <language name="JPN_KANJI" width="256">調査項目7</language>
-      </row><row id="str_topic_7_title">
+      </row><row id="str_topic_7">
         <language name="JPN" width="256">ちょうさこうもく8</language>
         <language name="JPN_KANJI" width="256">調査項目8</language>
-      </row><row id="str_topic_8_title">
+      </row><row id="str_topic_8">
         <language name="JPN" width="256">ちょうさこうもく9</language>
         <language name="JPN_KANJI" width="256">調査項目9</language>
-      </row><row id="str_topic_9_title">
+      </row><row id="str_topic_9">
         <language name="JPN" width="256">ちょうさこうもく10</language>
         <language name="JPN_KANJI" width="256">調査項目10</language>
       </row><row id="str_topic_0_caption">
@@ -477,6 +477,96 @@
       </row><row id="str_question_29">
         <language name="JPN" width="256">ゲームプレイじかんは？</language>
         <language name="JPN_KANJI" width="256">ゲームプレイじかんは？</language>
+      </row><row id="str_question_00_caption">
+        <language name="JPN" width="256">ほそく1</language>
+        <language name="JPN_KANJI" width="256">補足1</language>
+      </row><row id="str_question_01_caption">
+        <language name="JPN" width="256">ほそく2</language>
+        <language name="JPN_KANJI" width="256">補足2</language>
+      </row><row id="str_question_02_caption">
+        <language name="JPN" width="256">ほそく3</language>
+        <language name="JPN_KANJI" width="256">補足3</language>
+      </row><row id="str_question_03_caption">
+        <language name="JPN" width="256">ほそく4</language>
+        <language name="JPN_KANJI" width="256">補足4</language>
+      </row><row id="str_question_04_caption">
+        <language name="JPN" width="256">ほそく5</language>
+        <language name="JPN_KANJI" width="256">補足5</language>
+      </row><row id="str_question_05_caption">
+        <language name="JPN" width="256">ほそく6</language>
+        <language name="JPN_KANJI" width="256">補足6</language>
+      </row><row id="str_question_06_caption">
+        <language name="JPN" width="256">ほそく7</language>
+        <language name="JPN_KANJI" width="256">補足7</language>
+      </row><row id="str_question_07_caption">
+        <language name="JPN" width="256">ほそく8</language>
+        <language name="JPN_KANJI" width="256">補足8</language>
+      </row><row id="str_question_08_caption">
+        <language name="JPN" width="256">ほそく9</language>
+        <language name="JPN_KANJI" width="256">補足9</language>
+      </row><row id="str_question_09_caption">
+        <language name="JPN" width="256">ほそく10</language>
+        <language name="JPN_KANJI" width="256">補足10</language>
+      </row><row id="str_question_10_caption">
+        <language name="JPN" width="256">ほそく11</language>
+        <language name="JPN_KANJI" width="256">補足11</language>
+      </row><row id="str_question_11_caption">
+        <language name="JPN" width="256">ほそく12</language>
+        <language name="JPN_KANJI" width="256">補足12</language>
+      </row><row id="str_question_12_caption">
+        <language name="JPN" width="256">ほそく13</language>
+        <language name="JPN_KANJI" width="256">補足13</language>
+      </row><row id="str_question_13_caption">
+        <language name="JPN" width="256">ほそく14</language>
+        <language name="JPN_KANJI" width="256">補足14</language>
+      </row><row id="str_question_14_caption">
+        <language name="JPN" width="256">ほそく15</language>
+        <language name="JPN_KANJI" width="256">補足15</language>
+      </row><row id="str_question_15_caption">
+        <language name="JPN" width="256">ほそく16</language>
+        <language name="JPN_KANJI" width="256">補足16</language>
+      </row><row id="str_question_16_caption">
+        <language name="JPN" width="256">ほそく17</language>
+        <language name="JPN_KANJI" width="256">補足17</language>
+      </row><row id="str_question_17_caption">
+        <language name="JPN" width="256">ほそく18</language>
+        <language name="JPN_KANJI" width="256">補足18</language>
+      </row><row id="str_question_18_caption">
+        <language name="JPN" width="256">ほそく19</language>
+        <language name="JPN_KANJI" width="256">補足19</language>
+      </row><row id="str_question_19_caption">
+        <language name="JPN" width="256">ほそく20</language>
+        <language name="JPN_KANJI" width="256">補足20</language>
+      </row><row id="str_question_20_caption">
+        <language name="JPN" width="256">ほそく21</language>
+        <language name="JPN_KANJI" width="256">補足21</language>
+      </row><row id="str_question_21_caption">
+        <language name="JPN" width="256">ほそく22</language>
+        <language name="JPN_KANJI" width="256">補足22</language>
+      </row><row id="str_question_22_caption">
+        <language name="JPN" width="256">ほそく23</language>
+        <language name="JPN_KANJI" width="256">補足23</language>
+      </row><row id="str_question_23_caption">
+        <language name="JPN" width="256">ほそく24</language>
+        <language name="JPN_KANJI" width="256">補足24</language>
+      </row><row id="str_question_24_caption">
+        <language name="JPN" width="256">ほそく25</language>
+        <language name="JPN_KANJI" width="256">補足25</language>
+      </row><row id="str_question_25_caption">
+        <language name="JPN" width="256">ほそく26</language>
+        <language name="JPN_KANJI" width="256">補足26</language>
+      </row><row id="str_question_26_caption">
+        <language name="JPN" width="256">ほそく27</language>
+        <language name="JPN_KANJI" width="256">補足27</language>
+      </row><row id="str_question_27_caption">
+        <language name="JPN" width="256">ほそく28</language>
+        <language name="JPN_KANJI" width="256">補足28</language>
+      </row><row id="str_question_28_caption">
+        <language name="JPN" width="256">ほそく29</language>
+        <language name="JPN_KANJI" width="256">補足29</language>
+      </row><row id="str_question_29_caption">
+        <language name="JPN" width="256">ほそく30</language>
+        <language name="JPN_KANJI" width="256">補足30</language>
       </row><row id="str_answer_000">
         <language name="JPN" width="256">無回答</language>
         <language name="JPN_KANJI" width="256">無回答</language>
