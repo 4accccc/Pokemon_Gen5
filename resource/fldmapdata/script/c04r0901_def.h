@@ -5,6 +5,5 @@
 #define _C04R0901_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C04R0901_RECEPTION_01 (1)
 
 #endif //_C04R0901_DEF_H_
