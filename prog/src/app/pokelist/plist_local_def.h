@@ -91,8 +91,8 @@
 #define PLIST_HPBAR_COL_RED_OUT (0xf)
 
 
-//プレートのアニメする色
-#define PLIST_MENU_ANIME_COL (0x7)
+//プレートのアニメする本数
+#define PLIST_MENU_ANIME_NUM (3)
 
 
 //OBJリソースIdx
@@ -242,9 +242,11 @@ struct _PLIST_WORK
   POKEMON_PARAM *selectPokePara;
   int  menuRet; //PLIST_MENU_ITEM_TYPE
   
-  u16 platePalAnm[16];
-  u16 platePalTrans[16];
+  //選択時フラッシュ+枠点滅
+  u16 platePalAnm[PLIST_MENU_ANIME_NUM][16];
+  u16 platePalTrans[PLIST_MENU_ANIME_NUM][16];
   u8  platePalAnmCnt;
+  u16 platePalWakuAnmCnt;
 
   //入れ替えアニメ用
   u8  anmCnt;

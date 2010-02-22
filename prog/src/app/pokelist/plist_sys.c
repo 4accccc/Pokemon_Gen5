@@ -236,6 +236,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->isActiveWindowMask = FALSE;
   work->btlJoinNum = 0;
   work->platePalAnmCnt = 0;
+  work->platePalWakuAnmCnt = 0;
   work->btlMenuAnmCnt = 0;
   work->btlTermAnmCnt = 0;
   work->hpAnimeCallBack = NULL;
@@ -546,10 +547,13 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 static void PLIST_UpdatePlatePalletAnime( PLIST_WORK *work )
 {
   //プレートアニメ
+  //選択フラッシュ
+  GFL_STD_MemCopy16( work->platePalAnm , work->platePalTrans , 16*2*PLIST_MENU_ANIME_NUM );
+
   if( work->platePalAnmCnt > 0 )
   {
     u8 anmRate;
-    u8 i;
+    u8 i,j;
     work->platePalAnmCnt--; //最終的に0にするので先にデクリメント
     if( work->platePalAnmCnt > PLIST_PLATE_ACTIVE_ANM_CNT_HALF )
     {
@@ -559,23 +563,61 @@ static void PLIST_UpdatePlatePalletAnime( PLIST_WORK *work )
     {
       anmRate = work->platePalAnmCnt;
     }
-    for( i=0;i<16;i++ )
+    for( j=0;j<PLIST_MENU_ANIME_NUM;j++ )
     {
-      u8 r = (work->platePalAnm[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
-      u8 g = (work->platePalAnm[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
-      u8 b = (work->platePalAnm[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
-//      r = (r<anmRate*2?0:r-(anmRate*2));
-//      g = (g<anmRate*2?0:g-(anmRate*2));
-//      b = (b<anmRate*2?0:b-(anmRate*2));
-      r = (r+anmRate*2 > 31?1:r+(anmRate*2));
-      g = (g+anmRate*2 > 31?31:g+(anmRate*2));
-      b = (b+anmRate*2 > 31?31:b+(anmRate*2));
-      work->platePalTrans[i] = GX_RGB(r,g,b);
+      for( i=0;i<16;i++ )
+      {
+        if( i<2 || i>4 )
+        {
+          u8 r = (work->platePalAnm[j][i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+          u8 g = (work->platePalAnm[j][i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+          u8 b = (work->platePalAnm[j][i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+    //      r = (r<anmRate*2?0:r-(anmRate*2));
+    //      g = (g<anmRate*2?0:g-(anmRate*2));
+    //      b = (b<anmRate*2?0:b-(anmRate*2));
+          r = (r+anmRate*2 > 31?31:r+(anmRate*2));
+          g = (g+anmRate*2 > 31?31:g+(anmRate*2));
+          b = (b+anmRate*2 > 31?31:b+(anmRate*2));
+          work->platePalTrans[j][i] = GX_RGB(r,g,b);
+        }
+      }
     }
-    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
-                                        PPC_NORMAL_SELECT * 32 ,
-                                        work->platePalTrans , 2*16 );
   }
+  //枠明滅
+  {
+    const u16 anmSpd = 0x10000/64;
+    if( work->platePalWakuAnmCnt + anmSpd >= 0x10000 )
+    {
+      work->platePalWakuAnmCnt = work->platePalWakuAnmCnt + anmSpd - 0x10000;
+    }
+    else
+    {
+      work->platePalWakuAnmCnt = work->platePalWakuAnmCnt + anmSpd;
+    }
+    {
+      u8 i,j;
+      const fx32 sin = (FX_SinIdx( work->platePalWakuAnmCnt )+FX32_ONE)/2;
+      const u8 anmRate = (16*sin)>>FX32_SHIFT;
+      for( j=0;j<PLIST_MENU_ANIME_NUM;j++ )
+      {
+        for( i=2;i<=4;i++ )
+        {
+          u8 r = (work->platePalAnm[j][i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+          u8 g = (work->platePalAnm[j][i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+          u8 b = (work->platePalAnm[j][i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+          r = (r+anmRate*2 > 31?31:r+(anmRate*2));
+          g = (g+anmRate*2 > 31?31:g+(anmRate*2));
+          b = (b+anmRate*2 > 31?31:b+(anmRate*2));
+          work->platePalTrans[j][i] = GX_RGB(r,g,b);
+        }
+      }
+    }
+  }
+  
+  
+  NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                      PPC_NORMAL_SELECT * 32 ,
+                                      work->platePalTrans , 2*16*PLIST_MENU_ANIME_NUM );
 }
 
 //--------------------------------------------------------------
@@ -1070,7 +1112,7 @@ static void PLIST_LoadResource( PLIST_WORK *work )
   }
   
   //アニメ用に、プレートの選択色のパレットを退避
-  GFL_STD_MemCopy16( (void*)(HW_BG_PLTT+PPC_NORMAL_SELECT*32) , work->platePalAnm , 16*2 );
+  GFL_STD_MemCopy16( (void*)(HW_BG_PLTT+PPC_NORMAL_SELECT*32) , work->platePalAnm , 16*2*PLIST_MENU_ANIME_NUM );
 }
 
 

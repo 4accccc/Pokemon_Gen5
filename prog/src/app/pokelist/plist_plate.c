@@ -771,7 +771,7 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
     if( work->mainSeq == PSMS_CHANGE_POKE ||
         work->mainSeq == PSMS_USE_POKE )
     {
-      PLIST_PLATE_ChangeColor( work , plateWork , PPC_CHANGE );
+      PLIST_PLATE_ChangeColor( work , plateWork , PPC_CHANGE_SELECT );
     }
     else
     {
@@ -790,8 +790,12 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
   else
   {
     //入れ替え中で、入れ替えターゲットのときは色を戻さない
-    if( ( !(work->mainSeq == PSMS_CHANGE_POKE && work->changeTarget == plateWork->idx)) &&
-        ( !(work->mainSeq == PSMS_USE_POKE && work->useTarget == plateWork->idx) ) )
+    if( (work->mainSeq == PSMS_CHANGE_POKE && work->changeTarget == plateWork->idx) ||
+        (work->mainSeq == PSMS_USE_POKE && work->useTarget == plateWork->idx) )
+    {
+      PLIST_PLATE_ChangeColor( work , plateWork , PPC_CHANGE );
+    }
+    else
     {
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL );
     }
@@ -908,13 +912,13 @@ void PLIST_PLATE_MovePlateXY( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , c
                         &work->plateScrData->rawData , 
                         PLATE_SCR_POS_ARR[(plateWork->idx==0?0:1)][0] , PLATE_SCR_POS_ARR[(plateWork->idx==0?0:1)][1] ,
                         32 , 32 );  //←グラフィックデータのサイズ
-    if( plateWork->idx == work->changeTarget )
-    {
-      palCol = PPC_CHANGE;
-    }
-    else
     if( plateWork->idx == work->pokeCursor )
     {
+      if( plateWork->idx == work->changeTarget )
+      {
+        palCol = PPC_CHANGE_SELECT;
+      }
+      else
       if( PLIST_PLATE_GetHPRate( plateWork ) == 0 )
       {
         palCol = PPC_DEATH_SELECT;
@@ -926,6 +930,11 @@ void PLIST_PLATE_MovePlateXY( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , c
     }
     else
     {
+      if( plateWork->idx == work->changeTarget )
+      {
+        palCol = PPC_CHANGE;
+      }
+      else
       if( PLIST_PLATE_GetHPRate( plateWork ) == 0 )
       {
         palCol = PPC_DEATH;

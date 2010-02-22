@@ -25,12 +25,13 @@
 typedef enum
 {
   PPC_NORMAL        = 3,  //通常
-  PPC_NORMAL_SELECT = 7,  //通常(選択
-  PPC_CHANGE        = 6,  //入れ替え
+  PPC_CHANGE        = 5,  //入れ替え
+  PPC_NORMAL_SELECT = 6,  //通常(選択
+  PPC_CHANGE_SELECT = 8,  //入れ替え
 
   //以下は自動設定
-  PPC_DEATH        = 5,  //死亡
-  PPC_DEATH_SELECT = 10,  //死亡(選択
+  PPC_DEATH        = 4,  //死亡
+  PPC_DEATH_SELECT = 7,  //死亡(選択
 }PLIST_PLATE_COLTYPE;
 
 //戦闘参加時の状態
