@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-12T22:32:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T22:05:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -289,7 +289,7 @@
 		<comment position="1" width="237"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="275"/>
 			<font default=" 0:large" position="4" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1482" top="244" right="2187" bottom="865" maximized="no" rayout="Vertical2">
+	<dialog left="1298" top="392" right="2003" bottom="1020" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -552,7 +552,7 @@
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
-	<row id="msg_intro_06" text-color=",,,#ff0000,,,,,,,,,,,,,,">
+	<row id="msg_intro_06">
 		<comment>■
 ・続けてmsg_intro_07
 ・セーブできていないときはmsg_intro_08</comment>
@@ -590,19 +590,23 @@
 ポケットモンスターの　世界へ！▼</language>
 	</row>
 
-	<row id="msg_intro_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_intro_08">
 		<comment>■
 ・セーブ処理中</comment>
-		<language name="JPN" width="256">（セーブ中）</language>
-		<language name="JPN_KANJI" width="256">（セーブ中）</language>
+		<language name="JPN" width="256">ちょっと　まってね……！
+いま　いろいろ　じゅんび　してるから</language>
+		<language name="JPN_KANJI" width="256">ちょっと　待ってね……！
+いま　いろいろ　準備してるから</language>
 	</row>
 
-	<row id="msg_intro_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_intro_09">
 		<comment>■
 ・セーブ終了時
 ・続けてmsg_intro_07</comment>
-		<language name="JPN" width="256">（セーブ終了）</language>
-		<language name="JPN_KANJI" width="256">（セーブ終了）</language>
+		<language name="JPN" width="256">よーし！
+これで　オーケーと！▼</language>
+		<language name="JPN_KANJI" width="256">よーし！
+これで　オーケーと！▼</language>
 	</row>
 
 	<row id="msg_intro_report_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
