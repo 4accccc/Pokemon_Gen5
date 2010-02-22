@@ -110,6 +110,7 @@
 
 #include "savedata/intrude_save_field.h"  //ISC_SAVE_CheckItem
 #include "event_intrude_secret_item.h"    //
+#include "field_diving_data.h"  //DIVINGSPOT_Check
 
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
@@ -488,7 +489,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         return event;
       }
     }
-    {
+    { //隠されアイテムチェック
       INTRUDE_SAVE_WORK * intsave;
       s16 gx,gy,gz;
       int result;
@@ -502,6 +503,14 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       if ( result != ISC_SAVE_SEARCH_NONE )
       {
         return EVENT_IntrudeSecretItem( gsys, req.heapID, result );
+      }
+    }
+
+    { //ダイビングチェック
+      u16 dummy;
+      if ( DIVINGSPOT_Check( fieldWork, &dummy ) == TRUE )
+      {
+        return SCRIPT_SetEventScript( gsys, SCRID_HIDEN_DIVING, NULL, req.heapID );
       }
     }
   }
@@ -2910,7 +2919,6 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
     { MAPATTR_VALUE_CheckShopShelf3,    0,  SCRID_BG_MSG_SHOPRACK2_01 },
     { MAPATTR_VALUE_CheckWaterFall,     0,  SCRID_HIDEN_TAKINOBORI },
     { MAPATTR_VALUE_CheckVendorMachine, 0,  SCRID_VENDING_MACHINE01 },
-    { MAPATTR_VALUE_CheckDeepSea,       0,  SCRID_HIDEN_DIVING },
   };
   int i;
 

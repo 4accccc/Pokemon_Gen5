@@ -162,6 +162,7 @@ VMCMD_RESULT EvCmdDiving( VMHANDLE * core, void *wk )
   SCRIPT_WORK* scriptWork = SCRCMD_WORK_GetScriptWork( work );
 
   GMEVENT * event;
+#if 0
   u16 connect_zone_id;
   {
     u16 now_zone_id = FIELDMAP_GetZoneID( fieldmap );
@@ -175,6 +176,11 @@ VMCMD_RESULT EvCmdDiving( VMHANDLE * core, void *wk )
       connect_zone_id = now_zone_id;
     }
   }
+#endif
+  u16 connect_zone_id;
+  BOOL result;
+  result = DIVINGSPOT_Check( fieldmap, &connect_zone_id );
+  GF_ASSERT( result );
   event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldmap, connect_zone_id );
   SCRIPT_CallEvent( scriptWork, event );
 

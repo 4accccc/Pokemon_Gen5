@@ -11,6 +11,10 @@
 
 #include "field_diving_data.h"
 
+#include "fieldmap.h"
+#include "field_player.h"
+#include "fldmmdl.h"
+
 #include "arc/fieldmap/zone_id.h"
 //============================================================================================
 //============================================================================================
@@ -38,7 +42,7 @@ typedef struct {
  * @return  u16 zone_id ZONE_ID_MAXの時、見つからなかった
  */
 //-----------------------------------------------------------------------------
-u16 DIVINGSPOT_GetZoneID( u16 zone_id, u16 x, u16 z )
+static u16 DIVINGSPOT_GetZoneID( u16 zone_id, u16 x, u16 z )
 {
   int i;
   const DIVING_SPOT_TABLE * tbl = DivingSpotTable;
@@ -63,8 +67,30 @@ u16 DIVINGSPOT_GetZoneID( u16 zone_id, u16 x, u16 z )
  * @return  BOOL  TRUEのとき、ダイビング可能
  */
 //-----------------------------------------------------------------------------
-BOOL DIVINGSPOT_SearchData( u16 zone_id, u16 x, u16 z )
+static BOOL DIVINGSPOT_SearchData( u16 zone_id, u16 x, u16 z )
 {
   return DIVINGSPOT_GetZoneID( zone_id, x, z) != ZONE_ID_MAX;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ダイビング判定処理
+ * @param fieldmap  FIELDMAP_WORKへのポインタ
+ * @param zone_id   遷移先マップIDを受け取るためのポインタ
+ * @return  BOOL  TRUEのとき、ダイビング可能
+ */
+//-----------------------------------------------------------------------------
+BOOL DIVINGSPOT_Check( FIELDMAP_WORK * fieldmap, u16 * zone_id )
+{
+  u16 now_zone_id = FIELDMAP_GetZoneID( fieldmap );
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  u16 x = MMDL_GetGridPosX( mmdl );
+  u16 z = MMDL_GetGridPosZ( mmdl );
+  *zone_id = DIVINGSPOT_GetZoneID( now_zone_id, x, z );
+  if ( *zone_id != ZONE_ID_MAX ) return TRUE;
+  //万が一の不具合対処
+  *zone_id = now_zone_id;
+  return FALSE;
 }
 

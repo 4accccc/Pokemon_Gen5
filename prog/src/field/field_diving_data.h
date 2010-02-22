@@ -9,25 +9,15 @@
 #pragma once
 
 #include <gflib.h>
-//-----------------------------------------------------------------------------
-/**
- * @brief ダイビングした先のゾーンIDを取得する
- * @param zone_id   現在のゾーン
- * @param x     探すX位置（グリッド単位）
- * @param z     探すZ位置（グリッド単位）
- * @return  u16 zone_id ZONE_ID_MAXの時、見つからなかった
- */
-//-----------------------------------------------------------------------------
-extern u16 DIVINGSPOT_GetZoneID( u16 zone_id, u16 x, u16 z );
 
+#include "field/fieldmap_proc.h"
 //-----------------------------------------------------------------------------
 /**
- * @brief ダイビングできるかどうかの判定
- * @param zone_id   現在のゾーン
- * @param x     探すX位置（グリッド単位）
- * @param z     探すZ位置（グリッド単位）
+ * @brief ダイビング判定処理
+ * @param fieldmap  FIELDMAP_WORKへのポインタ
+ * @param zone_id   遷移先マップIDを受け取るためのポインタ
  * @return  BOOL  TRUEのとき、ダイビング可能
  */
 //-----------------------------------------------------------------------------
-extern BOOL DIVINGSPOT_SearchData( u16 zone_id, u16 x, u16 z );
+extern BOOL DIVINGSPOT_Check( FIELDMAP_WORK * fieldmap, u16 * zone_id );
 

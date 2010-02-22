@@ -24,6 +24,7 @@
 #include "../../../resource/fldmapdata/script/hiden_def.h" //script id
 
 #include "event_mapchange.h"  //EVENT_ChangeMapByTeleport
+#include "field_diving_data.h"  //DIVINGSPOT_Check
 
 //======================================================================
 //  define
@@ -192,9 +193,8 @@ void FLDSKILL_InitCheckWork(
   }
 
   { //ここにダイビングの使用可能かチェックを追加する
-    MAPATTR_VALUE val = MAPATTR_GetAttrValue( fattr );
-    
-    if( MAPATTR_VALUE_CheckDeepSea(val) == TRUE )
+    u16 zone_id;
+    if( DIVINGSPOT_Check( fieldmap, &zone_id ) == TRUE )
     {
       scwk->enable_skill |= ( 1 << FLDSKILL_IDX_DIVING );
     }
