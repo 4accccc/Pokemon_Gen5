@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T15:11:34"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T21:12:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,14 +330,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1507" top="209" right="2196" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="514"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="527"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="681"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,25 +359,24 @@
 	</lock>
 
 
-	<row id="msg_t02_doctor_jr_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t02_doctor_jr_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ポケセンの前に配置
 ・このメッセージ表示後
 　ポケセン（t02pc0101）内へ画面切り替え
-
-0＝主人公名前</comment>
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
 		<language name="JPN" width="256">アララギ『ハーイ！
 [1:00:トレーナー名:0]！！▼
-ポケモンと　いっしょに　みちをゆく！
+ポケモンと　ともに　みちをゆく！
 これが　トレーナーの　よろこびだよね▼
 ということで！　トレーナーにとって
 いちばん　だいじな　ばしょを▽
 おしえるから　ついてきてね！▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『ハーイ！
 [1:00:トレーナー名:0]！！▼
-ポケモンと　一緒に　道を行く！
+ポケモンと　ともに　道を行く！
 これが　トレーナーの　喜びだよね▼
 ということで！　トレーナーにとって
 一番　大切な　施設を▽
@@ -1099,12 +1098,10 @@
 生い茂る　ツルは　繁栄の証</language>
 	</row>
 
-	<row id="msg_t02_sign2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_t02_sign2_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">看板：ポケセン</attribute>
-		<language name="JPN" width="256">たびのおともに　ポケモンセンター
-フレンドリィショップも　あります</language>
-		<language name="JPN_KANJI" width="256">旅のお供に　ポケモンセンター
-ショップコーナーも　あります</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
