@@ -190,8 +190,14 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone( GMEVENT * event, int *
     (*seq)++;
     break;
 
-  // 画面フェードアウト
+  // SE 再生
   case 1:
+    if( work->fadeOutType != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
+    (*seq)++; 
+    break;
+
+  // 画面フェードアウト
+  case 2:
     if( work->seasonDisplayFlag )
     { // 季節フェード
       GMEVENT_CallEvent( event, 
@@ -206,7 +212,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone( GMEVENT * event, int *
     break;
 
   // イベント終了
-  case 2:
+  case 3:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -289,7 +295,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
     // BGMフェード完了待ち
     if( PMSND_CheckFadeOnBGM() != TRUE )
     { 
-      PMSND_PlaySE( SEQ_SE_KAIDAN );    // SE
+      // SE 再生
+      if( work->fadeOutType != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
       (*seq)++; 
     }
     break;
