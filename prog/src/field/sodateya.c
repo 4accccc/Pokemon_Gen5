@@ -31,7 +31,7 @@
 //========================================================================================
 #define CHARGE_MIN         (100) // 最小料金
 #define CHARGE_PER_LEVEL   (100) // 1レベル毎の引き取り料金
-#define EXP_PER_WALK         (0xffffffff) // 歩くたびに加算する経験値 // TEST:
+#define EXP_PER_WALK         (1) // 歩くたびに加算する経験値
 #define EGG_CHECK_INTERVAL (256) // 産卵判定の頻度
 #define RARE_EGG_CHANCE      (5) // レアタマゴ抽選回数
 
