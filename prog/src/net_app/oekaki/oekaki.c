@@ -533,6 +533,7 @@ static void VBlankFunc( GFL_TCB *tcb, void * work )
 //----------------------------------------------------------------------------------
 /**
  * @brief 【ユニオン乱入コールバック】乱入処理
+ *         乱入コールバックは３台目からの子機しか発生しない
  *
  * @param   net_id      接続ＩＤ
  * @param   mystatus    MYSTATUS
@@ -548,11 +549,6 @@ static void OEKAKI_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *
   
   // 別な子機の乱入に対処
   if(GFL_NET_SystemGetCurrentID()==0){
-    // 一台目の子機
-//    if(wk->firstChild==0 && net_id!=0){
-//      OS_Printf("おえかき開始時の子機なので送信の必要なし net_id=%d\n", net_id);
-//      wk->firstChild=1;
-//    }else{
       int ret;
       u8 id  = net_id;
       // 2台目以降の子機の乱入
@@ -823,8 +819,8 @@ static void BgGraphicSet( OEKAKI_WORK * wk, ARCHANDLE* p_handle )
 {
 
   // 上下画面ＢＧパレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_oekaki_oekaki_m_NCLR, PALTYPE_MAIN_BG, 0, 16*2*2,  HEAPID_OEKAKI);
-  GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_oekaki_oekaki_s_NCLR, PALTYPE_SUB_BG,  0, 16*2*2,  HEAPID_OEKAKI);
+  GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_oekaki_oekaki_m_NCLR, PALTYPE_MAIN_BG, 0, 16*2*12,  HEAPID_OEKAKI);
+  GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_oekaki_oekaki_s_NCLR, PALTYPE_SUB_BG,  0, 16*2*12,  HEAPID_OEKAKI);
   
   // 会話フォントパレット転送
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
@@ -868,6 +864,8 @@ static void BgGraphicSet( OEKAKI_WORK * wk, ARCHANDLE* p_handle )
 static void InitCellActor(OEKAKI_WORK *wk, ARCHANDLE* p_handle)
 {
   int i;
+  
+  // 共通素材ファイルハンドルオープン
   ARCHANDLE *c_handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_OEKAKI );
   // セルアクター初期化
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &OekakiDispVramDat, HEAPID_OEKAKI );
@@ -878,8 +876,8 @@ static void InitCellActor(OEKAKI_WORK *wk, ARCHANDLE* p_handle)
   
   
   
-  //---------上画面用-------------------
-
+  //---------メイン画面用-------------------
+  // お絵かき素材
   //chara読み込み
   wk->resObjTbl[CLACT_RES_M_CHR] = GFL_CLGRP_CGR_Register( p_handle, NARC_oekaki_oekaki_m_obj_NCGR, 0, 
                                                            CLSYS_DRAW_MAIN, HEAPID_OEKAKI );
@@ -894,15 +892,15 @@ static void InitCellActor(OEKAKI_WORK *wk, ARCHANDLE* p_handle)
                                                                  NARC_oekaki_oekaki_m_obj_NANR, 
                                                                  HEAPID_OEKAKI );
 
-  //---------上画面用-------------------
-
+  //---------メイン画面用-------------------
+  // 共通メニュー素材
   //chara読み込み
   wk->resObjTbl[CLACT_RES_SYS_CHR] = GFL_CLGRP_CGR_Register( c_handle, APP_COMMON_GetBarIconCharArcIdx(), 0, 
                                                            CLSYS_DRAW_MAIN, HEAPID_OEKAKI );
 
   //pal読み込み
   wk->resObjTbl[CLACT_RES_SYS_PLTT] = GFL_CLGRP_PLTT_RegisterEx( c_handle, APP_COMMON_GetBarIconPltArcIdx(), 
-                                                                 CLSYS_DRAW_MAIN, 5*32, 0, 4, HEAPID_OEKAKI );
+                                                                 CLSYS_DRAW_MAIN, 11*32, 0, 3, HEAPID_OEKAKI );
 
   //cell読み込み
   wk->resObjTbl[CLACT_RES_SYS_CELL] = GFL_CLGRP_CELLANIM_Register( c_handle, 
@@ -910,7 +908,7 @@ static void InitCellActor(OEKAKI_WORK *wk, ARCHANDLE* p_handle)
                                                                  APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_32K), 
                                                                  HEAPID_OEKAKI );
 
-  //---------下画面用-------------------
+  //---------サブ画面用-------------------
 
   //chara読み込み
   wk->resObjTbl[CLACT_RES_S_CHR] = GFL_CLGRP_CGR_Register( p_handle, NARC_oekaki_oekaki_m_obj_NCGR, 0, 
@@ -925,6 +923,10 @@ static void InitCellActor(OEKAKI_WORK *wk, ARCHANDLE* p_handle)
                                                                  NARC_oekaki_oekaki_m_obj_NCER, 
                                                                  NARC_oekaki_oekaki_m_obj_NANR, 
                                                                  HEAPID_OEKAKI );
+  // 共通素材ファイルハンドルクローズ
+  GFL_ARC_CloseDataHandle( c_handle );
+
+  
 
 }
 
@@ -937,15 +939,15 @@ static void InitCellActor(OEKAKI_WORK *wk, ARCHANDLE* p_handle)
 
 
 static const u16 pal_button_oam_table[][3]={
-  {13     , 171, 5},    // 黒
-  {13+24*1, 171, 7},    // 白
-  {13+24*2, 171, 9},    // 赤
-  {13+24*3, 171,11},    // 紫
-  {13+24*4, 171,13},    // 青
-  {13+24*5, 171,15},    // 水色
-  {13+24*6, 171,17},    // 緑
-  {13+24*7, 171,19},    // 黄色
-  {13+24*8+20, 171,21}, // 「やめる」
+  {12     , 172, 5},    // 黒
+  {12+24*1, 172, 7},    // 白
+  {12+24*2, 172, 9},    // 赤
+  {12+24*3, 172,11},    // 紫
+  {12+24*4, 172,13},    // 青
+  {12+24*5, 172,15},    // 水色
+  {12+24*6, 172,17},    // 緑
+  {12+24*7, 172,19},    // 黄色
+  {12+24*8+20, 171,21}, // 「やめる」
 
   // ペン先アイコン
   {20,    9,   29, },
@@ -2094,12 +2096,11 @@ static int Oekaki_EndParentOnlyWait( OEKAKI_WORK *wk, int seq )
 static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
 {
   // ●●●さんがかえりました
-  if( EndMessageWait( wk->printStream ) ){
-    //表示中のメッセージがある場合は強制停止
-    //GF_STR_PrintForceStop(wk->MsgIndex);
-    PRINTSYS_PrintStreamDelete( wk->printStream );
-
-  }
+//  if( EndMessageWait( wk->printStream ) ){
+//    //表示中のメッセージがある場合は強制停止
+//    //GF_STR_PrintForceStop(wk->MsgIndex);
+//    PRINTSYS_PrintStreamDelete( wk->printStream );
+//  }
 
   EndMessagePrint( wk, msg_oekaki_03, 1 );  
   SetNextSequence( wk, OEKAKI_MODE_LOGOUT_CHILD_WAIT );
@@ -2183,7 +2184,7 @@ static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
  *
  * @param   wk    
  * @param   seq   
- * @param   id    
+ * @param   id    通信ID
  *
  * @retval  none    
  */
@@ -2197,7 +2198,7 @@ void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  )
     }
     EndButtonAppearChange( wk->EndIconActWork, FALSE );
     // 指定の子機の名前をWORDSETに登録（離脱・乱入時)
-//    WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(wk->param->uniapp, id) );  
+    WORDSET_RegisterPlayerName( wk->WordSet, 0, Union_App_GetMystatus(wk->param->uniapp, id) );  
     wk->newMemberId = id;
     wk->ridatu_bit = 0;
     OS_Printf("新しい人のID %d\n",id);
@@ -2683,13 +2684,10 @@ static void NameCheckPrint( GFL_BMPWIN *win[], PRINTSYS_LSB color, OEKAKI_WORK *
       MyStatus_CopyNameString( wk->TrainerStatus[i][0], wk->TrainerName[i] );
       OS_Printf("name print id=%d\n", i);
       if(id==i){
-//        GF_STR_PrintColor(  &win[i], FONT_TALK, wk->TrainerName[i], 0, 0, MSG_NO_PUT, 
-//                            NAME_COL_MINE,NULL);
           PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_NAME_WIN0+i], wk->printQue, 
                                   0, 0, wk->TrainerName[i], wk->font, NAME_COL_MINE );
 
       }else{
-//        GF_STR_PrintColor(  &win[i], FONT_TALK, wk->TrainerName[i], 0, 0, MSG_NO_PUT, color,NULL);
           PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_NAME_WIN0+i], wk->printQue, 
                                   0, 0, wk->TrainerName[i], wk->font, color );
 
