@@ -40,10 +40,10 @@ EVENT_START ev_tri_house_reception
   //マスターランクになったか？
   IF $rank == TH_RANK_MASTER THEN
     //「ししょう！チャレンジする？」
-    _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_002)
+    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_002, SCWK_TARGET_OBJID, POS_DL )
   ELSE
     //「チャレンジする？」
-    _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_001)
+    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_001, SCWK_TARGET_OBJID, POS_DL )
   ENDIF
 
   WHILE $loop == TRUE
@@ -76,7 +76,7 @@ EVENT_START ev_tri_house_reception
 
   IF $exit == TRUE THEN
     //「またこんど」
-    _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_005)
+    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_005, SCWK_TARGET_OBJID, POS_DL )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
@@ -89,7 +89,7 @@ EVENT_END
 //説明
 explanation:
   //説明メッセージ
-  _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_001)  //@todo
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_001, SCWK_TARGET_OBJID, POS_DL )  //@todo
 _RET
 
 charange:
@@ -98,7 +98,7 @@ charange:
   DEFINE_LOCAL    regulation
   DEFINE_LOCAL    download
   //「チャレンジするのね。ちょっとまって」
-  _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_003)
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_003, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE()
 
   //ビーコンサーチ処理
@@ -107,7 +107,7 @@ charange:
   //ダウンロードデータで遊ぶかをセットする
   _TH_SET_DL_FLG( download )
   //シングル？ダブル?
-  _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_006)
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_006, SCWK_TARGET_OBJID, POS_DL )
   //リスト作成
   _BMPMENU_INIT_EX( 1,1,0,1,first_list_ret )
   _BMPMENU_MAKE_LIST( msg_trialhouse_str4, 0 )    //シングル
@@ -140,7 +140,7 @@ charange:
   ENDIF
 
   //「早速はじめる」
-  _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_011)
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_011, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE()
 
   //手持ちかバトルボックスか選ぶウィンドウ表示(メンバチェック込み)
@@ -165,7 +165,7 @@ charange:
   ENDIF
 
   //「でははじめるよ」
-  _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_013)
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_013, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE()
 
   //受付係はける
@@ -188,7 +188,7 @@ charange:
    DEFINE_LOCAL result_rank
    DEFINE_LOCAL rank_msg
     //「おつかれさま」
-    _BALLOONWIN_TALKOBJ_MSG_DOWN(msg_trialhouse_014)
+    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_014, SCWK_TARGET_OBJID, POS_DL )
     _BALLOONWIN_CLOSE()
     //評価アプリ起動 @todo
 
@@ -225,7 +225,7 @@ charange:
     _TH_SET_RANK( result_rank )
 
     //ラストメッセージ
-    _BALLOONWIN_TALKOBJ_MSG_DOWN(rank_msg)
+    _BALLOONWIN_OBJMSG_POS(rank_msg, SCWK_TARGET_OBJID, POS_DL )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 

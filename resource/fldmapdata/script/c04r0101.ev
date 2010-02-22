@@ -138,7 +138,7 @@ EVENT_START	ev_c04r0101_boy1_btltalk
     $last_msg = msg_touroku_05
   ENDIF
 
-  _BALLOONWIN_TALKOBJ_MSG_DOWN( last_msg )
+  _BALLOONWIN_OBJMSG_POS( last_msg , SCWK_TARGET_OBJID, POS_DL )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
@@ -151,7 +151,7 @@ easy_talk_loop:
   $exit = FALSE
 
   //「教えて」
-  _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_touroku_01 )
+  _BALLOONWIN_OBJMSG_POS( msg_touroku_01 , SCWK_TARGET_OBJID, POS_DL )
 
   WHILE $exit == FALSE
     //リスト作成
@@ -187,7 +187,7 @@ easy_talk_loop:
 
         ENDSWITCH
 
-        _BALLOONWIN_TALKOBJ_MSG_DOWN( msg )
+        _BALLOONWIN_OBJMSG_POS( msg , SCWK_TARGET_OBJID, POS_DL )
         _BALLOONWIN_CLOSE()
         //簡易会話アプリ
         {
@@ -202,7 +202,7 @@ easy_talk_loop:
 
         IF $SCWK_ANSWER == TRUE THEN
           //「他にも教えて」
-          _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_touroku_07 )
+          _BALLOONWIN_OBJMSG_POS( msg_touroku_07 , SCWK_TARGET_OBJID, POS_DL )
           _YES_NO_WIN( SCWK_ANSWER )
           IF $SCWK_ANSWER != 0 THEN   //教えない。終了
             _BALLOONWIN_CLOSE() //ウィンドウ閉じる
