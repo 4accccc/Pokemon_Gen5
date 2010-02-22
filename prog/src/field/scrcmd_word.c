@@ -17,6 +17,7 @@
 #include "item/item.h"
 #include "savedata/myitem_savedata.h"
 
+#include "field/zonedata.h"
 #include "script.h"
 #include "script_local.h"
 #include "script_def.h"
@@ -347,7 +348,7 @@ VMCMD_RESULT EvCmdPlaceName( VMHANDLE *core, void *wk )
 	u16           idx = SCRCMD_GetVMWorkValue( core, work );  // ‘æˆêˆø”
 	u16       zone_id = SCRCMD_GetVMWorkValue( core, work );  // ‘æ“ñˆø”
 
-  WORDSET_RegisterPlaceName( wordset, idx, zone_id );
+  WORDSET_RegisterPlaceName( wordset, idx, ZONEDATA_GetPlaceNameID(zone_id) );
 	return VMCMD_RESULT_CONTINUE;
 }
 
