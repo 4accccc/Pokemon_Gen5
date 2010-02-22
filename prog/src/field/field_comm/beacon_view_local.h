@@ -11,6 +11,7 @@
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/game_beacon_accessor.h"
 #include "gamesystem/beacon_status.h"
+#include "gamesystem/g_power.h"
 #include "system/palanm.h"
 #include "system/gfl_use.h"
 #include "savedata/intrude_save.h"
@@ -129,10 +130,10 @@ typedef enum{
 #define BVIEW_SE_DECIDE (SEQ_SE_DECIDE1)
 #define BVIEW_SE_SELECT (SEQ_SE_SELECT1)
 #define BVIEW_SE_CANCEL (SEQ_SE_CANCEL1)
-#define BVIEW_SE_UPDOWN (SEQ_SE_DECIDE2)
-#define BVIEW_SE_NEW_PLAYER (SEQ_SE_DECIDE3)
-#define BVIEW_SE_ICON   (SEQ_SE_SELECT2)
-#define BVIEW_SE_THANKS (SEQ_SE_DECIDE1)
+#define BVIEW_SE_UPDOWN (SEQ_SE_SELECT4)
+#define BVIEW_SE_NEW_PLAYER (SEQ_SE_SYS_11)
+#define BVIEW_SE_ICON   (SEQ_SE_MESSAGE)
+#define BVIEW_SE_THANKS (SEQ_SE_SELECT2)
 
 ///////////////////////////////////////////////////
 //BMPŠÖ˜A
@@ -479,6 +480,7 @@ typedef struct _BEACON_VIEW{
   MY_DATA               my_data;
 
   BOOL      active;
+  BOOL      my_power_f;
   int       seq;
   int       sub_seq;
   int       event_id;
@@ -533,6 +535,10 @@ typedef struct _BEACON_VIEW{
   RES2D_CHAR  resCharUnion[UNION_CHAR_MAX];
   RES2D_PLTT  resPlttUnion;
   RES2D_PLTT  resPlttPanel;
+
+#ifdef PM_DEBUG
+  u32 deb_stack_check_throw;
+#endif
 }BEACON_VIEW;
 
 

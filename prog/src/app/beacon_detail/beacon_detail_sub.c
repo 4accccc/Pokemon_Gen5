@@ -487,13 +487,17 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
         BMP_PROF02_DAT_PX, 0, BMP_PROF02_DAT_SX, BMP_PROF02_DAT_SY, 1);
   }
   //出身地
-  GFL_MSG_GetString( wk->msg_area, GAMEBEACON_Get_Area(info) , wk->str_tmp);
-  draw_BeaconData( wk, &bp->home[1], wk->str_tmp,
-      0, 0, BMP_HOME02_SX, BMP_HOME02_SY, 0 );
-
+  GFL_MSG_GetString( wk->msg, msg_home_town_word , wk->str_tmp);
+  {
+    u16 nation = GAMEBEACON_Get_Nation(info);
+    WORDSET_RegisterCountryName( wk->wset, 0, nation);
+    WORDSET_RegisterLocalPlaceName( wk->wset, 1, nation, GAMEBEACON_Get_Area(info));
+    draw_BeaconData( wk, &bp->home[1], wk->str_tmp,
+        0, 0, BMP_HOME02_SX, BMP_HOME02_SY, 0 );
+  }
   //レコード
   WORDSET_RegisterNumber( wk->wset, 0,
-      /*GAMEBEACON_Get_ThanksRecvCount(info)*/99999, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+      GAMEBEACON_Get_ThanksRecvCount(info), 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wk->wset, 1,
       GAMEBEACON_Get_SuretigaiCount(info), 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
   

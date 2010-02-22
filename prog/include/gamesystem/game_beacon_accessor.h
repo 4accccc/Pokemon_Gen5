@@ -36,6 +36,7 @@ extern GAMEBEACON_INFO_TBL * GAMEBEACON_InfoTbl_Alloc(HEAPID heap_id);
 //  アクセサ
 //--------------------------------------------------------------
 extern BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info);
+extern BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_PlayerNameToBuf(const GAMEBEACON_INFO *info, STRBUF* strbuf);
 extern int GAMEBEACON_Get_PmVersion(const GAMEBEACON_INFO *info);
 extern int GAMEBEACON_Get_Nation(const GAMEBEACON_INFO *info);
@@ -65,3 +66,6 @@ extern void GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info, STRBUF *
 extern u16 GAMEBEACON_Get_Action_TrNo(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_Action_ThankyouCount(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_Action_Hour(const GAMEBEACON_INFO *info);
+
+void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id);
+

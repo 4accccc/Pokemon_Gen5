@@ -184,6 +184,9 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   int i;
 
   GFL_TCBL_Main( wk->pTcbSys );
+  
+  //スタックテーブル更新
+  GAMEBEACON_Stack_Update( wk->infoStack );
 
   if( wk->active != bActive ){
     wk->active = bActive;
@@ -195,8 +198,6 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   if(!bActive){
     return;
   }
-  //スタックテーブル更新
-  GAMEBEACON_Stack_Update( wk->infoStack );
   
   switch( wk->seq ){
   case SEQ_MAIN:
@@ -356,6 +357,7 @@ static void event_RequestReset( BEACON_VIEW_PTR wk )
 static int seq_Main( BEACON_VIEW_PTR wk )
 {
   int ret;
+  
 
   //メイン入力チェック
   ret = BeaconView_CheckInput( wk );
@@ -517,7 +519,8 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   {
     INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(save);
     wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv);
-    wk->my_data.power = 1;
+//    wk->my_data.power = 1;
+    wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
   }
   wk->misc_sv = (MISC*)SaveData_GetMiscConst( save );
   wk->log_count = MISC_CrossComm_GetSuretigaiCount( wk->misc_sv );
