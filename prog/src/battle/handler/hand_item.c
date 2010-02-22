@@ -289,6 +289,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MononokePlate( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_RyuunoPlate( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KowamotePlate( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KoutetsuPlate( u32* numElems );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_OokinaNekko( u32* numElems );
+static void handler_OokinaNekko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_TumetaiIwa( u32* numElems );
 static void handler_TumetaiIwa( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SarasaraIwa( u32* numElems );
@@ -584,6 +586,7 @@ static const struct {
   { ITEM_RYUUNOPUREETO,     HAND_ADD_ITEM_RyuunoPlate     },
   { ITEM_KOWAMOTEPUREETO,   HAND_ADD_ITEM_KowamotePlate   },
   { ITEM_KOUTETUPUREETO,    HAND_ADD_ITEM_KoutetsuPlate   },
+  { ITEM_OOKINANEKKO,       HAND_ADD_ITEM_OokinaNekko     },
 
 
   { ITEM_SINKANOKISEKI,     HAND_ADD_ITEM_SinkanoKiseki   },  // しんかのきせき
@@ -3246,7 +3249,6 @@ static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 counter = BPP_GetWazaContCounter( bpp );
-    OS_TPrintf("連続ワザカウンタ=%dだ\n", counter);
     if( counter )
     {
       fx32 ratio;
@@ -3254,7 +3256,6 @@ static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       pow = 100 + (common_GetItemParam(myHandle, ITEM_PRM_ATTACK) * (counter));
       if( pow > 200 ){ pow = 200; }
       ratio = (FX32_CONST(pow) / 100);
-      OS_TPrintf("メトロノーム効果 : %08x\n", ratio);
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
     }
   }
@@ -3864,7 +3865,28 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KoutetsuPlate( u32* numElems )
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-
+//------------------------------------------------------------------------------
+/**
+ *  おおきなねっこ
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_OokinaNekko( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CALC_DRAIN,     handler_OokinaNekko },  // ドレイン量計算ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+// ドレイン量計算ハンドラ
+static void handler_OokinaNekko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    fx32 ratio = Item_AttackValue_to_Ratio( myHandle );
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
+  }
+}
 
 //------------------------------------------------------------------------------
 /**

@@ -6095,6 +6095,18 @@ static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POK
   }
 }
 //
+//----------------------------------------------------------------------------------
+/**
+ * HP吸い取り処理コア
+ *
+ * @param   wk
+ * @param   attacker    吸い取る側ポケID
+ * @param   target      吸い取られる側ポケID（NULLでも可：「ねをはる」を大きなねっこ対象にするため利用）
+ * @param   drainHP
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
 static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 drainHP )
 {
   u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -10992,12 +11004,19 @@ static void scEvent_WazaRankEffectFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARA
 //--------------------------------------------------------------------------
 static int scEvent_RecalcDrainVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, u32 volume )
 {
+  fx32 ratio;
+  u8   targetPokeID = (target!=NULL)? BPP_GetID(target) : BTL_POKEID_NULL;
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, targetPokeID );
+    BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.1), FX32_CONST(32) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_DRAIN );
     volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+    ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
+    if( volume > 0 ){
+      volume = BTL_CALC_MulRatio( volume, ratio );
+    }
   BTL_EVENTVAR_Pop();
   return volume;
 }
@@ -11067,7 +11086,6 @@ static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
   {
     u32 maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
     u32 volume = BTL_CALC_MulRatio( maxHP, ratio );
-    OS_TPrintf("MaxHP=%d, ratio=%08x, value=%d\n", maxHP, ratio, volume);
     return volume;
   }
 }
@@ -12154,7 +12172,10 @@ static u8 scproc_HandEx_drain( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADE
 {
   const BTL_HANDEX_PARAM_DRAIN* param = (BTL_HANDEX_PARAM_DRAIN*)param_header;
   BTL_POKEPARAM* pp_recover = BTL_POKECON_GetPokeParam( wk->pokeCon, param->recoverPokeID );
-  BTL_POKEPARAM* pp_damaged = BTL_POKECON_GetPokeParam( wk->pokeCon, param->damagedPokeID );
+  BTL_POKEPARAM* pp_damaged = NULL;
+  if( param->damagedPokeID != BTL_POKEID_NULL ){
+    pp_damaged = BTL_POKECON_GetPokeParam( wk->pokeCon, param->damagedPokeID );
+  }
 
   if( !BPP_IsDead(pp_recover)
   &&  !BPP_IsHPFull(pp_recover)
