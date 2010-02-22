@@ -1268,6 +1268,7 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
       if( (itemID != ITEM_DUMMY_DATA) && (targetIdx != BPL_SEL_EXIT) )
       {
         u8 cost = BTLV_ITEMSELECT_GetCost( wk->viewCore );
+        u16 wazaIdx = BTLV_ITEMSELECT_GetWazaIdx( wk->viewCore );
         if( wk->shooterEnergy >= cost ){
           wk->shooterEnergy -= cost;
         }else{
@@ -1276,7 +1277,7 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
           cost = wk->shooterEnergy;
         }
         shooterCost_Save( wk, wk->procPokeIdx, cost );
-        BTL_ACTION_SetItemParam( wk->procAction, itemID, targetIdx );
+        BTL_ACTION_SetItemParam( wk->procAction, itemID, targetIdx, wazaIdx );
         ClientSubProc_Set( wk, selact_CheckFinish );
       }else{
 //      (*seq)=SEQ_SELECT_ACTION;

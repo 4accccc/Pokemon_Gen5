@@ -312,6 +312,7 @@ extern void BTLV_ITEMSELECT_ForceQuit( BTLV_CORE* wk );
 extern u16 BTLV_ITEMSELECT_GetItemID( BTLV_CORE* wk );
 extern u8  BTLV_ITEMSELECT_GetCost( BTLV_CORE* wk );
 extern u8  BTLV_ITEMSELECT_GetTargetIdx( BTLV_CORE* wk );
+extern u8 BTLV_ITEMSELECT_GetWazaIdx( BTLV_CORE* wk );
 extern void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk );
 
 

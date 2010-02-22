@@ -80,12 +80,12 @@ static inline void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, WazaID waza, u
   p->fight.waza = waza;
 }
 // アイテムつかうアクション
-static inline void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber, u8 targetIdx )
+static inline void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber, u8 targetIdx, u8 wazaIdx )
 {
   p->item.cmd = BTL_ACTION_ITEM;
   p->item.number = itemNumber;
   p->item.targetIdx = targetIdx;
-  p->item.param = 0;
+  p->item.param = wazaIdx;
 }
 // 入れ替えポケモン選択アクション（選択対象は未定）
 static inline void BTL_ACTION_SetChangeBegin( BTL_ACTION_PARAM* p )
