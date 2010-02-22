@@ -511,6 +511,23 @@ BOOL MMDL_ReqRailMove( MMDL * fmmdl, u16 dir, s16 wait )
 //-----------------------------------------------------------------------------
 u32 MMDL_HitCheckRailMove( const MMDL *mmdl, const RAIL_LOCATION* now_location, const RAIL_LOCATION* next_location )
 {
+  return MMDL_HitCheckRailMoveEx( mmdl, now_location, next_location, NULL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドレール動作モデル　移動チェック
+ *
+ *	@param	mmdl              モデル
+ *	@param	now_location      現在のロケーション
+ *	@param  next_location     次のロケーション
+ *	@param	p_attr            次のロケーションのアトリビュート 
+ *
+ * @retval	u32		ヒットビット。MMDL_MOVEHITBIT_LIM等
+ */
+//-----------------------------------------------------------------------------
+u32 MMDL_HitCheckRailMoveEx( const MMDL *mmdl, const RAIL_LOCATION* now_location, const RAIL_LOCATION* next_location, MAPATTR* p_attr )
+{
   const MV_RAIL_COMMON_WORK* cp_work;
   u32 ret = MMDL_MOVEHITBIT_NON;
   FLDNOGRID_MAPPER* p_mapper;
@@ -553,6 +570,10 @@ u32 MMDL_HitCheckRailMove( const MMDL *mmdl, const RAIL_LOCATION* now_location, 
       TOMOYA_Printf( "HIT ATTR\n" );
 		  ret |= MMDL_MOVEHITBIT_ATTR;
     }
+
+    if( p_attr ){
+      *p_attr = attr;
+    }
   }
 
   // モデルあたり判定
@@ -564,6 +585,7 @@ u32 MMDL_HitCheckRailMove( const MMDL *mmdl, const RAIL_LOCATION* now_location, 
 
   return ret;
 }
+
 
 //----------------------------------------------------------------------------
 /**
@@ -604,6 +626,22 @@ u32 MMDL_HitCheckRailMoveCurrent( const MMDL *mmdl, const RAIL_LOCATION* next_lo
 //-----------------------------------------------------------------------------
 u32 MMDL_HitCheckRailMoveDir( const MMDL *mmdl, u16 dir )
 {
+  return MMDL_HitCheckRailMoveDirEx( mmdl, dir, NULL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドレール動作モデル  移動チェック  今の場所からdirの方向に
+ *
+ *	@param	mmdl              モデル
+ *	@param  dir               移動方向 
+ *	@param	p_attr            移動先アトリビュート格納先
+ *
+ * @retval	u32		ヒットビット。MMDL_MOVEHITBIT_LIM等
+ */
+//-----------------------------------------------------------------------------
+u32 MMDL_HitCheckRailMoveDirEx( const MMDL *mmdl, u16 dir, MAPATTR* p_attr )
+{
   const MV_RAIL_COMMON_WORK* cp_work;
   RAIL_LOCATION now_location;
   RAIL_LOCATION next_location;
@@ -624,7 +662,7 @@ u32 MMDL_HitCheckRailMoveDir( const MMDL *mmdl, u16 dir )
   
   if( check_next_location )
   {
-    return MMDL_HitCheckRailMove(mmdl, &now_location, &next_location);
+    return MMDL_HitCheckRailMoveEx(mmdl, &now_location, &next_location, p_attr);
   }
 
   TOMOYA_Printf( "MOVE LIMIT\n" );
@@ -885,6 +923,9 @@ void MMDL_Rail_GetDirLineWay( const MMDL *mmdl, u16 dir, VecFx16* way )
   // レール前方方向の情報から、wayの回転角度を求める
   rail_dir  = sc_RAILLINE_DIR_CHANGE_TBL[ rail_key ][ dir ];
   rot       = sc_RAILLINE_DIR_ROT_Y[ rail_dir ];
+
+  // Yの値は、cosで動かす
+  way->y = FX_Mul( FX_CosIdx( rot ), way->y );
 
   // XZのパラメータだけ回転させる
   VEC_Set( &calc_vec, way->x, way->y, way->z );

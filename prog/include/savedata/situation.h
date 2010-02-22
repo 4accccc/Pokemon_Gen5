@@ -31,7 +31,7 @@ typedef struct{
   RAIL_LOCATION railposition;
 	s16 direction;
   u8 pos_type;       ///<LOCATION_POS_TYPE
-  u8 pad;
+  u8 move_form;     ///< PLAYER_MOVE_FORM
 }PLAYERWORK_SAVE;
 
 

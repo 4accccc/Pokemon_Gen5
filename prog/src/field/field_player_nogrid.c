@@ -163,7 +163,7 @@ static PLAYER_SET nogridGetMoveStartSet( FIELD_PLAYER_NOGRID* p_player, int dir,
 static void nogridSetMove( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set, int dir, int key_trg, int key_cont, BOOL debug );
 static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, int key_cont, PLAYER_SET set );
 
-static u32 nogrid_HitCheckMove( FIELD_PLAYER_NOGRID* p_player, MMDL *mmdl, u16 dir );
+static u32 nogrid_HitCheckMove( FIELD_PLAYER_NOGRID* p_player, MMDL *mmdl, u16 dir, MAPATTR* p_attr );
 
 static void nogrid_KuruKuruMain( FIELD_PLAYER_NOGRID* p_player );
 
@@ -276,7 +276,6 @@ static void jikiMove_Cycle(
 static PLAYER_SET jikiMove_Cycle_GetSet(
 		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
     u16 dir, BOOL debug_flag );
-
 static PLAYER_SET playerCycle_CheckMoveStart_Stop(
 	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
@@ -308,6 +307,44 @@ static void playerCycle_SetMove_Hitch(
 static void playerCycle_SetMove_Jump(
 	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+
+// 波乗り移動
+static void jikiMove_Swim(
+		FIELD_PLAYER_NOGRID *p_player, PLAYER_SET set, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag );
+
+static PLAYER_SET jikiMove_Swim_GetSet(
+		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag );
+static PLAYER_SET playerSwim_CheckMoveStart_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET playerSwim_CheckMoveStart_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET playerSwim_CheckMoveStart_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET playerSwim_CheckMoveStart_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+
+static void playerSwim_SetMove_Non(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void playerSwim_SetMove_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void playerSwim_SetMove_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void playerSwim_SetMove_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void playerSwim_SetMove_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+
 
 //----------------------------------------------------------------------------
 /**
@@ -846,7 +883,7 @@ static PLAYER_SET nogridGetMoveStartSet( FIELD_PLAYER_NOGRID* p_player, int dir,
     set = jikiMove_Cycle_GetSet( p_player, key_trg, key_cont, dir, debug );
 	  break;
   case PLAYER_MOVE_FORM_SWIM:
-    GF_ASSERT( form == PLAYER_MOVE_FORM_SWIM );
+    set = jikiMove_Swim_GetSet( p_player, key_trg, key_cont, dir, debug );
     break;
   default:
     GF_ASSERT( 0 );
@@ -879,7 +916,7 @@ static void nogridSetMove( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set, int di
     jikiMove_Cycle( p_player, set, key_trg, key_cont, dir, debug );
 	  break;
   case PLAYER_MOVE_FORM_SWIM:
-    GF_ASSERT( form == PLAYER_MOVE_FORM_SWIM );
+    jikiMove_Swim( p_player, set, key_trg, key_cont, dir, debug );
     break;
   default:
     GF_ASSERT( 0 );
@@ -920,13 +957,14 @@ static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, int key_cont,
  *	@param	p_player    プレイヤーワーク
  *	@param	mmdl        モデル
  *	@param	dir         ほうこう
+ *	@param  p_attr      移動先アトリビュート格納先
  *
  *	@return ヒット情報
  */
 //-----------------------------------------------------------------------------
-static u32 nogrid_HitCheckMove( FIELD_PLAYER_NOGRID* p_player, MMDL *mmdl, u16 dir )
+static u32 nogrid_HitCheckMove( FIELD_PLAYER_NOGRID* p_player, MMDL *mmdl, u16 dir, MAPATTR* p_attr )
 {
-  u32 hit = MMDL_HitCheckRailMoveDir( mmdl, dir );
+  u32 hit = MMDL_HitCheckRailMoveDirEx( mmdl, dir, p_attr );
   return hit;
 }
 
@@ -1110,7 +1148,7 @@ static PLAYER_SET player_CheckMoveStart_Walk(
 	}
 	
 	{
-		u32 hit = nogrid_HitCheckMove( p_player, mmdl, dir );
+		u32 hit = nogrid_HitCheckMove( p_player, mmdl, dir, NULL );
 
 		if( debug_flag == TRUE )
     {
@@ -1543,7 +1581,7 @@ static PLAYER_SET playerCycle_CheckMoveStart_Walk(
 	}
 	
 	{
-		u32 hit = nogrid_HitCheckMove( p_player, mmdl, dir );
+		u32 hit = nogrid_HitCheckMove( p_player, mmdl, dir, NULL );
 		
 		if( debug_flag == TRUE )
     {
@@ -1820,6 +1858,261 @@ static void playerCycle_SetMove_Jump(
   
   FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_WALK );
 }
+
+// 波乗り移動
+static void jikiMove_Swim(
+		FIELD_PLAYER_NOGRID *p_player, PLAYER_SET set, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag )
+{
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( p_player->p_player_core );
+
+  switch( set ){
+  case PLAYER_SET_NON:
+    playerSwim_SetMove_Non(
+      p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;
+  case PLAYER_SET_STOP:
+    playerSwim_SetMove_Stop(
+      p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;
+  case PLAYER_SET_WALK:
+    playerSwim_SetMove_Walk(
+      p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;
+  case PLAYER_SET_TURN:
+    playerSwim_SetMove_Turn(
+      p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;
+  case PLAYER_SET_HITCH:
+    playerSwim_SetMove_Hitch(
+      p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;
+  default:
+    GF_ASSERT( 0 );
+    break;
+  }
+}
+
+static void playerSwim_SetMove_Non(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+}
+
+static void playerSwim_SetMove_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+  u16 code;
+  
+  if( dir == DIR_NOT ){
+    dir = MMDL_GetDirDisp( mmdl );
+  }
+  
+  code = MMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
+  MMDL_SetAcmd( mmdl, code );
+  p_player->move_state = PLAYER_MOVE_STOP;
+  
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_STOP );
+}
+
+static void playerSwim_SetMove_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+  u16 code;
+  
+  GF_ASSERT( dir != DIR_NOT );
+  
+  if( debug_flag == TRUE ){
+    code = AC_WALK_U_2F;
+  }else{
+    code = AC_WALK_U_4F;
+  }
+  
+  code = MMDL_ChangeDirAcmdCode( dir, code );
+  
+  MMDL_SetAcmd( mmdl, code );
+  p_player->move_state = PLAYER_MOVE_WALK;
+
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_WALK );
+}
+
+static void playerSwim_SetMove_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+  u16 code;
+  
+  GF_ASSERT( dir != DIR_NOT );
+  code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
+  
+  MMDL_SetAcmd( mmdl, code );
+  p_player->move_state = PLAYER_MOVE_TURN;
+  
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_TURN );
+}
+
+static void playerSwim_SetMove_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+  u16 code;
+  
+  GF_ASSERT( dir != DIR_NOT );
+  code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
+  
+  MMDL_SetAcmd( mmdl, code );
+  p_player->move_state = PLAYER_MOVE_HITCH;
+  
+  FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_STOP );
+  PMSND_PlaySE( SEQ_SE_WALL_HIT );
+}
+
+// PLAYER_SET
+static PLAYER_SET jikiMove_Swim_GetSet(
+		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag )
+{
+  PLAYER_SET set;
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( p_player->p_player_core );
+   
+  set = PLAYER_SET_NON;
+  switch( p_player->move_state ){
+  case PLAYER_MOVE_STOP:
+    set = playerSwim_CheckMoveStart_Stop(
+      p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;
+  case PLAYER_MOVE_WALK:
+    set = playerSwim_CheckMoveStart_Walk(
+      p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;
+  case PLAYER_MOVE_TURN:
+    set = playerSwim_CheckMoveStart_Turn(
+      p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;
+  case PLAYER_MOVE_HITCH:
+    set = playerSwim_CheckMoveStart_Hitch(
+      p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+  
+  return( set );
+}
+
+static PLAYER_SET playerSwim_CheckMoveStart_Stop(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+  if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
+    if( dir != DIR_NOT ){
+      u16 old_dir;
+      old_dir = MMDL_GetDirDisp( mmdl );
+      
+      if( dir != old_dir && debug_flag == FALSE ){
+        return( PLAYER_SET_TURN );
+      }
+      
+      return( playerSwim_CheckMoveStart_Walk(
+        p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+    }
+    
+    return( PLAYER_SET_STOP );
+  }
+  
+  return( PLAYER_SET_NON );
+}
+
+static PLAYER_SET playerSwim_CheckMoveStart_Walk(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+  if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+    return( PLAYER_SET_NON );
+  }
+  
+  if( dir == DIR_NOT )
+  {
+    return( playerSwim_CheckMoveStart_Stop(
+      p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+  }
+  
+  {
+    MAPATTR attr;
+    u32 hit = nogrid_HitCheckMove( p_player, mmdl, dir, &attr );
+    
+    if( debug_flag == TRUE )
+    {
+      if( hit != MMDL_MOVEHITBIT_NON &&
+          !(hit & MMDL_MOVEHITBIT_OUTRANGE) )
+      {
+        hit = MMDL_MOVEHITBIT_NON;
+      }
+    }
+    
+    if( attr != MAPATTR_ERROR ){
+      MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+      
+      if( hit == MMDL_MOVEHITBIT_NON ){
+        if( (flag & MAPATTR_FLAGBIT_WATER) ){
+          return( PLAYER_SET_WALK );
+        }
+        
+        if( debug_flag == TRUE ){
+          return( PLAYER_SET_WALK );
+        }
+      }
+    }
+  }
+  
+  return( PLAYER_SET_HITCH );
+}
+
+static PLAYER_SET playerSwim_CheckMoveStart_Turn(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+  if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+    return( PLAYER_SET_NON );
+  }
+  
+  if( dir == DIR_NOT ){
+    return( playerSwim_CheckMoveStart_Stop(
+      p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+  }
+  
+  return( playerSwim_CheckMoveStart_Walk(
+    p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+}
+
+static PLAYER_SET playerSwim_CheckMoveStart_Hitch(
+	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+  u16 dir_now = MMDL_GetDirDisp( mmdl );
+   
+  if( dir != DIR_NOT && dir != dir_now ){
+    MMDL_FreeAcmd( mmdl );
+    return( playerSwim_CheckMoveStart_Walk(
+      p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+  }
+  
+  if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+    return( PLAYER_SET_NON );
+  }
+  
+  if( dir == DIR_NOT ){
+    return( playerSwim_CheckMoveStart_Stop(
+      p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+  }
+  
+  return( playerSwim_CheckMoveStart_Walk(
+    p_player,mmdl,key_trg,key_cont,dir,debug_flag) );
+}
+
 
 
 //======================================================================
@@ -2184,7 +2477,7 @@ static u16 nogrid_ControlUnderIce( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL de
   MAPATTR attr;
   MMDL *mmdl = nogrid->p_mmdl;
   u16 jiki_dir = MMDL_GetDirMove( mmdl );
-  u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir );
+  u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir, NULL );
 	
   if( hit != MMDL_MOVEHITBIT_NON ){ //障害物ヒット
     nogrid_ControlUnder_Clear( nogrid );
@@ -2226,7 +2519,7 @@ static u16 nogrid_ControlUnderIceSpinL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
   MAPATTR attr;
   MMDL *mmdl = nogrid->p_mmdl;
   u16 jiki_dir = MMDL_GetDirMove( mmdl );
-  u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir );
+  u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir, NULL );
 	
   if( hit != MMDL_MOVEHITBIT_NON ){ //障害物ヒット
     nogrid_ControlUnder_Clear( nogrid );
@@ -2266,7 +2559,7 @@ static u16 nogrid_ControlUnderIceSpinR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
   MAPATTR attr;
   MMDL *mmdl = nogrid->p_mmdl;
   u16 jiki_dir = MMDL_GetDirMove( mmdl );
-  u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir );
+  u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir, NULL );
 	
   if( hit != MMDL_MOVEHITBIT_NON ){ //障害物ヒット
     nogrid_ControlUnder_Clear( nogrid );

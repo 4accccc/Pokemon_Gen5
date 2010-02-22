@@ -2330,7 +2330,15 @@ static GMEVENT_RESULT debugMenuControlTimeListEvent(
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
 {
-  if( FIELDMAP_GetMapControlType(wk->fieldWork) != FLDMAP_CTRLTYPE_GRID ){
+  if( FIELDMAP_GetMapControlType(wk->fieldWork) != FLDMAP_CTRLTYPE_GRID )
+  {
+    // ƒŒ[ƒ‹‚Ì‚Æ‚«
+    FIELD_PLAYER* p_fld_player = FIELDMAP_GetFieldPlayer( wk->fieldWork );
+    if( FIELD_PLAYER_GetMoveForm( p_fld_player ) != PLAYER_MOVE_FORM_SWIM ){
+      FIELD_PLAYER_SetNaminori( p_fld_player );
+    }else{
+      FIELD_PLAYER_SetNaminoriEnd( p_fld_player );
+    }
     return( FALSE );
   }
   

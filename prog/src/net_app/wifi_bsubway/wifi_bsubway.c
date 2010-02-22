@@ -1678,7 +1678,7 @@ static void CODEIN_StartRoomNoProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
   p_wk->p_codein = CodeInput_ParamCreate( heapID, VIEW_NUMBER_KETA_ROOM_NO, s_CODEIN_BLOCK );
   
   // プロックコール
-  GFL_PROC_SysCallProc( FS_OVERLAY_ID(codein), &CodeInput_ProcData, p_wk->p_codein );
+  GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(codein), &CodeInput_ProcData, p_wk->p_codein );
 }
 
 //----------------------------------------------------------------------------
@@ -1700,7 +1700,7 @@ static void CODEIN_StartRankProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
   p_wk->p_codein = CodeInput_ParamCreate( heapID, VIEW_NUMBER_KETA_RANK, s_CODEIN_BLOCK );
   
   // プロックコール
-  GFL_PROC_SysCallProc( FS_OVERLAY_ID(codein), &CodeInput_ProcData, p_wk->p_codein );
+  GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(codein), &CodeInput_ProcData, p_wk->p_codein );
 }
 
 //----------------------------------------------------------------------------
@@ -1808,7 +1808,7 @@ static void LOGIN_StartProc( WIFI_BSUBWAY* p_wk )
 
 
   // プロックコール
-  GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &p_wk->login );
+  GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &p_wk->login );
 }
 
 //----------------------------------------------------------------------------
@@ -1858,7 +1858,7 @@ static void LOGOUT_StartProc( WIFI_BSUBWAY* p_wk )
   p_wk->logout.display   = WIFILOGIN_DISPLAY_UP;
 
   // プロックコール
-  GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &p_wk->logout );
+  GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &p_wk->logout );
 }
 
 //----------------------------------------------------------------------------
@@ -1940,6 +1940,9 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEA
     break;
 
   case SCORE_UPLOAD_SEQ_SAVE:
+    // バトルTower 未アップロードフラグをクリア
+    BSUBWAY_SCOREDATA_SetFlag( p_wk->p_bsubway_score, BSWAY_SCOREDATA_FLAG_WIFI_UPLOAD, BSWAY_SETMODE_reset );
+
     SAVE_Start(p_wk);
     p_wk->seq++;
     break;
@@ -1959,8 +1962,6 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEA
     break;
 
   case SCORE_UPLOAD_SEQ_PERSON_END:
-    // バトルTower 未アップロードフラグをクリア
-    BSUBWAY_SCOREDATA_SetFlag( p_wk->p_bsubway_score, BSWAY_SCOREDATA_FLAG_WIFI_UPLOAD, BSWAY_SETMODE_reset );
     return BSUBWAY_MAIN_RESULT_OK;
 
   default:
@@ -2093,6 +2094,11 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
     break;
 
   case SCORE_UPLOAD_SEQ_GAMEDATA_SAVE:
+    // セーブデータ反映
+    {
+      ROOM_DATA_SavePlayerData( &p_wk->roomdata, p_wk->p_bsubway_wifi );
+    }
+
     SAVE_Start(p_wk);
     p_wk->seq++;
     break;
@@ -2111,10 +2117,6 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
     break;
 
   case SCORE_UPLOAD_SEQ_GAMEDATA_DOWNLOAD_END:
-    // セーブデータ反映
-    {
-      ROOM_DATA_SavePlayerData( &p_wk->roomdata, p_wk->p_bsubway_wifi );
-    }
     return BSUBWAY_MAIN_RESULT_OK;
 
 
@@ -2152,6 +2154,9 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
       if( result == 0 ){
         return BSUBWAY_MAIN_RESULT_CANCEL;
       }else if( result == BMPMENU_CANCEL ){
+
+        // ROOM_DATAリセット
+        ROOM_DATA_Init( &p_wk->roomdata );
         p_wk->seq = SCORE_UPLOAD_SEQ_GAMEDATA_MSG_00;
       }
     }
@@ -2306,6 +2311,10 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
     break;
 
   case SCORE_UPLOAD_SEQ_SUCCESSDATA_SAVE:
+    // セーブデータ反映
+    {
+      ROOM_DATA_SaveLeaderData( &p_wk->roomdata, p_wk->p_bsubway_wifi );
+    }
     SAVE_Start(p_wk);
     p_wk->seq++;
     break;
@@ -2325,10 +2334,6 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
 
 
   case SCORE_UPLOAD_SEQ_SUCCESSDATA_DOWNLOAD_END:
-    // セーブデータ反映
-    {
-      ROOM_DATA_SaveLeaderData( &p_wk->roomdata, p_wk->p_bsubway_wifi );
-    }
     return BSUBWAY_MAIN_RESULT_OK;
 
 
@@ -2355,6 +2360,9 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
         return BSUBWAY_MAIN_RESULT_CANCEL;
       }else if( result == BMPMENU_CANCEL )
       {
+
+        // ROOM_DATAリセット
+        ROOM_DATA_Init( &p_wk->roomdata );
         p_wk->seq = SCORE_UPLOAD_SEQ_SUCCESSDATA_MSG_00;
       }
     }

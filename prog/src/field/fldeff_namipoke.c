@@ -26,6 +26,9 @@
 #define NAMIPOKE_RIDE_Y_OFFSET (FX32_ONE*7) ///<運転手表示オフセットY
 #define NAMIPOKE_RIDE_Z_OFFSET (FX32_ONE*4) ///<運転手表示オフセットZ
 
+#define NAMIPOKE_RIDE_RAIL_Y_OFFSET (FX32_ONE*5) ///<運転手表示オフセットY
+#define NAMIPOKE_RIDE_RAIL_Z_OFFSET (FX32_ONE*7) ///<運転手表示オフセットZ
+
 //======================================================================
 //  struct
 //======================================================================
@@ -142,6 +145,7 @@ static void namipoke_InitResource( FLDEFF_NAMIPOKE *namipoke );
 static void namipoke_DeleteResource( FLDEFF_NAMIPOKE *namipoke );
 
 static const FLDEFF_TASK_HEADER DATA_namipokeTaskHeader;
+static const FLDEFF_TASK_HEADER DATA_RAIL_namipokeTaskHeader;
 
 static void npoke_eff_InitResource( FLDEFF_NAMIPOKE_EFFECT *npoke_eff );
 static void npoke_eff_DeleteResource( FLDEFF_NAMIPOKE_EFFECT *npoke_eff );
@@ -269,8 +273,16 @@ FLDEFF_TASK * FLDEFF_NAMIPOKE_SetMMdl( FLDEFF_CTRL *fectrl,
   head.dir = dir;
   head.pos = *pos;
   
-  task = FLDEFF_CTRL_AddTask(
-      fectrl, &DATA_namipokeTaskHeader, &head.pos, joint, &head, 0 );
+  if( !MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) ){
+    
+    // GRID用
+    task = FLDEFF_CTRL_AddTask(
+        fectrl, &DATA_namipokeTaskHeader, &head.pos, joint, &head, 0 );
+  }else{
+    // RIIL用
+    task = FLDEFF_CTRL_AddTask(
+        fectrl, &DATA_RAIL_namipokeTaskHeader, &head.pos, joint, &head, 0 );
+  }
   return( task );
 }
 
@@ -545,6 +557,7 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
 }
 
 #define RIPPLE_OFFS_Y (-0x4000)
+#define RIPPLE_OFFS_XZ (0xe000)
 
 //--------------------------------------------------------------
 /**
@@ -576,10 +589,10 @@ static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
   if( work->ripple_work.vanish_flag == FALSE ){ //飛沫
     RIPPLE_WORK *rip = &work->ripple_work;
     VecFx32 rip_otbl[DIR_MAX4] = {
-      {0,RIPPLE_OFFS_Y,0xe000},
-      {0,RIPPLE_OFFS_Y,-0xe000},
-      {0xe000,RIPPLE_OFFS_Y,0},
-      {-0xe000,RIPPLE_OFFS_Y,0},
+      {0,RIPPLE_OFFS_Y,RIPPLE_OFFS_XZ},
+      {0,RIPPLE_OFFS_Y,-RIPPLE_OFFS_XZ},
+      {RIPPLE_OFFS_XZ,RIPPLE_OFFS_Y,0},
+      {-RIPPLE_OFFS_XZ,RIPPLE_OFFS_Y,0},
     };
     u16 rip_rtbl[DIR_MAX4][3] = {
       {0,0,0},{0,0x8000,0},{0,0x4000,0},{0,0xc000,0} };
@@ -596,6 +609,12 @@ static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
     st->trans.y += rip->offs.y + rip_offs->y;
     st->trans.z += rip->offs.z + rip_offs->z;
     st->scale = rip->scale;
+
+    FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, FALSE );
+  }else{
+
+    RIPPLE_WORK *rip = &work->ripple_work;
+    FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, TRUE );
   }
 }
 
@@ -609,6 +628,214 @@ static const FLDEFF_TASK_HEADER DATA_namipokeTaskHeader =
   namipokeTask_Delete,
   namipokeTask_Update,
   namipokeTask_Draw,
+};
+
+
+
+
+//--------------------------------------------------------------
+//  波乗りポケモンタスク　Railマップ用
+//
+//  Railマップは方向がころころ変わる。
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+/**
+ * 波乗りポケモンタスク　更新
+ * @param task FLDEFF_TASK
+ * @param wk task work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void namipokeTask_RAIL_Update( FLDEFF_TASK *task, void *wk )
+{
+  TASKWORK_NAMIPOKE *work = wk;
+  VecFx32 oya_offs = { 0, 0, 0 };
+  VecFx16 up_way;
+  VecFx16 front_way;
+  
+  if( work->joint == NAMIPOKE_JOINT_OFF ){ //接続しない
+    return;
+  }
+ 	
+  { //方向
+    work->dir = MMDL_GetDirDisp( work->head.mmdl );
+
+    // 3D方向　（XZ平面にする）
+    MMDL_Rail_GetDirLineWay( work->head.mmdl, DIR_UP, &up_way );
+    MMDL_Rail_GetDirLineWay( work->head.mmdl, work->dir, &front_way );
+
+    up_way.y = 0;
+    VEC_Fx16Normalize( &up_way, &up_way );
+    front_way.y = 0;
+    VEC_Fx16Normalize( &front_way, &front_way );
+  }
+  
+  if( work->joint == NAMIPOKE_JOINT_ON ){ //揺れ
+		work->shake_offs += work->shake_value;
+		
+		if( work->shake_offs >= NAMIPOKE_SHAKE_MAX ){
+			work->shake_offs = NAMIPOKE_SHAKE_MAX;
+			work->shake_value = -work->shake_value;
+		}else if( work->shake_offs <= FX32_ONE ){
+			work->shake_offs = FX32_ONE;
+			work->shake_value = -work->shake_value;
+		}
+    
+    { //運転手に揺れを追加
+      oya_offs.x = FX_Mul( -up_way.x, NAMIPOKE_RIDE_RAIL_Z_OFFSET);
+      oya_offs.y = work->shake_offs + NAMIPOKE_RIDE_RAIL_Y_OFFSET;
+      oya_offs.z = FX_Mul( -up_way.z, NAMIPOKE_RIDE_RAIL_Z_OFFSET ); 
+      MMDL_SetVectorOuterDrawOffsetPos( work->head.mmdl, &oya_offs );
+    }
+  }
+
+  { //座標
+    VecFx32 pos;
+    MMDL_GetDrawVectorPos( work->head.mmdl, &pos );
+    
+    pos.x -= oya_offs.x;
+    pos.y -= oya_offs.y;
+    pos.z -= oya_offs.z;
+    
+    pos.y += work->shake_offs - FX32_ONE;
+    FLDEFF_TASK_SetPos( task, &pos );
+  }
+  
+  if( work->joint == NAMIPOKE_JOINT_ONLY || work->ripple_off == TRUE ){
+    RIPPLE_WORK *rip = &work->ripple_work;      //波を出さない
+    rip->dir = DIR_NOT; //次回更新時に初期化
+    
+    if( work->ripple_off == TRUE ){
+      rip->vanish_flag = TRUE;
+    }
+  }else{ //波エフェクト
+    fx32 ret;
+    VecFx32 pos;
+    FLD_G3DOBJ_CTRL *obj_ctrl;
+    RIPPLE_WORK *rip = &work->ripple_work;
+    
+    obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+        work->head.eff_namipoke->fectrl );
+    FLD_G3DOBJ_CTRL_LoopAnimeObject( obj_ctrl, rip->obj_idx, FX32_ONE );
+    
+    MMDL_GetVectorPos( work->head.mmdl, &pos );
+    
+    if( work->dir != rip->dir ){ //方向更新
+      rip->dir = work->dir;
+      rip->pos = pos;
+    }else if( pos.x == rip->save_pos.x && //停止 減衰
+      pos.y == rip->save_pos.y && pos.z == rip->save_pos.z ){
+      
+      rip->pos.x += FX_Mul( front_way.x, RIP_SCALE_VECTOR_LES );
+      rip->pos.z += FX_Mul( front_way.z, RIP_SCALE_VECTOR_LES );
+      rip->pos.y = pos.y;
+      if( front_way.x > 0 ){
+        if( rip->pos.x > pos.x ){ rip->pos.x = pos.x; }
+      }else if( front_way.x < 0 ){
+        if( rip->pos.x < pos.x ){ rip->pos.x = pos.x; }
+      }
+      if( front_way.z > 0 ){
+        if( rip->pos.z > pos.z ){ rip->pos.z = pos.z; }
+      }else if( front_way.z < 0 ){
+        if( rip->pos.z < pos.z ){ rip->pos.z = pos.z; }
+      }
+    }
+    
+    ret = VEC_Distance( &pos, &rip->pos );
+    
+    if( ret >= RIP_SCALE_VECTOR_MAX ){
+      // 進行方向にあわせて位置を決める
+      rip->pos.x = pos.x - FX_Mul( front_way.x, RIP_SCALE_VECTOR_MAX );
+      rip->pos.z = pos.z - FX_Mul( front_way.z, RIP_SCALE_VECTOR_MAX );
+    }
+
+    ret = ripple_scale_get( ret );
+    
+    if( ret <= RIP_SCALE_PER ){
+      rip->vanish_flag = TRUE;
+    }else{
+      rip->vanish_flag = FALSE;
+      rip->scale.x = ret;
+      rip->scale.y = ret;
+      rip->scale.z = ret;
+    }
+    
+    rip->save_pos = pos;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 波乗りポケモンタスク　描画
+ * @param task FLDEFF_TASK
+ * @param wk task work
+ * @retval nothing
+ * @note 描画をFLD_G3DOBJ_CTRLに任せ、
+ * ここではステータス設定を行うのみとなった。
+ */
+//--------------------------------------------------------------
+static void namipokeTask_RAIL_Draw( FLDEFF_TASK *task, void *wk )
+{
+  VecFx32 pos;
+  GFL_G3D_OBJSTATUS *st;
+  FLD_G3DOBJ_CTRL *obj_ctrl;
+  TASKWORK_NAMIPOKE *work = wk;
+  VecFx16 front_way_16;
+  VecFx32 front_way;
+  VecFx32 back_way;
+  MtxFx33 rotate;
+  MtxFx33 rotate_back;
+
+  // 進行方向
+  {
+    MMDL_Rail_GetDirLineWay( work->head.mmdl, work->dir, &front_way_16 );
+    front_way.x = front_way_16.x;
+    front_way.y = front_way_16.y;
+    front_way.z = front_way_16.z;
+    back_way.x  = -front_way_16.x;
+    back_way.y  = -front_way_16.y;
+    back_way.z  = -front_way_16.z;
+
+    GFL_CALC3D_MTX_GetVecToRotMtxXZ( &front_way, &rotate );
+    GFL_CALC3D_MTX_GetVecToRotMtxXZ( &back_way, &rotate_back );
+  }
+  
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+      work->head.eff_namipoke->fectrl );
+  
+  //ポケモン回転、座標設定
+  st = FLD_G3DOBJ_CTRL_GetObjStatus( obj_ctrl, work->obj_idx );
+  st->rotate = rotate;
+  FLDEFF_TASK_GetPos( task, &st->trans );
+  
+  if( work->ripple_work.vanish_flag == FALSE ){ //飛沫
+    RIPPLE_WORK *rip = &work->ripple_work;
+    FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, FALSE );
+    st = FLD_G3DOBJ_CTRL_GetObjStatus( obj_ctrl, rip->obj_idx );
+    st->rotate  = rotate_back;
+      
+    FLDEFF_TASK_GetPos( task, &st->trans );
+    st->trans.x += rip->offs.x - FX_Mul( front_way.x, RIPPLE_OFFS_XZ );
+    st->trans.y += rip->offs.y + RIPPLE_OFFS_Y - FX_Mul( front_way.y, RIPPLE_OFFS_XZ );
+    st->trans.z += rip->offs.z - FX_Mul( front_way.z, RIPPLE_OFFS_XZ );
+    st->scale = rip->scale;
+  }else{
+    RIPPLE_WORK *rip = &work->ripple_work;
+
+    FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, TRUE );
+  }
+}
+
+//--------------------------------------------------------------
+//  波乗りポケモンタスク Railマップ用　ヘッダー
+//--------------------------------------------------------------
+static const FLDEFF_TASK_HEADER DATA_RAIL_namipokeTaskHeader =
+{
+  sizeof(TASKWORK_NAMIPOKE),
+  namipokeTask_Init,
+  namipokeTask_Delete,
+  namipokeTask_RAIL_Update,
+  namipokeTask_RAIL_Draw,
 };
 
 //======================================================================

@@ -1153,7 +1153,7 @@ BOOL FIELD_PLAYER_CheckNaminoriEventEnd( FIELD_PLAYER *fld_player )
     return( FIELD_PLAYER_GRID_CheckNaminoriEventEnd(fld_player->gridwk) );
   }
   
-  OS_Printf( "rail not support\n" );
+  //OS_Printf( "rail not support\n" );
   return( FALSE );
 }
 
@@ -1170,8 +1170,7 @@ void FIELD_PLAYER_SetNaminoriEventEnd( FIELD_PLAYER *fld_player, BOOL flag )
         fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
     FIELD_PLAYER_GRID_SetNaminoriEventEnd( fld_player->gridwk, flag );
   }else{
-    OS_Printf( "rail not support\n" );
-    GF_ASSERT(0);
+    //OS_Printf( "rail not support\n" );
   }
 }
 

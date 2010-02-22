@@ -1241,8 +1241,11 @@ extern void MMDL_UpdateRail( MMDL* fmmdl );
 extern BOOL MMDL_ReqRailMove( MMDL * fmmdl, u16 dir, s16 wait );
 extern u32 MMDL_HitCheckRailMove( const MMDL *mmdl,
 	const RAIL_LOCATION* now_location, const RAIL_LOCATION* next_location );
+extern u32 MMDL_HitCheckRailMoveEx( const MMDL *mmdl,
+	const RAIL_LOCATION* now_location, const RAIL_LOCATION* next_location, MAPATTR* p_attr );
 extern u32 MMDL_HitCheckRailMoveCurrent( const MMDL *mmdl, const RAIL_LOCATION* next_location );
 extern u32 MMDL_HitCheckRailMoveDir( const MMDL *mmdl, u16 dir );
+extern u32 MMDL_HitCheckRailMoveDirEx( const MMDL *mmdl, u16 dir, MAPATTR* p_attr );
 extern BOOL MMDL_HitCheckRailMoveFellow(
 	const MMDL * mmdl, const RAIL_LOCATION* location );
 extern MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* location, BOOL old_hit );
