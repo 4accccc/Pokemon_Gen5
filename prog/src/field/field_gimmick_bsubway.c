@@ -15,6 +15,7 @@
 
 #include "fieldmap.h"
 #include "field_gimmick_def.h"
+#include "field_bg_def.h"
 
 #include "fldeff_btrain.h"
 
@@ -36,6 +37,8 @@ enum
   BSWGMK_NO_C04R0111,
   BSWGMK_NO_MAX,
 };
+
+#define SHAKE_Y (6)
 
 //======================================================================
 //  struct
@@ -60,6 +63,7 @@ struct _TAG_BSW_GMK
   u16 gmk_id;
   u32 zone_id;
   HEAPID heapID;
+  VecFx32 cameraTargetPos; //車内専用カメラターゲット
   void *bsw_work;
 };
 
@@ -86,7 +90,12 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  int shake_stop;
+  u8 shake_stop;
+  u8 seq_no;
+  u8 padding[2];
+  
+  int wait;
+  int shake_y;
 }SHAKE_WORK;
 
 //======================================================================
@@ -293,6 +302,9 @@ static void initProc_ShakeTrain( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
 
   work = GFL_HEAP_AllocClearMemory( bsw_gmk->heapID, sizeof(SHAKE_WORK) );
   bsw_gmk->bsw_work = work;
+  
+  //車内専用カメラターゲット初期化
+//  bsw_gmk->cameraTargetPos.x
 }
 
 //--------------------------------------------------------------
@@ -318,7 +330,55 @@ static void delProc_ShakeTrain( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
 //--------------------------------------------------------------
 static void moveProc_ShakeTrain( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
 {
+  VecFx32 scroll = {0,0,0};
   SHAKE_WORK *work = bsw_gmk->bsw_work;
+  FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fldmap );
+  
+  switch( work->seq_no ){
+  case 0: //初期化
+    work->wait = GFUser_GetPublicRand( 30*3 ) + 15; //最大3秒+最低0.5秒の間
+    work->seq_no++;
+  case 1: //ウェイト
+    work->wait--;
+    
+    if( work->wait <= 0 ){
+      work->shake_y = SHAKE_Y;
+      work->seq_no++;
+    }
+    break;
+  case 2: //ゆれ
+    if( work->shake_stop == TRUE ){
+      work->shake_y = 0;
+      work->seq_no++;
+      FLDMAPPER_SetDrawOffset( mapper, &scroll );
+    }else{
+      KAGAYA_Printf(
+          "BGスクロール = %d\n", GFL_BG_GetScrollY(FLDBG_MFRM_3D) );
+      
+      scroll.y = NUM_FX32( work->shake_y );
+      FLDMAPPER_SetDrawOffset( mapper, &scroll );
+
+      if( work->shake_y == 0 ){
+        work->seq_no = 0;
+      }
+      
+      if( work->shake_y < 0 ){
+        work->shake_y += 2;
+
+        if( work->shake_y > 0 ){
+          work->shake_y = 0;
+        }
+      }
+      
+      work->shake_y = -work->shake_y;
+    } 
+    break;
+  case 3: //ゆれ停止待ち
+    if( work->shake_stop != TRUE ){
+      work->seq_no = 0;
+    }
+    break;
+  }
 }
 
 //======================================================================
