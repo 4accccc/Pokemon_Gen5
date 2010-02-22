@@ -259,7 +259,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_ENCEFF, debugMenuCallProc_EncEffList },           //エンカウントエフェクト
 
   { DEBUG_FIELD_TITLE_01, (void*)BMPMENULIST_LABEL },       //○システム
-  { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },     //フラグ操作
+  { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },     //数値入力
   { DEBUG_FIELD_STR04, debugMenuCallProc_GameEnd },         //ゲーム終了
   { DEBUG_FIELD_STR60, debugMenuCallProc_ForceSave },       //強制セーブ
   { DEBUG_FIELD_STR53, debugMenuCallProc_UseMemoryDump },   //メモリ状況
