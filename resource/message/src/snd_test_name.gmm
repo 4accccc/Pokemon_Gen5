@@ -7934,9 +7934,9 @@
 		<language name="JPN" width="256">FLD-122</language>
 		<language name="JPN_KANJI" width="256">FLD-122</language>
 	</row>
-	<row id="msg_seq_se_dmy_224">
-		<language name="JPN" width="256">DMY-224</language>
-		<language name="JPN_KANJI" width="256">DMY-224</language>
+	<row id="msg_seq_se_sys_79">
+		<language name="JPN" width="256">SYS-79</language>
+		<language name="JPN_KANJI" width="256">SYS-79</language>
 	</row>
 	<row id="msg_seq_se_dmy_225">
 		<language name="JPN" width="256">DMY-225</language>
