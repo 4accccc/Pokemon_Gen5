@@ -1291,6 +1291,7 @@ void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos 
   BtlvMcssPos  at_pos, def_pos;
 
   at_pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, atPokePos );
+
   def_pos = (defPokePos != BTL_POS_NULL)?
       BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPokePos ) : BTLV_MCSS_POS_ERROR;
 
@@ -1469,6 +1470,24 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
   return FALSE;
 
 }
+
+//=============================================================================================
+/**
+ * 溜めワザ（そらをとぶ等）によるポケ表示オン・オフ切り替え
+ *
+ * @param   wk
+ * @param   vpos
+ * @param   vanishFlag
+ */
+//=============================================================================================
+void BTLV_ACT_TameWazaHide( BTLV_CORE* wk, BtlvMcssPos vpos, BTLV_MCSS_VANISH_FLAG  vanishFlag )
+{
+  if( vanishFlag != BTLV_EFFECT_GetMcssVanishFlag(vpos) )
+  {
+    BTLV_EFFECT_SetMcssVanishFlag( vpos, vanishFlag );
+  }
+}
+
 
 //=============================================================================================
 /**

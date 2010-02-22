@@ -3246,6 +3246,7 @@ static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 counter = BPP_GetWazaContCounter( bpp );
+    OS_TPrintf("連続ワザカウンタ=%dだ\n", counter);
     if( counter )
     {
       fx32 ratio;
@@ -3253,6 +3254,7 @@ static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       pow = 100 + (common_GetItemParam(myHandle, ITEM_PRM_ATTACK) * (counter));
       if( pow > 200 ){ pow = 200; }
       ratio = (FX32_CONST(pow) / 100);
+      OS_TPrintf("メトロノーム効果 : %08x\n", ratio);
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
     }
   }

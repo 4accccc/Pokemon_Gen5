@@ -212,6 +212,7 @@ static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_TameWazaHide( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args );
@@ -2538,6 +2539,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_MSG_WAZA,              scProc_MSG_Waza           },
     { SC_ACT_WAZA_EFFECT,       scProc_ACT_WazaEffect     },
     { SC_ACT_WAZA_EFFECT_EX,    scProc_ACT_WazaEffectEx   },
+    { SC_ACT_TAMEWAZA_HIDE,     scProc_ACT_TameWazaHide   },
     { SC_ACT_WAZA_DMG,          scProc_ACT_WazaDmg        },
     { SC_ACT_WAZA_DMG_PLURAL,   scProc_ACT_WazaDmg_Plural },
     { SC_ACT_WAZA_ICHIGEKI,     scProc_ACT_WazaIchigeki   },
@@ -3000,6 +3002,10 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args )
   return FALSE;
 }
 
+/**
+ *  ワザエフェクト
+ *  args  [0]:攻撃ポケ位置  [1]:防御ポケ位置  [2]:ワザID
+ */
 static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ) {
@@ -3033,16 +3039,18 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
 
   return FALSE;
 }
+/**
+ *  ワザエフェクト（拡張引数付き）
+ *  args  [0]:攻撃ポケ位置  [1]:防御ポケ位置  [2]:ワザID  [3]:拡張引数 (1byte)
+ */
 static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ) {
   case 0:
     {
       u8 turnType = args[3];
-      if( (BTL_MAIN_IsWazaEffectEnable(wk->mainModule))
-// @todo 本来有効な行だが今はワザエフェクトが用意されておらずフリーズするのでコメントアウト
-//      ||  (turnType == BTLV_WAZAEFF_TURN_TAME)
-      ){
+      if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
+      {
         WazaID waza;
         u8 atPokePos, defPokePos;
         const BTL_PARTY* party;
@@ -3070,7 +3078,31 @@ static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args )
 
   return FALSE;
 }
+/**
+ *  溜めワザ（そらをとぶ等）による、表示オン／オフ
+ *  args  [0]:対象ポケID  [1]:TRUE=非表示, FALSE=表示
+ */
+static BOOL scProc_ACT_TameWazaHide( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ) {
+  case 0:
+    {
+      u8 pokeID = args[0];
+      BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, pokeID );
 
+      BTLV_MCSS_VANISH_FLAG  flag = (args[1])? BTLV_MCSS_VANISH_ON : BTLV_MCSS_VANISH_OFF;
+
+
+      BTLV_ACT_TameWazaHide( wk->viewCore, vpos, flag );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 

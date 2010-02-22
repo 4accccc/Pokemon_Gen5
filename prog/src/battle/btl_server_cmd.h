@@ -71,6 +71,7 @@ typedef enum {
   SC_OP_CLEAR_CONSUMED_ITEM,///< アイテム消費情報のクリア
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
+  SC_ACT_TAMEWAZA_HIDE,     ///< 【アクション】そらをとぶなどで画面から消える・現れる設定
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
   SC_ACT_WAZA_DMG_PLURAL,   ///< 【アクション】複数体同時ダメージ処理 [ pokeCnt, affAbout, ... ]
   SC_ACT_WAZA_ICHIGEKI,     ///< 【アクション】一撃ワザ処理
@@ -360,6 +361,13 @@ static inline void SCQUE_PUT_ACT_WazaEffectEx( BTL_SERVER_CMD_QUE* que, u8 atPok
 {
   SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT_EX, atPokePos, defPokePos, waza, arg );
 }
+// 溜めワザ（そらをとぶ等）の開始時に姿を消す・攻撃後に姿を現す
+static inline void SCQUE_PUT_ACT_TameWazaHide( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 hideFlag )
+{
+  SCQUE_PUT_Common( que, SC_ACT_TAMEWAZA_HIDE, pokeID, hideFlag );
+}
+
+
 
 // 【アクション】単体ダメージ処理
 static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 defPokeID, u8 affinity, u16 damage, u16 wazaID )
