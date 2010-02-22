@@ -566,8 +566,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //バトル呼び出し
 	case BSWSUB_LOCAL_BTL_CALL:
+    #ifndef DEBUG_BSW_BTL_SKIP
     SCRIPT_CallEvent(
         sc, BSUBWAY_EVENT_TrainerBattle(bsw_scr,gsys,fieldmap) );
+    #endif
     return VMCMD_RESULT_SUSPEND;
   //現在のプレイモードを取得
   case BSWSUB_GET_PLAY_MODE:
@@ -670,6 +672,22 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //通信中フラグを取得
   case BSWSUB_GET_COMM_FLAG:
     *ret_wk = bsw_scr->comm_sio_f;
+    break;
+  //戦闘結果取得
+  case BSWSUB_GET_BATTLE_RESULT:
+    {
+      #ifndef DEBUG_BSW_BTL_SKIP
+      BtlResult res = GAMEDATA_GetLastBattleResult( gdata );
+      
+      if( FIELD_BATTLE_IsLoseResult(res,BTL_COMPETITOR_TRAINER) == TRUE ){
+        *ret_wk = SCR_BATTLE_RESULT_LOSE;
+      }else{
+        *ret_wk = SCR_BATTLE_RESULT_WIN;
+      }
+      #else
+      *ret_wk = SCR_BATTLE_RESULT_WIN;
+      #endif
+    }
     break;
   //----ワーク依存　通信関連
   //通信開始

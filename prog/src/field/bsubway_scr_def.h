@@ -13,6 +13,11 @@
 //======================================================================
 //  define
 //======================================================================
+#ifdef DEBUG_ONLY_FOR_kagaya
+#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
+#define DEBUG_BSW_BTL_SKIP //定義で戦闘スキップ
+#endif
+
 #define BSUBWAY_SCRWORK_MAGIC  (0x12345678) ///<マジックナンバー
 
 #define BSWAY_NULL_POKE  (0xFF)
@@ -207,7 +212,8 @@
 #define BSWSUB_SET_HOME_OBJ (BSWSUB_START_NO+29)
 #define BSWSUB_SET_COMM_FLAG (BSWSUB_START_NO+30)
 #define BSWSUB_GET_COMM_FLAG (BSWSUB_START_NO+31)
-#define BSWSUB_END_NO (BSWSUB_START_NO+32)
+#define BSWSUB_GET_BATTLE_RESULT (BSWSUB_START_NO+32)
+#define BSWSUB_END_NO (BSWSUB_START_NO+33)
 
 #define BSWSUB_COMM_START_NO (200)
 #define BSWSUB_COMM_START (BSWSUB_COMM_START_NO+0)
