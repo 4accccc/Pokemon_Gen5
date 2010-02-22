@@ -50,19 +50,32 @@ typedef enum
 //=====================================
 typedef enum
 {
-  WIFIBATTLEMATCH_NET_ERRORTYPE_DWC,
+  WIFIBATTLEMATCH_NET_ERRORTYPE_NONE,
   WIFIBATTLEMATCH_NET_ERRORTYPE_SC,
   WIFIBATTLEMATCH_NET_ERRORTYPE_GDB,
-  WIFIBATTLEMATCH_NET_ERRORTYPE_MY,
+  WIFIBATTLEMATCH_NET_ERRORTYPE_ND,
+  WIFIBATTLEMATCH_NET_ERRORTYPE_NHTTP,
+  WIFIBATTLEMATCH_NET_ERRORTYPE_SYS,
 } WIFIBATTLEMATCH_NET_ERRORTYPE;
 //-------------------------------------
 /// 自分のシステムのエラー結果
 //=====================================
 typedef enum
 {
-  WIFIBATTLEMATCH_NET_RESULT_NONE,
-  WIFIBATTLEMATCH_NET_RESULT_TIMEOUT,
-} WIFIBATTLEMATCH_NET_RESULT;
+  WIFIBATTLEMATCH_NET_SYSERROR_NONE,    //エラーは発生していない
+  WIFIBATTLEMATCH_NET_SYSERROR_TIMEOUT, //アプリケーションタイムアウトが発生した
+} WIFIBATTLEMATCH_NET_SYSERROR;
+
+//-------------------------------------
+///	エラー解決タイプ
+//=====================================
+typedef enum
+{
+  WIFIBATTLEMATCH_NET_ERROR_NONE,               //正常
+  WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN,      //復帰可能地点まで戻る
+  WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT,  //切断しログインからやり直し
+  WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL,       //電源切断
+} WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE;
 
 //=============================================================================
 /**
@@ -99,6 +112,7 @@ typedef struct
       s32 shooter_rate;
       s32 single_rate;
       s32 triple_rate;
+      s32 wificup_rate;
       s32 cheat;
       s32 complete;
       s32 disconnect;
@@ -116,7 +130,7 @@ typedef struct
       s32 init_profileID;
       s32 now_profileID;
     };
-    s32 arry[20];
+    s32 arry[21];
   };
 } WIFIBATTLEMATCH_GDB_RND_SCORE_DATA;
 
@@ -133,15 +147,6 @@ typedef struct
   s32 rate;
   u8  pokeparty[ WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE ];
 } WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA;
-
-//エラー解決タイプ
-typedef enum
-{
-  WIFIBATTLEMATCH_NET_ERROR_NONE,               //正常
-  WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETRY,       //もう一度
-  WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT,  //切断しログインからやり直し
-  WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL,       //電源切断
-} WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE;
 
 
 //-------------------------------------
@@ -166,12 +171,13 @@ extern void WIFIBATTLEMATCH_NET_Main( WIFIBATTLEMATCH_NET_WORK *p_wk );
 ///	エラー
 //=====================================
 extern BOOL WIFIBATTLEMATCH_NET_CheckError( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //-------------------------------------
 ///	初回処理(必要のない場合は内部で自動的にきる)
 //=====================================
 extern void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk );
-extern BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CONTROL_WORK *p_save, DWCGdbError *p_result );
+extern BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CONTROL_WORK *p_save );
 extern BOOL WIFIBATTLEMATCH_NET_IsInitialize( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
 
 //-------------------------------------
@@ -199,9 +205,7 @@ extern void WIFIBATTLEMATCH_NET_StopConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOO
 ///	ATLAS統計・競争関係（SC）
 //=====================================
 extern void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_MODE mode, WIFIBATTLEMATCH_BTLRULE rule, BtlResult result );
-extern BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCScResult *p_result );
-
-extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_SC_GetErrorRepairType( DWCScResult error );
+extern BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 typedef struct
 {
@@ -252,29 +256,33 @@ typedef enum
   WIFIBATTLEMATCH_GDB_GET_WIFI_SCORE,
   WIFIBATTLEMATCH_GDB_GET_RECORDID,
   WIFIBATTLEMATCH_GDB_GET_PARTY,
+  WIFIBATTLEMATCH_GDB_GET_LOGIN_DATE, //s64の受け取りバッファを設定してください
+
+  WIFIBATTLEMATCH_GDB_GET_DEBUGALL  = WIFIBATTLEMATCH_GDB_GET_RND_SCORE,
 }WIFIBATTLEMATCH_GDB_GETTYPE;
 
 //自分のデータから取得する場合
 #define WIFIBATTLEMATCH_GDB_MYRECORD  (0xFFFFFFFF)
 
 extern void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 recordID, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs );
-extern BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p_result );
+extern BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //書き込み
 typedef enum
 { 
-  WIFIBATTLEMATCH_GDB_WRITE_DEBUGALL,
   WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY,  //ポケモンのバッファは外側のものを使います
   WIFIBATTLEMATCH_GDB_WRITE_WIFI_SCORE,
+  WIFIBATTLEMATCH_GDB_WRITE_LOGIN_DATE, //データは、いりません（内部でログイン時間をバッファに貯めます）
+  WIFIBATTLEMATCH_GDB_WRITE_MYINFO, //データは、いりません＋LOGIN_DATEも設定します
+
+  WIFIBATTLEMATCH_GDB_WRITE_DEBUGALL,
 }WIFIBATTLEMATCH_GDB_WRITETYPE;
 extern void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_GDB_WRITETYPE type, const void *cp_wk_adrs );
-extern BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p_result );
-
-extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_GDB_GetErrorRepairType( DWCGdbError error );
+extern BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //作成
 extern void WIFIBATTLEMATCH_GDB_StartCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk );
-extern BOOL WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p_result );
+extern BOOL WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //レコードID取得
 extern u32 WIFIBATTLEMATCH_GDB_GetRecordID( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
@@ -318,7 +326,7 @@ typedef enum
 } WIFIBATTLEMATCH_RECV_GPFDATA_RET;
 
 extern void WIFIBATTLEMATCH_NET_StartRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, HEAPID heapID );
-extern WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, NHTTPError *p_error );
+extern WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern void WIFIBATTLEMATCH_NET_GetRecvGpfData( const WIFIBATTLEMATCH_NET_WORK *cp_wk, DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_recv );
 
 //書き込み
@@ -330,7 +338,7 @@ typedef enum
 } WIFIBATTLEMATCH_SEND_GPFDATA_RET;
 
 extern void WIFIBATTLEMATCH_NET_StartSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, const DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA *cp_send, HEAPID heapID );
-extern WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, NHTTPError *p_error );
+extern WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 
 //-------------------------------------

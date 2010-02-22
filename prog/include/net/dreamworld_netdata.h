@@ -90,18 +90,24 @@ typedef enum{
   DREAM_WORLD_MATCHUP_RETIRE,		 // 途中で解除
 } DREAM_WORLD_MATCHUP_TYPE;   /// 世界対戦の進行状況
 
+//下記構造体に書き込まれる、書き込みフラグ
+typedef enum
+{ 
+  DREAM_WORLD_ENTRYFLAG_GPF_WRITE,
+  DREAM_WORLD_ENTRYFLAG_DS_WRITE,
+} DREAM_WORLD_ENTRYFLAG;
 
 /// 世界対戦確認用データ構造体
 typedef struct {
   u32 WifiMatchUpID;   ///< 世界対戦の開催ID
-  u8 GPFEntryFlg;      ///< GPFから書き込んだら1 DSから書き込んだら２
+  u8 GPFEntryFlg;      ///< GPFから書き込んだらDREAM_WORLD_ENTRYFLAG_GPF_WRITE DSから書き込んだらDREAM_WORLD_ENTRYFLAG_DS_WRITE
   u8 WifiMatchUpState; ///< 世界対戦の進行状況
 } DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA;
 
 
 /// 世界対戦書き込みデータ構造体
 typedef struct {
-  u8 GPFEntryFlg;    ///< GPFから書き込んだら1 DSから書き込んだら２
+  u8 GPFEntryFlg;      ///< GPFから書き込んだらDREAM_WORLD_ENTRYFLAG_GPF_WRITE DSから書き込んだらDREAM_WORLD_ENTRYFLAG_DS_WRITE
   u8 WifiMatchUpState; ///< 世界対戦の進行状況
 } DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA;
 

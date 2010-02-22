@@ -26,8 +26,8 @@
 #include "message.naix"
 
 //自分のモジュール
-#include "../wifibattlematch_graphic.h"
 #include "../wifibattlematch_util.h"
+#include "../wifibattlematch_graphic.h"
 #include "../wifibattlematch_net.h"
 #include "../atlas_syachi2ds_v1.h"
 
@@ -42,14 +42,15 @@
 //=====================================
 FS_EXTERN_OVERLAY(ui_common);
 FS_EXTERN_OVERLAY(dpw_common);
+FS_EXTERN_OVERLAY(wifibattlematch_view);
 
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
-#define DEBUG_BMPWIN_MAX  (20)
-#define DEBUG_DATA_MAX  (20)
+#define DEBUG_BMPWIN_MAX  (21)
+#define DEBUG_DATA_MAX  (21)
 
 //=============================================================================
 /**
@@ -110,7 +111,8 @@ typedef struct
   s32         now;
   u8          keta;
   u8          active;
-  u16         dummy;
+  u8          frm;
+  u8          plt;
   STRBUF      *p_strbuf;
 } NUMINPUT_WORK;
 
@@ -132,6 +134,7 @@ typedef struct
   WIFIBATTLEMATCH_SC_DEBUG_DATA       report;
   WBM_TEXT_WORK             *p_text;
   GFL_FONT                  *p_font;
+  GFL_FONT                  *p_small_font;
   PRINT_QUE                 *p_que;
   NUMINPUT_WORK             numinput;
   u32                       select;
@@ -153,10 +156,13 @@ typedef struct
   WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  score;
   WBM_TEXT_WORK             *p_text;
   GFL_FONT                  *p_font;
+  GFL_FONT                  *p_small_font;
   PRINT_QUE                 *p_que;
   NUMINPUT_WORK             numinput;
   u32                       select;
   STRBUF                    *p_strbuf;
+  SAVE_CONTROL_WORK         *p_save;
+  s64                       logindate;
 } DEBUG_SAKE_WORK;
 
 //-------------------------------------
@@ -221,9 +227,9 @@ static void Atlas_UpdateReportDisplay( DEBUG_ATLAS_WORK *p_wk );
 //-------------------------------------
 ///	NUMINPUT
 //=====================================
-static void NUMINPUT_Init( NUMINPUT_WORK *p_wk, u8 frm, u8 x, u8 y , u8 w, u8 h, u8 plt, GFL_FONT *p_font, HEAPID heapID );
+static void NUMINPUT_Init( NUMINPUT_WORK *p_wk, u8 frm, u8 plt, GFL_FONT *p_font, HEAPID heapID );
 static void NUMINPUT_Exit( NUMINPUT_WORK *p_wk );
-static void NUMINPUT_Start( NUMINPUT_WORK *p_wk, u8 keta, s32 min, s32 max, s32 now );
+static void NUMINPUT_Start( NUMINPUT_WORK *p_wk, u8 keta, s32 min, s32 max, s32 now, u8 x, u8 y );
 static BOOL NUMINPUT_Main( NUMINPUT_WORK *p_wk );
 static u16  NUMINPUT_GetNum( const NUMINPUT_WORK *cp_wk );
 static u32 NumInput_AddKeta( u32 now, u32 keta, s8 dir );
@@ -303,6 +309,7 @@ static const char *sc_stat_name[]  =
   "シュータレート %d",
   "せつだんカウンタ %d",
   "ふせいカウンタ %d",
+  "ログインじかん %d",
 };
 
 //=============================================================================
@@ -330,6 +337,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_DEBUG_PROC_Init
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(wifibattlematch_view));
 
   //ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIMATCH_DEBUG, 0x30000 );
@@ -407,6 +415,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_DEBUG_PROC_Exit
 	//ヒープ破棄
 	GFL_HEAP_DeleteHeap( HEAPID_WIFIMATCH_DEBUG );
 	
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifibattlematch_view));
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 
@@ -493,7 +502,10 @@ static void SAKE_Init( DEBUG_SAKE_WORK *p_wk, GAMEDATA *p_gamedata, HEAPID heapI
 { 
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_SAKE_WORK) );
   p_wk->heapID    = heapID;
+  p_wk->p_save    = GAMEDATA_GetSaveControlWork( p_gamedata );
 	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+	p_wk->p_small_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   p_wk->p_strbuf  = GFL_STR_CreateBuffer( 255, heapID );
   p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
@@ -501,7 +513,7 @@ static void SAKE_Init( DEBUG_SAKE_WORK *p_wk, GAMEDATA *p_gamedata, HEAPID heapI
   Sake_CreateDisplay( p_wk, heapID );
   p_wk->p_net = WIFIBATTLEMATCH_NET_Init( p_gamedata, NULL, heapID );
 
-  NUMINPUT_Init( &p_wk->numinput, BG_FRAME_S_NUM, 10, 10, 6, 2, PLT_FONT_S, p_wk->p_font, heapID );
+  NUMINPUT_Init( &p_wk->numinput, BG_FRAME_S_NUM, PLT_FONT_S, p_wk->p_small_font, heapID );
   GFL_BG_SetVisible( BG_FRAME_S_NUM, FALSE );
 }
 
@@ -521,6 +533,7 @@ static void SAKE_Exit( DEBUG_SAKE_WORK *p_wk )
   Sake_DeleteDisplay( p_wk );
   WBM_TEXT_Main( p_wk->p_text );
 	GFL_FONT_Delete( p_wk->p_font );
+	GFL_FONT_Delete( p_wk->p_small_font );
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_SAKE_WORK) );
 }
 
@@ -535,6 +548,9 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
 { 
   enum
   { 
+    SEQ_START_INIT,
+    SEQ_WAIT_INIT,
+
     SEQ_INIT,
     SEQ_MAIN,
 
@@ -543,20 +559,43 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
   
     SEQ_START_RECVDATA,
     SEQ_WAIT_RECVDATA,
+    SEQ_START_RECVTIME,
+    SEQ_WAIT_RECVTIME,
 
     SEQ_START_SENDDATA,
     SEQ_WAIT_SENDDATA,
+    SEQ_START_SENDTIME,
+    SEQ_WAIT_SENDTIME,
 
     SEQ_WAIT_DISCONNECT,
     SEQ_EXIT,
   };
   switch( p_wk->seq )
   { 
+  case SEQ_START_INIT:
+    { 
+      const u16 str[] = L"初期化を行っています。";
+      WBM_TEXT_PrintDebug( p_wk->p_text, str, NELEMS(str), p_wk->p_font );
+    }
+    WIFIBATTLEMATCH_NET_StartInitialize( p_wk->p_net );
+    p_wk->seq = SEQ_WAIT_INIT;
+    break;
+
+  case SEQ_WAIT_INIT:
+    { 
+      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net, p_wk->p_save )  )
+      { 
+        p_wk->seq = SEQ_INIT;
+      }
+    }
+    break;
+
   case SEQ_INIT:
     { 
       const u16 str[] = L"Aで受信、Bで送信　タッチで値変更";
       WBM_TEXT_PrintDebug( p_wk->p_text, str, NELEMS(str), p_wk->p_font );
     }
+    Sake_UpdateDisplay( p_wk );
     p_wk->seq = SEQ_MAIN;
     break;
 
@@ -596,7 +635,10 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
   case SEQ_START_NUMINPUT:
     GFL_BG_SetVisible( BG_FRAME_S_NUM, TRUE );
     { 
-      NUMINPUT_Start( &p_wk->numinput, 4, 0, 9999, p_wk->data[ p_wk->select ] );
+      u8 x, y;
+      x = GFL_BMPWIN_GetPosX( p_wk->p_bmpwin[p_wk->select] );
+      y = GFL_BMPWIN_GetPosY( p_wk->p_bmpwin[p_wk->select] );
+      NUMINPUT_Start( &p_wk->numinput, 4, 0, 9999, p_wk->data[ p_wk->select ], x+10, y );
     }
     p_wk->seq = SEQ_WAIT_NUMINPUT;
     break;
@@ -616,20 +658,14 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
       const u16 str[] = L"SAKEからデータを取得中";
       WBM_TEXT_PrintDebug( p_wk->p_text, str, NELEMS(str), p_wk->p_font );
     }
-    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->score );
+    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_DEBUGALL, &p_wk->score );
     p_wk->seq = SEQ_WAIT_RECVDATA;
     break;
 
   case SEQ_WAIT_RECVDATA:
     { 
-      DWCGdbError result;
-      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &result ) )
+      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net ) )
       { 
-        { 
-          const u16 str[] = L"データ取得完了";
-          WBM_TEXT_PrintDebug( p_wk->p_text, str, NELEMS(str), p_wk->p_font );
-        }
-
         p_wk->data[0] = p_wk->score.single_win;
         p_wk->data[1] = p_wk->score.single_lose;
         p_wk->data[2] = p_wk->score.single_rate;
@@ -647,8 +683,24 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
         p_wk->data[14] = p_wk->score.shooter_rate;
         p_wk->data[15] = p_wk->score.disconnect;
         p_wk->data[16] = p_wk->score.cheat;
+        p_wk->seq = SEQ_START_RECVTIME;
+      }
+    }
+    break;
+  
+  case SEQ_START_RECVTIME:
+    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_LOGIN_DATE, &p_wk->logindate );
+    p_wk->seq = SEQ_WAIT_RECVTIME;
+    break;
 
-        p_wk->seq = SEQ_MAIN;
+  case SEQ_WAIT_RECVTIME:
+    { 
+      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net ) )
+      { 
+        OS_TPrintf( "正確なログイン時刻 =[%d]\n", p_wk->logindate );
+        //下位32bit
+        p_wk->data[17]  = p_wk->logindate & 0xFFFFFFFF;
+        p_wk->seq = SEQ_INIT;
       }
     }
     break;
@@ -683,14 +735,27 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
 
   case SEQ_WAIT_SENDDATA:
     { 
-      DWCGdbError result;
-      if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net, &result )  )
+      if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net )  )
+      { 
+        p_wk->seq = SEQ_START_SENDTIME;
+      }
+    }
+    break;
+    
+  case SEQ_START_SENDTIME:
+    WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_LOGIN_DATE, NULL );
+    p_wk->seq = SEQ_WAIT_SENDTIME;
+    break;
+
+  case SEQ_WAIT_SENDTIME:
+    { 
+      if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net )  )
       { 
         { 
           const u16 str[] = L"データ送信完了";
           WBM_TEXT_PrintDebug( p_wk->p_text, str, NELEMS(str), p_wk->p_font );
         }
-        p_wk->seq = SEQ_MAIN;
+        p_wk->seq = SEQ_INIT;
       }
     }
     break;
@@ -738,7 +803,7 @@ static void Sake_CreateDisplay( DEBUG_SAKE_WORK *p_wk, HEAPID heapID )
         PLT_FONT_S, GFL_BMP_CHRAREA_GET_B );
 
 
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_font );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_small_font );
 
     GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin[i] );
   }
@@ -786,7 +851,7 @@ static void Sake_UpdateDisplay( DEBUG_SAKE_WORK *p_wk )
     PRINT_GetStrWithNumber( p_wk->p_strbuf, sc_stat_name[i], p_wk->data[i] );
 
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0 );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_font );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_small_font );
 
     GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin[i] );
   }
@@ -812,13 +877,15 @@ static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, GAMEDATA *p_gamedata, HEAPID hea
   p_wk->p_save    = GAMEDATA_GetSaveControlWork( p_gamedata );
 	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+	p_wk->p_small_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   p_wk->p_strbuf  = GFL_STR_CreateBuffer( 255, heapID );
   p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
   p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, p_wk->p_que, p_wk->p_font, heapID );
   Atlas_CreateReportDisplay( p_wk, heapID );
   p_wk->p_net = WIFIBATTLEMATCH_NET_Init( p_gamedata, NULL, heapID );
 
-  NUMINPUT_Init( &p_wk->numinput, BG_FRAME_S_NUM, 10, 10, 6, 2, PLT_FONT_S, p_wk->p_font, heapID );
+  NUMINPUT_Init( &p_wk->numinput, BG_FRAME_S_NUM, PLT_FONT_S, p_wk->p_small_font, heapID );
   GFL_BG_SetVisible( BG_FRAME_S_NUM, FALSE );
 }
 
@@ -838,6 +905,7 @@ static void ATLAS_Exit( DEBUG_ATLAS_WORK *p_wk )
   Atlas_DeleteRecvDisplay( p_wk );
   WBM_TEXT_Main( p_wk->p_text );
   PRINTSYS_QUE_Delete( p_wk->p_que );
+	GFL_FONT_Delete( p_wk->p_small_font );
 	GFL_FONT_Delete( p_wk->p_font );
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_ATLAS_WORK) );
 }
@@ -904,8 +972,7 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
 
   case SEQ_WAIT_INIT:
     { 
-      DWCGdbError error;
-      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net, p_wk->p_save, &error )  )
+      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net, p_wk->p_save )  )
       { 
         { 
           const u16 str[] = L"送信自分。Aで送信、Xでモード、タッチで値";
@@ -1009,6 +1076,7 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
     { 
       u32 data;
       u32 max;
+      u8 x, y;
       if( p_wk->pre_seq == SEQ_RECVMAIN )
       { 
         data  = p_wk->recv_data[ p_wk->select ];
@@ -1017,7 +1085,9 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
       { 
         data  = p_wk->send_data[p_wk->is_you][ p_wk->select ];
       }
-      NUMINPUT_Start( &p_wk->numinput, 4, 0, 1, data );
+      x = GFL_BMPWIN_GetPosX( p_wk->p_bmpwin[p_wk->select] );
+      y = GFL_BMPWIN_GetPosY( p_wk->p_bmpwin[p_wk->select] );
+      NUMINPUT_Start( &p_wk->numinput, 4, 0, 1, data, x+10, y );
     }
     p_wk->seq = SEQ_WAIT_NUMINPUT;
     break;
@@ -1045,14 +1115,13 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
       const u16 str[] = L"SAKEからデータを取得中";
       WBM_TEXT_PrintDebug( p_wk->p_text, str, NELEMS(str), p_wk->p_font );
     }
-    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->score );
+    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_DEBUGALL, &p_wk->score );
     p_wk->seq = SEQ_WAIT_RECVDATA;
     break;
 
   case SEQ_WAIT_RECVDATA:
     { 
-      DWCGdbError result;
-      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &result ) )
+      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net ) )
       { 
         { 
           const u16 str[] = L"データ取得完了";
@@ -1131,8 +1200,7 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
 
   case SEQ_WAIT_SENDDATA:
     { 
-      DWCScResult result;
-      if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net, &result )  )
+      if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net )  )
       { 
         { 
           const u16 str[] = L"レポート送信完了";
@@ -1263,7 +1331,7 @@ static void Atlas_CreateReportDisplay( DEBUG_ATLAS_WORK *p_wk, HEAPID heapID )
         PLT_FONT_S, GFL_BMP_CHRAREA_GET_B );
 
 
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_font );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_small_font );
 
     GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin[i] );
   }
@@ -1273,7 +1341,7 @@ static void Atlas_CreateReportDisplay( DEBUG_ATLAS_WORK *p_wk, HEAPID heapID )
   p_wk->p_bmpwin[i]  = GFL_BMPWIN_Create( BG_FRAME_S_FONT, 
         param.x, param.y, param.w, param.h, 
         PLT_FONT_S, GFL_BMP_CHRAREA_GET_B );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_small_font );
   GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin[i] );
 
 }
@@ -1315,14 +1383,14 @@ static void Atlas_UpdateReportDisplay( DEBUG_ATLAS_WORK *p_wk )
     PRINT_GetStrWithNumber( p_wk->p_strbuf, sc_key_name[i], p_wk->send_data[p_wk->is_you][i] );
 
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0 );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_font );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_small_font );
 
     GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[i] );
   }
 
   PRINT_GetStrWithNumber( p_wk->p_strbuf, sc_key_name[i], p_wk->is_auth );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0 );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_wk->p_strbuf, p_wk->p_small_font );
   GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin[i] );
 
 }
@@ -1347,12 +1415,12 @@ static void Atlas_UpdateReportDisplay( DEBUG_ATLAS_WORK *p_wk )
  *	@param	heapID              ヒープID
  */
 //-----------------------------------------------------------------------------
-static void NUMINPUT_Init( NUMINPUT_WORK *p_wk, u8 frm, u8 x, u8 y , u8 w, u8 h, u8 plt, GFL_FONT *p_font, HEAPID heapID )
+static void NUMINPUT_Init( NUMINPUT_WORK *p_wk, u8 frm, u8 plt, GFL_FONT *p_font, HEAPID heapID )
 { 
   GFL_STD_MemClear( p_wk, sizeof(NUMINPUT_WORK) );
   p_wk->p_font  = p_font;
-  p_wk->p_bmpwin  = GFL_BMPWIN_Create( frm, x, y, w, h, plt, GFL_BMP_CHRAREA_GET_B );
-  GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+  p_wk->frm     = frm;
+  p_wk->plt     = plt;
   p_wk->p_strbuf  = GFL_STR_CreateBuffer( 255, heapID );
 }
 //----------------------------------------------------------------------------
@@ -1365,7 +1433,6 @@ static void NUMINPUT_Init( NUMINPUT_WORK *p_wk, u8 frm, u8 x, u8 y , u8 w, u8 h,
 static void NUMINPUT_Exit( NUMINPUT_WORK *p_wk )
 { 
   GFL_STR_DeleteBuffer( p_wk->p_strbuf );
-  GFL_BMPWIN_Delete( p_wk->p_bmpwin );
   GFL_STD_MemClear( p_wk, sizeof(NUMINPUT_WORK) );
 }
 //----------------------------------------------------------------------------
@@ -1379,16 +1446,22 @@ static void NUMINPUT_Exit( NUMINPUT_WORK *p_wk )
  *	@param  now                 初期値
  */
 //-----------------------------------------------------------------------------
-static void NUMINPUT_Start( NUMINPUT_WORK *p_wk, u8 keta, s32 min, s32 max, s32 now )
+static void NUMINPUT_Start( NUMINPUT_WORK *p_wk, u8 keta, s32 min, s32 max, s32 now, u8 x, u8 y )
 { 
-  p_wk->keta  = keta;
-  p_wk->min   = min;
-  p_wk->max   = max;
-  p_wk->now   = now;
+  if( p_wk->p_bmpwin == NULL )
+  { 
 
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 15 );
-  NumInput_Print( p_wk );
-  GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
+    p_wk->keta  = keta;
+    p_wk->min   = min;
+    p_wk->max   = max;
+    p_wk->now   = now;
+
+    p_wk->p_bmpwin  = GFL_BMPWIN_Create( p_wk->frm, x, y, 6, 2, p_wk->plt, GFL_BMP_CHRAREA_GET_B );
+
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 15 );
+    NumInput_Print( p_wk );
+    GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1400,6 +1473,11 @@ static void NUMINPUT_Start( NUMINPUT_WORK *p_wk, u8 keta, s32 min, s32 max, s32 
 static BOOL NUMINPUT_Main( NUMINPUT_WORK *p_wk )
 { 
   BOOL  is_update = FALSE;
+
+  if( p_wk->p_bmpwin == NULL)
+  { 
+    return TRUE;
+  }
 
   //左右で変更する数字を切り替える
   if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
@@ -1439,6 +1517,12 @@ static BOOL NUMINPUT_Main( NUMINPUT_WORK *p_wk )
   //決定
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   { 
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );
+    GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
+    GFL_BMPWIN_ClearScreen( p_wk->p_bmpwin );
+    GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+    p_wk->p_bmpwin  = NULL;
+
     return TRUE;
   }
 
