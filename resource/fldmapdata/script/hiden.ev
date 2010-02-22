@@ -190,14 +190,6 @@ ev_hiden_naminori_ng:
   _SYSWIN_CLOSE()
   _RET
 
-/*
-ev_hiden_naminori_pair_ng:
-  _SYSWIN_MSG_DOWN    msg_naminori_03
-  _LAST_KEYWAIT
-  _TALK_CLOSE
-  _JUMP      ev_hiden_end_bg
-*/
-
 //îgèÊÇËî≠ìÆ
 ev_hiden_naminori_02:
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_NAMINORI )
