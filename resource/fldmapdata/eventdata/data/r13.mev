@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/12 11:02:40
+#save date:2010/02/15 13:21:52
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r13.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r13.wms
 #hold event type:
 1
 #hold event number:
-2
+17
 #event number: 0
 #type
 1
@@ -72,6 +72,471 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 520 0 -1256
+#event number: 2
+#type
+1
+#ID name
+R13_TREE_01
+#OBJ CODE Number
+TREE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_IAIGIRI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 0 -168
+#event number: 3
+#type
+1
+#ID name
+R13_TREE_02
+#OBJ CODE Number
+TREE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_IAIGIRI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 0 -184
+#event number: 4
+#type
+1
+#ID name
+R13_GIRL2_01
+#OBJ CODE Number
+GIRL2
+#MOVE CODE Number
+MV_RND_H
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+424 0 -88
+#event number: 5
+#type
+1
+#ID name
+R13_BOY2_01
+#OBJ CODE Number
+BOY2
+#MOVE CODE Number
+MV_ALONGW_L
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+5
+#Move Limit Z Number
+5
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 0 -408
+#event number: 6
+#type
+1
+#ID name
+R13_AMBRELLA_01
+#OBJ CODE Number
+AMBRELLA
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+696 -80 -984
+#event number: 7
+#type
+1
+#ID name
+R13_FIGHTERM_01
+#OBJ CODE Number
+FIGHTERM
+#MOVE CODE Number
+MV_ALONGW_LRR
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+15
+#Move Limit Z Number
+4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1288 -80 -1352
+#event number: 8
+#type
+1
+#ID name
+R13_FUTAGO_01
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_RTLU         
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+7
+#Move Limit Z Number
+5
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+920 -64 -1432
+#event number: 9
+#type
+1
+#ID name
+R13_FUTAGO_01_2
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_TR_PAIR
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+936 -64 -1432
+#event number: 10
+#type
+1
+#ID name
+R13_GENTLEMAN_01
+#OBJ CODE Number
+GENTLEMAN
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1032 -64 -1416
+#event number: 11
+#type
+1
+#ID name
+R13_LADY_01
+#OBJ CODE Number
+LADY
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1096 -64 -1528
+#event number: 12
+#type
+1
+#ID name
+R13_MIDDLEMAN_01
+#OBJ CODE Number
+MIDDLEMAN1
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+520 0 -808
+#event number: 13
+#type
+1
+#ID name
+R13_FISHING_01
+#OBJ CODE Number
+FISHING
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+376 -88 -584
+#event number: 14
+#type
+1
+#ID name
+R13_FISHING_02
+#OBJ CODE Number
+FISHING
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+696 -88 -776
+#event number: 15
+#type
+1
+#ID name
+R13_FISHING_03
+#OBJ CODE Number
+FISHING
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+744 -88 -1160
+#event number: 16
+#type
+1
+#ID name
+R13_FISHING_04
+#OBJ CODE Number
+FISHING
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+664 -88 -1256
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
