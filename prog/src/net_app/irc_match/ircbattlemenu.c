@@ -809,13 +809,21 @@ static void _modeButtonFlash2(IRC_BATTLE_MENU* pWork)
 static void _modeButtonFlash(IRC_BATTLE_MENU* pWork)
 {
   GFL_CLWK_ANM_CALLBACK cbwk;
+  int objno= pWork->bttnid;
 
   cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
   cbwk.param = (u32)pWork;          // コールバックワーク
   cbwk.p_func = _modeAppWinFlashCallback; // コールバック関数
-  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[pWork->bttnid],TRUE);
-  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[pWork->bttnid], &cbwk );
-  GFL_CLACT_WK_StartAnm( pWork->buttonObj[pWork->bttnid] );
+
+  if(_SELECTMODE_BATTLE2 == pWork->bttnid){
+    objno = _SELECTMODE_BATTLE;
+  }
+  else if(_SELECTMODE_POKE_CHANGE2 == pWork->bttnid){
+    objno = _SELECTMODE_POKE_CHANGE;
+  }
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[objno],TRUE);
+  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[objno], &cbwk );
+  GFL_CLACT_WK_StartAnm( pWork->buttonObj[objno] );
   
   _CHANGE_STATE(pWork,_modeButtonFlash2);
 
@@ -967,6 +975,19 @@ static void _modeSelectEntryButtonFlash(IRC_BATTLE_MENU* pWork)
   _CHANGE_STATE(pWork, _modeSelectEntryButtonFlash2);
 }
 
+
+
+static void _modeAppWinFlash4(u32 param, fx32 currentFrame )
+{
+  IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
+
+  _CHANGE_STATE(pWork, _modeSelectMenuInit);
+}
+
+static void _modeAppWinFlash5(IRC_BATTLE_MENU* pWork)
+{
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   モードセレクト画面タッチ処理
@@ -976,9 +997,15 @@ static void _modeSelectEntryButtonFlash(IRC_BATTLE_MENU* pWork)
 
 static void _modeAppWinFlash2(IRC_BATTLE_MENU* pWork)
 {
-  if( _flashDispAndCheck( pWork , Btn_PalettePos) ){
-    _CHANGE_STATE(pWork,_modeSelectMenuInit);        // モード選択にもどる
-  }
+  GFL_CLWK_ANM_CALLBACK cbwk;
+
+  cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
+  cbwk.param = (u32)pWork;          // コールバックワーク
+  cbwk.p_func = _modeAppWinFlash4; // コールバック関数
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[pWork->bttnid], TRUE);
+  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[pWork->bttnid], &cbwk );
+  GFL_CLACT_WK_StartAnm( pWork->buttonObj[pWork->bttnid] );
+  _CHANGE_STATE(pWork,_modeAppWinFlash5);
 }
 
 //------------------------------------------------------------------------------
@@ -1006,9 +1033,9 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
     break;
   case _ENTRYNUM_EXIT:
 		PMSND_PlaySystemSE(_SE_CANCEL);
-//    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
     _CHANGE_STATE(pWork,_modeAppWinFlash2);        // 終わり
+
     break;
   default:
     break;
