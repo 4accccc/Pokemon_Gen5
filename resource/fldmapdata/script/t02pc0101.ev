@@ -279,6 +279,9 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	//T01ÇÃîéémï\é¶
 	_FLAG_RESET( FV_T01R0401_HAKASE2 )
 
+	//T01ÇÃé©ëÓÇ™å≥í ÇËÇ…Ç»ÇÈ
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE, TRUE )
+
 	//===================================//
 
 	//BGMèIóπ

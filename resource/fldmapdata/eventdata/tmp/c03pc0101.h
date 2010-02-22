@@ -18,6 +18,7 @@
 #define C03PC0101_SHOPM1_01                6
 #define C03PC0101_SHOPM1_02                7
 #define C03PC0101_DELIVERY                 8
+#define C03PC0101_SUNGLASSES_01            9
 
 #endif //ZONE_C03PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -27,7 +27,6 @@ _EVENT_DATA		ev_scene_n01r0502_lastbtl_04
 _EVENT_DATA		ev_n01r0502_boss_01
 _EVENT_DATA		ev_n01r0502_wkobjcode00_01
 _EVENT_DATA		ev_n01r0502_wkobjcode01_01
-_EVENT_DATA		ev_scene_n01r0502_lastbtl_05
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -54,19 +53,41 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_17, msg_n01r0502_boss_17, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 
+	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
-				
+	
 	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,0,1593344,60 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 9688,0,970752,1081344,196655,819200,70 )	//一番最後の引数は移動にかかるフレーム数	
+	
+	//ダミーの主人公OBJ表示
+	DEFINE_LOCAL	LWK_SEX
+	_GET_MY_SEX( LWK_SEX )
+	
+	IF $LWK_SEX == PM_MALE THEN
+		_OBJ_ADD_EX( 16,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
+	ELSE
+		_OBJ_ADD_EX( 16,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
+	ENDIF
+	
+	//【仮】透明の主人公が移動
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_camera_move1 )
+	_OBJ_ANIME_WAIT()
+
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//ボクが　のぞむのは　ポケモンだけの　せかい
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01w, msg_n01r0502_boss_01b, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 
+
 	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 60 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	
+	//【仮】透明の主人公が移動
+	_CAMERA_RECV_MOVE( 70 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_camera_move2 )
+	_OBJ_ANIME_WAIT()
+
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
@@ -74,11 +95,28 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	//========================================/
 	
 	//WKを１にする
-	$LOCALWORK10 = 1
+	$WK_SCENE_N01R0502 = 1
 	
 	//========================================/
 
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
 EVENT_END
+
+
+//--------------------------------------------------------------------
+//		カメラ移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_camera_move1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	AC_WALK_U_2F,39
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_camera_move2
+	_ANIME_DATA	AC_WALK_D_2F,39
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*	最終イベント２	WK_SCENE_N01R0502=1起動					*/
@@ -91,14 +129,20 @@ EVENT_START	ev_pos_n01r0502_lastbtl_02
 	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
 	
 	//X軸が15の場合
-	IF $LWK_POSX == 15 THEN
+	IF $LWK_POSX == 14 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last14 )
+	//X軸が16の場合	
+	ELSIF $LWK_POSX == 15 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last15 )
 	//X軸が16の場合	
 	ELSIF $LWK_POSX == 16 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last16 )
-	//X軸が17の場合
-	ELSE
+	//X軸が16の場合	
+	ELSIF $LWK_POSX == 17 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last17 )
+	//X軸が18の場合
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last18 )
 	ENDIF
 	//Ｎ：自機の前に移動
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_last2 )
@@ -112,7 +156,10 @@ EVENT_START	ev_pos_n01r0502_lastbtl_02
 	//========================================/
 	
 	//WKを２にする
-	$LOCALWORK10 = 2
+	$WK_SCENE_N01R0502 = 2
+	
+	//ライトストーンの使用を許可する
+	$WK_SYS_N01R0502_ITEMUSE = 1
 	
 	//========================================/
 
@@ -122,19 +169,30 @@ EVENT_END
 //	lastbtl２用アニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_n_last2
-	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	AC_WALK_D_2F,20
+	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	ACMD_END,0
-	
+
+_ANIME_LABEL	anm_player_last14
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_player_last15
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 _ANIME_LABEL	anm_player_last16
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 _ANIME_LABEL	anm_player_last17
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_last18
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
@@ -187,33 +245,40 @@ _ANIME_LABEL	anm_last3_d
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_last3_r
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_last3_l
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
-/*	最終イベント４	WK_SCENE_N01R0502=3起動					*/
+/*	最終イベント４											*/
 /************************************************************/
-//【仮】とりあえずシーンチェンジで代用＝デバッグメニューでWK値を変えます
+//【仮】WK_SYS_N01R0502_ITEMUSEが=2の時に起動
 EVENT_START		ev_scene_n01r0502_lastbtl_04
 
 	//Ｎ：横向き
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_r )
 	_OBJ_ANIME_WAIT()
-	
+
+	_TIME_WAIT(30)
+
 	//ボクは　すこしだけ　キミのことを　きにいっていたのかも
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_03w, msg_n01r0502_boss_03b, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
+
+	_TIME_WAIT(30)
 	
 	//Ｎ:自機のほうを見る
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_d )
@@ -262,9 +327,10 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 	
 	//========================================/
 	
-	//最終イベント４終了
-	$LOCALWORK10 = 4
-	
+	//最終イベント４終了・ライトストーンイベント終了
+	$WK_SCENE_N01R0502 = 3
+	$WK_SYS_N01R0502_ITEMUSE = 3
+		
 	//========================================/
 	
 EVENT_END
@@ -295,7 +361,7 @@ _ANIME_LABEL	anm_stay_r
 /************************************************************/
 EVENT_START		ev_n01r0502_boss_01
 
-IF $LOCALWORK10 == 4 THEN
+IF $WK_SCENE_N01R0502 == 3 THEN
 
 	//Nと戦闘
 	//【仮】戦闘呼び出し　全滅処理が未定
@@ -309,19 +375,21 @@ IF $LOCALWORK10 == 4 THEN
 	_GET_ROM_VERSION( LWK_ROM )	
 	
 		IF $LWK_ROM == VERSION_WHITE THEN
-			_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 34, DIR_DOWN )
-			_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 35, DIR_DOWN )
-			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 38, DIR_UP )
+			_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
+			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
 		ELSE
-			_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 34, DIR_DOWN )
-			_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 35, DIR_DOWN )
-			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 38, DIR_UP )
+			_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
+			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
 		ENDIF
 	}
 		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
+
+	//Ｎ後ずさり
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_back )
+	_OBJ_ANIME_WAIT()
 
 	//どういうこと　だ？
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_06w, msg_n01r0502_boss_06b, N01R0502_BOSS_01, WIN_NONE )
@@ -368,6 +436,7 @@ IF $LOCALWORK10 == 4 THEN
 	//フラグセット
 	_FLAG_RESET( FV_N01R0502_LEGEND_02 )
 	_OBJ_ADD( N01R0502_WKOBJCODE01_01 )
+	_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 36, DIR_DOWN )
 	
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
@@ -399,7 +468,7 @@ IF $LOCALWORK10 == 4 THEN
 	//========================================/
 	
 	//最終イベント５終了
-	$LOCALWORK10 = 5
+	$WK_SCENE_N01R0502 = 4
 	
 	//========================================/
 
@@ -424,6 +493,13 @@ _ANIME_LABEL	anm_n_move
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_back
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
@@ -472,13 +548,12 @@ _TALK_OBJ_START()
 				//シンのOBJ削除
 				_OBJ_DEL( N01R0502_WKOBJCODE01_01 )
 				
-				//WKの値を6にし、イベント終了
-				$LOCALWORK10 = 6
-				
 				//自機の位置調整
 				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
 				
 				//========================================/
+				
+				_CALL ev_last
 				
 				_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 			
@@ -504,13 +579,12 @@ _TALK_OBJ_START()
 				//ムのOBJ削除
 				_OBJ_DEL( N01R0502_WKOBJCODE01_01 )
 				
-				//WKの値を6にし、イベント終了
-				$LOCALWORK10 = 6
-				
 				//自機の位置調整
 				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
 
 				//========================================/
+				
+				_CALL ev_last
 				
 				_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 			
@@ -528,9 +602,9 @@ _TALK_OBJ_START()
 EVENT_END
 
 /************************************************************/
-/*	最終イベント７	$WK_SCENE_N01R0502=6起動				*/
+/*	ラストシーン											*/
 /************************************************************/
-EVENT_START		ev_scene_n01r0502_lastbtl_05
+ev_last:
 {
 	DEFINE_LOCAL	LWK_ROM
 	_GET_ROM_VERSION( LWK_ROM )
@@ -803,7 +877,7 @@ EVENT_START		ev_scene_n01r0502_lastbtl_05
 	//Ｎのアップ絵終了
 	_END_FACEUP()
 
-	//【仮】デモ再生：シン（ム）の咆哮
+/*	//【仮】デモ再生：シン（ム）の咆哮
 	
 	_MAP_FADE_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
@@ -831,11 +905,19 @@ EVENT_START		ev_scene_n01r0502_lastbtl_05
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lastscene )
 	_OBJ_ANIME_WAIT()
 	_VOICE_WAIT()
+*/
+	
+	//========================================/
+	
+	//$WK_SCENE_N01R0502を５にして終了
+	$WK_SCENE_N01R0502 = 5
+
+	//========================================/
 
 	//ゲームクリア
 	_GOTO_GAMECLEAR_DEMO( 0 )
 
-EVENT_END
+_RET
 
 //--------------------------------------------------------------------
 //	Ｎ：lastbtl5用アニメ
