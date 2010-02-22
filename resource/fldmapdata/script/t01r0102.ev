@@ -88,8 +88,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_PLAINWIN_MSG_UP( msg_t01r0102_white_01 )
 	_MSGWIN_CLOSE()
 	
-	//主人公・ライバル：サポートを見る
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+	//ライバル：サポートを見る
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_look_01 )
 	_OBJ_ANIME_WAIT()
 	
@@ -660,15 +659,14 @@ ev_t01r0102_support_battle:
 		_TRAINER_BTL_SP_SET( TRID_SUPPORT_03, 0, SCR_BATTLE_MODE_NOLOSE )
 	ENDIF
 	
-	//戦闘復帰処理
-	_TRAINER_WIN()
-	
 	//ローカル変数定義
 	DEFINE_LOCAL	BM_ANIME_ID1
 	//けむり演出のアニメコントローラを作成
 	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_EVENT, 8, 1 )
 	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
-//	_BMODEL_ANIME_SET( BM_ANIME_ID1, 1 )
+	
+	//戦闘復帰処理
+	_TRAINER_WIN()
 	
 	//けむりが晴れるの待ち
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
