@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-01-26T16:40:52"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-22T15:01:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -335,21 +335,21 @@
 
 	<row id="pmss_lost_01">
 		<language name="JPN" width="216">まけました……
-[1:1C:簡易会話単語:0]！</language>
+[1:1C:簡易会話単語:0]</language>
 		<language name="JPN_KANJI" width="216">まけました……
-[1:1C:簡易会話単語:0]！</language>
+[1:1C:簡易会話単語:0]</language>
 	</row>
 
 	<row id="pmss_lost_02">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　だけは
-いやだった……</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　だけは
-いやだった……</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　は
+ほんとに　すごいなあ</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　は
+ほんとに　すごいなあ</language>
 	</row>
 
 	<row id="pmss_lost_03">
-		<language name="JPN" width="216">うわーん　[1:1C:簡易会話単語:0]！！</language>
-		<language name="JPN_KANJI" width="216">うわーん　[1:1C:簡易会話単語:0]！！</language>
+		<language name="JPN" width="216">うわーん　[1:1C:簡易会話単語:0]　！！</language>
+		<language name="JPN_KANJI" width="216">うわーん　[1:1C:簡易会話単語:0]　！！</language>
 	</row>
 
 	<row id="pmss_lost_04">
@@ -367,17 +367,17 @@
 	</row>
 
 	<row id="pmss_lost_06">
-		<language name="JPN" width="216">もしかして
-[1:1C:簡易会話単語:0]　……　？</language>
-		<language name="JPN_KANJI" width="216">もしかして
-[1:1C:簡易会話単語:0]　……　？</language>
+		<language name="JPN" width="216">めの　まえが
+[1:1C:簡易会話単語:0]　に　なった！</language>
+		<language name="JPN_KANJI" width="216">めの　まえが
+[1:1C:簡易会話単語:0]　に　なった！</language>
 	</row>
 
 	<row id="pmss_lost_07">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　なんて
-ひどいです！</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　なんて
-ひどいです！</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　だなんて
+くやしい！</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　だなんて
+くやしい！</language>
 	</row>
 
 	<row id="pmss_lost_08">
@@ -402,24 +402,24 @@
 	</row>
 
 	<row id="pmss_lost_11">
-		<language name="JPN" width="216">この　くやしさは
-[1:1C:簡易会話単語:0]　です！</language>
-		<language name="JPN_KANJI" width="216">この　くやしさは
-[1:1C:簡易会話単語:0]　です！</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　の　ように
+なりたい！</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　の　ように
+なりたい！</language>
 	</row>
 
 	<row id="pmss_lost_12">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]が
-かなしいなあ</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]が
-かなしいなあ</language>
+		<language name="JPN" width="216">もう　[1:1C:簡易会話単語:0]
+かも　しれない……</language>
+		<language name="JPN_KANJI" width="216">もう　[1:1C:簡易会話単語:0]
+かも　しれない……</language>
 	</row>
 
 	<row id="pmss_lost_13">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]が
-かわいそう　です！</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]が
-かわいそう　です！</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　でも
+いいかなー</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　でも
+いいかなー</language>
 	</row>
 
 	<row id="pmss_lost_14">
@@ -430,17 +430,17 @@
 	</row>
 
 	<row id="pmss_lost_15">
-		<language name="JPN" width="216">まけた　けど
-[1:1C:簡易会話単語:0]で　かった！</language>
-		<language name="JPN_KANJI" width="216">まけた　けど
-[1:1C:簡易会話単語:0]で　かった！</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　じゃあ
+だめなんだ！</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　じゃあ
+だめなんだ！</language>
 	</row>
 
 	<row id="pmss_lost_16">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]なら
-かてた　のに……</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]なら
-かてた　のに……</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　には
+かてないよー</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　には
+かてないよー</language>
 	</row>
 
 	<row id="pmss_lost_17">
@@ -451,16 +451,16 @@
 	</row>
 
 	<row id="pmss_lost_18">
-		<language name="JPN" width="216">この　まけかたは
-[1:1C:簡易会話単語:0]　に　にている……</language>
-		<language name="JPN_KANJI" width="216">この　まけかたは
-[1:1C:簡易会話単語:0]　に　にている……</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]
+できなかった　からかなー</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]
+できなかった　からかなー</language>
 	</row>
 
 	<row id="pmss_lost_19">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　は
+		<language name="JPN" width="216">その　[1:1C:簡易会話単語:0]　は
 [1:1C:簡易会話単語:1]　なんじゃない？</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　は
+		<language name="JPN_KANJI" width="216">その　[1:1C:簡易会話単語:0]　は
 [1:1C:簡易会話単語:1]　なんじゃない？</language>
 	</row>
 

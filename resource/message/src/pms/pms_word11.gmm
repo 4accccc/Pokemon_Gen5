@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-01-26T16:40:52"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-22T14:41:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,163 +334,163 @@
 
 
 	<row id="pms_word11_01">
-		<language name="JPN" font=" 1:font_system" width="96">アースカラー</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">アースカラー</language>
+		<language name="JPN" font=" 1:small" width="96">Ｃ-ギア</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">Ｃ-ギア</language>
 	</row>
 
 	<row id="pms_word11_02">
-		<language name="JPN" font=" 1:font_system" width="96">インプラント</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">インプラント</language>
+		<language name="JPN" font=" 1:small" width="96">Ｇパワー（かり）</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">Ｇパワー（かり）</language>
 	</row>
 
 	<row id="pms_word11_03">
-		<language name="JPN" font=" 1:font_system" width="96">おうごんひ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">おうごんひ</language>
+		<language name="JPN" font=" 1:small" width="96">エレガント</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">エレガント</language>
 	</row>
 
 	<row id="pms_word11_04">
-		<language name="JPN" font=" 1:font_system" width="96">オムニバス</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">オムニバス</language>
+		<language name="JPN" font=" 1:small" width="96">キュート</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">キュート</language>
 	</row>
 
 	<row id="pms_word11_05">
-		<language name="JPN" font=" 1:font_system" width="96">おもかじ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">おもかじ</language>
+		<language name="JPN" font=" 1:small" width="96">クール</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">クール</language>
 	</row>
 
 	<row id="pms_word11_06">
-		<language name="JPN" font=" 1:font_system" width="96">がいこくかわせ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">がいこくかわせ</language>
+		<language name="JPN" font=" 1:small" width="96">グループ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">グループ</language>
 	</row>
 
 	<row id="pms_word11_07">
-		<language name="JPN" font=" 1:font_system" width="96">かいぞうど</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">かいぞうど</language>
+		<language name="JPN" font=" 1:small" width="96">ゲット</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ゲット</language>
 	</row>
 
 	<row id="pms_word11_08">
-		<language name="JPN" font=" 1:font_system" width="96">カデンツァ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">カデンツァ</language>
+		<language name="JPN" font=" 1:small" width="96">コレクション</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">コレクション</language>
 	</row>
 
 	<row id="pms_word11_09">
-		<language name="JPN" font=" 1:font_system" width="96">ぎむきょういく</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ぎむきょういく</language>
+		<language name="JPN" font=" 1:small" width="96">コンプリート</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">コンプリート</language>
 	</row>
 
 	<row id="pms_word11_10">
-		<language name="JPN" font=" 1:font_system" width="96">キュビスム</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">キュビスム</language>
+		<language name="JPN" font=" 1:small" width="96">システム</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">システム</language>
 	</row>
 
 	<row id="pms_word11_11">
-		<language name="JPN" font=" 1:font_system" width="96">クロスステッチ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">クロスステッチ</language>
+		<language name="JPN" font=" 1:small" width="96">シューター</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">シューター</language>
 	</row>
 
 	<row id="pms_word11_12">
-		<language name="JPN" font=" 1:font_system" width="96">けいどうみゃく</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">けいどうみゃく</language>
+		<language name="JPN" font=" 1:small" width="96">せいかく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">せいかく</language>
 	</row>
 
 	<row id="pms_word11_13">
-		<language name="JPN" font=" 1:font_system" width="96">こつみつど</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">こつみつど</language>
+		<language name="JPN" font=" 1:small" width="96">ダウジング</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ダウジング</language>
 	</row>
 
 	<row id="pms_word11_14">
-		<language name="JPN" font=" 1:font_system" width="96">ゴマージュ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ゴマージュ</language>
+		<language name="JPN" font=" 1:small" width="96">タウンマップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">タウンマップ</language>
 	</row>
 
 	<row id="pms_word11_15">
-		<language name="JPN" font=" 1:font_system" width="96">ストリーミング</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ストリーミング</language>
+		<language name="JPN" font=" 1:small" width="96">デザイン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">デザイン</language>
 	</row>
 
 	<row id="pms_word11_16">
-		<language name="JPN" font=" 1:font_system" width="96">ちょうでんどう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ちょうでんどう</language>
+		<language name="JPN" font=" 1:small" width="96">デジタル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">デジタル</language>
 	</row>
 
 	<row id="pms_word11_17">
-		<language name="JPN" font=" 1:font_system" width="96">ちょさくけん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ちょさくけん</language>
+		<language name="JPN" font=" 1:small" width="96">でんどういり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">でんどういり</language>
 	</row>
 
 	<row id="pms_word11_18">
-		<language name="JPN" font=" 1:font_system" width="96">ツーステップ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ツーステップ</language>
+		<language name="JPN" font=" 1:small" width="96">トライアル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">トライアル</language>
 	</row>
 
 	<row id="pms_word11_19">
-		<language name="JPN" font=" 1:font_system" width="96">とうこうせん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">とうこうせん</language>
+		<language name="JPN" font=" 1:small" width="96">バッジ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">バッジ</language>
 	</row>
 
 	<row id="pms_word11_20">
-		<language name="JPN" font=" 1:font_system" width="96">ニュートリノ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ニュートリノ</language>
+		<language name="JPN" font=" 1:small" width="96">バトルけんてい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">バトルけんてい</language>
 	</row>
 
 	<row id="pms_word11_21">
-		<language name="JPN" font=" 1:font_system" width="96">ハウリング</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ハウリング</language>
+		<language name="JPN" font=" 1:small" width="96">バトルボックス</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">バトルボックス</language>
 	</row>
 
 	<row id="pms_word11_22">
-		<language name="JPN" font=" 1:font_system" width="96">ひょうけいさん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ひょうけいさん</language>
+		<language name="JPN" font=" 1:small" width="96">ふしぎなコイン（かり）</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ふしぎなコイン（かり）</language>
 	</row>
 
 	<row id="pms_word11_23">
-		<language name="JPN" font=" 1:font_system" width="96">ひょうじゅんじ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ひょうじゅんじ</language>
+		<language name="JPN" font=" 1:small" width="96">ポケセン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ポケセン</language>
 	</row>
 
 	<row id="pms_word11_24">
-		<language name="JPN" font=" 1:font_system" width="96">ふかいしすう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ふかいしすう</language>
+		<language name="JPN" font=" 1:small" width="96">ポケモン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ポケモン</language>
 	</row>
 
 	<row id="pms_word11_25">
-		<language name="JPN" font=" 1:font_system" width="96">フラクタル</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">フラクタル</language>
+		<language name="JPN" font=" 1:small" width="96">ミッション</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ミッション</language>
 	</row>
 
 	<row id="pms_word11_26">
-		<language name="JPN" font=" 1:font_system" width="96">フランベ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">フランベ</language>
+		<language name="JPN" font=" 1:small" width="96">メール</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">メール</language>
 	</row>
 
 	<row id="pms_word11_27">
-		<language name="JPN" font=" 1:font_system" width="96">へいきんかぶか</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">へいきんかぶか</language>
+		<language name="JPN" font=" 1:small" width="96">メッセージ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">メッセージ</language>
 	</row>
 
 	<row id="pms_word11_28">
-		<language name="JPN" font=" 1:font_system" width="96">ペーハー</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ペーハー</language>
+		<language name="JPN" font=" 1:small" width="96">モノリス（かり）</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">モノリス（かり）</language>
 	</row>
 
 	<row id="pms_word11_29">
-		<language name="JPN" font=" 1:font_system" width="96">ベクトル</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ベクトル</language>
+		<language name="JPN" font=" 1:small" width="96">ユニーク</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ユニーク</language>
 	</row>
 
 	<row id="pms_word11_30">
-		<language name="JPN" font=" 1:font_system" width="96">ポリフェノール</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ポリフェノール</language>
+		<language name="JPN" font=" 1:small" width="96">レベル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">レベル</language>
 	</row>
 
-	<row id="pms_word11_31">
-		<language name="JPN" font=" 1:font_system" width="96">ユビキタス</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ユビキタス</language>
+	<row id="pms_word11_34">
+		<language name="JPN" font=" 1:small" width="96">レンタル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">レンタル</language>
 	</row>
 
-	<row id="pms_word11_32">
-		<language name="JPN" font=" 1:font_system" width="96">レムすいみん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">レムすいみん</language>
+	<row id="pms_word11_35">
+		<language name="JPN" font=" 1:small" width="96">わざマシン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">わざマシン</language>
 	</row>
 
 	<flowchart-group-list>

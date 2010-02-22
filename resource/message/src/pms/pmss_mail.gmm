@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-01-26T16:40:52"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-22T14:57:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="712" top="374" right="1417" bottom="994" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="1614" top="194" right="2087" bottom="592" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -335,134 +335,142 @@
 
 	<row id="pmss_mail_01">
 		<language name="JPN" width="216">こんにちは！
-[1:1C:簡易会話単語:0]！</language>
+[1:1C:簡易会話単語:0]</language>
 		<language name="JPN_KANJI" width="216">こんにちは！
-[1:1C:簡易会話単語:0]！</language>
+[1:1C:簡易会話単語:0]</language>
 	</row>
 
 	<row id="pmss_mail_02">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　だいすき！</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　だいすき！</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　です！
+よろしくおねがいします</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　です！
+よろしくおねがいします</language>
 	</row>
 
 	<row id="pmss_mail_03">
 		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　だいすき！
-[1:1C:簡易会話単語:1]　も　だいすき！</language>
+[1:1C:簡易会話単語:1]　も　すき！</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　だいすき！
-[1:1C:簡易会話単語:1]　も　だいすき！</language>
+[1:1C:簡易会話単語:0]　も　すき！</language>
 	</row>
 
 	<row id="pmss_mail_04">
-		<language name="JPN" width="216">この　[1:1C:簡易会話単語:0]は
-[1:1C:簡易会話単語:1]　でしょ！</language>
-		<language name="JPN_KANJI" width="216">この　[1:1C:簡易会話単語:0]は
-[1:1C:簡易会話単語:1]　でしょ！</language>
+		<language name="JPN" width="216">すきな　[1:1C:簡易会話単語:0]　は
+[1:1C:簡易会話単語:1]　です！</language>
+		<language name="JPN_KANJI" width="216">すきな　[1:1C:簡易会話単語:0]　は
+[1:1C:簡易会話単語:0]　です！</language>
 	</row>
 
 	<row id="pmss_mail_05">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　の　ためなら
-なんでも　できるよ！</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　の　ためなら
-なんでも　できるよ！</language>
+		<language name="JPN" width="216">すきな　[1:1C:簡易会話単語:1]　は
+なんですか？</language>
+		<language name="JPN_KANJI" width="216">すきな　【・・・・・】　は
+なんですか？</language>
 	</row>
 
 	<row id="pmss_mail_06">
-		<language name="JPN" width="216">この　[1:1C:簡易会話単語:0]　は
-[1:1C:簡易会話単語:1]　ですよ！</language>
-		<language name="JPN_KANJI" width="216">この　[1:1C:簡易会話単語:0]　は
-[1:1C:簡易会話単語:1]　ですよ！</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　の　ためなら
+なんだって　できる！</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　の　ためなら
+なんだって　できる！</language>
 	</row>
 
 	<row id="pmss_mail_07">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　こそ
-[1:1C:簡易会話単語:1]　なのだ！</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　こそ
-[1:1C:簡易会話単語:1]　なのだ！</language>
-	</row>
-
-	<row id="pmss_mail_08">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　かも　しれない……</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　かも　しれない……</language>
-	</row>
-
-	<row id="pmss_mail_09">
-		<language name="JPN" width="216">もう　[1:1C:簡易会話単語:0]　しか　ない！</language>
-		<language name="JPN_KANJI" width="216">もう　[1:1C:簡易会話単語:0]　しか　ない！</language>
-	</row>
-
-	<row id="pmss_mail_10">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　です！
-[1:1C:簡易会話単語:1]　なんです！</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　です！
-[1:1C:簡易会話単語:1]　なんです！</language>
-	</row>
-
-	<row id="pmss_mail_11">
-		<language name="JPN" width="216">やっぱり
-[1:1C:簡易会話単語:0]　が　いい！</language>
-		<language name="JPN_KANJI" width="216">やっぱり
-[1:1C:簡易会話単語:0]　が　いい！</language>
-	</row>
-
-	<row id="pmss_mail_12">
 		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　は
 [1:1C:簡易会話単語:1]　なの？</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　は
-[1:1C:簡易会話単語:1]　なの？</language>
+[1:1C:簡易会話単語:0]　なの？</language>
 	</row>
 
-	<row id="pmss_mail_13">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]は
-すき　ですか？</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]は
-すき　ですか？</language>
-	</row>
-
-	<row id="pmss_mail_14">
+	<row id="pmss_mail_08">
 		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　の　こと
 どう　おもう？</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　の　こと
 どう　おもう？</language>
 	</row>
 
-	<row id="pmss_mail_15">
+	<row id="pmss_mail_09">
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　って
+[1:1C:簡易会話単語:1]　できると　おもう？</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　って
+[1:1C:簡易会話単語:0]　できると　おもう？</language>
+	</row>
+
+	<row id="pmss_mail_10">
 		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　って
 [1:1C:簡易会話単語:1]　！</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　って
-[1:1C:簡易会話単語:1]　！</language>
+[1:1C:簡易会話単語:0]　！</language>
+	</row>
+
+	<row id="pmss_mail_11">
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　が
+きになります</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　が
+きになります</language>
+	</row>
+
+	<row id="pmss_mail_12">
+		<language name="JPN" width="216">やっぱり
+[1:1C:簡易会話単語:0]　だよね！</language>
+		<language name="JPN_KANJI" width="216">やっぱり
+[1:1C:簡易会話単語:0]　だよね！</language>
+	</row>
+
+	<row id="pmss_mail_13">
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　こそ
+[1:1C:簡易会話単語:1]　なのだ！</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　こそ
+[1:1C:簡易会話単語:0]　なのだ！</language>
+	</row>
+
+	<row id="pmss_mail_14">
+		<language name="JPN" width="216">この　[1:1C:簡易会話単語:0]　は
+[1:1C:簡易会話単語:1]　なんだよー</language>
+		<language name="JPN_KANJI" width="216">この　[1:1C:簡易会話単語:0]　は
+[1:1C:簡易会話単語:0]　なんだよー</language>
+	</row>
+
+	<row id="pmss_mail_15">
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　な　りゆうは
+[1:1C:簡易会話単語:1]　だからです</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　な　りゆうは
+[1:1C:簡易会話単語:0]　だからです</language>
 	</row>
 
 	<row id="pmss_mail_16">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　は
-[1:1C:簡易会話単語:1]　だよ！</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　は
-[1:1C:簡易会話単語:1]　だよ！</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　って
+しってる？</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　って
+しってる？</language>
 	</row>
 
 	<row id="pmss_mail_17">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　だよね！</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　だよね！</language>
+		<language name="JPN" width="216">じつは　[1:1C:簡易会話単語:0]
+[1:1C:簡易会話単語:1]　なんです</language>
+		<language name="JPN_KANJI" width="216">じつは　[1:1C:簡易会話単語:0]
+[1:1C:簡易会話単語:0]　なんです</language>
 	</row>
 
 	<row id="pmss_mail_18">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　しってた？
-[1:1C:簡易会話単語:1]　なの！</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　しってた？
-[1:1C:簡易会話単語:1]　なの！</language>
+		<language name="JPN" width="216">さいきん　[1:1C:簡易会話単語:0]　が
+[1:1C:簡易会話単語:1]　なんだよ</language>
+		<language name="JPN_KANJI" width="216">さいきん　[1:1C:簡易会話単語:0]　が
+[1:1C:簡易会話単語:0]　なんだよ</language>
 	</row>
 
 	<row id="pmss_mail_19">
-		<language name="JPN" width="216">あのね……
-[1:1C:簡易会話単語:0]　です！</language>
-		<language name="JPN_KANJI" width="216">あのね……
-[1:1C:簡易会話単語:0]　です！</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　って
+おいしいのかな……？</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　って
+おいしいのかな……？</language>
 	</row>
 
 	<row id="pmss_mail_20">
-		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　だよね？
-[1:1C:簡易会話単語:1]　！</language>
-		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　だよね？
-[1:1C:簡易会話単語:1]　！</language>
+		<language name="JPN" width="216">まいにち　かかさず
+[1:1C:簡易会話単語:0]　してます</language>
+		<language name="JPN_KANJI" width="216">まいにち　かかさず
+[1:1C:簡易会話単語:0]　してます</language>
 	</row>
 
 	<flowchart-group-list>
