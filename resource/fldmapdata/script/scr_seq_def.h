@@ -887,16 +887,6 @@
 //--------------------------------------------------------------
 #define _SYSWIN_MSG( msg_id, pos )  _ASM_SYSWIN_MSG msg_id, pos
 
-//--------------------------------------------------------------
-/**
- *  _SYSWIN_MSG_DOWN 展開メッセージを表示(1byte)　ウィンドウ上
- *  @param  msg_id  表示するメッセージID
- *
- *  廃止予定です。
- */
-//--------------------------------------------------------------
-#define _SYSWIN_MSG_DOWN( msg_id ) _ASM_SYSWIN_MSG msg_id,WIN_DOWN
-
   .macro  _ASM_SYSWIN_MSG msg_id,up_down
   .short  EV_SEQ_SYSWIN_MSG
   .short  \msg_id
@@ -905,9 +895,10 @@
 
 //--------------------------------------------------------------
 /**
- *  _SYSWIN_MSG_ALLPUT 展開メッセージを一括表示
+ *  @def  _SYSWIN_MSG_ALLPUT
+ *  @brief  展開メッセージを一括表示
  *  @param  msg_id  表示するメッセージid
- *  @param pos     ウィンドウ表示位置の指定
+ *  @param  pos     ウィンドウ表示位置の指定
  */
 //--------------------------------------------------------------
 #define _SYSWIN_MSG_ALLPUT( msg_id, pos ) \
@@ -932,24 +923,8 @@
 
 //--------------------------------------------------------------
 /**
- *  _TALKWIN_OPEN システムウィンドウ開く　なくなりました。
- */
-//--------------------------------------------------------------
-#if 0
-#define _SYSWIN_OPEN() _ASM_SYSWIN_OPEN WIN_DOWN
-#define _SYSWIN_OPEN_UP() _ASM_SYSWIN_OPEN WIN_UP
-#define _SYSWIN_OPEN_DOWN() _ASM_SYSWIN_OPEN WIN_DOWN
-#define _TALKWIN_OPEN() _ASM_SYSWIN_OPEN WIN_DOWN
-
-  .macro  _ASM_SYSWIN_OPEN up_down
-  .short  EV_SEQ_TALKWIN_OPEN
-  .short  \up_down
-  .endm
-#endif
-
-//--------------------------------------------------------------
-/**
- *  _SYSWIN_CLOSE システムウィンドウ閉じる
+ *  @def    _SYSWIN_CLOSE
+ *  @brief  システムウィンドウ閉じる
  *  @param none
  */
 //--------------------------------------------------------------
@@ -1233,7 +1208,7 @@
 
 //--------------------------------------------------------------
 /**
- *  @def _PLAINWIN_MSG_CLOSE
+ *  @def _PLAINWIN_CLOSE
  *  @brief プレーンウィンドウを閉じる
  *  @param msg_id 表示するメッセージID
  */
@@ -1642,10 +1617,14 @@
 
 //--------------------------------------------------------------
 /**
- * @def   自機の高さ変化演出
- * @param type  　動かす種類
- * @param frame   動かす長さ
- * @param length
+ * @def _PLAYER_UPDOWN_EFFECT
+ * @brief 自機の高さ変化演出
+ * @param type  　動かす種類0の時原点から、1の時逆算した位置から
+ * @param frame   動かす時間
+ * @param length  移動距離（3D座標単位）
+ *
+ * @note
+ * 自機の内部情報を操作して戻す処理がないため使用箇所は要注意！
  */
 //--------------------------------------------------------------
 #define _PLAYER_UPDOWN_EFFECT( type, frame, length ) \
@@ -1660,7 +1639,8 @@
 
 //--------------------------------------------------------------
 /**
- * @def   自機の高さ変化演出
+ * @def _POS_PLAYER_TURN
+ * @brief 自機の高さ変化演出
  * @param type  　動かす種類
  * @param frame   動かす長さ
  * @param length
@@ -1674,7 +1654,7 @@
 
 //--------------------------------------------------------------
 /**
- * @def   自機のスクリプト用レールロケーション取得　！レールマップ専用！
+ * @brief   自機のスクリプト用レールロケーション取得　！レールマップ専用！
  * @param index   戻り値１　インデックス
  * @param front   戻り値２  フロントインデックス
  * @param side    戻り値３  サイドインデックス
@@ -1692,7 +1672,7 @@
 
 //--------------------------------------------------------------
 /**
- * @def   動作モデルのスクリプト用レールロケーション取得　！レールマップ専用！
+ * @brief   動作モデルのスクリプト用レールロケーション取得　！レールマップ専用！
  * @param id 座標変更するOBJ ID
  * @param index   戻り値１　インデックス
  * @param front   戻り値２  フロントインデックス
@@ -4182,7 +4162,7 @@
 
 //--------------------------------------------------------------
 /**
- * @def _SET_SP_LOCATION_HERE
+ * @def _SET_SP_LOCATION_DIRECT
  * @brief 特殊接続先の設定：直接指定
  * @param zone_id マップID指定
  * @param dir 方向指定
@@ -4823,7 +4803,7 @@
 
 //--------------------------------------------------------------
 /**
- * @def _ADD_TEMOTI_WAZA
+ * @def _SET_TEMOTI_WAZA
  * @brief 手持ちポケモンの技セット(追加・置き換え・忘れ対応
  * @param poke_pos ポケモンの位置
  * @param waza_pos 技の位置(5で技を押し出し式で追加
@@ -4844,8 +4824,8 @@
 
 //--------------------------------------------------------------
 /**
- * @def   わざおぼえ：適用チェック
- * @brief _SKILLTEACH_CHECK_PARTY
+ * @def _SKILLTEACH_CHECK_PARTY
+ * @brief わざおぼえ：適用チェック
  * @param mode    技覚えモード（script_def.hのSCR_SKILLTEACH_MODE参照）
  * @param ret_wk  script_def.hのSCR_SKILLTEACH_CHECK_RESULT_を参照
  * @retval  SCR_SKILLTEACH_CHECK_RESULT_OK          対象となるポケモンがいる
@@ -4867,8 +4847,8 @@
 
 //--------------------------------------------------------------
 /**
- * @def   わざおぼえ：適用ポケモンのチェック
- * @brief _SKILLTEACH_CHECK_POKEMON
+ * @def _SKILLTEACH_CHECK_POKEMON
+ * @brief わざおぼえ：適用ポケモンのチェック
  * @param mode    技覚えモード（script_def.hのSCR_SKILLTEACH_MODE参照）
  * @param pos     選択したポケモンの位置
  * @param ret_wk  script_def.hのSCR_SKILLTEACH_CHECK_RESULT_を参照
@@ -5040,7 +5020,7 @@
   
 //--------------------------------------------------------------
 /**
- * @def _GET_PARTY_POS_BY_MONSNO
+ * @def _GET_PARTY_POS
  * @brief 指定モンスターナンバーのポケが手持ちのどこにいるかを調べる
  * @param monsno  探すモンスターナンバー
  * @param ret_wk  TRUEなら発見 FALSEなら未発見
@@ -6190,11 +6170,18 @@
  * @def _SHOP_CALL
  * @brief 簡易イベントコマンド：ショップイベント呼び出し
  * @param shop_id
- *
- * ＊GREETING_LESSは話しかけ時の「いらっしゃいませ」の挨拶無し
  */
 //--------------------------------------------------------------
 #define _SHOP_CALL( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL,TRUE 
+
+//--------------------------------------------------------------
+/**
+ * @def _SHOP_CALL_GREETING_LESS
+ * @brief 簡易イベントコマンド：ショップイベント呼び出し
+ * @param shop_id
+ * _SHOP_CALLとの違いは話しかけ時の「いらっしゃいませ」の挨拶無し
+ */
+//--------------------------------------------------------------
 #define _SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL,FALSE
 
 //--------------------------------------------------------------
@@ -6436,8 +6423,9 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @def _BEACON_SET_REQ
+ * @def _BEACON_SET_REQ_ITEM_GET
  * @brief ビーコンセットリクエスト関連
+ * @param itemno  取得したアイテムのナンバー
  */
 //--------------------------------------------------------------
 #define _BEACON_SET_REQ_ITEM_GET( itemno ) \
@@ -7573,10 +7561,13 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @def
- * @brief
- * @param req
- * @param ret_wk
+ * @def  _POSTMAN_REQUEST
+ * @brief 不思議な贈り物配達員用コマンド
+ * @param req     リクエストID
+ * @param ret_wk  戻り値
+ *
+ * @note
+ * 不思議なおくりもの専用です。通常は使用しないでください。
  */
 //--------------------------------------------------------------
 #define _POSTMAN_REQUEST( req, ret_wk ) \
@@ -7789,8 +7780,9 @@
 //--------------------------------------------------------------
 /**
  * @def _ELEVATOR_ENTRY_LIST
- * @brief
- * @param list_label  データラベル
+ * @brief エレベーターデータの登録
+ * @param list_label  エレベーターデータ指定ラベル
+ * @note  エレベータースクリプト専用コマンド。通常は使わないでください。
  */
 //--------------------------------------------------------------
 #define _ELEVATOR_ENTRY_LIST( list_label ) \
@@ -7804,7 +7796,8 @@
 //--------------------------------------------------------------
 /**
  * @def _ELEVATOR_MAKE_LIST
- * @brief
+ * @brief エレベーターフロア選択リスト追加処理
+ * @note  エレベータースクリプト専用コマンド。通常は使わないでください。
  */
 //--------------------------------------------------------------
 #define _ELEVATOR_MAKE_LIST( ) \
@@ -7817,9 +7810,9 @@
 //--------------------------------------------------------------
 /**
  * @def _ELEVATOR_MAP_CHANGE
- * @brief
- * @param list_label  データラベル
+ * @brief エレベーター用マップ遷移処理
  * @param select_id   選択位置
+ * @note  エレベータースクリプト専用コマンド。通常は使わないでください。
  */
 //--------------------------------------------------------------
 #define _ELEVATOR_MAP_CHANGE( select_id ) \
