@@ -44,10 +44,11 @@ typedef enum {
 	SEPLAYER_SE1,
 	SEPLAYER_SE2,
 	SEPLAYER_SE_PSG,
+	SEPLAYER_SE3,
 
 }SEPLAYER_ID;
 
-#define SEPLAYER_MAX (4)
+#define SEPLAYER_MAX (5)
 //------------------------------------------------------------------
 /**
  * @brief	ä÷êîà¯êîópíËã`
