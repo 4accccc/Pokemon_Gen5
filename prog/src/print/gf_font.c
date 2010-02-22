@@ -250,7 +250,7 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
     wk->glyphCharH = wk->glyphInfo.cellHeight /8  + (wk->glyphInfo.cellHeight % 8 != 0);
     wk->glyphRemBits = (wk->glyphInfo.cellWidth * 2) % 8;
     if( wk->glyphRemBits == 0 ){ wk->glyphRemBits = 8; }
-//    OS_TPrintf("[GF_FONT] CellW=%d, RemBits=%d\n", wk->glyphInfo.cellWidth, wk->glyphRemBits);
+    OS_TPrintf("[GF_FONT] CellW=%d, RemBits=%d LineHeight=%d\n", wk->glyphInfo.cellWidth, wk->glyphRemBits, wk->fontHeader.linefeed);
 
     wk->ofsGlyphTop = wk->fontHeader.ofsGlyph + sizeof(NNSGlyphInfo);
     wk->glyphBuf = GFL_HEAP_AllocMemory( heapID, wk->glyphInfo.cellSize );
@@ -262,8 +262,9 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
       GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsMap,
             mapTblSize, (void*)(wk->codeMapTop) );
 
-//      OS_TPrintf("[GF_FONT] MapIdxTableSize=%08x bytes\n", mapTblSize);
-//      OS_TPrintf("[GF_FONT] WidthTableOfs  = %08x\n", wk->fontHeader.ofsWidth);
+//      OS_TPrintf("[GF_FONT] MapIdxTableSize = %08x bytes\n", mapTblSize);
+//      OS_TPrintf("[GF_FONT] WidthTableOfs = %08x\n", wk->fontHeader.ofsWidth, );
+
 //      OS_TPrintf("[GF_FONT] MapIdxTableOfs = %08x\n", wk->fontHeader.ofsMap);
     }
   }
