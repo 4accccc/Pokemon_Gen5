@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="lee_hyunjung" host="W00154A" date="2010-02-22T14:00:31" source="untitled"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="31"
+	tool_start_frame="0"
+	tool_end_frame="30"
+	compress_material="on" material_size="1 1"
+/>
+
+<tex_pattern_list_data image_size="5" palette_size="1">
+	<image_name index="0" name="mv_tsuchi.1"/>
+	<image_name index="1" name="mv_tsuchi.2"/>
+	<image_name index="2" name="mv_tsuchi.3"/>
+	<image_name index="3" name="mv_tsuchi.4"/>
+	<image_name index="4" name="mv_tsuchi.5"/>
+	<palette_name index="0" name="mv_tsuchi"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="5">
+		0 6 12 18 24
+	</frame_idx>
+	<image_idx size="5">
+		0 1 2 3 4
+	</image_idx>
+	<palette_idx size="5">
+		0 0 0 0 0
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="mv_tsuchi_1" data_size="5" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
