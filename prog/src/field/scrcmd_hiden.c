@@ -26,6 +26,7 @@
 #include "event_mapchange.h"
 #include "arc/fieldmap/zone_id.h"
 #include "script_local.h" //SCRIPT_CallEvent
+#include "field_diving_data.h"  //DIVINGSPOT_GetZoneID
 
 //======================================================================
 //  秘伝技波乗り
@@ -149,7 +150,7 @@ VMCMD_RESULT EvCmdIaigiriEffect( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * @brief
+ * @brief ダイビングでのマップ遷移
  * @todo  暫定コマンドなので、振り分けなどをキチンとする！
  */
 //--------------------------------------------------------------
@@ -160,7 +161,21 @@ VMCMD_RESULT EvCmdDiving( VMHANDLE * core, void *wk )
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   SCRIPT_WORK* scriptWork = SCRCMD_WORK_GetScriptWork( work );
 
-  GMEVENT * event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldmap, ZONE_ID_D20R0101 );
+  GMEVENT * event;
+  u16 connect_zone_id;
+  {
+    u16 now_zone_id = FIELDMAP_GetZoneID( fieldmap );
+    FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+    u16 x = MMDL_GetGridPosX( mmdl );
+    u16 z = MMDL_GetGridPosZ( mmdl );
+    connect_zone_id = DIVINGSPOT_GetZoneID( now_zone_id, x, z );
+    if ( connect_zone_id == ZONE_ID_MAX )
+    { //不具合対処
+      connect_zone_id = now_zone_id;
+    }
+  }
+  event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldmap, connect_zone_id );
   SCRIPT_CallEvent( scriptWork, event );
 
   return VMCMD_RESULT_SUSPEND;

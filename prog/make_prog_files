@@ -607,6 +607,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/event_comm_talked.c \
 				field/event_gpower.c \
 				field/field_season_time.c \
+        field/field_diving_data.c \
 				net_app/comm_entry_menu.c \
 				net_app/comm_entry_menu_comm_command.c \
         field/enceff.c \

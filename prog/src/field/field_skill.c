@@ -192,7 +192,9 @@ void FLDSKILL_InitCheckWork(
   }
 
   { //ここにダイビングの使用可能かチェックを追加する
-    if ( 0 )
+    MAPATTR_VALUE val = MAPATTR_GetAttrValue( fattr );
+    
+    if( MAPATTR_VALUE_CheckDeepSea(val) == TRUE )
     {
       scwk->enable_skill |= ( 1 << FLDSKILL_IDX_DIVING );
     }

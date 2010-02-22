@@ -2910,6 +2910,7 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
     { MAPATTR_VALUE_CheckShopShelf3,    0,  SCRID_BG_MSG_SHOPRACK2_01 },
     { MAPATTR_VALUE_CheckWaterFall,     0,  SCRID_HIDEN_TAKINOBORI },
     { MAPATTR_VALUE_CheckVendorMachine, 0,  SCRID_VENDING_MACHINE01 },
+    { MAPATTR_VALUE_CheckDeepSea,       0,  SCRID_HIDEN_DIVING },
   };
   int i;
 
