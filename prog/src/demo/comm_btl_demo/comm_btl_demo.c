@@ -1,10 +1,10 @@
 //=============================================================================
 /**
  *
- *	@file		comm_btl_demo.c
- *	@brief  通信バトルデモ
- *	@author	hosaka genya
- *	@data		2009.09.29
+ *  @file   comm_btl_demo.c
+ *  @brief  通信バトルデモ
+ *  @author hosaka genya
+ *  @data   2009.09.29
  *
  */
 //=============================================================================
@@ -46,7 +46,7 @@
 #include "demo/comm_btl_demo.h"
 
 #include "message.naix"
-#include "comm_btl_demo.naix"	// アーカイブ
+#include "comm_btl_demo.naix" // アーカイブ
 
 #include "comm_btl_demo_res.cdat"
 
@@ -66,7 +66,7 @@ static BOOL g_debug_loop = FALSE;
 
 //=============================================================================
 /**
- *								定数定義
+ *                定数定義
  */
 //=============================================================================
 enum
@@ -86,7 +86,7 @@ enum
 };
 
 //--------------------------------------------------------------
-///	リザルト表示位置
+/// リザルト表示位置
 //==============================================================
 typedef enum
 { 
@@ -212,30 +212,30 @@ enum
 };
 
 //-------------------------------------
-///	フレーム
+/// フレーム
 //=====================================
 enum
-{	
-	BG_FRAME_TEXT_M	= GFL_BG_FRAME1_M,
-	BG_FRAME_BAR_M	= GFL_BG_FRAME2_M,
-	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
-	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
+{ 
+  BG_FRAME_TEXT_M = GFL_BG_FRAME1_M,
+  BG_FRAME_BAR_M  = GFL_BG_FRAME2_M,
+  BG_FRAME_BACK_M = GFL_BG_FRAME3_M,
+  BG_FRAME_BACK_S = GFL_BG_FRAME2_S,
   BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
 };
 
 //-------------------------------------
-///	パレット
+/// パレット
 //=====================================
 enum
-{	
-	//メインBG
-	PLTID_BG_BACK_M				= 0,
-	PLTID_BG_TEXT_M				= 1,
-	PLTID_BG_TASKMENU_M		= 11,
-	PLTID_BG_TOUCHBAR_M		= 13,
-	PLTID_BG_INFOWIN_M		= 15,
-	//サブBG
-	PLTID_BG_BACK_S				=	0,
+{ 
+  //メインBG
+  PLTID_BG_BACK_M       = 0,
+  PLTID_BG_TEXT_M       = 1,
+  PLTID_BG_TASKMENU_M   = 11,
+  PLTID_BG_TOUCHBAR_M   = 13,
+  PLTID_BG_INFOWIN_M    = 15,
+  //サブBG
+  PLTID_BG_BACK_S       = 0,
 
   // Main OBJ
   PLTID_OBJ_COMMON_M = 0,
@@ -243,20 +243,20 @@ enum
 
 //=============================================================================
 /**
- *								構造体定義
+ *                構造体定義
  */
 //=============================================================================
 
 //--------------------------------------------------------------
-///	BG管理ワーク
+/// BG管理ワーク
 //==============================================================
 typedef struct 
 {
-	int dummy;
+  int dummy;
 } COMM_BTL_DEMO_BG_WORK;
 
 //--------------------------------------------------------------
-///	OBJワーク
+/// OBJワーク
 //==============================================================
 typedef struct {
   //[IN]
@@ -267,7 +267,7 @@ typedef struct {
 } COMM_BTL_DEMO_OBJ_WORK;
 
 //--------------------------------------------------------------
-///	G3D管理ワーク
+/// G3D管理ワーク
 //==============================================================
 typedef struct {
   //[IN]
@@ -288,7 +288,7 @@ typedef struct {
 #define BALL_CLWK_MAX ( 6 )
 
 //--------------------------------------------------------------
-///	ボールUNITワーク
+/// ボールUNITワーク
 //==============================================================
 typedef struct {
   //[IN]
@@ -306,7 +306,7 @@ typedef struct {
 } BALL_UNIT;
 
 //--------------------------------------------------------------
-///	トレーナーユニット
+/// トレーナーユニット
 //==============================================================
 typedef struct {
   // [IN]
@@ -326,7 +326,7 @@ typedef struct {
 } TRAINER_UNIT;
 
 //--------------------------------------------------------------
-///	勝敗ユニット
+/// 勝敗ユニット
 //==============================================================
 typedef struct {
   // [IN]
@@ -345,14 +345,14 @@ typedef struct {
 
 
 //--------------------------------------------------------------
-///	メインワーク
+/// メインワーク
 //==============================================================
 typedef struct 
 {
   HEAPID heapID;
   COMM_BTL_DEMO_PARAM * pwk;
 
-	COMM_BTL_DEMO_BG_WORK		wk_bg;
+  COMM_BTL_DEMO_BG_WORK   wk_bg;
   COMM_BTL_DEMO_OBJ_WORK  wk_obj;
   COMM_BTL_DEMO_G3D_WORK  wk_g3d;
 
@@ -361,15 +361,15 @@ typedef struct
 
   RESULT_UNIT result_unit;
 
-	//描画設定
-	COMM_BTL_DEMO_GRAPHIC_WORK	*graphic;
+  //描画設定
+  COMM_BTL_DEMO_GRAPHIC_WORK  *graphic;
 
-	//フォント
-	GFL_FONT						*font;
+  //フォント
+  GFL_FONT            *font;
 
-	//プリントキュー
-	PRINT_QUE						*print_que;
-	GFL_MSGDATA					*msg;
+  //プリントキュー
+  PRINT_QUE           *print_que;
+  GFL_MSGDATA         *msg;
   
   // シーンコントローラ
   UI_SCENE_CNT_PTR  cntScene;
@@ -383,7 +383,7 @@ typedef struct
 
 //=============================================================================
 /**
- *							シーン定義
+ *              シーン定義
  */
 //=============================================================================
 
@@ -402,7 +402,7 @@ static BOOL SceneEndDemoDraw_Main( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneEndDemoDraw_End( UI_SCENE_CNT_PTR cnt, void* work );
 
 //--------------------------------------------------------------
-///	SceneID
+/// SceneID
 //==============================================================
 typedef enum
 { 
@@ -414,7 +414,7 @@ typedef enum
 } CBD_SCENE_ID;
 
 //--------------------------------------------------------------
-///	SceneFunc
+/// SceneFunc
 //==============================================================
 static const UI_SCENE_FUNC_SET c_scene_func_tbl[ CBD_SCENE_ID_MAX ] = 
 {
@@ -447,7 +447,7 @@ static const UI_SCENE_FUNC_SET c_scene_func_tbl[ CBD_SCENE_ID_MAX ] =
 
 //=============================================================================
 /**
- *							プロトタイプ宣言
+ *              プロトタイプ宣言
  */
 //=============================================================================
 static CBD_SCENE_ID calc_first_scene( COMM_BTL_DEMO_PARAM* pwk );
@@ -495,27 +495,27 @@ static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d );
 static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d );
 
   //-------------------------------------
-///	PROC
+/// PROC
 //=====================================
 static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 
 //-------------------------------------
-///	汎用処理ユーティリティ
+/// 汎用処理ユーティリティ
 //=====================================
 static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapID );
 
 //=============================================================================
 /**
- *								外部公開
+ *                外部公開
  */
 //=============================================================================
 const GFL_PROC_DATA CommBtlDemoProcData = 
 {
-	CommBtlDemoProc_Init,
-	CommBtlDemoProc_Main,
-	CommBtlDemoProc_Exit,
+  CommBtlDemoProc_Init,
+  CommBtlDemoProc_Main,
+  CommBtlDemoProc_Exit,
 };
 
 #ifdef DEBUG_SET_PARAM
@@ -614,24 +614,24 @@ static void debug_param_del( COMM_BTL_DEMO_PARAM* prm )
 
 //=============================================================================
 /**
- *								PROC
+ *                PROC
  */
 //=============================================================================
 //-----------------------------------------------------------------------------
 /**
- *	@brief  PROC 初期化処理
+ *  @brief  PROC 初期化処理
  *
- *	@param	GFL_PROC *procプロセスシステム
- *	@param	*seq					シーケンス
- *	@param	*pwk					COMM_BTL_DEMO_PARAM
- *	@param	*mywk					PROCワーク
+ *  @param  GFL_PROC *procプロセスシステム
+ *  @param  *seq          シーケンス
+ *  @param  *pwk          COMM_BTL_DEMO_PARAM
+ *  @param  *mywk         PROCワーク
  *
- *	@retval	終了コード
+ *  @retval 終了コード
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
-	COMM_BTL_DEMO_MAIN_WORK *wk;
+  COMM_BTL_DEMO_MAIN_WORK *wk;
   COMM_BTL_DEMO_PARAM * prm;
 
   prm = pwk;
@@ -656,14 +656,14 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   GF_ASSERT( prm );
   GF_ASSERT( (*seq) == 0 );
 
-	//オーバーレイ読み込み
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+  //オーバーレイ読み込み
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 
-	//ヒープ作成
+  //ヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_BTL_DEMO, COMM_BTL_DEMO_HEAP_SIZE );
   wk = GFL_PROC_AllocWork( proc, sizeof(COMM_BTL_DEMO_MAIN_WORK), HEAPID_COMM_BTL_DEMO );
   GFL_STD_MemClear( wk, sizeof(COMM_BTL_DEMO_MAIN_WORK) );
-	
+  
 #ifdef DEBUG_SET_PARAM
   debug_param( prm );
 #endif
@@ -676,34 +676,37 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   wk->pwk = prm;
   wk->type = wk->pwk->type;
   wk->result = wk->pwk->result;
-	
-	//描画設定初期化
-	wk->graphic	= COMM_BTL_DEMO_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
+  
+  //描画設定初期化
+  wk->graphic = COMM_BTL_DEMO_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
 
-	//フォント作成
-	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+  //フォント作成
+  wk->font      = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+                        GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
-	//メッセージ
-	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-			NARC_message_mictest_dat, wk->heapID );
+  //メッセージ
+  wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+      NARC_message_mictest_dat, wk->heapID );
 
-	//PRINT_QUE作成
-	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
+  //PRINT_QUE作成
+  wk->print_que   = PRINTSYS_QUE_Create( wk->heapID );
   
   // シーンコントローラ作成
   wk->cntScene = UI_SCENE_CNT_Create( 
       wk->heapID, c_scene_func_tbl, CBD_SCENE_ID_MAX, 
       calc_first_scene(pwk), wk );
 
-	//BGリソース読み込み
-	CommBtlDemo_BG_LoadResource( &wk->wk_bg, wk->heapID );
+  //BGリソース読み込み
+  CommBtlDemo_BG_LoadResource( &wk->wk_bg, wk->heapID );
 
   // G3D関連初期化
   G3D_Init( &wk->wk_g3d, wk->graphic, wk->heapID );
 
   // OBJ初期化
   OBJ_Init( &wk->wk_obj, wk->graphic, wk->heapID );
+
+  // メイン画面を上に表示
+  GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
 
   // フェードイン リクエスト
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1 );
@@ -716,19 +719,19 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  PROC 終了処理
+ *  @brief  PROC 終了処理
  *
- *	@param	GFL_PROC *procpロセスシステム
- *	@param	*seq					シーケンス
- *	@param	*pwk					COMM_BTL_DEMO_PARAM
- *	@param	*mywk					PROCワーク
+ *  @param  GFL_PROC *procpロセスシステム
+ *  @param  *seq          シーケンス
+ *  @param  *pwk          COMM_BTL_DEMO_PARAM
+ *  @param  *mywk         PROCワーク
  *
- *	@retval	終了コード
+ *  @retval 終了コード
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
-	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
+  COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
 
 #ifdef DEBUG_SET_PARAM
   debug_param_del( pwk );
@@ -737,14 +740,14 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
   // シーンコントーラ削除
   UI_SCENE_CNT_Delete( wk->cntScene );
 
-	//メッセージ破棄
-	GFL_MSG_Delete( wk->msg );
+  //メッセージ破棄
+  GFL_MSG_Delete( wk->msg );
 
-	//PRINT_QUE
-	PRINTSYS_QUE_Delete( wk->print_que );
+  //PRINT_QUE
+  PRINTSYS_QUE_Delete( wk->print_que );
 
-	//FONT
-	GFL_FONT_Delete( wk->font );
+  //FONT
+  GFL_FONT_Delete( wk->font );
   
   // OBJ開放
   OBJ_Exit( &wk->wk_obj );
@@ -752,34 +755,34 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
   // 3Dシステム開放
   G3D_End( &wk->wk_g3d );
 
-	//描画設定破棄
-	COMM_BTL_DEMO_GRAPHIC_Exit( wk->graphic );
+  //描画設定破棄
+  COMM_BTL_DEMO_GRAPHIC_Exit( wk->graphic );
 
-	//PROC用メモリ解放
+  //PROC用メモリ解放
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( wk->heapID );
 
-	//オーバーレイ破棄
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+  //オーバーレイ破棄
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 
   return GFL_PROC_RES_FINISH;
 }
 //-----------------------------------------------------------------------------
 /**
- *	@brief  PROC 主処理
+ *  @brief  PROC 主処理
  *
- *	@param	GFL_PROC *procプロセスシステム
- *	@param	*seq					シーケンス
- *	@param	*pwk					COMM_BTL_DEMO_PARAM
- *	@param	*mywk					PROCワーク
+ *  @param  GFL_PROC *procプロセスシステム
+ *  @param  *seq          シーケンス
+ *  @param  *pwk          COMM_BTL_DEMO_PARAM
+ *  @param  *mywk         PROCワーク
  *
- *	@retval	終了コード
+ *  @retval 終了コード
  */
 //-----------------------------------------------------------------------------
 #include "ui/debug_code/g3d/camera_test.c"
 static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
-	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
+  COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
         
 #if 0
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
@@ -800,79 +803,79 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 #endif
 
   G3D_Main( &wk->wk_g3d );
-	
+  
   // SCENE
   if( UI_SCENE_CNT_Main( wk->cntScene ) )
   {
     return GFL_PROC_RES_FINISH;
   }
 
-	//PRINT_QUE
-	PRINTSYS_QUE_Main( wk->print_que );
+  //PRINT_QUE
+  PRINTSYS_QUE_Main( wk->print_que );
 
-	//2D描画
-	COMM_BTL_DEMO_GRAPHIC_2D_Draw( wk->graphic );
+  //2D描画
+  COMM_BTL_DEMO_GRAPHIC_2D_Draw( wk->graphic );
 
   return GFL_PROC_RES_CONTINUE;
 }
 
 //=============================================================================
 /**
- *								static関数
+ *                static関数
  */
 //=============================================================================
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  BG管理モジュール リソース読み込み
+ *  @brief  BG管理モジュール リソース読み込み
  *
- *	@param	COMM_BTL_DEMO_BG_WORK* wk BG管理ワーク
- *	@param	heapID  ヒープID 
+ *  @param  COMM_BTL_DEMO_BG_WORK* wk BG管理ワーク
+ *  @param  heapID  ヒープID 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapID )
 {
-	ARCHANDLE	*handle;
+  ARCHANDLE *handle;
 
-	handle	= GFL_ARC_OpenDataHandle( ARCID_COMM_BTL_DEMO_GRA, heapID );
+  handle  = GFL_ARC_OpenDataHandle( ARCID_COMM_BTL_DEMO_GRA, heapID );
 
-	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_u_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x0, heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_d_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x0, heapID );
+  // 上下画面ＢＧパレット転送
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_u_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x0, heapID );
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_d_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x0, heapID );
   
 #if 0 
   // 会話フォントパレット転送
-	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT,
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT,
       NARC_font_default_nclr,
       PALTYPE_MAIN_BG,
       0x20*PLTID_BG_TEXT_M, 0x20, heapID );
 #endif
-	
-  //	----- 下画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_comm_btl_demo_bg_base_d_NCGR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_comm_btl_demo_bg_base_d_NSCR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );	
+  
+  //  ----- 下画面 -----
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_comm_btl_demo_bg_base_d_NCGR,
+            BG_FRAME_BACK_M, 0, 0, 0, heapID );
+  GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_comm_btl_demo_bg_base_d_NSCR,
+            BG_FRAME_BACK_M, 0, 0, 0, heapID ); 
 
-	//	----- 上画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_comm_btl_demo_bg_base_u_NCGR,
-						BG_FRAME_BACK_S, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_comm_btl_demo_bg_base_u_NSCR,
-						BG_FRAME_BACK_S, 0, 0, 0, heapID );		
+  //  ----- 上画面 -----
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_comm_btl_demo_bg_base_u_NCGR,
+            BG_FRAME_BACK_S, 0, 0, 0, heapID );
+  GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_comm_btl_demo_bg_base_u_NSCR,
+            BG_FRAME_BACK_S, 0, 0, 0, heapID );   
 
-	GFL_ARC_CloseDataHandle( handle );
+  GFL_ARC_CloseDataHandle( handle );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  共通開放処理
+ *  @brief  共通開放処理
  *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	wk 
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _SceneEndDemoEnd( UI_SCENE_CNT_PTR cnt, COMM_BTL_DEMO_MAIN_WORK* wk )
@@ -901,12 +904,12 @@ static void _SceneEndDemoEnd( UI_SCENE_CNT_PTR cnt, COMM_BTL_DEMO_MAIN_WORK* wk 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バトル前デモ 初期化処理
+ *  @brief  バトル前デモ 初期化処理
  *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	work 
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL SceneStartDemo_Init( UI_SCENE_CNT_PTR cnt, void* work )
@@ -984,12 +987,12 @@ static void _start_demo_init_rebind_multi( COMM_BTL_DEMO_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バトル前デモ 主処理
+ *  @brief  バトル前デモ 主処理
  *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	work 
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
@@ -1074,12 +1077,12 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バトル前デモ 終了処理
+ *  @brief  バトル前デモ 終了処理
  *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	work 
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL SceneStartDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
@@ -1108,12 +1111,12 @@ static BOOL SceneStartDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バトル後デモ 初期化処理
+ *  @brief  バトル後デモ 初期化処理
  *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	*work 
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  *work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL SceneEndDemo_Init( UI_SCENE_CNT_PTR cnt, void *work )
@@ -1156,12 +1159,12 @@ static BOOL SceneEndDemo_Init( UI_SCENE_CNT_PTR cnt, void *work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バトル後デモ 主処理
+ *  @brief  バトル後デモ 主処理
  *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	work 
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
@@ -1289,12 +1292,12 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バトル後デモ 主処理
+ *  @brief  バトル後デモ 主処理
  *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	work 
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL SceneEndDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
@@ -1315,12 +1318,12 @@ static BOOL SceneEndDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バトル後デモ 引き分け 主処理
+ *  @brief  バトル後デモ 引き分け 主処理
  *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	work 
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL SceneEndDemoDraw_Main( UI_SCENE_CNT_PTR cnt, void* work )
@@ -1362,12 +1365,12 @@ static BOOL SceneEndDemoDraw_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バトル後デモ 引き分け 主処理
+ *  @brief  バトル後デモ 引き分け 主処理
  *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	work 
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  work 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL SceneEndDemoDraw_End( UI_SCENE_CNT_PTR cnt, void* work )
@@ -1387,11 +1390,11 @@ static BOOL SceneEndDemoDraw_End( UI_SCENE_CNT_PTR cnt, void* work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  最初のシーンを判定
+ *  @brief  最初のシーンを判定
  *
- *	@param	COMM_BTL_DEMO_MAIN_WORK* wk 
+ *  @param  COMM_BTL_DEMO_MAIN_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static CBD_SCENE_ID calc_first_scene( COMM_BTL_DEMO_PARAM* pwk )
@@ -1414,11 +1417,11 @@ static CBD_SCENE_ID calc_first_scene( COMM_BTL_DEMO_PARAM* pwk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *  @brief
  *
- *	@param	u8 type 
+ *  @param  u8 type 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 BOOL type_is_normal( u8 type )
@@ -1445,11 +1448,11 @@ BOOL type_is_normal( u8 type )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  タイプがスタートかエンドか取得
+ *  @brief  タイプがスタートかエンドか取得
  *
- *	@param	u8 type 
+ *  @param  u8 type 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 BOOL type_is_start( u8 type )
@@ -1476,11 +1479,11 @@ BOOL type_is_start( u8 type )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ポケパラからボールOBJのアニメIDを取得
+ *  @brief  ポケパラからボールOBJのアニメIDを取得
  *
- *	@param	POKEMON_PARAM* pp 
+ *  @param  POKEMON_PARAM* pp 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static u32 PokeParaToBallAnim( POKEMON_PARAM* pp )
@@ -1516,15 +1519,15 @@ static u32 PokeParaToBallAnim( POKEMON_PARAM* pp )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ボールユニット初期化
+ *  @brief  ボールユニット初期化
  *
- *	@param	BALL_UNIT* unit
- *	@param	POKEPARTY* party
- *	@param	type
- *	@param	posid
- *	@param	obj 
+ *  @param  BALL_UNIT* unit
+ *  @param  POKEPARTY* party
+ *  @param  type
+ *  @param  posid
+ *  @param  obj 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d )
@@ -1638,11 +1641,11 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ボールユニット開放
+ *  @brief  ボールユニット開放
  *
- *	@param	BALL_UNIT* unit 
+ *  @param  BALL_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void BALL_UNIT_Exit( BALL_UNIT* unit )
@@ -1659,11 +1662,11 @@ static void BALL_UNIT_Exit( BALL_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *  @brief
  *
- *	@param	BALL_UNIT* unit 
+ *  @param  BALL_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _ball_open( BALL_UNIT* unit, int start_sync )
@@ -1748,11 +1751,11 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ボール主処理
+ *  @brief  ボール主処理
  *
- *	@param	BALL_UNIT* unit 
+ *  @param  BALL_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void BALL_UNIT_Main( BALL_UNIT* unit )
@@ -1816,11 +1819,11 @@ static void BALL_UNIT_Main( BALL_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アニメ開始
+ *  @brief  アニメ開始
  *
- *	@param	BALL_UNIT* unit 
+ *  @param  BALL_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void BALL_UNIT_SetStart( BALL_UNIT* unit )
@@ -1830,12 +1833,12 @@ static void BALL_UNIT_SetStart( BALL_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ポケモンの状態を反映
+ *  @brief  ポケモンの状態を反映
  *
- *	@param	BALL_UNIT* unit
- *	@param	id 
+ *  @param  BALL_UNIT* unit
+ *  @param  id 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void BALL_UNIT_SetPartyCondition( BALL_UNIT* unit, const POKEPARTY* party, int id )
@@ -1862,12 +1865,12 @@ static void BALL_UNIT_SetPartyCondition( BALL_UNIT* unit, const POKEPARTY* party
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナー名用BMPWIN生成
+ *  @brief  トレーナー名用BMPWIN生成
  *
- *	@param	u8 type
- *	@param	posid 
+ *  @param  u8 type
+ *  @param  posid 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GFL_BMPWIN* TRAINERNAME_WIN_Create( u8 type, u8 posid )
@@ -1924,14 +1927,14 @@ static GFL_BMPWIN* TRAINERNAME_WIN_Create( u8 type, u8 posid )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーユニット 初期化
+ *  @brief  トレーナーユニット 初期化
  *
- *	@param	TRAINER_UNIT* unit
- *	@param	posid
- *	@param	COMM_BTL_DEMO_TRAINER_DATA* data
- *	@param	obj 
+ *  @param  TRAINER_UNIT* unit
+ *  @param  posid
+ *  @param  COMM_BTL_DEMO_TRAINER_DATA* data
+ *  @param  obj 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d, GFL_FONT* font )
@@ -1972,11 +1975,11 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーユニット 
+ *  @brief  トレーナーユニット 
  *
- *	@param	TRAINER_UNIT* unit 
+ *  @param  TRAINER_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _trainer_unit_main_start( TRAINER_UNIT* unit )
@@ -2037,11 +2040,11 @@ static void _trainer_unit_main_start( TRAINER_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *  @brief
  *
- *	@param	TRAINER_UNIT* unit 
+ *  @param  TRAINER_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 #if 0
@@ -2075,11 +2078,11 @@ static void _trainer_unit_main_end( TRAINER_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーユニット 後処理
+ *  @brief  トレーナーユニット 後処理
  *
- *	@param	TRAINER_UNIT* unit 
+ *  @param  TRAINER_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit )
@@ -2096,11 +2099,11 @@ static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーユニット 主処理
+ *  @brief  トレーナーユニット 主処理
  *
- *	@param	TRAINER_UNIT* unit 
+ *  @param  TRAINER_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
@@ -2128,11 +2131,11 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーユニット トレーナー名生成、表示
+ *  @brief  トレーナーユニット トレーナー名生成、表示
  *
- *	@param	TRAINER_UNIT* unit 
+ *  @param  TRAINER_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
@@ -2181,11 +2184,11 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーユニット 初期化コントローラー
+ *  @brief  トレーナーユニット 初期化コントローラー
  *
- *	@param	COMM_BTL_DEMO_MAIN_WORK* wk 
+ *  @param  COMM_BTL_DEMO_MAIN_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_CNT_Init( COMM_BTL_DEMO_MAIN_WORK* wk )
@@ -2206,11 +2209,11 @@ static void TRAINER_UNIT_CNT_Init( COMM_BTL_DEMO_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーユニット 後処理コントローラー
+ *  @brief  トレーナーユニット 後処理コントローラー
  *
- *	@param	COMM_BTL_DEMO_MAIN_WORK* wk 
+ *  @param  COMM_BTL_DEMO_MAIN_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_CNT_Exit( COMM_BTL_DEMO_MAIN_WORK* wk )
@@ -2226,11 +2229,11 @@ static void TRAINER_UNIT_CNT_Exit( COMM_BTL_DEMO_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーユニット 主処理コントローラー
+ *  @brief  トレーナーユニット 主処理コントローラー
  *
- *	@param	COMM_BTL_DEMO_MAIN_WORK* wk 
+ *  @param  COMM_BTL_DEMO_MAIN_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk )
@@ -2271,11 +2274,11 @@ static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーユニット ボール開始コントローラー
+ *  @brief  トレーナーユニット ボール開始コントローラー
  *
- *	@param	COMM_BTL_DEMO_MAIN_WORK* wk 
+ *  @param  COMM_BTL_DEMO_MAIN_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_CNT_BallSetStart( COMM_BTL_DEMO_MAIN_WORK* wk )
@@ -2291,13 +2294,13 @@ static void TRAINER_UNIT_CNT_BallSetStart( COMM_BTL_DEMO_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  勝敗ユニット生成
+ *  @brief  勝敗ユニット生成
  *
- *	@param	RESULT_UNIT* unit
- *	@param	obj
- *	@param	g3d 
+ *  @param  RESULT_UNIT* unit
+ *  @param  obj
+ *  @param  g3d 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void RESULT_UNIT_Init( RESULT_UNIT* unit, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d, u16 pokenum_me, u16 pokenum_you, u8 type )
@@ -2347,11 +2350,11 @@ static void RESULT_UNIT_Init( RESULT_UNIT* unit, COMM_BTL_DEMO_OBJ_WORK* obj, CO
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  勝敗ユニット 開放
+ *  @brief  勝敗ユニット 開放
  *
- *	@param	RESULT_UNIT* unit 
+ *  @param  RESULT_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void RESULT_UNIT_Exit( RESULT_UNIT* unit )
@@ -2374,11 +2377,11 @@ static void RESULT_UNIT_Exit( RESULT_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  リザルトユニット 主処理
+ *  @brief  リザルトユニット 主処理
  *
- *	@param	RESULT_UNIT* unit 
+ *  @param  RESULT_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void RESULT_UNIT_Main( RESULT_UNIT* unit )
@@ -2407,13 +2410,13 @@ static void RESULT_UNIT_Main( RESULT_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  リザルトアニメ開始
+ *  @brief  リザルトアニメ開始
  *
- *	@param	RESULT_UNIT* unit
- *	@param	pos
- *	@param	result 
+ *  @param  RESULT_UNIT* unit
+ *  @param  pos
+ *  @param  result 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void RESULT_UNIT_SetOpen( RESULT_UNIT* unit, RESULT_POS pos, COMM_BTL_DEMO_RESULT result )
@@ -2443,11 +2446,11 @@ static void RESULT_UNIT_SetOpen( RESULT_UNIT* unit, RESULT_POS pos, COMM_BTL_DEM
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  OBJ初期化
+ *  @brief  OBJ初期化
  *
- *	@param	COMM_BTL_DEMO_OBJ_WORK* wk 
+ *  @param  COMM_BTL_DEMO_OBJ_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void OBJ_Init( COMM_BTL_DEMO_OBJ_WORK* wk, COMM_BTL_DEMO_GRAPHIC_WORK* graphic, HEAPID heapID )
@@ -2481,11 +2484,11 @@ static void OBJ_Init( COMM_BTL_DEMO_OBJ_WORK* wk, COMM_BTL_DEMO_GRAPHIC_WORK* gr
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  OBJ開放
+ *  @brief  OBJ開放
  *
- *	@param	COMM_BTL_DEMO_OBJ_WORK* wk 
+ *  @param  COMM_BTL_DEMO_OBJ_WORK* wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void OBJ_Exit( COMM_BTL_DEMO_OBJ_WORK* wk )
@@ -2498,14 +2501,14 @@ static void OBJ_Exit( COMM_BTL_DEMO_OBJ_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  CLWK生成
+ *  @brief  CLWK生成
  *
- *	@param	COMM_BTL_DEMO_OBJ_WORK* wk
- *	@param	px
- *	@param	py
- *	@param	anim 
+ *  @param  COMM_BTL_DEMO_OBJ_WORK* wk
+ *  @param  px
+ *  @param  py
+ *  @param  anim 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GFL_CLWK* OBJ_CreateCLWK( COMM_BTL_DEMO_OBJ_WORK* wk, s16 px, s16 py, u16 anim )
@@ -2522,11 +2525,11 @@ static GFL_CLWK* OBJ_CreateCLWK( COMM_BTL_DEMO_OBJ_WORK* wk, s16 px, s16 py, u16
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  残りポケモン数OBJを生成
+ *  @brief  残りポケモン数OBJを生成
  *
- *	@param	TRAINER_UNIT* unit 
+ *  @param  TRAINER_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GFL_CLWK* OBJ_CreatePokeNum( COMM_BTL_DEMO_OBJ_WORK* obj, u8 posid, u8 pokenum )
@@ -2588,11 +2591,11 @@ static GFL_CLWK* OBJ_CreatePokeNum( COMM_BTL_DEMO_OBJ_WORK* obj, u8 posid, u8 po
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  初期化
+ *  @brief  初期化
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_Init( COMM_BTL_DEMO_G3D_WORK* g3d, COMM_BTL_DEMO_GRAPHIC_WORK* graphic, HEAPID heapID )
@@ -2618,11 +2621,11 @@ static void G3D_Init( COMM_BTL_DEMO_G3D_WORK* g3d, COMM_BTL_DEMO_GRAPHIC_WORK* g
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  終了処理
+ *  @brief  終了処理
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d )
@@ -2645,11 +2648,11 @@ static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  3D関連 主処理
+ *  @brief  3D関連 主処理
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK * g3d 
+ *  @param  COMM_BTL_DEMO_G3D_WORK * g3d 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_Main( COMM_BTL_DEMO_G3D_WORK * g3d )
@@ -2689,12 +2692,12 @@ static VecFx32 sc_camera_at = { 0, 0, 0 };
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  PTCリソースロード
+ *  @brief  PTCリソースロード
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d
- *	@param	spa_idx 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d
+ *  @param  spa_idx 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
@@ -2707,7 +2710,7 @@ static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
   // PTCワーク生成
   g3d->ptc = GFL_PTC_Create( g3d->spa_work, sizeof(g3d->spa_work), TRUE, g3d->heapID );
   
-  /* パーティクルのカメラを正射影に設定 */	
+  /* パーティクルのカメラを正射影に設定 */  
   {
     GFL_G3D_PROJECTION projection; 
     projection.type = GFL_G3D_PRJORTH;
@@ -2722,7 +2725,7 @@ static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
     projection.param4 = FX32_ONE*64.0f;  
 #endif
     projection.near = FX32_CONST( 1 );
-    projection.far  = FX32_CONST( 1024 );	// 正射影なので関係ないが、念のためクリップのfarを設定
+    projection.far  = FX32_CONST( 1024 ); // 正射影なので関係ないが、念のためクリップのfarを設定
     projection.scaleW = 0;
     GFL_PTC_PersonalCameraDelete( g3d->ptc );
     GFL_PTC_PersonalCameraCreate( g3d->ptc, &projection, DEFAULT_PERSP_WAY, &sc_camera_eye, &sc_camera_up, &sc_camera_at, g3d->heapID );
@@ -2741,11 +2744,11 @@ static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  PTCワーク削除
+ *  @brief  PTCワーク削除
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_PTC_Delete( COMM_BTL_DEMO_G3D_WORK* g3d )
@@ -2759,11 +2762,11 @@ static void G3D_PTC_Delete( COMM_BTL_DEMO_G3D_WORK* g3d )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  PTCシステム終了
+ *  @brief  PTCシステム終了
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_PTC_Exit( COMM_BTL_DEMO_G3D_WORK* g3d )
@@ -2778,13 +2781,13 @@ static void G3D_PTC_Exit( COMM_BTL_DEMO_G3D_WORK* g3d )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  エミッタ生成
+ *  @brief  エミッタ生成
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK * g3d
- *	@param	idx
- *	@param	VecFx32* pos 
+ *  @param  COMM_BTL_DEMO_G3D_WORK * g3d
+ *  @param  idx
+ *  @param  VecFx32* pos 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_PTC_CreateEmitter( COMM_BTL_DEMO_G3D_WORK * g3d, u16 idx, const VecFx32* pos )
@@ -2801,12 +2804,12 @@ static void G3D_PTC_CreateEmitter( COMM_BTL_DEMO_G3D_WORK * g3d, u16 idx, const 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  SPAの中を全て再生
+ *  @brief  SPAの中を全て再生
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d
- *	@param	VecFx32* pos 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d
+ *  @param  VecFx32* pos 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_PTC_CreateEmitterAll( COMM_BTL_DEMO_G3D_WORK* g3d, const VecFx32* pos )
@@ -2821,13 +2824,13 @@ static void G3D_PTC_CreateEmitterAll( COMM_BTL_DEMO_G3D_WORK* g3d, const VecFx32
 
 //-----------------------------------------------------------------------------
 /** 
- *	@brief  imd内マテリアルのパレットの結びつきを変更
+ *  @brief  imd内マテリアルのパレットの結びつきを変更
  *
- *	@param	GFL_G3D_OBJ* obj G3D_OBJ
- *	@param	mat_idx マテリアル インデックス
- *	@param	pal_idx パレット インデックス
+ *  @param  GFL_G3D_OBJ* obj G3D_OBJ
+ *  @param  mat_idx マテリアル インデックス
+ *  @param  pal_idx パレット インデックス
  *
- *	@retval TRUE:成功 FALSE:失敗
+ *  @retval TRUE:成功 FALSE:失敗
  */
 //-----------------------------------------------------------------------------
 static BOOL G3D_OBJ_PaletteReBind( GFL_G3D_OBJ* obj, int mat_idx, int pal_idx )
@@ -2852,12 +2855,12 @@ static BOOL G3D_OBJ_PaletteReBind( GFL_G3D_OBJ* obj, int mat_idx, int pal_idx )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アニメーション初期化
+ *  @brief  アニメーション初期化
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d
- *	@param	demo_id 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d
+ *  @param  demo_id 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
@@ -2901,12 +2904,12 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
 #if 0
 //-----------------------------------------------------------------------------
 /**
- *	@brief  男女からテクスチャリソースの結びつきを変更
+ *  @brief  男女からテクスチャリソースの結びつきを変更
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d
- *	@param	trsex 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d
+ *  @param  trsex 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_AnimeSetTrSex( COMM_BTL_DEMO_G3D_WORK* g3d, u8 trsex, u8 is_normal )
@@ -2958,11 +2961,11 @@ static void G3D_AnimeSetTrSex( COMM_BTL_DEMO_G3D_WORK* g3d, u8 trsex, u8 is_norm
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アニメーション削除
+ *  @brief  アニメーション削除
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_AnimeDel( COMM_BTL_DEMO_G3D_WORK* g3d )
@@ -2980,11 +2983,11 @@ static void G3D_AnimeDel( COMM_BTL_DEMO_G3D_WORK* g3d )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アニメーションシステム終了
+ *  @brief  アニメーションシステム終了
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d )
@@ -2998,11 +3001,11 @@ static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  描画処理
+ *  @brief  描画処理
  *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *  @param  COMM_BTL_DEMO_G3D_WORK* g3d 
  *
- *	@retval TRUE:ループ再生中, FALSE: 再生終了
+ *  @retval TRUE:ループ再生中, FALSE: 再生終了
  */
 //-----------------------------------------------------------------------------
 static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
