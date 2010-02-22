@@ -142,7 +142,7 @@ enum {
 #define	POKEICON_PY		( 104 )
 #define	POKEICON_SX		( 32 )
 // セーブ状況マーク表示座標
-#define	TIMEMARK_PX		( 70 )
+#define	TIMEMARK_PX		( 74 )
 #define	TIMEMARK_PY		( 174 )
 #define	TIMEMARK_SX		( 12 )
 
@@ -344,21 +344,33 @@ void REPORT_Draw( REPORT_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void REPORT_StartSave( REPORT_WORK * wk )
 {
+	u32	totalSize;
 	u32	i;
-
-	wk->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->gameSys) );
-	SaveControl_GetActualSize( wk->sv, &wk->actualSize, &wk->totalSize );
-	wk->timeSize  = wk->actualSize * 2 / 10;
-	wk->totalSize = wk->timeSize;
-	wk->objCount  = 0;
-
-	wk->save_start = TRUE;
 
 	GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[BMPWIN_REPORT].win );
 
 	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
 		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
 	}
+
+	wk->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->gameSys) );
+	SaveControl_GetActualSize( wk->sv, &wk->actualSize, &totalSize );
+	wk->timeSize  = wk->actualSize * 2 / 10;
+	wk->totalSize = wk->timeSize;
+	wk->objCount  = 0;
+
+/*
+	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
+	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
+	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
+	OS_Printf( "　セーブ開始\n" );
+	OS_Printf( "　　actualSize = %d, totalSize = %d, timeSize = %d\n", wk->actualSize, totalSize, wk->timeSize );
+	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
+	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
+	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
+*/
+
+	wk->save_start = TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -376,10 +388,12 @@ void REPORT_EndSave( REPORT_WORK * wk )
 
 	wk->save_start = FALSE;
 
+/*
 	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
 		GFL_CLACT_WK_SetAnmFrame( wk->clwk[i], 0 );
 		GFL_CLACT_WK_SetAnmSeq( wk->clwk[i], 1 );
 	}
+*/
 }
 
 
@@ -793,7 +807,9 @@ static void VBlankTask_SaveTimeMarkObj( GFL_TCB * tcb, void * work )
 			wk->objCount++;
 		}
 		wk->totalSize += wk->timeSize;
+//		OS_Printf( "　セーブ中 : nowSize = %d, timeTotal = %d, objCount = %d\n", now_size, wk->totalSize, wk->objCount );
 	}
+//	OS_Printf( "　よばれました : nowSize = %d, timeTotal = %d, objCount = %d\n", now_size, wk->totalSize, wk->objCount );
 
 	GFL_CLACT_SYS_Main();
 	GFL_CLACT_SYS_VBlankFunc();

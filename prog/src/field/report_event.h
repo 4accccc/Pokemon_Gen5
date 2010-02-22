@@ -9,6 +9,7 @@
 #pragma	once
 
 #include "gamesystem/gamesystem.h"
+#include "system/time_icon.h"
 #include "app/app_taskmenu.h"
 
 
@@ -18,12 +19,14 @@
 
 // ÉèÅ[ÉN
 typedef struct {
+	// äOÇ©ÇÁìnÇµÇƒÇ≠ÇæÇ≥Ç¢
 	SAVE_CONTROL_WORK * sv;
   GAMESYS_WORK * gsys;
-
   FIELDMAP_WORK * fieldWork;
   FLDMSGBG * msgBG;
+  HEAPID	heapID;
 
+	// Å´ì‡ïîÇ≈ê›íË
 	GFL_TCBLSYS * tcbl;
 
   GFL_MSGDATA * msgData;
@@ -35,7 +38,7 @@ typedef struct {
 	APP_TASKMENU_RES * ynRes;
 	APP_TASKMENU_WORK * ynWork;
 
-  HEAPID	heapID;
+	TIMEICON_WORK * timeIcon;
 
 }FMENU_REPORT_EVENT_WORK;
 

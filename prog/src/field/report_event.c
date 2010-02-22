@@ -179,6 +179,9 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 	case REPORT_SEQ_SAVE_INIT:							// ƒZ[ƒu‰ŠúÝ’è
 		if( MainReportMsg( wk ) == FALSE ){
 			FIELD_SUBSCREEN_SetReportStart( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
+			wk->timeIcon = TIMEICON_Create(
+											GFUser_VIntr_GetTCBSYS(),
+											wk->win, 15, TIMEICON_DEFAULT_WAIT, wk->heapID );
 			SetReportPlayerAnime( wk );
 			PLAYTIME_SetSaveTime( SaveData_GetPlayTime(wk->sv) );
 			GAMEDATA_SaveAsyncStart( GAMESYSTEM_GetGameData(wk->gsys) );
@@ -206,6 +209,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 				WORDSET_Delete( wset );
 			}
 			SetReportMsgBuff( wk );
+			TILEICON_Exit( wk->timeIcon );
 			*seq = REPORT_SEQ_RESULT_OK_WAIT;
 			break;
 
@@ -213,6 +217,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
 			ResetReportPlayerAnime( wk );
 			SetReportMsg( wk, msg_common_report_06 );
+			TILEICON_Exit( wk->timeIcon );
 			*seq = REPORT_SEQ_RESULT_NG_WAIT;
 			break;
 		}

@@ -149,7 +149,8 @@ SUBDIRS	=	wmi \
 			kokuren \
 			pokevoice \
 			dowsing_gra \
-            report
+            report \
+            time_icon
 
 include $(RESOURCE_MACRO)
 

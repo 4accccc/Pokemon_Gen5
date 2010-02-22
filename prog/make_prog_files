@@ -226,7 +226,8 @@ SRCS  +=    $(SOUNDSRC) \
 		debug/debug_sd_print.c \
 		system/ds_system.c \
         savedata/undata_update.c \
-        system/scroll_bar.c 
+        system/scroll_bar.c \
+        system/time_icon.c
 
 
 #================================================

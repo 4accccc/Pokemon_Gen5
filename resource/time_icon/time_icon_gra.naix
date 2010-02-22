@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: time_icon_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TIME_ICON_GRA_NAIX_
+#define NARC_TIME_ICON_GRA_NAIX_
+
+enum {
+	NARC_time_icon_gra_time_icon_lz_NCGR = 0
+};
+
+/* NARC_TIME_ICON_GRA_NAIX_ */
+#endif
