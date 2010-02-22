@@ -65,6 +65,7 @@ struct _WORDSET{
 /*--------------------------------------------------------------------------*/
 static void InitParam(WORDSET_PARAM* param);
 static void RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* str, const WORDSET_PARAM* param );
+static void ClearBuffer( WORDSET* wordset, u32 bufID );
 
 
 
@@ -196,6 +197,20 @@ static void InitParam(WORDSET_PARAM* param)
 {
   GFL_STD_MemClear( param, sizeof(*param) );
   param->deco_id = PMS_DECOID_NULL;
+}
+
+//------------------------------------------------------------------
+/**
+ * 指定バッファをクリア(エラー対策)
+ *
+ * @param   param   パラメータ構造体へのポインタ
+ *
+ */
+//------------------------------------------------------------------
+static void ClearBuffer( WORDSET* wordset, u32 bufID )
+{
+  InitParam( &wordset->word[bufID].param );
+  GFL_STR_ClearBuffer( wordset->word[bufID].str );
 }
 
 
@@ -573,8 +588,14 @@ void WORDSET_RegisterCountryName( WORDSET* wordset, u32 bufID, u32 countryID )
   GFL_MSGDATA *man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_place_msg_world_dat, wordset->heapID);
   if( man )
   {
-    GFL_MSG_GetString( man, countryID, wordset->tmpBuf );
-    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+    int str_count = GFL_MSG_GetStrCount( man );
+    if( str_count < countryID ){
+      GFL_MSG_GetString( man, countryID, wordset->tmpBuf );
+      RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+    }else{
+      GF_ASSERT_MSG( countryID < str_count, "countryID=%d, countryID Max=%d", countryID, str_count );
+      ClearBuffer( wordset, bufID );
+    }
     GFL_MSG_Delete(man);
   }
 }
@@ -602,12 +623,19 @@ void WORDSET_RegisterLocalPlaceName( WORDSET* wordset, u32 bufID, u32 countryID,
       GFL_MSGDATA *man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, datID, wordset->heapID);
       if( man )
       {
-        GFL_MSG_GetString( man, placeID, wordset->tmpBuf );
-        RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+        int str_count = GFL_MSG_GetStrCount( man );
+        if( str_count < placeID ){
+          GFL_MSG_GetString( man, placeID, wordset->tmpBuf );
+          RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+          GFL_MSG_Delete(man);
+          return;
+        }
+        GF_ASSERT_MSG( placeID < str_count, "palceID=%d, placeID max=%d", placeID, str_count );
         GFL_MSG_Delete(man);
       }
     }
   }
+  ClearBuffer( wordset, bufID );
 }
 
 //------------------------------------------------------------------
