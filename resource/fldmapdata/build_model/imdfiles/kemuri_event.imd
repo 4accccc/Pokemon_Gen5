@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-02-19T17:05:10" source="kemuri_event01.mb"/>
+	<create user="unno" host="W00199" date="2010-02-22T17:52:03" source="kemuri_event01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-02-19T17:05:10" source="kemuri_event01.mb"/>
+<original_create user="unno" host="W00199" date="2010-02-22T17:52:03" source="kemuri_event01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-2.502686 1.191162 -0.498047" whd="4.035156 0.190918 2.467773"/>
+<box_test pos_scale="6" xyz="-2.502686 1.235840 -0.481689" whd="4.035156 0.968506 2.338867"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="e_kemuri01"
@@ -307,7 +307,7 @@
 	<material index="0" name="lambert2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="0"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
@@ -681,8 +681,8 @@
 		draw_mtx="off"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		rotate="20.000000 0.000000 0.000000"
+		translate="0.000000 80.000000 -16.000000"
 		visibility="on"
 		display_size="0"
 	>
@@ -696,7 +696,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-61.377441 80.000000 32.000000"
+		translate="-61.377441 48.000000 32.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -716,7 +716,7 @@
 		billboard="off"
 		scale="0.699951 1.000000 0.699951"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-35.113281 83.304199 51.097168"
+		translate="-35.113281 51.304199 51.097168"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -736,7 +736,7 @@
 		billboard="off"
 		scale="0.699951 1.000000 0.699951"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-80.494385 83.304199 65.043945"
+		translate="-80.494385 51.304199 65.043945"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -756,7 +756,7 @@
 		billboard="off"
 		scale="0.800049 1.000000 0.800049"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-94.891113 85.507080 -6.000488"
+		translate="-94.891113 53.507080 -6.000488"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -776,7 +776,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-128.171387 85.507080 73.304932"
+		translate="-128.171387 53.507080 73.304932"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -796,7 +796,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-60.904541 80.000000 94.073975"
+		translate="-60.904541 48.000000 94.073975"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -816,7 +816,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-110.033447 88.327393 40.786621"
+		translate="-110.033447 56.327393 40.786621"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -836,7 +836,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-1.182617 80.000000 63.867920"
+		translate="-1.182617 48.000000 63.867920"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -856,7 +856,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="16.521729 88.460693 35.540771"
+		translate="16.521729 56.460693 35.540771"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -876,7 +876,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="48.389404 76.239746 92.194824"
+		translate="48.389404 44.239746 92.194824"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -896,7 +896,7 @@
 		billboard="off"
 		scale="0.699951 1.000000 0.699951"
 		rotate="0.000000 0.000000 0.000000"
-		translate="48.389404 82.820313 56.786133"
+		translate="48.389404 50.820313 56.786133"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -916,7 +916,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="66.093750 76.239746 0.132080"
+		translate="66.093750 44.239746 0.132080"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
