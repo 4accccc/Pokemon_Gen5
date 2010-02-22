@@ -121,7 +121,8 @@ typedef enum
   PL_RET_TELEPORT,    // メニュー 技：テレポート
   PL_RET_ANAWOHORU,   // メニュー 技：あなをほる
   PL_RET_AMAIKAORI,   // メニュー 技：あまいかおり
-  PL_RET_OSYABERI,    // メニュー 技：おしゃべり  //field_skillココまで
+  PL_RET_OSYABERI,    // メニュー 技：おしゃべり
+  PL_RET_DIVING,      // メニュー 技：ダイビング  //field_skillココまで
   PL_RET_MILKNOMI,    // メニュー 技：ミルクのみ
   PL_RET_TAMAGOUMI,   // メニュー 技：タマゴうみ
 }PL_RETURN_TYPE;

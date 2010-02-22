@@ -3117,6 +3117,9 @@ u32 PLIST_UTIL_CheckFieldWaza( const POKEMON_PARAM *pp , const u8 wazaPos )
   case WAZANO_OSYABERI: //おしゃべり(448)
     return PL_RET_OSYABERI;
     break;
+  case WAZANO_DAIBINGU: //ダイビング(291)
+    return PL_RET_DIVING;
+    break;
   case WAZANO_MIRUKUNOMI: //ミルクのみ(208)
     return PL_RET_MILKNOMI;
     break;

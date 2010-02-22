@@ -33,13 +33,8 @@
 //======================================================================
 #pragma mark [> define
 
-#define PLIST_PLATE_WIDTH  (16)
-#define PLIST_PLATE_HEIGHT (6)
-
 //各表示物の位置
 //プレートの左上からの相対座標
-#define PLIST_PLATE_POKE_POS_X (24)
-#define PLIST_PLATE_POKE_POS_Y (16)
 #define PLIST_PLATE_POKE_ACTIVE_POS_X (26)
 #define PLIST_PLATE_POKE_ACTIVE_POS_Y (19)
 #define PLIST_PLATE_BALL_POS_X (16)

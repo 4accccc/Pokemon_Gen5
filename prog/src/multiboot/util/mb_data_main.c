@@ -274,6 +274,8 @@ const u16 MB_DATA_GetItemNum( MB_DATA_WORK *dataWork , const u16 itemNo )
     return MB_DATA_GS_GetItemNum( dataWork , itemNo );
     break;
   }
+  GF_ASSERT( NULL );
+  return 0;
 }
 
 

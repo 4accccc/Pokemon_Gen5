@@ -471,7 +471,7 @@ static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *info
                             PSTATUS_INFO_STR_ID_X , PSTATUS_INFO_STR_ID_Y , PSTATUS_STR_COL_TITLE );
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
-    u32 id = PPP_Get( ppp , ID_PARA_id_no , NULL )%100000;
+    u32 id = PPP_Get( ppp , ID_PARA_id_no , NULL )&0x0000FFFF;
     WORDSET_RegisterNumber( wordSet , 0 , id , 5 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
     PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ID] , wordSet , mes_status_02_10 , 
                                    PSTATUS_INFO_STR_ID_VAL_X , PSTATUS_INFO_STR_ID_VAL_Y , PSTATUS_STR_COL_VALUE );
