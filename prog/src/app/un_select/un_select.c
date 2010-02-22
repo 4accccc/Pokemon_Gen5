@@ -331,7 +331,7 @@ enum
 { 
   UN_SELECT_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
 
-  UN_LIST_MAX = WIFI_COUNTRY_MAX, //20, ///< 項目数
+  UN_LIST_MAX = WIFI_COUNTRY_MAX, ///< 項目数
 };
 
 // パッシブ定数
@@ -1104,21 +1104,25 @@ static void MSG_CNT_Main( UN_SELECT_MSG_CNT_WORK* wk )
 static void MSG_CNT_DrawListElem( UN_SELECT_MSG_CNT_WORK* wk, PRINT_UTIL* util, PRINT_QUE *que, GFL_FONT *font, u32 itemNum )
 {
   int ypos = 12;
+  int idx;
+  int floor;
 
   GF_ASSERT(wk);
 
   // フロア表示
+  idx = itemNum;
+  floor = UN_LIST_MAX - itemNum + 1; //フロアは2Ｆから
   GFL_MSG_GetString( wk->msghandle, un_reception_msg_04, wk->strbuf );
-  WORDSET_RegisterNumber( wk->wordset, 2, itemNum, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wordset, 2, floor, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_ExpandStr( wk->wordset, wk->exp_strbuf, wk->strbuf );
 
   PRINTTOOL_PrintColor( util, que, 0, 12, wk->exp_strbuf, font, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
 
   // 国名 表示(１行・２行対応）
-  if(GFL_STR_GetBufferLength(wk->name[itemNum]) > MULTI_LINE_WORD_NUM){
+  if(GFL_STR_GetBufferLength(wk->name[idx]) > MULTI_LINE_WORD_NUM){
     ypos = 4;
   }
-  PRINTTOOL_PrintColor( util, que, 32, ypos, wk->name[itemNum], font, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
+  PRINTTOOL_PrintColor( util, que, 32, ypos, wk->name[idx], font, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
 
   return;
 }
@@ -1490,18 +1494,20 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
     for( i=0; i<UN_LIST_MAX; i++)
     {
       int type;
+      int idx;
+      idx = UN_LIST_MAX - i - 1;
 
       //@TODO 条件、項目の存在
       type = GFUser_GetPublicRand0( 2 );
 
       // パラメータは純粋に順列ID
-      FRAMELIST_AddItem( wk->lwk, type, i );
+      FRAMELIST_AddItem( wk->lwk, type, idx );
 
       // 項目あり
       if( type == 0 )
       {
         // 項目用文字列 取得
-        wk->cnt_msg->name[i] = GFL_MSG_CreateString( mman, i );
+        wk->cnt_msg->name[i] = GFL_MSG_CreateString( mman, idx );
       }
       // 項目なし
       else
@@ -1698,7 +1704,7 @@ static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
   // フロア選択処理
   // @TODO タッチ及びカーソルで選択
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
   {
     UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_CONFIRM );
     return TRUE;
