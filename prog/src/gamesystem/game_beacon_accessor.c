@@ -16,7 +16,89 @@
 #include "gamesystem/game_beacon_types.h"
 #include "net_app\union\union_beacon_tool.h"
 
+#include "app/townmap_data.h"
+#include "arc/fieldmap/zone_id.h"
+#include "tr_tool/trno_def.h"
+#include "poke_tool/monsno_def.h"
+#include "item/itemsym.h"
 
+enum{
+ BEACON_WSET_DEFAULT,   //デフォルト(トレーナー名)  
+ BEACON_WSET_TRNAME,    //対戦相手名
+ BEACON_WSET_MONSNAME,  //ポケモン種族名
+ BEACON_WSET_NICKNAME,  //ポケモンニックネーム
+ BEACON_WSET_POKE_W,  //ポケモンニックネーム
+ BEACON_WSET_ITEM,      //アイテム名
+ BEACON_WSET_PTIME,     //プレイタイム
+ BEACON_WSET_THANKS,    //御礼回数
+ BEACON_WSET_HAIHU_MONS, //配布モンスター名
+ BEACON_WSET_HAIHU_ITEM, //配布アイテム名
+ BEACON_WSET_MAX,
+};
+
+///ビーコン内容wordset用テンポラリバッファ長定義
+#define BUFLEN_BEACON_WORDSET_TMP (16*2+EOM_SIZE)
+
+/*
+ *  @brief  GAMEBEACON_ACTION型の並びと同一である必要があります
+ */
+static const u8 DATA_BeaconWordsetType[GAMEBEACON_ACTION_MAX] = {
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_NULL,                     ///<データ無し
+  
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_SEARCH,                   ///<「ｘｘｘさんをサーチしました！」      1
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_WILD_POKE_START,   ///<野生のポケモンと対戦を開始しました！  2
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY, ///<野生のポケモンに勝利しました！        3
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_SP_POKE_START,     ///<特別なポケモンと対戦を開始しました！  4
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY,   ///<特別なポケモンに勝利しました！        5
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_TRAINER_START,     ///<トレーナーと対戦を開始しました！      6
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY,   ///<トレーナーに勝利しました！            7
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_LEADER_START,      ///<ジムリーダーと対戦を開始しました！    8
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY,    ///<ジムリーダーに勝利しました！          9
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_BIGFOUR_START,     ///<四天王と対戦を開始しました！          10
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY,   ///<四天王に勝利しました！                11
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_CHAMPION_START,    ///<チャンピオンと対戦を開始しました！    12
+  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY,  ///<チャンピオンに勝利しました！          13
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_POKE_GET,                 ///<ポケモン捕獲                          14
+  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_SP_POKE_GET,              ///<特別なポケモン捕獲                    15
+  BEACON_WSET_NICKNAME,	///<GAMEBEACON_ACTION_POKE_LVUP,                ///<ポケモンレベルアップ                  16
+  BEACON_WSET_POKE_W,	///<GAMEBEACON_ACTION_POKE_EVOLUTION,           ///<ポケモン進化                          17
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_GPOWER,                   ///<Gパワー発動                           18
+  BEACON_WSET_ITEM,	  ///<GAMEBEACON_ACTION_SP_ITEM_GET,              ///<貴重品ゲット                          19
+  BEACON_WSET_PTIME,	///<GAMEBEACON_ACTION_PLAYTIME,                 ///<一定のプレイ時間を越えた              20
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_ZUKAN_COMPLETE,           ///<図鑑完成                              21
+  BEACON_WSET_THANKS,	///<GAMEBEACON_ACTION_THANKYOU_OVER,            ///<お礼を受けた回数が規定数を超えた      22
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_UNION_IN,                 ///<ユニオンルームに入った                23
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_THANKYOU,                 ///<「ありがとう！」                      24
+  BEACON_WSET_HAIHU_MONS,	///<GAMEBEACON_ACTION_DISTRIBUTION_POKE,        ///<ポケモン配布中                        25
+  BEACON_WSET_HAIHU_ITEM,	///<GAMEBEACON_ACTION_DISTRIBUTION_ITEM,        ///<アイテム配布中                        26
+  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_DISTRIBUTION_ETC,         ///<その他配布中                          27
+};
+
+typedef BOOL (*BEACON_INFO_ERROR_CHECK_FUNC)(const GAMEBEACON_INFO* info );
+
+static BOOL errchk_action_default(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_trainer_battle(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_poke_monsno(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_poke_nickname(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_poke_double(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_itemno(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_playtime(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_thanks_count(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_haifu_mons(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_haifu_item(const GAMEBEACON_INFO* info );
+
+static const BEACON_INFO_ERROR_CHECK_FUNC DATA_ErrorCheckFuncTbl[BEACON_WSET_MAX] = {
+  errchk_action_default,
+  errchk_action_trainer_battle,
+  errchk_action_poke_monsno,
+  errchk_action_poke_nickname,
+  errchk_action_poke_double,
+  errchk_action_itemno,
+  errchk_action_playtime,
+  errchk_action_thanks_count,
+  errchk_action_haifu_mons,
+  errchk_action_haifu_item,
+};
 
 //==============================================================================
 //
@@ -332,6 +414,52 @@ GAMEBEACON_INFO_TBL * GAMEBEACON_InfoTbl_Alloc(HEAPID heap_id)
 //==============================================================================
 //==================================================================
 /**
+ * 基本データエラーチェック 
+ * @param   info	ビーコン情報へのポインタ
+ * @retval  TRUE  エラーを検出
+ */
+//==================================================================
+BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
+{
+  //アクションNoチェック
+  if( info->action.action_no == GAMEBEACON_ACTION_NULL ||
+      info->action.action_no >= GAMEBEACON_ACTION_MAX ) {
+    return TRUE;
+  }
+  //詳細コードナンバー
+  if( info->details.details_no >= GAMEBEACON_DETAILS_NO_MAX ){
+    return TRUE;
+  }
+  //調査隊員ランク
+  if( info->research_team_rank >= RESEARCH_TEAM_RANK_MAX ){
+    return TRUE;
+  }
+  //プレイ時間
+  if( info->play_hour >= 999 || info->play_min >= 59 ){
+    return TRUE;
+  }
+  //GパワーIDチェック
+  if( info->g_power_id >= GPOWER_ID_MAX ) {
+    return TRUE;
+  }
+  //ゾーンIDチェック
+  if( info->zone_id >= ZONE_ID_MAX || info->townmap_root_zone_id >= TOWNMAP_DATA_MAX ){
+    return TRUE;
+  }
+  //すれ違い人数＆御礼カウント
+  if( info->suretigai_count > 99999 || info->thanks_recv_count > 99999 ){
+    return TRUE;
+  }
+  //アクション詳細データチェック
+  if( (DATA_ErrorCheckFuncTbl[DATA_BeaconWordsetType[ info->action.action_no ]])(info) ){
+    return TRUE;
+  }
+  return FALSE; //@todo なにがしかの条件でNPC判定をする
+}
+
+
+//==================================================================
+/**
  * NPCデータかどうかチェック 
  * @param   info	ビーコン情報へのポインタ
  * @retval  TRUE  NPCデータ(=詳細情報なし)
@@ -339,6 +467,12 @@ GAMEBEACON_INFO_TBL * GAMEBEACON_InfoTbl_Alloc(HEAPID heap_id)
 //==================================================================
 BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info)
 {
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_DISTRIBUTION_POKE:        ///<ポケモン配布中
+  case GAMEBEACON_ACTION_DISTRIBUTION_ITEM:        ///<アイテム配布中
+  case GAMEBEACON_ACTION_DISTRIBUTION_ETC:        ///<その他配布中
+    return TRUE;
+  }
   return FALSE; //@todo なにがしかの条件でNPC判定をする
 }
 
@@ -779,3 +913,158 @@ u32 GAMEBEACON_Get_Action_Hour(const GAMEBEACON_INFO *info)
   GF_ASSERT(0);
   return info->action.hour;
 }
+
+//==================================================================
+/**
+ * ビーコン情報の内容をWORDSETする
+ *
+ * @param   info		        対象のビーコン情報へのポインタ
+ * @param   wordset		
+ * @param   temp_heap_id		内部でテンポラリとして使用するヒープID
+ */
+//==================================================================
+void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id)
+{
+  u8 type;
+  STRBUF *strbuf = GFL_STR_CreateBuffer( BUFLEN_BEACON_WORDSET_TMP , temp_heap_id);
+
+  //トレーナー名展開(デフォルト)
+  GAMEBEACON_Get_PlayerNameToBuf(info, strbuf);
+  WORDSET_RegisterWord( wordset, 0, strbuf, 0, TRUE, PM_LANG);
+
+  {
+    GAMEBEACON_ACTION action = GAMEBEACON_Get_Action_ActionNo(info);
+    type = DATA_BeaconWordsetType[ action ];
+  }
+
+  switch( type ){
+  case BEACON_WSET_TRNAME:
+    WORDSET_RegisterTrainerName( wordset, 1, GAMEBEACON_Get_Action_TrNo(info) );
+    break;
+  case BEACON_WSET_MONSNAME:
+  case BEACON_WSET_POKE_W:
+    WORDSET_RegisterPokeMonsNameNo( wordset, 1,GAMEBEACON_Get_Action_Monsno(info));
+    if( type == BEACON_WSET_MONSNAME ){
+      break;
+    }
+    //ブレイクスルー
+  case BEACON_WSET_NICKNAME:
+    GAMEBEACON_Get_Action_Nickname( info, strbuf );
+    WORDSET_RegisterWord(wordset, 2, strbuf, 0, TRUE, PM_LANG);
+    break;
+  case BEACON_WSET_ITEM:
+    WORDSET_RegisterItemName( wordset, 1, GAMEBEACON_Get_Action_ItemNo(info) );
+    break;
+  case BEACON_WSET_PTIME:
+    WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_Hour(info), 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    break;
+  case BEACON_WSET_THANKS:
+    WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_ThankyouCount(info), 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    break;
+  case BEACON_WSET_HAIHU_MONS:
+    WORDSET_RegisterItemName( wordset, 1, GAMEBEACON_Get_Action_DistributionMonsno(info));
+    break;
+  case BEACON_WSET_HAIHU_ITEM:
+    WORDSET_RegisterItemName( wordset, 1, GAMEBEACON_Get_Action_DistributionItemNo(info));
+    break;
+  }
+  GFL_STR_DeleteBuffer(strbuf);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////
+/*
+ *  ローカル関数
+ */
+///////////////////////////////////////////////////////////////////////////////////
+
+//エラーチェック デフォルトタイプ
+static BOOL errchk_action_default(const GAMEBEACON_INFO* info )
+{
+  return FALSE;
+}
+//エラーチェック トレーナー対戦タイプ
+static BOOL errchk_action_trainer_battle(const GAMEBEACON_INFO* info )
+{
+  if( info->action.tr_no == TRID_NULL || info->action.tr_no >= TRID_MAX ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック ポケモン種族名チェックタイプ
+static BOOL errchk_action_poke_monsno(const GAMEBEACON_INFO* info )
+{
+  if( info->action.monsno == 0 || 
+      info->action.monsno > MONSNO_END ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック ポケモンニックネームチェックタイプ
+static BOOL errchk_action_poke_nickname(const GAMEBEACON_INFO* info )
+{
+  return FALSE;
+}
+//エラーチェック 種族名とポケモンニックネームチェックタイプ
+static BOOL errchk_action_poke_double(const GAMEBEACON_INFO* info )
+{
+  if( info->action.monsno == 0 || 
+      info->action.monsno > MONSNO_END ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック アイテムNoチェックタイプ
+static BOOL errchk_action_itemno(const GAMEBEACON_INFO* info )
+{
+  if( info->action.itemno == ITEM_DUMMY_DATA || info->action.itemno > ITEM_DATA_MAX ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック プレイタイムタイプ
+static BOOL errchk_action_playtime(const GAMEBEACON_INFO* info )
+{
+  if( info->play_hour > 999 | info->play_min > 59 ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック 御礼回数タイプ
+static BOOL errchk_action_thanks_count(const GAMEBEACON_INFO* info )
+{
+  if( info->action.thankyou_count > 99999 ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック 配布モンスター名タイプ
+static BOOL errchk_action_haifu_mons(const GAMEBEACON_INFO* info )
+{
+  if( info->action.distribution.monsno  == 0 ||
+      info->action.distribution.monsno > MONSNO_END ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック 配布アイテムタイプ
+static BOOL errchk_action_haifu_item(const GAMEBEACON_INFO* info )
+{
+  if( info->action.distribution.itemno  == ITEM_DUMMY_DATA ||
+      info->action.distribution.itemno > ITEM_DATA_MAX ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+
+
