@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T22:30:19"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T19:42:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="216" right="1996" bottom="844" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -466,20 +466,20 @@ TVトランシーバー</attribute>
 
 	<row id="msg_r04_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん！▼
+		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 ポケモンには　わざを　だすための
-げんきの　みなもとの　ＰＰ……▽
-すなわち　パワーポイントが　あります▼
+げんきの　みなもとの　ＰＰ……[BE:00:ページ切り替え（行送り）]
+すなわち　パワーポイントが　あります[BE:01:ページ切り替え（クリア）]
 この　パワーポイントが　なくなると
-わざが　だせなくなります▼
+わざが　だせなくなります[BE:01:ページ切り替え（クリア）]
 パワーポイントが　へったときも
 ポケモンセンターに　いきましょう！</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
+		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 ポケモンには　わざを　だすための
-元気の源の　ＰＰ……▽
-すなわち　パワーポイントが　あります▼
+元気の源の　ＰＰ……[BE:00:ページ切り替え（行送り）]
+すなわち　パワーポイントが　あります[BE:01:ページ切り替え（クリア）]
 この　パワーポイントが　なくなると
-わざが　だせなくなります▼
+わざが　だせなくなります[BE:01:ページ切り替え（クリア）]
 パワーポイントが　減ったときも
 ポケモンセンターに　行きましょう！</language>
 	</row>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-16T21:17:28"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T19:44:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="349" right="1995" bottom="977" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -396,16 +396,16 @@
 	<row id="msg_r06_sign3_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：掲示板</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん！▼
+		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 バッグの　たいせつなものポケットに
-しまっている　どうぐは▽
-とうろく　しておけば▼
+しまっている　どうぐは[BE:00:ページ切り替え（行送り）]
+とうろく　しておけば[BE:01:ページ切り替え（クリア）]
 Ｙボタンで　かんたんに
 えらべるように　なります！</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
+		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 バッグの　たいせつなものポケットに
-しまっている　道具は▽
-登録しておけば▼
+しまっている　道具は[BE:00:ページ切り替え（行送り）]
+登録しておけば[BE:01:ページ切り替え（クリア）]
 Ｙボタンで　簡単に
 選べるように　なります！</language>
 	</row>
