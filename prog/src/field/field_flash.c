@@ -17,6 +17,9 @@
 
 #include "field_flash.h"
 
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -429,6 +432,9 @@ static void FLASH_REQ_FadeOut( FIELD_FLASH* p_wk )
   // 
   p_wk->status = FIELD_FLASH_STATUS_FADEOUT;
   FLASH_SCALE_StartFade( &p_wk->scale, FLASH_NEAR_SCALE, FLASH_FAR_SCALE, FLASH_NEAR_ALPHA, FLASH_FAR_ALPHA, FLASH_FADE_TIME );
+
+  // フラッシュ使用音
+  PMSND_PlaySE( SEQ_SE_FLD_127 );
 }
 
 //----------------------------------------------------------------------------
