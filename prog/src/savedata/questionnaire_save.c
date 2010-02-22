@@ -99,7 +99,7 @@ QUESTIONNAIRE_SAVE_WORK * SaveData_GetQuestionnaire(SAVE_CONTROL_WORK *sv)
 
 //==================================================================
 /**
- * 回答ワークへのポインタを取得
+ * 自分の回答ワークへのポインタを取得
  *
  * @param   qsw		アンケートセーブワークへのポインタ
  *
