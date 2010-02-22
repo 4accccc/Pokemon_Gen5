@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-22T19:29:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T22:39:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="26" top="10" right="527" bottom="630" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1119" top="7" right="1592" bottom="405" visible="yes"/>
-		<band id="0" index="1" style="0000" width="493"/>
+		<tag-palette left="807" top="7" right="1280" bottom="405" visible="yes"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="326"/>
-		<band id="3" index="4" style="0000" width="493"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="369"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -366,7 +366,7 @@
 おたよりも　かずおおく　よせられている！▼
 こじんあての　ファンレターも　あるから
 きみたちにも　てわたしていこう！▼</language>
-		<language name="JPN_KANJI" width="256">いやー　お疲れさま！▼
+		<language name="JPN_KANJI" width="256">いやー　おつかれさま！▼
 ポケモンたちの　息が
 みごとなまでに　ピッタリだった！▼
 とても　完成度の　高い
@@ -394,7 +394,7 @@
 おたよりを　あずかっている！▼
 おきゃくさんの　こえだ
 じゅんばんに　わたしていこう！▼</language>
-		<language name="JPN_KANJI" width="256">うーむ　お疲れさま！▼
+		<language name="JPN_KANJI" width="256">うーむ　おつかれさま！▼
 とても　素晴らしい
 ミュージカル　だったと　思うよ！▼
 その　証拠に　ほら▼
@@ -418,7 +418,7 @@
 きみたちあてに　おたよりも　もらったよ！▼
 おきゃくさんの　こえだ
 じゅんばんに　わたしていこう！▼</language>
-		<language name="JPN_KANJI" width="256">ふーむ　お疲れさま！▼
+		<language name="JPN_KANJI" width="256">ふーむ　おつかれさま！▼
 なかなか　良い　ミュージカルだったね！▼
 舞台を　みていた　お客さんから
 君たちあてに　お便りも　もらったよ！▼
@@ -442,7 +442,7 @@
 きみたちあてに　おたよりも　もらったよ！▼
 おきゃくさんの　こえだ
 じゅんばんに　わたしていこう！▼</language>
-		<language name="JPN_KANJI" width="256">ふーむ　お疲れさま！▼
+		<language name="JPN_KANJI" width="256">ふーむ　おつかれさま！▼
 一部で　すごく　盛り上がりのある
 ミュージカル　だったようだね！▼
 舞台を　みていた　お客さんから
@@ -500,8 +500,8 @@
 いま　とても　かんどうしています！▼</language>
 		<language name="JPN_KANJI">今回の　ミュージカルは
 [1:00:トレーナー名:0]さんの　ポケモンが▼
-主役　だったと　いっても
-いい過ぎでは　ないと思います！▼
+主役だったと　いっても
+いいすぎでは　ないと思います！▼
 今　とても　感動しています！▼</language>
 	</row>
 
@@ -575,13 +575,11 @@
 		<language name="JPN">なんだか　あまり
 めだっては　いなかったけれど……▼
 ぼくは　すき　でした！
-また　かいじょうに
-あしを　はこびますね！▼</language>
+また　かいじょうに　きますね！▼</language>
 		<language name="JPN_KANJI">なんだか　あまり
 目立っては　いなかったけど……▼
 ぼくは　好きでした！
-また　会場に
-足を　運びますね！▼</language>
+また　会場に　来ますね！▼</language>
 	</row>
 
 	<row id="msg_mus_03_004_01">
