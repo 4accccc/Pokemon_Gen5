@@ -17,6 +17,8 @@
 #include "event_comm_error.h" // EVENT_FieldCommErroProc
 #include "system/net_err.h" //NetErr_ErrorSet();
 
+#include "system/ds_system.h" //DS_SYSTEM_IsAvailableWireless
+
 #include "script_def.h"
 
 //====================================================================
@@ -105,3 +107,17 @@ VMCMD_RESULT EvCmdFieldCommExitWait( VMHANDLE * core, void *wk )
   OBATA_Printf( "EvCmdFieldCommExitWait\n" );
   return VMCMD_RESULT_SUSPEND;
 }
+
+//--------------------------------------------------------------------
+/**
+ * @brief DSÇ≈í êMãñâ¬ê›íËÇ≥ÇÍÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©Çï‘Ç∑
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdAvailableWireless( VMHANDLE * core, void *wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  *ret_wk = DS_SYSTEM_IsAvailableWireless();
+  return VMCMD_RESULT_CONTINUE;
+}
+

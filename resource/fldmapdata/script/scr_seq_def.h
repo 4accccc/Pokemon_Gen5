@@ -3816,6 +3816,23 @@
   .short  \ret_work
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _GET_AVAILABLE_WIRELESS
+ * @brief 通信可能な状態かどうかの取得
+ * @param ret_work  TRUEの時、通信可能
+ *
+ * DSi本体設定での通信ON/OFF状態を取得する。DSの場合は常にTRUEとなる
+ */
+//--------------------------------------------------------------
+#define _GET_AVAILABLE_WIRELESS( ret_work ) \
+    _ASM_GET_AVAILABLE_WIRELESS ret_work
+
+  .macro  _ASM_GET_AVAILABLE_WIRELESS ret_work
+  .short  EV_SEQ_GET_AVAILABLE_WIRELESS
+  .short  \ret_work
+  .endm
+
 //======================================================================
 //  プログラム管理データの取得・セット
 //======================================================================

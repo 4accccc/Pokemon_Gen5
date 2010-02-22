@@ -561,7 +561,7 @@
   // í êMä÷òA
   DEF_CMD( EvCmdFieldCommExitWait,  EV_SEQ_FIELD_COMM_EXIT )
   DEF_CMD( EvCmdGetFieldCommNo, EV_SEQ_GET_FIELD_COMM_NO )
-  NO_CMD()
+  DEF_CMD( EvCmdAvailableWireless, EV_SEQ_GET_AVAILABLE_WIRELESS )
   NO_CMD()
 
   NO_CMD()
