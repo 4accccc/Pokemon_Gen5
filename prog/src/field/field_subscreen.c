@@ -67,6 +67,8 @@ struct _FIELD_SUBSCREEN_WORK {
   HEAPID heapID;
   FIELD_SUBSCREEN_ACTION action;
   FIELDMAP_WORK * fieldmap;
+  STARTUP_ENDCALLBACK* endCallback;
+  void* endCallbackWork;
   union { 
     FIELD_MENU_WORK *fieldMenuWork;
     C_GEAR_WORK* cgearWork;
@@ -111,6 +113,7 @@ typedef struct
 //-----------------------------------------------------------------------------
 
 static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
+static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void actioncallback_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_ACTION actionno );
@@ -242,6 +245,15 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     exit_report_subscreen,
     NULL,
   },
+  { // CGEAR起動画面
+    FIELD_SUBSCREEN_CGEARFIRST,
+    init_firstget_subscreen,
+    update_normal_subscreen,
+    NULL ,
+    NULL ,
+    exit_normal_subscreen,
+    actioncallback_normal_subscreen,
+  },
   { // デバッグライト制御パネル
     FIELD_SUBSCREEN_DEBUG_LIGHT,  
     init_light_subscreen,
@@ -268,7 +280,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     NULL ,
     exit_soundviewer_subscreen,
     NULL ,
-  }
+  },
 };
 
 //----------------------------------------------------------------------------
@@ -551,6 +563,26 @@ void FIELD_SUBSCREEN_ChangeFromWithin( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCR
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief         CGEAR起動画面用切り替え
+ * @param pWork
+ * @param pWork   サブスクリーン制御ワークへのポインタ
+ * @param mode
+ */
+//----------------------------------------------------------------------------
+void FIELD_SUBSCREEN_CgearFirst( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode,STARTUP_ENDCALLBACK* pCall,void* pWork2)
+{ 
+  GF_ASSERT(new_mode < FIELD_SUBSCREEN_MODE_MAX);
+  GF_ASSERT(funcTable[new_mode].mode == new_mode);
+
+  pWork->endCallback = pCall;
+  pWork->endCallbackWork = pWork2;
+  pWork->nextMode = FIELD_SUBSCREEN_CGearCheck(pWork,new_mode);
+  pWork->state = FSS_CHANGE_FADEOUT;
+
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -647,6 +679,27 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
     GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap))
     )), pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap));
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  CGEARの起動初期化
+ *  
+ *  @param  heapID  ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
+{
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap)));
+  // Overlay
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
+
+  pWork->cgearWork = CGEAR_FirstInit(CGEAR_SV_GetCGearSaveData(pSave),
+                                     pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap),
+                                     pWork->endCallback, pWork->endCallbackWork );
+}
+
+
 
 //----------------------------------------------------------------------------
 /**

@@ -61,6 +61,7 @@ enum _EVENT_IRCBATTLE {
   _FIELD_FADE_CLOSE,
   _CALL_GAMESYNC_MENU,
   _WAIT_GAMESYNC_MENU,
+  _NETEND,
   _FIELD_FADEOUT,
   _CALL_IRCBATTLE_MATCH,
   _WAIT_IRCBATTLE_MATCH,
@@ -125,7 +126,11 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
       *seq = _FIELD_OPEN;
     }
     break;
-
+  case _NETEND:
+    if(!GFL_NET_IsInit()){
+      *seq = _FIELD_OPEN;
+    }
+    break;
   case _FIELD_FADEOUT:
     (*seq)++;
     break;

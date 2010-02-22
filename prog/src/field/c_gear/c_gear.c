@@ -196,7 +196,10 @@ struct _C_GEAR_WORK {
 
   GFL_CLWK  *cellMove;
 
-  GFL_TCBSYS* pfade_tcbsys;
+  STARTUP_ENDCALLBACK* pCall;
+ void* pWork;
+
+     GFL_TCBSYS* pfade_tcbsys;
   GFL_TCB*                    vblank_tcb;
   void* pfade_tcbsys_wk;
   PALETTE_FADE_PTR            pfade_ptr;
@@ -1716,6 +1719,11 @@ static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
   }
   if(_IsGearBootMain(pWork)){
     _gearBootMain(pWork);	// パネル作成
+    if(pWork->pCall){
+      pWork->pCall(pWork->pWork);
+    }
+    pWork->pCall=NULL;
+    pWork->pWork=NULL;
     return;
   }
   pWork->startCounter=0;
@@ -1847,6 +1855,26 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 
   return pWork;
 }
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   起動画面スタート
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, STARTUP_ENDCALLBACK* pCall,void* pWork2 )
+{
+  C_GEAR_WORK* pWork = CGEAR_Init( pCGSV, pSub, pGameSys);
+  pWork->GetOpenTrg=TRUE;
+  pWork->pCall = pCall;
+  pWork->pWork = pWork2;
+  return pWork;
+}
+
+
 
 //------------------------------------------------------------------------------
 /**

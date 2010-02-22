@@ -24,6 +24,10 @@ extern "C"{
  *          定数宣言
 */
 //-----------------------------------------------------------------------------
+
+typedef void (STARTUP_ENDCALLBACK) (void* pWork);
+
+
 //BG面とパレット番号(仮設定
 #define FIELD_SUBSCREEN_BGPLANE (GFL_BG_FRAME0_S)
 #define FIELD_SUBSCREEN_PALLET  (0xE)
@@ -41,6 +45,7 @@ typedef enum {
   FIELD_SUBSCREEN_NOGEAR,             // Cギアの未取得時
   FIELD_SUBSCREEN_DOWSING,            // ダウジング
   FIELD_SUBSCREEN_REPORT,             // レポート画面
+  FIELD_SUBSCREEN_CGEARFIRST,         // CGEAR起動画面
 #if PM_DEBUG
   FIELD_SUBSCREEN_DEBUG_LIGHT,        // デバッグライト制御パネル
   FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA,  // デバッグカメラ
@@ -101,6 +106,7 @@ extern const BOOL FIELD_SUBSCREEN_CanChange( FIELD_SUBSCREEN_WORK* pWork );
 extern void FIELD_SUBSCREEN_Change( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode);
 extern void FIELD_SUBSCREEN_ChangeForce( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode);
 extern void FIELD_SUBSCREEN_ChangeFromWithin( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode, BOOL bFade);
+extern void FIELD_SUBSCREEN_CgearFirst( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode,STARTUP_ENDCALLBACK* pCall,void* pWork2);
 
 extern FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_GetMode(const FIELD_SUBSCREEN_WORK * pWork);
 

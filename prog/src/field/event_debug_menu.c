@@ -73,6 +73,7 @@
 //CGEAR PICTURE
 #include "c_gear.naix"
 #include "./c_gear/c_gear.h"
+#include "./c_gear/event_cgearget.h"
 #include "savedata/save_tbl.h"
 #include "savedata/c_gear_picture.h"
 
@@ -717,10 +718,15 @@ static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
 static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk )
 {
   GMEVENT *event = wk->gmEvent;
+  GMEVENT *next_event;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   GAMESYS_WORK  *gameSys  = wk->gmSys;
 
-  EVENT_WiFiClubChange(gameSys, fieldWork, event);
+//  EVENT_WiFiClubChange(gameSys, fieldWork, event);
+
+  CGEARGET_EVENT_Change(gameSys, event);
+    
+
   return( TRUE );
 }
 

@@ -167,6 +167,7 @@ GMEVENT* EVENT_WiFiClub( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 
   return event;
 }
+
 //------------------------------------------------------------------
 /*
  *  @brief  WiFiクラブイベントチェンジ
