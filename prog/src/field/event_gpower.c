@@ -30,7 +30,7 @@
 
 #include "../../../resource/fldmapdata/script/gpower_scr_def.h" //SCRID_Å`
 
-#define SE_POWER_USE  (SEQ_SE_FLD_110)
+#define SE_POWER_USE  (SEQ_SE_W295_01)
 
 typedef struct POWER_FLD_EFF{
   u8  ct;
