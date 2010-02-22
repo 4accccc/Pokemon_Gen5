@@ -4,6 +4,17 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 #001
 %00
 ポケモン拡縮	攻撃側	往復	0.2	-0.2	2	0	20
+制御モード変更	継続
+SE再生	SEQ_SE_W360_MOMOMON	SE1	0	0	70	0	0
+SEパン	SE1	追従	攻撃側	攻撃側	0	60:0:0
+SE再生	SEQ_SE_FLD_03	SE2	35	0	127	0	0
+SE再生	SEQ_SE_FLD_03	SE2	45	0	127	0	0
+SE再生	SEQ_SE_FLD_03	SE2	55	0	127	0	0
+SEパン	SE2	追従	攻撃側	攻撃側	0	60:0:0
+SE再生	SEQ_SE_FLD_69	PSG	0	-200	60	0	0
+SE再生	SEQ_SE_DUMMY5	PSG	80	0	0	0	0
+SEパン	PSG	追従	攻撃側	攻撃側	0	60:0:0
+制御モード変更	逐次
 タイマーによるウエイト	20
 カメラゆれ	縦ゆれ	1	0	1	0	16
 ポケモンアニメ	防御側	アニメストップ
