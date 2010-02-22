@@ -11,7 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "c04r0105_def.h"
   .include "../../../prog/src/field/bsubway_scr_def.h"
-  .include "bsubway_scr_def.h
+  .include "bsubway_scr_def.h"
 
 //--------------------------------------------------------------
 //              特殊スクリプト

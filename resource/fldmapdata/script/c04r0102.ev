@@ -9,7 +9,7 @@
 // .include "../../message/dst/script/msg_c04r0102.h"
   .include "c04r0102.h"
   
-  .include "bsubway_scr_def.h
+  .include "bsubway_scr_def.h"
   .include "../../../prog/src/field/bsubway_scr_def.h"
 
 //--------------------------------------------------------------
