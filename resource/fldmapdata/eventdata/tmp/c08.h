@@ -41,5 +41,6 @@
 #ifndef ZONE_C08_EVB_H
 #define ZONE_C08_EVB_H
 
+#define BG_C08_BOARD_01                   0
 
 #endif //ZONE_C08_EVB_H

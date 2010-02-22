@@ -11,6 +11,8 @@
 
 #define C04R0107_RECEIPT                   0
 #define C04R0107_PARTNER                   1
+#define C04R0107_BPSHOP_WAZA               2
+#define C04R0107_BPSHOP_ITEM               3
 
 #endif //ZONE_C04R0107_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0107.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -10,6 +10,8 @@
 #define ZONE_C04R0102_EVC_H
 
 #define C04R0102_RECEIPT                   0
+#define C04R0102_BPSHOP_WAZA               1
+#define C04R0102_BPSHOP_ITEM               2
 
 #endif //ZONE_C04R0102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

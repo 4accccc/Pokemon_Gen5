@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/13 21:30:10
+#save date:2010/02/22 17:28:18
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r1102.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -14,17 +14,30 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r1102.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Bg Event Label
+BGID_C03R1102_ELEVATOR
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_ELEVATOR_C03R11
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 232
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -34,7 +47,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r1102.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1

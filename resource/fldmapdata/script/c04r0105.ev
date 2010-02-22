@@ -19,6 +19,8 @@ _EVENT_DATA ev_c04r0105_game_continue
 _EVENT_DATA ev_c04r0105_game_cancel 
 _EVENT_DATA ev_c04r0105_game_continue_error
 _EVENT_DATA ev_c04r0105_game_after
+_EVENT_DATA ev_c04r0105_bpshop_waza
+_EVENT_DATA ev_c04r0105_bpshop_item
 _EVENT_DATA_END
 
 //======================================================================
@@ -58,4 +60,20 @@ EVENT_START ev_c04r0105_game_after
 {
   _CHG_COMMON_SCR SCRID_BSW_GAME_AFTER
 }
+EVENT_END
+
+//--------------------------------------------------------------
+//  バトルサブウェイ　BPSHOP　わざ
+//--------------------------------------------------------------
+EVENT_START ev_c04r0105_bpshop_waza
+	_TALK_OBJ_START()
+	_BP_WAZA_SHOP_CALL()
+EVENT_END
+
+//--------------------------------------------------------------
+//  バトルサブウェイ　BPSHOP　アイテム
+//--------------------------------------------------------------
+EVENT_START ev_c04r0105_bpshop_item
+	_TALK_OBJ_START()
+	_BP_ITEM_SHOP_CALL()
 EVENT_END
