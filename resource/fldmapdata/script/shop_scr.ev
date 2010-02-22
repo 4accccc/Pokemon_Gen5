@@ -63,14 +63,14 @@ sub_shop_main:
   DEFINE_LOCAL  i_loop
 
   //ÇÊÇ§Ç±Çª
-  _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_shop_01 )
+  _BALLOONWIN_OBJMSG_POS( msg_shop_01 , SCWK_TARGET_OBJID, POS_DL )
 
   $i_seq = SEQ_MENU
   $i_loop = TRUE
   WHILE $i_loop == TRUE
     SWITCH $i_seq
     CASE SEQ_MENU_CONTINUE THEN
-      _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_shop_02 ) //ÇªÇÃÇŸÇ©Ç…Ç®éËì`Ç¢Ç≈Ç´ÇÈÇ±Ç∆ÇÕÅH
+      _BALLOONWIN_OBJMSG_POS( msg_shop_02 , SCWK_TARGET_OBJID, POS_DL ) //ÇªÇÃÇŸÇ©Ç…Ç®éËì`Ç¢Ç≈Ç´ÇÈÇ±Ç∆ÇÕÅH
       $i_seq = SEQ_MENU
 
     CASE SEQ_MENU THEN
@@ -90,7 +90,7 @@ sub_shop_main:
     ENDSWITCH
   ENDWHILE
   
-  _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_shop_03 ) //Ç‹ÇΩÇ«Ç§Çº
+  _BALLOONWIN_OBJMSG_POS( msg_shop_03 , SCWK_TARGET_OBJID, POS_DL ) //Ç‹ÇΩÇ«Ç§Çº
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 }
