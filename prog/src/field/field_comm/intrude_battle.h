@@ -14,7 +14,8 @@
 typedef struct{
   GAMESYS_WORK *gsys;
   u8 target_netid;
-  u8 padding[3];
+  u8 flat_level;        ///<フラットレベル(0の場合はフリー)
+  u8 padding[2];
 }INTRUDE_BATTLE_PARENT;
 
 //==============================================================================

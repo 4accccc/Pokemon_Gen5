@@ -61,5 +61,19 @@ MISSION_STATUS MISSION_FIELD_CheckStatus(MISSION_SYSTEM *mission)
 //==================================================================
 TALK_TYPE MISSION_FIELD_GetTalkType(INTRUDE_COMM_SYS_PTR intcomm, NetID net_id)
 {
-  return intcomm->intrude_status[net_id].disguise_type;
+  switch(intcomm->intrude_status[net_id].disguise_no){
+  case DISGUISE_NO_NULL:      //•Ï‘•–³‚µ
+    {
+      GAMEDATA *gamedata = GameCommSys_GetGameData( intcomm->game_comm );
+      MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer( gamedata, net_id );
+      if(MyStatus_GetMySex(myst) == PM_MALE){
+        return TALK_TYPE_MAN;
+      }
+      return TALK_TYPE_WOMAN;
+    }
+    break;
+  case DISGUISE_NO_NORMAL:    //ƒpƒŒƒX•W€‚Ì•Ï‘•p
+  default:
+    return intcomm->intrude_status[net_id].disguise_type;
+  }
 }

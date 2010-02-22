@@ -133,6 +133,7 @@ typedef enum{
 ///同期取り番号
 enum{
     INTRUDE_TIMING_EXIT = 20,
+    INTRUDE_TIMING_MISSION_BATTLE_BEFORE,       ///<ミッションバトル開始前
     INTRUDE_TIMING_BATTLE_COMMAND_ADD_BEFORE,   ///<通信対戦のコマンドADD前
     INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER,    ///<通信対戦のコマンドADD後
 };

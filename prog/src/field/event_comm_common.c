@@ -33,6 +33,7 @@
 #include "event_mission_normal.h"
 #include "event_mission_talked.h"
 #include "event_mission_talk.h"
+#include "event_mission_battle.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -70,10 +71,10 @@ static INTRUDE_TALK_TYPE _IntrudeTalkTypeJudge(EVENT_COMM_COMMON *talk, INTRUDE_
 //==============================================================================
 ///話しかけた：イベント切り替えテーブル
 static const EVENT_COMM_FUNC EventCommFuncTalkTbl[] = {
-  NULL,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_T
+  EVENTCHANGE_CommMissionBattle_MtoT_Talk,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_T
   NULL,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_M
   NULL,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_N
-  NULL,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_M
+  EVENTCHANGE_CommMissionBattle_TtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_M
   NULL,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_N
 
   EVENTCHANGE_CommMissionTalked_MtoT_Talk,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_T
@@ -121,10 +122,10 @@ static const EVENT_COMM_FUNC EventCommFuncTalkTbl[] = {
 
 ///話しかけられた：イベント切り替えテーブル
 static const EVENT_COMM_FUNC EventCommFuncTalkedTbl[] = {
-  NULL,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_T
+  EVENTCHANGE_CommMissionBattle_TtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_T
   NULL,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_M
   NULL,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_N
-  NULL,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_M
+  EVENTCHANGE_CommMissionBattle_MtoT_Talked,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_M
   NULL,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_N
 
   EVENTCHANGE_CommMissionTalked_TtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_T
@@ -478,8 +479,8 @@ static void _EventChangeTalked(GMEVENT *event, EVENT_COMM_COMMON *talk, INTRUDE_
   else if(talk->ccew.intrude_talk_type == INTRUDE_TALK_TYPE_MISSION_N_to_T){  //共通：傍観者＞ターゲット
   }
   else if(talk->ccew.intrude_talk_type >= INTRUDE_TALK_TYPE_MISSION_OFFSET_START){
-    GF_ASSERT(EventCommFuncTalkTbl[talk->ccew.intrude_talk_type - INTRUDE_TALK_TYPE_MISSION_VICTORY_START] != NULL);
-    EventCommFuncTalkTbl[talk->ccew.intrude_talk_type - INTRUDE_TALK_TYPE_MISSION_VICTORY_START](event, temp_ccew);
+    GF_ASSERT(EventCommFuncTalkedTbl[talk->ccew.intrude_talk_type - INTRUDE_TALK_TYPE_MISSION_VICTORY_START] != NULL);
+    EventCommFuncTalkedTbl[talk->ccew.intrude_talk_type - INTRUDE_TALK_TYPE_MISSION_VICTORY_START](event, temp_ccew);
   }
   else{
     GF_ASSERT(0);
@@ -577,6 +578,7 @@ static INTRUDE_TALK_TYPE _IntrudeTalkTypeJudge(EVENT_COMM_COMMON *talk, INTRUDE_
       intrude_talk_type += INTRUDE_TALK_TYPE_MISSION_PERSONALITY_START;
       break;
     }
+    intrude_talk_type -= INTRUDE_TALK_TYPE_MISSION_OFFSET_START;
   }
   
   return intrude_talk_type;

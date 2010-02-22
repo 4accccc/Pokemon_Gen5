@@ -105,9 +105,8 @@ typedef struct{
 //--------------------------------------------------------------
 ///ミッション系統毎に異なるdataの構造体：VICTORY
 typedef struct{
-  u16 disguise_objcode;   ///<変装OBJCODE
   u16 battle_level;       ///<対戦レベル
-  u16 padding;
+  u16 padding[2];
 }MISSION_TYPEDATA_VICTORY;
 
 ///ミッション系統毎に異なるdataの構造体：SKILL
