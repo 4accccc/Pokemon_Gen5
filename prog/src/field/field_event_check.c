@@ -46,6 +46,7 @@
 #include "event_intrude_subscreen.h"
 #include "event_subscreen.h"      //EVENT_ChangeSubScreen
 #include "event_shortcut_menu.h"	//EVENT_ShortCutMenu
+#include "event_research_radar.h"  //EVENT_ResearchRadar
 
 #include "system/main.h"    //HEAPID_FIELDMAP
 #include "isdbglib.h"
@@ -2319,6 +2320,9 @@ static GMEVENT * checkSubScreenEvent(
   
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
     event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW);
+    break;
+  case FIELD_SUBSCREEN_ACTION_SCANRADAR:
+    event = EVENT_ResearchRadar( gsys, fieldWork );
     break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR:
     event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_NORMAL);

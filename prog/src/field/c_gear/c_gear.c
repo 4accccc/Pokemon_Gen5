@@ -59,6 +59,11 @@
 #define	FBMP_COL_WHITE		(15)
 
 
+#define POS_SCANRADAR_X  (40)
+#define POS_SCANRADAR_Y  (170)
+
+
+
 //-------------------------
 
 #define PANEL_Y1 (6)
@@ -138,7 +143,8 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
   {	PANEL_Y2 * 8,  PANEL_Y2 * 8 + (PANEL_SIZEXY * 8 * PANEL_HEIGHT2), 0,32*8-1 },
   { 18, 18+16, 208-16, 208+24-16 },
   { 18, 18+16, 40, 40+32 },
-  { 160, 160+24, 44, 44+16*_CLACT_CROSS_MAX },
+  { 160, 160+24, 100, 146 },
+  { (POS_SCANRADAR_Y-12), (POS_SCANRADAR_Y+12), (POS_SCANRADAR_X-16), (POS_SCANRADAR_X+16) },
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 
@@ -1069,11 +1075,12 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       break;
     case 2:
       //GAMEBEACON_Set_Congratulations();
-      OS_TPrintf("t2\n");
       break;
     case 3:
       FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW);
-      OS_TPrintf("t3\n");
+      return;
+    case 4:
+      FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_SCANRADAR);
       return;
     }
     break;
@@ -1352,8 +1359,8 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
     GFL_CLWK_DATA cellInitData;
     //セルの生成
 
-    cellInitData.pos_x = 40;
-    cellInitData.pos_y = 170;
+    cellInitData.pos_x = POS_SCANRADAR_X;
+    cellInitData.pos_y = POS_SCANRADAR_Y;
     cellInitData.anmseq = NANR_c_gear_obj_CellAnime_radar;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
