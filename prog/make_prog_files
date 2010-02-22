@@ -182,6 +182,7 @@ SRCS  +=    $(SOUNDSRC) \
         debug/debug_system_group.c \
         app/app_menu_common.c \
         app/app_taskmenu.c \
+				app/app_printsys_common.c \
         app/app_keycursor.c \
         app/bag/itemuse.c \
         field/player_volume_fader.c \
