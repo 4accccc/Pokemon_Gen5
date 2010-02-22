@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T15:28:02"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T22:16:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,7 +296,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="162"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="170" right="2001" bottom="798" maximized="no" rayout="Vertical2">
+	<dialog left="1298" top="392" right="2003" bottom="1020" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -362,23 +362,30 @@
 	<row id="msg_n01r0502_boss_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・WHITEver
-・メッセージ表示後、主人公フリームーブ</comment>
+・続けて01_01w</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『ボクが　のぞむのは
 ポケモンだけの　せかい……▼
 ポケモンは　ひとから　ときはなたれ
-ほんらいの　ちからを　とりもどす▼
-……ここまで　きたからには
+ほんらいの　ちからを　とりもどす▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『ボクが　のぞむのは
+ポケモンだけの　せかい……▼
+ポケモンは　ひとから　ときはなたれ
+ほんらいの　ちからを　とりもどす▼</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_01_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・WHITEver
+・メッセージ表示後、主人公フリームーブ</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">……ここまで　きたからには
 キミにも　あるんだろう？▼
 みせてよ
 キミの　かくごって　やつ▼
 ほら　キミが　てにいれた
 ダークストーンを　つかってさ</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ボクが　のぞむのは
-ポケモンだけの　せかい……▼
-ポケモンは　ひとから　ときはなたれ
-ほんらいの　ちからを　とりもどす▼
-……ここまで　きたからには
+		<language name="JPN_KANJI" width="256">……ここまで　きたからには
 キミにも　あるんだろう？▼
 みせてよ
 キミの　かくごって　やつ▼
@@ -389,23 +396,30 @@
 	<row id="msg_n01r0502_boss_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
-・メッセージ表示後、主人公フリームーブ</comment>
+・続けて01_01b</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『ボクが　のぞむのは
 ポケモンだけの　せかい……▼
 ポケモンは　ひとから　ときはなたれ
-ほんらいの　ちからを　とりもどす▼
-……ここまで　きたからには
+ほんらいの　ちからを　とりもどす▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『ボクが　のぞむのは
+ポケモンだけの　せかい……▼
+ポケモンは　ひとから　ときはなたれ
+ほんらいの　ちからを　とりもどす▼</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_01_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・メッセージ表示後、主人公フリームーブ</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">……ここまで　きたからには
 キミにも　あるんだろう？▼
 みせてよ
 キミの　かくごって　やつ▼
 ほら　キミが　てにいれた
 ライトストーンを　つかってさ</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ボクが　のぞむのは
-ポケモンだけの　せかい……▼
-ポケモンは　ひとから　ときはなたれ
-ほんらいの　ちからを　とりもどす▼
-……ここまで　きたからには
+		<language name="JPN_KANJI" width="256">……ここまで　きたからには
 キミにも　あるんだろう？▼
 みせてよ
 キミの　かくごって　やつ▼
@@ -505,21 +519,27 @@
 		<comment>♂
 ・WHITEver
 ・主人公を向いてメッセージ表示
-・続けてboss_05w</comment>
+・続けて04_01w</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">……だけど　ちがった
 いま　すごく　ガッカリしているよ▼
 ボクと　おなじ　そんざい……
-えいゆうには　なれなかったんだね▼
-キミに　できることは　２つ！▼
-かちめのない　たたかいを　いどむか▼
-それとも　ここを　たちさり
-かわりゆく　せかいを　みまもるか▼</language>
+えいゆうには　なれなかったんだね▼</language>
 		<language name="JPN_KANJI" width="256">……だけど　ちがった
 いま　すごく　ガッカリしているよ▼
 ボクと　おなじ　そんざい……
-えいゆうには　なれなかったんだね▼
-キミに　できることは　２つ！▼
+えいゆうには　なれなかったんだね▼</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_04_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・WHITEver
+・続けてboss_05w</comment>
+		<language name="JPN" width="256">キミに　できることは　２つ！▼
+かちめのない　たたかいを　いどむか▼
+それとも　ここを　たちさり
+かわりゆく　せかいを　みまもるか▼</language>
+		<language name="JPN_KANJI" width="256">キミに　できることは　２つ！▼
 かちめのない　たたかいを　いどむか▼
 それとも　ここを　たちさり
 かわりゆく　せかいを　みまもるか▼</language>
@@ -529,21 +549,27 @@
 		<comment>♂
 ・BLACKver
 ・主人公を向いてメッセージ表示
-・続けてboss_05b</comment>
+・続けて04_01b</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">……だけど　ちがった
 いま　すごく　ガッカリしているよ▼
 ボクと　おなじ　そんざい……
-えいゆうには　なれなかったんだね▼
-キミに　できることは　２つ！▼
-かちめのない　たたかいを　いどむか▼
-それとも　ここを　たちさり
-かわりゆく　せかいを　みまもるか▼</language>
+えいゆうには　なれなかったんだね▼</language>
 		<language name="JPN_KANJI" width="256">……だけど　ちがった
 いま　すごく　ガッカリしているよ▼
 ボクと　おなじ　そんざい……
-えいゆうには　なれなかったんだね▼
-キミに　できることは　２つ！▼
+えいゆうには　なれなかったんだね▼</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_04_01b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・続けてboss_05b</comment>
+		<language name="JPN" width="256">キミに　できることは　２つ！▼
+かちめのない　たたかいを　いどむか▼
+それとも　ここを　たちさり
+かわりゆく　せかいを　みまもるか▼</language>
+		<language name="JPN_KANJI" width="256">キミに　できることは　２つ！▼
 かちめのない　たたかいを　いどむか▼
 それとも　ここを　たちさり
 かわりゆく　せかいを　みまもるか▼</language>
@@ -904,8 +930,7 @@
 	<row id="msg_n01r0502_boss_12w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・WHITEver
-・メッセージ表示後、カットイン終了
-・続けてmsg_n01r0502_sage1_01</comment>
+・続けてboss_12_01w</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『ムと　シン……▼
 ２ひきが　それぞれ　ことなる
@@ -914,15 +939,7 @@
 おなじじだいに　ふたりのえいゆう
 りそうを　もとめる　もの▽
 しんじつを　もとめる　もの▽
-ともに　ただしいと　いうのか？▼
-……わからない▼
-ことなる　かんがえを
-ひてい　するのではなく▼
-ことなる　かんがえを
-うけいれることで▽
-せかいは　かがくはんのうを　おこす▼
-これこそが……
-せかいを　かえるための　すうしき……▼</language>
+ともに　ただしいと　いうのか？▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『ムと　シン……▼
 ２ひきが　それぞれ　ことなる
 えいゆうを　えらんだ……▽
@@ -930,8 +947,24 @@
 おなじじだいに　ふたりのえいゆう
 りそうを　もとめる　もの▽
 しんじつを　もとめる　もの▽
-ともに　ただしいと　いうのか？▼
-……わからない▼
+ともに　ただしいと　いうのか？▼</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_12_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・WHITEver
+・メッセージ表示後、カットイン終了
+・続けてmsg_n01r0502_sage1_01</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">……わからない▼
+ことなる　かんがえを
+ひてい　するのではなく▼
+ことなる　かんがえを
+うけいれることで▽
+せかいは　かがくはんのうを　おこす▼
+これこそが……
+せかいを　かえるための　すうしき……▼</language>
+		<language name="JPN_KANJI" width="256">……わからない▼
 ことなる　かんがえを
 ひてい　するのではなく▼
 ことなる　かんがえを
@@ -944,8 +977,7 @@
 	<row id="msg_n01r0502_boss_12b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
-・メッセージ表示後、カットイン終了
-・続けてmsg_n01r0502_sage1_01</comment>
+・続けてboss_12_01b</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『シンと　ム……▼
 ２ひきが　それぞれ　ことなる
@@ -954,15 +986,7 @@
 おなじじだいに　ふたりのえいゆう
 りそうを　もとめる　もの▽
 しんじつを　もとめる　もの▽
-ともに　ただしいと　いうのか？▼
-……わからない▼
-ことなる　かんがえを
-ひてい　するのではなく▼
-ことなる　かんがえを
-うけいれることで▽
-せかいは　かがくはんのうを　おこす▼
-これこそが……
-せかいを　かえるための　すうしき……▼</language>
+ともに　ただしいと　いうのか？▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『シンと　ム……▼
 ２ひきが　それぞれ　ことなる
 えいゆうを　えらんだ……▽
@@ -970,8 +994,24 @@
 おなじじだいに　ふたりのえいゆう
 りそうを　もとめる　もの▽
 しんじつを　もとめる　もの▽
-ともに　ただしいと　いうのか？▼
-……わからない▼
+ともに　ただしいと　いうのか？▼</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_12_01b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・メッセージ表示後、カットイン終了
+・続けてmsg_n01r0502_sage1_01</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">……わからない▼
+ことなる　かんがえを
+ひてい　するのではなく▼
+ことなる　かんがえを
+うけいれることで▽
+せかいは　かがくはんのうを　おこす▼
+これこそが……
+せかいを　かえるための　すうしき……▼</language>
+		<language name="JPN_KANJI" width="256">……わからない▼
 ことなる　かんがえを
 ひてい　するのではなく▼
 ことなる　かんがえを
