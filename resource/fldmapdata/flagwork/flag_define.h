@@ -187,12 +187,12 @@
 #define FE_C09R0501_CHAMPION               171 /* 0x00ab チャンピオンリーグ：アデク初回会話フラグ */
 #define FE_MEZAPA_FIRSTTALK                172 /* 0x00ac めざめるパワーのタイプチェックする人の初回会話フラグ */
 #define FE_T01R0102_SUPPORTBTL             173 /* 0x00ad 自宅２Ｆサポートとの戦闘終了フラグ */
-		/* not used   174(0x00ae) */
-		/* not used   175(0x00af) */
-		/* not used   176(0x00b0) */
-		/* not used   177(0x00b1) */
-		/* not used   178(0x00b2) */
-		/* not used   179(0x00b3) */
+#define FE_HYOUKA_ITEMGET_01               174 /* 0x00ae 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび１ */
+#define FE_HYOUKA_ITEMGET_02               175 /* 0x00af 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび２ */
+#define FE_HYOUKA_ITEMGET_03               176 /* 0x00b0 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび３ */
+#define FE_HYOUKA_ITEMGET_04               177 /* 0x00b1 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび４ */
+#define FE_HYOUKA_ITEMGET_05               178 /* 0x00b2 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび５ */
+#define FE_HYOUKA_ITEMGET_06               179 /* 0x00b3 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび６ */
 		/* not used   180(0x00b4) */
 		/* not used   181(0x00b5) */
 		/* not used   182(0x00b6) */
