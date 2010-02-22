@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T11:11:51"/>
+	<create user="matsumiya" host="W00224" date="2010-02-22T20:23:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1691" top="317" right="2396" bottom="937" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1205,13 +1205,13 @@
 		<language name="JPN_KANJI" width="256">◇遺跡が見つかったため　工事は中止になりました</language>
 	</row>
 
-	<row id="msg_gate_d3_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_gate_d3_06" back-color="#80ff80,,,#80ff80,,#ff8080,#80ff80,,,#80ff80,,#ff8080,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報6</comment>
 		<language name="JPN" width="256">◇さばくではかせきが　しゅつどすることがあります</language>
 		<language name="JPN_KANJI" width="256">◇砂漠では化石が　出土することがあります</language>
 	</row>
 
-	<row id="msg_gate_d3_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_gate_d3_07" back-color="#80ff80,,,#80ff80,,#ff8080,#80ff80,,,#80ff80,,#ff8080,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報7</comment>
 		<language name="JPN" width="256">◇いせきにはこだいのゴーストが　すみついています</language>
 		<language name="JPN_KANJI" width="256">◇遺跡には古代のゴーストが　住み着いています</language>
@@ -1477,12 +1477,12 @@
 
 	<row id="msg_gate_arare">
 		<language name="JPN" width="256">あられ</language>
-		<language name="JPN_KANJI" width="256">雪あられ</language>
+		<language name="JPN_KANJI" width="256">あられ</language>
 	</row>
 
 	<row id="msg_gate_mirage">
 		<language name="JPN" width="256">しんきろう</language>
-		<language name="JPN_KANJI" width="256">蜃気楼</language>
+		<language name="JPN_KANJI" width="256">しんきろう</language>
 	</row>
 
 	<row id="msg_gate_weather">
