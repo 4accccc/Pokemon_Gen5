@@ -533,6 +533,7 @@ end
 
 		trno += 1
 	}
+	fp_trno.printf( "#define TRID_MAX  ( %d )\n", trno )
 	fp_trno.print( "\n" )
 	fp_trno.print( "#ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹\n" )
 	fp_trno.print( "typedef  int TrainerID;\n" )
