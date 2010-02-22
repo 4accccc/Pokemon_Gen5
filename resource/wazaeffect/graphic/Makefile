@@ -75,7 +75,7 @@ nclr: $(notdir $(WAZAEFFNCL:.ncl=.NCLR))
 %.NCLR: %.ncl
 	g2dcvtr $< -pcm -o/./
 
-$(NARCNAME): $(notdir $(WAZAEFFNCE:.nce=.NCER)) $(notdir $(WAZAEFFNCG:.ncg=.NCGR)) $(notdir $(WAZAEFFNSC:.nsc=.NSCR)) $(notdir $(WAZAEFFNCL:.ncl=.NCLR))
+$(NARCNAME): $(notdir $(WAZAEFFNCE:.nce=.NCER)) $(notdir $(WAZAEFFNCG:.ncg=.NCGR)) $(notdir $(WAZAEFFNSC:.nsc=.NSCR)) $(notdir $(WAZAEFFNCL:.ncl=.NCLR)) waza_eff_gra.scr
 	nnsarc -c -l -n -i $(NARCNAME) -S waza_eff_gra.scr
 	$(NAIXCUT) $(NAIXNAME)
 	../../../tools/etd.exe $(NAIXNAME)

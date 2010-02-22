@@ -34,7 +34,6 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ポケモン影バニッシュ	POS_E	バニッシュオン
 ラベル	NO_EXIST_E_1
 制御モード変更	逐次
-パーティクルデータロード	be_ball_001_1
 パーティクルデータロード	w_157
 トレーナーアニメセット	POS_AA	1
 タイマーによるウエイト	20
@@ -82,6 +81,8 @@ SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 制御モード変更	継続
 SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_AA	いない	NO_EXIST_AA_3
+ボールモード	捕獲ボールAA
+パーティクルデータロード	be_ball_001_1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_AA	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_AA	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_AA	方向無し	4:0:0	1:1:1	1
@@ -90,6 +91,8 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 ポケモン鳴き声	POS_AA
 ラベル	NO_EXIST_AA_3
 立ち位置チェック	POS_A	いない	NO_EXIST_A_3
+ボールモード	捕獲ボールA
+パーティクルデータロード	be_ball_001_1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_A	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_A	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_A	方向無し	4:0:0	1:1:1	1
@@ -98,6 +101,8 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 ポケモン鳴き声	POS_A
 ラベル	NO_EXIST_A_3
 立ち位置チェック	POS_C	いない	NO_EXIST_C_3
+ボールモード	捕獲ボールC
+パーティクルデータロード	be_ball_001_1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_C	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_C	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_C	方向無し	4:0:0	1:1:1	1
@@ -106,6 +111,8 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 ポケモン鳴き声	POS_C
 ラベル	NO_EXIST_C_3
 立ち位置チェック	POS_E	いない	NO_EXIST_E_3
+ボールモード	捕獲ボールE
+パーティクルデータロード	be_ball_001_1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	POS_E	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	POS_E	方向無し	4:0:0	1:1:1	1
 パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	POS_E	方向無し	4:0:0	1:1:1	1
