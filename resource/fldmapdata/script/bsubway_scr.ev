@@ -38,14 +38,18 @@ _EVENT_DATA_END
 INIT_EVENT_START ev_init_bsw_receipt
 {
   DEFINE_LOCAL play_mode
+  DEFINE_LOCAL objid
   
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_RECEIPT, BSW_NULL )
   
-  //続きからでAIマルチの際はパートナーOBJ追加
-  IF $WK_OTHER_BSUBWAY_RECEIPT == BSWAY_SCENE_RECEIPT_CONTINUE THEN
-    _NOP
-  ENDIF
+  SWITCH $WK_OTHER_BSUBWAY_RECEIPT
+  CASE BSWAY_SCENE_RECEIPT_CANCEL THEN    //キャンセル
+    //デモ用に自機バニッシュ
+  CASE BSWAY_SCENE_RECEIPT_AFTER THEN     //ゲーム後
+    //デモ用に自機バニッシュ
+  CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
+  ENDSWITCH
 }
 INIT_EVENT_END
 
@@ -54,10 +58,37 @@ INIT_EVENT_END
 //--------------------------------------------------------------
 INIT_EVENT_START ev_recover_bsw_receipt
 {
+  DEFINE_LOCAL objid
   DEFINE_LOCAL play_mode
   
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_RECEIPT, BSW_NULL )
+  
+  SWITCH $WK_OTHER_BSUBWAY_RECEIPT
+  CASE BSWAY_SCENE_RECEIPT_CONTINUE THEN //コンティニュー
+    _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+    
+    //AIマルチならばパートナー追加
+    IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+      //セーブデータ有効チェック
+      _BSUBWAY_TOOL( BSWTOOL_IS_SAVE_DATA_ENABLE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+      
+      //セーブデータ有効ならばパートナー追加
+      IF $SCWK_ANSWER == TRUE THEN
+        _CALL sub_receipt_common_add_partner
+        
+        _CALL sub_receipt_common_get_objid_partner
+        $objid = $SCWK_ANSWER
+        
+        //自機の隣に
+        _OBJ_POS_CHANGE( objid, 10, 0, 5, DIR_RIGHT )
+      ELSE //エラー
+        _CALL sub_receipt_common_del_partner //パートナーOBJ削除
+      ENDIF
+    ENDIF
+  CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
+    _CALL sub_receipt_common_del_partner  //パートナーOBJ削除
+  ENDSWITCH
 }
 INIT_EVENT_END
 
@@ -275,15 +306,11 @@ sub_receipt_challenge_single_double:
   //乗車メッセージ
   _CALL sub_receipt_msg_geton_train
   
-  //乗車アニメ
-  _CALL sub_receipt_anm_geton_train
-  
-  //電車移動
+  //デモ　出発
   _CALL sub_receipt_demo_start_train
   
   //マップ遷移
   _CALL sub_receipt_common_map_change_train
-  
 }
 _RET
 
@@ -373,7 +400,7 @@ sub_receipt_challenge_multi_ai:
     _SYSWIN_MSG( msg_bsw_scr_72 , WIN_DOWN ) //さよなら
     _AB_KEYWAIT()
     //サポート退場、終了
-    _CALL sub_receipt_anm_partner_out
+    _CALL sub_receipt_anm_return_partner
     _CALL sub_receipt_common_exit
     _RET
   ENDSWITCH
@@ -382,19 +409,18 @@ sub_receipt_challenge_multi_ai:
   
   //トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
-
+  
+  //自機振り向き
+  _CALL sub_receipt_anm_jiki_turn_receipt
+  
   //乗車メッセージ
   _CALL sub_receipt_msg_geton_train
   
-  //乗車アニメ
-  _CALL sub_receipt_anm_geton_train
-  
-  //電車移動
+  //デモ　出発
   _CALL sub_receipt_demo_start_train
   
   //マップ遷移
   _CALL sub_receipt_common_map_change_train
-  
 }
 _RET
 
@@ -532,15 +558,11 @@ sub_receipt_challenge_multi_comm:
   //通信同期待ち
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_AUTO_SAVE, BSW_NULL, BSW_NULL )
   
-  //乗車アニメ
-  _CALL sub_receipt_anm_geton_train
-  
-  //電車移動
+  //デモ　出発
   _CALL sub_receipt_demo_start_train
   
   //マップ遷移
   _CALL sub_receipt_common_map_change_train
-  
 }
 _RET
 
@@ -579,7 +601,6 @@ sub_receipt_challenge_multi_comm_connect_group:
   CASE BSWAY_COMM_CHILD_ENTRY_NG THEN //NG
     $SCWK_ANSWER = FALSE
   ENDSWITCH
-  
 }
 _RET
 
@@ -622,15 +643,11 @@ sub_receipt_challenge_wifi:
   
   _CALL sub_receipt_msg_geton_train
   
-  //乗車アニメ
-  _CALL sub_receipt_anm_geton_train
-  
-  //電車移動
+  //デモ　出発
   _CALL sub_receipt_demo_start_train
   
   //マップ遷移
   _CALL sub_receipt_common_map_change_train
-
 }
 _RET
 
@@ -642,6 +659,9 @@ _RET
 //--------------------------------------------------------------
 ev_bsw_game_continue:
 {
+  DEFINE_LOCAL ai_multi
+  DEFINE_LOCAL play_mode
+  
   //ステートクリア
   _CALL sub_receipt_flag_clear
   
@@ -688,10 +708,7 @@ ev_bsw_game_continue:
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   
-  //乗車アニメ
-  _CALL sub_receipt_anm_geton_train
-   
-  //電車移動デモ
+  //デモ　出発
   _CALL sub_receipt_demo_start_train
   
   //マップチェンジ
@@ -727,12 +744,21 @@ _END
 //--------------------------------------------------------------
 ev_bsw_game_cancel:
 {
-  //マップフェード
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
-
+  DEFINE_LOCAL play_mode
+  
+  //電車到着デモ
+  _CALL sub_receipt_demo_arrival_train
+  
   //フラグクリア
   _CALL sub_receipt_flag_clear
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //AIマルチならばパートナー去る
+  IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+    _CALL sub_receipt_anm_return_partner
+  ENDIF
   
   //成績をレポートに
   _SYSWIN_MSG( msg_bsw_scr_36 , WIN_DOWN )
@@ -753,9 +779,21 @@ _END
 //--------------------------------------------------------------
 ev_bsw_game_after:
 {
-  //マップフェード
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
+  DEFINE_LOCAL play_mode
+  
+  //電車到着デモ
+  _CALL sub_receipt_demo_arrival_train
+  
+  //フラグクリア
+  _CALL sub_receipt_flag_clear
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //AIマルチならばパートナー去る
+  IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+    _CALL sub_receipt_anm_return_partner
+  ENDIF
   
   //お疲れ様でした
   _SYSWIN_MSG( msg_bsw_scr_35 , WIN_DOWN )
@@ -961,86 +999,6 @@ _RET
 //  受付　アニメ、デモ
 //=====================================================================
 //--------------------------------------------------------------
-//  受付  アニメ　乗車
-//--------------------------------------------------------------
-sub_receipt_anm_geton_train:
-{
-  DEFINE_LOCAL play_mode
-  DEFINE_LOCAL objid_receipt
-  DEFINE_LOCAL objid_partner
-  
-  //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  
-  _CALL sub_receipt_common_get_objid_receipt
-  $objid_receipt = $SCWK_ANSWER
-  
-  _CALL sub_receipt_common_get_objid_partner
-  $objid_partner = $SCWK_ANSWER
-   
-  SWITCH $play_mode
-  CASE BSWAY_MODE_SINGLE THEN
-    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
-  CASE BSWAY_MODE_S_SINGLE THEN
-    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
-  CASE BSWAY_MODE_DOUBLE THEN
-    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
-  CASE BSWAY_MODE_S_DOUBLE THEN
-    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
-  CASE BSWAY_MODE_MULTI THEN
-    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
-    _OBJ_ANIME( objid_partner, anm_receipt_geton_partner )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
-  CASE BSWAY_MODE_S_MULTI THEN
-    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
-    _OBJ_ANIME( objid_partner, anm_receipt_geton_partner )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
-  CASE BSWAY_MODE_COMM_MULTI THEN
-    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
-  CASE BSWAY_MODE_S_COMM_MULTI THEN
-    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
-  CASE BSWAY_MODE_WIFI THEN
-    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
-  ENDSWITCH
-
-  _OBJ_ANIME_WAIT()
-}
-_RET
-
-//アニメデータ　乗車　受付
-_ANIME_LABEL anm_receipt_geton_receipt
-  _ANIME_DATA AC_WALK_R_8F,2
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_WALK_R_8F,1
-  _ANIME_DATA AC_STAY_WALK_L_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//アニメデータ　乗車　自機
-_ANIME_LABEL anm_receipt_geton_jiki
-  _ANIME_DATA AC_WALK_R_8F,3
-  _ANIME_DATA AC_WALK_U_8F,2
-  _ANIME_DATA AC_WAIT_1F,4
-  _ANIME_DATA AC_VANISH_ON,1
-  _ANIME_DATA ACMD_END,0
-
-//アニメデータ　乗車　パートナー
-_ANIME_LABEL anm_receipt_geton_partner
-  _ANIME_DATA AC_WALK_R_8F,4
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_WAIT_1F,4
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_WAIT_1F,4
-  _ANIME_DATA AC_VANISH_ON,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------
 //  受付　アニメ　パートナー登場
 //--------------------------------------------------------------
 sub_receipt_anm_partner_in:
@@ -1053,6 +1011,7 @@ sub_receipt_anm_partner_in:
   
   //サポート追加
   _CALL sub_receipt_common_add_partner
+  
   //場所変更
   _OBJ_POS_CHANGE( objid, 2, 1, 12, DIR_RIGHT )
   
@@ -1060,7 +1019,8 @@ sub_receipt_anm_partner_in:
   _OBJ_ANIME( objid, anm_receipt_partner_in_partner )
   _OBJ_ANIME_WAIT()
   
-  //自機振り向く
+  //自機振り向き
+  _CALL sub_receipt_anm_jiki_turn_partner
   
   //初遭遇か？
   _BSUBWAY_TOOL( BSWTOOL_GET_SUPPORT_ENCOUNT_END, BSW_NULL, BSW_NULL, SCWK_ANSWER )
@@ -1086,7 +1046,7 @@ _ANIME_LABEL anm_receipt_partner_in_partner
 //--------------------------------------------------------------
 //  受付　アニメ　パートナー退場
 //--------------------------------------------------------------
-sub_receipt_anm_partner_out:
+sub_receipt_anm_return_partner:
 {
   DEFINE_LOCAL objid
   
@@ -1095,18 +1055,19 @@ sub_receipt_anm_partner_out:
   $objid = $SCWK_ANSWER
   
   //パートナー退場
-  _OBJ_ANIME( objid, anm_receipt_partner_out_partner )
+  _OBJ_ANIME( objid, anm_receipt_return_partner )
   _OBJ_ANIME_WAIT()
   
   //自機受付に向く
-
+  _CALL sub_receipt_anm_jiki_turn_receipt
+  
   //サポート削除
   _CALL sub_receipt_common_del_partner
 }
 _RET
 
 //アニメデータ　パートナー登場　パートナー
-_ANIME_LABEL anm_receipt_partner_out_partner
+_ANIME_LABEL anm_receipt_return_partner
   _ANIME_DATA AC_WALK_L_8F,2
   _ANIME_DATA AC_WALK_U_8F,3
   _ANIME_DATA AC_WALK_L_8F,6
@@ -1114,14 +1075,226 @@ _ANIME_LABEL anm_receipt_partner_out_partner
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------
+//  受付　アニメ　自機受付へ振り向く
+//--------------------------------------------------------------
+sub_receipt_anm_jiki_turn_receipt:
+{
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_jiki_turn_receipt )
+  _OBJ_ANIME_WAIT()
+}
+_RET
+
+//アニメデータ　自機受付振り向き
+_ANIME_LABEL anm_receipt_jiki_turn_receipt
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------
+//  受付　アニメ　パートナーに向く
+//--------------------------------------------------------------
+sub_receipt_anm_jiki_turn_partner:
+{
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_jiki_turn_partner )
+  _OBJ_ANIME_WAIT()
+}
+_RET
+
+//アニメデータ　自機パートナー振り向き
+_ANIME_LABEL anm_receipt_jiki_turn_partner
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//=====================================================================
+//  受付　デモ
+//=====================================================================
+//--------------------------------------------------------------
 //  受付  デモ　電車移動
 //--------------------------------------------------------------
 sub_receipt_demo_start_train:
 {
+  DEFINE_LOCAL play_mode
+  DEFINE_LOCAL objid_receipt
+  DEFINE_LOCAL objid_partner
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+
+  //OBJ ID取得
+  _CALL sub_receipt_common_get_objid_receipt
+  $objid_receipt = $SCWK_ANSWER
+  
+  _CALL sub_receipt_common_get_objid_partner
+  $objid_partner = $SCWK_ANSWER
+  
+  //自機高さを固定化
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, MMDL_ID_PLAYER, 0, BSW_NULL )
+  
+  //電車へ移動
+  SWITCH $play_mode
+  CASE BSWAY_MODE_SINGLE THEN
+    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  CASE BSWAY_MODE_S_SINGLE THEN
+    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  CASE BSWAY_MODE_DOUBLE THEN
+    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  CASE BSWAY_MODE_S_DOUBLE THEN
+    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  CASE BSWAY_MODE_MULTI THEN
+    //パートナー高さを固定化
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, objid_partner, 0, BSW_NULL )
+    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
+    _OBJ_ANIME( objid_partner, anm_receipt_geton_partner )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  CASE BSWAY_MODE_S_MULTI THEN
+    //パートナー高さを固定化
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, objid_partner, 0, BSW_NULL )
+    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
+    _OBJ_ANIME( objid_partner, anm_receipt_geton_partner )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  CASE BSWAY_MODE_COMM_MULTI THEN
+    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  CASE BSWAY_MODE_S_COMM_MULTI THEN
+    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  CASE BSWAY_MODE_WIFI THEN
+    _OBJ_ANIME( objid_receipt, anm_receipt_geton_receipt )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  ENDSWITCH
+  
+  //OBJアニメ待ち
+  _OBJ_ANIME_WAIT()
+  
+  //電車移動
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_HOME, BSW_NULL, BSW_NULL )
   _TIME_WAIT( 24 ) //アニメを少し見せてフェードアウト
 }
 _RET
+
+//アニメデータ　乗車　受付
+_ANIME_LABEL anm_receipt_geton_receipt
+  _ANIME_DATA AC_WALK_R_8F,4
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//アニメデータ　乗車　自機
+_ANIME_LABEL anm_receipt_geton_jiki
+  _ANIME_DATA AC_WALK_R_8F,5
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA AC_WAIT_1F,4
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
+
+//アニメデータ　乗車　パートナー
+_ANIME_LABEL anm_receipt_geton_partner
+  _ANIME_DATA AC_WALK_R_8F,6
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WAIT_1F,4
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WAIT_1F,4
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------
+//  受付  デモ　電車到着
+//--------------------------------------------------------------
+sub_receipt_demo_arrival_train:
+{
+  DEFINE_LOCAL ai_multi
+  DEFINE_LOCAL play_mode
+  DEFINE_LOCAL objid_receipt
+  DEFINE_LOCAL objid_partner
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //OBJ ID取得
+  _CALL sub_receipt_common_get_objid_receipt
+  $objid_receipt = $SCWK_ANSWER
+  
+  _CALL sub_receipt_common_get_objid_partner
+  $objid_partner = $SCWK_ANSWER
+  
+  //AIマルチチェック
+  IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+    $ai_multi = TRUE
+  ELSE
+    $ai_multi = FALSE
+  ENDIF
+
+  //自機高さを固定化
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, MMDL_ID_PLAYER, 0, BSW_NULL )
+  
+  //自機座標を入り口に
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 13, DIR_DOWN )
+  
+  //自機非表示
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_VANISH, MMDL_ID_PLAYER, TRUE, BSW_NULL )
+  
+  //パートナー登場
+  IF $ai_multi == TRUE THEN
+    _CALL sub_receipt_common_add_partner
+    _OBJ_POS_CHANGE( objid_partner, 16, 0, 13, DIR_DOWN )
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_VANISH, objid_partner, TRUE, BSW_NULL )
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, objid_partner, 0, BSW_NULL )
+  ENDIF
+  
+  //受付を電車出口に
+//  _OBJ_POS_CHANGE( $objid_receipt, 15, 0, 15, DIR_RIGHT )
+  
+  //マップフェードイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+  //電車アニメ
+  _TIME_WAIT( 30 ) //仮
+  
+  //自機移動アニメ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_demo_arrival_train_getdown_jiki )
+  
+  //パートナーアニメ
+  IF $ai_multi == TRUE THEN
+    _OBJ_ANIME( objid_partner, anm_demo_arrival_train_getdown_partner )
+  ENDIF
+  
+  //OBJアニメ待ち
+  _OBJ_ANIME_WAIT()
+  
+  //自機高さを戻す
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, MMDL_ID_PLAYER, 0, BSW_NULL )
+  
+  //パートナー高さ戻す
+  IF $ai_multi == TRUE THEN
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, objid_partner, 0, BSW_NULL )
+  ENDIF
+}
+_RET
+
+//アニメデータ　到着　自機
+_ANIME_LABEL anm_demo_arrival_train_getdown_jiki
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_1F,4
+  _ANIME_DATA AC_WALK_D_8F,3
+  _ANIME_DATA AC_WALK_L_8F,5
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//アニメデータ　到着　パートナー
+_ANIME_LABEL anm_demo_arrival_train_getdown_partner
+  _ANIME_DATA AC_WAIT_1F,14
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WALK_D_8F,3
+  _ANIME_DATA AC_WALK_L_8F,6
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //=====================================================================
 //  受付　共通処理
@@ -1146,7 +1319,7 @@ _RET
 //  受付　通信切断して終了処理
 //--------------------------------------------------------------
 sub_receipt_common_comm_exit:
-{ 
+{
   DEFINE_LOCAL comm_flag
   
   _BSUBWAY_TOOL( BSWSUB_GET_COMM_FLAG, BSW_NULL, BSW_NULL, comm_flag )
@@ -1168,7 +1341,7 @@ _RET
 sub_receipt_common_report_error:
 {
   //お客様！
-  _SYSWIN_MSG( msg_bsw_scr_37 , WIN_DOWN )
+  _SYSWIN_MSG( msg_bsw_scr_37, WIN_DOWN )
   _AB_KEYWAIT()
   
   //不正終了時のパラメータ処理
@@ -1338,14 +1511,20 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_common_add_partner:
 {
+  DEFINE_LOCAL ret
   DEFINE_LOCAL objid
   
   _CALL sub_receipt_common_get_objid_partner
   $objid = $SCWK_ANSWER
-  $OBJCHRWORK0 = SUPPORT
   
   _FLAG_RESET( FV_BSUBWAY_RECEIPT_PARTNER )
-  _OBJ_ADD( objid )
+  
+  _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_OBJ, objid, BSW_NULL, ret )
+  
+  IF $ret == FALSE THEN
+    $OBJCHRWORK0 = SUPPORT
+    _OBJ_ADD( objid )
+  ENDIF
 }
 _RET
 
@@ -1354,13 +1533,19 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_common_del_partner:
 {
+  DEFINE_LOCAL ret
   DEFINE_LOCAL objid
   
   _CALL sub_receipt_common_get_objid_partner
   $objid = $SCWK_ANSWER
-  
-  _OBJ_DEL( objid )
+
   _FLAG_SET( FV_BSUBWAY_RECEIPT_PARTNER )
+  
+  _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_OBJ, objid, BSW_NULL, ret )
+  
+  IF $ret == TRUE THEN
+    _OBJ_DEL( objid )
+  ENDIF
 }
 _RET
 

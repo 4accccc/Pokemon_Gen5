@@ -31,8 +31,8 @@ _EVENT_DATA_END
 INIT_EVENT_START ev_init_c04r0111_home
 {
   DEFINE_LOCAL play_mode
+  
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_HOME, BSW_NULL )
   
   //受付座標を変更
   _OBJ_POS_CHANGE( C04R0111_RECEIPT1, 17, 0, 13, DIR_RIGHT )
@@ -40,10 +40,6 @@ INIT_EVENT_START ev_init_c04r0111_home
   
   //ゲームクリア直後
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_GAME_CLEAR THEN
-    //デモ用初期化　自機非表示
-    _BSUBWAY_TOOL( BSWTOOL_PLAYER_VANISH, TRUE, BSW_NULL, BSW_NULL )
-    //自機高さを固定化
-    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, MMDL_ID_PLAYER, 0, BSW_NULL )
     //周回に合わせてNPC追加
     _BSUBWAY_TOOL( BSWSUB_SET_HOME_OBJ, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
@@ -57,14 +53,13 @@ INIT_EVENT_START ev_recover_c04r0111_home
 {
   DEFINE_LOCAL play_mode
   
-  _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
-  
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_HOME, BSW_NULL )
+  
+  _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
   
   //コンテニュー復帰　ワーク作成
   IF $SCWK_ANSWER == TRUE THEN
-    IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_TERMINUS || $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
+    IF $WK_OTHER_BSUBWAY_HOME != BSWAY_SCENE_HOME_NON THEN
       _BSUBWAY_WORK_CREATE( BSWAY_PLAY_CONTINUE, play_mode )
       
       //通信マルチの場合は終点にする
@@ -72,6 +67,14 @@ INIT_EVENT_START ev_recover_c04r0111_home
         $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
       ENDIF
     ENDIF
+  ENDIF
+  
+  //電車セット
+  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_HOME, BSW_NULL )
+  
+  //途中駅ならば電車非表示
+  IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
+    _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_VANISH, TRUE, BSW_NULL, BSW_NULL )
   ENDIF
 }
 INIT_EVENT_END
@@ -87,11 +90,11 @@ EVENT_START ev_c04r0111_receipt_talk
   _TALK_OBJ_START()
   
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN //途中駅
-    _SYSWIN_MSG( msg_c04r0111_15 , WIN_DOWN ) //どうしますか
+    _SYSWIN_MSG( msg_c04r0111_15 , WIN_DOWN )   //どうしますか
     _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
-    _BMPMENU_MAKE_LIST( msg_c04r0111_16, 0 ) //続ける
-    _BMPMENU_MAKE_LIST( msg_c04r0111_17, 1 ) //ライモン
-    _BMPMENU_MAKE_LIST( msg_c04r0111_18, 2 ) //まだここにいる
+    _BMPMENU_MAKE_LIST( msg_c04r0111_16, 0 )    //続ける
+    _BMPMENU_MAKE_LIST( msg_c04r0111_17, 1 )    //ライモン
+    _BMPMENU_MAKE_LIST( msg_c04r0111_18, 2 )    //まだここにいる
     _BMPMENU_START()
     _SYSWIN_CLOSE()
     
@@ -170,11 +173,13 @@ sub_challenge_continue:
   _REPORT_CALL( SCWK_ANSWER )
   _SYSWIN_CLOSE()
   
-  //車内移動アニメ
+  //電車発車デモ
+  _CALL sub_demo_train_starting
+  
+  //ホーム制御　無しに
+  $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
   
   //マップ移動
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
   _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
 }
 _RET
@@ -230,11 +235,13 @@ sub_challenge_continue_comm_multi:
   //通信同期待ち
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_AUTO_SAVE, BSW_NULL, BSW_NULL )
   
-  //車内移動アニメ
+  //電車発車デモ
+  _CALL sub_demo_train_starting
   
+  //ホーム制御　無しに
+  $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
+
   //マップ移動
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
   _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
 }
 _RET
@@ -294,12 +301,14 @@ sub_mapchg_receipt:
     //受付対応　ゲーム後へ
     $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
     
-    //マップフェードアウト
-    _MAP_FADE_BLACK_OUT()
-    _MAP_FADE_END_CHECK()
+    //電車発車デモ
+    _CALL sub_demo_train_starting
     
     //ワーク開放
     _BSUBWAY_WORK_RELEASE()
+    
+    //ホーム制御　無しに
+    $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
     
     //受付へと戻る
     _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
@@ -341,52 +350,36 @@ EVENT_START ev_c04r0111_home
 {
   DEFINE_LOCAL play_mode
   
-  //ホーム制御　無しに
-  $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
-  
   //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
-  //トレインアニメ
-  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 2, BTRAIN_POS_RECEIPT, BSW_NULL )
+  //途中駅状態に
+  $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_STOPOVER
   
-  //マップフェードイン
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
-  
-  _TIME_WAIT( 45 ) //アニメを待つ
-  
-  //自機登場
-  _BSUBWAY_TOOL( BSWTOOL_PLAYER_VANISH, FALSE, BSW_NULL, BSW_NULL )
-  
-  //自機移動
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_jiki_train_out )
-  _OBJ_ANIME_WAIT()
-
-  //高さ固定を戻す
-  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, MMDL_ID_PLAYER, 0, BSW_NULL )
-  
-  //マルチならパートナー出現
+  //終点チェック
   SWITCH $play_mode
+  CASE BSWAY_MODE_SINGLE THEN
+    $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
+  CASE BSWAY_MODE_S_SINGLE THEN
+    _NOP
+  CASE BSWAY_MODE_DOUBLE THEN
+    $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
+  CASE BSWAY_MODE_S_DOUBLE THEN
+    _NOP
   CASE BSWAY_MODE_MULTI THEN
-    $OBJCHRWORK0 = SUPPORT
-    _FLAG_RESET( FV_C04R0111_PARTNER )
-    _OBJ_ADD( C04R0111_PARTNER )
-    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, C04R0111_PARTNER, 0, BSW_NULL )
-    _OBJ_POS_CHANGE( C04R0111_PARTNER, 75, 0, 14, DIR_DOWN )
-    _OBJ_ANIME( C04R0111_PARTNER, anm_partner_train_out )
-    _OBJ_ANIME_WAIT()
-    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, C04R0111_PARTNER, 0, BSW_NULL )
+    $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
   CASE BSWAY_MODE_S_MULTI THEN
-     $OBJCHRWORK0 = SUPPORT
-    _FLAG_RESET( FV_C04R0111_PARTNER )
-    _OBJ_ADD( C04R0111_PARTNER )
-    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, C04R0111_PARTNER, 0, BSW_NULL )
-    _OBJ_POS_CHANGE( C04R0111_PARTNER, 75, 0, 14, DIR_DOWN )
-    _OBJ_ANIME( C04R0111_PARTNER, anm_partner_train_out )
-    _OBJ_ANIME_WAIT()
-    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, C04R0111_PARTNER, 0, BSW_NULL )
+    _NOP
+  CASE BSWAY_MODE_COMM_MULTI THEN
+    $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
+  CASE BSWAY_MODE_S_COMM_MULTI THEN
+    _NOP
+  CASE BSWAY_MODE_WIFI THEN
+    $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
   ENDSWITCH
+  
+  //電車到着デモ
+  _CALL sub_demo_train_arrival
   
   //戻り先を無効に
   _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSW_NULL, BSW_NULL,BSW_NULL )
@@ -414,18 +407,6 @@ EVENT_START ev_c04r0111_home
         _AB_KEYWAIT()
         _BSUBWAY_TOOL( BSWTOOL_SET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
       ENDIF
-      
-      //途中駅にする
-      $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_STOPOVER
-
-      //レポート
-      _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
-      _REPORT_CALL( SCWK_ANSWER )
-      
-      //また話し掛けてくれ
-      _SYSWIN_MSG( msg_c04r0111_09 , WIN_DOWN )
-      _LAST_KEYWAIT()
-      _SYSWIN_CLOSE()
     ELSE  //ノーマルボスである
       _SYSWIN_MSG( msg_c04r0111_04 , WIN_DOWN ) //おめでとうございます
       _AB_KEYWAIT()
@@ -443,26 +424,6 @@ EVENT_START ev_c04r0111_home
         _AB_KEYWAIT()
         _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
       ENDIF
-       
-      //終点にする
-      $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
-      
-      //レポート
-      _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
-      _REPORT_CALL( SCWK_ANSWER )
-
-      //終点メッセージ
-      SWITCH $play_mode
-      CASE BSWAY_MODE_SINGLE THEN
-        _SYSWIN_MSG( msg_c04r0111_10 , WIN_DOWN )
-      CASE BSWAY_MODE_DOUBLE THEN
-        _SYSWIN_MSG( msg_c04r0111_11 , WIN_DOWN )
-      CASE BSWAY_MODE_MULTI THEN
-        _SYSWIN_MSG( msg_c04r0111_12 , WIN_DOWN )
-      ENDSWITCH
-      
-      _LAST_KEYWAIT()
-      _SYSWIN_CLOSE()
     ENDIF
   ELSE //倒していない
     _SYSWIN_MSG( msg_c04r0111_03 , WIN_DOWN ) //おめでとうございます
@@ -473,345 +434,210 @@ EVENT_START ev_c04r0111_home
     _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
     _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
     _ME_WAIT()
-    
-    //途中駅にする
-    $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_STOPOVER
-
-    //レポート
-    _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
-    _REPORT_CALL( SCWK_ANSWER )
-    
-    //また話し掛けてくれ
-    _SYSWIN_MSG( msg_c04r0111_09 , WIN_DOWN )
-    _LAST_KEYWAIT()
-    _SYSWIN_CLOSE()
   ENDIF
+  
+  //レポート
+  _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
+  _REPORT_CALL( SCWK_ANSWER )
+   
+  IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
+    //途中駅　また話し掛けてくれ
+    _SYSWIN_MSG( msg_c04r0111_09 , WIN_DOWN )
+  ELSE
+    //終点　終点メッセージ
+    SWITCH $play_mode
+    CASE BSWAY_MODE_SINGLE THEN
+     _SYSWIN_MSG( msg_c04r0111_10, WIN_DOWN )
+    CASE BSWAY_MODE_DOUBLE THEN
+     _SYSWIN_MSG( msg_c04r0111_11, WIN_DOWN )
+    CASE BSWAY_MODE_MULTI THEN
+      _SYSWIN_MSG( msg_c04r0111_12, WIN_DOWN )
+    ENDSWITCH
+  ENDIF
+  
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
 }
 EVENT_END
 
+//======================================================================
+//  デモ
+//======================================================================
 //--------------------------------------------------------------
-//  アニメ　自機、パートナー、車両から出てくる
+//  電車到着デモ
 //--------------------------------------------------------------
-_ANIME_LABEL anm_jiki_train_out
-  _ANIME_DATA AC_WAIT_4F,1
+sub_demo_train_arrival:
+{
+  DEFINE_LOCAL play_mode
+  DEFINE_LOCAL ai_multi
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+    $ai_multi = TRUE
+  ELSE
+    $ai_multi = FALSE
+  ENDIF
+  
+  //自機初期設定
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 75, 0, 12, DIR_DOWN )
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_VANISH, MMDL_ID_PLAYER, TRUE, BSW_NULL )
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, MMDL_ID_PLAYER, 0, BSW_NULL )
+  
+  //マルチならパートナー追加
+  IF $ai_multi == TRUE THEN
+     $OBJCHRWORK0 = SUPPORT
+    _FLAG_RESET( FV_C04R0111_PARTNER )
+    _OBJ_ADD( C04R0111_PARTNER )
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, C04R0111_PARTNER, 0, BSW_NULL )
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_VANISH, C04R0111_PARTNER, TRUE, BSW_NULL )
+    _OBJ_POS_CHANGE( C04R0111_PARTNER, 75, 0, 12, DIR_DOWN )
+  ENDIF
+  
+  //到着アニメ
+  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 2, BTRAIN_POS_RECEIPT, BSW_NULL )
+  
+  //マップフェードイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+  _TIME_WAIT( 50 ) //アニメを待つ
+  
+  //自機登場アニメ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_demo_train_arrival_jiki )
+  
+  //パートナーアニメ
+  IF $ai_multi == TRUE THEN
+    _OBJ_ANIME( C04R0111_PARTNER, anm_demo_train_arrival_partner )
+  ENDIF
+  
+  //OBJアニメ待ち
+  _OBJ_ANIME_WAIT()
+  
+  //自機高さを戻す
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, MMDL_ID_PLAYER, 0, BSW_NULL )
+
+  //パートナー高さ戻す
+  IF $ai_multi == TRUE THEN
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, C04R0111_PARTNER, 0, BSW_NULL )
+  ENDIF
+  
+  //途中駅なら電車去る
+  IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
+    _TIME_WAIT( 10 ) //ちょっと待つ
+    _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 0, BTRAIN_POS_RECEIPT, BSW_NULL )
+    _TIME_WAIT( 5 ) //ちょっと待つ
+    
+    //ブラックアウト
+    _BLACK_OUT()
+    _DISP_FADE_END_CHECK()
+    
+    //電車消す
+    _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_VANISH, TRUE, BSW_NULL, BSW_NULL )
+    
+    //フェードイン
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+  ENDIF
+}
+_RET
+
+//アニメデータ　電車到着デモ　自機下車
+_ANIME_LABEL anm_demo_train_arrival_jiki
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_1F,4
   _ANIME_DATA AC_WALK_D_8F,2
   _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL anm_partner_train_out
-  _ANIME_DATA AC_WAIT_4F,1
+//アニメデータ　電車到着デモ　パートナー下車
+_ANIME_LABEL anm_demo_train_arrival_partner
+  _ANIME_DATA AC_WAIT_1F,14
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_1F,4
   _ANIME_DATA AC_WALK_D_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//======================================================================
-//======================================================================
-//======================================================================
-//======================================================================
-//======================================================================
-//======================================================================
-//======================================================================
-//======================================================================
-/*
-//======================================================================
-//  パーツ　ワーク初期化
-//======================================================================
-//--------------------------------------------------------------
-//  ワーク初期化
-//--------------------------------------------------------------
-ev_bsubway_init_work_return_gate:
-  //_LDVAL( WK_OTHER_SCENE_C04R0102,0 )
-  //_LDVAL( WK_OTHER_SCENE_C04R0104,0 )
-  //_LDVAL( WK_OTHER_SCENE_C04R0110,0 )
-  //_LDVAL( WK_OTHER_SCENE_C04R0111,0 )
-  _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSW_NULL, BSW_NULL,BSW_NULL )
-  _RET
-
-//======================================================================
-//  シーケンス　ライモンシティに戻る
-//======================================================================
-//--------------------------------------------------------------
-//  シーケンス　ライモンシティに戻る
-//--------------------------------------------------------------
-ev_bsubway_seq_map_change:
-  //_LDVAL( WK_OTHER_SCENE_C04R0110,0 )
-  //_LDVAL( WK_OTHER_SCENE_C04R0111,0 )
-
-  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,map_change_playmode_double
-  
-map_change_playmode_single:
-  //_LDVAL( WK_OTHER_SCENE_C04R0102,3 ) //c04r0102 after
-  _MAP_CHANGE( ZONE_ID_C04R0102,13,13,DIR_RIGHT )
-  _END
-  
-map_change_playmode_double:
-  //_LDVAL( WK_OTHER_SCENE_C04R0104,3 ) //c04r0104 after
-  _MAP_CHANGE( ZONE_ID_C04R0104,13,13,DIR_RIGHT )
-  _END
- 
-//======================================================================
-//  シーケンス　つづけて挑戦
-//======================================================================
-//--------------------------------------------------------------
-//  シーケンス　続けて挑戦
-//--------------------------------------------------------------
-ev_bsubway_seq_challenge:
-  //_LDVAL( WK_OTHER_SCENE_C04R0110, 1 )
-  //_LDVAL( WK_OTHER_SCENE_C04R0111, 0 )
-
-  _SYSWIN_MSG( msg_c04r0111_07 , WIN_DOWN )
-  _AB_KEYWAIT()
- 
-  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,challenge_playmode_double
-  
-challenge_playmode_single:
-  //_LDVAL( WK_OTHER_SCENE_C04R0102, 255 ) //c04r0102 error
-  _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_SINGLE )
-  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET,BSW_NULL, BSW_NULL,BSW_NULL )
-  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL )
-  _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION,BSW_NULL, BSW_NULL,BSW_NULL )
-  _REPORT_EVENT_CALL( SCWK_ANSWER )
-  _SYSWIN_CLOSE()
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
-  _MAP_CHANGE_NO_FADE(ZONE_ID_C04R0110,10,0,4,DIR_UP)
-  _END
-  
-challenge_playmode_double:
-  //_LDVAL( WK_OTHER_SCENE_C04R0104, 255 ) //c04r0102 error
-  _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_DOUBLE )
-  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET,BSW_NULL, BSW_NULL,BSW_NULL )
-  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL )
-  _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION,BSW_NULL, BSW_NULL,BSW_NULL )
-  _REPORT_EVENT_CALL( SCWK_ANSWER )
-  _SYSWIN_CLOSE()
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
-  _MAP_CHANGE_NO_FADE(ZONE_ID_C04R0110,10,0,4,DIR_UP)
-  _END
-  
-//=====================================================================
-//  受付　話し掛け
-//=====================================================================
-//--------------------------------------------------------------
-//  受付　話し掛け
-//--------------------------------------------------------------
-ev_c04r0111_receipt_talk:
-  _TALK_OBJ_START()
-//  _IFVAL_JUMP WK_OTHER_SCENE_C04R0111,EQ,2,ev_receipt_talk_boss_clear
-  
-  //どうしますか
-  _SYSWIN_MSG( msg_c04r0111_02 , WIN_DOWN )
-  _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
-  _BMPMENU_MAKE_LIST( msg_c04r0111_03, 0 ) //続ける
-  _BMPMENU_MAKE_LIST( msg_c04r0111_04, 1 ) //ライモン
-  _BMPMENU_MAKE_LIST( msg_c04r0111_05, 2 ) //まだここにいる
-  _BMPMENU_START()
-  _SYSWIN_CLOSE()
-  
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_c04r0111_receipt_continue
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_c04r0111_receipt_map_change
-  
-  _END
-
-//続ける
-ev_c04r0111_receipt_continue:
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_bsubway_seq_challenge
-  _END
-  
-//ライモン戻る
-ev_c04r0111_receipt_map_change:
-  //一旦戻る
-  _SYSWIN_MSG( msg_c04r0111_06 , WIN_DOWN )
-  _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
-  _JUMP ev_bsubway_seq_map_change
-  _END
-
-//クリア時
-ev_receipt_talk_boss_clear:
-  //ライモンシティに戻るか
-  _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN )
-  _YES_NO_WIN( SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_receipt_talk_first_clear_no
-  
-  //もどります
-  _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
-  _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
-  _JUMP ev_bsubway_seq_map_change
-  
-ev_receipt_talk_first_clear_no:
-  _SYSWIN_CLOSE()
-  _END
-
-//=====================================================================
-//  受付　対戦終了後の戻り
-//=====================================================================
-//--------------------------------------------------------------
-//  対戦後の戻り
-//--------------------------------------------------------------
-ev_c04r0111_game_after_finish:
-  //ステートクリア
-  _CALL ev_bsubway_init_work_return_gate
-  _CALL ev_anime_player_train_out
-  
-  //クリアデータを反映
-  _BSUBWAY_TOOL( BSWSUB_SAVE_GAMECLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
-  
-  //ノーマルチェック
-  //スーパーチェック
-
-  _BSUBWAY_TOOL( BSWSUB_GET_LEADER_CLEAR_FLAG, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_normal_clear_boss
-  
-//--------------------------------------------------------------
-//  ノーマル　７人抜きクリア
-//--------------------------------------------------------------
-ev_normal_clear_7:
-  //バトルポイントをプラス
-  _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT,BSW_NULL, BSW_NULL,SCWK_ANSWER )
-  _LDWK( SCWK_TEMP0,SCWK_ANSWER )
-  
-  //メッセージタグセット
-  _PLAYER_NAME( 0 )
-  
-  //おめでとうございます
-  _SYSWIN_MSG( msg_c04r0111_08 , WIN_DOWN )
-  _AB_KEYWAIT()
-  
-  //ファンファーレ
-  _PLAYER_NAME( 0 )
-  _NUMBER( 1, SCWK_ANSWER, 2 )
-  _SYSWIN_MSG( msg_c04r0111_point_get , WIN_DOWN )
-  _ME_PLAY( SEQ_ME_ITEM )
-  _ME_WAIT()
-  
-  //レポート
-  _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0111_12 )
-  _REPORT_CALL( SCWK_ANSWER )
-
-  //ごゆっくり
-  _SYSWIN_MSG( msg_c04r0111_13 , WIN_DOWN )
-  _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
-  
-  _BSUBWAY_WORK_RELEASE()
-  _END
-  
-//--------------------------------------------------------------
-//  ノーマル　ボス倒してクリア
-//--------------------------------------------------------------
-ev_normal_clear_boss:
-  _BSUBWAY_TOOL( BSWSUB_SET_LEADER_CLEAR_FLAG, 0, BSW_NULL )
-
-  //バトルポイントをプラス
-  _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT,BSW_NULL, BSW_NULL,SCWK_ANSWER )
-  _LDWK( SCWK_TEMP0,SCWK_ANSWER )
-  
-  //メッセージタグセット
-  _PLAYER_NAME( 0 )
-  
-  //おめでとうございます
-  _SYSWIN_MSG( msg_c04r0111_09 , WIN_DOWN )
-  _AB_KEYWAIT()
-  
-  //ファンファーレ
-  _PLAYER_NAME( 0 )
-  _NUMBER( 1, 20, 2 )
-  _SYSWIN_MSG( msg_c04r0111_point_get , WIN_DOWN )
-  _ME_PLAY( SEQ_ME_ITEM )
-  _ME_WAIT()
-  
-  //初めてボスを倒したか
-  _LDVAL( SCWK_ANSWER, 0 )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_normal_clear_boss_save
-  
-ev_normal_clear_boss_first:
-  //スーパートレイン解除フラグを立てる
-  
-  //スーパーシングルトレインにチャレンジ可能
-//  _SYSWIN_MSG( msg_c04r0111_10 , WIN_DOWN )
-//  _AB_KEYWAIT()
-  
-ev_normal_clear_boss_save:
-  //ライモン戻るのみの会話に
-  //_LDVAL( WK_OTHER_SCENE_C04R0111, 2 )
-  
-  //レポート
-  _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0111_12 )
-  _REPORT_CALL( SCWK_ANSWER )
-
-  _SYSWIN_MSG( msg_c04r0111_14 , WIN_DOWN )
-  _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
-  
-  _BSUBWAY_WORK_RELEASE()
-  _END
-
-//--------------------------------------------------------------
-//  スーパー　ボス倒してクリア
-//--------------------------------------------------------------
-ev_super_clear_boss:
-  //バトルポイントをプラス
-  _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT,BSW_NULL, BSW_NULL,SCWK_ANSWER )
-  _LDWK( SCWK_TEMP0,SCWK_ANSWER )
-  
-  //メッセージタグセット
-  _PLAYER_NAME( 0 )
-  
-  //おめでとうございます
-  _SYSWIN_MSG( msg_c04r0111_09 , WIN_DOWN )
-  _AB_KEYWAIT()
-  
-  //ファンファーレ
-  _PLAYER_NAME( 0 )
-  _NUMBER( 1, SCWK_ANSWER, 2 )
-  _SYSWIN_MSG( msg_c04r0111_point_get , WIN_DOWN )
-  _ME_PLAY( SEQ_ME_ITEM )
-  _ME_WAIT()
-  
-  //初めてボスを倒したか
-  _LDVAL( SCWK_ANSWER, 0 )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_super_clear_boss_save
-  
-ev_super_clear_boss_first:
-  //トロフィー追加
-  
-  //トロフィーをさしあげます
-  _SYSWIN_MSG( msg_c04r0111_11 , WIN_DOWN )
-  _AB_KEYWAIT()
-  
-ev_super_clear_boss_save:
-  //レポート
-  _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0111_12 )
-  _REPORT_CALL( SCWK_ANSWER )
-  
-  _SYSWIN_MSG( msg_c04r0111_14 , WIN_DOWN )
-  _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
-  
-  _BSUBWAY_WORK_RELEASE()
-  _END
-
-//--------------------------------------------------------------
-//  アニメ　自機が車両から出てくる
-//--------------------------------------------------------------
-_ANIME_LABEL anm_c04r0111_player_train_out
-  _ANIME_DATA AC_WAIT_4F,1
-  _ANIME_DATA AC_WALK_D_8F,1
-  _ANIME_DATA AC_STAY_WALK_L_8F,1
-  _ANIME_DATA ACMD_END,0
-  
-_ANIME_LABEL anm_c04r0111_player_train_out_pcwoman
-  _ANIME_DATA AC_WAIT_32F,1
   _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
-ev_anime_player_train_out:
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_c04r0111_player_train_out )
-  _OBJ_ANIME( C04R0111_RECEIPT1, anm_c04r0111_player_train_out_pcwoman )
+//--------------------------------------------------------------
+//  電車出発デモ
+//--------------------------------------------------------------
+sub_demo_train_starting:
+{
+  DEFINE_LOCAL play_mode
+  DEFINE_LOCAL ai_multi
+  
+  //マップフェードアウト
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+    $ai_multi = TRUE
+  ELSE
+    $ai_multi = FALSE
+  ENDIF
+  
+  //自機初期設定
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 18, 0, 13, DIR_LEFT )
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, MMDL_ID_PLAYER, 0, BSW_NULL )
+  
+  //マルチならパートナー設定
+  IF $ai_multi == TRUE THEN
+    _OBJ_POS_CHANGE( C04R0111_PARTNER, 19, 0, 13, DIR_LEFT )
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, C04R0111_PARTNER, 0, BSW_NULL )
+  ENDIF
+  
+  //マップフェードイン開始
+  _BLACK_IN()
+  
+  //途中駅ならば電車到着アニメ
+  IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
+    _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 2, BTRAIN_POS_HOME, BSW_NULL )
+    _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_VANISH, FALSE, BSW_NULL, BSW_NULL )
+    _TIME_WAIT( 100 ) //アニメを待つ
+  ENDIF
+  
+  //フェードインチェック
+  _DISP_FADE_END_CHECK()
+  
+  //自機乗車アニメ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_demo_train_starting_jiki )
+  
+  //パートナーアニメ
+  IF $ai_multi == TRUE THEN
+    _OBJ_ANIME( C04R0111_PARTNER, anm_demo_train_starting_partner )
+  ENDIF
+  
+  //アニメ終了待ち
   _OBJ_ANIME_WAIT()
-  _RET
-*/
+  
+  //電車発車
+  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 3, BTRAIN_POS_HOME, BSW_NULL )
+  _TIME_WAIT( 24 ) //アニメを少し見せる
+  
+  //マップフェードアウト
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+}
+_RET
+
+//アニメデータ　電車発車デモ　自機乗車
+_ANIME_LABEL anm_demo_train_starting_jiki
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WAIT_1F,8
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
+
+//アニメデータ　電車発車デモ　パートナー乗車
+_ANIME_LABEL anm_demo_train_starting_partner
+  _ANIME_DATA AC_WAIT_1F,32
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WAIT_1F,8
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
