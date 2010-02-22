@@ -913,7 +913,7 @@
  */
 //--------------------------------------------------------------
 #define _SYSWIN_MSG_ALLPUT_DOWN( msg_id ) \
-    _ASM_SYSWIN_MSG_ALLPUT msg_id, WIN_DOWN
+    _ASM_SYSWIN_MSG_ALLPUT msg_id, POS_DOWN
   
   .macro  _ASM_SYSWIN_MSG_ALLPUT msg_id, up_down
   .short  EV_SEQ_SYSWIN_MSG_ALLPUT
@@ -975,12 +975,6 @@
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 
-#define _BALLOONWIN_TALKOBJ_MSG_DOWN( msg_id ) \
-    _ASM_BALLOONWIN_OBJMSG_POS msg_id, SCWK_TARGET_OBJID, WIN_DOWN 
-
-#define _BALLOONWIN_TALKOBJ_MSG_UP( msg_id ) \
-    _ASM_BALLOONWIN_OBJMSG_POS msg_id, SCWK_TARGET_OBJID, WIN_UP
-
 //--------------------------------------------------------------
 /**
  * @def _BALLOONWIN_TALKOBJ_MSG_ARC
@@ -1006,7 +1000,7 @@
  *  @brief  吹き出しウィンドウ描画　位置指定あり
  *  @param msg_id 表示するメッセージID
  *  @param obj_id 吹き出しを出す対象OBJ ID
- *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DOWN,WIN_NONE
+ *  @param pos 吹き出しウィンドウ位置 usescript.hのPOS_定義を参照
  */
 //--------------------------------------------------------------
 #define _BALLOONWIN_OBJMSG_POS( msg_id , obj_id, pos ) \
@@ -1028,7 +1022,7 @@
  *  @param msg_id_m 表示するメッセージID　男性
  *  @param msg_id_f 表示するメッセージID　女性
  *  @param obj_id 吹き出しを出す対象OBJ ID
- *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DOWN,WIN_NONE
+ *  @param pos 吹き出しウィンドウ位置 usescript.hのPOS_定義を参照
  */
 //--------------------------------------------------------------
 #define _BALLOONWIN_OBJMSG_MF( msg_id_m, msg_id_f, obj_id, pos ) \
@@ -1051,7 +1045,7 @@
  *  @param msg_id_w 表示するメッセージID、ホワイト版
  *  @param msg_id_b 表示するメッセージID、ブラック版
  *  @param obj_id 吹き出しを出す対象OBJ ID
- *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DOWN,WIN_NONE
+ *  @param pos 吹き出しウィンドウ位置 usescript.hのPOS_定義を参照
  */
 //--------------------------------------------------------------
 #define _BALLOONWIN_OBJMSG_WB( msg_id_w, msg_id_b, obj_id, pos ) \
@@ -1073,7 +1067,7 @@
  *  @brief  吹き出しウィンドウ描画　ギザギザ　位置指定あり
  *  @param msg_id 表示するメッセージID
  *  @param obj_id 吹き出しを出す対象OBJ ID
- *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DOWN,WIN_NONE
+ *  @param pos 吹き出しウィンドウ位置 usescript.hのPOS_定義を参照
  */
 //--------------------------------------------------------------
 #define _GIZAWIN_OBJMSG_POS( msg_id , obj_id, pos ) \
@@ -1189,7 +1183,7 @@
  *  @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-#define _PLAINWIN_MSG_UP( msg_id ) _ASM_PLAINWIN_MSG msg_id, WIN_UP
+#define _PLAINWIN_MSG_UP( msg_id ) _ASM_PLAINWIN_MSG msg_id, POS_UP
 
 //--------------------------------------------------------------
 /**
@@ -1198,7 +1192,7 @@
  *  @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-#define _PLAINWIN_MSG_DOWN( msg_id ) _ASM_PLAINWIN_MSG msg_id, WIN_DOWN
+#define _PLAINWIN_MSG_DOWN( msg_id ) _ASM_PLAINWIN_MSG msg_id, POS_DOWN
   
   .macro _ASM_PLAINWIN_MSG msg_id, up_down
   .short EV_SEQ_PLAINWIN_MSG

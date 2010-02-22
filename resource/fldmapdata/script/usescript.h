@@ -43,7 +43,7 @@
 
 #include "../../personal/monsno_def.h"    //ポケモンナンバー
 #include "../../itemconv/itempocket_def.h"  //どうぐポケットナンバー指定
-#include "../../../prog/include/item/itemsym.h"
+#include "../../../prog/include/item/itemsym.h"   //アイテムナンバー定義
 
 #include "../zonetable/zone_id.h"     //ゾーンID参照
 #include "../warpdata/warpdata.h"     //ワープID参照
@@ -122,69 +122,6 @@
 //顔アップ定義
 #include "../../../prog/src/field/fld_faceup_def.h"
 
-//--------------------------------------------------------------
-//  wb_null
-//--------------------------------------------------------------
-#if 0
-//include/field
-
-#include "../../../include/system/brightness.h"   //輝度
-#include "../../../include/system/window.h"     //ウィンドウ
-#include "../../../include/system/wipe.h"     //ワイプ
-
-#include "../../../include/battle/battle_common.h"  //戦闘関連
-#include "../../../include/battle/trno_def.h"   //トレーナーナンバー定義
-
-#include "../../../include/application/br_sys_def.h"//GDS定義
-#include "../../../include/application/wifi_p2pmatch_def.h" //P2P対戦マッチングボード
-#include "../../../include/application/imageClip/imc_itemid_define.h" //イメージクリップ定義
-#include "../../../include/application/box_mode.h"  //ボックスモード定義
-#include "../../../include/application/bag_def.h" //ポケット定義
-#include "../../../include/application/seal_id.h" //シール定義
-#include "../../../include/contest/contest_def.h" //コンテスト
-#include "../../../include/itemtool/itemsym.h"    //アイテムナンバー定義
-#include "../../../include/communication/comm_def.h"//通信
-
-#include "../../../include/battle/wazano_def.h"   //ワザNo
-#include "../../../include/battle/battle_server.h"  //フォルムNo
-
-//include/savedata
-#include "../../../include/savedata/fnote_mem.h"  //冒険ノート
-#include "../../../include/savedata/score_def.h"  //スコア
-#include "../../../include/savedata/record.h" //スコア
-
-//src/field
-#include "../../field/ev_win.h"           //イベントウィンドウ定義
-#include "../../field/comm_union_def.h"       //ユニオン定義
-#include "../../field/comm_union_beacon.h"      //ユニオンルーム用ビーコン定義
-#include "../../field/comm_direct_counter_def.h"  //通信ダイレクトコーナー
-#include "../../field/fieldobj_code.h"        //フィールドOBJで使用するシンボル、コード宣言
-#include "../../field/player_code.h"        //REQBIT
-#include "../../field/board.h"            //看板
-#include "../../field/honey_tree_def.h"       //蜜木ステート定義
-#include "../../field/sysflag_def.h"        //システムフラグ定義
-#include "../../field/syswork_def.h"        //システムワーク定義
-#include "../../field/gym_def.h"          //ジム関連定義
-#include "../../field/safari_train_def.h"
-#include "../../field/field_trade.h"        //ゲーム内交換
-#include "../../field/scr_cycling.h"        //サイクリングロード座標
-
-#include "../../../include/system/snd_def.h"    //サウンド定義の置き換え定義
-#include "../maptable/zone_id.h"          //ゾーンID定義
-#include "../shopdata/fs_goods_def.h"       //固定グッズショップ定義
-#include "../shopdata/fs_seal_def.h"        //固定シールショップ定義
-
-#include "../../field/move_pokemon_def.h"     //移動ポケモン定義
-#include "../../field/elevator_anm_def.h"     //エレベータ関連定義
-#include "../../field/ship_demo_def.h"        //船デモ関連定義
-
-#include "../../frontier/factory_def.h"       //ファクトリー定義
-#include "../../frontier/stage_def.h"       //ステージ定義
-#include "../../frontier/castle_def.h"        //キャッスル定義
-#include "../../frontier/roulette_def.h"      //ルーレット定義
-#include "../../frontier/fss_scene.h"       //フロンティアシーン定義
-#include "../../frontier/frontier_def.h"      //フロンティア定義
-#endif //wb null
 
 //======================================================================
 //  共通メッセージ関連
@@ -200,7 +137,6 @@
 //#endif
 
 //--------------------------------------------------------------
-//(エメラルドではvmstat.hに定義してあった)
 //--------------------------------------------------------------
 #define LT        0       /* <  */
 #define EQ        1       /* == */
@@ -233,33 +169,10 @@
 #define TRUE      1
 #define FALSE     0
 
-//スクリプト通信受付の判別定義
-#define SCR_COMM_ID_NOTHING (0) //何もなし
-#define SCR_COMM_ID_BATTLE  (1) //バトル
-#define SCR_COMM_ID_UNION (2) //ユニオン
-#define SCR_COMM_ID_WIFI  (3) //WiFi
-#define SCR_COMM_ID_RECORD  (4) //レコード(sp_***.evに埋め込んでしまったので残している)
-#define SCR_COMM_ID_CONTEST (5)     //コンテスト
-#define SCR_COMM_ID_GTC   (6)     //GTC
 
 //--------------------------------------------------------------
 //*.evの中で使用する定義
 //--------------------------------------------------------------
-/*
-  // 話かけた方向を保持するワーク
-  u16 TalkSiteWork = 0;
-
-  // 手持ちがいっぱいでＰＣに転送された時
-  u16 BoxNoWork = 0;      //何番のBOXか
-  u16 PasoNoWork = 0;     //そのBOXの何番目か
-
-  //ユニオンルームでのイベント状態制御用ワーク
-  u16 UnionRoomWork = 0;
-*/
-
-/*アンノーンいせき*/
-#define ANOON_SEE_NUM_1 (10)
-#define ANOON_SEE_NUM_2 (26)
 
 //メニュー用戻り値
 #define EV_WIN_B_CANCEL (0xfffe)
@@ -268,31 +181,31 @@
 //フェード共通速度
 #define DISP_FADE_SPEED (2)
 
-#define BAG_POCKET_NORMAL   0
-#define BAG_POCKET_DRUG     1
-#define BAG_POCKET_WAZA     2
-#define BAG_POCKET_NUTS     3
-#define BAG_POCKET_EVENT    4
 
-//ウィンドウ位置
-#define WIN_UP (SCRCMD_MSGWIN_UP)
-#define WIN_DOWN (SCRCMD_MSGWIN_DOWN)
-#define WIN_NONE (SCRCMD_MSGWIN_NON)
+//いあいぎりエフェクト表示開始から, OBJを消すまでの待ち時間
+#define EV_HIDEN_IAIGIRI_OBJDEL_WAIT (3)
 
-//システムウィンドウ用位置定義
+//======================================================================
+//
+//    ウィンドウ関連定義
+//
+//======================================================================
+//ウィンドウ位置（旧定義、廃止予定）
+#define WIN_UP      (SCRCMD_MSGWIN_UPLEFT)
+#define WIN_DOWN    (SCRCMD_MSGWIN_DOWNLEFT)
+#define WIN_NONE    (SCRCMD_MSGWIN_NON)
+
+//システム＆プレーンウィンドウ用位置定義
 #define POS_UP      SCRCMD_MSGWIN_UPLEFT
 #define POS_DOWN    SCRCMD_MSGWIN_DOWNLEFT
+
 //ふきだしウィンドウ用位置定義
-#define POS_UL      SCRCMD_MSGWIN_UPLEFT
-#define POS_DL      SCRCMD_MSGWIN_DOWNLEFT
-#define POS_UR      SCRCMD_MSGWIN_UPRIGHT
-#define POS_DR      SCRCMD_MSGWIN_DOWNRIGHT
+#define POS_UL      SCRCMD_MSGWIN_UPLEFT      /* 左上から */
+#define POS_DL      SCRCMD_MSGWIN_DOWNLEFT    /* 左下から */
+#define POS_UR      SCRCMD_MSGWIN_UPRIGHT     /* 右上から */
+#define POS_DR      SCRCMD_MSGWIN_DOWNRIGHT   /* 左上から */
 
-#define POS_DEFAULT SCRCMD_MSGWIN_DEFAULT
-
-//ワイプフェードの基本の値
-#define SCR_WIPE_DIV        (WIPE_DEF_DIV)
-#define SCR_WIPE_SYNC       (WIPE_DEF_SYNC)
+#define POS_DEFAULT SCRCMD_MSGWIN_DEFAULT     /* 自動振り分け */
 
 //BGウィンドウタイプ
 #define TYPE_INFO (SCRCMD_BGWIN_TYPE_INFO) //掲示板
@@ -301,14 +214,11 @@
 #define TYPE_ROAD (SCRCMD_BGWIN_TYPE_ROAD) //道
 
 //特殊ウィンドウタイプ
-#define SPWIN_LETTER (SCRCMD_SPWIN_TYPE_LETTER)
-#define SPWIN_BOOK (SCRCMD_SPWIN_TYPE_BOOK)
-
-//いあいぎりエフェクト表示開始から, OBJを消すまでの待ち時間
-#define EV_HIDEN_IAIGIRI_OBJDEL_WAIT (3)
+#define SPWIN_LETTER  (SCRCMD_SPWIN_TYPE_LETTER)
+#define SPWIN_BOOK    (SCRCMD_SPWIN_TYPE_BOOK)
 
 //吹き出しウィンドウ　種類
 #define BALLOONWIN_TYPE_NORMAL (0)
-#define BALLOONWIN_TYPE_GIZA (1)
+#define BALLOONWIN_TYPE_GIZA   (1)
 
 #endif //__USESCRIPT_H__
