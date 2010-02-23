@@ -970,7 +970,13 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
       0, 0, buf_name, unisub->font_handle, _CHAT_FONT_LSB);
     GFL_STR_DeleteBuffer(buf_name);
     
-    //友達手帳の名前  ※check　まだ未作成 2009.08.24(月)
+    //友達手帳の名前
+    if(chat->friend == TRUE){
+      STRBUF *buf_friend = GFL_MSG_CreateString( unisub->msgdata, msg_union_sub_friend );
+      PRINTSYS_PrintQueColor( unisub->printQue, GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[write_pos]), 
+        UNION_BMPWIN_SIZE_X/2, 0, buf_friend, unisub->font_handle, _CHAT_FONT_LSB);
+      GFL_STR_DeleteBuffer(buf_friend);
+    }
   }
 }
 

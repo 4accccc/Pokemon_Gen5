@@ -664,6 +664,13 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   
   beacon->party = situ->mycomm.party;
   
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
+    WIFI_LIST* wifilist = GAMEDATA_GetWiFiList(gamedata);
+    
+    WifiList_GetMyFriendData( wifilist, &beacon->dwcfriend );
+  }
+  
   //送信データ完成
   beacon->data_valid = UNION_BEACON_VALID;
   unisys->send_beacon_update = TRUE;

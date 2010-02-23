@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T10:38:16"/>
+	<create user="matsuda" host="W00142" date="2010-02-22T23:01:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,15 +337,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="13" top="116" right="718" bottom="744" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="787" top="36" right="1260" bottom="434" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -3097,19 +3097,19 @@ msg_connect_union_08からの分岐メッセージ
 また　今度ね</language>
 	</row>
 
-	<row id="msg_union_friend_name01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="msg_union_friend_name01" text-color="#000000,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ユニオン下画面の１番上にある掲示板の友達名。</comment>
-		<language name="JPN" font=" 1:small" width="120">[1:00:トレーナー名:0]のともだち</language>
-		<language name="JPN_KANJI" font=" 1:small" width="120">[1:00:トレーナー名:0]の友達</language>
+		<language name="JPN" font=" 1:small" width="120">ともだち</language>
+		<language name="JPN_KANJI" font=" 1:small" width="120">友達</language>
 	</row>
 
-	<row id="msg_union_friend_name02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="msg_union_friend_name02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ユニオン下画面の２番目にある掲示板の友達名。</comment>
 		<language name="JPN" font=" 1:small" width="120">[1:00:トレーナー名:1]のともだち</language>
 		<language name="JPN_KANJI" font=" 1:small" width="120">[1:00:トレーナー名:1]の友達</language>
 	</row>
 
-	<row id="msg_union_friend_name03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="msg_union_friend_name03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ユニオン下画面の３番目にある掲示板の友達名。</comment>
 		<language name="JPN" font=" 1:small" width="120">[1:00:トレーナー名:2]のともだち</language>
 		<language name="JPN_KANJI" font=" 1:small" width="120">[1:00:トレーナー名:2]の友達</language>

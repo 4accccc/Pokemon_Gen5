@@ -13,6 +13,7 @@
 #include "print\str_tool.h"
 #include "union_local.h"
 #include "union_chat.h"
+#include "savedata/wifilist.h"
 
 
 //==============================================================================
@@ -64,6 +65,21 @@ void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_
     dest->rand = bpc->beacon.pms_rand;
     GFL_STD_MemCopy(bpc->mac_address, dest->mac_address, 6);
     dest->sex = bpc->beacon.sex;
+    {//友達チェック
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
+      WIFI_LIST* wifilist = GAMEDATA_GetWiFiList(gamedata);
+      int i;
+      
+      for(i = 0; i < WIFILIST_FRIEND_MAX; i++){
+        if(WifiList_IsFriendData(wifilist, i) == TRUE){
+          if(DWC_IsEqualFriendData(
+              WifiList_GetDwcDataPtr( wifilist, i ), &bpc->beacon.dwcfriend) == TRUE){
+            dest->friend = TRUE;
+            break;
+          }
+        }
+      }
+    }
   }
   
   //現在見ている表示位置が終端であるなら、表示位置も追加されたチャット分に合わせてずらしていく

@@ -27,7 +27,7 @@
 #define UNION_PICTURE_MEMBER_MAX      (4)
 
 ///ビーコンデータが有効なものである事を示す数値
-#define UNION_BEACON_VALID        (0x7a)
+#define UNION_BEACON_VALID            (1)
 
 ///実行中のゲームカテゴリー
 typedef enum{ //※MenuMemberMax, UNION_STATUS_TRAINERCARD以降のテーブルと並びを同じにしておくこと！
@@ -313,20 +313,19 @@ typedef struct{
 ///ユニオンで送受信するビーコンデータ
 typedef struct{
   u8 connect_mac_address[6];  ///<接続したい人へのMacAddress
-  u8 connect_num;             ///<現在の接続人数
-  u8 chat_type;               ///<UNION_CHAT_TYPE_xxx
+  u8 connect_num:4;           ///<現在の接続人数
+  u8 trainer_view:4;          ///<トレーナータイプ(ユニオンルーム内での見た目)
+  u8 chat_type:3;             ///<UNION_CHAT_TYPE_xxx
+  u8 sex:1;                   ///<性別
+  u8 data_valid:1;            ///<UNION_BEACON_VALID:このビーコンデータは有効なものである
+  u8 appeal_no:3;             ///<アピール番号(UNION_APPEAL_???)
   
   u8 pm_version;              ///<PM_VERSION
   u8 language;                ///<PM_LANG
   u8 union_status;            ///<プレイヤーの状況(UNION_STATUS_???)
-  u8 appeal_no;               ///<アピール番号(UNION_APPEAL_???)
+  u8 play_category;           ///<実行中のゲームカテゴリー
   
   STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];  ///<名前
-  
-  u8 data_valid;              ///<UNION_BEACON_VALID:このビーコンデータは有効なものである
-  u8 play_category;           ///<実行中のゲームカテゴリー
-  u8 trainer_view;            ///<トレーナータイプ(ユニオンルーム内での見た目)
-  u8 sex;                     ///<性別
   
   PMS_DATA pmsdata;           ///<チャット
   u16 pms_rand;               ///<チャット用識別コード
@@ -335,7 +334,9 @@ typedef struct{
   
   UNION_PARTY party;          ///<接続相手の情報
   
-  u8 reserve[8];              ///<将来の為の予約
+  DWCFriendData dwcfriend;    ///<友達情報
+  
+  u8 reserve[4];              ///<将来の為の予約
 }UNION_BEACON;
 
 ///受信したビーコンデータから作成されたPCパラメータ
@@ -458,7 +459,8 @@ typedef struct{
   u8 mac_address[6];                            ///<MacAddress 6
   u8 sex;                                       ///<性別
   u8 chat_type;                                 ///<UNION_CHAT_TYPE_xxx
-  u8 padding[2];
+  u8 friend;                                    ///<TRUE:友達
+  u8 padding;
 }UNION_CHAT_DATA;
 
 ///チャットログ管理
