@@ -328,245 +328,325 @@
   </output>
 
 <row id="str_topic_0">
-        <language name="JPN" width="256">ちょうさこうもく1</language>
-        <language name="JPN_KANJI" width="256">調査項目1</language>
-      </row><row id="str_topic_1">
-        <language name="JPN" width="256">ちょうさこうもく2</language>
-        <language name="JPN_KANJI" width="256">調査項目2</language>
-      </row><row id="str_topic_2">
-        <language name="JPN" width="256">ちょうさこうもく3</language>
-        <language name="JPN_KANJI" width="256">調査項目3</language>
-      </row><row id="str_topic_3">
-        <language name="JPN" width="256">ちょうさこうもく4</language>
-        <language name="JPN_KANJI" width="256">調査項目4</language>
-      </row><row id="str_topic_4">
-        <language name="JPN" width="256">ちょうさこうもく5</language>
-        <language name="JPN_KANJI" width="256">調査項目5</language>
-      </row><row id="str_topic_5">
-        <language name="JPN" width="256">ちょうさこうもく6</language>
-        <language name="JPN_KANJI" width="256">調査項目6</language>
-      </row><row id="str_topic_6">
-        <language name="JPN" width="256">ちょうさこうもく7</language>
-        <language name="JPN_KANJI" width="256">調査項目7</language>
-      </row><row id="str_topic_7">
-        <language name="JPN" width="256">ちょうさこうもく8</language>
-        <language name="JPN_KANJI" width="256">調査項目8</language>
-      </row><row id="str_topic_8">
-        <language name="JPN" width="256">ちょうさこうもく9</language>
-        <language name="JPN_KANJI" width="256">調査項目9</language>
-      </row><row id="str_topic_9">
-        <language name="JPN" width="256">ちょうさこうもく10</language>
-        <language name="JPN_KANJI" width="256">調査項目10</language>
-      </row><row id="str_topic_0_caption">
         <language name="JPN" width="256">どうあそんでるか　ちょうさ</language>
         <language name="JPN_KANJI" width="256">どうあそんでるか　ちょうさ</language>
-      </row><row id="str_topic_1_caption">
+      </row><row id="str_topic_1">
         <language name="JPN" width="256">どんなひとが　いるかの　ちょうさ</language>
         <language name="JPN_KANJI" width="256">どんなひとが　いるかの　ちょうさ</language>
-      </row><row id="str_topic_2_caption">
+      </row><row id="str_topic_2">
         <language name="JPN" width="256">すきなポケモンの　ちょうさ</language>
         <language name="JPN_KANJI" width="256">すきなポケモンの　ちょうさ</language>
-      </row><row id="str_topic_3_caption">
+      </row><row id="str_topic_3">
         <language name="JPN" width="256">みんなの　りそうを　ちょうさ</language>
         <language name="JPN_KANJI" width="256">みんなの　りそうを　ちょうさ</language>
-      </row><row id="str_topic_4_caption">
+      </row><row id="str_topic_4">
         <language name="JPN" width="256">すきなひとの　ちょうさ</language>
         <language name="JPN_KANJI" width="256">すきなひとの　ちょうさ</language>
-      </row><row id="str_topic_5_caption">
+      </row><row id="str_topic_5">
         <language name="JPN" width="256">みんなの　このみを　ちょうさ</language>
         <language name="JPN_KANJI" width="256">みんなの　このみを　ちょうさ</language>
-      </row><row id="str_topic_6_caption">
+      </row><row id="str_topic_6">
         <language name="JPN" width="256">みんなの　しゅみを　ちょうさ</language>
         <language name="JPN_KANJI" width="256">みんなの　しゅみを　ちょうさ</language>
-      </row><row id="str_topic_7_caption">
+      </row><row id="str_topic_7">
         <language name="JPN" width="256">がっこうせいかつを　ちょうさ</language>
         <language name="JPN_KANJI" width="256">がっこうせいかつを　ちょうさ</language>
-      </row><row id="str_topic_8_caption">
+      </row><row id="str_topic_8">
         <language name="JPN" width="256">どんな　あそびがすきか　ちょうさ</language>
         <language name="JPN_KANJI" width="256">どんな　あそびがすきか　ちょうさ</language>
-      </row><row id="str_topic_9_caption">
+      </row><row id="str_topic_9">
         <language name="JPN" width="256">ポケモンのことをくわしくちょうさ</language>
         <language name="JPN_KANJI" width="256">ポケモンのことをくわしくちょうさ</language>
+      </row><row id="str_topic_0_caption">
+        <language name="JPN" width="256">ポケットモンスター　ブラック・ホワイトを
+どのように　あそんでいるか　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">ポケットモンスター　ブラック・ホワイトを
+どのように　あそんでいるか　ちょうさします</language>
+      </row><row id="str_topic_1_caption">
+        <language name="JPN" width="256">じぶんの　まわりには　どんなひとが
+おおいのか　ちょうさを　します</language>
+        <language name="JPN_KANJI" width="256">じぶんの　まわりには　どんなひとが
+おおいのか　ちょうさを　します</language>
+      </row><row id="str_topic_2_caption">
+        <language name="JPN" width="256">どんな　ポケモンが　すきで　そのポケモンで
+どんな　あそびをしているのか　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">どんな　ポケモンが　すきで　そのポケモンで
+どんな　あそびをしているのか　ちょうさします</language>
+      </row><row id="str_topic_3_caption">
+        <language name="JPN" width="256">じぶんの　りそうや　みんなの　たいせつに
+しているものを　ちょうさをします</language>
+        <language name="JPN_KANJI" width="256">じぶんの　りそうや　みんなの　たいせつに
+しているものを　ちょうさをします</language>
+      </row><row id="str_topic_4_caption">
+        <language name="JPN" width="256">どんな　ひとが　すきなのか
+その　けいこうを　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">どんな　ひとが　すきなのか
+その　けいこうを　ちょうさします</language>
+      </row><row id="str_topic_5_caption">
+        <language name="JPN" width="256">みんなが　どんなきせつや　たべものが
+すきなのかを　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">みんなが　どんなきせつや　たべものが
+すきなのかを　ちょうさします</language>
+      </row><row id="str_topic_6_caption">
+        <language name="JPN" width="256">みんなが　どんな　しゅみを
+もっているのか　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">みんなが　どんな　しゅみを
+もっているのか　ちょうさします</language>
+      </row><row id="str_topic_7_caption">
+        <language name="JPN" width="256">みんなが　どんな　がっこうせいかつを
+おくっているのか　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">みんなが　どんな　がっこうせいかつを
+おくっているのか　ちょうさします</language>
+      </row><row id="str_topic_8_caption">
+        <language name="JPN" width="256">みんなが　どんな　あそびや　スポーツが
+すきなのか　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">みんなが　どんな　あそびや　スポーツが
+すきなのか　ちょうさします</language>
+      </row><row id="str_topic_9_caption">
+        <language name="JPN" width="256">ポケモンに　ついて　みんなのかんそうを
+くわしく　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">ポケモンに　ついて　みんなのかんそうを
+くわしく　ちょうさします</language>
       </row><row id="str_question_00">
-        <language name="JPN" width="256">ホワイトとブラック　どっち？</language>
-        <language name="JPN_KANJI" width="256">ホワイトとブラック　どっち？</language>
+        <language name="JPN" width="256">・ホワイトとブラック　どっち？</language>
+        <language name="JPN_KANJI" width="256">・ホワイトとブラック　どっち？</language>
       </row><row id="str_question_01">
-        <language name="JPN" width="256">おとこのこ　おんなのこ　どっち？</language>
-        <language name="JPN_KANJI" width="256">おとこのこ　おんなのこ　どっち？</language>
+        <language name="JPN" width="256">・おとこのこ　おんなのこ　どっち？</language>
+        <language name="JPN_KANJI" width="256">・おとこのこ　おんなのこ　どっち？</language>
       </row><row id="str_question_02">
-        <language name="JPN" width="256">たいせんと　こうかん　どっち？</language>
-        <language name="JPN_KANJI" width="256">たいせんと　こうかん　どっち？</language>
+        <language name="JPN" width="256">・たいせんと　こうかん　どっち？</language>
+        <language name="JPN_KANJI" width="256">・たいせんと　こうかん　どっち？</language>
       </row><row id="str_question_03">
-        <language name="JPN" width="256">とかいと　いなか　すむなら？</language>
-        <language name="JPN_KANJI" width="256">とかいと　いなか　すむなら？</language>
+        <language name="JPN" width="256">・とかいと　いなか　すむなら？</language>
+        <language name="JPN_KANJI" width="256">・とかいと　いなか　すむなら？</language>
       </row><row id="str_question_04">
-        <language name="JPN" width="256">あいてを　えらぶなら　どっち？</language>
-        <language name="JPN_KANJI" width="256">あいてを　えらぶなら　どっち？</language>
+        <language name="JPN" width="256">・あいてを　えらぶなら　どっち？</language>
+        <language name="JPN_KANJI" width="256">・あいてを　えらぶなら　どっち？</language>
       </row><row id="str_question_05">
-        <language name="JPN" width="256">ほしいのは　どっち？</language>
-        <language name="JPN_KANJI" width="256">ほしいのは　どっち？</language>
+        <language name="JPN" width="256">・ほしいのは　どっち？</language>
+        <language name="JPN_KANJI" width="256">・ほしいのは　どっち？</language>
       </row><row id="str_question_06">
-        <language name="JPN" width="256">あいてに　もとめるものは？</language>
-        <language name="JPN_KANJI" width="256">あいてに　もとめるものは？</language>
+        <language name="JPN" width="256">・あいてに　もとめるものは？</language>
+        <language name="JPN_KANJI" width="256">・あいてに　もとめるものは？</language>
       </row><row id="str_question_07">
-        <language name="JPN" width="256">どんな　ポケモンが　すき？</language>
-        <language name="JPN_KANJI" width="256">どんな　ポケモンが　すき？</language>
+        <language name="JPN" width="256">・どんな　ポケモンが　すき？</language>
+        <language name="JPN_KANJI" width="256">・どんな　ポケモンが　すき？</language>
       </row><row id="str_question_08">
-        <language name="JPN" width="256">さいしょにえらんだ　ポケモンは？</language>
-        <language name="JPN_KANJI" width="256">さいしょにえらんだ　ポケモンは？</language>
+        <language name="JPN" width="256">・さいしょにえらんだ　ポケモンは？</language>
+        <language name="JPN_KANJI" width="256">・さいしょにえらんだ　ポケモンは？</language>
       </row><row id="str_question_09">
-        <language name="JPN" width="256">あそびにいくなら？</language>
-        <language name="JPN_KANJI" width="256">あそびにいくなら？</language>
+        <language name="JPN" width="256">・あそびにいくなら？</language>
+        <language name="JPN_KANJI" width="256">・あそびにいくなら？</language>
       </row><row id="str_question_10">
-        <language name="JPN" width="256">すきな　がっこうの　じかんは？</language>
-        <language name="JPN_KANJI" width="256">すきな　がっこうの　じかんは？</language>
+        <language name="JPN" width="256">・すきな　がっこうの　じかんは？</language>
+        <language name="JPN_KANJI" width="256">・すきな　がっこうの　じかんは？</language>
       </row><row id="str_question_11">
-        <language name="JPN" width="256">だいじなのは？</language>
-        <language name="JPN_KANJI" width="256">だいじなのは？</language>
+        <language name="JPN" width="256">・だいじなのは？</language>
+        <language name="JPN_KANJI" width="256">・だいじなのは？</language>
       </row><row id="str_question_12">
-        <language name="JPN" width="256">どの　きせつが　すき？</language>
-        <language name="JPN_KANJI" width="256">どの　きせつが　すき？</language>
+        <language name="JPN" width="256">・どの　きせつが　すき？</language>
+        <language name="JPN_KANJI" width="256">・どの　きせつが　すき？</language>
       </row><row id="str_question_13">
-        <language name="JPN" width="256">どんな　たべものが　すき？</language>
-        <language name="JPN_KANJI" width="256">どんな　たべものが　すき？</language>
+        <language name="JPN" width="256">・どんな　たべものが　すき？</language>
+        <language name="JPN_KANJI" width="256">・どんな　たべものが　すき？</language>
       </row><row id="str_question_14">
-        <language name="JPN" width="256">すきな　にんげんの　タイプは？</language>
-        <language name="JPN_KANJI" width="256">すきな　にんげんの　タイプは？</language>
+        <language name="JPN" width="256">・すきな　にんげんの　タイプは？</language>
+        <language name="JPN_KANJI" width="256">・すきな　にんげんの　タイプは？</language>
       </row><row id="str_question_15">
-        <language name="JPN" width="256">ポケモンの　おもしろいところは？</language>
-        <language name="JPN_KANJI" width="256">ポケモンの　おもしろいところは？</language>
+        <language name="JPN" width="256">・ポケモンの　おもしろいところは？</language>
+        <language name="JPN_KANJI" width="256">・ポケモンの　おもしろいところは？</language>
       </row><row id="str_question_16">
-        <language name="JPN" width="256">すきな　べんきょうは？</language>
-        <language name="JPN_KANJI" width="256">すきな　べんきょうは？</language>
+        <language name="JPN" width="256">・すきな　べんきょうは？</language>
+        <language name="JPN_KANJI" width="256">・すきな　べんきょうは？</language>
       </row><row id="str_question_17">
-        <language name="JPN" width="256">にがてな　べんきょうは？</language>
-        <language name="JPN_KANJI" width="256">にがてな　べんきょうは？</language>
+        <language name="JPN" width="256">・にがてな　べんきょうは？</language>
+        <language name="JPN_KANJI" width="256">・にがてな　べんきょうは？</language>
       </row><row id="str_question_18">
-        <language name="JPN" width="256">もし　なれるなら？</language>
-        <language name="JPN_KANJI" width="256">もし　なれるなら？</language>
+        <language name="JPN" width="256">・もし　なれるなら？</language>
+        <language name="JPN_KANJI" width="256">・もし　なれるなら？</language>
       </row><row id="str_question_19">
-        <language name="JPN" width="256">きゅうじつは　なにしてる？</language>
-        <language name="JPN_KANJI" width="256">きゅうじつは　なにしてる？</language>
+        <language name="JPN" width="256">・きゅうじつは　なにしてる？</language>
+        <language name="JPN_KANJI" width="256">・きゅうじつは　なにしてる？</language>
       </row><row id="str_question_20">
-        <language name="JPN" width="256">どんな　おんがくが　すき？</language>
-        <language name="JPN_KANJI" width="256">どんな　おんがくが　すき？</language>
+        <language name="JPN" width="256">・どんな　おんがくが　すき？</language>
+        <language name="JPN_KANJI" width="256">・どんな　おんがくが　すき？</language>
       </row><row id="str_question_21">
-        <language name="JPN" width="256">すきな　TVばんぐみは？</language>
-        <language name="JPN_KANJI" width="256">すきな　TVばんぐみは？</language>
+        <language name="JPN" width="256">・すきな　TVばんぐみは？</language>
+        <language name="JPN_KANJI" width="256">・すきな　TVばんぐみは？</language>
       </row><row id="str_question_22">
-        <language name="JPN" width="256">どんな　えいがが　すき？</language>
-        <language name="JPN_KANJI" width="256">どんな　えいがが　すき？</language>
+        <language name="JPN" width="256">・どんな　えいがが　すき？</language>
+        <language name="JPN_KANJI" width="256">・どんな　えいがが　すき？</language>
       </row><row id="str_question_23">
-        <language name="JPN" width="256">すきな　スポーツは？</language>
-        <language name="JPN_KANJI" width="256">すきな　スポーツは？</language>
+        <language name="JPN" width="256">・すきな　スポーツは？</language>
+        <language name="JPN_KANJI" width="256">・すきな　スポーツは？</language>
       </row><row id="str_question_24">
-        <language name="JPN" width="256">すきないろは　どれ？</language>
-        <language name="JPN_KANJI" width="256">すきないろは　どれ？</language>
+        <language name="JPN" width="256">・すきないろは　どれ？</language>
+        <language name="JPN_KANJI" width="256">・すきないろは　どれ？</language>
       </row><row id="str_question_25">
-        <language name="JPN" width="256">なにが　しゅみ？</language>
-        <language name="JPN_KANJI" width="256">なにが　しゅみ？</language>
+        <language name="JPN" width="256">・なにが　しゅみ？</language>
+        <language name="JPN_KANJI" width="256">・なにが　しゅみ？</language>
       </row><row id="str_question_26">
-        <language name="JPN" width="256">どんな　しごと？</language>
-        <language name="JPN_KANJI" width="256">どんな　しごと？</language>
+        <language name="JPN" width="256">・どんな　しごと？</language>
+        <language name="JPN_KANJI" width="256">・どんな　しごと？</language>
       </row><row id="str_question_27">
-        <language name="JPN" width="256">どのジムリーダーが　すき？</language>
-        <language name="JPN_KANJI" width="256">どのジムリーダーが　すき？</language>
+        <language name="JPN" width="256">・どのジムリーダーが　すき？</language>
+        <language name="JPN_KANJI" width="256">・どのジムリーダーが　すき？</language>
       </row><row id="str_question_28">
-        <language name="JPN" width="256">すきな　ポケモンの　タイプは？</language>
-        <language name="JPN_KANJI" width="256">すきな　ポケモンの　タイプは？</language>
+        <language name="JPN" width="256">・すきな　ポケモンの　タイプは？</language>
+        <language name="JPN_KANJI" width="256">・すきな　ポケモンの　タイプは？</language>
       </row><row id="str_question_29">
-        <language name="JPN" width="256">ゲームプレイじかんは？</language>
-        <language name="JPN_KANJI" width="256">ゲームプレイじかんは？</language>
+        <language name="JPN" width="256">・ゲームプレイじかんは？</language>
+        <language name="JPN_KANJI" width="256">・ゲームプレイじかんは？</language>
       </row><row id="str_question_00_caption">
-        <language name="JPN" width="256">ほそく1</language>
-        <language name="JPN_KANJI" width="256">補足1</language>
+        <language name="JPN" width="256">ポケットモンスターＷＢで　ホワイトとブラック
+どちらを　あそんでいる？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">ポケットモンスターＷＢで　ホワイトとブラック
+どちらを　あそんでいる？　のアンケート</language>
       </row><row id="str_question_01_caption">
-        <language name="JPN" width="256">ほそく2</language>
-        <language name="JPN_KANJI" width="256">補足2</language>
+        <language name="JPN" width="256">おとこのこ　おんなのこ　どっちが　おおい？
+をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">おとこのこ　おんなのこ　どっちが　おおい？
+をあつめた　アンケート</language>
       </row><row id="str_question_02_caption">
-        <language name="JPN" width="256">ほそく3</language>
-        <language name="JPN_KANJI" width="256">補足3</language>
+        <language name="JPN" width="256">ポケモンで　たいせん　こうかんが　どちらが
+すきか？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">ポケモンで　たいせん　こうかんが　どちらが
+すきか？　をあつめた　アンケート</language>
       </row><row id="str_question_03_caption">
-        <language name="JPN" width="256">ほそく4</language>
-        <language name="JPN_KANJI" width="256">補足4</language>
+        <language name="JPN" width="256">とかいの　くらしと　いなかの　くらし
+どちらがすき？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">とかいの　くらしと　いなかの　くらし
+どちらがすき？　をあつめた　アンケート</language>
       </row><row id="str_question_04_caption">
-        <language name="JPN" width="256">ほそく5</language>
-        <language name="JPN_KANJI" width="256">補足5</language>
+        <language name="JPN" width="256">あたまがいい　ひとと　うんどうのできる　ひと
+もしえらぶなら　どちらをえらぶ？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">あたまがいい　ひとと　うんどうのできる　ひと
+もしえらぶなら　どちらをえらぶ？　のアンケート</language>
       </row><row id="str_question_05_caption">
-        <language name="JPN" width="256">ほそく6</language>
-        <language name="JPN_KANJI" width="256">補足6</language>
+        <language name="JPN" width="256">もし　じかんと　おかね　すきなだけ
+もらえるなら　どちらをえらぶ？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">もし　じかんと　おかね　すきなだけ
+もらえるなら　どちらをえらぶ？　のアンケート</language>
       </row><row id="str_question_06_caption">
-        <language name="JPN" width="256">ほそく7</language>
-        <language name="JPN_KANJI" width="256">補足7</language>
+        <language name="JPN" width="256">がいけんのいい　ひとと　こころが　きれいなひと
+もしえらぶなら　どちらをえらぶ？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">がいけんのいい　ひとと　こころが　きれいなひと
+もしえらぶなら　どちらをえらぶ？　のアンケート</language>
       </row><row id="str_question_07_caption">
-        <language name="JPN" width="256">ほそく8</language>
-        <language name="JPN_KANJI" width="256">補足8</language>
+        <language name="JPN" width="256">みんなは　どんなポケモンが　すき？
+をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">みんなは　どんなポケモンが　すき？
+をあつめた　アンケート</language>
       </row><row id="str_question_08_caption">
-        <language name="JPN" width="256">ほそく9</language>
-        <language name="JPN_KANJI" width="256">補足9</language>
+        <language name="JPN" width="256">たびのはじめに　えらんだ　ポケモンは　
+どの　タイプのポケモン？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">たびのはじめに　えらんだ　ポケモンは　
+どの　タイプのポケモン？　のアンケート</language>
       </row><row id="str_question_09_caption">
-        <language name="JPN" width="256">ほそく10</language>
-        <language name="JPN_KANJI" width="256">補足10</language>
+        <language name="JPN" width="256">やすみのひに　もしそとに　あそびにいくなら
+どこにする？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">やすみのひに　もしそとに　あそびにいくなら
+どこにする？　をあつめた　アンケート</language>
       </row><row id="str_question_10_caption">
-        <language name="JPN" width="256">ほそく11</language>
-        <language name="JPN_KANJI" width="256">補足11</language>
+        <language name="JPN" width="256">がっこうせいかつで　いちばんすきな　じかんは
+どのじかん？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">がっこうせいかつで　いちばんすきな　じかんは
+どのじかん？　をあつめた　アンケート</language>
       </row><row id="str_question_11_caption">
-        <language name="JPN" width="256">ほそく12</language>
-        <language name="JPN_KANJI" width="256">補足12</language>
+        <language name="JPN" width="256">じぶんにとって　たいせつなのは　かぞく？
+ともだち？　それとも　じぶん？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">じぶんにとって　たいせつなのは　かぞく？
+ともだち？　それとも　じぶん？　のアンケート</language>
       </row><row id="str_question_12_caption">
-        <language name="JPN" width="256">ほそく13</language>
-        <language name="JPN_KANJI" width="256">補足13</language>
+        <language name="JPN" width="256">みんなの　すきなきせつは　どのきせつ？
+をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">みんなの　すきなきせつは　どのきせつ？
+をあつめた　アンケート</language>
       </row><row id="str_question_13_caption">
-        <language name="JPN" width="256">ほそく14</language>
-        <language name="JPN_KANJI" width="256">補足14</language>
+        <language name="JPN" width="256">みんなの　すきなたべものは
+どんな　たべもの？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">みんなの　すきなたべものは
+どんな　たべもの？　をあつめた　アンケート</language>
       </row><row id="str_question_14_caption">
-        <language name="JPN" width="256">ほそく15</language>
-        <language name="JPN_KANJI" width="256">補足15</language>
+        <language name="JPN" width="256">みんなの　すきなひとは
+どんな　タイプのひと？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">みんなの　すきなひとは
+どんな　タイプのひと？　のアンケート</language>
       </row><row id="str_question_15_caption">
-        <language name="JPN" width="256">ほそく16</language>
-        <language name="JPN_KANJI" width="256">補足16</language>
+        <language name="JPN" width="256">ポケットモンスターの　どんなぶぶんが
+おもしろい？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">ポケットモンスターの　どんなぶぶんが
+おもしろい？　をあつめた　アンケート</language>
       </row><row id="str_question_16_caption">
-        <language name="JPN" width="256">ほそく17</language>
-        <language name="JPN_KANJI" width="256">補足17</language>
+        <language name="JPN" width="256">がっこうの　べんきょうで　すきなものは？
+をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">がっこうの　べんきょうで　すきなものは？
+をあつめた　アンケート</language>
       </row><row id="str_question_17_caption">
-        <language name="JPN" width="256">ほそく18</language>
-        <language name="JPN_KANJI" width="256">補足18</language>
+        <language name="JPN" width="256">がっこうの　べんきょうで　きらいなものは？
+をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">がっこうの　べんきょうで　きらいなものは？
+をあつめた　アンケート</language>
       </row><row id="str_question_18_caption">
-        <language name="JPN" width="256">ほそく19</language>
-        <language name="JPN_KANJI" width="256">補足19</language>
+        <language name="JPN" width="256">ポケットモンスターの　せかいで　もし
+なれるなら　なにになりたい？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">ポケットモンスターの　せかいで　もし
+なれるなら　なにになりたい？　のアンケート</language>
       </row><row id="str_question_19_caption">
-        <language name="JPN" width="256">ほそく20</language>
-        <language name="JPN_KANJI" width="256">補足20</language>
+        <language name="JPN" width="256">きゅうじつのひ　どんなことをしている？
+をしらべた　アンケート</language>
+        <language name="JPN_KANJI" width="256">きゅうじつのひ　どんなことをしている？
+をしらべた　アンケート</language>
       </row><row id="str_question_20_caption">
-        <language name="JPN" width="256">ほそく21</language>
-        <language name="JPN_KANJI" width="256">補足21</language>
+        <language name="JPN" width="256">みんなの　すきな　おんがくは
+どんな　おんがく？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">みんなの　すきな　おんがくは
+どんな　おんがく？　のアンケート</language>
       </row><row id="str_question_21_caption">
-        <language name="JPN" width="256">ほそく22</language>
-        <language name="JPN_KANJI" width="256">補足22</language>
+        <language name="JPN" width="256">みんなの　すきな　ＴＶばんぐみは
+どんな　ばんぐみ？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">みんなの　すきな　ＴＶばんぐみは
+どんな　ばんぐみ？　をあつめた　アンケート</language>
       </row><row id="str_question_22_caption">
-        <language name="JPN" width="256">ほそく23</language>
-        <language name="JPN_KANJI" width="256">補足23</language>
+        <language name="JPN" width="256">みんなの　すきな　えいがは
+どんな　えいが？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">みんなの　すきな　えいがは
+どんな　えいが？　をあつめた　アンケート</language>
       </row><row id="str_question_23_caption">
-        <language name="JPN" width="256">ほそく24</language>
-        <language name="JPN_KANJI" width="256">補足24</language>
+        <language name="JPN" width="256">みんなの　すきな　スポーツは
+どんな　スポーツ？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">みんなの　すきな　スポーツは
+どんな　スポーツ？　をあつめた　アンケート</language>
       </row><row id="str_question_24_caption">
-        <language name="JPN" width="256">ほそく25</language>
-        <language name="JPN_KANJI" width="256">補足25</language>
+        <language name="JPN" width="256">このなかで　えらぶなら　どんないろが　すき？
+のアンケート</language>
+        <language name="JPN_KANJI" width="256">このなかで　えらぶなら　どんないろが　すき？
+のアンケート</language>
       </row><row id="str_question_25_caption">
-        <language name="JPN" width="256">ほそく26</language>
-        <language name="JPN_KANJI" width="256">補足26</language>
+        <language name="JPN" width="256">みんなが　どんなことを　しゅみにしている？
+をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">みんなが　どんなことを　しゅみにしている？
+をあつめた　アンケート</language>
       </row><row id="str_question_26_caption">
-        <language name="JPN" width="256">ほそく27</language>
-        <language name="JPN_KANJI" width="256">補足27</language>
+        <language name="JPN" width="256">みんなは　どんなことを　しごとにしている？
+をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">みんなは　どんなことを　しごとにしている？
+をあつめた　アンケート</language>
       </row><row id="str_question_27_caption">
-        <language name="JPN" width="256">ほそく28</language>
-        <language name="JPN_KANJI" width="256">補足28</language>
+        <language name="JPN" width="256">ポケットモンスター　ブラック・ホワイトで
+どのジムリーダーが　すき？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">ポケットモンスター　ブラック・ホワイトで
+どのジムリーダーが　すき？　のアンケート</language>
       </row><row id="str_question_28_caption">
-        <language name="JPN" width="256">ほそく29</language>
-        <language name="JPN_KANJI" width="256">補足29</language>
+        <language name="JPN" width="256">ポケモンの　どのタイプが　すき？
+をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">ポケモンの　どのタイプが　すき？
+をあつめた　アンケート</language>
       </row><row id="str_question_29_caption">
-        <language name="JPN" width="256">ほそく30</language>
-        <language name="JPN_KANJI" width="256">補足30</language>
+        <language name="JPN" width="256">みんなが　ポケットモンスターＷＢで
+あそんだじかんを　あつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">みんなが　ポケットモンスターＷＢで
+あそんだじかんを　あつめた　アンケート</language>
       </row><row id="str_answer_000">
         <language name="JPN" width="256">無回答</language>
         <language name="JPN_KANJI" width="256">無回答</language>
