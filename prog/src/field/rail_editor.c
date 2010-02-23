@@ -21,6 +21,8 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 
+#include "system/main.h"
+
 #include "arc/arc_def.h"
 #include "arc/debug/rail_editor.naix"
 
@@ -391,7 +393,7 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
 		// バッファのメモリ確保
 		p_wk->p_recv = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID(p_wk->p_fieldmap), sizeof(RE_RECV_BUFF) );
-		p_wk->p_tmp_buff = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID(p_wk->p_fieldmap), RE_TMP_BUFF_SIZE );
+		p_wk->p_tmp_buff = GFL_HEAP_AllocClearMemory( HEAPID_PROC, RE_TMP_BUFF_SIZE );
 
 		// カメラターゲット設定
 //		FIELD_CAMERA_BindTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->camera_target );
