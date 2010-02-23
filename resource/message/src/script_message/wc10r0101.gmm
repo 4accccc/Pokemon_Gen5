@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-12T18:51:04"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T12:58:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="420" top="329" right="1125" bottom="949" maximized="no" rayout="Vertical2">
+	<dialog left="63" top="333" right="768" bottom="953" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1052" top="258" right="1525" bottom="656" visible="yes"/>
+		<tag-palette left="807" top="258" right="1280" bottom="656" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -309,7 +309,7 @@
 ポケモンと　共に　暮らす[BE:00:ページ切り替え（行送り）]
 それが　このホワイトフォレスト[BE:01:ページ切り替え（クリア）]
 きみも　森の声を　聞いてみなさい
-ウエルカムと　言っておるよ[BE:01:ページ切り替え（クリア）]
+ウエルカムと　いっておるよ[BE:01:ページ切り替え（クリア）]
 ホッ　ホッ　フォッー</language>
 	</row>
 
@@ -362,7 +362,7 @@
 		<language name="JPN_KANJI" width="256">また　明日
 ここに　来ておくれ[BE:01:ページ切り替え（クリア）]
 森も　ウエルカムを
-言ってくれる　だろうから</language>
+いってくれる　だろうから</language>
 	</row>
 
 	<row id="msg_wc10r0101_oldman1_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
