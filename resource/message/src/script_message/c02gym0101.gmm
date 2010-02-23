@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T16:50:10"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T17:10:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -619,18 +619,19 @@ GIRL3</attribute>
 研究も　しているってね</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_012" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_girl3_012" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
-・盗難イベント発生時
-・仮メッセージ</comment>
+・盗難イベント発生時</comment>
 		<attribute name="キャラ指定">見物客その２
 GIRL3</attribute>
 		<language name="JPN" width="256">ドロボウたちの
 あの　だいたんな　こうどう……▼
 まるで　じぶんたちの
 せいぎを　しんじているみたい</language>
-		<language name="JPN_KANJI" width="256">泥棒たちの　あの　大胆な行動……
-自分たちの　正義を　信じているみたい</language>
+		<language name="JPN_KANJI" width="256">ドロボウたちの
+あの　大胆な　行動……▼
+自分たちの
+正義を　信じているみたい</language>
 	</row>
 
 	<row id="msg_c02gym0101_oldman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
@@ -657,7 +658,7 @@ OLDMAN1</attribute>
 いったい　なにもの　なんだ！？</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・カイリューの骨格標本</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -667,7 +668,18 @@ OLDMAN1</attribute>
 ポケモンの　こっかくひょうほん</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_01a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・カイリューの骨格標本
+･盗難イベント時</comment>
+		<attribute name="キャラ指定">展示物の解説プレート</attribute>
+		<language name="JPN" width="256">プラズマだんに　うばわれ
+ホネの　いちぶが　ない！！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団に　奪われ
+ホネの　一部が　ない！！</language>
+	</row>
+
+	<row id="msg_c02gym0101_plate_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・アーマルドのカセキ</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -677,7 +689,7 @@ OLDMAN1</attribute>
 まもっていた　ポケモンのカセキ</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・デオキシス用の隕石</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -687,7 +699,7 @@ OLDMAN1</attribute>
 ふちゃくしていた　いんせき</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ライトストーン/ダークストーン</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -697,7 +709,7 @@ OLDMAN1</attribute>
 こだいの　まるい　いし</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・石版</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -707,7 +719,7 @@ OLDMAN1</attribute>
 もじが　きざまれた　せきばん</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_06" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・木の仮面</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -717,7 +729,7 @@ OLDMAN1</attribute>
 まつりのときに　つけた　かめん</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_07" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ガラガラの骨</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
