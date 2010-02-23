@@ -51,6 +51,7 @@
 //アーカイブ
 #include "arc_def.h"
 
+#include "field/zonedata.h"
 //外部公開
 #include "app/beacon_detail.h"
 
@@ -288,25 +289,24 @@ static const BEACON_DETAIL* sub_GetBeaconDetailParam( GAMEBEACON_ACTION action )
 //==================================================================
 static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset )
 {
-  GAMEBEACON_ACTION action = GAMEBEACON_Get_Action_ActionNo(info);
+  GAMEBEACON_DETAILS_NO details = GAMEBEACON_Get_Details_DetailsNo(info);
 
-  switch( action ){
-  case GAMEBEACON_ACTION_BATTLE_WILD_POKE_START:
-  case GAMEBEACON_ACTION_BATTLE_SP_POKE_START:
-    WORDSET_RegisterPokeMonsNameNo( wordset, 1,GAMEBEACON_Get_Action_Monsno(info));
+  switch( details ){
+  case GAMEBEACON_DETAILS_NO_BATTLE_WILD_POKE:        ///<野生ポケモンと対戦中
+  case GAMEBEACON_DETAILS_NO_BATTLE_SP_POKE:          ///<特別なポケモンと対戦中
+    WORDSET_RegisterPokeMonsNameNo( wordset, 1,GAMEBEACON_Get_Details_BattleMonsNo(info));
     break;
-  case GAMEBEACON_ACTION_BATTLE_TRAINER_START:
-  case GAMEBEACON_ACTION_BATTLE_LEADER_START:
-  case GAMEBEACON_ACTION_BATTLE_BIGFOUR_START:
-  case GAMEBEACON_ACTION_BATTLE_CHAMPION_START:
-    WORDSET_RegisterTrainerName( wordset, 0, GAMEBEACON_Get_Action_TrNo(info) );
+  case GAMEBEACON_DETAILS_NO_BATTLE_TRAINER:
+  case GAMEBEACON_DETAILS_NO_BATTLE_JIMLEADER:
+  case GAMEBEACON_DETAILS_NO_BATTLE_BIGFOUR:
+  case GAMEBEACON_DETAILS_NO_BATTLE_CHAMPION:
+    WORDSET_RegisterTrainerName( wordset, 0, GAMEBEACON_Get_Details_BattleTrainer(info) );
     break;
   default:
-    WORDSET_RegisterPlaceName( wordset, 0, GAMEBEACON_Get_ZoneID( info ) );
+    WORDSET_RegisterPlaceName( wordset, 0, ZONEDATA_GetPlaceNameID(GAMEBEACON_Get_ZoneID( info )) );
     break;
   }
 }
-
 
 /*
  *  @brief  アクター アニメスタート
@@ -587,7 +587,7 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
     WORDSET_RegisterNumber( wk->wset, 0,
       hour%12, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterNumber( wk->wset, 1,
-      (wk->tmpTime&0xFF), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      (wk->tmpTime&0xFF), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
   
     print_GetMsgToBuf( wk, msg_receive_time01+(hour/12) );
     PRINTSYS_PrintColor( wk->win_popup.bmp, 0, 0, wk->str_expand, wk->font, FCOL_POPUP );

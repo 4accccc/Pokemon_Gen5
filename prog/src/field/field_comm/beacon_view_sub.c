@@ -149,7 +149,9 @@ void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
   //矢印と御礼メニューの見た目セット
   obj_UpDownViewSet( wk );
   obj_ThanksViewSet( wk );
-
+  if( wk->my_data.power == GPOWER_ID_NULL ){
+    act_AnmStart( wk->pAct[ACT_POWER], ACTANM_POWER_OFF );
+  }
   GFL_NET_ReloadIcon();
 }
 
@@ -236,6 +238,10 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
 
   //スタックに積まれた情報をチェック
   if( !GAMEBEACON_Stack_GetInfo( wk->infoStack, wk->tmpInfo, &wk->tmpTime ) ){
+    return FALSE;
+  }
+  //エラーチェック
+  if( GAMEBEACON_Check_Error( wk->tmpInfo)){
     return FALSE;
   }
   ofs = GAMEBEACON_InfoTblRing_SetBeacon( wk->infoLog,
@@ -332,6 +338,7 @@ BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk )
     if( wk->eff_task_ct ){
       break;
     }
+    wk->sub_seq = 0;
     return TRUE;
   }
   return FALSE;
@@ -448,7 +455,7 @@ static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk )
 void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state )
 {
   if( id & MENU_POWER ){
-    if( wk->my_data.power != 0 ){
+    if( wk->my_data.power != GPOWER_ID_NULL ){
       act_AnmStart( wk->pAct[ACT_POWER], state+ACTANM_POWER_ON );
     }
   }
@@ -608,20 +615,14 @@ static int touchin_CheckUpDown( BEACON_VIEW_PTR wk, POINT* tp )
 static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp )
 {
   int i, ret;
-  u8  enable = 4;
   GFL_UI_TP_HITTBL tbl[2];
   static const u16 se_tbl[] = { BVIEW_SE_DECIDE, BVIEW_SE_DECIDE, BVIEW_SE_CANCEL };
 
-  if( wk->my_data.power != GPOWER_ID_NULL ){
-    enable |= 1;
-  }
-  if( wk->ctrl.max > 0 ){
-    enable |= 2;
-  }
   tbl[1].rect.top = GFL_UI_TP_HIT_END;
 
   for(i = 0;i < ACT_MENU_NUM;i++){
-    if( !(enable & (1<<i))){
+    u8 seq = GFL_CLACT_WK_GetAnmSeq( wk->pAct[ACT_POWER+i] )-(ACTANM_POWER_ON+i*ACT_ANM_SET);
+    if( (seq % ACT_ANM_SET) >= 2){
       continue;
     }
     tbl[0].rect.top = ACT_MENU_PY;
@@ -1157,21 +1158,8 @@ static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 ofs, u
   }else{
     effReq_PanelScroll( wk, dir, pp, NULL );
   }
+  BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
 //  wk->ctrl.view_top = pp->data_ofs;
-}
-
-
-/*
- *  @brief  指定したindexのデータが描画ラインにいるかどうか？
- */
-static list_panel_IsView( BEACON_VIEW_PTR wk, u8 idx )
-{
-  int i;
-
-  if(idx < wk->ctrl.view_top || idx >= wk->ctrl.view_btm ){
-    return FALSE;
-  }
-  return TRUE;
 }
 
 static int list_GetScrollLineNum( BEACON_VIEW_PTR wk, BOOL new_f )
@@ -1504,8 +1492,12 @@ typedef struct _TASKWK_WIN_GPOWER{
   int child_task;
 
   GPOWER_ID  g_power;
-  u32 tr_id;
-
+  u16 tr_id;
+  u16 item_num;
+  u16 item_use;
+  u16 mypower_use;
+  u16 mypower_min;
+  u16 mypower_sec;
   BEACON_VIEW_PTR bvp;
   int* task_ct;
 }TASKWK_WIN_GPOWER;
@@ -1556,6 +1548,23 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u32 tr_id,
 
   WORDSET_RegisterGPowerName( wk->wordset, 1, g_power );
 
+  //使用ポイント取得
+  if( twk->type == GPOWER_USE_MINE ){
+    twk->item_use = 1;
+    twk->item_num = MYITEM_GetItemNum(wk->item_sv, ITEM_PARESUDAMA, wk->tmpHeapID);
+    
+    WORDSET_RegisterNumber( wk->wordset, 2, twk->item_use, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wk->wordset, 3, twk->item_num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  
+    twk->mypower_use = GPOWER_Check_MyPower();
+    if( twk->mypower_use > 0 ){
+      twk->mypower_min = twk->mypower_use/60;
+      twk->mypower_sec = twk->mypower_use%60;
+      WORDSET_RegisterNumber( wk->wordset, 4, twk->mypower_min, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( wk->wordset, 5, twk->mypower_sec, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    }
+  }
+
   twk->task_ct = task_ct;
   (*task_ct)++;
 }
@@ -1577,11 +1586,20 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
     twk->seq++;
     return;
   case 1:
-    if( twk->child_task == 0 ){
+    if( twk->child_task > 0 ){
+      return;
+    }
+    if( twk->mypower_use ){ //既に使用中
+      print_GetMsgToBuf( bvp, msg_sys_gpower_use_err02+(twk->mypower_min != 0) );
+      twk->seq = 5;
+    }else if( twk->item_num < twk->item_use ){  //アイテムが足りない
+      print_GetMsgToBuf( bvp, msg_sys_gpower_use_err01);
+      twk->seq = 5;
+    }else{
       print_GetMsgToBuf( bvp, DATA_GPowerUseMsg[twk->type] );
-      print_PopupWindow( bvp, bvp->str_expand, bvp->msg_spd );
       twk->seq++;
     }
+    print_PopupWindow( bvp, bvp->str_expand, bvp->msg_spd );
     return;
   case 2:
     if( print_PopupWindowStreamCheck( bvp ) ){
@@ -1613,6 +1631,7 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
 
       //使うGパワーを覚えておく
       bvp->ctrl.g_power = twk->g_power;
+      MYITEM_SubItem( bvp->item_sv, ITEM_PARESUDAMA, twk->item_use, bvp->tmpHeapID);
 
       twk->seq++;
     }

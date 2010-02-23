@@ -17,8 +17,10 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
+///1秒のフレーム数
+#define ONE_SECOND_FRAME    (60)
 ///1分のフレーム数
-#define ONE_MINUTE_FRAME    (60 * 60)
+#define ONE_MINUTE_FRAME    (ONE_SECOND_FRAME * 60)
 
 
 //==============================================================================
@@ -183,15 +185,20 @@ GPOWER_ID GPOWER_Check_OccurType(GPOWER_TYPE type, const POWER_CONV_DATA *powerd
 /**
  * 自分のパワーが発動しているかチェック
  *
- * @retval  BOOL		TRUE:自分のパワーが発動している　FALSE:発動していない
+ * @retval  u32		0:発動していない 1以上:残りライフ(秒)
  */
 //==================================================================
-BOOL GPOWER_Check_MyPower(void)
+u32 GPOWER_Check_MyPower(void)
 {
+  u32 sec;
   if(GPowerSys.my_power_type == GPOWER_TYPE_NULL){
-    return FALSE;
+    return 0;
   }
-  return TRUE;
+  sec = GPowerSys.life[GPowerSys.my_power_type]/ONE_SECOND_FRAME;
+  if( sec == 0){
+    return 1; //1秒以下は1秒と返すことにする
+  }
+  return sec;
 }
 
 //==================================================================

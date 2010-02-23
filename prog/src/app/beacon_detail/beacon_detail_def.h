@@ -164,7 +164,7 @@ enum
 #define BMP_PROF02_DAT_SX  (BMP_PROF_SX-BMP_PROF02_DAT_PX)
 #define BMP_PROF02_DAT_SY  (BMP_PROF_SY)
 
-#define BMP_RECORD_DAT_PX  (17)
+#define BMP_RECORD_DAT_PX  (18)
 #define BMP_RECORD_DAT_SX  (BMP_RECORD_SX-BMP_RECORD_DAT_PX)
 #define BMP_RECORD_DAT_SY  (BMP_RECORD_SY)
 
@@ -215,7 +215,7 @@ enum{
 #define POPUP_HEIGHT  (8*8)
 #define POPUP_DIFF    (8)
 #define POPUP_COUNT   (POPUP_HEIGHT/POPUP_DIFF)
-#define POPUP_WAIT    (30*3)
+#define POPUP_WAIT    (30*5)
 
 
 ///ページスクロール

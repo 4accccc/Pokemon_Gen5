@@ -16,8 +16,10 @@
 #include "system/gfl_use.h"
 #include "savedata/intrude_save.h"
 #include "savedata/misc.h"
+#include "savedata/myitem_savedata.h"
 #include "app/app_taskmenu.h"
 #include "app/app_keycursor.h"
+#include "item/itemsym.h"
 #include "msg/msg_beacon_status.h"
 
 #include "sound/pm_sndsys.h"
@@ -439,10 +441,10 @@ typedef struct _PANEL_WORK{
  */
 typedef struct _LOG_CTRL{
   u8  max;  //ログ数
-  u8  top;  //今描画されている先頭index
+//  u8  top;  //今描画されている先頭index
 //  u8  next_panel; //次にデータが来た時書き込むパネルindex
   u8  view_top;
-  u8  view_btm;
+//  u8  view_btm;
   u8  view_max;
   u8  target;
 
@@ -470,6 +472,7 @@ typedef struct _BEACON_VIEW{
   FIELDMAP_WORK* fieldWork; 
   FIELD_SUBSCREEN_WORK *subscreen;
   MISC* misc_sv;
+  MYITEM_PTR item_sv;
 
   ////////////////////////////////////////
   BEACON_STATUS* b_status;
@@ -486,6 +489,7 @@ typedef struct _BEACON_VIEW{
   int       event_id;
 
   int       io_interval;
+  u8        menu_active;
   u8        msg_spd;
   LOG_CTRL  ctrl;
 

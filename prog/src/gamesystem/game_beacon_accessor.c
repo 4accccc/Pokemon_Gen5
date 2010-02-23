@@ -712,6 +712,18 @@ void GAMEBEACON_Get_ThankyouMessage(const GAMEBEACON_INFO *info, STRBUF *dest)
 
 //==================================================================
 /**
+ * 詳細情報パラメータ取得：詳細情報No
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  GAMEBEACON_DETAILS_NO 詳細No
+ */
+//==================================================================
+GAMEBEACON_DETAILS_NO GAMEBEACON_Get_Details_DetailsNo(const GAMEBEACON_INFO *info)
+{
+  return info->details.details_no;
+}
+
+//==================================================================
+/**
  * 詳細情報パラメータ取得：戦闘相手のトレーナーコード
  * @param   info		ビーコン情報へのポインタ
  * @retval  u16		  トレーナーコード

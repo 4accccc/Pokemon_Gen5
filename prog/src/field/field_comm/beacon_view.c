@@ -389,6 +389,7 @@ static int seq_ViewUpdate( BEACON_VIEW_PTR wk )
   if( wk->ctrl.g_power != GPOWER_ID_NULL){
     event_Request( wk, EV_GPOWER_USE );
   }
+  BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
   return SEQ_MAIN;
 }
 
@@ -519,9 +520,10 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   {
     INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(save);
     wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv);
-//    wk->my_data.power = 1;
+    wk->my_data.power = 1;
     wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
   }
+  wk->item_sv = GAMEDATA_GetMyItem( wk->gdata );
   wk->misc_sv = (MISC*)SaveData_GetMiscConst( save );
   wk->log_count = MISC_CrossComm_GetSuretigaiCount( wk->misc_sv );
 
