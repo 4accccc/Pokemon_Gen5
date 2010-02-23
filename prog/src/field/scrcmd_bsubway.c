@@ -43,6 +43,7 @@
 
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 #include "../../../resource/fldmapdata/script/c04r0111_def.h"
+#include "msg/script/msg_c04r0111.h"
 
 //======================================================================
 //  define
@@ -51,6 +52,18 @@
 //======================================================================
 //  struct
 //======================================================================
+//--------------------------------------------------------------
+/// HOME_NPC_DATA 途中駅NPCデータ
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 code;
+  u16 stage;
+  s16 gx;
+  s16 gy;
+  s16 gz;
+  u16 msg_id;
+}HOME_NPC_DATA;
 
 //======================================================================
 //  proto
@@ -60,6 +73,11 @@ static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk );
 static BOOL evCommRecvData( VMHANDLE *core, void *wk );
 
+static void bsway_SetHomeNPC(
+    BSUBWAY_SCRWORK *bsw_scr, MMDLSYS *mmdlsys, FIELDMAP_WORK *fieldmap );
+static u16 bsway_GetHomeNPCMsgID( const MMDL *mmdl );
+
+
 static BOOL bsway_CheckEntryPokeNum(
     u16 num, GAMESYS_WORK *gsys, BOOL item_flag );
 static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys );
@@ -67,6 +85,7 @@ static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys );
 static const FLDEFF_BTRAIN_TYPE data_TrainModeType[BSWAY_MODE_MAX];
 static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX];
 
+const HOME_NPC_DATA data_HomeNpcTbl[];
 
 //======================================================================
 //  バトルサブウェイ　スクリプト関連
@@ -458,13 +477,15 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //途中駅NPCのメッセージID取得
   case BSWTOOL_GET_HOME_NPC_MSGID:
     {
-#if 0
       u16 id = param0;
       MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
       MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
-      if( mmdl != 
       *ret_wk = 0;
-#endif
+      GF_ASSERT( mmdl != NULL );
+      
+      if( mmdl != NULL ){
+        *ret_wk = bsway_GetHomeNPCMsgID( mmdl );
+      }
     }
     break;
   //----TOOL Wifi関連
@@ -580,7 +601,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     *ret_wk = BSUBWAY_SCRWORK_GetTrainerOBJCode( bsw_scr, param0 );
     break;
   //バトル呼び出し
-	case BSWSUB_LOCAL_BTL_CALL:
+  case BSWSUB_LOCAL_BTL_CALL:
     #ifndef DEBUG_BSW_BTL_SKIP
     SCRIPT_CallEvent(
         sc, BSUBWAY_EVENT_TrainerBattle(bsw_scr,gsys,fieldmap) );
@@ -679,6 +700,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //ホーム、OBJセット
   case BSWSUB_SET_HOME_OBJ:
+    {
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      bsway_SetHomeNPC( bsw_scr, mmdlsys, fieldmap );
+    }
     break;
   //通信中フラグをセット
   case BSWSUB_SET_COMM_FLAG:
@@ -703,6 +728,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       *ret_wk = SCR_BATTLE_RESULT_WIN;
       #endif
     }
+    break;
+  //ホームに着いた際に行うワークセット
+  case BSWSUB_SET_HOME_WORK:
+    BSUBWAY_SCRWORK_SetHomeWork( bsw_scr, gsys );
     break;
   //----ワーク依存　通信関連
   //通信開始
@@ -914,6 +943,66 @@ static BOOL evCommRecvData( VMHANDLE *core, void *wk )
 //======================================================================
 //  途中駅NPC
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * 途中駅NPC配置
+ * @param 
+ * @retval
+ */
+//--------------------------------------------------------------
+static void bsway_SetHomeNPC(
+    BSUBWAY_SCRWORK *bsw_scr, MMDLSYS *mmdlsys, FIELDMAP_WORK *fieldmap )
+{
+  MMDL *mmdl;
+  int i = 0;
+  u16 obj_id = BSW_HOME_OBJID_NPC_FIRST;
+  int zone_id = FIELDMAP_GetZoneID( fieldmap );
+  BSWAY_PLAYMODE mode = bsw_scr->play_mode;
+  const HOME_NPC_DATA *data = data_HomeNpcTbl;
+  BSUBWAY_SCOREDATA *bsw_score = bsw_scr->scoreData;
+  u16 stage = BSUBWAY_SCOREDATA_GetStageNo( bsw_score, mode );
+  
+  switch( mode ){
+  case BSWAY_MODE_S_SINGLE:
+  case BSWAY_MODE_S_DOUBLE:
+  case BSWAY_MODE_S_MULTI:
+  case BSWAY_MODE_S_COMM_MULTI:
+    stage += 3;
+  }
+  
+  while( data->code != OBJCODEMAX ){
+    if( data->stage == stage ){
+      mmdl = MMDLSYS_AddMMdlParam( mmdlsys,
+          data->gx, data->gz, (DIR_UP+i) % DIR_MAX4,
+          obj_id, data->code, MV_DIR_RND, zone_id );
+      
+      MMDL_SetParam( mmdl, i, MMDL_PARAM_0 );
+      MMDL_SetParam( mmdl, data->msg_id, MMDL_PARAM_1 );
+      MMDL_SetEventID( mmdl, SCRID_C04R0111_NPC_TALK );
+      
+      if( obj_id < 0xff ){
+        obj_id++;
+      }else{
+        GF_ASSERT( 0 );
+      }
+    }
+    
+    data++;
+    i++;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 途中駅NPC メッセージID取得
+ * @param 
+ * @retval
+ */
+//--------------------------------------------------------------
+static u16 bsway_GetHomeNPCMsgID( const MMDL *mmdl )
+{
+  return( MMDL_GetParam(mmdl,MMDL_PARAM_1) );
+}
 
 //======================================================================
 //  parts
@@ -1018,3 +1107,90 @@ static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX] =
   },
 };
 
+//--------------------------------------------------------------
+/// バトルサブウェイ　途中駅NPCデータ
+//--------------------------------------------------------------
+static const HOME_NPC_DATA data_HomeNpcTbl[] =
+{
+  {BOY1,1,71,0,17,msg_c04r0111_boy2_1},
+  {BOY1,4,62,0,14,msg_c04r0111_boy2_2},
+  {GIRL2,1,66,0,14,msg_c04r0111_girl2_1},
+  {GIRL2,4,50,0,16,msg_c04r0111_girl2_2},
+  {BOY3,1,23,0,16,msg_c04r0111_boy3_1},
+  {BOY3,4,41,0,14,msg_c04r0111_boy3_2},
+  {GIRL3,1,35,0,16,msg_c04r0111_girl3_1},
+  {GIRL3,4,42,0,14,msg_c04r0111_girl3_2},
+  {BACKPACKERM,1,61,0,13,msg_c04r0111_backpackerm_1},
+  {BACKPACKERM,2,31,0,14,msg_c04r0111_backpackerm_2},
+  {BACKPACKERM,4,58,0,15,msg_c04r0111_backpackerm_3},
+  {BACKPACKERM,9,22,0,13,msg_c04r0111_backpackerm_4},
+  {BACKPACKERM,15,42,0,17,msg_c04r0111_backpackerm_5},
+  {BACKPACKERW,2,67,0,17,msg_c04r0111_backpackerw_1},
+  {BACKPACKERW,4,12,0,16,msg_c04r0111_backpackerw_2},
+  {BACKPACKERW,8,38,0,14,msg_c04r0111_backpackerw_3},
+  {BACKPACKERW,12,28,0,16,msg_c04r0111_backpackerw_4},
+  {POLICEMAN,2,42,0,15,msg_c04r0111_policeman_1},
+  {POLICEMAN,3,19,0,16,msg_c04r0111_policeman_2},
+  {POLICEMAN,5,50,0,16,msg_c04r0111_policeman_3},
+  {POLICEMAN,11,68,0,14,msg_c04r0111_policeman_4},
+  {OLDMAN1,1,42,0,14,msg_c04r0111_oldman1_1},
+  {OLDMAN1,2,22,0,14,msg_c04r0111_oldman1_2},
+  {OLDMAN1,3,58,0,15,msg_c04r0111_oldman1_3},
+  {OLDMAN1,5,61,0,16,msg_c04r0111_oldman1_4},
+  {OLDMAN1,6,21,0,14,msg_c04r0111_oldman1_5},
+  {OLDMAN1,8,20,0,16,msg_c04r0111_oldman1_6},
+  {OLDMAN1,12,67,0,14,msg_c04r0111_oldman1_7},
+  {OL,3,67,0,15,msg_c04r0111_ol_1},
+  {OL,4,82,0,17,msg_c04r0111_ol_2},
+  {OL,6,60,0,16,msg_c04r0111_ol_3},
+  {OL,11,34,0,15,msg_c04r0111_ol_4},
+  {RAILMAN,3,46,0,15,msg_c04r0111_railman_1},
+  {RAILMAN,5,12,0,15,msg_c04r0111_railman_2},
+  {RAILMAN,6,78,0,15,msg_c04r0111_railman_3},
+  {RAILMAN,7,18,0,14,msg_c04r0111_railman_4},
+  {RAILMAN,8,62,0,14,msg_c04r0111_railman_5},
+  {RAILMAN,15,61,0,17,msg_c04r0111_railman_6},
+  {RAILMAN,18,67,0,15,msg_c04r0111_railman_7},
+  {BOY4,4,32,0,15,msg_c04r0111_boy4_1},
+  {GIRL4,1,55,0,17,msg_c04r0111_girl4_1},
+  {PILOT,17,59,0,15,msg_c04r0111_pilot_1},
+  {TRAINERM,9,69,0,17,msg_c04r0111_trainerm_1},
+  {TRAINERM,10,81,0,14,msg_c04r0111_trainerm_2},
+  {TRAINERM,12,48,0,14,msg_c04r0111_trainerm_3},
+  {TRAINERM,14,63,0,16,msg_c04r0111_trainerm_4},
+  {TRAINERM,21,70,0,17,msg_c04r0111_trainerm_5},
+  {TRAINERW,7,67,0,17,msg_c04r0111_trainerw_1},
+  {TRAINERW,9,47,0,15,msg_c04r0111_trainerw_2},
+  {TRAINERW,11,23,0,16,msg_c04r0111_trainerw_3},
+  {TRAINERW,16,17,0,16,msg_c04r0111_trainerw_4},
+  {TRAINERW,20,46,0,15,msg_c04r0111_trainerw_5},
+  {BADMAN,1,83,0,17,msg_c04r0111_badman_1},
+  {BADMAN,2,50,0,16,msg_c04r0111_badman_2},
+  {BADMAN,5,43,0,13,msg_c04r0111_badman_3},
+  {CLEANINGM,3,39,0,16,msg_c04r0111_cleaningm_1},
+  {CLEANINGM,5,35,0,16,msg_c04r0111_cleaningm_2},
+  {CLEANINGM,7,58,0,15,msg_c04r0111_cleaningm_3},
+  {CLEANINGM,22,50,0,14,msg_c04r0111_cleaningm_4},
+  {VETERANM,7,39,0,14,msg_c04r0111_veteranm_1},
+  {VETERANM,9,62,0,16,msg_c04r0111_veteranm_2},
+  {VETERANM,11,53,0,14,msg_c04r0111_veteranm_3},
+  {VETERANM,13,59,0,15,msg_c04r0111_veteranm_4},
+  {VETERANM,15,55,0,14,msg_c04r0111_veteranm_5},
+  {VETERANW,8,57,0,16,msg_c04r0111_veteranw_1},
+  {VETERANW,10,39,0,13,msg_c04r0111_veteranw_2},
+  {VETERANW,13,60,0,15,msg_c04r0111_veteranw_3},
+  {VETERANW,16,68,0,15,msg_c04r0111_veteranw_4},
+  {VETERANW,19,64,0,14,msg_c04r0111_veteranw_5},
+  {LADY,3,25,0,14,msg_c04r0111_lady_1},
+  {LADY,5,82,0,15,msg_c04r0111_lady_2},
+  {LADY,8,50,0,15,msg_c04r0111_lady_3},
+  {GENTLEMAN,3,26,0,14,msg_c04r0111_gentleman_1},
+  {GENTLEMAN,6,44,0,14,msg_c04r0111_gentleman_2},
+  {GENTLEMAN,7,48,0,16,msg_c04r0111_gentleman_3},
+  {GENTLEMAN,10,58,0,16,msg_c04r0111_gentleman_4},
+  {BUSINESSMAN,6,66,0,14,msg_c04r0111_businessman_1},
+  {BUSINESSMAN,7,55,0,13,msg_c04r0111_businessman_2},
+  {BUSINESSMAN,10,20,0,16,msg_c04r0111_businessman_3},
+  {BUSINESSMAN,18,28,0,14,msg_c04r0111_businessman_4},
+  {OBJCODEMAX,0,0,0,0,0},
+};

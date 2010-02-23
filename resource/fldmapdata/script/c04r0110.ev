@@ -339,7 +339,6 @@ sub_train_battle_win:
   ELSE //ƒNƒŠƒA‚Ü‚¾
     _CALL sub_train_battle_win_next
   ENDIF
-  
 }
 _RET
 

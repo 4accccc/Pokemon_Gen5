@@ -14,7 +14,7 @@
 //  define
 //======================================================================
 #ifdef DEBUG_ONLY_FOR_kagaya
-#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
+//#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
 #define DEBUG_BSW_BTL_SKIP //定義で戦闘スキップ
 #endif
 
@@ -214,7 +214,8 @@
 #define BSWSUB_SET_COMM_FLAG (BSWSUB_START_NO+30)
 #define BSWSUB_GET_COMM_FLAG (BSWSUB_START_NO+31)
 #define BSWSUB_GET_BATTLE_RESULT (BSWSUB_START_NO+32)
-#define BSWSUB_END_NO (BSWSUB_START_NO+33)
+#define BSWSUB_SET_HOME_WORK (BSWSUB_START_NO+33)
+#define BSWSUB_END_NO (BSWSUB_START_NO+34)
 
 #define BSWSUB_COMM_START_NO (200)
 #define BSWSUB_COMM_START (BSWSUB_COMM_START_NO+0)
@@ -342,5 +343,6 @@
 #define BSW_TRAIN_OBJID_PARTNER (0xe1)
 #define BSW_TRAIN_OBJID_TRAINER_0 (0xe2)
 #define BSW_TRAIN_OBJID_TRAINER_1 (0xe3)
+#define BSW_HOME_OBJID_NPC_FIRST (0x80)
 
 #endif //__SUBWAY_SCR_DEF_H__

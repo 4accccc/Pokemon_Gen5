@@ -191,9 +191,26 @@ FLDEFF_TASK * FLDEFF_GYOE_SetMMdl( FLDEFF_CTRL *fectrl,
   MMDL_InitCheckSameData( mmdl, &head.samedata );
   
   if( se_play == TRUE ){
-    PMSND_PlaySE( SEQ_SE_FLD_07 );
-  }
+    u32 idx = 0;
 
+    switch( type ){
+    case FLDEFF_GYOETYPE_GYOE:
+      idx = SEQ_SE_FLD_07;
+      break;
+    case FLDEFF_GYOETYPE_HATE:
+      idx = SEQ_SE_SYS_62;
+      break;
+    case FLDEFF_GYOETYPE_ONPU:
+      idx = SEQ_SE_SYS_63;
+      break;
+    case FLDEFF_GYOETYPE_TEN:
+      idx = SEQ_SE_SYS_64;
+      break;
+    }
+
+    PMSND_PlaySE( idx );
+  }
+  
   return( FLDEFF_CTRL_AddTask(fectrl,&DATA_gyoeTaskHeader,NULL,0,&head,0) );
 }
 

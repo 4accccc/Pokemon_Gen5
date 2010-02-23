@@ -47,6 +47,8 @@ extern void BSUBWAY_SCRWORK_SetBtlTrainerNo( BSUBWAY_SCRWORK *wk );
 extern BOOL BSUBWAY_SCRWORK_GetEntryPoke( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys );
 extern BOOL BSUBWAY_SCRWORK_IsClear( BSUBWAY_SCRWORK *bsw_scr );
 extern void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys );
+extern void BSUBWAY_SCRWORK_SetHomeWork(
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys );
 extern void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr );
 extern u16 BSUBWAY_SCRWORK_GetTrainerOBJCode( BSUBWAY_SCRWORK *bsw_scr, u16 idx );
 extern u16 BSUBWAY_SCRWORK_SetWifiRank(

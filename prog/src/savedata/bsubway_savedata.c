@@ -334,6 +334,7 @@ void BSUBWAY_PLAYDATA_IncRoundNo( BSUBWAY_PLAYDATA *bsw_play )
   if( buf < 0xff ){
     buf++;
   }
+  KAGAYA_Printf( "BSW ƒ‰ƒEƒ“ƒh”‘‰Á %d\n", buf );
   BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_round, &buf );
 }
 

@@ -665,7 +665,7 @@ BOOL BSUBWAY_SCRWORK_IsClear( BSUBWAY_SCRWORK *bsw_scr )
 {
   if( bsw_scr->clear_f == FALSE ){
     u32 round = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData );
-
+    
 #ifdef DEBUG_BSW_CLEAR_1
     if( round < 1 ){
       return( FALSE );
@@ -696,7 +696,7 @@ void BSUBWAY_SCRWORK_SetClearScore(
   u32 ret = 0;
   u16 before,after,chg_flg,play_mode;
   play_mode = bsw_scr->play_mode;
-
+  
   //最大連勝数更新
   BSUBWAY_SCOREDATA_UpdateRenshouMax(
       bsw_scr->scoreData, play_mode,
@@ -704,6 +704,24 @@ void BSUBWAY_SCRWORK_SetClearScore(
   
   //周回数プラス
   BSUBWAY_SCOREDATA_IncStageNo( bsw_scr->scoreData, play_mode );
+  
+  //ラウンド数リセット
+  BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  ホームに着いた際のワーク処理
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @param gsys GAMESYS_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_SetHomeWork(
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys )
+{
+  bsw_scr->clear_f = 0;
+  bsw_scr->boss_f = 0;
 }
 
 //--------------------------------------------------------------
