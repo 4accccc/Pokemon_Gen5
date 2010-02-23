@@ -16,6 +16,7 @@
 #include "intrude_main.h"
 #include "intrude_work.h"
 #include "print/wordset.h"
+#include "field/zonedata.h"
 
 #include "mission.naix"
 
@@ -1282,7 +1283,7 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata
     {
       const MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)mdata->cdata.data;
       
-      WORDSET_RegisterPlaceName( wordset, 0, d_attr->zone_id );
+      WORDSET_RegisterPlaceName( wordset, 0, ZONEDATA_GetPlaceNameID( d_attr->zone_id ) );
     }
     break;
   case MISSION_TYPE_ITEM:        //“¹‹ï
