@@ -228,7 +228,7 @@ struct _TAG_FLDSYSWIN_STREAM
    
   u8 flag_cursor;
   u8 flag_key_pause_clear;
-  u8 flag_write_key_cursor;
+  u8 flag_write_key_cursor; //メッセージ表示後にカーソルキーを表示させる
   u8 padding;
   KEYCURSOR_WORK cursor_work;
 };
@@ -2346,6 +2346,10 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
+    if( sysWin->flag_write_key_cursor ){ //カーソル表示のリクエストが来ている
+
+    }
+    
     return( TRUE );
   }
 
@@ -2454,8 +2458,8 @@ struct _TAG_FLDTALKMSGWIN
   u8 flag_key_cont;
   u8 flag_key_pause_clear;
   u8 flag_cursor;
-
-  u8 flag_write_key_cursor;
+  
+  u8 flag_write_key_cursor; //メッセージ表示後にカーソルキーを表示させる
   u8 talkMsgWinIdx;
   s16 shake_y;
   
@@ -2822,10 +2826,9 @@ static void fldPlainMsgWin_Add( FLDMSGBG *fmb,
  */
 //--------------------------------------------------------------
 FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add(
-    FLDMSGBG *fmb,  GFL_MSGDATA *msgData,
+    FLDMSGBG *fmb,  GFL_MSGDATA *msgData, TALKMSGWIN_TYPE type,
     u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
 {
-  TALKMSGWIN_TYPE type = TEST_TALKMSGWIN_TYPE;
   FLDPLAINMSGWIN *plnwin = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDPLAINMSGWIN) );
   plnwin->fmb = fmb;
@@ -2853,7 +2856,7 @@ void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin )
   
   if( plnwin->msgPrint != NULL ){
     FLDMSGPRINT_Delete( plnwin->msgPrint );
-  };
+  }
 
   if( plnwin->strBuf != NULL ){
 		GFL_STR_DeleteBuffer( plnwin->strBuf );

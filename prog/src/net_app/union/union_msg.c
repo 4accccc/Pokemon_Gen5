@@ -1343,7 +1343,7 @@ void UnionMsg_TalkStream_WindowSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fie
     unisys->strbuf_talk_expand = GFL_STR_CreateBuffer(256, HEAPID_UNION);
     _WordsetCreate(unisys);
     unisys->fld_msgwin_stream = FLDPLAINMSGWIN_Add(fldmsg_bg, unisys->msgdata,
-      1, 19, 30, 4);
+     TALKMSGWIN_TYPE_NORMAL, 1, 19, 30, 4);
   }
   else{ //既にウィンドウが表示されている場合はメッセージエリアのクリアを行う
     FLDPLAINMSGWIN_ClearMessage(unisys->fld_msgwin_stream);
@@ -1764,7 +1764,7 @@ void UnionMsg_Menu_BattleMenuMultiTitleSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_W
 {
   if(unisys->fldmsgwin == NULL){
     FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
-    unisys->fldmsgwin = FLDPLAINMSGWIN_Add(fldmsg_bg, unisys->msgdata, 1, 1, 30, 2);
+    unisys->fldmsgwin = FLDPLAINMSGWIN_Add(fldmsg_bg, unisys->msgdata, TALKMSGWIN_TYPE_NORMAL, 1, 1, 30, 2);
     FLDPLAINMSGWIN_Print( unisys->fldmsgwin, 0, 0, msg_union_battle_01_12_05 );
   }
 }
@@ -1855,7 +1855,7 @@ void UnionMsg_Menu_RegulationSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
   
 //  _WordsetCreate(unisys);
   unisys->fldmsgwin = FLDPLAINMSGWIN_Add(fldmsg_bg, unisys->msgdata, 
-    1, 1, 26, (REGULATION_CATEGORY_MAX+2)*2);
+    TALKMSGWIN_TYPE_NORMAL, 1, 1, 26, (REGULATION_CATEGORY_MAX+2)*2);
   unisys->alloc.rpm = PokeRegulation_CreatePrintMsg(unisys->alloc.regulation,
     unisys->wordset, HEAPID_UNION, shooter_type);
   _WordsetSetDefaultData(unisys); //レギュレーションでWORDSETが上書きされたので復帰

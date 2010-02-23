@@ -40,6 +40,7 @@ extern VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk );
 extern BOOL SCREND_CheckEndWin(SCREND_CHECK *end_check , int *seq);
 
 extern VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdPlainGizaWinMsg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPlainWinClose( VMHANDLE *core, void *wk );
 extern BOOL SCREND_CheckEndPlainWin( SCREND_CHECK *end_check, int *seq );
 
@@ -56,3 +57,5 @@ extern VMCMD_RESULT EvCmdSpWinClose( VMHANDLE *core, void *wk );
 extern BOOL SCREND_CheckEndSpWin( SCREND_CHECK *end_check, int *seq );
 
 extern VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk );
+
+extern VMCMD_RESULT EvCmdKeyWaitMsgCursor( VMHANDLE *core, void *wk );

@@ -344,7 +344,7 @@ extern void FLDTALKMSGWIN_ResetMessageStrBuf( FLDTALKMSGWIN *tmsg, STRBUF *strbu
 
 //プレーンウィンドウ
 extern FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add(
-    FLDMSGBG *fmb,  GFL_MSGDATA *msgData,
+    FLDMSGBG *fmb,  GFL_MSGDATA *msgData, TALKMSGWIN_TYPE type,
     u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );
 extern void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin );
 extern void FLDPLAINMSGWIN_ClearMessage( FLDPLAINMSGWIN *plnwin );

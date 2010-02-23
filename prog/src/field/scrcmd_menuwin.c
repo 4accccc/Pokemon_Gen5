@@ -1060,12 +1060,13 @@ static BOOL PlainWinMsgWait( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * プレーンウィンドウ　作成
+ * プレーンウィンドウ　作成　メイン
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk )
+static VMCMD_RESULT addPlainWin(
+    VMHANDLE *core, void *wk, TALKMSGWIN_TYPE type )
 {
   STRBUF *msgbuf;
   FLDPLAINMSGWIN *win;
@@ -1089,7 +1090,7 @@ VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk )
     win = SCRCMD_WORK_GetMsgWinPtr( work );
     FLDPLAINMSGWIN_ClearMessage( win );
   }else{
-    win = FLDPLAINMSGWIN_Add( fparam->msgBG, NULL, x, y, sx, sy );
+    win = FLDPLAINMSGWIN_Add( fparam->msgBG, NULL, type, x, y, sx, sy );
     SCRCMD_WORK_SetMsgWinPtr( work, win );
   }
   
@@ -1098,6 +1099,30 @@ VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk )
   
   VMCMD_SetWait( core, PlainWinMsgWait );
   return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * プレーンウィンドウ　作成
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk )
+{
+  return( addPlainWin(core,wk,TALKMSGWIN_TYPE_NORMAL) );
+}
+
+//--------------------------------------------------------------
+/**
+ * プレーンウィンドウ　ギザギザ　作成
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlainGizaWinMsg( VMHANDLE *core, void *wk )
+{
+  return( addPlainWin(core,wk,TALKMSGWIN_TYPE_GIZA) );
 }
 
 //--------------------------------------------------------------
@@ -1508,6 +1533,22 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
    CloseBalloonWin( core, work );
   }
  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//======================================================================
+//  キー待ちカーソル
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * メッセージウィンドウ共通　メッセージウィンドウ閉じる
+ * @param 
+ * @retval
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdKeyWaitMsgCursor( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
   return VMCMD_RESULT_SUSPEND;
 }
 
