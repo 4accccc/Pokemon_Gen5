@@ -411,7 +411,6 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 
 static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
 {
-#if 0
 	s32 vc;
 	PMSIV_EDIT* wk = (PMSIV_EDIT*)vwork;
 
@@ -419,12 +418,25 @@ static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
   
 // HOSAKA_Printf("vc=%d\n", vc);
 
+/*
 	if(vc < 6*8){
 		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
 	}else{
 		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
 	}
-#endif
+*/
+/*
+	if( vc == 0 ){
+		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
+	}else if( vc == 6*8 ){
+		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
+	}
+*/
+	if( vc == 192 +1 ){
+		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
+	}else if( vc == 6*8 +8 ){
+		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -478,7 +490,7 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
 	}
 	wk->sub_scr += dir;
 	wk->main_scr += dir;
-	GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
+	//hblank‚Å‚â‚Á‚Ä‚¢‚é‚Ì‚Å‚±‚±‚Å‚Í‚â‚ç‚È‚­‚Ä‚¢‚¢  //GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
 	GFL_BG_SetScroll( FRM_SUB_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->sub_scr);
 	
   for( i=0; i<PMSIV_LCD_MAX; i++ )
@@ -501,7 +513,8 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
 
   HOSAKA_Printf("scr_ct=%d \n", wk->scr_ct );
 
-	if(wk->scr_dir && (wk->scr_ct == 6)){
+	//if(wk->scr_dir && (wk->scr_ct == 6)){
+	if(wk->scr_dir && (wk->scr_ct == 6 +1)){
     HOSAKA_Printf("task delete \n" );
 		GFL_TCB_DeleteTask( wk->hBlankTask );
 		wk->hBlankTask = NULL;

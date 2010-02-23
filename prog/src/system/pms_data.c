@@ -14,6 +14,7 @@
 
 #include "arc_def.h"
 #include "message.naix"
+#include "msg\msg_pmss_mail.h"
 #include "msg\msg_pmss_union.h"
 #include "msg\msg_pmss_ready.h"
 #include "msg\msg_pmss_won.h"
@@ -125,8 +126,12 @@ void PMSDAT_Init( PMS_DATA* pms, u32 sentence_type )
 //------------------------------------------------------------------
 void PMSDAT_SetupDefaultUnionMessage( PMS_DATA* pms )
 {
-	PMSDAT_Init( pms, PMS_TYPE_UNION );
-	pms->sentence_id = pmss_union_06;
+	//PMSDAT_Init( pms, PMS_TYPE_UNION );
+	//pms->sentence_id = pmss_union_06;
+	
+  PMSDAT_Init( pms, PMS_TYPE_MAIL );  // ユニオンルームに　はいりました！
+  pms->sentence_id = pmss_mail_01;    // が、なくなってしまったので、緊急仮対応
+  pms->word[0] = PMSW_GetWordNumberByGmmID( NARC_message_pms_word08_dat, pms_word08_48 );
 }
 
 
