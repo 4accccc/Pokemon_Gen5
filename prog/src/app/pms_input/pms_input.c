@@ -995,6 +995,10 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
         HOSAKA_Printf("lock mode scroll failed! \n");
         return GFL_UI_TP_HIT_NONE;
       }
+      else
+      {
+        return ret;
+      }
     }
     else
     {
@@ -1028,7 +1032,10 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 static int edit_sentence_check_flipbtn( PMS_INPUT_WORK* wk )
 {
 	u32 tpx,tpy;
-	
+
+  // 文章固定モードはセンテンス(空欄に単語を当てはめることができる穴開き文章)を変更できない
+  if( PMSI_PARAM_GetLockFlag( wk->input_param ) ) return -1;
+
 	if( GFL_UI_TP_GetPointTrg( &tpx, &tpy ) == FALSE )
   {
     return -1; 

@@ -21,6 +21,9 @@ static BOOL TESTMODE_ITEM_SelectCmmBtlDemoEndMulti( TESTMODE_WORK* work, const i
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStart( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStartMulti( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectPmsPeculiar( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectPmsSingle( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectPmsDouble( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 
 // メニューリスト
@@ -33,6 +36,9 @@ static TESTMODE_MENU_LIST menuHosaka[] =
   {L"通信バトル前デモ",TESTMODE_ITEM_SelectCmmBtlDemoStart},
   {L"通信バトル前マルチ",TESTMODE_ITEM_SelectCmmBtlDemoStartMulti},
 	{L"かんい会話選択",TESTMODE_ITEM_SelectPmsSelect },
+	{L"かんい会話固定",TESTMODE_ITEM_SelectPmsPeculiar },
+	{L"かんい会話一単語",TESTMODE_ITEM_SelectPmsSingle },
+	{L"かんい会話二単語",TESTMODE_ITEM_SelectPmsDouble },
 	{L"マイクテスト",TESTMODE_ITEM_SelectMicTest },
 	
 	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
@@ -244,6 +250,53 @@ static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx )
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pmsinput), &ProcData_PMSSelect, initParam);
 	return TRUE;
 }
+
+
+// 簡易会話 固定
+#include "app/pms_input.h"
+
+static BOOL TESTMODE_ITEM_SelectPmsPeculiar( TESTMODE_WORK *work , const int idx )
+{
+  PMS_DATA data;
+  PMSI_PARAM* pmsi;
+
+  PMSDAT_Init( &data, 0 );
+  //pmsi = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, &data, TRUE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // デコ文字OK
+  pmsi = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, &data, FALSE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // デコ文字禁止
+
+	TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, pmsi );
+
+  return TRUE;
+}
+	
+// 簡易会話 一単語
+static BOOL TESTMODE_ITEM_SelectPmsSingle( TESTMODE_WORK *work , const int idx )
+{
+  PMS_DATA data;
+  PMSI_PARAM* pmsi;
+
+  PMSDAT_Init( &data, 0 );
+  pmsi = PMSI_PARAM_Create( PMSI_MODE_SINGLE, PMSI_GUIDANCE_DEFAULT, NULL, TRUE, SaveControl_GetPointer(), GFL_HEAPID_APP );
+
+	TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, pmsi );
+
+  return TRUE;
+}
+
+// 簡易会話 二単語
+static BOOL TESTMODE_ITEM_SelectPmsDouble( TESTMODE_WORK *work , const int idx )
+{
+  PMS_DATA data;
+  PMSI_PARAM* pmsi;
+
+  PMSDAT_Init( &data, 0 );
+  pmsi = PMSI_PARAM_Create( PMSI_MODE_DOUBLE, PMSI_GUIDANCE_DEFAULT, NULL, TRUE, SaveControl_GetPointer(), GFL_HEAPID_APP );
+
+	TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, pmsi );
+
+  return TRUE;
+}
+
 
 // マイクテスト
 FS_EXTERN_OVERLAY(mictest);

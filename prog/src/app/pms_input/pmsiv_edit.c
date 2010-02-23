@@ -199,6 +199,14 @@ struct _PMSIV_EDIT {
 	int*				p_key_mode;
 	
 	GFL_TCB				*hBlankTask;
+  BOOL          hblank_up_scroll_finish;
+  BOOL          hblank_down_scroll_finish;
+
+	GFL_TCB*   vblank_task;
+#if 0
+  u16        scroll_y_per_line[192];
+#endif
+
 };
 
 
@@ -206,9 +214,11 @@ struct _PMSIV_EDIT {
 // Prototype
 //==============================================================
 static void pmsiv_edit_hblank(GFL_TCB *, void *vwork);
+static void pmsiv_edit_vblank(GFL_TCB* tcb, void* work);
 static void setup_pal_datas( PMSIV_EDIT* wk, ARCHANDLE* p_handle );
 static void update_editarea_palette( PMSIV_EDIT* wk );
 static void setup_wordarea_pos( PMSIV_EDIT* wk );
+static void setup_deco_obj( PMSIV_EDIT* wk );
 static void setup_obj( PMSIV_EDIT* wk );
 static u32 print_sentence( PMSIV_EDIT* wk ,GFL_BMPWIN* win, u8 cnt);
 static void setup_pms_analyze( PMS_ANALYZE_WORK* awk, PMSIV_EDIT* wk );
@@ -261,7 +271,22 @@ PMSIV_EDIT*  PMSIV_EDIT_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, 
 
 	wk->main_scr = 0;
 	wk->sub_scr = 0;
-	return wk;
+
+  wk->hblank_up_scroll_finish    = FALSE;
+  wk->hblank_down_scroll_finish  = FALSE;
+
+  wk->vblank_task = NULL;
+#if 0
+  {
+    u8 i;
+    for( i=0; i<192; i++ )
+    {
+      wk->scroll_y_per_line[i] = 0;
+    }
+  }
+#endif
+	
+  return wk;
 }
 //------------------------------------------------------------------
 /**
@@ -273,6 +298,11 @@ PMSIV_EDIT*  PMSIV_EDIT_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, 
 //------------------------------------------------------------------
 void PMSIV_EDIT_Delete( PMSIV_EDIT* wk )
 {
+  if( wk->vblank_task )
+  {
+		GFL_TCB_DeleteTask( wk->vblank_task );
+  }
+
 	if( wk->hBlankTask )
 	{
 		GFL_TCB_DeleteTask( wk->hBlankTask );
@@ -403,6 +433,9 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	GFL_BMPWIN_MakeScreen( wk->win_msg[1] );
 
 	setup_wordarea_pos(wk);
+
+  setup_deco_obj( wk );  // PMSIV_EDIT_UpdateEditAreaから呼び出す関数がデコメOBJを使用しているので、デコメだけ先に作成
+
 	PMSIV_EDIT_UpdateEditArea( wk );
 
 	// PMSIV_EDIT_UpdateEditArea で単語数が確定するので、その後に。
@@ -432,11 +465,55 @@ static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
 		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
 	}
 */
+/*
 	if( vc == 192 +1 ){
 		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
 	}else if( vc == 6*8 +8 ){
 		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
 	}
+*/
+  if( vc >= 192 )
+  {
+    if( !wk->hblank_up_scroll_finish )
+    {
+		  GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
+      wk->hblank_up_scroll_finish = TRUE;
+    }
+  }
+  else if( 6*8<=vc && vc<192-3*8 )
+  {
+    if( !wk->hblank_down_scroll_finish )
+    {
+		  GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
+      wk->hblank_down_scroll_finish = TRUE;
+    }
+  }
+}
+
+static void pmsiv_edit_vblank(GFL_TCB* tcb, void* work)
+{
+#if 0
+  // TwlSDK/build/demos/gx/UnitTours/Window_HDMA/src/main.c
+
+	PMSIV_EDIT* wk = (PMSIV_EDIT*)work;
+ 
+  u32 dma_no = 0;
+
+  MI_StopDma( dma_no );
+  MI_HBlankDmaCopy16(
+      dma_no,
+      wk->scroll_y_per_line,
+      (void*)REG_BG0VOFS_ADDR,
+      sizeof(u16) 
+  );
+
+  OS_SetIrqCheckFlag(OS_IE_V_BLANK);
+#endif
+
+	PMSIV_EDIT* wk = (PMSIV_EDIT*)work;
+  
+  wk->hblank_up_scroll_finish = FALSE;
+  wk->hblank_down_scroll_finish = FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -459,6 +536,15 @@ void PMSIV_EDIT_ScrollSet( PMSIV_EDIT* wk,u8 scr_dir)
 		GFL_TCB_DeleteTask( wk->hBlankTask );
 	}
 	wk->hBlankTask = GFUser_HIntr_CreateTCB( pmsiv_edit_hblank, wk , 1);
+
+  wk->hblank_up_scroll_finish = FALSE;
+  wk->hblank_down_scroll_finish = FALSE;
+
+  if( wk->vblank_task )
+  {
+    GFL_TCB_DeleteTask( wk->vblank_task );
+  }
+  wk->vblank_task = GFUser_VIntr_CreateTCB( pmsiv_edit_vblank, wk , 1 );
 }
 
 //-----------------------------------------------------------------------------
@@ -520,7 +606,32 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
 		wk->hBlankTask = NULL;
 //		sys_HBlankIntrSet(NULL,NULL);
 //		sys_HBlankIntrStop();
+
+		GFL_TCB_DeleteTask( wk->vblank_task );
+		wk->vblank_task = NULL;
 	}
+
+#if 0
+  {
+    u8 i=0;
+    
+    (void)OS_DisableIrq();
+    
+    for( i=0; i<48; i++ )
+    {
+      wk->scroll_y_per_line[i] = wk->main_scr;
+    }
+    for( i=48; i<192; i++ )
+    {
+      wk->scroll_y_per_line[i] = 0;
+    }
+   
+    (void)OS_EnableIrq();
+    
+    DC_FlushRange( (void *)wk->scroll_y_per_line[i], sizeof(u16)*192 );
+  }
+#endif
+
 	return FALSE;
 }
 
@@ -606,6 +717,27 @@ static void setup_wordarea_pos( PMSIV_EDIT* wk )
 
 }
 
+static void setup_deco_obj( PMSIV_EDIT* wk )
+{
+  {
+    int i, k;
+    PMSIV_CELL_RES deco_res;
+
+    for( i=0; i<PMS_WORD_MAX; i++ )
+    {
+      PMSIView_GetDecoResource( wk->vwk, &deco_res, PMSIV_LCD_MAIN+i );
+
+      for( k=0; k<PMS_WORD_MAX; k++ )
+      {
+        wk->deco_actor[k][PMSIV_LCD_MAIN+i] = PMSIView_AddActor( wk->vwk, &deco_res, 0, 0,
+          ACTPRI_EDITAREA_DECO, NNS_G2D_VRAM_TYPE_2DMAIN+i );
+      
+        GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[k][PMSIV_LCD_MAIN+i], FALSE );
+      }
+    }
+  }
+}
+
 static void setup_obj( PMSIV_EDIT* wk )
 {
 	PMSIV_CELL_RES  header;
@@ -632,22 +764,8 @@ static void setup_obj( PMSIV_EDIT* wk )
 			ACTPRI_EDITAREA_CURSOR, NNS_G2D_VRAM_TYPE_2DMAIN );
 
   {
-    int i, k;
-    PMSIV_CELL_RES deco_res;
-
-    for( i=0; i<PMS_WORD_MAX; i++ )
-    {
-      PMSIView_GetDecoResource( wk->vwk, &deco_res, PMSIV_LCD_MAIN+i );
-
-      for( k=0; k<PMS_WORD_MAX; k++ )
-      {
-        wk->deco_actor[k][PMSIV_LCD_MAIN+i] = PMSIView_AddActor( wk->vwk, &deco_res, 0, 0,
-          ACTPRI_EDITAREA_DECO, NNS_G2D_VRAM_TYPE_2DMAIN+i );
-      
-        GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[k][PMSIV_LCD_MAIN+i], FALSE );
-      }
-    }
-  }
+    //setup_deco_obj( wk );  // PMSIV_EDIT_UpdateEditAreaから呼び出す関数がデコメOBJを使用しているので、デコメだけ先に作成
+  }                          // することにしたので、ここはコメントアウトしておく。
 
 	set_cursor_anm( wk, TRUE );
 
