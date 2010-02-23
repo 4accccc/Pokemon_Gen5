@@ -627,6 +627,9 @@ static void _connectionStart(WIFILOGIN_WORK* pWork)
   if(pWork->dbw->nsid == WB_NET_BSUBWAY){
     aGFLNetInit.heapSize = GFL_NET_DWC_BSUBWAY_HEAPSIZE;
   }
+  else if(pWork->dbw->nsid == WB_NET_WIFIMATCH){
+    aGFLNetInit.heapSize = GFL_NET_DWC_RNDMATCH_HEAPSIZE;
+  }
   GFL_NET_Init(&aGFLNetInit, NULL, pWork);	//í êMèâä˙âª
   GFL_NET_StateWifiEnterLogin();
   GFL_NET_ReloadIcon();

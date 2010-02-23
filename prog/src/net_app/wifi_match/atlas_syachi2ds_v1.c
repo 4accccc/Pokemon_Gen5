@@ -44,7 +44,7 @@ static const char* ATLAS_Wifi_Field_Name[] =
 		"DISCONNECTS_WIFICUP_COUNTER",
 		"NUM_WIFICUP_LOSE_COUNTER",
 		"NUM_WIFICUP_WIN_COUNTER",
-    "WIFICUP_POKEMON_PARTY"
+    "WIFICUP_POKEMON_PARTY",
 };
 
 const char** ATLAS_RND_GetFieldName( void )

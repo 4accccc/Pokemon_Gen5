@@ -121,10 +121,17 @@ static inline u32 WIFIBATTLEMATCH_DATA_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDAT
   }
 
   //トレーナービュー
-  if( p_mystatus->trainer_view >= 8 )
+  if( p_mystatus->trainer_view >= 16 )
   { 
-    OS_TPrintf( "見た目が不正だったので、無理やり書き換えます \n" );
-    p_mystatus->trainer_view  = 0;
+    OS_TPrintf( "見た目が不正だったので、無理やり書き換えます %d \n", p_mystatus->trainer_view );
+    if( p_mystatus->sex == PTL_SEX_MALE )
+    { 
+      p_mystatus->trainer_view  = 0;
+    }
+    else
+    { 
+      p_mystatus->trainer_view  = 8;
+    }
     dirty++;
   }
 
@@ -138,7 +145,7 @@ static inline u32 WIFIBATTLEMATCH_DATA_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDAT
 
   //エリア
   { 
-    if( p_mystatus->area >= WIFI_COUNTRY_CountryCodeToPlaceIndexMax( p_mystatus->nation ) )
+    if( p_mystatus->nation != 0 && p_mystatus->area >= WIFI_COUNTRY_CountryCodeToPlaceIndexMax( p_mystatus->nation ) )
     {
       OS_TPrintf( "地域が不正だったので、無理やり書き換えます %d %d\n", p_mystatus->nation, p_mystatus->area );
       p_mystatus->area  = 0;
@@ -150,7 +157,7 @@ static inline u32 WIFIBATTLEMATCH_DATA_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDAT
   if( !PMSDAT_IsValid( &p_data->pms, GetHeapLowID(heapID) ) )
   { 
     OS_TPrintf( "PMSが不正だったので、無理やり書き換えます\n" );
-    PMSDAT_Init( &p_data->pms, PMS_TYPE_BATTLE_READY ); //何挨拶？ @todo
+    PMSDAT_Init( &p_data->pms, PMS_TYPE_BATTLE_READY );
     dirty++;
   }
 

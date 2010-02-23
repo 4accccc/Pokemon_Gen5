@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-02-22T14:40:13"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-02-22T19:37:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1240" top="153" right="-535" bottom="781" maximized="no" rayout="Vertical2">
+	<dialog left="-978" top="308" right="-273" bottom="936" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="136" right="1280" bottom="534" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -955,6 +955,14 @@
 		<language name="JPN" width="256">つうしん　たいきちゅう　です
 でんげんを　きらないで　ください</language>
 		<language name="JPN_KANJI" width="256">通信待機中です
+電源を　切らないでください</language>
+	</row>
+
+	<row id="WIFIMATCH_WIFI_STR_35">
+		<comment>WIFI大会</comment>
+		<language name="JPN" width="256">データを　じゅしんしています
+でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI" width="256">データを　受信しています
 電源を　切らないでください</language>
 	</row>
 
