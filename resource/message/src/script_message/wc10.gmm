@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-23T12:35:35"/>
+	<create user="ohmori" host="W00223" date="2010-02-23T12:59:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1006,10 +1006,10 @@
 	</row>
 
 	<row id="wc10_16_02">
-		<language name="JPN" width="256">なまえ『こんなしぜんにかこまれた
+		<language name="JPN" width="256">リリカ『こんなしぜんにかこまれた
 なにもない かんきょうも わるくないわね▼
 いやされ　ちゃうわ▼</language>
-		<language name="JPN_KANJI" width="256">なまえ『こんなしぜんにかこまれた
+		<language name="JPN_KANJI" width="256">リリカ『こんなしぜんにかこまれた
 なにもない かんきょうも わるくないわね▼
 いやされ　ちゃうわ▼</language>
 	</row>
@@ -1046,13 +1046,13 @@
 	</row>
 
 	<row id="wc10_17_02">
-		<language name="JPN" width="256">なまえ『しぜんのなかで
+		<language name="JPN" width="256">みつまさ『しぜんのなかで
 ゆっくり　じかんをかけて▼
-じぶんのせいかつを　たのしむ…
+じぶんのせいかつを　たのしむ……
 そういう　くらしも　わるくないとおもうんだ▼</language>
-		<language name="JPN_KANJI" width="256">なまえ『しぜんのなかで
+		<language name="JPN_KANJI" width="256">みつまさ『しぜんのなかで
 ゆっくり　じかんをかけて▼
-じぶんのせいかつを　たのしむ…
+じぶんのせいかつを　たのしむ……
 そういう　くらしも　わるくないとおもうんだ▼</language>
 	</row>
 
@@ -1131,10 +1131,10 @@
 
 	<row id="wc10_19_02">
 		<language name="JPN" width="256">セキ『ゆったりとした
-ポケモンたちと　すごす　じかん…▽
+ポケモンたちと　すごす　じかん……▽
 こういうのって　だいじよね▼</language>
 		<language name="JPN_KANJI" width="256">セキ『ゆったりとした
-ポケモンたちと　すごす　じかん…▽
+ポケモンたちと　すごす　じかん……▽
 こういうのって　だいじよね▼</language>
 	</row>
 
@@ -1297,11 +1297,11 @@
 	</row>
 
 	<row id="wc10_23_03">
-		<language name="JPN" width="256">だけど…
+		<language name="JPN" width="256">だけど……
 しぜんをみてるだけじゃ▼
 こころがみたされない
 そんなときも　さいきんあるの</language>
-		<language name="JPN_KANJI" width="256">だけど…
+		<language name="JPN_KANJI" width="256">だけど……
 しぜんをみてるだけじゃ▼
 こころがみたされない
 そんなときも　さいきんあるの</language>

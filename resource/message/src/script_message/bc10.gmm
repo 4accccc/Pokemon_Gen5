@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-23T12:41:13"/>
+	<create user="ohmori" host="W00223" date="2010-02-23T13:00:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -908,10 +908,10 @@
 
 	<row id="bc10_16_01">
 		<language name="JPN" width="256">リリカ『ごきげんよう！▼
-アナタが つよいヒトかどうか…
+アナタが つよいヒトかどうか……
 たしかめさせて　くださる？▼</language>
 		<language name="JPN_KANJI" width="256">リリカ『ごきげんよう！▼
-アナタが つよいヒトかどうか…
+アナタが つよいヒトかどうか……
 たしかめさせて　くださる？▼</language>
 	</row>
 
@@ -1111,9 +1111,9 @@
 	</row>
 
 	<row id="bc10_22_01">
-		<language name="JPN" width="256">オレの　きもち！
+		<language name="JPN" width="256">マツリ『オレの　きもち！
 このポケモンしょうぶで　ぶつけるぜ！▼</language>
-		<language name="JPN_KANJI" width="256">オレの　きもち！
+		<language name="JPN_KANJI" width="256">マツリ『オレの　きもち！
 このポケモンしょうぶで　ぶつけるぜ！▼</language>
 	</row>
 
@@ -1155,10 +1155,10 @@
 	</row>
 
 	<row id="bc10_23_01">
-		<language name="JPN" width="256">あれもほしい　これもほしい！▼
+		<language name="JPN" width="256">ナギー『あれもほしい　これもほしい！▼
 あなたとの ポケモンしょうぶでの
 しょうりもほしい！▼</language>
-		<language name="JPN_KANJI" width="256">あれもほしい　これもほしい！▼
+		<language name="JPN_KANJI" width="256">ナギー『あれもほしい　これもほしい！▼
 あなたとの ポケモンしょうぶでの
 しょうりもほしい！▼</language>
 	</row>
