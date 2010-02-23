@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T18:59:21"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T17:13:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="317" right="2006" bottom="945" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -343,6 +343,7 @@ C03ジムリーダー</attribute>
 ・アイテム入手処理
 　No000「ほしのかけら」（仮）
 ※入手アイテムはランダムにするかも</comment>
+		<attribute name="キャラ指定">特殊な岩</attribute>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は
 ためしのいわを　こわそうとした！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]は
@@ -353,6 +354,7 @@ C03ジムリーダー</attribute>
 		<comment>BGメッセージ
 ・手持ちリストの先頭が格闘ポケモンでないとき
 ・アイテムを入手したあと（日が変わるまで）</comment>
+		<attribute name="キャラ指定">特殊な岩</attribute>
 		<language name="JPN" width="256">ためしのいわが　ある……</language>
 		<language name="JPN_KANJI" width="256">ためしのいわが　ある……</language>
 	</row>
@@ -360,10 +362,8 @@ C03ジムリーダー</attribute>
 	<row id="msg_d02_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>･仮メッセージ</comment>
 		<attribute name="キャラ指定">道路看板</attribute>
-		<language name="JPN" width="256">ここは　２ばんどうろ
-このさき　ヤグルマのもり</language>
-		<language name="JPN_KANJI" width="256">ここは　２番道路
-このさき　ヤグルマの森</language>
+		<language name="JPN" width="256">このさき　ヤグルマのもり</language>
+		<language name="JPN_KANJI" width="256">このさき　ヤグルマの森</language>
 	</row>
 
 	<flowchart-group-list>
