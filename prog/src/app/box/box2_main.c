@@ -3932,7 +3932,7 @@ int BOX2MAIN_PokeStatusCall( BOX2_SYS_WORK * syswk )
 	pst->zukan_mode = syswk->dat->zknMode;
 	pst->mode       = PST_MODE_NORMAL;
 
-	GFL_PROC_SysCallProc( FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, pst );
+	GFL_PROC_LOCAL_CallProc( syswk->localProc, FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, pst );
 
 	syswk->subProcWork = pst;
 
@@ -3978,7 +3978,7 @@ int BOX2MAIN_BagCall( BOX2_SYS_WORK * syswk )
 {
 	BAG_PARAM * wk = BAG_CreateParam( syswk->dat->gamedata, NULL, BAG_MODE_POKELIST, HEAPID_BOX_SYS );
 
-	GFL_PROC_SysCallProc( FS_OVERLAY_ID(bag), &ItemMenuProcData, wk );
+	GFL_PROC_LOCAL_CallProc( syswk->localProc, FS_OVERLAY_ID(bag), &ItemMenuProcData, wk );
 
 	syswk->subProcWork = wk;
 
@@ -4027,7 +4027,7 @@ int BOX2MAIN_NameInCall( BOX2_SYS_WORK * syswk )
 	wk->prm = NAMEIN_AllocParam(
 							HEAPID_BOX_SYS, NAMEIN_BOX, 0, 0, BOX_TRAYNAME_MAXLEN, wk->name );
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
-	GFL_PROC_SysCallProc( FS_OVERLAY_ID(namein), &NameInputProcData, wk->prm );
+	GFL_PROC_LOCAL_CallProc( syswk->localProc, FS_OVERLAY_ID(namein), &NameInputProcData, wk->prm );
 
 	syswk->subProcWork = wk;
 

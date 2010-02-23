@@ -1077,9 +1077,12 @@ static int MainSeq_SubProcCall( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_SubProcMain( BOX2_SYS_WORK * syswk )
 {
-	SubProcFunc[syswk->subProcType].exit( syswk );
-	syswk->next_seq = SubProcFunc[syswk->subProcType].rcvSeq;
-	return BOX2SEQ_MAINSEQ_INIT;
+	if( syswk->procStatus != GFL_PROC_MAIN_VALID ){
+		SubProcFunc[syswk->subProcType].exit( syswk );
+		syswk->next_seq = SubProcFunc[syswk->subProcType].rcvSeq;
+		return BOX2SEQ_MAINSEQ_INIT;
+	}
+	return BOX2SEQ_MAINSEQ_SUB_PROCMAIN;
 }
 
 //--------------------------------------------------------------------------------------------

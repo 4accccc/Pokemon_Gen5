@@ -97,6 +97,9 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	syswk->tb_ret_btn     = BOX2OBJ_TB_ICON_ON;
 	syswk->tb_status_btn  = BOX2OBJ_TB_ICON_OFF;
 
+	// ƒ[ƒJƒ‹‚o‚q‚n‚bì¬
+	syswk->localProc = GFL_PROC_LOCAL_boot( HEAPID_BOX_SYS );
+
 
 /*
 	syswk->box    = SaveData_GetBoxData( syswk->dat->savedata );
@@ -126,6 +129,10 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 //--------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT Box2Proc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	BOX2_SYS_WORK * syswk = mywk;
+
+	syswk->procStatus = GFL_PROC_LOCAL_Main( syswk->localProc );
+
 	if( BOX2SEQ_Main( mywk, seq ) == FALSE ){
 		return GFL_PROC_RES_FINISH;
 	}
@@ -151,6 +158,9 @@ static GFL_PROC_RESULT Box2Proc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	BOXDAT_SetCureentTrayNumber( syswk->dat->sv_box, syswk->tray );		// ƒJƒŒƒ“ƒgƒgƒŒƒCXV
 
 //	GFL_HEAP_FreeMemory( syswk->getPP );
+
+	GFL_PROC_LOCAL_Exit( syswk->localProc );
+
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_BOX_SYS );
 

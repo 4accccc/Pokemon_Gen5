@@ -26,7 +26,9 @@
 
 // メインシーケンス
 enum {
-	SEQ_TOP_CALL = 0,			// トップ呼び出し
+	SEQ_LOCAL_PROC_WAIT,	// 各処理終了待ち
+
+	SEQ_TOP_CALL,					// トップ呼び出し
 	SEQ_TOP_END,					// トップ終了後
 
 	SEQ_LIST_CALL,				// リスト呼び出し
@@ -43,16 +45,21 @@ enum {
 };
 
 typedef struct {
-	ZUKAN_PARAM * prm;
+	ZUKAN_PARAM * prm;			// 外部データ
+
+	GFL_PROCSYS * localProc;						// ローカルＰＲＯＣ
+	GFL_PROC_MAIN_STATUS	procStatus;		// ローカルＰＲＯＣの戻り値
 
 	u16 * list;			// リストデータ
 	u16	listMax;		// リストデータ数
-	u32	listMode;		// リストモード
+	u16	listMode;		// リストモード
 
 	ZKNCOMM_LIST_SORT	sort;		// ソートデータ
 
-	int	seq;
-	void * work;
+	int	mainSeq;			// メインシーケンス
+	int nextSeq;			// 次のシーケンス
+
+	void * work;			// 各処理のワーク
 }ZUKAN_MAIN_WORK;
 
 typedef int (*pZUKAN_FUNC)(ZUKAN_MAIN_WORK*);
@@ -66,6 +73,8 @@ static GFL_PROC_RESULT ZukanProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 static GFL_PROC_RESULT ZukanProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
 static void FreeListData( ZUKAN_MAIN_WORK * wk );
+
+static int MainSeq_LocalProcWait( ZUKAN_MAIN_WORK * wk );
 
 static int MainSeq_CallTop( ZUKAN_MAIN_WORK * wk );
 static int MainSeq_EndTop( ZUKAN_MAIN_WORK * wk );
@@ -93,17 +102,19 @@ const GFL_PROC_DATA ZUKAN_ProcData = {
 
 // メインシーケンス関数テーブル
 static const pZUKAN_FUNC MainSeq[] = {
-	MainSeq_CallTop,			// トップ呼び出し
-	MainSeq_EndTop,				// トップ終了後
+	MainSeq_LocalProcWait,	// 各処理の終了待ち
 
-	MainSeq_CallList,			// リスト呼び出し
-	MainSeq_EndList,			// リスト終了後
+	MainSeq_CallTop,				// トップ呼び出し
+	MainSeq_EndTop,					// トップ終了後
 
-	MainSeq_CallDetail,		// 情報呼び出し
-	MainSeq_EndDetail,		// 情報終了後
+	MainSeq_CallList,				// リスト呼び出し
+	MainSeq_EndList,				// リスト終了後
 
-	MainSeq_CallSearch,		// 検索呼び出し
-	MainSeq_EndSearch,		// 検索終了後
+	MainSeq_CallDetail,			// 情報呼び出し
+	MainSeq_EndDetail,			// 情報終了後
+
+	MainSeq_CallSearch,			// 検索呼び出し
+	MainSeq_EndSearch,			// 検索終了後
 };
 
 
@@ -132,24 +143,26 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 
 	wk->prm = pwk;
 
+	wk->localProc = GFL_PROC_LOCAL_boot( HEAPID_ZUKAN_SYS );
+
 	wk->listMax  = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
 	wk->listMode = ZKNLIST_CALL_NORMAL;
 	ZKNCOMM_ResetSortData( wk->prm->savedata, &wk->sort );
 
 	if( wk->prm->callMode == ZUKAN_MODE_TOP ){
-		wk->seq = SEQ_TOP_CALL;
+		wk->mainSeq = SEQ_TOP_CALL;
 	}else if( wk->prm->callMode == ZUKAN_MODE_LIST ){
-		wk->seq = SEQ_LIST_CALL;
+		wk->mainSeq = SEQ_LIST_CALL;
 	}else if( wk->prm->callMode == ZUKAN_MODE_INFO ){
-		wk->seq = SEQ_INFO_CALL;
+		wk->mainSeq = SEQ_INFO_CALL;
 	}else if( wk->prm->callMode == ZUKAN_MODE_MAP ){
-		wk->seq = SEQ_INFO_CALL;
+		wk->mainSeq = SEQ_INFO_CALL;
 	}else if( wk->prm->callMode == ZUKAN_MODE_VOICE ){
-		wk->seq = SEQ_INFO_CALL;
+		wk->mainSeq = SEQ_INFO_CALL;
 	}else if( wk->prm->callMode == ZUKAN_MODE_FORM ){
-		wk->seq = SEQ_INFO_CALL;
+		wk->mainSeq = SEQ_INFO_CALL;
 	}else{
-		wk->seq = SEQ_SEARCH_CALL;
+		wk->mainSeq = SEQ_SEARCH_CALL;
 	}
 
 	return GFL_PROC_RES_FINISH;
@@ -171,11 +184,13 @@ static GFL_PROC_RESULT ZukanProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 {
 	ZUKAN_MAIN_WORK * wk = mywk;
 
-	if( wk->seq == SEQ_PROC_FINISH ){
+	if( wk->mainSeq == SEQ_PROC_FINISH ){
 		return GFL_PROC_RES_FINISH;
 	}
 
-	wk->seq = MainSeq[wk->seq]( wk );
+	wk->procStatus = GFL_PROC_LOCAL_Main( wk->localProc );
+
+	wk->mainSeq = MainSeq[wk->mainSeq]( wk );
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -194,7 +209,11 @@ static GFL_PROC_RESULT ZukanProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 //--------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT ZukanProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	FreeListData( mywk );
+	ZUKAN_MAIN_WORK * wk = mywk;
+
+	FreeListData( wk );
+
+	GFL_PROC_LOCAL_Exit( wk->localProc );
 
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_ZUKAN_SYS );
@@ -212,6 +231,21 @@ static void FreeListData( ZUKAN_MAIN_WORK * wk )
 	}
 }
 
+static int NextProcCall( ZUKAN_MAIN_WORK * wk, int next )
+{
+	wk->nextSeq = next;
+	return SEQ_LOCAL_PROC_WAIT;
+}
+
+// 各処理の終了待ち
+static int MainSeq_LocalProcWait( ZUKAN_MAIN_WORK * wk )
+{
+	if( wk->procStatus != GFL_PROC_MAIN_VALID ){
+		return wk->nextSeq;
+	}
+	return SEQ_LOCAL_PROC_WAIT;
+}
+
 
 //--------------------------------------------------------------------------------------------
 //	トップ
@@ -225,9 +259,9 @@ static int MainSeq_CallTop( ZUKAN_MAIN_WORK * wk )
 
 	top->gamedata = wk->prm->gamedata;
 
-	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_top), &ZUKANTOP_ProcData, wk->work );
+	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_top), &ZUKANTOP_ProcData, wk->work );
 
-	return SEQ_TOP_END;
+	return NextProcCall( wk, SEQ_TOP_END );
 }
 
 static int MainSeq_EndTop( ZUKAN_MAIN_WORK * wk )
@@ -276,9 +310,9 @@ static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk )
 	list->list     = wk->list;
 	list->listMax  = wk->listMax;
 
-	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_list), &ZUKANLIST_ProcData, wk->work );
+	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_list), &ZUKANLIST_ProcData, wk->work );
 
-	return SEQ_LIST_END;
+	return NextProcCall( wk, SEQ_LIST_END );
 }
 
 static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
@@ -350,9 +384,9 @@ static int MainSeq_CallSearch( ZUKAN_MAIN_WORK * wk )
 	search->sort     = &wk->sort;
 	search->list     = NULL;
 	search->listMax  = 0;
-	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_search), &ZUKANSEARCH_ProcData, wk->work );
+	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_search), &ZUKANSEARCH_ProcData, wk->work );
 
-	return SEQ_SEARCH_END;
+	return NextProcCall( wk, SEQ_SEARCH_END );
 }
 
 static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )
@@ -424,10 +458,10 @@ static int MainSeq_CallDetail( ZUKAN_MAIN_WORK * wk )
     }
   }
 
-	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_detail), &ZUKAN_DETAIL_ProcData, detail );
+	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_detail), &ZUKAN_DETAIL_ProcData, detail );
 
   wk->work = detail;	
-  return SEQ_INFO_END;
+  return NextProcCall( wk, SEQ_INFO_END );
 }
 
 static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )

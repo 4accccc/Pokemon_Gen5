@@ -441,6 +441,9 @@ typedef struct {
 
 	BOX2_GFL_PROC_PARAM * dat;	// 外部データ
 
+	GFL_PROCSYS * localProc;						// ローカルＰＲＯＣ
+	GFL_PROC_MAIN_STATUS	procStatus;		// ローカルＰＲＯＣの戻り値
+
 	void * subProcWork;				// サブプロセスで使用するワーク
 	u16	subRet;								// サブプロセスの戻り値などを保存する場所
 	u8	subProcType;					// サブプロセスの種類
