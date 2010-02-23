@@ -18,6 +18,7 @@ _EVENT_DATA   ev_gameover_recover_pokecen
 _EVENT_DATA   ev_report_event_call_wireless
 _EVENT_DATA   ev_report_event_call
 _EVENT_DATA   ev_field_comm_exit_event_call
+_EVENT_DATA   ev_wireless_off_message
 _EVENT_DATA_END //終了
 
 //--------------------------------------------------------------------
@@ -348,5 +349,14 @@ sub_field_comm_exit_main:
   ENDIF
 }
 _RET
+
+
+//====================================================================
+//  「本体設定の無線通信がOFF」メッセージ
+//====================================================================
+ev_wireless_off_message:
+  _SYSWIN_MSG( msg_common_wireless_off_keywait, POS_DOWN )
+  _SYSWIN_CLOSE()
+  _CHG_LOCAL_SCR    //呼び出し元スクリプトに切り替え
 
 
