@@ -423,10 +423,35 @@
 	@echo convert ncg_imd leader1c
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader1c.ncg ./mmdl_res ./mmdl_res/ncg4x4pcwoman1.imd 4 4 9
 
+#leader2.imd
+./mmdl_res/leader2.imd: ./mmdl_nchara/leader2.ncg ./mmdl_nchara/leader2.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+	@echo convert ncg_imd leader2
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader2.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#leader3.imd
+./mmdl_res/leader3.imd: ./mmdl_nchara/leader3.ncg ./mmdl_nchara/leader3.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+	@echo convert ncg_imd leader3
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader3.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
 #leader4.imd
 ./mmdl_res/leader4.imd: ./mmdl_nchara/leader4.ncg ./mmdl_nchara/leader4.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd leader4
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader4.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
+#leader5.imd
+./mmdl_res/leader5.imd: ./mmdl_nchara/leader5.ncg ./mmdl_nchara/leader5.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+	@echo convert ncg_imd leader5
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader5.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#leader6.imd
+./mmdl_res/leader6.imd: ./mmdl_nchara/leader6.ncg ./mmdl_nchara/leader6.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+	@echo convert ncg_imd leader6
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader6.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#leader7.imd
+./mmdl_res/leader7.imd: ./mmdl_nchara/leader7.ncg ./mmdl_nchara/leader7.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+	@echo convert ncg_imd leader7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader7.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #leader8w.imd
 ./mmdl_res/leader8w.imd: ./mmdl_nchara/leader8w.ncg ./mmdl_nchara/leader8w.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
@@ -752,6 +777,11 @@
 ./mmdl_res/leader1a.imd: ./mmdl_nchara/leader1a.ncg ./mmdl_nchara/leader1a.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
 	@echo convert ncg_imd leader1a
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader1a.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#leader8b.imd
+./mmdl_res/leader8b.imd: ./mmdl_nchara/leader8b.ncg ./mmdl_nchara/leader8b.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+	@echo convert ncg_imd leader8b
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader8b.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #corn.imd
 ./mmdl_res/corn.imd: ./mmdl_nchara/corn.ncg ./mmdl_nchara/corn.ncl ./mmdl_res/ncg4x4ocell.imd fldmmdl_list.csv

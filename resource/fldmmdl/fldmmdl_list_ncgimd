@@ -84,7 +84,12 @@ FMMDL_RESLIST_NCGIMD = \
 	sunglasses.imd \
 	ambrella.imd \
 	leader1c.imd \
+	leader2.imd \
+	leader3.imd \
 	leader4.imd \
+	leader5.imd \
+	leader6.imd \
+	leader7.imd \
 	leader8w.imd \
 	hakaim.imd \
 	hakaiw.imd \
@@ -150,6 +155,7 @@ FMMDL_RESLIST_NCGIMD = \
 	fishheroine.imd \
 	leader1b.imd \
 	leader1a.imd \
+	leader8b.imd \
 	corn.imd \
 	ninja.imd \
 	espm.imd \
