@@ -225,26 +225,31 @@ EVENT_START   ev_pos_c02_boss_01
 	
 	//Nがしゃべる
 	//まよえる　トレーナーよ
-	_BALLOONWIN_OBJMSG( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00 )
-	
+	_BALLOONWIN_OBJMSG( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00)
+
 	//はい/いいえの選択
 	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
-	 
+	_MSGWIN_CLOSE()
+
+	//Ｎバストアップ表示開始---------------------------------------------------
+	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
+	
 	IF $SCWK_ANSWER ==  SCR_NO THEN
 	
 		//Nが喋る・いいえの場合
 		//Ｎ『ボクを　からかっているね
-		_BALLOONWIN_OBJMSG( msg_c02_boss_03, MMDL_ID_EVENTOBJ_00 )
-    	_BALLOONWIN_CLOSE()
+		_PLAINWIN_MSG_DOWN(msg_c02_boss_03)
+    	_MSGWIN_CLOSE()
 		
 	ELSE
 		//Nが喋る・はいの場合
 		//Ｎ『ボクに　さからうんだね
-    	_BALLOONWIN_OBJMSG( msg_c02_boss_02, MMDL_ID_EVENTOBJ_00 )
-    	_BALLOONWIN_CLOSE()
+		_PLAINWIN_MSG_DOWN(msg_c02_boss_02)
+    	_MSGWIN_CLOSE()
     	
 	ENDIF
+	
+	_END_FACEUP()	//Ｎバストアップ表示終了----------------------------------
 
 	//BGM終了
 	_END_EVENT_BGM()
@@ -255,11 +260,16 @@ EVENT_START   ev_pos_c02_boss_01
 	//NのBGM再生
 	_START_EVENT_BGM( SEQ_BGM_E_N )
 	
+	//Ｎバストアップ表示開始---------------------------------------------------
+	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
+	
 	//Nが喋る
 	//Ｎ『いまの　ボクの　ともだちとでは
-	_BALLOONWIN_OBJMSG( msg_c02_boss_04, MMDL_ID_EVENTOBJ_00 )
-    _BALLOONWIN_CLOSE()
-    
+	_PLAINWIN_MSG_DOWN(msg_c02_boss_04)
+    _MSGWIN_CLOSE()
+   
+ 	_END_FACEUP()	//Ｎバストアップ表示終了----------------------------------
+ 	
 	//Nが5歩移動
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_02 )
 	_OBJ_ANIME_WAIT()

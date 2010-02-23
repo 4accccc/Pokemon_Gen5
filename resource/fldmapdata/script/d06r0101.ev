@@ -562,23 +562,28 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_01, D06R0101_BOSS_01)
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
+
+	//Ｎバストアップ表示開始---------------------------------------------------
+	_START_FACEUP( FLD_FACEUP_BG_DUNGEON, FLD_FACEUP_CHAR_BOSS )
 	
 	//はい・いいえで分岐
 	IF $SCWK_ANSWER ==  SCR_YES THEN
 		//はい
 		//Nが喋る
 		//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
-		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_02, D06R0101_BOSS_01)
-		_BALLOONWIN_CLOSE()
+		_PLAINWIN_MSG_DOWN(msg_d06r0101_boss_02)
+		_MSGWIN_CLOSE()
 	
 	ELSE
 		//いいえ
 		//Nが喋る
 		//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
-		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_03, D06R0101_BOSS_01)
-		_BALLOONWIN_CLOSE()
+		_PLAINWIN_MSG_DOWN(msg_d06r0101_boss_03)
+		_MSGWIN_CLOSE()
 	
 	ENDIF
+
+	_END_FACEUP()	//Ｎバストアップ表示終了----------------------------------
 
 	//BGM終了
 	_END_EVENT_BGM()
