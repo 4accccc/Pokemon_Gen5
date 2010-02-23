@@ -580,6 +580,7 @@ typedef struct {
  *  Main Work
  */
 struct _DEBUG_BTL_WORK {
+  GFL_PROCSYS*    subProc;
   GAMEDATA*       gameData;
   GFL_BMPWIN*     win;
   GFL_BMP_DATA*   bmp;
@@ -617,7 +618,6 @@ struct _DEBUG_BTL_WORK {
   u8   recBuffer[ 4096 ];
   u32  recDataSize;
   GFL_STD_RandContext  recRand;
-
 };
 
 /*--------------------------------------------------------------------------*/
@@ -727,6 +727,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
   GFL_STD_MemClear( wk, sizeof(DEBUG_BTL_WORK) );
 
   wk->heapID = HEAPID_BTL_DEBUG_SYS;
+  wk->subProc = GFL_PROC_LOCAL_boot( wk->heapID );
   wk->gameData = pwk;
   wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
   wk->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
@@ -1844,14 +1845,17 @@ FS_EXTERN_OVERLAY(debug_makepoke);
     break;
   case 1:
     wk->makePokeParam.dst = savework_GetPokeParaArea( &wk->saveData, wk->selectItem-SELITEM_POKE_SELF_1 );
-//    wk->makePokeParam.oyaStatus = GAMEDATA_GetMyStatus( wk->gameData );
+//  wk->makePokeParam.oyaStatus = GAMEDATA_GetMyStatus( wk->gameData );
     wk->makePokeParam.oyaStatus = NULL;
-    GFL_PROC_SysCallProc( FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &wk->makePokeParam );
+
+    GFL_PROC_LOCAL_CallProc( wk->subProc, FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &wk->makePokeParam );
     (*seq)++;
     break;
   case 2:
-    changeScene_recover( wk );
-    setMainProc( wk, mainProc_Setup );
+    if( GFL_PROC_LOCAL_Main(wk->subProc) != GFL_PROC_MAIN_VALID ){
+      changeScene_recover( wk );
+      setMainProc( wk, mainProc_Setup );
+    }
     break;
   }
   return FALSE;
@@ -2166,17 +2170,20 @@ FS_EXTERN_OVERLAY(battle);
     changeScene_start( wk );
     setDebugParams( &wk->saveData, &wk->setupParam );
     PMSND_PlayBGM( wk->setupParam.musicDefault );
-    GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, &wk->setupParam );
+    GFL_PROC_LOCAL_CallProc( wk->subProc, FS_OVERLAY_ID(battle), &BtlProcData, &wk->setupParam );
     (*seq) = SEQ_BTL_RETURN;
     break;
 
   case SEQ_BTL_RETURN:
-    changeScene_recover( wk );
-    PMSND_StopBGM();
-    if( wk->fNetConnect ){
-      GFL_NET_Exit( btlExitConnectCallback );
+    if( GFL_PROC_LOCAL_Main(wk->subProc) != GFL_PROC_MAIN_VALID )
+    {
+      changeScene_recover( wk );
+      PMSND_StopBGM();
+      if( wk->fNetConnect ){
+        GFL_NET_Exit( btlExitConnectCallback );
+      }
+      (*seq) = SEQ_NET_EXIT_WAIT;
     }
-    (*seq) = SEQ_NET_EXIT_WAIT;
     break;
 
   case SEQ_NET_EXIT_WAIT:
