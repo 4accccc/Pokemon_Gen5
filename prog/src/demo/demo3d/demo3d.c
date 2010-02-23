@@ -51,10 +51,6 @@
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
-//#define DEMO3D_INFOWIN
-//#define DEMO3D_TOUCHBAR
-//#define DEMO3D_TASKMENU
-
 FS_EXTERN_OVERLAY(ui_common);
 
 #define CHECK_KEY_TRG( key ) ( ( GFL_UI_KEY_GetTrg() & (key) ) == (key) )
@@ -160,27 +156,12 @@ typedef struct
 	//描画設定
 	DEMO3D_GRAPHIC_WORK	*graphic;
 
-#ifdef DEMO3D_TOUCHBAR
-	//タッチバー
-	TOUCHBAR_WORK							*touchbar;
-	//以下カスタムボタン使用する場合のサンプルリソース
-	u32												ncg_btn;
-	u32												ncl_btn;
-	u32												nce_btn;
-#endif //DEMO3D_TOUCHBAR
-
 	//フォント
 	GFL_FONT									*font;
 
 	//プリントキュー
 	PRINT_QUE									*print_que;
 	GFL_MSGDATA								*msg;
-
-#ifdef DEMO3D_TASKMENU
-	//タスクメニュー
-	APP_TASKMENU_RES					*menu_res;
-	APP_TASKMENU_WORK					*menu;
-#endif //DEMO3D_TASKMENU
 
   // デモエンジン
   DEMO3D_ENGINE_WORK*   engine;
@@ -209,36 +190,6 @@ typedef struct
 static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
-
-#ifdef DEMO3D_INFOWIN
-//-------------------------------------
-///	INFOWIN
-//=====================================
-static void Demo3D_INFOWIN_Init( GAMESYS_WORK *gamesys, HEAPID heapID );
-static void Demo3D_INFOWIN_Exit( void );
-static void Demo3D_INFOWIN_Main( void );
-#endif //DEMO3D_INFOWIN
-
-#ifdef DEMO3D_TOUCHBAR
-//-------------------------------------
-///	タッチバー
-//=====================================
-static TOUCHBAR_WORK * Demo3D_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID );
-static void Demo3D_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar );
-static void Demo3D_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
-//以下カスタムボタン使用サンプル用
-static TOUCHBAR_WORK * Demo3D_TOUCHBAR_InitEx( DEMO3D_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
-static void Demo3D_TOUCHBAR_ExitEx( DEMO3D_MAIN_WORK *wk );
-#endif //DEMO3D_TOUCHBAR
-
-#ifdef DEMO3D_TASKMENU
-//-------------------------------------
-///	リストシステムはい、いいえ
-//=====================================
-static APP_TASKMENU_WORK * Demo3D_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID );
-static void Demo3D_TASKMENU_Exit( APP_TASKMENU_WORK *menu );
-static void Demo3D_TASKMENU_Main( APP_TASKMENU_WORK *menu );
-#endif //DEMO3D_TASKMENU
 
 //-----------------------------------------------------------
 // アプリ例外処理
@@ -401,25 +352,6 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   //3D 初期化
   wk->engine = Demo3D_ENGINE_Init( wk->graphic, param->demo_id, param->start_frame, wk->heapID );
 
-#ifdef DEMO3D_INFOWIN
-	//INFOWINの初期化
-	Demo3D_INFOWIN_Init( param->gamesys, wk->heapID );
-#endif //DEMO3D_INFOWIN
-
-#ifdef DEMO3D_TOUCHBAR
-	//タッチバーの初期化
-	{	
-		GFL_CLUNIT	*clunit	= DEMO3D_GRAPHIC_GetClunit( wk->graphic );
-		wk->touchbar	= Demo3D_TOUCHBAR_InitEx( wk, clunit, wk->heapID );
-	}
-#endif //DEMO3D_TOUCHBAR
-
-#ifdef DEMO3D_TASKMENU
-	//TASKMENUリソース読み込み＆初期化
-	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_BAR_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
-	wk->menu			= Demo3D_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
-#endif //DEMO3D_TASKMENU
-
   // BG/OBJを非表示にしておく
   GFL_BG_SetVisible( BG_FRAME_BACK_S, VISIBLE_OFF );
   GFL_BG_SetVisible( BG_FRAME_TEXT_S, VISIBLE_OFF );
@@ -468,22 +400,6 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
 
   // 例外処理エンジン 終了処理
   APP_EXCEPTION_Delete( wk->expection );
-
-#ifdef DEMO3D_TASKMENU
-	//TASKMENUシステム＆リソース破棄
-	Demo3D_TASKMENU_Exit( wk->menu );
-	APP_TASKMENU_RES_Delete( wk->menu_res );	
-#endif //DEMO3D_TASKMENU
-
-#ifdef DEMO3D_TOUCHBAR
-	//タッチバー
-	Demo3D_TOUCHBAR_ExitEx( wk );
-#endif //DEMO3D_TOUCHBAR
-
-#ifdef DEMO3D_INFOWIN
-	//INFWIN
-	Demo3D_INFOWIN_Exit();
-#endif //DEMO3D_INFOWIN
 
 	//メッセージ破棄
 	GFL_MSG_Delete( wk->msg );
@@ -544,31 +460,21 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
       CHECK_KEY_TRG( PAD_KEY_LEFT ) ||
       CHECK_KEY_TRG( PAD_KEY_RIGHT ) ||
       CHECK_KEY_TRG( PAD_KEY_DOWN ) ||
-      CHECK_KEY_TRG( PAD_KEY_UP ) 
+      CHECK_KEY_TRG( PAD_KEY_UP )
+#else
+      ||
+      CHECK_KEY_TRG( PAD_BUTTON_START )
 #endif
     )
   {
+    // [OUT] フレーム値を設定
+    wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
     wk->param->result = DEMO3D_RESULT_USER_END;
     return GFL_PROC_RES_FINISH;
   }
   
   // 例外処理エンジン 主処理
   APP_EXCEPTION_Main( wk->expection );
-
-#ifdef DEMO3D_TOUCHBAR
-	//タッチバーメイン処理
-	Demo3D_TOUCHBAR_Main( wk->touchbar );
-#endif //DEMO3D_TOUCHBAR
-
-#ifdef DEMO3D_INFOWIN
-	//INFWINメイン処理
-	Demo3D_INFOWIN_Main();
-#endif //DEMO3D_INFOWIN
-
-#ifdef DEMO3D_TASKMENU
-	//タスクメニューメイン処理
-	Demo3D_TASKMENU_Main( wk->menu );
-#endif //DEMO3D_TASKMENU
 
 	//PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
@@ -597,301 +503,6 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
  */
 //=============================================================================
 
-
-#ifdef DEMO3D_INFOWIN
-//=============================================================================
-/**
- *		INFOWIN
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	INFOWIN初期化
- *
- *	@param	GAMESYS_WORK *gamesys	ゲームシステム
- *	@param	heapID		ヒープID
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_INFOWIN_Init( GAMESYS_WORK *gamesys, HEAPID heapID )
-{	
-	GAME_COMM_SYS_PTR comm;
-
-  GF_ASSERT( gamesys );
-
-	comm	= GAMESYSTEM_GetGameCommSysPtr(gamesys);
-	INFOWIN_Init( BG_FRAME_BAR_M, PLTID_BG_INFOWIN_M, comm, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	INFOWIN破棄
- *
- *	@param	void 
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_INFOWIN_Exit( void )
-{	
-	INFOWIN_Exit();
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	INFWINメイン処理
- *
- *	@param	void 
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_INFOWIN_Main( void )
-{	
-	INFOWIN_Update();
-}
-#endif //DEMO3D_INFOWIN
-
-#ifdef DEMO3D_TOUCHBAR
-//=============================================================================
-/**
- *	TOUCHBAR
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR初期化
- *
- *	@param	GFL_CLUNIT *clunit	CLUNIT
- *	@param	heapID							ヒープID
- *
- *	@return	TOUCHBAR_WORK
- */
-//-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * Demo3D_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-	//アイコンの設定
-	//数分作る
-	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
-	{	
-		{	
-			TOUCHBAR_ICON_RETURN,
-			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CLOSE,
-			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CHECK,
-			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK },
-		},
-	};
-
-	//設定構造体
-	//さきほどの窓情報＋リソース情報をいれる
-	TOUCHBAR_SETUP	touchbar_setup;
-	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
-	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
-	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
-	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
-	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
-	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
-
-	return TOUCHBAR_Init( &touchbar_setup, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR破棄
- *
- *	@param	TOUCHBAR_WORK	*touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar )
-{	
-	TOUCHBAR_Exit( touchbar );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR初期化	+ カスタムアイコン版
- *
- * @param  wk										ワーク
- *	@param	GFL_CLUNIT *clunit	CLUNIT
- *	@param	heapID							ヒープID
- *
- *	@return	TOUCHBAR_WORK
- */
-//-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * Demo3D_TOUCHBAR_InitEx( DEMO3D_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-
-	//リソース読みこみ
-	//サンプルとしてタウンマップの拡大縮小アイコンをカスタムボタンに登録する
-	{	
-		ARCHANDLE *handle;
-		//ハンドル
-		handle	= GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, heapID );
-		//リソース読みこみ
-		wk->ncg_btn	= GFL_CLGRP_CGR_Register( handle,
-					NARC_townmap_gra_tmap_obj_d_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
-		wk->ncl_btn	= GFL_CLGRP_PLTT_RegisterEx( handle,
-				NARC_townmap_gra_tmap_bg_d_NCLR, CLSYS_DRAW_MAIN, PLTID_OBJ_TOWNMAP_M*0x20,
-				2, 2, heapID );	
-		wk->nce_btn	= GFL_CLGRP_CELLANIM_Register( handle,
-					NARC_townmap_gra_tmap_obj_d_NCER,
-				 	NARC_townmap_gra_tmap_obj_d_NANR, heapID );
-	
-		GFL_ARC_CloseDataHandle( handle ) ;
-	}
-
-	//タッチバーの設定
-	{	
-	//アイコンの設定
-	//数分作る
-	TOUCHBAR_SETUP	touchbar_setup;
-	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
-	{	
-		{	
-			TOUCHBAR_ICON_RETURN,
-			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CLOSE,
-			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CHECK,
-			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK }
-		},
-		{	
-			TOUCHBAR_ICON_CUTSOM1,	//カスタムボタン１を拡大縮小アイコンに,
-			{	TOUCHBAR_ICON_X_04, TOUCHBAR_ICON_Y },
-		},
-	};
-
-	//以下カスタムボタンならば入れなくてはいけない情報
-	touchbar_icon_tbl[3].cg_idx	=  wk->ncg_btn;				//キャラリソース
-	touchbar_icon_tbl[3].plt_idx	= wk->ncl_btn;				//パレットリソース
-	touchbar_icon_tbl[3].cell_idx	=	wk->nce_btn;				//セルリソース
-	touchbar_icon_tbl[3].active_anmseq	=	8;						//アクティブのときのアニメ
-	touchbar_icon_tbl[3].noactive_anmseq	=		12;						//ノンアクティブのときのアニメ
-	touchbar_icon_tbl[3].push_anmseq	=		10;						//押したときのアニメ（STOPになっていること）
-	touchbar_icon_tbl[3].key	=		PAD_BUTTON_START;		//キーで押したときに動作させたいならば、ボタン番号
-	touchbar_icon_tbl[3].se	=		0;									//押したときにSEならしたいならば、SEの番号
-
-	//設定構造体
-	//さきほどの窓情報＋リソース情報をいれる
-	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
-	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
-	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
-	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
-	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
-	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
-
-	return TOUCHBAR_Init( &touchbar_setup, heapID );
-	}
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR破棄	カスタムボタン版
- *
- *	@param	TOUCHBAR_WORK	*touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_TOUCHBAR_ExitEx( DEMO3D_MAIN_WORK *wk )
-{	
-	//タッチバー破棄
-	TOUCHBAR_Exit( wk->touchbar );
-
-	//リソース破棄
-	{	
-		GFL_CLGRP_PLTT_Release( wk->ncl_btn );
-		GFL_CLGRP_CGR_Release( wk->ncg_btn );
-		GFL_CLGRP_CELLANIM_Release( wk->nce_btn );
-	}
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBARメイン処理
- *
- *	@param	TOUCHBAR_WORK	*touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar )
-{	
-	TOUCHBAR_Main( touchbar );
-}
-#endif //DEMO3D_TOUCHBAR
-
-#ifdef DEMO3D_TASKMENU
-//----------------------------------------------------------------------------
-/**
- *	@brief	TASKMENUの初期化
- *
- *	@param	menu_res	リソース
- */
-//-----------------------------------------------------------------------------
-static APP_TASKMENU_WORK * Demo3D_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID )
-{	
-	int i;
-	APP_TASKMENU_INITWORK	init;
-	APP_TASKMENU_ITEMWORK	item[3];
-	APP_TASKMENU_WORK			*menu;	
-
-	//窓の設定
-	for( i = 0; i < NELEMS(item); i++ )
-	{	
-		item[i].str	= GFL_MSG_CreateString( msg, 0 );	//文字列
-		item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;	//文字色
-		item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL;	//窓の種類
-	}
-
-	//初期化
-	init.heapId		= heapID;
-	init.itemNum	= NELEMS(item);
-	init.itemWork = item;
-	init.posType	= ATPT_RIGHT_DOWN;
-	init.charPosX	= 32;
-	init.charPosY = 21;
-	init.w				= APP_TASKMENU_PLATE_WIDTH;
-	init.h				= APP_TASKMENU_PLATE_HEIGHT;
-
-	menu	= APP_TASKMENU_OpenMenu( &init, menu_res );
-
-	//文字列解放
-	for( i = 0; i < NELEMS(item); i++ )
-	{	
-		GFL_STR_DeleteBuffer( item[i].str );
-	}
-
-	return menu;
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TASKMENUの破棄
- *
- *	@param	APP_TASKMENU_WORK *menu	ワーク
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_TASKMENU_Exit( APP_TASKMENU_WORK *menu )
-{	
-	APP_TASKMENU_CloseMenu( menu );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TASKMENUのメイン処理
- *
- *	@param	APP_TASKMENU_WORK *menu	ワーク
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_TASKMENU_Main( APP_TASKMENU_WORK *menu )
-{	
-	APP_TASKMENU_UpdateMenu( menu );
-}
-#endif //DEMO3D_TASKMENU
 
 //-----------------------------------------------------------------------------
 // アプリごとの例外表示
