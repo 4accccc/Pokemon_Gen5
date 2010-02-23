@@ -7,7 +7,7 @@ SOUNDSRC =    sound/snd_strm.c \
         sound/pm_voice.c \
         sound/pm_wb_voice.c \
         sound/snd_mic.c \
-		sound/bgm_info.c
+		    sound/bgm_info.c
 
 #セーブデータ関連
 SAVEDATASRC =   savedata/save_tbl.c \
@@ -1557,7 +1557,8 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
 #===> SRCS_OVERLAY_BATTLE_PLIST
 #===> SRCS_OVERLAY_VS_MULTI_LIST
 SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
-                                    net_app/wifi_match/wifibattlematch_subproc.c
+                                    net_app/wifi_match/wifibattlematch_subproc.c \
+                                    net_app/wifi_match/wifibattlematch_battle.c
 
 # WIFIバトルマッチングフロー周り＋ネット部分
 #===> SRCS_OVERLAY_DPW_COMMON
@@ -1592,12 +1593,14 @@ SRCS_OVERLAY_COMMAND_DEMO = demo/command_demo/command_demo.c \
 #バトルレコーダー
 #===> SRCS_OVERLAY_BATTLE
 #===> SRCS_OVERLAY_BATTLE_BAG
-#===> SRCS_OVERLAY_BATTLE_PLIST 
+#===> SRCS_OVERLAY_BATTLE_PLIST
 #===> SRCS_OVERLAY_VS_MULTI_LIST
 SRCS_OVERLAY_BATTLE_RECORDER  = net_app/battle_recorder/br_main.c
 
 #バトルレコーダーコア部分
-#===> SRCS_OVERLAY_MUSICAL
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_MUSICAL_SHOT
 SRCS_OVERLAY_BATTLE_RECORDER_CORE	=	net_app/battle_recorder/br_core.c \
 						net_app/battle_recorder/br_btn.c \
 						net_app/battle_recorder/br_btn_data.c \

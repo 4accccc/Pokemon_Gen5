@@ -54,10 +54,12 @@ const BOOL DS_SYSTEM_IsRestrictPhotoExchange( void )
   }
   
 #if (defined(SDK_TWL))
-  return OS_IsRestrictPhotoExchange();
-#else
-  return FALSE;
+  if( DS_SYSTEM_IsRunOnTwl() )
+  { 
+    return OS_IsRestrictPhotoExchange();
+  }
 #endif
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -73,12 +75,15 @@ const BOOL DS_SYSTEM_IsRestrictUGC( void )
   {
     return TRUE;
   }
+  return FALSE;
 
 #if (defined(SDK_TWL))
-  return OS_IsRestrictUGC();
-#else
-  return FALSE;
+  if( DS_SYSTEM_IsRunOnTwl() )
+  { 
+    return OS_IsRestrictUGC();
+  }
 #endif
+  return FALSE;
 }
 
 
@@ -92,7 +97,7 @@ const BOOL DS_SYSTEM_IsAvailableWireless( void )
 {
   if( DEBUG_FLG_GetFlg( DEBUG_FLG_DisableWL ) == TRUE )
   {
-    return TRUE;
+    return FALSE;
   }
 
 #if (defined(SDK_TWL))

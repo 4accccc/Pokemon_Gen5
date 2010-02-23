@@ -53,7 +53,6 @@
 
 #include "pokemontrade_local.h"
 
-#include "app/app_printsys_common.h"
 
 
 
@@ -217,7 +216,7 @@ void POKETRADE_MESSAGE_WindowOpenCustom(POKEMON_TRADE_WORK* pWork,BOOL bFast,BOO
   if(!bFast){
     pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pMessageStrBuf, pWork->pFontHandle,
                                           MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15 );
-    APP_PRINTSYS_COMMON_PrintStreamInit(&pWork->trgWork);
+    APP_PRINTSYS_COMMON_PrintStreamInit(&pWork->trgWork, APP_PRINTSYS_COMMON_TYPE_KEY );
   }
   else{
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pMessageStrBuf, pWork->pFontHandle);
@@ -369,7 +368,7 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
 
 BOOL POKETRADE_MESSAGE_EndCheck(POKEMON_TRADE_WORK* pWork)
 {
-  BOOL ret = APP_PRINTSYS_COMMON_PrintStreamFunc(pWork->pStream,&pWork->trgWork);
+  BOOL ret = APP_PRINTSYS_COMMON_PrintStreamFunc(&pWork->trgWork,pWork->pStream);
 
   if(ret){
     if(pWork->pStream){

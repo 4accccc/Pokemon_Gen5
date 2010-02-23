@@ -11,6 +11,25 @@
 
 #include "print/printsys.h"
 
+#define APP_PRINTSYS_COMMON_TRG_KEY (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)
+
+typedef enum
+{ 
+  APP_PRINTSYS_COMMON_TYPE_KEY    = 1<<1,
+  APP_PRINTSYS_COMMON_TYPE_TOUCH  = 1<<2,
+  APP_PRINTSYS_COMMON_TYPE_BOTH   = APP_PRINTSYS_COMMON_TYPE_KEY|APP_PRINTSYS_COMMON_TYPE_TOUCH,
+}APP_PRINTSYS_COMMON_TYPE;
+
+//-------------------------------------
+///	
+//=====================================
+typedef struct 
+{
+  u8                         trg;  //離した検知
+  u8                         dummy[3];
+  APP_PRINTSYS_COMMON_TYPE   type; //トリガで使用するもの
+} APP_PRINTSYS_COMMON_WORK;
+
 
 //----------------------------------------------------------------------------
 /**
@@ -18,7 +37,7 @@
  *	@param	トリガーを制御すりワーク u8
  */
 //-----------------------------------------------------------------------------
-extern void APP_PRINTSYS_COMMON_PrintStreamInit(u8* trgWork);
+extern void APP_PRINTSYS_COMMON_PrintStreamInit(APP_PRINTSYS_COMMON_WORK *wk, APP_PRINTSYS_COMMON_TYPE type);
 //----------------------------------------------------------------------------
 /**
  *	@brief	プリントシステム実行関数
@@ -26,5 +45,5 @@ extern void APP_PRINTSYS_COMMON_PrintStreamInit(u8* trgWork);
  *	@param	初期化で渡したトリガーを制御すりワーク u8
  */
 //-----------------------------------------------------------------------------
-extern BOOL APP_PRINTSYS_COMMON_PrintStreamFunc(PRINT_STREAM* handle,u8* trgWork);
+extern BOOL APP_PRINTSYS_COMMON_PrintStreamFunc( APP_PRINTSYS_COMMON_WORK *wk, PRINT_STREAM* handle );
 

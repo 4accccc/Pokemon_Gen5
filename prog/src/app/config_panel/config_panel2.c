@@ -17,6 +17,8 @@
 #include "system/bmp_winframe.h"
 #include "sound/pm_sndsys.h"
 #include "gamesystem/msgspeed.h"
+#include "system/ds_system.h"
+#include "app/app_printsys_common.h"
 
 //module
 #include "app/app_menu_common.h"
@@ -32,7 +34,9 @@
 //print
 #include "font/font.naix"
 #include "message.naix"
+#include "script_message.naix"
 #include "msg/msg_config.h"
+#include "msg/script/msg_common_scr.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
 
@@ -232,7 +236,7 @@ typedef enum
 #define SCROLL_TOP_BAR_Y    (3*GFL_BG_1CHRDOTSIZ)
 #define SCROLL_APP_BAR_Y    (192-3*GFL_BG_1CHRDOTSIZ)
 
-#define SCROLL_CHAGEPLT_SAFE_SYNC (6)   //何シンク同じならばOKか
+#define SCROLL_CHAGEPLT_SAFE_SYNC (3)   //何シンク同じならばOKか
 
 //-------------------------------------
 /// UIの種類
@@ -253,6 +257,7 @@ typedef enum
   UI_INPUT_CONT_DOWN, //キー下
   UI_INPUT_TRG_Y, //キーY
   UI_INPUT_TRG_X, //キーX
+  UI_INPUT_KEY,    //キーモード切り替え
 } UI_INPUT;
 
 //-------------------------------------
@@ -441,6 +446,8 @@ typedef struct
   PRINT_UTIL        util;
   PRINT_QUE         *p_que;
   u32               print_update;
+  APP_PRINTSYS_COMMON_WORK  trg_work;
+  u8                padding[3];
 } MSGWND_WORK;
 //-------------------------------------
 /// 最終確認画面 CONFIRM
@@ -487,6 +494,7 @@ typedef struct
   int pre_y;
   CONFIG_PARAM  now;
   BOOL is_info_update;
+  BOOL pre_decide_draw;
 } SCROLL_WORK;
 //-------------------------------------
 /// コンフィグメインワーク
@@ -596,13 +604,13 @@ static void UI_Exit( UI_WORK *p_wk );
 static void UI_Main( UI_WORK *p_wk );
 static UI_INPUT UI_GetInput( const UI_WORK *cp_wk );
 static void UI_GetParam( const UI_WORK *cp_wk, UI_INPUT_PARAM param, GFL_POINT *p_data );
-static BOOL UI_IsKey( UI_INPUT input );
 //-------------------------------------
 /// MSGWND
 //=====================================
 static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, GFL_MSGDATA *p_msg, GFL_TCBLSYS *p_tcbl, PRINT_QUE *p_que, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait );
+static void MSGWND_PrintEx( MSGWND_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, int wait );
 static BOOL MSGWND_IsEndMsg( MSGWND_WORK* p_wk );
 //-------------------------------------
 /// APPBAR
@@ -623,6 +631,7 @@ static void SCROLL_Exit( SCROLL_WORK *p_wk );
 static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p_msg, GRAPHIC_WORK *p_graphic, APPBAR_WORK *p_appbar );
 static CONFIG_LIST SCROLL_GetSelect( const SCROLL_WORK *cp_wk );
 static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_param );
+static void SCROLL_SetConfigParamWireless( SCROLL_WORK *p_wk, u16 param );
 static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw );
 static void Scroll_Move( SCROLL_WORK *p_wk, int y_add );
 static void Scroll_TouchItem( SCROLL_WORK *p_wk, const GFL_POINT *cp_pos );
@@ -639,6 +648,10 @@ static void CONFIRM_Exit( CONFIRM_WORK *p_wk );
 static void CONFIRM_Main( CONFIRM_WORK *p_wk );
 static void CONFIRM_Start( CONFIRM_WORK *p_wk, int wait );
 static CONFIRM_SELECT CONFIRM_Select( const CONFIRM_WORK *cp_wk );
+//切断できないメッセージ
+static void CONFIRM_PrintErrMessage( CONFIRM_WORK *p_wk, u32 strID, int wait );
+static void CONFIRM_PrintMessage( CONFIRM_WORK *p_wk, u32 strID, int wait );
+static BOOL CONFIRM_IsEndMessage( CONFIRM_WORK *p_wk );
 //-------------------------------------
 /// CONFIG_PARAM
 //=====================================
@@ -2190,49 +2203,6 @@ static void UI_Main( UI_WORK *p_wk )
   //一端リセット
   p_wk->input = UI_INPUT_NONE;
 
-  //キー入力
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-  {
-    p_wk->input = UI_INPUT_TRG_UP;
-  }
-  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-  {
-    p_wk->input = UI_INPUT_TRG_DOWN;
-  }
-  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-  {
-    p_wk->input = UI_INPUT_TRG_LEFT;
-  }
-  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-  {
-    p_wk->input = UI_INPUT_TRG_RIGHT;
-  }
-  else if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
-  {
-    p_wk->input = UI_INPUT_CONT_UP;
-  }
-  else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
-  {
-    p_wk->input = UI_INPUT_CONT_DOWN;
-  }
-  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
-  {
-    p_wk->input = UI_INPUT_TRG_DECIDE;
-  }
-  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B )
-  {
-    p_wk->input = UI_INPUT_TRG_CANCEL;
-  }
-  else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-  {
-    p_wk->input = UI_INPUT_TRG_Y;
-  }
-  else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-  {
-    p_wk->input = UI_INPUT_TRG_X;
-  }
-
-
   //タッチ入力
   if( GFL_UI_TP_GetPointTrg( &x, &y ) )
   {
@@ -2242,6 +2212,11 @@ static void UI_Main( UI_WORK *p_wk )
     p_wk->slide_start.x = x;
     p_wk->slide_start.y = y;
     p_wk->is_start_slide  = TRUE;
+
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
+    {
+      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    }
   }
   else if( GFL_UI_TP_GetPointCont( &x, &y ) && p_wk->is_start_slide )
   {
@@ -2257,6 +2232,62 @@ static void UI_Main( UI_WORK *p_wk )
   else
   {
     p_wk->is_start_slide  = FALSE;
+  }
+
+  
+  //キー入力
+  { 
+    if( GFL_UI_KEY_GetTrg() )
+    { 
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        p_wk->input = UI_INPUT_KEY;
+        //キー入力をせずに終了
+        return ;
+      } 
+    }
+
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      p_wk->input = UI_INPUT_TRG_UP;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      p_wk->input = UI_INPUT_TRG_DOWN;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      p_wk->input = UI_INPUT_TRG_LEFT;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      p_wk->input = UI_INPUT_TRG_RIGHT;
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
+    {
+      p_wk->input = UI_INPUT_CONT_UP;
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
+    {
+      p_wk->input = UI_INPUT_CONT_DOWN;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      p_wk->input = UI_INPUT_TRG_DECIDE;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      p_wk->input = UI_INPUT_TRG_CANCEL;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    {
+      p_wk->input = UI_INPUT_TRG_Y;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      p_wk->input = UI_INPUT_TRG_X;
+    }
   }
 }
 
@@ -2305,42 +2336,6 @@ static void UI_GetParam( const UI_WORK *cp_wk, UI_INPUT_PARAM param, GFL_POINT *
     }
   }
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  キー入力かチェック
- *
- *	@param	UI_INPUT input  入力情報
- *
- *	@return キー入力ならTRUE　さもなくばFALSE
- */
-//-----------------------------------------------------------------------------
-static BOOL UI_IsKey( UI_INPUT input )
-{ 
-  switch(input )
-  { 
-  case UI_INPUT_NONE:      //入力なし
-    return FALSE;
-
-  case UI_INPUT_SLIDE:     //タッチスライド
-  case UI_INPUT_FLICK:     //タッチはじき
-  case UI_INPUT_TOUCH:     //タッチトリガー
-    return FALSE;
-
-  case UI_INPUT_TRG_UP:    //キー上
-  case UI_INPUT_TRG_DOWN:  //キー下
-  case UI_INPUT_TRG_RIGHT: //キー右
-  case UI_INPUT_TRG_LEFT:  //キー左
-  case UI_INPUT_TRG_DECIDE://キー決定
-  case UI_INPUT_TRG_CANCEL://キーキャンセル
-  case UI_INPUT_CONT_UP:   //キー上
-  case UI_INPUT_CONT_DOWN: //キー下
-  case UI_INPUT_TRG_Y: //キーY
-  case UI_INPUT_TRG_X: //キーX
-    return TRUE;
-  }
-
-  return FALSE;
-}
 //=============================================================================
 /**
  *          MSGWND
@@ -2385,6 +2380,7 @@ static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_fo
   p_wk->p_que     = p_que;
   p_wk->print_update  = MSGWND_PRINT_TYPE_NONE;
 
+  APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->trg_work, APP_PRINTSYS_COMMON_TYPE_BOTH );
   BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_OFF,1, GFL_BMPWIN_GetPalette(p_bmpwin) );
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
@@ -2420,11 +2416,25 @@ static void MSGWND_Exit( MSGWND_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait )
 {
+  MSGWND_PrintEx( p_wk, p_wk->p_msg, strID, wait );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージウィンドウ  プリント開始  MSGDATA指定版
+ *
+ *	@param	MSGWND_WORK* p_wk ワーク
+ *	@param	*p_msg  メッセージ
+ *	@param	strID 文字
+ *	@param	wait  メッセージスピード
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintEx( MSGWND_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, int wait )
+{ 
   //一端消去
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
 
   //文字列作成
-  GFL_MSG_GetString( p_wk->p_msg, strID, p_wk->p_strbuf );
+  GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
 
   //ストリーム破棄
   if( p_wk->p_stream )
@@ -2449,7 +2459,6 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait )
 
     p_wk->print_update  = MSGWND_PRINT_TYPE_STREAM;
   }
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -2472,7 +2481,7 @@ static BOOL MSGWND_IsEndMsg( MSGWND_WORK* p_wk )
     return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
 
   case MSGWND_PRINT_TYPE_STREAM:
-    return PRINTSTREAM_STATE_DONE == PRINTSYS_PrintStreamGetState( p_wk->p_stream );
+    return APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->trg_work, p_wk->p_stream ); 
   }
 }
 //=============================================================================
@@ -2611,9 +2620,12 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
 
   switch( input )
   {
+  case UI_INPUT_KEY:
+    //キー切替時はTOUCHBAR_Mainの処理をさせない
+    return;
+
   case UI_INPUT_TOUCH:
     UI_GetParam( cp_ui, UI_INPUT_PARAM_TRGPOS, &pos );
-    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
     //タッチしたならば、
     //入っていれば、選択
     if( COLLISION_IsRectXPos( &sc_appbar_rect[APPBAR_WIN_DECIDE], &pos )
@@ -2633,7 +2645,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
     else if( p_wk->select != APPBAR_WIN_NULL )
     {
       p_wk->select  = APPBAR_WIN_NULL;
-    }
+    } 
 
     is_update = TRUE;
     break;
@@ -2666,7 +2678,6 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
   case UI_INPUT_TRG_DECIDE:
     if( p_wk->select != APPBAR_WIN_NULL )
     {
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       PMSND_PlaySE( CONFIG_SE_DECIDE );
       p_wk->is_decide = TRUE;
       is_update = TRUE;
@@ -2674,7 +2685,6 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
     break;
 
   case UI_INPUT_TRG_CANCEL:
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     PMSND_PlaySE( CONFIG_SE_CANCEL );
     p_wk->select    = APPBAR_WIN_CANCEL;
     p_wk->is_decide = TRUE;
@@ -2921,7 +2931,6 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
   GFL_POINT slide_now;
   int y, bar_top;
   BOOL is_bmpprint_decide;
-  BOOL  is_decide = TRUE;
 
   //入力取得
   input = UI_GetInput( cp_ui );
@@ -2930,55 +2939,15 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
   y = GFL_BG_GetScrollY( p_wk->back_frm );
   bar_top = (y-SCROLL_START)/SCROLL_WINDOW_H_DOT;
 
-  //入力がキーかタッチかチェック
-#ifdef CONFIG_KEY_TOUCH
-  if( input != UI_INPUT_NONE )
-  { 
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
-    {
-      if( UI_IsKey( input ) )
-      { 
-        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-        Scroll_ChangePlt( p_wk, TRUE );
-        if( CONFIG_LIST_INIT < p_wk->select && p_wk->select < CONFIG_LIST_MAX )
-        { 
-          int speed;
-          if( p_wk->select == CONFIG_LIST_MSGSPEED )
-          { 
-            speed = CONFIGPARAM_GetMsgSpeed(&p_wk->now);
-          }
-          else
-          { 
-            speed = 0;
-          }
-          GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
-          MSGWND_Print( p_msg, sc_list_info[ p_wk->select ].infoID, speed );
-        }
-        return;
-      }
-      else
-      { 
-        is_decide = FALSE;
-      }
-    }
-    else
-    { 
-      if( !UI_IsKey( input ) )
-      { 
-        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-        is_decide = FALSE;
-      }
-      else
-      { 
-        is_decide = TRUE;
-      }
-   }
-  }
-#endif
-
   //入力による操作
   switch( input )
   {
+  case UI_INPUT_KEY:
+    //キー切替時
+    p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
+    Scroll_ChangePlt( p_wk, TRUE );
+    break;
+
   case UI_INPUT_SLIDE:
     UI_GetParam( cp_ui, UI_INPUT_PARAM_SLIDEPOS, &slide_pos );
     UI_GetParam( cp_ui, UI_INPUT_PARAM_SLIDENOW, &slide_now );
@@ -2991,7 +2960,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       //上下に移動させすぎるとちかちかしてしまうので、チェック
       if( Scroll_ChangePlt_Safe_IsOk(p_wk) )
       {
-        Scroll_ChangePlt( p_wk, is_decide );
+        Scroll_ChangePlt( p_wk, FALSE );
         GRAPHIC_StartPalleteFade( p_graphic );
       }
     }
@@ -3020,7 +2989,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       p_wk->is_info_update  = TRUE;
     }
     PMSND_PlaySE( CONFIG_SE_MOVE );
-    Scroll_ChangePlt( p_wk, is_decide );
+    Scroll_ChangePlt( p_wk, TRUE );
     GRAPHIC_StartPalleteFade( p_graphic );
     break;
 
@@ -3047,7 +3016,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       p_wk->is_info_update  = TRUE;
     }
     PMSND_PlaySE( CONFIG_SE_MOVE );
-    Scroll_ChangePlt( p_wk, is_decide );
+    Scroll_ChangePlt( p_wk, TRUE );
     GRAPHIC_StartPalleteFade( p_graphic );
     break;
 
@@ -3059,10 +3028,10 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       p_wk->select  = Scroll_PosToList( p_wk, &trg_pos );
       //項目のタッチ
       Scroll_TouchItem( p_wk, &trg_pos );
-      Scroll_ChangePlt( p_wk, is_decide );
+      Scroll_ChangePlt( p_wk, FALSE );
       GRAPHIC_StartPalleteFade( p_graphic );
       p_wk->is_info_update  = TRUE;
-      is_bmpprint_decide  = is_decide;
+      is_bmpprint_decide  = FALSE;
     }
     break;
 
@@ -3071,9 +3040,9 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     {
       PMSND_PlaySE( CONFIG_SE_MOVE );
       Scroll_SelectItem( p_wk, 1 );
-      Scroll_ChangePlt( p_wk, is_decide );
+      Scroll_ChangePlt( p_wk, TRUE );
       GRAPHIC_StartPalleteFade( p_graphic );
-      is_bmpprint_decide  = is_decide;
+      is_bmpprint_decide  = TRUE;
     }
     else
     {
@@ -3088,9 +3057,9 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     {
       PMSND_PlaySE( CONFIG_SE_MOVE );
       Scroll_SelectItem( p_wk, -1 );
-      Scroll_ChangePlt( p_wk, is_decide );
+      Scroll_ChangePlt( p_wk, TRUE );
       GRAPHIC_StartPalleteFade( p_graphic );
-      is_bmpprint_decide  = is_decide;
+      is_bmpprint_decide  = TRUE;
     }
     else if( p_wk->select == CONFIG_LIST_CANCEL )
     {
@@ -3182,6 +3151,19 @@ static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_par
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  コンフィグパラメータにワイヤレス設定
+ *
+ *	@param	SCROLL_WORK *p_wk ワーク
+ *	@param	param             NETWORK_SEARCH_ON  or NETWORK_SEARCH_OFF
+ */
+//-----------------------------------------------------------------------------
+static void SCROLL_SetConfigParamWireless( SCROLL_WORK *p_wk, u16 param )
+{ 
+  p_wk->now.param[CONFIG_LIST_WIRELESS] = param;
+  Scroll_ChangePlt( p_wk, p_wk->pre_decide_draw );
+}
+//----------------------------------------------------------------------------
+/**
  *  @brief  パレットで塗る
  *
  *  @param  SCROLL_WORK *p_wk ワーク
@@ -3210,6 +3192,8 @@ static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw )
   {
     is_decide_draw  = FALSE;
   }
+
+  p_wk->pre_decide_draw  = is_decide_draw;
 
   //座標取得
   y = GFL_BG_GetScrollY( p_wk->back_frm );
@@ -3700,6 +3684,7 @@ static void CONFIRM_Start( CONFIRM_WORK *p_wk, int wait )
     GFL_NET_ReloadIcon();
   }
 }
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  選択取得
@@ -3712,6 +3697,73 @@ static void CONFIRM_Start( CONFIRM_WORK *p_wk, int wait )
 static CONFIRM_SELECT CONFIRM_Select( const CONFIRM_WORK *cp_wk )
 {
   return cp_wk->select;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  メッセージ表示
+ *
+ *  @param  CONFIRM_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void CONFIRM_PrintErrMessage( CONFIRM_WORK *p_wk, u32 strID, int wait )
+{ 
+  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ , 8 );
+  GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), TRUE );
+
+  { 
+    GFL_MSGDATA *p_msg  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, GFL_HEAP_LOWID(HEAPID_CONFIG) );
+    MSGWND_PrintEx( &p_wk->msg, p_msg, strID, wait );
+
+    GFL_MSG_Delete( p_msg );
+  }
+
+  if( GFL_NET_IsInit() )
+  { 
+    //通信アイコンがBGにかぶるので位置を変える
+    GFL_NET_ChangeIconPosition(-16,-16);
+    GFL_NET_ReloadIcon();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  メッセージ表示
+ *
+ *  @param  CONFIRM_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void CONFIRM_PrintMessage( CONFIRM_WORK *p_wk, u32 strID, int wait )
+{ 
+  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ , 8 );
+  GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), TRUE );
+  MSGWND_Print( &p_wk->msg, strID, wait );
+
+  if( GFL_NET_IsInit() )
+  { 
+    //通信アイコンがBGにかぶるので位置を変える
+    GFL_NET_ChangeIconPosition(-16,-16);
+    GFL_NET_ReloadIcon();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ終了待ち
+ *
+ *	@param	CONFIRM_WORK *p_wk ワーク
+ *	@retval TRUE終了  FALSE処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL CONFIRM_IsEndMessage( CONFIRM_WORK *p_wk )
+{ 
+
+  if( MSGWND_IsEndMsg( &p_wk->msg ) )
+  {
+    G2_BlendNone();
+    GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), FALSE );
+    return TRUE;
+  }
+
+  return FALSE;
 }
 //=============================================================================
 /**
@@ -4121,23 +4173,34 @@ static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
+  enum
+  { 
+    SEQ_MAIN,
+    SEQ_START_NOT_WIRELESS_MESSAGE,
+    SEQ_START_PARENTAL_CONTROL_MESSAGE,
+    SEQ_START_NOT_DISCONNECT_MESSAGE,
+    SEQ_END_MESSAGE,
+  };
+
   CONFIG_WORK *p_wk = p_param;
 
   //モジュールメイン
-
-  //決定していないときに動く
-  if( !APPBAR_IsDecide( &p_wk->appbar, NULL ) )
-  {
-    SCROLL_Main( &p_wk->scroll, &p_wk->ui, &p_wk->info, &p_wk->graphic, &p_wk->appbar );
-  }
-  APPBAR_Main(  &p_wk->appbar, &p_wk->ui, &p_wk->scroll );
-  UI_Main( &p_wk->ui );
-
-  //状態変移
-  {
-    APPBAR_WIN_LIST select;
-    if( APPBAR_IsDecide( &p_wk->appbar, &select ) )
+  switch( *p_seq )
+  { 
+  case SEQ_MAIN:
+    UI_Main( &p_wk->ui );
+    //決定していないときに動く
+    if( !APPBAR_IsDecide( &p_wk->appbar, NULL ) )
     {
+      SCROLL_Main( &p_wk->scroll, &p_wk->ui, &p_wk->info, &p_wk->graphic, &p_wk->appbar );
+    }
+    APPBAR_Main(  &p_wk->appbar, &p_wk->ui, &p_wk->scroll );
+
+    //状態変移
+    {
+      APPBAR_WIN_LIST select;
+      if( APPBAR_IsDecide( &p_wk->appbar, &select ) )
+      {
         switch( select )
         {
         case APPBAR_WIN_DECIDE:
@@ -4182,7 +4245,92 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
           }
           break;
         }
+      }
     }
+
+    //接続禁止メッセージ
+    { 
+      const BOOL is_wire  = DS_SYSTEM_IsAvailableWireless();
+      CONFIG_PARAM config;
+      SCROLL_GetConfigParam( &p_wk->scroll, &config );
+      if( config.param[CONFIG_LIST_WIRELESS] == NETWORK_SEARCH_ON && !is_wire )
+      { 
+        *p_seq  = SEQ_START_NOT_WIRELESS_MESSAGE;
+      }
+    }
+    //ペアレンタルコントロール中メッセージ
+    { 
+      const BOOL is_ugc = DS_SYSTEM_IsRestrictUGC();
+      CONFIG_PARAM config;
+      SCROLL_GetConfigParam( &p_wk->scroll, &config );
+      if( config.param[CONFIG_LIST_WIRELESS] == NETWORK_SEARCH_ON && is_ugc )
+      { 
+        *p_seq  = SEQ_START_PARENTAL_CONTROL_MESSAGE;
+      }
+    }
+
+    //切断禁止メッセージ
+    {
+      //パレスにいるならば切断禁止
+      GAME_COMM_SYS_PTR p_comm = GAMESYSTEM_GetGameCommSysPtr( p_wk->p_param->p_gamesys );
+      GAME_COMM_NO no = GameCommSys_BootCheck(p_comm);
+      if( no == GAME_COMM_NO_INVASION )
+      { 
+        CONFIG_PARAM config;
+        SCROLL_GetConfigParam( &p_wk->scroll, &config );
+        if( config.param[CONFIG_LIST_WIRELESS] == NETWORK_SEARCH_OFF && 0 )
+        { 
+          *p_seq  = SEQ_START_NOT_DISCONNECT_MESSAGE;
+        }
+      }
+    }
+    break;
+
+  case SEQ_START_NOT_WIRELESS_MESSAGE:
+    {
+      int speed;
+      CONFIG_PARAM config;
+
+      SCROLL_GetConfigParam( &p_wk->scroll, &config );
+      speed = CONFIGPARAM_GetMsgSpeed(&config);
+      CONFIRM_PrintErrMessage( &p_wk->confirm, msg_common_wireless_off_keywait, speed );
+      SCROLL_SetConfigParamWireless( &p_wk->scroll, NETWORK_SEARCH_OFF );
+    }
+    *p_seq  = SEQ_END_MESSAGE;
+    break;
+    
+  case SEQ_START_PARENTAL_CONTROL_MESSAGE:
+    {
+      int speed;
+      CONFIG_PARAM config;
+
+      SCROLL_GetConfigParam( &p_wk->scroll, &config );
+      speed = CONFIGPARAM_GetMsgSpeed(&config);
+      CONFIRM_PrintErrMessage( &p_wk->confirm, msg_common_wireless_off_keywait, speed );
+      SCROLL_SetConfigParamWireless( &p_wk->scroll, NETWORK_SEARCH_OFF );
+    }
+    *p_seq  = SEQ_END_MESSAGE;
+    break;
+
+  case SEQ_START_NOT_DISCONNECT_MESSAGE:
+    {
+      int speed;
+      CONFIG_PARAM config;
+
+      SCROLL_GetConfigParam( &p_wk->scroll, &config );
+      speed = CONFIGPARAM_GetMsgSpeed(&config);
+      CONFIRM_PrintMessage( &p_wk->confirm, mes_config_comment30, speed );
+      SCROLL_SetConfigParamWireless( &p_wk->scroll, NETWORK_SEARCH_ON );
+    }
+    *p_seq  = SEQ_END_MESSAGE;
+    break;
+
+  case SEQ_END_MESSAGE:
+    if( CONFIRM_IsEndMessage( &p_wk->confirm ) )
+    { 
+      *p_seq  = SEQ_MAIN;
+    }
+    break;
   }
 }
 //----------------------------------------------------------------------------
