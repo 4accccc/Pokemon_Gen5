@@ -95,6 +95,7 @@ FMMDL_RESLIST_NCGIMD = \
 	hakase1.imd \
 	hakase2.imd \
 	icpo.imd \
+	tboss.imd \
 	tree.imd \
 	rock.imd \
 	monsterball.imd \
@@ -112,6 +113,7 @@ FMMDL_RESLIST_NCGIMD = \
 	poke12.imd \
 	poke13.imd \
 	poke14.imd \
+	poke15.imd \
 	poke16.imd \
 	poke17.imd \
 	poke18.imd \
@@ -172,6 +174,7 @@ FMMDL_RESLIST_NCGIMD = \
 	flag.imd \
 	keyboard.imd \
 	sprock.imd \
+	tbossbl.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \

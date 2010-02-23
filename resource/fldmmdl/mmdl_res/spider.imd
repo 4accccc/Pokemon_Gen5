@@ -31,8 +31,8 @@
 			00fe 0fef feff ffbe f0fe ebfe 000f efef 
 			f0fe f0fe 0fee fbef efee ef0f ff0f eebf 
 			ffbe effe 00ff bef0 feeb eff0 eefb eeee 
-			eeee eeeb fffe 0fef fef0 eeef ffee bfef 
-			ffbe ffee eeee 0fee eef0 fffe 00fe 0fef 
+			eeee eeeb fffe 0fef fef0 eeef ffee ffef 
+			ffbe ffee eeee 0fee eef0 fffe 00fe ffef 
 			f0fe f0fe fffe feef feef f00f 00fe 0fef 
 			0fef ffef f0fe eefe efee f00f 00fe 0fef 
 			0fef 0fef efef feff f0fe fffe 0fbe 0fef 
@@ -56,8 +56,8 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='monsterball' color_size='16' index='0'>
-		2e47 454e 5dd3 3126 20c4 45a9 45e9 1463 
-		1953 3cf8 34d1 2108 7fff 56b5 2d6b 18c6 
+		10c9 454e 5dd3 3126 20c4 45a9 45e9 0cf1 
+		03bd 092c 0297 2108 7fff 56b5 2d6b 18c6 
 	</tex_palette>
 </tex_palette_array>
 
