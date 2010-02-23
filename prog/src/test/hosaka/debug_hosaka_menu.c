@@ -21,6 +21,7 @@ static BOOL TESTMODE_ITEM_SelectCmmBtlDemoEndMulti( TESTMODE_WORK* work, const i
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStart( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStartMulti( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectPmsDirect( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsPeculiar( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsSingle( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsDouble( TESTMODE_WORK *work , const int idx );
@@ -36,6 +37,7 @@ static TESTMODE_MENU_LIST menuHosaka[] =
   {L"通信バトル前デモ",TESTMODE_ITEM_SelectCmmBtlDemoStart},
   {L"通信バトル前マルチ",TESTMODE_ITEM_SelectCmmBtlDemoStartMulti},
 	{L"かんい会話選択",TESTMODE_ITEM_SelectPmsSelect },
+	{L"かんい会話直呼び",TESTMODE_ITEM_SelectPmsDirect },
 	{L"かんい会話固定",TESTMODE_ITEM_SelectPmsPeculiar },
 	{L"かんい会話一単語",TESTMODE_ITEM_SelectPmsSingle },
 	{L"かんい会話二単語",TESTMODE_ITEM_SelectPmsDouble },
@@ -252,9 +254,23 @@ static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx )
 }
 
 
-// 簡易会話 固定
+// 簡易会話 直呼び
 #include "app/pms_input.h"
+static BOOL TESTMODE_ITEM_SelectPmsDirect( TESTMODE_WORK *work , const int idx )
+{
+  PMS_DATA data;
+  PMSI_PARAM* pmsi;
 
+  PMSDAT_Init( &data, 0 );
+  pmsi = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, NULL, TRUE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // デコ文字OK
+  //pmsi = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, NULL, FALSE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // デコ文字禁止
+
+	TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, pmsi );
+
+  return TRUE;
+}
+
+// 簡易会話 固定
 static BOOL TESTMODE_ITEM_SelectPmsPeculiar( TESTMODE_WORK *work , const int idx )
 {
   PMS_DATA data;
@@ -276,7 +292,7 @@ static BOOL TESTMODE_ITEM_SelectPmsSingle( TESTMODE_WORK *work , const int idx )
   PMSI_PARAM* pmsi;
 
   PMSDAT_Init( &data, 0 );
-  pmsi = PMSI_PARAM_Create( PMSI_MODE_SINGLE, PMSI_GUIDANCE_DEFAULT, NULL, TRUE, SaveControl_GetPointer(), GFL_HEAPID_APP );
+  pmsi = PMSI_PARAM_Create( PMSI_MODE_SINGLE, PMSI_GUIDANCE_DEFAULT, NULL, FALSE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // dataは送らない
 
 	TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, pmsi );
 
@@ -290,7 +306,8 @@ static BOOL TESTMODE_ITEM_SelectPmsDouble( TESTMODE_WORK *work , const int idx )
   PMSI_PARAM* pmsi;
 
   PMSDAT_Init( &data, 0 );
-  pmsi = PMSI_PARAM_Create( PMSI_MODE_DOUBLE, PMSI_GUIDANCE_DEFAULT, NULL, TRUE, SaveControl_GetPointer(), GFL_HEAPID_APP );
+  //pmsi = PMSI_PARAM_Create( PMSI_MODE_DOUBLE, PMSI_GUIDANCE_DEFAULT, &data, TRUE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // dataを送ってみる
+  pmsi = PMSI_PARAM_Create( PMSI_MODE_DOUBLE, PMSI_GUIDANCE_DEFAULT, NULL, TRUE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // 単語モードは文章固定に未対応らしい pmsi_param.c
 
 	TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, pmsi );
 

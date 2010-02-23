@@ -476,6 +476,33 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
 	COMMAND_WORK* cwk = wk_adrs;
 	ARCHANDLE* p_handle;
 
+
+
+
+/*
+これより前に、
+pms_input.c
+static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
+から呼ばれる
+pms_input_view.c
+PMS_INPUT_VIEW*  PMSIView_Create(const PMS_INPUT_WORK* main_wk, const PMS_INPUT_DATA* data_wk)
+で
+GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &bank_data, HEAPID_PMS_INPUT_VIEW );
+をやっているのが非常に気になる。
+順番を入れ替えたい。
+*/
+	//レジスタ初期化
+	G2_BlendNone();
+	G2S_BlendNone();	
+	GX_SetVisibleWnd( GX_WNDMASK_NONE );
+	GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+
+	//VRAMクリアー
+	GFL_DISP_ClearVRAM( 0 );
+
+
+
+
 	GFL_DISP_GX_InitVisibleControl();
 	GFL_DISP_GXS_InitVisibleControl();
 	GX_SetVisiblePlane( 0 );

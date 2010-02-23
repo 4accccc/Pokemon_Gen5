@@ -80,7 +80,7 @@ enum {
 	ARROW_DOWN_Y = 16*8,
 
 	SCRLL_BAR_X = 244,
-	SCRLL_BAR_Y = 12,
+	SCRLL_BAR_Y = 8 + 14/2 +3,//12,
 };
 
 enum {
