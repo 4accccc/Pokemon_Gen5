@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T18:28:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T21:45:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="177" right="2001" bottom="805" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -352,9 +352,9 @@
 ・続けてhakaim_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『なるほどね
-おまえらしい　たたかいかた　じゃん！[BE:01:ページ切り替え（クリア）]</language>
+きみらしい　たたかいかた　だね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『なるほどね
-おまえらしい　闘い方じゃん！[BE:01:ページ切り替え（クリア）]</language>
+きみらしい　戦い方　だね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r03_hakaim_01">
@@ -621,10 +621,10 @@
 ともだちで　良かった！！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ベル『ありがとうね！
 さっき　チェレンに　きいたよ[BE:01:ページ切り替え（クリア）]
-ふたりで　ポケモンを
-とりかえして　くれたんだよね[BE:01:ページ切り替え（クリア）]
+２人で　ポケモンを
+取り返して　くれたんだよね[BE:01:ページ切り替え（クリア）]
 ほんと　[1:00:トレーナー名:0]たちと
-ともだちで　よかった！！[BE:01:ページ切り替え（クリア）]</language>
+友達で　よかった！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r03_babygirl1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
