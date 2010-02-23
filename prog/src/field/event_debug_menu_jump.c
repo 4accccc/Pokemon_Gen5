@@ -71,28 +71,6 @@ static void initDZEW(DEBUG_ZONESEL_EVENT_WORK * dzew,
 static GMEVENT_RESULT debugMenuZoneSelectEvent(
     GMEVENT *event, int *seq, void *work );
 
-/// どこでもジャンプ　メニューヘッダー
-const FLDMENUFUNC_HEADER DATA_DebugMenuList_ZoneSel =
-{
-  1,    //リスト項目数
-  9,    //表示最大項目数
-  0,    //ラベル表示Ｘ座標
-  13,   //項目表示Ｘ座標
-  0,    //カーソル表示Ｘ座標
-  0,    //表示Ｙ座標
-  1,    //表示文字色
-  15,   //表示背景色
-  2,    //表示文字影色
-  0,    //文字間隔Ｘ
-  1,    //文字間隔Ｙ
-  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
-  12,   //文字サイズX(ドット
-  12,   //文字サイズY(ドット
-  0,    //表示座標X キャラ単位
-  0,    //表示座標Y キャラ単位
-  0,    //表示サイズX キャラ単位
-  0,    //表示サイズY キャラ単位
-};
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
