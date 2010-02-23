@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-23T12:59:57"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T16:02:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1567" top="232" right="2261" bottom="847" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<band id="0" index="1" style="0000" width="519"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="532"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="686"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -356,78 +356,79 @@
 		<language name="JPN" width="256">みんな　しんせつで
 だれにでも　やさしい！[BE:01:ページ切り替え（クリア）]
 みんなで　きょうりょくして
-いいもりに　したいな</language>
+すてきな　もりに　したいな</language>
 		<language name="JPN_KANJI" width="256">みんな　親切で
-だれにでも　優しい！[BE:00:ページ切り替え（行送り）]
-みんなで　協力して　いい森に　したいな</language>
+だれにでも　優しい！[BE:01:ページ切り替え（クリア）]
+みんなで　協力して
+すてきな森に　したいな</language>
 	</row>
 
 	<row id="msg_wc10_oldwoman1_01">
 		<attribute name="キャラ指定">OLDWOMAN1</attribute>
 		<language name="JPN" width="256">しぜんの　ちからは
 とても　いだいな　ものですよ[BE:01:ページ切り替え（クリア）]
-いきものを　よびよせ
-そして　たくさんの　めぐみを　くれる[BE:01:ページ切り替え（クリア）]
+いきものを　よびよせ　そして
+たくさんの　めぐみを　くれる[BE:01:ページ切り替え（クリア）]
 にんげんには　まねできない
 ちからを　もっているんです</language>
 		<language name="JPN_KANJI" width="256">自然の　力は
 とても　偉大な　ものですよ[BE:01:ページ切り替え（クリア）]
-生き物を　呼び寄せ
-そして　たくさんの　恵みを　くれる[BE:01:ページ切り替え（クリア）]
+生き物を　呼び寄せ　そして
+たくさんの　恵みを　くれる[BE:01:ページ切り替え（クリア）]
 人間には　真似できない
 力を　持っているんです</language>
 	</row>
 
-	<row id="wc10_01_01">
+	<row id="wc10_01_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ツバサ『あっ　こんにちは！
 しぜんの　めぐみが　きもちいいね！▼
 ●●●●●がいた　ブラックシティから
 やってきた　ツバサです　よろしく！▼</language>
 		<language name="JPN_KANJI" width="256">ツバサ『あっ　こんにちは！
-しぜんの　めぐみが　きもちいいね！▼
+自然の　恵みが　気持ちいいね！▼
 ●●●●●がいた　ブラックシティから
 やってきた　ツバサです　よろしく！▼</language>
 	</row>
 
-	<row id="wc10_01_02">
-		<language name="JPN" width="256">ツバサ『あっ　どうも　こんにちは！
-はっぱと　はっぱが　すれあう　おとで▽
-きょうは　めが　さめたよ▼
+	<row id="wc10_01_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ツバサ『あっ　どうも　こんにちは！▼
+はっぱと　はっぱが　すれあう　おとで
+きょうは　めざめたよ▼
 ほんとうに　きもちいいね　ここは！▼</language>
-		<language name="JPN_KANJI" width="256">ツバサ『あっ　どうも　こんにちは！
-はっぱと　はっぱが　すれあう　おとで▽
-きょうは　めが　さめたよ▼
-ほんとうに　きもちいいね　ここは！▼</language>
+		<language name="JPN_KANJI" width="256">ツバサ『あっ　どうも　こんにちは！▼
+はっぱと　はっぱが　すれあう　音で
+今日は　目覚めたよ▼
+本当に　気持ちいいね　ここは！▼</language>
 	</row>
 
-	<row id="wc10_01_03">
+	<row id="wc10_01_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">さいきん　むねが　ざわつくんだよね
 とかいの　かぜを　かんじたいのかも</language>
-		<language name="JPN_KANJI" width="256">さいきん　むねが　ざわつくんだよね
-とかいの　かぜを　かんじたいのかも</language>
+		<language name="JPN_KANJI" width="256">最近　胸が　ざわつくんだよね
+都会の風を　感じたいのかも</language>
 	</row>
 
-	<row id="wc10_01_04">
+	<row id="wc10_01_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ツバサ『あっ！　きいて　きいて▼
 そこの　そうげんで
 ●●●●●が　ごはん　たべてたよ！</language>
 		<language name="JPN_KANJI" width="256">ツバサ『あっ！　きいて　きいて▼
-そこの　そうげんで
-●●●●●が　ごはん　たべてたよ！</language>
+そこの　草原で
+●●●●●が　ごはん　食べてたよ！</language>
 	</row>
 
 	<row id="wc10_02_01">
-		<language name="JPN" width="256">アル『あら　こんにちは！
-おいしい　くうきに　のどかな　じかん▽
+		<language name="JPN" width="256">アル『あら　こんにちは！▼
+おいしい　くうきに　のどかな　じかん
 ここの　まちは　すごく　ステキですね▼
 ●●●●●さんが　いた
 ブラックシティから　きた　アルです▽
 どうも　よろしくね</language>
-		<language name="JPN_KANJI" width="256">アル『あら　こんにちは！
-おいしい　くうきに　のどかな　じかん▽
-ここの　まちは　すごく　ステキですね▼
+		<language name="JPN_KANJI" width="256">アル『あら　こんにちは！▼
+おいしい　空気に　のどかな　時間
+ここの街は　すごく　ステキですね▼
 ●●●●●さんが　いた
-ブラックシティから　きた　アルです▽
+ブラックシティから　来た　アルです▽
 どうも　よろしくね</language>
 	</row>
 
@@ -435,20 +436,22 @@
 		<language name="JPN" width="256">アル『もし　メガネを　はずしていても
 ここが　どこだか　すぐ　わかります▼
 だって　まわりは　みどり　いっしょく
-すごく　ステキですね▼</language>
+すごく　ステキですね！▼</language>
 		<language name="JPN_KANJI" width="256">アル『もし　メガネを　はずしていても
 ここが　どこだか　すぐ　わかります▼
-だって　まわりは　みどり　いっしょく
-すごく　ステキですね▼</language>
+だって　周りは　緑一色
+すごく　ステキですね！▼</language>
 	</row>
 
 	<row id="wc10_02_03">
 		<language name="JPN" width="256">ここで　すごす　じかんは
-すごく　だいすきで　たいせつ　だけど▽
-なにか　たりない　そんな　きがするの</language>
-		<language name="JPN_KANJI" width="256">ここで　すごす　じかんは
-すごく　だいすきで　たいせつ　だけど▽
-なにか　たりない　そんな　きがするの</language>
+すごく　だいすきで　たいせつ　だけど▼
+なにかが　たりない……
+そんな　きがするの</language>
+		<language name="JPN_KANJI" width="256">ここで　すごす　時間は
+すごく　大好きで　大切だけど▼
+なにかが　足りない……
+そんな　気がするの</language>
 	</row>
 
 	<row id="wc10_02_04">
@@ -456,44 +459,44 @@
 ●●●●●ちゃんと　であったの！▽
 ほんとうに　のどかで　ステキね　ここ</language>
 		<language name="JPN_KANJI" width="256">このまえ　そこで
-●●●●●ちゃんと　であったの！▽
-ほんとうに　のどかで　ステキね　ここ</language>
+●●●●●ちゃんと　出会ったの！▽
+本当に　のどかで　ステキね　ここ</language>
 	</row>
 
-	<row id="wc10_03_01">
+	<row id="wc10_03_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ヤス『ウッス　●●●●●とは
 ブラックシティで　よく　やりあった▽
-ヤスだ　よろしく　たのむぜ！▼
+ヤスだ！　よろしく　たのむな！▼
 ここは　オレみたいな　
 ツッパリでも　うけいれてくれる▽　
 おおきな　うつわを　かんじるぜ▼</language>
 		<language name="JPN_KANJI" width="256">ヤス『ウッス　●●●●●とは
 ブラックシティで　よく　やりあった▽
-ヤスだ　よろしく　たのむぜ！▼
+ヤスだ！　よろしく　たのむな！▼
 ここは　オレみたいな　
-ツッパリでも　うけいれてくれる▽　
-おおきな　うつわを　かんじるぜ▼</language>
+ツッパリでも　受け入れてくれる▽　
+大きな　器を　感じるぜ▼</language>
 	</row>
 
-	<row id="wc10_03_02">
+	<row id="wc10_03_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ヤス『ウッス　きょうも　キマってるぜ▼
 だいしぜんの　すげー　ところ
 ビシビシ　つたわってくるぜ▼</language>
 		<language name="JPN_KANJI" width="256">ヤス『ウッス　きょうも　キマってるぜ▼
-だいしぜんの　すげー　ところ
-ビシビシ　つたわってくるぜ▼</language>
+大自然の　すげー　ところ
+ビシビシ　伝わってくるぜ▼</language>
 	</row>
 
-	<row id="wc10_03_03">
+	<row id="wc10_03_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">なんつーか　ヒマすぎるぜ▼
-おれは　ここで　おさまってる
+オレは　ここで　おさまってる
 うつわじゃ　ねーのかもな　</language>
 		<language name="JPN_KANJI" width="256">なんつーか　ヒマすぎるぜ▼
-おれは　ここで　おさまってる
-うつわじゃ　ねーのかもな　</language>
+オレは　ここで　おさまってる
+器じゃ　ねーのかもな　</language>
 	</row>
 
-	<row id="wc10_03_04">
+	<row id="wc10_03_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">●●●●●！▼
 なんだ　おまえか
 さっきよ　●●●●●を　みかけたぜ</language>
@@ -508,9 +511,9 @@
 ブラックシティに　いたときは
 ちょっこし　だいたん　だったのです</language>
 		<language name="JPN_KANJI" width="256">アズサ『まいど　こんにちは！
-●●●●●の　ともだちの　アズサです▼
+●●●●●の　友達の　アズサです▼
 ブラックシティに　いたときは
-ちょっこし　だいたん　だったのです</language>
+ちょっこし　大胆だったのです</language>
 	</row>
 
 	<row id="wc10_04_02">
@@ -519,7 +522,7 @@
 あせくらしい　ブラックシティと
 おおちがい　ですよ！▽
 いいとこ　ですねー</language>
-		<language name="JPN_KANJI" width="256">アズサ『だいしぜんに　かこまれて
+		<language name="JPN_KANJI" width="256">アズサ『大自然に　囲まれて
 やわやわっと　なりますね！▼
 あせくらしい　ブラックシティと
 おおちがい　ですよ！▽
@@ -529,56 +532,56 @@
 	<row id="wc10_04_03">
 		<language name="JPN" width="256">あせくらしい　せいかつも
 たまには　いいかなと　おもってます</language>
-		<language name="JPN_KANJI" width="256">あせくらしい　せいかつも
-たまには　いいかなと　おもってます</language>
+		<language name="JPN_KANJI" width="256">あせくらしい　生活も
+たまには　いいかなと　思ってます</language>
 	</row>
 
 	<row id="wc10_04_04">
 		<language name="JPN" width="256">あれ　●●●●●を　さがしてます？
 ●●●●●なら　そこで　みましたよ</language>
-		<language name="JPN_KANJI" width="256">あれ　●●●●●を　さがしてます？
+		<language name="JPN_KANJI" width="256">あれ　●●●●●を　探してます？
 ●●●●●なら　そこで　みましたよ</language>
 	</row>
 
-	<row id="wc10_05_01">
+	<row id="wc10_05_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ヨシヒサ『●●●●●が　いた
 ブラックシティから　きた▽
 ヨシヒサだよ！　よろしく！▼
 いやー　こんなところも　あるんだねー
 すげー　もりだらけ！　びっくりだよ▼</language>
 		<language name="JPN_KANJI" width="256">ヨシヒサ『●●●●●が　いた
-ブラックシティから　きた▽
+ブラックシティから　来た▽
 ヨシヒサだよ！　よろしく！▼
 いやー　こんなところも　あるんだねー
-すげー　もりだらけ！　びっくりだよ▼</language>
+すげー　森だらけ！　びっくりだよ▼</language>
 	</row>
 
-	<row id="wc10_05_02">
+	<row id="wc10_05_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ヨシヒサ『ビルが　だいすきで
 ブラックシティに　いたけど▼
 もりのなか　っていうのも
-そんなに　わるくないねー！▼</language>
-		<language name="JPN_KANJI" width="256">ヨシヒサ『ビルが　だいすきで
+けっこう　あり　だよねー！▼</language>
+		<language name="JPN_KANJI" width="256">ヨシヒサ『ビルが　大好きで
 ブラックシティに　いたけど▼
-もりのなか　っていうのも
-そんなに　わるくないねー！▼</language>
+森のなか　っていうのも
+けっこう　あり　だよねー！▼</language>
 	</row>
 
-	<row id="wc10_05_03">
+	<row id="wc10_05_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">あー！　ヒマ！　ヒマすぎる！
 ブラックシティに　もどりたいよー！</language>
 		<language name="JPN_KANJI" width="256">あー！　ヒマ！　ヒマすぎる！
 ブラックシティに　もどりたいよー！</language>
 	</row>
 
-	<row id="wc10_05_04">
+	<row id="wc10_05_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">あ！　あのさー！
 ●●●●●！　●●●●●が▼
 そこを　にげていったよ！
 おいかけちゃおうかなー</language>
 		<language name="JPN_KANJI" width="256">あ！　あのさー！
 ●●●●●！　●●●●●が▼
-そこを　にげていったよ！
+そこを　逃げていったよ！
 おいかけちゃおうかなー</language>
 	</row>
 
@@ -591,8 +594,8 @@
 		<language name="JPN_KANJI" width="256">チサト『こんにちわぁー　アタシ
 チサトって　いうの　よろしくねー▼
 ●●●●●と
-ブラックシティで　たたかったわ！▽
-すごく　つよかったの！▼</language>
+ブラックシティで　戦ったわ！▽
+すごく　強くなったの！▼</language>
 	</row>
 
 	<row id="wc10_06_02">
@@ -601,75 +604,75 @@
 くさきの　かおりで　おちつける
 アロマテラピーって　あるそうね▽
 ここにも　そんな　こうかが　あるかも▼</language>
-		<language name="JPN_KANJI" width="256">チサト『うぅーん　ここは　おちつくね
-ほんで　みたのだけど▼
-くさきの　かおりで　おちつける
+		<language name="JPN_KANJI" width="256">チサト『うぅーん　ここは　落ち着くね
+本で　見たのだけど▼
+草木の　香りで　落ち着ける
 アロマテラピーって　あるそうね▽
-ここにも　そんな　こうかが　あるかも▼</language>
+ここにも　そんな　効果が　あるかも▼</language>
 	</row>
 
 	<row id="wc10_06_03">
 		<language name="JPN" width="256">おちつきすぎて　たいくつかもぉ？▼
 そんな　じかんも
 たいせつだって　おもうのだけどねー</language>
-		<language name="JPN_KANJI" width="256">おちつきすぎて　たいくつかもぉ？▼
-そんな　じかんも
-たいせつだって　おもうのだけどねー</language>
+		<language name="JPN_KANJI" width="256">落ち着きすぎて　退屈かもぉ？▼
+そんな　時間も
+大切だって　思うのだけどねー</language>
 	</row>
 
 	<row id="wc10_06_04">
-		<language name="JPN" width="256">こんにちわぁー▼
+		<language name="JPN" width="256">こんにちはぁー▼
 あれれ？　いま　アナタの　うしろを
 ●●●●●が　かけていったわよ</language>
-		<language name="JPN_KANJI" width="256">こんにちわぁー▼
-あれれ？　いま　アナタの　うしろを
+		<language name="JPN_KANJI" width="256">こんにちはぁー▼
+あれれ？　いま　アナタの　後ろを
 ●●●●●が　かけていったわよ</language>
 	</row>
 
-	<row id="wc10_07_01">
+	<row id="wc10_07_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ショウゴ『やあ！　こんにちは
 くうきが　すんでて　すばらしいね！▼
 ●●●●●のいた　ブラックシティから
 やってきた　ショウゴだよ　よろしく！</language>
 		<language name="JPN_KANJI" width="256">ショウゴ『やあ！　こんにちは
-くうきが　すんでて　すばらしいね！▼
+空気が　澄んでて　すばらしいね！▼
 ●●●●●のいた　ブラックシティから
 やってきた　ショウゴだよ　よろしく！</language>
 	</row>
 
-	<row id="wc10_07_02">
+	<row id="wc10_07_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ショウゴ『セイ！　セイ！　セイ！！
 くうきが　おいしいと　しゅぎょうに▽
 きあいが　すごく　はいるよ！▼
 れんしゅう　あいてが　いないのは
 ちょっと　こまりもの　だけどね！▼</language>
 		<language name="JPN_KANJI" width="256">ショウゴ『セイ！　セイ！　セイ！！
-くうきが　おいしいと　しゅぎょうに▽
-きあいが　すごく　はいるよ！▼
-れんしゅう　あいてが　いないのは
+空気が　おいしいと　修行に▽
+気合が　すごく　はいるよ！▼
+練習相手が　いないのは
 ちょっと　こまりもの　だけどね！▼</language>
 	</row>
 
-	<row id="wc10_07_03">
+	<row id="wc10_07_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">セイ？　セイ？　セイ？？
 あれれ　きあいが　はいらないな……▼
-やっぱり　ブラックシティが
-おれには　あうのかな？</language>
+やっぱり　おれには
+ブラックシティが　あうのかな？</language>
 		<language name="JPN_KANJI" width="256">セイ？　セイ？　セイ？？
-あれれ　きあいが　はいらないな……▼
-やっぱり　ブラックシティが
-おれには　あうのかな？</language>
+あれれ　気合が　はいらないな……▼
+やっぱり　おれには
+ブラックシティが　あうのかな？</language>
 	</row>
 
-	<row id="wc10_07_04">
+	<row id="wc10_07_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">やあ！　おれの　ポケモンと
 せいけんづき　してたら▼
 ●●●●●が　うらやましそうに
-みてたよ　さがしてみたら？</language>
+みてたからさ　さがしてみたら？</language>
 		<language name="JPN_KANJI" width="256">やあ！　おれの　ポケモンと
 せいけんづき　してたら▼
 ●●●●●が　うらやましそうに
-みてたよ　さがしてみたら？</language>
+みてたからさ　探してみたら？</language>
 	</row>
 
 	<row id="wc10_08_01">
@@ -679,10 +682,10 @@
 かんしん　しちゃって▽
 わたしも　まだまだって　おもったわ！▼</language>
 		<language name="JPN_KANJI" width="256">ノリコ『ブラックシティから
-ぜんりょく　ダッシュで　きちゃった！▼
-●●●●●の　たたかいかたに
-かんしん　しちゃって▽
-わたしも　まだまだって　おもったわ！▼</language>
+全力ダッシュで　来ちゃった！▼
+●●●●●の　戦い方に
+感心しちゃって▽
+わたしも　まだまだって　思ったわ！▼</language>
 	</row>
 
 	<row id="wc10_08_02">
@@ -690,8 +693,8 @@
 ポケモンと　いっしょに
 はしりこんでるの！▼</language>
 		<language name="JPN_KANJI" width="256">ノリコ『ファイト！　オー！▼
-ポケモンと　いっしょに
-はしりこんでるの！▼</language>
+ポケモンと　一緒に
+走りこんでるの！▼</language>
 	</row>
 
 	<row id="wc10_08_03">
@@ -700,9 +703,9 @@
 つぎは　じっせんよね
 ブラックシティに　いきたいわ</language>
 		<language name="JPN_KANJI" width="256">ふー……　そろそろ
-はしりこみにも　あきちゃった！▼
-つぎは　じっせんよね
-ブラックシティに　いきたいわ</language>
+走り込みにも　飽きちゃった！▼
+次は　実戦よね
+ブラックシティに　行きたいわ</language>
 	</row>
 
 	<row id="wc10_08_04">
@@ -711,12 +714,12 @@
 さっき　やせいの　●●●●●が　いてね
 はしってたら　あえるかも？</language>
 		<language name="JPN_KANJI" width="256">あら？　
-あなたも　いっしょに　はしる？▼
-さっき　やせいの　●●●●●が　いてね
-はしってたら　あえるかも？</language>
+あなたも　一緒に　走る？▼
+さっき　野生の　●●●●●が　いてね
+走ってたら　会えるかも？</language>
 	</row>
 
-	<row id="wc10_09_01">
+	<row id="wc10_09_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ミヤオ『どうも　どうも！　ミヤオです▼
 ブラックシティから　まいりました
 ●●●●●さんの　しりあい　です▼
@@ -724,34 +727,34 @@
 ポケモンしょうぶを　されますね！▼</language>
 		<language name="JPN_KANJI" width="256">ミヤオ『どうも　どうも！　ミヤオです▼
 ブラックシティから　まいりました
-●●●●●さんの　しりあい　です▼
-あのかたは　じつに　じょうねつてきな
-ポケモンしょうぶを　されますね！▼</language>
+●●●●●さんの　知り合いです▼
+あのかたは　じつに　情熱的な
+ポケモン勝負を　されますね！▼</language>
 	</row>
 
-	<row id="wc10_09_02">
+	<row id="wc10_09_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ミヤオ『しぜんに　かこまれて
 わたしが　やることは　しごと　です！▽
-けっこう　はかどる　もの　ですね▼</language>
-		<language name="JPN_KANJI" width="256">ミヤオ『しぜんに　かこまれて
-わたしが　やることは　しごと　です！▽
-けっこう　はかどる　もの　ですね▼</language>
+けっこう　はかどる　ものですね▼</language>
+		<language name="JPN_KANJI" width="256">ミヤオ『自然に　囲まれて
+わたしが　やることは　仕事です！▽
+けっこう　はかどる　ものですね▼</language>
 	</row>
 
-	<row id="wc10_09_03">
+	<row id="wc10_09_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">しぜんが　あっても　モノが　なければ
 しごとは　すすまない　ですね……</language>
-		<language name="JPN_KANJI" width="256">しぜんが　あっても　モノが　なければ
-しごとは　すすまない　ですね……</language>
+		<language name="JPN_KANJI" width="256">自然があっても　モノがなければ
+仕事は　進まない　ですね……</language>
 	</row>
 
-	<row id="wc10_09_04">
+	<row id="wc10_09_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">どうも　おせわに　なってます！▼
 いやー　ここは　いるだけで
 きぶんは　リフレッシュ！　ですよ</language>
 		<language name="JPN_KANJI" width="256">どうも　おせわに　なってます！▼
 いやー　ここは　いるだけで
-きぶんは　リフレッシュ！　ですよ</language>
+気分は　リフレッシュ！　ですよ</language>
 	</row>
 
 	<row id="wc10_10_01">
@@ -759,28 +762,28 @@
 ブラックシティでは　●●●●●の
 れんしゅう　あいてを　してあげたけど▼
 まあまあ　つよかったかな
-ぼくほど　では　ないけどね▼</language>
+ぼくほどでは　ないけどね▼</language>
 		<language name="JPN_KANJI" width="256">ナルオ『やあ　ごきげんよう▼
 ブラックシティでは　●●●●●の
-れんしゅう　あいてを　してあげたけど▼
-まあまあ　つよかったかな
-ぼくほど　では　ないけどね▼</language>
+練習相手を　してあげたけど▼
+まあまあ　強かったかな
+ぼくほどでは　ないけどね▼</language>
 	</row>
 
 	<row id="wc10_10_02">
 		<language name="JPN" width="256">ナルオ『しぜんの　そうだいさは
 ぼくを　ひきたてる　スパイスだね▽
 うん　きにいったよ　ここ▼</language>
-		<language name="JPN_KANJI" width="256">ナルオ『しぜんの　そうだいさは
+		<language name="JPN_KANJI" width="256">ナルオ『自然の　壮大さは
 ぼくを　ひきたてる　スパイスだね▽
-うん　きにいったよ　ここ▼</language>
+うん　気にいったよ　ここ▼</language>
 	</row>
 
 	<row id="wc10_10_03">
 		<language name="JPN" width="256">シティうまれ　シティそだち　だからさ
 そろそろ　かえりたいんだよね？</language>
-		<language name="JPN_KANJI" width="256">シティうまれ　シティそだち　だからさ
-そろそろ　かえりたいんだよね？</language>
+		<language name="JPN_KANJI" width="256">シティ生まれ　シティ育ち　だからさ
+そろそろ　帰りたいんだよね？</language>
 	</row>
 
 	<row id="wc10_10_04">
@@ -790,44 +793,44 @@
 ずいぶん　てれや　なんだね</language>
 		<language name="JPN_KANJI" width="256">さっき　そこで　●●●●●が
 ぼくに　みとれてたよ▼
-めが　あったら　すぐ　にげちゃった
+めが　あったら　すぐ　逃げちゃった
 ずいぶん　てれや　なんだね</language>
 	</row>
 
-	<row id="wc10_11_01">
+	<row id="wc10_11_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">カワセ『さんそが　こい！
 ●●●●●に　きいた　とおりね！▼
 ここなら　
 いい　ろんぶんが　かけちゃうわ！▼</language>
-		<language name="JPN_KANJI" width="256">カワセ『さんそが　こい！
+		<language name="JPN_KANJI" width="256">カワセ『酸素が　濃い！
 ●●●●●に　きいた　とおりね！▼
 ここなら　
-いい　ろんぶんが　かけちゃうわ！▼</language>
+いい　論文が　書けちゃうわ！▼</language>
 	</row>
 
-	<row id="wc10_11_02">
+	<row id="wc10_11_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">カワセ『いい　さんそに
 いい　ろんぶん……　これが　かけたら▽
-はっぴょうしに　ブラックシティね！▼</language>
-		<language name="JPN_KANJI" width="256">カワセ『いい　さんそに
-いい　ろんぶん……　これが　かけたら▽
-はっぴょうしに　ブラックシティね！▼</language>
+ブラックシティで　はっぴょうね！▼</language>
+		<language name="JPN_KANJI" width="256">カワセ『いい酸素に
+いい論文……　これが　書けたら▽
+ブラックシティで　発表ね！▼</language>
 	</row>
 
-	<row id="wc10_11_03">
+	<row id="wc10_11_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">じゅうぶんに　リフレッシュ　したし
 ブラックシティに　もどりたいわ</language>
-		<language name="JPN_KANJI" width="256">じゅうぶんに　リフレッシュ　したし
+		<language name="JPN_KANJI" width="256">充分に　リフレッシュしたし
 ブラックシティに　もどりたいわ</language>
 	</row>
 
-	<row id="wc10_11_04">
+	<row id="wc10_11_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">さっき　しんこきゅう　してたら
 まよこで　●●●●●も　してたの▽
 なんか　おかしくて　わらっちゃった</language>
-		<language name="JPN_KANJI" width="256">さっき　しんこきゅう　してたら
+		<language name="JPN_KANJI" width="256">さっき　深呼吸してたら
 まよこで　●●●●●も　してたの▽
-なんか　おかしくて　わらっちゃった</language>
+なんか　おかしくて　笑っちゃった</language>
 	</row>
 
 	<row id="wc10_12_01">
@@ -836,27 +839,27 @@
 ブラックシティで　あった　ひとなの
 ポケモンしょうぶを　したの……▼</language>
 		<language name="JPN_KANJI" width="256">ユーキ『●●●●●……？
-ごめんなさい　しりあいと　にてた……▼
-ブラックシティで　あった　ひとなの
-ポケモンしょうぶを　したの……▼</language>
+ごめんなさい　知り合いと　似てた……▼
+ブラックシティで　会った　人なの
+ポケモン勝負を　したの……▼</language>
 	</row>
 
 	<row id="wc10_12_02">
 		<language name="JPN" width="256">ユーキ『だいちの　めぐみが
 ゆたかな　しぜんを　つくるのよね▽
 かんしゃ　して　あるきたい……▼</language>
-		<language name="JPN_KANJI" width="256">ユーキ『だいちの　めぐみが
-ゆたかな　しぜんを　つくるのよね▽
-かんしゃ　して　あるきたい……▼</language>
+		<language name="JPN_KANJI" width="256">ユーキ『大地の　恵みが
+豊かな　自然を　つくるのよね▽
+感謝して　歩きたい……▼</language>
 	</row>
 
 	<row id="wc10_12_03">
 		<language name="JPN" width="256">ひとは　ひとが　つくった　ものに
 ひかれて　しまうものね▼
 ブラックシティが　なつかしい……</language>
-		<language name="JPN_KANJI" width="256">ひとは　ひとが　つくった　ものに
+		<language name="JPN_KANJI" width="256">人は　人が　つくった　ものに
 ひかれて　しまうものね▼
-ブラックシティが　なつかしい……</language>
+ブラックシティが　懐かしい……</language>
 	</row>
 
 	<row id="wc10_12_04">
@@ -864,50 +867,50 @@
 とりポケモンの　さえずり……▼
 ……●●●●●　いま　あなたの
 うしろを　はしっていった……</language>
-		<language name="JPN_KANJI" width="256">くさポケモンの　こきゅうや
+		<language name="JPN_KANJI" width="256">くさポケモンの　呼吸や
 とりポケモンの　さえずり……▼
-……●●●●●　いま　あなたの
-うしろを　はしっていった……</language>
+……●●●●●　今　あなたの
+後ろを　走っていった……</language>
 	</row>
 
-	<row id="wc10_13_01">
+	<row id="wc10_13_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">マサシ『おー！　こんにちは
 ここは　みどころが　たくさんだねー！▼
 まえに　すんでた　ブラックシティも
 ●●●●●って　トレーナーが▽
 すごく　つよくて　おもしろかったけど▼</language>
 		<language name="JPN_KANJI" width="256">マサシ『おー！　こんにちは
-ここは　みどころが　たくさんだねー！▼
-まえに　すんでた　ブラックシティも
+ここは　見所が　たくさんだねー！▼
+前に　すんでた　ブラックシティも
 ●●●●●って　トレーナーが▽
-すごく　つよくて　おもしろかったけど▼</language>
+すごく　強くて　おもしろかったけど▼</language>
 	</row>
 
-	<row id="wc10_13_02">
+	<row id="wc10_13_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">マサシ『おー！　こんにちは
 こんなに　しぜんが　あるばしょは▼
 いろんなところを　たびをしたけど
 すごく　めずらしいと　おもうよ！▼</language>
 		<language name="JPN_KANJI" width="256">マサシ『おー！　こんにちは
-こんなに　しぜんが　あるばしょは▼
-いろんなところを　たびをしたけど
-すごく　めずらしいと　おもうよ！▼</language>
+こんなに　自然がある　場所は▼
+いろんなところを　旅をしたけど
+すごく　珍しいと　思うよ！▼</language>
 	</row>
 
-	<row id="wc10_13_03">
+	<row id="wc10_13_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">うーん　そろそろ　
 ほかのばしょも　みてみたいな　</language>
 		<language name="JPN_KANJI" width="256">うーん　そろそろ　
-ほかのばしょも　みてみたいな　</language>
+他の場所も　みてみたいな　</language>
 	</row>
 
-	<row id="wc10_13_04">
+	<row id="wc10_13_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">●●●●●！　●●●●●が
 そこに　さっきまで　いたよ▽
 さがしてみたら　どうかな？</language>
 		<language name="JPN_KANJI" width="256">●●●●●！　●●●●●が
 そこに　さっきまで　いたよ▽
-さがしてみたら　どうかな？</language>
+探してみたら　どうかな？</language>
 	</row>
 
 	<row id="wc10_14_01">
@@ -916,9 +919,9 @@
 ねぇねぇ　●●●●●って　トレーナー
 しってる？　すごく　つよいのよ！▼</language>
 		<language name="JPN_KANJI" width="256">カナ『ここが　ホワイトフォレストかぁ
-ブラックシティと　ぜんぜん　ちがうね▼
+ブラックシティと　ぜんぜん　違うね▼
 ねぇねぇ　●●●●●って　トレーナー
-しってる？　すごく　つよいのよ！▼</language>
+知ってる？　すごく　強いのよ！▼</language>
 	</row>
 
 	<row id="wc10_14_02">
@@ -926,9 +929,9 @@
 ばしょを　めぐって　きたけど▼
 こんな　きれいな　ばしょを
 みたのは　はじめてよ▼</language>
-		<language name="JPN_KANJI" width="256">カナ『たびを　して　いろいろな
-ばしょを　めぐって　きたけど▼
-こんな　きれいな　ばしょを
+		<language name="JPN_KANJI" width="256">カナ『旅をして　いろいろな
+場所を　巡ってきたけど▼
+こんな　きれいな　場所を
 みたのは　はじめてよ▼</language>
 	</row>
 
@@ -936,7 +939,7 @@
 		<language name="JPN" width="256">きれいな　ところ　だけど
 ちょっと　たいくつ　かな</language>
 		<language name="JPN_KANJI" width="256">きれいな　ところ　だけど
-ちょっと　たいくつ　かな</language>
+ちょっと　退屈かな</language>
 	</row>
 
 	<row id="wc10_14_04">
@@ -944,26 +947,26 @@
 そうげんの　ほうへ　はしっていったよ▼
 わたしも　ポケモンと　いっしょに
 そうげんを　はしろうかしら</language>
-		<language name="JPN_KANJI" width="256">●●●●●が　げんきよく
-そうげんの　ほうへ　はしっていったよ▼
-わたしも　ポケモンと　いっしょに
-そうげんを　はしろうかしら</language>
+		<language name="JPN_KANJI" width="256">●●●●●が　元気よく
+草原の　ほうへ　走っていったよ▼
+わたしも　ポケモンと　一緒に
+草原を　走ろうかしら</language>
 	</row>
 
-	<row id="wc10_15_01">
+	<row id="wc10_15_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">オーヤブ『●●●●●！？
 ちがうかね▼
 ポケモンしょうぶで　まけたのが
 くやしくてね　こんど　みかけたら▽
 もういちど　しょうぶ　したいのだよ▼</language>
 		<language name="JPN_KANJI" width="256">オーヤブ『●●●●●！？
-ちがうかね▼
-ポケモンしょうぶで　まけたのが
-くやしくてね　こんど　みかけたら▽
-もういちど　しょうぶ　したいのだよ▼</language>
+違うかね▼
+ポケモン勝負で　負けたのが
+くやしくてね　今度　みかけたら▽
+もう一度　勝負したいのだよ▼</language>
 	</row>
 
-	<row id="wc10_15_02">
+	<row id="wc10_15_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">オーヤブ『おお……　みなさい！▼
 わたしの　ポケモンが
 こんなに　よろこんでいる▼
@@ -971,651 +974,663 @@
 わたしとは　せいはんたい　だな▼</language>
 		<language name="JPN_KANJI" width="256">オーヤブ『おお……　みなさい！▼
 わたしの　ポケモンが
-こんなに　よろこんでいる▼
-ポケモンは　しぜんが　だいすきか
-わたしとは　せいはんたい　だな▼</language>
+こんなに　喜んでいる▼
+ポケモンは　自然が　大好きか
+わたしとは　正反対だな▼</language>
 	</row>
 
-	<row id="wc10_15_03">
+	<row id="wc10_15_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ポケモンは　よろこんでいるが
 わたしは　しげきに　うえている</language>
-		<language name="JPN_KANJI" width="256">ポケモンは　よろこんでいるが
-わたしは　しげきに　うえている</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　喜んでいるが
+わたしは　刺激に　飢えている</language>
 	</row>
 
-	<row id="wc10_15_04">
+	<row id="wc10_15_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">さきほどな　わたしの　ポケモンが
 やせいの　●●●●●と　あそんでいた▼
 わたしを　みたら　にげてしまったが
 じつに　たのしそう　だったよ</language>
 		<language name="JPN_KANJI" width="256">さきほどな　わたしの　ポケモンが
-やせいの　●●●●●と　あそんでいた▼
-わたしを　みたら　にげてしまったが
-じつに　たのしそう　だったよ</language>
+やせいの　●●●●●と　遊んでいた▼
+わたしを　みたら　逃げてしまったが
+じつに　楽しそうだったよ</language>
 	</row>
 
 	<row id="wc10_16_01">
 		<language name="JPN" width="256">リリカ『ごきげんよう
-ブラックシティに　いぜんいたんだけど▼
-●●●●●はととてもつよかったわ！
+ブラックシティに　いぜん　いたけど▼
+●●●●●は　とても　つよかったわ！
 ステキだったわよ▼</language>
 		<language name="JPN_KANJI" width="256">リリカ『ごきげんよう
-ブラックシティに　いぜんいたんだけど▼
-●●●●●はととてもつよかったわ！
+ブラックシティに　以前いたけど▼
+●●●●●は　とても強かったわ！
 ステキだったわよ▼</language>
 	</row>
 
 	<row id="wc10_16_02">
-		<language name="JPN" width="256">リリカ『こんなしぜんにかこまれた
-なにもない かんきょうも わるくないわね▼
-いやされ　ちゃうわ▼</language>
-		<language name="JPN_KANJI" width="256">リリカ『こんなしぜんにかこまれた
-なにもない かんきょうも わるくないわね▼
-いやされ　ちゃうわ▼</language>
+		<language name="JPN" width="256">リリカ『こんな　しぜんに　かこまれた
+なにもない　かんきょうも▽
+いいわね！　いやされちゃうわ▼</language>
+		<language name="JPN_KANJI" width="256">リリカ『こんな　自然に　囲まれた
+なにもない　環境も▽
+いいわね！　いやされちゃうわ▼</language>
 	</row>
 
 	<row id="wc10_16_03">
-		<language name="JPN" width="256">ちょっと イナカにはあきちゃったわ▼
-もっといろいろなモノがある
-とかいで過ごしたいわ</language>
-		<language name="JPN_KANJI" width="256">ちょっと イナカにはあきちゃったわ▼
-もっといろいろなモノがある
-とかいで過ごしたいわ</language>
+		<language name="JPN" width="256">……ちょっと
+イナカには　あきちゃったわ▼
+もっと　いろいろな　モノがある
+とかいで　すごしたいわ</language>
+		<language name="JPN_KANJI" width="256">……ちょっと
+イナカには　飽きちゃったわ▼
+もっと　いろいろな　モノがある
+都会で　すごしたいわ</language>
 	</row>
 
 	<row id="wc10_16_04">
-		<language name="JPN" width="256">きょうは　●●●●●をみかけたわ！▼
-わたくし あんまりみたことなかったから
-なんだか　かんどうしちゃった</language>
-		<language name="JPN_KANJI" width="256">きょうは　●●●●●をみかけたわ！▼
-わたくし あんまりみたことなかったから
-なんだか　かんどうしちゃった</language>
+		<language name="JPN" width="256">きょうは　●●●●●を　みかけたわ！▼
+あんまり　みたことなかったから
+なんだか　かんどう　しちゃった！</language>
+		<language name="JPN_KANJI" width="256">きょうは　●●●●●を　みかけたわ！▼
+あんまり　みたことなかったから
+なんだか　感動しちゃった！</language>
 	</row>
 
-	<row id="wc10_17_01">
+	<row id="wc10_17_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">みつまさ『まえは
 ブラックシティに　いたんだよ▼
-●●●●●とたたかったりもしたけど▼
-●●●●●もホワイトフォレスト
+●●●●●と　たたかったりもしたけど▼
+●●●●●も　ホワイトフォレスト
 いがいと　きにいるんじゃないかな▼</language>
 		<language name="JPN_KANJI" width="256">みつまさ『まえは
 ブラックシティに　いたんだよ▼
-●●●●●とたたかったりもしたけど▼
-●●●●●もホワイトフォレスト
-いがいと　きにいるんじゃないかな▼</language>
+●●●●●と　戦ったりもしたけど▼
+●●●●●も　ホワイトフォレスト
+以外と　気にいるんじゃないかな▼</language>
 	</row>
 
-	<row id="wc10_17_02">
+	<row id="wc10_17_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">みつまさ『しぜんのなかで
-ゆっくり　じかんをかけて▼
-じぶんのせいかつを　たのしむ……
-そういう　くらしも　わるくないとおもうんだ▼</language>
-		<language name="JPN_KANJI" width="256">みつまさ『しぜんのなかで
-ゆっくり　じかんをかけて▼
-じぶんのせいかつを　たのしむ……
-そういう　くらしも　わるくないとおもうんだ▼</language>
+ゆっくり　じかんを　かけて▽
+じぶんのせいかつを　たのしむ……▼
+そういう　くらしも
+わるくないと　おもうんだ▼</language>
+		<language name="JPN_KANJI" width="256">みつまさ『自然の中で
+ゆっくり　時間を　かけて▽
+自分の　生活を　満喫する……▼
+そういう　暮らしも
+悪くないと　思うんだ▼</language>
 	</row>
 
-	<row id="wc10_17_03">
-		<language name="JPN" width="256">うーん　でも　ゆったりした　せいかつも
-ちょっと　あきてきちゃったかもな…</language>
-		<language name="JPN_KANJI" width="256">うーん　でも　ゆったりした　せいかつも
-ちょっと　あきてきちゃったかもな…</language>
+	<row id="wc10_17_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">うーん……▼
+でも　ゆったりした　せいかつも
+ちょっと　あきてきちゃったかもな……</language>
+		<language name="JPN_KANJI" width="256">うーん……▼
+でも　ゆったりした　生活も
+ちょっと　飽きてきちゃったかもな……</language>
 	</row>
 
-	<row id="wc10_17_04">
-		<language name="JPN" width="256">きょうは ●●●●●をみたよ▼
+	<row id="wc10_17_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">きょうは
+●●●●●を　みたよ▼
 ホワイトフォレスト　ならではの
-であいだよね</language>
-		<language name="JPN_KANJI" width="256">きょうは ●●●●●をみたよ▼
+であい　だよね！</language>
+		<language name="JPN_KANJI" width="256">今日は
+●●●●●を　みたよ▼
 ホワイトフォレスト　ならではの
-であいだよね</language>
+出会い　だよね！</language>
 	</row>
 
 	<row id="wc10_18_01">
-		<language name="JPN" width="256">テルアキ『しぜんはいいなぁ！▼
-でもたまに ブラックシティのこと
-おもいだすよ▼
-●●●●●とのたたかいは
-わしのきちょうな　おもいでだ！▼</language>
-		<language name="JPN_KANJI" width="256">テルアキ『しぜんはいいなぁ！▼
-でもたまに ブラックシティのこと
-おもいだすよ▼
-●●●●●とのたたかいは
-わしのきちょうな　おもいでだ！▼</language>
+		<language name="JPN" width="256">テルアキ『しぜんは　いいなぁ！▼
+でも　たまに
+ブラックシティのこと　おもいだすよ▼
+●●●●●との　たたかいは
+わしの　きちょうな　おもいでだ！▼</language>
+		<language name="JPN_KANJI" width="256">テルアキ『自然は　いいなぁ！▼
+でも　たまに
+ブラックシティのこと　思い出すよ▼
+●●●●●との　勝負は
+わしの　貴重な　思い出だ！▼</language>
 	</row>
 
 	<row id="wc10_18_02">
-		<language name="JPN" width="256">テルアキ『わしの　しゅみは▼
-しぜんのなかで
-ポケモンとであうことだ▼</language>
-		<language name="JPN_KANJI" width="256">テルアキ『わしの　しゅみは▼
-しぜんのなかで
-ポケモンとであうことだ▼</language>
+		<language name="JPN" width="256">テルアキ『わしの　しゅみは！▼
+しぜんの　なかで
+ポケモンと　であうことだ！▼</language>
+		<language name="JPN_KANJI" width="256">テルアキ『わしの　趣味は！▼
+自然の　なかで
+ポケモンと　出会うことだ！▼</language>
 	</row>
 
 	<row id="wc10_18_03">
 		<language name="JPN" width="256">でも　さいきんは
-であったポケモンで▼
-ちからだめしをしたいと
-おもうときも　ある</language>
-		<language name="JPN_KANJI" width="256">でも　さいきんは
-であったポケモンで▼
-ちからだめしをしたいと
-おもうときも　ある</language>
+であった　ポケモンで▽
+ちからだめしを　したいと　おもう</language>
+		<language name="JPN_KANJI" width="256">でも　最近は
+出会った　ポケモンで▽
+力試しを　したいと　思う</language>
 	</row>
 
 	<row id="wc10_18_04">
 		<language name="JPN" width="256">きょうは　●●●●●と
 であえたよ　ラッキーだった▼
-やっぱりホワイトフォレストは
-わしのはだに　あうなぁ</language>
+やっぱり　ホワイトフォレストは
+わしの　はだに　あうなぁ</language>
 		<language name="JPN_KANJI" width="256">きょうは　●●●●●と
-であえたよ　ラッキーだった▼
-やっぱりホワイトフォレストは
-わしのはだに　あうなぁ</language>
+出会えたよ　ラッキーだった▼
+やっぱり　ホワイトフォレストは
+わしの　肌に　あうなぁ</language>
 	</row>
 
-	<row id="wc10_19_01">
-		<language name="JPN" width="256">セキ『ここはみどりが　きもちいいわね▼
-いぜんはブラックシティに
-いたのだけれど▼
-●●●●●の こうりつのいい
-トレーナーぶりは なかなかだったわ▼</language>
-		<language name="JPN_KANJI" width="256">セキ『ここはみどりが　きもちいいわね▼
-いぜんはブラックシティに
-いたのだけれど▼
-●●●●●の こうりつのいい
-トレーナーぶりは なかなかだったわ▼</language>
+	<row id="wc10_19_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">セキ『ここはみどりが　ここちいいわね▼
+さいきんまで
+ブラックシティに　いたのだけれど▼
+●●●●●の　こうりつの　いい
+トレーナーぶりは　なかなかだったわ▼</language>
+		<language name="JPN_KANJI" width="256">セキ『ここは緑が　心地いいわね▼
+最近まで
+ブラックシティに　いたのだけれど▼
+●●●●●の　効率の　いい
+トレーナーぶりは　なかなかだったわ▼</language>
 	</row>
 
-	<row id="wc10_19_02">
-		<language name="JPN" width="256">セキ『ゆったりとした
-ポケモンたちと　すごす　じかん……▽
-こういうのって　だいじよね▼</language>
-		<language name="JPN_KANJI" width="256">セキ『ゆったりとした
-ポケモンたちと　すごす　じかん……▽
-こういうのって　だいじよね▼</language>
+	<row id="wc10_19_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">セキ『ポケモンたちと　すごす
+ゆったりとした　じかん……▽
+こういうのって　だいじ　よね▼</language>
+		<language name="JPN_KANJI" width="256">セキ『ポケモンたちと　すごす
+ゆったりとした　時間……▽
+こういうのって　大事よね▼</language>
 	</row>
 
-	<row id="wc10_19_03">
-		<language name="JPN" width="256">でもなんだか　さいきん▼
-こうしてのんびりとすごすことに
-ちょっとあせりをかんてるの▼</language>
-		<language name="JPN_KANJI" width="256">でもなんだか　さいきん▼
-こうしてのんびりとすごすことに
-ちょっとあせりをかんてるの▼</language>
+	<row id="wc10_19_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">でもなんだか　さいきん
+こうして　のんびり　すごすことに▽
+ちょっと　あせりを　かんじてるの▼</language>
+		<language name="JPN_KANJI" width="256">でもなんだか　最近
+こうして　のんびり　すごすことに▽
+ちょっと　あせりを　感じてるの▼</language>
 	</row>
 
-	<row id="wc10_19_04">
+	<row id="wc10_19_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">きょうは　●●●●●と
-いっしょに　すごしたのよ▼
-きちょうな　たいけんだった！</language>
+いっしょに　すごしたのよ▽
+きちょうな　たいけん　だった！</language>
 		<language name="JPN_KANJI" width="256">きょうは　●●●●●と
-いっしょに　すごしたのよ▼
-きちょうな　たいけんだった！</language>
+一緒に　すごしたのよ▽
+貴重な　体験だった！</language>
 	</row>
 
 	<row id="wc10_20_01">
 		<language name="JPN" width="256">ミポ『ホワイトフォレストの
-ポケモンって チョーかわいいよね！▼
-でも　まえにブラックシティで　あった
+ポケモンって　チョーかわいいよね！▼
+でも　まえに　ブラックシティで　あった
 ●●●●●も　かわいかったなー▼</language>
 		<language name="JPN_KANJI" width="256">ミポ『ホワイトフォレストの
-ポケモンって チョーかわいいよね！▼
-でも　まえにブラックシティで　あった
+ポケモンって　チョーかわいいよね！▼
+でも　前に　ブラックシティで　会った
 ●●●●●も　かわいかったなー▼</language>
 	</row>
 
 	<row id="wc10_20_02">
-		<language name="JPN" width="256">ミポ『ポケモンたち　と　しぜん▼
-みんな　ありのままのすがたで
-とってもステキだとおもう▼</language>
-		<language name="JPN_KANJI" width="256">ミポ『ポケモンたち　と　しぜん▼
-みんな　ありのままのすがたで
-とってもステキだとおもう▼</language>
+		<language name="JPN" width="256">ミポ『ポケモンたちと　しぜん▼
+みんな　ありのままの　すがたで
+とっても　ステキだと　おもう▼</language>
+		<language name="JPN_KANJI" width="256">ミポ『ポケモンたちと　自然▼
+みんな　ありのままの　姿で
+とっても　ステキだと　思う▼</language>
 	</row>
 
 	<row id="wc10_20_03">
-		<language name="JPN" width="256">でも　ワタシはしぜんたいじゃ
-かわいくないんじゃないか▼
+		<language name="JPN" width="256">でも　ワタシは　しぜんたいじゃ
+かわいくないかも……▽
 そんなふうに　ふあんになるの</language>
-		<language name="JPN_KANJI" width="256">でも　ワタシはしぜんたいじゃ
-かわいくないんじゃないか▼
-そんなふうに　ふあんになるの</language>
+		<language name="JPN_KANJI" width="256">でも　ワタシは　自然体じゃ
+かわいくないかも……▽
+そんなふうに　不安になるの</language>
 	</row>
 
 	<row id="wc10_20_04">
-		<language name="JPN" width="256">しぜんたいで
-●●●●●とも　ひととも▽
-なかよくできる▼
-それって　ステキなことよね</language>
-		<language name="JPN_KANJI" width="256">しぜんたいで
-●●●●●とも　ひととも▽
-なかよくできる▼
-それって　ステキなことよね</language>
+		<language name="JPN" width="256">しぜんたいで　●●●●●とも
+ひととも　なかよくできる……▽
+それって　ステキな　ことよね！</language>
+		<language name="JPN_KANJI" width="256">自然体で　●●●●●とも
+人とも　仲良くできる……▽
+それって　ステキな　ことよね！</language>
 	</row>
 
-	<row id="wc10_21_01">
+	<row id="wc10_21_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ショウ『ホワイトフォレストは
-みんな じぶんに　すなおでいいよね▼
+みんな じぶんに　すなお　だよね▼
 まえに ブラックシティで　あった
-●●●●●も　あんがい▼
-ホワイトフォレスト　きにいるんじゃないかな▼</language>
+●●●●●も　あんがい▽
+ホワイトフォレストのこと▽
+きにいるんじゃ　ないかな？▼</language>
 		<language name="JPN_KANJI" width="256">ショウ『ホワイトフォレストは
-みんな じぶんに　すなおでいいよね▼
-まえに ブラックシティで　あった
-●●●●●も　あんがい▼
-ホワイトフォレスト　きにいるんじゃないかな▼</language>
+みんな　自分に　素直だよね▼
+前に　ブラックシティで　会った
+●●●●●も　案外▽
+ホワイトフォレストのこと▽
+気にいるんじゃ　ないかな？▼</language>
 	</row>
 
-	<row id="wc10_21_02">
+	<row id="wc10_21_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ショウ『ここでは　ポケモンも　ひとも
 みんな　じぶんに　すなおでいられる▼</language>
-		<language name="JPN_KANJI" width="256">ショウ『ここでは　ポケモンも　ひとも
-みんな　じぶんに　すなおでいられる▼</language>
+		<language name="JPN_KANJI" width="256">ショウ『ここでは　ポケモンも　人も
+みんな　自分に　素直でいられる▼</language>
 	</row>
 
-	<row id="wc10_21_03">
+	<row id="wc10_21_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">でも　そんな　すなおなじぶんを
 どうみられてるか　ふあん　なんだ</language>
-		<language name="JPN_KANJI" width="256">でも　そんな　すなおなじぶんを
-どうみられてるか　ふあん　なんだ</language>
+		<language name="JPN_KANJI" width="256">でも　そんな　素直な　自分を
+どうみられてるか　不安なんだ</language>
 	</row>
 
-	<row id="wc10_21_04">
-		<language name="JPN" width="256">●●●●●　をみかけたけど
-しぜんたいでいいよね　アイツは</language>
-		<language name="JPN_KANJI" width="256">●●●●●　をみかけたけど
-しぜんたいでいいよね　アイツは</language>
+	<row id="wc10_21_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">●●●●●を　みかけたけど
+しぜんたいで　いいよね　アイツは</language>
+		<language name="JPN_KANJI" width="256">●●●●●を　みかけたけど
+自然体で　いいよね　アイツは</language>
 	</row>
 
 	<row id="wc10_22_01">
-		<language name="JPN" width="256">マツリ『ホワイトフォレストでは▼
-ひとともポケモンとも すなおに
-むきあえるかんじが たのしいな▼
+		<language name="JPN" width="256">マツリ『ホワイトフォレストでは
+ひととも　ポケモンとも すなおに▽
+むきあえる　かんじが　たのしいな▼
 でも　まえにブラックシティで
-●●●●●と　ポケモンしょうぶして▼
-きもちをぶつけあったことがあるんだ
+●●●●●と　ポケモンしょうぶして▽
+きもちを　ぶつけあったことが　ある！▽
 あのときも　たのしかったな▼</language>
-		<language name="JPN_KANJI" width="256">マツリ『ホワイトフォレストでは▼
-ひとともポケモンとも すなおに
-むきあえるかんじが たのしいな▼
-でも　まえにブラックシティで
-●●●●●と　ポケモンしょうぶして▼
-きもちをぶつけあったことがあるんだ
-あのときも　たのしかったな▼</language>
+		<language name="JPN_KANJI" width="256">マツリ『ホワイトフォレストでは
+ひととも　ポケモンとも　素直に▽
+むきあえる　感じが　楽しいな▼
+でも　前に　ブラックシティで
+●●●●●と　ポケモン勝負して▽
+気持ちを　ぶつけあったことが　ある！▽
+あのときも　楽しかったな▼</language>
 	</row>
 
 	<row id="wc10_22_02">
-		<language name="JPN" width="256">マツリ『ポケモンとも ひととも
-きちんと　おたがいむきあって▼
-わかりあえるかんけいに
-なりたいとおもってるんだ▼</language>
-		<language name="JPN_KANJI" width="256">マツリ『ポケモンとも ひととも
-きちんと　おたがいむきあって▼
-わかりあえるかんけいに
-なりたいとおもってるんだ▼</language>
+		<language name="JPN" width="256">マツリ『ポケモンとも　ひととも
+きちんと　おたがい　むきあって▼
+わかりあえる　かんけいに
+なりたいと　おもってるんだ▼</language>
+		<language name="JPN_KANJI" width="256">マツリ『ポケモンとも　人とも
+きちんと　お互い　向き合って▼
+わかりあえる　関係に
+なりたいと　思ってるんだ▼</language>
 	</row>
 
 	<row id="wc10_22_03">
-		<language name="JPN" width="256">でも　もっとてっとりばやく
-じぶんのきもちを　ぶつけたい▼
-そうおもうときも　さいきんあるよ</language>
-		<language name="JPN_KANJI" width="256">でも　もっとてっとりばやく
-じぶんのきもちを　ぶつけたい▼
-そうおもうときも　さいきんあるよ</language>
+		<language name="JPN" width="256">でも　もっと　てっとりばやく
+じぶんの　きもちを　ぶつけたい！▽
+そう　おもうときも　さいきんあるよ</language>
+		<language name="JPN_KANJI" width="256">でも　もっと　てっとりばやく
+自分の　気持ちを　ぶつけたい！▽
+そう思うときも　最近あるよ</language>
 	</row>
 
 	<row id="wc10_22_04">
-		<language name="JPN" width="256">きょうは　●●●●●と
-あったよ　なんだか▼
-きもちがつうじあえた　きがしたね</language>
-		<language name="JPN_KANJI" width="256">きょうは　●●●●●と
-あったよ　なんだか▼
-きもちがつうじあえた　きがしたね</language>
+		<language name="JPN" width="256">きょうは　●●●●●と　あったよ▼
+なんだか　きもちが　つうじあえた……
+そんな　おもいで　いっぱいだよ</language>
+		<language name="JPN_KANJI" width="256">きょうは　●●●●●と　会ったよ▼
+なんだか　気持ちが　通じあえた……
+そんな　思いで　いっぱいだよ</language>
 	</row>
 
-	<row id="wc10_23_01">
-		<language name="JPN" width="256">ナギー『しぜんとふれあう　せいかつ
-みたされるね▼
-でも まえにブラックシティで
-●●●●●とポケモンしょうぶしたとき▽
-あのときも　なんだかみたされたな▼</language>
-		<language name="JPN_KANJI" width="256">ナギー『しぜんとふれあう　せいかつ
-みたされるね▼
-でも まえにブラックシティで
-●●●●●とポケモンしょうぶしたとき▽
-あのときも　なんだかみたされたな▼</language>
+	<row id="wc10_23_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ナギー『しぜんと　ふれあう
+せいかつも　みたされるね▼
+でも　まえに
+ブラックシティで　●●●●●と▽
+ポケモンしょうぶした　あのときも▽
+なんだか　みたされたな▼</language>
+		<language name="JPN_KANJI" width="256">ナギー『自然と　触れ合う
+生活も　満たされるね▼
+でも　前に
+ブラックシティで　●●●●●と▽
+ポケモン勝負した　あのときも▽
+なんだか　満たされたな▼</language>
 	</row>
 
-	<row id="wc10_23_02">
+	<row id="wc10_23_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ナギー『しぜんと　ふれあっていると
-それだけで こころがゆたかになるね▼</language>
-		<language name="JPN_KANJI" width="256">ナギー『しぜんと　ふれあっていると
-それだけで こころがゆたかになるね▼</language>
+それだけで　こころが　ゆたかになるね▼</language>
+		<language name="JPN_KANJI" width="256">ナギー『自然と　触れあっていると
+それだけで　心が　豊かになるね▼</language>
 	</row>
 
-	<row id="wc10_23_03">
+	<row id="wc10_23_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">だけど……
-しぜんをみてるだけじゃ▼
-こころがみたされない
-そんなときも　さいきんあるの</language>
+しぜんを　みてるだけじゃ▼
+こころが　みたされない
+そんなときも　さいきん　あるの</language>
 		<language name="JPN_KANJI" width="256">だけど……
-しぜんをみてるだけじゃ▼
-こころがみたされない
-そんなときも　さいきんあるの</language>
+自然を　みてるだけじゃ▼
+心が　満たされない
+そんなときも　最近あるの</language>
 	</row>
 
-	<row id="wc10_23_04">
-		<language name="JPN" width="256">●●●●●　をみたんだけど
-なんだか　こころがみたされた</language>
-		<language name="JPN_KANJI" width="256">●●●●●　をみたんだけど
-なんだか　こころがみたされた</language>
+	<row id="wc10_23_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">●●●●●を　みたんだけど
+なんだか　こころが　みたされた！</language>
+		<language name="JPN_KANJI" width="256">●●●●●を　みたんだけど
+なんだか　心が　満たされた！</language>
 	</row>
 
 	<row id="wc10_24_01">
 		<language name="JPN" width="256">タナカ『いやぁー
-のんびりしたくらし　いいよね▼
-じつはまえに
+のんびりした　くらし　いいよね▼
+じつは　まえに
 ブラックシティに　いたんだけど▼
-●●●●●と せかせかしょうぶした
-そんないちめんも　ぼくにはあるんだよ▼</language>
+●●●●●と　せかせか　しょうぶした
+そんな　いちめんも　あるんだよ▼</language>
 		<language name="JPN_KANJI" width="256">タナカ『いやぁー
-のんびりしたくらし　いいよね▼
-じつはまえに
+のんびりした　暮らし　いいよね▼
+じつは　前に
 ブラックシティに　いたんだけど▼
-●●●●●と せかせかしょうぶした
-そんないちめんも　ぼくにはあるんだよ▼</language>
+●●●●●と　せかせか　勝負した
+そんな　一面も　あるんだよ▼</language>
 	</row>
 
 	<row id="wc10_24_02">
-		<language name="JPN" width="256">タナカ『いやぁー のんびりと
-しぜんをたのしむのって　いいよねぇ▼</language>
-		<language name="JPN_KANJI" width="256">タナカ『いやぁー のんびりと
-しぜんをたのしむのって　いいよねぇ▼</language>
+		<language name="JPN" width="256">タナカ『いやぁー　のんびりと
+しぜんを　たのしむのって　いいよねぇ▼</language>
+		<language name="JPN_KANJI" width="256">タナカ『いやぁー　のんびりと
+自然を　楽しむのって　いいよねぇ▼</language>
 	</row>
 
 	<row id="wc10_24_03">
-		<language name="JPN" width="256">でも こうしてのんびりしていて
-いいのかなぁって▼
-かんがえちゃうときも
-あるんだよねぇ</language>
-		<language name="JPN_KANJI" width="256">でも こうしてのんびりしていて
-いいのかなぁって▼
-かんがえちゃうときも
-あるんだよねぇ</language>
+		<language name="JPN" width="256">でも　こうして
+のんびりして　いいのかなぁって▽
+かんがえるときも　あるんだよねぇ</language>
+		<language name="JPN_KANJI" width="256">でも　こうして
+のんびりして　いいのかなぁって▽
+考えるときも　あるんだよねぇ</language>
 	</row>
 
 	<row id="wc10_24_04">
-		<language name="JPN" width="256">もりで のんびりしてたら
-●●●●●とあったよー！▼
+		<language name="JPN" width="256">もりで　のんびりしてたら
+●●●●●と　あったよー！▼
 すばらしい　じかんだったなぁ</language>
-		<language name="JPN_KANJI" width="256">もりで のんびりしてたら
-●●●●●とあったよー！▼
-すばらしい　じかんだったなぁ</language>
+		<language name="JPN_KANJI" width="256">森で　のんびりしてたら
+●●●●●と　あったよー！▼
+すばらしい　時間だったなぁ</language>
 	</row>
 
-	<row id="wc10_25_01">
-		<language name="JPN" width="256">ユウ『ここでは　ひろいしやを
-もって ポケモンをみつめることができる▼
-トレーナーとして せいちょうをかんじるよ
-だが　まえにブラックシティで▼
-●●●●●と　ポケモンしょうぶしたとき
-あのときも　トレーナーとして▼
-じぶんのせいちょうを　かんじたな▼</language>
-		<language name="JPN_KANJI" width="256">ユウ『ここでは　ひろいしやを
-もって ポケモンをみつめることができる▼
-トレーナーとして せいちょうをかんじるよ
-だが　まえにブラックシティで▼
-●●●●●と　ポケモンしょうぶしたとき
-あのときも　トレーナーとして▼
-じぶんのせいちょうを　かんじたな▼</language>
+	<row id="wc10_25_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ユウ『ここでは　ひろい　かんがえで
+ポケモンを　みつめることが　できる▼
+トレーナーとして
+せいちょうを　かんじるよ▼
+だが　まえに　ブラックシティで
+●●●●●と　しょうぶした……▼
+あのときも　トレーナーとして
+じぶんの　せいちょうを　かんじたな▼</language>
+		<language name="JPN_KANJI" width="256">ユウ『ここでは　広い　視野で
+ポケモンを　みつめることが　できる▼
+トレーナーとして
+成長を　感じるよ▼
+だが　前に　ブラックシティで
+●●●●●と　勝負した……▼
+あのときも　トレーナーとして
+自分の　成長を　感じたな▼</language>
 	</row>
 
-	<row id="wc10_25_02">
-		<language name="JPN" width="256">ユウ『いろんなポケモンを
-けんきゅうして　ひろいちしきをえていると▽
-しやが　ひろがるよ▼</language>
-		<language name="JPN_KANJI" width="256">ユウ『いろんなポケモンを
-けんきゅうして　ひろいちしきをえていると▽
-しやが　ひろがるよ▼</language>
+	<row id="wc10_25_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ユウ『いろんな　ポケモンを
+けんきゅうして▽
+ひろい　ちしきを　えると▽
+せかいも　ひろがるよ▼</language>
+		<language name="JPN_KANJI" width="256">ユウ『いろんな　ポケモンを
+研究して▽
+広い　知識を　得ると▽
+視野も　広がるよ▼</language>
 	</row>
 
-	<row id="wc10_25_03">
-		<language name="JPN" width="256">だけど　もっとひとつの▼
-ことだけを ふかくみたいとも
-おもうね</language>
-		<language name="JPN_KANJI" width="256">だけど　もっとひとつの▼
-ことだけを ふかくみたいとも
-おもうね</language>
+	<row id="wc10_25_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">だけど　もっとひとつの　ことだけを
+ふかく　みたいとも　おもうね</language>
+		<language name="JPN_KANJI" width="256">だけど　もっとひとつの　ことだけを
+深く　みたいとも　思うね</language>
 	</row>
 
-	<row id="wc10_25_04">
-		<language name="JPN" width="256">ひろいしやを　もつことで
-しぜんと じぶん▼
-じぶんと ●●●●●
+	<row id="wc10_25_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ひろい　しやを　もつことで
+しぜんと　じぶん▽
+じぶんと　●●●●●▽
 いろんなことに　きづかされるよ</language>
-		<language name="JPN_KANJI" width="256">ひろいしやを　もつことで
-しぜんと じぶん▼
-じぶんと ●●●●●
+		<language name="JPN_KANJI" width="256">広い　視野を　もつことで
+自然と　自分▽
+じぶんと　●●●●●▽
 いろんなことに　きづかされるよ</language>
 	</row>
 
 	<row id="wc10_26_01">
-		<language name="JPN" width="256">シミズ『たような　ポケモンを
-みていると　たような　こたえの▼
-そんざいを　かんじる
-まえにブラックシティで▼
-であった　●●●●●
-かれのトレーナーとしてのしせいにも▼
-また　ひとつの　こたえをかんじた▼</language>
-		<language name="JPN_KANJI" width="256">シミズ『たような　ポケモンを
-みていると　たような　こたえの▼
-そんざいを　かんじる
-まえにブラックシティで▼
-であった　●●●●●
-かれのトレーナーとしてのしせいにも▼
-また　ひとつの　こたえをかんじた▼</language>
+		<language name="JPN" width="256">シミズ『せかいの　たような
+ポケモンを　みていると▼
+たような　こたえの
+そんざいを　かんじる▼
+まえに　ブラックシティで
+であった　●●●●●▼
+かれの　トレーナーとしての
+しせいにも　また　ひとつの▽
+こたえを　かんじた▼</language>
+		<language name="JPN_KANJI" width="256">シミズ『世界の　多様な
+ポケモンを　みていると▼
+多様な　解答の
+存在を　感じる……▼
+以前　ブラックシティで
+出会った　●●●●●▼
+彼の　トレーナーとしての
+姿勢にも　また　ひとつの▽
+解答を　感じた▼</language>
 	</row>
 
 	<row id="wc10_26_02">
-		<language name="JPN" width="256">シミズ『ものごとには　こたえが
-いくつもあるものが そんざいする▼
-いろんな ポケモンたちを みていると
-そういうふうに かんじるんだ▼</language>
-		<language name="JPN_KANJI" width="256">シミズ『ものごとには　こたえが
-いくつもあるものが そんざいする▼
-いろんな ポケモンたちを みていると
-そういうふうに かんじるんだ▼</language>
+		<language name="JPN" width="256">シミズ『ものごとには　いくつも
+こたえの　あるものが　そんざいする▼
+いろんな　ポケモンたちを　みていると
+そういうふうに　かんじるんだ▼</language>
+		<language name="JPN_KANJI" width="256">シミズ『物事には　いくつも
+解答の　あるものが　存在する▼
+いろんな　ポケモンたちを　みていると
+そういうふうに　感じるんだ▼</language>
 	</row>
 
 	<row id="wc10_26_03">
-		<language name="JPN" width="256">でも　もっとめいかくに▼
-ハッキリとした　こたえのでる
-けんきゅうがしたい……</language>
-		<language name="JPN_KANJI" width="256">でも　もっとめいかくに▼
-ハッキリとした　こたえのでる
-けんきゅうがしたい……</language>
+		<language name="JPN" width="256">でも　もっと　めいかくに
+ハッキリとした　こたえのでる▽
+けんきゅうが　したい……</language>
+		<language name="JPN_KANJI" width="256">でも　もっと　明確に
+ハッキリとした　解答のでる▽
+研究が　したい……</language>
 	</row>
 
 	<row id="wc10_26_04">
-		<language name="JPN" width="256">たような ●●●●●
-たような こたえ▼
-そのどれらも　ただしいんだよ</language>
-		<language name="JPN_KANJI" width="256">たような ●●●●●
-たような こたえ▼
-そのどれらも　ただしいんだよ</language>
+		<language name="JPN" width="256">たような　●●●●●
+たような　こたえ▽
+その　いずれも　ただしいんだよ</language>
+		<language name="JPN_KANJI" width="256">多様な　●●●●●
+多様な　解答▽
+その　いずれも　正しいんだよ</language>
 	</row>
 
-	<row id="wc10_27_01">
+	<row id="wc10_27_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ナオ『いちにち　いちにちを
-いきることでの せいちょうを▼
-ホワイトフォレストでは かんじるけど
-まえに ブラックシティで　であった▼
-●●●●●をみたときも
-いきるって　こういうことかな▼
-ってかんじたわ▼</language>
-		<language name="JPN_KANJI" width="256">ナオ『いちにち　いちにちを
-いきることでの せいちょうを▼
-ホワイトフォレストでは かんじるけど
-まえに ブラックシティで　であった▼
-●●●●●をみたときも
-いきるって　こういうことかな▼
-ってかんじたわ▼</language>
+いきることでの せいちょうを▽
+ホワイトフォレストでは かんじるけど▼
+まえに ブラックシティで　であった
+●●●●●を　みたときも▽
+いきるって　こういうことかな　と▽
+わたし　かんじたわ▼</language>
+		<language name="JPN_KANJI" width="256">ナオ『一日　一日を
+生きることでの　成長を▽
+ホワイトフォレストでは　感じるけど▼
+前に ブラックシティで　出会った
+●●●●●を　みたときも▽
+生きるって　こういうことかな　と▽
+わたし　感じたわ▼</language>
 	</row>
 
-	<row id="wc10_27_02">
+	<row id="wc10_27_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ナオ『こうして
-しぜんのせいちょうを みていると▼
-いちにち　いちにちに
-せいちょうがあるのを　かんじるわ▼</language>
+しぜんの　せいちょうを　みていると▼
+いちにち　いちにちに　なにかの
+せいちょうが　あるのを　かんじるわ▼</language>
 		<language name="JPN_KANJI" width="256">ナオ『こうして
-しぜんのせいちょうを みていると▼
-いちにち　いちにちに
-せいちょうがあるのを　かんじるわ▼</language>
+自然の　成長を　みていると▼
+一日　一日に　なにかの
+成長が　あるのを　感じるわ▼</language>
 	</row>
 
-	<row id="wc10_27_03">
-		<language name="JPN" width="256">でも　ただいきてるだけって▼
-しょうじきヒマなのよね
-たいくつしちゃう……</language>
-		<language name="JPN_KANJI" width="256">でも　ただいきてるだけって▼
-しょうじきヒマなのよね
-たいくつしちゃう……</language>
+	<row id="wc10_27_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">でも　ただいきてる　だけって
+しょうじき　ヒマなのよね▽
+たいくつ　しちゃう……</language>
+		<language name="JPN_KANJI" width="256">でも　ただ生きてるだけって
+正直　ヒマなのよね▽
+退屈しちゃう……</language>
 	</row>
 
-	<row id="wc10_27_04">
-		<language name="JPN" width="256">まいにちをいきていくことって
-すこしずつへんかがあって▼
-いみのあることなのね
-●●●●●を　みていると▼
-そうおもうわ</language>
-		<language name="JPN_KANJI" width="256">まいにちをいきていくことって
-すこしずつへんかがあって▼
-いみのあることなのね
-●●●●●を　みていると▼
-そうおもうわ</language>
+	<row id="wc10_27_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">まいにちを　いきていくことって
+すこしずつ　へんかがあって▽
+いみの　あることなのね▼
+●●●●●を　みていると
+そう　おもうわ</language>
+		<language name="JPN_KANJI" width="256">毎日を　生きていくことって
+少しずつ　変化があって▽
+意味の　あることなのね▼
+●●●●●を　みていると
+そう　思うわ</language>
 	</row>
 
 	<row id="wc10_28_01">
 		<language name="JPN" width="256">スズ『いまは　ここで
 おちついてる オレだけど▼
-いぜんはブラックシティに
+いぜんは　ブラックシティに
 いったことも　あるんだ▼
-●●●●● との
-ポケモンしょうぶは▼
-たのしかったな！▼</language>
+●●●●●との
+ポケモンしょうぶは　たのしかったな！▼</language>
 		<language name="JPN_KANJI" width="256">スズ『いまは　ここで
-おちついてる オレだけど▼
-いぜんはブラックシティに
-いったことも　あるんだ▼
-●●●●● との
-ポケモンしょうぶは▼
-たのしかったな！▼</language>
+落ち着いている オレだけど▼
+以前は　ブラックシティに
+行ったことも　あるんだ▼
+●●●●●との
+ポケモン勝負は　楽しかったな！▼</language>
 	</row>
 
 	<row id="wc10_28_02">
-		<language name="JPN" width="256">スズ『しぜんにかこまれて
+		<language name="JPN" width="256">スズ『しぜんに　かこまれて
 くらしていると　ほっとするよ▼</language>
-		<language name="JPN_KANJI" width="256">スズ『しぜんにかこまれて
-くらしていると　ほっとするよ▼</language>
+		<language name="JPN_KANJI" width="256">スズ『自然に　囲まれて
+暮らしていると　ほっとするよ▼</language>
 	</row>
 
 	<row id="wc10_28_03">
-		<language name="JPN" width="256">でも　ひとつのところに
-いつづけるのって▼
-オレのしょうには あわないんだよね</language>
-		<language name="JPN_KANJI" width="256">でも　ひとつのところに
-いつづけるのって▼
-オレのしょうには あわないんだよね</language>
+		<language name="JPN" width="256">でも　ひとつの　ところに
+いつづけるのって▽
+オレの　しょうには　あわないんだよね</language>
+		<language name="JPN_KANJI" width="256">でも　ひとつの　ところに
+いつづけるのって▽
+オレの　性には　合わないんだよね</language>
 	</row>
 
 	<row id="wc10_28_04">
-		<language name="JPN" width="256">●●●●●とであえる
+		<language name="JPN" width="256">●●●●●と　であえる
 このもりを　きにいってるんだ▼
-ここで　ゆっくりくらしたい</language>
-		<language name="JPN_KANJI" width="256">●●●●●とであえる
-このもりを　きにいってるんだ▼
-ここで　ゆっくりくらしたい</language>
+ここで　ゆっくり　くらしたい</language>
+		<language name="JPN_KANJI" width="256">●●●●●と　出会える
+この森を　気にいってるんだ▼
+ここで　ゆっくり　暮らしたい</language>
 	</row>
 
-	<row id="wc10_29_01">
+	<row id="wc10_29_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ユウ『いまはゆったり
 たびをしてる　わたしだけど▼
 いぜんは　ブラックシティで
-●●●●●に かつことを▼
-もくてきにしていた
+●●●●●に　かつことを▽
+もくてきに　していた……▽
 そんなときも　あったの▼</language>
-		<language name="JPN_KANJI" width="256">ユウ『いまはゆったり
-たびをしてる　わたしだけど▼
-いぜんは　ブラックシティで
-●●●●●に かつことを▼
-もくてきにしていた
+		<language name="JPN_KANJI" width="256">ユウ『いまは　ゆったり
+旅をしてる　わたしだけど▼
+以前は　ブラックシティで
+●●●●●に　勝つことを▽
+目的に　していた……▽
 そんなときも　あったの▼</language>
 	</row>
 
-	<row id="wc10_29_02">
-		<language name="JPN" width="256">ユウ『もくてきをきめずに
-フラッとりょこうをするのも▼
+	<row id="wc10_29_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ユウ『もくてきを　きめずに
+フラッと　たびをするのも▽
 たのしいものね▼</language>
-		<language name="JPN_KANJI" width="256">ユウ『もくてきをきめずに
-フラッとりょこうをするのも▼
-たのしいものね▼</language>
+		<language name="JPN_KANJI" width="256">ユウ『目的を　決めずに
+フラッと　旅をするのも▽
+楽しいものね▼</language>
 	</row>
 
-	<row id="wc10_29_03">
+	<row id="wc10_29_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">でも　すこしくらいは
-もくてきをきめて▼
-りょこうしたほうが　たのしいかも？</language>
-		<language name="JPN_KANJI" width="256">でも　すこしくらいは
-もくてきをきめて▼
-りょこうしたほうが　たのしいかも？</language>
+もくてきを　きめて▽
+たびを　したほうが　たのしいかも？</language>
+		<language name="JPN_KANJI" width="256">でも　少しくらいは
+目的を　決めて▽
+旅を　したほうが　楽しいかも？</language>
 	</row>
 
-	<row id="wc10_29_04">
+	<row id="wc10_29_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">なにもきめずに あるいていたら
-●●●●●に　あえたの！▼
+●●●●●に　あえたの！▽
 うれしかった！</language>
-		<language name="JPN_KANJI" width="256">なにもきめずに あるいていたら
-●●●●●に　あえたの！▼
+		<language name="JPN_KANJI" width="256">なにも決めずに　歩いていたら
+●●●●●に　会えたの！▽
 うれしかった！</language>
 	</row>
 
 	<row id="wc10_30_01">
 		<language name="JPN" width="256">アキコ『いぜん　ブラックシティで
-であった　●●●●●の▼
-ポケモンしょうぶも
-しぜんにおとらぬ▽
-うつくしさがあったわ▼</language>
-		<language name="JPN_KANJI" width="256">アキコ『いぜん　ブラックシティで
-であった　●●●●●の▼
-ポケモンしょうぶも
-しぜんにおとらぬ▽
-うつくしさがあったわ▼</language>
+であった　●●●●●との▽
+ポケモンしょうぶも▼
+しぜんに　おとらぬ▽
+うつくしさが　あったわ！▼</language>
+		<language name="JPN_KANJI" width="256">アキコ『以前　ブラックシティで
+出会った　●●●●●との▽
+ポケモン勝負も▼
+自然に　劣らぬ▽
+美しさが　あったわ！▼</language>
 	</row>
 
 	<row id="wc10_30_02">
-		<language name="JPN" width="256">アキコ『しぜんがつくる うつくしさ▼
-そのゆうだいさは
-ひとのそうぞうを　こえているわ▼</language>
-		<language name="JPN_KANJI" width="256">アキコ『しぜんがつくる うつくしさ▼
-そのゆうだいさは
-ひとのそうぞうを　こえているわ▼</language>
+		<language name="JPN" width="256">アキコ『だいしぜんが
+うみだす　うつくしさ▼
+その　ゆうだいさは
+ひとの　そうぞうを　こえているわ▼</language>
+		<language name="JPN_KANJI" width="256">アキコ『大自然が
+うみだす　美しさ▼
+その　雄大さは
+人の　想像を　超えているわ▼</language>
 	</row>
 
 	<row id="wc10_30_03">
-		<language name="JPN" width="256">ひとのてによる　げいじゅつも
+		<language name="JPN" width="256">ひとの　てによる　げいじゅつも
 さいきんは　みたくなってきたわ</language>
-		<language name="JPN_KANJI" width="256">ひとのてによる　げいじゅつも
-さいきんは　みたくなってきたわ</language>
+		<language name="JPN_KANJI" width="256">人の手による　芸術も
+最近は　みたくなってきたわ</language>
 	</row>
 
 	<row id="wc10_30_04">
 		<language name="JPN" width="256">●●●●●の　うつくしさも
-またしぜんで　うつくしい……</language>
-		<language name="JPN_KANJI" width="256">●●●●●の　うつくしさも
-またしぜんで　うつくしい……</language>
+また　しぜんなのが　いいのよね……</language>
+		<language name="JPN_KANJI" width="256">●●●●●の　美しさも
+また　自然なのが　いいのよね……</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T14:39:55"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T16:02:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,15 +330,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1337" top="200" right="2040" bottom="828" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -366,28 +366,28 @@
 		<language name="JPN_KANJI" width="256">ブラックシティ　すてき！</language>
 	</row>
 
-	<row id="bc10_01_01">
+	<row id="bc10_01_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ツバサ『とかいの　しげきで
 つよくなった　ぼくを　みてよ！▼</language>
 		<language name="JPN_KANJI" width="256">ツバサ『都会の　刺激で
 強くなった　ぼくを　みてよ！▼</language>
 	</row>
 
-	<row id="bc10_01_02">
+	<row id="bc10_01_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">しげきが　たりなかったみたい……
 もっと　とかいの　かぜに　ふかれよう</language>
 		<language name="JPN_KANJI" width="256">刺激が　足りなかったみたい……
 もっと　都会の　風に　吹かれよう</language>
 	</row>
 
-	<row id="bc10_01_03">
+	<row id="bc10_01_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ちょっと　ぼくには
 ここは　しげきが　つよすぎるかも……</language>
 		<language name="JPN_KANJI" width="256">ちょっと　ぼくには
 ここは　刺激が　強すぎるかも……</language>
 	</row>
 
-	<row id="bc10_01_04">
+	<row id="bc10_01_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">じゅうぶんな　しげきは
 ひとの　せいちょうを　はやくする▽
 そんな　ことばが　にあう　まちだよね</language>
@@ -430,7 +430,7 @@
 めまいが　しちゃうぐらい　ステキね</language>
 	</row>
 
-	<row id="bc10_03_01">
+	<row id="bc10_03_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ヤス『お！　キマってんな　おまえ！
 オレと　どっちが　キマってるか▽
 ポケモンしょうぶで　キめようぜ！▼</language>
@@ -439,14 +439,14 @@
 ポケモン勝負で　キめようぜ！▼</language>
 	</row>
 
-	<row id="bc10_03_02">
+	<row id="bc10_03_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">サイコーに　キマってんな　おまえ！
 オトコみちの　むこうに　イけるぜ！</language>
 		<language name="JPN_KANJI" width="256">サイコーに　キマってんな　おまえ！
 オトコ道の　向こうに　イけるぜ！</language>
 	</row>
 
-	<row id="bc10_03_03">
+	<row id="bc10_03_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ツッパリすぎて　くたびれたぜ▼
 ホワイトフォレストに
 ちょっぴり　あこがれちゃうぜ</language>
@@ -455,7 +455,7 @@
 ちょっぴり　あこがれちゃうぜ</language>
 	</row>
 
-	<row id="bc10_03_04">
+	<row id="bc10_03_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">シティの　かぜで　オレが　かがやく！
 どうだ　いまの　オレ▽
 サイコーに　キマってるだろ？</language>
@@ -500,7 +500,7 @@
 案外　おもしろいですね</language>
 	</row>
 
-	<row id="bc10_05_01">
+	<row id="bc10_05_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ヨシヒサ『この　ブラックシティ　だと
 ノリが　のりに　のって▽
 ぜんぜん　しょうぶで　まけないのだ！▼</language>
@@ -509,7 +509,7 @@
 ぜんぜん　勝負で　負けないのだ！▼</language>
 	</row>
 
-	<row id="bc10_05_02">
+	<row id="bc10_05_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ノリに　のれなかったー！
 もういちど　のってくるから▽
 また　しょうぶ　してよ！</language>
@@ -518,7 +518,7 @@
 また　勝負　してよ！</language>
 	</row>
 
-	<row id="bc10_05_03">
+	<row id="bc10_05_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">あー！　ノリノリで　つかれたよー！
 ちょっと　ホワイトフォレストで▽
 きゅうけい　したいなー！</language>
@@ -527,7 +527,7 @@
 きゅうけい　したいなー！</language>
 	</row>
 
-	<row id="bc10_05_04">
+	<row id="bc10_05_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">はってん　はってんで！
 まいにちが　ちがう　ブラックシティ！▽
 そんな　ここが　だいすきさ！</language>
@@ -578,7 +578,7 @@
 なんとかなるし　おもしろいわねー</language>
 	</row>
 
-	<row id="bc10_07_01">
+	<row id="bc10_07_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ショウゴ『やあ！　こんにちは
 おれが　どこまで　つよくなったのか▽
 きみで　たしかめたいんだ　いいだろ？▼</language>
@@ -587,7 +587,7 @@
 きみで　確かめたいんだ　いいだろ？▼</language>
 	</row>
 
-	<row id="bc10_07_02">
+	<row id="bc10_07_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">そうか……
 おれは　こんなところか▼
 ありがとう！　きみとの　しょうぶで
@@ -598,16 +598,16 @@
 目標が　定まったよ！</language>
 	</row>
 
-	<row id="bc10_07_03">
+	<row id="bc10_07_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">セイ？　セイ？　セイ？？
 あれれ　きあいが　はいらないな……▼
 ここは　しゅうちゅう　できないのかも</language>
 		<language name="JPN_KANJI" width="256">セイ？　セイ？　セイ？？
-あれれ　きあいが　はいらないな……▼
-ここは　しゅうちゅう　できないのかも</language>
+あれれ　気合が　はいらないな……▼
+ここは　集中できないのかも</language>
 	</row>
 
-	<row id="bc10_07_04">
+	<row id="bc10_07_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">セイ！　セイ！　セイ！！
 つよいやつが　あつまる　ここは▼
 しゅぎょうを　するのに
@@ -656,7 +656,7 @@
 もっと　もっと　勝負したいわ！</language>
 	</row>
 
-	<row id="bc10_09_01">
+	<row id="bc10_09_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ミヤオ『どうも！　おせわになってます▼
 おちかづきの　しるしに
 ポケモンしょうぶ　いかが　ですか！▼</language>
@@ -665,14 +665,14 @@
 ポケモン勝負　いかが　ですか！▼</language>
 	</row>
 
-	<row id="bc10_09_02">
+	<row id="bc10_09_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">いよっ！
 イッシュいちの　おてまえで！</language>
 		<language name="JPN_KANJI" width="256">いよっ！
 イッシュいちの　おてまえで！</language>
 	</row>
 
-	<row id="bc10_09_03">
+	<row id="bc10_09_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">モノが　あふれてる　ブラックシティで
 たりないものが　あるとすれば▽
 それは　いやしです！　いやされたーい</language>
@@ -681,7 +681,7 @@
 それは　いやしです！　いやされたーい</language>
 	</row>
 
-	<row id="bc10_09_04">
+	<row id="bc10_09_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">モノが　あふれてる　ブラックシティ！
 ここだと　しごとが　はかどりますね▽</language>
 		<language name="JPN_KANJI" width="256">モノが　あふれてる　ブラックシティ！
@@ -722,7 +722,7 @@
 ぼくを　ひきたてる　スパイスだね</language>
 	</row>
 
-	<row id="bc10_11_01">
+	<row id="bc10_11_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">カワセ『しょうぶを　するまえに
 ふかく　しんこきゅう……▽
 あたまが　さえたら　いざ　しょうぶ！▼</language>
@@ -731,21 +731,21 @@
 頭が　さえたら　いざ勝負！▼</language>
 	</row>
 
-	<row id="bc10_11_02">
+	<row id="bc10_11_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">かんがえすぎて　まけちゃった……
 ときには　からっぽも　いいかもね</language>
 		<language name="JPN_KANJI" width="256">考えすぎて　負けちゃった……
 ときには　からっぽも　いいかもね</language>
 	</row>
 
-	<row id="bc10_11_03">
+	<row id="bc10_11_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">だいぶ　ろんぶんが　いきづまったの
 ホワイトフォレストで　いやされたいわ</language>
 		<language name="JPN_KANJI" width="256">だいぶ　論文が　行き詰ったの
 ホワイトフォレストで　いやされたいわ</language>
 	</row>
 
-	<row id="bc10_11_04">
+	<row id="bc10_11_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">エキサイトな　ブラックシティに
 エキサイトに　しげき　されて▽
 アイディアが　たくさん　でるわ</language>
@@ -792,7 +792,7 @@
 だから　ここは　落ち着くの……</language>
 	</row>
 
-	<row id="bc10_13_01">
+	<row id="bc10_13_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">マサシ『おー！　こんにちは！▼
 ここで　あったのも　なにかの　えん！
 ポケモンしょうぶを　しようよ！▼</language>
@@ -801,21 +801,21 @@
 ポケモン勝負を　しようよ！▼</language>
 	</row>
 
-	<row id="bc10_13_02">
+	<row id="bc10_13_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ブラックシティでの　しょうぶは
 テンションが　あがっちゃうね！</language>
 		<language name="JPN_KANJI" width="256">ブラックシティでの　勝負は
 テンションが　あがっちゃうね！</language>
 	</row>
 
-	<row id="bc10_13_03">
+	<row id="bc10_13_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">うーん　そろそろ　
 ほかのばしょも　みてみたいな　</language>
 		<language name="JPN_KANJI" width="256">うーん　そろそろ　
 他の場所も　みてみたいな　</language>
 	</row>
 
-	<row id="bc10_13_04">
+	<row id="bc10_13_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ブラックシティは　みるところが
 おおくて　あきが　こないよ！</language>
 		<language name="JPN_KANJI" width="256">ブラックシティは　みるところが
@@ -860,27 +860,27 @@
 ブラックシティは　すごく　クールよね</language>
 	</row>
 
-	<row id="bc10_15_01">
+	<row id="bc10_15_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">オーヤブ『おお……　みなさい！▼
 わたしの　ポケモンが
 きみと　たたかいたいと　いっておるよ</language>
 		<language name="JPN_KANJI" width="256">オーヤブ『おお……　みなさい！▼
 わたしの　ポケモンが
-きみと　たたかいたいと　いっておるよ</language>
+きみと　戦いたいと　いっておるよ</language>
 	</row>
 
-	<row id="bc10_15_02">
+	<row id="bc10_15_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">わたしの　ポケモンが
 いい　しょうぶ　だったと　いっている▼
 わたしの　ポケモンは
 じつに　しんしだと　おもわないかね</language>
 		<language name="JPN_KANJI" width="256">わたしの　ポケモンが
-いい　勝負　だったと　いっている▼
+いい　勝負だったと　いっている▼
 わたしの　ポケモンは
 じつに　紳士だと　思わないかね</language>
 	</row>
 
-	<row id="bc10_15_03">
+	<row id="bc10_15_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">わたしは　ここが　だいすき　だが
 わたしの　ポケモンは　ふまんそうだ▽
 ホワイトフォレストに　つれてゆくか</language>
@@ -889,7 +889,7 @@
 ホワイトフォレストに　つれてゆくか</language>
 	</row>
 
-	<row id="bc10_15_04">
+	<row id="bc10_15_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">やはり　わたしには
 ここが　あっている▼
 へんかし　はってんする　ようすは
@@ -934,7 +934,7 @@
 強い　ヒトと　出会いたい！</language>
 	</row>
 
-	<row id="bc10_17_01">
+	<row id="bc10_17_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">みつまさ『ひゅう！
 スリリングな　くらし！▼
 ぼくと　ポケモンしょうぶ　で
@@ -945,14 +945,14 @@
 スリルを　あじあわない？▼</language>
 	</row>
 
-	<row id="bc10_17_02">
+	<row id="bc10_17_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ギリギリの　きもち！
 スリリングで　たのしかったー！</language>
 		<language name="JPN_KANJI" width="256">ギリギリの　気持ち！
 スリリングで　楽しかったー！</language>
 	</row>
 
-	<row id="bc10_17_03">
+	<row id="bc10_17_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">あーあ　スリリングなのにも
 なんだか　あきてきちゃったな▼
 ゆっくり　ポケモンと　すごしたいや……</language>
@@ -961,7 +961,7 @@
 ゆっくり　ポケモンと　すごしたいや……</language>
 	</row>
 
-	<row id="bc10_17_04">
+	<row id="bc10_17_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ブラックシティは　いいよね
 ぶんめいがあって　らくにくらせる▼
 おなじ　くらすなら
@@ -998,29 +998,29 @@
 	</row>
 
 	<row id="bc10_18_04">
-		<language name="JPN" width="256">どんどん　たたかって
+		<language name="JPN" width="256">どんどん　しょうぶをして
 じぶんの　ちからが　ためせる▼
 ブラックシティは　いい　まちだ！</language>
-		<language name="JPN_KANJI" width="256">どんどん　戦って
+		<language name="JPN_KANJI" width="256">どんどん　勝負をして
 自分の　力が　試せる▼
 ブラックシティは　いい街だ！</language>
 	</row>
 
-	<row id="bc10_19_01">
+	<row id="bc10_19_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">セキ『こうりつよく　ムダなく　たたかう
 それが　わたしの　ポリシーなの！▼</language>
 		<language name="JPN_KANJI" width="256">セキ『効率よく　ムダなく　戦う
 それが　わたしの　ポリシーなの！▼</language>
 	</row>
 
-	<row id="bc10_19_02">
+	<row id="bc10_19_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">あなたの　ムダのない　たたかいかた
 ほんとうに　すばらしいわ！</language>
 		<language name="JPN_KANJI" width="256">あなたの　ムダのない　戦い方
 本当に　すばらしいわ！</language>
 	</row>
 
-	<row id="bc10_19_03">
+	<row id="bc10_19_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">なんだか　こうりつばかり
 おいもとめる　せいかつにも▼
 つかれてきちゃった　きがする</language>
@@ -1029,7 +1029,7 @@
 つかれてきちゃった　気がする</language>
 	</row>
 
-	<row id="bc10_19_04">
+	<row id="bc10_19_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">しょうぶも　ビジネスも
 こうりつが　すべて！▼
 ブラックシティには　ムダがないわ
@@ -1076,21 +1076,21 @@
 かわいくなれるし　強くなれる！</language>
 	</row>
 
-	<row id="bc10_21_01">
+	<row id="bc10_21_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ショウ『つよいか　そうじゃないか
 キミとしょうぶして　かくにんする！▼</language>
 		<language name="JPN_KANJI" width="256">ショウ『強いか　そうじゃないか
 キミと勝負して　確認する！▼</language>
 	</row>
 
-	<row id="bc10_21_02">
+	<row id="bc10_21_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">そっか……
 オレって　よわいのか……</language>
 		<language name="JPN_KANJI" width="256">そっか……
 オレって　弱いのか……</language>
 	</row>
 
-	<row id="bc10_21_03">
+	<row id="bc10_21_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ひとから　どう　みられているか
 きにして　くらす　せいかつに▽
 ちょっと　くたびれちゃったよ</language>
@@ -1099,7 +1099,7 @@
 ちょっと　くたびれちゃったよ</language>
 	</row>
 
-	<row id="bc10_21_04">
+	<row id="bc10_21_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ブラックシティでは
 ひとと　しょうぶすることで▼
 じぶんがどんなヤツか
@@ -1156,7 +1156,7 @@
 気持ちいい　もんだぜ！</language>
 	</row>
 
-	<row id="bc10_23_01">
+	<row id="bc10_23_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ナギー『あれもほしい！
 これもほしい！▼
 あなたとの　ポケモンしょうぶでの
@@ -1167,14 +1167,14 @@
 勝利も　ほしい！▼</language>
 	</row>
 
-	<row id="bc10_23_02">
+	<row id="bc10_23_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">あらら……
 まけちゃった！</language>
 		<language name="JPN_KANJI" width="256">あらら……
 負けちゃった！</language>
 	</row>
 
-	<row id="bc10_23_03">
+	<row id="bc10_23_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">いろんなものを　かっても
 まんぞく　できない……▼
 そんな　しゅんかんが　あるの</language>
@@ -1183,7 +1183,7 @@
 そんな　瞬間が　あるの</language>
 	</row>
 
-	<row id="bc10_23_04">
+	<row id="bc10_23_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ブラックシティだったら
 なんでも　てにはいるよね▼
 あんしんして　くらせるよ</language>
@@ -1227,7 +1227,7 @@
 実に　すばらしいよねぇ</language>
 	</row>
 
-	<row id="bc10_25_01">
+	<row id="bc10_25_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ユウ『ポケモンしょうぶ　だけに
 うちこんだ　じんせい……▼
 スペシャリストとして　かつ！▼</language>
@@ -1236,14 +1236,14 @@
 スペシャリストとして　勝つ！▼</language>
 	</row>
 
-	<row id="bc10_25_02">
+	<row id="bc10_25_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">まだまだ　ポケモンしょうぶの
 けんきゅうが　たりないようだな▼</language>
 		<language name="JPN_KANJI" width="256">まだまだ　ポケモン勝負の
 研究が　足りないようだな▼</language>
 	</row>
 
-	<row id="bc10_25_03">
+	<row id="bc10_25_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ポケモンしょうぶの　ことだけを
 まいにち　かんがえている▼
 だけど　もっと　ほかのことも
@@ -1256,7 +1256,7 @@
 そう　思うときも　ある</language>
 	</row>
 
-	<row id="bc10_25_04">
+	<row id="bc10_25_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ブラックシティに　いれば
 ポケモンしょうぶを▽
 きわめることが　できる！▼
@@ -1309,7 +1309,7 @@
 研究者として　満足だ</language>
 	</row>
 
-	<row id="bc10_27_01">
+	<row id="bc10_27_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ナオ『じんせい　なんて
 ヒマつぶし……　そう　おもわない？▽
 わたしと　あそびましょう！▼</language>
@@ -1318,19 +1318,19 @@
 わたしと　遊びましょう！▼</language>
 	</row>
 
-	<row id="bc10_27_02">
+	<row id="bc10_27_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">いいヒマつぶしが　できたわ！</language>
 		<language name="JPN_KANJI" width="256">いいヒマつぶしが　できたわ！</language>
 	</row>
 
-	<row id="bc10_27_03">
+	<row id="bc10_27_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">まいにち　ヒマつぶし　だけの
 じんせいを　もてあましているのかも</language>
 		<language name="JPN_KANJI" width="256">毎日　ヒマつぶし　だけの
 人生を　もてあましてるのかも</language>
 	</row>
 
-	<row id="bc10_27_04">
+	<row id="bc10_27_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ブラックシティでは
 ヒマをつぶすことが　たくさんあって▽
 たいくつ　しないわ！　ステキ！！</language>
@@ -1340,10 +1340,10 @@
 	</row>
 
 	<row id="bc10_28_01">
-		<language name="JPN" width="256">スズ『わたしは
+		<language name="JPN" width="256">スズ『この　オレは
 ひとつの　とちには　しばられない……▽
 わたりあるいて　きょうも　しょうぶ！▼</language>
-		<language name="JPN_KANJI" width="256">スズ『わたしは
+		<language name="JPN_KANJI" width="256">スズ『この　オレは
 ひとつの　土地には　しばられない……▽
 渡り歩いて　今日も　勝負！▼</language>
 	</row>
@@ -1369,21 +1369,21 @@
 この　せいかつ　きにいってるんだ</language>
 	</row>
 
-	<row id="bc10_29_01">
+	<row id="bc10_29_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ユウ『ポケモンしょうぶ……
 それがわたしの　たびのもくてき！▼</language>
 		<language name="JPN_KANJI" width="256">ユウ『ポケモン勝負……
 それがわたしの　たびのもくてき！▼</language>
 	</row>
 
-	<row id="bc10_29_02">
+	<row id="bc10_29_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">勝てなかった！　でも
 これも　たびの　だいごみね</language>
 		<language name="JPN_KANJI" width="256">勝てなかった！　でも
 これも　旅の　だいごみね</language>
 	</row>
 
-	<row id="bc10_29_03">
+	<row id="bc10_29_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">もっと　ゆったり
 もくてきを　とくに　きめたりせず▼
 たびそのものを　たのしみたいなって
@@ -1394,7 +1394,7 @@
 最近は　思うの</language>
 	</row>
 
-	<row id="bc10_29_04">
+	<row id="bc10_29_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ブラックシティでは
 ポケモンしょうぶが　たのしめるから▽
 わたしの　たびには　ピッタリのまち！</language>
