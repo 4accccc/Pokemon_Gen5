@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T16:56:52"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T22:37:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1301" top="317" right="2006" bottom="945" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -304,10 +304,12 @@
 　いいえ→black_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]！▼
+シャガさんたちから　きいたけれど
 アデクさん……▼
 チャンピオンが　Ｎを　おいかけ
 ポケモンリーグに　むかったんだって？</language>
 		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]！▼
+シャガさんたちから　聞いたけれど
 アデクさん……▼
 チャンピオンが　Ｎを　追いかけ
 ポケモンリーグに　向かったんだって？</language>
@@ -339,7 +341,7 @@
 つよくなりたかった　くせに
 こんなとき　なにもできないのか▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……ぼくは▼
-つよくなりたかった　くせに
+強くなりたかった　くせに
 こんなとき　なにもできないのか▼</language>
 	</row>
 
@@ -379,12 +381,12 @@
 こんなときに　きみは……▼</language>
 	</row>
 
-	<row id="msg_r10_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてblack_06</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『はい　チェレンは
-すこしは　わらいなさいよ▼
+		<language name="JPN" width="256">ベル『はい　チェレン
+すこしは　わらおうよ▼
 しんこくな　かお　するだけじゃ
 なんにも　かわらないんだから▼
 えーっとね　あたしたち
@@ -394,16 +396,16 @@
 でも　それって
 それぞれの　りそうが　ちがったんだ！▽
 って　なんか　うれしくなったの▼</language>
-		<language name="JPN_KANJI" width="256">ベル『はい　チェレンは
-すこしは　わらいなさいよ▼
-しんこくな　かお　するだけじゃ
+		<language name="JPN_KANJI" width="256">ベル『はい　チェレン
+すこしは　笑おうよ▼
+深刻な　顔　するだけじゃ
 なんにも　かわらないんだから▼
 えーっとね　あたしたち
-ポケモンと　であってから▽
+ポケモンと　出会ってから▽
 いろんなことが　あって……▽
-みんな　けっこう　かわっちゃって▼
+みんな　けっこう　変わっちゃって▼
 でも　それって
-それぞれの　りそうが　ちがったんだ！▽
+それぞれの　理想が　違ったんだ！▽
 って　なんか　うれしくなったの▼</language>
 	</row>
 
@@ -422,7 +424,7 @@
 できることを　すれば　いいんだよね▼</language>
 	</row>
 
-	<row id="msg_r10_black_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r10_black_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・主人公を向いて
 ・出現した方向に戻る（ダッシュ?）
@@ -434,25 +436,25 @@
 だから……
 いまは　きみに　たくすよ▼
 アデクさん　ひとりに
-むちゃを　させないでほしい▽
-たのんだよ▼</language>
+むりを　させないでほしい▽
+たのんだよ！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！　ぼくも
-すぐに　つよくなって　おいつく▼
+すぐに　強くなって　追いつく▼
 だから……
 いまは　きみに　たくすよ▼
-アデクさん　ひとりに
-むちゃを　させないでほしい▽
-たのんだよ▼</language>
+アデクさん　１人に
+無理を　させないでほしい▽
+頼んだよ！▼</language>
 	</row>
 
-	<row id="msg_r10_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ライバルの去ったほうをみながら（主人公も）
 ・続けてwhite_05
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『いっちゃった！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『いっちゃった！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『行っちゃった！▼</language>
 	</row>
 
 	<row id="msg_r10_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -469,14 +471,14 @@
 いえたら　いいのに……▼
 えーっと！
 おたがい　がんばろうね！！▼</language>
-		<language name="JPN_KANJI" width="256">主人公！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！▼
 あたしも
-あたしに　できること　するよ▼
+あたしに　できること　するね▼
 だから……　えーっと……
-こういうとき　いいこと▽
-いえたら　いいんだけどなあ……▼
+こういうとき　かっこいいこと▽
+いえたら　いいのに……▼
 えーっと！
-おたがい　がんばろうね！！▼</language>
+お互い　がんばろうね！！▼</language>
 	</row>
 
 	<row id="msg_r10_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

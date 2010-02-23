@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T21:06:07"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T22:42:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -785,11 +785,13 @@ WOMAN2</attribute>
 		<language name="JPN" width="256">ちょうせんしゃ？[BE:01:ページ切り替え（クリア）]
 もうしわけないね
 いま　ジムリーダーは[BE:00:ページ切り替え（行送り）]
-しゅぎょうちゅう　でね[BE:01:ページ切り替え（クリア）]</language>
+ちょっと　るす　でね[BE:01:ページ切り替え（クリア）]
+また　こんど　きてほしい</language>
 		<language name="JPN_KANJI" width="256">挑戦者？[BE:01:ページ切り替え（クリア）]
 申し訳ないね
 今　ジムリーダーは[BE:00:ページ切り替え（行送り）]
-修行中　でね[BE:01:ページ切り替え（クリア）]</language>
+ちょっと　留守でね[BE:01:ページ切り替え（クリア）]
+また　今度　来てほしい</language>
 	</row>
 
 	<row id="msg_c08_gentleman_01w">
