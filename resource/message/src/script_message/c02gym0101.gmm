@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T14:21:17"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T16:50:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="186" right="1992" bottom="814" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="317" right="2006" bottom="945" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -302,17 +302,18 @@
 シッポウ博物館へ</language>
 	</row>
 
-	<row id="msg_c02gym0101_counter1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_counter1_02" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
-・盗難イベント発生時
-・仮メッセージ</comment>
-		<language name="JPN" width="256">あの　ドロボウって……
+・盗難イベント発生時</comment>
+		<language name="JPN" width="256">あの　ドロボウって……▼
+プラズマだん　って
 いったい　なにもの　ですか？</language>
-		<language name="JPN_KANJI" width="256">あの　ドロボウって……
+		<language name="JPN_KANJI" width="256">あの　ドロボウって……▼
+プラズマ団　って
 いったい　なにもの　ですか？</language>
 	</row>
 
-	<row id="msg_c02gym0101_counter2_01">
+	<row id="msg_c02gym0101_counter2_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・通常時</comment>
 		<attribute name="キャラ指定">受付嬢その２</attribute>
@@ -322,14 +323,13 @@
 博物館の　奥から　行けます！</language>
 	</row>
 
-	<row id="msg_c02gym0101_counter2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_counter2_02" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
-・盗難イベント発生時
-・仮メッセージ</comment>
+・盗難イベント発生時</comment>
 		<language name="JPN" width="256">ホネを　うばって
-どうする　つもりでしょう？</language>
-		<language name="JPN_KANJI" width="256">ホネを　うばって
-どうする　つもりでしょう？</language>
+どうするつもり　でしょう？</language>
+		<language name="JPN_KANJI" width="256">ポケモンのホネを　奪って
+どうするつもり　でしょう？</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -428,8 +428,7 @@
 		<comment>♂
 ・ジム（予定）……階段付近
 ・ジムバッジ取得まで
-　この位置でこのメッセージ繰り返し
-・仮メッセージ</comment>
+　この位置でこのメッセージ繰り返し</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">この　さきが
