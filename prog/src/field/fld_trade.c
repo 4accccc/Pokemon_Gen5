@@ -761,7 +761,7 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
         GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
         work->shinkaDemoParam = SHINKADEMO_AllocParam( 
             heapID, gameData, pokeParty, afterMonsNo, work->partyPos, cond, TRUE );
-        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ShinkaDemoProcData, work->shinkaDemoParam );
+        GMEVENT_CallProc( event, NO_OVERLAY_ID, &ShinkaDemoProcData, work->shinkaDemoParam );
       }
     }
     *seq = SEQ_EXIT;
