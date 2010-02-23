@@ -237,6 +237,7 @@ struct _BTL_SVFLOW_WORK {
   BTL_POKESET         pokesetSubTarget;
   BTL_POKESET         pokesetDamaged;
   BTL_POKESET         pokesetRobTarget;
+  BTL_POKESET         pokesetMemberInProc;
 
   SVFL_WAZAPARAM         wazaParam;
   BTL_POSPOKE_WORK       pospokeWork;
@@ -2518,24 +2519,39 @@ static void scproc_MemberInForChange( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posId
 static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
 {
   FRONT_POKE_SEEK_WORK fps;
+  BTL_POKESET* pokeSet;
   BTL_POKEPARAM* bpp;
-  u8 pokeID;
+  u32 hem_state;
+  u8  pokeID;
 
-  u32 hem_state = Hem_PushState( &wk->HEManager );
-
+  pokeSet = &wk->pokesetMemberInProc;
+  BTL_POKESET_Clear( pokeSet );
   FRONT_POKE_SEEK_InitWork( &fps, wk );
+
   while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
   {
-    pokeID = BPP_GetID( bpp );
-    // @todo これホントはリクエストあった順にしないとダメか
-    if( wk->pokeInFlag[ pokeID ] )
     {
-      scEvent_AfterMemberIn( wk, bpp );
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      wk->pokeInFlag[ pokeID ] = FALSE;
+      u8 pokeID = BPP_GetID( bpp );
+      if( wk->pokeInFlag[ pokeID ] )
+      {
+        BTL_POKESET_Add( pokeSet, bpp );
+        wk->pokeInFlag[ pokeID ] = FALSE;
+      }
     }
   }
-  Hem_PopState( &wk->HEManager, hem_state );
+  BTL_POKESET_SortByAgility( pokeSet, wk );
+
+
+  BTL_POKESET_SeekStart( pokeSet );
+  while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL )
+  {
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      scEvent_AfterMemberIn( wk, bpp );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+    }
+  }
 
   scproc_CheckExpGet( wk );
 }
@@ -7893,6 +7909,7 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 
   return (sp != Hem_GetStackPtr(&wk->HEManager));
 }
+
 
 //==============================================================================
 // サーバーフロー：ターンチェックルート
