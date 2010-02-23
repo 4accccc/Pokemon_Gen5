@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-02-23T16:26:08"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-02-23T18:20:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -428,6 +428,13 @@
 かいとうにんずう</language>
 		<language name="JPN_KANJI">いままでの
 回答人数</language>
+	</row>
+
+	<row id="str_check_data_receive" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">データ
+しゅとくちゅう</language>
+		<language name="JPN_KANJI">データ
+取得中</language>
 	</row>
 
 	<flowchart-group-list>
