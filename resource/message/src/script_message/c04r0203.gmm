@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-23T22:32:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="758" top="314" right="1463" bottom="934" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,92 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c04r0203_policeman_01">
+		<comment>ストッパー用の警備員１</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">わたくし　こうえんちゅうも
+けいび　してますが▼
+こっそり　たのしんでおります</language>
+		<language name="JPN_KANJI" width="256">わたくし　公演中も
+警備　してますが▼
+こっそり　楽しんでおります</language>
+	</row>
+
+	<row id="msg_c04r0203_policeman_02">
+		<comment>ストッパー用の警備員２</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">こうえんが　はじまるまで
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">公演が　始まるまで
+しばらく　おまちください</language>
+	</row>
+
+	<row id="msg_c04r0203_babyboy1_01">
+		<comment>ストッパー用の観客
+家族連れの子供♂</comment>
+		<attribute name="キャラ指定">BABYBOY1</attribute>
+		<language name="JPN" width="256">ひろい　ひろーい！</language>
+		<language name="JPN_KANJI" width="256">ひろい　ひろーい！</language>
+	</row>
+
+	<row id="msg_c04r0203_girl3_01">
+		<comment>ストッパー用の観客
+家族連れの子供♀</comment>
+		<attribute name="キャラ指定">GIRL3</attribute>
+		<language name="JPN" width="256">ミュージカル
+はやく　はじまらないかなー</language>
+		<language name="JPN_KANJI" width="256">ミュージカル
+はやく　始まらないかなー</language>
+	</row>
+
+	<row id="msg_c04r0203_oldwoman1_01">
+		<comment>ストッパー用の観客
+家族連れの保護者♀</comment>
+		<attribute name="キャラ指定">OLDWOMAN1</attribute>
+		<language name="JPN" width="256">これこれ　あまり　はしゃぎすぎて
+ころばない　ようにね</language>
+		<language name="JPN_KANJI" width="256">これこれ　あまり　はしゃぎすぎて
+転ばない　ようにね</language>
+	</row>
+
+	<row id="msg_c04r0203_girl2_01">
+		<comment>一般人♀</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">みてなさいよー▼
+いつか　このかんきゃくせき　いっぱいに
+うまった　おきゃくさんを▼
+わたしの　ポケモンの　えんぎで
+メロメロに　しちゃうんだから！</language>
+		<language name="JPN_KANJI" width="256">みてなさいよー▼
+いつか　この観客席　いっぱいに
+埋まった　お客さんを▼
+私の　ポケモンの　演技で
+メロメロに　しちゃうんだから！</language>
+	</row>
+
+	<row id="msg_c04r0203_breederw_01">
+		<comment>一般人♀
+ミュージカルの観客の
+目線に関してのヒント</comment>
+		<attribute name="キャラ指定">BREEDERW</attribute>
+		<language name="JPN" width="256">おきゃくさん　というのは
+とても　しょうじきものよ▼
+すばらしい　ドレスアップをした
+ポケモンには　ちゅうもく　するし▼
+そうでなければ　みむきもしない▼
+でも　だからこそ
+ちゅうもくされている　ということは▼
+ひょうか　されているんだと
+うけとめて　いいんだよね</language>
+		<language name="JPN_KANJI" width="256">お客さん　というのは
+とても　正直者よ▼
+素晴らしい　ドレスアップをした
+ポケモンには　注目　するし▼
+そうでなければ　みむきもしない▼
+でも　だからこそ
+注目されている　ということは▼
+評価　されているんだと
+受けとめて　いいんだよね</language>
 	</row>
 
 	<flowchart-group-list>
