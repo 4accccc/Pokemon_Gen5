@@ -13,6 +13,7 @@
 #include "print/str_tool.h"
 #include "poke_tool/monsno_def.h"
 #include "waza_tool/wazano_def.h"
+#include "buflen.h"
 
 #include "font/font.naix"
 #include "arc_def.h"
@@ -20,6 +21,7 @@
 #include "msg/msg_debug_makepoke.h"
 
 #include "debug/debug_makepoke.h"
+
 
 //--------------------------------------------------------------
 /**
@@ -332,10 +334,15 @@ enum {
   LX_FORM_BOX = LX_FORM_CAP + CALC_STRBOX_WIDTH(4),
   LY_FORM_BOX = LY_FORM_CAP,
 
-  LX_TAMAGO_CAP = 192,
+  LX_TAMAGO_CAP = 200,
   LY_TAMAGO_CAP = LY_LV12+6,
-  LX_TAMAGO_BOX = LX_TAMAGO_CAP + CALC_STRBOX_WIDTH(3),
+  LX_TAMAGO_BOX = LX_TAMAGO_CAP + 30,
   LY_TAMAGO_BOX = LY_TAMAGO_CAP-4,
+
+  LX_RARE_CAP = 156,
+  LY_RARE_CAP = LY_LV12+6,
+  LX_RARE_BOX = LX_RARE_CAP + 20,
+  LY_RARE_BOX = LY_RARE_CAP-4,
 
 };
 
@@ -412,6 +419,7 @@ typedef enum {
   INPUTBOX_ID_NATSUKI,
   INPUTBOX_ID_FORM,
   INPUTBOX_ID_TAMAGO,
+  INPUTBOX_ID_RARE,
 
   INPUTBOX_ID_MAX,
 
@@ -678,6 +686,11 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
     ID_PARA_tamago_flag, DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
   },
 
+  { INPUTBOX_TYPE_SWITCH,  DMPSTR_RARE, LX_RARE_CAP,  LY_RARE_CAP,
+    LX_RARE_BOX,           LY_RARE_BOX,  CALC_NUMBOX_WIDTH(2), LINE_HEIGHT+8,
+    ID_PARA_tamago_flag,   DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
+  },
+
 };
 
 //--------------------------------------------------------------
@@ -723,7 +736,6 @@ typedef struct {
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil;
   GFL_SKB*        skb;
-  u32             pokeID;
   u32             pokeExpMin;
   u32             pokeExpMax;
   int             boxIdx;
@@ -733,6 +745,10 @@ typedef struct {
   POKEMON_PARAM*  dst;
   HEAPID  heapID;
   u8      seq;
+
+  u32       oyaID;
+  STRCODE   oyaName[ PERSON_NAME_SIZE ];
+  u8        oyaSex;
 
   COMP_SKB_WORK   comp;
   NUMINPUT_WORK   numInput;
@@ -806,10 +822,22 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, 
 
       wk->heapID = HEAPID_DEBUG_MAKEPOKE;
       wk->dst = proc_param->dst;
-      if( PP_Get(wk->dst, ID_PARA_monsno, NULL) == 0 ){
-        PP_Setup( wk->dst, MONSNO_HIHIDARUMA, 5, PTL_SETUP_ID_NOT_RARE );
+
+      if( proc_param->oyaStatus ){
+        wk->oyaID = MyStatus_GetID( proc_param->oyaStatus );
+        wk->oyaSex = MyStatus_GetMySex( proc_param->oyaStatus );
+        STRTOOL_Copy( MyStatus_GetMyName(proc_param->oyaStatus), wk->oyaName, NELEMS(wk->oyaName) );
+      }else{
+        static const STRCODE dmyName[] = { L'‚¾', L'‚Ý', L'‚¨', 0xffff };
+        wk->oyaID = 0;
+        wk->oyaSex = 0;
+        STRTOOL_Copy( dmyName, wk->oyaName, NELEMS(wk->oyaName) );
       }
-      wk->pokeID = PP_Get( wk->dst, ID_PARA_id_no, NULL );
+
+      if( PP_Get(wk->dst, ID_PARA_monsno, NULL) == 0 ){
+        PP_Setup( wk->dst, MONSNO_HIHIDARUMA, 5, wk->oyaID  );
+      }
+
       UpdatePokeExpMinMax( wk, wk->dst );
       wk->seq = 0;
     }
@@ -1163,12 +1191,15 @@ static BOOL is_hiragana( const STRBUF* buf )
 static void update_dst( DMP_MAINWORK* wk )
 {
   u32 personal_rnd, mons_no, tokusei, sex, level;
+  u8 rare_flag = box_getvalue( wk, INPUTBOX_ID_RARE );
+  u8 form_no = box_getvalue( wk, INPUTBOX_ID_FORM );
 
   mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
   tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
   sex = box_getvalue( wk, INPUTBOX_ID_SEX );
   level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
-  personal_rnd = POKETOOL_CalcPersonalRand( mons_no, PTL_FORM_NONE, sex );
+///  personal_rnd = POKETOOL_CalcPersonalRand( mons_no, PTL_FORM_NONE, sex );
+  personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, rare_flag );
 
   PP_Clear( wk->dst );
   {
@@ -1181,7 +1212,9 @@ static void update_dst( DMP_MAINWORK* wk )
     spw = box_getvalue( wk, INPUTBOX_ID_SPWRND );
     sdf = box_getvalue( wk, INPUTBOX_ID_SDFRND );
     pow_val = PTL_SETUP_POW_PACK( hp, pow, def, spw, sdf, agi );
-    PP_SetupEx( wk->dst, mons_no, level, wk->pokeID, pow_val, personal_rnd );
+    PP_SetupEx( wk->dst, mons_no, level, wk->oyaID, pow_val, personal_rnd );
+    PP_Put( wk->dst, ID_PARA_oyasex, wk->oyaSex );
+    PP_Put( wk->dst, ID_PARA_oyaname_raw, (u32)(wk->oyaName) );
 
     TAYA_Printf("[[‘‚«ž‚Ý]] «•Ê=%d, ŒÂ«—”=%08x\n", sex, personal_rnd);
     TAYA_Printf("             HP:%2d  ATK:%2d  DEF:%2d  SAT:%2d  SDF:%2d  AGI:%2d\n",
@@ -1259,9 +1292,11 @@ static void update_dst( DMP_MAINWORK* wk )
     PP_Put( wk->dst, ID_PARA_tamago_flag, tamago_flg );
   }
 
+
   PP_Put( wk->dst, ID_PARA_condition, box_getvalue(wk, INPUTBOX_ID_SICK) );
   PP_Put( wk->dst, ID_PARA_friend,    box_getvalue(wk, INPUTBOX_ID_NATSUKI) );
   PP_Put( wk->dst, ID_PARA_form_no,   box_getvalue(wk, INPUTBOX_ID_FORM) );
+
 }
 
 //----------------------------------------------------------------------------------
@@ -1364,7 +1399,11 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
     }
     break;
   default:
-    value = PP_Get( pp, p->paraID, NULL );
+    if( boxID == INPUTBOX_ID_RARE ){
+      value = PP_CheckRare( pp );
+    }else{
+      value = PP_Get( pp, p->paraID, NULL );
+    }
     break;
   }
 

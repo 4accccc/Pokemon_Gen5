@@ -10,6 +10,7 @@
 
 #include <procsys.h>
 #include "poke_tool\poke_tool.h"
+#include "savedata\mystatus.h"
 
 //--------------------------------------------------------------
 /**
@@ -19,6 +20,7 @@
 typedef struct {
 
   POKEMON_PARAM*    dst;
+  const MYSTATUS*   oyaStatus;
 
 }PROCPARAM_DEBUG_MAKEPOKE;
 

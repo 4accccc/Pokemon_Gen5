@@ -119,7 +119,7 @@ FS_EXTERN_OVERLAY( d_iwasawa );
 static FLDMENUFUNC * DEBUGFLDMENU_InitExPos(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
     const DEBUG_MENU_INITIALIZER * init, u16 list_pos, u16 cursor_pos );
-static void	DebugMenu_IineCallBack(BMPMENULIST_WORK* lw,u32 param,u8 y);
+static void DebugMenu_IineCallBack(BMPMENULIST_WORK* lw,u32 param,u8 y);
 static u32 DebugMenu_GetQuickJumpIdx( u32 strID );
 
 static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk );
@@ -211,7 +211,7 @@ static BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_GPowerList( DEBUG_MENU_EVENT_WORK *wk );
 static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *wk );
-static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, 
+static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list,
   HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
 static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work );
 
@@ -299,7 +299,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_SEASON_DISPLAY, debugMenuCallProc_SeasonDisplay },//季節表示
   { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },        //バトルレコーダー
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
-	{ DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },						//ずかん
+  { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },            //ずかん
 };
 
 
@@ -356,7 +356,7 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuListHeader =
   0,    //表示サイズX キャラ単位
   0,    //表示サイズY キャラ単位
   DebugMenu_IineCallBack,  //１行ごとのコールバック
-};  
+};
 
 //--------------------------------------------------------------
 /**
@@ -367,7 +367,7 @@ static const DEBUG_MENU_INITIALIZER DebugMenuData = {
   NARC_message_d_field_dat,
   NELEMS(DATA_DebugMenuList),
   DATA_DebugMenuList,
-  &DATA_DebugMenuListHeader, 
+  &DATA_DebugMenuListHeader,
   1, 1, D_MENU_CHARSIZE_X, D_MENU_CHARSIZE_Y,
   NULL,
   NULL,
@@ -392,19 +392,19 @@ GMEVENT * DEBUG_EVENT_DebugMenu(
 {
   DEBUG_MENU_EVENT_WORK * dmew;
   GMEVENT * event;
-  
+
   event = GMEVENT_Create(
     gsys, NULL, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
-  
+
   dmew = GMEVENT_GetEventWork(event);
   GFL_STD_MemClear( dmew, sizeof(DEBUG_MENU_EVENT_WORK) );
-  
+
   dmew->gmSys = gsys;
   dmew->gmEvent = event;
   dmew->gdata = GAMESYSTEM_GetGameData( gsys );
   dmew->fieldWork = fieldWork;
   dmew->heapID = heapID;
-  
+
   return event;
 }
 
@@ -423,7 +423,7 @@ static FLDMENUFUNC * DebugMenuInitCore(
   FLDMENUFUNC_LISTDATA *listdata;
   FLDMENUFUNC_HEADER menuH;
   u16 max;
-  
+
   gsys = FIELDMAP_GetGameSysWork( fieldmap );
   msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
   msgData = FLDMSGBG_CreateMSGDATA( msgBG, init->msg_arc_id );
@@ -486,7 +486,7 @@ static FLDMENUFUNC * DEBUGFLDMENU_InitExPos(
 static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_MENU_EVENT_WORK *work = wk;
-  
+
   switch (*seq) {
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugMenuData );
@@ -496,7 +496,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
     {
       u32 ret;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
 #ifdef QuickJumpStart
         if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
@@ -527,13 +527,13 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
   case 2:
     {
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
+
       if( work->call_proc != NULL ){
         if( work->call_proc(work) == TRUE ){
           return( GMEVENT_RES_CONTINUE );
         }
       }
-      
+
       return( GMEVENT_RES_FINISH );
     }
     break;
@@ -544,38 +544,38 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  １行ごとのコールバック
+ *  @brief  １行ごとのコールバック
  *
- *	@param	lw    ワーク
- *	@param	param 引数
- *	@param	y     Y位置
+ *  @param  lw    ワーク
+ *  @param  param 引数
+ *  @param  y     Y位置
  */
 //-----------------------------------------------------------------------------
-static void	DebugMenu_IineCallBack(BMPMENULIST_WORK* lw,u32 param,u8 y)
+static void DebugMenu_IineCallBack(BMPMENULIST_WORK* lw,u32 param,u8 y)
 {
-	if(param == BMPMENULIST_LABEL){
-		BmpMenuList_TmpColorChange( lw,4,0,4);
-	}else{
-		BmpMenuList_TmpColorChange(lw,1,0,2);
-	}
+  if(param == BMPMENULIST_LABEL){
+    BmpMenuList_TmpColorChange( lw,4,0,4);
+  }else{
+    BmpMenuList_TmpColorChange(lw,1,0,2);
+  }
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  関数の位置を取得
+ *  @brief  関数の位置を取得
  *
- *	@param	void *p_adrs  サーチする関数
+ *  @param  void *p_adrs  サーチする関数
  *
- *	@return 関数のインデックス
+ *  @return 関数のインデックス
  */
 //-----------------------------------------------------------------------------
 static u32 DebugMenu_GetQuickJumpIdx( u32 strID )
-{ 
+{
   int i;
   for( i = 0; i < NELEMS(DATA_DebugMenuList); i++ )
-  { 
+  {
     if( DATA_DebugMenuList[i].str_id == strID )
-    { 
+    {
       return i;
     }
   }
@@ -622,7 +622,7 @@ static BOOL debugMenuCallProc_EventFlagScript( DEBUG_MENU_EVENT_WORK *now_wk )
   SCRIPT_ChangeScript( now_wk->gmEvent, SCRID_DEBUG_COMMON, NULL, HEAPID_FIELDMAP );
   //GMEVENT * new_event = DEBUG_EVENT_FLDMENU_DebugScript( now_wk );
   //GMEVENT_ChangeEvent( now_wk->gmEvent, new_event );
-  
+
   return TRUE;
 }
 //--------------------------------------------------------------
@@ -636,7 +636,7 @@ static BOOL debugMenuCallProc_ScriptSelect( DEBUG_MENU_EVENT_WORK *now_wk )
 {
   GMEVENT * new_event = DEBUG_EVENT_FLDMENU_DebugScript( now_wk );
   GMEVENT_ChangeEvent( now_wk->gmEvent, new_event );
-  
+
   return TRUE;
 }
 
@@ -732,7 +732,7 @@ static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
   GAMESYS_WORK  *gameSys  = wk->gmSys;
 #if 0 //通信システム変更の為、Fix 2009.09.03(木)
   FIELD_COMM_DEBUG_WORK *work;
-  
+
   GMEVENT_Change( event,
     FIELD_COMM_DEBUG_CommDebugMenu, FIELD_COMM_DEBUG_GetWorkSize() );
   work = GMEVENT_GetEventWork( event );
@@ -806,16 +806,16 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
     POKEPARTY *party = GAMEDATA_GetMyPokemon(gamedata);
     POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, 0);
     POKEMON_PASO_PARAM  *ppp = PP_GetPPPPointer( pp );
-    
+
     OS_TPrintf("before monsno = %d, level = %d, item = %d\n", PPP_Get(ppp, ID_PARA_monsno, NULL), PPP_Get(ppp, ID_PARA_level, NULL), PPP_Get(ppp, ID_PARA_item, NULL));
     DREAMWORLD_SV_SetSleepPokemon(pdw, pp);
-    
+
 //    pp = DREAMWORLD_SV_GetSleepPokemon(pdw);
   //  OS_TPrintf("after monsno = %d, level = %d, item = %d\n", PPP_Get(ppp, ID_PARA_monsno, NULL), PPP_Get(ppp, ID_PARA_level, NULL), PPP_Get(ppp, ID_PARA_item, NULL));
 
     {//Myステータス
       MYSTATUS* pMy = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(wk->gmSys));
-      
+
       OS_TPrintf("before myst gold=%d,  id=%d, sex=%d\n",pMy->gold,  pMy->id, pMy->sex);
       pMy->gold = 511;
       pMy->id = 88776655;
@@ -825,14 +825,14 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 
     {//レコード
       long* rec = (long*)SaveData_GetRecord(SaveControl_GetPointer());
-      
+
       OS_TPrintf("before record capture=%d, fishing=%d\n", rec[RECID_CAPTURE_POKE], rec[RECID_FISHING_SUCCESS]);
       rec[RECID_CAPTURE_POKE] = 7896;
       rec[RECID_FISHING_SUCCESS] = 3;
       OS_TPrintf("after record capture=%d, fishing=%d\n", rec[RECID_CAPTURE_POKE], rec[RECID_FISHING_SUCCESS]);
     }
   }
-  
+
  // GMEVENT_ChangeEvent( wk->gmEvent, DEBUG_EVENT_FLDMENU_JumpEasy( wk->gmSys, wk->heapID ) );
   return( FALSE );
 }
@@ -854,7 +854,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   GAMESYS_WORK  *gameSys  = wk->gmSys;
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys));
-  
+
   NNSG2dCharacterData* charData;
   NNSG2dPaletteData* palData;
   void* pArc;
@@ -898,7 +898,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 #endif
 //--------------------------------------------------------------
 /**
- * デバッグメニュー呼び出し 数値入力　
+ * デバッグメニュー呼び出し 数値入力
  * @param wk  DEBUG_MENU_EVENT_WORK*
  * @retval  BOOL  TRUE=イベント継続
  */
@@ -909,10 +909,10 @@ static BOOL debugMenuCallProc_NumInput( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   GMEVENT *event;
- 
-  event = GMEVENT_CreateOverlayEventCall( wk->gmSys, 
+
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
     FS_OVERLAY_ID( d_numinput ), DEBUG_EVENT_FLDMENU_NumInput, wk );
-  
+
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
   return( TRUE );
@@ -924,7 +924,7 @@ static BOOL debugMenuCallProc_NumInput( DEBUG_MENU_EVENT_WORK *wk )
 /**
  */
 //--------------------------------------------------------------
-typedef struct {  
+typedef struct {
   HEAPID heapID;
   GAMESYS_WORK *gmSys;
   GMEVENT *gmEvent;
@@ -960,12 +960,12 @@ static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk )
   GAMESYS_WORK *gsys = wk->gmSys;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DMESSWORK *work;
-  
+
     GMEVENT_Change( event,
       debugMenuSubscreenSelectEvent, sizeof(DMESSWORK) );
     work = GMEVENT_GetEventWork( event );
     GFL_STD_MemClear( work, sizeof(DMESSWORK) );
-  
+
     work->gmSys = gsys;
     work->gmEvent = event;
     work->heapID = heapID;
@@ -1024,7 +1024,7 @@ static GMEVENT_RESULT debugMenuSubscreenSelectEvent(
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
 
       if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
@@ -1039,7 +1039,7 @@ static GMEVENT_RESULT debugMenuSubscreenSelectEvent(
     }
     break;
   }
-  
+
   return GMEVENT_RES_CONTINUE ;
 }
 
@@ -1051,9 +1051,9 @@ static GMEVENT_RESULT debugMenuSubscreenSelectEvent(
  */
 //--------------------------------------------------------------
 static void setupTouchCameraSubscreen(DMESSWORK * dmess)
-{ 
+{
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
-  { 
+  {
     void * inner_work;
     FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(dmess->fieldWork);
     inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(dmess->subscreen);
@@ -1064,35 +1064,35 @@ static void setupTouchCameraSubscreen(DMESSWORK * dmess)
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setupSoundViewerSubscreen(DMESSWORK * dmess)
-{ 
+{
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER);
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setupNormalSubscreen(DMESSWORK * dmess)
-{ 
+{
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_NORMAL);
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setupTopMenuSubscreen(DMESSWORK * dmess)
-{ 
+{
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_TOPMENU);
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setupUnionSubscreen(DMESSWORK * dmess)
-{ 
+{
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_UNION);
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setupDebugLightSubscreen(DMESSWORK * dmess)
-{ 
+{
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_LIGHT);
 }
 
@@ -1109,14 +1109,14 @@ FS_EXTERN_OVERLAY(musical);
 #include "poke_tool/poke_tool.h"  //ドレスアップ仮データ用
 #include "poke_tool/monsno_def.h" //ドレスアップ仮データ用
 #include "event_fieldmap_control.h"
-typedef struct {  
+typedef struct {
   HEAPID heapID;
   GAMESYS_WORK *gmSys;
   GMEVENT *gmEvent;
   GMEVENT *newEvent;
   FIELDMAP_WORK *fieldWork;
   FLDMENUFUNC *menuFunc;
-  
+
   POKEMON_PARAM *pokePara;
   MUSICAL_POKE_PARAM *musPoke;
   DRESSUP_INIT_WORK *dupInitWork;
@@ -1141,12 +1141,12 @@ static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
   GAMESYS_WORK *gsys = wk->gmSys;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEB_MENU_MUS_WORK *work;
-  
+
     GMEVENT_Change( event,
       debugMenuMusicalSelectEvent, sizeof(DEB_MENU_MUS_WORK) );
     work = GMEVENT_GetEventWork( event );
     GFL_STD_MemClear( work, sizeof(DEB_MENU_MUS_WORK) );
-  
+
     work->gmSys = gsys;
     work->gmEvent = event;
     work->heapID = heapID;
@@ -1202,7 +1202,7 @@ static GMEVENT_RESULT debugMenuMusicalSelectEvent(
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
 
       if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
@@ -1246,7 +1246,7 @@ static GMEVENT_RESULT debugMenuMusicalSelectEvent(
   case 5:
     return( GMEVENT_RES_FINISH );
   }
-  
+
   return GMEVENT_RES_CONTINUE ;
 }
 //--------------------------------------------------------------
@@ -1263,7 +1263,7 @@ static void setupMusicalDressup(DEB_MENU_MUS_WORK * work)
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work)
-{ 
+{
   work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
         FS_OVERLAY_ID(musical), &MusicalStage_ProcData, NULL );
 }
@@ -1375,18 +1375,18 @@ static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_MMDLLIST_EVENT_WORK *work;
-  
+
   GMEVENT_Change( event,
     debugMenuMMdlListEvent, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
-  
+
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
-  
+
   work->gmSys = gsys;
   work->gmEvent = event;
   work->heapID = heapID;
   work->fieldWork = fieldWork;
-  
+
   {
     GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
     work->fldmmdlsys = GAMEDATA_GetMMdlSys( gdata );
@@ -1408,7 +1408,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_MMDLLIST_EVENT_WORK *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugMMdlListData );
@@ -1418,21 +1418,21 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
     {
       u32 ret;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       if( ret == FLDMENUFUNC_CANCEL || ret == NONDRAW ){ //キャンセル
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
         return( GMEVENT_RES_FINISH );
       }
-      
+
       work->obj_code = ret;
 #if 0 //要らない
       work->res_add = MMDL_BLACTCONT_AddOBJCodeRes(
           work->fldmmdlsys, work->obj_code );
-#endif      
+#endif
       {
         //VecFx32 pos;
         MMDL *jiki;
@@ -1455,12 +1455,12 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
         };
         MMDL_HEADER_GRIDPOS *gridpos;
 
-        
+
         jiki = MMDLSYS_SearchOBJID(
           work->fldmmdlsys, MMDL_ID_PLAYER );
-        
+
         head.id = 250;
-        MMDLHEADER_SetGridPos( &head, 
+        MMDLHEADER_SetGridPos( &head,
             MMDL_GetGridPosX( jiki ) + 2,
             MMDL_GetGridPosZ( jiki ),
             MMDL_GetVectorPosY( jiki ) );
@@ -1468,7 +1468,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
         work->fmmdl = MMDLSYS_AddMMdl(
           work->fldmmdlsys, &head, 0 );
       }
-      
+
       (*seq)++;
       break;
     case 2:
@@ -1478,19 +1478,19 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
 
         if( (key_trg & PAD_BUTTON_B) ){
           MMDL_Delete( work->fmmdl );
-          
+
           if( work->res_add == TRUE ){
             MMDL_BLACTCONT_DeleteOBJCodeRes(
                 work->fldmmdlsys, work->obj_code );
           }
-          
+
           (*seq) = 1;
         }
       }
       break;
     }
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -1508,14 +1508,14 @@ static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code )
   u16 utf16,utf16_eom;
   u16 *pStrBuf;
   u8 *name8;
-  
+
   pStrBuf = GFL_HEAP_AllocClearMemory( heapID,
       sizeof(u16)*DEBUG_OBJCODE_STR_LENGTH );
   name8 = DEBUG_MMDL_GetOBJCodeString( code, heapID );
   //DEBUG_ConvertAsciiToUTF16( name8, DEBUG_OBJCODE_STR_LENGTH, pStrBuf );
   DEB_STR_CONV_SjisToStrcode( (const char *)name8, pStrBuf, DEBUG_OBJCODE_STR_LENGTH );
   GFL_HEAP_FreeMemory( name8 );
-  
+
   return( pStrBuf );
 }
 
@@ -1533,7 +1533,7 @@ static void DEBUG_SetMenuWorkMMdlList(
   u16 *str;
   int id,max;
   STRBUF *strBuf = GFL_STR_CreateBuffer( DEBUG_OBJCODE_STR_LENGTH, heapID );
-  
+
   for( id = OBJCODESTART_BBD; id < OBJCODEEND_BBD; id++ ){
     GFL_STR_ClearBuffer( strBuf );
     str = DEBUG_GetOBJCodeStrBuf( heapID, id );
@@ -1541,7 +1541,7 @@ static void DEBUG_SetMenuWorkMMdlList(
     GFL_HEAP_FreeMemory( str );
     FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
   }
-  
+
   for( id = OBJCODESTART_TPOKE; id < OBJCODEEND_TPOKE; id++ ){
     GFL_STR_ClearBuffer( strBuf );
     str = DEBUG_GetOBJCodeStrBuf( heapID, id );
@@ -1549,7 +1549,7 @@ static void DEBUG_SetMenuWorkMMdlList(
     GFL_HEAP_FreeMemory( str );
     FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
   }
-  
+
   for( id = OBJCODESTART_MDL; id < OBJCODEEND_MDL; id++ ){
     GFL_STR_ClearBuffer( strBuf );
     str = DEBUG_GetOBJCodeStrBuf( heapID, id );
@@ -1557,7 +1557,7 @@ static void DEBUG_SetMenuWorkMMdlList(
     GFL_HEAP_FreeMemory( str );
     FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
   }
-  
+
   GFL_HEAP_FreeMemory( strBuf );
 }
 
@@ -1598,11 +1598,11 @@ static BOOL debugMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event = wk->gmEvent;
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
+
   GMEVENT_Change( event, debugMenuControlLight, sizeof(DEBUG_CTLLIGHT_WORK) );
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_CTLLIGHT_WORK) );
-  
+
   work->gsys = gsys;
   work->event = event;
   work->heapID = heapID;
@@ -1628,7 +1628,7 @@ static GMEVENT_RESULT debugMenuControlLight(
 
   // ライト取得
   p_light = FIELDMAP_GetFieldLight( work->fieldWork );
-  
+
   switch( (*seq) ){
   case 0:
     // ライト管理開始
@@ -1655,7 +1655,7 @@ static GMEVENT_RESULT debugMenuControlLight(
       GFL_ARC_UTIL_TransVramPalette(
         ARCID_FONT, NARC_font_default_nclr,
         PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
-      
+
       // ビットマップウィンドウを作成
       work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
         1, 1, 30, 22,
@@ -1698,7 +1698,7 @@ static GMEVENT_RESULT debugMenuControlLight(
 
     return( GMEVENT_RES_FINISH );
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -1734,11 +1734,11 @@ static BOOL debugMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event = wk->gmEvent;
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
+
   GMEVENT_Change( event, debugMenuControlFog, sizeof(DEBUG_CTLFOG_WORK) );
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_CTLFOG_WORK) );
-  
+
   work->gsys = gsys;
   work->event = event;
   work->heapID = heapID;
@@ -1764,7 +1764,7 @@ static GMEVENT_RESULT debugMenuControlFog(
 
   // フォグ取得
   p_fog = FIELDMAP_GetFieldFog( work->fieldWork );
-  
+
   switch( (*seq) ){
   case 0:
 
@@ -1789,7 +1789,7 @@ static GMEVENT_RESULT debugMenuControlFog(
       GFL_ARC_UTIL_TransVramPalette(
         ARCID_FONT, NARC_font_default_nclr,
         PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
-      
+
       // ビットマップウィンドウを作成
       work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
         1, 1, 30, 22,
@@ -1834,7 +1834,7 @@ static GMEVENT_RESULT debugMenuControlFog(
 
     return( GMEVENT_RES_FINISH );
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -1929,13 +1929,13 @@ static BOOL debugMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_WEATERLIST_EVENT_WORK *work;
-  
+
   GMEVENT_Change( event,
     debugMenuWeatherListEvent, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
-  
+
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
-  
+
   work->gmSys = gsys;
   work->gmEvent = event;
   work->heapID = heapID;
@@ -1956,7 +1956,7 @@ static GMEVENT_RESULT debugMenuWeatherListEvent(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_WEATERLIST_EVENT_WORK *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugWeatherMenuListData );
@@ -1966,24 +1966,24 @@ static GMEVENT_RESULT debugMenuWeatherListEvent(
     {
       u32 ret;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
+
       if( ret != FLDMENUFUNC_CANCEL ){  //決定
         GAMEDATA* gdata = GAMESYSTEM_GetGameData( work->gmSys );
         FIELD_WEATHER_Change( FIELDMAP_GetFieldWeather( work->fieldWork ), ret );
         GAMEDATA_SetWeatherNo( gdata, ret );
       }
-      
+
       return( GMEVENT_RES_FINISH );
     }
     break;
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -2106,13 +2106,13 @@ static BOOL debugMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_CONTROL_TIME_LIST_EVENT_WORK *work;
-  
+
   GMEVENT_Change( event,
     debugMenuControlTimeListEvent, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
-  
+
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
-  
+
   work->gmSys = gsys;
   work->gmEvent = event;
   work->heapID = heapID;
@@ -2133,7 +2133,7 @@ static GMEVENT_RESULT debugMenuControlTimeListEvent(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_CONTROL_TIME_LIST_EVENT_WORK *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugControlTimeMenuListData );
@@ -2143,11 +2143,11 @@ static GMEVENT_RESULT debugMenuControlTimeListEvent(
     {
       u32 ret;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       if( ret != FLDMENUFUNC_CANCEL ){  //決定
         switch( ret ){
         case CONT_TIME_TYPE_NORMAL:
@@ -2179,15 +2179,15 @@ static GMEVENT_RESULT debugMenuControlTimeListEvent(
       }else{
 
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
-      
+
+
         // オワリ
         return( GMEVENT_RES_FINISH );
       }
     }
     break;
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -2214,7 +2214,7 @@ static BOOL debugMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
     }
     return( FALSE );
   }
-  
+
   FIELD_EVENT_ChangeNaminoriStart( wk->gmEvent, wk->gmSys, wk->fieldWork );
   return( TRUE );
 }
@@ -2226,9 +2226,9 @@ static BOOL debugMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
 FS_EXTERN_OVERLAY(debug_makepoke);
 static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 //-------------------------------------
-/// デバッグポケモン作成用ワーク  
+/// デバッグポケモン作成用ワーク
 //=====================================
-typedef struct 
+typedef struct
 {
   HEAPID heapID;
   GAMESYS_WORK    *p_gamesys;
@@ -2248,7 +2248,7 @@ typedef struct
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
   GMEVENT       *p_event    = p_wk->gmEvent;
   FIELDMAP_WORK *p_field  = p_wk->fieldWork;
@@ -2259,7 +2259,7 @@ static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT_Change( p_event, debugMenuMakePoke, sizeof(DEBUG_MAKEPOKE_EVENT_WORK) );
   p_mp_work = GMEVENT_GetEventWork( p_event );
   GFL_STD_MemClear( p_mp_work, sizeof(DEBUG_MAKEPOKE_EVENT_WORK) );
-  
+
   //ワーク設定
   p_mp_work->p_gamesys  = p_gamesys;
   p_mp_work->p_event    = p_event;
@@ -2267,6 +2267,7 @@ static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk )
   p_mp_work->heapID     = heapID;
   p_mp_work->pp = PP_Create( 1,1,PTL_SETUP_ID_AUTO,p_mp_work->heapID );
   p_mp_work->p_mp_work.dst = p_mp_work->pp;
+  p_mp_work->p_mp_work.oyaStatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_gamesys) );
 
   return TRUE;
 }
@@ -2283,9 +2284,9 @@ static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{ 
+{
   enum
-  { 
+  {
     SEQ_CALL_PROC,
     SEQ_PROC_END,
   };
@@ -2293,7 +2294,7 @@ static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_w
   DEBUG_MAKEPOKE_EVENT_WORK *p_wk = p_wk_adrs;
 
   switch(*p_seq )
-  { 
+  {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
         FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &p_wk->p_mp_work ) );
@@ -2305,7 +2306,7 @@ static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_w
     {
       GAMEDATA *gmData = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
       POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
-      
+
       {
         u16 oyaName[6] = {L'で',L'ば',L'ぐ',L'ぽ',L'け',0xFFFF};
         PP_Put( p_wk->pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
@@ -2316,7 +2317,7 @@ static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_w
       {
         PokeParty_Add( party , p_wk->pp );
       }
-      
+
       GFL_HEAP_FreeMemory( p_wk->pp );
     }
     return GMEVENT_RES_FINISH;
@@ -2388,10 +2389,10 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
   POKEMON_PARAM *pp;
   POKEMON_PASO_PARAM  *ppp;
   const STRCODE *name;
-  
+
   myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gameSys));
   name = MyStatus_GetMyName( myStatus );
-  
+
   pp = PP_Create(100, 100, 123456, HEAPID_FIELDMAP);
 
   {
@@ -2418,7 +2419,7 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
       }
     }
   }
-  
+
   GFL_HEAP_FreeMemory(pp);
 #endif
   return( FALSE );
@@ -2452,9 +2453,9 @@ static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk )
 //======================================================================
 FS_EXTERN_OVERLAY(townmap);
 //-------------------------------------
-/// デバッグ空を飛ぶ用ワーク  
+/// デバッグ空を飛ぶ用ワーク
 //=====================================
-typedef struct 
+typedef struct
 {
   GAMESYS_WORK    *p_gamesys;
   GMEVENT         *p_event;
@@ -2475,7 +2476,7 @@ static GMEVENT_RESULT debugMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
   GMEVENT       *p_event    = p_wk->gmEvent;
   FIELDMAP_WORK *p_field  = p_wk->fieldWork;
@@ -2485,7 +2486,7 @@ static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT_Change( p_event, debugMenuSkyJump, sizeof(DEBUG_SKYJUMP_EVENT_WORK) );
   p_sky = GMEVENT_GetEventWork( p_event );
   GFL_STD_MemClear( p_sky, sizeof(DEBUG_SKYJUMP_EVENT_WORK) );
-  
+
   //ワーク設定
   p_sky->p_gamesys  = p_gamesys;
   p_sky->p_event    = p_event;
@@ -2519,9 +2520,9 @@ static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT debugMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{ 
+{
   enum
-  { 
+  {
     SEQ_CALL_PROC,
     SEQ_PROC_END,
     SEQ_CHANGE_MAP,
@@ -2531,7 +2532,7 @@ static GMEVENT_RESULT debugMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk
   DEBUG_SKYJUMP_EVENT_WORK  *p_wk = p_wk_adrs;
 
   switch(*p_seq )
-  { 
+  {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
         FS_OVERLAY_ID(townmap), &TownMap_ProcData, p_wk->p_param ) );
@@ -2540,11 +2541,11 @@ static GMEVENT_RESULT debugMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk
 
   case SEQ_PROC_END:
     if( p_wk->p_param->select == TOWNMAP_SELECT_SKY )
-    { 
+    {
       *p_seq  = SEQ_CHANGE_MAP;
     }
     else
-    { 
+    {
       *p_seq  = SEQ_EXIT;
     }
     break;
@@ -2557,7 +2558,7 @@ static GMEVENT_RESULT debugMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk
 
   case SEQ_EXIT:
     if( p_wk->p_param )
-    { 
+    {
       GFL_HEAP_FreeMemory(p_wk->p_param);
     }
     return GMEVENT_RES_FINISH;
@@ -2587,12 +2588,12 @@ static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk )
   MYSTATUS *mystatus = GAMEDATA_GetMyStatus( wk->gdata );
   SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( wk->gdata );
   MYSTATUS *s_mystatus = SaveData_GetMyStatus( save );
-  
+
   sex = MyStatus_GetMySex( mystatus );
   sex ^= 1;
   MyStatus_SetMySex( mystatus, sex );
   MyStatus_SetMySex( s_mystatus, sex );
-  
+
   {
     GMEVENT * mapchange_event;
     mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldMap, zone_id );
@@ -2607,9 +2608,9 @@ static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk )
 FS_EXTERN_OVERLAY(worldtrade);
 #include "net/dwc_rapcommon.h"
 //-------------------------------------
-/// デバッグGTS用ワーク 
+/// デバッグGTS用ワーク
 //=====================================
-typedef struct 
+typedef struct
 {
   GAMESYS_WORK        *p_gamesys;
   GMEVENT             *p_event;
@@ -2630,7 +2631,7 @@ static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
   GMEVENT       *p_event    = p_wk->gmEvent;
   FIELDMAP_WORK *p_field  = p_wk->fieldWork;
@@ -2657,7 +2658,7 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
     p_gts->wifi.pWork     = NULL;
     p_gts->wifi.isEndProc = TRUE;
     p_gts->wifi.selectType  = 0;
-  
+
     //GTSワーク設定
     p_gts->gts.savedata         = GAMEDATA_GetSaveControlWork(p_gamedata );
     p_gts->gts.worldtrade_data  = SaveData_GetWorldTradeData(p_gts->gts.savedata);
@@ -2672,12 +2673,12 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
     p_gts->gts.record           = SaveData_GetRecord(p_gts->gts.savedata);
     p_gts->gts.myitem           = NULL;
     p_gts->gts.gamesys          = p_gamesys;
-    
+
     p_gts->gts.zukanmode        = 0;
     p_gts->gts.profileId        = WifiList_GetMyGSID( p_gts->gts.wifilist );
     p_gts->gts.contestflag      = FALSE;
-    p_gts->gts.connect          = 0;  
-  
+    p_gts->gts.connect          = 0;
+
     OS_Printf( "GTS Start\n" );
     return TRUE;
 }
@@ -2694,9 +2695,9 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{ 
+{
   enum
-  { 
+  {
     SEQ_CALL_WIFI,
     SEQ_PROC_END,
     SEQ_CALL_GTS,
@@ -2706,7 +2707,7 @@ static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk
   DEBUG_WIFIGTS_EVENT_WORK  *p_wk = p_wk_adrs;
 
   switch(*p_seq )
-  { 
+  {
   case SEQ_CALL_WIFI:
     if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(p_wk->wifi.gsys))){
       GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(p_wk->wifi.gsys));
@@ -2716,7 +2717,7 @@ static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk
 
   case SEQ_PROC_END:
     if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(p_wk->wifi.gsys)))
-    { 
+    {
       *p_seq  = SEQ_CALL_GTS;
     }
     break;
@@ -2740,9 +2741,9 @@ static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk
 #include "net_app/gds_main.h"
 FS_EXTERN_OVERLAY(gds_comm);
 //-------------------------------------
-/// デバッグGDS用ワーク 
+/// デバッグGDS用ワーク
 //=====================================
-typedef struct 
+typedef struct
 {
   GAMESYS_WORK        *gsys;
   FIELDMAP_WORK     *fieldWork;
@@ -2760,15 +2761,15 @@ static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adr
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_GDS( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GAMESYS_WORK *gsys = p_wk->gmSys;
   FIELDMAP_WORK *fieldWork = p_wk->fieldWork;
   GAMEDATA *p_gamedata      = GAMESYSTEM_GetGameData(gsys);
   GMEVENT       *p_event    = p_wk->gmEvent;
   DEBUG_GDS_EVENT_WORK *p_gds;
-  
+
   if( WifiList_CheckMyGSID(GAMEDATA_GetWiFiList(p_gamedata) ) )
-  { 
+  {
     //イヴェント
     GMEVENT_Change( p_event, debugMenuGDS, sizeof(DEBUG_GDS_EVENT_WORK) );
     p_gds = GMEVENT_GetEventWork( p_event );
@@ -2776,7 +2777,7 @@ static BOOL debugMenuCallProc_GDS( DEBUG_MENU_EVENT_WORK *p_wk )
     p_gds->fieldWork = fieldWork;
   }
   else
-  { 
+  {
     OS_Printf( "GameSpyIDが不正なので、GTSを開始しなかった\n" );
   }
 
@@ -2795,27 +2796,27 @@ static BOOL debugMenuCallProc_GDS( DEBUG_MENU_EVENT_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{ 
+{
   DEBUG_GDS_EVENT_WORK  *p_gds  = p_wk_adrs;
 
   switch(*p_seq )
-  { 
+  {
   case 0:
     {
       GDSPROC_PARAM *gds_param;
-      
+
       gds_param = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(GDSPROC_PARAM));
       gds_param->gamedata = GAMESYSTEM_GetGameData(p_gds->gsys);
       gds_param->savedata = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(p_gds->gsys));
       gds_param->connect = 0;
       gds_param->gds_mode = 0;
-      
+
       GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_gds->gsys, p_gds->fieldWork,
           FS_OVERLAY_ID(gds_comm), &GdsMainProcData, gds_param ) );
       (*p_seq)++;
     }
     break;
-  
+
   case 1:
     return GMEVENT_RES_FINISH;
   }
@@ -2828,9 +2829,9 @@ static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 //======================================================================
 FS_EXTERN_OVERLAY(ui_debug);
 //-------------------------------------
-/// デバッグUIテンプレート用ワーク  
+/// デバッグUIテンプレート用ワーク
 //=====================================
-typedef struct 
+typedef struct
 {
   GAMESYS_WORK        *p_gamesys;
   GMEVENT             *p_event;
@@ -2848,7 +2849,7 @@ static GMEVENT_RESULT debugMenuUITemplate( GMEVENT *p_event, int *p_seq, void *p
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
   GMEVENT       *p_event    = p_wk->gmEvent;
   FIELDMAP_WORK *p_field    = p_wk->fieldWork;
@@ -2881,9 +2882,9 @@ static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT debugMenuUITemplate( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{ 
+{
   enum
-  { 
+  {
     SEQ_CALL_PROC,
     SEQ_EXIT,
   };
@@ -2891,7 +2892,7 @@ static GMEVENT_RESULT debugMenuUITemplate( GMEVENT *p_event, int *p_seq, void *p
   DEBUG_UITEMPLATE_EVENT_WORK *p_wk = p_wk_adrs;
 
   switch(*p_seq )
-  { 
+  {
   case SEQ_CALL_PROC:
       GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
         FS_OVERLAY_ID(ui_debug), &UITemplateProcData, &p_wk->param ) );
@@ -2937,11 +2938,11 @@ static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event = wk->gmEvent;
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
+
   GMEVENT_Change( event, debugMenuControlLinerCamera, sizeof(DEBUG_CTL_LINERCAMERA_WORK) );
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_CTL_LINERCAMERA_WORK) );
-  
+
   work->gsys = gsys;
   work->event = event;
   work->heapID = heapID;
@@ -2949,12 +2950,12 @@ static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk )
 
   {
     FIELD_SUBSCREEN_WORK * subscreen;
-    
+
 
     // カメラ操作は下画面で行う
     subscreen = FIELDMAP_GetFieldSubscreenWork(work->fieldWork);
     FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
-    { 
+    {
       void * inner_work;
       FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
       inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
@@ -2967,7 +2968,7 @@ static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk )
   // レールカメラ反映の停止
   {
     FLDNOGRID_MAPPER* mapper;
-    
+
     if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
     {
       mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
@@ -3003,7 +3004,7 @@ static GMEVENT_RESULT debugMenuControlLinerCamera(
     // レールカメラ反映の再開
     {
       FLDNOGRID_MAPPER* mapper;
-      
+
       if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
       {
         mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
@@ -3107,16 +3108,16 @@ static void DampCameraInfo(FIELD_CAMERA * cam)
  */
 //--------------------------------------------------------------
 static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk )
-{ 
+{
   int i;
   GAMESYS_WORK *gsys = wk->gmSys;
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(wk->gdata);
   SHORTCUT *p_shortcut_sv = SaveData_GetShortCut( p_sv );
   for( i = 0; i < SHORTCUT_ID_MAX; i++ )
-  { 
+  {
     SHORTCUT_SetRegister( p_shortcut_sv, i, TRUE );
   }
-  
+
   return FALSE;
 }
 
@@ -3130,7 +3131,7 @@ static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk )
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk )
-{ 
+{
   GMEVENT * new_event;
   new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID( debug_beacon ), EVENT_DebugBeacon, wk->fieldWork );
@@ -3149,20 +3150,20 @@ static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk )
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
-{ 
+{
   WIFIBATTLEMATCH_MODE mode = WIFIBATTLEMATCH_MODE_RANDOM;
   WIFIBATTLEMATCH_BTLRULE btl_rule  = WIFIBATTLEMATCH_BTLRULE_SINGLE;
 #ifdef PM_DEBUG
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L && GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-  { 
+  {
     btl_rule  = WIFIBATTLEMATCH_BTLRULE_ROTATE;
   }
   else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-  { 
+  {
     btl_rule  = WIFIBATTLEMATCH_BTLRULE_DOUBLE;
   }
   else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-  { 
+  {
     btl_rule  = WIFIBATTLEMATCH_BTLRULE_TRIPLE;
   }
 #endif
@@ -3181,7 +3182,7 @@ static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_DEBUG_WifiMatch( p_wk->gmSys, p_wk->fieldWork, DEBUG_WIFIBATTLEMATCH_MODE_SAKE ) );
   return TRUE;
 }
@@ -3195,7 +3196,7 @@ static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_DEBUG_WifiMatch( p_wk->gmSys, p_wk->fieldWork, DEBUG_WIFIBATTLEMATCH_MODE_ATLAS ) );
   return TRUE;
 }
@@ -3208,10 +3209,10 @@ FS_EXTERN_OVERLAY( battle_recorder );
 
 static GMEVENT_RESULT debugBattleRecorder( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 //-------------------------------------
-/// バトルレコーダーPROCイベントワーク  
+/// バトルレコーダーPROCイベントワーク
 //=====================================
 typedef struct
-{ 
+{
   HEAPID heapID;
   GAMESYS_WORK    *p_gamesys;
   GMEVENT         *p_event;
@@ -3229,7 +3230,7 @@ typedef struct
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
   GMEVENT       *p_event    = p_wk->gmEvent;
   FIELDMAP_WORK *p_field  = p_wk->fieldWork;
@@ -3240,7 +3241,7 @@ static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT_Change( p_event, debugBattleRecorder, sizeof(DEBUG_BR_EVENT_WORK) );
   p_param = GMEVENT_GetEventWork( p_event );
   GFL_STD_MemClear( p_param, sizeof(DEBUG_BR_EVENT_WORK) );
-  
+
   //ワーク設定
   p_param->p_gamesys  = p_gamesys;
   p_param->p_event    = p_event;
@@ -3250,11 +3251,11 @@ static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk )
   p_param->param.mode       = BR_MODE_BROWSE;
 
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-  { 
+  {
     p_param->param.mode  = BR_MODE_GLOBAL_BV;
   }
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-  { 
+  {
     p_param->param.mode  = BR_MODE_GLOBAL_MUSICAL;
   }
 
@@ -3266,15 +3267,15 @@ static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk )
  *
  *  @param  GMEVENT *p_event  イベント
  *  @param  *p_seq      シーケンス
- *  @param  *p_wk_adrs  ワーク 
+ *  @param  *p_wk_adrs  ワーク
  *
  *  @return 終了コード
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT debugBattleRecorder( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{ 
+{
   enum
-  { 
+  {
     SEQ_CALL_PROC,
     SEQ_PROC_END,
   };
@@ -3282,7 +3283,7 @@ static GMEVENT_RESULT debugBattleRecorder( GMEVENT *p_event, int *p_seq, void *p
   DEBUG_BR_EVENT_WORK *p_wk = p_wk_adrs;
 
   switch(*p_seq )
-  { 
+  {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
         FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &p_wk->param ) );
@@ -3303,9 +3304,9 @@ static GMEVENT_RESULT debugBattleRecorder( GMEVENT *p_event, int *p_seq, void *p
  */
 //-----------------------------------------------------------------------------
 //-------------------------------------
-/// デバッグカメラ　こまかく設定用ワーク  
+/// デバッグカメラ　こまかく設定用ワーク
 //=====================================
-typedef struct 
+typedef struct
 {
   FIELDMAP_WORK*  p_field;
   FIELD_CAMERA*   p_camera;
@@ -3322,7 +3323,7 @@ static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, voi
 /**
  *  @brief  起動
  *
- *  @param  wk 
+ *  @param  wk
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
@@ -3331,11 +3332,11 @@ static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT* p_event = wk->gmEvent;
   FIELDMAP_WORK* p_fieldWork = wk->fieldWork;
   HEAPID heapID = wk->heapID;
-  
+
   GMEVENT_Change( p_event, debugMenuDelicateCamera, sizeof(DEBUG_DELICATE_CAMERA_EVENT_WORK) );
   p_work = GMEVENT_GetEventWork( p_event );
   GFL_STD_MemClear( p_work, sizeof(DEBUG_DELICATE_CAMERA_EVENT_WORK) );
-  
+
   p_work->p_field   = p_fieldWork;
   p_work->p_camera  = FIELDMAP_GetFieldCamera( p_fieldWork );
   p_work->heapID    = heapID;
@@ -3345,7 +3346,7 @@ static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
   // レールカメラ反映の停止
   {
     FLDNOGRID_MAPPER* mapper;
-    
+
     if( FIELDMAP_GetBaseSystemType( p_fieldWork ) == FLDMAP_BASESYS_RAIL )
     {
       mapper = FIELDMAP_GetFldNoGridMapper( p_fieldWork );
@@ -3360,7 +3361,7 @@ static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
     fx32 map_size_x, map_size_z;
 
     FLDMAPPER_GetSize( cp_mapper, &map_size_x, &map_size_z );
-    
+
     // インフォーバーの非表示
     FIELD_SUBSCREEN_Exit(FIELDMAP_GetFieldSubscreenWork(p_fieldWork));
     GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_OFF );
@@ -3382,7 +3383,7 @@ static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
       GFL_ARC_UTIL_TransVramPalette(
         ARCID_FONT, NARC_font_default_nclr,
         PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, heapID );
-      
+
       // ビットマップウィンドウを作成
       p_work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
         1, 1, 30, 22,
@@ -3466,8 +3467,8 @@ static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, voi
     FIELD_CAMERA_SetAngleYaw( p_work->p_camera, yaw );
     FIELD_CAMERA_SetAngleLen( p_work->p_camera, len );
   }
-  
-  
+
+
   // カメラデバック入力
   result = FIELD_CAMERA_DEBUG_Control( p_work->p_camera, trg, cont, repeat );
 
@@ -3499,7 +3500,7 @@ static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, voi
       FIELD_CAMERA_DEBUG_DrawInfo( p_work->p_camera, p_work->p_win, map_size_x, map_size_z );
     }
   }
-  
+
 
   return( GMEVENT_RES_CONTINUE );
 }
@@ -3514,7 +3515,7 @@ FS_EXTERN_OVERLAY(waza_oshie);
 //-------------------------------------
 /// 技思い出し画面テスト用ワーク
 //=====================================
-typedef struct 
+typedef struct
 {
   GAMESYS_WORK        *p_gamesys;
   GMEVENT             *p_event;
@@ -3533,7 +3534,7 @@ static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
   GMEVENT       *p_event    = p_wk->gmEvent;
   FIELDMAP_WORK *p_field    = p_wk->fieldWork;
@@ -3575,9 +3576,9 @@ static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{ 
+{
   enum
-  { 
+  {
     SEQ_CALL_PROC,
     SEQ_EXIT,
   };
@@ -3585,7 +3586,7 @@ static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_
   DEBUG_WAZAOSHIE_EVENT_WORK  *p_wk = p_wk_adrs;
 
   switch(*p_seq )
-  { 
+  {
   case SEQ_CALL_PROC:
 
     GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
@@ -3608,7 +3609,7 @@ static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_
 //-------------------------------------
 /// 使用メモリの表示（主要な）
 //=====================================
-typedef struct 
+typedef struct
 {
   FIELDMAP_WORK       *p_field;
   GFL_BMPWIN* p_win;
@@ -3636,11 +3637,11 @@ static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT* p_event = p_wk->gmEvent;
   FIELDMAP_WORK* p_fieldWork = p_wk->fieldWork;
   HEAPID heapID = p_wk->heapID;
-  
+
   GMEVENT_Change( p_event, debugMenuUseMemoryDump, sizeof(DEBUG_USEMEMORY_EVENT_WORK) );
   p_work = GMEVENT_GetEventWork( p_event );
   GFL_STD_MemClear( p_work, sizeof(DEBUG_USEMEMORY_EVENT_WORK) );
-  
+
   p_work->p_field   = p_fieldWork;
   p_work->heapID    = heapID;
 
@@ -3658,7 +3659,7 @@ static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk )
       ARCID_FONT, NARC_font_large_gftr,
       GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   }
-  
+
 
   // 表示面の作成
   {
@@ -3683,7 +3684,7 @@ static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk )
       GFL_ARC_UTIL_TransVramPalette(
         ARCID_FONT, NARC_font_default_nclr,
         PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, heapID );
-      
+
       // ビットマップウィンドウを作成
       p_work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
         1, 1, 30, 22,
@@ -3766,28 +3767,28 @@ static void debugMenuWriteUseMemoryDump( DEBUG_USEMEMORY_EVENT_WORK* p_wk )
   // 配置オブジェクト
 #ifdef BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
 
-  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 1, FIELD_BMODEL_MAN_GetUseResourceMemorySize(), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 1, FIELD_BMODEL_MAN_GetUseResourceMemorySize(), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
 #else // BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
 
-  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 1, 0, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
-  
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 1, 0, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
 #endif // BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
 
   // 動作オブジェ
 #ifdef DEBUG_MMDL_RESOURCE_MEMORY_SIZE
-  
-  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 3, DEBUG_MMDL_GetUseResourceMemorySize(), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
-  
+
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 3, DEBUG_MMDL_GetUseResourceMemorySize(), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
 #else // DEBUG_MMDL_RESOURCE_MEMORY_SIZE
-  
-  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 3, 0, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
+
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 3, 0, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
 #endif  // DEBUG_MMDL_RESOURCE_MEMORY_SIZE
 
   // FIELDヒープの残り
-  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 4, GFI_HEAP_GetHeapFreeSize(p_wk->heapID), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
-  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 5, GFI_HEAP_GetHeapAllocatableSize(p_wk->heapID), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 4, GFI_HEAP_GetHeapFreeSize(p_wk->heapID), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 5, GFI_HEAP_GetHeapAllocatableSize(p_wk->heapID), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
   // 表示
   GFL_MSG_GetString( p_wk->p_debug_msgdata, DEBUG_FIELD_STR54, p_wk->p_debug_strbuff_tmp );
@@ -3891,9 +3892,9 @@ static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK* wk )
 /**
  * 強制セーブ
  *
- * @param   wk		
+ * @param   wk
  *
- * @retval  BOOL		TRUE=イベント継続
+ * @retval  BOOL    TRUE=イベント継続
  */
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_ForceSave( DEBUG_MENU_EVENT_WORK *wk )
@@ -3905,20 +3906,20 @@ static BOOL debugMenuCallProc_ForceSave( DEBUG_MENU_EVENT_WORK *wk )
   FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
   GFL_MSGDATA *msgdata;
   FLDMSGWIN *fldmsgwin;
-  
+
   msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_field_dat, heapID );
-  
+
   fldmsgwin = FLDMSGWIN_Add(msgBG, msgdata, 1, 19, 30, 4);
 
   FLDMSGWIN_Print( fldmsgwin, 0, 0, DEBUG_FIELD_STR60_message );
   FLDMSGBG_AllPrint(msgBG);
-  
+
   //セーブ
   GAMEDATA_Save(GAMESYSTEM_GetGameData(gsys));
-  
+
   FLDMSGWIN_Delete(fldmsgwin);
   GFL_MSG_Delete(msgdata);
-  
+
   return( FALSE );
 }
 
@@ -4008,13 +4009,13 @@ static BOOL debugMenuCallProc_CaptureList( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_CAPTURELIST_EVENT_WORK *work;
-  
+
   GMEVENT_Change( event,
     debugMenuCaptureListEvent, sizeof(DEBUG_CAPTURELIST_EVENT_WORK) );
-  
+
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_CAPTURELIST_EVENT_WORK) );
-  
+
   work->gmSys = gsys;
   work->gmEvent = event;
   work->heapID = heapID;
@@ -4036,7 +4037,7 @@ static GMEVENT_RESULT debugMenuCaptureListEvent(
 {
   DEBUG_CAPTURELIST_EVENT_WORK *work = wk;
   MMDL *fmmdl;
-  
+
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugCaptureMenuListData );
@@ -4046,17 +4047,17 @@ static GMEVENT_RESULT debugMenuCaptureListEvent(
     {
       u32 ret;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_CANCEL ){  //決定
         return GMEVENT_RES_FINISH;
       }
-      
+
       work->select_mode = ret;
       (*seq)++;
     }
@@ -4077,7 +4078,7 @@ static GMEVENT_RESULT debugMenuCaptureListEvent(
         u32 no = 0;
         BOOL ret;
         MMDLSYS *fos = FIELDMAP_GetMMdlSys( work->fieldWork );
-        
+
         do{
           ret = MMDLSYS_SearchUseMMdl(fos, &fmmdl, &no );
           if(ret == TRUE){
@@ -4090,23 +4091,23 @@ static GMEVENT_RESULT debugMenuCaptureListEvent(
     (*seq)++;
     break;
   case 3:
-		MI_CpuClearFast( (void*)HW_LCDC_VRAM_D, HW_VRAM_D_SIZE );
-		GX_SetCapture(
-				GX_CAPTURE_SIZE_256x192,			// キャプチャサイズ
-				GX_CAPTURE_MODE_A,			// キャプチャモード
-				GX_CAPTURE_SRCA_3D,				// キャプチャブレンドA
-				GX_CAPTURE_SRCB_VRAM_0x00000,				// キャプチャブレンドB
-				GX_CAPTURE_DEST_VRAM_D_0x00000,			// 転送Vram
-				0,						// ブレンド係数A
-				0);						// ブレンド係数B
+    MI_CpuClearFast( (void*)HW_LCDC_VRAM_D, HW_VRAM_D_SIZE );
+    GX_SetCapture(
+        GX_CAPTURE_SIZE_256x192,      // キャプチャサイズ
+        GX_CAPTURE_MODE_A,      // キャプチャモード
+        GX_CAPTURE_SRCA_3D,       // キャプチャブレンドA
+        GX_CAPTURE_SRCB_VRAM_0x00000,       // キャプチャブレンドB
+        GX_CAPTURE_DEST_VRAM_D_0x00000,     // 転送Vram
+        0,            // ブレンド係数A
+        0);           // ブレンド係数B
 
-		//LCDCにメモリマッピング
-		GX_SetBankForLCDC(GX_VRAM_LCDC_D);
-	//	GX_SetGraphicsMode(GX_DISPMODE_VRAM_C, GX_BGMODE_0, GX_BG0_AS_3D);
-    
+    //LCDCにメモリマッピング
+    GX_SetBankForLCDC(GX_VRAM_LCDC_D);
+  //  GX_SetGraphicsMode(GX_DISPMODE_VRAM_C, GX_BGMODE_0, GX_BG0_AS_3D);
+
     return GMEVENT_RES_FINISH;
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -4120,10 +4121,10 @@ static GMEVENT_RESULT debugMenuCaptureListEvent(
 static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk )
 {
   GMEVENT *event;
-  
-  event = GMEVENT_CreateOverlayEventCall( wk->gmSys, 
+
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
     FS_OVERLAY_ID( d_iwasawa ), EVENT_DebugMovePoke, wk );
-  
+
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
   return( TRUE );
@@ -4156,7 +4157,7 @@ static GMEVENT_RESULT debugMenuControlBbdColor(
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ビルボードカラーを指定
+ *  @brief  ビルボードカラーを指定
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk )
@@ -4166,11 +4167,11 @@ static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event = wk->gmEvent;
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
+
   GMEVENT_Change( event, debugMenuControlBbdColor, sizeof(DEBUG_BBDCOLOR_WORK) );
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_BBDCOLOR_WORK) );
-  
+
   work->gsys = gsys;
   work->event = event;
   work->heapID = heapID;
@@ -4194,7 +4195,7 @@ static GMEVENT_RESULT debugMenuControlBbdColor(
       AREADATA* p_areadata = FIELDMAP_GetAreaData( work->fieldWork );
 
       FLD_BBD_COLOR_Load( p_color, AREADATA_GetBBDColor(p_areadata) );
-      
+
       // モデル管理開始
       FLD_BBD_COLOR_DEBUG_Init( p_bbd_sys, p_color, work->heapID );
 
@@ -4222,7 +4223,7 @@ static GMEVENT_RESULT debugMenuControlBbdColor(
       GFL_ARC_UTIL_TransVramPalette(
         ARCID_FONT, NARC_font_default_nclr,
         PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
-      
+
       // ビットマップウィンドウを作成
       work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
         1, 1, 30, 22,
@@ -4264,7 +4265,7 @@ static GMEVENT_RESULT debugMenuControlBbdColor(
 
     return( GMEVENT_RES_FINISH );
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -4383,13 +4384,13 @@ static BOOL debugMenuCallProc_EncEffList( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_ENCEFF_LIST_EVENT_WORK *work;
-  
+
   GMEVENT_Change( event,
     debugMenuEncEffListEvent, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
-  
+
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
-  
+
   work->gmSys = gsys;
   work->gmEvent = event;
   work->heapID = heapID;
@@ -4411,7 +4412,7 @@ static GMEVENT_RESULT debugMenuEncEffListEvent(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_ENCEFF_LIST_EVENT_WORK *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugEncEffMenuListData );
@@ -4421,13 +4422,13 @@ static GMEVENT_RESULT debugMenuEncEffListEvent(
     {
       u32 ret;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
+
       if( ret != FLDMENUFUNC_CANCEL ) //決定
       {
         //エンカウントエフェクトコール
@@ -4446,7 +4447,7 @@ static GMEVENT_RESULT debugMenuEncEffListEvent(
       //オーバーレイアンロード
       ENCEFF_UnloadEffOverlay(cnt_ptr);
     }
-    
+
     GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, -1 );
     (*seq)++;
@@ -4456,7 +4457,7 @@ static GMEVENT_RESULT debugMenuEncEffListEvent(
       return( GMEVENT_RES_FINISH );
     }
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -4467,9 +4468,9 @@ static GMEVENT_RESULT debugMenuEncEffListEvent(
 FS_EXTERN_OVERLAY(debug_make_undata);
 static GMEVENT_RESULT debugMenuMakeUNData( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 //-------------------------------------
-/// デバッグ国連データ作成用ワーク  
+/// デバッグ国連データ作成用ワーク
 //=====================================
-typedef struct 
+typedef struct
 {
   HEAPID HeapID;
   GAMESYS_WORK    *gsys;
@@ -4488,7 +4489,7 @@ typedef struct
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugMakeUNData( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GAMESYS_WORK  *gsys  = p_wk->gmSys;
   GMEVENT       *event    = p_wk->gmEvent;
   FIELDMAP_WORK *fieldWork  = p_wk->fieldWork;
@@ -4500,7 +4501,7 @@ static BOOL debugMenuCallProc_DebugMakeUNData( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT_Change( event, debugMenuMakeUNData, sizeof(DEBUG_MAKE_UNDATA_EVENT_WORK) );
   evt_work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( evt_work, sizeof(DEBUG_MAKE_UNDATA_EVENT_WORK) );
-  
+
   //ワーク設定
   evt_work->gsys = gsys;
   evt_work->Event = event;
@@ -4523,9 +4524,9 @@ static BOOL debugMenuCallProc_DebugMakeUNData( DEBUG_MENU_EVENT_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT debugMenuMakeUNData( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{ 
+{
   enum
-  { 
+  {
     SEQ_CALL_PROC,
     SEQ_PROC_END,
   };
@@ -4533,7 +4534,7 @@ static GMEVENT_RESULT debugMenuMakeUNData( GMEVENT *p_event, int *p_seq, void *p
   DEBUG_MAKE_UNDATA_EVENT_WORK *evt_work = p_wk_adrs;
 
   switch(*p_seq )
-  { 
+  {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( evt_work->Event, EVENT_FieldSubProc( evt_work->gsys, evt_work->FieldWork,
         FS_OVERLAY_ID(debug_make_undata), &ProcData_DebugMakeUNData, &evt_work->p_work ) );
@@ -4651,17 +4652,17 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
       u32 ret;
       GMEVENT* next_event;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-      
+
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
         return( GMEVENT_RES_FINISH );
       }
-      
+
       switch( ret ){
       case DEBUG_BSWAY_DEMO_HOME:
         ret = ZONE_ID_C04R0111;
@@ -4680,17 +4681,17 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
 
       // WiFi系イベントの起動
       case DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD:  // ゲームデータダウンロード
-        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys, 
+        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
             WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD );
         break;
-        
+
       case DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD:  // 履歴ダウンロード
-        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys, 
+        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
             WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD );
         break;
-        
+
       case DEBUG_BSWAY_WIFI_UPLOAD: // ゲームデータアップロード
-        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys, 
+        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
             WIFI_BSUBWAY_MODE_SCORE_UPLOAD );
         break;
       }
@@ -4702,7 +4703,7 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
   case 2:
     return GMEVENT_RES_FINISH;
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -4720,7 +4721,7 @@ static BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_WEATERLIST_EVENT_WORK *work;
-  
+
   GMEVENT_Change( event,
     debugMenuBSubwayEvent, sizeof(DEBUG_BSUBWAY_EVENT_WORK) );
   work = GMEVENT_GetEventWork( event );
@@ -4750,7 +4751,7 @@ typedef struct
   FIELDMAP_WORK *fieldWork;
   GFL_MSGDATA *msgData;
   FLDMENUFUNC *menuFunc;
-  
+
   POWER_CONV_DATA *powerdata;
 }DEBUG_GPOWER_EVENT_WORK;
 
@@ -4808,13 +4809,13 @@ static BOOL debugMenuCallProc_GPowerList( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_GPOWER_EVENT_WORK *work;
-  
+
   GMEVENT_Change( event,
     debugMenuGPowerListEvent, sizeof(DEBUG_GPOWER_EVENT_WORK) );
-  
+
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_GPOWER_EVENT_WORK) );
-  
+
   work->gmSys = gsys;
   work->gmEvent = event;
   work->heapID = heapID;
@@ -4834,7 +4835,7 @@ static BOOL debugMenuCallProc_GPowerList( DEBUG_MENU_EVENT_WORK *wk )
 static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_GPOWER_EVENT_WORK *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugGPowerMenuListData );
@@ -4845,7 +4846,7 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
     {
       u32 ret;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
@@ -4853,7 +4854,7 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
         (*seq)++;
         break;
       }
-      
+
       if(ret < GPOWER_ID_MAX){
         GPOWER_Set_OccurID(ret, work->powerdata, FALSE);
       }
@@ -4867,7 +4868,7 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
     GPOWER_PowerData_Unload(work->powerdata);
     return( GMEVENT_RES_FINISH );
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -4879,7 +4880,7 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
  * @retval  nothing
  */
 //--------------------------------------------------------------
-static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, 
+static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list,
   HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
 {
   int id;
@@ -4887,14 +4888,14 @@ static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *l
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FLDMSGBG * msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
   GFL_MSGDATA * pMsgDataDMatsu = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_matsu_dat );
-  
+
   for( id = 0; id < GPOWER_ID_MAX; id++ ){
     GFL_MSG_GetString( msgData,  id, strBuf );
     FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
   }
   GFL_MSG_GetString(pMsgDataDMatsu, DM_MSG_POWER_RESET, strBuf);
   FLDMENUFUNC_AddStringListData( list, strBuf, GPOWER_ID_MAX, heapID );
-  
+
   GFL_MSG_Delete( pMsgDataDMatsu );
   GFL_HEAP_FreeMemory( strBuf );
 }
@@ -4951,13 +4952,13 @@ static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event = wk->gmEvent;
   DEBUG_MENU_EVENT_WORK   temp  = *wk;
   DEBUG_MENU_EVENT_WORK   *work;
-  
+
   GMEVENT_Change( event,
     debugMenuFieldSkillListEvent, sizeof(DEBUG_MENU_EVENT_WORK) );
-  
+
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_MENU_EVENT_WORK) );
-  
+
   *work  = temp;
   work->call_proc = NULL;
 
@@ -4978,7 +4979,7 @@ static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *wk )
 static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_MENU_EVENT_WORK *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     (*seq)++;
@@ -4987,7 +4988,7 @@ static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, voi
     {
       u32 ret;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }else if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
@@ -5002,18 +5003,18 @@ static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, voi
   case 2:
     {
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
+
       if( work->call_proc != NULL ){
         if( work->call_proc(work) == TRUE ){
           return( GMEVENT_RES_CONTINUE );
         }
       }
-      
+
       return( GMEVENT_RES_FINISH );
     }
     break;
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -5043,18 +5044,18 @@ static const DEBUG_MENU_INITIALIZER DebugSubMysteryCardMakeData = {
 
 
 static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *wk )
-{ 
+{
   GMEVENT *event = wk->gmEvent;
   DEBUG_MENU_EVENT_WORK   temp  = *wk;
   DEBUG_MENU_EVENT_WORK   *work;
-  
+
   //イベント流用
   GMEVENT_Change( event,
     debugMenuFieldSkillListEvent, sizeof(DEBUG_MENU_EVENT_WORK) );
-  
+
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_MENU_EVENT_WORK) );
-  
+
   *work  = temp;
   work->call_proc = NULL;
 
@@ -5064,16 +5065,16 @@ static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *wk )
 }
 
 static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   MYSTERY_DATA *p_mystery_sv  = SaveData_GetMysteryData( pSave);
   GIFT_PACK_DATA  data;
   int i;
 
   for( i = 1; i < 2048; i++ )
-  { 
+  {
     if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
-    { 
+    {
 
       DEBUG_MYSTERY_SetGiftPokeData( &data, i );
       MYSTERYDATA_SetCardData( p_mystery_sv, &data );
@@ -5087,16 +5088,16 @@ static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk )
   return FALSE;
 }
 static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   MYSTERY_DATA *p_mystery_sv  = SaveData_GetMysteryData( pSave);
   GIFT_PACK_DATA  data;
   int i;
 
   for( i = 1; i < 2048; i++ )
-  { 
+  {
     if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
-    { 
+    {
 
       DEBUG_MYSTERY_SetGiftItemData( &data, i );
       MYSTERYDATA_SetCardData( p_mystery_sv, &data );
@@ -5109,16 +5110,16 @@ static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk )
   return FALSE;
 }
 static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   MYSTERY_DATA *p_mystery_sv  = SaveData_GetMysteryData( pSave);
   GIFT_PACK_DATA  data;
   int i;
 
   for( i = 1; i < 2048; i++ )
-  { 
+  {
     if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
-    { 
+    {
 
       DEBUG_MYSTERY_SetGiftGPowerData( &data, i );
       MYSTERYDATA_SetCardData( p_mystery_sv, &data );
@@ -5138,9 +5139,9 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
 FS_EXTERN_OVERLAY(debug_zone_jump);
 static GMEVENT_RESULT debugMenuZoneJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 //-------------------------------------
-/// デバッグ国連データ作成用ワーク  
+/// デバッグ国連データ作成用ワーク
 //=====================================
-typedef struct 
+typedef struct
 {
   HEAPID HeapID;
   GAMESYS_WORK    *gsys;
@@ -5159,7 +5160,7 @@ typedef struct
  */
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   GAMESYS_WORK  *gsys  = p_wk->gmSys;
   GMEVENT       *event    = p_wk->gmEvent;
   FIELDMAP_WORK *fieldWork  = p_wk->fieldWork;
@@ -5171,7 +5172,7 @@ static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT_Change( event, debugMenuZoneJump, sizeof(DEBUG_ZONE_JUMP_EVENT_WORK) );
   evt_work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( evt_work, sizeof(DEBUG_ZONE_JUMP_EVENT_WORK) );
-  
+
   //ワーク設定
   evt_work->gsys = gsys;
   evt_work->Event = event;
@@ -5193,9 +5194,9 @@ static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT debugMenuZoneJump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{ 
+{
   enum
-  { 
+  {
     SEQ_CALL_PROC,
     SEQ_PROC_RESULT,
     SEQ_PROC_END,
@@ -5204,7 +5205,7 @@ static GMEVENT_RESULT debugMenuZoneJump( GMEVENT *p_event, int *p_seq, void *p_w
   DEBUG_ZONE_JUMP_EVENT_WORK *evt_work = p_wk_adrs;
 
   switch(*p_seq )
-  { 
+  {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( evt_work->Event, EVENT_FieldSubProc( evt_work->gsys, evt_work->FieldWork,
         FS_OVERLAY_ID(debug_zone_jump), &ProcData_DebugZoneJump, &evt_work->p_work ) );
@@ -5239,7 +5240,7 @@ typedef struct {
   GMEVENT *gmEvent;
   FIELDMAP_WORK *fieldWork;
   FLDMENUFUNC *menuFunc;
-	ZUKAN_SAVEDATA * sv;
+  ZUKAN_SAVEDATA * sv;
 }DEBUG_ZUKAN_WORK;
 
 ///リスト メニューヘッダー
@@ -5268,12 +5269,12 @@ static const FLDMENUFUNC_HEADER ZukanMenuHeader =
 ///メニューリスト
 static const FLDMENUFUNC_LIST ZukanMenuList[] =
 {
-  { DEBUG_FIELD_ZUKAN_01, (void*)0 },		// 全国捕獲
-  { DEBUG_FIELD_ZUKAN_07, (void*)1 },		// 全国見た
-  { DEBUG_FIELD_ZUKAN_09, (void*)2 },		// ランダム
-  { DEBUG_FIELD_ZUKAN_03, (void*)3 },		// フォルム
-  { DEBUG_FIELD_ZUKAN_05, (void*)4 },		// 全国フラグ
-  { DEBUG_FIELD_ZUKAN_06, (void*)5 },		// バージョンアップ
+  { DEBUG_FIELD_ZUKAN_01, (void*)0 },   // 全国捕獲
+  { DEBUG_FIELD_ZUKAN_07, (void*)1 },   // 全国見た
+  { DEBUG_FIELD_ZUKAN_09, (void*)2 },   // ランダム
+  { DEBUG_FIELD_ZUKAN_03, (void*)3 },   // フォルム
+  { DEBUG_FIELD_ZUKAN_05, (void*)4 },   // 全国フラグ
+  { DEBUG_FIELD_ZUKAN_06, (void*)5 },   // バージョンアップ
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuZukanImitializer = {
@@ -5307,17 +5308,17 @@ static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_ZUKAN_WORK *work;
-  
+
   GMEVENT_Change( event, debugMenuZukanEvent, sizeof(DEBUG_ZUKAN_WORK) );
-  
+
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_ZUKAN_WORK) );
-  
+
   work->gmSys = gsys;
   work->gmEvent = event;
   work->heapID = heapID;
-	work->fieldWork = fieldWork;
-	work->sv = GAMEDATA_GetZukanSave( GAMESYSTEM_GetGameData(wk->gmSys) );
+  work->fieldWork = fieldWork;
+  work->sv = GAMEDATA_GetZukanSave( GAMESYSTEM_GetGameData(wk->gmSys) );
 
   return TRUE;
 }
@@ -5334,7 +5335,7 @@ static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk )
 static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_ZUKAN_WORK *work = wk;
-  
+
   switch( *seq ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID, &DebugMenuZukanImitializer );
@@ -5343,94 +5344,94 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
 
   case 1:
 
-		switch( FLDMENUFUNC_ProcMenu(work->menuFunc) ){
-		case FLDMENUFUNC_NULL:		// 操作無し
-			break;
+    switch( FLDMENUFUNC_ProcMenu(work->menuFunc) ){
+    case FLDMENUFUNC_NULL:    // 操作無し
+      break;
 
-		case FLDMENUFUNC_CANCEL:	// キャンセル
-			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			return GMEVENT_RES_FINISH;
+    case FLDMENUFUNC_CANCEL:  // キャンセル
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
 
-		case 0:			// 全国捕獲
-			{
-				u32	i;
-				for( i=1; i<=MONSNO_END; i++ ){
-					SetZukanDataOne( wk, i, 0, 0 );
-				}
-			}
-			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			return GMEVENT_RES_FINISH;
+    case 0:     // 全国捕獲
+      {
+        u32 i;
+        for( i=1; i<=MONSNO_END; i++ ){
+          SetZukanDataOne( wk, i, 0, 0 );
+        }
+      }
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
 
-		case 1:			// 全国見た
-			{
-				u32	i;
-				for( i=1; i<=MONSNO_END; i++ ){
-					SetZukanDataOne( wk, i, 0, 1 );
-				}
-			}
-			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			return GMEVENT_RES_FINISH;
+    case 1:     // 全国見た
+      {
+        u32 i;
+        for( i=1; i<=MONSNO_END; i++ ){
+          SetZukanDataOne( wk, i, 0, 1 );
+        }
+      }
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
 
-		case 2:			// ランダム
-			{
-				u32	rand;
-				u32	max;
-				u32	i;
-				for( i=1; i<=MONSNO_END; i++ ){
-					rand = GFL_STD_MtRand( 3 );
-					if( rand == 2 ){ continue; }
-					max = ZUKANSAVE_GetFormMax( i );
-					if( max != 0 ){
-						SetZukanDataOne( wk, i, GFL_STD_MtRand(max), rand );
-					}else{
-						SetZukanDataOne( wk, i, 0, rand );
-					}
-				}
-			}
-			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			return GMEVENT_RES_FINISH;
+    case 2:     // ランダム
+      {
+        u32 rand;
+        u32 max;
+        u32 i;
+        for( i=1; i<=MONSNO_END; i++ ){
+          rand = GFL_STD_MtRand( 3 );
+          if( rand == 2 ){ continue; }
+          max = ZUKANSAVE_GetFormMax( i );
+          if( max != 0 ){
+            SetZukanDataOne( wk, i, GFL_STD_MtRand(max), rand );
+          }else{
+            SetZukanDataOne( wk, i, 0, rand );
+          }
+        }
+      }
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
 
-		case 3:			// フォルム
-			{
-				u32	max;
-				u16	i, j;
-				for( i=1; i<=MONSNO_END; i++ ){
-					max = ZUKANSAVE_GetFormMax( i );
-					if( max != 0 ){
-						for( j=0; j<max; j++ ){
-							SetZukanDataOne( wk, i, j, 0 );
-						}
-					}
-				}
-			}
-			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			return GMEVENT_RES_FINISH;
+    case 3:     // フォルム
+      {
+        u32 max;
+        u16 i, j;
+        for( i=1; i<=MONSNO_END; i++ ){
+          max = ZUKANSAVE_GetFormMax( i );
+          if( max != 0 ){
+            for( j=0; j<max; j++ ){
+              SetZukanDataOne( wk, i, j, 0 );
+            }
+          }
+        }
+      }
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
 
-		case 4:			// 全国フラグ
-			ZUKANSAVE_SetZenkokuZukanFlag( work->sv );
-			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			return GMEVENT_RES_FINISH;
+    case 4:     // 全国フラグ
+      ZUKANSAVE_SetZenkokuZukanFlag( work->sv );
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
 
-		case 5:			// バージョンアップ
-			ZUKANSAVE_SetGraphicVersionUpFlag( work->sv );
-			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			return GMEVENT_RES_FINISH;
-		}
-		break;
+    case 5:     // バージョンアップ
+      ZUKANSAVE_SetGraphicVersionUpFlag( work->sv );
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
+    }
+    break;
   }
-  
+
   return GMEVENT_RES_CONTINUE;
 }
 
 static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u32 mode )
 {
-	POKEMON_PARAM * pp = PP_Create( mons, 50, 0, wk->heapID );
+  POKEMON_PARAM * pp = PP_Create( mons, 50, 0, wk->heapID );
 
-	if( mode == 0 ){
-		ZUKANSAVE_SetPokeGet( wk->sv, pp );
-	}else{
-		ZUKANSAVE_SetPokeSee( wk->sv, pp );
-	}
+  if( mode == 0 ){
+    ZUKANSAVE_SetPokeGet( wk->sv, pp );
+  }else{
+    ZUKANSAVE_SetPokeSee( wk->sv, pp );
+  }
 
-	GFL_HEAP_FreeMemory( pp );
+  GFL_HEAP_FreeMemory( pp );
 }

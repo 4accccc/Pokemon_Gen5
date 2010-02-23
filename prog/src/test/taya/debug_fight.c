@@ -1844,6 +1844,8 @@ FS_EXTERN_OVERLAY(debug_makepoke);
     break;
   case 1:
     wk->makePokeParam.dst = savework_GetPokeParaArea( &wk->saveData, wk->selectItem-SELITEM_POKE_SELF_1 );
+//    wk->makePokeParam.oyaStatus = GAMEDATA_GetMyStatus( wk->gameData );
+    wk->makePokeParam.oyaStatus = NULL;
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &wk->makePokeParam );
     (*seq)++;
     break;
