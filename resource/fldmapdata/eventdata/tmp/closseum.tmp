@@ -1,5 +1,5 @@
 #../data/closseum.mev
-../tmp/closseum.bin:../data/closseum.mev $(UNIQ_SCRIPTHEADER) ../tmp/closseum.h 
+../tmp/closseum.bin:../data/closseum.mev $(UNIQ_SCRIPTHEADER) ../tmp/closseum.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/CLOSSEUM_def.h 
 	@echo ../data/closseum.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/closseum.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/closseum.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/CLOSSEUM_def.h 
 
