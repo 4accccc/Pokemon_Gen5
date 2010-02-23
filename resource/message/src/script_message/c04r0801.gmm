@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-06T18:26:08"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T18:16:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,15 +229,15 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="184"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="215"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="147">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="952" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1377" top="165" right="2081" bottom="785" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="529"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,28 +292,80 @@
 	</lock>
 
 
-	<row id="msg_c04r0801_elitew_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0801_infomationw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・ｒ16ゲートストッパー
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">ELITEW</attribute>
+・クリア前
+・話かけたとき</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
 		<language name="JPN" width="256">ああ！　そちらへは
-バッジを　８こ　もっていないと[BE:00:ページ切り替え（行送り）]
+バッジを　８こ　もち▼
+さらに　ポケモンリーグで
+みとめられて　いないと▽
 すすめない　きまり　なんです</language>
 		<language name="JPN_KANJI" width="256">ああ！　そちら方面へは
-バッジを　８個　持っていないと[BE:00:ページ切り替え（行送り）]
+バッジを　８個　持ち▼
+さらに　ポケモンリーグで
+認められて　いないと▽
 進めない　決まり　なんです</language>
+	</row>
+
+	<row id="msg_c04r0801_infomationw_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・クリア前
+・pos起動（GRIDX=14、GRIDZ=4~8）
+　メッセージ表示後、一歩左に戻す</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">ああ！　そちらへは
+バッジを　８こ　もち▼
+さらに　ポケモンリーグで
+みとめられて　いないと▽
+すすめない　きまり　なんです▼</language>
+		<language name="JPN_KANJI" width="256">ああ！　そちら方面へは
+バッジを　８個　持ち▼
+さらに　ポケモンリーグで
+認められて　いないと▽
+進めない　決まり　なんです▼</language>
+	</row>
+
+	<row id="msg_c04r0801_infomationw_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・クリア後</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">このさき　ワンダーブリッジです！</language>
+		<language name="JPN_KANJI" width="256">この先　ワンダーブリッジです！</language>
+	</row>
+
+	<row id="msg_c04r0801_elitew_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・ゾロアークイベント前
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">ELITEW</attribute>
+		<language name="JPN" width="256">１６ばんどうろの　まよいのもり……▼
+みとめられた　トレーナーでないと
+いつまでも　とおりぬけられない▼
+そうきいたが　どうすれば
+みとめられると　いうのだろう？</language>
+		<language name="JPN_KANJI" width="256">１６番道路の　まよいのもり……▼
+認められた　トレーナーでないと
+いつまでも　通り抜けられない▼
+そうきいたが　どうすれば
+認められると　いうのだろう？</language>
 	</row>
 
 	<row id="msg_c04r0801_elitew_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・ｒ16ゲートストッパー
+・ゾロアークイベント後
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">ELITEW</attribute>
-		<language name="JPN" width="256">イッシュ地方に　架かっている
-橋は　すべて　渡りましたか？</language>
-		<language name="JPN_KANJI" width="256">イッシュ地方に　架かっている
-橋は　すべて　渡りましたか？</language>
+		<language name="JPN" width="256">ゾロアークという　ポケモンが
+みんなを　まどわせていた……▽
+それも　すごい　はなし　だよね</language>
+		<language name="JPN_KANJI" width="256">ゾロアークという　ポケモンが
+みんなを　まどわせていた……▽
+それも　すごい　話だよね</language>
 	</row>
 
 	<flowchart-group-list>

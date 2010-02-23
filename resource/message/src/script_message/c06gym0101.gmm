@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T16:16:18"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T18:57:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -461,8 +461,9 @@
 おめでとう　ございます！！</language>
 	</row>
 
-	<row id="msg_c06gym0101_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>ジムバッジ取得前</comment>
+	<row id="msg_c06gym0101_statue_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・ジムバッジ取得前</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">フキヨセ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　フウロ
@@ -472,8 +473,9 @@
 認定　トレーナー！</language>
 	</row>
 
-	<row id="msg_c06gym0101_statue_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>ジムバッジ取得後</comment>
+	<row id="msg_c06gym0101_statue_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">フキヨセ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　フウロ
@@ -486,7 +488,8 @@
 	</row>
 
 	<row id="msg_c06gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>？？後</comment>
+		<comment>BGメッセージ
+・c07バッジ取得時時</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">フキヨセ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　フウロ
