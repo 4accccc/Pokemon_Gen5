@@ -1492,7 +1492,7 @@ BOOL PPP_IsMatchOya( const POKEMON_PASO_PARAM* ppp, const MYSTATUS* player )
 
     if( (playerID == oyaID)
     &&  (playerSex == oyaSex)
-    &&  (STRTOOL_Comp(StrBuffer, StrBufferSub) == 0)
+    &&  (STRTOOL_Comp(StrBuffer, StrBufferSub))
     ){
       result = TRUE;
     }
