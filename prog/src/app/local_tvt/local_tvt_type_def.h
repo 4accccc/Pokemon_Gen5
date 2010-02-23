@@ -25,6 +25,7 @@ typedef enum
   LTCT_RIVAL,
   LTCT_SUPPORT,
   LTCT_DOCTOR_D,
+  LTCT_MOTHER,
 
   LTCT_PLAYER_F,  //ŽålŒö‚¾‚Á‚½ê‡•ªŠò‚³‚¹‚é
   

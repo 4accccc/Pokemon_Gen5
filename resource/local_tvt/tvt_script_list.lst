@@ -17,6 +17,7 @@
 "chara_player_m.NCLR"
 "chara_rival.NCLR"
 "chara_support.NCLR"
+"chara_mother.NCLR"
 "chara_doctor_d_1.NCGR"
 "chara_doctor_d_2.NCGR"
 "chara_player_f_1.NCGR"
@@ -27,6 +28,8 @@
 "chara_rival_2.NCGR"
 "chara_support_1.NCGR"
 "chara_support_2.NCGR"
+"chara_mother_1.NCGR"
+"chara_mother_2.NCGR"
 
 "dummy.NCGR"
 "local_tvt_scr_2.NSCR"
@@ -34,3 +37,6 @@
 
 "tvt_script_01.bin"
 "tvt_script_02.bin"
+"tvt_script_03.bin"
+"tvt_script_04.bin"
+"tvt_script_05.bin"

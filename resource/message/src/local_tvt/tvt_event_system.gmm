@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-11T20:31:21"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-23T21:02:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1571" top="190" right="2159" bottom="810" maximized="no" rayout="Vertical2">
+	<dialog left="1377" top="232" right="2082" bottom="860" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="580"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="259"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -355,6 +355,11 @@
 	<row id="LOCAL_TVT_CHARA_03">
 		<language name="JPN" width="256">博士(娘)</language>
 		<language name="JPN_KANJI" width="256">博士(娘)</language>
+	</row>
+
+	<row id="LOCAL_TVT_CHARA_04">
+		<language name="JPN" width="256">はは</language>
+		<language name="JPN_KANJI" width="256">母</language>
 	</row>
 
 	<row id="LOCAL_TVT_CHARA_99">
