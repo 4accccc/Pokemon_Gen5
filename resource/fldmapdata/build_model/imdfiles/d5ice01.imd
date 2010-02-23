@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-02-22T23:10:31" source="d5ice01c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-02-23T14:20:38" source="d5ice01c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2010-02-22T23:10:31" source="d5ice01c.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-02-23T14:20:38" source="d5ice01c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -38,22 +38,22 @@
 		path="C:/home/wb_data3d/build_model/indoor/d5ice01/tex/d5miniice01.tga"
 	>
 		<bitmap size="128">
-			0f10 0d0f 0d0d 0f0d 0c0b 0d0c 0e0d 100f
-			0e10 0d0e 0d0d 090d 0c09 0909 0d0c 070e
-			0e0e 0d0d 0d0d 090d 0707 0707 0c09 070e
-			0a0d 0d0a 0d0d 0d0d 0609 0202 0c09 0307
-			090d 0909 0d0d 0d0d 090d 0206 0707 0003
-			0909 0607 0d09 0d0d 0d0d 0609 0707 0003
-			0a10 0507 0906 0d0d 0d0d 090d 0706 0003
-			0a10 040a 0602 0d09 0d0d 0d0d 0709 0007
-			0a10 030a 0102 0906 0d0d 0d0d 090d 070c
-			0a10 020a 0205 0602 0d09 0d0d 0d0d 0709
-			0a10 020a 0203 0302 0906 0d0d 0d0d 090d
-			0a10 020a 0202 0505 0602 0d09 0d0d 0d0d
-			0a10 050a 0505 0505 0505 0906 0d0d 0d0d
-			0a10 070a 0707 0707 0707 0605 0d09 0d0d
-			0a10 070a 0a07 0a0a 070a 0707 070a 0d0d
-			1008 1010 1010 1010 1010 1010 0a10 0707
+			0808 0808 0808 0808 0808 0808 0808 0408
+			0808 0809 0808 0608 0505 0505 0505 0405
+			0908 0808 0808 0608 0304 0303 0303 0405
+			0708 0807 0808 0808 0206 0000 0300 0405
+			0508 0606 0808 0808 0608 0002 0300 0405
+			0508 0203 0806 0808 0808 0206 0300 0405
+			0508 0103 0602 0808 0808 0608 0302 0405
+			0508 0103 0200 0806 0808 0808 0306 0405
+			0508 0103 0000 0602 0808 0808 0608 0405
+			0508 0103 0000 0200 0806 0808 0808 0406
+			0508 0103 0000 0000 0602 0808 0808 0408
+			0508 0103 0000 0000 0200 0806 0808 0408
+			0508 0103 0101 0101 0101 0602 0808 0408
+			0508 0303 0303 0303 0303 0303 0806 0408
+			0508 0505 0505 0505 0505 0505 0505 0408
+			0404 0404 0404 0404 0404 0404 0404 0404
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="d5miniice02"
@@ -64,14 +64,14 @@
 		path="C:/home/wb_data3d/build_model/indoor/d5ice01/tex/d5miniice02.tga"
 	>
 		<bitmap size="64">
-			ceef 888c c888 fddc 679f 7775 9787 d965
-			669f 6624 6666 e965 469b 5524 5545 c965
-			469b 2424 5211 c966 469b 1224 2100 c965
-			469b 0113 2111 c964 469b 2012 2121 c974
-			469b 1124 1222 c941 469b 1111 1221 c764
-			469b 2012 2121 c964 46ab 0113 2111 c964
-			46cd 1224 2100 c965 46cf 2455 5211 c966
-			69cf 5555 5545 e767 aaff 7777 7777 edd7
+			5555 5555 5555 5555 4445 4444 4444 5444
+			3345 3333 3333 5433 2345 2222 2222 5432
+			2345 1111 1111 5432 2345 0001 1000 5432
+			2345 0001 1000 5432 2345 0001 1000 5432
+			2345 0001 1000 5432 2345 0001 1000 5432
+			2345 0001 1000 5432 2345 1111 1111 5432
+			2345 2222 2222 5432 3345 3333 3333 5433
+			4445 4444 4444 5444 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="d5minikage01"
@@ -102,14 +102,12 @@
 </tex_image_array>
 
 <tex_palette_array size="3">
-	<tex_palette index="0" name="d5miniice01_pl" color_size="24">
-		5a90 62f3 66f3 6714 6b13 6f13 7334 7775
-		7b97 7f97 7fb9 7fba 7fd9 7fda 7fdb 7fdc
-		7ffc 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="0" name="d5miniice01_pl" color_size="16">
+		6af1 6f13 7731 7732 7f72 7f94 7fb5 7ff8
+		7ffa 7ffb 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="d5miniice02_pl" color_size="16">
-		526f 566f 5a90 5e8f 62b0 66f1 6f12 7775
-		7b97 7f74 7f96 7f97 7fb8 7fb9 7fba 7fdb
+	<tex_palette index="1" name="d5miniice02_pl" color_size="8">
+		5e8f 62b0 6af0 7b73 7ff8 7ffe 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="d5minikage01_pl" color_size="8">
 		294a 7fff 7fff 7fff 7fff 7fff 7fff 7fff
