@@ -888,15 +888,9 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
   u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
 
-#if 0
-  if( PM_VERSION == VERSION_BLACK ){
+  if( GET_VERSION() == VERSION_BLACK ){
     msg_id = msg_id_b;
   }
-#else
-  if( GetVersion() == VERSION_BLACK ){
-    msg_id = msg_id_b;
-  }
-#endif
 
   if( balloonWin_Write(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );

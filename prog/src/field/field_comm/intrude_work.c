@@ -280,7 +280,7 @@ u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm)
   u8 palace_area;
   
   if(intcomm == NULL){
-    return PM_VERSION;
+    return GET_VERSION();
   }
   
   palace_area = Intrude_GetPalaceArea(intcomm);

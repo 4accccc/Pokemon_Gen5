@@ -93,6 +93,12 @@ extern const u8 CasetteLanguage;
 extern const u8 GetVersion( void );
 #endif
 
+#ifdef  PM_DEBUG
+#define GET_VERSION()  GetVersion()
+#else
+#define GET_VERSION()  PM_VERSION
+#endif
+
 //=========================================================================
 //	関数プロトタイプ
 //=========================================================================

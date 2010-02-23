@@ -470,7 +470,7 @@ u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id)
   default:
     GF_ASSERT(season_id < PMSEASON_TOTAL);
   }
-  if (bgm_id == SEQ_BGM_C_08_B && GetVersion() == VERSION_WHITE )
+  if (bgm_id == SEQ_BGM_C_08_B && GET_VERSION() == VERSION_WHITE )
   {
     bgm_id = SEQ_BGM_C_08_W;
   }

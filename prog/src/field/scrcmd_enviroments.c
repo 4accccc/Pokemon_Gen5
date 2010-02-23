@@ -49,7 +49,7 @@
 VMCMD_RESULT EvCmdGetRomVersion( VMHANDLE *core, void *wk )
 {
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = GetVersion(); //include/pm_version.h
+  *ret_wk = GET_VERSION(); //include/pm_version.h
   return VMCMD_RESULT_CONTINUE;
 }
 
