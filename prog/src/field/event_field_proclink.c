@@ -755,8 +755,11 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
     switch( pBag->next_proc )
     { 
     case BAG_NEXTPROC_RETURN:
-      if(pBag->mode == BAG_MODE_POKELIST){   //リストから呼ばれていた場合
-        plistData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
+      if(pBag->mode == BAG_MODE_POKELIST)
+      {   //リストから呼ばれていた場合
+        //plistData->mode = PL_MODE_ITEMSET;    //アイテムをセットする呼び出し
+        //リストからの持たせるでキャンセルしてきてるはずなので。 Ariizumi 100223
+        plistData->mode = PL_MODE_FIELD;
       }
       break;
       

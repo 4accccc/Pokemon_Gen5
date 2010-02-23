@@ -34,3 +34,8 @@ extern void PLIST_DEMO_DemoInit( PLIST_WORK *work );
 extern void PLIST_DEMO_DemoTerm( PLIST_WORK *work );
 extern void PLIST_DEMO_DemoMain( PLIST_WORK *work );
 
+//ñ{ìñÇÕDEMOÇ∂Ç·Ç»Ç¢ÇØÇ«ÅAÇ±Ç±Ç…Ç®Ç≠ÅB
+extern const BOOL PLIST_DEMO_CheckGirathnaToOrigin( PLIST_WORK *work , POKEMON_PARAM *pp );
+extern void PLIST_DEMO_ChangeGirathinaToOrigin( PLIST_WORK *work , POKEMON_PARAM *pp );
+extern const BOOL PLIST_DEMO_CheckGirathnaToAnother( PLIST_WORK *work , POKEMON_PARAM *pp );
+extern void PLIST_DEMO_ChangeGirathinaToAnother( PLIST_WORK *work , POKEMON_PARAM *pp );

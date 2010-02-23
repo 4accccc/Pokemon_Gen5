@@ -405,3 +405,12 @@ static void PLIST_MSG_ClearWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  )
   GFL_BMPWIN_MakeTransWindow_VBlank( msgWork->bmpWin );
 }
 
+
+//--------------------------------------------------------------
+//	ウィンドウ枠の再読み込み
+//--------------------------------------------------------------
+void PLIST_MSG_ReloadWinFrame( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  )
+{
+  BmpWinFrame_GraphicSet( PLIST_BG_MENU , PLIST_BG_WINCHAR_TOP , PLIST_BG_PLT_BMPWIN ,
+                          0 , work->heapId );
+}

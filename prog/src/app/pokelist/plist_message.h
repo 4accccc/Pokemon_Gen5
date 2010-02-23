@@ -46,3 +46,4 @@ extern void PLIST_MSG_AddWordSet_StatusName( PLIST_WORK *work , PLIST_MSG_WORK *
 extern void PLIST_MSG_AddWordSet_Value( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , u16 value , u8 keta );
 extern void PLIST_MSG_AddWordSet_Word( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , STRBUF *str , u32 sex );
 
+extern void PLIST_MSG_ReloadWinFrame( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  );

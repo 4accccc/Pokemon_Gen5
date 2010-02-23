@@ -1253,8 +1253,15 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     else if(BAG_MENU_MOTASERU==pWork->ret_code2){ // もたせる
       //@TODO check!!!!
       // ポケモンリスト アイテムを持たせる処理
-      pWork->ret_code = BAG_NEXTPROC_HAVE;  //変えました。Ari100222
-      //pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
+      //リストから来たかどうかの分岐を入れました。 Ariizumi 100222
+      if(pWork->mode == BAG_MODE_POKELIST)
+      {
+        pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
+      }
+      else
+      {
+        pWork->ret_code = BAG_NEXTPROC_HAVE;
+      }
       _CHANGE_STATE(pWork,NULL);
     }
     else{

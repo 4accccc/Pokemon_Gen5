@@ -188,7 +188,6 @@ static void PLIST_YesNoWait( PLIST_WORK *work );
 static void PLIST_YesNoWaitInit( PLIST_WORK *work , PLIST_CallbackFuncYesNo yesNoCallBack );
 
 //メッセージコールバック
-static void PLIST_MSGCB_ReturnSelectCommon( PLIST_WORK *work );
 static void PLIST_MSGCB_ForgetSkill_ForgetCheckCB( PLIST_WORK *work , const int retVal );
 static void PLIST_MSGCB_ForgetSkill_SkillCancel( PLIST_WORK *work );
 static void PLIST_MSGCB_ForgetSkill_SkillCancelCB( PLIST_WORK *work , const int retVal );
@@ -813,7 +812,9 @@ void PLIST_InitBG0_3DParticle( PLIST_WORK *work )
   GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS , GX_BGMODE_0 , GX_BG0_AS_3D );
   GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
           0, work->heapId, NULL );
-  GFL_BG_SetBGControl3D( 0 ); //NNS_g3dInitの中で表示優先順位変わる・・・
+  //↓を使うと表示もされてしまうのでSDK直叩き
+  //GFL_BG_SetBGControl3D( 0 ); //NNS_g3dInitの中で表示優先順位変わる・・・
+  G2_SetBG0Priority( 0 );
 
   G3X_EdgeMarking( TRUE );
   G3X_AntiAlias( TRUE );
@@ -832,6 +833,12 @@ void PLIST_InitBG0_3DParticle( PLIST_WORK *work )
                        &cam_target,
                        work->heapId );
       GFL_G3D_CAMERA_Switching( work->camera );
+
+  //エフェクトのため変更
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 ,
+                    GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ ,
+                    16 , 10 );
+
 
 	GFL_PTC_Init( work->heapId );
 
@@ -870,6 +877,11 @@ void PLIST_TermBG0_3DParticle( PLIST_WORK *work )
   GFL_G3D_Exit();
 
   GFL_BG_FreeBGControl( PLIST_BG_3D );
+
+  //エフェクトで設定したのを戻す
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
+                    GX_BLEND_PLANEMASK_BG3 ,
+                    16 , 10 );
 }
 
 //--------------------------------------------------------------------------
@@ -1275,15 +1287,29 @@ static void PLIST_InitMode( PLIST_WORK *work )
       const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
       if( itemNo == 0 )
       {
-        PLIST_MSG_CreateWordSet( work , work->msgWork );
-        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
-        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
-        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
-        PLIST_MSG_DeleteWordSet( work , work->msgWork );
         
+        //フォルムチェンジ前にReDrawParamが必要
         PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
         PLIST_SubBagItem( work , work->plData->item );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+
+
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
+        if( PLIST_DEMO_CheckGirathnaToOrigin( work , work->selectPokePara ) == TRUE )
+        {
+          //ギラティナ・フォルムチェンジ
+          PLIST_DEMO_ChangeGirathinaToOrigin( work , work->selectPokePara);
+          PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_FormChange );
+          work->demoType = PDT_GIRATHINA_TO_ORIGIN;
+        }
+        else
+        {
+          PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+        }
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+
         //ついでにモードをフィールドに戻してしまう
         work->plData->mode = PL_MODE_FIELD;
       }
@@ -1501,14 +1527,18 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
         {
           work->plData->ret_mode = PL_RET_BAG;
           
+          //フォルムチェンジ前にReDrawParamが必要
+          PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
+          PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+          
           PLIST_MSG_CreateWordSet( work , work->msgWork );
           PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
           PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
 
-          if( work->plData->item == ITEM_HAKKINDAMA &&
-              PP_Get( work->selectPokePara , ID_PARA_monsno , NULL ) == MONSNO_GIRATHINA )
+          if( PLIST_DEMO_CheckGirathnaToOrigin( work , work->selectPokePara ) == TRUE )
           {
             //ギラティナ・フォルムチェンジ
+            PLIST_DEMO_ChangeGirathinaToOrigin( work , work->selectPokePara);
             PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_FormChange );
             work->demoType = PDT_GIRATHINA_TO_ORIGIN;
           }
@@ -1517,9 +1547,6 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
             PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ExitCommon );
           }
           PLIST_MSG_DeleteWordSet( work , work->msgWork );
-          
-          PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
-          PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
         }
       }
       else
@@ -2832,15 +2859,28 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       }
       else
       {
-        PLIST_MSG_CreateWordSet( work , work->msgWork );
-        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
-        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , itemNo );
-        PLIST_MessageWaitInit( work , mes_pokelist_04_30 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
-        PLIST_MSG_DeleteWordSet( work , work->msgWork );
-        
+        //フォルムチェンジ前にReDrawParamが必要
         PP_Put( work->selectPokePara , ID_PARA_item , 0 );
         PLIST_AddBagItem( work , itemNo );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , itemNo );
+        
+        if( PLIST_DEMO_CheckGirathnaToAnother( work , work->selectPokePara ) == TRUE )
+        {
+          //ギラティナ・フォルムチェンジ
+          PLIST_DEMO_ChangeGirathinaToAnother( work , work->selectPokePara);
+          PLIST_MessageWaitInit( work , mes_pokelist_04_30 , TRUE , PLIST_MSGCB_FormChange );
+          work->demoType = PDT_GIRATHINA_TO_ANOTHER;
+        }
+        else
+        {
+          PLIST_MessageWaitInit( work , mes_pokelist_04_30 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+        }
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+        
       }
     }
     break;
@@ -3321,7 +3361,7 @@ void PLIST_UTIL_DrawValueStrFuncSys( PLIST_WORK *work , GFL_BMPWIN *bmpWin ,
 }
 
 #pragma mark [>message callback
-static void PLIST_MSGCB_ReturnSelectCommon( PLIST_WORK *work )
+void PLIST_MSGCB_ReturnSelectCommon( PLIST_WORK *work )
 {
   PLIST_MSG_CloseWindow( work , work->msgWork );
   work->mainSeq = PSMS_SELECT_POKE;
@@ -3462,7 +3502,16 @@ static void PLIST_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const int 
     }
     else
     {
+      BOOL isGirathinaToOrigin;
+      BOOL isGirathinaToAnother;
       PLIST_MSG_CloseWindow( work , work->msgWork );
+
+      //フォルムチェンジ前にReDrawParamが必要
+      PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
+      PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+
+      isGirathinaToOrigin = PLIST_DEMO_CheckGirathnaToOrigin( work , work->selectPokePara );
+      isGirathinaToAnother = PLIST_DEMO_CheckGirathnaToAnother( work , work->selectPokePara );
 
       PLIST_MSG_CreateWordSet( work , work->msgWork );
       PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , haveItemNo );
@@ -3472,17 +3521,52 @@ static void PLIST_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const int 
         //リストから開始なので戻る
         //ついでにモードをフィールドに戻してしまう
         work->plData->mode = PL_MODE_FIELD;
-        PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+        if( isGirathinaToOrigin == TRUE )
+        {
+          //ギラティナ・フォルムチェンジ(アナザー→オリジン
+          PLIST_DEMO_ChangeGirathinaToOrigin( work , work->selectPokePara);
+          PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_FormChange );
+          work->demoType = PDT_GIRATHINA_TO_ORIGIN;
+        }
+        else
+        if( isGirathinaToAnother == TRUE )
+        {
+          //ギラティナ・フォルムチェンジ(オリジン→アナザー
+          PLIST_DEMO_ChangeGirathinaToAnother( work , work->selectPokePara);
+          PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_FormChange );
+          work->demoType = PDT_GIRATHINA_TO_ANOTHER;
+        }
+        else
+        {
+          PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+        }
       }
       else
       {
         //アイテムから来たので終了
         work->plData->ret_mode = PL_RET_BAG;
-        PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ExitCommon );
+        if( isGirathinaToOrigin == TRUE )
+        {
+          //ギラティナ・フォルムチェンジ(アナザー→オリジン
+          PLIST_DEMO_ChangeGirathinaToOrigin( work , work->selectPokePara);
+          PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_FormChange );
+          work->demoType = PDT_GIRATHINA_TO_ORIGIN;
+        }
+        else
+        if( isGirathinaToAnother == TRUE )
+        {
+          //ギラティナ・フォルムチェンジ(オリジン→アナザー
+          PLIST_DEMO_ChangeGirathinaToAnother( work , work->selectPokePara);
+          PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_FormChange );
+          work->demoType = PDT_GIRATHINA_TO_ANOTHER;
+        }
+        else
+        {
+          PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ExitCommon );
+        }
       }
       PLIST_MSG_DeleteWordSet( work , work->msgWork );
 
-      PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
     }
   }
   else
@@ -3618,6 +3702,7 @@ static void PLIST_MSGCB_TakeMail_ConfirmCB( PLIST_WORK *work , const int retVal 
 
 static void PLIST_MSGCB_FormChange( PLIST_WORK *work )
 {
+  PLIST_MSG_CloseWindow( work , work->msgWork );
   work->mainSeq = PSMS_FORM_CHANGE_INIT;
 }
 #pragma mark [>force exit

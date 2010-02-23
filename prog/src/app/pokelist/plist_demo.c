@@ -11,11 +11,14 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "item/item.h"
 
 #include "pokelist_gra.naix"
+#include "msg/msg_pokelist.h"
 
 #include "plist_sys.h"
 #include "plist_plate.h"
+#include "plist_message.h"
 #include "plist_demo.h"
 
 #include "pokelist_particle_lst.h"
@@ -25,6 +28,11 @@
 //======================================================================
 #pragma mark [> define
 #define PLIST_DEMO_EFFECT_WORK_SIZE (0x5000)
+
+///パーティクルが出て、この時間だけ経ったらポケモンアイコン変更
+#define PLIST_DEMO_CHANGE_WAIT_GIRATHINA		(65)
+///パーティクルが出て、この時間だけ経ったらポケモンアイコン変更
+#define PLIST_DEMO_CHANGE_WAIT_SHEIMI			(38)
 
 //======================================================================
 //	enum
@@ -52,12 +60,17 @@ void PLIST_DEMO_DemoInit( PLIST_WORK *work )
 {
   GF_ASSERT_MSG(work->demoType!=PDT_NONE,"Plz set demotype!\n");
   
+  work->demoCnt = 0;
+  work->demoIsChange = FALSE;
+  
+  //チラツキを消すため一回非表示
+  GFL_BG_SetVisible( PLIST_BG_3D , FALSE ); 
   //BGを3D用に切り替える
   PLIST_TermBG0_2DMenu( work );
   PLIST_InitBG0_3DParticle( work );
 
   PLIST_DEMO_InitEffect( work );
-	G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE, 0x3f, 31, 0);
+	//G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE, 0x3f, 31, 0);
   
   work->mainSeq = PSMS_FORM_CHANGE_MAIN;
 }
@@ -71,7 +84,49 @@ void PLIST_DEMO_DemoTerm( PLIST_WORK *work )
   //3DをBG用に切り替える
   PLIST_TermBG0_3DParticle( work );
   PLIST_InitBG0_2DMenu( work );
-  work->mainSeq = PSMS_FADEOUT;
+
+  //多分2Dの初期化で消えてるのでリロード
+  PLIST_MSG_ReloadWinFrame( work , work->msgWork );
+
+  if( work->demoType == PDT_GIRATHINA_TO_ORIGIN )
+  {
+    PLIST_CallbackFunc cbFunc = PLIST_MSGCB_ExitCommon;
+    
+    if( work->plData->mode == PL_MODE_FIELD )
+    {
+      //リストから持たせる→バッグ帰り
+      cbFunc = PLIST_MSGCB_ReturnSelectCommon;
+    }
+    
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+    PLIST_MessageWaitInit( work , mes_pokelist_12_01 , TRUE , cbFunc );
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+  }
+  else
+  if( work->demoType == PDT_GIRATHINA_TO_ANOTHER )
+  {
+    PLIST_CallbackFunc cbFunc = PLIST_MSGCB_ExitCommon;
+    
+    if( work->plData->mode == PL_MODE_FIELD )
+    {
+      //リストから持たせる→バッグ帰り
+      cbFunc = PLIST_MSGCB_ReturnSelectCommon;
+    }
+    
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+    PLIST_MessageWaitInit( work , mes_pokelist_12_01 , TRUE , cbFunc );
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+  }
+  else
+	if( work->demoType == PDT_SHEIMI_TO_SKY )
+  {
+  }
+  else
+  {
+    work->mainSeq = PSMS_FADEOUT;
+  }
 }
 
 //--------------------------------------------------------------
@@ -79,6 +134,25 @@ void PLIST_DEMO_DemoTerm( PLIST_WORK *work )
 //--------------------------------------------------------------
 void PLIST_DEMO_DemoMain( PLIST_WORK *work )
 {
+  if( work->demoIsChange == FALSE )
+  {
+    work->demoCnt++;
+    if( work->demoCnt == 1 )
+    {
+      //チラツキを消すため一回非表示にした面の再表示
+      GFL_BG_SetVisible( PLIST_BG_3D , TRUE ); 
+    }
+    if( work->demoCnt > work->demoChangeTimming )
+    {
+      PLIST_PLATE_ResetParam( work , work->plateWork[work->pokeCursor] , work->selectPokePara , 0 );
+      work->demoIsChange = TRUE;
+    }
+  }
+  if( GFL_PTC_GetEmitterNum( work->ptcWork ) <= 0 )
+  {
+    work->mainSeq = PSMS_FORM_CHANGE_TERM;
+  }
+  
   GFL_PTC_CalcAll();
   
   //3D描画  
@@ -90,11 +164,6 @@ void PLIST_DEMO_DemoMain( PLIST_WORK *work )
   GFL_G3D_DRAW_End();
 
   //GFL_PTC_Main();
-
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-  {
-    work->mainSeq = PSMS_FORM_CHANGE_TERM;
-  }
 }
   
 
@@ -109,16 +178,18 @@ static void PLIST_DEMO_InitEffect( PLIST_WORK *work )
   u32 fileIdx = NARC_pokelist_gra_demo_sheimi_spa;
   //リソース読み込み
   if( work->demoType == PDT_GIRATHINA_TO_ORIGIN ||
-      work->demoType == PDT_GIRATHINA_TO_NORMAL )
+      work->demoType == PDT_GIRATHINA_TO_ANOTHER )
   {
     fileIdx = NARC_pokelist_gra_demo_girathina_spa;
     emmitNum = DEMO_GIRATHINA_SPAMAX;
+    work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_GIRATHINA;
   }
   else
 	if( work->demoType == PDT_SHEIMI_TO_SKY )
   {
     fileIdx = NARC_pokelist_gra_demo_sheimi_spa;
     emmitNum = DEMO_SHEIMI_SPAMAX;
+    work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_SHEIMI;
   }
   effRes = GFL_PTC_LoadArcResource( ARCID_POKELIST , fileIdx , work->heapId );
   
@@ -136,7 +207,7 @@ static void PLIST_DEMO_InitEffect( PLIST_WORK *work )
     VecFx32 pos;
     PLIST_PLATE_GetPlatePosition( work , work->plateWork[work->pokeCursor] , &pos2d );
     pos2d.x = pos2d.x-( (PLIST_PLATE_WIDTH /2)*8 ) + PLIST_PLATE_POKE_POS_X;
-    pos2d.y = pos2d.y-( (PLIST_PLATE_HEIGHT/2)*8 ) + PLIST_PLATE_POKE_POS_Y;
+    pos2d.y = pos2d.y-( (PLIST_PLATE_HEIGHT/2)*8 ) + PLIST_PLATE_POKE_POS_Y + 12;
     pos.x = FX32_CONST(pos2d.x)/PLIST_DEMO_SCALE;
     pos.y = FX32_CONST(pos2d.y)/PLIST_DEMO_SCALE;
     pos.z = FX32_CONST(64);
@@ -156,4 +227,66 @@ static void PLIST_DEMO_TermEffect( PLIST_WORK *work )
 
   GFL_PTC_Delete( work->ptcWork );
   GFL_NET_Align32Free( work->effTempWork );
+}
+
+
+//--------------------------------------------------------------
+//	ギラティナ：アナザー→オリジンチェック
+//--------------------------------------------------------------
+const BOOL PLIST_DEMO_CheckGirathnaToOrigin( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  if( PP_Get( work->selectPokePara , ID_PARA_monsno , NULL ) != MONSNO_GIRATHINA )
+  {
+    //ギラティナじゃない！
+    return FALSE;
+  }
+  if( PP_Get( work->selectPokePara , ID_PARA_item , NULL ) != ITEM_HAKKINDAMA )
+  {
+    //はっきんだま持ってない！
+    return FALSE;
+  }
+  if( PP_Get( work->selectPokePara , ID_PARA_form_no , NULL ) != FORMNO_GIRATHINA_ANOTHER )
+  {
+    //アナザーフォルムじゃない！
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+//	ギラティナ：アナザー→オリジン変更(再描画はしない
+//--------------------------------------------------------------
+void PLIST_DEMO_ChangeGirathinaToOrigin( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  PP_ChangeFormNo( pp , FORMNO_GIRATHINA_ORIGIN );
+}
+
+//--------------------------------------------------------------
+//	ギラティナ：オリジン→アナザーチェック
+//--------------------------------------------------------------
+const BOOL PLIST_DEMO_CheckGirathnaToAnother( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  if( PP_Get( work->selectPokePara , ID_PARA_item , NULL ) == ITEM_HAKKINDAMA )
+  {
+    //はっきんだま持ってる！
+    return FALSE;
+  }
+  if( PP_Get( work->selectPokePara , ID_PARA_monsno , NULL ) != MONSNO_GIRATHINA )
+  {
+    //ギラティナじゃない！
+    return FALSE;
+  }
+  if( PP_Get( work->selectPokePara , ID_PARA_form_no , NULL ) != FORMNO_GIRATHINA_ORIGIN )
+  {
+    //オリジンフォルムじゃない！
+    return FALSE;
+  }
+  return TRUE;
+}
+//--------------------------------------------------------------
+//	ギラティナ：オリジン→アナザー変更(再描画はしない
+//--------------------------------------------------------------
+void PLIST_DEMO_ChangeGirathinaToAnother( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  PP_ChangeFormNo( pp , FORMNO_GIRATHINA_ANOTHER );
 }

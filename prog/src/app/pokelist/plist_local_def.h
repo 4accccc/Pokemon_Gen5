@@ -202,12 +202,12 @@ typedef enum
 
 //DEMO用
 #define PLIST_DEMO_EMMITER_MAX (3)
-#define PLIST_DEMO_SCALE (42)
+#define PLIST_DEMO_SCALE (38)
 typedef enum
 {
   PDT_NONE,
   PDT_GIRATHINA_TO_ORIGIN,
-  PDT_GIRATHINA_TO_NORMAL,
+  PDT_GIRATHINA_TO_ANOTHER,
   PDT_SHEIMI_TO_SKY,
 }PLIST_DEMO_TYPE;
 
@@ -314,11 +314,14 @@ struct _PLIST_WORK
 	//taskmenuリソース
 	APP_TASKMENU_RES *taskres;
 	
-	//3D用
+	//3D用(フォルムチェンジ演出用
   GFL_G3D_CAMERA    *camera;
-	PLIST_DEMO_TYPE demoType;
 	void*         effTempWork;
 	GFL_PTC_PTR		ptcWork;
+	PLIST_DEMO_TYPE demoType;
+	u8   demoCnt;
+	u8   demoChangeTimming;
+	BOOL demoIsChange;
 
   PLIST_DATA *plData;
 #if USE_DEBUGWIN_SYSTEM

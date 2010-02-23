@@ -696,12 +696,12 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
             if( place2 == 30002 )
             {
               //ÉQÅ[ÉÄì‡åä∑
-              memoId = trmemo_02_01_01;
+              memoId = trmemo_02_02_01;
             }
             else
             {
               //í èÌïﬂäl
-              memoId = trmemo_02_02_01;
+              memoId = trmemo_02_01_01;
             }
           }
           else
