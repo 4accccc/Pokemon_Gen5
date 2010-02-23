@@ -166,27 +166,27 @@ EVENT_START		ev_bg_c01gym0101_pokezou
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG( msg_c01gym0101_statue_01 , POS_DOWN )
+		_PLAINWIN_MSG_DOWN( msg_c01gym0101_statue_01 )
 		
 	//ジムバッジを取得している場合
 	ELSE
 	
-		//分岐処理・C02到着していないなら
-		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
+		//分岐処理・R03プラズマイベント前
+		IF $WK_SCENE_R03_PLASMA == 0 THEN
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG( msg_c01gym0101_statue_02 , POS_DOWN )
+			_PLAINWIN_MSG_DOWN( msg_c01gym0101_statue_02 )
 		
-		//C02到着している場合
+		//分岐処理・R03プラズマイベント後
 		ELSE
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG( msg_c01gym0101_statue_03 , POS_DOWN )
+			_PLAINWIN_MSG_DOWN( msg_c01gym0101_statue_03 )
 			
 		ENDIF
-	
+		_PLAINWIN_CLOSE()
 	ENDIF
 	
 	_LAST_KEYWAIT()	
-	_SYSWIN_CLOSE()
+	
 
 EVENT_END
 

@@ -60,6 +60,11 @@ EVENT_START		ev_scene_c03p07_tvt_01
 	_PLAYER_NAME(0)
 	_PLAINWIN_MSG_DOWN( msg_c03p07_tvt_01 )
 	_PLAINWIN_CLOSE()
+	
+	//TVトランシーバー起動
+	_CALL_TVT_DEMO( 3 )
+	
+	//トランシーバーイベント終了
 	$WK_SCENE_C03P07 = 3
 	
 EVENT_END
@@ -78,8 +83,14 @@ EVENT_START		ev_pos_c03p07_rival_01
 
 	//自機を押してライバルが１歩進む
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
+	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_move )
 	_OBJ_ANIME_WAIT()
+
+	_CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	
+	_CAMERA_MOVE( 6917,0,933888,1343488,0,3178496,60 )
 
 	//やあ　アーティさんに　いどんだけれど
 	_PLAYER_NAME(0)
@@ -109,6 +120,12 @@ EVENT_START		ev_pos_c03p07_rival_01
 
 	//ライバルのOBJ削除
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//カメラ戻す
+	_CAMERA_RECV_MOVE( 30 )//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
 
 	//========================================/
 	

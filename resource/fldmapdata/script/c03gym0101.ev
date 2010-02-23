@@ -123,18 +123,28 @@ EVENT_START	ev_bg_c03gym0101_statue_01
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG( msg_c03gym0101_statue_01 , POS_DOWN )
+		_PLAINWIN_MSG_DOWN( msg_c03gym0101_statue_01 )
 	
 	//ジムバッジを取得している場合
 	ELSE
+		//C04プラズマ団イベント発生前
+		IF $WK_SCENE_C04 == 0 THEN
 		
-		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG( msg_c03gym0101_statue_02 , POS_DOWN )
+			_PLAYER_NAME( 0 )
+			_PLAINWIN_MSG_DOWN( msg_c03gym0101_statue_02 )
+			
+		//C04プラズマ団イベント後
+		ELSE
+		
+			_PLAYER_NAME( 0 )
+			_PLAINWIN_MSG_DOWN( msg_c03gym0101_statue_03 )
+		
+		ENDIF
 		
 	ENDIF
 	
 	_LAST_KEYWAIT()	
-	_SYSWIN_CLOSE()
+	_PLAINWIN_CLOSE()
 	
 EVENT_END
 

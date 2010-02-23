@@ -239,6 +239,46 @@ EVENT_START		ev_pos_r04_rival_01
 	_MSGWIN_CLOSE()
 	
 	//【仮】ライバルと戦闘
+	//水タイプを選択している場合
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_MIZU THEN
+	
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_RIVAL_10, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+	
+	//草タイプを選択している場合
+	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_RIVAL_11, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+
+	//炎タイプを選択している場合
+	ELSE
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_RIVAL_12, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+	
+	ENDIF
+	
 	
 	//ありがとう！　なんとなく　わかったことがある
 	_BALLOONWIN_OBJMSG( msg_r04_black_03 , R04_RIVAL_01 )
@@ -281,9 +321,19 @@ EVENT_START		ev_pos_r04_rival_01
 	
 	//===================================//
 	
+	//TVT着信音を再生
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
+	
 	//アララギ博士からの連絡
 	_PLAINWIN_MSG_DOWN( msg_r04_tvt_01 )
 	_PLAINWIN_CLOSE()
+	
+	//TVトランシーバー起動
+	_CALL_TVT_DEMO( 4 )
+
 	
 EVENT_END
 

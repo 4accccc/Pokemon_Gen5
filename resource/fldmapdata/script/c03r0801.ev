@@ -173,7 +173,7 @@ _TALK_OBJ_START()
 	ELSE
 
 		IF $LWK_WIN3 == 0 THEN
-			_BALLOONWIN_OBJMSG( msg_c03r0801_ex_01 , C03R0801_CREW_01 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_01a )
 		ELSE
 			//せんないの　トレーナーさんは……
 			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_01 )

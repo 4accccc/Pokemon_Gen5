@@ -111,7 +111,7 @@ _TALK_OBJ_START()
 			//けしき　ウキウキ
 			_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_01 )
 			//所持金の表示
-			_GOLD_WIN_OPEN( 1, 1 )
+			_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
 			
 			_YES_NO_WIN( SCWK_ANSWER )
 			_BALLOONWIN_CLOSE()

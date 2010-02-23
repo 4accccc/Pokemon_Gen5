@@ -117,34 +117,34 @@ EVENT_END
 EVENT_START		ev_bg_c06gym0101_pokezou
 	_TALK_OBJ_START()
 	
-	
-	//分岐：ジムバッジ取得しているか、いないか
+	//ジムバッジを持っているのかを判定
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_06 )
 
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG( msg_c06gym0101_statue_01 , POS_DOWN )
-		
+		_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_01 )
+	
 	//ジムバッジを取得している場合
 	ELSE
-	
-		//【仮】分岐処理・フラグの設定が仮
-		IF FLAG_OFF( SYS_FLAG_ARRIVE_C07 ) THEN
-			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG( msg_c06gym0101_statue_02 , POS_DOWN )
+		//C02ライトストーン入手後
+		IF $WK_SCENE_C02 == 7 THEN
 		
-		//C02到着している場合
-		ELSE
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG( msg_c06gym0101_statue_03 , POS_DOWN )
+			_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_03 )
 			
+		//C02ライトストーン入手前
+		ELSE
+		
+			_PLAYER_NAME( 0 )
+			_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_02 )
+		
 		ENDIF
-	
+		
 	ENDIF
 	
 	_LAST_KEYWAIT()	
-	_SYSWIN_CLOSE()
+	_PLAINWIN_CLOSE()
 
 EVENT_END
 
