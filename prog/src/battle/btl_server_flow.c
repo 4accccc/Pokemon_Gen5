@@ -8421,6 +8421,11 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
   const BTL_POKEPARAM* bpp;
   u16 i;
 
+  // トレーナー戦は1.5倍
+  if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER ){
+    baseExp = (baseExp * 15) / 10;
+  }
+
   // ワーククリア
   for(i=0; i<BTL_PARTY_MEMBER_MAX; ++i){
     GFL_STD_MemClear( &result[i], sizeof(CALC_EXP_WORK) );
@@ -8540,6 +8545,8 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
         result[i].exp = BTL_CALC_MulRatio( result[i].exp, FX32_CONST(1.5f) );
         result[i].fBonus = TRUE;
       }
+
+      OS_TPrintf("Gパワー前経験値 = %d\n", result[i].exp);
 
       // Ｇパワー補正
       result[i].exp = GPOWER_Calc_Exp( result[i].exp );
@@ -8673,7 +8680,8 @@ static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16
 
   numer = _calc_adjust_level_sub( numer_int );
   denom = _calc_adjust_level_sub( denom_int );
-  ratio = (numer / (denom >> FX32_SHIFT));
+  ratio = FX32_CONST(numer) / denom;
+  OS_TPrintf( "numer=%x, denom=%x, ratio=%08x\n", numer, denom, ratio );
 
   result = BTL_CALC_MulRatio( base_exp, ratio ) + 1;
   expMargin = BPP_GetExpMargin( bpp );
@@ -8686,6 +8694,22 @@ static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16
 
   return result;
 }
+/**
+ *  経験値補正計算サブ(2.5乗）
+ */
+static inline u32 _calc_adjust_level_sub( u32 val )
+{
+  fx32  fx_val, fx_sqrt;
+  u64 result;
+
+  fx_val = FX32_CONST( val );
+  fx_sqrt = FX_Sqrt( fx_val );
+  val *= val;
+  result = (val * fx_sqrt) >> FX32_SHIFT;
+
+  return result;
+}
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -8719,21 +8743,6 @@ static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
       }
     }
   }
-}
-/**
- *  経験値補正計算サブ
- */
-static inline u32 _calc_adjust_level_sub( u32 val )
-{
-  fx32  fx_val, fx_sqrt;
-  u64 result;
-
-  fx_val = FX32_CONST( val );
-  fx_sqrt = FX_Sqrt( fx_val );
-  val *= val;
-  result = (val * fx_sqrt) >> FX32_SHIFT;
-
-  return result;
 }
 
 
