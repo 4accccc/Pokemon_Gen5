@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-15T19:26:30"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T12:45:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1480" top="263" right="2185" bottom="891" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="311" right="2001" bottom="939" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -371,8 +371,8 @@
 　Black→demo_01b
 ・続けてdemo_02</comment>
 		<attribute name="キャラ指定">演出</attribute>
-		<language name="JPN" width="256">しゅぼわん！！▼</language>
-		<language name="JPN_KANJI" width="256">しゅぼわん！！▼</language>
+		<language name="JPN" width="256">バアアニンッグッ！！▼</language>
+		<language name="JPN_KANJI" width="256">バアアニンッグッ！！▼</language>
 	</row>
 
 	<row id="msg_d08r0801_demo_01b" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
