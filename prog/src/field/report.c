@@ -43,9 +43,16 @@
 #define	BMPWIN_DATE_FRM		( GFL_BG_FRAME1_S )
 #define	BMPWIN_DATE_PX		( 3 )
 #define	BMPWIN_DATE_PY		( 7 )
-#define	BMPWIN_DATE_SX		( 13 )
+#define	BMPWIN_DATE_SX		( 10 )
 #define	BMPWIN_DATE_SY		( 2 )
 #define	BMPWIN_DATE_PAL		( 0 )
+// 時間
+#define	BMPWIN_DATE2_FRM	( GFL_BG_FRAME1_S )
+#define	BMPWIN_DATE2_PX		( 14 )
+#define	BMPWIN_DATE2_PY		( 7 )
+#define	BMPWIN_DATE2_SX		( 5 )
+#define	BMPWIN_DATE2_SY		( 2 )
+#define	BMPWIN_DATE2_PAL	( 0 )
 // 場所
 #define	BMPWIN_PLACE_FRM	( GFL_BG_FRAME1_S )
 #define	BMPWIN_PLACE_PX		( 3 )
@@ -64,21 +71,21 @@
 #define	BMPWIN_ZUKAN_FRM	( GFL_BG_FRAME1_S )
 #define	BMPWIN_ZUKAN_PX		( 17 )
 #define	BMPWIN_ZUKAN_PY		( 16 )
-#define	BMPWIN_ZUKAN_SX		( 11 )
+#define	BMPWIN_ZUKAN_SX		( 12 )
 #define	BMPWIN_ZUKAN_SY		( 2 )
 #define	BMPWIN_ZUKAN_PAL	( 0 )
 // プレイ時間
 #define	BMPWIN_TIME_FRM		( GFL_BG_FRAME1_S )
 #define	BMPWIN_TIME_PX		( 3 )
 #define	BMPWIN_TIME_PY		( 18 )
-#define	BMPWIN_TIME_SX		( 15 )
+#define	BMPWIN_TIME_SX		( 16 )
 #define	BMPWIN_TIME_SY		( 2 )
 #define	BMPWIN_TIME_PAL		( 0 )
 // 前回のレポート
 #define	BMPWIN_REPORT_FRM	( GFL_BG_FRAME1_S )
-#define	BMPWIN_REPORT_PX	( 3 )
+#define	BMPWIN_REPORT_PX	( 1 )
 #define	BMPWIN_REPORT_PY	( 21 )
-#define	BMPWIN_REPORT_SX	( 26 )
+#define	BMPWIN_REPORT_SX	( 30 )
 #define	BMPWIN_REPORT_SY	( 2 )
 #define	BMPWIN_REPORT_PAL	( 0 )
 
@@ -86,6 +93,7 @@
 enum {
 	BMPWIN_TITLE = 0,		// タイトル
 	BMPWIN_DATE,				// 日付
+	BMPWIN_DATE2,				// 時間
 	BMPWIN_PLACE,				// 場所
 	BMPWIN_BADGE,				// ジムバッジ
 	BMPWIN_ZUKAN,				// 図鑑
@@ -203,6 +211,10 @@ static const u8 BmpWinData[][6] =
 	{	// 日付
 		BMPWIN_DATE_FRM, BMPWIN_DATE_PX, BMPWIN_DATE_PY,
 		BMPWIN_DATE_SX, BMPWIN_DATE_SY, BMPWIN_DATE_PAL
+	},
+	{	// 時間
+		BMPWIN_DATE2_FRM, BMPWIN_DATE2_PX, BMPWIN_DATE2_PY,
+		BMPWIN_DATE2_SX, BMPWIN_DATE2_SY, BMPWIN_DATE2_PAL
 	},
 	{	// 場所
 		BMPWIN_PLACE_FRM, BMPWIN_PLACE_PX, BMPWIN_PLACE_PY,
@@ -563,22 +575,23 @@ static void InitBmp( REPORT_WORK * wk )
 	{
 		RTCDate	date;
 		RTC_GetDate( &date );
-		WORDSET_RegisterNumber( wset, 0, date.year, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-		WORDSET_RegisterNumber( wset, 1, date.month, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-		WORDSET_RegisterNumber( wset, 2, date.day, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+		WORDSET_RegisterNumber( wset, 0, date.year, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 1, date.month, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 2, date.day, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
 	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE], wk->que, 0, 0, exp, font, FCOL_P00WN );
 	GFL_STR_DeleteBuffer( str );
+	// 時間
 	str = GFL_MSG_CreateString( mman, REPORT_STR_03 );
 	{
 		RTCTime	time;
 		RTC_GetTime( &time );
-		WORDSET_RegisterNumber( wset, 0, time.hour, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
-		WORDSET_RegisterNumber( wset, 1, time.minute, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+		WORDSET_RegisterNumber( wset, 0, time.hour, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 1, time.minute, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE], wk->que, 72, 0, exp, font, FCOL_P00WN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE2], wk->que, 0, 0, exp, font, FCOL_P00WN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 場所
@@ -593,12 +606,9 @@ static void InitBmp( REPORT_WORK * wk )
 
 	// ジムバッジ
 	str = GFL_MSG_CreateString( mman, REPORT_STR_05 );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_BADGE], wk->que, 0, 0, str, font, FCOL_P00WN );
-	GFL_STR_DeleteBuffer( str );
-	str = GFL_MSG_CreateString( mman, REPORT_STR_06 );
 	{
 		int	num = MISC_GetBadgeCount( GAMEDATA_GetMiscWork(gd) );
-		WORDSET_RegisterNumber( wset, 0, num, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+		WORDSET_RegisterNumber( wset, 0, num, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
 	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_BADGE], wk->que, 0, 0, exp, font, FCOL_P00WN );
@@ -606,12 +616,9 @@ static void InitBmp( REPORT_WORK * wk )
 
 	// 図鑑
 	str = GFL_MSG_CreateString( mman, REPORT_STR_07 );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_ZUKAN], wk->que, 0, 0, str, font, FCOL_P00WN );
-	GFL_STR_DeleteBuffer( str );
-	str = GFL_MSG_CreateString( mman, REPORT_STR_08 );
 	{
 		u16	num = ZUKANSAVE_GetZukanPokeSeeCount( GAMEDATA_GetZukanSave(gd), wk->heapID );
-		WORDSET_RegisterNumber( wset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+		WORDSET_RegisterNumber( wset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
 	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_ZUKAN], wk->que, 0, 0, exp, font, FCOL_P00WN );
@@ -619,16 +626,13 @@ static void InitBmp( REPORT_WORK * wk )
 
 	// プレイ時間
 	str = GFL_MSG_CreateString( mman, REPORT_STR_09 );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TIME], wk->que, 0, 0, str, font, FCOL_P00WN );
-	GFL_STR_DeleteBuffer( str );
-	str = GFL_MSG_CreateString( mman, REPORT_STR_10 );
 	{
 		PLAYTIME * ptime = SaveData_GetPlayTime( sv );
-		WORDSET_RegisterNumber( wset, 0, PLAYTIME_GetHour(ptime), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
-		WORDSET_RegisterNumber( wset, 1, PLAYTIME_GetMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+		WORDSET_RegisterNumber( wset, 0, PLAYTIME_GetHour(ptime), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 1, PLAYTIME_GetMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TIME], wk->que, 80, 0, exp, font, FCOL_P00WN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TIME], wk->que, 0, 0, exp, font, FCOL_P00WN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 前回のレポート
@@ -636,20 +640,13 @@ static void InitBmp( REPORT_WORK * wk )
 	if( SaveControl_IsOverwritingOtherData(sv) == FALSE && SaveData_GetExistFlag(sv) == TRUE ){
 		PLAYTIME * ptime = SaveData_GetPlayTime( sv );
 		str = GFL_MSG_CreateString( mman, REPORT_STR_11 );
-		PRINT_UTIL_PrintColor( &wk->win[BMPWIN_REPORT], wk->que, 0, 0, str, font, FCOL_P00WN );
-		GFL_STR_DeleteBuffer( str );
-		str = GFL_MSG_CreateString( mman, REPORT_STR_12 );
-		WORDSET_RegisterNumber( wset, 0, PLAYTIME_GetSaveYear(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-		WORDSET_RegisterNumber( wset, 1, PLAYTIME_GetSaveMonth(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-		WORDSET_RegisterNumber( wset, 2, PLAYTIME_GetSaveDay(ptime ), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+		WORDSET_RegisterNumber( wset, 0, PLAYTIME_GetSaveYear(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 1, PLAYTIME_GetSaveMonth(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 2, PLAYTIME_GetSaveDay(ptime ), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 3, PLAYTIME_GetSaveHour(ptime), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 4, PLAYTIME_GetSaveMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 		WORDSET_ExpandStr( wset, exp, str );
-		PRINT_UTIL_PrintColor( &wk->win[BMPWIN_REPORT], wk->que, 104, 0, exp, font, FCOL_P00WN );
-		GFL_STR_DeleteBuffer( str );
-		str = GFL_MSG_CreateString( mman, REPORT_STR_13 );
-		WORDSET_RegisterNumber( wset, 0, PLAYTIME_GetSaveHour(ptime), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
-		WORDSET_RegisterNumber( wset, 1, PLAYTIME_GetSaveMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-		WORDSET_ExpandStr( wset, exp, str );
-		PRINT_UTIL_PrintColor( &wk->win[BMPWIN_REPORT], wk->que, 176, 0, exp, font, FCOL_P00WN );
+		PRINT_UTIL_PrintColor( &wk->win[BMPWIN_REPORT], wk->que, 0, 0, exp, font, FCOL_P00WN );
 		GFL_STR_DeleteBuffer( str );
 	}
 
