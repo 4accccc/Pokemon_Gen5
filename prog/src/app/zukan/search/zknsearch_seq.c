@@ -404,9 +404,10 @@ static int MainSeq_ResetSort( ZKNSEARCHMAIN_WORK * wk )
 static int MainSeq_StartSort( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( wk->loadingCnt == 0 ){
-//		PMSND_PlaySE( ZKNSEARCH_SE_LOADING );
+		PMSND_PlaySE( ZKNSEARCH_SE_LOADING );
 		ZKNSEARCHMAIN_LoadingWindowOn( wk );
 		ZKNSEARCHBMP_SearchStart( wk );
+		ZKNSEARCHBMP_ClearMainPageLabel( wk );
 	}
 
 	if( wk->loadingCnt == (60*2+1) ){
@@ -419,6 +420,7 @@ static int MainSeq_StartSort( ZKNSEARCHMAIN_WORK * wk )
 		if( wk->dat->listMax != 0 ){
 			ZKNSEARCHBMP_SearchComp( wk );
 		}else{
+			PMSND_StopSE();
 			PMSND_PlaySE( ZKNSEARCH_SE_ERROR );
 			ZKNSEARCHBMP_SearchError( wk );
 		}
@@ -434,10 +436,12 @@ static int MainSeq_ResultSort( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( ZKNSEARCHUI_Result( wk ) == TRUE ){
 		if( wk->dat->listMax != 0 ){
+			PMSND_StopSE();
 			wk->dat->retMode = ZKNSEARCH_RET_START;
 			return MAINSEQ_END_SET;
 		}
 		ZKNSEARCHMAIN_LoadingWindowOff( wk );
+		ZKNSEARCHBMP_PutMainPageLabel( wk );
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
 			CURSORMOVE_CursorOnOffSet( wk->cmwk, FALSE );
 		}else{

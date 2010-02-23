@@ -14,6 +14,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 #include "system/wipe.h"
+#include "sound/pm_sndsys.h"
 #include "savedata/zukan_wp_savedata.h"
 
 #include "../zukan_common.h"
@@ -391,7 +392,7 @@ static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk )
 	switch( wk->demoSeq ){
 	case 0:
 		if( wk->demoCnt == DEMO_SCROLL_COUNT ){
-			// SE
+			PMSND_PlaySE( SEQ_SE_SYS_76 );
 			wk->demoCnt = 0;
 			wk->demoSeq++;
 			break;
@@ -405,7 +406,7 @@ static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk )
 
 	case 1:
 		if( wk->demoCnt == DEMO_SCROLL_END_WAIT ){
-			// SE
+			PMSND_PlaySE( SEQ_SE_SYS_77 );
 			wk->demoCnt = 0;
 			wk->demoSeq++;
 			break;

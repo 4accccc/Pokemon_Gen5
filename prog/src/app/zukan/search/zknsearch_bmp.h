@@ -50,6 +50,8 @@ extern void ZKNSEARCHBMP_PrintUtilTrans( ZKNSEARCHMAIN_WORK * wk );
 
 
 extern void ZKNSEARCHBMP_PutMainPage( ZKNSEARCHMAIN_WORK * wk );
+extern void ZKNSEARCHBMP_PutMainPageLabel( ZKNSEARCHMAIN_WORK * wk );
+extern void ZKNSEARCHBMP_ClearMainPageLabel( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHBMP_PutRowPage( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHBMP_PutRowItem( ZKNSEARCHMAIN_WORK * wk );
 extern void ZKNSEARCHBMP_PutNamePage( ZKNSEARCHMAIN_WORK * wk );
