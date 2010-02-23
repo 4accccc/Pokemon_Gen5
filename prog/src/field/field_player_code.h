@@ -30,5 +30,7 @@
 #define FIELD_PLAYER_REQBIT_PC_AZUKE (1<<6)
 ///カットイン自機表示にする
 #define FIELD_PLAYER_REQBIT_CUTIN (1<<7)
+///自機をダイビング状態に変更
+#define FIELD_PLAYER_REQBIT_DIVING (1<<8)
 ///ビット最大
-#define FIELD_PLAYER_REQBIT_MAX (8)
+#define FIELD_PLAYER_REQBIT_MAX (9)

@@ -137,6 +137,9 @@ extern u16 FIELD_PLAYER_GetKeyDir( const FIELD_PLAYER* fld_player, int key );
 extern void FIELD_PLAYER_SetNaminori( FIELD_PLAYER * fld_player );
 extern void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER * fld_player );
 
+// ê[äCãCñAê›íË
+extern void FIELD_PLAYER_SetBubble( FIELD_PLAYER *  );
+
 //éQè∆ÅAê›íË
 extern void FIELD_PLAYER_GetPos(
 		const FIELD_PLAYER *fld_player, VecFx32 *pos );

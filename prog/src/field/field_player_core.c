@@ -22,6 +22,7 @@
 #include "field_sound.h"
 #include "fldeff_namipoke.h"
 #include "fldeff_kemuri.h"
+#include "fldeff_bubble.h"
 
 #include "field_player_core.h"
 
@@ -117,6 +118,7 @@ static void gjikiReq_SetItemGetHero( FIELD_PLAYER_CORE *player_core );
 static void gjikiReq_SetReportHero( FIELD_PLAYER_CORE *player_core );
 static void gjikiReq_SetPCAzukeHero( FIELD_PLAYER_CORE *player_core );
 static void gjikiReq_SetCutInHero( FIELD_PLAYER_CORE *player_core );
+static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core );
 static void gjiki_PlayBGM( FIELD_PLAYER_CORE *player_core );
 
 
@@ -431,6 +433,7 @@ void FIELD_PLAYER_CORE_UpdateRequest( FIELD_PLAYER_CORE * player_core )
     gjikiReq_SetReportHero,
     gjikiReq_SetPCAzukeHero,
     gjikiReq_SetCutInHero,
+    gjikiReq_SetDiving, //FIELD_PLAYER_REQBIT_SWIM
   };
 
   
@@ -1059,7 +1062,9 @@ static void gjikiReq_SetSwim( FIELD_PLAYER_CORE *player_core )
     MMDL_ChangeOBJCode( mmdl, code );
   }
   
-  FIELD_PLAYER_CORE_SetMoveForm( player_core, PLAYER_MOVE_FORM_SWIM );
+  if(FIELD_PLAYER_CORE_GetMoveForm( player_core ) != PLAYER_MOVE_FORM_SWIM ){
+    FIELD_PLAYER_CORE_SetMoveForm( player_core, PLAYER_MOVE_FORM_SWIM );
+  }
   gjiki_PlayBGM( player_core );
   
   if( FIELD_PLAYER_CORE_GetEffectTaskWork( player_core ) == NULL ){ //”gæ‚èƒ|ƒPƒ‚ƒ“
@@ -1138,6 +1143,24 @@ static void gjikiReq_SetCutInHero( FIELD_PLAYER_CORE *player_core )
 {
   FIELD_PLAYER_CORE_ChangeDrawForm( player_core, PLAYER_DRAW_FORM_CUTIN );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DIVINGó‘Ô‚ğİ’è
+ */
+//-----------------------------------------------------------------------------
+static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core )
+{
+  FLDEFF_CTRL *fectrl;
+  fectrl = FIELDMAP_GetFldEffCtrl( player_core->fieldWork );
+  
+  // ‚Ü‚¸”gæ‚èó‘Ô‚É‚µ‚Ä
+  gjikiReq_SetSwim( player_core );
+
+  //‹C–A‚ğİ’è
+  FLDEFF_BUBBLE_SetMMdl( player_core->fldmmdl, fectrl );
+}
+
 
 //--------------------------------------------------------------
 /**

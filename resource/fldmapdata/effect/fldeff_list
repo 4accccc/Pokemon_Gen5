@@ -77,6 +77,7 @@ G3D_FE_ANMICA = shibuki01.ica \
 G3D_FE_ANMIMA = taki_land.ima \
   iwakudaki.ima \
   iaigiri.ima \
+  awa.ima \
   $(EFFENC_BIRD)bird_shadow.ima
 
 #---------------------------------------------------------------
@@ -98,7 +99,8 @@ G3D_FE_ANMITA = shibuki01.ita \
   $(EFFENC_BIRD)bird_shadow.ita \
   $(EFFENC_CAVE)soil_smoke.ita \
   iwakudaki.ita \
-  iaigiri.ita
+  iaigiri.ita \
+  awa.ita
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　ivaアニメ定義
@@ -176,6 +178,7 @@ G3D_FE_MDL = kage.imd \
   $(EFF_D06DENKI)d6_yuka_biri01.imd \
   $(EFF_D06DENKI)d6_ishikage01.imd \
   iaigiri.imd \
+  awa.imd \
   sc_mark_u.imd \
   sc_mark_l.imd \
   sc_mark_ul.imd \

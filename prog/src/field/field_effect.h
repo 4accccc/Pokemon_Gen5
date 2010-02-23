@@ -42,6 +42,7 @@ typedef enum
   FLDEFF_PROCID_FISHING_LURE, ///<釣りイベントのルアー
   FLDEFF_PROCID_BTRAIN, ///<バトルトレイン
   FLDEFF_PROCID_HIDE, ///<動作モデル隠れ蓑
+  FLDEFF_PROCID_BUBBLE, ///<水泡
 
   //ここからエフェクトエンカウント用
   FLDEFF_PROCID_ENC_SGRASS, ///<エフェクトエンカウント用　短い草
