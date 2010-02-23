@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T19:44:04"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T22:33:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -448,11 +448,11 @@
 		<comment>♂
 ・続けてblack_06</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『もくてきを　もって
+		<language name="JPN" width="256">アデク『うむ！　もくてきを　もって
 たびすることは　すばらしいことだ▼
 それで　チャンピオンに　なって
 どうする　つもりかね？▼</language>
-		<language name="JPN_KANJI" width="256">アデク『目的を　もって
+		<language name="JPN_KANJI" width="256">アデク『うむ！　目的を　もって
 旅することは　すばらしいことだ▼
 それで　チャンピオンに　なって
 どうする　つもりかね？▼</language>
@@ -565,7 +565,7 @@
 こたえも　いろいろ　ある▼
 きみと　わたしの　かんがえる
 チャンピオンが　ちがっていても▽
-そういうものだと　おもってほしい▼</language>
+そういうものだと　おもってくれい！▼</language>
 		<language name="JPN_KANJI" width="256">さて　若者よ▼
 君のように
 強さを　求める者が　いれば▼
@@ -576,7 +576,7 @@
 答えも　いろいろ　ある▼
 きみと　わたしの　考える
 チャンピオンが　違っていても▽
-そういうものだと　思ってほしい▼</language>
+そういうものだと　思ってくれい！▼</language>
 	</row>
 
 	<row id="msg_r05_champion_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -587,11 +587,11 @@
 		<language name="JPN" width="256">アデク『ひとと　ポケモンの　ように
 ぜんぜん　ちがう　そんざいが▽
 おたがいを　みとめあって▽
-いっしょに　いるのは　すばらしいよな</language>
+いっしょに　いるのは　すばらしいな！</language>
 		<language name="JPN_KANJI" width="256">アデク『人と　ポケモンの　ように
 全然　違う　存在が▽
 お互いを　認め合って▽
-一緒に　いるのは　すばらしいよな</language>
+一緒に　いるのは　すばらしいな！</language>
 	</row>
 
 	<row id="msg_r05_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
