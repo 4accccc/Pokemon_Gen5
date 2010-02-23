@@ -553,6 +553,7 @@ static const u32 menu_screen_table[] = {
  NARC_field_menu_menu_bg_5_NSCR,    // ユニオン
  NARC_field_menu_menu_bg_4_NSCR,    // ポケモン・図鑑両方無し
  NARC_field_menu_menu_bg_5_NSCR,    // 図鑑無し
+ NARC_field_menu_menu_bg_5_NSCR,    // 遊覧船
 };
 
 
@@ -1020,10 +1021,14 @@ static int _get_nowcursor_pos( int x, int y )
 
 // 上下左右の順
 static const u8 move_table[][8][4]={
- {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,5,2,3,},{2,4,4,5,},{3,5,4,5},{0xff,6,6,6,},{0xff,6,6,6,},},  // 6個
- {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,5,2,3,},{2,4,4,5,},{3,5,4,5},{0xff,6,6,6,},{0xff,6,6,6,},},  // 6個
  {{0,2,0,1,},{1,3,0,1,},{0,2,2,3,},{1,3,2,3,},{6,6,6,6,},{6,6,6,6},{0xfe,6,6,6,},{0xfe,6,6,6,},},  // 4個
  {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,3,2,3,},{2,4,4,4,},{6,6,6,6},{   4,6,6,6,},{   4,6,6,6,},},  // 5個
+ {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,5,2,3,},{2,4,4,5,},{3,5,4,5},{0xff,6,6,6,},{0xff,6,6,6,},},  // 6個
+};
+
+// menuTypeに対応した
+static const u8 menu_type_table[]={
+  6,6,4,5,5,
 };
 
 // カーソル位置をXYに振り分けるテーブル
@@ -1056,7 +1061,7 @@ static BOOL _move_cursor( FIELD_MENU_WORK* work, int move )
     GF_ASSERT_MSG(0,"カーソルが範囲外 (%d,%d)", work->cursorPosX, work->cursorPosY);
   }
 
-  ret = move_table[work->menuType][now][move];
+  ret = move_table[menu_type_table[work->menuType]-4][now][move];
 
   
   if(now!=ret){     // 特殊移動1(0xffの場合はY座標的に1段上に移動する）
