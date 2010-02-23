@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-19T20:58:11"/>
+	<create user="taya" host="W00146" date="2010-02-24T01:08:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1418,6 +1418,26 @@
 あたらなかった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]には
 当たらなかった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NotEffect_Ichigeki">
+		<comment>一撃ワザがレベル差により失敗</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]には
+ぜんぜん　きいてない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]には
+全然　効いてない！</language>
+	</row>
+	<row id="BTL_STRID_SET_NotEffect_Ichigeki_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]には
+ぜんぜん　きいてない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]には
+全然　効いてない！</language>
+	</row>
+	<row id="BTL_STRID_SET_NotEffect_Ichigeki_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]には
+ぜんぜん　きいてない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]には
+全然　効いてない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Item_DamageShrink">

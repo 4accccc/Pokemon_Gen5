@@ -556,6 +556,7 @@ static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx exCode 
 static void scPut_WazaFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scPut_WazaAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, WazaID waza );
 static void scput_WazaNoEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
+static void scput_WazaNoEffectIchigeki( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
 static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage, BOOL critical_flag, BOOL plural_hit_flag );
 static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
@@ -7326,7 +7327,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
         scput_WazaNoEffect( wk, target );
       }
       else if( atkLevel < defLevel ){
-        scput_WazaNoEffect( wk, target );
+        scput_WazaNoEffectIchigeki( wk, target );
       }
       else if( scProc_checkWazaDamageAffinity(wk, attacker, target, wazaParam) == BTL_TYPEAFF_0 ){
         scput_WazaNoEffect( wk, target );
@@ -7344,10 +7345,12 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
 
           if( korae_cause == BPP_KORAE_NONE ){
             scproc_Ichigeki_Succeed( wk, target );
-            scproc_CheckDeadCmd( wk, target );
           }else{
             scproc_Ichigeki_Korae( wk, target, korae_cause, damage );
           }
+
+          scproc_WazaDamageReaction( wk, attacker, target, wazaParam, BTL_TYPEAFF_100, damage, FALSE );
+          scproc_CheckDeadCmd( wk, target );
 
         }
         else
@@ -9033,6 +9036,16 @@ static void scput_WazaNoEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defend
 {
   SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(defender) );
 }
+//--------------------------------------------------------------------------
+/**
+ * 「○○には  ぜんぜんきいてない」表示
+ */
+//--------------------------------------------------------------------------
+static void scput_WazaNoEffectIchigeki( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender )
+{
+  SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NotEffect_Ichigeki, BPP_GetID(defender) );
+}
+
 //--------------------------------------------------------------------------
 /**
  * [Put] ワザによるダメージ（単体）
