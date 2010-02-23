@@ -2365,8 +2365,8 @@ void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, 
   ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
   GFL_CLWK_DATA cellInitData;
   int drawn;
-  GFL_POINT pokemonpos[]={{36,92},{68,92},{100,92} , {36+128,92},{68+128,92},{100+128,92}};
-  GFL_POINT pokemonposl[]={{24,40},{24,88},{24,136}, {20+128,36},{20+128,84},{20+128,132} };
+  GFL_POINT pokemonpos[]={{30,96},{64,96},{96,96} , {36+128+4,96},{68+128+4,96},{100+128+4,96}};
+  GFL_POINT pokemonposl[]={{24,46},{24,94},{24,142}, {20+128,46},{20+128,94},{20+128,142} };
 
   POKETRADE_2D_GTSPokemonIconReset(pWork, side, no);
   

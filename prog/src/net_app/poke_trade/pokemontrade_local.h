@@ -197,6 +197,21 @@ typedef enum
 typedef void (StateFunc)(POKEMON_TRADE_WORK* pState);
 
 
+
+typedef enum
+{
+  POKEMONTORADE_SEQ_NONE,
+  POKEMONTORADE_SEQ_MISERUOK,  //あいてに　みせるのはこのポケモンで　いいですか？
+  POKEMONTORADE_SEQ_MISERUNG,
+  POKEMONTORADE_SEQ_KAISHIOK,  //このポケモンで　こうかんをかいしします　よろしいですか？
+  POKEMONTORADE_SEQ_KAISHING,
+  
+  
+  
+}POKEMONTORADE_SEQ_ENUM;
+
+
+
 typedef enum
 {
   PLT_POKEICON,   //ARCID_POKEICON
@@ -563,6 +578,7 @@ struct _POKEMON_TRADE_WORK{
   GFL_CLACTPOS AddPos;
   POKEMONTRADE_TYPE type;
   PROGVAL_PEZIER_WORK aCutMullRom;
+  APP_PRINTSYS_COMMON_WORK trgWork;  //キーの制御を行うワーク
   s16 SuckedCount;
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
@@ -571,7 +587,9 @@ struct _POKEMON_TRADE_WORK{
   u8 bByebyeNoJump;
   u8 bEncountNoJump;
   u8 timerErupted[2]; //顔文字消去タイマー
-  APP_PRINTSYS_COMMON_WORK trgWork;  //キーの制御を行うワーク
+  u8 NegoWaitTime;  //NEGOを遅らせるタイマー
+  u8 pokemonGTSSeq;  //GTSシーケンス番号
+  u8 pokemonGTSSeqSend;  //送るGTSシーケンス番号
 } ;
 
 
@@ -671,6 +689,7 @@ extern void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BO
 extern void IRC_POKETRADE_PosChangeSubStatusIcon(POKEMON_TRADE_WORK* pWork,int sel,BOOL bReset);
 extern void POKEMONTRADE_VisibleFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo, BOOL bVisible);
 extern void POKE_GTS_VisibleFaceIcon(POKEMON_TRADE_WORK* pWork,BOOL bVisible);
+extern void POKEMON_TRADE_MaskCommon(POKEMON_TRADE_WORK* pWork);
 
 
 #if _TRADE_DEBUG
@@ -750,6 +769,7 @@ typedef enum {
   _NETCMD_SCROLLBAR,
   _NETCMD_FACEICON,
   _NETCMD_POKEMONCOLOR,
+  _NETCMD_GTSSEQNO,
 } _POKEMON_TRADE_SENDCMD;
 
 
@@ -761,7 +781,9 @@ extern void POKE_GTS_SelectStatusMessageDelete(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_EndWork(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_Select6MessageInit(POKEMON_TRADE_WORK* pWork);
 extern int POKE_GTS_IsSelect(POKEMON_TRADE_WORK* pWork,int boxno,int index);
+extern BOOL POKEMONTRADEPROC_IsTimeWaitSelect(POKEMON_TRADE_WORK* pWork);
 
 
 

@@ -101,6 +101,7 @@ static void _scrollResetAndIconReset(POKEMON_TRADE_WORK* pWork);
 static void _recvFriendFaceIcon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvPokemonColor(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static u8* _setPokemonColorBuffer(int netID, void* pWk, int size);
+static void _recvSeqNegoNo(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 
 ///通信コマンドテーブル
@@ -120,6 +121,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvFriendScrollBar, NULL}, //_NETCMD_SCROLLBAR
   {_recvFriendFaceIcon, NULL},//_NETCMD_FACEICON
   {_recvPokemonColor, _setPokemonColorBuffer},//_NETCMD_POKEMONCOLOR
+  {_recvSeqNegoNo,   NULL},    ///_NETCMD_GTSSEQNO 
 
 };
 
@@ -166,6 +168,27 @@ BOOL POKEMONTRADEPROC_IsTriSelect(POKEMON_TRADE_WORK* pWork)
 //  case POKEMONTRADE_TYPE_GTSNEGO: ///< GTSネゴシエーション
 //  case POKEMONTRADE_TYPE_GTS: ///< GTS
   default:
+    ret = TRUE;
+    break;
+  }
+  return ret;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   時間の負荷をかけるかどうかのモードかどうか
+ * @param   POKEMON_TRADE_WORK
+ * @retval  TRUEならwait
+ */
+//------------------------------------------------------------------
+
+BOOL POKEMONTRADEPROC_IsTimeWaitSelect(POKEMON_TRADE_WORK* pWork)
+{
+  BOOL ret = FALSE;
+  
+  switch(pWork->type){
+  case POKEMONTRADE_TYPE_GTSNEGO: ///< GTSネゴシエーション
     ret = TRUE;
     break;
   }
@@ -501,6 +524,23 @@ static u8* _setPokemonColorBuffer(int netID, void* pWk, int size)
   return (u8*)pWork->FriendPokemonCol[1];
 }
 
+
+
+//_NETCMD_GTSSEQNO
+static void _recvSeqNegoNo(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  const u8* pBuff = pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  pWork->pokemonGTSSeq = pBuff[0];
+
+}
 
 
 
@@ -2455,7 +2495,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       if(POKEMONTRADEPROC_IsTriSelect(pWork)){
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
-        _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
+        _CHANGE_STATE(pWork, POKE_GTS_Select6MessageInit);
       }
       else{
         _CHANGE_STATE(pWork, _changeMenuOpen);
@@ -2706,7 +2746,7 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL
           u16 oyaName[5] = {L'デ',L'バ',L'ッ',L'グ',0xFFFF};
           POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(MONSNO_MARIRU+i, 0, GFL_HEAPID_APP);
           u32 ret = POKE_PERSONAL_GetParam(ppd,POKEPER_ID_sex);
-          int monsno = GFUser_GetPublicRand(200)+1;
+          int monsno = GFUser_GetPublicRand(10)+100;
           PP_SetupEx(pp, monsno, i+j, 123456,PTL_SETUP_POW_AUTO, ret);
           PP_Put( pp , ID_PARA_oyaname_raw , (u32)oyaName );
           PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex(  pWork->pMy ) );

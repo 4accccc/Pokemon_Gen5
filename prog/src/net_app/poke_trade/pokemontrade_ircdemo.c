@@ -277,10 +277,18 @@ static void _apperFlgCheck(POKEMON_TRADE_WORK* pWork, u8* msg,u8* nojump,MYSTATU
   POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
   int id = PP_Get(pp,ID_PARA_id_no,NULL);
   int monsno = PP_Get(pp,ID_PARA_monsno_egg,NULL);
+  int frm = PP_Get( pp, ID_PARA_form_no, NULL );
+  BOOL nojimpflg;
+
+  {
+    POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(monsno, frm, pWork->heapID);
+    nojimpflg = POKE_PERSONAL_GetParam(ppd, POKEPER_ID_no_jump);
+    POKE_PERSONAL_CloseHandle(ppd);
+  }
   if( PP_Get(pp,ID_PARA_tamago_flag,NULL) ){
     *nojump = TRUE;
   }
-  else if((monsno == MONSNO_DHIGUDA) || (monsno == MONSNO_DAGUTORIO)){
+  else if(nojimpflg){
     *nojump = TRUE;
   }
   if(MyStatus_GetID(pMystatus) != id){

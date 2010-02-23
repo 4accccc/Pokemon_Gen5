@@ -717,7 +717,7 @@ void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork,POKEMON_
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
     GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ, 8 );
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ, -8 );
 
 //    POKETRADE2D_IconAllGray(pWork,TRUE);
 
@@ -926,9 +926,9 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
   int side,poke;
   MYSTATUS* aStBuf[GTS_PLAYER_WORK_NUM];
 
-  aStBuf[0] = pWork->pMy;
-  aStBuf[1] = pWork->pFriend;
-
+  //Ž©•ª‚Æ‘ŠŽè‚Í‚³‚©‚³‚Ü
+  aStBuf[0] = pWork->pFriend;
+  aStBuf[1] = pWork->pMy;
 
 
 #if 1
@@ -936,13 +936,13 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
   for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
     pWork->TriStatusWin[side] =
       GFL_BMPWIN_Create(GFL_BG_FRAME1_S,
-                        side*16+ 1 , 0, 14, 2, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
+                        side*16+ 1 , 0, 14, 3, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
 
     pWin = pWork->TriStatusWin[side];
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_27, pWork->pExStrBuf );
     WORDSET_RegisterPlayerName( pWork->pWordSet, 0,  aStBuf[side]  );
     WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 0, 4, pWork->pStrBuf, pWork->pFontHandle);
     GFL_BMPWIN_TransVramCharacter(pWin);
     GFL_BMPWIN_MakeScreen(pWin);
   }
@@ -953,7 +953,7 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
   for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
     pWork->TriStatusWin[side+2] =
       GFL_BMPWIN_Create(GFL_BG_FRAME1_S,
-                        side*16 + 5 , 3, 9, 17, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
+                        side*16 + 5 , 3, 9, 18, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
     pWin = pWork->TriStatusWin[side+2];
     GFL_FONTSYS_SetColor( FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 0x0 );
     for(poke = 0;poke < GTS_NEGO_POKESLT_MAX;poke++){
@@ -963,10 +963,10 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
 
         POKETRADE_2D_GTSPokemonIconSet(pWork, side, poke, pp,FALSE);
         
-        _pokeNickNameMsgDisp(pp, pWin, 0, 6*8*poke+8 , bEgg, pWork);
+        _pokeNickNameMsgDisp(pp, pWin, 0, 6*8*poke+8+4 , bEgg, pWork);
         if(!bEgg){
-          _pokeSexMsgDisp(pp, pWin, 7*8, 6*8*poke + 3*8, pWork);
-          _pokeLvMsgDisp(pp, pWin, 0, 6*8*poke + 3*8, pWork);
+          _pokeSexMsgDisp(pp, pWin, 7*8, 6*8*poke + 3*8+4, pWork);
+          _pokeLvMsgDisp(pp, pWin, 0, 6*8*poke + 3*8+4, pWork);
         }
       }
     }
@@ -992,3 +992,36 @@ void POKETRADE_MESSAGE_SixStateDelete(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+
+void POKEMON_TRADE_MaskCommon(POKEMON_TRADE_WORK* pWork)
+{
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ, -8 );
+
+  {
+    G2S_SetWnd0InsidePlane(
+      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_BG1|
+      GX_WND_PLANEMASK_BG2|
+      GX_WND_PLANEMASK_BG3|
+      GX_WND_PLANEMASK_OBJ,
+      TRUE );
+    G2S_SetWnd0Position( 0, 0, 255, 192-3*8 );
+    G2S_SetWnd1InsidePlane(
+      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_BG1|
+      GX_WND_PLANEMASK_BG2|
+      GX_WND_PLANEMASK_BG3|
+      GX_WND_PLANEMASK_OBJ,
+      TRUE );
+    G2S_SetWnd1Position( 255, 0, 0, 192-3*8 );
+    G2S_SetWndOutsidePlane(
+      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_BG1|
+      GX_WND_PLANEMASK_BG2|
+      GX_WND_PLANEMASK_BG3|
+      GX_WND_PLANEMASK_OBJ,
+      FALSE );
+    GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
+  }
+}
