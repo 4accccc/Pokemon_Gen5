@@ -14,6 +14,8 @@
 
 #include "system/vm_cmd.h"
 
+#include "pm_version.h"
+
 #include "scrcmd.h"
 #include "script_def.h"
 #include "script_local.h"
@@ -854,10 +856,16 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
   u16 win_idx = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
 
+#if 0
   if( PM_VERSION == VERSION_BLACK ){
     msg_id = msg_id_b;
   }
-  
+#else
+  if( GetVersion() == VERSION_BLACK ){
+    msg_id = msg_id_b;
+  }
+#endif
+
   if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
