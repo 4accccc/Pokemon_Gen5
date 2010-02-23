@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T19:21:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T22:46:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1439" top="330" right="2144" bottom="950" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -302,15 +302,24 @@
 プラズマだんに　いたんだ▼
 だけどな　みんなが　おなじ
 かんがえって　おかしいだろ？▼
+というか　みんなで　いる
+いみが　ないように　おもえてさ……▼
 だから　じぶんは　どうしたいか
-かんがえるため　やめたのさ</language>
-		<language name="JPN_KANJI" width="256">……ここだけの　はなし▼
+かんがえるため　だんを　ぬけたのさ▼
+この　はなしは　へやの
+はんたいがわに　いる▽
+アイツには　ないしょ　だぜ</language>
+		<language name="JPN_KANJI" width="256">……ここだけの　話▼
 オレ　むかし
-プラズマだんに　いたんだ▼
-だけどな　みんなが　おなじ
-かんがえって　おかしいだろ？▼
+プラズマ団に　いたんだ▼
+だけどな　みんなが　同じ
+考えって　おかしいだろ？▼
+というか　みんなで　いる
+意味がないように　思えてさ……▼
 だから　じぶんは　どうしたいか
-かんがえるため　やめたのさ</language>
+考えるため　団を　ぬけたのさ▼
+この話は　部屋の　反対側にいる
+アイツには　内緒だぜ</language>
 	</row>
 
 	<row id="msg_c08r0302_man2a_01">
@@ -320,10 +329,15 @@
 青年２</attribute>
 		<language name="JPN" width="256">……ここだけの　はなし▼
 オレは　ポケモン　よわいから
-プラズマだんに　さんせい　なんだ</language>
-		<language name="JPN_KANJI" width="256">……ここだけの　はなし▼
-オレは　ポケモン　よわいから
-プラズマだんに　さんせい　なんだ</language>
+プラズマだんに　さんせい　なんだ▼
+この　はなしは　へやの
+はんたいがわに　いる▽
+アイツには　ないしょ　だぜ</language>
+		<language name="JPN_KANJI" width="256">……ここだけの　話▼
+オレは　ポケモン　弱いから
+プラズマ団に　賛成なんだ▼
+この話は　部屋の　反対側にいる
+アイツには　内緒だぜ</language>
 	</row>
 
 	<flowchart-group-list>
