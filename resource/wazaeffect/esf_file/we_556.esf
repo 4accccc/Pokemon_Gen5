@@ -4,7 +4,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_556.spa
 #001
 %00
-カメラ移動	追従	防御側	16	0	8
+カメラ移動	追従	防御側	12	0	8
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_556
 パーティクル再生	w_556	W_556_556_TSURARA_DOWN	防御側	方向無し	2:0:0	1:1:1	1
