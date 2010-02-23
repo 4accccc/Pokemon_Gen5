@@ -86,6 +86,10 @@ GMEVENT * WIFI_BSUBWAY_EVENT_Start( GAMESYS_WORK *gsys, WIFI_BSUBWAY_MODE mode )
   p_wk->param.mode = mode;
   p_wk->param.p_gamesystem = gsys;
 
+  if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys))){
+    GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(gsys));
+  }
+
   return p_event;
 }
 

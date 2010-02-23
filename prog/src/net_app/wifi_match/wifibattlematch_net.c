@@ -3194,24 +3194,27 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk)
 	      }
 	      else
 	      { 
-        p_wk->seq = SEQ_CREATE_RESULT;
+          p_wk->seq = SEQ_CREATE_RESULT;
         }
 	    }
 	    break;
 
     case SEQ_CREATE_RESULT:
-      if( state != DWC_GDB_STATE_IDLE )
-      { 
-        WIFIBATTLEMATCH_NETERR_SetGdbState( &p_wk->error, state );
-        DEBUG_NET_Printf( "INIT:Create Wait error \n" );
-        p_wk->is_gdb_start  = FALSE;
-        DwcRap_Gdb_Finalize( p_wk );
-        return TRUE;
-      }
-      else
-      { 
-        DEBUG_NET_Printf( "INIT:Create Wait\n" );
-        p_wk->seq = SEQ_CREATE_END;
+      {
+        state = DWC_GdbGetState();
+        if( state != DWC_GDB_STATE_IDLE )
+        { 
+          WIFIBATTLEMATCH_NETERR_SetGdbState( &p_wk->error, state );
+          DEBUG_NET_Printf( "INIT:Create Wait error \n" );
+          p_wk->is_gdb_start  = FALSE;
+          DwcRap_Gdb_Finalize( p_wk );
+          return TRUE;
+        }
+        else
+        { 
+          DEBUG_NET_Printf( "INIT:Create Wait\n" );
+          p_wk->seq = SEQ_CREATE_END;
+        }
       }
       break;
 	

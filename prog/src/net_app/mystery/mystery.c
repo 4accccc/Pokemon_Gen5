@@ -18,6 +18,7 @@
 #include "sound/pm_sndsys.h"
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
+#include "system/ds_system.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -28,6 +29,8 @@
 #include "item/item.h"
 #include "item_icon.naix"
 #include "system/poke2dgra.h"
+#include "script_message.naix"
+#include "msg/script/msg_common_scr.h"
 
 //セーブデータ
 #include "savedata/mystery_data.h"
@@ -314,6 +317,9 @@ typedef struct
 	//共通で使うキュー
 	PRINT_QUE				          *p_que;
 
+	//共通で使うエラーメッセージ
+	GFL_MSGDATA	          		*p_err_msg;
+
 	//共通で使うメッセージ
 	GFL_MSGDATA	          		*p_msg;
 
@@ -389,6 +395,10 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 static void SEQFUNC_DisConnectEnd( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_DisConnectReturn( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+static void SEQFUNC_RestrictUGC( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_EnableWireless( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
 //-------------------------------------
 ///	UTIL  Mystery_utilのモジュールをパックしたもの
 //=====================================
@@ -526,6 +536,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_MYSTERYGIFT );
 	p_wk->p_que			= PRINTSYS_QUE_Create( HEAPID_MYSTERYGIFT );
 	p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_mystery_dat, HEAPID_MYSTERYGIFT );
+	p_wk->p_err_msg	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, HEAPID_MYSTERYGIFT );
 	p_wk->p_word	= WORDSET_Create( HEAPID_MYSTERYGIFT );
 
   //モジュール作成
@@ -569,6 +580,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 
 	//共通モジュールの破棄
 	WORDSET_Delete( p_wk->p_word );
+	GFL_MSG_Delete( p_wk->p_err_msg );
 	GFL_MSG_Delete( p_wk->p_msg );
 	PRINTSYS_QUE_Delete( p_wk->p_que );
 	GFL_FONT_Delete( p_wk->p_font );
@@ -1135,10 +1147,25 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
           }
           else
           { 
-            //通常時
-            MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_002, MYSTERY_TEXT_TYPE_STREAM );
-            MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_YESNO_INIT );
-            *p_seq  = SEQ_MSG_WAIT;
+            if( !DS_SYSTEM_IsAvailableWireless() )
+            { 
+              //DSの無線設定で通信不可のとき
+              MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_EnableWireless );
+            }
+#if 0
+            else if( DS_SYSTEM_IsRestrictUGC() )
+            { 
+              //ペアレンタルコントロールで送受信拒否しているとき
+              MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_RestrictUGC );
+            }
+#endif
+            else
+            { 
+              //通常時  受け取れる
+              MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_002, MYSTERY_TEXT_TYPE_STREAM );
+              MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_YESNO_INIT );
+              *p_seq  = SEQ_MSG_WAIT;
+            }
           }
         }
         else if( ret == 1 )
@@ -2320,6 +2347,78 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 
   //終了
   MYSTERY_SEQ_End( p_seqwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ペアレンタルコントロールでユーザー作成コンテンツの送受信を拒否していた場合
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_RestrictUGC( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_MSG,
+    SEQ_WAIT_MSG,
+  };
+
+  MYSTERY_WORK  *p_wk     = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_MSG:
+    //@TODO
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_err_msg, msg_common_wireless_off_keywait, MYSTERY_TEXT_TYPE_STREAM );
+
+    *p_seq  = SEQ_WAIT_MSG;
+    break;
+  
+  case SEQ_WAIT_MSG:
+    if( MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
+    {
+      MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	DSの無線通信設定で通信負荷にしていた場合
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_EnableWireless( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_MSG,
+    SEQ_WAIT_MSG,
+  };
+
+  MYSTERY_WORK  *p_wk     = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_MSG:
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_err_msg, msg_common_wireless_off_keywait, MYSTERY_TEXT_TYPE_STREAM );
+
+    *p_seq  = SEQ_WAIT_MSG;
+    break;
+  
+  case SEQ_WAIT_MSG:
+    if( MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
+    {
+      MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+    }
+    break;
+  }
 }
 
 //=============================================================================

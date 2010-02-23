@@ -23,12 +23,15 @@
 #include "system/wipe.h"
 #include "system/bmp_menulist.h"
 #include "app/app_keycursor.h"
+#include "system/ds_system.h"
 
 #include "arc_def.h"
 #include "battle_championship.naix"
 #include "message.naix"
 #include "font/font.naix"
 #include "msg/msg_battle_championship.h"
+#include "script_message.naix"
+#include "msg/script/msg_common_scr.h"
 
 #include "title/title.h"
 #include "net_app/irc_battle.h"
@@ -83,6 +86,7 @@ typedef struct
   WBM_TEXT_WORK    *text;
   GFL_FONT        *fontHandle;
   GFL_MSGDATA     *msgHandle;
+  GFL_MSGDATA     *scr_msgHandle;
   PRINT_QUE       *taskMenuQue;
 
   //シーケンス管理
@@ -125,6 +129,7 @@ static void BATTLE_CHAMPIONSHIP_InitMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk );
 static void BATTLE_CHAMPIONSHIP_TermMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk );
 static void BATTLE_CHAMPIONSHIP_UpdateMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk );
 static void BATTLE_CHAMPIONSHIP_ShowMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk  , const u16 msgNo );
+static void BATTLE_CHAMPIONSHIP_ShowErrMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk  , const u16 msgNo );
 static const BOOL BATTLE_CHAMPIONSHIP_IsFinishMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk );
 
 //-------------------------------------
@@ -144,15 +149,18 @@ static const u32 BATTLE_CHAMPIONSHIP_UpdateFirstMenu( BATTLE_CHAMPIONSHIP_WORK *
 //-------------------------------------
 ///	シーケンス関数
 //=====================================
-static void SEQFUNC_Start( WBM_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_End( WBM_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_FadeIn( WBM_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_FadeOut( WBM_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_MainMenu( WBM_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_Info( WBM_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_WifiInfo( WBM_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_DigitalCard( WBM_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_End( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_FadeIn( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_FadeOut( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_MainMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_Info( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_WifiInfo( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_DigitalCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+static void SEQFUNC_RestrictUGC( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_EnableWireless( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //--------------------------------------------------------------
 //  外部公開プロセス
@@ -280,6 +288,7 @@ static void BATTLE_CHAMPIONSHIP_InitMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk )
   p_wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , p_wk->heapId );
   
   p_wk->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_battle_championship_dat , p_wk->heapId );
+  p_wk->scr_msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, p_wk->heapId );
   
   p_wk->taskMenuQue = PRINTSYS_QUE_Create( p_wk->heapId );
   
@@ -293,6 +302,7 @@ static void BATTLE_CHAMPIONSHIP_TermMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 
   PRINTSYS_QUE_Delete( p_wk->taskMenuQue );
   
+  GFL_MSG_Delete( p_wk->scr_msgHandle );
   GFL_MSG_Delete( p_wk->msgHandle );
   GFL_FONT_Delete( p_wk->fontHandle );
 }
@@ -305,6 +315,10 @@ static void BATTLE_CHAMPIONSHIP_UpdateMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 static void BATTLE_CHAMPIONSHIP_ShowMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk  , const u16 msgNo )
 {
   WBM_TEXT_Print( p_wk->text, p_wk->msgHandle, msgNo, WBM_TEXT_TYPE_STREAM );
+}
+static void BATTLE_CHAMPIONSHIP_ShowErrMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk  , const u16 msgNo )
+{
+  WBM_TEXT_Print( p_wk->text, p_wk->scr_msgHandle, msgNo, WBM_TEXT_TYPE_STREAM );
 }
 
 static const BOOL BATTLE_CHAMPIONSHIP_IsFinishMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk )
@@ -663,8 +677,22 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         switch( ret )
         {
         case 0: //さんかする
-          WBM_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
-          p_wk->nextProcType = BCNP_WIFI_BATTLE;
+          if( !DS_SYSTEM_IsAvailableWireless() )
+          { 
+            //DSの無線設定で通信不可のとき
+            WBM_SEQ_SetNext( p_seqwk, SEQFUNC_EnableWireless );
+          }
+          else if( DS_SYSTEM_IsRestrictUGC() )
+          { 
+            //ペアレンタルコントロールで送受信拒否しているとき
+            WBM_SEQ_SetNext( p_seqwk, SEQFUNC_RestrictUGC );
+          }
+          else
+          { 
+            //接続できるとき
+            WBM_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
+            p_wk->nextProcType = BCNP_WIFI_BATTLE;
+          }
           break;
         case 1: //説明を聞く
           WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiInfo );
@@ -825,5 +853,77 @@ static void SEQFUNC_DigitalCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
 		}
 		break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ペアレンタルコントロールでユーザー作成コンテンツの送受信を拒否していた場合
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_RestrictUGC( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_MSG,
+    SEQ_WAIT_MSG,
+  };
+
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_MSG:
+    //@TODO
+    BATTLE_CHAMPIONSHIP_ShowErrMessage( p_wk, msg_common_wireless_off_keywait );
+    *p_seq  = SEQ_WAIT_MSG;
+    break;
+  
+    break;
+  case SEQ_WAIT_MSG:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( p_wk );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( p_wk ) == TRUE )
+    {
+      WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	DSの無線通信設定で通信負荷にしていた場合
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_EnableWireless( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_MSG,
+    SEQ_WAIT_MSG,
+  };
+
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_MSG:
+    BATTLE_CHAMPIONSHIP_ShowErrMessage( p_wk, msg_common_wireless_off_keywait );
+    *p_seq  = SEQ_WAIT_MSG;
+    break;
+  
+  case SEQ_WAIT_MSG:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( p_wk );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( p_wk ) == TRUE )
+    {
+      WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
+    }
+    break;
   }
 }

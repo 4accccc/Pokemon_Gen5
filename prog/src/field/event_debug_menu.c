@@ -94,6 +94,7 @@
 
 #include "debug/debug_mystery_card.h"
 #include "event_wifi_bsubway.h"
+#include "savedata/battle_box_save.h"
 
 FS_EXTERN_OVERLAY( d_iwasawa );
 
@@ -166,6 +167,7 @@ static BOOL debugMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugSecretItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk );
 
@@ -274,6 +276,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg },          //タマゴ作成
   { DEBUG_FIELD_MAKE_UNDATA,   debugMenuCallProc_DebugMakeUNData }, //国連データ作成
   { DEBUG_FIELD_MYSTERY_00, debugMenuCallProc_MakeMysteryCardList },//ふしぎなおくりものカード作成
+  { DEBUG_FIELD_STR41, debugMenuCallProc_SetBtlBox },  //不正チェックを通るポケモンを作成
 
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
@@ -2431,9 +2434,8 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
         int monsno = i+10;
         monsno = GFUser_GetPublicRand(300);
         OS_TPrintf("%d  %d %d作成\n",monsno, i, j);
-        PP_Setup(pp,  monsno , 30, PTL_SETUP_ID_AUTO);
+        PP_Setup(pp,  monsno , 100, MyStatus_GetID( myStatus ));
 
-        //以下の親名設定は、090827現在PP_Putで設定できないので、無理やりPPPにするnagihashi
         ppp = (POKEMON_PASO_PARAM  *)PP_GetPPPPointerConst( pp );
         PPP_Put( ppp , ID_PARA_oyaname_raw , (u32)name );
         PPP_Put( ppp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
@@ -2469,6 +2471,62 @@ static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk )
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   不正チェックを通るポケモンをバトルBOXへセットする
+ * @param   wk DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+
+static BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk )
+{
+#if 1
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys));
+  MYSTATUS *myStatus;
+  POKEMON_PARAM *pp;
+  POKEMON_PASO_PARAM  *ppp;
+  const STRCODE *name;
+  POKEPARTY *party = PokeParty_AllocPartyWork( HEAPID_FIELDMAP );
+  BATTLE_BOX_SAVE* btlbox = BATTLE_BOX_SAVE_GetBattleBoxSave( sv );
+  myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gameSys));
+  name = MyStatus_GetMyName( myStatus );
+
+  pp = PP_Create(100, 100, 123456, HEAPID_FIELDMAP);
+
+  {
+    static const int poke_tbl[] =
+    { 10, 11, 13, 16, 19, 21 };
+    int i;
+
+    static u16 poke_name[6] =
+      L"ポケモン";
+    poke_name[4]  = 0;
+    poke_name[5]  = 0xFFFF;
+
+
+    BATTLE_BOX_SAVE_InitWork(btlbox);
+    for(i=0;i < PokeParty_GetPokeCountMax(party);i++){
+
+        PP_Setup(pp,  poke_tbl[i] , 10, MyStatus_GetID( myStatus ));
+        ppp = (POKEMON_PASO_PARAM  *)PP_GetPPPPointerConst( pp );
+        PPP_Put( ppp , ID_PARA_oyaname_raw , (u32)name );
+        PPP_Put( ppp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+
+        PPP_Put( ppp , ID_PARA_nickname_raw, (u32)poke_name );
+
+        PokeParty_Add( party, pp );
+
+    }
+    BATTLE_BOX_SAVE_SetPokeParty( btlbox, party );
+  }
+  
+  GFL_HEAP_FreeMemory(pp);
+  GFL_HEAP_FreeMemory(party);
+#endif
+  return( FALSE );
+}
 
 
 //======================================================================
