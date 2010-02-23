@@ -150,7 +150,7 @@ GFL_PROC_RESULT Guru2Proc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk 
 
   GFL_PROC_LOCAL_Exit( g2call->local_procsys );
 
-  // プロセル用ワーク解放
+  // プロセス用ワーク解放
   GFL_PROC_FreeWork( proc );
 
   return GFL_PROC_RES_FINISH;

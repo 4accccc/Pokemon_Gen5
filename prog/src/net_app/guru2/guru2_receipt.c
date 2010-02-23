@@ -1272,6 +1272,7 @@ static void PadControl( GURU2RC_WORK *wk )
       }
     }
 
+  // キャンセル
   }else if(_get_key_trg()&PAD_BUTTON_B){
     // やめますか？
     if(GFL_NET_SystemGetCurrentID()){
@@ -1303,16 +1304,12 @@ static void PadControl( GURU2RC_WORK *wk )
       }
     }
   }
+  // 通常時
   else{
     if(wk->beacon_flag == GURU2COMM_BAN_NONE){
       if(GFL_NET_SystemGetCurrentID() == 0 && Union_App_GetMemberNum(_get_unionwork(wk))==wk->g2c->shareNum){
-        if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
-
-          u8 flag = GURU2COMM_BAN_NONE;
-          // 離脱禁止解除通達
-          Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
-//          Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
-        }
+        // 離脱禁止解除通達
+        Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
       }
     }
   }

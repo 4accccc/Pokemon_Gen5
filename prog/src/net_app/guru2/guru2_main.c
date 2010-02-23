@@ -2772,6 +2772,8 @@ static RET Guru2Subproc_EndTimingSync( GURU2MAIN_WORK *g2m )
 //      CommStateSetLimitNum( 1 );            // 接続最大人数を1人（ユニオンに戻るため）
 //      CommStateUnionBconCollectionRestart();
       OS_Printf("通信切断開始\n");
+      // 通信コマンドテーブル解放
+      GFL_NET_DelCommandTable( GFL_NET_CMD_GURUGURU );
       Union_App_Shutdown( _get_unionwork(g2m) );  // 通信切断開始
       g2m->seq_no = SEQNO_MAIN_END_CONNECT_CHECK;
     }
@@ -4105,6 +4107,9 @@ static void Disc_Update( GURU2MAIN_WORK *g2m )
   disc->draw_pos.z = disc->pos.z + disc->offs_egg.z + disc->offs.z;
 }
 
+// CALC3D_MTX_CreateRotに渡すための回転単位
+#define ROT_RADIAN    ( 65536/360 )
+
 //--------------------------------------------------------------
 /**
  * 皿描画
@@ -4125,7 +4130,8 @@ static void Disc_Draw( GURU2MAIN_WORK *g2m )
   VEC_Set( &status.trans, disc->draw_pos.x, disc->draw_pos.y, disc->draw_pos.z );
   VEC_Set( &status.scale, disc->scale.x, disc->scale.y, disc->scale.z );
 //  MTX_Identity33( &status.scale );
-  GFL_CALC3D_MTX_CreateRot( disc->rotate.x, disc->rotate.y, disc->rotate.z, &status.rotate );
+  GFL_CALC3D_MTX_CreateRot( disc->rotate.x, disc->rotate.y*ROT_RADIAN, 
+                            disc->rotate.z, &status.rotate );
 
   GFL_G3D_DRAW_DrawObject( obj, &status );
     
