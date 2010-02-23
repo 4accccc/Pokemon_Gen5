@@ -153,6 +153,24 @@ static const GFL_G3D_UTIL_SETUP g_ship_port_setup[] = {
 	{ res_g_ship_port_unit01, NELEMS(res_g_ship_port_unit01), obj_g_ship_port_unit01, NELEMS(obj_g_ship_port_unit01) },
 };
 //=========================================================================
+// DEMO3D_ID_INTRO_TOWN
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_intro_town_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_intro_town01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_intro_town_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP intro_town_setup[] = {
+	{ res_intro_town_unit01, NELEMS(res_intro_town_unit01), obj_intro_town_unit01, NELEMS(obj_intro_town_unit01) },
+};
+//=========================================================================
 // DEMO3D_ID_N_CASTLE
 //=========================================================================
 //UNIT
@@ -367,17 +385,39 @@ static const GFL_G3D_UTIL_SETUP n_legend_meat_w_setup[] = {
 //UNIT
 static const GFL_G3D_UTIL_RES res_riza_bridge_unit01[] = {
 	{ ARCID_DEMO3D_GRA, NARC_demo3d_riza_bridge_01_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_riza_bridge_01_nsbca, GFL_G3D_UTIL_RESARC },
+};
+//ANM
+static const GFL_G3D_UTIL_ANM anm_riza_bridge_unit01[] = {
+	{ 1, 0 },
 };
 //OBJ
 static const GFL_G3D_UTIL_OBJ obj_riza_bridge_unit01[] = {
 	{
 		0, 0, 0, // MdlResID, MdlDataID, TexResID
-		NULL, 0, // AnmTbl, AnmTblNum
+		anm_riza_bridge_unit01, NELEMS(anm_riza_bridge_unit01), // AnmTbl, AnmTblNum
+	}
+};
+//UNIT
+static const GFL_G3D_UTIL_RES res_riza_bridge_unit02[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_riza_bridge_02_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_riza_bridge_02_nsbta, GFL_G3D_UTIL_RESARC },
+};
+//ANM
+static const GFL_G3D_UTIL_ANM anm_riza_bridge_unit02[] = {
+	{ 1, 0 },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_riza_bridge_unit02[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		anm_riza_bridge_unit02, NELEMS(anm_riza_bridge_unit02), // AnmTbl, AnmTblNum
 	}
 };
 //setup
 static const GFL_G3D_UTIL_SETUP riza_bridge_setup[] = {
 	{ res_riza_bridge_unit01, NELEMS(res_riza_bridge_unit01), obj_riza_bridge_unit01, NELEMS(obj_riza_bridge_unit01) },
+	{ res_riza_bridge_unit02, NELEMS(res_riza_bridge_unit02), obj_riza_bridge_unit02, NELEMS(obj_riza_bridge_unit02) },
 };
 //=========================================================================
 // DEMO3D_ID_V_BOAT_PORT
@@ -408,6 +448,7 @@ static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
 	{ c_cruiser_port_setup, NELEMS(c_cruiser_port_setup), NARC_demo3d_c_cruiser_port_camera_bin, 4096, 163840, 163840, 0,  },
 	{ f_wheel_setup, NELEMS(f_wheel_setup), NARC_demo3d_f_wheel_camera_bin, 4096, 163840, 163840, 0,  },
 	{ g_ship_port_setup, NELEMS(g_ship_port_setup), NARC_demo3d_g_ship_port_camera_bin, 4096, 163840, 163840, 0,  },
+	{ intro_town_setup, NELEMS(intro_town_setup), NARC_demo3d_intro_town_camera_bin, 4096, 163840, 163840, 0,  },
 	{ n_castle_setup, NELEMS(n_castle_setup), NARC_demo3d_n_camera_bin, 4096, 286720, 286720, 1,  },
 	{ n_final_b_setup, NELEMS(n_final_b_setup), NARC_demo3d_n_final_b_camera_bin, 4096, 163840, 163840, 0,  },
 	{ n_final_w_setup, NELEMS(n_final_w_setup), NARC_demo3d_n_final_w_camera_bin, 4096, 163840, 163840, 0,  },
