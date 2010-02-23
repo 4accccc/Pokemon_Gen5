@@ -417,7 +417,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIST_Init( WEATHER_TASK* p_wk, WEATHER_T
 	p_local_wk->work[0] = 0;	// 同じくフォグ用
 
   p_local_wk->slope = WEATHER_FOG_SLOPE_DEFAULT;
-  p_local_wk->offs = WEATHER_FOG_DEPTH_DEFAULT_START + WEATHER_MIST_FOG_OFS;
+  p_local_wk->offs = WEATHER_FOG_DEPTH_DEFAULT + WEATHER_MIST_FOG_OFS;
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
