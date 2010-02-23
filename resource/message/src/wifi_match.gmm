@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-02-22T19:37:53"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-02-23T23:58:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="138"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-978" top="308" right="-273" bottom="936" maximized="no" rayout="Vertical2">
+	<dialog left="102" top="219" right="807" bottom="847" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="136" right="1280" bottom="534" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -967,19 +967,19 @@
 	</row>
 
 	<row id="WIFIMATCH_WIFI_POKE_00">
-		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">LV[2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">LV[2:02:３桁:0]</language>
+		<comment>WIFI大会　NUMFONT</comment>
+		<language name="JPN" width="256">L[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">L[2:02:３桁:0]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_POKE_01">
-		<comment>WIFI大会</comment>
+		<comment>WIFI大会　NUMFONT</comment>
 		<language name="JPN" width="256">♂</language>
 		<language name="JPN_KANJI" width="256">♂</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_POKE_02">
-		<comment>WIFI大会</comment>
+		<comment>WIFI大会　NUMFONT</comment>
 		<language name="JPN" width="256">♀</language>
 		<language name="JPN_KANJI" width="256">♀</language>
 	</row>

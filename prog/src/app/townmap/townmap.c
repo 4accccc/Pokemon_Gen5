@@ -3932,7 +3932,7 @@ static DEBUG_PRINT_WORK * DEBUGPRINT_Init( u8 frm, DEBUGPRINT_SAVE_TYPE	save, HE
 
 	//デバッグプリント用フォント
 	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT,
-				NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );	
+				NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );	
 
 	//退避エリアをタイプによって取得
 	switch( p_wk->save )

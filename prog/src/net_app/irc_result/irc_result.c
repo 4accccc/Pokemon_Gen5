@@ -53,7 +53,6 @@
 */
 //=============================================================================
 #ifdef PM_DEBUG
-//#define DEBUG_RESULT_MSG	//デバッグメッセージを出す
 #endif //PM_DEBUG
 
 //#define OBJNUMBER_SCALE	//スケールする
@@ -390,39 +389,6 @@ typedef struct
 	BOOL	is_vanish;
 } NUMBERSCROLL_WORK;
 
-#ifdef DEBUG_RESULT_MSG
-//-------------------------------------
-///	デバッグプリント用画面
-//=====================================
-typedef struct
-{
-	GFL_BMP_DATA *p_bmp;
-	GFL_FONT*			p_font;
-
-	BOOL	is_now_save;
-	u8		frm;
-
-  u8  *p_char_temp_area;      ///<キャラクタVRAM退避先
-  u16 *p_scrn_temp_area;      ///<スクリーンVRAM退避先
-  u16 *p_pltt_temp_area;      ///<パレットVRAM退避先
-
- 	u8  font_col_bkup[3];
-  u8  prioryty_bkup;
-  u8  scroll_x_bkup;
-  u8  scroll_y_bkup;
-
-	HEAPID heapID;
-} DEBUG_PRINT_WORK;
-
-#define DEBUGPRINT_CHAR_TEMP_AREA (0x4000)
-#define DEBUGPRINT_SCRN_TEMP_AREA (0x800)
-#define DEBUGPRINT_PLTT_TEMP_AREA (0x20)
-#define DEBUGPRINT_WIDTH  (32)
-#define DEBUGPRINT_HEIGHT (18)
-
-static DEBUG_PRINT_WORK *sp_dp_wk;
-#endif //DEBUG_RESULT_MSG
-
 //-------------------------------------
 ///	結果表示メインワーク
 //=====================================
@@ -559,27 +525,9 @@ static SCORE_RANK UTIL_GetScoreRank( u8 score, BOOL *p_is_nearly );
 
 
 //汎用
-static void DEBUGRESULT_PRINT_UpDate( RESULT_MAIN_WORK *p_wk );
 //汎用的な動作
 //ぶったいの動作
 //DEBUG_PRINT
-#ifdef DEBUG_RESULT_MSG
-static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID );
-static void DEBUGPRINT_Exit( void );
-static void DEBUGPRINT_Open( void );
-static void DEBUGPRINT_Close( void );
-static void DEBUGPRINT_Print( const u16 *cp_str, u16 x, u16 y );
-static void DEBUGPRINT_PrintNumber( const u16 *cp_str, int number, u16 x, u16 y );
-static void DEBUGPRINT_Clear( void );
-#else
-#define DEBUGPRINT_Init(...)				((void)0)
-#define DEBUGPRINT_Exit(...)				((void)0)
-#define DEBUGPRINT_Open(...)				((void)0)
-#define DEBUGPRINT_Close(...)				((void)0)
-#define DEBUGPRINT_Print(...)				((void)0)
-#define DEBUGPRINT_PrintNumber(...) ((void)0)
-#define DEBUGPRINT_Clear(...)				((void)0)
-#endif //DEBUG_RESULT_MSG
 
 //=============================================================================
 /**
@@ -758,9 +706,6 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	//ハート
 	HEARTEFF_Init( &p_wk->heart, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], p_wk->p_param->score, HEAPID_IRCRESULT );
 
-	//デバッグ
-	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRESULT );
-	DEBUGPRINT_Open();
 
 	//ここで通信すると、通信終了の相手に送る、ユニットエラーになる
 	//
@@ -792,9 +737,6 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 
 	p_wk	= p_work;
 
-	//デバッグ破棄
-	DEBUGPRINT_Close();
-	DEBUGPRINT_Exit();
 
 	HEARTEFF_Exit( &p_wk->heart );
 
@@ -2949,237 +2891,4 @@ static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk )
  *				汎用
  */
 //=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバッグプリントを更新
- *
- *	@param	RESULT_MAIN_WORK *p_wk	ワーク
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static void DEBUGRESULT_PRINT_UpDate( RESULT_MAIN_WORK *p_wk )
-{
-//	DEBUGPRINT_Clear();
-	//DEBUGPRINT_Print( L"タッチ開始から終了まで", 0,  0 );
-}
  
-#ifdef DEBUG_RESULT_MSG
-//=============================================================================
-/**
- *				デバッグプリント用画面
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバッグ用プリント領域	初期化
- *
- *	@param	frm											フレーム
- *	@param	heapID									ヒープID
- *
- */
-//-----------------------------------------------------------------------------
-static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID )
-{	
-	DEBUG_PRINT_WORK *p_wk;
-
-	sp_dp_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(DEBUG_PRINT_WORK) );
-	p_wk = sp_dp_wk;
-	GFL_STD_MemClear( p_wk, sizeof(DEBUG_PRINT_WORK) );
-	p_wk->heapID						= heapID;
-	p_wk->is_now_save				= is_now_save;
-	p_wk->frm								= frm;
-
-	//デバッグプリント用フォント
-	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT,
-				NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );	
-
-	//退避エリアをNetEffから取得
-	NetErr_GetTempArea( &p_wk->p_char_temp_area, &p_wk->p_scrn_temp_area, &p_wk->p_pltt_temp_area );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバッグ用プリント領域	破棄
- *
- */
-//-----------------------------------------------------------------------------
-static void DEBUGPRINT_Exit( void )
-{	
-	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
-
-	GFL_FONT_Delete( p_wk->p_font );
-	GFL_STD_MemClear( p_wk, sizeof(DEBUG_PRINT_WORK) );
-
-	GFL_HEAP_FreeMemory( p_wk );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバッグ用プリント領域オープン
- *
- */
-//-----------------------------------------------------------------------------
-static void DEBUGPRINT_Open( void )
-{	
-	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
-
-	GF_ASSERT( p_wk );
-
-	if( p_wk->is_now_save )
-	{	
-		//VRAMのデータを退避
-		GFL_STD_MemCopy16(GFL_DISPUT_GetCgxPtr(p_wk->frm), p_wk->p_char_temp_area, DEBUGPRINT_CHAR_TEMP_AREA);
-		GFL_STD_MemCopy16(GFL_DISPUT_GetScrPtr(p_wk->frm), p_wk->p_scrn_temp_area, DEBUGPRINT_SCRN_TEMP_AREA);
-		GFL_STD_MemCopy16(GFL_DISPUT_GetPltPtr(p_wk->frm), p_wk->p_pltt_temp_area, DEBUGPRINT_PLTT_TEMP_AREA);	
-		//Fontカラーの退避
-		GFL_FONTSYS_GetColor( &p_wk->font_col_bkup[0] ,
-				&p_wk->font_col_bkup[1] ,
-				&p_wk->font_col_bkup[2] );
-
-		//もろもろ退避
-		p_wk->prioryty_bkup = GFL_BG_GetPriority(p_wk->frm);
-		p_wk->scroll_x_bkup = GFL_BG_GetScrollX(p_wk->frm);
-		p_wk->scroll_y_bkup = GFL_BG_GetScrollY(p_wk->frm);
-	}
-
-	//上で退避させたものの設定
-	GFL_BG_SetPriority( p_wk->frm , 0 );
-	GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_X_SET , 0 );
-	GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_Y_SET , 0 );
-
-	//デバッグプリント用設定
-	//スクリーンの作成
-  {
-    u8 x,y;
-		u16 buf;
-    for( y = 0;y<DEBUGPRINT_HEIGHT;y++ )
-    {
-      for( x=0;x<DEBUGPRINT_WIDTH;x++ )
-      {
-        buf = x+y*DEBUGPRINT_WIDTH;
-        GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
-      }
-      for( x=DEBUGPRINT_WIDTH;x<32;x++ )
-      {
-        buf = DEBUGPRINT_HEIGHT*DEBUGPRINT_WIDTH;
-        GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
-      }
-    }
-		for( y = DEBUGPRINT_HEIGHT;y<24;y++ )
-    {
-	 		buf = DEBUGPRINT_HEIGHT*DEBUGPRINT_WIDTH;
- 			GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
-			for( x=0;x<32;x++ )
-      {
-        buf = DEBUGPRINT_HEIGHT*DEBUGPRINT_WIDTH;
-        GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
-      }
-		}
-    GFL_BG_LoadScreenReq( p_wk->frm );
-  }
-  
-  //パレットの作成
-  {
-    u16 col[4]={ 0xFFFF , 0x0000 , 0x7fff , 0x001f };
-    GFL_BG_LoadPalette( p_wk->frm, col, sizeof(u16)*4, 0 );
-  }
-
-	//書き込むためのBMP作成
-	p_wk->p_bmp	= GFL_BMP_CreateInVRAM( GFL_DISPUT_GetCgxPtr(p_wk->frm), DEBUGPRINT_WIDTH, DEBUGPRINT_HEIGHT, GFL_BMP_16_COLOR, p_wk->heapID );
-	GFL_STD_MemClear16( GFL_DISPUT_GetCgxPtr(p_wk->frm) , DEBUGPRINT_CHAR_TEMP_AREA );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバッグ用プリント領域	終了
- *
- */
-//-----------------------------------------------------------------------------
-static void DEBUGPRINT_Close( void )
-{	
-	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
-
-	GF_ASSERT( p_wk );
-
-	GFL_BMP_Delete( p_wk->p_bmp );
-	if( p_wk->is_now_save )
-	{	
-		//もろもろ復帰
-		GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_X_SET , p_wk->scroll_x_bkup );
-		GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_Y_SET , p_wk->scroll_y_bkup );
-		GFL_BG_SetPriority( p_wk->frm , p_wk->prioryty_bkup );
-		//Fontカラーの復帰
-		GFL_FONTSYS_SetColor( p_wk->font_col_bkup[0] ,
-				p_wk->font_col_bkup[1] ,
-				p_wk->font_col_bkup[2] );
-		GFL_STD_MemCopy16(p_wk->p_char_temp_area, GFL_DISPUT_GetCgxPtr(p_wk->frm), DEBUGPRINT_CHAR_TEMP_AREA);
-		GFL_STD_MemCopy16(p_wk->p_scrn_temp_area, GFL_DISPUT_GetScrPtr(p_wk->frm), DEBUGPRINT_SCRN_TEMP_AREA);
-		GFL_STD_MemCopy16(p_wk->p_pltt_temp_area, GFL_DISPUT_GetPltPtr(p_wk->frm), DEBUGPRINT_PLTT_TEMP_AREA);
-	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバッグ用プリント領域に書き込み
- *
- *	@param	u16 *cp_str							ワイド文字列
- *	@param	x												座標X
- *	@param	y												座標Y
- *
- */
-//-----------------------------------------------------------------------------
-static void DEBUGPRINT_Print( const u16 *cp_str, u16 x, u16 y )
-{	
-	STRBUF	*p_strbuf;
-	STRCODE	str[128];
-	u16	strlen;
-	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
-
-	GF_ASSERT(p_wk);
-
-	//STRBUF用に変換
-	strlen	= wcslen(cp_str);
-	GFL_STD_MemCopy(cp_str, str, strlen*2);
-	str[strlen]	= GFL_STR_GetEOMCode();
-
-	//STRBUFに転送
-	p_strbuf	= GFL_STR_CreateBuffer( strlen*2, p_wk->heapID );
-	GFL_STR_SetStringCode( p_strbuf, str);
-
-	//書き込み
-	PRINTSYS_Print( p_wk->p_bmp, x, y, p_strbuf, p_wk->p_font );
-
-	//破棄
-	GFL_STR_DeleteBuffer( p_strbuf );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバッグ用プリント領域に数値つき文字書き込み
- *
- *	@param	u16 *cp_str							ワイド文字列（%dや%fを使ってください）
- *	@param	number									数字
- *	@param	x												座標X
- *	@param	y												座標Y
- *
- */
-//-----------------------------------------------------------------------------
-static void DEBUGPRINT_PrintNumber( const u16 *cp_str, int number, u16 x, u16 y )
-{	
-	u16	str[128];
-	swprintf( str, 128, cp_str, number );
-	DEBUGPRINT_Print( str, x, y );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバッグ用プリント領域をクリアー
- *
- */
-//-----------------------------------------------------------------------------
-static void DEBUGPRINT_Clear( void )
-{	
-	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
-	GF_ASSERT(p_wk);
-	GFL_BMP_Clear( p_wk->p_bmp, 0 );
-
-}
-#endif //DEBUG_RESULT_MSG 
