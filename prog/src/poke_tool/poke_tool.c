@@ -1707,8 +1707,6 @@ u32   POKETOOL_CalcPersonalRandEx( u32 id, u16 mons_no, u16 form_no, u8 sex, u8 
 
   //特性ナンバーではないので、2以上はアサートにする
   GF_ASSERT( tokusei < 2 );
-  //性別にPTL_SEX_UNKNOWNは指定できないのでアサート
-  GF_ASSERT( sex != PTL_SEX_UNKNOWN );
 
   if( rare_flag )
   {
