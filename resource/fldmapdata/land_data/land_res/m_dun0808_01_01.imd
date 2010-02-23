@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-02-19T22:58:17" source="m_dun0808_01_01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-02-22T21:36:51" source="m_dun0808_01_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-02-19T22:58:17" source="m_dun0808_01_01.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-02-22T21:36:51" source="m_dun0808_01_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -21,15 +21,15 @@
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="12 12"
+	compress_material="on" material_size="11 11"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 -0.750000 -2.000000" whd="4.000000 1.187500 4.000000"/>
+<box_test pos_scale="7" xyz="-2.000000 -0.093750 -2.000000" whd="4.000000 0.531250 4.000000"/>
 
-<tex_image_array size="12">
+<tex_image_array size="11">
 	<tex_image index="0" name="gake1_1"
 		width="16" height="8" original_width="16" original_height="8"
 		format="palette16"
@@ -500,21 +500,7 @@
 			2020 2020 0000 0000 0000 0000 2020 2020
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="out29_soko01"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="color"
-		palette_name="out29_soko01_pl"
-		path="C:/home/wb_data3d/field/out29/chip/tex/out29_soko01.tga"
-	>
-		<bitmap size="32">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="11" name="shore01"
+	<tex_image index="10" name="shore01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="transparency"
@@ -530,7 +516,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="12">
+<tex_palette_array size="11">
 	<tex_palette index="0" name="gake1_1_pl" color_size="16">
 		258b 298f 29af 29d2 2dad 2df4 2e17 2e18
 		326f 3b11 4351 4370 4792 7fff 7fff 7fff
@@ -566,15 +552,12 @@
 	<tex_palette index="9" name="kusa_ec3_pl" color_size="8">
 		2108 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="10" name="out29_soko01_pl" color_size="4">
-		5580 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="11" name="shore01_pl" color_size="4">
+	<tex_palette index="10" name="shore01_pl" color_size="4">
 		7c1f 5690 5ab1 56b3
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="12">
+<material_array size="11">
 	<material index="0" name="gake1_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
@@ -815,31 +798,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="out29_soko01"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="12 12 12"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="10" tex_palette_idx="10"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="11" name="shore01"
+	<material index="10" name="shore01"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -856,7 +815,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="11" tex_palette_idx="11"
+		tex_image_idx="10" tex_palette_idx="10"
 		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -869,7 +828,7 @@
 	<matrix index="0" mtx_weight="1" node_idx="0"/>
 </matrix_array>
 
-<polygon_array size="12">
+<polygon_array size="11">
 	<polygon index="0" name="polygon0"
 		vertex_size="15" polygon_size="5"
 		triangle_size="3" quad_size="2"
@@ -2460,37 +2419,10 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
-	<polygon index="11" name="polygon11"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -1.500000 -4.000000"
-		volume_max="1.171875 -1.500000 1.242432"
-		volume_r="5.852295"
-		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="off" tex_flag="on"
-	>
-		<mtx_prim index="0">
-			<mtx_list size="1">0</mtx_list>
-			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="4">
-					<mtx idx="0"/>
-					<tex st="9.875000 16.000000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="-4.000000 -1.500000 1.242432"/>
-					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="1.171875 -1.500000"/>
-					<tex st="16.000000 8.000000"/>
-					<pos_xz xz="1.171875 -4.000000"/>
-					<tex st="9.937500 8.000000"/>
-					<pos_xy xy="-4.000000 -1.500000"/>
-				</primitive>
-			</primitive_array>
-		</mtx_prim>
-	</polygon>
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface986" kind="mesh"
+	<node index="0" name="polySurface987" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -2501,12 +2433,12 @@
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
-		display_size="12"
-		vertex_size="686" polygon_size="178"
-		triangle_size="14" quad_size="164"
-		volume_min="-4.000000 -1.500000 -4.000000"
+		display_size="11"
+		vertex_size="682" polygon_size="177"
+		triangle_size="14" quad_size="163"
+		volume_min="-4.000000 -0.187500 -4.000000"
 		volume_max="4.000000 0.875000 4.000000"
-		volume_r="5.852295"
+		volume_r="5.702881"
 	>
 		<display index="0" material="0" polygon="10" priority="0"/>
 		<display index="1" material="1" polygon="8" priority="0"/>
@@ -2518,13 +2450,12 @@
 		<display index="7" material="7" polygon="3" priority="0"/>
 		<display index="8" material="8" polygon="2" priority="0"/>
 		<display index="9" material="9" polygon="1" priority="0"/>
-		<display index="10" material="10" polygon="11" priority="0"/>
-		<display index="11" material="11" polygon="9" priority="0"/>
+		<display index="10" material="10" polygon="9" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="686" polygon_size="178"
-	triangle_size="14" quad_size="164"/>
+<output_info vertex_size="682" polygon_size="177"
+	triangle_size="14" quad_size="163"/>
 
 </body>
 
