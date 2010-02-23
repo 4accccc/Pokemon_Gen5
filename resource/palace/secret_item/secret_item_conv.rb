@@ -117,7 +117,7 @@ def DataFileOutput()
     file.printf("//       secret_item_conv.rb で出力されたファイルです\n");
     file.printf("//============================================================\n\n");
     file.printf("///侵入隠しアイテム配置データ\n");
-    file.printf("static const INTRUDE_SECRET_ITEM_POSDATA IntrudeSecretItemPosDataTbl[] = {\n");
+    file.printf("const INTRUDE_SECRET_ITEM_POSDATA IntrudeSecretItemPosDataTbl[] = {\n");
 
     for i in 0..SecretData.size-1
       file.printf("\t{%s, %s, %s, %s},\t\t//%d\n", SecretData[i].grid_x, SecretData[i].grid_y, SecretData[i].grid_z, SecretData[i].zone_id, i);
@@ -126,7 +126,7 @@ def DataFileOutput()
     file.printf("};\n");
   }
 
-  File.open("intrude_secret_item.h", "w"){|file|
+  File.open("intrude_secret_item_def.h", "w"){|file|
     file.printf("//============================================================\n");
     file.printf("//       secret_item_conv.rb で出力されたファイルです\n");
     file.printf("//============================================================\n\n");

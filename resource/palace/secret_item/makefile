@@ -18,6 +18,7 @@ targetname = intrude_secret_item
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_PROGDIR)src/field/
+TARGETHEAD = $(PROJECT_PROGDIR)include/field/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -52,9 +53,9 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).cdat: $(targetname).cdat $(targetname).h
+$(TARGETDIR)/$(targetname).cdat: $(targetname).cdat $(targetname)_def.h
 	$(COPY) $(targetname).cdat $(TARGETDIR)
-	$(COPY) $(targetname).h $(TARGETDIR)
+	$(COPY) $(targetname)_def.h $(TARGETHEAD)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -73,9 +74,9 @@ clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(targetname).cdat
-	rm -f $(targetname).h
+	rm -f $(targetname)_def.h
 	rm -f *.csv
 endif
 	rm -f $(TARGETDIR)/$(targetname).cdat
-	rm -f $(TARGETDIR)/$(targetname).h
+	rm -f $(TARGETHEAD)/$(targetname)_def.h
 

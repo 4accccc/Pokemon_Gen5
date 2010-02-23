@@ -35,7 +35,7 @@
 //------------------------------------------------------------------
 //  隠されアイテム用追加分
 //------------------------------------------------------------------
-#include "field/intrude_secret_item.h"  //IntrudeSecretItemPosDataMax
+#include "field/intrude_secret_item_def.h"  //IntrudeSecretItemPosDataMax
 #include "savedata/intrude_save_field.h"
 #include "savedata/intrude_save.h"
 
@@ -714,7 +714,7 @@ GMEVENT* EVENT_DebugSecretItemMake( GAMESYS_WORK * gsys, void * work )
   wk->gsys = gsys;
   wk->heapID = heapID;
   wk->itemnum = 1;
-  wk->itemmax = IntrudeSecretItemPosDataMax;
+  wk->itemmax = SECRET_ITEM_DATA_TBL_MAX;
   return new_event;
 }
 
