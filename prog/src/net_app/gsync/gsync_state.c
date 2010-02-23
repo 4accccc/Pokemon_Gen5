@@ -315,12 +315,15 @@ static void _wakeupAction6(G_SYNC_WORK* pWork)
       NET_PRINT("I—¹\n");
       {
         u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+        DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
         DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream = (DREAM_WORLD_SERVER_DOWNLOAD_DATA*)&pEvent[sizeof(gs_response)];
 
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
-
+        //@todo ‚·‚×‚Ä‚ÌŽó‚¯“n‚µ‚ð‚©‚©‚È‚¯‚ê‚Î‚¢‚¯‚È‚¢
         SymbolSave_Set(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
                        pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm);
+
+        DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin );
 
       }
       _CHANGE_STATE(_wakeupAction_test1);
