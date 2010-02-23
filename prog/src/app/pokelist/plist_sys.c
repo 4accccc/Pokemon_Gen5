@@ -1489,7 +1489,18 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
         }
         else
         {
-          PLIST_ITEM_MSG_CanNotUseItem( work );
+          if( work->plData->item == ITEM_GURASIDEANOHANA &&
+              PLIST_DEMO_CheckSheimiToSky( work , work->selectPokePara ) == TRUE )
+          {
+            PLIST_DEMO_ChangeSheimiToSky( work , work->selectPokePara );
+            work->plData->ret_mode = PL_RET_BAG;
+            work->mainSeq = PSMS_FORM_CHANGE_INIT;
+            work->demoType = PDT_SHEIMI_TO_SKY;
+          }
+          else
+          {
+            PLIST_ITEM_MSG_CanNotUseItem( work );
+          }
         }
       }
     }

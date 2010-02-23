@@ -122,6 +122,12 @@ void PLIST_DEMO_DemoTerm( PLIST_WORK *work )
   else
 	if( work->demoType == PDT_SHEIMI_TO_SKY )
   {
+    PLIST_CallbackFunc cbFunc = PLIST_MSGCB_ExitCommon;
+
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+    PLIST_MessageWaitInit( work , mes_pokelist_12_01 , TRUE , cbFunc );
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
   }
   else
   {
@@ -289,4 +295,50 @@ const BOOL PLIST_DEMO_CheckGirathnaToAnother( PLIST_WORK *work , POKEMON_PARAM *
 void PLIST_DEMO_ChangeGirathinaToAnother( PLIST_WORK *work , POKEMON_PARAM *pp )
 {
   PP_ChangeFormNo( pp , FORMNO_GIRATHINA_ANOTHER );
+}
+
+//--------------------------------------------------------------
+//	シェイミ：ランド→スカイチェック
+//--------------------------------------------------------------
+const BOOL PLIST_DEMO_CheckSheimiToSky( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  if( PP_Get( work->selectPokePara , ID_PARA_monsno , NULL ) != MONSNO_SHEIMI )
+  {
+    //シェイミじゃない！
+    return FALSE;
+  }
+  if( PP_Get( work->selectPokePara , ID_PARA_form_no , NULL ) != FORMNO_SHEIMI_LAND )
+  {
+    //ランドフォルムじゃない！
+    return FALSE;
+  }
+  if( PP_Get( work->selectPokePara , ID_PARA_event_get_flag , NULL ) != 1 )
+  {
+    //イベント配布じゃない！
+    return FALSE;
+  }
+  if( PP_GetSick( work->selectPokePara ) & PTL_CONDITION_KOORI )
+  {
+    //凍ってる！
+    return FALSE;
+  }
+  {
+    //AM4:00 ～ PM19:59までがフォルムチェンジ可能
+    RTCTime time;
+    GFL_RTC_GetTime( &time );
+    if( time.hour<4 || time.hour>=20 )
+    {
+      //時間外！
+      return FALSE;
+    }
+  }
+  
+  return TRUE;
+}
+//--------------------------------------------------------------
+//	シェイミ：ランド→スカイ変更(再描画はしない
+//--------------------------------------------------------------
+void PLIST_DEMO_ChangeSheimiToSky( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  PP_ChangeFormNo( pp , FORMNO_SHEIMI_SKY );
 }
