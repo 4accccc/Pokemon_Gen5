@@ -291,6 +291,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KowamotePlate( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KoutetsuPlate( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_OokinaNekko( u32* numElems );
 static void handler_OokinaNekko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_KireiNaNukegara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static  const BtlEventHandlerTable*  HAND_ADD_ITEM_KireiNaNukegara( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_TumetaiIwa( u32* numElems );
 static void handler_TumetaiIwa( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SarasaraIwa( u32* numElems );
@@ -587,6 +589,7 @@ static const struct {
   { ITEM_KOWAMOTEPUREETO,   HAND_ADD_ITEM_KowamotePlate   },
   { ITEM_KOUTETUPUREETO,    HAND_ADD_ITEM_KoutetsuPlate   },
   { ITEM_OOKINANEKKO,       HAND_ADD_ITEM_OokinaNekko     },
+  { ITEM_KIREINANUKEGARA,   HAND_ADD_ITEM_KireiNaNukegara },
 
 
   { ITEM_SINKANOKISEKI,     HAND_ADD_ITEM_SinkanoKiseki   },  // しんかのきせき
@@ -3886,6 +3889,27 @@ static void handler_OokinaNekko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     fx32 ratio = Item_AttackValue_to_Ratio( myHandle );
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
   }
+}
+
+//------------------------------------------------------------------------------
+/**
+ *  きれいなぬけがら
+ */
+//------------------------------------------------------------------------------
+// にげるチェックハンドラ
+static void handler_KireiNaNukegara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+  }
+}
+static  const BtlEventHandlerTable*  HAND_ADD_ITEM_KireiNaNukegara( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_SKIP_NIGERU_CALC,       handler_KireiNaNukegara },  // にげるチェックハンドラ
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
 }
 
 //------------------------------------------------------------------------------

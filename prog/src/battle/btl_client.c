@@ -1795,6 +1795,16 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
   *tokuseiID = POKETOKUSEI_NULL;
   *pokeID = BTL_POKEID_NULL;
 
+  #ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+    return BTL_CANTESC_NULL;
+  }
+  #endif
+
+  if( BPP_GetItem(procPoke) == ITEM_KIREINANUKEGARA ){
+    return BTL_CANTESC_NULL;
+  }
+
   procPokeID = BPP_GetID( procPoke );
   myPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, procPokeID );
   exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
@@ -2269,15 +2279,18 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
       if( numPuttable )
       {
         u8 numSelect = wk->myChangePokeCnt;
+        u8 clientID, outPokeIdx;
 
         // 生きてるポケが出さなければいけない数に足りない場合、そこを諦める
         if( numSelect > numPuttable ){
           numSelect = numPuttable;
         }
 
-        BTL_N_Printf( DBGSTR_CLIENT_ChangePokeCmdInfo, wk->myID, numSelect, mode );
+        BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, wk->myChangePokePos[0], &clientID, &outPokeIdx );
+
+        BTL_N_Printf( DBGSTR_CLIENT_ChangePokeCmdInfo, wk->myID, numSelect, outPokeIdx, mode );
         setupPokeSelParam( wk, mode, numSelect, &wk->pokeSelParam, &wk->pokeSelResult );
-        BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, -1, FALSE, &wk->pokeSelResult );
+        BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, outPokeIdx, FALSE, &wk->pokeSelResult );
 
         CmdLimit_Start( wk );
         (*seq)++;
@@ -2396,7 +2409,7 @@ static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq )
         if( result == BTL_YESNO_YES )
         {
           setupPokeSelParam( wk, BPL_MODE_NORMAL, 1, &wk->pokeSelParam, &wk->pokeSelResult );
-          BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, -1, FALSE, &wk->pokeSelResult );
+          BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, 0, FALSE, &wk->pokeSelResult );
           (*seq) = SEQ_WAIT_POKESELECT;
         }
         else
