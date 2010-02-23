@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-02-20T16:56:53"/>
+	<create user="ohmori" host="W00223" date="2010-02-23T14:13:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -361,10 +361,10 @@
 	</row>
 
 	<row id="str_select_direction" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN">ポケモンＷＢを　どう　あそんでいるか
-３つの　こうもくで　ちょうさします</language>
-		<language name="JPN_KANJI">ポケモンＷＢを　どう　遊んでいるか
-３項目で　調査します</language>
+		<language name="JPN">したの　こうもくから　ちょうさしたい
+ないようを　１つ　えらんでください</language>
+		<language name="JPN_KANJI">下の項目から　調査したい
+内容を　１つ　選んでください</language>
 	</row>
 
 	<row id="str_select_confirm" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -376,7 +376,7 @@
 
 	<row id="str_select_confirm_ok" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN">けってい</language>
-		<language name="JPN_KANJI">決定</language>
+		<language name="JPN_KANJI">けってい</language>
 	</row>
 
 	<row id="str_select_confirm_cancel" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
