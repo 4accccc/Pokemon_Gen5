@@ -194,10 +194,10 @@
 #define FE_HYOUKA_ITEMGET_05               178 /* 0x00b2 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび５ */
 #define FE_HYOUKA_ITEMGET_06               179 /* 0x00b3 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび６ */
 #define FE_C08R0402_ITEMGET_01             180 /* 0x00b4 過去未来サブイベントのごほうび入手フラグ */
-		/* not used   181(0x00b5) */
-		/* not used   182(0x00b6) */
-		/* not used   183(0x00b7) */
-		/* not used   184(0x00b8) */
+#define FE_C06_ITEMGET_1                   181 /* 0x00b5 フキヨセ滑走路に落ちているアイテムの入手フラグ */
+#define FE_LEGEND1_BATTLE                  182 /* 0x00b6 伝説ポケモン：アトスと戦った */
+#define FE_LEGEND2_BATTLE                  183 /* 0x00b7 伝説ポケモン：ポルトスと戦った */
+#define FE_LEGEND3_BATTLE                  184 /* 0x00b8 伝説ポケモン：アラミスと戦った */
 		/* not used   185(0x00b9) */
 		/* not used   186(0x00ba) */
 		/* not used   187(0x00bb) */
@@ -689,7 +689,7 @@
 #define FV_D03R0101_DARUMA_03              665 /* 0x0299 砂漠のゴリダルマ(瞑想モード)その３ */
 #define FV_D03R0101_DARUMA_04              666 /* 0x029a 砂漠のゴリダルマ(瞑想モード)その４ */
 #define FV_D03R0101_DARUMA_05              667 /* 0x029b 砂漠のゴリダルマ(瞑想モード)その５ */
-		/* not used   668(0x029c) */
+#define FV_C06_GIRLBOY_01                  668 /* 0x029c フキヨセ滑走路に出てくる少年少女（なみのり入手イベント） */
 		/* not used   669(0x029d) */
 		/* not used   670(0x029e) */
 		/* not used   671(0x029f) */
