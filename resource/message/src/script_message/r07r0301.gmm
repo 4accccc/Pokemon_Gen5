@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T18:10:50"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T21:34:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="22" top="127" right="735" bottom="804" maximized="no" rayout="Vertical2">
+	<dialog left="1347" top="105" right="2060" bottom="782" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="538"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="551"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="705"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,7 +334,7 @@
 		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">やさいを　たっぷり　にこんで
 おいしい　スープを　つくるんじゃー</language>
-		<language name="JPN_KANJI" width="256">やさいを　たっぷり　にこんで
+		<language name="JPN_KANJI" width="256">野菜を　たっぷり　煮込んで
 おいしい　スープを　つくるんじゃー</language>
 	</row>
 
@@ -345,10 +345,10 @@
 		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">りょうりを　している　ときは
 おしゃべりが　とまるからな[BE:00:ページ切り替え（行送り）]
-わしも　らくちんなんじゃよ</language>
-		<language name="JPN_KANJI" width="256">りょうりを　している　ときは
+わしも　らくちん　なんじゃよ</language>
+		<language name="JPN_KANJI" width="256">料理を　している　ときは
 おしゃべりが　とまるからな[BE:00:ページ切り替え（行送り）]
-わしも　らくちんなんじゃよ</language>
+わしも　らくちん　なんじゃよ</language>
 	</row>
 
 	<row id="msg_r07r0301_oldwoman_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
@@ -365,10 +365,10 @@
 スープでも　のむかー？
 くちに　あうか　わからんがのー[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">わけえ　からってな
-つめてー　あめに　うたれとったら[BE:00:ページ切り替え（行送り）]
+つめてー　雨に　うたれとったら[BE:00:ページ切り替え（行送り）]
 カゼさんに　なっちまうぞー[BE:01:ページ切り替え（クリア）]
-スープでも　のむかー？
-くちに　あうか　わからんがのー[BE:01:ページ切り替え（クリア）]</language>
+スープでも　飲むかー？
+口に　合うか　わからんがのー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r07r0301_oldwoman_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
@@ -383,7 +383,7 @@
 わかい　うちは　えんりょなんか[BE:00:ページ切り替え（行送り）]
 するもんじゃ　ねえぞー[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">それで　ええのじゃー
-わかい　うちは　えんりょなんか[BE:00:ページ切り替え（行送り）]
+わかい　うちは　遠慮なんか[BE:00:ページ切り替え（行送り）]
 するもんじゃ　ねえぞー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -398,8 +398,8 @@
 		<language name="JPN" width="256">そう　いわんと　すこし　のめばええー[BE:01:ページ切り替え（クリア）]
 ばあちゃんの　はなしに
 すこし　つきあって　くれんかのー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">そう　いわんと　すこし　のめばええー[BE:01:ページ切り替え（クリア）]
-ばあちゃんの　はなしに
+		<language name="JPN_KANJI" width="256">そう　いわんと　すこし　飲めばええー[BE:01:ページ切り替え（クリア）]
+ばあちゃんの　話に
 すこし　つきあって　くれんかのー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -416,12 +416,12 @@
 このちほうを　ぐるぐる　とびまわって
 すんげー　かぜと　あめを[BE:00:ページ切り替え（行送り）]
 ざんざか　ふらしているんじゃー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">イッシュちほう　にはなー
+		<language name="JPN_KANJI" width="256">イッシュ地方　にはなー
 こんな　あらしを　おこす[BE:00:ページ切り替え（行送り）]
-カザカミ　って　なまえの[BE:00:ページ切り替え（行送り）]
+カザカミ　って　名前の[BE:00:ページ切り替え（行送り）]
 ポケモンさんが　おるんじゃよー[BE:01:ページ切り替え（クリア）]
-このちほうを　ぐるぐる　とびまわって
-すんげー　かぜと　あめを[BE:00:ページ切り替え（行送り）]
+この地方を　ぐるぐる　飛びまわって
+すんげー　風と　雨を[BE:00:ページ切り替え（行送り）]
 ざんざか　ふらしているんじゃー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -437,13 +437,13 @@
 このちほうを　ぐるぐる　とびまわって
 すんげー　かぜと　かみなりを[BE:00:ページ切り替え（行送り）]
 ごろんごろん　ならすんじゃー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">イッシュちほう　にはなー
+		<language name="JPN_KANJI" width="256">イッシュ地方　にはなー
 こんな　あらしを　おこす[BE:00:ページ切り替え（行送り）]
-ライカミ　って　なまえの[BE:00:ページ切り替え（行送り）]
+ライカミ　って　名前の[BE:00:ページ切り替え（行送り）]
 ポケモンさんが　おるんじゃよー[BE:01:ページ切り替え（クリア）]
-このちほうを　ぐるぐる　とびまわって
-すんげー　かぜと　かみなりを[BE:00:ページ切り替え（行送り）]
-ごろんごろん　ならすんじゃー[BE:01:ページ切り替え（クリア）]</language>
+この地方を　ぐるぐる　飛びまわって
+すんげー　風と　カミナリを[BE:00:ページ切り替え（行送り）]
+ごろんごろん　鳴らすんじゃー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r07r0301_oldwoman_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
@@ -452,7 +452,7 @@
 		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">ほれ　のんでみなさいー
 あったまるぞー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ほれ　のんでみなさいー
+		<language name="JPN_KANJI" width="256">ほれ　飲んでみなさいー
 あったまるぞー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -461,7 +461,7 @@
 		<attribute name="キャラ指定">ナレーション</attribute>
 		<language name="JPN" width="256">やさいが　たっぷりの　スープ！
 とっても　おいしい！</language>
-		<language name="JPN_KANJI" width="256">やさいが　たっぷりの　スープ！
+		<language name="JPN_KANJI" width="256">野菜が　たっぷりの　スープ！
 とっても　おいしい！</language>
 	</row>
 
@@ -471,8 +471,8 @@
 		<language name="JPN" width="256">だいじに　そだてとった　さくもつが
 おおあめで　ダメに　なるんよー[BE:01:ページ切り替え（クリア）]
 ほんとに　こまった　ポケモンじゃー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">だいじに　そだてとった　さくもつが
-おおあめで　ダメに　なるんよー[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">大事に　育てとった　作物が
+大雨で　ダメに　なるんよー[BE:01:ページ切り替え（クリア）]
 ほんとに　こまった　ポケモンじゃー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -483,10 +483,10 @@
 あっちこっち　とびまわっとって[BE:00:ページ切り替え（行送り）]
 みつけたー　おもっても[BE:00:ページ切り替え（行送り）]
 すぐに　にげて　しまうんじゃー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">つまかえようと　おもってもなー
-あっちこっち　とびまわっとって[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">捕まえようと　おもってもなー
+あっちこっち　飛びまわっとって[BE:00:ページ切り替え（行送り）]
 みつけたー　おもっても[BE:00:ページ切り替え（行送り）]
-すぐに　にげて　しまうんじゃー[BE:01:ページ切り替え（クリア）]</language>
+すぐに　逃げて　しまうんじゃー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r07r0301_oldwoman_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
@@ -501,11 +501,11 @@
 よるは　きたの　とちに　いるんじゃと[BE:01:ページ切り替え（クリア）]
 このあたりは　ゆうがた　ごろに
 やってくるんじゃよー</language>
-		<language name="JPN_KANJI" width="256">１にち　かけて　イッシュちほうを
-ぐるっと　１しゅう　するんじゃー[BE:01:ページ切り替え（クリア）]
-あさは　みなみの　とち
-よるは　きたの　とちに　いるんじゃと[BE:01:ページ切り替え（クリア）]
-このあたりは　ゆうがた　ごろに
+		<language name="JPN_KANJI" width="256">１日　かけて　イッシュ地方を
+ぐるっと　１周　するんじゃー[BE:01:ページ切り替え（クリア）]
+朝は　南の　土地
+夜は　北の　土地に　いるんじゃと[BE:01:ページ切り替え（クリア）]
+このあたりは　夕方　ごろに
 やってくるんじゃよー</language>
 	</row>
 
@@ -543,15 +543,15 @@ msg_r07r0301_oldwoman_00
 それから　３０ねんほどは
 カザカミも　おとなしかったんじゃが[BE:00:ページ切り替え（行送り）]
 このあたりに　かくれておったんじゃな</language>
-		<language name="JPN_KANJI" width="256">わしが　ムッキムキの　びだんし
-ばあさんも　ピッチピチの　むすめっこ[BE:00:ページ切り替え（行送り）]
-そんな　じだいの　はなしじゃ[BE:01:ページ切り替え（クリア）]
-すぐ　ちかくで　ある　ポケモンが
-あめと　かぜで　わるさする[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">わしが　ムッキムキの　美男子
+ばあさんも　ピッチピチの　娘っこ[BE:00:ページ切り替え（行送り）]
+そんな　時代の　話じゃ[BE:01:ページ切り替え（クリア）]
+すぐ　近くで　ある　ポケモンが
+雨と　風で　わるさする[BE:00:ページ切り替え（行送り）]
 カザカミを　こらしめたんじゃ[BE:01:ページ切り替え（クリア）]
-それから　３０ねんほどは
+それから　３０年ほどは
 カザカミも　おとなしかったんじゃが[BE:00:ページ切り替え（行送り）]
-このあたりに　かくれておったんじゃな</language>
+このあたりに　隠れておったんじゃな</language>
 	</row>
 
 	<row id="msg_r07r0301_oldman_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
@@ -568,15 +568,15 @@ msg_r07r0301_oldwoman_00
 それから　３０ねんほどは
 ライカミも　おとなしかったんじゃが[BE:00:ページ切り替え（行送り）]
 このあたりに　かくれておったんじゃな</language>
-		<language name="JPN_KANJI" width="256">わしが　ムッキムキの　びだんし
-ばあさんも　ピッチピチの　むすめっこ[BE:00:ページ切り替え（行送り）]
-そんな　じだいの　はなしじゃ[BE:01:ページ切り替え（クリア）]
-すぐ　ちかくで　ある　ポケモンが
-あめと　カミナリで　わるさする[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">わしが　ムッキムキの　美男子
+ばあさんも　ピッチピチの　娘っこ[BE:00:ページ切り替え（行送り）]
+そんな　時代の　話じゃ[BE:01:ページ切り替え（クリア）]
+すぐ　近くで　ある　ポケモンが
+雨と　カミナリで　わるさする[BE:00:ページ切り替え（行送り）]
 ライカミを　こらしめたんじゃ[BE:01:ページ切り替え（クリア）]
-それから　３０ねんほどは
+それから　３０年ほどは
 ライカミも　おとなしかったんじゃが[BE:00:ページ切り替え（行送り）]
-このあたりに　かくれておったんじゃな</language>
+このあたりに　隠れておったんじゃな</language>
 	</row>
 
 	<row id="msg_r07r0301_oldman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
@@ -584,8 +584,8 @@ msg_r07r0301_oldwoman_00
 		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">あらしに　なっとる　みちに　いけば
 くさむらで　とびだしてくるじゃろう</language>
-		<language name="JPN_KANJI" width="256">あらしに　なっとる　みちに　いけば
-くさむらで　とびだしてくるじゃろう</language>
+		<language name="JPN_KANJI" width="256">あらしに　なっとる　道に　いけば
+くさむらで　飛び出してくるじゃろう</language>
 	</row>
 
 	<row id="msg_r07r0301_oldman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
@@ -605,7 +605,7 @@ msg_r07r0301_oldman_00
 あったと　きいたことが　あるのう…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">わるさを　していた　カザカミを
 こらしめる　ポケモンが　いるんじゃ[BE:01:ページ切り替え（クリア）]
-たしか…　１３ばんどうろ　あたりに
+確か…　１３番道路　あたりに
 その　ポケモンを　まつった　ほこらが[BE:00:ページ切り替え（行送り）]
 あったと　きいたことが　あるのう…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
