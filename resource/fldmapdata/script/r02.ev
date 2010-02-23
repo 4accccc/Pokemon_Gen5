@@ -129,13 +129,8 @@ EVENT_START   ev_pos_r02_mama_01
 	_SYSWIN_MSG_ALLPUT( msg_r02_tvt_01, POS_DOWN )
 	_SYSWIN_CLOSE()
 	
-	_SE_STOP()
+	_CALL_TVT_DEMO( 2 )
 	
-	_WHITE_OUT()
-	_TIME_WAIT  ( 90 )
-	
-	_WHITE_IN()
-
 	//BGMÇÃçƒê∂
 	_START_EVENT_BGM(SEQ_BGM_E_TSURETEKE1 )
 	
