@@ -948,5 +948,7 @@ SCRIPTFILES += \
 	sp_d20r0901.ev \
 	d20r1001.ev \
 	sp_d20r1001.ev \
+	r01r0101.ev \
+	sp_r01r0101.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö

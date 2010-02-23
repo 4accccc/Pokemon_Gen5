@@ -507,10 +507,15 @@ outData << "{"
 questions.each do |question|
   data = String.new
   data += "  { "
-  question.answers.each do |answer|
-    data += "#{answer.ID}, "
+  0.upto( 16 ) do |answerIdx|
+    answer = question.answers[ answerIdx ]
+    if answer == nil then 
+      data += "0, "
+    else 
+      data += "#{answer.ID}, "
+    end
   end
-  data += " },"
+  data += "},"
   outData << data
 end
 outData << "};"

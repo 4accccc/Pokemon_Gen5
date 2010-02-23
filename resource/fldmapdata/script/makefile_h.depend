@@ -1542,3 +1542,6 @@ d20r0901_def.h: d20r0901.ev
 d20r1001_def.h: d20r1001.ev
 	$(EV_DEF) d20r1001.ev $(SCR_OFFS_ID_H)
 
+r01r0101_def.h: r01r0101.ev
+	$(EV_DEF) r01r0101.ev $(SCR_OFFS_ID_H)
+
