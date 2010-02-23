@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-23T18:01:23"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T21:09:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="424" top="386" right="1129" bottom="1004" maximized="no" rayout="Vertical2">
+	<dialog left="1547" top="249" right="2252" bottom="867" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -330,8 +330,8 @@
 うんこうに　なっております[BE:00:ページ切り替え（行送り）]
 あらためて　おこし　くださいませ</language>
 		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号は
-夕方　のみの　運航に　なっております[BE:00:ページ切り替え（行送り）]
-あらためて　お越し　くださいませ</language>
+夕方のみの　運航に　なっております[BE:00:ページ切り替え（行送り）]
+あらためて　お越しくださいませ</language>
 	</row>
 
 	<row id="msg_c03p16_cabinguide_01c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -370,16 +370,18 @@
 ・続けてcabinguide04</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
-		<language name="JPN" width="256">ロイヤルイッシュごう　じまんの
-かんぱんでは　けしきを　たのしめます[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ロイヤルイッシュごう
+じまんの　かんぱん　では[BE:00:ページ切り替え（行送り）]
+けしきを　たのしめます[BE:01:ページ切り替え（クリア）]
 きゃくしつには　しょうぶずきな
 トレーナーたちが　あつまっております[BE:01:ページ切り替え（クリア）]
 ぜひ　けしきも　しょうぶも
 おたのしみ　ください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号　自慢の　甲板では
+		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号
+自慢の　甲板では[BE:00:ページ切り替え（行送り）]
 景色を　楽しむことが　できます！[BE:01:ページ切り替え（クリア）]
 客室には　勝負が好きな
-トレーナーたちが　集まって　おります[BE:01:ページ切り替え（クリア）]
+トレーナーたちが　集まっております[BE:01:ページ切り替え（クリア）]
 ぜひ　景色も　勝負も
 お楽しみ　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
