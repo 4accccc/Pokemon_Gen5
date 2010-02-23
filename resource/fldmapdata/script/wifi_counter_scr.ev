@@ -46,6 +46,22 @@ EVENT_END
 
 
 //==============================================================
+//サブルーチン：ハードの無線通信On/Off設定チェック
+//==============================================================
+sub_available_wireless_check:
+{
+  _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
+
+  //FALSEのとき、無線通信は使えない
+  IF $SCWK_ANSWER == FALSE THEN
+	  //共通メッセージ呼び出し
+	  _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
+    _RET
+  ENDIF
+}
+_RET
+
+//==============================================================
 //サブルーチン：受付メイン
 //==============================================================
 sub_wifi_counter_main:
@@ -100,10 +116,6 @@ sub_wifi_counter_main:
       _CALL sub_wifi_global_terminal  //グローバルターミナル
       $i_seq = $reg_return
     
-    CASE SEQ_GEO_NET THEN
-      _CALL sub_wifi_geo_net  //ジオネット
-      $i_seq = $reg_return  
-
     CASE SEQ_GOODBYE THEN
       _BALLOONWIN_OBJMSG_POS( msg_wifi_counter_02 , SCWK_TARGET_OBJID, POS_DL ) //それではまたお越しください
       $i_seq = SEQ_EXIT
@@ -132,12 +144,11 @@ sub_wifi_counter_main_menu:
 {
   DEFINE_LOCAL  i_ret
 
-  //分岐・ランダムマッチ/GTS/ジオネット/説明を聞く/やめる
+  //分岐・ランダムマッチ/GTS/説明を聞く/やめる
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 		
 	_BMPMENU_MAKE_LIST( msg_wifi_counter_win01, SEQ_RANDOM_MATCH )	  //ランダムマッチ
 	_BMPMENU_MAKE_LIST( msg_wifi_counter_win02, SEQ_GLOBAL_TERMINAL )	//グローバルターミナル
-	_BMPMENU_MAKE_LIST( msg_wifi_counter_win03, SEQ_GOODBYE )	        //ジオネット
 	_BMPMENU_MAKE_LIST( msg_wifi_counter_win04, SEQ_COUNTER_EXP )	    //説明を聞く
 	_BMPMENU_MAKE_LIST( msg_wifi_counter_win05, SEQ_GOODBYE )        	//やめる
 		
@@ -266,12 +277,17 @@ sub_rndmatch_exp:
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_loop
   DEFINE_LOCAL  i_msg
+    
+  //ランダムマッチでは…
+  _BALLOONWIN_OBJMSG_POS( msg_rndmatch_02_01 , SCWK_TARGET_OBJID, POS_DL )
+  //（消）
+  _BALLOONWIN_CLOSE()
 
   $i_loop = TRUE
   WHILE $i_loop == TRUE
 
     //どの説明を聞きますか
-    _BALLOONWIN_OBJMSG_POS( msg_rndmatch_02 , SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS( msg_rndmatch_02_02 , SCWK_TARGET_OBJID, POS_DL )
 
     //分岐・預ける/探す/わかった
 	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
@@ -309,6 +325,13 @@ sub_rndmatch_try_select:
 {
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_msg
+  
+  //本体無線通信設定チェック
+  _CALL sub_available_wireless_check
+  IF $SCWK_ANSWER == FALSE THEN
+    $reg_return = SEQ_SUB_RNDMATCH_EXIT
+    _RET
+  ENDIF
 
   //どの対戦をしますか？
   _BALLOONWIN_OBJMSG_POS( msg_rndmatch_03 , SCWK_TARGET_OBJID, POS_DL )
@@ -640,7 +663,14 @@ _RET
 sub_gterminal_gts_exchange:
 {
   DEFINE_LOCAL  i_ret
-  
+ 
+  //本体無線通信設定チェック
+  _CALL sub_available_wireless_check
+  IF $SCWK_ANSWER == FALSE THEN
+    $reg_return = SEQ_SUB_GTERMINAL_GTS_EXIT
+    _RET
+  ENDIF
+
   // レポートを書く
   _REPORT_EVENT_CALL( i_ret )
   // 書き込みに失敗
@@ -782,6 +812,13 @@ sub_gterminal_gts_nego_exchange:
 {
   DEFINE_LOCAL  i_ret
   
+  //本体無線通信設定チェック
+  _CALL sub_available_wireless_check
+  IF $SCWK_ANSWER == FALSE THEN
+    $reg_return = SEQ_SUB_GTERMINAL_GTS_NEGO_EXIT
+    _RET
+  ENDIF
+
   // レポートを書く
   _REPORT_EVENT_CALL( i_ret )
   // 書き込みに失敗
@@ -897,6 +934,13 @@ _RET
 sub_gterminal_btl_recorder_call:
 {
   DEFINE_LOCAL  i_ret
+  
+  //本体無線通信設定チェック
+  _CALL sub_available_wireless_check
+  IF $SCWK_ANSWER == FALSE THEN
+    $reg_return = SEQ_SUB_GTERMINAL_EXIT
+    _RET
+  ENDIF
 
   // レポートを書く
   _REPORT_EVENT_CALL( i_ret )
@@ -912,34 +956,6 @@ sub_gterminal_btl_recorder_call:
   
   _CALL sub_anm_wifi_counter_out
   $reg_return = SEQ_SUB_GTERMINAL_MENU
-}
-_RET
-
-//==============================================================
-//サブルーチン：ジオネット
-//==============================================================
-sub_wifi_geo_net:
-{
-  DEFINE_LOCAL  i_ret
-  
-  //フィールド通信切断
-  _CALL sub_wifi_counter_field_comm_exit_check
-  IF $reg_return != 0 THEN
-    _RET
-  ENDIF
-
-  
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
-  _SYSWIN_CLOSE()
-  _FIELD_CLOSE()
-  
-  _FIELD_OPEN()
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
-  
-  //メニューへ戻る
-  $reg_return = SEQ_MAIN_MENU
 }
 _RET
 

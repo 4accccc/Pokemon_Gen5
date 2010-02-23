@@ -43,6 +43,21 @@ EVENT_START   ev_wifi_club_counter
 }
 EVENT_END
 
+//==============================================================
+//サブルーチン：ハードの無線通信On/Off設定チェック
+//==============================================================
+sub_available_wireless_check:
+{
+  _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
+
+  //FALSEのとき、無線通信は使えない
+  IF $SCWK_ANSWER == FALSE THEN
+	  //共通メッセージ呼び出し
+	  _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
+    _RET
+  ENDIF
+}
+_RET
 
 //==============================================================
 //サブルーチン：受付メイン
@@ -143,6 +158,12 @@ sub_club_counter_check_connect:
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_friend_num
   DEFINE_LOCAL  i_id_state
+
+  _CALL sub_available_wireless_check
+  IF $SCWK_ANSWER == FALSE THEN
+    $reg_return = SEQ_GOODBYE
+    _RET
+  ENDIF
 
   //IDの状態チェック
 
