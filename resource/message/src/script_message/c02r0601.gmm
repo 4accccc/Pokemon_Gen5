@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T19:51:52"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T20:19:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1387" top="207" right="2092" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="177" right="2001" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,17 +292,48 @@
 	</lock>
 
 
-	<row id="msg_c02r0601_waitress_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0601_waitress_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・仮メッセージ</comment>
+・水曜日以外</comment>
 		<attribute name="キャラ指定">WAITRESS
 ウエートレス</attribute>
-		<language name="JPN" width="256">ちょっと　いなかの
-ちょっと　おしゃれな　カフェへ[BE:00:ページ切り替え（行送り）]
-ようこそ！</language>
-		<language name="JPN_KANJI" width="256">ちょっと　いなかの
-ちょっと　おしゃれな　カフェへ[BE:00:ページ切り替え（行送り）]
-ようこそ！</language>
+		<language name="JPN" width="256">いなかの　ちょっと　おしゃれな
+カフェ　ソーコへ　ようこそ！！</language>
+		<language name="JPN_KANJI" width="256">いなかの　ちょっと　おしゃれな
+カフェ　ソーコへ　ようこそ！！</language>
+	</row>
+
+	<row id="msg_c02r0601_waitress_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・水曜日
+・メッセージ表示後
+　モーモーミルク追加処理</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウエートレス</attribute>
+		<language name="JPN" width="256">いなかの　ちょっと　おしゃれな
+カフェ　ソーコへ　ようこそ！！▼
+すいようびは　サービスデー！
+こちらの　モーモーミルクを　どうぞ！▼
+とうてん　じまんの
+あじを　おためし　ください！▼</language>
+		<language name="JPN_KANJI" width="256">いなかの　ちょっと　おしゃれな
+カフェ　ソーコへ　ようこそ！！▼
+水曜日は　サービスデー！
+こちらの　モーモーミルクを　どうぞ！▼
+当店自慢の
+味を　お試しください！▼</language>
+	</row>
+
+	<row id="msg_c02r0601_waitress_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・水曜日
+　モーモーミルク入手後</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウエートレス</attribute>
+		<language name="JPN" width="256">とうてん　じまんの
+あじを　おためし　ください</language>
+		<language name="JPN_KANJI" width="256">当店自慢の
+味を　お試しください！</language>
 	</row>
 
 	<row id="msg_c02r0601_woman3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
