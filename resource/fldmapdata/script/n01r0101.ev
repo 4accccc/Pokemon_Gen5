@@ -53,6 +53,12 @@ INIT_EVENT_START	ev_init_n01r0101
 		_OBJ_POS_CHANGE( N01R0101_LEADER7_01, 19, 0, 15, DIR_UP )
 		_OBJ_POS_CHANGE( N01R0101_LEADER8W_01, 31, 0, 15, DIR_UP )
 		_OBJ_POS_CHANGE( N01R0101_LEADER8B_01, 24, 0, 15, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_SAGE2_02, 26, 0, 13, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_SAGE2_03, 24, 0, 13, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_SAGE2_04, 28, 0, 13, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_SAGE2_05, 22, 0, 13, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_SAGE2_06, 30, 0, 13, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0101_SAGE2_07, 20, 0, 13, DIR_UP )
 	ENDIF
 
 INIT_EVENT_END
@@ -76,7 +82,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
 	//カメラ操作
-	_CAMERA_MOVE( 9688,0,970752,1671168,0,872448,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 9688,0,970752,1671168,0,950272,30 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	
@@ -119,7 +125,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	//７人衆２：前へ
 
 	_OBJ_ANIME( N01R0101_SAGE2_02, anm_sage2_move_01 )
-	_TIME_WAIT( 16 )
+	/*
 	//七人衆：主人公を囲む
 	//７人衆３：前へ
 	_OBJ_ANIME( N01R0101_SAGE2_03, anm_sage3_move_01 )
@@ -131,6 +137,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_OBJ_ANIME( N01R0101_SAGE2_06, anm_sage6_move_01 )
 	//７人衆７：前へ
 	_OBJ_ANIME( N01R0101_SAGE2_07, anm_sage7_move_01 )
+	*/
 	_OBJ_ANIME_WAIT()
 	
 	//われら６人を相手に勝ち残れるとは思えん
@@ -140,12 +147,6 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	//???だいじょうぶだろうよ
 	_PLAINWIN_MSG_DOWN( msg_n01r0101_leader5_01 )
 	_MSGWIN_CLOSE()
-	
-	//カメラ戻す
-	_CAMERA_RECV_MOVE( 30 )	//カメラ復帰移動
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド
-	_CAMERA_END()		//カメラ操作終了
 	
 	//ヤーコン：登場
 	_OBJ_ADD( N01R0101_LEADER5_01 )
@@ -168,7 +169,6 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader5_03, N01R0101_LEADER5_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
-	
 	//ジムリーダー７人が一斉に登場
 	_FLAG_RESET( FV_N01R0101_LEADERS_01 )
 	_OBJ_ADD( N01R0101_LEADER2_01 )
@@ -186,14 +186,15 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_OBJ_ADD( N01R0101_LEADER8B_01 )
 	_OBJ_ANIME( N01R0101_LEADER8B_01, anm_leader8b_come_01 )
 	_OBJ_ANIME_WAIT()
-
+/*
 	_OBJ_ANIME( N01R0101_SAGE2_03, anm_back_u )
 	_OBJ_ANIME( N01R0101_SAGE2_04, anm_back_u )
 	_OBJ_ANIME( N01R0101_SAGE2_05, anm_back_u )
 	_OBJ_ANIME( N01R0101_SAGE2_06, anm_back_u )
 	_OBJ_ANIME( N01R0101_SAGE2_07, anm_back_u )
 	_OBJ_ANIME_WAIT()
-	
+*/
+
 	//わるいわねぇ
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader2_01, N01R0101_LEADER2_01, WIN_NONE )
 	_MSGWIN_CLOSE()
@@ -225,7 +226,13 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0101_leader8a_01w, msg_n01r0101_leader8a_01b, N01R0101_LEADER8B_01, WIN_NONE )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
-	
+
+	//カメラ戻す
+	_CAMERA_RECV_MOVE( 30 )	//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
 	//========================================//
 	
 	//シーンチェンジ無効
