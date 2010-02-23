@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T21:12:24"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T16:19:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="317" right="2006" bottom="945" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -583,13 +583,13 @@
 はっきりと　言い切れるのでしょうか▼</language>
 	</row>
 
-	<row id="msg_t02_boodle_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t02_boodle_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・サブウインドウで表示
 ・続けてmsg_t02_boodle_01b</comment>
 		<attribute name="キャラ指定">群集</attribute>
-		<language name="JPN" width="256">……</language>
-		<language name="JPN_KANJI" width="256">……</language>
+		<language name="JPN" width="256">ドキ！</language>
+		<language name="JPN_KANJI" width="256">ドキ！</language>
 	</row>
 
 	<row id="msg_t02_boodle_02a" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
