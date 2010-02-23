@@ -14,6 +14,8 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
+#include "field/field_const.h"
+
 #include "fieldmap.h"
 #include "field_effect.h"
 #include "fldmmdl.h"
@@ -80,7 +82,8 @@ static const u32 sc_ANM_RES_INDEX[ BUBBLE_ANM_MAX ] = {
 ///	出現座標調整
 //=====================================
 #define BUBBLE_POP_POS_Y  ( 7*FX32_ONE )
-#define BUBBLE_POP_POS_FRONT  ( 3*FX32_ONE )
+#define BUBBLE_POP_POS_FRONT_UP  ( 14*FX32_ONE )  //泡が自機の向こうから出るように
+#define BUBBLE_POP_POS_FRONT  ( 4*FX32_ONE )
 
 //-----------------------------------------------------------------------------
 /**
@@ -155,12 +158,13 @@ static void bubbleTask_Draw( FLDEFF_TASK* p_task, void* p_work );
 
 // 泡管理
 static BUBBLE_WK* bubbleTask_GetClearWk( TASKWORK_BUBBLE* p_wk );
-static void bubbleTask_SetUpObj( BUBBLE_WK* p_wk, const VecFx32* cp_pos );
+static void bubbleTask_SetUpObj( BUBBLE_WK* p_wk, const MMDL* cp_mmdl );
 static void bubbleTask_ClearObj( BUBBLE_WK* p_wk );
 static void bubbleTask_UpdateObj( BUBBLE_WK* p_wk, int frame_max );
 static void bubbleTask_DrawObj( BUBBLE_WK* p_wk, GFL_G3D_OBJ* p_mdl );
 
-
+// 目の前の方向を取得
+static u16 bubbleTask_GetFrontWay( const MMDL* cp_mmdl, VecFx16* p_way );
 
 // ヘッダー
 static const FLDEFF_TASK_HEADER data_bubbleTaskHeader;
@@ -350,16 +354,14 @@ static void bubbleTask_Update( FLDEFF_TASK* p_task, void* p_work )
   int i;
   int frame_max;
   BUBBLE_WK* p_obj;
-  VecFx32 pos;
 
   
   // 発動管理
   p_wk->frame ++;
   if( p_wk->frame >= BUBBLE_POP_TIMING ){
-    MMDL_GetVectorPos( p_wk->head.p_mmdl, &pos );
     p_obj = bubbleTask_GetClearWk( p_wk );
     if( p_obj ){
-      bubbleTask_SetUpObj( p_obj, &pos );
+      bubbleTask_SetUpObj( p_obj, p_wk->head.p_mmdl );
     }
     p_wk->frame = 0;
   }
@@ -371,11 +373,9 @@ static void bubbleTask_Update( FLDEFF_TASK* p_task, void* p_work )
     p_wk->action_count ++;
     
     if( p_wk->action_count >= BUBBLE_POP_ACTION_TIMING ){
-      MMDL_GetVectorPos( p_wk->head.p_mmdl, &pos );
       p_obj = bubbleTask_GetClearWk( p_wk );
       if( p_obj ){
-        TOMOYA_Printf( "move setup\n" );
-        bubbleTask_SetUpObj( p_obj, &pos );
+        bubbleTask_SetUpObj( p_obj, p_wk->head.p_mmdl );
       }
       p_wk->action_count = 0;
     }
@@ -437,12 +437,25 @@ static BUBBLE_WK* bubbleTask_GetClearWk( TASKWORK_BUBBLE* p_wk )
  *	@param	cp_pos  位置
  */
 //-----------------------------------------------------------------------------
-static void bubbleTask_SetUpObj( BUBBLE_WK* p_wk, const VecFx32* cp_pos )
+static void bubbleTask_SetUpObj( BUBBLE_WK* p_wk, const MMDL* cp_mmdl )
 {
+  VecFx16 way;
+  u16 dir;
+  fx32 mul;
+  
   p_wk->flag  = TRUE;
   p_wk->frame = 0;
-  p_wk->pos   = *cp_pos;
+  MMDL_GetVectorPos( cp_mmdl, &p_wk->pos );
+  dir = bubbleTask_GetFrontWay( cp_mmdl, &way );
+  if( dir == DIR_UP ){
+    mul = BUBBLE_POP_POS_FRONT_UP;
+  }else{
+    mul = BUBBLE_POP_POS_FRONT;
+  }
+
   p_wk->pos.y += BUBBLE_POP_POS_Y;
+  p_wk->pos.x += FX_Mul( way.x, mul );
+  p_wk->pos.z += FX_Mul( way.z, mul );
 }
 
 //----------------------------------------------------------------------------
@@ -506,6 +519,32 @@ static void bubbleTask_DrawObj( BUBBLE_WK* p_wk, GFL_G3D_OBJ* p_mdl )
   GFL_G3D_DRAW_DrawObjectCullingON( p_mdl, &status );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  目の前の方向を返す
+ */
+//-----------------------------------------------------------------------------
+static u16 bubbleTask_GetFrontWay( const MMDL* cp_mmdl, VecFx16* p_way )
+{
+  u16 dir = MMDL_GetDirDisp( cp_mmdl );
+  
+  if( !MMDL_CheckStatusBit( cp_mmdl, MMDL_STABIT_RAIL_MOVE ) ){
+    p_way->y = 0;
+    p_way->x = MMDL_TOOL_GetDirAddValueGridX( dir );
+    p_way->z = MMDL_TOOL_GetDirAddValueGridZ( dir );
+
+    p_way->x = GRID_TO_FX32( p_way->x );
+    p_way->z = GRID_TO_FX32( p_way->z );
+    VEC_Fx16Normalize( p_way, p_way );
+  }else{
+    MMDL_Rail_GetDirLineWay( cp_mmdl, dir, p_way );
+    p_way->y = 0;
+    VEC_Fx16Normalize( p_way, p_way );
+  }
+
+  return dir;
+}
 
 
 

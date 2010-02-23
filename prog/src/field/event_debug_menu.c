@@ -3890,6 +3890,14 @@ static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *wk )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_Diving( DEBUG_MENU_EVENT_WORK *wk )
 {
+  if( FIELDMAP_GetMapControlType(wk->fieldWork) != FLDMAP_CTRLTYPE_GRID )
+  {
+    FIELD_PLAYER* p_fld_player = FIELDMAP_GetFieldPlayer( wk->fieldWork );
+
+    // ƒŒ[ƒ‹ã‚Å‚Í‚±‚Á‚¿
+    FIELD_PLAYER_SetRequest( p_fld_player, FIELD_PLAYER_REQBIT_DIVING );
+    return FALSE;
+  }
   SCRIPT_ChangeScript( wk->gmEvent, SCRID_HIDEN_DIVING_MENU, NULL, HEAPID_FIELDMAP );
   return TRUE;
 }

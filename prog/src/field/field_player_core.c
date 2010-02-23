@@ -1159,6 +1159,11 @@ static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core )
 
   //気泡を設定
   FLDEFF_BUBBLE_SetMMdl( player_core->fldmmdl, fectrl );
+
+  // 水飛沫エフェクトOFF
+  if( player_core->fldeff_joint ){
+    FLDEFF_NAMIPOKE_SetRippleEffect( player_core->fldeff_joint, FALSE );
+  }
 }
 
 

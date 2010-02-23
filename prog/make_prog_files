@@ -675,6 +675,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_btrain.c \
         field/field_gimmick_bsubway.c \
         field/fldeff_hide.c \
+        field/fldeff_bubble.c \
         field/trial_house.c \
         field/scrcmd_trial_house.c
 
