@@ -8,6 +8,11 @@
 ######################################################### 
 require "win32ole"
 
+RETURN_CODE = "\n" # 置換対象の改行コード
+SPACE_CODE  = "　" # 置換対象の空白コード
+DUMMY_RETURN_CODE  = "@"   # 改行コードとして埋め込むダミーコード
+DUMMY_SPACE_CODE   = "□"  # 空白コードとして埋め込むダミーコード
+
 
 #--------------------------------------------------------
 # ■brief:  ファイルの絶対パスを取得する
@@ -41,6 +46,20 @@ begin
     row.Columns.each do |cell|
       if cell.Value != nil then record << cell.Value end
     end
+
+    # セル内の文字列に含まれる改行コードを, ダミーコードに置き換える
+    record.each do |value|
+      if value.is_a? String then 
+        if value.include?( RETURN_CODE ) then value.gsub!( RETURN_CODE, DUMMY_RETURN_CODE ) end
+      end
+    end
+    # セル内の文字列に含まれる空白コードを, ダミーコードに置き換える
+    record.each do |value|
+      if value.is_a? String then 
+        if value.include?( SPACE_CODE ) then value.gsub!( SPACE_CODE, DUMMY_SPACE_CODE ) end
+      end
+    end
+
     if record.size != 0 then
       data = record.join("\t")
       file.puts( data.strip )

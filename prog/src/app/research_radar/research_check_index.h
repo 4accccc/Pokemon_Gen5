@@ -38,13 +38,14 @@ typedef enum {
 
 // BGFont オブジェクト
 typedef enum {
-  SUB_BG_FONT_TITLE,             // 上画面 タイトル
-  SUB_BG_FONT_TOPIC_CAPTION,     // 上画面 調査項目の補足文
-  SUB_BG_FONT_QUESTION_CAPTION,  // 上画面 質問の補足文
-  MAIN_BG_FONT_QUESTION,         // 下画面 質問
-  MAIN_BG_FONT_ANSWER,           // 下画面 回答
-  MAIN_BG_FONT_MY_ANSWER,        // 下画面 自分の回答
-  MAIN_BG_FONT_COUNT,            // 下画面 回答人数
+  SUB_BG_FONT_TITLE,            // 上画面 タイトル
+  SUB_BG_FONT_TOPIC_CAPTION,    // 上画面 調査項目の補足文
+  SUB_BG_FONT_QUESTION_CAPTION, // 上画面 質問の補足文
+  MAIN_BG_FONT_QUESTION,        // 下画面 質問
+  MAIN_BG_FONT_ANSWER,          // 下画面 回答
+  MAIN_BG_FONT_MY_ANSWER,       // 下画面 自分の回答
+  MAIN_BG_FONT_COUNT,           // 下画面 回答人数
+  MAIN_BG_FONT_NO_DATA,         // 下画面「ただいまちょうさちゅう」
   BG_FONT_NUM,
 } BG_FONT_INDEX;
 

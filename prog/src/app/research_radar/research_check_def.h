@@ -156,6 +156,17 @@
 #define COUNT_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define COUNT_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
+// 下画面「ただいまちょうさちゅう」
+#define NO_DATA_X               (2)   // X座標   (キャラクター単位)
+#define NO_DATA_Y               (7)   // Y座標   (キャラクター単位)
+#define NO_DATA_WIDTH           (13)  // Xサイズ (キャラクター単位)
+#define NO_DATA_HEIGHT          (5)   // Yサイズ (キャラクター単位)
+#define NO_DATA_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
+#define NO_DATA_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
+#define NO_DATA_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
+#define NO_DATA_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
+#define NO_DATA_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
+
 
 //===============================================================================
 // ■OBJ
@@ -219,6 +230,11 @@
 // ■動作
 //===============================================================================
 #define SEQ_QUEUE_SIZE (5)  // シーケンスキューのサイズ
+
+// シーケンスの動作フレーム数
+#define SEQ_ANALYZE_FRAMES (120) // RESEARCH_CHECK_SEQ_ANALYZE
+#define SEQ_FLASH_FRAMES   (30)  // RESEARCH_CHECK_SEQ_FLASH
+#define SEQ_UPDATE_FRAMES  (60)  // RESEARCH_CHECK_SEQ_UPDATE
 
 // パレットフェード ( アウト )
 #define MAIN_BG_PALETTE_FADE_OUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク

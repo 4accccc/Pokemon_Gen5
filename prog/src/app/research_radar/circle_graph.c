@@ -23,7 +23,9 @@
 #define CIRCLE_VERTEX_COUNT  (CIRCLE_POINT_COUNT * 3) // 円の描画に使用する頂点の数
 #define DIV_PERCENTAGE       (100.0f / CIRCLE_DIV_COUNT) // ポリゴンあたりが占める割合
 #define MAX_COMPONENT_NUM    (20)  // 円グラフの最大構成要素数
-#define CIRCLE_RADIUS        (FX32_CONST(0.7f)) // 円グラフの半径
+#define CIRCLE_RADIUS        (FX32_CONST(0.491f)) // 円グラフの半径
+#define CIRCLE_CENTER_X      (FX16_CONST(-0.707f)) // 円グラフ中心点の x 座標
+#define CIRCLE_CENTER_Y      (FX16_CONST(-0.041f)) // 円グラフ中心点の y 座標
 
 #define ANALYZE_FRAMES (120) // 解析状態の動作フレーム数
 #define SHOW_FRAMES    (30)  // 出現状態の動作フレーム数
@@ -526,45 +528,6 @@ static void GraphAct_HIDE( CIRCLE_GRAPH* graph )
 //-----------------------------------------------------------------------------------------
 static void GraphAct_STAY( CIRCLE_GRAPH* graph )
 {
-  // TEST:
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
-  {
-    graph->centerPos.x -= FX16_CONST( 0.001f );
-    UpdateDrawVertices( graph ); // 描画に使用する頂点リストを更新する
-  }
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
-  {
-    graph->centerPos.x += FX16_CONST( 0.001f );
-    UpdateDrawVertices( graph ); // 描画に使用する頂点リストを更新する
-  }
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
-  {
-    graph->centerPos.y += FX16_CONST( 0.001f );
-    UpdateDrawVertices( graph ); // 描画に使用する頂点リストを更新する
-  }
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
-  {
-    graph->centerPos.y -= FX16_CONST( 0.001f );
-    UpdateDrawVertices( graph ); // 描画に使用する頂点リストを更新する
-  }
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-  {
-    graph->radius += FX32_CONST( 0.001f );
-    SetupCirclePoints( graph ); // 外周頂点の座標 準備
-    UpdateDrawVertices( graph ); // 描画に使用する頂点リストを更新する
-  }
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-  {
-    graph->radius -= FX32_CONST( 0.001f );
-    SetupCirclePoints( graph ); // 外周頂点の座標 準備
-    UpdateDrawVertices( graph ); // 描画に使用する頂点リストを更新する
-  }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
-  {
-    OS_Printf( "radius = %d\n", (int)( FX_FX32_TO_F32(graph->radius) * 1000 ) );
-    OS_Printf( "x = %d, y = %d\n", (int)( FX_FX16_TO_F32(graph->centerPos.x) * 1000 ), (int)( FX_FX16_TO_F32(graph->centerPos.y) * 1000 ) );
-  }
-
   // キューが空でなければ状態遷移する
   if( QUEUE_IsEmpty( graph->stateQueue ) == FALSE )
   {
@@ -1245,7 +1208,7 @@ static void InitGraph( CIRCLE_GRAPH* graph, HEAPID heapID )
   graph->radius       = CIRCLE_RADIUS;
   graph->componentNum = 0;
 
-  VEC_Fx16Set( &(graph->centerPos), 0, 0, 0 );
+  VEC_Fx16Set( &(graph->centerPos), CIRCLE_CENTER_X, CIRCLE_CENTER_Y, 0 );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: init graph\n" );

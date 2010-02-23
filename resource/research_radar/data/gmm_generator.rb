@@ -7,6 +7,12 @@
 require 'kconv'  # for String.toutf8
 
 
+RETURN_CODE = "\n" # 置換対象の改行コード
+SPACE_CODE  = "　" # 置換対象の空白コード
+DUMMY_RETURN_CODE  = "@"   # 改行コードとして埋め込むダミーコード
+DUMMY_SPACE_CODE   = "□"  # 空白コードとして埋め込むダミーコード
+
+
 #==================================================================================
 # □brief:  gmmヘッダ部を取得する
 # □return: gmmヘッダ部の文字列
@@ -391,9 +397,24 @@ def GenerateGMM( directory, fileName, stringLavel, stringJPN, stringJPN_KANJI )
 
   # 引数の文字列を整形
   0.upto( stringLavel.size - 1 ) do |strIdx|
+    # 両端の空白を削除
     stringLavel    [ strIdx ].strip!
     stringJPN      [ strIdx ].strip!
     stringJPN_KANJI[ strIdx ].strip!
+    # 改行ダミーコードを復元
+    if stringJPN[ strIdx ].include?( DUMMY_RETURN_CODE ) then
+      stringJPN[ strIdx ].gsub!( DUMMY_RETURN_CODE, RETURN_CODE )
+    end
+    if stringJPN_KANJI[ strIdx ].include?( DUMMY_RETURN_CODE ) then
+      stringJPN_KANJI[ strIdx ].gsub!( DUMMY_RETURN_CODE, RETURN_CODE )
+    end
+    # 空白ダミーコードを復元
+    if stringJPN[ strIdx ].include?( DUMMY_SPACE_CODE ) then
+      stringJPN[ strIdx ].gsub!( DUMMY_SPACE_CODE, SPACE_CODE )
+    end
+    if stringJPN_KANJI[ strIdx ].include?( DUMMY_SPACE_CODE ) then
+      stringJPN_KANJI[ strIdx ].gsub!( DUMMY_SPACE_CODE, SPACE_CODE )
+    end
   end
 
   # gmm テキスト列挙部分を作成

@@ -48,6 +48,13 @@
 #include "caption_string_id_question.cdat" // for CaptionStringID_question[]
 
 
+// ’²¸ƒf[ƒ^‚Ì•\¦ƒ^ƒCƒv
+typedef enum {
+  DATA_DISP_TYPE_TODAY, // ¡“ú‚Ìƒf[ƒ^‚ğ•\¦ 
+  DATA_DISP_TYPE_TOTAL, // ‡Œv‚Ìƒf[ƒ^‚ğ•\¦
+} DATA_DISP_TYPE;
+
+
 //==============================================================================================
 // ¡’²¸•ñŠm”F‰æ–Ê ƒ[ƒN
 //==============================================================================================
@@ -62,9 +69,12 @@ struct _RESEARCH_CHECK_WORK
   BOOL                  seqFinishFlag; // Œ»İ‚ÌƒV[ƒPƒ“ƒX‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
   u32                   seqCount;      // ƒV[ƒPƒ“ƒXƒJƒEƒ“ƒ^
   RESEARCH_CHECK_RESULT result;        // ‰æ–ÊI—¹Œ‹‰Ê
-  MENU_ITEM             cursorPos;     // ƒJ[ƒ\ƒ‹ˆÊ’u
-  RESEARCH_DATA         researchData;  // ’²¸ƒf[ƒ^
-  u8                    questionIdx;   // •\¦’†‚Ì¿–âƒCƒ“ƒfƒbƒNƒX
+
+  MENU_ITEM      cursorPos;     // ƒJ[ƒ\ƒ‹ˆÊ’u
+  RESEARCH_DATA  researchData;  // ’²¸ƒf[ƒ^
+  u8             questionIdx;   // •\¦’†‚Ì¿–âƒCƒ“ƒfƒbƒNƒX
+  u8             answerIdx;     // ‘I‘ğ’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX
+  DATA_DISP_TYPE dispType;      // ¡“ú or ‡Œv ‚Ì‚Ç‚¿‚ç‚Ìƒf[ƒ^‚ğ•\¦‚·‚é‚Ì‚©
 
   // ‰~ƒOƒ‰ƒt
   CIRCLE_GRAPH* circleGraph;
@@ -139,6 +149,14 @@ static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work ); // ‰º‚ÖˆÚ“®‚·‚é
 static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work ); // Ÿ‚Ì¿–â‚É•ÏX‚·‚é
 static void ChangeQuestionToPrev( RESEARCH_CHECK_WORK* work ); // ‘O‚Ì¿–â‚É•ÏX‚·‚é
 
+// •\¦‚·‚é‰ñ“š
+static void ChangeAnswerToNext( RESEARCH_CHECK_WORK* work ); // Ÿ‚Ì‰ñ“š‚É•ÏX‚·‚é
+static void ChangeAnswerToPrev( RESEARCH_CHECK_WORK* work ); // ‘O‚Ì‰ñ“š‚É•ÏX‚·‚é
+static void ChangeAnswerToTop ( RESEARCH_CHECK_WORK* work ); // æ“ª‚Ì‰ñ“š‚É•ÏX‚·‚é
+
+// ’²¸ƒf[ƒ^‚Ì•\¦ƒ^ƒCƒv
+static void SwitchDataDisplayType( RESEARCH_CHECK_WORK* work ); // ’²¸ƒf[ƒ^‚Ì•\¦ƒ^ƒCƒv‚ğØ‚è‘Ö‚¦‚é
+
 //----------------------------------------------------------------------------------------------
 //  LAYER 2 ŒÂ•Ê‘€ì
 //---------------------------------------------------------------------------------------------- 
@@ -148,9 +166,19 @@ static void ShiftMenuCursorPos( RESEARCH_CHECK_WORK* work, int stride ); // ƒJ[
 // •\¦‚·‚é¿–âƒCƒ“ƒfƒbƒNƒX
 static void ShiftQuestionIdx( RESEARCH_CHECK_WORK* work, int stride ); // •\¦‚·‚é¿–â‚ÌƒCƒ“ƒfƒbƒNƒX‚ğ•ÏX‚·‚é
 
+// ‘I‘ğ’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX
+static void ShiftAnswerIdx( RESEARCH_CHECK_WORK* work, int stride ); // ‘I‘ğ’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğ•ÏX‚·‚é
+static void ResetAnswerIdx( RESEARCH_CHECK_WORK* work );             // ‘I‘ğ’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğƒŠƒZƒbƒg‚·‚é
+
+// ’²¸ƒf[ƒ^•\¦ƒ^ƒCƒv
+static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType ); // ’²¸ƒf[ƒ^‚Ì•\¦ƒ^ƒCƒv‚ğİ’è‚·‚é
+
 // ƒƒjƒ…[€–Ú‚Ì•\¦
 static void SetMenuCursorOn ( RESEARCH_CHECK_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 static void SetMenuCursorOff( RESEARCH_CHECK_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+
+// BG
+static void UpdateMainBG_WINDOW( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ğXV‚·‚é
 
 // BGFont
 static void UpdateBGFont_TopicCaption   ( RESEARCH_CHECK_WORK* work ); // ’²¸€–Ú‚Ì•â‘«•¶‚ğXV‚·‚é
@@ -159,6 +187,7 @@ static void UpdateBGFont_Question       ( RESEARCH_CHECK_WORK* work ); // ¿–â‚ğ
 static void UpdateBGFont_Answer         ( RESEARCH_CHECK_WORK* work ); // ‰ñ“š‚ğXV‚·‚é
 static void UpdateBGFont_MyAnswer       ( RESEARCH_CHECK_WORK* work ); // ©•ª‚Ì‰ñ“š‚ğXV‚·‚é
 static void UpdateBGFont_Count          ( RESEARCH_CHECK_WORK* work ); // ‰ñ“šl”‚ğXV‚·‚é
+static void UpdateBGFont_NoData         ( RESEARCH_CHECK_WORK* work ); //u‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v‚Ì•\¦‚ğXV‚·‚é
 
 // OBJ‚Ì•\¦
 static void UpdateControlCursor( RESEARCH_CHECK_WORK* work ); // ‘€ìƒJ[ƒ\ƒ‹‚Ì•\¦‚ğXV‚·‚é
@@ -174,6 +203,16 @@ static BOOL IsPaletteFadeEnd   ( RESEARCH_CHECK_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF
 //----------------------------------------------------------------------------------------------
 //  LAYER 1 ƒf[ƒ^ƒAƒNƒZƒX
 //----------------------------------------------------------------------------------------------
+// ’²¸ƒf[ƒ^
+static u8 GetTopicID( const RESEARCH_CHECK_WORK* work ); // Œ»İ•\¦’†‚Ì’²¸€–ÚID
+static u8 GetQuestionID( const RESEARCH_CHECK_WORK* work ); // Œ»İ•\¦’†‚Ì¿–âID
+static u8 GetAnswerNum( const RESEARCH_CHECK_WORK* work ); // Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é‰ñ“š‘I‘ğˆ‚Ì”
+static u16 GetAnswerID( const RESEARCH_CHECK_WORK* work ); // Œ»İ•\¦’†‚Ì‰ñ“šID
+static u16 GetTodayCountOfQuestion( const RESEARCH_CHECK_WORK* work ); // Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
+static u16 GetTotalCountOfQuestion( const RESEARCH_CHECK_WORK* work ); // Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
+static u16 GetTodayCountOfAnswer( const RESEARCH_CHECK_WORK* work ); // Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
+static u16 GetTotalCountOfAnswer( const RESEARCH_CHECK_WORK* work ); // Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
+
 // OBJ
 static u32 GetObjResourceRegisterIndex( const RESEARCH_CHECK_WORK* work, OBJ_RESOURCE_ID resID ); // OBJƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX
 static GFL_CLUNIT* GetClactUnit( const RESEARCH_CHECK_WORK* work, CLUNIT_INDEX unitIdx ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg
@@ -287,6 +326,8 @@ RESEARCH_CHECK_WORK* CreateResearchCheckWork( HEAPID heapID )
   work->heapID          = heapID;
   work->cursorPos       = MENU_ITEM_QUESTION;
   work->questionIdx     = 0;
+  work->answerIdx       = 0;
+  work->dispType        = DATA_DISP_TYPE_TODAY;
   work->VBlankTCBSystem = GFUser_VIntr_GetTCBSYS();
 
   for( i=0; i<OBJ_RESOURCE_NUM; i++ ){ work->objResRegisterIdx[i] = 0; }
@@ -380,9 +421,6 @@ RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
  * @brief €”õƒV[ƒPƒ“ƒX ( RESEARCH_CHECK_SEQ_SETUP ) ‚Ìˆ—
  *
  * @param work
- *
- * @return ƒV[ƒPƒ“ƒX‚ª•Ï‰»‚·‚éê‡ Ÿ‚ÌƒV[ƒPƒ“ƒX”Ô†
- *         ƒV[ƒPƒ“ƒX‚ªŒp‘±‚·‚éê‡ Œ»İ‚ÌƒV[ƒPƒ“ƒX”Ô†
  */
 //----------------------------------------------------------------------------------------------
 static void Main_SETUP( RESEARCH_CHECK_WORK* work )
@@ -479,9 +517,6 @@ static void Main_SETUP( RESEARCH_CHECK_WORK* work )
  * @brief ƒL[“ü—Í‘Ò‚¿ƒV[ƒPƒ“ƒX ( RESEARCH_CHECK_SEQ_KEY_WAIT ) ‚Ìˆ—
  *
  * @param work
- *
- * @return ƒV[ƒPƒ“ƒX‚ª•Ï‰»‚·‚éê‡ Ÿ‚ÌƒV[ƒPƒ“ƒX”Ô†
- *         ƒV[ƒPƒ“ƒX‚ªŒp‘±‚·‚éê‡ Œ»İ‚ÌƒV[ƒPƒ“ƒX”Ô†
  */
 //----------------------------------------------------------------------------------------------
 static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
@@ -493,47 +528,75 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
   trg = GFL_UI_KEY_GetTrg(); 
 
   // TEST:
-  if( key & PAD_BUTTON_DEBUG )  
-  {
-    if( trg & PAD_BUTTON_A )
-    {
+  if( key & PAD_BUTTON_DEBUG ) {
+    if( trg & PAD_BUTTON_A ) {
       CIRCLE_GRAPH_ShowReq( work->circleGraph );
     }
-    else if( trg & PAD_BUTTON_B )
-    {
+    else if( trg & PAD_BUTTON_B ) {
       CIRCLE_GRAPH_HideReq( work->circleGraph );
     }
-    else if( trg & PAD_BUTTON_X )
-    {
+    else if( trg & PAD_BUTTON_X ) {
       CIRCLE_GRAPH_UpdateReq( work->circleGraph );
     }
-    else if( trg & PAD_BUTTON_Y )
-    {
+    else if( trg & PAD_BUTTON_Y ) {
       CIRCLE_GRAPH_AnalyzeReq( work->circleGraph );
-    }
-    else if( trg & PAD_BUTTON_SELECT )
-    {
-      static BOOL disp = FALSE;
-      disp = !disp; 
-      BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, disp );
     }
     return;
   }
 
-  if( trg & PAD_KEY_UP ) // ã ƒL[
-  {
+  if( trg & PAD_KEY_UP ) {
     MoveMenuCursorUp( work );
   }
-  else if( trg & PAD_KEY_DOWN ) // ‰º ƒL[
-  {
+  else if( trg & PAD_KEY_DOWN ) {
     MoveMenuCursorDown( work );
   } 
-  else if( trg & PAD_BUTTON_A ) // A ƒ{ƒ^ƒ“
-  {
+  else if( trg & PAD_KEY_LEFT ) {
+    switch( work->cursorPos )
+    {
+    case MENU_ITEM_QUESTION: 
+      ChangeQuestionToPrev( work );  
+      ChangeAnswerToTop( work );
+      break;
+    case MENU_ITEM_ANSWER:   
+      ChangeAnswerToPrev( work );    
+      break;
+    case MENU_ITEM_MY_ANSWER:
+      break;
+    case MENU_ITEM_COUNT: 
+      SwitchDataDisplayType( work );
+      break;
+    default: GF_ASSERT(0);
+    }
+  }
+  else if( trg & PAD_KEY_RIGHT ) {
+    switch( work->cursorPos )
+    {
+    case MENU_ITEM_QUESTION: 
+      ChangeQuestionToNext( work );  
+      ChangeAnswerToTop( work );
+      break;
+    case MENU_ITEM_ANSWER:   
+      ChangeAnswerToNext( work );    
+      break;
+    case MENU_ITEM_MY_ANSWER:
+      break;
+    case MENU_ITEM_COUNT:                                   
+      SwitchDataDisplayType( work );
+      break;
+    default: GF_ASSERT(0);
+    }
+  }
+  else if( trg & PAD_BUTTON_A ) {
+    if( work->cursorPos == MENU_ITEM_QUESTION ) {
+      // ƒV[ƒPƒ“ƒX•ÏX
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_ANALYZE );
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH );
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      FinishCurrentSequence( work );
+    }
   } 
-  else if( trg & PAD_BUTTON_B ) // B ƒ{ƒ^ƒ“
-  {
-    // ƒV[ƒPƒ“ƒXI—¹
+  else if( trg & PAD_BUTTON_B ) {
+    // ƒV[ƒPƒ“ƒX•ÏX
     SetNextSequence( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
   }
@@ -544,14 +607,15 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
  * @brief ‰ğÍƒV[ƒPƒ“ƒX ( RESEARCH_CHECK_SEQ_ANALYZE ) ‚Ìˆ—
  *
  * @param work
- *
- * @return ƒV[ƒPƒ“ƒX‚ª•Ï‰»‚·‚éê‡ Ÿ‚ÌƒV[ƒPƒ“ƒX”Ô†
- *         ƒV[ƒPƒ“ƒX‚ªŒp‘±‚·‚éê‡ Œ»İ‚ÌƒV[ƒPƒ“ƒX”Ô†
  */
 //----------------------------------------------------------------------------------------------
 static void Main_ANALYZE( RESEARCH_CHECK_WORK* work )
 {
-  FinishCurrentSequence( work );
+  // ˆê’èŠÔ‚ªŒo‰ß‚ÅŸ‚ÌƒV[ƒPƒ“ƒX‚Ö
+  if( SEQ_ANALYZE_FRAMES < work->seqCount )
+  {
+    FinishCurrentSequence( work );
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -559,14 +623,15 @@ static void Main_ANALYZE( RESEARCH_CHECK_WORK* work )
  * @brief ‰æ–Êƒtƒ‰ƒbƒVƒ…ƒV[ƒPƒ“ƒX ( RESEARCH_CHECK_SEQ_FLASH ) ‚Ìˆ—
  *
  * @param work
- *
- * @return ƒV[ƒPƒ“ƒX‚ª•Ï‰»‚·‚éê‡ Ÿ‚ÌƒV[ƒPƒ“ƒX”Ô†
- *         ƒV[ƒPƒ“ƒX‚ªŒp‘±‚·‚éê‡ Œ»İ‚ÌƒV[ƒPƒ“ƒX”Ô†
  */
 //----------------------------------------------------------------------------------------------
 static void Main_FLASH( RESEARCH_CHECK_WORK* work )
 {
-  FinishCurrentSequence( work );
+  // ˆê’èŠÔ‚ªŒo‰ß‚ÅŸ‚ÌƒV[ƒPƒ“ƒX‚Ö
+  if( SEQ_FLASH_FRAMES < work->seqCount )
+  {
+    FinishCurrentSequence( work );
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -574,14 +639,15 @@ static void Main_FLASH( RESEARCH_CHECK_WORK* work )
  * @brief ’²¸€–ÚŠm’è‚ÌŠm”FƒV[ƒPƒ“ƒX‚Ö‚Ì€”õƒV[ƒPƒ“ƒX ( RESEARCH_CHECK_SEQ_UPDATE ) ‚Ìˆ—
  *
  * @param work
- *
- * @return ƒV[ƒPƒ“ƒX‚ª•Ï‰»‚·‚éê‡ Ÿ‚ÌƒV[ƒPƒ“ƒX”Ô†
- *         ƒV[ƒPƒ“ƒX‚ªŒp‘±‚·‚éê‡ Œ»İ‚ÌƒV[ƒPƒ“ƒX”Ô†
  */
 //----------------------------------------------------------------------------------------------
 static void Main_UPDATE( RESEARCH_CHECK_WORK* work )
 {
-  FinishCurrentSequence( work );
+  // ˆê’èŠÔ‚ªŒo‰ß‚ÅŸ‚ÌƒV[ƒPƒ“ƒX‚Ö
+  if( SEQ_UPDATE_FRAMES < work->seqCount )
+  {
+    FinishCurrentSequence( work );
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -809,6 +875,9 @@ static void InitSequence_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void InitSequence_ANALYZE( RESEARCH_CHECK_WORK* work )
 {
+  //uc‚©‚¢‚¹‚«‚¿‚ã‚¤cv‚ğ•\¦
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, TRUE );
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq ANALYZE\n" );
 }
@@ -857,7 +926,7 @@ static void InitSequence_CLEAN_UP( RESEARCH_CHECK_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_CHECK_SEQ_SETUP )
+ * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_CHECK_SEQ_SETUP )
  *
  * @param work
  */
@@ -870,7 +939,7 @@ static void FinishSequence_SETUP( RESEARCH_CHECK_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_CHECK_SEQ_KEY_WAIT )
+ * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_CHECK_SEQ_KEY_WAIT )
  *
  * @param work
  */
@@ -883,20 +952,23 @@ static void FinishSequence_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_CHECK_SEQ_ANALYZE )
+ * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_CHECK_SEQ_ANALYZE )
  *
  * @param work
  */
 //----------------------------------------------------------------------------------------------
 static void FinishSequence_ANALYZE( RESEARCH_CHECK_WORK* work )
 {
+  //uc‚©‚¢‚¹‚«‚¿‚ã‚¤cv‚ğÁ‚·
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, FALSE );
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq ANALYZE\n" );
 }
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_CHECK_SEQ_FLASH )
+ * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_CHECK_SEQ_FLASH )
  *
  * @param work
  */
@@ -909,7 +981,7 @@ static void FinishSequence_FLASH( RESEARCH_CHECK_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_CHECK_SEQ_UPDATE )
+ * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_CHECK_SEQ_UPDATE )
  *
  * @param work
  */
@@ -925,7 +997,7 @@ static void FinishSequence_UPDATE ( RESEARCH_CHECK_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_CHECK_SEQ_CLEAN_UP )
+ * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_CHECK_SEQ_CLEAN_UP )
  *
  * @param work
  */
@@ -991,19 +1063,27 @@ static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief Ÿ‚Ì¿–â‚É•ÏX‚·‚é
+ * @brief •\¦‚·‚é¿–â‚ğ, Ÿ‚Ì¿–â‚É•ÏX‚·‚é
  *
  * @param work
  */
 //---------------------------------------------------------------------------------------------- 
 static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work )
 {
-  ShiftQuestionIdx( work, 1 ); // •\¦‚·‚é¿–âƒCƒ“ƒfƒbƒNƒX‚ğ•ÏX
+  ShiftQuestionIdx( work, 1 );          // •\¦‚·‚é¿–âƒCƒ“ƒfƒbƒNƒX‚ğ•ÏX
+
+  // •\¦‚ğXV
+  UpdateBGFont_QuestionCaption( work ); // ¿–â‚Ì•â‘«•¶‚ğXV‚·‚é
+  UpdateBGFont_Question( work );        // ¿–â‚ğXV‚·‚é 
+  UpdateBGFont_Answer( work );          // ‰ñ“š‚ğXV‚·‚é
+  UpdateBGFont_MyAnswer( work );        // ©•ª‚Ì‰ñ“š‚ğXV‚·‚é
+  UpdateBGFont_Count( work );           // ‰ñ“šl”‚ğXV‚·‚é
+  UpdateBGFont_NoData( work );          //u‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v‚Ì•\¦‚ğXV‚·‚é
 }
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ‘O‚Ì¿–â‚É•ÏX‚·‚é
+ * @brief •\¦‚·‚é¿–â‚ğ, ‘O‚Ì¿–â‚É•ÏX‚·‚é
  *
  * @param work
  */
@@ -1011,6 +1091,87 @@ static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work )
 static void ChangeQuestionToPrev( RESEARCH_CHECK_WORK* work )
 {
   ShiftQuestionIdx( work, -1 ); // •\¦‚·‚é¿–âƒCƒ“ƒfƒbƒNƒX‚ğ•ÏX
+
+  // •\¦‚ğXV
+  UpdateBGFont_QuestionCaption( work ); // ¿–â‚Ì•â‘«•¶‚ğXV‚·‚é
+  UpdateBGFont_Question( work );        // ¿–â‚ğXV‚·‚é 
+  UpdateBGFont_Answer( work );          // ‰ñ“š‚ğXV‚·‚é
+  UpdateBGFont_MyAnswer( work );        // ©•ª‚Ì‰ñ“š‚ğXV‚·‚é
+  UpdateBGFont_Count( work );           // ‰ñ“šl”‚ğXV‚·‚é
+  UpdateBGFont_NoData( work );          //u‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v‚Ì•\¦‚ğXV‚·‚é
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief •\¦‚·‚é‰ñ“š‚ğ, Ÿ‚Ì‰ñ“š‚É•ÏX‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void ChangeAnswerToNext( RESEARCH_CHECK_WORK* work )
+{
+  ShiftAnswerIdx( work, 1 ); // •\¦‚·‚é‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğ•ÏX
+
+  // •\¦‚ğXV
+  UpdateBGFont_Answer( work ); // ‰ñ“š‚ğXV‚·‚é
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief •\¦‚·‚é‰ñ“š‚ğ, ‘O‚Ì‰ñ“š‚É•ÏX‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void ChangeAnswerToPrev( RESEARCH_CHECK_WORK* work )
+{
+  ShiftAnswerIdx( work, -1 ); // •\¦‚·‚é‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğ•ÏX
+
+  // •\¦‚ğXV
+  UpdateBGFont_Answer( work ); // ‰ñ“š‚ğXV‚·‚é
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief •\¦‚·‚é‰ñ“š‚ğ, æ“ª‚Ì‰ñ“š‚É•ÏX‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void ChangeAnswerToTop( RESEARCH_CHECK_WORK* work )
+{
+  ResetAnswerIdx( work ); // •\¦‚·‚é‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğƒŠƒZƒbƒg
+
+  // •\¦‚ğXV
+  UpdateBGFont_Answer( work ); // ‰ñ“š‚ğXV‚·‚é
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ’²¸ƒf[ƒ^‚Ì•\¦ƒ^ƒCƒv‚ğØ‚è‘Ö‚¦‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void SwitchDataDisplayType( RESEARCH_CHECK_WORK* work )
+{
+  DATA_DISP_TYPE nextType;
+
+  // •ÏXŒã‚Ì•\¦ƒ^ƒCƒv‚ğ‘I‘ğ
+  switch( work->dispType )
+  {
+  case DATA_DISP_TYPE_TODAY: nextType = DATA_DISP_TYPE_TOTAL; break;
+  case DATA_DISP_TYPE_TOTAL: nextType = DATA_DISP_TYPE_TODAY; break;
+  default: GF_ASSERT(0);
+  }
+
+  // •\¦ƒ^ƒCƒv‚ğ•ÏX
+  SetDataDisplayType( work, nextType );
+
+  // •\¦‚ğXV
+  UpdateBGFont_Answer( work ); // ‰ñ“š‚ğXV‚·‚é
+  UpdateBGFont_Count( work );  // ‰ñ“šl”‚ğXV‚·‚é
+  UpdateBGFont_NoData( work ); //u‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v‚Ì•\¦‚ğXV‚·‚é
 }
 
 
@@ -1060,6 +1221,68 @@ static void ShiftQuestionIdx( RESEARCH_CHECK_WORK* work, int stride )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: shift question index ==> %d\n", nextIdx );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ‘I‘ğ’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğ•ÏX‚·‚é
+ *
+ * @param work
+ * @param stride •ÏX—Ê
+ */
+//----------------------------------------------------------------------------------------------
+static void ShiftAnswerIdx( RESEARCH_CHECK_WORK* work, int stride )
+{
+  int nowIdx;
+  int nextIdx;
+  int answerNum;
+
+  // ƒCƒ“ƒfƒbƒNƒX‚ğ•ÏX
+  answerNum = GetAnswerNum( work );
+  nowIdx    = work->answerIdx;
+  nextIdx   = ( nowIdx + stride + answerNum ) % answerNum;
+  work->answerIdx = nextIdx;
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: shift answer index ==> %d\n", nextIdx );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ‘I‘ğ’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğƒŠƒZƒbƒg‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void ResetAnswerIdx( RESEARCH_CHECK_WORK* work )
+{
+  work->answerIdx = 0;
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: reset answer index ==> %d\n", work->answerIdx );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ’²¸ƒf[ƒ^‚Ì•\¦ƒ^ƒCƒv‚ğİ’è‚·‚é
+ *
+ * @param work
+ * @param dispType İ’è‚·‚é•\¦ƒ^ƒCƒv
+ */
+//----------------------------------------------------------------------------------------------
+static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType )
+{
+  work->dispType = dispType;
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set data display type ==> " );
+  switch( dispType )
+  {
+  case DATA_DISP_TYPE_TODAY: OS_TFPrintf( PRINT_TARGET, "TODAY" ); break;
+  case DATA_DISP_TYPE_TOTAL: OS_TFPrintf( PRINT_TARGET, "TOTAL" ); break;
+  default: GF_ASSERT(0);
+  }
+  OS_TFPrintf( PRINT_TARGET, "\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1159,6 +1382,17 @@ static void SetMenuCursorOff( RESEARCH_CHECK_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
+ * @brief MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ğXV‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdateMainBG_WINDOW( RESEARCH_CHECK_WORK* work )
+{
+}
+
+//----------------------------------------------------------------------------------------------
+/**
  * @brief ’²¸€–Ú‚Ì•â‘«•¶‚ğXV‚·‚é
  *
  * @param work
@@ -1174,7 +1408,10 @@ static void UpdateBGFont_TopicCaption( RESEARCH_CHECK_WORK* work )
   strID = StringID_topicCaption[ topicID ];
 
   // BG ( ƒtƒHƒ“ƒg–Ê ) ‚É‘Î‚µ, •¶š—ñ‚ğ‘‚«‚Ş
-  BG_FONT_SetString( work->BGFont[ SUB_BG_FONT_TOPIC_CAPTION ], strID );
+  BG_FONT_SetMessage( work->BGFont[ SUB_BG_FONT_TOPIC_CAPTION ], strID );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont topic caption\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1186,19 +1423,18 @@ static void UpdateBGFont_TopicCaption( RESEARCH_CHECK_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void UpdateBGFont_QuestionCaption( RESEARCH_CHECK_WORK* work )
 {
-  u32 topicID;
   u32 questionID;
-  u32 questionIdx;
   u32 strID;
 
   // ¿–â‚Ì•â‘«•¶‚Ì•¶š—ñID‚ğæ“¾
-  topicID     = work->researchData.topicID;
-  questionIdx = work->questionIdx;
-  questionID  = work->researchData.questionData[ questionIdx ].ID;
+  questionID  = GetQuestionID( work );
   strID       = CaptionStringID_question[ questionID ];
 
   // BG ( ƒtƒHƒ“ƒg–Ê ) ‚É‘Î‚µ, •¶š—ñ‚ğ‘‚«‚Ş
-  BG_FONT_SetString( work->BGFont[ SUB_BG_FONT_QUESTION_CAPTION ], strID );
+  BG_FONT_SetMessage( work->BGFont[ SUB_BG_FONT_QUESTION_CAPTION ], strID );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont question caption\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1210,19 +1446,18 @@ static void UpdateBGFont_QuestionCaption( RESEARCH_CHECK_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void UpdateBGFont_Question( RESEARCH_CHECK_WORK* work )
 {
-  u32 topicID;
   u32 questionID;
-  u32 questionIdx;
   u32 strID;
 
   // ¿–â‚Ì•¶š—ñID‚ğæ“¾
-  topicID     = work->researchData.topicID;
-  questionIdx = work->questionIdx;
-  questionID  = work->researchData.questionData[ questionIdx ].ID;
+  questionID  = GetQuestionID( work );
   strID       = StringID_question[ questionID ];
 
   // BG ( ƒtƒHƒ“ƒg–Ê ) ‚É‘Î‚µ, •¶š—ñ‚ğ‘‚«‚Ş
-  BG_FONT_SetString( work->BGFont[ MAIN_BG_FONT_QUESTION ], strID );
+  BG_FONT_SetMessage( work->BGFont[ MAIN_BG_FONT_QUESTION ], strID );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont question\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1234,6 +1469,18 @@ static void UpdateBGFont_Question( RESEARCH_CHECK_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void UpdateBGFont_Answer( RESEARCH_CHECK_WORK* work )
 {
+  u16 answerID;
+  u32 strID;
+
+  // ‰ñ“š‚Ì•¶š—ñID‚ğæ“¾
+  answerID = GetAnswerID( work );
+  strID    = StringID_answer[ answerID ];
+
+  // BG ( ƒtƒHƒ“ƒg–Ê ) ‚É‘Î‚µ, •¶š—ñ‚ğ‘‚«‚Ş
+  BG_FONT_SetMessage( work->BGFont[ MAIN_BG_FONT_ANSWER ], strID );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont answer\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1245,6 +1492,28 @@ static void UpdateBGFont_Answer( RESEARCH_CHECK_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void UpdateBGFont_MyAnswer( RESEARCH_CHECK_WORK* work )
 {
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* questionnaireSave;
+  QUESTIONNAIRE_ANSWER_WORK* myAnswerWork;
+  u8 questionID;
+  u16 answerID;
+  u32 strID;
+
+  // ƒZ[ƒuƒf[ƒ^‚ğæ“¾
+  save              = SaveControl_GetPointer();
+  questionnaireSave = SaveData_GetQuestionnaire( save );
+  myAnswerWork      = Questionnaire_GetAnswerWork( questionnaireSave );
+
+  // Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ©•ª‚Ì‰ñ“šID‚ğæ“¾
+  questionID = GetQuestionID( work );
+  answerID   = QuestionnaireAnswer_ReadBit( myAnswerWork, questionID );
+  strID      = StringID_answer[ answerID ];
+
+  // BG ( ƒtƒHƒ“ƒg–Ê ) ‚É‘Î‚µ, •¶š—ñ‚ğ‘‚«‚Ş
+  BG_FONT_SetMessage( work->BGFont[ MAIN_BG_FONT_MY_ANSWER ], strID );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont my answer\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1256,6 +1525,64 @@ static void UpdateBGFont_MyAnswer( RESEARCH_CHECK_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void UpdateBGFont_Count( RESEARCH_CHECK_WORK* work )
 {
+  u32 strID;
+
+  // •¶š—ñID‚ğŒˆ’è
+  switch( work->dispType )
+  {
+  case DATA_DISP_TYPE_TODAY: strID = str_check_today_count; break;
+  case DATA_DISP_TYPE_TOTAL: strID = str_check_total_count; break;
+  default: GF_ASSERT(0);
+  }
+
+  // BG ( ƒtƒHƒ“ƒg–Ê ) ‚É‘Î‚µ, •¶š—ñ‚ğ‘‚«‚Ş
+  BG_FONT_SetMessage( work->BGFont[ MAIN_BG_FONT_COUNT ], strID );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont count\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @briefu‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v‚Ì•\¦‚ğXV‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdateBGFont_NoData( RESEARCH_CHECK_WORK* work )
+{
+  u32 count;
+
+  // •\¦’†‚Ì¿–â‚É‘Î‚·‚é‰ñ“šl”‚ğæ“¾
+  switch( work->dispType )
+  {
+  // ¡“ú‚Ìƒf[ƒ^
+  case DATA_DISP_TYPE_TODAY:
+    count = GetTodayCountOfQuestion( work );
+    break;
+
+  // ‡Œv‚Ìƒf[ƒ^
+  case DATA_DISP_TYPE_TOTAL:
+    count = GetTotalCountOfQuestion( work );
+    break;
+
+  // ƒGƒ‰[
+  default:
+    GF_ASSERT(0);
+  }
+
+  // •\¦ó‘Ô‚ğXV
+  if( count == 0 ) { 
+    // •\¦
+    BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_NO_DATA ], TRUE ); 
+  }
+  else { 
+    // ƒNƒŠƒA
+    BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_NO_DATA ], FALSE ); 
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont no data\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1823,7 +2150,7 @@ static void CreateBGFonts( RESEARCH_CHECK_WORK* work )
     work->BGFont[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
 
     // •¶š—ñ‚ğİ’è
-    BG_FONT_SetString( work->BGFont[i], strID );
+    BG_FONT_SetMessage( work->BGFont[i], strID );
   } 
 
   // DEBUG:
@@ -1959,9 +2286,10 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
   totalCount_question[2] = QuestionnaireWork_GetTotalCount( questionnaireSave, questionID[2] ); // ‚¢‚Ü‚Ü‚Å‚Ì‰ñ“šl”
   for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
   {
+    u8 qID = questionID[ qIdx ];
     for( aIdx=0; aIdx < answerNum[ qIdx ]; aIdx++ )
     {
-      answerID[ qIdx ][ aIdx ] = AnswerID_question[ qIdx ][ aIdx ]; // ‰ñ“šID
+      answerID[ qIdx ][ aIdx ] = AnswerID_question[ qID ][ aIdx ]; // ‰ñ“šID
       todayCount_answer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTodayAnswerNum( questionnaireSave, qIdx, aIdx ); // ¡“ú‚Ì‰ñ“šl”
       totalCount_answer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTotalAnswerNum( questionnaireSave, qIdx, aIdx ); // ‚¢‚Ü‚Ü‚Å‚Ì‰ñ“šl”
     }
@@ -2635,9 +2963,149 @@ static void CleanUpPaletteFadeSystem( RESEARCH_CHECK_WORK* work )
 }
 
 
-//==============================================================================================
-// ¡OBJ ƒAƒNƒZƒX
-//==============================================================================================
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì’²¸€–ÚID
+ */
+//----------------------------------------------------------------------------------------------
+static u8 GetTopicID( const RESEARCH_CHECK_WORK* work )
+{
+  return work->researchData.topicID;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì¿–âID‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì¿–âID
+ */
+//----------------------------------------------------------------------------------------------
+static u8 GetQuestionID( const RESEARCH_CHECK_WORK* work )
+{
+  u8 qIdx;
+  qIdx = work->questionIdx;
+  return work->researchData.questionData[ qIdx ].ID;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é‰ñ“š‘I‘ğˆ‚Ì” ‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ‰ñ“š‚Ì‘I‘ğˆ‚Ì”
+ */
+//---------------------------------------------------------------------------------------------- 
+static u8 GetAnswerNum( const RESEARCH_CHECK_WORK* work )
+{
+  u8 questionIdx;
+
+  questionIdx = work->questionIdx;
+
+  return work->researchData.questionData[ questionIdx ].answerNum;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì‰ñ“šID‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì‰ñ“šID
+ */
+//----------------------------------------------------------------------------------------------
+static u16 GetAnswerID( const RESEARCH_CHECK_WORK* work )
+{
+  u8 qIdx;
+  u8 aIdx;
+
+  qIdx = work->questionIdx;
+  aIdx = work->answerIdx;
+
+  return work->researchData.questionData[ qIdx ].answerData[ aIdx ].ID;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
+ */
+//----------------------------------------------------------------------------------------------
+static u16 GetTodayCountOfQuestion( const RESEARCH_CHECK_WORK* work )
+{
+  u8 qIdx;
+
+  qIdx = work->questionIdx;
+
+  return work->researchData.questionData[ qIdx ].todayCount;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
+ */
+//----------------------------------------------------------------------------------------------
+static u16 GetTotalCountOfQuestion( const RESEARCH_CHECK_WORK* work )
+{
+  u8 qIdx;
+
+  qIdx = work->questionIdx;
+
+  return work->researchData.questionData[ qIdx ].totalCount;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
+ */
+//----------------------------------------------------------------------------------------------
+static u16 GetTodayCountOfAnswer( const RESEARCH_CHECK_WORK* work )
+{
+  u8 qIdx;
+  u8 aIdx;
+
+  qIdx = work->questionIdx;
+  aIdx = work->answerIdx;
+
+  return work->researchData.questionData[ qIdx ].answerData[ aIdx ].todayCount;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
+ */
+//----------------------------------------------------------------------------------------------
+static u16 GetTotalCountOfAnswer( const RESEARCH_CHECK_WORK* work )
+{
+  u8 qIdx;
+  u8 aIdx;
+
+  qIdx = work->questionIdx;
+  aIdx = work->answerIdx;
+
+  return work->researchData.questionData[ qIdx ].answerData[ aIdx ].totalCount;
+}
 
 //----------------------------------------------------------------------------------------------
 /**
@@ -2859,7 +3327,7 @@ static void Debug_SetupResearchData( RESEARCH_CHECK_WORK* work )
   u8 questionID[ QUESTION_NUM_PER_TOPIC ];
   u16 answerID[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
   u8 answerNum[ QUESTION_NUM_PER_TOPIC ];
-  u16 todayCount_question[ QUESTION_NUM_PER_TOPIC ] = { 100, 200, 300 };
+  u16 todayCount_question[ QUESTION_NUM_PER_TOPIC ] = { 0, 200, 300 };
   u16 totalCount_question[ QUESTION_NUM_PER_TOPIC ] = { 300, 500, 900 };
   u16 todayCount_answer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ] = 
   {
@@ -2883,9 +3351,10 @@ static void Debug_SetupResearchData( RESEARCH_CHECK_WORK* work )
   answerNum[2] = AnswerNum_question[ questionID[2] ]; // ‰ñ“š‘I‘ğˆ‚Ì”
   for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
   {
+    u8 qID = questionID[ qIdx ];
     for( aIdx=0; aIdx < answerNum[ qIdx ]; aIdx++ )
     {
-      answerID[ qIdx ][ aIdx ] = AnswerID_question[ qIdx ][ aIdx ]; // ‰ñ“šID
+      answerID[ qIdx ][ aIdx ] = AnswerID_question[ qID ][ aIdx ]; // ‰ñ“šID
     }
   }
 

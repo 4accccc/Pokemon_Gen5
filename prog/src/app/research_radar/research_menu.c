@@ -969,7 +969,7 @@ static void CreateBGFonts( RESEARCH_MENU_WORK* work )
     work->BGFont[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
 
     // •¶Žš—ñ‚ðÝ’è
-    BG_FONT_SetString( work->BGFont[i], strID );
+    BG_FONT_SetMessage( work->BGFont[i], strID );
   } 
 
   // DEBUG:

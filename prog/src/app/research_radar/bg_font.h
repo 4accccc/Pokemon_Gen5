@@ -40,10 +40,14 @@ typedef struct
 //===============================================================================
 // □
 //===============================================================================
-// 生成/破棄
+// 生成・破棄
 extern BG_FONT* BG_FONT_Create( const BG_FONT_PARAM* param, 
                                 GFL_FONT* font, GFL_MSGDATA* message, HEAPID heapID );
 extern void BG_FONT_Delete( BG_FONT* BGFont );
 
 // 文字列の設定
-extern void BG_FONT_SetString( BG_FONT* BGFont, u32 strID );
+extern void BG_FONT_SetMessage( BG_FONT* BGFont, u32 strID );
+extern void BG_FONT_SetString( BG_FONT* BGFont, const STRBUF* strbuf );
+
+// 表示・非表示の設定
+extern void BG_FONT_SetDrawEnable( BG_FONT* BGFont, BOOL enable );

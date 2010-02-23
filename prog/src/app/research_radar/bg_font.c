@@ -79,18 +79,40 @@ void BG_FONT_Delete( BG_FONT* BGFont )
 //-------------------------------------------------------------------------------
 /**
  * @brief 文字列を設定する
+ *
+ * @param BGFont
+ * @param strID  書き込む文字列ID
  */
 //-------------------------------------------------------------------------------
-void BG_FONT_SetString( BG_FONT* BGFont, u32 strID )
+void BG_FONT_SetMessage( BG_FONT* BGFont, u32 strID )
+{
+  STRBUF* strbuf;
+
+  // 文字列を取得
+  strbuf = GFL_MSG_CreateString( BGFont->message, strID );
+
+  // 書き込み
+  BG_FONT_SetString( BGFont, strbuf );
+
+  GFL_HEAP_FreeMemory( strbuf );
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 文字列を設定する
+ *
+ * @param BGFont
+ * @param strbuf 書き込む文字列
+ */
+//------------------------------------------------------------------------------- 
+void BG_FONT_SetString( BG_FONT* BGFont, const STRBUF* strbuf )
 {
   BG_FONT_PARAM* param;
   GFL_BMP_DATA*  bmpData;
-  STRBUF*        strbuf;
   PRINTSYS_LSB   color;
 
   param   = &(BGFont->param);
   color   = PRINTSYS_LSB_Make( param->colorNo_L, param->colorNo_S, param->colorNo_B );
-  strbuf  = GFL_MSG_CreateString( BGFont->message, strID );
   bmpData = GFL_BMPWIN_GetBmp( BGFont->bmpWin );
 
   // クリア
@@ -102,6 +124,27 @@ void BG_FONT_SetString( BG_FONT* BGFont, u32 strID )
                        strbuf, BGFont->font, color ); 
   // VRAMへ転送
   GFL_BMPWIN_MakeTransWindow( BGFont->bmpWin );
+}
 
-  GFL_HEAP_FreeMemory( strbuf );
+//-------------------------------------------------------------------------------
+/**
+ * @brief 表示・非表示を設定する
+ *
+ * @param BGFont
+ * @param enable 表示する場合TRUE, 非表示にする場合FALSE
+ */
+//-------------------------------------------------------------------------------
+void BG_FONT_SetDrawEnable( BG_FONT* BGFont, BOOL enable )
+{
+  if( enable ) {
+    // スクリーンを作成
+    GFL_BMPWIN_MakeScreen( BGFont->bmpWin );
+  }
+  else {
+    // スクリーンをクリア
+    GFL_BMPWIN_ClearScreen( BGFont->bmpWin );
+  }
+
+  // VRAMへ転送
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( BGFont->bmpWin ) );
 }

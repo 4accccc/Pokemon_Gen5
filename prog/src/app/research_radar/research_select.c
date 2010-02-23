@@ -1372,13 +1372,13 @@ static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work )
   nowPos = work->topicCursorPos;
 
   // ’²¸€–Ú ‘è–¼/•â‘«
-  BG_FONT_SetString( work->BGFont[ BG_FONT_TOPIC_TITLE ],   StringID_topicTitle[ nowPos ] );
-  BG_FONT_SetString( work->BGFont[ BG_FONT_TOPIC_CAPTION ], StringID_topicCaption[ nowPos ] );
+  BG_FONT_SetMessage( work->BGFont[ BG_FONT_TOPIC_TITLE ],   StringID_topicTitle[ nowPos ] );
+  BG_FONT_SetMessage( work->BGFont[ BG_FONT_TOPIC_CAPTION ], StringID_topicCaption[ nowPos ] );
 
   // Ž¿–â
-  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_1 ], StringID_question[ Question1_topic[ nowPos ] ] );
-  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_2 ], StringID_question[ Question2_topic[ nowPos ] ] );
-  BG_FONT_SetString( work->BGFont[ BG_FONT_QUESTION_3 ], StringID_question[ Question3_topic[ nowPos ] ] );
+  BG_FONT_SetMessage( work->BGFont[ BG_FONT_QUESTION_1 ], StringID_question[ Question1_topic[ nowPos ] ] );
+  BG_FONT_SetMessage( work->BGFont[ BG_FONT_QUESTION_2 ], StringID_question[ Question2_topic[ nowPos ] ] );
+  BG_FONT_SetMessage( work->BGFont[ BG_FONT_QUESTION_3 ], StringID_question[ Question3_topic[ nowPos ] ] );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update sub display strings \n" );
@@ -2169,7 +2169,7 @@ static void CreateBGFonts( RESEARCH_SELECT_WORK* work )
     work->BGFont[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
 
     // •¶Žš—ñ‚ðÝ’è
-    BG_FONT_SetString( work->BGFont[i], strID );
+    BG_FONT_SetMessage( work->BGFont[i], strID );
   } 
 
   // ’²¸€–ÚBGFont
@@ -2200,7 +2200,7 @@ static void CreateBGFonts( RESEARCH_SELECT_WORK* work )
     work->TopicsBGFont[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
 
     // •¶Žš—ñ‚ðÝ’è
-    BG_FONT_SetString( work->TopicsBGFont[i], strID );
+    BG_FONT_SetMessage( work->TopicsBGFont[i], strID );
   } 
 
   // DEBUG:
