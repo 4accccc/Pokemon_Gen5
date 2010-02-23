@@ -346,7 +346,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //------------------------------
   case MES_INIT_MUSICAL_SHOT:
     MUSICAL_EVENT_InitMusicalShot( evWork );
-    GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &MusicalShot_ProcData, evWork->shotInitWork );
+    GAMESYSTEM_CallProc( evWork->gsys , FS_OVERLAY_ID(musical_shot), &MusicalShot_ProcData, evWork->shotInitWork );
     evWork->state = MES_TERM_MUSICAL_SHOT;
     break;
     

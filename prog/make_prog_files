@@ -1207,6 +1207,7 @@ SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_FIELDMAP
+#===> GROUP_OVERLAY_GIMMICK
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
         musical/mus_poke_data.c \
@@ -1228,10 +1229,14 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
         musical/stage/script/script_table.c \
 		musical/comm/mus_comm_lobby.c \
 		musical/comm/mus_comm_func.c \
-        musical/shot/musical_shot_sys.c\
-        musical/shot/mus_shot_photo.c\
-        musical/shot/mus_shot_info.c\
         test/ariizumi/musical_editor.c
+
+# ミュージカルショット
+#===> SRCS_OVERLAY_MUSICAL
+SRCS_OVERLAY_MUSICAL_SHOT = musical/shot/musical_shot_sys.c \
+        musical/shot/mus_shot_photo.c\
+        musical/shot/mus_shot_info.c
+
 
 #パレス
 #===> SRCS_OVERLAY_DEV_WIFI

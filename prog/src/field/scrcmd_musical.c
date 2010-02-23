@@ -159,7 +159,7 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
     
     //ショット呼び出し
     event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
-                                         FS_OVERLAY_ID(musical), &MusicalShot_ProcData, callWork->initWork,
+                                         FS_OVERLAY_ID(musical_shot), &MusicalShot_ProcData, callWork->initWork,
                                          EvCmdMusicalShotCallProc_CallBack, callWork );
     SCRIPT_CallEvent( sc, event );
 
