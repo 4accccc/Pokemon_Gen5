@@ -92,6 +92,7 @@ typedef struct {
   PRINT_STREAM*     printStream;
   PRINT_QUE*        printQue;
   PRINT_UTIL        printUtil[1];
+  GFL_PROCSYS*      localProc;
 
   pSubProc    subProc;
   int         subSeq;
@@ -202,6 +203,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
   wk = GFL_PROC_AllocWork( proc, sizeof(MAIN_WORK), HEAPID_CORE );
   wk->heapID = HEAPID_TEMP;
   wk->tmpModuleExistFlag = FALSE;
+  wk->localProc = GFL_PROC_LOCAL_boot( wk->heapID );
 
   initGraphicSystems( wk );
   createTemporaryModules( wk );
@@ -227,6 +229,8 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 static GFL_PROC_RESULT DebugTayaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   MAIN_WORK* wk = mywk;
+
+  GFL_PROC_LOCAL_Exit( wk->localProc );
   GFL_HEAP_FreeMemory( wk->testPoke );
   GFL_HEAP_DeleteHeap( HEAPID_TEMP );
   GFL_HEAP_DeleteHeap( HEAPID_CORE );
@@ -826,6 +830,16 @@ static void autoConnectCallBack( void* pWork )
   MAIN_WORK* wk = pWork;
   wk->netTestSeq = 1;
 }
+//------------------------------------------------------------------------------------------------------
+// LOCAL PROC I—¹‘Ò‚¿
+//------------------------------------------------------------------------------------------------------
+static BOOL WaitLocalProcDone( GFL_PROCSYS* localProc )
+{
+  if( GFL_PROC_LOCAL_Main(localProc) != GFL_PROC_MAIN_VALID ){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 //------------------------------------------------------------------------------------------------------
 // ƒ|ƒPƒ‚ƒ“ì¬‰æ–Ê‚Ö
@@ -848,13 +862,15 @@ FS_EXTERN_OVERLAY(debug_makepoke);
     {
       PROCPARAM_DEBUG_MAKEPOKE* para = getGenericWork( wk, sizeof(PROCPARAM_DEBUG_MAKEPOKE) );
       para->dst = wk->testPoke;
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, para );
+      GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, para );
       (*seq)++;
     }
     break;
   case 2:
-    wk->testPokeEditFlag = TRUE;
-    changeScene_recover( wk );
+    if( WaitLocalProcDone(wk->localProc) ){
+      wk->testPokeEditFlag = TRUE;
+      changeScene_recover( wk );
+    }
     return TRUE;
   }
   return FALSE;
@@ -969,11 +985,13 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       GFL_HEAP_FreeMemory( wk->partyPlayer );
 
       PMSND_PlayBGM( para->musicDefault );
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
+      GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(battle), &BtlProcData, para );
+
       (*seq)++;
     }
     break;
   case 2:
+    if( WaitLocalProcDone(wk->localProc) )
     {
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
       GFL_HEAP_FreeMemory( para->party[BTL_CLIENT_PLAYER] );
@@ -1188,14 +1206,16 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
       set_test_playername( (MYSTATUS*)(para->playerStatus[BTL_CLIENT_PLAYER]) );
 
       DEBUG_PerformanceSetActive( FALSE );
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
+      GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(battle), &BtlProcData, para );
       (*seq)++;
     }
     break;
   case 5:
-    BATTLE_PARAM_Release( (BATTLE_SETUP_PARAM*)getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) ) );
-    changeScene_recover( wk );
-    return TRUE;
+    if( WaitLocalProcDone(wk->localProc) ){
+      BATTLE_PARAM_Release( (BATTLE_SETUP_PARAM*)getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) ) );
+      changeScene_recover( wk );
+      return TRUE;
+    }
   }
 
   return FALSE;
@@ -1365,15 +1385,17 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
       }
 
       DEBUG_PerformanceSetActive( FALSE );
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
+      GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(battle), &BtlProcData, para );
       (*seq)++;
     }
     break;
 
   case 8:
-    BATTLE_PARAM_Release( (BATTLE_SETUP_PARAM*)getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) ) );
-    changeScene_recover( wk );
-    return TRUE;
+    if( WaitLocalProcDone(wk->localProc) ){
+      BATTLE_PARAM_Release( (BATTLE_SETUP_PARAM*)getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) ) );
+      changeScene_recover( wk );
+      return TRUE;
+    }
   }
 
   return FALSE;
