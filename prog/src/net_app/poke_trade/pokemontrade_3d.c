@@ -959,18 +959,18 @@ static void tex_coord(int idx)
 static const  u32     myTexAddr = 0x03000;       // a texture image at 0x1000 of the texture image slots
 static const  u32     myTexPlttAddr = 0x02000;   // a texture palette at 0x1000 of the texture palette slots
 
-static const  u32     myTexSize = 512;   // a texture palette at 0x1000 of the texture palette slots
+static const  u32     myTexSize = 2048;   // a texture palette at 0x1000 of the texture palette slots
 
 
 static void _printColorSquear(u8* tempBuff, int x, int y, int colno)
 {
   int i,j;
-  int xstart = x*5+1;
-  int ystart = y*5+2;
+  int xstart = x*10+1;
+  int ystart = y*10+2;
     
-  for(i = ystart ; i < (ystart + 4); i++){  //y座標
-    for(j = xstart; j < (xstart + 4); j++){  //x座標
-      int pos = j/2+i*16;
+  for(i = ystart ; i < (ystart + 8); i++){  //y座標
+    for(j = xstart; j < (xstart + 8); j++){  //x座標
+      int pos = j/2+i*32;
 
       if((j % 2)==0){
         tempBuff[pos] = (0xf0 & tempBuff[pos]) + colno;
@@ -1000,6 +1000,10 @@ static void _panelLoad(POKEMON_TRADE_WORK *pWork,int num)
     for(i=0;i < num;i++){
       GFL_STD_MemFill(tempBuff, 0xf, myTexSize);
 
+      _printColorSquear(tempBuff, num%6, num/6, num%16);
+
+
+#if 0
       if(i==BOX_MAX_TRAY){
         for( index=0;index<6;index++){
           _printColorSquear(tempBuff, num%2, num/2, pWork->FriendPokemonCol[1][i*BOX_MAX_POS+index]);
@@ -1011,6 +1015,7 @@ static void _panelLoad(POKEMON_TRADE_WORK *pWork,int num)
           OS_TPrintf("color %d\n",pWork->FriendPokemonCol[1][i*BOX_MAX_POS+index]);
         }
       }
+#endif
         
       DC_FlushRange(tempBuff,myTexSize);
 
@@ -1115,8 +1120,8 @@ static void _createBoard(float pos, int index)
 
   G3_TexImageParam(GX_TEXFMT_PLTT16,      // use 16 colors palette texture
                    GX_TEXGEN_TEXCOORD,    // use texcoord
-                   GX_TEXSIZE_S32,        // 32 pixels
-                   GX_TEXSIZE_T32,        // 32 pixels
+                   GX_TEXSIZE_S64,        // 32 pixels
+                   GX_TEXSIZE_T64,        // 32 pixels
                    GX_TEXREPEAT_NONE,     // no repeat
                    GX_TEXFLIP_NONE,       // no flip
                    GX_TEXPLTTCOLOR0_USE,  // use color 0 of the palette

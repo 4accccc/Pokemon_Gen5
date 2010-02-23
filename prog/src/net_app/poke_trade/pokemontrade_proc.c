@@ -2231,10 +2231,10 @@ static void _touchStateGTS(POKEMON_TRADE_WORK* pWork)
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
   }
-  if(pWork->GTSSelectIndex[0][0]!=-1){
-    int msg[]={POKETRADE_STR2_26};
-    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
-  }
+//  if(pWork->GTSSelectIndex[0][0]!=-1){
+//    int msg[]={POKETRADE_STR2_26};
+//    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
+//  }
 
 
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
@@ -2376,13 +2376,12 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
       pWork->underSelectBoxno  = pWork->workBoxno;
       pWork->underSelectIndex = pWork->workPokeIndex;
-
-
       pWork->selectIndex = pWork->underSelectIndex;
       pWork->selectBoxno = pWork->underSelectBoxno;
       if(!POKEMONTRADEPROC_IsTriSelect(pWork)){        // ‘I‘ð‚µ‚½ƒ|ƒPƒ‚ƒ“‚ð“Š‚°‚é‚Æ‚±‚ë
         pWork->pCatchCLWK = NULL;
         POKEMONTRADE_StartSucked(pWork);
+        PMSND_PlaySE( POKETRADESE_THROW );
         _CHANGE_STATE(pWork, _POKE_SetAndSendData);
         return;
       }

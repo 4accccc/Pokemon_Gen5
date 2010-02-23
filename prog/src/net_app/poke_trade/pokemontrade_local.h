@@ -568,6 +568,8 @@ struct _POKEMON_TRADE_WORK{
   u8 bByebyeNoJump;
   u8 bEncountNoJump;
   u8 timerErupted[2]; //顔文字消去タイマー
+  u8 trgWork;  //キーの制御を行うワーク
+  u8 dummy;
 } ;
 
 

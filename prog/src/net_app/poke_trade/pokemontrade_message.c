@@ -53,6 +53,8 @@
 
 #include "pokemontrade_local.h"
 
+#include "app/app_printsys_common.h"
+
 static void _select6keywait(POKEMON_TRADE_WORK* pWork);
 static void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,BOOL bEgg,POKEMON_TRADE_WORK* pWork);
 static void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
@@ -213,6 +215,7 @@ void POKETRADE_MESSAGE_WindowOpenCustom(POKEMON_TRADE_WORK* pWork,BOOL bFast,BOO
   if(!bFast){
     pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pMessageStrBuf, pWork->pFontHandle,
                                           MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15 );
+    APP_PRINTSYS_COMMON_PrintStreamInit(&pWork->trgWork);
   }
   else{
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pMessageStrBuf, pWork->pFontHandle);
@@ -364,6 +367,20 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
 
 BOOL POKETRADE_MESSAGE_EndCheck(POKEMON_TRADE_WORK* pWork)
 {
+  BOOL ret = APP_PRINTSYS_COMMON_PrintStreamFunc(pWork->pStream,&pWork->trgWork);
+
+  if(ret){
+    if(pWork->pStream){
+      PRINTSYS_PrintStreamDelete( pWork->pStream );
+      pWork->pStream = NULL;
+    }
+  }
+  return ret;
+  
+#if 0
+
+
+
   if(pWork->pStream){
     int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
     switch(state){
@@ -382,6 +399,7 @@ BOOL POKETRADE_MESSAGE_EndCheck(POKEMON_TRADE_WORK* pWork)
     return FALSE;  //まだ終わってない
   }
   return TRUE;// 終わっている
+#endif
 }
 
 
@@ -802,7 +820,7 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
   {//自分の位置調整
     VecFx32 apos;
     apos.x = _MCSS_POS_X(51);
-    apos.y = _MCSS_POS_Y(8);
+    apos.y = _MCSS_POS_Y(16);
     apos.z = _MCSS_POS_Z(0);
     MCSS_SetPosition( pWork->pokeMcss[pWork->pokemonselectno] ,&apos );
     MCSS_ResetVanishFlag(pWork->pokeMcss[pWork->pokemonselectno]);
@@ -839,8 +857,8 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
   _pokePersonalMsgDisp(pp, pWork->MyInfoWin, 9*8, 16*8, pWork);  //性格
   _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 9*8, 18*8, pWork);  //特性
   _pokePocketItemMsgDisp(pp,pWork->MyInfoWin, 9*8, 20*8,pWork);  //もちもの
-  _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 20*8, 13*8, pWork);  //わざ
-  _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 20*8,15*8, pWork); //わざリスト
+  _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 19*8, 12*8, pWork);  //わざ
+  _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 19*8,14*8, pWork); //わざリスト
 
   UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
                                   16, 16, CLSYS_DRAW_MAIN, pWork->heapID );

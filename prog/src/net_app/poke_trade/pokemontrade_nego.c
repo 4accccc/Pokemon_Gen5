@@ -318,7 +318,7 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
 
 void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL bSelected)
 {
-  int sidex[] = {1, 17};
+  int sidex[] = {5, 21};
   int i=0,lv;
   int frame = GFL_BG_FRAME3_M;
   GFL_BMPWIN* pWin;
@@ -333,7 +333,7 @@ void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL 
   if(pWork->StatusWin[side]){
     GFL_BMPWIN_Delete(pWork->StatusWin[side]);
   }
-  pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 15, 14, 2,	_MAINBG_APP_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 16, 14, 2,	_MAINBG_APP_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
   pWin = pWork->StatusWin[side];
   GFL_FONTSYS_SetColor( 4, 1, 0x0 );
@@ -723,6 +723,28 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
   //GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
   GFL_BG_SetVisible( GFL_BG_FRAME1_S , TRUE );
 
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
+
+  if(1){
+    G2S_SetWnd0InsidePlane(
+      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_BG1|
+      GX_WND_PLANEMASK_BG2|
+      GX_WND_PLANEMASK_BG3|
+      GX_WND_PLANEMASK_OBJ,
+      TRUE );
+    G2S_SetWnd0Position( 128, 0, 255, 192 );
+    G2S_SetWndOutsidePlane(
+      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_BG1|
+      GX_WND_PLANEMASK_BG2|
+      GX_WND_PLANEMASK_BG3|
+      GX_WND_PLANEMASK_OBJ,
+      FALSE );
+    GXS_SetVisibleWnd( GX_WNDMASK_W0 );
+  }
+
+  
   _CHANGE_STATE(pWork,POKETRADE_NEGO_Select6keywait);
 
 

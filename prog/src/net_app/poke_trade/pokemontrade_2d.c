@@ -496,7 +496,7 @@ void IRC_POKETRADE_SendVramBoxNameChar(POKEMON_TRADE_WORK* pWork)
     }
     GFL_FONTSYS_SetColor( 0xf, 0x2, 0 );
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->BoxNameWin[i]), 0 );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->BoxNameWin[i]), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->BoxNameWin[i]), 8, 0, pWork->pStrBuf, pWork->pFontHandle);
     GFL_BMPWIN_TransVramCharacter(pWork->BoxNameWin[i]);
 
     GFL_BMPWIN_SetPosY( pWork->BoxNameWin[i], 0 );  //‚O‚É•â³
@@ -2282,7 +2282,7 @@ void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* 
     UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
 
     pIM->clwk_poke_item =
-      UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit, markpos[i]*8 , 13 * 8, type, pWork->heapID );
+      UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit, markpos[i]*8 , 10 * 8, type, pWork->heapID );
   }
 
 }
@@ -2364,7 +2364,7 @@ void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, 
   ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
   GFL_CLWK_DATA cellInitData;
   int drawn;
-  GFL_POINT pokemonpos[]={{40,92},{72,92},{104,92} , {40+128,92},{72+128,92},{104+128,92}};
+  GFL_POINT pokemonpos[]={{36,92},{68,92},{100,92} , {36+128,92},{68+128,92},{100+128,92}};
   GFL_POINT pokemonposl[]={{20,36},{20,84},{20,132}, {20+128,36},{20+128,84},{20+128,132} };
 
   POKETRADE_2D_GTSPokemonIconReset(pWork, side, no);
