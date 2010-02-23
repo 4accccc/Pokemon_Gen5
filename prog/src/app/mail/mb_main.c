@@ -113,7 +113,6 @@ void MBMAIN_VBlank( GFL_TCB *tcb, void *work )
   
   GFL_CLACT_SYS_VBlankFunc();
 
-  OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -556,7 +555,7 @@ void MBMAIN_SelBoxInit( MAILBOX_SYS_WORK * syswk )
   for(i=0;i<2;i++){
     syswk->app->yn_menuitem[i].str      = GFL_MSG_CreateString( syswk->app->mman, yn_item[i][0] ); //メニューに表示する文字列
     syswk->app->yn_menuitem[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
-    syswk->app->yn_menuitem[i].type     = yn_item[i][2]; //戻るマークの表示
+    syswk->app->yn_menuitem[i].type     = yn_item[i][1];
   }
 /*
   syswk->app->selbox = SelectBoxSys_AllocWork( HEAPID_MAILBOX_APP, NULL );

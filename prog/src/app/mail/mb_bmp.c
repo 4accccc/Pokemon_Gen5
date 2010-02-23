@@ -588,7 +588,7 @@ void MBBMP_PagePut( MAILBOX_SYS_WORK * syswk )
 
   // 現在のページ
   WORDSET_RegisterNumber(
-    syswk->app->wset, 0, syswk->sel_page+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    syswk->app->wset, 0, syswk->sel_page+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   str = GFL_MSG_CreateString( syswk->app->mman, msg_page01 );
   WORDSET_ExpandStr( syswk->app->wset, syswk->app->expbuf, str );
   GFL_STR_DeleteBuffer( str );
@@ -599,7 +599,7 @@ void MBBMP_PagePut( MAILBOX_SYS_WORK * syswk )
 
   // ページ数
   WORDSET_RegisterNumber(
-    syswk->app->wset, 0, syswk->app->page_max+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    syswk->app->wset, 0, syswk->app->page_max+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   str = GFL_MSG_CreateString( syswk->app->mman, msg_page01 );
   WORDSET_ExpandStr( syswk->app->wset, syswk->app->expbuf, str );
   GFL_STR_DeleteBuffer( str );
@@ -609,6 +609,7 @@ void MBBMP_PagePut( MAILBOX_SYS_WORK * syswk )
     BMPWIN_PAGE_SX*8/2+sx/2, 0, syswk->font, FCOL_SYS_BKN_M15, STRPRINT_MODE_LEFT );
 
   GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_PAGE] );
+
 }
 
 //--------------------------------------------------------------------------------------------

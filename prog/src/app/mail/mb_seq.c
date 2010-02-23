@@ -268,7 +268,7 @@ static int MainSeq_Init( MAILBOX_SYS_WORK * syswk )
   MBMAIN_MsgInit( syswk->app );
 
   MBBMP_DefaultStrSet( syswk );
-  MBBMP_PagePut( syswk );
+//  MBBMP_PagePut( syswk );   // ページ表示
   MBMAIN_MailButtonInit( syswk );
   MBMAIN_SelBoxInit( syswk );
 
@@ -480,15 +480,18 @@ static int MainSeq_SubProcCall( MAILBOX_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_SubProcMain( MAILBOX_SYS_WORK * syswk )
 {
-/*
-  if( ProcMain( syswk->subProcFunc ) == FALSE ){
+  //ローカルPROCの更新処理
+  GFL_PROC_MAIN_STATUS proc_status = GFL_PROC_LOCAL_Main( syswk->mbProcSys );
+
+  // 終了待ち
+  if(proc_status == GFL_PROC_MAIN_VALID){
     return MBSEQ_MAINSEQ_SUBPROC_MAIN;
   }
-  PROC_Delete( syswk->subProcFunc );
-*/
 
   syswk->next_seq = SubProcFunc[syswk->subProcType].exit( syswk );
   return SubProcFunc[syswk->subProcType].rcvSeq;
+
+  
 }
 
 //--------------------------------------------------------------------------------------------
@@ -635,7 +638,7 @@ static int MainSeq_MailSelectPageChg( MAILBOX_SYS_WORK * syswk )
     MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_ARROW_R, FALSE );
   }
 
-  MBBMP_PagePut( syswk );
+//  MBBMP_PagePut( syswk );   // ページ表示
   MBMAIN_MailButtonInit( syswk );
   return MBSEQ_MAINSEQ_MAIL_SELECT_MAIN;
 }
@@ -1192,7 +1195,7 @@ FS_EXTERN_OVERLAY(pokelist);
 static int MailPokeListCall( MAILBOX_SYS_WORK * syswk )
 {
   
-  GFL_PROC_SysCallProc( FS_OVERLAY_ID(pokelist), &PokeList_ProcData, syswk->subProcWork );
+  GFL_PROC_LOCAL_CallProc( syswk->mbProcSys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, syswk->subProcWork );
   return 0;
 }
 
@@ -1293,7 +1296,7 @@ static int MailWriteCall( MAILBOX_SYS_WORK * syswk )
       MailSysProc_End,
     };
 
-    GFL_PROC_SysCallProc( NO_OVERLAY_ID, &MailSysProcData, syswk->subProcWork );
+    GFL_PROC_LOCAL_CallProc( syswk->mbProcSys, NO_OVERLAY_ID, &MailSysProcData, syswk->subProcWork );
   }
 
   return 0;
@@ -1356,7 +1359,7 @@ static int MailDelYes( MAILBOX_SYS_WORK * syswk )
     syswk->sel_page = syswk->app->page_max;
     syswk->sel_pos  = 0;
   }
-  MBBMP_PagePut( syswk );
+//  MBBMP_PagePut( syswk );   // ページ表示
   MBMAIN_MailButtonInit( syswk );
   BGWINFRM_FrameOff( syswk->app->wfrm, MBMAIN_BGWF_SELMAIL );
 

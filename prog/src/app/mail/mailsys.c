@@ -55,6 +55,8 @@ typedef struct _MAIL_MAIN_DAT{
 
   PMS_DATA  tmpPms;   //<簡易会話テンポラリ
 
+  GFL_PROCSYS *localProcSys;
+
 }MAIL_MAIN_DAT;
 
 //================================================================
@@ -103,6 +105,9 @@ GFL_PROC_RESULT MailSysProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *my
   }
   wk->dat->val = param->mode;
 
+  // メールシステム内PROCSYS作成
+  wk->localProcSys = GFL_PROC_LOCAL_boot( HEAPID_MAILSYS );
+  
   //現在のキー動作モードを取得
 //  wk->dat->kt_status = param->pKeytouch;
 
@@ -142,23 +147,29 @@ GFL_PROC_RESULT MailSysProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *my
     PMSInput_Quit,
   };
 
+  //ローカルPROCの更新処理
+  GFL_PROC_MAIN_STATUS proc_status = GFL_PROC_LOCAL_Main( wk->localProcSys );
+
+
   switch(*seq){
   case MAILCASE_INIT:
     wk->dat->val = param->mode; //動作モード値復帰
-    GFL_PROC_SysCallProc( NO_OVERLAY_ID, &MailViewProcData, wk->dat );
+    GFL_PROC_LOCAL_CallProc( wk->localProcSys, NO_OVERLAY_ID, &MailViewProcData, wk->dat );
     *seq = MAILCASE_WAIT;
     break;
   case MAILCASE_WAIT:
-    switch(wk->dat->val){
-    case VIEW_END_CANCEL:
-      *seq = MAILCASE_END;
-      break;
-    case VIEW_END_DECIDE:
-      *seq = MAILCASE_END;
-      break;
-    default:
-      *seq = WORDCASE_INIT; 
-      break;
+    if(proc_status != GFL_PROC_MAIN_VALID){
+      switch(wk->dat->val){
+      case VIEW_END_CANCEL:
+        *seq = MAILCASE_END;
+        break;
+      case VIEW_END_DECIDE:
+        *seq = MAILCASE_END;
+        break;
+      default:
+        *seq = WORDCASE_INIT; 
+        break;
+      }
     }
     break;
   case MAILCASE_END:
@@ -191,21 +202,23 @@ GFL_PROC_RESULT MailSysProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *my
     }
     PMSI_PARAM_SetInitializeDataSentence(wk->app_wk,&(wk->tmpPms));
     
-    GFL_PROC_SysCallProc( NO_OVERLAY_ID, &PMSProcData,  wk->app_wk );
+    GFL_PROC_LOCAL_CallProc( wk->localProcSys, NO_OVERLAY_ID, &PMSProcData,  wk->app_wk );
     *seq     = WORDCASE_WAIT;
     break;
   case WORDCASE_WAIT:
-    // 簡易会話取得
-    if( PMSI_PARAM_CheckCanceled(wk->app_wk) == FALSE)
-    {
-      //変更があれば書き戻し
-      PMSI_PARAM_GetInputDataSentence( wk->app_wk,  &(wk->dat->msg[wk->dat->cntNo]));
+    if(proc_status != GFL_PROC_MAIN_VALID){
+      // 簡易会話取得
+      if( PMSI_PARAM_CheckCanceled(wk->app_wk) == FALSE)
+      {
+        //変更があれば書き戻し
+        PMSI_PARAM_GetInputDataSentence( wk->app_wk,  &(wk->dat->msg[wk->dat->cntNo]));
+      }
+      PMSI_PARAM_Delete(wk->app_wk);
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(pmsinput));
+  //    GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));    
+  
+      *seq = MAILCASE_INIT; 
     }
-    PMSI_PARAM_Delete(wk->app_wk);
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(pmsinput));
-//    GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));    
-
-    *seq = MAILCASE_INIT; 
     break;
   }
   return GFL_PROC_RES_CONTINUE;
@@ -217,6 +230,9 @@ GFL_PROC_RESULT MailSysProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *my
 GFL_PROC_RESULT MailSysProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   MAIL_MAIN_DAT *wk = mywk;
+
+  // メールシステム内PROCSYS終了
+  GFL_PROC_LOCAL_Exit( wk->localProcSys );
 
   //メールデータテンポラリ領域解放
   MailSys_ReleaseTmpData(wk->dat);

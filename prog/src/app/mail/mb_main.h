@@ -231,7 +231,9 @@ typedef struct {
 
   int next_seq;     // 次のシーケンス
 
-  GFL_TCB *vintr_tcb; // 登録したVblankFuncのポインタ
+  GFL_TCB      *vintr_tcb; // 登録したVblankFuncのポインタ
+  GFL_PROCSYS  *mbProcSys; // メールボックス内で実行するPROCのサブシステム
+
 }MAILBOX_SYS_WORK;
 
 typedef int (*pMailBoxFunc)(MAILBOX_SYS_WORK*);

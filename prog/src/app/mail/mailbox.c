@@ -54,6 +54,9 @@ GFL_PROC_RESULT MailBoxProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *my
   syswk->next_seq  = MBSEQ_MAINSEQ_START;
   syswk->vintr_tcb = NULL;
 
+  // メールボックスシステム内PROCSYS作成
+  syswk->mbProcSys = GFL_PROC_LOCAL_boot( HEAPID_MAILBOX_SYS );
+
   // テスト用にメールデータを追加
 #ifdef PM_DEBUG
   {
@@ -121,6 +124,11 @@ GFL_PROC_RESULT MailBoxProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *my
 //--------------------------------------------------------------------------------------------
 GFL_PROC_RESULT MailBoxProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
+  MAILBOX_SYS_WORK * syswk = mywk;
+
+  // メールボックスシステム内PROCSYS終了
+  GFL_PROC_LOCAL_Exit( syswk->mbProcSys );
+
   GFL_PROC_FreeWork( proc );
 
   GFL_HEAP_CheckHeapSafe( HEAPID_MAILBOX_SYS );
