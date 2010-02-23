@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-23T18:12:34"/>
+	<create user="murakami_naoto" host="W00228" date="2010-02-22T23:37:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -330,7 +330,7 @@
 じゅうでんが　できるものが　いたら▽
 きかいが　うごくかも　しれない▼
 きみ　よければ
-じゅうでんが　できる　ポケモンを
+じゅうでんが　できる　ポケモンを▽
 かして　くれないか？▼</language>
 		<language name="JPN_KANJI" width="256">どこかに　このまちと　にているが
 みらいのような　としが　あるらしい▼
@@ -339,7 +339,7 @@
 じゅうでんが　できるものが　いたら▽
 きかいが　うごくかも　しれない▼
 きみ　よければ
-じゅうでんが　できる　ポケモンを
+じゅうでんが　できる　ポケモンを▽
 かして　くれないか？▼</language>
 	</row>
 
@@ -356,6 +356,17 @@
 
 	<row id="msg_c08_man1_04w">
 		<comment>♂：WhiteVer
+・はい選択時</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">あ　ありがとう！
+これで　きかいが　うごくぞ▼</language>
+		<language name="JPN_KANJI" width="256">あ　ありがとう！
+これで　きかいが　うごくぞ▼</language>
+	</row>
+
+	<row id="msg_c08_man1_05w">
+		<comment>♂：WhiteVer
 ・はい選択だが
 　条件を満たしていない時</comment>
 		<attribute name="キャラ指定">MAN1
@@ -368,17 +379,6 @@
 ……って　ぼくの　おねがいした
 じょうけんを　みたした▽
 ポケモンが　いないよ！！</language>
-	</row>
-
-	<row id="msg_c08_man1_05w">
-		<comment>♂：WhiteVer
-・はい選択時</comment>
-		<attribute name="キャラ指定">MAN1
-青年</attribute>
-		<language name="JPN" width="256">あ　ありがとう！
-これで　きかいが　うごくぞ▼</language>
-		<language name="JPN_KANJI" width="256">あ　ありがとう！
-これで　きかいが　うごくぞ▼</language>
 	</row>
 
 	<row id="msg_c08_man1_06w">
@@ -463,13 +463,13 @@
 みらいに　つながっている▽
 いまを　せいいっぱい　いきるのが▽
 だいじってこと……だね！▼
-よし　ジキル！　あとで　でかけよう！
+よし　タイム！　あとで　でかけよう！
 きょうは　めいいっぱい　あそぼう</language>
 		<language name="JPN_KANJI" width="256">みらいについて　ふあんに　なるより
 みらいに　つながっている▽
 いまを　せいいっぱい　いきるのが▽
 だいじってこと……だね！▼
-よし　ジキル！　あとで　でかけよう！
+よし　タイム！　あとで　でかけよう！
 きょうは　めいいっぱい　あそぼう</language>
 	</row>
 
@@ -513,7 +513,7 @@
 じゅうでんが　できるものが　いたら▽
 きかいが　うごくかも　しれない▼
 きみ　よければ
-じゅうでんが　できる　ポケモンを
+じゅうでんが　できる　ポケモンを▽
 かして　くれませんか？▼</language>
 		<language name="JPN_KANJI" width="256">どこかに　このまちと　にているけど
 ふるい　かんじの　としが　あるらしい▼
@@ -522,7 +522,7 @@
 じゅうでんが　できるものが　いたら▽
 きかいが　うごくかも　しれない▼
 きみ　よければ
-じゅうでんが　できる　ポケモンを
+じゅうでんが　できる　ポケモンを▽
 かして　くれませんか？▼</language>
 	</row>
 

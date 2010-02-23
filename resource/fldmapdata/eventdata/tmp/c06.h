@@ -24,6 +24,9 @@
 #define C06_RANGERW_01                     5
 #define C06_LEADER6_01                     6
 #define C06_HAKASE1_01                     7
+#define C06_MONSTERBALL_01                 8
+#define C06_BOY2_01                        9
+#define C06_BABYGIRL1_01                  10
 
 #endif //ZONE_C06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

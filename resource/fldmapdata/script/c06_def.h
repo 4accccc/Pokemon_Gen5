@@ -13,5 +13,6 @@
 #define SCRID_C06_WOMAN1_01 (6)
 #define SCRID_BG_C06_SIGN1_01 (7)
 #define SCRID_POS_C06_HAKASE1_01 (8)
+#define SCRID_C06_MONSTERBALL_01 (9)
 
 #endif //_C06_DEF_H_

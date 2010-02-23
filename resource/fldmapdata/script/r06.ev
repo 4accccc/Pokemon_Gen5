@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_r06_mountain_01
 _EVENT_DATA		ev_r06_woman2_01
+_EVENT_DATA		ev_r06_oldman1_01
 _EVENT_DATA		ev_bg_r06_sign1_01
 _EVENT_DATA		ev_bg_r06_sign2_01
 _EVENT_DATA		ev_bg_r06_sign4_01
@@ -50,6 +51,20 @@ EVENT_START  ev_r06_mountain_01
 	
 EVENT_END
 
+/**************************************************************/
+/*  R06 oldman1_01のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r06_oldman1_01
+	
+	IF FLAG_ON(FH_01) THEN	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06_oldman1_01 )
+
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06_oldman1_02 )
+		
+	ENDIF
+	
+EVENT_END
 /**************************************************************/
 /*  R06 WOMEN2の会話のイベントスクリプト*/
 /**************************************************************/

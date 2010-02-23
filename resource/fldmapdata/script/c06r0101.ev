@@ -47,10 +47,10 @@ EVENT_START   ev_c06r0101_babygirl1_01
 
 	//ジムバッジを入手後
 	ELSE
-		//技マシン「そらをとぶ」を入手している
-		IF FLAG_ON(FH_01) THEN
-			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_babygirl_01)
 		//技マシン「そらをとぶ」を入手していない
+		IF FLAG_OFF(FH_01) THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_babygirl_01)
+		//技マシン「そらをとぶ」を入手している
 		ELSE
 			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_babygirl_02)		
 		ENDIF
@@ -70,12 +70,14 @@ EVENT_START   ev_c06r0101_boy2_01
 	IF $SCWK_TEMP0 == 0 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_boy2_00)
 
-	//ジムバッジを入手後
+	//ジムバッジを入手後 
 	ELSE
-		//技マシン「そらをとぶ」を入手している
-		IF FLAG_ON(FH_01) THEN
-			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_boy2_01)
 		//技マシン「そらをとぶ」を入手していない
+		IF FLAG_OFF(FH_01) THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_boy2_01)
+			_FLAG_RESET(FV_C06_MONSTERBALL)
+			
+		//技マシン「そらをとぶ」を入手している
 		ELSE
 			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_boy2_02)		
 		ENDIF

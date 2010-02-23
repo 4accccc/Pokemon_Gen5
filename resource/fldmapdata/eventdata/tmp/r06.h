@@ -20,6 +20,7 @@
 #define TR_PARASOL_01                      6
 #define TR_SCIENTISTM_01                   7
 #define TR_SCIENTISTW_04                   8
+#define R06_OLDMAN1_01                     9
 
 #endif //ZONE_R06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

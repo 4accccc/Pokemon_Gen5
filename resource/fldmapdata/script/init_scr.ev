@@ -169,6 +169,9 @@ init_flags:
 	//ライモンシティのサポートパパ（ミュージカル誘導イベントまで非表示）
 	_FLAG_SET( FV_C04_SUPPORTPAPA_01 )
 
+	//C06R101のGIRL1に話しかけるまで、C06のモンスターボールを非表示
+	_FLAG_SET( FV_C06_MONSTERBALL )	
+
 	//R07：ライバルとチャンピオン（POS起動で表示）
 	_FLAG_SET( FV_R07_RIVAL_01 )
 	

@@ -37,16 +37,23 @@ EVENT_START		 ev_c08r0402_man1_01
 	DEFINE_LOCAL LWK_POKE_CHECK
 	DEFINE_LOCAL LWK_SEL_POS
 	DEFINE_LOCAL LWK_WAZA_CHECK
-		
-	//【仮】マップにPCを配置して頂けることになったので、アニメはその後につける
-	_TALK_OBJ_START()
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
 	
+	//主人公位置を取得
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ  )
+
+	_TALK_OBJ_START()
 	//アイテム入手フラグ
-	IF FLAG_OFF(FE_C08R0402_ITEMGET_01)	THEN	
+	IF FLAG_OFF(FE_C08R0402_ITEMGET_01)	THEN
+//	IF FLAG_OFF(FH_01)	THEN	
 	
 		//ぼくはみらいをしりたい！_ぼくはかこにもどりたい！
 		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_01w,msg_c08_man1_01b, C08R0402_MAN1_01 , WIN_DOWN)
 		_MSGWIN_CLOSE()
+
+		//間を作る
+		_TIME_WAIT(16)
 		
 		//どこかにこのまちとにているが
 		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_02w,msg_c08_man1_02b, C08R0402_MAN1_01 , WIN_DOWN)
@@ -60,16 +67,34 @@ EVENT_START		 ev_c08r0402_man1_01
 		//じゅうでんを持ったバージョン違いのポケモンがいる場合
 		IF$LWK_POKE_CHECK == 1 THEN
 			
-			//パソコンに向かうアニメ
-			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_come_01)
+			//プレイヤーが道を空ける
+			IF $LWK_POSX == 10 THEN
+				_OBJ_ANIME(MMDL_ID_PLAYER,anm_c08r0402_player_go_01)
+				_OBJ_ANIME_WAIT()
+			ENDIF
+
+			_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_right)
 			_OBJ_ANIME_WAIT()
 			
+			_CAMERA_START()		//カメラ操作開始
+			_CAMERA_PURGE()		//カメラのバインドを解く
+				
+			//カメラ操作　チャンピオンの位置にカメラを合わせる
+			_CAMERA_MOVE( 9688,0,970752,876544,0,622592,40 )	//一番最後の引数は移動にかかるフレーム数
+
+			//パソコンに向かうアニメ
+			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_come_01)
+			_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+			_OBJ_ANIME_WAIT()
+					
 			//さあみらいをみせておくれ
 			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_06w,msg_c08_man1_06b, C08R0402_MAN1_01 , WIN_DOWN)		
 			_MSGWIN_CLOSE()
 			
 			//SEを鳴らす「キィィィイイン」
+			_PLAINWIN_MSG_DOWN( msg_c08_machine_01 )
 			_SE_PLAY(SEQ_SE_FLD_128)
+			_MSGWIN_CLOSE()
 			_SE_WAIT()
 			
 			//未来_過去を見て、感動！ジャンプしちゃうかも
@@ -79,6 +104,9 @@ EVENT_START		 ev_c08r0402_man1_01
 			//おおっ！　みらいは……
 			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_07w,msg_c08_man1_07b, C08R0402_MAN1_01 , WIN_DOWN)		
 			_MSGWIN_CLOSE()
+
+			//間を作る
+			_TIME_WAIT(32)
 			
 			//元にもどった事を確認するために、周りをきょろきょろ
 			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_kyorokyoro)
@@ -87,14 +115,33 @@ EVENT_START		 ev_c08r0402_man1_01
 			//……もとにもどった？
 			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_08w,msg_c08_man1_08b, C08R0402_MAN1_01 , WIN_DOWN)		
 			_MSGWIN_CLOSE()
-		
+			
+			//間を作る
+			_TIME_WAIT(32)
+			
+			_OBJ_ANIME(C08R0402_MAN1_01,anm_common_turn_left)
+			_OBJ_ANIME_WAIT()
+			
 			//そうだ！
 			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_09w,msg_c08_man1_09b, C08R0402_MAN1_01 , WIN_DOWN)		
 			_MSGWIN_CLOSE()
-			
-			//ポケモンを返しにくるアニメ
-			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_come_02)
+
+			//自機にカメラを戻す
+			_CAMERA_RECV_MOVE( 40 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+
+			//ポケモンを返しにくる
+			IF $LWK_POSX == 8 THEN
+				_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_man1_go_01_posx8)
+			ELSIF $LWK_POSX == 9 THEN
+				_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_man1_go_01_posx9)
+			ELSIF $LWK_POSX == 10 THEN
+				_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_man1_go_01_posx10)
+			ENDIF
 			_OBJ_ANIME_WAIT()
+
+			_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+			_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+			_CAMERA_END()		//カメラ操作終了
 			
 			//アイテム入手処理
 			_ITEM_EVENT_NOWAIT(ITEM_ORENNOMI, 1)
@@ -103,15 +150,14 @@ EVENT_START		 ev_c08r0402_man1_01
 			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_kangai)
 			_OBJ_ANIME_WAIT()
 			
+			
 			//みらいについて
 			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_10w,msg_c08_man1_10b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
-			//タイムのほうに向かう
-			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_come_03)
-			_OBJ_ANIME_WAIT()
-			
 			_FLAG_SET(FE_C08R0402_ITEMGET_01)
+			_FLAG_SET(FH_01)
 		
 		ENDIF
 	
@@ -137,8 +183,8 @@ ev_event_check:
 	    
 		//バージョンをチェックする
 		//技を覚えているかチェックする
-//		_CHECK_POKE_WAZA( LWK_WAZA_CHECK, WAZANO_ZYUUDEN, LWK_SEL_POS )
-		$LWK_WAZA_CHECK = 1
+		_CHECK_POKE_WAZA( LWK_WAZA_CHECK, WAZANO_ZYUUDEN, LWK_SEL_POS )
+//		$LWK_WAZA_CHECK = 1
 		
 		//必要なポケモンがいる
 		IF$SCWK_ANSWER == 1 && $LWK_WAZA_CHECK == 1 THEN
@@ -169,17 +215,41 @@ _RET
 	
 EVENT_END
 //--------------------------------------------------------------------
+// 主人公：PCに向かう C08R0402_MAN1をよける                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c08r0402_player_go_01
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
 // C08R0402_MAN1： PCに向かう                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c08r0402_come_01
-	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA AC_WAIT_32F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_32F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
 // C08R0402_MAN1： ポケモンを返しにくる                 
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_c08r0402_come_02
-	_ANIME_DATA AC_MARK_GYOE,1
+_ANIME_LABEL	anm_c08r0402_man1_go_01_posx8
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_c08r0402_man1_go_01_posx9
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_c08r0402_man1_go_01_posx10
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -194,13 +264,16 @@ _ANIME_LABEL	anm_c08r0402_come_03
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c08r0402_kandou
 	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA AC_STAY_JUMP_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 // C08R0402_MAN1： 感慨深げに歩く                       
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c08r0402_kangai
-	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_WALK_R_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -208,6 +281,16 @@ _ANIME_LABEL	anm_c08r0402_kangai
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_c08r0402_kyorokyoro
 	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA AC_WAIT_32F,1
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_WALK_L_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
