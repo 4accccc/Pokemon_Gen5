@@ -535,6 +535,21 @@ void GFL_NET_DWC_GetMySendedFriendCode( const WIFI_LIST* pList, DWCFriendData* p
 
 //---------------------------------------------------------------------------
 /**
+ * @brief   自分のDWCFriendDataを取得する
+ * @param   WIFI_LIST構造体
+ * @param   代入先
+ */
+//---------------------------------------------------------------------------
+void WifiList_GetMyFriendData( WIFI_LIST* pWifiList, DWCFriendData *pFriendData )
+{
+  DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
+
+  GF_ASSERT(userdata);
+  DWC_CreateExchangeToken(userdata, pFriendData);
+}
+
+//---------------------------------------------------------------------------
+/**
  * @brief   自分のGSIDを取得する
  * @param   WIFI_LIST構造体
  * @retval  正の整数  	GSプロファイルID
@@ -542,14 +557,12 @@ void GFL_NET_DWC_GetMySendedFriendCode( const WIFI_LIST* pList, DWCFriendData* p
             -1 	ログインIDが格納されているため、取得できない
  */
 //---------------------------------------------------------------------------
-
 int WifiList_GetMyGSID( WIFI_LIST* pWifiList )
 {
   DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
   DWCFriendData friendData;
 
-  GF_ASSERT(userdata);
-  DWC_CreateExchangeToken(userdata,&friendData);
+  WifiList_GetMyFriendData(pWifiList, &friendData);
   return DWC_GetGsProfileId( userdata,&friendData);
 }
 

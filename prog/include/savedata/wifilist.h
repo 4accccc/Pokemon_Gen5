@@ -69,6 +69,7 @@ extern void WifiList_AddMinigameBalloon( WIFI_LIST *list, int no, int addnum );
 extern void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no);
 extern void WifiList_FormUpData( WIFI_LIST *list);
 extern void GFL_NET_DWC_GetMySendedFriendCode( const WIFI_LIST* pList, DWCFriendData* pFriend );
+extern void WifiList_GetMyFriendData( WIFI_LIST* pWifiList, DWCFriendData *pFriendData );
 extern int  WifiList_GetMyGSID( WIFI_LIST* pWifiList );
 extern BOOL WifiList_CheckMyGSID( WIFI_LIST* pWifiList );
 
