@@ -327,6 +327,7 @@ extern void FLDSYSWIN_STREAM_WriteWindow( FLDSYSWIN_STREAM *sysWin );
 extern void FLDSYSWIN_STREAM_AllPrintStrBuf(
     FLDSYSWIN_STREAM *sysWin, u16 x, u16 y, STRBUF *strBuf );
 extern BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin );
+extern void FLDSYSWIN_STREAM_SetLastKeyCursor( FLDSYSWIN_STREAM *sysWin, BOOL flag );
 
 //吹き出しメッセージウィンドウ
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
@@ -339,8 +340,9 @@ extern void FLDTALKMSGWIN_StartClose( FLDTALKMSGWIN *tmsg );
 extern BOOL FLDTALKMSGWIN_WaitClose( FLDTALKMSGWIN *tmsg );
 extern void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg );
 extern void FLDTALKMSGWIN_ClearMessage( FLDTALKMSGWIN *tmsg );
-extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
 extern void FLDTALKMSGWIN_ResetMessageStrBuf( FLDTALKMSGWIN *tmsg, STRBUF *strbuf );
+extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
+extern void FLDTALKMSGWIN_SetLastKeyCursor( FLDTALKMSGWIN *tmsg, BOOL flag );
 
 //プレーンウィンドウ
 extern FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add(
@@ -362,6 +364,7 @@ extern void FLDPLAINMSGWIN_PrintStreamStart(
 extern void FLDPLAINMSGWIN_PrintStreamStartStrBuf(
     FLDPLAINMSGWIN *plnwin, u16 x, u16 y, const STRBUF *strBuf );
 extern BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin );
+extern void FLDPLAINMSGWIN_SetLastKeyCursor( FLDPLAINMSGWIN *plnwin, BOOL flag );
 
 //サブウィンドウ
 extern void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,

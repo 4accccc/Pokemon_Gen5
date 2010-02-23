@@ -887,11 +887,11 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
   u16 obj_id = SCRCMD_GetVMWorkValue( core, work );
   u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
-
+  
   if( GET_VERSION() == VERSION_BLACK ){
     msg_id = msg_id_b;
   }
-
+  
   if( balloonWin_Write(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
@@ -1541,14 +1541,72 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * メッセージウィンドウ共通　メッセージウィンドウ閉じる
- * @param 
- * @retval
+ * キー待ちカーソル表示　セット部分
+ * @param work SCRCMD_WORK
+ * @param flag TRUE=カーソル表示、FALSE=非表示
+ * @return BOOL TRUE=正常終了 FALSE=異常 
+ */
+//--------------------------------------------------------------
+static BOOL setKeyWaitMsgCursor( SCRCMD_WORK *work, BOOL flag )
+{
+  void *win = SCRCMD_WORK_GetMsgWinPtr( work );
+  
+  if( win == NULL ){
+    GF_ASSERT( 0 );
+    return FALSE;
+  }
+  
+  if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
+    FLDSYSWIN_STREAM_SetLastKeyCursor( (FLDSYSWIN_STREAM*)win, flag );
+  }else if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){
+    FLDPLAINMSGWIN_SetLastKeyCursor( (FLDPLAINMSGWIN*)win, flag );
+  }else if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
+    FLDTALKMSGWIN_SetLastKeyCursor( (FLDTALKMSGWIN*)win, flag );
+  }else{
+    GF_ASSERT( 0 );
+    return FALSE;
+  }
+  
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * キー待ちカーソル表示　ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitKeyWaitMsgCursor( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  int trg = GFL_UI_KEY_GetTrg();
+  
+  if( trg & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ){
+    setKeyWaitMsgCursor( work, FALSE );
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * キー待ちカーソル表示
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdKeyWaitMsgCursor( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+
+  if( setKeyWaitMsgCursor(work,TRUE) == FALSE ){
+    GF_ASSERT( 0 );
+    return VMCMD_RESULT_CONTINUE;
+  }
+  
+  VMCMD_SetWait( core, EvWaitKeyWaitMsgCursor );
   return VMCMD_RESULT_SUSPEND;
 }
 
