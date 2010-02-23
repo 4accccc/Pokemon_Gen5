@@ -27,7 +27,27 @@ _EVENT_DATA    ev_c08_boy2_01
 _EVENT_DATA    ev_c08_woman1_01
 _EVENT_DATA    ev_c08_iss_01
 _EVENT_DATA    ev_bg_c08_board_01
+_EVENT_DATA    ev_zone_c08
 _EVENT_DATA_END
+
+/************************************************************/
+/*			ISSOBJをバージョンで分岐						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c08
+	
+	//バージョンを取得してOBJを変化させる
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	
+	//BlackVERならシャガ
+	IF $SCWK_ANSWER == VERSION_BLACK THEN
+		$OBJCHRWORK0 = KEYBOARD
+	
+	//Whiteならアイリス
+	ELSE
+		$OBJCHRWORK0 = FIDDLE
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /* POS：【仮】チャンピオンとジムリーダー                       */
