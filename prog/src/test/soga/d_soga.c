@@ -73,7 +73,6 @@ static	const	SOGA_PROC_TABLE	spt[]={
 	{ DSMSG_TRAINER_VIEWER,	&TrainerViewerProcData },
 	{ DSMSG_BATTLE_TEST,	&DebugBattleTestProcData },
 	{ DSMSG_CAPTURE,		&CaptureTestProcData },
-	{ DSMSG_CAPTURE,		&ShinkaDemoProcData },
 };
 
 //--------------------------------------------------------------------------
@@ -226,20 +225,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
     }
     else if( trg & PAD_BUTTON_A ){
       wk->seq_no = 1;
-      if( wk->pos == 5 )
-      { 
-        POKEPARTY* ppt = PokeParty_AllocPartyWork( wk->heapID );
-        POKEMON_PARAM* pp = PP_Create( MONSNO_TUTININ, 1, 0, wk->heapID );
-        PokeParty_Add( ppt, pp );
-        GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-        wk->param = SHINKADEMO_AllocParam( wk->heapID, NULL, ppt, MONSNO_TEKKANIN, 0, 0, FALSE );
-        GFL_PROC_SysCallProc( NO_OVERLAY_ID, spt[ wk->pos ].gpd, wk->param );
-        (*seq)++;
-      }
-      else
-      { 
-        return GFL_PROC_RES_FINISH;
-      }
+      return GFL_PROC_RES_FINISH;
     }
   case 1:
     break;
