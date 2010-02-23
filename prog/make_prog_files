@@ -435,9 +435,43 @@ SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
 SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 
 
+
+#下画面のオーバーレイレイヤー
+
+# フィールドマップ上でのみ使用する侵入関連のソース
+#===> SRCS_OVERLAY_DEV_IRC
+#GROUP_OVERLAY_UNION_INTRUDE
+SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
+				field/field_comm/intrude_minimono.c \
+				field/field_comm/intrude_monolith.c \
+				field/event_intrude.c \
+				field/event_intrude_subscreen.c \
+        field/scrcmd_intrude.c \
+        field/field_comm/intrude_subdisp.c \
+        field/field_comm/intrude_message.c \
+        field/field_comm/intrude_mission_field.c \
+        field/scrcmd_intrude_field.c \
+				field/event_comm_common.c \
+				field/event_mission_normal.c \
+				field/event_mission_talk.c \
+				field/event_mission_talked.c \
+				field/event_mission_battle.c
+
+#===> SRCS_OVERLAY_DEV_IRC
+#GROUP_OVERLAY_UNION_INTRUDE
+SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
+                          net_app/union/union_receive.c \
+                          net_app/union/union_event_check.c \
+                          net_app/union/union_oneself.c \
+                          net_app/union/union_msg.c \
+                          net_app/union/union_tool.c \
+                          net_app/union/union_eff.c \
+                          net_app/union/colosseum_tool.c
+
+
 # field初期化用
 # event_mapchange内でfield_procが生成される前に使用される処理
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_FIELD_INIT		=	field/event_mapchange.c \
         field/ev_time.c \
         field/field_wfbc_data_local.c \
@@ -644,40 +678,10 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_trial_house.c
 
 
-#下画面のオーバーレイレイヤー
-
-# フィールドマップ上でのみ使用する侵入関連のソース
-#===> SRCS_OVERLAY_FIELDMAP
-SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
-				field/field_comm/intrude_minimono.c \
-				field/field_comm/intrude_monolith.c \
-				field/event_intrude.c \
-				field/event_intrude_subscreen.c \
-        field/scrcmd_intrude.c \
-        field/field_comm/intrude_subdisp.c \
-        field/field_comm/intrude_message.c \
-        field/field_comm/intrude_mission_field.c \
-        field/scrcmd_intrude_field.c \
-				field/event_comm_common.c \
-				field/event_mission_normal.c \
-				field/event_mission_talk.c \
-				field/event_mission_talked.c \
-				field/event_mission_battle.c
-
-#===> SRCS_OVERLAY_FIELDMAP
-SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
-                          net_app/union/union_receive.c \
-                          net_app/union/union_event_check.c \
-                          net_app/union/union_oneself.c \
-                          net_app/union/union_msg.c \
-                          net_app/union/union_tool.c \
-                          net_app/union/union_eff.c \
-                          net_app/union/colosseum_tool.c
-
 
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_UNION_APP = net_app/union/union_app.c
 
 # ぐるぐる交換（ユニオンルーム）
@@ -687,29 +691,24 @@ SRCS_OVERLAY_OEKAKI = net_app/oekaki/comm_command_oekaki.c \
 
 
 # フィールド天気
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> SRCS_OVERLAY_FIELDMAP
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_SUNNY = field/weather_sunny.c
 
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> SRCS_OVERLAY_FIELDMAP
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_SNOW = field/weather_snow.c
 
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> SRCS_OVERLAY_FIELDMAP
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_RAIN = field/weather_rain.c
 
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> SRCS_OVERLAY_FIELDMAP
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
                   field/weather_mirage.c
 
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> SRCS_OVERLAY_FIELDMAP
 #GROUP_OVERLAY_FIELD_WEATHER
 SRCS_OVERLAY_FIELD_WEATHER_MIST = field/weather_mist.c
 
@@ -838,7 +837,7 @@ SRCS_OVERLAY_FIELD_GIMMICK_LEAGUE_FRONT01 = field/field_gimmick_league_front01.c
 SRCS_OVERLAY_FIELD_GIMMICK_LEAGUE_FRONT02 = field/field_gimmick_league_front02.c
 
 # マッパーサンプル
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
         test/tetsu/sample/sample_net.c \
         test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
@@ -854,9 +853,7 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
 #UI汎用モジュール
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/ui_easy_clwk.c \
                          ui/touchbar.c \
@@ -873,15 +870,13 @@ SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel2.c
 
 # アイテム画面
 #===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_IRC
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_BAG = app/bag/itemmenu.c \
                    app/bag/itemmenu_disp.c
 
 # モノリス画面
 #===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MONOLITH = field/field_comm/monolith_main.c \
 									 field/field_comm/monolith_tool.c \
 									 field/field_comm/monolith_mission_select.c \
@@ -933,22 +928,22 @@ SRCS_OVERLAY_FLD_FACEUP = field/fld_faceup.c
 
 
 # サウンドデバッグ画面
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_SOUND_DEBUG  = sound/snd_test2.c
 
 # 有泉デバッグ
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c
 
 # 田谷デバッグ
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_TAYA_DEBUG   = test/taya/d_taya.c
 
 
 
 # 曽我部デバッグ
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
 								  test/soga/d_btltest.c \
@@ -975,11 +970,9 @@ SRCS_OVERLAY_TESTMODE = test/testmode.c
 
 
 #ポケモンリスト
-#===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 		app/pokelist/plist_sys.c \
 		app/pokelist/plist_plate.c \
@@ -1082,7 +1075,7 @@ SRCS_OVERLAY_VS_MULTI_LIST = battle/app/vs_multi_list.c
 # WIFICLUB
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
 							net_app/wificlub/comm_command_wfp2pmf.c \
@@ -1103,7 +1096,7 @@ SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
 #相性チェック
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
       net_app/compatible/compati_tool.c \
       net_app/compatible/compati_control.c \
@@ -1114,7 +1107,7 @@ SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
 #赤外線相性チェック用ネットシステム
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_IRC_COMPATIBLE	= net_app/irc_compatible/compatible_irc_sys.c \
 															net_app/irc_compatible/irc_compatible.c \
 															net_app/irc_compatible/irc_appbar.c
@@ -1143,7 +1136,7 @@ SRCS_OVERLAY_IRC_RANKING	= net_app/irc_ranking/irc_ranking.c
 #dlplay_funcは不思議な贈り物で文字コード変換に使っている。移植後削除を。
 #FIELDのしたにあるのはselectでtalkmsgwinを使っているから。
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_FIELDMAP
 #LIB=>          libmb.$HYB.a
@@ -1166,7 +1159,7 @@ SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \
         test/dlplay/dlplay_func.c 
 
 # 大野デバッグ
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_IRCBATTLEMATCH
 SRCS_OVERLAY_OHNO_DEBUG = test/ohno/d_ohno_list.c
@@ -1201,7 +1194,7 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
 # トレーナーカード
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_PMSINPUT
 SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
       app/trainercard/trcard_bmp.c \
@@ -1212,9 +1205,8 @@ SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
 # ミュージカル
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_FIELDMAP
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
         musical/mus_poke_data.c \
         musical/mus_item_draw.c \
@@ -1243,7 +1235,7 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
 #パレス
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
       app/palace/palace_draw.c
 
@@ -1378,7 +1370,7 @@ SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
 # 友達手帳(+コード入力
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_WIFI2DMAP
 SRCS_OVERLAY_WIFINOTE = app/wifi_note/wifi_note.c
 
@@ -1406,8 +1398,7 @@ SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
 
 #ポケモンステータス
 #===> SRCS_OVERLAY_DPW_COMMON
-#===> SRCS_OVERLAY_UNION_ROOM
-#===> SRCS_OVERLAY_FIELD_INTRUDE
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
         app/p_status/p_status.c \
 		app/p_status/p_sta_sub.c \
@@ -1453,7 +1444,7 @@ SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = battle_championship/battle_championship.c \
         net_app/wifi_match/digitalcardcheck.c
 
 # 小幡デバッグ
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
                            test/obata/debug_obata_menu_setup.c \
                            test/obata/debug_obata_demo_test.c \
@@ -1504,7 +1495,7 @@ SRCS_OVERLAY_DEBUG_BEACON = field/event_debug_beacon.c
 SRCS_OVERLAY_DEBUG_JUMP   = field/event_debug_menu_jump.c
 
 #マイクテスト
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c
 
 #UIデバッグ(新規アプリ用テンプレート）
@@ -1526,7 +1517,7 @@ SRCS_OVERLAY_BOX    = app/box/box2.c \
 # カメラテスト
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #LIB=>          libssp.$HYB.a
 SRCS_OVERLAY_COMM_TVT = system/camera_system.c \
 			net_app/comm_tvt/enc_adpcm.c \
@@ -1543,13 +1534,13 @@ SRCS_OVERLAY_COMM_TVT = system/camera_system.c \
 # 技教え
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_WAZA_OSHIE = app/waza_oshie/wo_main.c
 
 # TVトランシーバー(非通信)
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
 		app/local_tvt/local_tvt_chara.c 
 
@@ -1585,7 +1576,7 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_VIEW = net_app/wifi_match/wifibattlematch_graphic.c
 
 # コマンドデモ
 #===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_COMMAND_DEMO = demo/command_demo/command_demo.c \
 							demo/command_demo/cdemo_main.c \
 							demo/command_demo/cdemo_seq.c \
@@ -1641,19 +1632,19 @@ SRCS_OVERLAY_DEBUG_FIGHT   = test/taya/debug_fight.c \
 
 
 #デバッグポケモン作成
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEBUG_FIGHT
 SRCS_OVERLAY_DEBUG_MAKEPOKE = debug/debug_makepoke.c
 
 #デバッグ国連データ作成
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEBUG_FIGHT
 SRCS_OVERLAY_DEBUG_MAKE_UNDATA = debug/debug_make_undata.c
 
 #デバッグゾーンジャンプ
-#===> SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEBUG_FIGHT
 SRCS_OVERLAY_DEBUG_ZONE_JUMP = debug/debug_zone_jump.c
@@ -1699,7 +1690,7 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_poke2dcheck.c
 
 # 保坂デバッグ
-#===>SRCS_OVERLAY_DEV_IRC
+#===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_DEBUG_HOSAKA   = test/hosaka/debug_3d_demo.c
 
 # 3Dデモ再生アプリ
