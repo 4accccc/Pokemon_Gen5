@@ -14,5 +14,8 @@
 #define SCRID_C08_ISS_01 (7)
 #define SCRID_BG_C08_BOARD_01 (8)
 #define SCRID_ZONE_C08 (9)
+#define SCRID_BG_C08_BOARD_02 (10)
+#define SCRID_BG_C08_BOARD_03 (11)
+#define SCRID_BG_C08_BOARD_04 (12)
 
 #endif //_C08_DEF_H_

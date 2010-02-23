@@ -35,6 +35,8 @@ _EVENT_DATA    ev_c05_boy2_01
 _EVENT_DATA    ev_c05_rangerw_01
 _EVENT_DATA    ev_c05_mountain_01
 _EVENT_DATA    ev_pos_c05_support_01
+_EVENT_DATA    ev_bg_c05_board_03
+_EVENT_DATA    ev_bg_c05_board_04
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -516,15 +518,29 @@ EVENT_START   ev_c05_mountain_01
 EVENT_END
 
 /**************************************************************/
-/*  C05 町看板                                                */
+/*  C05 はねばし看板                                           */
 /**************************************************************/
 EVENT_START   ev_bg_c05_board_01
-  _EASY_BGWIN_MSG( msg_c05_sign1_01, TYPE_TOWN )
+  _EASY_BGWIN_MSG( msg_c05_sign2_01, TYPE_POST )
 EVENT_END
 
 /**************************************************************/
-/*  C05 船オブジェクト用看板                                                */
+/*  C05 船オブジェクト用看板                                    */
 /**************************************************************/
 EVENT_START   ev_bg_c05_board_02
-  _EASY_BGWIN_MSG( msg_c05_sign2_01, TYPE_TOWN )
+  _EASY_BGWIN_MSG( msg_c05_sign1_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*  C05 街看板                                                */
+/**************************************************************/
+EVENT_START   ev_bg_c05_board_03
+  _EASY_BGWIN_MSG( msg_c05_sign3_01, TYPE_TOWN )
+EVENT_END
+
+/**************************************************************/
+/*  C05 マーケット看板                                        */
+/**************************************************************/
+EVENT_START   ev_bg_c05_board_04
+  _EASY_BGWIN_MSG( msg_c05_sign4_01, TYPE_POST )
 EVENT_END

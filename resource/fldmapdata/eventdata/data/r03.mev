@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/16 13:12:25
+#save date:2010/02/23 16:18:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -864,7 +864,7 @@ SCRID_BG_R03_BOARD_02
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-888 16 56
+952 16 56
 #event number: 3
 #Bg Event Label
 R03_HIDE_ITEM_00

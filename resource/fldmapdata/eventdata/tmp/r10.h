@@ -25,5 +25,6 @@
 #ifndef ZONE_R10_EVB_H
 #define ZONE_R10_EVB_H
 
+#define R10_BOARD_01                      0
 
 #endif //ZONE_R10_EVB_H

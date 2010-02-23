@@ -28,6 +28,9 @@ _EVENT_DATA    ev_c08_woman1_01
 _EVENT_DATA    ev_c08_iss_01
 _EVENT_DATA    ev_bg_c08_board_01
 _EVENT_DATA    ev_zone_c08
+_EVENT_DATA    ev_bg_c08_board_02
+_EVENT_DATA    ev_bg_c08_board_03
+_EVENT_DATA    ev_bg_c08_board_04
 _EVENT_DATA_END
 
 /************************************************************/
@@ -673,4 +676,37 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c08_board_01
 	_EASY_BGWIN_MSG( msg_c08_sign1_01, TYPE_TOWN )
+EVENT_END
+
+/**************************************************************/
+/* シャガの家施設看板                                          */
+/**************************************************************/
+EVENT_START   ev_bg_c08_board_02
+	_EASY_BGWIN_MSG( msg_c08_sign2_01, TYPE_POST)
+EVENT_END
+
+/**************************************************************/
+/* ローテーションバトル・トリプルバトル施設看板               */
+/**************************************************************/
+EVENT_START   ev_bg_c08_board_03
+
+	//バージョンを取得して表示内容をを変化させる
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	
+	//BlackVERならトリプルバトル
+	IF $SCWK_ANSWER == VERSION_BLACK THEN
+		_EASY_BGWIN_MSG( msg_c08_sign3_01b, TYPE_POST )
+	
+	//Whiteならローテーションバトル
+	ELSE
+		_EASY_BGWIN_MSG( msg_c08_sign3_01w, TYPE_POST )
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/* おとくなけいじばん                                         */
+/**************************************************************/
+EVENT_START   ev_bg_c08_board_04
+	_EASY_BGWIN_MSG( msg_c08_sign4_01, TYPE_INFO )
 EVENT_END

@@ -21,5 +21,7 @@
 #define SCRID_C05_RANGERW_01 (14)
 #define SCRID_C05_MOUNTAIN_01 (15)
 #define SCRID_POS_C05_SUPPORT_01 (16)
+#define SCRID_BG_C05_BOARD_03 (17)
+#define SCRID_BG_C05_BOARD_04 (18)
 
 #endif //_C05_DEF_H_
