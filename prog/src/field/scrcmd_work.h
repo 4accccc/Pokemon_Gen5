@@ -39,6 +39,7 @@ typedef struct
 {
   u16 zone_id;
   u16 script_id;
+  
 	SCRIPT_WORK *script_work;
 	GAMESYS_WORK *gsys;
 	GAMEDATA *gdata;
@@ -54,7 +55,7 @@ typedef struct
 typedef struct
 {
   u16 obj_id;
-  u16 up_down;
+  u16 win_idx;
   VecFx32 tail_pos;
 }SCRCMD_BALLOONWIN_WORK;
 
@@ -86,6 +87,8 @@ extern SCRCMD_BALLOONWIN_WORK * SCRCMD_WORK_GetBalloonWinWork(
 
 extern void SCRCMD_WORK_SetCallProcTCB( SCRCMD_WORK *work, GFL_TCB *tcb );
 extern GFL_TCB * SCRCMD_WORK_GetCallProcTCB( SCRCMD_WORK *work );
+extern u8 SCRCMD_WORK_GetBeforeWindowPosType( const SCRCMD_WORK *work );
+extern void SCRCMD_WORK_SetBeforeWindowPosType( SCRCMD_WORK *work, u8 type );
 
 //アニメーションコマンド
 extern void SCRCMD_WORK_SetMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb );

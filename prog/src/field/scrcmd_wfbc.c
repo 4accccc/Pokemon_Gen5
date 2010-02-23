@@ -902,7 +902,7 @@ static void EVENT_WFBC_WFBC_TalkStart( WFBC_PALACE_TALK_WK* p_wk, u16 palace_msg
   WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_wk->p_strbuf_tmp );
 
   // •`‰æŠJŽn
-  p_wk->p_talkwin = FLDTALKMSGWIN_AddStrBuf( p_wk->p_fmb, FLDTALKMSGWIN_IDX_AUTO, &p_wk->pos, p_wk->p_strbuf, TALKMSGWIN_TYPE_NORMAL );
+  p_wk->p_talkwin = FLDTALKMSGWIN_AddStrBuf( p_wk->p_fmb, FLDTALKMSGWIN_IDX_AUTO, &p_wk->pos, p_wk->p_strbuf, TALKMSGWIN_TYPE_NORMAL, TAIL_SETPAT_NONE );
 
 
   (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_WAIT;
@@ -938,8 +938,7 @@ static void EVENT_WFBC_WFBC_TalkStartYesNo( WFBC_PALACE_TALK_WK* p_wk, u16 palac
   WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_wk->p_strbuf_tmp );
 
   // •`‰æŠJŽn
-  p_wk->p_talkwin = FLDTALKMSGWIN_AddStrBuf( p_wk->p_fmb, FLDTALKMSGWIN_IDX_AUTO, &p_wk->pos, p_wk->p_strbuf, TALKMSGWIN_TYPE_NORMAL );
-
+  p_wk->p_talkwin = FLDTALKMSGWIN_AddStrBuf( p_wk->p_fmb, FLDTALKMSGWIN_IDX_AUTO, &p_wk->pos, p_wk->p_strbuf, TALKMSGWIN_TYPE_NORMAL, TAIL_SETPAT_NONE );
 
   (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_WAIT;
   p_wk->yes_next_seq = yes_next_seq;

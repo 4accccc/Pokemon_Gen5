@@ -84,18 +84,6 @@ enum {
 	WINSEQ_END,
 };
 
-typedef enum {
-	TAIL_SETPAT_NONE = 0,
-	TAIL_SETPAT_U,
-	TAIL_SETPAT_D,
-	TAIL_SETPAT_L,
-	TAIL_SETPAT_R,
-	TAIL_SETPAT_FIX_UL,
-	TAIL_SETPAT_FIX_UR,
-	TAIL_SETPAT_FIX_DL,
-	TAIL_SETPAT_FIX_DR,
-}TAIL_SETPAT;
-
 #define TEX_DATA_SIZ (32)
 static u8 texData[32] = {
 	0x44,0x44,0x44,0x44,
@@ -174,7 +162,8 @@ struct _TALKMSGWIN_SYS{
 };
 
 typedef struct {
-	TALKWIN_SETPAT	winPat;
+	TALKWIN_SETPAT winPat;
+	TAIL_SETPAT   tailPat;
 	u8							winpx;			
 	u8							winpy;			
 	u8							winsx;			
@@ -364,13 +353,14 @@ void TALKMSGWIN_CreateWindowAlone(	TALKMSGWIN_SYS*		tmsgwinSys,
 	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
   
 	setup.winPat = TALKWIN_SETPAT_FLOAT;
+  setup.tailPat = TAIL_SETPAT_NONE;
 	setup.winpx = winpx;
 	setup.winpy = winpy;
 	setup.winsx = winsx;
 	setup.winsy = winsy;
 	setup.color = BACKGROUND_COLOR;
   setup.winType = winType;
-
+  
 	setupWindow( tmsgwinSys,
       &tmsgwinSys->tmsgwin[tmsgwinIdx], NULL, msg, &setup );
   tmsgwinSys->tmsgwin[tmsgwinIdx].windowAlone = TRUE;
@@ -392,6 +382,7 @@ void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys,
 	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
 
 	setup.winPat = TALKWIN_SETPAT_FLOAT;
+  setup.tailPat = TAIL_SETPAT_NONE;
 	setup.winpx = winpx;
 	setup.winpy = winpy;
 	setup.winsx = winsx;
@@ -420,6 +411,7 @@ void TALKMSGWIN_CreateFloatWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys,
 	GF_ASSERT( (prev_tmsgwinIdx>=0)&&(prev_tmsgwinIdx<TALKMSGWIN_NUM) );
 
 	setup.winPat = TALKWIN_SETPAT_FLOAT;
+  setup.tailPat = TAIL_SETPAT_NONE;
 	setup.winpx = winpx;
 	setup.winpy = winpy;
 	setup.winsx = winsx;
@@ -440,13 +432,16 @@ void TALKMSGWIN_CreateFixWindowUpper( TALKMSGWIN_SYS* tmsgwinSys,
 																			VecFx32*				pTarget,
 																			STRBUF*					msg,
 																			u8							colIdx,
-                                      TALKMSGWIN_TYPE winType )
+                                      TALKMSGWIN_TYPE winType,
+                                      TAIL_SETPAT tailPat )
 {
 	TALKMSGWIN_SETUP setup;
 
 	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
-
+  
 	setup.winPat = TALKWIN_SETPAT_FIX_U;
+//  setup.tailPat = TAIL_SETPAT_NONE;
+  setup.tailPat = tailPat;
 	setup.winpx = TWIN_FIX_POSX;
 	setup.winpy = TWIN_FIX_POSY_U;
 	setup.winsx = TWIN_FIX_SIZX;
@@ -462,13 +457,16 @@ void TALKMSGWIN_CreateFixWindowLower( TALKMSGWIN_SYS* tmsgwinSys,
 																			VecFx32*				pTarget,
 																			STRBUF*					msg,
 																			u8							colIdx,
-                                      TALKMSGWIN_TYPE winType )
+                                      TALKMSGWIN_TYPE winType,
+                                      TAIL_SETPAT tailPat )
 {
 	TALKMSGWIN_SETUP setup;
 
 	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
 
 	setup.winPat = TALKWIN_SETPAT_FIX_D;
+//  setup.tailPat = TAIL_SETPAT_NONE;
+  setup.tailPat = tailPat;
 	setup.winpx = TWIN_FIX_POSX;
 	setup.winpy = TWIN_FIX_POSY_D;
 	setup.winsx = TWIN_FIX_SIZX;
@@ -491,9 +489,13 @@ void TALKMSGWIN_CreateFixWindowAuto(	TALKMSGWIN_SYS* tmsgwinSys,
 	NNS_G3dWorldPosToScrPos(pTarget, &targetx, &targety);
 
 	if( targety < (96) ){ 
-		TALKMSGWIN_CreateFixWindowLower(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx,winType);
+		TALKMSGWIN_CreateFixWindowLower(
+        tmsgwinSys, tmsgwinIdx, pTarget, msg,
+        colIdx, winType, TAIL_SETPAT_NONE );
 	} else {
-		TALKMSGWIN_CreateFixWindowUpper(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx,winType);
+		TALKMSGWIN_CreateFixWindowUpper(
+        tmsgwinSys, tmsgwinIdx, pTarget, msg,
+        colIdx, winType, TAIL_SETPAT_NONE );
 	}
 }
 
@@ -554,6 +556,39 @@ GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )
 	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
 
 	return tmsgwinSys->tmsgwin[tmsgwinIdx].bmpwin; 
+}
+
+//------------------------------------------------------------------
+void TALKMSGWIN_ResetMessage(
+    TALKMSGWIN_SYS *tmsgwinSys, int tmsgwinIdx, STRBUF *msg )
+{
+  TMSGWIN *tmsgwin = &tmsgwinSys->tmsgwin[tmsgwinIdx];
+  
+  if( tmsgwin->printStream != NULL ){
+    PRINTSYS_PrintStreamDelete(tmsgwin->printStream);
+    tmsgwin->printStream = NULL;
+  }
+   
+  clearBmpWindow( tmsgwinSys, tmsgwin->bmpwin );
+  
+  if( msg != NULL ){
+    int wait = MSGSPEED_GetWait();
+	  
+    tmsgwin->msg = msg;
+    tmsgwin->printStream = PRINTSYS_PrintStream(
+        tmsgwin->bmpwin,							// GFL_BMPWIN
+				tmsgwin->writex,							// u16
+				tmsgwin->writey,							// u16
+				tmsgwin->msg,									// STRBUF*
+				tmsgwinSys->setup.fontHandle,	// GFL_FONT*
+				wait,													// int
+				tmsgwinSys->tcbl,							// GFL_TCBLSYS*
+				0,														// u32 tcbpri
+				tmsgwinSys->setup.heapID,			// HEAPID
+				BACKGROUND_COLIDX );					// u16 clrCol
+
+	  tmsgwin->seq = WINSEQ_HOLD;
+  }
 }
 
 
@@ -678,9 +713,14 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 		tmsgwin->bmpwin = setupBmpWindow( tmsgwinSys,
 								px, py, setup->winsx, setup->winsy );
 	}
+  
 	//吹き出しエフェクトパラメータ計算
+#if 0
 	tmsgwin->tailData.tailPat = TAIL_SETPAT_NONE;
-
+#else
+	tmsgwin->tailData.tailPat = setup->tailPat;
+#endif
+  
 #if 0
 	//描画位置算出（センタリング）
 	{
@@ -709,7 +749,7 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 	}
 #else
 	tmsgwin->writex = 2;
-//	tmsgwin->writey = 2; //縦サイズ32dot、１文字縦サイズ16で被ってしまう。
+//tmsgwin->writey = 2; //縦サイズ32dot、１文字縦サイズ16で被ってしまう。
 	tmsgwin->writey = 0;
 #endif
   
@@ -1088,7 +1128,7 @@ static u8 calcTailVtx1Vtx2( const TMSGWIN*	win,
 			int side;
 			ey1 = py + sy - 1 - Y_OFFS;
 			ey2 = py + sy - 1 - Y_OFFS;
-
+      
 			if(win->tailData.tailPat == TAIL_SETPAT_NONE){
 				if(targetScrx < 128){
 					side = 0;

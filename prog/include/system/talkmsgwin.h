@@ -22,6 +22,18 @@ typedef enum {
   TALKMSGWIN_TYPE_GIZA,
 }TALKMSGWIN_TYPE;
 
+typedef enum {
+	TAIL_SETPAT_NONE = 0,
+	TAIL_SETPAT_U,
+	TAIL_SETPAT_D,
+	TAIL_SETPAT_L,
+	TAIL_SETPAT_R,
+	TAIL_SETPAT_FIX_UL,
+	TAIL_SETPAT_FIX_UR,
+	TAIL_SETPAT_FIX_DL,
+	TAIL_SETPAT_FIX_DR,
+}TAIL_SETPAT;
+
 typedef struct {
 	int			frameID;
 	u8			winPltID;
@@ -95,21 +107,23 @@ extern void TALKMSGWIN_CreateFloatWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys,
 																										u8								colIdx,
                                                     TALKMSGWIN_TYPE   winType );
 
-extern void TALKMSGWIN_CreateFixWindowUpper(	TALKMSGWIN_SYS* tmsgwinSys, 
-																							int							tmsgwinIdx,
-																							VecFx32*				pTarget,
-																							STRBUF*					msg,
-																							u8							colIdx,
-                                              TALKMSGWIN_TYPE   winType );
+extern void TALKMSGWIN_CreateFixWindowUpper( TALKMSGWIN_SYS* tmsgwinSys,
+																			int							tmsgwinIdx,
+																			VecFx32*				pTarget,
+																			STRBUF*					msg,
+																			u8							colIdx,
+                                      TALKMSGWIN_TYPE winType,
+                                      TAIL_SETPAT tailPat );
 
-extern void TALKMSGWIN_CreateFixWindowLower(	TALKMSGWIN_SYS* tmsgwinSys,
-																							int							tmsgwinIdx,
-																							VecFx32*				pTarget,
-																							STRBUF*					msg,
-																							u8							colIdx,
-                                              TALKMSGWIN_TYPE   winType );
+extern void TALKMSGWIN_CreateFixWindowLower( TALKMSGWIN_SYS* tmsgwinSys,
+																			int							tmsgwinIdx,
+																			VecFx32*				pTarget,
+																			STRBUF*					msg,
+																			u8							colIdx,
+                                      TALKMSGWIN_TYPE winType,
+                                      TAIL_SETPAT tailPat );
 
-extern void TALKMSGWIN_CreateFixWindowAuto(		TALKMSGWIN_SYS* tmsgwinSys,
+extern void TALKMSGWIN_CreateFixWindowAuto( TALKMSGWIN_SYS* tmsgwinSys,
 																							int							tmsgwinIdx,
 																							VecFx32*				pTarget,
 																							STRBUF*					msg,
@@ -124,6 +138,8 @@ extern BOOL TALKMSGWIN_CheckCloseStatus( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwin
 extern BOOL						TALKMSGWIN_CheckPrintOn( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
 extern PRINT_STREAM*	TALKMSGWIN_GetPrintStream( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );	
 extern GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
+extern void TALKMSGWIN_ResetMessage(
+    TALKMSGWIN_SYS *tmsgwinSys, int tmsgwinIdx, STRBUF *msg );
 extern void TALKMSGWIN_ReTransWindowBG( TALKMSGWIN_SYS* tmsgwinSys );
 
 extern GFL_BMPWIN * TALKMSGWIN_CreateBmpWindow( TALKMSGWIN_SYS *tmsgwinSys, 

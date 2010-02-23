@@ -64,8 +64,11 @@ struct _TAG_SCRCMD_WORK
   
   SCRCMD_MENU_WORK menuWork;
   SCRCMD_BALLOONWIN_WORK balloonWinWork;
-
+  
   void * backup_work;
+  
+  u8 before_win_pos_type;
+  u8 padding[3]; //—]‚è
 };
 
 //======================================================================
@@ -298,6 +301,31 @@ void SCRCMD_WORK_SetCallProcTCB( SCRCMD_WORK *work, GFL_TCB *tcb )
 GFL_TCB * SCRCMD_WORK_GetCallProcTCB( SCRCMD_WORK *work )
 {
   return( work->tcb_callproc );
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ *
+ */
+//--------------------------------------------------------------
+u8 SCRCMD_WORK_GetBeforeWindowPosType( const SCRCMD_WORK *work )
+{
+  return( work->before_win_pos_type );
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void SCRCMD_WORK_SetBeforeWindowPosType( SCRCMD_WORK *work, u8 type )
+{
+  work->before_win_pos_type = type;
 }
 
 //======================================================================

@@ -42,7 +42,8 @@
 #define DEBUG_FLDMSGBG
 #endif
 
-#define FLDMSGBG_BGFRAME ( FLDBG_MFRM_MSG )	///<使用BGフレーム
+#define FLDMSGBG_BGFRAME (FLDBG_MFRM_MSG)	///<使用BGフレーム
+#define FLDMSGBG_BGFRAME_BLD (FLDBG_MFRM_EFF1) ///<使用BGフレーム 半透明用
 
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
 #define FLDMSGBG_PRINT_STREAM_MAX (1) ///<PRINT_STREAM稼働数
@@ -227,6 +228,8 @@ struct _TAG_FLDSYSWIN_STREAM
    
   u8 flag_cursor;
   u8 flag_key_pause_clear;
+  u8 flag_write_key_cursor;
+  u8 padding;
   KEYCURSOR_WORK cursor_work;
 };
 
@@ -2451,12 +2454,14 @@ struct _TAG_FLDTALKMSGWIN
   u8 flag_key_cont;
   u8 flag_key_pause_clear;
   u8 flag_cursor;
+
+  u8 flag_write_key_cursor;
+  u8 talkMsgWinIdx;
+  s16 shake_y;
+  
   STRBUF *strBuf;
-  int talkMsgWinIdx;
   TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
   KEYCURSOR_WORK cursor_work;
-  
-  int shake_y;
 };
 
 //--------------------------------------------------------------
@@ -2474,7 +2479,7 @@ struct _TAG_FLDTALKMSGWIN
 static void fldTalkMsgWin_Add(
     FLDMSGBG *fmb, FLDTALKMSGWIN *tmsg,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf,
-    TALKMSGWIN_TYPE type )
+    TALKMSGWIN_TYPE type, TAIL_SETPAT tail )
 {
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
@@ -2485,15 +2490,17 @@ static void fldTalkMsgWin_Add(
   
   winframe_SetPaletteWhith( fmb->heapID );
   setBlendAlpha( FALSE );
-
+  
   switch( idx ){
   case FLDTALKMSGWIN_IDX_UPPER:
     TALKMSGWIN_CreateFixWindowUpper( tmsg->talkMsgWinSys,
-        FLDTALKMSGWIN_IDX_UPPER, (VecFx32*)pos, strBuf, 15, type );
+        FLDTALKMSGWIN_IDX_UPPER, (VecFx32*)pos, strBuf, 15,
+        type, tail );
     break;
   case FLDTALKMSGWIN_IDX_LOWER:
     TALKMSGWIN_CreateFixWindowLower( tmsg->talkMsgWinSys,
-        FLDTALKMSGWIN_IDX_LOWER, (VecFx32*)pos, strBuf, 15, type );
+        FLDTALKMSGWIN_IDX_LOWER, (VecFx32*)pos, strBuf, 15,
+        type, tail );
     break;
   default:
     TALKMSGWIN_CreateFixWindowAuto( tmsg->talkMsgWinSys,
@@ -2506,6 +2513,7 @@ static void fldTalkMsgWin_Add(
   
   if( type == TALKMSGWIN_TYPE_GIZA ){
     tmsg->shake_y = GIZA_SHAKE_Y;
+    PMSND_PlaySystemSE( SEQ_SE_SYS_58 );
   }
   
   KAGAYA_Printf( "ウィンドウ %d,%d,%d\n", pos->x, pos->y, pos->z );
@@ -2526,7 +2534,7 @@ static void fldTalkMsgWin_Add(
 //--------------------------------------------------------------
 FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
-    GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type )
+    GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type, TAIL_SETPAT tail )
 {
   FLDTALKMSGWIN *tmsg = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDTALKMSGWIN) );
@@ -2534,7 +2542,7 @@ FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
 					FLDMSGBG_STRLEN, fmb->heapID );
   
   GFL_MSG_GetString( msgData, msgID, tmsg->strBuf );
-  fldTalkMsgWin_Add( fmb, tmsg, idx, pos, tmsg->strBuf, type );
+  fldTalkMsgWin_Add( fmb, tmsg, idx, pos, tmsg->strBuf, type, tail );
   return( tmsg );
 }
 
@@ -2552,11 +2560,11 @@ FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
 //--------------------------------------------------------------
 FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
-    STRBUF *strBuf, TALKMSGWIN_TYPE type )
+    STRBUF *strBuf, TALKMSGWIN_TYPE type, TAIL_SETPAT tail )
 {
   FLDTALKMSGWIN *tmsg = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDTALKMSGWIN) );
-  fldTalkMsgWin_Add( fmb, tmsg, idx, pos, strBuf, type );
+  fldTalkMsgWin_Add( fmb, tmsg, idx, pos, strBuf, type, tail );
   return( tmsg );
 }
 
@@ -2610,6 +2618,35 @@ void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg )
   TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   keyCursor_Delete( &tmsg->cursor_work );
   GFL_HEAP_FreeMemory( tmsg );
+}
+
+#if 0
+//--------------------------------------------------------------
+/**
+ * FLDTALKMSGWIN 吹き出しウィンドウ メッセージクリア
+ * @param tmsg FLDTALKMSGWIN
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDTALKMSGWIN_ClearMessage( FLDTALKMSGWIN *tmsg, STRBUF *strBuf )
+{
+  GFL_BMPWIN *bmpwin = TALKMSGWIN_GetBmpWin(
+      tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+  TALKMSGWIN_ClearBmpWindow( tmsg->talkMsgWinSys, bmpwin );
+}
+#endif
+
+//--------------------------------------------------------------
+/**
+ * FLDTALKMSGWIN 吹き出しウィンドウ メッセージリセット
+ * @param tmsg FLDTALKMSGWIN
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDTALKMSGWIN_ResetMessageStrBuf( FLDTALKMSGWIN *tmsg, STRBUF *strbuf )
+{
+  TALKMSGWIN_ResetMessage(
+    tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx, strbuf );
 }
 
 //--------------------------------------------------------------
@@ -2816,7 +2853,7 @@ void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin )
   
   if( plnwin->msgPrint != NULL ){
     FLDMSGPRINT_Delete( plnwin->msgPrint );
-  }
+  };
 
   if( plnwin->strBuf != NULL ){
 		GFL_STR_DeleteBuffer( plnwin->strBuf );

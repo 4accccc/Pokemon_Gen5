@@ -26,6 +26,7 @@
 
 #include "arc/script_message.naix"
 #include "msg/script/msg_common_scr.h"
+#include "../../../resource/fldmapdata/script/usescript.h"
 
 //======================================================================
 //  define
@@ -46,7 +47,8 @@ static void DeleteBalloonWin(SCRCMD_WORK *work);
 
 static void setBalloonWindow( SCRCMD_WORK *work,
   FLDMSGBG *fmb, FLDTALKMSGWIN_IDX idx,
-  const VecFx32 *pos, STRBUF *strBuf, TALKMSGWIN_TYPE type );
+  const VecFx32 *pos, STRBUF *strBuf,
+  TALKMSGWIN_TYPE type, TAIL_SETPAT tail );
 
 static STRBUF * SetExpandWord(
     SCRCMD_WORK *work, SCRIPT_WORK *sc, u32 msg_id );
@@ -261,7 +263,7 @@ VMCMD_RESULT EvCmdBmpMenuStart_Breakable( VMHANDLE *core, void *wk )
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void sysWin_AddWindow( SCRCMD_WORK *work, u8 updown )
+static void sysWin_AddWindow( SCRCMD_WORK *work, u8 up_down )
 {
   FLDSYSWIN_STREAM *sysWin;
   
@@ -272,15 +274,22 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 updown )
   }
   else
   {
+    u16 y = 1; //up
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
     SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-
-    if( updown == SCRCMD_MSGWIN_UP ){
-	    sysWin = FLDSYSWIN_STREAM_Add( fparam->msgBG, msgData, 1 );
-    }else{ //DOWN
-	    sysWin = FLDSYSWIN_STREAM_Add( fparam->msgBG, msgData, 19 );
+    
+    if( up_down == SCRCMD_MSGWIN_NON ){
+      up_down = SCRCMD_WORK_GetBeforeWindowPosType( work );
     }
+    
+    if( up_down == SCRCMD_MSGWIN_DOWNLEFT ||
+        up_down == SCRCMD_MSGWIN_DOWNRIGHT ){
+      y = 19;
+    }
+    
+	  sysWin = FLDSYSWIN_STREAM_Add( fparam->msgBG, msgData, y );
+    SCRCMD_WORK_SetBeforeWindowPosType( work, up_down );
     
     SCRCMD_WORK_SetMsgWinPtr( work, sysWin );
     SCREND_CHK_SetBitOn(SCREND_CHK_WIN_OPEN);
@@ -630,7 +639,7 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work )
 
   offs = &data_balloonWinOffset_Up[dir];
   
-  if( bwin_work->up_down == FLDTALKMSGWIN_IDX_LOWER ){
+  if( bwin_work->win_idx == FLDTALKMSGWIN_IDX_LOWER ){
     offs = &data_balloonWinOffset_Down[dir];
   }
    
@@ -652,7 +661,7 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work )
  */
 //--------------------------------------------------------------
 static BOOL balloonWin_Write( SCRCMD_WORK *work,
-    u16 objID, u16 arcID, u16 msgID, FLDTALKMSGWIN_IDX idx,
+    u16 objID, u16 arcID, u16 msgID, u16 pos_type,
     TALKMSGWIN_TYPE type )
 {
   STRBUF *msgbuf;
@@ -663,25 +672,15 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   MMDL *jiki = MMDLSYS_SearchOBJID( mmdlsys, MMDL_ID_PLAYER );
   MMDL *npc = MMDLSYS_SearchOBJID( mmdlsys, objID );
-
+  
   if( npc == NULL ){
     OS_Printf("スクリプトエラー 吹き出し対象のOBJが存在しません\n");
     return( FALSE );
   }
   
-  //既にビットが立っていたら新しく作らない
-  if ( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
-#ifdef SCR_ASSERT_ON     
-    GF_ASSERT_MSG(0,"既にバルーンウィンドウがある\n");
-#else
-    OS_Printf("====既にバルーンウィンドウがある====\n");
-#endif
-    return ( FALSE );
-  }
-  
   bwin_work = SCRCMD_WORK_GetBalloonWinWork( work );
   bwin_work->obj_id = objID;
-
+  
   msgbuf = SCRIPT_GetMsgBuffer( sc );
   
   {
@@ -699,26 +698,59 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
 
     WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
   }
-  
-  if( idx != FLDTALKMSGWIN_IDX_LOWER && idx != FLDTALKMSGWIN_IDX_UPPER ){
-    idx = FLDTALKMSGWIN_IDX_LOWER;
+
+  //既にビットが立っていたら新しく作らない
+  if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) )
+  {
+    FLDTALKMSGWIN *tmsg = SCRCMD_WORK_GetMsgWinPtr( work );
+    GF_ASSERT( tmsg != NULL );
+    FLDTALKMSGWIN_ResetMessageStrBuf( tmsg, msgbuf );
+  }
+  else
+  {  
+    u16 idx = FLDTALKMSGWIN_IDX_UPPER;
+    TAIL_SETPAT tail = TAIL_SETPAT_NONE;
     
-    {
-      VecFx32 pos,jiki_pos;
-      MMDL_GetVectorPos( npc, &pos );
-      MMDL_GetVectorPos( jiki, &jiki_pos );
+    switch( pos_type ){
+    case SCRCMD_MSGWIN_UPLEFT: //ウィンドウ上　吹き出し向き左
+      tail = TAIL_SETPAT_FIX_UL;
+      break;
+    case SCRCMD_MSGWIN_DOWNLEFT: //ウィンドウ下　吹き出し向き左
+      idx = FLDTALKMSGWIN_IDX_LOWER;
+      tail = TAIL_SETPAT_FIX_DL;
+      break;
+    case SCRCMD_MSGWIN_UPRIGHT: //ウィンドウ上　吹き出し向き右
+      tail = TAIL_SETPAT_FIX_UR;
+      break;
+    case SCRCMD_MSGWIN_DOWNRIGHT: //ウィンドウ下　吹き出し向き右
+      idx = FLDTALKMSGWIN_IDX_LOWER;
+      tail = TAIL_SETPAT_FIX_DR;
+      break;
+    case SCRCMD_MSGWIN_DEFAULT: //自機の位置から自動割り当て
+      {
+        VecFx32 pos,jiki_pos;
       
-      if( pos.z < jiki_pos.z ){
-        idx = FLDTALKMSGWIN_IDX_UPPER;
+        MMDL_GetVectorPos( npc, &pos );
+        MMDL_GetVectorPos( jiki, &jiki_pos );
+        
+        idx = FLDTALKMSGWIN_IDX_LOWER;
+
+        if( pos.z < jiki_pos.z ){
+          idx = FLDTALKMSGWIN_IDX_UPPER;
+        }
       }
+      break;
     }
+    
+    bwin_work->win_idx = idx;
+    balloonWin_UpdatePos( work );
+      
+    setBalloonWindow( work,
+        fparam->msgBG, idx, &bwin_work->tail_pos, msgbuf, type, tail );
+    
+    SCRCMD_WORK_SetBeforeWindowPosType( work, pos_type );
   }
   
-  bwin_work->up_down = idx;
-  balloonWin_UpdatePos( work );
-  
-  setBalloonWindow( work,
-      fparam->msgBG, idx, &bwin_work->tail_pos, msgbuf, type );
   return( TRUE );
 }
 
@@ -757,12 +789,12 @@ VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 obj_id = SCRCMD_GetVMWorkValue( core, work );
-  u16 win_idx = SCRCMD_GetVMWorkValue( core, work );
+  u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
   
   KAGAYA_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
   
-  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
+  if( balloonWin_Write(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -784,7 +816,7 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   MMDL *mmdl = SCRIPT_GetTargetObj( sc );
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
-  u16 win_idx = SCRCMD_GetVMWorkValue( core, work );
+  u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
 
   if( mmdl == NULL ){
@@ -795,7 +827,7 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   {
     u8 obj_id = MMDL_GetOBJID( mmdl );
     
-    if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
+    if( balloonWin_Write(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
     }
@@ -818,7 +850,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id_f = SCRCMD_GetVMWorkValue( core, work );
   u16 obj_id = SCRCMD_GetVMWorkValue( core, work );
-  u16 win_idx = SCRCMD_GetVMWorkValue( core, work );
+  u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
 
   {
@@ -831,7 +863,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
     }
   }
   
-  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
+  if( balloonWin_Write(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -853,7 +885,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id_b = SCRCMD_GetVMWorkValue( core, work );
   u16 obj_id = SCRCMD_GetVMWorkValue( core, work );
-  u16 win_idx = SCRCMD_GetVMWorkValue( core, work );
+  u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
 
 #if 0
@@ -866,7 +898,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
   }
 #endif
 
-  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
+  if( balloonWin_Write(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -968,18 +1000,23 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
     bwin_work->obj_id = MMDL_GetOBJID( ncp );
     
     {
+      u8 pos_type = SCRCMD_MSGWIN_UPLEFT;
       FLDTALKMSGWIN_IDX idx = FLDTALKMSGWIN_IDX_LOWER;
       
       if( dir == DIR_UP ){
+        pos_type = SCRCMD_MSGWIN_DOWNLEFT;
         idx = FLDTALKMSGWIN_IDX_UPPER;
       }
       
-      bwin_work->up_down = idx;
+      bwin_work->win_idx = idx;
       balloonWin_UpdatePos( work );
       
       setBalloonWindow( work, fparam->msgBG,
-          idx, &bwin_work->tail_pos, msgbuf, TALKMSGWIN_TYPE_NORMAL );
+          idx, &bwin_work->tail_pos, msgbuf,
+          TALKMSGWIN_TYPE_NORMAL, TAIL_SETPAT_NONE );
       
+      SCRCMD_WORK_SetBeforeWindowPosType( work, pos_type );
+
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
     }
@@ -1054,12 +1091,17 @@ VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk )
     y = 19;
   }
   
-  win = FLDPLAINMSGWIN_Add( fparam->msgBG, NULL, x, y, sx, sy );
-  SCRCMD_WORK_SetMsgWinPtr( work, win );
+  if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){ //オープン済み
+    win = SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDPLAINMSGWIN_ClearMessage( win );
+  }else{
+    win = FLDPLAINMSGWIN_Add( fparam->msgBG, NULL, x, y, sx, sy );
+    SCRCMD_WORK_SetMsgWinPtr( work, win );
+  }
   
   FLDPLAINMSGWIN_PrintStreamStartStrBuf( win, 2, 2, msgbuf );
-  
   SCREND_CHK_SetBitOn(SCREND_CHK_PLAINWIN_OPEN);
+  
   VMCMD_SetWait( core, PlainWinMsgWait );
   return VMCMD_RESULT_SUSPEND;
 }
@@ -1589,11 +1631,13 @@ static void DeleteBalloonWin(SCRCMD_WORK *work)
 //--------------------------------------------------------------
 static void setBalloonWindow( SCRCMD_WORK *work,
   FLDMSGBG *fmb, FLDTALKMSGWIN_IDX idx,
-  const VecFx32 *pos, STRBUF *strBuf, TALKMSGWIN_TYPE type )
+  const VecFx32 *pos, STRBUF *strBuf,
+  TALKMSGWIN_TYPE type, TAIL_SETPAT tail )
 {
   FLDTALKMSGWIN *tmsg;
   
-  tmsg = FLDTALKMSGWIN_AddStrBuf( fmb, idx, pos, strBuf, type );
+  tmsg = FLDTALKMSGWIN_AddStrBuf(
+      fmb, idx, pos, strBuf, type, tail );
   SCRCMD_WORK_SetMsgWinPtr( work, tmsg );
   //ウィンドウ作成フラグオン
   SCREND_CHK_SetBitOn(SCREND_CHK_BALLON_WIN_OPEN);

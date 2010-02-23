@@ -52,8 +52,6 @@ typedef enum
 {
   FLDTALKMSGWIN_IDX_UPPER = 0, ///<画面上部に
   FLDTALKMSGWIN_IDX_LOWER, ///<画面下部に
-  FLDTALKMSGWIN_IDX_UPRIGHT,
-  FLDTALKMSGWIN_IDX_LOWRIGHT,
   FLDTALKMSGWIN_IDX_AUTO, ///<吹き出し元の座標を考慮し自動で配置
   FLDTALKMSGWIN_IDX_SUBWIN0, ///<サブウィンドウ
   FLDTALKMSGWIN_IDX_SUBWIN1, ///<サブウィンドウ
@@ -333,14 +331,16 @@ extern BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin );
 //吹き出しメッセージウィンドウ
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
-    GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type );
+    GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type, TAIL_SETPAT tail );
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
-    STRBUF *strBuf, TALKMSGWIN_TYPE type );
+    STRBUF *strBuf, TALKMSGWIN_TYPE type, TAIL_SETPAT tail );
 extern void FLDTALKMSGWIN_StartClose( FLDTALKMSGWIN *tmsg );
 extern BOOL FLDTALKMSGWIN_WaitClose( FLDTALKMSGWIN *tmsg );
 extern void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg );
+extern void FLDTALKMSGWIN_ClearMessage( FLDTALKMSGWIN *tmsg );
 extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
+extern void FLDTALKMSGWIN_ResetMessageStrBuf( FLDTALKMSGWIN *tmsg, STRBUF *strbuf );
 
 //プレーンウィンドウ
 extern FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add(
