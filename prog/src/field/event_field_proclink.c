@@ -1037,6 +1037,9 @@ static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_C
 	prm->gamedata = GAMESYSTEM_GetGameData( wk->param->gsys );
 	prm->savedata = GAMEDATA_GetZukanSave( prm->gamedata );
 
+	FSND_HoldBGMVolume_forApp(
+		GAMEDATA_GetFieldSound(prm->gamedata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
+
   if( param != EVENT_PROCLINK_DATA_NONE )
   { 
     //Yボタンメニューからきたときは起動モードを渡す
@@ -1067,6 +1070,9 @@ static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_C
 static RETURNFUNC_RESULT FMenuReturnProc_Zukan(PROCLINK_WORK* wk,void* param_adrs)
 {
   ZUKAN_PARAM * prm = param_adrs;
+
+	FSND_ReleaseBGMVolume_fromApp(
+		GAMEDATA_GetFieldSound(prm->gamedata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
 
   if( prm->retMode == ZUKAN_RET_NORMAL ){
     return RETURNFUNC_RESULT_RETURN;
