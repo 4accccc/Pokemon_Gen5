@@ -108,7 +108,7 @@ typedef enum
 
 #define	FBMP_COL_WHITE		(15)
 
-
+#define _FULL_TIMER   (120)  //人数がいっぱいで交換できない場合のメッセージ表示時間
 
 
 //-------------------------------------------------------------------------
@@ -274,6 +274,7 @@ struct _IRC_BATTLE_MATCH {
   GFL_MSGDATA *pMsgData;  //
   WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
+  STRBUF* pExStrBuf;
   STRBUF* pStrBuf;
   BMPWINFRAME_AREAMANAGER_POS aPos;
   int windowNum;
@@ -310,7 +311,7 @@ struct _IRC_BATTLE_MATCH {
 
   GFL_BUTTON_MAN* pButton;
   TouchFunc* touch;
-
+  int timer;
   
   PRINT_QUE*            SysMsgQue;
   APP_TASKMENU_WORK* pAppTask;
@@ -969,6 +970,44 @@ static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork)
 
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ともだちの人数表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _friendNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork)
+{
+  int i=1;
+  u32 cgx;
+  int frame = GFL_BG_FRAME1_S;
+
+  pWork->buttonWin[i] = GFL_BMPWIN_Create(
+    frame,
+    2, 8, 16, 2,
+    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
+  GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
+  GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+  BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2), _BUTTON_WIN_PAL );
+
+  GFL_MSG_GetString(  pWork->pMsgData, msgno, pWork->pExStrBuf );
+  {
+    int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
+    int num2 = WIFILIST_FRIEND_MAX;
+    WORDSET_RegisterNumber(pWork->pWordSet, 0, num1, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+    WORDSET_RegisterNumber(pWork->pWordSet, 1, num2, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);  
+    WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
+  }
+  
+  //    GFL_FONTSYS_SetColor( 1, 1, 1 );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 2, pWork->pStrBuf, pWork->pFontHandle);
+  GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	ボタンイベントコールバック
@@ -986,7 +1025,11 @@ static void _buttonWindowDelete(IRC_BATTLE_MATCH* pWork)
   if(pWork->buttonWin[0]){
     GFL_BMPWIN_Delete(pWork->buttonWin[0]);
   }
+  if(pWork->buttonWin[1]){
+    GFL_BMPWIN_Delete(pWork->buttonWin[1]);
+  }
   pWork->buttonWin[0]=NULL;
+  pWork->buttonWin[1]=NULL;
 }
 
 
@@ -1014,10 +1057,12 @@ static void _graphicEnd(IRC_BATTLE_MATCH* pWork)
 static void _modeInit(IRC_BATTLE_MATCH* pWork)
 {
   GFL_FONTSYS_SetDefaultColor();
+  pWork->pWordSet = WORDSET_CreateEx( 11, 200, pWork->heapID );
   _graphicInit(pWork);
   _createBg(pWork);
 
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+  pWork->pExStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_ircbattle_dat, pWork->heapID );
 
@@ -1067,7 +1112,20 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
   {
-    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
+    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND)
+    {
+      int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
+      if(num1==WIFILIST_FRIEND_MAX){
+        int aMsgBuff[]={IRCBTL_STR_34};
+        _msgWindowCreate(aMsgBuff, pWork);
+      }
+      else{
+        int aMsgBuff[]={IRCBTL_STR_33};
+        _msgWindowCreate(aMsgBuff, pWork);
+        _friendNumWindowCreate(IRCBTL_STR_35, pWork);
+      }
+    }
+    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
     {
       int aMsgBuff[]={IRCBTL_STR_17};
       _msgWindowCreate(aMsgBuff, pWork);
@@ -1195,6 +1253,7 @@ static void _workEnd(IRC_BATTLE_MATCH* pWork)
   GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
   GFL_MSG_Delete( pWork->pMsgData );
   GFL_FONT_Delete(pWork->pFontHandle);
+  GFL_STR_DeleteBuffer(pWork->pExStrBuf);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
   GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
@@ -1359,6 +1418,18 @@ static void _modeAppWinFlash(IRC_BATTLE_MATCH* pWork)
 }
 
 
+static void _waitFinish(IRC_BATTLE_MATCH* pWork)
+{
+  pWork->timer--;
+  if(pWork->timer!=0){
+    return;
+  }
+  _buttonWindowDelete(pWork);
+  GFL_NET_Exit(NULL);
+  _CHANGE_STATE(pWork,_modeFadeoutStart);
+
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   キャンセルボタンタッチ処理
@@ -1389,7 +1460,14 @@ static BOOL _cancelButtonCallback(int bttnid, IRC_BATTLE_MATCH* pWork)
 
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 {
+  int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
+  if(num1==WIFILIST_FRIEND_MAX){
+    _CHANGE_STATE(pWork,_waitFinish);        // 終わり()
+    pWork->timer = _FULL_TIMER;
+    return;
+  }
 
+  
   if(pWork->ircCenterAnim){  //4台の時2台を真ん中に
 
     _buttonWindowDelete(pWork);
@@ -1635,6 +1713,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
 		GFL_BMN_Delete(pWork->pButton);
 	}
   pWork->pButton = NULL;
+  WORDSET_Delete(pWork->pWordSet);
 
   _workEnd(pWork);
   GFL_TCB_DeleteTask( pWork->g3dVintr );

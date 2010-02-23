@@ -2290,7 +2290,8 @@ static GMEVENT * checkSubScreenEvent(
   
   switch(FIELD_SUBSCREEN_GetAction(subscreen)){
   case FIELD_SUBSCREEN_ACTION_IRC:
-		{
+#if 0 //確認無しでイベントを起こすように修正 最終的に消します
+    {
 			GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
 			GAME_COMM_NO no = GameCommSys_BootCheck(gcsp);
 			if(GAME_COMM_NO_FIELD_BEACON_SEARCH == no || GAME_COMM_NO_DEBUG_SCANONLY == no){
@@ -2301,6 +2302,8 @@ static GMEVENT * checkSubScreenEvent(
 				event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
 			}
 		}
+#endif
+    event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
     break;
   case FIELD_SUBSCREEN_ACTION_GSYNC:
     event = EVENT_GSync(gsys, fieldWork, NULL, TRUE);

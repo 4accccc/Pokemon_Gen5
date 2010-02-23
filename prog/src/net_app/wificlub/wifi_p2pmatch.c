@@ -5471,6 +5471,7 @@ static int _exitExiting( WIFIP2PMATCH_WORK *wk, int seq )
   if(wk->timer == 1){
     wk->timer = 0;
     //GFL_NET_StateWifiLogout();
+//    DWC_ShutdownFriendsMatch();
     GFL_NET_Exit(NULL);
   }
   if(!GFL_NET_IsInit()){

@@ -180,7 +180,6 @@ struct _IRC_BATTLE_MENU {
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
   GFL_BUTTON_MAN* pButton;
   GFL_MSGDATA *pMsgData;  //
-  WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
 	STRBUF*  pExpStrBuf;
   STRBUF* pStrBuf;
@@ -748,7 +747,14 @@ static void _workEnd(IRC_BATTLE_MENU* pWork)
 static void _modeFadeout(IRC_BATTLE_MENU* pWork)
 {
 	if(WIPE_SYS_EndCheck()){
-		_CHANGE_STATE(pWork, NULL);        // 終わり
+    if(pWork->selectType !=  EVENTIRCBTL_ENTRYMODE_EXIT){
+      if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pWork->dbw)))){
+        _CHANGE_STATE(pWork, NULL);        // 終わり
+      }
+    }
+    else{
+        _CHANGE_STATE(pWork, NULL);        // 終わり
+    }
 	}
 }
 
@@ -763,6 +769,12 @@ static void _modeFadeoutStart(IRC_BATTLE_MENU* pWork)
 {
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+
+  if(pWork->selectType !=  EVENTIRCBTL_ENTRYMODE_EXIT){
+    if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pWork->dbw)))){
+      GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pWork->dbw)));
+    }
+  }
   _CHANGE_STATE(pWork, _modeFadeout);        // 終わり
 }
 

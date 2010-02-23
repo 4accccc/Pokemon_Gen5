@@ -597,6 +597,7 @@ static GFL_PROC_RESULT DebugItemMakeProc_End( GFL_PROC * proc, int * seq, void *
   GFL_STR_DeleteBuffer(wk->fullword);
   WORDSET_Delete(wk->WordSet);
   GFL_FONT_Delete(wk->fontHandle);
+  GFL_UI_KEY_SetRepeatSpeed(UI_REPEAT_SPEED_DEF,UI_REPEAT_WAIT_DEF);
   return GFL_PROC_RES_FINISH;
 
 }
