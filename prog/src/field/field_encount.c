@@ -164,6 +164,9 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   {
     u8 prob_rev = 0;
     enc_loc = enc_GetLocation( enc, enc_type, &prob_rev );
+    if( enc_loc == ENC_LOCATION_NONE ){
+      return NULL;
+    }
     per = enc_GetLocationPercent( enc, enc_loc, prob_rev );
   }
   
