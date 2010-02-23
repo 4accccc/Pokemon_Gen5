@@ -1182,6 +1182,7 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
       init_flag = TRUE;
       work->set_anm_dir = dir;
       work->offs_frame = 0;
+      work->offs_y = 0;
       GFL_BBDACT_SetAnimeIdx( actSys,work->actID, work->set_anm_dir );
       
       { //描画オフセットもクリア
@@ -1322,6 +1323,11 @@ static void DrawTsurePokeFly_Draw( MMDL *mmdl )
       work->offs_frame = 0;
       work->offs_y = 0; //描画オフセットもクリア
       GFL_BBDACT_SetAnimeIdx( actSys, work->actID, work->set_anm_dir );
+
+      { //描画オフセットもクリア
+        VecFx32 offs = {0,0,0};
+        MMDL_GetVectorDrawOffsetPos( mmdl, &offs );
+      }
     }
     
     if( MMDL_CheckDrawPause(mmdl) == FALSE ){ //to GS
