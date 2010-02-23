@@ -27,7 +27,12 @@ SUBDIRS	=
 #------------------------------------------------------------------------------
 #※ここでアーカイブしたい直下のサブディレクトリの名前を書く
 #------------------------------------------------------------------------------
-SUBDIRS_ARC = info list search top
+SUBDIRS_INFO = info
+SUBDIRS_LIST = list
+SUBDIRS_SEARCH = search
+SUBDIRS_TOP = top
+
+SUBDIRS_ARC = $(SUBDIRS_INFO) $(SUBDIRS_LIST) $(SUBDIRS_SEARCH) $(SUBDIRS_TOP)
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -112,6 +117,10 @@ ifeq ($(lobjects),)
 	rm -f $(lobjects)
 endif
 
+	rm -f $(SUBDIRS_INFO)/*.N*R
+	rm -f $(SUBDIRS_LIST)/*.N*R
+	rm -f $(SUBDIRS_SEARCH)/*.N*R
+	rm -f $(SUBDIRS_TOP)/*.N*R
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
