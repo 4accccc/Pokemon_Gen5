@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T22:49:49"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T13:38:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="170" right="2001" bottom="798" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -299,32 +299,35 @@
 ブラックシティへ　ようこそ……[BE:01:ページ切り替え（クリア）]
 ここは　ゆめと　よくぼう　そして
 ……よくぼうの　まちさ[BE:01:ページ切り替え（クリア）]
-そしておれは　そんな　よくぼう　うずまく
+そして　おれは
+そんな　よくぼう　うずまく▽
 ブラックシティの　ボスなのさ</language>
 		<language name="JPN_KANJI" width="256">……
 ブラックシティへ　ようこそ……[BE:01:ページ切り替え（クリア）]
 ここは　夢と　欲望　そして
 ……欲望の　街さ[BE:01:ページ切り替え（クリア）]
-そしておれは　そんな　欲望　うずまく
+そして　おれは　そんな　欲望うずまく
 ブラックシティの　ボスなのさ</language>
 	</row>
 
 	<row id="msg_bc10r0401_gentleman_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GENTLEMAN(BCのボス）</attribute>
-		<language name="JPN" width="256">このまちには　よくぼうの　かたまりのような
-いきのいい　やつらが　そろっている……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">この　まちには
+よくぼうの　かたまりのような▽
+いきのいい　ヤツらが　そろっている……[BE:01:ページ切り替え（クリア）]
 ……そうだな
-そんな　いきのいい　やつらを[BE:00:ページ切り替え（行送り）]
+そんな　いきのいい　ヤツらを[BE:00:ページ切り替え（行送り）]
 [2:04:５桁:0]にん　たおしてみな[BE:01:ページ切り替え（クリア）]
-そしたら　おまえの　よくぼうも
-かなえてやるよ……</language>
-		<language name="JPN_KANJI" width="256">この街には　欲望の　かたまりのような
+そしたら　おまえの
+よくぼうも　かなえてやるよ……</language>
+		<language name="JPN_KANJI" width="256">この街には
+欲望の　かたまりのような▽
 活きのいい　奴らが　そろっている……[BE:01:ページ切り替え（クリア）]
 ……そうだな
 そんな　活きのいい　奴らを[BE:00:ページ切り替え（行送り）]
 [2:04:５桁:0]にん　倒してみな[BE:01:ページ切り替え（クリア）]
-そしたら　おまえの　欲望も
-かなえてやるよ……</language>
+そしたら　おまえの
+欲望も　かなえてやるよ……</language>
 	</row>
 
 	<row id="msg_bc10r0401_gentleman_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -342,17 +345,19 @@
 	<row id="msg_bc10r0401_gentleman_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GENTLEMAN(BCのボス）</attribute>
 		<language name="JPN" width="256">おお？
-もう　[2:04:５桁:0]にんも　たおしたのか……[BE:00:ページ切り替え（行送り）]
-おまえ　いがいに　よくぶかいやつだな[BE:00:ページ切り替え（行送り）]
+もう　[2:04:５桁:0]にんも　たおしたのか……▼
+おまえ……
+いがいに　よくぶかい　ヤツだな[BE:00:ページ切り替え（行送り）]
 はらのそこが　ギラギラしてるぜ[BE:01:ページ切り替え（クリア）]
-きにいった
+きにいった！
 その　よくぼう　かなえてやるよ</language>
 		<language name="JPN_KANJI" width="256">おお？
-もう　[2:04:５桁:0]人も　倒したのか……[BE:00:ページ切り替え（行送り）]
-おまえ　以外に　欲深い奴だな[BE:00:ページ切り替え（行送り）]
+もう　[2:04:５桁:0]人も　倒したのか……▼
+おまえ……
+以外に　欲深い　奴だな[BE:00:ページ切り替え（行送り）]
 腹の底が　ギラギラしてるぜ[BE:01:ページ切り替え（クリア）]
-気に入った
-その　欲望　かなえてやるよ</language>
+気に入った！
+その欲望　かなえてやるよ</language>
 	</row>
 
 	<row id="msg_bc10r0401_gentleman_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -382,7 +387,7 @@
 まさに
 ブラック　オブ　ブラック！[BE:01:ページ切り替え（クリア）]
 このまちで　いちばん
-まっくろな　やつさ！</language>
+まっくろな　ヤツさ！</language>
 		<language name="JPN_KANJI" width="256">よう！
 おまえは　最高だな！[BE:01:ページ切り替え（クリア）]
 まさに
@@ -459,8 +464,8 @@
 つくって　しまうのだからな</language>
 		<language name="JPN_KANJI" width="256">文明の　力とは
 すごいものだな……[BE:01:ページ切り替え（クリア）]
-人が欲しいもの　全て
-作って　しまうのだからな</language>
+人が欲しいもの　すべて
+つくって　しまうのだからな</language>
 	</row>
 
 	<flowchart-group-list>

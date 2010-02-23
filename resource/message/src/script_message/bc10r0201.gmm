@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-12T17:08:13"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T13:32:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1413" top="307" right="2118" bottom="927" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -313,10 +313,12 @@
 	<row id="msg_bc10r0201_boy1_02">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY1</attribute>
-		<language name="JPN" width="256">この　おもちゃ　あきた！
-もっと　たのしい　おもちゃが　ほしいよー！</language>
-		<language name="JPN_KANJI" width="256">この　おもちゃ　あきた！
-もっと　楽しい　おもちゃが　欲しいよー！</language>
+		<language name="JPN" width="256">この　おもちゃ　あきた！▼
+もっと　たのしい
+おもちゃが　ほしいよー！</language>
+		<language name="JPN_KANJI" width="256">この　おもちゃ　あきた！▼
+もっと　楽しい
+おもちゃが　欲しいよー！</language>
 	</row>
 
 	<flowchart-group-list>
