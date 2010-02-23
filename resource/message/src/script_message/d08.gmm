@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T21:17:25"/>
+	<create user="matsumiya" host="W00224" date="2010-02-23T23:03:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1382" top="228" right="2087" bottom="856" maximized="no" rayout="Vertical2">
+	<dialog left="1333" top="175" right="2038" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -423,7 +423,7 @@
 		<language name="JPN_KANJI" width="256">アララギ『おお　そうか
 きみたちが……[BE:01:ページ切り替え（クリア）]
 だが　プラズマ団　相手に
-事を　構えるのは[BE:00:ページ切り替え（行送り）]
+ことを　構えるのは[BE:00:ページ切り替え（行送り）]
 あまり　感心できんが……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -547,52 +547,58 @@
 すなおに　喜べぬぞ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_hakase1_08w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_08w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・続けてmsg_d08_champion_03w</comment>
 		<attribute name="キャラ指定">博士（父）</attribute>
 		<language name="JPN" width="256">アララギ『……うむ[BE:01:ページ切り替え（クリア）]
 かれらに　きいたところ
-Ｎという　おとこが　かかげた[BE:00:ページ切り替え（行送り）]
-ライトストーンが　かがやき[BE:00:ページ切り替え（行送り）]
-ポケモンに　へんげした　という[BE:01:ページ切り替え（クリア）]</language>
+とうの　さいじょうかい　で▼
+Ｎという　おとこ　が
+でんせつの　ポケモンと　ともに▽
+とびさったと　いう……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『……うむ[BE:01:ページ切り替え（クリア）]
 かれらに　聞いたところ
-Ｎという　男が　掲げた[BE:00:ページ切り替え（行送り）]
-ライトストーンが　輝き[BE:00:ページ切り替え（行送り）]
-ポケモンに　変化した　という[BE:01:ページ切り替え（クリア）]</language>
+塔の　最上階で▼
+Ｎという　男が
+伝説の　ポケモンと　ともに▽
+飛び去ったと　いう……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_hakase1_08b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_08b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・続けてmsg_d08_champion_03b</comment>
 		<attribute name="キャラ指定">博士（父）</attribute>
 		<language name="JPN" width="256">アララギ『……うむ[BE:01:ページ切り替え（クリア）]
 かれらに　きいたところ
-Ｎという　おとこが　かかげた[BE:00:ページ切り替え（行送り）]
-ダークストーンが　かがやき[BE:00:ページ切り替え（行送り）]
-ポケモンに　へんげした　という[BE:01:ページ切り替え（クリア）]</language>
+とうの　さいじょうかい　で▼
+Ｎという　おとこ　が
+でんせつの　ポケモンと　ともに▽
+とびさったと　いう……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『……うむ[BE:01:ページ切り替え（クリア）]
 かれらに　聞いたところ
-Ｎという　男が　掲げた[BE:00:ページ切り替え（行送り）]
-ダークストーンが　輝き[BE:00:ページ切り替え（行送り）]
-ポケモンに　変化した　という[BE:01:ページ切り替え（クリア）]</language>
+塔の　最上階で▼
+Ｎという　男が
+伝説の　ポケモンと　ともに▽
+飛び去ったと　いう……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d08_champion_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・続けてmsg_d08_white_06</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『……ふむう[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アデク『……ふむう
+それは　ちと　まずいのう[BE:01:ページ切り替え（クリア）]
 われわれも　もうひとつの　いし
 ダークストーンを　さがしだし[BE:01:ページ切り替え（クリア）]
 もういっぴきの　ドラゴンポケモン
 ムの　ちからを　えるしか[BE:00:ページ切り替え（行送り）]
 Ｎには　たいこう　できないだろうな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『……ふむう[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">アデク『……ふむう
+それは　ちと　まずいのう[BE:01:ページ切り替え（クリア）]
 われわれも　もうひとつの　石
 ダークストーンを　探しだし[BE:01:ページ切り替え（クリア）]
-もう一匹の　ドラゴンポケモン
+もう１匹の　ドラゴンポケモン
 ムの　力を　得るしか[BE:00:ページ切り替え（行送り）]
 Ｎには　対抗できないだろうな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -601,16 +607,18 @@
 		<comment>♂：d08r0701イベント後
 ・続けてmsg_d08_white_06</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『……ふむう[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アデク『……ふむう
+それは　ちと　まずいのう[BE:01:ページ切り替え（クリア）]
 われわれも　もうひとつの　いし
 ライトストーンを　さがしだし[BE:01:ページ切り替え（クリア）]
 もういっぴきの　ドラゴンポケモン
 シンの　ちからを　えるしか[BE:00:ページ切り替え（行送り）]
 Ｎには　たいこう　できないだろうな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『……ふむう[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">アデク『……ふむう
+それは　ちと　まずいのう[BE:01:ページ切り替え（クリア）]
 われわれも　もうひとつの　石
 ライトストーンを　探しだし[BE:01:ページ切り替え（クリア）]
-もう一匹の　ドラゴンポケモン
+もう１匹の　ドラゴンポケモン
 シンの　力を　得るしか[BE:00:ページ切り替え（行送り）]
 Ｎには　対抗できないだろうな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -638,7 +646,7 @@
 だが　わしにも　かんがえが　ある[BE:01:ページ切り替え（クリア）]
 とにかく　こだいのしろにて　あおう
 [1:00:トレーナー名:0]たち　ついてこい！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『……確かに　シンと　ムが[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">アデク『……確かに　シンと　ムが
 七日七晩　争いつづけ[BE:00:ページ切り替え（行送り）]
 イッシュ地方は　荒廃したと　伝わっている[BE:01:ページ切り替え（クリア）]
 だが　わたしにも　考えが　ある[BE:01:ページ切り替え（クリア）]
