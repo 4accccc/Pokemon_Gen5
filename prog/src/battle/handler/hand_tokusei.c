@@ -707,7 +707,7 @@ static void handler_Ikaku_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     {
       BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
 
-      param->rankType = BPP_ATTACK;
+      param->rankType = BPP_ATTACK_RANK;
       param->rankVolume = -1;
       param->fAlmost = TRUE;
 
@@ -770,7 +770,7 @@ static void handler_FukutsunoKokoro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     header = (BTL_HANDEX_PARAM_HEADER*)param;
     header->tokwin_flag = TRUE;
 
-    param->rankType = BPP_AGILITY;
+    param->rankType = BPP_AGILITY_RANK;
     param->rankVolume = 1;
     param->fAlmost = FALSE;
     param->poke_cnt = 1;
@@ -1242,7 +1242,7 @@ static void handler_Kasoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
 
     param->header.tokwin_flag = TRUE;
-    param->rankType = BPP_AGILITY;
+    param->rankType = BPP_AGILITY_RANK;
     param->poke_cnt = 1;
     param->pokeID[0] = pokeID;
     param->rankVolume = 1;
@@ -2758,7 +2758,7 @@ static void handler_IkarinoTubo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
         BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
         const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
         param->rankType = WAZA_RANKEFF_ATTACK;
-        param->rankVolume = BPP_RankEffectUpLimit( bpp, BPP_ATTACK );
+        param->rankVolume = BPP_RankEffectUpLimit( bpp, BPP_ATTACK_RANK );
         param->fAlmost = TRUE;
         param->poke_cnt = 1;
         param->pokeID[0] = pokeID;
@@ -3251,9 +3251,9 @@ static void handler_Download( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       // 相手のぼうぎょ・とくぼうを比較して、弱い方に対応した自分のこうげき・とくこうをアップ
       //（同じなら とくこう をアップ
       if( sumDef >= sumSpDef ){
-        valueID = BPP_SP_ATTACK;
+        valueID = BPP_SP_ATTACK_RANK;
       }else{
-        valueID = BPP_ATTACK;
+        valueID = BPP_ATTACK_RANK;
       }
 
       {
@@ -3855,7 +3855,7 @@ static void handler_DenkiEngine_Fix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     param->poke_cnt = 1;
     param->pokeID[0] = pokeID;
     param->fAlmost = TRUE;
-    param->rankType = BPP_AGILITY;
+    param->rankType = BPP_AGILITY_RANK;
     param->rankVolume = 1;
     param->header.tokwin_flag = TRUE;
   }
@@ -4525,7 +4525,7 @@ static void handler_Hiraisin_DmgToRecvFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
     param->poke_cnt = 1;
     param->pokeID[0] = pokeID;
     param->fAlmost = TRUE;
-    param->rankType = BPP_SP_ATTACK;
+    param->rankType = BPP_SP_ATTACK_RANK;
     param->rankVolume = 1;
     param->header.tokwin_flag = TRUE;
   }
@@ -5042,8 +5042,8 @@ static void handler_KudakeruYoroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BOOL fEffective = FALSE;
 
-    if( BPP_IsRankEffectValid(bpp, BPP_DEFENCE, -1)
-    ||  BPP_IsRankEffectValid(bpp, BPP_AGILITY,  1)
+    if( BPP_IsRankEffectValid(bpp, BPP_DEFENCE_RANK, -1)
+    ||  BPP_IsRankEffectValid(bpp, BPP_AGILITY_RANK,  1)
     ){
       fEffective = TRUE;
     }
@@ -5058,14 +5058,14 @@ static void handler_KudakeruYoroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
         param->poke_cnt = 1;
         param->pokeID[0] = pokeID;
         param->fAlmost = TRUE;
-        param->rankType = BPP_DEFENCE;
+        param->rankType = BPP_DEFENCE_RANK;
         param->rankVolume = -1;
 
         param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
         param->poke_cnt = 1;
         param->pokeID[0] = pokeID;
         param->fAlmost = TRUE;
-        param->rankType = BPP_AGILITY;
+        param->rankType = BPP_AGILITY_RANK;
         param->rankVolume = 1;
 
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
@@ -5177,7 +5177,7 @@ static void handler_Makenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
         BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
 
         param->header.tokwin_flag = TRUE;
-        param->rankType = BPP_ATTACK;
+        param->rankType = BPP_ATTACK_RANK;
         param->rankVolume = 2;
         param->fAlmost = TRUE;
         param->poke_cnt = 1;
@@ -5437,7 +5437,7 @@ static void handler_Murakke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     enum {
-      PATTERN_MAX = ((BPP_RANKVALUE_RANGE * BPP_RANKVALUE_RANGE) - BPP_RANKVALUE_RANGE) * 2,
+      PATTERN_MAX = ((WAZA_RANKEFF_NUMS * WAZA_RANKEFF_NUMS) - WAZA_RANKEFF_NUMS) * 2,
     };
 
     // 重複しない「上昇・下降」の組み合わせを列挙するための計算用ワーク
@@ -5446,8 +5446,8 @@ static void handler_Murakke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     typedef struct {
 
       u16 patterns[ PATTERN_MAX ];
-      u8  upEffects[ BPP_RANKVALUE_RANGE ];
-      u8  downEffects[ BPP_RANKVALUE_RANGE ];
+      u8  upEffects[ WAZA_RANKEFF_NUMS ];
+      u8  downEffects[ WAZA_RANKEFF_NUMS ];
 
     }CALC_WORK;
 
@@ -5461,18 +5461,18 @@ static void handler_Murakke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 
     // 上がりうる能力、下がりうる能力を列挙、カウントする
     upCnt = downCnt = 0;
-    for(i=0; i<BPP_RANKVALUE_RANGE; ++i){
-      if( BPP_IsRankEffectValid(bpp, BPP_ATTACK+i, 1) ){
-        work->upEffects[ upCnt++ ] = BPP_ATTACK+i;
+    for(i=0; i<WAZA_RANKEFF_NUMS; ++i)
+    {
+      if( BPP_IsRankEffectValid(bpp, WAZA_RANKEFF_ORIGIN+i, 1) ){
+        work->upEffects[ upCnt++ ] = WAZA_RANKEFF_ORIGIN+i;
       }
-      if( BPP_IsRankEffectValid(bpp, BPP_ATTACK+i, -1) ){
-        work->downEffects[ downCnt++ ] = BPP_ATTACK+i;
+      if( BPP_IsRankEffectValid(bpp, WAZA_RANKEFF_ORIGIN+i, -1) ){
+        work->downEffects[ downCnt++ ] = WAZA_RANKEFF_ORIGIN+i;
       }
     }
 
-
     // 上がりうる（下がりうる）能力が０の場合、ランダムで１つだけ上がる（下がる）
-    upEffect = downEffect = BPP_VALUE_NULL;
+    upEffect = downEffect = WAZA_RANKEFF_NULL;
     if( (upCnt == 0) && (downCnt != 0) ){
       i = BTL_CALC_GetRand( downCnt );
       downEffect = work->downEffects[ i ];
@@ -5919,7 +5919,7 @@ static void handler_JisinKajou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
         param->header.tokwin_flag = TRUE;
         param->poke_cnt = 1;
         param->pokeID[0] = pokeID;
-        param->rankType = BPP_ATTACK;
+        param->rankType = BPP_ATTACK_RANK;
         param->rankVolume = 1;
       }
     }
@@ -5953,7 +5953,7 @@ static void handler_SeiginoKokoro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       param->header.tokwin_flag = TRUE;
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
-      param->rankType = BPP_ATTACK;
+      param->rankType = BPP_ATTACK_RANK;
       param->rankVolume = 1;
     }
   }
@@ -5989,7 +5989,7 @@ static void handler_Bibiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       param->header.tokwin_flag = TRUE;
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
-      param->rankType = BPP_AGILITY;
+      param->rankType = BPP_AGILITY_RANK;
       param->rankVolume = 1;
     }
   }
@@ -6052,7 +6052,7 @@ static void handler_Sousyoku_Fix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 
   param->poke_cnt = 1;
   param->pokeID[0] = pokeID;
-  param->rankType = BPP_SP_ATTACK;
+  param->rankType = BPP_SP_ATTACK_RANK;
   param->rankVolume = 1;
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sousyoku( u32* numElems )
@@ -6215,19 +6215,15 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Syuukaku( u32* numElems )
  *  とくせい「あまのじゃく」
  *
  *  能力ランク効果が逆転して働く。（ex. "いかく"を受けると攻撃力が上がる）
- *  ただしオーバーヒート系などの自分で能力を下げる技には効果がない。
  */
 //------------------------------------------------------------------------------
 // ランク増減値修正ハンドラ
 static void handler_Amanojaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // @todo オバヒ系チェックしてなくね？
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     int volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
-    if( (volume > 0)
-    ||  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID)
-    ){
+    {
       volume *= -1;
       work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, volume );
     }

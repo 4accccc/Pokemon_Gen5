@@ -976,13 +976,13 @@ static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* bpp, BppValueID ty
   *max = BPP_RANK_STATUS_MAX;
 
   switch( type ) {
-  case BPP_ATTACK:      ptr = &bpp->varyParam.attack; break;
-  case BPP_DEFENCE:     ptr = &bpp->varyParam.defence; break;
-  case BPP_SP_ATTACK:   ptr = &bpp->varyParam.sp_attack; break;
-  case BPP_SP_DEFENCE:  ptr = &bpp->varyParam.sp_defence; break;
-  case BPP_AGILITY:     ptr = &bpp->varyParam.agility; break;
-  case BPP_HIT_RATIO:   ptr = &bpp->varyParam.hit; break;
-  case BPP_AVOID_RATIO: ptr = &bpp->varyParam.avoid; break;
+  case BPP_ATTACK_RANK:     ptr = &bpp->varyParam.attack; break;
+  case BPP_DEFENCE_RANK:    ptr = &bpp->varyParam.defence; break;
+  case BPP_SP_ATTACK_RANK:  ptr = &bpp->varyParam.sp_attack; break;
+  case BPP_SP_DEFENCE_RANK: ptr = &bpp->varyParam.sp_defence; break;
+  case BPP_AGILITY_RANK:    ptr = &bpp->varyParam.agility; break;
+  case BPP_HIT_RATIO:       ptr = &bpp->varyParam.hit; break;
+  case BPP_AVOID_RATIO:     ptr = &bpp->varyParam.avoid; break;
 
   default:
     GF_ASSERT_MSG(0, "illegal rank Type ->%d", type);
@@ -1094,13 +1094,13 @@ u8 BPP_RankUp( BTL_POKEPARAM* bpp, BppValueID rankType, u8 volume )
   s8 max = BPP_RANK_STATUS_MAX;
 
   switch( rankType ){
-  case BPP_ATTACK:      ptr = &bpp->varyParam.attack; break;
-  case BPP_DEFENCE:     ptr = &bpp->varyParam.defence; break;
-  case BPP_SP_ATTACK:   ptr = &bpp->varyParam.sp_attack; break;
-  case BPP_SP_DEFENCE:  ptr = &bpp->varyParam.sp_defence; break;
-  case BPP_AGILITY:     ptr = &bpp->varyParam.agility; break;
-  case BPP_HIT_RATIO:   ptr = &bpp->varyParam.hit; break;
-  case BPP_AVOID_RATIO: ptr = &bpp->varyParam.avoid; break;
+  case BPP_ATTACK_RANK:     ptr = &bpp->varyParam.attack; break;
+  case BPP_DEFENCE_RANK:    ptr = &bpp->varyParam.defence; break;
+  case BPP_SP_ATTACK_RANK:  ptr = &bpp->varyParam.sp_attack; break;
+  case BPP_SP_DEFENCE_RANK: ptr = &bpp->varyParam.sp_defence; break;
+  case BPP_AGILITY_RANK:    ptr = &bpp->varyParam.agility; break;
+  case BPP_HIT_RATIO:       ptr = &bpp->varyParam.hit; break;
+  case BPP_AVOID_RATIO:     ptr = &bpp->varyParam.avoid; break;
 
   default:
     GF_ASSERT(0);
@@ -1135,13 +1135,13 @@ u8 BPP_RankDown( BTL_POKEPARAM* bpp, BppValueID rankType, u8 volume )
   s8 min = BPP_RANK_STATUS_MIN;
 
   switch( rankType ){
-  case BPP_ATTACK:       ptr = &bpp->varyParam.attack; break;
-  case BPP_DEFENCE:      ptr = &bpp->varyParam.defence; break;
-  case BPP_SP_ATTACK:    ptr = &bpp->varyParam.sp_attack; break;
-  case BPP_SP_DEFENCE:   ptr = &bpp->varyParam.sp_defence; break;
-  case BPP_AGILITY:      ptr = &bpp->varyParam.agility; break;
-  case BPP_HIT_RATIO:    ptr = &bpp->varyParam.hit; break;
-  case BPP_AVOID_RATIO:  ptr = &bpp->varyParam.avoid; break;
+  case BPP_ATTACK_RANK:     ptr = &bpp->varyParam.attack; break;
+  case BPP_DEFENCE_RANK:    ptr = &bpp->varyParam.defence; break;
+  case BPP_SP_ATTACK_RANK:  ptr = &bpp->varyParam.sp_attack; break;
+  case BPP_SP_DEFENCE_RANK: ptr = &bpp->varyParam.sp_defence; break;
+  case BPP_AGILITY_RANK:    ptr = &bpp->varyParam.agility; break;
+  case BPP_HIT_RATIO:       ptr = &bpp->varyParam.hit; break;
+  case BPP_AVOID_RATIO:     ptr = &bpp->varyParam.avoid; break;
 
   default:
     GF_ASSERT(0);
@@ -1175,13 +1175,13 @@ void BPP_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value )
   u8 max = BPP_RANK_STATUS_MAX;
 
   switch( rankType ){
-  case BPP_ATTACK:        ptr = &pp->varyParam.attack; break;
-  case BPP_DEFENCE:       ptr = &pp->varyParam.defence; break;
-  case BPP_SP_ATTACK:     ptr = &pp->varyParam.sp_attack; break;
-  case BPP_SP_DEFENCE:    ptr = &pp->varyParam.sp_defence; break;
-  case BPP_AGILITY:       ptr = &pp->varyParam.agility; break;
-  case BPP_HIT_RATIO:     ptr = &pp->varyParam.hit; break;
-  case BPP_AVOID_RATIO:   ptr = &pp->varyParam.avoid; break;
+  case BPP_ATTACK_RANK:     ptr = &pp->varyParam.attack; break;
+  case BPP_DEFENCE_RANK:    ptr = &pp->varyParam.defence; break;
+  case BPP_SP_ATTACK_RANK:  ptr = &pp->varyParam.sp_attack; break;
+  case BPP_SP_DEFENCE_RANK: ptr = &pp->varyParam.sp_defence; break;
+  case BPP_AGILITY_RANK:    ptr = &pp->varyParam.agility; break;
+  case BPP_HIT_RATIO:       ptr = &pp->varyParam.hit; break;
+  case BPP_AVOID_RATIO:     ptr = &pp->varyParam.avoid; break;
 
   default:
     GF_ASSERT(0);

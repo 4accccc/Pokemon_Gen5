@@ -4301,11 +4301,11 @@ static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_RankSet5( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_RankSet( bpp, BPP_ATTACK,      args[1] );
-  BPP_RankSet( bpp, BPP_DEFENCE,     args[2] );
-  BPP_RankSet( bpp, BPP_SP_ATTACK,   args[3] );
-  BPP_RankSet( bpp, BPP_SP_DEFENCE,  args[4] );
-  BPP_RankSet( bpp, BPP_AGILITY,     args[5] );
+  BPP_RankSet( bpp, BPP_ATTACK_RANK,      args[1] );
+  BPP_RankSet( bpp, BPP_DEFENCE_RANK,     args[2] );
+  BPP_RankSet( bpp, BPP_SP_ATTACK_RANK,   args[3] );
+  BPP_RankSet( bpp, BPP_SP_DEFENCE_RANK,  args[4] );
+  BPP_RankSet( bpp, BPP_AGILITY_RANK,     args[5] );
   return TRUE;
 }
 static BOOL scProc_OP_RankRecover( BTL_CLIENT* wk, int* seq, const int* args )

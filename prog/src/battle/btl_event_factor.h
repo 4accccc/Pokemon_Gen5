@@ -21,7 +21,7 @@
 
 enum {
   EVENT_HANDLER_WORK_ELEMS = 8,       ///< ハンドラごとに割り当てられるローカルワーク要素数(int)
-  EVENT_HANDLER_TMP_WORK_SIZE = 128,  ///< 全ハンドラから参照される一時使用ワークサイズ
+  EVENT_HANDLER_TMP_WORK_SIZE = 512,  ///< 全ハンドラから参照される一時使用ワークサイズ
 
   EVENT_WAZA_STICK_MAX = 8,   ///< １体につき貼り付くことが出来るワザ数の最大値
 };

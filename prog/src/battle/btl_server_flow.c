@@ -3108,19 +3108,19 @@ static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
 }
 static u8 ItemEff_AttackRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_ATTACK );
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_ATTACK_RANK );
 }
 static u8 ItemEff_DefenceRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_DEFENCE );
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_DEFENCE_RANK );
 }
 static u8 ItemEff_SPAttackRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_SP_ATTACK );
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_SP_ATTACK_RANK );
 }
 static u8 ItemEff_SPDefenceRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_SP_DEFENCE );
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_SP_DEFENCE_RANK );
 }
 static u8 ItemEff_AgilityRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
@@ -8437,7 +8437,6 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
     // Ç™Ç≠ÇµÇ„Ç§ÇªÇ§ÇøÇëïîıÇµÇƒÇ¢ÇÈÉ|ÉPÉÇÉìÇ™ëŒè€
     bpp = BTL_PARTY_GetMemberDataConst( party, i );
     if( !BPP_IsDead(bpp)
-//    &&  (BPP_GetValue(bpp, BPP_LEVEL) < PTL_LEVEL_MAX)
     &&  (BPP_GetItem(bpp) == ITEM_GAKUSYUUSOUTI)
     ){
       ++gakusyuCount;
@@ -8457,7 +8456,6 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
     {
       bpp = BTL_PARTY_GetMemberDataConst( party, i );
       if( !BPP_IsDead(bpp)
-//      &&  (BPP_GetValue(bpp, BPP_LEVEL) < PTL_LEVEL_MAX)
       &&  (BPP_GetItem(bpp) == ITEM_GAKUSYUUSOUTI)
       ){
         result[i].exp = gakusyuExp;
@@ -12441,11 +12439,11 @@ static u8 scproc_HandEx_setRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   if( !BPP_IsDead(pp_target) )
   {
-    BPP_RankSet( pp_target, BPP_ATTACK,     param->attack );
-    BPP_RankSet( pp_target, BPP_DEFENCE,    param->defence );
-    BPP_RankSet( pp_target, BPP_SP_ATTACK,  param->sp_attack );
-    BPP_RankSet( pp_target, BPP_SP_DEFENCE, param->sp_defence );
-    BPP_RankSet( pp_target, BPP_AGILITY,    param->agility );
+    BPP_RankSet( pp_target, BPP_ATTACK_RANK,     param->attack );
+    BPP_RankSet( pp_target, BPP_DEFENCE_RANK,    param->defence );
+    BPP_RankSet( pp_target, BPP_SP_ATTACK_RANK,  param->sp_attack );
+    BPP_RankSet( pp_target, BPP_SP_DEFENCE_RANK, param->sp_defence );
+    BPP_RankSet( pp_target, BPP_AGILITY_RANK,    param->agility );
     SCQUE_PUT_OP_RankSet5( wk->que,
       param->pokeID, param->attack, param->defence, param->sp_attack, param->sp_defence, param->agility );
     return 1;

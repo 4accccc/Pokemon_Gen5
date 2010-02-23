@@ -1799,19 +1799,19 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
-      param->rankType = BPP_AGILITY;
+      param->rankType = BPP_AGILITY_RANK;
       param->rankVolume = -1;
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
-      param->rankType = BPP_ATTACK;
+      param->rankType = BPP_ATTACK_RANK;
       param->rankVolume = 1;
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
-      param->rankType = BPP_DEFENCE;
+      param->rankType = BPP_DEFENCE_RANK;
       param->rankVolume = 1;
     }
   }
@@ -2341,7 +2341,7 @@ static void handler_Takuwaeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
       rank_param->poke_cnt = 1;
       rank_param->pokeID[0] = pokeID;
-      rank_param->rankType = BPP_DEFENCE;
+      rank_param->rankType = BPP_DEFENCE_RANK;
       rank_param->rankVolume = 1;
       counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
       counter_param->header.failSkipFlag = TRUE;
@@ -2353,7 +2353,7 @@ static void handler_Takuwaeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
       rank_param->poke_cnt = 1;
       rank_param->pokeID[0] = pokeID;
-      rank_param->rankType = BPP_SP_DEFENCE;
+      rank_param->rankType = BPP_SP_DEFENCE_RANK;
       rank_param->rankVolume = 1;
       counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
       counter_param->header.failSkipFlag = TRUE;
@@ -5406,7 +5406,7 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u32 downHP = BPP_GetValue( bpp, BPP_MAX_HP ) / 2;
-    u32 upVolume = BPP_RankEffectUpLimit( bpp, BPP_ATTACK );
+    u32 upVolume = BPP_RankEffectUpLimit( bpp, BPP_ATTACK_RANK );
     if( (BPP_GetValue(bpp, BPP_HP) > downHP) && (upVolume != 0) )
     {
       BTL_HANDEX_PARAM_SHIFT_HP     *hp_param;
@@ -5419,7 +5419,7 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       hp_param->volume[0] = -downHP;
 
       rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-      rank_param->rankType = BPP_ATTACK;
+      rank_param->rankType = BPP_ATTACK_RANK;
       rank_param->rankVolume = upVolume;
       rank_param->poke_cnt = 1;
       rank_param->pokeID[0] = pokeID;
@@ -5510,7 +5510,7 @@ static void handler_TuboWoTuku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     static const BppValueID rankType[] = {
-      BPP_ATTACK, BPP_DEFENCE, BPP_AGILITY, BPP_SP_ATTACK, BPP_SP_DEFENCE,
+      BPP_ATTACK_RANK, BPP_DEFENCE_RANK, BPP_AGILITY_RANK, BPP_SP_ATTACK_RANK, BPP_SP_DEFENCE_RANK,
       BPP_HIT_RATIO, BPP_AVOID_RATIO,
     };
     u8  target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
@@ -6014,14 +6014,14 @@ static void handler_Okimiyage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
     rank_param->poke_cnt = 1;
     rank_param->pokeID[0] = targetPokeID;
-    rank_param->rankType = BPP_ATTACK;
+    rank_param->rankType = BPP_ATTACK_RANK;
     rank_param->rankVolume = -2;
     rank_param->fAlmost = TRUE;
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
     rank_param->poke_cnt = 1;
     rank_param->pokeID[0] = targetPokeID;
-    rank_param->rankType = BPP_SP_ATTACK;
+    rank_param->rankType = BPP_SP_ATTACK_RANK;
     rank_param->rankVolume = -2;
     rank_param->fAlmost = TRUE;
   }
@@ -6287,8 +6287,8 @@ static void handler_PowerTrick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_STATUS, pokeID );
 
     param->pokeID  = pokeID;
-    param->attack  = BPP_GetValue_Base( bpp, BPP_DEFENCE );
-    param->defence = BPP_GetValue_Base( bpp, BPP_ATTACK );
+    param->attack  = BPP_GetValue_Base( bpp, BPP_DEFENCE_RANK );
+    param->defence = BPP_GetValue_Base( bpp, BPP_ATTACK_RANK );
     param->fAttackEnable  = TRUE;
     param->fDefenceEnable = TRUE;
 
@@ -8516,7 +8516,7 @@ static const BtlEventHandlerTable*  ADD_AsistPower( u32* numElems )
 static void handler_AsistPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   static const u8 RankValue[] = {
-    BPP_ATTACK, BPP_DEFENCE, BPP_AGILITY, BPP_SP_ATTACK, BPP_SP_DEFENCE,
+    BPP_ATTACK_RANK, BPP_DEFENCE_RANK, BPP_AGILITY_RANK, BPP_SP_ATTACK_RANK, BPP_SP_DEFENCE_RANK,
     BPP_HIT_RATIO, BPP_AVOID_RATIO,
   };
 

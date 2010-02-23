@@ -4801,7 +4801,7 @@ static void handler_Kyuukon_DmgReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_MIZU )
     {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      if( BPP_IsRankEffectValid(bpp, BPP_SP_ATTACK, 1) )
+      if( BPP_IsRankEffectValid(bpp, BPP_SP_ATTACK_RANK, 1) )
       {
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
       }
@@ -4816,7 +4816,7 @@ static void handler_Kyuukon_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
     param->poke_cnt = 1;
     param->pokeID[0] = pokeID;
-    param->rankType = BPP_SP_ATTACK;
+    param->rankType = BPP_SP_ATTACK_RANK;
     param->rankVolume = 1;
   }
 }
@@ -4843,7 +4843,7 @@ static void handler_Juudenti_DmgReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_DENKI )
     {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      if( BPP_IsRankEffectValid(bpp, BPP_ATTACK, 1) )
+      if( BPP_IsRankEffectValid(bpp, BPP_ATTACK_RANK, 1) )
       {
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
       }
@@ -4858,7 +4858,7 @@ static void handler_Juudenti_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
     param->poke_cnt = 1;
     param->pokeID[0] = pokeID;
-    param->rankType = BPP_ATTACK;
+    param->rankType = BPP_ATTACK_RANK;
     param->rankVolume = 1;
   }
 }
