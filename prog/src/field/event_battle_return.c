@@ -57,6 +57,8 @@ typedef struct {
 
   HEAPID  heapID;
 
+  // ローカルPROCシステム
+  GFL_PROCSYS*  local_procsys;
 }BTLRET_WORK;
 
 /*--------------------------------------------------------------------------*/
@@ -99,6 +101,9 @@ static GFL_PROC_RESULT BtlRet_ProcInit( GFL_PROC * proc, int * seq, void * pwk, 
   wk->shinka_param = NULL;
   wk->heapID = HEAPID_BTLRET_SYS;
 
+  // ローカルPROCシステムを作成
+  wk->local_procsys = GFL_PROC_LOCAL_boot( wk->heapID );
+
   return GFL_PROC_RES_FINISH;
 }
 //--------------------------------------------------------------------------
@@ -109,6 +114,9 @@ static GFL_PROC_RESULT BtlRet_ProcInit( GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT BtlRet_ProcQuit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   BTLRET_WORK* wk = mywk;
+
+  // ローカルPROCシステムを破棄
+  GFL_PROC_LOCAL_Exit( wk->local_procsys ); 
 
   if( wk->box_strbuf )
   {
@@ -131,6 +139,10 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 {
   BTLRET_WORK*  wk = mywk;
   BTLRET_PARAM* param = pwk;
+
+  // ローカルPROCの更新処理
+  GFL_PROC_MAIN_STATUS  local_proc_status   =  GFL_PROC_LOCAL_Main( wk->local_procsys );
+  if( local_proc_status == GFL_PROC_MAIN_VALID ) return GFL_PROC_RES_CONTINUE;
 
   switch( *seq ){
   case 0:
@@ -205,7 +217,8 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         {
           ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME, wk->pp, wk->box_strbuf, boxman, wk->box_tray );
         }
-        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );
+        // ローカルPROC呼び出し
+        GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );
         (*seq)++;
       }else{
         (*seq) = 4;
@@ -215,41 +228,58 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 
   case 1:
     {
-      BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
-
-      BOOL nickname = FALSE;
-      if( ZUKAN_TOROKU_GetResult(&(wk->zukan_toroku_param)) == ZUKAN_TOROKU_RESULT_NICKNAME )
+      // ローカルPROCが終了するのを待つ  // このMainの最初でGFL_PROC_MAIN_VALIDならreturnしているので、ここでは判定しなくてもよいが念のため
+      if( local_proc_status != GFL_PROC_MAIN_VALID )
       {
-        nickname = TRUE;
-      }
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID(zukan_toroku) );
+        BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
 
-      if( nickname )
-      {
-        // 名前入力画面へ
-        GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
-        wk->nameinParam = NAMEIN_AllocParamPokemonCapture( wk->heapID, wk->pp, NAMEIN_POKEMON_LENGTH, NULL,
+        BOOL nickname = FALSE;
+        if( ZUKAN_TOROKU_GetResult(&(wk->zukan_toroku_param)) == ZUKAN_TOROKU_RESULT_NICKNAME )
+        {
+          nickname = TRUE;
+        }
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID(zukan_toroku) );
+
+        if( nickname )
+        {
+          // 名前入力画面へ
+          GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
+          wk->nameinParam = NAMEIN_AllocParamPokemonCapture( wk->heapID, wk->pp, NAMEIN_POKEMON_LENGTH, NULL,
                                                            wk->box_strbuf, boxman, wk->box_tray );
 
-        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
-        (*seq)++;
+          // ローカルPROC呼び出し
+          GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
+          (*seq)++;
+        }
+        else
+        {
+          (*seq) = 3;
+        }
       }
       else
       {
-        (*seq) = 3;
+        return GFL_PROC_RES_CONTINUE;
       }
     }
     break;
 
   case 2:
-    if( !NAMEIN_IsCancel(wk->nameinParam) ){
-      NAMEIN_CopyStr( wk->nameinParam, wk->strbuf );
-      PP_Put( wk->pp, ID_PARA_nickname, (u32)(wk->strbuf) );
+    // ローカルPROCが終了するのを待つ  // このMainの最初でGFL_PROC_MAIN_VALIDならreturnしているので、ここでは判定しなくてもよいが念のため
+    if( local_proc_status != GFL_PROC_MAIN_VALID )
+    {
+      if( !NAMEIN_IsCancel(wk->nameinParam) ){
+        NAMEIN_CopyStr( wk->nameinParam, wk->strbuf );
+        PP_Put( wk->pp, ID_PARA_nickname, (u32)(wk->strbuf) );
+      }
+      NAMEIN_FreeParam( wk->nameinParam );
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+      wk->nameinParam = NULL;
+      (*seq)++;
     }
-    NAMEIN_FreeParam( wk->nameinParam );
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
-    wk->nameinParam = NULL;
-    (*seq)++;
+    else
+    {
+      return GFL_PROC_RES_CONTINUE;
+    }
     break;
 
   case 3:
@@ -289,7 +319,8 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         {
           GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
           wk->shinka_param = SHINKADEMO_AllocParam( wk->heapID, param->gameData, party, after_mons_no, pos, cond, FALSE );
-          GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ShinkaDemoProcData, wk->shinka_param );
+          // ローカルPROC呼び出し
+          GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ShinkaDemoProcData, wk->shinka_param );
           (*seq) = 5;
           break;
         }
@@ -301,16 +332,24 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     }
     break;
   case 5:
-    SHINKADEMO_FreeParam( wk->shinka_param );
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
-    wk->shinka_param = NULL;
-    if( wk->shinka_poke_bit )
+    // ローカルPROCが終了するのを待つ  // このMainの最初でGFL_PROC_MAIN_VALIDならreturnしているので、ここでは判定しなくてもよいが念のため
+    if( local_proc_status != GFL_PROC_MAIN_VALID )
     {
-      (*seq) = 4;
+      SHINKADEMO_FreeParam( wk->shinka_param );
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+      wk->shinka_param = NULL;
+      if( wk->shinka_poke_bit )
+      {
+        (*seq) = 4;
+      }
+      else
+      {
+        (*seq)++;
+      }
     }
     else
     {
-      (*seq)++;
+      return GFL_PROC_RES_CONTINUE;
     }
     break;
   case 6:

@@ -346,6 +346,8 @@ typedef struct
 
   BOOL b_touch;  // タッチ操作のときTRUE、キー操作のときFALSE 
 
+  // ローカルPROCシステム
+  GFL_PROCSYS*  local_procsys;
 } PMS_SELECT_MAIN_WORK;
 
 
@@ -491,7 +493,10 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 
   // グラフィックロード
   PMSSelect_GRAPHIC_Load( wk );
-  
+
+  // ローカルPROCシステムを作成
+  wk->local_procsys = GFL_PROC_LOCAL_boot( wk->heapID );
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -510,6 +515,9 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	PMS_SELECT_MAIN_WORK* wk = mywk;
+
+  // ローカルPROCシステムを破棄
+  GFL_PROC_LOCAL_Exit( wk->local_procsys ); 
 
   PMSSelect_GRAPHIC_UnLoad( wk );
 
@@ -556,7 +564,10 @@ static void ChangeSeq( int* seq, PMS_SELECT_MAIN_WORK* wk, int s )
 static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	PMS_SELECT_MAIN_WORK* wk = mywk;
- 
+
+  // ローカルPROCの更新処理
+  GFL_PROC_MAIN_STATUS  local_proc_status   =  GFL_PROC_LOCAL_Main( wk->local_procsys );
+  if( local_proc_status == GFL_PROC_MAIN_VALID ) return GFL_PROC_RES_CONTINUE;
 
   switch(*seq)
   {
@@ -670,15 +681,19 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
     break;
   case SEQ_CALL_EDIT_END:
     {
-      if( SceneCallEdit_End( &(wk->sub_seq), wk ) )
-  	  {
-        HOSAKA_Printf("return! \n");
+      // ローカルPROCが終了するのを待つ  // このMainの最初でGFL_PROC_MAIN_VALIDならreturnしているので、ここでは判定しなくてもよいが念のため
+      if( local_proc_status != GFL_PROC_MAIN_VALID )
+      {
+        if( SceneCallEdit_End( &(wk->sub_seq), wk ) )
+  	    {
+          HOSAKA_Printf("return! \n");
         
-        GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-        // グラフィックリロード
-        PMSSelect_GRAPHIC_Load( wk );
+          GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+          // グラフィックリロード
+          PMSSelect_GRAPHIC_Load( wk );
       
-        ChangeSeq( seq, wk, SEQ_CALL_EDIT_FADE_IN_START );
+          ChangeSeq( seq, wk, SEQ_CALL_EDIT_FADE_IN_START );
+        }
       }
       
       return GFL_PROC_RES_CONTINUE;
@@ -856,13 +871,13 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
     // 足りない色をつくっておく
     BOOL result;
 
-    wk->transCol[COL_CHANGE_3] = GX_RGB(28, 28, 28);
+    wk->transCol[COL_CHANGE_3] = GX_RGB(31, 31, 31);
     result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
                                         PLTID_BG_MSG_M * 32 + MSG_M_COL_B_SELECTED * 2 ,
                                         &(wk->transCol[COL_CHANGE_3]) , 2 );
     GF_ASSERT( result );
 
-    wk->transCol[COL_CHANGE_4] = GX_RGB(22, 22, 22);
+    wk->transCol[COL_CHANGE_4] = GX_RGB(31, 31, 31);
     result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
                                         PLTID_BG_MSG_M * 32 + MSG_M_COL_B_NOT_SEL * 2 ,
                                         &(wk->transCol[COL_CHANGE_4]) , 2 );
@@ -2219,8 +2234,8 @@ static BOOL SceneCallEdit_Main( int* seq, void* work )
         PMSI_PARAM_SetInitializeDataSentence( pmsi, data );
       }
 
-      // PROC切替 入力画面呼び出し
-      GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ProcData_PMSInput, pmsi );
+      // PROC切替 入力画面呼び出し  // ローカルPROC呼び出し
+      GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ProcData_PMSInput, pmsi );
       wk->subproc_work = pmsi;
 
       return TRUE;

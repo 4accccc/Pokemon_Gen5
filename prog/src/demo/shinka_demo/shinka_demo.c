@@ -314,6 +314,9 @@ typedef struct
   void*                       pfade_tcbsys_work;
   PALETTE_FADE_PTR            pfade_ptr;  // パレットフェード
   s32                         pfade_step;
+
+  // ローカルPROCシステム
+  GFL_PROCSYS*  local_procsys;
 }
 SHINKA_DEMO_WORK;
 
@@ -532,6 +535,9 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
     work->vblank_tcb = GFUser_VIntr_CreateTCB( ShinkaDemo_VBlankFunc, work, 1 );
   }
 
+  // ローカルPROCシステムを作成
+  work->local_procsys = GFL_PROC_LOCAL_boot( work->heap_id );
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -542,6 +548,9 @@ static GFL_PROC_RESULT ShinkaDemoProcExit( GFL_PROC * proc, int * seq, void * pw
 {
   SHINKA_DEMO_PARAM*    param    = (SHINKA_DEMO_PARAM*)pwk;
   SHINKA_DEMO_WORK*     work     = (SHINKA_DEMO_WORK*)mywk;
+
+  // ローカルPROCシステムを破棄
+  GFL_PROC_LOCAL_Exit( work->local_procsys ); 
 
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
@@ -587,6 +596,10 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   SHINKA_DEMO_WORK*     work     = (SHINKA_DEMO_WORK*)mywk;
 
   int key_trg = GFL_UI_KEY_GetTrg();
+
+  // ローカルPROCの更新処理
+  GFL_PROC_MAIN_STATUS  local_proc_status   =  GFL_PROC_LOCAL_Main( work->local_procsys );
+  if( local_proc_status == GFL_PROC_MAIN_VALID ) return GFL_PROC_RES_CONTINUE;
 
   switch( work->step )
   {
@@ -960,15 +973,24 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
           work->psData->canExitButton     = FALSE;
 
           GFL_OVERLAY_Load( FS_OVERLAY_ID(poke_status) );
-          GFL_PROC_SysCallProc( NO_OVERLAY_ID, &PokeStatus_ProcData, work->psData );
+          // ローカルPROC呼び出し
+          GFL_PROC_LOCAL_CallProc( work->local_procsys, NO_OVERLAY_ID, &PokeStatus_ProcData, work->psData );
         }
       }
     }
     break;
   case STEP_WAZA_STATUS_FIELD:
     {
-      // 次へ
-      work->step = STEP_WAZA_STATUS_FIELD_OUT;
+      // ローカルPROCが終了するのを待つ  // このMainの最初でGFL_PROC_MAIN_VALIDならreturnしているので、ここでは判定しなくてもよいが念のため
+      if( local_proc_status != GFL_PROC_MAIN_VALID )
+      {
+        // 次へ
+        work->step = STEP_WAZA_STATUS_FIELD_OUT;
+      }
+      else
+      {
+        return GFL_PROC_RES_CONTINUE;
+      }
     }
     break;
   case STEP_WAZA_STATUS_FIELD_OUT:

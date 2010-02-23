@@ -269,6 +269,9 @@ typedef struct
 
   // 名前入力
   NAMEIN_PARAM*               namein_param;
+
+  // ローカルPROCシステム
+  GFL_PROCSYS*  local_procsys;
 }
 EGG_DEMO_WORK;
 
@@ -455,6 +458,9 @@ static GFL_PROC_RESULT Egg_Demo_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
 
+  // ローカルPROCシステムを作成
+  work->local_procsys = GFL_PROC_LOCAL_boot( work->heap_id );
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -465,6 +471,9 @@ static GFL_PROC_RESULT Egg_Demo_ProcExit( GFL_PROC* proc, int* seq, void* pwk, v
 {
   EGG_DEMO_PARAM*    param    = (EGG_DEMO_PARAM*)pwk;
   EGG_DEMO_WORK*     work     = (EGG_DEMO_WORK*)mywk;
+
+  // ローカルPROCシステムを破棄
+  GFL_PROC_LOCAL_Exit( work->local_procsys ); 
 
   // サウンド
   Egg_Demo_SoundExit( param, work );
@@ -490,6 +499,10 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
   EGG_DEMO_WORK*     work     = (EGG_DEMO_WORK*)mywk;
 
   int key_trg = GFL_UI_KEY_GetTrg();
+  
+  // ローカルPROCの更新処理
+  GFL_PROC_MAIN_STATUS  local_proc_status   =  GFL_PROC_LOCAL_Main( work->local_procsys );
+  if( local_proc_status == GFL_PROC_MAIN_VALID ) return GFL_PROC_RES_CONTINUE;
 
   switch( work->trunk_step )
   {
@@ -660,27 +673,36 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
         // 名前入力へ行く
         GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
         work->namein_param = NAMEIN_AllocParamPokemonByPP( work->heap_id, param->pp, NAMEIN_POKEMON_LENGTH, NULL );
-        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, work->namein_param );
+        // ローカルPROC呼び出し
+        GFL_PROC_LOCAL_CallProc( work->local_procsys, NO_OVERLAY_ID, &NameInputProcData, work->namein_param );
       }
     }
     break;
   case TRUNK_STEP_NAMEIN:
     {
-      // 名前入力から戻る
-      if( !NAMEIN_IsCancel( work->namein_param ) )
+      // ローカルPROCが終了するのを待つ  // このMainの最初でGFL_PROC_MAIN_VALIDならreturnしているので、ここでは判定しなくてもよいが念のため
+      if( local_proc_status != GFL_PROC_MAIN_VALID )
       {
-        STRBUF* strbuf = GFL_STR_CreateBuffer( NAMEIN_STRBUF_LENGTH, work->heap_id );
-        NAMEIN_CopyStr( work->namein_param, strbuf );
-        PP_Put( param->pp, ID_PARA_nickname, (u32)strbuf );
-        GFL_STR_DeleteBuffer( strbuf );
-      }
-      NAMEIN_FreeParam( work->namein_param );
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+        // 名前入力から戻る
+        if( !NAMEIN_IsCancel( work->namein_param ) )
+        {
+          STRBUF* strbuf = GFL_STR_CreateBuffer( NAMEIN_STRBUF_LENGTH, work->heap_id );
+          NAMEIN_CopyStr( work->namein_param, strbuf );
+          PP_Put( param->pp, ID_PARA_nickname, (u32)strbuf );
+          GFL_STR_DeleteBuffer( strbuf );
+        }
+        NAMEIN_FreeParam( work->namein_param );
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
-      // 次へ
-      work->trunk_step = TRUNK_STEP_NAMEIN_BLACK;
+        // 次へ
+        work->trunk_step = TRUNK_STEP_NAMEIN_BLACK;
      
-      Egg_Demo_SoundFadeOutHatch( param, work );
+        Egg_Demo_SoundFadeOutHatch( param, work );
+      }
+      else
+      {
+        return GFL_PROC_RES_CONTINUE;
+      }
     }
     break;
   case TRUNK_STEP_NAMEIN_BLACK:

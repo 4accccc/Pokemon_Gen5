@@ -997,26 +997,33 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
+	int flag1,flag2;
 
 	switch( wk->seq ){
 	case 0:
 //		PMSIV_SUB_ChangeCategoryButton( vwk->sub_wk );
 //		PMSIV_BUTTON_ChangeCategoryButton( vwk->button_wk );
     PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE );
+    PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, FALSE ); 
 		wk->seq++;
 		break;
 
 	case 1:
-    if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE ) )
     {
-      PMSIV_MENU_ResetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE );
+      flag1 = PMSIV_CATEGORY_WaitMoveSubWinList( vwk->category_wk, FALSE );
+      flag2 = PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE );
 
-      PMSIV_MENU_SetupCategory( vwk->menu_wk );
+      if( flag1 && flag2 )
+      {
+        PMSIV_MENU_ResetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE );
 
-      PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
-      PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
-      PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
-      wk->seq++;
+        PMSIV_MENU_SetupCategory( vwk->menu_wk );
+
+        PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
+        PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
+        PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
+        wk->seq++;
+      }
     }
 		break;
 
@@ -1204,7 +1211,16 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
     // このタイミングでBG背景面を読み込んでしまう
     PMSIView_SetBackScreen( wk->vwk, FALSE );
 		PMSIV_CATEGORY_StartFadeIn( vwk->category_wk );
-    PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, (count>0) );
+
+    if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
+  	{
+      PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, FALSE );  // フシギバナ ヒトカゲ リザード → ポケモン ステータス わざ
+    }
+    else
+    {
+      PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, (count>0) );  // あく アクアテール → あ い う え お か き
+    }
+
 		wk->seq++;
 		break;
 

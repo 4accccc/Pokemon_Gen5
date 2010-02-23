@@ -3040,6 +3040,8 @@ static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key )
 	}
 
 #endif
+/*
+  // wordwin(フシギバナ ヒトカゲ リザード とか アクアテール あく とかが並んでいる画面)で、右端にいるときに右入力で左端へ行く
 	if( key & (PAD_KEY_LEFT | PAD_KEY_RIGHT ) )
 	{
 		wordwin->cursor_x ^= 1;
@@ -3048,6 +3050,40 @@ static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key )
 			return WORDWIN_RESULT_CURSOR_MOVE;
 		}
 		wordwin->cursor_x ^= 1;
+		return WORDWIN_RESULT_INVALID;
+	}
+*/
+  // wordwin(フシギバナ ヒトカゲ リザード とか アクアテール あく とかが並んでいる画面)で、右端にいるときに右入力で左端へ行かない
+	if( key & PAD_KEY_LEFT  )
+	{
+    if( wordwin->cursor_x == 1 )
+    {
+		  wordwin->cursor_x ^= 1;
+		  if( get_wordwin_pos( wordwin ) < wordwin->word_max - PMSI_DUMMY_LABEL_NUM )
+      {
+			  return WORDWIN_RESULT_CURSOR_MOVE;
+      }
+      else
+      {
+		    wordwin->cursor_x ^= 1;
+      }
+    }
+		return WORDWIN_RESULT_INVALID;
+	}
+  else if( key & PAD_KEY_RIGHT )
+	{
+    if( wordwin->cursor_x == 0 )
+    {
+		  wordwin->cursor_x ^= 1;
+		  if( get_wordwin_pos( wordwin ) < wordwin->word_max - PMSI_DUMMY_LABEL_NUM )
+      {
+			  return WORDWIN_RESULT_CURSOR_MOVE;
+      }
+      else
+      {
+		    wordwin->cursor_x ^= 1;
+      }
+    }
 		return WORDWIN_RESULT_INVALID;
 	}
 

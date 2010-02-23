@@ -411,6 +411,7 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 
 static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
 {
+#if 0
 	s32 vc;
 	PMSIV_EDIT* wk = (PMSIV_EDIT*)vwork;
 
@@ -423,6 +424,7 @@ static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
 	}else{
 		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -464,7 +466,8 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
 	
 	if(wk->scr_ct > 5){
     // スクリーンをクリア @TODO hosaka test > これでチラつきはなくなるが、一部残る。
-    GFL_BG_FillScreen( FRM_MAIN_EDITAREA, 0x0, 0, 0, 32*8, 4*8, 0 );
+    //GFL_BG_FillScreen( FRM_MAIN_EDITAREA, 0x0, 0, 0, 32*8, 4*8, 0 );  // 単位はキャラだよ
+    //GFL_BG_FillScreen( FRM_MAIN_EDITAREA, 0x0, 0, 0, 32, 6, 0 );
 		return TRUE;
 	}
 	
@@ -965,6 +968,8 @@ static void print_wordarea( PMSIV_EDIT* wk, GFL_BMPWIN* win, const POS* wordpos,
     GFL_CLACT_WK_SetAnmSeq( deco_actor, deco_id );
     GFL_CLACT_WK_SetPos( deco_actor, &clPos, draw_type );
     GFL_CLACT_WK_SetDrawEnable( deco_actor, TRUE );
+    GFL_CLACT_WK_SetBgPri( deco_actor, GFL_BG_GetPriority( GFL_BMPWIN_GetFrame(win) ) );
+        // 「デコメでないときの文字」が書かれるBGの直上にデコメが書かれるように、プライオリティを設定する
   }
   else
   {
