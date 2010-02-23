@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-24T01:08:20"/>
+	<create user="taya" host="W00146" date="2010-02-24T03:28:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1274,6 +1274,14 @@
 ほのおの　いりょくが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 ほのおの　威力が　上がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Samehada">
+		<comment>さめはだ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+きずついた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+傷ついた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YotimuExe">
