@@ -305,19 +305,6 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
 		GFL_G3D_MAP_Main( g3Dmapper->blockWk[i].g3Dmap );
     WRITEBLOCK_Control_SetOneBlock( g3Dmapper, g3Dmapper->blockWk[i].g3Dmap, i );
-
-#ifdef PM_DEBUG
-    // モデルResourceのFOGをON
-    {
-      NNSG3dRenderObj* p_rnd = GFL_G3D_MAP_GetRenderObj( g3Dmapper->blockWk[i].g3Dmap );
-      if( p_rnd ){
-        NNSG3dResMdl* p_mdl = NNS_G3dRenderObjGetResMdl( p_rnd );
-        if( p_mdl ){
-          NNS_G3dMdlSetMdlFogEnableFlagAll( p_mdl, TRUE );
-        }
-      }
-    }
-#endif // PM_DEBUG
 	}
 
 	//現在ブロックのindex取得

@@ -583,6 +583,35 @@ static u32 DebugMenu_GetQuickJumpIdx( u32 strID )
   return 0;
 }
 
+
+
+
+
+//======================================================================
+//  汎用リスト　ヘッダー
+//======================================================================
+const FLDMENUFUNC_HEADER DATA_DebugMenuList_Default =
+{
+  1,    //リスト項目数
+  9,    //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+  0,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  12,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
+};
+
 //======================================================================
 //  デバッグメニュー呼び出し
 //======================================================================
@@ -961,7 +990,7 @@ static const DEBUG_MENU_INITIALIZER DebugSubscreenSelectData = {
   NARC_message_d_field_dat,
   NELEMS(DATA_SubcreenMenuList),
   DATA_SubcreenMenuList,
-  &DATA_DebugMenuList_ZoneSel, //流用
+  &DATA_DebugMenuList_Default, //流用
   1, 1, 16, 17,
   NULL,
   NULL
@@ -1139,7 +1168,7 @@ static const DEBUG_MENU_INITIALIZER DebugMusicalSelectData = {
   NARC_message_d_field_dat,
   NELEMS(DATA_MusicalMenuList),
   DATA_MusicalMenuList,
-  &DATA_DebugMenuList_ZoneSel, //流用
+  &DATA_DebugMenuList_Default, //流用
   1, 1, 16, 17,
   NULL,
   NULL
@@ -4904,7 +4933,7 @@ static const DEBUG_MENU_INITIALIZER DebugSubFieldSkillListSelectData = {
   NARC_message_d_field_dat,
   NELEMS(DATA_SubFieldSkillList),
   DATA_SubFieldSkillList,
-  &DATA_DebugMenuList_ZoneSel, //流用
+  &DATA_DebugMenuList_Default, //流用
   1, 1, 16, 17,
   NULL,
   NULL
@@ -5006,7 +5035,7 @@ static const DEBUG_MENU_INITIALIZER DebugSubMysteryCardMakeData = {
   NARC_message_d_field_dat,
   NELEMS(DATA_SubMysteryCardMakeList),
   DATA_SubMysteryCardMakeList,
-  &DATA_DebugMenuList_ZoneSel, //流用
+  &DATA_DebugMenuList_Default, //流用
   1, 1, 16, 17,
   NULL,
   NULL
