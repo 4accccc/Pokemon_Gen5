@@ -2578,8 +2578,8 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
       OS_TPrintf("ƒTƒuPROCI—¹\n");
       GFL_HEAP_FreeMemory(unisys->parent_work);
       unisys->parent_work = NULL;
-      //UnionComm_Req_Restarts(unisys);
-      UnionComm_Req_ShutdownRestarts(unisys);
+      UnionComm_Req_Restarts(unisys);
+      //UnionComm_Req_ShutdownRestarts(unisys);
       (*seq)++;
     }
     break;
