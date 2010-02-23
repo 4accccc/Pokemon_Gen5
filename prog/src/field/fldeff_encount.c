@@ -10,6 +10,7 @@
 #include "system/gfl_use.h"
 
 #include "fieldmap.h"
+#include "field/fieldmap_call.h"
 #include "field_effect.h"
 #include "fldmmdl.h"
 #include "effect_encount.h"
@@ -64,6 +65,7 @@ struct _TAG_FLDEFF_ENCOUNT
 //--------------------------------------------------------------
 typedef struct
 {
+  FIELD_ENCOUNT* fld_enc;
   FLDEFF_ENCOUNT *eff_enc;
   MMDLSYS* mmdl_sys;
   MMDL *fmmdl;
@@ -90,6 +92,8 @@ typedef struct
   GFL_G3D_OBJ *obj;
   GFL_G3D_ANM *obj_anm[ENCOUNT_ANMRES_MAX];
   GFL_G3D_RND *obj_rnd;
+
+  FIELD_ENCOUNT* fld_enc;
 }TASKWORK_ENCOUNT;
 
 #define ENCEFF_SE_GRASS (SEQ_SE_FLD_70)
@@ -300,7 +304,7 @@ static void enc_DeleteResource( FLDEFF_ENCOUNT* enc )
  * @retval nothing
  */
 //--------------------------------------------------------------
-FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32 height, EFFENC_TYPE_ID type )
+FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FIELD_ENCOUNT* fld_enc, FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32 height, EFFENC_TYPE_ID type )
 {
   FLDEFF_ENCOUNT* enc;
   TASKHEADER_ENCOUNT head;
@@ -312,13 +316,14 @@ FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32
   }
 
   enc = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_ENC_SGRASS+type );
+  head.fld_enc = fld_enc;
   head.eff_enc = enc;
   head.mmdl_sys = FIELDMAP_GetMMdlSys( fieldMapWork );
 
   head.gx = gx;
   head.gz = gz;
   head.type = type;
-
+  
   head.pos.x = GRID_SIZE_FX32(gx)+GRID_HALF_FX32;
   head.pos.z = GRID_SIZE_FX32(gz)+GRID_HALF_FX32;
   head.pos.y = height;
@@ -359,6 +364,8 @@ static void encountTask_Init( FLDEFF_TASK *task, void *wk )
   FLDEFF_ENCOUNT* enc;
  
   head = FLDEFF_TASK_GetAddPointer( task );
+  work->fld_enc = head->fld_enc;
+  
   work->head = *head;
   enc = work->head.eff_enc;
 
@@ -423,8 +430,12 @@ static void encountTask_Update( FLDEFF_TASK *task, void *wk )
   int i;
   TASKWORK_ENCOUNT *work = wk;
   FLDEFF_ENCOUNT* enc = work->head.eff_enc;
- 
-  if(work->anm_pause_f || MMDLSYS_GetPauseMoveFlag(work->head.mmdl_sys)){
+  
+  if(!FIELDMAP_IsReady( FLDEFF_CTRL_GetFieldMapWork( enc->fectrl ) )){
+    return;
+  }
+  if( work->anm_pause_f ||
+      MMDLSYS_GetPauseMoveFlag(work->head.mmdl_sys)){
     return;
   }
   sub_PlaySE( work, enc );
@@ -443,7 +454,7 @@ static void sub_PlaySE( TASKWORK_ENCOUNT* work, FLDEFF_ENCOUNT* enc )
 {
   int frame;
   u16 dis = 0;
-  FIELDMAP_WORK* fieldWork;
+//  FIELDMAP_WORK* fieldWork;
   static const u8 volume_tbl[] = { 127, 90, 60, 40 };
  	  
   GFL_G3D_OBJECT_GetAnimeFrame( work->obj, 0, &frame );
@@ -451,9 +462,9 @@ static void sub_PlaySE( TASKWORK_ENCOUNT* work, FLDEFF_ENCOUNT* enc )
     return;
   }
 
-  fieldWork = FLDEFF_CTRL_GetFieldMapWork( enc->fectrl );
+//  fieldWork = FLDEFF_CTRL_GetFieldMapWork( enc->fectrl );
 
-  if( EFFECT_ENC_GetDistanceToPlayer( FIELDMAP_GetEncount(fieldWork), &dis) == FALSE ){
+  if( EFFECT_ENC_GetDistanceToPlayer( work->fld_enc, &dis) == FALSE ){
     return;
   }
   dis /= 5;

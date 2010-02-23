@@ -86,7 +86,7 @@ static BOOL effect_CheckMMdlHit( FIELD_ENCOUNT* enc, s16 x,s16 y, s16 z );
 static BOOL effect_DeleteCheck( FIELD_ENCOUNT* enc );
 static void effect_EffectDelete( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 
-static void effect_AddFieldEffect( EFFECT_ENCOUNT* eff_wk, EFFENC_PARAM* ep );
+static void effect_AddFieldEffect( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, EFFENC_PARAM* ep );
 static void effect_DelFieldEffect( EFFECT_ENCOUNT* eff_wk );
 
 static u16 effitem_GetItemBridge(void);
@@ -410,7 +410,7 @@ static void effect_EffectPop( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
       return;
     }
   }
-  effect_AddFieldEffect( eff_wk, ep );  //保存されたパラメータで復帰
+  effect_AddFieldEffect( enc, eff_wk, ep );  //保存されたパラメータで復帰
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -593,7 +593,7 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   //カウンタークリア
   effenc_WalkCtClear( ewk );
 
-  effect_AddFieldEffect( eff_wk, ep );
+  effect_AddFieldEffect( enc, eff_wk, ep );
 }
 
 /*
@@ -660,14 +660,13 @@ static void effect_EffectDelete( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 /*
  *  @brief  フィールドエフェクト登録
  */
-static void effect_AddFieldEffect( EFFECT_ENCOUNT* eff_wk, EFFENC_PARAM* ep )
+static void effect_AddFieldEffect( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, EFFENC_PARAM* ep )
 {
   if( eff_wk->eff_task != NULL){
     GF_ASSERT(0);
     return;
   }
-  eff_wk->eff_task = FLDEFF_ENCOUNT_SetEffect( eff_wk->fectrl, ep->gx, ep->gz, ep->height, ep->type );
-//  eff_wk->pos.eff_task = FLDEFF_ENCOUNT_SetEffect( eff_wk->fectrl, 788, 715, ep->height, ep->type );  
+  eff_wk->eff_task = FLDEFF_ENCOUNT_SetEffect( enc, eff_wk->fectrl, ep->gx, ep->gz, ep->height, ep->type );
   IWASAWA_Printf(" EffectAdd( %d, %d, h = 0x%08x) type=%d <0x%08x\n",ep->gx, ep->gz, ep->height, ep->type,eff_wk->eff_task );
 }
 
