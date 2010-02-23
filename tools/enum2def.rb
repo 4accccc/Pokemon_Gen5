@@ -34,12 +34,14 @@
     split_data = read_data[ cnt ].split(/\s/)
     case mode
     when 0  #enumŒŸõ
-      if split_data[ 0 ] == "enum" || split_data[ 1 ] == "enum"
-        mode = 1
-        num = 0
-        label = ""
-        num_label_find = 0
-      end
+      split_data.size.times {|split|
+        if split_data[ split ].index( "enum" ) != nil
+          mode = 1
+          num = 0
+          label = ""
+          num_label_find = 0
+        end
+      }
     when 1  #ƒ‰ƒxƒ‹
       label_find = 0
       next if split_data[ 0 ] == nil
