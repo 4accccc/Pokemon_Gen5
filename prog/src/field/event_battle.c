@@ -186,6 +186,73 @@ static void debug_FieldDebugFlagSet( BATTLE_SETUP_PARAM* bp )
 #endif  //PM_DEBUG
 
 //--------------------------------------------------------------
+//  野生戦用ラッパーイベントのパラメータ
+//--------------------------------------------------------------
+typedef struct {
+  GAMESYS_WORK * gsys;
+  BATTLE_SETUP_PARAM * bp;
+  BOOL sub_event_f;
+  int enc_eff_no;
+}WILD_BATTLE_EVENT_WORK;
+
+//--------------------------------------------------------------
+//  野生戦用ラッパーイベント
+//--------------------------------------------------------------
+static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
+{
+  WILD_BATTLE_EVENT_WORK * wbew = wk;
+  GAMESYS_WORK * gsys =  wbew->gsys;
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  switch (*seq)
+  {
+  case 0:
+    { //バトルイベントの呼び出し
+      GMEVENT * battle_main_event;
+      BATTLE_EVENT_WORK * bew;
+      battle_main_event = GMEVENT_Create( gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
+      bew = GMEVENT_GetEventWork( battle_main_event );
+      BEW_Initialize( bew, gsys, wbew->bp );
+      bew->is_sub_event = TRUE; //このイベントが存在する以上、常にバトルはサブイベント
+      //bew->is_sub_event = wbew->sub_event_f;
+      bew->EncEffNo = wbew->enc_eff_no;     //エンカウントエフェクトセット
+
+      GMEVENT_CallEvent( event, battle_main_event );
+    }
+    (*seq) ++;
+    break;
+
+  case 1:
+    //このイベント自体がサブイベントの場合、何もせずに戻る
+    if ( wbew->sub_event_f == TRUE )
+    {
+      return GMEVENT_RES_FINISH;
+    }
+
+    //このイベントがトップのイベントの場合、戦闘後処理を行う
+    if (FIELD_BATTLE_IsLoseResult(GAMEDATA_GetLastBattleResult(gamedata), BTL_COMPETITOR_WILD) == TRUE)
+    {
+      //負けた場合は敗北処理へ
+      GMEVENT_ChangeEvent( event, EVENT_NormalLose(gsys) );
+    }
+    else
+    {
+      //負けていない場合はフェードイン
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn_Black(gsys, GAMESYSTEM_GetFieldMapWork(gsys), FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(event, fade_event);
+    }
+    (*seq) ++;
+    break;
+
+  case 2:
+    //ここに侵入相手がたすけてくれたメッセージイベントを追加
+    return GMEVENT_RES_FINISH;
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
 /**
  * フィールド野生ポケモンバトルイベント作成
  * @param gsys  GAMESYS_WORK
@@ -195,11 +262,11 @@ static void debug_FieldDebugFlagSet( BATTLE_SETUP_PARAM* bp )
 //--------------------------------------------------------------
 GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp, BOOL sub_event_f, const int enc_eff_no )
 {
+#if 0
   GMEVENT * event;
   BATTLE_EVENT_WORK * bew;
 
-  event = GMEVENT_Create(
-      gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
+  event = GMEVENT_Create( gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
 
 #ifdef PM_DEBUG
   debug_FieldDebugFlagSet( bp );
@@ -209,7 +276,17 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = sub_event_f;
   bew->EncEffNo = enc_eff_no;     //エンカウントエフェクトセット
+#endif
+  GMEVENT * event = GMEVENT_Create( gsys, NULL, wildBattleEvent, sizeof(WILD_BATTLE_EVENT_WORK) );
+  WILD_BATTLE_EVENT_WORK * wbew = GMEVENT_GetEventWork( event );
+  wbew->gsys = gsys;
+  wbew->bp = bp;
+  wbew->sub_event_f = sub_event_f;
+  wbew->enc_eff_no = enc_eff_no;
 
+#ifdef PM_DEBUG
+  debug_FieldDebugFlagSet( bp );
+#endif
   //すれ違いビーコン送信リクエスト
   BeaconReq_BtlWild( bp, BTL_BEACON_ST_START );
 
@@ -570,9 +647,11 @@ static GMEVENT_RESULT fieldBattleEvent(
 //
 //======================================================================
 
+//--------------------------------------------------------------
 /*
  *  @brief  トレーナービーコンタイプ取得
  */
+//--------------------------------------------------------------
 static u8 btl_trainer_GetBeaconType( u16 tr_id )
 {
   int i;
@@ -596,9 +675,11 @@ static u8 btl_trainer_GetBeaconType( u16 tr_id )
   return TR_BEACON_NORMAL;
 }
 
+//--------------------------------------------------------------
 /*
  *  @brief  トレーナー戦闘ビーコンリクエスト
  */
+//--------------------------------------------------------------
 static void BeaconReq_BtlTrainer( u16 tr_id, BTL_BEACON_ST state )
 {
   TRAINER_BEACON_TYPE type = btl_trainer_GetBeaconType( tr_id );
@@ -606,9 +687,11 @@ static void BeaconReq_BtlTrainer( u16 tr_id, BTL_BEACON_ST state )
   DATA_TrBeaconSetFuncTbl[type][state]( tr_id );
 }
 
+//--------------------------------------------------------------
 /*
  *  @brief  野生戦ビーコンリクエスト
  */
+//--------------------------------------------------------------
 static void BeaconReq_BtlWild( BATTLE_SETUP_PARAM* bp, BTL_BEACON_ST state )
 {
   POKEPARTY* party = BATTLE_PARAM_GetPokePartyPointer( bp, BTL_CLIENT_ENEMY1 );
@@ -628,9 +711,11 @@ static void BeaconReq_BtlWild( BATTLE_SETUP_PARAM* bp, BTL_BEACON_ST state )
   }
 }
 
+//--------------------------------------------------------------
 /*
  *  @brief  バトル終了時ビーコンリクエスト
  */
+//--------------------------------------------------------------
 static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
 {
   BATTLE_SETUP_PARAM* bp = bew->battle_param;
