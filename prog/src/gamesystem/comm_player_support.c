@@ -17,6 +17,9 @@
 ///通信相手からのサポート
 struct _COMM_PLAYER_SUPPORT{
   SUPPORT_TYPE type;            ///<サポートの種類
+  SUPPORT_TYPE used_type;       ///<実際に戦闘で使用されたサポートの種類
+  SUPPORT_TYPE battle_end_type; ///<戦闘終了後サポートの種類状況
+
   MYSTATUS mystatus;            ///<サポートしてくれた通信相手のMYSTATUS
   MYSTATUS used_mystatus;       ///<実際に戦闘画面で反映された相手のMYSTATUS
 };
@@ -66,6 +69,8 @@ void COMM_PLAYER_SUPPORT_Init(COMM_PLAYER_SUPPORT *cps)
 {
   GFL_STD_MemClear(cps, sizeof(COMM_PLAYER_SUPPORT));
   cps->type = SUPPORT_TYPE_NULL;
+  cps->used_type = SUPPORT_TYPE_NULL;
+  cps->battle_end_type = SUPPORT_TYPE_NULL;
   MyStatus_Init(&cps->mystatus);
   MyStatus_Init(&cps->used_mystatus);
 }
@@ -122,8 +127,40 @@ SUPPORT_TYPE COMM_PLAYER_SUPPORT_GetSupportType(const COMM_PLAYER_SUPPORT *cps)
 //==================================================================
 void COMM_PLAYER_SUPPORT_SetUsed(COMM_PLAYER_SUPPORT *cps)
 {
-  cps->type = SUPPORT_TYPE_USED;
+  cps->used_type = cps->type;
   cps->used_mystatus = cps->mystatus;
+
+  cps->type = SUPPORT_TYPE_USED;
+}
+
+//==================================================================
+/**
+ * 戦闘後の状況の反映
+ *
+ * @param   cps		
+ */
+//==================================================================
+void COMM_PLAYER_SUPPORT_SetBattleEnd(COMM_PLAYER_SUPPORT *cps)
+{
+  cps->battle_end_type = cps->type;
+  cps->type = SUPPORT_TYPE_NULL;
+}
+
+//==================================================================
+/**
+ * 戦闘後、サポートが発生していたかチェック
+ *
+ * @param   cps		
+ *
+ * @retval  BOOL		TRUE:サポートが発生していた
+ */
+//==================================================================
+BOOL COMM_PLAYER_SUPPORT_GetBattleEndSupportType(const COMM_PLAYER_SUPPORT *cps)
+{
+  if(cps->used_type != SUPPORT_TYPE_NULL || cps->battle_end_type != SUPPORT_TYPE_NULL){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //==================================================================
@@ -140,11 +177,12 @@ void COMM_PLAYER_SUPPORT_SetUsed(COMM_PLAYER_SUPPORT *cps)
 //==================================================================
 const MYSTATUS * COMM_PLAYER_SUPPORT_GetSupportedMyStatus(const COMM_PLAYER_SUPPORT *cps)
 {
-  GF_ASSERT(cps->type == SUPPORT_TYPE_USED || cps->type == SUPPORT_TYPE_NULL);
+  GF_ASSERT(COMM_PLAYER_SUPPORT_GetBattleEndSupportType(cps) == TRUE);
   
-  if(cps->type == SUPPORT_TYPE_USED){
+  if(cps->used_type != SUPPORT_TYPE_NULL){
     return &cps->used_mystatus;
   }
   return &cps->mystatus;
 }
+
 

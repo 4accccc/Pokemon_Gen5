@@ -47,6 +47,8 @@
 #include "tr_tool/tr_tool.h"
 #include "battle/battle.h"
 
+#include "event_mission_help_after.h"
+
 #include "debug/debug_flg.h"
 
 #include "trial_house.h"
@@ -245,7 +247,17 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
     break;
 
   case 2:
-    //ここに侵入相手がたすけてくれたメッセージイベントを追加
+    //侵入相手がたすけてくれたメッセージイベント
+    {
+      COMM_PLAYER_SUPPORT *cps = GAMEDATA_GetCommPlayerSupportPtr(gamedata);
+      if(COMM_PLAYER_SUPPORT_GetBattleEndSupportType(cps) == TRUE){
+        GMEVENT_CallEvent(event, EVENT_Intrude_BattleHelpAfterEvent( gsys, HEAPID_PROC ));
+      }
+    }
+    (*seq)++;
+    break;
+  
+  case 3:
     return GMEVENT_RES_FINISH;
     break;
   }
@@ -576,7 +588,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     {
       FIELD_STATUS *fldstatus = GAMEDATA_GetFieldStatus(gamedata);
       FIELD_STATUS_SetProcAction( fldstatus, PROC_ACTION_FIELD );
-      COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
+      COMM_PLAYER_SUPPORT_SetBattleEnd(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
     }
     (*seq) ++;
     break;

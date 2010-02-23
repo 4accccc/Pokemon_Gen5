@@ -111,6 +111,26 @@ extern void COMM_PLAYER_SUPPORT_SetUsed(COMM_PLAYER_SUPPORT *cps);
 
 //==================================================================
 /**
+ * 戦闘後の状況の反映
+ *
+ * @param   cps		
+ */
+//==================================================================
+extern void COMM_PLAYER_SUPPORT_SetBattleEnd(COMM_PLAYER_SUPPORT *cps);
+
+//==================================================================
+/**
+ * 戦闘後、サポートが発生していたかチェック
+ *
+ * @param   cps		
+ *
+ * @retval  BOOL		TRUE:サポートが発生していた
+ */
+//==================================================================
+extern BOOL COMM_PLAYER_SUPPORT_GetBattleEndSupportType(const COMM_PLAYER_SUPPORT *cps);
+
+//==================================================================
+/**
  * 戦闘後に使用するツール：実際に助けてくれた人のMYSTATUSを取得する
  *
  * @param   cps		

@@ -1420,7 +1420,16 @@ static void _IntrudeRecv_PlayerSupport(const int netID, const int size, const vo
   }
   
   OS_TPrintf("受信：プレイヤーサポート netID=%d, type=%d\n", netID, *support_type);
-  COMM_PLAYER_SUPPORT_SetParam(cps, *support_type, GAMEDATA_GetMyStatusPlayer(gamedata, netID));
+  {
+    FIELD_STATUS *fldstatus = GAMEDATA_GetFieldStatus(gamedata);
+    if(FIELD_STATUS_GetProcAction( fldstatus ) == PROC_ACTION_BATTLE){
+      SUPPORT_TYPE now_support = COMM_PLAYER_SUPPORT_GetSupportType(cps);
+      if(now_support == SUPPORT_TYPE_NULL || now_support == SUPPORT_TYPE_USED){
+        COMM_PLAYER_SUPPORT_SetParam(
+          cps, *support_type, GAMEDATA_GetMyStatusPlayer(gamedata, netID));
+      }
+    }
+  }
 }
 
 //==================================================================

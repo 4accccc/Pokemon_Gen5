@@ -33,6 +33,7 @@
 #include "event_intrude.h"
 #include "event_comm_common.h"
 #include "event_mission_help.h"
+#include "event_mission_help_after.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -61,6 +62,8 @@ static GMEVENT_RESULT CommMissionHelp_TtoM_Talk( GMEVENT *event, int *seq, void 
 static GMEVENT_RESULT CommMissionHelp_MtoT_Talked( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionHelp_TtoM_Talked( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionHelp_MtoT_Battle( GMEVENT *event, int *seq, void *wk );
+
+static GMEVENT_RESULT Intrude_BattleHelpAfterEvent( GMEVENT *event, int *seq, void *wk );
 
 
 //==============================================================================
@@ -555,6 +558,88 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Battle( GMEVENT *event, int *seq, voi
   case SEQ_END:
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
+    return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+
+
+//==============================================================================
+//  
+//==============================================================================
+///助けてもらった時の戦闘後イベント
+typedef struct{
+  INTRUDE_EVENT_MSGWORK iem;
+  MYSTATUS *myst;
+}HELP_AFTER_WORK;
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief ミッション：助けろ：助けてもらった時の戦闘後イベント
+ *
+ * @param gsys
+ * 
+ * @return イベント
+ */
+//---------------------------------------------------------------------------------
+GMEVENT* EVENT_Intrude_BattleHelpAfterEvent( GAMESYS_WORK* gsys, HEAPID heap_id )
+{
+  GMEVENT* event;
+  HELP_AFTER_WORK* work;
+  GAMEDATA* gamedata;
+  COMM_PLAYER_SUPPORT *cps;
+
+  gamedata = GAMESYSTEM_GetGameData( gsys );
+  cps = GAMEDATA_GetCommPlayerSupportPtr(gamedata);
+  
+  event = GMEVENT_Create(gsys, NULL, Intrude_BattleHelpAfterEvent, sizeof(HELP_AFTER_WORK));
+  work = GMEVENT_GetEventWork( event );
+  work->myst = MyStatus_AllocWork(heap_id);
+  MyStatus_Copy(COMM_PLAYER_SUPPORT_GetSupportedMyStatus(cps), work->myst);
+
+  IntrudeEventPrint_SetupFieldMsg(&work->iem, gsys);
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション：助けてもらった時の戦闘後イベント
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event talk
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT Intrude_BattleHelpAfterEvent( GMEVENT *event, int *seq, void *wk )
+{
+	HELP_AFTER_WORK *work = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	enum{
+    SEQ_INIT,
+    SEQ_LAST_MSG_WAIT,
+    SEQ_MSG_END_BUTTON_WAIT,
+    SEQ_END,
+  };
+	
+	switch( *seq ){
+  case SEQ_INIT:
+    WORDSET_RegisterPlayerName( work->iem.wordset, 0, work->myst );
+    IntrudeEventPrint_StartStream(&work->iem, msg_invasion_mission_sys007);
+    (*seq)++;
+    break;
+  case SEQ_LAST_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&work->iem) == TRUE){
+      *seq = SEQ_MSG_END_BUTTON_WAIT;
+    }
+    break;
+  case SEQ_MSG_END_BUTTON_WAIT:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      *seq = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    GFL_HEAP_FreeMemory(work->myst);
+    IntrudeEventPrint_ExitFieldMsg(&work->iem);
     return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;

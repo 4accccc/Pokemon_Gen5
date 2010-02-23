@@ -380,6 +380,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   switch(*seq){
   case 0:
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || NetErr_App_CheckError()){
+      COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
       FIELD_WFBC_COMM_DATA_Exit(&intcomm->wfbc_comm_data);
       GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
       GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
