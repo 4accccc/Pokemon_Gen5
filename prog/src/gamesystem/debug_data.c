@@ -61,6 +61,25 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
+#elif defined(DEBUG_ONLY_FOR_matsuda)
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
+
+	PP_Setup(pp, MONSNO_MUSYAANA, 100, 123456);
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
+
+	PP_Setup(pp, MONSNO_TIRAAMHI, 100, 123456);
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+  PP_SetWazaPos( pp , WAZANO_TEREPOOTO , 0 );
+  PP_SetWazaPos( pp , WAZANO_HURASSYU, 1 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 #else
   PP_Put( pp , ID_PARA_id_no, myID );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
@@ -233,12 +252,35 @@ static void DEBUG_INTRUDE_MakeSecretItem( GAMEDATA * gamedata, HEAPID heapID )
 }
 
 //--------------------------------------------------------------
+/**
+ * デバッグ用に設定する侵入パラメータ
+ *
+ * @param   gamedata		
+ * @param   heapID		
+ */
+//--------------------------------------------------------------
+static void DEBUG_IntrudeParam( GAMEDATA *gamedata, HEAPID heapID )
+{
+  INTRUDE_SAVE_WORK * intsave;
+  OCCUPY_INFO *occupy;
+  
+  occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  occupy->white_level = 100;
+  occupy->black_level = 100;
+  occupy->intrude_point = 3456;
+  
+  intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
+  ISC_SAVE_SetGPowerID( intsave, GFUser_GetPublicRand( GPOWER_ID_MAX - 1) + 1 );
+}
+
+//--------------------------------------------------------------
 //--------------------------------------------------------------
 void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
 {
   DEBUG_INTRUDE_MakeSecretItem( gamedata, heapID );
   DEBUG_MYITEM_MakeBag( gamedata, heapID );
   DEBUG_MyPokeAdd( gamedata, heapID );
+  DEBUG_IntrudeParam( gamedata, heapID );
 }
 
 
