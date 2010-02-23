@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-23T22:37:24"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-23T22:59:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1044,7 +1044,7 @@
 ぬふーっ　たまらないッ！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_un_wierd_man_04">
 		<comment>変人♂メッセージ4</comment>
 		<attribute name="キャラ指定">変人男</attribute>
 		<language name="JPN" width="256">ちょっと　キミ！
