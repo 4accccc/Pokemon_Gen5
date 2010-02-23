@@ -852,7 +852,7 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
 //--------------------------------------------------------------
 //	ƒ|ƒPƒ‚ƒ“MCSSì¬
 //--------------------------------------------------------------
-void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp )
+void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev )
 {
   MCSS_ADD_WORK addWork;
   VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
@@ -860,6 +860,11 @@ void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront,
   int z;
 
   GF_ASSERT( pWork->pokeMcss[no] == NULL );
+
+  if(bRev){
+    scale.x = -FX32_ONE*16;
+  }
+  
 
   if(bFront){
     MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );

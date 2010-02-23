@@ -38,6 +38,7 @@
 #define _SUCKEDCOUNT_NUM (21)  //吸い込みまでにかかる回数
 
 
+
 static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar);
 static void IRC_POKETRADE_TrayExit(POKEMON_TRADE_WORK* pWork);
 static void _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork );
@@ -2028,6 +2029,7 @@ void IRC_POKETRADE_InitSubMojiBG(POKEMON_TRADE_WORK* pWork)
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME0_S);
   GFL_BG_SetVisible( GFL_BG_FRAME0_S , TRUE );
 	GFL_ARC_CloseDataHandle( p_handle );
+  IRC_POKETRADE_GraphicInitSubDispStatusDisp(pWork);
 
 /*  {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
@@ -2056,7 +2058,6 @@ void IRC_POKETRADE_InitSubMojiBG(POKEMON_TRADE_WORK* pWork)
   if(pWork->curIcon[CHAR_LEFTPAGE_MARK]){
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_LEFTPAGE_MARK], FALSE );
   }
-
 
 }
 
@@ -2365,7 +2366,7 @@ void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, 
   GFL_CLWK_DATA cellInitData;
   int drawn;
   GFL_POINT pokemonpos[]={{36,92},{68,92},{100,92} , {36+128,92},{68+128,92},{100+128,92}};
-  GFL_POINT pokemonposl[]={{20,36},{20,84},{20,132}, {20+128,36},{20+128,84},{20+128,132} };
+  GFL_POINT pokemonposl[]={{24,40},{24,88},{24,136}, {20+128,36},{20+128,84},{20+128,132} };
 
   POKETRADE_2D_GTSPokemonIconReset(pWork, side, no);
   
@@ -2700,21 +2701,40 @@ void POKEMONTRADE_StartFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo)
 {
   GFL_CLWK_DATA cellInitData;
 
-  cellInitData.pos_x = GTSFACEICON_POSX+faceNo*GTSFACEICON_HEIGHT;
-  cellInitData.pos_y = GTSFACEICON_POSY;
-  cellInitData.anmseq = 11+faceNo;
-  cellInitData.softpri = 0;
-  cellInitData.bgpri = 0;
-
-  pWork->faceButtonGTS[faceNo] =
-    GFL_CLACT_WK_Create( pWork->cellUnit ,
-                         pWork->cellRes[CHAR_SCROLLBAR],
-                         pWork->cellRes[PAL_SCROLLBAR],
-                         pWork->cellRes[ANM_SCROLLBAR],
-                         &cellInitData ,CLSYS_DRAW_SUB, pWork->heapID );
+  if(!pWork->faceButtonGTS[faceNo]){
+    cellInitData.pos_x = GTSFACEICON_POSX+faceNo*GTSFACEICON_HEIGHT;
+    cellInitData.pos_y = GTSFACEICON_POSY;
+    cellInitData.anmseq = 11+faceNo;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    
+    pWork->faceButtonGTS[faceNo] =
+      GFL_CLACT_WK_Create( pWork->cellUnit ,
+                           pWork->cellRes[CHAR_SCROLLBAR],
+                           pWork->cellRes[PAL_SCROLLBAR],
+                           pWork->cellRes[ANM_SCROLLBAR],
+                           &cellInitData ,CLSYS_DRAW_SUB, pWork->heapID );
+  }
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->faceButtonGTS[faceNo] ,TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->faceButtonGTS[faceNo], TRUE );
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   タッチアイコンを見えなくする
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_VisibleFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo, BOOL bVisible)
+{
+  GFL_CLACT_WK_SetDrawEnable( pWork->faceButtonGTS[faceNo], bVisible );
+}
+
+
 
 //------------------------------------------------------------------------------
 /**

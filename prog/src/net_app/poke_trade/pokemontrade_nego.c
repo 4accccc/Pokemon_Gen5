@@ -272,8 +272,9 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
   
   if(pWork->GTSInfoWindow){
     GFL_BMPWIN_Delete(pWork->GTSInfoWindow);
+    GFL_BMPWIN_Delete(pWork->GTSInfoWindow2);
   }
-  pWork->GTSInfoWindow = GFL_BMPWIN_Create(frame,	0, 0, 32, 10,	_MAINBG_APP_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  pWork->GTSInfoWindow = GFL_BMPWIN_Create(frame,	0, 0, 32, 2,	_MAINBG_APP_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
   pWin = pWork->GTSInfoWindow;
   GFL_FONTSYS_SetColor( 0xe, 0xf, 0x0 );
@@ -283,26 +284,29 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
   GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_22 + pWork->GTSlv[0], pWork->pStrBuf );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 100,  2, pWork->pStrBuf, pWork->pFontHandle);
 
-  GFL_FONTSYS_SetColor( 4, 1, 0x0 );
+  GFL_BMPWIN_TransVramCharacter(pWin);
+  GFL_BMPWIN_MakeScreen(pWin);
   
+  pWork->GTSInfoWindow2 = GFL_BMPWIN_Create(frame,	0, 3, 32, 8,	_POKEMON_MAIN_FRIENDGIVEMSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  pWin = pWork->GTSInfoWindow2;
 
   for(side = 0 ; side < GTS_PLAYER_WORK_NUM; side++){
     if(aStBuf[side]){
+      GFL_FONTSYS_SetColor( 1, 2, 0x0 );
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_16, pWork->pExStrBuf );
       WORDSET_RegisterPlayerName( pWork->pWordSet, 0,  aStBuf[side]  );
       WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 16+8+2, pWork->pStrBuf, pWork->pFontHandle);
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 2, pWork->pStrBuf, pWork->pFontHandle);
 
+      GFL_FONTSYS_SetColor( 3, 4, 0x0 );
       GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_17 + pWork->GTStype[side], pWork->pStrBuf );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 48+8+2, pWork->pStrBuf, pWork->pFontHandle);
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 32+2, pWork->pStrBuf, pWork->pFontHandle);
 
-//      GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_14 + pWork->bGTSSelect[side], pWork->pStrBuf );
-  //    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 128+8, pWork->pStrBuf, pWork->pFontHandle);
 
-      GFL_BMPWIN_TransVramCharacter(pWin);
-      GFL_BMPWIN_MakeScreen(pWin);
     }
   }
+  GFL_BMPWIN_TransVramCharacter(pWin);
+  GFL_BMPWIN_MakeScreen(pWin);
   GFL_BG_LoadScreenV_Req( frame );
 }
 
@@ -324,21 +328,19 @@ void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL 
   GFL_BMPWIN* pWin;
 
     
-  GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId() , 
-                                 NARC_app_menu_common_task_menu_NCLR ,
-                                 PALTYPE_MAIN_BG , _MAINBG_APP_MSG_PAL*32 , 32*1 , pWork->heapID );	
+//  GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId() , 
+  //                               NARC_app_menu_common_task_menu_NCLR ,
+    //                             PALTYPE_MAIN_BG , _MAINBG_APP_MSG_PAL*32 , 32*1 , pWork->heapID );	
 //  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
   //                              0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
   
   if(pWork->StatusWin[side]){
     GFL_BMPWIN_Delete(pWork->StatusWin[side]);
   }
-  pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 16, 14, 2,	_MAINBG_APP_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 16, 14, 2,	_POKEMON_MAIN_FRIENDGIVEMSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
   pWin = pWork->StatusWin[side];
-  GFL_FONTSYS_SetColor( 4, 1, 0x0 );
-  
-
+  GFL_FONTSYS_SetColor( 5, 6, 0x0 );
 
   GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_14 + bSelected, pWork->pStrBuf );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
@@ -363,13 +365,16 @@ void POKE_GTS_SelectStatusMessageDelete(POKEMON_TRADE_WORK* pWork)
     GFL_BMPWIN_ClearScreen(pWork->StatusWin[0]);
     GFL_BMPWIN_ClearScreen(pWork->StatusWin[1]);
     GFL_BMPWIN_ClearScreen(pWork->GTSInfoWindow);
+    GFL_BMPWIN_ClearScreen(pWork->GTSInfoWindow2);
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
     GFL_BMPWIN_Delete(pWork->StatusWin[0]);
     GFL_BMPWIN_Delete(pWork->StatusWin[1]);
     GFL_BMPWIN_Delete(pWork->GTSInfoWindow);
+    GFL_BMPWIN_Delete(pWork->GTSInfoWindow2);
     pWork->StatusWin[0]=NULL;
     pWork->StatusWin[1]=NULL;
     pWork->GTSInfoWindow=NULL;
+    pWork->GTSInfoWindow2=NULL;
   }
 }
 
@@ -903,6 +908,29 @@ void POKE_GTS_InitFaceIcon(POKEMON_TRADE_WORK* pWork)
     }
   }
 }
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ƒAƒCƒRƒ“‰B‚·
+ * @param   
+ * @param   
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKE_GTS_VisibleFaceIcon(POKEMON_TRADE_WORK* pWork,BOOL bVisible)
+{
+  int i;
+
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    for(i = 0; i < GTS_FACE_BUTTON_NUM;i++){
+      POKEMONTRADE_VisibleFaceButtonGTS(pWork, i, bVisible);
+    }
+  }
+}
+
+
 
 //------------------------------------------------------------------------------
 /**

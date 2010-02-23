@@ -424,7 +424,7 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
         else{
           pWork->pMoveMcss[0] = _pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_shortJumpTbl), &apos, _shortJumpTbl,  pWork->heapID);
         }
-        IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0) );  //‚Ý‚©‚½— 
+        IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),TRUE );  //‚Ý‚©‚½— 
         MCSS_SetAnmStopFlag(pWork->pokeMcss[2]);
         MCSS_SetVanishFlag( pWork->pokeMcss[2] );
 
@@ -526,9 +526,9 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   G2_BlendNone();
   IRC_POKETRADEDEMO_SetModel( pWork, TRADEIR_OBJECT);
 
-  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );  //‘ŠŽè— 
-  IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0) );  //‚Ý‚©‚½— 
-  IRCPOKETRADE_PokeCreateMcss(pWork, 3, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );  //‘ŠŽè•\
+  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //‘ŠŽè— 
+  IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),TRUE );  //‚Ý‚©‚½— 
+  IRCPOKETRADE_PokeCreateMcss(pWork, 3, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //‘ŠŽè•\
   MCSS_SetVanishFlag( pWork->pokeMcss[1] );
   MCSS_SetVanishFlag( pWork->pokeMcss[2] );
   MCSS_SetVanishFlag( pWork->pokeMcss[3] );

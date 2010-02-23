@@ -116,9 +116,10 @@ typedef enum
 
 
 
+#define _POKEMON_MAIN_FRIENDGIVEMSG_PAL (5)  //メイン画面、説明文のパレット
 
-#define _TRADE_BG_PALLETE_NUM (5)  //交換BGのパレットの本数   0-4
-#define _TOUCHBAR_BG_PALPOS (5)     //タッチバーの色     TOUCHBAR_BG_PLT_NUM （１）本
+#define _TRADE_BG_PALLETE_NUM (6)  //交換BGのパレットの本数   0-4
+#define _TOUCHBAR_BG_PALPOS (7)     //タッチバーの色     TOUCHBAR_BG_PLT_NUM （１）本
 
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット ef0
 #define _STATUS_MSG_PAL   (11)  // メッセージフォント
@@ -384,6 +385,7 @@ struct _POKEMON_TRADE_WORK{
   u8 FriendPokemonCol[2][BOX_POKESET_MAX + TEMOTI_POKEMAX];         ///< 相手のポケモンBOXにあるポケモン色
   GFL_BMPWIN* StatusWin[2];     ///< ステータス表示
   GFL_BMPWIN* GTSInfoWindow;     ///< GTSネゴシエーション説明
+  GFL_BMPWIN* GTSInfoWindow2;     ///< GTSネゴシエーション説明
   POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
   StateFunc* state;      ///< ハンドルのプログラム状態
   HEAPID heapID;
@@ -633,7 +635,7 @@ extern void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_EVOLUTION_TimingStart(POKEMON_TRADE_WORK* pWork);
 
 extern void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  );
-extern void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp );
+extern void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev );
 extern POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , int trayNo, int index,POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKETRADE_SetSubStatusIcon(POKEMON_TRADE_WORK* pWork);
@@ -667,6 +669,8 @@ extern void IRC_POKETRADE_DEMOCLACT_Create(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_CLACT_Create(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BOOL bGray);
 extern void IRC_POKETRADE_PosChangeSubStatusIcon(POKEMON_TRADE_WORK* pWork,int sel,BOOL bReset);
+extern void POKEMONTRADE_VisibleFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo, BOOL bVisible);
+extern void POKE_GTS_VisibleFaceIcon(POKEMON_TRADE_WORK* pWork,BOOL bVisible);
 
 
 #if _TRADE_DEBUG

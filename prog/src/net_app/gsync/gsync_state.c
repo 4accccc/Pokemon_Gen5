@@ -320,10 +320,12 @@ static void _wakeupAction6(G_SYNC_WORK* pWork)
 
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
         //@todo すべての受け渡しをかかなければいけない
+        //ポケモンシンボルエンカウント
         SymbolSave_Set(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
                        pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm);
-
+        //サインイン
         DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin );
+        // 
 
       }
       _CHANGE_STATE(_wakeupAction_test1);

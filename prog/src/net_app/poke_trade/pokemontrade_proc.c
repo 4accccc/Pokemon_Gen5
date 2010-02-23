@@ -846,7 +846,7 @@ static void _noneState(POKEMON_TRADE_WORK* pWork)
 void POKE_MAIN_Pokemonset(POKEMON_TRADE_WORK *pWork, int side, POKEMON_PARAM* pp )
 {
   IRCPOKETRADE_PokeDeleteMcss(pWork, side);
-  IRCPOKETRADE_PokeCreateMcss(pWork, side, 1-side, pp);
+  IRCPOKETRADE_PokeCreateMcss(pWork, side, 1-side, pp, TRUE);
   POKETRADE_MESSAGE_SetPokemonStatusMessage(pWork,side ,pp);
 }
 
@@ -1181,8 +1181,7 @@ static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork)
 {
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,FALSE );
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
 
@@ -1288,8 +1287,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
   
   TOUCHBAR_Main(pWork->pTouchWork);
   switch( TOUCHBAR_GetTouch(pWork->pTouchWork )){
-  case TOUCHBAR_ICON_CUR_L:
-  case TOUCHBAR_ICON_CUR_R:
+  case TOUCHBAR_ICON_CUTSOM3:
     pWork->padMode=TRUE;
     if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
       APP_TASKMENU_SetActive(pWork->pAppTask,FALSE);
@@ -1297,8 +1295,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     break;
   }
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
-  case TOUCHBAR_ICON_CUR_L:
-  case TOUCHBAR_ICON_CUR_R:
+  case TOUCHBAR_ICON_CUTSOM3:
     {
       pWork->pokemonselectno = 1 - pWork->pokemonselectno;
       bChange=TRUE;
@@ -1403,8 +1400,7 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
 
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
-  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, TRUE);
-  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, TRUE);
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, TRUE);
 
   {
     int msg[]={POKETRADE_STR_03,POKETRADE_STR_06};
@@ -1818,7 +1814,9 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
 //  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
 
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ, 8 );
-
+  
+  POKE_GTS_VisibleFaceIcon(pWork, FALSE);
+  
   
   if(1){
     G2S_SetWnd0InsidePlane(
@@ -2150,6 +2148,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
   GFL_STD_MemClear(pWork->pokeIconNo,sizeof(pWork->pokeIconNo));
 
   _CatchPokemonPositionRewind(pWork);
+  POKE_GTS_VisibleFaceIcon(pWork, TRUE);
 
 
   if(pWork->pAppTask!=NULL){
@@ -2174,8 +2173,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
 
@@ -2206,8 +2204,7 @@ static void _scrollResetAndIconReset(POKEMON_TRADE_WORK* pWork)
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
   _PokemonIconRenew(pWork);
 }
@@ -2240,8 +2237,7 @@ static void _touchStateGTS(POKEMON_TRADE_WORK* pWork)
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
 
@@ -3019,9 +3015,9 @@ static GFL_PROC_RESULT PokemonTradeDemoProcInit( GFL_PROC * proc, int * seq, voi
   GFL_STD_MemCopy(pParent->pMyPoke, pWork->recvPoke[0] , POKETOOL_GetWorkSize());
   GFL_STD_MemCopy(pParent->pNPCPoke, pWork->recvPoke[1] , POKETOOL_GetWorkSize());
 
-  IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, pParent->pMyPoke);
+  IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, pParent->pMyPoke,TRUE);
   
-  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, pParent->pNPCPoke);
+  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, pParent->pNPCPoke,TRUE);
   MCSS_SetVanishFlag( pWork->pokeMcss[1] );
   
   pWork->pMy = pParent->pMy;

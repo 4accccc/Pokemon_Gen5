@@ -56,20 +56,16 @@ void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork)
       { TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
     },
     {
-      TOUCHBAR_ICON_CUR_L,
-      { TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
-    },
-    {
-      TOUCHBAR_ICON_CUR_R,
-      { TOUCHBAR_ICON_X_01, TOUCHBAR_ICON_Y },
-    },
-    {
       TOUCHBAR_ICON_CUTSOM1,
       { TOUCHBAR_ICON_X_00+8+4, TOUCHBAR_ICON_Y },
     },
     {
       TOUCHBAR_ICON_CUTSOM2,
       { TOUCHBAR_ICON_X_06+4, TOUCHBAR_ICON_Y },
+    },
+    {
+      TOUCHBAR_ICON_CUTSOM3,
+      { TOUCHBAR_ICON_X_01, TOUCHBAR_ICON_Y },
     },
   };
 
@@ -85,27 +81,36 @@ void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork)
   touchbar_setup.obj_plt  = 0;      //OBJﾊﾟﾚｯﾄ
   touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
 
+  touchbar_icon_tbl[1].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];
+  touchbar_icon_tbl[1].plt_idx = pWork->cellRes[PAL_SCROLLBAR];
+  touchbar_icon_tbl[1].cell_idx = pWork->cellRes[ANM_SCROLLBAR];
+  touchbar_icon_tbl[1].active_anmseq  = 6;            //アクティブのときのアニメ
+  touchbar_icon_tbl[1].noactive_anmseq  =   5;            //ノンアクティブのときのアニメ
+  touchbar_icon_tbl[1].push_anmseq  =   4;            //押したときのアニメ（STOPになっていること）
+  touchbar_icon_tbl[1].key  =   0;    //キーで押したときに動作させたいならば、ボタン番号
+  touchbar_icon_tbl[1].se =   POKETRADESE_DECIDE;                 //押したときにSEならしたいならば、SEの番号
+
+  touchbar_icon_tbl[2].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];
+  touchbar_icon_tbl[2].plt_idx = pWork->cellRes[PAL_SCROLLBAR];
+  touchbar_icon_tbl[2].cell_idx = pWork->cellRes[ANM_SCROLLBAR];
+  touchbar_icon_tbl[2].active_anmseq  = 9;            //アクティブのときのアニメ
+  touchbar_icon_tbl[2].noactive_anmseq  =   8;            //ノンアクティブのときのアニメ
+  touchbar_icon_tbl[2].push_anmseq  =   7;            //押したときのアニメ（STOPになっていること）
+  touchbar_icon_tbl[2].key  =   0;    //キーで押したときに動作させたいならば、ボタン番号
+  touchbar_icon_tbl[2].se =   POKETRADESE_DECIDE;                 //押したときにSEならしたいならば、SEの番号
+
   touchbar_icon_tbl[3].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];
   touchbar_icon_tbl[3].plt_idx = pWork->cellRes[PAL_SCROLLBAR];
   touchbar_icon_tbl[3].cell_idx = pWork->cellRes[ANM_SCROLLBAR];
-  touchbar_icon_tbl[3].active_anmseq  = 6;            //アクティブのときのアニメ
-  touchbar_icon_tbl[3].noactive_anmseq  =   5;            //ノンアクティブのときのアニメ
-  touchbar_icon_tbl[3].push_anmseq  =   4;            //押したときのアニメ（STOPになっていること）
-  touchbar_icon_tbl[3].key  =   0;    //キーで押したときに動作させたいならば、ボタン番号
+  touchbar_icon_tbl[3].active_anmseq  = 22;            //アクティブのときのアニメ
+  touchbar_icon_tbl[3].noactive_anmseq  =  21;            //ノンアクティブのときのアニメ
+  touchbar_icon_tbl[3].push_anmseq  =   20;            //押したときのアニメ（STOPになっていること）
+  touchbar_icon_tbl[3].key  = (PAD_KEY_LEFT|PAD_KEY_RIGHT);    //キーで押したときに動作させたいならば、ボタン番号
   touchbar_icon_tbl[3].se =   POKETRADESE_DECIDE;                 //押したときにSEならしたいならば、SEの番号
 
-  touchbar_icon_tbl[4].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];
-  touchbar_icon_tbl[4].plt_idx = pWork->cellRes[PAL_SCROLLBAR];
-  touchbar_icon_tbl[4].cell_idx = pWork->cellRes[ANM_SCROLLBAR];
-  touchbar_icon_tbl[4].active_anmseq  = 9;            //アクティブのときのアニメ
-  touchbar_icon_tbl[4].noactive_anmseq  =   8;            //ノンアクティブのときのアニメ
-  touchbar_icon_tbl[4].push_anmseq  =   7;            //押したときのアニメ（STOPになっていること）
-  touchbar_icon_tbl[4].key  =   0;    //キーで押したときに動作させたいならば、ボタン番号
-  touchbar_icon_tbl[4].se =   POKETRADESE_DECIDE;                 //押したときにSEならしたいならば、SEの番号
 
   pWork->pTouchWork = TOUCHBAR_Init(&touchbar_setup, pWork->heapID);
-  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE);
-  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE);
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, FALSE);
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
   TOUCHBAR_SetSoftPriorityAll( pWork->pTouchWork, 2 );
 

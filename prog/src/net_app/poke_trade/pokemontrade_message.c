@@ -55,6 +55,8 @@
 
 #include "app/app_printsys_common.h"
 
+
+
 static void _select6keywait(POKEMON_TRADE_WORK* pWork);
 static void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,BOOL bEgg,POKEMON_TRADE_WORK* pWork);
 static void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
@@ -854,9 +856,9 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
   _pokeATTACKSPEEDNumMsgDisp(pp, pWork->MyInfoWin, 8*9, 5*8, pWork);
 
 
-  _pokePersonalMsgDisp(pp, pWork->MyInfoWin, 9*8, 16*8, pWork);  //«Ši
-  _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 9*8, 18*8, pWork);  //“Á«
-  _pokePocketItemMsgDisp(pp,pWork->MyInfoWin, 9*8, 20*8,pWork);  //‚à‚¿‚à‚Ì
+  _pokePersonalMsgDisp(pp, pWork->MyInfoWin, 7*8, 16*8, pWork);  //«Ši
+  _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 7*8, 18*8, pWork);  //“Á«
+  _pokePocketItemMsgDisp(pp,pWork->MyInfoWin, 7*8, 20*8,pWork);  //‚à‚¿‚à‚Ì
   _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 19*8, 12*8, pWork);  //‚í‚´
   _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 19*8,14*8, pWork); //‚í‚´ƒŠƒXƒg
 
@@ -952,7 +954,7 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
   for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
     pWork->TriStatusWin[side+2] =
       GFL_BMPWIN_Create(GFL_BG_FRAME1_S,
-                        side*16 + 5 , 3, 9, 16, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
+                        side*16 + 5 , 3, 9, 17, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
     pWin = pWork->TriStatusWin[side+2];
     GFL_FONTSYS_SetColor( FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 0x0 );
     for(poke = 0;poke < GTS_NEGO_POKESLT_MAX;poke++){
@@ -962,10 +964,10 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
 
         POKETRADE_2D_GTSPokemonIconSet(pWork, side, poke, pp,FALSE);
         
-        _pokeNickNameMsgDisp(pp, pWin, 0, 6*8*poke , bEgg, pWork);
+        _pokeNickNameMsgDisp(pp, pWin, 0, 6*8*poke+8 , bEgg, pWork);
         if(!bEgg){
-          _pokeSexMsgDisp(pp, pWin, 7*8, 6*8*poke + 2*8, pWork);
-          _pokeLvMsgDisp(pp, pWin, 0, 6*8*poke + 2*8, pWork);
+          _pokeSexMsgDisp(pp, pWin, 7*8, 6*8*poke + 3*8, pWork);
+          _pokeLvMsgDisp(pp, pWin, 0, 6*8*poke + 3*8, pWork);
         }
       }
     }
