@@ -584,6 +584,9 @@ static void PLIST_UpdatePlatePalletAnime( PLIST_WORK *work )
   }
   //˜g–¾–Å
   {
+    const u16 startCol[3] = {0x3f7f,0x4f9f,0x3afa};
+    const u16 endCol[3]   = {0x0db0,0x09ab,0x1150};
+
     const u16 anmSpd = 0x10000/64;
     if( work->platePalWakuAnmCnt + anmSpd >= 0x10000 )
     {
@@ -596,18 +599,25 @@ static void PLIST_UpdatePlatePalletAnime( PLIST_WORK *work )
     {
       u8 i,j;
       const fx32 sin = (FX_SinIdx( work->platePalWakuAnmCnt )+FX32_ONE)/2;
-      const u8 anmRate = (16*sin)>>FX32_SHIFT;
       for( j=0;j<PLIST_MENU_ANIME_NUM;j++ )
       {
-        for( i=2;i<=4;i++ )
+        for( i=0;i<3;i++ )
         {
-          u8 r = (work->platePalAnm[j][i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
-          u8 g = (work->platePalAnm[j][i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
-          u8 b = (work->platePalAnm[j][i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
-          r = (r+anmRate*2 > 31?31:r+(anmRate*2));
-          g = (g+anmRate*2 > 31?31:g+(anmRate*2));
-          b = (b+anmRate*2 > 31?31:b+(anmRate*2));
-          work->platePalTrans[j][i] = GX_RGB(r,g,b);
+          const u8 sr = (startCol[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+          const u8 sg = (startCol[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+          const u8 sb = (startCol[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+          const u8 er = (endCol[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+          const u8 eg = (endCol[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+          const u8 eb = (endCol[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+          const s8 or = ((er-sr)*sin)>>FX32_SHIFT;
+          const s8 og = ((eg-sg)*sin)>>FX32_SHIFT;
+          const s8 ob = ((eb-sb)*sin)>>FX32_SHIFT;
+          //0`31‚ÌŠÛ‚ßˆ—
+          const u8 r = (sr+or>31 ? 31 : (sr+or<0 ? 0 : sr+or) );
+          const u8 g = (sg+og>31 ? 31 : (sg+og<0 ? 0 : sg+og) );
+          const u8 b = (sb+ob>31 ? 31 : (sb+ob<0 ? 0 : sb+ob) );
+
+          work->platePalTrans[j][i+2] = GX_RGB(r,g,b);
         }
       }
     }
