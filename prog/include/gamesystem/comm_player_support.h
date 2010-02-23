@@ -29,6 +29,8 @@ typedef enum{
   SUPPORT_TYPE_NULL,            ///<サポート無し
   SUPPORT_TYPE_RECOVER_HALF,    ///<回復(半分)
   SUPPORT_TYPE_RECOVER_FULL,    ///<回復(全快)
+  
+  SUPPORT_TYPE_USED,            ///<サポート効果使用済み
 }SUPPORT_TYPE;
 
 
@@ -98,6 +100,28 @@ extern const MYSTATUS * COMM_PLAYER_SUPPORT_GetMyStatus(const COMM_PLAYER_SUPPOR
 //==================================================================
 extern SUPPORT_TYPE COMM_PLAYER_SUPPORT_GetSupportType(const COMM_PLAYER_SUPPORT *cps);
 
+//==================================================================
+/**
+ * サポートデータを使用済み状態にする
+ *
+ * @param   cps		
+ */
+//==================================================================
+extern void COMM_PLAYER_SUPPORT_SetUsed(COMM_PLAYER_SUPPORT *cps);
+
+//==================================================================
+/**
+ * 戦闘後に使用するツール：実際に助けてくれた人のMYSTATUSを取得する
+ *
+ * @param   cps		
+ *
+ * @retval  const MYSTATUS *		
+ *
+ * 戦闘画面で反映されたサポートがいるならその人優先
+ * 反映されたサポートがないなら最後に受信している人のデータを返す
+ */
+//==================================================================
+extern const MYSTATUS * COMM_PLAYER_SUPPORT_GetSupportedMyStatus(const COMM_PLAYER_SUPPORT *cps);
 
 
 //==============================================================================

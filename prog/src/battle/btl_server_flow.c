@@ -7971,7 +7971,7 @@ static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk )
 //    COMM_PLAYER_SUPPORT_SetParam( supportHandle, SUPPORT_TYPE_RECOVER_HALF, BTL_MAIN_GetPlayerStatus(wk->mainModule) );
 
     support_type = COMM_PLAYER_SUPPORT_GetSupportType( supportHandle );
-    if( support_type != SUPPORT_TYPE_NULL )
+    if( support_type != SUPPORT_TYPE_NULL && support_type != SUPPORT_TYPE_USED )
     {
       u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
       SVCL_WORK* clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
@@ -8000,7 +8000,7 @@ static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk )
         if( recoverHP ){
           scproc_RecoverHP( wk, bpp, recoverHP );
           SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_CommSupport, BTL_CLIENTID_COMM_SUPPORT, pokeID );
-          COMM_PLAYER_SUPPORT_Init( supportHandle );
+          COMM_PLAYER_SUPPORT_SetUsed( supportHandle );
         }
       }
     }
