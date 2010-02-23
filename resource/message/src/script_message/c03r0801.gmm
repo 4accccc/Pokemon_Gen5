@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-18T19:59:14"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-02-23T18:58:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -272,7 +272,7 @@
 		<band id="3" index="4" style="0000" width="147"/>
 		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -315,11 +315,25 @@
 あなたは　[2:00:１桁:4]にんに　かちました[BE:01:ページ切り替え（クリア）]
 ふねは　しゅっこうちゅう　です
 ふねから　おりられますか？</language>
-		<language name="JPN_KANJI" width="256">ほんじつの　ロイヤルイッシュごうには
-[2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
-あなたは　[2:00:１桁:4]にんに　かちました[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">本日の　ロイヤルイッシュ号には
+[2:00:１桁:3]人　トレーナーが　います[BE:00:ページ切り替え（行送り）]
+あなたは　[2:00:１桁:4]人に　勝ちました[BE:01:ページ切り替え（クリア）]
+船は　出港　しています
+船から　おりられますか？</language>
+	</row>
+
+	<row id="msg_c03r0801_crew_01a" back-color="#800000,,,#800000,,#800000,#800000,#800000,,,#800000,,#800000,#800000,,,#800000,,">
+		<comment>リタイア受付
+全抜き時はex_2へ</comment>
+		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<language name="JPN" width="256">ほんじつの　ロイヤルイッシュごうには
+[2:00:１桁:3]にん　トレーナーが　います[BE:01:ページ切り替え（クリア）]
 ふねは　しゅっこうちゅう　です
 ふねから　おりられますか？</language>
+		<language name="JPN_KANJI" width="256">本日の　ロイヤルイッシュ号には
+[2:00:１桁:3]人　トレーナーが　います[BE:01:ページ切り替え（クリア）]
+船は　出港　しています
+船から　おりられますか？</language>
 	</row>
 
 	<row id="msg_c03r0801_crew_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -360,8 +374,8 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
 		<language name="JPN" width="256">このさきは　ロイヤルイッシュごう
 じまんの　てんぼうフロアに　なります</language>
-		<language name="JPN_KANJI" width="256">このさきは　ロイヤルイッシュごう
-じまんの　てんぼうフロアに　なります</language>
+		<language name="JPN_KANJI" width="256">この先は　ロイヤルイッシュ号
+自慢の　展望フロアに　なります</language>
 	</row>
 
 	<row id="msg_c03r0801_crew_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -373,8 +387,8 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">きょうは　あおいろの　ドアの　へやに
 ひとりしか　トレーナーさんは[BE:00:ページ切り替え（行送り）]
 いない　みたいだよ</language>
-		<language name="JPN_KANJI" width="256">きょうは　あおいろの　ドアの　へやに
-ひとりしか　トレーナーさんは[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">今日は　青色の　ドアの　部屋に
+１人しか　トレーナーは[BE:00:ページ切り替え（行送り）]
 いない　みたいだよ</language>
 	</row>
 
@@ -387,8 +401,8 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">きょうは　あおいろの　ドアの　へやに
 [2:00:１桁:2]にん　トレーナーさんが[BE:00:ページ切り替え（行送り）]
 いる　みたいだよ</language>
-		<language name="JPN_KANJI" width="256">きょうは　あおいろの　ドアの　へやに
-[2:00:１桁:2]にん　トレーナーさんが[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">今日は　青色の　ドアの　部屋に
+[2:00:１桁:2]人　トレーナーが[BE:00:ページ切り替え（行送り）]
 いる　みたいだよ</language>
 	</row>
 
@@ -454,8 +468,8 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
 		<language name="JPN" width="256">しごとの　あいまにね
 ついつい　のっちゃうんだよ</language>
-		<language name="JPN_KANJI" width="256">しごとの　あいまにね
-ついつい　のっちゃうんだよ</language>
+		<language name="JPN_KANJI" width="256">仕事の　合間にね
+ついつい　乗っちゃうんだよ</language>
 	</row>
 
 	<row id="msg_c03r0801_businessman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -520,7 +534,7 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">うみの　むこうに
 まだまだ　ポケモンが　いるんだって</language>
-		<language name="JPN_KANJI" width="256">うみの　むこうに
+		<language name="JPN_KANJI" width="256">海の　向こうに
 まだまだ　ポケモンが　いるんだって</language>
 	</row>
 
@@ -530,7 +544,7 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">ごうかな　せんしつで
 きゅうけいちゅう　さ！</language>
-		<language name="JPN_KANJI" width="256">ごうかな　せんしつで
+		<language name="JPN_KANJI" width="256">ごうかな　船室で
 きゅうけいちゅう　さ！</language>
 	</row>
 
@@ -539,8 +553,8 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">ポケモンしょうぶ　かい？
 うけてたとう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ポケモンしょうぶ　かい？
-うけてたとう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポケモン勝負　かい？
+受けてたとう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerm_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -548,8 +562,8 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">ふねに　ゆられて　ポケモンしょうぶ
 すごく　しんせん　だったよ</language>
-		<language name="JPN_KANJI" width="256">ふねに　ゆられて　ポケモンしょうぶ
-すごく　しんせん　だったよ</language>
+		<language name="JPN_KANJI" width="256">船に　ゆられて　ポケモン勝負
+すごく　新鮮　だったよ</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -559,9 +573,9 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">この　ふねの　トレーナーは
 うみの　むこうから　きたひとが[BE:00:ページ切り替え（行送り）]
 おおい　らしいわ</language>
-		<language name="JPN_KANJI" width="256">この　ふねの　トレーナーは
-うみの　むこうから　きたひとが[BE:00:ページ切り替え（行送り）]
-おおい　らしいわ</language>
+		<language name="JPN_KANJI" width="256">この　船の　トレーナーは
+海の　向こうから　きた人が[BE:00:ページ切り替え（行送り）]
+多い　らしいわ</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -570,8 +584,8 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">てんぼうフロアには　いった？
 すごい　けしきが　みれるのよ！</language>
-		<language name="JPN_KANJI" width="256">てんぼうフロアには　いった？
-すごい　けしきが　みれるのよ！</language>
+		<language name="JPN_KANJI" width="256">展望フロアには　いった？
+すごい　景色が　みれるのよ！</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerw_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -581,7 +595,7 @@ msg_c03r0801_hint_02</comment>
 ポケモンしょうぶ！[BE:00:ページ切り替え（行送り）]
 ワクワク　するわね！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ゆらゆら　ゆられながらの
-ポケモンしょうぶ！[BE:00:ページ切り替え（行送り）]
+ポケモン勝負！[BE:00:ページ切り替え（行送り）]
 ワクワク　するわね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -590,8 +604,8 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">まけちゃったー……
 けしきでも　みにいこうかなー</language>
-		<language name="JPN_KANJI" width="256">まけちゃったー……
-けしきでも　みにいこうかなー</language>
+		<language name="JPN_KANJI" width="256">負けちゃったー……
+景色でも　みにいこうかなー</language>
 	</row>
 
 	<row id="msg_c03r0801_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -642,8 +656,8 @@ msg_c03r0801_hint_02</comment>
 ポケモンと　いっしょに　のれる[BE:00:ページ切り替え（行送り）]
 このふねが　だいすき！</language>
 		<language name="JPN_KANJI" width="256">あたしね　あたしね！
-ポケモンと　いっしょに　のれる[BE:00:ページ切り替え（行送り）]
-このふねが　だいすき！</language>
+ポケモンと　いっしょに　乗れる[BE:00:ページ切り替え（行送り）]
+この船が　だいすき！</language>
 	</row>
 
 	<row id="msg_c03r0801_girl2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -710,12 +724,12 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">この　ごうかな　ゆうらんせんには
+		<language name="JPN" width="256">この　ごうかな　ふねには
 ぼくみたいな　おかねもちが[BE:00:ページ切り替え（行送り）]
 おにあいだろ？</language>
-		<language name="JPN_KANJI" width="256">この　ごうかな　ゆうらんせんには
-ぼくみたいな　おかねもちが[BE:00:ページ切り替え（行送り）]
-おにあいだろ？</language>
+		<language name="JPN_KANJI" width="256">この　ごうかな　船には
+ぼくみたいな　お金持ちが[BE:00:ページ切り替え（行送り）]
+お似合いだろ？</language>
 	</row>
 
 	<row id="msg_c03r0801_boy4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -723,11 +737,11 @@ msg_c03r0801_hint_02</comment>
 ・短い話２</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
 		<language name="JPN" width="256">きてきは　ぜんぶで　５かい！
-きいてない　ふりしてても[BE:00:ページ切り替え（行送り）]
+きいてない　フリ　してても[BE:00:ページ切り替え（行送り）]
 ５かい　なったら　おわりかー……</language>
-		<language name="JPN_KANJI" width="256">きてきは　ぜんぶで　５かい！
-きいてない　ふりしてても[BE:00:ページ切り替え（行送り）]
-５かい　なったら　おわりかー……</language>
+		<language name="JPN_KANJI" width="256">汽笛は　全部で　５回！
+聞いてない　フリ　してても[BE:00:ページ切り替え（行送り）]
+５回　鳴ったら　終わりかー……</language>
 	</row>
 
 	<row id="msg_c03r0801_boy4_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -736,18 +750,18 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">きひんの　ある　このふねで
 じょうひんな　たたかいを[BE:00:ページ切り替え（行送り）]
 みせて　あげるよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きひんの　ある　このふねで
-じょうひんな　たたかいを[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">気品の　ある　この船で
+上品な　たたかいを[BE:00:ページ切り替え（行送り）]
 みせて　あげるよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0801_boy4_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">まけても　じょうひん
+		<language name="JPN" width="256">まけても　きひんを　わすれない
 それが　このぼく[BE:00:ページ切り替え（行送り）]
 おぼっちゃま　なのさ</language>
-		<language name="JPN_KANJI" width="256">まけても　じょうひん
+		<language name="JPN_KANJI" width="256">負けても　気品を　忘れない
 それが　このぼく[BE:00:ページ切り替え（行送り）]
 おぼっちゃま　なのさ</language>
 	</row>
@@ -770,10 +784,10 @@ msg_c03r0801_hint_02</comment>
 もうしぶんは　ないのですが[BE:01:ページ切り替え（クリア）]
 きゃくしつの　ふんいきも
 わたくし　おきにいり　ですの</language>
-		<language name="JPN_KANJI" width="256">そとの　うつくしい　けしきも
+		<language name="JPN_KANJI" width="256">そとの　うつくしい　景色も
 もうしぶんは　ないのですが[BE:01:ページ切り替え（クリア）]
-きゃくしつの　ふんいきも
-わたくし　おきにいり　ですの</language>
+客室の　ふんいきも
+わたくし　お気に入り　ですの</language>
 	</row>
 
 	<row id="msg_c03r0801_girl4_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -783,8 +797,8 @@ msg_c03r0801_hint_02</comment>
 ポケモンしょうぶを　かれいに[BE:00:ページ切り替え（行送り）]
 えんしゅつ　しますわ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ワルツを　おどる　ステップで
-ポケモンしょうぶを　かれいに[BE:00:ページ切り替え（行送り）]
-えんしゅつ　しますわ！[BE:01:ページ切り替え（クリア）]</language>
+ポケモン勝負を　かれいに[BE:00:ページ切り替え（行送り）]
+演出　しますわ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0801_girl4_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -792,7 +806,7 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">あつい　ポケモンしょうぶに
 わたくし　よって　しまいましたわ</language>
-		<language name="JPN_KANJI" width="256">あつい　ポケモンしょうぶに
+		<language name="JPN_KANJI" width="256">あつい　ポケモン勝負に
 わたくし　よって　しまいましたわ</language>
 	</row>
 
@@ -800,14 +814,14 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
-		<language name="JPN" width="256">きみから　みると
-わたしは　うみのむこうの　トレーナー[BE:01:ページ切り替え（クリア）]
-わたしから　みると
-きみは　うみのむこうの　トレーナー</language>
-		<language name="JPN_KANJI" width="256">きみから　みると
-わたしは　うみのむこうの　トレーナー[BE:01:ページ切り替え（クリア）]
-わたしから　みると
-きみは　うみのむこうの　トレーナー</language>
+		<language name="JPN" width="256">きみから　みると　わたしは
+うみのむこうの　トレーナー[BE:01:ページ切り替え（クリア）]
+わたしから　みると　きみは
+うみのむこうの　トレーナー</language>
+		<language name="JPN_KANJI" width="256">きみから　みると　わたしは
+海の　向こうの　トレーナー[BE:01:ページ切り替え（クリア）]
+わたしから　みると　きみは
+海の　向こうの　トレーナー</language>
 	</row>
 
 	<row id="msg_c03r0801_gentleman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -932,8 +946,8 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
 		<language name="JPN" width="256">おなかの　そこから　ひびくおと！
 きてきの　おとって　ちからづよいな！</language>
-		<language name="JPN_KANJI" width="256">おなかの　そこから　ひびくおと！
-きてきの　おとって　ちからづよいな！</language>
+		<language name="JPN_KANJI" width="256">おなかの　底から　ひびく音！
+汽笛の　音って　力強いな！</language>
 	</row>
 
 	<row id="msg_c03r0801_man3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -977,25 +991,33 @@ msg_c03r0801_hint_02</comment>
 	<row id="msg_c03r0801_maid_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">MAID</attribute>
-		<language name="JPN" width="256">わたくしは　はぐれメイドの
-はぐれトレーナー　おてなみ[BE:00:ページ切り替え（行送り）]
-はいけんさせて　いただきます[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">わたくしは　はぐれメイドの
-はぐれトレーナー　おてなみ[BE:00:ページ切り替え（行送り）]
-はいけんさせて　いただきます[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">きえた　ごしゅじんさまを　さがし[BE:01:ページ切り替え（クリア）]
+やまを　こえて　たにを　こえて
+うみを　こえて　ここに　きました[BE:01:ページ切り替え（クリア）]
+かずかずの　こんなんを　のりこえた
+わたくしの　スペシャルな　ポケモンと[BE:00:ページ切り替え（行送り）]
+いざ　じんじょうに　しょうぶです！</language>
+		<language name="JPN_KANJI" width="256">消えた　ご主人様を　探し[BE:01:ページ切り替え（クリア）]
+山を　こえて　谷を　こえて
+海を　こえて　ここに　来ました[BE:01:ページ切り替え（クリア）]
+かずかずの　困難を　のりこえた
+わたくしの　スペシャルな　ポケモンと[BE:00:ページ切り替え（行送り）]
+いざ　じんじょうに　勝負です！</language>
 	</row>
 
 	<row id="msg_c03r0801_maid_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">MAID</attribute>
-		<language name="JPN" width="256">わたくしは
-はぐれメイドの　はぐれトレーナー[BE:01:ページ切り替え（クリア）]
-きかいが　あれば
-また　おあいしましょう</language>
-		<language name="JPN_KANJI" width="256">わたくしは
-はぐれメイドの　はぐれトレーナー[BE:01:ページ切り替え（クリア）]
-きかいが　あれば
-また　おあいしましょう</language>
+		<language name="JPN" width="256">せかいを　たびした
+わたしより　つよいなんて！？[BE:01:ページ切り替え（クリア）]
+しょうぶに　まけた　メイドは
+ふたたび　ごしゅじんさまを　さがしに[BE:00:ページ切り替え（行送り）]
+たびに　でると　します</language>
+		<language name="JPN_KANJI" width="256">世界を　旅した
+わたしより　強いなんて！？[BE:01:ページ切り替え（クリア）]
+勝負に　負けた　メイドは
+再び　ご主人様を　探しに[BE:00:ページ切り替え（行送り）]
+旅に　でると　します</language>
 	</row>
 
 	<row id="msg_c03r0801_babygirl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
@@ -1057,7 +1079,7 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">かしこまりました
 そのまま　おまち　くださいませ</language>
 		<language name="JPN_KANJI" width="256">かしこまりました
-そのまま　おまち　くださいませ</language>
+そのまま　お待ち　くださいませ</language>
 	</row>
 
 	<row id="msg_c03r0801_retire_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
@@ -1066,7 +1088,7 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">かしこまりました
 ひきつづき　おたのしみ　くださいませ</language>
 		<language name="JPN_KANJI" width="256">かしこまりました
-ひきつづき　おたのしみ　くださいませ</language>
+引き続き　お楽しみ　くださいませ</language>
 	</row>
 
 	<row id="msg_c03r0801_sys_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -1087,11 +1109,11 @@ msg_c03r0801_hint_02</comment>
 ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 ごゆっくり　おたのしみ　くださいませ</language>
-		<language name="JPN_KANJI" width="256">ロイヤルイッシュごうの
-ごじょうせん　ありがとうございます[BE:01:ページ切り替え（クリア）]
-ほんじつの　ロイヤルイッシュごうには
-[2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
-ごゆっくり　おたのしみ　くださいませ</language>
+		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号の
+ご乗船　ありがとうございます[BE:01:ページ切り替え（クリア）]
+本日の　ロイヤルイッシュ号には
+[2:00:１桁:3]人　トレーナーが　います[BE:00:ページ切り替え（行送り）]
+ごゆっくり　お楽しみ　くださいませ</language>
 	</row>
 
 	<row id="msg_c03r0801_ex_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
@@ -1105,13 +1127,13 @@ msg_c03r0801_hint_02</comment>
 おたおしに　なられたの　ですね！[BE:01:ページ切り替え（クリア）]
 ふねは　しゅっこうちゅう　ですが
 ふねから　おおりに　なられますか？</language>
-		<language name="JPN_KANJI" width="256">ほんじつの　ロイヤルイッシュごうには
-[2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">本日の　ロイヤルイッシュ号には
+[2:00:１桁:3]人　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは……　おめでとうございます！[BE:01:ページ切り替え（クリア）]
 すべての　トレーナーを
-おたおしに　なられたの　ですね！[BE:01:ページ切り替え（クリア）]
-ふねは　しゅっこうちゅう　ですが
-ふねから　おおりに　なられますか？</language>
+お倒しに　なられたの　ですね！[BE:01:ページ切り替え（クリア）]
+ふねは　お出港　していますが
+ふねから　お降りに　なられますか？</language>
 	</row>
 
 	<flowchart-group-list>

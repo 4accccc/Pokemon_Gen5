@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-16T17:59:34"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-02-23T18:01:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1459" top="293" right="2164" bottom="913" maximized="no" rayout="Vertical2">
+	<dialog left="424" top="386" right="1129" bottom="1004" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,22 +292,59 @@
 	</lock>
 
 
-	<row id="msg_c03p16_cabinguide_01">
+	<row id="msg_c03p16_cabinguide_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♀（仮）
 ・遊覧船乗り場案内人
-・はい→cabinguide_02
-・いいえ→cabinguide_04</comment>
+・はい→cabinguide_01a
+・いいえ→cabinguide_06</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
 		<language name="JPN" width="256">けしき　ウキウキ　しょうぶ　ワクワク
-ロイヤルイッシュごうへ　ようこそ！[BE:00:ページ切り替え（行送り）]
-ごじょうせんは　はじめてですか？[BE:01:ページ切り替え（クリア）]</language>
+ロイヤルイッシュごうへ　ようこそ！[BE:01:ページ切り替え（クリア）]
+にゅうじょうりょうは
+１０００えん　になります[BE:00:ページ切り替え（行送り）]
+ごじょうせんに　なりますか？</language>
 		<language name="JPN_KANJI" width="256">景色　ウキウキ　勝負で　ワクワク
-ロイヤルイッシュ号へ　ようこそ！[BE:00:ページ切り替え（行送り）]
-ご乗船は　初めてですか？[BE:01:ページ切り替え（クリア）]</language>
+ロイヤルイッシュ号へ　ようこそ！[BE:01:ページ切り替え（クリア）]
+入場料は　１０００円　になります
+ご乗船に　なりますか？</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03p16_cabinguide_01a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>・はい→cabingguide_02
+・いいえ→cabinguide_05</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">ロイヤルイッシュごう　について
+せつめいを　いたしますか？</language>
+		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号　について
+説明を　いたしますか？</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>時間外の場合</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">ロイヤルイッシュごうは
+ゆうがた　のみの[BE:00:ページ切り替え（行送り）]
+うんこうに　なっております[BE:00:ページ切り替え（行送り）]
+あらためて　おこし　くださいませ</language>
+		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号は
+夕方　のみの　運航に　なっております[BE:00:ページ切り替え（行送り）]
+あらためて　お越し　くださいませ</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_01c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>お金が足りなかった場合</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">おかねが　たりません
+またの　おこしを　おまちしております</language>
+		<language name="JPN_KANJI" width="256">お金が　たりません
+またの　お越しを　お待ちしております</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♀（仮）
 ・続けてcabinguide_03
 
@@ -318,19 +355,17 @@
 スカイアローブリッジを　くぐり[BE:01:ページ切り替え（クリア）]
 ワンダーブリッジを　まわって
 ヒウンシティに　もどる　ふねです[BE:01:ページ切り替え（クリア）]
-じょうせんじかんは
-ぜんぶで　５かい　ボォォォ！と[BE:00:ページ切り替え（行送り）]
+じょうせんじかんは　５かい
 きてきで　おしらせ　いたします[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">イッシュ地方の　大きな橋
 スカイアローブリッジを　くぐり[BE:01:ページ切り替え（クリア）]
 ワンダーブリッジを　まわって
 ヒウンシティに　戻ります[BE:01:ページ切り替え（クリア）]
-乗船時間は　全部で　５回
-ボォォォォォォォ！　と[BE:00:ページ切り替え（行送り）]
-汽笛で　お知らせ　いたします[BE:01:ページ切り替え（クリア）]</language>
+乗船時間は　５回　汽笛で
+お知らせ　いたします[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_03">
+	<row id="msg_c03p16_cabinguide_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♀（仮）
 ・続けてcabinguide04</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -349,7 +384,7 @@
 お楽しみ　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_04">
+	<row id="msg_c03p16_cabinguide_04" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>♀（仮）
 ・はい→cabinguide05
 ・いいえ→cabinguide06</comment>
@@ -361,7 +396,7 @@
 お乗りに　なられますか？</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_05">
+	<row id="msg_c03p16_cabinguide_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♀（仮）
 遊覧船内に入る演出
 C03R0801へマップ移動</comment>
@@ -373,30 +408,30 @@ C03R0801へマップ移動</comment>
 いってらっしゃいませ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_06">
+	<row id="msg_c03p16_cabinguide_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♀（仮）
 ・イベント終了</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
 		<language name="JPN" width="256">かしこまりました
-またの　おこしを　おまちしております[BE:01:ページ切り替え（クリア）]</language>
+またの　おこしを　おまちしております</language>
 		<language name="JPN_KANJI" width="256">かしこまりました
-またの　お越しを　お待ちしております[BE:01:ページ切り替え（クリア）]</language>
+またの　お越しを　お待ちしております</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_07">
+	<row id="msg_c03p16_cabinguide_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♀（仮）
 ・乗船イベント終了後
 このメッセージへ</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
 		<language name="JPN" width="256">ごじょうせん　ありがとうございました
-またの　おこしを　おまちしております[BE:01:ページ切り替え（クリア）]</language>
+またの　おこしを　おまちしております</language>
 		<language name="JPN_KANJI" width="256">ご乗船　ありがとうございました！
-またの　お越しを　お待ちしております[BE:01:ページ切り替え（クリア）]</language>
+またの　お越しを　お待ちしております</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_08">
+	<row id="msg_c03p16_cabinguide_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♀（仮）
 ・乗船時間外の場合</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -408,7 +443,7 @@ C03R0801へマップ移動</comment>
 また　明日　お越しくださいませ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_09">
+	<row id="msg_c03p16_cabinguide_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♀（仮）
 ・全抜き時
 何か景品</comment>
@@ -420,10 +455,27 @@ C03R0801へマップ移動</comment>
 こちらは　けいひんに　なります
 おうけとり　くださいませ</language>
 		<language name="JPN_KANJI" width="256">おめでとうございます！[BE:01:ページ切り替え（クリア）]
-あなたは　せんない　すべての
-トレーナーを　たおしました！[BE:01:ページ切り替え（クリア）]
-こちらは　けいひんに　なります
-おうけとり　くださいませ</language>
+あなたは　船内　すべての
+トレーナーを　倒しました！[BE:01:ページ切り替え（クリア）]
+こちらは　景品に　なります
+お受け取り　くださいませ</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_10" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<comment>ゲームクリア前の場合</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">この　ふねは　
+じゅんびちゅう　です[BE:01:ページ切り替え（クリア）]
+さいきょうの　ポケモントレーナーに
+ふさわしい　ふねに　なりますよう[BE:01:ページ切り替え（クリア）]
+こころを　こめて
+じゅんび　しています</language>
+		<language name="JPN_KANJI" width="256">この　船は　準備中　です[BE:01:ページ切り替え（クリア）]
+最強の　ポケモントレーナーに
+ふさわしい　船に　なりますよう[BE:01:ページ切り替え（クリア）]
+心を　こめて
+準備　しています</language>
 	</row>
 
 	<flowchart-group-list>
