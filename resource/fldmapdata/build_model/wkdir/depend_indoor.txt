@@ -140,4 +140,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/c09_dendo.nsbmd \
 	$(RESDIR)/in06_kairyu.nsbmd \
 	$(RESDIR)/kemuri_event.nsbmd \
+	$(RESDIR)/kemuri_event2.nsbmd \
 
