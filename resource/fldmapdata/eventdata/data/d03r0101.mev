@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/19 15:01:05
+#save date:2010/02/23 18:54:17
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d03r0101.wms
 #SECTION START:OBJ_EVENT
@@ -432,7 +432,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #Pos Event Label
 POS_D03R0101_EVENT_01
@@ -447,7 +447,7 @@ WK_SCENE_D03R0101
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1048 0 -1064
+1048 0 -1048
 #size
 5 1
 #event number: 1
@@ -465,6 +465,23 @@ WK_SCENE_D03R0101
 EVENTDATA_POSTYPE_GRID
 #position
 728 32 -232
+#size
+1 1
+#event number: 2
+#Pos Event Label
+POS_D03R0101_EVENT_01A
+#Pos Script Name
+SCRID_POS_D03R0101_EVENT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D03R0101
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1032 0 -1064
 #size
 1 1
 #Map Event List Data End

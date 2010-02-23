@@ -176,6 +176,8 @@ init_flags:
 	_FLAG_SET( FV_N01R0502_LEGEND_01 )
 	_FLAG_SET( FV_N01R0502_LEGEND_02 )
 
+	//C03:リーダー３のジム前イベント
+	_FLAG_SET( FV_C03_GUIDE_01 )
 }  
 _RET
 

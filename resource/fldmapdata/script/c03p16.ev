@@ -34,7 +34,10 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 
 	//下船アニメ
 	_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_out )
+	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_out2 )
 	_OBJ_ANIME_WAIT()
 
 	//ローカル変数を定義
@@ -70,11 +73,22 @@ EVENT_END
 //			下船アニメ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_cabin_out
-	_ANIME_DATA	AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_cabin_out2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_out
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -83,77 +97,130 @@ _ANIME_LABEL	anm_player_out
 EVENT_START		ev_c03p16_cabinguide_01
 _TALK_OBJ_START()
 
-	//【仮】分岐：時間が乗船時間内であるか？
+	DEFINE_LOCAL	LWK_TIMEZONE
+	DEFINE_LOCAL	LWK_GOLD_CHK
 
-		//乗船時間内の場合
-
-		//けしき　ウキウキ
-		_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_01 )
-		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
-		
-		//分岐：はい処理
-		IF $SCWK_ANSWER == SCR_YES THEN
-			
-			//この　ゆうらんせんは
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_02 )
-			_BALLOONWIN_CLOSE()
-			
-			//ヒウンゆうらんせん　じまんの
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_03 )
-			_BALLOONWIN_CLOSE()
-		
-		ENDIF
-
-		//ヒウンゆうらんせんへ　おのりに
-		_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_04 )
-		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
-		
-		//分岐：はい処理
-		IF $SCWK_ANSWER == SCR_YES THEN
-			
-			//まもなく　しゅっこうに　なります
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_05 )
-			_BALLOONWIN_CLOSE()
-
-			//乗船アニメ
-			_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_in )
-			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
-			_OBJ_ANIME_WAIT()
-			
-			//船員のOBJを消す
-			_OBJ_DEL( C03P16_CABINGUIDE_01 )
-
-			//望さんスクリプト
-			_PL_BOAT_START()
-
-			//予約スクリプト
-			_RESERVE_SCRIPT( SCRID_RESERVE_C03R0801_CABINGUIDE_01 )
+	//ゲームクリア後なら
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 	
-			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_C03R0801, 29, 29, DIR_UP )
-
-		//分岐：いいえ処理
-		ELSE
-
-			//かしこまりました
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_06 )
+		_GET_TIMEZONE( LWK_TIMEZONE )
+	
+		//乗船時間内の場合
+		IF $LWK_TIMEZONE == TIMEZONE_EVENING THEN
+	
+			//けしき　ウキウキ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_01 )
+			//所持金の表示
+			_GOLD_WIN_OPEN( 1, 1 )
+			
+			_YES_NO_WIN( SCWK_ANSWER )
 			_BALLOONWIN_CLOSE()
+			_CHECK_GOLD( LWK_GOLD_CHK, 1000  )
+			//分岐：はい処理
+			IF $SCWK_ANSWER == SCR_YES THEN
+				//お金が足りている場合
+				IF $LWK_GOLD_CHK == TRUE THEN
+					
+					_SUBTRACT_GOLD( 1000 )
+					
+					// 支払いSE
+					_SE_PLAY( SEQ_SE_SYS_22 )
+					_SE_WAIT()
+					_GOLD_WIN_CLOSE()
+					//システムの　説明の可否
+					_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_01a )
+					_YES_NO_WIN( SCWK_ANSWER )
+					_BALLOONWIN_CLOSE()
+					
+					//分岐：はい処理
+					IF $SCWK_ANSWER == SCR_YES THEN
+					
+						//この　ゆうらんせんは
+						_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_02 )
+						_BALLOONWIN_CLOSE()
+				
+						//ヒウンゆうらんせん　じまんの
+						_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_03 )
+						_BALLOONWIN_CLOSE()
+				
+					//分岐：いいえ選択処理
+					ELSE
+				
+					ENDIF
+				
+					//まもなく　しゅっこうに　なります
+					_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_05 )
+					_BALLOONWIN_CLOSE()
 
+					//乗船アニメ
+					_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_in )
+					_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
+					_OBJ_ANIME_WAIT()
+			
+					//船員のOBJを消す
+					_OBJ_DEL( C03P16_CABINGUIDE_01 )
+
+					//望さんスクリプト
+					_PL_BOAT_START()
+
+					//予約スクリプト
+					_RESERVE_SCRIPT( SCRID_RESERVE_C03R0801_CABINGUIDE_01 )
+	
+					//マップチェンジ
+					_MAP_CHANGE( ZONE_ID_C03R0801, 29, 29, DIR_UP )
+
+				//お金が足りない場合
+				ELSE
+					_GOLD_WIN_CLOSE()
+					//お金が　足りません
+					_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_01c )
+					_LAST_KEYWAIT()
+					_BALLOONWIN_CLOSE()
+			
+				ENDIF
+		
+			//分岐：いいえ選択
+			ELSE
+				//かしこまりました
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_06 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+		
+			ENDIF
+
+		//乗船時間外の場合
+		ELSE
+	
+			//夕方のみの　運航になっております。
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_01b )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+	
 		ENDIF
+	
+	//ゲームクリア前なら
+	ELSE
+		
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_10 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 
+	ENDIF
 EVENT_END
 
 //--------------------------------------------------------------
 //			乗船アニメ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_cabin_in
-	_ANIME_DATA	AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_in
 	_ANIME_DATA AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	ACMD_END,0
 	

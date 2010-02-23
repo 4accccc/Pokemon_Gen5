@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/07 18:02:45
+#save date:2010/02/23 19:43:00
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r01.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r01.wms
 #hold event type:
 1
 #hold event number:
-8
+7
 #event number: 0
 #type
 1
@@ -169,37 +169,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-R01_PRINCE_01
-#OBJ CODE Number
-MAID
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_PRINCE_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-144 0 -400
-#event number: 6
-#type
-1
-#ID name
 R01_RIVEL_02
 #OBJ CODE Number
 RIVEL
@@ -227,7 +196,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 648 0 120
-#event number: 7
+#event number: 6
 #type
 1
 #ID name
@@ -360,6 +329,23 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Door Event Label
+DOOR_ID_R01_R01R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_R01R0101
+#Next Door ID Name
+DOOR_ID_R01R0101_R01_EXIT01
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 -952
+#size
+1 3
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

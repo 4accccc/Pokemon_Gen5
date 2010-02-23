@@ -10,6 +10,14 @@
 #define ZONE_C03P16_EVC_H
 
 #define C03P16_CABINGUIDE_01               0
+#define DUMMY_OBJ01                        1
+#define DUMMY_OBJ02                        2
+#define DUMMY_OBJ03                        3
+#define DUMMY_OBJ04                        4
+#define DUMMY_OBJ05                        5
+#define DUMMY_OBJ065                       6
+#define DUMMY_OBJ07                        7
+#define DUMMY_OBJ08                        8
 
 #endif //ZONE_C03P16_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p16.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

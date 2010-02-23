@@ -73,7 +73,7 @@ EVENT_END
 EVENT_START		ev_d03r0101_fighterm_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_fighterm_01 )
 EVENT_END
-
+                                                                                                                                                                                                                                                                                              
 /**************************************************************/
 /*		ＰＯＳプラズマ団イベント D03R0101イベントスクリプト	  */
 /**************************************************************/
@@ -91,9 +91,37 @@ EVENT_START		ev_pos_d03r0101_event_01
 	//自機位置座標取得
 	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
 	
-	//X軸が82ならば
-	IF $LWK_HERO_X == 82 THEN
+	//X軸が80ならば
+	IF $LWK_HERO_X == 80 THEN
 	
+		//ライバル：自機に近づく
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_80come )
+		_OBJ_ANIME_WAIT()
+		
+		//共通処理
+		_CALL d03r0101_rival_talk
+	
+		//ライバル：遺跡へダッシュ
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_80dush )
+		_OBJ_ANIME_WAIT()
+	
+	//X軸が81ならば
+	ELSIF $LWK_HERO_X == 81 THEN
+
+		//ライバル：自機に近づく
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_81come )
+		_OBJ_ANIME_WAIT()
+		
+		//共通処理
+		_CALL d03r0101_rival_talk
+	
+		//ライバル：遺跡へダッシュ
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_81dush )
+		_OBJ_ANIME_WAIT()
+		
+	//X軸が82ならば
+	ELSIF $LWK_HERO_X == 82 THEN
+
 		//ライバル：自機に近づく
 		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_82come )
 		_OBJ_ANIME_WAIT()
@@ -104,7 +132,7 @@ EVENT_START		ev_pos_d03r0101_event_01
 		//ライバル：遺跡へダッシュ
 		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_82dush )
 		_OBJ_ANIME_WAIT()
-	
+
 	//X軸が83ならば
 	ELSIF $LWK_HERO_X == 83 THEN
 
@@ -120,7 +148,7 @@ EVENT_START		ev_pos_d03r0101_event_01
 		_OBJ_ANIME_WAIT()
 
 	//X軸が84ならば
-	ELSE
+	ELSIF $LWK_HERO_X == 84 THEN
 
 		//ライバル：自機に近づく
 		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_84come )
@@ -131,6 +159,20 @@ EVENT_START		ev_pos_d03r0101_event_01
 	
 		//ライバル：遺跡へダッシュ
 		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_84dush )
+		_OBJ_ANIME_WAIT()
+
+	//X軸が85ならば
+	ELSE
+
+		//ライバル：自機に近づく
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_85come )
+		_OBJ_ANIME_WAIT()
+		
+		//共通処理
+		_CALL d03r0101_rival_talk
+	
+		//ライバル：遺跡へダッシュ
+		_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_85dush )
 		_OBJ_ANIME_WAIT()
 	
 	ENDIF
@@ -177,44 +219,72 @@ _ANIME_LABEL	anm_rival_kiduku
 //--------------------------------------------------------------------
 //		ライバル：近づく
 //--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_80come
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_81come
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_rival_82come
-	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_83come
-	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_84come
-	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_85come
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
 //		ライバル：遺跡へ走る
 //--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_80dush
+	_ANIME_DATA	AC_STAY_WALK_U_2F,5
+	_ANIME_DATA	AC_WALK_L_4F,2
+	_ANIME_DATA	AC_WALK_U_4F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_81dush
+	_ANIME_DATA	AC_STAY_WALK_U_2F,5
+	_ANIME_DATA	AC_WALK_L_4F,3
+	_ANIME_DATA	AC_WALK_U_4F,10
+	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_rival_82dush
 	_ANIME_DATA	AC_STAY_WALK_U_2F,5
-	_ANIME_DATA	AC_WALK_U_2F,4
 	_ANIME_DATA	AC_WALK_L_4F,4
-	_ANIME_DATA	AC_WALK_U_4F,6
+	_ANIME_DATA	AC_WALK_U_4F,10
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_83dush
 	_ANIME_DATA	AC_STAY_WALK_U_2F,5
-	_ANIME_DATA	AC_WALK_U_2F,4
 	_ANIME_DATA	AC_WALK_L_4F,5
-	_ANIME_DATA	AC_WALK_U_4F,6
+	_ANIME_DATA	AC_WALK_U_4F,10
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_84dush
 	_ANIME_DATA	AC_STAY_WALK_U_2F,5
-	_ANIME_DATA	AC_WALK_U_2F,4
 	_ANIME_DATA	AC_WALK_L_4F,6
-	_ANIME_DATA	AC_WALK_U_4F,6
+	_ANIME_DATA	AC_WALK_U_4F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_85dush
+	_ANIME_DATA	AC_STAY_WALK_U_2F,5
+	_ANIME_DATA	AC_WALK_L_4F,7
+	_ANIME_DATA	AC_WALK_U_4F,10
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -264,7 +334,8 @@ EVENT_START		ev_scene_d03r0101_plasmaevent_01
 	_BALLOONWIN_OBJMSG( msg_d03r0101_rival_04 , D03R0101_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
 	
-	//【仮】TVトランシーバーを見るイベント
+	//TVトランシーバー起動
+	_CALL_TVT_DEMO( 5 )
 
 	//ライバル：自機のほうに向く
 	_OBJ_ANIME( D03R0101_RIVAL_02, anm_stay_l )

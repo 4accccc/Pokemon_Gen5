@@ -110,7 +110,7 @@ EVENT_START		ev_c03_businessman5_01
 EVENT_END
 
 /**************************************************************/
-/*		RIVAL	POSイベント用スクリプト						  */
+/*		LEADER3		POSイベント用スクリプト					  */
 /**************************************************************/
 EVENT_START		ev_pos_c03_rivalevent_01
 
@@ -121,7 +121,11 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	 _GET_PLAYER_RAIL_LOC( LWK_INDEX, LWK_FRONT, LWK_SIDE )
 
 	//【仮】使い方解んない・ドアアニメ再生
-
+	
+	//フラグリセット
+	_FLAG_RESET(FV_C03_GUIDE_01)
+	_OBJ_ADD(C03_LEADER3_01)
+	
 	//ジムリーダー：登場
 	_OBJ_ANIME( C03_LEADER3_01, anm_leader_come )
 	_OBJ_ANIME_WAIT()

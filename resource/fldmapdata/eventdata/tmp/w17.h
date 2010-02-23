@@ -2,6 +2,7 @@
 #ifndef ZONE_W17_EVD_H
 #define ZONE_W17_EVD_H
 
+#define DOOR_ID_W17_R01R0101_EXIT01       0
 
 #endif //ZONE_W17_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/w17.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

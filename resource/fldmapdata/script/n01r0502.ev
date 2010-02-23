@@ -50,7 +50,7 @@ INIT_EVENT_END
 EVENT_START	ev_pos_n01r0502_lastbtl_01
 
 	//【仮】メッセージ
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_17, msg_n01r0502_boss_17, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01w, msg_n01r0502_boss_01b, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 
 	
@@ -109,7 +109,7 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//ボクが　のぞむのは　ポケモンだけの　せかい
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01w, msg_n01r0502_boss_01b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01_01w, msg_n01r0502_boss_01_01b, N01R0502_BOSS_01, WIN_NONE )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -316,6 +316,10 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 
 	//だけど　ちがった　いま　すごく　ガッカリしているよ
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04w, msg_n01r0502_boss_04b, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//キミに　できることは　２つ！
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04_01w, msg_n01r0502_boss_04_01b, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 
 	//Ｎ：その場足踏み
@@ -713,8 +717,12 @@ ev_last:
 	_GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
 			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12w )
+			_PLAINWIN_CLOSE()
+			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12_01w )
 		ELSE
 			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12b )
+			_PLAINWIN_CLOSE()
+			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12_01b )
 		ENDIF
 			_PLAINWIN_CLOSE()
 }

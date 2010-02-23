@@ -2,6 +2,7 @@
 #ifndef ZONE_R01_EVD_H
 #define ZONE_R01_EVD_H
 
+#define DOOR_ID_R01_R01R0101_EXIT01       0
 
 #endif //ZONE_R01_EVD_H
 //このファイルは../data/r01.mevから自動生成されました
@@ -13,9 +14,8 @@
 #define R01_RIVAL_01                       2
 #define R01_SUPPORT_01                     3
 #define R01_HAKASE2_01                     4
-#define R01_PRINCE_01                      5
-#define R01_RIVEL_02                       6
-#define R01_SUPPORT_02                     7
+#define R01_RIVEL_02                       5
+#define R01_SUPPORT_02                     6
 
 #endif //ZONE_R01_EVC_H
 //このファイルは../data/r01.mevから自動生成されました
