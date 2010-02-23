@@ -76,7 +76,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) mailarc.txt
 	g2dcvtr mailbox_obj.nce -br
-	ntrcomp -l 2 -o mailbox_obj_m_lz.ncgr mailbox_obj_m.ncgr
+	ntrcomp -l 2 -o mailbox_obj_m_lz.ncgr mailbox_obj.ncgr
 	nnsarc -c -l -n -i $(targetname) -S mailarc.txt
 	$(NAIXCUT) $(targetname).naix
 endif
