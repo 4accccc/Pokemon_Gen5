@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/12 22:39:43
+#save date:2010/02/24 15:38:03
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0201.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0201.wms
 #hold event type:
 1
 #hold event number:
-3
+9
 #event number: 0
 #type
 1
@@ -103,6 +103,192 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 328 0 -88
+#event number: 3
+#type
+1
+#ID name
+TR_HAKAIW1_08
+#OBJ CODE Number
+HAKAIW
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_HAKAIW1_08
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+616 16 56
+#event number: 4
+#type
+1
+#ID name
+TR_HAKAIW1_07
+#OBJ CODE Number
+HAKAIW
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_HAKAIW1_07
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+1
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+568 16 -280
+#event number: 5
+#type
+1
+#ID name
+TR_HAKAIM1_17
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_HAKAIM1_17
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+1
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+584 16 -488
+#event number: 6
+#type
+1
+#ID name
+TR_HAKAIM1_18
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_HAKAIM1_18
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+712 16 -296
+#event number: 7
+#type
+1
+#ID name
+TR_HAKAIM1_19
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_HAKAIM1_19
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+648 16 -88
+#event number: 8
+#type
+1
+#ID name
+TR_HAKAIM1_20
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_HAKAIM1_20
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 0 184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

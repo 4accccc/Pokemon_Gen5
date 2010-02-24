@@ -18,7 +18,7 @@
 
 //--------------------------------------------------------------
 //               スクリプトテーブル
-//--------------------------------------------------------------
+//-------------------------------------------------------------- 
 _EVENT_DATA    ev_pos_d08r0801_hakai_01	
 _EVENT_DATA		ev_d08r0801_hakaim_01
 _EVENT_DATA		ev_d08r0801_hakaim_02
@@ -74,13 +74,17 @@ EVENT_START    ev_pos_d08r0801_demo_01
 	//【仮】ポケモンの鳴き声のウィンドウを仮
 	//ROMによって、ポケモンの鳴き声が違う
 	IF $LCWK_VERSION == VERSION_WHITE THEN
+		_GIZAPLAINWIN_MSG_POS( msg_d08r0801_demo_01w, POS_UP )
 		_VOICE_PLAY(MONSNO_650,0)
 
 	ELSE
+		_GIZAPLAINWIN_MSG_POS( msg_d08r0801_demo_01b, POS_UP )
 		_VOICE_PLAY(MONSNO_651,0)
 		
 	ENDIF
 		_VOICE_WAIT()
+		_AB_KEYWAIT_MARK()
+		_GIZAPLAINWIN_CLOSE()
 	
 	_SYSWIN_MSG(msg_d08r0801_demo_02, POS_DOWN )
 	_LAST_KEYWAIT()
@@ -122,10 +126,6 @@ EVENT_START    ev_pos_d08r0801_hakai_01
 	//七賢人移動
 	_OBJ_ANIME(D08R0801_SAGE2_01,anm_sage02_idou_01)
 	_OBJ_ANIME_WAIT()
-	
-	//カメラを主人公に寄せる
-	
-	//カメラを主人公が連れて行かれる場所へ
 	
 	//プラズマ団、4人が主人公を取り囲む
 	IF $LWK_HERO_POSZ == 10 THEN 

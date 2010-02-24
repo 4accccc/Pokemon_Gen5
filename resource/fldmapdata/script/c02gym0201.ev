@@ -328,16 +328,25 @@ EVENT_START		 ev_bg_c02gym0201_statue_01
 	IF $SCWK_TEMP0 == 0 THEN
 	
 		_PLAINWIN_MSG_DOWN ( msg_c02gym0101_statue_01 )
+	    _LAST_KEYWAIT()	
 		_MSGWIN_CLOSE()
 	
 	//ジムバッジを取得している場合
 	ELSE
-		
 		_PLAYER_NAME( 0 )
-			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_statue_02)
-    	_LAST_KEYWAIT()
-    	_MSGWIN_CLOSE()
 		
+		IF$WK_SCENE_H01R0201 == 1 THEN
+			
+			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_statue_03)
+	    	
+		ELSE
+			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_statue_02)
+
+	    ENDIF
+	    
+	    _LAST_KEYWAIT()
+	    _MSGWIN_CLOSE()
+			
 	ENDIF
 	
 EVENT_END
@@ -355,15 +364,24 @@ EVENT_START		ev_bg_c02gym0201_statue_02
 	IF $SCWK_TEMP0 == 0 THEN
 	
 		_PLAINWIN_MSG_DOWN ( msg_c02gym0101_statue_01 )
+	    _LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
 	//ジムバッジを取得している場合
 	ELSE
+	_PLAYER_NAME( 0 )
 		
-		_PLAYER_NAME( 0 )
+		IF$WK_SCENE_H01R0201 == 1 THEN
+			
+			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_statue_03)
+	    	
+		ELSE
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_statue_02)
-    	_LAST_KEYWAIT()
-   		_MSGWIN_CLOSE()
+
+	    ENDIF
+	    
+	    _LAST_KEYWAIT()
+	    _MSGWIN_CLOSE()
    		
 	ENDIF
 	
