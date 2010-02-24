@@ -734,9 +734,11 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
         MMDL_GetVectorPos( jiki, &jiki_pos );
         
         idx = FLDTALKMSGWIN_IDX_LOWER;
-
+        pos_type = SCRCMD_MSGWIN_DOWNLEFT;
+        
         if( pos.z < jiki_pos.z ){
           idx = FLDTALKMSGWIN_IDX_UPPER;
+          pos_type = SCRCMD_MSGWIN_UPLEFT;
         }
       }
       break;
