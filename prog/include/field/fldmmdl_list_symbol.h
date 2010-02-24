@@ -24,6 +24,8 @@
 #define PROC_FISHINGHERO 13 //釣り自機専用
 #define PROC_YUREHERO 14 //尾瀬揺れ自機
 #define PROC_BLACT_ALANM32 15 //汎用ビルボードアクター常に32フレーム移動アニメ
+#define PROC_SHIN_MU 16 //ポケモン シン・ム
+#define PROC_SPIDER 17 //くもの巣
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し
@@ -120,6 +122,8 @@
 #define ANMID_FISHINGHERO 15 //自機釣り
 #define ANMID_CUTINHERO 16 //カットイン自機
 #define ANMID_YUREHERO 17 //尾瀬揺れ自機
+#define ANMID_SHIN_MU 18 //ポケモン　シン・ム
+#define ANMID_SPIDER 19 //くもの巣
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0

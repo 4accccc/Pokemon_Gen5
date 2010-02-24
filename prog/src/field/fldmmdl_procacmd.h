@@ -326,4 +326,9 @@ extern int (* const DATA_AC_RailJumpD_2G_16F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailJumpL_2G_16F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailJumpR_2G_16F_Tbl[])( MMDL * );
 
+//--------------------------------------------------------------
+//  AC_SPIDER_REMOVE
+//--------------------------------------------------------------
+extern int (* const DATA_AC_SpiderRemove_Tbl[])( MMDL * );
+
 #endif //MMDL_PROCACMD_H_FILE

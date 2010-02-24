@@ -4211,6 +4211,56 @@ static int AC_JumpGUR1G_8F_0( MMDL * mmdl )
 }
 
 //======================================================================
+//	AC_SPIDER_REMOVE くもの巣除去アニメ
+//======================================================================
+//--------------------------------------------------------------
+///	AC_SPIDER_REMOVE_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+	int frame;
+}AC_SPIDER_REMOVE_WORK;
+
+#define AC_SPIDER_REMOVE_WORK_SIZE (sizeof(AC_SPIDER_REMOVE_WORK))
+
+//--------------------------------------------------------------
+/**
+ * AC_SPIDER_REMOVE	0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_SpiderRemove_0( MMDL * mmdl )
+{
+	AC_SPIDER_REMOVE_WORK *work =
+    MMDL_InitMoveCmdWork( mmdl, AC_SPIDER_REMOVE_WORK_SIZE );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_SPIDER_REMOVE );
+	MMDL_IncAcmdSeq( mmdl );
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SPIDER_REMOVE	1
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_SpiderRemove_1( MMDL * mmdl )
+{
+	AC_SPIDER_REMOVE_WORK *work = MMDL_GetMoveCmdWork( mmdl );
+	
+	work->frame++;
+	
+	if( work->frame >= 18 ){
+		MMDL_IncAcmdSeq( mmdl );
+	}
+	
+	return( FALSE );
+}
+
+//======================================================================
 //	data	アニメーションコマンドテーブル
 //======================================================================
 //--------------------------------------------------------------
@@ -5912,6 +5962,15 @@ int (* const DATA_AC_SandWalkR_16F_Tbl[])( MMDL * ) =
 	AC_End,
 };
 
+//--------------------------------------------------------------
+///	AC_SPIDER_REMOVE
+//--------------------------------------------------------------
+int (* const DATA_AC_SpiderRemove_Tbl[])( MMDL * ) =
+{
+	AC_SpiderRemove_0,
+	AC_SpiderRemove_1,
+	AC_End,
+};
 
 //======================================================================
 //	data

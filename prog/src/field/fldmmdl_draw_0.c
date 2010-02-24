@@ -1398,6 +1398,210 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePokeFly =
 };
 
 //======================================================================
+//  ビルボード　ポケモン シン・ム
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　ポケモン　シン・ム　初期化
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlActShinMu_Init( MMDL *mmdl )
+{
+  u16 code;
+  DRAW_BLACT_WORK *work;
+  
+  work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
+  
+  code = MMDL_GetOBJCode( mmdl );
+  comManAnmCtrl_Init( &work->anmcnt );
+
+  if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
+    MMDL_CallDrawProc( mmdl );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　ポケモン シン・ム　削除
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlActShinMu_Delete( MMDL *mmdl )
+{
+  DRAW_BLACT_WORK *work;
+  work = MMDL_GetDrawProcWork( mmdl );
+  MMDL_BLACTCONT_DeleteActor( mmdl, work->actID );
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　ポケモン シン・ム 描画
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlActShinMu_Draw( MMDL *mmdl )
+{
+  VecFx32 pos;
+  DRAW_BLACT_WORK *work;
+  GFL_BBDACT_SYS *actSys;
+  
+  work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+#if 0
+  if( MMDL_GetOBJID(mmdl) == 1 && MMDL_GetOBJCode(mmdl) == WOMAN2 ){
+    KAGAYA_Printf( "きました\n" );
+  }
+#endif
+  
+  actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
+  
+  MMDL_GetDrawVectorPos( mmdl, &pos );
+  blact_SetCommonOffsPos( &pos );
+  GFL_BBD_SetObjectTrans(
+    GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　ポケモン シン・ム　取得。
+ * ビルボードアクターIDを返す。
+ * @param  mmdl  MMDL
+ * @param  state  特に無し
+ * @retval  u32  GFL_BBDACT_ACTUNIT_ID
+ */
+//--------------------------------------------------------------
+static u32 DrawBlActShinMu_GetBlActID( MMDL *mmdl, u32 state )
+{
+  DRAW_BLACT_WORK *work;
+  work = MMDL_GetDrawProcWork( mmdl );
+  return( work->actID );
+}
+
+//--------------------------------------------------------------
+//  描画処理　ビルボード　ポケモン シン・ム　まとめ
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActShinMu =
+{
+  DrawBlActShinMu_Init,
+  DrawBlActShinMu_Draw,
+  DrawBlActShinMu_Delete,
+  DrawBlActShinMu_Delete,  //本当は退避
+  DrawBlActShinMu_Init,    //本当は復帰
+  DrawBlActShinMu_GetBlActID,
+};
+
+//======================================================================
+//  ビルボード　くもの巣
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　くもの巣　初期化
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlActSpider_Init( MMDL *mmdl )
+{
+  u16 code;
+  DRAW_BLACT_WORK *work;
+  
+  work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
+  
+  code = MMDL_GetOBJCode( mmdl );
+  comManAnmCtrl_Init( &work->anmcnt );
+
+  if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
+    MMDL_CallDrawProc( mmdl );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　くもの巣　削除
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlActSpider_Delete( MMDL *mmdl )
+{
+  DRAW_BLACT_WORK *work;
+  work = MMDL_GetDrawProcWork( mmdl );
+  MMDL_BLACTCONT_DeleteActor( mmdl, work->actID );
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　くもの巣　描画
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlActSpider_Draw( MMDL *mmdl )
+{
+  VecFx32 pos;
+  DRAW_BLACT_WORK *work;
+  GFL_BBDACT_SYS *actSys;
+  
+  work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+#if 0
+  if( MMDL_GetOBJID(mmdl) == 1 && MMDL_GetOBJCode(mmdl) == WOMAN2 ){
+    KAGAYA_Printf( "きました\n" );
+  }
+#endif
+  
+  actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
+  
+  MMDL_GetDrawVectorPos( mmdl, &pos );
+  blact_SetCommonOffsPos( &pos );
+  GFL_BBD_SetObjectTrans(
+    GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　くもの巣　取得。
+ * ビルボードアクターIDを返す。
+ * @param  mmdl  MMDL
+ * @param  state  特に無し
+ * @retval  u32  GFL_BBDACT_ACTUNIT_ID
+ */
+//--------------------------------------------------------------
+static u32 DrawBlActSpider_GetBlActID( MMDL *mmdl, u32 state )
+{
+  DRAW_BLACT_WORK *work;
+  work = MMDL_GetDrawProcWork( mmdl );
+  return( work->actID );
+}
+
+//--------------------------------------------------------------
+//  描画処理　ビルボード　くもの巣　まとめ
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActSpider =
+{
+  DrawBlActSpider_Init,
+  DrawBlActSpider_Draw,
+  DrawBlActSpider_Delete,
+  DrawBlActSpider_Delete,  //本当は退避
+  DrawBlActSpider_Init,    //本当は復帰
+  DrawBlActSpider_GetBlActID,
+};
+
+//======================================================================
 //  人物系共通　ビルボードアクターアニメ処理
 //======================================================================
 //--------------------------------------------------------------

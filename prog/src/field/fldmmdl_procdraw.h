@@ -31,6 +31,8 @@ extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePoke;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePokeFly;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_FishingHero;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_YureHero;
+extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActShinMu;
+extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActSpider;
 
 //--------------------------------------------------------------
 //  fldmmdl_draw_1.c

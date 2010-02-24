@@ -38,6 +38,8 @@ const MMDL_DRAW_PROC_LIST * const
   &DATA_MMDL_DRAWPROCLIST_FishingHero, //釣り自機
   &DATA_MMDL_DRAWPROCLIST_YureHero, //揺れ自機
   &DATA_MMDL_DRAWPROCLIST_BlActAlwaysAnime, //通常ビルボード＋常にアニメ
+  &DATA_MMDL_DRAWPROCLIST_BlActShinMu, //ポケモン シン・ム
+  &DATA_MMDL_DRAWPROCLIST_BlActSpider, //くもの巣
 };
 
 //======================================================================
@@ -2126,6 +2128,71 @@ static const GFL_BBDACT_ANM * DATA_BlActYureHeroTbl[4] = {
 };
 
 //======================================================================
+//  シン・ム
+//======================================================================
+enum
+{
+  TEXIDX_SHIN_MU_0,
+  TEXIDX_SHIN_MU_1,
+  TEXIDX_SHIN_MU_2,
+  TEXIDX_SHIN_MU_3,
+  TEXIDX_SHIN_MU_4,
+  TEXIDX_SHIN_MU_5,
+  TEXIDX_SHIN_MU_6,
+  TEXIDX_SHIN_MU_7,
+  TEXIDX_SHIN_MU_8,
+  TEXIDX_SHIN_MU_9,
+  TEXIDX_SHIN_MU_10,
+  TEXIDX_SHIN_MU_11,
+  TEXIDX_SHIN_MU_12,
+  TEXIDX_SHIN_MU_13,
+  TEXIDX_SHIN_MU_14,
+  TEXIDX_SHIN_MU_15,
+  TEXIDX_SHIN_MU_16,
+  TEXIDX_SHIN_MU_17,
+  TEXIDX_SHIN_MU_18,
+  TEXIDX_SHIN_MU_19,
+};
+
+static const GFL_BBDACT_ANM DATA_BlActShinMu_Stop[] = {
+  {TEXIDX_SHIN_MU_0,ANMFLIP_OFF,ANMFLIP_OFF,4},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * DATA_BlActShinMuTbl[DRAW_STA_SHIN_MU_MAX] = {
+  DATA_BlActShinMu_Stop,
+};
+
+//======================================================================
+//  くもの巣
+//======================================================================
+enum
+{
+  TEXIDX_SPIDER_0,
+  TEXIDX_SPIDER_1,
+  TEXIDX_SPIDER_2,
+  TEXIDX_SPIDER_3,
+};
+
+static const GFL_BBDACT_ANM DATA_BlActSpider_Stop[] = {
+  {TEXIDX_SPIDER_0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM DATA_BlActSpider_Remove[] = {
+  {TEXIDX_SPIDER_0,ANMFLIP_OFF,ANMFLIP_OFF,4},
+  {TEXIDX_SPIDER_1,ANMFLIP_OFF,ANMFLIP_OFF,6},
+  {TEXIDX_SPIDER_2,ANMFLIP_OFF,ANMFLIP_OFF,6},
+  {TEXIDX_SPIDER_3,ANMFLIP_OFF,ANMFLIP_OFF,6},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * DATA_BlActSpiderTbl[DRAW_STA_SPIDER_MAX] = {
+  DATA_BlActSpider_Stop,
+  DATA_BlActSpider_Remove,
+};
+
+//======================================================================
 //  ビルボードアクター　アニメーション　リストテーブル
 //======================================================================
 const MMDL_BBDACT_ANMTBL
@@ -2167,6 +2234,10 @@ const MMDL_BBDACT_ANMTBL
   {DATA_BlActCutInHeroTbl,4},
   //MMDL_BLACT_ANMTBLNO_YUREHERO
   {DATA_BlActYureHeroTbl,4},
+  //MMDL_BLACT_ANMTBLNO_SHIN_MU
+  {DATA_BlActShinMuTbl,DRAW_STA_SHIN_MU_MAX},
+  //MMDL_BLACT_ANMTBLNO_SPIDER
+  {DATA_BlActSpiderTbl,DRAW_STA_SPIDER_MAX},
 };
 
 //======================================================================

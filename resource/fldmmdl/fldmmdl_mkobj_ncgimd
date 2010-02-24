@@ -554,14 +554,14 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke6.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #poke7.imd
-./mmdl_res/poke7.imd: ./mmdl_nchara/poke7.ncg ./mmdl_nchara/poke7.ncl ./mmdl_res/ncg8x8pokeflip.imd fldmmdl_list.csv
+./mmdl_res/poke7.imd: ./mmdl_nchara/poke7.ncg ./mmdl_nchara/poke7.ncl ./mmdl_res/ncg8x8x20poke.imd fldmmdl_list.csv
 	@echo convert ncg_imd poke7
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke7.ncg ./mmdl_res ./mmdl_res/ncg8x8pokeflip.imd 8 8 6
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke7.ncg ./mmdl_res ./mmdl_res/ncg8x8x20poke.imd 8 8 20
 
 #poke8.imd
-./mmdl_res/poke8.imd: ./mmdl_nchara/poke8.ncg ./mmdl_nchara/poke8.ncl ./mmdl_res/ncg8x8pokeflip.imd fldmmdl_list.csv
+./mmdl_res/poke8.imd: ./mmdl_nchara/poke8.ncg ./mmdl_nchara/poke8.ncl ./mmdl_res/ncg8x8x20poke.imd fldmmdl_list.csv
 	@echo convert ncg_imd poke8
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke8.ncg ./mmdl_res ./mmdl_res/ncg8x8pokeflip.imd 8 8 6
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke8.ncg ./mmdl_res ./mmdl_res/ncg8x8x20poke.imd 8 8 20
 
 #poke9.imd
 ./mmdl_res/poke9.imd: ./mmdl_nchara/poke9.ncg ./mmdl_nchara/poke9.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
@@ -704,9 +704,9 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/mama.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #spider.imd
-./mmdl_res/spider.imd: ./mmdl_nchara/spider.ncg ./mmdl_nchara/spider.ncl ./mmdl_res/ncg4x4ocell.imd fldmmdl_list.csv
+./mmdl_res/spider.imd: ./mmdl_nchara/spider.ncg ./mmdl_nchara/spider.ncl ./mmdl_res/ncg4x4spider.imd fldmmdl_list.csv
 	@echo convert ncg_imd spider
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/spider.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/spider.ncg ./mmdl_res ./mmdl_res/ncg4x4spider.imd 4 4 4
 
 #pipe.imd
 ./mmdl_res/pipe.imd: ./mmdl_nchara/pipe.ncg ./mmdl_nchara/pipe.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
