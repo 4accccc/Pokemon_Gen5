@@ -873,6 +873,10 @@ SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
 SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel2.c
 
 
+# Wifiバトルサブウェイリーダーボード画面
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_LEADER_BOARD = app/leader_board/leader_board.c
+
 # アイテム画面
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> GROUP_OVERLAY_UNION_INTRUDE
@@ -1694,7 +1698,7 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 SRCS_OVERLAY_DEBUG_HOSAKA   = test/hosaka/debug_3d_demo.c
 
 # 3Dデモ再生アプリ
-#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_TITLE
 SRCS_OVERLAY_DEMO3D = demo/demo3d/demo3d.c \
                       demo/demo3d/demo3d_graphic.c \
 					            demo/demo3d/demo3d_engine.c \
