@@ -36,8 +36,8 @@ enum
 {
 	WORDSET_SCRIPT_SETNUM = 32,		///<デフォルトバッファ数
 	WORDSET_SCRIPT_BUFLEN = 64,		///<デフォルトバッファ長（文字数）
-  SCR_MSG_BUF_SIZE	= (512),				///<メッセージバッファサイズ
-  //SCR_MSG_BUF_SIZE =	(1024)				//メッセージバッファサイズ
+  //SCR_MSG_BUF_SIZE	= (512),				///<メッセージバッファサイズ
+  SCR_MSG_BUF_SIZE =	(1024)				//メッセージバッファサイズ
 };
 
 
