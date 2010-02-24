@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-23T16:10:22"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-24T11:18:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -424,7 +424,7 @@
 赤外線通信を　してください</language>
 	</row>
 
-	<row id="IRCBTL_STR_11">
+	<row id="IRCBTL_STR_11" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="256">リーダーに　なりました！</language>
 		<language name="JPN_KANJI" width="256">リーダーになりました！</language>
 	</row>
@@ -565,8 +565,8 @@
 	</row>
 
 	<row id="IRCBTL_STR_35">
-		<language name="JPN" width="256">とうろくにんずう　[2:01:２桁:0]／[2:01:２桁:1]</language>
-		<language name="JPN_KANJI" width="256">登録人数　[2:01:２桁:0]／[2:01:２桁:1]</language>
+		<language name="JPN" width="256">とうろくにんずう　[2:01:２桁:0]／３２</language>
+		<language name="JPN_KANJI" width="256">登録人数　[2:01:２桁:0]／３２</language>
 	</row>
 
 	<flowchart-group-list>
