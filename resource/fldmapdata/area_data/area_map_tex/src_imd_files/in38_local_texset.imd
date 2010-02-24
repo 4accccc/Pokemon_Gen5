@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-02-18T14:09:22"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-02-24T12:20:25"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,12 +29,12 @@
 
 <box_test pos_scale="6" xyz="-3.500000 0.000000 -4.375000" whd="7.250000 4.875000 7.874512"/>
 
-<tex_image_array size="22">
+<tex_image_array size="23">
 	<tex_image index="0" name="c09_iriguti"
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="c09_iriguti_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/c09_iriguti.tga"
+		path="C:/home/wb_data3d/field/out32/chip/tex/c09_iriguti.tga"
 	>
 		<bitmap size="128">
 			d0d0 d0d0 d0d0 d0d0 d0d0 d0d0 d0d0 d0d0
@@ -988,9 +988,35 @@
 			0017 0000 5417 5555 a917 aaaa fd17 ffff
 		</bitmap>
 	</tex_image>
+	<tex_image index="22" name="n_bridge2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette256"
+		color0_mode="color"
+		palette_name="n_bridge2_pl"
+		path="C:/home/wb_data3d/field/in38/chip/tex/n_bridge2.tga"
+	>
+		<bitmap size="128">
+			1d1d 1d1d 1d1d 1d1d 1d1d 1d1d 1d1d 1d1d
+			1d1d 1d1d 1d1d 1d1d 1d1d 1d1d 1d1d 1d1d
+			1c1c 1c1c 1c1c 1c1c 1c1c 1c1c 1c1c 1c1c
+			1a1b 1a1a 1b1a 1b1b 1b1b 1b1b 1b1b 1b1b
+			1819 1818 1818 1818 1818 1818 1818 1818
+			1617 1516 1616 1616 1616 1616 1616 1616
+			1214 1112 1312 1313 1313 1313 1313 1313
+			0f10 0e0f 100f 1010 1010 1010 1010 1010
+			0c0d 0b0c 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b
+			090a 0609 0906 0909 0909 0909 0909 0909
+			0308 0103 0503 0505 0505 0505 0505 0505
+			0207 0002 0702 0707 0707 0707 0707 0707
+			0207 0002 0000 0000 0000 0000 0000 0000
+			0207 0002 0200 0202 0202 0202 0202 0202
+			0207 0002 0402 0404 0404 0404 0404 0404
+			0207 0002 0702 0707 0707 0707 0707 0707
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="22">
+<tex_palette_array size="23">
 	<tex_palette index="0" name="c09_iriguti_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -1061,7 +1087,13 @@
 	<tex_palette index="20" name="in38crack_pl" color_size="8">
 		2dd0 0463 0ca6 110b 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="21" name="n_bridge_pl" color_size="4">
+	<tex_palette index="21" name="n_bridge2_pl" color_size="32">
+		1084 14a4 18c6 1ce6 1ce7 2107 2108 2528
+		2928 2949 318b 318c 39ad 3def 4210 4631
+		4e52 5293 5694 56b5 5ad5 5ef7 6317 6318
+		6b5a 6f7b 739c 77bd 7bde 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="22" name="n_bridge_pl" color_size="4">
 		1084 18c6 1ce7 2528
 	</tex_palette>
 </tex_palette_array>
@@ -9860,7 +9892,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="V‹KƒV[ƒ“" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="22">
+	<ex_tex_image_array size="23">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -9883,8 +9915,9 @@
 		<ex_tex_image index="19" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="20" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="21" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="22" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="22">
+	<ex_tex_palette_array size="23">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -9907,6 +9940,7 @@
 		<ex_tex_palette index="19" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="20" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="21" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="22" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="13">
 		<ex_material index="0" disp_pos="-720.000000 240.000000"/>
