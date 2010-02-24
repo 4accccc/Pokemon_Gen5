@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T22:42:52"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T15:43:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -926,6 +926,7 @@ WOMAN2</attribute>
 
 	<row id="msg_c08_sign2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>シャガ/アイリスの家</comment>
+		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">シャガの　いえ</language>
 		<language name="JPN_KANJI" width="256">シャガの家</language>
 	</row>
@@ -933,6 +934,7 @@ WOMAN2</attribute>
 	<row id="msg_c08_sign3_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>バトル施設
 ・WHITEver</comment>
+		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">バトルの　やかた
 ザ・ローテーションバトル！</language>
 		<language name="JPN_KANJI" width="256">バトルの館
@@ -942,6 +944,7 @@ WOMAN2</attribute>
 	<row id="msg_c08_sign3_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>バトル施設
 ・BLACKver</comment>
+		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">バトルの　やかた
 ザ・トリプルバトル！</language>
 		<language name="JPN_KANJI" width="256">バトルの館
@@ -950,8 +953,41 @@ WOMAN2</attribute>
 
 	<row id="msg_c08_sign4_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お得な掲示板</comment>
-		<language name="JPN" width="256">おとくな　けいじばん！</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板！</language>
+		<attribute name="キャラクター">看板</attribute>
+		<language name="JPN" width="256">おとくな　けいじばん！▼
+チャンピオンに　かった　トレーナーに
+ドラゴンタイプ　さいきょうの　わざを▽
+でんじゅ　します！▼
+くわしくは　しちょうの　いえで！</language>
+		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
+チャンピオンに　勝った　トレーナーに
+ドラゴンタイプ　最強の　技を▽
+伝授します！▼
+詳しくは　シャガ市長の　家で！</language>
+	</row>
+
+	<row id="msg_c08_gymsign_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>ポケモンジム
+・WHITEver</comment>
+		<attribute name="キャラクター">看板</attribute>
+		<language name="JPN" width="256">ウリュウシティ　ポケモンジム
+リーダー　アイリス▽
+りゅうの　こころを　しる　むすめ</language>
+		<language name="JPN_KANJI" width="256">ウリュウシティ　ポケモンジム
+リーダー　アイリス▽
+りゅうの　こころを　しる　むすめ</language>
+	</row>
+
+	<row id="msg_c08_gymsign_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>ポケモンジム
+・BLACKver</comment>
+		<attribute name="キャラクター">看板</attribute>
+		<language name="JPN" width="256">ソウリュウシティ　ポケモンジム
+リーダー　シャガ▽
+スパルタン　メイヤー</language>
+		<language name="JPN_KANJI" width="256">ソウリュウシティ　ポケモンジム
+リーダー　シャガ▽
+スパルタン　メイヤー</language>
 	</row>
 
 	<flowchart-group-list>
