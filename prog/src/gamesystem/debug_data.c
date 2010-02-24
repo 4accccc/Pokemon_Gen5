@@ -29,6 +29,9 @@
 #include "msg/msg_debugname.h"  //DEBUG_NAME_RAND_M_000
 #include "system/gfl_use.h"   //GFUser_GetPublicRand
 
+#include "app/research_radar/question_id.h"
+#include "savedata/questionnaire_save.h"
+
 #ifdef PM_DEBUG
 //============================================================================================
 //============================================================================================
@@ -274,6 +277,28 @@ static void DEBUG_IntrudeParam( GAMEDATA *gamedata, HEAPID heapID )
 }
 
 //--------------------------------------------------------------
+/**
+ * デバッグ用に設定するアンケートデータ
+ *
+ * @param   gamedata		
+ * @param   heapID		
+ */
+//--------------------------------------------------------------
+static void DEBUG_QuestionnaireParam( GAMEDATA *gamedata )
+{
+  QUESTIONNAIRE_SAVE_WORK *qsw;
+  QUESTIONNAIRE_ANSWER_WORK *answork;
+  int question_id;
+  
+  qsw = SaveData_GetQuestionnaire( GAMEDATA_GetSaveControlWork( gamedata ) );
+  answork = Questionnaire_GetAnswerWork(qsw);
+  
+  for(question_id = 0; question_id < QUESTION_ID_NUM; question_id++){
+    QuestionnaireAnswer_WriteBit(answork, question_id, GFUser_GetPublicRand(2) + 1);
+  }
+}
+
+//--------------------------------------------------------------
 //--------------------------------------------------------------
 void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
 {
@@ -281,6 +306,7 @@ void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
   DEBUG_MYITEM_MakeBag( gamedata, heapID );
   DEBUG_MyPokeAdd( gamedata, heapID );
   DEBUG_IntrudeParam( gamedata, heapID );
+  DEBUG_QuestionnaireParam( gamedata );
 }
 
 

@@ -11,6 +11,7 @@
 #include "savedata/save_tbl.h"
 #include "savedata/questionnaire_save.h"
 #include "app/research_radar/questionnaire_index.h"
+#include "app/research_radar/research_select_def.h"   //SELECT_TOPIC_MAX_NUM
 
 
 //==============================================================================
@@ -42,7 +43,7 @@ struct _QUESTIONNAIRE_SAVE_WORK{
   u32 total_count[QUESTIONNAIRE_ITEM_NUM];        ///<今までの調査人数の合計
   u16 total_answer[QUESTIONNAIRE_ANSWER_NUM];     ///<今までの答えの合計(項目分)
   
-  u8 investigating_question_id;                   ///<調査中の質問ID
+  u8 investigating_question_id[SELECT_TOPIC_MAX_NUM];    ///<調査中の質問ID
 };
 
 
@@ -74,9 +75,12 @@ u32 QuestionnaireSave_GetWorkSize( void )
 void QuestionnaireSave_WorkInit(void *work)
 {
   QUESTIONNAIRE_SAVE_WORK *anketo_save = work;
+  int work_index;
   
   GFL_STD_MemClear(anketo_save, sizeof(QUESTIONNAIRE_SAVE_WORK));
-  anketo_save->investigating_question_id = INVESTIGATING_QUESTION_NULL;
+  for(work_index = 0; work_index < SELECT_TOPIC_MAX_NUM; work_index++){
+    anketo_save->investigating_question_id[work_index] = INVESTIGATING_QUESTION_NULL;
+  }
 }
 
 
@@ -193,11 +197,13 @@ void QuestionnaireAnswer_WriteBit(QUESTIONNAIRE_ANSWER_WORK *qanswer, u8 questio
  *
  * @param   qsw		        アンケートセーブワークへのポインタ
  * @param   question_id		質問ID
+ * @param   work_index    IDをセットするワーク位置(0～SELECT_TOPIC_MAX_NUM)
  */
 //==================================================================
-void QuestionnaireWork_SetInvestigatingQuestion(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id)
+void QuestionnaireWork_SetInvestigatingQuestion(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id, int work_index)
 {
-  qsw->investigating_question_id = question_id;
+  GF_ASSERT(work_index < SELECT_TOPIC_MAX_NUM);
+  qsw->investigating_question_id[work_index] = question_id;
 }
 
 //==================================================================
@@ -205,13 +211,15 @@ void QuestionnaireWork_SetInvestigatingQuestion(QUESTIONNAIRE_SAVE_WORK *qsw, in
  * 調査中の質問IDを取得する
  *
  * @param   qsw		アンケートセーブワークへのポインタ
+ * @param   work_index    IDを取得するワーク位置(0～SELECT_TOPIC_MAX_NUM)
  *
  * @retval  int		調査中の質問ID (何も指定していない場合はINVESTIGATING_QUESTION_NULL)
  */
 //==================================================================
-int QuestionnaireWork_GetInvestigatingQuestion(QUESTIONNAIRE_SAVE_WORK *qsw)
+int QuestionnaireWork_GetInvestigatingQuestion(QUESTIONNAIRE_SAVE_WORK *qsw, int work_index)
 {
-  return qsw->investigating_question_id;
+  GF_ASSERT(work_index < SELECT_TOPIC_MAX_NUM);
+  return qsw->investigating_question_id[work_index];
 }
 
 //==================================================================

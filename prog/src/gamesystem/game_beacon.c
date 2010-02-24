@@ -17,6 +17,7 @@
 #include "savedata/my_pms_data.h"
 #include "app/townmap_util.h"
 #include "net_app\union\union_beacon_tool.h"
+#include "app/research_radar/research_select_def.h"   //SELECT_TOPIC_MAX_NUM
 
 
 //==============================================================================
@@ -271,6 +272,29 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
     }
   }
   
+  //アンケート反映
+  {
+    SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(bsys->gamedata);
+    QUESTIONNAIRE_SAVE_WORK *questsave = SaveData_GetQuestionnaire(sv_ctrl);
+    int search_question_id, i;
+    u32 answer;
+    
+    for(i = 0; i < SELECT_TOPIC_MAX_NUM; i++){
+      search_question_id = QuestionnaireWork_GetInvestigatingQuestion(questsave, i);
+      if(search_question_id != INVESTIGATING_QUESTION_NULL){
+        answer = QuestionnaireAnswer_ReadBit(&info->question_answer, search_question_id);
+        if(answer != 0){  //0は無回答
+          answer--; //項目Noは無回答の"0"を除いた0始まりの為、-1する
+          QuestionnaireWork_AddTodayCount(questsave, search_question_id, 1);
+          QuestionnaireWork_AddTodayAnswerNum(questsave, search_question_id, answer, 1);
+          bsys->new_entry = TRUE;
+          MATSUDA_Printf("QuestionAnswerSet id=%d, answer=%d\n", search_question_id, answer);
+        }
+      }
+    }
+  }
+
+  //ログにセット
   GFL_STD_MemClear(setlog, sizeof(GAMEBEACON_LOG));
   setlog->info = *info;
   bsys->update_log |= 1 << bsys->end_log;
@@ -340,7 +364,6 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   }
   else{
     BeaconInfo_Set(bsys, info);
-    bsys->new_entry = TRUE;
     bsys->log_count++;
     OS_TPrintf("セット完了 %d件目 id=%d\n", bsys->log_count, info->trainer_id);
   }
@@ -579,7 +602,7 @@ static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send)
 //==============================================================================
 //==================================================================
 /**
- * 新しい人物とすれ違ったかを取得する
+ * アンケート用：新しい人物とすれ違ったかを取得する
  *
  * @retval  BOOL		TRUE:新しい人物とすれ違った　　FALSE:すれ違っていない
  */

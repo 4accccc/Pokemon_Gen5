@@ -2608,7 +2608,7 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
   // セーブデータ取得
   save              = SaveControl_GetPointer();
   questionnaireSave = SaveData_GetQuestionnaire( save );
-  topicID = QuestionnaireWork_GetInvestigatingQuestion( questionnaireSave ); // 調査項目ID
+  topicID = QuestionnaireWork_GetInvestigatingQuestion( questionnaireSave, 0 ); // 調査項目ID
   questionID[0] = Question1_topic[ topicID ]; // 質問ID
   questionID[1] = Question2_topic[ topicID ]; // 質問ID
   questionID[2] = Question3_topic[ topicID ]; // 質問ID
