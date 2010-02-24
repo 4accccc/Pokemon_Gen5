@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-09T18:20:11"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-02-24T19:00:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="208" right="1990" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -309,6 +309,72 @@
 カナワとは　こうさする　てつのわっか</language>
 		<language name="JPN_KANJI" width="256">ここは　カナワタウン
 カナワとは　交差する　鉄の輪</language>
+	</row>
+
+	<row id="msg_t05_railfan_01">
+		<comment>♂
+カメラ決定のための実験用NPC
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">鉄道うんちく
+MAN3（仮）</attribute>
+		<language name="JPN" width="256">きみも　あの　でんしゃが
+きになると　いうわけだ</language>
+		<language name="JPN_KANJI" width="256">きみも　あの　でんしゃが
+きになると　いうわけだ</language>
+	</row>
+
+	<row id="msg_t05_railfan_02">
+		<comment>♂
+カメラ決定のための実験用NPC
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">鉄道うんちく
+MAN3（仮）</attribute>
+		<language name="JPN" width="256">よしきた！▼</language>
+		<language name="JPN_KANJI" width="256">よしきた！▼</language>
+	</row>
+
+	<row id="msg_t05_railfan_03">
+		<comment>♂
+カメラ決定のための実験用NPC
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">鉄道うんちく
+MAN3（仮）</attribute>
+		<language name="JPN" width="256">あー　いそいで　いるんだね
+わかるよ</language>
+		<language name="JPN_KANJI" width="256">あー　いそいで　いるんだね
+わかるよ</language>
+	</row>
+
+	<row id="msg_t05_railfan_04">
+		<comment>♂
+カメラ決定のための実験用NPC
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">鉄道うんちく
+MAN3（仮）</attribute>
+		<language name="JPN" width="256">かいせつしよう！　その１▼</language>
+		<language name="JPN_KANJI" width="256">かいせつしよう！　その１▼</language>
+	</row>
+
+	<row id="msg_t05_railfan_05">
+		<comment>♂
+カメラ決定のための実験用NPC
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">鉄道うんちく
+MAN3（仮）</attribute>
+		<language name="JPN" width="256">かいせつしよう！　その２▼</language>
+		<language name="JPN_KANJI" width="256">かいせつしよう！　その２▼</language>
+	</row>
+
+	<row id="msg_t05_railfan_06">
+		<comment>♂
+カメラ決定のための実験用NPC
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">鉄道うんちく
+MAN3（仮）</attribute>
+		<language name="JPN" width="256">どうだい！　でんしゃって
+おくが　ふかいだろう！</language>
+		<language name="JPN_KANJI" width="256">どうだい！　でんしゃって
+おくが　ふかいだろう！</language>
 	</row>
 
 	<flowchart-group-list>
