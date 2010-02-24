@@ -986,7 +986,7 @@ static void _friendNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork)
 
   pWork->buttonWin[i] = GFL_BMPWIN_Create(
     frame,
-    2, 8, 16, 2,
+    2, 8, 16, 4,
     _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
   GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
@@ -1128,6 +1128,11 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
     else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
     {
       int aMsgBuff[]={IRCBTL_STR_17};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
+    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MULTH)
+    {
+      int aMsgBuff[]={IRCBTL_STR_10};
       _msgWindowCreate(aMsgBuff, pWork);
     }
     else
