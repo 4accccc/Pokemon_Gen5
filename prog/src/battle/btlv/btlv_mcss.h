@@ -84,7 +84,11 @@ typedef enum
 }BTLV_MCSS_ANM_STOP_FLAG;
 
 typedef enum{ 
-  BTLV_MCSS_STATUS_FLAG_MIGAWARI = 0x00000001,    //みがわりフラグ
+  BTLV_MCSS_STATUS_FLAG_MIGAWARI  = 0x00000001,    //みがわりフラグ
+  BTLV_MCSS_STATUS_FLAG_RARE      = 0x00000002,    //レアフラグ
+
+  BTLV_MCSS_STATUS_FLAG_MIGAWARI_OFF  = ( BTLV_MCSS_STATUS_FLAG_MIGAWARI  ^ 0xffffffff ),    //みがわりフラグ
+  BTLV_MCSS_STATUS_FLAG_RARE_OFF      = ( BTLV_MCSS_STATUS_FLAG_RARE      ^ 0xffffffff ),    //レアフラグ
 }BTLV_MCSS_STATUS_FLAG;
 
 typedef struct _BTLV_MCSS BTLV_MCSS;
@@ -150,6 +154,7 @@ extern  int             BTLV_MCSS_GetMonsNo( BTLV_MCSS_WORK *bmw, int position )
 extern  int             BTLV_MCSS_GetFormNo( BTLV_MCSS_WORK *bmw, int position );
 extern  u16             BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position );
 extern  u32             BTLV_MCSS_GetStatusFlag( BTLV_MCSS_WORK *bmw, int position );
+extern  BOOL            BTLV_MCSS_GetNoJump( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK *bmw, int position, int sw, BOOL flag );
 extern  void            BTLV_MCSS_SetMosaic( BTLV_MCSS_WORK *bmw, int position, int mosaic );
 extern  void            BTLV_MCSS_CopyMAW( BTLV_MCSS_WORK *bmw, int src, int dst );

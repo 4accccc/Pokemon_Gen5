@@ -382,6 +382,8 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   GF_ASSERT( index < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT_MSG( BTLV_MCSS_GetIndex( bmw, position ) == BTLV_MCSS_NO_INDEX, "pos=%d", position );
 
+  bmw->btlv_mcss[ index ].status_flag = 0;
+
   //立ち位置を保存
   bmw->btlv_mcss[ index ].position = position;
 
@@ -390,6 +392,12 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
 
   //捕獲ボールを取得しておく
   bmw->btlv_mcss[ index ].capture_ball = PP_Get( pp, ID_PARA_get_ball, NULL );
+
+  //レアかどうか？
+  if( PP_CheckRare( pp ) == TRUE )
+  { 
+    bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_RARE;
+  }
 
   BTLV_MCSS_MakeMAW( pp, &bmw->btlv_mcss[ index ].maw, position );
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
@@ -1143,6 +1151,22 @@ u32  BTLV_MCSS_GetStatusFlag( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
+ * @brief 指定された立ち位置のno_jumpを取得
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  MCSSの立ち位置
+ *
+ */
+//============================================================================================
+BOOL  BTLV_MCSS_GetNoJump( BTLV_MCSS_WORK *bmw, int position )
+{ 
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  return ( POKETOOL_GetPersonalParam( bmw->btlv_mcss[ index ].mons_no, bmw->btlv_mcss[ index ].form_no, POKEPER_ID_no_jump ) != 0 );
+}
+
+//============================================================================================
+/**
  * @brief 指定された立ち位置のMCSSにみがわりセット
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
@@ -1163,7 +1187,7 @@ void  BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK* bmw, int position, int sw, BOOL fla
     MCSS_ReloadResource( bmw->mcss_sys, bmw->btlv_mcss[ index ].mcss, &bmw->btlv_mcss[ index ].maw );
     if( flag )
     { 
-      bmw->btlv_mcss[ index ].status_flag &= ( BTLV_MCSS_STATUS_FLAG_MIGAWARI ^ 0xffffffff );
+      bmw->btlv_mcss[ index ].status_flag &= BTLV_MCSS_STATUS_FLAG_MIGAWARI_OFF;
     }
   }
   else
