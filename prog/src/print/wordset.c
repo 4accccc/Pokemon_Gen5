@@ -590,7 +590,7 @@ void WORDSET_RegisterCountryName( WORDSET* wordset, u32 bufID, u32 countryID )
   if( man )
   {
     int str_count = GFL_MSG_GetStrCount( man );
-    if( str_count < countryID ){
+    if( countryID < str_count ){
       GFL_MSG_GetString( man, countryID, wordset->tmpBuf );
       RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     }else{
@@ -625,7 +625,7 @@ void WORDSET_RegisterLocalPlaceName( WORDSET* wordset, u32 bufID, u32 countryID,
       if( man )
       {
         int str_count = GFL_MSG_GetStrCount( man );
-        if( str_count < placeID ){
+        if( placeID < str_count ){
           GFL_MSG_GetString( man, placeID, wordset->tmpBuf );
           RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
           GFL_MSG_Delete(man);
