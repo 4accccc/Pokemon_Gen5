@@ -690,7 +690,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 SRCS_OVERLAY_UNION_APP = net_app/union/union_app.c
 
 # ぐるぐる交換（ユニオンルーム）
-#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_UNION_APP
 SRCS_OVERLAY_OEKAKI = net_app/oekaki/comm_command_oekaki.c \
 		      net_app/oekaki/oekaki.c
 
