@@ -154,12 +154,10 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
       if( GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(wk->gsys)) == GAME_COMM_NO_INVASION ){
 				SetReportMsg( wk, msg_common_report_13 );
 				*seq = REPORT_SEQ_RESULT_NG_WAIT;
-/*
 			// 違うセーブデータがある
 			}else if( SaveControl_IsOverwritingOtherData(wk->sv) == TRUE ){
 				SetReportMsg( wk, msg_common_report_08 );
 				*seq = REPORT_SEQ_RESULT_NG_WAIT;
-*/
 /*
 			// セーブデータがある
 			}else if( SaveData_GetExistFlag(wk->sv) == TRUE ){
