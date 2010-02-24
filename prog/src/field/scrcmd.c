@@ -21,18 +21,10 @@
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 
-#include "msgdata.h"
-#include "print/wordset.h"
 
-#include "sound/pm_sndsys.h"
-//#include "sound/wb_sound_data.sadl"
-
-#include "fieldmap.h"
+#include "field_status_local.h"
 #include "field_sound.h"
-#include "field_player.h"
 
-#include "event_gameover.h" //EVENT_NormalLose
-#include "event_battle.h"   //FIELD_BATTLE_IsLoseResult
 
 #include "debug/debug_flg.h" //DEBUG_FLG_～
 
@@ -862,6 +854,8 @@ static BOOL EvChangeCommonScrWait(VMHANDLE *core, void *wk )
  * ローカルスクリプトをウェイト状態にして、共通スクリプトを動作させます
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
+ *
+ * 共通スクリプト以外にも切り替え可能になっている！
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdChangeCommonScr( VMHANDLE *core, void *wk )
@@ -874,12 +868,19 @@ static VMCMD_RESULT EvCmdChangeCommonScr( VMHANDLE *core, void *wk )
   scr_id = VMGetU16(core);
 
   SCRCMD_WORK_BackupUserWork( wk );
-  //共通スクリプト以外にも切り替え可能になっている！
-  //仮想マシン追加
-  SCRIPT_AddVMachine( sc, getZoneID(work), scr_id, VMHANDLE_SUB1 );
+  if ( SCRCMD_WORK_GetSpScriptFlag( work ) == FALSE )
+  { //通常スクリプト→仮想マシン追加
+    SCRIPT_AddVMachine( sc, getZoneID(work), scr_id, VMHANDLE_SUB1 );
 
-  VMCMD_SetWait( core, EvChangeCommonScrWait );
-  return VMCMD_RESULT_SUSPEND;
+    VMCMD_SetWait( core, EvChangeCommonScrWait );
+    return VMCMD_RESULT_SUSPEND;
+  }
+  else
+  { //特殊スクリプト→その場呼び出し
+    SCRIPT_CallSpecialScript( gsys, sc, SCRCMD_WORK_GetHeapID(work), scr_id );
+    return VMCMD_RESULT_CONTINUE;
+  }
+
 }
 
 //--------------------------------------------------------------

@@ -143,6 +143,12 @@ u16 SCRCMD_WORK_GetScriptID( SCRCMD_WORK *work )
   return( work->head.script_id );
 }
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+BOOL SCRCMD_WORK_GetSpScriptFlag( const SCRCMD_WORK *work )
+{
+  return ( work->head.sp_flag );
+}
+//--------------------------------------------------------------
 /**
  * SCRCMD_WORK GAMESYS_WORKŽæ“¾
  * @param	work	SCRCMD_WORK

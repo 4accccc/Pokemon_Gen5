@@ -108,6 +108,11 @@ extern SCRIPT_WORK* SCRIPT_GetScriptWorkFromEvent( GMEVENT *event );
 //--------------------------------------------------------------
 extern SCRIPTSYS * SCRIPT_GetScriptSysFromEvent( GMEVENT *event );
 
+//--------------------------------------------------------------
+/// スクリプトワークからスクリプト制御ワークを取得
+//--------------------------------------------------------------
+extern SCRIPTSYS * SCRIPT_GetScriptSys( SCRIPT_WORK * sc );
+
 
 //------------------------------------------------------------------
 /**
@@ -129,11 +134,13 @@ extern BOOL SCRIPT_IsValidScriptID( u16 script_id );
 /**
  * 特殊スクリプト呼び出し
  * @param gsys
+ * @param sc
  * @param heapID
  * @param script_id
  */
 //--------------------------------------------------------------
-extern void SCRIPT_CallSpecialScript( GAMESYS_WORK *gsys, HEAPID heapID, u16 script_id );
+extern void SCRIPT_CallSpecialScript(
+    GAMESYS_WORK *gsys, SCRIPT_WORK * sc, HEAPID heapID, u16 script_id );
 
 //------------------------------------------------------------------
 /**

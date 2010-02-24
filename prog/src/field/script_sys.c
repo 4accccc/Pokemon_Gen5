@@ -82,7 +82,6 @@ static void SCRIPTSYS_EntryNextFunc( SCRIPTSYS *scrsys, GMEVENT * next_event );
 static void SCRIPTSYS_CallNextFunc( SCRIPTSYS *scrsys, GMEVENT * event );
 static BOOL SCRIPTSYS_HasNextFunc( const SCRIPTSYS *scrsys );
 
-static SCRIPTSYS * SCRIPT_GetScriptSys( SCRIPT_WORK * sc );
 //イベント
 static GMEVENT * createScriptEvent(
     GAMESYS_WORK * gsys, u16 temp_heapID, u16 scr_id, MMDL * obj, void * ret_script_wk );
@@ -96,7 +95,8 @@ static u16 searchSceneScript( GAMEDATA * gamedata, const u8 * p, u8 key );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static VMHANDLE * SCRVM_Create( HEAPID main_heapID, SCRIPT_WORK *sc, u16 zone_id, u16 scr_id );
+static VMHANDLE * SCRVM_Create(
+    HEAPID main_heapID, SCRIPT_WORK *sc, u16 zone_id, u16 scr_id, BOOL is_sp_flag );
 static void SCRVM_Delete( VMHANDLE* core );
 
 
@@ -443,7 +443,7 @@ void SCRIPT_AddVMachine( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id, VMHANDLE_ID v
   if ( scrsys )
   {
     VMHANDLE * vm;
-    vm = SCRVM_Create( scrsys->heapID, sc, zone_id, scr_id );
+    vm = SCRVM_Create( scrsys->heapID, sc, zone_id, scr_id, FALSE );
     SCRIPTSYS_AddVM( scrsys, vm, vm_id );
   }
   else
@@ -475,7 +475,7 @@ SCRIPTSYS * SCRIPT_GetScriptSysFromEvent( GMEVENT *event )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static SCRIPTSYS * SCRIPT_GetScriptSys( SCRIPT_WORK * sc )
+SCRIPTSYS * SCRIPT_GetScriptSys( SCRIPT_WORK * sc )
 {
   GMEVENT * event;
   EVENT_SCRIPT_WORK * ev_sc;
@@ -525,7 +525,7 @@ static void clearLocalEventFlags( EVENTWORK * evwork )
 //------------------------------------------------------------------
 void SCRIPT_CallGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID )
 {
-  SCRIPT_CallSpecialScript( gsys, heapID, SCRID_INIT_SCRIPT );
+  SCRIPT_CallSpecialScript( gsys, NULL, heapID, SCRID_INIT_SCRIPT );
 }
 
 #ifdef  PM_DEBUG
@@ -539,7 +539,7 @@ void SCRIPT_CallGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID )
 //------------------------------------------------------------------
 void SCRIPT_CallDebugGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID )
 {
-  SCRIPT_CallSpecialScript( gsys, heapID, SCRID_INIT_DEBUG_SCRIPT );
+  SCRIPT_CallSpecialScript( gsys, NULL, heapID, SCRID_INIT_DEBUG_SCRIPT );
 }
 #endif  //PM_DEBUG
 
@@ -552,28 +552,39 @@ void SCRIPT_CallDebugGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID )
 //------------------------------------------------------------------
 void SCRIPT_CallGameClearScript( GAMESYS_WORK *gsys, HEAPID heapID )
 {
-  SCRIPT_CallSpecialScript( gsys, heapID, SCRID_INIT_GAMECLEAR_SCRIPT );
+  SCRIPT_CallSpecialScript( gsys, NULL, heapID, SCRID_INIT_GAMECLEAR_SCRIPT );
 }
 
 //------------------------------------------------------------------
 /**
  * @brief	EVENTではなく特殊スクリプト実行
  * @param	gsys      GAMESYS_WORK型のポインタ
+ * @param sc        スクリプトワークへのポインタ
  * @param	scr_id		スクリプトID
  * @return	none
  */
 //------------------------------------------------------------------
-void SCRIPT_CallSpecialScript( GAMESYS_WORK *gsys, HEAPID heapID, u16 script_id )
+void SCRIPT_CallSpecialScript( GAMESYS_WORK *gsys, SCRIPT_WORK * sc, HEAPID heapID, u16 script_id )
 {
   VMHANDLE *core = NULL;
-  SCRIPT_WORK *sc = SCRIPTWORK_Create( HEAPID_PROC, gsys, NULL, script_id, NULL);
+  SCRIPT_WORK *sc_local = NULL;
+  u16 zone_id;
   
-  u16 zone_id = getZoneID( gsys );
-  core = SCRVM_Create( HEAPID_PROC, sc, zone_id, script_id );
+  if ( sc == NULL )
+  {
+    sc_local = SCRIPTWORK_Create( HEAPID_PROC, gsys, NULL, script_id, NULL);
+    sc = sc_local;
+  }
+  
+  zone_id = getZoneID( gsys );
+  core = SCRVM_Create( HEAPID_PROC, sc, zone_id, script_id, TRUE );
   while( VM_Control(core) == TRUE ){};
   SCRVM_Delete( core );
 
-  SCRIPTWORK_Delete( sc );
+  if ( sc_local )
+  {
+    SCRIPTWORK_Delete( sc_local );
+  }
 }
 
 //------------------------------------------------------------------
@@ -600,7 +611,7 @@ static BOOL searchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key)
 	}
 
   //特殊スクリプト実行
-  SCRIPT_CallSpecialScript( gsys, heapID, scr_id );
+  SCRIPT_CallSpecialScript( gsys, NULL, heapID, scr_id );
 	return TRUE;
 }
 
@@ -783,13 +794,16 @@ static VM_CODE * loadScriptCodeData( u32 scr_id, HEAPID heapID );
 //--------------------------------------------------------------
 /**
  * @brief	仮想マシン生成
- * @param	id			スクリプトID
- * @param	start		命令テーブル開始アドレス
- * @param	end			命令テーブル終了アドレス
- * @retval	none
+ * @param main_heapID
+ * @param sc
+ * @param zone_id
+ * @param scr_id
+ * @param is_sp_flag
+ * @retval	VMHANDLE
  */
 //--------------------------------------------------------------
-static VMHANDLE * SCRVM_Create( HEAPID main_heapID, SCRIPT_WORK *sc, u16 zone_id, u16 scr_id )
+static VMHANDLE * SCRVM_Create(
+    HEAPID main_heapID, SCRIPT_WORK *sc, u16 zone_id, u16 scr_id, BOOL is_sp_flag )
 {
 	VMHANDLE *core;
 	SCRCMD_WORK *work;
@@ -798,6 +812,7 @@ static VMHANDLE * SCRVM_Create( HEAPID main_heapID, SCRIPT_WORK *sc, u16 zone_id
     SCRCMD_WORK_HEADER head;
     head.zone_id = zone_id;
     head.script_id = scr_id;
+    head.sp_flag = is_sp_flag;
     head.gsys = SCRIPT_GetGameSysWork( sc );
     head.gdata = GAMESYSTEM_GetGameData( head.gsys );
     head.mmdlsys = GAMEDATA_GetMMdlSys( head.gdata );
@@ -824,7 +839,7 @@ static VMHANDLE * SCRVM_Create( HEAPID main_heapID, SCRIPT_WORK *sc, u16 zone_id
     //スクリプトデータ、メッセージデータ読み込み
     local_scr_id = getScriptIndex( zone_id, scr_id, &scr_idx, &msg_idx );
     core->pScript = loadScriptCodeData( scr_idx, main_heapID );
-    if( msg_idx != SCRIPT_MSG_NON )
+    if( is_sp_flag ==FALSE && msg_idx != SCRIPT_MSG_NON )
     {
       SCRCMD_WORK_CreateMsgData( work, msg_idx );
     }
