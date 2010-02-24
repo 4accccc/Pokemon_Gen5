@@ -54,6 +54,9 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 		//おめでとうございます！（全抜き用メッセージ）
 		_BALLOONWIN_OBJMSG( msg_c03p16_cabinguide_09 , C03P16_CABINGUIDE_01 )
 		_BALLOONWIN_CLOSE()
+		
+		//【仮】ご褒美仮
+		_ITEM_EVENT_KEYWAIT(ITEM_KIZUGUSURI, 1)
 
     ENDIF
 
@@ -64,8 +67,12 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 	//遊覧船終了
 	_PL_BOAT_END()
 
+	//========================================/
+
 	//乗船アニメ用ワークを０にする
 	$WK_OTHER_PASSENGERBOAT = 0
+	
+	//========================================/
 
 EVENT_END
 
@@ -99,6 +106,8 @@ _TALK_OBJ_START()
 
 	DEFINE_LOCAL	LWK_TIMEZONE
 	DEFINE_LOCAL	LWK_GOLD_CHK
+	DEFINE_LOCAL	LWK_MENU
+	DEFINE_LOCAL	LWK_MENU_WHILE
 
 	//ゲームクリア後なら
 	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
@@ -109,90 +118,61 @@ _TALK_OBJ_START()
 		IF $LWK_TIMEZONE == TIMEZONE_EVENING THEN
 	
 			//けしき　ウキウキ
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_01 )
-			//所持金の表示
-			_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+			_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01 , C03P16_CABINGUIDE_01, POS_DL )
 			
-			_YES_NO_WIN( SCWK_ANSWER )
-			_BALLOONWIN_CLOSE()
-			_CHECK_GOLD( LWK_GOLD_CHK, 1000  )
-			//分岐：はい処理
-			IF $SCWK_ANSWER == SCR_YES THEN
-				//お金が足りている場合
-				IF $LWK_GOLD_CHK == TRUE THEN
-					
-					_SUBTRACT_GOLD( 1000 )
-					
-					// 支払いSE
-					_SE_PLAY( SEQ_SE_SYS_22 )
-					_SE_WAIT()
-					_GOLD_WIN_CLOSE()
-					//システムの　説明の可否
-					_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_01a )
-					_YES_NO_WIN( SCWK_ANSWER )
-					_BALLOONWIN_CLOSE()
-					
-					//分岐：はい処理
-					IF $SCWK_ANSWER == SCR_YES THEN
-					
-						//この　ゆうらんせんは
-						_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_02 )
-						_BALLOONWIN_CLOSE()
+			//説明を受けた場合のみ繰り返す
+			$LWK_MENU_WHILE = 0
+			WHILE $LWK_MENU_WHILE != 1
 				
-						//ヒウンゆうらんせん　じまんの
-						_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_03 )
-						_BALLOONWIN_CLOSE()
-				
-					//分岐：いいえ選択処理
-					ELSE
-				
-					ENDIF
-				
-					//まもなく　しゅっこうに　なります
-					_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_05 )
-					_BALLOONWIN_CLOSE()
+				//所持金の表示
+				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+				//BMPMENU表示
+				_BMPMENU_INIT_EX( MENU_X2,MENU_Y2,0,1,LWK_MENU )
 
-					//乗船アニメ
-					_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_in )
-					_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
-					_OBJ_ANIME_WAIT()
+				_BMPMENU_MAKE_LIST( msg_c03p16_cabin_menu_01, 0 )	//ふねにのる
+				_BMPMENU_MAKE_LIST( msg_c03p16_cabin_menu_02, 1 )	//せつめい
+				_BMPMENU_MAKE_LIST( msg_c03p16_cabin_menu_03, 2 )	//やめる
 			
-					//船員のOBJを消す
-					_OBJ_DEL( C03P16_CABINGUIDE_01 )
-
-					//望さんスクリプト
-					_PL_BOAT_START()
-
-					//予約スクリプト
-					_RESERVE_SCRIPT( SCRID_RESERVE_C03R0801_CABINGUIDE_01 )
-	
-					//マップチェンジ
-					_MAP_CHANGE( ZONE_ID_C03R0801, 29, 29, DIR_UP )
-
-				//お金が足りない場合
-				ELSE
+				// メニュー表示
+				_BMPMENU_START()
+				_MSGWIN_CLOSE()
+			
+				//選択結果で分岐
+				SWITCH $LWK_MENU
+				CASE 0 THEN		//ふねにのる場合
+					
 					_GOLD_WIN_CLOSE()
-					//お金が　足りません
-					_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_01c )
+					//ループ終了
+					$LWK_MENU_WHILE = 1
+					
+					_CALL ev_cabin
+			
+				CASE 1 THEN		//せつめいを受ける場合
+
+					_GOLD_WIN_CLOSE()
+					_CALL ev_explanation
+					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01d , C03P16_CABINGUIDE_01, POS_DL )
+
+				CASE 2 THEN		//やめる
+					
+					_GOLD_WIN_CLOSE()
+					//ループ終了
+					$LWK_MENU_WHILE = 1
+					
+					//かしこまりました
+					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_06 , C03P16_CABINGUIDE_01, POS_DL )
 					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE()
-			
-				ENDIF
-		
-			//分岐：いいえ選択
-			ELSE
-				//かしこまりました
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_06 )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-		
-			ENDIF
+				
+				ENDSWITCH
+
+			ENDWHILE
 
 		//乗船時間外の場合
 		ELSE
 	
 			//夕方のみの　運航になっております。
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_01b )
+			_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01b , C03P16_CABINGUIDE_01, POS_DL )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 	
@@ -200,8 +180,7 @@ _TALK_OBJ_START()
 	
 	//ゲームクリア前なら
 	ELSE
-		
-		_BALLOONWIN_TALKOBJ_MSG( msg_c03p16_cabinguide_10 )
+		_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_10 , C03P16_CABINGUIDE_01, POS_DL )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 
@@ -224,3 +203,66 @@ _ANIME_LABEL	anm_player_in
 	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	ACMD_END,0
 	
+//--------------------------------------------------------------------
+//	共通処理：船に乗る場合
+//--------------------------------------------------------------------
+
+ev_cabin:
+				//所持金をチェック
+				_CHECK_GOLD( LWK_GOLD_CHK, 1000  )
+				//お金が足りている場合
+				IF $LWK_GOLD_CHK == TRUE THEN
+					
+					_SUBTRACT_GOLD( 1000 )
+					// 支払いSE
+					_SE_PLAY( SEQ_SE_SYS_22 )
+					_SE_WAIT()
+					
+					//まもなく　しゅっこうに　なります
+					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_05 , C03P16_CABINGUIDE_01, POS_DL )
+					_BALLOONWIN_CLOSE()
+
+					//乗船アニメ
+					_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_in )
+					_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
+					_OBJ_ANIME_WAIT()
+			
+					//船員のOBJを消す
+					_OBJ_DEL( C03P16_CABINGUIDE_01 )
+
+					//望さんスクリプト
+					_PL_BOAT_START()
+
+					//予約スクリプト
+					_RESERVE_SCRIPT( SCRID_RESERVE_C03R0801_CABINGUIDE_01 )
+	
+					//マップチェンジ
+					_MAP_CHANGE( ZONE_ID_C03R0801, 29, 29, DIR_UP )
+
+				//お金が足りない場合
+				ELSE
+				
+					//お金が　足りません
+					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01c , C03P16_CABINGUIDE_01, POS_DL )
+					_BALLOONWIN_CLOSE()
+				
+				ENDIF
+_RET
+
+//--------------------------------------------------------------------
+//	共通処理：説明
+//--------------------------------------------------------------------
+
+ev_explanation:
+
+//ロイヤルイッシュ号は～
+_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01a , C03P16_CABINGUIDE_01, POS_DL )
+_BALLOONWIN_CLOSE()
+//イッシュちほうの　おおきなはし
+_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_02 , C03P16_CABINGUIDE_01, POS_DL )
+_BALLOONWIN_CLOSE()
+//甲板では　景色も　楽しめます
+_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_03 , C03P16_CABINGUIDE_01, POS_DL )
+_BALLOONWIN_CLOSE()
+
+_RET
