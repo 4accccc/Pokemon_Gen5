@@ -40,14 +40,15 @@
 //=======================================================================================
 typedef struct
 {
-  GAMESYS_WORK*           gameSystem;
-  GAMEDATA*               gameData;
-  FIELDMAP_WORK*          fieldmap;
-  LOCATION                nextLocation;       // 遷移先指定
-  EXIT_TYPE               exitType;           // 出入り口タイプ
-  BOOL                    seasonDisplayFlag;  // 季節表示を行うかどうか
-  ENTRANCE_CAMERA_SETTINGS cameraSettings;    // 特殊出入り口のカメラ設定データ
-  FIELD_FADE_TYPE          fadeOutType;       // 季節表示がない場合のF/Oタイプ
+  GAMESYS_WORK*            gameSystem;
+  GAMEDATA*                gameData;
+  FIELDMAP_WORK*           fieldmap;
+  LOCATION                 nextLocation;       // 遷移先指定
+  EXIT_TYPE                exitType;           // 出入り口タイプ
+  BOOL                     seasonDisplayFlag;  // 季節表示を行うかどうか
+  ENTRANCE_CAMERA_SETTINGS cameraSettings;     // 特殊出入り口のカメラ設定データ
+  FIELD_FADE_TYPE          fadeOutType;        // 季節表示がない場合のF/Oタイプ
+  BOOL                     BGMFadeWaitFlag;    // BGM のフェード完了を待つかどうか
 
 } EVENT_WORK;
 
@@ -266,34 +267,31 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
     break;
   case 1: 
     { // 現在のBGMがダンジョンISS && 次のBGMもダンジョンISS ==> BGMフェードアウト
-      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gameData );
-      BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gameData );
-      PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gameData, 0 );
-      PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-      u32 bgm_next = FSND_GetFieldBGM( gameData, work->nextLocation.zone_id );
-      u32 bgm_now = PMSND_GetBGMsoundNo();
-      u8 iss_type_next = BGM_INFO_GetIssType( bgm_info, bgm_next ); 
-      u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, bgm_now ); 
-      if( ( iss_type_next == ISS_TYPE_DUNGEON ) &&
-          ( iss_type_now == ISS_TYPE_DUNGEON ) )
-      { // BGMフェードアウト
-        GMEVENT* fadeOutEvent;
-        FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gameData );
-        fadeOutEvent = EVENT_FSND_FadeOutBGM( gameSystem, FSND_FADE_SHORT );
+      FIELD_SOUND*  fieldSound = GAMEDATA_GetFieldSound( gameData );
+      BGM_INFO_SYS* BGMInfo    = GAMEDATA_GetBGMInfoSys( gameData );
+      PLAYER_WORK*  player     = GAMEDATA_GetPlayerWork( gameData, 0 );
+      u32 nextBGM = FSND_GetFieldBGM( gameData, work->nextLocation.zone_id );
+      u32 nowBGM = PMSND_GetBGMsoundNo();
+      u8 nextIssType = BGM_INFO_GetIssType( BGMInfo, nextBGM ); 
+      u8 nowIssType = BGM_INFO_GetIssType( BGMInfo, nowBGM ); 
+      if( ( nextIssType == ISS_TYPE_DUNGEON ) && ( nowIssType == ISS_TYPE_DUNGEON ) ) { 
+        // BGM フェードアウト
+        GMEVENT* fadeOutEvent = EVENT_FSND_FadeOutBGM( gameSystem, FSND_FADE_SHORT );
         GMEVENT_CallEvent( event, fadeOutEvent );
+        work->BGMFadeWaitFlag = TRUE; // BGMフェードを待つ
       }
-      else
-      { // BGM再生準備
-        FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gameData );
+      else { 
+        // BGM 再生準備
         u16 nowZoneID = FIELDMAP_GetZoneID( fieldmap );
-        FSND_StandByNextMapBGM( fsnd, gameData, nowZoneID, work->nextLocation.zone_id );
+        FSND_StandByNextMapBGM( fieldSound, gameData, nowZoneID, work->nextLocation.zone_id );
+        work->BGMFadeWaitFlag = FALSE; // BGMフェードは待たない
       }
     }
     (*seq)++;
     break;
   case 2: 
     // BGMフェード完了待ち
-    if( PMSND_CheckFadeOnBGM() != TRUE )
+    if( (work->BGMFadeWaitFlag == FALSE) || (PMSND_CheckFadeOnBGM() == FALSE) )
     { 
       // SE 再生
       if( work->fadeOutType != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
