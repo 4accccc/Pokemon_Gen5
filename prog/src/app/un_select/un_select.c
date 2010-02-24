@@ -351,8 +351,11 @@ enum
 #define COUNTRY_DISP_OFS  (30)
 
 #define FLOOR_MARKING_MAX (20)
-//ＯＢＪ
 
+//ＢＧ書き換え用
+#define BASE_OFS  (1*32)    //ＢＧ先頭アドレス１キャラ先から開始
+
+//ＯＢＪ
 #define UN_OBJ_CHRRES_MAX (1)
 #define UN_OBJ_PALRES_MAX (1)
 #define UN_OBJ_CELRES_MAX (1)
@@ -437,6 +440,7 @@ enum
  *                構造体定義
  */
 //=============================================================================
+#if 0
 //--------------------------------------------------------------
 /// BG管理ワーク
 //==============================================================
@@ -444,7 +448,7 @@ typedef struct
 {
   int dummy;
 } UN_SELECT_BG_WORK;
-
+#endif
 //--------------------------------------------------------------
 /// メッセージ管理ワーク
 //==============================================================
@@ -479,7 +483,7 @@ typedef struct
 {
   HEAPID heap_id;
 
-  UN_SELECT_BG_WORK       wk_bg;
+//  UN_SELECT_BG_WORK       wk_bg;
 
   //描画設定
   UN_SELECT_GRAPHIC_WORK  *graphic;
@@ -507,7 +511,7 @@ typedef struct
 
   int ListSelPos;   //リストで選んだ位置 0～UN_LIST_MAX-1
 
-  BOOL Valid[UN_LIST_MAX]; //たぶん無くせるとおもう @todo
+  BOOL Valid[UN_LIST_MAX]; //たぶん無くせるとおもう @todo  0=最上階　232=2Ｆ
 
   GFL_TCB * htask;		// TCB ( HBLANK )
 
@@ -630,7 +634,7 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
 //-------------------------------------
 /// 汎用処理ユーティリティ
 //=====================================
-static void UNSelect_BG_LoadResource( UN_SELECT_BG_WORK* wk, HEAPID heap_id );
+static void UNSelect_BG_LoadResource( UN_SELECT_MAIN_WORK* wk, HEAPID heap_id );
 
 #ifdef UN_SELECT_TOUCHBAR
 //-------------------------------------
@@ -836,17 +840,21 @@ static GFL_PROC_RESULT UNSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, v
 //=============================================================================
 //-----------------------------------------------------------------------------
 /**
- *  @brief  BG管理モジュール リソース読み込み
+ *  @brief  BG管理モジュール リソース読み込み + ビルライトBG書き換え
  *
- *  @param  UN_SELECT_BG_WORK* wk BG管理ワーク
+ *  @param  UN_SELECT_MAIN_WORK* wk メインワークポインタ
  *  @param  heap_id  ヒープID 
  *
  *  @retval none
  */
 //-----------------------------------------------------------------------------
-static void UNSelect_BG_LoadResource( UN_SELECT_BG_WORK* wk, HEAPID heap_id )
+static void UNSelect_BG_LoadResource( UN_SELECT_MAIN_WORK* wk, HEAPID heap_id )
 {
   ARCHANDLE *handle;
+  void *mainbg_data;
+  void *subbg_data;
+  NNSG2dCharacterData* charData_main;
+  NNSG2dCharacterData* charData_sub;
 
   handle  = GFL_ARC_OpenDataHandle( ARCID_UN_SELECT_GRA, heap_id );
 
@@ -855,28 +863,26 @@ static void UNSelect_BG_LoadResource( UN_SELECT_BG_WORK* wk, HEAPID heap_id )
   GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0, heap_id );
   
   //  ----- サブ画面 -----
+/**
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_un_select_gra_kokuren_bg_NCGR,
             BG_FRAME_BACK_S, 0, 0, 0, heap_id );
+*/
   GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_un_select_gra_kokuren_bgu_NSCR,
             BG_FRAME_BACK_S, 0, 0, 0, heap_id );
 
-/**
-  {
-    NNSG2dCharacterData* charData;
-    void *data;
-    int transSize;
-    data = GFL_ARCHDL_UTIL_LoadBGCharacter( handle, NARC_un_select_gra_kokuren_bg_NCGR, FALSE, &charData, heap_id );
-		transSize = charData->szByte;
-		GFL_BG_LoadCharacter(BG_FRAME_BACK_S, charData->pRawData, transSize, 0);
-    GFL_HEAP_FreeMemory( data );
-  }
-*/  
+  subbg_data = GFL_ARCHDL_UTIL_LoadBGCharacter(
+      handle, NARC_un_select_gra_kokuren_bg_NCGR, FALSE, &charData_sub, heap_id );
 
   //  ----- メイン画面 -----
+/**
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_un_select_gra_kokuren_bg_NCGR,
             BG_FRAME_BACK_M, 0, 0, 0, heap_id );
+*/            
   GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_un_select_gra_kokuren_bgd_NSCR,
-            BG_FRAME_BACK_M, 0, 0, 0, heap_id );    
+            BG_FRAME_BACK_M, 0, 0, 0, heap_id );
+
+  mainbg_data = GFL_ARCHDL_UTIL_LoadBGCharacter(
+      handle, NARC_un_select_gra_kokuren_bg_NCGR, FALSE, &charData_main, heap_id );
   
   // ----- リストバー -----
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_un_select_gra_kokuren_bg_listframe_NCGR,
@@ -884,9 +890,43 @@ static void UNSelect_BG_LoadResource( UN_SELECT_BG_WORK* wk, HEAPID heap_id )
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_un_select_gra_kokuren_bg_listframe_NCGR,
             BG_FRAME_LIST_S, 0, 0, 0, heap_id );
 
+  //BGキャラデータ書き換え
+  {
+    int i;
+    for( i=0; i<UN_LIST_MAX; i++)
+    {
+      u8 *data;
+      u8 chr_idx;
+      u8 target_line;
+      u8 ofs;
+      int adr;
+      int floor_idx;
+      floor_idx = (UN_LIST_MAX - i) - 1;
+
+      if ( !wk->Valid[floor_idx] )
+      {
+        data = (u8*)charData_main->pRawData;
+        //書き換えキャラを選定
+        chr_idx = i/8;
+        target_line = 7 - (i%8);    //キャラ内書き換え対象ライン（0～7）キャラの下から書き換える
+        ofs = target_line * 4;    //一列８ドットは４バイト
+        adr = BASE_OFS + (chr_idx * 32) + ofs;
+        //４バイト書き換え
+        data[adr] = 0xff;
+        data[adr+1] = 0xff;
+        data[adr+2] = 0xff;
+        data[adr+3] = 0xff;
+      }
+    }
+  }
+
+  GFL_BG_LoadCharacter(BG_FRAME_BACK_S, charData_sub->pRawData, charData_sub->szByte, 0);
+  GFL_HEAP_FreeMemory( subbg_data );
+  GFL_BG_LoadCharacter(BG_FRAME_BACK_M, charData_main->pRawData, charData_main->szByte, 0);
+  GFL_HEAP_FreeMemory( mainbg_data );  
+
   GFL_ARC_CloseDataHandle( handle );
 }
-
 
 #ifdef UN_SELECT_TOUCHBAR
 //=============================================================================
@@ -1663,8 +1703,8 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
       int idx;
       idx = UN_LIST_MAX - i - 1;
 
-      //@TODO 条件、項目の存在
-      type = GFUser_GetPublicRand0( 2 );
+      if ( wk->Valid[i] == TRUE ) type = 0;
+      else type = 1;
 
       // パラメータは純粋に順列ID
       FRAMELIST_AddItem( wk->lwk, type, idx );
@@ -1676,14 +1716,12 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
         country_msg_idx = g_FloorTable[idx];
         // 項目用文字列 取得
         wk->cnt_msg->name[i] = GFL_MSG_CreateString( mman, country_msg_idx );
-        wk->Valid[i] = TRUE;
       }
       // 項目なし
       else
       {
         // 項目用文字列 取得
         wk->cnt_msg->name[i] = GFL_MSG_CreateString( mman, un_reception_msg_05 );
-        wk->Valid[i] = FALSE;
       }
     }
       
@@ -1742,7 +1780,17 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
   // 初期化
   wk->heap_id = HEAPID_UN_SELECT;
   wk->pwk = prm;
-  
+#ifdef PM_DEBUG
+  //@todo    解禁国ランダムセット（デバッグ処理）
+  {
+    int i;
+    for( i=0; i<UN_LIST_MAX; i++)
+    {
+      if ( GFUser_GetPublicRand0( 2 ) ) wk->Valid[i] = TRUE;
+      else wk->Valid[i] = FALSE;
+    }
+  }
+#endif  
   //描画設定初期化
   wk->graphic = UN_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heap_id );
 
@@ -1755,7 +1803,7 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
       UNS_SCENE_ID_LIST_MAKE, wk );
 
   //BGリソース読み込み
-  UNSelect_BG_LoadResource( &wk->wk_bg, wk->heap_id );
+  UNSelect_BG_LoadResource( wk, wk->heap_id );
 
 #ifdef UN_SELECT_TOUCHBAR
   //タッチバーの初期化
