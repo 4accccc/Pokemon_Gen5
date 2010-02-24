@@ -67,7 +67,7 @@ u32 SCROLLBAR_GetPosY( u32 scrollMax, u32 scrollCount, u32 railTop, u32 railBott
 
 	py = railBottom - railTop - barSize;
 //	py = ( ( py << 8 ) / ( scrollMax + 1 ) * scrollCount ) >> 8;
-	py = ( ( py << 8 ) / ( scrollMax ) * scrollCount ) >> 8;
+	py = ( (( py << 8 ) * scrollCount) / ( scrollMax ) ) >> 8;
 
 	return ( railTop + py + barSize/2 );
 /*
