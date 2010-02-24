@@ -1371,7 +1371,7 @@ static void GHOST_SPARK_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p
 
   // ループ再生開始
   PMSND_PlaySE( SEQ_SE_FLD_111 );
-  PMSND_PlaySE( SEQ_SE_FLD_112 );
+  //PMSND_PlaySE( SEQ_SE_FLD_112 );
 }
 
 //----------------------------------------------------------------------------
@@ -1383,7 +1383,7 @@ static void GHOST_SPARK_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p
 {
   // ループSEの停止
   PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_111) );
-  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_112) );
+  //PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_112) );
 }
 
 //----------------------------------------------------------------------------
