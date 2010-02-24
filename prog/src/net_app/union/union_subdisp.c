@@ -939,6 +939,9 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
       STRBUF *buf_msg;
       
       switch(chat->chat_type){
+      case UNION_CHAT_TYPE_UNION_IN:             //「ユニオンルームにはいりました！」
+        buf_msg = GFL_MSG_CreateString( unisub->msgdata, msg_union_sub_appeal_05 );
+        break;
       case UNION_CHAT_TYPE_RECRUIT_BATTLE:       //バトル募集
         buf_msg = GFL_MSG_CreateString( unisub->msgdata, msg_union_appeal_01 );
         break;

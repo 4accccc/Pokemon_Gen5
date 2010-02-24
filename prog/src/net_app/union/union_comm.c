@@ -805,9 +805,8 @@ void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys)
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   
   GFL_STD_MemClear(situ, sizeof(UNION_MY_SITUATION));
-  PMSDAT_SetupDefaultUnionMessage(&situ->chat_pmsdata);
   situ->chat_pms_rand = GFUser_GetPublicRand(0xffff);
-  situ->chat_type = UNION_CHAT_TYPE_NORMAL;
+  situ->chat_type = UNION_CHAT_TYPE_UNION_IN;
   situ->union_status = UNION_STATUS_ENTER;
   UnionMyComm_Init(unisys, &situ->mycomm);
 }

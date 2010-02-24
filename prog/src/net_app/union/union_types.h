@@ -252,6 +252,7 @@ typedef enum{
 ///チャットの表示タイプ
 typedef enum{
   UNION_CHAT_TYPE_NORMAL,               ///<簡易会話メッセージを表示
+  UNION_CHAT_TYPE_UNION_IN,             ///<「ユニオンルームにはいりました！」
   UNION_CHAT_TYPE_RECRUIT_BATTLE,       ///<バトル募集
   UNION_CHAT_TYPE_RECRUIT_TRADE,        ///<交換募集
   UNION_CHAT_TYPE_RECRUIT_PICTURE,      ///<お絵かき募集
