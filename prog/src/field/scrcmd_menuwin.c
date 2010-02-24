@@ -1579,15 +1579,25 @@ static BOOL setKeyWaitMsgCursor( SCRCMD_WORK *work, BOOL flag )
 //--------------------------------------------------------------
 static BOOL EvWaitKeyWaitMsgCursor( VMHANDLE *core, void *wk )
 {
+  BOOL ret = FALSE;
   SCRCMD_WORK *work = wk;
   int trg = GFL_UI_KEY_GetTrg();
+  void *win = SCRCMD_WORK_GetMsgWinPtr( work );
   
   if( trg & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ){
     setKeyWaitMsgCursor( work, FALSE );
-    return( TRUE );
+    ret = TRUE;
   }
   
-  return( FALSE );
+  if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
+    FLDSYSWIN_STREAM_Print( (FLDSYSWIN_STREAM*)win );
+  }else if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){
+    FLDPLAINMSGWIN_PrintStream( (FLDPLAINMSGWIN*)win );
+  }else if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
+    FLDTALKMSGWIN_Print( (FLDTALKMSGWIN*)win );
+  }
+  
+  return( ret );
 }
 
 //--------------------------------------------------------------
