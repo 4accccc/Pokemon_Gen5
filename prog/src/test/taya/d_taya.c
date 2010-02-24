@@ -89,6 +89,7 @@ typedef struct {
   GFL_TCBLSYS*    tcbl;
 
   GFL_FONT*         fontHandle;
+  GFL_FONT*         numFont;
   PRINT_STREAM*     printStream;
   PRINT_QUE*        printQue;
   PRINT_UTIL        printUtil[1];
@@ -197,7 +198,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 {
   MAIN_WORK* wk;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CORE,    0x8000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CORE,   0x12000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(MAIN_WORK), HEAPID_CORE );
@@ -216,7 +217,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
   wk->subProc = NULL;
   wk->testPoke = PP_Create( MONSNO_POTTYAMA, 20, 3594, HEAPID_CORE );
   wk->testPokeEditFlag = FALSE;
-  wk->gameData = GAMEDATA_Create( HEAPID_CORE );
+//  wk->gameData = GAMEDATA_Create( HEAPID_CORE );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -357,7 +358,11 @@ static void createTemporaryModules( MAIN_WORK* wk )
 
   GFL_HEAP_CheckHeapSafe( wk->heapID );
   wk->fontHandle = GFL_FONT_Create( ARCID_FONT,
-    NARC_font_small_gftr,
+    NARC_font_large_gftr,
+    GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+
+  wk->numFont = GFL_FONT_Create( ARCID_FONT,
+    NARC_font_num_gftr,
     GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
@@ -369,7 +374,9 @@ static void createTemporaryModules( MAIN_WORK* wk )
 static void deleteTemporaryModules( MAIN_WORK* wk )
 {
   PRINTSYS_QUE_Delete( wk->printQue );
+  GFL_FONT_Delete( wk->numFont );
   GFL_FONT_Delete( wk->fontHandle );
+
 
   GFL_TCBL_Exit( wk->tcbl );
   GFL_STR_DeleteBuffer( wk->strbuf );
@@ -609,10 +616,15 @@ static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl )
 
     GFL_FONTSYS_SetColor( fontCol, 2, 0x0f );
 
-    PRINTSYS_Print( wk->bmp, MAINMENU_PRINT_OX, ypos, wk->strbuf, wk->fontHandle );
-    GFL_FONTSYS_SetDefaultColor();
+    {
+//      GFL_FONT* font = (writePos==0)? wk->numFont : wk->fontHandle;
+      GFL_FONT* font = wk->fontHandle;
 
-    ypos += (GFL_FONT_GetLineHeight(wk->fontHandle)+2);
+      PRINTSYS_Print( wk->bmp, MAINMENU_PRINT_OX, ypos, wk->strbuf, font );
+      GFL_FONTSYS_SetDefaultColor();
+
+      ypos += (GFL_FONT_GetLineHeight(font)+2);
+    }
     writePos++;
   }
   GFL_FONTSYS_SetDefaultColor();
