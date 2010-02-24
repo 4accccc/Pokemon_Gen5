@@ -12,6 +12,7 @@
 //=============================================================================
 #include <wchar.h>
 #include "gflib.h"
+#include "calctool.h"
 #include "system/gfl_use.h"
 #include "arc_def.h"
 
@@ -22,62 +23,32 @@
 #include "system/bmp_winframe.h"
 #include "system/bmp_menu.h"
 #include "system/bmp_menulist.h"
+#include "system/wipe.h"
 
 #include "print/printsys.h"
 #include "print/str_tool.h"
 #include "print/wordset.h"
+
+#include "gamesystem/game_data.h"
 #include "gamesystem\msgspeed.h"
 
+#include "savedata/mystatus.h"
+#include "savedata/wifihistory.h"
+
+#include "sound/pm_sndsys.h"
+
 #include "net_app/wifi_country.h"
-#include "wifi_earth.naix"
-#include "msg/msg_wifi_earth_guide.h"
-
-#if 0
-#include "common.h"
-
-#include "system/procsys.h"
-#include "system/arc_tool.h"
-#include "system/arc_util.h"
-#include "savedata/savedata_def.h"
-#include "savedata/config.h"
-
-#define __WIFIEARTH_H_GLOBAL__
-#include "application/wifi_earth.h"
-
-#include "system/lib_pack.h"
-#include "system/bmp_list.h"
-#include "system/bmp_menu.h"
-#include "system/fontproc.h"
-#include "msgdata/msg.naix"
-#include "system/pm_str.h"
-#include "system/palanm.h"
-#include "system/wipe.h"
-#include "system/window.h"
-#include "system/arc_util.h"
-#include "system/snd_tool.h"
-#include "system/wordset.h"
-#if PL_T0864_080714_FIX
-#include "system/pmfprint.h"
-#endif
-
-#include "msg/msg_earth.h"
-#include "msg/msg_wifi_place_msg_world.h"
-//#include "savedata/wifihistory.h"
 #include "wifi_earth_place.naix"
 #include "wifi_earth.naix"
-
-#include "wifi_country.h"
-
-#include "wifi_earth_snd.h"
-#endif
+#include "msg/msg_wifi_earth_guide.h"
 
 typedef struct Vec2DS32_tag{
 	s32 x;
 	s32 y;
 }Vec2DS32;
 
-
 #define MAKING
+
 BOOL	WIFI_LocalAreaExistCheck(int nationID);
 //============================================================================================
 //	定数定義
@@ -111,7 +82,7 @@ BOOL	WIFI_LocalAreaExistCheck(int nationID);
 #define EARTH_ICONWIN_PAL		(5)
 #define EARTH_TALKWIN_PAL		(6)
 #define EARTH_MENUWIN_PAL		(7)
-#define EARTH_TOUCHFONT_PAL		(15)
+#define EARTH_TOUCHFONT_PAL		(8)
 
 // カラー指定
 #define FBMP_COL_BLACK		(1)
@@ -239,8 +210,10 @@ enum{
 	EARTHDEMO_SEQ_REGISTRATIONMENU,					//登録メニュー設定
 	EARTHDEMO_SEQ_REGISTRATIONMENU_SELECT,			//登録メニュー選択モード
 	EARTHDEMO_SEQ_REGISTRATIONLIST_NATION,			//国別登録リスト設定
+	EARTHDEMO_SEQ_REGISTRATIONLIST_NATION2,			// 2010.2.24 add by tetsu
 	EARTHDEMO_SEQ_REGISTRATIONLIST_NATION_SELECT,	//国別登録リスト選択モード
 	EARTHDEMO_SEQ_REGISTRATIONLIST_AREA,			//地域別登録リスト設定
+	EARTHDEMO_SEQ_REGISTRATIONLIST_AREA2,			// 2010.2.24 add by tetsu
 	EARTHDEMO_SEQ_REGISTRATIONLIST_AREA_SELECT,		//地域別登録リスト選択モード
 	EARTHDEMO_SEQ_FINAL_REGISTRATION,				//登録最終確認設定
 	EARTHDEMO_SEQ_FINAL_REGISTRATION_YESNO,			//登録最終確認
@@ -298,7 +271,19 @@ enum {
 	MARK_YELLOW,	//通信済
 	MARK_RED,		//自分の登録場所
 	MARK_GREEN,		//カーソル
+
+	MARK_ARRAY_MAX,
 };
+
+#ifdef MAKING
+enum {
+	WIFIEARTH_SND_SELECT = SEQ_SE_SELECT1, 
+	WIFIEARTH_SND_YAMERU = SEQ_SE_SELECT1, 
+	WIFIEARTH_SND_XSELECT = SEQ_SE_SELECT1, 
+	WIFIEARTH_SND_ZOMEIN = SEQ_SE_SELECT1, 
+	WIFIEARTH_SND_ZOMEOUT = SEQ_SE_SELECT1, 
+};
+#endif
 
 //============================================================================================
 //	構造体定義
@@ -356,11 +341,13 @@ typedef struct EARTH_DEMO_WORK_tag
 {
 	//ヒープ設定ワーク
 	int	heapID;
-#ifndef MAKING
+
 	//セーブデータポインタ
-	WIFI_HISTORY*	wifi_sv;
-	CONFIG*			config;	
-#endif
+	GAMEDATA*						gamedata;
+	SAVE_CONTROL_WORK*	scw;
+	MYSTATUS*						mystatus;
+	WIFI_HISTORY*				wifi_sv;
+
 	//地点リストワーク
 	EARTH_DEMO_LIST	placelist;
 
@@ -379,6 +366,9 @@ typedef struct EARTH_DEMO_WORK_tag
 	GFL_FONT*       fontHandle;
 	GFL_MSGDATA*		msg_man;
 	PRINT_STREAM*		printStream;
+  PRINT_UTIL      printUtil;
+  PRINT_QUE*      printQue;
+	PRINTLSB				printLSB;
 	GFL_TCBLSYS*		tcbl;
 	WORDSET*				wordset;
 	STRBUF*					msgstr;
@@ -400,15 +390,8 @@ typedef struct EARTH_DEMO_WORK_tag
 
 	VecFx32	mark_scale;
 
-	//カメラ設定ワーク
-#ifndef MAKING
-	GF_CAMERA_PTR camera_p;
-	CAMERA_ANGLE camera_angle;
-#endif
+	//カメラステータス
 	u16 camera_status;
-
-	//ライト設定ワーク
-	VecFx32	light_vec;
 
 	//動作処理ワーク
 	int		Draw3Dsw;
@@ -439,14 +422,24 @@ typedef struct EARTH_DEMO_WORK_tag
 	int debug_work[8];
 #endif	
 
-	//キー入力
-	int trg;
-	int cont;
+	//入力状態
+	int		trg;
+	int		cont;
+	BOOL	tptrg;
+	BOOL	tpcont;
+	u32		tpx;
+	u32		tpy;
 
-	//文字色バックアップ
-	PRINTLSB printLSB;
-  PRINT_UTIL      printUtil;
-  PRINT_QUE*      printQue;
+	//3Dインターフェース
+	GFL_G3D_CAMERA*			g3Dcamera;
+	GFL_G3D_LIGHTSET*		g3Dlightset;
+
+	GFL_G3D_RES*		g3DresEarth;
+	GFL_G3D_RES*		g3DresMark[MARK_ARRAY_MAX];
+	GFL_G3D_RND*		g3DrndEarth;
+	GFL_G3D_RND*		g3DrndMark[MARK_ARRAY_MAX];
+	GFL_G3D_OBJ*		g3DobjEarth;
+	GFL_G3D_OBJ*		g3DobjMark[MARK_ARRAY_MAX];
 
 }EARTH_DEMO_WORK;
 
@@ -470,9 +463,7 @@ typedef struct {
 //============================================================================================
 //	グローバル関数定義
 //============================================================================================
-#ifndef MAKING
-void	WIFI_RegistratonInit(SAVEDATA* savedata);
-#endif
+void	WIFI_RegistratonInit( GAMEDATA* gamedata );
 BOOL	WIFI_NationAreaNameGet(int nationID,int areaID,
 								STRBUF* nation_str,STRBUF* area_str,int heapID);
 BOOL	WIFI_LocalAreaExistCheck(int nationID);
@@ -492,8 +483,8 @@ static void EarthList_NationAreaListSet( EARTH_DEMO_WORK * wk );
 static int	EarthAreaTableGet(int nationID);
 
 static void Earth_TouchPanel( EARTH_DEMO_WORK * wk );
-static void Earth_TouchPanelParamGet
-	( int prevx,int prevy,int* dirx_p,int* lenx_p,int* diry_p,int* leny_p );
+static void Earth_TouchPanelParamGet( EARTH_DEMO_WORK * wk,
+	int prevx,int prevy,int* dirx_p,int* lenx_p,int* diry_p,int* leny_p );
 
 static BOOL Earth_StrPrint
 ( EARTH_DEMO_WORK * wk, GFL_BMPWIN* bmpwin, const STRBUF* strbuf, u8 x, u8 y );
@@ -514,6 +505,7 @@ static void Earth_ModelRelease( EARTH_DEMO_WORK * wk );
 static void EarthDataInit( EARTH_DEMO_WORK * wk );
 static void EarthCameraInit( EARTH_DEMO_WORK * wk );
 static void EarthLightInit( EARTH_DEMO_WORK * wk );
+static void EarthCameraStart( EARTH_DEMO_WORK * wk );
 
 static BOOL Earth3D_Control( EARTH_DEMO_WORK * wk,int keytrg,int keycont );
 static BOOL Earth3D_CameraMoveNearFar( EARTH_DEMO_WORK * wk );
@@ -706,6 +698,12 @@ static GFL_PROC_RESULT Earth_Demo_Init(GFL_PROC * proc, int * seq, void * pwk, v
 	GFL_STD_MemClear(wk, sizeof(EARTH_DEMO_WORK));
 	wk->heapID = heapID;
 
+	//セーブデータポインタ作成
+	wk->gamedata = (GAMEDATA*)pwk;
+	wk->scw = GAMEDATA_GetSaveControlWork( wk->gamedata );
+	wk->mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
+	wk->wifi_sv = SaveData_GetWifiHistory( wk->scw );
+
 	//日本語版かどうかの判別フラグ
 	if( CasetteLanguage == LANG_JAPAN ){
 		// 日本語バージョンでは日本しか登録できない
@@ -714,45 +712,25 @@ static GFL_PROC_RESULT Earth_Demo_Init(GFL_PROC * proc, int * seq, void * pwk, v
 		// 日本語バージョン以外は最初から地球儀が全部見える
 		wk->Japan_ROM_mode = FALSE;
 	}
-#ifndef MAKING
 #ifdef PM_DEBUG
 	// Ｌボタンをおしていると入力情報をクリアした上で世界から入力できる
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
-		SAVEDATA* sv = PROC_GetParentWork( proc );
-		WIFI_RegistratonInit( sv );
+		WIFI_RegistratonInit( wk->gamedata );
 		wk->Japan_ROM_mode = FALSE;
 	}
 #endif
-#else
-	wk->Japan_ROM_mode = FALSE;
-#endif
+	//ステータス取得
+	wk->my_nation = MyStatus_GetMyNation( wk->mystatus );
+	wk->my_area = MyStatus_GetMyArea( wk->mystatus );
+	wk->my_worldopen_flag = WIFIHISTORY_GetWorldFlag( wk->wifi_sv );
 
-#ifndef MAKING
-	//セーブデータポインタ作成
-	{
-		SAVEDATA* sv = PROC_GetParentWork( proc );
-
-		wk->wifi_sv = SaveData_GetWifiHistory( sv );
-		wk->my_nation = WIFIHISTORY_GetMyNation( wk->wifi_sv );
-		wk->my_area = WIFIHISTORY_GetMyArea( wk->wifi_sv );
-		wk->my_worldopen_flag = WIFIHISTORY_GetWorldFlag( wk->wifi_sv );
-		wk->config	= SaveData_GetConfig( sv );	
-	}
-#endif
 	//ＶＲＡＭ設定
 	Earth_VramBankSet();
-
 	//ＢＧライブラリ設定
 	Earth_BGsysSet( wk->heapID );
 	//メッセージ表示システム初期化
-#ifndef MAKING	
-	MSG_PrintInit();
-#endif
 	wk->wordset = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, EARTH_NAME_SIZE, wk->heapID );
-#ifndef MAKING	
-	//カメラライブラリ設定
-	wk->camera_p = GFC_AllocCamera( wk->heapID );
-#endif
+
 	//３Ｄ描画スイッチ設定
 	wk->Draw3Dsw = DRAW3D_DISABLE;
 	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
@@ -773,8 +751,6 @@ static GFL_PROC_RESULT Earth_Demo_Init(GFL_PROC * proc, int * seq, void * pwk, v
 	//地域リストデータ作成
 	EarthListLoad(wk);
 	
-	OS_Printf("plist cgxnum = %x(%x)\n",
-			EARTH_PLACE_WIN_CGX, EARTH_MENUWINCHR_NUM + EARTH_MENUWINCHR_SIZ);
 	return	GFL_PROC_RES_FINISH;
 }
 
@@ -793,6 +769,13 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 
 	wk->trg = GFL_UI_KEY_GetTrg(); 
 	wk->cont = GFL_UI_KEY_GetCont();
+	wk->tpcont = GFL_UI_TP_GetPointCont(&wk->tpx, &wk->tpy); 
+	if(wk->tpcont == TRUE){
+		wk->tptrg = GFL_UI_TP_GetTrg(); 
+	} else {
+		wk->tptrg = GFL_UI_TP_GetPointTrg(&wk->tpx, &wk->tpy); 
+	}
+
 	// 地球儀モード以外ならタッチ=Aボタン
 	if( (*seq) != EARTHDEMO_SEQ_EARTH_DISPON &&
 		(*seq) != EARTHDEMO_SEQ_MOVE_EARTH && 
@@ -814,12 +797,11 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 		Earth_BGdataLoad(wk, p_handle);	//ＢＧデータロード
 
 		GFL_ARC_CloseDataHandle( p_handle );
-#ifndef MAKING
 		//輝度変更セット（ＩＮ）
 		wk->fade_end_flag = FALSE;
 		WIPE_SYS_Start(	WIPE_PATTERN_WMS,WIPE_TYPE_FADEIN,WIPE_TYPE_FADEIN,
 						WIPE_FADE_BLACK,WIPE_DEF_DIV,WIPE_DEF_SYNC,wk->heapID);
-#endif
+
 		GFL_BG_SetVisible( EARTH_TEXT_PLANE, VISIBLE_ON );
 		GFL_BG_SetVisible( EARTH_ICON_PLANE, VISIBLE_ON );
 		GFL_BG_SetVisible( EARTH_BACK_S_PLANE, VISIBLE_ON );
@@ -830,13 +812,9 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 
 	//-----------------------------------------------------------
 	case EARTHDEMO_SEQ_DISPON:	//描画ＯＮ
-#ifndef MAKING
 		if(WIPE_SYS_EndCheck() == TRUE){	//輝度変更待ち
 			*seq = EARTHDEMO_SEQ_WELCOME_MSG;
 		}
-#else
-		*seq = EARTHDEMO_SEQ_WELCOME_MSG;
-#endif
 		break;
 
 	//-----------------------------------------------------------
@@ -871,9 +849,9 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 				break;
 			}
 			Earth_BmpListDel(wk);//選択リスト削除処理
-#ifndef MAKING
-			Snd_SePlay( WIFIEARTH_SND_SELECT );
-#endif
+
+			PMSND_PlaySE( WIFIEARTH_SND_SELECT );
+
 			switch(list_result){
 			default:
 			case MENU_WORLD:	//「いちらん」
@@ -922,13 +900,14 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 		break;
 
 	case EARTHDEMO_SEQ_REGISTRATIONLIST_NATION:	//国別登録リスト設定
+		wk->my_nation_tmp = 0;//登録情報テンポラリ初期化
+		Earth_BmpListAddGmmAll
+			(wk, &EarthPlaceListWinData, &PlaceListHeader, NARC_message_wifi_place_msg_world_dat);
+		*seq = EARTHDEMO_SEQ_REGISTRATIONLIST_NATION2;	//国別登録リスト選択へ
+		break;
 
+	case EARTHDEMO_SEQ_REGISTRATIONLIST_NATION2:
 		if(Earth_MsgPrint(wk,mes_earth_01_04,A_BUTTON_NOWAIT) == TRUE){
-		
-			wk->my_nation_tmp = 0;//登録情報テンポラリ初期化
-			Earth_BmpListAddGmmAll
-				(wk, &EarthPlaceListWinData, &PlaceListHeader, NARC_message_wifi_place_msg_world_dat);
-
 			*seq = EARTHDEMO_SEQ_REGISTRATIONLIST_NATION_SELECT;	//国別登録リスト選択へ
 		}
 		break;
@@ -943,9 +922,9 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 				break;
 			}
 			Earth_BmpListDel(wk);//選択リスト削除処理
-#ifndef MAKING
-			Snd_SePlay( WIFIEARTH_SND_SELECT );
-#endif
+
+			PMSND_PlaySE( WIFIEARTH_SND_SELECT );
+
 			switch(list_result){
 			default:
 				{
@@ -970,12 +949,13 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 		break;
 
 	case EARTHDEMO_SEQ_REGISTRATIONLIST_AREA:	//地域別登録リスト設定
-
+		wk->my_area_tmp = 0;//登録情報テンポラリ初期化
+		Earth_BmpListAddGmmAll(wk, &EarthPlaceListWinData,&PlaceListHeader,
+					WIFI_COUNTRY_CountryCodeToPlaceMsgDataID(wk->my_nation_tmp));
+		*seq = EARTHDEMO_SEQ_REGISTRATIONLIST_AREA2;
+		break;
+	case EARTHDEMO_SEQ_REGISTRATIONLIST_AREA2:	//地域別登録リスト設定
 		if(Earth_MsgPrint(wk,mes_earth_01_05,A_BUTTON_NOWAIT) == TRUE){
-			wk->my_area_tmp = 0;//登録情報テンポラリ初期化
-			Earth_BmpListAddGmmAll(wk, &EarthPlaceListWinData,&PlaceListHeader,
-						WIFI_COUNTRY_CountryCodeToPlaceMsgDataID(wk->my_nation_tmp));
-
 			*seq = EARTHDEMO_SEQ_REGISTRATIONLIST_AREA_SELECT;	//地域別登録リスト選択へ
 		}
 		break;
@@ -990,9 +970,9 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 				break;
 			}
 			Earth_BmpListDel(wk);//選択リスト削除処理
-#ifndef MAKING
-			Snd_SePlay( WIFIEARTH_SND_SELECT );
-#endif
+
+			PMSND_PlaySE( WIFIEARTH_SND_SELECT );
+
 			switch(list_result){
 			default:
 				wk->my_area_tmp = list_result;			//地域登録
@@ -1032,9 +1012,9 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 			case 0:		//「はい」
 				Earth_MyPlaceInfoWinRelease( wk );
 				//登録データセーブ
-#ifndef MAKING
-				WIFIHISTORY_SetMyNationArea(wk->wifi_sv,wk->my_nation_tmp,wk->my_area_tmp);
-#endif
+				WIFIHISTORY_SetMyNationArea
+					(wk->wifi_sv, wk->mystatus, wk->my_nation_tmp, wk->my_area_tmp);
+
 				wk->my_nation = wk->my_nation_tmp;
 				wk->my_area = wk->my_area_tmp;
 
@@ -1061,18 +1041,16 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 #ifdef WIFI_ERATH_DEBUG_ALL_DRAW
 		wk->earth_mode = GLOBAL_MODE;	// DEBUG
 #endif
-		EarthDataInit(wk);					//地球データ初期化
+		EarthDataInit(wk);								//地球データ初期化
 		EarthList_NationAreaListSet(wk);	//登録地域データ設定
-		EarthCameraInit(wk);				//カメラ初期化
-		EarthLightInit(wk);					//ライト初期化
-#ifndef MAKING
+		EarthCameraStart(wk);							//カメラ開始設定
+
 		//メッセージ画面クリア
-		GF_BGL_BmpWinFill(&wk->msgwin,FBMP_COL_WHITE,0,0,
-							EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->msgwin), FBMP_COL_WHITE );
+		GFL_BMPWIN_TransVramCharacter(wk->msgwin);
 		//「やめる」アイコンＯＮ
-		BmpMenuWinWrite(&wk->iconwin,WINDOW_TRANS_ON,EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
-		// 「みる」アイコンＯＮ
-//		BmpMenuWinWrite(&wk->lookwin,WINDOW_TRANS_ON,EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
+		GFL_BMPWIN_MakeScreen(wk->iconwin);
+		BmpWinFrame_Write(wk->iconwin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
 
 		//住んでいる場所入力済？
 		if(wk->my_nation != 0){
@@ -1080,7 +1058,7 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 		}
 		Earth_PosInfoPut( wk );
 		wk->info_mode = 0;
-#endif
+
 		wk->Draw3Dsw = DRAW3D_ENABLE;//３Ｄ描画スイッチ設定ＯＮ
 
 		*seq = EARTHDEMO_SEQ_MOVE_EARTH;
@@ -1089,9 +1067,6 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 	//-----------------------------------------------------------
 	case EARTHDEMO_SEQ_MOVE_EARTH:	//地球回転
 		{
-			if( GFL_UI_TP_GetTrg() ){	*seq = EARTHDEMO_SEQ_END; }
-					
-#ifndef MAKING
 			u32 minindex;	// ダミー
 			u16 camera_status_backup = wk->camera_status;
 
@@ -1100,23 +1075,25 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 
 			if( Earth_SearchPosInfo(wk, &minindex ) ){
 				// 「みる」アイコンＯＮ
-				BmpMenuWinWrite(&wk->lookwin,WINDOW_TRANS_ON,EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
+				GFL_BMPWIN_MakeScreen(wk->lookwin);
+				BmpWinFrame_Write(wk->lookwin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
 			}else{
 				//「みる」アイコンＯＦＦ
-				BmpMenuWinClear(&wk->lookwin,WINDOW_TRANS_ON);
+				BmpWinFrame_Clear( wk->lookwin, WINDOW_TRANS_ON );
 			}
 
 			//終了判定
-			if((sys.trg & PAD_BUTTON_B)||(wk->tp_result & PAD_BUTTON_B)){
+			if((wk->trg & PAD_BUTTON_B)||(wk->tp_result & PAD_BUTTON_B)){
 				//「やめる」アイコンＯＦＦ
-				BmpMenuWinClear(&wk->iconwin,WINDOW_TRANS_ON);
+				BmpWinFrame_Clear( wk->iconwin, WINDOW_TRANS_ON );
 				//「みる」アイコンＯＦＦ
-				BmpMenuWinClear(&wk->lookwin,WINDOW_TRANS_ON);
-#ifndef MAKING
-				Snd_SePlay( WIFIEARTH_SND_YAMERU );
-#endif
-				GF_BGL_BmpWinFill(&wk->msgwin,FBMP_COL_WHITE,0,0,
-							EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
+				BmpWinFrame_Clear( wk->lookwin, WINDOW_TRANS_ON );
+
+				PMSND_PlaySE( WIFIEARTH_SND_YAMERU );
+
+				//メッセージ画面クリア
+				GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->msgwin), FBMP_COL_WHITE );
+				GFL_BMPWIN_TransVramCharacter(wk->msgwin);
 
 				//住んでいる場所入力済？
 				if(wk->my_nation == 0){
@@ -1129,21 +1106,19 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 				}
 			}else{
 				// 「みる」機能
-				if( ((sys.trg & PAD_BUTTON_X)||(wk->tp_result & PAD_BUTTON_X))&&(wk->info_mode == 0) ){
+				if( ((wk->trg & PAD_BUTTON_X)||(wk->tp_result & PAD_BUTTON_X))&&(wk->info_mode == 0) ){
 					wk->info_mode = 1;
 					Earth_PosInfoPut( wk );
 
 					// info_modeには Earth_PosInfoPut の検索結果が入っている
 					if( wk->info_mode == 1 ){
-#ifndef MAKING
-						Snd_SePlay( WIFIEARTH_SND_XSELECT );
-#endif
+						PMSND_PlaySE( WIFIEARTH_SND_XSELECT );
 					}
 					break;
 				}
 
 				// 抜け判定
-				if((sys.trg & (PAD_BUTTON_X|PAD_BUTTON_A|PAD_BUTTON_B)||(wk->tp_result & PAD_BUTTON_X))
+				if((wk->trg & (PAD_BUTTON_X|PAD_BUTTON_A|PAD_BUTTON_B)||(wk->tp_result & PAD_BUTTON_X))
 						&&(wk->info_mode == 1)){
 					wk->info_mode = 0;
 					Earth_PosInfoPut( wk );
@@ -1164,17 +1139,12 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 				if(camera_status_backup != wk->camera_status){
 					*seq = EARTHDEMO_SEQ_MOVE_CAMERA;
 					if( wk->camera_status == CAMERA_FAR ){
-#ifndef MAKING
-						Snd_SePlay( WIFIEARTH_SND_ZOMEOUT );
-#endif
+						PMSND_PlaySE( WIFIEARTH_SND_ZOMEOUT );
 					}else{
-#ifndef MAKING
-						Snd_SePlay( WIFIEARTH_SND_ZOMEIN );
-#endif
+						PMSND_PlaySE( WIFIEARTH_SND_ZOMEIN );
 					}
 				}
 			}
-#endif
 		}
 
 #ifdef WIFI_ERATH_DEBUG
@@ -1195,20 +1165,14 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 	//-----------------------------------------------------------
 	case EARTHDEMO_SEQ_END:		//終了処理
 		wk->fade_end_flag = FALSE;//輝度変更待ちフラグリセット
-#ifndef MAKING
 		WIPE_SYS_Start(	WIPE_PATTERN_WMS,WIPE_TYPE_FADEOUT,WIPE_TYPE_FADEOUT,
 						WIPE_FADE_BLACK,WIPE_DEF_DIV,WIPE_DEF_SYNC,wk->heapID);
-#endif
 		*seq = EARTHDEMO_SEQ_EXIT;
 		break;
 
 	case EARTHDEMO_SEQ_EXIT:	//終了
 
-#ifndef MAKING
 		if(WIPE_SYS_EndCheck() == TRUE){	//輝度変更待ち
-#else
-		{
-#endif
 			wk->Draw3Dsw = DRAW3D_ENABLE;//３Ｄ描画スイッチ設定ＯＦＦ
 			//ＢＧデータ破棄
 			Earth_BGdataRelease(wk);
@@ -1240,13 +1204,11 @@ static GFL_PROC_RESULT Earth_Demo_Exit(GFL_PROC * proc, int * seq, void * pwk, v
 	GFL_BG_SetVisible( EARTH_ICON_PLANE, VISIBLE_OFF );
 	GFL_BG_SetVisible( EARTH_BACK_S_PLANE, VISIBLE_OFF );
 	GFL_BG_SetVisible( EARTH_BACK_M_PLANE, VISIBLE_OFF );
+	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
 
 	GFL_TCBL_Exit(wk->tcbl);
 
 	//各種内部確保ワーク開放
-#ifndef MAKING
-	GFC_FreeCamera(wk->camera_p);
-#endif
 	WORDSET_Delete( wk->wordset );
 	Earth_BGsysRelease();
 
@@ -1255,8 +1217,6 @@ static GFL_PROC_RESULT Earth_Demo_Exit(GFL_PROC * proc, int * seq, void * pwk, v
 
 	//ヒープ開放
 	GFL_HEAP_DeleteHeap( heapID );
-
-	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
 
 	return	GFL_PROC_RES_FINISH;
 }
@@ -1346,7 +1306,7 @@ static void Earth_BGsysRelease( void )
 static void EarthListLoad( EARTH_DEMO_WORK * wk )
 {
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFI_EARTH_PLACE, wk->heapID );
-#ifndef MAKING
+
 	//地点リスト総数初期化
 	wk->placelist.listcount = 0;
 
@@ -1356,8 +1316,8 @@ static void EarthListLoad( EARTH_DEMO_WORK * wk )
 		u32	size;
 		int	i,listcount;
 
-		filep = ArcUtil_HDL_LoadEx( p_handle, NARC_wifi_earth_place_place_pos_wrd_dat, 
-								FALSE, wk->heapID, ALLOC_TOP, &size );
+		filep = GFL_ARCHDL_UTIL_LoadEx
+			( p_handle, NARC_wifi_earth_place_place_pos_wrd_dat, FALSE, wk->heapID, &size );
 
 		listp = (EARTH_DATA_NATION*)filep;	//ファイル読み込み用に変換
 		listcount = size/6;				//地点数取得（データ長：１地点につき６バイト）
@@ -1370,7 +1330,7 @@ static void EarthListLoad( EARTH_DEMO_WORK * wk )
 			}
 			listp++;
 		}
-		sys_FreeMemoryEz(filep);
+		GFL_HEAP_FreeMemory(filep);
 	}
 	{//地点マーク回転初期化（地域データバイナリデータロード）
 		void* filep;
@@ -1384,8 +1344,7 @@ static void EarthListLoad( EARTH_DEMO_WORK * wk )
 		while(index < datLen){
 
 			data_id = WIFI_COUNTRY_DataIndexToPlaceDataID( index );
-			filep = ArcUtil_HDL_LoadEx( p_handle, data_id, FALSE, 
-									wk->heapID, ALLOC_TOP, &size );
+			filep = GFL_ARCHDL_UTIL_LoadEx( p_handle, data_id, FALSE, wk->heapID, &size );
 
 			listp = (EARTH_DATA_AREA*)filep;	//ファイル読み込み用に変換
 			listcount = size/4;		//地点数取得（データ長：１地点につき４バイト）
@@ -1397,11 +1356,10 @@ static void EarthListLoad( EARTH_DEMO_WORK * wk )
 				wk->placelist.listcount++;
 				listp++;
 			}
-			sys_FreeMemoryEz(filep);
+			GFL_HEAP_FreeMemory(filep);
 			index++;
 		}
 	}
-#endif
 	GFL_ARC_CloseDataHandle( p_handle );
 }
 
@@ -1422,10 +1380,8 @@ static void EarthListSet( EARTH_DEMO_WORK * wk,u32 index,s16 x,s16 y,u16 nationI
 	EarthVecFx32_to_MtxFx33_place(&rotMtx,&rotVec);	//初期位置からの相対座標計算
 	wk->placelist.place[index].rotate = rotMtx;
 
-#ifndef MAKING
 	//マーク色設定(wifihistory定義に沿うこと)
 	wk->placelist.place[index].col = WIFIHISTORY_GetStat(wk->wifi_sv,nationID,areaID);
-#endif
 
 #ifdef WIFI_ERATH_DEBUG_ALL_DRAW
 	wk->placelist.place[index].col = WIFIHIST_STAT_EXIST;	// DEBUG
@@ -1473,7 +1429,6 @@ static int	EarthAreaTableGet(int nationID)
 //============================================================================================
 static void Earth_TouchPanel( EARTH_DEMO_WORK * wk )
 {
-#ifndef MAKING
 	enum {
 		ZOOM_LEN_LIMIT = 4,	///< ズームイン／アウトのアソビ
 	};
@@ -1487,16 +1442,16 @@ static void Earth_TouchPanel( EARTH_DEMO_WORK * wk )
 	//------------------------------------------------------------------------------
 	// Touch Graphic Button Check
 	//------------------------------------------------------------------------------
-	if(	(sys.tp_x >= ((EARTH_ICON_WIN_PX-1) * DOTSIZE))&&
-		(sys.tp_x <= ((EARTH_ICON_WIN_PX+1 + EARTH_ICON_WIN_SX) * DOTSIZE))&&
-		(sys.tp_y >= ((EARTH_ICON_WIN_PY-1) * DOTSIZE))&&
-		(sys.tp_y <= ((EARTH_ICON_WIN_PY + EARTH_ICON_WIN_SY) * DOTSIZE))) {
+	if(	(wk->tpx >= ((EARTH_ICON_WIN_PX-1) * DOTSIZE))&&
+		(wk->tpx <= ((EARTH_ICON_WIN_PX+1 + EARTH_ICON_WIN_SX) * DOTSIZE))&&
+		(wk->tpy >= ((EARTH_ICON_WIN_PY-1) * DOTSIZE))&&
+		(wk->tpy <= ((EARTH_ICON_WIN_PY + EARTH_ICON_WIN_SY) * DOTSIZE))) {
 		// 「やめる」ボタン
 		button_area = PAD_BUTTON_B;
-	} else if( (sys.tp_x >= ((EARTH_LOOK_WIN_PX-1) * DOTSIZE))&&
-		(sys.tp_x <= ((EARTH_LOOK_WIN_PX+1 + EARTH_LOOK_WIN_SX) * DOTSIZE))&&
-		(sys.tp_y >= ((EARTH_LOOK_WIN_PY-1) * DOTSIZE))&&
-		(sys.tp_y <= ((EARTH_LOOK_WIN_PY + EARTH_LOOK_WIN_SY) * DOTSIZE))) {
+	} else if( (wk->tpx >= ((EARTH_LOOK_WIN_PX-1) * DOTSIZE))&&
+		(wk->tpx <= ((EARTH_LOOK_WIN_PX+1 + EARTH_LOOK_WIN_SX) * DOTSIZE))&&
+		(wk->tpy >= ((EARTH_LOOK_WIN_PY-1) * DOTSIZE))&&
+		(wk->tpy <= ((EARTH_LOOK_WIN_PY + EARTH_LOOK_WIN_SY) * DOTSIZE))) {
 		//「みる」ボタン
 		button_area = PAD_BUTTON_X;
 	}
@@ -1504,7 +1459,7 @@ static void Earth_TouchPanel( EARTH_DEMO_WORK * wk )
 	//------------------------------------------------------------------------------
 	// Touch Trg
 	//------------------------------------------------------------------------------
-	if(sys.tp_trg){
+	if(wk->tptrg){
 		if( button_area ) {
 			// 既に結果が出ていた = ボタン範囲
 			// ボタンを押したことにして抜ける
@@ -1518,8 +1473,8 @@ static void Earth_TouchPanel( EARTH_DEMO_WORK * wk )
 			wk->tp_count = 0;
 			wk->tp_result = 0;
 			//初回の検出位置を保存
-			wk->tp_x = sys.tp_x;
-			wk->tp_y = sys.tp_y;
+			wk->tp_x = wk->tpx;
+			wk->tp_y = wk->tpy;
 			wk->tp_count = 4;
 		}
 	}
@@ -1527,7 +1482,7 @@ static void Earth_TouchPanel( EARTH_DEMO_WORK * wk )
 	//------------------------------------------------------------------------------
 	// Touch Cont
 	//------------------------------------------------------------------------------
-	if(sys.tp_cont){
+	if(wk->tpcont){
 		switch(wk->tp_seq){
 		case 0:
 			//最初のカウントはトリガー認識用に無視
@@ -1540,12 +1495,12 @@ static void Earth_TouchPanel( EARTH_DEMO_WORK * wk )
 			// ボタンの範囲だったら地球儀タッチ処理を飛ばす
 			if( button_area ){ break; }
 
-			Earth_TouchPanelParamGet(wk->tp_x,wk->tp_y,&dirx,&lenx,&diry,&leny);
+			Earth_TouchPanelParamGet(wk, wk->tp_x,wk->tp_y,&dirx,&lenx,&diry,&leny);
 			wk->tp_result = dirx | diry;
 			wk->tp_lenx = lenx;
 			wk->tp_leny = leny;
-			wk->tp_x = sys.tp_x;
-			wk->tp_y = sys.tp_y;
+			wk->tp_x = wk->tpx;
+			wk->tp_y = wk->tpy;
 			break;
 		}
 	//------------------------------------------------------------------------------
@@ -1563,8 +1518,8 @@ static void Earth_TouchPanel( EARTH_DEMO_WORK * wk )
 	}
 }
 
-static void Earth_TouchPanelParamGet
-	( int prevx,int prevy,int* dirx_p,int* lenx_p,int* diry_p,int* leny_p )
+static void Earth_TouchPanelParamGet( EARTH_DEMO_WORK * wk,
+	int prevx,int prevy,int* dirx_p,int* lenx_p,int* diry_p,int* leny_p )
 {
 	int x_dir = 0;
 	int y_dir = 0;
@@ -1572,8 +1527,8 @@ static void Earth_TouchPanelParamGet
 	int y_len = 0;
 
 	//Ｘ方向＆移動幅取得
-	if(sys.tp_x != 0xffff){
-		x_len = sys.tp_x - prevx;
+	if(wk->tpx != 0xffff){
+		x_len = wk->tpx - prevx;
 		if(x_len < 0){
 			x_len ^= -1;
 			x_dir = PAD_KEY_RIGHT;
@@ -1588,8 +1543,8 @@ static void Earth_TouchPanelParamGet
 	*lenx_p = x_len;
 
 	//Ｙ方向＆移動幅取得
-	if(sys.tp_y != 0xffff){
-		y_len = sys.tp_y - prevy;
+	if(wk->tpy != 0xffff){
+		y_len = wk->tpy - prevy;
 		if(y_len < 0){
 			y_len ^= -1;
 			y_dir = PAD_KEY_DOWN;
@@ -1602,7 +1557,6 @@ static void Earth_TouchPanelParamGet
 	y_len &= 0x3f;	//リミッター
 	*diry_p = y_dir;
 	*leny_p = y_len;
-#endif
 }
 
 
@@ -1614,7 +1568,7 @@ static void Earth_TouchPanelParamGet
 //----------------------------------
 //ＢＭＰＷＩＮ作成
 //----------------------------------
-static GFL_BMPWIN* _createBmpWin(const BMPWIN_DAT* wDat)
+static GFL_BMPWIN* _createBmpWin(const BMPWIN_DAT* wDat, BOOL makeScreen)
 {
 	GFL_BMPWIN* bmpwin;
 
@@ -1625,8 +1579,9 @@ static GFL_BMPWIN* _createBmpWin(const BMPWIN_DAT* wDat)
 															wDat->palIdx, GFL_BMP_CHRAREA_GET_B);
   //ウインドウクリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), FBMP_COL_WHITE );
-	GFL_BMPWIN_MakeScreen(bmpwin);
-
+	if(makeScreen == TRUE){
+		GFL_BMPWIN_MakeScreen(bmpwin);
+	}
 	return bmpwin;
 }
 
@@ -1642,6 +1597,11 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
                                     FALSE,
                                     wk->heapID);
 
+  //文字色設定バックアップ
+	GFL_FONTSYS_GetColor(&wk->printLSB.l, &wk->printLSB.s, &wk->printLSB.b);
+		
+  //文字色設定
+	GFL_FONTSYS_SetColor(FBMP_COL_BLACK, FBMP_COL_BLK_SDW, FBMP_COL_WHITE);
 	//--------サブＢＧ面-------------------------------------------
 	//テキストＢＧ面コントロール設定
 	GFL_BG_SetBGControl(EARTH_TEXT_PLANE,&Earth_Demo_BGtxt_header,GFL_BG_MODE_TEXT);
@@ -1689,7 +1649,7 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 	GFL_BG_SetBackGroundColor( EARTH_TEXT_PLANE,EARTH_NULL_PALETTE );
 
 	//メッセージウインドウビットマップ作成（ウインドウ内側）
-	wk->msgwin = _createBmpWin( &EarthMsgWinData );
+	wk->msgwin = _createBmpWin( &EarthMsgWinData, TRUE );
 	BmpWinFrame_Write(wk->msgwin, WINDOW_TRANS_ON, EARTH_TALKWINCHR_NUM,EARTH_TALKWIN_PAL);
   GFL_BMPWIN_TransVramCharacter(wk->msgwin);
 
@@ -1726,7 +1686,7 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 																	wk->heapID);
 	//メニューウインドウキャラ＆パレット読み込み（ウインドウ外側）
 	BmpWinFrame_GraphicSet
-		(EARTH_ICON_PLANE, 0/*EARTH_MENUWINCHR_NUM*/, EARTH_MENUWIN_PAL, 0, wk->heapID);
+		(EARTH_ICON_PLANE, EARTH_MENUWINCHR_NUM, EARTH_MENUWIN_PAL, 0, wk->heapID);
 
 	//フォントパレット読み込み
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, 
@@ -1753,25 +1713,27 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 #ifndef MAKING
 		//タッチフォントのロード
 		FontProc_LoadFont( FONT_TOUCH, wk->heapID );
-#endif
 		//タッチフォント用パレットのロード
 		{//パレットデータがないので直接作成
-			u16 pal[4] = { 0x7fff, 0x1ce7, 0x4e72, 0x7fff };
-			GFL_BG_LoadPalette( EARTH_ICON_PLANE, &pal, 2*4, EARTH_TOUCHFONT_PAL*PALSIZE+1*2 );
+			//u16 pal[4] = { 0x7fff, 0x1ce7, 0x4e72, 0x7fff };
+			//GFL_BG_LoadPalette( EARTH_ICON_PLANE, &pal, 2*4, EARTH_TOUCHFONT_PAL*PALSIZE+1*2 );
 		}
+#endif
 		//メッセージウインドウビットマップ作成（ウインドウ内側）
-		wk->iconwin = _createBmpWin( &EarthIconWinData );
+		wk->iconwin = _createBmpWin( &EarthIconWinData, FALSE );
 		//文字列の取得（やめる）
 		GFL_MSG_GetString(wk->msg_man, mes_earth_03_03, temp_str);
 		//文字列の表示
-		Earth_StrPrint(wk, wk->iconwin, temp_str, 0, 0);	
+		Earth_StrPrint(wk, wk->iconwin, temp_str, 4, 0);	
+		GFL_BMPWIN_TransVramCharacter(wk->iconwin);
 		
 		//メッセージウインドウビットマップ作成（ウインドウ内側）
-		wk->lookwin = _createBmpWin( &EarthLookWinData );
+		wk->lookwin = _createBmpWin( &EarthLookWinData, FALSE );
 		//文字列の取得（みる）
 		GFL_MSG_GetString(wk->msg_man, mes_earth_02_08, temp_str);
 		//文字列の表示
 		Earth_StrPrint(wk, wk->lookwin, temp_str, 0, 0);
+		GFL_BMPWIN_TransVramCharacter(wk->lookwin);
 
 		//メッセージバッファの開放
 		GFL_STR_DeleteBuffer(temp_str);
@@ -1794,6 +1756,8 @@ static void Earth_BGdataRelease( EARTH_DEMO_WORK * wk )
 	GFL_BG_FreeBGControl(EARTH_BACK_S_PLANE);
 
   GFL_FONT_Delete(wk->fontHandle);
+  //文字色設定復帰
+	GFL_FONTSYS_SetColor(wk->printLSB.l, wk->printLSB.s, wk->printLSB.b);
 }
 
 //----------------------------------
@@ -1820,7 +1784,6 @@ static BOOL Earth_StrPrint
 //----------------------------------
 static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 {
-#if 1
 	BOOL result = FALSE;
 
 	switch(wk->msgseq){
@@ -1856,73 +1819,27 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 				break;
 			case PRINTSTREAM_STATE_PAUSE:  ///< 一時停止中（ページ切り替え待ち等）
 				if(wk->trg & PAD_BUTTON_A){
-					GFL_STR_DeleteBuffer(wk->msgstr);
-					PRINTSYS_PrintStreamDelete(wk->printStream);
-
-					wk->msgseq = MSGSET;
-					result = TRUE;
+					// 文字列送り処理
+					PRINTSYS_PrintStreamReleasePause(wk->printStream);
 				}
 				break;
 			case PRINTSTREAM_STATE_DONE:   ///< 文字列終端まで表示完了
-				GFL_STR_DeleteBuffer(wk->msgstr);
-				PRINTSYS_PrintStreamDelete(wk->printStream);
-
-				wk->msgseq = MSGSET;
-				result = TRUE;
+				wk->msgseq = MSGWAIT;
 				break;
 			}
 		}
 		break;
 
-#if 0
 	case MSGWAIT:
-		//終了待ち
-		if((button_mode != A_BUTTON_WAIT)||(wk->trg & PAD_BUTTON_A)){
-			wk->msgseq = MSGSET;
-			result = TRUE;
-		}
-#endif
+		//終了
+		GFL_STR_DeleteBuffer(wk->msgstr);
+		PRINTSYS_PrintStreamDelete(wk->printStream);
+
+		wk->msgseq = MSGSET;
+		result = TRUE;
+		break;
 	}
 	return result;
-#else
-	BOOL result = FALSE;
-
-	switch(wk->msgseq){
-	case MSGSET:
-		//領域クリア
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->msgwin), FBMP_COL_WHITE );
-		//文字列バッファの作成
-		wk->msgstr = GFL_STR_CreateBuffer(EARTH_STRBUF_SIZE, wk->heapID);	
-		//文字列の取得
-		GFL_MSG_GetString(wk->msg_man, msgID, wk->msgstr);
-		//プリントキューハンドル作成
-		wk->printQue = PRINTSYS_QUE_Create(wk->heapID);
-		PRINT_UTIL_Setup(&wk->printUtil, wk->msgwin);
-		//文字列の表示
-    PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue,
-                0, 0, wk->msgstr, wk->fontHandle, PRINTSYS_LSB_Make(1,2,15));
-		wk->msgseq = MSGDRAW;
-		break;
-
-	case MSGDRAW:
-		PRINT_UTIL_Trans(&wk->printUtil, wk->printQue);
-		if(PRINTSYS_QUE_Main(wk->printQue) == TRUE){
-			wk->msgseq = MSGWAIT;
-		}
-		break;
-
-	case MSGWAIT:
-		if(wk->trg == PAD_BUTTON_A){
-			PRINTSYS_QUE_Clear(wk->printQue);
-			PRINTSYS_QUE_Delete(wk->printQue);
-
-			GFL_STR_DeleteBuffer(wk->msgstr);
-			wk->msgseq = MSGSET;
-			result = TRUE;
-		}
-	}
-	return result;
-#endif
 }
 
 //----------------------------------
@@ -1931,9 +1848,7 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 static void Earth_BmpListMoveSeCall(BMPMENULIST_WORK * wk,u32 param,u8 mode)
 {
 	if( mode == 0 ){//初期化時は鳴らさない
-#ifndef MAKING
-		Snd_SePlay( WIFIEARTH_SND_SELECT );
-#endif
+		//PMSND_PlaySE( WIFIEARTH_SND_SELECT );
 	}
 }
 
@@ -1947,7 +1862,7 @@ static void Earth_BmpListAdd(	EARTH_DEMO_WORK * wk, const BMPWIN_DAT* windata,
 	int	i;
 
 	//メニュービットマップ追加
-	wk->listwin = _createBmpWin( windata );
+	wk->listwin = _createBmpWin( windata, TRUE );
 	//メニューリスト用文字列バッファ作成
 	wk->bmplistdata = BmpMenuWork_ListCreate(listheader->count,wk->heapID);
 	//メニューリスト用文字列バッファ取得
@@ -1976,7 +1891,7 @@ static void Earth_BmpListAdd(	EARTH_DEMO_WORK * wk, const BMPWIN_DAT* windata,
 	BmpMenuList_SetCursorBmp(wk->bmplist, wk->heapID);
 
 	//ウインドウ描画
-	BmpWinFrame_Write(wk->listwin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
+	BmpWinFrame_Write(wk->listwin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM, EARTH_MENUWIN_PAL);
   GFL_BMPWIN_TransVramCharacter(wk->listwin);
 }
 
@@ -1992,7 +1907,7 @@ static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* wind
 	int	i;
 
 	//メニュービットマップ追加
-	wk->listwin = _createBmpWin( windata );
+	wk->listwin = _createBmpWin( windata, TRUE );
 	//メッセージマネージャ作成
 	msg_man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, listarcID, wk->heapID);
 	//メッセージ総数取得
@@ -2028,7 +1943,7 @@ static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* wind
 	BmpMenuList_SetCursorBmp(wk->bmplist, wk->heapID);
 
 	//ウインドウ描画
-	BmpWinFrame_Write(wk->listwin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
+	BmpWinFrame_Write(wk->listwin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM, EARTH_MENUWIN_PAL);
   GFL_BMPWIN_TransVramCharacter(wk->listwin);
 }
 
@@ -2056,7 +1971,7 @@ static void Earth_MyPlaceInfoWinSet( EARTH_DEMO_WORK* wk )
 	STRBUF* msgstr = GFL_STR_CreateBuffer(EARTH_STRBUF_SIZE, wk->heapID);	
 	STRBUF* msgtmp = GFL_STR_CreateBuffer(EARTH_STRBUF_SIZE, wk->heapID);	
 
-	wk->infowin = _createBmpWin(&EarthInfoWinData );
+	wk->infowin = _createBmpWin(&EarthInfoWinData, TRUE );
 
 	WORDSET_RegisterCountryName( wk->wordset, 0, wk->my_nation );
 	WORDSET_RegisterLocalPlaceName( wk->wordset, 1, wk->my_nation, wk->my_area );
@@ -2071,7 +1986,7 @@ static void Earth_MyPlaceInfoWinSet( EARTH_DEMO_WORK* wk )
 	GFL_STR_DeleteBuffer( msgtmp );
 	GFL_STR_DeleteBuffer( msgstr );
 
-	BmpWinFrame_Write(wk->infowin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
+	BmpWinFrame_Write(wk->infowin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM, EARTH_MENUWIN_PAL);
   GFL_BMPWIN_TransVramCharacter(wk->infowin);
 }
 
@@ -2080,7 +1995,7 @@ static void Earth_MyPlaceInfoWinSet2( EARTH_DEMO_WORK* wk, int nation, int area 
 	STRBUF* str1 = GFL_STR_CreateBuffer( EARTH_NAME_SIZE, wk->heapID );
 	STRBUF* str2 = GFL_STR_CreateBuffer( EARTH_NAME_SIZE, wk->heapID );
 
-	wk->infowin = _createBmpWin(&EarthInfoWinData );
+	wk->infowin = _createBmpWin(&EarthInfoWinData, TRUE );
 
 	WIFI_NationAreaNameGet(nation, area, str1, str2, wk->heapID);
 	if( area != 0 ){
@@ -2090,7 +2005,7 @@ static void Earth_MyPlaceInfoWinSet2( EARTH_DEMO_WORK* wk, int nation, int area 
 	GFL_STR_DeleteBuffer(str2);
 	GFL_STR_DeleteBuffer(str1);
 
-	BmpWinFrame_Write(wk->infowin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
+	BmpWinFrame_Write(wk->infowin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM, EARTH_MENUWIN_PAL);
   GFL_BMPWIN_TransVramCharacter(wk->infowin);
 }
 
@@ -2221,7 +2136,6 @@ static void Earth_PosInfoPut( EARTH_DEMO_WORK* wk )
 			GFL_STR_DeleteBuffer(str2);
 			GFL_STR_DeleteBuffer(str1);
 
-
 			// さしている位置を地域の位置にする
 			wk->rotate.x = wk->placelist.place[minindex].x;
 			wk->rotate.y = wk->placelist.place[minindex].y;
@@ -2229,6 +2143,7 @@ static void Earth_PosInfoPut( EARTH_DEMO_WORK* wk )
 			wk->info_mode = 0;
 		}
 	}
+  GFL_BMPWIN_TransVramCharacter(wk->msgwin);
 }
 
 //============================================================================================
@@ -2236,51 +2151,63 @@ static void Earth_PosInfoPut( EARTH_DEMO_WORK* wk )
 //	ローカル関数（３Ｄ関連）
 //
 //============================================================================================
+typedef struct {
+	u16 idx;
+	u16 datID;
+}MARK_DATA;
+static const MARK_DATA mark_array_data[] = {
+	{ MARK_RED,			NARC_wifi_earth_earth_mark_r_nsbmd },
+	{ MARK_GREEN,		NARC_wifi_earth_earth_mark_g_nsbmd },
+	{	MARK_BLUE,		NARC_wifi_earth_earth_mark_b_nsbmd },
+	{ MARK_YELLOW,	NARC_wifi_earth_earth_mark_y_nsbmd },
+};
 //----------------------------------
 //３Ｄデータロード関数＆３Ｄデータ開放関数
 //----------------------------------
 static void Earth_ModelLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 {
-#ifndef MAKING
-	wk->resfileheader = ArchiveDataLoadAllocByHandle	//地球モデル
-						( p_handle, NARC_wifi_earth_wifi_earth_nsbmd, wk->heapID );
-	simple_3DModelSetResFileAlready( &wk->renderobj, &wk->resmodel, &wk->resfileheader );
-	
-	wk->mark_resfileheader[MARK_RED] = ArchiveDataLoadAllocByHandle	//地点マークモデル（赤）
-						( p_handle, NARC_wifi_earth_earth_mark_r_nsbmd, wk->heapID );
-	simple_3DModelSetResFileAlready(	&wk->mark_renderobj[MARK_RED],
-										&wk->mark_resmodel[MARK_RED],
-										&wk->mark_resfileheader[MARK_RED]);
+	u32 arcID = ARCID_WIFI_EARTH;
+	int i;
 
-	wk->mark_resfileheader[MARK_GREEN] = ArchiveDataLoadAllocByHandle	//地点マークモデル（緑）
-						( p_handle, NARC_wifi_earth_earth_mark_g_nsbmd, wk->heapID );
-	simple_3DModelSetResFileAlready(	&wk->mark_renderobj[MARK_GREEN],
-										&wk->mark_resmodel[MARK_GREEN],
-										&wk->mark_resfileheader[MARK_GREEN]);
+	//地球モデル
+	wk->g3DresEarth = GFL_G3D_CreateResourceArc(arcID, NARC_wifi_earth_wifi_earth_nsbmd);
+	GFL_G3D_TransVramTexture( wk->g3DresEarth );
+	wk->g3DrndEarth = GFL_G3D_RENDER_Create(wk->g3DresEarth, 0, wk->g3DresEarth); 
+	wk->g3DobjEarth = GFL_G3D_OBJECT_Create(wk->g3DrndEarth, NULL, 0); 
 
-	wk->mark_resfileheader[MARK_BLUE] = ArchiveDataLoadAllocByHandle	//地点マークモデル（青）
-						( p_handle, NARC_wifi_earth_earth_mark_b_nsbmd, wk->heapID );
-	simple_3DModelSetResFileAlready(	&wk->mark_renderobj[MARK_BLUE],
-										&wk->mark_resmodel[MARK_BLUE],
-										&wk->mark_resfileheader[MARK_BLUE]);
+	//地点マークモデル
+	for(i=0; i<NELEMS(mark_array_data); i++){
+		u16 p = mark_array_data[i].idx;
+		wk->g3DresMark[p] = GFL_G3D_CreateResourceArc(arcID, mark_array_data[i].datID);
+		GFL_G3D_TransVramTexture( wk->g3DresMark[p] );
+		wk->g3DrndMark[p] = GFL_G3D_RENDER_Create(wk->g3DresMark[p], 0, wk->g3DresMark[p]); 
+		wk->g3DobjMark[p] = GFL_G3D_OBJECT_Create(wk->g3DrndMark[p], NULL, 0); 
+	}
 
-	wk->mark_resfileheader[MARK_YELLOW] = ArchiveDataLoadAllocByHandle	//地点マークモデル（黄）
-						( p_handle, NARC_wifi_earth_earth_mark_y_nsbmd, wk->heapID );
-	simple_3DModelSetResFileAlready(	&wk->mark_renderobj[MARK_YELLOW],
-										&wk->mark_resmodel[MARK_YELLOW],
-										&wk->mark_resfileheader[MARK_YELLOW]);
-#endif
+	// カメラ・ライトセットアップ
+	EarthCameraInit( wk );
+	EarthLightInit( wk );
 }
 
 static void Earth_ModelRelease( EARTH_DEMO_WORK * wk )
 {
-#ifndef MAKING
-	sys_FreeMemoryEz(wk->mark_resfileheader[MARK_YELLOW]);
-	sys_FreeMemoryEz(wk->mark_resfileheader[MARK_BLUE]);
-	sys_FreeMemoryEz(wk->mark_resfileheader[MARK_GREEN]);
-	sys_FreeMemoryEz(wk->mark_resfileheader[MARK_RED]);
-	sys_FreeMemoryEz(wk->resfileheader);
-#endif
+	int i;
+
+	GFL_G3D_CAMERA_Delete( wk->g3Dcamera );
+	GFL_G3D_LIGHT_Delete( wk->g3Dlightset );
+
+	GFL_G3D_OBJECT_Delete( wk->g3DobjEarth ); 
+	GFL_G3D_RENDER_Delete( wk->g3DrndEarth ); 
+	GFL_G3D_FreeVramTexture( wk->g3DresEarth );
+	GFL_G3D_DeleteResource( wk->g3DresEarth );
+
+	for(i=0; i<NELEMS(mark_array_data); i++){
+		u16 p = mark_array_data[i].idx;
+		GFL_G3D_OBJECT_Delete( wk->g3DobjMark[p] ); 
+		GFL_G3D_RENDER_Delete( wk->g3DrndMark[p] ); 
+		GFL_G3D_FreeVramTexture( wk->g3DresMark[p] );
+		GFL_G3D_DeleteResource( wk->g3DresMark[p] );
+	}
 }
 
 //----------------------------------
@@ -2316,27 +2243,25 @@ static void EarthDataInit( EARTH_DEMO_WORK * wk )
 //----------------------------------
 static void EarthCameraInit( EARTH_DEMO_WORK * wk )
 {
-#ifndef MAKING
-	VecFx32	target_pos	= 	{ INIT_CAMERA_TARGET_XVAL,
-							  INIT_CAMERA_TARGET_YVAL,
-							  INIT_CAMERA_TARGET_ZVAL };
-	VecFx32	camera_pos	=	{ INIT_CAMERA_POS_XVAL,
-							  INIT_CAMERA_POS_YVAL,
-							  INIT_CAMERA_POS_ZVAL };
+	VecFx32	target_pos = 
+		{ INIT_CAMERA_TARGET_XVAL, INIT_CAMERA_TARGET_YVAL, INIT_CAMERA_TARGET_ZVAL };
+	VecFx32	camera_pos =
+		{ INIT_CAMERA_POS_XVAL, INIT_CAMERA_POS_YVAL, INIT_CAMERA_POS_ZVAL };
+	fx32 near = INIT_CAMERA_CLIP_NEAR;
+	fx32 far = INIT_CAMERA_CLIP_FAR;
 
-	//カメラライブラリ初期化
-	GFC_InitCameraTC(	&target_pos,&camera_pos,
-						INIT_CAMERA_PERSPWAY,
-						GF_CAMERA_PERSPECTIV,
-						FALSE,
-						wk->camera_p);
+  wk->g3Dcamera = GFL_G3D_CAMERA_CreateDefault( &camera_pos, &target_pos, wk->heapID );
 
-	//クリップ関連設定
-	GFC_SetCameraClip(INIT_CAMERA_CLIP_NEAR,INIT_CAMERA_CLIP_FAR,wk->camera_p);
-	GFC_SetCameraView(GF_CAMERA_PERSPECTIV,wk->camera_p);
-	//カメラＯＮ
-	GFC_AttachCamera(wk->camera_p);
+	GFL_G3D_CAMERA_SetfovySin( wk->g3Dcamera, FX_SinIdx( INIT_CAMERA_PERSPWAY ) );
+	GFL_G3D_CAMERA_SetfovyCos( wk->g3Dcamera, FX_CosIdx( INIT_CAMERA_PERSPWAY ) );
+	GFL_G3D_CAMERA_SetNear( wk->g3Dcamera, &near );
+	GFL_G3D_CAMERA_SetFar( wk->g3Dcamera, &far );
 
+  GFL_G3D_CAMERA_Switching(wk->g3Dcamera);
+}
+
+static void EarthCameraStart( EARTH_DEMO_WORK * wk )
+{
 	if(wk->earth_mode == JAPAN_MODE){
 		//カメラ距離フラグ初期化（開始時は近距離）
 		wk->camera_status = CAMERA_NEAR;
@@ -2350,19 +2275,22 @@ static void EarthCameraInit( EARTH_DEMO_WORK * wk )
 			break;
 		}
 	}
-#endif
 }
 
 //----------------------------------
 //ライト初期化
 //----------------------------------
+static const GFL_G3D_LIGHT_DATA lightTbl[] = {
+	{ USE_LIGHT_NUM, 
+		{{INIT_LIGHT_ANGLE_XVAL, INIT_LIGHT_ANGLE_YVAL, INIT_LIGHT_ANGLE_ZVAL}, GX_RGB(31,31,31) } 
+	},
+};
+static const GFL_G3D_LIGHTSET_SETUP lightSetup = { lightTbl, NELEMS(lightTbl) };
+
 static void EarthLightInit( EARTH_DEMO_WORK * wk )
 {
-	wk->light_vec.x = INIT_LIGHT_ANGLE_XVAL;
-	wk->light_vec.y = INIT_LIGHT_ANGLE_YVAL;
-	wk->light_vec.z = INIT_LIGHT_ANGLE_ZVAL;
-	NNS_G3dGlbLightVector(USE_LIGHT_NUM,wk->light_vec.x,wk->light_vec.y,wk->light_vec.z);
-	//NNS_G3dGlbLightVector(1,-LIGHT_VECDEF,-LIGHT_VECDEF,-LIGHT_VECDEF);
+  wk->g3Dlightset = GFL_G3D_LIGHT_Create( &lightSetup, wk->heapID );
+  GFL_G3D_LIGHT_Switching(wk->g3Dlightset);
 }
 
 //----------------------------------
@@ -2507,9 +2435,17 @@ static BOOL Earth3D_Control( EARTH_DEMO_WORK * wk,int keytrg,int keycont )
 //----------------------------------
 static BOOL Earth3D_CameraMoveNearFar( EARTH_DEMO_WORK * wk )
 {
-#ifndef MAKING
-	fx32 distance = GFC_GetCameraDistance(wk->camera_p);
+	VecFx32 camPos, camTarget, vec;
+	fx32 distance;
 	BOOL result = FALSE;
+
+	GFL_G3D_CAMERA_GetPos( wk->g3Dcamera, &camPos );
+	GFL_G3D_CAMERA_GetTarget( wk->g3Dcamera, &camTarget );
+	VEC_Subtract(&camPos, &camTarget, &vec);
+	distance = VEC_Mag(&vec);		// 距離取得
+	VEC_Normalize(&vec, &vec);	// 方向単位ベクトル取得
+
+	//distance = GFC_GetCameraDistance(wk->camera_p);
 
 	switch(wk->camera_status){
 
@@ -2535,11 +2471,10 @@ static BOOL Earth3D_CameraMoveNearFar( EARTH_DEMO_WORK * wk )
 		}
 		break;
 	}
-	GFC_SetCameraDistance(distance,wk->camera_p);
+	VEC_MultAdd(distance, &vec, &camTarget, &camPos);	
+	GFL_G3D_CAMERA_SetPos( wk->g3Dcamera, &camPos );
+	//GFC_SetCameraDistance(distance,wk->camera_p);
 	return result;
-#else
-	return FALSE;
-#endif
 }
 
 //----------------------------------
@@ -2556,53 +2491,49 @@ static void Earth3D_Draw( EARTH_DEMO_WORK * wk )
 		break;
 
 	case DRAW3D_BANISH:
-#ifndef MAKING
-		GF_G3X_Reset();
-		GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO,GX_BUFFERMODE_W);
-#endif
+		GFL_G3D_DRAW_Start();
+		GFL_G3D_DRAW_End();
 		wk->Draw3Dsw = DRAW3D_DISABLE;
 		break;
 
 	case DRAW3D_ENABLE:
-#ifndef MAKING
-		GF_G3X_Reset();
-		GFC_CameraLookAt();
+		GFL_G3D_LIGHT_Switching(wk->g3Dlightset);
+		GFL_G3D_CAMERA_Switching(wk->g3Dcamera);
+
+		GFL_G3D_DRAW_Start();
+		GFL_G3D_DRAW_SetLookAt();
 		{
-			//グローバル回転行列取得
-			EarthVecFx32_to_MtxFx33(&rotate_world,&wk->rotate);
-	
-			//地球描画
-			simple_3DModelDraw(&wk->renderobj,&wk->trans,&rotate_world,&wk->scale);
-			//GF_G3D_Draw_1mat1shape(&wk->renderobj,&wk->trans,&rotate_world,&wk->scale);
-	
+			GFL_G3D_OBJSTATUS statusEarth;
+			statusEarth.trans = wk->trans;
+			MTX_Identity33( &statusEarth.rotate );
+
 			//中心マーク描画（基準点のため回転なし）
-			{
-				MtxFx33 rotate_tmp = {FX32_ONE,0,0,0,FX32_ONE,0,0,0,FX32_ONE};
-				simple_3DModelDraw(&wk->mark_renderobj[MARK_GREEN],
-						&wk->trans,&rotate_tmp,&wk->mark_scale);
-				//GF_G3D_Draw_1mat1shape(&wk->mark_renderobj[MARK_GREEN],
-				//		&wk->trans,&rotate_tmp,&wk->mark_scale);
-			}
+			statusEarth.scale = wk->mark_scale;
+			GFL_G3D_DRAW_DrawObject( wk->g3DobjMark[MARK_GREEN], &statusEarth);
+			
+			//地球描画
+			statusEarth.scale = wk->scale;
+			EarthVecFx32_to_MtxFx33(&statusEarth.rotate, &wk->rotate); //グローバル回転行列取得
+			GFL_G3D_DRAW_DrawObject( wk->g3DobjEarth, &statusEarth);
 	
 			//地点マーク描画
 			{
-				MtxFx33 rotate_tmp = {FX32_ONE,0,0,0,FX32_ONE,0,0,0,FX32_ONE};
-				int	i;
-	
+				GFL_G3D_OBJSTATUS statusMark;
+				int i;
+
+				statusMark.trans = wk->trans;
+				statusMark.scale = wk->mark_scale;
+
 				for(i=0;i<wk->placelist.listcount;i++){
-					MTX_Concat33(&wk->placelist.place[i].rotate,&rotate_world,&rotate_tmp);
+					MTX_Concat33(&wk->placelist.place[i].rotate, &statusEarth.rotate, &statusMark.rotate);
 	
 					if(wk->placelist.place[i].col != MARK_NULL){
-						simple_3DModelDraw(	&wk->mark_renderobj[wk->placelist.place[i].col],
-											&wk->trans,&rotate_tmp,&wk->mark_scale);
-						//GF_G3D_Draw_1mat1shape(	&wk->mark_renderobj[wk->placelist.place[i].col],
-						//					&wk->trans,&rotate_tmp,&wk->mark_scale);
+						GFL_G3D_DRAW_DrawObject( wk->g3DobjMark[wk->placelist.place[i].col], &statusMark);
 					}
 				}
 			}
 		}
-		GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO,GX_BUFFERMODE_W);
-#endif
+		GFL_G3D_DRAW_End();
 		break;
 	}
 }
@@ -2620,15 +2551,15 @@ static void Earth3D_Draw( EARTH_DEMO_WORK * wk )
  * @retval
  */
 //============================================================================================
-#ifndef MAKING
-void	WIFI_RegistratonInit(SAVEDATA* savedata)
+void	WIFI_RegistratonInit( GAMEDATA* gamedata )
 {
-	WIFI_HISTORY* wh = SaveData_GetWifiHistory(savedata);
+	SAVE_CONTROL_WORK*	scw = GAMEDATA_GetSaveControlWork( gamedata );
+	MYSTATUS*						mystatus = GAMEDATA_GetMyStatus( gamedata );
+	WIFI_HISTORY*				wh = SaveData_GetWifiHistory( scw );
 
-	WIFIHISTORY_SetMyNationArea(wh,0,0);
-	WIFIHISTORY_SetWorldFlag(wh,FALSE);
+	WIFIHISTORY_SetMyNationArea(wh, mystatus, 0, 0);
+	WIFIHISTORY_SetWorldFlag(wh, FALSE);
 }
-#endif
 
 //============================================================================================
 /**
@@ -2734,14 +2665,13 @@ static u32 WIFI_EarthGetRotateDist( const Vec2DS32* cp_earth, const Vec2DS32* cp
 	// 距離が近いほうを選ぶ
 	dif_x = MATH_ABS(cp_earth->x - cp_place->x);
 	dif_y = MATH_ABS(cp_earth->y - cp_place->y);
-#ifndef MAKING
-	if( dif_x > RotKey(180) ){
+
+	if( dif_x > GFL_CALC_RotKey(180) ){
 		dif_x = 0xffff - dif_x;
 	}
-	if( dif_y > RotKey(180) ){
+	if( dif_y > GFL_CALC_RotKey(180) ){
 		dif_y = 0xffff - dif_y;
 	}
-#endif
 	dist = FX_Sqrt( ((dif_x*dif_x)+(dif_y*dif_y)) << FX32_SHIFT ) >> FX32_SHIFT;
 
 	return dist;
@@ -2821,10 +2751,10 @@ static void EarthDebugNationMarkSet( EARTH_DEMO_WORK * wk )
 	u16 cursor_pos;
 	int	nationID;
 
-	if(sys.trg & PAD_BUTTON_SELECT){
+	if(wk->trg & PAD_BUTTON_SELECT){
 		pattern_flag = WIFIHIST_STAT_NEW;
 	}
-	if(sys.trg & PAD_BUTTON_SELECT){
+	if(wk->trg & PAD_BUTTON_SELECT){
 		pattern_flag = WIFIHIST_STAT_EXIST;
 	}
 	if(pattern_flag == WIFIHIST_STAT_NODATA){
@@ -2847,10 +2777,10 @@ static void EarthDebugAreaMarkSet( EARTH_DEMO_WORK * wk )
 	u16 cursor_pos;
 	int	areaID;
 
-	if(sys.trg & PAD_BUTTON_SELECT){
+	if(wk->trg & PAD_BUTTON_SELECT){
 		pattern_flag = WIFIHIST_STAT_NEW;
 	}
-	if(sys.trg & PAD_BUTTON_SELECT){
+	if(wk->trg & PAD_BUTTON_SELECT){
 		pattern_flag = WIFIHIST_STAT_EXIST;
 	}
 	if(pattern_flag == WIFIHIST_STAT_NODATA){
