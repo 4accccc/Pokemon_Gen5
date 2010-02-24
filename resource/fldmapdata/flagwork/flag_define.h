@@ -2506,8 +2506,8 @@
 #define TMFLG_C03R0201_GALLERY_TYPE       2732 /* 0x0aac ギャラリーの日替わりポケモンタイプ */
 #define TMFLG_C03R0201_GALLERY_CLEAR      2733 /* 0x0aad ギャラリーの日替わりミッションクリア判定 */
 #define TMFLG_C03R1001_MASSAGE            2734 /* 0x0aae １日１回なつきマッサージ */
-		/* not used  2735(0x0aaf) */
-		/* not used  2736(0x0ab0) */
+#define TMFLG_C03P09_SWEETS               2735 /* 0x0aaf １日１個購入制限アイテム */
+#define TMFLG_C02R0601_ITEM               2736 /* 0x0ab0 １日１個入手制限アイテム */
 		/* not used  2737(0x0ab1) */
 		/* not used  2738(0x0ab2) */
 		/* not used  2739(0x0ab3) */

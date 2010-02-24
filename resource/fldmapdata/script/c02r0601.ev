@@ -9,7 +9,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c02r0601.h"
-  //.include  "c02r0601.h"
+  .include  "c02r0601.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -36,8 +36,43 @@ _EVENT_DATA_END
 /*  C02R0601 WAITRESSの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c02r0601_waitress_01
-  
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress_01 )
+
+	
+
+	//今日既にイベントを終えたかチェック
+	IF FLAG_ON( TMFLG_C02R0601_ITEM ) THEN
+		
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress_03 )
+		
+	//イベントを終えていない
+	ELSE
+
+		//曜日チェック
+		DEFINE_LOCAL LWK_WEEKCK
+		_GET_WEEK( LWK_WEEKCK )
+		
+		//水曜日である
+		IF $LWK_WEEKCK == RTC_WEEK_WEDNESDAY THEN
+			_TALK_OBJ_START()
+			_BALLOONWIN_OBJMSG( msg_c02r0601_waitress_02 , C02R0601_WAITRESS_01 )
+			_BALLOONWIN_CLOSE()
+			
+			_ITEM_EVENT_KEYWAIT(ITEM_MOOMOOMIRUKU, 1)
+			
+			//==================================//
+			
+			//無料サービスは１日１個なので、タイムフラグを立てる
+			_FLAG_SET ( TMFLG_C02R0601_ITEM )
+			
+			//==================================//
+		
+		//水曜日ではない
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress_01 )
+			
+		ENDIF
+	
+	ENDIF
  
 EVENT_END
 
