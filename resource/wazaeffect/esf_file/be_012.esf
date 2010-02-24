@@ -1,0 +1,25 @@
+EFFSEQ
+$0001
+c:\home\pokemon_wb\resource\particle\wazaeffect\w_003.spa
+#001
+%00
+射影モード	正射影
+制御モード変更	継続
+カメラ移動（座標指定）	追従（相対指定）	20:2:16	12:4:16	32	0	32
+トレーナーセット	2	POS_AA	-64:232:0
+トレーナー移動	POS_AA	追従	104	-80	32	0	0
+立ち位置チェック	POS_BB	いない	NO_EXIST_BB
+ポケモン拡縮	POS_BB	追従	0.5	0.5	12	2	0
+ラベル	NO_EXIST_BB
+立ち位置チェック	POS_B	いない	NO_EXIST_B
+ポケモン拡縮	POS_B	追従	0.5	0.5	12	2	0
+ラベル	NO_EXIST_B
+立ち位置チェック	POS_D	いない	NO_EXIST_D
+ポケモン拡縮	POS_D	追従	0.5	0.5	12	2	0
+ラベル	NO_EXIST_D
+立ち位置チェック	POS_F	いない	NO_EXIST_F
+ポケモン拡縮	POS_F	追従	0.5	0.5	12	2	0
+ラベル	NO_EXIST_F
+エフェクト終了待ち	すべて
+エフェクト終了
+&
