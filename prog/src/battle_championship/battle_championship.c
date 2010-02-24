@@ -24,6 +24,7 @@
 #include "system/bmp_menulist.h"
 #include "app/app_keycursor.h"
 #include "system/ds_system.h"
+#include "sound/pm_sndsys.h"
 
 #include "arc_def.h"
 #include "battle_championship.naix"
@@ -194,6 +195,8 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcInit( GFL_PROC * proc, int * seq 
 
   p_wk->p_seq = WBM_SEQ_Init( p_wk, SEQFUNC_FadeIn, HEAPID_BATTLE_CHAMPIONSHIP );
   
+  PMSND_PlayBGM( SEQ_BGM_WCS );
+
   return GFL_PROC_RES_FINISH;
 }
 

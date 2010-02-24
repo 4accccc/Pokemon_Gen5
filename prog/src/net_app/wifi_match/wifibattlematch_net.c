@@ -254,7 +254,11 @@ struct _WIFIBATTLEMATCH_NET_WORK
   s32               pid;
   DWCSvlResult      *p_svl_result;
 
+  //エラー
   WIFIBATTLEMATCH_NETERR_WORK error;
+  
+  //日時
+  WBM_NET_DATETIME  datetime;
 
   //マッチング
   u32 seq_matchmake;
@@ -348,6 +352,7 @@ static DWCNdError s_callback_result = 0;
  *					プロトタイプ宣言
 */
 //=============================================================================
+static void WifiBattleMatch_SetDateTime( WBM_NET_DATETIME *p_wk );
 //-------------------------------------
 ///	マッチング関係
 //=====================================
@@ -981,6 +986,29 @@ void WIFIBATTLEMATCH_NET_StopConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_st
   p_wk->is_stop_connect = is_stop;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ログイン時間から、現在の日時を取り出す
+ *
+ *	@param	WBM_NET_DATETIME *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WifiBattleMatch_SetDateTime( WBM_NET_DATETIME *p_wk )
+{ 
+  RTCDate date;
+  RTCTime time;
+  BOOL ret  = DWC_GetDateTime(&date, &time);
+  GF_ASSERT( ret );
+
+  GFL_STD_MemClear( p_wk, sizeof(WBM_NET_DATETIME) );
+
+  p_wk->year  = date.year;
+  p_wk->month = date.month;
+  p_wk->day   = date.day;
+  p_wk->hour  = time.hour;
+  p_wk->minute= time.minute;
+  p_wk->second= time.second;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  キーを設定
@@ -2572,13 +2600,6 @@ static void DwcRap_Gdb_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk )
 static void DwcRap_Gdb_SetMyInfo( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
   MYSTATUS  *p_mystatus = GAMEDATA_GetMyStatus(p_wk->p_gamedata);
-  RTCDate date;
-  RTCTime time;
-  BOOL ret  = DWC_GetDateTime(&date, &time);
-  s64 datetime;
-  GF_ASSERT( ret );
-
-  datetime  = RTC_ConvertDateTimeToSecond(&date, &time);
 
   p_wk->p_field_buff[0].name  = SAKE_STAT_TRAINER_NAME;
   p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_UNICODE_STRING;
@@ -2608,9 +2629,12 @@ static void DwcRap_Gdb_SetMyInfo( WIFIBATTLEMATCH_NET_WORK *p_wk )
   p_wk->p_field_buff[6].type  = DWC_GDB_FIELD_TYPE_BYTE;
   p_wk->p_field_buff[6].value.int_u8 = MyStatus_GetRegionCode(p_mystatus);
 
+  
+  WifiBattleMatch_SetDateTime( &p_wk->datetime );
   p_wk->p_field_buff[7].name  = SAKE_STAT_LAST_LOGIN_DATETIME;
-  p_wk->p_field_buff[7].type  = DWC_GDB_FIELD_TYPE_DATE_AND_TIME;
-  p_wk->p_field_buff[7].value.datetime = datetime;
+  p_wk->p_field_buff[7].type  = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+  p_wk->p_field_buff[7].value.binary_data.data = (u8*)&p_wk->datetime;
+  p_wk->p_field_buff[7].value.binary_data.size = sizeof(WBM_NET_DATETIME);
 
   p_wk->table_name_num  = 8;
 }
@@ -2849,7 +2873,7 @@ static void DwcRap_Gdb_PokeParty_GetRecordsCallback(int record_num, DWCGdbField*
 static void DwcRap_Gdb_LoginDate_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
 { 
     int i,j;
-    DWCTick *p_data = user_param;
+    WBM_NET_DATETIME *p_data = user_param;
 
     for (i = 0; i < record_num; i++)
     {
@@ -2860,7 +2884,7 @@ static void DwcRap_Gdb_LoginDate_GetRecordsCallback(int record_num, DWCGdbField*
 
         if( !GFL_STD_StrCmp( field->name, SAKE_STAT_LAST_LOGIN_DATETIME ) )
         { 
-          *p_data  = field->value.datetime;
+          GFL_STD_MemCopy( field->value.binary_data.data, p_data, field->value.binary_data.size );
         }
         print_field( field );
         DEBUG_NET_Printf(" ");
@@ -2969,18 +2993,13 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
     break;
   case WIFIBATTLEMATCH_GDB_WRITE_LOGIN_DATE:
     { 
-      RTCDate date;
-      RTCTime time;
-      BOOL ret  = DWC_GetDateTime(&date, &time);
-      s64 datetime;
-      GF_ASSERT( ret );
-
-      datetime  = RTC_ConvertDateTimeToSecond(&date, &time);
+      WifiBattleMatch_SetDateTime( &p_wk->datetime );
 
       p_wk->table_name_num  = 1;
       p_wk->p_field_buff[0].name  = SAKE_STAT_LAST_LOGIN_DATETIME;
-      p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_DATE_AND_TIME;
-      p_wk->p_field_buff[0].value.datetime = datetime;
+      p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[0].value.binary_data.data = (u8*)&p_wk->datetime;
+      p_wk->p_field_buff[0].value.binary_data.size = sizeof(WBM_NET_DATETIME);
     }
     break;
   case WIFIBATTLEMATCH_GDB_WRITE_MYINFO:

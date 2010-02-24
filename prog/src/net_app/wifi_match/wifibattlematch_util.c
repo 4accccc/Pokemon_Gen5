@@ -15,9 +15,13 @@
 #include "gamesystem/msgspeed.h"
 #include "system/bmp_winframe.h"
 #include "app/app_keycursor.h"
+#include "app/app_printsys_common.h"
 
 //文字表示
 #include "print/printsys.h"
+
+//自分のモジュール
+#include "wifibattlematch_snd.h"
 
 //外部公開
 #include "wifibattlematch_util.h"
@@ -49,6 +53,7 @@ struct _WBM_TEXT_WORK
   u32               print_update;
   BOOL              is_end_print;
   APP_KEYCURSOR_WORK* p_keycursor;
+  APP_PRINTSYS_COMMON_WORK  common;
 };
 //-------------------------------------
 ///	プロトタイプ
@@ -82,8 +87,10 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
   p_wk->p_que     = p_que;
   p_wk->print_update  = WBM_TEXT_TYPE_NONE;
 
+  APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
+
   //文字送りカーソル作成
-  p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, TRUE, heapID );
+  p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, FALSE, heapID );
 
   //バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
@@ -154,34 +161,14 @@ void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
   case WBM_TEXT_TYPE_STREAM:
     if( p_wk->p_stream )
     { 
-      PRINTSTREAM_STATE state;
-      state  = PRINTSYS_PrintStreamGetState( p_wk->p_stream );
+      BOOL is_end;
 
       APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
+      is_end  = APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->common, p_wk->p_stream );
 
-      switch( state )
+      if( is_end )
       { 
-      case PRINTSTREAM_STATE_RUNNING:  ///< 処理実行中（文字列が流れている）
-
-        // メッセージスキップ
-        if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
-        {
-          PRINTSYS_PrintStreamShortWait( p_wk->p_stream, 0 );
-        }
-        break;
-
-      case PRINTSTREAM_STATE_PAUSE:    ///< 一時停止中（ページ切り替え待ち等）
-
-        //改行
-        if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
-        { 
-          PRINTSYS_PrintStreamReleasePause( p_wk->p_stream );
-        }
-        break;
-
-      case PRINTSTREAM_STATE_DONE:     ///< 文字列終端まで表示完了
         p_wk->is_end_print  = TRUE;
-        break;
       }
     }
     break;

@@ -82,6 +82,18 @@ typedef enum
  *					構造体宣言
 */
 //=============================================================================
+//-------------------------------------
+///	時刻型
+//=====================================
+typedef struct 
+{
+  u8  year;                      // 年 ( 0 ~ 99 )
+  u8  month;                     // 月 ( 1 ~ 12 )
+  u8  day;                       // 日 ( 1 ~ 31 )
+  u8  hour;                      // 時 ( 0 ~ 23 )
+  u8  minute;                    // 分 ( 0 ~ 59 )
+  u8  second;                    // 秒 ( 0 ~ 59 )
+} WBM_NET_DATETIME;
 
 //-------------------------------------
 ///	ポケモンデータ
@@ -256,7 +268,7 @@ typedef enum
   WIFIBATTLEMATCH_GDB_GET_WIFI_SCORE,
   WIFIBATTLEMATCH_GDB_GET_RECORDID,
   WIFIBATTLEMATCH_GDB_GET_PARTY,
-  WIFIBATTLEMATCH_GDB_GET_LOGIN_DATE, //s64の受け取りバッファを設定してください
+  WIFIBATTLEMATCH_GDB_GET_LOGIN_DATE, //DATETIMEの受け取りバッファを設定してください
 
   WIFIBATTLEMATCH_GDB_GET_DEBUGALL  = WIFIBATTLEMATCH_GDB_GET_RND_SCORE,
 }WIFIBATTLEMATCH_GDB_GETTYPE;

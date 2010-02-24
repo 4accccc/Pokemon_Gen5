@@ -14,6 +14,7 @@
 //	SYSTEM
 #include "system/gf_date.h"
 #include "system/bmp_winframe.h"
+#include "sound/pm_sndsys.h"
 
 //	module
 #include "pokeicon/pokeicon.h"
@@ -31,12 +32,14 @@
 #include "wifi_unionobj_plt.cdat"
 #include "wifi_unionobj.naix"
 
+
 //	print
 #include "print/gf_font.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 
 // mine
+#include "wifibattlematch_snd.h"
 #include "wifibattlematch_view.h"
 
 //-------------------------------------
@@ -775,6 +778,8 @@ BOOL PLAYERINFO_MoveMain( PLAYERINFO_WORK * p_wk )
           p_wk->clwk_x[i]  = pos.x;
         }
       }
+
+      PMSND_PlaySE( WBM_SND_SE_CARD_SLIDE );
     }
 
     x = -WBM_CARD_INIT_POS_X + WBM_CARD_INIT_POS_X * p_wk->cnt / CARD_WAIT_SYNC;
@@ -2018,6 +2023,9 @@ BOOL MATCHINFO_MoveMain( MATCHINFO_WORK * p_wk )
         p_wk->star_x[i] = pos.x;
       }
     }
+
+    //スライドインの音
+    PMSND_PlaySE( WBM_SND_SE_CARD_SLIDE );
   }
 
 

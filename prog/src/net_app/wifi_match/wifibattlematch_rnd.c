@@ -41,6 +41,7 @@
 #include "wifibattlematch_view.h"
 #include "wifibattlematch_net.h"
 #include "wifibattlematch_util.h"
+#include "wifibattlematch_snd.h"
 
 //ŠO•”ŒöŠJ
 #include "wifibattlematch_core.h"
@@ -1057,6 +1058,8 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_OK_MATCHING_MSG:
+    PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
+
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_010, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_OK_MATCHING_WAIT );
@@ -1666,6 +1669,8 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_OK_MATCHING_MSG:
+    PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
+
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_010, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_OK_MATCHING_WAIT );

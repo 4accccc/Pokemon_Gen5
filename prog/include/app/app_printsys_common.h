@@ -10,9 +10,20 @@
 #pragma once
 
 #include "print/printsys.h"
+#include "sound/wb_sound_data.sadl"
 
+//-------------------------------------
+///	定義
+//=====================================
+//入力キー
 #define APP_PRINTSYS_COMMON_TRG_KEY (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)
 
+//ページ送り音
+#define APP_PRINTSYS_COMMON_SE_TRG  (SEQ_SE_MESSAGE)
+
+//-------------------------------------
+///	タッチ方式
+//=====================================
 typedef enum
 { 
   APP_PRINTSYS_COMMON_TYPE_KEY    = 1<<1,
@@ -21,7 +32,7 @@ typedef enum
 }APP_PRINTSYS_COMMON_TYPE;
 
 //-------------------------------------
-///	
+///	制御ワーク
 //=====================================
 typedef struct 
 {

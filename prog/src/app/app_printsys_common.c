@@ -8,6 +8,7 @@
 //=============================================================================
 
 #include <gflib.h>
+#include "sound/pm_sndsys.h"
 #include "app/app_printsys_common.h"
 
 
@@ -55,6 +56,7 @@ BOOL APP_PRINTSYS_COMMON_PrintStreamFunc( APP_PRINTSYS_COMMON_WORK *wk, PRINT_ST
       //入力
       if( App_PrintSys_IsTrg( wk->type ) )
       { 
+        PMSND_PlaySE( APP_PRINTSYS_COMMON_SE_TRG );
   		  PRINTSYS_PrintStreamReleasePause( handle );
    		}
       break;
@@ -62,7 +64,8 @@ BOOL APP_PRINTSYS_COMMON_PrintStreamFunc( APP_PRINTSYS_COMMON_WORK *wk, PRINT_ST
     case PRINTSTREAM_STATE_RUNNING:
       // メッセージスキップ
 			if(wk->trg == FALSE){               //キーを離して無いと有効にならない
-        if( App_PrintSys_IsRelease( wk->type ) ){
+        if( App_PrintSys_IsRelease( wk->type ) )
+        {
           wk->trg=TRUE;
         }
       }

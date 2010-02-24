@@ -411,6 +411,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 
   WIFIBATTLEMATCH_SYS   *p_wk     = p_wk_adrs;
 
+  //WIFI大会はタイトルから直接くるためにエラーシステムを自分で動かす
+  if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_WIFI )
+  { 
+    NetErr_DispCall(FALSE);
+  }
+
   //シーケンス
 	switch( *p_seq )
 	{	

@@ -44,6 +44,7 @@
 #include "wifibattlematch_view.h"
 #include "wifibattlematch_net.h"
 #include "wifibattlematch_util.h"
+#include "wifibattlematch_snd.h"
 
 //ŠO•”ŒöŠJ
 #include "wifibattlematch_core.h"
@@ -333,8 +334,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Init( GFL_PROC *p_proc, int *p_
 
   p_wk->p_other_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_CORE );
 
-  PMSND_PlayBGM( SEQ_BGM_WCS );
-	
 
 #ifdef DEBUG_REGULATION_DATA
   {
@@ -2379,6 +2378,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     }
     break;
   case SEQ_START_OK_MATCHING_MSG:
+    PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
+
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_32, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
