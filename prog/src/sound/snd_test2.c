@@ -160,17 +160,17 @@ static const u8 bmpwinNameStDat[NAMEIDX_MAX][4] = { //px, py, sx, sy
 };
 
 static const u8 bmpwinNoStDat[NOIDX_MAX][4] = { //px, py, sx, sy
-  { 0x03, 0x13, 6, 1 }, //NOIDX_HEAPFREESIZ
+  { 0x03, 0x12, 6, 2 }, //NOIDX_HEAPFREESIZ
 
-  { 0x04, 0x06, 4, 1 }, //NOIDX_BGMNO
-  { 0x0e, 0x06, 4, 1 }, //NOIDX_VOICENO
-  { 0x0e, 0x0c, 4, 1 }, //NOIDX_VOICEPAN
-  { 0x0e, 0x0f, 4, 1 }, //NOIDX_VOICESPEED
-  { 0x0e, 0x12, 4, 1 }, //NOIDX_VOICECHORUSVOL
-  { 0x0e, 0x15, 4, 1 }, //NOIDX_VOICECHORUSSPEED
-  { 0x18, 0x06, 4, 1 }, //NOIDX_SENO
-  { 0x18, 0x0c, 4, 1 }, //NOIDX_SEPAN
-  { 0x18, 0x0f, 4, 1 }, //NOIDX_SEPITCH
+  { 0x04, 0x05, 4, 2 }, //NOIDX_BGMNO
+  { 0x0e, 0x05, 4, 2 }, //NOIDX_VOICENO
+  { 0x0e, 0x0b, 4, 2 }, //NOIDX_VOICEPAN
+  { 0x0e, 0x0e, 4, 2 }, //NOIDX_VOICESPEED
+  { 0x0e, 0x11, 4, 2 }, //NOIDX_VOICECHORUSVOL
+  { 0x0e, 0x14, 4, 2 }, //NOIDX_VOICECHORUSSPEED
+  { 0x18, 0x05, 4, 2 }, //NOIDX_SENO
+  { 0x18, 0x0b, 4, 2 }, //NOIDX_SEPAN
+  { 0x18, 0x0e, 4, 2 }, //NOIDX_SEPITCH
 };
 
 //------------------------------------------------------------------
@@ -1339,7 +1339,7 @@ static void printNo(SOUNDTEST_WORK* sw, int idx, u32 numberSize )
 
   STRTOOL_SetNumber(  sw->setNoBuffer, sw->setNo[idx], numberSize,
             STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
-    PRINT_UTIL_PrintColor(  &sw->printUtilNo[idx], sw->printQue, 1, 1,
+    PRINT_UTIL_PrintColor(  &sw->printUtilNo[idx], sw->printQue, 1, 1+8,
               sw->setNoBuffer, sw->fontHandle, PRINTSYS_LSB_Make(2,3,0));
 }
 

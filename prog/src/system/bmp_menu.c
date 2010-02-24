@@ -547,7 +547,7 @@ static void BmpMenuStrPut( BMPMENU_WORK * mw )
 #else
   {
     //    u8 l,s,b;
-    //    GFL_FONTSYS_GetColor( &l, &s, &b );
+    //    Gfl_FONTSYS_GetColor( &l, &s, &b );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(mw->hed.win), 0xff );
   }
 
@@ -626,6 +626,7 @@ static void CursorWritePosGet( BMPMENU_WORK * mw, u8 * x, u8 * y, u8 pos )
  * @li  BMPウィンドウとBMPメニューワークをAllocで取得している
  */
 //--------------------------------------------------------------------------------------------
+#if 0
 BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u8 pal, u8 pos, HEAPID heap )
 {
   BMPMENU_HEADER hed;
@@ -671,6 +672,67 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
   GFL_BMPWIN_TransVramCharacter( hed.win );
   return pWk;
 
+}
+#endif
+static BMPMENU_WORK * BmpMenu_YesNoSelectInitCore
+	( GFL_BMPWIN* bmpwin, u16 cgx, u8 pal, u8 pos, HEAPID heap )
+{
+  BMPMENU_HEADER hed;
+  GFL_MSGDATA * man;
+  BMP_MENULIST_DATA * ld;
+  BMPMENU_WORK* pWk;
+
+  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_yesnomenu_dat, heap );
+  ld  = BmpMenuWork_ListCreate( 2, heap );
+  BmpMenuWork_ListAddArchiveString( ld, man, msgid_yesno_yes, 0,heap );
+  BmpMenuWork_ListAddArchiveString( ld, man, msgid_yesno_no, BMPMENU_CANCEL,heap );
+  GFL_MSG_Delete( man );
+
+  GFL_STD_MemClear(&hed,sizeof(BMPMENU_HEADER));
+
+  hed.menu     = ld;
+  hed.win      = bmpwin;
+  hed.x_max    = 1;
+  hed.y_max    = 2;
+  hed.line_spc = 1;
+  hed.c_disp_f = 0;
+  hed.loop_f = 0;
+  hed.print_util = GFL_HEAP_AllocClearMemory(heap,sizeof(PRINT_UTIL));
+
+  hed.font_handle = GFL_FONT_Create
+								(ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
+  hed.font_size_y = GFL_FONT_GetLineHeight(hed.font_handle);
+  hed.font_size_x = hed.font_size_y; //←この値だと文字左端がカーソル移動で消えてしまう
+  PRINT_UTIL_Setup(hed.print_util, hed.win);
+  hed.print_que = PRINTSYS_QUE_Create( heap );
+//  GFL_MSGDATA *msgdata; //表示に使用するメッセージバッファ
+
+  //  GFL_BG_BmpWinAddEx( ini, hed.win, data );
+  //BmpMenuWinWrite( hed.win, WINDOW_TRANS_OFF, cgx, pal );
+  pWk = BmpMenu_AddEx( &hed, 14, 0, pos, heap, PAD_BUTTON_CANCEL );
+  GFL_BMPWIN_MakeScreen(hed.win);
+  BmpWinFrame_Write( hed.win, WINDOW_TRANS_ON, cgx, pal );
+
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(hed.win) );
+  GFL_BMPWIN_TransVramCharacter( hed.win );
+
+  return pWk;
+}
+
+BMPMENU_WORK * BmpMenu_YesNoSelectInit
+	( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap )
+{
+  GFL_BMPWIN* bmpwin = GFL_BMPWIN_Create
+		( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
+	return BmpMenu_YesNoSelectInitCore(bmpwin, winframecgx, winframepal, pos, heap);
+}
+
+BMPMENU_WORK * BmpMenu_YesNoSelectInitFixPos
+	( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap )
+{
+  GFL_BMPWIN* bmpwin = GFL_BMPWIN_CreateFixPos
+		( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, data->chrnum );
+	return BmpMenu_YesNoSelectInitCore(bmpwin, winframecgx, winframepal, pos, heap);
 }
 
 //--------------------------------------------------------------------------------------------
