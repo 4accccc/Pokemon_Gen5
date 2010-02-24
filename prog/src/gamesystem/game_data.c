@@ -156,12 +156,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->sv_control_ptr = SaveControl_GetPointer();
 
   //‹GßÝ’èFƒQ[ƒ€“à‚Å‚Í1ƒ–ŒŽ‚PƒV[ƒYƒ“
-  {
-    RTCDate date;
-    GFL_RTC_GetDate(&date);
-    gd->season_id = PMSEASON_SPRING;
-    //gd->season_id = date.month % PMSEASON_TOTAL;
-  }
+  gd->season_id = PMSEASON_GetRealTimeSeasonID();
 
   //
   gd->subscreen_mode = FIELD_SUBSCREEN_NORMAL;
