@@ -116,7 +116,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_bg_c06gym0101_pokezou
 	_TALK_OBJ_START()
-	
+
+	DEFINE_LOCAL	LWK_BADGE
+
 	//ジムバッジを持っているのかを判定
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_06 )
 
@@ -127,17 +129,21 @@ EVENT_START		ev_bg_c06gym0101_pokezou
 	
 	//ジムバッジを取得している場合
 	ELSE
-		//C02ライトストーン入手後
-		IF $WK_SCENE_C02 == 7 THEN
+	
+		//ジムバッジを持っているのかを判定
+		_GET_BADGE_FLAG( LWK_BADGE, BADGE_ID_07 )
 		
-			_PLAYER_NAME( 0 )
-			_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_03 )
-			
-		//C02ライトストーン入手前
-		ELSE
+		//セッカシティのバッジ取得前の場合
+		IF $LWK_BADGE == 0 THEN
 		
 			_PLAYER_NAME( 0 )
 			_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_02 )
+			
+		//セッカシティのバッジ取得後の場合
+		ELSE
+		
+			_PLAYER_NAME( 0 )
+			_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_03 )
 		
 		ENDIF
 		
@@ -203,6 +209,17 @@ _TALK_OBJ_START()
 		//わざマシンの解説
 		_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_05 , C06GYM0101_LEADER6_01 )
 		_BALLOONWIN_CLOSE()
+		
+		//========================================/
+		
+		//トレーナーフラグセット
+		_TRAINER_FLAG_SET( TR_WORKER2_08 )
+		_TRAINER_FLAG_SET( TR_WORKER2_10 )
+		_TRAINER_FLAG_SET( TR_PILOT_01 )
+		_TRAINER_FLAG_SET( TR_PILOT_02 )
+		_TRAINER_FLAG_SET( TR_WORKER2_11 )
+		
+		//========================================/
 
 	//ジムバッジを取得している場合
 	ELSE

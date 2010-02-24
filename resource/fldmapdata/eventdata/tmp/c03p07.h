@@ -19,5 +19,7 @@
 #ifndef ZONE_C03P07_EVB_H
 #define ZONE_C03P07_EVB_H
 
+#define BGID_C03P07_GYMSIGN_01            0
+#define BGID_C03P07_GYMSIGN_02            1
 
 #endif //ZONE_C03P07_EVB_H

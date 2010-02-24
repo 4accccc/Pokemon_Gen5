@@ -23,6 +23,7 @@ _EVENT_DATA		ev_c03p07_veteranm_01
 _EVENT_DATA		ev_c03p07_trainerw_01
 _EVENT_DATA		ev_scene_c03p07_tvt_01
 _EVENT_DATA		ev_pos_c03p07_rival_01
+_EVENT_DATA		ev_bg_c03p07_gymsign_01
 _EVENT_DATA_END
 
 
@@ -176,3 +177,9 @@ _ANIME_LABEL anm_stay_l
 	_ANIME_DATA		AC_STAY_WALK_L_8F,1
 	_ANIME_DATA		ACMD_END,0
 
+/**************************************************************/
+/*	C03P07	ƒWƒ€ŠÅ”Â										  */
+/**************************************************************/
+EVENT_START		ev_bg_c03p07_gymsign_01
+	_EASY_BGWIN_MSG( msg_c03p07_gymsign_01, TYPE_POST )
+EVENT_END

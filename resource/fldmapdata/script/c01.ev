@@ -35,6 +35,7 @@ _EVENT_DATA		ev_c01_inventor_01
 _EVENT_DATA		ev_zone_c01
 _EVENT_DATA		ev_c01_woman2a_01
 _EVENT_DATA		ev_c01_fising_01
+_EVENT_DATA		ev_bg_c01_gymsign_01
 _EVENT_DATA_END
 
 
@@ -428,3 +429,10 @@ EVENT_START		ev_c01_fising_01
 	_EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN01, 1, FH_01, msg_c01_fising_01, msg_c01_fising_02, msg_c01_fising_02)
 EVENT_END
 
+
+/**************************************************************/
+//	C01	ƒWƒ€ŠÅ”Â											  */
+/**************************************************************/
+EVENT_START		ev_bg_c01_gymsign_01
+	_EASY_BGWIN_MSG( msg_c01_gymsign_01, TYPE_POST )
+EVENT_END

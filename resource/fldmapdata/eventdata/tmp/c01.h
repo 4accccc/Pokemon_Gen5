@@ -39,5 +39,7 @@
 #define C01_HIDE_ITEM_01                  3
 #define C01_HIDE_ITEM_02                  4
 #define C01_HIDE_ITEM_03                  5
+#define BGID_C01_GYMSIGN_01               6
+#define BGID_C01_GYMSIGN_02               7
 
 #endif //ZONE_C01_EVB_H

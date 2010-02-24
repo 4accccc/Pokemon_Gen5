@@ -605,6 +605,10 @@ EVENT_START		ev_c01gym0101_leader1b_01
 
 			//D01R0101ジム対策イベントOBJ非表示
 			_FLAG_SET( FV_D01R0101_GIRL_01 )
+			
+			//トレーナーフラグセット
+			_TRAINER_FLAG_SET( TR_WAITER_01 )
+			_TRAINER_FLAG_SET( TR_WAITRESS_01 )
 
 			//========================================//
 
@@ -727,7 +731,11 @@ EVENT_START		ev_c01gym0101_leader1a_01
 
 			//D01R0101ジム対策イベントOBJ非表示
 			_FLAG_SET( FV_D01R0101_GIRL_01 )
-
+			
+			//トレーナーフラグセット
+			_TRAINER_FLAG_SET( TR_WAITER_01 )
+			_TRAINER_FLAG_SET( TR_WAITRESS_01 )
+			
 			//========================================//
 			
 
@@ -849,6 +857,10 @@ EVENT_START		ev_c01gym0101_leader1c_01
 
 			//D01R0101ジム対策イベントOBJ非表示
 			_FLAG_SET( FV_D01R0101_GIRL_01 )
+
+			//トレーナーフラグセット
+			_TRAINER_FLAG_SET( TR_WAITER_01 )
+			_TRAINER_FLAG_SET( TR_WAITRESS_01 )
 
 			//========================================//
 
