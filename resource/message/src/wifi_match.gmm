@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-02-24T15:25:23"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T16:46:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-1274" top="112" right="-569" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="136" right="1280" bottom="534" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -657,8 +657,7 @@
 		<language name="JPN" width="256">さんか　できる　たいかいが　ありません[BE:01:ページ切り替え（クリア）]
 バトルたいかいは　
 いぜん　さんかした　たいかいには[BE:00:ページ切り替え（行送り）]
-さんか　できません[BE:01:ページ切り替え（クリア）]
-</language>
+さんか　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">参加できる　大会が　ありません[BE:01:ページ切り替え（クリア）]
 バトル大会は　
 以前　参加した　大会には[BE:00:ページ切り替え（行送り）]
@@ -671,8 +670,7 @@
 みつかりませんでした[BE:01:ページ切り替え（クリア）]
 また　バトルたいかいは　
 いぜん　さんかした　たいかいには[BE:00:ページ切り替え（行送り）]
-さんか　できません[BE:01:ページ切り替え（クリア）]
-</language>
+さんか　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">参加できる　大会が
 みつかりませんでした[BE:01:ページ切り替え（クリア）]
 また　バトル大会は　
@@ -805,7 +803,7 @@
 	<row id="WIFIMATCH_WIFI_STR_19">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">さんか　できませんでした</language>
-		<language name="JPN_KANJI" width="256">参加　できませんでした</language>
+		<language name="JPN_KANJI" width="256">参加できませんでした</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_20">
