@@ -54,6 +54,9 @@ EVENT_START    ev_pos_d08r0801_demo_01
 	_GET_ROM_VERSION(LCWK_VERSION)
 	
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
+	_SHAKE_CAMERA(1, 4, 15000, 3)
+
+	_TIME_WAIT(8)
 	
 	//‚Ñ‚Á‚­‚è‚·‚é
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
