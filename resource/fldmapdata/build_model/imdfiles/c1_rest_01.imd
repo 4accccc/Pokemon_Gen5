@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2009-11-05T18:59:13" source="c1_rest_01.mb"/>
+	<create user="james_turner" host="W00212" date="2010-02-24T15:09:03" source="c1_rest_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2009-11-05T18:59:13" source="c1_rest_01.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-02-24T15:09:03" source="c1_rest_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -77,78 +77,78 @@
 			8888 0888 0000 55a0 7ee7 5555 0a55 0000
 			8888 8888 8888 555c 5555 5555 c555 8888
 			8888 0888 0000 55a0 7ee7 5555 0a55 0000
-			bbbb bbbb bbbb 555c 5555 5555 c555 bbbb
-			bbbb 0bbb 0000 555a 5775 5555 a555 0000
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb 0bbb 0000 555a 5775 5555 a555 0000
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb 0bbb 0000 555a ee55 55ee a555 0000
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb 0bbb 0000 522a 5ee5 5ee5 a225 0000
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb 0bbb 0000 e25a 55ee ee55 a52e 0000
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb 0bbb 0000 555a 5ee5 5ee5 a555 0000
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb 0bbb 0000 77a0 ee57 75ee 0a77 0000
-			bbbb bbbb bbbb bbbb 559b b955 bbbb bbbb
-			bbbb 0bbb 0000 75a0 5577 7755 0a57 0000
-			bbbb bbbb bbbb 9bbb 5555 5555 bbb9 bbbb
-			bbbb 0bbb 0000 5a00 7775 5777 00a5 0000
-			bbbb bbbb bbbb 59bb 5555 5555 bb95 bbbb
-			bbbb 0bbb 0000 a000 555a a555 000a 0000
-			bbbb bbbb bbbb 55cb aa55 55aa bc55 bbbb
+			8888 8888 8888 555c 5555 5555 c555 8888
+			8888 0888 0000 555a 5775 5555 a555 0000
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 0888 0000 555a 5775 5555 a555 0000
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 0888 0000 555a ee55 55ee a555 0000
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 0888 0000 522a 5ee5 5ee5 a225 0000
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 0888 0000 e25a 55ee ee55 a52e 0000
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 0888 0000 555a 5ee5 5ee5 a555 0000
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 0888 0000 77a0 ee57 75ee 0a77 0000
+			8888 8888 8888 8888 5598 b955 8888 8888
+			8888 0888 0000 75a0 5577 7755 0a57 0000
+			8888 8888 8888 9888 5555 5555 8889 8888
+			8888 0888 0000 5a00 7775 5777 00a5 0000
+			8888 8888 8888 5988 5555 5555 8b95 8888
+			8888 0888 0000 a000 555a a555 000a 0000
+			bbbb 8bbb 8888 55c8 aa55 55aa bc55 8888
+			bbb8 0bbb 0000 0000 aaaa aaaa 0000 0000
+			bbbb bbbb bbbb 555c 55aa aa55 c555 bbbb
 			bbbb 0bbb 0000 0000 aaaa aaaa 0000 0000
-			cccc bbcc bbbb 555c 55aa aa55 c555 bbbb
-			ccbb 0ccc 0000 0000 aaaa aaaa 0000 0000
-			cccc cccc bccc a665 5ee3 3ee5 566a cccb
-			cccc 0ccc 0000 0000 aa5a a5aa 0000 0000
-			cccc cccc 5bcc 4775 56ee ee65 5774 ccb5
-			cccc 0ccc 0000 0000 55a0 0a55 0000 0000
-			cccc 9ccc 5b99 e477 66ee ee66 774e 99b5
-			c999 0ccc 0000 0000 55a0 0a55 0000 0000
-			cccc 99cc 65b9 e577 606e e606 775e 9b56
-			c999 0ccc 0000 0000 5a00 00a5 0000 0000
-			cccc 99cc 75b9 ee57 606e e606 75ee 9b57
-			c999 0ccc 0000 0000 a000 000a 0000 0000
-			cccc 99cc 75b9 ee57 6006 6006 75ee 9b57
-			c999 0ccc 0000 0000 0000 0000 0000 0000
-			cccc 99cc 75b9 6e57 6000 0006 75e6 9b57
-			c999 0ccc 0000 0000 0000 0000 0000 0000
-			bbbb ccbb 75bc 6e57 6000 0006 75e6 cb57
-			bccc 0bbb 0000 0000 0000 0000 0000 0000
-			bbbb ccbb 75bc 5557 6666 6666 7555 cb57
-			bccc dbbb dddd dddd dddd 4457 7444 6555
-			bbbb ccbb 75bc 5557 6666 6666 7555 cb57
-			bccc dbbb bcbb bbbb dbbc 4457 7444 6555
-			bbbb ccbb 75bc 0057 6000 0006 7500 cb57
-			bccc dbbb cdcb cbbb dbcd 4457 7444 6555
-			bbbb ccbb 75bc 0057 6000 0006 7500 cb57
-			bccc dbbb dbdb dbbb dbdb 4457 7444 6555
-			bbbb ccbb 75bc 0057 6000 0006 7500 cb57
-			bccc dbbb bdbb bbbb dbbd 4457 7444 6555
-			bbbb ccbb 75bc 0057 6000 0006 7500 cb57
-			bccc dbbb dddd dddd dddd 4457 7444 6555
-			bbbb ccbb 75bc 0057 6000 0006 7500 cb57
-			bccc dbbb dddd dddd dddd 6667 d456 bddd
-			bbbb ccbb 75bc 0057 6000 0006 7500 cb57
-			bccc dbbb dddd dddd dddd 6667 d456 bddd
-			cccc 99cc 75b9 0057 5000 0005 7500 9b57
-			c999 dccc dddd dddd dddd 6667 d456 bddd
-			cccc 99cc 75b9 0057 5000 0005 7500 9b57
-			c999 dccc dddd dddd dddd 6667 d456 bddd
-			cccc 99cc 75b9 0057 5000 0005 7500 9b57
-			c999 cccc cccc cccc cccc 6667 d456 bddd
-			cccc 99cc 75b9 0057 5000 0005 7500 9b57
-			c999 5ccc 5555 5555 5555 6667 d456 bddd
-			cccc 99cc 75b9 5557 5555 5555 7555 9b57
-			c999 5ccc 5555 5555 5555 5555 5555 5555
-			cccc 99cc 75b9 7777 7777 7777 7777 9b57
-			c999 7ccc 7777 7777 7777 5555 5555 5555
-			cccc 99cc 75b9 7777 7777 7777 7777 9b57
-			c999 7ccc 7777 7777 7777 5555 5555 5555
-			cccc 99cc 5b99 5555 5555 5555 5555 99b5
-			c999 7ccc 7777 7777 7777 5555 6666 5555
+			bbbb bbbb bbbb a665 5ee3 3ee5 566a bbbb
+			bbbb 0bbb 0000 0000 aa5a a5aa 0000 0000
+			bbbb ccbb 5bcc 4775 56ee ee65 5774 ccb5
+			cccc 0bbb 0000 0000 55a0 0a55 0000 0000
+			bbbb 9ccb 5b99 e477 66ee ee66 774e 99b5
+			c999 0bbb 0000 0000 55a0 0a55 0000 0000
+			bbbb 99cb 65b9 e577 606e e606 775e 9b56
+			c999 0bbb 0000 0000 5a00 00a5 0000 0000
+			bbbb 99cb 75b9 ee57 606e e606 75ee 9b57
+			c999 0bbb 0000 0000 a000 000a 0000 0000
+			bbbb 99cb 75b9 ee57 6006 6006 75ee 9b57
+			c999 0bbb 0000 0000 0000 0000 0000 0000
+			bbbb 99cb 75b9 6e57 6000 0006 75e6 9b57
+			c999 0bbb 0000 0000 0000 0000 0000 0000
+			8888 ccb8 75bc 6e57 6000 0006 75e6 cb57
+			bccc 0888 0000 0000 0000 0000 0000 0000
+			8888 ccb8 75bc 5557 6666 6666 7555 cb57
+			bccc d888 dddd dddd dddd 4457 7444 6555
+			8888 ccb8 75bc 5557 6666 6666 7555 cb57
+			bccc d888 bcbb bbbb dbbc 4457 7444 6555
+			8888 ccb8 75bc 0057 6000 0006 7500 cb57
+			bccc d888 cdcb cbbb dbcd 4457 7444 6555
+			8888 ccb8 75bc 0057 6000 0006 7500 cb57
+			bccc d888 dbdb dbbb dbdb 4457 7444 6555
+			8888 ccb8 75bc 0057 6000 0006 7500 cb57
+			bccc d888 bdbb bbbb dbbd 4457 7444 6555
+			8888 ccb8 75bc 0057 6000 0006 7500 cb57
+			bccc d888 dddd dddd dddd 4457 7444 6555
+			8888 ccb8 75bc 0057 6000 0006 7500 cb57
+			bccc d888 dddd dddd dddd 6667 d456 bddd
+			8888 ccb8 75bc 0057 6000 0006 7500 cb57
+			bccc d888 dddd dddd dddd 6667 d456 bddd
+			bbbb 99cb 75b9 0057 5000 0005 7500 9b57
+			c999 dbbb dddd dddd dddd 6667 d456 bddd
+			bbbb 99cb 75b9 0057 5000 0005 7500 9b57
+			c999 dbbb dddd dddd dddd 6667 d456 bddd
+			bbbb 99cb 75b9 0057 5000 0005 7500 9b57
+			c999 cbbb cccc cccc cccc 6667 d456 bddd
+			bbbb 99cb 75b9 0057 5000 0005 7500 9b57
+			c999 5bbb 5555 5555 5555 6667 d456 bddd
+			bbbb 99cb 75b9 5557 5555 5555 7555 9b57
+			c999 5bbb 5555 5555 5555 5555 5555 5555
+			bbbb 99cb 75b9 7777 7777 7777 7777 9b57
+			c999 7bbb 7777 7777 7777 5555 5555 5555
+			bbbb 99cb 75b9 7777 7777 7777 7777 9b57
+			c999 7bbb 7777 7777 7777 5555 5555 5555
+			bbbb 99cb 5b99 5555 5555 5555 5555 99b5
+			c999 7bbb 7777 7777 7777 5555 6666 5555
 			4444 4444 4444 4444 4444 4444 4444 cccc
 			cccc cccc cccc cccc cccc 6655 9999 5566
 			4444 4444 4444 4444 4444 4444 4444 4444
@@ -438,7 +438,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="17"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -462,7 +462,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="17"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -486,7 +486,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="17"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -2027,7 +2027,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface360" kind="mesh"
+	<node index="0" name="rest" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
