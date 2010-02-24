@@ -538,6 +538,14 @@ BOOL ZONEDATA_EscapeEnable( u16 zone_id )
   zoneData = loadZoneData( zone_id );
   return zoneData->escape_flag;
 }
+//------------------------------------------------------------------
+/// パレスに遷移できるマップかどうか
+//------------------------------------------------------------------
+BOOL ZONEDATA_EnablePalaceUse( u16 zone_id )
+{
+  ZONEDATA* zoneData = loadZoneData( zone_id );
+  return zoneData->palace_ok_flag;
+}
 
 //------------------------------------------------------------------
 /**
