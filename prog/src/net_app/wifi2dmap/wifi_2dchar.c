@@ -1454,7 +1454,7 @@ static BOOL WF_2DC_ShResCheck( const WF_2DCSH_RES* cp_shadowres )
  *	@param	heap
  */
 //-----------------------------------------------------------------------------
-static void WF_2DC_UniCharPlttResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 offset, u32 heap )
+static void WF_2DC_UniCharPlttResLoad( WF_2DCSYS* p_sys, u32 draw_type, int offset, u32 heap )
 {
   BOOL result;
 
