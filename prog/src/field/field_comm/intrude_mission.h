@@ -40,7 +40,7 @@ extern BOOL MISSION_CheckRecvResult(const MISSION_SYSTEM *mission);
 extern BOOL MISSION_Talk_CheckAchieve(const MISSION_SYSTEM *mission, int talk_netid);
 extern MISSION_TYPE MISSION_GetMissionType(const MISSION_SYSTEM *mission);
 extern s32 MISSION_GetResultPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
-extern BOOL MISSION_AddPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
+extern BOOL MISSION_AddPoint(GAMEDATA *gamedata, const MISSION_RESULT *result, s32 point);
 extern BOOL MISSION_CheckResultMissionMine(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 extern void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, int accept_netid, int palace_area);
 extern BOOL MISSION_MissionList_CheckOcc(const MISSION_CHOICE_LIST *list);

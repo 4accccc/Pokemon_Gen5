@@ -807,13 +807,8 @@ s32 MISSION_GetResultPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *m
  * @retval  BOOL		TRUE:加算した。　FALSE:ポイントは発生しなかった
  */
 //==================================================================
-BOOL MISSION_AddPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission)
+BOOL MISSION_AddPoint(GAMEDATA *gamedata, const MISSION_RESULT *result, s32 point)
 {
-  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
-  const MISSION_RESULT *result = &intcomm->mission.result;
-  int point;
-  
-  point = MISSION_GetResultPoint(intcomm, mission);
   if(point > 0){
     OCCUPY_INFO *mine_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
 //    PALACE_TOWN_RESULT town_result;
@@ -985,20 +980,18 @@ static void MISSIONDATA_ExtraParamSet(INTRUDE_COMM_SYS_PTR intcomm, MISSION_DATA
   MISSION_TYPE_WORK *exwork = &mdata->exwork;
   
   MISSION_ClearTargetInfo(&mdata->target_info);
+  MISSION_SetTargetInfo(intcomm, &mdata->target_info, accept_netid);
   switch(mdata->cdata.type){
   case MISSION_TYPE_VICTORY:     ///<勝利(LV)
-    MISSION_SetTargetInfo(intcomm, &mdata->target_info, accept_netid);
     break;
   case MISSION_TYPE_SKILL:       ///<技
     break;
   case MISSION_TYPE_BASIC:       ///<基礎
-    MISSION_SetTargetInfo(intcomm, &mdata->target_info, accept_netid);
     break;
   case MISSION_TYPE_SIZE:        ///<大きさ
   case MISSION_TYPE_ATTRIBUTE:   ///<属性
     break;
   case MISSION_TYPE_ITEM:        ///<道具
-    MISSION_SetTargetInfo(intcomm, &mdata->target_info, accept_netid);
     break;
   case MISSION_TYPE_OCCUR:       ///<発生(エンカウント)
   case MISSION_TYPE_PERSONALITY: ///<性格

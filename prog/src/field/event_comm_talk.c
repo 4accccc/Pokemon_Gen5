@@ -75,7 +75,6 @@ static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionItemEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionBasicEvent( GMEVENT *event, int *seq, void *wk );
-static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk );
 
 //==============================================================================
 //  データ
@@ -545,7 +544,7 @@ static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *w
   case SEQ_END:
     IntrudeEventPrint_ExitFieldMsg(&talk->iem);
     if(intcomm != NULL){
-      if(MISSION_AddPoint(intcomm, &intcomm->mission) == TRUE){
+      if(MISSION_AddPoint(GAMESYSTEM_GetGameData(gsys), MISSION_GetResultData(&intcomm->mission), MISSION_GetResultPoint(intcomm, &intcomm->mission)) == TRUE){
         intcomm->send_occupy = TRUE;
       }
       MISSION_Init(&intcomm->mission);
@@ -721,163 +720,4 @@ static GMEVENT_RESULT CommMissionBasicEvent( GMEVENT *event, int *seq, void *wk 
 	return GMEVENT_RES_CONTINUE;
 }
 
-
-//==================================================================
-/**
- * ミッション結果通知イベント起動(自分が達成ではなく通信相手が達成した結果が届いた)
- *
- * @param   gsys		
- * @param   fieldWork		
- * @param   intcomm		      侵入システムワークへのポインタ
- * @param   fmmdl_player		自機動作モデル
- * @param   heap_id		      ヒープID
- *
- * @retval  GMEVENT *		
- */
-//==================================================================
-GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
-  INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, HEAPID heap_id)
-{
-	COMMTALK_EVENT_WORK *ftalk_wk;
-	GMEVENT *event;
-	
-	event = GMEVENT_Create(
- 		gsys, NULL,	CommMissionResultEvent, sizeof(COMMTALK_EVENT_WORK) );
-
-	ftalk_wk = GMEVENT_GetEventWork( event );
-	GFL_STD_MemClear( ftalk_wk, sizeof(COMMTALK_EVENT_WORK) );
-	
-	ftalk_wk->heapID = heap_id;
-	ftalk_wk->fmmdl_player = fmmdl_player;
-	ftalk_wk->fieldWork = fieldWork;
-	ftalk_wk->intcomm = intcomm;
-	
-  IntrudeEventPrint_SetupFieldMsg(&ftalk_wk->iem, gsys);
-
-	return( event );
-}
-
-//--------------------------------------------------------------
-/**
- * ミッション結果通知イベント(自分が達成ではなく通信相手が達成した結果が届いた)
- * @param	event	GMEVENT
- * @param	seq		シーケンス
- * @param	wk		event talk
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk )
-{
-	COMMTALK_EVENT_WORK *talk = wk;
-	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
-	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-  GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
-	INTRUDE_COMM_SYS_PTR intcomm;
-	enum{
-    SEQ_INIT,
-    SEQ_KEY_WAIT,
-    SEQ_POINT_GET_CHECK,
-    SEQ_POINT_GET,
-    SEQ_POINT_GET_MSG_WAIT,
-    SEQ_POINT_GET_MSG_END_BUTTON_WAIT,
-    SEQ_DISGUISE_START,
-    SEQ_DISGUISE_MAIN,
-    SEQ_END,
-  };
-	
-  intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
-    if((*seq) < SEQ_POINT_GET_MSG_WAIT){
-      *seq = SEQ_DISGUISE_START;
-      talk->error = TRUE;
-    }
-  }
-
-	switch( *seq ){
-  case SEQ_INIT:
-    IntrudeEventPrint_SetupExtraMsgWin(&talk->iem, gsys, 1, 1, 32-2, 16);
-    
-    MISSIONDATA_Wordset(intcomm,
-       &(MISSION_GetResultData(&intcomm->mission))->mission_data, talk->iem.wordset, talk->heapID);
-    {
-      u16 explain_msgid, title_msgid;
-      const MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
-      
-      title_msgid = msg_mistype_000 + mresult->mission_data.cdata.type;
-      explain_msgid = mresult->mission_data.cdata.msg_id_contents_monolith;
-      
-      IntrudeEventPrint_PrintExtraMsgWin_MissionMono(&talk->iem, title_msgid, 8, 0);
-      IntrudeEventPrint_PrintExtraMsgWin_MissionMono(&talk->iem, explain_msgid, 8, 16);
-      if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){ //成功
-        IntrudeEventPrint_Print(&talk->iem, msg_invasion_mission_sys004, 0, 0);
-      }
-      else{ //失敗
-        IntrudeEventPrint_Print(&talk->iem, msg_invasion_mission_sys002, 0, 0);
-      }
-    }
-    (*seq)++;
-    break;
-  case SEQ_KEY_WAIT:
-    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)){
-      IntrudeEventPrint_ExitExtraMsgWin(&talk->iem);
-      (*seq) = SEQ_POINT_GET_CHECK;
-    }
-    break;
-
-  case SEQ_POINT_GET_CHECK:   //報酬ゲットしたか
-    if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){
-      *seq = SEQ_POINT_GET;
-    }
-    else{
-      *seq = SEQ_DISGUISE_START;
-    }
-    break;
-  case SEQ_POINT_GET:         //報酬ゲット
-    WORDSET_RegisterNumber( talk->iem.wordset, 0, 
-      MISSION_GetResultPoint(intcomm, &intcomm->mission), 
-      3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-    IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys003);
-    (*seq)++;
-    break;
-  case SEQ_POINT_GET_MSG_WAIT:
-    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
-      *seq = SEQ_POINT_GET_MSG_END_BUTTON_WAIT;
-    }
-    break;
-  case SEQ_POINT_GET_MSG_END_BUTTON_WAIT:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
-      if(MISSION_AddPoint(intcomm, &intcomm->mission) == TRUE){
-        intcomm->send_occupy = TRUE;
-      }
-      (*seq) = SEQ_DISGUISE_START;
-    }
-    break;
-
-  case SEQ_DISGUISE_START:  //変装戻す
-    IntrudeEvent_Sub_DisguiseEffectSetup(&talk->iedw, gsys, talk->fieldWork, 
-      DISGUISE_NO_NORMAL, 0, 0);
-    (*seq)++;
-    break;
-  case SEQ_DISGUISE_MAIN:
-    if(IntrudeEvent_Sub_DisguiseEffectMain(&talk->iedw, intcomm) == TRUE){
-      (*seq)++;
-    }
-    break;
-
-  case SEQ_END:
-    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
-
-  #if 0
-    //※check　ミッションが一つしかないので、ここで全回復
-    if(intcomm->mission.data.target_info.net_id == GAMEDATA_GetIntrudeMyID(gdata)){
-      STATUS_RCV_PokeParty_RecoverAll(GAMEDATA_GetMyPokemon(gdata));
-    }
-  #endif
-    if(intcomm != NULL){
-      MISSION_Init(&intcomm->mission);
-    }
-
-    return GMEVENT_RES_FINISH;
-  }
-	return GMEVENT_RES_CONTINUE;
-}
 

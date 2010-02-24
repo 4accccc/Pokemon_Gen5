@@ -42,6 +42,7 @@
 #include "event_comm_talk.h"      //EVENT_CommTalk
 #include "event_comm_talked.h"      //EVENT_CommWasTalkedTo
 #include "event_comm_common.h"
+#include "event_comm_result.h"      //EVENT_CommWasTalkedTo
 #include "event_rail_slipdown.h"    //EVENT_RailSlipDown
 #include "event_intrude_subscreen.h"
 #include "event_subscreen.h"      //EVENT_ChangeSubScreen
