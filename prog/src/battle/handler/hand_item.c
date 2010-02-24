@@ -2441,8 +2441,6 @@ static void handler_OujaNoSirusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
     if( per == 0 ){
       per = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
-      // @todo テスト用に100にしてる
-      per = 100;
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
     }
   }

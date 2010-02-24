@@ -134,8 +134,9 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
     BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
     eff_param->header.failSkipFlag = TRUE;
     eff_param->effectNo = BTLEFF_YADORIGI;
-    eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
-    eff_param->pos_to = pos_to;
+    // エフェクト側の from, to の解釈が逆っぽいのでこうする。
+    eff_param->pos_from = pos_to;
+    eff_param->pos_to = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
     eff_param->reservedQuePos = que_reserve_pos;
     eff_param->fQueReserve = TRUE;
   }
