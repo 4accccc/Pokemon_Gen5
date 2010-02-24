@@ -324,7 +324,8 @@ enum              ///<ネームウィンドウ
 #define EGG_ATARI_HABA_L_FX         ( NUM_FX32(-4) )
 #define EGG_ATARI_HABA_R_FX         ( NUM_FX32(5) )
 
-#define DISC_TOP_SPEED      ( 14 )
+//#define DISC_TOP_SPEED      ( 14 )
+#define DISC_TOP_SPEED      ( 7 )
 #define DISC_TOP_SPEED_FX   ( NUM_FX32(DISC_TOP_SPEED ))
 #define DISC_ACCEL_FX       ( ACCEL_FRAME_FX(GURU2_GAME_FRAME_H,DISC_TOP_SPEED) )
 #define DISC_LOW_SPEED      ( 4 )
@@ -987,6 +988,9 @@ struct GURU2MAIN_WORK
   GFL_TCB     *vintr_tcb;   // Vblank割り込みTCB
 
   NET_SAVE_WORK *NetSaveWork;   // 通信同期セーブ用ワーク
+
+  u32         unitIndex_bg; // 背景３Dデータリソースインデックス
+
 #ifdef GURU2_DEBUG_ON
   DEBUGWORK debug;
 #endif
@@ -1057,6 +1061,11 @@ static void Disc_Rotate( DISCWORK *disc, fx32 add );
 static void Egg_Init( GURU2MAIN_WORK *g2m );
 static void Egg_Delete( GURU2MAIN_WORK *g2m );
 static void Egg_MdlActInit( GURU2MAIN_WORK *g2m, EGGACTOR *act );
+
+static void Bg3D_Init( GURU2MAIN_WORK *g2m );
+static void Bg3D_Delete( GURU2MAIN_WORK *g2m );
+static void Bg3D_Draw( GURU2MAIN_WORK *g2m );
+
 
 static void EggAct_Update( GURU2MAIN_WORK *g2m );
 static void EggAct_Draw( GURU2MAIN_WORK *g2m );
@@ -1209,10 +1218,13 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
 
   // モデリングリソース管理UTIL初期化
   g2m->g3dUtil = GFL_G3D_UTIL_Create( GURU2_3DRES_NUM, GURU2_3DOBJ_MAX, HEAPID_GURU2 );
+
+  // 3D背景初期化
+  Bg3D_Init( g2m );
   
   //アクター初期化
-  Disc_Init( g2m );
   Egg_Init( g2m );
+  Disc_Init( g2m );
   OS_Printf("g2m=%08x, g2p=%08x, g2c=%08x\n", (u32)g2m, (u32)g2p, (u32)g2p->g2c);
   
   { //現在のIDと参加人数でディスク角度セット
@@ -1295,6 +1307,8 @@ GFL_PROC_RESULT Guru2MainProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
   GFL_TCB_Exit( g2m->tcbSys );
   GFL_HEAP_FreeMemory( g2m->tcbSysWork );
   
+  // 3D背景削除
+  Bg3D_Delete( g2m );
   //アクター削除
   Disc_Delete( g2m );
   Egg_Delete( g2m );
@@ -3038,6 +3052,9 @@ static void guru2_DrawProc( GURU2MAIN_WORK *g2m )
   NNS_G3dGlbMaterialColorSpecEmi(
     GX_RGB(31,31,31), GX_RGB(31,31,31), FALSE );
   
+  // 背景描画
+  Bg3D_Draw( g2m );
+  
   //皿描画
   Disc_Draw( g2m );
   //卵描画
@@ -3217,7 +3234,7 @@ static void guru2_3DDrawInit( GURU2MAIN_WORK *g2m )
 
   //カメラ設定
   { 
-    static const VecFx32 cam_pos    = { 0,0x10*FX32_ONE,0x70*FX32_ONE};
+    static const VecFx32 cam_pos    = { 0,0x30*FX32_ONE,0x70*FX32_ONE};
     static const VecFx32 cam_target = { CAMERA_TARGET_X,CAMERA_TARGET_Y,CAMERA_TARGET_Z};
     cm->gf_camera = GFL_G3D_CAMERA_CreateDefault( &cam_pos, &cam_target, HEAPID_GURU2 );
     
@@ -4151,6 +4168,82 @@ static void Disc_Rotate( DISCWORK *disc, fx32 add )
 {
   AngleAdd( &disc->rotate_fx, add );
 }
+
+
+
+
+//==============================================================================
+//  背景３Ｄ
+//==============================================================================
+// 背景
+static const GFL_G3D_UTIL_RES res_table_bg3d[] = 
+  {  { ARCID_GURU2, NARC_guru2_g_panel_bg_nsbmd, GFL_G3D_UTIL_RESARC },};
+
+static const GFL_G3D_UTIL_OBJ obj_table_bg3d[] = 
+{
+  {
+    0,    // モデルリソースID
+    0,    // モデルデータID(リソース内部INDEX)
+    0,    // テクスチャリソースID
+    NULL, // アニメ定義
+    0,    // アニメID
+  },
+}; 
+
+static const GFL_G3D_UTIL_SETUP setupBg3d[] =
+{
+  { res_table_bg3d, 1, obj_table_bg3d, 1 },
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 背景３D初期化
+ *
+ * @param   g2m   
+ */
+//----------------------------------------------------------------------------------
+static void Bg3D_Init( GURU2MAIN_WORK *g2m )
+{
+  // 背景３Ｄモデリングデータ読み込み
+  g2m->unitIndex_bg  = GFL_G3D_UTIL_AddUnit( g2m->g3dUtil, setupBg3d );
+  
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 3D背景削除
+ *
+ * @param   g2m   
+ */
+//----------------------------------------------------------------------------------
+static void Bg3D_Delete( GURU2MAIN_WORK *g2m )
+{
+  // ３Ｄユニット削除
+  GFL_G3D_UTIL_DelUnit( g2m->g3dUtil, g2m->unitIndex_bg  );
+  
+}
+
+//--------------------------------------------------------------
+/**
+ * 背景描画
+ * @param g2m GURU2MAIN_WORK
+ * @retval    none
+ */
+//--------------------------------------------------------------
+static void Bg3D_Draw( GURU2MAIN_WORK *g2m )
+{
+  GFL_G3D_OBJSTATUS status;
+
+  GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g2m->g3dUtil, g2m->unitIndex_bg );
+  
+  VEC_Set( &status.trans, 0,0,0 );
+  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+  GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
+
+  GFL_G3D_DRAW_DrawObject( obj, &status );
+    
+}
+
 
 //==============================================================================
 //  卵
@@ -5299,7 +5392,7 @@ static void EggDiscJump( GURU2MAIN_WORK *g2m, EGGDISCJUMPTCB_WORK *work )
       work->jump_proc_flag = FALSE;
       work->jump_flag = FALSE;
       work->seq_no = 0;
-      
+      OS_Printf("タマゴ着地音を再生\n");
       PMSND_PlaySE( GURU2_SE_EGG_LANDING );
     }
     break;

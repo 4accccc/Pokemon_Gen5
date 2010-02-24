@@ -20,7 +20,7 @@
 
 #define GURU2_SE_EGG_FALL     (SEQ_SE_SYS_51) // (SEQ_SE_DP_FW104) //スタート時にタマゴが落ちてくる
 #define GURU2_SE_EGG_JUMP     (SEQ_SE_DANSA) // (SEQ_SE_DP_DANSA5)  //タマゴジャンプ
-#define GURU2_SE_EGG_LANDING  (SEQ_SE_FLD_10) // (SEQ_SE_DP_SUTYA) //タマゴ着地
+#define GURU2_SE_EGG_LANDING  (SEQ_SE_SYS_83) // (SEQ_SE_DP_SUTYA) //タマゴ着地
 
 #define GURU2_SE_TIMEUP       (SEQ_SE_SYS_55) // (SEQ_SE_DP_PINPON)  //タイムアップ
 
