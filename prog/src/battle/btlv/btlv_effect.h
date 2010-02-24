@@ -87,14 +87,16 @@ enum{
   BTLEFF_NEWOHARU,              //ねをはる
 };
 
-typedef struct _BTLV_EFFECT_WORK BTLV_EFFECT_WORK;
+typedef struct _BTLV_EFFECT_SETUP_PARAM BTLV_EFFECT_SETUP_PARAM;
+typedef struct _BTLV_EFFECT_WORK        BTLV_EFFECT_WORK;
 
 //OBJパレット使用内訳
 enum{
   BTLV_OBJ_PLTT_HP_GAUGE    = 0x20 * 0,   //0-5:HPゲージ（6本分）
-  BTLV_OBJ_PLTT_TIMER       = 0x20 * 6,   //6:タイマー
-  BTLV_OBJ_PLTT_STATUS_ICON = 0x20 * 7,   //7:状態異常アイコン
-  BTLV_OBJ_PLTT_CLACT       = 0x20 * 8,   //8:BTLV_CLACTで使用するセルアクター（8個分）
+  BTLV_OBJ_PLTT_BALL_GAUGE  = 0x20 * 6,   //6:ボールゲージ
+  BTLV_OBJ_PLTT_TIMER       = 0x20 * 7,   //7:タイマー
+  BTLV_OBJ_PLTT_STATUS_ICON = 0x20 * 8,   //8:状態異常アイコン
+  BTLV_OBJ_PLTT_CLACT       = 0x20 * 9,   //9:BTLV_CLACTで使用するセルアクター（7個分）
 };
 
 //--------------------------------------------
@@ -126,7 +128,11 @@ typedef enum{
   BTLV_EFFECT_ROTATE_DIR_RIGHT,
 }BTLV_EFFECT_ROTATE_DIR;
 
-extern  void              BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* fontHandle, HEAPID heapID );
+extern  BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FIELD_SITUATION* bfs,
+                                                              BOOL multi, u16* tr_type, HEAPID heapID );
+extern  BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* mainModule, HEAPID heapID );
+
+extern  void              BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEAPID heapID );
 extern  void              BTLV_EFFECT_Exit( void );
 extern  void              BTLV_EFFECT_Main( void );
 extern  void              BTLV_EFFECT_Add( int eff_no );
@@ -134,6 +140,7 @@ extern  void              BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no );
 extern  void              BTLV_EFFECT_AddByDir( BtlvMcssPos from, BtlvMcssPos to, int eff_no );
 extern  void              BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param );
 extern  void              BTLV_EFFECT_Stop( void );
+extern  void              BTLV_EFFECT_Restart( void );
 
 extern  void              BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza );
 extern  void              BTLV_EFFECT_Hinshi( BtlvMcssPos target );

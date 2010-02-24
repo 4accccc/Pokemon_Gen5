@@ -38,36 +38,46 @@
 
 #define BTLV_EFFECT_TRAINER_INDEX_NONE  ( 0xffffffff )
 
+#define TRTYPE_NONE ( 0xffff )
+
 //============================================================================================
 /**
  *  構造体宣言
  */
 //============================================================================================
 
+struct _BTLV_EFFECT_SETUP_PARAM
+{ 
+  BtlRule             rule;
+  BTL_FIELD_SITUATION bfs;
+  u16                 tr_type[ 4 ];
+  BOOL                multi;
+};
+
 struct _BTLV_EFFECT_WORK
 {
   //本来はスクリプトエンジンを載せて、動作させるが、暫定でTCBを利用する
   //最終的にはエフェクトで使用するTCBをBTLV_MCSS、BTLV_CAMERA、BTLV_EFFECTでシェアする形にする
-  GFL_TCBSYS        *tcb_sys;
-  void              *tcb_work;
-  VMHANDLE          *vm_core;
-  PALETTE_FADE_PTR  pfd;
-  BTLV_MCSS_WORK    *bmw;
-  BTLV_STAGE_WORK   *bsw;
-  BTLV_FIELD_WORK   *bfw;
-  BTLV_CAMERA_WORK  *bcw;
-  BTLV_CLACT_WORK   *bclw;
-  BTLV_GAUGE_WORK   *bgw;
-  BTLV_BALL_GAUGE_WORK *bbgw[ BTLV_BALL_GAUGE_TYPE_MAX ];
-  BTLV_TIMER_WORK   *btw;
-  BTLV_BG_WORK      *bbw;
-  GFL_TCB           *v_tcb;
-  int               execute_flag;
-  int               tcb_execute_flag;
-  HEAPID            heapID;
-  BtlRule           rule;
+  GFL_TCBSYS*             tcb_sys;
+  void*                   tcb_work;
+  VMHANDLE*               vm_core;
+  PALETTE_FADE_PTR        pfd;
+  BTLV_MCSS_WORK*         bmw;
+  BTLV_STAGE_WORK*        bsw;
+  BTLV_FIELD_WORK*        bfw;
+  BTLV_CAMERA_WORK*       bcw;
+  BTLV_CLACT_WORK*        bclw;
+  BTLV_GAUGE_WORK*        bgw;
+  BTLV_BALL_GAUGE_WORK*   bbgw[ BTLV_BALL_GAUGE_TYPE_MAX ];
+  BTLV_TIMER_WORK*        btw;
+  BTLV_BG_WORK*           bbw;
+  GFL_TCB*                v_tcb;
+  BTLV_EFFECT_SETUP_PARAM besp;
+  int                     execute_flag;
+  int                     tcb_execute_flag;
+  HEAPID                  heapID;
 
-  int               trainer_index[ BTLV_MCSS_POS_MAX ];
+  int                     trainer_index[ BTLV_MCSS_POS_MAX ];
 };
 
 typedef struct
@@ -105,18 +115,72 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
 
 //============================================================================================
 /**
+ * @brief システム初期化用のセットアップパラメータ生成（バトル用）
+ *
+ * @param[in] heapID      ヒープID
+ */
+//============================================================================================
+BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FIELD_SITUATION* bfs, BOOL multi, u16* tr_type, HEAPID heapID )
+{ 
+  BTLV_EFFECT_SETUP_PARAM* besp = GFL_HEAP_AllocMemory( heapID, sizeof( BTLV_EFFECT_SETUP_PARAM ) );
+  int i;
+
+  besp->rule  = rule;
+  besp->bfs   = *bfs;
+  besp->multi = multi;
+
+  for( i = BTL_CLIENTID_SA_PLAYER ; i <= BTL_CLIENTID_SA_ENEMY2 ; i++ )
+  { 
+    besp->tr_type[ i ] = tr_type[ i ];
+  }
+
+  return besp;
+}
+
+//============================================================================================
+/**
+ * @brief システム初期化用のセットアップパラメータ生成（バトル用）
+ *
+ * @param[in] mainModule  戦闘メインモジュール
+ * @param[in] heapID      ヒープID
+ */
+//============================================================================================
+BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* mainModule, HEAPID heapID )
+{ 
+  int i;
+  u16 tr_type[ 4 ];
+
+  for( i = BTL_CLIENTID_SA_PLAYER ; i <= BTL_CLIENTID_SA_ENEMY2 ; i++ )
+  { 
+    if( BTL_MAIN_IsClientNPC( mainModule, i ) == FALSE )
+    { 
+      tr_type[ i ] = BTL_MAIN_GetClientTrainerType( mainModule, i );
+    }
+    else
+    { 
+      tr_type[ i ] = TRTYPE_NONE;
+    }
+  }
+
+  return BTLV_EFFECT_MakeSetUpParam( BTL_MAIN_GetRule( mainModule ), BTL_MAIN_GetFieldSituation( mainModule ),
+                                     BTL_MAIN_IsMultiMode( mainModule ), tr_type, heapID );
+}
+
+//============================================================================================
+/**
  * @brief システム初期化
  *
- * @param[in] rule    戦闘ルール
- * @param[in] bsp         戦闘セットアップパラメータ
+ * @param[in] besp        セットアップパラメータ
  * @param[in] fontHandle  フォントハンドル
  * @param[in] heapID      ヒープID
  */
 //============================================================================================
-void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* fontHandle, HEAPID heapID )
+void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEAPID heapID )
 {
   GF_ASSERT( bew == NULL );
   bew = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_EFFECT_WORK ) );
+
+  bew->besp = *besp;
 
   bew->heapID = heapID;
 
@@ -133,7 +197,7 @@ void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* 
   PaletteFadeWorkAllocSet( bew->pfd, FADE_MAIN_OBJ, 0x200, heapID );
   PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_OBJ, 0x1e0, heapID );
 
-  bew->bmw  = BTLV_MCSS_Init( rule, bew->tcb_sys, heapID );
+  bew->bmw  = BTLV_MCSS_Init( besp->rule, bew->tcb_sys, heapID );
 
   {
     BATT_BG_TBL_ZONE_SPEC_TABLE*  bbtzst = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL,
@@ -141,20 +205,20 @@ void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* 
                                                                   bew->heapID );
     u8  season = 0;
 
-    if( bbtzst[ bfs->bgType ].season )
+    if( bbtzst[ besp->bfs.bgType ].season )
     {
-      season = bfs->season;
+      season = besp->bfs.season;
     }
-    bew->bsw  = BTLV_STAGE_Init( rule, bbtzst[ bfs->bgType ].stage_file[ bfs->bgAttr ], season, heapID );
-    bew->bfw  = BTLV_FIELD_Init( rule, bbtzst[ bfs->bgType ].bg_file[ bfs->bgAttr ], season, heapID );
+    bew->bsw  = BTLV_STAGE_Init( besp->rule, bbtzst[ besp->bfs.bgType ].stage_file[ besp->bfs.bgAttr ], season, heapID );
+    bew->bfw  = BTLV_FIELD_Init( besp->rule, bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ], season, heapID );
 
     //ライト設定
-    if( bbtzst[ bfs->bgType ].time_zone )
+    if( bbtzst[ besp->bfs.bgType ].time_zone )
     {
       GFL_G3D_LIGHT light;
       FIELD_LIGHT_STATUS  fls;
 
-      FIELD_LIGHT_STATUS_Get( bfs->zoneID, bfs->hour, bfs->minute, bfs->weather, bfs->season, &fls, bew->heapID );
+      FIELD_LIGHT_STATUS_Get( besp->bfs.zoneID, besp->bfs.hour, besp->bfs.minute, besp->bfs.weather, besp->bfs.season, &fls, bew->heapID );
 
       light.color = fls.light;
       light.vec.x = 0;
@@ -186,8 +250,6 @@ void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* 
       bew->trainer_index[ index ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
     }
   }
-
-  bew->rule = rule;
 
   //VBlank関数
   bew->v_tcb = GFUser_VIntr_CreateTCB( BTLV_EFFECT_VBlank, NULL, 1 );
@@ -341,6 +403,16 @@ void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
 void BTLV_EFFECT_Stop( void )
 {
   BTLV_EFFVM_Stop( bew->vm_core );
+}
+
+//=============================================================================================
+/**
+ * @brief エフェクト再開
+ */
+//=============================================================================================
+void BTLV_EFFECT_Restart( void )
+{
+  BTLV_EFFVM_Restart( bew->vm_core );
 }
 
 //=============================================================================================
@@ -536,7 +608,7 @@ void  BTLV_EFFECT_DelTrainer( int position )
 //============================================================================================
 void  BTLV_EFFECT_SetGauge( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp, int position )
 {
-  if( bew->rule == BTL_RULE_TRIPLE )
+  if( bew->besp.rule == BTL_RULE_TRIPLE )
   {
     BTLV_GAUGE_Add( bew->bgw, wk, bpp, BTLV_GAUGE_TYPE_3vs3, position );
   }
@@ -967,7 +1039,7 @@ BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void )
 //============================================================================================
 BtlRule BTLV_EFFECT_GetBtlRule( void )
 {
-  return bew->rule;
+  return bew->besp.rule;
 }
 
 //============================================================================================
