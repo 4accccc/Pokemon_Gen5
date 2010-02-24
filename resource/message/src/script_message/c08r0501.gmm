@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-30T12:31:18"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T18:22:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="147"/>
+		<comment position="4" width="227"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="386" right="1996" bottom="1012" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="695"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,37 @@
 	</lock>
 
 
-	<row id="msg_c08r0501_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0501_infomationw_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・WHITEver</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">ようこそ！　れきしを　おもんじる　まち
+ソウリュウシティへ！▼
+……この　セリフ
+２どめなら　ごめんなさいね</language>
+		<language name="JPN_KANJI" width="256">ようこそ！　歴史を　重んじる　街
+ソウリュウシティへ！▼
+……この　セリフ
+２度目なら　ごめんなさいね</language>
+	</row>
+
+	<row id="msg_c08r0501_infomationw_02b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・BLACKver</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">ようこそ！　へんかを　このむ　まち
+ソウリュウシティへ！▼
+……この　セリフ
+２どめなら　ごめんなさいね</language>
+		<language name="JPN_KANJI" width="256">ようこそ！　変化を　好む　街
+ソウリュウシティへ！▼
+……この　セリフ
+２度目なら　ごめんなさいね</language>
+	</row>
+
+	<row id="msg_c08r0501_man3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c08での演説イベント前
 ・仮メッセージ</comment>
@@ -310,7 +340,7 @@
 モグモゴ　モゴモグ……</language>
 	</row>
 
-	<row id="msg_c08r0501_man3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0501_man3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c08での演説イベント後
 ・仮メッセージ</comment>
@@ -320,20 +350,14 @@
 たべているときは　ハッピー！[BE:01:ページ切り替え（クリア）]
 モグモグ
 たべおわると　アンハッピー……[BE:01:ページ切り替え（クリア）]
-だから　また　たべるけれど
-いつかは　おなかいっぱいに　なって[BE:00:ページ切り替え（行送り）]
-たべられなくなっちゃう……[BE:01:ページ切り替え（クリア）]
-ハッピーと　アンハッピーは
-となりあわせ　なんだなあ　モゴモゴ……</language>
+たべていないときは
+ハッピー　アンハッピーが　はんぶんこ</language>
 		<language name="JPN_KANJI" width="256">モグモグ……
 食べているときは　ハッピー！[BE:01:ページ切り替え（クリア）]
 モグモグ
 食べ終わると　アンハッピー……[BE:01:ページ切り替え（クリア）]
-だから　また食べるけれど
-いつかは　おなかいっぱいに　なって[BE:00:ページ切り替え（行送り）]
-食べられなくなっちゃう……[BE:01:ページ切り替え（クリア）]
-ハッピーと　アンハッピーは
-隣合わせ　なんだなあ　モゴモゴ……</language>
+食べていないときは
+ハッピー　アンハッピーが　はんぶんこ</language>
 	</row>
 
 	<flowchart-group-list>
