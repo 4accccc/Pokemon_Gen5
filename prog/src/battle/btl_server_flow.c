@@ -2099,7 +2099,20 @@ static BOOL ActOrder_SendLast( BTL_SVFLOW_WORK* wk, u8 pokeID )
   }
   return FALSE;
 }
+//--------------------------------------------------------------
+/**
+ *  アクションを実行済みにする（ポケモンID指定）
+ */
+//--------------------------------------------------------------
+static void ActORder_ForceDone( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  ACTION_ORDER_WORK* actOrder = ActOrderTool_SearchByPokeID( wk, pokeID );
+  if( actOrder )
+  {
+    actOrder->fDone = TRUE;
+  }
 
+}
 
 
 //----------------------------------------------------------------------------------------------
@@ -3422,9 +3435,13 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
 //----------------------------------------------------------------------------------
 static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke )
 {
+  u8 pokeID = BPP_GetID( outPoke );
+
   scPut_MemberOut( wk, outPoke );
   BPP_Clear_ForOut( outPoke );
   SCQUE_PUT_OP_OutClear( wk->que, BPP_GetID(outPoke) );
+
+  ActORder_ForceDone( wk, pokeID );
 
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -3433,7 +3450,7 @@ static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke )
     Hem_PopState( &wk->HEManager, hem_state );
   }
 
-  BTL_POSPOKE_PokeOut( &wk->pospokeWork, BPP_GetID(outPoke) );
+  BTL_POSPOKE_PokeOut( &wk->pospokeWork, pokeID );
   scproc_ClearPokeDependEffect( wk, outPoke );
 }
 //----------------------------------------------------------------------------------
@@ -7440,18 +7457,22 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
 
     BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(target) );
 
+    // 対象が死んでたら失敗
     if( BPP_IsDead(target) ){
       return FALSE;
     }
 
+    // 特殊要因で失敗
     if( scEvent_CheckPushOutFail(wk, attacker, target) ){
       return FALSE;
     }
 
+    // 通常処理
     {
       u8 clientID, posIdx;
       BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, targetPos, &clientID, &posIdx );
 
+      // 強制入れ替え効果
       if( eff == PUSHOUT_EFFECT_CHANGE )
       {
         SVCL_WORK* clwk;
@@ -7473,10 +7494,12 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
             handexSub_putString( wk, succeedMsg );
           }
           scproc_MemberInForChange( wk, clientID, posIdx, nextPokeIdx, FALSE );
+
           SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_PushOutChange, nextPokeID );
           scproc_AfterMemberIn( wk );
         }
       }
+      // バトル離脱効果
       else
       {
         scproc_MemberOutCore( wk, target );
