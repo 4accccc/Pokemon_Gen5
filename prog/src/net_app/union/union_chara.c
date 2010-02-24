@@ -380,16 +380,11 @@ static void UNION_CHARA_CheckOBJ_Entry(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC 
  * @param   pc		
  */
 //==================================================================
-static void UNION_CHARA_CheckFocusOBJ(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc)
+static BOOL UNION_CHARA_CheckFocusOBJ(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc)
 {
   int i;
   UNION_CHARACTER *unichara;
   UNION_BEACON *beacon;
-  const u8 null_mac[6] = {0,0,0,0,0,0};
-  
-  if(GFL_STD_MemComp(null_mac, &unisys->my_situation.focus_mac_address, 6) == 0){
-    return;
-  }
   
   beacon = &pc->beacon;
   for(i = 0; i < UNION_CONNECT_PLAYER_NUM; i++){
@@ -416,10 +411,10 @@ static void UNION_CHARA_CheckFocusOBJ(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *
         }
       }
       GFL_STD_MemClear(unisys->my_situation.focus_mac_address, 6);
-      return;
+      return TRUE;
     }
   }
-  GFL_STD_MemClear(unisys->my_situation.focus_mac_address, 6);
+  return FALSE;
 }
 
 static void _ReqFocusOBJ(UNION_SYSTEM_PTR unisys, u16 char_index)
@@ -442,8 +437,14 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata)
   MMDLSYS *mdlsys;
   UNION_CHARACTER *unichara;
   int del_count, child_no;
+  const u8 focus_null_mac[6] = {0,0,0,0,0,0};
+  BOOL focus_check = FALSE;
   
   mdlsys = GAMEDATA_GetMMdlSys( gdata );
+
+  if(GFL_STD_MemComp(focus_null_mac, &unisys->my_situation.focus_mac_address, 6) != 0){
+    focus_check = TRUE;
+  }
 
   bpc = unisys->receive_beacon;
   for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
@@ -457,7 +458,11 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata)
       UNION_CHARA_CheckOBJ_Entry(unisys, bpc);
 
       //フォーカスキャラチェック
-      UNION_CHARA_CheckFocusOBJ(unisys, bpc);
+      if(focus_check == TRUE){
+        if(UNION_CHARA_CheckFocusOBJ(unisys, bpc) == TRUE){
+          focus_check = FALSE;
+        }
+      }
       
       del_count = 0;
       for(child_no = 0; child_no < UNION_CONNECT_PLAYER_NUM; child_no++){
@@ -484,6 +489,7 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata)
     }
     bpc++;
   }
+  GFL_STD_MemClear(unisys->my_situation.focus_mac_address, 6);
 }
 
 //--------------------------------------------------------------
