@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T16:58:40"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T15:51:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1388" top="258" right="2093" bottom="878" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="126" right="1209" bottom="524" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -469,17 +469,17 @@
 電源を　切らないでください</language>
 	</row>
 
-	<row id="msg_common_report_10">
+	<row id="msg_common_report_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN">セーブデータ　書き込み中　１</language>
 		<language name="JPN_KANJI">セーブデータ　書き込み中　１</language>
 	</row>
 
-	<row id="msg_common_report_11">
+	<row id="msg_common_report_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN">セーブデータ　書き込み中　２</language>
 		<language name="JPN_KANJI">セーブデータ　書き込み中　２</language>
 	</row>
 
-	<row id="msg_common_report_12">
+	<row id="msg_common_report_12" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN">セーブデータ　書き込み中　３</language>
 		<language name="JPN_KANJI">セーブデータ　書き込み中　３</language>
 	</row>
