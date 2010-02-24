@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-02-23T20:40:25"/>
+	<create user="tamada" host="W00139" date="2010-02-24T20:43:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1365,6 +1365,11 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_ZUKAN_09">
 		<language name="JPN" width="160">ランダムセット</language>
 		<language name="JPN_KANJI" width="160">ランダムセット</language>
+	</row>
+
+	<row id="DEBUG_FIELD_GEONET">
+		<language name="JPN" width="160">ジオネットよびだし</language>
+		<language name="JPN_KANJI" width="160">ジオネット呼び出し</language>
 	</row>
 
 	<flowchart-group-list>
