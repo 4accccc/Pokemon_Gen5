@@ -35,6 +35,7 @@
 #include "field/field_const.h"  //GRID_TO_FX32
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //for SYS_FLAG_
+#include "report.h" //REPORT_SAVE_TYPE_VAL
 
 
 //======================================================================
@@ -352,7 +353,12 @@ VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk )
 
   // @todo 書き込むデータサイズに応じて, その段階を返す
   SaveControl_GetActualSize( scw, &actual_size, &total_size );
-  *ret_volume = 0;
+  if ( actual_size * REPORT_SAVE_TYPE_VAL < total_size )
+  {
+    *ret_volume = 0;  //ふつう
+  } else {
+    *ret_volume = 1;  //たくさん
+  }
 
   return VMCMD_RESULT_CONTINUE;
 } 
