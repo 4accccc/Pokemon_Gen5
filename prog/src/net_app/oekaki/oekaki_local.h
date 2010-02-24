@@ -15,6 +15,7 @@
 
 #include "system/touch_subwindow.h"
 #include "net_app/union_app.h"
+#include "app/app_taskmenu.h"
 
 // 機能ボタン用定義
 #define FUNCBUTTON_NUM  ( 7 )     // 機能ボタンの数
@@ -216,6 +217,12 @@ struct OEKAKI_WORK{
   PRINT_STREAM  *printStream;           // 
   GFL_TCBLSYS   *pMsgTcblSys;           // メッセージ表示用タスクシステム
 
+  // APPMENU関連
+  APP_TASKMENU_RES   *app_res;            // はい・いいえメニューリソース
+  APP_TASKMENU_WORK  *app_menuwork;       // はい・いいえメニューワーク
+  APP_TASKMENU_ITEMWORK yn_menuitem[2];   // はい・いいえメニューアイテム
+
+  // サブシーケンス制御
   int           proc_seq;                 // MainProcのシーケンスを監視するためだけにある
                                           // （サブシーケンスは書き換えない）
   int           seq;                      // 現在のサブシーケンス状態
@@ -254,7 +261,6 @@ struct OEKAKI_WORK{
   // ----親だけが必要なワーク
 
   TOUCH_INFO        ParentTouchResult[5];
-  TOUCH_SW_SYS      *TouchSubWindowSys;
   int           banFlag;
   int           yesno_flag;               // 現在「はい・いいえ」画面を呼び出し中
   int           firstChild;               // 一番最初にやってきたときに子機から乱入宣言されても無視

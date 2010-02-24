@@ -60,6 +60,11 @@
 #define OEKAKI_NEWMEMBER_SE  ( SEQ_SE_DECIDE1 )
 #define OEKAKI_PEN_CHANGE_SE ( SEQ_SE_DECIDE2 )
 
+// はい・いいえ
+#define YESNO_RET_YES   ( 0 )
+#define YESNO_RET_NO    ( 1 )
+#define YESNO_RET_NONE  ( 2 )
+
 //============================================================================================
 //  プロトタイプ宣言
 //============================================================================================
@@ -128,8 +133,6 @@ static int Oekaki_ForceEndWaitNop( OEKAKI_WORK *wk, int seq );
 static void SetNextSequence( OEKAKI_WORK *wk, int nextSequence );
 static void OekakiSequenceControl( OEKAKI_WORK *wk, int proc_seq );
 
-static BOOL OekakiInitYesNoWin(OEKAKI_WORK *wk, TOUCH_SW_PARAM *param);
-static void OekakiResetYesNoWin(OEKAKI_WORK *wk);
 static int FakeEndYesNoSelect( OEKAKI_WORK  *wk );
 static void SetTouchpanelData( TOUCH_INFO *touchResult, TP_ONE_DATA *tpData, int brush_color, int brush );
 static int _get_connect_bit( OEKAKI_WORK *wk );
@@ -137,6 +140,9 @@ static int _get_connect_num( OEKAKI_WORK *wk );
 static void _disp_on( void );
 static void OEKAKI_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork);
 static void OEKAKI_leave_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork);
+static APP_TASKMENU_WORK  *YesNoMenuInit( OEKAKI_WORK *wk );
+static u32 YesNoMenuMain( OEKAKI_WORK *wk );
+static void OekakiResetYesNoWin(OEKAKI_WORK *wk);
 
 
 typedef struct{
@@ -430,6 +436,9 @@ GFL_PROC_RESULT OekakiProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk
   switch(*seq){
   case 0:
     OS_Printf("おえかきワーク解放処理突入\n");
+
+    // 通信コマンドテーブル解放
+    GFL_NET_DelCommandTable( GFL_NET_CMD_PICTURE );
 
     // Vblank期間中のBG転送終了
     GFL_TCB_DeleteTask( wk->vblankTcb );
@@ -733,8 +742,9 @@ static void InitWork( OEKAKI_WORK *wk )
   wk->firstChild   = 0;
   wk->ireagalJoin  = 0;
   wk->seq          = 0;
-  wk->bookJoin  = 0;
-  wk->joinBit  = 0;
+  wk->bookJoin     = 0;
+  wk->joinBit      = 0;
+  wk->app_menuwork = NULL;
 
   // 親は通信で絵を受け取る必要が無い
   if( GFL_NET_SystemGetCurrentID()==0 ){
@@ -749,9 +759,6 @@ static void InitWork( OEKAKI_WORK *wk )
 
   // お絵かき画像圧縮データ領域
   wk->lz_buf = GFL_HEAP_AllocMemory( HEAPID_OEKAKI, 30*16*32 );
-
-  // 下画面ウインドウシステム初期化
-  wk->TouchSubWindowSys = TOUCH_SW_AllocWork( HEAPID_OEKAKI );
 
   // 接続人数監視用ワーク初期化
   wk->connectBackup = 0;
@@ -771,7 +778,6 @@ static void FreeWork( OEKAKI_WORK *wk )
   int i;
 
   GFL_HEAP_FreeMemory(  wk->lz_buf );
-  TOUCH_SW_FreeWork( wk->TouchSubWindowSys );
 
 
   for(i=0;i<OEKAKI_MEMBER_MAX;i++){
@@ -1594,20 +1600,9 @@ static int Oekaki_NewMemberEnd( OEKAKI_WORK *wk, int seq )
 static int Oekaki_EndSelectPutString( OEKAKI_WORK *wk, int seq )
 {
   if( EndMessageWait( wk->printStream ) ){
-    TOUCH_SW_PARAM param;
-    BOOL rc;
 
-    // YES NO ウィンドウボタンの表示
-    MI_CpuClear8(&param,sizeof(TOUCH_SW_PARAM));
-    param.bg_frame  = GFL_BG_FRAME0_M;
-    param.char_offs = YESNO_CHARA_OFFSET+YESNO_CHARA_W*YESNO_CHARA_H;
-    param.pltt_offs = 8;
-    param.x     = OEKAKI_YESNO_BUTTON_X; /*25*/
-    param.y     = OEKAKI_YESNO_BUTTON_Y; /* 6*/
-    param.type    = TOUCH_SW_TYPE_S;
-
-    rc = OekakiInitYesNoWin(wk, &param);
-    GF_ASSERT(rc);
+    // はい・いいえ開始
+    wk->app_menuwork = YesNoMenuInit( wk );
 
     SetNextSequence( wk, OEKAKI_MODE_END_SELECT_WAIT );
   }
@@ -1627,7 +1622,7 @@ static int Oekaki_EndSelectPutString( OEKAKI_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
 {
-  int result;
+  u32 result;
 
   // 誤送信を防ぐ
   wk->MyTouchResult.size = 0;
@@ -1654,42 +1649,42 @@ static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
     return seq;
   }
 
-  result = TOUCH_SW_Main( wk->TouchSubWindowSys );
+  result = YesNoMenuMain( wk );
   switch(result){       //やめますか？
-  case TOUCH_SW_RET_YES:            //はい
-    if(GFL_NET_SystemGetCurrentID()==0){    
-      SetNextSequence( wk, OEKAKI_MODE_END_SELECT_PARENT );
-      EndMessagePrint( wk, msg_oekaki_05, 1 );    // リーダーがやめると…
-    }else{
-      COMM_OEKAKI_END_CHILD_WORK coec;
-      
-      MI_CpuClear8(&coec, sizeof(COMM_OEKAKI_END_CHILD_WORK));
-      coec.request = COEC_REQ_RIDATU_CHECK;
-      coec.ridatu_id = GFL_NET_SystemGetCurrentID();
-      
-      wk->status_end = TRUE;
-      wk->ridatu_wait = 0;
-
-      SetNextSequence( wk, OEKAKI_MODE_END_SELECT_ANSWER_WAIT );
-      GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(),CO_OEKAKI_END_CHILD, 
-                        sizeof(COMM_OEKAKI_END_CHILD_WORK), &coec );
-      BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
-    }
-    OekakiResetYesNoWin(wk);
-
-    //おえかき再描画
-    GFL_BMPWIN_MakeTransWindow( wk->OekakiBoard );
+//  case TOUCH_SW_RET_YES:            //はい
+  case YESNO_RET_YES:
+      if(GFL_NET_SystemGetCurrentID()==0){    
+        SetNextSequence( wk, OEKAKI_MODE_END_SELECT_PARENT );
+        EndMessagePrint( wk, msg_oekaki_05, 1 );    // リーダーがやめると…
+      }else{
+        COMM_OEKAKI_END_CHILD_WORK coec;
+        
+        MI_CpuClear8(&coec, sizeof(COMM_OEKAKI_END_CHILD_WORK));
+        coec.request = COEC_REQ_RIDATU_CHECK;
+        coec.ridatu_id = GFL_NET_SystemGetCurrentID();
+        
+        wk->status_end = TRUE;
+        wk->ridatu_wait = 0;
+  
+        SetNextSequence( wk, OEKAKI_MODE_END_SELECT_ANSWER_WAIT );
+        GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(),CO_OEKAKI_END_CHILD, 
+                          sizeof(COMM_OEKAKI_END_CHILD_WORK), &coec );
+        BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
+      }
+  
+      //おえかき再描画
+      GFL_BMPWIN_MakeTransWindow( wk->OekakiBoard );
   
     break;
-  case TOUCH_SW_RET_NO:           //いいえ
+//  case TOUCH_SW_RET_NO:           //いいえ
+  case YESNO_RET_NO:
     SetNextSequence( wk, OEKAKI_MODE );
     EndButtonAppearChange( wk->EndIconActWork, FALSE );
     BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
-    OekakiResetYesNoWin(wk);
-
+  
     //おえかき再描画
     GFL_BMPWIN_MakeTransWindow( wk->OekakiBoard );
-    
+      
     // 親機は接続拒否を解除
     if(GFL_NET_SystemGetCurrentID()==0){
       CommStateSetLimitNum(wk, _get_connect_num(wk)+1);
@@ -1878,19 +1873,9 @@ static int  Oekaki_EndChildWait2( OEKAKI_WORK *wk, int seq )
 static int Oekaki_EndSelectParent( OEKAKI_WORK *wk, int seq )
 {
   if( EndMessageWait( wk->printStream ) ){
-    TOUCH_SW_PARAM param;
-    BOOL rc;
 
-    // YES NO ウィンドウボタンの表示
-    param.bg_frame  = GFL_BG_FRAME0_M;
-    param.char_offs = YESNO_CHARA_OFFSET+YESNO_CHARA_W*YESNO_CHARA_H;
-    param.pltt_offs = 8;
-    param.x     = 25;
-    param.y     = 6;
-    param.type    = TOUCH_SW_TYPE_S;
-
-    rc = OekakiInitYesNoWin(wk, &param);
-    GF_ASSERT(rc);
+    // はい・いいえ開始
+    wk->app_menuwork = YesNoMenuInit( wk );
 
     SetNextSequence( wk, OEKAKI_MODE_END_SELECT_PARENT_WAIT );
 
@@ -1913,7 +1898,7 @@ static int Oekaki_EndSelectParent( OEKAKI_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
 {
-  int result = TOUCH_SW_Main( wk->TouchSubWindowSys );
+  u32 result = YesNoMenuMain( wk );
 
   if(wk->shareNum != MyStatusGetNum(wk) //一致していないなら「やめる」許可しない
       || wk->ridatu_bit != 0){  //離脱しようとしている子がいるなら許可しない
@@ -1922,7 +1907,7 @@ static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
   }
 
   switch(result){       //やめますか？
-  case TOUCH_SW_RET_YES:            //はい
+  case YESNO_RET_YES:            //はい
     SetNextSequence( wk, OEKAKI_MODE_FORCE_END );
     GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), 
                       CO_OEKAKI_END, NULL, 0 );  //終了通知
@@ -1931,13 +1916,11 @@ static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
                                 Union_App_GetMystatus(wk->param->uniapp, 0)); 
     seq = SEQ_LEAVE;
     OS_Printf("OEKAKI_MODE_FORCE_ENDにかきかえ\n");
-    OekakiResetYesNoWin(wk);
     break;
-  case TOUCH_SW_RET_NO:           //いいえ
+  case YESNO_RET_NO:           //いいえ
     SetNextSequence( wk, OEKAKI_MODE );
     EndButtonAppearChange( wk->EndIconActWork, FALSE );
     BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
-    OekakiResetYesNoWin(wk);
 
     // 親機は接続拒否を解除
     if(GFL_NET_SystemGetCurrentID()==0){
@@ -3090,25 +3073,6 @@ static void OekakiSequenceControl( OEKAKI_WORK *wk, int proc_seq )
   }
 }
 
-//------------------------------------------------------------------
-/**
- * @brief   タッチパネルのはい・いいえウィンドウの作成関数
- *
- * @param   wk    
- *
- * @retval  BOOL    TRUE：成功  FALSE：失敗       
- */
-//------------------------------------------------------------------
-static BOOL OekakiInitYesNoWin(OEKAKI_WORK *wk, TOUCH_SW_PARAM *param)
-{
-  if(!wk->yesno_flag){
-    TOUCH_SW_Init( wk->TouchSubWindowSys, param );
-    wk->yesno_flag = 1;
-    return TRUE;
-  }else{
-    return FALSE;
-  }
-}
 
 //------------------------------------------------------------------
 /**
@@ -3122,7 +3086,9 @@ static BOOL OekakiInitYesNoWin(OEKAKI_WORK *wk, TOUCH_SW_PARAM *param)
 static void OekakiResetYesNoWin(OEKAKI_WORK *wk)
 {
   if(wk->yesno_flag){
-    TOUCH_SW_Reset( wk->TouchSubWindowSys );
+    if(wk->app_menuwork!=NULL){
+      APP_TASKMENU_CloseMenu( wk->app_menuwork );
+    }
     wk->yesno_flag = 0;
   }
 }
@@ -3245,3 +3211,86 @@ static void _disp_on( void )
   
   GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
 }
+
+
+static const int yn_item[][2]={
+  { msg_oekaki_yes,  APP_TASKMENU_WIN_TYPE_NORMAL },
+  { msg_oekaki_no,   APP_TASKMENU_WIN_TYPE_NORMAL },
+};
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief はい・いいえ開始
+ *
+ * @param   wk    
+ *
+ * @retval  APP_TASKMENU_WORK  *    
+ */
+//----------------------------------------------------------------------------------
+static APP_TASKMENU_WORK  *YesNoMenuInit( OEKAKI_WORK *wk )
+{
+  APP_TASKMENU_INITWORK init;
+  APP_TASKMENU_WORK     *menuwork;
+  int i;
+
+  // APPMENUリソース読み込み
+  wk->app_res = APP_TASKMENU_RES_Create( GFL_BG_FRAME0_M, 2, wk->font, wk->printQue, HEAPID_OEKAKI );
+
+  for(i=0;i<2;i++){
+    wk->yn_menuitem[i].str      = GFL_MSG_CreateString( wk->MsgManager, yn_item[i][0] ); //メニューに表示する文字列
+    wk->yn_menuitem[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
+    wk->yn_menuitem[i].type     = yn_item[i][1];
+  }
+
+
+  init.heapId   = HEAPID_OEKAKI;
+  init.itemNum  = 2;
+  init.itemWork = wk->yn_menuitem;
+  init.posType  = ATPT_LEFT_UP;
+  init.charPosX = 21; //ウィンドウ開始位置(キャラ単位
+  init.charPosY =  7;
+  init.w = 10;  //キャラ単位
+  init.h =  3;  //キャラ単位
+
+  // はい・いいえメニュー開始
+  menuwork = APP_TASKMENU_OpenMenu( &init, wk->app_res );
+  
+  return menuwork;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief はい・いいえ選択待ち
+ *
+ * @param   wk    
+ *
+ * @retval  u32   
+ */
+//----------------------------------------------------------------------------------
+static u32 YesNoMenuMain( OEKAKI_WORK *wk )
+{
+  u32 ret=YESNO_RET_NONE;
+
+  // メニューメイン
+  APP_TASKMENU_UpdateMenu( wk->app_menuwork );
+
+  if(APP_TASKMENU_IsFinish( wk->app_menuwork )){
+    if(APP_TASKMENU_GetCursorPos(wk->app_menuwork)==0){
+      ret = YESNO_RET_YES;
+    }else{
+      ret = YESNO_RET_NO;
+    }
+    // 終了処理
+    APP_TASKMENU_CloseMenu( wk->app_menuwork );
+    GFL_STR_DeleteBuffer( wk->yn_menuitem[1].str );
+    GFL_STR_DeleteBuffer( wk->yn_menuitem[0].str );
+    APP_TASKMENU_RES_Delete( wk->app_res );
+    wk->app_menuwork = NULL;
+  }
+
+  return ret;
+  
+}
+
