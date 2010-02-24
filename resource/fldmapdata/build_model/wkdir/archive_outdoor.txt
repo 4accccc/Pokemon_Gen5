@@ -255,3 +255,4 @@
 "nsbmdfiles/tt_train10.nsbmd"
 "nsbmdfiles/wf_house01.nsbmd"
 "nsbmdfiles/tt_train11.nsbmd"
+"nsbmdfiles/door_c05_build.nsbmd"
