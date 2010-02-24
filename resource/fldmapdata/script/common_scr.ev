@@ -212,27 +212,41 @@ ev_report_event_call_wireless:
   _GET_WIRELESS_SAVEMODE( savemode )
 
   SWITCH $savemode
-  CASE WIRELESS_SAVEMODE_ON  THEN _CALL ev_report_event_call    // レポート処理へ
-  CASE WIRELESS_SAVEMODE_OFF THEN $SCWK_PARAM0 = SCR_REPORT_OK  // レポート書いたとみなす
-                                  _CHG_LOCAL_SCR                // ローカルスクリプトに切り替え
+  CASE WIRELESS_SAVEMODE_ON  THEN
+      _CALL ev_report_event_call    // レポート処理へ
+  CASE WIRELESS_SAVEMODE_OFF THEN
+      $SCWK_PARAM0 = SCR_REPORT_OK  // レポート書いたとみなす
   ENDSWITCH
+  _CHG_LOCAL_SCR                // ローカルスクリプトに切り替え
 }
 _END 
+
 ev_report_event_call:
+  _CALL sub_report_event_call
+  _CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
+  _END
+
+sub_report_event_call:
 { 
+  DEFINE_LOCAL  do_save_flag
+  DEFINE_LOCAL  save_exists_flag
+  DEFINE_LOCAL  new_save_flag
+  DEFINE_LOCAL  save_size_value
+  DEFINE_LOCAL  temp_work
+
   // 変数を初期化
   $SCWK_PARAM1 = FALSE    // セーブするかどうか
-  $SCWK_PARAM2 = FALSE    // セーブデータが存在するかどうか
-  $SCWK_PARAM3 = FALSE    // プレイ中のデータが新規データかどうか
+  $save_exists_flag = FALSE    // セーブデータが存在するかどうか
+  $new_save_flag = FALSE    // プレイ中のデータが新規データかどうか
   $SCWK_PARAM4 = FALSE    // セーブデータ量
-  $SCWK_PARAM5 = 0        // temp
+  $temp_work = 0        // temp
 
   // セーブデータの状態を取得
-  _REPORT_CHECK( SCWK_PARAM2, SCWK_PARAM3, SCWK_PARAM4 )
+  _REPORT_CHECK( save_exists_flag, new_save_flag, save_size_value )
   // test
-  $SCWK_PARAM2 = TRUE
-  $SCWK_PARAM3 = FALSE
-  $SCWK_PARAM4 = 1  
+  //$save_exists_flag = TRUE
+  //$new_save_flag = FALSE
+  //$save_size_value = 1  
 
   // システムウィンドウを確実に出すために数フレーム待つ.
   // ※_BALLOONWIN_CLOSE()が呼ばれた後,
@@ -244,56 +258,56 @@ ev_report_event_call:
 
   //「かいても いいですか？」
   _SYSWIN_MSG( msg_common_report_01 , POS_DOWN )
-  _YES_NO_WIN( SCWK_PARAM5 )
-  IF $SCWK_PARAM5 == 0 THEN //『はい』
-    $SCWK_PARAM1 = TRUE
+  _YES_NO_WIN( temp_work )
+  IF $temp_work == 0 THEN //『はい』
+    $do_save_flag = TRUE
   ENDIF
   _SYSWIN_CLOSE()
 
   //「すでに べつの レポートが…」
-  IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 == TRUE) THEN
+  IF ($do_save_flag == TRUE) && ($save_exists_flag == TRUE) && ($new_save_flag == TRUE) THEN
       _SYSWIN_MSG( msg_common_report_08 , POS_DOWN )
     _AB_KEYWAIT()
     _SYSWIN_CLOSE()
-    $SCWK_PARAM1 = FALSE
+    $do_save_flag = FALSE
   ENDIF
 
+/*
   //「うえから かいても いいですか？」
-  IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 != TRUE) THEN
+  IF ($do_save_flag == TRUE) && ($save_exists_flag == TRUE) && ($new_save_flag != TRUE) THEN
       _SYSWIN_MSG( msg_common_report_02 , POS_DOWN )
-    _YES_NO_WIN( SCWK_PARAM5 )
+    _YES_NO_WIN( temp_work )
     _SYSWIN_CLOSE()
-    IF $SCWK_PARAM5 == 1 THEN //『いいえ』
-     $SCWK_PARAM1 = FALSE
+    IF $temp_work == 1 THEN //『いいえ』
+     $do_save_flag = FALSE
     ENDIF
   ENDIF
+*/
 
   // セーブ
-  IF $SCWK_PARAM1 == TRUE THEN
+  IF $do_save_flag == TRUE THEN
     //「かきこんでいます」
-    SWITCH $SCWK_PARAM4 
+    SWITCH $save_size_value 
     CASE 0 THEN 
-      _SYSWIN_MSG( msg_common_report_10 , POS_DOWN )
+      _SYSWIN_MSG( msg_common_report_03 , POS_DOWN )  //ふつう
     CASE 1 THEN
-      _SYSWIN_MSG( msg_common_report_11 , POS_DOWN )
-    CASE 2 THEN
-      _SYSWIN_MSG( msg_common_report_12 , POS_DOWN )
+      _SYSWIN_MSG( msg_common_report_09 , POS_DOWN )  //たくさん
     ENDSWITCH
-    _REPORT_CALL( SCWK_PARAM5 ) // 実セーブ処理
+    _REPORT_CALL( temp_work ) // 実セーブ処理
     _SYSWIN_CLOSE()
     // 書き込みに成功
-    IF $SCWK_PARAM5 == TRUE THEN
+    IF $temp_work == TRUE THEN
       _SE_PLAY( SEQ_SE_SAVE )
       //「しっかり かきのこした！」
       _PLAYER_NAME(0)
-          _SYSWIN_MSG( msg_common_report_04 , POS_DOWN )
+      _SYSWIN_MSG( msg_common_report_04 , POS_DOWN )
       _AB_KEYWAIT()
       _SYSWIN_CLOSE()
       $SCWK_PARAM0 = SCR_REPORT_OK
     // 書き込みに失敗
     ELSE
       //「かけませんでした」
-          _SYSWIN_MSG( msg_common_report_06 , POS_DOWN )
+      _SYSWIN_MSG( msg_common_report_06 , POS_DOWN )
       _AB_KEYWAIT()
       _SYSWIN_CLOSE() 
       $SCWK_PARAM0 = SCR_REPORT_CANCEL  // 結果を返す
@@ -301,12 +315,11 @@ ev_report_event_call:
   ENDIF
 
   // セーブしなかった場合
-  IF $SCWK_PARAM1 != TRUE THEN
+  IF $do_save_flag != TRUE THEN
     $SCWK_PARAM0 = SCR_REPORT_CANCEL  // 結果を返す
   ENDIF
 
-  _CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
-  _END
+  _RET
 }
 
 //====================================================================
