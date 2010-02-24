@@ -355,6 +355,25 @@ void  BTLV_CLACT_SetAnime( BTLV_CLACT_WORK *bclw, int index, int anm_no )
 
 //============================================================================================
 /**
+ *  パレットフェード
+ *
+ * @param[in] bclw      BTLV_CLACT_WORK管理構造体へのポインタ
+ * @param[in] index     CLWKの管理インデックス
+ * @param[in] start_evy
+ * @param[in] end_evy 
+ * @param[in] wait
+ * @param[in] rgb 
+ */
+//============================================================================================
+void  BTLV_CLACT_SetPaletteFade( BTLV_CLACT_WORK *bclw, int index, u8 start_evy, u8 end_evy, s8 wait, u16 rgb )
+{ 
+  u16 pltt_bit = 1 << ( ( GFL_CLGRP_PLTT_GetAddr( bclw->bccl[ index ].plttID, CLSYS_DRAW_MAIN ) & 0x3ff ) / 0x20 );
+
+  PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_MAIN_OBJ, pltt_bit, wait, start_evy, end_evy, rgb, BTLV_EFFECT_GetTCBSYS() );
+}
+
+//============================================================================================
+/**
  *  タスクが起動中かチェック
  *
  * @param[in] bclw    BTLV_CLACT_WORK管理ワークへのポインタ

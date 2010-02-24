@@ -10,7 +10,7 @@
 
 #pragma once
 
-#define BTLV_CLACT_CLWK_MAX ( 10 )    //UNIT‚ÌMAX
+#define BTLV_CLACT_CLWK_MAX ( 7 )    //UNIT‚ÌMAX
 
 typedef struct _BTLV_CLACT_WORK BTLV_CLACT_WORK;
 typedef struct _BTLV_CLACT_CLWK BTLV_CLACT_CLWK;
@@ -30,6 +30,8 @@ extern  void              BTLV_CLACT_MovePosition( BTLV_CLACT_WORK *bclw, int in
 extern  void              BTLV_CLACT_MoveScale( BTLV_CLACT_WORK *bclw, int index, int type,
                                                 VecFx32 *scale, int frame, int wait, int count );
 extern  void              BTLV_CLACT_SetAnime( BTLV_CLACT_WORK *bclw, int index, int anm_no );
+extern  void              BTLV_CLACT_SetPaletteFade( BTLV_CLACT_WORK *bclw, int index,
+                                                     u8 start_evy, u8 end_evy, s8 wait, u16 rgb );
 extern  BOOL              BTLV_CLACT_CheckTCBExecute( BTLV_CLACT_WORK *bclw, int index );
 
 
