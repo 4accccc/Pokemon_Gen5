@@ -72,10 +72,6 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	IF $SCWK_ANSWER == SCR_YES THEN
 		//はいの処理
 
-		//【仮】ニックネーム処理にいった場合はカメラリセットされるので後のカメラ終了処理をスキップする
-		DEFINE_LOCAL	LWK_CAMERA_OFF
-		$LWK_CAMERA_OFF = 1
-
 		//ニックネーム入力処理
 		_CALL		ev_name_input
 
@@ -180,7 +176,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_BALLOONWIN_CLOSE()
 
 	//カメラを主人公位置に戻す
-	_CAMERA_RECV_MOVE(30)	//カメラ復帰移動
+	_CAMERA_DEF_MOVE(30)		//カメラ主人公位置に復帰
 
 	//博士：退室へ（主人公＆ライバル道を開ける）
 	_OBJ_ANIME( T01R0401_SUPPORT_01,anm_zukan_player_move_01 )
@@ -188,12 +184,10 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_OBJ_ANIME( T01R0401_HAKASE2_01,anm_zukan_doc_goaway_01 )
 	_OBJ_ANIME_WAIT()
 
-	//【仮】ニックネーム処理をよんでなければカメラ復帰
-	IF $LWK_CAMERA_OFF != 1 THEN
-		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-		_CAMERA_BIND()		//カメラバインド
-		_CAMERA_END()		//カメラ操作終了
-	ENDIF
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+
+	_CAMERA_END()		//カメラ操作終了
 
 	//カメラ操作ここまで===================================
 
@@ -262,6 +256,13 @@ ev_name_input:
 
 	//名前入力画面呼び出し（インデックスは１匹しかいないはずなので固定値）
 	_PARTY_POKE_NAME_INPUT( NAME_RET, 0 )
+
+	_CAMERA_END()		//カメラ操作終了
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	//カメラ初期化されてしまうので再度カメラ操作
+	_CAMERA_MOVE(9688,0,970752,294912,0,335872, 20)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//名前入力の有無で分岐
 	IF $NAME_RET == TRUE THEN
