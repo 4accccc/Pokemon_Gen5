@@ -776,7 +776,7 @@ void BOX2MAIN_MsgInit( BOX2_SYS_WORK * syswk )
 												ARCID_FONT, NARC_font_large_gftr,
 												GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BOX_APP );
   syswk->app->nfnt = GFL_FONT_Create(
-												ARCID_FONT, NARC_font_small_gftr,
+												ARCID_FONT, NARC_font_num_gftr,
 												GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BOX_APP );
 	syswk->app->wset = WORDSET_Create( HEAPID_BOX_APP );
 	syswk->app->que  = PRINTSYS_QUE_Create( HEAPID_BOX_APP );

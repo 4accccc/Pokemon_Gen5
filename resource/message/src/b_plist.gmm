@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-12-22T12:24:54"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-02-24T12:13:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -401,8 +401,8 @@
 	<row id="mes_b_plist_01_701" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>ポケモン選択画面
 レベル表示</comment>
-		<language name="JPN" width="176">Lv.[2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="176">Lv.[2:02:３桁:0]</language>
+		<language name="JPN" width="176">L[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="176">L[2:02:３桁:0]</language>
 	</row>
 
 	<row id="mes_b_plist_01_702" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">

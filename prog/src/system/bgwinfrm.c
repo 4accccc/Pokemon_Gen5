@@ -135,7 +135,7 @@ void BGWINFRM_Add( BGWINFRM_WORK * wk, u32 index, u32 frm, u32 sx, u32 sy )
 
 	win = &wk->win[index];
 
-	win->scr = GFL_HEAP_AllocMemory( wk->heapID, sx * sy * 2 );
+	win->scr = GFL_HEAP_AllocClearMemory( wk->heapID, sx * sy * 2 );
 	win->sx  = sx;
 	win->sy  = sy;
 

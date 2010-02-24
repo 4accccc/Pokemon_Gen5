@@ -2511,7 +2511,7 @@ static void BPL_MsgManSet( BPLIST_WORK * wk )
 {
   wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_b_plist_dat, wk->dat->heap );
 //  wk->nfnt = NUMFONT_Create( 15, 14, FBMP_COL_NULL, wk->dat->heap );
-  wk->nfnt = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->dat->heap );
+  wk->nfnt = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->dat->heap );
   wk->wset = WORDSET_Create( wk->dat->heap );
 //  wk->que  = PRINTSYS_QUE_Create( wk->dat->heap );
   wk->que  = PRINTSYS_QUE_CreateEx( 2048, wk->dat->heap );

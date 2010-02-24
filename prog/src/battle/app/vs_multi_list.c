@@ -528,6 +528,10 @@ static int MainSeq_Init( VSMLIST_WORK * wk )
 	InitObj( wk );
 	InitBgWinFrame( wk );
 
+	// 通信アイコン設定
+	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_WIFINOTE );
+	GFL_NET_ReloadIcon();
+
 	GFL_DISP_GX_SetVisibleControl(
 		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_OBJ, VISIBLE_ON );
 
@@ -612,6 +616,10 @@ static int MainSeq_Main( VSMLIST_WORK * wk )
 
 	switch( wk->sub_seq ){
 	case 0:
+	  if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+			break;
+		}
+
 		if( wk->dat->pos == VS_MULTI_LIST_POS_LEFT ){
 			for( i=0; i<3; i++ ){
 				BGWINFRM_MoveInit( wk->wfrm, BGWF_POKE4_PLATE+i, -1, 0, BPL_COMM_BSX_PLATE );
@@ -837,7 +845,7 @@ static void InitMsg( VSMLIST_WORK * wk )
 {
 	wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_b_plist_dat, HEAPID_VS_MULTI_LIST );
 	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_VS_MULTI_LIST );
-  wk->nfnt = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_VS_MULTI_LIST );
+  wk->nfnt = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_VS_MULTI_LIST );
   wk->wset = WORDSET_Create( HEAPID_VS_MULTI_LIST );
   wk->que  = PRINTSYS_QUE_CreateEx( 2048, HEAPID_VS_MULTI_LIST );
 //  wk->msg_buf = GFL_STR_CreateBuffer( TMP_MSG_BUF_SIZ, wk->dat->heap );
@@ -975,6 +983,7 @@ static void InitBmp( VSMLIST_WORK * wk )
 
 	for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[i].win), 0 );
+//		GFL_BMPWIN_TransVramCharacter( wk->win[i].win );
 		if( wk->pp[i] != NULL ){
 			PutPokeName( wk, i );
 			PutPokeLv( wk, i );
@@ -1051,7 +1060,7 @@ static void PutPokeName( VSMLIST_WORK * wk, u32 idx )
 
   GFL_STR_DeleteBuffer( str );
   GFL_STR_DeleteBuffer( exp );
-
+/*
   // 性別
   if( PP_Get( wk->pp[idx], ID_PARA_nidoran_nickname, NULL ) == TRUE &&
 			PP_Get( wk->pp[idx], ID_PARA_tamago_flag, NULL ) == 0 ){
@@ -1074,6 +1083,7 @@ static void PutPokeName( VSMLIST_WORK * wk, u32 idx )
       GFL_STR_DeleteBuffer( str );
     }
 	}
+*/
 }
 
 //--------------------------------------------------------------------------------------------
