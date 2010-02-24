@@ -3399,6 +3399,8 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
       unisys->alloc.psl = NULL;
       if(select_party == SELECT_PARTY_CANCEL){
         OS_TPrintf("メニューをキャンセルしました\n");
+        _BBox_PokePartyFree(unisys->alloc.bbox_party);
+        unisys->alloc.bbox_party = NULL;
         UnionMsg_Menu_PokePartySelectMenuDel(unisys);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
         return TRUE;
