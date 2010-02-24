@@ -92,6 +92,8 @@ FS_EXTERN_OVERLAY(wifi2dmap);
 #define	CLACT_PALSIZ_TB					( 3 )
 #define	CLACT_PALNUM_TRGRA			( CLACT_PALNUM_TB + CLACT_PALSIZ_TB )
 #define	CLACT_PALSIZ_TRGRA			( 1 )
+#define	CLACT_PALNUM_WF2DC			( CLACT_PALNUM_TRGRA + CLACT_PALSIZ_TRGRA )
+#define	CLACT_PALSIZ_WF2DC			( 8 )
 
 //-------------------------------------
 /// VRAMTRANFER_MAN
@@ -2011,6 +2013,10 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
 
   // 描画システムワーク初期化
   Draw_Init( &p_wk->draw, &p_wk->data, HEAPID_WIFINOTE );
+
+	// 通信アイコン設定
+	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_WIFINOTE );
+	GFL_NET_ReloadIcon();
 
   // 各画面のワーク初期化
 //  ModeSelect_Init( &p_wk->mode_select, &p_wk->data, &p_wk->draw, HEAPID_WIFINOTE );
@@ -4509,7 +4515,7 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
 
   // ユニオンキャラクタを読み込む
   WF_2DC_UnionResSet( p_wk->p_charsys, CLSYS_DRAW_MAIN,
-      WF_2DC_MOVETURN, 7, heapID );
+      WF_2DC_MOVETURN, CLACT_PALNUM_WF2DC*0x20, heapID );
 
 /*
   // 戻るメッセージ作成
@@ -6050,8 +6056,8 @@ static void FListDrawArea_SetPlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WF_2DCSYS* p_c
     adddata.y = ((p_wk->scrn_area.scrn_y+DATA_FListCursorData[pos].scrn_data.scrn_y) * 8) + FLIST_PLAYER_Y;
     adddata.pri = FLIST_PLAYER_PRI;
     adddata.bgpri = FLIST_PLAYER_BGPRI;
-//    p_wk->p_clwk[ pos ] = WF_2DC_WkAdd( p_charsys, &adddata, view, heapID );
-    p_wk->p_clwk[ pos ] = WF_2DC_WkAdd( p_charsys, &adddata, 5, heapID );
+    p_wk->p_clwk[ pos ] = WF_2DC_WkAdd( p_charsys, &adddata, view, heapID );
+//    p_wk->p_clwk[ pos ] = WF_2DC_WkAdd( p_charsys, &adddata, 5, heapID );
     WF_2DC_WkPatAnmStart( p_wk->p_clwk[ pos ] , WF_2DC_ANMWAY , WF2DMAP_WAY_DOWN );
   }
 
@@ -7438,7 +7444,8 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
 						p_wifilist,
 		        p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_UNION_GRA );
     //num = UnionView_GetTrainerInfo( sex, num, UNIONVIEW_TRTYPE );
-    num = UnionView_GetTrType( UnionView_Objcode_to_Index(num) );
+//    num = UnionView_GetTrType( UnionView_Objcode_to_Index(num) );
+    num = UnionView_GetTrType( num );
 
 		ah = TR2DGRA_OpenHandle( heapID );
 		p_wk->trRes[0] = TR2DGRA_OBJ_CGR_Register( ah, num, CLSYS_DRAW_MAIN, heapID );
