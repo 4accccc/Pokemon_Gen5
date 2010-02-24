@@ -284,9 +284,11 @@ static void hideTask_Update( FLDEFF_TASK *task, void *wk )
     }
     
     if( work->anm_flag == TRUE ){
-      if( FLD_G3DOBJ_CTRL_AnimeObject(
-            work->head.obj_ctrl,work->obj_idx,FX32_ONE) == FALSE ){
-        work->anm_end_flag = TRUE;
+      if( work->anm_end_flag == FALSE ){
+        if( FLD_G3DOBJ_CTRL_AnimeObject(
+              work->head.obj_ctrl,work->obj_idx,FX32_ONE) == FALSE ){
+          work->anm_end_flag = TRUE;
+        }
       }
     }
     

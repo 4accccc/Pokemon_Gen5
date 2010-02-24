@@ -3136,7 +3136,7 @@ static int AC_HidePullOFF_1( MMDL * mmdl )
 	  if( task != NULL ){
       if( FLDEFF_HIDE_CheckAnime(task) == TRUE ){
         FLDEFF_TASK_CallDelete( task );
-        MMDL_SetMoveHideEffectTask( mmdl, task );
+        MMDL_SetMoveHideEffectTask( mmdl, NULL );
       }
     }
 	}
