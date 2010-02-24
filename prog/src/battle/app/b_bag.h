@@ -36,6 +36,7 @@ enum {
 enum BBagBallUse_tag {
   BBAG_BALLUSE_TRUE = 0,    // 使用可能
   BBAG_BALLUSE_POKEMAX,     // 手持ち・ボックスに空きがないため使用不可
+	BBAG_BALLUSE_DOUBLE,			// 野生ダブル・敵が２匹のため使用不可
 };
 typedef u8 BBagBallUse;
 

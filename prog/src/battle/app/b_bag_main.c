@@ -816,6 +816,13 @@ static int BBAG_ItemUse( BBAG_WORK * wk )
 			wk->ret_seq = SEQ_BBAG_ERR;
 			return SEQ_BBAG_MSG_WAIT;
 		}
+		// –ì¶ƒ_ƒuƒ‹E“G‚ª‚Q•C‚Ì‚½‚ßŽg—p•s‰Â
+		if( dat->ball_use == BBAG_BALLUSE_DOUBLE ){
+      GFL_MSG_GetString( wk->mman, mes_b_bag_m11, wk->msg_buf );
+			BattleBag_TalkMsgSet( wk );
+			wk->ret_seq = SEQ_BBAG_ERR;
+			return SEQ_BBAG_MSG_WAIT;
+		}
 	}
 
 
