@@ -3978,6 +3978,9 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
   case 3:
     if( !PMSND_CheckPlayBGM() )
     {
+      //戦闘エフェクト一時停止を解除
+      BTLV_EFFECT_Restart();
+      PMSND_PlayBGM( SEQ_BGM_WIN1 );
       // 図鑑登録メッセージ
       if( args[3] )
       {
