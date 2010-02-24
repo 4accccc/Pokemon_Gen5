@@ -13,6 +13,7 @@
 #define R06R0202_ROCK_01                   0
 #define R06R0202_ROCK_02                   1
 #define R06R0202_ROCK_03                   2
+#define R06R0202_OLDMAN1_01                3
 
 #endif //ZONE_R06R0202_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r06r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

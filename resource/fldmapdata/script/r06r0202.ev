@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r06r0202.h"
-  //.include  "r06r0202.h"
+  .include  "r06r0202.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,270 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r06r0202
+_EVENT_DATA    ev_pos_r06r0202_oldman1_01
+_EVENT_DATA    ev_r06r0202_oldman1_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*  OLDMAN1_01のPOSイベント           */
 /**************************************************************/
-//ev_r06r0202_flag_change:
-//  _END
+EVENT_START   ev_pos_r06r0202_oldman1_01
+	
+	//POSによって、移動する
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ ) //自機座標取得
+		
+	//じじい主人公に気づく
+	_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_common_gyoe)
+	_OBJ_ANIME_WAIT()
+	
+	//主人公を一歩押し戻す
+	//主人公が押し戻される
+	IF $LWK_POSX == 17 THEN	
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_push_01_17)
+		_TIME_WAIT(16)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_pushed_01)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_POSX == 18 THEN
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_push_01_18)
+		_TIME_WAIT(16)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_pushed_01)
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_POSX == 19 THEN
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_push_01_19)
+		_TIME_WAIT(16)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_pushed_01)
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	
+	//おぬし…
+	_BALLOONWIN_OBJMSG_POS( msg_r06r0202_guide_01, R06R0202_OLDMAN1_01, POS_DOWN )
+	
+	//はい。いいえ選択
+	_YES_NO_WIN( SCWK_ANSWER )
+	_MSGWIN_CLOSE()
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		//ひととポケモンが
+		_BALLOONWIN_OBJMSG_POS( msg_r06r0202_guide_02, R06R0202_OLDMAN1_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//じじい一歩右へ歩く
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_go_right_01)
+		_OBJ_ANIME_WAIT()	
+		
+		//じじい正面を向く
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()		
+
+		//ポケモンたちをすくいだした
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_03, R06R0202_OLDMAN1_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//じじい主人公の前に移動
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_go_left_01)
+		_OBJ_ANIME_WAIT()	
+
+		//じじい正面を向く
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()	
+		
+		//アトス　ポルトス　アラミスは
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_04, R06R0202_OLDMAN1_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//じじい段差をあがる
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_go_up_01)
+		_OBJ_ANIME_WAIT()	
+		
+		//ひとのいくさがおわると
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_05, R06R0202_OLDMAN1_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+
+		//じじい正面を向く
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()	
+
+		//何百年ものあいだ
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_06, R06R0202_OLDMAN1_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//じじい段差を下がる
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_go_down_01)
+		_OBJ_ANIME_WAIT()	
+		
+		//しかし　かれらは
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_07, R06R0202_OLDMAN1_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//じじい一歩進む
+		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_go_down_02)
+		_OBJ_ANIME_WAIT()	
+		
+		//おぬしなら…
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_08, R06R0202_OLDMAN1_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//=========　フラグワーク操作　===========//
+		
+		$WK_SCENE_R06R0202 = 1
+		
+		//=========　フラグワーク操作　===========//
+		
+	ELSE
+		//いいえを選択
+		//としよりのはなしを
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_10, R06R0202_OLDMAN1_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//じじい元の位置に戻る
+		IF $LWK_POSX == 17 THEN	
+			_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_back_01_17)
+			_OBJ_ANIME_WAIT()
+		ELSIF $LWK_POSX == 18 THEN
+			_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_back_01_18)
+			_OBJ_ANIME_WAIT()
+		ELSIF $LWK_POSX == 19 THEN
+			_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_back_01_19)
+			_OBJ_ANIME_WAIT()
+		ENDIF
+	
+	ENDIF
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//共通 : おじいさん　一歩下がる                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman1_go_down_01
+	
+	_ANIME_DATA AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//共通 : おじいさん　階段を下がる                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman1_go_down_02
+
+	_ANIME_DATA AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通 : おじいさん　左に一歩移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman1_go_left_01
+
+	_ANIME_DATA AC_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通 : おじいさん　右に一歩移動                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman1_go_right_01
+
+	_ANIME_DATA AC_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通 : おじいさん　階段を上がる                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman1_go_up_01
+	
+	_ANIME_DATA AC_WALK_U_16F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通 : おじいさん　主人公を押し返す                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman1_push_01_17
+	
+	_ANIME_DATA AC_WALK_L_16F,2
+	_ANIME_DATA AC_WALK_D_16F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_oldman1_push_01_18
+
+	_ANIME_DATA AC_WALK_L_16F,1
+	_ANIME_DATA AC_WALK_D_16F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_oldman1_push_01_19
+
+	_ANIME_DATA AC_WALK_D_16F,2
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//共通 : おじいさん　元の位置に戻る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman1_back_01_17
+	_ANIME_DATA AC_WALK_U_16F,2
+	_ANIME_DATA AC_WALK_R_16F,2
+	_ANIME_DATA AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_oldman1_back_01_18
+	_ANIME_DATA AC_WALK_U_16F,2
+	_ANIME_DATA AC_WALK_R_16F,1
+	_ANIME_DATA AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_oldman1_back_01_19
+	_ANIME_DATA AC_WALK_U_16F,2
+	_ANIME_DATA AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通 : 主人公　押し返される                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_pushed_01
+	
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_WALK_D_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1	
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：びっくり                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*                                                            */
+/*  OLDMAN1_01のイベント           */
 /**************************************************************/
-ev_r06r0202:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_r06r0202_oldman1_01
+  	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d06r0203_guide_09)
+EVENT_END
 

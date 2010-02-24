@@ -17,5 +17,6 @@
 #ifndef ZONE_D06_EVB_H
 #define ZONE_D06_EVB_H
 
+#define BG_D06_SIGN1_01                   0
 
 #endif //ZONE_D06_EVB_H

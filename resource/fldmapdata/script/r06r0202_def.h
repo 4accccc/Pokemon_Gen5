@@ -5,6 +5,7 @@
 #define _R06R0202_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_R06R0202 (1)
+#define SCRID_POS_R06R0202_OLDMAN1_01 (1)
+#define SCRID_R06R0202_OLDMAN1_01 (2)
 
 #endif //_R06R0202_DEF_H_

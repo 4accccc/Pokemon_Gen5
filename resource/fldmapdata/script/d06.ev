@@ -161,8 +161,8 @@ EVENT_START    ev_pos_d06_leader5_01
 	//【仮】スクリプトの動きだけ出来るのか。エフェクトはいるのか
 	//ポケモンがわざを出したような処理
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
-	
-	_TIME_WAIT(32)
+	_OBJ_ANIME_WAIT()
+
 	_OBJ_ANIME(D06_STOPPER_01,anm_stopper_01_hakai)
 	_OBJ_ANIME_WAIT()
 

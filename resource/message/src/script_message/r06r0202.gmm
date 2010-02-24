@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-02-10T17:08:19"/>
+	<create user="murakami_naoto" host="W00228" date="2010-02-24T20:56:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_ｒ06r0202_guide_01">
+	<row id="msg_r06r0202_guide_01">
 		<comment>・pos起動（GRIDX=17~19 GRIDZ=15）
 ※r0203へ通じる階段の手前。
 
