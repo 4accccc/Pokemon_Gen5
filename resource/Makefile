@@ -149,6 +149,7 @@ SUBDIRS	=	wmi \
 			kokuren \
 			pokevoice \
 			dowsing_gra \
+			leader_board \
             report \
             time_icon
 
