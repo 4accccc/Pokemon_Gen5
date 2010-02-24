@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-10T12:23:42"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T17:20:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="146" right="1996" bottom="774" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -307,11 +307,11 @@
 トリプルバトルが　どんなものか
 かいせつ　しても　いいかね？</language>
 		<language name="JPN_KANJI" width="256">ようこそ！
-トリプルバトルの　やかたへ▼
-ここでは　そのなのとおり
-トリプルバトルを　たのしめる▼
+トリプルバトルの　館へ▼
+ここでは　その名のとおり
+トリプルバトルを　楽しめる▼
 トリプルバトルが　どんなものか
-かいせつ　しても　いいかね？</language>
+解説しても　いいかね？</language>
 	</row>
 
 	<row id="msg_c08r0201_veteranm_02w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -325,7 +325,7 @@
 		<language name="JPN" width="256">トリプルバトルが　どんなものか
 かいせつ　しても　いいかね？</language>
 		<language name="JPN_KANJI" width="256">トリプルバトルが　どんなものか
-かいせつ　しても　いいかね？</language>
+解説しても　いいかね？</language>
 	</row>
 
 	<row id="msg_c08r0201_veteranm_03w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -339,10 +339,10 @@
 あいての　ポケモンを　すべて
 ひんしにした　トレーナーの　かちだ！</language>
 		<language name="JPN_KANJI" width="256">トリプルバトルとは
-ポケモンを　３びきずつ　だして▽
-たたかう　たいせんけいしき！▼
-あいての　ポケモンを　すべて
-ひんしにした　トレーナーの　かちだ！</language>
+ポケモンを　３匹ずつ　だして▽
+勝負する　対戦形式！▼
+相手の　ポケモンを　すべて
+ひんしにした　トレーナーの　勝利だ！</language>
 	</row>
 
 	<row id="msg_c08r0201_veteranm_04w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -353,9 +353,9 @@
 		<language name="JPN" width="256">きょうみ　ないのか？▼
 たのしいから　まず
 かいせつを　きいてみてくれ！</language>
-		<language name="JPN_KANJI" width="256">きょうみ　ないのか？▼
-たのしいから　まず
-かいせつを　きいてみてくれ！</language>
+		<language name="JPN_KANJI" width="256">興味ないの！？▼
+楽しいから　まず
+解説を　きいてよ！！</language>
 	</row>
 
 	<row id="msg_c08r0201_veteranm_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -373,11 +373,11 @@
 ローテーションバトルが　どんなものか
 かいせつ　しても　いいかね？</language>
 		<language name="JPN_KANJI" width="256">ようこそ！
-ローテーションバトルの　やかたへ▼
-ここでは　そのなのとおり
-ローテーションバトルを　たのしめる▼
+ローテーションバトルの　館へ▼
+ここでは　その名のとおり
+ローテーションバトルを　楽しめる▼
 ローテーションバトルが　どんなものか
-かいせつ　しても　いいかね？</language>
+解説しても　いいかね？</language>
 	</row>
 
 	<row id="msg_c08r0201_veteranm_02b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -391,7 +391,7 @@
 		<language name="JPN" width="256">ローテーションバトルが　どんなものか
 かいせつ　しても　いいかね？</language>
 		<language name="JPN_KANJI" width="256">ローテーションバトルが　どんなものか
-かいせつ　しても　いいかね？</language>
+解説しても　いいかね？</language>
 	</row>
 
 	<row id="msg_c08r0201_veteranm_03b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -404,17 +404,17 @@
 たたかう　たいせんけいしき！▼
 そして　だした　ポケモンは
 まえに２ひき！　うしろに１ひきの▽
-ポジションに　セットされる▼
+ポジションで　セットされる▼
 この　ポジションは　１ターンごとに
 かわるというのが　ポイントだ！</language>
 		<language name="JPN_KANJI" width="256">ローテーションバトルとは
-ポケモンを　３びきずつ　だして▽
-たたかう　たいせんけいしき！▼
+ポケモンを　３匹ずつ　だして▽
+勝負する　対戦形式！▼
 そして　だした　ポケモンは
-まえに２ひき！　うしろに１ひきの▽
-ポジションに　セットされる▼
+前衛に２匹！　後衛に１匹の▽
+ポジションで　セットされる▼
 この　ポジションは　１ターンごとに
-かわるというのが　ポイントだ！</language>
+換わるというのが　ポイントだ！</language>
 	</row>
 
 	<row id="msg_c08r0201_veteranm_04b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -425,9 +425,9 @@
 		<language name="JPN" width="256">きょうみ　ないのか？▼
 たのしいから　まず
 かいせつを　きいてみてくれ！</language>
-		<language name="JPN_KANJI" width="256">きょうみ　ないのか？▼
-たのしいから　まず
-かいせつを　きいてみてくれ！</language>
+		<language name="JPN_KANJI" width="256">興味ないの！？▼
+楽しいから　まず
+解説を　きいてよ！！</language>
 	</row>
 
 	<flowchart-group-list>

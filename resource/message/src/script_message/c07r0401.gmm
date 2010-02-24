@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T20:46:54"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T17:15:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="278" right="1998" bottom="906" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="384" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -322,11 +322,11 @@
 		<language name="JPN" width="256">きみも　トレーナーなら
 どれだけ　あいじょうを　もって▼
 ポケモンを　そだてているか
-わたしに　みせてくれないかい？</language>
+わたくしに　みせてくれないかい？</language>
 		<language name="JPN_KANJI" width="256">きみも　トレーナーなら
-どれだけ　あいじょうを　もって▼
-ポケモンを　そだてているか
-わたしに　みせてくれないかい？</language>
+どれだけ　愛情を　もって▼
+ポケモンを　育てているか
+わたくしに　みせてくれないかい？</language>
 	</row>
 
 	<row id="msg_c07r0401_gentleman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -383,8 +383,8 @@
 紳士</attribute>
 		<language name="JPN" width="256">むむ？　タマゴの　そだちぐあいは
 ちょっと　はんだんが　むずかしいね</language>
-		<language name="JPN_KANJI" width="256">むむ？　タマゴの　そだちぐあいは
-ちょっと　はんだんが　むずかしいね</language>
+		<language name="JPN_KANJI" width="256">むむ？　タマゴの　育ち具合の
+判断は　ちょっと　難しいね</language>
 	</row>
 
 	<row id="msg_c07r0401_gentleman_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -417,8 +417,8 @@
 紳士</attribute>
 		<language name="JPN" width="256">すごく　そだてたんだねえ
 あいじょう　たっぷりだねえ▼</language>
-		<language name="JPN_KANJI" width="256">すごく　そだてたんだねえ
-あいじょう　たっぷりだねえ▼</language>
+		<language name="JPN_KANJI" width="256">すごく　育てたんだねえ
+愛情　たっぷりだねえ▼</language>
 	</row>
 
 	<row id="msg_c07r0401_gentleman_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -432,8 +432,8 @@
 紳士</attribute>
 		<language name="JPN" width="256">かなり　そだてたんだねえ
 あいじょう　かんじるねえ▼</language>
-		<language name="JPN_KANJI" width="256">かなり　そだてたんだねえ
-あいじょう　かんじるねえ▼</language>
+		<language name="JPN_KANJI" width="256">かなり　育てたんだねえ
+愛情　感じるねえ▼</language>
 	</row>
 
 	<row id="msg_c07r0401_gentleman_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -447,8 +447,8 @@
 紳士</attribute>
 		<language name="JPN" width="256">けっこう　そだてたんだねえ
 あいじょう　あるねえ▼</language>
-		<language name="JPN_KANJI" width="256">けっこう　そだてたんだねえ
-あいじょう　あるねえ▼</language>
+		<language name="JPN_KANJI" width="256">けっこう　育てたんだねえ
+愛情　あるねえ▼</language>
 	</row>
 
 	<row id="msg_c07r0401_gentleman_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -460,7 +460,7 @@
 		<language name="JPN" width="256">なるほど！　わずかながらも
 きみの　あいじょうを　かんじられるね！</language>
 		<language name="JPN_KANJI" width="256">なるほど！　わずかながらも
-きみの　あいじょうを　かんじられるね！</language>
+きみの　愛情を　感じられるね！</language>
 	</row>
 
 	<row id="msg_c07r0401_gentleman_13" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -486,8 +486,8 @@
 ポケモンを　そだててほしいね！</language>
 		<language name="JPN_KANJI" width="256">いやー　きみには
 いいものを　みせてもらった！▼
-これからも　あいじょう　こめて
-ポケモンを　そだててほしいね！</language>
+これからも　愛情　こめて
+ポケモンを　育ててほしいね！</language>
 	</row>
 
 	<row id="msg_c07r0401_woman1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
