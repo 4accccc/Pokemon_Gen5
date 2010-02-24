@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-06T11:41:08"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T16:52:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="262" right="1996" bottom="890" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,7 +359,7 @@
 	</lock>
 
 
-	<row id="msg_d06r0101_ninja_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_d06r0101_ninja_01" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・pos（GRIDX=6~8、GRIDZ=55）を踏むと
 　主人公の上下にダークトリニティ出現
@@ -374,7 +374,7 @@
 		<language name="JPN_KANJI" width="256">……　……　……▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_10" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・GRIDX=10、GRIDZ=50、右向きに配置していた
 　Nが下を向いてメッセージ表示
@@ -388,7 +388,7 @@
 能力を　ひきだせて　いるかい？[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_11" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_11" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・はい選択時
 ・続けてboss_04</comment>
@@ -403,7 +403,7 @@
 力を　持っているとでも[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_12" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_12" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・続けてboss_04</comment>
@@ -418,7 +418,7 @@
 ポケモンを　解き放たない？[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_13" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_13" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・表示後、GRIDX=14、GRIDZ=45まで移動
 　あわせてカメラも追従
@@ -440,7 +440,7 @@
 出口で　待っているよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_01" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：シーン1
 ・pos（GRIDX=11、GRIDZ=45~47）で発動
 　ｒ06側から登場
@@ -453,20 +453,20 @@
 ういている　いしは
 おせば　うごくんだよ▼</language>
 		<language name="JPN_KANJI" width="256">ベル『おーい！
-[1:00:トレーナー名:0]　しってる？▼
-ういている　いしは
-おせば　うごくんだよ▼</language>
+[1:00:トレーナー名:0]　知ってる？▼
+浮いている　石は
+押せば　動くんだよ▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_02" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_01</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ですよね！　はかせ！▼</language>
-		<language name="JPN_KANJI" width="256">ですよね！　はかせ！▼</language>
+		<language name="JPN_KANJI" width="256">ですよね！　博士！▼</language>
 	</row>
 
-	<row id="msg_d06r0101_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_hakase2_01">
 		<comment>♀
 ・画面外から登場
 　GRIDX=9、GRIDZ=47に配置してメッセージ表示
@@ -479,7 +479,7 @@
 元気してる？　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_d06r0101_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d06r0101_hakase2_02" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♀
 ・GRIDX=8、GRIDZ=47に移動
 　その場で上下を見た後、主人公と向き合って
@@ -503,7 +503,7 @@
 押せるわけじゃ　ないけど▼</language>
 	</row>
 
-	<row id="msg_d06r0101_hakase2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_hakase2_03">
 		<comment>♀
 ・再度、GRIDX=9、GRIDZ=47に移動して
 ・メッセージ表示後、主人公操作可能に</comment>
@@ -524,7 +524,7 @@
 たくさんの　ポケモンと　出会ってね！</language>
 	</row>
 
-	<row id="msg_d06r0101_hakase2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_hakase2_04">
 		<comment>♀
 ・シーン2まで繰り返し
 　できればその場で四方を振り向きつつ待機</comment>
@@ -539,7 +539,7 @@
 たくさんの　ポケモンと　出会ってね！</language>
 	</row>
 
-	<row id="msg_d06r0101_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・シーン2まで繰り返し
 　できればその場で四方を振り向きつつ待機</comment>
@@ -552,7 +552,7 @@
 って　そんな　必要ないけど……</language>
 	</row>
 
-	<row id="msg_d06r0101_hakase2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_hakase2_05">
 		<comment>♀：シーン2
 ・pos（GRIDX=31、GRIDZ=24~26）を踏むと
 　博士　　GRIDX=30、GRIDZ=25
@@ -569,7 +569,7 @@
 集め終えたところ　かな▼</language>
 	</row>
 
-	<row id="msg_d06r0101_hakase2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_hakase2_06">
 		<comment>♀
 ・左を向いてメッセージ表示
 ・続けてhakase2_07</comment>
@@ -611,7 +611,7 @@
 そう　信じているのよね！▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_04" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_08</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -661,7 +661,7 @@
 だって　旅は　出会い　なんだもん！</language>
 	</row>
 
-	<row id="msg_d06r0101_ninja_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_d06r0101_ninja_02" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・pos（GRIDX=38、GRIDZ=41~42）を踏むと
 　主人公を囲むようにダークトリニティ3人出現
@@ -673,7 +673,7 @@
 		<language name="JPN_KANJI" width="256">……　……　……▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・GRIDX=69、GRIDZ=13、左向きで待機
 ・pos（GRIDX=67、GRIDZ=12~14）を踏むと
