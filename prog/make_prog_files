@@ -372,6 +372,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
 				field/event_shortcut_menu.c \
 				field/event_field_proclink.c \
         field/event_fldmmdl_control.c \
+        field/event_geonet.c \
         field/field_comm/bingo_system.c \
         field/field_comm/intrude_comm.c \
         field/field_comm/intrude_comm_command.c \
