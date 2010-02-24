@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-24T17:50:14"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-24T17:51:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -746,11 +746,11 @@ msg_palpark_first_19に続く</comment>
 
 	<row id="msg_palpark_17">
 		<comment>研究者B</comment>
-		<language name="JPN" width="256">ここでは　パークてんそうシステムの
+		<language name="JPN" width="256">ここでは　ポケシフターの
 モニターを　しているんだ▼
 ポケモンに　なにか　あったら
 いけないからね！</language>
-		<language name="JPN_KANJI" width="256">ここでは　パーク転送システムの
+		<language name="JPN_KANJI" width="256">ここでは　ポケシフターの
 モニターを　しているんだ▼
 ポケモンに　なにか　あったら
 いけないからね！</language>
