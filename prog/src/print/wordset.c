@@ -13,6 +13,7 @@
 #include "print/global_msg.h"
 #include "str_tool_local.h"
 #include "../../../resource/research_radar/data/hobby_id.h"  // for HOBBY_ID_xxxx
+#include "../../../resource/research_radar/data/job_id.h"  // for JOB_ID_xxxx
 
 #include "arc_def.h"
 #include "message.naix"
@@ -797,7 +798,7 @@ void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power 
  * @param hobbyID 趣味ID
  */
 //------------------------------------------------------------------
-extern void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID )
+void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID )
 {
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_MESSAGE, NARC_message_hobby_dat, wordset->heapID );
@@ -806,12 +807,42 @@ extern void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID )
   if( HOBBY_ID_MAX < hobbyID )
   {
     GF_ASSERT(0);
+    ClearBuffer( wordset, bufID );
     return;
   }
 
   if( msg )
   {
     GFL_MSG_GetString( msg, hobbyID, wordset->tmpBuf );
+    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+    GFL_MSG_Delete( msg );
+  }
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファに仕事名を登録
+ *
+ * @param bufID   バッファID
+ * @param jobID   仕事ID
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterJobName( WORDSET* wordset, u32 bufID, u8 jobID )
+{
+  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+      ARCID_MESSAGE, NARC_message_job_dat, wordset->heapID );
+
+  // 仕事IDエラー
+  if( JOB_ID_MAX < jobID )
+  {
+    GF_ASSERT(0);
+    ClearBuffer( wordset, bufID );
+    return;
+  }
+
+  if( msg )
+  {
+    GFL_MSG_GetString( msg, jobID, wordset->tmpBuf );
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete( msg );
   }
