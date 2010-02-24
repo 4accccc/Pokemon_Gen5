@@ -1023,8 +1023,6 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/handler/hand_item.c \
 			battle/handler/hand_waza.c \
 			battle/handler/hand_side.c \
-			battle/handler/hand_field.c \
-			battle/handler/hand_pos.c \
 			battle/btlv/btlv_core.c \
 			battle/btlv/btlv_scu.c \
 			battle/btlv/btlv_scd.c
@@ -1045,6 +1043,7 @@ SRCS_OVERLAY_BATTLE_VIEW = battle/btlv/btlv_stage.c \
 			battle/btlv/btlv_timer.c \
 			battle/btlv/btlv_bg.c \
 			battle/btlv/btlv_finger_cursor.c
+
 
 # バトル用バッグ&ポケモンリスト共通ツール
 #===> SRCS_OVERLAY_BATTLE_VIEW
@@ -1070,7 +1069,10 @@ SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
 # 戦闘はVRAM_Hが空いているのでLCDCのメモリに割り当てて配置
 # 戦闘で使う以外のソースは配置しないでください
 #===> LCDC_VRAM_H
-SRCS_OVERLAY_VRAM_H = battle/tr_ai/tr_ai.c
+SRCS_OVERLAY_VRAM_H =	battle/tr_ai/tr_ai.c \
+			battle/handler/hand_field.c \
+			battle/handler/hand_pos.c
+
 
 # マルチバトル開始前ポケモンリスト
 #===> SRCS_OVERLAY_BATTLE
@@ -1670,8 +1672,6 @@ SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 #===> SRCS_OVERLAY_UI_COMMON
 #===> SRCS_OVERLAY_POKE_STATUS
 #===> SRCS_OVERLAY_WORLDTRADE
-#===> SRCS_OVERLAY_BATTLE_B_APP
-#===> SRCS_OVERLAY_BATTLE_PLIST
 SRCS_OVERLAY_SHINKA_DEMO	= demo/shinka_demo/shinka_demo.c \
 													  demo/shinka_demo/shinka_demo_graphic.c \
 													  demo/shinka_demo/shinka_demo_view.c
