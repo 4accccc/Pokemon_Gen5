@@ -5,30 +5,39 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_kaiten.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 #001
 %00
+汎用ワークに値をセット	3
 制御モード変更	継続
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_1
 ポケモン拡縮	POS_BB	ダイレクト	0	0	0	0	0
-ポケモン移動	POS_BB	追従	0	4	1	0	0
 ポケモンアニメ	POS_BB	アニメストップ
 ポケモン影バニッシュ	POS_BB	バニッシュオン
+指定されたワークを見て条件分岐	POS_BB_JUMP	==	1	NO_EXIST_BB_1
+ポケモン移動	POS_BB	追従	0	4	1	0	0
+汎用ワークに値をセット	0
 ラベル	NO_EXIST_BB_1
 立ち位置チェック	POS_B	いない	NO_EXIST_B_1
 ポケモン拡縮	POS_B	ダイレクト	0	0	0	0	0
-ポケモン移動	POS_B	追従	0	4	1	0	0
 ポケモンアニメ	POS_B	アニメストップ
 ポケモン影バニッシュ	POS_B	バニッシュオン
+指定されたワークを見て条件分岐	POS_B_JUMP	==	1	NO_EXIST_B_1
+ポケモン移動	POS_B	追従	0	4	1	0	0
+汎用ワークに値をセット	0
 ラベル	NO_EXIST_B_1
 立ち位置チェック	POS_D	いない	NO_EXIST_D_1
 ポケモン拡縮	POS_D	ダイレクト	0	0	0	0	0
-ポケモン移動	POS_D	追従	0	4	1	0	0
 ポケモンアニメ	POS_D	アニメストップ
 ポケモン影バニッシュ	POS_D	バニッシュオン
+指定されたワークを見て条件分岐	POS_D_JUMP	==	1	NO_EXIST_D_1
+ポケモン移動	POS_D	追従	0	4	1	0	0
+汎用ワークに値をセット	0
 ラベル	NO_EXIST_D_1
 立ち位置チェック	POS_F	いない	NO_EXIST_F_1
 ポケモン拡縮	POS_F	ダイレクト	0	0	0	0	0
-ポケモン移動	POS_F	追従	0	4	1	0	0
 ポケモンアニメ	POS_F	アニメストップ
 ポケモン影バニッシュ	POS_F	バニッシュオン
+指定されたワークを見て条件分岐	POS_F_JUMP	==	1	NO_EXIST_F_1
+ポケモン移動	POS_F	追従	0	4	1	0	0
+汎用ワークに値をセット	0
 ラベル	NO_EXIST_F_1
 制御モード変更	逐次
 パーティクルデータロード	w_157
@@ -123,63 +132,71 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_4
 ポケモンパレットフェード	POS_BB	16	0	1	31:31:31
 ポケモン拡縮	POS_BB	追従	1	1	16	0	0
+指定されたワークを見て条件分岐	POS_BB_JUMP	==	1	NO_EXIST_BB_4
 ポケモン移動	POS_BB	追従	0	-1	16	0	0
 ラベル	NO_EXIST_BB_4
 立ち位置チェック	POS_B	いない	NO_EXIST_B_4
 ポケモンパレットフェード	POS_B	16	0	1	31:31:31
 ポケモン拡縮	POS_B	追従	1	1	16	0	0
+指定されたワークを見て条件分岐	POS_B_JUMP	==	1	NO_EXIST_B_4
 ポケモン移動	POS_B	追従	0	-1	16	0	0
 ラベル	NO_EXIST_B_4
 立ち位置チェック	POS_D	いない	NO_EXIST_D_4
 ポケモンパレットフェード	POS_D	16	0	1	31:31:31
 ポケモン拡縮	POS_D	追従	1	1	16	0	0
+指定されたワークを見て条件分岐	POS_D_JUMP	==	1	NO_EXIST_D_4
 ポケモン移動	POS_D	追従	0	-1	16	0	0
 ラベル	NO_EXIST_D_4
 立ち位置チェック	POS_F	いない	NO_EXIST_F_4
 ポケモンパレットフェード	POS_F	16	0	1	31:31:31
 ポケモン拡縮	POS_F	追従	1	1	16	0	0
+指定されたワークを見て条件分岐	POS_F_JUMP	==	1	NO_EXIST_F_4
 ポケモン移動	POS_F	追従	0	-1	16	0	0
 ラベル	NO_EXIST_F_4
 エフェクト終了待ち	すべて
 制御モード変更	継続
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_5
+指定されたワークを見て条件分岐	POS_BB_JUMP	==	1	NO_EXIST_BB_5
 ポケモン移動	POS_BB	追従	0	-3	10	0	0
 指定されたワークを見て条件分岐	POS_BB_WEIGHT	<	1500	WEIGHT_BB_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_BB	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
 ラベル	WEIGHT_BB_M
 指定されたワークを見て条件分岐	POS_BB_WEIGHT	<	500	NO_EXIST_BB_5
-指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	0	NO_EXIST_BB_5
+指定されたワークを見て条件分岐	SEQUENCE_WORK	==	2	NO_EXIST_BB_5
 汎用ワークに値をセット	1
 ラベル	NO_EXIST_BB_5
 立ち位置チェック	POS_B	いない	NO_EXIST_B_5
+指定されたワークを見て条件分岐	POS_B_JUMP	==	1	NO_EXIST_B_5
 ポケモン移動	POS_B	追従	0	-3	10	0	0
 指定されたワークを見て条件分岐	POS_B_WEIGHT	<	1500	WEIGHT_B_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_B	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
 ラベル	WEIGHT_B_M
 指定されたワークを見て条件分岐	POS_B_WEIGHT	<	500	NO_EXIST_B_5
-指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	0	NO_EXIST_B_5
+指定されたワークを見て条件分岐	SEQUENCE_WORK	==	2	NO_EXIST_B_5
 汎用ワークに値をセット	1
 ラベル	NO_EXIST_B_5
 立ち位置チェック	POS_D	いない	NO_EXIST_D_5
+指定されたワークを見て条件分岐	POS_D_JUMP	==	1	NO_EXIST_D_5
 ポケモン移動	POS_D	追従	0	-3	10	0	0
 指定されたワークを見て条件分岐	POS_D_WEIGHT	<	1500	WEIGHT_D_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_D	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
 ラベル	WEIGHT_D_M
 指定されたワークを見て条件分岐	POS_D_WEIGHT	<	500	NO_EXIST_D_5
-指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	0	NO_EXIST_D_5
+指定されたワークを見て条件分岐	SEQUENCE_WORK	==	2	NO_EXIST_D_5
 汎用ワークに値をセット	1
 ラベル	NO_EXIST_D_5
 立ち位置チェック	POS_F	いない	NO_EXIST_F_5
+指定されたワークを見て条件分岐	POS_F_JUMP	==	1	NO_EXIST_F_5
 ポケモン移動	POS_F	追従	0	-3	10	0	0
 指定されたワークを見て条件分岐	POS_F_WEIGHT	<	1500	WEIGHT_F_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_F	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
 ラベル	WEIGHT_F_M
 指定されたワークを見て条件分岐	POS_F_WEIGHT	<	500	NO_EXIST_F_5
-指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	0	NO_EXIST_F_5
+指定されたワークを見て条件分岐	SEQUENCE_WORK	==	2	NO_EXIST_F_5
 汎用ワークに値をセット	1
 ラベル	NO_EXIST_F_5
 タイマーによるウエイト	5
@@ -222,20 +239,33 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	0	0	127	0	0
 ラベル	SHAKE_END
 制御モード変更	継続
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_6
+指定されたワークを見て条件分岐	POS_BB_RARE	==	0	NO_RARE_BB
+サブルーチンコール	BTLEFF_RARE	POS_BB	POS_BB
+ラベル	NO_RARE_BB
 ポケモンアニメ	POS_BB	アニメスタート
 ポケモン影バニッシュ	POS_BB	バニッシュオフ
 ラベル	NO_EXIST_BB_6
 立ち位置チェック	POS_B	いない	NO_EXIST_B_6
+指定されたワークを見て条件分岐	POS_B_RARE	==	0	NO_RARE_B
+サブルーチンコール	BTLEFF_RARE	POS_B	POS_B
+ラベル	NO_RARE_B
 ポケモンアニメ	POS_B	アニメスタート
 ポケモン影バニッシュ	POS_B	バニッシュオフ
 ラベル	NO_EXIST_B_6
 立ち位置チェック	POS_D	いない	NO_EXIST_D_6
+指定されたワークを見て条件分岐	POS_D_RARE	==	0	NO_RARE_D
+サブルーチンコール	BTLEFF_RARE	POS_D	POS_D
+ラベル	NO_RARE_D
 ポケモンアニメ	POS_D	アニメスタート
 ポケモン影バニッシュ	POS_D	バニッシュオフ
 ラベル	NO_EXIST_D_6
 立ち位置チェック	POS_F	いない	NO_EXIST_F_6
+指定されたワークを見て条件分岐	POS_F_RARE	==	0	NO_RARE_F
+サブルーチンコール	BTLEFF_RARE	POS_F	POS_F
+ラベル	NO_RARE_F
 ポケモンアニメ	POS_F	アニメスタート
 ポケモン影バニッシュ	POS_F	バニッシュオフ
 ラベル	NO_EXIST_F_6
+エフェクト終了待ち	すべて
 エフェクト終了
 &

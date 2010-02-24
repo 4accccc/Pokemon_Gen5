@@ -43,7 +43,7 @@ WAZAEFFNCG	:= $(wildcard $(RES_DIR)*.ncg)
 WAZAEFFNSC	:= $(wildcard $(RES_DIR)*.nsc)
 WAZAEFFNCL	:= $(wildcard $(RES_DIR)*.ncl)
 
-.PHONY:	do-build clean waza_eff_gra.scr ncgr nscr nclr
+.PHONY:	do-build clean ncgr nscr nclr
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
@@ -56,7 +56,7 @@ endif
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-waza_eff_gra.scr:
+waza_eff_gra.scr:	mkscr.rb
 	ruby mkscr.rb waza_eff_gra.scr
 
 ncer: $(notdir $(WAZAEFFNCE:.nce=.NCER))

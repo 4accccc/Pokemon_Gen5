@@ -55,7 +55,7 @@ WAZAEFFSRCS	:= $(wildcard $(RES_DIR)?e_???.esf)
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	graphic esf $(NARCNAME1) $(TARGETDIR)/$(NARCNAME1) $(NARCNAME2) $(TARGETDIR)/$(NARCNAME2)
+do-build:	btlv_effect_def.h graphic esf $(NARCNAME1) $(TARGETDIR)/$(NARCNAME1) $(NARCNAME2) $(TARGETDIR)/$(NARCNAME2)
 else
 do-build:	graphic $(TARGETDIR)/$(NARCNAME1) $(TARGETDIR)/$(NARCNAME2)
 endif
@@ -72,6 +72,9 @@ $(TARGETDIR)/$(NARCNAME2):	$(NARCNAME2)
 	$(COPY) $(NAIXNAME2) $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+
+btlv_effect_def.h: ../../prog/src/battle/btlv/btlv_effect.h
+	ruby ../../tools/enum2def.rb ../../prog/src/battle/btlv/btlv_effect.h
 
 esf: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
 %.s: $(RES_DIR)%.esf ../../prog/src/battle/btlv/btlv_effvm_def.h ../../prog/include/sound/wb_sound_data.sadl ../../../pokemon_wb_doc/particle/wazaeffect/mkparticle_be.mk ../../../pokemon_wb_doc/particle/wazaeffect/mkparticle_we.mk
