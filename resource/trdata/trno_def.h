@@ -3,7 +3,6 @@
  * @file	trno_def.h
  * @bfief	トレーナーID定義ファイル
  * @author	TrainerDataConverter
- * @date	2010-02-22
  * @author	このファイルは、コンバータが吐き出したファイルです
 */
 //============================================================================================
@@ -472,7 +471,43 @@
 #define	TRID_MOUNT_09   ( 458 ) 
 #define	TRID_MOUNT_10   ( 459 ) 
 #define	TRID_MOUNT_11   ( 460 ) 
-#define TRID_MAX  ( 461 )
+#define	TRID_OL_06   ( 461 ) 
+#define	TRID_OL_07   ( 462 ) 
+#define	TRID_ELITEW_17   ( 463 ) 
+#define	TRID_ELITEM_17   ( 464 ) 
+#define	TRID_PRINCESS_07   ( 465 ) 
+#define	TRID_PRINCE_07   ( 466 ) 
+#define	TRID_KARATE_12   ( 467 ) 
+#define	TRID_SCIENTISTM_11   ( 468 ) 
+#define	TRID_SCIENTISTW_08   ( 469 ) 
+#define	TRID_BUSINESS1_08   ( 470 ) 
+#define	TRID_BUSINESS1_09   ( 471 ) 
+#define	TRID_GENTLE_04   ( 472 ) 
+#define	TRID_SCHOOLB_07   ( 473 ) 
+#define	TRID_SCHOOLG_07   ( 474 ) 
+#define	TRID_HEADS_04   ( 475 ) 
+#define	TRID_TANPAN_14   ( 476 ) 
+#define	TRID_BACKPACKERW_11   ( 477 ) 
+#define	TRID_BACKPACKERW_12   ( 478 ) 
+#define	TRID_BACKPACKERM_13   ( 479 ) 
+#define	TRID_BACKPACKERM_14   ( 480 ) 
+#define	TRID_BATTLEG_12   ( 481 ) 
+#define	TRID_VETERANW_06   ( 482 ) 
+#define	TRID_VETERANM_07   ( 483 ) 
+#define	TRID_MINI_09   ( 484 ) 
+#define	TRID_MOUNT_12   ( 485 ) 
+#define	TRID_RANGERW_09   ( 486 ) 
+#define	TRID_RANGERM_09   ( 487 ) 
+#define	TRID_MADAM_04   ( 488 ) 
+#define	TRID_CHILDCARE_03   ( 489 ) 
+#define	TRID_SCHOOLB_08   ( 490 ) 
+#define	TRID_SUPPORT_04   ( 491 ) 
+#define	TRID_SUPPORT_05   ( 492 ) 
+#define	TRID_SUPPORT_06   ( 493 ) 
+#define	TRID_SUPPORT_07   ( 494 ) 
+#define	TRID_SUPPORT_08   ( 495 ) 
+#define	TRID_SUPPORT_09   ( 496 ) 
+#define TRID_MAX  ( 497 )
 
 #ifndef __ASM_NO_DEF_  //これ以降はアセンブラでは無視
 typedef  int TrainerID;
