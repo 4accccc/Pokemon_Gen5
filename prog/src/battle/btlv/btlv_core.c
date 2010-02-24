@@ -292,8 +292,11 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
   switch( *seq ){
   case 0:
     setup_core( core, core->heapID );
-    BTLV_EFFECT_Init( BTL_MAIN_GetRule( core->mainModule ), BTL_MAIN_GetFieldSituation( core->mainModule ),
-                      core->smallFontHandle, core->heapID );
+    { 
+      BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParamBtl( core->mainModule, core->heapID );
+      BTLV_EFFECT_Init( besp, core->smallFontHandle, core->heapID );
+      GFL_HEAP_FreeMemory( besp );
+    }
     BTLV_SCU_Setup( core->scrnU );
     BTLV_SCD_Init( core->scrnD );
     (*seq)++;
@@ -350,8 +353,11 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
   switch( *seq ){
   case 0:
     setup_core( core, core->heapID );
-    BTLV_EFFECT_Init( BTL_MAIN_GetRule( core->mainModule ), BTL_MAIN_GetFieldSituation( core->mainModule ),
-                      core->smallFontHandle, core->heapID );
+    { 
+      BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParamBtl( core->mainModule, core->heapID );
+      BTLV_EFFECT_Init( besp, core->smallFontHandle, core->heapID );
+      GFL_HEAP_FreeMemory( besp );
+    }
     BTLV_SCU_Setup( core->scrnU );
     BTLV_SCD_Init( core->scrnD );
     cdw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_capturedemo_dat, core->heapID );
@@ -2061,8 +2067,10 @@ typedef struct {
   u8 dir;
   u8 vpos1;
   u8 vpos2;
+  u8 vpos3;
   BtlPokePos  pos1;
   BtlPokePos  pos2;
+  BtlPokePos  pos3;
 }ROTATE_MEMBER_WORK;
 
 
@@ -2164,8 +2172,10 @@ void BTLV_RotationMember_Start( BTLV_CORE* wk, u8 clientID, BtlRotateDir dir )
 
     subwk->pos1 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 0 );
     subwk->pos2 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 1 );
+    subwk->pos3 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 2 );
     subwk->vpos1 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, subwk->pos1 );
     subwk->vpos2 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, subwk->pos2 );
+    subwk->vpos3 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, subwk->pos3 );
 
     BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocRotateMember );
   }
@@ -2193,47 +2203,29 @@ static BOOL subprocRotateMember( int* seq, void* wk_adrs )
 
   switch( *seq ){
   case 0:
-    if( BTLV_EFFECT_CheckExist(subwk->vpos1) ){
-      BTLV_EFFECT_DelPokemon( subwk->vpos1 );
-    }
-    if( BTLV_EFFECT_CheckExist(subwk->vpos2) ){
-      BTLV_EFFECT_DelPokemon( subwk->vpos2 );
-    }
+    BTLV_EFFECT_SetRotateEffect( subwk->dir, subwk->clientID );
     (*seq)++;
     break;
 
   case 1:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, subwk->clientID );
-      const BTL_POKEPARAM* bpp;
-      bpp = BTL_PARTY_GetMemberDataConst( party, 0 );
-      if( !BPP_IsDead(bpp) ){
-        BTLV_EFFECT_SetPokemon( BPP_GetSrcData(bpp), subwk->vpos1 );
-      }
-      bpp = BTL_PARTY_GetMemberDataConst( party, 1 );
-      if( !BPP_IsDead(bpp) ){
-        BTLV_EFFECT_SetPokemon( BPP_GetSrcData(bpp), subwk->vpos2 );
-      }
+    if( !BTLV_EFFECT_CheckExecute() ){
+      BTLV_SCU_UpdateGauge_Start( wk->scrnU, subwk->pos1 );
+      BTLV_SCU_UpdateGauge_Start( wk->scrnU, subwk->pos2 );
+      BTLV_SCU_UpdateGauge_Start( wk->scrnU, subwk->pos3 );
       (*seq)++;
     }
     break;
 
   case 2:
-    if( !BTLV_EFFECT_CheckExecute() ){
-      BTLV_SCU_UpdateGauge_Start( wk->scrnU, subwk->pos1 );
-      BTLV_SCU_UpdateGauge_Start( wk->scrnU, subwk->pos2 );
-      (*seq)++;
-    }
-    break;
-
-  case 3:
     {
       BOOL fEnd = TRUE;
       if( BTLV_SCU_UpdateGauge_Wait(wk->scrnU, subwk->pos1) == FALSE ){
         fEnd = FALSE;
       }
       if( BTLV_SCU_UpdateGauge_Wait(wk->scrnU, subwk->pos2) == FALSE ){
+        fEnd = FALSE;
+      }
+      if( BTLV_SCU_UpdateGauge_Wait(wk->scrnU, subwk->pos3) == FALSE ){
         fEnd = FALSE;
       }
       if( fEnd ){
