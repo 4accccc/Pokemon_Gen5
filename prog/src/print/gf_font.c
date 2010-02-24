@@ -121,8 +121,10 @@ struct  _GFL_FONT {
   u32                      arcDatID;
 
   NNSFontInfo              fontHeader;
-  BOOL                     fixedFontFlag;
   pWidthGetFunc            WidthGetFunc;
+  u16                      unknownCodeIndex;
+  u8                       fixedFontFlag;
+
 
   NNSGlyphInfo  glyphInfo;
   u16           glyphRemBits;
@@ -252,7 +254,6 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
     wk->glyphCharH = wk->glyphInfo.cellHeight /8  + (wk->glyphInfo.cellHeight % 8 != 0);
     wk->glyphRemBits = (wk->glyphInfo.cellWidth * 2) % 8;
     if( wk->glyphRemBits == 0 ){ wk->glyphRemBits = 8; }
-    TAYA_Printf("[GF_FONT] CellW=%d, LineHeight=%d, RemBits=%d\n", wk->glyphInfo.cellWidth, wk->fontHeader.linefeed, wk->glyphRemBits);
 
     wk->ofsGlyphTop = wk->fontHeader.ofsGlyph + sizeof(NNSGlyphInfo);
     wk->glyphBuf = GFL_HEAP_AllocMemory( heapID, wk->glyphInfo.cellSize );
@@ -269,6 +270,14 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
 
 //      OS_TPrintf("[GF_FONT] MapIdxTableOfs = %08x\n", wk->fontHeader.ofsMap);
     }
+
+    // 不明文字コード出力時のGlyphIndex
+    wk->unknownCodeIndex = 0;
+    wk->unknownCodeIndex = get_glyph_index( wk, L'?' );
+
+    TAYA_Printf("[GF_FONT] CellW=%d, LineHeight=%d, RemBits=%d, UnknownCodeIdx=%d\n",
+      wk->glyphInfo.cellWidth, wk->fontHeader.linefeed, wk->glyphRemBits, wk->unknownCodeIndex);
+//    glyph
   }
 }
 //------------------------------------------------------------------
@@ -529,7 +538,7 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
         break;
       }
 
-      return 31;
+      return wk->unknownCodeIndex;
     }
     else if( pMap->nextOfs )
     {
