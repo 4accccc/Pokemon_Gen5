@@ -568,8 +568,6 @@ void TALKMSGWIN_ResetMessage(
     PRINTSYS_PrintStreamDelete(tmsgwin->printStream);
     tmsgwin->printStream = NULL;
   }
-   
-  clearBmpWindow( tmsgwinSys, tmsgwin->bmpwin );
   
   if( msg != NULL ){
     int wait = MSGSPEED_GetWait();

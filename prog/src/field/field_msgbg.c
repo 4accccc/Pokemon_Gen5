@@ -132,9 +132,13 @@ struct _TAG_FLDMSGPRINT
 //--------------------------------------------------------------
 struct _TAG_FLDMSGBG
 {
-	HEAPID heapID;
-	u16 bgFrame;
-	u16 deriveWin_plttNo;
+	HEAPID heapID; //u16
+	u8 bgFrame;
+  u8 bgFrameBld;
+  
+	u8 deriveWin_plttNo;
+  s8 d_printTCBcount;
+  u8 padding[2];
   
 	GFL_FONT *fontHandle;
 	PRINT_QUE *printQue;
@@ -145,11 +149,8 @@ struct _TAG_FLDMSGBG
   TALKMSGWIN_SYS *talkMsgWinSys;
   
   GFL_TCBLSYS *printTCBLSys;
+  
   GFL_G3D_CAMERA *g3Dcamera;
-
-#ifdef DEBUG_FLDMSGBG
-  int d_printTCBcount;
-#endif
 };
 
 //--------------------------------------------------------------
@@ -382,14 +383,13 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 	
 	fmb = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMSGBG) );
 	fmb->heapID = heapID;
-//	fmb->bgFrame = BGFRAME_ERROR;
-	fmb->bgFrame = FLDMSGBG_BGFRAME;
+	fmb->bgFrame = BGFRAME_ERROR;
+  fmb->bgFrameBld = BGFRAME_ERROR;
 	fmb->g3Dcamera = g3Dcamera;
-  
+   
   {	//font
 		fmb->fontHandle = GFL_FONT_Create(
 			ARCID_FONT,
-//    NARC_font_large_nftr, //旧フォントID
       NARC_font_large_gftr, //新フォントID
 			GFL_FONT_LOADTYPE_FILE, FALSE, fmb->heapID );
 	}
@@ -403,7 +403,6 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
         fmb->heapID, fmb->heapID, FLDMSGBG_PRINT_STREAM_MAX, 4 );
   }
   
-  //FLDMSGBG_SetupResource( fmb );
 	return( fmb );
 }
 
@@ -445,6 +444,10 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
 	  GFL_BG_FreeBGControl( fmb->bgFrame );
   }
 	
+  if( fmb->bgFrameBld != BGFRAME_ERROR ){
+	  GFL_BG_FreeBGControl( fmb->bgFrameBld );
+  }
+  
 	do{
 		#if 0
 		if( msgPrint->msgData != NULL ){
@@ -487,6 +490,11 @@ void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb )
 	  GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
     GFL_BG_FreeBGControl( fmb->bgFrame );
     fmb->bgFrame = BGFRAME_ERROR;
+  }
+  
+  if( fmb->bgFrameBld != BGFRAME_ERROR ){
+    GFL_BG_FreeBGControl( fmb->bgFrameBld );
+    fmb->bgFrameBld = BGFRAME_ERROR;
   }
 }
 
@@ -2664,8 +2672,13 @@ void FLDTALKMSGWIN_ClearMessage( FLDTALKMSGWIN *tmsg, STRBUF *strBuf )
 //--------------------------------------------------------------
 void FLDTALKMSGWIN_ResetMessageStrBuf( FLDTALKMSGWIN *tmsg, STRBUF *strbuf )
 {
+  GFL_BMPWIN *bmpwin = TALKMSGWIN_GetBmpWin(
+      tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( bmpwin );
+  GFL_BMP_Clear( bmp, 0xff);
   TALKMSGWIN_ResetMessage(
     tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx, strbuf );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(bmpwin) );
 }
 
 //--------------------------------------------------------------
@@ -4353,7 +4366,8 @@ static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin )
 static void setBGResource( FLDMSGBG *fmb )
 {
 	fmb->bgFrame = FLDMSGBG_BGFRAME;
-
+  fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD;
+  
 	{	//BG初期化
 		GFL_BG_BGCNT_HEADER bgcntText = {
 			0, 0, FLDBG_MFRM_MSG_SCRSIZE, 0,
@@ -4363,6 +4377,7 @@ static void setBGResource( FLDMSGBG *fmb )
 		};
 		
 		GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( fmb->bgFrameBld, &bgcntText, GFL_BG_MODE_TEXT );
 		
 		GFL_BG_FillCharacter( fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
 		GFL_BG_FillScreen( fmb->bgFrame,
@@ -4402,9 +4417,12 @@ static void setBGResource( FLDMSGBG *fmb )
   { //SYSWIN
     syswin_InitGraphic( fmb->heapID );
   }
-
-  GFL_BG_SetPriority( GFL_BG_FRAME0_M, FLDBG_MFRM_3D_PRI );
+  
+  GFL_BG_SetPriority( fmb->bgFrame, FLDBG_MFRM_3D_PRI );
+  GFL_BG_SetPriority( fmb->bgFrameBld, FLDBG_MFRM_3D_PRI );
+  
   GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
+  GFL_BG_SetVisible( fmb->bgFrameBld, VISIBLE_ON );
   
   fmb->deriveWin_plttNo = PANO_FONT;
 }
