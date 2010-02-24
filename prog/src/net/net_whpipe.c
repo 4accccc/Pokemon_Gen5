@@ -18,7 +18,11 @@
 #include "system/gfl_use.h"
 
 
+#ifdef PM_DEBUG
 
+//#define DEBUG_WH_BEACON_PRINT_ON  // beacon切り替えタイミングを表示
+
+#endif
 
 
 //-------------------------------------------------------------
@@ -1914,6 +1918,9 @@ static void _crossScanShootWait(GFL_NETWL* pNetWL)
 //  if( pNetWL->CrossRand < WHGetBeaconScanNum()){
     WH_EndScan(); //スキャン終了
     _CHANGE_STATE(_crossScanShootEndWait);  // スキャン終了待ち
+#ifdef DEBUG_WH_BEACON_PRINT_ON
+    OS_TPrintf( "scan off\n" );
+#endif
   }
 }
 
@@ -1924,6 +1931,9 @@ static void _crossScanShootStart(GFL_NETWL* pNetWL)
     if(WH_StartScan(_scanCallback, NULL, 0)){
       pNetWL->CrossRand = 60+GFUser_GetPublicRand(40);
       _CHANGE_STATE(_crossScanShootWait);  // スキャン待ち
+#ifdef DEBUG_WH_BEACON_PRINT_ON
+      OS_TPrintf( "scan on\n" );
+#endif
 		}
 	}
 }
