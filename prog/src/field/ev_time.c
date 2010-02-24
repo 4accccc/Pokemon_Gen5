@@ -187,6 +187,9 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
 	//WIFI通信履歴データの更新処理
 //	WIFIHISTORY_Update(SaveData_GetWifiHistory(gdata->savedata));
 
+  //調査レーダー：本日のすれ違い人数を合計に移動
+  QuestionnaireWork_DateChangeUpdate( SaveData_GetQuestionnaire(save) );
+  
 	if(!is_penalty){	//ペナルティタイムでないときだけ処理する
 	}
 }
