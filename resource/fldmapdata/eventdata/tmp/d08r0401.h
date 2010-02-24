@@ -10,6 +10,7 @@
 #ifndef ZONE_D08R0401_EVC_H
 #define ZONE_D08R0401_EVC_H
 
+#define D08R0401_ROCK_01                   0
 
 #endif //ZONE_D08R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
