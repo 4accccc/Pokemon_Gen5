@@ -318,6 +318,27 @@ EVENT_START ev_union
     ENDIF
   ENDIF
 
+  // 無線通信 ON・OFF チェック
+  IF $room_in == TRUE THEN
+    _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN
+      _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
+      $room_in = FALSE
+    ENDIF
+  ENDIF
+
+  // トレーナータイプ告知処理
+  IF $room_in == TRUE THEN
+    // トレーナータイプの変更をチェック
+    _CHECK_PLAYER_VIEW_CHANGE( SCWK_TEMP0, SCWK_TEMP1 )
+    // トレーナータイプを変更していない
+    IF $SCWK_TEMP0 == FALSE THEN
+      //「そうだ！…なんていかがでしょうか？」
+      _TRAINER_TYPE_NAME( 0, SCWK_TEMP1 )
+      _BALLOONWIN_OBJMSG_POS( msg_pc_union_08, SCWK_TARGET_OBJID, POS_DL )
+    ENDIF
+  ENDIF
+
   // ユニオンルームに入る場合
   IF $room_in == TRUE THEN
     //「ワイヤレスつうしんをかいしします」
@@ -326,15 +347,6 @@ EVENT_START ev_union
     _BALLOONWIN_CLOSE()
     //『いいえ』
     IF $ret == SCR_NO THEN
-      $room_in = FALSE
-    ENDIF
-  ENDIF
-
-  // 無線通信 ON・OFF チェック
-  IF $room_in == TRUE THEN
-    _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
-    IF $SCWK_ANSWER == FALSE THEN
-      _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
       $room_in = FALSE
     ENDIF
   ENDIF

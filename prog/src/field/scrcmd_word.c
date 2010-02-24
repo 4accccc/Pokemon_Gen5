@@ -437,4 +437,27 @@ VMCMD_RESULT EvCmdGPowerName( VMHANDLE* core, void* wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------------
+/**
+ * @brief トレーナー種別をバッファに展開する 
+ *
+ * @param core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT:
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdTrTypeName( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK* work    = (SCRCMD_WORK*)wk;
+  u16          idx     = VMGetU8( core );                     // 第一引数: バッファID
+  u16          trID    = SCRCMD_GetVMWorkValue( core, work ); // 第二引数: トレーナー種別ID
+  SCRIPT_WORK* sc      = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET*     wordset = SCRIPT_GetWordSet( sc );
+
+  WORDSET_RegisterTrTypeName( wordset, idx, trID );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 

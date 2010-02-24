@@ -196,7 +196,7 @@
   
   DEF_CMD( EvCmdHobbyName , EV_SEQ_HOBBY_NAME )
   DEF_CMD( EvCmdGPowerName, EV_SEQ_GPOWER_NAME )
-  NO_CMD()
+  DEF_CMD( EvCmdTrTypeName, EV_SEQ_TRAINER_TYPE_NAME )
   NO_CMD()
 
   //ìÆçÏÉÇÉfÉã
@@ -428,7 +428,7 @@
   DEF_CMD( EvCmdGetShoes, EV_SEQ_GET_SHOES )
 
   DEF_CMD( EvCmdGetBoxWallPaper, EV_SEQ_GET_BOX_WALLPAPER )
-  NO_CMD()
+  DEF_CMD( EvCmdCheckPlayerViewChange, EV_SEQ_CHECK_PLAYER_VIEW_CHANGE )
   NO_CMD()
   NO_CMD()
 

@@ -26,6 +26,7 @@
 #include "savedata/mystatus.h"  //MyStatus_～
 #include "savedata/config.h" // CONFIG
 #include "savedata/box_savedata.h"  //BOX_MANAGER
+#include "savedata/trainercard_data.h" // TR_CARD_SV_PTR
 
 #include "savedata/save_control.h"
 #include "savedata/zukan_savedata.h"
@@ -662,3 +663,35 @@ SDK_COMPILER_ASSERT( SCR_BOX_EX_WALLPAPER2 == BOX_EX_WALLPAPER_SET_FLAG_2 );
 
 
 
+//--------------------------------------------------------------
+/**
+ * @brief トレーナータイプが変更されているかどうかをチェックする.
+ *        変更されていない場合, 
+ *        → 変更済みに設定し, 
+ *        → デフォルトで設定されたトレーナータイプを取得する.
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckPlayerViewChange( VMHANDLE * core, void * wk ) {
+  SCRCMD_WORK* work       = (SCRCMD_WORK*)wk;
+  u16*         retWk_disp = SCRCMD_GetVMWork( core, work ); // 第一引数: 表示されているかどうかの格納先
+  u16*         retWk_type = SCRCMD_GetVMWork( core, work ); // 第二引数: 自身のトレーナータイプの格納先
+  GAMEDATA*    gameData   = SCRCMD_WORK_GetGameData( work );
+  PLAYER_WORK* player     = GAMEDATA_GetMyPlayerWork( gameData );
+  MYSTATUS*    mystatus   = &( player->mystatus );
+  SAVE_CONTROL_WORK* saveWork   = GAMEDATA_GetSaveControlWork( gameData );
+  TR_CARD_SV_PTR     trCardSave = TRCSave_GetSaveDataPtr( saveWork );
+
+  // 自身のトレーナータイプを取得
+  *retWk_type = MyStatus_GetTrainerView( mystatus );
+
+  // 表示されているかどうかを取得
+  *retWk_disp = TRCSave_GetTrainerViewChange( trCardSave );
+
+  // 表示されている状態に変更
+  TRCSave_SetTrainerViewChange( trCardSave );
+  
+  return VMCMD_RESULT_CONTINUE;
+}

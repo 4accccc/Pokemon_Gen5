@@ -30,6 +30,7 @@ extern VMCMD_RESULT EvCmdEasyTalkWordName( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdCountryName( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdHobbyName( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGPowerName( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdTrTypeName( VMHANDLE* core, void* wk );
 
 #endif	/* __ASM_NO_DEF_ */
 

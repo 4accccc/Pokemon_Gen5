@@ -2080,6 +2080,22 @@
   .byte   \idx
   .short  \gpower_id
   .endm
+
+//--------------------------------------------------------------
+/**
+ *  トレーナー種別を指定タグにセット
+ * @param idx   セットするタグナンバー
+ * @param tr_id セットするトレーナー種別
+ */
+//--------------------------------------------------------------
+#define _TRAINER_TYPE_NAME( idx, tr_id ) \
+    _ASM_TRAINER_TYPE_NAME idx, tr_id
+
+  .macro  _ASM_TRAINER_TYPE_NAME idx, tr_id
+  .short  EV_SEQ_TRAINER_TYPE_NAME
+  .byte   \idx
+  .short  \tr_id
+  .endm
   
 
 //======================================================================
@@ -4294,6 +4310,30 @@
     .macro  _ASM_GET_BOX_WALLPAPER flag
     .short  EV_SEQ_GET_BOX_WALLPAPER
     .short  \flag
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_PLAYER_VIEW_CHANGE
+ * @brief プレイヤーのトレーナータイプが変更されているかどうかをチェックする.
+ *        変更されていない場合, 
+ *        → 変更済みに設定し, 
+ *        → デフォルトで設定されたトレーナータイプを取得する.
+ * @param ret_wk_chng トレーナータイプ変更状態の格納先
+ * @param ret_wk_type プレイヤーのトレイナータイプの格納先
+ *
+ * ※ret_wk_chng
+ * →TRUE  トレーナータイプ変更済み
+ * →FALSE トレーナータイプ変更してない
+ */
+//--------------------------------------------------------------
+#define _CHECK_PLAYER_VIEW_CHANGE( ret_wk_chng, ret_wk_type )  \
+    _ASM_CHECK_PLAYER_VIEW_CHANGE ret_wk_chng, ret_wk_type
+
+    .macro  _ASM_CHECK_PLAYER_VIEW_CHANGE ret_wk_chng, ret_wk_type
+    .short  EV_SEQ_CHECK_PLAYER_VIEW_CHANGE
+    .short  \ret_wk_chng
+    .short  \ret_wk_type
     .endm
 
 //--------------------------------------------------------------
