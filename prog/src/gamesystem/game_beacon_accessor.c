@@ -529,7 +529,7 @@ int GAMEBEACON_Get_Area(const GAMEBEACON_INFO *info)
 /**
  * 仕事IDを取得
  * @param   info		ビーコン情報へのポインタ
- * @retval  u16		  仕事ID (設定されていない場合はGAMEBEACON_DETAILS_JOB_NULL)
+ * @retval  u8		  仕事ID (設定されていない場合はGAMEBEACON_DETAILS_JOB_NULL)
  */
 //==================================================================
 u8 GAMEBEACON_Get_Job(const GAMEBEACON_INFO *info)
@@ -547,7 +547,7 @@ u8 GAMEBEACON_Get_Job(const GAMEBEACON_INFO *info)
 /**
  * 趣味IDを取得
  * @param   info		ビーコン情報へのポインタ
- * @retval  u16		  趣味ID (設定されていない場合はGAMEBEACON_DETAILS_HOBBY_NULL)
+ * @retval  u8		  趣味ID (設定されていない場合はGAMEBEACON_DETAILS_HOBBY_NULL)
  */
 //==================================================================
 u8 GAMEBEACON_Get_Hobby(const GAMEBEACON_INFO *info)
