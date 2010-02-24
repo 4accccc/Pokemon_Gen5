@@ -8,6 +8,8 @@
 #ifndef ZONE_T05_EVC_H
 #define ZONE_T05_EVC_H
 
+#define T05_RAILFAN_01                     0
+#define T05_PIPE_01                        1
 
 #endif //ZONE_T05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

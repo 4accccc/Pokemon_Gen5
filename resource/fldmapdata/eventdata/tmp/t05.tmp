@@ -1,5 +1,5 @@
 #../data/t05.mev
-../tmp/t05.bin:../data/t05.mev $(UNIQ_SCRIPTHEADER) ../tmp/t05.h 
+../tmp/t05.bin:../data/t05.mev $(UNIQ_SCRIPTHEADER) ../tmp/t05.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/T05_def.h 
 	@echo ../data/t05.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/t05.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/t05.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/T05_def.h 
 

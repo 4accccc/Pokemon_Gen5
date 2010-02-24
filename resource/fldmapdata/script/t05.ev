@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_t05.h"
-  //.include  "t05.h"
+  .include  "t05.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,98 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t05
+_EVENT_DATA    ev_t05_railfan_01
+_EVENT_DATA    ev_t05_pipe_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_t05_flag_change:
-//  _END
+/************************************************************/
+/*						てっちゃん							*/
+/************************************************************/
+EVENT_START	ev_t05_railfan_01
+	_TALK_OBJ_START()
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	
+	//車庫を眺めるカメラへ
+	_CAMERA_MOVE( 5208,0,970752,1671168,327759,2424832, 15)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	_MSGWIN_CLOSE()
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		//はい
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_02 )
+		_MSGWIN_CLOSE()
+		
+		//車両解説へ
+		_CALL	ev_rail_talk
+		
+		//終了メッセージ
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_06 )
+	
+	ELSE
+		//いいえ
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_03 )
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	_CAMERA_DEF_MOVE(15)		//カメラ主人公位置に復帰
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
+EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_t05:
-  //とりあえず最初のラベルだけ生成している
-  _END
+//車両解説
+ev_rail_talk:
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	_CAMERA_MOVE( 6616,60032,970752,1503232,323663,1945600, 1)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 6616,3968,970752,1794048,323663,1945600, 120)
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	_TIME_WAIT( 80 )
+	
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	//カメラ切り替え
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 7000,9600,970752,1785856,323663,1843200, 1)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 7000,9600,970752,1785856,323663,1220608, 120)
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	_TIME_WAIT( 80 )
+	
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	//カメラ切り替え
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 5208,0,970752,1671168,327759,2424832, 1)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+_RET
+
+
+
+/************************************************************/
+/*					ISS：フルート吹き						*/
+/************************************************************/
+EVENT_START	ev_t05_pipe_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05_iss_01 )
+EVENT_END
 
