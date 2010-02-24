@@ -438,6 +438,66 @@ file.close
 
 #=================================================================================== 
 # ■main
+# □回答ID ⇒ 表示カラー(R) テーブル出力
+#===================================================================================
+# 出力データ作成
+outData = Array.new
+outData << "// コンバータにより生成"
+outData << "static const u8 ColorR_answer[ ANSWER_ID_NUM ] = "
+outData << "{"
+answers.each do |answer|
+  outData << "  #{answer.colorR},  // [#{answer.ID_lavel}]"
+end
+outData << "};"
+
+# 出力
+file = File.open( "color_r_answer.cdat", "w" )
+file.puts( outData )
+file.close
+
+
+#=================================================================================== 
+# ■main
+# □回答ID ⇒ 表示カラー(G) テーブル出力
+#===================================================================================
+# 出力データ作成
+outData = Array.new
+outData << "// コンバータにより生成"
+outData << "static const u8 ColorG_answer[ ANSWER_ID_NUM ] = "
+outData << "{"
+answers.each do |answer|
+  outData << "  #{answer.colorG},  // [#{answer.ID_lavel}]"
+end
+outData << "};"
+
+# 出力
+file = File.open( "color_g_answer.cdat", "w" )
+file.puts( outData )
+file.close
+
+
+#=================================================================================== 
+# ■main
+# □回答ID ⇒ 表示カラー(B) テーブル出力
+#===================================================================================
+# 出力データ作成
+outData = Array.new
+outData << "// コンバータにより生成"
+outData << "static const u8 ColorB_answer[ ANSWER_ID_NUM ] = "
+outData << "{"
+answers.each do |answer|
+  outData << "  #{answer.colorB},  // [#{answer.ID_lavel}]"
+end
+outData << "};"
+
+# 出力
+file = File.open( "color_b_answer.cdat", "w" )
+file.puts( outData )
+file.close
+
+
+#=================================================================================== 
+# ■main
 # □質問ID ⇒ 文字列 テーブル出力
 #===================================================================================
 # 出力データ作成

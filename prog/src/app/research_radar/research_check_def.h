@@ -167,6 +167,16 @@
 #define NO_DATA_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define NO_DATA_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
+// 下画面「データじゅしんちゅう」
+#define DATA_RECEIVING_X               (13)  // X座標   (キャラクター単位)
+#define DATA_RECEIVING_Y               (4)   // Y座標   (キャラクター単位)
+#define DATA_RECEIVING_WIDTH           (28)  // Xサイズ (キャラクター単位)
+#define DATA_RECEIVING_HEIGHT          (4)   // Yサイズ (キャラクター単位)
+#define DATA_RECEIVING_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
+#define DATA_RECEIVING_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
+#define DATA_RECEIVING_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
+#define DATA_RECEIVING_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
+#define DATA_RECEIVING_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
 //===============================================================================
 // ■OBJ

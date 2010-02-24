@@ -518,30 +518,6 @@ static const CLWK_INIT_DATA ClactWorkInitData[ CLWK_NUM ] =
     OBJ_RESOURCE_MAIN_CELL_ANIME,    // セルアニメ リソース
     CLSYS_DEFREND_MAIN,              // サーフェス指定
   },
-  { // 調査項目選択アイコン1
-    CLWK_SELECT_ICON_POS_X,          // x 座標
-    CLWK_SELECT_ICON_POS_Y,          // y 座標
-    CLWK_SELECT_ICON_ANIME_SEQ,      // アニメーションシーケンス
-    CLWK_SELECT_ICON_SOFT_PRIORITY,  // ソフト優先順位
-    CLWK_SELECT_ICON_BG_PRIORITY,    // BG 優先順位
-    CLUNIT_MAIN_OBJ,                 // 所属ユニット
-    OBJ_RESOURCE_MAIN_CHARACTER,     // キャラクタ リソース
-    OBJ_RESOURCE_MAIN_PALETTE,       // パレット リソース
-    OBJ_RESOURCE_MAIN_CELL_ANIME,    // セルアニメ リソース
-    CLSYS_DEFREND_MAIN,              // サーフェス指定
-  },
-  { // 調査項目選択アイコン2
-    CLWK_SELECT_ICON_POS_X,          // x 座標
-    CLWK_SELECT_ICON_POS_Y,          // y 座標
-    CLWK_SELECT_ICON_ANIME_SEQ,      // アニメーションシーケンス
-    CLWK_SELECT_ICON_SOFT_PRIORITY,  // ソフト優先順位
-    CLWK_SELECT_ICON_BG_PRIORITY,    // BG 優先順位
-    CLUNIT_MAIN_OBJ,                 // 所属ユニット
-    OBJ_RESOURCE_MAIN_CHARACTER,     // キャラクタ リソース
-    OBJ_RESOURCE_MAIN_PALETTE,       // パレット リソース
-    OBJ_RESOURCE_MAIN_CELL_ANIME,    // セルアニメ リソース
-    CLSYS_DEFREND_MAIN,              // サーフェス指定
-  },
 };
 
 //-------------------

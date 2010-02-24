@@ -71,8 +71,6 @@ typedef enum {
 typedef enum {
   CLWK_SCROLL_CONTROL,// スクロールバーのつまみ
   CLWK_SELECT_ICON_0, // 調査項目選択アイコン0
-  CLWK_SELECT_ICON_1, // 調査項目選択アイコン1
-  CLWK_SELECT_ICON_2, // 調査項目選択アイコン2
   CLWK_NUM,           // 総数
 } CLWK_INDEX; 
 

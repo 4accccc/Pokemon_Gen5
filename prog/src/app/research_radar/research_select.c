@@ -2988,8 +2988,6 @@ static void UpdateTopicSelectIcons( const RESEARCH_SELECT_WORK* work )
   CLWK_INDEX iconClactWorkIdx[ SELECT_TOPIC_MAX_NUM ] = 
   {
     CLWK_SELECT_ICON_0,
-    CLWK_SELECT_ICON_1,
-    CLWK_SELECT_ICON_2,
   };
 
   // 全アイコンを消去

@@ -46,6 +46,7 @@ typedef enum {
   MAIN_BG_FONT_MY_ANSWER,       // 下画面 自分の回答
   MAIN_BG_FONT_COUNT,           // 下画面 回答人数
   MAIN_BG_FONT_NO_DATA,         // 下画面「ただいまちょうさちゅう」
+  MAIN_BG_FONT_DATA_RECEIVING,  // 下画面「データしゅとくちゅう」
   BG_FONT_NUM,
 } BG_FONT_INDEX;
 

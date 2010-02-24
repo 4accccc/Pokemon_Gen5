@@ -113,6 +113,24 @@ static const MENU_ITEM_DRAW_PARAM MenuItemDrawParam[ MENU_ITEM_NUM ] =
 
 
 //==============================================================================================
+// ■3D
+//==============================================================================================
+
+// エッジカラー
+static const GXRgb EdgeColor[] = 
+{ 
+  GX_RGB(0, 0, 0),
+  GX_RGB(0, 0, 0),
+  GX_RGB(0, 0, 0),
+  GX_RGB(0, 0, 0),
+  GX_RGB(0, 0, 0),
+  GX_RGB(0, 0, 0),
+  GX_RGB(0, 0, 0),
+  GX_RGB(0, 0, 0),
+};
+
+
+//==============================================================================================
 // ■BG
 //==============================================================================================
 
@@ -332,6 +350,21 @@ static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] =
     NO_DATA_STRING_COLOR_B,    // 背景のカラー番号
     MESSAGE_STATIC,            // 参照するメッセージデータ
     str_check_examining,       // 使用する文字列
+  }, 
+  { // 下画面「データじゅしんちゅう」
+    MAIN_BG_FONT,                     // 対象BGフレーム
+    DATA_RECEIVING_X,                 // x座標 (キャラクター単位)
+    DATA_RECEIVING_Y,                 // x座標 (キャラクター単位)
+    DATA_RECEIVING_WIDTH,             // xサイズ (キャラクター単位)
+    DATA_RECEIVING_HEIGHT,            // yサイズ (キャラクター単位)
+    DATA_RECEIVING_STRING_OFFSET_X,   // 書き込み先x座標 (ドット単位)
+    DATA_RECEIVING_STRING_OFFSET_Y,   // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,             // 使用パレット番号
+    DATA_RECEIVING_STRING_COLOR_L,    // 文字のカラー番号
+    DATA_RECEIVING_STRING_COLOR_S,    // 影のカラー番号
+    DATA_RECEIVING_STRING_COLOR_B,    // 背景のカラー番号
+    MESSAGE_STATIC,                   // 参照するメッセージデータ
+    str_check_data_receive,           // 使用する文字列
   }, 
 };
 

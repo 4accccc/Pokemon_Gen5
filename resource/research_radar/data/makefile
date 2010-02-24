@@ -52,6 +52,9 @@ STRID_TOPIC_T       = string_id_topic_title.cdat
 ANSWER_NUM_QUESTION = answer_num_question.cdat
 ANSWER_ID_QUESTION  = answer_id_question.cdat
 QUESTION_ID_TOPIC   = question_id_topic.cdat
+COLOR_R_ANSWER      = color_r_answer.cdat
+COLOR_G_ANSWER      = color_g_answer.cdat
+COLOR_B_ANSWER      = color_b_answer.cdat
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -78,7 +81,10 @@ do-build:	subdir \
 					$(DEF_COPY_DIR)/$(STRID_TOPIC_T) \
 					$(DEF_COPY_DIR)/$(ANSWER_NUM_QUESTION) \
 					$(DEF_COPY_DIR)/$(ANSWER_ID_QUESTION) \
-					$(DEF_COPY_DIR)/$(QUESTION_ID_TOPIC)
+					$(DEF_COPY_DIR)/$(QUESTION_ID_TOPIC) \
+					$(DEF_COPY_DIR)/$(COLOR_R_ANSWER) \
+					$(DEF_COPY_DIR)/$(COLOR_G_ANSWER) \
+					$(DEF_COPY_DIR)/$(COLOR_B_ANSWER)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -134,6 +140,15 @@ $(DEF_COPY_DIR)/$(ANSWER_NUM_QUESTION): $(ANSWER_NUM_QUESTION)
 
 $(DEF_COPY_DIR)/$(QUESTION_ID_TOPIC): $(QUESTION_ID_TOPIC)
 	$(COPY) $(QUESTION_ID_TOPIC) $(DEF_COPY_DIR)
+
+$(DEF_COPY_DIR)/$(COLOR_R_ANSWER): $(COLOR_R_ANSWER)
+	$(COPY) $(COLOR_R_ANSWER) $(DEF_COPY_DIR)
+
+$(DEF_COPY_DIR)/$(COLOR_G_ANSWER): $(COLOR_G_ANSWER)
+	$(COPY) $(COLOR_G_ANSWER) $(DEF_COPY_DIR)
+
+$(DEF_COPY_DIR)/$(COLOR_B_ANSWER): $(COLOR_B_ANSWER)
+	$(COPY) $(COLOR_B_ANSWER) $(DEF_COPY_DIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 endif
