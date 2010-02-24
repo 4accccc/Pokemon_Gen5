@@ -19,6 +19,10 @@
 #include "event_fieldmap_control.h"
 
 #include "event_geonet.h"
+
+FS_EXTERN_OVERLAY( watanabe_sample );
+extern const GFL_PROC_DATA Earth_Demo_proc_data;
+
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -42,8 +46,8 @@ static GMEVENT_RESULT geonetEvent( GMEVENT * event, int *seq, void *work )
     (*seq) ++;
     break;
   case 1:
-    GMEVENT_CallProc( event, FS_OVERLAY_ID(gameclear_demo), &GameClearMsgProcData, gsys );
-    //GMEVENT_CallProc( event, FS_OVERLAY_ID(debug_watanabe), &proc_data, gamedata );
+    //GMEVENT_CallProc( event, FS_OVERLAY_ID(gameclear_demo), &GameClearMsgProcData, gsys );
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(watanabe_sample), &Earth_Demo_proc_data, gamedata );
     (*seq) ++;
     break;
   case 2:

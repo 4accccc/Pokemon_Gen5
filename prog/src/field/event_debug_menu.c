@@ -95,6 +95,7 @@
 #include "debug/debug_mystery_card.h"
 #include "event_wifi_bsubway.h"
 #include "savedata/battle_box_save.h"
+#include "event_geonet.h"
 
 FS_EXTERN_OVERLAY( d_iwasawa );
 
@@ -194,6 +195,7 @@ static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_Geonet( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Ananukenohimo( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *p_wk );
@@ -285,6 +287,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },  //ともだちコード配信
   { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake },             //サケ操作
   { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas },            //アトラス操作
+  { DEBUG_FIELD_GEONET, debugMenuCallProc_Geonet },         //ジオネット呼び出し
 
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },        //UIテンプレート
@@ -3282,6 +3285,16 @@ static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk )
   return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief   デバッグメニュー：ジオネット呼び出し
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_Geonet( DEBUG_MENU_EVENT_WORK * p_wk )
+{
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_Geonet( p_wk->gmSys ) );
+  return TRUE;
+}
 //======================================================================
 //  バトルレコーダー
 //======================================================================
