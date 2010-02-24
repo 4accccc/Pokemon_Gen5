@@ -236,7 +236,10 @@ typedef struct {
  * @li	BMPウィンドウとBMPメニューワークをAllocで取得している
  */
 //--------------------------------------------------------------------------------------------
-extern BMPMENU_WORK * BmpMenu_YesNoSelectInit(	const BMPWIN_YESNO_DAT *data, u16 cgx, u8 pal, u8 pos, HEAPID heap );
+extern BMPMENU_WORK * BmpMenu_YesNoSelectInit
+	( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap );
+extern BMPMENU_WORK * BmpMenu_YesNoSelectInitFixPos
+	( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap );
 
 //--------------------------------------------------------------------------------------------
 /**
