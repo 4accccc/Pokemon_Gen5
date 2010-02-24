@@ -27,6 +27,30 @@
 #ifdef SEQ_SE_MSCL_04
 #undef SEQ_SE_MSCL_04
 #endif
+#ifdef SEQ_SE_WB_SLIDE
+#undef SEQ_SE_WB_SLIDE
+#endif
+#ifdef WAVE_SE_WB_SLIDE
+#undef WAVE_SE_WB_SLIDE
+#endif
+#ifdef SEQ_SE_SYS_06
+#undef SEQ_SE_SYS_06
+#endif
+#ifdef WAVE_SE_WB_SYS_06
+#undef WAVE_SE_WB_SYS_06
+#endif
+#ifdef BANK_SE_WB_SYS_06
+#undef BANK_SE_WB_SYS_06
+#endif
+#ifdef SEQ_SE_DUMMY
+#undef SEQ_SE_DUMMY
+#endif
+#ifdef WAVE_SE_WB_DUMMY
+#undef WAVE_SE_WB_DUMMY
+#endif
+#ifdef BANK_SE_WB_DUMMY
+#undef BANK_SE_WB_DUMMY
+#endif
 #include "multiboot/wb_sound_palpark_game.sadl"
 
 
