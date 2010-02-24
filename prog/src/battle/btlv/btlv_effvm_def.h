@@ -442,27 +442,29 @@ ex)
 #define	EC_OBJ_MOVE	   				        ( 39 )
 #define	EC_OBJ_SCALE	   				      ( 40 )
 #define	EC_OBJ_ANIME_SET	   				  ( 41 )
-#define	EC_OBJ_DEL	   				        ( 42 )
-#define	EC_SE_PLAY									  ( 43 )
-#define	EC_SE_STOP									  ( 44 )
-#define	EC_SE_PAN								      ( 45 )
-#define	EC_SE_EFFECT								  ( 46 )
-#define	EC_EFFECT_END_WAIT					  ( 47 )
-#define	EC_WAIT											  ( 48 )
-#define	EC_CONTROL_MODE							  ( 49 )
-#define	EC_IF						              ( 50 )
-#define	EC_MCSS_POS_CHECK						  ( 51 )
-#define	EC_SET_WORK						        ( 52 )
-#define	EC_MIGAWARI						        ( 53 )
-#define	EC_HENSHIN						        ( 54 )
-#define	EC_NAKIGOE						        ( 55 )
-#define	EC_BALL_MODE						      ( 56 )
-#define	EC_BALLOBJ_SET						    ( 57 )
-#define	EC_CALL						            ( 58 )
-#define	EC_RETURN						          ( 59 )
+#define	EC_OBJ_PAL_FADE		   				  ( 42 )
+#define	EC_OBJ_DEL	   				        ( 43 )
+#define	EC_SE_PLAY									  ( 44 )
+#define	EC_SE_STOP									  ( 45 )
+#define	EC_SE_PAN								      ( 46 )
+#define	EC_SE_EFFECT								  ( 47 )
+#define	EC_EFFECT_END_WAIT					  ( 48 )
+#define	EC_WAIT											  ( 49 )
+#define	EC_CONTROL_MODE							  ( 50 )
+#define	EC_IF						              ( 51 )
+#define	EC_MCSS_POS_CHECK						  ( 52 )
+#define	EC_SET_WORK						        ( 53 )
+#define	EC_MIGAWARI						        ( 54 )
+#define	EC_HENSHIN						        ( 55 )
+#define	EC_NAKIGOE						        ( 56 )
+#define	EC_BALL_MODE						      ( 57 )
+#define	EC_BALLOBJ_SET						    ( 58 )
+#define	EC_CALL						            ( 59 )
+#define	EC_RETURN						          ( 60 )
+#define	EC_PAUSE						          ( 61 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  ( 60 )
+#define	EC_SEQ_END									  ( 62 )
 
 #ifndef __C_NO_DEF_
 
@@ -1666,6 +1668,33 @@ ex)
 
 //======================================================================
 /**
+ * @brief	OBJパレットフェード
+ *
+ * #param_num	5
+ * @param	index     操作するOBJの管理インデックス
+ * @param	start_evy	START_EVY値
+ * @param	end_evy		END_EVY値
+ * @param	wait			ウエイト
+ * @param	rgb				開始or終了時の色
+ *
+ * #param	VALUE_INT		OBJの管理インデックス
+ * #param	VALUE_INT	START_EVY値
+ * #param	VALUE_INT	END_EVY値
+ * #param	VALUE_INT	ウエイト
+ * #param	VALUE_VECFX32	R値(0-31)	G値(0-31)	B値(0-31)
+ */
+//======================================================================
+	.macro	OBJ_PAL_FADE index, start_evy, end_evy, wait, r, g, b
+	.short	EC_OBJ_PAL_FADE
+	.long		\index
+	.long		\start_evy
+	.long		\end_evy
+	.long		\wait
+	.long		( ( ( \b >> BTLEFF_FX32_SHIFT ) & 0x1f ) << 10 ) | ( ( ( \g >> BTLEFF_FX32_SHIFT ) & 0x1f ) << 5 ) | ( ( \r >> BTLEFF_FX32_SHIFT ) & 0x1f )
+	.endm
+
+//======================================================================
+/**
  * @brief	OBJ削除
  *
  * #param_num	1
@@ -2051,6 +2080,17 @@ ex)
 //======================================================================
   .macro  RETURN
   .short  EC_RETURN
+  .endm
+
+//======================================================================
+/**
+ * @brief	シーケンス一時停止
+ *
+ * #param_num	0
+ */
+//======================================================================
+  .macro  PAUSE
+  .short  EC_PAUSE
   .endm
 
 //======================================================================

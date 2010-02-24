@@ -44,7 +44,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -62,7 +62,8 @@ typedef struct{
   u32               set_priority_flag     :1;     //PRIORITY操作されたか？
   u32               set_alpha_flag        :1;     //ALPHA操作されたか？
   u32               execute_effect_type   :1;     //起動しているエフェクトタイプ（0:技エフェクト　1:戦闘エフェクト）
-  u32                                     :25;
+  u32               pause_flag            :1;     //一時停止フラグ
+  u32                                     :24;
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
@@ -205,6 +206,7 @@ BOOL      BTLV_EFFVM_Main( VMHANDLE *vmh );
 void      BTLV_EFFVM_Exit( VMHANDLE *vmh );
 void      BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID waza, BTLV_EFFVM_PARAM* param );
 void      BTLV_EFFVM_Stop( VMHANDLE *vmh );
+void      BTLV_EFFVM_Restart( VMHANDLE *vmh );
 
 //エフェクトコマンド
 static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work );
@@ -249,6 +251,7 @@ static VMCMD_RESULT VMEC_OBJ_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_OBJ_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_OBJ_SCALE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_OBJ_ANIME_SET( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_OBJ_PAL_FADE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_OBJ_DEL( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work );
@@ -267,12 +270,14 @@ static VMCMD_RESULT VMEC_BALL_MODE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_BALLOBJ_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CALL( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_RETURN( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_PAUSE( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 
 //VM_WAIT_FUNC群
 static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work );
 static  BOOL  VWF_WAIT_CHECK( VMHANDLE *vmh, void *context_work );
+static  BOOL  VWF_PAUSE_CHECK( VMHANDLE *vmh, void *context_work );
 
 //非公開関数群
 static  int           EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMcssPos* pos );
@@ -393,6 +398,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_OBJ_MOVE,
   VMEC_OBJ_SCALE,
   VMEC_OBJ_ANIME_SET,
+  VMEC_OBJ_PAL_FADE,
   VMEC_OBJ_DEL,
   VMEC_SE_PLAY,
   VMEC_SE_STOP,
@@ -411,6 +417,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_BALLOBJ_SET,
   VMEC_CALL,
   VMEC_RETURN,
+  VMEC_PAUSE,
 
   VMEC_SEQ_END,
 };
@@ -478,6 +485,10 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
   BOOL  ret = VM_Control( vmh );
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 
+  if( bevw->pause_flag )
+  { 
+    return FALSE;
+  }
   if( ( ret == FALSE ) && ( bevw->sequence ) )
   {
     if( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA )
@@ -638,6 +649,22 @@ void      BTLV_EFFVM_Stop( VMHANDLE *vmh )
     GFL_HEAP_FreeMemory( bevw->sequence );
     bevw->sequence = NULL;
   }
+}
+
+//============================================================================================
+/**
+ * @brief VM再開
+ *
+ * @param[in] vmh 仮想マシン制御構造体へのポインタ
+ */
+//============================================================================================
+void      BTLV_EFFVM_Restart( VMHANDLE *vmh )
+{ 
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+
+  GF_ASSERT( bevw->pause_flag );
+
+  bevw->pause_flag = 0;
 }
 
 //============================================================================================
@@ -2319,6 +2346,33 @@ static VMCMD_RESULT VMEC_OBJ_ANIME_SET( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ * @brief OBJパレットフェード
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_OBJ_PAL_FADE( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int   index     = ( int )VMGetU32( vmh );
+  int   start_evy = ( int )VMGetU32( vmh );
+  int   end_evy   = ( int )VMGetU32( vmh );
+  int   wait      = ( int )VMGetU32( vmh );
+  int   rgb       = ( int )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_OBJ_PAL_FADE\n");
+#endif DEBUG_OS_PRINT
+
+  BTLV_CLACT_SetPaletteFade( BTLV_EFFECT_GetCLWK(), index, start_evy, end_evy, wait, rgb );
+
+  return bevw->control_mode;
+}
+
+
+//============================================================================================
+/**
  * @brief OBJ削除
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -2978,6 +3032,32 @@ static VMCMD_RESULT VMEC_RETURN( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ * @brief シーケンス一時停止
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_PAUSE( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_PAUSE\n");
+#endif DEBUG_OS_PRINT
+
+  bevw->pause_flag = 1;
+
+  VMCMD_SetWait( vmh, VWF_PAUSE_CHECK );
+
+  //ウエイトは必ずSUSPENDモードに切り替える
+  bevw->control_mode = VMCMD_RESULT_SUSPEND;
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//============================================================================================
+/**
  * @brief エフェクトシーケンス終了
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -3269,6 +3349,23 @@ static  BOOL  VWF_WAIT_CHECK( VMHANDLE *vmh, void *context_work )
   bevw->wait--;
 
   return ( bevw->wait <= 0 );
+}
+
+//============================================================================================
+/**
+ * @brief 一時停止終了チェック
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ *
+ * @retval  TRUE:一時停止終了　FALSE:一時停止動作中
+ */
+//============================================================================================
+static  BOOL  VWF_PAUSE_CHECK( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+
+  return ( bevw->pause_flag == 0 );
 }
 
 //非公開関数群
@@ -4306,12 +4403,10 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
   case BTLEFF_WORK_POS_D_RARE:
   case BTLEFF_WORK_POS_E_RARE:
   case BTLEFF_WORK_POS_F_RARE:
-//    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_RARE ) & BTLV_MCSS_STATUS_FLAG_RARE ) != 0 );
-    ret = 1;
+    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_RARE ) & BTLV_MCSS_STATUS_FLAG_RARE ) != 0 );
     break;
   case BTLEFF_WORK_ATTACK_RARE:
-//    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_RARE ) != 0 );
-    ret = 1;
+    ret = ( ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_RARE ) != 0 );
     break;
   case BTLEFF_WORK_POS_AA_JUMP:
   case BTLEFF_WORK_POS_BB_JUMP:
@@ -4638,6 +4733,7 @@ static  ARCDATID  EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID )
   }
   switch( datID ){ 
   case NARC_spa_be_ball_001_1_spa:
+  case NARC_spa_be_capture_01_spa:
     datID += ofs;
     break;
   case NARC_spa_be_m_ball_01_close_spa:
@@ -4819,6 +4915,12 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
   int *start_ofs = (int *)&start[ script_table[ from ][ to ] ] ;
   int i;
+
+  if( bevw->pause_flag )
+  { 
+    BTLV_EFFVM_Restart( vmh );
+    return;
+  }
 
   if( param != NULL )
   { 
