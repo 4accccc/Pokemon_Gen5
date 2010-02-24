@@ -2917,8 +2917,8 @@ static void WbmWifiSeq_DisConnextEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   { 
     SEQ_SEND_SAKE_LOGINTIME,
     SEQ_WAIT_SAKE_LOGINTIME,
-    SEQ_START_DISCONNECT,
-    SEQ_WAIT_DISCONNECT,
+//    SEQ_START_DISCONNECT,
+//    SEQ_WAIT_DISCONNECT,
     SEQ_END,
   };
 
@@ -2935,18 +2935,18 @@ static void WbmWifiSeq_DisConnextEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_WAIT_SAKE_LOGINTIME:
     if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net ) )
     { 
-      *p_seq  = SEQ_START_DISCONNECT;
+      *p_seq  = SEQ_END;
     }
 
     switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //êÿífÇµÉçÉOÉCÉìÇ©ÇÁÇ‚ÇËíºÇµ
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //ñﬂÇÈ
-      *p_seq  = SEQ_START_DISCONNECT;
+      *p_seq  = SEQ_END;
       break;
     }
     break;
-
+#if 0
   case SEQ_START_DISCONNECT:
     if( GFL_NET_IsInit())
     { 
@@ -2967,7 +2967,7 @@ static void WbmWifiSeq_DisConnextEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
       *p_seq  = SEQ_END;
     }
     break;
-
+#endif
   case SEQ_END:
     WBM_SEQ_End( p_seqwk );
     break;

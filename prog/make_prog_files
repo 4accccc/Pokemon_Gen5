@@ -1096,18 +1096,6 @@ SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
                 net_app/friend_trade/ircbattlefriend.c
 
 
-
-#相性チェック
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> GROUP_OVERLAY_UNION_INTRUDE
-SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
-      net_app/compatible/compati_tool.c \
-      net_app/compatible/compati_control.c \
-      net_app/compatible/compati_result.c \
-      net_app/compatible/compati_comm.c \
-      net_app/compatible/compati_irc.c
-
 #赤外線相性チェック用ネットシステム
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS

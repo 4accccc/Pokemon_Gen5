@@ -966,6 +966,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
       Util_Matchkey_SetData( &data, p_wk );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
+      PMSND_PlaySE( WBM_SND_SE_MATCHING );
       WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, TRUE, p_param->p_param->btl_rule, &data );
       *p_seq = SEQ_START_MATCHING_MSG;
     }
@@ -996,10 +997,12 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      PMSND_StopSE();
       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
       break;
 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      PMSND_StopSE();
       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
       break;
     }
@@ -1058,6 +1061,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_OK_MATCHING_MSG:
+    PMSND_StopSE();
     PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
 
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_010, WBM_TEXT_TYPE_STREAM );
@@ -1124,6 +1128,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         case 0:
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           p_param->result = WIFIBATTLEMATCH_CORE_RESULT_FINISH;
+          PMSND_PlaySE( WBM_SND_SE_MATCHING );
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
           break;
         case 1:
@@ -1571,6 +1576,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     { 
       WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
       Util_Matchkey_SetData( &data, p_wk );
+      PMSND_PlaySE( WBM_SND_SE_MATCHING );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
       WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, FALSE, p_param->p_param->btl_rule, &data ); 
       *p_seq = SEQ_START_MATCHING_MSG;
@@ -1602,10 +1608,12 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      PMSND_StopSE();
       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
       break;
 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      PMSND_StopSE();
       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
       break;
     }
@@ -1669,6 +1677,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_OK_MATCHING_MSG:
+    PMSND_StopSE();
     PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
 
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_010, WBM_TEXT_TYPE_STREAM );
@@ -1993,8 +2002,8 @@ static void WbmRndSeq_DisConnectEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   { 
     SEQ_START_SEND_SAKE_TIME,
     SEQ_WAIT_SEND_SAKE_TIME,
-    SEQ_START_DISCONNECT,
-    SEQ_WAIT_DISCONNECT,
+//    SEQ_START_DISCONNECT,
+//    SEQ_WAIT_DISCONNECT,
     SEQ_END,
   };
   WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
@@ -2011,19 +2020,20 @@ static void WbmRndSeq_DisConnectEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     {
       if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net ) )
       { 
-        *p_seq  = SEQ_START_DISCONNECT;
+        *p_seq  = SEQ_END;
       }
 
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-        *p_seq  = SEQ_START_DISCONNECT;
+        *p_seq  = SEQ_END;
         break;
       }
     }
     break;
-
+    //ログアウトで行うことになりました
+#if 0
   case SEQ_START_DISCONNECT:
     if( GFL_NET_IsInit())
     { 
@@ -2044,7 +2054,7 @@ static void WbmRndSeq_DisConnectEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       *p_seq  = SEQ_END;
     }
     break;
-
+#endif
   case SEQ_END:
     WBM_SEQ_End( p_seqwk );
     break;

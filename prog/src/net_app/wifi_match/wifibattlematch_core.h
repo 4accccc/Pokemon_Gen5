@@ -26,10 +26,10 @@
 //=====================================
 typedef enum 
 {
-  WIFIBATTLEMATCH_CORE_RESULT_FINISH,       //アプリ終了
-  WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE,  //バトルへ
-  WIFIBATTLEMATCH_CORE_RESULT_NEXT_REC,     //録画
-  WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN,  //シャットダウンエラーのため、ログインからやり直し
+  WIFIBATTLEMATCH_CORE_RESULT_FINISH,           //アプリ終了
+  WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE,      //バトルへ
+  WIFIBATTLEMATCH_CORE_RESULT_NEXT_REC,         //録画
+  WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN,   //シャットダウンエラーのため、ログインからやり直し
 } WIFIBATTLEMATCH_CORE_RESULT;
 
 //-------------------------------------

@@ -22,6 +22,7 @@
 
 //各プロセス
 #include "net_app/wifi_login.h"
+#include "net_app/wifi_logout.h"
 #include "title/title.h"
 #include "wifibattlematch_battle.h"
 #include "net_app/btl_rec_sel.h"
@@ -163,6 +164,9 @@ static BOOL WBM_LISTAFTER_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 //録画
 static void *WBM_BTLREC_AllocParam( HEAPID heapID, void *p_wk_adrs );
 static BOOL WBM_BTLREC_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+//WIFIログアウト
+static void *LOGOUT_AllocParam( HEAPID heapID, void *p_wk_adrs );
+static BOOL LOGOUT_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 
 //-------------------------------------
 ///	データバッファ作成
@@ -201,6 +205,7 @@ typedef enum
   SUBPROCID_LOGIN,
   SUBPROCID_LISTAFTER,
   SUBPROCID_BTLREC,
+  SUBPROCID_LOGOUT,
 
 	SUBPROCID_MAX
 } SUBPROC_ID;
@@ -247,7 +252,14 @@ static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
     &BTL_REC_SEL_ProcData,
     WBM_BTLREC_AllocParam,
     WBM_BTLREC_FreeParam,
-  }
+  },
+  //SUBPROCID_LOGOUT
+  { 
+    FS_OVERLAY_ID( wifi_login ),
+    &WiFiLogout_ProcData,
+    LOGOUT_AllocParam,
+    LOGOUT_FreeParam,
+  },
 };
 
 //=============================================================================
@@ -678,7 +690,7 @@ static BOOL WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
     break;
 
   case WIFIBATTLEMATCH_CORE_RESULT_FINISH:
-    //何もなくなると終了するので何も呼ばない
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGOUT );
     break;
   }
 
@@ -1128,6 +1140,46 @@ static BOOL WBM_BTLREC_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
 
   return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WIFIログアウトプロセスの引数	破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static void *LOGOUT_AllocParam( HEAPID heapID, void *p_wk_adrs )
+{ 
+  WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
+  WIFILOGOUT_PARAM    *p_param;
+
+  p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFILOGOUT_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(WIFILOGOUT_PARAM) );
+
+  p_param->gamedata = p_wk->param.p_game_data;
+  p_param->bg       = WIFILOGIN_BG_NORMAL;
+  p_param->display  = WIFILOGIN_DISPLAY_UP;
+
+  return p_param;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WIFIログアウトプロセスの引数	破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL LOGOUT_FreeParam( void *p_param_adrs, void *p_wk_adrs )
+{ 
+  WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
+  WIFILOGOUT_PARAM    *p_param  = p_param_adrs;
+
+  //次のPROCは無し
+
+  GFL_HEAP_FreeMemory( p_param );
 }
 
 //----------------------------------------------------------------------------

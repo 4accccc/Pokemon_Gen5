@@ -44,6 +44,7 @@
 #include "mystery_util.h"
 #include "mystery_album.h"
 #include "mystery_net.h"
+#include "mystery_snd.h"
 
 //デバッグ
 #include "mystery_debug.h"
@@ -2873,6 +2874,8 @@ static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg )
 
       if( p_wk->sync++ >= MYSTERY_DEMO_MOVE_GIFT_SYNC )
       { 
+        PMSND_PlaySE( MYSTERY_SE_RECV_PRESENT );
+
         p_wk->sync  = 0;
         p_wk->seq   = SEQ_END_WAIT;
       }

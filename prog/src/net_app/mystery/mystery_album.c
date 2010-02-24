@@ -32,6 +32,7 @@
 #include "mystery_util.h"
 #include "net_app/mystery.h"
 #include "mystery_debug.h"
+#include "mystery_snd.h"
 
 //外部公開
 #include "mystery_album.h"
@@ -2504,6 +2505,8 @@ static void SEQFUNC_SwapCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     //スワップ
     Mystery_Album_SwapCard( p_wk, card_index, p_wk->swap_card_index );
     NAGI_Printf( "入れ替えます 今の%d 前の%d\n", card_index, p_wk->swap_card_index );
+
+    PMSND_PlaySE( MYSTERY_SE_SWAP_CARD );
 
     //画面作り直し
     Mystery_Album_DeleteDisplay( p_wk, TRUE );

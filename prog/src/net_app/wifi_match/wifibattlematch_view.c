@@ -2578,6 +2578,14 @@ void WBM_WAITICON_Main( WBM_WAITICON_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void WBM_WAITICON_SetDrawEnable( WBM_WAITICON_WORK *p_wk, BOOL on_off )
 { 
+  if( on_off == TRUE )
+  { 
+    PMSND_PlaySE( WBM_SND_SE_MATCHING );
+  }
+  else
+  { 
+    PMSND_StopSE();
+  }
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_light, on_off );
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_wall, on_off );
 }
