@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T15:33:47"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T16:35:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1376" top="392" right="2081" bottom="1012" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -303,7 +303,7 @@
 		<language name="JPN_KANJI" width="256">この　倉庫は　２年前まで
 アーティさんが　使っていたんです！[BE:01:ページ切り替え（クリア）]
 アーティさん　創作に　行き詰ると
-この　街に　戻ってくるそうですよ！</language>
+この街に　戻ってくるそうですよ！</language>
 	</row>
 
 	<row id="msg_c02r0501_man2_01">
