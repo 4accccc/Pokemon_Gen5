@@ -106,14 +106,24 @@ typedef enum
 
 //#define _OBJPLT_POKEICON_GRAY_OFFSET (0) ///< グレー用ポケモンアイコンパレット
 //#define _OBJPLT_POKEICON_GRAY  (3)  //ポケモンアイコングレイ 3本
-#define _OBJPLT_COMMON_OFFSET (0)
-#define _OBJPLT_COMMON  (2)  //サブ画面OBJパレット下画面バー 2本
-#define PLTID_OBJ_POKEITEM_S (2) //12本目
+
+//下は通信アイコン出さないからもう一本可能
+#define _TOUCHBAR_OBJ_PALPOS  (0)  //タッチバーのパレット
+#define _OBJPLT_COMMON_OFFSET (0)   //アプリケーションメニュ
+#define _OBJPLT_COMMON  (TOUCHBAR_OBJ_PLT_NUM)  //サブ画面OBJパレット下画面バー 3本
+#define PLTID_OBJ_POKEITEM_S (0xc) //
+#define PLTID_OBJ_BALLICON_S (0xd)  // 1本使用
 
 #define _OBJPLT_POKEICON_OFFSET (3*0x20)
 #define _OBJPLT_POKEICON  (3)  //ポケモンアイコン 3本
 #define _OBJPLT_BOX_OFFSET (_OBJPLT_POKEICON_OFFSET+_OBJPLT_POKEICON*32)
 #define _OBJPLT_BOX  (6)  //サブ画面OBJパレット基本  5本
+
+//PLTID_OBJ_POKEITEM_S
+
+//--- TOUCH2
+//--- POKE5
+//------  SCROLLb
 
 
 
@@ -590,6 +600,7 @@ struct _POKEMON_TRADE_WORK{
   u8 NegoWaitTime;  //NEGOを遅らせるタイマー
   u8 pokemonGTSSeq;  //GTSシーケンス番号
   u8 pokemonGTSSeqSend;  //送るGTSシーケンス番号
+  u8 dummy;
 } ;
 
 
@@ -625,6 +636,7 @@ extern void IRC_POKETRADE_SetMainDispGraphic(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_ResetSubDispGraphic(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetSubVram(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetMainVram(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_TouchStateGTS(POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKETRADE_3DGraphicSetUp( POKEMON_TRADE_WORK* pWork );
 extern void IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE type);
@@ -690,6 +702,7 @@ extern void IRC_POKETRADE_PosChangeSubStatusIcon(POKEMON_TRADE_WORK* pWork,int s
 extern void POKEMONTRADE_VisibleFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo, BOOL bVisible);
 extern void POKE_GTS_VisibleFaceIcon(POKEMON_TRADE_WORK* pWork,BOOL bVisible);
 extern void POKEMON_TRADE_MaskCommon(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKE_GTS_IsMyIn(POKEMON_TRADE_WORK* pWork);
 
 
 #if _TRADE_DEBUG

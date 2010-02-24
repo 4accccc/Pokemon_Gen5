@@ -112,10 +112,32 @@ void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork)
   for(j = 0;j < GTS_PLAYER_WORK_NUM;j++){
     for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
       pWork->GTSSelectIndex[j][i] = -1;
+      pWork->GTSSelectBoxno[j][i] = -1;
     }
   }
 
 }
+
+//Ž©•ª‚ÌPOKE‚ª‚¢‚é‚©‚Ç‚¤‚©Šm”F‚·‚é
+BOOL POKE_GTS_IsMyIn(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
+      if((pWork->GTSSelectIndex[0][i] != -1) && (pWork->GTSSelectBoxno[0][i] != -1)){
+        return TRUE;
+      }
+    }
+  }
+  else{
+    if((pWork->selectIndex != -1) && (pWork->selectBoxno != -1)){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
 
 // GTSPOKE‚ð‘I‘ð‚µ‚Ä‚é‚©‚Ç‚¤‚©”»’f‚·‚é
 int POKE_GTS_IsSelect(POKEMON_TRADE_WORK* pWork,int boxno,int index)
@@ -927,11 +949,11 @@ static void _Select6MessageInitEnd(POKEMON_TRADE_WORK* pWork)
   
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&pWork->pokemonGTSSeq)){
-      _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+      _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
     }
   }
   else{
-    _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+    _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
   }
 }
 
@@ -1000,6 +1022,9 @@ static void _Select6MessageInit3(POKEMON_TRADE_WORK* pWork)
 {
   int targetID = 1 - GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
 
   if(CheckNegoWaitTimer(pWork)){
 
@@ -1068,7 +1093,7 @@ static void _Select6MessageInit2(POKEMON_TRADE_WORK* pWork)
       break;
     default: //‚¢‚¢‚¦
       POKETRADE_MESSAGE_WindowClear(pWork);
-      _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
+      _CHANGE_STATE(pWork,POKETRADE_TouchStateGTS);
       break;
     }
   }
@@ -1107,9 +1132,8 @@ void POKE_GTS_Select6MessageInit(POKEMON_TRADE_WORK* pWork)
   GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_02, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);
 
-  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
+  TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
 
-  
   _CHANGE_STATE(pWork,_Select6MessageInit1);
 
   POKEMON_TRADE_MaskCommon(pWork);
@@ -1201,9 +1225,11 @@ void POKE_GTS_DeletePokemonState(POKEMON_TRADE_WORK* pWork)
       return;
     }
   }
-  POKE_GTS_DeletePokemonDirect(pWork, 0, no);
-  POKETRADE_2D_GTSPokemonIconReset(pWork,0, no);
-  _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+  if(no!=-1){
+    POKE_GTS_DeletePokemonDirect(pWork, 0, no);
+    POKETRADE_2D_GTSPokemonIconReset(pWork,0, no);
+  }
+  _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
 }
 
 

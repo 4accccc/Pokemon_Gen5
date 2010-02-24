@@ -156,7 +156,7 @@ static void UITemplate_BALLICON_DeleteCLWK( _BALL_ICON_WORK* wk )
 //UIテンプレート ボール
 static void UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
                                             POKEMON_PARAM* pp, GFL_CLUNIT *unit,
-                                            int x ,int y, int drawtype, HEAPID heapID )
+                                            int x ,int y, int drawtype, HEAPID heapID,int plt )
 {
   UI_EASY_CLWK_RES_PARAM prm;
   BALL_ID ballID;
@@ -173,7 +173,7 @@ static void UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
   prm.ncg_id    = APP_COMMON_GetBallCharArcIdx( ballID );
   prm.cell_id   = APP_COMMON_GetBallCellArcIdx( ballID, APP_COMMON_MAPPING_128K );
   prm.anm_id    = APP_COMMON_GetBallAnimeArcIdx( ballID, APP_COMMON_MAPPING_128K );
-  prm.pltt_line = PLTID_OBJ_BALLICON_M;
+  prm.pltt_line = plt;
   prm.pltt_src_ofs  = 0;
   prm.pltt_src_num = 1;
 
@@ -654,7 +654,7 @@ void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int si
     _pokeLvMsgDisp(pp, pWork->StatusWin[side], 16, 19, pWork);
     _pokePocketItemMsgDisp(pp, pWork->StatusWin[side], 16, 16*8, pWork);
     UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
-                                    xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID );
+                                    xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID,PLTID_OBJ_BALLICON_M );
   }
   GFL_BMPWIN_TransVramCharacter(pWork->StatusWin[side]);
   GFL_BMPWIN_MakeScreen(pWork->StatusWin[side]);
@@ -782,7 +782,7 @@ void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pagen
       IRC_POKETRADE_ItemIconDisp(pWork, leftright, pp);
       IRC_POKETRADE_PokerusIconDisp(pWork, leftright,FALSE, pp);
       UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
-                                      xdotpos[leftright]+16, 16, CLSYS_DRAW_SUB, pWork->heapID );
+                                      xdotpos[leftright]+16, 16, CLSYS_DRAW_SUB, pWork->heapID,PLTID_OBJ_BALLICON_S );
     }
   }
   else{
@@ -862,7 +862,7 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
   _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 19*8,14*8, pWork); //わざリスト
 
   UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
-                                  16, 16, CLSYS_DRAW_MAIN, pWork->heapID );
+                                  16, 16, CLSYS_DRAW_MAIN, pWork->heapID,PLTID_OBJ_BALLICON_M );
 
   UITemplate_TYPEICON_CreateCLWK(&pWork->aTypeIcon[0], pp, 0, pWork->cellUnit,
                                  25*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
@@ -1006,7 +1006,7 @@ void POKEMON_TRADE_MaskCommon(POKEMON_TRADE_WORK* pWork)
       GX_WND_PLANEMASK_BG3|
       GX_WND_PLANEMASK_OBJ,
       TRUE );
-    G2S_SetWnd0Position( 0, 0, 255, 192-3*8 );
+    G2S_SetWnd0Position( 0, 0, 255, 192 );
     G2S_SetWnd1InsidePlane(
       GX_WND_PLANEMASK_BG0|
       GX_WND_PLANEMASK_BG1|
@@ -1014,7 +1014,7 @@ void POKEMON_TRADE_MaskCommon(POKEMON_TRADE_WORK* pWork)
       GX_WND_PLANEMASK_BG3|
       GX_WND_PLANEMASK_OBJ,
       TRUE );
-    G2S_SetWnd1Position( 255, 0, 0, 192-3*8 );
+    G2S_SetWnd1Position( 255, 0, 0, 192 );
     G2S_SetWndOutsidePlane(
       GX_WND_PLANEMASK_BG0|
       GX_WND_PLANEMASK_BG1|

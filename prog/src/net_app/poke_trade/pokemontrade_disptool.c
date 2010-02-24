@@ -78,7 +78,7 @@ void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork)
   touchbar_setup.is_notload_bg = TRUE;  //BGはなし
   touchbar_setup.bar_frm  = GFL_BG_FRAME0_S;            //BG読み込みのためのBG面上下画面判定にも必要
   touchbar_setup.bg_plt   = _TOUCHBAR_BG_PALPOS;      //BGﾊﾟﾚｯﾄ
-  touchbar_setup.obj_plt  = 0;      //OBJﾊﾟﾚｯﾄ
+  touchbar_setup.obj_plt  = _TOUCHBAR_OBJ_PALPOS;      //OBJﾊﾟﾚｯﾄ
   touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
 
   touchbar_icon_tbl[1].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];
