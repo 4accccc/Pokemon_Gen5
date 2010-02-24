@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-02-23T22:06:39" source="m_dun0201_02_02.mb"/>
+	<create user="fuchino" host="W00152" date="2010-02-24T20:46:15" source="m_dun0201_02_02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-02-23T22:06:39" source="m_dun0201_02_02.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-02-24T20:46:15" source="m_dun0201_02_02.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -272,7 +272,47 @@
 			7333 88a8 9889 5966 6577 4356 4334 4334
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="d2michi_ha"
+	<tex_image index="4" name="d2michi02a"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="d2michi02a_pl"
+		path="C:/home/wb_data3d/field/out27/chip/tex/d2michi02a.tga"
+	>
+		<bitmap size="128">
+			7777 7777 7777 5777 7775 7777 7777 7777
+			8888 8888 8888 5788 8875 8888 8888 8888
+			8888 8888 8888 5788 8875 8888 8888 8888
+			5555 5555 5555 5555 5555 5555 5555 5555
+			2222 2222 2222 2222 2222 2222 2222 2222
+			1111 1111 1111 1111 1111 1111 1111 1111
+			0111 1101 1011 0010 0110 0111 1101 0111
+			1000 0010 0100 0001 0000 1000 0010 1000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0303 0303 0000 0000 0000
+			0000 0300 3003 3330 3030 3030 0000 0000
+			3030 3030 3330 3333 3333 0333 0303 0003
+			3333 3333 4333 4343 4343 3333 3333 3333
+			4333 3343 3443 4444 3434 3434 3334 3333
+			3434 3434 4434 4464 4444 4344 4343 4443
+			4444 4444 4444 4444 4444 4464 3434 4434
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="d2michi02b"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="d2michi02b_pl"
+		path="C:/home/wb_data3d/field/out27/chip/tex/d2michi02b.tga"
+	>
+		<bitmap size="32">
+			0000 0000 1555 0000 4555 0000 1155 0000
+			0455 0000 1115 0000 0445 0000 0111 1000
+			0044 0440 0001 1110 0000 1444 0000 1511
+			0000 1544 0000 1551 4000 1554 0000 1555
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="d2michi_ha"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="transparency"
@@ -298,7 +338,7 @@
 			2a00 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="d2mori01s"
+	<tex_image index="7" name="d2mori01s"
 		width="32" height="16" original_width="32" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -324,7 +364,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="grass01ax"
+	<tex_image index="8" name="grass01ax"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -462,7 +502,7 @@
 			1997 2211 2222 0000 1110 9411 4499 7777
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="ki00a2"
+	<tex_image index="9" name="ki00a2"
 		width="32" height="64" original_width="32" original_height="64"
 		format="palette16"
 		color0_mode="transparency"
@@ -536,7 +576,7 @@
 			0000 0000 dfe0 cddd dddc 0efd 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="ki00b2"
+	<tex_image index="10" name="ki00b2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -578,7 +618,7 @@
 			0000 0000 0000 3000 0003 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="ki00c2"
+	<tex_image index="11" name="ki00c2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="ki00c2_pl"
@@ -651,7 +691,7 @@
 			0000 2020 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="ki00d2"
+	<tex_image index="12" name="ki00d2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -693,7 +733,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="ki02ax"
+	<tex_image index="13" name="ki02ax"
 		width="32" height="64" original_width="32" original_height="64"
 		format="palette16"
 		color0_mode="transparency"
@@ -767,7 +807,7 @@
 			0000 0000 dfe0 cddd dddc 0efd 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="12" name="ki02bx"
+	<tex_image index="14" name="ki02bx"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -809,7 +849,7 @@
 			0000 0000 0000 3000 0003 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="13" name="ki02c"
+	<tex_image index="15" name="ki02c"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="ki02c_pl"
@@ -882,7 +922,7 @@
 			0000 2020 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="14" name="ki02dx"
+	<tex_image index="16" name="ki02dx"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -922,46 +962,6 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="15" name="michi02a"
-		width="32" height="16" original_width="32" original_height="16"
-		format="palette16"
-		color0_mode="color"
-		palette_name="michi02a_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/michi02a.tga"
-	>
-		<bitmap size="128">
-			7777 7777 7777 7777 7777 7777 7777 7777
-			8888 8888 8888 8888 8888 8888 8888 8888
-			8888 8888 8888 8888 8888 8888 8888 8888
-			5555 5555 5555 5555 5555 5555 5555 5555
-			2222 2222 2222 2222 2222 2222 2222 2222
-			1111 1111 1111 1111 1111 1111 1111 1111
-			0111 1101 1011 0010 0110 0111 1101 0111
-			1000 0010 0100 0001 0000 1000 0010 1000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0303 0303 0000 0000 0000
-			0000 0300 3003 3330 3030 3030 0000 0000
-			3030 3030 3330 3333 3333 0333 0303 0003
-			3333 3333 4333 4343 4343 3333 3333 3333
-			4333 3343 3443 4444 3434 3434 3334 3333
-			3434 3434 4434 4464 4444 4344 4343 4443
-			4444 4444 4444 4444 4444 4464 3434 4434
-		</bitmap>
-	</tex_image>
-	<tex_image index="16" name="michi02b"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="color"
-		palette_name="michi02b_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/michi02b.tga"
-	>
-		<bitmap size="32">
-			0040 0000 0000 0004 0000 0000 0000 0000
-			0001 0000 0000 0000 0000 1000 0000 0000
-			0000 0000 0000 0004 0000 0000 0040 0000
-			0000 0000 0000 0040 0000 0000 1000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="17" name="saku01a"
@@ -1036,48 +1036,48 @@
 		1e4c 1e6e 1e6f 224e 226f 266d 266f 2a8d
 		2e8c 2ecc 328c 32ad 32ec 3acd 7fff 7fff
 	</tex_palette>
-	<tex_palette index="4" name="d2michi_ha_pl" color_size="4">
-		318c 3aaa 368a 36ee
-	</tex_palette>
-	<tex_palette index="5" name="d2mori01s_pl" color_size="8">
-		4210 7fff 739c 6739 5ef7 56b5 4a52 7fff
-	</tex_palette>
-	<tex_palette index="6" name="grass01ax_pl" color_size="16">
-		4351 4352 4370 4371 4372 4770 4771 4772
-		4792 4793 4794 47b3 47b4 4bb4 4bb5 4bd6
-	</tex_palette>
-	<tex_palette index="7" name="ki00a2_pl" color_size="16">
-		0364 3de0 4202 3183 2943 2103 2d65 4223
-		35c1 4247 3a06 4288 19ce 156c 1109 152b
-	</tex_palette>
-	<tex_palette index="8" name="ki00b2_pl" color_size="8">
-		0364 3183 2943 2103 35c1 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="9" name="ki00c2_pl" color_size="8">
-		1461 152b 156c 19ce 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="10" name="ki00d2_pl" color_size="8">
-		0364 39a1 4202 4247 3a06 4288 7fff 7fff
-	</tex_palette>
-	<tex_palette index="11" name="ki02ax_pl" color_size="16">
-		7c1f 3a21 3602 2dc4 2144 3643 3a84 2584
-		29a6 3267 36a8 3ae9 1db0 196e 150b 192d
-	</tex_palette>
-	<tex_palette index="12" name="ki02bx_pl" color_size="8">
-		7c1f 3602 2dc4 2144 2584 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="13" name="ki02c_pl" color_size="8">
-		1461 192d 196e 1db0 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="14" name="ki02dx_pl" color_size="8">
-		7c1f 3602 2dc4 3643 3a84 3267 36a8 3ae9
-	</tex_palette>
-	<tex_palette index="15" name="michi02a_pl" color_size="16">
+	<tex_palette index="4" name="d2michi02a_pl" color_size="16">
 		39ce 39ef 3a11 3def 4210 4274 4631 4eb6
 		56f7 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="16" name="michi02b_pl" color_size="4">
+	<tex_palette index="5" name="d2michi02b_pl" color_size="4">
 		4210 4631 7fff 7fff
+	</tex_palette>
+	<tex_palette index="6" name="d2michi_ha_pl" color_size="4">
+		318c 3aaa 368a 36ee
+	</tex_palette>
+	<tex_palette index="7" name="d2mori01s_pl" color_size="8">
+		4210 7fff 739c 6739 5ef7 56b5 4a52 7fff
+	</tex_palette>
+	<tex_palette index="8" name="grass01ax_pl" color_size="16">
+		4351 4352 4370 4371 4372 4770 4771 4772
+		4792 4793 4794 47b3 47b4 4bb4 4bb5 4bd6
+	</tex_palette>
+	<tex_palette index="9" name="ki00a2_pl" color_size="16">
+		0364 3de0 4202 3183 2943 2103 2d65 4223
+		35c1 4247 3a06 4288 19ce 156c 1109 152b
+	</tex_palette>
+	<tex_palette index="10" name="ki00b2_pl" color_size="8">
+		0364 3183 2943 2103 35c1 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="11" name="ki00c2_pl" color_size="8">
+		1461 152b 156c 19ce 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="12" name="ki00d2_pl" color_size="8">
+		0364 39a1 4202 4247 3a06 4288 7fff 7fff
+	</tex_palette>
+	<tex_palette index="13" name="ki02ax_pl" color_size="16">
+		7c1f 3a21 3602 2dc4 2144 3643 3a84 2584
+		29a6 3267 36a8 3ae9 1db0 196e 150b 192d
+	</tex_palette>
+	<tex_palette index="14" name="ki02bx_pl" color_size="8">
+		7c1f 3602 2dc4 2144 2584 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="15" name="ki02c_pl" color_size="8">
+		1461 192d 196e 1db0 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="16" name="ki02dx_pl" color_size="8">
+		7c1f 3602 2dc4 3643 3a84 3267 36a8 3ae9
 	</tex_palette>
 	<tex_palette index="17" name="saku01a_pl" color_size="16">
 		7c1f 5ef2 6313 4e6f 5290 56b1 6f77 462f
@@ -1185,7 +1185,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="d2michi_ha"
+	<material index="4" name="d2michi02a"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1203,13 +1203,13 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="4" tex_palette_idx="4"
-		tex_tiling="repeat repeat"
+		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="d2mori01s"
+	<material index="5" name="d2michi02b"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1227,13 +1227,13 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="5" tex_palette_idx="5"
-		tex_tiling="clamp clamp"
+		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="grass01ax"
+	<material index="6" name="d2michi_ha"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1257,9 +1257,9 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="ki00a2"
+	<material index="7" name="d2mori01s"
 		light0="on" light1="off" light2="off" light3="off"
-		face="both"
+		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
@@ -1275,13 +1275,13 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="7" tex_palette_idx="7"
-		tex_tiling="repeat clamp"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="ki00b2"
+	<material index="8" name="grass01ax"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1305,9 +1305,9 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="ki00c2"
+	<material index="9" name="ki00a2"
 		light0="on" light1="off" light2="off" light3="off"
-		face="front"
+		face="both"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
@@ -1323,13 +1323,13 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="9" tex_palette_idx="9"
-		tex_tiling="repeat repeat"
+		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="ki00d2"
+	<material index="10" name="ki00b2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1353,9 +1353,9 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="ki02ax"
+	<material index="11" name="ki00c2"
 		light0="on" light1="off" light2="off" light3="off"
-		face="both"
+		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
@@ -1371,13 +1371,13 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="11" tex_palette_idx="11"
-		tex_tiling="repeat clamp"
+		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="12" name="ki02bx"
+	<material index="12" name="ki00d2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1401,9 +1401,9 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="13" name="ki02c"
+	<material index="13" name="ki02ax"
 		light0="on" light1="off" light2="off" light3="off"
-		face="front"
+		face="both"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
@@ -1419,13 +1419,13 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="13" tex_palette_idx="13"
-		tex_tiling="repeat repeat"
+		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="14" name="ki02dx"
+	<material index="14" name="ki02bx"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1449,7 +1449,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="15" name="michi02a"
+	<material index="15" name="ki02c"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1467,13 +1467,13 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="15" tex_palette_idx="15"
-		tex_tiling="repeat clamp"
+		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="16" name="michi02b"
+	<material index="16" name="ki02dx"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -5351,19 +5351,19 @@
 		<display index="1" material="1" polygon="14" priority="0"/>
 		<display index="2" material="2" polygon="16" priority="0"/>
 		<display index="3" material="3" polygon="1" priority="0"/>
-		<display index="4" material="4" polygon="17" priority="0"/>
-		<display index="5" material="5" polygon="13" priority="0"/>
-		<display index="6" material="6" polygon="2" priority="0"/>
-		<display index="7" material="7" polygon="12" priority="0"/>
-		<display index="8" material="8" polygon="10" priority="0"/>
-		<display index="9" material="9" polygon="9" priority="0"/>
-		<display index="10" material="10" polygon="11" priority="0"/>
-		<display index="11" material="11" polygon="6" priority="0"/>
-		<display index="12" material="12" polygon="7" priority="0"/>
-		<display index="13" material="13" polygon="5" priority="0"/>
-		<display index="14" material="14" polygon="8" priority="0"/>
-		<display index="15" material="15" polygon="3" priority="0"/>
-		<display index="16" material="16" polygon="0" priority="0"/>
+		<display index="4" material="4" polygon="3" priority="0"/>
+		<display index="5" material="5" polygon="0" priority="0"/>
+		<display index="6" material="6" polygon="17" priority="0"/>
+		<display index="7" material="7" polygon="13" priority="0"/>
+		<display index="8" material="8" polygon="2" priority="0"/>
+		<display index="9" material="9" polygon="12" priority="0"/>
+		<display index="10" material="10" polygon="10" priority="0"/>
+		<display index="11" material="11" polygon="9" priority="0"/>
+		<display index="12" material="12" polygon="11" priority="0"/>
+		<display index="13" material="13" polygon="6" priority="0"/>
+		<display index="14" material="14" polygon="7" priority="0"/>
+		<display index="15" material="15" polygon="5" priority="0"/>
+		<display index="16" material="16" polygon="8" priority="0"/>
 		<display index="17" material="17" polygon="4" priority="0"/>
 		<display index="18" material="18" polygon="18" priority="0"/>
 	</node>
