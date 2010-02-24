@@ -59,19 +59,19 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 font.narc : large.gftr small.gftr small_batt.gftr num.gftr default.nclr talkwin.nclr systemwin.nclr
 
 
-large.nftr : large.bmp
+large.nftr : large.bmp pokemon_wb.xlor
 	fontcvtrc -i bmp -if large.bmp -io pokemon_wb.xlor -ib 2 -o nitro -of large.nftr
 	xcopy /D /Y large.nftr w:\font
 
-small.nftr : small.bmp
+small.nftr : small.bmp pokemon_wb.xlor
 	fontcvtrc -i bmp -if small.bmp -io pokemon_wb.xlor -ib 2 -o nitro -of small.nftr
 	xcopy /D /Y small.nftr w:\font
 
-small_batt.nftr : small_batt.bmp
+small_batt.nftr : small_batt.bmp pokemon_wb.xlor
 	fontcvtrc -i bmp -if small_batt.bmp -io pokemon_wb.xlor -ib 2 -o nitro -of small_batt.nftr
 	xcopy /D /Y small_batt.nftr w:\font
 
-num.nftr : num.bmp
+num.nftr : num.bmp pokemon_wb_num.xlor
 	fontcvtrc -i bmp -if num.bmp -io pokemon_wb_num.xlor -ib 2 -o nitro -of num.nftr
 	xcopy /D /Y num.nftr w:\font
 
