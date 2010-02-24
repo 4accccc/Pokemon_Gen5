@@ -689,7 +689,10 @@ static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data )
     else if( MAPATTR_VALUE_CheckDesertDeep(data->attr_val_old) == TRUE )
     {
       type = FOOTMARK_TYPE_DEEPSNOW;       
+      
+#if 0 //©‹@‚Ì‘«ÕSEˆ—‚Å‚Ì‚İ–Â‚ç‚·
       PMSND_PlaySE( SEQ_SE_FLD_91 );
+#endif
     }
     else
     {

@@ -569,6 +569,7 @@ static const ATTR_VALUE_SE data_PlaySE_NextValue[] =
 {
   {MAPATTR_VALUE_CheckLongGrass,SEQ_SE_FLD_08,2,4},
   {MAPATTR_VALUE_CheckSnow,SEQ_SE_FLD_11,2,4},
+  {MAPATTR_VALUE_CheckSnowNotCycle,SEQ_SE_FLD_11,2,4},
   {MAPATTR_VALUE_CheckShoal,SEQ_SE_FLD_13,2,4},
   {MAPATTR_VALUE_CheckPool,SEQ_SE_FLD_13,2,4},
   {MAPATTR_VALUE_CheckMarsh,SEQ_SE_FLD_13,2,4},

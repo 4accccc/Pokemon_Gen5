@@ -9,6 +9,8 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
+#include "sound/pm_sndsys.h"
+
 #include "fieldmap.h"
 #include "field_effect.h"
 #include "fldmmdl.h"
@@ -54,7 +56,19 @@ typedef struct
   TASKHEADER_HIDE head;
   MMDL_CHECKSAME_DATA samedata;
   FLD_G3DOBJ_OBJIDX obj_idx;
+  
+  u16 anm_flag;
+  u16 anm_end_flag;
 }TASKWORK_HIDE;
+
+//--------------------------------------------------------------
+/// HIDE_ARCIDX
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 mdl_idx;
+  u16 anm_idx;
+}HIDE_ARCIDX;
 
 //======================================================================
 //	proto
@@ -64,7 +78,8 @@ static void hide_DeleteResource( FLDEFF_HIDE *hide );
 
 static const FLDEFF_TASK_HEADER data_HideTaskHeader;
 
-static const u16 data_ArcIdxTbl[HIDE_MAX];
+static const HIDE_ARCIDX data_ArcIdxTbl[HIDE_MAX];
+static const u32 data_PullOffSeTbl[HIDE_MAX];
 
 //======================================================================
 //	隠れ蓑　システム
@@ -116,16 +131,18 @@ void FLDEFF_HIDE_Delete( FLDEFF_CTRL *fectrl, void *work )
 static void hide_InitResource( FLDEFF_HIDE *hide )
 {
   int i = 0;
-  const u16 *tbl = data_ArcIdxTbl;
+  const HIDE_ARCIDX *tbl = data_ArcIdxTbl;
   ARCHANDLE *handle = FLDEFF_CTRL_GetArcHandleEffect( hide->fectrl );
   FLD_G3DOBJ_CTRL *obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( hide->fectrl );
   FLD_G3DOBJ_RES_HEADER head;
   
   for( ; i < HIDE_MAX; i++, tbl++ ){
     FLD_G3DOBJ_RES_HEADER_Init( &head );
-    FLD_G3DOBJ_RES_HEADER_SetMdl( &head, handle, tbl[i] );
-    hide->res_idx[i] = FLD_G3DOBJ_CTRL_CreateResource(
-        obj_ctrl, &head, FALSE );
+    FLD_G3DOBJ_RES_HEADER_SetMdl( &head, handle, tbl->mdl_idx );
+    FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+    FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx( &head, tbl->anm_idx );
+    hide->res_idx[i] =
+      FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
   }
 }
 
@@ -164,7 +181,7 @@ FLDEFF_TASK * FLDEFF_HIDE_SetMMdl(
 {
   FLDEFF_TASK *task;
   TASKHEADER_HIDE head;
-
+  
   head.eff_hide = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_HIDE );
   head.obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( fectrl );
   head.mmdl = mmdl;
@@ -173,6 +190,33 @@ FLDEFF_TASK * FLDEFF_HIDE_SetMMdl(
   task = FLDEFF_CTRL_AddTask(
       fectrl, &data_HideTaskHeader, NULL, 0, &head, 0 );
   return( task );
+}
+
+//--------------------------------------------------------------
+/**
+ * 動作モデル用隠れ蓑　アニメセット
+ * @param task FLDEFF_TASK*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDEFF_HIDE_SetAnime( FLDEFF_TASK *task )
+{
+  TASKWORK_HIDE *work = FLDEFF_TASK_GetWork( task );
+  work->anm_flag = TRUE;
+  PMSND_PlaySE( data_PullOffSeTbl[work->head.hide_type] );
+}
+
+//--------------------------------------------------------------
+/**
+ * 動作モデル用隠れ蓑　アニメ終了チェック
+ * @param task FLDEFF_TASK*
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+BOOL FLDEFF_HIDE_CheckAnime( FLDEFF_TASK *task )
+{
+  TASKWORK_HIDE *work = FLDEFF_TASK_GetWork( task );
+  return( work->anm_end_flag );
 }
 
 //--------------------------------------------------------------
@@ -239,6 +283,13 @@ static void hideTask_Update( FLDEFF_TASK *task, void *wk )
       pos.y = height;
     }
     
+    if( work->anm_flag == TRUE ){
+      if( FLD_G3DOBJ_CTRL_AnimeObject(
+            work->head.obj_ctrl,work->obj_idx,FX32_ONE) == FALSE ){
+        work->anm_end_flag = TRUE;
+      }
+    }
+    
     FLDEFF_TASK_SetPos( task, &pos );
     FLD_G3DOBJ_CTRL_SetObjPos( work->head.obj_ctrl, work->obj_idx, &pos );
   }
@@ -275,8 +326,17 @@ static const FLDEFF_TASK_HEADER data_HideTaskHeader =
 //--------------------------------------------------------------
 /// 隠れ蓑アーカイブインデックス
 //--------------------------------------------------------------
-static const u16 data_ArcIdxTbl[HIDE_MAX] =
+static const HIDE_ARCIDX data_ArcIdxTbl[HIDE_MAX] =
 {
-  NARC_fldeff_kage_nsbmd,
-  NARC_fldeff_kage_nsbmd,
+  { NARC_fldeff_mv_hide_kusa_nsbmd, NARC_fldeff_mv_hide_kusa_nsbtp },
+  { NARC_fldeff_mv_hide_tsuchi_nsbmd, NARC_fldeff_mv_hide_tsuchi_nsbtp },
+};
+
+//--------------------------------------------------------------
+/// 隠れ蓑が脱げる時のSE
+//--------------------------------------------------------------
+static const u32 data_PullOffSeTbl[HIDE_MAX] =
+{
+  SEQ_SE_TB_START,
+  SEQ_SE_W254_04,
 };

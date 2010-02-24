@@ -43,3 +43,5 @@ extern void FLDEFF_HIDE_Delete( FLDEFF_CTRL *fectrl, void *work );
 
 extern FLDEFF_TASK * FLDEFF_HIDE_SetMMdl(
     FLDEFF_CTRL *fectrl, MMDL *mmdl, HIDE_TYPE type );
+extern void FLDEFF_HIDE_SetAnime( FLDEFF_TASK *task );
+extern BOOL FLDEFF_HIDE_CheckAnime( FLDEFF_TASK *task );

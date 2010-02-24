@@ -16,6 +16,7 @@
 
 #include "fieldmap.h"
 #include "fldeff_gyoe.h"
+#include "fldeff_hide.h"
 
 //======================================================================
 //	define
@@ -3094,7 +3095,7 @@ static int AC_HidePullOFF_0( MMDL * mmdl )
 	
 	{
 		FLDEFF_TASK *task = MMDL_GetMoveHideEffectTask( mmdl );
-		if( task != NULL ){ FLDEFF_TASK_CallDelete( task ); }
+    FLDEFF_HIDE_SetAnime( task );
 	}
 	
 	{
@@ -3105,7 +3106,7 @@ static int AC_HidePullOFF_0( MMDL * mmdl )
 #if 0 //‰B‚ê–ª“y‰Œ
 	FE_mmdlHKemuri_Add( mmdl );
 #endif
-
+  
 	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START|MMDL_MOVEBIT_JUMP_START );
 	MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
 	
@@ -3129,8 +3130,19 @@ static int AC_HidePullOFF_1( MMDL * mmdl )
 	offs.y = tbl[work->frame];
 	MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	
+  {
+		FLDEFF_TASK *task = MMDL_GetMoveHideEffectTask( mmdl );
+    
+	  if( task != NULL ){
+      if( FLDEFF_HIDE_CheckAnime(task) == TRUE ){
+        FLDEFF_TASK_CallDelete( task );
+        MMDL_SetMoveHideEffectTask( mmdl, task );
+      }
+    }
+	}
+	
 	work->frame += 2;
- 	
+  
 	if( work->frame < AC_JUMP_H_TBL_MAX ){
 		return( FALSE );
 	}
