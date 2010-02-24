@@ -8,6 +8,7 @@ REM ##################################################
 doskey gowa = cd %PROJECT_RSCDIR:/=\%waza_tbl
 doskey gome = cd %PROJECT_RSCDIR:/=\%message
 doskey gofo = cd %PROJECT_RSCDIR:/=\%font
+doskey goan = cd %PROJECT_ROOT:/=\%tools\analyze\overlaymap
 
 cd %PROJECT_PROGDIR:/=\%
 
