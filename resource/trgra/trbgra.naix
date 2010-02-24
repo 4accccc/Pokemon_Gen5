@@ -22,7 +22,11 @@ enum {
 	NARC_trbgra_tbwb_araragi_NCGR = 8,
 	NARC_trbgra_tbwb_araragi_NCLR = 9,
 	NARC_trbgra_tbwb_araragi_NCER = 10,
-	NARC_trbgra_tbwb_araragi_NANR = 11
+	NARC_trbgra_tbwb_araragi_NANR = 11,
+	NARC_trbgra_tbwb_rival_NCGR = 12,
+	NARC_trbgra_tbwb_rival_NCLR = 13,
+	NARC_trbgra_tbwb_rival_NCER = 14,
+	NARC_trbgra_tbwb_rival_NANR = 15
 };
 
 /* NARC_TRBGRA_NAIX_ */
