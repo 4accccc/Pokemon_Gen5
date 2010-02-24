@@ -23,6 +23,7 @@
 #include "message.naix"
 #include "font/font.naix"
 #include "msg/msg_trainercard.h"
+#include "msg/msg_trtype.h"
 
 
 #define FONT_BG (GFL_BG_FRAME3_S)
@@ -372,9 +373,9 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
 //            BMP_WIDTH_TYPE2, 0, 0, str, inTrCardData->Score, SCORE_DIGIT,
 //            STR_NUM_DISP_SPACE,0);
     
-    // トレーナータイプ
-    TRCBmp_PrintTrainerType( wk, 2, 0 );   // @@TODO ユニオン見た目がとれてない
-
+    // トレーナータイプ(ユニオン見た目の取得・反映)
+    TRCBmp_PrintTrainerType( wk, inTrCardData->UnionTrNo, 0 );
+    
     // せいかく
     TRCBmp_PrintPersonality( wk, inTrCardData->Personality, 0 );   // セーブデータに性格データ保存がない
     
@@ -423,6 +424,28 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
   }
 }
 
+// トレーナーカードに表示するユニオン見た目文字列
+static const trtype_name_tbl[]={
+  // 男子
+  MSG_TRTYPE_ELITEM,        // エリートトレーナー
+  MSG_TRTYPE_RANGERM,       // ポケモンレンジャー♂
+  MSG_TRTYPE_BREEDERM,      // ポケモンブリーダー♂
+  MSG_TRTYPE_SCIENTISTM,    // けんきゅういん♂
+  MSG_TRTYPE_TANPAN,        // たんぱんこぞう
+  MSG_TRTYPE_MOUNT,         // やまおとこ
+  MSG_TRTYPE_HEADS,         // スキンヘッズ
+  MSG_TRTYPE_KINDERGARTENM, // ようちえん♂
+
+  // 女子
+  MSG_TRTYPE_MINI,          // ミニスカート
+  MSG_TRTYPE_ELITEW,        // エリートトレーナー♀
+  MSG_TRTYPE_RANGERW,       // ポケモンレンジャー♀
+  MSG_TRTYPE_BREEDERW,      // ポケモンブリーダー♀
+  MSG_TRTYPE_SCIENTISTW,    // けんきゅういん♀
+  MSG_TRTYPE_NURSE,         // ナース
+  MSG_TRTYPE_PARASOL,       // パラソルおねえさん
+  MSG_TRTYPE_KINDERGARTENW, // ようちえん♀
+};
 
 //----------------------------------------------------------------------------------
 /**
@@ -437,7 +460,7 @@ void TRCBmp_PrintTrainerType( TR_CARD_WORK *wk, int trtype, int trans_sw )
 {
   GFL_MSGDATA *msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                          NARC_message_trtype_dat, wk->heapId );
-  STRBUF *str = GFL_MSG_CreateString( msgdata, trtype );
+  STRBUF *str = GFL_MSG_CreateString( msgdata, trtype_name_tbl[trtype] );
   int length = PRINTSYS_GetStrWidth( str, wk->fontHandle, 0 );
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[TRC_BMPWIN_TRAINER_TYPE]), 0 );

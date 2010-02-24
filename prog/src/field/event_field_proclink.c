@@ -364,9 +364,9 @@ GMEVENT * EVENT_ProcLink( EVENT_PROCLINK_PARAM *param, HEAPID heapID )
   wk->pre_type  = wk->param->call;
   wk->next_type = wk->param->call;
   
-  wk->sel_poke = 0;
-  wk->item_no = 0;
-  wk->mode = 0;
+  wk->sel_poke  = 0;
+  wk->item_no   = 0;
+  wk->mode      = 0;
 
   PROCLINK_CALLBACK_Set( &wk->callback, wk->param, wk->param->open_func, wk->param->close_func, wk->param->wk_adrs );
 
@@ -1034,8 +1034,8 @@ static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_C
   ZUKAN_PARAM * prm = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(ZUKAN_PARAM) );
   GFL_STD_MemClear( prm, sizeof(ZUKAN_PARAM) );
 
-	prm->gamedata = GAMESYSTEM_GetGameData( wk->param->gsys );
-	prm->savedata = GAMEDATA_GetZukanSave( prm->gamedata );
+  prm->gamedata = GAMESYSTEM_GetGameData( wk->param->gsys );
+  prm->savedata = GAMEDATA_GetZukanSave( prm->gamedata );
 
 	FSND_HoldBGMVolume_forApp(
 		GAMEDATA_GetFieldSound(prm->gamedata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
@@ -1371,11 +1371,19 @@ static RETURNFUNC_RESULT FMenuReturnProc_Bag(PROCLINK_WORK* wk,void* param_adrs)
 static void * FMenuCallProc_TrainerCard(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
 { 
   TRCARD_CALL_PARAM *tr_param;
-  GAMEDATA *gdata;
-  
-  gdata = GAMESYSTEM_GetGameData( wk->param->gsys );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( wk->param->gsys );
+  int zoneId = GAMEDATA_GetMyPlayerWork(gdata)->zoneID; 
+  BOOL edit = TRUE;
 
-  tr_param = TRAINERCASR_CreateCallParam_SelfData( gdata, HEAPID_PROC );
+  // ユニオンルームとコロシアム内では自分のトレーナーカードを編集できない
+  if(ZONEDATA_IsUnionRoom(zoneId) || ZONEDATA_IsColosseum(zoneId)){
+    edit = FALSE;
+  }
+  
+  OS_Printf("zoneid=%d, edit=%d\n", zoneId, edit);
+  
+  // トレーナーカードワーク作成
+  tr_param = TRAINERCASR_CreateCallParam_SelfData( gdata, HEAPID_PROC, edit );
 
   // 表か裏の指定をtr_paramに格納する
   if(param==FALSE || param==EVENT_PROCLINK_DATA_NONE){
@@ -1595,7 +1603,7 @@ static void FMenuEvent_Report( PROCLINK_WORK* wk, u32 param )
   GMEVENT_CallEvent(wk->event, subevent);
 
   wk->result  = RETURNFUNC_RESULT_RETURN;
-//	wk->result  = RETURNFUNC_RESULT_EXIT;
+//  wk->result  = RETURNFUNC_RESULT_EXIT;
 }
 //-------------------------------------
 /// 友達手帳
@@ -2004,7 +2012,7 @@ static GMEVENT * createFMenuReportEvent(
   work->heapID = heapID;
   work->gsys = gsys;
   work->fieldWork = fieldWork;
-	work->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(work->gsys) );
+  work->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(work->gsys) );
 
   return msgEvent;
 }
@@ -2017,10 +2025,10 @@ static GMEVENT * createFMenuReportEvent(
 //--------------------------------------------------------------
 static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
 {
-	if( REPORTEVENT_Main( wk, seq ) == TRUE ){
-		return GMEVENT_RES_CONTINUE;
-	}
-	return GMEVENT_RES_FINISH;
+  if( REPORTEVENT_Main( wk, seq ) == TRUE ){
+    return GMEVENT_RES_CONTINUE;
+  }
+  return GMEVENT_RES_FINISH;
 }
 
 

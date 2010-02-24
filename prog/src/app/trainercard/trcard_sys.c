@@ -37,9 +37,9 @@
 typedef struct _TR_CARD_SYS{
   int heapId;
 
-  void              *app_wk;    ///<簡易会話モジュールワークの保存
-  GFL_PROCSYS       *procSys;   ///<サブプロセスワーク
-  PMS_SELECT_PARAM  PmsParam;   ///<簡易会話アプリ呼び出し用ワーク
+  void              *app_wk;          ///< 簡易会話モジュールワークの保存
+  GFL_PROCSYS       *procSys;         ///< サブプロセスワーク
+  PMS_SELECT_PARAM  PmsParam;         ///< 簡易会話アプリ呼び出し用ワーク
 
   TRCARD_CALL_PARAM *tcp;
 
@@ -131,7 +131,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   wk->tcp = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ) );
   *wk->tcp = *pp;
   wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
-  TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE);
+  TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible);
 
   return GFL_PROC_RES_FINISH;
 }
@@ -345,6 +345,7 @@ static int sub_SignWait(TR_CARD_SYS* wk)
   if(wk->PmsParam.out_pms_data!=NULL){
     wk->tcp->TrCardData->Pms = *wk->PmsParam.out_pms_data;
   }
+
 /*
   //サインデータを呼び出しテンポラリに書き戻し
   {
@@ -368,7 +369,7 @@ static int sub_SignWait(TR_CARD_SYS* wk)
  * @param   isSendData    
  */
 //=============================================================================================
-void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData )
+void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData, BOOL edit )
 {
   u8 i,flag;
   TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(GAMEDATA_GetSaveControlWork(gameData));
@@ -426,7 +427,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   }
   else
   {
-    cardData->UnionTrNo = UNION_TR_NONE;
+    cardData->UnionTrNo = MyStatus_GetTrainerView( mystatus );
     cardData->TimeUpdate = TRUE;
     cardData->PlayTime = SaveData_GetPlayTime( SaveControl_GetPointer() );
   }
@@ -482,9 +483,14 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   //サインデータの取得
   //サインデータの有効/無効フラグを取得(金銀ローカルでのみ有効)
   cardData->MySignValid = TRCSave_GetSigned(trc_ptr);
+
   //サインデータをセーブデータからコピー
   MI_CpuCopy8(TRCSave_GetSignDataPtr(trc_ptr),
       cardData->SignRawData, SIGN_SIZE_X*SIGN_SIZE_Y*8 );
+
+  // 編集可能フラグの格納
+  cardData->EditPossible = edit;
+
 }
 
 //=============================================================================================
@@ -493,18 +499,20 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
  *
  * @param   gameData    
  * @param   heapId    
+ * @param   edit      編集可能か(TRUE:OK FALSE:NG)
  *
  * @retval  TRCARD_CALL_PARAM*    
  */
 //=============================================================================================
-TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_SelfData( GAMEDATA *gameData , HEAPID heapId )
+TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_SelfData( GAMEDATA *gameData , HEAPID heapId, BOOL edit )
 {
   TRCARD_CALL_PARAM* callParam;
-  callParam = GFL_HEAP_AllocMemory( heapId , sizeof( TRCARD_CALL_PARAM ) );
+  callParam = GFL_HEAP_AllocClearMemory( heapId , sizeof( TRCARD_CALL_PARAM ) );
   GFL_STD_MemClear( callParam, sizeof(TRCARD_CALL_PARAM) );
-  callParam->TrCardData = NULL;
-  callParam->gameData = gameData;
-  callParam->value = 0;
+  callParam->TrCardData    = NULL;
+  callParam->gameData      = gameData;
+  callParam->value         = 0;
+  callParam->edit_possible = edit;
   
   return callParam;
 }
@@ -524,10 +532,12 @@ TRCARD_CALL_PARAM*  TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , v
 {
   TRCARD_CALL_PARAM* callParam;
   
-  callParam = GFL_HEAP_AllocMemory( heapId , sizeof( TRCARD_CALL_PARAM ) );
+  callParam = GFL_HEAP_AllocClearMemory( heapId , sizeof( TRCARD_CALL_PARAM ) );
   callParam->TrCardData = pCardData;
   callParam->gameData = gameData;
   callParam->value = 0;
+  callParam->TrCardData->EditPossible = FALSE;   // 必ず編集不可能
+  callParam->TrCardData->OtherTrCard  = TRUE;
 
   return callParam;
 }

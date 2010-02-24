@@ -39,7 +39,9 @@ typedef struct TR_CARD_DATA_tag
   u8 MySignValid:1; //サインデータ有効/無効フラグ
   u8 SignAnimeOn:1; // サインデータはアニメしているか？（0:してない　1:してる）
   u8 SignDisenable:1; // サインを書けなくする？（0:サインは書ける 1:書け無くする ）
-  u8 Padding:3;
+  u8 EditPossible:1;  // 編集可能か？（TRUE:OK　FALSE:NG)
+  u8 OtherTrCard:1;   // 他人のカードを見ている（TRUE:他人のカード FALSE：自分のカード)
+  u8 Padding:1;
   u8 UnionTrNo;     //ユニオントレーナーナンバー（0～15）指定無しのときはUNION_TR_NONE(0xff)
 
   u16 BadgeFlag;    //バッジ入手フラグ(16bit)
@@ -79,21 +81,22 @@ typedef struct TR_CARD_DATA_tag
 }TR_CARD_DATA;
 
 typedef struct TRCARD_CALL_PARAM_tag{
-  TR_CARD_DATA    *TrCardData;
-  GAMEDATA   *gameData;
-  int         value;    ///<リターン値
+  TR_CARD_DATA  *TrCardData;    ///< トレーナーカードデータが入っている場合のポインタ(通信中など）
+  GAMEDATA      *gameData;      ///< ゲームデータアクセス用ポインタ
+  BOOL          edit_possible;  ///< 編集可能か？（TRUE:可能・FALSE：不可能）
+  int           value;          ///< リターン値
 }TRCARD_CALL_PARAM;
 
 FS_EXTERN_OVERLAY(trainercard);
 #define TRCARD_OVERLAY_ID (FS_OVERLAY_ID(trainercard))
 
 //データの取得
-extern void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData );
+extern void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData, BOOL edit );
 
 
 //通信用と自分用のCallParam作成
-TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_SelfData( GAMEDATA *gameData , HEAPID heapId );
-TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , void* pCardData , HEAPID heapId );
+extern TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_SelfData( GAMEDATA *gameData , HEAPID heapId, BOOL edit );
+extern TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , void* pCardData , HEAPID heapId );
 
 extern const GFL_PROC_DATA TrCardSysProcData;
 //初期化が違う通信用Procデータ

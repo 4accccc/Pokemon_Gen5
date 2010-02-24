@@ -438,10 +438,10 @@ int UnionOneself_Update(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork)
 /**
  * 次のUNION_STATUSをセットする
  *
- * @param   unisys		    
- * @param   req_status		UNION_STATUS_???
+ * @param   unisys        
+ * @param   req_status    UNION_STATUS_???
  *
- * @retval  BOOL		TRUE：成功
+ * @retval  BOOL    TRUE：成功
  */
 //==================================================================
 BOOL UnionOneself_ReqStatus(UNION_SYSTEM_PTR unisys, int req_status)
@@ -455,8 +455,8 @@ BOOL UnionOneself_ReqStatus(UNION_SYSTEM_PTR unisys, int req_status)
 //--------------------------------------------------------------
 /**
  * メニューIndexからバトルレギュレーション番号を取得する
- * @param   play_category		
- * @retval  int		レギュレーションNo
+ * @param   play_category   
+ * @retval  int   レギュレーションNo
  */
 //--------------------------------------------------------------
 static int Union_GetPlayCategory_to_RegulationNo(u32 play_category)
@@ -501,9 +501,9 @@ static int Union_GetPlayCategory_to_RegulationNo(u32 play_category)
 //--------------------------------------------------------------
 /**
  * play_categoryからシューターの有無を取得する
- * @param   play_category		
- * @retval  int		TRUE:シューターあり
- * @retval  int		FALSE:シューター無し
+ * @param   play_category   
+ * @retval  int   TRUE:シューターあり
+ * @retval  int   FALSE:シューター無し
  */
 //--------------------------------------------------------------
 static BOOL Union_GetPlayCategory_to_Shooter(u32 play_category)
@@ -528,9 +528,9 @@ static BOOL Union_GetPlayCategory_to_Shooter(u32 play_category)
 /**
  * プレイカテゴリーが戦闘のものかチェックする
  *
- * @param   play_category		
+ * @param   play_category   
  *
- * @retval  BOOL		TRUE:戦闘　FALSE:戦闘以外
+ * @retval  BOOL    TRUE:戦闘　FALSE:戦闘以外
  */
 //--------------------------------------------------------------
 static BOOL Union_CheckPlayCategoryBattle(u32 play_category)
@@ -546,9 +546,9 @@ static BOOL Union_CheckPlayCategoryBattle(u32 play_category)
 /**
  * バトルボックスのPOKEPARTYをAllocして作成します
  *
- * @param   unisys		
+ * @param   unisys    
  *
- * @retval  POKEPARTY *		AllocしたPOKEPARTY (バトルボックスが無い場合はNULL)
+ * @retval  POKEPARTY *   AllocしたPOKEPARTY (バトルボックスが無い場合はNULL)
  */
 //--------------------------------------------------------------
 static POKEPARTY * _BBox_PokePartyAlloc(UNION_SYSTEM_PTR unisys)
@@ -566,7 +566,7 @@ static POKEPARTY * _BBox_PokePartyAlloc(UNION_SYSTEM_PTR unisys)
 //--------------------------------------------------------------
 /**
  * バトルボックスのPOKEPARTYをFreeします
- * @param   party		
+ * @param   party   
  */
 //--------------------------------------------------------------
 static void _BBox_PokePartyFree(POKEPARTY *party)
@@ -579,7 +579,7 @@ static void _BBox_PokePartyFree(POKEPARTY *party)
 /**
  * unisys->alloc.regulationにplay_categoryに対応したレギュレーションデータをロードします
  *
- * @param   play_category		
+ * @param   play_category   
  */
 //--------------------------------------------------------------
 static void _Load_PlayCategory_to_Regulation(UNION_SYSTEM_PTR unisys, u32 play_category)
@@ -596,10 +596,10 @@ static void _Load_PlayCategory_to_Regulation(UNION_SYSTEM_PTR unisys, u32 play_c
 /**
  * 手持ちポケモンのレギュレーションチェック
  *
- * @param   unisys		
- * @param   fail_bit		
+ * @param   unisys    
+ * @param   fail_bit    
  *
- * @retval  POKE_REG_RETURN_ENUM		
+ * @retval  POKE_REG_RETURN_ENUM    
  *
  * unisys->alloc.regulationにレギュレーションデータがロードされている必要があります
  */
@@ -618,10 +618,10 @@ static POKE_REG_RETURN_ENUM _CheckRegulation_Temoti(UNION_SYSTEM_PTR unisys, u32
 /**
  * バトルボックスのレギュレーションチェック
  *
- * @param   unisys		
- * @param   fail_bit		
+ * @param   unisys    
+ * @param   fail_bit    
  *
- * @retval  POKE_REG_RETURN_ENUM		
+ * @retval  POKE_REG_RETURN_ENUM    
  *
  * unisys->alloc.regulationにレギュレーションデータがロードされている必要があります
  */
@@ -649,12 +649,12 @@ static POKE_REG_RETURN_ENUM _CheckRegulation_BBox(UNION_SYSTEM_PTR unisys, u32 *
 /**
  * 選択メニューが戦闘だった場合、参加出来るかレギュレーションチェック
  *
- * @param   unisys		
- * @param   menu_index		
+ * @param   unisys    
+ * @param   menu_index    
  * @param   temoti_fail_bit      手持ちNGbit代入先
  * @param   bbox_fail_bit        バトルボックスNGbit代入先
  *
- * @retval  BOOL		TRUE:どちらか片方だけでも参加OK　FALSE:両方とも参加NG
+ * @retval  BOOL    TRUE:どちらか片方だけでも参加OK　FALSE:両方とも参加NG
  */
 //--------------------------------------------------------------
 static BOOL Union_CheckEntryBattleRegulation(UNION_SYSTEM_PTR unisys, u32 menu_index,u32 *temoti_fail_bit, u32 *bbox_fail_bit)
@@ -684,8 +684,8 @@ static BOOL Union_CheckEntryBattleRegulation(UNION_SYSTEM_PTR unisys, u32 menu_i
 /**
  * 自機にポーズをかける
  *
- * @param   fieldWork		
- * @param   pause_flag		TRUE:ポーズ　FALSE:ポーズ解除
+ * @param   fieldWork   
+ * @param   pause_flag    TRUE:ポーズ　FALSE:ポーズ解除
  */
 //--------------------------------------------------------------
 static void _PlayerMinePause(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, int pause_flag)
@@ -702,11 +702,11 @@ static void _PlayerMinePause(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, 
 /**
  * 通常状態(何もしていない)：初期化
  *
- * @param   unisys		
- * @param   situ		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -727,11 +727,11 @@ static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *s
 /**
  * 通常状態(何もしていない)：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -822,11 +822,11 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
 /**
  * ユニオンルーム入室：更新
  *
- * @param   unisys		
- * @param   situ		  
- * @param   seq		    
+ * @param   unisys    
+ * @param   situ      
+ * @param   seq       
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_Enter(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -865,11 +865,11 @@ static BOOL OneselfSeq_Enter(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, 
 /**
  * ユニオンルーム退出：更新
  *
- * @param   unisys		
- * @param   situ		  
- * @param   seq		    
+ * @param   unisys    
+ * @param   situ      
+ * @param   seq       
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -888,11 +888,11 @@ static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, 
 /**
  * ユニオンルーム退出：更新
  *
- * @param   unisys		
- * @param   situ		  
- * @param   seq		    
+ * @param   unisys    
+ * @param   situ      
+ * @param   seq       
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -900,10 +900,10 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   switch(*seq){
   case 0:
     {
-    	PMS_SELECT_PARAM	*initParam;
-    	PMS_DATA  pmsDat;
+      PMS_SELECT_PARAM  *initParam;
+      PMS_DATA  pmsDat;
 
-    	initParam             = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof( PMS_SELECT_PARAM ) );
+      initParam             = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof( PMS_SELECT_PARAM ) );
       initParam->save_ctrl  = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
 
       unisys->parent_work = initParam;
@@ -919,14 +919,14 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     break;
   case 2:
     {
-     	PMS_SELECT_PARAM	*initParam = unisys->parent_work;
-    	const PMS_DATA* pmsdata = initParam->out_pms_data;
-     	
-    	// 簡易会話を更新したか？
-    	if( initParam->out_cancel_flag == FALSE ){
-      	// ビーコンデータの簡易会話を書き換える & 通信データに反映
+      PMS_SELECT_PARAM  *initParam = unisys->parent_work;
+      const PMS_DATA* pmsdata = initParam->out_pms_data;
+      
+      // 簡易会話を更新したか？
+      if( initParam->out_cancel_flag == FALSE ){
+        // ビーコンデータの簡易会話を書き換える & 通信データに反映
         UnionChat_SetMyPmsData(unisys, pmsdata);
-  	  }
+      }
     }
     GFL_HEAP_FreeMemory(unisys->parent_work);
     unisys->parent_work = NULL;
@@ -940,12 +940,12 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 /**
  * 接続リクエスト：初期化
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectReqInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -958,11 +958,11 @@ static BOOL OneselfSeq_ConnectReqInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 /**
  * 接続リクエスト実行：更新
  *
- * @param   unisys		
- * @param   situ		  
- * @param   seq		    
+ * @param   unisys    
+ * @param   situ      
+ * @param   seq       
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1023,12 +1023,12 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
 /**
  * 接続リクエスト：終了
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1041,12 +1041,12 @@ static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 /**
  * 接続リクエストを受けたので接続を試みる：初期化
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1060,12 +1060,12 @@ static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 /**
  * 接続リクエストを受けたので接続を試みる：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1123,12 +1123,12 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
 /**
  * 接続リクエストを受けたので接続を試みる：終了
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1141,12 +1141,12 @@ static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 /**
  * 接続確立後の会話（親）：初期化
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1171,8 +1171,8 @@ static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     break;
   case 1:
     OS_TPrintf("会話開始前の同期待ち・・・親\n");
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION) == TRUE){
       return TRUE;
     }
     break;
@@ -1184,12 +1184,12 @@ static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 /**
  * 接続確立後の会話（親）：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1296,12 +1296,12 @@ static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 /**
  * 接続確立後の会話（親）：終了
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkExit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1314,19 +1314,19 @@ static BOOL OneselfSeq_TalkExit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 /**
  * 接続確立後、選択したメニュー項目の送信と子の返事待ち（親）：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   switch(*seq){
   case 0: //相手に選択したメニューを通知
-		if(UnionSend_MainMenuListResult(situ->mycomm.mainmenu_select) == TRUE){
+    if(UnionSend_MainMenuListResult(situ->mycomm.mainmenu_select) == TRUE){
       OS_TPrintf("リスト結果送信成功 : %d\n", situ->mycomm.mainmenu_select);
       if(situ->mycomm.mainmenu_select == UNION_MENU_SELECT_CANCEL){
         UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
@@ -1371,12 +1371,12 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
 /**
  * 接続確立後の会話（子）：初期化
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1395,8 +1395,8 @@ static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     break;
   case 1:
     OS_TPrintf("会話開始前の同期待ち・・・子\n");
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION) == TRUE){
       return TRUE;
     }
   }
@@ -1407,12 +1407,12 @@ static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 /**
  * 接続確立後の会話（子）：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1609,12 +1609,12 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
 /**
  * 接続確立後の会話（子）：終了
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkExit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1626,12 +1626,12 @@ static BOOL OneselfSeq_TalkExit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 /**
  * 対戦の会話（親）：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -1763,11 +1763,11 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
 /**
  * 既に遊んでいる親に話しかけた：更新
  *
- * @param   unisys		
- * @param   situ		  
- * @param   seq		    
+ * @param   unisys    
+ * @param   situ      
+ * @param   seq       
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2046,11 +2046,11 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
 /**
  * 既に遊んでいる子に話しかけた：更新
  *
- * @param   unisys		
- * @param   situ		  
- * @param   seq		    
+ * @param   unisys    
+ * @param   situ      
+ * @param   seq       
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2128,12 +2128,12 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
 /**
  * トレーナーカード呼び出し：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2146,7 +2146,7 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
       = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
     situ->mycomm.trcard.target_card 
       = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
-    TRAINERCARD_GetSelfData(situ->mycomm.trcard.my_card, unisys->uniparent->game_data, TRUE);
+    TRAINERCARD_GetSelfData(situ->mycomm.trcard.my_card, unisys->uniparent->game_data, TRUE, FALSE);
     GFL_STD_MemCopy(  //一応何かの事故で受け取れなかった時のケアの為、自分のをコピーしておく
       situ->mycomm.trcard.my_card, situ->mycomm.trcard.target_card, sizeof(TR_CARD_DATA));
     
@@ -2162,8 +2162,8 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     (*seq)++;
     break;
   case 1:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード前の同期取り成功\n");
       (*seq)++;
     }
@@ -2191,8 +2191,8 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     (*seq)++;
     break;
   case 5:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_BEFORE, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード画面切り替え前の同期取り成功\n");
       (*seq)++;
     }
@@ -2218,8 +2218,8 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     if(UnionMsg_TalkStream_Check(unisys) == FALSE){
       break;
     }
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード終了後の同期取り成功\n");
     
     #if 0//トレーナーカードのParentWorkはトレーナーカードのProc内で解放されるのでここでは解放しない
@@ -2249,12 +2249,12 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 /**
  * ポケモン交換：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2285,8 +2285,8 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
     }
     break;
   case 4:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("ポケモン交換前の同期取り成功\n");
       (*seq)++;
     }
@@ -2330,8 +2330,8 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
     if(UnionMsg_TalkStream_Check(unisys) == FALSE){
       break;
     }
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_AFTER, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_AFTER, WB_NET_UNION) == TRUE){
       OS_TPrintf("ポケモン交換画面終了後の同期取り成功\n");
     
       if(GFL_NET_IsParentMachine() == TRUE){
@@ -2352,12 +2352,12 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
 /**
  * 乱入処理：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2457,12 +2457,12 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
 /**
  * 切断処理：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2479,8 +2479,8 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     (*seq)++;
     break;
   case 1:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN, WB_NET_UNION) == TRUE){
       OS_TPrintf("切断前の同期取り：成功\n");
       (*seq)++;
     }
@@ -2505,12 +2505,12 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 /**
  * ミニゲーム遷移：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2543,8 +2543,8 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     (*seq)++;
     break;
   case _SEQ_TIMING_WAIT:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_PROC_BEFORE, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("ミニゲーム遷移前の同期取り成功\n");
       (*seq)++;
     }
@@ -2639,12 +2639,12 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 /**
  * コロシアム遷移：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2673,8 +2673,8 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     (*seq)++;
     break;
   case 3:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("コロシアム遷移前の同期取り成功\n");
       (*seq)++;
     }
@@ -2706,12 +2706,12 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 /**
  * マルチ：コロシアム遷移：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2744,8 +2744,8 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     break;
   case 3:
     if(situ->mycomm.intrude == FALSE){  //乱入の場合は同期取りなし
-  		if(GFL_NET_HANDLE_IsTimeSync(
-  		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION) == TRUE){
+      if(GFL_NET_HANDLE_IsTimeSync(
+          GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION) == TRUE){
         OS_TPrintf("コロシアム遷移前の同期取り成功\n");
         (*seq)++;
       }
@@ -2786,12 +2786,12 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
 /**
  * コロシアム、メンバー集合待ち：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2853,8 +2853,8 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     break;
   case 1:
     if(situ->mycomm.intrude == FALSE){
-  		if(GFL_NET_HANDLE_IsTimeSync(
-  		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP, WB_NET_UNION) == TRUE){
+      if(GFL_NET_HANDLE_IsTimeSync(
+          GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP, WB_NET_UNION) == TRUE){
         (*seq)++;
       }
     }
@@ -2966,12 +2966,12 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
 /**
  * コロシアム、最初のデータ共有：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -2989,8 +2989,8 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
     (*seq)++;
     break;
   case 1:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER, WB_NET_UNION) == TRUE){
       OS_TPrintf("最初のデータ共有前の同期取り成功\n");
       (*seq)++;
     }
@@ -3004,8 +3004,8 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
     (*seq)++;
     break;
   case 3:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER, WB_NET_UNION) == TRUE){
       OS_TPrintf("通信テーブルをAddしたので同期取り成功\n");
       (*seq)++;
     }
@@ -3038,8 +3038,8 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
     (*seq)++;
     break;
   case 7:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_CARD_BEFORE, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_CARD_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード交換前の同期取り成功\n");
       (*seq)++;
     }
@@ -3070,12 +3070,12 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
 /**
  * コロシアム、フリー移動：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -3090,12 +3090,12 @@ static BOOL OneselfSeq_ColosseumInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
 /**
  * コロシアム、フリー移動：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -3150,12 +3150,12 @@ static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 /**
  * コロシアム、立ち位置にたった：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumStandPosition(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -3231,12 +3231,12 @@ static BOOL OneselfSeq_ColosseumStandPosition(UNION_SYSTEM_PTR unisys, UNION_MY_
 /**
  * コロシアム、立ち位置から後退する：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -3296,12 +3296,12 @@ static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_S
 /**
  * コロシアム、手持ち、バトルボックス選択：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -3479,12 +3479,12 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
 /**
  * コロシアム、ポケモンリスト呼び出し前の全員待ち：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumPokelistReady(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -3537,8 +3537,8 @@ static BOOL OneselfSeq_ColosseumPokelistReady(UNION_SYSTEM_PTR unisys, UNION_MY_
 /**
  * レギュレーションに沿ってPOKEPARTYのレベルを補正
  *
- * @param   regulation		
- * @param   party		
+ * @param   regulation    
+ * @param   party   
  */
 //--------------------------------------------------------------
 static void _PokeParty_RegulationLevelRevise(REGULATION* regulation, POKEPARTY *party)
@@ -3578,12 +3578,12 @@ static void _PokeParty_RegulationLevelRevise(REGULATION* regulation, POKEPARTY *
 /**
  * コロシアム、ポケモンリスト呼び出し前の全員データ送受信：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -3626,8 +3626,8 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
     (*seq)++;
     break;
   case 2:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_LIST_POKEPARTY_BEFORE, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_LIST_POKEPARTY_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("リスト用のPOKEPARTY送受信前の同期取り成功\n");
       (*seq)++;
     }
@@ -3651,8 +3651,8 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
     (*seq)++;
     break;
   case 6:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_STANDINGPOS_BEFORE, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_STANDINGPOS_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("立ち位置送信前の同期成功\n");
       (*seq)++;
     }
@@ -3684,12 +3684,12 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
 /**
  * コロシアム、ポケモンリスト呼び出し：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -3749,8 +3749,8 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     }
     break;
   case 2:
-		if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 
-		    UNION_TIMING_COLOSSEUM_POKELIST_BEFORE, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 
+        UNION_TIMING_COLOSSEUM_POKELIST_BEFORE, WB_NET_UNION) == TRUE){
       UnionMsg_AllDel(unisys);
       (*seq)++;
     }
@@ -3866,12 +3866,12 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 /**
  * コロシアム、全員が戦闘の準備が完了するのを待つ：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumAllBattleReadyWait(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -3903,12 +3903,12 @@ static BOOL OneselfSeq_ColosseumAllBattleReadyWait(UNION_SYSTEM_PTR unisys, UNIO
 /**
  * コロシアム、戦闘画面呼び出し：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -3930,8 +3930,8 @@ static BOOL OneselfSeq_ColosseumBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     }
     break;
   case 1:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_POKEPARTY_BEFORE, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_POKEPARTY_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("バトル用のPOKEPARTY送受信前の同期取り成功\n");
       (*seq)++;
     }
@@ -3981,12 +3981,12 @@ static BOOL OneselfSeq_ColosseumBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 /**
  * コロシアム退出処理：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
@@ -4044,8 +4044,8 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     (*seq)++;
     break;
   case LEAVE_SEQ_TIMING_WAIT:
-		if(GFL_NET_HANDLE_IsTimeSync(
-		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_LEAVE, WB_NET_UNION) == TRUE){
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_LEAVE, WB_NET_UNION) == TRUE){
       OS_TPrintf("コロシアム切断前の同期取り：成功\n");
       (*seq)++;
     }
@@ -4090,12 +4090,12 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
 /**
  * コロシアムでのトレーナーカード呼び出し：更新
  *
- * @param   unisys		
- * @param   situ		
- * @param   fieldWork		
- * @param   seq		
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)

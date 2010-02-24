@@ -203,23 +203,23 @@ enum{
 static const int UniTrTable[UNION_TR_MAX] =
 {
   //男
-  NARC_trc_union_trdp_schoolb256_NCGR,
-  NARC_trc_union_trdp_mushi256_NCGR,
   NARC_trc_union_trdp_elitem256_NCGR,
-  NARC_trc_union_trdp_heads256_NCGR,
-  NARC_trc_union_trdp_iseki256_NCGR,
   NARC_trc_union_trdp_karate256_NCGR,
-  NARC_trc_union_trdp_prince256_NCGR,
   NARC_trc_union_trdp_espm256_NCGR,
+  NARC_trc_union_trdp_prince256_NCGR,
+  NARC_trc_union_trdp_mushi256_NCGR,
+  NARC_trc_union_trdp_iseki256_NCGR,
+  NARC_trc_union_trdp_heads256_NCGR,
+  NARC_trc_union_trdp_schoolb256_NCGR,
   //女
   NARC_trc_union_trdp_mini256_NCGR,
-  NARC_trc_union_trdp_battleg256_NCGR,
-  NARC_trc_union_trdp_sister256_NCGR,
   NARC_trc_union_trdp_elitew256_NCGR,
+  NARC_trc_union_trdp_princess256_NCGR,
+  NARC_trc_union_trdp_battleg256_NCGR,
   NARC_trc_union_trdp_idol256_NCGR,
   NARC_trc_union_trdp_madam256_NCGR,
   NARC_trc_union_trdp_cowgirl256_NCGR,
-  NARC_trc_union_trdp_princess256_NCGR,
+  NARC_trc_union_trdp_sister256_NCGR,
 };
 
 static const GFL_DISP_VRAM vramBank = {
@@ -508,6 +508,32 @@ static void debug_scale( TR_CARD_WORK *wk )
 }
 #endif
 
+#define TRAINER_TYPE_GENDER_MAX   ( 8 )
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 男は(0-7) 女は(8-15)間のトレーナータイプを足し込む
+ *
+ * @param   trCard    
+ */
+//----------------------------------------------------------------------------------
+static void _add_UnionTrNo( TR_CARD_DATA *trCard )
+{
+  if(++trCard->UnionTrNo > (TRAINER_TYPE_GENDER_MAX*(trCard->TrSex+1))-1){
+    trCard->UnionTrNo = TRAINER_TYPE_GENDER_MAX*trCard->TrSex;
+  }
+
+}
+
+static void _scruch_sound_func( TR_CARD_WORK *wk )
+{
+#if 0
+      if (wk->TrCardData->BrushValid){
+        ClearScruchSnd(&wk->ScruchSnd);
+      }
+#endif
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * プロセス関数：メイン
@@ -534,11 +560,7 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       int req;
       req = CheckInput(wk);
 
-#if 0
-      if (wk->TrCardData->BrushValid){
-        ClearScruchSnd(&wk->ScruchSnd);
-      }
-#endif
+      _scruch_sound_func(wk);
       if (req == TRC_KEY_REQ_REV_BUTTON){
         //カードひっくり返す
         wk->sub_seq = 0;  //サブシーケンス初期化
@@ -562,16 +584,18 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
                 WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
         *seq = SEQ_OUT;
       }else if(req==TRC_KEY_REQ_TRAINER_TYPE){
-        if(++wk->trainer_type>7){
-          wk->trainer_type = 0;
+        if(wk->tcp->TrCardData->EditPossible){
+          _add_UnionTrNo( wk->TrCardData );
+          TRCBmp_PrintTrainerType( wk, wk->TrCardData->UnionTrNo, 1 );
         }
-        TRCBmp_PrintTrainerType( wk, wk->trainer_type, 1 );
         
       }else if(req==TRC_KEY_REQ_PERSONALITY){
-        if(++wk->TrCardData->Personality>24){
-          wk->TrCardData->Personality = 0;
+        if(wk->tcp->TrCardData->EditPossible){
+          if(++wk->TrCardData->Personality>24){
+            wk->TrCardData->Personality = 0;
+          }
+          TRCBmp_PrintPersonality( wk, wk->TrCardData->Personality, 1 );
         }
-        TRCBmp_PrintPersonality( wk, wk->TrCardData->Personality, 1 );
       }
       
       UpdatePlayTime(wk, wk->TrCardData->TimeUpdate);
@@ -1039,19 +1063,16 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
   SetCasePalette(wk,wk->TrCardData->Version);
 
   //TRAINER
-  if (wk->TrCardData->UnionTrNo == UNION_TR_NONE){
-    {
-      wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRAINERCARD, NARC_trainer_case_card_trainer_NCGR,
+  if (wk->TrCardData->OtherTrCard==FALSE){
+    wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRAINERCARD, NARC_trainer_case_card_trainer_NCGR,
                     FALSE, &wk->TrCharData, wk->heapId);
-    }
-
     if (wk->TrCardData->TrSex == PM_MALE){
       //男
-      wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen(ARCID_TRAINERCARD, NARC_trainer_case_card_trainer01_NSCR,
+      wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen( ARCID_TRAINERCARD, NARC_trainer_case_card_trainer01_NSCR,
                           0, &wk->ScrnData, wk->heapId);
     }else{
       //女
-      wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen(ARCID_TRAINERCARD, NARC_trainer_case_card_trainer02_NSCR,
+      wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen( ARCID_TRAINERCARD, NARC_trainer_case_card_trainer02_NSCR,
                           0, &wk->ScrnData, wk->heapId);
     }
   }else{
@@ -1060,7 +1081,7 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
       wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRC_UNION, UniTrTable[wk->TrCardData->UnionTrNo],
                     FALSE, &wk->TrCharData, wk->heapId);
 
-      wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen(ARCID_TRC_UNION, NARC_trc_union_card_test256_NSCR,
+      wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen( ARCID_TRC_UNION, NARC_trc_union_card_test256_NSCR,
                           0, &wk->ScrnData, wk->heapId);
       //トレーナーパレット変更
       SetUniTrainerPalette(wk,wk->TrCardData->UnionTrNo);
@@ -1868,7 +1889,7 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief 
+ * @brief サイン面にタッチしている場合は線を描く
  *
  * @param   wk    
  */
@@ -1909,7 +1930,7 @@ static void normal_sign_func( TR_CARD_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief 
+ * @brief サインを拡大して描く
  *
  * @param   wk    
  */
