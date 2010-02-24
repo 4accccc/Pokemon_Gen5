@@ -376,11 +376,12 @@ EVENT_START	ev_bg_c08gym0101_statue_01
 		ENDIF
 	
 	//★Whiteの場合
+	ELSE
 
 		//ジムバッジフラグによって分岐
 		IF $SCWK_TEMP0 == 0 THEN
 			//バッジ入手前なら
-			_SYSWIN_MSG( msg_c02gym0101_statue_w_01 , POS_DOWN )
+			_PLAINWIN_MSG_DOWN( msg_c02gym0101_statue_w_01 )
 
 		ELSE
 			//R10でのライバル戦後にライバルの名前追記
