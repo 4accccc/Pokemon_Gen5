@@ -1144,13 +1144,13 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 			wk->listScroll--;
 			DrawListItemMain( wk, wk->listScroll, GetItemFramePosY(wk,-1) );
 			wk->putFrameMain = GetNextFrameNum( wk->putFrameMain, wk->putFrameMaxMain, -1 );
-			DrawListItemSub( wk, wk->listScroll-wk->putFrameMaxSub, GetItemFramePosY(wk,-1) );
+			DrawListItemSub( wk, wk->listScroll-wk->putFrameMaxSub, GetItemFramePosY(wk,-1)+wk->subFramePy );
 			wk->putFrameSub = GetNextFrameNum( wk->putFrameSub, wk->putFrameMaxSub, -1 );
 		}else{
 			wk->listScroll++;
 			DrawListItemMain( wk, wk->listScroll+(wk->putFrameMaxMain-1), GetItemFramePosY(wk,1) );
 			wk->putFrameMain = GetNextFrameNum( wk->putFrameMain, wk->putFrameMaxMain, 1 );
-			DrawListItemSub( wk, wk->listScroll-1, GetItemFramePosY(wk,1) );
+			DrawListItemSub( wk, wk->listScroll-1, GetItemFramePosY(wk,1)+wk->subFramePy );
 			wk->putFrameSub = GetNextFrameNum( wk->putFrameSub, wk->putFrameMaxSub, 1 );
 		}
 		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
@@ -1657,7 +1657,7 @@ static void DrawListItemMain( FRAMELIST_WORK * wk, s32 pos, s8 py )
 static void DrawListItemSub( FRAMELIST_WORK * wk, s32 pos, s8 py )
 {
 	if( wk->hed.subBG != FRAMELIST_SUB_BG_NONE ){
-		py += wk->subFramePy;
+//		py += wk->subFramePy;
 		if( pos >= 0 ){
 			u32	subFrame = wk->putFrameSub + wk->printSubPos;
 			WriteItemFrame( wk, pos, subFrame );
