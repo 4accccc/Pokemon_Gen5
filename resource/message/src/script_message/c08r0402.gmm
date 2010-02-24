@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-02-22T23:37:50"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T22:30:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="91" top="233" right="796" bottom="853" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -485,7 +485,7 @@
 きかいを　つくったんだ▼
 ぼくは　かこと　げんざいを　つなぐ
 きかいを　つくっている▽
-…けど　でんきが　たりないよ▼</language>
+……だけど　でんきが　たりないよ▼</language>
 		<language name="JPN_KANJI" width="256">ぼくは　かこに　もどりたい！
 やりなおしたい　ことばかりだ！▼
 ぼくのちち　バックは
@@ -493,7 +493,7 @@
 きかいを　つくったんだ▼
 ぼくは　かこと　げんざいを　つなぐ
 きかいを　つくっている▽
-…けど　でんきが　たりないよ▼</language>
+……だけど　でんきが　たりないよ▼</language>
 	</row>
 
 	<row id="msg_c08_man1_02b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -632,13 +632,13 @@
 		<language name="JPN" width="256">むかしのことを　こうかいするより
 かこから　つながる▽
 いまを　せいいっぱい　いきるのが▽
-だいじって……ことか▼
+だいじ……　って　ことか▼
 よし！
 まえむきに　がんばろう！</language>
 		<language name="JPN_KANJI" width="256">むかしのことを　こうかいするより
 かこから　つながる▽
 いまを　せいいっぱい　いきるのが▽
-だいじって……ことか▼
+だいじ……　って　ことか▼
 よし！
 まえむきに　がんばろう！</language>
 	</row>

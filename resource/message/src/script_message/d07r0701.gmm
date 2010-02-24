@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T21:13:00"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T22:20:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1644" top="328" right="2349" bottom="949" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -298,8 +298,8 @@
 		<attribute name="キャラ指定">凍結した岩</attribute>
 		<language name="JPN" width="256">こおりで　おおわれた　いわ
 さわると　じぶんまで　こおりそう</language>
-		<language name="JPN_KANJI" width="256">こおりで　おおわれた　いわ
-さわると　じぶんまで　こおりそう</language>
+		<language name="JPN_KANJI" width="256">氷で　覆われた　岩
+触ると　自分まで　凍りそう</language>
 	</row>
 
 	<flowchart-group-list>
