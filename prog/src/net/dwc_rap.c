@@ -1568,6 +1568,17 @@ int mydwc_HandleError(void)
       break;
 
     case DWC_ETYPE_SHOW_ERROR:  // エラー表示が必要
+
+      if( -40000 >= errorCode && errorCode >= -41999 )
+      { 
+        DWC_GdbShutdown();           // 簡易データベースライブラリの終了
+      }
+      if( -43000 >= errorCode && errorCode >= -44999 )
+      { 
+        DWC_ScShutdown();     //SCライブラリの終了
+        DWC_GdbShutdown();
+      }
+
       DWC_ClearError();
       break;
 
