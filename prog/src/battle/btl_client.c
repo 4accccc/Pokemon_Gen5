@@ -3928,7 +3928,7 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
-      BTLV_EFFECT_BallThrow( vpos, args[5], args[1], args[2] );
+      BTLV_EFFECT_BallThrow( vpos, args[5], args[1], args[2], args[4] );
       (*seq)++;
     }
     break;

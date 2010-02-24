@@ -76,7 +76,7 @@ enum{
 //  BTLEFF_ANGRY,               //
   BTLEFF_NOROI,                 //‚Ì‚ë‚¢  30
   BTLEFF_AKUMU,                 //‚ ‚­‚Þ
-  BTLEFF_YADORIGI,              //‚â‚Ç‚è‚¬ 
+  BTLEFF_YADORIGI,              //‚â‚Ç‚è‚¬
   BTLEFF_SIMETUKERU,            //‚µ‚ß‚Â‚¯‚é
   BTLEFF_MAKITUKU,              //‚Ü‚«‚Â‚­
   BTLEFF_HONOONOUZU,            //‚Ù‚Ì‚¨‚Ì‚¤‚¸
@@ -149,7 +149,7 @@ extern  void              BTLV_EFFECT_DelGauge( int position );
 extern  void              BTLV_EFFECT_CalcGaugeHP( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeEXP( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeEXPLevelUp( int position, const BTL_POKEPARAM* bpp );
-extern  void              BTLV_EFFECT_BallThrow( int position, u16 item_no, u8 yure_cnt, BOOL f_success );
+extern  void              BTLV_EFFECT_BallThrow( int position, u16 item_no, u8 yure_cnt, BOOL f_success, BOOL f_critical );
 extern  BOOL              BTLV_EFFECT_CheckExecuteGauge( void );
 extern  void              BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off );
 extern  void              BTLV_EFFECT_SetGaugeStatus( PokeSick sick,  BtlvMcssPos pos );

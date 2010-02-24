@@ -501,7 +501,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
   case 16:
     if( BTLV_WaitMsg( core ) )
     {
-      BTLV_EFFECT_BallThrow( BTLV_MCSS_POS_BB, ITEM_MONSUTAABOORU, 3, TRUE );
+      BTLV_EFFECT_BallThrow( BTLV_MCSS_POS_BB, ITEM_MONSUTAABOORU, 3, TRUE, FALSE );
       (*seq)++;
     }
     break;
@@ -938,11 +938,8 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, int
   wk->plistData.heap = wk->heapID;
   wk->plistData.mode = param->bplMode;
   wk->plistData.end_flg = FALSE;
-  if( outMemberIndex >= 0 ){
-    wk->plistData.sel_poke = outMemberIndex;
-  }else{
-    wk->plistData.sel_poke = 0;
-  }
+  wk->plistData.sel_poke = (outMemberIndex >= 0)? outMemberIndex : 0;
+  wk->plistData.sel_pos_index = wk->plistData.sel_poke;
   wk->plistData.chg_waza = 0;
   wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
   wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );

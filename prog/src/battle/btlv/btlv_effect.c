@@ -107,7 +107,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
 /**
  * @brief システム初期化
  *
- * @param[in]	rule    戦闘ルール
+ * @param[in] rule    戦闘ルール
  * @param[in] bsp         戦闘セットアップパラメータ
  * @param[in] fontHandle  フォントハンドル
  * @param[in] heapID      ヒープID
@@ -135,14 +135,14 @@ void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* 
 
   bew->bmw  = BTLV_MCSS_Init( rule, bew->tcb_sys, heapID );
 
-  { 
+  {
     BATT_BG_TBL_ZONE_SPEC_TABLE*  bbtzst = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL,
                                                                   NARC_batt_bg_tbl_zone_spec_table_bin,
                                                                   bew->heapID );
     u8  season = 0;
 
     if( bbtzst[ bfs->bgType ].season )
-    { 
+    {
       season = bfs->season;
     }
     bew->bsw  = BTLV_STAGE_Init( rule, bbtzst[ bfs->bgType ].stage_file[ bfs->bgAttr ], season, heapID );
@@ -150,17 +150,17 @@ void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* 
 
     //ライト設定
     if( bbtzst[ bfs->bgType ].time_zone )
-    { 
-	    GFL_G3D_LIGHT light;
+    {
+      GFL_G3D_LIGHT light;
       FIELD_LIGHT_STATUS  fls;
-  
+
       FIELD_LIGHT_STATUS_Get( bfs->zoneID, bfs->hour, bfs->minute, bfs->weather, bfs->season, &fls, bew->heapID );
-  
+
       light.color = fls.light;
       light.vec.x = 0;
       light.vec.y = -FX32_ONE;
       light.vec.z = 0;
-	    GFL_G3D_SetSystemLight( 0, &light );
+      GFL_G3D_SetSystemLight( 0, &light );
     }
     GFL_HEAP_FreeMemory( bbtzst );
   }
@@ -395,9 +395,10 @@ void BTLV_EFFECT_Hinshi( BtlvMcssPos target )
  * @param   itemNum     投げたボールのアイテムナンバー
  * @param   yure_cnt    ボール揺れ回数（0～3）
  * @param   f_success   捕獲成功フラグ
+ * @param   f_critical  クリティカルフラグ
  */
 //=============================================================================================
-void BTLV_EFFECT_BallThrow( int vpos, u16 item_no, u8 yure_cnt, BOOL f_success )
+void BTLV_EFFECT_BallThrow( int vpos, u16 item_no, u8 yure_cnt, BOOL f_success, BOOL f_critical )
 {
   BTLV_EFFVM_PARAM  effvm_param;
 
@@ -765,11 +766,11 @@ void  BTLV_EFFECT_SetVanishFlag( int model, int flag )
  */
 //============================================================================================
 void  BTLV_EFFECT_SetRotateEffect( BtlRotateDir dir, int side )
-{ 
+{
   TCB_ROTATION *tr = GFL_HEAP_AllocMemory( bew->heapID, sizeof( TCB_ROTATION ) );
   GF_ASSERT( dir != BTL_ROTATEDIR_NONE )
   if( dir == BTL_ROTATEDIR_STAY )
-  { 
+  {
     return;
   }
   bew->tcb_execute_flag = 1;
@@ -804,7 +805,7 @@ int BTLV_EFFECT_GetTrainerIndex( int position )
  */
 //============================================================================================
 void  BTLV_EFFECT_CreateTimer( int game_time, int command_time )
-{ 
+{
   BTLV_TIMER_Create( bew->btw, game_time, command_time );
 }
 
@@ -819,7 +820,7 @@ void  BTLV_EFFECT_CreateTimer( int game_time, int command_time )
  */
 //============================================================================================
 void  BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE type, BOOL enable, BOOL init )
-{ 
+{
   BTLV_TIMER_SetDrawEnable( bew->btw, type, enable, init );
 }
 
@@ -832,7 +833,7 @@ void  BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE type, BOOL enable, BOOL init 
  */
 //============================================================================================
 BOOL  BTLV_EFFECT_IsZero( BTLV_TIMER_TYPE type )
-{ 
+{
   return BTLV_TIMER_IsZero( bew->btw, type );
 }
 
@@ -844,7 +845,7 @@ BOOL  BTLV_EFFECT_IsZero( BTLV_TIMER_TYPE type )
  */
 //============================================================================================
 BTLV_MCSS_VANISH_FLAG  BTLV_EFFECT_GetMcssVanishFlag( BtlvMcssPos position )
-{ 
+{
   return  BTLV_MCSS_GetVanishFlag( bew->bmw, position );
 }
 
@@ -857,7 +858,7 @@ BTLV_MCSS_VANISH_FLAG  BTLV_EFFECT_GetMcssVanishFlag( BtlvMcssPos position )
  */
 //============================================================================================
 void    BTLV_EFFECT_SetMcssVanishFlag( BtlvMcssPos position, BTLV_MCSS_VANISH_FLAG flag )
-{ 
+{
   BTLV_MCSS_SetVanishFlag( bew->bmw, position, flag );
 }
 
@@ -953,7 +954,7 @@ BTLV_BG_WORK *BTLV_EFFECT_GetBGWork( void )
  */
 //============================================================================================
 BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void )
-{ 
+{
   return bew->btw;
 }
 
@@ -965,7 +966,7 @@ BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void )
  */
 //============================================================================================
 BtlRule BTLV_EFFECT_GetBtlRule( void )
-{ 
+{
   return bew->rule;
 }
 
@@ -1024,19 +1025,19 @@ static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
  */
 //============================================================================================
 static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work )
-{ 
+{
   TCB_ROTATION *tr = ( TCB_ROTATION* )work;
 
-  switch( tr->seq_no ){ 
+  switch( tr->seq_no ){
   case 0:
     BTLV_STAGE_SetAnmReq( bew->bsw, tr->side, 0, ( ( tr->dir == 0 ) ? -FX32_ONE : FX32_ONE ), 100 );
-    BTLV_MCSS_SetRotation( bew->bmw, tr->side, tr->dir ); 
+    BTLV_MCSS_SetRotation( bew->bmw, tr->side, tr->dir );
     tr->seq_no++;
     break;
   case 1:
     if( ( BTLV_STAGE_CheckExecuteAnmReq( bew->bsw ) == FALSE ) &&
         ( BTLV_MCSS_CheckTCBExecuteAllPos( bew->bmw ) == FALSE ) )
-    { 
+    {
       bew->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( tr );
       GFL_TCB_DeleteTask( tcb );
