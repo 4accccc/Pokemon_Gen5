@@ -167,11 +167,9 @@ int ENCEFFNO_GetTrEncEffNo( const int inTrID, FIELDMAP_WORK *fieldmap )
     no = ENCEFFID_SAGE;
     return no;
   //ƒ`ƒƒƒ“ƒv
-/**
-  case TRTYPE_CHAMP:
+  case TRTYPE_CHAMPION:
     no = ENCEFFID_CHAMP;
     return no;
-*/    
   }
 
   //‚»‚êˆÈŠO
