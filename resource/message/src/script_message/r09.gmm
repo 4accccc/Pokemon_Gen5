@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T19:45:34"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T17:41:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="384" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -333,6 +333,14 @@
 とくせいが　異なることが　あります[BE:01:ページ切り替え（クリア）]
 捕まえた　ポケモンでも
 また　捕まえてみましょう！</language>
+	</row>
+
+	<row id="msg_r09_sign4_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">シリンダーブリッジ
+イッシュじまんの　てつどうきょう</language>
+		<language name="JPN_KANJI" width="256">シリンダーブリッジ
+イッシュ自慢の　鉄道橋</language>
 	</row>
 
 	<flowchart-group-list>
