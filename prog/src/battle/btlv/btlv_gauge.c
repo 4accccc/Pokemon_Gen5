@@ -33,6 +33,7 @@
  */
 //============================================================================================
 
+#define BTLV_GAUGE_MAX ( 6 )                                   //画面に出るゲージのMAX値
 #define BTLV_GAUGE_CLWK_MAX ( BTLV_MCSS_POS_MAX )              //ゲージCLWKのMAX値
 #define BTLV_GAUGE_CLUNIT_CLWK_MAX ( BTLV_MCSS_POS_MAX * 5 )   //CLUNITを生成するときのCLWKのMAX値
 
@@ -84,27 +85,32 @@ enum
   BTLV_GAUGE_POS_BB_X = 56,
   BTLV_GAUGE_POS_BB_Y = 40,
 
-  BTLV_GAUGE_POS_A_X = 192,
-  BTLV_GAUGE_POS_A_Y = 104,
+  BTLV_GAUGE_POS_A_X = 192 + 8,
+  BTLV_GAUGE_POS_A_Y = 104 - 4,
 
-  BTLV_GAUGE_POS_B_X = 64,
+  BTLV_GAUGE_POS_B_X = 64 - 8,
   BTLV_GAUGE_POS_B_Y = 28,
 
-  BTLV_GAUGE_POS_C_X = 196,
-  BTLV_GAUGE_POS_C_Y = 132,
+  BTLV_GAUGE_POS_C_X = 196 + 8,
+  BTLV_GAUGE_POS_C_Y = 132 - 4,
 
-  BTLV_GAUGE_POS_D_X = 60,
+  BTLV_GAUGE_POS_D_X = 60 - 8,
   BTLV_GAUGE_POS_D_Y = 52,
 
-  BTLV_GAUGE_POS_E_X = 200,
-  BTLV_GAUGE_POS_E_Y = 160,
+  BTLV_GAUGE_POS_E_X = 200 + 8,
+  BTLV_GAUGE_POS_F_X = 56 - 8,
 
-  BTLV_GAUGE_POS_F_X = 56,
-  BTLV_GAUGE_POS_F_Y = 76,
+  BTLV_GAUGE_POS_A_3vs3_Y =  92 + 6,
+  BTLV_GAUGE_POS_C_3vs3_Y = 114 + 3,
+  BTLV_GAUGE_POS_E_3vs3_Y = 136,
+
+  BTLV_GAUGE_POS_B_3vs3_Y = 20,
+  BTLV_GAUGE_POS_D_3vs3_Y = 42 - 3,
+  BTLV_GAUGE_POS_F_3vs3_Y = 64 - 6,
 
   BTLV_GAUGE_HPNUM_X  = 16,
   BTLV_GAUGE_HPNUM_Y  = 13,
-  BTLV_GAUGE_MINE_HP_X   = 16,
+  BTLV_GAUGE_MINE_HP_X   = 8,
   BTLV_GAUGE_MINE_HP_Y   = 7,
   BTLV_GAUGE_ENEMY_HP_X  = 0,
   BTLV_GAUGE_ENEMY_HP_Y  = 7,
@@ -118,27 +124,38 @@ enum
   BTLV_GAUGE_BMP_SIZE_X = 8,
   BTLV_GAUGE_BMP_SIZE_Y = 2,
   BTLV_GAUGE_BMP_POS_X = 8,
-  BTLV_GAUGE_BMP_POS_Y = 7,
+  BTLV_GAUGE_BMP_POS_Y = 5,
 
-  BTLV_GAUGE_NAME1U_CHARSTART = 0x02,
-  BTLV_GAUGE_NAME1D_CHARSTART = 0x0a,
+  BTLV_GAUGE_NAME1U_CHARSTART_M = 0x01,
+  BTLV_GAUGE_NAME1D_CHARSTART_M = 0x09,
+  BTLV_GAUGE_NAME1U_CHARSTART_E = 0x02,
+  BTLV_GAUGE_NAME1D_CHARSTART_E = 0x0a,
+
   BTLV_GAUGE_NAME2U_CHARSTART = 0x20,
   BTLV_GAUGE_NAME2D_CHARSTART = 0x28,
 
-  BTLV_GAUGE_SEXU_CHARSTART = 0x22,
-  BTLV_GAUGE_SEXD_CHARSTART = 0x2a,
+  BTLV_GAUGE_SEXU_CHARSTART_M = 0x21,
+  BTLV_GAUGE_SEXD_CHARSTART_M = 0x29,
+  BTLV_GAUGE_SEXU_CHARSTART_E = 0x22,
+  BTLV_GAUGE_SEXD_CHARSTART_E = 0x2a,
+
+  BTLV_GAUGE_LVU_CHARSTART_M = 0x23,
+  BTLV_GAUGE_LVD_CHARSTART_M = 0x2b,
+  BTLV_GAUGE_LVU_CHARSTART_E = 0x24,
+  BTLV_GAUGE_LVD_CHARSTART_E = 0x2c,
+
 
   BTLV_GAUGE_HP_CHARSTART = 0x02,
   BTLV_GAUGE_NOWHP_CHARSTART = 0x00,
   BTLV_GAUGE_MAXHP_CHARSTART = 0x04,
-  BTLV_GAUGE_LV_CHARSTART = 0x2b,
   BTLV_GAUGE_EXP_CHARSTART = 0x01,
   BTLV_GAUGE_BALL_CHARSTART = 0x0a,
 
-  BTLV_GAUGE_TYPE_3vs3_YOFFSET_E = -16,   //3vs3時のゲージY方向オフセット（相手側）
-  BTLV_GAUGE_TYPE_3vs3_YOFFSET_M = -24,   //3vs3時のゲージY方向オフセット（自分側）
-
   BTLV_GAUGE_EXP_SE_TIME = 16,
+
+  MOVE_VALUE = 16,
+  MOVE_COUNT = 2,
+  MOVE_SPEED = MOVE_VALUE / MOVE_COUNT,
 };
 
 typedef enum
@@ -199,7 +216,8 @@ struct _BTLV_GAUGE_CLWK
   u32           gauge_enable  :1;
   u32           seq_no        :4;
   u32           se_wait       :8;
-  u32                         :16;
+  u32           move_cnt      :4;
+  u32                         :12;
 };
 
 struct _BTLV_GAUGE_WORK
@@ -207,10 +225,11 @@ struct _BTLV_GAUGE_WORK
   GFL_CLUNIT*     clunit;
   ARCHANDLE*      handle;
   GFL_FONT*       font;
+  GFL_TCB*        tcb;
   void*           arc_data;
   const u8*       parts_address;
 
-  u32             plttID;
+  u32             plttID[ BTLV_GAUGE_MAX ];
 
   //状態異常アイコン
   u32             status_charID;
@@ -228,6 +247,13 @@ struct _BTLV_GAUGE_WORK
 
   HEAPID          heapID;
 };
+
+typedef struct
+{ 
+  BTLV_GAUGE_WORK*  bgw;
+  int               seq_no;
+  int               pltt_bit;
+}BTLV_GAUGE_DAMAGE_EFFECT_WORK;
 
 //============================================================================================
 /**
@@ -252,6 +278,9 @@ static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
 
 static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
 
+static  void  TCB_BTLV_GAUGE_Move( GFL_TCB* tcb, void* work );
+static  void  TCB_BTLV_GAUGE_DamageEffect( GFL_TCB* tcb, void* work );
+
 //============================================================================================
 /**
  *  @brief  システム初期化
@@ -271,10 +300,17 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID )
   bgw->clunit = GFL_CLACT_UNIT_Create( BTLV_GAUGE_CLUNIT_CLWK_MAX, 0, bgw->heapID );
 
   //共通パレット読み込み
-  bgw->plttID = GFL_CLGRP_PLTT_Register( bgw->handle, NARC_battgra_wb_gauge_NCLR,
-                                         CLSYS_DRAW_MAIN, BTLV_OBJ_PLTT_HP_GAUGE, bgw->heapID );
-  PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
-                           GFL_CLGRP_PLTT_GetAddr( bgw->plttID, CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
+  { 
+    int i;
+
+    for( i = 0 ; i < BTLV_GAUGE_MAX ; i++ )
+    { 
+      bgw->plttID[ i ] = GFL_CLGRP_PLTT_Register( bgw->handle, NARC_battgra_wb_gauge_NCLR,
+                                                  CLSYS_DRAW_MAIN, BTLV_OBJ_PLTT_HP_GAUGE + 0x20 * i, bgw->heapID );
+      PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
+                               GFL_CLGRP_PLTT_GetAddr( bgw->plttID[ i ], CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
+    }
+  }
   {
     ARCHANDLE*  handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), bgw->heapID );
 
@@ -306,6 +342,15 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID )
   //今鳴っているBGMを保存
   bgw->now_bgm_no = PMSND_GetBGMsoundNo();
 
+  //ダメージエフェクト監視TCBセット
+  { 
+    BTLV_GAUGE_DAMAGE_EFFECT_WORK* bgdew = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_GAUGE_DAMAGE_EFFECT_WORK ) );
+
+    bgdew->bgw = bgw;
+
+    bgw->tcb = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_GAUGE_DamageEffect, bgdew, 0 );
+  }
+
   return bgw;
 }
 
@@ -328,7 +373,14 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
   {
     PMSND_PopBGM();
   }
-  GFL_CLGRP_PLTT_Release( bgw->plttID );
+  { 
+    int i;
+
+    for( i = 0 ; i < BTLV_GAUGE_MAX ; i++ )
+    { 
+      GFL_CLGRP_PLTT_Release( bgw->plttID[ i ] );
+    }
+  }
   GFL_CLGRP_CGR_Release( bgw->status_charID );
   GFL_CLGRP_CELLANIM_Release( bgw->status_cellID );
   GFL_CLGRP_PLTT_Release( bgw->status_plttID );
@@ -336,6 +388,8 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
   GFL_HEAP_FreeMemory( bgw->arc_data );
   GFL_FONT_Delete( bgw->font );
   GFL_ARC_CloseDataHandle( bgw->handle );
+  GFL_HEAP_FreeMemory( GFL_TCB_GetWork( bgw->tcb ) );
+  GFL_TCB_DeleteTask( bgw->tcb );
   GFL_HEAP_FreeMemory( bgw );
 }
 
@@ -447,30 +501,24 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
       0, 0,     //x, y
       0, 0, 0,  //アニメ番号、優先順位、BGプライオリティ
     };
-    GFL_CLACTPOS  gauge_pos[]={
-      { BTLV_GAUGE_POS_AA_X, BTLV_GAUGE_POS_AA_Y },
-      { BTLV_GAUGE_POS_BB_X, BTLV_GAUGE_POS_BB_Y },
-      { BTLV_GAUGE_POS_A_X, BTLV_GAUGE_POS_A_Y },
-      { BTLV_GAUGE_POS_B_X, BTLV_GAUGE_POS_B_Y },
-      { BTLV_GAUGE_POS_C_X, BTLV_GAUGE_POS_C_Y },
-      { BTLV_GAUGE_POS_D_X, BTLV_GAUGE_POS_D_Y },
-      { BTLV_GAUGE_POS_E_X, BTLV_GAUGE_POS_E_Y },
-      { BTLV_GAUGE_POS_F_X, BTLV_GAUGE_POS_F_Y },
-    };
+    int pltt_id = ( pos < BTLV_MCSS_POS_A ) ? pos : pos - BTLV_MCSS_POS_A;
     gauge.softpri = 1;
     bgw->bgcl[ pos ].base_clwk = GFL_CLACT_WK_Create( bgw->clunit,
-                                                      bgw->bgcl[ pos ].base_charID, bgw->plttID, bgw->bgcl[ pos ].base_cellID,
+                                                      bgw->bgcl[ pos ].base_charID, bgw->plttID[ pltt_id ],
+                                                      bgw->bgcl[ pos ].base_cellID,
                                                       &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     gauge.softpri = 0;
     bgw->bgcl[ pos ].hpnum_clwk = GFL_CLACT_WK_Create( bgw->clunit,
-                                                       bgw->bgcl[ pos ].hpnum_charID, bgw->plttID,
+                                                       bgw->bgcl[ pos ].hpnum_charID, bgw->plttID[ pltt_id ],
                                                        bgw->bgcl[ pos ].hpnum_cellID,
                                                        &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     bgw->bgcl[ pos ].hp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
-                                                    bgw->bgcl[ pos ].hp_charID, bgw->plttID, bgw->bgcl[ pos ].hp_cellID,
+                                                    bgw->bgcl[ pos ].hp_charID, bgw->plttID[ pltt_id ],
+                                                    bgw->bgcl[ pos ].hp_cellID,
                                                     &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     bgw->bgcl[ pos ].status_clwk = GFL_CLACT_WK_Create( bgw->clunit,
-                                                        bgw->status_charID, bgw->status_plttID, bgw->status_cellID,
+                                                        bgw->status_charID, bgw->status_plttID,
+                                                        bgw->status_cellID,
                                                         &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( bgw->bgcl[ pos ].status_clwk, TRUE );
     if( ( BPP_SICKCONT_IsMoudokuCont( BPP_GetSickCont( bpp, WAZASICK_DOKU ) ) == TRUE ) &&
@@ -485,10 +533,11 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
     if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_3vs3 ) )
     {
       bgw->bgcl[ pos ].exp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
-                                                       bgw->bgcl[ pos ].exp_charID, bgw->plttID, bgw->bgcl[ pos ].exp_cellID,
+                                                       bgw->bgcl[ pos ].exp_charID, bgw->plttID[ pltt_id ],
+                                                       bgw->bgcl[ pos ].exp_cellID,
                                                        &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     }
-    BTLV_GAUGE_SetPos( bgw, pos, gauge_pos[ pos ].x, gauge_pos[ pos ].y );
+    BTLV_GAUGE_SetPos( bgw, pos );
   }
 
   {
@@ -554,6 +603,10 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
   }
 
   bgw->bgcl[ pos ].gauge_enable = 1;
+
+  bgw->bgcl[ pos ].move_cnt = MOVE_COUNT;
+
+  GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_GAUGE_Move, &bgw->bgcl[ pos ], 0 );
 }
 
 //============================================================================================
@@ -601,11 +654,9 @@ void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
  *
  *  @param[in] bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
  *  @param[in] pos   立ち位置
- *  @param[in] pos_x セットするX座標
- *  @param[in] pos_y セットするY座標
  */
 //============================================================================================
-void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int pos_x, int pos_y )
+void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
 {
   GFL_CLACTPOS  cl_pos;
   GFL_CLACTPOS  hp_pos_ofs[]={
@@ -616,20 +667,37 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int pos_x, int p
     { BTLV_STATUS_MINE_X, BTLV_STATUS_MINE_Y },
     { BTLV_STATUS_ENEMY_X, BTLV_STATUS_ENEMY_Y },
   };
+  GFL_CLACTPOS  gauge_pos[]={
+    { BTLV_GAUGE_POS_AA_X + MOVE_VALUE, BTLV_GAUGE_POS_AA_Y },
+    { BTLV_GAUGE_POS_BB_X - MOVE_VALUE, BTLV_GAUGE_POS_BB_Y },
+    { BTLV_GAUGE_POS_A_X  + MOVE_VALUE, BTLV_GAUGE_POS_A_Y },
+    { BTLV_GAUGE_POS_B_X  - MOVE_VALUE, BTLV_GAUGE_POS_B_Y },
+    { BTLV_GAUGE_POS_C_X  + MOVE_VALUE, BTLV_GAUGE_POS_C_Y },
+    { BTLV_GAUGE_POS_D_X  - MOVE_VALUE, BTLV_GAUGE_POS_D_Y },
+  };
+  GFL_CLACTPOS  gauge_pos_3vs3[]={
+    { BTLV_GAUGE_POS_AA_X + MOVE_VALUE, BTLV_GAUGE_POS_AA_Y },
+    { BTLV_GAUGE_POS_BB_X - MOVE_VALUE, BTLV_GAUGE_POS_BB_Y },
+    { BTLV_GAUGE_POS_A_X  + MOVE_VALUE, BTLV_GAUGE_POS_A_3vs3_Y },
+    { BTLV_GAUGE_POS_B_X  - MOVE_VALUE, BTLV_GAUGE_POS_B_3vs3_Y },
+    { BTLV_GAUGE_POS_C_X  + MOVE_VALUE, BTLV_GAUGE_POS_C_3vs3_Y },
+    { BTLV_GAUGE_POS_D_X  - MOVE_VALUE, BTLV_GAUGE_POS_D_3vs3_Y },
+    { BTLV_GAUGE_POS_E_X  + MOVE_VALUE, BTLV_GAUGE_POS_E_3vs3_Y },
+    { BTLV_GAUGE_POS_F_X  - MOVE_VALUE, BTLV_GAUGE_POS_F_3vs3_Y },
+  };
+  int pos_x, pos_y;
 
   if( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_3vs3 )
   {
-    int pos_ofs_y[]={
-      0, 0,
-      BTLV_GAUGE_TYPE_3vs3_YOFFSET_M + 8,
-      BTLV_GAUGE_TYPE_3vs3_YOFFSET_E,
-      BTLV_GAUGE_TYPE_3vs3_YOFFSET_M + 4,
-      BTLV_GAUGE_TYPE_3vs3_YOFFSET_E,
-      BTLV_GAUGE_TYPE_3vs3_YOFFSET_M,
-      BTLV_GAUGE_TYPE_3vs3_YOFFSET_E,
-    };
-    pos_y += pos_ofs_y[ pos ];
+    pos_x = gauge_pos_3vs3[ pos ].x;
+    pos_y = gauge_pos_3vs3[ pos ].y;
   }
+  else
+  { 
+    pos_x = gauge_pos[ pos ].x;
+    pos_y = gauge_pos[ pos ].y;
+  }
+
   cl_pos.x = pos_x;
   cl_pos.y = pos_y;
   GFL_CLACT_WK_SetPos( bgw->bgcl[ pos ].base_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
@@ -1126,22 +1194,44 @@ static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const BTL
     obj_vram = G2_GetOBJCharPtr();
     GFL_CLACT_WK_GetImgProxy( bgcl->base_clwk, &image );
 
-    MI_CpuCopy16( bmp_data,
-                  (void*)( (u32)obj_vram + BTLV_GAUGE_NAME1U_CHARSTART * 0x20 +
-                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                  0x20 * 6 );
-    MI_CpuCopy16( &bmp_data[ BTLV_GAUGE_BMP_SIZE_X * 0x20 ],
-                  (void*)( (u32)obj_vram + BTLV_GAUGE_NAME1D_CHARSTART * 0x20 +
-                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                  0x20 * 6 );
-    MI_CpuCopy16( &bmp_data[ 6 * 0x20 ],
-                  (void*)( (u32)obj_vram + BTLV_GAUGE_NAME2U_CHARSTART * 0x20 +
-                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                  0x20 * 2 );
-    MI_CpuCopy16( &bmp_data[ ( BTLV_GAUGE_BMP_SIZE_X + 6 ) * 0x20 ],
-                  (void*)( (u32)obj_vram + BTLV_GAUGE_NAME2D_CHARSTART * 0x20 +
-                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                  0x20 * 2 );
+    if( bgcl->gauge_dir )
+    { 
+      MI_CpuCopy16( bmp_data,
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_NAME1U_CHARSTART_E * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 6 );
+      MI_CpuCopy16( &bmp_data[ BTLV_GAUGE_BMP_SIZE_X * 0x20 ],
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_NAME1D_CHARSTART_E * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 6 );
+      MI_CpuCopy16( &bmp_data[ 6 * 0x20 ],
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_NAME2U_CHARSTART * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 2 );
+      MI_CpuCopy16( &bmp_data[ ( BTLV_GAUGE_BMP_SIZE_X + 6 ) * 0x20 ],
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_NAME2D_CHARSTART * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 2 );
+    }
+    else
+    { 
+      MI_CpuCopy16( bmp_data,
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_NAME1U_CHARSTART_M * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 7 );
+      MI_CpuCopy16( &bmp_data[ BTLV_GAUGE_BMP_SIZE_X * 0x20 ],
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_NAME1D_CHARSTART_M * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 7 );
+      MI_CpuCopy16( &bmp_data[ 7 * 0x20 ],
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_NAME2U_CHARSTART * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 1 );
+      MI_CpuCopy16( &bmp_data[ ( BTLV_GAUGE_BMP_SIZE_X + 7 ) * 0x20 ],
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_NAME2D_CHARSTART * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 1 );
+    }
   }
 
   GFL_STR_DeleteBuffer( monsname );
@@ -1169,14 +1259,28 @@ static  void  PutSexOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
   obj_vram = G2_GetOBJCharPtr();
   GFL_CLACT_WK_GetImgProxy( bgcl->base_clwk, &image );
 
-  MI_CpuCopy16( &bgw->parts_address[ GP_MALE_U + bgcl->sex * 0x40 ],
-                (void*)( (u32)obj_vram + BTLV_GAUGE_SEXU_CHARSTART * 0x20 +
-                image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                0x20 );
-  MI_CpuCopy16( &bgw->parts_address[ GP_MALE_D + bgcl->sex * 0x40 ],
-                (void*)( (u32)obj_vram + BTLV_GAUGE_SEXD_CHARSTART * 0x20 +
-                image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                0x20 );
+  if( bgcl->gauge_dir )
+  { 
+    MI_CpuCopy16( &bgw->parts_address[ GP_MALE_U + bgcl->sex * 0x40 ],
+                  (void*)( (u32)obj_vram + BTLV_GAUGE_SEXU_CHARSTART_E * 0x20 +
+                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                  0x20 );
+    MI_CpuCopy16( &bgw->parts_address[ GP_MALE_D + bgcl->sex * 0x40 ],
+                  (void*)( (u32)obj_vram + BTLV_GAUGE_SEXD_CHARSTART_E * 0x20 +
+                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                  0x20 );
+  }
+  else
+  { 
+    MI_CpuCopy16( &bgw->parts_address[ GP_MALE_U + bgcl->sex * 0x40 ],
+                  (void*)( (u32)obj_vram + BTLV_GAUGE_SEXU_CHARSTART_M * 0x20 +
+                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                  0x20 );
+    MI_CpuCopy16( &bgw->parts_address[ GP_MALE_D + bgcl->sex * 0x40 ],
+                  (void*)( (u32)obj_vram + BTLV_GAUGE_SEXD_CHARSTART_M * 0x20 +
+                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                  0x20 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1405,14 +1509,28 @@ static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
     obj_vram = G2_GetOBJCharPtr();
     GFL_CLACT_WK_GetImgProxy( bgcl->base_clwk, &image );
 
-    MI_CpuCopy16( bmp_data,
-                  (void*)( (u32)obj_vram + 0x24 * 0x20 +
-                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                  0x20 * 3 );
-    MI_CpuCopy16( &bmp_data[ 3 * 0x20 ],
-                  (void*)( (u32)obj_vram + 0x2c * 0x20 +
-                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                  0x20 * 3 );
+    if( bgcl->gauge_dir )
+    { 
+      MI_CpuCopy16( bmp_data,
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_LVU_CHARSTART_E * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 3 );
+      MI_CpuCopy16( &bmp_data[ 3 * 0x20 ],
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_LVD_CHARSTART_E * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 3 );
+    }
+    else
+    { 
+      MI_CpuCopy16( bmp_data,
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_LVU_CHARSTART_M * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 3 );
+      MI_CpuCopy16( &bmp_data[ 3 * 0x20 ],
+                    (void*)( (u32)obj_vram + BTLV_GAUGE_LVD_CHARSTART_M * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 * 3 );
+    }
   }
 
   GFL_STR_DeleteBuffer( num );
@@ -1635,3 +1753,100 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
   }
 }
 #endif
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲージ移動タスク
+ */
+//--------------------------------------------------------------
+static  void  TCB_BTLV_GAUGE_Move( GFL_TCB* tcb, void* work )
+{ 
+  BTLV_GAUGE_CLWK*  bgcl = ( BTLV_GAUGE_CLWK* )work;
+  GFL_CLACTPOS  cl_pos;
+  int           move_value;
+
+  if( bgcl->gauge_dir )
+  { 
+    move_value = MOVE_SPEED;
+  }
+  else
+  { 
+    move_value = -MOVE_SPEED;
+  }
+
+  GFL_CLACT_WK_GetPos( bgcl->base_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+  cl_pos.x += move_value;
+  GFL_CLACT_WK_SetPos( bgcl->base_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+
+  GFL_CLACT_WK_GetPos( bgcl->hp_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+  cl_pos.x += move_value;
+  GFL_CLACT_WK_SetPos( bgcl->hp_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+
+  GFL_CLACT_WK_GetPos( bgcl->status_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+  cl_pos.x += move_value;
+  GFL_CLACT_WK_SetPos( bgcl->status_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+
+  if( ( bgcl->gauge_dir == 0 ) && ( bgcl->gauge_type == BTLV_GAUGE_TYPE_1vs1 ) )
+  {
+    GFL_CLACT_WK_GetPos( bgcl->hpnum_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+    cl_pos.x += move_value;
+    GFL_CLACT_WK_SetPos( bgcl->hpnum_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+  }
+
+
+  if( bgcl->exp_clwk )
+  {
+    GFL_CLACT_WK_GetPos( bgcl->exp_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+    cl_pos.x += move_value;
+    GFL_CLACT_WK_SetPos( bgcl->exp_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+  }
+
+  if( --bgcl->move_cnt == 0 )
+  { 
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲージダメージエフェクトTCB
+ */
+//--------------------------------------------------------------
+static  void  TCB_BTLV_GAUGE_DamageEffect( GFL_TCB* tcb, void* work )
+{ 
+  BTLV_GAUGE_DAMAGE_EFFECT_WORK* bgdew = ( BTLV_GAUGE_DAMAGE_EFFECT_WORK* )work;
+  int pltt_bit_tbl[] = { 0x01, 0x02, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 };
+  int i;
+
+  switch( bgdew->seq_no ){ 
+  case 0:
+    bgdew->pltt_bit = 0;
+    for( i = 0 ; i < BTLV_GAUGE_CLWK_MAX ; i++ )
+    {
+      if( bgdew->bgw->bgcl[ i ].hp_calc_req )
+      {
+        bgdew->pltt_bit |= pltt_bit_tbl[ i ];
+      }
+    }
+    if( bgdew->pltt_bit )
+    { 
+      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_MAIN_OBJ, bgdew->pltt_bit, 0, 0, 8, 16, BTLV_EFFECT_GetTCBSYS() );
+      bgdew->seq_no = 1;
+    }
+    break;
+  case 1:
+    if( PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) == 0 )
+    { 
+      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_MAIN_OBJ, bgdew->pltt_bit, 0, 8, 0, 16, BTLV_EFFECT_GetTCBSYS() );
+      bgdew->seq_no = 2;
+    }
+    break;
+  case 2:
+    if( PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) == 0 )
+    { 
+      bgdew->seq_no = 0;
+    }
+    break;
+  }
+}
+
