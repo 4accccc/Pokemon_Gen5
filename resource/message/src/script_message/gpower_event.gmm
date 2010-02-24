@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-02-18T12:30:12"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T22:33:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="92" top="28" right="797" bottom="643" maximized="no" rayout="Vertical2">
+	<dialog left="1447" top="182" right="2152" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="785" top="91" right="1258" bottom="715" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -303,7 +303,7 @@
 		<language name="JPN" width="256">「[1:1C:簡易会話単語:2]」の
 こうかが　きれた</language>
 		<language name="JPN_KANJI" width="256">「[1:1C:簡易会話単語:2]」の
-効果が切れた</language>
+効果が　切れた</language>
 	</row>
 
 	<row id="msg_wonderpower_02_01">
@@ -312,21 +312,21 @@
 		<language name="JPN" width="256">「[1:1C:簡易会話単語:2]」の
 こうかが　きれた[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">「[1:1C:簡易会話単語:2]」の
-効果が切れた[BE:01:ページ切り替え（クリア）]</language>
+効果が　切れた[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wonderpower_effect_01">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ポケモンに
 そうぐうしやすくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ポケモンに
-そうぐうしやすくなった！</language>
+遭遇しやすくなった！</language>
 	</row>
 
 	<row id="msg_wonderpower_effect_02">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ポケモンに
 そうぐうしづらくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ポケモンに
-そうぐうしづらくなった！</language>
+遭遇しづらくなった！</language>
 	</row>
 
 	<row id="msg_wonderpower_effect_03">
@@ -403,7 +403,7 @@
 		<language name="JPN" width="256">パレスの　ツリーに
 なにかが　うみだされた！</language>
 		<language name="JPN_KANJI" width="256">パレスの　ツリーに
-何かが生み出された！</language>
+何かが　生み出された！</language>
 	</row>
 
 	<flowchart-group-list>
