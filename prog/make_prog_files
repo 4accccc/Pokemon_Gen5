@@ -852,7 +852,6 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
         test/tetsu/sample4.c \
         test/tetsu/sample5.c \
         test/tetsu/sample6.c \
-		 		net_app/wifi_earth/wifi_earth.c \
         test/tetsu/debug_watanabe.c
 
 #UI汎用モジュール
@@ -1816,3 +1815,8 @@ SRCS_OVERLAY_RESEARCH_RADAR = app/research_radar/research_main.c \
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_UN_SELECT = app/un_select/un_select.c \
                  app/un_select/un_select_graphic.c
+
+#ジオネット地球儀
+#===> GROUP_OVERLAY_UNION_INTRUDE
+SRCS_OVERLAY_GEONET = net_app/wifi_earth/wifi_earth.c
+
