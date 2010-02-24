@@ -140,3 +140,4 @@
 "nsbmdfiles/in06_kairyu.nsbmd"
 "nsbmdfiles/kemuri_event.nsbmd"
 "nsbmdfiles/kemuri_event2.nsbmd"
+"nsbmdfiles/cabin_door.nsbmd"

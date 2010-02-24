@@ -141,4 +141,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/in06_kairyu.nsbmd \
 	$(RESDIR)/kemuri_event.nsbmd \
 	$(RESDIR)/kemuri_event2.nsbmd \
+	$(RESDIR)/cabin_door.nsbmd \
 
