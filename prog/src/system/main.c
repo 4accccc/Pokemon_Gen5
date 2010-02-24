@@ -55,7 +55,7 @@ static  void  GameVBlankFunc(void);
 #ifdef PM_DEBUG
 static void DEBUG_StackOverCheck(void);
 
-#define DEBUG_MAIN_TIME_AVERAGE (1) // 時間AVERAGE　表示 １：ON　０：OFF
+#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
 
 #else
 
