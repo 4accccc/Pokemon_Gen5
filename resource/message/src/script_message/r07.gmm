@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T19:44:53"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T18:01:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="384" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -505,7 +505,6 @@
 
 	<row id="msg_r07_oldwoman_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>・フキダシを出し直して、このセリフを喋る。
-
 ・セリフ後、主人公を連れて家に入る。</comment>
 		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">こんな　あめかぜの　したで
@@ -552,18 +551,29 @@
 ただしき　たましい　ここにねむる</language>
 	</row>
 
-	<row id="msg_r07_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r07_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・仮メッセージ
+　要調整</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
 		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
-つよい　ポケモンで
-よわい　ポケモンを　たおしても[BE:00:ページ切り替え（行送り）]
-もらえる　けいけんちは[BE:00:ページ切り替え（行送り）]
-ちょっと　すくなくなります</language>
+もらえる　けいけんち　ですが
+あいての　ポケモンよりも[BE:00:ページ切り替え（行送り）]
+じぶんの　ポケモンが　よわいと[BE:00:ページ切り替え（行送り）]
+たくさん　もらえますが[BE:01:ページ切り替え（クリア）]
+はんたいに
+あいての　ポケモンよりも[BE:00:ページ切り替え（行送り）]
+じぶんの　ポケモンが　つよいと[BE:01:ページ切り替え（クリア）]
+もらえる　けいけんちは
+すくなく　なります</language>
 		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
-強い　ポケモンで
-弱い　ポケモンを　倒しても[BE:00:ページ切り替え（行送り）]
-もらえる　経験値は[BE:00:ページ切り替え（行送り）]
-ちょっと　少なくなります</language>
+もらえる　経験値ですが
+あいての　ポケモンよりも[BE:00:ページ切り替え（行送り）]
+じぶんの　ポケモンが　弱いと[BE:00:ページ切り替え（行送り）]
+たくさん　もらえますが[BE:01:ページ切り替え（クリア）]
+反対に
+あいての　ポケモンよりも[BE:00:ページ切り替え（行送り）]
+じぶんの　ポケモンが　強いと[BE:00:ページ切り替え（行送り）]
+もらえる　経験値は　少なくなります</language>
 	</row>
 
 	<flowchart-group-list>
