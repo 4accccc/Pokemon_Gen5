@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T21:45:55"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T22:43:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -351,10 +351,10 @@
 ・戦闘後メッセージ
 ・続けてhakaim_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『なるほどね
-きみらしい　たたかいかた　だね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『なるほどね
-きみらしい　戦い方　だね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『なるほどね！
+どこか　きみらしさを　かんじるよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『なるほどね！
+どこか　きみらしさを　感じるよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r03_hakaim_01">
