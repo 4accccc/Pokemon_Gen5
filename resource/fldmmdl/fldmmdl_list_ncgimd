@@ -91,6 +91,11 @@ FMMDL_RESLIST_NCGIMD = \
 	leader6.imd \
 	leader7.imd \
 	leader8w.imd \
+	bigfour1.imd \
+	bigfour2.imd \
+	bigfour3.imd \
+	bigfour4.imd \
+	champion.imd \
 	hakaim.imd \
 	hakaiw.imd \
 	sage1.imd \
