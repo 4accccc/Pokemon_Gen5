@@ -265,14 +265,12 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) = _CALL_NET_END;
     break;
   case _CALL_IRCBATTLE_FRIEND:  //  ともだちコード交換
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ircbattlematch), &IrcBattleFriendProcData, dbw);
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(ircbattlematch), &IrcBattleFriendProcData, dbw);
     (*seq)++;
     break;
   case _WAIT_IRCBATTLE_FRIEND:
-    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      NET_PRINT("ともだちコード交換おわり\n");
-      (*seq) = _CALL_NET_END;
-    }
+    NET_PRINT("ともだちコード交換おわり\n");
+    (*seq) = _CALL_NET_END;
     break;
   case _CALL_TRADE:  //  ポケモン交換
     dbw->aPokeTr.gamedata = dbw->gamedata;
@@ -323,9 +321,13 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _CALL_NET_END:
     if(GFL_NET_IsParentMachine()){
-      GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL);
+      if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL)){
+        (*seq) ++;
+      }
     }
-    (*seq) ++;
+    else{
+      (*seq) ++;
+    }
     break;
   case _WAIT_NET_END:
     if(GFL_NET_IsExit()){

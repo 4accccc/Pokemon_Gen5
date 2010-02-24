@@ -79,6 +79,7 @@ typedef enum
 #define _SE_DESIDE (SEQ_SE_SYS_69)
 #define _SE_CANCEL (SEQ_SE_SYS_70)
 
+#define _TEL_TIMER (66)  //電話タイマー  CGEARのパレットタイマーと同じ値
 
 //--------------------------------------------
 // 画面構成定義
@@ -202,7 +203,9 @@ struct _CG_WIRELESS_MENU {
   int unionnum;
   int unionnumOld;
   u32 cellRes[CEL_RESOURCE_MAX];
+  int TelTimer;
   GFL_CLWK* buttonObj[_SELECTMODE_MAX];
+  GFL_CLWK* TVTCall;
 
 };
 
@@ -487,14 +490,14 @@ static void _CreateButtonObj(CG_WIRELESS_MENU* pWork)
   u8 buffx[]={128,128,224};
   u8 buffy[]={ 192/2 , 192/2, 177};
   u8 buttonno[]={12,11,0};
+  GFL_CLWK_DATA cellInitData;
 
 
   for(i=0;i<_SELECTMODE_MAX;i++){
-    GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = buffx[i];
     cellInitData.pos_y = buffy[i];
     cellInitData.anmseq = buttonno[i];
-    cellInitData.softpri = 0;
+    cellInitData.softpri = 1;
     cellInitData.bgpri = 1;
     pWork->buttonObj[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                pWork->cellRes[CHAR_OBJ],
@@ -505,6 +508,22 @@ static void _CreateButtonObj(CG_WIRELESS_MENU* pWork)
     GFL_CLACT_WK_SetDrawEnable( pWork->buttonObj[i], TRUE );
     GFL_CLACT_WK_SetObjMode(pWork->buttonObj[i],GX_OAM_MODE_XLU);
   }
+
+
+
+  cellInitData.pos_x = 128;
+  cellInitData.pos_y = 192/2;
+  cellInitData.anmseq = 15;
+  cellInitData.softpri = 0;
+  cellInitData.bgpri = 1;
+  pWork->TVTCall = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                        pWork->cellRes[CHAR_OBJ],
+                                        pWork->cellRes[PLT_OBJ],
+                                        pWork->cellRes[ANM_OBJ],
+                                        &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->TVTCall , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->TVTCall, TRUE );
+  GFL_CLACT_WK_SetObjMode(pWork->TVTCall, GX_OAM_MODE_XLU);
 }
 
 //------------------------------------------------------------------------------
@@ -759,7 +778,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
 
   switch( bttnid ){
   case _SELECTMODE_PALACE:
-    {
+    { ///@todo  パレスの演出がはいってからでないと今は外さずに置きます
       GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
       if(pWork->dbw->bPalaceJump){
         pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
@@ -1248,10 +1267,24 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
       GFL_BMPWIN_MakeScreen(pWork->nameWin);
     }
     GFL_STR_DeleteBuffer(pName);
-    PMSND_PlaySE( SEQ_SE_SYS_35 );
+
+    if(pWork->TelTimer < 0){
+      PMSND_PlaySE( SEQ_SE_SYS_35 );
+      pWork->TelTimer = _TEL_TIMER;
+    }
+    else{
+      pWork->TelTimer--;
+    }
+
+    if(15 == GFL_CLACT_WK_GetAnmSeq(pWork->TVTCall)){
+      GFL_CLACT_WK_SetAnmSeq(pWork->TVTCall, 16);
+    }
   }
   else{
     PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
+    if(16 == GFL_CLACT_WK_GetAnmSeq(pWork->TVTCall)){
+      GFL_CLACT_WK_SetAnmSeq(pWork->TVTCall, 15);
+    }
   }
 }
 
@@ -1456,6 +1489,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   for(i=0;i<_SELECTMODE_MAX; i++){
     GFL_CLACT_WK_Remove(pWork->buttonObj[i]);
   }
+  GFL_CLACT_WK_Remove( pWork->TVTCall);
   
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_OBJ] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_OBJ] );
