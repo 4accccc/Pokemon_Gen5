@@ -19,7 +19,7 @@
 #include "app/app_menu_common.h"
 #include "field_oam_pal.h"
 #include "fieldmap.h"
-#include "font/font.naix" //NARC_font_small_gftr
+#include "font/font.naix" //NARC_font_num_gftr
 #include "print/wordset.h"
 
 
@@ -57,7 +57,7 @@ enum{
 ///フォント：ノーマル色
 #define FONT_NORMAL_COLOR   (PRINTSYS_MACRO_LSB(1,2,0))
 ///フォント：灰色
-#define FONT_GRAY_COLOR     (PRINTSYS_MACRO_LSB(2,1,0))
+#define FONT_GRAY_COLOR     (PRINTSYS_MACRO_LSB(1,2,0))
 
 ///ソフトプライオリティ
 enum{
@@ -104,7 +104,7 @@ typedef struct _PARTY_SELECT_LIST{
   FLDMENUFUNC *fldmenufunc;
   FLDMSGWIN_STREAM *msgwin_stream;
   FLDMSGWIN *fldmsgwin_poke;
-  GFL_FONT *font_handle_small;
+  GFL_FONT *font_handle_num;
   
   SELECT_PARTY return_select;     ///<最終的に決定した項目
   u8 seq;
@@ -217,7 +217,7 @@ PARTY_SELECT_LIST_PTR PARTY_SELECT_LIST_Setup(FIELDMAP_WORK *fieldWork, const PO
   psl->bbox_reg_fail = bbox_reg_fail;
 
   psl->clunit = GFL_CLACT_UNIT_Create( PSL_ACTOR_MAX, PSL_ACTOR_UNIT_PRI, psl->heap_id );
-  psl->font_handle_small = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, 
+  psl->font_handle_num = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr, 
     GFL_FONT_LOADTYPE_FILE, FALSE, psl->heap_id );
   _Print_SetupFieldMsg(psl);
 
@@ -251,7 +251,7 @@ SELECT_PARTY PARTY_SELECT_LIST_Exit(PARTY_SELECT_LIST_PTR psl)
   _PokeIcon_ResourceFree(psl);
   
   _Print_ExitFieldMsg(psl);
-  GFL_FONT_Delete(psl->font_handle_small);
+  GFL_FONT_Delete(psl->font_handle_num);
   GFL_CLACT_UNIT_Delete(psl->clunit);
   
   GFL_HEAP_FreeMemory(psl);
@@ -953,7 +953,7 @@ static void _Print_DrawPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl, const POKEPAR
     WORDSET_ExpandStr( psl->wordset, buf_lv, tempbuf );
     FLDMSGWIN_PrintStrBufColorFontHandle( psl->fldmsgwin_poke, 
       LV_POS_X + LV_POS_SPACE_X*i, LV_POS_Y, buf_lv, FONT_NORMAL_COLOR, 
-      psl->font_handle_small );
+      psl->font_handle_num );
     
     //性別
     if(sex == PM_NEUTRAL 

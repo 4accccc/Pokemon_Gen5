@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:25:52"/>
+	<create user="matsuda" host="W00142" date="2010-02-24T15:19:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,8 +359,8 @@
 	</row>
 
 	<row id="msg_psl_lv" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,,#80ffff,,,#80ffff,,,,,,,">
-		<language name="JPN" width="216" line="2">Ｌｖ．[2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="216" line="2">Ｌｖ．[2:02:３桁:0]</language>
+		<language name="JPN" width="216" line="2">L[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="216" line="2">L[2:02:３桁:0]</language>
 	</row>
 
 	<row id="msg_psl_male" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,,#80ffff,,,#80ffff,,,,,,,">
