@@ -850,6 +850,7 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
         test/tetsu/sample4.c \
         test/tetsu/sample5.c \
         test/tetsu/sample6.c \
+		 		net_app/wifi_earth/wifi_earth.c \
         test/tetsu/debug_watanabe.c
 
 #UI”Ä—pƒ‚ƒWƒ…[ƒ‹
