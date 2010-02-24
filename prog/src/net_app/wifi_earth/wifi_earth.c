@@ -1232,16 +1232,18 @@ static GFL_PROC_RESULT Earth_Demo_Exit(GFL_PROC * proc, int * seq, void * pwk, v
 static void Earth_VramBankSet(void)
 {
 	GFL_DISP_VRAM vramSetTable = {
-		GX_VRAM_BG_128_C,				// メイン2DエンジンのBG
-		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-		GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_16_F,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-		GX_VRAM_TEX_01_AB,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_0123_E			// テクスチャパレットスロット
+		GX_VRAM_BG_128_C,									// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,						// メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_32_H,							// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE,				// サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_16_F,									// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_NONE,					// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_16_I,							// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,			// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_01_AB,								// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_0123_E,						// テクスチャパレットスロット
+		GX_OBJVRAMMODE_CHAR_1D_32K,				// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,				// サブOBJマッピングモード
 	};
   // VRAM全クリア
   GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
