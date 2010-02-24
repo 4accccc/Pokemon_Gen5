@@ -1320,3 +1320,9 @@ void FIELD_SUBSCREEN_SetReportEnd( FIELD_SUBSCREEN_WORK * pWork )
 {
 	REPORT_EndSave( pWork->reportWork );
 }
+
+// セーブタイプ取得（たくさん書くか）
+BOOL FIELD_SUBSCREEN_CheckReportType( FIELD_SUBSCREEN_WORK * pWork )
+{
+	return REPORT_CheckSaveType( pWork->reportWork );
+}

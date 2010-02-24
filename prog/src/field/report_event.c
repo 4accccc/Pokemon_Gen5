@@ -37,8 +37,10 @@ enum {
 	REPORT_SEQ_INIT_MESSAGE,						// 初期メッセージ
 	REPORT_SEQ_WRITE_YESNO_SET,					// セーブしますか？【はい・いいえ】セット
 	REPORT_SEQ_WRITE_YESNO_WAIT,				// セーブしますか？【はい・いいえ】待ち
+/*
 	REPORT_SEQ_OVERWRITE_YESNO_SET,			// 上書きしますか？【はい・いいえ】セット
 	REPORT_SEQ_OVERWRITE_YESNO_WAIT,		// 上書きしますか？【はい・いいえ】待ち
+*/
 	REPORT_SEQ_SAVE_SIZE_CHECK,					// セーブサイズ取得
 	REPORT_SEQ_SAVE_INIT,								// セーブ初期設定
 	REPORT_SEQ_SAVE_MAIN,								// セーブ実行
@@ -152,18 +154,20 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
       if( GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(wk->gsys)) == GAME_COMM_NO_INVASION ){
 				SetReportMsg( wk, msg_common_report_13 );
 				*seq = REPORT_SEQ_RESULT_NG_WAIT;
+/*
 			// 違うセーブデータがある
 			}else if( SaveControl_IsOverwritingOtherData(wk->sv) == TRUE ){
 				SetReportMsg( wk, msg_common_report_08 );
 				*seq = REPORT_SEQ_RESULT_NG_WAIT;
+*/
+/*
 			// セーブデータがある
 			}else if( SaveData_GetExistFlag(wk->sv) == TRUE ){
 				SetReportMsg( wk, msg_common_report_02 );
 				*seq = REPORT_SEQ_OVERWRITE_YESNO_SET;
+*/
 			// セーブ
 			}else{
-//				SetReportMsg( wk, msg_common_report_03 );
-//				*seq = REPORT_SEQ_SAVE_INIT;
 				BmpWinFrame_Clear( wk->local->win, WINDOW_TRANS_ON_V );
 				*seq = REPORT_SEQ_SAVE_SIZE_CHECK;
 			}
@@ -175,6 +179,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 		}
 		break;
 
+/*
 	case REPORT_SEQ_OVERWRITE_YESNO_SET:		// 上書きしますか？【はい・いいえ】セット
 		if( MainReportMsg( wk ) == FALSE ){
 			SetReportYesNo( wk );
@@ -185,8 +190,6 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 	case REPORT_SEQ_OVERWRITE_YESNO_WAIT:		// 上書きしますか？【はい・いいえ】待ち
 		switch( MainReportYesNo(wk) ){
 		case 0:	// はい
-//			SetReportMsg( wk, msg_common_report_03 );
-//			*seq = REPORT_SEQ_SAVE_INIT;
 			BmpWinFrame_Clear( wk->local->win, WINDOW_TRANS_ON_V );
 			*seq = REPORT_SEQ_SAVE_SIZE_CHECK;
 			break;
@@ -196,11 +199,16 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			break;
 		}
 		break;
+*/
 
 	case REPORT_SEQ_SAVE_SIZE_CHECK:				// セーブサイズ取得
 		PLAYTIME_SetSaveTime( SaveData_GetPlayTime(wk->sv) );
 		FIELD_SUBSCREEN_SetReportSize( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
-		SetReportMsg( wk, msg_common_report_03 );
+		if( FIELD_SUBSCREEN_CheckReportType(FIELDMAP_GetFieldSubscreenWork(wk->fieldWork)) == TRUE ){
+			SetReportMsg( wk, msg_common_report_09 );
+		}else{
+			SetReportMsg( wk, msg_common_report_03 );
+		}
 		*seq = REPORT_SEQ_SAVE_INIT;
 		break;
 

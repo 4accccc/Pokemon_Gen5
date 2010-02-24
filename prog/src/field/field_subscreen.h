@@ -122,6 +122,7 @@ extern void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , cons
 extern void FIELD_SUBSCREEN_SetReportSize( FIELD_SUBSCREEN_WORK * pWork );
 extern void FIELD_SUBSCREEN_SetReportStart( FIELD_SUBSCREEN_WORK * pWork );
 extern void FIELD_SUBSCREEN_SetReportEnd( FIELD_SUBSCREEN_WORK * pWork );
+extern BOOL FIELD_SUBSCREEN_CheckReportType( FIELD_SUBSCREEN_WORK * pWork );
 
 
 #ifdef  PM_DEBUG

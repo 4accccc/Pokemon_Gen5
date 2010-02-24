@@ -170,12 +170,13 @@ struct _REPORT_WORK {
 	u32	celRes[CELRES_MAX];
 
 	// セーブ状況
-	GFL_TCB * vtask;		// TCB ( VBLANK )
-	BOOL	save_start;
-	u32	actualSize;
-	u32	totalSize;
-	u32	timeSize;
-	u32	objCount;
+	GFL_TCB * vtask;			// TCB ( VBLANK )
+	BOOL	save_active;		// セーブ中か
+	u32	actualSize;				// セーブするサイズ
+	u32	totalSize;				// セーブデータサイズ
+	u32	overSize;					// セーブしたサイズ
+	u32	timeSize;					// カウンタサイズ
+	u32	objCount;					// OBJ変更カウンタ
 
 	int	seq;
 
@@ -356,24 +357,29 @@ void REPORT_Draw( REPORT_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void REPORT_SetSaveSize( REPORT_WORK * wk )
 {
-	u32	totalSize;
-
 	wk->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->gameSys) );
-	SaveControl_GetActualSize( wk->sv, &wk->actualSize, &totalSize );
+	SaveControl_GetActualSize( wk->sv, &wk->actualSize, &wk->totalSize );
 	wk->timeSize  = wk->actualSize * 2 / 10;
-	wk->totalSize = wk->timeSize;
+	wk->overSize = wk->timeSize;
 	wk->objCount  = 0;
+}
 
-/*
-	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
-	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
-	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
-	OS_Printf( "　セーブ開始\n" );
-	OS_Printf( "　　actualSize = %d, totalSize = %d, timeSize = %d\n", wk->actualSize, totalSize, wk->timeSize );
-	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
-	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
-	OS_Printf( "□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n" );
-*/
+//--------------------------------------------------------------------------------------------
+/**
+ * セーブタイプ取得（たくさん書くか）
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @retval	"TRUE = たくさん"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL REPORT_CheckSaveType( REPORT_WORK * wk )
+{
+	if( wk->actualSize >= ( wk->totalSize / REPORT_SAVE_TYPE_VAL ) ){
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -395,7 +401,7 @@ void REPORT_StartSave( REPORT_WORK * wk )
 		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
 	}
 
-	wk->save_start = TRUE;
+	wk->save_active = TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -411,7 +417,7 @@ void REPORT_EndSave( REPORT_WORK * wk )
 {
 	u32	i;
 
-	wk->save_start = FALSE;
+	wk->save_active = FALSE;
 
 /*
 	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
@@ -805,21 +811,19 @@ static void VBlankTask_SaveTimeMarkObj( GFL_TCB * tcb, void * work )
 	
 	wk = work;
 
-	if( wk->save_start == FALSE ){ return; }
+	if( wk->save_active == FALSE ){ return; }
 
 	now_size = SaveControl_GetSaveAsyncMain_WritingSize( wk->sv );
 
-	if( now_size >= wk->totalSize ){
+	if( now_size >= wk->overSize ){
 		if( wk->objCount < 10 ){
 			GFL_CLACT_WK_SetAnmFrame( wk->clwk[OBJID_TIME01+wk->objCount], 0 );
 			GFL_CLACT_WK_SetAnmSeq( wk->clwk[OBJID_TIME01+wk->objCount], 1 );
 			GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[OBJID_TIME01+wk->objCount], TRUE );
 			wk->objCount++;
 		}
-		wk->totalSize += wk->timeSize;
-//		OS_Printf( "　セーブ中 : nowSize = %d, timeTotal = %d, objCount = %d\n", now_size, wk->totalSize, wk->objCount );
+		wk->overSize += wk->timeSize;
 	}
-//	OS_Printf( "　よばれました : nowSize = %d, timeTotal = %d, objCount = %d\n", now_size, wk->totalSize, wk->objCount );
 
 	GFL_CLACT_SYS_Main();
 	GFL_CLACT_SYS_VBlankFunc();
