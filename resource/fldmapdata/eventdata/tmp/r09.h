@@ -28,5 +28,6 @@
 #define BG_R09_SIGN2_01                   0
 #define BG_R09_SIGN1_01                   1
 #define BG_R09_SIGN3_01                   2
+#define BG_R09_SIGN4_01                   3
 
 #endif //ZONE_R09_EVB_H

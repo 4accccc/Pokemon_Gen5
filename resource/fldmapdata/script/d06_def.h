@@ -10,5 +10,6 @@
 #define SCRID_INIT_D06 (3)
 #define SCRID_RECOVER_D06 (4)
 #define SCRID_ZONE_D06 (5)
+#define SCRID_BG_D06_SIGN1_01 (6)
 
 #endif //_D06_DEF_H_

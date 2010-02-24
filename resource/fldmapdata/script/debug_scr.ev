@@ -504,6 +504,8 @@ EVENT_START   ev_debug_murakami
 			_MAP_CHANGE( ZONE_ID_C02, 644, 587, DIR_UP )
 	  
 		ELSIF $SCWK_TEMP1 == 2 THEN
+			
+			//イベント関係者を表示
 			_FLAG_RESET(FV_D08R0901_BOSS_01)
 			_FLAG_RESET(FV_D08R0801_EVENT_01)
 			_FLAG_RESET(FV_D08R0901_EVENT_01)
@@ -518,8 +520,33 @@ EVENT_START   ev_debug_murakami
 			$WK_SCENE_D08_LEGEND = 1
 				
 		ELSIF $SCWK_TEMP1 == 3 THEN
+
+			_MAP_CHANGE( ZONE_ID_D06, 107, 343, DIR_UP )
+			_TIME_WAIT(90)
+			
+			//ヤーコンのポケモンが出現
+			_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE17, MV_DMY )
+			
+			//ポケモンが巣に向かう
+			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_kuru_01)
+			_OBJ_ANIME_WAIT()
+			
+			//【仮】スクリプトの動きだけ出来るのか。エフェクトはいるのか
+			//ポケモンがわざを出したような処理
+			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
+			_OBJ_ANIME_WAIT()
+										
+			_OBJ_ANIME(D06_STOPPER_01,anm_stopper_01_hakai)
+			_OBJ_ANIME_WAIT()
+			
+			_OBJ_DEL( D06_STOPPER_01 )
 		
-			_ADD_GOLD(10000)
+//			_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+			
+			//===============フラグ操作===============//
+			//デンチュラの巣を消す
+//				_FLAG_SET(FV_D06_STOPPER_01)
+			//========================================// 
 		
 		ELSIF $SCWK_TEMP1 == 4 THEN
 		
@@ -527,6 +554,36 @@ EVENT_START   ev_debug_murakami
 		
 EVENT_END
 
+//--------------------------------------------------------------------
+//デンチュラの巣:壊れる                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_01_hakai
+	_ANIME_DATA	AC_SPIDER_REMOVE,1
+	_ANIME_DATA	ACMD_END,0 
+
+//--------------------------------------------------------------------
+// ポケモン: 巣まで移動する                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke2_kuru_01
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ポケモン: わざを出す                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke2_waza_01
+
+	_ANIME_DATA AC_STAY_JUMP_U_8F,1	
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1	
+	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /*                                                            */
 /**************************************************************/

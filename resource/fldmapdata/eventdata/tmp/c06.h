@@ -34,5 +34,6 @@
 #define ZONE_C06_EVB_H
 
 #define BG_C06_SIGN1_01                   0
+#define BG_C06_SIGN2_01                   1
 
 #endif //ZONE_C06_EVB_H

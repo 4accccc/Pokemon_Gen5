@@ -28,6 +28,7 @@ _EVENT_DATA    ev_c06_woman1_01
 _EVENT_DATA    ev_bg_c06_sign1_01
 _EVENT_DATA    ev_pos_c06_hakase1_01 
 _EVENT_DATA    ev_c06_monsterball_01
+_EVENT_DATA    ev_bg_c06_sign2_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -595,11 +596,22 @@ EVENT_START   ev_c06_woman1_01
 EVENT_END
 
 /**************************************************************/
-/*  C06 看板のイベントスクリプト                      */
+/*  C06 看板のイベントスクリプト1                      */
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign1_01
 
-  _BGWIN_MSG(msg_c06_sign1_01,TYPE_TOWN) 
+  _BGWIN_MSG(msg_c06_sign1_01,TYPE_TOWN)  
+  _LAST_KEYWAIT()
+  _BGWIN_CLOSE()
+
+EVENT_END
+
+ /**************************************************************/
+/*  C06 看板のイベントスクリプト2                      */
+/**************************************************************/
+EVENT_START   ev_bg_c06_sign2_01
+
+  _BGWIN_MSG(msg_c06_sign2_01,TYPE_POST)  
   _LAST_KEYWAIT()
   _BGWIN_CLOSE()
 

@@ -23,7 +23,8 @@ _EVENT_DATA    ev_d06_stopper_01
 _EVENT_DATA    ev_pos_d06_leader5_01
 _EVENT_DATA    ev_init_d06
 _EVENT_DATA    ev_recover_d06
-_EVENT_DATA    ev_zone_d06
+_EVENT_DATA    ev_zone_d06 
+_EVENT_DATA    ev_bg_d06_sign1_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -146,7 +147,7 @@ EVENT_START    ev_pos_d06_leader5_01
 	_BALLOONWIN_CLOSE()
 	
 	//ヤーコンのポケモンが出現
-	_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE2, MV_DMY )
+	_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE17, MV_DMY )
 	
 	//ポケモンが巣に向かう
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_kuru_01)
@@ -160,6 +161,9 @@ EVENT_START    ev_pos_d06_leader5_01
 	//【仮】スクリプトの動きだけ出来るのか。エフェクトはいるのか
 	//ポケモンがわざを出したような処理
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
+	
+	_TIME_WAIT(32)
+	_OBJ_ANIME(D06_STOPPER_01,anm_stopper_01_hakai)
 	_OBJ_ANIME_WAIT()
 
 //===============フラグ操作===============//
@@ -255,6 +259,13 @@ EVENT_START    ev_pos_d06_leader5_01
 //ENDIF
 
 EVENT_END
+
+//--------------------------------------------------------------------
+//デンチュラの巣:壊れる                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_01_hakai
+	_ANIME_DATA	AC_SPIDER_REMOVE,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //主人公:びっくりマークを出す                       
@@ -469,4 +480,14 @@ _ANIME_LABEL	anm_poke2_saru_01_d
 	_ANIME_DATA AC_WALK_L_8F,3
 	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
-	
+
+/**************************************************************/
+/*  D06 看板のイベントスクリプト2                      */
+/**************************************************************/
+EVENT_START   ev_bg_d06_sign1_01
+
+  _BGWIN_MSG(msg_d06_sign1_01,TYPE_POST) 
+  _LAST_KEYWAIT()
+  _BGWIN_CLOSE()
+
+EVENT_END

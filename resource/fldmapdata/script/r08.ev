@@ -55,7 +55,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_r08_sign2_01
 
-  _EASY_BGWIN_MSG(msg_r08_sign2_01, TYPE_ROAD) 
+  _EASY_BGWIN_MSG(msg_r08_sign4_01, TYPE_POST) 
 
 EVENT_END
 

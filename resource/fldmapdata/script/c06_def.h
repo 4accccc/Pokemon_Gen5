@@ -14,5 +14,6 @@
 #define SCRID_BG_C06_SIGN1_01 (7)
 #define SCRID_POS_C06_HAKASE1_01 (8)
 #define SCRID_C06_MONSTERBALL_01 (9)
+#define SCRID_BG_C06_SIGN2_01 (10)
 
 #endif //_C06_DEF_H_

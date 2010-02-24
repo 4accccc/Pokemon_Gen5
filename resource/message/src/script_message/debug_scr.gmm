@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-02-20T18:27:39"/>
+	<create user="murakami_naoto" host="W00228" date="2010-02-24T19:40:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -268,8 +268,8 @@
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="548"/>
-		<band id="3" index="4" style="0000" width="147"/>
+		<band id="2" index="3" style="0000" width="543"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
@@ -474,8 +474,8 @@
 	</row>
 
 	<row id="msg_debug_murakami_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<language name="JPN" width="256">テスト用1</language>
-		<language name="JPN_KANJI" width="256">テスト用1</language>
+		<language name="JPN" width="256">D06デンチュラの巣を破壊する</language>
+		<language name="JPN_KANJI" width="256">D06デンチュラの巣を破壊する</language>
 	</row>
 
 	<row id="msg_debug_murakami_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">

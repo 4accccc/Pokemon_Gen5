@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/23 21:58:07
+#save date:2010/02/24 17:15:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r06.wms
 #SECTION START:OBJ_EVENT
@@ -342,7 +342,7 @@ SCRID_BG_R06_SIGN1_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-728 0 -584
+728 0 -568
 #event number: 1
 #Bg Event Label
 BG_R06_SIGN2_01
@@ -355,7 +355,7 @@ SCRID_BG_R06_SIGN2_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 248
+8 0 104
 #event number: 2
 #Bg Event Label
 BG_R06_SIGN4_01
