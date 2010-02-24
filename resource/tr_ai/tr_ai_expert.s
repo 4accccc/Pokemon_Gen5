@@ -313,7 +313,7 @@ ExpertAI_3:	//すいとる
 	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_3_1
 
 	CHECK_TOKUSEI	CHECK_DEFENCE
-	IF_EQUAL	TOKUSYU_HEDOROEKI,ExpertAI_3_1
+	IF_EQUAL	TOKUSYU_HEDOROEKI,ExpertAI_3_1      //相手の特性がヘドロえき
 
 	JUMP		ExpertAI_3_2
 	
@@ -372,8 +372,12 @@ ExpertAI_7_poke_table:
 ExpertAI_8:	//ゆめくい
 	//技相性が1/4、1/2なら-1
 	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_8_ng
-	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_8_ng
-	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_8_ng
+	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_8_ng1
+	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_8_ng1
+
+  CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_HEDOROEKI,ExpertAI_8_ng             //相手の特性がヘドロえき
+
 	IF_WAZASICK		CHECK_DEFENCE,WAZASICK_NEMURI,ExpertAI_8_ok
 	JUMP		ExpertAI_8_end
 
@@ -383,6 +387,10 @@ ExpertAI_8_ok:
 	JUMP		ExpertAI_8_end
 
 ExpertAI_8_ng:
+	IF_RND_UNDER	50,ExpertAI_8_ng1
+	INCDEC		-2
+ExpertAI_8_ng1:
+	IF_RND_UNDER	50,ExpertAI_8_end
 	INCDEC		-1
 ExpertAI_8_end:
 	AIEND
@@ -417,25 +425,30 @@ ExpertAI_9_Table://変化して強そうな技群
 	//以降追加2006.6.14
 	//2006.6.14
 	.long	375,384,385,389,391,415,445,464	
+	//2010.2.20
+	.long	549,555
 	.long	0xffffffff
 
 //---------------------------------------------------------------------------
 ExpertAI_10:	// 攻撃力アップ
 	IF_PARA_UNDER	CHECK_ATTACK,PARA_POW,9,ExpertAI_10_1
-	IF_RND_UNDER	100,ExpertAI_10_2
+	IF_RND_UNDER	100,ExpertAI_10_3
 	INCDEC		-1
-	JUMP		ExpertAI_10_2
+	JUMP		ExpertAI_10_3
 ExpertAI_10_1:
-	IFN_HP_EQUAL	CHECK_ATTACK,100,ExpertAI_10_2
+	IFN_HP_EQUAL	CHECK_ATTACK,100,ExpertAI_10_3
 
-	IF_RND_UNDER	128,ExpertAI_10_2
-	INCDEC		2
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,127,ExpertAI_10_2		// バトンタッチ系
+
+	IF_RND_UNDER	128,ExpertAI_10_3
 ExpertAI_10_2:
+	INCDEC		2
+ExpertAI_10_3:
 	IF_HP_OVER	CHECK_ATTACK,70,ExpertAI_10_end
-	IF_HP_UNDER	CHECK_ATTACK,40,ExpertAI_10_3
+	IF_HP_UNDER	CHECK_ATTACK,40,ExpertAI_10_4
 
 	IF_RND_UNDER	40,ExpertAI_10_end
-ExpertAI_10_3:
+ExpertAI_10_4:
 	INCDEC		-2
 ExpertAI_10_end:
 	AIEND
@@ -448,11 +461,14 @@ ExpertAI_11:	// 防御力アップ
 	INCDEC		-1
 	JUMP		ExpertAI_11_2
 ExpertAI_11_1:
-	IFN_HP_EQUAL	CHECK_ATTACK,100,ExpertAI_11_2
+	IFN_HP_EQUAL	CHECK_ATTACK,100,ExpertAI_11_2_2
 
-	IF_RND_UNDER	128,ExpertAI_11_2
-	INCDEC		2
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,127,ExpertAI_11_2		// バトンタッチ系
+
+	IF_RND_UNDER	128,ExpertAI_11_2_2
 ExpertAI_11_2:
+	INCDEC		2
+ExpertAI_11_2_2:
 	IF_HP_UNDER	CHECK_ATTACK,70,ExpertAI_11_3
 
 	IF_RND_UNDER	200,ExpertAI_11_end
@@ -464,13 +480,6 @@ ExpertAI_11_3:
 	CHECK_WORKWAZA_POW
 	IF_EQUAL	0,ExpertAI_11_4
 
-	//タイプでなく技別に分類が決定するので使用やめる2006.6.14
-	//--------------------------------------------------
-	//CHECK_LAST_WAZA	CHECK_DEFENCE
-	//CHECK_WORKWAZA_TYPE
-	//IFN_TABLE_JUMP	ExpertAI_11_Table,ExpertAI_11_5
-	//--------------------------------------------------
-	
 	//追加：相手が最後に出した技が特殊ならば出しにくくする
 	//2006.6.14
 	CHECK_LAST_WAZA_KIND
@@ -485,18 +494,6 @@ ExpertAI_11_5:
 ExpertAI_11_end:
 	AIEND
 
-ExpertAI_11_Table:
-	.long	POKETYPE_NORMAL
-	.long	POKETYPE_KAKUTOU
-	.long	POKETYPE_DOKU
-	.long	POKETYPE_JIMEN
-	.long	POKETYPE_HIKOU
-	.long	POKETYPE_IWA
-	.long	POKETYPE_MUSHI
-	.long	POKETYPE_GHOST
-	.long	POKETYPE_HAGANE
-	.long	0xffffffffff
-
 //---------------------------------------------------------------------------
 ExpertAI_12:	// 素早さアップ
 	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_12_1
@@ -504,12 +501,20 @@ ExpertAI_12:	// 素早さアップ
 	JUMP		ExpertAI_12_end
 
 ExpertAI_12_1:
-	IF_RND_UNDER	70,ExpertAI_12_end
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,31,ExpertAI_12_2		// ひるみ系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,150,ExpertAI_12_2		// ひるみ系（ふみつけ系）
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,98,ExpertAI_12_2		// みちづれ系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,127,ExpertAI_12_2		// バトンタッチ系
+	JUMP		ExpertAI_12_3
 
-	INCDEC		3
+ExpertAI_12_2:
+	IF_RND_UNDER	70,ExpertAI_12_3
+	INCDEC		2
+ExpertAI_12_3:
+	IF_RND_UNDER	70,ExpertAI_12_end
+	INCDEC		2
 ExpertAI_12_end:
 	AIEND
-//相手よりも遅いとき、185/255の確率で+3
 	
 //---------------------------------------------------------------------------
 ExpertAI_13:	// 特攻アップ
@@ -520,7 +525,10 @@ ExpertAI_13:	// 特攻アップ
 ExpertAI_13_1:
 	IFN_HP_EQUAL	CHECK_ATTACK,100,ExpertAI_13_2
 
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,127,ExpertAI_13_1_2		// バトンタッチ系
+
 	IF_RND_UNDER	128,ExpertAI_13_2
+ExpertAI_13_1_2:
 	INCDEC		2
 ExpertAI_13_2:
 	IF_HP_OVER	CHECK_ATTACK,70,ExpertAI_13_end
@@ -531,6 +539,7 @@ ExpertAI_13_3:
 	INCDEC		-2
 ExpertAI_13_end:
 	AIEND
+
 //---------------------------------------------------------------------------
 ExpertAI_211:	// めいそう
 ExpertAI_206:	// コスモパワー
@@ -542,7 +551,10 @@ ExpertAI_14:	// 特防アップ
 ExpertAI_14_1:
 	IFN_HP_EQUAL	CHECK_ATTACK,100,ExpertAI_14_2
 
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,127,ExpertAI_14_1_2		// バトンタッチ系
+
 	IF_RND_UNDER	128,ExpertAI_14_2
+ExpertAI_14_1_2:
 	INCDEC		2
 ExpertAI_14_2:
 	IF_HP_UNDER	CHECK_ATTACK,70,ExpertAI_14_3
@@ -556,19 +568,12 @@ ExpertAI_14_3:
 	CHECK_WORKWAZA_POW
 	IF_EQUAL	0,ExpertAI_14_4
 
-	//タイプでなく技別に分類が決定するので使用やめる2006.6.14
-	//CHECK_LAST_WAZA	CHECK_DEFENCE
-	//CHECK_WORKWAZA_TYPE
-	//IF_TABLE_JUMP	ExpertAI_14_Table,ExpertAI_14_5
-	//--------------------------------------------------
-
 	//追加：相手が最後に出した技が物理ならば出しにくくする
 	//2006.6.14
 	CHECK_LAST_WAZA_KIND
-	IF_EQUAL	WAZADATA_DMG_PHYSIC,ExpertAI_14_5//特殊
+	IF_EQUAL	WAZADATA_DMG_PHYSIC,ExpertAI_14_5//物理
 	
 	IF_RND_UNDER	60,ExpertAI_14_end
-
 
 ExpertAI_14_4:
 	IF_RND_UNDER	60,ExpertAI_14_end
@@ -576,18 +581,6 @@ ExpertAI_14_5:
 	INCDEC		-2
 ExpertAI_14_end:
 	AIEND
-
-ExpertAI_14_Table:
-	.long	POKETYPE_NORMAL
-	.long	POKETYPE_KAKUTOU
-	.long	POKETYPE_DOKU
-	.long	POKETYPE_JIMEN
-	.long	POKETYPE_HIKOU
-	.long	POKETYPE_IWA
-	.long	POKETYPE_MUSHI
-	.long	POKETYPE_GHOST
-	.long	POKETYPE_HAGANE
-	.long	0xffffffff
 
 //---------------------------------------------------------------------------
 ExpertAI_15:	// 命中率アップ	（未使用）
@@ -600,65 +593,144 @@ ExpertAI_15_1:
 	INCDEC		-2
 ExpertAI_15_end:
 	AIEND
+
 //---------------------------------------------------------------------------
 ExpertAI_16:	// 回避率アップ
-	IF_HP_UNDER	CHECK_ATTACK,90,ExpertAI_16_1
+	CHECK_TOKUSEI	CHECK_ATTACK
+	IF_EQUAL	TOKUSYU_NOOGAADO,ExpertAI_16_ng	  	// ノーガード
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_NOOGAADO,ExpertAI_16_ng	  	// ノーガード
 
-	IF_RND_UNDER	100,ExpertAI_16_1
-	INCDEC		3
+	CHECK_LAST_WAZA	CHECK_DEFENCE
+	CHECK_WORKWAZA_SEQNO
+	IF_EQUAL	17,ExpertAI_16_ng		// 必中技
+	IF_EQUAL	235,ExpertAI_16_ng		// きりふだ
+	IF_EQUAL	272,ExpertAI_16_ng		// シャドーダイブ
+
+	IF_WAZASICK	CHECK_ATTACK,WAZASICK_NOROI,ExpertAI_16_ng  	// のろい中
+	IF_WAZASICK	CHECK_ATTACK,WAZASICK_MIYABURU,ExpertAI_16_ng	//みやぶる中
+
+	CHECK_WEATHER
+	IFN_EQUAL	WEATHER_AME,ExpertAI_16_arare		//　あめ中
+
+	CHECK_LAST_WAZA	CHECK_DEFENCE
+	IF_EQUAL	152,ExpertAI_16_ng		// かみなり必中
+
+ExpertAI_16_arare:
+	CHECK_WEATHER
+	IFN_EQUAL	WEATHER_ARARE,ExpertAI_16_weather_end		//　あられ中
+
+	CHECK_LAST_WAZA	CHECK_DEFENCE
+	IF_EQUAL	260,ExpertAI_16_ng		// ふぶき必中
+
+ExpertAI_16_weather_end:
+
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,32,ExpertAI_16_1		// じこさいせい
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,132,ExpertAI_16_1		// あさのひざし
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,156,ExpertAI_16_1		// ねむる
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,162,ExpertAI_16_1		// のみこむ
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,214,ExpertAI_16_1		// はねやすめ
+
+	CHECK_TOKUSEI	CHECK_ATTACK
+	IF_EQUAL	TOKUSYU_MAZIKKUGAADO,ExpertAI_16_1	// マジックガード
+
+	IF_WAZASICK	CHECK_ATTACK,WAZASICK_YADORIGI,ExpertAI_16_atk_ng	//やどりぎ
+
+	IF_DOKUDOKU	CHECK_ATTACK,ExpertAI_16_atk_doku	                 // どくどく
+	IF_WAZASICK	CHECK_ATTACK,WAZASICK_DOKU,ExpertAI_16_atk_doku  	  // どく
+	IF_WAZASICK	CHECK_ATTACK,WAZASICK_YAKEDO,ExpertAI_16_atk_ng  	// やけど
+
+	JUMP	ExpertAI_16_1
+
+ExpertAI_16_atk_doku:
+	CHECK_TOKUSEI	CHECK_ATTACK
+	IF_EQUAL	TOKUSYU_POIZUNHIIRU,ExpertAI_16_atk_doku_ok		// ポイズンヒール	
+
+	JUMP	ExpertAI_16_atk_ng
+
+ExpertAI_16_atk_doku_ok:
+	IF_RND_UNDER	50,ExpertAI_16_1
+	INCDEC		1
+	JUMP	ExpertAI_16_1
+
+ExpertAI_16_atk_ng:
+	IF_RND_UNDER	50,ExpertAI_16_1
+	INCDEC		-1
 ExpertAI_16_1:
-	IF_PARA_UNDER	CHECK_ATTACK,PARA_AVOID,9,ExpertAI_16_2
 
-	IF_RND_UNDER	128,ExpertAI_16_2
+	IF_WAZASICK	CHECK_ATTACK,WAZASICK_NEWOHARU,ExpertAI_16_atk_ok  //ねをはる
+//@todo	IFN_WAZASICK	CHECK_ATTACK,WAZASICK_AQUARING,ExpertAI_16_atk_ok  //アクアリング
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_TABENOKOSI,ExpertAI_16_atk_ok  //　たべのこし
+
+	IFN_EQUAL	WEATHER_AME,ExpertAI_16_2		//　あめ中
+
+	CHECK_TOKUSEI	CHECK_ATTACK
+	IF_EQUAL	TOKUSYU_KANSOUHADA,ExpertAI_16_atk_ok		// かんそうはだ	
+	IF_EQUAL	TOKUSYU_AMEUKEZARA,ExpertAI_16_atk_ok		// あめうけざら
+	JUMP	ExpertAI_16_2
+
+ExpertAI_16_atk_ok:
+	IF_RND_UNDER	50,ExpertAI_16_2
+	INCDEC		1
+ExpertAI_16_2:
+
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_MAZIKKUGAADO,ExpertAI_16_3	// マジックガード
+
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_NOROI,ExpertAI_16_def_ok	// のろい
+
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,32,ExpertAI_16_3		// じこさいせい
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,132,ExpertAI_16_3		// あさのひざし
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,156,ExpertAI_16_3		// ねむる
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,162,ExpertAI_16_3		// のみこむ
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,214,ExpertAI_16_3		// はねやすめ
+
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_YADORIGI,ExpertAI_16_def_ok	//やどりぎ
+
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_YAKEDO,ExpertAI_16_def_ok  	// やけど
+	IF_DOKUDOKU	CHECK_DEFENCE,ExpertAI_16_def_doku	                 // どくどく
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_DOKU,ExpertAI_16_def_doku  	  // どく
+
+	IFN_EQUAL	WEATHER_HARE,ExpertAI_16_3		//　はれ中
+
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_KANSOUHADA,ExpertAI_16_def_ok		// かんそうはだ	
+
+	JUMP	ExpertAI_16_3
+
+ExpertAI_16_def_doku:
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_POIZUNHIIRU,ExpertAI_16_3		// ポイズンヒール	
+
+	JUMP	ExpertAI_16_def_ok
+
+ExpertAI_16_def_ok:
+	IF_RND_UNDER	50,ExpertAI_16_3
+	INCDEC		1
+	JUMP	ExpertAI_16_3
+
+ExpertAI_16_3:
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_AVOID,9,ExpertAI_16_4
+
+	IF_HP_OVER	CHECK_ATTACK,70,ExpertAI_16_4
+	IF_RND_UNDER	50,ExpertAI_16_4
 	INCDEC		-1
 
-ExpertAI_16_2:
-	IFN_DOKUDOKU	CHECK_DEFENCE,ExpertAI_16_5
-
-	IF_HP_OVER	CHECK_ATTACK,50,ExpertAI_16_4
-
-	IF_RND_UNDER	80,ExpertAI_16_5
 ExpertAI_16_4:
+	IFN_HAVE_WAZA_SEQNO	CHECK_ATTACK,127,ExpertAI_16_5		// バトンタッチ系
+
+	IF_HP_UNDER	CHECK_ATTACK,70,ExpertAI_16_5
 	IF_RND_UNDER	50,ExpertAI_16_5
-	INCDEC		3
-
+	INCDEC		1
 ExpertAI_16_5:
-	IFN_WAZASICK	CHECK_DEFENCE,WAZASICK_YADORIGI,ExpertAI_16_6	//やどりぎ
-	IF_RND_UNDER	70,ExpertAI_16_6
-	INCDEC		3
+	IF_HP_OVER	CHECK_ATTACK,50,ExpertAI_16_end
 
-ExpertAI_16_6:
-	IFN_WAZASICK	CHECK_ATTACK,WAZASICK_NEWOHARU,ExpertAI_16_6_1
-	IF_RND_UNDER	128,ExpertAI_16_7
-	INCDEC		2
-	JUMP	ExpertAI_16_7
-
-//2006.6.14アクアリング追加
-ExpertAI_16_6_1:
-//@todo	IFN_WAZASICK	CHECK_ATTACK,WAZASICK_AQUARING,ExpertAI_16_7
-	IF_RND_UNDER	128,ExpertAI_16_7
-	INCDEC		2
-	JUMP	ExpertAI_16_7
-
-
-ExpertAI_16_7:
-	IFN_WAZASICK	CHECK_DEFENCE,WAZASICK_NOROI,ExpertAI_16_8	// のろい
-	IF_RND_UNDER	70,ExpertAI_16_8
-	INCDEC		3
-ExpertAI_16_8:
-	IF_HP_OVER	CHECK_ATTACK,70,ExpertAI_16_end
-
-	IF_PARA_EQUAL	CHECK_ATTACK,PARA_AVOID,6,ExpertAI_16_end
-
-	IF_HP_UNDER	CHECK_ATTACK,40,ExpertAI_16_9
-	IF_HP_UNDER	CHECK_DEFENCE,40,ExpertAI_16_9
-	
 	IF_RND_UNDER	70,ExpertAI_16_end
-
-ExpertAI_16_9:
+ExpertAI_16_ng:
 	INCDEC		-2
 ExpertAI_16_end:
 	AIEND
+
 //---------------------------------------------------------------------------
 ExpertAI_17:	//かならずあたるok
 	IF_PARA_OVER	CHECK_DEFENCE,PARA_AVOID,10,ExpertAI_17_1
@@ -1723,23 +1795,24 @@ ExpertAI_111_mamoriyaburanai:
 	IF_WAZASICK	  CHECK_ATTACK,WAZASICK_MEROMERO,     ExpertAI_111_ng1	//メロメロ
 	IF_WAZASICK	  CHECK_ATTACK,WAZASICK_YADORIGI,     ExpertAI_111_ng1	// やどりぎ
 	IF_WAZASICK	  CHECK_ATTACK,WAZASICK_AKUBI,        ExpertAI_111_ng1	// あくび
+
+	IF_WAZASICK	  CHECK_DEFENCE,WAZASICK_NOROI,       ExpertAI_111_ok		// のろい
+	IF_WAZASICK	  CHECK_DEFENCE,WAZASICK_HOROBINOUTA, ExpertAI_111_ok   // ほろび
+
 	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,32,ExpertAI_111_ng1		// じこさいせい
 	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,156,ExpertAI_111_ng1		// ねむる
 
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,132,ExpertAI_111_ng1		// あさのひざし
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,162,ExpertAI_111_ng1		// のみこむ
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,214,ExpertAI_111_ng1		// はねやすめ
+
 	IF_DOKUDOKU		CHECK_DEFENCE,                      ExpertAI_111_ok   // どくどく
-	IF_WAZASICK	  CHECK_DEFENCE,WAZASICK_NOROI,       ExpertAI_111_ok		// のろい
-	IF_WAZASICK	  CHECK_DEFENCE,WAZASICK_HOROBINOUTA, ExpertAI_111_ok   // ほろび
 	IF_WAZASICK	  CHECK_DEFENCE,WAZASICK_MEROMERO,    ExpertAI_111_ok   //メロメロ
 	IF_WAZASICK	  CHECK_DEFENCE,WAZASICK_YADORIGI,    ExpertAI_111_ok   // やどりぎ
 	IF_WAZASICK	  CHECK_DEFENCE,WAZASICK_AKUBI,       ExpertAI_111_ok		// あくび
 	
 	CHECK_BTL_RULE
 	IF_EQUAL		BTL_RULE_DOUBLE,ExpertAI_111_ok							//2VS2
-	
-	//相手がロックオンをしてなかったら守る：ＡＧＢから間違っていると思われるので修正2006.8.9
-	//CHECK_LAST_WAZA	CHECK_DEFENCE
-	//CHECK_WORKWAZA_SEQNO
-	//IFN_EQUAL	94,ExpertAI_111_ok					
 	
 	//自分がロックオンされていたら守る
 	IF_WAZASICK	  CHECK_ATTACK,WAZASICK_MUSTHIT_TARGET,ExpertAI_111_ok	//ロックオンされ中
@@ -1917,6 +1990,7 @@ ExpertAI_136_1:
 
 	CHECK_TOKUSEI	CHECK_ATTACK
 	IF_EQUAL	TOKUSYU_AMEUKEZARA,ExpertAI_136_ok		// あめうけざら
+	IF_EQUAL	TOKUSYU_KANSOUHADA,ExpertAI_136_ok		// かんそうはだ
 	IFN_EQUAL	TOKUSYU_URUOIBODHI,ExpertAI_136_end		// うるおいボディでない
 	IF_POKESICK	CHECK_ATTACK,ExpertAI_136_ok		// 状態異常時
 	JUMP		ExpertAI_136_end
@@ -2770,6 +2844,7 @@ ExpertAI_195_1:
 
 	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,32,ExpertAI_195_ok1		// じこさいせい
 	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,156,ExpertAI_195_ok1		// ねむる
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,214,ExpertAI_195_ok1		// はねやすめ
 
 	JUMP		ExpertAI_195_ok2	
 
