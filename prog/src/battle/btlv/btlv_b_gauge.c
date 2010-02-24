@@ -123,7 +123,7 @@ BTLV_BALL_GAUGE_WORK* BTLV_BALL_GAUGE_Create( const BTLV_BALL_GAUGE_PARAM* bbgp,
   bbgw->charID = GFL_CLGRP_CGR_Register( handle, NARC_battgra_wb_gauge_m_ball_NCGR, FALSE, CLSYS_DRAW_MAIN, bbgw->heapID );
   bbgw->cellID = GFL_CLGRP_CELLANIM_Register( handle, NARC_battgra_wb_gauge_m_ball_NCER, NARC_battgra_wb_gauge_m_ball_NANR,
                                               bbgw->heapID );
-  bbgw->plttID = GFL_CLGRP_PLTT_Register( handle, NARC_battgra_wb_gauge_m_ball_NCLR, CLSYS_DRAW_MAIN, 0x40, bbgw->heapID );
+  bbgw->plttID = GFL_CLGRP_PLTT_Register( handle, NARC_battgra_wb_gauge_m_ball_NCLR, CLSYS_DRAW_MAIN, BTLV_OBJ_PLTT_BALL_GAUGE, bbgw->heapID );
   PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
                            GFL_CLGRP_PLTT_GetAddr( bbgw->plttID, CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
 
