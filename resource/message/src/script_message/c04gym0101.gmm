@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T22:49:11"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T13:05:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="177" right="2001" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -485,7 +485,7 @@ princess_01</attribute>
 		<language name="JPN_KANJI" width="256">あたくしも　カミツレさまに
 鍛えられた　ポケモントレーナー[BE:01:ページ切り替え（クリア）]
 このジムに　ふさわしい　強さ
-ふさわしい　闘い方を　みせます[BE:01:ページ切り替え（クリア）]</language>
+ふさわしい　戦い方を　みせます[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04gym0101_princess1_03">
@@ -598,7 +598,8 @@ princess_01</attribute>
 	</row>
 
 	<row id="msg_c04gym0101_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>ジムバッジ取得前</comment>
+		<comment>BGメッセージ
+・ジムバッジ取得前</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ライモン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　カミツレ
@@ -609,7 +610,8 @@ princess_01</attribute>
 	</row>
 
 	<row id="msg_c04gym0101_statue_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>ジムバッジ取得後</comment>
+		<comment>BGメッセージ
+・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ライモン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　カミツレ
@@ -622,7 +624,8 @@ princess_01</attribute>
 	</row>
 
 	<row id="msg_c04gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>？？後</comment>
+		<comment>BGメッセージ
+・r05チャンピオンイベント後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ライモン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　カミツレ
