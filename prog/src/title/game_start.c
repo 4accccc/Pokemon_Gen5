@@ -22,6 +22,7 @@
 #include "msg/msg_debugname.h"
 #include "net_app/union/union_beacon_tool.h"
 #include "system/gfl_use.h"
+#include "demo/demo3d.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
 
@@ -213,6 +214,7 @@ typedef struct
   INTR_SAVE_CONTROL* intr_save;
   GFL_PROCSYS* procsys_up;
   SOUNDMAN_PRESET_HANDLE* bgm_handle;
+  DEMO3D_PARAM demo3dParam;
   u32 voice_load_id;
 }GAMESTART_FIRST_WORK;
 
@@ -306,6 +308,8 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     SEQ_INPUT_NAME_RETAKE_YESNO,
     SEQ_INPUT_NAME_RETAKE_CHECK,
     SEQ_INPUT_NAME_RETAKE_CHECK_WAIT,
+    SEQ_3D_DEMO,
+    SEQ_3D_DEMO_WAIT,
     SEQ_END,
   };
   
@@ -382,12 +386,24 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     // 名前入力復帰判定
     if( work->introParam.retcode == INTRO_RETCODE_NORMAL )
     {
-      (*seq) = SEQ_END;
+      (*seq) = SEQ_3D_DEMO;
     }
     else
     {
       // 名前入力に復帰
       (*seq) = SEQ_INPUT_NAME;
+    }
+    break;
+  case SEQ_3D_DEMO:
+    // 3Dデモ呼び出し
+    work->demo3dParam.demo_id     = DEMO3D_ID_INTRO_TOWN;
+    work->demo3dParam.start_frame = 0;
+    GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(demo3d), &Demo3DProcData, &work->demo3dParam );
+    (*seq) = SEQ_3D_DEMO_WAIT;
+    break;
+  case SEQ_3D_DEMO_WAIT:
+    if( up_status != GFL_PROC_MAIN_VALID ){
+      (*seq) = SEQ_END;
     }
     break;
   case SEQ_END:
