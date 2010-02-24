@@ -2070,6 +2070,7 @@ static void WRITEBLOCK_Control_SetOneBlock( FLDMAPPER* g3Dmapper, GFL_G3D_MAP* g
 //-----------------------------------------------------------------------------
 static BOOL WRITEBLOCK_Control_IsWriteBlockIndex( const FLDMAPPER* g3Dmapper, u32 index, FLDMAPPER_DRAW_TYPE draw_type )
 {
+  // ここを書き換えれば、描画するブロックのルールを変える事ができます。
   
   if( draw_type == FLDMAPPER_DRAW_TOP ){
 
