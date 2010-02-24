@@ -31,7 +31,7 @@
 #define _BRIGHTNESS_SYNC (0)  // フェードのＳＹＮＣは要調整
 
 // サウンド仮想ラベル
-#define GEAR_SE_DECIDE_ (SEQ_SE_SYS_69)
+#define GEAR_SE_DECIDE_ (SEQ_SE_DECIDE3)
 #define GEAR_SE_CANCEL_ (SEQ_SE_SYS_70)
 
 #define MSG_COUNTDOWN_FRAMENUM (30*3)
