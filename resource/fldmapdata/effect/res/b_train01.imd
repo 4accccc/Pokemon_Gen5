@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-01-15T16:15:57" source="b_train_base.mb"/>
+	<create user="unno" host="W00199" date="2010-02-24T16:47:32" source="b_train_base.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-01-15T16:15:57" source="b_train_base.mb"/>
+<original_create user="unno" host="W00199" date="2010-02-24T16:47:32" source="b_train_base.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -35,7 +35,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_a_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_a.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_a.tga"
 	>
 		<bitmap size="128">
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
@@ -61,7 +61,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_b_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_b.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_b.tga"
 	>
 		<bitmap size="64">
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
@@ -79,7 +79,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_c_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_c.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_c.tga"
 	>
 		<bitmap size="128">
 			aaa1 aaaa aaaa aaaa aaa1 aaaa aaaa aaaa
@@ -105,7 +105,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_d1_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_d1.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_d1.tga"
 	>
 		<bitmap size="128">
 			ffff ffff ffff ffff 15af 0000 0000 fe95
@@ -131,7 +131,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_f_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_f.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_f.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -142,7 +142,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_g_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_g.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_g.tga"
 	>
 		<bitmap size="16">
 			1694 1694 1694 1694 1694 1694 1694 1694
@@ -154,7 +154,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="lb_door_a_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_door_a.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_door_a.tga"
 	>
 		<bitmap size="256">
 			4444 4444 4444 4444 4444 4444 4444 4444
@@ -196,7 +196,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_ent_a.1_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_ent_a.1.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_ent_a.1.tga"
 	>
 		<bitmap size="32">
 			05af 0000 05af 0000 05af 0000 05af 0000
@@ -210,7 +210,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="lb_win_c.1_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_win_c.1.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_win_c.1.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -244,7 +244,7 @@
 		6f7a 6738 7ffe 7fff
 	</tex_palette>
 	<tex_palette index="3" name="lb_body_d1_pl" color_size="4">
-		5e60 6280 66a1 6aa2
+		3ae0 3f00 4321 4742
 	</tex_palette>
 	<tex_palette index="4" name="lb_body_f_pl" color_size="4">
 		4630 7fff 7fff 7fff
