@@ -101,6 +101,7 @@ static void panel_IconObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 icon);
 static u8 panel_FrameColorGet( GAMEBEACON_INFO* info );
 static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str );
+static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp );
 static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
 
 static void list_UpDownReq( BEACON_VIEW_PTR wk, u8 dir );
@@ -164,6 +165,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   POINT tp;
   BOOL my_power;
 
+#if 0
   if( wk->my_data.power != GPOWER_ID_NULL ){
     my_power = GPOWER_Check_MyPower();
     if( wk->my_power_f != my_power ){
@@ -171,6 +173,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
       wk->my_power_f = my_power; 
     }
   }
+#endif
 
 #ifdef PM_DEBUG
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
@@ -1062,6 +1065,21 @@ static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str )
 }
 
 /*
+ *  @brief  パネル　名前文字列描画
+ */
+static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp )
+{
+  GFL_BMP_Clear( pp->msgOam.bmp, 0 );
+
+  if( 1 ){
+  	PRINTSYS_PrintColor( pp->msgOam.bmp, 0, 0, pp->name, wk->fontHandle, FCOL_FNTOAM_G );
+  }else{
+  	PRINTSYS_PrintColor( pp->msgOam.bmp, 0, 0, pp->name, wk->fontHandle, FCOL_FNTOAM_W );
+  }
+	BmpOam_ActorBmpTrans( pp->msgOam.oam );
+}
+
+/*
  *  @brief  パネル　ランク描画
  */
 static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
@@ -1089,7 +1107,7 @@ static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* inf
   //メッセージバッファ初期化
   GFL_STR_ClearBuffer( pp->str );
   //プレイヤー名転送
-  panel_MsgPrint( wk, pp, pp->name );
+  panel_NamePrint( wk, pp );
   //ランクセット
   panel_RankSet( wk, pp, info);
 
@@ -1719,7 +1737,7 @@ static void tcb_IconEffect( GFL_TCBL *tcb , void* tcb_wk)
   if( twk->wait-- > 0 ){
     return;
   }
-  panel_MsgPrint( twk->bvp, twk->pp, twk->pp->name ); 
+  panel_NamePrint( twk->bvp, twk->pp ); 
   panel_IconVisibleSet( twk->pp, FALSE );
   GFL_TCBL_Delete(tcb);
 }

@@ -467,11 +467,30 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
   draw_BeaconData( wk, &bp->prof[0], wk->str_tmp,
       BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 0 );
   //ŽdŽ–
-  draw_BeaconData( wk, &bp->prof[1], wk->str_tmp,
+  {
+    u8 job = GAMEBEACON_Get_Job(info);
+    if( job == GAMEBEACON_DETAILS_JOB_NULL ){
+      GFL_STR_ClearBuffer( wk->str_expand );
+    }else{
+      WORDSET_RegisterJobName( wk->wset, 0, job);
+    }
+    print_GetMsgToBuf( wk, msg_prof_job );
+    draw_BeaconData( wk, &bp->prof[1], wk->str_expand,
       BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 1 );
+  }
   //Žï–¡
-  draw_BeaconData( wk, &bp->prof[2], wk->str_tmp,
-      BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 0 );
+  {
+    u8 hobby = GAMEBEACON_Get_Hobby( info );
+    if( hobby == GAMEBEACON_DETAILS_HOBBY_NULL ){
+      GFL_STR_ClearBuffer( wk->str_expand );
+    }else{
+      WORDSET_RegisterJobName( wk->wset, 0, hobby );
+    }
+    print_GetMsgToBuf( wk, msg_prof_hobby );
+    draw_BeaconData( wk, &bp->prof[2], wk->str_expand,
+        BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 0 );
+  }
+
   //ƒvƒŒƒCŽžŠÔ
   {
     u16 hour,min;
