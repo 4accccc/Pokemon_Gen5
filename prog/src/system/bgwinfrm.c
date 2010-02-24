@@ -167,9 +167,18 @@ void BGWINFRM_Add( BGWINFRM_WORK * wk, u32 index, u32 frm, u32 sx, u32 sy )
 //--------------------------------------------------------------------------------------------
 void BGWINFRM_FrameSet( BGWINFRM_WORK * wk, u32 index, u16 * scr )
 {
+  BGWINFRM * win;
+
+  GF_ASSERT_MSG( index<wk->max , "index‚ÌŽw’è‚ª‰Šú‰»Žž‚ÌÅ‘å”‚ð’´‚¦‚Ä‚¢‚Ü‚·\n");
+
+  win = &wk->win[index];
+
+  GFL_STD_MemCopy16( scr, win->scr, win->sx*win->sy*2 );
+/*
 	BGWINFRM * win = &wk->win[index];
 
 	GFL_STD_MemCopy16( scr, win->scr, win->sx*win->sy*2 );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
