@@ -330,6 +330,15 @@ EVENT_START ev_union
     ENDIF
   ENDIF
 
+  // 無線通信 ON・OFF チェック
+  IF $room_in == TRUE THEN
+    _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN
+      _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
+      $room_in = FALSE
+    ENDIF
+  ENDIF
+
   // フィールドマップ通信終了処理
   IF $room_in == TRUE THEN
     _FIELD_COMM_EXIT_EVENT_CALL( ret )
