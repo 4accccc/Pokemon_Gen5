@@ -332,6 +332,9 @@ void DWS_SYS_Delete(DWS_SYS* dws)
 {
   GFL_CAMADJUST_Delete(dws->gflCamAdjust);
 
+  GFL_G3D_LIGHT_Delete(dws->g3Dlightset);
+  GFL_G3D_CAMERA_Delete(dws->g3Dcamera);
+
   GFL_MSG_Delete(dws->msgManager);
   GFL_FONT_Delete(dws->fontHandle);
 

@@ -136,7 +136,6 @@ extern const GFL_PROC_DATA DebugWatanabeSample3ProcData;
 extern const GFL_PROC_DATA DebugWatanabeSample4ProcData;
 extern const GFL_PROC_DATA DebugWatanabeSample5ProcData;
 extern const GFL_PROC_DATA DebugWatanabeSample6ProcData;
-extern const GFL_PROC_DATA Earth_Demo_proc_data;
 
 static const DEBUGITEM_LIST debugItemList[] = {
   //{DEBUG_TETSU_MENU1, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample1ProcData},
@@ -144,8 +143,7 @@ static const DEBUGITEM_LIST debugItemList[] = {
   {DEBUG_TETSU_MENU3, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample3ProcData},
   {DEBUG_TETSU_MENU4, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample4ProcData},
   {DEBUG_TETSU_MENU5, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample5ProcData},
-  //{DEBUG_TETSU_MENU6, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample6ProcData},
-  {DEBUG_TETSU_MENU6, FS_OVERLAY_ID(watanabe_sample), &Earth_Demo_proc_data},
+  {DEBUG_TETSU_MENU6, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample6ProcData},
 };
 
 //------------------------------------------------------------------
