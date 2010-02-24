@@ -234,6 +234,8 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
     work->boxName[i] = GFL_HEAP_AllocClearMemory( work->heapId , 20 );  //8•¶Žš+EOM
   }
   GFUser_SetVIntrFunc( MB_CHILD_VBlank );
+
+  PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
 }
 
 //--------------------------------------------------------------
@@ -561,6 +563,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       GFUser_ResetVIntrFunc();
       MB_MSG_MessageTerm( work->msgWork );
       MB_CHILD_TermGraphic( work );
+      PMSND_StopBGM();
       PMSND_Exit();
 
       work->msgWork = NULL;
@@ -609,8 +612,10 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
 
     GFUser_SetVIntrFunc( MB_CHILD_VBlank );
     MB_CHILD_ErrCheck( work , TRUE );
+
+    PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
     break;
-    
+  
   case MCS_CAPTURE_FADEIN:
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
                 WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
@@ -907,6 +912,10 @@ static void MB_CHILD_InitGraphic( MB_CHILD_WORK *work )
     MB_CHILD_SetupBgFunc( &header_sub3  , MB_CHILD_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
     
   }
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+  GFL_NET_ReloadIcon();
+
   
 }
 

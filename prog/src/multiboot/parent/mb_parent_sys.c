@@ -454,6 +454,8 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     else
     if( MB_COMM_GetChildState(work->commWork) == MCCS_NEXT_GAME )
     {
+      //‚±‚±‚É—ˆ‚½‚Æ‚¢‚¤‚±‚Æ‚Í•ß‚Ü‚¦‚Ä‚¢‚È‚¢I
+      MISC_SetPalparkFinishState( work->miscSave,PALPARK_FINISH_NO_GET );
       work->state = MPS_SEND_LEAST_BOX;
     }
     break;

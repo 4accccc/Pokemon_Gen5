@@ -230,7 +230,7 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
             isBlockAnyPoke = TRUE;
           }
         }
-        if( isHitAnyPoke == FALSE )
+        if( isHitAnyPoke == TRUE )
         {
           VecFx32 effPos = ballWork->pos;
           

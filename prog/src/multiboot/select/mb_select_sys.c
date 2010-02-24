@@ -293,6 +293,10 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
   work->exitWaitCell = NULL;
   
   GFL_ARC_CloseDataHandle( arcHandle );
+
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+  GFL_NET_ReloadIcon();
+
 }
 
 //--------------------------------------------------------------
@@ -905,6 +909,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
         }
         GFL_CLACT_WK_SetAnmSeq( work->clwkChangeTray[0] , 5 );
         GFL_CLACT_WK_SetAutoAnmFlag( work->clwkChangeTray[0] , TRUE );
+        PMSND_PlaySE( SEQ_SE_SELECT1 );
       }
       else
       if( ret == 1 )
@@ -923,6 +928,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
         }
         GFL_CLACT_WK_SetAnmSeq( work->clwkChangeTray[1] , 6 );
         GFL_CLACT_WK_SetAutoAnmFlag( work->clwkChangeTray[1] , TRUE );
+        PMSND_PlaySE( SEQ_SE_SELECT1 );
       }
       else
       if( ret == 2 )
@@ -956,6 +962,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
             MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
             
             MB_SEL_POKE_SetAlpha( work , work->boxPoke[idx] , TRUE );
+            PMSND_PlaySE( SEQ_SE_SELECT1 );
           }
         }
       }
@@ -969,6 +976,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
         work->exitWaitCell = work->clwkRetIcon;
         //TODO 確認MSG？
         work->initWork->isCancel = TRUE;
+        PMSND_PlaySE( SEQ_SE_CANCEL1 );
       }
       work->befTpx = tpx;
       work->befTpy = tpy;
@@ -999,6 +1007,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
           work->holdPoke = work->selPoke[trayRet];
           MB_SEL_POKE_SetPri( work , work->selPoke[trayRet] , MSPT_HOLD );
           MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->initWork->selectPoke[trayRet][0]][work->initWork->selectPoke[trayRet][1]] );
+          PMSND_PlaySE( SEQ_SE_SELECT1 );
         }
       }
     }
@@ -1030,6 +1039,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
 
           //トレーの上を通るので例外的に表示優先を変える
           MB_SEL_POKE_SetPri( work , work->holdPoke , MSPT_TRAY );
+          PMSND_PlaySE( SEQ_SE_CANCEL1 );
         }
       }
       else
@@ -1099,6 +1109,7 @@ static const BOOL MB_SELECT_CheckDropTray( MB_SELECT_WORK *work )
                              MB_SEL_POKE_GetPosX( work->selPoke[i] ),
                              MB_SEL_POKE_GetPosY( work->selPoke[i] ),
                              MB_SEL_SET_TRAY_ICON_CNT , FALSE );
+        PMSND_PlaySE( SEQ_SE_DECIDE1 );
         return TRUE;
       }
       else
@@ -1202,6 +1213,7 @@ static const BOOL MB_SELECT_CheckDropBox( MB_SELECT_WORK *work )
                              -32,work->befTpy,
                              MB_SEL_RETURN_BOX_ICON_CNT , TRUE );
       }
+      PMSND_PlaySE( SEQ_SE_CANCEL1 );
       
       return TRUE;
     }
