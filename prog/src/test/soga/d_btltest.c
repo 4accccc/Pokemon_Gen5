@@ -35,8 +35,11 @@
 #include "battle/btlv/btlv_b_gauge.h"
 
 #include "tr_tool/tr_tool.h"
+#include "tr_tool/trtype_def.h"
 
 #include "battle/battle.h"
+
+#include "field/zonedata.h"
 
 #define BTLV_MCSS_1vs1    //1vs1•`‰æ
 
@@ -217,11 +220,16 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
     BTL_FIELD_SITUATION bfs = { 
       0, 0, 0, 0, 0
     };
+    u16 tr_type[] = { 
+      TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
+    };
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, wk->heapID );
 
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, wk->heapID );
-
-    BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, wk->small_font, wk->heapID );
+    ZONEDATA_Open( wk->heapID );
+    BTLV_EFFECT_Init( besp, wk->font, wk->heapID );
     wk->bcw = BTLV_EFFECT_GetCameraWork();
+    GFL_HEAP_FreeMemory( besp );
   }
 
   set_pokemon( wk );

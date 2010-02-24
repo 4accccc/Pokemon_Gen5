@@ -25,6 +25,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "field/zonedata.h"
+#include "item/itemsym.h"
 
 #include "debug/gf_mcs.h"
 
@@ -283,12 +284,17 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
   //戦闘エフェクト初期化
   {
     BTL_FIELD_SITUATION bfs = { 
-      0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0
     };
+    u16 tr_type[] = { 
+      TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
+    };
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, evw->heapID );
 
-    ZONEDATA_Open( evw->heapID );
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, evw->heapID );
-    BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, evw->small_font, evw->heapID );
+    ZONEDATA_Open( evw->heapID );
+    BTLV_EFFECT_Init( besp, evw->font, evw->heapID );
+    GFL_HEAP_FreeMemory( besp );
   }
 
   evw->mons_no = MONSNO_WARUBIRU;
@@ -612,7 +618,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       else if( cont == PAD_BUTTON_Y ){
         BTLV_EFFVM_PARAM param;
 
-        param.item_no = 0;
+        param.item_no = ITEM_MASUTAABOORU;
         param.yure_cnt = GFUser_GetPublicRand( 4 );
         param.get_success = FALSE;
 
@@ -621,7 +627,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       else if( cont == PAD_BUTTON_X ){
         BTLV_EFFVM_PARAM param;
 
-        param.item_no = 0;
+        param.item_no = ITEM_MASUTAABOORU;
         param.yure_cnt = 3;
         param.get_success = TRUE;
 

@@ -22,6 +22,9 @@
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
+#include "poke_tool/natsuki.h"
+
+#include "field/zonedata.h"
 
 #include "font/font.naix"
 
@@ -263,33 +266,23 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
   }
 
   wk->seq_no = 0;
-#if 1
   {
     BTL_FIELD_SITUATION bfs = { 
       0, 0, 0, 0, 0
     };
+    u16 tr_type[] = { 
+      TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
+    };
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, wk->heapID );
 
-    wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, wk->heapID );
-    BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, wk->font, wk->heapID );
+    ZONEDATA_Open( wk->heapID );
+    BTLV_EFFECT_Init( besp, wk->font, wk->heapID );
     wk->bcw = BTLV_EFFECT_GetCameraWork();
+    GFL_HEAP_FreeMemory( besp );
   }
 
   set_pokemon( wk );
-
-#else
-  {
-    BTL_FIELD_SITUATION bfs = { 
-      0, 0, 0, 0, 0
-    };
-
-    BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, wk->small_font, wk->heapID );
-    wk->bcw = BTLV_EFFECT_GetCameraWork( wk->bew );
-  }
-
-  set_pokemon( wk );
-
-#endif
 
   //2D‰æ–Ê‰Šú‰»
   {
@@ -368,6 +361,10 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
     wk->clwk = GFL_CLACT_WK_Create( wk->cl_unit, wk->charID, wk->plttID, wk->cellID, &obj, CLSYS_DEFREND_MAIN, wk->heapID );
   }
 
+  OS_TPrintf("fusigidane no_jump:%d dagutorio no_jump:%d\n",
+              POKETOOL_GetPersonalParam( MONSNO_HUSIGIDANE, 0, POKEPER_ID_no_jump ),
+              POKETOOL_GetPersonalParam( MONSNO_DAGUTORIO, 0, POKEPER_ID_no_jump ) );
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -407,6 +404,25 @@ static GFL_PROC_RESULT CaptureTestProcMain( GFL_PROC * proc, int * seq, void * p
     wk->timer_flag ^= 1;
   }
 
+  if( trg & PAD_BUTTON_A )
+  { 
+    OS_TPrintf("friend:%d\n",PP_Get( wk->pp, ID_PARA_friend, NULL ) );
+    NATSUKI_Calc( wk->pp, CALC_NATSUKI_LEVELUP, 0, wk->heapID );
+    OS_TPrintf("friend:%d\n",PP_Get( wk->pp, ID_PARA_friend, NULL ) );
+    NATSUKI_Calc( wk->pp, CALC_NATSUKI_BOSS_BATTLE, 0, wk->heapID );
+    OS_TPrintf("friend:%d\n",PP_Get( wk->pp, ID_PARA_friend, NULL ) );
+    NATSUKI_Calc( wk->pp, CALC_NATSUKI_HINSHI, 0, wk->heapID );
+    OS_TPrintf("friend:%d\n",PP_Get( wk->pp, ID_PARA_friend, NULL ) );
+    NATSUKI_Calc( wk->pp, CALC_NATSUKI_LEVEL30_HINSHI, 0, wk->heapID );
+    OS_TPrintf("friend:%d\n",PP_Get( wk->pp, ID_PARA_friend, NULL ) );
+    NATSUKI_Calc( wk->pp, CALC_NATSUKI_MUSICAL, 0, wk->heapID );
+    OS_TPrintf("friend:%d\n",PP_Get( wk->pp, ID_PARA_friend, NULL ) );
+    NATSUKI_CalcUseItem( wk->pp, ITEM_TAURIN, 0, wk->heapID );
+    OS_TPrintf("friend:%d\n",PP_Get( wk->pp, ID_PARA_friend, NULL ) );
+    NATSUKI_CalcTsurearuki( wk->pp, 0, wk->heapID );
+    OS_TPrintf("friend:%d\n",PP_Get( wk->pp, ID_PARA_friend, NULL ) );
+  }
+
   BTLV_EFFECT_Main();
 
   if( pad == PAD_BUTTON_EXIT ){
@@ -433,6 +449,7 @@ static GFL_PROC_RESULT CaptureTestProcExit( GFL_PROC * proc, int * seq, void * p
   GFL_UI_KEY_SetRepeatSpeed( wk->key_repeat_speed, wk->key_repeat_wait );
 
   BTLV_EFFECT_Exit();
+  ZONEDATA_Close();
 
   GFL_CLACT_SYS_Delete();
 
@@ -544,34 +561,34 @@ static  void  MoveCamera( SOGA_WORK *wk )
 static  void  set_pokemon( SOGA_WORK *wk )
 {
   //POKEMON_PARAM¶¬
-  POKEMON_PARAM *pp = GFL_HEAP_AllocMemory( wk->heapID, POKETOOL_GetWorkSize() );
-  PP_SetupEx( pp, 0, 0, 0, 0, 255 );
+  wk->pp = GFL_HEAP_AllocMemory( wk->heapID, POKETOOL_GetWorkSize() );
+  PP_SetupEx( wk->pp, 0, 0, 0, 0, 255 );
 
   if( wk->timer_flag ){
-    PP_Put( pp, ID_PARA_monsno, wk->mons_no );
-    PP_Put( pp, ID_PARA_id_no, 0x10 );
-    BTLV_MCSS_Add( wk->bmw, pp, pokemon_pos_table[ wk->position ][ 0 ] );
-    BTLV_MCSS_Add( wk->bmw, pp, pokemon_pos_table[ wk->position ][ 1 ] );
+    PP_Put( wk->pp, ID_PARA_monsno, wk->mons_no );
+    PP_Put( wk->pp, ID_PARA_id_no, 0x10 );
+    BTLV_MCSS_Add( wk->bmw, wk->pp, pokemon_pos_table[ wk->position ][ 0 ] );
+    BTLV_MCSS_Add( wk->bmw, wk->pp, pokemon_pos_table[ wk->position ][ 1 ] );
   }
   else{
 #ifdef BTLV_MCSS_1vs1
 //1vs1
-    PP_Put( pp, ID_PARA_monsno, MONSNO_RIZAADON );
-    PP_Put( pp, ID_PARA_id_no, 0x10 );
-    BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
-    BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
+    PP_Put( wk->pp, ID_PARA_monsno, MONSNO_RIZAADON );
+    PP_Put( wk->pp, ID_PARA_id_no, 0x10 );
+    BTLV_EFFECT_SetPokemon( wk->pp, BTLV_MCSS_POS_AA );
+    BTLV_EFFECT_SetPokemon( wk->pp, BTLV_MCSS_POS_BB );
 #else
 //2vs2
-    PP_Put( pp, ID_PARA_monsno, MONSNO_ARUSEUSU + 1 );
-    PP_Put( pp, ID_PARA_id_no, 0x10 );
-    BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_A );
-    BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_B );
-    PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
-    BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_C );
-    BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_D );
+    PP_Put( wk->pp, ID_PARA_monsno, MONSNO_ARUSEUSU + 1 );
+    PP_Put( wk->pp, ID_PARA_id_no, 0x10 );
+    BTLV_EFFECT_SetPokemon( wk->pp, BTLV_MCSS_POS_A );
+    BTLV_EFFECT_SetPokemon( wk->pp, BTLV_MCSS_POS_B );
+    PP_Put( wk->pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
+    BTLV_EFFECT_SetPokemon( wk->pp, BTLV_MCSS_POS_C );
+    BTLV_EFFECT_SetPokemon( wk->pp, BTLV_MCSS_POS_D );
 #endif
   }
-  GFL_HEAP_FreeMemory( pp );
+  //GFL_HEAP_FreeMemory( pp );
 }
 
 static  void  del_pokemon( SOGA_WORK *wk )

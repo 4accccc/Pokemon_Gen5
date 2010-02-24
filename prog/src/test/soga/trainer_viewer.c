@@ -328,12 +328,17 @@ static GFL_PROC_RESULT TrainerViewerProcInit( GFL_PROC * proc, int * seq, void *
   //戦闘エフェクト初期化
   {
     BTL_FIELD_SITUATION bfs = { 
-      0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0
     };
+    u16 tr_type[] = { 
+      TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
+    };
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, tvw->heapID );
 
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, tvw->heapID );
     ZONEDATA_Open( tvw->heapID );
-    BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, tvw->small_font, tvw->heapID );
+    BTLV_EFFECT_Init( besp, tvw->font, tvw->heapID );
+    GFL_HEAP_FreeMemory( besp );
   }
 
   //2D画面初期化
