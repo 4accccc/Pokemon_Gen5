@@ -404,7 +404,12 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max = now_time;
   }
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count >= DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME ){
-    OS_TPrintf( " ave tick %d over_count %d max %d\n", DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count, DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount, DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max );
+    OS_TPrintf( " ave tick %d", 
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count );
+    OS_TPrintf( " Over %d",
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount );
+    OS_TPrintf( " Max %d\n",
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max );
 
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave = 0;
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0;
@@ -413,7 +418,7 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
   }
 
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_NOW_TIME_DRAW_KEY & GFL_UI_KEY_GetCont() ){
-    OS_TPrintf( " now tick %d\n", now_time );
+    OS_TPrintf( " now tick %ld\n", now_time );
   }
 }
 
