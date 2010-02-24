@@ -22,19 +22,22 @@ require "answer.rb"                     # for Answer
 require "question.rb"                   # for Question
 require "topic.rb"                      # for Topic
 require "hobby.rb"                      # for Hobby
+require "job.rb"                        # for Job
 require "gmm_generator.rb"              # for GenerateGMM
 
 FILENAME_ANSWER_DATA   = ARGV[1]  # 回答データ
 FILENAME_QUESTION_DATA = ARGV[2]  # 質問データ
 FILENAME_TOPIC_DATA    = ARGV[3]  # 調査項目データ
 FILENAME_HOBBY_DATA    = ARGV[4]  # 趣味データ
-GMM_OUTPUT_DEST        = ARGV[5]  # gmmファイルの出力先
-DEBUG_OUTPUT_DEST      = ARGV[6]  # デバッグデータの出力先
+FILENAME_JOB_DATA      = ARGV[5]  # 仕事データ
+GMM_OUTPUT_DEST        = ARGV[6]  # gmmファイルの出力先
+DEBUG_OUTPUT_DEST      = ARGV[7]  # デバッグデータの出力先
 
 answers   = Array.new  # 全回答データ
 questions = Array.new  # 全質問データ
 topics    = Array.new  # 全調査項目データ
 hobbies   = Array.new  # 趣味リスト
+jobs      = Array.new  # 職業リスト
 
 
 #===================================================================================
@@ -230,6 +233,33 @@ end
 
 #===================================================================================
 # ■main
+# □職業リストの取得
+#=================================================================================== 
+# 列インデックス
+COLUMN_JOB_ID        = 0  # 職業ID
+COLUMN_JOB_ID_LAVEL  = 1  # 職業IOラベル名
+COLUMN_JOB_JPN       = 3  # 職業文字列 (かな)
+COLUMN_JOB_JPN_KANJI = 4  # 職業文字列 (漢字)
+# 行インデックス
+ROW_FIRST_JOB = 2  # 先頭データ
+
+# 全ての文字列を取得
+fileReader = TabSeparatedFileReader.new
+fileReader.ReadFile( FILENAME_JOB_DATA )
+ROW_FIRST_JOB.upto( fileReader.GetRowNum - 1 ) do |rowIdx|
+  id              = fileReader.GetCell( rowIdx, COLUMN_JOB_ID ).to_i
+  idLavel         = fileReader.GetCell( rowIdx, COLUMN_JOB_ID_LAVEL ).strip
+  stringJPN       = fileReader.GetCell( rowIdx, COLUMN_JOB_JPN ).strip
+  stringJPN_KANJI = fileReader.GetCell( rowIdx, COLUMN_JOB_JPN_KANJI ).strip
+  job = Job.new
+  job.SetID( id, idLavel )
+  job.SetString( stringJPN, stringJPN_KANJI )
+  job.OutputDebug( DEBUG_OUTPUT_DEST )
+  jobs << job
+end
+
+#===================================================================================
+# ■main
 # □アンケート回答インデックス データ出力
 #===================================================================================
 answerNum       = Array.new  # 項目数
@@ -352,6 +382,47 @@ outData << "#define HOBBY_ID_DUMMY (0xff)              // 趣味IDのダミー値"
 
 # 出力
 file = File.open( "hobby_id.h", "w" )
+file.puts( outData )
+file.close
+
+
+#===================================================================================
+# ■main
+# □gmm 出力 ( job.gmm )
+#=================================================================================== 
+directory       = GMM_OUTPUT_DEST
+fileName        = "job.gmm"
+stringLavel     = Array.new
+stringJPN       = Array.new
+stringJPN_KANJI = Array.new
+
+# 職業
+jobs.each do |job|
+  stringLavel     << "job_%d" % job.ID
+  stringJPN       << job.stringJPN
+  stringJPN_KANJI << job.stringJPN_KANJI
+end
+
+# gmm 生成
+GenerateGMM( directory, fileName, stringLavel, stringJPN, stringJPN_KANJI )
+
+
+#=================================================================================== 
+# ■main
+# □職業ID ファイル出力
+#===================================================================================
+# 出力データ作成
+outData = Array.new
+outData << "// コンバータにより生成"
+jobs.each do |job|
+  outData << "#define #{job.ID_lavel} (#{job.ID}) //「#{job.stringJPN}」"
+end
+outData << "#define JOB_ID_NUM   (#{jobs.size})   // 職業IDの数"
+outData << "#define JOB_ID_MAX   (JOB_ID_NUM - 1) // 職業IDの最大値"
+outData << "#define JOB_ID_DUMMY (0xff)           // 職業IDのダミー値"
+
+# 出力
+file = File.open( "job_id.h", "w" )
 file.puts( outData )
 file.close
 

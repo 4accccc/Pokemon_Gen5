@@ -36,11 +36,13 @@ ANSWER_DATA         = answers.txt
 QUESTION_DATA       = questions.txt
 TOPIC_DATA          = topics.txt
 HOBBY_DATA          = hobbies.txt
+JOB_DATA            = job.txt
 DATA_SOURCE         = .
 DATA_BIN            = bin
 DATA_DEBUG          = debug
 GMM_QUESTIONNAIRE   = questionnaire.gmm
 GMM_HOBBY           = hobby.gmm
+GMM_JOB             = job.gmm
 TOPIC_ID_DEF        = topic_id.h
 QUESTION_ID_DEF     = question_id.h
 ANSWER_ID_DEF       = answer_id.h
@@ -71,6 +73,7 @@ endif
 do-build:	subdir \
 	        $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE) \
 					$(GMM_COPY_DIR)/$(GMM_HOBBY) \
+					$(GMM_COPY_DIR)/$(GMM_JOB) \
 					$(DEF_COPY_DIR)/$(TOPIC_ID_DEF) \
 					$(DEF_COPY_DIR)/$(QUESTION_ID_DEF) \
 					$(DEF_COPY_DIR)/$(ANSWER_ID_DEF) \
@@ -95,7 +98,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	ruby $(XLSCONV) $(XLS_DATA) 2 $(QUESTION_DATA)
 	ruby $(XLSCONV) $(XLS_DATA) 3 $(ANSWER_DATA)
 	ruby $(XLSCONV) $(XLS_DATA) 4 $(HOBBY_DATA)
-	ruby $(CONVERTER) $(CONV_ROOT_DIR) $(ANSWER_DATA) $(QUESTION_DATA) $(TOPIC_DATA) $(HOBBY_DATA) $(DATA_SOURCE) $(DATA_DEBUG)
+	ruby $(XLSCONV) $(XLS_DATA) 5 $(JOB_DATA)
+	ruby $(CONVERTER) $(CONV_ROOT_DIR) $(ANSWER_DATA) $(QUESTION_DATA) $(TOPIC_DATA) $(HOBBY_DATA) $(JOB_DATA) $(DATA_SOURCE) $(DATA_DEBUG)
 endif
 
 # gmm コピー
@@ -105,6 +109,9 @@ $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE): $(GMM_QUESTIONNAIRE)
 # gmm コピー
 $(GMM_COPY_DIR)/$(GMM_HOBBY): $(GMM_HOBBY)
 	$(COPY) $(GMM_HOBBY) $(GMM_COPY_DIR)
+
+$(GMM_COPY_DIR)/$(GMM_JOB): $(GMM_JOB)
+	$(COPY) $(GMM_JOB) $(GMM_COPY_DIR)
 
 # def コピー
 $(DEF_COPY_DIR)/$(TOPIC_ID_DEF): $(TOPIC_ID_DEF)
