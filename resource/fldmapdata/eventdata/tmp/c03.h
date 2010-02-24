@@ -48,5 +48,15 @@
 #ifndef ZONE_C03_EVB_H
 #define ZONE_C03_EVB_H
 
+#define BGID_C03_SIGN2_01                 0
+#define BGID_C03_SIGN1_02                 1
+#define BGID_C03_SIGN1_01                 2
+#define BGID_C03_SIGN1_03                 3
+#define BGID_C03_SIGN3_01                 4
+#define BGID_C03_SIGN3_02                 5
+#define BGID_C03_SIGN4_01                 6
+#define BGID_C03_SIGN5_01                 7
+#define BGID_C03_SIGN7_01                 8
+#define BGID_C03_SIGN6_01                 9
 
 #endif //ZONE_C03_EVB_H

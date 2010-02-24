@@ -30,6 +30,13 @@ _EVENT_DATA		ev_c03_businessman3_01
 _EVENT_DATA		ev_c03_businessman4_01
 _EVENT_DATA		ev_c03_businessman5_01
 _EVENT_DATA		ev_pos_c03_rivalevent_01
+_EVENT_DATA		ev_bg_c03_sign1_01
+_EVENT_DATA		ev_bg_c03_sign2_01
+_EVENT_DATA		ev_bg_c03_sign3_01
+_EVENT_DATA		ev_bg_c03_sign4_01
+_EVENT_DATA		ev_bg_c03_sign5_01
+_EVENT_DATA		ev_bg_c03_sign6_01
+_EVENT_DATA		ev_bg_c03_sign7_01
 _EVENT_DATA_END
 
 
@@ -294,3 +301,52 @@ _ANIME_LABEL anm_leader_come
 	_ANIME_DATA		AC_WALK_D_8F,5
 	_ANIME_DATA		AC_STAY_WALK_R_8F,1
 	_ANIME_DATA		ACMD_END,0
+
+/**************************************************************/
+/*		�ŔP
+/**************************************************************/
+EVENT_START		ev_bg_c03_sign1_01
+	_EASY_BGWIN_MSG( msg_c03_sign1_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*		�ŔQ
+/**************************************************************/
+EVENT_START		ev_bg_c03_sign2_01
+	_EASY_BGWIN_MSG( msg_c03_sign2_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*		�ŔR
+/**************************************************************/
+EVENT_START		ev_bg_c03_sign3_01
+	_EASY_BGWIN_MSG( msg_c03_sign3_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*		�ŔS
+/**************************************************************/
+EVENT_START		ev_bg_c03_sign4_01
+	_EASY_BGWIN_MSG( msg_c03_sign4_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*		�ŔT
+/**************************************************************/
+EVENT_START		ev_bg_c03_sign5_01
+	_EASY_BGWIN_MSG( msg_c03_sign5_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*		�ŔU
+/**************************************************************/
+EVENT_START		ev_bg_c03_sign6_01
+	_EASY_BGWIN_MSG( msg_c03_sign6_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*		�ŔV
+/**************************************************************/
+EVENT_START		ev_bg_c03_sign7_01
+	_EASY_BGWIN_MSG( msg_c03_sign7_01, TYPE_POST )
+EVENT_END
