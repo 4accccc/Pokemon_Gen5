@@ -3,7 +3,7 @@
  *
  *  @file   un_select.c
  *  @brief  国連 フロア選択
- *  @author genya hosaka
+ *  @author genya hosaka >> saito
  *  @data   2010.02.05
  *
  */
@@ -82,14 +82,15 @@ FS_EXTERN_OVERLAY(ui_common);
  */
 //=============================================================================
 
+
 //--------------------------------------------------------------
 /// フロアテーブル
 //==============================================================
 static const int g_FloorTable[]={
-  country001, //アフガニスタン
   country093, //アイスランド
   country098, //アイルランド
   country014, //アゼルバイジャン
+  country001, //アフガニスタン
   country220, //アメリカ
   country004, //アメリカりょうサモア
   country221, //アメリカりょうバージンしょとう
@@ -318,7 +319,7 @@ static const int g_FloorTable[]={
   country115, //レバノン
   country170, //レユニオン
   country172, //ロシア
-  country228, //ワリス・フテュナしょとう
+  country228  //ワリス・フテュナしょとう
 };
 
 
@@ -331,17 +332,56 @@ enum
 { 
   UN_SELECT_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
 
-  UN_LIST_MAX = WIFI_COUNTRY_MAX, ///< 項目数
+  UN_LIST_MAX = WIFI_COUNTRY_MAX-1, ///< 項目数 233ヶ国
+  CUR_MOVE_RANGE = 4,
 };
 
-// パッシブ定数
-#define YESNO_MASK_DISP ( MASK_DOUBLE_DISPLAY )
-#define YESNO_MASK_PLANE ( PLANEMASK_BG3 | PLANEMASK_OBJ | PLANEMASK_BD )
+// パッシブ定数　※上画面はアルファブレンドを使用するので、マスター輝度変更でパッシブ状態にする
+#define YESNO_MASK_DISP ( MASK_MAIN_DISPLAY )
+#define YESNO_MASK_PLANE ( PLANEMASK_BG3 | PLANEMASK_BG2 | PLANEMASK_OBJ | PLANEMASK_BD )
 #define BRIGHT_PASSIVE_SYNC (8)
 #define BRIGHT_PASSIVE_VOL (-8)
 
 // フォントカラー
 #define FCOL_WP01WN   ( PRINTSYS_LSB_Make(14,15,0) )  // フォントカラー：明日
+
+#define	BLEND_EV1		( 6 )				// ブレンド係数
+#define	BLEND_EV2		( 10 )			// ブレンド係数
+
+#define COUNTRY_DISP_OFS  (30)
+
+#define FLOOR_MARKING_MAX (20)
+//ＯＢＪ
+
+#define UN_OBJ_CHRRES_MAX (1)
+#define UN_OBJ_PALRES_MAX (1)
+#define UN_OBJ_CELRES_MAX (1)
+#define UN_LISTMAKER_MAX (FLOOR_MARKING_MAX)
+#define UN_BUILMAKER_MAX (FLOOR_MARKING_MAX)
+#define UN_BUILCURSOR_MAX (1)
+#define UN_SCRBER_MAX (1)
+#define UN_OBJ_MAX ( UN_LISTMAKER_MAX+UN_BUILMAKER_MAX+UN_BUILCURSOR_MAX+UN_SCRBER_MAX )
+
+#define BUIL_CUR_SIZE (8)      //グラフィック依存
+#define SCROLL_BAR_SIZE (16)      //グラフィック依存
+#define LIST_MARLER_BASE_POS (192+20)
+#define LIST_MARLER_OFS (5*8)     //リスト項目は５キャラ間隔
+#define BASE_FLOOR_IDX (3)       //計算基底フロアインデックス
+
+//ビルフロア塗りつぶし終了Ｙドット位置（絶対座標）ここの位置がフロアインデックス232(233カ国目)に相当
+#define BUIL_FLOOR_YDOT_TOP    (103)
+//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス0（１カ国目）に相当
+#define BUIL_FLOOR_YDOT_BOTTOM    (335)
+
+#define SCROLL_BAR_UY (8)
+#define SCROLL_BAR_DY (160)
+
+enum {
+  UN_OBJ_BUIL_CURSOR = 0,
+  UN_OBJ_BUIL_MARKER_START = 1,
+  UN_OBJ_LIST_MARKER_START = 21,
+  UN_OBJ_SCROLL_BAR = 41,
+};
 
 //両用０１白抜
 
@@ -364,8 +404,8 @@ enum
   BG_FRAME_BACK_M = GFL_BG_FRAME3_M,
 
   BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
-  BG_FRAME_LIST_S = GFL_BG_FRAME1_S,
-  BG_FRAME_BACK_S = GFL_BG_FRAME2_S,
+  BG_FRAME_LIST_S = GFL_BG_FRAME2_S,
+  BG_FRAME_BACK_S = GFL_BG_FRAME3_S,
 };
 
 //-------------------------------------
@@ -382,17 +422,11 @@ enum
   PLTID_BG_INFOWIN_M    = 15,
   //サブBG
   PLTID_BG_BACK_S       = 0,
+  PLTID_BG_TEXT_S       = 6,
 
   //メインOBJ
-  PLTID_OBJ_TOUCHBAR_M  = 0, // 3本使用
-  PLTID_OBJ_TYPEICON_M  = 3, // 3本使用
-  PLTID_OBJ_OAM_MAPMODEL_M = 6, // 1本使用
-  PLTID_OBJ_POKEICON_M = 7,     // 3本使用
-  PLTID_OBJ_POKEITEM_M = 10,    // 1本使用
-  PLTID_OBJ_ITEMICON_M = 11,
-  PLTID_OBJ_POKE_M = 12,
-  PLTID_OBJ_BALLICON_M = 13, // 1本使用
-  PLTID_OBJ_TOWNMAP_M = 14,   
+  PLTID_OBJ_TOUCHBAR_M  = 0, // タッチバーパレット　3本使用
+  PLTID_OBJ_UN_MS  = 3, // 国連アプリパレット　1本使用 上下で使用
 
   //サブOBJ
   PLTID_OBJ_PMS_DRAW = 0, // 5本使用
@@ -432,6 +466,7 @@ typedef struct
   // ストリーム再生
   PRINT_STREAM* print_stream;
   GFL_BMPWIN    *win_talk;
+  GFL_BMPWIN    *win_talk_up;
 
   STRBUF* name[ UN_LIST_MAX ]; ///< 名前バッファ
 
@@ -469,8 +504,39 @@ typedef struct
   UN_SELECT_MSG_CNT_WORK* cnt_msg;
 
   FRAMELIST_WORK* lwk;
+
+  int ListSelPos;   //リストで選んだ位置 0～UN_LIST_MAX-1
+
+  BOOL Valid[UN_LIST_MAX]; //たぶん無くせるとおもう @todo
+
+  GFL_TCB * htask;		// TCB ( HBLANK )
+
+  //OBJ
+//  GFL_CLUNIT * clunit;
+	GFL_CLWK * ClWk[UN_OBJ_MAX];
+	u32	ChrRes[UN_OBJ_CHRRES_MAX];
+	u32	PalRes[UN_OBJ_PALRES_MAX];
+	u32	CelRes[UN_OBJ_CELRES_MAX];
+
+  //２０個のリストマーカのY位置
+  int ListMarkerPos[UN_LISTMAKER_MAX];
+  //マーカー表示する２０個の対象フロア
+  int MarkerFloor[FLOOR_MARKING_MAX];
   
 } UN_SELECT_MAIN_WORK;
+
+// セルアクターデータ
+typedef struct {
+	GFL_CLWK_DATA	Dat;
+
+	u32	ChrRes;
+	u32	PalRes;
+	u32	CelRes;
+
+	u16	Pal;
+	u16	Disp; //CLSYS_DEFREND_TYPE or CLWK_SETSF_NONE 
+
+}UN_CLWK_DATA;
 
 //=============================================================================
 /**
@@ -490,6 +556,22 @@ static BOOL SceneSelectFloor_End( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneConfirm_Main( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneConfirm_End( UI_SCENE_CNT_PTR cnt, void* work );
+
+static void HBlankTask( GFL_TCB * tcb, void * work );
+
+
+//ＯＢＪ
+static void SetupRes( UN_SELECT_MAIN_WORK *wk );
+static void ExitRes( UN_SELECT_MAIN_WORK *wk );
+static void MakeAct( UN_SELECT_MAIN_WORK *wk );
+static void DelAct( UN_SELECT_MAIN_WORK *wk );
+static GFL_CLWK *CreateAct( GFL_CLUNIT *unit, UN_CLWK_DATA *data );
+
+static void MvListMarkerPos( UN_SELECT_MAIN_WORK *wk, const int inAddVal);
+static void UpdateListMarkerPos( UN_SELECT_MAIN_WORK *wk );
+static void SetBuilMarkerPos( UN_SELECT_MAIN_WORK *wk );
+static void SetScrollBarPos( UN_SELECT_MAIN_WORK *wk, const int inY );
+static void SetBuilCurPos( UN_SELECT_MAIN_WORK *wk, const int inY );
 
 //--------------------------------------------------------------
 /// SceneID
@@ -670,7 +752,12 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
   {
      return GFL_PROC_RES_CONTINUE;
   }
-    
+
+  GFL_TCB_DeleteTask( wk->htask );
+  // ブレンド初期化
+	G2_BlendNone();
+	G2S_BlendNone();
+  
   // リスト開放
   LIST_Delete( wk ); 
 
@@ -679,6 +766,11 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
 
   // メッセージ消去
   MSG_CNT_Delete( wk->cnt_msg );
+
+  //アクター削除
+  DelAct( wk );
+  //ＯＢＪリソース解放
+  ExitRes( wk );
 
   //TASKMENU リソース破棄
   APP_TASKMENU_RES_Delete( wk->menu_res );  
@@ -762,13 +854,25 @@ static void UNSelect_BG_LoadResource( UN_SELECT_BG_WORK* wk, HEAPID heap_id )
   GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0, heap_id );
   GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0, heap_id );
   
-  //  ----- 下画面 -----
+  //  ----- サブ画面 -----
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_un_select_gra_kokuren_bg_NCGR,
             BG_FRAME_BACK_S, 0, 0, 0, heap_id );
   GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_un_select_gra_kokuren_bgu_NSCR,
-            BG_FRAME_BACK_S, 0, 0, 0, heap_id );  
-  
-  //  ----- 上画面 -----
+            BG_FRAME_BACK_S, 0, 0, 0, heap_id );
+
+/**
+  {
+    NNSG2dCharacterData* charData;
+    void *data;
+    int transSize;
+    data = GFL_ARCHDL_UTIL_LoadBGCharacter( handle, NARC_un_select_gra_kokuren_bg_NCGR, FALSE, &charData, heap_id );
+		transSize = charData->szByte;
+		GFL_BG_LoadCharacter(BG_FRAME_BACK_S, charData->pRawData, transSize, 0);
+    GFL_HEAP_FreeMemory( data );
+  }
+*/  
+
+  //  ----- メイン画面 -----
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_un_select_gra_kokuren_bg_NCGR,
             BG_FRAME_BACK_M, 0, 0, 0, heap_id );
   GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_un_select_gra_kokuren_bgd_NSCR,
@@ -833,11 +937,15 @@ static TOUCHBAR_WORK * UNSelect_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heap_i
   touchbar_setup.bar_frm  = BG_FRAME_MENU_M;            //BG読み込みのためのBG面
   touchbar_setup.bg_plt   = PLTID_BG_TOUCHBAR_M;      //BGﾊﾟﾚｯﾄ
   touchbar_setup.obj_plt  = PLTID_OBJ_TOUCHBAR_M;     //OBJﾊﾟﾚｯﾄ
-  touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
+  touchbar_setup.mapping  = APP_COMMON_MAPPING_32K;  //マッピングモード
 
   touchbar =  TOUCHBAR_Init( &touchbar_setup, heap_id );
 
   TOUCHBAR_SetBGPriorityAll( touchbar, 1 ); // BGプライオリティを設定
+
+  //左右ボタンのＳＥを鳴らさないようにする
+  TOUCHBAR_SetSE( touchbar, TOUCHBAR_ICON_CUR_L, 0 );
+  TOUCHBAR_SetSE( touchbar, TOUCHBAR_ICON_CUR_R, 0 );
 
   return touchbar;
 }
@@ -1026,6 +1134,44 @@ static UN_SELECT_MSG_CNT_WORK* MSG_CNT_Create( HEAPID heap_id )
   
   // ウィンドウ生成
   wk->win_talk = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, 1, 19, 30, 4, PLTID_BG_TEXT_M, GFL_BMP_CHRAREA_GET_B );
+
+  //上画面固定メッセージ表示
+  {
+    const u8 clear_color = 15;
+    GFL_BMPWIN* win;
+
+    // ウィンドウ生成
+    wk->win_talk_up = GFL_BMPWIN_Create( BG_FRAME_TEXT_S, 1, 1, 30, 2, PLTID_BG_TEXT_S, GFL_BMP_CHRAREA_GET_B );
+    
+    win = wk->win_talk_up;
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win), clear_color);
+    GFL_FONTSYS_SetColor(1, 2, clear_color);
+
+    GFL_MSG_GetString( wk->msghandle, un_reception_msg_00, wk->strbuf );
+
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 4, 0, wk->strbuf, wk->font);
+
+#if 1   //@todo
+    GFL_BMPWIN_TransVramCharacter( win );
+    GFL_BMPWIN_MakeScreen( win );
+
+      GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(win) );
+#else
+/**  
+    // フレーム生成
+    BmpWinFrame_Write( wk->win_talk_up, WINDOW_TRANS_OFF, CGX_BMPWIN_FRAME_POS, GFL_BMPWIN_GetPalette(wk->win_talk_up) );
+
+
+    // 転送
+    { 
+      GFL_BMPWIN_TransVramCharacter( win );
+      GFL_BMPWIN_MakeScreen( win );
+
+      GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(win) );
+    }
+*/
+#endif    
+  }
   
   return wk;
 }
@@ -1049,6 +1195,7 @@ static void MSG_CNT_Delete( UN_SELECT_MSG_CNT_WORK* wk )
   }
 
   // BMPWIN 破棄
+  GFL_BMPWIN_Delete( wk->win_talk_up );
   GFL_BMPWIN_Delete( wk->win_talk );
 
   // STRBUF 破棄
@@ -1113,7 +1260,9 @@ static void MSG_CNT_DrawListElem( UN_SELECT_MSG_CNT_WORK* wk, PRINT_UTIL* util, 
   idx = itemNum;
   floor = UN_LIST_MAX - itemNum + 1; //フロアは2Ｆから
   GFL_MSG_GetString( wk->msghandle, un_reception_msg_04, wk->strbuf );
-  WORDSET_RegisterNumber( wk->wordset, 2, floor, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wordset, 2, floor, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+  //※↑国連だけ特別に半角数字を許可してもらっているらしい。
+
   WORDSET_ExpandStr( wk->wordset, wk->exp_strbuf, wk->strbuf );
 
   PRINTTOOL_PrintColor( util, que, 0, 12, wk->exp_strbuf, font, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
@@ -1122,7 +1271,7 @@ static void MSG_CNT_DrawListElem( UN_SELECT_MSG_CNT_WORK* wk, PRINT_UTIL* util, 
   if(GFL_STR_GetBufferLength(wk->name[idx]) > MULTI_LINE_WORD_NUM){
     ypos = 4;
   }
-  PRINTTOOL_PrintColor( util, que, 32, ypos, wk->name[idx], font, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
+  PRINTTOOL_PrintColor( util, que, COUNTRY_DISP_OFS, ypos, wk->name[idx], font, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
 
   return;
 }
@@ -1336,12 +1485,12 @@ static const FRAMELIST_CALLBACK FRMListCallBack = {
 //==============================================================
 static const FRAMELIST_TOUCH_DATA TouchHitTbl[] =
 {
-  { { 0,    8*5-1,  8*12, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },   // 00: 
-  { { 8*5,  8*10-1, 8*12, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },   // 01: 
-  { { 8*10, 8*15-1, 8*12, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },   // 02: 
-  { { 8*15, 8*20-1, 8*12, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },   // 03: 
+  { { 0,    8*5-1,  8*12, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },   // 00: 
+  { { 8*5,  8*10-1, 8*12, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },   // 01: 
+  { { 8*10, 8*15-1, 8*12, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },   // 02: 
+  { { 8*15, 8*20-1, 8*12, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },   // 03: 
 
-  { { 8, 159, 240, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },         // 07: レール
+  { { SCROLL_BAR_UY, SCROLL_BAR_DY, 240, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },         // 07: レール
 
   { { 168, 191, 16, 16+3*8-1 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },      // 08: 左
   { { 168, 191, 80, 80+3*8-1 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },    // 09: 右
@@ -1382,6 +1531,13 @@ static void ListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 
   }
 
   HOSAKA_Printf("draw!\n");
+  NOZOMU_Printf("draw %d\n",py);
+/**
+  //マーカー移動
+  MvListMarkerPos( wk, -mv);
+  //マーカー位置更新
+  UpdateListMarkerPos( wk );
+*/  
 }
 
 //-----------------------------------------------------------------------------
@@ -1415,6 +1571,18 @@ static void ListCallBack_Scroll( void * work, s8 mv )
 {
   UN_SELECT_MAIN_WORK* wk = work;
   HOSAKA_Printf("scroll!\n");
+  //マーカー移動
+  MvListMarkerPos( wk, -mv);
+  //マーカー位置更新
+  UpdateListMarkerPos( wk );
+  {
+    s16 cur_y;
+    cur_y = FRAMELIST_GetScrollBarPY(wk->lwk);
+    //スクロールバー移動
+    SetScrollBarPos( wk, cur_y );
+    //ビルカーソル位置セット
+    SetBuilCurPos( wk, cur_y );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1433,15 +1601,15 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
   static FRAMELIST_HEADER header = {
     BG_FRAME_LIST_M,
     BG_FRAME_LIST_S,
-
-    11,         // 項目フレーム表示開始Ｘ座標
+    //<<※ここから画像依存
+    9,         // 項目フレーム表示開始Ｘ座標 
     0,          // 項目フレーム表示開始Ｙ座標
-    18,         // 項目フレーム表示Ｘサイズ
+    20,         // 項目フレーム表示Ｘサイズ
     5,          // 項目フレーム表示Ｙサイズ
-
+    //<<※ここまで画像依存
     1,              // フレーム内に表示するBMPWINの表示Ｘ座標
     0,              // フレーム内に表示するBMPWINの表示Ｙ座標
-    15,             // フレーム内に表示するBMPWINの表示Ｘサイズ
+    18,             // フレーム内に表示するBMPWINの表示Ｘサイズ
     5,              // フレーム内に表示するBMPWINの表示Ｙサイズ
     1,              // フレーム内に表示するBMPWINのパレット
 
@@ -1449,14 +1617,14 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 
     3,              // 選択項目のパレット
 
-    8,              // スクロールバーのＹサイズ
+    SCROLL_BAR_SIZE,              // スクロールバーのＹサイズ
 
     UN_LIST_MAX,    // 項目登録数
     2,              // 背景登録数
 
     0,              // 初期位置
-    4,              // カーソル移動範囲
-    UN_LIST_MAX-5,  // 初期スクロール値 //@TODO
+    CUR_MOVE_RANGE,              // カーソル移動範囲
+    (UN_LIST_MAX-1)-3,  // 初期スクロール値 　下から４番目
 
     TouchHitTbl,      // タッチデータ
 
@@ -1477,8 +1645,6 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 
   // 点滅アニメパレット設定
   FRAMELIST_LoadBlinkPalette( wk->lwk, ah, NARC_un_select_gra_kokuren_bg_NCLR, 2, 3 );
-
-//  FRAMELIST_ChangePosPalette(
 
   // アーカイブ クローズ
   GFL_ARC_CloseDataHandle( ah );
@@ -1506,14 +1672,18 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
       // 項目あり
       if( type == 0 )
       {
+        int country_msg_idx;
+        country_msg_idx = g_FloorTable[idx];
         // 項目用文字列 取得
-        wk->cnt_msg->name[i] = GFL_MSG_CreateString( mman, idx );
+        wk->cnt_msg->name[i] = GFL_MSG_CreateString( mman, country_msg_idx );
+        wk->Valid[i] = TRUE;
       }
       // 項目なし
       else
       {
         // 項目用文字列 取得
         wk->cnt_msg->name[i] = GFL_MSG_CreateString( mman, un_reception_msg_05 );
+        wk->Valid[i] = FALSE;
       }
     }
       
@@ -1600,9 +1770,61 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
       MSG_CNT_GetFont( wk->cnt_msg ),
       MSG_CNT_GetPrintQue( wk->cnt_msg ),
       wk->heap_id );
-  
+
+  //OBJリソースセットアップ
+  SetupRes( wk );
+
   // リスト生成
   LIST_Make( wk );
+
+  //アクター作成
+  MakeAct( wk );
+
+  //デバッグマーカー抽選
+  {
+    int i;
+    int ofs;
+    int floor_idx;
+    for(i=0;i<UN_LISTMAKER_MAX;i++){
+      floor_idx = GFUser_GetPublicRand(/*UN_LIST_MAX*/30);
+      wk->MarkerFloor[i] = floor_idx;
+      //ベースのリスト位置は最後から４番目なのでインデックウ229
+      //ベースとの差分で座標を決定する
+      ofs = (BASE_FLOOR_IDX - floor_idx) * LIST_MARLER_OFS;
+      wk->ListMarkerPos[i] = LIST_MARLER_BASE_POS + ofs;
+      NOZOMU_Printf( "listmarker %d:Floor=%d  pos=%d\n",i,floor_idx+2,wk->ListMarkerPos[i] );
+    }
+  }
+
+  //ビルマーカー位置決定
+  SetBuilMarkerPos( wk );
+  //リストマーカー初期位置確定のための更新
+  UpdateListMarkerPos( wk );
+#if 0  
+  {
+    s16 cur_y;
+    cur_y = FRAMELIST_GetScrollBarPY(wk->lwk);
+    NOZOMU_Printf("start_scr_bar_Y = %d\n",cur_y);
+    //スクロールバー移動
+    SetScrollBarPos( wk, cur_y );
+    //ビルカーソル位置セット
+    SetBuilCurPos( wk, cur_y );
+  }
+#else
+  {
+    //ビルカーソル位置セット
+    s16 cur_y;
+    cur_y = SCROLL_BAR_DY-(SCROLL_BAR_SIZE/2);
+    SetBuilCurPos( wk, cur_y );
+  }
+#endif
+  //アルファセット
+  G2S_SetBlendAlpha(
+		GX_BLEND_PLANEMASK_BG1,
+		GX_BLEND_PLANEMASK_BG2,
+		BLEND_EV1, BLEND_EV2 );
+
+  wk->htask = GFUser_HIntr_CreateTCB( HBlankTask, wk, 0 );
 
   return wk;
 }
@@ -1674,7 +1896,7 @@ static BOOL SceneListMake( UI_SCENE_CNT_PTR cnt, void* work )
 //-----------------------------------------------------------------------------
 /**
  *  @brief  SCENE フロア選択 初期化処理
- *
+ = *
  *  @param  UI_SCENE_CNT_PTR cnt
  *  @param  work 
  *
@@ -1700,17 +1922,40 @@ static BOOL SceneSelectFloor_Init( UI_SCENE_CNT_PTR cnt, void* work )
 //-----------------------------------------------------------------------------
 static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
 {
+  u32 ret;
   UN_SELECT_MAIN_WORK* wk = work;
 
   // フロア選択処理
   // @TODO タッチ及びカーソルで選択
+/**
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
   {
     UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_CONFIRM );
     return TRUE;
   }
+*/
+  ret = FRAMELIST_Main( wk->lwk );
 
-  FRAMELIST_Main( wk->lwk );
+  if ( (0<=ret)&&(ret<CUR_MOVE_RANGE) )
+  {
+    int list_pos;
+    NOZOMU_Printf("pos=%d\n",ret);
+    list_pos = FRAMELIST_GetListPos( wk->lwk );
+    NOZOMU_Printf("list_pos=%d\n",list_pos);
+
+    //項目有効判定
+    if ( wk->Valid[list_pos] == TRUE )
+    {
+      wk->ListSelPos = list_pos;
+      UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_CONFIRM );
+      return TRUE;
+    }
+    else
+    {
+      //項目無効
+      NOZOMU_Printf("Invalid list_pos = %d\n",list_pos);
+    }
+  }
 
 #ifdef UN_SELECT_TOUCHBAR
   //タッチバーメイン処理
@@ -1787,7 +2032,17 @@ static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work )
     TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_CUR_R, FALSE );
     TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_RETURN, FALSE );
 #endif
-
+    {
+      int code;
+      //リスト位置を国コードに変換
+      code = g_FloorTable[(UN_LIST_MAX-1) - wk->ListSelPos];
+      if ( (0<code)&&(code<UN_LIST_MAX) )
+      {
+        //国名タグ展開
+        WORDSET_RegisterCountryName( wk->cnt_msg->wordset, 0, code );
+      }
+      else GF_ASSERT_MSG(0,"listpos = %d code = %d",wk->ListSelPos, code);
+    }
     MSG_CNT_SetPrint( wk->cnt_msg, un_reception_msg_01 );
     UI_SCENE_CNT_IncSubSeq( cnt );
     break;
@@ -1840,6 +2095,9 @@ static BOOL SceneConfirm_Main( UI_SCENE_CNT_PTR cnt, void* work )
     case 0 :
       // 終了
       app_end( wk, END_MODE_DECIDE );
+      PASSIVE_Reset();
+      MSG_CNT_PrintClear( wk->cnt_msg );
+      UNSelect_TASKMENU_Exit( wk->menu );
       UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
       break;
 
@@ -1875,5 +2133,315 @@ static BOOL SceneConfirm_End( UI_SCENE_CNT_PTR cnt, void* work )
   UN_SELECT_MAIN_WORK* wk = work;
 
   return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  Ｈブランク処理
+ *
+ *  @param  tcb
+ *  @param  work 
+ *
+ *  @retval none
+ */
+//-----------------------------------------------------------------------------
+static void HBlankTask( GFL_TCB * tcb, void * work )
+{
+	s32	vcount = GX_GetVCount();
+
+	if( vcount >= 168 ){
+		G2S_ChangeBlendAlpha( 11, 5 );
+	}else if( vcount >= 144 ){
+		G2S_ChangeBlendAlpha( 10, 6 );
+	}else if( vcount >= 120 ){
+		G2S_ChangeBlendAlpha( 9, 7 );
+	}else if( vcount >= 96 ){
+		G2S_ChangeBlendAlpha( 8, 8 );
+	}else if( vcount >= 72 ){
+		G2S_ChangeBlendAlpha( 6, 10 );
+	}else{
+		G2S_ChangeBlendAlpha( 4, 12 );
+	}
+}
+
+//////////////////////////////////////////////////
+//OBJ
+#define	RES_NONE	( 0xffffffff )		// リソースが読み込まれていない
+
+#define LIST_MARKER_X (29*8)
+#define BUIL_MARKER_X (32+8)
+#define BUIL_CUR_X (8)
+#define SCROLL_BAR_X (256-10)
+
+#define SOFT_PRI  (0)
+#define OBJ_BG_PRI  (2)
+
+//セルアニメオフセット定義
+typedef enum{
+  ANM_OFS_BUIL_MARKER = 0,
+  ANM_OFS_LIST_MARKER,
+  ANM_OFS_LIST_CURSOR,
+  ANM_OFS_SCROLL_BAR,
+}OBJ_ANM_OFS;
+
+//リソースのセットアップ
+static void SetupRes( UN_SELECT_MAIN_WORK *wk )
+{
+  ARCHANDLE *handle;
+	u32 * chr;
+	u32 * pal;
+	u32 * cel;
+  int i;
+
+  HEAPID heapID = wk->heap_id;
+
+  // 初期化
+	for( i=0; i<UN_OBJ_CHRRES_MAX; i++ ){
+		wk->ChrRes[i] = RES_NONE;
+	}
+	for( i=0; i<UN_OBJ_PALRES_MAX; i++ ){
+		wk->PalRes[i] = RES_NONE;
+	}
+	for( i=0; i<UN_OBJ_CELRES_MAX; i++ ){
+		wk->CelRes[i] = RES_NONE;
+	}
+
+  handle = GFL_ARC_OpenDataHandle( ARCID_UN_SELECT_GRA, heapID );
+	chr = wk->ChrRes;
+	pal = wk->PalRes;
+	cel = wk->CelRes;
+	*chr = GFL_CLGRP_CGR_Register(
+					handle, NARC_un_select_gra_kokuren_obj_NCGR,
+					FALSE, CLSYS_DRAW_MAX, heapID );
+  *pal = GFL_CLGRP_PLTT_Register(
+					handle, NARC_un_select_gra_kokuren_obj_NCLR,
+					CLSYS_DRAW_MAX, PLTID_OBJ_UN_MS*0x20, heapID ); //両画面
+	*cel = GFL_CLGRP_CELLANIM_Register(
+					handle,
+					NARC_un_select_gra_kokuren_obj_NCER,
+					NARC_un_select_gra_kokuren_obj_NANR,
+					heapID );
+	GFL_ARC_CloseDataHandle( handle );
+}
+
+//リソースの解放
+static void ExitRes( UN_SELECT_MAIN_WORK *wk )
+{
+	int	i;
+	for( i=0; i<UN_OBJ_CHRRES_MAX; i++ ){
+		if( wk->ChrRes[i] != RES_NONE ){
+			GFL_CLGRP_CGR_Release( wk->ChrRes[i] );
+		}
+	}
+	for( i=0; i<UN_OBJ_PALRES_MAX; i++ ){
+		if( wk->PalRes[i] != RES_NONE ){
+	    GFL_CLGRP_PLTT_Release( wk->PalRes[i] );
+		}
+	}
+	for( i=0; i<UN_OBJ_CELRES_MAX; i++ ){
+		if( wk->CelRes[i] != RES_NONE ){
+	    GFL_CLGRP_CELLANIM_Release( wk->CelRes[i] );
+		}
+	}
+}
+
+static void MakeAct( UN_SELECT_MAIN_WORK *wk )
+{
+  int i;
+  GFL_CLUNIT *unit;
+  unit = UN_SELECT_GRAPHIC_GetClunit( wk->graphic );
+  GF_ASSERT(unit != NULL);
+  
+  //初期化
+  for( i=0; i<UN_OBJ_MAX; i++ ){
+		wk->ClWk[i] = NULL;
+	}
+
+  //ビルカーソル
+  {
+    UN_CLWK_DATA data = {
+      { BUIL_CUR_X, 104, ANM_OFS_LIST_CURSOR, SOFT_PRI, OBJ_BG_PRI },
+      0,0,0,
+      PLTID_OBJ_UN_MS, CLWK_SETSF_NONE
+    };
+    data.ChrRes = wk->ChrRes[0];
+    data.PalRes = wk->PalRes[0];
+    data.CelRes = wk->CelRes[0];
+    wk->ClWk[UN_OBJ_BUIL_CURSOR] = CreateAct( unit, &data );
+  }
+
+  //ビルマーカー
+  {
+    UN_CLWK_DATA data = {
+      { BUIL_MARKER_X, 0, ANM_OFS_BUIL_MARKER, SOFT_PRI, OBJ_BG_PRI },
+      0,0,0,
+      PLTID_OBJ_UN_MS, CLWK_SETSF_NONE
+    };
+    data.ChrRes = wk->ChrRes[0];
+    data.PalRes = wk->PalRes[0];
+    data.CelRes = wk->CelRes[0];
+    for (i=0;i<UN_BUILMAKER_MAX;i++)
+    {
+      wk->ClWk[UN_OBJ_BUIL_MARKER_START+i] = CreateAct( unit, &data );
+    }
+  }
+  //リストマーカー
+  {
+    UN_CLWK_DATA data = {
+      { LIST_MARKER_X, 0, ANM_OFS_LIST_MARKER, SOFT_PRI, OBJ_BG_PRI },
+      0,0,0,
+      PLTID_OBJ_UN_MS, CLWK_SETSF_NONE
+    };
+    data.ChrRes = wk->ChrRes[0];
+    data.PalRes = wk->PalRes[0];
+    data.CelRes = wk->CelRes[0];
+    for (i=0;i<UN_LISTMAKER_MAX;i++)
+    {
+      wk->ClWk[UN_OBJ_LIST_MARKER_START+i] = CreateAct( unit, &data );
+    }
+  }
+  //スクロールバー
+  {
+    //アプリ開始時は、5Ｆをさす状態なので、
+    //Ｙ値にバーが一番下に来るSCROLL_BAR_DY-(SCROLL_BAR_SIZE/2)をセットする
+    UN_CLWK_DATA data = {
+      { SCROLL_BAR_X, SCROLL_BAR_DY-(SCROLL_BAR_SIZE/2), ANM_OFS_SCROLL_BAR, SOFT_PRI, OBJ_BG_PRI },
+      0,0,0,
+      PLTID_OBJ_UN_MS, CLSYS_DEFREND_MAIN
+    };
+    data.ChrRes = wk->ChrRes[0];
+    data.PalRes = wk->PalRes[0];
+    data.CelRes = wk->CelRes[0];
+    wk->ClWk[UN_OBJ_SCROLL_BAR] = CreateAct( unit, &data );
+  }
+}
+
+static void DelAct( UN_SELECT_MAIN_WORK *wk )
+{
+  int	i;
+	for( i=0; i<UN_OBJ_MAX; i++ ){
+    if( wk->ClWk[i] != NULL ){
+      GFL_CLACT_WK_Remove( wk->ClWk[i] );
+    }
+	}
+}
+
+//アクターの作成
+static GFL_CLWK *CreateAct( GFL_CLUNIT *unit, UN_CLWK_DATA *data )
+{
+  GFL_CLWK *clwk;
+  HEAPID heapID = HEAPID_UN_SELECT;
+  clwk = GFL_CLACT_WK_Create( unit, data->ChrRes, data->PalRes, data->CelRes, &data->Dat, data->Disp, heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( clwk, TRUE );
+  return clwk;
+}
+
+//マーカーの管理位置座標を更新
+static void MvListMarkerPos( UN_SELECT_MAIN_WORK *wk, const int inAddVal)
+{
+  int i;
+  for (i=0;i<UN_LISTMAKER_MAX;i++)
+  {
+    wk->ListMarkerPos[i] += inAddVal;
+  }
+}
+
+//マーカーの座標を更新
+static void UpdateListMarkerPos( UN_SELECT_MAIN_WORK *wk )
+{
+  int i;
+  for (i=0;i<UN_LISTMAKER_MAX;i++)
+  {
+    int pos;
+    //アクター取得
+    GFL_CLWK *clwk = wk->ClWk[UN_OBJ_LIST_MARKER_START+i];
+    pos = wk->ListMarkerPos[i];
+    //管理座標は画面内（上下少し余裕を持つ範囲内）か？
+    if ( (0-16<pos)&&(pos<192*2+16) )
+    {
+      GFL_CLACTPOS calc_pos;
+      //アクターを表示
+      GFL_CLACT_WK_SetDrawEnable( clwk, TRUE );
+      //座標セット
+      GFL_CLACT_WK_GetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
+      calc_pos.y = pos;
+      GFL_CLACT_WK_SetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
+    }
+    else{
+      //アクター非表示
+      GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+    }
+  }
+}
+
+//ビルマーカーの位置をセット
+static void SetBuilMarkerPos( UN_SELECT_MAIN_WORK *wk )
+{
+  int i;
+  for (i=0;i<UN_BUILMAKER_MAX;i++)
+  {
+    GFL_CLACTPOS calc_pos;
+    //アクター取得
+    GFL_CLWK *clwk = wk->ClWk[UN_OBJ_BUIL_MARKER_START+i];
+    //座標セット
+    GFL_CLACT_WK_GetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
+    calc_pos.y = BUIL_FLOOR_YDOT_BOTTOM - wk->MarkerFloor[i];
+    GFL_CLACT_WK_SetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
+  }
+}
+
+//スクロールバーの位置をセット
+static void SetScrollBarPos( UN_SELECT_MAIN_WORK *wk, const int inY )
+{
+  s16 y;
+  s16 w;
+  GFL_CLACTPOS	pos;
+  GFL_CLWK *clwk = wk->ClWk[UN_OBJ_SCROLL_BAR];
+  y = inY;
+  w = SCROLL_BAR_SIZE/2;
+  if( y < SCROLL_BAR_UY+w ){
+		y = SCROLL_BAR_UY + w;
+	}else if( y > SCROLL_BAR_DY-w ){
+		y = SCROLL_BAR_DY - w;
+	}
+  GFL_CLACT_WK_GetPos( clwk, &pos, CLSYS_DEFREND_MAIN ); //メイン画面内指定
+	pos.y = y;
+	GFL_CLACT_WK_SetPos( clwk, &pos, CLSYS_DEFREND_MAIN ); //メイン画面内指定
+
+  NOZOMU_Printf("bar_y %d\n",y);
+}
+
+//ビルカーソルの位置をセット
+static void SetBuilCurPos( UN_SELECT_MAIN_WORK *wk, const int inY )
+{
+  s16 y;
+  s16 w;
+  s16 pos_y;
+  GFL_CLACTPOS	pos;
+  GFL_CLWK *clwk = wk->ClWk[UN_OBJ_BUIL_CURSOR];
+  y = inY;
+  w = SCROLL_BAR_SIZE/2;
+  if( y < SCROLL_BAR_UY+w ){
+		y = SCROLL_BAR_UY + w;
+	}else if( y > SCROLL_BAR_DY-w ){
+		y = SCROLL_BAR_DY - w;
+	}
+
+  {
+    int numerator;      //スクロールバー位置の割合分子
+    int denominator;    //スクロールバー位置の割合分母
+    int band;           //ビルカーソル移動範囲
+    int val;            //計算結果
+    int scr_w = SCROLL_BAR_SIZE/2;
+    int cur_w = BUIL_CUR_SIZE/2;
+    numerator = y - (SCROLL_BAR_UY+scr_w);
+    denominator = (SCROLL_BAR_DY-scr_w) - (SCROLL_BAR_UY+scr_w);
+    band = (BUIL_FLOOR_YDOT_BOTTOM-cur_w) - (BUIL_FLOOR_YDOT_TOP+cur_w)+1;
+    val = (band * numerator) / denominator;
+    pos_y = BUIL_FLOOR_YDOT_TOP + cur_w + val;
+  }
+  GFL_CLACT_WK_GetPos( clwk, &pos, CLWK_SETSF_NONE ); //絶対座標指定
+	pos.y = pos_y;
+	GFL_CLACT_WK_SetPos( clwk, &pos, CLWK_SETSF_NONE ); //絶対座標指定
 }
 

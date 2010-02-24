@@ -3,7 +3,7 @@
  *
  *	@file		graphic.c
  *	@brief	グラフィック設定
- *	@author	genya hosaka
+ *	@author	genya hosaka >> saito
  *	@data		2010.02.05
  *	@version {1.0}
  *	@note 
@@ -80,7 +80,7 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_0_D,						// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_0_F,				// テクスチャパレットスロット
-	GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
+	GX_OBJVRAMMODE_CHAR_1D_32K,// メイン画面OBJマッピングモード		
 	GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
 };
 
@@ -111,7 +111,6 @@ static const struct
 }	sc_bgsetup[]	=
 {	
 	//MAIN------------------------
-#if 1	//3D設定のためいらない
 	{	
 		GFL_BG_FRAME0_M,	//設定するフレーム
 		{
@@ -123,7 +122,6 @@ static const struct
 		GFL_BG_MODE_TEXT,	//BGの種類
 		TRUE,	//初期表示
 	},
-#endif
 	{	
 		GFL_BG_FRAME1_M,	//設定するフレーム
 		{
@@ -151,7 +149,7 @@ static const struct
 		{
 			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
+			GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x18000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
 			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
@@ -171,40 +169,27 @@ static const struct
 		TRUE,	//初期表示
 	},
 	{	
-		GFL_BG_FRAME1_S,	//設定するフレーム
-		{
-			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
-		},
-		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
-	},
-	{	
 		GFL_BG_FRAME2_S,	//設定するフレーム
 		{
 			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
 			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
-#if 0	//使わない場合は、このテーブルから消してください。(#if#endifじゃなくても大丈夫です)
 	{	
 		GFL_BG_FRAME3_S,	//設定するフレーム
 		{
 			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ_256x256,
+			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
 			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
-#endif
 };
 
 #endif //GRAPHIC_BG_USE
@@ -218,7 +203,7 @@ static const struct
 ///	CLSYS_INITデータ
 //=====================================
 static const GFL_CLSYS_INIT sc_clsys_init	=
-#if 1	//上下画面つなげない場合
+#if 0	//上下画面つなげない場合
 {	
 	0, 0,		//メインサーフェースの左上X,Y座標
 	0, 512,	//サブサーフェースの左上X,Y座標
@@ -230,8 +215,8 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 };
 #else	//上下画面つなげたい場合
 {	
-	0, 0,		//メインサーフェースの左上X,Y座標
-	0, 192,	//サブサーフェースの左上X,Y座標
+	0, 192,		//メインサーフェースの左上X,Y座標
+	0, 0,	//サブサーフェースの左上X,Y座標
 	4, 124,	//メインOAM管理開始～終了	（通信アイコン用に開始は4以上に、またすべて4の倍数いしてください）
 	4, 124,	//差bOAM管理開始～終了	（通信アイコン用に開始は4以上に、またすべて4の倍数いしてください）
 	0,			//セルVram転送管理数
