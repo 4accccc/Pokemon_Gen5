@@ -1,0 +1,28 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: leader_board.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_LEADER_BOARD_NAIX_
+#define NARC_LEADER_BOARD_NAIX_
+
+enum {
+	NARC_leader_board_leaderb_d_lz_NSCR = 0,
+	NARC_leader_board_leaderb_d_lz_NCGR = 1,
+	NARC_leader_board_leaderb_d_NCLR = 2,
+	NARC_leader_board_leaderb_win_lz_NSCR = 3,
+	NARC_leader_board_leaderb_u_lz_NSCR = 4,
+	NARC_leader_board_leaderb_u_lz_NCGR = 5,
+	NARC_leader_board_leaderb_u_NCLR = 6,
+	NARC_leader_board_leaderb_obj_lz_NCGR = 7,
+	NARC_leader_board_leaderb_obj_NCER = 8,
+	NARC_leader_board_leaderb_obj_NANR = 9,
+	NARC_leader_board_leaderb_obj_NCLR = 10
+};
+
+/* NARC_LEADER_BOARD_NAIX_ */
+#endif
