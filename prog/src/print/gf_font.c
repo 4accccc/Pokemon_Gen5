@@ -158,8 +158,10 @@ static inline void ExpandFontData( const void* src_p, void* dst_p );
 static inline void BitReader_Init( BIT_READER* br, const u8* src );
 static inline void BitReader_SetNextBit( BIT_READER* br );
 static inline u8 BitReader_Read( BIT_READER* br, u8 bits );
-static inline void dotExpand_1x1( const u8* glyphSrc, u16 remBits, u8* dst );
-static inline void dotExpand_2x2( const u8* glyphSrc, u16 remBits, u8* dst );
+static void dotExpand_1x1( const u8* glyphSrc, u16 remBits, u8* dst );
+static void dotExpand_1x2( const u8* glyphSrc, u16 remBits, u8* dst );
+static void dotExpand_2x1( const u8* glyphSrc, u16 remBits, u8* dst );
+static void dotExpand_2x2( const u8* glyphSrc, u16 remBits, u8* dst );
 
 
 
@@ -250,7 +252,7 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
     wk->glyphCharH = wk->glyphInfo.cellHeight /8  + (wk->glyphInfo.cellHeight % 8 != 0);
     wk->glyphRemBits = (wk->glyphInfo.cellWidth * 2) % 8;
     if( wk->glyphRemBits == 0 ){ wk->glyphRemBits = 8; }
-    TAYA_Printf("[GF_FONT] CellW=%d, RemBits=%d LineHeight=%d\n", wk->glyphInfo.cellWidth, wk->glyphRemBits, wk->fontHeader.linefeed);
+    TAYA_Printf("[GF_FONT] CellW=%d, LineHeight=%d, RemBits=%d\n", wk->glyphInfo.cellWidth, wk->fontHeader.linefeed, wk->glyphRemBits);
 
     wk->ofsGlyphTop = wk->fontHeader.ofsGlyph + sizeof(NNSGlyphInfo);
     wk->glyphBuf = GFL_HEAP_AllocMemory( heapID, wk->glyphInfo.cellSize );
@@ -382,13 +384,13 @@ static void setup_type_read_file( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapI
   wk->fontBitData = NULL;
   wk->GetBitmapFunc = GetBitmapFileRead;
 
-  if( cellW==1 && cellH==1 )
+  if( cellW==1 )
   {
-    wk->DotExpandFunc = dotExpand_1x1;
+    wk->DotExpandFunc = (cellH==1)? dotExpand_1x1 : dotExpand_1x2;
   }
-  else if( cellW==2 && cellH==2 )
+  else
   {
-    wk->DotExpandFunc = dotExpand_2x2;
+    wk->DotExpandFunc = (cellH==1)? dotExpand_2x1 : dotExpand_2x2;
   }
 }
 
@@ -478,7 +480,6 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
   };
 
   const NNSCodeMap* pMap = wk->codeMapTop;
-
 
   while( 1 )
   {
@@ -948,7 +949,7 @@ static inline u8 BitReader_Read( BIT_READER* br, u8 bits )
   };
 
 #if 1
-  u8 ret_u, ret_d, ret, shift;
+  u32 ret_u, ret_d, ret, shift;
 
   if( br->rem_bits < bits )
   {
@@ -1010,7 +1011,57 @@ static inline u8 BitReader_Read( BIT_READER* br, u8 bits )
 static BIT_READER BitReader = {0};
 
 // 1x1char (幅5ドット以上）ドット読み取り
-static inline void dotExpand_1x1( const u8* glyphSrc, u16 remBits, u8* dst )
+static void dotExpand_1x1( const u8* glyphSrc, u16 remBits, u8* dst )
+{
+  u16* dst16 = (u16*)dst;
+  u8 dots;
+
+  BitReader_Init( &BitReader, glyphSrc );
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+}
+/**
+ *  1x2char 読み取り
+ */
+static void dotExpand_1x2( const u8* glyphSrc, u16 remBits, u8* dst )
 {
   u16* dst16 = (u16*)dst;
   u8 dots;
@@ -1057,10 +1108,135 @@ static inline void dotExpand_1x1( const u8* glyphSrc, u16 remBits, u8* dst )
   dots = BitReader_Read( &BitReader, remBits );
   *dst16++ = DotTbl[dots];
 
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+
+  dots = BitReader_Read( &BitReader, 8 );
+  *dst16++ = DotTbl[dots];
+  dots = BitReader_Read( &BitReader, remBits );
+  *dst16++ = DotTbl[dots];
+}
+/**
+ *  2x1char 読み取り
+ */
+static void dotExpand_2x1( const u8* glyphSrc, u16 remBits, u8* dst )
+{
+  u16* dst1st = (u16*)dst;
+  u16* dst2nd = (u16*)( dst + 0x20 );
+  u8 dots;
+
+  BitReader_Init( &BitReader, glyphSrc );
+
+  // この１ブロックで横１ライン分のドットを読み取っている
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst2nd++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
+
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst2nd++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
+
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst2nd++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
+
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst2nd++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
+
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst2nd++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
+
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst2nd++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
+
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst2nd++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
+
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst2nd++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
 }
 
-// 2x2char (幅9～12ドット）ドット読み取り
-static inline void dotExpand_2x2( const u8* glyphSrc, u16 remBits, u8* dst )
+
+
+// 2x2char読み取り
+static void dotExpand_2x2( const u8* glyphSrc, u16 remBits, u8* dst )
 {
   u16* dst1st = (u16*)dst;
   u16* dst2nd = (u16*)( dst + 0x20 );
