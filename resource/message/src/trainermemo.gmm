@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-20T22:25:57"/>
+	<create user="shimoyamada" host="W00184" date="2010-02-24T16:12:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,151 +336,151 @@
 	<row id="trmemo_01_01">
 		<comment>メモの１行目：がんばりや</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]がんばりや[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]がんばりや[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]がんばりや[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_02">
 		<comment>メモの１行目：さみしがり</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]さみしがり[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]さみしがり[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]さみしがり[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_03">
 		<comment>メモの１行目：ゆうかん</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]ゆうかん[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]ゆうかん[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]ゆうかん[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_04">
 		<comment>メモの１行目：いじっぱり</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]いじっぱり[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]いじっぱり[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]いじっぱり[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_05">
 		<comment>メモの１行目：やんちゃ</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]やんちゃ[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]やんちゃ[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]やんちゃ[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_06">
 		<comment>メモの１行目：ずぶとい</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]ずぶとい[FF:00:色:0]　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]ずぶとい[FF:00:色:0]　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]ずぶとい[FF:00:色:0]　性格。</language>
 	</row>
 
 	<row id="trmemo_01_07">
 		<comment>メモの１行目：すなお</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]すなお[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]すなお[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]すなお[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_08">
 		<comment>メモの１行目：のんき</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]のんき[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]のんき[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]のんき[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_09">
 		<comment>メモの１行目：わんぱく</comment>
 		<language name="JPN" font=" 1:small" size="109" width="144">[FF:00:色:2]わんぱく[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" size="109" width="144">[FF:00:色:2]わんぱく[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" size="109" width="144">[FF:00:色:2]わんぱく[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_10">
 		<comment>メモの１行目：のうてんき</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]のうてんき[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]のうてんき[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]のうてんき[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_11">
 		<comment>メモの１行目：おくびょう</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]おくびょう[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]おくびょう[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]おくびょう[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_12">
 		<comment>メモの１行目：せっかち</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]せっかち[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]せっかち[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]せっかち[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_13">
 		<comment>メモの１行目：まじめ</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]まじめ[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]まじめ[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]まじめ[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_14">
 		<comment>メモの１行目：ようき</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]ようき[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]ようき[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]ようき[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_15">
 		<comment>メモの１行目：むじゃき</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]むじゃき[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]むじゃき[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]むじゃき[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_16">
 		<comment>メモの１行目：ひかえめ</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]ひかえめ[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]ひかえめ[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]ひかえめ[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_17">
 		<comment>メモの１行目：おっとり</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]おっとり[FF:00:色:0]した　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]おっとり[FF:00:色:0]した　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]おっとり[FF:00:色:0]した　性格。</language>
 	</row>
 
 	<row id="trmemo_01_18">
 		<comment>メモの１行目：れいせい</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]れいせい[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]れいせい[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]れいせい[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_19">
 		<comment>メモの１行目：てれや</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]てれや[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]てれや[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]てれや[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_20">
 		<comment>メモの１行目：うっかりや</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]うっかりや[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]うっかりや[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]うっかりや[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_21">
 		<comment>メモの１行目：おだやか</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]おだやか[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]おだやか[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]おだやか[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_22">
 		<comment>メモの１行目：おとなしい</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]おとなしい[FF:00:色:0]　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]おとなしい[FF:00:色:0]　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]おとなしい[FF:00:色:0]　性格。</language>
 	</row>
 
 	<row id="trmemo_01_23">
 		<comment>メモの１行目：なまいき</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]なまいき[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]なまいき[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]なまいき[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_24">
 		<comment>メモの１行目：しんちょう</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]しんちょう[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]しんちょう[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]しんちょう[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_01_25">
 		<comment>メモの１行目：きまぐれ</comment>
 		<language name="JPN" font=" 1:small" width="144">[FF:00:色:2]きまぐれ[FF:00:色:0]な　せいかく。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]きまぐれ[FF:00:色:0]な　せいかく。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144">[FF:00:色:2]きまぐれ[FF:00:色:0]な　性格。</language>
 	</row>
 
 	<row id="trmemo_02_01_01">
@@ -495,10 +495,10 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 Ｌｖ．[2:02:３桁:3]のときに
 であった。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 Ｌｖ．[2:02:３桁:3]のときに
-であった。</language>
+出会った。</language>
 	</row>
 
 	<row id="trmemo_02_01_02">
@@ -513,10 +513,10 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 Ｌｖ．[2:02:３桁:3]のときに
 であった　ようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 Ｌｖ．[2:02:３桁:3]のときに
-であった　ようだ。</language>
+出会った　ようだ。</language>
 	</row>
 
 	<row id="trmemo_02_02_01">
@@ -531,7 +531,7 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 Ｌｖ．[2:02:３桁:3]のときに
 やってきた。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 Ｌｖ．[2:02:３桁:3]のときに
 やってきた。</language>
@@ -549,7 +549,7 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 Ｌｖ．[2:02:３桁:3]のときに
 やってきた　ようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 Ｌｖ．[2:02:３桁:3]のときに
 やってきた。</language>
@@ -573,12 +573,12 @@
 ２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 かえって　であった。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="6">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="6">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]で
-てにいれた　タマゴが
-２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+手に入れた　タマゴが
+２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-かえって　であった。</language>
+かえって　出会った。</language>
 	</row>
 
 	<row id="trmemo_02_03_02">
@@ -599,12 +599,12 @@
 ２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 かえり　であったようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="6">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="6">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]で
-てにいれた　タマゴが
-２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+手に入れた　タマゴが
+２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-かえり　であったようだ。</language>
+かえり　出会ったようだ。</language>
 	</row>
 
 	<row id="trmemo_02_04_01">
@@ -625,12 +625,12 @@
 ２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 かえって　であった。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]から
 もらった　タマゴが
-２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-かえって　であった。</language>
+かえって　出会った。</language>
 	</row>
 
 	<row id="trmemo_02_04_02">
@@ -651,12 +651,12 @@
 ２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 かえり　であったようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]から
 もらった　タマゴが
-２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-かえり　であったようだ。</language>
+かえり　出会ったようだ。</language>
 	</row>
 
 	<row id="trmemo_02_05_01">
@@ -672,11 +672,11 @@
 Ｌｖ．[2:02:３桁:3]のときに
 うんめいてきな
 であいをした。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 Ｌｖ．[2:02:３桁:3]のときに
-うんめいてきな
-であいをした。</language>
+運命的な
+出会いをした。</language>
 	</row>
 
 	<row id="trmemo_02_05_02">
@@ -692,11 +692,11 @@
 Ｌｖ．[2:02:３桁:3]のときに
 うんめいてきな
 であいをした　ようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 Ｌｖ．[2:02:３桁:3]のときに
-うんめいてきな
-であいをした　ようだ。</language>
+運命的な
+出会いをした　ようだ。</language>
 	</row>
 
 	<row id="trmemo_02_06_01">
@@ -718,13 +718,13 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 かえって　うんめいてきな
 であいをした。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]で
-てにいれた　タマゴが
-２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+手に入れた　タマゴが
+２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-かえって　うんめいてきな
-であいをした。</language>
+かえって　運命的な
+出会いをした。</language>
 	</row>
 
 	<row id="trmemo_02_06_02">
@@ -746,13 +746,13 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 かえって　うんめいてきな
 であいをした　ようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]で
-てにいれた　タマゴが
-２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+手に入れた　タマゴが
+２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-かえって　うんめいてきな
-であいをした　ようだ。</language>
+かえって　運命的な
+出会いをした　ようだ。</language>
 	</row>
 
 	<row id="trmemo_02_07_01  " back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -775,13 +775,13 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 かえって　うんめいてきな
 であいをした。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]から
 やってきた　タマゴが
-２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-かえって　うんめいてきな
-であいをした。</language>
+かえって　運命的な
+出会いをした。</language>
 	</row>
 
 	<row id="trmemo_02_07_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -803,13 +803,13 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 かえって　うんめいてきな
 であいをした　ようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]で
-てにいれた　タマゴが
-２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+手に入れた　タマゴが
+２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-かえって　うんめいてきな
-であいをした　ようだ。</language>
+かえって　運命的な
+出会いをした　ようだ。</language>
 	</row>
 
 	<row id="trmemo_02_08_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -831,13 +831,13 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 かえって　うんめいてきな
 であいをした。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]で
-てにいれた　タマゴが
-２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+手に入れた　タマゴが
+２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-かえって　うんめいてきな
-であいをした。</language>
+かえって　運命的な
+出会いをした。</language>
 	</row>
 
 	<row id="trmemo_02_08_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -859,13 +859,13 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 かえって　うんめいてきな
 であいをした　ようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]で
-てにいれた　タマゴが
-２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+手に入れた　タマゴが
+２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-かえって　うんめいてきな
-であいをした　ようだ。</language>
+かえって　運命的な
+出会いをした　ようだ。</language>
 	</row>
 
 	<row id="trmemo_02_09_01">
@@ -880,7 +880,7 @@
 Ｌｖ．[2:02:３桁:3]のとき
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]から
 やってきた。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 Ｌｖ．[2:02:３桁:3]のとき
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]から
 やってきた。</language>
@@ -898,7 +898,7 @@
 Ｌｖ．[2:02:３桁:3]のとき
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]から
 やってきた　ようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 Ｌｖ．[2:02:３桁:3]のとき
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]から
 やってきた。</language>
@@ -917,7 +917,7 @@
 ながい　ときを　こえて
 Ｌｖ．[2:02:３桁:3]のとき
 やってきた。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [1:05:マップ名:4]から
 ながい　ときを　こえて
 Ｌｖ．[2:02:３桁:3]のとき
@@ -937,7 +937,7 @@
 ながい　ときを　こえて
 Ｌｖ．[2:02:３桁:3]のとき
 やってきた　ようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [1:05:マップ名:4]から
 ながい　ときを　こえて
 Ｌｖ．[2:02:３桁:3]のとき
@@ -958,9 +958,9 @@
 [1:05:マップ名:4]から
 Ｌｖ．[2:02:３桁:3]のとき
 やってきた。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
-うんめいてきな
-であいをした
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
+運命的な
+出会いをした
 [1:05:マップ名:4]から
 Ｌｖ．[2:02:３桁:3]のとき
 やってきた。</language>
@@ -980,9 +980,9 @@
 [1:05:マップ名:4]から
 Ｌｖ．[2:02:３桁:3]のとき
 やってきた　ようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
-うんめいてきな
-であいをした
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
+運命的な
+出会いをした
 [1:05:マップ名:4]から
 Ｌｖ．[2:02:３桁:3]のとき
 やってきた　ようだ。</language>
@@ -1003,9 +1003,9 @@
 ながい　ときを　こえて
 Ｌｖ．[2:02:３桁:3]のとき
 やってきた。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
-うんめいてきな
-であいをした
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
+運命的な
+出会いをした
 [1:05:マップ名:4]から
 ながい　ときを　こえて
 Ｌｖ．[2:02:３桁:3]のとき
@@ -1027,9 +1027,9 @@
 ながい　ときを　こえて
 Ｌｖ．[2:02:３桁:3]のとき
 やってきた　ようだ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
-うんめいてきな
-であいをした
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
+運命的な
+出会いをした
 [1:05:マップ名:4]から
 ながい　ときを　こえて
 Ｌｖ．[2:02:３桁:3]のとき
@@ -1046,11 +1046,11 @@
 あやつる　ゾロアークと
 はげしい　たたかいを
 くりひろげた。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">クラウンシティを　まもる
-でんせつのポケモン。
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">クラウンシティを　守る
+伝説のポケモン。
 イリュージョンを
 あやつる　ゾロアークと
-はげしい　たたかいを
+激しい　戦いを
 くりひろげた。</language>
 	</row>
 
@@ -1066,8 +1066,8 @@
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">クラウンシティに
 ときわたりで
 やってきた。
-まいごの　ゾロアと
-であい　なかよくなった。</language>
+迷子の　ゾロアと
+出会い　仲良くなった。</language>
 	</row>
 
 	<row id="trmemo_02_15_01">
@@ -1080,12 +1080,12 @@
 ゾロアークの
 イリュージョンを
 うちやぶった。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">げんえいのもりで
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">幻影の森で
 ゾロアークと
-ふたたび　であう。
+再び　出会う。
 ゾロアークの
 イリュージョンを
-うちやぶった。</language>
+打ち破った。</language>
 	</row>
 
 	<row id="trmemo_02_16_01">
@@ -1097,8 +1097,8 @@
 いっしょに　ぼうけんを
 することに　なった。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ライモンシティで
-ゾロアと　さいかいして
-いっしょに　ぼうけんを
+ゾロアと　再開して
+一緒に　冒険を
 することに　なった。</language>
 	</row>
 
@@ -1359,7 +1359,7 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]から
 もらった　ふしぎな
 ポケモンの　タマゴ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]から
 もらった　ふしぎな
 ポケモンの　タマゴ。</language>
@@ -1384,9 +1384,9 @@
 てにいれた　ふしぎな
 ポケモンの　タマゴ。
 </language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]で
-てにいれた　ふしぎな
+手に入れた　ふしぎな
 ポケモンの　タマゴ。
 </language>
 	</row>
@@ -1409,14 +1409,12 @@
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 てにいれた
 ふしぎな　ふしぎな
-ポケモンの　タマゴ。
-</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+ポケモンの　タマゴ。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
-てにいれた
+手に入れた
 ふしぎな　ふしぎな
-ポケモンの　タマゴ。
-</language>
+ポケモンの　タマゴ。</language>
 	</row>
 
 	<row id="trmemo_01_T_01_04">
@@ -1437,12 +1435,11 @@
 てにいれた　とっても
 ふしぎな　ふしぎな
 ポケモンの　タマゴ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]ねん[2:01:２桁:6]がつ[2:01:２桁:7]にち
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:1][1:05:マップ名:8][FF:00:色:0]で
-てにいれた　とっても
+手に入れた　とっても
 ふしぎな　ふしぎな
-ポケモンの　タマゴ。
-</language>
+ポケモンの　タマゴ。</language>
 	</row>
 
 	<row id="trmemo_01_T_02_01">
@@ -1451,13 +1448,11 @@
 		<language name="JPN" font=" 1:small" width="144" line="5">「タマゴのようす」
 なかから　おとが
 きこえてくる！
-もうすぐ　うまれそう！
-</language>
+もうすぐ　うまれそう！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">「タマゴのようす」
 なかから　おとが
 きこえてくる！
-もうすぐ　うまれそう！
-</language>
+もうすぐ　うまれそう！</language>
 	</row>
 
 	<row id="trmemo_01_T_02_02">

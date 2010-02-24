@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-02-23T17:50:32"/>
+	<create user="shimoyamada" host="W00184" date="2010-02-24T16:55:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+	<dialog left="149" top="557" right="854" bottom="1185" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -418,8 +418,8 @@ C-Gear入手前</comment>
 	<row id="msg_wifi_counter_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ランダムマッチング</language>
-		<language name="JPN_KANJI" width="256">ランダムマッチング</language>
+		<language name="JPN" width="256">ランダムマッチ</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチ</language>
 	</row>
 
 	<row id="msg_wifi_counter_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -836,8 +836,8 @@ C-Gear入手前</comment>
 	<row id="msg_rndmatch_02_win04" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">もどる</language>
-		<language name="JPN_KANJI" width="256">もどる</language>
+		<language name="JPN" width="256">わかった</language>
+		<language name="JPN_KANJI" width="256">わかった</language>
 	</row>
 
 	<row id="msg_rndmatch_02_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">

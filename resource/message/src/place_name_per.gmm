@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-20T19:48:02"/>
+	<create user="shimoyamada" host="W00184" date="2010-02-24T16:15:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1087" top="439" right="1694" bottom="1059" maximized="no" rayout="Vertical2">
+	<dialog left="1145" top="364" right="1850" bottom="992" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="599"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="432"/>
-		<band id="3" index="3" style="0000" width="599"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,12 +336,12 @@
 	<row id="MAPNAME_TOOKUNIIRUHITO">
 		<comment>次のバージョン以降の知らない人物</comment>
 		<language name="JPN" width="256">とおくにいるひと</language>
-		<language name="JPN_KANJI" width="256">とおくにいるひと</language>
+		<language name="JPN_KANJI" width="256">遠くにいる人</language>
 	</row>
 
 	<row id="MAPNAME_SODATEYA">
 		<language name="JPN" width="256">そだてやふうふ</language>
-		<language name="JPN_KANJI" width="256">そだてやふうふ</language>
+		<language name="JPN_KANJI" width="256">そだてや夫婦</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-21T15:10:17"/>
+	<create user="shimoyamada" host="W00184" date="2010-02-24T16:42:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1728" top="228" right="1936" bottom="821" maximized="no" rayout="Vertical2">
+	<dialog left="1024" top="403" right="1729" bottom="1031" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="445"/>
+		<band id="0" index="0" style="0000" width="495"/>
 		<band id="1" index="1" style="0000" width="200"/>
-		<band id="2" index="2" style="0000" width="217"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -333,88 +333,88 @@
 	</lock>
 
 
-	<row id="MAPNAME_SUTEKINABASYO" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="MAPNAME_SUTEKINABASYO" text-color="#000000,,,#000000,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>汎用的配布場所</comment>
 		<language name="JPN" width="120">すてきなばしょ</language>
-		<language name="JPN_KANJI" width="120">すてきなばしょ</language>
+		<language name="JPN_KANJI" width="120">すてきな場所</language>
 	</row>
 
-	<row id="MAPNAME_TOOIBASYO_OUT" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="MAPNAME_TOOIBASYO_OUT" text-color="#000000,,,#000000,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>他の関連ゲーム</comment>
 		<language name="JPN" width="120">とおいばしょ</language>
-		<language name="JPN_KANJI" width="120">とおいばしょ</language>
+		<language name="JPN_KANJI" width="120">とおい場所</language>
 	</row>
 
 	<row id="MAPNAME_EIGA" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画汎用</comment>
 		<language name="JPN" width="120">ポケモンえいが</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画</language>
 	</row>
 
 	<row id="MAPNAME_EIGA10" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2010</comment>
 		<language name="JPN" width="120">ポケモンえいが１０</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが１０</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画１０</language>
 	</row>
 
 	<row id="MAPNAME_EIGA11" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2011</comment>
 		<language name="JPN" width="120">ポケモンえいが１１</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが１１</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画１１</language>
 	</row>
 
 	<row id="MAPNAME_EIGA12" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2012</comment>
 		<language name="JPN" width="120">ポケモンえいが１２</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが１２</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画１２</language>
 	</row>
 
 	<row id="MAPNAME_EIGA13" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2013</comment>
 		<language name="JPN" width="120">ポケモンえいが１３</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが１３</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画１３</language>
 	</row>
 
 	<row id="MAPNAME_EIGA14" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2014</comment>
 		<language name="JPN" width="120">ポケモンえいが１４</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが１４</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画１４</language>
 	</row>
 
 	<row id="MAPNAME_EIGA15" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2015</comment>
 		<language name="JPN" width="120">ポケモンえいが１５</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが１５</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画１５</language>
 	</row>
 
 	<row id="MAPNAME_EIGA16" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2016</comment>
 		<language name="JPN" width="120">ポケモンえいが１６</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが１６</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画１６</language>
 	</row>
 
 	<row id="MAPNAME_EIGA17" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2017</comment>
 		<language name="JPN" width="120">ポケモンえいが１７</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが１７</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画１７</language>
 	</row>
 
 	<row id="MAPNAME_EIGA18" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2018</comment>
 		<language name="JPN" width="120">ポケモンえいが１８</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが１８</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画１８</language>
 	</row>
 
 	<row id="MAPNAME_EIGA19" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2019</comment>
 		<language name="JPN" width="120">ポケモンえいが１９</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが１９</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画１９</language>
 	</row>
 
 	<row id="MAPNAME_EIGA20" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン映画2020</comment>
 		<language name="JPN" width="120">ポケモンえいが２０</language>
-		<language name="JPN_KANJI" width="120">ポケモンえいが２０</language>
+		<language name="JPN_KANJI" width="120">ポケモン映画２０</language>
 	</row>
 
 	<row id="MAPNAME_POKEMONSENTAH" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -690,7 +690,7 @@
 	<row id="MAPNAME_BATORUTAIKAI" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>汎用バトル大会</comment>
 		<language name="JPN" width="120">バトルたいかい</language>
-		<language name="JPN_KANJI" width="120">バトルたいかい</language>
+		<language name="JPN_KANJI" width="120">バトル大会</language>
 	</row>
 
 	<row id="MAPNAME_GEHMUIBENTO" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -1014,10 +1014,10 @@ Nintendoスポット2</comment>
 		<language name="JPN_KANJI" width="120">ポケパーク２０</language>
 	</row>
 
-	<row id="MAPNAME_IBENTOKAIZYOU" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="MAPNAME_IBENTOKAIZYOU" text-color="#000000,,,#000000,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>汎用的イベント会場</comment>
 		<language name="JPN" width="120">イベントかいじょう</language>
-		<language name="JPN_KANJI" width="120">イベントかいじょう</language>
+		<language name="JPN_KANJI" width="120">イベント会場</language>
 	</row>
 
 	<flowchart-group-list>
