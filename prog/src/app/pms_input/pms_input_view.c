@@ -24,6 +24,10 @@
 #include "pms_input_view.h"
 #include "pmsi.naix"
 
+// 上画面説明欄に表示するメッセージ
+#include "message.naix"
+#include "msg/msg_pms_input.h"
+
 #include "test/ariizumi/ari_debug.h"
 
 //==============================================================================================
@@ -37,6 +41,14 @@ enum {
 
 	FADE_FRAMES = 5,
 
+};
+
+// 上画面説明欄の文字の色
+enum
+{
+  EXPLAIN_COL_L     = 14,
+  EXPLAIN_COL_S     = 15,
+  EXPLAIN_COL_B     =  7,
 };
 
 
@@ -67,6 +79,11 @@ struct _PMS_INPUT_VIEW {
 	PMSIV_SUB*			  sub_wk; // 現状SUBBGの読み込みだけに使われているようだったので全てコメントアウトした
   PMSIV_MENU*       menu_wk;
 
+  // 上画面説明欄に表示するフォントカラーをつくるためのバッファ
+  GXRgb        explain_font_color_l_s[2];
+  // 上画面説明欄に表示するメッセージのウィンドウ
+  GFL_BMPWIN*  explain_bmpwin;
+  BOOL         explain_bmpwin_trans_req;
 
 	u8					status;
 	u8					key_mode;
@@ -153,6 +170,23 @@ static const GFL_DISP_VRAM bank_data = {
 	GX_OBJVRAMMODE_CHAR_1D_64K
 };
 
+
+// 上画面説明欄に表示するメッセージのウィンドウ
+typedef enum
+{
+  PMSIV_EXPLAIN_MSG_EDIT_SENTENCE,
+  PMSIV_EXPLAIN_MSG_EDIT_PECULIAR,
+  PMSIV_EXPLAIN_MSG_GROUP_CATEGORY,
+  PMSIV_EXPLAIN_MSG_GROUP_WORDWIN,
+  PMSIV_EXPLAIN_MSG_INITIAL_CATEGORY,
+  PMSIV_EXPLAIN_MSG_INITIAL_WORDWIN,
+  PMSIV_EXPLAIN_MSG_MAX,
+}
+PMSIV_EXPLAIN_MSG;
+static void set_explain_message( COMMAND_WORK* cwk, PMSIV_EXPLAIN_MSG msg );
+static void trans_explain_message( PMS_INPUT_VIEW* vwk );
+
+
 //------------------------------------------------------------------
 /**
 	* 
@@ -190,6 +224,9 @@ PMS_INPUT_VIEW*  PMSIView_Create(const PMS_INPUT_WORK* main_wk, const PMS_INPUT_
 		{
 			vwk->cmdTask[i] = NULL;
 		}
+
+    // 上画面説明欄に表示するメッセージのウィンドウ
+    vwk->explain_bmpwin_trans_req     = FALSE;
 
 	}
 
@@ -278,6 +315,8 @@ static void PMSIView_MainTask( GFL_TCB *tcb, void* wk_adrs )
   PMSIV_MENU_Main( vwk->menu_wk );
 
   PRINTSYS_QUE_Main( vwk->print_que );
+
+  trans_explain_message( vwk );
 }
 
 //------------------------------------------------------------------
@@ -534,7 +573,64 @@ GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &bank_data, HEAPID_PMS_INPU
   GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_sub2_NSCR, FRM_SUB_SEARCH_LIST, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_pmsi_pms_bg_sub_NCGR, FRM_SUB_SEARCH_LIST, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	GFL_BG_SetVisible( FRM_SUB_SEARCH_LIST, FALSE );
-	
+
+
+  // 上画面説明欄
+  // 他のパレットはこのすぐ上にある
+  // PMSIV_EDIT_SetupGraphicDatas
+  // で呼ばれている
+  GFL_ARCHDL_UTIL_TransVramPaletteEx(
+      p_handle,
+      NARC_pmsi_pms_bg_sub_NCLR,
+      PALTYPE_SUB_BG,
+      0x20*PALSRCPOS_SUB_EXPLAIN,
+      0x20*PALNUM_SUB_EXPLAIN,
+      0x20*PALAMOUNT_SUB_EXPLAIN,
+      HEAPID_PMS_INPUT_VIEW );
+  {
+    // 足りない色をつくっておく
+    BOOL result;
+
+    cwk->vwk->explain_font_color_l_s[0] = GX_RGB(11, 10, 10);
+    result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        PALNUM_SUB_EXPLAIN * 0x20 + EXPLAIN_COL_L * 2 ,
+                                        &(cwk->vwk->explain_font_color_l_s[0]) , 2 );
+    GF_ASSERT( result );
+
+    cwk->vwk->explain_font_color_l_s[1] = GX_RGB(20, 20, 21);
+    result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        PALNUM_SUB_EXPLAIN * 0x20 + EXPLAIN_COL_S * 2 ,
+                                        &(cwk->vwk->explain_font_color_l_s[1]) , 2 );
+    GF_ASSERT( result );
+  }
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(	p_handle, NARC_pmsi_pms_bg_sub_NCGR,
+						FRM_SUB_EXPLAIN, 0, 0, 0, HEAPID_PMS_INPUT_VIEW );
+  
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms2_bg_main4_NSCR,
+						FRM_SUB_EXPLAIN, 0, 0, 0, HEAPID_PMS_INPUT_VIEW );
+  GFL_BG_ChangeScreenPalette( FRM_SUB_EXPLAIN, 0, 0, 32, 32, PALNUM_SUB_EXPLAIN );
+
+  cwk->vwk->explain_bmpwin = GFL_BMPWIN_Create(
+      FRM_SUB_EXPLAIN,
+      3, 5, 
+      26, 7,
+      PALNUM_SUB_EXPLAIN,
+      GFL_BMP_CHRAREA_GET_B );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( cwk->vwk->explain_bmpwin ), EXPLAIN_COL_B );
+  cwk->vwk->explain_bmpwin_trans_req = FALSE;
+
+  // 上画面説明欄に表示するメッセージのウィンドウ
+  if( PMSI_GetLockFlag( cwk->mwk ) )
+  {
+    set_explain_message( cwk, PMSIV_EXPLAIN_MSG_EDIT_PECULIAR );
+  }
+  else
+  {
+    set_explain_message( cwk, PMSIV_EXPLAIN_MSG_EDIT_SENTENCE );
+  }
+
+
   // 背景面転送
   PMSIView_SetBackScreen( cwk->vwk, FALSE );
 
@@ -612,6 +708,11 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 		if( WIPE_SYS_EndCheck() )
 		{
 			int i;
+
+
+      // 上画面説明欄
+      GFL_BMPWIN_Delete( cwk->vwk->explain_bmpwin );
+
 
 			PMSIV_EDIT_Delete( cwk->vwk->edit_wk );
 //	  PMSIV_BUTTON_Delete( cwk->vwk->button_wk );
@@ -713,12 +814,19 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x14000,0x8000,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
+  // 上画面説明欄
+	static const GFL_BG_BGCNT_HEADER header_sub3 = {
+		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x1c000,0x4000,
+		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+	};
 
 	PMS_INPUT_VIEW* vwk = cwk->vwk;
 
 
 	GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
-	GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_3D);
+	//GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_3D);  // GFL_BG_SetBGModeを直後で呼んでいるから不要でしょ&3Dじゃないでしょ
 
 	GFL_DISP_SetBank( &bank_data );
 	GFL_BG_SetBGMode( &sys_data );
@@ -732,8 +840,9 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 	GFL_BG_SetBGControl( FRM_SUB_EDITAREA, &header_sub0, GFL_BG_MODE_TEXT );
 	GFL_BG_SetBGControl( FRM_SUB_BG, &header_sub1, GFL_BG_MODE_TEXT );
 	GFL_BG_SetBGControl( FRM_SUB_SEARCH_LIST, &header_sub2, GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( FRM_SUB_EXPLAIN, &header_sub3, GFL_BG_MODE_TEXT );
 
-	for(i = 0;i < 7;i++){
+	for( i = GFL_BG_FRAME0_M; i <= GFL_BG_FRAME3_S; i++ ){
 		GFL_BG_ClearScreen(GFL_BG_FRAME0_M+i);
 		GFL_BG_SetVisible(GFL_BG_FRAME0_M+i,TRUE);
 	}
@@ -958,6 +1067,17 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 //		PMSIV_BUTTON_Hide( vwk->button_wk );
 		PMSIV_CATEGORY_StartEnableBG( vwk->category_wk );
 		PMSIV_EDIT_ScrollSet( vwk->edit_wk,0);
+
+    // 上画面説明欄に表示するメッセージのウィンドウ
+    if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
+    {
+      set_explain_message( wk, PMSIV_EXPLAIN_MSG_GROUP_CATEGORY );
+    }
+    else //if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+    {
+      set_explain_message( wk, PMSIV_EXPLAIN_MSG_INITIAL_CATEGORY );
+    }
+
 		wk->seq++;
 		break;
 
@@ -1049,6 +1169,17 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
         PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
         PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
         PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
+
+        // 上画面説明欄に表示するメッセージのウィンドウ
+        if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
+        {
+          set_explain_message( wk, PMSIV_EXPLAIN_MSG_GROUP_CATEGORY );
+        }
+        else //if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+        {
+          set_explain_message( wk, PMSIV_EXPLAIN_MSG_INITIAL_CATEGORY );
+        }
+
         wk->seq++;
       }
     }
@@ -1115,6 +1246,17 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
     PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
     PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
     PMSIV_EDIT_ScrollSet( vwk->edit_wk,1);
+
+    // 上画面説明欄に表示するメッセージのウィンドウ
+    if( PMSI_GetLockFlag( wk->mwk ) )
+    {
+      set_explain_message( wk, PMSIV_EXPLAIN_MSG_EDIT_PECULIAR );
+    }
+    else
+    {
+      set_explain_message( wk, PMSIV_EXPLAIN_MSG_EDIT_SENTENCE );
+    }
+
     wk->seq++;
     break;
 
@@ -1173,6 +1315,17 @@ static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
         PMSIV_MENU_SetupWordWin( vwk->menu_wk );
 		    PMSIV_WORDWIN_SetupWord( vwk->wordwin_wk );
         PMSIV_WORDWIN_StartFadeIn( vwk->wordwin_wk );
+
+        // 上画面説明欄に表示するメッセージのウィンドウ
+        if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
+        {
+          set_explain_message( wk, PMSIV_EXPLAIN_MSG_GROUP_WORDWIN );
+        }
+        else //if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+        {
+          set_explain_message( wk, PMSIV_EXPLAIN_MSG_INITIAL_WORDWIN );
+        }
+        
         wk->seq++;
       }
 		}
@@ -1248,6 +1401,16 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
       PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, (count>0) );  // あく アクアテール → あ い う え お か き
     }
 
+    // 上画面説明欄に表示するメッセージのウィンドウ
+    if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
+    {
+      set_explain_message( wk, PMSIV_EXPLAIN_MSG_GROUP_CATEGORY );
+    }
+    else //if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+    {
+      set_explain_message( wk, PMSIV_EXPLAIN_MSG_INITIAL_CATEGORY );
+    }
+
 		wk->seq++;
 		break;
 
@@ -1300,7 +1463,18 @@ static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
       // このタイミングでBG背景面を読み込んでしまう
       PMSIView_SetBackScreen( wk->vwk, FALSE );
 			PMSIV_CATEGORY_StartFadeIn( vwk->category_wk );
-			wk->seq++;
+
+      // 上画面説明欄に表示するメッセージのウィンドウ
+      if( PMSI_GetLockFlag( wk->mwk ) )
+      {
+        set_explain_message( wk, PMSIV_EXPLAIN_MSG_EDIT_PECULIAR );
+      }
+      else
+      {
+        set_explain_message( wk, PMSIV_EXPLAIN_MSG_EDIT_SENTENCE );
+      }
+
+      wk->seq++;
 		}
 		break;
 
@@ -1990,5 +2164,56 @@ void PMSIView_SetBackScreen( PMS_INPUT_VIEW* vwk, BOOL is_wordwin )
   GFL_ARC_CloseDataHandle( p_handle );
 	
   GFL_BG_LoadScreenReq( FRM_MAIN_BACK );
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  上画面説明欄に表示するメッセージのウィンドウ
+ *
+ *	@param	
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void set_explain_message( COMMAND_WORK* cwk, PMSIV_EXPLAIN_MSG msg )
+{
+  const u32 str_id[PMSIV_EXPLAIN_MSG_MAX] =
+  {
+    info_02,
+    info_03,
+    info_07,
+    info_04,
+    info_05,
+    info_06,
+  };
+
+  GFL_MSGDATA* msgdata;
+  STRBUF* strbuf;
+  
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( cwk->vwk->explain_bmpwin ), EXPLAIN_COL_B );
+
+  msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pms_input_dat, HEAPID_PMS_INPUT_VIEW );
+  strbuf = GFL_MSG_CreateString( msgdata, str_id[msg] );
+  PRINTSYS_PrintQueColor(
+        cwk->vwk->print_que,
+        GFL_BMPWIN_GetBmp( cwk->vwk->explain_bmpwin ),
+        2, 4,
+        strbuf,
+        cwk->vwk->fontHandle,
+        PRINTSYS_LSB_Make( EXPLAIN_COL_L, EXPLAIN_COL_S, EXPLAIN_COL_B ) );
+  cwk->vwk->explain_bmpwin_trans_req = TRUE;
+  GFL_STR_DeleteBuffer( strbuf );
+  GFL_MSG_Delete( msgdata );
+}
+static void trans_explain_message( PMS_INPUT_VIEW* vwk )
+{
+  // 上画面説明欄に表示するメッセージのウィンドウ
+  if(    vwk->explain_bmpwin_trans_req
+      && ( !PRINTSYS_QUE_IsExistTarget( vwk->print_que, GFL_BMPWIN_GetBmp( vwk->explain_bmpwin ) ) ) )
+  {
+    GFL_BMPWIN_MakeTransWindow_VBlank( vwk->explain_bmpwin );
+    vwk->explain_bmpwin_trans_req = FALSE;
+  }
 }
 

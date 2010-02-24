@@ -329,8 +329,8 @@ void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
 
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
 
-  // ロックモードでは表示しない
-  if( PMSI_GetLockFlag( wk->mwk ) == FALSE )
+  // ロックモードでは表示しない && 単語１個モード単語２個モードでは表示しない
+  if( PMSI_GetLockFlag( wk->mwk ) == FALSE && PMSI_GetInputMode( wk->mwk ) == PMSI_MODE_SENTENCE )
   {
     // CLWK
     GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_L ], TRUE );

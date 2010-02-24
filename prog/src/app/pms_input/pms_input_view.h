@@ -44,6 +44,7 @@ enum {
 	FRM_SUB_EDITAREA = GFL_BG_FRAME0_S,
 	FRM_SUB_BG = GFL_BG_FRAME1_S,
   FRM_SUB_SEARCH_LIST = GFL_BG_FRAME2_S,
+  FRM_SUB_EXPLAIN  = GFL_BG_FRAME3_S,
 
 	FRM_MAIN_EDITAREA_BLENDMASK = GX_BLEND_PLANEMASK_BG0,
 	FRM_MAIN_CATEGORY_BLENDMASK = GX_BLEND_PLANEMASK_BG1,
@@ -73,6 +74,15 @@ enum {
 	
   PALNUM_MAIN_BUTTON = 0x0a, // @TODO 使ってないので消す
 
+  // サブ画面のBGのパレットのRAMの位置
+  PALNUM_SUB_ALL         = 0,  // 全体(5本)
+  PALNUM_SUB_EXPLAIN     = 5,  // 上画面説明欄(1本)
+  // サブ画面のBGのパレットの本数
+  PALAMOUNT_SUB_ALL      = 5,  // 全体(5本)
+  PALAMOUNT_SUB_EXPLAIN  = 1,  // 上画面説明欄(1本)
+  // サブ画面のBGのパレットの読み込み開始位置
+  PALSRCPOS_SUB_ALL      = 0,  // 全体(5本)
+  PALSRCPOS_SUB_EXPLAIN  = 4,  // 上画面説明欄(ライン4番のパレット1本だけ使う)
 };
 //------------------------------------------------
 /**

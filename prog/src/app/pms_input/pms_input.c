@@ -34,7 +34,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //------------------------------------------------------
 enum {
 	HEAPSIZE_SYS = 0x18000,
-	HEAPSIZE_VIEW = 0x30000,
+	HEAPSIZE_VIEW = 0x32000,
 };
 
 enum {

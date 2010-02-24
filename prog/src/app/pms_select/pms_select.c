@@ -198,6 +198,7 @@ enum
 	BG_FRAME_BACK_M	  = GFL_BG_FRAME3_M,  // 背景
   // SUB
 	BG_FRAME_BACK_S	= GFL_BG_FRAME0_S,  // 背景
+	BG_FRAME_EXPLAIN_S	= GFL_BG_FRAME1_S,  // 背景
 
   // タスクメニューが出ているときに、その後ろを暗くする
   BG_MENU_BRIGHT = -8,
@@ -218,6 +219,7 @@ enum
 
 	//サブBG
 	PLTID_BG_BACK_S				=	0,
+	PLTID_BG_EXPLAIN_S		=	8,
 
 	//メインOBJ
 	PLTID_OBJ_COMMON_M    = 0, // 5本使用
@@ -236,7 +238,8 @@ enum
 	PLTNUM_BG_TOUCHBAR_M		= 0,  // ?本
 
 	//サブBG
-	PLTNUM_BG_BACK_S				=	0,  // 全転送
+	PLTNUM_BG_BACK_S				=	8,
+	PLTNUM_BG_EXPLAIN_S			=	1,
 
 	//メインOBJ
 	PLTNUM_OBJ_COMMON_M    = 5,
@@ -254,6 +257,19 @@ enum
   MSG_M_COL_B_NOT_SEL        = 13,
 };
 
+// 上画面説明欄のパレット
+enum
+{
+  EXPLAIN_S_SRC_PAL_POS      = 4,  // ライン4番のパレットだけ使う
+};
+// 上画面説明欄の文字の色
+enum
+{
+  EXPLAIN_S_COL_L            = 14,
+  EXPLAIN_S_COL_S            = 15,
+  EXPLAIN_S_COL_B            =  7,
+};
+
 // 色変更
 enum
 {
@@ -262,6 +278,8 @@ enum
   COL_CHANGE_2,    // プレートの枠2
   COL_CHANGE_3,    // 文字の背景色SELECTED
   COL_CHANGE_4,    // 文字の背景色NOT_SEL
+  COL_CHANGE_5,    // 上画面説明欄の文字のL色
+  COL_CHANGE_6,    // 上画面説明欄の文字のS色
   COL_CHANGE_MAX,
 };
 
@@ -280,6 +298,11 @@ typedef struct
   NNSG2dScreenData* platescrnData;
   u16   transAnmCnt;
   GXRgb transCol[COL_CHANGE_MAX];
+
+  // 上画面説明欄に表示するメッセージのウィンドウ
+  GFL_BMPWIN*  explain_s_bmpwin;
+  BOOL         explain_s_bmpwin_trans_req;
+
 } PMS_SELECT_BG_WORK;
 
 #ifdef PMS_SELECT_PMSDRAW
@@ -346,6 +369,7 @@ typedef struct
 
   BOOL b_touch;  // タッチ操作のときTRUE、キー操作のときFALSE 
 
+
   // ローカルPROCシステム
   GFL_PROCSYS*  local_procsys;
 } PMS_SELECT_MAIN_WORK;
@@ -374,7 +398,8 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 //=====================================
 static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk );
 static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk );
-static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID );
+static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID,
+    GFL_FONT* font, PRINT_QUE* print_que, GFL_MSGDATA* msgdata );
 static void PMSSelect_BG_UnLoadResource( PMS_SELECT_BG_WORK* wk );
 static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32 sentence_type, BOOL is_select );
 static void PMSSelect_BG_PlateMain( PMS_SELECT_BG_WORK* wk );
@@ -723,7 +748,17 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 
   // PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
-  
+ 
+  // 上画面説明欄に表示するメッセージのウィンドウ
+  {
+    if(    wk->wk_bg.explain_s_bmpwin_trans_req
+        && ( !PRINTSYS_QUE_IsExistTarget( wk->print_que, GFL_BMPWIN_GetBmp( wk->wk_bg.explain_s_bmpwin ) ) ) )
+    {
+      GFL_BMPWIN_MakeTransWindow_VBlank( wk->wk_bg.explain_s_bmpwin );
+      wk->wk_bg.explain_s_bmpwin_trans_req = FALSE;
+    }
+  }
+
   // PLATE転送
   PLATE_CNT_Trans( wk );
 
@@ -790,7 +825,7 @@ static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
   }
 
 	//BGリソース読み込み
-	PMSSelect_BG_LoadResource( &wk->wk_bg, wk->heapID );
+	PMSSelect_BG_LoadResource( &wk->wk_bg, wk->heapID, wk->font, wk->print_que, wk->msg );
 
 #ifdef PMS_SELECT_TOUCHBAR
 	//タッチバーの初期化
@@ -855,7 +890,8 @@ static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
+static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID,
+    GFL_FONT* font, PRINT_QUE* print_que, GFL_MSGDATA* msgdata )
 {
 	ARCHANDLE	*handle;
 	
@@ -908,6 +944,61 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
   wk->plateScrnWork = GFL_ARCHDL_UTIL_LoadScreen( handle, NARC_pmsi_pms2_bg_main1_NSCR, FALSE,
                       &wk->platescrnData, heapID );
 
+
+  // 上画面説明欄
+  GFL_ARCHDL_UTIL_TransVramPaletteEx(
+      handle,
+      NARC_pmsi_pms_bg_sub_NCLR,
+      PALTYPE_SUB_BG,
+      0x20*EXPLAIN_S_SRC_PAL_POS,
+      0x20*PLTID_BG_EXPLAIN_S,
+      0x20*PLTNUM_BG_EXPLAIN_S,
+      heapID );
+  {
+    // 足りない色をつくっておく
+    BOOL result;
+
+    wk->transCol[COL_CHANGE_5] = GX_RGB(11, 10, 10);
+    result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        PLTID_BG_EXPLAIN_S * 32 + EXPLAIN_S_COL_L * 2 ,
+                                        &(wk->transCol[COL_CHANGE_5]) , 2 );
+    GF_ASSERT( result );
+
+    wk->transCol[COL_CHANGE_6] = GX_RGB(20, 20, 21);
+    result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        PLTID_BG_EXPLAIN_S * 32 + EXPLAIN_S_COL_S * 2 ,
+                                        &(wk->transCol[COL_CHANGE_6]) , 2 );
+    GF_ASSERT( result );
+  } 
+  
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_pmsi_pms_bg_sub_NCGR,
+						BG_FRAME_EXPLAIN_S, 0, 0, 0, heapID );
+  
+  GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_pmsi_pms2_bg_main4_NSCR,
+						BG_FRAME_EXPLAIN_S, 0, 0, 0, heapID );
+  GFL_BG_ChangeScreenPalette( BG_FRAME_EXPLAIN_S, 0, 0, 32, 32, PLTID_BG_EXPLAIN_S );
+
+  wk->explain_s_bmpwin = GFL_BMPWIN_Create(
+      BG_FRAME_EXPLAIN_S,
+      3, 5, 
+      26, 7,
+      PLTID_BG_EXPLAIN_S,
+      GFL_BMP_CHRAREA_GET_B );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->explain_s_bmpwin ), EXPLAIN_S_COL_B );
+  {
+    STRBUF* strbuf = GFL_MSG_CreateString( msgdata, info_01 );
+    PRINTSYS_PrintQueColor(
+        print_que,
+        GFL_BMPWIN_GetBmp( wk->explain_s_bmpwin ),
+        2, 4,
+        strbuf,
+        font,
+        PRINTSYS_LSB_Make( EXPLAIN_S_COL_L, EXPLAIN_S_COL_S, EXPLAIN_S_COL_B ) );
+    wk->explain_s_bmpwin_trans_req = TRUE;
+    GFL_STR_DeleteBuffer( strbuf );
+  }
+
+
 	GFL_ARC_CloseDataHandle( handle );
 
   // メニューのBGにもバーをロードしておく
@@ -924,6 +1015,9 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void PMSSelect_BG_UnLoadResource( PMS_SELECT_BG_WORK* wk )
 {
+  // 上画面説明欄
+  GFL_BMPWIN_Delete( wk->explain_s_bmpwin );
+
   // 背面BG開放
 	GFL_BG_FreeCharacterArea( BG_FRAME_BACK_M,
 			GFL_ARCUTIL_TRANSINFO_GetPos(wk->m_back_chr_pos),
