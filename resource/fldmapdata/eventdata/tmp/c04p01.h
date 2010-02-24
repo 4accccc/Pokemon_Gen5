@@ -21,5 +21,6 @@
 #ifndef ZONE_C04P01_EVB_H
 #define ZONE_C04P01_EVB_H
 
+#define BG_C04P01_SIGN_01                 0
 
 #endif //ZONE_C04P01_EVB_H

@@ -45,5 +45,6 @@
 #define BGID_C04_BOARD_01                 3
 #define BGID_C04_BOARD_04                 4
 #define BGID_C04_BOARD_06                 5
+#define BGID_C04_BOARD_07                 6
 
 #endif //ZONE_C04_EVB_H
