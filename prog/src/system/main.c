@@ -399,6 +399,7 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count ++;
   if( now_time > 16000 ){
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount ++;
+    OS_TPrintf( " over tick %ld\n", now_time );
   }
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max < now_time ){
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max = now_time;
@@ -406,7 +407,7 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count >= DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME ){
     OS_TPrintf( " ave tick %d", 
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count );
-    OS_TPrintf( " Over %d",
+    OS_TPrintf( " Over 120::%d",
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount );
     OS_TPrintf( " Max %d\n",
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max );
