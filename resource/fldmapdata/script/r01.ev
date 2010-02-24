@@ -95,6 +95,7 @@ EVENT_START   ev_r01_poke_getdemo_01
 
 	//捕獲デモ呼び出し[100216斉藤マ]
 	_CAPTURE_DEMO_SET()
+	_WILD_WIN()
 	
 	//博士、メッセージ＋退場アニメ
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget1a )

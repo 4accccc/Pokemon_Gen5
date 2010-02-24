@@ -517,7 +517,7 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
 
   bew = GMEVENT_GetEventWork(event);
   BEW_Initialize( bew, gsys, bp );
-  bew->is_sub_event = FALSE;
+  bew->is_sub_event = TRUE;
   bew->EncEffNo = ENCEFFNO_GetWildEncEffNo( MONSNO_MINEZUMI, fieldmap );
 
   return event;
