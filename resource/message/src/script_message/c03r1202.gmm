@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T18:29:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T21:26:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1423" top="224" right="2127" bottom="845" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="384" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,9 +301,9 @@
 		<language name="JPN" width="256">イッシュちほうで　もらえる
 かずかずの　ジムバッジ！▽
 せつめいを　ききたいかい？</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうで　もらえる
-かずかずの　ジムバッジ！▽
-せつめいを　ききたいかい？</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方で　もらえる
+数々の　ジムバッジ！▽
+説明を　ききたいかい？</language>
 	</row>
 
 	<row id="msg_c03r1202_badge_02">
@@ -312,7 +312,7 @@
 		<language name="JPN" width="256">ほいほい
 しりたくなったら　またきなさい</language>
 		<language name="JPN_KANJI" width="256">ほいほい
-しりたくなったら　またきなさい</language>
+知りたくなったら　また来なさい</language>
 	</row>
 
 	<row id="msg_c03r1202_badge_03">
@@ -322,9 +322,9 @@
 		<language name="JPN" width="256">トライバッジを　もっていると
 レベル２０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼▼</language>
-		<language name="JPN_KANJI" width="256">トライバッジを　もっていると
+		<language name="JPN_KANJI" width="256">トライバッジを　持っていると
 レベル２０までの　ポケモンが▽
-すなおに　めいれいを　きいてくれるよ▼</language>
+素直に　命令を　きいてくれるよ▼</language>
 	</row>
 
 	<row id="msg_c03r1202_badge_04">
@@ -334,9 +334,9 @@
 		<language name="JPN" width="256">ベーシックバッジを　もっていると
 レベル３０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
-		<language name="JPN_KANJI" width="256">ベーシックバッジを　もっていると
+		<language name="JPN_KANJI" width="256">ベーシックバッジを　持っていると
 レベル３０までの　ポケモンが▽
-すなおに　めいれいを　きいてくれるよ▼</language>
+素直に　命令を　きいてくれるよ▼</language>
 	</row>
 
 	<row id="msg_c03r1202_badge_05">
@@ -346,9 +346,9 @@
 		<language name="JPN" width="256">ビートルバッジを　もっていると
 レベル４０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
-		<language name="JPN_KANJI" width="256">ビートルバッジを　もっていると
+		<language name="JPN_KANJI" width="256">ビートルバッジを　持っていると
 レベル４０までの　ポケモンが▽
-すなおに　めいれいを　きいてくれるよ▼</language>
+素直に　命令を　きいてくれるよ▼</language>
 	</row>
 
 	<row id="msg_c03r1202_badge_06">
@@ -358,9 +358,9 @@
 		<language name="JPN" width="256">ボルトバッジを　もっていると
 レベル５０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
-		<language name="JPN_KANJI" width="256">ボルトバッジを　もっていると
+		<language name="JPN_KANJI" width="256">ボルトバッジを　持っていると
 レベル５０までの　ポケモンが▽
-すなおに　めいれいを　きいてくれるよ▼</language>
+素直に　命令を　きいてくれるよ▼</language>
 	</row>
 
 	<row id="msg_c03r1202_badge_07">
@@ -370,9 +370,9 @@
 		<language name="JPN" width="256">クエイクバッジを　もっていると
 レベル６０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
-		<language name="JPN_KANJI" width="256">クエイクバッジを　もっていると
+		<language name="JPN_KANJI" width="256">クエイクバッジを　持っていると
 レベル６０までの　ポケモンが▽
-すなおに　めいれいを　きいてくれるよ▼</language>
+素直に　命令を　きいてくれるよ▼</language>
 	</row>
 
 	<row id="msg_c03r1202_badge_08">
@@ -382,9 +382,9 @@
 		<language name="JPN" width="256">ジェットバッジを　もっていると
 レベル７０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
-		<language name="JPN_KANJI" width="256">ジェットバッジを　もっていると
+		<language name="JPN_KANJI" width="256">ジェットバッジを　持っていると
 レベル７０までの　ポケモンが▽
-すなおに　めいれいを　きいてくれるよ▼</language>
+素直に　命令を　きいてくれるよ▼</language>
 	</row>
 
 	<row id="msg_c03r1202_badge_09">
@@ -394,9 +394,9 @@
 		<language name="JPN" width="256">アイシクルバッジを　もっていると
 レベル８０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
-		<language name="JPN_KANJI" width="256">アイシクルバッジを　もっていると
+		<language name="JPN_KANJI" width="256">アイシクルバッジを　持っていると
 レベル８０までの　ポケモンが▽
-すなおに　めいれいを　きいてくれるよ▼</language>
+素直に　命令を　きいてくれるよ▼</language>
 	</row>
 
 	<row id="msg_c03r1202_badge_10">
@@ -406,9 +406,9 @@
 		<language name="JPN" width="256">レジェンドバッジを　もっていると
 すべての　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
-		<language name="JPN_KANJI" width="256">レジェンドバッジを　もっていると
+		<language name="JPN_KANJI" width="256">レジェンドバッジを　持っていると
 すべての　ポケモンが▽
-すなおに　めいれいを　きいてくれるよ▼</language>
+素直に　命令を　きいてくれるよ▼</language>
 	</row>
 
 	<row id="msg_c03r1202_badge_11">
@@ -417,7 +417,7 @@
 		<language name="JPN" width="256">ほかの　どの　バッジの
 せつめいを　ききたい？</language>
 		<language name="JPN_KANJI" width="256">ほかの　どの　バッジの
-せつめいを　ききたい？</language>
+説明を　ききたい？</language>
 	</row>
 
 	<row id="msg_c03r1202_select_01">
