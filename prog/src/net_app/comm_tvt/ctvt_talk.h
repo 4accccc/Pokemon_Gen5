@@ -36,6 +36,7 @@
 extern CTVT_TALK_WORK* CTVT_TALK_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId );
 extern void CTVT_TALK_TermSystem( COMM_TVT_WORK *work , CTVT_TALK_WORK *commWork );
 extern const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *commWork );
+extern void CTVT_TALK_Main_VBlank( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 extern void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 extern void CTVT_TALK_TermMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 

@@ -376,6 +376,8 @@ static void COMM_TVT_VBlankFunc(GFL_TCB *tcb, void *wk )
   GFL_CLACT_SYS_VBlankFunc();
   //‚¨ŠG•`‚«‚ÌXV
   DRAW_SYS_UpdateSystemVBlank( work->drawSys );
+  
+  CTVT_TALK_Main_VBlank( work , work->talkWork );
 }
 
 //--------------------------------------------------------------
@@ -711,6 +713,9 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     break;
   }
 
+
+  work->mode = work->nextMode;
+  
   //‰Šú‰»
   switch( work->nextMode )
   {
@@ -728,7 +733,6 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     CTVT_COMM_ExitComm( work , work->commWork );
     break;
   }
-  work->mode = work->nextMode;
 }
 
 //--------------------------------------------------------------------------
@@ -1109,36 +1113,40 @@ void COMM_TVT_DispTalkIcon( COMM_TVT_WORK *work , const u8 idx )
 {
   const COMM_TVT_DISP_MODE mode = COMM_TVT_GetDispMode( work );
   u8 pos = idx;
-  if( mode == CTDM_DOUBLE )
+  //‚¨ŠG•`‚«’†‚Íƒ}[ƒN‚ðo‚³‚È‚¢
+  if( work->mode != CTM_DRAW )
   {
-    if( idx == 0 )
+    if( mode == CTDM_DOUBLE )
     {
-      pos = 2;
+      if( idx == 0 )
+      {
+        pos = 2;
+      }
+      else
+      {
+        pos = 3;
+      }
     }
-    else
+    
     {
-      pos = 3;
+      //X‚Í–¼‘O‚Ì•ª‘«‚·
+      const u8 posX[4] = { 64+8, 128+64+8 , 64+8 , 128+64+8 };
+      const u8 posY[4] = { 96-8 , 96-8 , 192-8 , 192-8 };
+      GFL_CLACTPOS cellPos;
+
+      CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetMemberData( work , work->commWork , idx );
+      MYSTATUS *myStatus = (MYSTATUS*)memData->myStatusBuff;
+      STRBUF *str = MyStatus_CreateNameString( myStatus , work->heapId );
+      const u8 nameLen = PRINTSYS_GetStrWidth( str , work->fontHandle , 0 );
+      GFL_STR_DeleteBuffer( str );
+
+      
+      cellPos.x = posX[pos] + nameLen/2 ;
+      cellPos.y = posY[pos];
+      
+      GFL_CLACT_WK_SetPos( work->clwkRec , &cellPos , CLSYS_DRAW_MAIN );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkRec , TRUE );
     }
-  }
-  
-  {
-    //X‚Í–¼‘O‚Ì•ª‘«‚·
-    const u8 posX[4] = { 64+8, 128+64+8 , 64+8 , 128+64+8 };
-    const u8 posY[4] = { 96-8 , 96-8 , 192-8 , 192-8 };
-    GFL_CLACTPOS cellPos;
-
-    CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetMemberData( work , work->commWork , idx );
-    MYSTATUS *myStatus = (MYSTATUS*)memData->myStatusBuff;
-    STRBUF *str = MyStatus_CreateNameString( myStatus , work->heapId );
-    const u8 nameLen = PRINTSYS_GetStrWidth( str , work->fontHandle , 0 );
-    GFL_STR_DeleteBuffer( str );
-
-    
-    cellPos.x = posX[pos] + nameLen/2 ;
-    cellPos.y = posY[pos];
-    
-    GFL_CLACT_WK_SetPos( work->clwkRec , &cellPos , CLSYS_DRAW_MAIN );
-    GFL_CLACT_WK_SetDrawEnable( work->clwkRec , TRUE );
   }
 }
 

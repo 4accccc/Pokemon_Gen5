@@ -20,6 +20,9 @@
 #include "message.naix"
 #include "font/font.naix"
 
+#include "system/ds_system.h"
+
+
 #include "local_tvt_local_def.h"
 #include "local_tvt_chara.h"
 
@@ -106,7 +109,8 @@ static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work )
 {
   u8 i;
   LOCAL_TVT_InitGraphic( work );
-  
+
+  OS_TPrintf("[%d]\n",DS_SYSTEM_IsRestrictUGC());
  
   work->arcHandle = GFL_ARC_OpenDataHandle( ARCID_LOCAL_TVT , work->heapId );
 

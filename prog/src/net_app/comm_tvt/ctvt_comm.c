@@ -1166,13 +1166,14 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
       commWork->updateReqTalk = TRUE;
     }
     break;
-
-  case CCFT_FINISH_TALK:  //会話終了通知
-    if( netID != selfId )
+  case CCFT_REQ_PLAY:     //再生要求
     {
       CTVT_MIC_WORK *micWork = COMM_TVT_GetMicWork(commWork->parentWork);
       CTVT_MIC_PlayWave( micWork , commWork->postWaveBuf , commWork->waveSize , 127 , commWork->waveSpeed );
     }
+    break;
+  
+  case CCFT_FINISH_TALK:  //会話終了通知
     if( selfId == 0 )
     {
       commWork->member[netID].reqTalk = FALSE;
@@ -1186,6 +1187,7 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
     {
       commWork->updateReqTalk = TRUE;
     }
+    COMM_TVT_EraseTalkIcon( commWork->parentWork );
     break;
     
   case CCFT_FINISH_PARENT:
@@ -1244,11 +1246,11 @@ static void CTVT_COMM_Post_WaveData( const int netID, const int size , const voi
 
   CTVT_TPrintf("Post Wave[%d]\n",header->dataNo );
   
-  if( netID != GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ) )
+  //if( netID != GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ) )
   {
     if( header->dataNo == 0 )
     {
-      ENC_ADPCM_ResetParam();
+      ENC_ADPCM_ResetParamDecode();
       GFL_STD_MemClear32( (void*)commWork->decodeWaveBuf , CTVT_SEND_WAVE_SIZE );
     }
     
@@ -1449,6 +1451,10 @@ void CTVT_COMM_ResetReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commW
 CTVT_COMM_BEACON* CTVT_COMM_GetCtvtBeaconData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   return &commWork->beacon;
+}
+void* CTVT_COMM_GetPlayWaveBuffer( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  return commWork->postWaveBuf;
 }
 
 const BOOL CTVT_COMM_IsEnableMemberData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx )

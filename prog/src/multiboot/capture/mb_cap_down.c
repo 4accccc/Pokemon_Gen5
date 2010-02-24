@@ -752,6 +752,7 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
       {
         downWork->state = MCDS_DRAG;
         downWork->isPlayBowPullSnd = FALSE;
+        //PMSND_PlaySE( MB_SND_BALL_CATCH );
       }
     }
   }

@@ -454,7 +454,7 @@ static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msgWinTitle) , 0 );
 
   //ƒtƒHƒ“ƒg“Ç‚Ýž‚Ý
-  work->fontHandleSmall = GFL_FONT_Create( ARCID_FONT , NARC_font_small_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  work->fontHandleSmall = GFL_FONT_Create( ARCID_FONT , NARC_font_num_gftr  , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   work->fontHandleLarge = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , MSU_PHOTO_PAL_FONT*0x20, 16*2, work->heapId );
  

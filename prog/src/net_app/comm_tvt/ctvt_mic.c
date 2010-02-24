@@ -30,8 +30,7 @@
 //#define CTVT_MIC_Print(...)  ((void)0)
 
 
-#define CTVT_MIC_CUT_SIZE (0x1000)  //ノイズが載るから頭を切る分
-#define CTVT_MIC_SAMPLING_SIZE (CTVT_SEND_WAVE_SIZE+CTVT_MIC_CUT_SIZE)
+#define CTVT_MIC_SAMPLING_SIZE (CTVT_SEND_WAVE_SIZE)
 
 
 #define CTVT_MIC_AMPGAIN (PM_AMPGAIN_160)
@@ -60,16 +59,23 @@ struct _CTVT_MIC_WORK
   BOOL isRecord;
   BOOL isPlayWave;
   
+  u32  playCnt;
+  u32  playSize;
+  int  playSpeed;
+  
   NNSSndWaveOutHandle waveHandle;
 };
 
 //======================================================================
 //	proto
 //======================================================================
+static void CTVT_MIC_Main_VSync( void );
 static void CTVT_MIC_PlayWaveInit( CTVT_MIC_WORK *micWork , const HEAPID heapId );
 static void CTVT_MIC_PlayWaveTerm( CTVT_MIC_WORK *micWork );
 static void CTVT_MIC_PlayWaveMain( CTVT_MIC_WORK *micWork );
 static void CTVT_MIC_BufferEndCallBack(MICResult	result, void*	arg );
+
+static CTVT_MIC_WORK *staticMicPointer = NULL;
 
 //--------------------------------------------------------------
 // マイク初期化
@@ -128,6 +134,10 @@ CTVT_MIC_WORK* CTVT_MIC_Init( const HEAPID heapId )
   micWork->recSize = 0;
   
   micWork->isRecord = FALSE;
+  
+  staticMicPointer = micWork;
+  GFUser_SetVIntrFunc( CTVT_MIC_Main_VSync );
+  
   return micWork;
 }
 
@@ -136,6 +146,9 @@ CTVT_MIC_WORK* CTVT_MIC_Init( const HEAPID heapId )
 //--------------------------------------------------------------
 void CTVT_MIC_Term( CTVT_MIC_WORK *micWork )
 {
+  GFUser_ResetVIntrFunc();
+  staticMicPointer = NULL;
+
   CTVT_MIC_StopRecord( micWork );
 
   CTVT_MIC_PlayWaveTerm( micWork );
@@ -165,8 +178,26 @@ void CTVT_MIC_Main( CTVT_MIC_WORK *micWork )
       }
     }
   }
+  if( micWork->isPlayWave == TRUE )
+  {
+    if( NNS_SndWaveOutIsPlaying( micWork->waveHandle ) == FALSE )
+    {
+      micWork->isPlayWave = FALSE;
+      //OS_TFPrintf(2,"[%x:%x:%d][%d]\n",micWork->playSize,micWork->playSpeed,micWork->playCnt,CTVT_MIC_GetPlayCntMax(micWork));
+    }
+  }
   CTVT_MIC_PlayWaveMain( micWork );
+}
+void CTVT_MIC_Main_VBlank( CTVT_MIC_WORK *micWork )
+{
+}
 
+static void CTVT_MIC_Main_VSync( void )
+{
+  if( staticMicPointer->isPlayWave == TRUE )
+  {
+    staticMicPointer->playCnt++;
+  }
 }
 
 //--------------------------------------------------------------
@@ -297,7 +328,7 @@ const u32 CTVT_MIC_GetRecSize( CTVT_MIC_WORK *micWork )
 //--------------------------------------------------------------
 void* CTVT_MIC_GetRecBuffer( CTVT_MIC_WORK *micWork )
 {
-  return (void*)((u32)micWork->recBuffer+CTVT_MIC_CUT_SIZE);
+  return (void*)((u32)micWork->recBuffer);
 }
 
 //--------------------------------------------------------------
@@ -367,7 +398,7 @@ static void CTVT_MIC_PlayWaveInit( CTVT_MIC_WORK *micWork , const HEAPID heapId 
 {
   micWork->waveHandle = NNS_SndWaveOutAllocChannel( CTVT_MIC_WAVEOUT_CH );
   GF_ASSERT_MSG( micWork->waveHandle != NNS_SND_WAVEOUT_INVALID_HANDLE , "Waveハンドルの確保に失敗！！\n" );
-  micWork->isPlayWave = TRUE;
+  micWork->isPlayWave = FALSE;
 
 }
 
@@ -394,7 +425,7 @@ const BOOL CTVT_MIC_PlayWave( CTVT_MIC_WORK *micWork , void *buffer , u32 size ,
   const BOOL ret = NNS_SndWaveOutStart(
                     micWork->waveHandle ,
                     NNS_SND_WAVE_FORMAT_PCM16 ,
-                    buffer ,
+                    (void*)((u32)buffer + CTVT_MIC_CUT_SIZE),
                     FALSE ,
                     0 ,
                     size /2,
@@ -403,6 +434,9 @@ const BOOL CTVT_MIC_PlayWave( CTVT_MIC_WORK *micWork , void *buffer , u32 size ,
                     speed ,
                     64 );
   micWork->isPlayWave = ret;
+  micWork->playCnt = 0;
+  micWork->playSize = size;
+  micWork->playSpeed = speed;
   return ret;
 }
 
@@ -433,4 +467,24 @@ const BOOL CTVT_MIC_IsFinishWave( CTVT_MIC_WORK *micWork )
     return FALSE;
   }
   return TRUE;
+}
+
+
+//--------------------------------------------------------------
+// 再生中波形描画用
+//--------------------------------------------------------------
+const u32 CTVT_MIC_GetPlaySize( CTVT_MIC_WORK *micWork )
+{
+  return micWork->playSize;
+}
+const u16 CTVT_MIC_GetPlayCnt( CTVT_MIC_WORK *micWork )
+{
+  return micWork->playCnt;
+}
+const u16 CTVT_MIC_GetPlayCntMax( CTVT_MIC_WORK *micWork )
+{
+  //270はざっとした計算値+速度補正
+//  return (micWork->playSize/270)/(micWork->playSpeed/0x8000);
+  //上を通分
+  return (micWork->playSize*0x8000)/(270*micWork->playSpeed);
 }

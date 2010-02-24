@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2009-10-30T14:41:53"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-24T12:09:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="113" top="161" right="613" bottom="777" maximized="no" rayout="Vertical2">
+	<dialog left="518" top="251" right="1018" bottom="867" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="786" top="163" right="1259" bottom="561" visible="no"/>
 		<band id="0" index="0" style="0000" width="492"/>
@@ -334,9 +334,24 @@
 
 
 	<row id="MUSICAL_SHOT_PHOTO_01">
-		<comment>写真の日付</comment>
-		<language name="JPN" font=" 1:small" width="64">[2:01:２桁:0]&apos;[2:01:２桁:1]&apos;[2:01:２桁:2]</language>
-		<language name="JPN_KANJI">[2:01:２桁:0]&apos;[2:01:２桁:1]&apos;[2:01:２桁:2]</language>
+		<comment>写真の日付
+年/月/日</comment>
+		<language name="JPN" font=" 1:small" width="64">[2:01:２桁:0]/[2:01:２桁:1]/[2:01:２桁:2]</language>
+		<language name="JPN_KANJI">[2:01:２桁:0]/[2:01:２桁:1]/[2:01:２桁:2]</language>
+	</row>
+
+	<row id="MUSICAL_SHOT_PHOTO_02">
+		<comment>写真の日付
+月/日/年</comment>
+		<language name="JPN" font=" 1:small" width="64">[2:01:２桁:1]/[2:01:２桁:2]/[2:01:２桁:0]</language>
+		<language name="JPN_KANJI">[2:01:２桁:1]/[2:01:２桁:2]/[2:01:２桁:0]</language>
+	</row>
+
+	<row id="MUSICAL_SHOT_PHOTO_03">
+		<comment>写真の日付
+日/月/年</comment>
+		<language name="JPN" font=" 1:small" width="64">[2:01:２桁:2]/[2:01:２桁:1]/[2:01:２桁:0]</language>
+		<language name="JPN_KANJI">[2:01:２桁:2]/[2:01:２桁:1]/[2:01:２桁:0]</language>
 	</row>
 
 	<row id="MUSICAL_SHOT_INFO_01">

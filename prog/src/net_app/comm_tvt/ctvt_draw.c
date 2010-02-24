@@ -190,11 +190,14 @@ CTVT_DRAW_WORK* CTVT_DRAW_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   drawWork->stampType = DSPS_STAMP_HEART;
 
   //バージョンで白黒を変える
-#if (PM_VERSION == VERSION_WHITE )
-  drawWork->penCol = 0x7FFF+0x8000;  //最上位ビットがα
-#else
-  drawWork->penCol = 0x0000+0x8000;  //最上位ビットがα
-#endif
+//  if( GET_VERSION() == VERSION_BLACK )
+  {
+    drawWork->penCol = 0x0000+0x8000;  //最上位ビットがα
+  }
+//  else
+  {
+    drawWork->penCol = 0x7FFF+0x8000;  //最上位ビットがα
+  }
   return drawWork;
 }
 
@@ -418,6 +421,9 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE , heapId );
   GFL_NET_ReloadIcon();
 
+  //上画面の会話アイコンを消す
+  COMM_TVT_EraseTalkIcon( work );
+  
   GFL_UI_TP_AutoStartNoBuff();
   
 }
@@ -1006,6 +1012,7 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
                 if( drawWork->editMode == CDED_KESHIGOMU )
                 {
                   info->col = 0;
+                  info->penType = DSPS_CIRCLE_8;
                 }
                 else
                 {

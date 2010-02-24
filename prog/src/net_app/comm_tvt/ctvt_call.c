@@ -116,6 +116,7 @@ struct _CTVT_CALL_MEMBER_WORK
   BOOL isLost;
   BOOL isCheck;
   BOOL isCamera;
+  BOOL isBlink;
   void *beacon;
   GameServiceID serviceType;
   u8 macAddress[6];
@@ -234,6 +235,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
                 COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
                 &cellInitData ,CLSYS_DRAW_SUB , heapId );
       GFL_CLACT_WK_SetDrawEnable( callWork->barWork[i].clwkBar , FALSE );
+      GFL_CLACT_WK_SetAutoAnmFlag( callWork->barWork[i].clwkBar , TRUE );
 
       cellInitData.pos_x = CTVT_CALL_CHECK_X;
       cellInitData.anmseq = CTOAS_CHECK;
@@ -288,6 +290,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
       callWork->memberData[i].isEnable = FALSE;
       callWork->memberData[i].isLost = FALSE;
       callWork->memberData[i].isCheck = FALSE;
+      callWork->memberData[i].isBlink = FALSE;
       callWork->memberData[i].barWorkNo = CTVT_CALL_INVALID_NO;
       callWork->memberData[i].beacon = GFL_HEAP_AllocClearMemory( heapId , CTVT_CALL_BEACONSIZE );
     }
@@ -515,6 +518,8 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       if( callWork->callAnmIdx >= CTVT_CALL_MSG_ANM_NUM )
       {
         callWork->callAnmIdx = 0;
+        //ついでにコール音再生
+        PMSND_PlaySystemSE( CTVT_SND_TEL_CALL );
       }
       
       if( callWork->state == CCS_WAIT_CONNECT_JOIN )
@@ -530,6 +535,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       if( COMM_TVT_GetConnectNum( work ) >= 2 )
       {
+        PMSND_PlaySystemSE( CTVT_SND_CALL_ANSWER );
         callWork->state = CCS_FADEOUT;
       }
     }
@@ -598,22 +604,29 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     {
       if( callWork->memberData[i].isEnable == TRUE )
       {
+        CTVT_CALL_BAR_WORK *barWork = &callWork->barWork[ callWork->memberData[i].barWorkNo ];
         if( callWork->memberData[i].isCheck == TRUE &&
             ( callWork->checkIdxParent == CTVT_CALL_INVALID_NO ||
               callWork->checkIdxParent == i ) )
         {
-          GFL_CLACT_WK_SetAnmSeq( callWork->barWork[ callWork->memberData[i].barWorkNo ].clwkCheck , CTOAS_CHECK_SELECT );
+          if( callWork->memberData[i].isBlink == FALSE )
+          {
+            callWork->memberData[i].isBlink = TRUE;
+            GFL_CLACT_WK_SetAnmSeq( barWork->clwkBar , CTOAS_SCROLL_BAR_BLINK );
+          }
+          GFL_CLACT_WK_SetAnmSeq( barWork->clwkCheck , CTOAS_CHECK_SELECT );
         }
         else
         {
           if( checkNum == 3 ||
               callWork->checkIdxParent != CTVT_CALL_INVALID_NO )
           {
-            GFL_CLACT_WK_SetAnmSeq( callWork->barWork[ callWork->memberData[i].barWorkNo ].clwkCheck , CTOAS_CHECK_NONE );
+            GFL_CLACT_WK_SetAnmSeq( barWork->clwkCheck , CTOAS_CHECK_NONE );
           }
           else
           {
-            GFL_CLACT_WK_SetAnmSeq( callWork->barWork[ callWork->memberData[i].barWorkNo ].clwkCheck , CTOAS_CHECK );
+            callWork->memberData[i].isBlink = FALSE;
+            GFL_CLACT_WK_SetAnmSeq( barWork->clwkCheck , CTOAS_CHECK );
           }
         }
       }
@@ -686,6 +699,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
               memberWork->isCheck = TRUE;
               callWork->isUpdateBarPos = TRUE;
               isUpdate = TRUE;
+              PMSND_PlaySystemSE( CTVT_SND_CALLBAR_TOUCH );
             }
             else
             {
@@ -693,6 +707,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
               memberWork->isCheck = FALSE;
               callWork->isUpdateBarPos = TRUE;
               isUpdate = TRUE;
+              PMSND_PlaySystemSE( CTVT_SND_CALLBAR_CANCEL );
             }
           }
           else
@@ -715,6 +730,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
                   memberWork->isCheck = TRUE;
                   callWork->isUpdateBarPos = TRUE;
                   isUpdate = TRUE;
+                  PMSND_PlaySystemSE( CTVT_SND_CALLBAR_TOUCH );
                 }
               }
               else
@@ -731,10 +747,10 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
                 memberWork->isCheck = FALSE;
                 callWork->isUpdateBarPos = TRUE;
                 isUpdate = TRUE;
+                PMSND_PlaySystemSE( CTVT_SND_CALLBAR_CANCEL );
               }
             }
           }
-          PMSND_PlaySystemSE( CTVT_SND_TOUCH );
         }
         
         //文字表示の更新
@@ -878,7 +894,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     {
       APP_TASKMENU_WIN_SetDecide( callWork->barMenuWork , TRUE );
       callWork->state = CCS_WAIT_ANIME;
-      PMSND_PlaySystemSE( CTVT_SND_DECIDE );
+      PMSND_PlaySystemSE( CTVT_SND_TEL_CALL );
     }
   }
   

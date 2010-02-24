@@ -179,24 +179,22 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
   
   if( COMM_TVT_CanUseCamera() == TRUE )
   {
-#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-#if (defined(SDK_TWL))
-    static effNum = 0;
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
     {
-      effNum++;
-      if( effNum >= CAMERA_EFFECT_MAX )
-      {
-        effNum = 0;
-      }
-      CAMERA_I2CEffect( CAMERA_SELECT_BOTH , effNum );
+      CAMERA_I2CEffect( CAMERA_SELECT_BOTH , CAMERA_EFFECT_NONE );
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      CAMERA_I2CEffect( CAMERA_SELECT_BOTH , CAMERA_EFFECT_SEPIA01 );
     }
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
     {
-      CAMERA_SYS_SwapCameraPos( camWork->camSys );
+      CAMERA_I2CEffect( CAMERA_SELECT_BOTH , CAMERA_EFFECT_MONO );
     }
-#endif
-#endif
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      CAMERA_I2CEffect( CAMERA_SELECT_BOTH , CAMERA_EFFECT_NEGATIVE );
+    }
   }
 }
 

@@ -42,6 +42,7 @@ typedef enum
     
   //外で使う
   CCFT_REQ_TALK,  //会話要求通知
+  CCFT_REQ_PLAY,  //再生要求
   CCFT_FINISH_TALK,  //会話終了通知
   CCFT_CANCEL_TALK,  //会話取り消し通知 //何かしらうまくいかなかったとき
 
@@ -117,6 +118,7 @@ extern const BOOL CTVT_COMM_IsEnableMember( COMM_TVT_WORK *work , CTVT_COMM_WORK
 extern const BOOL CTVT_COMM_CanUseCameraMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx );
 
 extern CTVT_COMM_BEACON* CTVT_COMM_GetCtvtBeaconData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+extern void* CTVT_COMM_GetPlayWaveBuffer( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 //お絵描きバッファ取得
 extern DRAW_SYS_PEN_INFO* CTVT_COMM_GetDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , BOOL *isFull );
 //お絵描きバッファ追加通知

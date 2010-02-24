@@ -43,12 +43,18 @@ static void adpcm_decoder( s8 *indata, s16 *outdata, int len,ADPCMstate *state);
 static char ADPCMEncorder( short sample, ADPCMstate* state );
 static s16 ADPCMDecoder( int code, ADPCMstate* state );
 
-static ADPCMstate adpcmState;
+static ADPCMstate adpcmStateEnc;
+static ADPCMstate adpcmStateDec;
 
-void ENC_ADPCM_ResetParam( void )
+void ENC_ADPCM_ResetParamEncode( void )
 {
-  adpcmState.prevSample = 0;
-  adpcmState.prevIndex = 0;
+  adpcmStateEnc.prevSample = 0;
+  adpcmStateEnc.prevIndex = 0;
+}
+void ENC_ADPCM_ResetParamDecode( void )
+{
+  adpcmStateDec.prevSample = 0;
+  adpcmStateDec.prevIndex = 0;
 }
 
 //--------------------------------------------------------------
@@ -62,13 +68,14 @@ const u32 ENC_ADPCM_EncodeData( void* src , const u32 srcSize , void* dst )
 //  adpcm_state state = {0,0};
   
 /*
+  OS_TFPrintf(3,"------------------------------------------\n");
   for( i=0;i<srcSize/2;i++ )
   {
     OS_TFPrintf(2,"%d\n",srcData[i]);
   }
   OS_TFPrintf(2,"------------------------------------------\n");
 */
-  adpcm_coder( srcData , dstData , srcSize/2 , &adpcmState );
+  adpcm_coder( srcData , dstData , srcSize/2 , &adpcmStateEnc );
 /*
   for( i=0;i<(srcSize+3)/4;i++ )
   {
@@ -95,8 +102,9 @@ const u32 ENC_ADPCM_DecodeData( void* src , const u32 srcSize , void* dst )
   }
   OS_TFPrintf(3,"------------------------------------------\n");
 */
-  adpcm_decoder(  srcData , dstData , srcSize*2 , &adpcmState );
+  adpcm_decoder(  srcData , dstData , srcSize*2 , &adpcmStateDec );
 /*
+  OS_TFPrintf(3,"------------------------------------------\n");
   for( i=0;i<srcSize*2;i++ )
   {
     OS_TFPrintf(3,"%d\n",dstData[i]);
@@ -227,8 +235,8 @@ static char ADPCMEncorder( short sample, ADPCMstate* state )
   
   if ( index < 0 )
     index = 0;
-  if ( index > 88 )
-    index = 88;
+  if ( index > INDEX_NUM-1 )
+    index = INDEX_NUM-1;
 
   state->prevSample = (short)pred;
   state->prevIndex = index;
@@ -250,12 +258,12 @@ static s16 ADPCMDecoder( int code, ADPCMstate* state )
     
   d = step >> 3;
   if ( code & 4 ) d += step;
-    if ( code & 2 ) d += step >> 1;
+  if ( code & 2 ) d += step >> 1;
   if ( code & 1 ) d += step >> 2;
     
   if ( code & 8 ) {
         sample -= d;
-        if ( sample < -32768 ) sample = -32768;
+        if ( sample < -32767 ) sample = -32767;
     }
   else {
         sample += d;

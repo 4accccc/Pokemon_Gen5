@@ -34,7 +34,8 @@
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
-extern void ENC_ADPCM_ResetParam( void ); 
+extern void ENC_ADPCM_ResetParamEncode( void ); 
+extern void ENC_ADPCM_ResetParamDecode( void ); 
 extern const u32 ENC_ADPCM_EncodeData( void* src , const u32 srcSize , void* dst );
 extern const u32 ENC_ADPCM_DecodeData( void* src , const u32 srcSize , void* dst );
 
