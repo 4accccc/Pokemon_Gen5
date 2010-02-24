@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T20:23:49"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-24T19:41:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,7 +317,7 @@
 		</language>
 	</columns>
 
-	<dialog left="427" top="129" right="1132" bottom="749" maximized="no" rayout="Vertical2">
+	<dialog left="295" top="129" right="1000" bottom="749" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -533,6 +533,19 @@
 しゅうりょうします</language>
 		<language name="JPN_KANJI">メンバーが　いなくなったので
 終了します</language>
+	</row>
+
+	<row id="COMM_TVT_SYS_08">
+		<comment>子機の呼び出しがタイムアウトになった
+Ariizumi100224</comment>
+		<language name="JPN">よびだしに　しっぱいしました。</language>
+		<language name="JPN_KANJI">呼び出しに　失敗しました。</language>
+	</row>
+
+	<row id="COMM_TVT_SYS_09">
+		<comment>親機への接続がタイムアウトになった。</comment>
+		<language name="JPN">せつぞくに　しっぱいしました。</language>
+		<language name="JPN_KANJI">接続に　失敗しました。</language>
 	</row>
 
 	<flowchart-group-list>
