@@ -4253,7 +4253,7 @@ static int AC_SpiderRemove_1( MMDL * mmdl )
 	
 	work->frame++;
 	
-	if( work->frame >= 18 ){
+	if( work->frame >= 22 ){
 		MMDL_IncAcmdSeq( mmdl );
 	}
 	

@@ -1504,42 +1504,6 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActShinMu =
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 描画処理　ビルボード　くもの巣　初期化
- * @param  mmdl  MMDL
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void DrawBlActSpider_Init( MMDL *mmdl )
-{
-  u16 code;
-  DRAW_BLACT_WORK *work;
-  
-  work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
-  
-  code = MMDL_GetOBJCode( mmdl );
-  comManAnmCtrl_Init( &work->anmcnt );
-
-  if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
-    MMDL_CallDrawProc( mmdl );
-  }
-}
-
-//--------------------------------------------------------------
-/**
- * 描画処理　ビルボード　くもの巣　削除
- * @param  mmdl  MMDL
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void DrawBlActSpider_Delete( MMDL *mmdl )
-{
-  DRAW_BLACT_WORK *work;
-  work = MMDL_GetDrawProcWork( mmdl );
-  MMDL_BLACTCONT_DeleteActor( mmdl, work->actID );
-}
-
-//--------------------------------------------------------------
-/**
  * 描画処理　ビルボード　くもの巣　描画
  * @param  mmdl  MMDL
  * @retval  nothing
@@ -1547,7 +1511,9 @@ static void DrawBlActSpider_Delete( MMDL *mmdl )
 //--------------------------------------------------------------
 static void DrawBlActSpider_Draw( MMDL *mmdl )
 {
+  u16 status;
   VecFx32 pos;
+  u16 init_flag = FALSE;
   DRAW_BLACT_WORK *work;
   GFL_BBDACT_SYS *actSys;
   
@@ -1557,14 +1523,21 @@ static void DrawBlActSpider_Draw( MMDL *mmdl )
     return;
   }
   
-#if 0
-  if( MMDL_GetOBJID(mmdl) == 1 && MMDL_GetOBJCode(mmdl) == WOMAN2 ){
-    KAGAYA_Printf( "きました\n" );
-  }
-#endif
-  
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
-  comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
+  
+  status = MMDL_GetDrawStatus( mmdl );
+  
+  if( status != work->anmcnt.set_anm_status ){
+    if( status < DRAW_STA_SPIDER_MAX ){
+      u16 anm_idx = status;
+      work->anmcnt.set_anm_status = status;
+      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
+      
+      init_flag = TRUE;
+    }
+  }
+  
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -1573,32 +1546,16 @@ static void DrawBlActSpider_Draw( MMDL *mmdl )
 }
 
 //--------------------------------------------------------------
-/**
- * 描画処理　ビルボード　くもの巣　取得。
- * ビルボードアクターIDを返す。
- * @param  mmdl  MMDL
- * @param  state  特に無し
- * @retval  u32  GFL_BBDACT_ACTUNIT_ID
- */
-//--------------------------------------------------------------
-static u32 DrawBlActSpider_GetBlActID( MMDL *mmdl, u32 state )
-{
-  DRAW_BLACT_WORK *work;
-  work = MMDL_GetDrawProcWork( mmdl );
-  return( work->actID );
-}
-
-//--------------------------------------------------------------
 //  描画処理　ビルボード　くもの巣　まとめ
 //--------------------------------------------------------------
 const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActSpider =
 {
-  DrawBlActSpider_Init,
+  DrawBlAct_Init,
   DrawBlActSpider_Draw,
-  DrawBlActSpider_Delete,
-  DrawBlActSpider_Delete,  //本当は退避
-  DrawBlActSpider_Init,    //本当は復帰
-  DrawBlActSpider_GetBlActID,
+  DrawBlAct_Delete,
+  DrawBlAct_Delete,  //本当は退避
+  DrawBlAct_Init,    //本当は復帰
+  DrawBlAct_GetBlActID,
 };
 
 //======================================================================
