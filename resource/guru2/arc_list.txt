@@ -25,3 +25,4 @@
 "guruguru_but0.NSCR"
 "guruguru_but1.NSCR"
 "guruguru_but2.NSCR"
+"g_panel_bg.nsbmd"

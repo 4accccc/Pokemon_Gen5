@@ -37,7 +37,8 @@ enum {
 	NARC_guru2_guruguru_sub_bg_NSCR = 23,
 	NARC_guru2_guruguru_but0_NSCR = 24,
 	NARC_guru2_guruguru_but1_NSCR = 25,
-	NARC_guru2_guruguru_but2_NSCR = 26
+	NARC_guru2_guruguru_but2_NSCR = 26,
+	NARC_guru2_g_panel_bg_nsbmd = 27
 };
 
 /* NARC_GURU2_NAIX_ */

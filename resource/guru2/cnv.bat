@@ -23,6 +23,7 @@ g3dcvtr g_egg_cursor2.ica -o g_egg_cursor2.nsbca
 g3dcvtr g_egg_cursor3.ica -o g_egg_cursor3.nsbca
 g3dcvtr g_egg_cursor4.ica -o g_egg_cursor4.nsbca
 g3dcvtr g_egg_cursor5.ica -o g_egg_cursor5.nsbca
+g3dcvtr g_panel_bg.imd -o g_panel_bg.nsbmd
 
 
 g2dcvtr guruguru_bg.ncl
