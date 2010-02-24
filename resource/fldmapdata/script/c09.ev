@@ -23,7 +23,16 @@ _EVENT_DATA    ev_c09_veteranm_01
 _EVENT_DATA    ev_c09_veteranm_02
 _EVENT_DATA    ev_pos_c09_firstvisit
 _EVENT_DATA    ev_zone_c09
+_EVENT_DATA    ev_pos_c09_forbidden
 _EVENT_DATA_END
+
+
+//------------------------！注意！------------------------------//
+//																//
+//		LOCALWORK10をPOSイベントの起動に使用しています			//
+//		ゾーン内での使用を禁止します							//
+//																//
+//--------------------------------------------------------------//
 
 
 /************************************************************/
@@ -37,6 +46,11 @@ INIT_EVENT_START	ev_zone_c09
 	_FLAG_RESET( SYS_FLAG_BIGFOUR_FIGHTWIN )
 	_FLAG_RESET( SYS_FLAG_BIGFOUR_ESPWIN )
 	
+	//Ｎの城出現後からチャンピオン復帰までリーグフロントに入れない
+	IF FLAG_ON( FE_C09_FORBIDDEN ) THEN
+		$LOCALWORK10 = 111	//POSイベントを有効にする
+	ENDIF
+	
 INIT_EVENT_END
 
 
@@ -46,7 +60,7 @@ INIT_EVENT_END
 EVENT_START	ev_c09_veteranm_01
 	_TALK_OBJ_START()
 	
-	_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_03, C09_VETERANM_01, POS_UL )
+	_PLAINWIN_MSG_UP( msg_c09_veteranm1_03 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -59,7 +73,7 @@ EVENT_END
 EVENT_START	ev_c09_veteranm_02
 	_TALK_OBJ_START()
 	
-	_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm2_03, C09_VETERANM_02, POS_UL )
+	_PLAINWIN_MSG_UP( msg_c09_veteranm2_03 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -76,11 +90,11 @@ EVENT_START	ev_pos_c09_firstvisit
 	_OBJ_ANIME_WAIT()
 	
 	//解説しよう!
-	_BALLOONWIN_OBJMSG( msg_c09_veteranm1_01, C09_VETERANM_01 )
+	_PLAINWIN_MSG_UP( msg_c09_veteranm1_01 )
 	_MSGWIN_CLOSE()
 	
 	//ポケモンリーグは…
-	_BALLOONWIN_OBJMSG( msg_c09_veteranm1_02, C09_VETERANM_01 )
+	_PLAINWIN_MSG_UP( msg_c09_veteranm1_02 )
 	_MSGWIN_CLOSE()
 	
 	//ベテラン（左側）：右を向く
@@ -90,10 +104,9 @@ EVENT_START	ev_pos_c09_firstvisit
 	_CAMERA_START()				//カメラ操作開始---------------------------▽
 	_CAMERA_PURGE()				//対象物とカメラのバインドを解く
 	_CAMERA_MOVE( 472,0,1888256,1568768,0,3874816,30 )	//カメラを動かす
-
 	
 	//全てのトレーナーにとって
-	_BALLOONWIN_OBJMSG( msg_c09_veteranm2_01, C09_VETERANM_02 )
+	_PLAINWIN_MSG_UP( msg_c09_veteranm2_01 )
 	_MSGWIN_CLOSE()
 	
 	_CAMERA_WAIT_MOVE()			//カメラ移動待ち
@@ -103,7 +116,7 @@ EVENT_START	ev_pos_c09_firstvisit
 	_OBJ_ANIME_WAIT()
 	
 	//こちらで準備をしておくがいい
-	_BALLOONWIN_OBJMSG( msg_c09_veteranm2_02, C09_VETERANM_02 )
+	_PLAINWIN_MSG_UP( msg_c09_veteranm2_02 )
 	_MSGWIN_CLOSE()
 	
 	_CAMERA_RECV_MOVE( 15 )		//カメラを主人公位置に戻す
@@ -140,5 +153,33 @@ _ANIME_LABEL	anm_staywalk_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+
+/************************************************************/
+/*		ポケモンリーグ立ち入り禁止POSイベント				*/
+/************************************************************/
+EVENT_START	ev_pos_c09_forbidden
+	//ベテラン（中央）：！マーク
+	_OBJ_ANIME( C09_VETERANM_01, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//ベテラン：主人公を見る
+	_OBJ_ANIME( C09_VETERANM_01, anm_staywalk_r )
+	_OBJ_ANIME_WAIT()
+	
+	_PLAINWIN_MSG_UP( msg_c09_veteranm1_stop )
+	_MSGWIN_CLOSE()
+	
+	//主人公：一歩下がる
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：一歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_back_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 
