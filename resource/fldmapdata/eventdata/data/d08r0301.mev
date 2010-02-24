@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/24 13:34:32
+#save date:2010/02/24 22:46:03
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0301.wms
 #SECTION START:OBJ_EVENT
@@ -88,8 +88,8 @@ EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 0 248
+152 0 248
 #size
-3 1
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
