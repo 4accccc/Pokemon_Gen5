@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-22T23:04:58"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-24T17:50:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -368,15 +368,15 @@ BOXに6匹以上の空きがない</comment>
 	<row id="msg_palpark_05">
 		<comment>はい選択で
 BOXに6匹以上の空きがある</comment>
-		<language name="JPN" width="256">ＤＳは　２つ　ひつようだよ▼
+		<language name="JPN" width="256">ＤＳは　２つ　ひつようだよ！▼
 もうひとつの　ＤＳを　つかって
 あそぶけど　それで　いいかな？</language>
-		<language name="JPN_KANJI" width="256">ＤＳは　２つ　必要だよ▼
+		<language name="JPN_KANJI" width="256">ＤＳは　２つ　必要だよ！▼
 もう一つの　ＤＳを　使って
 遊ぶけど　それで　いいかな？▼</language>
 	</row>
 
-	<row id="msg_palpark_06">
+	<row id="msg_palpark_06" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>はい/いいえの選択肢表示</comment>
 		<language name="JPN" width="256">あそぶには　レポートへ
 かきこむ　ひつようが　ある▼
@@ -388,7 +388,7 @@ BOXに6匹以上の空きがある</comment>
 書きこんでも　いいかい？▼</language>
 	</row>
 
-	<row id="msg_palpark_07">
+	<row id="msg_palpark_07" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>msg_palpark_06ではい選択時
 続けてmsg_palpark_08</comment>
 		<language name="JPN" width="256">レポートへ　かきこんでいます
@@ -463,9 +463,9 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_12">
 		<comment>パルパークでポケモンを1匹も捕まえられなかった場合</comment>
-		<language name="JPN" width="256">ざんねん！　ポケモンは
+		<language name="JPN" width="256">ノーゥ　ざんねん！　ポケモンは
 つかまえられなかった　みたいだね</language>
-		<language name="JPN_KANJI" width="256">残念！　ポケモンは
+		<language name="JPN_KANJI" width="256">ノーゥ　残念！　ポケモンは
 捕まえられなかった　みたいだね</language>
 	</row>
 
@@ -629,7 +629,7 @@ msg_palpark_first_19に続く</comment>
 れきしを　うごかす　だいじっけんに
 さんか　しないかね！？▼
 ここの　そうちは　ポケシフターと　いって▼
-エネルギー　パーティクルを
+エネルギー　パーティクルを▽
 イヴォークしつつ▼
 
 ＤＳという……▼
@@ -697,8 +697,8 @@ msg_palpark_first_19に続く</comment>
 	<row id="msg_palpark_first_09" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>博士
 激しいふきだし</comment>
-		<language name="JPN" width="256">……というわけで　ユー！</language>
-		<language name="JPN_KANJI" width="256">……というわけで　ユー！</language>
+		<language name="JPN" width="256">……というわけで　ユー！▼</language>
+		<language name="JPN_KANJI" width="256">……というわけで　ユー！▼</language>
 	</row>
 
 	<row id="msg_palpark_09_b">
