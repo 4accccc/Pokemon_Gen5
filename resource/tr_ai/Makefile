@@ -69,25 +69,25 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build: btl_calc_def.h btl_field_def.h btl_sideeff_def.h btl_pokeparam_def.h battle_def.h wazadata_def.h poketype_def.h $(SRC:.s=.bin) tr_ai_seq.narc
 
 btl_calc_def.h: ../../prog/src/battle/btl_calc.h
-	ruby enum2def.rb ../../prog/src/battle/btl_calc.h
+	ruby ../../tools/enum2def.rb ../../prog/src/battle/btl_calc.h
 
 btl_field_def.h: ../../prog/src/battle/btl_field.h
-	ruby enum2def.rb ../../prog/src/battle/btl_field.h
+	ruby ../../tools/enum2def.rb ../../prog/src/battle/btl_field.h
 
 btl_sideeff_def.h: ../../prog/src/battle/btl_sideeff.h
-	ruby enum2def.rb ../../prog/src/battle/btl_sideeff.h
+	ruby ../../tools/enum2def.rb ../../prog/src/battle/btl_sideeff.h
 
 btl_pokeparam_def.h: ../../prog/src/battle/btl_pokeparam.h
-	ruby enum2def.rb ../../prog/src/battle/btl_pokeparam.h
+	ruby ../../tools/enum2def.rb ../../prog/src/battle/btl_pokeparam.h
 
 battle_def.h: ../../prog/include/battle/battle.h
-	ruby enum2def.rb ../../prog/include/battle/battle.h
+	ruby ../../tools/enum2def.rb ../../prog/include/battle/battle.h
 
 wazadata_def.h: ../../prog/include/waza_tool/wazadata.h
-	ruby enum2def.rb ../../prog/include/waza_tool/wazadata.h
+	ruby ../../tools/enum2def.rb ../../prog/include/waza_tool/wazadata.h
 
 poketype_def.h: ../../prog/include/poke_tool/poketype.h
-	ruby enum2def.rb ../../prog/include/poke_tool/poketype.h
+	ruby ../../tools/enum2def.rb ../../prog/include/poke_tool/poketype.h
 
 %.bin: %.s *.h
 	$(MWAS) $< -o $*.o
