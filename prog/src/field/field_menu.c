@@ -551,8 +551,8 @@ void FIELD_MENU_DrawMenu( FIELD_MENU_WORK* work )
 static const u32 menu_screen_table[] = {
  NARC_field_menu_menu_bg_NSCR,      // 通常
  NARC_field_menu_menu_bg_5_NSCR,    // ユニオン
- NARC_field_menu_menu_bg_4_NSCR,    // ポケモン・図鑑両方無し
  NARC_field_menu_menu_bg_5_NSCR,    // 図鑑無し
+ NARC_field_menu_menu_bg_4_NSCR,    // ポケモン・図鑑両方無し
  NARC_field_menu_menu_bg_5_NSCR,    // 遊覧船
 };
 
@@ -742,15 +742,16 @@ int FIELDMENU_GetMenuType( EVENTWORK *ev, int zoneId )
     type = FIELD_MENU_UNION;
 
   // 遊覧船か？
-  }else if(ZONEDATA_IsPlBoat(zoneId))
-  {
+  }else if(ZONEDATA_IsPlBoat(zoneId)){
     type = FIELD_MENU_PLEASURE_BOAT; 
   
   // ゲーム開始時チェック
   }else if( EVENTWORK_CheckEventFlag(ev,SYS_FLAG_FIRST_POKE_GET) == FALSE ){
+    OS_Printf("図鑑なし・ポケモン無し\n");
     type = FIELD_MENU_NO_POKEMON_NO_ZUKAN; // 図鑑無し・ポケモン無し
 
   }else if(EVENTWORK_CheckEventFlag(ev,SYS_FLAG_ZUKAN_GET) == FALSE ){
+    OS_Printf("図鑑なし\n");
     type  = FIELD_MENU_NO_ZUKAN;            // 図鑑無し
   }
 
@@ -808,21 +809,21 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
       FMIT_NONE,
       FMIT_EXIT,
     },
-    { //ポケモン無し・図鑑無し
-      FMIT_ITEMMENU,
-      FMIT_TRAINERCARD,
-      FMIT_REPORT,
-      FMIT_CONFING,
-      FMIT_NONE,
-      FMIT_NONE,
-      FMIT_EXIT,
-    },
     { //図鑑無し
       FMIT_POKEMON,
       FMIT_ITEMMENU,
       FMIT_TRAINERCARD,
       FMIT_REPORT,
       FMIT_CONFING,
+      FMIT_NONE,
+      FMIT_EXIT,
+    },
+    { //ポケモン無し・図鑑無し
+      FMIT_ITEMMENU,
+      FMIT_TRAINERCARD,
+      FMIT_REPORT,
+      FMIT_CONFING,
+      FMIT_NONE,
       FMIT_NONE,
       FMIT_EXIT,
     },
@@ -1026,9 +1027,13 @@ static const u8 move_table[][8][4]={
  {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,5,2,3,},{2,4,4,5,},{3,5,4,5},{0xff,6,6,6,},{0xff,6,6,6,},},  // 6個
 };
 
-// menuTypeに対応した
+// menuTypeに対応したアイコンの数
 static const u8 menu_type_table[]={
-  6,6,4,5,5,
+  6,  // FIELD_MENU_NORMAL=0,            通常メニュー
+  5,  // FIELD_MENU_UNION,               ユニオンルーム
+  5,  // FIELD_MENU_NO_ZUKAN,            図鑑無し
+  4,  // FIELD_MENU_NO_POKEMON_NO_ZUKAN, 図鑑無し・ポケモン無し
+  5,  // FIELD_MENU_PLEASURE_BOAT,       遊覧船内
 };
 
 // カーソル位置をXYに振り分けるテーブル
