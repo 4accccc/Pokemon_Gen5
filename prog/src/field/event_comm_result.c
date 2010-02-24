@@ -139,8 +139,6 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
   INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_INIT,
-    SEQ_ME_WAIT,
-    SEQ_RESULT_INIT,
     SEQ_RESULT_KEY_WAIT,
     SEQ_POINT_GET_CHECK,   //•ñVƒQƒbƒg‚µ‚½‚©
     SEQ_POINT_GET,         //•ñVƒQƒbƒg
@@ -159,17 +157,6 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 
 	switch( *seq ){
   case SEQ_INIT:
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_ASA ));
-    (*seq)++;
-    break;
-  case SEQ_ME_WAIT:
-    if( PMSND_CheckPlayBGM() == FALSE ){
-      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_SHORT));
-      (*seq)++;
-    }
-    break;
-    
-  case SEQ_RESULT_INIT:
     IntrudeEventPrint_SetupExtraMsgWin(&talk->iem, gsys, 1, 4, 32-2, 16);
     IntrudeEventPrint_PrintExtraMsgWin_MissionMono(&talk->iem, talk->title_msgid, 8, 0);
     IntrudeEventPrint_PrintExtraMsgWin_MissionMono(&talk->iem, talk->explain_msgid, 8, 16);
@@ -185,12 +172,12 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
   case SEQ_POINT_GET_CHECK:   //•ñVƒQƒbƒg‚µ‚½‚©
     if(talk->mission_result == TRUE){   //¬Œ÷
       IntrudeEventPrint_Print(&talk->iem, msg_invasion_mission_03, 0, 0);
-      GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_ASA ));
+      GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_MISSION_CLEAR ));
       *seq = SEQ_POINT_GET;
     }
     else{   //Ž¸”s
       IntrudeEventPrint_Print(&talk->iem, msg_invasion_mission_04, 0, 0);
-      GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_ASA ));
+      GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_MISSION_FAILED ));
       *seq = SEQ_MISSION_FAIL;
     }
     break;

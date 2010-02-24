@@ -32,6 +32,7 @@
 #include "field_comm\intrude_field.h"
 #include "sound/pm_sndsys.h"
 #include "event_mapchange.h"
+#include "sound/pm_sndsys.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -139,6 +140,8 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
 	INTRUDE_COMM_SYS_PTR intcomm;
   enum{
   	SEQ_MISSION_VIEW,
+  	SEQ_ME_START,
+  	SEQ_ME_WAIT,
     SEQ_MISSION_VIEW_WAIT,
     SEQ_DISGUISE_START,
     SEQ_DISGUISE_MAIN,
@@ -171,14 +174,23 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
       IntrudeEventPrint_PrintExtraMsgWin_MissionMono(&dis_wk->iem, title_msgid, 8, 0);
       IntrudeEventPrint_PrintExtraMsgWin_MissionMono(&dis_wk->iem, explain_msgid, 8, 16);
     }
-    
     (*seq)++;
     break;
-  case SEQ_MISSION_VIEW_WAIT:
-    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)){
-      IntrudeEventPrint_ExitExtraMsgWin(&dis_wk->iem);
+  
+  case SEQ_ME_START:
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_MISSION_START ));
+    (*seq)++;
+    break;
+  case SEQ_ME_WAIT:
+    if( PMSND_CheckPlayBGM() == FALSE ){
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_SHORT));
       (*seq)++;
     }
+    break;
+    
+  case SEQ_MISSION_VIEW_WAIT:
+    IntrudeEventPrint_ExitExtraMsgWin(&dis_wk->iem);
+    (*seq)++;
     break;
   
   case SEQ_DISGUISE_START:
