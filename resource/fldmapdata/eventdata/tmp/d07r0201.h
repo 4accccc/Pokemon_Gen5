@@ -17,6 +17,8 @@
 #ifndef ZONE_D07R0201_EVC_H
 #define ZONE_D07R0201_EVC_H
 
+#define DUMMY_OBJ_GRND                     0
+#define DUMMY_OBJ_GRND_2                   1
 
 #endif //ZONE_D07R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
