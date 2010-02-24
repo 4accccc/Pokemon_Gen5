@@ -740,8 +740,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       }
       commWork->reqSendMemberData = TRUE;
       commWork->connectNum = connectNum;
-      //commWork->beacon.connectNum = connectNum;
-      commWork->beacon.connectNum = 4;
+      commWork->beacon.connectNum = connectNum;
     }
     
   }
