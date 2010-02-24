@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-20T14:01:52"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-24T22:53:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1670" top="21" right="2170" bottom="595" maximized="no" rayout="Vertical2">
+	<dialog left="739" top="274" right="1444" bottom="902" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="161" right="1280" bottom="559" visible="yes"/>
-		<band id="0" index="0" style="0000" width="492"/>
+		<tag-palette left="807" top="161" right="1280" bottom="559" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="325"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -343,14 +343,49 @@
 
 	<row id="DUP_MSG_02">
 		<language name="JPN" width="256">この　いしょうで
-さんか　しますか？</language>
+よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">この　衣装で
-参加しますか？</language>
+よろしいですか？</language>
 	</row>
 
 	<row id="DUP_MSG_03">
 		<language name="JPN" width="256">ほかの　さんかしゃを まっています</language>
 		<language name="JPN_KANJI" width="256">他の　参加者を　待っています</language>
+	</row>
+
+	<row id="DUP_MSG_04">
+		<language name="JPN" width="256">[1:0A:グッズ名:0]
+みみに　つけるグッズです</language>
+		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]
+耳に　つけるグッズです</language>
+	</row>
+
+	<row id="DUP_MSG_05">
+		<language name="JPN" width="256">[1:0A:グッズ名:0]
+あたまに　つけるグッズです</language>
+		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]
+頭に　つけるグッズです</language>
+	</row>
+
+	<row id="DUP_MSG_06">
+		<language name="JPN" width="256">[1:0A:グッズ名:0]
+かおに　つけるグッズです</language>
+		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]
+顔に　つけるグッズです</language>
+	</row>
+
+	<row id="DUP_MSG_07">
+		<language name="JPN" width="256">[1:0A:グッズ名:0]
+からだに　つけるグッズです</language>
+		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]
+身体に　つけるグッズです</language>
+	</row>
+
+	<row id="DUP_MSG_08">
+		<language name="JPN" width="256">[1:0A:グッズ名:0]
+うでに　つけるグッズです</language>
+		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]
+腕に　つけるグッズです</language>
 	</row>
 
 	<flowchart-group-list>
