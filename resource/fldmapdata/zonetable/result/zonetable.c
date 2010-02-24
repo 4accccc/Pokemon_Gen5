@@ -8642,7 +8642,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D12R0101 = 270
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN03,
+		AREA_ID_IN58,
 		MATRIX_ID_D12H01,
 		NARC_script_seq_d12r0101_bin,
 		NARC_script_seq_sp_d12r0101_bin,	//NARC_script_seq_sp_d12r0101_bin,
