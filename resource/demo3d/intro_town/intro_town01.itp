@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2010-02-24T20:06:23" source="intro_town_04.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="240"
+	tool_start_frame="1"
+	tool_end_frame="240"
+	compress_material="on" material_size="33 33"
+/>
+
+<tex_pattern_list_data image_size="4" palette_size="4">
+	<image_name index="0" name="hana01.1"/>
+	<image_name index="1" name="hana01.2"/>
+	<image_name index="2" name="hana01.3"/>
+	<image_name index="3" name="hana01.4"/>
+	<palette_name index="0" name="hana01.1_pl"/>
+	<palette_name index="1" name="hana01.2_pl"/>
+	<palette_name index="2" name="hana01.3_pl"/>
+	<palette_name index="3" name="hana01.4_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="30">
+		0 8 16 24 33 40 48 56 65 72
+		80 88 97 104 112 120 129 136 144 152
+		161 168 176 184 193 200 208 216 225 232
+	</frame_idx>
+	<image_idx size="30">
+		0 1 2 3 0 1 2 3 0 1
+		2 3 0 1 2 3 0 1 2 3
+		0 1 2 3 0 1 2 3 0 1
+	</image_idx>
+	<palette_idx size="30">
+		0 1 2 3 0 1 2 3 0 1
+		2 3 0 1 2 3 0 1 2 3
+		0 1 2 3 0 1 2 3 0 1
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="hana01_1" data_size="30" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
