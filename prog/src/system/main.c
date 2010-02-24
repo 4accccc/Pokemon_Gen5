@@ -55,7 +55,7 @@ static  void  GameVBlankFunc(void);
 #ifdef PM_DEBUG
 static void DEBUG_StackOverCheck(void);
 
-#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
+#define DEBUG_MAIN_TIME_AVERAGE (1) // 時間AVERAGE　表示 １：ON　０：OFF
 
 #else
 
@@ -73,8 +73,11 @@ static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start;    // 1フレーム開始
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_End;    // 1フレーム開始
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave;      // AVERAGE
 static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0; // カウンタ
-
+static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount =0;    // 16000Over
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max =0;    // 16000Over
 #define DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME  ( 120 )
+
+#define DEBUG_DEBUG_MAIN_TIME_AVERAGE_NOW_TIME_DRAW_KEY  ( PAD_BUTTON_R )
 
 static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void );
 static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void );
@@ -87,7 +90,6 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void );
 //FS_EXTERN_OVERLAY(title);
 FS_EXTERN_OVERLAY(notwifi);
 
-
 //------------------------------------------------------------------
 /**
  * @brief	メイン処理
@@ -95,6 +97,7 @@ FS_EXTERN_OVERLAY(notwifi);
 //------------------------------------------------------------------
 void NitroMain(void)
 {
+
 	// ハード環境システム郡を初期化する関数
 	MachineSystem_Init();
 	// ＧＦＬ初期化
@@ -387,15 +390,30 @@ static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void )
 
 static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 {
+  OSTick now_time;
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_End = OS_GetTick(); 
 
-  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave += (OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_End) - OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start));
+  now_time = OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_End - DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start);
+
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave += now_time;
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count ++;
+  if( now_time > 16000 ){
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount ++;
+  }
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max < now_time ){
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max = now_time;
+  }
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count >= DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME ){
-    OS_TPrintf( " ave tick %d\n", DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count );
+    OS_TPrintf( " ave tick %d over_count %d max %d\n", DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count, DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount, DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max );
 
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave = 0;
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max       = 0;
+  }
+
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_NOW_TIME_DRAW_KEY & GFL_UI_KEY_GetCont() ){
+    OS_TPrintf( " now tick %d\n", now_time );
   }
 }
 
