@@ -370,24 +370,6 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/map25_10.nsbmd \
 	$(DIR_TEMP)/map21_03.nsbmd \
 	$(DIR_TEMP)/map23_06.nsbmd \
-	$(DIR_TEMP)/m_dun1002_00_00.nsbmd \
-	$(DIR_TEMP)/m_dun1002_01_00.nsbmd \
-	$(DIR_TEMP)/m_dun1002_02_00.nsbmd \
-	$(DIR_TEMP)/m_dun1002_00_01.nsbmd \
-	$(DIR_TEMP)/m_dun1002_01_01.nsbmd \
-	$(DIR_TEMP)/m_dun1002_02_01.nsbmd \
-	$(DIR_TEMP)/m_dun1002_00_02.nsbmd \
-	$(DIR_TEMP)/m_dun1002_01_02.nsbmd \
-	$(DIR_TEMP)/m_dun1002_02_02.nsbmd \
-	$(DIR_TEMP)/m_dun1003_00_00.nsbmd \
-	$(DIR_TEMP)/m_dun1003_01_00.nsbmd \
-	$(DIR_TEMP)/m_dun1003_02_00.nsbmd \
-	$(DIR_TEMP)/m_dun1003_00_01.nsbmd \
-	$(DIR_TEMP)/m_dun1003_01_01.nsbmd \
-	$(DIR_TEMP)/m_dun1003_02_01.nsbmd \
-	$(DIR_TEMP)/m_dun1003_00_02.nsbmd \
-	$(DIR_TEMP)/m_dun1003_01_02.nsbmd \
-	$(DIR_TEMP)/m_dun1003_02_02.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
@@ -632,6 +614,24 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_dun2005_01_02.nsbmd \
 	$(DIR_TEMP)/m_dun2005_02_02.nsbmd \
 	$(DIR_TEMP)/m_dun1004_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun1002_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun1002_01_00.nsbmd \
+	$(DIR_TEMP)/m_dun1002_02_00.nsbmd \
+	$(DIR_TEMP)/m_dun1002_00_01.nsbmd \
+	$(DIR_TEMP)/m_dun1002_01_01.nsbmd \
+	$(DIR_TEMP)/m_dun1002_02_01.nsbmd \
+	$(DIR_TEMP)/m_dun1002_00_02.nsbmd \
+	$(DIR_TEMP)/m_dun1002_01_02.nsbmd \
+	$(DIR_TEMP)/m_dun1002_02_02.nsbmd \
+	$(DIR_TEMP)/m_dun1003_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun1003_01_00.nsbmd \
+	$(DIR_TEMP)/m_dun1003_02_00.nsbmd \
+	$(DIR_TEMP)/m_dun1003_00_01.nsbmd \
+	$(DIR_TEMP)/m_dun1003_01_01.nsbmd \
+	$(DIR_TEMP)/m_dun1003_02_01.nsbmd \
+	$(DIR_TEMP)/m_dun1003_00_02.nsbmd \
+	$(DIR_TEMP)/m_dun1003_01_02.nsbmd \
+	$(DIR_TEMP)/m_dun1003_02_02.nsbmd \
 	$(DIR_TEMP)/m_ruin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate01_00_00.nsbmd \
 	$(DIR_TEMP)/m_pc01_00_00.nsbmd \

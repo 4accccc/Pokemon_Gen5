@@ -370,24 +370,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/map25_10.3dppack \
 	$(DIR_OUTPUT)/map21_03.3dppack \
 	$(DIR_OUTPUT)/map23_06.3dppack \
-	$(DIR_OUTPUT)/m_dun1002_00_00.3dppack \
-	$(DIR_OUTPUT)/m_dun1002_01_00.3dppack \
-	$(DIR_OUTPUT)/m_dun1002_02_00.3dppack \
-	$(DIR_OUTPUT)/m_dun1002_00_01.3dppack \
-	$(DIR_OUTPUT)/m_dun1002_01_01.3dppack \
-	$(DIR_OUTPUT)/m_dun1002_02_01.3dppack \
-	$(DIR_OUTPUT)/m_dun1002_00_02.3dppack \
-	$(DIR_OUTPUT)/m_dun1002_01_02.3dppack \
-	$(DIR_OUTPUT)/m_dun1002_02_02.3dppack \
-	$(DIR_OUTPUT)/m_dun1003_00_00.3dppack \
-	$(DIR_OUTPUT)/m_dun1003_01_00.3dppack \
-	$(DIR_OUTPUT)/m_dun1003_02_00.3dppack \
-	$(DIR_OUTPUT)/m_dun1003_00_01.3dppack \
-	$(DIR_OUTPUT)/m_dun1003_01_01.3dppack \
-	$(DIR_OUTPUT)/m_dun1003_02_01.3dppack \
-	$(DIR_OUTPUT)/m_dun1003_00_02.3dppack \
-	$(DIR_OUTPUT)/m_dun1003_01_02.3dppack \
-	$(DIR_OUTPUT)/m_dun1003_02_02.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
@@ -632,6 +614,24 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun2005_01_02.3dppack \
 	$(DIR_OUTPUT)/m_dun2005_02_02.3dppack \
 	$(DIR_OUTPUT)/m_dun1004_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1002_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1002_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1002_02_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1002_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1002_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1002_02_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1002_00_02.3dppack \
+	$(DIR_OUTPUT)/m_dun1002_01_02.3dppack \
+	$(DIR_OUTPUT)/m_dun1002_02_02.3dppack \
+	$(DIR_OUTPUT)/m_dun1003_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1003_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1003_02_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1003_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1003_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1003_02_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1003_00_02.3dppack \
+	$(DIR_OUTPUT)/m_dun1003_01_02.3dppack \
+	$(DIR_OUTPUT)/m_dun1003_02_02.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \
