@@ -390,6 +390,10 @@ static FIELD_FADE_TYPE GetFadeOutType_byMapChangeType( MC_TYPE prevMapChangeType
     /* BRIDGE  */{ FIELD_FADE_CROSS, FIELD_FADE_BLACK, FIELD_FADE_CROSS, FIELD_FADE_BLACK, FIELD_FADE_CROSS },
   };
 
+  // DEBUG:
+  OS_TFPrintf( 0, "MapChangeType%d ==> MapChangeType%d = FadeOutType%d\n", 
+               prevMapChangeType, nextMapChangeType, fadeType[ prevMapChangeType ][ nextMapChangeType ] );
+
   return fadeType[ prevMapChangeType ][ nextMapChangeType ];
 }
 
@@ -415,6 +419,10 @@ static FIELD_FADE_TYPE GetFadeInType_byMapChangeType( MC_TYPE prevMapChangeType,
     /* DUNGEON */{ FIELD_FADE_WHITE, FIELD_FADE_WHITE, FIELD_FADE_WHITE, FIELD_FADE_BLACK, FIELD_FADE_WHITE },
     /* BRIDGE  */{ FIELD_FADE_CROSS, FIELD_FADE_BLACK, FIELD_FADE_CROSS, FIELD_FADE_BLACK, FIELD_FADE_CROSS },
   };
+
+  // DEBUG:
+  OS_TFPrintf( 0, "MapChangeType%d ==> MapChangeType%d = FadeInType%d\n", 
+               prevMapChangeType, nextMapChangeType, fadeType[ prevMapChangeType ][ nextMapChangeType ] );
 
   return fadeType[ prevMapChangeType ][ nextMapChangeType ];
 }
