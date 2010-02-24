@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-23T18:36:31"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-24T20:49:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -401,6 +401,12 @@
 		<comment>友達手帳に記録している相手の場合、プレートに表示</comment>
 		<language name="JPN" width="216" line="2">ともだち</language>
 		<language name="JPN_KANJI" width="216" line="2">友達</language>
+	</row>
+
+	<row id="msg_union_sub_appeal_05" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>ユニオン進入時に表示</comment>
+		<language name="JPN" width="216" line="2">ユニオンルームに　はいりました！</language>
+		<language name="JPN_KANJI" width="216" line="2">ユニオンルームに　はいりました！</language>
 	</row>
 
 	<flowchart-group-list>
