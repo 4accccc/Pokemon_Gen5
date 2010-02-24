@@ -1,0 +1,154 @@
+
+// -------------------------------------------------------------
+/** 
+ * @file leaderboard.cdat
+ * @brief Wifiバトルサブウェイ上画面BMPWIN定義
+ **/
+// -------------------------------------------------------------
+
+// 「れきだいトレーナー」
+#define WINDOW0_WIN_X			(2)
+#define WINDOW0_WIN_Y			(1)
+#define WINDOW0_WIN_W			(24)
+#define WINDOW0_WIN_H			(2)
+#define WINDOW0_WIN_PAL			( 1)
+#define WINDOW0_WIN_CHR			(20)
+
+
+// 「ランク○○」
+#define WINDOW1_WIN_X			(2)
+#define WINDOW1_WIN_Y			(3)
+#define WINDOW1_WIN_W			(11)
+#define WINDOW1_WIN_H			(2)
+#define WINDOW1_WIN_PAL			( 1)
+#define WINDOW1_WIN_CHR			(68)
+
+
+// 「トレインナンバー○○○」
+#define WINDOW2_WIN_X			(13)
+#define WINDOW2_WIN_Y			(3)
+#define WINDOW2_WIN_W			(17)
+#define WINDOW2_WIN_H			(2)
+#define WINDOW2_WIN_PAL			( 1)
+#define WINDOW2_WIN_CHR			(90)
+
+
+// 「すんでるばしょ」
+#define WINDOW3_WIN_X			(2)
+#define WINDOW3_WIN_Y			(8)
+#define WINDOW3_WIN_W			(10)
+#define WINDOW3_WIN_H			(2)
+#define WINDOW3_WIN_PAL			( 1)
+#define WINDOW3_WIN_CHR			(124)
+
+
+// 国名
+#define WINDOW4_WIN_X			(2)
+#define WINDOW4_WIN_Y			(10)
+#define WINDOW4_WIN_W			(28)
+#define WINDOW4_WIN_H			(2)
+#define WINDOW4_WIN_PAL			( 1)
+#define WINDOW4_WIN_CHR			(144)
+
+
+// 地方名
+#define WINDOW5_WIN_X			(2)
+#define WINDOW5_WIN_Y			(12)
+#define WINDOW5_WIN_W			(28)
+#define WINDOW5_WIN_H			(4)
+#define WINDOW5_WIN_PAL			( 1)
+#define WINDOW5_WIN_CHR			(200)
+
+
+// 「じこしょうかい」
+#define WINDOW6_WIN_X			(2)
+#define WINDOW6_WIN_Y			(16)
+#define WINDOW6_WIN_W			(16)
+#define WINDOW6_WIN_H			(2)
+#define WINDOW6_WIN_PAL			( 1)
+#define WINDOW6_WIN_CHR			(312)
+
+
+//　簡易会話描画領域
+#define WINDOW7_WIN_X			(2)
+#define WINDOW7_WIN_Y			(18)
+#define WINDOW7_WIN_W			(28)
+#define WINDOW7_WIN_H			(4)
+#define WINDOW7_WIN_PAL			( 1)
+#define WINDOW7_WIN_CHR			(344)
+
+// 「れきだいトレーナー」
+static const BMPWIN_DAT Window0BmpData={
+	GFL_BG_FRAME0_S,
+	WINDOW0_WIN_X,	WINDOW0_WIN_Y,
+	WINDOW0_WIN_W,	WINDOW0_WIN_H,
+	WINDOW0_WIN_PAL,	WINDOW0_WIN_CHR,
+};
+
+// 「ランク○○」
+static const BMPWIN_DAT Window1BmpData={
+	GFL_BG_FRAME0_S,
+	WINDOW1_WIN_X,	WINDOW1_WIN_Y,
+	WINDOW1_WIN_W,	WINDOW1_WIN_H,
+	WINDOW1_WIN_PAL,	WINDOW1_WIN_CHR,
+};
+
+// 「トレインナンバー○○○」
+static const BMPWIN_DAT Window2BmpData={
+	GFL_BG_FRAME0_S,
+	WINDOW2_WIN_X,	WINDOW2_WIN_Y,
+	WINDOW2_WIN_W,	WINDOW2_WIN_H,
+	WINDOW2_WIN_PAL,	WINDOW2_WIN_CHR,
+};
+
+// 「すんでるばしょ」
+static const BMPWIN_DAT Window3BmpData={
+	GFL_BG_FRAME0_S,
+	WINDOW3_WIN_X,	WINDOW3_WIN_Y,
+	WINDOW3_WIN_W,	WINDOW3_WIN_H,
+	WINDOW3_WIN_PAL,	WINDOW3_WIN_CHR,
+};
+
+// 国名
+static const BMPWIN_DAT Window4BmpData={
+	GFL_BG_FRAME0_S,
+	WINDOW4_WIN_X,	WINDOW4_WIN_Y,
+	WINDOW4_WIN_W,	WINDOW4_WIN_H,
+	WINDOW4_WIN_PAL,	WINDOW4_WIN_CHR,
+};
+
+// 地方名
+static const BMPWIN_DAT Window5BmpData={
+	GFL_BG_FRAME0_S,
+	WINDOW5_WIN_X,	WINDOW5_WIN_Y,
+	WINDOW5_WIN_W,	WINDOW5_WIN_H,
+	WINDOW5_WIN_PAL,	WINDOW5_WIN_CHR,
+};
+
+// 「じこしょうかい」
+static const BMPWIN_DAT Window6BmpData={
+	GFL_BG_FRAME0_S,
+	WINDOW6_WIN_X,	WINDOW6_WIN_Y,
+	WINDOW6_WIN_W,	WINDOW6_WIN_H,
+	WINDOW6_WIN_PAL,	WINDOW6_WIN_CHR,
+};
+
+//　簡易会話描画領域
+static const BMPWIN_DAT Window7BmpData={
+	GFL_BG_FRAME0_S,
+	WINDOW7_WIN_X,	WINDOW7_WIN_Y,
+	WINDOW7_WIN_W,	WINDOW7_WIN_H,
+	WINDOW7_WIN_PAL,	WINDOW7_WIN_CHR,
+};
+
+// 一括アクセス用テーブル
+static const BMPWIN_DAT* Window0BmpDataTable[]={
+	&Window0BmpData,
+	&Window1BmpData,
+	&Window2BmpData,
+	&Window3BmpData,
+	&Window4BmpData,
+	&Window5BmpData,
+	&Window6BmpData,
+	&Window7BmpData,
+};

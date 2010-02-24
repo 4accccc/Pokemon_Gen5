@@ -279,3 +279,5 @@
   ARCID_REPORT_GRA  "report_gra.narc" #レポート画面グラフィック
   ARCID_WIFI_EARTH  "wifi_earth.narc" #WI-FI地球データ
   ARCID_TIMEICON_GRA  "time_icon_gra.narc" #タイマーアイコングラフィック
+  ARCID_LEADER_BOARD  "leader_board.narc" #Wifiリーダーボード画像
+
