@@ -184,6 +184,9 @@ init_flags:
 
 	//C03:リーダー３のジム前イベント
 	_FLAG_SET( FV_C03_GUIDE_01 )
+
+  //各ポケセンにいるふしぎな贈り物配達員
+  _FLAG_SET( FV_POSTMAN )
 }  
 _RET
 

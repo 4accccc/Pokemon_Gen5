@@ -8,6 +8,7 @@
   .include  "../../../prog/include/msg/script/msg_t02pc0101.h"
   .include  "t02pc0101.h"
   .include	"t02_def.h"
+  .include  "postman_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -25,6 +26,7 @@ _EVENT_DATA		ev_init_t02pc0101
 _EVENT_DATA		ev_scene_t02pc0101_hakaseguide_02
 _EVENT_DATA		ev_pos_t02pc0101_kaifuku_01
 _EVENT_DATA		ev_t02pc0101_hakase2_01
+_EVENT_DATA   ev_recover_t02pc0101
 _EVENT_DATA_END
 
 
@@ -42,9 +44,23 @@ INIT_EVENT_START	ev_init_t02pc0101
 			_OBJ_POS_CHANGE( T02PC0101_SUPPORT_01, 9, 0, 15, DIR_RIGHT )
 	
 		ENDIF
+  ELSE
+    //すべてのイベントが終わっている時のみ、配達員の制御
+    _GLOBAL_CALL  SCRID_INIT_POSTMAN
 	
 	ENDIF
 
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL						*/
+/************************************************************/
+INIT_EVENT_START  ev_recover_t02pc0101
+
+    IF $WK_SCENE_T02 > 2 THEN
+        //すべてのイベントが終わっている時のみ、配達員の制御
+        _GLOBAL_CALL  SCRID_RECOVER_POSTMAN
+    ENDIF
 INIT_EVENT_END
 
 /**************************************************************/

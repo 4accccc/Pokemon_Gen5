@@ -16,6 +16,7 @@
 //--------------------------------------------------------------
 _SCENE_CHANGE_LABEL		sp_t02pc0101_tbl
 _FIELD_INIT_LABEL		SCRID_INIT_T02PC0101
+_FIELD_RECOVER_LABEL  SCRID_RECOVER_T02PC0101
 _SP_EVENT_DATA_END
 
 //テーブル定義
