@@ -90,6 +90,10 @@ typedef enum
   CTS_END_WIFI_REQ_INIT,
   CTS_END_WIFI_REQ,
 
+  //一人になったので終了
+  CTS_END_MEMBER_NONE_INIT,
+  CTS_END_MEMBER_NONE,
+
 }CTVT_TALK_STATE;
 
 typedef enum
@@ -615,6 +619,26 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       }
     }
     break;
+  
+  //独りになったので終了
+  case CTS_END_MEMBER_NONE_INIT:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      CTVT_COMM_ExitComm( work , commWork );
+      
+      CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_07 );
+      talkWork->state = CTS_END_MEMBER_NONE;
+    }
+    break;
+  case CTS_END_MEMBER_NONE:
+    if( GFL_UI_TP_GetTrg() == TRUE ||
+        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+    {
+      talkWork->subState = CTSS_GO_END;
+      talkWork->state = CTS_FADEOUT_BOTH;
+      COMM_TVT_SetSusspend( work , TRUE );
+    }
+    break;
   }
 
   CTVT_TALK_UpdateButton( work , talkWork );
@@ -664,7 +688,9 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
 
   }
   
-  if( talkWork->isDrawPlayWave == FALSE )
+  //相手の会話波形表示
+  if( talkWork->isDrawPlayWave == FALSE &&
+      talkWork->state != CTS_TALKING )
   {
     if( CTVT_MIC_IsPlayWave( talkWork->micWork ) == TRUE )
     {
@@ -1277,6 +1303,13 @@ static const BOOL CTVT_TALK_CheckFinishReq( COMM_TVT_WORK *work , CTVT_TALK_WORK
     }
     return TRUE;
   }
+  if( COMM_TVT_GetConnectNum( work ) <= 1 )
+  {
+    //誰も居なくなった。
+    talkWork->state = CTS_END_MEMBER_NONE_INIT;
+    return TRUE;
+  }
+
   return FALSE;
 }
 

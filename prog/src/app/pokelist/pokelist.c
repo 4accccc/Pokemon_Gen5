@@ -88,7 +88,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       {
         //*
         static const u8 no[5] = {487,135,32,2,3};
-        static const u8 lv[5] = {34,10,15,10,10};
+        static const u8 lv[5] = {34,100,15,10,10};
         POKEMON_PARAM *pPara = PP_Create( no[i] , lv[i] , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
   #if DEB_ARI
         switch( i )

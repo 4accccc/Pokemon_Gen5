@@ -507,6 +507,12 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   {
     commWork->beaconDataTime--;
     //ビーコンリセット
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      commWork->beaconDataTime = 0;
+    }
+#endif
     if( commWork->beaconDataTime == 0 )
     {
       u8 i,j;
@@ -734,7 +740,8 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       }
       commWork->reqSendMemberData = TRUE;
       commWork->connectNum = connectNum;
-      commWork->beacon.connectNum = connectNum;
+      //commWork->beacon.connectNum = connectNum;
+      commWork->beacon.connectNum = 4;
     }
     
   }
@@ -1169,7 +1176,15 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
   case CCFT_REQ_PLAY:     //再生要求
     {
       CTVT_MIC_WORK *micWork = COMM_TVT_GetMicWork(commWork->parentWork);
-      CTVT_MIC_PlayWave( micWork , commWork->postWaveBuf , commWork->waveSize , 127 , commWork->waveSpeed );
+      if( netID == selfId )
+      {
+        //音量０のダミー再生
+        CTVT_MIC_PlayWave( micWork , commWork->postWaveBuf , commWork->waveSize , 0 , commWork->waveSpeed );
+      }
+      else
+      {
+        CTVT_MIC_PlayWave( micWork , commWork->postWaveBuf , commWork->waveSize , 127 , commWork->waveSpeed );
+      }
     }
     break;
   

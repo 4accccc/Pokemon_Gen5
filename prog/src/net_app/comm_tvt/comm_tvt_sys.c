@@ -210,7 +210,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   case CTM_CHILD:  //Žq‹N“®
     CTVT_COMM_SetMode( work , work->commWork , CCIM_CHILD );
     CTVT_COMM_SetMacAddress( work , work->commWork , work->initWork->macAddress );
-    work->nextMode = CTM_TALK;
+    work->nextMode = CTM_CALL;
     break;
   case CTM_WIFI:   //Wifi‹N“®
     CTVT_COMM_SetMode( work , work->commWork , CCIM_CONNECTED );
@@ -1189,6 +1189,10 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
     {
       work->initWork->mode = CTM_PARENT;
+    }
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+    {
+      work->initWork->mode = CTM_CHILD;
     }
   }
   else

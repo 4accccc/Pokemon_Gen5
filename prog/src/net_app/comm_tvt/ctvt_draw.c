@@ -107,7 +107,10 @@ typedef enum
   CDS_END_WIFI_REQ_DISP,
   CDS_END_WIFI_REQ_INIT,
   CDS_END_WIFI_REQ,
-  
+
+  //一人になったので終了
+  CDS_END_MEMBER_NONE_INIT,
+  CDS_END_MEMBER_NONE,  
   
 }CTVT_DRAW_STATE;
 
@@ -607,6 +610,25 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
         drawWork->state = CDS_FADEOUT;
         COMM_TVT_SetSusspend( work , TRUE );
       }
+    }
+    break;
+  //一人になったので終了
+  case CDS_END_MEMBER_NONE_INIT:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      CTVT_COMM_ExitComm( work , commWork );
+      
+      CTVT_DRAW_DispMessage( work , drawWork , COMM_TVT_SYS_07 );
+      drawWork->state = CDS_END_MEMBER_NONE;
+    }
+    break;
+  case CDS_END_MEMBER_NONE:
+    if( GFL_UI_TP_GetTrg() == TRUE ||
+        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+    {
+      drawWork->isFinish = TRUE;
+      drawWork->state = CDS_FADEOUT;
+      COMM_TVT_SetSusspend( work , TRUE );
     }
     break;
   }
@@ -1261,6 +1283,12 @@ static const BOOL CTVT_DRAW_CheckFinishReq( COMM_TVT_WORK *work , CTVT_DRAW_WORK
       //親のリクエストによる終了
       drawWork->state = CDS_END_PARENT_REQ_INIT;
     }
+    return TRUE;
+  }
+  if( COMM_TVT_GetConnectNum( work ) <= 1 )
+  {
+    //誰も居なくなった。
+    drawWork->state = CDS_END_MEMBER_NONE_INIT;
     return TRUE;
   }
   return FALSE;

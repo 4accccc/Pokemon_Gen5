@@ -74,6 +74,9 @@
 #define CTVT_CALL_MSG_ANM_SPEED (30)
 #define CTVT_CALL_MSG_ANM_NUM (4)
 
+//接続時タイムアウト
+#define CTVT_CALL_JOIN_TIMEOUT (15*60)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -90,7 +93,10 @@ typedef enum
   CCS_MAIN,
   CCS_WAIT_ANIME,
   CCS_WAIT_CONNECT_JOIN,
+  CCS_WAIT_CONNECT_JOIN_DIRECT,
   CCS_WAIT_CONNECT_CALL,
+  
+  CCS_FAILUE_CONNECT,
 
 }CTVT_CALL_STATE;
 
@@ -99,6 +105,7 @@ typedef enum
   CCBS_NONE,
   CCBS_CALL_CHILD,
   CCBS_JOIN_PARENT,
+  CCBS_JOIN_PARENT_DIRECT,
   
   CCBS_CANCEL,
 }CTVT_CALL_BAR_STATE;
@@ -120,6 +127,7 @@ struct _CTVT_CALL_MEMBER_WORK
   void *beacon;
   GameServiceID serviceType;
   u8 macAddress[6];
+  u8 connectNum;
   
   u8 barWorkNo;
 };
@@ -161,6 +169,7 @@ struct _CTVT_CALL_WORK
   GFL_BMPWIN *callMsgWin;
   u8  callAnmCnt;
   u8  callAnmIdx;
+  u16 connectTimeOutCnt;
 
   CTVT_CALL_BAR_WORK barWork[CTVT_CALL_BAR_NUM];
   CTVT_CALL_MEMBER_WORK memberData[CTVT_CALL_SEARCH_NUM];
@@ -293,6 +302,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
       callWork->memberData[i].isBlink = FALSE;
       callWork->memberData[i].barWorkNo = CTVT_CALL_INVALID_NO;
       callWork->memberData[i].beacon = GFL_HEAP_AllocClearMemory( heapId , CTVT_CALL_BEACONSIZE );
+      callWork->memberData[i].connectNum = 0;
     }
     for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
     {
@@ -331,10 +341,28 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   callWork->isUpdateCallMsgWin = FALSE;
   callWork->barState = CCBS_NONE;
   callWork->barMenuWork = NULL;
+  callWork->state = CCS_FADEIN;
+  callWork->callAnmCnt = 0;
+  callWork->callAnmIdx = 0;
+  callWork->connectTimeOutCnt = 0;
 
   GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , 0 );
+  
+  {
+    const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
+    if( initWork->mode == CTM_CHILD )
+    {
+      //CGEARから呼び出しできた。
+      GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
+      CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
 
-  CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
+      callWork->barState = CCBS_JOIN_PARENT_DIRECT;
+    }
+    else
+    {
+      CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -403,7 +431,16 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   case CCS_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      callWork->state = CCS_MAIN;
+      const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
+      if( initWork->mode == CTM_CHILD )
+      {
+        //CGEARから呼び出しできた。
+        callWork->state = CCS_WAIT_CONNECT_JOIN_DIRECT;
+      }
+      else
+      {
+        callWork->state = CCS_MAIN;
+      }
     }
     break;
 
@@ -460,6 +497,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           CTVT_COMM_SetMacAddress( work , commWork , callWork->memberData[ callWork->checkIdxParent ].macAddress );
           CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
           callWork->state = CCS_WAIT_CONNECT_JOIN;
+          callWork->connectTimeOutCnt = 0;
           callWork->callAnmCnt = 0;
           callWork->callAnmIdx = 0;
 
@@ -506,8 +544,9 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       }
     }
     break;
-    
+  
   case CCS_WAIT_CONNECT_JOIN:
+  case CCS_WAIT_CONNECT_JOIN_DIRECT:
   case CCS_WAIT_CONNECT_CALL:
     callWork->callAnmCnt++;
     if( callWork->callAnmCnt > CTVT_CALL_MSG_ANM_SPEED &&
@@ -519,10 +558,14 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       {
         callWork->callAnmIdx = 0;
         //ついでにコール音再生
-        PMSND_PlaySystemSE( CTVT_SND_TEL_CALL );
+        if( callWork->state == CCS_WAIT_CONNECT_CALL )
+        {
+          PMSND_PlaySystemSE( CTVT_SND_TEL_CALL );
+        }
       }
       
-      if( callWork->state == CCS_WAIT_CONNECT_JOIN )
+      if( callWork->state == CCS_WAIT_CONNECT_JOIN ||
+          callWork->state == CCS_WAIT_CONNECT_JOIN_DIRECT )
       {
         CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11+callWork->callAnmIdx );
       }
@@ -545,6 +588,45 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       if( CTVT_COMM_IsEndBeaconTime( work , commWork ) == TRUE )
       {
+        CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+        CTVT_COMM_SetMode( work , commWork , CCIM_SCAN );
+        CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_SYS_08 );
+        callWork->state = CCS_FAILUE_CONNECT;
+      }
+    }
+    else
+    if( callWork->state == CCS_WAIT_CONNECT_JOIN ||
+        callWork->state == CCS_WAIT_CONNECT_JOIN_DIRECT )
+    {
+      callWork->connectTimeOutCnt++;
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+      {
+        callWork->connectTimeOutCnt = CTVT_CALL_JOIN_TIMEOUT+1;
+      }
+#endif
+      if( callWork->connectTimeOutCnt >= CTVT_CALL_JOIN_TIMEOUT )
+      {
+        CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+        CTVT_COMM_SetMode( work , commWork , CCIM_SCAN );
+        CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_SYS_09 );
+        callWork->state = CCS_FAILUE_CONNECT;
+      }
+    }
+    break;
+    
+  case CCS_FAILUE_CONNECT:
+    if( GFL_UI_TP_GetTrg() == TRUE )
+    {
+      const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
+      if( initWork->mode == CTM_CHILD )
+      {
+        //CGEARから呼び出しできた。
+        callWork->state = CCS_FADEOUT_BOTH;
+        callWork->barState = CCBS_NONE;
+      }
+      else
+      {
         u8 i;
         for( i=0;i<3;i++ )
         {
@@ -555,7 +637,6 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         callWork->state = CCS_MAIN;
         BmpWinFrame_Clear( callWork->callMsgWin , WINDOW_TRANS_ON_V );
         GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
-        CTVT_COMM_SetMode( work , commWork , CCIM_SCAN );
 
         GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN );
         CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
@@ -606,6 +687,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       {
         CTVT_CALL_BAR_WORK *barWork = &callWork->barWork[ callWork->memberData[i].barWorkNo ];
         if( callWork->memberData[i].isCheck == TRUE &&
+            callWork->memberData[i].connectNum < CTVT_MEMBER_NUM && 
             ( callWork->checkIdxParent == CTVT_CALL_INVALID_NO ||
               callWork->checkIdxParent == i ) )
         {
@@ -619,7 +701,8 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         else
         {
           if( checkNum == 3 ||
-              callWork->checkIdxParent != CTVT_CALL_INVALID_NO )
+              callWork->checkIdxParent != CTVT_CALL_INVALID_NO ||
+              callWork->memberData[i].connectNum == CTVT_MEMBER_NUM )
           {
             GFL_CLACT_WK_SetAnmSeq( barWork->clwkCheck , CTOAS_CHECK_NONE );
           }
@@ -689,7 +772,8 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
         CTVT_CALL_MEMBER_WORK *memberWork = &callWork->memberData[memIdx];
         BOOL isUpdate = FALSE;
         
-        if( memberWork->isEnable == TRUE )
+        if( memberWork->isEnable == TRUE &&
+            memberWork->connectNum < CTVT_MEMBER_NUM )
         {
           if( memberWork->serviceType == WB_NET_COMM_TVT )
           {
@@ -894,7 +978,10 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     {
       APP_TASKMENU_WIN_SetDecide( callWork->barMenuWork , TRUE );
       callWork->state = CCS_WAIT_ANIME;
-      PMSND_PlaySystemSE( CTVT_SND_TEL_CALL );
+      if( callWork->barState == CCBS_CALL_CHILD )
+      {
+        PMSND_PlaySystemSE( CTVT_SND_TEL_CALL );
+      }
     }
   }
   
@@ -909,7 +996,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
       {GFL_UI_TP_HIT_END,0,0,0}
     };
     const int ret = GFL_UI_TP_HitTrg( hitTbl );
-    if( ret == 0 || GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    if( ret == 0 || GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
       callWork->state = CCS_WAIT_ANIME;
       callWork->barState = CCBS_CANCEL;
@@ -1249,13 +1336,13 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
         if( memberWork->serviceType == WB_NET_COMM_TVT )
         {
           CTVT_COMM_BEACON *becData = memberWork->beacon;
-          WORDSET_RegisterNumber( wordSet , 0 , CTVT_BCON_GetIDLow(becData) , 5 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( wordSet , 0 , CTVT_BCON_GetIDLow(becData) , 5 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
         }
         else
         {
           GBS_BEACON *becData = memberWork->beacon;
           u16 id = (becData->info.trainer_id & 0xFFFF);
-          WORDSET_RegisterNumber( wordSet , 0 , id , 5 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( wordSet , 0 , id , 5 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
         }
         WORDSET_ExpandStr( wordSet , tempStr , str );
         GFL_STR_DeleteBuffer( str );
@@ -1269,6 +1356,7 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
       if( memberWork->serviceType == WB_NET_COMM_TVT )
       {
         CTVT_COMM_BEACON *becData = memberWork->beacon;
+        memberWork->connectNum = becData->connectNum;
         str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_03 );
         {
           STRBUF *tempStr = GFL_STR_CreateBuffer( 32 , heapId );
@@ -1277,10 +1365,15 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
           GFL_STR_DeleteBuffer( str );
           str = tempStr;
         }
+        PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( barWork->strWin ) , 
+                144 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
+        GFL_STR_DeleteBuffer( str );
+        
       }
       else
       {
-        str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_02 );
+        memberWork->connectNum = 0;
+        //str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_02 );
       }
 
       //カメラ
@@ -1309,10 +1402,6 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
           memberWork->isCamera = FALSE;
         }
       }
-      
-      PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( barWork->strWin ) , 
-              144 , 0 , str , fontHandle ,CTVT_FONT_COLOR_WHITE );
-      GFL_STR_DeleteBuffer( str );
       
       
       WORDSET_Delete( wordSet );
@@ -1351,7 +1440,6 @@ static void CTVT_CALL_UpdateBarPosFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *ca
       pos.x = CTVT_CALL_CAMERA_X;
       GFL_CLACT_WK_SetPos( barWork->clwkCamera , &pos , CLSYS_DRAW_SUB );
 
-      //TODOカメラチェック
       if( callWork->memberData[ barWork->memberWorkNo ].isCamera == TRUE )
       {
         GFL_CLACT_WK_SetAnmSeq( callWork->barWork[idx].clwkCamera , CTOAS_CAMERA_ON );
