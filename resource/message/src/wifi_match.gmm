@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-02-23T23:58:19"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T15:14:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="102" top="219" right="807" bottom="847" maximized="no" rayout="Vertical2">
+	<dialog left="1534" top="235" right="2234" bottom="859" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="136" right="1280" bottom="534" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="525"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="692"/>
+		<band id="3" index="3" style="0000" width="692"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -512,29 +512,29 @@
 	<row id="WIFIMATCH_TEXT_009">
 		<language name="JPN" width="256">たいせん　あいてを
 さがして　います……</language>
-		<language name="JPN_KANJI" width="256">対戦　相手を
+		<language name="JPN_KANJI" width="256">対戦相手を
 探しています……</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_010">
 		<language name="JPN" width="256">たいせん　あいてが
 みつかり　ました！</language>
-		<language name="JPN_KANJI" width="256">対戦　相手が
+		<language name="JPN_KANJI" width="256">対戦相手が
 見つかりました！</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_011">
 		<language name="JPN" width="256">たいせん　あいてを
 さがすのを　やめますか？</language>
-		<language name="JPN_KANJI" width="256">対戦　相手を
+		<language name="JPN_KANJI" width="256">対戦相手を
 探すのを　やめますか？</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_012">
-		<language name="JPN" width="256">ポケモンを　えらんで
-ください</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　選んで
-ください</language>
+		<language name="JPN" width="256">ポケモンを
+えらんで　ください</language>
+		<language name="JPN_KANJI" width="256">ポケモンを
+選んでください</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_013">
@@ -553,10 +553,10 @@
 	</row>
 
 	<row id="WIFIMATCH_TEXT_017">
-		<language name="JPN" width="256">セーブを　しています……
-でんげんを　きらないで　ください</language>
-		<language name="JPN_KANJI" width="256">セーブを　しています……
-電源を　切らないでください</language>
+		<language name="JPN" width="256">レポートに　かきこんでいます
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" width="256">レポートに　書き込んでいます
+電源を　切らないでください&quot;</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_018">
@@ -698,15 +698,15 @@
 
 	<row id="WIFIMATCH_WIFI_STR_10">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">Wi-Fi　たいかいに　さんかするため
+		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいに　さんかするため
 デジタルせんしゅしょうを[BE:00:ページ切り替え（行送り）]
-ロック　します[BE:01:ページ切り替え（クリア）]
+ロックします[BE:01:ページ切り替え（クリア）]
 ロックすると　バトルボックスへ　
 ポケモンを　だしいれ　できなくなります[BE:01:ページ切り替え（クリア）]
 ロックしても　よろしい　ですか？</language>
-		<language name="JPN_KANJI" width="256">Wi-Fi　大会に　参加するため
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会に　参加するため
 デジタル選手証を[BE:00:ページ切り替え（行送り）]
-ロック　します[BE:01:ページ切り替え（クリア）]
+ロックします[BE:01:ページ切り替え（クリア）]
 ロックすると　バトルボックスへ　
 ポケモンを　だしいれ　できなくなります[BE:01:ページ切り替え（クリア）]
 ロックしても　よろしい　ですか？</language>
@@ -714,18 +714,18 @@
 
 	<row id="WIFIMATCH_WIFI_STR_11">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">Wi-Fi　たいかいに　さんかするため
+		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいに　さんかするため
 デジタルせんしゅしょうを[BE:00:ページ切り替え（行送り）]
 うわがき　します[BE:01:ページ切り替え（クリア）]
 いぜんの　とうろくした
 ポケモンの　ロックは　かいじょ　されます[BE:01:ページ切り替え（クリア）]
-うわがきしても　よろしい　ですか？</language>
-		<language name="JPN_KANJI" width="256">Wi-Fi　大会に　参加するため
+うわがきしても　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会に　参加するため
 デジタル選手証を[BE:00:ページ切り替え（行送り）]
 上書き　します[BE:01:ページ切り替え（クリア）]
 以前の　登録した
-ポケモンの　ロックは　解除　されます[BE:01:ページ切り替え（クリア）]
-上書きしても　よろしい　ですか？</language>
+ポケモンの　ロックは　解除されます[BE:01:ページ切り替え（クリア）]
+上書きしても　よろしいですか？</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_12">
@@ -735,8 +735,8 @@
 さんか　できません[BE:01:ページ切り替え（クリア）]
 こうしんを　やめますか？</language>
 		<language name="JPN_KANJI" width="256">デジタル選手証を
-更新　しないと　大会に[BE:00:ページ切り替え（行送り）]
-参加　できません[BE:01:ページ切り替え（クリア）]
+更新しないと　大会に[BE:00:ページ切り替え（行送り）]
+参加できません[BE:01:ページ切り替え（クリア）]
 更新を　やめますか？</language>
 	</row>
 
@@ -755,7 +755,7 @@
 		<language name="JPN" width="256">デジタルせんしゅしょうを
 こうしん　できませんでした</language>
 		<language name="JPN_KANJI" width="256">デジタル選手証を
-更新　できませんでした</language>
+更新できません　でした</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_15">
@@ -780,7 +780,7 @@
 
 	<row id="WIFIMATCH_WIFI_STR_16">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">とうろくするのを
+		<language name="JPN" width="256">とうろく　するのを
 やめますか？</language>
 		<language name="JPN_KANJI" width="256">登録するのを
 やめますか？</language>
@@ -832,9 +832,9 @@
 
 	<row id="WIFIMATCH_WIFI_STR_22">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">Wi-Fiバトル　たいかい！
+		<language name="JPN" width="256">Ｗｉ－Ｆｉバトル　たいかい！
 なにを　しますか？</language>
-		<language name="JPN_KANJI" width="256">Wi-Fiバトル　大会！
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉバトル　大会！
 なにを　しますか？</language>
 	</row>
 
@@ -883,7 +883,7 @@
 		<language name="JPN" width="256">ポケモンの　ロックを
 かいじょ　しました</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　ロックを
-解除　しました</language>
+解除しました</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_27">
@@ -900,7 +900,7 @@
 おなじ　たいかいに　さんか　できません[BE:01:ページ切り替え（クリア）]
 かいじょしても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">参加を　解除すると
-同じ　大会に　参加　できません[BE:01:ページ切り替え（クリア）]
+同じ　大会に　参加できません[BE:01:ページ切り替え（クリア）]
 解除しても　よろしいですか？</language>
 	</row>
 
@@ -1091,7 +1091,7 @@
 	<row id="WIFIMATCH_ERR_00">
 		<comment>ポケモンが不正</comment>
 		<language name="JPN" width="256">さんか　できませんでした</language>
-		<language name="JPN_KANJI" width="256">参加　できませんでした</language>
+		<language name="JPN_KANJI" width="256">参加できませんでした</language>
 	</row>
 
 	<flowchart-group-list>
