@@ -198,7 +198,7 @@
 #define FE_LEGEND1_BATTLE                  182 /* 0x00b6 伝説ポケモン：アトスと戦った */
 #define FE_LEGEND2_BATTLE                  183 /* 0x00b7 伝説ポケモン：ポルトスと戦った */
 #define FE_LEGEND3_BATTLE                  184 /* 0x00b8 伝説ポケモン：アラミスと戦った */
-		/* not used   185(0x00b9) */
+#define FE_C09_FORBIDDEN                   185 /* 0x00b9 ポケモンリーグ立ち入り禁止状態フラグ。Ｎ城出現&#xff5e;チャンプ復帰まで */
 		/* not used   186(0x00ba) */
 		/* not used   187(0x00bb) */
 		/* not used   188(0x00bc) */
@@ -690,7 +690,7 @@
 #define FV_D03R0101_DARUMA_04              666 /* 0x029a 砂漠のゴリダルマ(瞑想モード)その４ */
 #define FV_D03R0101_DARUMA_05              667 /* 0x029b 砂漠のゴリダルマ(瞑想モード)その５ */
 #define FV_C06_GIRLBOY_01                  668 /* 0x029c フキヨセ滑走路に出てくる少年少女（なみのり入手イベント） */
-		/* not used   669(0x029d) */
+#define FV_C09R0701_WARPMAN                669 /* 0x029d ポケモンリーグ回復施設：Nの城にワープさせてくれるNPC */
 		/* not used   670(0x029e) */
 		/* not used   671(0x029f) */
 		/* not used   672(0x02a0) */
