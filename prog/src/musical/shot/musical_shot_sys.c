@@ -90,6 +90,8 @@ GFL_PROC_DATA MusicalShot_ProcData =
   MusicalShotProc_Term
 };
 
+//デバッグ用
+FS_EXTERN_OVERLAY(musical);
 //--------------------------------------------------------------
 //  初期化
 //--------------------------------------------------------------
@@ -103,6 +105,7 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
   ARI_TPrintf("MUS_SHOT_DATA_SIZE[%d]\n",sizeof(MUSICAL_SHOT_DATA));
   if( pwk == NULL )
   {
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(musical) );
     work->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_SHOT , sizeof( MUS_SHOT_INIT_WORK ));
     work->shotInitWork->musShotData = GFL_HEAP_AllocClearMemory( HEAPID_MUSICAL_SHOT , sizeof( MUSICAL_SHOT_DATA ));
     {
@@ -232,6 +235,9 @@ static GFL_PROC_RESULT MusicalShotProc_Term( GFL_PROC * proc, int * seq , void *
   {
     GFL_HEAP_FreeMemory( work->shotInitWork->musShotData );
     GFL_HEAP_FreeMemory( work->shotInitWork );
+
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(musical) );
+
   }
 
   GFL_PROC_FreeWork( proc );
