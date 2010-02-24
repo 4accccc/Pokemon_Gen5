@@ -440,7 +440,7 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
     return TRUE;
   }
   //GパワーIDチェック
-  if( info->g_power_id >= GPOWER_ID_MAX ) {
+  if( info->g_power_id > GPOWER_ID_MAX ) {
     return TRUE;
   }
   //ゾーンIDチェック
