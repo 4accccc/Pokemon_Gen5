@@ -61,7 +61,17 @@ MISSION_STATUS MISSION_FIELD_CheckStatus(MISSION_SYSTEM *mission)
 //==================================================================
 TALK_TYPE MISSION_FIELD_GetTalkType(INTRUDE_COMM_SYS_PTR intcomm, NetID net_id)
 {
-  switch(intcomm->intrude_status[net_id].disguise_no){
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  INTRUDE_STATUS *intstatus;
+  
+  if(net_id == GAMEDATA_GetIntrudeMyID(gamedata)){
+    intstatus = &intcomm->intrude_status_mine;
+  }
+  else{
+    intstatus = &intcomm->intrude_status[net_id];
+  }
+  
+  switch(intstatus->disguise_no){
   case DISGUISE_NO_NULL:      //•Ï‘•–³‚µ
     {
       GAMEDATA *gamedata = GameCommSys_GetGameData( intcomm->game_comm );
@@ -74,6 +84,6 @@ TALK_TYPE MISSION_FIELD_GetTalkType(INTRUDE_COMM_SYS_PTR intcomm, NetID net_id)
     break;
   case DISGUISE_NO_NORMAL:    //ƒpƒŒƒX•W€‚Ì•Ï‘•Žp
   default:
-    return intcomm->intrude_status[net_id].disguise_type;
+    return intstatus->disguise_type;
   }
 }

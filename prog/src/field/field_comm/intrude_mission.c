@@ -425,7 +425,8 @@ void MISSION_SetMissionEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *missi
 {
   if(MISSION_RecvCheck(mission) == TRUE){
     mission->mine_entry = TRUE;
-    intcomm->intrude_status_mine.mission_entry = FALSE;
+    mission->mission_complete = FALSE;
+    intcomm->intrude_status_mine.mission_entry = TRUE;
     intcomm->send_status = TRUE;
     OS_TPrintf("ミッション参加フラグセット\n");
   }
@@ -445,6 +446,7 @@ static void MISSION_ClearMissionEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYST
     intcomm->intrude_status_mine.mission_entry = FALSE;
     intcomm->send_status = TRUE;
   }
+  mission->mission_complete = FALSE;
 }
 
 //==================================================================
@@ -462,6 +464,32 @@ BOOL MISSION_GetMissionEntry(const MISSION_SYSTEM *mission)
     return mission->mine_entry;
   }
   return FALSE;
+}
+
+//==================================================================
+/**
+ * ミッション達成フラグをセットする
+ *
+ * @param   mission		
+ */
+//==================================================================
+void MISSION_SetMissionComplete(MISSION_SYSTEM *mission)
+{
+  mission->mission_complete = TRUE;
+}
+
+//==================================================================
+/**
+ * ミッション達成フラグを取得する
+ *
+ * @param   mission		
+ *
+ * @retval  BOOL		TRUE:ミッション達成済み　FALSE:ミッションまだ未達成
+ */
+//==================================================================
+BOOL MISSION_GetMissionComplete(const MISSION_SYSTEM *mission)
+{
+  return mission->mission_complete;
 }
 
 //==================================================================
@@ -586,7 +614,7 @@ BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, in
   result->achieve_netid[ranking] = achieve_netid;
   
   mission->result_mission_achieve[achieve_netid] = MISSION_ACHIEVE_OK;
-  mission->result_send_req = TRUE;  //※check メインで席が全て埋まるor制限時間で送信するようにする
+  mission->result_send_req = TRUE;  //※check メインで 達成者の席が全て埋まる or 制限時間で送信するようにする
   
   return TRUE;
 }
@@ -718,7 +746,7 @@ BOOL MISSION_Talk_CheckAchieve(const MISSION_SYSTEM *mission, int talk_netid)
   if(mdata->accept_netid == INTRUDE_NETID_NULL){
     return FALSE;
   }
-  if(talk_netid == mdata->target_netid){
+  if(talk_netid == mdata->target_info.net_id){
     return TRUE;
   }
   return FALSE;

@@ -134,8 +134,9 @@ typedef struct{
 
 ///ミッション系統毎に異なるdataの構造体：ITEM
 typedef struct{
+  u16 secret_pos_tblno;   ///<隠しアイテム設置座標テーブル番号位置(IntrudeSecretItemPosDataTbl)
   u16 item_no;            ///<渡すアイテム番号
-  u16 padding[2];
+  u16 padding;
 }MISSION_TYPEDATA_ITEM;
 
 ///ミッション系統毎に異なるdataの構造体：OCCUR
@@ -224,7 +225,7 @@ typedef struct{
   u8 palace_area;             ///<どのパレスエリアで受注したミッションなのか
   
   u8 monolith_type;           ///<石版タイプ  MONOLITH_TYPE_???
-  u8 target_netid;            ///<ミッション内容によってターゲットとなるプレイヤーのNetID
+//  u8 target_netid;            ///<ミッション内容によってターゲットとなるプレイヤーのNetID
   
   u16 zone_id;                ///<ミッション起動に使用したミニモノリスがあったゾーンID
   u8 padding[2];
@@ -270,12 +271,13 @@ typedef struct{
   u8 data_send_req;           ///<TRUE:ミッションデータの送信を行う
   u8 result_send_req;         ///<TRUE:ミッションデータの送信を行う
   u8 send_mission_start;      ///<準備期間終了。ミッション開始を送信(_SEND_MISSION_START_xxx)
-  u8 mine_entry;              ///<TRUE:ミッション参加している
 
   //子が持つデータ
   u8 parent_data_recv;        ///<TRUE:親からミッションデータを受信
   u8 parent_result_recv;      ///<TRUE:親から結果を受信
   u8 recv_entry_answer_result;  ///<ミッション受注の返事(MISSION_ENTRY_RESULT_???)
   u8 parent_achieve_recv;     ///<親からミッション達成報告を受信(MISSION_ACHIEVE_???)
+  u8 mine_entry;              ///<TRUE:ミッション参加している
+  u8 mission_complete;        ///<TRUE:今実行しているミッションは完了した
 }MISSION_SYSTEM;
 

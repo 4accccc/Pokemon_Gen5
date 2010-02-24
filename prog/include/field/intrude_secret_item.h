@@ -23,9 +23,9 @@
 //==============================================================================
 ///侵入隠しアイテム配置データ
 typedef struct{
-  u16 grid_x;
-  u16 grid_y;
-  u16 grid_z;
+  s16 grid_x;
+  s16 grid_y;
+  s16 grid_z;
   u16 zone_id;
 }INTRUDE_SECRET_ITEM_POSDATA;
 

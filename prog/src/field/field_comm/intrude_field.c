@@ -26,6 +26,9 @@
 #include "field/zonedata.h"
 #include "field/field_g3d_mapper.h"
 #include "intrude_main.h"
+#include "intrude_mission.h"
+#include "field/intrude_secret_item.h"
+#include "field/event_mission_secretitem_ex.h"
 
 #include "message.naix"
 #include "msg/msg_d_field.h"
@@ -882,3 +885,40 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * 隠しアイテムミッションが発動している時に目的地に到達したかチェック
+ *
+ * @param   gsys		
+ * @param   intcomm		
+ * @param   pcActor		
+ *
+ * @retval  MISSION_DATA *		到達した場合はミッションデータへのポインタ
+ * @retval  MISSION_DATA *		到達していない場合はNULL
+ */
+//--------------------------------------------------------------
+GMEVENT * IntrudeField_CheckSecretItemEvent(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS_PTR intcomm, const FIELD_PLAYER *pcActor)
+{
+  if(MISSION_GetMissionEntry(&intcomm->mission) == TRUE
+      && MISSION_GetMissionComplete(&intcomm->mission) == FALSE){
+    const MISSION_DATA *mdata = MISSION_GetRecvData(&intcomm->mission);
+    if(mdata != NULL && mdata->cdata.type == MISSION_TYPE_ITEM 
+        && intcomm->intrude_status_mine.palace_area == mdata->target_info.net_id){
+      const MISSION_TYPEDATA_ITEM *d_item = (void*)mdata->cdata.data;
+      PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
+      ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
+    	const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( pcActor );
+    	MMDL_GRIDPOS grid_pos;
+    	
+      MMDL_GetGridPos( fmmdl, &grid_pos );
+      if(IntrudeSecretItemPosDataTbl[d_item->secret_pos_tblno].zone_id == zone_id
+          && IntrudeSecretItemPosDataTbl[d_item->secret_pos_tblno].grid_x == grid_pos.gx
+          && IntrudeSecretItemPosDataTbl[d_item->secret_pos_tblno].grid_y == grid_pos.gy
+          && IntrudeSecretItemPosDataTbl[d_item->secret_pos_tblno].grid_z == grid_pos.gz){
+        return EVENT_Intrude_SecretItemArrivalEvent(gsys, intcomm, mdata);
+      }
+    }
+  }
+  
+  return NULL;
+}

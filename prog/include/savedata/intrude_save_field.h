@@ -37,7 +37,7 @@
  * @retval  int       ÉqÉbÉgÇµÇ»Ç©Ç¡ÇΩèÍçáÅFISC_SAVE_SEARCH_NONE
  */
 //==================================================================
-extern int ISC_SAVE_CheckItem(INTRUDE_SAVE_WORK *intsave, u16 zone_id, u16 grid_x, u16 grid_y, u16 grid_z);
+extern int ISC_SAVE_CheckItem(INTRUDE_SAVE_WORK *intsave, u16 zone_id, s16 grid_x, s16 grid_y, s16 grid_z);
 
 //==================================================================
 /**

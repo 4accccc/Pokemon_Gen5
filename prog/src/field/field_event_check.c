@@ -436,6 +436,13 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         FIELD_PLAYER_ForceStop( req.field_player );
         return EVENT_CommMissionResult(gsys, fieldWork, intcomm, fmmdl_player, req.heapID);
       }
+      //隠しアイテムの目的地到達チェック
+      if (req.stepRequest ){
+        event = IntrudeField_CheckSecretItemEvent(gsys, intcomm, req.field_player);
+        if(event != NULL){
+          return event;
+        }
+      }
       //話しかける
       if( req.talkRequest ){
         if(IntrudeField_CheckTalk(intcomm, req.field_player, &talk_netid) == TRUE){

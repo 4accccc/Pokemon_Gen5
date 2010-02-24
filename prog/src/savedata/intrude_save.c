@@ -161,6 +161,7 @@ void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE
   
   for(i = 0; i < INTRUDE_SECRET_ITEM_SAVE_MAX; i++){
     if(isis->item == 0){
+      OS_TPrintf("save secretitem No.%d\n", i);
       *isis = *src;
       return;
     }

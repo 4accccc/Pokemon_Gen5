@@ -456,7 +456,8 @@ SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
 				field/event_mission_talk.c \
 				field/event_mission_talked.c \
 				field/event_mission_battle.c \
-				field/event_mission_help.c
+				field/event_mission_help.c \
+				field/event_mission_secretitem.c
 
 #===> SRCS_OVERLAY_DEV_IRC
 #GROUP_OVERLAY_UNION_INTRUDE

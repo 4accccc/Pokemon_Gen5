@@ -48,6 +48,7 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
 static void _IntrudeRecv_OccupyInfo(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_TargetTiming(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_PlayerSupport(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_SecretItem(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_WfbcReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_Wfbc(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_WfbcNpcAns(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -85,6 +86,7 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_OccupyInfo, NULL},             //INTRUDE_CMD_OCCUPY_INFO
   {_IntrudeRecv_TargetTiming, NULL},           //INTRUDE_CMD_TARGET_TIMING
   {_IntrudeRecv_PlayerSupport, NULL},          //INTRUDE_CMD_PLAYER_SUPPORT
+  {_IntrudeRecv_SecretItem, NULL},             //INTRUDE_CMD_SECRET_ITEM
   {_IntrudeRecv_WfbcReq, NULL},                //INTRUDE_CMD_WFBC_REQ
   {_IntrudeRecv_Wfbc, NULL},                   //INTRUDE_CMD_WFBC
   {_IntrudeRecv_WfbcNpcAns, NULL},             //INTRUDE_CMD_WFBC_NPC_ANS
@@ -1157,6 +1159,7 @@ BOOL IntrudeSend_MissionAchieve(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYST
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_MISSION_ACHIEVE, sizeof(MISSION_DATA), &mission->data);
   if(ret == TRUE){
+    MISSION_SetMissionComplete(&intcomm->mission);
     OS_TPrintf("送信：ミッション達成 \n");
   }
   return ret;
@@ -1451,6 +1454,59 @@ BOOL IntrudeSend_PlayerSupport(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, S
 
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_netid, INTRUDE_CMD_PLAYER_SUPPORT, sizeof(support_type), &support_type, 
+    FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：隠しアイテム
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_SecretItem(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const INTRUDE_SECRET_ITEM_SAVE *itemdata = pData;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  
+  if((intcomm->recv_profile & (1 << netID)) == 0){
+    OS_TPrintf("受信：隠しアイテム：プロフィール未受信の為、受け取らない netID=%d\n", netID);
+    return;
+  }
+  
+  OS_TPrintf("受信：隠しアイテム netID=%d\n", netID);
+  {
+    INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork(gamedata) );
+    ISC_SAVE_SetItem(intsave, itemdata);
+  }
+}
+
+//==================================================================
+/**
+ * データ送信：隠しアイテム
+ *
+ * @param   send_netid    サポート相手
+ * @param   support_type  サポートタイプ(SUPPORT_TYPE_???)
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_SecretItem(NetID send_netid, const INTRUDE_SECRET_ITEM_SAVE *itemdata)
+{
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_netid, INTRUDE_CMD_SECRET_ITEM, sizeof(INTRUDE_SECRET_ITEM_SAVE), itemdata, 
     FALSE, FALSE, FALSE);
 }
 

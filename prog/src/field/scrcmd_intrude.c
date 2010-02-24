@@ -197,7 +197,7 @@ static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, vo
   case SEQ_MSG_INIT:
     {
       GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
-      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_netid);
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_info.net_id);
       u32 msg_id;
 
       msg_id = MISSION_GetMissionMsgID(&intcomm->mission);

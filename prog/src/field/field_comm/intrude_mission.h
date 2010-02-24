@@ -26,6 +26,8 @@ extern BOOL MISSION_RecvCheck(const MISSION_SYSTEM *mission);
 extern MISSION_DATA * MISSION_GetRecvData(MISSION_SYSTEM *mission);
 extern void MISSION_SetMissionEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 extern BOOL MISSION_GetMissionEntry(const MISSION_SYSTEM *mission);
+extern void MISSION_SetMissionComplete(MISSION_SYSTEM *mission);
+extern BOOL MISSION_GetMissionComplete(const MISSION_SYSTEM *mission);
 extern u16 MISSION_GetMissionMsgID(const MISSION_SYSTEM *mission);
 extern u16 MISSION_GetAchieveMsgID(const MISSION_SYSTEM *mission, int my_netid);
 extern MISSION_RESULT * MISSION_GetResultData(MISSION_SYSTEM *mission);

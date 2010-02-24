@@ -35,7 +35,7 @@
  * @retval  int       ƒqƒbƒg‚µ‚È‚©‚Á‚½ê‡FISC_SAVE_SEARCH_NONE
  */
 //==================================================================
-int ISC_SAVE_CheckItem(INTRUDE_SAVE_WORK *intsave, u16 zone_id, u16 grid_x, u16 grid_y, u16 grid_z)
+int ISC_SAVE_CheckItem(INTRUDE_SAVE_WORK *intsave, u16 zone_id, s16 grid_x, s16 grid_y, s16 grid_z)
 {
   int i;
   const INTRUDE_SECRET_ITEM_SAVE *isis = intsave->secret_item;
@@ -76,7 +76,7 @@ void ISC_SAVE_GetItem(INTRUDE_SAVE_WORK *intsave, int work_no, INTRUDE_SECRET_IT
   GF_ASSERT(dest->item != 0);
   
   //‘O‹l‚ß
-  for(i = 1; i < INTRUDE_SECRET_ITEM_SAVE_MAX; i++){
+  for(i = work_no + 1; i < INTRUDE_SECRET_ITEM_SAVE_MAX; i++){
     intsave->secret_item[i - 1] = intsave->secret_item[i];
   }
   intsave->secret_item[INTRUDE_SECRET_ITEM_SAVE_MAX - 1].item = 0;

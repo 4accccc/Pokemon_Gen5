@@ -518,7 +518,7 @@ static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *w
   case SEQ_MSG_INIT:
     {
       GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
-      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_netid);
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_info.net_id);
       MYSTATUS *mine_myst = GAMEDATA_GetMyStatus(gdata);
       int my_netid = GAMEDATA_GetIntrudeMyID(gdata);
       u16 msg_id;
@@ -868,7 +868,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 
   #if 0
     //※check　ミッションが一つしかないので、ここで全回復
-    if(intcomm->mission.data.target_netid == GAMEDATA_GetIntrudeMyID(gdata)){
+    if(intcomm->mission.data.target_info.net_id == GAMEDATA_GetIntrudeMyID(gdata)){
       STATUS_RCV_PokeParty_RecoverAll(GAMEDATA_GetMyPokemon(gdata));
     }
   #endif

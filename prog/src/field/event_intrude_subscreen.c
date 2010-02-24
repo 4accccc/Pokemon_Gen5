@@ -189,7 +189,7 @@ static GMEVENT_RESULT MissionPutEvent( GMEVENT *event, int *seq, void *wk )
     {
     #if 0
       GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
-      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_netid);
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_info.net_id);
       u16 msg_id;
       
       msg_id = MISSION_GetMissionMsgID(&intcomm->mission);
