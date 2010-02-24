@@ -191,6 +191,8 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
   monosys->procsys_up = GFL_PROC_LOCAL_boot(HEAPID_MONOLITH);
   monosys->procsys_down = GFL_PROC_LOCAL_boot(HEAPID_MONOLITH);
   
+  APP_PRINTSYS_COMMON_PrintStreamInit(&monosys->setup.app_printsys, APP_PRINTSYS_COMMON_TYPE_BOTH);
+  
 	//Vƒuƒ‰ƒ“ƒNTCB“o˜^
 	monosys->vintr_tcb = GFUser_VIntr_CreateTCB(_VblankFunc, monosys, MONOLITH_VINTR_TCB_PRI_MAIN);
 

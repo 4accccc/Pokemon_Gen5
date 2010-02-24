@@ -219,7 +219,7 @@ static void _Setup_BmpWinDelete(MONOLITH_PWSELECT_WORK *mpw);
 static void _Set_TitlePrint(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
 static void _Set_MsgStream(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id);
 static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id);
-static BOOL _Wait_MsgStream(MONOLITH_PWSELECT_WORK *mpw);
+static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw);
 static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw);
 static MONO_USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy);
 static void _Setup_ScreenClear(MONOLITH_PWSELECT_WORK *mpw);
@@ -438,7 +438,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     }
     break;
   case SEQ_DECIDE_STREAM_WAIT:
-    if(_Wait_MsgStream(mpw) == TRUE){
+    if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){
       if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
         _Clear_MsgStream(mpw);
         {
@@ -769,12 +769,9 @@ static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *se
  * @retval  BOOL		TRUE:o—ÍŠ®—¹
  */
 //--------------------------------------------------------------
-static BOOL _Wait_MsgStream(MONOLITH_PWSELECT_WORK *mpw)
+static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw)
 {
-  if(PRINTSYS_PrintStreamGetState( mpw->print_stream ) == PRINTSTREAM_STATE_DONE ){
-    return TRUE;
-  }
-  return FALSE;
+  return APP_PRINTSYS_COMMON_PrintStreamFunc( &setup->app_printsys, mpw->print_stream );
 }
 
 //--------------------------------------------------------------

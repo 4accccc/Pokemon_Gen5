@@ -17,6 +17,7 @@
 #include "system/actor_tool.h"
 #include "system/bmp_oam.h"
 #include "mission_types.h"
+#include "app/app_printsys_common.h"
 
 
 //==============================================================================
@@ -142,7 +143,8 @@ typedef struct{
 	BMPOAM_SYS_PTR bmpoam_sys;
 	ARCHANDLE *hdl;
   POWER_CONV_DATA *powerdata;
-
+  APP_PRINTSYS_COMMON_WORK app_printsys;
+  
 	struct{
     u32 pltt_index;          ///<アクター共通素材パレットIndex
     u32 char_index;          ///<アクター共通素材キャラIndex

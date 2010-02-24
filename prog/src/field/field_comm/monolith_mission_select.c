@@ -86,7 +86,7 @@ static void _Msselect_ViewChange(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_W
 static void _Setup_BmpWinCreate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_SETUP *setup);
 static void _Setup_BmpWinDelete(MONOLITH_MSSELECT_WORK *mmw);
 static void _Set_MsgStream(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_SETUP *setup, u16 msg_id);
-static BOOL _Wait_MsgStream(MONOLITH_MSSELECT_WORK *mmw);
+static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_MSSELECT_WORK *mmw);
 static void _Clear_MsgStream(MONOLITH_MSSELECT_WORK *mmw);
 
 
@@ -372,7 +372,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
     break;
   case SEQ_ORDER_OK_STREAM_WAIT:
   case SEQ_ORDER_NG_STREAM_WAIT:
-    if(_Wait_MsgStream(mmw) == TRUE){
+    if(_Wait_MsgStream(appwk->setup, mmw) == TRUE){
       if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
         _Clear_MsgStream(mmw);
         if((*seq) == SEQ_ORDER_OK_STREAM_WAIT){
@@ -573,12 +573,9 @@ static void _Set_MsgStream(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_SETUP *setup, u
  * @retval  BOOL		TRUE:o—ÍŠ®—¹
  */
 //--------------------------------------------------------------
-static BOOL _Wait_MsgStream(MONOLITH_MSSELECT_WORK *mmw)
+static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_MSSELECT_WORK *mmw)
 {
-  if(PRINTSYS_PrintStreamGetState( mmw->print_stream ) == PRINTSTREAM_STATE_DONE ){
-    return TRUE;
-  }
-  return FALSE;
+  return APP_PRINTSYS_COMMON_PrintStreamFunc( &setup->app_printsys, mmw->print_stream );
 }
 
 //--------------------------------------------------------------

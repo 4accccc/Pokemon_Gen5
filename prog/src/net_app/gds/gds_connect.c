@@ -67,6 +67,7 @@
 #include "system/bmp_winframe.h"
 #include "net/network_define.h"
 #include "system/net_err.h"
+#include "app/app_printsys_common.h"
 
 
 //==============================================================================
@@ -127,7 +128,7 @@ typedef struct{
 	STRBUF			*TalkString;						// 会話メッセージ用
 	STRBUF			*TitleString;						// タイトルメッセージ用
 	STRBUF			*ErrorString;
-
+  APP_PRINTSYS_COMMON_WORK app_printsys;
 
 	// BMPWIN描画周り
 	GFL_BMPWIN *			MsgWin;					// 会話ウインドウ
@@ -315,6 +316,8 @@ static GFL_PROC_RESULT GdsConnectProc_Init( GFL_PROC * proc, int * seq, void * p
 
 	// BMPWIN確保
 	BmpWinInit( wk );
+	
+	APP_PRINTSYS_COMMON_PrintStreamInit(&wk->app_printsys, APP_PRINTSYS_COMMON_TYPE_BOTH);
 
 	// ワイプフェード開始
 	WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK, 
@@ -886,7 +889,7 @@ static int Enter_MessagePrintEndCheck(GDS_CONNECT_SYS *wk)
   BOOL que_end = FALSE;
   
   if(wk->print_stream != NULL){
-    if(PRINTSYS_PrintStreamGetState(wk->print_stream) == PRINTSTREAM_STATE_DONE){
+    if(APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->app_printsys, wk->print_stream ) == TRUE){
       PRINTSYS_PrintStreamDelete(wk->print_stream);
       wk->print_stream = NULL;
       stream_end = TRUE;
