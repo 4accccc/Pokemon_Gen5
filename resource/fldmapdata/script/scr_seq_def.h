@@ -1236,7 +1236,7 @@
 //--------------------------------------------------------------
 #define _GIZAPLAINWIN_MSG_POS( msg_id, pos ) _ASM_GIZAPLAINWIN_MSG_POS msg_id, pos
   
-  .macro _ASM_GIZAPLAINWIN_MSG_POS
+  .macro _ASM_GIZAPLAINWIN_MSG_POS msg_id, pos
   .short EV_SEQ_PLAINWIN_GIZA_MSG
   .short \msg_id
   .byte \pos
