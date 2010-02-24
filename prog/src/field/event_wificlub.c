@@ -132,27 +132,6 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   dbw->fieldmap = fieldmap;
   dbw->event = event;
   dbw->bFieldEnd = bFieldEnd;
-#if 0
-  para = &dbw->para;
-  {
-    para->rule = BTL_RULE_SINGLE;
-    para->competitor = BTL_COMPETITOR_COMM;
-
-    para->commMode = BTL_COMM_DS;
-    para->multiMode = 0;
-
-    para->party[ BTL_CLIENT_PLAYER ] = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
-    para->party[ BTL_CLIENT_ENEMY1 ] = NULL;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
-    para->party[ BTL_CLIENT_PARTNER ] = NULL;  ///< 2vs2時の味方AI（不要ならnull）
-    para->party[ BTL_CLIENT_ENEMY2 ] = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
-    para->playerStatus[ BTL_CLIENT_PLAYER ] =  GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
-
-    para->musicDefault = SEQ_BGM_VS_NORAPOKE;   ///< デフォルト時のBGMナンバー
-    para->musicPinch = SEQ_BGM_BATTLEPINCH;     ///< ピンチ時のBGMナンバー
-
-    PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->party[ BTL_CLIENT_PLAYER ]);
-  }
-#endif
 }
 
 //------------------------------------------------------------------
