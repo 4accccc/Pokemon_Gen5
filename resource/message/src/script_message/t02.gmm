@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T12:39:31"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T22:48:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -437,17 +437,17 @@
 博士が　待っていなかった？▼</language>
 	</row>
 
-	<row id="msg_t02_black_01a" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t02_black_01a" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・上記メッセージ、直接会話した時用
 0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『おい　[1:00:トレーナー名:0]▼
+		<language name="JPN" width="256">チェレン『ねえ　[1:00:トレーナー名:0]▼
 ポケモンセンターの　まえで
-はかせが　まっていただろ？</language>
-		<language name="JPN_KANJI" width="256">チェレン『おい　[1:00:トレーナー名:0]▼
-博士　いただろ？
-ポケモンセンターの　前にさ</language>
+はかせが　まっていなかった？</language>
+		<language name="JPN_KANJI" width="256">チェレン『ねえ　[1:00:トレーナー名:0]▼
+ポケモンセンターの　前で
+博士が　待っていなかった？</language>
 	</row>
 
 	<row id="msg_t02_boodle_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
