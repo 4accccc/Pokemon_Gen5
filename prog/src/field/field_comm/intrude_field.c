@@ -363,7 +363,7 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
       pos.z = 12120 << FX32_SHIFT;
       
       if(intcomm != NULL 
-          && GFL_NET_GetConnectNum() > 1 
+//          && GFL_NET_GetConnectNum() > 1 
           && GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gameSys)) == GAME_COMM_NO_INVASION
 //          && GFL_NET_IsParentMachine() == TRUE
           && intcomm->intrude_status_mine.palace_area == GFL_NET_SystemGetCurrentID()){
