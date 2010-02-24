@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T19:47:52"/>
+	<create user="matsumiya" host="W00224" date="2010-02-24T17:45:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -504,6 +504,17 @@
 ピエロさんが　いるよ！</language>
 		<language name="JPN_KANJI" width="256">ねーねー！
 ピエロさんが　いるよ！</language>
+	</row>
+
+	<row id="msg_c04p01_gymsign_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>ポケモンジム</comment>
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">ライモンシティ　ポケモンジム
+リーダー　カミツレ[BE:00:ページ切り替え（行送り）]
+シャイニング　ビューティ</language>
+		<language name="JPN_KANJI" width="256">ライモンシティ　ポケモンジム
+リーダー　カミツレ[BE:00:ページ切り替え（行送り）]
+シャイニング　ビューティ</language>
 	</row>
 
 	<row id="msg_wheel_spring_f_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
