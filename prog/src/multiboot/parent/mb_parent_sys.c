@@ -454,7 +454,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     else
     if( MB_COMM_GetChildState(work->commWork) == MCCS_NEXT_GAME )
     {
-      work->state = MPS_WAIT_NEXT_GAME_CONFIRM;
+      work->state = MPS_SEND_LEAST_BOX;
     }
     break;
 
@@ -493,6 +493,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       const u16 leastBoxNum = BOXDAT_GetEmptySpaceTotal( boxMng );
       if( MB_COMM_Send_Flag( work->commWork , MCFT_LEAST_BOX , leastBoxNum ) == TRUE )
       {
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_12 , MSGSPEED_GetWait() );
         MB_Printf("Parent box empty num[%d]\n",leastBoxNum);
         work->state = MPS_WAIT_NEXT_GAME_CONFIRM;
       }

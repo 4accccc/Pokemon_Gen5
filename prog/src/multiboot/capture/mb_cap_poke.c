@@ -41,7 +41,7 @@
 #define MB_CAP_POKE_FALL_SPEED (FX32_HALF)
 #define MB_CAP_POKE_DOWN_EFF_OFS (FX32_CONST(16))
 
-#define MB_CAP_POKE_ESCAPE_TIME (600)   //‰æ–ÊŠO‚É“¦‚°‚Ä‚¢‚éŠÔ
+#define MB_CAP_POKE_ESCAPE_TIME (60*7)   //‰æ–ÊŠO‚É“¦‚°‚Ä‚¢‚éŠÔ
 
 //======================================================================
 //	enum
@@ -423,10 +423,9 @@ static void MB_CAP_POKE_StateNone(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
   {
     if( pokeWork->cnt > 0 )
     {
-      pokeWork->cnt--;
-      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
+      if( MB_CAPTURE_IsBonusTime( capWork ) == FALSE )
       {
-        pokeWork->cnt = 0;
+        pokeWork->cnt--;
       }
     }
     else

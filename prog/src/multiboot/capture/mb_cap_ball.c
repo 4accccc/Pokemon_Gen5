@@ -272,7 +272,8 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
         effPos.y -= ballWork->height;
         effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
         MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , 0 , -1 );
-        MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
+        //HITエフェクトは木とポケだけ
+        //MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
         PMSND_PlaySE( MB_SND_GRASS_SHAKE );
       }
       else
@@ -285,7 +286,8 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
         effPos.y -= ballWork->height;
         effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
         MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , -1 , 0 );
-        MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
+        //HITエフェクトは木とポケだけ
+        //MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
         PMSND_PlaySE( MB_SND_GRASS_SHAKE );
       }
       else
@@ -298,7 +300,8 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
         effPos.y -= ballWork->height;
         effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
         MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , 1 , 0 );
-        MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
+        //HITエフェクトは木とポケだけ
+        //MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
         PMSND_PlaySE( MB_SND_GRASS_SHAKE );
       }
       
@@ -311,8 +314,14 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
     
     effPos.y -= ballWork->height;
     effPos.z = FX32_CONST(MB_CAP_EFFECT_Z);
-    MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
-    PMSND_PlaySE( MB_SND_BALL_NO_HIT );
+    //HITエフェクトは木とポケだけ
+    //MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
+    
+    if( ballWork->pos.y >= FX32_CONST(60) )
+    {
+      //空中部分に当たっても音は鳴らさない
+      PMSND_PlaySE( MB_SND_BALL_NO_HIT );
+    }
   }
   return isBlockAnyPoke;
 }

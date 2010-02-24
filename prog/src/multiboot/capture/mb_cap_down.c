@@ -255,6 +255,7 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
               &cellInitData ,CLSYS_DEFREND_SUB , heapId );
     GFL_CLACT_WK_SetDrawEnable( downWork->clwkPen , FALSE );
 
+    cellInitData.bgpri = 3;
     cellInitData.anmseq = MCDA_NUMBER;
     cellInitData.pos_y = MB_CAP_DOWN_SCORE_POS_Y;
     for( i=0;i<MB_CAP_DOWN_SCORE_DIGIT;i++ )
@@ -270,7 +271,7 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
     
     //ƒ{[ƒ‹
     cellInitData.softpri = 0;
-    cellInitData.bgpri = 0;
+    cellInitData.bgpri = 3;
     cellInitData.pos_y = MB_CAP_DOWN_POKE_POS_Y;
     cellInitData.anmseq = MCDA_BALL_GET;
     for( i=0;i<MB_CAP_POKE_NUM;i++ )
@@ -752,7 +753,7 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
       {
         downWork->state = MCDS_DRAG;
         downWork->isPlayBowPullSnd = FALSE;
-        //PMSND_PlaySE( MB_SND_BALL_CATCH );
+        PMSND_PlaySE( MB_SND_BALL_CATCH );
       }
     }
   }

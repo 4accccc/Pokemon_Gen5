@@ -646,11 +646,11 @@ static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle 
                     MB_SELECT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
   
   //上画面(SUB
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_select_gra_box_bgd_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_select_gra_box_bgu_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_select_gra_box_bgd_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_select_gra_box_bgu_NCGR ,
                     MB_SELECT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_select_gra_box_bgd_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_select_gra_box_bgu_NSCR , 
                     MB_SELECT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
 
   
@@ -869,8 +869,8 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
       MB_SEL_CHANGE_TRAY_R_X+12 },
     { MB_SEL_POKE_BOX_TOP-8 , 
       MB_SEL_POKE_BOX_TOP+MB_SEL_POKE_BOX_HEIGHT*(MB_SEL_POKE_BOX_Y_NUM-1)+16 ,
-      MB_SEL_POKE_BOX_LEFT-16 , 
-      MB_SEL_POKE_BOX_LEFT+MB_SEL_POKE_BOX_WIDTH*(MB_SEL_POKE_BOX_X_NUM-1)+16 },
+      MB_SEL_POKE_BOX_LEFT-12 , 
+      MB_SEL_POKE_BOX_LEFT+MB_SEL_POKE_BOX_WIDTH*(MB_SEL_POKE_BOX_X_NUM-1)+12 },
     { 192-24 , 
       192 ,
       256-24 , 
@@ -928,29 +928,35 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
       if( ret == 2 )
       {
         //ボックス内
-        const u8 idxX = (tpx-(MB_SEL_POKE_BOX_LEFT-16))/MB_SEL_POKE_BOX_WIDTH;
+        const u8 idxX = (tpx-(MB_SEL_POKE_BOX_LEFT-12))/MB_SEL_POKE_BOX_WIDTH;
         const u8 idxY = (tpy-(MB_SEL_POKE_BOX_TOP - 8))/MB_SEL_POKE_BOX_HEIGHT;
         const u8 idx  = idxX + idxY*MB_SEL_POKE_BOX_X_NUM;
         
-        if( MB_SEL_POKE_isValid( work->boxPoke[idx] ) == TRUE &&
-            MB_SEL_POKE_GetAlpha( work , work->boxPoke[idx] ) == FALSE )
+        
+        OS_TFPrintf(2,"[%d:%d:][%d:%d:]\n",tpx,tpy,idxX,idxY);
+        if( idxX >= 0 && idxX < MB_SEL_POKE_BOX_X_NUM &&
+            idxY >= 0 && idxY < MB_SEL_POKE_BOX_Y_NUM )
         {
-          GFL_CLACTPOS cellPos;
-          cellPos.x = tpx;
-          cellPos.y = tpy;
+          if( MB_SEL_POKE_isValid( work->boxPoke[idx] ) == TRUE &&
+              MB_SEL_POKE_GetAlpha( work , work->boxPoke[idx] ) == FALSE )
+          {
+            GFL_CLACTPOS cellPos;
+            cellPos.x = tpx;
+            cellPos.y = tpy;
 
-          work->isHold = TRUE;
-          //work->holdPoke = work->boxPoke[idx];
-          //MB_SEL_POKE_SetPri( work , work->boxPoke[idx] , MSPT_HOLD );
-          //MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
-          work->holdPoke = work->boxHoldPoke;
-          MB_SEL_POKE_SetIdx( work->holdPoke , idx );
-          MB_SEL_POKE_SetPPP( work , work->holdPoke , work->initWork->boxData[work->boxPage][idx] );
-          MB_SEL_POKE_SetPri( work , work->holdPoke , MSPT_HOLD );
-          MB_SEL_POKE_SetPos( work , work->holdPoke , &cellPos );
-          MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
-          
-          MB_SEL_POKE_SetAlpha( work , work->boxPoke[idx] , TRUE );
+            work->isHold = TRUE;
+            //work->holdPoke = work->boxPoke[idx];
+            //MB_SEL_POKE_SetPri( work , work->boxPoke[idx] , MSPT_HOLD );
+            //MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
+            work->holdPoke = work->boxHoldPoke;
+            MB_SEL_POKE_SetIdx( work->holdPoke , idx );
+            MB_SEL_POKE_SetPPP( work , work->holdPoke , work->initWork->boxData[work->boxPage][idx] );
+            MB_SEL_POKE_SetPri( work , work->holdPoke , MSPT_HOLD );
+            MB_SEL_POKE_SetPos( work , work->holdPoke , &cellPos );
+            MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
+            
+            MB_SEL_POKE_SetAlpha( work , work->boxPoke[idx] , TRUE );
+          }
         }
       }
       else
