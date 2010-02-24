@@ -124,6 +124,8 @@ extern void FIELD_SUBSCREEN_SetReportStart( FIELD_SUBSCREEN_WORK * pWork );
 extern void FIELD_SUBSCREEN_SetReportEnd( FIELD_SUBSCREEN_WORK * pWork );
 extern BOOL FIELD_SUBSCREEN_CheckReportType( FIELD_SUBSCREEN_WORK * pWork );
 
+extern BOOL FIELD_SUBSCREEN_EnablePalaceUse( FIELD_SUBSCREEN_WORK* pWork );
+
 
 #ifdef  PM_DEBUG
 extern void * FIELD_SUBSCREEN_DEBUG_GetControl(FIELD_SUBSCREEN_WORK * pWork);

@@ -28,6 +28,7 @@
 #include "net_app/union/union_subdisp.h"
 #include "field/intrude_subdisp.h"
 #include "field/beacon_view.h"
+#include "field/zonedata.h"
 #include "net_app/union/union_main.h"
 
 #include "report.h"
@@ -1326,3 +1327,14 @@ BOOL FIELD_SUBSCREEN_CheckReportType( FIELD_SUBSCREEN_WORK * pWork )
 {
 	return REPORT_CheckSaveType( pWork->reportWork );
 }
+//----------------------------------------------------------------------------
+/**
+ *  @brief  パレスに遷移できるかどうか
+ *  @param pWork   サブスクリーンワーク
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_SUBSCREEN_EnablePalaceUse( FIELD_SUBSCREEN_WORK* pWork )
+{
+  return ZONEDATA_EnablePalaceUse(FIELDMAP_GetZoneID( pWork->fieldmap ));
+}
+

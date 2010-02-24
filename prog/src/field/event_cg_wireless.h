@@ -34,6 +34,7 @@ typedef struct {
   BOOL isEndProc;
   int selectType;
   BOOL push;
+  BOOL bPalaceJump;
 } EVENT_CG_WIRELESS_WORK;
 
 extern void EVENT_CG_WIRELESS_SetEnd(EVENT_CG_WIRELESS_WORK* pWk);

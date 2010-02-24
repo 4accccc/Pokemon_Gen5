@@ -703,6 +703,7 @@ extern void POKEMONTRADE_VisibleFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int fac
 extern void POKE_GTS_VisibleFaceIcon(POKEMON_TRADE_WORK* pWork,BOOL bVisible);
 extern void POKEMON_TRADE_MaskCommon(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKE_GTS_IsMyIn(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_WindowOpenXY(POKEMON_TRADE_WORK* pWork,BOOL bFast,int x,int y,int xm,int ym);
 
 
 #if _TRADE_DEBUG

@@ -1849,34 +1849,47 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_InitSubMojiBG(pWork);
 
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_52, pWork->pMessageStrBuf );
-  POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
+  POKETRADE_MESSAGE_WindowOpenXY(pWork, TRUE, 1,1,29,4);
 
 //  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
 
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ, -8 );
   
   POKE_GTS_VisibleFaceIcon(pWork, FALSE);
   
-  
-  if(1){
+
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ, -8 );
+
+  {
     G2S_SetWnd0InsidePlane(
-      GX_WND_PLANEMASK_BG0|
-      GX_WND_PLANEMASK_OBJ,
-      FALSE );
-    G2S_SetWnd0Position( 224, 169, 255, 192 );
-    G2S_SetWndOutsidePlane(
       GX_WND_PLANEMASK_BG0|
       GX_WND_PLANEMASK_BG1|
       GX_WND_PLANEMASK_BG2|
       GX_WND_PLANEMASK_BG3|
       GX_WND_PLANEMASK_OBJ,
       TRUE );
-    GXS_SetVisibleWnd( GX_WNDMASK_W0 );
+    G2S_SetWnd0Position( 0, 0, 255, 192-24 );
+    G2S_SetWnd1InsidePlane(
+      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_BG1|
+      GX_WND_PLANEMASK_BG2|
+      GX_WND_PLANEMASK_BG3|
+      GX_WND_PLANEMASK_OBJ,
+      TRUE );
+    G2S_SetWnd1Position( 255, 0, 0, 192-24 );
+    G2S_SetWndOutsidePlane(
+      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_BG1|
+      GX_WND_PLANEMASK_BG2|
+      GX_WND_PLANEMASK_BG3|
+      GX_WND_PLANEMASK_OBJ,
+      FALSE );
+    GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
   }
 
 
-
   
+  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+
   _CHANGE_STATE(pWork,_loopSearchMojiState);
 }
 

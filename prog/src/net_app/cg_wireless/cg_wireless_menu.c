@@ -761,9 +761,14 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
   case _SELECTMODE_PALACE:
     {
       GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
-      pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
-      PMSND_PlaySystemSE(_SE_DESIDE);
-      _CHANGE_STATE(pWork,_modeAppWinFlash);
+      if(pWork->dbw->bPalaceJump){
+        pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
+        PMSND_PlaySystemSE(_SE_DESIDE);
+        _CHANGE_STATE(pWork,_modeAppWinFlash);
+      }
+      else{
+        PMSND_PlaySystemSE(_SE_CANCEL);
+      }
     }
     break;
   case _SELECTMODE_TV:

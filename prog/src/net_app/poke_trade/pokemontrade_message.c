@@ -193,7 +193,7 @@ static void UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
 //------------------------------------------------------------------------------
 
 
-void POKETRADE_MESSAGE_WindowOpenCustom(POKEMON_TRADE_WORK* pWork,BOOL bFast,BOOL bUnderPos)
+void POKETRADE_MESSAGE_WindowOpenXY(POKEMON_TRADE_WORK* pWork,BOOL bFast,int x,int y,int xm,int ym)
 {
   GFL_BMPWIN* pwin;
 
@@ -202,12 +202,7 @@ void POKETRADE_MESSAGE_WindowOpenCustom(POKEMON_TRADE_WORK* pWork,BOOL bFast,BOO
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-  if(bUnderPos){
-    pWork->mesWin = GFL_BMPWIN_Create(GFL_BG_FRAME2_S , 1 , 18, 30 ,4 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
-  }
-  else{
-    pWork->mesWin = GFL_BMPWIN_Create(GFL_BG_FRAME2_S , 1 , 1, 30 ,4 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
-  }
+  pWork->mesWin = GFL_BMPWIN_Create(GFL_BG_FRAME2_S , x , y, xm ,ym ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   pwin = pWork->mesWin;
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
@@ -227,6 +222,17 @@ void POKETRADE_MESSAGE_WindowOpenCustom(POKEMON_TRADE_WORK* pWork,BOOL bFast,BOO
   GFL_BMPWIN_MakeScreen(pwin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
 
+}
+
+
+void POKETRADE_MESSAGE_WindowOpenCustom(POKEMON_TRADE_WORK* pWork,BOOL bFast,BOOL bUnderPos)
+{
+  if(bUnderPos){
+    POKETRADE_MESSAGE_WindowOpenXY(pWork,bFast, 1,18,30,4);
+  }
+  else{
+    POKETRADE_MESSAGE_WindowOpenXY(pWork,bFast, 1,1,30,4);
+  }
 }
 
 

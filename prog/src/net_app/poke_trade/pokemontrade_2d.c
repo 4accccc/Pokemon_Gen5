@@ -2020,22 +2020,23 @@ static MojiTableStruct mojitbl[]={
 void IRC_POKETRADE_InitSubMojiBG(POKEMON_TRADE_WORK* pWork)
 {
   int i;
-	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
-	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-																				 NARC_trade_wb_trade_bg04_NSCR,
-																				 GFL_BG_FRAME0_S, 0,
-																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
-																				 pWork->heapID);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME0_S);
-  GFL_BG_SetVisible( GFL_BG_FRAME0_S , TRUE );
-	GFL_ARC_CloseDataHandle( p_handle );
-  IRC_POKETRADE_GraphicInitSubDispStatusDisp(pWork);
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S , FALSE );
+  GFL_BG_SetVisible(GFL_BG_FRAME2_S, FALSE);
 
-/*  {
+  {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
-    GFL_ARC_CloseDataHandle( p_handle );
-  }*/
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+                                           NARC_trade_wb_trade_bg04_NSCR,
+                                           GFL_BG_FRAME0_S, 0,
+                                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+                                           pWork->heapID);
+    GFL_BG_LoadScreenV_Req(GFL_BG_FRAME0_S);
+    GFL_BG_SetScroll(GFL_BG_FRAME0_S,GFL_BG_SCROLL_X_SET, -4);
+    GFL_BG_SetScroll(GFL_BG_FRAME2_S,GFL_BG_SCROLL_X_SET, -4);
 
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+//  IRC_POKETRADE_GraphicInitSubDispStatusDisp(pWork);
 
 
   GFL_FONTSYS_SetColor( 1, 2, 15 );
@@ -2058,6 +2059,8 @@ void IRC_POKETRADE_InitSubMojiBG(POKEMON_TRADE_WORK* pWork)
   if(pWork->curIcon[CHAR_LEFTPAGE_MARK]){
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_LEFTPAGE_MARK], FALSE );
   }
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S , TRUE );
+  GFL_BG_SetVisible(GFL_BG_FRAME2_S, TRUE);
 
 }
 
