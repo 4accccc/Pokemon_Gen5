@@ -65,7 +65,10 @@ EVENT_START		ev_pos_c03r0601_stop_01
 
 	//サポート出現
 	_OBJ_ADD_EX( 5,14,DIR_UP,MMDL_ID_EVENTOBJ_00,SUPPORT,MV_DMY )
-
+	
+	//サポート曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	
 	DEFINE_LOCAL	LWK_POSX
 	DEFINE_LOCAL	LWK_POSZ
 	
@@ -148,6 +151,9 @@ EVENT_START		ev_pos_c03r0601_stop_01
 	//階段ＳＥ再生
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
+
+	//サポート曲停止
+	_END_EVENT_BGM()
 
 	//==========================//
 	

@@ -3,8 +3,6 @@
 #define ZONE_C06GYM0101_EVD_H
 
 #define DOOR_ID_C06GYM0101_C06_EXIT01     0
-#define DOOR_ID_C06GYM0101_C06_EXIT02     1
-#define DOOR_ID_C06GYM0101_C06_EXIT03     2
 
 #endif //ZONE_C06GYM0101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06gym0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

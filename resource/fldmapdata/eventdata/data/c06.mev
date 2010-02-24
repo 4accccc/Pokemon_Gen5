@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/24 12:37:13
+#save date:2010/02/24 14:40:12
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\C06.wms
 #SECTION START:OBJ_EVENT
@@ -468,7 +468,7 @@ DOOR_ID_C06_C06GYM0101_EXIT01
 #Next Zone ID Name
 ZONE_ID_C06GYM0101
 #Next Door ID Name
-DOOR_ID_C06GYM0101_C06_EXIT02
+DOOR_ID_C06GYM0101_C06_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type

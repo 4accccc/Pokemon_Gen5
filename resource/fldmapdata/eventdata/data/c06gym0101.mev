@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/05 14:23:45
+#save date:2010/02/24 14:39:52
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -243,7 +243,7 @@ BGID_C06GYM0101_POKEZOU_01
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
+BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C06GYM0101_POKEZOU
 #Pos Type
@@ -256,7 +256,7 @@ BGID_C06GYM0101_POKEZOU_02
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
+BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C06GYM0101_POKEZOU
 #Pos Type
@@ -282,7 +282,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+1
 #event number: 0
 #Door Event Label
 DOOR_ID_C06GYM0101_C06_EXIT01
@@ -299,40 +299,6 @@ EVENTDATA_POSTYPE_GRID
 #position
 -24 0 -392
 #size
-1 1
-#event number: 1
-#Door Event Label
-DOOR_ID_C06GYM0101_C06_EXIT02
-#Next Zone ID Name
-ZONE_ID_C06
-#Next Door ID Name
-DOOR_ID_C06_C06GYM0101_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 0 -392
-#size
-1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_C06GYM0101_C06_EXIT03
-#Next Zone ID Name
-ZONE_ID_C06
-#Next Door ID Name
-DOOR_ID_C06_C06GYM0101_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -392
-#size
-1 1
+3 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
