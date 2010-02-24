@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="nakatsui" host="W00169" date="2009-12-07T19:31:37" source="leagin03_01_01.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-02-22T16:20:12" source="leagin03_00_00matome.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="nakatsui" host="W00169" date="2009-12-07T19:31:37" source="leagin03_01_01.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-02-22T16:20:12" source="leagin03_00_00matome.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,7 +18,7 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="1"
+	tool_start_frame="20"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
@@ -27,37 +27,37 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 -0.250000 -1.937500" whd="4.000000 0.000000 4.000000"/>
+<box_test pos_scale="7" xyz="-2.000000 0.000000 -1.750000" whd="4.000000 0.000000 4.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="gake_futa"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
-		color0_mode="transparency"
+		color0_mode="color"
 		palette_name="gake_futa_pl"
 		path="C:/home/wb_data3d/field/out00/chip/tex/gake_futa.tga"
 	>
 		<bitmap size="64">
-			4333 2334 3222 3344 4311 2144 1122 3113
-			3311 2444 1112 1113 3311 1443 3222 1111
-			3112 1333 1122 1111 1122 3333 2121 2211
-			1111 2131 2112 2111 3111 2233 2441 1111
-			3333 3333 2344 1112 1111 3333 1434 1112
-			1111 1333 3433 1112 3111 1133 3333 1221
-			4333 1113 3333 4433 4444 2113 3333 3443
-			4443 2223 3331 3344 4433 2223 4312 3334
+			2000 4402 0144 0022 2011 4122 1144 0110
+			0011 3222 1113 1110 0014 3220 0355 1111
+			0114 1000 1353 4111 1144 0000 3131 4411
+			1144 3103 5113 4411 3144 3301 5221 4113
+			3344 0001 5022 4115 1314 0000 3202 1115
+			1114 1000 1000 1135 0111 0100 0000 1353
+			2000 3110 0000 2211 2222 5310 0001 0220
+			2220 5530 0144 0022 2200 4550 4444 0201
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="gake_futa_pl" color_size="8">
-		7c1f 25d3 2e37 2190 1d6e 4a52 7fff 7fff
+		25b1 25d3 298f 29f5 2df4 2e37 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="gake_futa_lm1"
+	<material index="0" name="leagin03_00_01_gake_futa_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -91,9 +91,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.000000 -4.000000"
-		volume_max="4.000000 0.000000 4.000000"
-		volume_r="5.656738"
+		volume_min="-4.000000 0.000000 -3.500000"
+		volume_max="4.000000 0.000000 4.500000"
+		volume_r="6.020752"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -104,11 +104,11 @@
 					<mtx idx="0"/>
 					<tex st="-480.000000 496.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<pos_s xyz="-4.000000 0.000000 4.500000"/>
 					<tex st="32.000000 496.000000"/>
 					<pos_xy xy="4.000000 0.000000"/>
 					<tex st="32.000000 -16.000000"/>
-					<pos_xz xz="4.000000 -4.000000"/>
+					<pos_xz xz="4.000000 -3.500000"/>
 					<tex st="-480.000000 -16.000000"/>
 					<pos_xy xy="-4.000000 0.000000"/>
 				</primitive>
@@ -118,7 +118,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="a" kind="mesh"
+	<node index="0" name="leagin03_00_01_bedrock1_32_32_00_polySurface234" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -127,14 +127,14 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 -32.000000 8.000000"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.000000 -4.000000"
-		volume_max="4.000000 0.000000 4.000000"
-		volume_r="5.656738"
+		volume_min="-4.000000 0.000000 -3.500000"
+		volume_max="4.000000 0.000000 4.500000"
+		volume_r="6.020752"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
