@@ -21,6 +21,7 @@
 #include "tr_tool/trno_def.h"
 #include "poke_tool/monsno_def.h"
 #include "item/itemsym.h"
+#include "app/research_radar/question_id.h"
 
 enum{
  BEACON_WSET_DEFAULT,   //デフォルト(トレーナー名)  
@@ -522,6 +523,42 @@ int GAMEBEACON_Get_Nation(const GAMEBEACON_INFO *info)
 int GAMEBEACON_Get_Area(const GAMEBEACON_INFO *info)
 {
   return info->area;
+}
+
+//==================================================================
+/**
+ * 仕事IDを取得
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  u16		  仕事ID (設定されていない場合はGAMEBEACON_DETAILS_JOB_NULL)
+ */
+//==================================================================
+u8 GAMEBEACON_Get_Job(const GAMEBEACON_INFO *info)
+{
+  u32 answer;
+  
+  answer = QuestionnaireAnswer_ReadBit(&info->question_answer, QUESTION_ID_JOB);
+  if(answer == 0){
+    return GAMEBEACON_DETAILS_JOB_NULL;
+  }
+  return answer - 1;  //回答は無回答の"0"を含めて0始まりの為、仕事IDと一致させる為に-1
+}
+
+//==================================================================
+/**
+ * 趣味IDを取得
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  u16		  趣味ID (設定されていない場合はGAMEBEACON_DETAILS_HOBBY_NULL)
+ */
+//==================================================================
+u8 GAMEBEACON_Get_Hobby(const GAMEBEACON_INFO *info)
+{
+  u32 answer;
+  
+  answer = QuestionnaireAnswer_ReadBit(&info->question_answer, QUESTION_ID_HOBBY);
+  if(answer == 0){
+    return GAMEBEACON_DETAILS_HOBBY_NULL;
+  }
+  return answer - 1;  //回答は無回答の"0"を含めて0始まりの為、趣味IDと一致させる為に-1
 }
 
 //==================================================================
