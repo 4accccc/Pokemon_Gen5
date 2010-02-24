@@ -54,13 +54,39 @@ static  void  GameVBlankFunc(void);
 
 #ifdef PM_DEBUG
 static void DEBUG_StackOverCheck(void);
+
+#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
+
+#else
+
+#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
+
 #endif
+
+
+//------------------------------------------------------------------
+//	処理時間AVERAGE
+//------------------------------------------------------------------
+#if DEBUG_MAIN_TIME_AVERAGE
+
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start;    // 1フレーム開始
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_End;    // 1フレーム開始
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave;      // AVERAGE
+static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0; // カウンタ
+
+#define DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME  ( 120 )
+
+static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void );
+static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void );
+#endif
+
 //------------------------------------------------------------------
 //	外部関数宣言
 //------------------------------------------------------------------
 //extern const	GFL_PROC_DATA CorpProcData;
 //FS_EXTERN_OVERLAY(title);
 FS_EXTERN_OVERLAY(notwifi);
+
 
 //------------------------------------------------------------------
 /**
@@ -107,7 +133,12 @@ void NitroMain(void)
 		//	DEBUG_PerformanceStart();
 		DEBUG_PerformanceMain();
 		DEBUG_PerformanceStartLine(PERFORMANCE_ID_MAIN);
+
 #endif //PM_DEBUG
+
+#if DEBUG_MAIN_TIME_AVERAGE
+    DEBUG_MAIN_TIME_AVERAGE_StartFunc();
+#endif // DEBUG_MAIN_TIME_AVERAGE
 
 #ifdef PM_DEBUG
 		DEBUG_StackOverCheck();
@@ -130,6 +161,10 @@ void NitroMain(void)
 		DEBUG_PerformanceEndLine(PERFORMANCE_ID_MAIN);
 		DEB_SD_PRINT_UpdateSystem();
 #endif //PM_DEBUG
+
+#if DEBUG_MAIN_TIME_AVERAGE
+    DEBUG_MAIN_TIME_AVERAGE_EndFunc();
+#endif // DEBUG_MAIN_TIME_AVERAGE
 
 		// VBLANK待ち
 		GFL_G3D_SwapBuffers();
@@ -208,6 +243,7 @@ static	void	GameInit(void)
 	/* ユーザーレベルで必要な初期化をここに記述する */
   //WIFIで必要ないプログラムオーバーレイの最初のロード
   GFL_OVERLAY_Load( FS_OVERLAY_ID( notwifi ) );
+
 
 	//セーブ関連初期化
 	SaveControl_SystemInit(HEAPID_SAVE);
@@ -338,4 +374,29 @@ static void DEBUG_StackOverCheck(void)
 		break;
 	}
 }
+
 #endif	//PM_DEBUG
+
+
+
+#if DEBUG_MAIN_TIME_AVERAGE
+static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void )
+{
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start = OS_GetTick(); 
+}
+
+static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
+{
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_End = OS_GetTick(); 
+
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave += (OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_End) - OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start));
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count ++;
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count >= DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME ){
+    OS_TPrintf( " ave tick %d\n", DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count );
+
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0;
+  }
+}
+
+#endif // DEBUG_MAIN_TIME_AVERAGE
