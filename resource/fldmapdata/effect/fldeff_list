@@ -44,7 +44,9 @@ G3D_FE_ANMITP = hero_kemu.itp \
   lgrass_sp2.itp \
   lgrass_sm2.itp \
   lgrass_at2.itp \
-  lgrass_wt2.itp
+  lgrass_wt2.itp \
+  mv_hide_tsuchi.itp \
+  mv_hide_kusa.itp
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　icaアニメ定義
@@ -201,7 +203,9 @@ G3D_FE_MDL = kage.imd \
   b_train04.imd \
   b_train05.imd \
   b_train06.imd \
-  b_train07.imd
+  b_train07.imd \
+  mv_hide_tsuchi.imd \
+  mv_hide_kusa.imd
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
