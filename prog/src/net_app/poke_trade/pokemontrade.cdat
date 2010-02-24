@@ -3,7 +3,7 @@
 
 
 #define _MOJITOP   (44)
-#define _MOJILEFT  (4)
+#define _MOJILEFT  (4+4)
 
 //文字入力のタッチデータ
 

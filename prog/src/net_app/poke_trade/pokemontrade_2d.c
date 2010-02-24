@@ -2078,6 +2078,8 @@ void IRC_POKETRADE_EndSubMojiBG(POKEMON_TRADE_WORK* pWork)
   int i;
   
   GFL_BG_SetVisible( GFL_BG_FRAME0_S , FALSE );
+  GFL_BG_SetScroll(GFL_BG_FRAME0_S,GFL_BG_SCROLL_X_SET, 0);
+  GFL_BG_SetScroll(GFL_BG_FRAME2_S,GFL_BG_SCROLL_X_SET, 0);
 
   if(pWork->curIcon[CELL_CUR_SCROLLBAR]){
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
