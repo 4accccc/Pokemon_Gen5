@@ -4509,7 +4509,7 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
 
   // ユニオンキャラクタを読み込む
   WF_2DC_UnionResSet( p_wk->p_charsys, CLSYS_DRAW_MAIN,
-      WF_2DC_MOVETURN, heapID );
+      WF_2DC_MOVETURN, 7, heapID );
 
 /*
   // 戻るメッセージ作成

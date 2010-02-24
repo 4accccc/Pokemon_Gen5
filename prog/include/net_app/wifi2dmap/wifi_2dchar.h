@@ -147,7 +147,7 @@ extern void WF_2DC_AllResDel( WF_2DCSYS* p_sys );
 
 // ユニオンリソース登録
 // ユニオンリソースは、boy1 boy3 man3 badman explore fighter gorggeousm mystery girl1 girl2 woman2 woman3 idol lady cowgirl gorggeousw の１６体
-extern void WF_2DC_UnionResSet( WF_2DCSYS* p_sys, u32 draw_type, WF_2DC_MOVETYPE movetype, u32 heap );
+extern void WF_2DC_UnionResSet( WF_2DCSYS* p_sys, u32 draw_type, WF_2DC_MOVETYPE movetype,int palstartpos, u32 heap );
 extern void WF_2DC_UnionResDel( WF_2DCSYS* p_sys );
 
 // 陰のリソース読み込み

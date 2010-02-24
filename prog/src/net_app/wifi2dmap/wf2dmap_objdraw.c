@@ -42,6 +42,8 @@
 #define WF2DMAP_DRAWPRI_GET(y)	( WF2DMAP_DRAWPRI_HERO_GET(y)+1 )	// NPC‚Ì•\Ž¦—Dæ‡ˆÊ
 #define WF2DMAP_DRAWPRI_SHADOW	( 255 )
 
+#define UNION_PALETTE_START (0) //
+
 // “o˜^ƒfƒtƒHƒ‹ƒgÝ’è
 #define WF2DMAP_BGPRI_DEF	(2)	// Šî–{‚a‚f—Dæ‡ˆÊ
 
@@ -320,7 +322,7 @@ void WF2DMAP_OBJDrawSysAllResDel( WF2DMAP_OBJDRAWSYS* p_sys )
 //-----------------------------------------------------------------------------
 void WF2DMAP_OBJDrawSysUniResSet( WF2DMAP_OBJDRAWSYS* p_sys, WF_2DC_MOVETYPE movetype, u32 heap )
 {
-	WF_2DC_UnionResSet( p_sys->p_drawsys, p_sys->draw_type, movetype, heap );
+	WF_2DC_UnionResSet( p_sys->p_drawsys, p_sys->draw_type, movetype, UNION_PALETTE_START, heap );
 }
 
 //----------------------------------------------------------------------------

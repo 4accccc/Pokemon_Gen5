@@ -530,6 +530,7 @@ void WF_2DC_AllResDel( WF_2DCSYS* p_sys )
  *	@param	p_sys			システムワーク
  *	@param	draw_type		転送先
  *	@param	movetype		動作タイプ
+ *  @param  palstartpos   パレット開始位置
  *	@param	heap			ヒープ
  *
  *	draw_type
@@ -538,7 +539,7 @@ void WF_2DC_AllResDel( WF_2DCSYS* p_sys )
 	両方に登録：NNS_G2D_VRAM_TYPE_2DMAX
  */
 //-----------------------------------------------------------------------------
-void WF_2DC_UnionResSet( WF_2DCSYS* p_sys, u32 draw_type, WF_2DC_MOVETYPE movetype, u32 heap )
+void WF_2DC_UnionResSet( WF_2DCSYS* p_sys, u32 draw_type, WF_2DC_MOVETYPE movetype,int palstartpos, u32 heap )
 {
   int i;
 
@@ -548,7 +549,7 @@ void WF_2DC_UnionResSet( WF_2DCSYS* p_sys, u32 draw_type, WF_2DC_MOVETYPE movety
 
 
   // ユニオンアニメリソース読込み
-  WF_2DC_UniCharPlttResLoad( p_sys, draw_type, heap );
+  WF_2DC_UniCharPlttResLoad( p_sys, draw_type, palstartpos, heap );
 
   // アニメリソース登録
   WF_2DC_UniCharAnmResLoad( p_sys, heap );
@@ -1453,13 +1454,13 @@ static BOOL WF_2DC_ShResCheck( const WF_2DCSH_RES* cp_shadowres )
  *	@param	heap
  */
 //-----------------------------------------------------------------------------
-static void WF_2DC_UniCharPlttResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 heap )
+static void WF_2DC_UniCharPlttResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 offset, u32 heap )
 {
   BOOL result;
 
   p_sys->unionplttid = GFL_CLGRP_PLTT_RegisterEx(p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
                                                  WF_2DC_ARC_GETUNINCL,
-                                                 draw_type, 0, 0, WF_2DC_UNIPLTT_NUM,heap);
+                                                 draw_type, offset, 0, WF_2DC_UNIPLTT_NUM,heap);
 
 }
 
