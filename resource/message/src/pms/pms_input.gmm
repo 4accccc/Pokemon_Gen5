@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T19:18:55"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-24T15:11:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1429" top="244" right="2134" bottom="872" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -404,7 +404,7 @@
 
 	<row id="str_decide">
 		<language name="JPN" width="64">けってい</language>
-		<language name="JPN_KANJI" width="64">決定</language>
+		<language name="JPN_KANJI" width="64">けってい</language>
 	</row>
 
 	<row id="str_cancel">
@@ -414,7 +414,7 @@
 
 	<row id="str_edit">
 		<language name="JPN" width="64">へんしゅう</language>
-		<language name="JPN_KANJI" width="64">編集</language>
+		<language name="JPN_KANJI" width="64">へんしゅう</language>
 	</row>
 
 	<row id="pms_input01_01">
@@ -424,12 +424,12 @@
 
 	<row id="select01_01">
 		<language name="JPN" width="216">えらぶ</language>
-		<language name="JPN_KANJI" width="216">選ぶ</language>
+		<language name="JPN_KANJI" width="216">えらぶ</language>
 	</row>
 
 	<row id="select01_02">
 		<language name="JPN" width="216">けす</language>
-		<language name="JPN_KANJI" width="216">消す</language>
+		<language name="JPN_KANJI" width="216">けす</language>
 	</row>
 
 	<row id="select01_03">
@@ -464,10 +464,10 @@
 
 	<row id="info_04">
 		<language name="JPN" width="216">グループモード：
-グループの　なかから
+えらんだ　グループの　なかから
 ことばを　えらんで　ください！</language>
 		<language name="JPN_KANJI" width="216">グループモード：
-グループの　中から
+選んだグループの　中から
 言葉を　選んでください！</language>
 	</row>
 
@@ -487,6 +487,13 @@
 		<language name="JPN_KANJI" width="216">あいうえおモード：
 しぼりこんだ　中から
 言葉を　選んでください！</language>
+	</row>
+
+	<row id="info_07">
+		<language name="JPN" width="216">グループモード：
+グループを　えらんで　ください</language>
+		<language name="JPN_KANJI" width="216">グループモード：
+グループを　選んでください</language>
 	</row>
 
 	<flowchart-group-list>
