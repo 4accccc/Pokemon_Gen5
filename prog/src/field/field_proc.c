@@ -98,24 +98,24 @@ static GFL_PROC_RESULT FieldMapProcInit
       GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
       u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
       if(ZONEDATA_IsUnionRoom(zone_id) == FALSE && ZONEDATA_IsColosseum(zone_id) == FALSE
-          && GFL_NET_IsInit() == FALSE && NetErr_App_CheckError() == NET_ERR_CHECK_NONE){
-        if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE){
-          if(GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
-            OS_TPrintf("常時通信モードの為、サーチ起動\n");
-            GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gsys);
+          && NetErr_App_CheckError() == NET_ERR_CHECK_NONE){
+        if(GFL_NET_IsInit() == FALSE){
+          if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE){
+            if(GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
+              OS_TPrintf("常時通信モードの為、サーチ起動\n");
+              GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gsys);
+            }
           }
-        }
-      #ifdef PM_DEBUG
-        else if(DebugScanOnly == TRUE && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
-          OS_TPrintf("非通信モードでDebugScanがONの為、ビーコンScanOnly起動\n");
-          GameCommSys_Boot(gcsp, GAME_COMM_NO_DEBUG_SCANONLY, gsys);
-        }
-      #endif
-        else{
-          if(GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_FIELD_BEACON_SEARCH){
-            OS_TPrintf("非通信モードの為、サーチ終了\n");
-            GameCommSys_ExitReq(gcsp);
+        #ifdef PM_DEBUG
+          else if(DebugScanOnly == TRUE && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
+            OS_TPrintf("非通信モードでDebugScanがONの為、ビーコンScanOnly起動\n");
+            GameCommSys_Boot(gcsp, GAME_COMM_NO_DEBUG_SCANONLY, gsys);
           }
+        #endif
+        }
+        else if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == FALSE){
+          OS_TPrintf("非通信モードの為、通信終了\n");
+          GameCommSys_ExitReq(gcsp);
         }
       }
     }
