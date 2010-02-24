@@ -185,8 +185,11 @@ init_flags:
 	//C03:リーダー３のジム前イベント
 	_FLAG_SET( FV_C03_GUIDE_01 )
 
-  //各ポケセンにいるふしぎな贈り物配達員
-  _FLAG_SET( FV_POSTMAN )
+	//各ポケセンにいるふしぎな贈り物配達員
+	_FLAG_SET( FV_POSTMAN )
+	
+	//Ｎの城移動用のワープＮＰＣを非表示
+	_FLAG_SET( FV_C09R0701_WARPMAN )
 }  
 _RET
 
@@ -246,6 +249,9 @@ INIT_EVENT_START  ev_init_gameclear_script
       //OBJを消していて、捕まえていなければ復活させる
       _FLAG_RESET( FV_D02R0201_LEGEND3 )
   ENDIF
+
+  //Ｎの城移動用のワープＮＰＣを非表示
+  _FLAG_SET( FV_C09R0701_WARPMAN )
 
 }
 INIT_EVENT_END
