@@ -62,6 +62,10 @@ EVENT_START ev_r06r0203_legend1
         _FLAG_SET( FV_D02_ROCK1 )
 
     ENDSWITCH
+    
+    //【2/24_村上_フラグを追加】
+    //アトスと戦ったかどうかを判別するフラグ
+    _FLAG_SET(FE_LEGEND1_BATTLE)
 
 EVENT_END
 

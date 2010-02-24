@@ -56,7 +56,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START  ev_r06_oldman1_01
 	
-	IF FLAG_ON(FH_01) THEN	
+	//R06R0203Ç≈ÉAÉgÉXÇ∆êÌÇ¡ÇΩÇ©Ç«Ç§Ç©Ç≈ï™äÚ
+	IF FLAG_OFF(FE_LEGEND1_BATTLE) THEN	
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06_oldman1_01 )
 
 	ELSE
