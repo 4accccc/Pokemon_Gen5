@@ -56,7 +56,7 @@ typedef struct {
   u8  mode;           // リストモード
 
   u8  sel_poke;       // 選択されたポケモン or 戻る　（初期位置用）
-	u8	sel_pos_index;	// sel_pos[ sel_pos_index ] に選択されたポケモン位置が入る
+	u8	sel_pos_index;	//「いれかえ」が押されたときに、sel_pos[ sel_pos_index ] に選択されたポケモン位置が入る
 
   u16 item;           // アイテム
   u16 chg_waza;       // いれかえ禁止技・新しく覚える技
