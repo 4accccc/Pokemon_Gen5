@@ -2426,7 +2426,7 @@ static void handler_KoukouNoSippo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static const BtlEventHandlerTable* HAND_ADD_ITEM_OujaNoSirusi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_SHRINK_PER,     handler_OujaNoSirusi },
+    { BTL_EVENT_WAZA_SHRINK_PER,     handler_OujaNoSirusi        },
     { BTL_EVENT_USE_ITEM_TMP,        handler_OujaNoSirusi_UseTmp },   // なげつける等
   };
   *numElems = NELEMS( HandlerTable );
@@ -2441,6 +2441,8 @@ static void handler_OujaNoSirusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
     if( per == 0 ){
       per = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
+      // @todo テスト用に100にしてる
+      per = 100;
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
     }
   }

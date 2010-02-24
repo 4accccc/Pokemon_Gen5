@@ -729,12 +729,12 @@ static void handler_Ikaku_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Seisinryoku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_SHRINK_CHECK, handler_Seisinryoku },
+    { BTL_EVENT_SHRINK_CHECK, handler_Seisinryoku },    // ひるみ発生チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
 }
-// BTL_EVENT_SHRINK_CHECK:ひるみ発生チェック
+// ひるみ発生チェックハンドラ
 static void handler_Seisinryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 自分がひるまされる対象

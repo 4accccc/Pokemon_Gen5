@@ -437,9 +437,10 @@ static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
+static void scproc_CheckShrink( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender );
 static void scproc_Fight_Damage_KoriCure( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKESET* targets );
-static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaID waza, u32 per );
+static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u32 per );
 static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 drainHP );
 static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza );
@@ -640,9 +641,8 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   const SVFL_WAZAPARAM* wazaParam, BOOL criticalFlag );
 static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, PokeType waza_type );
 static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker );
-static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk,
-  const BTL_POKEPARAM* target, WazaID waza, u32 per );
+static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker );
+static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, u32 per );
 static void scEvent_FailShrink( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target );
 static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
   WazaRankEffect effect, u8 wazaUsePokeID, int volume );
@@ -5415,6 +5415,8 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   }
 
   scproc_Fight_Damage_After( wk, wazaParam, attacker, &wk->pokesetDamaged );
+
+
 }
 static void scproc_Fight_Damage_ToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   const SVFL_WAZAPARAM* wazaParam, BTL_POKESET* targets )
@@ -5475,10 +5477,9 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   }
   else if( poke_cnt > 1 )
   {
-    u8 f_same_aff;
     int i, j;
 
-    f_same_aff = TRUE;
+    u8 f_same_aff = TRUE;
 
     // 相性全一致チェック
     for(i=0; i<poke_cnt; ++i)
@@ -5525,8 +5526,8 @@ static u32 scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
 {
   u32 dmg_sum = svflowsub_damage_act_singular( wk, attacker, defender, wazaParam, affinity, targetDmgRatio );
 
-  scproc_CheckDeadCmd( wk, attacker );
-  scproc_CheckDeadCmd( wk, defender );
+//  scproc_CheckDeadCmd( wk, attacker );
+//  scproc_CheckDeadCmd( wk, defender );
 
   return dmg_sum;
 }
@@ -5597,6 +5598,7 @@ static u32 svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
       damage_sum += damage;
 
       // 追加効果、リアクション処理
+      scproc_CheckShrink( wk, wazaParam, attacker, defender );
       scproc_WazaAdditionalEffect( wk, wazaParam, attacker, defender, damage );
       scproc_WazaDamageReaction( wk, attacker, defender, wazaParam, affinity, damage, fCritical );
       scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, damage );
@@ -5712,7 +5714,9 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
   }
 
   // 追加効果、リアクション処理
-  for(i=0; i<poke_cnt; ++i){
+  for(i=0; i<poke_cnt; ++i)
+  {
+    scproc_CheckShrink( wk, wazaParam, attacker, bpp[i] );
     scproc_WazaAdditionalEffect( wk, wazaParam, attacker, bpp[i], dmg[i] );
     scproc_WazaDamageReaction( wk, attacker, bpp[i], wazaParam, affAry[i], dmg[i], critical_flg[i] );
     scproc_CheckItemReaction( wk, bpp[i] );
@@ -5720,10 +5724,12 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
 
   scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
 
+  /*
   for(i=0; i<poke_cnt; ++i){
     scproc_CheckDeadCmd( wk, bpp[i] );
   }
   scproc_CheckDeadCmd( wk, attacker );
+  */
 
   return dmg_sum;
 }
@@ -6000,7 +6006,7 @@ static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
 {
   scproc_Fight_Damage_Drain( wk, wazaParam->wazaID, attacker, targets );
-  scproc_Fight_Damage_Shrink( wk, wazaParam->wazaID, attacker, targets );
+//  scproc_Fight_Damage_Shrink( wk, wazaParam->wazaID, attacker, targets );
   scproc_Fight_Damage_KoriCure( wk, wazaParam, attacker, targets );
 
   {
@@ -6025,8 +6031,17 @@ static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
   {
     if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ACTION_DONE) )
     {
-      scproc_AddShrinkCore( wk, bpp, waza, waza_per );
+      scproc_AddShrinkCore( wk, bpp,  waza_per );
     }
+  }
+}
+static void scproc_CheckShrink( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender )
+{
+  u32 waza_per = scEvent_GetWazaShrinkPer( wk, wazaParam->wazaID, attacker );
+
+  if( !BPP_TURNFLAG_Get(defender, BPP_TURNFLG_ACTION_DONE) )
+  {
+    scproc_AddShrinkCore( wk, defender, waza_per );
   }
 }
 //------------------------------------------------------------------
@@ -6056,13 +6071,12 @@ static void scproc_Fight_Damage_KoriCure( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
  *
  * @param   wk
  * @param   target
- * @param   waza    ワザ追加効果によるひるみの場合、ワザナンバー（それ以外 WAZANO_NULL）
  * @param   per     確率（パーセンテージ）
  *
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaID waza, u32 per )
+static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u32 per )
 {
   BOOL fShrink;
 
@@ -6071,7 +6085,7 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, Wa
   if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_MUST_SHRINK) ){
     fShrink = TRUE;
   }else{
-    fShrink = scEvent_CheckShrink(wk, target, waza, per);
+    fShrink = scEvent_CheckShrink( wk, target, per );
   }
 
   if( fShrink )
@@ -10901,7 +10915,7 @@ static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
  * @retval  u32
  */
 //----------------------------------------------------------------------------------
-static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker )
+static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker )
 {
   u32 per = WAZADATA_GetParam( waza, WAZAPARAM_SHRINK_PER );
   BTL_EVENTVAR_Push();
@@ -10924,17 +10938,16 @@ static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
  * @retval  BOOL    ひるむならTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk,
-  const BTL_POKEPARAM* target, WazaID waza, u32 per )
+static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, u32 per )
 {
   BOOL fail_flag = FALSE;
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, fail_flag );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_SHRINK_CHECK );
+
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
     fail_flag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
   BTL_EVENTVAR_Pop();
@@ -13203,7 +13216,7 @@ static u8 scproc_HandEx_addShrink( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
   BTL_HANDEX_PARAM_ADD_SHRINK* param = (BTL_HANDEX_PARAM_ADD_SHRINK*)param_header;
 
   BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  if( scproc_AddShrinkCore(wk, target, WAZANO_NULL, param->per) ){
+  if( scproc_AddShrinkCore(wk, target, param->per) ){
     return 1;
   }
   return 0;
