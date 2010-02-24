@@ -284,7 +284,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
   //戦闘エフェクト初期化
   {
     BTL_FIELD_SITUATION bfs = { 
-      0, 0, 0, 0, 0
+      0, 0, 0, 0, 0, 12, 0,
     };
     u16 tr_type[] = { 
       TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
