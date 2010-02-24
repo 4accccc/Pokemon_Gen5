@@ -121,12 +121,12 @@ EVENT_START   ev_pos_r03_rival_01
 	_OBJ_ADD(R03_HAKAIM_01)
 	_OBJ_ADD(R03_HAKAIM_02)
 	
+	//ライバル曲再生
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_RIVAL )
+	
 	//オブジェクト駆け寄る
 	_OBJ_ANIME(R03_RIVAL_01,anm_rival_01)
 	_OBJ_ANIME_WAIT()
-	
-	//ライバル曲再生
-	_START_TEMP_EVENT_BGM( SEQ_BGM_E_RIVAL )
 	
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_00)
 	_OBJ_ANIME_WAIT()
@@ -401,6 +401,8 @@ ev_r03_rival_stoper:
 			
 			//OBJ非表示
 			_OBJ_DEL(R03_RIVAL_03)
+			_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
+			_SE_WAIT()
 			//洞窟前のRIVALを非表示
 			_FLAG_SET(FV_R03_RIVAL_03)
 			
@@ -449,6 +451,8 @@ ev_r03_rival_stoper:
 			
 			//OBJ非表示
 			_OBJ_DEL(R03_RIVAL_03)
+			_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
+			_SE_WAIT()
 			//洞窟前のRIVALを非表示
 			_FLAG_SET(FV_R03_RIVAL_03)
 			
@@ -534,6 +538,9 @@ EVENT_START   ev_pos_r03_support_03
 	
 	ENDIF
 	
+	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_gift_01 )
+	_OBJ_ANIME_WAIT()
+	
 	//【仮】アイテム入手
 	_ITEM_EVENT_KEYWAIT(ITEM_MONSUTAABOORU, 5)
 	
@@ -541,9 +548,10 @@ EVENT_START   ev_pos_r03_support_03
 	_BALLOONWIN_OBJMSG( msg_r03_white_08 , R03_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_goodbye01 )
+	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_goodbye01 )
 	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_goodbye02 )
-	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_goodbye01 )
+	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_goodbye02 )
 	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( R03_BABYGIRL_02 ,  anm_support_goodbye03 )
 	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_goodbye03 )
@@ -563,6 +571,78 @@ EVENT_START   ev_pos_r03_support_03
 	//======================================//
 	
 EVENT_END
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公真ん中にx715
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_player_goodbye_x715
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公真ん中にx717
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_player_goodbye_x717
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：BABYGIRLからギフト
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl_gift_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：BABYGIRLとサポート退場（babygirlを先導）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_goodbye01
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：BABYGIRLとサポート退場（BABYGIRL後ろにつく）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl_goodbye01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：BABYGIRLとサポート退場（サポート先導）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_goodbye02
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：BABYGIRLとサポート退場（BABYGIRL後ろにつく）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl_goodbye02
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：BABYGIRLとサポート退場（二人とも歩いていく）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_goodbye03
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*  R03 POSでライバルによる長い草解説イベント*/
@@ -641,8 +721,8 @@ _ANIME_LABEL	anm_rival_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_player_00
-	_ANIME_DATA	AC_WAIT_8F,1
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -652,7 +732,7 @@ _ANIME_LABEL	anm_player_00
 _ANIME_LABEL	anm_player_00_z561
 	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -661,7 +741,7 @@ _ANIME_LABEL	anm_player_00_z561
 
 _ANIME_LABEL	anm_player_00_z562
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -678,7 +758,7 @@ _ANIME_LABEL	anm_player_00_z563
 
 _ANIME_LABEL	anm_player_00_z564
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -687,7 +767,7 @@ _ANIME_LABEL	anm_player_00_z564
 
 _ANIME_LABEL	anm_player_00_z565
 	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -737,7 +817,7 @@ _ANIME_LABEL	 anm_hakai_dash_01
 
 _ANIME_LABEL	 anm_rival_01_03
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -747,7 +827,7 @@ _ANIME_LABEL	 anm_rival_01_03
 _ANIME_LABEL	 anm_player_return
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -755,7 +835,7 @@ _ANIME_LABEL	 anm_player_return
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_rival_01_stop_right
 	_ANIME_DATA	AC_WAIT_8F,1
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -778,14 +858,14 @@ _ANIME_LABEL	 anm_babygirl_01
 //  ポケモン誘拐イベント：ライバル左方向を向く
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_rival_01_04
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //  ポケモン誘拐イベント：ライバル右方向を向く
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_rival_01_05
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -793,7 +873,8 @@ _ANIME_LABEL	anm_rival_01_05
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_support_01_step
-		_ANIME_DATA	AC_STAY_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_4F,0
+	_ANIME_DATA	AC_STAY_WALK_L_4F,0
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -801,21 +882,22 @@ _ANIME_LABEL	 anm_support_01_step
 //  ポケモン誘拐イベント：BABYGIRLサポートの方を向く
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_babygirl_02
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 // ポケモン誘拐イベント：サポート BABYGIRLの方を向く
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_support_02
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 // ポケモン誘拐イベント：ライバルその場歩きでせっかちさ表現
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_rival_01_06
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	AC_STAY_WALK_R_4F,0
+	_ANIME_DATA	AC_STAY_WALK_R_4F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -829,14 +911,14 @@ _ANIME_LABEL	anm_support_03
 // ポケモン誘拐イベント：ライバル主人公のほうを向く
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_rival_01_06_up
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_STAY_WALK_U_4F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 // ポケモン誘拐イベント：ライバル主人公のほうを向く
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_rival_01_06_down
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_4F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -907,63 +989,10 @@ _ANIME_LABEL	anm_stoper_player_koutai
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_player_02
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：主人公真ん中にx715
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_player_goodbye_x715
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：主人公真ん中にx717
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_player_goodbye_x717
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：BABYGIRLとサポート退場（babygirlを先導）
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_goodbye01
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：BABYGIRLとサポート退場（サポート先導）
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_goodbye02
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：BABYGIRLとサポート退場（BABYGIRL後ろにつく）
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_babygirl_goodbye01
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：BABYGIRLとサポート退場（二人とも歩いていく）
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_goodbye03
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	長い草イベント：ライバル登場

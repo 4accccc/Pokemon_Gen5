@@ -64,7 +64,7 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団とバトル！
-	_TRAINER_BTL_SET( TRID_HAKAIM1_01, TRID_HAKAIM1_02 )
+	_TRAINER_BTL_SET( TRID_HAKAIM1_13, 0 )
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -121,11 +121,68 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_left )
 	_OBJ_ANIME_WAIT()
 	
-	//【仮】ダブルバトル処理
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+		
+	//マルチバトル処理（持ちタイプによって分岐）
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+		//最初の３匹で草タイプを選択した時の処理
+		_TRAINER_MULTI_BTL_SET ( TRID_RIVAL_04 , TRID_HAKAIM1_01 , TRID_HAKAIM1_02 ) 
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			//======================================//
+			
+			//洞窟前のRIVALを表示
+			_FLAG_RESET(FV_R03_RIVAL_03)
+			
+			//***フラグ操作：ストッパーの会話を２回目に***
+			$WK_SCENE_R03_PLASMA = 2
+				
+			//======================================//
+		_TRAINER_LOSE()
+		ENDIF
+
+	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
+		//最初の３匹で炎タイプを選択した時の処理
+		_TRAINER_MULTI_BTL_SET ( TRID_RIVAL_05 , TRID_HAKAIM1_01 , TRID_HAKAIM1_02 ) 
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			//======================================//
+			
+			//洞窟前のRIVALを表示
+			_FLAG_RESET(FV_R03_RIVAL_03)
+			
+			//***フラグ操作：ストッパーの会話を２回目に***
+			$WK_SCENE_R03_PLASMA = 2
+				
+			//======================================//
+		ENDIF
+		
+	ELSE
+		//最初の３匹で水タイプを選択した時の処理
+		_TRAINER_MULTI_BTL_SET ( TRID_RIVAL_06 , TRID_HAKAIM1_01 , TRID_HAKAIM1_02 ) 
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			//======================================//
+			
+			//洞窟前のRIVALを表示
+			_FLAG_RESET(FV_R03_RIVAL_03)
+			
+			//***フラグ操作：ストッパーの会話を２回目に***
+			$WK_SCENE_R03_PLASMA = 2
+				
+			//======================================//
+		ENDIF
+			
+	ENDIF
+	
 	
 	//戦闘終了後会話
 	_BALLOONWIN_OBJMSG( msg_r03r0301_hakaim2_03 , R03R0301_HAKAIM_03 )
@@ -174,6 +231,8 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_03 )
 	_OBJ_ANIME_WAIT()
 	_OBJ_DEL( R03R0301_RIVAL_01 )
+	_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
+	_SE_WAIT()
 
 	//==================================//
 
@@ -272,7 +331,7 @@ _ANIME_LABEL	anm_r03r0301_rival_step
 // ライバルプラズマ団のほうを見る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r03r0301_rival_left
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -281,7 +340,7 @@ _ANIME_LABEL	anm_r03r0301_rival_left
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_rival_01
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -289,7 +348,7 @@ _ANIME_LABEL	anm_r03r0301_rival_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_rival_down
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -297,7 +356,7 @@ _ANIME_LABEL	anm_r03r0301_rival_down
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_player_to_rival
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -305,5 +364,5 @@ _ANIME_LABEL	anm_r03r0301_player_to_rival
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_rival_03
-	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	ACMD_END,0

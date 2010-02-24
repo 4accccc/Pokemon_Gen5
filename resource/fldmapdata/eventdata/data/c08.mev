@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/23 16:30:46
+#save date:2010/02/24 19:02:12
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08.wms
 #SECTION START:OBJ_EVENT
@@ -577,7 +577,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-5
+7
 #event number: 0
 #Bg Event Label
 BG_C08_BOARD_01
@@ -643,6 +643,32 @@ SCRID_BG_C08_BOARD_04
 EVENTDATA_POSTYPE_GRID
 #position
 88 0 -456
+#event number: 5
+#Bg Event Label
+BG_C08_BOARD_05
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C08_BOARD_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -8
+#event number: 6
+#Bg Event Label
+BG_C08_BOARD_06
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C08_BOARD_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 -8
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

@@ -23,5 +23,6 @@
 #define SCRID_POS_C05_SUPPORT_01 (16)
 #define SCRID_BG_C05_BOARD_03 (17)
 #define SCRID_BG_C05_BOARD_04 (18)
+#define SCRID_BG_C05_BOARD_05 (19)
 
 #endif //_C05_DEF_H_

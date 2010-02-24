@@ -56,5 +56,7 @@
 #define C05_BOARD_02                      1
 #define C05_BOARD_03                      2
 #define C05_BOARD_04                      3
+#define C05_BOARD_05                      4
+#define C05_BOARD_06                      5
 
 #endif //ZONE_C05_EVB_H

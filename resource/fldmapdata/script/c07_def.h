@@ -22,5 +22,6 @@
 #define SCRID_C07_GIRL2_02 (15)
 #define SCRID_C07_BOY1_01 (16)
 #define SCRID_BG_C07_BOARD_02 (17)
+#define SCRID_BG_C07_BOARD_03 (18)
 
 #endif //_C07_DEF_H_

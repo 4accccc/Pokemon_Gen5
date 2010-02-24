@@ -36,5 +36,7 @@
 
 #define C07_BOARD_01                      0
 #define C07_BOARD_02                      1
+#define C07_BOARD_03                      2
+#define C07_BOARD_04                      3
 
 #endif //ZONE_C07_EVB_H

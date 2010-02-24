@@ -31,6 +31,7 @@ _EVENT_DATA    ev_zone_c08
 _EVENT_DATA    ev_bg_c08_board_02
 _EVENT_DATA    ev_bg_c08_board_03
 _EVENT_DATA    ev_bg_c08_board_04
+_EVENT_DATA    ev_bg_c08_board_05
 _EVENT_DATA_END
 
 /************************************************************/
@@ -709,4 +710,21 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c08_board_04
 	_EASY_BGWIN_MSG( msg_c08_sign4_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/* ジム看板                                         */
+/**************************************************************/
+EVENT_START   ev_bg_c08_board_05
+	//バージョンを取得して表示内容をを変化させる
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	
+	//BlackVERならトリプルバトル
+	IF $SCWK_ANSWER == VERSION_BLACK THEN
+		_EASY_BGWIN_MSG( msg_c08_gymsign_01b, TYPE_POST )
+	
+	//Whiteならローテーションバトル
+	ELSE
+		_EASY_BGWIN_MSG( msg_c08_gymsign_01w, TYPE_POST )
+	ENDIF
 EVENT_END

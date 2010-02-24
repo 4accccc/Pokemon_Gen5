@@ -27,5 +27,7 @@
 #ifndef ZONE_C08GYM0101_EVB_H
 #define ZONE_C08GYM0101_EVB_H
 
+#define BG_C08GYM0101_STATUE_01           0
+#define BG_C08GYM0101_STATUE_02           1
 
 #endif //ZONE_C08GYM0101_EVB_H

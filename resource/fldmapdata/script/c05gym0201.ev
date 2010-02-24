@@ -133,16 +133,16 @@ EVENT_START	ev_bg_c05gym0201_statue_01
 	//ジムバッジフラグによって分岐
 	IF $SCWK_TEMP0 == 0 THEN
 		//バッジ入手前なら
-		_SYSWIN_MSG( msg_c05gym0201_statue_01 , POS_DOWN )
+		_PLAINWIN_MSG_DOWN( msg_c05gym0201_statue_01 )
 
 	ELSE
-		//バッジ入手後なら　【仮】イベント進行で分岐（？？後友達の名前も入る）
-		IF FLAG_OFF( FH_01) THEN
-			//イベント進行前
-			_SYSWIN_MSG( msg_c05gym0201_statue_02 , POS_DOWN )
-		ELSE
+		//でんきいしのストッパー解除でライバルの名前が追記される
+		IF $WK_SCENE_D06 >= 2 THEN
 			//イベント進行後
-			_SYSWIN_MSG( msg_c05gym0201_statue_03 , POS_DOWN )
+			_PLAINWIN_MSG_DOWN( msg_c05gym0201_statue_03 )
+		ELSE
+			//イベント進行前
+			_PLAINWIN_MSG_DOWN( msg_c05gym0201_statue_02  )
 		ENDIF
 
 	ENDIF
