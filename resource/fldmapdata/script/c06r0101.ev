@@ -48,7 +48,7 @@ EVENT_START   ev_c06r0101_babygirl1_01
 	//ジムバッジを入手後
 	ELSE
 		//技マシン「そらをとぶ」を入手していない
-		IF FLAG_OFF(FH_01) THEN
+		IF FLAG_OFF(FE_C06_ITEMGET_1) THEN
 			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_babygirl_01)
 		//技マシン「そらをとぶ」を入手している
 		ELSE
@@ -73,7 +73,7 @@ EVENT_START   ev_c06r0101_boy2_01
 	//ジムバッジを入手後 
 	ELSE
 		//技マシン「そらをとぶ」を入手していない
-		IF FLAG_OFF(FH_01) THEN
+		IF FLAG_OFF(FE_C06_ITEMGET_1) THEN
 			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_boy2_01)
 			_FLAG_RESET(FV_C06_MONSTERBALL)
 			

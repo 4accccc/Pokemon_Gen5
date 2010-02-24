@@ -38,18 +38,23 @@ _EVENT_DATA_END
 /*  C06 BOY2とGIRL1のなみのり入手イベントスクリプト           */
 /**************************************************************/
 EVENT_START   ev_c06_monsterball_01
-	
+
+	//===============フラグ操作===============//
 	//なみのりを隠している、少年と少女を出現させる
+	_FLAG_RESET( FV_C06_GIRLBOY_01 )
 	_OBJ_ADD(C06_BOY2_01)
 	_OBJ_ADD(C06_BABYGIRL1_01)
+	//===============フラグ操作===============//
 	
+	//アイテム入手処理
 	_OBJ_DEL(C06_MONSTERBALL_01)
  	_ITEM_EVENT_FIELD(ITEM_WAZAMASIN96,1)
  	_FLAG_SET(FV_C06_MONSTERBALL)
+ 	_FLAG_SET(FE_C06_ITEMGET_1)
   	
+  	//主人公が初年と少女に気づく
   	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
   	_OBJ_ANIME_WAIT()
-  	
   	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
   	_OBJ_ANIME_WAIT()
   	
@@ -88,9 +93,13 @@ EVENT_START   ev_c06_monsterball_01
 	_OBJ_ANIME(C06_BABYGIRL1_01,anm_c06_babygirl1_01_back_01)
    	_OBJ_ANIME(C06_BOY2_01,anm_c06_boy2_01_back_01)
   	_OBJ_ANIME_WAIT()
-  	
+  
+ 	//===============フラグ操作===============//
+ 	//なみのりを隠している、少年と少女を消す
   	_OBJ_DEL(C06_BABYGIRL1_01)
   	_OBJ_DEL(C06_BOY2_01)
+  	_FLAG_SET( FV_C06_GIRLBOY_01 )
+ 	//===============フラグ操作===============//
   	
 EVENT_END
 

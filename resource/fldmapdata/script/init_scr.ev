@@ -171,7 +171,10 @@ init_flags:
 
 	//C06R101のGIRL1に話しかけるまで、C06のモンスターボールを非表示
 	_FLAG_SET( FV_C06_MONSTERBALL )	
-
+	
+	//C06のモンスターボールをに話しかけるまで、BOY2とBABYGIRL1を非表示
+	_FLAG_SET( FV_C06_GIRLBOY_01 )	
+	
 	//R07：ライバルとチャンピオン（POS起動で表示）
 	_FLAG_SET( FV_R07_RIVAL_01 )
 	
