@@ -1255,6 +1255,8 @@ static void PadControl( GURU2RC_WORK *wk )
 #else
       if(1){
 #endif
+        PMSND_PlaySE(SEQ_SE_DECIDE1);
+
         // —£’E‹ÖŽ~’Ê’B(FALSE‚Ìê‡‚Íis‚µ‚È‚¢j
         Union_App_Parent_EntryBlock( _get_unionwork(wk) );
 //        if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
@@ -1292,6 +1294,7 @@ static void PadControl( GURU2RC_WORK *wk )
           u8 flag = GURU2COMM_BAN_ON;
           RecordMessagePrint( wk, msg_guru2_receipt_01_03, 0 );
           SequenceChange_MesWait(wk,RECORD_MODE_END_SELECT);
+          PMSND_PlaySE(SEQ_SE_CANCEL1);
           // —£’E‹ÖŽ~’Ê’B
         //  Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
 
