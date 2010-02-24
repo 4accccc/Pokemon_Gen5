@@ -1462,7 +1462,9 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
 #endif
   
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
-  comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
+
+//  comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
