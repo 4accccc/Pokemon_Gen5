@@ -1019,7 +1019,7 @@ static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
     if( BPL_IrekaeCheck( wk ) == TRUE ){
 			// ’Êí‚Ì“ü‚ê‘Ö‚¦
 			if( wk->dat->mode != BPL_MODE_CHG_DEAD ){
-				wk->dat->sel_pos[0] = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
+				wk->dat->sel_pos[wk->dat->sel_pos_index] = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
 	      return SEQ_BPL_ENDSET;
 			}
 			// •mŽ€Žž‚Ì“ü‚ê‘Ö‚¦
