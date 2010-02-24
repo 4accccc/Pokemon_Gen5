@@ -429,7 +429,7 @@ BOOL FLD_G3DOBJ_CTRL_AnimeObject(
     int max = ctrl->pResTbl[obj->resIdx].anm_count;
     
     while( i < max ){
-      if( GFL_G3D_OBJECT_LoopAnimeFrame(obj->pObj,i,frame) != FALSE ){
+      if( GFL_G3D_OBJECT_IncAnimeFrame(obj->pObj,i,frame) != FALSE ){
         ret = TRUE;
       }
       i++;
