@@ -1329,11 +1329,10 @@ static void DrawTsurePokeFly_Draw( MMDL *mmdl )
         MMDL_GetVectorDrawOffsetPos( mmdl, &offs );
       }
     }
-    
+#if 0
     if( MMDL_CheckDrawPause(mmdl) == FALSE ){ //to GS
       work->offs_frame++;
       work->offs_frame %= 20;
-      
       if( work->offs_frame >= 15 || //5-9 or 15-19
           (work->offs_frame >= 5 && work->offs_frame < 10) ){
         work->offs_y -= FX32_ONE * 2;
@@ -1346,14 +1345,18 @@ static void DrawTsurePokeFly_Draw( MMDL *mmdl )
     pos.y = work->offs_y;
     pos.z = 0;
 	  MMDL_SetVectorDrawOffsetPos( mmdl, &pos );
+#endif
+    
+    TsurePoke_SetAnmAndOffset( mmdl, work, dir );
     
     MMDL_GetDrawVectorPos( mmdl, &pos );
+
     blact_SetCommonOffsPos( &pos );
     GFL_BBD_SetObjectTrans(
       GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
     
-    MMDL_GetDrawVectorPos( mmdl, &pos );
-    blact_SetCommonOffsPos( &pos );
+//    MMDL_GetDrawVectorPos( mmdl, &pos );
+//    blact_SetCommonOffsPos( &pos );
     blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
   }
 }
