@@ -445,7 +445,7 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
   }
 	
   if( fmb->bgFrameBld != BGFRAME_ERROR ){
-	  GFL_BG_FreeBGControl( fmb->bgFrameBld );
+//	  GFL_BG_FreeBGControl( fmb->bgFrameBld );
   }
   
 	do{
@@ -493,8 +493,10 @@ void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb )
   }
   
   if( fmb->bgFrameBld != BGFRAME_ERROR ){
+/*
     GFL_BG_FreeBGControl( fmb->bgFrameBld );
     fmb->bgFrameBld = BGFRAME_ERROR;
+*/
   }
 }
 
@@ -4377,7 +4379,7 @@ static void setBGResource( FLDMSGBG *fmb )
 		};
 		
 		GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
-		GFL_BG_SetBGControl( fmb->bgFrameBld, &bgcntText, GFL_BG_MODE_TEXT );
+//		GFL_BG_SetBGControl( fmb->bgFrameBld, &bgcntText, GFL_BG_MODE_TEXT );
 		
 		GFL_BG_FillCharacter( fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
 		GFL_BG_FillScreen( fmb->bgFrame,
@@ -4419,10 +4421,10 @@ static void setBGResource( FLDMSGBG *fmb )
   }
   
   GFL_BG_SetPriority( fmb->bgFrame, FLDBG_MFRM_3D_PRI );
-  GFL_BG_SetPriority( fmb->bgFrameBld, FLDBG_MFRM_3D_PRI );
+//  GFL_BG_SetPriority( fmb->bgFrameBld, FLDBG_MFRM_3D_PRI );
   
   GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
-  GFL_BG_SetVisible( fmb->bgFrameBld, VISIBLE_ON );
+//  GFL_BG_SetVisible( fmb->bgFrameBld, VISIBLE_ON );
   
   fmb->deriveWin_plttNo = PANO_FONT;
 }
