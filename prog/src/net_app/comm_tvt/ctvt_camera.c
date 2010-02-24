@@ -176,6 +176,7 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       }
     }
   }
+#if (defined(SDK_TWL))
   
   if( COMM_TVT_CanUseCamera() == TRUE )
   {
@@ -196,6 +197,7 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       CAMERA_I2CEffect( CAMERA_SELECT_BOTH , CAMERA_EFFECT_NEGATIVE );
     }
   }
+#endif
 }
 
 //--------------------------------------------------------------
