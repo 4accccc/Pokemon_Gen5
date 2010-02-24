@@ -2,7 +2,7 @@
 
 
 #define _IRMAIN_EXIT_ST_X (24-4)
-#define _IRMAIN_EXIT_ST_Y (32-10)
+#define _IRMAIN_EXIT_ST_Y (32-12)
 #define _IRMAIN_EXIT_WIDTH (10)
 #define _IRMAIN_EXIT_HEIGHT (4)
 

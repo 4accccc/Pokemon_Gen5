@@ -1376,6 +1376,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;
 	}
+  GFL_NET_ReloadIcon();
   
   return GFL_PROC_RES_FINISH;
 }

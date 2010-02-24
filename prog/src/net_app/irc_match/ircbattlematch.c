@@ -147,6 +147,7 @@ static BOOL _cancelButtonCallback(int bttnid,IRC_BATTLE_MATCH* pWork);
 static void _RecvMyStatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _RecvPokePartyData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static u8* _getPokePartyBuff(int netID, void* pWork, int size);
+static void _firstConnectMessage(IRC_BATTLE_MATCH* pWork);
 
 
 ///通信コマンド
@@ -308,6 +309,7 @@ struct _IRC_BATTLE_MATCH {
   BOOL ircCenterAnim;
   int ircCenterAnimCount;
   int yoffset;
+  BOOL SecondStep;
 
   GFL_BUTTON_MAN* pButton;
   TouchFunc* touch;
@@ -544,6 +546,7 @@ static void _ircConnectEndCallback(void* pWk)
   if(pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MULTH){
     pWork->ircmatchflg=TRUE;
     pWork->ircmatchanim=TRUE;
+    pWork->SecondStep = TRUE;
   }
   else if(pWork->bParent){
     if(pWork->ircCenterAnimCount!=0){
@@ -1048,6 +1051,48 @@ static void _graphicEnd(IRC_BATTLE_MATCH* pWork)
 
 }
 
+
+
+static void _firstConnectMessage(IRC_BATTLE_MATCH* pWork)
+{
+  if( pWork->SecondStep == TRUE){
+    int aMsgBuff[]={IRCBTL_STR_12};
+    _msgWindowCreate(aMsgBuff, pWork);
+  }
+  else{
+    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND)
+    {
+      int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
+      if(num1==WIFILIST_FRIEND_MAX){
+        int aMsgBuff[]={IRCBTL_STR_34};
+        _msgWindowCreate(aMsgBuff, pWork);
+      }
+      else{
+        int aMsgBuff[]={IRCBTL_STR_33};
+        _msgWindowCreate(aMsgBuff, pWork);
+        _friendNumWindowCreate(IRCBTL_STR_35, pWork);
+      }
+    }
+    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
+    {
+      int aMsgBuff[]={IRCBTL_STR_17};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
+    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MULTH)
+    {
+      int aMsgBuff[]={IRCBTL_STR_10};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
+    else
+    {
+      int aMsgBuff[]={IRCBTL_STR_09};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
+  }
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   モードセレクト全体の初期化
@@ -1112,34 +1157,7 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
   {
-    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND)
-    {
-      int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
-      if(num1==WIFILIST_FRIEND_MAX){
-        int aMsgBuff[]={IRCBTL_STR_34};
-        _msgWindowCreate(aMsgBuff, pWork);
-      }
-      else{
-        int aMsgBuff[]={IRCBTL_STR_33};
-        _msgWindowCreate(aMsgBuff, pWork);
-        _friendNumWindowCreate(IRCBTL_STR_35, pWork);
-      }
-    }
-    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
-    {
-      int aMsgBuff[]={IRCBTL_STR_17};
-      _msgWindowCreate(aMsgBuff, pWork);
-    }
-    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MULTH)
-    {
-      int aMsgBuff[]={IRCBTL_STR_10};
-      _msgWindowCreate(aMsgBuff, pWork);
-    }
-    else
-    {
-      int aMsgBuff[]={IRCBTL_STR_09};
-      _msgWindowCreate(aMsgBuff, pWork);
-    }
+    _firstConnectMessage(pWork);
   }
 
   GFL_CLACT_SYS_Create(	&GFL_CLSYSINIT_DEF_DIVSCREEN, &_defVBTbl, pWork->heapID );
@@ -1310,9 +1328,9 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
     }
     else
     {  // いいえを選択した場合
-      int aMsgBuff[]={IRCBTL_STR_09};
       _buttonWindowDelete(pWork);
-      _msgWindowCreate(aMsgBuff, pWork);
+
+      _firstConnectMessage(pWork);
 
       _ReturnButtonStart(pWork);
       pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
@@ -1450,7 +1468,7 @@ static BOOL _cancelButtonCallback(int bttnid, IRC_BATTLE_MATCH* pWork)
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
     APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+//  pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
     _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
     break;
   default:
@@ -1553,27 +1571,6 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 
 
   GFL_BMN_Main( pWork->pButton );
-
-  
-
-/*
-  if(GFL_UI_TP_GetTrg()){
-    int aMsgBuff[]={IRCBTL_STR_16};
-    _buttonWindowDelete(pWork);
-
-    GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-                                  0x20*12, 0x20, pWork->heapID);
-
-    _msgWindowCreate(aMsgBuff, pWork);
-
-
-    _YesNoStart(pWork);
-    
-
-    GFL_FONTSYS_SetDefaultColor();
-    _CHANGE_STATE(pWork,_ircExitWait);
-  }
-*/
 
 }
 
