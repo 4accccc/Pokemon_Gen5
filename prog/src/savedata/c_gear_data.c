@@ -11,6 +11,7 @@
 
 #include "savedata/save_tbl.h"
 #include "savedata/c_gear_data.h"
+#include "system/gf_date.h"
 
 //----------------------------------------------------------
 /**
@@ -19,6 +20,7 @@
 //----------------------------------------------------------
 
 struct _CGEAR_SAVEDATA {
+  GFDATE gsyncTime;
 	u8 type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
   u16 CGearPictCRC;
   u8 CGearPictureON;
