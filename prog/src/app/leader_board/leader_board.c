@@ -4,6 +4,8 @@
  * @brief   リーダーボード画面（Wifiバトルサブウェイダウンロードデータ）
  * @author  Akito Mori
  * @date    10.02.22
+ *
+ * @todo 2月ROM用の仮データを入れる処理が入っているので、Wifiサーバーが動くようになったら消す事
  */
 //============================================================================================
 #include <gflib.h>
@@ -28,6 +30,10 @@
 #include "msg/msg_leader_board.h"   // 
 
 #include "leader_board_def.h"       // 各種定義等
+
+#ifdef PM_DEBUG
+#define SPECIAL_FEBRUARY
+#endif
 
 //--------------------------------------------------------------------------------------------
 // 定数定義
@@ -312,8 +318,11 @@ static void InitWork( LEADERBOARD_WORK *wk, void *pwk )
   // leader_board.gmmの文字列を全て読み込む
   {
     int i;
+    const STRCODE *buf;
     for(i=0;i<LB_STR_MAX;i++){
       wk->strbuf[i] = GFL_MSG_CreateString( wk->mman, i );
+      buf = GFL_STR_GetStringCodePointer( wk->strbuf[i] );
+      OS_Printf("str%d=%02d, %02d, %02d, %02d, %02d,\n", i,buf[0],buf[1],buf[2],buf[3],buf[4]);
     }
   }
   // 展開用文字列確保
@@ -339,6 +348,9 @@ static void InitWork( LEADERBOARD_WORK *wk, void *pwk )
 
   // デバッグ用データセット
   _debug_data_set( wk, wk->bSubwayData );
+
+  GFL_MSG_Delete( wk->debugname );
+
 #endif
   
   // トレーナー数数え上げ
@@ -372,9 +384,6 @@ static void FreeWork( LEADERBOARD_WORK *wk )
   // ワードセット解放
   WORDSET_Delete( wk->wset );
 
-#ifdef PM_DEBUG
-  GFL_MSG_Delete( wk->debugname );
-#endif
   // メッセージデータ解放
   GFL_MSG_Delete( wk->mman );
 
@@ -1271,6 +1280,7 @@ static int _countup_bsubway( BSUBWAY_LEADER_DATA *bData )
   int i,result=0;
   for(i=0;i<BSUBWAY_STOCK_WIFI_LEADER_MAX;i++){
     // 名前の１文字目が０じゃ無かったら存在している事にする
+//    if(bData[i].name[0]!=GFL_STR_GetEOMCode()){
     if(bData[i].name[0]!=0){
       result++;
     }
@@ -1301,9 +1311,9 @@ static void Rewrite_UpperInformation( LEADERBOARD_WORK *wk, BSUBWAY_LEADER_DATA 
   // 各種情報登録
 
   // ランクＮＯ
-  WORDSET_RegisterNumber( wk->wset, 0, wk->param->rank_no, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU);
+  WORDSET_RegisterNumber( wk->wset, 0, wk->param->rank_no,  2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU);
   // トレインNO
-  WORDSET_RegisterNumber( wk->wset, 1, wk->param->train_no,3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU);
+  WORDSET_RegisterNumber( wk->wset, 1, wk->param->train_no, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU);
   WORDSET_RegisterCountryName(    wk->wset, 2, nation );          // 国
   WORDSET_RegisterLocalPlaceName( wk->wset, 3, nation, local );   // 地方
 
@@ -1650,9 +1660,13 @@ static PMS_DATA debug_pms[3]={
   // デバッグ用データセット
 static void _debug_data_set( LEADERBOARD_WORK *wk, BSUBWAY_LEADER_DATA *bData )
 {
-  int i, num=10;
+  int i, num=0;
   STRBUF *str;
   PMS_DATA *pms;
+
+#ifdef SPECIAL_FEBRUARY
+  num = 23;
+#endif
 
   if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){
     num = 5;
