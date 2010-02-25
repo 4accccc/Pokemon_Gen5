@@ -846,6 +846,8 @@ void UnionMyComm_Init(UNION_SYSTEM_PTR unisys, UNION_MY_COMM *mycomm)
     member->sex = MyStatus_GetMySex(unisys->uniparent->mystatus);
     member->occ = TRUE;
   }
+  
+  mycomm->talk_obj_id = UNION_MYCOMM_NOT_TALK_OBJ_ID;
 }
 
 //==================================================================

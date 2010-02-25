@@ -25,7 +25,7 @@
 //  型定義
 //==============================================================================
 ///ビーコンPCの動作関数型
-typedef BOOL (*UNICHARA_FUNC)(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq);
+typedef BOOL (*UNICHARA_FUNC)(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq);
 
 ///ビーコンPCの動作テーブル型
 typedef struct{
@@ -52,12 +52,13 @@ enum{
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static BOOL UnionCharaFunc(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara);
+static BOOL UnionCharaFunc(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap);
 static BOOL BeaconPC_UpdateLife(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc);
 
-static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq);
-static BOOL UnicharaSeq_EnterUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq);
-static BOOL UnicharaSeq_LeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq);
+static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq);
+static BOOL UnicharaSeq_EnterUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq);
+static BOOL UnicharaSeq_LeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq);
+static BOOL UnicharaSeq_TalkingUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq);
 
 
 //==============================================================================
@@ -129,6 +130,11 @@ static const UNICHARA_FUNC_DATA UnicharaFuncTbl[] = {
   {//BPC_EVENT_STATUS_LEAVE
     NULL,
     UnicharaSeq_LeaveUpdate,
+    NULL,
+  },
+  {//BPC_EVENT_STATUS_TALKING
+    NULL,
+    UnicharaSeq_TalkingUpdate,
     NULL,
   },
 };
@@ -429,7 +435,7 @@ static void _ReqFocusOBJ(UNION_SYSTEM_PTR unisys, u16 char_index)
  * @param   unisys		
  */
 //==================================================================
-void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata)
+void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, FIELDMAP_WORK *fieldmap)
 {
   int i;
   UNION_BEACON_PC *bpc;
@@ -469,7 +475,7 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata)
         unichara = bpc->chara_group.character[child_no];
         //動作実行
         if(unichara != NULL){
-          ret = UnionCharaFunc(unisys, unichara);
+          ret = UnionCharaFunc(unisys, unichara, fieldmap);
           if(ret == FALSE){
             UNION_CHARA_DeleteOBJ(unisys, bpc, unichara);
             bpc->chara_group.character[child_no] = NULL;
@@ -501,7 +507,7 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata)
  * @retval  BOOL		TRUE:動作継続。　FALSE:動作終了(モデルを削除してください)
  */
 //--------------------------------------------------------------
-static BOOL UnionCharaFunc(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara)
+static BOOL UnionCharaFunc(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap)
 {
   BOOL next_seq = TRUE;
   UNICHARA_FUNC func;
@@ -519,7 +525,7 @@ static BOOL UnionCharaFunc(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara)
   }
 
   if(func != NULL){
-    next_seq = func(unisys, unichara, &unichara->func_seq);
+    next_seq = func(unisys, unichara, fieldmap, &unichara->func_seq);
   }
   
   if(next_seq == TRUE){
@@ -584,7 +590,7 @@ static BOOL BeaconPC_UpdateLife(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc)
  * @retval  static BOOL		
  */
 //==================================================================
-static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq)
+static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq)
 {
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   UNION_BEACON *beacon;
@@ -603,9 +609,13 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
     UNION_CHAR_EventReq(unichara, BPC_EVENT_STATUS_LEAVE);
     return TRUE;
   }
-
-  //アピール番号が一致していればジャンプ
-  if(situ->appeal_no != UNION_APPEAL_NULL 
+  
+  //話しかけ相手ならばプレイヤーの方向を向く
+  if(situ->mycomm.talk_obj_id == UNION_CHARA_GetCharaIndex(unichara->parent_pc, unichara)){
+    UNION_CHAR_EventReq(unichara, BPC_EVENT_STATUS_TALKING);
+    return TRUE;
+  }
+  else if(situ->appeal_no != UNION_APPEAL_NULL //アピール番号が一致していればジャンプ
       && (situ->appeal_no == UnionTool_PlayCategory_to_AppealNo(beacon->play_category)
       || situ->appeal_no == beacon->appeal_no)   //アピール番号一致
       && unichara->child_no == 0                //親だけ
@@ -631,7 +641,7 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
  * @retval  static BOOL		
  */
 //==================================================================
-static BOOL UnicharaSeq_EnterUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq)
+static BOOL UnicharaSeq_EnterUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq)
 {
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   UNION_BEACON *beacon;
@@ -669,7 +679,7 @@ static BOOL UnicharaSeq_EnterUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *un
  * @retval  static BOOL		
  */
 //==================================================================
-static BOOL UnicharaSeq_LeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, u8 *seq)
+static BOOL UnicharaSeq_LeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq)
 {
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   UNION_BEACON *beacon;
@@ -687,6 +697,74 @@ static BOOL UnicharaSeq_LeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *un
   case 1:
     if(MMDL_CheckEndAcmd(mmdl) == TRUE){
       MMDL_EndAcmd(mmdl);
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * お話中：更新
+ *
+ * @param   unisys		
+ * @param   bpc		
+ * @param   mmdl		
+ * @param   seq		
+ *
+ * @retval  static BOOL		
+ */
+//==================================================================
+static BOOL UnicharaSeq_TalkingUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  MMDL *mmdl;
+
+  mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
+
+  switch(*seq){
+  case 0:
+    if(MMDL_CheckPossibleAcmd(mmdl) == TRUE)
+    {
+      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
+    	u16 dir = MMDL_GetDirDisp( FIELD_PLAYER_GetMMdl( player ) );
+    	u16 movecode, anmcode;
+    	switch(dir){
+      case DIR_UP:
+        movecode = MV_DOWN;
+        anmcode = AC_DIR_D;
+        break;
+      case DIR_DOWN:
+        movecode = MV_UP;
+        anmcode = AC_DIR_U;
+        break;
+      case DIR_LEFT:
+        movecode = MV_RIGHT;
+        anmcode = AC_DIR_R;
+        break;
+      case DIR_RIGHT:
+      default:
+        movecode = MV_LEFT;
+        anmcode = AC_DIR_L;
+        break;
+      }
+      //MMDL_ChangeMoveCode( mmdl, movecode );
+      MMDL_SetAcmd(mmdl, anmcode);
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if(MMDL_CheckPossibleAcmd(mmdl) == TRUE){
+      MMDL_OnStatusBit(mmdl, MMDL_STABIT_PAUSE_DIR);
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(situ->mycomm.talk_obj_id != UNION_CHARA_GetCharaIndex(unichara->parent_pc, unichara)){
+      mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
+      //MMDL_ChangeMoveCode( mmdl, MV_DIR_RND );
+      MMDL_OffStatusBit(mmdl, MMDL_STABIT_PAUSE_DIR);
       return TRUE;
     }
     break;

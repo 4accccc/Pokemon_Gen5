@@ -102,7 +102,7 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldmap)
           UnionOneself_Update(unisys, fieldmap);
           
           //OBJ”½‰f
-          UNION_CHAR_Update(unisys, unisys->uniparent->game_data);
+          UNION_CHAR_Update(unisys, unisys->uniparent->game_data, fieldmap);
           
           //‰º‰æ–Ê”½‰f
         }

@@ -16,6 +16,7 @@ enum{
   BPC_EVENT_STATUS_NORMAL,    ///<何もしていない
   BPC_EVENT_STATUS_ENTER,     ///<ユニオンルームへ進入
   BPC_EVENT_STATUS_LEAVE,     ///<ユニオンルームから退出
+  BPC_EVENT_STATUS_TALKING,   ///<お話中
   
   BPC_EVENT_STATUS_MAX,
 };
@@ -29,7 +30,7 @@ typedef enum{
 //==============================================================================
 //  外部関数宣言
 //==============================================================================
-extern void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata);
+extern void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, FIELDMAP_WORK *fieldmap);
 extern UNION_CHARA_INDEX UNION_CHARA_CheckCharaIndex(u16 chara_index);
 extern u16 UNION_CHARA_GetCharaIndex_to_ParentNo(u16 chara_index);
 extern BOOL UNION_CHARA_CheckCommPlayer(u16 chara_index);
