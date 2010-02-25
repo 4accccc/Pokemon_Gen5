@@ -195,6 +195,7 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcInit( GFL_PROC * proc, int * seq 
 
   p_wk->p_seq = WBM_SEQ_Init( p_wk, SEQFUNC_FadeIn, HEAPID_BATTLE_CHAMPIONSHIP );
   
+  PMSND_PushBGM();
   PMSND_PlayBGM( SEQ_BGM_WCS );
 
   return GFL_PROC_RES_FINISH;
@@ -204,6 +205,7 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcTerm( GFL_PROC * proc, int * seq 
 {
   BATTLE_CHAMPIONSHIP_WORK *p_wk = mywk;
 
+  PMSND_PopBGM();
   WBM_SEQ_Exit( p_wk->p_seq);
 
   BATTLE_CHAMPIONSHIP_TermMessage( p_wk );

@@ -37,9 +37,10 @@ typedef enum
 //=====================================
 typedef enum 
 {
-  WIFIBATTLEMATCH_CORE_MODE_START,      //開始
-  WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE,  //バトル終了
-  WIFIBATTLEMATCH_CORE_MODE_ENDREC,     //録画終了
+  WIFIBATTLEMATCH_CORE_MODE_START,          //開始
+  WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE,      //バトル終了
+  WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR,  //バトル終了ただしエラー
+  WIFIBATTLEMATCH_CORE_MODE_ENDREC,         //録画終了
 } WIFIBATTLEMATCH_CORE_MODE;
 
 //-------------------------------------

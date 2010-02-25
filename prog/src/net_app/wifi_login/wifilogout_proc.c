@@ -14,6 +14,7 @@
 //システム
 #include "system/main.h"
 #include "system/wipe.h"
+#include "net/dwc_error.h"
 
 //アーカイブ
 #include "message.naix"
@@ -206,6 +207,16 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Main
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFILOGOUT_WORK   *p_wk     = p_wk_adrs;
+
+  //エラーチェック
+  //（GAMESYSTEMかこの下位のPROCでNetErr_DispCall(FALSE);が呼ばれているのが前提です）
+  if( GFL_NET_IsInit() )
+  { 
+    if( GFL_NET_DWC_ERROR_RESULT_NONE != GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE ) )
+    {
+      return GFL_PROC_RES_FINISH;
+    }
+  }
 
   //モジュール動作
   if( p_wk->p_select )

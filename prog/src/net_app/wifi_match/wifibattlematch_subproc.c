@@ -248,10 +248,14 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     break;
   }
 
-  //エラー処理
+  //エラー処理ここで起きたら復帰が難しいので切断
   if( GFL_NET_IsInit() )
   { 
-    GFL_NET_DWC_ERROR_ReqErrorDisp();
+    if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) != GFL_NET_DWC_ERROR_RESULT_NONE )
+    { 
+      p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN;
+      return GFL_PROC_RES_FINISH;
+    }
   }
 
 

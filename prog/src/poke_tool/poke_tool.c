@@ -23,6 +23,11 @@
 #include    "arc_def.h"
 #include    "savedata/mail.h"
 
+//サイズがずれたらWIFI不正チェックを通らなく可能性があるので、
+//名木橋のみコンパイルエラーチェックをしておく
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+SDK_COMPILER_ASSERT( sizeof(POKEMON_PARAM) == 220 );
+#endif
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */

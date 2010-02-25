@@ -2494,7 +2494,7 @@ static BOOL WiFiBsubway_DisconnectWait( WIFI_BSUBWAY* p_wk )
 static BOOL WiFiBsubway_Error( WIFI_BSUBWAY* p_wk )
 {
   // Netエラーチェック
-  if( GFL_NET_DWC_ERROR_ReqErrorDisp() )
+  if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) )
   {
     // 終了へ
     return FALSE;

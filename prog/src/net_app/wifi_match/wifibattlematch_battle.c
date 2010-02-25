@@ -16,6 +16,7 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/btl_setup.h"
 #include "poke_tool/pokeparty.h"
+#include "net/dwc_error.h"
 
 //WIFIバトルマッチのモジュール
 #include "wifibattlematch_net.h"
@@ -90,11 +91,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Init( GFL_PROC *p_proc, i
   WIFIBATTLEMATCH_BATTLELINK_PARAM *p_param  = p_param_adrs;
 
   //ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SUB, 0x4000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SUB, 0x1000 );
 
   //プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_BATTLELINK_WORK), HEAPID_WIFIBATTLEMATCH_SUB );
 	GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_BATTLELINK_WORK) );	
+  p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_SUCCESS;
 
   //モジュール初期化
   p_wk->p_procsys = GFL_PROC_LOCAL_boot( HEAPID_WIFIBATTLEMATCH_SUB );
@@ -261,6 +263,24 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
   default:
     GF_ASSERT(0);
     break;
+  }
+
+  //エラー処理ここで起きたらCOREに戻る
+  if( GFL_NET_IsInit() )
+  { 
+    if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) != GFL_NET_DWC_ERROR_RESULT_NONE )
+    { 
+      p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_DISCONNECT;
+      return GFL_PROC_RES_FINISH;
+    }
+  }
+
+  { 
+    //不正チェック
+    if( 0 )
+    { 
+      return WIFIBATTLEMATCH_BATTLELINK_RESULT_EVIL;
+    }
   }
 
   return GFL_PROC_RES_CONTINUE;

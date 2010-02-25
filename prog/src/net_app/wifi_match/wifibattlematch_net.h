@@ -64,6 +64,7 @@ typedef enum
 {
   WIFIBATTLEMATCH_NET_SYSERROR_NONE,    //エラーは発生していない
   WIFIBATTLEMATCH_NET_SYSERROR_TIMEOUT, //アプリケーションタイムアウトが発生した
+  WIFIBATTLEMATCH_NET_SYSERROR_NO_RECORD, //自分のサケテーブルIDが取得＆作成できない
 } WIFIBATTLEMATCH_NET_SYSERROR;
 
 //-------------------------------------
@@ -182,15 +183,13 @@ extern void WIFIBATTLEMATCH_NET_Main( WIFIBATTLEMATCH_NET_WORK *p_wk );
 //-------------------------------------
 ///	エラー
 //=====================================
-extern BOOL WIFIBATTLEMATCH_NET_CheckError( WIFIBATTLEMATCH_NET_WORK *p_wk );
-extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_heavy );
 
 //-------------------------------------
 ///	初回処理(必要のない場合は内部で自動的にきる)
 //=====================================
 extern void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CONTROL_WORK *p_save );
-extern BOOL WIFIBATTLEMATCH_NET_IsInitialize( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
 
 //-------------------------------------
 ///	マッチング
@@ -293,6 +292,7 @@ extern void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFI
 extern BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //作成
+//  作成したあとは上記関数でWIFIBATTLEMATCH_GDB_WRITE_MYINFOをかきこんでください
 extern void WIFIBATTLEMATCH_GDB_StartCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern BOOL WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
@@ -373,7 +373,7 @@ typedef enum
 typedef struct 
 {
   u8 status_code;
-  u32 poke_result;
+  u32 poke_result[TEMOTI_POKEMAX];
   s8 sign[ NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN ];
 } WIFIBATTLEMATCH_NET_EVILCHECK_DATA;
 

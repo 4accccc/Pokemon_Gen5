@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 //ライブラリ
 #include <gflib.h>
+#include <nitro/crypto.h>
 #include <nitro/crypto/sign.h>
 
 
@@ -20,12 +21,23 @@
  *					定数宣言
 */
 //=============================================================================
+#define NHTTP_RAP_HEAPID_NONE   (0xFFFF)
 
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
+//CRYPTOライブラリ計算で必要なAlloc関数のためヒープID
+static HEAPID s_heapID  = NHTTP_RAP_HEAPID_NONE;
+
+//=============================================================================
+/**
+ *					PRIVATE
+*/
+//=============================================================================
+static void * Nhttp_Rap_EvilCheck_Alloc( u32 size );
+static void Nhttp_Rap_EvilCheck_Free( void *p_adrs );
 
 //=============================================================================
 /**
@@ -85,16 +97,18 @@ const s8 * NHTTP_RAP_EVILCHECK_GetSign( const void *cp_data, int poke_max )
 //----------------------------------------------------------------------------
 /**
  *	@brief  ポケモン不正検査  署名とポケモンが一致していることを証明する
+ *	        内部で計算のため最高で4kbyte程度のメモリを使用する
  *
  *	@param	const void *p_poke_buff ポケモンデータが格納されているバッファ
  *	@param	poke_size               不正チェックの時に送った１体あたりのサイズ
  *	@param	poke_max                不正チェックの時に送ったポケモンの最大数
  *	@param	s8 *cp_sign             不正チェックで受け取ったサイン
+ *	@param  HEAPID                  計算のために使用するヒープ
  *
  *	@return TRUE一致している  FALSE一致していない
  */
 //-----------------------------------------------------------------------------
-BOOL NHTTP_RAP_EVILCHECK_VerifySign( const void *p_poke_buff, int poke_size, int poke_max, const s8 *cp_sign )
+BOOL NHTTP_RAP_EVILCHECK_VerifySign( const void *p_poke_buff, int poke_size, int poke_max, const s8 *cp_sign, HEAPID heapID )
 { 
   // 公開鍵
   static unsigned char publicKey[ NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN ] = 
@@ -117,7 +131,22 @@ BOOL NHTTP_RAP_EVILCHECK_VerifySign( const void *p_poke_buff, int poke_size, int
     0x07, 0x23, 0x31, 0xC3, 0xF7, 0x98, 0x57, 0xE5
   };
 
-  return CRYPTO_VerifySignature( p_poke_buff, poke_size * poke_max, cp_sign, publicKey );
+  BOOL ret;
+
+  s_heapID  = heapID;
+
+  CRYPTO_SetMemAllocator(
+      Nhttp_Rap_EvilCheck_Alloc,
+      Nhttp_Rap_EvilCheck_Free,
+      NULL  //ReAllocはRSA暗号化機能のときしか使わない(電子署名では使わない)
+      );
+
+
+  ret = CRYPTO_VerifySignature( p_poke_buff, poke_size * poke_max, cp_sign, publicKey );
+
+  s_heapID  = NHTTP_RAP_HEAPID_NONE;
+
+  return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -168,5 +197,38 @@ void NHTTP_RAP_EVILCHECK_DeleteVerifyPokeBuffer( void *p_buff )
 void NHTTP_RAP_EVILCHECK_AddPokeVerifyPokeBuffer( void *p_buff, const void *cp_data, int poke_size, int poke_index )
 { 
   const u32 offset  = poke_size * poke_index;
-  GFL_STD_MemCopy( cp_data, ((u8*)p_buff + offset), poke_size );
+  GFL_STD_MemCopy( cp_data, (((u8*)p_buff) + offset ), poke_size );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CRYPT計算のためのアロケート関数
+ *
+ *	@param	u32 size  サイズ
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+static void * Nhttp_Rap_EvilCheck_Alloc( u32 size )
+{ 
+  void *p_adrs;
+
+  GF_ASSERT_MSG( s_heapID != NHTTP_RAP_HEAPID_NONE, "heapIDを設定してください\n" );
+    
+  p_adrs  = GFL_HEAP_AllocMemory( s_heapID, size );
+
+  GF_ASSERT_MSG( p_adrs, "CRYPT alloc failed!! size=%d =restHeap%d \n", size, GFL_HEAP_GetHeapFreeSize(s_heapID) );
+
+  return p_adrs;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CRYPT計算のためのフリー関数
+ *
+ *	@param	void *p_adrs  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Nhttp_Rap_EvilCheck_Free( void *p_adrs )
+{ 
+  GFL_HEAP_FreeMemory( p_adrs );
 }

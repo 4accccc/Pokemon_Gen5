@@ -1587,18 +1587,16 @@ int mydwc_HandleError(void)
       //DWC_RnkShutdown関数(汎用ランキングライブラリ)
       //エラーコードを表示してください。
       //
-      if( ret == DWC_ERROR_GDB_ANY )
+      if( -40000 >= errorCode && errorCode >= -41999 )
       { 
         DWC_GdbShutdown();           // 簡易データベースライブラリの終了
       }
-
-      if( ret == DWC_ERROR_SCL_ANY )
+      if( -43000 >= errorCode && errorCode >= -44999 )
       { 
         DWC_ScShutdown();
         DWC_GdbShutdown();           // 簡易データベースライブラリの終了
       }
 
-      //DWC_RnkShutdown(); //ランキングライブラリは現状使用しないはずなので、呼ばない
       DWC_ClearError();
       break;
 

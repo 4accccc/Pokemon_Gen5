@@ -167,7 +167,7 @@ void NetErr_SystemCreate(int heap_id)
  * @brief   通信エラー画面システム破棄
  */
 //--------------------------------------------------------------
-void NetErr_SystemExit(void)
+static void NetErr_SystemExit(void)
 {
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 
@@ -400,6 +400,24 @@ void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea )
   *plttArea = nes->push_pltt_p;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  強制切断
+ *
+ */
+//-----------------------------------------------------------------------------
+static void NetErr_ExitNetSystem( void )
+{ 
+  if(GFL_NET_IsInit() )
+  { 
+    GFL_NET_Exit(NULL);
+    do{
+      GFL_NET_Main();
+      OS_TPrintf("GFL_NET_IsExitの完了を待っています\n");
+    }while(GFL_NET_IsExit() == FALSE);
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   通信エラー画面制御メイン
@@ -425,12 +443,8 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 	}
   
 	if(nes->status == NET_ERR_STATUS_REQ){
-    //通信ライブラリ終了待ち  ※check　軽度エラーの場合は終了処理を入れない
-    GFL_NET_Exit(NULL);
-    do{
-      GFL_NET_Main();
-      OS_TPrintf("GFL_NET_IsExitの完了を待っています\n");
-    }while(GFL_NET_IsExit() == FALSE);
+    //通信ライブラリ終了待ち 
+    NetErr_ExitNetSystem();
 
 		//エラー画面描画
 		Local_ErrDispInit();

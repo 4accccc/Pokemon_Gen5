@@ -139,16 +139,18 @@ extern const s8 * NHTTP_RAP_EVILCHECK_GetSign( const void *cp_data, int poke_max
 //----------------------------------------------------------------------------
 /**
  *	@brief  ポケモン不正検査  署名とポケモンが一致していることを証明する
+ *	        内部で計算のため最高で4kbyte程度のメモリを使用する
  *
- *	@param	const void *p_poke_buff ポケモンデータが格納されているバッファ  (以下の３つの関数を使ってください)
+ *	@param	const void *p_poke_buff ポケモンデータが格納されているバッファ
  *	@param	poke_size               不正チェックの時に送った１体あたりのサイズ
  *	@param	poke_max                不正チェックの時に送ったポケモンの最大数
  *	@param	s8 *cp_sign             不正チェックで受け取ったサイン
+ *	@param  HEAPID                  計算のために使用するヒープ
  *
  *	@return TRUE一致している  FALSE一致していない
  */
 //-----------------------------------------------------------------------------
-extern BOOL NHTTP_RAP_EVILCHECK_VerifySign( const void *p_poke_buff, int poke_size, int poke_max, const s8 *cp_sign );
+extern BOOL NHTTP_RAP_EVILCHECK_VerifySign( const void *p_poke_buff, int poke_size, int poke_max, const s8 *cp_sign, HEAPID heapID );
 
 //----------------------------------------------------------------------------
 /**

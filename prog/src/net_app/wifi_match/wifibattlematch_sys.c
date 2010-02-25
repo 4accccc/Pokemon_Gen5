@@ -87,6 +87,8 @@ typedef struct {
 	u8							next_procID;
 	u8							now_procID;
 	u16							seq;
+
+  GFL_PROC_MAIN_STATUS  status;
 } SUBPROC_WORK;
 //-------------------------------------
 ///	システムワーク
@@ -140,6 +142,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main
 //=====================================
 static void SUBPROC_Init( SUBPROC_WORK *p_wk, const SUBPROC_DATA *cp_procdata_tbl, void *p_wk_adrs, HEAPID heapID );
 static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk );
+static GFL_PROC_MAIN_STATUS SUBPROC_GetStatus( const SUBPROC_WORK *cp_wk );
 static void SUBPROC_Exit( SUBPROC_WORK *p_wk );
 static void SUBPROC_CallProc( SUBPROC_WORK *p_wk, u32 procID );
 
@@ -423,12 +426,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 
   WIFIBATTLEMATCH_SYS   *p_wk     = p_wk_adrs;
 
-  //WIFI大会はタイトルから直接くるためにエラーシステムを自分で動かす
-  if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_WIFI )
-  { 
-    NetErr_DispCall(FALSE);
-  }
-
   //シーケンス
 	switch( *p_seq )
 	{	
@@ -457,6 +454,16 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 			{	
 				*p_seq	= WBM_SYS_SEQ_EXIT;
 			}
+
+      //このローカルPROC内でPROC遷移するため、エラーシステムを自分で動かす
+      //if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_WIFI )
+      { 
+        const GFL_PROC_MAIN_STATUS  status  = SUBPROC_GetStatus( &p_wk->subproc );
+        if( status == GFL_PROC_MAIN_CHANGE || status == GFL_PROC_MAIN_NULL )
+        { 
+          NetErr_DispCall(FALSE);
+        }
+      }
 		}
 		break;
 
@@ -552,9 +559,8 @@ static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
 
 	case SEQ_MAIN:
 		{	
-			GFL_PROC_MAIN_STATUS result;
-			result	= GFL_PROC_LOCAL_Main( p_wk->p_procsys );
-			if( GFL_PROC_MAIN_NULL == result )
+			p_wk->status	= GFL_PROC_LOCAL_Main( p_wk->p_procsys );
+			if( GFL_PROC_MAIN_NULL == p_wk->status )
 			{	
 				p_wk->seq	= SEQ_FREE_PARAM;
 			}
@@ -595,6 +601,20 @@ static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
 	}
 
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SUBPROCシステム PROC状態を取得
+ *
+ *	@param	const SUBPROC_WORK *cp_wk   ワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_MAIN_STATUS SUBPROC_GetStatus( const SUBPROC_WORK *cp_wk )
+{ 
+  return cp_wk->status;
 }
 
 //----------------------------------------------------------------------------
@@ -963,6 +983,7 @@ static BOOL BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_BATTLELINK_PARAM  *p_param  = p_param_adrs;
   BATTLE_SETUP_PARAM  *p_btl_param  = p_param->p_btl_setup_param;
+  WIFIBATTLEMATCH_BATTLELINK_RESULT result  = p_param->result;
 
   //受け取り
   p_wk->btl_result  = p_btl_param->result;
@@ -976,8 +997,24 @@ static BOOL BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 	GFL_HEAP_FreeMemory( p_param );
 
   //次のPROC
-  p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE;
-  SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+  switch( result )
+  {
+  case WIFIBATTLEMATCH_BATTLELINK_RESULT_SUCCESS:
+    p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE;
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+    break;
+
+  case WIFIBATTLEMATCH_BATTLELINK_RESULT_DISCONNECT:
+    //切断された
+    p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+    break;
+    
+  case WIFIBATTLEMATCH_BATTLELINK_RESULT_EVIL:
+    p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+    break;
+  }
 
   return TRUE;
 }
@@ -1180,6 +1217,8 @@ static BOOL LOGOUT_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   //次のPROCは無し
 
   GFL_HEAP_FreeMemory( p_param );
+
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------

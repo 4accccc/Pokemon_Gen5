@@ -48,7 +48,7 @@
  *	@return TRUEエラー発生し表示  FALSEならばエラーではない
  */
 //-----------------------------------------------------------------------------
-BOOL GFL_NET_DWC_ERROR_ReqErrorDisp( void )
+GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
 { 
   if( GFL_NET_IsInit() )
   { 
@@ -56,45 +56,39 @@ BOOL GFL_NET_DWC_ERROR_ReqErrorDisp( void )
     { 
       const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
 
-      //GDBとSCの切断とFatalエラー以外は、個別処理とするため、検知しない
-      if( (cp_error->errorRet == DWC_ERROR_GDB_ANY
-            || cp_error->errorRet == DWC_ERROR_SCL_ANY)
-          && (cp_error->errorType != DWC_ETYPE_DISCONNECT
-            && cp_error->errorType != DWC_ETYPE_FATAL) )
-      { 
-        return FALSE;
-      }
-
       switch( cp_error->errorType )
       { 
       case DWC_ETYPE_LIGHT:
         /* fallthru */
       case DWC_ETYPE_SHOW_ERROR:
         //エラーコードorメッセージを表示するだけ
-        NetErr_DispCallPushPop();
-        GFL_NET_StateClearWifiError();
-        break;
+        if( !is_heavy )
+        { 
+          NetErr_DispCallPushPop();
+          GFL_NET_StateClearWifiError();
+          return GFL_NET_DWC_ERROR_RESULT_PRINT_MSG;
+        }
+        /* fallthru */
 
       case DWC_ETYPE_SHUTDOWN_FM:
       case DWC_ETYPE_SHUTDOWN_GHTTP:
       case DWC_ETYPE_SHUTDOWN_ND:
         //シャットダウン
         NetErr_App_ReqErrorDisp();
-        return TRUE;
+        return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
 
       case DWC_ETYPE_DISCONNECT:
         //切断
         NetErr_App_ReqErrorDisp();
-        return TRUE;
+        return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
 
       case DWC_ETYPE_FATAL:
         //Fatal
         NetErr_DispCallFatal();
-        return TRUE;
+        return GFL_NET_DWC_ERROR_RESULT_FATAL;
       }
     }
   }
 
-  return FALSE;
-
+  return GFL_NET_DWC_ERROR_RESULT_NONE;
 }

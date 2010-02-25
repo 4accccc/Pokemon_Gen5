@@ -84,6 +84,11 @@ typedef enum
   WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMESAFE  = 0,//期間内
   WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER,     //期間をすぎた
 
+  //ポケモン不正チェックの戻り値
+  WBM_WIFI_SUBSEQ_EVILCHECK_RET_SUCCESS  = 0,  //成功
+  WBM_WIFI_SUBSEQ_EVILCHECK_RET_DARTY,         //１体でも不正ポケモンがいた
+  WBM_WIFI_SUBSEQ_EVILCHECK_RET_NET_ERR,       //ネットエラー
+
 
   WBM_WIFI_SUBSEQ_RET_NONE  = 0xFFFF,       //なし
 } WBM_WIFI_SUBSEQ_RET;
@@ -153,6 +158,7 @@ typedef struct
   WBM_SEQ_WORK              *p_subseq;
   WBM_WIFI_SUBSEQ_RET       subseq_ret;
 
+
   // ------ 以下データ ------
   //GPFサーバーから落としてきた選手証データ
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA gpf_data;
@@ -164,10 +170,10 @@ typedef struct
   WIFIBATTLEMATCH_NET_EVILCHECK_DATA  evilecheck_data;
   POKEPARTY                           *p_evilcheck_party;
 
-  //ウエイト
+  //カウンタ
   u32 cnt;
 
-  //相手のの不正カウンタ
+  //不正カウンタ
   u32 other_dirty_cnt;
   u32 my_dirty_cnt;
 
@@ -199,7 +205,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Main
 //=====================================
 static void WbmWifiSeq_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmWifiSeq_Join( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );  //以前はメニューはここでしていましたが、
-                                                                                    //battle_championshipの中でおこなうことになりました
+                                                                                    //battle_championshipの中でおこなうことになりました念のため消してはいませんがWbmWifiSeq_Joinはつながっていません。
 static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -217,6 +223,7 @@ static void WbmWifiSeq_Err_ReturnLogin( WBM_SEQ_WORK *p_seqwk, int *p_seq, void 
 //=====================================
 static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 ///	モジュールを使いやすくまとめたもの
@@ -250,7 +257,9 @@ static u32 Util_List_Main( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
 static void Util_SubSeq_Start( WIFIBATTLEMATCH_WIFI_WORK *p_wk, WBM_SEQ_FUNCTION seq_function );
 static WBM_WIFI_SUBSEQ_RET Util_SubSeq_Main( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
 //自分のデータ作成
-static void Util_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_WIFI_WORK *cp_wk );
+static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data );
+static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_WIFI_WORK *cp_wk );
+static void Util_SetMyDataSign( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_NET_EVILCHECK_DATA  *cp_evilecheck_data, u32 index );
 //ポケモン証明
 static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapID );
 
@@ -332,7 +341,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Init( GFL_PROC *p_proc, int *p_
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
   }
 
+  PMSND_PlayBGM( SEQ_BGM_WCS );
+
   p_wk->p_other_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_CORE );
+
+  Util_InitMyData( p_param->p_player_data );
 
 
 #ifdef DEBUG_REGULATION_DATA
@@ -452,16 +465,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Main( GFL_PROC *p_proc, int *p_
     { 
       *p_seq  = SEQ_FADEOUT_START;
     }
-
-    //共通のエラー処理（SC,GDB以外）
-    if( p_wk->p_net )
-    { 
-      if( WIFIBATTLEMATCH_NET_CheckError( p_wk->p_net ) )
-      { 
-        p_param->result = WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN;
-        *p_seq  = SEQ_FADEOUT_START;
-      }
-    }
     break;
 
   case SEQ_FADEOUT_START:
@@ -537,6 +540,8 @@ static void WbmWifiSeq_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     break;
 
   case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE:
+  case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR:
+    //@todo
     WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_EndBattle );
     break;
 
@@ -737,7 +742,7 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -768,7 +773,7 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       else if( ret == WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR )
       { 
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -795,7 +800,7 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -896,7 +901,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   //-------------------------------------
   ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
   //=====================================
-  switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+  switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
   { 
   case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
   case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -1716,19 +1721,33 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       ret = WIFIBATTLEMATCH_NET_WaitEvilCheck( p_wk->p_net, &p_wk->evilecheck_data );
       if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_SUCCESS )
       { 
-        OS_TPrintf( "不正チェック通過\n" );
+        const int poke_max  = PokeParty_GetPokeCount( p_wk->p_evilcheck_party );
+        int i;
+        int ret = 0;
+        for( i = 0; i < poke_max; i++ )
+        { 
+          if( p_wk->evilecheck_data.poke_result[i] == NHTTP_RAP_EVILCHECK_RESULT_OK )
+          { 
+            ret++;
+          }
+        }
+
+        if( p_wk->evilecheck_data.status_code == 0 && ret == poke_max )
+        { 
+          OS_TPrintf( "不正チェック通過\n" );
+          *p_seq = SEQ_START_SEND_SAKE_POKE;
+        }
+        else
+        { 
+          OS_TPrintf( "不正チェックNG\n" );
+          *p_seq = SEQ_START_DIRTY_POKE_MSG;
+        }
+
         GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
-        *p_seq = SEQ_START_SEND_SAKE_POKE;
-      }
-      else if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_ERROR )
-      { 
-        OS_TPrintf( "不正チェックNG\n" );
-        GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
-        *p_seq = SEQ_START_DIRTY_POKE_MSG;
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
@@ -1770,7 +1789,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         *p_seq  = SEQ_START_REGISTER_POKE_MSG;
@@ -1801,7 +1820,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         *p_seq  = SEQ_START_REGISTER_POKE_MSG;
@@ -1866,7 +1885,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         *p_seq  = SEQ_START_REGISTER_POKE_MSG;
@@ -1923,12 +1942,18 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_CUP_LIST,
     SEQ_SELECT_CUP_LIST,
 
-    SEQ_NEXT_MATCHING,
     SEQ_NEXT_CUP_END,
 
     SEQ_START_SUBSEQ_UNREGISTER,
     SEQ_WAIT_SUBSEQ_UNREGISTER,
     SEQ_NEXT_DISCONNECT,
+
+    SEQ_START_SUBSEQ_EVILCHECK,
+    SEQ_WAIT_SUBSEQ_EVILCHECK,
+    SEQ_NEXT_MATCHING,
+    
+    SEQ_START_DIRTY_MSG,
+    SEQ_DIRTY_END,
 
     SEQ_WAIT_MSG,
   };
@@ -1976,8 +2001,8 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         Util_List_Delete( p_wk );
         switch( select )
         { 
-        case 0: //たいせんする
-          *p_seq = SEQ_NEXT_MATCHING;
+        case 0: //たいせんする　　不正チェック後マッチングへ
+          *p_seq = SEQ_START_SUBSEQ_EVILCHECK;
           break;
         case 1: //さんかかいじょ
           *p_seq = SEQ_START_SUBSEQ_UNREGISTER;
@@ -1988,10 +2013,6 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         }
       }
     }
-    break;
-
-  case SEQ_NEXT_MATCHING:
-    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Matching );
     break;
 
   case SEQ_NEXT_CUP_END:
@@ -2011,7 +2032,7 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
@@ -2024,6 +2045,54 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_NEXT_DISCONNECT:
+    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_DisConnextEnd );
+    break;
+
+    //-------------------------------------
+    ///	不正チェック
+    //=====================================
+  case SEQ_START_SUBSEQ_EVILCHECK:
+    Util_SubSeq_Start( p_wk, WbmWifiSubSeq_EvilCheck );
+    *p_seq       = SEQ_WAIT_SUBSEQ_EVILCHECK;
+    break;
+
+  case SEQ_WAIT_SUBSEQ_EVILCHECK:
+    { 
+      WBM_WIFI_SUBSEQ_RET ret = Util_SubSeq_Main( p_wk );
+      if( ret == WBM_WIFI_SUBSEQ_EVILCHECK_RET_SUCCESS )
+      { 
+        *p_seq       = SEQ_NEXT_MATCHING;
+      }
+      else if( ret == WBM_WIFI_SUBSEQ_EVILCHECK_RET_DARTY )
+      {   
+        *p_seq       = SEQ_START_DIRTY_MSG;
+      }
+
+      //エラー
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      { 
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
+        break;
+
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+        break;
+      }
+    }
+    break;
+
+  case SEQ_NEXT_MATCHING:
+    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Matching );
+    break;
+
+  case SEQ_START_DIRTY_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_ERR_00, WBM_TEXT_TYPE_STREAM );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
+    break;
+
+  case SEQ_DIRTY_END:
     WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_DisConnextEnd );
     break;
 
@@ -2112,7 +2181,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
@@ -2138,12 +2207,33 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       { 
         //自分のデータ作成
         WIFIBATTLEMATCH_ENEMYDATA *p_my_data = p_param->p_player_data;
-        Util_SetupMyData( p_my_data, p_wk );
-        *p_seq  = SEQ_START_MATCH_MSG;
+        Util_SetMyDataInfo( p_my_data, p_wk );
+
+#ifdef PM_DEBUG
+        {
+          SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+          BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+          POKEPARTY         *p_party=  BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, GFL_HEAP_LOWID(HEAPID_WIFIBATTLEMATCH_CORE) );
+          if( GFL_STD_MemComp( p_party, p_my_data->pokeparty,
+                PokeParty_GetWorkSize() ) == 0 )
+          { 
+            OS_TFPrintf( 3, "自分のパーティとサケは一緒\n" );
+          }
+
+          GFL_HEAP_FreeMemory( p_party );
+        }
+
+        //自分で自分の署名は通るのかチェック
+        if( Util_VerifyPokeData( p_my_data, HEAPID_WIFIBATTLEMATCH_CORE ) )
+#endif
+        { 
+          OS_TFPrintf( 3, "自分の署名は通ったぜ\n" );
+          *p_seq  = SEQ_START_MATCH_MSG;
+        }
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
@@ -2196,7 +2286,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     }
 
     //エラー
-    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2262,7 +2352,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       POKEPARTY         *p_party=  (POKEPARTY*)p_param->p_enemy_data->pokeparty;
       //相手のポケモンをレギュレーションチェックにかける
       if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, p_party, &failed_bit)  )
-      { 
+      {
         NAGI_Printf( "相手のポケモンはレギュレーションOK\n" );
         *p_seq = SEQ_START_DOWNLOAD_OTHER_SAKE_POKE;
       }
@@ -2287,7 +2377,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2304,13 +2394,23 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     if( GFL_STD_MemComp( p_wk->p_other_party, p_wk->p_param->p_enemy_data->pokeparty,
           PokeParty_GetWorkSize() ) != 0 )
     { 
+      NAGI_Printf( "!!相手のポケモンとサーバーポケモン違うNG!! \n" );
       p_wk->other_dirty_cnt++;
+    }
+    else
+    { 
+      NAGI_Printf( "!!相手のポケモンとサーバーポケモンが完全一致!! \n" );
     }
 
     //相手のサーバーポケモンと署名から、正常データであることを証明
     if( !Util_VerifyPokeData( p_wk->p_param->p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE ) )
     { 
+      NAGI_Printf( "!!相手のポケモン署名NG!! \n" );
       p_wk->other_dirty_cnt++;
+    }
+    else
+    { 
+      NAGI_Printf( "!!相手のポケモン署名完全一致!! \n" );
     }
 
     *p_seq  = SEQ_SEND_DIRTY_CHECK_DATA;
@@ -2365,7 +2465,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2501,7 +2601,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2592,7 +2692,7 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2621,7 +2721,7 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2684,7 +2784,7 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2784,7 +2884,7 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2879,7 +2979,7 @@ static void WbmWifiSeq_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -2938,14 +3038,19 @@ static void WbmWifiSeq_DisConnextEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
       *p_seq  = SEQ_END;
     }
 
-    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net ) )
+    //エラーがあろうとなかろうと終了へいく
+#if 0
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       *p_seq  = SEQ_END;
       break;
     }
+#endif
     break;
+
+    //ログアウトで行うことになりました
 #if 0
   case SEQ_START_DISCONNECT:
     if( GFL_NET_IsInit())
@@ -3042,36 +3147,40 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_CHECK_DATE:
     { 
-      u8 start_year;
-      u8 start_month;
-      u8 start_day;
-      u8 end_year;
-      u8 end_month;
-      u8 end_day;
+      RTCDate start_date;
+      RTCDate end_date;
       RTCDate now_date;
       RTCTime time;
       BOOL    ret;
+      s32 start;
+      s32 now;
+      s32 end;
+
       SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
       REGULATION_CARDDATA*p_reg = SaveData_GetRegulationCardData( p_sv );
       ret = DWC_GetDateTime( &now_date, &time );
 
-      start_year  = Regulation_GetCardParam( p_reg, REGULATION_CARD_START_YEAR );
-      start_month = Regulation_GetCardParam( p_reg, REGULATION_CARD_START_MONTH );
-      start_day   = Regulation_GetCardParam( p_reg, REGULATION_CARD_START_DAY );
+      start_date.year  = Regulation_GetCardParam( p_reg, REGULATION_CARD_START_YEAR );
+      start_date.month = Regulation_GetCardParam( p_reg, REGULATION_CARD_START_MONTH );
+      start_date.day   = Regulation_GetCardParam( p_reg, REGULATION_CARD_START_DAY );
+      start_date.week  = RTC_WEEK_SUNDAY; //RTC_ConvertDateToDay関数のなかで範囲チェックしてるのでだますために適当な曜日をいれる
 
-      end_year    = Regulation_GetCardParam( p_reg, REGULATION_CARD_END_YEAR );
-      end_month   = Regulation_GetCardParam( p_reg, REGULATION_CARD_END_MONTH );
-      end_day     = Regulation_GetCardParam( p_reg, REGULATION_CARD_END_DAY );
+      end_date.year    = Regulation_GetCardParam( p_reg, REGULATION_CARD_END_YEAR );
+      end_date.month   = Regulation_GetCardParam( p_reg, REGULATION_CARD_END_MONTH );
+      end_date.day     = Regulation_GetCardParam( p_reg, REGULATION_CARD_END_DAY );
+      end_date.week    = RTC_WEEK_SUNDAY; //RTC_ConvertDateToDay関数のなかで範囲チェックしてるのでだますために適当な曜日をいれる
 
-      OS_TFPrintf( 3, "開催期間チェック 開始%d.%d.%d　現在%d.%d.%d　終了%d.%d.%d\n", start_year, start_month, start_day, 
-                        now_date.year, now_date.month, now_date.day,
-                        end_year, end_month, end_day );
+      start = RTC_ConvertDateToDay( &start_date );
+      end   = RTC_ConvertDateToDay( &end_date );
+      now   = RTC_ConvertDateToDay( &now_date );
 
-      if( ret &&
-          ( start_year <= now_date.year && now_date.year <= end_year &&
-            start_month <= now_date.month && now_date.month <= end_month &&
-            start_day <= now_date.day && now_date.day <= end_day ) )
-      { 
+      OS_TFPrintf( 3, "開催期間チェック 開始%d.%d.%d[%d] 現在%d.%d.%d[%d] 終了%d.%d.%d[%d]\n",
+                        start_date.year, start_date.month, start_date.day, start,
+                        now_date.year, now_date.month, now_date.day, now,
+                        end_date.year, end_date.month, end_date.day, end );
+
+      if( ret && ( start <= now && now <= end ) )
+      {
         p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMESAFE;
         *p_seq  = SEQ_END;
       }
@@ -3354,7 +3463,125 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正チェックサーバーへ1匹ずつ送り署名を貰う
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk       シーケンスワーク
+ *	@param  p_peq                       シーケンス
+ *	@param	p_wk_adrs                   ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START,
+    SEQ_START_EVIL_CHECK,
+    SEQ_WAIT_EVIL_CHECK,
+    SEQ_END_CHECK,
+    SEQ_END,
+  };
 
+  WIFIBATTLEMATCH_WIFI_WORK	  *p_wk	      = p_wk_adrs;
+  WIFIBATTLEMATCH_CORE_PARAM  *p_param    = p_wk->p_param;
+  WIFIBATTLEMATCH_ENEMYDATA   *p_my_data  = p_param->p_player_data;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START:
+    { 
+      SAVE_CONTROL_WORK *p_sv;
+      BATTLE_BOX_SAVE   *p_bbox_save;
+      p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_game_data );
+      p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+      p_wk->p_evilcheck_party =  BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, HEAPID_WIFIBATTLEMATCH_CORE );
+      OS_TFPrintf( 3, "自分のポケモン署名取得開始\n" );
+    }
+    p_wk->cnt = 0;
+    (*p_seq)  = SEQ_START_EVIL_CHECK;
+    break;
+
+  case SEQ_START_EVIL_CHECK:
+    { 
+      const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( p_wk->p_evilcheck_party, p_wk->cnt);
+
+      WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, cp_pp, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PP );
+      (*p_seq)  = SEQ_WAIT_EVIL_CHECK;
+      NAGI_Printf( "EvilCheck Start [%d]匹目\n", p_wk->cnt );
+    }
+    break;
+
+  case SEQ_WAIT_EVIL_CHECK:
+    {
+      WIFIBATTLEMATCH_NET_EVILCHECK_RET ret;
+      ret = WIFIBATTLEMATCH_NET_WaitEvilCheck( p_wk->p_net, &p_wk->evilecheck_data );
+      if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_SUCCESS )
+      { 
+        NAGI_Printf( "EvilCheck Success\n" );
+        (*p_seq)  = SEQ_END_CHECK;
+      }
+      else if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_ERROR )
+      { 
+        NAGI_Printf( "EvilCheck Error\n" );
+        p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_NET_ERR;
+        *p_seq  = SEQ_END;
+      }
+    }
+    break;
+
+  case SEQ_END_CHECK:
+    //データを格納
+    OS_TPrintf( "ポケモン結果[%d]status=%d\n", p_wk->evilecheck_data.poke_result[0], p_wk->evilecheck_data.status_code );
+    if( p_wk->evilecheck_data.status_code == 0 && p_wk->evilecheck_data.poke_result[0] == NHTTP_RAP_EVILCHECK_RESULT_OK )
+    { 
+      OS_TFPrintf( 3, "-=-=-=ポケモン証明[%d]-=-=-=\n", p_wk->cnt );
+      {
+        int len = 0;
+        for(len = 0; len < 128; len++ )
+        {
+          OS_TFPrintf( 3,"%x ", (u8) p_wk->evilecheck_data.sign[len] );
+          if( (len + 1) % 16 == 0 ) OS_TFPrintf( 3,"\n");
+        }
+        OS_TFPrintf( 3, "\n" );
+      }
+      OS_TFPrintf( 3, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+
+      //署名を保存
+      Util_SetMyDataSign( p_my_data, &p_wk->evilecheck_data, p_wk->cnt );
+
+      //カウント
+      p_wk->cnt++;
+
+      //まだポケモンがいれば不正チェック
+      if( p_wk->cnt < PokeParty_GetPokeCount( p_wk->p_evilcheck_party ) )
+      { 
+        NAGI_Printf( "EvilCheck %d匹目　OK！！\n",p_wk->cnt );
+        *p_seq  = SEQ_START_EVIL_CHECK;
+      }
+      else
+      { 
+        NAGI_Printf( "EvilCheck 成功！！\n" );
+        p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_SUCCESS;
+        *p_seq  = SEQ_END;
+      }
+    }
+    else
+    { 
+      NAGI_Printf( "EvilCheck 不正 %d / %d！！\n", p_wk->cnt, PokeParty_GetPokeCount( p_wk->p_evilcheck_party ) );
+      p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_DARTY;
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
+    WBM_SEQ_End( p_seqwk );
+    break;
+  }
+
+
+}
 //=============================================================================
 /**
  *  便利
@@ -3679,6 +3906,17 @@ static WBM_WIFI_SUBSEQ_RET Util_SubSeq_Main( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  自分のデータを初期化
+ *
+ *	@param	WIFIBATTLEMATCH_ENEMYDATA *p_my_data ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data )
+{ 
+  GFL_STD_MemClear( p_my_data, sizeof(WIFIBATTLEMATCH_ENEMYDATA) );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  自分のデータを格納
  *	        SAKE GPFからデータをもらってきていること
  *
@@ -3686,10 +3924,8 @@ static WBM_WIFI_SUBSEQ_RET Util_SubSeq_Main( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
  *	@param	WIFIBATTLEMATCH_WIFI_WORK *cp_wk      ワーク
  */
 //-----------------------------------------------------------------------------
-static void Util_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_WIFI_WORK *cp_wk )
+static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_WIFI_WORK *cp_wk )
 { 
-  GFL_STD_MemClear( p_my_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
-
   {
     MYSTATUS  *p_my;
     p_my  = GAMEDATA_GetMyStatus(cp_wk->p_param->p_param->p_game_data);
@@ -3715,6 +3951,20 @@ static void Util_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBA
 
   GFL_STD_MemCopy( cp_wk->sake_data.pokeparty, p_my_data->pokeparty, PokeParty_GetWorkSize() );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  署名を追加
+ *
+ *	@param	WIFIBATTLEMATCH_ENEMYDATA *p_my_data      ワーク
+ *	@param	WIFIBATTLEMATCH_NET_EVILCHECK_DATA  *cp_evilecheck_data 不正チェック
+ *	@param	index                                                   何番目のポケモンか
+ *
+ */
+//-----------------------------------------------------------------------------
+static void Util_SetMyDataSign( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_NET_EVILCHECK_DATA  *cp_evilecheck_data, u32 index )
+{ 
+  GFL_STD_MemCopy( cp_evilecheck_data->sign, p_my_data->sign[ index ], NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -3734,6 +3984,8 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapI
   const POKEMON_PARAM *cp_pp;
   BOOL ret  = TRUE;
 
+  NAGI_Printf( "ポケモン署名開始　全部で[%d]匹\n", PokeParty_GetPokeCount( p_party ) );
+  OS_TFPrintf( 3, "相手のポケモン署名チェック開始\n" );
   for( i = 0; i < PokeParty_GetPokeCount( p_party ); i++ )
   { 
     cp_pp  = PokeParty_GetMemberPointer( p_party, i);
@@ -3741,10 +3993,28 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapI
     p_buff  = NHTTP_RAP_EVILCHECK_CreateVerifyPokeBuffer( POKETOOL_GetWorkSize(), 1, GFL_HEAP_LOWID(heapID) );
     NHTTP_RAP_EVILCHECK_AddPokeVerifyPokeBuffer( p_buff, cp_pp, POKETOOL_GetWorkSize(), 0 );
 
-    ret &= NHTTP_RAP_EVILCHECK_VerifySign( p_buff, POKETOOL_GetWorkSize(), 1, p_data->sign[i] );
+    ret = NHTTP_RAP_EVILCHECK_VerifySign( p_buff, POKETOOL_GetWorkSize(), 1, p_data->sign[i], GFL_HEAP_LOWID(heapID) );
+
+    OS_TFPrintf( 3, "-=-=-=ポケモン証明[%d]-=-=-=\n", i );
+    { 
+      OS_TFPrintf( 3, "mosno=%d\n", PP_Get( cp_pp, ID_PARA_monsno, NULL ) );
+      OS_TFPrintf( 3, "sex  =%d\n", PP_Get( cp_pp, ID_PARA_sex, NULL ) );
+      OS_TFPrintf( 3, "level=%d\n", PP_Get( cp_pp, ID_PARA_level, NULL ) );
+    }
+    {
+      int len = 0;
+      for(len = 0; len < 128; len++ )
+			{
+				OS_TFPrintf( 3,"%x ", (u8) p_data->sign[i][len] );
+				if( (len + 1) % 16 == 0 ) OS_TFPrintf( 3,"\n");
+			}
+      OS_TFPrintf( 3, "\n" );
+    }
+    OS_TFPrintf( 3, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 
     NHTTP_RAP_EVILCHECK_DeleteVerifyPokeBuffer( p_buff );
 
+    NAGI_Printf( "%d匹目=[%d]\n", i, ret );
     if( ret == FALSE )
     { 
       break;
@@ -3752,5 +4022,4 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapI
   }
 
   return ret;
-
 }

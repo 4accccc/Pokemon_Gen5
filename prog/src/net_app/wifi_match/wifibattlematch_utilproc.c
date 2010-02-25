@@ -14,6 +14,7 @@
 //	システム
 #include "system/main.h"
 #include "gamesystem/game_data.h"
+#include "net/dwc_error.h"
 
 //WIFIバトルマッチのモジュール
 #include "wifibattlematch_net.h"
@@ -210,13 +211,15 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_LISTAFTER_PROC_Main( GFL_PROC *p_proc, in
     return GFL_PROC_RES_FINISH;
   }
 
-  //共通のエラー処理（SC,GDB以外）
-  if( WIFIBATTLEMATCH_NET_CheckError( p_wk->p_net ) )
+  //エラー処理ここで起きたら復帰が難しいので切断
+  if( GFL_NET_IsInit() )
   { 
-    p_param->result = WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_NEXT_LOGIN;
-    return GFL_PROC_RES_FINISH;
+    if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) != GFL_NET_DWC_ERROR_RESULT_NONE )
+    { 
+      p_param->result = WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_NEXT_LOGIN;
+      return GFL_PROC_RES_FINISH;
+    }
   }
-
 
   return GFL_PROC_RES_CONTINUE;
 }

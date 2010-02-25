@@ -66,7 +66,6 @@ extern void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea 
 extern NET_ERR_CHECK NetErr_App_CheckError(void);
 extern void NetErr_App_ReqErrorDisp(void);
 
-
 //--------------------------------------------------------------
 //  デバッグ用
 //--------------------------------------------------------------

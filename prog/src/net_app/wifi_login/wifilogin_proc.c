@@ -16,6 +16,7 @@
 #include "net/network_define.h"
 #include "net/dwc_rap.h"
 #include "net/nhttp_rap.h"
+#include "net/dwc_error.h"
 
 #include "system/main.h"
 #include "system/wipe.h"
@@ -991,12 +992,27 @@ static GFL_PROC_RESULT WiFiLogin_ProcMain( GFL_PROC * proc, int * seq, void * pw
   WIFILOGIN_PARAM* pEv=pwk;
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
 
-  StateFunc* state = pWork->state;
-  if(state != NULL){
-    state(pWork);
-    retCode = GFL_PROC_RES_CONTINUE;
+  //エラーチェック
+  //（GAMESYSTEMかこの下位のPROCでNetErr_DispCall(FALSE);が呼ばれているのが前提です）
+  if( GFL_NET_IsInit() )
+  { 
+    if( GFL_NET_DWC_ERROR_RESULT_NONE != GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE ) )
+    {
+      pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
+      return retCode;
+    }
   }
 
+  //メインプロセス
+  { 
+    StateFunc* state = pWork->state;
+    if(state != NULL){
+      state(pWork);
+      retCode = GFL_PROC_RES_CONTINUE;
+    }
+  }
+
+  //
   if(pWork->pSelectWork){
     WIFILOGIN_MESSAGE_YesNoUpdate(pWork->pSelectWork);
   }
