@@ -340,6 +340,7 @@ DEP_TEXSET_IMD_INDOOR006 = \
 	$(SRCDIR)/warp03.imd \
 	$(SRCDIR)/shelf06.imd \
 	$(SRCDIR)/in06_kairyu.imd \
+	$(SRCDIR)/kemuri_event.imd \
 	$(SRCDIR)/kemuri_event2.imd
 
 texset/indoor006.imd: $(DEP_TEXSET_IMD_INDOOR006) texset/tmp/indoor006.list
