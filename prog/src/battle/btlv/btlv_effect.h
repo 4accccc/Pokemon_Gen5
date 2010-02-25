@@ -71,8 +71,8 @@ enum{
   BTLEFF_POKEMON_KURIDASU,      //ポケモン繰り出しエフェクト
   BTLEFF_MIGAWARI_FALL,         //みがわり落ちてくる
   BTLEFF_MIGAWARI_DEAD,         //みがわり消滅
-//  BTLEFF_FUN,                 //
-//  BTLEFF_EAT,                 //
+  BTLEFF_TRAINER_IN,            //トレーナーフレームイン
+  BTLEFF_TRAINER_OUT,           //トレーナーフレームアウト
 //  BTLEFF_ANGRY,               //
   BTLEFF_NOROI,                 //のろい  30
   BTLEFF_AKUMU,                 //あくむ

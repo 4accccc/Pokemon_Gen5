@@ -132,7 +132,7 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FI
   besp->bfs   = *bfs;
   besp->multi = multi;
 
-  for( i = BTL_CLIENTID_SA_PLAYER ; i <= BTL_CLIENTID_SA_ENEMY2 ; i++ )
+  for( i = 0 ; i < 4 ; i++ )
   { 
     besp->tr_type[ i ] = tr_type[ i ];
   }
@@ -153,10 +153,21 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* 
   int i;
   u16 tr_type[ 4 ];
 
-  tr_type[ 0 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetPlayerClientID( mainModule ) );
-  tr_type[ 1 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 0 ) );
-  tr_type[ 2 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetFriendCleintID( mainModule ) );
-  tr_type[ 3 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 1 ) );
+  if( BTL_MAIN_IsMultiMode( mainModule ) == TRUE )
+  { 
+    tr_type[ 0 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetPlayerClientID( mainModule ) );
+    tr_type[ 1 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 0 ) );
+    tr_type[ 2 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetFriendCleintID( mainModule ) );
+    tr_type[ 3 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 1 ) );
+  }
+  else
+  { 
+    tr_type[ 0 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetPlayerClientID( mainModule ) );
+    tr_type[ 1 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 0 ) );
+    tr_type[ 2 ] = 0;
+    tr_type[ 3 ] = 0;
+  }
+
 
   return BTLV_EFFECT_MakeSetUpParam( BTL_MAIN_GetRule( mainModule ), BTL_MAIN_GetFieldSituation( mainModule ),
                                      BTL_MAIN_IsMultiMode( mainModule ), tr_type, heapID );
