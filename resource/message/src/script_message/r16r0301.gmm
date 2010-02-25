@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsushima" host="W00181" date="2010-02-25T14:09:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,12 +235,12 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="233"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="298"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="313"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -292,11 +292,65 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_r16r0301_youngman_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●ゾロアークを捕獲後
+
+・登場してから叫ぶ。
+・その後、主人公に近寄り、
+msg_r16r0201_youngman_05</comment>
+		<attribute name="キャラ指定">バックパッカー♂</attribute>
+		<language name="JPN" width="256">やっぱり　ここが
+ゾロアークの　すみか　だったのか！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">やっぱり　ここが
+ゾロアークの　すみか　だったのか！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r16r0301_youngman_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>・主人公の横に立ってからのセリフ。
+
+・続けてmsg_r16r0201_youngman_06</comment>
+		<attribute name="キャラ指定">バックパッカー♂</attribute>
+		<language name="JPN" width="256">ゾロアークは　じぶんたちの　すみかを
+あらされないように　イリュージョンで[BE:00:ページ切り替え（行送り）]
+ひとや　ポケモンを　ばかしているんだ[BE:01:ページ切り替え（クリア）]
+この　ばしょが　あやしいと　きいて
+しらべていたんだけど…[BE:00:ページ切り替え（行送り）]
+ボクも　ばかされていたらしい[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゾロアークは　じぶんたちの　すみかを
+あらされないように　イリュージョンで[BE:00:ページ切り替え（行送り）]
+ひとや　ポケモンを　ばかしているんだ[BE:01:ページ切り替え（クリア）]
+この　ばしょが　あやしいと　きいて
+しらべていたんだけど…[BE:00:ページ切り替え（行送り）]
+ボクも　ばかされていたらしい[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r16r0301_youngman_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>・このセリフのあと、周囲を見渡すような小芝居。
+
+・小芝居のあとmsg_r16r0201_youngman_07</comment>
+		<attribute name="キャラ指定">バックパッカー♂</attribute>
+		<language name="JPN" width="256">キミが　つれていた　ポケモンに
+ゾロアークは　はげしく　はんのうした…[BE:01:ページ切り替え（クリア）]
+なにか　いんねん　みたいな　ものが
+あったんだろうね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">キミが　つれていた　ポケモンに
+ゾロアークは　はげしく　はんのうした…[BE:01:ページ切り替え（クリア）]
+なにか　いんねん　みたいな　ものが
+あったんだろうね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r16r0301_youngman_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>・言い終えると、青年は立ち去り、
+イベントが終了する。</comment>
+		<attribute name="キャラ指定">バックパッカー♂</attribute>
+		<language name="JPN" width="256">こんな　うつくしい　のはらが
+ここに　あったなんて…[BE:01:ページ切り替え（クリア）]
+まるで　この　けしきのほうが
+イリュージョン　みたいじゃないか！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">こんな　うつくしい　のはらが
+ここに　あったなんて…[BE:01:ページ切り替え（クリア）]
+まるで　この　けしきのほうが
+イリュージョン　みたいじゃないか！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
