@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-02-25T15:39:55"/>
+	<create user="morimoto" host="W00220" date="2010-02-25T16:20:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,9 +337,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1592" top="220" right="2297" bottom="840" maximized="no" rayout="Vertical2">
+	<dialog left="1353" top="126" right="2058" bottom="746" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="1861" top="291" right="2334" bottom="689" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -599,6 +599,13 @@
 バトルけんていの　しんだんを▽
 おこなっちゃいますよ！▼
 さっそく　チャレンジ　しちゃう？</language>
+	</row>
+
+	<row id="msg_trialhouse_029" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">つぎは　[2:00:１桁:0]にんめ　ですよ
+がんばって　ください！</language>
+		<language name="JPN_KANJI" width="256">つぎは　[2:00:１桁:0]にんめ　ですよ
+がんばって　ください！</language>
 	</row>
 
 	<row id="msg_trialhouse_str1">
