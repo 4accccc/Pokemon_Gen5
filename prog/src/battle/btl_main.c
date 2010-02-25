@@ -2739,6 +2739,14 @@ u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk )
 {
   return wk->myClientID;
 }
+u8 BTL_MAIN_GetFriendCleintID( const BTL_MAIN_MODULE* wk )
+{
+  u8 friendClientID = GetFriendCrientID( wk->myClientID );
+  if( BTL_MAIN_IsExistClient(wk, friendClientID) ){
+    return friendClientID;
+  }
+  return BTL_CLIENTID_NULL;
+}
 u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx )
 {
   return BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, idx );

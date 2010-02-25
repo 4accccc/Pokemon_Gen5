@@ -56,6 +56,7 @@ extern u8 BTL_MAIN_GetPlayerMultiPos( const BTL_MAIN_MODULE* wk );
 extern BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk );
 extern u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk );
+extern u8 BTL_MAIN_GetFriendCleintID( const BTL_MAIN_MODULE* wk );
 extern u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx );
 extern BtlSide BTL_MAIN_GetPlayerSide( const BTL_MAIN_MODULE* wk );
 

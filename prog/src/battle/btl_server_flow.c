@@ -5525,8 +5525,8 @@ static u32 scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
 {
   u32 dmg_sum = svflowsub_damage_act_singular( wk, attacker, defender, wazaParam, affinity, targetDmgRatio );
 
-//  scproc_CheckDeadCmd( wk, attacker );
-//  scproc_CheckDeadCmd( wk, defender );
+  scproc_CheckDeadCmd( wk, attacker );
+  scproc_CheckDeadCmd( wk, defender );
 
   return dmg_sum;
 }
@@ -5725,12 +5725,10 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
 
   scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
 
-  /*
   for(i=0; i<poke_cnt; ++i){
     scproc_CheckDeadCmd( wk, bpp[i] );
   }
   scproc_CheckDeadCmd( wk, attacker );
-  */
 
   return dmg_sum;
 }
@@ -10689,7 +10687,7 @@ static BOOL scEvent_CheckPluralHitParam( BTL_SVFLOW_WORK* wk, const BTL_POKEPARA
         *hitCount = max;
         *fPluralHitCheck = FALSE;
       }else{
-        *hitCount = BTL_CALC_HitCountMax( max );
+        *hitCount = BTL_CALC_HitCountStd( max );
         *fPluralHitCheck = BTL_EVENTVAR_GetValue( BTL_EVAR_AVOID_FLAG );
       }
     BTL_EVENTVAR_Pop();

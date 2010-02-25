@@ -7228,7 +7228,8 @@ static void handler_FukuroDataki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     u32 cnt_max, cnt, i;
 
     cnt_max = cnt = BTL_PARTY_GetMemberCount( party );
-    for(i=0; i<cnt_max; ++i){
+    for(i=0; i<cnt_max; ++i)
+    {
       bpp = BTL_PARTY_GetMemberDataConst( party, i );
       if( BPP_IsDead(bpp)
       ||  (BPP_GetPokeSick(bpp) != POKESICK_NULL)

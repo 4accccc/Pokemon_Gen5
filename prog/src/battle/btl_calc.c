@@ -344,40 +344,26 @@ u8 BTL_CALC_GetResistTypes( PokeType type, PokeType* dst )
  * @retval  u8
  */
 //=============================================================================================
-u8 BTL_CALC_HitCountMax( u8 numHitMax )
+u8 BTL_CALC_HitCountStd( u8 numHitMax )
 {
-  enum {
-    HIT_COUNT_MIN = 1,
-    HIT_COUNT_MAX = 5,
-
-    HIT_COUNT_RANGE = HIT_COUNT_MAX - HIT_COUNT_MIN + 1,
-  };
-
-  GF_ASSERT(numHitMax>=HIT_COUNT_MIN);
-  GF_ASSERT(numHitMax<=HIT_COUNT_MAX);
-
+  if( numHitMax == 5 )
   {
-    static const u8 perTbl[ HIT_COUNT_RANGE ][ HIT_COUNT_RANGE ] = {
-/* 1 */     {  100, 100, 100, 100, 100 },
-/* 2 */     {    0, 100, 100, 100, 100 },
-/* 3 */     {    0,   0, 100, 100, 100 },
-/* 4 */     {   35,  70, 100, 100, 100 },
-/* 5 */     {    0,  35,  70,  85, 100 },
+    static const u8 perTbl[] = {
+      0, 0, 35, 70, 85, 100,
     };
+    u8 rnd = BTL_CALC_GetRand( 100 );
+    u8 i;
 
-    u8  max, p, i;
-
-    p = BTL_CALC_GetRand( 100 );
-    max = numHitMax - HIT_COUNT_MIN;
-//    OS_TPrintf("numHitMax = %d ..\n", max );
-    for(i=0; i<HIT_COUNT_RANGE; i++)
+    for(i=0; i<NELEMS(perTbl); ++i)
     {
-      if( p < perTbl[max][i] )
-      {
-        break;
+      if( rnd < perTbl[i] ){
+        return i;
       }
     }
-    return i + HIT_COUNT_MIN;
+    return numHitMax;
+  }
+  else{
+    return numHitMax;
   }
 }
 

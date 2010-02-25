@@ -91,7 +91,7 @@ extern BtlTypeAff BTL_CALC_TypeAffMul( BtlTypeAff aff1, BtlTypeAff aff2 );
 
 extern u32 BTL_CALC_AffDamage( u32 rawDamage, BtlTypeAff aff );
 
-extern u8 BTL_CALC_HitCountMax( u8 numHitMax );
+extern u8 BTL_CALC_HitCountStd( u8 numHitMax );
 extern u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather );
 extern fx32 BTL_CALC_GetWeatherDmgRatio( BtlWeather weather, PokeType wazaType );
 

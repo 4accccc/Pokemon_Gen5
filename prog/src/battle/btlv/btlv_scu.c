@@ -1879,15 +1879,20 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
 //---------------------------------------------------------------------------
 static BOOL btlinEff_MyPokeInDouble( BTLV_SCU* wk, int* seq )
 {
-  u8 clientID_1 = BTL_MAIN_GetEnemyClientID ( wk->mainModule, 0 );
-  u8 clientID_2 = BTL_MAIN_GetEnemyClientID ( wk->mainModule, 1 );
-  if( clientID_1 != clientID_2 )
+  u8 clientID_1 = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+  u8 clientID_2 = BTL_MAIN_GetFriendCleintID( wk->mainModule );
+  if( clientID_2 == BTL_CLIENTID_NULL )
   {
-    return btlinEffSub_MyPokeIn_Tag( wk, seq, clientID_1, clientID_2 );
+    return btlinEffSub_MyPokeIn_Solo( wk, seq, clientID_1 );
   }
   else
   {
-    return btlinEffSub_MyPokeIn_Solo( wk, seq, clientID_1 );
+    if( clientID_1 > clientID_2 ){
+      u8  tmp = clientID_1;
+      clientID_2 = clientID_1;
+      clientID_1 = tmp;
+    }
+    return btlinEffSub_MyPokeIn_Tag( wk, seq, clientID_1, clientID_2 );
   }
 }
 /**
