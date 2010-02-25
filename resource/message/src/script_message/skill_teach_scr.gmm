@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T14:50:24"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T22:14:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="186" right="1992" bottom="814" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -349,30 +349,30 @@
 　なつき度最高を満たしていれば何匹でも覚える
 　技名「りゅうせいぐん」</comment>
 		<attribute name="キャラ指定">ジムリーダー
-シャガ</attribute>
-		<language name="JPN" width="256">シャガ『きみが　のぞむなら
-きみの　ポケモンに▽
-ドラゴンタイプ　さいきょうの▽
-わざを　おしえても　よい▼
-さて　ポケモンに
-わざを　おぼえさせるかね？▼</language>
-		<language name="JPN_KANJI" width="256">シャガ『きみが　望むなら
-きみの　ポケモンに▽
-ドラゴンタイプ　最強の▽
-技を　教えても　よい▼
-さて　ポケモンに
-技を　覚えさせるかね？▼</language>
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『ねえねえ！
+よければ　きみの　ポケモンに▽
+ドラゴンタイプ　さいきょうの　わざ▽
+あたしが　おしえてあげる！！▼
+どうする？　ポケモンに
+わざを　おぼえさせてあげる？▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『ねえねえ！
+よければ　きみの　ポケモンに▽
+ドラゴンタイプ　さいきょうの　わざ▽
+あたしが　おしえてあげる！！▼
+どうする？　ポケモンに
+わざを　おぼえさせてあげる？▼</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_02b">
 		<comment>♂：ドラゴン技教え
 ・いいえを選択</comment>
 		<attribute name="キャラ指定">ジムリーダー
-シャガ</attribute>
-		<language name="JPN" width="256">よろしい
-きが　むいたなら　また　きたまえ</language>
-		<language name="JPN_KANJI" width="256">よろしい
-気が　むいたなら　また　来たまえ</language>
+アイリス</attribute>
+		<language name="JPN" width="256">はーい！　それじゃあ
+きがむいたら　またきてね！！</language>
+		<language name="JPN_KANJI" width="256">はーい！　それじゃあ
+きがむいたら　またきてね！！</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_03b">
@@ -382,21 +382,21 @@
 　なつき度がＭＡＸではない
 ・選択画面で選んだ場合も</comment>
 		<attribute name="キャラ指定">ジムリーダー
-シャガ</attribute>
-		<language name="JPN" width="256">フム……▼
+アイリス</attribute>
+		<language name="JPN" width="256">どれどれ……▼
 きみが　つれている　ポケモンは
-わざを　おぼえることは　できる▼
-だが　その　ポケモンは　まだ
-きみに　かんぜんに　なついていない▼
-それでは　この　わざを
-おぼえさせる　わけには　いかない</language>
-		<language name="JPN_KANJI" width="256">フム……▼
-きみが　連れている　ポケモンは
-技を　覚えることは　できる▼
-だが　その　ポケモンは　まだ
-きみに　完全に　なついていない▼
-それでは　この　技を
-覚えさせる　わけには　いかない</language>
+わざを　おぼえることは　できるけど▼
+その　ポケモン……　まだ
+きみに　かんぜんに　なついてないよね▼
+それだと　この　わざを
+おぼえさせるのは　むずかしいなあ</language>
+		<language name="JPN_KANJI" width="256">どれどれ……▼
+きみが　つれている　ポケモンは
+わざを　おぼえることは　できるけど▼
+その　ポケモン……　まだ
+きみに　かんぜんに　なついてないよね▼
+それだと　この　わざを
+おぼえさせるのは　むずかしいなあ</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_04b">
@@ -404,15 +404,15 @@
 ・はいを選択
 　だが覚えられるポケモンがいない</comment>
 		<attribute name="キャラ指定">ジムリーダー
-シャガ</attribute>
-		<language name="JPN" width="256">なるほど……▼
-だが　きみが　つれている　なかに
+アイリス</attribute>
+		<language name="JPN" width="256">えーっと▼
+きみが　つれている　なかに
 わざを　おぼえられる▽
-ポケモンは　いないようだね</language>
-		<language name="JPN_KANJI" width="256">なるほど……▼
-だが　きみが　連れている　中に
-技を　覚えられる▽
-ポケモンは　いないようだね</language>
+ポケモン　いないみたい……</language>
+		<language name="JPN_KANJI" width="256">えーっと▼
+きみが　つれている　なかに
+わざを　おぼえられる▽
+ポケモン　いないみたい……</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_05b">
@@ -421,11 +421,11 @@
 　覚えられるポケモンがいる
 ・メッセージ表示後、ポケモン選択画面に</comment>
 		<attribute name="キャラ指定">ジムリーダー
-シャガ</attribute>
+アイリス</attribute>
 		<language name="JPN" width="256">どの　ポケモンに
-わざを　おぼえさせるのかね？▼</language>
+わざを　おぼえさせるの？▼</language>
 		<language name="JPN_KANJI" width="256">どの　ポケモンに
-技を　覚えさせるのかね？▼</language>
+わざを　おぼえさせるの？▼</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_06b">
@@ -433,26 +433,34 @@
 ・ポケモン選択後
 　おぼえられない</comment>
 		<attribute name="キャラ指定">ジムリーダー
-シャガ</attribute>
-		<language name="JPN" width="256">もうしわけないのだが……▼
+アイリス</attribute>
+		<language name="JPN" width="256">うーん　ごめんね……▼
 その　ポケモンでは
-この　わざは　おぼえられない</language>
-		<language name="JPN_KANJI" width="256">申し訳ないのだが……▼
+この　わざ　おぼえられないよ……</language>
+		<language name="JPN_KANJI" width="256">うーん　ごめんね……▼
 その　ポケモンでは
-この　技は　覚えられない</language>
+この　わざ　おぼえられないよ……</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_07b">
 		<comment>♂：ドラゴン技教え
 ・ポケモン選択時にタマゴ選択</comment>
 		<attribute name="キャラ指定">ジムリーダー
-シャガ</attribute>
-		<language name="JPN" width="256">フム……▼
-タマゴに　わざを　おぼえさせるのは
-わたしにも　むずかしいな</language>
-		<language name="JPN_KANJI" width="256">フム……▼
-タマゴに　技を　覚えさせるのは
-わたしにも　難しいな</language>
+アイリス</attribute>
+		<language name="JPN" width="256">エーッ！▼
+タマゴに　わざを　おぼえさせるの？
+じゃあ　ちょっと　がんばってみるね▼
+……　……　……
+……　……　……▼
+ごめん……
+ちょっと　ムリみたい……</language>
+		<language name="JPN_KANJI" width="256">エーッ！▼
+タマゴに　わざを　おぼえさせるの？
+じゃあ　ちょっと　がんばってみるね▼
+……　……　……
+……　……　……▼
+ごめん……
+ちょっと　ムリみたい……</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_08b">
@@ -460,11 +468,11 @@
 ・ポケモン選択後、すでに習得済み
 ・0＝技名</comment>
 		<attribute name="キャラ指定">ジムリーダー
-シャガ</attribute>
-		<language name="JPN" width="256">ふむ……　その　ポケモンは
-すでに　[1:07:わざ名:0]を　おぼえているが</language>
-		<language name="JPN_KANJI" width="256">ふむ……　その　ポケモンは
-すでに　[1:07:わざ名:0]を　覚えているが</language>
+アイリス</attribute>
+		<language name="JPN" width="256">どれどれ？　その　ポケモン
+すでに　[1:07:わざ名:0]を　おぼえているよ？</language>
+		<language name="JPN_KANJI" width="256">どれどれ？　その　ポケモン
+すでに　[1:07:わざ名:0]を　おぼえているよ？</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_09b">
@@ -473,13 +481,15 @@
 　フィールドにもどると、このメッセージ表示
 ・以降はmsg_skillteach_dragon_01表示</comment>
 		<attribute name="キャラ指定">ジムリーダー
-シャガ</attribute>
-		<language name="JPN" width="256">シャガ『りゅうせいぐんの　いりょくは
-すさまじいが　つかうと　じぶんの▽
-とくしゅこうげきも　さげてしまうぞ</language>
-		<language name="JPN_KANJI" width="256">シャガ『りゅうせいぐんの　威力は
-すさまじいが　使うと　自分の▽
-特殊攻撃も　下げてしまうぞ</language>
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『りゅうせいぐんの　いりょくは
+ものすごーく　すごいんだけど！▼
+つかったあとは　じぶんの
+とくしゅこうげきも　さがっちゃうんだ</language>
+		<language name="JPN_KANJI" width="256">アイリス『りゅうせいぐんの　いりょくは
+ものすごーく　すごいんだけど！▼
+つかったあとは　じぶんの
+とくしゅこうげきも　さがっちゃうんだ</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_10" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
@@ -589,30 +599,30 @@
 　なつき度最高を満たしていれば何匹でも覚える
 　技名「りゅうせいぐん」</comment>
 		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">アイリス『ねえねえ！
-よければ　きみの　ポケモンに▽
-ドラゴンタイプ　さいきょうの　わざ▽
-あたしが　おしえてあげる！！▼
-どうする？　ポケモンに
-わざを　おぼえさせてあげる？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『ねえねえ！
-よければ　きみの　ポケモンに▽
-ドラゴンタイプ　さいきょうの　わざ▽
-あたしが　おしえてあげる！！▼
-どうする？　ポケモンに
-わざを　おぼえさせてあげる？▼</language>
+シャガ</attribute>
+		<language name="JPN" width="256">シャガ『きみが　のぞむなら
+きみの　ポケモンに▽
+ドラゴンタイプ　さいきょうの▽
+わざを　おしえても　よい▼
+さて　ポケモンに
+わざを　おぼえさせるかね？▼</language>
+		<language name="JPN_KANJI" width="256">シャガ『きみが　望むなら
+きみの　ポケモンに▽
+ドラゴンタイプ　最強の▽
+技を　教えても　よい▼
+さて　ポケモンに
+技を　覚えさせるかね？▼</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_02w">
 		<comment>♂：ドラゴン技教え
 ・いいえを選択</comment>
 		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">はーい！　それじゃあ
-きがむいたら　またきてね！！</language>
-		<language name="JPN_KANJI" width="256">はーい！　それじゃあ
-きがむいたら　またきてね！！</language>
+シャガ</attribute>
+		<language name="JPN" width="256">よろしい
+きが　むいたなら　また　きたまえ</language>
+		<language name="JPN_KANJI" width="256">よろしい
+気が　むいたなら　また　来たまえ</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_03w">
@@ -622,21 +632,21 @@
 　なつき度がＭＡＸではない
 ・選択画面で選んだ場合も</comment>
 		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">どれどれ……▼
+シャガ</attribute>
+		<language name="JPN" width="256">フム……▼
 きみが　つれている　ポケモンは
-わざを　おぼえることは　できるけど▼
-その　ポケモン……　まだ
-きみに　かんぜんに　なついてないよね▼
-それだと　この　わざを
-おぼえさせるのは　むずかしいなあ</language>
-		<language name="JPN_KANJI" width="256">どれどれ……▼
-きみが　つれている　ポケモンは
-わざを　おぼえることは　できるけど▼
-その　ポケモン……　まだ
-きみに　かんぜんに　なついてないよね▼
-それだと　この　わざを
-おぼえさせるのは　むずかしいなあ</language>
+わざを　おぼえることは　できる▼
+だが　その　ポケモンは　まだ
+きみに　かんぜんに　なついていない▼
+それでは　この　わざを
+おぼえさせる　わけには　いかない</language>
+		<language name="JPN_KANJI" width="256">フム……▼
+きみが　連れている　ポケモンは
+技を　覚えることは　できる▼
+だが　その　ポケモンは　まだ
+きみに　完全に　なついていない▼
+それでは　この　技を
+覚えさせる　わけには　いかない</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_04w">
@@ -644,15 +654,15 @@
 ・はいを選択
 　だが覚えられるポケモンがいない</comment>
 		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">えーっと▼
-きみが　つれている　なかに
+シャガ</attribute>
+		<language name="JPN" width="256">なるほど……▼
+だが　きみが　つれている　なかに
 わざを　おぼえられる▽
-ポケモン　いないみたい……</language>
-		<language name="JPN_KANJI" width="256">えーっと▼
-きみが　つれている　なかに
-わざを　おぼえられる▽
-ポケモン　いないみたい……</language>
+ポケモンは　いないようだね</language>
+		<language name="JPN_KANJI" width="256">なるほど……▼
+だが　きみが　連れている　中に
+技を　覚えられる▽
+ポケモンは　いないようだね</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_05w">
@@ -661,11 +671,11 @@
 　覚えられるポケモンがいる
 ・メッセージ表示後、ポケモン選択画面に</comment>
 		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
+シャガ</attribute>
 		<language name="JPN" width="256">どの　ポケモンに
-わざを　おぼえさせるの？▼</language>
+わざを　おぼえさせるのかね？▼</language>
 		<language name="JPN_KANJI" width="256">どの　ポケモンに
-わざを　おぼえさせるの？▼</language>
+技を　覚えさせるのかね？▼</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_06w">
@@ -673,34 +683,26 @@
 ・ポケモン選択後
 　おぼえられない</comment>
 		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">うーん　ごめんね……▼
+シャガ</attribute>
+		<language name="JPN" width="256">もうしわけないのだが……▼
 その　ポケモンでは
-この　わざ　おぼえられないよ……</language>
-		<language name="JPN_KANJI" width="256">うーん　ごめんね……▼
+この　わざは　おぼえられない</language>
+		<language name="JPN_KANJI" width="256">申し訳ないのだが……▼
 その　ポケモンでは
-この　わざ　おぼえられないよ……</language>
+この　技は　覚えられない</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_07w">
 		<comment>♂：ドラゴン技教え
 ・ポケモン選択時にタマゴ選択</comment>
 		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">エーッ！▼
-タマゴに　わざを　おぼえさせるの？
-じゃあ　ちょっと　がんばってみるね▼
-……　……　……
-……　……　……▼
-ごめん……
-ちょっと　ムリみたい……</language>
-		<language name="JPN_KANJI" width="256">エーッ！▼
-タマゴに　わざを　おぼえさせるの？
-じゃあ　ちょっと　がんばってみるね▼
-……　……　……
-……　……　……▼
-ごめん……
-ちょっと　ムリみたい……</language>
+シャガ</attribute>
+		<language name="JPN" width="256">フム……▼
+タマゴに　わざを　おぼえさせるのは
+わたしにも　むずかしいな</language>
+		<language name="JPN_KANJI" width="256">フム……▼
+タマゴに　技を　覚えさせるのは
+わたしにも　難しいな</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_08w">
@@ -708,11 +710,11 @@
 ・ポケモン選択後、すでに習得済み
 ・0＝技名</comment>
 		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">どれどれ？　その　ポケモン
-すでに　[1:07:わざ名:0]を　おぼえているよ？</language>
-		<language name="JPN_KANJI" width="256">どれどれ？　その　ポケモン
-すでに　[1:07:わざ名:0]を　おぼえているよ？</language>
+シャガ</attribute>
+		<language name="JPN" width="256">ふむ……　その　ポケモンは
+すでに　[1:07:わざ名:0]を　おぼえているが</language>
+		<language name="JPN_KANJI" width="256">ふむ……　その　ポケモンは
+すでに　[1:07:わざ名:0]を　覚えているが</language>
 	</row>
 
 	<row id="msg_skillteach_dragon_09w">
@@ -721,15 +723,13 @@
 　フィールドにもどると、このメッセージ表示
 ・以降はmsg_skillteach_dragon_01表示</comment>
 		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">アイリス『りゅうせいぐんの　いりょくは
-ものすごーく　すごいんだけど！▼
-つかったあとは　じぶんの
-とくしゅこうげきも　さがっちゃうんだ</language>
-		<language name="JPN_KANJI" width="256">アイリス『りゅうせいぐんの　いりょくは
-ものすごーく　すごいんだけど！▼
-つかったあとは　じぶんの
-とくしゅこうげきも　さがっちゃうんだ</language>
+シャガ</attribute>
+		<language name="JPN" width="256">シャガ『りゅうせいぐんの　いりょくは
+すさまじいが　つかうと　じぶんの▽
+とくしゅこうげきも　さげてしまうぞ</language>
+		<language name="JPN_KANJI" width="256">シャガ『りゅうせいぐんの　威力は
+すさまじいが　使うと　自分の▽
+特殊攻撃も　下げてしまうぞ</language>
 	</row>
 
 	<row id="msg_skillteach_powerful_01">
