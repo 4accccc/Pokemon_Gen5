@@ -212,6 +212,7 @@ sub_bsw_receipt_guide_wifi_upload:
       _AB_KEYWAIT()
     ELSE
       _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
+      _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, ret )
     ENDIF
   ENDIF
   
@@ -751,7 +752,13 @@ sub_receipt_challenge_wifi:
       _CALL sub_receipt_common_exit
       _RET
     ENDIF
+    
+    //ダウンロードプレイである
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_SEL_DL_BTL, TRUE, BSW_NULL, BSW_NULL )
   ENDIF
+  
+  //トレーナー抽選(仮：正規データがサーバーに設定されるまで
+  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //乗車メッセージ
   _CALL sub_receipt_msg_geton_train

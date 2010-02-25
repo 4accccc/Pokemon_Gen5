@@ -42,6 +42,9 @@ INIT_EVENT_START ev_init_c04r0110
     ELSE //その他
       _CALL sub_init_add_trainer
     ENDIF
+    
+    //BGMスイッチをラウンド数に合わせてON
+    _BSUBWAY_TOOL( BSWSUB_SET_TRAIN_BGM_ROUND_SW, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
 }
 INIT_EVENT_END
@@ -536,6 +539,7 @@ sub_train_battle_win_next_menu:
       //フェードアウト
       _MAP_FADE_BLACK_OUT()
       _MAP_FADE_END_CHECK()
+      
       //OBJバニッシュ
       _CALL sub_set_obj_vanish_flag
       //シーン制御を継続に
