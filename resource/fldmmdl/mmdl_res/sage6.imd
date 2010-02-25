@@ -272,7 +272,7 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='woman1' color_size='16' index='0'>
-		4617 5646 1908 0a59 0b5c 18a5 352a 498e 
+		4617 5646 1908 0a59 0b5c 148b 18d2 2538 
 		192f 3a7a 4efd 5f5f 7fff 6b5a 4e73 0000 
 	</tex_palette>
 </tex_palette_array>

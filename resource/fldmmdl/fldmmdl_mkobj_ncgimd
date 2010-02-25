@@ -459,29 +459,29 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader8w.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #bigfour1.imd
-./mmdl_res/bigfour1.imd: ./mmdl_nchara/bigfour1.ncg ./mmdl_nchara/bigfour1.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+./mmdl_res/bigfour1.imd: ./mmdl_nchara/bigfour1.ncg ./mmdl_nchara/bigfour1.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd bigfour1
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/bigfour1.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/bigfour1.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #bigfour2.imd
-./mmdl_res/bigfour2.imd: ./mmdl_nchara/bigfour2.ncg ./mmdl_nchara/bigfour2.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+./mmdl_res/bigfour2.imd: ./mmdl_nchara/bigfour2.ncg ./mmdl_nchara/bigfour2.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd bigfour2
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/bigfour2.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/bigfour2.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #bigfour3.imd
-./mmdl_res/bigfour3.imd: ./mmdl_nchara/bigfour3.ncg ./mmdl_nchara/bigfour3.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+./mmdl_res/bigfour3.imd: ./mmdl_nchara/bigfour3.ncg ./mmdl_nchara/bigfour3.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd bigfour3
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/bigfour3.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/bigfour3.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #bigfour4.imd
-./mmdl_res/bigfour4.imd: ./mmdl_nchara/bigfour4.ncg ./mmdl_nchara/bigfour4.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+./mmdl_res/bigfour4.imd: ./mmdl_nchara/bigfour4.ncg ./mmdl_nchara/bigfour4.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd bigfour4
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/bigfour4.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/bigfour4.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #champion.imd
-./mmdl_res/champion.imd: ./mmdl_nchara/champion.ncg ./mmdl_nchara/champion.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+./mmdl_res/champion.imd: ./mmdl_nchara/champion.ncg ./mmdl_nchara/champion.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd champion
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/champion.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/champion.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #hakaim.imd
 ./mmdl_res/hakaim.imd: ./mmdl_nchara/hakaim.ncg ./mmdl_nchara/hakaim.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
@@ -494,9 +494,9 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakaiw.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #sage1.imd
-./mmdl_res/sage1.imd: ./mmdl_nchara/sage1.ncg ./mmdl_nchara/sage1.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+./mmdl_res/sage1.imd: ./mmdl_nchara/sage1.ncg ./mmdl_nchara/sage1.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd sage1
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sage1.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sage1.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #sage2.imd
 ./mmdl_res/sage2.imd: ./mmdl_nchara/sage2.ncg ./mmdl_nchara/sage2.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
@@ -529,9 +529,9 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/icpo.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #tboss.imd
-./mmdl_res/tboss.imd: ./mmdl_nchara/tboss.ncg ./mmdl_nchara/tboss.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+./mmdl_res/tboss.imd: ./mmdl_nchara/tboss.ncg ./mmdl_nchara/tboss.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd tboss
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/tboss.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/tboss.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #tree.imd
 ./mmdl_res/tree.imd: ./mmdl_nchara/tree.ncg ./mmdl_nchara/tree.ncl ./mmdl_res/ncg4x4ocell.imd fldmmdl_list.csv
@@ -804,9 +804,9 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader1a.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #leader8b.imd
-./mmdl_res/leader8b.imd: ./mmdl_nchara/leader8b.ncg ./mmdl_nchara/leader8b.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+./mmdl_res/leader8b.imd: ./mmdl_nchara/leader8b.ncg ./mmdl_nchara/leader8b.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd leader8b
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader8b.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader8b.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #corn.imd
 ./mmdl_res/corn.imd: ./mmdl_nchara/corn.ncg ./mmdl_nchara/corn.ncl ./mmdl_res/ncg4x4ocell.imd fldmmdl_list.csv
@@ -929,9 +929,9 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sprock.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
 
 #tbossbl.imd
-./mmdl_res/tbossbl.imd: ./mmdl_nchara/tbossbl.ncg ./mmdl_nchara/tbossbl.ncl ./mmdl_res/ncg4x4flip.imd fldmmdl_list.csv
+./mmdl_res/tbossbl.imd: ./mmdl_nchara/tbossbl.ncg ./mmdl_nchara/tbossbl.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd tbossbl
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/tbossbl.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/tbossbl.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_res/ncg4x4pokeflip.imd fldmmdl_list.csv
