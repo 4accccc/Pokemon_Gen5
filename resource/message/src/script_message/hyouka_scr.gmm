@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T17:35:25"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T18:02:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="113" right="1990" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -493,11 +493,13 @@
 　150匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
 		<language name="JPN" width="256">すごい！　すごいわ！▼
-イッシュちほう　すべての
-ポケモンと　であったのね！</language>
+イッシュちほうにいる　すべての
+ポケモンと　であったのね！▼
+ほんとうに　おめでとう！！</language>
 		<language name="JPN_KANJI" width="256">すごい！　すごいわ！▼
-イッシュ地方　すべての
-ポケモンと　出会ったのね！</language>
+イッシュ地方にいる　すべての
+ポケモンと　出会ったのね！▼
+本当に　おめでとう！！</language>
 	</row>
 
 	<row id="msg_hyouka_i10" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
@@ -505,111 +507,129 @@
 ・捕まえた数が
 　1～29匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-０ひき～２９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-０匹～２９匹</language>
+		<language name="JPN" width="256">すこしずつ……　だけど　かくじつに
+ポケモンずかんに　くわしい　データが▽
+かきこまれているわね！　がんばって！</language>
+		<language name="JPN_KANJI" width="256">すこしずつ……　だけど　確実に
+ポケモン図鑑に　詳しいデータが▽
+書き込まれているわね！　がんばって！</language>
 	</row>
 
-	<row id="msg_hyouka_i11" back-color="#00ff00,,,,,,,,,,,,,,,,,,">
+	<row id="msg_hyouka_i11" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
 		<comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　1～29匹</comment>
+　30～49匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-３０ひき～４９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-３０匹～４９匹</language>
+		<language name="JPN" width="256">モンスターボールは　つかいわけてる？▼
+さまざまな　しゅるいが　あるから
+じょうきょうに　おうじて　つかってね</language>
+		<language name="JPN_KANJI" width="256">モンスターボールは　使い分けてる？▼
+さまざまな　種類が　あるから
+状況に　応じて　使ってね</language>
 	</row>
 
-	<row id="msg_hyouka_i12" back-color="#00ff00,,,,,,,,,,,,,,,,,,">
+	<row id="msg_hyouka_i12" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
 		<comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　1～29匹</comment>
+　50～69匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-５０ひき～６９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-５０匹～６９匹</language>
+		<language name="JPN" width="256">ずかんの　かいせつを　よめば
+ポケモンの　いがいな　いちめんを▽
+うかがうことが　できて　たのしいわ！</language>
+		<language name="JPN_KANJI" width="256">図鑑の　解説を　読めば
+ポケモンの　意外な　一面を▽
+うかがうことが　できて　楽しいわ！</language>
 	</row>
 
-	<row id="msg_hyouka_i13" back-color="#00ff00,,,,,,,,,,,,,,,,,,">
+	<row id="msg_hyouka_i13" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
 		<comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　1～29匹</comment>
+　70～89匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-７０ひき～８９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-７０匹～８９匹</language>
+		<language name="JPN" width="256">つかまえるだけ　ではなく
+ポケモンを　しんか　させて▽
+ずかんを　うめるのも　だいじよ！</language>
+		<language name="JPN_KANJI" width="256">捕まえるだけ　ではなく
+ポケモンを　進化させて▽
+図鑑を　埋めるのも　大事よ！</language>
 	</row>
 
-	<row id="msg_hyouka_i14" back-color="#00ff00,,,,,,,,,,,,,,,,,,">
+	<row id="msg_hyouka_i14" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
 		<comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　1～29匹</comment>
+　90～104匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-９０ひき～１０４ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-９０匹～１０４匹</language>
+		<language name="JPN" width="256">ともだちと　こうかん　することでも
+ポケモンを　つかまえたことに　なるわ</language>
+		<language name="JPN_KANJI" width="256">友達と　交換することでも
+ポケモンを　捕まえたことに　なるわ</language>
 	</row>
 
-	<row id="msg_hyouka_i15" back-color="#00ff00,,,,,,,,,,,,,,,,,,">
+	<row id="msg_hyouka_i15" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
 		<comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　1～29匹</comment>
+　105～119匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-１０５ひき～１１９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-１０５匹～１１９匹</language>
+		<language name="JPN" width="256">これだけの　ポケモンと　ふれあえば
+どの　ポケモンと　いっしょに▽
+たびをすれば　いいか　まよわない？</language>
+		<language name="JPN_KANJI" width="256">これだけの　ポケモンと　ふれあえば
+どの　ポケモンと　一緒に▽
+旅をすれば　いいか　迷わない？</language>
 	</row>
 
-	<row id="msg_hyouka_i16" back-color="#00ff00,,,,,,,,,,,,,,,,,,">
+	<row id="msg_hyouka_i16" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
 		<comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　1～29匹</comment>
+　120～134匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-１２０ひき～１３４ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-１２０匹～１３４匹</language>
+		<language name="JPN" width="256">じゅうじつした　ポケモンずかんね
+アタシの　けんきゅうも　はかどります</language>
+		<language name="JPN_KANJI" width="256">充実した　ポケモン図鑑ね
+アタシの　研究も　はかどります</language>
 	</row>
 
-	<row id="msg_hyouka_i17" back-color="#00ff00,,,,,,,,,,,,,,,,,,">
+	<row id="msg_hyouka_i17" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
 		<comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　1～29匹</comment>
+　1135～144匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-１３５ひき～１４４ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-１３５匹～１４４匹</language>
+		<language name="JPN" width="256">これだけ　ポケモンを　つかまえたら
+アタシよりも　くわしくなったかも？▼
+ポケモンずかんの　かんせいを
+アタシも　おうえん　しています</language>
+		<language name="JPN_KANJI" width="256">これだけ　ポケモンを　捕まえたら
+アタシよりも　詳しくなったかも？▼
+ポケモン図鑑の　完成を
+アタシも　応援しています</language>
 	</row>
 
-	<row id="msg_hyouka_i18" back-color="#00ff00,,,,,,,,,,,,,,,,,,">
+	<row id="msg_hyouka_i18" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
 		<comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　1～29匹</comment>
+　145～149匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-１４５ひき～１４９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-１４５匹～１４９匹</language>
+		<language name="JPN" width="256">もうすこしで　パーフェクトな
+ポケモンずかんの　かんせいね！▽
+ここまで　きたんだから　がんばって！</language>
+		<language name="JPN_KANJI" width="256">もうすこしで　パーフェクトな
+ポケモン図鑑の　完成ね！▽
+ここまで　きたんだから　がんばって！</language>
 	</row>
 
-	<row id="msg_hyouka_i19" back-color="#00ff00,,,,,,,,,,,,,,,,,,">
+	<row id="msg_hyouka_i19" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
 		<comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
 　150匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
 		<language name="JPN" width="256">すごい！　すごいわ！▼
-イッシュちほう　すべての
-ポケモンを　つかまえたのね！</language>
+イッシュちほうに　いる　すべての
+ポケモンを　つかまえたのね！▼
+ほんとうに　おめでとう！！</language>
 		<language name="JPN_KANJI" width="256">すごい！　すごいわ！▼
-イッシュちほう　すべての
-ポケモンを　つかまえたのね！</language>
+イッシュ地方にいる　すべての
+ポケモンを　捕まえたのね！▼
+本当に　おめでとう！！</language>
 	</row>
 
 	<row id="msg_hyouka_hakase_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
