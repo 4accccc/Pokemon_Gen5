@@ -795,9 +795,9 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
   GFL_TCBL_Main(wk->tcbl);
 
   // メニューのアニメ実行が行われていなかったらサブシーケンス実行可能
-//  if(_menu_anime_check(wk)){
+  if(_menu_anime_check(wk)){
     sys_result = SubSeq_Main( wk, seq );
-//  }
+  }
   Earth3D_Draw(wk);   //３Ｄ描画エンジン
   _menu_main(wk);     // タスクメニュー描画
   PRINTSYS_QUE_Main( wk->printQue );
@@ -821,8 +821,11 @@ static BOOL _menu_anime_check( EARTH_DEMO_WORK *wk )
   // ボタンが存在しているならアニメチェック
   for(i=0;i<2;i++){
     if(wk->TaskMenuWork[i]!=NULL){
-      if( APP_TASKMENU_WIN_IsFinish( wk->TaskMenuWork[i] )==FALSE){
-        return FALSE;
+      if( APP_TASKMENU_WIN_IsDecide( wk->TaskMenuWork[i] ) )
+      { 
+        if( APP_TASKMENU_WIN_IsFinish( wk->TaskMenuWork[i] )==FALSE){
+          return FALSE;
+        }
       }
     }
   }

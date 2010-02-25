@@ -722,6 +722,19 @@ void APP_TASKMENU_WIN_SetDecide( APP_TASKMENU_WIN_WORK *wk, BOOL isDecide )
 {	
 	wk->isDecide	= isDecide;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  決定状態を取得
+ *
+ *	@param	const APP_TASKMENU_WIN_WORK *wk   ワーク
+ *
+ *	@return TRUEで決定状態  FALSEでなし
+ */
+//-----------------------------------------------------------------------------
+BOOL APP_TASKMENU_WIN_IsDecide( const APP_TASKMENU_WIN_WORK *wk )
+{ 
+  return wk->isDecide;
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -729,24 +742,19 @@ void APP_TASKMENU_WIN_SetDecide( APP_TASKMENU_WIN_WORK *wk, BOOL isDecide )
  *
  *	@param	APP_TASKMENU_WIN_WORK *work ワーク
  *
- *	@retval TRUE:アニメしていない FALSEアニメ中
+ *	@retval TRUE:アニメカウント終了
  */
 //-----------------------------------------------------------------------------
-const BOOL APP_TASKMENU_WIN_IsFinish( APP_TASKMENU_WIN_WORK *work )
+const BOOL APP_TASKMENU_WIN_IsFinish( const APP_TASKMENU_WIN_WORK *work )
 {
-  if( work->isDecide )
-  { 
-    if( work->anmCnt < APP_TASKMENU_ANM_CNT )
-    {
-      return FALSE;
-    }
-    else
-    {
-      return TRUE;
-    }
+  if( work->anmCnt < APP_TASKMENU_ANM_CNT )
+  {
+    return FALSE;
   }
-
-  return TRUE;
+  else
+  {
+    return TRUE;
+  }
 }
 //----------------------------------------------------------------------------
 /**
