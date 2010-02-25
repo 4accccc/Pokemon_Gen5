@@ -52,6 +52,9 @@ typedef struct{
 //  int max;
   SAVE_CONTROL_WORK     *sv;
   RECORD                *record;
+  
+  //ぐるぐる交換側でセットしてもらうワーク
+  BOOL                  bgm_change;   ///<TRUE:ぐるぐる交換側でBGMの変更を行った
 }GURUGURU_PARENT_WORK;
 
 
