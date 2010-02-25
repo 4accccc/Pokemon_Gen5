@@ -32,8 +32,8 @@
 //戦闘エフェクト定義
 enum{
   BTLEFF_SINGLE_ENCOUNT_1 = WAZANO_MAX + 1,
-  BTLEFF_SINGLE_ENCOUNT_2_MALE,
-  BTLEFF_SINGLE_ENCOUNT_2_FEMALE,
+  BTLEFF_SINGLE_ENCOUNT_2_SOLO,
+  BTLEFF_SINGLE_ENCOUNT_2_TAG,
   BTLEFF_SINGLE_ENCOUNT_3,
   BTLEFF_CAMERA_WORK,
   BTLEFF_CAMERA_INIT,
@@ -182,6 +182,8 @@ extern  BTLV_CLACT_WORK*  BTLV_EFFECT_GetCLWK( void );
 extern  BTLV_BG_WORK*     BTLV_EFFECT_GetBGWork( void );
 extern  BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void );
 extern  BtlRule           BTLV_EFFECT_GetBtlRule( void );
+extern  BOOL              BTLV_EFFECT_GetMulti( void );
+extern  int               BTLV_EFFECT_GetTrType( int pos );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );

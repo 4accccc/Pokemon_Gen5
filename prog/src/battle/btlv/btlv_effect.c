@@ -19,6 +19,9 @@
 
 #include "field/field_light_status.h"
 
+#include "tr_tool/trtype_def.h"
+#include "tr_tool/trtype_sex.h"
+
 #include "arc_def.h"
 #include "battle/batt_bg_tbl.h"
 #include "batt_bg_tbl.naix"
@@ -567,6 +570,27 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
   }
   else
   {
+    switch( trtype ){ 
+    case TRTYPE_HERO:
+    case TRTYPE_HEROINE:
+      break;
+    case TRTYPE_DOCTOR:
+      trtype = 2;
+      break;
+    case TRTYPE_RIVAL:
+      trtype = 3;
+      break;
+    default:
+      if( TrTypeSexTable[ trtype ] == PTL_SEX_MALE )
+      {
+        trtype = TRTYPE_HERO;
+      }
+      else
+      { 
+        trtype = TRTYPE_HEROINE;
+      }
+      break;
+    }
     pos_x = pos_x >> FX32_SHIFT;
     pos_y = pos_y >> FX32_SHIFT;
     bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_CLACT_Add( bew->bclw, ARCID_TRBGRA, trtype * 4, pos_x, pos_y );
@@ -1040,6 +1064,33 @@ BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void )
 BtlRule BTLV_EFFECT_GetBtlRule( void )
 {
   return bew->besp.rule;
+}
+
+//============================================================================================
+/**
+ * @brief  マルチかどうかを取得
+ *
+ * @retval TRUE:マルチ  FALSE:マルチ以外
+ */
+//============================================================================================
+BOOL BTLV_EFFECT_GetMulti( void )
+{
+  return bew->besp.multi;
+}
+
+//============================================================================================
+/**
+ * @brief  立ち位置を指定してTRTYPEを取得
+ *
+ * @param[in] pos 立ち位置
+ *
+ * @retval TRTYPE_
+ */
+//============================================================================================
+int BTLV_EFFECT_GetTrType( int pos )
+{
+  GF_ASSERT( pos < 4 );
+  return bew->besp.tr_type[ pos ];
 }
 
 //============================================================================================
