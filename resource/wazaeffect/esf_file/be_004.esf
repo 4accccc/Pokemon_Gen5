@@ -44,7 +44,15 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ラベル	NO_EXIST_E_1
 制御モード変更	逐次
 パーティクルデータロード	w_157
+立ち位置チェック	POS_TR_AA	いない	NO_ANIME_AA
 トレーナーアニメセット	POS_AA	1
+ラベル	NO_ANIME_AA
+立ち位置チェック	POS_TR_A	いない	NO_ANIME_A
+トレーナーアニメセット	POS_A	1
+ラベル	NO_ANIME_A
+立ち位置チェック	POS_TR_C	いない	NO_ANIME_C
+トレーナーアニメセット	POS_C	1
+ラベル	NO_ANIME_C
 タイマーによるウエイト	20
 SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 制御モード変更	継続
@@ -61,7 +69,11 @@ SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_C	いない	NO_EXIST_C_2
 ボールモード	捕獲ボールC
 パーティクルデータロード	be_m_ball_01_kaiten
+立ち位置チェック	POS_TR_C	いる	THROW_TR_C
 エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線（半分）	7.5:3:20	POS_C	1:35:5	1:1:0
+ジャンプ	NO_EXIST_C_2
+ラベル	THROW_TR_C
+エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線（半分）	12:3:20	POS_C	1:35:5	1:1:0
 ラベル	NO_EXIST_C_2
 立ち位置チェック	POS_E	いない	NO_EXIST_E_2
 ボールモード	捕獲ボールE
@@ -69,7 +81,15 @@ SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線（半分）	7.5:3:20	POS_E	1:35:5	1:1:0
 ラベル	NO_EXIST_E_2
 制御モード変更	逐次
+立ち位置チェック	POS_TR_AA	いない	NO_MOVE_AA
 トレーナー移動	POS_AA	追従	-104	80	32	0	0
+ラベル	NO_MOVE_AA
+立ち位置チェック	POS_TR_A	いない	NO_MOVE_A
+トレーナー移動	POS_A	追従	-104	80	32	0	0
+ラベル	NO_MOVE_A
+立ち位置チェック	POS_TR_C	いない	NO_MOVE_C
+トレーナー移動	POS_C	追従	-152	80	32	0	0
+ラベル	NO_MOVE_C
 タイマーによるウエイト	60
 立ち位置チェック	POS_AA	いない	NO_DELETE_AA
 ボールモード	捕獲ボールAA
@@ -129,7 +149,15 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 ポケモン拡縮	POS_E	追従	0.7	0.7	32	0	0
 ポケモン鳴き声	POS_E
 ラベル	NO_EXIST_E_3
+立ち位置チェック	POS_TR_AA	いない	NO_DEL_AA
 トレーナー削除	POS_AA
+ラベル	NO_DEL_AA
+立ち位置チェック	POS_TR_A	いない	NO_DEL_A
+トレーナー削除	POS_A
+ラベル	NO_DEL_A
+立ち位置チェック	POS_TR_C	いない	NO_DEL_C
+トレーナー削除	POS_C
+ラベル	NO_DEL_C
 エフェクト終了待ち	ポケモン
 制御モード変更	継続
 立ち位置チェック	POS_AA	いない	NO_EXIST_AA_4

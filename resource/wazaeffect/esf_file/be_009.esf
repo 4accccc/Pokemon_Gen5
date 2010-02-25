@@ -63,11 +63,31 @@ SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 パーティクルデータロード	be_m_ball_01_kaiten
 パーティクル再生	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	POS_F	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_F_2
+立ち位置チェック	POS_TR_BB	いない	NO_EXIST_BB
 ポケモン拡縮	POS_TR_BB	追従	0.8	0.8	20	0	0
 ポケモン移動	POS_TR_BB	追従	-1	1	20	0	0
 ポケモンα値	POS_TR_BB	追従	2	20	0	0
+ラベル	NO_EXIST_BB
+立ち位置チェック	POS_TR_B	いない	NO_EXIST_B
+ポケモン拡縮	POS_TR_B	追従	0.8	0.8	20	0	0
+ポケモン移動	POS_TR_B	追従	-1	1	20	0	0
+ポケモンα値	POS_TR_B	追従	2	20	0	0
+ラベル	NO_EXIST_B
+立ち位置チェック	POS_TR_D	いない	NO_EXIST_D
+ポケモン拡縮	POS_TR_D	追従	0.8	0.8	20	0	0
+ポケモン移動	POS_TR_D	追従	-1	1	20	0	0
+ポケモンα値	POS_TR_D	追従	2	20	0	0
+ラベル	NO_EXIST_D
 エフェクト終了待ち	ポケモン
+立ち位置チェック	POS_TR_BB	いない	NO_DEL_BB
 トレーナー削除	POS_BB
+ラベル	NO_DEL_BB
+立ち位置チェック	POS_TR_B	いない	NO_DEL_B
+トレーナー削除	POS_B
+ラベル	NO_DEL_B
+立ち位置チェック	POS_TR_D	いない	NO_DEL_D
+トレーナー削除	POS_D
+ラベル	NO_DEL_D
 タイマーによるウエイト	5
 立ち位置チェック	POS_BB	いない	NO_DELETE_BB
 ボールモード	捕獲ボールBB
