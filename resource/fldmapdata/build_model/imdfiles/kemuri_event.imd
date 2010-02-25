@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-02-22T17:52:03" source="kemuri_event01.mb"/>
+	<create user="unno" host="W00199" date="2010-02-25T18:43:18" source="kemuri_event03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-02-22T17:52:03" source="kemuri_event01.mb"/>
+<original_create user="unno" host="W00199" date="2010-02-25T18:43:18" source="kemuri_event03.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,14 +20,14 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="13 13"
-	compress_material="on" material_size="1 1"
+	compress_node="merge" node_size="15 15"
+	compress_material="on" material_size="2 2"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-2.502686 1.235840 -0.481689" whd="4.035156 0.968506 2.338867"/>
+<box_test pos_scale="5" xyz="-3.928223 3.812256 2.447510" whd="6.196289 1.917236 3.320801"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="e_kemuri01"
@@ -37,280 +37,304 @@
 		path="C:/home/wb_data3d/build_model/indoor/kemuri_event/tex/e_kemuri01.tga"
 	>
 		<bitmap size="2048">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 e200 e1e1 e1e1
-			00e1 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 e1e1 e4e1 e4e4 e4e4
-			e4e4 e1e1 00e1 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 e100 e1e1 e4e4 e4e4 e4e4 e4e4
-			e4e4 e2e4 e2e2 00e2 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 e4e1 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e2e2 e2e2 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 e100 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e2e2 e2e2 00e2 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 e4e1 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e2e4 e2e2 00e2 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 e4e1 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e2e4 e2e2 e2e2 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			e100 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e2e3 e2e2 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 e1e1 e1e1
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e3e3 e3e3 e1e1 e1e1 00e1
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 e4e1 e4e4 e4e4
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e3e3 e3e3 e3e3 e3e3 e1e3
-			00e1 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 e100 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e3e3 e3e3 e3e3 e3e3 e3e3
-			e1e3 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 e4e1 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e2e3 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 e100 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e2e3 00e2 0000 0000 0000 0000 0000
-			0000 0000 0000 e100 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e2e2 0000 0000 0000 0000 0000
-			0000 0000 0000 e4e1 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e2e2 0000 0000 0000 0000 0000
-			0000 0000 0000 e4e1 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e4e3 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e2e3 e2e2 00e2 0000 0000 0000 0000
-			0000 0000 0000 e4e1 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e3e3 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e3e4 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e2e2 00e2 0000 0000 0000 0000
-			0000 0000 e100 e4e2 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e3e4 e3e3 e3e3 e3e3 e3e3 e3e3
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			2303 2323 0323 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 2303 4323 4343
+			4343 4343 4343 0323 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 2303 6343 6363 6363
+			6363 6363 4363 6343 4343 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 2303 4343 6363 8283 a282
+			a2a2 82a2 8383 6363 6363 2343 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 4323 6263 8282 a2a2 a1a2
+			a1a1 a2a1 a2a2 6383 6363 6363 0323 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 2303 6243 a282 a1a2 a1a1 a1a1
+			a1a1 a1a1 a2a1 82a2 6383 6363 2343 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			2323 4343 6243 a282 a2a2 a2a1 c2c2 c2c2
+			c2c2 c1c2 a1c1 a2a1 83a2 6363 2363 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 4323
+			4343 6363 8262 a1a2 a2a1 c3c3 e3e3 e3e3
+			e3e3 e3e3 c2e3 a1c1 82a2 6383 4363 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 4323 6363
+			6363 6263 a282 a1a1 c3c1 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 c1e3 a2a1 8282 8383 0343
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 2303 6343 6363
+			6363 8262 a1a1 c1a0 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 c3e3 a0a1 a2a1 a2a2 63a3
+			0323 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 4323 6363 8363
+			8283 a182 a1a1 e2c0 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 a0c1 a1a1 a2a1 a2a2
+			2383 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 2303 6343 8363 8383
+			a2a2 a1a1 c1a1 e3e2 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 c3e3 a3a3 a1a2 a2a1
+			82a2 0343 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 2303 6363 a383 a2a2
+			c2c2 c1c1 e2c1 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 c3e3 a3c3 a1a2
+			a2a1 6282 0323 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 4323 8363 a2a3 a2a2
+			c1c1 e0e1 e2e1 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 c3e3 a2a3
+			a1a1 82a2 2362 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 4323 a383 a2a2 c1a2
+			e0c0 e2e1 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 c3c3
+			a1a2 a2a1 6382 0343 0303 0303 0303 0303
+			0303 0303 0303 0303 6343 a283 c2a2 c0c1
+			e2e0 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 c3e3
+			a2a3 a1a1 8382 2363 0303 0303 0303 0303
+			0303 0303 0303 2303 8343 a2a3 c1c2 e1c0
+			e3e2 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e2e3 e2e2 00e2 0000 0000 0000 0000
-			0000 0000 e100 e4e3 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			a3c3 a0a1 82a1 4363 0303 0303 0303 0303
+			0303 0303 0303 4303 8363 a2a2 c0c1 e3e1
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e2e3 e2e2 00e2 0000 0000 0000 0000
-			0000 0000 e100 e3e3 e4e4 e4e4 e4e4 e4e4
-			e4e4 e4e4 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e2e3 e2e2 00e2 0000 0000 0000 0000
-			0000 0000 e100 e3e3 e4e4 e4e4 e4e4 e4e4
-			e4e4 e3e4 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			a3e3 a1a1 a2a1 6383 0343 0303 0303 0303
+			0303 0303 0303 4303 8363 c2a2 c1c1 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e2e3 e2e2 e2e2 00e2 0000 0000 0000
-			0000 0000 e100 e3e3 e3e3 e4e4 e4e4 e4e4
-			e3e4 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e2e2 e2e2 e2e2 e2e2 00e2 0000 0000
-			0000 0000 e100 e3e3 e4e3 e4e4 e4e4 e4e4
-			e4e4 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			c3e3 a1a2 a2a1 6382 0343 0303 0303 0303
+			0303 0303 0303 4303 a383 c1a2 c2c1 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e2e2 e2e2 e3e2 e2e3 e2e2 0000 0000
-			0000 0000 e100 e3e3 e4e3 e4e4 e4e4 e4e4
-			e4e4 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e2e2 e2e2 e3e2 e3e3 e2e2 0000 0000
-			0000 0000 e100 e3e3 e4e4 e4e4 e4e4 e4e4
-			e4e4 e3e3 e3e3 e2e3 e3e3 e3e3 e3e3 e3e3
+			c3e3 a1a2 a1a1 6382 2363 0303 0303 0303
+			0303 0303 2303 6343 a383 c1a2 e2c1 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e2e3 e2e2 e2e2 e3e3 e3e3 e2e3 00e2 0000
-			0000 0000 e3e1 e3e3 e4e4 e4e4 e4e4 e4e4
-			e4e4 e3e3 e3e3 e2e3 e3e2 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e2e2 e2e2 e2e2 e3e3 e3e3 e2e3 00e2 0000
-			0000 e100 e3e3 e3e3 e4e3 e4e4 e4e4 e4e4
-			e4e4 e3e3 e3e3 e2e3 e2e2 e3e3 e3e3 e3e3
+			e3e3 a1a2 a1a1 8382 2363 0303 0303 0303
+			0303 0303 4323 6363 a283 a1a2 e3c1 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 a1c2 a1a1 8281 2363 0303 0303 0303
+			0303 2303 4323 8363 a283 c1a2 e3c2 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e2e3 c1e1 a1a1 8281 0362 0303 0303 0303
+			0303 2303 6343 8363 a2a3 c1c1 e2e2 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e2e2 e1e1 a1c1 81a1 0261 0303 0303 0303
+			0303 2323 6343 a383 c2a3 e1c1 e3e2 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e2e2 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e2e3
-			e2e2 e2e2 e2e2 e3e3 e3e3 e2e3 e2e2 0000
-			0000 e2e1 e3e3 e3e3 e3e3 e4e4 e4e4 e4e4
-			e3e4 e3e3 e3e3 e2e2 e2e2 e2e2 e3e2 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 e2e2
-			e2e2 e2e2 e3e2 e3e3 e3e3 e3e3 e2e2 0000
-			0000 e3e1 e3e3 e3e3 e3e3 e4e4 e4e4 e4e4
-			e3e3 e3e3 e3e3 e2e2 e2e2 e3e2 e3e3 e3e3
-			e3e3 e3e3 e3e3 e2e3 e2e2 e2e2 e2e2 e2e2
-			e2e2 e2e2 e3e3 e3e3 e3e3 e3e3 e2e2 0000
-			e100 e3e2 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e2e3 e2e2 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e2e3 e2e2 e2e2 e2e2 e2e2
-			e2e2 e3e2 e3e3 e3e3 e3e3 e3e3 e2e2 00e1
-			e100 e3e2 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e2e2 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 e2e2 e2e2
-			e3e2 e3e3 e3e3 e3e3 e3e3 e3e3 e2e2 00e1
-			e100 e3e2 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e1e1 e1e1 a1c1 a1a1 4281 0302 0303 0303
+			0303 4323 6363 a383 c1a2 e1e1 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e2e3 e2e1 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e1e2
+			e1e1 e1e1 c1c1 a1a1 61a1 0322 0303 0303
+			2303 4323 8363 a2a3 c1c2 e2e1 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e1e2 e2e1 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 e1e1
+			e1e1 e1e1 c1e1 a1a1 81a1 4362 0303 0303
+			2303 6343 8383 a2a3 e1c1 e3e2 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e1e2 e1e1 e2e1 e3e3
+			e3e3 e3e3 e2e2 e3e3 e3e3 e2e3 e1e2 e1e1
+			e1e1 e1e2 c1e1 a1a1 a1a1 4262 0323 0303
+			2303 6343 8383 a2a2 e2c1 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e2e3 e1e1 e1e1 e2e1 e3e3
+			e3e3 e3e3 e2e2 e1e1 e2e2 e1e2 e1e1 e1e1
+			e2e1 e2e2 c1e1 a1a1 a1a1 6261 0343 0303
+			2303 6343 8383 c1a2 e2c1 e3e3 e3e3 e3e3
+			e3e3 e3e3 e2e3 e1e1 e2e1 e2e2 e3e3 e3e3
+			e3e3 e3e3 e3e3 e2e2 e1e2 e1e1 e1e1 e1e1
+			e3e3 e3e3 e1e2 a1a1 a1a1 6281 2363 0303
+			2303 6343 8283 c1a2 e3c1 e3e3 e3e3 e3e3
+			e3e3 e3e3 e1e2 e2e1 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e2e3 e2e2 e2e2 e4e2
+			e3e3 e3e3 e2e3 a1c1 a1a1 6281 2362 0303
+			2303 6343 8283 c1a1 e3c1 e3e3 e3e3 e3e3
+			e3e3 e3e3 e2e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 a1c2 a1a1 6181 4362 0303
+			2303 6343 8283 c1a1 c2c1 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 00e1
-			e100 e3e2 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 a2c2 a1a1 6181 6362 0323
+			0303 6343 8283 a0a1 c2a1 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 00e1
-			e100 e2e2 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 a2c2 a1a1 6181 4362 0323
+			0303 6323 8263 a0a1 c2a1 e3c3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 00e1
-			e100 e2e2 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 a1c2 a1a1 6181 6362 0323
+			0303 4303 8263 a081 a2a1 c3c3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 00e1
-			e100 e2e2 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e2 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 a1c2 a1a1 6181 6362 0323
+			0303 4303 6363 a182 a2a1 c3a3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e2e3 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e2 e3e3 e3e3
+			e3e3 e3e3 c2e3 a1a1 a1a1 6281 6363 0323
+			0303 4303 6363 8162 a1a1 c3a2 e3c3 e3e3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e1e2 00e1
-			0000 e2e2 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e2e2 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e1e2 00e1
-			0000 e2e2 e3e2 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e2e2 e3e2 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e2 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e1e1 0000
-			0000 e200 e2e2 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e2e3 e2e2 e3e2 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e2 e3e3 e3e3
+			e3e3 e3e3 c2e3 a1a1 81a1 6261 6363 0323
+			0303 4303 6363 8262 a1a1 a3a1 c3c3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e2 e3e3 e3e3
+			e3e3 e3e3 e3e3 e3e3 e1e2 e3e3 e3e3 e3e3
+			e3e3 e3e3 a1c2 a1a1 81a1 6261 6363 0303
+			0303 4303 6363 8263 a181 a2a1 c3c3 e3c3
 			e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 e3e2 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e1e3 e1e1 0000
-			0000 e200 e2e2 e3e2 e3e3 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e2e2 e2e2 e3e2
-			e3e3 e3e3 e3e3 e3e3 e2e3 e2e2 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e1e1 e1e1 0000
-			0000 0000 e2e2 e2e2 e3e2 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 e2e2 e2e2
-			e2e2 e2e2 e2e2 e2e2 e2e2 e2e2 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e1e1 e1e1 e1e1 0000
-			0000 0000 e200 e2e2 e2e2 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 e2e2
-			e2e2 e2e2 e2e2 e2e2 e2e2 e3e2 e3e3 e3e3
-			e3e3 e1e3 e1e1 e1e1 e1e1 e1e1 00e1 0000
-			0000 0000 0000 e2e2 e2e2 e3e3 e3e3 e3e3
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e2e1
-			e2e2 e2e2 e2e2 e2e2 e3e3 e3e3 e3e3 e3e3
-			e2e3 e1e2 e1e1 e1e1 e1e1 e1e1 0000 0000
-			0000 0000 0000 e2e2 e2e2 e3e3 e3e3 e3e1
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e1e1
-			e2e2 e2e2 e3e2 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e1e2 e1e1 e1e1 e1e1 0000 0000 0000
-			0000 0000 0000 e2e2 e2e2 e3e3 e3e3 e1e3
-			e1e1 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e1e1
-			e1e1 e3e2 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e1e1 e1e1 0000 0000 0000 0000 0000
-			0000 0000 0000 e200 e2e2 e3e2 e3e3 e3e3
-			e1e1 e3e1 e3e3 e3e3 e3e3 e3e3 e1e3 e1e1
-			e1e1 e3e1 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e1e1 e1e1 0000 0000 0000 0000 0000
-			0000 0000 0000 e200 e2e2 e2e2 e3e3 e3e3
-			e1e3 e1e1 e3e1 e3e3 e3e3 e3e3 e1e1 e1e1
-			e1e1 e3e1 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e3e3 e1e1 e1e1 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 e2e2 e2e2 e2e2 e3e3
-			e3e3 e1e3 e1e1 e3e1 e3e3 e1e1 e1e1 e1e1
-			e1e1 e1e1 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e1e3 e1e1 e1e1 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 e200 e2e2 e2e2 e2e2
-			e3e2 e3e3 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
-			e1e1 e1e1 e3e1 e3e3 e3e3 e3e3 e3e3 e3e3
-			e1e1 e1e1 e1e1 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 e200 e2e2 e2e2
-			e2e3 e3e3 e3e3 e1e1 e1e1 e1e1 e1e1 e1e1
-			e1e1 e1e1 e1e1 e3e1 e3e3 e3e3 e3e3 e1e3
-			e1e1 e1e1 00e1 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 e100
-			e3e3 e3e3 e3e3 e3e3 e1e3 e1e1 e1e1 e1e1
-			e1e1 e1e1 e1e1 e1e1 e3e1 e3e3 e1e1 e1e1
-			e1e1 e1e1 00e1 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 e100
-			e3e1 e3e3 e3e3 e3e3 e1e1 e1e1 e1e1 e1e1
-			e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
-			e1e1 e1e1 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			e1e1 e3e3 e3e3 e1e3 e1e1 e1e1 e1e1 e1e1
-			e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
-			e1e1 e1e1 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
-			e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
-			e1e1 00e1 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			e100 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
-			e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
-			00e1 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
-			e1e1 e1e1 0000 e100 e1e1 e1e1 e1e1 00e1
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 e100 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
-			e1e1 00e1 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 e100 e1e1 e1e1 e1e1 e1e1 e1e1
-			e1e1 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 e100 e1e1 e1e1 e1e1 e1e1
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			e3e3 e3e3 e3e3 e2e2 e2e2 e3e3 e3e3 e3e3
+			e3e3 e2e3 a1a2 a1a1 81a1 6362 4363 0303
+			0303 4303 6363 6363 8182 a1a1 c2a1 e3c3
+			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e2e2 e3e2
+			e3e3 e3e3 e2e2 e2e1 e3e2 e3e3 e3e3 e3e3
+			e3e3 a2e2 a1a1 a1a1 6281 6362 4363 0303
+			0303 4303 6363 6363 8262 a181 a1a1 c2a1
+			e2e2 e3e3 e3e3 e3e3 e3e3 e3e3 e2e3 e1e1
+			e2e1 e1e2 e1e1 e2e2 e3e3 e3e3 e3e3 e3e3
+			e2e2 a1c1 a1a1 81a1 6262 6363 2363 0303
+			0303 2303 6363 6363 6263 8182 a1a1 c1a1
+			e1e1 e2e1 e3e3 e3e3 e3e3 e3e3 e2e3 e1e1
+			e1e1 e2e1 e2e2 e3e2 e3e3 e3e3 e3e3 e2e3
+			c1e1 a1a1 81a1 6281 6362 6363 0343 0303
+			0303 0303 6343 6363 6363 8263 a181 a1a1
+			e1e1 e1e1 e2e1 e3e3 e3e3 e3e3 e1e2 e1e1
+			e1e1 e3e1 e3e2 e3e3 e3e3 e3e3 e3e3 e2e3
+			c1e1 a1a1 81a1 6262 6363 6363 0323 0303
+			0303 0303 4323 6363 6363 6363 8282 a1a1
+			e1c1 e1e1 e1e1 e2e1 e2e2 e1e2 e1e1 e1e1
+			e1e1 e2e1 e3e3 e3e3 e3e3 e3e3 e3e3 e2e3
+			a1c1 a1a1 6181 6362 6363 6363 0323 0303
+			0303 0303 2303 6343 6363 6363 8263 a182
+			c1a1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
+			e1e1 e1e1 e2e2 e3e2 e3e3 e3e3 e3e3 c1e2
+			a1a1 a1a1 6181 6362 6363 4363 0303 0303
+			0303 0303 0303 2303 4343 6363 6363 a182
+			c1a1 e1c1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
+			e1e1 e1e1 e1e1 e2e2 e3e3 e3e3 e2e2 a1c1
+			a1a1 81a1 6261 6363 6363 0343 0303 0303
+			0303 0303 0303 0303 0303 6343 6363 8263
+			a1a1 c1a1 e1c1 e1e1 e1e1 e1e1 e1e1 e1e1
+			e1e1 e1e1 e1e1 e1e1 e2e2 e2e2 c1c1 a1a1
+			a1a1 6181 6261 6363 2343 0303 0303 0303
+			0303 0303 0303 0303 0303 4303 6363 8363
+			a182 a1a1 c1c1 e1c1 e1e1 e1e1 e1e1 e1e1
+			e1e1 e1e1 e1e1 e1e1 c1e1 c1c1 a1a1 a1a1
+			a1a1 6081 6261 4343 0323 0303 0303 0303
+			0303 0303 0303 0303 0303 2303 6363 6363
+			a283 a1a1 a1a1 c1c1 c1c1 c1c1 c1c1 a1c1
+			a1a1 c1a1 c1c1 c1c1 a1c1 a1a1 a1a1 a1a1
+			81a1 6161 2342 0323 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 6343 6363
+			8363 a1a2 a1a1 c1a1 c1c1 a1c1 a1c1 a1a1
+			a1a1 a1a1 a1a1 a1a1 a1a1 a1a1 a1a1 81a1
+			6181 4262 0323 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 6323 6363
+			8363 a283 a2a2 a2a2 a2a2 a2a2 a2a2 a2a2
+			a2a2 a1a2 a1a1 a1a1 a1a1 a1a1 a1a1 6181
+			6262 2363 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 4303 6363
+			6363 8383 a3a3 a3a3 a3a3 a3a3 a3a3 83a3
+			8383 a283 a2a2 a1a2 a1a1 a1a1 6181 6262
+			6363 0343 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 6343
+			6363 6363 8363 a383 a3a3 a3a3 8383 6383
+			6363 8363 8383 8282 8282 8282 6262 6363
+			4363 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 4303
+			6363 6363 6363 6363 8383 6383 6363 6363
+			6363 6363 6363 6363 6363 6363 6363 4363
+			0323 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			4323 6363 6363 6363 6363 6363 6363 6363
+			6343 6363 6363 6363 6363 6363 6363 2343
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 4343 6363 6363 6363 6363 6363 2343
+			2323 6343 6363 6363 6363 4363 2343 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 2323 4343 6363 4363 2343 0303
+			0303 2303 4323 4343 4343 2323 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 2303 0323 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
+			0303 0303 0303 0303 0303 0303 0303 0303
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="e_kemuri01_pl" color_size="8">
-		0000 5ad6 6318 6b5a 6f7b 7fff 7fff 7fff
+		5ef7 6318 6739 6b5a 6f7b 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="1">
+<material_array size="2">
 	<material index="0" name="lambert2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="0"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="1"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="lambert3"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="0"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="2"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -330,7 +354,7 @@
 	/>
 </material_array>
 
-<matrix_array size="12">
+<matrix_array size="14">
 	<matrix index="0" mtx_weight="1" node_idx="1"/>
 	<matrix index="1" mtx_weight="1" node_idx="2"/>
 	<matrix index="2" mtx_weight="1" node_idx="3"/>
@@ -343,9 +367,11 @@
 	<matrix index="9" mtx_weight="1" node_idx="10"/>
 	<matrix index="10" mtx_weight="1" node_idx="11"/>
 	<matrix index="11" mtx_weight="1" node_idx="12"/>
+	<matrix index="12" mtx_weight="1" node_idx="13"/>
+	<matrix index="13" mtx_weight="1" node_idx="14"/>
 </matrix_array>
 
-<polygon_array size="12">
+<polygon_array size="14">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
@@ -670,9 +696,63 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
+	<polygon index="12" name="polygon12"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">12</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 0.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="64.000000 -64.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="0.000000 -64.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="13" name="polygon13"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">13</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 0.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="64.000000 -64.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="0.000000 -64.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
 </polygon_array>
 
-<node_array size="13">
+<node_array size="15">
 	<node index="0" name="null1" kind="null"
 		parent="-1"
 		child="1"
@@ -680,9 +760,9 @@
 		brother_prev="-1"
 		draw_mtx="off"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="20.000000 0.000000 0.000000"
-		translate="0.000000 80.000000 -16.000000"
+		scale="0.699951 0.699951 0.699951"
+		rotate="30.000000 0.000000 0.000000"
+		translate="-13.580566 152.586914 131.604248"
 		visibility="on"
 		display_size="0"
 	>
@@ -696,7 +776,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-61.377441 48.000000 32.000000"
+		translate="-61.377441 0.000000 -6.663818"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -716,7 +796,7 @@
 		billboard="off"
 		scale="0.699951 1.000000 0.699951"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-35.113281 51.304199 51.097168"
+		translate="-35.113281 0.000000 12.433350"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -725,7 +805,7 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="0" polygon="1" priority="0"/>
+		<display index="0" material="1" polygon="1" priority="0"/>
 	</node>
 	<node index="3" name="L_kemuri3" kind="mesh"
 		parent="0"
@@ -736,7 +816,7 @@
 		billboard="off"
 		scale="0.699951 1.000000 0.699951"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-80.494385 51.304199 65.043945"
+		translate="-80.494385 0.000000 26.380127"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -756,7 +836,7 @@
 		billboard="off"
 		scale="0.800049 1.000000 0.800049"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-94.891113 53.507080 -6.000488"
+		translate="-94.891113 0.000000 -44.664307"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -776,7 +856,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-128.171387 53.507080 73.304932"
+		translate="-128.171387 0.000000 34.641113"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -785,7 +865,7 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="0" polygon="4" priority="0"/>
+		<display index="0" material="1" polygon="4" priority="0"/>
 	</node>
 	<node index="6" name="L_kemuri6" kind="mesh"
 		parent="0"
@@ -796,7 +876,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-60.904541 48.000000 94.073975"
+		translate="-60.904541 0.000000 55.410156"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -816,7 +896,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-110.033447 56.327393 40.786621"
+		translate="-110.033447 0.000000 2.122803"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -825,7 +905,7 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="0" polygon="6" priority="0"/>
+		<display index="0" material="1" polygon="6" priority="0"/>
 	</node>
 	<node index="8" name="R_kemuri1" kind="mesh"
 		parent="0"
@@ -836,7 +916,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-1.182617 48.000000 63.867920"
+		translate="-1.182617 0.000000 25.203857"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -845,7 +925,7 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="0" polygon="7" priority="0"/>
+		<display index="0" material="1" polygon="7" priority="0"/>
 	</node>
 	<node index="9" name="R_kemuri2" kind="mesh"
 		parent="0"
@@ -856,7 +936,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="16.521729 56.460693 35.540771"
+		translate="16.521729 0.000000 -3.123047"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -876,7 +956,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="48.389404 44.239746 92.194824"
+		translate="48.389404 0.000000 53.531006"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -885,7 +965,7 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="0" polygon="9" priority="0"/>
+		<display index="0" material="1" polygon="9" priority="0"/>
 	</node>
 	<node index="11" name="R_kemuri4" kind="mesh"
 		parent="0"
@@ -896,7 +976,7 @@
 		billboard="off"
 		scale="0.699951 1.000000 0.699951"
 		rotate="0.000000 0.000000 0.000000"
-		translate="48.389404 50.820313 56.786133"
+		translate="48.389404 0.000000 18.122314"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -910,13 +990,13 @@
 	<node index="12" name="R_kemuri5" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="-1"
+		brother_next="13"
 		brother_prev="11"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="66.093750 44.239746 0.132080"
+		translate="66.093750 0.000000 -38.531738"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -925,12 +1005,52 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="0" polygon="11" priority="0"/>
+		<display index="0" material="1" polygon="11" priority="0"/>
+	</node>
+	<node index="13" name="R_kemuri6" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="14"
+		brother_prev="12"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-1.182617 0.000000 -55.887451"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="1" polygon="12" priority="0"/>
+	</node>
+	<node index="14" name="R_kemuri7" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="13"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="91.093750 0.000000 25.203857"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="1" polygon="13" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="48" polygon_size="12"
-	triangle_size="0" quad_size="12"/>
+<output_info vertex_size="56" polygon_size="14"
+	triangle_size="0" quad_size="14"/>
 
 </body>
 
