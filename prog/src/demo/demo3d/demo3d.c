@@ -388,7 +388,12 @@ static int _key_check( DEMO3D_MAIN_WORK *wk )
     }
         
   }
-  
+
+#ifdef PM_DEBUG
+  if( (GFL_UI_KEY_GetCont() &PAD_BUTTON_X) && (GFL_UI_KEY_GetCont() &PAD_BUTTON_Y)){
+    return TRUE;
+  }
+#endif
   return FALSE;
 }
 
