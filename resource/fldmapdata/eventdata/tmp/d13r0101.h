@@ -2,6 +2,7 @@
 #ifndef ZONE_D13R0101_EVD_H
 #define ZONE_D13R0101_EVD_H
 
+#define DOOR_ID_D13R0101_D13_EXIT01       0
 
 #endif //ZONE_D13R0101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d13r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
