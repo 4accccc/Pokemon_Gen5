@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/12 22:41:10
+#save date:2010/02/25 18:14:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d05r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d05r0101.wms
 #hold event type:
 1
 #hold event number:
-9
+10
 #event number: 0
 #type
 1
@@ -76,17 +76,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_WORKER1_04
+TR_WORKER1_05
 #OBJ CODE Number
 WORKMAN
 #MOVE CODE Number
-MV_DOWN
+MV_RND_DL
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_WORKER1_04
+SCRID_TRID_WORKER1_05
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -102,101 +102,8 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 0 -440
+72 0 -168
 #event number: 3
-#type
-1
-#ID name
-TR_WORKER1_01
-#OBJ CODE Number
-WORKMAN
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_WORKER1_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-4
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-232 0 -440
-#event number: 4
-#type
-1
-#ID name
-TR_WORKER1_02
-#OBJ CODE Number
-WORKMAN
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_WORKER1_02
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-4
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-248 0 -440
-#event number: 5
-#type
-1
-#ID name
-TR_WORKER1_03
-#OBJ CODE Number
-WORKMAN
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_WORKER1_03
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-4
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-264 0 -440
-#event number: 6
 #type
 1
 #ID name
@@ -227,7 +134,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 -232 0 -200
-#event number: 7
+#event number: 4
 #type
 1
 #ID name
@@ -258,7 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 72 0 216
-#event number: 8
+#event number: 5
 #type
 1
 #ID name
@@ -289,6 +196,130 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 24 0 -216
+#event number: 6
+#type
+1
+#ID name
+TR_WORKER1_01
+#OBJ CODE Number
+WORKMAN
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WORKER1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 40
+#event number: 7
+#type
+1
+#ID name
+TR_WORKER1_02
+#OBJ CODE Number
+WORKMAN
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WORKER1_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 96 -88
+#event number: 8
+#type
+1
+#ID name
+TR_WORKER1_03
+#OBJ CODE Number
+WORKMAN
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WORKER1_03
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 48 120
+#event number: 9
+#type
+1
+#ID name
+TR_WORKER1_04
+#OBJ CODE Number
+WORKMAN
+#MOVE CODE Number
+MV_RND_UL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WORKER1_04
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 0 168
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
