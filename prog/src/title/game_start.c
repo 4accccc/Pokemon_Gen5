@@ -635,7 +635,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     config  = SaveData_GetConfig( SaveControl_GetPointer() );
     switch(always_net){
     case DEBUG_COMM_SEARCH_ONLY:
-      mode = NETWORK_SEARCH_OFF;
+      mode = NETWORK_SEARCH_ON;
       DebugScanOnly = TRUE;
       break;
     case DEBUG_COMM_ON:
