@@ -67,9 +67,9 @@
 #define MAIN_BG_PALETTE_BACK_3     (0x3)
 #define MAIN_BG_PALETTE_BACK_4     (0x4)
 #define MAIN_BG_PALETTE_BACK_5     (0x5)
-#define MAIN_BG_PALETTE_FONT       (0x8)
 #define MAIN_BG_PALETTE_WINDOW_OFF (0x9)
 #define MAIN_BG_PALETTE_WINDOW_ON  (0xa)
+#define MAIN_BG_PALETTE_FONT       (0xf)
 // SUB-BG
 #define SUB_BG_PALETTE_BACK_0 (0x0)
 #define SUB_BG_PALETTE_BACK_1 (0x1)
@@ -78,7 +78,7 @@
 #define SUB_BG_PALETTE_BACK_4 (0x4)
 #define SUB_BG_PALETTE_BACK_5 (0x5)
 #define SUB_BG_PALETTE_WINDOW (0x6)
-#define SUB_BG_PALETTE_FONT   (0x7)
+#define SUB_BG_PALETTE_FONT   (0xf)
 
 //---------------------
 // □ウィンドウ/ボタン
@@ -89,9 +89,9 @@
 #define TITLE_WINDOW_WIDTH           (28)  // Xサイズ (キャラクター単位)
 #define TITLE_WINDOW_HEIGHT          (3)   // Yサイズ (キャラクター単位)
 #define TITLE_WINDOW_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define TITLE_WINDOW_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
-#define TITLE_WINDOW_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
-#define TITLE_WINDOW_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
+#define TITLE_WINDOW_STRING_OFFSET_Y (4)   // 文字列の書き込み先オフセットY
+#define TITLE_WINDOW_STRING_COLOR_L  (3)   // フォント (文字) のカラー番号
+#define TITLE_WINDOW_STRING_COLOR_S  (4)   // フォント (影)　 のカラー番号
 #define TITLE_WINDOW_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
 // 上画面 調査項目名
@@ -101,8 +101,8 @@
 #define TOPIC_TITLE_HEIGHT          (3)   // Yサイズ (キャラクター単位)
 #define TOPIC_TITLE_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
 #define TOPIC_TITLE_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
-#define TOPIC_TITLE_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
-#define TOPIC_TITLE_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
+#define TOPIC_TITLE_STRING_COLOR_L  (3)   // フォント (文字) のカラー番号
+#define TOPIC_TITLE_STRING_COLOR_S  (4)   // フォント (影)　 のカラー番号
 #define TOPIC_TITLE_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
 // 上画面 調査項目の補足文
@@ -112,14 +112,14 @@
 #define TOPIC_CAPTION_HEIGHT          (4)   // Yサイズ (キャラクター単位)
 #define TOPIC_CAPTION_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
 #define TOPIC_CAPTION_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
-#define TOPIC_CAPTION_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
-#define TOPIC_CAPTION_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
+#define TOPIC_CAPTION_STRING_COLOR_L  (3)   // フォント (文字) のカラー番号
+#define TOPIC_CAPTION_STRING_COLOR_S  (4)   // フォント (影)　 のカラー番号
 #define TOPIC_CAPTION_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
 // 上画面 質問1
-#define QUESTION_1_X               (0)   // X座標   (キャラクター単位)
-#define QUESTION_1_Y               (10)  // Y座標   (キャラクター単位)
-#define QUESTION_1_WIDTH           (32)  // Xサイズ (キャラクター単位)
+#define QUESTION_1_X               (3)   // X座標   (キャラクター単位)
+#define QUESTION_1_Y               (11)  // Y座標   (キャラクター単位)
+#define QUESTION_1_WIDTH           (30)  // Xサイズ (キャラクター単位)
 #define QUESTION_1_HEIGHT          (2)   // Yサイズ (キャラクター単位)
 #define QUESTION_1_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
 #define QUESTION_1_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
@@ -128,9 +128,9 @@
 #define QUESTION_1_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
 // 上画面 質問2
-#define QUESTION_2_X               (0)   // X座標   (キャラクター単位)
-#define QUESTION_2_Y               (12)  // Y座標   (キャラクター単位)
-#define QUESTION_2_WIDTH           (32)  // Xサイズ (キャラクター単位)
+#define QUESTION_2_X               (3)   // X座標   (キャラクター単位)
+#define QUESTION_2_Y               (13)  // Y座標   (キャラクター単位)
+#define QUESTION_2_WIDTH           (30)  // Xサイズ (キャラクター単位)
 #define QUESTION_2_HEIGHT          (2)   // Yサイズ (キャラクター単位)
 #define QUESTION_2_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
 #define QUESTION_2_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
@@ -139,9 +139,9 @@
 #define QUESTION_2_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
 // 上画面 質問3
-#define QUESTION_3_X               (0)   // X座標   (キャラクター単位)
-#define QUESTION_3_Y               (14)  // Y座標   (キャラクター単位)
-#define QUESTION_3_WIDTH           (32)  // Xサイズ (キャラクター単位)
+#define QUESTION_3_X               (3)   // X座標   (キャラクター単位)
+#define QUESTION_3_Y               (15)  // Y座標   (キャラクター単位)
+#define QUESTION_3_WIDTH           (30)  // Xサイズ (キャラクター単位)
 #define QUESTION_3_HEIGHT          (2)   // Yサイズ (キャラクター単位)
 #define QUESTION_3_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
 #define QUESTION_3_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
@@ -155,9 +155,9 @@
 #define DIRECTION_WINDOW_WIDTH           (32)  // Xサイズ (キャラクター単位)
 #define DIRECTION_WINDOW_HEIGHT          (6)   // Yサイズ (キャラクター単位)
 #define DIRECTION_WINDOW_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define DIRECTION_WINDOW_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
-#define DIRECTION_WINDOW_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
-#define DIRECTION_WINDOW_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
+#define DIRECTION_WINDOW_STRING_OFFSET_Y (5)   // 文字列の書き込み先オフセットY
+#define DIRECTION_WINDOW_STRING_COLOR_L  (3)   // フォント (文字) のカラー番号
+#define DIRECTION_WINDOW_STRING_COLOR_S  (4)   // フォント (影)　 のカラー番号
 #define DIRECTION_WINDOW_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
 // 下画面 調査項目ボタン ( 先頭の項目 / 非選択時 )
@@ -165,8 +165,8 @@
 #define TOPIC_BUTTON_Y               (0)   // Y座標   (キャラクター単位)
 #define TOPIC_BUTTON_WIDTH           (28)  // Xサイズ (キャラクター単位)
 #define TOPIC_BUTTON_HEIGHT          (3)   // Yサイズ (キャラクター単位)
-#define TOPIC_BUTTON_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define TOPIC_BUTTON_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
+#define TOPIC_BUTTON_STRING_OFFSET_X (8)   // 文字列の書き込み先オフセットX
+#define TOPIC_BUTTON_STRING_OFFSET_Y (4)   // 文字列の書き込み先オフセットY
 #define TOPIC_BUTTON_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
 #define TOPIC_BUTTON_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define TOPIC_BUTTON_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
@@ -221,24 +221,28 @@
 // □BMP-OAM アクター
 //-------------------
 // 確認メッセージ
-#define BMPOAM_ACTOR_CONFIRM_CHARA_SIZE_X   (20)  // x サイズ ( キャラ単位 )
-#define BMPOAM_ACTOR_CONFIRM_CHARA_SIZE_Y   (5)   // y サイズ ( キャラ単位 )
-#define BMPOAM_ACTOR_CONFIRM_POS_X          (0)   // 左上x座標
-#define BMPOAM_ACTOR_CONFIRM_POS_Y          (152) // 左上y座標
-#define BMPOAM_ACTOR_CONFIRM_PALETTE_OFFSET (1)   // パレットオフセット
-#define BMPOAM_ACTOR_CONFIRM_SOFT_PRIORITY  (0)   // ソフトプライオリティ
-#define BMPOAM_ACTOR_CONFIRM_BG_PRIORITY    (0)   // BGプライオリティ
-#define BMPOAM_ACTOR_CONFIRM_STRING_COLOR_L (1)   // 文字のカラー番号
-#define BMPOAM_ACTOR_CONFIRM_STRING_COLOR_S (2)   // 影のカラー番号
-#define BMPOAM_ACTOR_CONFIRM_STRING_COLOR_B (0)   // 背景のカラー番号
+#define BMPOAM_ACTOR_CONFIRM_CHARA_SIZE_X    (20)  // x サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_CONFIRM_CHARA_SIZE_Y    (6)   // y サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_CONFIRM_POS_X           (0)   // 左上x座標
+#define BMPOAM_ACTOR_CONFIRM_POS_Y           (144) // 左上y座標
+#define BMPOAM_ACTOR_CONFIRM_PALETTE_OFFSET  (1)   // パレットオフセット
+#define BMPOAM_ACTOR_CONFIRM_SOFT_PRIORITY   (0)   // ソフトプライオリティ
+#define BMPOAM_ACTOR_CONFIRM_BG_PRIORITY     (0)   // BGプライオリティ
+#define BMPOAM_ACTOR_CONFIRM_STRING_OFFSET_X (10)  // 文字書き込み先 x 座標オフセット
+#define BMPOAM_ACTOR_CONFIRM_STRING_OFFSET_Y (10)  // 文字書き込み先 y 座標オフセット
+#define BMPOAM_ACTOR_CONFIRM_STRING_COLOR_L  (1)   // 文字のカラー番号
+#define BMPOAM_ACTOR_CONFIRM_STRING_COLOR_S  (2)   // 影のカラー番号
+#define BMPOAM_ACTOR_CONFIRM_STRING_COLOR_B  (0)   // 背景のカラー番号
 //「けってい」
 #define BMPOAM_ACTOR_OK_CHARA_SIZE_X   (10)   // x サイズ ( キャラ単位 )
 #define BMPOAM_ACTOR_OK_CHARA_SIZE_Y   (3)    // y サイズ ( キャラ単位 )
 #define BMPOAM_ACTOR_OK_POS_X          (160)  // 左上x座標
-#define BMPOAM_ACTOR_OK_POS_Y          (152)  // 左上y座標
+#define BMPOAM_ACTOR_OK_POS_Y          (142)  // 左上y座標
 #define BMPOAM_ACTOR_OK_PALETTE_OFFSET (1)    // パレットオフセット
 #define BMPOAM_ACTOR_OK_SOFT_PRIORITY  (0)    // ソフトプライオリティ
 #define BMPOAM_ACTOR_OK_BG_PRIORITY    (0)    // BGプライオリティ
+#define BMPOAM_ACTOR_OK_STRING_OFFSET_X (10)  // 文字書き込み先 x 座標オフセット
+#define BMPOAM_ACTOR_OK_STRING_OFFSET_Y (5)  // 文字書き込み先 y 座標オフセット
 #define BMPOAM_ACTOR_OK_STRING_COLOR_L (1)    // 文字のカラー番号
 #define BMPOAM_ACTOR_OK_STRING_COLOR_S (2)    // 影のカラー番号
 #define BMPOAM_ACTOR_OK_STRING_COLOR_B (0)    // 背景のカラー番号
@@ -250,17 +254,21 @@
 #define BMPOAM_ACTOR_CANCEL_PALETTE_OFFSET (1)    // パレットオフセット
 #define BMPOAM_ACTOR_CANCEL_SOFT_PRIORITY  (0)    // ソフトプライオリティ
 #define BMPOAM_ACTOR_CANCEL_BG_PRIORITY    (0)    // BGプライオリティ
+#define BMPOAM_ACTOR_CANCEL_STRING_OFFSET_X (10)  // 文字書き込み先 x 座標オフセット
+#define BMPOAM_ACTOR_CANCEL_STRING_OFFSET_Y (5)  // 文字書き込み先 y 座標オフセット
 #define BMPOAM_ACTOR_CANCEL_STRING_COLOR_L (1)    // 文字のカラー番号
 #define BMPOAM_ACTOR_CANCEL_STRING_COLOR_S (2)    // 影のカラー番号
 #define BMPOAM_ACTOR_CANCEL_STRING_COLOR_B (0)    // 背景のカラー番号
 //「ちょうさを　かいしします！」
-#define BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_X   (30) // x サイズ ( キャラ単位 )
-#define BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_Y   (5)  // y サイズ ( キャラ単位 )
-#define BMPOAM_ACTOR_DETERMINE_POS_X          (8)  // 左上x座標
+#define BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_X   (32) // x サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_Y   (4)  // y サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_DETERMINE_POS_X          (0)  // 左上x座標
 #define BMPOAM_ACTOR_DETERMINE_POS_Y          (76) // 左上y座標
 #define BMPOAM_ACTOR_DETERMINE_PALETTE_OFFSET (1)  // パレットオフセット
 #define BMPOAM_ACTOR_DETERMINE_SOFT_PRIORITY  (0)  // ソフトプライオリティ
 #define BMPOAM_ACTOR_DETERMINE_BG_PRIORITY    (0)  // BGプライオリティ
+#define BMPOAM_ACTOR_DETERMINE_STRING_OFFSET_X (0)  // 文字書き込み先 x 座標オフセット
+#define BMPOAM_ACTOR_DETERMINE_STRING_OFFSET_Y (9)  // 文字書き込み先 y 座標オフセット
 #define BMPOAM_ACTOR_DETERMINE_STRING_COLOR_L (1)  // 文字のカラー番号
 #define BMPOAM_ACTOR_DETERMINE_STRING_COLOR_S (2)  // 影のカラー番号
 #define BMPOAM_ACTOR_DETERMINE_STRING_COLOR_B (0)  // 背景のカラー番号
@@ -269,6 +277,7 @@
 //===============================================================================
 // ■動作
 //===============================================================================
+#define SEQ_QUEUE_SIZE            (10) // シーケンスキューのサイズ
 #define SELECT_TOPIC_MAX_NUM      (1)  // 選択する調査項目の数
 #define SEQ_DETERMINE_WAIT_FRAMES (60) // 調査項目確定シーケンスの待ち時間
 

@@ -680,7 +680,7 @@ static void LoadSubBGResources( HEAPID heapID )
       void* src;
       ARCDATID datID;
       NNSG2dScreenData* data;
-      datID = NARC_research_radar_graphic_bgu_base_NSCR;
+      datID = NARC_research_radar_graphic_bgu_ring_NSCR;
       src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, heapID );
       NNS_G2dGetUnpackedScreenData( src, &data );
       GFL_BG_WriteScreen( SUB_BG_RADAR, data->rawData, 0, 0, 32, 24 );

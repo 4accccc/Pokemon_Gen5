@@ -59,7 +59,7 @@
 #define MAIN_BG_PALETTE_BACK_5     (0x5)
 #define MAIN_BG_PALETTE_WINDOW_ON  (0xa)
 #define MAIN_BG_PALETTE_WINDOW_OFF (0x7)
-#define MAIN_BG_PALETTE_FONT       (0x8)
+#define MAIN_BG_PALETTE_FONT       (0xf)
 // SUB-BG
 #define SUB_BG_PALETTE_BACK_0 (0x0)
 #define SUB_BG_PALETTE_BACK_1 (0x1)
@@ -68,7 +68,7 @@
 #define SUB_BG_PALETTE_BACK_4 (0x4)
 #define SUB_BG_PALETTE_BACK_5 (0x5)
 #define SUB_BG_PALETTE_WINDOW (0x6)
-#define SUB_BG_PALETTE_FONT   (0x7)
+#define SUB_BG_PALETTE_FONT   (0xf)
 
 //---------------------
 // □ウィンドウ/ボタン
@@ -79,9 +79,9 @@
 #define CAPTION_WINDOW_WIDTH           (32)  // Xサイズ (キャラクター単位)
 #define CAPTION_WINDOW_HEIGHT          (6)   // Yサイズ (キャラクター単位)
 #define CAPTION_WINDOW_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define CAPTION_WINDOW_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
-#define CAPTION_WINDOW_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
-#define CAPTION_WINDOW_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
+#define CAPTION_WINDOW_STRING_OFFSET_Y (16)  // 文字列の書き込み先オフセットY
+#define CAPTION_WINDOW_STRING_COLOR_L  (3)   // フォント (文字) のカラー番号
+#define CAPTION_WINDOW_STRING_COLOR_S  (4)   // フォント (影)　 のカラー番号
 #define CAPTION_WINDOW_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
 // 下画面 タイトル ウィンドウ
@@ -91,8 +91,8 @@
 #define TITLE_WINDOW_HEIGHT          (4)   // Yサイズ (キャラクター単位)
 #define TITLE_WINDOW_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
 #define TITLE_WINDOW_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
-#define TITLE_WINDOW_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
-#define TITLE_WINDOW_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
+#define TITLE_WINDOW_STRING_COLOR_L  (3)   // フォント (文字) のカラー番号
+#define TITLE_WINDOW_STRING_COLOR_S  (4)   // フォント (影)　 のカラー番号
 #define TITLE_WINDOW_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
 // 下画面 ボタン ( 調査内容の決定 )
@@ -101,7 +101,7 @@
 #define CHANGE_BUTTON_WIDTH           (26)  // Xサイズ (キャラクター単位)
 #define CHANGE_BUTTON_HEIGHT          (4)   // Yサイズ (キャラクター単位)
 #define CHANGE_BUTTON_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define CHANGE_BUTTON_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
+#define CHANGE_BUTTON_STRING_OFFSET_Y (8)   // 文字列の書き込み先オフセットY
 #define CHANGE_BUTTON_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
 #define CHANGE_BUTTON_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define CHANGE_BUTTON_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
@@ -112,7 +112,7 @@
 #define CHECK_BUTTON_WIDTH           (26)  // Xサイズ (キャラクター単位)
 #define CHECK_BUTTON_HEIGHT          (4)   // Yサイズ (キャラクター単位)
 #define CHECK_BUTTON_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define CHECK_BUTTON_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
+#define CHECK_BUTTON_STRING_OFFSET_Y (8)   // 文字列の書き込み先オフセットY
 #define CHECK_BUTTON_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
 #define CHECK_BUTTON_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define CHECK_BUTTON_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
@@ -142,3 +142,24 @@
 #define CLWK_NEW_ICON_ANIME_SEQ (NANR_obj_new)  // アニメーションシーケンス
 #define CLWK_NEW_ICON_SOFT_PRIORITY (0)  // ソフト優先順位 0>0xff
 #define CLWK_NEW_ICON_BG_PRIORITY   (0)  // BG 優先順位
+
+
+//===============================================================================
+// ■タッチ範囲
+//===============================================================================
+//「調査内容を変更する」
+#define TOUCH_AREA_CHANGE_BUTTON_X      (CHANGE_BUTTON_X * DOT_PER_CHARA)      // X座標   (ドット単位)
+#define TOUCH_AREA_CHANGE_BUTTON_Y      (CHANGE_BUTTON_Y * DOT_PER_CHARA)      // Y座標   (ドット単位)
+#define TOUCH_AREA_CHANGE_BUTTON_WIDTH  (CHANGE_BUTTON_WIDTH * DOT_PER_CHARA)  // Xサイズ (ドット単位)
+#define TOUCH_AREA_CHANGE_BUTTON_HEIGHT (CHANGE_BUTTON_HEIGHT * DOT_PER_CHARA) // Yサイズ (ドット単位)
+//「調査報告を確認する」
+#define TOUCH_AREA_CHECK_BUTTON_X      (CHECK_BUTTON_X * DOT_PER_CHARA)      // X座標   (ドット単位)
+#define TOUCH_AREA_CHECK_BUTTON_Y      (CHECK_BUTTON_Y * DOT_PER_CHARA)      // Y座標   (ドット単位)
+#define TOUCH_AREA_CHECK_BUTTON_WIDTH  (CHECK_BUTTON_WIDTH * DOT_PER_CHARA)  // Xサイズ (ドット単位)
+#define TOUCH_AREA_CHECK_BUTTON_HEIGHT (CHECK_BUTTON_HEIGHT * DOT_PER_CHARA) // Yサイズ (ドット単位)
+
+
+//===============================================================================
+// ■動作
+//===============================================================================
+#define SEQ_QUEUE_SIZE (10) // シーケンスキューのサイズ

@@ -22,17 +22,18 @@ typedef struct _BG_FONT BG_FONT;
 //===============================================================================
 typedef struct
 {
-  u8 BGFrame;   // 対象BGフレーム
-  u8 posX;      // x座標 (キャラクター単位)
-  u8 posY;      // x座標 (キャラクター単位)
-  u8 sizeX;     // xサイズ (キャラクター単位)
-  u8 sizeY;     // yサイズ (キャラクター単位)
-  u8 offsetX;   // 書き込み先x座標 (ドット単位)
-  u8 offsetY;   // 書き込み先y座標 (ドット単位)
-  u8 paletteNo; // 使用パレット番号
-  u8 colorNo_L; // 文字のカラー番号
-  u8 colorNo_S; // 影のカラー番号
-  u8 colorNo_B; // 背景のカラー番号
+  u8   BGFrame;       // 対象BGフレーム
+  u8   posX;          // x座標 (キャラクター単位)
+  u8   posY;          // x座標 (キャラクター単位)
+  u8   sizeX;         // xサイズ (キャラクター単位)
+  u8   sizeY;         // yサイズ (キャラクター単位)
+  u8   offsetX;       // 書き込み先x座標 (ドット単位)
+  u8   offsetY;       // 書き込み先y座標 (ドット単位)
+  u8   paletteNo;     // 使用パレット番号
+  u8   colorNo_L;     // 文字のカラー番号
+  u8   colorNo_S;     // 影のカラー番号
+  u8   colorNo_B;     // 背景のカラー番号
+  BOOL centeringFlag; // センタリングするかどうか
 
 } BG_FONT_PARAM; 
 

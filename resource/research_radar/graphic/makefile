@@ -46,15 +46,16 @@ GRAPHIC_DATA = $(GRAPHIC_BIN)/bgd.NCLR \
 							 $(GRAPHIC_BIN)/bgu.NCLR \
 							 $(GRAPHIC_BIN)/bgu.NCGR \
 							 $(GRAPHIC_BIN)/bgu_base.NSCR \
+							 $(GRAPHIC_BIN)/bgu_ring.NSCR \
 							 $(GRAPHIC_BIN)/bgu_win1.NSCR \
 							 $(GRAPHIC_BIN)/obj.NCER \
 							 $(GRAPHIC_BIN)/obj.NCGR \
 							 $(GRAPHIC_BIN)/obj.NCLR \
 							 $(GRAPHIC_BIN)/obj.NANR \
-							 $(GRAPHIC_BIN)/obj_window1.NCGR \
+							 $(GRAPHIC_BIN)/obj_win.NCGR \
 							 $(GRAPHIC_BIN)/obj_window2.NCGR \
 							 $(GRAPHIC_BIN)/obj_window3.NCGR \
-							 $(GRAPHIC_BIN)/obj_window4.NCGR
+							 $(GRAPHIC_BIN)/obj_win2.NCGR
 
 
 
@@ -88,12 +89,13 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu.ncl -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu.ncg -bg -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu_base.nsc -o/$(GRAPHIC_BIN)
+	g2dcvtr $(GRAPHIC_SOURCE)/bgu_ring.nsc -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/bgu_win1.nsc -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/obj.nce -lbl -o/$(GRAPHIC_BIN)
-	g2dcvtr $(GRAPHIC_SOURCE)/obj_window1.ncg -bg -o/$(GRAPHIC_BIN)
+	g2dcvtr $(GRAPHIC_SOURCE)/obj_win.ncg -bg -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/obj_window2.ncg -bg -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/obj_window3.ncg -bg -o/$(GRAPHIC_BIN)
-	g2dcvtr $(GRAPHIC_SOURCE)/obj_window4.ncg -bg -o/$(GRAPHIC_BIN)
+	g2dcvtr $(GRAPHIC_SOURCE)/obj_win2.ncg -bg -o/$(GRAPHIC_BIN)
 endif
 
 # ヘッダのコピーだけ実行する

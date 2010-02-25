@@ -18,6 +18,7 @@ typedef enum {
   RESEARCH_SELECT_SEQ_CONFIRM,      // 調査項目確定の確認
   RESEARCH_SELECT_SEQ_TO_KEY_WAIT,  // キー入力待ちに戻る
   RESEARCH_SELECT_SEQ_DETERMINE,    // 調査項目確定
+  RESEARCH_SELECT_SEQ_FADE_OUT,     // フェードアウト
   RESEARCH_SELECT_SEQ_CLEAN_UP,     // 後片付け
   RESEARCH_SELECT_SEQ_FINISH,       // 終了
 } RESEARCH_SELECT_SEQ;
@@ -28,6 +29,30 @@ typedef enum {
   MENU_ITEM_DETERMINATION_CANCEL, //「やめる」
   MENU_ITEM_NUM,                  // 総数
 } MENU_ITEM;
+
+// タッチ範囲 ( メニュー項目 )
+typedef enum {
+  MENU_TOUCH_AREA_OK_BUTTON,     //「決定」ボタン
+  MENU_TOUCH_AREA_CANCEL_BUTTON, //「やめる」ボタン
+  MENU_TOUCH_AREA_DUMMY,         // 終端コード
+  MENU_TOUCH_AREA_NUM,           // 総数
+} MENU_TOUCH_AREA_INDEX;
+
+// タッチ範囲 ( 調査項目リスト )
+typedef enum {
+  TOPIC_TOUCH_AREA_TOPIC_0,       // 調査項目0
+  TOPIC_TOUCH_AREA_TOPIC_1,       // 調査項目1
+  TOPIC_TOUCH_AREA_TOPIC_2,       // 調査項目2
+  TOPIC_TOUCH_AREA_TOPIC_3,       // 調査項目3
+  TOPIC_TOUCH_AREA_TOPIC_4,       // 調査項目4
+  TOPIC_TOUCH_AREA_TOPIC_5,       // 調査項目5
+  TOPIC_TOUCH_AREA_TOPIC_6,       // 調査項目6
+  TOPIC_TOUCH_AREA_TOPIC_7,       // 調査項目7
+  TOPIC_TOUCH_AREA_TOPIC_8,       // 調査項目8
+  TOPIC_TOUCH_AREA_TOPIC_9,       // 調査項目9
+  TOPIC_TOUCH_AREA_DUMMY,         // 終端コード
+  TOPIC_TOUCH_AREA_NUM,           // 総数
+} TOPIC_TOUCH_AREA_INDEX;
 
 // メッセージデータ
 typedef enum {

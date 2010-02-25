@@ -15,7 +15,7 @@
 //=============================================================================== 
 #define PRINT_TARGET (2)  // デバッグ出力先
 
-#define DOT_PER_CHARA (8)  // 1キャラ = 8ドット
+#define DOT_PER_CHARA     (8)                      // 1キャラ = 8ドット
 #define ONE_CHARA_SIZE    (0x20)                   // 1キャラクターデータのサイズ [Byte]
 #define ONE_PALETTE_SIZE  (0x20)                   // 1パレット(16色分)のサイズ [Byte]
 #define FULL_PALETTE_SIZE (ONE_PALETTE_SIZE * 16)  // 16パレットのサイズ [Byte]
@@ -31,9 +31,9 @@
 // レーダー面
 #define SUB_BG_RADAR (GFL_BG_FRAME1_S)    // BG フレーム
 #define SUB_BG_RADAR_PRIORITY        (2)  // 表示優先順位
-#define SUB_BG_RADAR_FIRST_PLT_IDX   (1)  // 先頭パレット番号
+#define SUB_BG_RADAR_FIRST_PLT_IDX   (0)  // 先頭パレット番号
 #define SUB_BG_RADAR_PLT_NUM         (6)  // 使用パレット数
-#define SUB_BG_RADAR_PLT_ANIME_FRAME (30) // パレットアニメーションの更新間隔[frame]
+#define SUB_BG_RADAR_PLT_ANIME_FRAME (10) // パレットアニメーションの更新間隔[frame]
 
 //-----------
 // □MAIN-BG

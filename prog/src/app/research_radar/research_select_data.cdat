@@ -9,6 +9,8 @@
 #include <gflib.h>
 #include "bg_font.h"
 #include "research_select_index.h"
+#include "research_common.h"
+
 #include "arc/arc_def.h"                    // for ARCID_xxxx
 #include "topic_id.h"                       // for TOPIC_ID_xxxx
 #include "obj_NANR_LBLDEFS.h"               // for NANR_obj_xxxx
@@ -151,281 +153,299 @@ static const GFL_BG_BGCNT_HEADER MainBGControl_FONT =
 //-----------------------
 typedef struct
 {
-  u8 BGFrame;    // 対象BGフレーム
-  u8 posX;       // x座標 (キャラクター単位)
-  u8 posY;       // x座標 (キャラクター単位)
-  u8 sizeX;      // xサイズ (キャラクター単位)
-  u8 sizeY;      // yサイズ (キャラクター単位)
-  u8 offsetX;    // 書き込み先x座標 (ドット単位)
-  u8 offsetY;    // 書き込み先y座標 (ドット単位)
-  u8 paletteNo;  // 使用パレット番号
-  u8 colorNo_L;  // 文字のカラー番号
-  u8 colorNo_S;  // 影のカラー番号
-  u8 colorNo_B;  // 背景のカラー番号
-  MESSAGE_INDEX messageIdx;  // 参照するメッセージデータ
-  u32           stringIdx;   // 使用する文字列
+  u8            BGFrame;       // 対象BGフレーム
+  u8            posX;          // x座標 (キャラクター単位)
+  u8            posY;          // x座標 (キャラクター単位)
+  u8            sizeX;         // xサイズ (キャラクター単位)
+  u8            sizeY;         // yサイズ (キャラクター単位)
+  u8            offsetX;       // 書き込み先x座標 (ドット単位)
+  u8            offsetY;       // 書き込み先y座標 (ドット単位)
+  u8            paletteNo;     // 使用パレット番号
+  u8            colorNo_L;     // 文字のカラー番号
+  u8            colorNo_S;     // 影のカラー番号
+  u8            colorNo_B;     // 背景のカラー番号
+  MESSAGE_INDEX messageIdx;    // 参照するメッセージデータ
+  u32           stringIdx;     // 使用する文字列
+  BOOL          softCentering; // 自力センタリングの有無
 } BG_FONT_INIT_DATA;
 
 static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] = 
 {
   { // 上画面 タイトル
-    SUB_BG_FONT,
-    TITLE_WINDOW_X,
-    TITLE_WINDOW_Y,
-    TITLE_WINDOW_WIDTH,
-    TITLE_WINDOW_HEIGHT,
-    TITLE_WINDOW_STRING_OFFSET_X,
-    TITLE_WINDOW_STRING_OFFSET_Y,
-    SUB_BG_PALETTE_FONT,
-    TITLE_WINDOW_STRING_COLOR_L,
-    TITLE_WINDOW_STRING_COLOR_S,
-    TITLE_WINDOW_STRING_COLOR_B,
-    MESSAGE_STATIC,
-    str_select_title,
+    SUB_BG_FONT,                  // 対象BGフレーム
+    TITLE_WINDOW_X,               // x座標 (キャラクター単位)
+    TITLE_WINDOW_Y,               // x座標 (キャラクター単位)
+    TITLE_WINDOW_WIDTH,           // xサイズ (キャラクター単位)
+    TITLE_WINDOW_HEIGHT,          // yサイズ (キャラクター単位)
+    TITLE_WINDOW_STRING_OFFSET_X, // 書き込み先x座標 (ドット単位)
+    TITLE_WINDOW_STRING_OFFSET_Y, // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,          // 使用パレット番号
+    TITLE_WINDOW_STRING_COLOR_L,  // 文字のカラー番号
+    TITLE_WINDOW_STRING_COLOR_S,  // 影のカラー番号
+    TITLE_WINDOW_STRING_COLOR_B,  // 背景のカラー番号
+    MESSAGE_STATIC,               // 参照するメッセージデータ
+    str_select_title,             // 使用する文字列
+    FALSE,                        // 自力センタリングの有無
   },
   { // 上画面 説明文
-    SUB_BG_FONT,
-    DIRECTION_WINDOW_X,
-    DIRECTION_WINDOW_Y,
-    DIRECTION_WINDOW_WIDTH,
-    DIRECTION_WINDOW_HEIGHT,
-    DIRECTION_WINDOW_STRING_OFFSET_X,
-    DIRECTION_WINDOW_STRING_OFFSET_Y,
-    SUB_BG_PALETTE_FONT,
-    DIRECTION_WINDOW_STRING_COLOR_L,
-    DIRECTION_WINDOW_STRING_COLOR_S,
-    DIRECTION_WINDOW_STRING_COLOR_B,
-    MESSAGE_STATIC,
-    str_select_direction,
+    SUB_BG_FONT,                       // 対象BGフレーム
+    DIRECTION_WINDOW_X,                // x座標 (キャラクター単位)
+    DIRECTION_WINDOW_Y,                // x座標 (キャラクター単位)
+    DIRECTION_WINDOW_WIDTH,            // xサイズ (キャラクター単位)
+    DIRECTION_WINDOW_HEIGHT,           // yサイズ (キャラクター単位)
+    DIRECTION_WINDOW_STRING_OFFSET_X,  // 書き込み先x座標 (ドット単位)
+    DIRECTION_WINDOW_STRING_OFFSET_Y,  // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,               // 使用パレット番号
+    DIRECTION_WINDOW_STRING_COLOR_L,   // 文字のカラー番号
+    DIRECTION_WINDOW_STRING_COLOR_S,   // 影のカラー番号
+    DIRECTION_WINDOW_STRING_COLOR_B,   // 背景のカラー番号
+    MESSAGE_STATIC,                    // 参照するメッセージデータ
+    str_select_direction,              // 使用する文字列
+    FALSE,                             // 自力センタリングの有無
   }, 
   { // 上画面 調査項目名
-    SUB_BG_FONT,
-    TOPIC_TITLE_X,
-    TOPIC_TITLE_Y,
-    TOPIC_TITLE_WIDTH,
-    TOPIC_TITLE_HEIGHT,
-    TOPIC_TITLE_STRING_OFFSET_X,
-    TOPIC_TITLE_STRING_OFFSET_Y,
-    SUB_BG_PALETTE_FONT,
-    TOPIC_TITLE_STRING_COLOR_L,
-    TOPIC_TITLE_STRING_COLOR_S,
-    TOPIC_TITLE_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    0,
+    SUB_BG_FONT,                       // 対象BGフレーム
+    TOPIC_TITLE_X,                     // x座標 (キャラクター単位)
+    TOPIC_TITLE_Y,                     // x座標 (キャラクター単位)
+    TOPIC_TITLE_WIDTH,                 // xサイズ (キャラクター単位)
+    TOPIC_TITLE_HEIGHT,                // yサイズ (キャラクター単位)
+    TOPIC_TITLE_STRING_OFFSET_X,       // 書き込み先x座標 (ドット単位)
+    TOPIC_TITLE_STRING_OFFSET_Y,       // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,               // 使用パレット番号
+    TOPIC_TITLE_STRING_COLOR_L,        // 文字のカラー番号
+    TOPIC_TITLE_STRING_COLOR_S,        // 影のカラー番号
+    TOPIC_TITLE_STRING_COLOR_B,        // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,             // 参照するメッセージデータ
+    0,                                 // 使用する文字列
+    TRUE,                              // 自力センタリングの有無
   }, 
   { // 上画面 調査項目の補足文
-    SUB_BG_FONT,
-    TOPIC_CAPTION_X,
-    TOPIC_CAPTION_Y,
-    TOPIC_CAPTION_WIDTH,
-    TOPIC_CAPTION_HEIGHT,
-    TOPIC_CAPTION_STRING_OFFSET_X,
-    TOPIC_CAPTION_STRING_OFFSET_Y,
-    SUB_BG_PALETTE_FONT,
-    TOPIC_CAPTION_STRING_COLOR_L,
-    TOPIC_CAPTION_STRING_COLOR_S,
-    TOPIC_CAPTION_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    0,
+    SUB_BG_FONT,                       // 対象BGフレーム
+    TOPIC_CAPTION_X,                   // x座標 (キャラクター単位)
+    TOPIC_CAPTION_Y,                   // x座標 (キャラクター単位)
+    TOPIC_CAPTION_WIDTH,               // xサイズ (キャラクター単位)
+    TOPIC_CAPTION_HEIGHT,              // yサイズ (キャラクター単位)
+    TOPIC_CAPTION_STRING_OFFSET_X,     // 書き込み先x座標 (ドット単位)
+    TOPIC_CAPTION_STRING_OFFSET_Y,     // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,               // 使用パレット番号
+    TOPIC_CAPTION_STRING_COLOR_L,      // 文字のカラー番号
+    TOPIC_CAPTION_STRING_COLOR_S,      // 影のカラー番号
+    TOPIC_CAPTION_STRING_COLOR_B,      // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,             // 参照するメッセージデータ
+    0,                                 // 使用する文字列
+    TRUE,                              // 自力センタリングの有無
   }, 
   { // 上画面 質問1
-    SUB_BG_FONT,
-    QUESTION_1_X,
-    QUESTION_1_Y,
-    QUESTION_1_WIDTH,
-    QUESTION_1_HEIGHT,
-    QUESTION_1_STRING_OFFSET_X,
-    QUESTION_1_STRING_OFFSET_Y,
-    SUB_BG_PALETTE_FONT,
-    QUESTION_1_STRING_COLOR_L,
-    QUESTION_1_STRING_COLOR_S,
-    QUESTION_1_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    0,
+    SUB_BG_FONT,                       // 対象BGフレーム
+    QUESTION_1_X,                      // x座標 (キャラクター単位)
+    QUESTION_1_Y,                      // x座標 (キャラクター単位)
+    QUESTION_1_WIDTH,                  // xサイズ (キャラクター単位)
+    QUESTION_1_HEIGHT,                 // yサイズ (キャラクター単位)
+    QUESTION_1_STRING_OFFSET_X,        // 書き込み先x座標 (ドット単位)
+    QUESTION_1_STRING_OFFSET_Y,        // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,               // 使用パレット番号
+    QUESTION_1_STRING_COLOR_L,         // 文字のカラー番号
+    QUESTION_1_STRING_COLOR_S,         // 影のカラー番号
+    QUESTION_1_STRING_COLOR_B,         // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,             // 参照するメッセージデータ
+    0,                                 // 使用する文字列
+    FALSE,                             // 自力センタリングの有無
   }, 
   { // 上画面 質問2
-    SUB_BG_FONT,
-    QUESTION_2_X,
-    QUESTION_2_Y,
-    QUESTION_2_WIDTH,
-    QUESTION_2_HEIGHT,
-    QUESTION_2_STRING_OFFSET_X,
-    QUESTION_2_STRING_OFFSET_Y,
-    SUB_BG_PALETTE_FONT,
-    QUESTION_2_STRING_COLOR_L,
-    QUESTION_2_STRING_COLOR_S,
-    QUESTION_2_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    0,
+    SUB_BG_FONT,                       // 対象BGフレーム
+    QUESTION_2_X,                      // x座標 (キャラクター単位)
+    QUESTION_2_Y,                      // x座標 (キャラクター単位)
+    QUESTION_2_WIDTH,                  // xサイズ (キャラクター単位)
+    QUESTION_2_HEIGHT,                 // yサイズ (キャラクター単位)
+    QUESTION_2_STRING_OFFSET_X,        // 書き込み先x座標 (ドット単位)
+    QUESTION_2_STRING_OFFSET_Y,        // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,               // 使用パレット番号
+    QUESTION_2_STRING_COLOR_L,         // 文字のカラー番号
+    QUESTION_2_STRING_COLOR_S,         // 影のカラー番号
+    QUESTION_2_STRING_COLOR_B,         // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,             // 参照するメッセージデータ
+    0,                                 // 使用する文字列
+    FALSE,                             // 自力センタリングの有無
   }, 
   { // 上画面 質問3
-    SUB_BG_FONT,
-    QUESTION_3_X,
-    QUESTION_3_Y,
-    QUESTION_3_WIDTH,
-    QUESTION_3_HEIGHT,
-    QUESTION_3_STRING_OFFSET_X,
-    QUESTION_3_STRING_OFFSET_Y,
-    SUB_BG_PALETTE_FONT,
-    QUESTION_3_STRING_COLOR_L,
-    QUESTION_3_STRING_COLOR_S,
-    QUESTION_3_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    0,
+    SUB_BG_FONT,                       // 対象BGフレーム
+    QUESTION_3_X,                      // x座標 (キャラクター単位)
+    QUESTION_3_Y,                      // x座標 (キャラクター単位)
+    QUESTION_3_WIDTH,                  // xサイズ (キャラクター単位)
+    QUESTION_3_HEIGHT,                 // yサイズ (キャラクター単位)
+    QUESTION_3_STRING_OFFSET_X,        // 書き込み先x座標 (ドット単位)
+    QUESTION_3_STRING_OFFSET_Y,        // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,               // 使用パレット番号
+    QUESTION_3_STRING_COLOR_L,         // 文字のカラー番号
+    QUESTION_3_STRING_COLOR_S,         // 影のカラー番号
+    QUESTION_3_STRING_COLOR_B,         // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,             // 参照するメッセージデータ
+    0,                                 // 使用する文字列
+    FALSE,                             // 自力センタリングの有無
   }, 
 };
 
 static const BG_FONT_INIT_DATA TopicsBGFontInitData[ TOPIC_ID_NUM ] = 
 {
   { // 調査項目0
-    MAIN_BG_FONT,
-    TOPIC_BUTTON_X,
-    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 0,
-    TOPIC_BUTTON_WIDTH,
-    TOPIC_BUTTON_HEIGHT,
-    TOPIC_BUTTON_STRING_OFFSET_X,
-    TOPIC_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TOPIC_BUTTON_STRING_COLOR_L,
-    TOPIC_BUTTON_STRING_COLOR_S,
-    TOPIC_BUTTON_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    str_topic_0,
+    MAIN_BG_FONT,                             // 対象BGフレーム
+    TOPIC_BUTTON_X,                           // x座標 (キャラクター単位)
+    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 0, // x座標 (キャラクター単位)
+    TOPIC_BUTTON_WIDTH,                       // xサイズ (キャラクター単位)
+    TOPIC_BUTTON_HEIGHT,                      // yサイズ (キャラクター単位)
+    TOPIC_BUTTON_STRING_OFFSET_X,             // 書き込み先x座標 (ドット単位)
+    TOPIC_BUTTON_STRING_OFFSET_Y,             // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                     // 使用パレット番号
+    TOPIC_BUTTON_STRING_COLOR_L,              // 文字のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_S,              // 影のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_B,              // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,                    // 参照するメッセージデータ
+    str_topic_0,                              // 使用する文字列
+    FALSE,                                    // 自力センタリングの有無
   }, 
   { // 調査項目1
-    MAIN_BG_FONT,
-    TOPIC_BUTTON_X,
-    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 1,
-    TOPIC_BUTTON_WIDTH,
-    TOPIC_BUTTON_HEIGHT,
-    TOPIC_BUTTON_STRING_OFFSET_X,
-    TOPIC_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TOPIC_BUTTON_STRING_COLOR_L,
-    TOPIC_BUTTON_STRING_COLOR_S,
-    TOPIC_BUTTON_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    str_topic_1,
+    MAIN_BG_FONT,                             // 対象BGフレーム
+    TOPIC_BUTTON_X,                           // x座標 (キャラクター単位)
+    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 1, // x座標 (キャラクター単位)
+    TOPIC_BUTTON_WIDTH,                       // xサイズ (キャラクター単位)
+    TOPIC_BUTTON_HEIGHT,                      // yサイズ (キャラクター単位)
+    TOPIC_BUTTON_STRING_OFFSET_X,             // 書き込み先x座標 (ドット単位)
+    TOPIC_BUTTON_STRING_OFFSET_Y,             // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                     // 使用パレット番号
+    TOPIC_BUTTON_STRING_COLOR_L,              // 文字のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_S,              // 影のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_B,              // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,                    // 参照するメッセージデータ
+    str_topic_1,                              // 使用する文字列
+    FALSE,                                    // 自力センタリングの有無
   }, 
   { // 調査項目2
-    MAIN_BG_FONT,
-    TOPIC_BUTTON_X,
-    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 2,
-    TOPIC_BUTTON_WIDTH,
-    TOPIC_BUTTON_HEIGHT,
-    TOPIC_BUTTON_STRING_OFFSET_X,
-    TOPIC_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TOPIC_BUTTON_STRING_COLOR_L,
-    TOPIC_BUTTON_STRING_COLOR_S,
-    TOPIC_BUTTON_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    str_topic_2,
+    MAIN_BG_FONT,                             // 対象BGフレーム
+    TOPIC_BUTTON_X,                           // x座標 (キャラクター単位)
+    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 2, // x座標 (キャラクター単位)
+    TOPIC_BUTTON_WIDTH,                       // xサイズ (キャラクター単位)
+    TOPIC_BUTTON_HEIGHT,                      // yサイズ (キャラクター単位)
+    TOPIC_BUTTON_STRING_OFFSET_X,             // 書き込み先x座標 (ドット単位)
+    TOPIC_BUTTON_STRING_OFFSET_Y,             // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                     // 使用パレット番号
+    TOPIC_BUTTON_STRING_COLOR_L,              // 文字のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_S,              // 影のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_B,              // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,                    // 参照するメッセージデータ
+    str_topic_2,                              // 使用する文字列
+    FALSE,                                    // 自力センタリングの有無
   }, 
   { // 調査項目3
-    MAIN_BG_FONT,
-    TOPIC_BUTTON_X,
-    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 3,
-    TOPIC_BUTTON_WIDTH,
-    TOPIC_BUTTON_HEIGHT,
-    TOPIC_BUTTON_STRING_OFFSET_X,
-    TOPIC_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TOPIC_BUTTON_STRING_COLOR_L,
-    TOPIC_BUTTON_STRING_COLOR_S,
-    TOPIC_BUTTON_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    str_topic_3,
+    MAIN_BG_FONT,                             // 対象BGフレーム
+    TOPIC_BUTTON_X,                           // x座標 (キャラクター単位)
+    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 3, // x座標 (キャラクター単位)
+    TOPIC_BUTTON_WIDTH,                       // xサイズ (キャラクター単位)
+    TOPIC_BUTTON_HEIGHT,                      // yサイズ (キャラクター単位)
+    TOPIC_BUTTON_STRING_OFFSET_X,             // 書き込み先x座標 (ドット単位)
+    TOPIC_BUTTON_STRING_OFFSET_Y,             // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                     // 使用パレット番号
+    TOPIC_BUTTON_STRING_COLOR_L,              // 文字のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_S,              // 影のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_B,              // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,                    // 参照するメッセージデータ
+    str_topic_3,                              // 使用する文字列
+    FALSE,                                    // 自力センタリングの有無
   }, 
   { // 調査項目4
-    MAIN_BG_FONT,
-    TOPIC_BUTTON_X,
-    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 4,
-    TOPIC_BUTTON_WIDTH,
-    TOPIC_BUTTON_HEIGHT,
-    TOPIC_BUTTON_STRING_OFFSET_X,
-    TOPIC_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TOPIC_BUTTON_STRING_COLOR_L,
-    TOPIC_BUTTON_STRING_COLOR_S,
-    TOPIC_BUTTON_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    str_topic_4,
+    MAIN_BG_FONT,                             // 対象BGフレーム
+    TOPIC_BUTTON_X,                           // x座標 (キャラクター単位)
+    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 4, // x座標 (キャラクター単位)
+    TOPIC_BUTTON_WIDTH,                       // xサイズ (キャラクター単位)
+    TOPIC_BUTTON_HEIGHT,                      // yサイズ (キャラクター単位)
+    TOPIC_BUTTON_STRING_OFFSET_X,             // 書き込み先x座標 (ドット単位)
+    TOPIC_BUTTON_STRING_OFFSET_Y,             // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                     // 使用パレット番号
+    TOPIC_BUTTON_STRING_COLOR_L,              // 文字のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_S,              // 影のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_B,              // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,                    // 参照するメッセージデータ
+    str_topic_4,                              // 使用する文字列
+    FALSE,                                    // 自力センタリングの有無
   }, 
   { // 調査項目5
-    MAIN_BG_FONT,
-    TOPIC_BUTTON_X,
-    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 5,
-    TOPIC_BUTTON_WIDTH,
-    TOPIC_BUTTON_HEIGHT,
-    TOPIC_BUTTON_STRING_OFFSET_X,
-    TOPIC_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TOPIC_BUTTON_STRING_COLOR_L,
-    TOPIC_BUTTON_STRING_COLOR_S,
-    TOPIC_BUTTON_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    str_topic_5,
+    MAIN_BG_FONT,                             // 対象BGフレーム
+    TOPIC_BUTTON_X,                           // x座標 (キャラクター単位)
+    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 5, // x座標 (キャラクター単位)
+    TOPIC_BUTTON_WIDTH,                       // xサイズ (キャラクター単位)
+    TOPIC_BUTTON_HEIGHT,                      // yサイズ (キャラクター単位)
+    TOPIC_BUTTON_STRING_OFFSET_X,             // 書き込み先x座標 (ドット単位)
+    TOPIC_BUTTON_STRING_OFFSET_Y,             // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                     // 使用パレット番号
+    TOPIC_BUTTON_STRING_COLOR_L,              // 文字のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_S,              // 影のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_B,              // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,                    // 参照するメッセージデータ
+    str_topic_5,                              // 使用する文字列
+    FALSE,                                    // 自力センタリングの有無
   }, 
   { // 調査項目6
-    MAIN_BG_FONT,
-    TOPIC_BUTTON_X,
-    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 6,
-    TOPIC_BUTTON_WIDTH,
-    TOPIC_BUTTON_HEIGHT,
-    TOPIC_BUTTON_STRING_OFFSET_X,
-    TOPIC_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TOPIC_BUTTON_STRING_COLOR_L,
-    TOPIC_BUTTON_STRING_COLOR_S,
-    TOPIC_BUTTON_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    str_topic_6,
+    MAIN_BG_FONT,                             // 対象BGフレーム
+    TOPIC_BUTTON_X,                           // x座標 (キャラクター単位)
+    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 6, // x座標 (キャラクター単位)
+    TOPIC_BUTTON_WIDTH,                       // xサイズ (キャラクター単位)
+    TOPIC_BUTTON_HEIGHT,                      // yサイズ (キャラクター単位)
+    TOPIC_BUTTON_STRING_OFFSET_X,             // 書き込み先x座標 (ドット単位)
+    TOPIC_BUTTON_STRING_OFFSET_Y,             // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                     // 使用パレット番号
+    TOPIC_BUTTON_STRING_COLOR_L,              // 文字のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_S,              // 影のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_B,              // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,                    // 参照するメッセージデータ
+    str_topic_6,                              // 使用する文字列
+    FALSE,                                    // 自力センタリングの有無
   }, 
   { // 調査項目7
-    MAIN_BG_FONT,
-    TOPIC_BUTTON_X,
-    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 7,
-    TOPIC_BUTTON_WIDTH,
-    TOPIC_BUTTON_HEIGHT,
-    TOPIC_BUTTON_STRING_OFFSET_X,
-    TOPIC_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TOPIC_BUTTON_STRING_COLOR_L,
-    TOPIC_BUTTON_STRING_COLOR_S,
-    TOPIC_BUTTON_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    str_topic_7,
+    MAIN_BG_FONT,                             // 対象BGフレーム
+    TOPIC_BUTTON_X,                           // x座標 (キャラクター単位)
+    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 7, // x座標 (キャラクター単位)
+    TOPIC_BUTTON_WIDTH,                       // xサイズ (キャラクター単位)
+    TOPIC_BUTTON_HEIGHT,                      // yサイズ (キャラクター単位)
+    TOPIC_BUTTON_STRING_OFFSET_X,             // 書き込み先x座標 (ドット単位)
+    TOPIC_BUTTON_STRING_OFFSET_Y,             // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                     // 使用パレット番号
+    TOPIC_BUTTON_STRING_COLOR_L,              // 文字のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_S,              // 影のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_B,              // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,                    // 参照するメッセージデータ
+    str_topic_7,                              // 使用する文字列
+    FALSE,                                    // 自力センタリングの有無
   }, 
   { // 調査項目8
-    MAIN_BG_FONT,
-    TOPIC_BUTTON_X,
-    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 8,
-    TOPIC_BUTTON_WIDTH,
-    TOPIC_BUTTON_HEIGHT,
-    TOPIC_BUTTON_STRING_OFFSET_X,
-    TOPIC_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TOPIC_BUTTON_STRING_COLOR_L,
-    TOPIC_BUTTON_STRING_COLOR_S,
-    TOPIC_BUTTON_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    str_topic_8,
+    MAIN_BG_FONT,                             // 対象BGフレーム
+    TOPIC_BUTTON_X,                           // x座標 (キャラクター単位)
+    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 8, // x座標 (キャラクター単位)
+    TOPIC_BUTTON_WIDTH,                       // xサイズ (キャラクター単位)
+    TOPIC_BUTTON_HEIGHT,                      // yサイズ (キャラクター単位)
+    TOPIC_BUTTON_STRING_OFFSET_X,             // 書き込み先x座標 (ドット単位)
+    TOPIC_BUTTON_STRING_OFFSET_Y,             // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                     // 使用パレット番号
+    TOPIC_BUTTON_STRING_COLOR_L,              // 文字のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_S,              // 影のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_B,              // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,                    // 参照するメッセージデータ
+    str_topic_8,                              // 使用する文字列
+    FALSE,                                    // 自力センタリングの有無
   }, 
   { // 調査項目9
-    MAIN_BG_FONT,
-    TOPIC_BUTTON_X,
-    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 9,
-    TOPIC_BUTTON_WIDTH,
-    TOPIC_BUTTON_HEIGHT,
-    TOPIC_BUTTON_STRING_OFFSET_X,
-    TOPIC_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TOPIC_BUTTON_STRING_COLOR_L,
-    TOPIC_BUTTON_STRING_COLOR_S,
-    TOPIC_BUTTON_STRING_COLOR_B,
-    MESSAGE_QUESTIONNAIRE,
-    str_topic_9,
+    MAIN_BG_FONT,                             // 対象BGフレーム
+    TOPIC_BUTTON_X,                           // x座標 (キャラクター単位)
+    TOPIC_BUTTON_Y + TOPIC_BUTTON_HEIGHT * 9, // x座標 (キャラクター単位)
+    TOPIC_BUTTON_WIDTH,                       // xサイズ (キャラクター単位)
+    TOPIC_BUTTON_HEIGHT,                      // yサイズ (キャラクター単位)
+    TOPIC_BUTTON_STRING_OFFSET_X,             // 書き込み先x座標 (ドット単位)
+    TOPIC_BUTTON_STRING_OFFSET_Y,             // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,                     // 使用パレット番号
+    TOPIC_BUTTON_STRING_COLOR_L,              // 文字のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_S,              // 影のカラー番号
+    TOPIC_BUTTON_STRING_COLOR_B,              // 背景のカラー番号
+    MESSAGE_QUESTIONNAIRE,                    // 参照するメッセージデータ
+    str_topic_9,                              // 使用する文字列
+    FALSE,                                    // 自力センタリングの有無
   }, 
 };
 
@@ -611,13 +631,13 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     GFL_BMP_16_COLOR,                    // カラーモード
     MESSAGE_STATIC,                      // 参照するメッセージデータ
     str_select_confirm,                  // 書き込むメッセージID
-    0,                                   // 書き込み先 x 座標 ( ドット単位 )
-    0,                                   // 書き込み先 y 座標 ( ドット単位 )
+    BMPOAM_ACTOR_CONFIRM_STRING_OFFSET_X,// 書き込み先 x 座標 ( ドット単位 )
+    BMPOAM_ACTOR_CONFIRM_STRING_OFFSET_Y,// 書き込み先 y 座標 ( ドット単位 )
     BMPOAM_ACTOR_CONFIRM_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_CONFIRM_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_CONFIRM_STRING_COLOR_B, // 背景のカラー番号
     ARCID_RESEARCH_RADAR_GRAPHIC,
-    NARC_research_radar_graphic_obj_window1_NCGR,
+    NARC_research_radar_graphic_obj_win_NCGR,
   },
   { //「けってい」
     BMPOAM_ACTOR_OK_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
@@ -625,8 +645,8 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     GFL_BMP_16_COLOR,               // カラーモード
     MESSAGE_STATIC,                 // 参照するメッセージデータ
     str_select_confirm_ok,          // 書き込むメッセージID
-    0,                              // 書き込み先 x 座標 ( ドット単位 )
-    0,                              // 書き込み先 y 座標 ( ドット単位 )
+    BMPOAM_ACTOR_OK_STRING_OFFSET_X,// 書き込み先 x 座標 ( ドット単位 )
+    BMPOAM_ACTOR_OK_STRING_OFFSET_Y,// 書き込み先 y 座標 ( ドット単位 )
     BMPOAM_ACTOR_OK_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_OK_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_OK_STRING_COLOR_B, // 背景のカラー番号
@@ -639,8 +659,8 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     GFL_BMP_16_COLOR,                   // カラーモード
     MESSAGE_STATIC,                     // 参照するメッセージデータ
     str_select_confirm_cancel,          // 書き込むメッセージID
-    0,                                  // 書き込み先 x 座標 ( ドット単位 )
-    0,                                  // 書き込み先 y 座標 ( ドット単位 )
+    BMPOAM_ACTOR_CANCEL_STRING_OFFSET_X,// 書き込み先 x 座標 ( ドット単位 )
+    BMPOAM_ACTOR_CANCEL_STRING_OFFSET_Y,// 書き込み先 y 座標 ( ドット単位 )
     BMPOAM_ACTOR_CANCEL_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_CANCEL_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_CANCEL_STRING_COLOR_B, // 背景のカラー番号
@@ -653,12 +673,61 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     GFL_BMP_16_COLOR,                      // カラーモード
     MESSAGE_STATIC,                        // 参照するメッセージデータ
     str_select_determine,                  // 書き込むメッセージID
-    0,                                     // 書き込み先 x 座標 ( ドット単位 )
-    0,                                     // 書き込み先 y 座標 ( ドット単位 )
+    BMPOAM_ACTOR_DETERMINE_STRING_OFFSET_X,// 書き込み先 x 座標 ( ドット単位 )
+    BMPOAM_ACTOR_DETERMINE_STRING_OFFSET_Y,// 書き込み先 y 座標 ( ドット単位 )
     BMPOAM_ACTOR_DETERMINE_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_DETERMINE_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_DETERMINE_STRING_COLOR_B, // 背景のカラー番号
     ARCID_RESEARCH_RADAR_GRAPHIC,
-    NARC_research_radar_graphic_obj_window4_NCGR,
+    NARC_research_radar_graphic_obj_win2_NCGR,
   },
+};
+
+
+//==============================================================================================
+// ■タッチ領域
+//==============================================================================================
+// 初期化データ
+typedef struct
+{
+  u8 left;    // 左 (ドット単位)
+  u8 right;   // 右 (ドット単位)
+  u8 top;     // 上 (ドット単位)
+  u8 bottom;  // 下 (ドット単位)
+
+} TOUCH_AREA_INIT_DATA;
+
+static const TOUCH_AREA_INIT_DATA MenuTouchAreaInitData[ MENU_TOUCH_AREA_NUM ] = 
+{
+  //「決定」ボタン
+  {
+    BMPOAM_ACTOR_OK_POS_X,
+    BMPOAM_ACTOR_OK_POS_X + BMPOAM_ACTOR_OK_CHARA_SIZE_X * DOT_PER_CHARA,
+    BMPOAM_ACTOR_OK_POS_Y,
+    BMPOAM_ACTOR_OK_POS_Y + BMPOAM_ACTOR_OK_CHARA_SIZE_Y * DOT_PER_CHARA,
+  },
+  //「やめる」ボタン
+  {
+    BMPOAM_ACTOR_CANCEL_POS_X,
+    BMPOAM_ACTOR_CANCEL_POS_X + BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X * DOT_PER_CHARA,
+    BMPOAM_ACTOR_CANCEL_POS_Y,
+    BMPOAM_ACTOR_CANCEL_POS_Y + BMPOAM_ACTOR_CANCEL_CHARA_SIZE_Y * DOT_PER_CHARA,
+  },
+  // 終端コード
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }, 
+};
+
+static const TOUCH_AREA_INIT_DATA TopicTouchAreaInitData[ TOPIC_TOUCH_AREA_NUM ] = 
+{
+  { 0, 0, 0, 0 }, // 調査項目0
+  { 0, 0, 0, 0 }, // 調査項目1
+  { 0, 0, 0, 0 }, // 調査項目2
+  { 0, 0, 0, 0 }, // 調査項目3
+  { 0, 0, 0, 0 }, // 調査項目4
+  { 0, 0, 0, 0 }, // 調査項目5
+  { 0, 0, 0, 0 }, // 調査項目6
+  { 0, 0, 0, 0 }, // 調査項目7
+  { 0, 0, 0, 0 }, // 調査項目8
+  { 0, 0, 0, 0 }, // 調査項目9
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }, // 終端コード
 };

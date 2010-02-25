@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////// 
 #include <gflib.h>
 #include "bg_font.h"
+#include "research_common.h"
 #include "print/printsys.h"  // for PRINTSYS_xxxx
 
 
@@ -25,7 +26,10 @@ struct _BG_FONT
 
 //===============================================================================
 // ■プロトタイプ宣言
-//===============================================================================
+//=============================================================================== 
+// センタリングするためのx描画オフセットを計算する
+static int CalcXOffsetForCentering( const BG_FONT* BGFont, const STRBUF* str );
+
 
 
 //-------------------------------------------------------------------------------
@@ -110,6 +114,7 @@ void BG_FONT_SetString( BG_FONT* BGFont, const STRBUF* strbuf )
   BG_FONT_PARAM* param;
   GFL_BMP_DATA*  bmpData;
   PRINTSYS_LSB   color;
+  int xOffset, yOffset;
 
   param   = &(BGFont->param);
   color   = PRINTSYS_LSB_Make( param->colorNo_L, param->colorNo_S, param->colorNo_B );
@@ -118,10 +123,21 @@ void BG_FONT_SetString( BG_FONT* BGFont, const STRBUF* strbuf )
   // クリア
   GFL_BMP_Clear( bmpData, BGFont->param.colorNo_B );
 
+  // 書き込みオフセット座標を決定
+  if( BGFont->param.centeringFlag ) {
+    // センタリングあり
+    xOffset = CalcXOffsetForCentering( BGFont, strbuf );
+    yOffset = param->offsetY;
+  }
+  else { 
+    // センタリングなし
+    xOffset = param->offsetX;
+    yOffset = param->offsetY;
+  }
+
   // 書き込み
-  PRINTSYS_PrintColor( bmpData, 
-                       param->offsetX, param->offsetY, 
-                       strbuf, BGFont->font, color ); 
+  PRINTSYS_PrintColor( bmpData, xOffset, yOffset, strbuf, BGFont->font, color ); 
+
   // VRAMへ転送
   GFL_BMPWIN_MakeTransWindow( BGFont->bmpWin );
 }
@@ -147,4 +163,30 @@ void BG_FONT_SetDrawEnable( BG_FONT* BGFont, BOOL enable )
 
   // VRAMへ転送
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( BGFont->bmpWin ) );
+}
+
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief センタリングするためのx描画オフセットを計算する
+ *
+ * @param BGFont 書き込み対象
+ * @param str    書き込む文字列
+ *
+ * @return センタリングして書き込むためのx描画オフセット
+ */
+//-------------------------------------------------------------------------------
+static int CalcXOffsetForCentering( const BG_FONT* BGFont, const STRBUF* str )
+{
+  int targetWidth; // 書き込み先の幅
+  int strWidth;    // 文字列の幅
+  int offset;
+
+  targetWidth = GFL_BMPWIN_GetSizeX( BGFont->bmpWin ) * DOT_PER_CHARA;
+  strWidth    = PRINTSYS_GetStrWidth( str, BGFont->font, 0 );
+
+  // センタリングのためのオフセット値を算出
+  offset = (targetWidth - strWidth) * 0.5f; 
+
+  return offset;
 }

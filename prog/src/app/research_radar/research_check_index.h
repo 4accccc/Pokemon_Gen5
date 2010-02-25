@@ -16,6 +16,7 @@ typedef enum {
   RESEARCH_CHECK_SEQ_ANALYZE,   // 解析シーケンス
   RESEARCH_CHECK_SEQ_FLASH,     // 画面フラッシュシーケンス
   RESEARCH_CHECK_SEQ_UPDATE,    // 更新シーケンス
+  RESEARCH_CHECK_SEQ_FADE_OUT,  // フェードアウト
   RESEARCH_CHECK_SEQ_CLEAN_UP,  // 後片付けシーケンス
   RESEARCH_CHECK_SEQ_FINISH,    // 終了シーケンス
 } RESEARCH_CHECK_SEQ;
@@ -28,6 +29,22 @@ typedef enum {
   MENU_ITEM_COUNT,     // 回答人数
   MENU_ITEM_NUM,       // 総数
 } MENU_ITEM;
+
+// タッチ範囲
+typedef enum {
+  TOUCH_AREA_CONTROL_CURSOR_L,// 左カーソル
+  TOUCH_AREA_CONTROL_CURSOR_R,// 右カーソル
+  TOUCH_AREA_QUESTION,        // 質問
+  TOUCH_AREA_DUMMY,           // 終端コード
+  TOUCH_AREA_NUM,             // 総数
+} TOUCH_AREA_INDEX;
+
+// 調査データの表示タイプ
+typedef enum {
+  DATA_DISP_TYPE_TODAY, // 今日のデータを表示 
+  DATA_DISP_TYPE_TOTAL, // 合計のデータを表示
+  DATA_DISP_TYPE_NUM,   // 総数
+} DATA_DISP_TYPE;
 
 // メッセージデータ
 typedef enum {

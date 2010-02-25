@@ -26,6 +26,8 @@
 #include "gamesystem/game_beacon.h"      // for GAMEBEACON_xxxx
 #include "savedata/save_control.h"       // for SaveControl_xxxx
 #include "savedata/questionnaire_save.h" // for QuestionnareWork_xxxx
+#include "sound/pm_sndsys.h"             // for PMSND_xxxx
+#include "sound/wb_sound_data.sadl"      // for SEQ_SE_XXXX
 
 #include "system/main.h"                    // for HEAPID_xxxx
 #include "arc/arc_def.h"                    // for ARCID_xxxx
@@ -51,12 +53,6 @@
 #include "color_g_answer.cdat"             // for ColorG_answer[]
 #include "color_b_answer.cdat"             // for ColorB_answer[]
 
-// 調査データの表示タイプ
-typedef enum {
-  DATA_DISP_TYPE_TODAY, // 今日のデータを表示 
-  DATA_DISP_TYPE_TOTAL, // 合計のデータを表示
-  DATA_DISP_TYPE_NUM,   // 総数
-} DATA_DISP_TYPE;
 
 
 //==============================================================================================
@@ -85,6 +81,9 @@ struct _RESEARCH_CHECK_WORK
   // 円グラフ
   CIRCLE_GRAPH* mainGraph[ DATA_DISP_TYPE_NUM ]; // 通常時に表示するグラフ
   CIRCLE_GRAPH* subGraph [ DATA_DISP_TYPE_NUM ]; // 更新時に表示するグラフ
+
+  // タッチ領域
+  GFL_UI_TP_HITTBL touchHitTable[ TOUCH_AREA_NUM ];
 
   // 文字列描画オブジェクト
   BG_FONT* BGFont[ BG_FONT_NUM ];
@@ -117,6 +116,7 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_KE
 static void Main_ANALYZE ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
 static void Main_FLASH   ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH
 static void Main_UPDATE  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
+static void Main_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
 static void Main_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
 
 // シーケンス制御
@@ -133,6 +133,7 @@ static void InitSequence_KEY_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHEC
 static void InitSequence_ANALYZE ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
 static void InitSequence_FLASH   ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH
 static void InitSequence_UPDATE  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
+static void InitSequence_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
 static void InitSequence_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
 
 // シーケンス終了処理
@@ -141,6 +142,7 @@ static void FinishSequence_KEY_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CH
 static void FinishSequence_ANALYZE ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
 static void FinishSequence_FLASH   ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH
 static void FinishSequence_UPDATE  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
+static void FinishSequence_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
 static void FinishSequence_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
 
 // 円グラフ メイン動作
@@ -187,6 +189,9 @@ static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispTy
 // メニュー項目の表示
 static void SetMenuCursorOn ( RESEARCH_CHECK_WORK* work ); // カーソルが乗っている状態にする
 static void SetMenuCursorOff( RESEARCH_CHECK_WORK* work ); // カーソルが乗っていない状態にする
+
+// タッチ範囲
+static void UpdateTouchArea( RESEARCH_CHECK_WORK* work ); // タッチ範囲を更新する
 
 // BG
 static void UpdateMainBG_WINDOW( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ウィンドウ面 ) を更新する
@@ -316,6 +321,7 @@ static void CreateCircleGraph( RESEARCH_CHECK_WORK* work ); // 円グラフ 生成
 static void DeleteCircleGraph( RESEARCH_CHECK_WORK* work ); // 円グラフ 破棄
 static void InitResearchData( RESEARCH_CHECK_WORK* work ); // 調査データ 初期化
 static void SetupResearchData( RESEARCH_CHECK_WORK* work ); // 調査データ 取得
+static void SetupTouchArea( RESEARCH_CHECK_WORK* work ); // タッチ領域 準備
 
 //----------------------------------------------------------------------------------------------
 // □LAYER -1 デバッグ
@@ -417,6 +423,7 @@ RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
   case RESEARCH_CHECK_SEQ_ANALYZE:   Main_ANALYZE( work );   break;
   case RESEARCH_CHECK_SEQ_FLASH:     Main_FLASH( work );     break;
   case RESEARCH_CHECK_SEQ_UPDATE:    Main_UPDATE( work );    break;
+  case RESEARCH_CHECK_SEQ_FADE_OUT:  Main_FADE_OUT( work );  break;
   case RESEARCH_CHECK_SEQ_CLEAN_UP:  Main_CLEAN_UP( work );  break;
   case RESEARCH_CHECK_SEQ_FINISH:    return work->result;
   default: GF_ASSERT(0);
@@ -459,6 +466,8 @@ static void Main_SETUP( RESEARCH_CHECK_WORK* work )
   CreateFont( work );
   CreateMessages( work );
   CreateWordset( work );
+  SetupTouchArea( work );
+  UpdateTouchArea( work );
 
   // 3D 初期設定
   Setup3D();
@@ -522,9 +531,11 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 {
   int key;
   int trg;
+  int touchedAreaIdx;
 
   key = GFL_UI_KEY_GetCont();
   trg = GFL_UI_KEY_GetTrg(); 
+  touchedAreaIdx = GFL_UI_TP_HitTrg( work->touchHitTable );
 
   // TEST:
   if( trg & PAD_BUTTON_DEBUG )
@@ -532,63 +543,84 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
     SetNextSequence( work, RESEARCH_CHECK_SEQ_UPDATE );
     SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
     FinishCurrentSequence( work );
+    return;
   }
 
+  //--------
+  // ↑キー
   if( trg & PAD_KEY_UP ) {
     MoveMenuCursorUp( work );
+    return;
   }
-  else if( trg & PAD_KEY_DOWN ) {
+
+  //--------
+  // ↓キー
+  if( trg & PAD_KEY_DOWN ) {
     MoveMenuCursorDown( work );
+    return;
   } 
-  else if( trg & PAD_KEY_LEFT ) {
+
+  //----------------------
+  // ←キー or 左カーソル
+  if( (trg & PAD_KEY_LEFT) ||
+      (touchedAreaIdx == TOUCH_AREA_CONTROL_CURSOR_L) ) {
     switch( work->cursorPos )
     {
-    case MENU_ITEM_QUESTION: 
-      ChangeQuestionToPrev( work );  
-      ChangeAnswerToTop( work );
-      break;
-    case MENU_ITEM_ANSWER:   
-      ChangeAnswerToPrev( work );    
-      break;
-    case MENU_ITEM_MY_ANSWER:
-      break;
-    case MENU_ITEM_COUNT: 
-      SwitchDataDisplayType( work );
-      break;
+    case MENU_ITEM_QUESTION:  ChangeQuestionToPrev( work );  break;
+    case MENU_ITEM_ANSWER:    ChangeAnswerToPrev( work );    break;
+    case MENU_ITEM_MY_ANSWER: break;
+    case MENU_ITEM_COUNT:     SwitchDataDisplayType( work ); break;
     default: GF_ASSERT(0);
     }
   }
-  else if( trg & PAD_KEY_RIGHT ) {
+
+  //----------------------
+  // →キー or 右カーソル
+  if( (trg & PAD_KEY_RIGHT) ||
+      (touchedAreaIdx == TOUCH_AREA_CONTROL_CURSOR_R) ) {
     switch( work->cursorPos )
     {
-    case MENU_ITEM_QUESTION: 
-      ChangeQuestionToNext( work );  
-      ChangeAnswerToTop( work );
-      break;
-    case MENU_ITEM_ANSWER:   
-      ChangeAnswerToNext( work );    
-      break;
-    case MENU_ITEM_MY_ANSWER:
-      break;
-    case MENU_ITEM_COUNT:                                   
-      SwitchDataDisplayType( work );
-      break;
+    case MENU_ITEM_QUESTION:  ChangeQuestionToNext( work );  break;
+    case MENU_ITEM_ANSWER:    ChangeAnswerToNext( work );    break;
+    case MENU_ITEM_MY_ANSWER: break;
+    case MENU_ITEM_COUNT:     SwitchDataDisplayType( work ); break;
     default: GF_ASSERT(0);
     }
   }
-  else if( trg & PAD_BUTTON_A ) {
-    if( (GetCountOfQuestion(work) != 0 ) && (work->cursorPos == MENU_ITEM_QUESTION) ) {
+
+  if( touchedAreaIdx == TOUCH_AREA_QUESTION ) {
+    if( (work->analyzeFlag == FALSE ) &&
+        (GetCountOfQuestion(work) != 0) ) {
       // シーケンス変更
       SetNextSequence( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH );
       SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
       FinishCurrentSequence( work );
+      return;
+    }
+  }
+
+  if( trg & PAD_BUTTON_A ) {
+    if( (work->analyzeFlag == FALSE ) &&
+        (GetCountOfQuestion(work) != 0) && 
+        (work->cursorPos == MENU_ITEM_QUESTION)  ) {
+      // シーケンス変更
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_ANALYZE );
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH );
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      FinishCurrentSequence( work );
+      return;
     }
   } 
-  else if( trg & PAD_BUTTON_B ) {
+
+  //----------
+  // B ボタン
+  if( trg & PAD_BUTTON_B ) {
     // シーケンス変更
+    SetNextSequence( work, RESEARCH_CHECK_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
+    return;
   }
 }
 
@@ -600,11 +632,17 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
  */
 //----------------------------------------------------------------------------------------------
 static void Main_ANALYZE( RESEARCH_CHECK_WORK* work )
-{
-  // 一定時間が経過で次のシーケンスへ
-  if( SEQ_ANALYZE_FRAMES <= work->seqCount )
-  {
-    FinishCurrentSequence( work );
+{ 
+  // SE が停止している
+  if( PMSND_CheckPlaySE() == FALSE ) { 
+    // 一定時間が経過で次のシーケンスへ
+    if( SEQ_ANALYZE_FRAMES <= work->seqCount ) {
+      FinishCurrentSequence( work );
+    } 
+    else { 
+      // データ解析中SEをループさせる
+      PMSND_PlaySE( SEQ_SE_SYS_81 );
+    }
   }
 }
 
@@ -638,6 +676,21 @@ static void Main_UPDATE( RESEARCH_CHECK_WORK* work )
   {
     FinishCurrentSequence( work );
   }
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目確定の確認シーケンスへの準備シーケンス ( RESEARCH_CHECK_SEQ_FADE_OUT ) の処理
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void Main_FADE_OUT( RESEARCH_CHECK_WORK* work )
+{
+  // フェードが終了
+  if( GFL_FADE_CheckFade() == FALSE ) {
+    FinishCurrentSequence( work );
+  } 
 }
 
 //----------------------------------------------------------------------------------------------
@@ -756,6 +809,7 @@ static void CountUpSeqCount( RESEARCH_CHECK_WORK* work )
   case RESEARCH_CHECK_SEQ_ANALYZE:  maxCount = SEQ_ANALYZE_FRAMES; break;
   case RESEARCH_CHECK_SEQ_FLASH:    maxCount = SEQ_FLASH_FRAMES;   break;
   case RESEARCH_CHECK_SEQ_UPDATE:   maxCount = SEQ_UPDATE_FRAMES;  break;
+  case RESEARCH_CHECK_SEQ_FADE_OUT: maxCount = 0xffffffff;         break;
   case RESEARCH_CHECK_SEQ_CLEAN_UP: maxCount = 0xffffffff;         break;
   case RESEARCH_CHECK_SEQ_FINISH:   maxCount = 0xffffffff;         break;
   default: GF_ASSERT(0);
@@ -826,6 +880,7 @@ static void SetSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
   case RESEARCH_CHECK_SEQ_ANALYZE:  FinishSequence_ANALYZE( work );   break;
   case RESEARCH_CHECK_SEQ_FLASH:    FinishSequence_FLASH( work );     break;
   case RESEARCH_CHECK_SEQ_UPDATE:   FinishSequence_UPDATE( work );    break;
+  case RESEARCH_CHECK_SEQ_FADE_OUT: FinishSequence_FADE_OUT( work );    break;
   case RESEARCH_CHECK_SEQ_CLEAN_UP: FinishSequence_CLEAN_UP( work );  break;
   case RESEARCH_CHECK_SEQ_FINISH:   break;
   default:  GF_ASSERT(0);
@@ -844,6 +899,7 @@ static void SetSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
   case RESEARCH_CHECK_SEQ_ANALYZE:  InitSequence_ANALYZE( work );   break;
   case RESEARCH_CHECK_SEQ_FLASH:    InitSequence_FLASH( work );     break;
   case RESEARCH_CHECK_SEQ_UPDATE:   InitSequence_UPDATE( work );    break;
+  case RESEARCH_CHECK_SEQ_FADE_OUT: InitSequence_FADE_OUT( work );    break;
   case RESEARCH_CHECK_SEQ_CLEAN_UP: InitSequence_CLEAN_UP( work );  break;
   case RESEARCH_CHECK_SEQ_FINISH:   break;
   default:  GF_ASSERT(0);
@@ -858,6 +914,7 @@ static void SetSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
   case RESEARCH_CHECK_SEQ_ANALYZE:  OS_TFPrintf( PRINT_TARGET, "ANALYZE" );   break;
   case RESEARCH_CHECK_SEQ_FLASH:    OS_TFPrintf( PRINT_TARGET, "FLASH" );     break;
   case RESEARCH_CHECK_SEQ_UPDATE:   OS_TFPrintf( PRINT_TARGET, "UPDATE" );    break;
+  case RESEARCH_CHECK_SEQ_FADE_OUT: OS_TFPrintf( PRINT_TARGET, "FADE_OUT" );    break;
   case RESEARCH_CHECK_SEQ_CLEAN_UP: OS_TFPrintf( PRINT_TARGET, "CLEAN_UP" );  break;
   case RESEARCH_CHECK_SEQ_FINISH:   OS_TFPrintf( PRINT_TARGET, "FINISH" );    break;
   default:  GF_ASSERT(0);
@@ -970,6 +1027,23 @@ static void InitSequence_UPDATE( RESEARCH_CHECK_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
+ * @brief シーケンスを初期化する ( ==> RESEARCH_CHECK_SEQ_FADE_OUT )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitSequence_FADE_OUT( RESEARCH_CHECK_WORK* work )
+{ 
+  // フェードアウト開始
+  GFL_FADE_SetMasterBrightReq(
+      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0);
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq FADE_OUT\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
  * @brief シーケンスを初期化する ( ==> RESEARCH_CHECK_SEQ_CLEAN_UP )
  *
  * @param work
@@ -1026,6 +1100,9 @@ static void FinishSequence_ANALYZE( RESEARCH_CHECK_WORK* work )
   UpdateBGFont_MyAnswer( work ); // 自分の回答を更新する
   UpdateBGFont_Count( work );    // 回答人数を更新する
 
+  // 調査結果表示SE
+  PMSND_PlaySE( SEQ_SE_SYS_82 );
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq ANALYZE\n" );
 }
@@ -1064,6 +1141,19 @@ static void FinishSequence_UPDATE( RESEARCH_CHECK_WORK* work )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq UPDATE\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief シーケンス終了処理 ( ==> RESEARCH_CHECK_SEQ_FADE_OUT )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void FinishSequence_FADE_OUT( RESEARCH_CHECK_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FADE_OUT\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1142,6 +1232,12 @@ static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work )
   // 表示を更新
   SetMenuCursorOn( work );      // カーソルが乗っている状態にする
   UpdateControlCursor( work );  // 左右カーソルを更新
+
+  // カーソル移動音
+  PMSND_PlaySE( SEQ_SE_SELECT1 );
+
+  // タッチ範囲を更新
+  UpdateTouchArea( work );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1166,6 +1262,12 @@ static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work )
   // 表示を更新
   SetMenuCursorOn( work );      // カーソルが乗っている状態にする
   UpdateControlCursor( work );  // 左右カーソルを更新
+
+  // カーソル移動音
+  PMSND_PlaySE( SEQ_SE_SELECT1 );
+
+  // タッチ範囲を更新
+  UpdateTouchArea( work );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1191,10 +1293,13 @@ static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work )
   SetMenuCursorOn( work );              // カーソルが乗っている状態にする
   UpdateBGFont_QuestionCaption( work ); // 質問の補足文を更新する
   UpdateBGFont_Question( work );        // 質問を更新する 
-  UpdateBGFont_Answer( work );          // 回答を更新する
+  ChangeAnswerToTop( work );            // 回答を更新する
   UpdateBGFont_MyAnswer( work );        // 自分の回答を更新する
   UpdateBGFont_Count( work );           // 回答人数を更新する
   UpdateBGFont_NoData( work );          //「ただいま ちょうさちゅう」の表示を更新する
+
+  // カーソル移動音
+  PMSND_PlaySE( SEQ_SE_SELECT1 );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1220,10 +1325,13 @@ static void ChangeQuestionToPrev( RESEARCH_CHECK_WORK* work )
   SetMenuCursorOn( work );              // カーソルが乗っている状態にする
   UpdateBGFont_QuestionCaption( work ); // 質問の補足文を更新する
   UpdateBGFont_Question( work );        // 質問を更新する 
-  UpdateBGFont_Answer( work );          // 回答を更新する
+  ChangeAnswerToTop( work );            // 回答を更新する
   UpdateBGFont_MyAnswer( work );        // 自分の回答を更新する
   UpdateBGFont_Count( work );           // 回答人数を更新する
   UpdateBGFont_NoData( work );          //「ただいま ちょうさちゅう」の表示を更新する
+
+  // カーソル移動音
+  PMSND_PlaySE( SEQ_SE_SELECT1 );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1239,6 +1347,9 @@ static void ChangeAnswerToNext( RESEARCH_CHECK_WORK* work )
 
   // 表示を更新
   UpdateBGFont_Answer( work ); // 回答を更新する
+
+  // カーソル移動音
+  PMSND_PlaySE( SEQ_SE_SELECT1 );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1254,6 +1365,9 @@ static void ChangeAnswerToPrev( RESEARCH_CHECK_WORK* work )
 
   // 表示を更新
   UpdateBGFont_Answer( work ); // 回答を更新する
+
+  // カーソル移動音
+  PMSND_PlaySE( SEQ_SE_SELECT1 );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1313,6 +1427,9 @@ static void SwitchDataDisplayType( RESEARCH_CHECK_WORK* work )
     CIRCLE_GRAPH_AppearReq( GetMainGraph(work) );
     CIRCLE_GRAPH_SetDrawEnable( GetMainGraph(work), TRUE );
   }
+
+  // カーソル移動音
+  PMSND_PlaySE( SEQ_SE_SELECT1 );
 }
 
 
@@ -1519,6 +1636,38 @@ static void SetMenuCursorOff( RESEARCH_CHECK_WORK* work )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set menu cursor off (%d)\n", work->cursorPos );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief タッチ範囲を更新する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdateTouchArea( RESEARCH_CHECK_WORK* work )
+{
+  const MENU_ITEM_DRAW_PARAM* menu;
+  GFL_UI_TP_HITTBL* area;
+
+  // 左カーソル
+  menu = &( MenuItemDrawParam[ work->cursorPos ] );
+  area = &( work->touchHitTable[ TOUCH_AREA_CONTROL_CURSOR_L ] );
+  area->rect.left   = menu->left_dot + menu->leftCursorOffsetX - CLWK_CONTROL_CURSOR_L_WIDTH/2;
+  area->rect.top    = menu->top_dot  + menu->leftCursorOffsetY - CLWK_CONTROL_CURSOR_L_HEIGHT/2;
+  area->rect.right  = area->rect.left + TOUCH_AREA_CONTROL_CURSOR_WIDTH;
+  area->rect.bottom = area->rect.top  + TOUCH_AREA_CONTROL_CURSOR_HEIGHT;
+
+  // 右カーソル
+  menu = &( MenuItemDrawParam[ work->cursorPos ] );
+  area = &( work->touchHitTable[ TOUCH_AREA_CONTROL_CURSOR_R ] );
+  area->rect.left   = menu->left_dot + menu->rightCursorOffsetX - CLWK_CONTROL_CURSOR_R_WIDTH/2;
+  area->rect.top    = menu->top_dot  + menu->rightCursorOffsetY - CLWK_CONTROL_CURSOR_R_HEIGHT/2;
+  area->rect.right  = area->rect.left + TOUCH_AREA_CONTROL_CURSOR_WIDTH;
+  area->rect.bottom = area->rect.top  + TOUCH_AREA_CONTROL_CURSOR_HEIGHT;
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update touch area\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -2449,19 +2598,20 @@ static void CreateBGFonts( RESEARCH_CHECK_WORK* work )
     GF_ASSERT( work->BGFont[i] == NULL ); 
 
     // 生成パラメータ選択
-    param.BGFrame   = BGFontInitData[i].BGFrame;
-    param.posX      = BGFontInitData[i].posX;
-    param.posY      = BGFontInitData[i].posY;
-    param.sizeX     = BGFontInitData[i].sizeX;
-    param.sizeY     = BGFontInitData[i].sizeY;
-    param.offsetX   = BGFontInitData[i].offsetX;
-    param.offsetY   = BGFontInitData[i].offsetY;
-    param.paletteNo = BGFontInitData[i].paletteNo;
-    param.colorNo_L = BGFontInitData[i].colorNo_L;
-    param.colorNo_S = BGFontInitData[i].colorNo_S;
-    param.colorNo_B = BGFontInitData[i].colorNo_B;
-    msgData         = work->message[ BGFontInitData[i].messageIdx ];
-    strID           = BGFontInitData[i].stringIdx;
+    param.BGFrame       = BGFontInitData[i].BGFrame;
+    param.posX          = BGFontInitData[i].posX;
+    param.posY          = BGFontInitData[i].posY;
+    param.sizeX         = BGFontInitData[i].sizeX;
+    param.sizeY         = BGFontInitData[i].sizeY;
+    param.offsetX       = BGFontInitData[i].offsetX;
+    param.offsetY       = BGFontInitData[i].offsetY;
+    param.paletteNo     = BGFontInitData[i].paletteNo;
+    param.colorNo_L     = BGFontInitData[i].colorNo_L;
+    param.colorNo_S     = BGFontInitData[i].colorNo_S;
+    param.colorNo_B     = BGFontInitData[i].colorNo_B;
+    param.centeringFlag = BGFontInitData[i].softCentering;
+    msgData             = work->message[ BGFontInitData[i].messageIdx ];
+    strID               = BGFontInitData[i].stringIdx;
 
     // 生成
     work->BGFont[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
@@ -2651,6 +2801,29 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
       work->researchData.questionData[ qIdx ].answerData[ aIdx ].totalCount = totalCount_answer[ qIdx ][ aIdx ];  // いままでの回答人数
     }
   }
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @breif タッチ領域の準備を行う
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void SetupTouchArea( RESEARCH_CHECK_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < TOUCH_AREA_NUM; idx++ )
+  {
+    work->touchHitTable[ idx ].rect.left   = TouchAreaInitData[ idx ].left;
+    work->touchHitTable[ idx ].rect.right  = TouchAreaInitData[ idx ].right;
+    work->touchHitTable[ idx ].rect.top    = TouchAreaInitData[ idx ].top;
+    work->touchHitTable[ idx ].rect.bottom = TouchAreaInitData[ idx ].bottom;
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create touch hit table\n" );
 }
 
 
@@ -3794,6 +3967,7 @@ static void DebugPrint_seqQueue( const RESEARCH_CHECK_WORK* work )
     case RESEARCH_CHECK_SEQ_ANALYZE:   OS_TFPrintf( PRINT_TARGET, "ANALYZE " );  break;
     case RESEARCH_CHECK_SEQ_FLASH:     OS_TFPrintf( PRINT_TARGET, "FLASH " );    break;
     case RESEARCH_CHECK_SEQ_UPDATE:    OS_TFPrintf( PRINT_TARGET, "UPDATE " );   break;
+    case RESEARCH_CHECK_SEQ_FADE_OUT:  OS_TFPrintf( PRINT_TARGET, "FADE_OUT " );   break;
     case RESEARCH_CHECK_SEQ_CLEAN_UP:  OS_TFPrintf( PRINT_TARGET, "CLEAN-UP " ); break;
     case RESEARCH_CHECK_SEQ_FINISH:    OS_TFPrintf( PRINT_TARGET, "FINISH " );   break;
     default: GF_ASSERT(0);

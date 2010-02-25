@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-02-24T11:03:43"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-02-24T23:40:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,12 +307,12 @@
 
 	<dialog left="146" top="195" right="851" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,37 +334,37 @@
 
 
 	<row id="str_menu_title" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">ちょうさ　レーダー</language>
-		<language name="JPN_KANJI">調査レーダー</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさ　レーダー</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査レーダー</language>
 	</row>
 
 	<row id="str_menu_caption" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">すれちがった　みんなのいけんを
-ちょうさすることが　できます</language>
-		<language name="JPN_KANJI">すれ違った　みんなの意見を
-調査することが　できます</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]すれちがった　みんなのいけんを
+[BD:02:Ｘセンタリング]ちょうさすることが　できます</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]すれ違った　みんなの意見を
+[BD:02:Ｘセンタリング]調査することが　できます</language>
 	</row>
 
 	<row id="str_menu_button_change" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">ちょうさないようの　けってい</language>
-		<language name="JPN_KANJI">調査内容の決定</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさないようの　けってい</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査内容の決定</language>
 	</row>
 
 	<row id="str_menu_button_check" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">ちょうさほうこくを　みる</language>
-		<language name="JPN_KANJI">調査報告を見る</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさほうこくを　みる</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査報告を見る</language>
 	</row>
 
 	<row id="str_select_title" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN">－ちょうさ　ないよう－</language>
-		<language name="JPN_KANJI">－調査内容－</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]－ちょうさ　ないよう－</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]－調査内容－</language>
 	</row>
 
 	<row id="str_select_direction" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN">したの　こうもくから　ちょうさしたい
-ないようを　１つ　えらんでください</language>
-		<language name="JPN_KANJI">下の項目から　調査したい
-内容を　１つ　選んでください</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]したの　こうもくから　ちょうさしたい
+[BD:02:Ｘセンタリング]ないようを　１つ　えらんでください</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]下の項目から　調査したい
+[BD:02:Ｘセンタリング]内容を　１つ　選んでください</language>
 	</row>
 
 	<row id="str_select_confirm" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -385,25 +385,25 @@
 	</row>
 
 	<row id="str_select_determine" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN">ちょうさを　かいしします！</language>
-		<language name="JPN_KANJI">調査を開始します!</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさを　かいしします！</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査を開始します!</language>
 	</row>
 
 	<row id="str_check_examining" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">ただいま
-ちょうさちゅう！</language>
-		<language name="JPN_KANJI">ただいま
-　　調査中！</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]ただいま
+[BD:02:Ｘセンタリング]ちょうさちゅう！</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]ただいま
+[BD:02:Ｘセンタリング]調査中！</language>
 	</row>
 
 	<row id="str_check_analyzing" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">……かいせきちゅう……</language>
-		<language name="JPN_KANJI">……解析中……</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]……かいせきちゅう……</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]……解析中……</language>
 	</row>
 
 	<row id="str_check_title" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">ちょうさ　ほうこく</language>
-		<language name="JPN_KANJI">　　調査報告　</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさ　ほうこく</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査報告　</language>
 	</row>
 
 	<row id="str_check_answer" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -437,9 +437,9 @@
 	</row>
 
 	<row id="str_check_data_receive" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">データ
+		<language name="JPN">[BD:02:Ｘセンタリング]データ
 しゅとくちゅう</language>
-		<language name="JPN_KANJI">データ
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]データ
 取得中</language>
 	</row>
 

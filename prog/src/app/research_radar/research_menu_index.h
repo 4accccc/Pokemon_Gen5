@@ -13,6 +13,7 @@
 typedef enum {
   RESEARCH_MENU_SEQ_SETUP,    // 準備
   RESEARCH_MENU_SEQ_KEY_WAIT, // キー入力待ち
+  RESEARCH_MENU_SEQ_FADE_OUT, // フェードアウト
   RESEARCH_MENU_SEQ_CLEAN_UP, // 後片付け
   RESEARCH_MENU_SEQ_FINISH,   // 終了
 } RESEARCH_MENU_SEQ;
@@ -30,6 +31,14 @@ typedef enum {
   MENU_ITEM_CHECK_RESEARCH,   //「調査報告を確認する」
   MENU_ITEM_NUM,              // メニュー項目数
 } MENU_ITEM;
+
+// タッチ範囲
+typedef enum {
+  TOUCH_AREA_CHANGE_BUTTON,  //「調査内容を変更する」
+  TOUCH_AREA_CHECK_BUTTON,   //「調査報告を確認する」
+  TOUCH_AREA_DUMMY,          // 終端コード
+  TOUCH_AREA_NUM,            // 総数
+} TOUCH_AREA_INDEX;
 
 // BGFont オブジェクト
 typedef enum {

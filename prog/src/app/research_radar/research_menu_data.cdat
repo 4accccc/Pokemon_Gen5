@@ -8,7 +8,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////////// 
 #include <gflib.h>
 #include "bg_font.h"
+#include "research_common.h"
 #include "research_menu_index.h"
+
 #include "obj_NANR_LBLDEFS.h"        // for NANR_obj_xxxx
 #include "arc/message.naix"          // for NARC_message_xxxx
 #include "msg/msg_research_radar.h"  // for str_xxxx
@@ -110,82 +112,87 @@ static const GFL_BG_BGCNT_HEADER MainBGControl_FONT =
 //-----------------------
 typedef struct
 {
-  u8 BGFrame;    // 対象BGフレーム
-  u8 posX;       // x座標 (キャラクター単位)
-  u8 posY;       // x座標 (キャラクター単位)
-  u8 sizeX;      // xサイズ (キャラクター単位)
-  u8 sizeY;      // yサイズ (キャラクター単位)
-  u8 offsetX;    // 書き込み先x座標 (ドット単位)
-  u8 offsetY;    // 書き込み先y座標 (ドット単位)
-  u8 paletteNo;  // 使用パレット番号
-  u8 colorNo_L;  // 文字のカラー番号
-  u8 colorNo_S;  // 影のカラー番号
-  u8 colorNo_B;  // 背景のカラー番号
-  MESSAGE_INDEX messageIdx;  // 参照するメッセージデータ
-  u32           stringIdx;   // 使用する文字列
+  u8            BGFrame;       // 対象BGフレーム
+  u8            posX;          // x座標 (キャラクター単位)
+  u8            posY;          // x座標 (キャラクター単位)
+  u8            sizeX;         // xサイズ (キャラクター単位)
+  u8            sizeY;         // yサイズ (キャラクター単位)
+  u8            offsetX;       // 書き込み先x座標 (ドット単位)
+  u8            offsetY;       // 書き込み先y座標 (ドット単位)
+  u8            paletteNo;     // 使用パレット番号
+  u8            colorNo_L;     // 文字のカラー番号
+  u8            colorNo_S;     // 影のカラー番号
+  u8            colorNo_B;     // 背景のカラー番号
+  MESSAGE_INDEX messageIdx;    // 参照するメッセージデータ
+  u32           stringIdx;     // 使用する文字列
+  BOOL          softCentering; // 自力センタリングの有無
 } BG_FONT_INIT_DATA;
 
 static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] = 
 {
   { // 上画面 説明文
-    SUB_BG_FONT,
-    CAPTION_WINDOW_X,
-    CAPTION_WINDOW_Y,
-    CAPTION_WINDOW_WIDTH,
-    CAPTION_WINDOW_HEIGHT,
-    CAPTION_WINDOW_STRING_OFFSET_X,
-    CAPTION_WINDOW_STRING_OFFSET_Y,
-    SUB_BG_PALETTE_FONT,
-    CAPTION_WINDOW_STRING_COLOR_L,
-    CAPTION_WINDOW_STRING_COLOR_S,
-    CAPTION_WINDOW_STRING_COLOR_B,
-    MESSAGE_STATIC,
-    str_menu_caption,
+    SUB_BG_FONT,                    // 対象BGフレーム
+    CAPTION_WINDOW_X,               // x座標 (キャラクター単位)
+    CAPTION_WINDOW_Y,               // x座標 (キャラクター単位)
+    CAPTION_WINDOW_WIDTH,           // xサイズ (キャラクター単位)
+    CAPTION_WINDOW_HEIGHT,          // yサイズ (キャラクター単位)
+    CAPTION_WINDOW_STRING_OFFSET_X, // 書き込み先x座標 (ドット単位)
+    CAPTION_WINDOW_STRING_OFFSET_Y, // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,            // 使用パレット番号
+    CAPTION_WINDOW_STRING_COLOR_L,  // 文字のカラー番号
+    CAPTION_WINDOW_STRING_COLOR_S,  // 影のカラー番号
+    CAPTION_WINDOW_STRING_COLOR_B,  // 背景のカラー番号
+    MESSAGE_STATIC,                 // 参照するメッセージデータ
+    str_menu_caption,               // 使用する文字列
+    FALSE,                          // 自力センタリングの有無
   }, 
   { // 下画面 タイトル
-    MAIN_BG_FONT,
-    TITLE_WINDOW_X,
-    TITLE_WINDOW_Y,
-    TITLE_WINDOW_WIDTH,
-    TITLE_WINDOW_HEIGHT,
-    TITLE_WINDOW_STRING_OFFSET_X,
-    TITLE_WINDOW_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    TITLE_WINDOW_STRING_COLOR_L,
-    TITLE_WINDOW_STRING_COLOR_S,
-    TITLE_WINDOW_STRING_COLOR_B,
-    MESSAGE_STATIC,
-    str_menu_title,
+    MAIN_BG_FONT,                  // 対象BGフレーム
+    TITLE_WINDOW_X,                // x座標 (キャラクター単位)
+    TITLE_WINDOW_Y,                // x座標 (キャラクター単位)
+    TITLE_WINDOW_WIDTH,            // xサイズ (キャラクター単位)
+    TITLE_WINDOW_HEIGHT,           // yサイズ (キャラクター単位)
+    TITLE_WINDOW_STRING_OFFSET_X,  // 書き込み先x座標 (ドット単位)
+    TITLE_WINDOW_STRING_OFFSET_Y,  // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,          // 使用パレット番号
+    TITLE_WINDOW_STRING_COLOR_L,   // 文字のカラー番号
+    TITLE_WINDOW_STRING_COLOR_S,   // 影のカラー番号
+    TITLE_WINDOW_STRING_COLOR_B,   // 背景のカラー番号
+    MESSAGE_STATIC,                // 参照するメッセージデータ
+    str_menu_title,                // 使用する文字列
+    FALSE,                         // 自力センタリングの有無
   },
   { // 下画面「調査内容の決定」
-    MAIN_BG_FONT,
-    CHANGE_BUTTON_X,
-    CHANGE_BUTTON_Y,
-    CHANGE_BUTTON_WIDTH,
-    CHANGE_BUTTON_HEIGHT,
-    CHANGE_BUTTON_STRING_OFFSET_X,
-    CHANGE_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    CHANGE_BUTTON_STRING_COLOR_L,
-    CHANGE_BUTTON_STRING_COLOR_S,
-    CHANGE_BUTTON_STRING_COLOR_B,
-    MESSAGE_STATIC,
-    str_menu_button_change,
+    MAIN_BG_FONT,                  // 対象BGフレーム
+    CHANGE_BUTTON_X,               // x座標 (キャラクター単位)
+    CHANGE_BUTTON_Y,               // x座標 (キャラクター単位)
+    CHANGE_BUTTON_WIDTH,           // xサイズ (キャラクター単位)
+    CHANGE_BUTTON_HEIGHT,          // yサイズ (キャラクター単位)
+    CHANGE_BUTTON_STRING_OFFSET_X, // 書き込み先x座標 (ドット単位)
+    CHANGE_BUTTON_STRING_OFFSET_Y, // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,          // 使用パレット番号
+    CHANGE_BUTTON_STRING_COLOR_L,  // 文字のカラー番号
+    CHANGE_BUTTON_STRING_COLOR_S,  // 影のカラー番号
+    CHANGE_BUTTON_STRING_COLOR_B,  // 背景のカラー番号
+    MESSAGE_STATIC,                // 参照するメッセージデータ
+    str_menu_button_change,        // 使用する文字列
+    FALSE,                         // 自力センタリングの有無
   },
   { // 下画面「調査報告の確認」
-    MAIN_BG_FONT,
-    CHECK_BUTTON_X,
-    CHECK_BUTTON_Y,
-    CHECK_BUTTON_WIDTH,
-    CHECK_BUTTON_HEIGHT,
-    CHECK_BUTTON_STRING_OFFSET_X,
-    CHECK_BUTTON_STRING_OFFSET_Y,
-    MAIN_BG_PALETTE_FONT,
-    CHECK_BUTTON_STRING_COLOR_L,
-    CHECK_BUTTON_STRING_COLOR_S,
-    CHECK_BUTTON_STRING_COLOR_B,
-    MESSAGE_STATIC,
-    str_menu_button_check,
+    MAIN_BG_FONT,                  // 対象BGフレーム
+    CHECK_BUTTON_X,                // x座標 (キャラクター単位)
+    CHECK_BUTTON_Y,                // x座標 (キャラクター単位)
+    CHECK_BUTTON_WIDTH,            // xサイズ (キャラクター単位)
+    CHECK_BUTTON_HEIGHT,           // yサイズ (キャラクター単位)
+    CHECK_BUTTON_STRING_OFFSET_X,  // 書き込み先x座標 (ドット単位)
+    CHECK_BUTTON_STRING_OFFSET_Y,  // 書き込み先y座標 (ドット単位)
+    MAIN_BG_PALETTE_FONT,          // 使用パレット番号
+    CHECK_BUTTON_STRING_COLOR_L,   // 文字のカラー番号
+    CHECK_BUTTON_STRING_COLOR_S,   // 影のカラー番号
+    CHECK_BUTTON_STRING_COLOR_B,   // 背景のカラー番号
+    MESSAGE_STATIC,                // 参照するメッセージデータ
+    str_menu_button_check,         // 使用する文字列
+    FALSE,                         // 自力センタリングの有無
   },
 };
 
@@ -264,4 +271,38 @@ static const CLWK_INIT_DATA ClactWorkInitData[ CLWK_NUM ] =
     OBJ_RESOURCE_MAIN_CELL_ANIME, // セルアニメ リソース
     CLSYS_DEFREND_MAIN,           // サーフェス指定
   },
+};
+
+
+//==============================================================================================
+// ■タッチ領域
+//==============================================================================================
+// 初期化データ
+typedef struct
+{
+  u8 left;    // 左 (ドット単位)
+  u8 right;   // 右 (ドット単位)
+  u8 top;     // 上 (ドット単位)
+  u8 bottom;  // 下 (ドット単位)
+
+} TOUCH_AREA_INIT_DATA;
+
+static const TOUCH_AREA_INIT_DATA TouchAreaInitData[ TOUCH_AREA_NUM ] = 
+{
+  //「調査内容を変更する」
+  {
+    TOUCH_AREA_CHANGE_BUTTON_X,
+    TOUCH_AREA_CHANGE_BUTTON_X + TOUCH_AREA_CHANGE_BUTTON_WIDTH,
+    TOUCH_AREA_CHANGE_BUTTON_Y,
+    TOUCH_AREA_CHANGE_BUTTON_Y + TOUCH_AREA_CHANGE_BUTTON_HEIGHT,
+  },
+  //「調査報告を確認する」 
+  {
+    TOUCH_AREA_CHECK_BUTTON_X,
+    TOUCH_AREA_CHECK_BUTTON_X + TOUCH_AREA_CHECK_BUTTON_WIDTH,
+    TOUCH_AREA_CHECK_BUTTON_Y,
+    TOUCH_AREA_CHECK_BUTTON_Y + TOUCH_AREA_CHECK_BUTTON_HEIGHT,
+  },
+  // 終端コード
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }, 
 };
