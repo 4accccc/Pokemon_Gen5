@@ -222,8 +222,11 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
     }
     else
     { // ‚Í‚¶‚ß‚©‚ç / ‚Â‚Ã‚«‚©‚ç
+#if 0
       u8 season = GAMEDATA_GetSeasonID( gamedata );
       GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Season( gsys, fieldmap, season, season ) );
+#endif
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
     }
     (*seq)++;
     break;
