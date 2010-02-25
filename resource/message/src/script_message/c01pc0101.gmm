@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T20:44:38"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T12:11:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="312" right="2001" bottom="940" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,14 +315,12 @@
 たくさん　いたほうが
 しょうぶでも　まけにくいし[BE:01:ページ切り替え（クリア）]
 ポケモンずかんや　ボックスを
-ながめる　たのしみも　うまれる！[BE:01:ページ切り替え（クリア）]
-なにより　にぎやかで　いいよな！</language>
+ながめる　たのしみも　うまれる！</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　捕まえているかい？[BE:01:ページ切り替え（クリア）]
 たくさん　いたほうが
 勝負でも　負けにくいし[BE:01:ページ切り替え（クリア）]
 ポケモン図鑑や　ボックスを
-ながめる　楽しみも　うまれる！[BE:01:ページ切り替え（クリア）]
-なにより　にぎやかで　いいよな！</language>
+ながめる　楽しみも　うまれる！</language>
 	</row>
 
 	<flowchart-group-list>
