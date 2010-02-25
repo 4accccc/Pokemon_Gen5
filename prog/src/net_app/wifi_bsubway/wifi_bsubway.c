@@ -1233,7 +1233,7 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
   WIFI_BSUBWAY_Printf( "." );
   
   error = NHTTP_RAP_Process( p_wk->p_nhttp );
-  if( NHTTP_ERROR_BUSY != error )
+  if( NHTTP_ERROR_NONE != error )
   { 
     // タイムアウトカウント
     ERROR_DATA_OnlyTimeOutCount( p_error );
