@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/14 22:21:10
+#save date:2010/02/25 12:07:01
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0203.wms
 #SECTION START:OBJ_EVENT
@@ -47,7 +47,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 N01R0203_GODDESS1_02
 #OBJ CODE Number
-GODDESS1
+GODDESS2
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number

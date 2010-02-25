@@ -49,17 +49,14 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_n01r0502_lastbtl_01
 
-	//【仮】メッセージ
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01w, msg_n01r0502_boss_01b, N01R0502_BOSS_01, WIN_NONE )
-	_MSGWIN_CLOSE()
+
 
 	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	
 	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,196655,819200,70 )	//一番最後の引数は移動にかかるフレーム数	
-
+	_CAMERA_MOVE( 9688,0,970752,1081344,196655,819200,70 )	//一番最後の引数は移動にかかるフレーム数
 	//ダミーの主人公OBJ表示
 {
 	DEFINE_LOCAL LWK_POSX
@@ -72,40 +69,52 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	SWITCH $LWK_POSX
 	CASE 14 THEN
 		IF $LWK_SEX == PM_MALE THEN
-			_OBJ_ADD_EX( 14,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
+			_OBJ_ADD_EX( 14,42,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
 		ELSE
-			_OBJ_ADD_EX( 14,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
+			_OBJ_ADD_EX( 14,42,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
 		ENDIF
 	CASE 15 THEN
 		IF $LWK_SEX == PM_MALE THEN
-			_OBJ_ADD_EX( 15,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
+			_OBJ_ADD_EX( 15,42,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
 		ELSE
-			_OBJ_ADD_EX( 15,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
+			_OBJ_ADD_EX( 15,42,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
 		ENDIF
 	CASE 16 THEN
 		IF $LWK_SEX == PM_MALE THEN
-			_OBJ_ADD_EX( 16,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
+			_OBJ_ADD_EX( 16,42,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
 		ELSE
-			_OBJ_ADD_EX( 16,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
+			_OBJ_ADD_EX( 16,42,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
 		ENDIF
 	CASE 17 THEN
 		IF $LWK_SEX == PM_MALE THEN
-			_OBJ_ADD_EX( 17,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
+			_OBJ_ADD_EX( 17,42,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
 		ELSE
-			_OBJ_ADD_EX( 17,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
+			_OBJ_ADD_EX( 17,42,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
 		ENDIF
 	CASE 18 THEN
 		IF $LWK_SEX == PM_MALE THEN
-			_OBJ_ADD_EX( 18,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
+			_OBJ_ADD_EX( 18,42,DIR_UP,MMDL_ID_EVENTOBJ_00,HERO,MV_DMY )
 		ELSE
-			_OBJ_ADD_EX( 18,50,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
+			_OBJ_ADD_EX( 18,42,DIR_UP,MMDL_ID_EVENTOBJ_00,HEROINE,MV_DMY )
 		ENDIF
 	ENDSWITCH
-}
+
 	//【仮】透明の主人公が移動
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_camera_move1 )
 	_OBJ_ANIME_WAIT()
 
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_TIME_WAIT( 20 )
+	//【仮】メッセージ
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01w, msg_n01r0502_boss_01b, N01R0502_BOSS_01, WIN_NONE )
+	_MSGWIN_CLOSE()	
+
+	_CAMERA_MOVE( 9688,0,970752,1081344,131103,1212416,50 )	//一番最後の引数は移動にかかるフレーム数
+
+	//Ｎ：数歩前に移動
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_last1_move )
+	_OBJ_ANIME_WAIT()
+	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//ボクが　のぞむのは　ポケモンだけの　せかい
@@ -122,14 +131,45 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
 	
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+	//X軸が15の場合
+	IF $LWK_POSX == 14 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last14 )
+	//X軸が16の場合	
+	ELSIF $LWK_POSX == 15 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last15 )
+	//X軸が16の場合	
+	ELSIF $LWK_POSX == 16 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last16 )
+	//X軸が16の場合	
+	ELSIF $LWK_POSX == 17 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last17 )
+	//X軸が18の場合
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last18 )
+	ENDIF
+}
+	//Ｎ：自機の前に移動
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_last2 )
+	_OBJ_ANIME_WAIT()
+	
+	//ほら　キミが　てにいれた
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_02w, msg_n01r0502_boss_02b, N01R0502_BOSS_01, WIN_NONE )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 	//========================================/
 	
-	//WKを１にする
-	$WK_SCENE_N01R0502 = 1
+	//WKを２にする
+	$WK_SCENE_N01R0502 = 2
+	
+	//ライトストーンの使用を許可する
+	$WK_SYS_N01R0502_ITEMUSE = 1
 	
 	//========================================/
 
-	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
 
 EVENT_END
 
@@ -139,20 +179,25 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_camera_move1
 	_ANIME_DATA	AC_VANISH_ON,1
-	_ANIME_DATA	AC_WALK_U_2F,39
+	_ANIME_DATA	AC_WALK_U_2F,30
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_camera_move2
-	_ANIME_DATA	AC_WALK_D_2F,39
+	_ANIME_DATA	AC_WALK_D_2F,30
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_last1_move
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*	最終イベント２	WK_SCENE_N01R0502=1起動					*/
 /************************************************************/
 EVENT_START	ev_pos_n01r0502_lastbtl_02
-
+/*
 {
 	DEFINE_LOCAL LWK_POSX
 	DEFINE_LOCAL LWK_POSZ
@@ -194,14 +239,14 @@ EVENT_START	ev_pos_n01r0502_lastbtl_02
 	$WK_SYS_N01R0502_ITEMUSE = 1
 	
 	//========================================/
-
+*/
 EVENT_END
 
 //--------------------------------------------------------------------
 //	lastbtl２用アニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_n_last2
-	_ANIME_DATA	AC_WALK_D_2F,20
+	_ANIME_DATA	AC_WALK_D_2F,14
 	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	ACMD_END,0
 
