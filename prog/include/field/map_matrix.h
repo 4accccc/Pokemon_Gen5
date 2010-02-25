@@ -14,10 +14,11 @@
 #include <gflib.h>
 
 #include "gamesystem/gamesystem.h"
+
 //======================================================================
 //	define
 //======================================================================
-#define MAP_MATRIX_ZONE_ID_NON (0xffffffff)
+#define MAP_MATRIX_ZONE_ID_NON (0xffff)
 #define MAP_MATRIX_RES_ID_NON (0xffffffff)
 
 #define MAP_MATRIX_WIDTH_MAX (30)
@@ -40,9 +41,9 @@ extern void MAP_MATRIX_Init(
 extern void MAP_MATRIX_Delete( MAP_MATRIX *pMat );
 
 extern u32 MAP_MATRIX_GetMatrixID( const MAP_MATRIX *pMat );
-extern u32 MAP_MATRIX_GetBlockPosZoneID(
+extern u16 MAP_MATRIX_GetBlockPosZoneID(
 		const MAP_MATRIX *pMat, int x, int z );
-extern u32 MAP_MATRIX_GetVectorPosZoneID(
+extern u16 MAP_MATRIX_GetVectorPosZoneID(
 		const MAP_MATRIX *pMat, fx32 x, fx32 z );
 extern u16 MAP_MATRIX_GetMapBlockSizeWidth( const MAP_MATRIX *pMat );
 extern u16 MAP_MATRIX_GetMapBlockSizeHeight( const MAP_MATRIX *pMat );

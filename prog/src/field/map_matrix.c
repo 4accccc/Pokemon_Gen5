@@ -20,7 +20,6 @@
 //======================================================================
 //	define
 //======================================================================
-
 //======================================================================
 //	struct
 //======================================================================
@@ -41,22 +40,22 @@ typedef struct
 struct _TAG_MAP_MATRIX
 {
 	HEAPID heapID;
-	u32 zone_id;
+	u16 zone_id;
 	u32 matrix_id;
 	
 	u16 size_w;
 	u16 size_h;
 	u16 status_flag;
 	u32 table_size;
-	u32 zone_id_tbl[MAP_MATRIX_MAX];
-	u32 map_res_id_tbl[MAP_MATRIX_MAX];
+	u16 zone_id_tbl[MAP_MATRIX_MAX];
+  u32 map_res_id_tbl[MAP_MATRIX_MAX];
 };
 
 //======================================================================
 //	proto
 //======================================================================
 static void MapMatrix_SetData(
-	MAP_MATRIX *pMat, const void *pMatData, u32 matrix_id, u32 zone_id );
+	MAP_MATRIX *pMat, const void *pMatData, u32 matrix_id, u16 zone_id );
 static int MapMatrix_ChgBlockPos( fx32 pos );
 
 //======================================================================
@@ -77,7 +76,7 @@ MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID )
 	MI_CpuFill32( pMat->map_res_id_tbl,
 		MAP_MATRIX_RES_ID_NON, sizeof(u32)*MAP_MATRIX_MAX );
 	MI_CpuFill32( pMat->zone_id_tbl,
-		MAP_MATRIX_ZONE_ID_NON, sizeof(u32)*MAP_MATRIX_MAX );
+		MAP_MATRIX_ZONE_ID_NON, sizeof(u16)*MAP_MATRIX_MAX );
 	return( pMat );
 }
 
@@ -131,12 +130,12 @@ u32 MAP_MATRIX_GetMatrixID( const MAP_MATRIX *pMat )
  * @param	pMat	MAP_MATRIX
  * @param	x		X座標(ブロック単位)
  * @param	z		Z座標(ブロック単位)
- * @retval	u32		ZONE ID
+ * @retval	u16		ZONE ID
  */
 //--------------------------------------------------------------
-u32 MAP_MATRIX_GetBlockPosZoneID( const MAP_MATRIX *pMat, int x, int z )
+u16 MAP_MATRIX_GetBlockPosZoneID( const MAP_MATRIX *pMat, int x, int z )
 {
-	u32 zone_id;
+	u16 zone_id;
 	GF_ASSERT( 0 <= x && x < pMat->size_w );
 	GF_ASSERT( 0 <= z && z < pMat->size_h );
 	zone_id = pMat->zone_id_tbl[x + (z*pMat->size_w)];
@@ -149,10 +148,10 @@ u32 MAP_MATRIX_GetBlockPosZoneID( const MAP_MATRIX *pMat, int x, int z )
  * @param	pMat	MAP_MATRIX
  * @param	x		X座標(実座標 fx32
  * @param	z		Z座標(実座標 fx32
- * @retval	u32		ZONE ID
+ * @retval	u16		ZONE ID
  */
 //--------------------------------------------------------------
-u32 MAP_MATRIX_GetVectorPosZoneID( const MAP_MATRIX *pMat, fx32 x, fx32 z )
+u16 MAP_MATRIX_GetVectorPosZoneID( const MAP_MATRIX *pMat, fx32 x, fx32 z )
 {
 	int bx = MapMatrix_ChgBlockPos( x );
 	int bz = MapMatrix_ChgBlockPos( z );
@@ -345,9 +344,10 @@ void MAP_MATRIX_CheckReplace(
  */
 //--------------------------------------------------------------
 static void MapMatrix_SetData(
-	MAP_MATRIX *pMat, const void *pMatData, u32 matrix_id, u32 zone_id )
+	MAP_MATRIX *pMat, const void *pMatData, u32 matrix_id, u16 zone_id )
 {
 	u32 *pMatTbl;
+  u16 *pZoneTbl;
 	const u32 *pResTbl;
 	const MAP_MATRIX_HEADER *pMatH;
 	
@@ -367,14 +367,20 @@ static void MapMatrix_SetData(
 	pResTbl = (const u32*)((const u32)pMatData + sizeof(MAP_MATRIX_HEADER));
 	MI_CpuCopy32( pResTbl, pMatTbl, sizeof(u32)*pMat->table_size );
 	
-	pMatTbl = pMat->zone_id_tbl;
+	pZoneTbl = pMat->zone_id_tbl;
 	
 	if( pMat->status_flag == 1 ){ //ゾーンID配列有り
 		pResTbl = (const u32*)((const u32)pMatData +
 			sizeof(MAP_MATRIX_HEADER) + (sizeof(u32)*pMat->table_size) );
-		MI_CpuCopy32( pResTbl, pMatTbl, sizeof(u32)*pMat->table_size );
+    {
+      int i;
+      for (i = 0; i < pMat->table_size; i++)
+      {
+        pZoneTbl[i] = pResTbl[i];
+      }
+    }
 	}else{ //ゾーンID指定無し
-		MI_CpuFill32( pMatTbl, zone_id, sizeof(u32)*MAP_MATRIX_MAX );
+    MI_CpuFill16( pZoneTbl, zone_id, sizeof(u16)*MAP_MATRIX_MAX );
 	}
 	
 //#ifdef DEBUG_ONLY_FOR_kagaya
