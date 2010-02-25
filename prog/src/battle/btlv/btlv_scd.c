@@ -160,8 +160,6 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk );
 static BOOL selectPokemon_init( int* seq, void* wk_adrs );
 static BOOL selectPokemon_loop( int* seq, void* wk_adrs );
 static void printCommWait( BTLV_SCD* wk );
-static  inline  void  SePlayDecide( BTLV_SCD* wk );
-static  inline  void  SePlayCancel( BTLV_SCD* wk );
 
 BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule,
         const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, const BTL_CLIENT* client, HEAPID heapID )
@@ -563,13 +561,8 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
   BTLV_SCD* wk = wk_adrs;
   int hit;
 
-  //カメラワークエフェクト
-  if( !BTLV_EFFECT_CheckExecute() ){
-    BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
-  }
-
 //  hit = GFL_UI_TP_HitTrg( BattleMenuTouchData );
-  hit = BTLV_INPUT_CheckInput( wk->biw, BattleMenuTouchData, BattleMenuKeyData );
+  hit = BTLV_INPUT_CheckInput( wk->biw, &BattleMenuTouchData, BattleMenuKeyData );
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     static const u8 action[] = {
@@ -590,7 +583,6 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
       break;
     }
 
-    SePlayDecide( wk );
     return TRUE;
   }
 
@@ -602,15 +594,9 @@ static BOOL selectDemoRoot_loop( int* seq, void* wk_adrs )
   BTLV_SCD* wk = wk_adrs;
   BOOL ret = FALSE;
 
-  //カメラワークエフェクト（捕獲デモはしなくていいよね？）
-  //if( !BTLV_EFFECT_CheckExecute() ){
-  //  BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
-  //}
-
   if( ( ret = BTLV_INPUT_CheckInputDemo( wk->biw ) ) == TRUE )
   {
     wk->selActionResult = BTL_ACTION_FIGHT;
-    SePlayDecide( wk );
   }
 
   return ret;
@@ -654,18 +640,14 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
   int hit;
   int pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
                                        BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID( wk->bpp ) ) );
-  const GFL_UI_TP_HITTBL* SkillMenuTouchData = ( ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) &&
-                                                 ( pos != BTLV_MCSS_POS_C ) ) ?
-                                                SkillMenuTouchData3vs3 :
-                                                SkillMenuTouchDataNormal;
+  const BTLV_INPUT_HITTBL* SkillMenuTouchData = ( ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) &&
+                                                  ( pos != BTLV_MCSS_POS_C ) ) ?
+                                                  &SkillMenuTouchData3vs3 :
+                                                  &SkillMenuTouchDataNormal;
   const BTLV_INPUT_KEYTBL* SkillMenuKeyData = ( ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) &&
                                                 ( pos != BTLV_MCSS_POS_C ) ) ?
                                                 SkillMenuKeyData3vs3 :
                                                 SkillMenuKeyDataNormal;
-  //カメラワークエフェクト
-  if( !BTLV_EFFECT_CheckExecute() ){
-    BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
-  }
 
 //  hit = GFL_UI_TP_HitTrg( SkillMenuTouchData );
   hit = BTLV_INPUT_CheckInput( wk->biw, SkillMenuTouchData, SkillMenuKeyData );
@@ -674,7 +656,6 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
     //キャンセルが押された
     if( hit == 4 )
     {
-      SePlayCancel( wk );
       BTL_ACTION_SetNULL( wk->destActionParam );
       return TRUE;
     }
@@ -685,13 +666,11 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
       waza = BPP_WAZA_GetID( wk->bpp, hit );
       BTL_ACTION_SetFightParam( wk->destActionParam, waza, BTL_POS_NULL );
 
-      SePlayDecide( wk );
       return TRUE;
     }
     else if( ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) && ( hit == 5 ) )
     {
       BTL_ACTION_SetMoveParam( wk->destActionParam );
-      SePlayDecide( wk );
       return TRUE;
     }
   }
@@ -992,7 +971,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
   switch( *seq ){
   case 0:
     {
-      const GFL_UI_TP_HITTBL *touch_data;
+      const BTLV_INPUT_HITTBL *touch_data;
       const BTLV_INPUT_KEYTBL *key_data;
       int hit;
       u8  touch_max;
@@ -1006,12 +985,12 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 
       if( BTL_MAIN_GetRule( wk->mainModule ) != BTL_RULE_TRIPLE ){
         GF_ASSERT_MSG( ( ( pos > -1 ) && ( pos < 2 ) ), "pos:%d\n", pos );
-        touch_data = PokeSeleMenuTouch4Data;
+        touch_data = &PokeSeleMenuTouch4Data;
         key_data = PokeSeleMenuKey4Data[ pos ][ target ];
         touch_max = 4;
       }else{
         GF_ASSERT_MSG( ( ( pos > -1 ) && ( pos < 3 ) ), "pos:%d\n", pos );
-        touch_data = PokeSeleMenuTouch6Data;
+        touch_data = &PokeSeleMenuTouch6Data;
         key_data = PokeSeleMenuKey6Data[ pos ][ target ];
         touch_max = 6;
       }
@@ -1024,7 +1003,6 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
         {
           BtlPokePos targetPos;
 
-          SePlayDecide( wk );
           if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &targetPos ) )
           {
             BTL_Printf("ターゲット決定 ... hitBtn=%d, hitPos=%d, targetPos=%d\n", hit, wk->selTargetWork.pos[hit], targetPos);
@@ -1035,7 +1013,6 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
         }
         else
         {
-          SePlayCancel( wk );
           wk->selTargetDone = FALSE;
           return TRUE;
         }
@@ -1154,10 +1131,9 @@ void BTLV_SCD_SelectYesNo_Start( BTLV_SCD* wk, BTLV_INPUT_YESNO_PARAM* param )
 
 BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result )
 {
-  int input = BTLV_INPUT_CheckInput( wk->biw, YesNoTouchData, YesNoKeyData );
+  int input = BTLV_INPUT_CheckInput( wk->biw, &YesNoTouchData, YesNoKeyData );
   if( input != GFL_UI_TP_HIT_NONE )
   {
-    SePlayDecide( wk );
     *result = input;
     BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
     return TRUE;
@@ -1173,28 +1149,6 @@ BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result )
 u8* BTLV_SCD_GetCursorFlagPtr( BTLV_SCD* wk )
 {
   return &wk->cursor_flag;
-}
-
-//=============================================================================================
-//  決定音再生
-//=============================================================================================
-static  inline  void  SePlayDecide( BTLV_SCD* wk )
-{
-  if( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_COMM )
-  {
-    PMSND_PlaySE( SEQ_SE_DECIDE2 );
-  }
-}
-
-//=============================================================================================
-//  キャンセル音再生
-//=============================================================================================
-static  inline  void  SePlayCancel( BTLV_SCD* wk )
-{
-  if( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_COMM )
-  {
-    PMSND_PlaySE( SEQ_SE_CANCEL2 );
-  }
 }
 
 //=============================================================================================
