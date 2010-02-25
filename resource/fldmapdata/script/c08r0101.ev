@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c08r0101.h"
   .include  "c08r0101.h"
+  .include  "skill_teach_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,6 +23,7 @@
 _EVENT_DATA    ev_scene_c08r0101_leader8_01
 _EVENT_DATA    ev_c08r0101_leader8a_01
 _EVENT_DATA    ev_c08r0101_leader8b_01
+_EVENT_DATA    ev_c08r0101_veteranw_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -34,7 +36,7 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 	_OBJ_ANIME_WAIT()
 	
 	//シャガWB分岐メッセージ（１）「君が持つストーンは」
-	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8a_01w , msg_c08r0101_leader8a_01b , C08R0101_LEADER8A_01 , WIN_NONE)
+	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8a_01w , msg_c08r0101_leader8a_01b , C08R0101_LEADER8A_01 , POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//アイリス相槌
@@ -42,11 +44,11 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 	_BALLOONWIN_CLOSE()
 	
 	//シャガWB分岐メッセージ（２）「だがある日の事」
-	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8a_02w , msg_c08r0101_leader8a_02b , C08R0101_LEADER8A_01 , WIN_NONE)
+	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8a_02w , msg_c08r0101_leader8a_02b , C08R0101_LEADER8A_01 , POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//アイリスWB分岐メッセージ（３）「その名も」
-	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8b_02w , msg_c08r0101_leader8b_02b , C08R0101_LEADER8B_01 , WIN_NONE)
+	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8b_02w , msg_c08r0101_leader8b_02b , C08R0101_LEADER8B_01 , POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//シャガ相槌
@@ -54,7 +56,7 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 	_BALLOONWIN_CLOSE()
 	
 	//アイリスWB分岐メッセージ（４）「だからね！いま２匹が出会っても」
-	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8b_03w , msg_c08r0101_leader8b_03b , C08R0101_LEADER8B_01 , WIN_NONE)
+	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8b_03w , msg_c08r0101_leader8b_03b , C08R0101_LEADER8B_01 , POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//シャガ相槌
@@ -131,14 +133,47 @@ EVENT_END
 /*   C08：シャガ一言メッセージ                                */
 /**************************************************************/
 EVENT_START   ev_c08r0101_leader8a_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0101_leader8a_07 )
+
+	//ゲームクリアしていたらドラゴン技教え
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+		_GLOBAL_CALL	SCRID_WAZA_TEACHER_DRAGON
+	ELSE
+	//未クリア
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0101_leader8a_07 )
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/
 /*   C08：アイリス一言メッセージ                               */
 /**************************************************************/
 EVENT_START   ev_c08r0101_leader8b_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0101_leader8a_09 )
+
+	//ゲームクリアしていたらドラゴン技教え
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+		_GLOBAL_CALL	SCRID_WAZA_TEACHER_DRAGON
+	ELSE
+	//未クリア
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0101_leader8a_09 )
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/*   C08：VETERANW一言メッセージ                               */
+/**************************************************************/
+EVENT_START   ev_c08r0101_veteranw_01
+
+	//ゲームクリアしていたらドラゴン技について解説
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+		_TALK_OBJ_START()
+		_BALLOONWIN_OBJMSG_WB( msg_c08r0101_veteranw_02w , msg_c08r0101_veteranw_02b , C08R0101_VETERANW_01 , POS_DEFAULT)
+		_BALLOONWIN_CLOSE()
+	ELSE
+	//未クリア
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0101_veteranw_01 )
+	ENDIF
+	
 EVENT_END
 
 //--------------------------------------------------------------
