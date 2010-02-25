@@ -12,6 +12,15 @@
 #define ZONE_D01R0201_EVC_H
 
 #define D01R0201_POKE15_01                 0
+#define TR_SCIENTISTM_08                   1
+#define TR_ESPM_07                         2
+#define TR_SCIENTISTW_06                   3
+#define TR_SCIENTISTW_07                   4
+#define TR_ESPM_08                         5
+#define TR_ESPW_07                         6
+#define TR_SCIENTISTM_09                   7
+#define TR_HAKAIW1_05                      8
+#define TR_HAKAIM1_12                      9
 
 #endif //ZONE_D01R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d01r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
