@@ -189,10 +189,29 @@ static const GFL_G3D_UTIL_OBJ obj_intro_town_unit02[] = {
 		anm_intro_town_unit02, NELEMS(anm_intro_town_unit02), // AnmTbl, AnmTblNum
 	}
 };
+//UNIT
+static const GFL_G3D_UTIL_RES res_intro_town_unit03[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_intro_town03_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_intro_town03_nsbca, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_intro_town03_nsbtp, GFL_G3D_UTIL_RESARC },
+};
+//ANM
+static const GFL_G3D_UTIL_ANM anm_intro_town_unit03[] = {
+	{ 1, 0 },
+	{ 2, 0 },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_intro_town_unit03[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		anm_intro_town_unit03, NELEMS(anm_intro_town_unit03), // AnmTbl, AnmTblNum
+	}
+};
 //setup
 static const GFL_G3D_UTIL_SETUP intro_town_setup[] = {
 	{ res_intro_town_unit01, NELEMS(res_intro_town_unit01), obj_intro_town_unit01, NELEMS(obj_intro_town_unit01) },
 	{ res_intro_town_unit02, NELEMS(res_intro_town_unit02), obj_intro_town_unit02, NELEMS(obj_intro_town_unit02) },
+	{ res_intro_town_unit03, NELEMS(res_intro_town_unit03), obj_intro_town_unit03, NELEMS(obj_intro_town_unit03) },
 };
 //=========================================================================
 // DEMO3D_ID_N_CASTLE

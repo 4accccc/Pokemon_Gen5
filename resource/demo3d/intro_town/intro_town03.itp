@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2010-02-25T15:07:43" source="intro_town_05.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="450"
+	tool_start_frame="1"
+	tool_end_frame="450"
+	compress_material="on" material_size="4 4"
+/>
+
+<tex_pattern_list_data image_size="12" palette_size="1">
+	<image_name index="0" name="delivery.1"/>
+	<image_name index="1" name="delivery.10"/>
+	<image_name index="2" name="delivery.11"/>
+	<image_name index="3" name="delivery.12"/>
+	<image_name index="4" name="delivery.2"/>
+	<image_name index="5" name="delivery.3"/>
+	<image_name index="6" name="delivery.4"/>
+	<image_name index="7" name="delivery.5"/>
+	<image_name index="8" name="delivery.6"/>
+	<image_name index="9" name="delivery.7"/>
+	<image_name index="10" name="delivery.8"/>
+	<image_name index="11" name="delivery.9"/>
+	<palette_name index="0" name="delivery"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="85">
+		0 2 5 8 11 14 17 20 23 26
+		29 32 35 38 41 44 47 50 53 56
+		59 62 65 68 71 74 77 80 83 86
+		89 92 95 98 101 104 107 110 113 116
+		119 122 125 128 131 134 137 140 143 146
+		149 150 154 158 162 166 170 174 178 182
+		186 190 194 198 202 206 210 214 225 239
+		243 255 259 263 267 272 309 319 323 328
+		332 336 340 344 348
+	</frame_idx>
+	<image_idx size="85">
+		7 8 9 10 7 8 9 10 7 8
+		9 10 7 8 9 10 7 8 9 10
+		7 8 9 10 7 8 9 10 7 8
+		9 10 7 8 9 10 7 8 9 10
+		7 8 9 10 7 8 9 10 7 8
+		9 11 1 2 3 11 1 2 3 11
+		1 2 3 11 1 2 3 11 0 4
+		5 0 4 5 6 0 7 8 9 10
+		7 8 9 10 7
+	</image_idx>
+	<palette_idx size="85">
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="obj_deli" data_size="85" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
