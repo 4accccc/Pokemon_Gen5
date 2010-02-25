@@ -11,6 +11,11 @@
 
 #define R18_ROCK_01                        0
 #define R18_ROCK_02                        1
+#define TR_BACKPACKERM_10                  2
+#define TR_BATTLEG_11                      3
+#define TR_VETERANM_06                     4
+#define TR_MOUNT_11                        5
+#define TR_BACKPACKERW_10                  6
 
 #endif //ZONE_R18_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r18.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
