@@ -729,19 +729,24 @@ void APP_TASKMENU_WIN_SetDecide( APP_TASKMENU_WIN_WORK *wk, BOOL isDecide )
  *
  *	@param	APP_TASKMENU_WIN_WORK *work ワーク
  *
- *	@retval TRUE:終了
+ *	@retval TRUE:アニメしていない FALSEアニメ中
  */
 //-----------------------------------------------------------------------------
 const BOOL APP_TASKMENU_WIN_IsFinish( APP_TASKMENU_WIN_WORK *work )
 {
-  if( work->anmCnt < APP_TASKMENU_ANM_CNT )
-  {
-    return FALSE;
+  if( work->isDecide )
+  { 
+    if( work->anmCnt < APP_TASKMENU_ANM_CNT )
+    {
+      return FALSE;
+    }
+    else
+    {
+      return TRUE;
+    }
   }
-  else
-  {
-    return TRUE;
-  }
+
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
