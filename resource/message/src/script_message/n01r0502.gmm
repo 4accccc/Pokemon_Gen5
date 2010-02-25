@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T17:02:11"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T16:54:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,15 +330,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="212" right="1998" bottom="844" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="696"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -364,14 +364,14 @@
 ・WHITEver
 ・続けて01_01w</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『ボクが　のぞむのは
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクが　のぞむのは
 ポケモンだけの　せかい……▼
 ポケモンは　ひとから　ときはなたれ
-ほんらいの　ちからを　とりもどす▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ボクが　望むのは
+ほんらいの　ちからを　とりもどす[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクが　望むのは
 ポケモンだけの　世界……▼
 ポケモンは　人から　解き放たれ
-本来の　力を　とりもどす▼</language>
+本来の　力を　とりもどす[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_01_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -379,18 +379,18 @@
 ・WHITEver
 ・メッセージ表示後、主人公フリームーブ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">……ここまで　きたからには
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……ここまで　きたからには
 キミにも　あるんだろう？▼
 みせてよ
 キミの　かくごって　やつ▼
 ほら　キミが　てにいれた
-ダークストーンを　つかってさ</language>
-		<language name="JPN_KANJI" width="256">……ここまで　来たからには
+ダークストーンを　つかってさ[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……ここまで　来たからには
 キミにも　あるんだろう？▼
 みせてよ
 キミの　覚悟って　やつ▼
 ほら　キミが　手に入れた
-ダークストーンを　使ってさ</language>
+ダークストーンを　使ってさ[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -398,14 +398,14 @@
 ・BLACKver
 ・続けて01_01b</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『ボクが　のぞむのは
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクが　のぞむのは
 ポケモンだけの　せかい……▼
 ポケモンは　ひとから　ときはなたれ
-ほんらいの　ちからを　とりもどす▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ボクが　望むのは
+ほんらいの　ちからを　とりもどす[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクが　望むのは
 ポケモンだけの　世界……▼
 ポケモンは　人から　解き放たれ
-本来の　力を　とりもどす▼</language>
+本来の　力を　とりもどす[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_01_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -413,18 +413,18 @@
 ・BLACKver
 ・メッセージ表示後、主人公フリームーブ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">……ここまで　きたからには
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……ここまで　きたからには
 キミにも　あるんだろう？▼
 みせてよ
 キミの　かくごって　やつ▼
 ほら　キミが　てにいれた
-ライトストーンを　つかってさ</language>
-		<language name="JPN_KANJI" width="256">……ここまで　来たからには
+ライトストーンを　つかってさ[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……ここまで　来たからには
 キミにも　あるんだろう？▼
 みせてよ
 キミの　覚悟って　やつ▼
 ほら　キミが　手に入れた
-ライトストーンを　使ってさ</language>
+ライトストーンを　使ってさ[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_02w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -432,10 +432,10 @@
 ・WHITEver
 ・boss_01w表示後、ダークストーンを使うまで繰り返し</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『ほら　キミが　てにいれた
-ダークストーンを　つかってみせてよ</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ほら　キミが　手に入れた
-ダークストーンを　使ってみせてよ</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ほら　キミが　てにいれた
+ダークストーンを　つかってみせてよ[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ほら　キミが　手に入れた
+ダークストーンを　使ってみせてよ[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_02b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -443,10 +443,10 @@
 ・BLACKver
 ・boss_01b表示後、ダークストーンを使うまで繰り返し</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『ほら　キミが　てにいれた
-ライトストーンを　つかってみせてよ</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ほら　キミが　手に入れた
-ライトストーンを　使ってみせてよ</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ほら　キミが　てにいれた
+ライトストーンを　つかってみせてよ[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ほら　キミが　手に入れた
+ライトストーンを　使ってみせてよ[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_stone_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -480,18 +480,18 @@
 ・横向きになってからメッセージ表示
 ・続けてboss_04w</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『……ボクは　すこしだけ
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクは　すこしだけ
 キミのことを　きにいっていたのかも▼
 トレーナーとして　ではなく
 ともだちとして　ポケモンと▽
 むかいあっている　にんげん……▼
-そう　おもえたからね▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……ボクは　すこしだけ
+そう　おもえたからね[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクは　すこしだけ
 キミのことを　気に入っていたのかも▼
 トレーナーとして　ではなく
 トモダチとして　ポケモンと▽
 向かい合っている　人間……▼
-そう　思えたからね▼</language>
+そう　思えたからね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_03b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -501,18 +501,18 @@
 ・横向きになってからメッセージ表示
 ・続けてboss_04b</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『……ボクは　すこしだけ
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクは　すこしだけ
 キミのことを　きにいっていたのかも▼
 トレーナーとして　ではなく
 ともだちとして　ポケモンと▽
 むかいあっている　にんげん……▼
-そう　おもえたからね▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……ボクは　すこしだけ
+そう　おもえたからね[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクは　すこしだけ
 キミのことを　気に入っていたのかも▼
 トレーナーとして　ではなく
 トモダチとして　ポケモンと▽
 向かい合っている　人間……▼
-そう　思えたからね▼</language>
+そう　思えたからね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_04w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -521,28 +521,28 @@
 ・主人公を向いてメッセージ表示
 ・続けて04_01w</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">……だけど　ちがった
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……だけど　ちがった
 いま　すごく　ガッカリしているよ▼
 ボクと　おなじ　そんざい……
-えいゆうには　なれなかったんだね▼</language>
-		<language name="JPN_KANJI" width="256">……だけど　違った
+えいゆうには　なれなかったんだね[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……だけど　違った
 いま　すごく　ガッカリしているよ▼
 ボクと　同じ　存在……
-英雄には　なれなかったんだね▼</language>
+英雄には　なれなかったんだね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_04_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・WHITEver
 ・続けてboss_05w</comment>
-		<language name="JPN" width="256">キミに　できることは　２つ！▼
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミに　できることは　２つ！▼
 かちめのない　たたかいを　いどむか▼
 それとも　ここを　たちさり
-かわりゆく　せかいを　みまもるか▼</language>
-		<language name="JPN_KANJI" width="256">キミに　できることは　２つ！▼
+かわりゆく　せかいを　みまもるか[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミに　できることは　２つ！▼
 勝算のない　戦いを　挑むか▼
 それとも　ここを　立ち去り
-変わりゆく　世界を　見守るか▼</language>
+変わりゆく　世界を　見守るか[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_04b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -551,28 +551,28 @@
 ・主人公を向いてメッセージ表示
 ・続けて04_01b</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">……だけど　ちがった
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……だけど　ちがった
 いま　すごく　ガッカリしているよ▼
 ボクと　おなじ　そんざい……
-えいゆうには　なれなかったんだね▼</language>
-		<language name="JPN_KANJI" width="256">……だけど　違った
+えいゆうには　なれなかったんだね[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……だけど　違った
 いま　すごく　ガッカリしているよ▼
 ボクと　同じ　存在……
-英雄には　なれなかったんだね▼</language>
+英雄には　なれなかったんだね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_04_01b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・続けてboss_05b</comment>
-		<language name="JPN" width="256">キミに　できることは　２つ！▼
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミに　できることは　２つ！▼
 かちめのない　たたかいを　いどむか▼
 それとも　ここを　たちさり
-かわりゆく　せかいを　みまもるか▼</language>
-		<language name="JPN_KANJI" width="256">キミに　できることは　２つ！▼
+かわりゆく　せかいを　みまもるか[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミに　できることは　２つ！▼
 勝算のない　戦いを　挑むか▼
 それとも　ここを　立ち去り
-変わりゆく　世界を　見守るか▼</language>
+変わりゆく　世界を　見守るか[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_05w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -583,8 +583,8 @@
 　Nに話しかけると戦闘に
 ※トレーナーアニメについて要相談</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『おいで　シン！▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『おいで　シン！▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　シン！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　シン！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_05b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -595,8 +595,8 @@
 　Nに話しかけると戦闘に
 ※トレーナーアニメについて要相談</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『おいで　ム！▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『おいで　ム！▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　ム！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　ム！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_06w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -605,16 +605,16 @@
 ・戦闘後、自動で表示
 　続けてstone_02w</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『……　……　……
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……　……　……
 ……　……　……▼
 ……どういうこと　だ？▼
 ボクと　シンが　まけるだなんて
-こんな……　ありえない……▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……　……　……
+こんな……　ありえない……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……　……　……
 ……　……　……▼
 ……どういうこと　だ？▼
 ボクと　シンが　負けるだなんて
-こんな……　ありえない……▼</language>
+こんな……　ありえない……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_06b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -623,16 +623,16 @@
 ・戦闘後、自動で表示
 　続けてstone_02b</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『……　……　……
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……　……　……
 ……　……　……▼
 ……どういうこと　だ？▼
 ボクと　ムが　まけるだなんて
-こんな……　ありえない……▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……　……　……
+こんな……　ありえない……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……　……　……
 ……　……　……▼
 ……どういうこと　だ？▼
 ボクと　ムが　負けるだなんて
-こんな……　ありえない……▼</language>
+こんな……　ありえない……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_stone_02w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -663,12 +663,12 @@
 ・pokemon_01w表示後
 　ダークストーン使用前にNと会話</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『キミが　もつ
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]キミが　もつ
 ダークストーンが……！▼
-いや　ムが！▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『キミが　持つ
+いや　ムが！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]キミが　持つ
 ダークストーンが……！▼
-いや　ムが！▼</language>
+いや　ムが！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_07b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -677,12 +677,12 @@
 ・pokemon_01b表示後
 　ライトストーン使用前にNと会話</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『キミが　もつ
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]キミが　もつ
 ライトストーンが……！▼
-いや　シンが！▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『キミが　持つ
+いや　シンが！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]キミが　持つ
 ライトストーンが……！▼
-いや　シンが！▼</language>
+いや　シンが！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_stone_03w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -714,7 +714,7 @@
 ・WHITEver
 ・ム復活デモ後、フィールドに戻るとこのメッセージ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『シンと　ムは……▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ムは……▼
 もとは　ひとつの　いのち……
 いっぴきの　ポケモンだった▼
 せいはんたいの　そんざい　にして
@@ -722,8 +722,8 @@
 シンも　ムも　えいゆうの　もとに
 あらわれる　ポケモン……▼
 つまり　キミにも
-えいゆうの　そしつが　あるわけだ▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『シンと　ムは……▼
+えいゆうの　そしつが　あるわけだ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ムは……▼
 もとは　ひとつの　命……
 一匹の　ポケモンだった▼
 正反対の　存在にして
@@ -731,7 +731,7 @@
 シンも　ムも　英雄の　元に
 あらわれる　ポケモン……▼
 つまり　キミにも
-英雄の　素質が　あるわけだ▼</language>
+英雄の　素質が　あるわけだ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_08b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -739,7 +739,7 @@
 ・BLACKver
 ・ム復活デモ後、フィールドに戻るとこのメッセージ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『ムと　シンは……▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シンは……▼
 もとは　ひとつの　いのち……
 いっぴきの　ポケモンだった▼
 せいはんたいの　そんざい　にして
@@ -747,8 +747,8 @@
 ムも　シンも　えいゆうの　もとに
 あらわれる　ポケモン……▼
 つまり　キミにも
-えいゆうの　そしつが　あるわけだ▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ムと　シンは……▼
+えいゆうの　そしつが　あるわけだ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シンは……▼
 もとは　ひとつの　命……
 一匹の　ポケモンだった▼
 正反対の　存在にして
@@ -756,7 +756,7 @@
 シンも　ムも　英雄の　元に
 あらわれる　ポケモン……▼
 つまり　キミにも
-英雄の　素質が　あるわけだ▼</language>
+英雄の　素質が　あるわけだ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_09w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -765,22 +765,22 @@
 ・メッセージ表示後、回復処理
 　その後、主人公、フリームーブ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『その　ポケモンが
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]その　ポケモンが
 なんと　いっているか▽
 おしえてあげるよ▼
 「キミと　たたかいたい」そうだ▼
 どれほどの　ちからを　もっているか
 たしかめたいんだろうね▼
 ボクも　キミのちからを　しりたい……
-さあ　どうぞ！▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『その　ポケモンが
+さあ　どうぞ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]その　ポケモンが
 なんと　いっているか▽
 教えてあげるよ▼
 「キミと　戦いたい」そうだ▼
 どれほどの　力を　持っているか
 確かめたいんだろうね▼
 ボクも　キミの　力を　知りたい……
-さあ　どうぞ！▼</language>
+さあ　どうぞ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_09b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -789,22 +789,22 @@
 ・メッセージ表示後、回復処理
 　その後、主人公、フリームーブ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『その　ポケモンが
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]その　ポケモンが
 なんと　いっているか▽
 おしえてあげるよ▼
 「キミと　たたかいたい」そうだ▼
 どれほどの　ちからを　もっているか
 たしかめたいんだろうね▼
 ボクも　キミのちからを　しりたい……
-さあ　どうぞ！▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『その　ポケモンが
+さあ　どうぞ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]その　ポケモンが
 なんと　いっているか▽
 教えてあげるよ▼
 「キミと　戦いたい」そうだ▼
 どれほどの　力を　持っているか
 確かめたいんだろうね▼
 ボクも　キミの　力を　知りたい……
-さあ　どうぞ！▼</language>
+さあ　どうぞ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_10w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -812,12 +812,12 @@
 ・WHITEver
 ・パッケージポケモンと戦闘まで繰り返し</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『こころして　かかりたまえ▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]こころして　かかりたまえ▼
 ムは　りそうを　もたない
-にんげんに　キバを　むくらしいから</language>
-		<language name="JPN_KANJI" width="256">Ｎ『心して　かかりたまえ▼
+にんげんに　キバを　むくらしいから[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]心して　かかりたまえ▼
 ムは　理想を　持たない
-人間に　キバを　むくらしいから</language>
+人間に　キバを　むくらしいから[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_10b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -825,12 +825,12 @@
 ・BLACKver
 ・パッケージポケモンと戦闘まで繰り返し</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『こころして　かかりたまえ▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]こころして　かかりたまえ▼
 シンは　ぜんの　こころを　もたない
-にんげんを　やきつくすと　いうよ</language>
-		<language name="JPN_KANJI" width="256">Ｎ『心して　かかりたまえ▼
+にんげんを　やきつくすと　いうよ[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]心して　かかりたまえ▼
 シンは　善の　心を　持たない
-人間を　焼き尽くすと　いうよ</language>
+人間を　焼き尽くすと　いうよ[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_pokemon_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -894,16 +894,16 @@
 　このメッセージ表示
 ・続けてNのカットインでboss_12w</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『……そうか▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……そうか▼
 りそうを　おいもとめる　えいゆうに
 その　ちからを　かすと　いわれている▽
 ムが　キミの　ちからを　みとめ▽
-ともに　あゆむことを　きめたか……▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……そうか▼
+ともに　あゆむことを　きめたか……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……そうか▼
 理想を　追い求める　英雄に
 その力を　貸すと　いわれている▽
 ムが　キミの　力を　認め▽
-ともに　歩むことを　決めたか……▼</language>
+ともに　歩むことを　決めたか……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_11b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -913,16 +913,16 @@
 　このメッセージ表示
 ・続けてNのカットインでboss_12b</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『……そうか▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……そうか▼
 しんじつを　おいもとめる　えいゆうに
 その　ちからを　かすと　いわれている▽
 シンが　キミの　ちからを　みとめ▽
-ともに　あゆむことを　きめたか……▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……そうか▼
+ともに　あゆむことを　きめたか……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……そうか▼
 真実を　追い求める　英雄に
 その力を　貸すと　いわれている▽
 シンが　キミの　力を　認め▽
-ともに　歩むことを　決めたか……▼</language>
+ともに　歩むことを　決めたか……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_12w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -930,22 +930,22 @@
 ・WHITEver
 ・続けてboss_12_01w</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『ムと　シン……▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シン……▼
 ２ひきが　それぞれ　ことなる
 えいゆうを　えらんだ……▽
 こんなことも　あるのか▼
 おなじじだいに　ふたりのえいゆう
 りそうを　もとめる　もの▽
 しんじつを　もとめる　もの▽
-ともに　ただしいと　いうのか？▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ムと　シン……▼
+ともに　ただしいと　いうのか？[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シン……▼
 ２匹が　それぞれ　異なる
 英雄を　選んだ……▽
 こんなことも　あるのか▼
 同じ時代に　二人の英雄
 理想を　求める　もの▽
 真実を　求める　もの▽
-ともに　正しいと　いうのか？▼</language>
+ともに　正しいと　いうのか？[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_12_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -954,22 +954,15 @@
 ・メッセージ表示後、カットイン終了
 ・続けてmsg_n01r0502_sage1_01</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">……わからない▼
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……わからない▼
 ことなる　かんがえを
 ひてい　するのではなく▼
 ことなる　かんがえを
 うけいれることで▽
 せかいは　かがくはんのうを　おこす▼
 これこそが……
-せかいを　かえるための　すうしき……▼</language>
-		<language name="JPN_KANJI" width="256">……わからない▼
-異なる　考えを
-否定するのではなく▼
-異なる　考えを
-受け入れることで▽
-世界は　化学反応を　おこす▼
-これこそが……
-世界を　変えるための　数式……▼</language>
+せかいを　かえるための　すうしき……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_12b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -977,22 +970,22 @@
 ・BLACKver
 ・続けてboss_12_01b</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『シンと　ム……▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ム……▼
 ２ひきが　それぞれ　ことなる
 えいゆうを　えらんだ……▽
 こんなことも　あるのか▼
 おなじじだいに　ふたりのえいゆう
 りそうを　もとめる　もの▽
 しんじつを　もとめる　もの▽
-ともに　ただしいと　いうのか？▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『シンと　ム……▼
+ともに　ただしいと　いうのか？[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ム……▼
 ２匹が　それぞれ　異なる
 英雄を　選んだ……▽
 こんなことも　あるのか▼
 同じ時代に　二人の英雄
 真実を　求める　もの▽
 理想を　求める　もの▽
-ともに　正しいと　いうのか？▼</language>
+ともに　正しいと　いうのか？[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_12_01b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -1001,22 +994,22 @@
 ・メッセージ表示後、カットイン終了
 ・続けてmsg_n01r0502_sage1_01</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">……わからない▼
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……わからない▼
 ことなる　かんがえを
 ひてい　するのではなく▼
 ことなる　かんがえを
 うけいれることで▽
 せかいは　かがくはんのうを　おこす▼
 これこそが……
-せかいを　かえるための　すうしき……▼</language>
-		<language name="JPN_KANJI" width="256">……わからない▼
+せかいを　かえるための　すうしき……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……わからない▼
 異なる　考えを
 否定するのではなく▼
 異なる　考えを
 受け入れることで▽
 世界は　化学反応を　おこす▼
 これこそが……
-世界を　変えるための　数式……▼</language>
+世界を　変えるための　数式……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -1313,14 +1306,14 @@
 		<comment>♂
 ・続けてchampion_02</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『……ゲーチスに　おしえられ
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ゲーチスに　おしえられ
 こころの　そこから　しんじていた▼
 ひとは　ポケモンに　あだなす
-あしき　そんざい　だと……▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……ゲーチスに　教えられ
+あしき　そんざい　だと……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ゲーチスに　教えられ
 心の底から　信じていた▼
 人は　ポケモンに　あだなす
-悪しき　存在　だと……▼</language>
+悪しき　存在　だと……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_champion_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -1337,12 +1330,12 @@
 		<comment>♂
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『ゲーチスに　いわれ
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ゲーチスに　いわれ
 にんげんの　おろかさを▽
-たしかめるために　ね……▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ゲーチスに　いわれ
+たしかめるために　ね……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ゲーチスに　いわれ
 人間の　愚かさを▽
-確かめるために　ね……▼</language>
+確かめるために　ね……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_champion_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -1359,7 +1352,7 @@
 		<comment>♂
 ・続けてchampion_04</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『ああ……▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ああ……▼
 でも　それいじょうに
 ポケモンの　うれしい　きもちが▽
 つたわってきて……▼
@@ -1367,8 +1360,8 @@
 しんねんが　ゆらぎ　つらかった……▼
 ひとと　ポケモン
 おたがい　あゆみよっているのだと▽
-そのたびに　ひとを　にくみなおした▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ああ……▼
+そのたびに　ひとを　にくみなおした[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ああ……▼
 でも　それ以上に
 ポケモンの　喜びが▽
 伝わってきて……▼
@@ -1376,7 +1369,7 @@
 信念が　揺らぎ　つらかった……▼
 人と　ポケモン
 お互い　歩み寄っているのだと▽
-そのたびに　人を　憎みなおした▼</language>
+そのたびに　人を　憎みなおした[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_champion_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -1399,16 +1392,16 @@
 		<comment>♂
 ・続けてboss_17</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『……ゆるす　というのか？▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ゆるす　というのか？▼
 なるほどね
 それが　シンと　ムの　いしかもね▼
 だけど　ボクが　どうすべきかは
-ボクが　きめることさ……▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……許す　というのか？▼
+ボクが　きめることさ……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……許す　というのか？▼
 なるほどね
 それが　シンと　ムの　意思かもね▼
 だけど　ボクが　どうすべきかは
-ボクが　決めることさ……▼</language>
+ボクが　決めることさ……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_17" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
