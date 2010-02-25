@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-06T14:01:32" source="map03_07.mb"/>
+	<create user="takahashi" host="W00229" date="2010-02-25T16:23:07" source="map03_07.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="iwao_kazumasa" host="W00203" date="2010-02-06T14:01:32" source="map03_07.mb"/>
+<original_create user="takahashi" host="W00229" date="2010-02-25T16:23:07" source="map03_07.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -72,19 +72,19 @@
 	<tex_image index="2" name="gake_futa"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
-		color0_mode="transparency"
+		color0_mode="color"
 		palette_name="gake_futa_pl"
 		path="C:/home/wb_data3d/field/out00/chip/tex/gake_futa.tga"
 	>
 		<bitmap size="64">
-			4333 2334 3222 3344 4311 2144 1122 3113
-			3311 2444 1112 1113 3311 1443 3222 1111
-			3112 1333 1122 1111 1122 3333 2121 2211
-			1111 2131 2112 2111 3111 2233 2441 1111
-			3333 3333 2344 1112 1111 3333 1434 1112
-			1111 1333 3433 1112 3111 1133 3333 1221
-			4333 1113 3333 4433 4444 2113 3333 3443
-			4443 2223 3331 3344 4433 2223 4312 3334
+			2000 4402 0144 0022 2011 4122 1144 0110
+			0011 3222 1113 1110 0014 3220 0355 1111
+			0114 1000 1353 4111 1144 0000 3131 4411
+			1144 3103 5113 4411 3144 3301 5221 4113
+			3344 0001 5022 4115 1314 0000 3202 1115
+			1114 1000 1000 1135 0111 0100 0000 1353
+			2000 3110 0000 2211 2222 5310 0001 0220
+			2220 5530 0144 0022 2200 4550 4444 0201
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="grass01ax"
@@ -625,7 +625,7 @@
 		326f 3b11 4351 4370 4792 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="gake_futa_pl" color_size="8">
-		7c1f 25d3 2e37 2190 1d6e 4a52 7fff 7fff
+		25b1 25d3 298f 29f5 2df4 2e37 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="grass01ax_pl" color_size="16">
 		4351 4352 4370 4371 4372 4770 4771 4772
@@ -3237,8 +3237,8 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="8" name="polygon8"
-		vertex_size="56" polygon_size="14"
-		triangle_size="0" quad_size="14"
+		vertex_size="52" polygon_size="13"
+		triangle_size="0" quad_size="13"
 		volume_min="-2.500000 0.031250 -1.000000"
 		volume_max="2.500000 0.031250 4.000000"
 		volume_r="4.031250"
@@ -3248,7 +3248,7 @@
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="56">
+				<primitive index="0" type="quads" vertex_size="52">
 					<mtx idx="0"/>
 					<tex st="16.000000 0.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
@@ -3347,14 +3347,6 @@
 					<pos_xy xy="-2.250000 0.031250"/>
 					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="-2.250000 -0.750000"/>
-					<tex st="16.000000 0.000000"/>
-					<pos_xz xz="1.250000 2.750000"/>
-					<tex st="16.000000 16.000000"/>
-					<pos_xz xz="1.250000 3.000000"/>
-					<tex st="32.000000 16.000000"/>
-					<pos_xy xy="1.500000 0.031250"/>
-					<tex st="32.000000 0.000000"/>
-					<pos_xz xz="1.500000 2.750000"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="2.250000 -0.500000"/>
 					<tex st="16.000000 16.000000"/>
@@ -7076,8 +7068,8 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="15"
-		vertex_size="2683" polygon_size="733"
-		triangle_size="39" quad_size="694"
+		vertex_size="2679" polygon_size="732"
+		triangle_size="39" quad_size="693"
 		volume_min="-4.000000 0.000000 -4.750000"
 		volume_max="4.000000 1.250000 4.000000"
 		volume_r="6.334473"
@@ -7100,8 +7092,8 @@
 	</node>
 </node_array>
 
-<output_info vertex_size="2683" polygon_size="733"
-	triangle_size="39" quad_size="694"/>
+<output_info vertex_size="2679" polygon_size="732"
+	triangle_size="39" quad_size="693"/>
 
 </body>
 
