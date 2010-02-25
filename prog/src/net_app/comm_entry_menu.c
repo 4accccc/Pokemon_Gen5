@@ -786,6 +786,7 @@ static BOOL _Update_ChildParentConnect(COMM_ENTRY_MENU_PTR em)
     break;
   case _SEQ_GAME_CANCEL_WAIT:
     if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE){
+      em->entry_result = COMM_ENTRY_RESULT_CANCEL;
       em->seq = _SEQ_FINISH;
     }
     break;
@@ -895,6 +896,7 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
     break;
   case _SEQ_GAME_CANCEL_WAIT:
     if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE){
+      em->entry_result = COMM_ENTRY_RESULT_CANCEL;
       em->seq = _SEQ_FINISH;
     }
     break;
@@ -1265,9 +1267,9 @@ static BREAKUP_TYPE CommEntryMenu_BreakupUpdate(COMM_ENTRY_MENU_PTR em)
       FLDMENUFUNC_DeleteMenu(yesno->menufunc);
       yesno->menufunc = NULL;
       
-      if(ret == FLDMENUFUNC_YESNO_YES){
+      if(ret == FLDMENUFUNC_YESNO_NO){
         yesno->breakup_type = BREAKUP_TYPE_NG;
-        yesno->seq = 0xff;
+        yesno->seq = 100;
       }
       else{
         _StreamMsgSet(em, msg_connect_04_01);
@@ -1297,13 +1299,17 @@ static BREAKUP_TYPE CommEntryMenu_BreakupUpdate(COMM_ENTRY_MENU_PTR em)
       }
       else{
         yesno->breakup_type = BREAKUP_TYPE_NG;
-        yesno->seq = 0xff;
+        yesno->seq = 100;
       }
     }
     break;
   case 5:
     yesno->seq = 0xff;
     yesno->breakup_type = BREAKUP_TYPE_OK;
+    break;
+  case 100: //‚â‚Á‚Ï‰ðŽU‚Í‚µ‚È‚¢
+    _StreamMsgSet(em, msg_connect_02_01);
+    yesno->seq = 0xff;
     break;
   case 0xff:
     if(yesno->menufunc != NULL){
