@@ -90,7 +90,7 @@ static const DEMO3D_CMD_DATA demo3d_cmd04_end_data[] =
 //------
 static const DEMO3D_CMD_DATA demo3d_cmd05_data[] = 
 { 
-  {  DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 0, { 16, 0, 16 }},
+  {  DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 0, { 30, 0,  -16 }},
   {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
 };
 static const DEMO3D_CMD_DATA demo3d_cmd05_end_data[] = 
