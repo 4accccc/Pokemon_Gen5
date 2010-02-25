@@ -54,6 +54,13 @@ typedef struct {
   // [IN]
   DEMO3D_ID     demo_id;      ///< デモID
   u32           start_frame;  ///< デモ開始フレーム(1sync=1)
+
+  u16           zone_id;      ///<フィールドゾーンID
+  u8            hour;         ///<呼び出し時間(時)
+  u8            min;          ///<呼び出し時間(分)
+  u8            weather;      ///<天候
+  u8            season;       ///<季節
+
   // [OUT]
   u32           end_frame;    ///< デモ終了フレーム(1sync=1)
   DEMO3D_RESULT result;       ///< デモ終了タイプ

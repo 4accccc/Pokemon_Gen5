@@ -1704,7 +1704,8 @@ SRCS_OVERLAY_DEMO3D = demo/demo3d/demo3d.c \
 					            demo/demo3d/demo3d_engine.c \
 					            demo/demo3d/demo3d_data.c \
 								      demo/demo3d/demo3d_cmd.c \
-                      demo/demo3d/demo3d_mb.c
+                      demo/demo3d/demo3d_mb.c \
+                      demo/demo3d/demo3d_exp_c_cruiser.c
 
 # ƒCƒ“ƒgƒƒfƒ‚
 #===> SRCS_OVERLAY_TITLE
