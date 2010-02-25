@@ -715,14 +715,18 @@ static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
       inCol  = PLIST_HPBAR_COL_GREEN_IN;
       outCol = PLIST_HPBAR_COL_GREEN_OUT;
     }
-    
+/*    
     GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP ,
                   len , 1 , outCol );
     GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP+1 ,
                   len , 2 , inCol );
     GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP+3 ,
                   len , 1 , outCol );
-
+*/
+    GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP+1 ,
+                  len , 1 , inCol );
+    GFL_BMP_Fill( bmp , PLIST_PLATE_HPBAR_LEFT , PLIST_PLATE_HPBAR_TOP+2 ,
+                  len , 1 , outCol );
     //HPƒo[•\Ž¦
     GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , TRUE );
   }

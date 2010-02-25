@@ -23,47 +23,20 @@ enum {
 	RIBBON_PARA_PALNUM,			// パレット番号
 	RIBBON_PARA_NAME,			// リボン名
 	RIBBON_PARA_INFO,			// リボン説明
+
+	RIBBON_PARA_CATEGORY,			// リボン種類
 };
 
-/*
-//リボンID	手書きなので、必要なものだけ定義してます
-enum{
-	RIBBON_ID_COOL = 33,			//クールリボン
-	RIBBON_ID_COOL_SUPER,			//クールリボンスーパー
-	RIBBON_ID_COOL_HYPER,			//クールリボンハイバー
-	RIBBON_ID_COOL_MASTER,			//クールリボンマスター
-	RIBBON_ID_BEAUTY,				//ビューティリボン
-	RIBBON_ID_BEAUTY_SUPER,			//ビューティリボンスーパー
-	RIBBON_ID_BEAUTY_HYPER,			//ビューティリボンハイパー
-	RIBBON_ID_BEAUTY_MASTER,		//ビューティリボンマスター
-	RIBBON_ID_CUTE,					//キュートリボン
-	RIBBON_ID_CUTE_SUPER,			//キュートリボンスーパー
-	RIBBON_ID_CUTE_HYPER,			//キュートリボンハイパー
-	RIBBON_ID_CUTE_MASTER,			//キュートリボンマスター
-	RIBBON_ID_GENEASU,				//ジーニアスリボン
-	RIBBON_ID_GENEASU_SUPER,		//ジーニアスリボンスーパー
-	RIBBON_ID_GENEASU_HYPER,		//ジーニアスリボンハイパー
-	RIBBON_ID_GENEASU_MASTER,		//ジーニアスリボンマスター
-	RIBBON_ID_PAWAFURU,				//パワフルリボン
-	RIBBON_ID_PAWAFURU_SUPER,		//パワフルリボンスーパー
-	RIBBON_ID_PAWAFURU_HYPER,		//パワフルリボンハイパー
-	RIBBON_ID_PAWAFURU_MASTER,		//パワフルリボンマスター
-
-	// AGBで未配布のリボン
-	RIBBON_ID_MARINE = 25,			//マリンリボン
-	RIBBON_ID_LAND,					//ランドリボン
-	RIBBON_ID_SKY,					//スカイリボン
-
-	// DSの配布リボン
-	RIBBON_ID_SINOU_RED = 73,		//シンオウレッドリボン
-	RIBBON_ID_SINOU_GREEN,			//シンオウグリーンリボン
-	RIBBON_ID_SINOU_BLUE,			//シンオウブルーリボン
-	RIBBON_ID_SINOU_FESTIVAL,		//シンオウフェスティバルリボン
-	RIBBON_ID_SINOU_CARNIVAL,		//シンオウカーニバルリボン
-	RIBBON_ID_SINOU_CLASSIC,		//シンオウクラシックリボン
-	RIBBON_ID_SINOU_PREMIERE,		//シンオウプレミアリボン
-};
-*/
+typedef enum
+{
+  RIBBON_CATEGORY_CHAMP,    //チャンプリボン
+  RIBBON_CATEGORY_CONTEST,  //コンテストリボン
+  RIBBON_CATEGORY_TOWER,    //タワーリボン
+  RIBBON_CATEGORY_MEMORY,   //メモリーリボン
+  RIBBON_CATEGORY_PRESENT,  //プレゼントリボン
+  
+  RIBBON_CATEGORY_MAX,
+}RIBBON_CATEGORY;
 
 //============================================================================================
 //	プロトタイプ宣言

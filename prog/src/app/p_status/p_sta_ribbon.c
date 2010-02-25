@@ -21,6 +21,7 @@
 
 #include "arc_def.h"
 #include "p_status_gra.naix"
+#include "msg/msg_ribbon.h"
 #include "message.naix"
 
 #include "p_sta_sys.h"
@@ -95,6 +96,14 @@ typedef struct
   
 }PSTATUS_RIBBON_DISP_WORK;
 
+typedef struct
+{
+  BOOL isEnable;
+  u8 ribbonNo;
+  u8 category;
+  u8 catNo;
+}PSTATUS_RIBBON_DATA_WORK;
+
 struct _PSTATUS_RIBBON_WORK
 {
   BOOL isDisp;
@@ -121,6 +130,8 @@ struct _PSTATUS_RIBBON_WORK
   NNSG2dCharacterData *srcCellNcg;
   void *resCellNcg;
 
+  GFL_MSGDATA *ribbonMsg;
+
   //カーソル系
   GFL_CLWK *clwkCur;
   u8       selectIdx;
@@ -135,6 +146,7 @@ struct _PSTATUS_RIBBON_WORK
   
   PSTA_OAM_SYS_PTR bmpOamSys;
   PSTATUS_RIBBON_DISP_WORK ribbonDispWork[PSTATUS_RIBBON_BAR_NUM];
+  PSTATUS_RIBBON_DATA_WORK ribbonDataWork[RIBBON_MAX];
 };
 
 //======================================================================
@@ -153,6 +165,14 @@ static void PSTATUS_RIBBON_DispInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_W
 static void PSTATUS_RIBBON_ClearInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
 static void PSTATUS_RIBBON_ClearInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
 
+static const u8 RibbonDispArr [RIBBON_MAX] =
+{
+  0,32,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,
+  19,20,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,
+  51,52,21,22,53,54,55,56,57,58,23,24,59,70,60,61,72,62,63,64,
+  65,66,67,68,69,28,29,30,31,78,79,71,74,75,76,77,25,26,27,73,
+};
+
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
@@ -163,6 +183,9 @@ PSTATUS_RIBBON_WORK* PSTATUS_RIBBON_Init( PSTATUS_WORK *work )
   ribbonWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PSTATUS_RIBBON_WORK) );
   ribbonWork->isDisp = FALSE;
   ribbonWork->sndCnt = 0;
+  ribbonWork->ribbonMsg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , 
+                                          NARC_message_ribbon_dat , work->heapId );
+
   return ribbonWork;
 }
 
@@ -171,6 +194,7 @@ PSTATUS_RIBBON_WORK* PSTATUS_RIBBON_Init( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 void PSTATUS_RIBBON_Term( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
+  GFL_MSG_Delete( ribbonWork->ribbonMsg );
   GFL_HEAP_FreeMemory( ribbonWork );
 }
 
@@ -324,33 +348,36 @@ static void PSTATUS_RIBBON_UpdateUI( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
 {
   if( work->isActiveBarButton == TRUE )
   {
-    const int touchBar = PSTATUS_RIBBON_CheckTouchBar( work , ribbonWork );
-    //アクティブ判定はここで行う
-    if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A || 
-        touchBar != GFL_UI_TP_HIT_NONE)
+    if( ribbonWork->ribbonNum > 0 ) 
     {
-      ribbonWork->speed = 0;
+      const int touchBar = PSTATUS_RIBBON_CheckTouchBar( work , ribbonWork );
+      //アクティブ判定はここで行う
+      if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A || 
+          touchBar != GFL_UI_TP_HIT_NONE)
+      {
+        ribbonWork->speed = 0;
 
-      PSTATUS_SetActiveBarButton( work , FALSE );
-      if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
-      {
-        PSTATUS_RIBBON_SetCursorTopBar( work , ribbonWork );
-        //GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , TRUE );
-        work->ktst = GFL_APP_END_KEY;
-        PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
-      }
-      else
-      {
-        ribbonWork->isTouchBar = TRUE;
-        ribbonWork->selectIdx = touchBar;
-        ribbonWork->isUpdateIdx = TRUE;
-        ribbonWork->selectType = PSTATUS_RIBBON_GetRibbonType( ribbonWork , touchBar );
         PSTATUS_SetActiveBarButton( work , FALSE );
-        work->ktst = GFL_APP_END_TOUCH;
-        PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+        if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+        {
+          PSTATUS_RIBBON_SetCursorTopBar( work , ribbonWork );
+          //GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , TRUE );
+          work->ktst = GFL_APP_END_KEY;
+          PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+        }
+        else
+        {
+          ribbonWork->isTouchBar = TRUE;
+          ribbonWork->selectIdx = touchBar;
+          ribbonWork->isUpdateIdx = TRUE;
+          ribbonWork->selectType = PSTATUS_RIBBON_GetRibbonType( ribbonWork , touchBar );
+          PSTATUS_SetActiveBarButton( work , FALSE );
+          work->ktst = GFL_APP_END_TOUCH;
+          PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+        }
+        PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
+        PSTATUS_RIBBON_DispInfo( work , ribbonWork );
       }
-      PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
-      PSTATUS_RIBBON_DispInfo( work , ribbonWork );
     }
   }
   else
@@ -717,10 +744,18 @@ void PSTATUS_RIBBON_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ri
 
   for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
   {
+    const u16 dataNo = ribbonWork->ribbonDispWork[i].dispRibbonNo;
     s16 y = PSTATUS_RIBBON_CalcRibbonBarY( ribbonWork , i );
     PSTA_OAM_ActorSetPos( ribbonWork->ribbonDispWork[i].bmpOam , PSTATUS_RIBBON_BAR_X , y );
-    PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , TRUE );
-    PSTA_OAM_ActorBmpTrans( ribbonWork->ribbonDispWork[i].bmpOam );
+    if( dataNo != PSTATUS_RIBBON_INVALID_TYPE )
+    {
+      PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , TRUE );
+      PSTA_OAM_ActorBmpTrans( ribbonWork->ribbonDispWork[i].bmpOam );
+    }
+    else
+    {
+      PSTA_OAM_ActorSetDrawEnable( ribbonWork->ribbonDispWork[i].bmpOam , FALSE );
+    }
   }
 
   ribbonWork->pagePos = 0;
@@ -772,10 +807,39 @@ void PSTATUS_RIBBON_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
 void PSTATUS_RIBBON_CreateRibbonBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
   u8 i;
+  u8 idx;
+  u8 categoryCnt[RIBBON_CATEGORY_MAX] = {1,1,1,1,1};
+  const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
 
-  //TODO 仮
-  ribbonWork->ribbonNum = 80;
+  for( i=0;i<RIBBON_MAX;i++ )
+  {
+    ribbonWork->ribbonDataWork[i].isEnable = FALSE;
+  }
 
+  idx = 0;
+  for( i=0;i<RIBBON_MAX;i++ )
+  {
+    const u8 ribbonNo = RibbonDispArr[i];
+    const u32 checkId = RIBBON_DataGet( ribbonNo , RIBBON_PARA_POKEPARA );
+    const u32 isHave = PPP_Get( ppp , checkId , NULL );
+
+#if USE_STATUS_DEBUG
+    if( isHave == 1 || work->isDevRibbon == TRUE )
+#else
+    if( isHave == 1 )
+#endif
+    {
+      const u8 category = RIBBON_DataGet( ribbonNo , RIBBON_PARA_CATEGORY );
+      ribbonWork->ribbonDataWork[idx].isEnable = TRUE;
+      ribbonWork->ribbonDataWork[idx].ribbonNo = ribbonNo;
+      ribbonWork->ribbonDataWork[idx].category = category;
+      ribbonWork->ribbonDataWork[idx].catNo = categoryCnt[category];
+      categoryCnt[category]++;
+      idx++;
+    }
+  }
+
+  ribbonWork->ribbonNum = idx;
   //リボンの番号のセット
   for( i=0 ; i<PSTATUS_RIBBON_BAR_NUM ; i++ )
   {
@@ -807,11 +871,13 @@ static void PSTATUS_RIBBON_CreateRibbonBarFunc( PSTATUS_WORK *work , PSTATUS_RIB
     GFL_STD_MemCopy( srcData , chrAdr , PSTATUS_RIBBON_BAR_CHARSIZE );
   }
   {
+    PSTATUS_RIBBON_DATA_WORK *ribbonData = &ribbonWork->ribbonDataWork[ribbonDispWork->dispRibbonNo];
+    
     //FIXME ribbonDispWork->dispRibbonNo をバー表示用のMsg番号Idxに直す
-    STRBUF *srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_test_1 ); 
+    STRBUF *srcStr = GFL_MSG_CreateString( ribbonWork->ribbonMsg , mes_ribbon_category_01+ribbonData->category ); 
     STRBUF *dstStr = GFL_STR_CreateBuffer( 32, work->heapId );
     WORDSET *wordSet = WORDSET_Create( work->heapId );
-    WORDSET_RegisterNumber( wordSet , 0 , ribbonDispWork->dispRibbonNo+1 , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 0 , ribbonData->catNo , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
     //ここのフォントはOBJのパレットを使っているので注意！！！ 
     //個々では例外的にbmp直書きを使う
@@ -969,13 +1035,12 @@ static void PSTATUS_RIBBON_DispInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
               PSTATUS_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
   //文字列
   {
-    GFL_MSGDATA *ribbonMsg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , 
-                                             NARC_message_ribbon_dat , work->heapId );
+    const u16 ribbonNo = ribbonWork->ribbonDataWork[ribbonWork->selectType].ribbonNo;
     //名前
     {
-      const u32 msgId = RIBBON_DataGet( ribbonWork->selectType , RIBBON_PARA_NAME );
+      const u32 msgId = RIBBON_DataGet( ribbonNo , RIBBON_PARA_NAME );
       STRBUF *srcStr;
-      srcStr = GFL_MSG_CreateString( ribbonMsg , msgId ); 
+      srcStr = GFL_MSG_CreateString( ribbonWork->ribbonMsg , msgId ); 
       PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( ribbonWork->bmpWinName ) , 
               PSTATUS_RIBBON_NAME_STR_X , PSTATUS_RIBBON_NAME_STR_Y , srcStr , 
               work->fontHandle , PSTATUS_STR_COL_BLACK );
@@ -983,15 +1048,14 @@ static void PSTATUS_RIBBON_DispInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
     }
     //説明
     {
-      const u32 msgId = RIBBON_InfoGet( ribbonWork->selectType , NULL );
+      const u32 msgId = RIBBON_InfoGet( ribbonNo , NULL );
       STRBUF *srcStr;
-      srcStr = GFL_MSG_CreateString( ribbonMsg , msgId ); 
+      srcStr = GFL_MSG_CreateString( ribbonWork->ribbonMsg , msgId ); 
       PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( ribbonWork->bmpWinInfo ) , 
               PSTATUS_RIBBON_INFO_STR_X , PSTATUS_RIBBON_INFO_STR_Y , srcStr , 
               work->fontHandle , PSTATUS_STR_COL_BLACK );
       GFL_STR_DeleteBuffer( srcStr );
     }
-    GFL_MSG_Delete( ribbonMsg );
   }
   
   ribbonWork->isUpdateStrInfo = TRUE;
@@ -1002,6 +1066,7 @@ static void PSTATUS_RIBBON_DispInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
 //--------------------------------------------------------------
 static void PSTATUS_RIBBON_DispInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
+  const u16 ribbonNo = ribbonWork->ribbonDataWork[ribbonWork->selectType].ribbonNo;
   GFL_BMPWIN_MakeTransWindow_VBlank( ribbonWork->bmpWinName );
   GFL_BMPWIN_MakeTransWindow_VBlank( ribbonWork->bmpWinInfo );
   //アイコン
@@ -1010,7 +1075,7 @@ static void PSTATUS_RIBBON_DispInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_W
     GFL_CLWK_DATA cellInitData;
     
     ribbonWork->ribbonIconNcg = GFL_CLGRP_CGR_Register( archandle , 
-        RIBBON_DataGet( ribbonWork->selectType , RIBBON_PARA_GRAPHIC ) , 
+        RIBBON_DataGet( ribbonNo , RIBBON_PARA_GRAPHIC ) , 
         FALSE , CLSYS_DRAW_SUB , work->heapId  );
 
     GFL_ARC_CloseDataHandle(archandle);
@@ -1027,7 +1092,7 @@ static void PSTATUS_RIBBON_DispInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_W
               work->cellRes[SCR_ANM_RIBBON_ICON],
               &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
     GFL_CLACT_WK_SetPlttOffs( ribbonWork->clwkRibbonIcon , 
-                            RIBBON_DataGet( ribbonWork->selectType , RIBBON_PARA_PALNUM ) , 
+                            RIBBON_DataGet( ribbonNo , RIBBON_PARA_PALNUM ) , 
                             CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkRibbonIcon , TRUE );
   }

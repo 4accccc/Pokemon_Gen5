@@ -2025,6 +2025,8 @@ static void PSTD_D_memo( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_U_getPPP( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_U_rom( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_D_rom( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_ribbon( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_ribbon( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTATUS_InitDebug( PSTATUS_WORK *work )
 {
   VEC_Set( &work->shadowScale , PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z );
@@ -2046,6 +2048,7 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
   work->isDevParent = FALSE;
   work->isDevEvent = FALSE;
   work->isDevMemo = FALSE;
+  work->isDevRibbon = FALSE;
   
   DEBUGWIN_InitProc( PSTATUS_BG_SUB_STR , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 0,31,0 );
@@ -2054,6 +2057,7 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
   DEBUGWIN_AddGroupToGroup( MEMO_DEBUG_GROUP_NUMBER , "トレーナーメモ" , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddGroupToGroup( MEMOINFO_DEBUG_GROUP_NUMBER , "すうち" , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
 
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_ribbon   ,PSTD_D_ribbon   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_ScaleX   ,PSTATUS_DEB_Draw_ScaleX   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_ScaleY   ,PSTATUS_DEB_Draw_ScaleY   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_Rotate   ,PSTATUS_DEB_Draw_Rotate   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
@@ -2605,3 +2609,17 @@ static void PSTD_U_getPPP( void* userWork , DEBUGWIN_ITEM* item )
   }
 }
 
+
+static void PSTD_U_ribbon( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( PSTD_UpdateBool( &work->isDevRibbon ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_ribbon( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "RibbonAll[%s]",(work->isDevRibbon?"ON":"OFF") );  
+}

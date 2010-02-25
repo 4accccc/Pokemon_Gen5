@@ -936,14 +936,18 @@ static void PSTATUS_SKILL_DrawHPBar( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     inCol  = PSTATUS_SKILL_HPBAR_COL_GREEN_IN;
     outCol = PSTATUS_SKILL_HPBAR_COL_GREEN_OUT;
   }
-
+/*
   GFL_BMP_Fill( bmp , PSTATUS_SKILL_HPBAR_LEFT , PSTATUS_SKILL_HPBAR_TOP ,
                 len , 1 , outCol );
   GFL_BMP_Fill( bmp , PSTATUS_SKILL_HPBAR_LEFT , PSTATUS_SKILL_HPBAR_TOP+1 ,
                 len , 2 , inCol );
   GFL_BMP_Fill( bmp , PSTATUS_SKILL_HPBAR_LEFT , PSTATUS_SKILL_HPBAR_TOP+3 ,
                 len , 1 , outCol );
-
+*/
+  GFL_BMP_Fill( bmp , PSTATUS_SKILL_HPBAR_LEFT , PSTATUS_SKILL_HPBAR_TOP+1 ,
+                len , 1 , inCol );
+  GFL_BMP_Fill( bmp , PSTATUS_SKILL_HPBAR_LEFT , PSTATUS_SKILL_HPBAR_TOP+2 ,
+                len , 1 , outCol );
 }
 
 //--------------------------------------------------------------

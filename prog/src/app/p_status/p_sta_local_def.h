@@ -308,6 +308,7 @@ typedef struct
   BOOL isDevParent;
   BOOL isDevEvent;
   BOOL isDevMemo;
+  BOOL isDevRibbon;
 #endif
 
 }PSTATUS_WORK;
