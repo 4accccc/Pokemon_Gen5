@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T18:01:16"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T15:41:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="384" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r07_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・pos（GRIDX=134、GRIDZ=243~245）起動
 ・画面左からライバル登場し
@@ -307,7 +307,7 @@
 確かめさせて　もらうよ▼</language>
 	</row>
 
-	<row id="msg_r07_champion_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07_champion_01">
 		<comment>♂
 ・戦闘復帰時にチャンピオン配置済み
 　GRIDX=136、GRIDZ=244
@@ -325,7 +325,7 @@
 育っておるようで　なにより！▼</language>
 	</row>
 
-	<row id="msg_r07_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてchampion_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -341,7 +341,7 @@
 正直　困ります▼</language>
 	</row>
 
-	<row id="msg_r07_champion_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07_champion_02">
 		<comment>♂
 ・メッセージ表示前、チャンピオンの動作モデル
 　GRIDX=133、GRIDZ=245付近に移動（ジャンプする?）
@@ -360,7 +360,7 @@
 強くなって　どうするのかね？▼</language>
 	</row>
 
-	<row id="msg_r07_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -374,7 +374,7 @@
 ぼくは　生きている　証が　ほしい▼</language>
 	</row>
 
-	<row id="msg_r07_champion_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07_champion_03">
 		<comment>♂
 ・まずライバルに渡すような演出
 ・続けてchampion_04</comment>
@@ -399,7 +399,7 @@
 これでも　持っていけ！▼</language>
 	</row>
 
-	<row id="msg_r07_champion_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07_champion_04">
 		<comment>♂
 ・主人公と隣接してメッセージ表示
 ・アイテム入手処理
@@ -410,7 +410,7 @@
 		<language name="JPN_KANJI" width="256">ほら　おまえさんも▼</language>
 	</row>
 
-	<row id="msg_r07_champion_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07_champion_05">
 		<comment>♂
 ・表示後、画面左に移動
 ・続けてblack_04</comment>
@@ -425,7 +425,7 @@
 なにを望むか　忘れるなよ！▼</language>
 	</row>
 
-	<row id="msg_r07_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・画面左を見ながら
 ・続けてblack_05</comment>
@@ -438,7 +438,7 @@
 強くなりたいんだよ　ぼくは▼</language>
 	</row>
 
-	<row id="msg_r07_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ
 ・表示後、画面左に移動
@@ -522,8 +522,8 @@
 ・メッセージ表示とともに鳴き声再生
 ・このあと、飛び去る。</comment>
 		<attribute name="キャラ指定">カザカミ</attribute>
-		<language name="JPN" width="256">しゅるばばばーっ！！▼</language>
-		<language name="JPN_KANJI" width="256">しゅるばばばーっ！！▼</language>
+		<language name="JPN" width="256">しゅるばばばーっ！！</language>
+		<language name="JPN_KANJI" width="256">しゅるばばばーっ！！</language>
 	</row>
 
 	<row id="msg_r07_pokemon_01b" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -531,8 +531,8 @@
 ・メッセージ表示とともに鳴き声再生
 ・このあと、飛び去る。</comment>
 		<attribute name="キャラ指定">ライカミ</attribute>
-		<language name="JPN" width="256">ばりゅるるるるーっ！！▼</language>
-		<language name="JPN_KANJI" width="256">ばりゅるるるるーっ！！▼</language>
+		<language name="JPN" width="256">ばりゅるるるるーっ！！</language>
+		<language name="JPN_KANJI" width="256">ばりゅるるるるーっ！！</language>
 	</row>
 
 	<row id="msg_r07_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -555,25 +555,26 @@
 		<comment>・仮メッセージ
 　要調整</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ちょっぴり
+おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 もらえる　けいけんち　ですが
-あいての　ポケモンよりも[BE:00:ページ切り替え（行送り）]
-じぶんの　ポケモンが　よわいと[BE:00:ページ切り替え（行送り）]
+あいての　ポケモンよりも[BE:01:ページ切り替え（クリア）]
+じぶんの　ポケモンが　よわいと
 たくさん　もらえますが[BE:01:ページ切り替え（クリア）]
 はんたいに
-あいての　ポケモンよりも[BE:00:ページ切り替え（行送り）]
-じぶんの　ポケモンが　つよいと[BE:01:ページ切り替え（クリア）]
-もらえる　けいけんちは
-すくなく　なります</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
+あいての　ポケモンよりも[BE:01:ページ切り替え（クリア）]
+じぶんの　ポケモンが　つよいと
+もらえる　けいけんちは　へります</language>
+		<language name="JPN_KANJI" width="256">ちょっぴり
+お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 もらえる　経験値ですが
-あいての　ポケモンよりも[BE:00:ページ切り替え（行送り）]
-じぶんの　ポケモンが　弱いと[BE:00:ページ切り替え（行送り）]
+相手の　ポケモンよりも[BE:01:ページ切り替え（クリア）]
+自分の　ポケモンが　弱いと
 たくさん　もらえますが[BE:01:ページ切り替え（クリア）]
 反対に
-あいての　ポケモンよりも[BE:00:ページ切り替え（行送り）]
-じぶんの　ポケモンが　強いと[BE:00:ページ切り替え（行送り）]
-もらえる　経験値は　少なくなります</language>
+相手の　ポケモンよりも[BE:01:ページ切り替え（クリア）]
+自分の　ポケモンが　強いと
+もらえる　経験値は　減ります</language>
 	</row>
 
 	<flowchart-group-list>
