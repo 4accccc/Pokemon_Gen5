@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-02-23T13:40:48"/>
+	<create user="ohmori" host="W00223" date="2010-02-25T21:55:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -262,7 +262,7 @@
 
 	<dialog left="216" top="222" right="921" bottom="842" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1790" top="259" right="2263" bottom="883" visible="yes"/>
+		<tag-palette left="1447" top="259" right="1920" bottom="883" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -316,10 +316,10 @@
 3：もっているアイテム数(1-999)</comment>
 		<language name="JPN" width="256">Ｇパワー[1:11:特殊状態名:1]を
 つかいますか？
-しょうひ[2:02:３桁:2]／もっているかず[2:02:３桁:3]</language>
+パレスだま　しよう[2:02:３桁:2]／もっている[2:02:３桁:3]</language>
 		<language name="JPN_KANJI" width="256">Ｇパワー[1:11:特殊状態名:1]を
 つかいますか？
-しょうひ[2:02:３桁:2]／もっているかず[2:02:３桁:3]</language>
+パレスだま　しよう[2:02:３桁:2]／もっている[2:02:３桁:3]</language>
 	</row>
 
 	<row id="msg_sys_gpower_use01">
@@ -348,9 +348,9 @@
 	<row id="msg_sys_gpower_use_err01">
 		<comment>2：消費するアイテム数(1-999)
 3：もっているアイテム数(1-999)</comment>
-		<language name="JPN" width="256">アイテムがたりません
+		<language name="JPN" width="256">パレスだまが　たりません
 ひつようなかず[2:02:３桁:2]／もっているかず[2:02:３桁:3][BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アイテムがたりません
+		<language name="JPN_KANJI" width="256">パレスだまが　たりません
 ひつようなかず[2:02:３桁:2]／もっているかず[2:02:３桁:3][BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
