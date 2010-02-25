@@ -568,10 +568,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //WiFi　歴代情報閲覧イベント呼び出し
   case BSWTOOL_WIFI_EV_READ_SCDATA:
     {
-      /*
-      SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
-          gsys,WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD) );
-      */
+      SCRIPT_CallEvent( sc, BSUBWAY_EVENT_CallLeaderBoard(gsys) );
     }
     return( VMCMD_RESULT_SUSPEND );
   //----ワーク依存

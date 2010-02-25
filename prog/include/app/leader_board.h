@@ -70,5 +70,6 @@ extern GFL_PROC_RESULT LeaderBoardProc_End( GFL_PROC * proc, int *seq, void *pwk
 
 
 extern const GFL_PROC_DATA LeaderBoardProcData;
+FS_EXTERN_OVERLAY(leader_board);
 
 #endif  // __LEADER_BOARD_H__

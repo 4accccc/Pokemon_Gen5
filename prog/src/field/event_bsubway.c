@@ -15,6 +15,7 @@
 #include "poke_tool/poke_regulation.h"
 #include "app/pokelist.h"
 #include "app/p_status.h"
+#include "app/leader_board.h"
 #include "battle/battle.h"
 
 #include "event_battle.h"
@@ -439,6 +440,80 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
   
   work->sysWin = FLDSYSWIN_STREAM_Add( msgbg, NULL, 19 );
   return( event );
+}
+
+
+
+
+//======================================================================
+//  歴代リーダー情報の表示
+//======================================================================
+//-------------------------------------
+///	イベントワーク
+//=====================================
+typedef struct {
+  FIELDMAP_WORK* fieldmap;
+  GAMESYS_WORK* gsys;
+  LEADERBOARD_PARAM param;
+}EVENT_WORK_CALL_LEADERBOARD;
+
+static GMEVENT_RESULT ev_CallLeaderBoard(
+    GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_WORK_CALL_LEADERBOARD* work = wk;
+  
+  switch( *seq ){
+  case 0:
+    {
+      GMEVENT* ev;
+      BSUBWAY_WIFI_DATA* bsw_wifi;
+
+      work->param.gamedata = GAMESYSTEM_GetGameData( work->gsys );
+
+      
+
+#if 0
+      bsw_wifi = GAMEDATA_GetBSubwayWifiData( work->param.gamedata );
+      work->param.rank_no   = BSUBWAY_WIFIDATA_GetLeaderRank();
+      work->param.train_no  = BSUBWAY_WIFIDATA_GetLeaderRoomNo();
+#else
+      // @TODO 仮です
+      work->param.rank_no   = 1;
+      work->param.train_no  = 1;
+#endif
+      ev = EVENT_FieldSubProc( work->gsys, work->fieldmap,
+		          FS_OVERLAY_ID(leader_board), &LeaderBoardProcData, &work->param);
+  		GMEVENT_CallEvent( event, ev );
+    }
+    break;
+  case 1:
+    // 終了
+    return( GMEVENT_RES_FINISH );
+  }
+
+  return( GMEVENT_RES_CONTINUE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  歴代リーダーボード呼び出し
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * BSUBWAY_EVENT_CallLeaderBoard( GAMESYS_WORK *gsys )
+{
+  GMEVENT * event;
+  EVENT_WORK_CALL_LEADERBOARD* work;
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+
+  event = GMEVENT_Create( gsys, NULL,
+    ev_CallLeaderBoard, sizeof(EVENT_WORK_CALL_LEADERBOARD) );
+  
+  work = GMEVENT_GetEventWork( event );
+  work->gsys      = gsys;
+  work->fieldmap  = fieldmap;
+
+  return event;
 }
 
 //======================================================================
