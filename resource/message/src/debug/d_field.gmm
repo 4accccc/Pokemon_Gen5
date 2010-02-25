@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-02-25T12:14:12"/>
+	<create user="tamada" host="W00139" date="2010-02-26T02:03:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -489,29 +489,14 @@
 		<language name="JPN_KANJI" width="80">四季ジャンプ</language>
 	</row>
 
-	<row id="DEBUG_FIELD_STR07">
-		<language name="JPN" width="80">カメラサンプル</language>
-		<language name="JPN_KANJI" width="80">カメラサンプル</language>
-	</row>
-
 	<row id="DEBUG_FIELD_STR08">
 		<language name="JPN" width="80">リセット</language>
 		<language name="JPN_KANJI" width="80">リセット</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR09">
-		<language name="JPN" width="80">すぎもり</language>
-		<language name="JPN_KANJI" width="80">すぎもり</language>
-	</row>
-
-	<row id="DEBUG_FIELD_STR10">
-		<language name="JPN" width="80">ますだ０</language>
-		<language name="JPN_KANJI" width="80">ますだ０</language>
-	</row>
-
-	<row id="DEBUG_FIELD_STR11">
-		<language name="JPN" width="80">ますだ１</language>
-		<language name="JPN_KANJI" width="80">ますだ１</language>
+		<language name="JPN" width="80">オールマップチェック</language>
+		<language name="JPN_KANJI" width="80">オールマップチェック</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR12">
