@@ -110,6 +110,8 @@ typedef enum
   BTLV_INPUT_SCRTYPE_DIR,
   BTLV_INPUT_SCRTYPE_YES_NO,
   BTLV_INPUT_SCRTYPE_ROTATE,
+
+  BTLV_INPUT_SCRTYPE_MAX,
 }BTLV_INPUT_SCRTYPE;
 
 //SCRTYPE_COMMANDのstatusパラメータの意味
@@ -120,6 +122,13 @@ enum
   BTLV_INPUT_STATUS_DEAD,     ///<ポケモンがいる（気絶）
   BTLV_INPUT_STATUS_NG,       ///<ポケモンがいる（ステータス異常）
 };
+
+typedef struct
+{ 
+  const GFL_UI_TP_HITTBL* hit_tbl;
+  const BOOL*             cancel_flag;
+  const int*              button_pltt;
+}BTLV_INPUT_HITTBL;
 
 typedef struct
 {
@@ -145,7 +154,7 @@ extern  void              BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw );
 extern  BOOL              BTLV_INPUT_CheckFadeExecute( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, void* param );
-extern  int               BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
+extern  int               BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl,
                                                  const BTLV_INPUT_KEYTBL* key_tbl );
 extern  BOOL              BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw );
 
