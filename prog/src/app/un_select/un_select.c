@@ -354,20 +354,25 @@ enum
 
 //ＢＧ書き換え用
 #define BASE_OFS  (1*32)    //ＢＧ先頭アドレス１キャラ先から開始
+#define MAIN_DISP_COUNTRY_MAX (144)   //メイン画面には144カ国表示
 
 //ＯＢＪ
 #define UN_OBJ_CHRRES_MAX (1)
 #define UN_OBJ_PALRES_MAX (1)
 #define UN_OBJ_CELRES_MAX (1)
-#define UN_LISTMAKER_MAX (FLOOR_MARKING_MAX)
+//#define UN_LISTMAKER_MAX (FLOOR_MARKING_MAX)
+#define UN_LISTMARKER_SETUP_MAX  (4+2)
+#define UN_LISTMAKER_MAIN_MAX (UN_LISTMARKER_SETUP_MAX+1)
+#define UN_LISTMAKER_SUB_MAX (UN_LISTMARKER_SETUP_MAX+1)
 #define UN_BUILMAKER_MAX (FLOOR_MARKING_MAX)
 #define UN_BUILCURSOR_MAX (1)
 #define UN_SCRBER_MAX (1)
-#define UN_OBJ_MAX ( UN_LISTMAKER_MAX+UN_BUILMAKER_MAX+UN_BUILCURSOR_MAX+UN_SCRBER_MAX )
+#define UN_OBJ_MAX ( /*UN_LISTMAKER_MAX*/UN_LISTMAKER_MAIN_MAX+UN_LISTMAKER_SUB_MAX+UN_BUILMAKER_MAX+UN_BUILCURSOR_MAX+UN_SCRBER_MAX )
 
 #define BUIL_CUR_SIZE (8)      //グラフィック依存
 #define SCROLL_BAR_SIZE (16)      //グラフィック依存
-#define LIST_MARLER_BASE_POS (192+20)
+#define LIST_MARLER_BASE_POS_MAIN (20) //メイン画面リストマーカー基点位置（ドット）
+#define LIST_MARLER_BASE_POS_SUB (192-20) //サブ画面リストマーカー基点位置（ドット）
 #define LIST_MARLER_OFS (5*8)     //リスト項目は５キャラ間隔
 #define BASE_FLOOR_IDX (3)       //計算基底フロアインデックス
 
@@ -380,10 +385,11 @@ enum
 #define SCROLL_BAR_DY (160)
 
 enum {
-  UN_OBJ_BUIL_CURSOR = 0,
-  UN_OBJ_BUIL_MARKER_START = 1,
-  UN_OBJ_LIST_MARKER_START = 21,
-  UN_OBJ_SCROLL_BAR = 41,
+  UN_OBJ_BUIL_CURSOR = 0,           //1
+  UN_OBJ_BUIL_MARKER_START = 1,     //20
+  UN_OBJ_LIST_MARKER_M_START = 21,  //7
+  UN_OBJ_LIST_MARKER_S_START = 28,  //7
+  UN_OBJ_SCROLL_BAR = 35,
 };
 
 //両用０１白抜
@@ -522,8 +528,6 @@ typedef struct
 	u32	PalRes[UN_OBJ_PALRES_MAX];
 	u32	CelRes[UN_OBJ_CELRES_MAX];
 
-  //２０個のリストマーカのY位置
-  int ListMarkerPos[UN_LISTMAKER_MAX];
   //マーカー表示する２０個の対象フロア
   int MarkerFloor[FLOOR_MARKING_MAX];
   
@@ -572,10 +576,14 @@ static void DelAct( UN_SELECT_MAIN_WORK *wk );
 static GFL_CLWK *CreateAct( GFL_CLUNIT *unit, UN_CLWK_DATA *data );
 
 static void MvListMarkerPos( UN_SELECT_MAIN_WORK *wk, const int inAddVal);
-static void UpdateListMarkerPos( UN_SELECT_MAIN_WORK *wk );
 static void SetBuilMarkerPos( UN_SELECT_MAIN_WORK *wk );
 static void SetScrollBarPos( UN_SELECT_MAIN_WORK *wk, const int inY );
 static void SetBuilCurPos( UN_SELECT_MAIN_WORK *wk, const int inY );
+
+static void SetupListMarker( UN_SELECT_MAIN_WORK* wk, int target_item );
+static void SetListMarker(UN_SELECT_MAIN_WORK* wk, const BOOL inIsMain, const int inY);
+static BOOL SetListMarkerCore(GFL_CLWK **clwk_ary, const int inIdx, const u16 inSetsf, const int inY);
+static BOOL IsMarkerFloorValid( UN_SELECT_MAIN_WORK *wk, const int inTargetItem );
 
 //--------------------------------------------------------------
 /// SceneID
@@ -900,12 +908,14 @@ static void UNSelect_BG_LoadResource( UN_SELECT_MAIN_WORK* wk, HEAPID heap_id )
       u8 target_line;
       u8 ofs;
       int adr;
-      int floor_idx;
-      floor_idx = (UN_LIST_MAX - i) - 1;
+      int valid_idx;
+      valid_idx = (UN_LIST_MAX - i) - 1;
 
-      if ( !wk->Valid[floor_idx] )
+      if (i < MAIN_DISP_COUNTRY_MAX) data = (u8*)charData_main->pRawData;
+      else data = (u8*)charData_sub->pRawData;
+
+      if ( !wk->Valid[valid_idx] )
       {
-        data = (u8*)charData_main->pRawData;
         //書き換えキャラを選定
         chr_idx = i/8;
         target_line = 7 - (i%8);    //キャラ内書き換え対象ライン（0～7）キャラの下から書き換える
@@ -1150,7 +1160,7 @@ static UN_SELECT_MSG_CNT_WORK* MSG_CNT_Create( HEAPID heap_id )
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0x20*PLTID_BG_TEXT_M, 0x20, heap_id );
   
   // フレームウィンドウ用のキャラを用意
-  BmpWinFrame_GraphicSet( BG_FRAME_TEXT_M, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M, MENU_TYPE_FIELD, heap_id );
+  BmpWinFrame_GraphicSet( BG_FRAME_TEXT_M, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M, MENU_TYPE_SYSTEM, heap_id );
   
   // ワードセット生成
   wk->wordset = WORDSET_Create( heap_id );
@@ -1571,13 +1581,16 @@ static void ListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 
   }
 
   HOSAKA_Printf("draw!\n");
-  NOZOMU_Printf("draw %d\n",py);
-/**
-  //マーカー移動
-  MvListMarkerPos( wk, -mv);
-  //マーカー位置更新
-  UpdateListMarkerPos( wk );
-*/  
+  NOZOMU_Printf("disp %d item %d draw %d\n",disp, itemNum, py);
+
+  //セットする項目は20件リストに入っているかを調べ、該当したら、表示処理を行う
+  if ( IsMarkerFloorValid( wk, itemNum ) ) 
+  {
+    int y = py + (LIST_MARLER_OFS/2); //項目縦幅の真ん中に表示
+    SetListMarker(wk, disp, y);
+  }
+
+  
 }
 
 //-----------------------------------------------------------------------------
@@ -1613,8 +1626,6 @@ static void ListCallBack_Scroll( void * work, s8 mv )
   HOSAKA_Printf("scroll!\n");
   //マーカー移動
   MvListMarkerPos( wk, -mv);
-  //マーカー位置更新
-  UpdateListMarkerPos( wk );
   {
     s16 cur_y;
     cur_y = FRAMELIST_GetScrollBarPY(wk->lwk);
@@ -1833,39 +1844,21 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
     int i;
     int ofs;
     int floor_idx;
-    for(i=0;i<UN_LISTMAKER_MAX;i++){
-      floor_idx = GFUser_GetPublicRand(/*UN_LIST_MAX*/30);
+    for(i=0;i<FLOOR_MARKING_MAX;i++){
+      floor_idx = GFUser_GetPublicRand(UN_LIST_MAX);
       wk->MarkerFloor[i] = floor_idx;
-      //ベースのリスト位置は最後から４番目なのでインデックウ229
-      //ベースとの差分で座標を決定する
-      ofs = (BASE_FLOOR_IDX - floor_idx) * LIST_MARLER_OFS;
-      wk->ListMarkerPos[i] = LIST_MARLER_BASE_POS + ofs;
-      NOZOMU_Printf( "listmarker %d:Floor=%d  pos=%d\n",i,floor_idx+2,wk->ListMarkerPos[i] );
     }
   }
 
   //ビルマーカー位置決定
   SetBuilMarkerPos( wk );
-  //リストマーカー初期位置確定のための更新
-  UpdateListMarkerPos( wk );
-#if 0  
-  {
-    s16 cur_y;
-    cur_y = FRAMELIST_GetScrollBarPY(wk->lwk);
-    NOZOMU_Printf("start_scr_bar_Y = %d\n",cur_y);
-    //スクロールバー移動
-    SetScrollBarPos( wk, cur_y );
-    //ビルカーソル位置セット
-    SetBuilCurPos( wk, cur_y );
-  }
-#else
+
   {
     //ビルカーソル位置セット
     s16 cur_y;
     cur_y = SCROLL_BAR_DY-(SCROLL_BAR_SIZE/2);
     SetBuilCurPos( wk, cur_y );
   }
-#endif
   //アルファセット
   G2S_SetBlendAlpha(
 		GX_BLEND_PLANEMASK_BG1,
@@ -2333,21 +2326,45 @@ static void MakeAct( UN_SELECT_MAIN_WORK *wk )
       wk->ClWk[UN_OBJ_BUIL_MARKER_START+i] = CreateAct( unit, &data );
     }
   }
-  //リストマーカー
+  //リストマーカーメイン画面
   {
     UN_CLWK_DATA data = {
       { LIST_MARKER_X, 0, ANM_OFS_LIST_MARKER, SOFT_PRI, OBJ_BG_PRI },
       0,0,0,
-      PLTID_OBJ_UN_MS, CLWK_SETSF_NONE
+      PLTID_OBJ_UN_MS, CLSYS_DEFREND_MAIN
     };
     data.ChrRes = wk->ChrRes[0];
     data.PalRes = wk->PalRes[0];
     data.CelRes = wk->CelRes[0];
-    for (i=0;i<UN_LISTMAKER_MAX;i++)
+    for (i=0;i<UN_LISTMAKER_MAIN_MAX;i++)
     {
-      wk->ClWk[UN_OBJ_LIST_MARKER_START+i] = CreateAct( unit, &data );
+      GFL_CLWK *clwk;
+      clwk = CreateAct( unit, &data );
+      //アクター非表示
+      GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+      wk->ClWk[UN_OBJ_LIST_MARKER_M_START+i] = clwk;
     }
   }
+  //リストマーカーサブ画面
+  {
+    UN_CLWK_DATA data = {
+      { LIST_MARKER_X, 0, ANM_OFS_LIST_MARKER, SOFT_PRI, OBJ_BG_PRI },
+      0,0,0,
+      PLTID_OBJ_UN_MS, CLSYS_DEFREND_SUB
+    };
+    data.ChrRes = wk->ChrRes[0];
+    data.PalRes = wk->PalRes[0];
+    data.CelRes = wk->CelRes[0];
+    for (i=0;i<UN_LISTMAKER_SUB_MAX;i++)
+    {
+      GFL_CLWK *clwk;
+      clwk = CreateAct( unit, &data );
+      //アクター非表示
+      GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+      wk->ClWk[UN_OBJ_LIST_MARKER_S_START+i] = clwk;
+    }
+  }
+
   //スクロールバー
   {
     //アプリ開始時は、5Ｆをさす状態なので、
@@ -2388,39 +2405,58 @@ static GFL_CLWK *CreateAct( GFL_CLUNIT *unit, UN_CLWK_DATA *data )
 static void MvListMarkerPos( UN_SELECT_MAIN_WORK *wk, const int inAddVal)
 {
   int i;
-  for (i=0;i<UN_LISTMAKER_MAX;i++)
-  {
-    wk->ListMarkerPos[i] += inAddVal;
-  }
-}
+  GFL_CLACTPOS calc_pos;
+  int ofs = (LIST_MARLER_OFS/2)+((5-24%5)*8);
+  //(5-24%5)は縦5キャラの項目を埋め尽くしたとき、
+  //見切れたリストの上（下）に項目追加しようとしたときのアクターの表示位置オフセット
 
-//マーカーの座標を更新
-static void UpdateListMarkerPos( UN_SELECT_MAIN_WORK *wk )
-{
-  int i;
-  for (i=0;i<UN_LISTMAKER_MAX;i++)
+  for (i=0;i<UN_LISTMAKER_MAIN_MAX;i++)
   {
     int pos;
     //アクター取得
-    GFL_CLWK *clwk = wk->ClWk[UN_OBJ_LIST_MARKER_START+i];
-    pos = wk->ListMarkerPos[i];
-    //管理座標は画面内（上下少し余裕を持つ範囲内）か？
-    if ( (0-16<pos)&&(pos<192*2+16) )
+    GFL_CLWK *clwk = wk->ClWk[UN_OBJ_LIST_MARKER_M_START+i];
+    //使用してるか？
+    if ( GFL_CLACT_WK_GetDrawEnable( clwk ) )
     {
-      GFL_CLACTPOS calc_pos;
-      //アクターを表示
-      GFL_CLACT_WK_SetDrawEnable( clwk, TRUE );
-      //座標セット
-      GFL_CLACT_WK_GetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
-      calc_pos.y = pos;
-      GFL_CLACT_WK_SetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
+      //座標取得
+      GFL_CLACT_WK_GetPos( clwk, &calc_pos, CLSYS_DEFREND_MAIN ); //画面内座標指定
+      calc_pos.y += inAddVal;
+      pos = calc_pos.y;
+      GFL_CLACT_WK_SetPos( clwk, &calc_pos, CLSYS_DEFREND_MAIN ); //画面内座標指定
+      //管理座標は画面外（上下少し余裕を持つ範囲外）か？
+      if ( (pos<=0-(LIST_MARLER_OFS/2))||(192+ofs<=pos) )
+      {
+        NOZOMU_Printf("main_vanish pos %d\n",pos);
+        //非表示
+        GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+      }
     }
-    else{
-      //アクター非表示
-      GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+  }
+
+  for (i=0;i<UN_LISTMAKER_SUB_MAX;i++)
+  {
+    int pos;
+    //アクター取得
+    GFL_CLWK *clwk = wk->ClWk[UN_OBJ_LIST_MARKER_S_START+i];
+    //使用してるか？
+    if ( GFL_CLACT_WK_GetDrawEnable( clwk ) )
+    {
+      //座標取得
+      GFL_CLACT_WK_GetPos( clwk, &calc_pos, CLSYS_DEFREND_SUB ); //画面内座標指定
+      calc_pos.y += inAddVal;
+      pos = calc_pos.y;
+      GFL_CLACT_WK_SetPos( clwk, &calc_pos, CLSYS_DEFREND_SUB ); //画面内座標指定
+      //管理座標は画面外（上下少し余裕を持つ範囲外）か？
+      if ( (pos<=0-ofs)||(192+(LIST_MARLER_OFS/2)<=pos) )
+      {
+        NOZOMU_Printf("sub_vanish pos %d\n",pos);
+        //非表示
+        GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+      }
     }
   }
 }
+
 
 //ビルマーカーの位置をセット
 static void SetBuilMarkerPos( UN_SELECT_MAIN_WORK *wk )
@@ -2491,5 +2527,136 @@ static void SetBuilCurPos( UN_SELECT_MAIN_WORK *wk, const int inY )
   GFL_CLACT_WK_GetPos( clwk, &pos, CLWK_SETSF_NONE ); //絶対座標指定
 	pos.y = pos_y;
 	GFL_CLACT_WK_SetPos( clwk, &pos, CLWK_SETSF_NONE ); //絶対座標指定
+}
+
+static void SetupListMarker( UN_SELECT_MAIN_WORK* wk, int target_item )
+{
+  int i, j;
+  int main_list[UN_LISTMAKER_MAIN_MAX];
+  int sub_list[UN_LISTMAKER_SUB_MAX];
+  int main_base, sub_base;
+
+  //指定基底位置からリストに表示される対象項目をリストアップ
+  {
+    int base;
+    int idx;
+    
+    main_base = target_item;
+    sub_base = target_item-1;
+
+    //メイン画面
+    base = target_item - 1;
+    for (i=0;i<UN_LISTMAKER_MAIN_MAX;i++)
+    {
+      idx = base + i;
+      main_list[i] = idx;
+    }
+
+    //サブ画面対象インデックス
+
+    base = target_item - (UN_LISTMAKER_SUB_MAX-1);
+    for (i=0;i<UN_LISTMAKER_SUB_MAX;i++)
+    {
+      idx = base + i;
+      sub_list[i] = idx;
+    }
+  }
+
+  //今回の20件のインデックスがリストに入っているかを調べる
+  {
+    int y;
+    int ofs;
+    for (i=0;i<FLOOR_MARKING_MAX;i++)
+    {
+      int floor_idx;
+      int item_idx;
+      floor_idx = wk->MarkerFloor[i];
+      item_idx = UN_LIST_MAX - floor_idx - 1;
+      //サブ
+      for(j=0;j<UN_LISTMARKER_SETUP_MAX;j++)
+      {
+        if (item_idx == sub_list[i])
+        {
+          ofs = (item_idx - sub_base) * LIST_MARLER_OFS;
+          y = LIST_MARLER_BASE_POS_SUB + ofs;
+          //サブ画面アクターセット
+          SetListMarker(wk, FALSE, y);
+          break;
+        }
+      }
+      //メイン
+      for(j=0;j<UN_LISTMARKER_SETUP_MAX;j++)
+      {
+        if (item_idx == main_list[i])
+        {
+          //メイン画面アクターセット
+          ofs = (item_idx - main_base) * LIST_MARLER_OFS;
+          y = LIST_MARLER_BASE_POS_MAIN + ofs;
+          SetListMarker(wk, TRUE, y);
+          break;
+        }
+      }
+    }
+  }
+}
+
+static void SetListMarker(UN_SELECT_MAIN_WORK* wk, const BOOL inIsMain, const int inY)
+{
+  int i;
+  GFL_CLWK **clwk_org;
+  u16 setsf;
+  int num;
+  if (inIsMain)
+  {
+    setsf = CLSYS_DEFREND_MAIN;
+    clwk_org = &wk->ClWk[UN_OBJ_LIST_MARKER_M_START];
+    num = UN_LISTMAKER_MAIN_MAX;
+  }
+  else
+  {
+    setsf = CLSYS_DEFREND_SUB;
+    clwk_org = &wk->ClWk[UN_OBJ_LIST_MARKER_S_START];
+    num = UN_LISTMAKER_SUB_MAX;
+  }
+
+  for (i=0;i<num;i++)
+  {
+    BOOL rc;
+    rc = SetListMarkerCore(clwk_org, i, setsf, inY);
+    if (rc) break;
+  }
+  GF_ASSERT( i != num);
+}
+
+static BOOL SetListMarkerCore(GFL_CLWK **clwk_ary, const int inIdx, const u16 inSetsf, const int inY)
+{
+  GFL_CLACTPOS pos;
+  BOOL rc = FALSE;
+  GFL_CLWK *clwk = clwk_ary[inIdx];
+  
+  if ( GFL_CLACT_WK_GetDrawEnable(clwk) == FALSE )
+  {
+    //表示
+    GFL_CLACT_WK_SetDrawEnable( clwk, TRUE );
+    //座標セット
+    GFL_CLACT_WK_GetPos( clwk, &pos, inSetsf ); //画面内座標指定
+    pos.y = inY;
+    GFL_CLACT_WK_SetPos( clwk, &pos, inSetsf ); //画面内座標指定
+    rc = TRUE;
+  }
+  return rc;
+}
+
+static BOOL IsMarkerFloorValid( UN_SELECT_MAIN_WORK *wk, const int inTargetItem )
+{
+  int i;
+  //リストインデックスをフロアインデックスに変換
+  int floor_idx = UN_LIST_MAX - inTargetItem - 1;
+  for (i=0;i<FLOOR_MARKING_MAX;i++)
+  {
+    if ( wk->MarkerFloor[i] == floor_idx ) return TRUE;
+  }
+
+  return FALSE;
 }
 
