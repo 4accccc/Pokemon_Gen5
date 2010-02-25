@@ -1243,8 +1243,9 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
     return;
   }
   
-  if(MISSION_RecvCheck(&intcomm->mission) == FALSE){
-    OS_TPrintf("受信：ミッション結果：ミッションを受信していない為、結果も受け取らない\n");
+  if(MISSION_RecvCheck(&intcomm->mission) == FALSE 
+      || MISSION_GetMissionEntry(&intcomm->mission) == FALSE){
+    OS_TPrintf("受信：ミッション結果：ミッションに参加していない為、結果も受け取らない\n");
     return;
   }
 
