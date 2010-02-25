@@ -228,6 +228,7 @@ static const DEBUG_MENU_INITIALIZER DebugMenuZoneJumpData = {
 static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_ZONESEL_EVENT_WORK *work = wk;
+  GMEVENT *mapchange_event;
   
   switch( (*seq) ){
   case 0:
@@ -250,9 +251,9 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
       }
       
       {
-        GMEVENT * mapchange_event;
         if(ret == ZONE_ID_UNION){
-          mapchange_event = EVENT_ChangeMapToUnion(work->gmSys, work->fieldWork);
+          *seq = 100;
+          break;
         }
         else if(ret == ZONE_ID_PALACE01){
           VecFx32 pos = {PALACE_MAP_LEN/2, 32*FX32_ONE, 488*FX32_ONE};
@@ -265,10 +266,24 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
       }
     }
     break;
+  
+  case 100: //ユニオンルームへワープする前にユニオンのBGMに変更する
+    {
+      u16 snd_index = FSND_GetFieldBGM(GAMESYSTEM_GetGameData(work->gmSys), ZONE_ID_UNION);
+      GMEVENT_CallEvent(event, 
+        EVENT_FSND_ChangeBGM(work->gmSys, snd_index, FSND_FADE_SHORT, FSND_FADE_SHORT));
+    }
+    (*seq)++;
+    break;
+  case 101:
+    mapchange_event = EVENT_ChangeMapToUnion(work->gmSys, work->fieldWork);
+    GMEVENT_ChangeEvent( event, mapchange_event );
+    break;
   }
 
   return( GMEVENT_RES_CONTINUE );
 }
+
 
 //======================================================================
 //  デバッグメニュー　四季ジャンプ
