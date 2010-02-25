@@ -1,10 +1,10 @@
 //=============================================================================
 /**
  *
- *	@file		demo3d.c
- *	@brief  3Dデモ再生アプリ
- *	@author	genya hosak -> miyuki iwasawa
- *	@data		2009.11.27 -> 2010.02.18
+ *  @file   demo3d.c
+ *  @brief  3Dデモ再生アプリ
+ *  @author genya hosak -> miyuki iwasawa
+ *  @data   2009.11.27 -> 2010.02.18
  */
 //=============================================================================
 //必ず必要なインクルード
@@ -208,13 +208,13 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   wk->heapID      = HEAPID_DEMO3D;
   wk->param       = param;
 
-	//描画設定初期化
-	wk->graphic	= DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, param->demo_id, wk->heapID );
+  //描画設定初期化
+  wk->graphic = DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, param->demo_id, wk->heapID );
 
   //フィールドライト設定引継ぎ
   FIELD_LIGHT_STATUS_Get( DATA_DemoZoneTable[param->demo_id],
       param->hour, param->min, WEATHER_NO_SUNNY, param->season, &wk->fld_light, wk->heapID );
-	
+  
   DEMO3D_GRAPHIC_Scene3DParamSet( wk->graphic, &wk->fld_light, NULL );
 
   //フォント作成
@@ -341,7 +341,13 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
   is_end = Demo3D_ENGINE_Main( wk->engine );
 
   // ループ検出かキー終了有効の時にはキーでも終了
-  if( is_end || _key_check(wk))
+  if(_key_check(wk)){
+    // [OUT] フレーム値を設定
+    wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
+    wk->param->result     = DEMO3D_RESULT_USER_END;
+    return GFL_PROC_RES_FINISH;
+  }
+  else if( is_end )
   {
     // [OUT] フレーム値を設定
     wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
@@ -374,14 +380,14 @@ static int _key_check( DEMO3D_MAIN_WORK *wk )
   if( wk->expection->key_skip )
   {
     if( GFL_UI_KEY_GetTrg() & 
-          PAD_BUTTON_DECIDE 
+        (  PAD_BUTTON_DECIDE 
         | PAD_BUTTON_CANCEL 
         | PAD_BUTTON_X 
         | PAD_BUTTON_Y
         | PAD_KEY_UP 
         | PAD_KEY_DOWN 
         | PAD_KEY_LEFT 
-        | PAD_KEY_RIGHT 
+        | PAD_KEY_RIGHT )
     )
     {
       return TRUE;
