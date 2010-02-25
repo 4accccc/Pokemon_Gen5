@@ -308,4 +308,11 @@ extern BSUBWAY_LEADER_DATA* BSUBWAY_WIFIDATA_GetLeaderDataAlloc( const BSUBWAY_W
 #define BSUBWAY_SCOREDATA_GetMaxRenshouCount(a,b) \
   BSUBWAY_SCOREDATA_GetRenshouMax(a,b)
 
+
+#ifdef PM_DEBUG
+// É_É~Å[èÓïÒÇê›íË
+extern void DEBUG_BSUBWAY_WIFIDATA_SetPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room );
+extern void DEBUG_BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room );
+#endif
+
 #endif //__H_BSUBWAY_SAVEDATA_H__

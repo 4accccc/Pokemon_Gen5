@@ -1170,6 +1170,25 @@ BSUBWAY_LEADER_DATA* BSUBWAY_WIFIDATA_GetLeaderDataAlloc( const BSUBWAY_WIFI_DAT
 }
 
 
+#ifdef PM_DEBUG
+// ƒ_ƒ~[î•ñ‚ðÝ’è
+void DEBUG_BSUBWAY_WIFIDATA_SetPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room )
+{
+  //roomno‚Ærank‚ð•Û‘¶
+  bsw_wifi->player_rank = rank;
+  bsw_wifi->player_room = room;
+  bsw_wifi->player_data_f = TRUE;
+}
+
+void DEBUG_BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room )
+{
+  //roomno‚Ærank‚ð•Û‘¶
+  bsw_wifi->leader_rank = rank;
+  bsw_wifi->leader_room = room;
+  bsw_wifi->leader_data_f = TRUE;
+}
+#endif
+
 
 
 //======================================================================
