@@ -44,7 +44,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -264,6 +264,7 @@ static VMCMD_RESULT VMEC_IF( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MCSS_POS_CHECK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SET_WORK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_GET_WORK( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_SET_PARAM( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MIGAWARI( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_HENSHIN( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work );
@@ -413,6 +414,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_MCSS_POS_CHECK,
   VMEC_SET_WORK,
   VMEC_GET_WORK,
+  VMEC_SET_PARAM,
   VMEC_MIGAWARI,
   VMEC_HENSHIN,
   VMEC_NAKIGOE,
@@ -2791,6 +2793,52 @@ static VMCMD_RESULT VMEC_GET_WORK( VMHANDLE *vmh, void *context_work )
 #endif DEBUG_OS_PRINT
 
   bevw->sequence_work = EFFVM_GetWork( bevw, ( int )VMGetU32( vmh ) );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief	指定されたワークに値をセット
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_SET_PARAM( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int work = ( int )VMGetU32( vmh );
+  int param = ( int )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_SET_WORK:\n");
+#endif DEBUG_OS_PRINT
+
+  switch( work ){ 
+  case BTLEFF_WORK_WAZA_RANGE:    ///<技の効果範囲
+    bevw->param.waza_range = param;
+    break;
+  case BTLEFF_WORK_TURN_COUNT:    ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
+    bevw->param.turn_count = param;
+    break;
+  case BTLEFF_WORK_CONTINUE_COUNT:   ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
+    bevw->param.continue_count = param;
+    break;
+  case BTLEFF_WORK_YURE_CNT:   ///<ボールゆれるカウント
+    bevw->param.yure_cnt = param;
+    break;
+  case BTLEFF_WORK_GET_SUCCESS:   ///<捕獲成功かどうか
+    bevw->param.get_success = param;
+    break;
+  case BTLEFF_WORK_ITEM_NO:   ///<ボールのアイテムナンバー
+    bevw->param.item_no = param;
+    break;
+  default:
+    //未知のパラメータです
+    GF_ASSERT( 0 );
+    break;
+  }
 
   return bevw->control_mode;
 }

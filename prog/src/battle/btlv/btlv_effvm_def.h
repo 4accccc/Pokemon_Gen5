@@ -462,18 +462,19 @@ ex)
 #define	EC_MCSS_POS_CHECK						  ( 52 )
 #define	EC_SET_WORK						        ( 53 )
 #define	EC_GET_WORK						        ( 54 )
-#define	EC_MIGAWARI						        ( 55 )
-#define	EC_HENSHIN						        ( 56 )
-#define	EC_NAKIGOE						        ( 57 )
-#define	EC_BALL_MODE						      ( 58 )
-#define	EC_BALLOBJ_SET						    ( 59 )
-#define	EC_CALL						            ( 60 )
-#define	EC_RETURN						          ( 61 )
-#define	EC_JUMP						            ( 62 )
-#define	EC_PAUSE						          ( 63 )
+#define	EC_SET_PARAM						      ( 55 )
+#define	EC_MIGAWARI						        ( 56 )
+#define	EC_HENSHIN						        ( 57 )
+#define	EC_NAKIGOE						        ( 58 )
+#define	EC_BALL_MODE						      ( 59 )
+#define	EC_BALLOBJ_SET						    ( 60 )
+#define	EC_CALL						            ( 61 )
+#define	EC_RETURN						          ( 62 )
+#define	EC_JUMP						            ( 63 )
+#define	EC_PAUSE						          ( 64 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  ( 64 )
+#define	EC_SEQ_END									  ( 65 )
 
 #ifndef __C_NO_DEF_
 
@@ -1969,6 +1970,25 @@ ex)
 	.macro	GET_WORK	work
   .short  EC_GET_WORK
 	.long		\work
+	.endm
+
+//======================================================================
+/**
+ * @brief	指定されたワークに値をセット
+ *
+ * #param_num	2
+ * @param		work	セットするワーク
+ * @param		param	セットする値
+ *
+ * #param COMBOBOX_TEXT WAZA_RANGE TURN_COUNT CONTINUE_COUNT YURE_CNT GET_SUCCESS ITEM_NO
+ * #param COMBOBOX_VALUE BTLEFF_WORK_WAZA_RANGE BTLEFF_WORK_TURN_COUNT BTLEFF_WORK_CONTINUE_COUNT BTLEFF_WORK_YURE_CNT BTLEFF_WORK_GET_SUCCESS BTLEFF_WORK_ITEM_NO
+ *  #param  VALUE_INT パラメータ
+ */
+//======================================================================
+	.macro	SET_PARAM	work, param
+  .short  EC_SET_PARAM
+	.long		\work
+	.long		\param
 	.endm
 
 //======================================================================
