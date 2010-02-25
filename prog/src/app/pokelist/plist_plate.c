@@ -64,6 +64,8 @@
 
 #define PLIST_PLATE_STR_BTL_ORDER_X (44+PLIST_MSG_STR_OFS_X)
 #define PLIST_PLATE_STR_BTL_ORDER_Y (PLIST_PLATE_NUM_BASAE_Y-4)
+#define PLIST_PLATE_STR_WAZA_LEARN_X (28+PLIST_MSG_STR_OFS_X)
+#define PLIST_PLATE_STR_WAZA_LEARN_Y (PLIST_PLATE_STR_BTL_ORDER_Y)
 
 //HPバー系
 #define PLIST_PLATE_HPBAR_LEN (48)
@@ -423,6 +425,13 @@ static void PLIST_PLATE_DrawParamMain( PLIST_WORK *work , PLIST_PLATE_WORK *plat
 static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
   const PRINTSYS_LSB fontCol = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER , PLIST_FONT_PARAM_SHADOW , 0 );
+  BOOL isWazaLearn = FALSE;
+  
+  if( work->plData->mode == PL_MODE_WAZASET || 
+      work->isSetWazaMode == TRUE )
+  {
+    isWazaLearn = TRUE;
+  }
   //名前
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
@@ -451,54 +460,55 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     }
   }
 
-  //レベル
-  if( (PP_GetSick( plateWork->pp ) == POKESICK_NULL &&
-      plateWork->dispHp != 0) ||
-      plateWork->btlOrder != PPBO_INVALLID )  //バトルのときはレベル表示
+  //レベル・状態異常
+  if( isWazaLearn == FALSE )//技の時はレベルも状態以上も無い。
   {
-    
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
-
-    u32 lv = PP_CalcLevel( plateWork->pp );
-    WORDSET_RegisterNumber( wordSet , 0 , lv , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-
-    PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
-                      wordSet , mes_pokelist_01_03 , 
-                      PLIST_PLATE_STR_LEVEL_X , PLIST_PLATE_STR_LEVEL_Y , fontCol );
-
-    WORDSET_Delete( wordSet );
-
-    GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , FALSE );
-  }
-  else
-  {
-    //レベルの代わりに状態異常アイコン
-    if( plateWork->dispHp == 0 )
+    if( (PP_GetSick( plateWork->pp ) == POKESICK_NULL && plateWork->dispHp != 0) ||
+        plateWork->btlOrder != PPBO_INVALLID )  //バトルのときは強制レベル表示
     {
-      GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_HINSI );
+        WORDSET *wordSet = WORDSET_Create( work->heapId );
+
+        u32 lv = PP_CalcLevel( plateWork->pp );
+        WORDSET_RegisterNumber( wordSet , 0 , lv , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+
+        PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
+                          wordSet , mes_pokelist_01_03 , 
+                          PLIST_PLATE_STR_LEVEL_X , PLIST_PLATE_STR_LEVEL_Y , fontCol );
+
+        WORDSET_Delete( wordSet );
+
+        GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , FALSE );
     }
     else
     {
-      switch(PP_GetSick( plateWork->pp ))
+      //レベルの代わりに状態異常アイコン
+      if( plateWork->dispHp == 0 )
       {
-      case POKESICK_MAHI:   ///< まひ
-        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_MAHI );
-        break;
-      case POKESICK_NEMURI: ///< ねむり
-        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_NEMURI );
-        break;
-      case POKESICK_KOORI:  ///< こおり
-        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_KOORI );
-        break;
-      case POKESICK_YAKEDO: ///< やけど
-        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_YAKEDO );
-        break;
-      case POKESICK_DOKU:   ///< どく
-        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_DOKU );
-        break;
+        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_HINSI );
       }
+      else
+      {
+        switch(PP_GetSick( plateWork->pp ))
+        {
+        case POKESICK_MAHI:   ///< まひ
+          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_MAHI );
+          break;
+        case POKESICK_NEMURI: ///< ねむり
+          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_NEMURI );
+          break;
+        case POKESICK_KOORI:  ///< こおり
+          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_KOORI );
+          break;
+        case POKESICK_YAKEDO: ///< やけど
+          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_YAKEDO );
+          break;
+        case POKESICK_DOKU:   ///< どく
+          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_DOKU );
+          break;
+        }
+      }
+      GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , TRUE );
     }
-    GFL_CLACT_WK_SetDrawEnable( plateWork->conditionIcon , TRUE );
   }
   
   //HPorバトル参加順or技教えor進化アイテムorミュージカル
@@ -528,8 +538,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
   }
   else
-  if( work->plData->mode == PL_MODE_WAZASET ||
-      work->isSetWazaMode == TRUE )
+  if( isWazaLearn == TRUE )
   {
     u32 strId;
     const PLIST_SKILL_CAN_LEARN learnType = PLIST_UTIL_CheckLearnSkill( work , plateWork->pp , plateWork->idx );
@@ -550,7 +559,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
       break;
     }
     PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , strId ,
-                    PLIST_PLATE_STR_BTL_ORDER_X , PLIST_PLATE_STR_BTL_ORDER_Y , fontCol );
+                    PLIST_PLATE_STR_WAZA_LEARN_X , PLIST_PLATE_STR_WAZA_LEARN_Y , fontCol );
     //HPバー非表示
     GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
   }

@@ -584,8 +584,8 @@ static void PLIST_UpdatePlatePalletAnime( PLIST_WORK *work )
   }
   //枠明滅
   {
-    const u16 startCol[3] = {0x3f7f,0x4f9f,0x3afa};
-    const u16 endCol[3]   = {0x0db0,0x09ab,0x1150};
+    const u16 startCol[3] = {0x7ff4,0x7fff,0x7be9};
+    const u16 endCol[3]   = {0x4a0a,0x5ef7,0x4140};
 
     const u16 anmSpd = 0x10000/64;
     if( work->platePalWakuAnmCnt + anmSpd >= 0x10000 )
@@ -1632,10 +1632,12 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       PLIST_MSG_DeleteWordSet( work , work->msgWork );
       
       PLIST_LearnSkillEmpty( work , work->selectPokePara );
+      /*
       if( work->plData->item != 0 )
       {
         PLIST_SubBagItem( work , work->plData->item );
       }
+      */
       PMSND_PlaySystemSE( PLIST_SND_WAZA_MACHINE );
       break;
     
@@ -3310,12 +3312,32 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
   }
   else
   {
-    //FIXME 正しい技チェック
-    if( isEmpty == TRUE )
+    if( work->plData->item != 0 )
     {
-      return LSCL_OK;
+      const int machineNo = ITEM_GetWazaMashineNo( work->plData->item );
+      if( PP_CheckWazaMachine( pp , machineNo ) == TRUE )
+      {
+        //FIXME 正しい技チェック
+        if( isEmpty == TRUE )
+        {
+          return LSCL_OK;
+        }
+        return LSCL_OK_FULL;
+      }
+      else
+      {
+        return LSCL_NG;
+      }
     }
-    return LSCL_OK_FULL;
+    else
+    {
+      //FIXME 正しい技チェック
+      if( isEmpty == TRUE )
+      {
+        return LSCL_OK;
+      }
+      return LSCL_OK_FULL;
+    }
   }
 }
 
