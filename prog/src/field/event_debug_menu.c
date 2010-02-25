@@ -1470,7 +1470,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
         MMDL_HEADER head = {
           0,  ///<識別ID
           0,  ///<表示するOBJコード
-          MV_RND, ///<動作コード
+          MV_DOWN, ///<動作コード
           0,  ///<イベントタイプ
           0,  ///<イベントフラグ
           0,  ///<イベントID
@@ -1505,6 +1505,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
     case 2:
       {
         int key_trg = GFL_UI_KEY_GetTrg();
+        u8  move = 0xFF;
         MMDL_UpdateMoveProc( work->fmmdl );
 
         if( (key_trg & PAD_BUTTON_B) ){
@@ -1516,7 +1517,24 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
           }
 
           (*seq) = 1;
+          return GMEVENT_RES_CONTINUE;
         }
+
+        if( key_trg & PAD_BUTTON_X ){
+          move = MV_RND;
+        }else if( (key_trg & PAD_KEY_UP )){
+          move = MV_UP;
+        }else if( key_trg & PAD_KEY_DOWN ){
+          move = MV_DOWN;
+        }else if( key_trg & PAD_KEY_LEFT ){
+          move = MV_LEFT;
+        }else if( key_trg & PAD_KEY_RIGHT ){
+          move = MV_RIGHT;
+        }
+        if( move != 0xFF ){
+          MMDL_ChangeMoveCode( work->fmmdl, move );
+        }
+
       }
       break;
     }
