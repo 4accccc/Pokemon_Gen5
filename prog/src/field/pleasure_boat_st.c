@@ -81,11 +81,10 @@ GMEVENT * PL_BOAT_CreateDemoEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work, u16 *
   evt_work = GMEVENT_GetEventWork(event);
   evt_work->Ptr = work;
   evt_work->RetWk = ret_wk;
+
   //現在の船内経過時間を取得してデモパラメータにセット
-  evt_work->Param.start_frame = PL_BOAT_GetTime(work);
+  DEMO3D_PARAM_SetFromRTC( &evt_work->Param, DEMO3D_ID_C_CRUISER, PL_BOAT_GetTime(work) );
   OS_Printf("start_frame = %d\n",evt_work->Param.start_frame);
-  //デモＩＤセット
-  evt_work->Param.demo_id = DEMO3D_ID_C_CRUISER;
 
   return event;
 }

@@ -180,8 +180,7 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
       {
         HOSAKA_Printf("menu ret = %d \n", ret);
 
-        work->param.demo_id = ret+1;
-
+        DEMO3D_PARAM_SetFromRTC( &work->param, ret+1, 0 );
         GMEVENT_CallEvent( event, EVENT_FieldSubProc( work->gsys, work->fieldmap,
         FS_OVERLAY_ID(demo3d), &Demo3DProcData, &work->param ) );
     

@@ -396,8 +396,7 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     break;
   case SEQ_3D_DEMO:
     // 3Dƒfƒ‚ŒÄ‚Ño‚µ
-    work->demo3dParam.demo_id     = DEMO3D_ID_INTRO_TOWN;
-    work->demo3dParam.start_frame = 0;
+    DEMO3D_PARAM_SetFromRTC( &work->demo3dParam, DEMO3D_ID_INTRO_TOWN, 0 );
     GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(demo3d), &Demo3DProcData, &work->demo3dParam );
     (*seq) = SEQ_3D_DEMO_WAIT;
     break;

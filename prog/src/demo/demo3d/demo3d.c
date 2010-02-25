@@ -1,18 +1,10 @@
 //=============================================================================
 /**
  *
-<<<<<<< .mine
  *	@file		demo3d.c
  *	@brief  3Dデモ再生アプリ
  *	@author	genya hosak -> miyuki iwasawa
  *	@data		2009.11.27 -> 2010.02.18
-=======
- *  @file   demo3d.c
- *  @brief  3Dデモ再生アプリ
- *  @author genya hosaka
- *  @data   2009.11.27
->>>>>>> .r22100
- *
  */
 //=============================================================================
 //必ず必要なインクルード
@@ -42,6 +34,7 @@
 #include "infowin/infowin.h"
 
 #include "field/field_light_status.h"
+#include "field/weather_no.h"
 
 //描画設定
 #include "demo3d_graphic.h"
@@ -73,7 +66,7 @@ enum
 //  @todo そのうち各デモの初期パラメータ設定としてinit.txtに記述する予定
 */
 static const u16 DATA_DemoZoneTable[] = {
-  0, // DEMO3D_ID_NULL
+  0, 0, // DEMO3D_ID_NULL
   ZONE_ID_T01,
   ZONE_ID_T01,
   ZONE_ID_T01,
@@ -217,7 +210,7 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 
   //フィールドライト設定引継ぎ
   FIELD_LIGHT_STATUS_Get( DATA_DemoZoneTable[param->demo_id],
-      param->hour, param->min, param->weather, param->season, &wk->fld_light, wk->heapID );
+      param->hour, param->min, WEATHER_NO_SUNNY, param->season, &wk->fld_light, wk->heapID );
 	
 	//描画設定初期化
 	wk->graphic	= DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, param->demo_id, wk->heapID );
