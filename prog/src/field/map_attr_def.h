@@ -33,6 +33,7 @@
 #define MATTR_NORMAL_03           (0x13)		//移動可能３
 #define MATTR_POOL_01             (0x14)		//水たまり（四季なし）
 #define MATTR_POOL_S01            (0x15)		//水たまり（四季あり）
+#define MATTR_E_ZIMEN_02          (0x16)		//室内エンカウント地面
 #define MATTR_SHOAL_01            (0x17)		//浅瀬
 #define MATTR_ICE_01              (0x18)		//氷上
 #define MATTR_SAND_01             (0x19)		//砂浜
