@@ -1303,7 +1303,10 @@ BOOL  BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw )
     biw->demo_cursor_pos++; 
     break;
   case 1:
-    ret = BTLV_FINGER_CURSOR_CheckExecute( biw->bfcw );
+    if( ( ret = BTLV_FINGER_CURSOR_CheckExecute( biw->bfcw ) ) == TRUE )
+    { 
+      SePlayDecide( biw );
+    }
     break;
   }
 
