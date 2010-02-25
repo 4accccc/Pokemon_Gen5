@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T18:53:48"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T12:43:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="177" right="2001" bottom="805" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -340,11 +340,11 @@
 		<language name="JPN" width="256">はじめて　ここに　きたときと
 ジムバッジを　てにしたあとの[BE:01:ページ切り替え（クリア）]
 みなさんの　ひょうじょうの　ちがいを
-みくべるのが　すき　なんですよね</language>
+みくべるのが　すき　なんすよね</language>
 		<language name="JPN_KANJI" width="256">はじめて　ここに来たときと
 ジムバッジを　手にした後の[BE:01:ページ切り替え（クリア）]
 みなさんの　表情の　違いを
-見比べるのが　好きなんですよね</language>
+見比べるのが　好きなんすよね</language>
 	</row>
 
 	<row id="msg_c02gym0101_glasses_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -419,7 +419,7 @@
 また　ききに　きてね</language>
 		<language name="JPN_KANJI" width="256">「はじめまして　ポケモンちゃん」は
 入り口に　近い　本棚よ▼
-探す　本が　あれば
+探す本が　あれば
 また　聞きに　きてね</language>
 	</row>
 
@@ -516,7 +516,7 @@
 ・戦闘後</comment>
 		<language name="JPN" width="256">よんだ　ほんは　ほんだなにもどす……
 ほんを　よむときの　ルールよね</language>
-		<language name="JPN_KANJI" width="256">読んだ　本は　本棚に　戻す……
+		<language name="JPN_KANJI" width="256">読んだ本は　本棚に戻す……
 本を　読むときの　ルールよね</language>
 	</row>
 
@@ -801,7 +801,7 @@
 仕組みについて　まとめてある</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_05" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ポケモンの　きょういく」
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ピカチュウの　せいたいが　かいてある▼
@@ -811,10 +811,10 @@
 		<language name="JPN_KANJI" width="256">ピカチュウの　生態が　書いてある▼
 弱った　仲間の　ピカチュウに
 電気を流し　ショックを与えて▽
-元気を　分け与える事も　ある</language>
+元気を　分け与えることも　ある</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_06" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ナエトルの　せいたい」
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ナエトルの　せいたいが　かいてある▼
@@ -827,7 +827,7 @@
 その　ナエトルは　とても　元気だ</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_07" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ポッチャマの　せいたい」
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ポッチャマの　せいたいが　かいてある▼
@@ -1087,7 +1087,7 @@
 本の下に　スイッチがある!
 本を　取ったので▽　
 スイッチが　動いたようだ▼
-どこかのカギが　一つ　外れた！</language>
+どこかのカギが　１つ　はずれた！</language>
 	</row>
 
 	<row id="msg_c02gym0101_switch_02" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
