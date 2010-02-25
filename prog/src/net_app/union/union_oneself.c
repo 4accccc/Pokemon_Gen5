@@ -1646,6 +1646,7 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     _REG_PRINT_TEMOTI_WAIT,
     _REG_PRINT_BBOX,
     _REG_PRINT_BBOX_WAIT,
+    _MENU_CONTINUE_MSG,
   };
   
   if(UnionMsg_TalkStream_Check(unisys) == FALSE){
@@ -1733,7 +1734,7 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
         && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
       UnionMsg_Menu_RegulationDel(unisys);
       if(situ->reg_bbox_fail_bit == 0xffffffff){  //バトルボックスを作っていないので表示スキップ
-        *seq = LOCALSEQ_INIT;
+        *seq = _MENU_CONTINUE_MSG;
       }
       else{
         (*seq)++;
@@ -1749,8 +1750,13 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE
         && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
       UnionMsg_Menu_RegulationDel(unisys);
-      (*seq) = LOCALSEQ_INIT;
+      (*seq) = _MENU_CONTINUE_MSG;
     }
+    break;
+  case _MENU_CONTINUE_MSG:
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+      UnionMsg_GetMsgID_TalkContinue(situ->mycomm.talk_pc->beacon.sex));
+    *seq = LOCALSEQ_INIT;
     break;
   }
   
