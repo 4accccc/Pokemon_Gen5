@@ -46,6 +46,8 @@
 #include "msg/msg_wifi_earth_guide.h"
 #include "msg/msg_wifi_place_msg_world.h"
 
+#include "wifi_earth_snd.h"
+
 typedef struct Vec2DS32_tag{
   s32 x;
   s32 y;
@@ -284,15 +286,6 @@ enum {
   MARK_ARRAY_MAX,
 };
 
-#ifdef MAKING
-enum {
-  WIFIEARTH_SND_SELECT = SEQ_SE_SELECT1, 
-  WIFIEARTH_SND_YAMERU = SEQ_SE_SELECT1, 
-  WIFIEARTH_SND_XSELECT = SEQ_SE_SELECT1, 
-  WIFIEARTH_SND_ZOMEIN = SEQ_SE_SELECT1, 
-  WIFIEARTH_SND_ZOMEOUT = SEQ_SE_SELECT1, 
-};
-#endif
 
 //============================================================================================
 //  構造体定義
@@ -824,6 +817,7 @@ static BOOL _menu_anime_check( EARTH_DEMO_WORK *wk )
       if( APP_TASKMENU_WIN_IsDecide( wk->TaskMenuWork[i] ) )
       { 
         if( APP_TASKMENU_WIN_IsFinish( wk->TaskMenuWork[i] )==FALSE){
+          APP_TASKMENU_WIN_SetDecide( wk->TaskMenuWork[i], FALSE );
           return FALSE;
         }
       }
@@ -1206,13 +1200,9 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
       //終了判定
       if((wk->trg & PAD_BUTTON_B)||(wk->tp_result & PAD_BUTTON_B)){
         //「やめる」アイコンＯＦＦ
-        TaskMenuOff( wk, 0 );
-        TaskMenuOff( wk, 1 );
-
-//        BmpWinFrame_Clear( wk->iconwin, WINDOW_TRANS_ON );
-        //「みる」アイコンＯＦＦ
-//        BmpWinFrame_Clear( wk->lookwin, WINDOW_TRANS_ON );
-
+        TaskMenuOff( wk, TASKMENU_MIRU );
+        _menu_anime_on( wk, TASKMENU_YAMERU );
+//        TaskMenu( wk, 1 );
         PMSND_PlaySE( WIFIEARTH_SND_YAMERU );
 
         //メッセージ画面クリア
@@ -1232,6 +1222,7 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
         // 「みる」機能
         if( ((wk->trg & PAD_BUTTON_X)||(wk->tp_result & PAD_BUTTON_X))&&(wk->info_mode == 0) ){
           wk->info_mode = 1;
+          _menu_anime_on( wk, TASKMENU_MIRU );
           Earth_PosInfoPut( wk );
 
           // info_modeには Earth_PosInfoPut の検索結果が入っている
@@ -1585,7 +1576,6 @@ static void Earth_TouchPanel( EARTH_DEMO_WORK * wk )
   //------------------------------------------------------------------------------
   ret = GFL_UI_TP_HitTrg( touch_tbl );
   if(ret==0){
-    _menu_anime_on( wk, TASKMENU_MIRU );
     button_area = PAD_BUTTON_X;
   }else if(ret==1){
     _menu_anime_on( wk, TASKMENU_YAMERU );
@@ -1959,6 +1949,7 @@ static void TaskMenuOff( EARTH_DEMO_WORK *wk, int id )
   // 削除
   if(wk->TaskMenuWork[id]!=NULL){
     APP_TASKMENU_WIN_Delete( wk->TaskMenuWork[id] );
+    GFL_BG_LoadScreenV_Req( EARTH_ICON_PLANE );
     wk->TaskMenuWork[id] = NULL;
   }
 }
@@ -2044,11 +2035,15 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
       APP_KEYCURSOR_Main( wk->printCursor, wk->printStream, wk->msgwin );
       switch(state){
       case PRINTSTREAM_STATE_RUNNING:///< 処理実行中（文字列が流れている）
+        if(GFL_UI_KEY_GetCont()&(PAD_BUTTON_DECIDE)){
+          PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
+        }
         break;
       case PRINTSTREAM_STATE_PAUSE:  ///< 一時停止中（ページ切り替え待ち等）
-        if(wk->trg & PAD_BUTTON_A){
+        if(wk->trg & PAD_BUTTON_A || wk->trg & PAD_BUTTON_B){
           // 文字列送り処理
           PRINTSYS_PrintStreamReleasePause(wk->printStream);
+          PMSND_PlaySE( WIFIEARTH_MOVE_CURSOR );
         }
         break;
       case PRINTSTREAM_STATE_DONE:   ///< 文字列終端まで表示完了
@@ -2078,7 +2073,7 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 static void Earth_BmpListMoveSeCall(BMPMENULIST_WORK * wk,u32 param,u8 mode)
 {
   if( mode == 0 ){//初期化時は鳴らさない
-    //PMSND_PlaySE( WIFIEARTH_SND_SELECT );
+    PMSND_PlaySE( WIFIEARTH_MOVE_CURSOR );
   }
 }
 
@@ -2570,7 +2565,7 @@ static BOOL Earth3D_Control( EARTH_DEMO_WORK * wk,int keytrg,int keycont )
   rotate_y = wk->rotate.y;
 
   //カメラ遠近移動判定（世界地球儀モードのみ）
-  if((keytrg & PAD_BUTTON_A)||(wk->tp_result & PAD_BUTTON_A)){
+  if((keytrg & PAD_BUTTON_A)||(wk->tp_result & PAD_BUTTON_B)){
     if(wk->earth_mode == GLOBAL_MODE){
       if(wk->camera_status == CAMERA_FAR){
         wk->camera_status = CAMERA_NEAR;
