@@ -284,6 +284,7 @@ static MMDL * fldcommAct_fmmdl_Add(
   
   MMDL_InitPosition( fmmdl, watch_pos, grid_ChangeFourDir(*watch_dir) );
   MMDL_SetStatusBitHeightGetOFF( fmmdl, TRUE );
+  MMDL_SetStatusBitAttrGetOFF( fmmdl, TRUE );
   MMDL_SetStatusBitNotZoneDelete( fmmdl, TRUE );
   MMDL_SetMoveBitRejectPauseMove( fmmdl, TRUE );
   return( fmmdl );
