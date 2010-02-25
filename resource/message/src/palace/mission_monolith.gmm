@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-25T18:32:58"/>
+	<create user="ohmori" host="W00223" date="2010-02-25T19:13:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -702,12 +702,12 @@
 		<language name="JPN_KANJI" width="256">だれにも　つかまらないように
 [1:09:どうぐ名:0]を　ライモンシティの
 ベンチとベンチの　あいだに　かくせ！
+
+
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　クリアしたひと
-
-パレスだま　２０こ
-ブラックレベル　＋１</language>
+パレスだま　２０こ</language>
 	</row>
 
 	<row id="plc_mism_05_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -724,12 +724,12 @@
 		<language name="JPN_KANJI" width="256">だれにも　つかまらないように
 [1:09:どうぐ名:0]を　ホドモシティの
 テントのうらの　がいとうに　かくせ！
+
+
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　クリアしたひと
-
-パレスだま　２０こ
-ブラックレベル　＋１</language>
+パレスだま　２０こ</language>
 	</row>
 
 	<row id="plc_mism_05_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -746,12 +746,12 @@
 		<language name="JPN_KANJI" width="256">だれにも　つかまらないように
 [1:09:どうぐ名:0]を　フキヨセシティの
 いちばんおくにある　ひこうきに　かくせ！
+
+
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　クリアしたひと
-
-パレスだま　２０こ
-ブラックレベル　＋１</language>
+パレスだま　２０こ</language>
 	</row>
 
 	<row id="plc_mism_05_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
