@@ -4946,9 +4946,9 @@
 		<language name="JPN" width="256">BGM-GAME-SYNC</language>
 		<language name="JPN_KANJI" width="256">BGM-GAME-SYNC</language>
 	</row>
-	<row id="msg_seq_bgm_grterminal">
-		<language name="JPN" width="256">BGM-GRTERMINAL</language>
-		<language name="JPN_KANJI" width="256">BGM-GRTERMINAL</language>
+	<row id="msg_seq_bgm_glterminal">
+		<language name="JPN" width="256">BGM-GLTERMINAL</language>
+		<language name="JPN_KANJI" width="256">BGM-GLTERMINAL</language>
 	</row>
 	<row id="msg_seq_bgm_guruguru">
 		<language name="JPN" width="256">BGM-GURUGURU</language>
