@@ -1592,11 +1592,11 @@ static BOOL EvWaitKeyWaitMsgCursor( VMHANDLE *core, void *wk )
   }
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
-    FLDSYSWIN_STREAM_Print( (FLDSYSWIN_STREAM*)win );
+    FLDSYSWIN_WriteKeyWaitCursor( (FLDSYSWIN_STREAM*)win );
   }else if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){
-    FLDPLAINMSGWIN_PrintStream( (FLDPLAINMSGWIN*)win );
+    FLDPLAINMSGWIN_WriteKeyWaitCursor( (FLDPLAINMSGWIN*)win );
   }else if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
-    FLDTALKMSGWIN_Print( (FLDTALKMSGWIN*)win );
+    FLDTALKMSGWIN_WriteKeyWaitCursor( (FLDTALKMSGWIN*)win );
   }
   
   return( ret );
