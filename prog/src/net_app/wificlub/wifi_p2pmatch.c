@@ -122,6 +122,7 @@ static void Snd_SePlay(int a){}
 static void Snd_BgmFadeOut( int a, int b){}
 static void Snd_BgmFadeIn( int a, int b, int c){}
 static void FONTOAM_OAMDATA_Delete( void* x){}
+static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk );
 
 
 
@@ -481,8 +482,8 @@ enum{
 #define MCV_BUTTON_FRAME_NUM  (16) // ボタンアニメフレーム数
 
 enum{
-  MCV_BUTTON_TYPE_GIRL,
   MCV_BUTTON_TYPE_MAN,
+  MCV_BUTTON_TYPE_GIRL,
   MCV_BUTTON_TYPE_NONE,
 };
 
@@ -3249,7 +3250,6 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
         u8 callcount = WIFI_STATUS_GetCallCounter(WifiFriendMatchStatusGet( n ));
         OS_TPrintf("呼び出し %d %d\n",callcount,wk->pParentWork->matchno[n] );
         if(callcount != wk->pParentWork->matchno[n] ){
-          wk->pParentWork->matchno[n] = callcount;   //前回マッチングした時のno
           //自分が呼び出されているので、接続開始 状態を取得
           status = _WifiMyStatusGet( wk, WifiFriendMatchStatusGet( n ) );
           gamemode = _WifiMyGameModeGet( wk, WifiFriendMatchStatusGet( n ) );
@@ -3406,6 +3406,10 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
       wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
       wk->cancelEnableTimer = _CANCELENABLE_TIMER;
       _CHANGESTATE(wk, WIFIP2PMATCH_MODE_MATCH_LOOP);
+      {
+        u8 callcount = WIFI_STATUS_GetCallCounter(WifiFriendMatchStatusGet( n ));
+        wk->pParentWork->matchno[n] = callcount;   //前回マッチングした時のno
+      }
       return seq;
     }
   }
@@ -4293,8 +4297,10 @@ static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
     gmmno = msg_wifilobby_077;
     break;
   case WIFI_STATUS_WAIT:   // 待機中
-    gmmno = msg_wifilobby_005;
-    break;
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+    _playerDirectConnectStart(wk);
+//    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_INIT2);
+    return seq;
   case WIFI_STATUS_RECRUIT:    // 募集中
     {
       u32 msgbuff[]={msg_wifilobby_004,msg_wifilobby_080,msg_wifilobby_078,msg_wifilobby_003};
@@ -4371,6 +4377,61 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
   }
 
   return seq;
+}
+
+
+
+static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
+{
+  int friendNo,message = 0,vchat,fst;
+  u32 ret;
+  int status,gamemode;
+  u16 mainCursor;
+  int checkMatch;
+  MCR_MOVEOBJ* p_npc;
+  WIFI_STATUS* p_status;
+
+  friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
+
+  wk->friendNo = friendNo;
+  if(  friendNo != 0 ){
+    int num = PokeParty_GetBattlePokeNum(wk->pMyPoke);
+    
+    p_status = WifiFriendMatchStatusGet( friendNo - 1 );
+    status = _WifiMyStatusGet( wk, p_status );
+    gamemode = WIFI_GAME_UNIONMATCH;
+    vchat = WIFI_STATUS_GetVChatStatus(p_status);
+    
+    if(WIFI_STATUS_UNKNOWN == status){
+      return FALSE;
+    }
+
+
+    {
+      NET_PRINT( "wifi接続先 %d %d\n", friendNo - 1,status );
+      if( WifiP2PMatch_CommWifiBattleStart( wk, - 1 ) ){
+        WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( friendNo - 1 ));
+
+        wk->cancelEnableTimer = _CANCELENABLE_TIMER;
+        _commStateChange(wk,WIFI_STATUS_CALL, gamemode);
+        _myStatusChange(wk, WIFI_STATUS_CALL, gamemode);  // 呼びかけ待機中になる
+        _friendNameExpand(wk, friendNo - 1);
+        WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
+        GF_ASSERT( wk->timeWaitWork == NULL );
+        wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
+
+        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+        
+        message = 1;
+      }else{
+        _friendNameExpand(wk, friendNo - 1);
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
+        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+        message = 1;
+      }
+    }
+  }
+  return TRUE;
 }
 
 
@@ -4455,47 +4516,8 @@ static int _playerDirectInit( WIFIP2PMATCH_WORK *wk, int seq )
   default:
     Snd_SePlay(_SE_DESIDE);
     if(ret == _CONNECTING){  // MACをビーコンで流し、親になる
-
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-
-      wk->friendNo = friendNo;
-      if(  friendNo != 0 ){
-        int num = PokeParty_GetBattlePokeNum(wk->pMyPoke);
-
-        p_status = WifiFriendMatchStatusGet( friendNo - 1 );
-        status = _WifiMyStatusGet( wk, p_status );
-        gamemode = WIFI_GAME_UNIONMATCH;
-        vchat = WIFI_STATUS_GetVChatStatus(p_status);
-
-        if(WIFI_STATUS_UNKNOWN == status){
-          break;
-        }
-
-
-        {
-          NET_PRINT( "wifi接続先 %d %d\n", friendNo - 1,status );
-          if( WifiP2PMatch_CommWifiBattleStart( wk, - 1 ) ){
-            WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( friendNo - 1 ));
-
-            wk->cancelEnableTimer = _CANCELENABLE_TIMER;
-            _commStateChange(wk,WIFI_STATUS_CALL, gamemode);
-            _myStatusChange(wk, WIFI_STATUS_CALL, gamemode);  // 呼びかけ待機中になる
-            _friendNameExpand(wk, friendNo - 1);
-            WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
-            GF_ASSERT( wk->timeWaitWork == NULL );
-            wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
-
-            _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-
-            message = 1;
-          }else{
-            _friendNameExpand(wk, friendNo - 1);
-            WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
-            _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
-            message = 1;
-          }
-        }
-      }
+      _playerDirectConnectStart(wk);
     }
     else if(ret == _INFOVIEW){
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_PERSONAL_INIT);
@@ -7054,14 +7076,29 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
   if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
     WIFI_MCR_Draw( &wk->matchroom );
   }
+
+
+
+  if(wk->SysMsgQue){
+    u8 defL, defS, defB;
+    GFL_FONTSYS_GetColor( &defL, &defS, &defB );
+    GFL_FONTSYS_SetColor(FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 15);
+    GFL_TCBL_Main( wk->pMsgTcblSys );
+    GFL_FONTSYS_SetColor( defL, defS, defB );
+    PRINTSYS_QUE_Main(wk->SysMsgQue);
+  }
+
+#if 0
+
   if(wk->SysMsgQue){
     u8 rb,gb,bb;
     GFL_FONTSYS_GetColor(&rb,&gb,&bb);
-    GFL_FONTSYS_SetDefaultColor();
+//    GFL_FONTSYS_SetDefaultColor();
     PRINTSYS_QUE_Main(wk->SysMsgQue);
     GFL_TCBL_Main( wk->pMsgTcblSys );
     GFL_FONTSYS_SetColor(rb,gb,bb);
   }
+#endif
   return GFL_PROC_RES_CONTINUE;
 }
 

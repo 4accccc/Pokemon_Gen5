@@ -651,7 +651,7 @@ void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int si
   }
   pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 1, 15, 20,	_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
-  GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_WHITE_SDW, 0x0 );
+  GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_BLK_SDW, 0x0 );
 
   _pokeNickNameMsgDisp(pp, pWork->StatusWin[side], 2*8, 0, bEgg, pWork);
   if(!bEgg){
@@ -938,11 +938,11 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
 
 
 #if 1
-  GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_WHITE_SDW, 0x0 );
+  GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_BLK_SDW, 0x0 );
   for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
     pWork->TriStatusWin[side] =
       GFL_BMPWIN_Create(GFL_BG_FRAME1_S,
-                        side*16+ 1 , 0, 14, 3, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
+                        side*16 + 2 , 0, 14, 3, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
 
     pWin = pWork->TriStatusWin[side];
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_27, pWork->pExStrBuf );
@@ -955,7 +955,7 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
 #endif
 
 
-  GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_WHITE_SDW, 0x0 );
+  GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_BLK_SDW, 0x0 );
   for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
     pWork->TriStatusWin[side+2] =
       GFL_BMPWIN_Create(GFL_BG_FRAME1_S,

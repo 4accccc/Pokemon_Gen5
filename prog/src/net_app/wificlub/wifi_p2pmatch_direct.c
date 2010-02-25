@@ -115,6 +115,7 @@ static int _playerDirectInit5( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT6);
   }
   else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   }
   return seq;
@@ -494,6 +495,7 @@ static int _playerDirectBattle2( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   case BMPMENULIST_CANCEL:
     if(wk->pParentWork->btalk){  //‰ï˜b‚Ì—¬‚ê
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_084, FALSE);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_INIT6);
     }
     else{  //ŒfŽ¦”Â‚Ì—¬‚ê

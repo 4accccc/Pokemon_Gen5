@@ -41,6 +41,7 @@
 #include "savedata/wifilist.h"
 
 #include "system/touch_subwindow.h"
+#include "system/wipe.h"
 
 #include "item/item.h"
 #include "app/app_menu_common.h"
@@ -332,7 +333,7 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
   GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_31 , pWork->pStrBuf );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 8,  2, pWork->pStrBuf, pWork->pFontHandle);
   GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_22 + pWork->GTSlv[0], pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 100,  2, pWork->pStrBuf, pWork->pFontHandle);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 128+8,  2, pWork->pStrBuf, pWork->pFontHandle);
 
   GFL_BMPWIN_TransVramCharacter(pWin);
   GFL_BMPWIN_MakeScreen(pWin);
@@ -711,24 +712,20 @@ static void _menuMyPokemonSend(POKEMON_TRADE_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   6体表示まち
+ * @brief   6体表示まちの時のポケモン選択
  * @param   POKEMON_TRADE_WORK
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
+static BOOL _NEGO_Select6PokemonSelect(POKEMON_TRADE_WORK* pWork, int trgno)
 {
-  BOOL bTouch=FALSE;
-  int trgno,target;
-  GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
-
-  trgno = GFL_UI_TP_HitTrg(_tp_data);
   if(trgno != -1){
     POKEMON_PARAM* pp = pWork->GTSSelectPP[trgno/GTS_NEGO_POKESLT_MAX][trgno%GTS_NEGO_POKESLT_MAX];
     if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL)){
       pWork->pokemonselectno = trgno;
 
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       if(trgno/GTS_NEGO_POKESLT_MAX){
         int msg[]={ POKETRADE_STR_04, POKETRADE_STR_06};
         
@@ -740,8 +737,195 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
         GFL_STD_MemCopy(pp, IRC_POKEMONTRADE_GetRecvPP(pWork,0) ,POKETOOL_GetWorkSize());
         _CHANGE_STATE(pWork, _menuMyPokemonSend);
       }
+      return TRUE;
     }
   }
+  return FALSE;
+}
+
+
+
+//フェードをかけて終了
+static void _NEGO_Select6CancelWait5(POKEMON_TRADE_WORK* pWork)
+{
+  if(WIPE_SYS_EndCheck()){
+    POKMEONTRADE_RemoveCoreResource(pWork);
+
+    POKETRADE_MESSAGE_HeapInit(pWork);
+    IRC_POKETRADE_InitBoxCursor(pWork);  // タスクバー
+    IRC_POKETRADE_CreatePokeIconResource(pWork);  // ポケモンアイコンCLACT+リソース常駐化
+    IRC_POKETRADE_GraphicInitMainDisp(pWork);
+    IRC_POKETRADE_GraphicInitSubDisp(pWork);
+    IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
+    GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+    POKETRADE_TOUCHBAR_Init(pWork);
+    GFL_NET_ReloadIcon();
+    
+    _CHANGE_STATE(pWork,IRC_POKMEONTRADE_ChangeFinish);
+  }
+}
+
+
+//相手側の終了を待つ
+static void _NEGO_Select6CancelWait4(POKEMON_TRADE_WORK* pWork)
+{
+  BOOL bEnd=FALSE;
+
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    if(pWork->pokemonGTSSeqSend == POKEMONTORADE_SEQ_SELECTNG){
+      bEnd = TRUE;
+    }
+    else if(pWork->pokemonGTSSeqSend == POKEMONTORADE_SEQ_SELECTOK){
+      bEnd = TRUE;
+    }
+  }
+  else{
+    bEnd = TRUE;
+  }
+  if(bEnd){
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    _CHANGE_STATE(pWork, _NEGO_Select6CancelWait5);
+  }
+}
+
+//
+static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&pWork->pokemonGTSSeqSend)){
+      _CHANGE_STATE(pWork, _NEGO_Select6CancelWait4);
+    }
+  }
+  else{
+    _CHANGE_STATE(pWork, _NEGO_Select6CancelWait4);
+  }
+}
+
+//
+static void _NEGO_Select6CancelWait2(POKEMON_TRADE_WORK* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    POKETRADE_MESSAGE_AppMenuClose(pWork);
+    POKETRADE_MESSAGE_WindowClear(pWork);
+    pWork->pAppTask=NULL;
+
+    switch(selectno){
+    case 0:  //はい
+      //友達の選択をまっていますメッセージ
+      GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
+      POKETRADE_MESSAGE_WindowOpen(pWork);
+      pWork->NegoWaitTime = _GTSINFO04_WAIT;
+
+      pWork->pokemonGTSSeqSend = POKEMONTORADE_SEQ_SELECTNG;
+
+      _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
+      break;
+    default: //いいえ
+      POKETRADE_MESSAGE_WindowClear(pWork);
+      _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
+      break;
+    }
+  }
+}
+
+static void _NEGO_Select6CancelWait(POKEMON_TRADE_WORK* pWork)
+{
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+  {
+    int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
+    POKETRADE_MESSAGE_AppMenuOpenCustom(pWork, msg, elementof(msg), 32, 12);
+    _CHANGE_STATE(pWork, _NEGO_Select6CancelWait2 );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   6体表示まち
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
+{
+  BOOL bTouch=FALSE;
+  int trgno,target;
+  BOOL curSel = FALSE;
+
+
+  trgno = GFL_UI_TP_HitTrg(_tp_data);
+  if(trgno != -1){
+    GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+    if(_NEGO_Select6PokemonSelect(pWork, trgno)){
+      return;
+    }
+  }
+  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+    if(GFL_UI_KEY_GetTrg()){
+      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+      pWork->pokemonselectno=0;
+      POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
+      PMSND_PlaySystemSE(SEQ_SE_SELECT1);
+      return;
+    }
+  }
+
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+    if(_NEGO_Select6PokemonSelect(pWork, pWork->pokemonselectno)){
+      return ;
+    }
+  }
+
+  // キー処理
+  if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT){
+    pWork->pokemonselectno = (pWork->pokemonselectno+3) % 6;
+    curSel=TRUE;
+  }
+  if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT){
+    pWork->pokemonselectno = (pWork->pokemonselectno-3) % 6;
+    if(pWork->pokemonselectno<0){
+      pWork->pokemonselectno+=3;
+    }
+    curSel=TRUE;
+  }
+  if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
+    if((pWork->pokemonselectno==0) || (pWork->pokemonselectno==3)){
+      pWork->pokemonselectno = pWork->pokemonselectno+3;
+    }
+    pWork->pokemonselectno = pWork->pokemonselectno-1;
+    curSel=TRUE;
+  }
+  if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
+    if((pWork->pokemonselectno==2) || (pWork->pokemonselectno==5)){
+      pWork->pokemonselectno = pWork->pokemonselectno-3;
+    }
+    pWork->pokemonselectno = pWork->pokemonselectno+1;
+    curSel=TRUE;
+  }
+  if(curSel){
+    POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
+    PMSND_PlaySystemSE(SEQ_SE_SELECT1);
+  }
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
+
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_15, pWork->pMessageStrBuf );
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+    _CHANGE_STATE(pWork, _NEGO_Select6CancelWait );
+    
+  }
+
+
 }
 
 
@@ -817,12 +1001,25 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
 
 
   IRC_POKETRADE_AllDeletePokeIconResource(pWork);
+  
+ 
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
+  TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
 
 
   POKE_GTS_SelectStatusMessageDelete(pWork);
   
-  POKETRADE_MESSAGE_SixStateDisp(pWork); 
+  POKETRADE_MESSAGE_SixStateDisp(pWork);//６体表示
+
+  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+    POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
+    pWork->pokemonselectno=-1;
+  }
+  else{
+    POKEMONTRADE_StartPokeSelectSixButton(pWork, 0);
+    pWork->pokemonselectno=0;
+  }
   
   pWork->bgscroll=0;
   pWork->bgscrollRenew = TRUE;
@@ -849,6 +1046,7 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
       FALSE );
     GXS_SetVisibleWnd( GX_WNDMASK_W0 );
   }
+  GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
 
   
   _CHANGE_STATE(pWork,POKETRADE_NEGO_Select6keywaitMsg);
@@ -948,7 +1146,7 @@ static void _Select6MessageInitEnd(POKEMON_TRADE_WORK* pWork)
 
   
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&pWork->pokemonGTSSeq)){
+    if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&pWork->pokemonGTSSeqSend)){
       _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
     }
   }
@@ -1162,12 +1360,10 @@ BOOL POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height)
 
 
   if(POKEMONTRADEPROC_IsTriSelect(pWork)){
-    for(l=0;l<GTS_PLAYER_WORK_NUM;l++){
-      for(m=0;m<GTS_NEGO_POKESLT_MAX;m++){
-        if(pWork->GTSSelectIndex[l][m] != -1){
-          if((pWork->GTSSelectIndex[l][m]==index) && (pWork->GTSSelectBoxno[l][m]==boxno)){
+    for(m=0;m<GTS_NEGO_POKESLT_MAX;m++){
+      if(pWork->GTSSelectIndex[0][m] != -1){
+        if((pWork->GTSSelectIndex[0][m]==index) && (pWork->GTSSelectBoxno[0][m]==boxno)){
           return TRUE;
-          }
         }
       }
     }
@@ -1367,6 +1563,7 @@ void POKE_GTS_InitEruptedIcon(POKEMON_TRADE_WORK* pWork,int faceNo, int index)
   if(POKEMONTRADEPROC_IsTriSelect(pWork)){
     POKEMONTRADE_StartEruptedGTS(pWork, faceNo, index);
     pWork->timerErupted[index] = _TIMER_ERUPTED_NUM;
+    PMSND_PlaySystemSE(SEQ_SE_SELECT3);
   }
 }
 

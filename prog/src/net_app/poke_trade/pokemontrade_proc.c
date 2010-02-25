@@ -101,6 +101,7 @@ static void _recvFriendFaceIcon(const int netID, const int size, const void* pDa
 static void _recvPokemonColor(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static u8* _setPokemonColorBuffer(int netID, void* pWk, int size);
 static void _recvSeqNegoNo(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork);
 
 
 ///通信コマンドテーブル
@@ -1554,9 +1555,24 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
 static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
 {
   
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKECOLOR,WB_NET_TRADE_SERVICEID)){
+  if(!POKEMONTRADEPROC_IsNetworkMode(pWork) || GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKECOLOR,WB_NET_TRADE_SERVICEID)){
     IRC_POKETRADE3D_SetColorTex(pWork);
-    _CHANGE_STATE(pWork, _touchState);
+
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      POKE_GTS_InitWork(pWork);
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_13, pWork->pMessageStrBuf );
+      POKETRADE_MESSAGE_WindowOpen(pWork);
+      G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
+      POKE_GTS_CreatePokeIconResource(pWork,CLSYS_DRAW_MAIN);      
+      POKE_GTS_StatusMessageDisp(pWork);
+      POKE_GTS_SelectStatusMessageDisp(pWork,0,FALSE);
+      POKE_GTS_SelectStatusMessageDisp(pWork,1,FALSE);
+      POKE_GTS_InitFaceIcon(pWork);
+      _CHANGE_STATE(pWork, _gtsFirstMsgState);
+    }
+    else{
+      _CHANGE_STATE(pWork, _touchState);
+    }
   }
 
 }
@@ -1574,7 +1590,7 @@ static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
   }
   else{
     IRC_POKETRADE3D_SetColorTex(pWork);
-    _CHANGE_STATE(pWork, _touchState);
+    _CHANGE_STATE(pWork, _touchState_BeforeTimeing2);
   }
 }
 
@@ -2549,8 +2565,8 @@ static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_WindowClear(pWork);
     POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
 
-  _CHANGE_STATE(pWork, _touchState_BeforeTimeing1);
-//    _CHANGE_STATE(pWork,_touchState);
+   // _CHANGE_STATE(pWork, _touchState_BeforeTimeing1);
+    _CHANGE_STATE(pWork,_touchState);
 
   }
 }
@@ -2964,23 +2980,24 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
 
   IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
 
-  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+//  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
     _CHANGE_STATE(pWork, _touchState_BeforeTimeing1);
 //    _CHANGE_STATE(pWork, _touchState);
-  }
-  else{
-    POKE_GTS_InitWork(pWork);
-    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_13, pWork->pMessageStrBuf );
-    POKETRADE_MESSAGE_WindowOpen(pWork);
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
-    
-    POKE_GTS_CreatePokeIconResource(pWork,CLSYS_DRAW_MAIN);      
-    POKE_GTS_StatusMessageDisp(pWork);
-    POKE_GTS_SelectStatusMessageDisp(pWork,0,FALSE);
-    POKE_GTS_SelectStatusMessageDisp(pWork,1,FALSE);
-    POKE_GTS_InitFaceIcon(pWork);
-    _CHANGE_STATE(pWork, _gtsFirstMsgState);
-  }
+//  }
+/*   else{
+ *     POKE_GTS_InitWork(pWork);
+ *     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_13, pWork->pMessageStrBuf );
+ *     POKETRADE_MESSAGE_WindowOpen(pWork);
+ *     G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
+ *     
+ *     POKE_GTS_CreatePokeIconResource(pWork,CLSYS_DRAW_MAIN);      
+ *     POKE_GTS_StatusMessageDisp(pWork);
+ *     POKE_GTS_SelectStatusMessageDisp(pWork,0,FALSE);
+ *     POKE_GTS_SelectStatusMessageDisp(pWork,1,FALSE);
+ *     POKE_GTS_InitFaceIcon(pWork);
+ *     _CHANGE_STATE(pWork, _gtsFirstMsgState);
+ *   }
+ */
 
   return GFL_PROC_RES_FINISH;
 }

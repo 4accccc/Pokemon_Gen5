@@ -722,6 +722,7 @@ void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork)
 {
   int i;
   
+  POKEMONTRADE_RemovePokeSelectSixButton(pWork);
   for(i = 0 ; i < _LING_LINENO_MAX ; i++){
     _deletePokeIconResource(pWork,i);
   }
@@ -2843,3 +2844,76 @@ void POKEMONTRADE_RemoveEruptedGTS(POKEMON_TRADE_WORK* pWork,int index)
   }
   
 }
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ６体選択アイコンを表示
+ * @param   POKEMON_TRADE_WORK
+ * @param   index 表示場所
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_StartPokeSelectSixButton(POKEMON_TRADE_WORK* pWork,int index)
+{
+  GFL_CLWK_DATA cellInitData;
+  GFL_CLACTPOS pos[6]={
+    {64, 48},
+    {64, 96},
+    {64, 144},
+    {128+64, 48},
+    {128+64, 96},
+    {128+64,144},
+  };
+
+  if(-1==index){
+    if(pWork->pokeSelectSixCur ){
+      GFL_CLACT_WK_SetDrawEnable( pWork->pokeSelectSixCur, FALSE );
+    }
+  }
+  else{
+    if(!pWork->pokeSelectSixCur ){
+      cellInitData.pos_x = 64;
+      cellInitData.pos_y = 48;
+      cellInitData.anmseq = 23;
+      cellInitData.softpri = 0;
+      cellInitData.bgpri = 0;
+      
+      pWork->pokeSelectSixCur =
+        GFL_CLACT_WK_Create( pWork->cellUnit ,
+                             pWork->cellRes[CHAR_SCROLLBAR],
+                             pWork->cellRes[PAL_SCROLLBAR],
+                             pWork->cellRes[ANM_SCROLLBAR],
+                             &cellInitData ,CLSYS_DRAW_SUB, pWork->heapID );
+    }
+    GFL_CLACT_WK_SetAutoAnmFlag(pWork->pokeSelectSixCur ,TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->pokeSelectSixCur, TRUE );
+
+    GFL_CLACT_WK_SetPos(  pWork->pokeSelectSixCur, &pos[index], CLSYS_DRAW_SUB);
+  }
+}
+
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ６体選択アイコンを消去
+ * @param   POKEMON_TRADE_WORK
+ * @param   index 表示場所
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_RemovePokeSelectSixButton(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->pokeSelectSixCur){
+    GFL_CLACT_WK_Remove(pWork->pokeSelectSixCur );
+    pWork->pokeSelectSixCur = NULL;
+  }
+}
+
+
+

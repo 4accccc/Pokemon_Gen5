@@ -1325,8 +1325,8 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, u32 gamemode, int* col )
 
   {//WIFI_GAME_e参照
     u32 message[]={msg_wifilobby_046,msg_wifilobby_046,msg_wifilobby_1014,msg_wifilobby_027, msg_wifilobby_076,
-    msg_wifilobby_025, msg_wifilobby_0571,msg_wifilobby_0571,msg_wifilobby_0572,msg_wifilobby_0572,
-    msg_wifilobby_0573,msg_wifilobby_0573,msg_wifilobby_0574,msg_wifilobby_0574,msg_wifilobby_056};
+    msg_wifilobby_025, msg_wifilobby_1023,msg_wifilobby_1023,msg_wifilobby_1024,msg_wifilobby_1024,
+    msg_wifilobby_1025,msg_wifilobby_1025,msg_wifilobby_1026,msg_wifilobby_1026,msg_wifilobby_056};
 
     msg_id = gamemode;
     if(gamemode > WIFI_GAME_UNKNOWN){
@@ -1350,12 +1350,12 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, u32 gamemode, int* col )
 static void _battleCustomSelectMenu( WIFIP2PMATCH_WORK *wk )
 {
 
-  _parentCustomInfoMenuList[0].str_id = msg_wifilobby_0571 + wk->battleMode;
-  _parentCustomInfoMenuList[1].str_id = msg_wifilobby_060 + wk->battleRule;
-  _parentCustomInfoMenuList[2].str_id = msg_wifilobby_062 + (1-wk->battleShooter);
+  _parentCustomInfoMenuList[0].str_id = msg_wifilobby_1023 + wk->battleMode;
+  _parentCustomInfoMenuList[1].str_id = msg_wifilobby_1028 + wk->battleRule;
+  _parentCustomInfoMenuList[2].str_id = msg_wifilobby_1030 + (1-wk->battleShooter);
 
   _modeSelectMenuBase(wk, &_parentCustomMenuListHeader, _parentCustomInfoMenuList,
-                      elementof(_parentCustomInfoMenuList), _MENUTYPE_BATTLE_CUSTOM,19);
+                      elementof(_parentCustomInfoMenuList), _MENUTYPE_BATTLE_CUSTOM,28);
 }
 
 //----------------------------------------------------------------------------
@@ -1470,8 +1470,8 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
     REGWINDOW_WIN_SX, REGWINDOW_WIN_SY,
     COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B);
 
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-                                0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
+//  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+//                                0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
 
   // システムウインドウ枠描画
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->SysMsgWin), WINCLR_COL(FBMP_COL_WHITE) );

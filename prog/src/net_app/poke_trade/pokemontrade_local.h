@@ -215,7 +215,8 @@ typedef enum
   POKEMONTORADE_SEQ_MISERUNG,
   POKEMONTORADE_SEQ_KAISHIOK,  //このポケモンで　こうかんをかいしします　よろしいですか？
   POKEMONTORADE_SEQ_KAISHING,
-  
+  POKEMONTORADE_SEQ_SELECTOK,
+  POKEMONTORADE_SEQ_SELECTNG,
   
   
 }POKEMONTORADE_SEQ_ENUM;
@@ -548,7 +549,7 @@ struct _POKEMON_TRADE_WORK{
   int GTSSelectIndex[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];  //候補のポケモンIndex
   int GTSSelectBoxno[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];  //候補のポケモンBox
 
-
+  GFL_CLWK* pokeSelectSixCur;
   POKEMON_PARAM* GTSSelectPP[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
   GFL_CLWK* pokeIconGTS[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
   u32 pokeIconNcgResGTS[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
@@ -749,7 +750,7 @@ extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 #define	FBMP_COL_BLUE_SDW	(6)
 #define	FBMP_COL_PINK		(9)
 #define	FBMP_COL_PNK_SDW	(10)
-#define	FBMP_COL_WHITE_SDW		(14)
+#define	FBMP_COL_WHITE_SDW		(2)
 #define	FBMP_COL_WHITE		(15)
 
 
@@ -873,3 +874,7 @@ extern void IRC_POKETRADE_ReleaseMainObj(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_InitMainObj(POKEMON_TRADE_WORK* pWork);
 extern void PokemonTrade_SetMyPokeColor( POKEMON_TRADE_WORK* pWork  );
 extern void IRC_POKETRADE3D_SetColorTex( POKEMON_TRADE_WORK* pWork);
+
+extern void POKEMONTRADE_StartPokeSelectSixButton(POKEMON_TRADE_WORK* pWork,int index);
+extern void POKEMONTRADE_RemovePokeSelectSixButton(POKEMON_TRADE_WORK* pWork);
+
