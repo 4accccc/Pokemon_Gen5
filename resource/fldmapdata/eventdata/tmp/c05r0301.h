@@ -17,5 +17,6 @@
 #ifndef ZONE_C05R0301_EVB_H
 #define ZONE_C05R0301_EVB_H
 
+#define BG_C05R0301_BOARD_01              0
 
 #endif //ZONE_C05R0301_EVB_H
