@@ -714,7 +714,7 @@ void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork,POKEMON_
   IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,1); //上のステータス文章+OAMを消す
 
   pWork->pokemonselectno = 0;//自分から表示
-  POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork, pp, 0);
+  POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork, pp, 0, FALSE);
   IRC_POKETRADE_SetMainStatusBG(pWork);  // 背景BGと
 
   if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
@@ -816,14 +816,18 @@ void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pagen
 }
 
 // ステータス表示の変更
-void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp, int mcssno)
+void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp, int mcssno,int change)
 {
   int i,num,num2,bEgg;
 
   bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
 
   if(!pWork->pokeMcss[mcssno]){
-    IRCPOKETRADE_PokeCreateMcss(pWork, mcssno, mcssno, pp , FALSE);    
+    IRCPOKETRADE_PokeCreateMcss(pWork, mcssno, mcssno, pp , FALSE);
+  }
+  if(change){
+    IRCPOKETRADE_PokeDeleteMcss(pWork, mcssno);
+    IRCPOKETRADE_PokeCreateMcss(pWork, mcssno, mcssno, pp , FALSE);
   }
 
   {//自分の位置調整

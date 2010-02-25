@@ -1019,7 +1019,7 @@ static void _changePokemonStatusDispAuto(POKEMON_TRADE_WORK* pWork,int sel)
   }
   {
     POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
-    POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork,pp, pWork->pokemonselectno );
+    POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork,pp, pWork->pokemonselectno ,FALSE);
   }
 }
 
@@ -1110,12 +1110,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     pWork->padMode = TRUE;
     _PokemonIconRenew(pWork);
     
-    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
-      _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
-    }
-    else{
-      _CHANGE_STATE(pWork, _networkFriendsStandbyWait2);
-    }
+    _CHANGE_STATE(pWork, _networkFriendsStandbyWait2);
   }
 }
 

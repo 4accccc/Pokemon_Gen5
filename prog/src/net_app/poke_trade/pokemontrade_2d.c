@@ -2934,3 +2934,52 @@ void POKEMONTRADE_RemovePokeSelectSixButton(POKEMON_TRADE_WORK* pWork)
 
 
 
+void POKEMONTRADE_NEGOBG_Select6Create(POKEMON_TRADE_WORK* pWork)
+{
+  ARCHANDLE* p_handle;
+
+  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+	pWork->subchar1 = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg02_NCGR,
+																																GFL_BG_FRAME1_S, 0, 0, pWork->heapID);
+	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_gts_bg05_NSCR,
+																				 GFL_BG_FRAME0_S, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+																				 pWork->heapID);
+
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_gts_bg05_NSCR,
+																				 GFL_BG_FRAME1_S, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+																				 pWork->heapID);
+
+  {
+    int frame = GFL_BG_FRAME3_S;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      3, 0, 0, FALSE
+      };
+    GFL_BG_FreeBGControl(frame);
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+  }
+  
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_gts_bg06_NSCR,
+																				 GFL_BG_FRAME3_S, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+																				 pWork->heapID);
+  GFL_BG_SetScroll(GFL_BG_FRAME0_S,GFL_BG_SCROLL_X_SET, -128);
+  GFL_BG_SetScroll(GFL_BG_FRAME3_S,GFL_BG_SCROLL_X_SET, 0);
+  
+  GFL_BG_SetPriority( GFL_BG_FRAME0_S , 3 );
+	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_trade_bg01_back_NSCR,
+																				 GFL_BG_FRAME2_M, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+																				 pWork->heapID);
+  GFL_ARC_CloseDataHandle( p_handle );
+}
+

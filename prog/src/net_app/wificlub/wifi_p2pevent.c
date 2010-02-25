@@ -262,6 +262,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
       ep2p->login.gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
       ep2p->login.display = WIFILOGIN_DISPLAY_UP;
       ep2p->login.bg = WIFILOGIN_BG_NORMAL;
+      ep2p->login.nsid = WB_NET_WIFICLUB;
     }
     GMEVENT_CallProc(pClub->event, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
 //    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
