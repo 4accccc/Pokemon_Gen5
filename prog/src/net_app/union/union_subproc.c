@@ -632,9 +632,16 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     }
 
     if(situ->play_category == UNION_PLAY_CATEGORY_GURUGURU){
-      u16 snd_index = FSND_GetFieldBGM(unisys->uniparent->game_data, ZONE_ID_UNION);
-      PMSND_PlayNextBGM( snd_index, FSND_FADE_SHORT, FSND_FADE_NORMAL );
-      *seq = _SEQ_BGM_FADE;
+  	  GURUGURU_PARENT_WORK *gurupwk = subproc->parent_work;
+  	  
+  	  if(gurupwk->bgm_change == TRUE){
+        u16 snd_index = FSND_GetFieldBGM(unisys->uniparent->game_data, ZONE_ID_UNION);
+        PMSND_PlayNextBGM( snd_index, FSND_FADE_SHORT, FSND_FADE_NORMAL );
+        *seq = _SEQ_BGM_FADE;
+      }
+      else{
+        *seq = _SEQ_APP_FREE;
+      }
     }
     else{
       *seq = _SEQ_APP_FREE;
@@ -642,7 +649,7 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     break;
   
   case _SEQ_BGM_FADE:
-    if(PMSND_CheckFadeOnBGM() == TRUE){
+    if(PMSND_CheckFadeOnBGM() == FALSE){
       *seq = _SEQ_APP_FREE;
     }
     break;
