@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/12 15:57:15
+#save date:2010/02/25 20:10:57
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,162 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14.wms
 #hold event type:
 1
 #hold event number:
+5
+#event number: 0
+#type
+1
+#ID name
+TR_MOUNT_09
+#OBJ CODE Number
+MOUNTMAN
+#MOVE CODE Number
+MV_RND_UL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
 0
+#Event Script Name
+SCRID_TRID_MOUNT_09
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 80 -296
+#event number: 1
+#type
+1
+#ID name
+TR_KARATE_11
+#OBJ CODE Number
+FIGHTERM
+#MOVE CODE Number
+MV_RND_H
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_KARATE_11
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+648 -80 -376
+#event number: 2
+#type
+1
+#ID name
+TR_FISHING_05
+#OBJ CODE Number
+FISHING
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_FISHING_05
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+968 -80 -72
+#event number: 3
+#type
+1
+#ID name
+TR_ELITEM_16
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND_V
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ELITEM_16
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 0 -424
+#event number: 4
+#type
+1
+#ID name
+TR_ELITEW_16
+#OBJ CODE Number
+TRAINERW
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ELITEW_16
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+264 16 -552
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
