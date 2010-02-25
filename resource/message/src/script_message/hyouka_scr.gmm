@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T18:02:18"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T19:01:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,15 +307,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="113" right="1990" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="384" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -675,10 +675,14 @@
 ・捕まえた数が
 　0～39匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-０ひき～３９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-０匹～３９匹</language>
+		<language name="JPN" width="256">ぜんこくには　６００を　こえるという
+ポケモンが　いるらしいからね▼
+まあ　きおわず　ゆっくり
+ポケモンを　つかまえていっておくれ</language>
+		<language name="JPN_KANJI" width="256">ぜんこくには　６００を　こえるという
+ポケモンが　いるらしいからね▼
+まあ　きおわず　ゆっくり
+ポケモンを　つかまえていっておくれ</language>
 	</row>
 
 	<row id="msg_hyouka_z02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -686,10 +690,12 @@
 ・捕まえた数が
 　40～79匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-４０ひき～７９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-４０匹～７９匹</language>
+		<language name="JPN" width="256">まずは　イッシュちほうを
+もういちど　たびする　きもちで▽
+ポケモンを　さがすのは　どうだろう？</language>
+		<language name="JPN_KANJI" width="256">まずは　イッシュちほうを
+もういちど　たびする　きもちで▽
+ポケモンを　さがすのは　どうだろう？</language>
 	</row>
 
 	<row id="msg_hyouka_z03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -697,10 +703,14 @@
 ・捕まえた数が
 　80～119匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-８０ひき～１１９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-８０匹～１１９匹</language>
+		<language name="JPN" width="256">ポケモンの　たいりょくを　へらすのは
+きほんの　きほん　だからね▼
+たくさん　つかまえても　そういった
+だいじなことは　わすれるんじゃないよ</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　たいりょくを　へらすのは
+きほんの　きほん　だからね▼
+たくさん　つかまえても　そういった
+だいじなことは　わすれるんじゃないよ</language>
 	</row>
 
 	<row id="msg_hyouka_z04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -708,10 +718,14 @@
 ・捕まえた数が
 　120～159匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-１２０ひき～１５９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-１２０匹～１５９匹</language>
+		<language name="JPN" width="256">そだてやさんに　いっておるかい？▼
+タマゴから　うまれることでしか
+つかまえられない　ポケモンもいると▽
+きいたことが　あるからね</language>
+		<language name="JPN_KANJI" width="256">そだてやさんに　いっておるかい？▼
+タマゴから　うまれることでしか
+つかまえられない　ポケモンもいると▽
+きいたことが　あるからね</language>
 	</row>
 
 	<row id="msg_hyouka_z05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -719,10 +733,14 @@
 ・捕まえた数が
 　160～199匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-１６０ひき～１９９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-１６０匹～１９９匹</language>
+		<language name="JPN" width="256">つりざおを　もっているかい？▼
+かわや　うみ……
+みずのなかに　いる　ポケモンも▽
+たくさん　おるそうだよ</language>
+		<language name="JPN_KANJI" width="256">つりざおを　もっているかい？▼
+かわや　うみ……
+みずのなかに　いる　ポケモンも▽
+たくさん　おるそうだよ</language>
 	</row>
 
 	<row id="msg_hyouka_z06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -730,10 +748,14 @@
 ・捕まえた数が
 　200～249匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-２００ひき～２４９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-２００匹～２４９匹</language>
+		<language name="JPN" width="256">おまえさんは　みねうち　という
+わざは　しっているかい？▼
+みねうちは　ポケモンの　たいりょくを
+すこしだけ　のこす　わざ　だよ</language>
+		<language name="JPN_KANJI" width="256">おまえさんは　みねうち　という
+わざは　しっているかい？▼
+みねうちは　ポケモンの　たいりょくを
+すこしだけ　のこす　わざ　だよ</language>
 	</row>
 
 	<row id="msg_hyouka_z07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -741,10 +763,14 @@
 ・捕まえた数が
 　250～299匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-２５０ひき～２９９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-２５０匹～２９９匹</language>
+		<language name="JPN" width="256">おまえさんは　くろいまなざし　という
+わざは　しっているかい？▼
+くろいまなざしを　かけられた
+ポケモンは　にげられなくなるんだ</language>
+		<language name="JPN_KANJI" width="256">おまえさんは　くろいまなざし　という
+わざは　しっているかい？▼
+くろいまなざしを　かけられた
+ポケモンは　にげられなくなるんだ</language>
 	</row>
 
 	<row id="msg_hyouka_z08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -752,10 +778,14 @@
 ・捕まえた数が
 　300～349匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-３００ひき～３４９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-３００匹～３４９匹</language>
+		<language name="JPN" width="256">ポケモンの　しんか　には
+さまざまな　スタイルが　あるんだよ▼
+なかには　なついていることで
+しんかする　ポケモンも　おるんだよ</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　しんか　には
+さまざまな　スタイルが　あるんだよ▼
+なかには　なついていることで
+しんかする　ポケモンも　おるんだよ</language>
 	</row>
 
 	<row id="msg_hyouka_z09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -763,10 +793,16 @@
 ・捕まえた数が
 　350～399匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-３５０ひき～３９９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-３５０匹～３９９匹</language>
+		<language name="JPN" width="256">たいりょうはっせい　という
+ことばは　きいたかい？▼
+もじどおり　ある　ポケモンが
+たいりょうに　はっせい　するんだ▽
+そう　つかまえる　チャンスだよ</language>
+		<language name="JPN_KANJI" width="256">たいりょうはっせい　という
+ことばは　きいたかい？▼
+もじどおり　ある　ポケモンが
+たいりょうに　はっせい　するんだ▽
+そう　つかまえる　チャンスだよ</language>
 	</row>
 
 	<row id="msg_hyouka_z10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -774,10 +810,14 @@
 ・捕まえた数が
 　400～449匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-４００ひき～４４９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-４００匹～４４９匹</language>
+		<language name="JPN" width="256">４００しゅるい　いじょうの
+ポケモンを　つかまえたのかい！？▼
+こりゃ　とんでもないことだよ！
+おまえさん　すごい　トレーナーだね</language>
+		<language name="JPN_KANJI" width="256">４００しゅるい　いじょうの
+ポケモンを　つかまえたのかい！？▼
+こりゃ　とんでもないことだよ！
+おまえさん　すごい　トレーナーだね</language>
 	</row>
 
 	<row id="msg_hyouka_z11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -785,10 +825,12 @@
 ・捕まえた数が
 　450～499匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-４５０ひき～４９９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-４５０匹～４９９匹</language>
+		<language name="JPN" width="256">なんでも　きまった　ばしょで
+レベルアップすることで▽
+しんかすると　ポケモンも　おるそうだ</language>
+		<language name="JPN_KANJI" width="256">なんでも　きまった　ばしょで
+レベルアップすることで▽
+しんかすると　ポケモンも　おるそうだ</language>
 	</row>
 
 	<row id="msg_hyouka_z12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -796,10 +838,18 @@
 ・捕まえた数が
 　500～549匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-５００ひき～５４９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-５００匹～５４９匹</language>
+		<language name="JPN" width="256">５００しゅるい　ね……▼
+いやはや　ポケモンという
+せいぶつの　たようせい　には▽
+おどろかされるね！▼
+もちろん　それだけ　つかまえた
+おまえさんも　たいしたもんだよ！</language>
+		<language name="JPN_KANJI" width="256">５００しゅるい　ね……▼
+いやはや　ポケモンという
+せいぶつの　たようせい　には▽
+おどろかされるね！▼
+もちろん　それだけ　つかまえた
+おまえさんも　たいしたもんだよ！</language>
 	</row>
 
 	<row id="msg_hyouka_z13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -807,10 +857,12 @@
 ・捕まえた数が
 　550～599匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-５５０ひき～５９９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-５５０匹～５９９匹</language>
+		<language name="JPN" width="256">パルパークは　しっておるかい？▼
+ああいう　しせつを　つかいこなすのも
+ポケモントレーナーの　たしなみだよ</language>
+		<language name="JPN_KANJI" width="256">パルパークは　しっておるかい？▼
+ああいう　しせつを　つかいこなすのも
+ポケモントレーナーの　たしなみだよ</language>
 	</row>
 
 	<row id="msg_hyouka_z14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -818,10 +870,16 @@
 ・捕まえた数が
 　600～614匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-６００ひき～６１４ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-６００匹～６１４匹</language>
+		<language name="JPN" width="256">ポケモンずかんの　かんせいまで
+あと　ひといきと　いったところかね▼
+これだけの　おおくの　ポケモンを
+つかまえるとは　おまえさん！▽
+そうとう　ポケモンが　すきなんだね</language>
+		<language name="JPN_KANJI" width="256">ポケモンずかんの　かんせいまで
+あと　ひといきと　いったところかね▼
+これだけの　おおくの　ポケモンを
+つかまえるとは　おまえさん！▽
+そうとう　ポケモンが　すきなんだね</language>
 	</row>
 
 	<row id="msg_hyouka_z15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -829,10 +887,14 @@
 ・捕まえた数が
 　615～629匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-６１５ひき～６２９ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-６１５匹～６２９匹</language>
+		<language name="JPN" width="256">おうおう！　すばらしい　ずかんだね▼
+どうだい？　おまえさんも
+わしと　いっしょに　ポケモンの▽
+けんきゅうを　せんかね？</language>
+		<language name="JPN_KANJI" width="256">おうおう！　すばらしい　ずかんだね▼
+どうだい？　おまえさんも
+わしと　いっしょに　ポケモンの▽
+けんきゅうを　せんかね？</language>
 	</row>
 
 	<row id="msg_hyouka_z16" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -840,10 +902,16 @@
 ・捕まえた数が
 　630～633匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-６３０ひき～６３３ひき</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-６３０匹～６３３匹</language>
+		<language name="JPN" width="256">おお！　ポケモンずかん　かんせいまで
+あと　ほんのすこし　ではないか！▼
+ともだちと　こうかんや
+いどうしてる　ポケモンの　ほかくなど▽
+わすれていることは　ないかね？</language>
+		<language name="JPN_KANJI" width="256">おお！　ポケモンずかん　かんせいまで
+あと　ほんのすこし　ではないか！▼
+ともだちと　こうかんや
+いどうしてる　ポケモンの　ほかくなど▽
+わすれていることは　ないかね？</language>
 	</row>
 
 	<row id="msg_hyouka_z17" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
@@ -851,10 +919,30 @@
 ・捕まえた数が
 　634匹</comment>
 		<attribute name="キャラ指定">アララギ博士：父</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-６３４ひき！！</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-６３４匹！！</language>
+		<language name="JPN" width="256">……　……　……
+……　……　……▼
+こりゃ　たまげたな！
+すばらしすぎて　ことばを　うしなった▼
+おまえさん
+とんでもないことを　やりとげたぞ！▼
+ぜんこくずかんを　すべて
+うめつくすとは　トレーナーの　なかの▽
+トレーナーと　いえるだろう！▼
+おまえさんのような　すばらしい
+トレーナーと　であえて　うれしいよ！▽
+こころから　かんしゃを　いうよ！！</language>
+		<language name="JPN_KANJI" width="256">……　……　……
+……　……　……▼
+こりゃ　たまげたな！
+すばらしすぎて　ことばを　うしなった▼
+おまえさん
+とんでもないことを　やりとげたぞ！▼
+ぜんこくずかんを　すべて
+うめつくすとは　トレーナーの　なかの▽
+トレーナーと　いえるだろう！▼
+おまえさんのような　すばらしい
+トレーナーと　であえて　うれしいよ！▽
+こころから　かんしゃを　いうよ！！</language>
 	</row>
 
 	<flowchart-group-list>
