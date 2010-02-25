@@ -1,21 +1,21 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2010-02-24T13:06:44' host='W00154A' user='lee_hyunjung' source='ncg8x8x20poke.mb'/>
+	<create date='2010-02-25T11:15:59' host='W00154A' user='lee_hyunjung' source='ncg8x8x20poke.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2010-02-24T13:06:44' host='W00154A' user='lee_hyunjung' source='ncg8x8x20poke.mb'/>
+<original_create date='2010-02-25T11:15:59' host='W00154A' user='lee_hyunjung' source='ncg8x8x20poke.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='merge' material_size='1 1' vertex_style='direct' compress_material='on' output_texture='used' node_size='1 1' pos_scale='4' tex_matrix_mode='maya' use_primitive_strip='on'/>
 
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='4'/>
 
-<tex_image_array size='20'>
+<tex_image_array size='23'>
 	<tex_image name='64_anmimd.1' format='palette16' original_width='64' original_height='64' index='0' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.1.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -900,7 +900,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.3' format='palette16' original_width='64' original_height='64' index='13' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.3.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='64_anmimd.21' format='palette16' original_width='64' original_height='64' index='13' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.21.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -968,7 +968,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.4' format='palette16' original_width='64' original_height='64' index='14' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.4.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='64_anmimd.22' format='palette16' original_width='64' original_height='64' index='14' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.22.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1036,7 +1036,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.5' format='palette16' original_width='64' original_height='64' index='15' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.5.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='64_anmimd.23' format='palette16' original_width='64' original_height='64' index='15' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.23.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1104,7 +1104,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.6' format='palette16' original_width='64' original_height='64' index='16' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.6.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='64_anmimd.3' format='palette16' original_width='64' original_height='64' index='16' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.3.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1172,7 +1172,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.7' format='palette16' original_width='64' original_height='64' index='17' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.7.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='64_anmimd.4' format='palette16' original_width='64' original_height='64' index='17' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.4.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1240,7 +1240,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.8' format='palette16' original_width='64' original_height='64' index='18' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.8.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='64_anmimd.5' format='palette16' original_width='64' original_height='64' index='18' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.5.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1308,7 +1308,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.9' format='palette16' original_width='64' original_height='64' index='19' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.9.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='64_anmimd.6' format='palette16' original_width='64' original_height='64' index='19' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.6.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1373,6 +1373,210 @@
 			0000 0000 0000 0000 0000 0000 0000 e000 eeee eeee 0000 eeee 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 ee00 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='64_anmimd.7' format='palette16' original_width='64' original_height='64' index='20' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.7.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+		<bitmap size='1024'>
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 00f0 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 00ff 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 ff00 0fff ff00 000f 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 fff0 ffff ff00 00ff 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 ffff ffff ffff ffff 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 ffff ffff ffff ffff 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 f000 ffff ffff ffff ffff 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 ff00 ffff ffff ffff ffff 000f 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fff0 f00f ffff ffff ffff 00ff 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fff0 ff00 ffff ffff ffff 00ff 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fff0 ff00 ffff ffff f0ff 0fff 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 ffff f000 ffff ffff 00ff 0fff 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 ffff f00f ffff ffff 000f 0ff0 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0ff0 f00f ffff ffff 000f 0ff0 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0ff0 f000 ffff fff1 000f 0ff0 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 00c0 0ff0 0000 11ff fff1 0000 0ff0 0c00 0000 0000 0000 0000 
+			0000 0000 0000 0000 ccee 0000 0000 11f0 0fff 0000 0000 eecc 0000 0000 0000 0000 
+			0000 0000 0000 ff00 ffff 000c 0000 11f0 0fff 0000 c000 ffff 00ff 0000 0000 0000 
+			0000 0000 f000 ffff ffff f00e 0000 1ff0 0ff1 0000 e00f ffff ffff 000f 0000 0000 
+			0000 f000 ffff ffff ffff ffcf 000c 11ff ff11 c000 fcff ffff ffff ffff 000f 0000 
+			0000 fff0 ffff ffff ffff ffcf 00cc 11ff ff11 cc00 fcff ffff ffff ffff 0fff 0000 
+			0000 ffff ffff ffff ffff ffff 00cf 11f0 0f11 fc00 ffff ffff ffff ffff ffff 0000 
+			0000 ffff ffff ffff ffff ffcf 00cf 11f0 0f11 fc00 fcff ffff ffff ffff ffff 0000 
+			0000 ffff ffff ffff feff ffcf 0cff 1fff fff1 ffc0 fcff ffef ffff ffff ffff 0000 
+			0000 ffff ffff ffff feff fccf 0cff 1fff fff1 ffc0 fccf ffef ffff ffff ffff 0000 
+			0000 ffff ffff ffff eeef fcff cfff 1fff fff1 fffc ffcf feee ffff ffff ffff 0000 
+			0000 ffff ffff ffff eeee fcfe 2fff eee1 2fee fffc efcf eeee ffff ffff ffff 0000 
+			f000 ffff ffff 0fff eeec fcfe 2fff ee22 2eee fffc efcf ceee fff0 ffff ffff 000f 
+			f000 ffff ffff 00ff ecc0 cfee 2fff ee22 21ee fff2 eefc 0cce ff00 ffff ffff 000f 
+			f000 0fff ffff 000f c000 cfee 2fff 1122 2111 fff2 eefc 000c f000 ffff fff0 000f 
+			ff00 00ff ffff cccc 0000 ceec 2ffc 1112 2111 cff2 ceec 0000 cccc ffff ff00 00ff 
+			ff00 000f ffff eeee 0ccc eedc 2ffc 1112 2211 cff1 cdee ccc0 eeee ffff f000 00ff 
+			ff00 0000 0fff eecb ceee eecd fffc 1122 2211 cfff dcee eeec bcee fff0 0000 00ff 
+			0000 0000 00ff bb00 eeec ecfc ffce 111e 2111 ecff cfce ceee 00bb ff00 0000 0000 
+			0000 0000 0000 cc00 ecbe ceee ffcc eeee eeee ccff eeec ebce 00cc 0000 0000 0000 
+			0000 0000 0000 eeb0 eeee eeee fcce eeef feee eccf eeee eeee 0bee 0000 0000 0000 
+			0000 0000 0000 bb00 eeee eeee fcee eeef feee eecf eeee eeee 00bb 0000 0000 0000 
+			0000 0000 0000 0000 eebb eeee feee 222f f222 eeef eeee bbee 0000 0000 0000 0000 
+			0000 0000 0000 c000 eeee eeee eeee 222f f222 eeee eeee eeee 000c 0000 0000 0000 
+			0000 0000 0000 b000 ecbb ecee eeee 222e e222 eeee eece bbce 000b 0000 0000 0000 
+			0000 0f00 0000 0000 cc00 eece eeee 22ee ee22 eeee ecee 00cc 0000 0000 0000 0000 
+			0000 0000 0000 0000 efc0 eecb eeee eeee eeee eeee bcee 0cfe 0000 0000 0000 0000 
+			0000 0000 0000 0000 bbb0 ec00 ecee eeee eeee eece 00ce 0bbb 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 eb00 ceee eeee eeee eeec 00be 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 b000 aeee eeee eeee eeea 000b 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 ecc0 0bee eebb bbee eeb0 0cce 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 eeec 0bee bb00 00bb eeb0 ceee 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 a000 eeee aeee 0000 0000 eeea eeee 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 3a00 eeee eeee 000b b000 eeee eeee 00a3 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 eeeb bbee 0000 0000 eebb beee 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 bbb0 00bb 0000 0000 bb00 0bbb 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='64_anmimd.8' format='palette16' original_width='64' original_height='64' index='21' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.8.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+		<bitmap size='1024'>
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 00ee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 00ee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 00ee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 00ee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 e000 00ee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 ee00 00ee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 ee00 00ee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 eee0 eeee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 ee00 eeee eeee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 eee0 e0ee 0eee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 e000 eeee eeee 0eee 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 e000 eeee ee0e 00ee 0000 0000 0000 0ff0 0000 f000 00ff 
+			0000 0000 0000 0000 0000 ee00 eeee eee0 00ee 0000 0000 f000 ffff ffff f000 00ff 
+			0000 0000 0000 0000 0000 eee0 eeee eeee 000e 0000 0000 fff0 ffff ffff ffff 000f 
+			0000 0000 0000 0000 0000 eee0 eeee eeee e00e fffe 0000 ffff ffff ffff ffff 0000 
+			0000 0000 0000 0000 0000 eee0 eeee eeee eee0 000e ff00 ffff ffff ffff 0fff 0000 
+			0000 0000 0000 0f00 0000 eee0 eeee eeee eeee 0000 fff0 ffff ffff ffff 00ff 0000 
+			0000 0000 0000 0ff0 0000 eee0 eeee eeee 00ee fff0 ffff ffff 0fff 0000 0fff 0000 
+			0000 0000 0000 00ff 0000 eee0 eeee eeee f000 ffff ffff ffff 00ff f000 0fff 0000 
+			0000 0000 f000 00ff 0fff eee0 eeee 0eee ffff ffff ffff ffff 0000 fff0 00ff 0000 
+			0000 0000 ff00 00ff ffff eeef eeee ff00 ffff ffff ffff ffff ff0f ffff 0000 0000 
+			0000 0000 ff00 f00f f0ff eeef 0eee ffff ffff ffff ffff ffff ffff 00ff 0000 0000 
+			0000 0000 ffff ff00 000f eee0 ffee ffff ffff ffff ffff ffff 0fff 0000 0000 0000 
+			0000 f000 0fff ff00 0000 eee0 ffee ffff ffff ffff ffff ffff 0000 0000 0000 0000 
+			0000 ff00 ffff ffff 0000 eee0 ffee ffff ffff ffff e00f 000e 0000 0000 0000 0000 
+			0000 ff00 ffff 0fff 0000 eee0 ffee ffff ffff 0fff ee00 000e 0000 0000 0000 0000 
+			0000 0000 ffff 00ff 0000 eee0 ffee ffff ffff 00ff eeee 000e 0000 0110 0000 0000 
+			0000 f000 ffff 000f 0000 eeee ffee ffff ffff e00f eeee 111e 1000 0111 0000 0000 
+			0000 fff0 ffff f00f 000f eeee fffe ffff ffff ee0f eeee 1111 1110 0111 0000 0000 
+			0000 fff0 ffff ff0f 000f eeee fffe ffff ffff ee0f 1eee 1111 1111 0001 0000 0000 
+			0000 fff0 ffff ffff e00f eeee fffe ffff ffff eeef 11ee 1111 1111 0000 0000 0000 
+			0000 ffff ffff 0fff e000 eeee fffe ffff ffff eeef 111e 1111 0111 0000 0000 0000 
+			0000 ffff ff8f 00ff e000 eeee ffff ffff ffff eeef 111e 1111 0011 0000 0000 0000 
+			f000 8fff fff8 00ff e000 eeee ffff ffff ffff eeee 111e 1111 0011 0000 0000 0000 
+			fff0 88ff ffff ffff e00f eeee ffff ffff ffff eeee 1122 1111 ee00 000e 0000 0000 
+			fff0 ffff ffff ffff efff feee ffff ffff eeff 2eee 2222 1112 eee0 000e 0000 0000 
+			fff0 ffff ffff fff0 ffff ffff ffff efff eeee 22ee 2222 ee02 00ee 0000 0000 0000 
+			fff0 ffff 0000 ffff ffff ffff ffff eeef eeee e11e 1222 eee0 0000 0000 0000 0000 
+			ff00 0000 0000 ffff ffff ffff ffff eeef eeee ee2e eee1 00ee 0000 0000 0000 0000 
+			0f00 0000 0000 fff0 ffff ffff ffff eeff eeee eee2 eeee 00ee 0000 0000 0000 0000 
+			0000 0000 0000 ff00 ffff ffff ffff ffff eeee 0ee2 eeee 0000 0000 0000 0000 0000 
+			0000 0000 0000 ff00 ffff ffff ffff ffff eeee eeee 0eee 0000 0000 0000 0000 0000 
+			0000 0000 0000 ff00 ffff ffff ffff ffff eeef eeee 000e 0000 0000 0000 0000 0000 
+			0000 0000 0000 ff00 ffff ffff ffff ffff ffff 0eee 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 ff00 ffff ffff ffff ffff ffff 000e 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 ffff ffff ffff ffff eeff eeee 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 fff0 ffff ffff ffff eeff eeee 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 ff00 ffff ffff ffff eeee eeee 000e 0000 0000 0000 0000 0000 
+			0000 0f00 0000 0000 f000 ffff ffff ffff eeee eeee eeee 000e 0000 0000 0000 0000 
+			0000 0000 0000 0000 f000 ffff ffff ffff eeee eeee eeee 00ee 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fff0 ffff ffff eeee eeee eeee 0eee 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 f000 ffff eeff eeee eeee eeee eeee 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 fff0 ee0f eeee eeee e00e eeee 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 e000 eeee eeee 0000 eeee 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 ee00 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='64_anmimd.9' format='palette16' original_width='64' original_height='64' index='22' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.9.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+		<bitmap size='1024'>
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 cc00 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 cc00 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0e00 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 c000 000c ee00 0000 c000 000c 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 c000 00ce ee00 000e ec00 000c 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0cec e000 00ee ceb0 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0cec e000 00ee ceb0 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 cec0 e000 00ee 0ceb 0000 0000 0000 0000 0000 0000 
+			c000 0000 0000 0000 0000 0000 cec0 ec00 00ee 0ceb 0000 0000 0000 0000 0000 000c 
+			ec00 000c 0000 0000 0000 0000 ceec ec00 00ce ceeb 0000 0000 0000 0000 c000 00ce 
+			ec00 0c0c 0000 0000 0000 0000 0bec ec00 00ce ceb0 0000 0000 0000 0000 c0c0 00ce 
+			eec0 cecc 0000 0000 0000 0000 0bec 11c0 0c1e ceb0 0000 0000 0000 0000 ccec 0cee 
+			eec0 ceec 0000 0000 0000 c000 0bee 11c0 0cee eeb0 000c 0000 0000 0000 ceec 0cee 
+			ec00 0cee 0000 0000 0000 b000 beee 11c0 0ce1 eeeb 000b 0000 0000 0000 eec0 00ce 
+			ec00 0cee 0000 0000 0000 b000 beee 112c c111 eeeb 000b 0000 0000 0000 eec0 00ce 
+			ec00 ceee 0000 0000 0000 b000 beee 122c c212 eeeb 000b 0000 0000 0000 eeec 00ce 
+			ec00 eeee cccc 0000 0000 b000 efee 222b b222 eefe 000b 0000 0000 cccc eeee 00ce 
+			c000 eeee eeee 0ccc 0000 b000 fffe 222b b222 efff 000b 0000 ccc0 eeee eeee 000c 
+			c000 eeed fffe cfff 00cc 0000 fffb 22bf fb22 bfff 0000 cc00 fffc efff deee 000c 
+			0000 ffdc ffff ffff ccee 0000 fffb 2bff ffb2 bfff 0000 eecc ffff ffff cdff 0000 
+			0000 ddec fffd ffff fffe 000c ffb0 bfff fffb 0bff c000 efff ffff dfff cedd 0000 
+			0000 eec0 ddde dfff ffff 00ce ffb0 cfff fffc 0bff ec00 ffff fffd eddd 0cee 0000 
+			0000 ec00 eeee cddd ff33 00cf fc00 cfff fffc 00cf fc00 33ff dddc eeee 00ce 0000 
+			0000 c000 eeee ceee f331 00cf eb00 cfff fffc 00be fc00 133f eeec eeee 000c 0000 
+			0000 0000 eecc eeee f31c 00c3 eebb ffff ffff bbee 3c00 c13f eeee ccee 0000 0000 
+			0000 0000 cc00 eeee 1c3e 0cf3 fcfa ffff ffff afcf 3fc0 e3c1 eeee 00cc 0000 0000 
+			0000 0000 0000 eeec 3eee 0cfd ffac fffd dfff caff dfc0 eee3 ceee 0000 0000 0000 
+			0000 0000 0000 eec0 eeee affd fdff fff8 8fff ffdf dffa eeee 0cee 0000 0000 0000 
+			0000 0000 0000 ec00 eeee cfde fdaa ffa7 7aff aadf edfc eeee 00ce 0000 0000 0000 
+			0000 0000 0000 c000 eeee cfde efcd febf faef dcfe edfc eeee 000c 0000 0000 0000 
+			0000 0000 0000 0000 eeec ffde acdc ffff ffff cdca edff ceee 0000 0000 0000 0000 
+			0000 0000 0000 0000 ecc0 fdee cddc fffa afff cddc eedf 0cce 0000 0000 0000 0000 
+			0000 0000 0000 0000 c000 fdee ddcf ffec ceff fcdd eedf 000c 0000 0000 0000 0000 
+			0000 0000 0000 cccc 0000 decc dcff feac caef ffcd cced 0000 cccc 0000 0000 0000 
+			0000 0000 b000 ffff 0ccc ecdc cffd aaec ceaa dffc cdce ccc0 ffff 000b 0000 0000 
+			0000 0000 0000 ffcb cfff cdcd ffce eeec ceee ecff dcdc fffc bcff 0000 0000 0000 
+			0000 0000 0000 bb00 fffc dcfc fcec eecf fcee cecf cfcd cfff 00bb 0000 0000 0000 
+			0000 0000 0000 cc00 fcbe cfef ddec eecf fcee cedd fefc ebcf 00cc 0000 0000 0000 
+			0000 0000 0000 ffb0 ffff ffff fdce eeed deee ecdf ffff ffff 0bff 0000 0000 0000 
+			0000 0000 0000 bb00 fffe ffff fdef eeff fdee fedf ffff efff 00bb 0000 0000 0000 
+			0000 0000 0000 0000 febb ffff dddf efff fffe fddd ffff bbef 0000 0000 0000 0000 
+			0000 0000 0000 c000 ffff feff ffdf ffff ffff fdff ffef ffff 000c 0000 0000 0000 
+			0000 0000 0000 b000 fcbb fcff fdff ffff ffff ffdf ffcf bbcf 000b 0000 0000 0000 
+			0000 0000 0000 0000 cc00 ffce feff ffff ffff ffef ecff 00cc 0000 0000 0000 0000 
+			0000 0000 000f 0000 efc0 ffcb fcff ffff ffff ffcf bcff 0cfe 0000 0000 0000 0000 
+			0000 0000 0000 0000 bbb0 fc00 fcff ffff ffff ffcf 00cf 0bbb 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 eb00 ceff ffff ffff ffec 00be 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 b000 aeee fffe efff eeea 000b 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fcc0 0bef ffbb bbfe feb0 0ccf 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fffc 0bff eed0 00be ffb0 cfff 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 a000 eeff aeff eed0 000e ffea ffee 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ea00 eeef affe ed00 000d effa feee 00ae 0000 0000 0000 0000 
+			0000 0000 0000 0000 aea0 beef 0aee dd00 000d eea0 feeb 0aea 0000 0000 0000 0000 
+			0000 0000 0000 0000 aaa0 baea 00ae 0000 0000 ea00 aeab 0aaa 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 a0aa 000a 0000 0000 a000 aa0a 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
