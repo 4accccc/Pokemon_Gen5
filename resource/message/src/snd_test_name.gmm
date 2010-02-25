@@ -4854,9 +4854,9 @@
 		<language name="JPN" width="256">BGM-VS-TRAINER</language>
 		<language name="JPN_KANJI" width="256">BGM-VS-TRAINER</language>
 	</row>
-	<row id="msg_seq_bgm_vs_subwaytrainer">
-		<language name="JPN" width="256">BGM-VS-SUBWAYTRAINER</language>
-		<language name="JPN_KANJI" width="256">BGM-VS-SUBWAYTRAINER</language>
+	<row id="msg_seq_bgm_vs_subway_trainer">
+		<language name="JPN" width="256">BGM-VS-SUBWAY-TRAINER</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-SUBWAY-TRAINER</language>
 	</row>
 	<row id="msg_seq_bgm_vs_gymleader">
 		<language name="JPN" width="256">BGM-VS-GYMLEADER</language>
@@ -4881,6 +4881,10 @@
 	<row id="msg_seq_bgm_vs_n">
 		<language name="JPN" width="256">BGM-VS-N</language>
 		<language name="JPN_KANJI" width="256">BGM-VS-N</language>
+	</row>
+	<row id="msg_seq_bgm_vs_n_2">
+		<language name="JPN" width="256">BGM-VS-N-2</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-N-2</language>
 	</row>
 	<row id="msg_seq_bgm_vs_g_cis">
 		<language name="JPN" width="256">BGM-VS-G-CIS</language>
@@ -4974,10 +4978,6 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1151">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1152">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
