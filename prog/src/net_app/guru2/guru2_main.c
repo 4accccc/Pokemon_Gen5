@@ -1822,6 +1822,7 @@ static RET Guru2Subproc_EggAddInit( GURU2MAIN_WORK *g2m )
   //BGMØ‚è‘Ö‚¦
 //  Snd_DataSetByScene( SND_SCENE_GURUGURU, SEQ_GS_GURUGURU, 1 );
   PMSND_PlayBGM( SEQ_BGM_GURUGURU );
+  g2m->g2p->param.bgm_change = TRUE;
   
   Guru2TalkWin_Clear( g2m );
   return( RET_CONT );

@@ -62,6 +62,7 @@ enum {
   SEQ_MAIN,
   SEQ_LEAVE,
   SEQ_OUT,
+  SEQ_DISCONNECT_WAIT,
 };
 
 enum{
@@ -144,7 +145,7 @@ static int  Record_Guru2PokeSelStart( GURU2RC_WORK *wk, int seq );
 
 
 
-// レコードコーナーメインシーケンス用関数配列定義
+// ぐるぐる交換受付メインシーケンス用関数配列定義
 static int (* const FuncTable[])(GURU2RC_WORK *wk, int seq)={
   Record_MainInit,            // RECORD_MODE_INIT  = 0, 
   Record_NewMember,           // RECORD_MODE_NEWMEMBER,
@@ -266,7 +267,7 @@ GFL_PROC_RESULT Guru2ReceiptProc_Init( GFL_PROC * proc, int *seq, void *pwk, voi
     // 通信コマンドを交換リスト用に変更
     Guru2Comm_CommandInit( g2p->g2c );
     
-    // レコードコーナーモードに変更
+    // ぐるぐる交換受付モードに変更
     // CommStateUnionGuru2Change();
     
       // 3台まで接続可能に書き換え
@@ -422,6 +423,13 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
     break;
   case SEQ_OUT:
     if( WIPE_SYS_EndCheck() ){
+      GFL_NET_DelCommandTable( GFL_NET_CMD_GURUGURU );
+      Union_App_Shutdown( _get_unionwork(wk) );  // 通信切断開始
+      wk->proc_seq = SEQ_DISCONNECT_WAIT;
+    }
+    break;
+  case SEQ_DISCONNECT_WAIT:
+    if(Union_App_WaitShutdown(_get_unionwork(wk))){
       return GFL_PROC_RES_FINISH;
     }
     break;
@@ -1183,7 +1191,7 @@ static int Record_MainInit( GURU2RC_WORK *wk, int seq )
   // 親の時はAボタンで開始メッセージ。子機は開始待ちメッセージ
   if(GFL_NET_SystemGetCurrentID()==0){
 
-/* レコードコーナーで3人以上の時、０．５秒ぐらいのタイミングで子機が抜けて親を一人にすると
+/* ぐるぐる交換受付で3人以上の時、０．５秒ぐらいのタイミングで子機が抜けて親を一人にすると
  「つごうがつかないメンバーが…」というメッセージが２重に表示されてウインドウ内で  
   表示が壊れてしまうバグを対処 */
 #if AFTER_MASTER_070424_RECORDCONER_FIX
@@ -1208,7 +1216,7 @@ static int Record_MainInit( GURU2RC_WORK *wk, int seq )
 
 //------------------------------------------------------------------
 /**
- * @brief   レコードコーナー通常処理
+ * @brief   ぐるぐる交換受付通常処理
  *
  * @param   wk    
  * @param   seq   
@@ -1448,7 +1456,7 @@ static const BMPWIN_YESNO_DAT YesNoBmpWin = {
 
 //------------------------------------------------------------------
 /**
- * @brief   レコードコーナー「やめる」を選択した時
+ * @brief   ぐるぐる交換受付「やめる」を選択した時
  *
  * @param   wk    
  * @param   seq   
@@ -1813,7 +1821,7 @@ static int  Record_EndChild( GURU2RC_WORK *wk, int seq )
 {
   u8 temp;
   
-  // レコードコーナーをぬけました
+  // ぐるぐる交換受付をぬけました
   RecordMessagePrint( wk, msg_guru2_receipt_01_04, 0 ); 
 
   // 終了通達
@@ -2046,7 +2054,7 @@ static int Record_ForceEndSynchronize( GURU2RC_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int Record_EndParentOnly( GURU2RC_WORK *wk, int seq )
 {
-/* レコードコーナーで3人以上の時、０．５秒ぐらいのタイミングで子機が抜けて親を一人にすると
+/* ぐるぐる交換受付で3人以上の時、０．５秒ぐらいのタイミングで子機が抜けて親を一人にすると
  「つごうがつかないメンバーが…」というメッセージが２重に表示されてウインドウ内で  
   表示が壊れてしまうバグを対処 */
 #if AFTER_MASTER_070424_RECORDCONER_FIX
