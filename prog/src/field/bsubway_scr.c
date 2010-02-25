@@ -749,9 +749,17 @@ void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr )
   
   switch( bsw_scr->play_mode ){
   case BSWAY_MODE_WIFI:
+#if 0 //WB 仮 サーバーデータが古いため。
     BSUBWAY_WIFIDATA_GetBtlPlayerData( bsw_scr->wifiData,
         &bsw_scr->tr_data[0], round );
     break;
+#else
+    BSUBWAY_SCRWORK_MakeRomTrainerData(
+      bsw_scr, &(bsw_scr->tr_data[0]),
+      bsw_scr->trainer[round],
+      bsw_scr->member_num, NULL, NULL, NULL, bsw_scr->heapID );
+    break;
+#endif
   case BSWAY_MODE_MULTI:
   case BSWAY_MODE_S_MULTI:
   case BSWAY_MODE_COMM_MULTI:
@@ -806,6 +814,7 @@ u16 BSUBWAY_SCRWORK_GetTrainerOBJCode( BSUBWAY_SCRWORK *bsw_scr, u16 idx )
  * @retval u16 操作後のランク
  */
 //--------------------------------------------------------------
+#if 0
 u16 BSUBWAY_SCRWORK_SetWifiRank(
     BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, BSWAY_SETMODE mode )
 {
@@ -858,6 +867,53 @@ u16 BSUBWAY_SCRWORK_SetWifiRank(
   }
   return 0;
 }
+#else
+u16 BSUBWAY_SCRWORK_SetWifiRank(
+    BSUBWAY_SCOREDATA *score, GAMESYS_WORK *gsys, BSWAY_SETMODE mode )
+{
+  u8 ct,rank;
+  static const u8 btower_wifi_rankdown[] = {
+   0,5,4,4,3,3,2,2,1,1,
+  };
+
+  switch( mode ){
+  case BSWAY_SETMODE_get:
+    return (u16)BSUBWAY_SCOREDATA_GetWifiRank( score );
+  case BSWAY_SETMODE_inc:  //Inc
+    BSUBWAY_SCOREDATA_SetFlag( score,  //連続敗戦フラグを落とす
+      BSWAY_SCOREDATA_FLAG_WIFI_LOSE_F, BSWAY_SETMODE_reset);
+    rank = BSUBWAY_SCOREDATA_GetWifiRank( score );
+    
+    if( rank == 10 ){  
+      return 0;  //もう上がらない
+    }
+    
+    //ランクアップ処理
+    BSUBWAY_SCOREDATA_IncWifiRank( score );
+    return 1;
+  case BSWAY_SETMODE_dec:  //dec
+    //現在の連続敗戦数をカウント
+    ct = BSUBWAY_SCOREDATA_SetWifiLoseCount( score, BSWAY_SETMODE_inc );
+    rank = BSUBWAY_SCOREDATA_GetWifiRank( score );
+    
+    if( rank == 1 ){
+      return 0;
+    }
+    
+    //ランク別敗戦カウントチェック
+    if( ct >= btower_wifi_rankdown[rank-1] ){
+      BSUBWAY_SCOREDATA_DecWifiRank( score ); //ランクダウン
+      //連続敗戦数と連続敗戦フラグをリセット
+      BSUBWAY_SCOREDATA_SetWifiLoseCount( score, BSWAY_SETMODE_reset );
+      BSUBWAY_SCOREDATA_SetFlag( score,
+        BSWAY_SCOREDATA_FLAG_WIFI_LOSE_F, BSWAY_SETMODE_reset );
+      return 1;
+    }
+    return 0;
+  }
+  return 0;
+}
+#endif
 
 //======================================================================
 //  parts

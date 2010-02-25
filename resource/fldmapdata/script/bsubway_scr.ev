@@ -151,7 +151,7 @@ sub_bsw_receipt_guide_wifi:
   
   IF $ret == TRUE THEN //未アップロードデータあり
     //アップロードするか？
-    _SYSWIN_MSG( msg_bsw_scr_50 , WIN_DOWN )
+    _SYSWIN_MSG( msg_bsw_scr_50, WIN_DOWN )
     _YES_NO_WIN( ret )
     
     IF $ret == SCR_YES THEN //アップロードする
@@ -846,6 +846,8 @@ _RET
 //--------------------------------------------------------------
 ev_bsw_report_error:
 {
+  DEFINE_LOCAL play_mode
+  
   //ステートクリア
   _CALL sub_receipt_flag_clear
   
@@ -1460,12 +1462,28 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_common_report_error:
 {
+  DEFINE_LOCAL ret
+  DEFINE_LOCAL play_mode
+
+  //ゾーン別プレイモード取得
+  _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
   //お客様！
   _SYSWIN_MSG( msg_bsw_scr_37, WIN_DOWN )
   _AB_KEYWAIT()
   
   //不正終了時のパラメータ処理
   _BSUBWAY_TOOL( BSWTOOL_SET_NG_SCORE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+  
+  IF $play_mode == BSWAY_MODE_WIFI THEN
+    //ランクダウン処理
+    _BSUBWAY_TOOL( BSWTOOL_DOWN_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
+    //ランクが下がった
+    _SYSWIN_MSG( msg_bsw_scr_79, WIN_DOWN )
+    _AB_KEYWAIT()
+    //レポート
+    _CALL sub_receipt_common_auto_save
+  ENDIF
   
   //またのご利用を
   _CALL sub_receipt_common_exit

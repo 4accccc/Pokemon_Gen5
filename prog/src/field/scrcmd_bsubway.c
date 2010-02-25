@@ -496,6 +496,21 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       }
     }
     break;
+  //Wifiランク取得
+  case BSWTOOL_GET_WIFI_RANK:
+    *ret_wk = BSUBWAY_SCRWORK_SetWifiRank(
+            scoreData, gsys, BSWAY_SETMODE_get );
+    break;
+  //WiFiランクアップ
+  case BSWTOOL_UP_WIFI_RANK:
+    *ret_wk = BSUBWAY_SCRWORK_SetWifiRank(
+        scoreData, gsys, BSWAY_SETMODE_inc );
+    break;
+  //Wifiランクダウン
+  case BSWTOOL_DOWN_WIFI_RANK:
+    *ret_wk = BSUBWAY_SCRWORK_SetWifiRank(
+            scoreData, gsys, BSWAY_SETMODE_dec );
+    break;
   //----TOOL Wifi関連
   //Wifiアップロードフラグをセット
   case BSWTOOL_WIFI_SET_UPLOAD_FLAG:
@@ -698,14 +713,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_GET_SELPOKE_IDX:
     *ret_wk = bsw_scr->member[param0];
     break;
-  //(BTS通信142)変更の対象
-  case BSWSUB_WIFI_RANK_UP:
-    #if 0
-    *ret_wk = TowerScr_SetWifiRank(bsw_scr,core->fsys->savedata,1);
-    #else
-    GF_ASSERT( 0 && "BSWSUB_WIFI_RANK_UP WB未作成" );
-    #endif
-    break;
   //受信バッファクリア
   case BSWSUB_RECV_BUF_CLEAR:
     MI_CpuClear8( bsw_scr->recv_buf, BSWAY_SIO_BUF_LEN );
@@ -745,16 +752,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }else{
       *ret_wk = FALSE;
     }
-    break;
-  //Wifiランクダウン
-  case BSWSUB_WIFI_RANK_DOWN:
-    *ret_wk = BSUBWAY_SCRWORK_SetWifiRank(
-            bsw_scr, gsys, BSWAY_SETMODE_dec );
-    break;
-  //Wifiランク取得
-  case BSWSUB_GET_WIFI_RANK:
-    *ret_wk = BSUBWAY_SCRWORK_SetWifiRank(
-            bsw_scr, gsys, BSWAY_SETMODE_get );
     break;
   //ホーム、OBJセット
   case BSWSUB_SET_HOME_OBJ:

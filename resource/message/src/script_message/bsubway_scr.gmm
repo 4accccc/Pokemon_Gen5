@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-02-08T21:04:04"/>
+	<create user="kagaya" host="W00143" date="2010-02-26T01:32:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -910,8 +910,11 @@
 	</row>
 
 	<row id="msg_bsw_scr_79">
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<comment>WiFi</comment>
+		<language name="JPN" width="256">ざんねんながら　こんかい　ランクが
+○に　さがって　しまいました……</language>
+		<language name="JPN_KANJI" width="256">ざんねんながら　こんかい　ランクが
+○に　さがって　しまいました……</language>
 	</row>
 
 	<row id="msg_bsw_scr_80">

@@ -256,12 +256,12 @@ sub_mapchg_receipt:
   DEFINE_LOCAL comm_flag
   
   //ライモンシティに戻るか
-  _SYSWIN_MSG( msg_c04r0111_13 , WIN_DOWN )
+  _SYSWIN_MSG( msg_c04r0111_13, WIN_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )
   
   IF $SCWK_ANSWER == 0 THEN
     //戻ります
-    _SYSWIN_MSG( msg_c04r0111_14 , WIN_DOWN )
+    _SYSWIN_MSG( msg_c04r0111_14, WIN_DOWN )
     _LAST_KEYWAIT()
     
     //プレイモード取得
@@ -271,7 +271,7 @@ sub_mapchg_receipt:
     _BSUBWAY_TOOL( BSWSUB_GET_COMM_FLAG, BSW_NULL, BSW_NULL, comm_flag )
     
     IF $comm_flag == TRUE THEN
-      _SYSWIN_MSG( msg_c04r0111_19 , WIN_DOWN )
+      _SYSWIN_MSG( msg_c04r0111_19, WIN_DOWN )
       
        //選択待ち通信同期
       _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RETIRE_WAIT, BSW_NULL, BSW_NULL )
@@ -458,22 +458,25 @@ EVENT_START ev_c04r0111_home
     _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_SEL_DL_BTL, BSW_NULL, BSW_NULL, ret )
     
     IF $ret == TRUE THEN //ダウンロードによる新規プレイである
-      //ランク処理
+      //ランクアップ処理
+      _BSUBWAY_TOOL( BSWTOOL_UP_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
       
-      //ランク？になりました
-      _SYSWIN_MSG( msg_c04r0111_21, WIN_DOWN )
+      IF $ret != 0 THEN //ランクアップした
+        //ランク？になりました
+        _SYSWIN_MSG( msg_c04r0111_21, WIN_DOWN )
       
-      //今回の成績をWifiに送るか？
-      _SYSWIN_MSG( msg_c04r0111_22, WIN_DOWN )
-      _YES_NO_WIN( SCWK_ANSWER )
-      _SYSWIN_CLOSE()
+        //今回の成績をWifiに送るか？
+        _SYSWIN_MSG( msg_c04r0111_22, WIN_DOWN )
+        _YES_NO_WIN( SCWK_ANSWER )
+        _SYSWIN_CLOSE()
 
-      IF $SCWK_ANSWER == SCR_YES THEN //送る
-        _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
-        _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, ret )
-      ELSE //送らない
-        //未ダウンロードフラグセット
-        _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, ret )
+        IF $SCWK_ANSWER == SCR_YES THEN //送る
+          _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
+          _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, ret )
+        ELSE //送らない
+          //未ダウンロードフラグセット
+          _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, ret )
+        ENDIF
       ENDIF
     ENDIF
   ENDIF
