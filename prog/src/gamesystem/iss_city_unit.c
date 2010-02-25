@@ -53,10 +53,10 @@ struct _ISS_C_UNIT
 	// 配置場所のゾーンID
 	u16 zoneID;
 
-	// 座標[world]
-	int x;
-	int y;
-	int z;
+	// 座標[grid]]
+	u16 xGrid;
+	u16 yGrid;
+	u16 zGrid;
 
 	// 音量空間
   u8  volume[ VOLUME_SPACE_NUM ];  // [0,127]
@@ -79,6 +79,9 @@ static u8 GetVolumeZ         ( const ISS_C_UNIT* unit, const VecFx32* playerPos 
 static u8 SearchBasePriorityX( const ISS_C_UNIT* unit, const VecFx32* playerPos );
 static u8 SearchBasePriorityY( const ISS_C_UNIT* unit, const VecFx32* playerPos );
 static u8 SearchBasePriorityZ( const ISS_C_UNIT* unit, const VecFx32* playerPos ); 
+static int GetWorldX( const ISS_C_UNIT* unit );
+static int GetWorldY( const ISS_C_UNIT* unit );
+static int GetWorldZ( const ISS_C_UNIT* unit );
 static int CalcLerp( int startVal, int endVal, int startPos, int endPos, int calcPos );
 // デバッグ
 static void DebugPrint_unitParam( const ISS_C_UNIT* unit );
@@ -187,10 +190,10 @@ static void SetupUnit( const ISS_C_UNIT_DATA* unitData, ISS_C_UNIT* unit )
   // ゾーンID
   unit->zoneID = unitData->zoneID;
 
-  // 座標 ( グリッドからワールドへ変換 )
-  unit->x = unitData->gx * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_SIZE / 2;
-  unit->y = unitData->gy * FIELD_CONST_GRID_SIZE;
-  unit->z = unitData->gz * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_SIZE / 2;
+  // 座標 [grid]
+  unit->xGrid = unitData->gx;
+  unit->yGrid = unitData->gy;
+  unit->zGrid = unitData->gz;
 
   // 音量空間 ( グリッドからワールドへ変換 )
   for( i=0; i<VOLUME_SPACE_NUM; i++ )
@@ -252,12 +255,13 @@ static u8 GetVolumeX( const ISS_C_UNIT* unit, const VecFx32* playerPos )
   }
   else
   {
-    int dist, playerX;
+    int dist, playerX, unitX;
     int startVal, endVal;
     int startPos, endPos;
 
     playerX = FX_Whole( playerPos->x );
-    dist    = ABS( playerX - unit->x );
+    unitX   = GetWorldX( unit );
+    dist    = ABS( playerX - unitX );
 
     startVal = unit->volume[ basePri ];
     endVal   = unit->volume[ destPri ];
@@ -295,12 +299,13 @@ static u8 GetVolumeY( const ISS_C_UNIT* unit, const VecFx32* playerPos )
   }
   else
   {
-    int dist, playerY;
+    int dist, playerY, unitY;
     int startVal, endVal;
     int startPos, endPos;
 
     playerY = FX_Whole( playerPos->y );
-    dist    = ABS( playerY - unit->y );
+    unitY   = GetWorldY( unit );
+    dist    = ABS( playerY - unitY );
 
     startVal = unit->volume[ basePri ];
     endVal   = unit->volume[ destPri ];
@@ -338,12 +343,13 @@ static u8 GetVolumeZ( const ISS_C_UNIT* unit, const VecFx32* playerPos )
   }
   else
   {
-    int dist, playerZ;
+    int dist, playerZ, unitZ;
     int startVal, endVal;
     int startPos, endPos;
 
     playerZ = FX_Whole( playerPos->z );
-    dist    = ABS( playerZ - unit->z );
+    unitZ   = GetWorldZ( unit );
+    dist    = ABS( playerZ - unitZ );
 
     startVal = unit->volume[ basePri ];
     endVal   = unit->volume[ destPri ];
@@ -367,11 +373,12 @@ static u8 GetVolumeZ( const ISS_C_UNIT* unit, const VecFx32* playerPos )
 static u8 SearchBasePriorityX( const ISS_C_UNIT* unit, const VecFx32* playerPos )
 {
   int spaceIdx;
-  int dist, playerX;
+  int dist, playerX, unitX;
 
   // 距離を求める
   playerX = FX_Whole( playerPos->x );
-  dist    = ABS( playerX - unit->x );
+  unitX   = GetWorldX( unit );
+  dist    = ABS( playerX - unitX );
 
   // 検索
   for( spaceIdx=0; spaceIdx < VOLUME_SPACE_NUM; spaceIdx++ )
@@ -397,11 +404,12 @@ static u8 SearchBasePriorityX( const ISS_C_UNIT* unit, const VecFx32* playerPos 
 static u8 SearchBasePriorityY( const ISS_C_UNIT* unit, const VecFx32* playerPos )
 {
   int spaceIdx;
-  int dist, playerY;
+  int dist, playerY, unitY;
 
   // 距離を求める
   playerY = FX_Whole( playerPos->y );
-  dist    = ABS( playerY - unit->y );
+  unitY   = GetWorldY( unit );
+  dist    = ABS( playerY - unitY );
 
   // 検索
   for( spaceIdx=0; spaceIdx < VOLUME_SPACE_NUM; spaceIdx++ )
@@ -427,11 +435,12 @@ static u8 SearchBasePriorityY( const ISS_C_UNIT* unit, const VecFx32* playerPos 
 static u8 SearchBasePriorityZ( const ISS_C_UNIT* unit, const VecFx32* playerPos )
 {
   int spaceIdx;
-  int dist, playerZ;
+  int dist, playerZ, unitZ;
 
   // 距離を求める
   playerZ = FX_Whole( playerPos->z );
-  dist    = ABS( playerZ - unit->z );
+  unitZ   = GetWorldZ( unit );
+  dist    = ABS( playerZ - unitZ );
 
   // 検索
   for( spaceIdx=0; spaceIdx < VOLUME_SPACE_NUM; spaceIdx++ )
@@ -443,6 +452,48 @@ static u8 SearchBasePriorityZ( const ISS_C_UNIT* unit, const VecFx32* playerPos 
   } 
   GF_ASSERT(0);
   return 0;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ユニットのワールド座標を取得する
+ *
+ * @param unit
+ *
+ * @return ユニットのワールドx座標
+ */
+//-----------------------------------------------------------------------------------------
+static int GetWorldX( const ISS_C_UNIT* unit )
+{
+  return unit->xGrid * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_SIZE * 0.5;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ユニットのワールド座標を取得する
+ *
+ * @param unit
+ *
+ * @return ユニットのワールドy座標
+ */
+//-----------------------------------------------------------------------------------------
+static int GetWorldY( const ISS_C_UNIT* unit )
+{
+  return unit->yGrid * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_SIZE * 0.5;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ユニットのワールド座標を取得する
+ *
+ * @param unit
+ *
+ * @return ユニットのワールドz座標
+ */
+//-----------------------------------------------------------------------------------------
+static int GetWorldZ( const ISS_C_UNIT* unit )
+{
+  return unit->zGrid * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_SIZE * 0.5;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -486,7 +537,7 @@ static void DebugPrint_unitParam( const ISS_C_UNIT* unit )
   int spaceIdx;
 
   OS_TFPrintf( PRINT_DEST, "ISS-C-UNIT: zoneID = %d\n", unit->zoneID );
-  OS_TFPrintf( PRINT_DEST, "ISS-C-UNIT: pos = (%d, %d, %d)\n", unit->x, unit->y, unit->z );
+  OS_TFPrintf( PRINT_DEST, "ISS-C-UNIT: pos = (%d, %d, %d)\n", unit->xGrid, unit->yGrid, unit->zGrid );
 
   for( spaceIdx=0; spaceIdx < VOLUME_SPACE_NUM; spaceIdx++ )
   {
