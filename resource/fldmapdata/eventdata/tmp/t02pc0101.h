@@ -25,5 +25,8 @@
 #ifndef ZONE_T02PC0101_EVB_H
 #define ZONE_T02PC0101_EVB_H
 
+#define BG_T02PC0101_GEONET_01            0
+#define BG_T02PC0101_GEONET_02            1
+#define BG_T02PC0101_GEONET_03            2
 
 #endif //ZONE_T02PC0101_EVB_H

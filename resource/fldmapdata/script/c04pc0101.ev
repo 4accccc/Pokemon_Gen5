@@ -63,8 +63,7 @@ EVENT_END
 /*					ポケモン（お嬢様の隣）					*/
 /************************************************************/
 EVENT_START	ev_c04pc0101_pokemon_01
-	//【仮】ポケモンの鳴き声が仮
-	_EASY_TALK_POKEVOICE( MONSNO_HUSIGIDANE, msg_c04pc0101_girl4_02 )
+	_EASY_TALK_POKEVOICE( MONSNO_533, msg_c04pc0101_girl4_02 )
 EVENT_END
 
 
