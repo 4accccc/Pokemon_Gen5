@@ -24,6 +24,8 @@ extern  void  MB_DATA_ResetSaveLoad( MB_DATA_WORK *dataWork );
 extern  BOOL  MB_DATA_LoadDataFirst( MB_DATA_WORK *dataWork );
 extern  BOOL  MB_DATA_SaveData( MB_DATA_WORK *dataWork );
 extern  u8    MB_DATA_GetErrorState( MB_DATA_WORK *dataWork );
+extern  BOOL  MB_DATA_LoadRomCRC( MB_DATA_WORK *dataWork );
+extern  BOOL  MB_DATA_CheckRomCRC( MB_DATA_WORK *dataWork );
 
 extern  u32   MB_DATA_GetStartAddress( const u16 id , DLPLAY_CARD_TYPE type );
 extern  const u32 MB_DATA_GetSavedataSize( const DLPLAY_CARD_TYPE type );

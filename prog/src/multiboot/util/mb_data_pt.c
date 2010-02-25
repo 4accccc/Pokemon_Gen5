@@ -120,12 +120,18 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
       footer[PT_MAIN_SECOND]= (PT_SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER , dataWork->cardType ) ];
       footer[PT_BOX_SECOND] = (PT_SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER , dataWork->cardType ) ];
 #if DEB_ARI
-      for( i=0;i<4;i++ ){
+      for( i=0;i<4;i++ )
+      {
         MB_DATA_TPrintf("footer[%d] g_count[%2d] b_count[%2d] size[%5d] MGNo[%d] blkID[%02x] crc[%d]\n"
               ,i ,footer[i]->g_count ,footer[i]->b_count ,footer[i]->size
               ,footer[i]->magic_number ,footer[i]->blk_id ,footer[i]->crc);
       }
 #endif
+      //ROMチェック用にCRCを保存
+      for( i=0;i<4;i++ )
+      {
+        dataWork->cardCrcTable[i] = footer[i]->crc;
+      }
       {
         const BOOL isCorrectData = MB_DATA_PT_CheckDataCorrect( &footer[0] , dataWork );
         if( isCorrectData == TRUE )
@@ -428,6 +434,8 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
   case 6: //最終確認
     if( CARD_TryWaitBackupAsync() == TRUE )
     {
+      PT_SAVE_FOOTER *boxFooter,*mainFooter;
+
       GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       //DLPlayFunc_PutString("Save complete!!.",dataWork->msgSys );
       //ここでLockは保持したまま
@@ -437,21 +445,43 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       dataWork->isFinishSaveSecond = TRUE;  //2番目は無い
       dataWork->isFinishSaveAll_ = TRUE;
       
-      //セーブ位置の入れ替え
+      //セーブ位置の入れ替えとCRCの更新
+      if( dataWork->boxLoadPos == DDS_FIRST )
+      {
+        boxFooter = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER,dataWork->cardType) ];
+      }
+      else
+      {
+        boxFooter = (PT_SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER,dataWork->cardType) ];
+      }
+      if( dataWork->mainLoadPos == DDS_FIRST )
+      {
+        mainFooter = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER,dataWork->cardType) ];
+      }
+      else
+      {
+        mainFooter = (PT_SAVE_FOOTER*)&dataWork->pDataMirror[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER,dataWork->cardType) ];
+      }
+
+      
       if( dataWork->mainSavePos == DDS_FIRST )
       {
+        dataWork->cardCrcTable[PT_MAIN_FIRST] = mainFooter->crc;
         dataWork->mainSavePos = DDS_SECOND;
       }
       else
       {
+        dataWork->cardCrcTable[PT_MAIN_SECOND] = mainFooter->crc;
         dataWork->mainSavePos = DDS_FIRST;
       }
       if( dataWork->boxSavePos == DDS_FIRST )
       {
+        dataWork->cardCrcTable[PT_BOX_FIRST] = boxFooter->crc;
         dataWork->boxSavePos = DDS_SECOND;
       }
       else
       {
+        dataWork->cardCrcTable[PT_BOX_SECOND] = boxFooter->crc;
         dataWork->boxSavePos = DDS_FIRST;
       }
     }
@@ -459,6 +489,92 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
   }
   return FALSE;
 }
+
+//ROMのCRCチェック
+BOOL MB_DATA_PT_LoadRomCRC( MB_DATA_WORK *dataWork )
+{
+  switch( dataWork->subSeq )
+  {
+  case 0: //初期化およびデータ読み込み
+    {
+      const u32 footerAdr = MB_DATA_GetStartAddress( PT_GMDATA_NORMAL_FOOTER , dataWork->cardType );
+      dataWork->pDataCrcCheck = GFL_HEAP_AllocClearMemory( dataWork->heapId , sizeof(PT_SAVE_FOOTER) );
+
+      dataWork->lockID_ = OS_GetLockID();
+      CARD_LockBackup( (u16)dataWork->lockID_ );
+
+      CARD_ReadFlashAsync( footerAdr , dataWork->pDataCrcCheck , sizeof(PT_SAVE_FOOTER) , NULL , NULL );
+      dataWork->subSeq++;
+    }
+    break;
+  case 1: 
+    //読み込みの完了を待つ
+    if( CARD_TryWaitBackupAsync() == TRUE )
+    {
+      const u32 footerAdr = MB_DATA_GetStartAddress( PT_GMDATA_BOX_FOOTER , dataWork->cardType );
+      PT_SAVE_FOOTER *footer = dataWork->pDataCrcCheck;
+      dataWork->loadCrcTable[PT_MAIN_FIRST] = footer->crc;
+      
+      //次は表box
+      CARD_ReadFlashAsync( footerAdr , dataWork->pDataCrcCheck , sizeof(PT_SAVE_FOOTER) , NULL , NULL );
+      dataWork->subSeq++;
+      
+    }
+    break;
+  case 2: 
+    //読み込みの完了を待つ
+    if( CARD_TryWaitBackupAsync() == TRUE )
+    {
+      const u32 footerAdr = MB_DATA_GetStartAddress( PT_GMDATA_NORMAL_FOOTER , dataWork->cardType );
+      PT_SAVE_FOOTER *footer = dataWork->pDataCrcCheck;
+      dataWork->loadCrcTable[PT_BOX_FIRST] = footer->crc;
+      
+      //次は裏通常
+      CARD_ReadFlashAsync( footerAdr+0x40000 , dataWork->pDataCrcCheck , sizeof(PT_SAVE_FOOTER) , NULL , NULL );
+      dataWork->subSeq++;
+      
+    }
+    break;
+  case 3: 
+    //読み込みの完了を待つ
+    if( CARD_TryWaitBackupAsync() == TRUE )
+    {
+      const u32 footerAdr = MB_DATA_GetStartAddress( PT_GMDATA_BOX_FOOTER , dataWork->cardType );
+      PT_SAVE_FOOTER *footer = dataWork->pDataCrcCheck;
+      dataWork->loadCrcTable[PT_MAIN_SECOND] = footer->crc;
+      
+      //次は裏Box
+      CARD_ReadFlashAsync( footerAdr+0x40000 , dataWork->pDataCrcCheck , sizeof(PT_SAVE_FOOTER) , NULL , NULL );
+      dataWork->subSeq++;
+    }
+    break;
+  case 4: 
+    //読み込みの完了を待つ
+    if( CARD_TryWaitBackupAsync() == TRUE )
+    {
+      PT_SAVE_FOOTER *footer = dataWork->pDataCrcCheck;
+      dataWork->loadCrcTable[PT_BOX_SECOND] = footer->crc;
+
+      GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      CARD_UnlockBackup( (u16)dataWork->lockID_ );
+      OS_ReleaseLockID( (u16)dataWork->lockID_ );
+
+      GFL_HEAP_FreeMemory( dataWork->pDataCrcCheck );
+      dataWork->pDataCrcCheck = NULL;
+
+      MB_DATA_TPrintf("LOAD CRC[%5d][%5d][%5d][%5d]\n",dataWork->loadCrcTable[0],dataWork->loadCrcTable[1],dataWork->loadCrcTable[2],dataWork->loadCrcTable[3]);
+      MB_DATA_TPrintf("CARD CRC[%5d][%5d][%5d][%5d]\n",dataWork->cardCrcTable[0],dataWork->cardCrcTable[1],dataWork->cardCrcTable[2],dataWork->cardCrcTable[3]);
+      dataWork->subSeq++;
+    }
+    break;
+  case 5:
+    dataWork->subSeq = 0;
+    return TRUE;
+    break;
+  }
+  return FALSE;
+}
+
 
 //データの関連性、整合性をチェックする
 static  BOOL MB_DATA_PT_CheckDataCorrect( PT_SAVE_FOOTER **pFooterArr , MB_DATA_WORK *dataWork )

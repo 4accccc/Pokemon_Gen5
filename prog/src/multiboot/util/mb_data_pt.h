@@ -14,6 +14,7 @@
 
 extern BOOL MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork );
 extern BOOL MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork );
+extern BOOL MB_DATA_PT_LoadRomCRC( MB_DATA_WORK *dataWork );
 
 extern u32   MB_DATA_PT_GetStartAddress( const PT_GMDATA_ID id );
 extern u32   MB_DATA_DP_GetStartAddress( const PT_GMDATA_ID id );

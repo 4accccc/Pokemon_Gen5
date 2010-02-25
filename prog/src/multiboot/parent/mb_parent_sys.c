@@ -76,6 +76,7 @@ typedef enum
   MPS_WAIT_POST_GAMEDATA,
   MPS_WAIT_FINISH_CAPTURE,
   MPS_WAIT_SEND_POKE,
+  MPS_WAIT_CRC_CHECK,
 
   MPS_SAVE_INIT,
   MPS_SAVE_MAIN,
@@ -465,19 +466,33 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     {
       if( MB_COMM_Send_Flag( work->commWork , MCFT_POST_POKE , 0 ) == TRUE )
       {
+        work->state = MPS_WAIT_CRC_CHECK;
+      }
+    }
+    break;
+  case MPS_WAIT_CRC_CHECK:
+    if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
+    {
+      if( MB_COMM_GetChildState(work->commWork) == MCCS_CRC_OK )
+      {
         work->state = MPS_SAVE_INIT;
+      }
+      else
+      if( MB_COMM_GetChildState(work->commWork) == MCCS_CRC_NG )
+      {
+        //CRCチェックエラーが発生した
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
+        MB_COMM_ReqDisconnect( work->commWork );
+        work->state = MPS_EXIT_COMM;
       }
     }
     break;
     
   case MPS_SAVE_INIT:
-    if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
-    {
-      MB_PARENT_SaveInit( work );
+    MB_PARENT_SaveInit( work );
 
-      work->state = MPS_SAVE_MAIN;
-      work->subState = MPSS_SAVE_WAIT_SAVE_INIT;
-    }
+    work->state = MPS_SAVE_MAIN;
+    work->subState = MPSS_SAVE_WAIT_SAVE_INIT;
     break;
 
   case MPS_SAVE_MAIN:

@@ -85,9 +85,13 @@ typedef enum
   MCS_CAPTURE_FADEIN,
   MCS_CAPTURE_FADEIN_WAIT,
 
+  MCS_CHECK_ROM_CRC_LOAD,
+  MCS_CHECK_ROM_CRC,
+
   //転送・保存
   MCS_TRANS_POKE_INIT,
   MCS_TRANS_POKE_SEND,
+  MCS_TRANS_POKE_SEND_WAIT,
 
   MCS_SAVE_INIT,
   MCS_SAVE_MAIN,
@@ -129,6 +133,7 @@ typedef enum
 typedef struct
 {
   HEAPID heapId;
+  GFL_TCB *vBlankTcb;
   
   MB_COMM_INIT_DATA *initData;
   void  *sndData;
@@ -153,6 +158,7 @@ typedef struct
   MB_CAPTURE_INIT_WORK capInitWork;
   
   BOOL isNetErr;
+  BOOL isInitCellSys;
   
 }MB_CHILD_WORK;
 
@@ -165,7 +171,8 @@ typedef struct
 static void MB_CHILD_Init( MB_CHILD_WORK *work );
 static void MB_CHILD_Term( MB_CHILD_WORK *work );
 static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work );
-static void MB_CHILD_VBlank( void );
+static void MB_CHILD_VBlankFunc(GFL_TCB *tcb, void *wk );
+static void MB_CHILD_VSync( void );
 
 static void MB_CHILD_InitGraphic( MB_CHILD_WORK *work );
 static void MB_CHILD_TermGraphic( MB_CHILD_WORK *work );
@@ -205,6 +212,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
   u8 i,j;
   work->state = MCS_FADEIN;
   work->dataWork = NULL;
+  work->isInitCellSys = FALSE;
 
   MB_CHILD_InitGraphic( work );
   MB_CHILD_LoadResource( work );
@@ -233,7 +241,10 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
     }
     work->boxName[i] = GFL_HEAP_AllocClearMemory( work->heapId , 20 );  //8文字+EOM
   }
-  GFUser_SetVIntrFunc( MB_CHILD_VBlank );
+
+  work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_CHILD_VBlankFunc , work , 8 );
+
+  GFUser_SetVIntrFunc( MB_CHILD_VSync );
 
   PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
 }
@@ -245,6 +256,7 @@ static void MB_CHILD_Term( MB_CHILD_WORK *work )
 {
   u8 i,j;
   GFUser_ResetVIntrFunc();
+  GFL_TCB_DeleteTask( work->vBlankTcb );
 
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
@@ -498,7 +510,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
     MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
     MB_CHILD_ErrCheck( work , TRUE );
-    GFUser_SetVIntrFunc( MB_CHILD_VBlank );
+    GFUser_SetVIntrFunc( MB_CHILD_VSync );
     break;
     
   case MCS_SELECT_FADEIN:
@@ -610,7 +622,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     MB_CHILD_LoadResource( work );
     work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
 
-    GFUser_SetVIntrFunc( MB_CHILD_VBlank );
+    GFUser_SetVIntrFunc( MB_CHILD_VSync );
     MB_CHILD_ErrCheck( work , TRUE );
 
     PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
@@ -690,7 +702,38 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       if( MB_COMM_Send_PokeData( work->commWork ) == TRUE )
       {
+        MB_DATA_ResetSaveLoad( work->dataWork );
+        work->state = MCS_CHECK_ROM_CRC_LOAD;
+      }
+    }
+    break;
+    
+  case MCS_CHECK_ROM_CRC_LOAD:
+    if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
+    {
+      if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
+      {
+        work->state = MCS_CHECK_ROM_CRC;
+      }
+    }
+    break;
+
+  case MCS_CHECK_ROM_CRC:
+    if( MB_CHILD_ErrCheck( work , FALSE ) == FALSE )
+    {
+      if( MB_DATA_CheckRomCRC( work->dataWork ) == TRUE )
+      {
+        MB_COMM_SetChildState( work->commWork , MCCS_CRC_OK );
         work->state = MCS_SAVE_INIT;
+      }
+      else
+      {
+        MB_COMM_SetChildState( work->commWork , MCCS_CRC_NG );
+        //CRCチェック失敗
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_12 , work->initData->msgSpeed );
+        MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+        work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
       }
     }
     break;
@@ -698,12 +741,9 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_SAVE_INIT:
     if( MB_CHILD_ErrCheck( work , FALSE ) == FALSE )
     {
-      if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
-      {
-        MB_CHILD_SaveInit( work );
-        work->state = MCS_SAVE_MAIN;
-        work->subState = MCSS_SAVE_WAIT_SAVE_INIT;
-      }
+      MB_CHILD_SaveInit( work );
+      work->state = MCS_SAVE_MAIN;
+      work->subState = MCSS_SAVE_WAIT_SAVE_INIT;
     }
     break;
 
@@ -813,7 +853,13 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_EXIT_GAME:
     break;
   }
-  
+
+  if( work->isInitCellSys == TRUE )
+  {
+    //OBJの更新
+    GFL_CLACT_SYS_Main();
+  }
+    
   if( work->msgWork != NULL )
   {
     MB_MSG_MessageMain( work->msgWork );
@@ -823,7 +869,20 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   return FALSE;
 }
 
-static void MB_CHILD_VBlank( void )
+//--------------------------------------------------------------
+//	VBlankTcb
+//--------------------------------------------------------------
+static void MB_CHILD_VBlankFunc(GFL_TCB *tcb, void *wk )
+{
+  MB_CHILD_WORK *work = wk;
+  //OBJの更新
+  if( work->isInitCellSys == TRUE )
+  {
+    GFL_CLACT_SYS_VBlankFunc();
+  }
+}
+
+static void MB_CHILD_VSync( void )
 {
   static u8 cnt = 0;
   if( cnt > 1 )
@@ -838,6 +897,7 @@ static void MB_CHILD_VBlank( void )
   {
     cnt++;
   }
+
 }
 
 //--------------------------------------------------------------
@@ -912,15 +972,18 @@ static void MB_CHILD_InitGraphic( MB_CHILD_WORK *work )
     MB_CHILD_SetupBgFunc( &header_sub3  , MB_CHILD_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
     
   }
+  GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &vramBank ,work->heapId );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
   GFL_NET_ReloadIcon();
-
+  work->isInitCellSys = TRUE;
   
 }
 
 static void MB_CHILD_TermGraphic( MB_CHILD_WORK *work )
 {
+  work->isInitCellSys = FALSE;
+  GFL_CLACT_SYS_Delete();
   GFL_BG_FreeBGControl( MB_CHILD_FRAME_SUB_MSG );
   GFL_BG_FreeBGControl( MB_CHILD_FRAME_MSG );
   GFL_BG_FreeBGControl( MB_CHILD_FRAME_BG );
@@ -1014,7 +1077,7 @@ static const u16 MB_CHILD_GetLeastPoke( MB_CHILD_WORK *work )
     }
   }
   
-  MB_TPrintf("Child box least poke [%].\n",num);
+  MB_TPrintf("Child box least poke [%d].\n",num);
   return num;
 }
 

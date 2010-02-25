@@ -60,6 +60,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   dataWork->subSeq   = 0;
   dataWork->pData = NULL;
   dataWork->pDataMirror  = NULL;
+  dataWork->pDataCrcCheck = NULL;
   dataWork->pBoxData = NULL;
   dataWork->pItemData = NULL;
   dataWork->errorState = DES_NONE;
@@ -124,6 +125,11 @@ void  MB_DATA_TermSystem( MB_DATA_WORK *dataWork )
   {
     GFL_HEAP_FreeMemory( dataWork->pDataMirror );
   }
+  if( dataWork->pDataCrcCheck != NULL )
+  {
+    GFL_HEAP_FreeMemory( dataWork->pDataCrcCheck );
+  }
+
   GFL_HEAP_FreeMemory( dataWork );
 }
 
@@ -177,6 +183,40 @@ BOOL  MB_DATA_SaveData( MB_DATA_WORK *dataWork )
     break;
   }
   return FALSE;
+}
+
+//マルチブート子機ではROMの抜け検出ができないため、セーブ前にCRCの
+//チェックを行う。通常、boxのfotterからCRCを抜き出す。
+BOOL  MB_DATA_LoadRomCRC( MB_DATA_WORK *dataWork )
+{
+  switch( dataWork->cardType )
+  {
+  case CARD_TYPE_DP:
+    return MB_DATA_PT_LoadRomCRC( dataWork );
+    break;
+
+  case CARD_TYPE_PT:
+    return MB_DATA_PT_LoadRomCRC( dataWork );
+    break;
+
+  case CARD_TYPE_GS:
+    return MB_DATA_GS_LoadRomCRC( dataWork );
+    break;
+  }
+  return FALSE;
+}
+
+BOOL  MB_DATA_CheckRomCRC( MB_DATA_WORK *dataWork )
+{
+  u8 i;
+  for( i=0;i<4;i++ )
+  {
+    if( dataWork->cardCrcTable[i] != dataWork->loadCrcTable[i] )
+    {
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
 
 //Boxデータの取得(PPP・Name

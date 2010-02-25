@@ -14,6 +14,7 @@
 
 extern BOOL MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork );
 extern BOOL MB_DATA_GS_SaveData( MB_DATA_WORK *dataWork );
+extern BOOL MB_DATA_GS_LoadRomCRC( MB_DATA_WORK *dataWork );
 
 extern u32   MB_DATA_GS_GetStartAddress( const GS_GMDATA_ID id );
 
