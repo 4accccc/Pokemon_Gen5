@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-25T15:54:25"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-25T17:12:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,14 +312,14 @@
 		</language>
 	</columns>
 
-	<dialog left="509" top="176" right="1214" bottom="804" maximized="no" rayout="Vertical2">
+	<dialog left="458" top="198" right="1163" bottom="826" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="606" top="232" right="1079" bottom="630" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -420,17 +420,17 @@ BOXに6匹以上の空きがある</comment>
 	<row id="msg_palpark_score_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイスコアメッセージ1</comment>
 		<language name="JPN" width="256">さすが　でんどういりの　トレーナーだ！
-ポケシフターが　みごとに　うごいている！▼
+ポケシフターが　うごいている！▼
 ……だが　[1:00:トレーナー名:3]くん！▼
-ボクのめは　ごまかせないッ！
+ボクのめは　ごまかせない！
 [1:00:トレーナー名:3]くんは　まだ　ちからを▽
 かくしているだろう！▼
 きみほどの　トレーナーなら　もっともっと
 つかいこなせるはずだ！▼</language>
 		<language name="JPN_KANJI" width="256">さすが　殿堂入りの　トレーナーだ！
-ポケシフターが　見事に　動いている！▼
+ポケシフターが　動いている！▼
 ……だが　[1:00:トレーナー名:3]くん！▼
-ボクの目は　ごまかせないッ！
+ボクの目は　ごまかせない！
 [1:00:トレーナー名:3]君は　まだ　力を▽
 隠しているだろう！▼
 きみほどの　トレーナーなら　もっともっと
@@ -439,47 +439,98 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_score_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイスコアメッセージ２</comment>
-		<language name="JPN" width="256">ぬほっ！
-ポケシフターが　あざやかに
-うごいているッ！
-[1:00:トレーナー名:3]くん！
-きみは　ジーニアスだ！　てんさいだ！
-</language>
-		<language name="JPN_KANJI" width="256">レベル２だね！</language>
+		<language name="JPN" width="256">ンー　すばらしいッ！
+いやはや　ファンタスティックッ！▽
+きみの　うでは　たいしたものだ！▼
+これでこそ　われわれ　サインティストにとって
+けんきゅうの　しがいが　あるってものだ！▼
+だが　[1:00:トレーナー名:3]くん！▼
+きっと　きみほどの　トレーナーなら
+もっと　エレガントに　つかいこなせる……▽
+そんな　きがしているよ！▼</language>
+		<language name="JPN_KANJI" width="256">ンー　すばらしいッ！
+いやはや　ファンタスティックッ！▽
+きみの　腕は　たいしたものだ！▼
+これでこそ　我々　サインティストにとって
+研究の　しがいが　あるってものだ！▼
+だが　[1:00:トレーナー名:3]くん！▼
+きっと　きみほどの　トレーナーなら
+もっと　エレガントに　使いこなせる……▽
+そんな　気がしているよ！▼</language>
 	</row>
 
 	<row id="msg_palpark_score_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイスコアメッセージ３</comment>
-		<language name="JPN" width="256">レベル３だね！</language>
-		<language name="JPN_KANJI" width="256">レベル３だね！</language>
+		<language name="JPN" width="256">グレイト！　グレイトォッ！▼
+ポケシフターは　かくじつに
+しんかを　しているよ！▼
+いやはや
+どれも　これも　きみの　おかげだよ！▼
+これからも　ぜひ　われわれの　リサーチに
+ちからを　かしてくれないか！▼</language>
+		<language name="JPN_KANJI" width="256">グレイト！　グレイトォッ！▼
+ポケシフターは　かくじつに
+しんかを　しているよ！▼
+いやはや
+どれも　これも　きみの　おかげだよ！▼
+これからも　ぜひ　われわれの　リサーチに
+ちからを　かしてくれないか！▼</language>
 	</row>
 
 	<row id="msg_palpark_score_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイスコアメッセージ４</comment>
-		<language name="JPN" width="256">レベル４だね！</language>
-		<language name="JPN_KANJI" width="256">レベル４だね！</language>
+		<language name="JPN" width="256">……　……
+……　……▼
+グレイトッ！　グレイトォッ！
+ファーンタースティーーック！▼
+きみの　ポケシフターさばきは
+ほんっとうに　しげきてきだ！▼
+おほぉっ　ポケシフターが　いよいよ
+かんせいに　ちかづいているぞ！▼</language>
+		<language name="JPN_KANJI" width="256">……　……
+……　……▼
+グレイトッ！　グレイトォッ！
+ファーンタースティーーック！▼
+きみの　ポケシフターさばきは
+ほんっとうに　刺激的だ！▼
+おほぉっ　ポケシフターが　いよいよ
+完成に　近づいているぞ！▼</language>
 	</row>
 
 	<row id="msg_palpark_score_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイスコアメッセージ５</comment>
-		<language name="JPN" width="256">レベル５だね！</language>
-		<language name="JPN_KANJI" width="256">レベル５だね！</language>
+		<language name="JPN" width="256">オオオオオッ
+いよいよだ！　いよいよだぞ！▼
+あといっぽで　ポケシフターは
+ファンタスティックな　はつめいひん　として▽
+れきしに　そのなを　きざむだろう！▼</language>
+		<language name="JPN_KANJI" width="256">オオオオオッ
+いよいよだ！　いよいよだぞ！▼
+あと一歩で　ポケシフターは
+ファンタスティックな　発明品　として▽
+歴史に　その名を　きざむだろう！▼</language>
 	</row>
 
 	<row id="msg_palpark_score_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイスコアメッセージ６</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:3]くん！▼
-やはり　ぼくのかんは　ただしかった！
+やはり　ぼくのかんは　ただしかった……
 きみは　ジーニアスだ！　てんさいだッ！▼
 これほど　ポケシフターを
 プロフェッショナルに　あつかえる　ものは▽
-もう　きみ　いがいに　いないだろう！▼</language>
+もう　きみ　いがいに　だれも　いないだろう！▼
+ありがとう
+これからも　ポケシフターを　つかいたく▽
+なったら　すきに　つかってくれ！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:3]くん！▼
 やはり　ぼくの勘は　正しかった！
 きみは　ジーニアスだ！　天才だッ！▼
 これほど　ポケシフターを
 プロフェッショナルに　扱える　ものは▽
-もう　きみ　以外に　いないだろう！▼</language>
+もう　きみ　以外に　だれも　いないだろう！▼
+ありがとう
+これからも　ポケシフターを　使いたく▽
+なったら　好きに　使ってくれ！▼</language>
 	</row>
 
 	<row id="msg_palpark_11">
@@ -492,19 +543,19 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_12">
 		<comment>パルパークでポケモンを1匹も捕まえられなかった場合</comment>
-		<language name="JPN" width="256">ノゥ　ザンンネーン！　ポケモンは
-つかまえられなかった　みたいだね▼</language>
-		<language name="JPN_KANJI" width="256">ノーゥ　ザンネーン！　ポケモンは
-捕まえられなかった　みたいだね▼</language>
+		<language name="JPN" width="256">でも　どうやら　ポケモンは
+つかまえられなかった　ようだね▼</language>
+		<language name="JPN_KANJI" width="256">でも　どうやら　ポケモンは
+捕まえられなかった　ようだね▼</language>
 	</row>
 
 	<row id="msg_palpark_13">
 		<comment>通信エラーのときのメッセージ</comment>
-		<language name="JPN" width="256">ぬぐっ！
+		<language name="JPN" width="256">ぐっ……
 つうしんエラーが　おきたみたいだ！▼
 ざんねんだが　もういちど
 やりなおして　みてくれ！▼</language>
-		<language name="JPN_KANJI" width="256">ぬぐっ！
+		<language name="JPN_KANJI" width="256">ぐっ……
 通信エラーが　起きたみたいだ！▼
 残念だが　もう一度
 やり直して　みてくれ！▼</language>
