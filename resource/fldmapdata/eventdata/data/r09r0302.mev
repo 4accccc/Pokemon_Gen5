@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/02 17:11:00
+#save date:2010/02/25 23:51:45
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09r0302.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 -120
+-56 0 -184
 #event number: 1
 #type
 1
@@ -49,29 +49,29 @@ TR_ELITEW_08
 #OBJ CODE Number
 TRAINERW
 #MOVE CODE Number
-MV_RND_DR
+MV_RT2
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TRAINER_SPIN_STOP_R
 #Flag Name
 0
 #Event Script Name
 SCRID_TRID_ELITEW_08
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
-3
+2
 #Parameter 1 Number
-0
+3
 #Parameter 2 Number
 0
 #Move Limit X Number
 0
 #Move Limit Z Number
-0
+9
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -56
+120 0 -40
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

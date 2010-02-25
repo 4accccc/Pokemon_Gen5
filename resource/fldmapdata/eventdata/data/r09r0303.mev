@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/02 17:11:31
+#save date:2010/02/25 23:54:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09r0303.wms
 #SECTION START:OBJ_EVENT
@@ -11,37 +11,6 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09r0303.wms
 #hold event number:
 2
 #event number: 0
-#type
-1
-#ID name
-TR_VETERANM_03
-#OBJ CODE Number
-VETERANM
-#MOVE CODE Number
-MV_RIGHT
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_VETERANM_03
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-5
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -72
-#event number: 1
 #type
 1
 #ID name
@@ -59,7 +28,7 @@ SCRID_TRID_VETERANW_03
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
-5
+0
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -71,7 +40,38 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -24
+72 0 -456
+#event number: 1
+#type
+1
+#ID name
+TR_VETERANM_03
+#OBJ CODE Number
+VETERANM
+#MOVE CODE Number
+MV_RND_UDL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_VETERANM_03
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+568 0 -216
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
