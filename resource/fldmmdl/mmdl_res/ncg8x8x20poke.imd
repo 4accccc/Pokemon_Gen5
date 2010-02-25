@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-02-24T13:06:44" source="ncg8x8x20poke.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-02-25T11:15:59" source="ncg8x8x20poke.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-02-24T13:06:44" source="ncg8x8x20poke.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-02-25T11:15:59" source="ncg8x8x20poke.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="4" xyz="-2.000000 0.000000 0.000000" whd="4.000000 4.000000 0.000000"/>
 
-<tex_image_array size="20">
+<tex_image_array size="23">
 	<tex_image index="0" name="64_anmimd.1"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
@@ -1824,7 +1824,421 @@
 			eeee eeee eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="13" name="64_anmimd.3"
+	<tex_image index="13" name="64_anmimd.21"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="64_anmimd"
+		path="C:/home/wb_data3d/field/fldobj/64_anmimd.21.tga"
+	>
+		<bitmap size="1024">
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee feee eeef eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee feee eeef eeee eeee eeee eeee
+			eeee eeee eeee efff ffee efff eeee eeee
+			eeee eeee feee eeff eeee eeee eeee eeee
+			eeee eeee feee ffff ffff ffff eeee eeee
+			eeee eeee feee eeff eeee eeee eeee eeee
+			eeee eeee feee ffff ffff ffff eeef eeee
+			eeee eeee feee eeff eeee eeee eeee eeee
+			eeee eeee feee ffff ffff ffff eeff eeee
+			eeee eeee feee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee ffee ffff efff eeee
+			eeee eeee feee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee feee ffff efff eeee
+			eeee eeee eeee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee ffff efff eeee
+			eeee eeee eeee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee eeee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee eeee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee eeee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee eeee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee ffff eeff eeee
+			eeee eeee eeee ffff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee ffff eeff eeee
+			eeee eeee eeee ffff eeee eeee eeee eeee
+			eeee eeee eeee eeee feee ffff eeff eeee
+			eeee eeee eeee fffe eeee eeee eeee eeee
+			eeee eeee eeee eeee feee ffff eeff eeee
+			eeee eeee eeee fffe eeee eeee eeee eeee
+			eeee eeee eeee eeee ffee ffff eeef eeee
+			eeee eeee eeee fffe eeef eeee eeee eeee
+			eeee eeee eeee eeee fffe ffff eeef eeee
+			eeee eeee eeee fffe eeef eeee eeee eeee
+			eeee eeee eeee eeee fffe ffff eeee eeee
+			eeee eeee eeee ffee eeef eeee eeee eeee
+			eeee eeee eeee eeee ffff ffff eeee eeee
+			eeee eeee eeee ffee eeef eeee eeee eeee
+			eeee eeee eeee feee ffff efff eeee eeee
+			eeee eeee eeee ffee eeef eeee eeee eeee
+			eeee eeee eeee feee ffff eeff eeee eeee
+			eeee eeee eeee ffee eeff eeee eeee eeee
+			eeee eeee eeee feee ffff eeff eeee eeee
+			eeee eeee eeee ffee eeff eeee eeee eeee
+			eeee eeee eeee feee ffff ffff ffff eeee
+			eeee eeee eeee ffee eeff eeee eeee eeee
+			eeee eeee eeee feee ffff ffff ffff ffff
+			eeef eeee eeee feee eeff eeee eeee eeee
+			eeee eeee eeee feee ffff ffff ffff ffff
+			eeef eeee eeee feee eeff eeee eeee eeee
+			eeee eeee eeee feee ffff ffff ffff ffff
+			eeef eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee ffff ffff ffff ffff
+			eeef eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee ffff ffff
+			eeef eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee ceee cccc cccc cccc cddd cccc dddd
+			eeee eeee ceee ddcc 99bb aaaa aaaa 9999
+			9999 aaa9 8888 7778 7777 6666 6666 6666
+			eeee ddcc 88ab 6677 4555 4444 4444 5554
+			5555 3445 3333 1223 1111 0001 0010 0101
+			8abd 6778 2345 1112 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			3345 0112 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0110 0000 0000
+			0000 0000 0000 1001 1111 2211 2221 1222
+			0000 0000 2110 4332 6555 5666 5556 4445
+			4444 4444 5554 7665 7777 7777 7777 7777
+			3333 5544 7766 a888 dbb9 dddd bbdd aa99
+			aaaa aaaa 9999 ddbb cccc cccc cccc cccc
+			a8aa db9a cccd eccc eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+		</bitmap>
+	</tex_image>
+	<tex_image index="14" name="64_anmimd.22"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="64_anmimd"
+		path="C:/home/wb_data3d/field/fldobj/64_anmimd.22.tga"
+	>
+		<bitmap size="1024">
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee efff ffee efff eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee feee ffff ffff ffff eeee eeee
+			feee ffff eeee eeee eeee eeee eeee eeee
+			eeee eeee feee ffff ffff ffff eeef eeee
+			fffe ffff eeff eeee eeee eeee eeee eeee
+			eeee eeee feee ffff ffff ffff eeff eeee
+			fffe feee ffff eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee ffee ffff efff eeee
+			eeee eeee fffe eeff eeee eeee eeee eeee
+			eeee eeee eeee eeee feee ffff efff eeee
+			eeee eeee feee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee ffff efff eeee
+			eeee eeee feee ffff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee eeee ffff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee eeee fffe eeef eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee eeee fffe eeef eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee eeee ffee eeef eeee eeee eeee
+			eeee eeee eeee eeee eeee ffff eeff eeee
+			eeee eeee eeee fffe eeef eeee eeee eeee
+			eeee eeee eeee eeee eeee ffff eeff eeee
+			eeee eeee eeee fffe eeef eeee eeee eeee
+			eeee eeee eeee eeee feee ffff eeff eeee
+			eeee eeee eeee fffe eeee eeee eeee eeee
+			eeee eeee eeee eeee feee ffff eeff eeee
+			eeee eeee eeee ffff eeee eeee eeee eeee
+			eeee eeee eeee eeee ffee ffff eeef eeee
+			eeee eeee eeee ffff eeee eeee eeee eeee
+			eeee eeee eeee eeee fffe ffff eeef eeee
+			eeee eeee feee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee fffe ffff eeee eeee
+			eeee eeee ffee efff eeee eeee eeee eeee
+			eeee eeee eeee eeee ffff ffff eeee eeee
+			eeee eeee fffe eeff eeee eeee eeee eeee
+			eeee eeee eeee feee ffff efff eeee eeee
+			eeee eeee ffff eeef eeee eeee eeee eeee
+			eeee eeee eeee feee ffff eeff eeee eeee
+			eeee feee ffff eeee eeee eeee eeee eeee
+			eeee eeee eeee feee ffff eeff eeee eeee
+			eeee ffee ffff efff eeee eeee eeee eeee
+			eeee eeee eeee feee ffff ffff ffff eeee
+			eeee fffe ffff ffff eeff eeee eeee eeee
+			eeee eeee eeee feee ffff ffff ffff ffff
+			eeef fffe ffff ffff ffff eeee eeee eeee
+			eeee eeee eeee feee ffff ffff ffff ffff
+			eeef fffe eeee fffe ffff eeee eeee eeee
+			eeee eeee eeee feee ffff ffff ffff ffff
+			eeef eeee eeee eeee ffff eeee eeee eeee
+			eeee eeee eeee eeee ffff ffff ffff ffff
+			eeef eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee ffff ffff
+			eeef eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee ceee cccc cccc cccc cddd cccc dddd
+			eeee eeee ceee ddcc 99bb aaaa aaaa 9999
+			9999 aaa9 8888 7778 7777 6666 6666 6666
+			eeee ddcc 88ab 6677 4555 4444 4444 5554
+			5555 3445 3333 1223 1111 0001 0010 0101
+			8abd 6778 2345 1112 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			3345 0112 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0110 0000 0000
+			0000 0000 0000 1001 1111 2211 2221 1222
+			0000 0000 2110 4332 6555 5666 5556 4445
+			4444 4444 5554 7665 7777 7777 7777 7777
+			3333 5544 7766 a888 dbb9 dddd bbdd aa99
+			aaaa aaaa 9999 ddbb cccc cccc cccc cccc
+			a8aa db9a cccd eccc eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+		</bitmap>
+	</tex_image>
+	<tex_image index="15" name="64_anmimd.23"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="64_anmimd"
+		path="C:/home/wb_data3d/field/fldobj/64_anmimd.23.tga"
+	>
+		<bitmap size="1024">
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee feee
+			ffff ffff efff eeee eeee eeee eeee eeee
+			eeee eeee eeee efff ffee efff eeee feee
+			ffff ffff ffff efff eeee eeee eeee eeee
+			eeee eeee feee ffff ffff ffff eeee feee
+			ffff ffff ffff ffff eeef eeee eeee eeee
+			eeee eeee feee ffff ffff ffff eeef eeee
+			eeee eeee fffe ffff eeef eeee eeee eeee
+			eeee eeee feee ffff ffff ffff eeff eeee
+			eeee eeee eeee fffe eeef eeee eeee eeee
+			eeee eeee eeee eeee ffee ffff efff eeee
+			eeee eeee eeee ffee eeef eeee eeee eeee
+			eeee eeee eeee eeee feee ffff efff eeee
+			eeee eeee eeee fffe eeef eeee eeee eeee
+			eeee eeee eeee eeee eeee ffff efff eeee
+			eeee eeee eeee ffff eeef eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee ffee ffff eeef eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee fffe ffff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee eeee ffff efff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee fffe efff eeee
+			eeee feee ffff eeff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee ffff eeff eeee
+			eeee feee ffff ffff eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee ffff eeff eeee
+			eeee feee ffff ffff eeef eeee eeee eeee
+			eeee eeee eeee eeee feee ffff eeff eeee
+			eeee eeee ffee ffff eeff eeee eeee eeee
+			eeee eeee eeee eeee feee ffff eeff eeee
+			eeee eeee eeee ffee eeff eeee eeee eeee
+			eeee eeee eeee eeee ffee ffff eeef eeee
+			eeee eeee eeee feee efff eeee eeee eeee
+			eeee eeee eeee eeee fffe ffff eeef eeee
+			eeee eeee eeee feee ffff eeee eeee eeee
+			eeee eeee eeee eeee fffe ffff eeee eeee
+			eeee eeee eeee eeee ffff eeee eeee eeee
+			eeee eeee eeee eeee ffff ffff eeee eeee
+			eeee eeee eeee eeee ffff eeef eeee eeee
+			eeee eeee eeee feee ffff efff eeee eeee
+			eeee eeee eeee eeee fffe eeef eeee eeee
+			eeee eeee eeee feee ffff eeff eeee eeee
+			eeee eeee eeee eeee ffee eeff eeee eeee
+			eeee eeee eeee feee ffff eeff eeee eeee
+			eeee eeee eeee eeee ffee eeff eeee eeee
+			eeee eeee eeee feee ffff ffff ffff eeee
+			eeee eeee eeee eeee feee eeff eeee eeee
+			eeee eeee eeee feee ffff ffff ffff ffff
+			eeef eeee eeee eeee feee eeff eeee eeee
+			eeee eeee eeee feee ffff ffff ffff ffff
+			eeef eeee eeee eeee ffee eeff eeee eeee
+			eeee eeee eeee feee ffff ffff ffff ffff
+			eeef eeee eeee eeee fffe eeff eeee eeee
+			eeee eeee eeee eeee ffff ffff ffff ffff
+			eeef feee ffff eeee ffff eeff eeee eeee
+			eeee eeee eeee eeee eeee eeee ffff ffff
+			eeef feee ffff ffff ffff eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee feee ffff ffff efff eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee fffe ffff eeff eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee ceee cccc cccc cccc cddd cccc dddd
+			eeee eeee ceee ddcc 99bb aaaa aaaa 9999
+			9999 aaa9 8888 7778 7777 6666 6666 6666
+			eeee ddcc 88ab 6677 4555 4444 4444 5554
+			5555 3445 3333 1223 1111 0001 0010 0101
+			8abd 6778 2345 1112 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			3345 0112 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0110 0000 0000
+			0000 0000 0000 1001 1111 2211 2221 1222
+			0000 0000 2110 4332 6555 5666 5556 4445
+			4444 4444 5554 7665 7777 7777 7777 7777
+			3333 5544 7766 a888 dbb9 dddd bbdd aa99
+			aaaa aaaa 9999 ddbb cccc cccc cccc cccc
+			a8aa db9a cccd eccc eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+		</bitmap>
+	</tex_image>
+	<tex_image index="16" name="64_anmimd.3"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -1962,7 +2376,7 @@
 			eeee eeee eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="14" name="64_anmimd.4"
+	<tex_image index="17" name="64_anmimd.4"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -2100,7 +2514,7 @@
 			eeee eeee eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="15" name="64_anmimd.5"
+	<tex_image index="18" name="64_anmimd.5"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -2238,7 +2652,7 @@
 			eeee eeee eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="16" name="64_anmimd.6"
+	<tex_image index="19" name="64_anmimd.6"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -2376,7 +2790,7 @@
 			eeee eeee eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="17" name="64_anmimd.7"
+	<tex_image index="20" name="64_anmimd.7"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -2514,7 +2928,7 @@
 			eeee eeee eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="18" name="64_anmimd.8"
+	<tex_image index="21" name="64_anmimd.8"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -2652,7 +3066,7 @@
 			eeee eeee eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="19" name="64_anmimd.9"
+	<tex_image index="22" name="64_anmimd.9"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
