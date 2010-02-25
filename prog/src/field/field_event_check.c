@@ -112,6 +112,7 @@
 #include "savedata/intrude_save_field.h"  //ISC_SAVE_CheckItem
 #include "event_intrude_secret_item.h"    //
 #include "field_diving_data.h"  //DIVINGSPOT_Check
+#include "poke_tool/natsuki.h"  //NATSUKI_CalcTsurearuki
 
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
@@ -121,7 +122,6 @@ extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
 
 //======================================================================
 //======================================================================
-
 
 //======================================================================
 //======================================================================
@@ -184,8 +184,9 @@ static GMEVENT* CheckSodateya(
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckEffectEncount( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys );
-static void updatePartyEgg( POKEPARTY* party );
+static void updatePartyEgg( GAMEDATA * gamedata, POKEPARTY* party );
 static BOOL checkPartyEgg( POKEPARTY* party );
+static void updateFriendyStepCount( GAMEDATA * gamedata, FIELDMAP_WORK * fieldmap );
 
 static GMEVENT * checkExit(EV_REQUEST * req,
     FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
@@ -1605,6 +1606,7 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   if( !req->moveRequest ){
     return NULL;
   }
+  updateFriendyStepCount( req->gamedata, fieldWork );
 
   //育て屋チェック
   event = CheckSodateya( req, fieldWork, gsys, gdata );
@@ -1625,7 +1627,7 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
  * ※なつき度(タマゴの場合は孵化までの残り歩数)
  */
 //--------------------------------------------------------------
-static void updatePartyEgg( POKEPARTY* party )
+static void updatePartyEgg( GAMEDATA * gamedata, POKEPARTY* party )
 {
   enum {
     ONE_STEP_COUNT = 0x00100, ///<一歩あたりの増分
@@ -1636,11 +1638,11 @@ static void updatePartyEgg( POKEPARTY* party )
   u32 count;
 
   // 状況データ取得
-  saveData  = SaveControl_GetPointer();
+  saveData  = GAMEDATA_GetSaveControlWork( gamedata );
   situation = SaveData_GetSituation( saveData );
 
   // タマゴ孵化カウンタを更新
-  SaveData_SituationLoadEggStepCount( situation, &count );
+  Situation_GetEggStepCount( situation, &count );
   count += GPOWER_Calc_Hatch( ONE_STEP_COUNT );
 
   // 手持ちのタマゴに反映
@@ -1672,7 +1674,7 @@ static void updatePartyEgg( POKEPARTY* party )
   }
 
   // セーブデータに反映
-  SaveData_SituationUpdateEggStepCount( situation, count );
+  Situation_SetEggStepCount( situation, count );
 
 }
 //--------------------------------------------------------------
@@ -1725,7 +1727,7 @@ static GMEVENT* CheckSodateya(
   }
 
   // 手持ちタマゴ: 孵化カウンタ更新
-  updatePartyEgg( party );
+  updatePartyEgg( gameData, party );
 
   // 手持ちタマゴ: 孵化チェック
   if( checkPartyEgg( party ) )
@@ -1733,6 +1735,45 @@ static GMEVENT* CheckSodateya(
     return SCRIPT_SetEventScript( gameSystem, SCRID_EGG_BIRTH, NULL, heapID );
   }
   return NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief なつき度上昇処理
+ * @param gamedata
+ * @param fieldmap
+ */
+//--------------------------------------------------------------
+static void updateFriendyStepCount( GAMEDATA * gamedata, FIELDMAP_WORK * fieldmap )
+{
+  enum {
+    FRIENDLY_STEP_MAX = 128,
+  };
+  SITUATION * sit = SaveData_GetSituation( GAMEDATA_GetSaveControlWork( gamedata ) );
+  u16 step_count;
+  BOOL result = FALSE;
+  step_count = Situation_GetFriendlyStepCount( sit );
+  step_count ++;
+  if ( step_count >= FRIENDLY_STEP_MAX )
+  {
+    step_count = 0;
+    result = TRUE;
+  }
+  Situation_SetFriendlyStepCount( sit, step_count );
+  if ( result )
+  {
+    POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
+    u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
+    HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
+    int count = PokeParty_GetPokeCount( party );
+    int i;
+
+    for ( i = 0; i < count; i++ )
+    {
+      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, i );
+      NATSUKI_CalcTsurearuki( pp, zone_id, heapID );
+    }
+  }
 }
 
 //======================================================================

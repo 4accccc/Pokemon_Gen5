@@ -31,6 +31,7 @@ struct _SITUATION {
   u8  weather_id;         ///<天気
   u8  pad[3];             ///<padding
   u32 egg_step_count;     ///<タマゴ孵化カウンタ
+  u16 friendly_step_count;  ///<なつき度上昇用カウンタ
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
 	PLAYERWORK_SAVE plsv;
@@ -290,20 +291,45 @@ void SaveData_SituationLoadWeatherID(SITUATION * st, u8 * weather)
  *	@param	count     カウンタの値
  */
 //-----------------------------------------------------------------------------
-void SaveData_SituationUpdateEggStepCount(SITUATION * st, u32 count)
+void Situation_SetEggStepCount(SITUATION * st, u32 count)
 {
   st->egg_step_count = count;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brieif タマゴ孵化カウンタを取得
+ *	@brief タマゴ孵化カウンタを取得
  *
  *	@param	st        セーブワーク
  *	@param	count     カウンタの値の格納先
  */
 //-----------------------------------------------------------------------------
-void SaveData_SituationLoadEggStepCount(SITUATION * st, u32 * count)
+void Situation_GetEggStepCount(SITUATION * st, u32 * count)
 {
   *count = st->egg_step_count;
 }
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief なつき度上昇判定用歩数カウンタの取得
+ * @param st  SITUATION構造体へのポインタ
+ * @return    u16  現在の歩数
+ */
+//-----------------------------------------------------------------------------
+u16 Situation_GetFriendlyStepCount( const SITUATION * st )
+{
+  return st->friendly_step_count;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief なつき度上昇判定用歩数カウンタのセット
+ * @param st          SITUATION構造体へのポインタ
+ * @param step_count  設定する歩数
+ */
+//-----------------------------------------------------------------------------
+void Situation_SetFriendlyStepCount( SITUATION * st, u16 step_count )
+{
+  st->friendly_step_count = step_count;
+}
+
