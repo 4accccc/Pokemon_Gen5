@@ -140,7 +140,6 @@ sub_club_counter_menu:
 		
 	//メニュー表示
 	_BMPMENU_START()
-  _BALLOONWIN_CLOSE()
 
   IF $i_ret == EV_WIN_B_CANCEL THEN
     $reg_return = SEQ_GOODBYE
@@ -175,10 +174,9 @@ sub_club_counter_check_connect:
   //$i_friend_num = 1
 
   IF $i_id_state == TRUE THEN
+    //本ID取得済みの時
     IF $i_friend_num == 0 THEN
       _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_06, SCWK_TARGET_OBJID, POS_DL ) //友だちを登録していないと利用できません
-      _AB_KEYWAIT()
-      _BALLOONWIN_CLOSE()
       $reg_return = SEQ_GOODBYE
     ELSE
       $reg_return = SEQ_CONNECT
@@ -186,10 +184,9 @@ sub_club_counter_check_connect:
     _RET
   ENDIF
 
-  //仮IDを取得しますか？
+  //本ID未取得。仮IDを取得しますか？
   _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_05, SCWK_TARGET_OBJID, POS_DL ) //自分のコードだけでも受け取りますか？
   _YES_NO_WIN( i_ret )
-  _BALLOONWIN_CLOSE()
   
   //『はい』
   IF $i_ret == SCR_YES THEN
@@ -240,7 +237,6 @@ sub_club_counter_connect:
 
   //接続　それではご案内します
   _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_04, SCWK_TARGET_OBJID, POS_DL )
-  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
   //引率アニメ再生

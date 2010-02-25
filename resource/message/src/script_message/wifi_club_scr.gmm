@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T11:59:26"/>
+	<create user="iwasawa" host="W00157" date="2010-02-24T15:07:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1348" top="279" right="2053" bottom="907" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -391,16 +391,16 @@ Wi-Fi P2P接続画面へ</comment>
 の受付メッセージ
 フィールドへもどる</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">……あら？▼
+		<language name="JPN" width="256">……あら？[BE:01:ページ切り替え（クリア）]
 おきゃくさまは
-まだ　ともだちてちょうに▽
-おともだちを　とうろく　してませんね▼
+まだ　ともだちてちょうに[BE:00:ページ切り替え（行送り）]
+おともだちを　とうろく　してませんね[BE:01:ページ切り替え（クリア）]
 Ｗｉ－Ｆｉクラブは
-ともだちてちょうに▽
-おともだちを　とうろく　していないと▽
-ごりよう　できません▼
+ともだちてちょうに[BE:00:ページ切り替え（行送り）]
+おともだちを　とうろく　していないと[BE:00:ページ切り替え（行送り）]
+ごりよう　できません[BE:01:ページ切り替え（クリア）]
 おともだちを　とうろく　してから
-おこしください</language>
+おこしください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">……あら？▼
 お客さまは
 まだ　ともだちてちょうに▽
@@ -410,7 +410,7 @@ Wi-Fi P2P接続画面へ</comment>
 お友達を　登録していないと▽
 ご利用できません▼
 お友達を　登録してから
-おこしください</language>
+おこしください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_club_01_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
