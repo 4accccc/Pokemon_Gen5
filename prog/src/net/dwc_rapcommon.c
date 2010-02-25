@@ -60,7 +60,6 @@ static DWCRAPCOMMON_WORK* pDwcRapWork;
 //-----------------------------------------------------------------------------
 void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 {	
-#pragma unused( name )
 
   void *ptr;
   OSIntrMode  enable = OS_DisableInterrupts();
@@ -68,7 +67,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
   (void)OS_RestoreInterrupts(enable);
 
   if(ptr == NULL){
-    GF_ASSERT_MSG(ptr,"dwcalloc not allocate! size %d,align %d rest %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle) );
+    GF_ASSERT_MSG(ptr,"dwcalloc not allocate! size %d,align %d rest %d name %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle), name );
     // ƒq[ƒv‚ª–³‚¢ê‡‚ÌC³
     GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
     return NULL;

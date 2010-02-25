@@ -2066,7 +2066,7 @@ int GFL_NET_DWC_returnLobby()
     _CHANGE_STATE(MDSTATE_LOGIN);
 //    _dWork->state = MDSTATE_LOGIN;
     _dWork->newFriendConnect = -1;
-    GFL_NET_DWC_ResetClientBlock();
+    //GFL_NET_DWC_ResetClientBlock();
     return 1;
   }
   return 0;

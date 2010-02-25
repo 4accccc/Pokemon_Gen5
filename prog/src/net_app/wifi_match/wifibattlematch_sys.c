@@ -19,6 +19,7 @@
 #include "print/str_tool.h"
 #include "net/network_define.h"
 #include "poke_tool/poke_regulation.h"
+#include "sound/pm_sndsys.h"
 
 //各プロセス
 #include "net_app/wifi_login.h"
@@ -37,6 +38,7 @@
 //自分のモジュール
 #include "wifibattlematch_core.h"
 #include "wifibattlematch_data.h"
+#include "wifibattlematch_snd.h"
 
 //外部公開
 #include "net_app/wifibattlematch.h"
@@ -115,6 +117,7 @@ typedef struct
   WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;
 
   DWCSvlResult                svl_result;
+
 #if 0
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_gpf_data;
   WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   *p_sake_data;
@@ -678,6 +681,8 @@ static void *WBM_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs )
   p_param->p_enemy_data   = p_wk->p_enemy_data;
   p_param->p_svl_result   = &p_wk->svl_result;
   p_param->p_rndmatch     = SaveData_GetRndMatch( GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data ) );
+
+  PMSND_PlayBGM( WBM_SND_SEQ_MAIN );
 		
 	return p_param;
 }

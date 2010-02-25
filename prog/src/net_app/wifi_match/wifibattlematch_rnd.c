@@ -46,9 +46,6 @@
 //外部公開
 #include "wifibattlematch_core.h"
 
-//デバッグ
-#include "debug/debugwin_sys.h"
-
 //-------------------------------------
 ///	オーバーレイ
 //=====================================
@@ -61,9 +58,15 @@ FS_EXTERN_OVERLAY(dpw_common);
 #ifdef PM_DEBUG
 #define DEBUGWIN_USE
 #define DEBUG_GPF_PASS
-#define DEBUG_DIRTYCHECK_PASS
+//#define DEBUG_DIRTYCHECK_PASS
 #endif //PM_DEBUG
 
+
+//デバッグWINインクルード
+#ifdef DEBUGWIN_USE
+//デバッグ
+#include "debug/debugwin_sys.h"
+#endif//DEBUGWIN_USE
 
 //=============================================================================
 /**
@@ -189,11 +192,15 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmRndSeq_Rate_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void WbmRndSeq_Rate_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void WbmRndSeq_Rate_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //フリー処理
 static void WbmRndSeq_Free_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmRndSeq_Free_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void WbmRndSeq_Free_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void WbmRndSeq_Free_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //エラー処理
 static void WbmRndSeq_Err_ReturnLogin( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //切断
@@ -325,9 +332,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
     p_wk->p_wait  = WBM_WAITICON_Init( p_unit, p_wk->p_res, HEAPID_WIFIBATTLEMATCH_CORE );
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
 	}
-  PMSND_PushBGM();
-  PMSND_PlayBGM( SEQ_BGM_WCS );
-
 
 
 #ifdef DEBUGWIN_USE
@@ -1123,9 +1127,9 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         { 
         case 0:
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-          p_param->result = WIFIBATTLEMATCH_CORE_RESULT_FINISH;
           PMSND_PlaySE( WBM_SND_SE_MATCHING );
-          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
+          WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupEnd );
           break;
         case 1:
           *p_seq = SEQ_START_MATCHING_MSG;
@@ -1328,13 +1332,48 @@ static void WbmRndSeq_Rate_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 { 
   enum
   { 
+    SEQ_START,
+
+    SEQ_WAIT_MSG,
+  };
+
+  WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START:
+    WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
+    break;
+
+
+    //-------------------------------------
+    ///	共通
+    //=====================================
+  case SEQ_WAIT_MSG:
+    if( WBM_TEXT_IsEnd( p_wk->p_text ) )
+    { 
+      WBM_SEQ_NextReservSeq( p_seqwk ); 
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチ  たいせんを続けますか？
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk       シーケンスワーク
+ *	@param  p_peq                       シーケンス
+ *	@param	p_wk_adrs                   ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void WbmRndSeq_Rate_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
     SEQ_START_SELECT_CONTINUE_MSG,
     SEQ_START_SELECT_CONTINUE,
     SEQ_WAIT_SELECT_CONTINUE,
-
-    SEQ_START_SELECT_CANCEL_MSG,
-    SEQ_START_SELECT_CANCEL,
-    SEQ_WAIT_SELECT_CANCEL,
 
     SEQ_WAIT_MSG,
   };
@@ -1368,13 +1407,49 @@ static void WbmRndSeq_Rate_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_Start );
           break;
         case 1:
-          *p_seq = SEQ_START_SELECT_CANCEL_MSG;
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupEnd );
           break;
         }
       }
     }
     break;
 
+    //-------------------------------------
+    ///	共通
+    //=====================================
+  case SEQ_WAIT_MSG:
+    if( WBM_TEXT_IsEnd( p_wk->p_text ) )
+    { 
+      WBM_SEQ_NextReservSeq( p_seqwk ); 
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチ  たいかいを終了しますか？
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk       シーケンスワーク
+ *	@param  p_peq                       シーケンス
+ *	@param	p_wk_adrs                   ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void WbmRndSeq_Rate_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_SELECT_CANCEL_MSG,
+    SEQ_START_SELECT_CANCEL,
+    SEQ_WAIT_SELECT_CANCEL,
+
+    SEQ_WAIT_MSG,
+  };
+
+  WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
+
+  switch( *p_seq )
+  { 
     //-------------------------------------
     /// ランダムマッチ終了確認
     //=====================================
@@ -1397,11 +1472,12 @@ static void WbmRndSeq_Rate_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
         switch( select )
         { 
         case 0:
+          WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
           p_param->result = WIFIBATTLEMATCH_CORE_RESULT_FINISH;
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
           break;
         case 1:
-          *p_seq = SEQ_START_SELECT_CONTINUE_MSG;
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
           break;
         }
       }
@@ -1418,7 +1494,13 @@ static void WbmRndSeq_Rate_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     }
     break;
   }
+
 }
+//=============================================================================
+/**
+ *      フリーモード
+ */
+//=============================================================================
 //----------------------------------------------------------------------------
 /**
  *	@brief  ランダムマッチ  フリーモード開始
@@ -1741,8 +1823,8 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         { 
         case 0:
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-          p_param->result = WIFIBATTLEMATCH_CORE_RESULT_FINISH;
-          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
+          WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupEnd );
           break;
         case 1:
           *p_seq = SEQ_START_MATCHING_MSG;
@@ -1874,13 +1956,47 @@ static void WbmRndSeq_Free_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 { 
   enum
   { 
+    SEQ_START,
+
+    SEQ_WAIT_MSG,
+  };
+
+  WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START:
+    WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupContinue );
+    break;
+
+    //-------------------------------------
+    ///	共通
+    //=====================================
+  case SEQ_WAIT_MSG:
+    if( WBM_TEXT_IsEnd( p_wk->p_text ) )
+    { 
+      WBM_SEQ_NextReservSeq( p_seqwk );
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチ  たいせんをつづけますか？
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk       シーケンスワーク
+ *	@param  p_peq                       シーケンス
+ *	@param	p_wk_adrs                   ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void WbmRndSeq_Free_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
     SEQ_START_SELECT_CONTINUE_MSG,
     SEQ_START_SELECT_CONTINUE,
     SEQ_WAIT_SELECT_CONTINUE,
-
-    SEQ_START_SELECT_CANCEL_MSG,
-    SEQ_START_SELECT_CANCEL,
-    SEQ_WAIT_SELECT_CANCEL,
 
     SEQ_WAIT_MSG,
   };
@@ -1914,13 +2030,50 @@ static void WbmRndSeq_Free_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_Start );
           break;
         case 1:
-          *p_seq = SEQ_START_SELECT_CANCEL_MSG;
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupEnd );
           break;
         }
       }
     }
     break;
 
+    //-------------------------------------
+    ///	共通
+    //=====================================
+  case SEQ_WAIT_MSG:
+    if( WBM_TEXT_IsEnd( p_wk->p_text ) )
+    { 
+      WBM_SEQ_NextReservSeq( p_seqwk );
+    }
+    break;
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチ  たいかいをしゅうりょうしますか？
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk       シーケンスワーク
+ *	@param  p_peq                       シーケンス
+ *	@param	p_wk_adrs                   ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void WbmRndSeq_Free_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_SELECT_CANCEL_MSG,
+    SEQ_START_SELECT_CANCEL,
+    SEQ_WAIT_SELECT_CANCEL,
+
+    SEQ_WAIT_MSG,
+  };
+
+  WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
+
+  switch( *p_seq )
+  { 
     //-------------------------------------
     /// ランダムマッチ終了確認
     //=====================================
@@ -1946,7 +2099,7 @@ static void WbmRndSeq_Free_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
           break;
         case 1:
-          *p_seq = SEQ_START_SELECT_CONTINUE_MSG;
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupContinue );
           break;
         }
       }
@@ -1963,8 +2116,8 @@ static void WbmRndSeq_Free_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     }
     break;
   }
-}
 
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  エラーのためログインに戻る

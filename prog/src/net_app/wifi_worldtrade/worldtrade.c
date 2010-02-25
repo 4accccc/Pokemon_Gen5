@@ -134,10 +134,6 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
   
   GFL_NET_DebugPrintOn();
 
-#ifdef PM_DEBUG
-    GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_SYSTEM );
-    GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP );
-#endif
 
     // ÉqÅ[ÉvçÏê¨
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0x40000 );  //old 0x70000

@@ -503,7 +503,7 @@ static void Local_ErrDispInit(void)
 	GX_SetGraphicsMode(GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_2D);
 	GX_SetVisiblePlane(GX_PLANEMASK_BG1);
 	GX_SetVisibleWnd(GX_WNDMASK_NONE);
-	
+
 	//VRAMのデータを退避(念のため上でBG1の設定をしてから行っている)
 	GFL_STD_MemCopy16(G2_GetBG1CharPtr(), nes->push_char_p, NETERR_PUSH_CHARVRAM_SIZE);
 	GFL_STD_MemCopy16(G2_GetBG1ScrPtr(), nes->push_scrn_p, NETERR_PUSH_SCRNVRAM_SIZE);
@@ -559,11 +559,6 @@ static void Local_ErrDispExit(void)
 	G2_BG1Mosaic(nes->bg1cnt.mosaic);
 	GFL_NET_BG1PosGet(&x, &y);
 	G2_SetBG1Offset(x, y);
-
-	//VRAM復帰
-	GFL_STD_MemCopy16(nes->push_char_p, G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
-	GFL_STD_MemCopy16(nes->push_scrn_p, G2_GetBG1ScrPtr(), NETERR_PUSH_SCRNVRAM_SIZE);
-	GFL_STD_MemCopy16(nes->push_pltt_p, (void*)HW_PLTT, NETERR_PUSH_PLTTVRAM_SIZE);
 	
 	//dispcnt復帰
 	GX_SetGraphicsMode(nes->dispcnt.dispMode, nes->dispcnt.bgMode, nes->dispcnt.bg0_2d3d);
