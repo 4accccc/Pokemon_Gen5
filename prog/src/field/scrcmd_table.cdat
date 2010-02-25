@@ -816,9 +816,9 @@
 
   //ê}ä”ï]âø
   DEF_CMD( EvCmdGetZukanHyouka, EV_SEQ_GET_ZUKAN_HYOUKA )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdSetZukanZenkokuFlag, EV_SEQ_SET_ZUKAN_ZENKOKU_FLAG )
+  DEF_CMD( EvCmdGetZukanZenkokuFlag, EV_SEQ_GET_ZUKAN_ZENKOKU_FLAG )
+  DEF_CMD( EvCmdSetZukanGraphicFlag, EV_SEQ_SET_ZUKAN_GRAPHIC_FLAG )
 
   //äÁÉAÉbÉv
   DEF_CMD( EvCmdFaceup_Start, EV_SEQ_FACEUP_SATRT )

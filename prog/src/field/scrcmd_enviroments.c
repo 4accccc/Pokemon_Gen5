@@ -589,6 +589,52 @@ VMCMD_RESULT EvCmdGetZukanCount( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief ずかんの機能操作：全国図鑑フラグのセット
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetZukanZenkokuFlag( VMHANDLE * core, void *wk )
+{
+  u16               mode = SCRCMD_GetVMWorkValue( core, wk );
+  SCRCMD_WORK*      work = wk;
+  GAMEDATA*     gamedata = SCRCMD_WORK_GetGameData( work );
+  ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
+  ZUKANSAVE_SetZenkokuZukanFlag( zukan );
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief ずかんの機能操作：全国図鑑フラグの取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetZukanZenkokuFlag( VMHANDLE * core, void *wk )
+{
+  u16               mode = SCRCMD_GetVMWorkValue( core, wk );
+  u16 *           ret_wk = SCRCMD_GetVMWork( core, wk );
+  SCRCMD_WORK*      work = wk;
+  GAMEDATA*     gamedata = SCRCMD_WORK_GetGameData( work );
+  ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
+  *ret_wk = ZUKANSAVE_GetZenkokuZukanFlag( zukan );
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief ずかんの機能操作：フォルム詳細画面追加
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetZukanGraphicFlag( VMHANDLE * core, void *wk )
+{
+  u16               mode = SCRCMD_GetVMWorkValue( core, wk );
+  SCRCMD_WORK*      work = wk;
+  GAMEDATA*     gamedata = SCRCMD_WORK_GetGameData( work );
+  ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
+  ZUKANSAVE_SetGraphicVersionUpFlag( zukan );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
  * @brief ワイヤレスセーブモードを取得する
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param  wk      SCRCMD_WORKへのポインタ
