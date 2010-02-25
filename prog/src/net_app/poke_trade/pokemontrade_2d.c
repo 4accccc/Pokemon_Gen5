@@ -1934,17 +1934,28 @@ void IRC_POKETRADE_PosChangeSubStatusIcon(POKEMON_TRADE_WORK* pWork,int sel,BOOL
 
 void IRC_POKETRADE_ResetMainStatusBG(POKEMON_TRADE_WORK* pWork)
 {
-  
-  GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_BASEPANEL]);
-  GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_SELECT]);
-  GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_PLAYER]);
-  GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_FRIEND]);
+  if(pWork->curIcon[CELL_CUR_POKE_BASEPANEL]){
+    GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_BASEPANEL]);
+  }
+  if(pWork->curIcon[CELL_CUR_POKE_SELECT]){
+    GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_SELECT]);
+  }
+  if(pWork->curIcon[CELL_CUR_POKE_PLAYER]){
+    GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_PLAYER]);
+  }
+  if(pWork->curIcon[CELL_CUR_POKE_FRIEND]){
+    GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_FRIEND]);
+  }
   pWork->curIcon[CELL_CUR_POKE_BASEPANEL]=NULL;
   pWork->curIcon[CELL_CUR_POKE_SELECT]=NULL;
   pWork->curIcon[CELL_CUR_POKE_PLAYER]=NULL;
   pWork->curIcon[CELL_CUR_POKE_FRIEND]=NULL;
-  GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_SELECT_POKEICON1] );
-  GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_SELECT_POKEICON2] );
+  if(pWork->cellRes[CHAR_SELECT_POKEICON1]){
+    GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_SELECT_POKEICON1] );
+  }
+  if(pWork->cellRes[CHAR_SELECT_POKEICON2] ){
+    GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_SELECT_POKEICON2] );
+  }
   pWork->cellRes[CHAR_SELECT_POKEICON1]=0;
   pWork->cellRes[CHAR_SELECT_POKEICON2]=0;
 }
@@ -2337,7 +2348,7 @@ void IRC_POKETRADE_StatusWindowMessagePaletteTrans(POKEMON_TRADE_WORK* pWork, in
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモンステータスウインドウ用のパレットを合成する
+ * @brief   ＧＴＳ用ポケモンアイコンを消す
  * @param   POKEMON_TRADE_WORK
  * @param   palno      パレットを送る番号
  * @param   palType   パレット転送タイプ MAINかSUB
@@ -2788,12 +2799,14 @@ void POKEMONTRADE_TouchFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo)
 void POKEMONTRADE_StartEruptedGTS(POKEMON_TRADE_WORK* pWork, int faceNo, int index)
 {
   GFL_CLWK_DATA cellInitData;
-
+ 
   cellInitData.pos_x = 8 + index*(216);
   cellInitData.pos_y = 192-24-8;
   cellInitData.anmseq = 4;
   cellInitData.softpri = 1;
   cellInitData.bgpri = 0;
+  
+  
 
   if(!pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2]){
     pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2] =
@@ -2805,6 +2818,10 @@ void POKEMONTRADE_StartEruptedGTS(POKEMON_TRADE_WORK* pWork, int faceNo, int ind
     GFL_CLACT_WK_SetAutoAnmFlag(pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2] ,TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2], TRUE );
   }
+  else{
+    GFL_CLACT_WK_SetDrawEnable( pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_BASE+index*2],TRUE);
+  }
+  
   if(!pWork->eruptedButtonGTS[GTS_ERUPTED_BUTTON_MARK+index*2]){
     cellInitData.softpri = 0;
     cellInitData.anmseq = faceNo;

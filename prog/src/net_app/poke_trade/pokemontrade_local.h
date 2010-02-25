@@ -580,7 +580,7 @@ struct _POKEMON_TRADE_WORK{
   int modelno;  ///< 表示しているモデルの番号
   int pokemonselectno;  ///< 自分と相手のポケモン選択中のどちらを指しているか
 
-  GFL_CLWK* eruptedButtonGTS[GTS_ERUPTED_BUTTON_NUM];  //顔噴出し
+  GFL_CLWK* eruptedButtonGTS[GTS_ERUPTED_BUTTON_NUM * 2];  //顔噴出し
   GFL_CLWK* faceButtonGTS[GTS_FACE_BUTTON_NUM];  //顔マークボタン
   
   u16* scrTray;
@@ -601,7 +601,7 @@ struct _POKEMON_TRADE_WORK{
   u8 NegoWaitTime;  //NEGOを遅らせるタイマー
   u8 pokemonGTSSeq;  //GTSシーケンス番号
   u8 pokemonGTSSeqSend;  //送るGTSシーケンス番号
-  u8 dummy;
+  u8 friendBoxNum;  //ともだちのボックス番号
 } ;
 
 
@@ -705,6 +705,7 @@ extern void POKE_GTS_VisibleFaceIcon(POKEMON_TRADE_WORK* pWork,BOOL bVisible);
 extern void POKEMON_TRADE_MaskCommon(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKE_GTS_IsMyIn(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_WindowOpenXY(POKEMON_TRADE_WORK* pWork,BOOL bFast,int x,int y,int xm,int ym);
+extern BOOL POKEMONTRADE_GetFriendBoxNum(POKEMON_TRADE_WORK* pWork);
 
 
 #if _TRADE_DEBUG
@@ -785,6 +786,7 @@ typedef enum {
   _NETCMD_FACEICON,
   _NETCMD_POKEMONCOLOR,
   _NETCMD_GTSSEQNO,
+  _NETCMD_FRIENDBOXNUM,
 } _POKEMON_TRADE_SENDCMD;
 
 
@@ -820,7 +822,7 @@ extern void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork,
 extern void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork);
 extern void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp);
-extern void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork,int frame);
 
 //ポケモン２Ｄ
 extern void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow);
@@ -877,4 +879,5 @@ extern void IRC_POKETRADE3D_SetColorTex( POKEMON_TRADE_WORK* pWork);
 
 extern void POKEMONTRADE_StartPokeSelectSixButton(POKEMON_TRADE_WORK* pWork,int index);
 extern void POKEMONTRADE_RemovePokeSelectSixButton(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKEMONTRADE_IsInPokemonRecvPoke(POKEMON_PARAM* pp);
 

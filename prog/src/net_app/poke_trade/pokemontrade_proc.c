@@ -102,6 +102,7 @@ static void _recvPokemonColor(const int netID, const int size, const void* pData
 static u8* _setPokemonColorBuffer(int netID, void* pWk, int size);
 static void _recvSeqNegoNo(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork);
+static void _recvFriendBoxNum(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 
 ///通信コマンドテーブル
@@ -121,9 +122,34 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvFriendScrollBar, NULL}, //_NETCMD_SCROLLBAR
   {_recvFriendFaceIcon, NULL},//_NETCMD_FACEICON
   {_recvPokemonColor, _setPokemonColorBuffer},//_NETCMD_POKEMONCOLOR
-  {_recvSeqNegoNo,   NULL},    ///_NETCMD_GTSSEQNO 
+  {_recvSeqNegoNo,   NULL},    ///_NETCMD_GTSSEQNO
+  {_recvFriendBoxNum,   NULL},   ///_NETCMD_FRIENDBOXNUM
 
 };
+
+
+BOOL POKEMONTRADE_IsInPokemonRecvPoke(POKEMON_PARAM* pp)
+{
+  u8* data = (u8*)pp;
+  int i,size = POKETOOL_GetWorkSize();
+
+  if(!pp){
+    return FALSE;
+  }
+  
+  for(i=0;i<size;i++){
+    if(data[i] != 0){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//ともだちのボックス数
+BOOL POKEMONTRADE_GetFriendBoxNum(POKEMON_TRADE_WORK* pWork)
+{
+  return pWork->friendBoxNum;
+}
 
 //------------------------------------------------------------------
 /**
@@ -557,6 +583,7 @@ POKEMON_PARAM* IRC_POKEMONTRADE_GetRecvPP(POKEMON_TRADE_WORK *pWork, int index)
   BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
   GF_ASSERT(index < 2);
 
+
   if(bMode==FALSE){
     return (POKEMON_PARAM*)pWork->recvPoke[index];
   }
@@ -641,6 +668,22 @@ static void _recvPokemonColor(const int netID, const int size, const void* pData
   }
   //すでに受信済み
 }
+
+//_NETCMD_FRIENDBOXNUM
+static void _recvFriendBoxNum(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  const u8* pRecvData = pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  pWork->friendBoxNum = pRecvData[0];
+}
+
 
 
 
@@ -885,9 +928,11 @@ static void _noneState(POKEMON_TRADE_WORK* pWork)
 //--------------------------------------------------------------
 void POKE_MAIN_Pokemonset(POKEMON_TRADE_WORK *pWork, int side, POKEMON_PARAM* pp )
 {
-  IRCPOKETRADE_PokeDeleteMcss(pWork, side);
-  IRCPOKETRADE_PokeCreateMcss(pWork, side, 1-side, pp, TRUE);
-  POKETRADE_MESSAGE_SetPokemonStatusMessage(pWork,side ,pp);
+  if(pp){
+    IRCPOKETRADE_PokeDeleteMcss(pWork, side);
+    IRCPOKETRADE_PokeCreateMcss(pWork, side, 1-side, pp, TRUE);
+    POKETRADE_MESSAGE_SetPokemonStatusMessage(pWork,side ,pp);
+  }
 }
 
 
@@ -1493,6 +1538,7 @@ static void _changeTimingDemoStart(POKEMON_TRADE_WORK* pWork)
   }
   
 
+  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
   if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
     _CHANGE_STATE(pWork,POKMEONTRADE_IRCDEMO_ChangeDemo);
   }
@@ -1581,7 +1627,7 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
 
 }
 
-static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
+static void _touchState_BeforeTimeing12(POKEMON_TRADE_WORK* pWork)
 {
   PokemonTrade_SetMyPokeColor(pWork);
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
@@ -1595,6 +1641,20 @@ static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
   else{
     IRC_POKETRADE3D_SetColorTex(pWork);
     _CHANGE_STATE(pWork, _touchState_BeforeTimeing2);
+  }
+}
+
+static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
+{
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    u8 sdata = pWork->BOX_TRAY_MAX;
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_FRIENDBOXNUM, 1, &sdata)){
+      _CHANGE_STATE(pWork, _touchState_BeforeTimeing12);
+    }
+  }
+  else{
+    pWork->friendBoxNum = pWork->BOX_TRAY_MAX;
+    _CHANGE_STATE(pWork, _touchState_BeforeTimeing12);
   }
 }
 
@@ -2770,7 +2830,8 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL
 #if PM_DEBUG
   if(bDebug){
 
-    pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
+    GF_ASSERT(pWork->pBox);
+ //   pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
  //   pWork->pMy = MyStatus_AllocWork(pWork->heapID);
 
 //    MyStatus_Init(pWork->pMy);
@@ -2858,6 +2919,7 @@ static void _maxTrayNumInit(POKEMON_TRADE_WORK *pWork)
 
 void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
 {
+  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
   POKETRADE_2D_GTSPokemonIconResetAll(pWork);
   IRC_POKETRADEDEMO_RemoveModel( pWork);
   POKE_GTS_ReleasePokeIconResource(pWork);

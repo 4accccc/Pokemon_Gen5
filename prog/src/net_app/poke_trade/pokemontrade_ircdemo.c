@@ -254,6 +254,10 @@ void POKMEONTRADE_IRCDEMO_ChangeDemo(POKEMON_TRADE_WORK* pWork)
   VecFx32 apos;
   int i;
 
+  PMSND_PushBGM();
+  PMSND_PlayBGM(  SEQ_BGM_KOUKAN );
+  PMSND_FadeInBGM( 8 );
+  
   pWork->mcssStop[0] = TRUE;
   MCSS_SetAnimeIndex(pWork->pokeMcss[0], 0);
   MCSS_SetAnmStopFlag( pWork->pokeMcss[0]);

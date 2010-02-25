@@ -11,6 +11,8 @@
 //#include "savedata/contest_savedata.h"
 #include "savedata/save_tbl.h"
 #include "savedata/save_control.h"
+#include "sound/pm_sndsys.h"
+#include "sound/pm_voice.h"
 
 #include "net\network_define.h"
 #include "../../field/event_gtsnego.h"
@@ -264,6 +266,8 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
 	GFL_BMPWIN_Init( wk->heapID );
 	GFL_FONTSYS_Init();
 
+  PMSND_PlayBGM(  SEQ_BGM_POKECEN );
+  
 	//ÇaÇfÉÇÅ[Éhê›íË
 	{
 		static const GFL_BG_SYS_HEADER sysHeader = {

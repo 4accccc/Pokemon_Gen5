@@ -247,8 +247,10 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork)
   VecFx32 apos;
   int i;
 
+  PMSND_PushBGM();
   PMSND_PlayBGM(  SEQ_BGM_KOUKAN );
-
+  PMSND_FadeInBGM( 8 );
+  
 #if 0
 //  pWork->mcssStop[0] = FALSE;
 //  MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
@@ -669,7 +671,6 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     MCSS_SetPosition( pWork->pokeMcss[3] ,&apos );
     MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
 
-    
     MCSS_SetPaletteFade( pWork->pokeMcss[3], 16, 16, 0, 0x7fff );
   }
   if(ANMCNTC(_POKEMON_CREATE_TIME+1) == pWork->anmCount){

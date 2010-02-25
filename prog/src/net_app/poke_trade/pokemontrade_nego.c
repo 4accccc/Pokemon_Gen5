@@ -51,6 +51,7 @@
 #include "pokemontrade_local.h"
 #include "app_menu_common.naix"
 
+#define KARI_EN (1)  //スライド演出がはいるまでかり
 
 #define _GTSINFO03_WAIT (60*2)
 #define _GTSINFO04_WAIT (60*2)
@@ -214,10 +215,19 @@ void POKE_GTS_DeletePokemonDirect(POKEMON_TRADE_WORK* pWork,int side,int index)
 void POKE_GTS_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork,int mainsub)
 {
   ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
+  int pal;
+  
+  if(mainsub==CLSYS_DRAW_SUB){
+    pal = _OBJPLT_POKEICON_OFFSET;
+  }
+  else{
+    pal = _OBJPLT_GTS_POKEICON_OFFSET_M;
+  }
+
   pWork->cellRes[PLT_GTS_POKEICON] =
     GFL_CLGRP_PLTT_RegisterComp( arcHandlePoke ,
                                  POKEICON_GetPalArcIndex() , mainsub ,
-                                 _OBJPLT_GTS_POKEICON_OFFSET_M , pWork->heapID  );
+                                 pal , pWork->heapID  );
   pWork->cellRes[ANM_GTS_POKEICON] =
     GFL_CLGRP_CELLANIM_Register( arcHandlePoke ,
                                  POKEICON_GetCellSubArcIndex() , POKEICON_GetAnmArcIndex(), pWork->heapID  );
@@ -481,7 +491,6 @@ static void _changePokemonSendData(POKEMON_TRADE_WORK* pWork)
 
 static void _networkFriendsStandbyWait2(POKEMON_TRADE_WORK* pWork)
 {
-
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
@@ -575,39 +584,73 @@ static void _friendSelectWait(POKEMON_TRADE_WORK* pWork)
 // ポケモンのステータス表示待ち
 static void _changePokemonStatusDispAuto(POKEMON_TRADE_WORK* pWork,int sel)
 {
-  POKEMON_PARAM* pp = pWork->GTSSelectPP[0][0];
+  POKEMON_PARAM* pp = pWork->GTSSelectPP[1-(sel/GTS_NEGO_POKESLT_MAX)][sel%GTS_NEGO_POKESLT_MAX]; //さかさまにする
 
-  POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork,pp);
+  if(POKEMONTRADE_IsInPokemonRecvPoke(pp)){
+    POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork,pp);
+  }
 }
+
+// ポケモンのステータス表示待ち
+static BOOL _pokemonStatusKeyLoop(POKEMON_TRADE_WORK* pWork)
+{
+  BOOL curSel=FALSE;
+  
+  // キー処理
+  if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT){
+    pWork->pokemonselectno = (pWork->pokemonselectno+3) % 6;
+    curSel=TRUE;
+  }
+  if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT){
+    pWork->pokemonselectno = (pWork->pokemonselectno-3) % 6;
+    if(pWork->pokemonselectno<0){
+      pWork->pokemonselectno+=6;
+    }
+    curSel=TRUE;
+  }
+  if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
+    if((pWork->pokemonselectno==0) || (pWork->pokemonselectno==3)){
+      pWork->pokemonselectno = pWork->pokemonselectno+3;
+    }
+    pWork->pokemonselectno = pWork->pokemonselectno-1;
+    curSel=TRUE;
+  }
+  if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
+    if((pWork->pokemonselectno==2) || (pWork->pokemonselectno==5)){
+      pWork->pokemonselectno = pWork->pokemonselectno-3;
+    }
+    pWork->pokemonselectno = pWork->pokemonselectno+1;
+    curSel=TRUE;
+  }
+  return curSel;
+}
+
 
 // ポケモンのステータス表示待ち
 static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
 {
   BOOL bReturn=FALSE;
+  int tpno;
+  
   GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
 
-  switch(GFL_UI_TP_HitTrg(_tp_data)){
-  case 0:
-    if(pWork->pokemonselectno!=0){
-      pWork->pokemonselectno = 0;
-      _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
-    }
-    break;
-  case 1:
-    if(pWork->pokemonselectno!=1){
-      pWork->pokemonselectno = 1;
-      _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
-    }
-    break;
-  case 2:
-    bReturn=TRUE;
-    break;
-  default:
-    break;
+  tpno = GFL_UI_TP_HitTrg(_tp_data);
+  if(-1!=tpno){   //タッチ処理
+    GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+    pWork->pokemonselectno = tpno;
+    _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
   }
 
-  if(GFL_UI_KEY_GetTrg()==PAD_KEY_LEFT || GFL_UI_KEY_GetTrg()==PAD_KEY_RIGHT){
-    pWork->pokemonselectno = 1 - pWork->pokemonselectno;
+  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+    if(GFL_UI_KEY_GetTrg()){
+      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+      POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
+      PMSND_PlaySystemSE(SEQ_SE_SELECT1);
+      return;
+    }
+  }
+
+  if(_pokemonStatusKeyLoop(pWork)){
     PMSND_PlaySystemSE(POKETRADESE_CUR);
     _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
   }
@@ -625,16 +668,27 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     // 消す
     GFL_BG_SetVisible( GFL_BG_FRAME3_M , FALSE );
 
-
     POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork);
-    
     GFL_BG_SetVisible( GFL_BG_FRAME0_S , FALSE );
-    IRC_POKETRADE_GraphicInitMainDisp(pWork);
+    {
+      ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+      GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+                                           NARC_trade_wb_trade_bg01_back_NSCR,
+                                           GFL_BG_FRAME2_M, 0,
+                                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                           pWork->heapID);
+      GFL_ARC_CloseDataHandle(p_handle);
+    }
     IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
     G2_BlendNone();
-    POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
-    POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
+
+    if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 0))){
+      POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
+    }
+    if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 1))){
+      POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
+    }
 
     if(POKEMONTRADEPROC_IsTriSelect(pWork)){
       _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
@@ -727,6 +781,9 @@ static BOOL _NEGO_Select6PokemonSelect(POKEMON_TRADE_WORK* pWork, int trgno)
       pWork->pokemonselectno = trgno;
 
       PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
+
+      
       if(trgno/GTS_NEGO_POKESLT_MAX){  //こちら側は自分のポケモンが入っている 自分のはみるだけ
         int msg[]={ POKETRADE_STR_04, POKETRADE_STR_06};
         POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
@@ -868,7 +925,8 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
   int trgno,target;
   BOOL curSel = FALSE;
 
-
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
+  
   trgno = GFL_UI_TP_HitTrg(_tp_data);
   if(trgno != -1){
     GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
@@ -893,41 +951,24 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
   }
 
   // キー処理
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT){
-    pWork->pokemonselectno = (pWork->pokemonselectno+3) % 6;
-    curSel=TRUE;
-  }
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT){
-    pWork->pokemonselectno = (pWork->pokemonselectno-3) % 6;
-    if(pWork->pokemonselectno<0){
-      pWork->pokemonselectno+=6;
-    }
-    curSel=TRUE;
-  }
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
-    if((pWork->pokemonselectno==0) || (pWork->pokemonselectno==3)){
-      pWork->pokemonselectno = pWork->pokemonselectno+3;
-    }
-    pWork->pokemonselectno = pWork->pokemonselectno-1;
-    curSel=TRUE;
-  }
-  if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
-    if((pWork->pokemonselectno==2) || (pWork->pokemonselectno==5)){
-      pWork->pokemonselectno = pWork->pokemonselectno-3;
-    }
-    pWork->pokemonselectno = pWork->pokemonselectno+1;
-    curSel=TRUE;
-  }
-  if(curSel){
+  if(_pokemonStatusKeyLoop(pWork)){
     POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
     PMSND_PlaySystemSE(SEQ_SE_SELECT1);
   }
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
-
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_15, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     _CHANGE_STATE(pWork, _NEGO_Select6CancelWait );
-    
+  }
+  TOUCHBAR_Main(pWork->pTouchWork);
+  switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
+  case TOUCHBAR_ICON_RETURN:
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_15, pWork->pMessageStrBuf );
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+    _CHANGE_STATE(pWork, _NEGO_Select6CancelWait );
+    break;
+  default:
+    break;
   }
 
 
@@ -944,6 +985,11 @@ static void POKETRADE_NEGO_Select6keywaitMsg2(POKEMON_TRADE_WORK* pWork)
   }
   {
     POKETRADE_MESSAGE_WindowClear(pWork);
+
+#if KARI_EN
+    POKETRADE_MESSAGE_SixStateDisp(pWork , GFL_BG_FRAME2_S);//６体表示
+#endif
+
     _CHANGE_STATE(pWork,POKETRADE_NEGO_Select6keywait);
   }
 }
@@ -965,26 +1011,25 @@ static void POKETRADE_NEGO_Select6keywaitMsg(POKEMON_TRADE_WORK* pWork)
 static void POKETRADE_NEGO_Select6keywaitMsgFade(POKEMON_TRADE_WORK* pWork)
 {
   if(WIPE_SYS_EndCheck()){
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
-
-  if(1){
-    G2S_SetWnd0InsidePlane(
-      GX_WND_PLANEMASK_BG0|
-      GX_WND_PLANEMASK_BG1|
-      GX_WND_PLANEMASK_BG2|
-      GX_WND_PLANEMASK_BG3|
-      GX_WND_PLANEMASK_OBJ,
-      TRUE );
-    G2S_SetWnd0Position( 128, 0, 255, 192 );
-    G2S_SetWndOutsidePlane(
-      GX_WND_PLANEMASK_BG0|
-      GX_WND_PLANEMASK_BG1|
-      GX_WND_PLANEMASK_BG2|
-      GX_WND_PLANEMASK_BG3|
-      GX_WND_PLANEMASK_OBJ,
-      FALSE );
-    GXS_SetVisibleWnd( GX_WNDMASK_W0 );
-  }
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ , -8 );
+    if(1){
+      G2S_SetWnd0InsidePlane(
+        GX_WND_PLANEMASK_BG0|
+        GX_WND_PLANEMASK_BG1|
+        GX_WND_PLANEMASK_BG2|
+        GX_WND_PLANEMASK_BG3|
+        GX_WND_PLANEMASK_OBJ,
+        FALSE );
+      G2S_SetWnd0Position( 0, 0, 128, 192-24+1 );
+      G2S_SetWndOutsidePlane(
+        GX_WND_PLANEMASK_BG0|
+        GX_WND_PLANEMASK_BG1|
+        GX_WND_PLANEMASK_BG2|
+        GX_WND_PLANEMASK_BG3|
+        GX_WND_PLANEMASK_OBJ,
+        TRUE );
+      GXS_SetVisibleWnd( GX_WNDMASK_W0 );
+    }
     GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S , TRUE );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S , TRUE );
@@ -1005,41 +1050,37 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
   GFL_BMPWIN* pWin;
   int side,poke;
   MYSTATUS* aStBuf[2];
+  ARCHANDLE* p_handle;
 
-  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
-	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-																				 NARC_trade_wb_gts_bg05_NSCR,
-																				 GFL_BG_FRAME0_S, 0,
-																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
-																				 pWork->heapID);
-  GFL_BG_SetPriority( GFL_BG_FRAME0_S , 3 );
-  GFL_BG_SetVisible( GFL_BG_FRAME3_S , FALSE );
-	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-																				 NARC_trade_wb_trade_bg01_back_NSCR,
-																				 GFL_BG_FRAME2_M, 0,
-																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-																				 pWork->heapID);
+//  pWork->bgscrollRenew=FALSE;  //スクロールはここからはしないようにFALSEに念のためしておく
   POKE_GTS_DeleteFaceIcon(pWork);
   POKE_GTS_DeleteEruptedIcon(pWork);
-
-  GFL_ARC_CloseDataHandle( p_handle );
+  POKETRADE_2D_GTSPokemonIconResetAll( pWork );
   POKE_GTS_ReleasePokeIconResource(pWork);
+ // if(pWork->pTouchWork){
+   // TOUCHBAR_Exit(pWork->pTouchWork);
+  //  pWork->pTouchWork=NULL;
+//  }
+  
+
   IRC_POKETRADE_ResetBoxNameWindow(pWork);
   POKE_GTS_SelectStatusMessageDelete(pWork);
 
-
+  IRC_POKETRADE_AllDeletePokeIconResource(pWork);
+  
   POKE_GTS_CreatePokeIconResource(pWork, CLSYS_DRAW_SUB);
 
-  GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
+  GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME2_S,0);
 
-  IRC_POKETRADE_AllDeletePokeIconResource(pWork);
- 
+
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
+//  POKETRADE_TOUCHBAR_Init(pWork);
+
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
   TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
 
 
-  POKETRADE_MESSAGE_SixStateDisp(pWork);//６体表示
+  POKETRADE_MESSAGE_SixStateDisp(pWork , GFL_BG_FRAME2_S);//６体表示
 
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
     POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
@@ -1054,6 +1095,50 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
   pWork->bgscrollRenew = TRUE;
   //GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
 
+
+
+  p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_gts_bg05_NSCR,
+																				 GFL_BG_FRAME0_S, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+																				 pWork->heapID);
+
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_gts_bg05_NSCR,
+																				 GFL_BG_FRAME1_S, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+																				 pWork->heapID);
+
+  {
+    int frame = GFL_BG_FRAME3_S;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      3, 0, 0, FALSE
+      };
+    GFL_BG_FreeBGControl(frame);
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+  }
+  
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_gts_bg06_NSCR,
+																				 GFL_BG_FRAME3_S, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+																				 pWork->heapID);
+  
+  GFL_BG_SetScroll(GFL_BG_FRAME0_S,GFL_BG_SCROLL_X_SET, -128);
+  GFL_BG_SetScroll(GFL_BG_FRAME3_S,GFL_BG_SCROLL_X_SET, 0);
+  
+  GFL_BG_SetPriority( GFL_BG_FRAME0_S , 3 );
+	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_trade_bg01_back_NSCR,
+																				 GFL_BG_FRAME2_M, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+																				 pWork->heapID);
+
+  GFL_ARC_CloseDataHandle( p_handle );
 
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
@@ -1080,7 +1165,7 @@ static void _send6Wait(POKEMON_TRADE_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _send5Wait(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->pokemonThreeSet){   //相手から届いたかどうかいまだとずっとまつ
+  if(!POKEMONTRADEPROC_IsNetworkMode(pWork) || pWork->pokemonThreeSet){   //相手から届いたかどうかいまだとずっとまつ
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
     _CHANGE_STATE(pWork,_send6Wait);
@@ -1107,7 +1192,7 @@ void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork)
     }
   }
   else{
-    _CHANGE_STATE(pWork,_Select6Init);
+    _CHANGE_STATE(pWork, _send5Wait);
   }
 }
 ///---------------------------------********************************************
@@ -1542,10 +1627,8 @@ void POKE_GTS_FaceIconFunc(POKEMON_TRADE_WORK* pWork)    //顔アイコンの処理
             index = GTS_FACE_BUTTON_NUM-1;
           }
           POKEMONTRADE_TouchFaceButtonGTS( pWork, index);
-          if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
-            POKE_GTS_InitEruptedIcon(pWork,index,0);
-          }
-          else{
+          POKE_GTS_InitEruptedIcon(pWork,index,0);
+          if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
             GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_FACEICON, 1, &index);
           }
         }

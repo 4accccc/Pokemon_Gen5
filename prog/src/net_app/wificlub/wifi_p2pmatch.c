@@ -2116,8 +2116,10 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
   else
   {        // ê⁄ë±Ç™Ç‹Çæ
     _CHANGESTATE(wk, WIFIP2PMATCH_FRIENDLIST_INIT);
-    PMSND_PlayNextBGM(SEQ_BGM_WIFI_ACCESS, 60, 0);
+//    PMSND_PlayBGM(SEQ_BGM_POKESEN);
+   // PMSND_PlayNextBGM(SEQ_BGM_WIFI_ACCESS, 60, 0);
   }
+  PMSND_PlayBGM(SEQ_BGM_POKECEN);
   return seq;
 }
 

@@ -926,7 +926,7 @@ void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork)
 //	６体ポケモンステータス表示
 //--------------------------------------------------------------
 
-void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
+void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork,int frame)
 {
   GFL_BMPWIN* pWin;
   int side,poke;
@@ -936,14 +936,14 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
   aStBuf[0] = pWork->pFriend;
   aStBuf[1] = pWork->pMy;
 
-
 #if 1
   GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_BLK_SDW, 0x0 );
   for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
-    pWork->TriStatusWin[side] =
-      GFL_BMPWIN_Create(GFL_BG_FRAME1_S,
-                        side*16 + 2 , 0, 14, 3, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
-
+    if(!pWork->TriStatusWin[side]){
+      pWork->TriStatusWin[side] =
+        GFL_BMPWIN_Create(frame,
+                          side*16 + 2 , 0, 14, 3, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
+    }
     pWin = pWork->TriStatusWin[side];
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_27, pWork->pExStrBuf );
     WORDSET_RegisterPlayerName( pWork->pWordSet, 0,  aStBuf[side]  );
@@ -959,15 +959,19 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
 
 
   for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
-    pWork->TriStatusWin[side+2] =
-      GFL_BMPWIN_Create(GFL_BG_FRAME1_S,
-                        side*16 + 5 , 3, 9, 18, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
+    if(!pWork->TriStatusWin[side+2]){
+      pWork->TriStatusWin[side+2] =
+        GFL_BMPWIN_Create(frame,
+                          side*16 + 5 , 3, 9, 18, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
+    }
     pWin = pWork->TriStatusWin[side+2];
     GFL_FONTSYS_SetColor( FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 0x0 );
     for(poke = 0;poke < GTS_NEGO_POKESLT_MAX;poke++){
       POKEMON_PARAM* pp = pWork->GTSSelectPP[1-side][poke];  //さかさまに変更する
 
-      if(pWork->GTSSelectIndex[side][poke]!=-1){
+      OS_TPrintf("SixDisp %d %d %d\n",1-side,poke,pWork->GTSSelectIndex[1-side][poke]);
+
+      if(pWork->GTSSelectIndex[1-side][poke]!=-1){
         BOOL bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
 
         POKETRADE_2D_GTSPokemonIconSet(pWork, side, poke, pp,FALSE);

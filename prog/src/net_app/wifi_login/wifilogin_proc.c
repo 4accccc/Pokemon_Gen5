@@ -844,6 +844,7 @@ static void _modeFadeStart(WIFILOGIN_WORK* pWork)
 {
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+  PMSND_FadeOutBGM( 8 );
   _CHANGE_STATE(pWork,_modeFadeout);        // èIÇÌÇË
 }
 
@@ -966,6 +967,10 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
       pWork->dbw = pwk;
+
+    PMSND_PlayBGM(SEQ_BGM_WIFI_ACCESS);
+    PMSND_FadeInBGM( 8 );
+    
     
     if(GFL_NET_IsInit()){       // ê⁄ë±íÜ
       GF_ASSERT(0);

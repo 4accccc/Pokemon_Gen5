@@ -107,6 +107,10 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
   POKETRADE_MESSAGE_HeapInit(pWork);
 
+  PMSND_PushBGM();
+  PMSND_PlayBGM( SEQ_ME_POKEGET );
+  PMSND_FadeInBGM( 8 );
+
   if(pWork->bEncountMessageEach){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_30, pWork->pMessageStrBufEx );
   }
@@ -163,6 +167,9 @@ static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
   if(pWork->anmCount < 100){
     return;
   }
+  PMSND_PopBGM();
+  PMSND_FadeInBGM( 24 );
+
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade23);
 }
@@ -358,6 +365,9 @@ static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
 {
+  PMSND_PopBGM();
+  PMSND_FadeInBGM( 24 );
+
   GFL_DISP_GX_SetVisibleControlDirect( 0 );
   GFL_DISP_GXS_SetVisibleControlDirect( 0 );
 
