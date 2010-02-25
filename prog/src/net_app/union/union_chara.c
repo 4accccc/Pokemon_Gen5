@@ -762,7 +762,6 @@ static BOOL UnicharaSeq_TalkingUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *
     break;
   case 2:
     if(situ->mycomm.talk_obj_id != UNION_CHARA_GetCharaIndex(unichara->parent_pc, unichara)){
-      mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
       //MMDL_ChangeMoveCode( mmdl, MV_DIR_RND );
       MMDL_OffStatusBit(mmdl, MMDL_STABIT_PAUSE_DIR);
       return TRUE;
