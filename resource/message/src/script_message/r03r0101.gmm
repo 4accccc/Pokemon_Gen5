@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T21:22:32"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T15:23:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,9 +352,9 @@
 ジムバッジを　持ってるもんね</language>
 	</row>
 
-	<row id="msg_r03r0101_babygirl1_01">
+	<row id="msg_r03r0101_babygirl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・７月末ROM用メッセージ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
 		<language name="JPN" width="256">ほんと　だんしって
 おこちゃま　なんだから</language>
@@ -362,17 +362,17 @@
 おこちゃま　なんだから</language>
 	</row>
 
-	<row id="msg_r03r0101_babyboy1a_01">
+	<row id="msg_r03r0101_babyboy1a_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・７月末ROM用メッセージ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BABYBOY</attribute>
 		<language name="JPN" width="256">わー　わー！</language>
 		<language name="JPN_KANJI" width="256">わー　わー！</language>
 	</row>
 
-	<row id="msg_r03r0101_babyboy1b_01">
+	<row id="msg_r03r0101_babyboy1b_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・７月末ROM用メッセージ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BABYBOY</attribute>
 		<language name="JPN" width="256">ぎゃおー！！
 まてまてぁーっ！！</language>
