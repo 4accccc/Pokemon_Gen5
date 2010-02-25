@@ -2878,7 +2878,7 @@ void POKEMONTRADE_StartPokeSelectSixButton(POKEMON_TRADE_WORK* pWork,int index)
       cellInitData.pos_y = 48;
       cellInitData.anmseq = 23;
       cellInitData.softpri = 0;
-      cellInitData.bgpri = 0;
+      cellInitData.bgpri = 1;
       
       pWork->pokeSelectSixCur =
         GFL_CLACT_WK_Create( pWork->cellUnit ,

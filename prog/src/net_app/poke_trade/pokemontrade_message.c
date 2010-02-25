@@ -956,6 +956,8 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
 
 
   GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_BLK_SDW, 0x0 );
+
+
   for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
     pWork->TriStatusWin[side+2] =
       GFL_BMPWIN_Create(GFL_BG_FRAME1_S,
@@ -963,7 +965,8 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork)
     pWin = pWork->TriStatusWin[side+2];
     GFL_FONTSYS_SetColor( FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 0x0 );
     for(poke = 0;poke < GTS_NEGO_POKESLT_MAX;poke++){
-      POKEMON_PARAM* pp = pWork->GTSSelectPP[side][poke];
+      POKEMON_PARAM* pp = pWork->GTSSelectPP[1-side][poke];  //‚³‚©‚³‚Ü‚É•ÏX‚·‚é
+
       if(pWork->GTSSelectIndex[side][poke]!=-1){
         BOOL bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
 

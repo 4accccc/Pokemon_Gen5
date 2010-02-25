@@ -650,7 +650,8 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
 static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
 {
   u16 trgno = pWork->pokemonselectno;
-  POKEMON_PARAM* pp = pWork->GTSSelectPP[trgno/GTS_NEGO_POKESLT_MAX][trgno%GTS_NEGO_POKESLT_MAX];
+  
+  POKEMON_PARAM* pp = pWork->GTSSelectPP[1-(trgno/GTS_NEGO_POKESLT_MAX)][trgno%GTS_NEGO_POKESLT_MAX]; //さかさまにする
 
   if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL) ){
     POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
@@ -721,14 +722,13 @@ static void _menuMyPokemonSend(POKEMON_TRADE_WORK* pWork)
 static BOOL _NEGO_Select6PokemonSelect(POKEMON_TRADE_WORK* pWork, int trgno)
 {
   if(trgno != -1){
-    POKEMON_PARAM* pp = pWork->GTSSelectPP[trgno/GTS_NEGO_POKESLT_MAX][trgno%GTS_NEGO_POKESLT_MAX];
+    POKEMON_PARAM* pp = pWork->GTSSelectPP[1-(trgno/GTS_NEGO_POKESLT_MAX)][trgno%GTS_NEGO_POKESLT_MAX]; //さかさまにする
     if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL)){
       pWork->pokemonselectno = trgno;
 
       PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-      if(trgno/GTS_NEGO_POKESLT_MAX){
+      if(trgno/GTS_NEGO_POKESLT_MAX){  //こちら側は自分のポケモンが入っている 自分のはみるだけ
         int msg[]={ POKETRADE_STR_04, POKETRADE_STR_06};
-        
         POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
         _CHANGE_STATE(pWork,_menuFriendPokemon);
       }
@@ -751,6 +751,8 @@ static void _NEGO_Select6CancelWait5(POKEMON_TRADE_WORK* pWork)
   if(WIPE_SYS_EndCheck()){
     POKMEONTRADE_RemoveCoreResource(pWork);
 
+//    GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+    pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
     POKETRADE_MESSAGE_HeapInit(pWork);
     IRC_POKETRADE_InitBoxCursor(pWork);  // タスクバー
     IRC_POKETRADE_CreatePokeIconResource(pWork);  // ポケモンアイコンCLACT+リソース常駐化
@@ -895,7 +897,7 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
   if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT){
     pWork->pokemonselectno = (pWork->pokemonselectno-3) % 6;
     if(pWork->pokemonselectno<0){
-      pWork->pokemonselectno+=3;
+      pWork->pokemonselectno+=6;
     }
     curSel=TRUE;
   }
@@ -957,6 +959,36 @@ static void POKETRADE_NEGO_Select6keywaitMsg(POKEMON_TRADE_WORK* pWork)
 }
 
 
+static void POKETRADE_NEGO_Select6keywaitMsgFade(POKEMON_TRADE_WORK* pWork)
+{
+  if(WIPE_SYS_EndCheck()){
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
+
+  if(1){
+    G2S_SetWnd0InsidePlane(
+      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_BG1|
+      GX_WND_PLANEMASK_BG2|
+      GX_WND_PLANEMASK_BG3|
+      GX_WND_PLANEMASK_OBJ,
+      TRUE );
+    G2S_SetWnd0Position( 128, 0, 255, 192 );
+    G2S_SetWndOutsidePlane(
+      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_BG1|
+      GX_WND_PLANEMASK_BG2|
+      GX_WND_PLANEMASK_BG3|
+      GX_WND_PLANEMASK_OBJ,
+      FALSE );
+    GXS_SetVisibleWnd( GX_WNDMASK_W0 );
+  }
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S , TRUE );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S , TRUE );
+    _CHANGE_STATE(pWork,POKETRADE_NEGO_Select6keywaitMsg);
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   6体表示
@@ -978,7 +1010,6 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
 																				 pWork->heapID);
   GFL_BG_SetPriority( GFL_BG_FRAME0_S , 3 );
-  GFL_BG_SetVisible( GFL_BG_FRAME0_S , TRUE );
   GFL_BG_SetVisible( GFL_BG_FRAME3_S , FALSE );
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 NARC_trade_wb_trade_bg01_back_NSCR,
@@ -988,28 +1019,23 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
   POKE_GTS_DeleteFaceIcon(pWork);
   POKE_GTS_DeleteEruptedIcon(pWork);
 
-
   GFL_ARC_CloseDataHandle( p_handle );
   POKE_GTS_ReleasePokeIconResource(pWork);
+  IRC_POKETRADE_ResetBoxNameWindow(pWork);
+  POKE_GTS_SelectStatusMessageDelete(pWork);
+
+
   POKE_GTS_CreatePokeIconResource(pWork, CLSYS_DRAW_SUB);
 
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
 
-  //GFL_BG_SetVisible( GFL_BG_FRAME1_S , FALSE );
-
-  IRC_POKETRADE_ResetBoxNameWindow(pWork);
-
-
   IRC_POKETRADE_AllDeletePokeIconResource(pWork);
-  
  
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
   TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
 
 
-  POKE_GTS_SelectStatusMessageDelete(pWork);
-  
   POKETRADE_MESSAGE_SixStateDisp(pWork);//６体表示
 
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
@@ -1024,50 +1050,37 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
   pWork->bgscroll=0;
   pWork->bgscrollRenew = TRUE;
   //GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
-  GFL_BG_SetVisible( GFL_BG_FRAME1_S , TRUE );
 
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
 
-  if(1){
-    G2S_SetWnd0InsidePlane(
-      GX_WND_PLANEMASK_BG0|
-      GX_WND_PLANEMASK_BG1|
-      GX_WND_PLANEMASK_BG2|
-      GX_WND_PLANEMASK_BG3|
-      GX_WND_PLANEMASK_OBJ,
-      TRUE );
-    G2S_SetWnd0Position( 128, 0, 255, 192 );
-    G2S_SetWndOutsidePlane(
-      GX_WND_PLANEMASK_BG0|
-      GX_WND_PLANEMASK_BG1|
-      GX_WND_PLANEMASK_BG2|
-      GX_WND_PLANEMASK_BG3|
-      GX_WND_PLANEMASK_OBJ,
-      FALSE );
-    GXS_SetVisibleWnd( GX_WNDMASK_W0 );
-  }
-  GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
-
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   
-  _CHANGE_STATE(pWork,POKETRADE_NEGO_Select6keywaitMsg);
+  _CHANGE_STATE(pWork,POKETRADE_NEGO_Select6keywaitMsgFade);
 
 
 }
 
-//------------------------------------------------------------------------------
-/**
- * @brief   6体表示確認まち
- * @param   POKEMON_TRADE_WORK
- * @retval  none
- */
-//------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
+//    6体表示確認まち
+//------------------------------------------------------------------------------
+static void _send6Wait(POKEMON_TRADE_WORK* pWork)
+{
+  if(WIPE_SYS_EndCheck()){
+    POKE_GTS_SelectStatusMessageDisp(pWork, 1, TRUE);
+    _CHANGE_STATE(pWork,_Select6Init);
+  }
+}
 
+//------------------------------------------------------------------------------
+//    6体表示確認まち
+//------------------------------------------------------------------------------
 static void _send5Wait(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->pokemonThreeSet){   //相手から届いたかどうかいまだとずっとまつ
-    POKE_GTS_SelectStatusMessageDisp(pWork, 1, TRUE);
-    _CHANGE_STATE(pWork,_Select6Init);
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    _CHANGE_STATE(pWork,_send6Wait);
   }
 }
 

@@ -2861,6 +2861,7 @@ void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
 
   IRC_POKETRADE_ResetBoxNameWindow(pWork);
   IRCPOKETRADE_PokeDeleteMcss(pWork,1);
+  POKEMONTRADE_RemovePokeSelectSixButton(pWork);
 
   POKE_GTS_DeleteFaceIcon(pWork);
   POKETRADE_MESSAGE_SixStateDelete(pWork);
