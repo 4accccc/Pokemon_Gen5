@@ -159,7 +159,7 @@ static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, const ITEM_DATA** data )
 // 本数
 enum
 {
-  BG_PAL_NUM_S_REAR          = 1,
+  BG_PAL_NUM_S_REAR          = 2,
   BG_PAL_NUM_S_TOUCHBAR      = APP_COMMON_BAR_PLT_NUM,    // 1
   BG_PAL_NUM_S_INFOWIN       = 1,
 };
@@ -167,8 +167,8 @@ enum
 enum
 {
   BG_PAL_POS_S_REAR          = 0, 
-  BG_PAL_POS_S_TOUCHBAR      = 1,
-  BG_PAL_POS_S_INFOWIN       = 2,
+  BG_PAL_POS_S_TOUCHBAR      = 2,
+  BG_PAL_POS_S_INFOWIN       = 3,
 };
 
 // OBJパレット
@@ -266,7 +266,7 @@ kid_info[ROD_MAX] =
   {             7,            7,            7,         128,         104,     4 }, 
   {             4,            4,            4,         128,          88,    12 }, 
   {             6,            6,            6,         128,         104,    12 }, 
-  {             4,            5,            0,         128,         152,     0 },  // アイテム表示
+  {             4,            5,            0,         128,         152,     0 },  // 矢印非表示＆アイテム表示
   {             5,            4,            0,         128,          88,     0 },  // 矢印非表示
 };
 
@@ -284,6 +284,15 @@ STATE;
 // 真上にいるときのSEを鳴らす値
 #define ABOVE_SE_PITCH (384)
 #define ABOVE_SE_WAIT  (6)
+
+// アイテムの種類
+typedef enum
+{
+  ITEM_TYPE_NONE,      // アイテムを見付けていないときのアイテムの種類の値
+  ITEM_TYPE_HIDE,      // 最初から隠してあるアイテム          // HIDE_ITEM_DATA               // src/field/script_hideitem.c
+  ITEM_TYPE_INTRUDE,   // 他のユーザが侵入して隠したアイテム  // INTRUDE_SECRET_ITEM_POSDATA  // include/field/intrude_secret_item.h
+}
+ITEM_TYPE;
 
 
 //=============================================================================
@@ -355,6 +364,36 @@ typedef struct
 KIT_SET;
 
 //-------------------------------------
+/// アイテムの情報
+//=====================================
+typedef struct
+{
+  ITEM_TYPE   type;
+
+  union
+  {
+    // type == ITEM_TYPE_HIDE のとき有効
+    struct
+    {
+      u16         index;
+    }
+    hide;
+
+    // type == ITEM_TYPE_INTRUDE のとき有効
+    struct
+    {
+      s16         grid_x;
+      s16         grid_y;
+      s16         grid_z;
+      u16         zone_id;
+    }
+    intrude;
+  }
+  info;
+}
+ITEM_INFO;
+
+//-------------------------------------
 /// ワーク
 //=====================================
 struct _DOWSING_WORK
@@ -385,8 +424,12 @@ struct _DOWSING_WORK
   ROD                         rod_prev;
   ROD                         rod_curr;
   ROD                         rod_draw_prev;
+
+  ITEM_INFO                   item_info_prev;
+  ITEM_INFO                   item_info_curr;
   u16                         item_prev;
   u16                         item_curr;
+
   s32                         player_grid_pos_x_prev;
   s32                         player_grid_pos_y_prev;
   s32                         player_grid_pos_z_prev;
@@ -397,8 +440,12 @@ struct _DOWSING_WORK
   BOOL                        above_se_flag;      // 再生中はTRUE
   u16                         above_se_wait;      // 待つフレーム数
 
+  BOOL                        above_se_synchro_obj;  // TRUEのときSEを鳴らしたので、OBJを表示してFALSEに戻すこと
+
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
+
+  u8                          rear_pal_pos;
 
   // アイテムサーチ
   ITEM_SEARCH_WORK*           item_search_wk;
@@ -490,10 +537,15 @@ DOWSING_WORK*    DOWSING_Init(
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Dowsing_VBlankFunc, work, 1 );
 
+  work->rear_pal_pos = 0;
+
   // 初期状態にする
   work->rod_prev       = ROD_MAX;    // 初期状態で描画が更新されるように、rod_currとは異なる値にしておく
   work->rod_curr       = ROD_NONE;
   work->rod_draw_prev  = ROD_MAX;    // 初期状態で描画が更新されるように、rod_currとは異なる値にしておく
+
+  work->item_info_prev.type = ITEM_TYPE_NONE;
+  work->item_info_curr.type = ITEM_TYPE_NONE;
   work->item_prev      = ITEM_NONE;
   work->item_curr      = ITEM_NONE;
 
@@ -502,6 +554,9 @@ DOWSING_WORK*    DOWSING_Init(
   work->player_grid_pos_z_prev    = 0;
 
   work->state        = STATE_NEED_SEARCH;
+
+  work->above_se_flag         = FALSE;
+  work->above_se_synchro_obj  = FALSE;
 
   // 初期状態で描画を更新しておく
   DOWSING_Draw( work, TRUE );
@@ -791,6 +846,8 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
               // 値の範囲は、-32768～32767です。pitchは正の値で高い方へ、負の値で低い方へ変化します。±64でちょうど半音変化します。
           
           work->above_se_wait = ABOVE_SE_WAIT;
+          
+          work->above_se_synchro_obj = TRUE;
         }
         can_play_se = FALSE;
       }
@@ -866,7 +923,7 @@ void DOWSING_Draw( DOWSING_WORK* work, BOOL active )
     GFL_CLACTPOS  pos;
 
     // 表示/非表示
-    GFL_CLACT_WK_SetDrawEnable( work->kit_set[KIT_ARROW].clwk, (work->rod_curr!=ROD_NONE)  );
+    GFL_CLACT_WK_SetDrawEnable( work->kit_set[KIT_ARROW].clwk, (work->rod_curr!=ROD_ABOVE && work->rod_curr!=ROD_NONE)  );
     GFL_CLACT_WK_SetDrawEnable( work->kit_set[KIT_ITEM].clwk,  (work->rod_curr==ROD_ABOVE) );
    
     // 位置
@@ -882,6 +939,15 @@ void DOWSING_Draw( DOWSING_WORK* work, BOOL active )
     // 今回のOBJの表示を次の前回のOBJの表示として覚えておく
     work->rod_draw_prev = work->rod_curr;
   }
+
+  // 真上にいるとき音を鳴らしたなら、それに合わせてアニメを再生し直す
+  if( work->rod_curr == ROD_ABOVE && work->above_se_synchro_obj )
+  {
+    GFL_CLACT_WK_SetAnmSeq( work->kit_set[KIT_ITEM].clwk, 0 );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->kit_set[KIT_ITEM].clwk, TRUE );
+    GFL_CLACT_WK_SetAnmFrame( work->kit_set[KIT_ITEM].clwk, 0 );
+    work->above_se_synchro_obj = FALSE;
+  }
 }
 
 
@@ -896,6 +962,15 @@ void DOWSING_Draw( DOWSING_WORK* work, BOOL active )
 static void Dowsing_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   DOWSING_WORK* work = (DOWSING_WORK*)wk;
+
+  // 背景のパレットを変更して、背景をチカチカさせる
+  u8 pal_pos;
+  if( work->rear_pal_pos >= 4 ) work->rear_pal_pos = 0;
+  if( work->rear_pal_pos < 2 ) pal_pos = 0;
+  else                         pal_pos = 1;
+  work->rear_pal_pos++;
+  GFL_BG_ChangeScreenPalette( BG_FRAME_S_REAR, 0, 0, 32, 24, pal_pos );
+  GFL_BG_LoadScreenReq( BG_FRAME_S_REAR );
 }
 
 // グラフィック
