@@ -19,6 +19,7 @@ _EVENT_DATA   ev_tri_house_reception
 _EVENT_DATA_END
 
 DEFINE_LOCAL exit
+DEFINE_LOCAL btl_count    //戦闘回数
 
 //受付
 EVENT_START ev_tri_house_reception
@@ -174,8 +175,15 @@ charange:
   //自機バトル場に移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov )
   _OBJ_ANIME_WAIT()
+  //受付係中央
+  _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_center )
+  _OBJ_ANIME_WAIT()
+
   _CALL battle
 
+  //受付係中央からどく
+  _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_ret )
+  _OBJ_ANIME_WAIT()
   //自機受付に戻る
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ret )
   _OBJ_ANIME_WAIT()
@@ -235,8 +243,8 @@ charange:
   
 _RET
 
+//バトル
 battle:
-  DEFINE_LOCAL btl_count
   DEFINE_LOCAL obj_id
   
   $btl_count = 0
@@ -259,23 +267,43 @@ battle:
     _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
     //戦闘回数加算
     $btl_count += 1
-/**
-    {
-      DEFINE_LOCAL retire
-      //リタイアする？
-      _YES_NO_WIN( retire )
-      IF $retire == SCR_YES THEN //リタイア
-        $SCWK_ANSWER = TRUE     //リタイアなので、評価無し
-        _RET
-      ENDIF
-    }
-*/    
+    
+    IF $btl_count < 5 THEN
+      //回復演出
+      _CALL recover_anm
+    ENDIF
+
   ENDWHILE
   //５戦後の処理
   $SCWK_ANSWER = TRUE     //５戦消化したので評価してもらう
 _RET
 
+//回復演出
+recover_anm:
+  DEFINE_LOCAL next
+  //受付係自機に近づく
+  _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_to_player )
+  //自機受付の方向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down )
+  _OBJ_ANIME_WAIT()
+  //回復ジングル
+  _ME_PLAY( SEQ_ME_ASA )
+  _ME_WAIT()
 
+  $next = $btl_count
+  $next += 1
+  _NUMBER( 0, next, 1 )
+  //「つぎは○人目」
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_029, SCWK_TARGET_OBJID, POS_DL )
+  _BALLOONWIN_CLOSE()
+
+  //自機左向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_left )
+  //受付センターへ
+  _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_center2 )
+  _OBJ_ANIME_WAIT()
+
+_RET
 
 //--------------------------------------------------------------------
 //受付係はける
@@ -293,6 +321,14 @@ _ANIME_LABEL	anm_player_mov
   _ANIME_DATA	AC_WALK_U_8F,5
   _ANIME_DATA	AC_WALK_R_8F,2
   _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//受付係中央へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_recep_center
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -315,6 +351,15 @@ _ANIME_LABEL	anm_enemy_ret
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
+//受付係道開ける
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_recep_ret
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
+
+//--------------------------------------------------------------------
 //自機もどる
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_ret
@@ -331,8 +376,34 @@ _ANIME_LABEL	anm_recep_close
   _ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
  
-  
+//--------------------------------------------------------------------
+//受付係がプレーヤーに近づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_recep_to_player
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
 
-  
+//--------------------------------------------------------------------
+//自機下向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_down
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//自機左向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_left
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+ //--------------------------------------------------------------------
+//受付係中央へ　バトルとバトルの間
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_recep_center2
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
