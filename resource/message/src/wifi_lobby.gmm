@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="WBROM" host="W00218" date="2010-02-25T22:59:25"/>
+	<create user="WBROM" host="W00218" date="2010-02-25T23:17:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -987,8 +987,8 @@
 	</row>
 
 	<row id="msg_wifilobby_076" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
-		<language name="JPN" width="216">TVトランシーバー</language>
-		<language name="JPN_KANJI" width="216">TVトランシーバー</language>
+		<language name="JPN" width="216">ＴＶトランシーバー</language>
+		<language name="JPN_KANJI" width="216">ＴＶトランシーバー</language>
 	</row>
 
 	<row id="msg_wifilobby_077" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
