@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/23 18:54:17
+#save date:2010/02/25 23:45:47
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d03r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d03r0101.wms
 #hold event type:
 1
 #hold event number:
-13
+20
 #event number: 0
 #type
 1
@@ -413,6 +413,223 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 456 24 -312
+#event number: 13
+#type
+1
+#ID name
+TR_BACKPACKERM_05
+#OBJ CODE Number
+BACKPACKERM
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERM_05
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+904 24 -856
+#event number: 14
+#type
+1
+#ID name
+TR_BACKPACKERW_05
+#OBJ CODE Number
+BACKPACKERW
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERW_05
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1000 0 -696
+#event number: 15
+#type
+1
+#ID name
+TR_ESPW_04
+#OBJ CODE Number
+ESPW
+#MOVE CODE Number
+MV_RND_V
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ESPW_04
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+696 0 -536
+#event number: 16
+#type
+1
+#ID name
+TR_BACKPACKERW_06
+#OBJ CODE Number
+BACKPACKERW
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERW_06
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 -376
+#event number: 17
+#type
+1
+#ID name
+TR_ESPM_04
+#OBJ CODE Number
+ESPM
+#MOVE CODE Number
+MV_RTRD         
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ESPM_04
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+7
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+296 0 -440
+#event number: 18
+#type
+1
+#ID name
+TR_BACKPACKERM_06
+#OBJ CODE Number
+BACKPACKERM
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERM_06
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+664 24 -776
+#event number: 19
+#type
+1
+#ID name
+TR_ESPM_05
+#OBJ CODE Number
+ESPM
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ESPM_05
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+456 0 -1128
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
