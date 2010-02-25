@@ -182,6 +182,30 @@ static const u16 c08_fs[] = {
 };
 #define C08_FS_MAX	(NELEMS(c08_fs))
 
+// ポケモンリーグ
+static const u16 fs_c09[] = {
+		ITEM_MONSUTAABOORU,
+};
+#define FS_C09_MAX	(NELEMS(fs_c09))
+
+// カゴメタウン
+static const u16 fs_t03[] = {
+		ITEM_MONSUTAABOORU,
+};
+#define FS_T03_MAX	(NELEMS(fs_t03))
+
+// サザナミタウン
+static const u16 fs_t04[] = {
+		ITEM_MONSUTAABOORU,
+};
+#define FS_T04_MAX	(NELEMS(fs_t04))
+
+// Ｃ１０ＷＦＢＣ
+static const u16 fs_c10[] = {
+		ITEM_MONSUTAABOORU,
+};
+#define FS_C10_MAX	(NELEMS(fs_c10))
+
 
 
 // 一括アクセス用配列定義
@@ -201,6 +225,10 @@ static const u16 *shop_data_table[]={
 	c06_fs,
 	c07_fs,
 	c08_fs,
+	fs_c09,
+	fs_t03,
+	fs_t04,
+	fs_c10,
 };
 
 
@@ -221,4 +249,8 @@ static const u8 shop_itemnum_table[]={
 	C06_FS_MAX,
 	C07_FS_MAX,
 	C08_FS_MAX,
+	FS_C09_MAX,
+	FS_T03_MAX,
+	FS_T04_MAX,
+	FS_C10_MAX,
 };

@@ -18,6 +18,10 @@
 #define C06_FS    ( 6 )  // シティ６
 #define C07_FS    ( 7 )  // シティ７
 #define C08_FS    ( 8 )  // シティ８
+#define FS_C09    ( 9 )  // ポケモンリーグ
+#define FS_T03    ( 10 )  // カゴメタウン
+#define FS_T04    ( 11 )  // サザナミタウン
+#define FS_C10    ( 12 )  // Ｃ１０ＷＦＢＣ
 
 
 #endif
