@@ -2154,15 +2154,59 @@ enum
   TEXIDX_SHIN_MU_17,
   TEXIDX_SHIN_MU_18,
   TEXIDX_SHIN_MU_19,
+  TEXIDX_SHIN_MU_20,
+  TEXIDX_SHIN_MU_21,
+  TEXIDX_SHIN_MU_22,
 };
 
-static const GFL_BBDACT_ANM DATA_BlActShinMu_Stop[] = {
-  {TEXIDX_SHIN_MU_0,ANMFLIP_OFF,ANMFLIP_OFF,4},
+static const GFL_BBDACT_ANM DATA_BlActShinMu_StopU[] = {
+  {TEXIDX_SHIN_MU_0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM DATA_BlActShinMu_StopD[] = {
+  {TEXIDX_SHIN_MU_4,ANMFLIP_OFF,ANMFLIP_OFF,1},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM DATA_BlActShinMu_Hoeru[] = {
+  {TEXIDX_SHIN_MU_8,ANMFLIP_OFF,ANMFLIP_OFF,1},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM DATA_BlActShinMu_Fly[] = {
+  {TEXIDX_SHIN_MU_19,ANMFLIP_OFF,ANMFLIP_OFF,1},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM DATA_BlActShinMu_FlyUp[] = {
+  {TEXIDX_SHIN_MU_11,ANMFLIP_OFF,ANMFLIP_OFF,1},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM DATA_BlActShinMu_Gutari[] = {
+  {TEXIDX_SHIN_MU_16,ANMFLIP_OFF,ANMFLIP_OFF,1},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM DATA_BlActShinMu_Turn[] = {
+  {TEXIDX_SHIN_MU_20,ANMFLIP_OFF,ANMFLIP_OFF,2},
+  {TEXIDX_SHIN_MU_21,ANMFLIP_OFF,ANMFLIP_OFF,2},
+  {TEXIDX_SHIN_MU_22,ANMFLIP_OFF,ANMFLIP_OFF,2},
   {GFL_BBDACT_ANMCOM_END,0,0,0},
 };
 
 static const GFL_BBDACT_ANM * DATA_BlActShinMuTbl[DRAW_STA_SHIN_MU_MAX] = {
-  DATA_BlActShinMu_Stop,
+  DATA_BlActShinMu_StopU, //u
+  DATA_BlActShinMu_StopD, //d
+  DATA_BlActShinMu_StopU, //l データあわせ
+  DATA_BlActShinMu_StopD, //r データあわせ
+  
+  DATA_BlActShinMu_Hoeru,
+  DATA_BlActShinMu_Fly,
+  DATA_BlActShinMu_FlyUp,
+  DATA_BlActShinMu_Gutari,
+  DATA_BlActShinMu_Turn,
 };
 
 //======================================================================
@@ -2177,7 +2221,7 @@ enum
 };
 
 static const GFL_BBDACT_ANM DATA_BlActSpider_Stop[] = {
-  {TEXIDX_SPIDER_0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+  {TEXIDX_SPIDER_0,ANMFLIP_OFF,ANMFLIP_OFF,2},
   {GFL_BBDACT_ANMCOM_END,0,0,0},
 };
 

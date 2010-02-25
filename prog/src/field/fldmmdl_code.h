@@ -385,7 +385,13 @@
 ///  フィールド動作モデル シン・ム描画ステータス
 //--------------------------------------------------------------
 #define DRAW_STA_SHIN_MU_STOP 0x00
-#define DRAW_STA_SHIN_MU_MAX 0x01
+#define DRAW_STA_SHIN_MU_STOP_MAX (DRAW_STA_SHIN_MU_STOP+4)
+#define DRAW_STA_SHIN_MU_HOERU  (DRAW_STA_SHIN_MU_STOP_MAX)
+#define DRAW_STA_SHIN_MU_FLY (DRAW_STA_SHIN_MU_STOP_MAX+1)
+#define DRAW_STA_SHIN_MU_FLY_UP (DRAW_STA_SHIN_MU_STOP_MAX+2)
+#define DRAW_STA_SHIN_MU_GUTARI (DRAW_STA_SHIN_MU_STOP_MAX+3)
+#define DRAW_STA_SHIN_MU_TURN (DRAW_STA_SHIN_MU_STOP_MAX+4)
+#define DRAW_STA_SHIN_MU_MAX (DRAW_STA_SHIN_MU_STOP_MAX+5)
 
 //--------------------------------------------------------------
 ///  フィールド動作モデル くもの巣専用描画ステータス
@@ -572,7 +578,12 @@
 #define AC_WALK_L_12F 0xa9 ///<上に移動 10フレーム
 #define AC_WALK_R_12F 0xaa ///<上に移動 10フレーム
 #define AC_SPIDER_REMOVE 0xab ///<くもの巣排除アニメ SPIDER専用
-#define ACMD_MAX 0xac ///<アニメーションコマンド最大数
+#define AC_SHIN_MU_HOERU 0xac ///<シンム　吠えるアニメ
+#define AC_SHIN_MU_FLY_L 0xad ///<シンム　飛ぶ　左
+#define AC_SHIN_MU_FLY_UPPER 0xae ///<シンム　上昇
+#define AC_SHIN_MU_GUTARI 0xaf ///<シンム　ぐったりアニメ
+#define AC_SHIN_MU_TURN 0xb0 ///<シンム　振り向き
+#define ACMD_MAX 0xb1 ///<アニメーションコマンド最大数
 
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT 0xff ///<非アニメーションコマンド

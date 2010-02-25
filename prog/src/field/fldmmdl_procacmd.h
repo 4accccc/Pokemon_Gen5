@@ -331,4 +331,13 @@ extern int (* const DATA_AC_RailJumpR_2G_16F_Tbl[])( MMDL * );
 //--------------------------------------------------------------
 extern int (* const DATA_AC_SpiderRemove_Tbl[])( MMDL * );
 
+//--------------------------------------------------------------
+//  AC_SHIN_MUŠÖ˜A
+//--------------------------------------------------------------
+extern int (* const DATA_AC_ShinMuHoeru_Tbl[])( MMDL * );
+extern int (* const DATA_AC_ShinMuFlyLeft_Tbl[])( MMDL * );
+extern int (* const DATA_AC_ShinMuFlyUpper_Tbl[])( MMDL * );
+extern int (* const DATA_AC_ShinMuGutari_Tbl[])( MMDL * );
+extern int (* const DATA_AC_ShinMuTurn_Tbl[])( MMDL * );
+
 #endif //MMDL_PROCACMD_H_FILE

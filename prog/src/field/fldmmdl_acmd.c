@@ -4276,6 +4276,128 @@ static int AC_SpiderRemove_1( MMDL * mmdl )
 }
 
 //======================================================================
+//	AC_SHIN_MU関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_HOERU
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuHoeru( MMDL * mmdl )
+{
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHIN_MU_HOERU );
+	MMDL_IncAcmdSeq( mmdl );
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_FLY_L
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuFlyLeft( MMDL * mmdl )
+{
+	AcWalkWorkInit( mmdl, DIR_LEFT,
+      GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_SHIN_MU_HOERU );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+///	AC_SHIN_MU_FLY_UPPPER_WORK構造体　シンム上昇で使用する
+//--------------------------------------------------------------
+typedef struct
+{
+	fx32 total_offset;
+	fx32 value;
+}AC_SHIN_MU_FLY_UPPPER_WORK;
+
+#define AC_SHIN_MU_FLY_UPPPER_WORK_SIZE (sizeof(AC_SHIN_MU_FLY_UPPPER_WORK))
+
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_FLY_UP 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuFlyUpper0( MMDL * mmdl )
+{
+  AC_SHIN_MU_FLY_UPPPER_WORK *work;
+	
+  work = MMDL_InitMoveCmdWork( mmdl, AC_SHIN_MU_FLY_UPPPER_WORK_SIZE );
+  work->value = FX32_ONE * 2;
+	
+  MMDL_SetDrawStatus( mmdl, DRAW_STA_SHIN_MU_FLY_UP );
+	MMDL_IncAcmdSeq( mmdl );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_FLY_UP 1
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuFlyUpper1( MMDL * mmdl )
+{
+	int grid;
+  AC_SHIN_MU_FLY_UPPPER_WORK *work;
+	
+	work = MMDL_GetMoveCmdWork( mmdl );
+	
+	work->total_offset += work->value;
+	
+	{
+		VecFx32 vec = {0,0,0};
+		vec.y = work->total_offset;
+		MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
+	}
+	
+	grid = work->total_offset / GRID_HALF_FX32;
+	
+	if( grid < 40 ){
+		return( FALSE );
+	}
+	
+	MMDL_IncAcmdSeq( mmdl );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_GUTARI
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuGutari( MMDL * mmdl )
+{
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHIN_MU_GUTARI );
+	MMDL_IncAcmdSeq( mmdl );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_TURN
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuTurn( MMDL * mmdl )
+{
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHIN_MU_TURN );
+	MMDL_IncAcmdSeq( mmdl );
+	return( TRUE );
+}
+
+//======================================================================
 //	data	アニメーションコマンドテーブル
 //======================================================================
 //--------------------------------------------------------------
@@ -5984,6 +6106,53 @@ int (* const DATA_AC_SpiderRemove_Tbl[])( MMDL * ) =
 {
 	AC_SpiderRemove_0,
 	AC_SpiderRemove_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_SHIN_MU_HOERU
+//--------------------------------------------------------------
+int (* const DATA_AC_ShinMuHoeru_Tbl[])( MMDL * ) =
+{
+  AC_ShinMuHoeru,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_SHIN_MU_FLY_L
+//--------------------------------------------------------------
+int (* const DATA_AC_ShinMuFlyLeft_Tbl[])( MMDL * ) =
+{
+  AC_ShinMuFlyLeft,
+	AC_Walk_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_SHIN_MU_FLY_UPPER
+//--------------------------------------------------------------
+int (* const DATA_AC_ShinMuFlyUpper_Tbl[])( MMDL * ) =
+{
+  AC_ShinMuFlyUpper0,
+  AC_ShinMuFlyUpper1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_SHIN_MU_GUTARI
+//--------------------------------------------------------------
+int (* const DATA_AC_ShinMuGutari_Tbl[])( MMDL * ) =
+{
+  AC_ShinMuGutari,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_SHIN_MU_TURN
+//--------------------------------------------------------------
+int (* const DATA_AC_ShinMuTurn_Tbl[])( MMDL * ) =
+{
+  AC_ShinMuTurn,
 	AC_End,
 };
 

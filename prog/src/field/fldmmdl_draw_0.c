@@ -1449,26 +1449,50 @@ static void DrawBlActShinMu_Delete( MMDL *mmdl )
 //--------------------------------------------------------------
 static void DrawBlActShinMu_Draw( MMDL *mmdl )
 {
+  u16 status,anm_id,dir;
+  u16 init_flag = FALSE;
   VecFx32 pos;
   DRAW_BLACT_WORK *work;
   GFL_BBDACT_SYS *actSys;
+  COMMAN_ANMCTRL_WORK *anmcnt;
   
+  work = MMDL_GetDrawProcWork( mmdl );
+  anmcnt = &work->anmcnt; 
+
   work = MMDL_GetDrawProcWork( mmdl );
   
   if( work->actID == MMDL_BLACTID_NULL ){ //–¢“o˜^
     return;
   }
   
-#if 0
-  if( MMDL_GetOBJID(mmdl) == 1 && MMDL_GetOBJCode(mmdl) == WOMAN2 ){
-    KAGAYA_Printf( "‚«‚Ü‚µ‚½\n" );
-  }
-#endif
-  
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  status = MMDL_GetDrawStatus( mmdl );
+  dir = blact_GetDrawDir( mmdl );
 
-//  comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
+  if( status != anmcnt->set_anm_status ){
+    anmcnt->set_anm_dir = dir;
+    anmcnt->set_anm_status = status;
+    anm_id = status;
+    
+    if( status == DRAW_STA_STOP ){ //’âŽ~Œn‚Í•ûŒüØ‚è‘Ö‚¦
+      anm_id = status + dir;
+    }
+
+    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+    GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
+    init_flag = TRUE;
+  }else if( dir != anmcnt->set_anm_dir ){
+    anmcnt->set_anm_dir = dir;
+
+    if( anmcnt->set_anm_status == DRAW_STA_STOP ){ //’âŽ~Œn‚Í•ûŒüØ‚è‘Ö‚¦
+      anm_id = status + dir;
+      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+      GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
+      init_flag = TRUE;
+    }
+  }
+  
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -1524,7 +1548,7 @@ static void DrawBlActSpider_Draw( MMDL *mmdl )
   GFL_BBDACT_SYS *actSys;
   
   work = MMDL_GetDrawProcWork( mmdl );
-  
+
   if( work->actID == MMDL_BLACTID_NULL ){ //–¢“o˜^
     return;
   }

@@ -1348,6 +1348,12 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_WalkR12F_Tbl,                  //AC_WALK_R_12F
    
   DATA_AC_SpiderRemove_Tbl, //AC_SPIDER_REMOVE
+  
+  DATA_AC_ShinMuHoeru_Tbl,            //AC_SHIN_MU_HOERU 
+  DATA_AC_ShinMuFlyLeft_Tbl,          //AC_SHIN_MU_FLY_L 
+  DATA_AC_ShinMuFlyUpper_Tbl,         //AC_SHIN_MU_FLY_UPPER
+  DATA_AC_ShinMuGutari_Tbl,                 //AC_SHIN_MU_GUTARI 
+  DATA_AC_ShinMuTurn_Tbl,                   //AC_SHIN_MU_TURN 
 };
 
 //--------------------------------------------------------------
@@ -1531,6 +1537,12 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailDummy,                  //AC_WALK_R_12F
   
   DATA_AC_RailDummy,                  //AC_SPIDER_REMOVE
+  
+  DATA_AC_RailDummy,                  //AC_SHIN_MU_HOERU 
+  DATA_AC_RailDummy,                  //AC_SHIN_MU_FLY_L 
+  DATA_AC_RailDummy,                  //AC_SHIN_MU_FLY_UPPER
+  DATA_AC_RailDummy,                  //AC_SHIN_MU_GUTARI 
+  DATA_AC_RailDummy,                  //AC_SHIN_MU_TURN 
 };
 
 //==============================================================================
