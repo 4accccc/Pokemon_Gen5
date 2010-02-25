@@ -482,7 +482,7 @@ static BOOL check_teach_mons( const POKEMON_PARAM * pp, u16 mode )
     return FALSE;
 
   case SCR_SKILLTEACH_MODE_DRAGON:
-#if 1
+#if 0
     {
       u16 type1 = PP_Get( pp, ID_PARA_type1, NULL );
       u16 type2 = PP_Get( pp, ID_PARA_type2, NULL );
