@@ -292,6 +292,10 @@ EVENT_START   ev_pos_c05_support_01
 	_PLAINWIN_MSG_DOWN( msg_c05_white_01 )
 	_MSGWIN_CLOSE()
 	
+	//主人公「！」
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_gyoe )
+	_OBJ_ANIME_WAIT()
+	
 	//サポート表示
 	_OBJ_ADD_EX( 181, 414, DIR_UP, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
 	
@@ -408,6 +412,14 @@ EVENT_START   ev_pos_c05_support_01
 	//========================================//
 
 EVENT_END
+
+//--------------------------------------------------------------
+//	サポート登場：主人公「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	サポート登場：主人公に隣接

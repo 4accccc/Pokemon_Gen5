@@ -188,6 +188,7 @@ _ANIME_LABEL	anm_r10_support_come
 //	R10ライバル心配イベント：プレイヤー振り向くz117
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_player_turn_z117
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
@@ -196,6 +197,7 @@ _ANIME_LABEL	anm_r10_player_turn_z117
 //	R10ライバル心配イベント：プレイヤー振り向くz118
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_player_turn_z118
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -203,6 +205,7 @@ _ANIME_LABEL	anm_r10_player_turn_z118
 //	R10ライバル心配イベント：プレイヤー振り向くz119
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_player_turn_z119
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
