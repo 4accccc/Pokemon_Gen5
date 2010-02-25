@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:41:44"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T15:02:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="384" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -386,7 +386,7 @@
 じぶんでも　ごういんだと　おもうが
 おまえらも　プラズマだんを　さがせ[BE:00:ページ切り替え（行送り）]
 すごうでの　トレーナー　なんだろ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『なんとでも　言え[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ヤーコン『なんとでも　いえ[BE:01:ページ切り替え（クリア）]
 大事なのは　おまえたちが　来たから
 プラズマ団が　逃げたと　いうことだ[BE:01:ページ切り替え（クリア）]
 自分でも　強引だと　思うが

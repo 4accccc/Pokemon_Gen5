@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T17:05:27"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T15:12:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,15 +300,17 @@
 　いいえ→man1_05</comment>
 		<attribute name="キャラ指定">MAN1
 青年１</attribute>
-		<language name="JPN" width="256">わたくし　ポケモンが　わざ
-めざめるパワーを　おぼえたとき▼
+		<language name="JPN" width="256">わたくし　ポケモンが
+めざめるパワーの　わざを▽
+おぼえたとき▼
 どのタイプの　わざに　なるのか
 なぜだか　わかるのです！▼
 ユーの　ポケモンが
 どのタイプの　めざめるパワーを▽
 おぼえるか　みてあげましょう！</language>
-		<language name="JPN_KANJI" width="256">わたくし　ポケモンが　わざ
-めざめるパワーを　覚えたとき▼
+		<language name="JPN_KANJI" width="256">わたくし　ポケモンが
+めざめるパワーの　わざを▽
+覚えたとき▼
 どのタイプの　わざに　なるのか
 なぜだか　わかるのです！▼
 ユーの　ポケモンが

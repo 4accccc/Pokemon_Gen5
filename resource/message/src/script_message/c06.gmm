@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:42:08"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T15:10:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -370,7 +370,7 @@
 [2:02:３桁:0]匹　か！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてmsg_c06_hakase1_05
 （この処理は暫定）</comment>
@@ -381,7 +381,7 @@
 なかなかの　トレーナーじゃな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてmsg_c06_hakase1_05
 （この処理は暫定）</comment>
@@ -422,10 +422,10 @@
 なんとも　うれしい　かぎりだ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ポケモン図鑑に
-　フォルムチェンジ確認機能（仮）追加予定
+　フォルムチェンジ確認機能追加予定
 ・続けてmsg_c06_hakase1_07</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">では　であいを　きねんして
