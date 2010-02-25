@@ -423,9 +423,16 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
     break;
   case SEQ_OUT:
     if( WIPE_SYS_EndCheck() ){
-      GFL_NET_DelCommandTable( GFL_NET_CMD_GURUGURU );
-      Union_App_Shutdown( _get_unionwork(wk) );  // 通信切断開始
-      wk->proc_seq = SEQ_DISCONNECT_WAIT;
+      // ぐるぐる開始であれば終了処理へ
+      if(wk->end_next_flag ){
+        return GFL_PROC_RES_FINISH;
+
+      // そうでなければ通信切断へ
+      }else{
+        GFL_NET_DelCommandTable( GFL_NET_CMD_GURUGURU );
+        Union_App_Shutdown( _get_unionwork(wk) );  // 通信切断開始
+        wk->proc_seq = SEQ_DISCONNECT_WAIT;
+      }
     }
     break;
   case SEQ_DISCONNECT_WAIT:
