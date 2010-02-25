@@ -426,8 +426,9 @@ EVENT_END
 EVENT_START   ev_t01r0401_hakase1_01
 	_TALK_OBJ_START()
 	
-	//全国図鑑入手済み？
-	IF FLAG_ON( SYS_FLAG_ZENKOKU_GET ) THEN
+	//全国図鑑入手済み？ 全国図鑑モードならTRUEを返す
+	_GET_ZENKOKU_ZUKAN_FLAG( SCWK_ANSWER )
+	IF $SCWK_ANSWER == TRUE THEN
 		//全国図鑑入手済みなら 図鑑評価処理へ
 		_PLAYER_NAME( 0 )
 		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_05 )
@@ -459,10 +460,8 @@ EVENT_START   ev_t01r0401_hakase1_01
 			_ME_WAIT()
 			_MSGWIN_CLOSE()
 			
-			//========================================//
 			//全国図鑑入手フラグをセット
-			_FLAG_SET( SYS_FLAG_ZENKOKU_GET )
-			//========================================//
+			_SET_ZENKOKU_ZUKAN_FLAG()
 			
 			//あらよっと！
 			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_04 )

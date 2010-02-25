@@ -222,7 +222,9 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_BALLOONWIN_OBJMSG( msg_c06_hakase1_05, C06_HAKASE1_01)
 	_BALLOONWIN_CLOSE()
 	
-	//【仮】ポケモン図鑑がパワーアップする処理
+	//ポケモン図鑑がパワーアップする処理 ※フォルム詳細画面追加
+	_SET_ZUKAN_GRAPHIC_FLAG()
+	
 	//博士が主人公に話しかける
 	//博士:では　であいを　きねんして　おまえさんの　ポケモンずかんを
 	_BALLOONWIN_OBJMSG( msg_c06_hakase1_06, C06_HAKASE1_01)
