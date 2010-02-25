@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/12 16:09:23
+#save date:2010/02/25 20:09:00
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r16.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r16.wms
 #hold event type:
 1
 #hold event number:
-1
+7
 #event number: 0
 #type
 1
@@ -41,6 +41,192 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 440 0 -40
+#event number: 1
+#type
+1
+#ID name
+TR_BACKPACKERM_11
+#OBJ CODE Number
+BACKPACKERM
+#MOVE CODE Number
+MV_RND_ULR
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERM_11
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 0 200
+#event number: 2
+#type
+1
+#ID name
+TR_BACKPACKERM_12
+#OBJ CODE Number
+BACKPACKERM
+#MOVE CODE Number
+MV_RND_DL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERM_12
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+360 0 -136
+#event number: 3
+#type
+1
+#ID name
+TR_BACKPACKERW_09
+#OBJ CODE Number
+BACKPACKERW
+#MOVE CODE Number
+MV_RND_UR
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERW_09
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+376 0 -120
+#event number: 4
+#type
+1
+#ID name
+TR_CYCLINGM_01
+#OBJ CODE Number
+CYCLEM
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_CYCLINGM_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+10
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+376 0 24
+#event number: 5
+#type
+1
+#ID name
+TR_CYCLINGW_01
+#OBJ CODE Number
+CYCLEW
+#MOVE CODE Number
+MV_RTDR         
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_CYCLINGW_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+6
+#Move Limit Z Number
+6
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 0 8
+#event number: 6
+#type
+1
+#ID name
+TR_POLICE_02
+#OBJ CODE Number
+POLICEMAN
+#MOVE CODE Number
+MV_RND_V
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_POLICE_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
