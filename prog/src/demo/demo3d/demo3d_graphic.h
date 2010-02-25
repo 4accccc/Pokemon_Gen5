@@ -30,6 +30,17 @@
 //=====================================
 typedef struct _DEMO3D_GRAPHIC_WORK  DEMO3D_GRAPHIC_WORK;
 
+/*
+ *  @brief  3Dシーンパラメータ指定構造体
+ */
+typedef struct _DEMO3D_3DSCENE_PARAM{
+  u8  edge_marking_f:1;
+  u8  fog_f:1;
+  u8  dmy:6;
+
+  GXRgb  edgeColorTbl[8]; 
+}DEMO3D_3DSCENE_PARAM;
+
 //=============================================================================
 /**
  *					プロトタイプ宣言
@@ -60,4 +71,13 @@ extern void DEMO3D_GRAPHIC_3D_EndDraw( DEMO3D_GRAPHIC_WORK *p_wk );
 ///情報取得	内部で設定したCLUNITを返します	OBJ使わない場合NULL
 //=====================================
 extern GFL_CLUNIT * DEMO3D_GRAPHIC_GetClunit( const DEMO3D_GRAPHIC_WORK *cp_wk );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デモシーンの3Dパラメータ設定
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+extern void DEMO3D_GRAPHIC_Scene3DParamSet( DEMO3D_GRAPHIC_WORK *p_wk, const FIELD_LIGHT_STATUS* f_light, DEMO3D_3DSCENE_PARAM* prm );
 

@@ -23,6 +23,7 @@
 #include "net_app/union/union_beacon_tool.h"
 #include "system/gfl_use.h"
 #include "demo/demo3d.h"
+#include "field/zonedata.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
 
@@ -396,12 +397,20 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     break;
   case SEQ_3D_DEMO:
     // 3Dデモ呼び出し
+    /*
+     *  Demo3DProcの内部でフィールドライトパラメータを取得するために
+     *  ZONEDATAが必要なのだが、このタイミングではまだGAMESYSTEMが生成されていないため
+     *  特別処理として、一時的にZONEDATAを生成する
+     */
+    ZONEDATA_Open( GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
+
     DEMO3D_PARAM_SetFromRTC( &work->demo3dParam, DEMO3D_ID_INTRO_TOWN, 0 );
     GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(demo3d), &Demo3DProcData, &work->demo3dParam );
     (*seq) = SEQ_3D_DEMO_WAIT;
     break;
   case SEQ_3D_DEMO_WAIT:
     if( up_status != GFL_PROC_MAIN_VALID ){
+      ZONEDATA_Close();
       (*seq) = SEQ_END;
     }
     break;

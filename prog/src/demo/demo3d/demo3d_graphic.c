@@ -34,11 +34,6 @@
 */
 //=============================================================================
 //-------------------------------------
-///	使用グラフィックマクロ設定
-//=====================================
-#define GRAPHIC_G3D_USE	//OFFにすると3D使用しません
-
-//-------------------------------------
 ///	バンク設定
 //=====================================
 static const GFL_DISP_VRAM sc_vramSetTable[2] =
@@ -240,7 +235,6 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
  *					３Ｄ設定
 */
 //=============================================================================
-#ifdef GRAPHIC_G3D_USE
 //-------------------------------------
 ///	テクスチャ、ﾊﾟﾚｯﾄのVRAMｻｲｽﾞ
 //=====================================
@@ -303,7 +297,6 @@ static void Graphic_3d_SetUp( void )
 	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
 }
 
-#endif //GRAPHIC_G3D_USE
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_
 //
 //	以上がデータ。	以下は基本的に書き換える必要がありません
@@ -377,13 +370,11 @@ static GFL_CLUNIT* GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk );
 //-------------------------------------
 ///	3D
 //=====================================
-#ifdef GRAPHIC_G3D_USE
 static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_G3D_Exit( GRAPHIC_G3D_WORK *p_wk );
 static void GRAPHIC_G3D_StartDraw( GRAPHIC_G3D_WORK *p_wk );
 static void GRAPHIC_G3D_EndDraw( GRAPHIC_G3D_WORK *p_wk );
 static void Graphic_3d_SetUp( void );
-#endif //GRAPHIC_G3D_USE
 
 //=============================================================================
 /**
@@ -441,9 +432,7 @@ DEMO3D_GRAPHIC_WORK * DEMO3D_GRAPHIC_Init( int display_select, DEMO3D_ID demo_id
     p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
   }
 
-#ifdef GRAPHIC_G3D_USE
 	GRAPHIC_G3D_Init( &p_wk->g3d, heapID );
-#endif //GRAPHIC_G3D_USE
 
 	return p_wk;
 }
@@ -463,9 +452,7 @@ void DEMO3D_GRAPHIC_Exit( DEMO3D_GRAPHIC_WORK *p_wk )
   }
 
 	//モジュール破棄
-#ifdef GRAPHIC_G3D_USE
 	GRAPHIC_G3D_Exit( &p_wk->g3d );
-#endif //GRAPHIC_G3D_USE
 
   // ダブルモードはBG/OBJを使わない
   if( p_wk->is_double == FALSE )
@@ -512,9 +499,7 @@ void DEMO3D_GRAPHIC_2D_Draw( DEMO3D_GRAPHIC_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void DEMO3D_GRAPHIC_3D_StartDraw( DEMO3D_GRAPHIC_WORK *p_wk )
 {	
-#ifdef GRAPHIC_G3D_USE
 	GRAPHIC_G3D_StartDraw( &p_wk->g3d );
-#endif //GRAPHIC_G3D_USE
 }
 //----------------------------------------------------------------------------
 /**
@@ -525,9 +510,7 @@ void DEMO3D_GRAPHIC_3D_StartDraw( DEMO3D_GRAPHIC_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void DEMO3D_GRAPHIC_3D_EndDraw( DEMO3D_GRAPHIC_WORK *p_wk )
 {	
-#ifdef GRAPHIC_G3D_USE
 	GRAPHIC_G3D_EndDraw( &p_wk->g3d );
-#endif //GRAPHIC_G3D_USE
 }
 //----------------------------------------------------------------------------
 /**
@@ -544,6 +527,39 @@ GFL_CLUNIT * DEMO3D_GRAPHIC_GetClunit( const DEMO3D_GRAPHIC_WORK *cp_wk )
   GF_ASSERT( cp_wk->is_double == FALSE );
 
 	return GRAPHIC_OBJ_GetUnit( &cp_wk->obj );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デモシーンの3Dパラメータ設定
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+void DEMO3D_GRAPHIC_Scene3DParamSet( DEMO3D_GRAPHIC_WORK *p_wk, const FIELD_LIGHT_STATUS* f_light, DEMO3D_3DSCENE_PARAM* prm )
+{
+  GRAPHIC_G3D_WORK* g3d = &p_wk->g3d;
+
+  //ライト再設定
+	GFL_G3D_LIGHT_SetColor( g3d->p_lightset, 0, (u16*)&f_light->light);
+	GFL_G3D_LIGHT_SetColor( g3d->p_lightset, 1, (u16*)&f_light->light1);
+	GFL_G3D_LIGHT_SetColor( g3d->p_lightset, 2, (u16*)&f_light->light2);
+	GFL_G3D_LIGHT_SetColor( g3d->p_lightset, 3, (u16*)&f_light->light3);
+  GFL_G3D_LIGHT_Switching( g3d->p_lightset );
+
+#if 0
+	// フォグセットアップ
+  G3X_SetFog(FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x0400, 0x00e00 );
+  G3X_SetFogColor(FIELD_DEFAULT_FOG_COLOR, 0);
+  G3X_SetFogTable(fldmapdata_fogColorTable);
+	
+	// クリアカラーの設定
+	//color,alpha,depth,polygonID,fog
+	G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,0,FALSE);
+
+	G3X_SetEdgeColorTable( fldmapdata_edgeColorTable ); 
+	G3X_EdgeMarking( FALSE );
+#endif
 }
 
 //=============================================================================
@@ -745,7 +761,6 @@ static GFL_CLUNIT* GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk )
  *					GRAPHIC_G3D
  */
 //=============================================================================
-#ifdef GRAPHIC_G3D_USE
 //----------------------------------------------------------------------------
 /**
  *	@brief	３D環境の初期化
@@ -817,4 +832,3 @@ static void GRAPHIC_G3D_EndDraw( GRAPHIC_G3D_WORK *p_wk )
 	GFL_G3D_DRAW_End();
 }
 
-#endif// GRAPHIC_G3D_USE

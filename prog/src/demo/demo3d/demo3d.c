@@ -208,12 +208,14 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   wk->heapID      = HEAPID_DEMO3D;
   wk->param       = param;
 
+	//描画設定初期化
+	wk->graphic	= DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, param->demo_id, wk->heapID );
+
   //フィールドライト設定引継ぎ
   FIELD_LIGHT_STATUS_Get( DATA_DemoZoneTable[param->demo_id],
       param->hour, param->min, WEATHER_NO_SUNNY, param->season, &wk->fld_light, wk->heapID );
 	
-	//描画設定初期化
-	wk->graphic	= DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, param->demo_id, wk->heapID );
+  DEMO3D_GRAPHIC_Scene3DParamSet( wk->graphic, &wk->fld_light, NULL );
 
   //フォント作成
   wk->font      = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
@@ -228,7 +230,6 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 
   //3D 初期化
   wk->engine = Demo3D_ENGINE_Init( wk->graphic, param->demo_id, param->start_frame, wk->heapID );
-
   // BG/OBJを非表示にしておく
   GFL_BG_SetVisible( BG_FRAME_BACK_S, VISIBLE_OFF );
   GFL_BG_SetVisible( BG_FRAME_TEXT_S, VISIBLE_OFF );
