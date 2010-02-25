@@ -248,7 +248,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 
   //ŽålŒö‚Ì«•Ê‚ÍA«•ÊÝ’è‚ªI‚í‚Á‚Ä‚©‚ç“ü‚ê‚é
   GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );  
-  work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL );
+  work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL, SaveData_GetMisc(SaveControl_GetPointer()) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
   work->procsys_up = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );

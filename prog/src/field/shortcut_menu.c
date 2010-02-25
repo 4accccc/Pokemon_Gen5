@@ -218,7 +218,7 @@ static void Scroll_DeleteList( SCROLL_WORK *p_wk, u16 *p_list_bak, u16 *p_cursor
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p_cursor, HEAPID sys_heapID, HEAPID res_heapID )
+SHORTCUTMENU_WORK *SHORTCUTMENU_Init( GAMEDATA *p_gamedata, SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p_cursor, HEAPID sys_heapID, HEAPID res_heapID )
 {	
 	//メインワーク作成
 	SHORTCUTMENU_WORK	*p_wk;
@@ -352,7 +352,7 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p
 
 	//モジュール初期化
 	{	
-		SAVE_CONTROL_WORK *p_sv_ptr	= SaveControl_GetPointer();
+		SAVE_CONTROL_WORK *p_sv_ptr	= GAMEDATA_GetSaveControlWork( p_gamedata );
 		SHORTCUT *p_shortcut_sv = SaveData_GetShortCut( p_sv_ptr );
 		SCROLL_Init( &p_wk->scroll, p_wk->p_cursor, p_wk->p_msg, p_wk->p_font, p_wk->p_que, p_shortcut_sv, p_wk->p_clwk, sys_heapID );
 		SCROLL_PrintMain( &p_wk->scroll );

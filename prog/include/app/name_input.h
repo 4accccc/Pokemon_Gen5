@@ -13,6 +13,7 @@
 #include "savedata\config.h"
 #include "savedata\box_savedata.h"
 #include "savedata/save_control_intr.h"
+#include "savedata/misc.h"
 
 //=============================================================================
 /**
@@ -131,6 +132,8 @@ typedef struct
 
   INTR_SAVE_CONTROL *p_intr_sv;  // [in]内部で、セーブしながら名前入力する(イントロ画面用)
 
+  MISC              *p_misc;    //  [in]内部でキーボードタイプを保存するためのセーブデータ
+
 } NAMEIN_PARAM;
 
 //=============================================================================
@@ -166,7 +169,7 @@ extern const GFL_PROC_DATA NameInputProcData;
  *	@return	NAMEIN_PARAM
  */
 //-----------------------------------------------------------------------------
-extern NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str );
+extern NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str, MISC *p_misc );
 //----------------------------------------------------------------------------
 /**
  *	@brief	NAMEIN_PARAM解放
@@ -190,7 +193,7 @@ extern void NAMEIN_FreeParam( NAMEIN_PARAM *param );
  *	@return	NAMEIN_PARAM
  */
 //-----------------------------------------------------------------------------
-extern NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str );
+extern NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str, MISC *p_misc );
 
 //----------------------------------------------------------------------------
 /**
@@ -209,7 +212,7 @@ extern NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_
  */
 //-----------------------------------------------------------------------------
 extern NAMEIN_PARAM *NAMEIN_AllocParamPokemonCapture( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str,
-                                                      const STRBUF *box_strbuf, const BOX_MANAGER *box_manager, u32 box_tray );
+                                                      const STRBUF *box_strbuf, const BOX_MANAGER *box_manager, u32 box_tray, MISC *p_misc );
 
 //------------------------------------
 ///	PARAMからの取得

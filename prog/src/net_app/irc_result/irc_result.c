@@ -1832,8 +1832,19 @@ static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	{	
     COMPATIBLE_STATUS *p_you;
     MYSTATUS  *p_mystatus;
+    SAVE_CONTROL_WORK *p_sv_ctrl;
+#ifdef PM_DEBUG
+    if( p_wk->p_param->p_gamesys == NULL )
+    { 
+      p_sv_ctrl = SaveControl_GetPointer();
+    }
+    else
+#endif 
+    { 
+      p_sv_ctrl = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys ) );
+    }
 
-		p_sv	= IRC_COMPATIBLE_SV_GetSavedata( SaveControl_GetPointer() );
+		p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
 		p_you	= p_wk->p_param->p_you_status;
     p_mystatus  = (MYSTATUS*)p_you->my_status;
 

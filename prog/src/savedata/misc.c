@@ -12,6 +12,8 @@
 #include "savedata/misc.h"
 #include "savedata/save_tbl.h"
 
+#include "app/name_input.h" //NAMEIN_POKEMONのため
+
 //=============================================================================
 /**
  *					定数宣言
@@ -117,8 +119,9 @@ MISC * SaveData_GetMisc( SAVE_CONTROL_WORK * p_sv)
  *	@param	input_type		入力タイプ
  */
 //-----------------------------------------------------------------------------
-void MISC_SetNameInMode( MISC *p_misc, NAMEIN_MODE mode, u8 input_type )
+void MISC_SetNameInMode( MISC *p_misc, u32 mode, u8 input_type )
 {	
+  GF_ASSERT( mode < NAMEIN_SAVEMODE_MAX );
 	p_misc->namein_mode[ mode ]	= input_type;
 }
 
@@ -132,8 +135,9 @@ void MISC_SetNameInMode( MISC *p_misc, NAMEIN_MODE mode, u8 input_type )
  *	@return	入力タイプ
  */
 //-----------------------------------------------------------------------------
-u8 MISC_GetNameInMode( const MISC *cp_misc, NAMEIN_MODE mode )
+u8 MISC_GetNameInMode( const MISC *cp_misc, u32 mode )
 {	
+  GF_ASSERT( mode < NAMEIN_SAVEMODE_MAX );
 	return cp_misc->namein_mode[ mode ];
 }
 

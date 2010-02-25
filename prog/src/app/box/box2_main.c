@@ -4016,6 +4016,7 @@ int BOX2MAIN_BagExit( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 int BOX2MAIN_NameInCall( BOX2_SYS_WORK * syswk )
 {
+  MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(syswk->dat->gamedata) );
 	BOX_NAMEIN_WORK * wk;
 
 	wk = GFL_HEAP_AllocClearMemory( HEAPID_BOX_SYS, sizeof(BOX_NAMEIN_WORK) );
@@ -4025,7 +4026,7 @@ int BOX2MAIN_NameInCall( BOX2_SYS_WORK * syswk )
 
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
 	wk->prm = NAMEIN_AllocParam(
-							HEAPID_BOX_SYS, NAMEIN_BOX, 0, 0, BOX_TRAYNAME_MAXLEN, wk->name );
+							HEAPID_BOX_SYS, NAMEIN_BOX, 0, 0, BOX_TRAYNAME_MAXLEN, wk->name, misc );
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 	GFL_PROC_LOCAL_CallProc( syswk->localProc, FS_OVERLAY_ID(namein), &NameInputProcData, wk->prm );
 

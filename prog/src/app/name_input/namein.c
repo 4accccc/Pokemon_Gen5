@@ -786,7 +786,7 @@ const u32 NAMEIN_SE_PresetNum = 5;
  *  @retura NAMEIN_PARAM
  */
 //-----------------------------------------------------------------------------
-NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str )
+NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str, MISC *p_misc )
 { 
   NAMEIN_PARAM *p_param;
   p_param = GFL_HEAP_AllocMemory( heapId, sizeof(NAMEIN_PARAM) );
@@ -795,6 +795,7 @@ NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, in
   p_param->wordmax  = wordmax;
   p_param->param1 = param1;
   p_param->param2 = param2;
+  p_param->p_misc = p_misc;
 
   //バッファ作成
   p_param->strbuf = GFL_STR_CreateBuffer( wordmax + 1, heapId );
@@ -819,7 +820,7 @@ NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, in
  *  @return NAMEIN_PARAM
  */
 //-----------------------------------------------------------------------------
-NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str )
+NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str, MISC *p_misc )
 { 
   NAMEIN_PARAM *p_param;
   p_param = GFL_HEAP_AllocMemory( heapId, sizeof(NAMEIN_PARAM) );
@@ -827,6 +828,7 @@ NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *
   p_param->mode     = NAMEIN_POKEMON;
   p_param->wordmax  = wordmax;
   p_param->pp       = pp;
+  p_param->p_misc = p_misc;
 
   //PPの場合引数を設定
   if( p_param->pp )
@@ -864,9 +866,9 @@ NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *
  */
 //-----------------------------------------------------------------------------
 NAMEIN_PARAM *NAMEIN_AllocParamPokemonCapture( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str,
-                                               const STRBUF *box_strbuf, const BOX_MANAGER *box_manager, u32 box_tray )
+                                               const STRBUF *box_strbuf, const BOX_MANAGER *box_manager, u32 box_tray, MISC *p_misc )
 {
-  NAMEIN_PARAM *p_param = NAMEIN_AllocParamPokemonByPP( heapId, pp, wordmax, default_str );
+  NAMEIN_PARAM *p_param = NAMEIN_AllocParamPokemonByPP( heapId, pp, wordmax, default_str, p_misc );
   p_param->box_strbuf = box_strbuf;
   p_param->box_manager = box_manager;
   p_param->box_tray = box_tray;
@@ -958,9 +960,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 
   //セーブデータ受け取り
   { 
-    const MISC *cp_misc;
-    cp_misc = SaveData_GetMisc( SaveControl_GetPointer() );
-    mode    = MISC_GetNameInMode( cp_misc, p_param->mode );
+    mode    = MISC_GetNameInMode( p_param->p_misc, p_param->mode );
   }
   
   if( 1 )
@@ -994,13 +994,6 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   p_wk->p_msg   = GFL_MSG_Create( msg_load, ARCID_MESSAGE, 
                         NARC_message_namein_dat, HEAPID_NAME_INPUT );
   p_wk->p_word  = WORDSET_Create( HEAPID_NAME_INPUT );
-
-  // イントロからセーブデータを引渡された場合
-  if( p_wk->p_param->p_intr_sv )
-  { 
-    //p_wk->p_intr_sv = IntrSave_Init(HEAPID_NAME_INPUT, SaveControl_GetPointer());
-  }
-
 
   //グラフィック設定
   p_wk->p_graphic = NAMEIN_GRAPHIC_Init( 0, HEAPID_NAME_INPUT );
@@ -1115,13 +1108,6 @@ static GFL_PROC_RESULT NAMEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
 
   //プリント
   PRINTSYS_QUE_Main( p_wk->p_que );
-
-  //セーブ
-  if( p_wk->p_param->p_intr_sv )
-  { 
-    //外部でよんでいる
-    //IntrSave_Main( p_wk->p_intr_sv );
-  }
 
   //終了
   if( SEQ_IsEnd( &p_wk->seq ) )
@@ -5493,11 +5479,9 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
   //入力モードを保存する
   { 
-    MISC *p_misc;
     NAMEIN_INPUTTYPE input_type;
-    p_misc  = SaveData_GetMisc( SaveControl_GetPointer() );
     input_type  = KEYBOARD_GetInputType( &p_wk->keyboard );
-    MISC_SetNameInMode( p_misc, p_wk->p_param->mode, input_type );
+    MISC_SetNameInMode( p_wk->p_param->p_misc, p_wk->p_param->mode, input_type );
   }
 
   //終了

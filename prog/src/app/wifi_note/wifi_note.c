@@ -6307,11 +6307,12 @@ static void CodeIn_DrawExit( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, WFNOTE_DR
 //-----------------------------------------------------------------------------
 static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, HEAPID heapID )
 {
+  MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(p_data->pGameData) );
   NAMEIN_PARAM* p_param;
 
   p_param = NAMEIN_AllocParam( heapID, NAMEIN_FRIENDNAME, 0, 0,
               NAMEIN_PERSON_LENGTH,
-              NULL );
+              NULL,  misc );
 
   // 名前入力画面初期化dataチェック
   if( p_data->namein_init.init == TRUE ){

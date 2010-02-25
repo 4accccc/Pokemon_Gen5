@@ -1260,7 +1260,9 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
 
     //モジュール初期化
     {
-      CONFIG * p_sv = SaveData_GetConfig(SaveControl_GetPointer());
+      GAMEDATA *p_gdata = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+      SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_gdata );
+      CONFIG * p_sv = SaveData_GetConfig(p_sv_ctrl);
       CONFIGPARAM_Init( &p_wk->pre, p_sv );
     }
     SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );  //最初はFadeOutシーケンス

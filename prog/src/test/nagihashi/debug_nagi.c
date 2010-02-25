@@ -502,13 +502,14 @@ static unsigned  char pokemonBinary[0xDC] =
 static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void *p_parent, void *p_work )
 {	
 	DEBUG_NAGI_MAIN_WORK	*p_wk;
+  MISC  *p_misc = SaveData_GetMisc( SaveControl_GetPointer() );
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAGI_DEBUG, 0x20000 );
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(DEBUG_NAGI_MAIN_WORK), HEAPID_NAGI_DEBUG );
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
 	CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
-	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_GREETING_WORD, 1, 0, NAMEIN_GREETING_WORD_LENGTH, NULL );
+	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_GREETING_WORD, 1, 0, NAMEIN_GREETING_WORD_LENGTH, NULL, p_misc );
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
   NAGI_Printf( "pokeparty size=[%d]\n", PokeParty_GetWorkSize() );

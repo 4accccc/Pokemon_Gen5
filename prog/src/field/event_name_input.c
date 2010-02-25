@@ -162,11 +162,12 @@ GMEVENT * EVENT_NameInput_PartyPoke(
     GAMEDATA*   gdata = GAMESYSTEM_GetGameData( work->gsys );
     POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
     POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, party_index );
+    MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gdata) );
     u32        monsno = PP_Get( pp, ID_PARA_monsno, NULL );
     u32        formno = PP_Get( pp, ID_PARA_form_no, NULL );
     GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     work->nameInParam = NAMEIN_AllocParam( 
-        HEAPID_PROC, NAMEIN_POKEMON, monsno, formno, NAMEIN_POKEMON_LENGTH, NULL );
+        HEAPID_PROC, NAMEIN_POKEMON, monsno, formno, NAMEIN_POKEMON_LENGTH, NULL, misc );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     work->pokeParam   = pp;
   }

@@ -16,7 +16,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
-#include "gamesystem/gamedata_def.h"
+#include "gamesystem/game_data.h"
 #include "gamesystem/msgspeed.h"
 #include "system/palanm.h"
 #include "system/bmp_winframe.h"
@@ -665,6 +665,8 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
     {
       if( !GFL_FADE_CheckFade() )
       {
+        MISC *misc  = SaveData_GetMisc( GAMEDATA_GetSaveControlWork( param->gamedata ) );
+
         Egg_Demo_Exit( param, work );
 
         // 次へ
@@ -672,7 +674,7 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
 
         // 名前入力へ行く
         GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
-        work->namein_param = NAMEIN_AllocParamPokemonByPP( work->heap_id, param->pp, NAMEIN_POKEMON_LENGTH, NULL );
+        work->namein_param = NAMEIN_AllocParamPokemonByPP( work->heap_id, param->pp, NAMEIN_POKEMON_LENGTH, NULL, misc );
         // ローカルPROC呼び出し
         GFL_PROC_LOCAL_CallProc( work->local_procsys, NO_OVERLAY_ID, &NameInputProcData, work->namein_param );
       }

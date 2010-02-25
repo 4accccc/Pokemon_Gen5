@@ -96,6 +96,7 @@
 #include "event_wifi_bsubway.h"
 #include "savedata/battle_box_save.h"
 #include "event_geonet.h"
+#include "app/name_input.h"
 
 FS_EXTERN_OVERLAY( d_iwasawa );
 
@@ -2611,7 +2612,9 @@ static BOOL debugMenuCallProc_ChangeName( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT       *p_event    = p_wk->gmEvent;
   FIELDMAP_WORK *p_field  = p_wk->fieldWork;
   DEBUG_CHANGENAME_EVENT_WORK  *p_ev_wk;
-  MYSTATUS      *p_mystatus  = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_gamesys) );
+  GAMEDATA  *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  MYSTATUS  *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
+  MISC      *p_misc     = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(p_gamedata) );
 
   //イヴェント
   GMEVENT_Change( p_event, debugEvnetChangeName, sizeof(DEBUG_CHANGENAME_EVENT_WORK) );
@@ -2628,7 +2631,7 @@ static BOOL debugMenuCallProc_ChangeName( DEBUG_MENU_EVENT_WORK *p_wk )
 
   GFL_OVERLAY_Load(FS_OVERLAY_ID(namein) );
   //名前入力ワーク設定
-  p_ev_wk->p_param  = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_MYNAME, MyStatus_GetMySex(p_mystatus), 0, NAMEIN_PERSON_LENGTH, p_ev_wk->p_default_str );
+  p_ev_wk->p_param  = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_MYNAME, MyStatus_GetMySex(p_mystatus), 0, NAMEIN_PERSON_LENGTH, p_ev_wk->p_default_str, p_misc );
 
   return TRUE;
 }

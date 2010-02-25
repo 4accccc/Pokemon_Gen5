@@ -674,13 +674,15 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
 
   //読み込み
   {
+    SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_gamedata );
+
     LOAD_RESULT result;
-    BattleRec_Load( SaveControl_GetPointer(), HEAPID_BATTLE_RECORDER_SYS, &result, p_param->mode ); 
+    BattleRec_Load( p_sv_ctrl, HEAPID_BATTLE_RECORDER_SYS, &result, p_param->mode ); 
     if( result == LOAD_RESULT_OK )
     { 
       if( p_param->mode == LOADDATA_MYREC )
       { 
-        GDS_Profile_MyDataSet(p_param->p_profile, SaveControl_GetPointer());
+        GDS_Profile_MyDataSet(p_param->p_profile, p_sv_ctrl);
       }
       NAGI_Printf( "戦闘録画読み込み %d\n", p_param->mode );
     }
@@ -727,6 +729,7 @@ static void BR_BTLSUBWAY_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, c
 	BR_BTLSUBWAY_PROC_PARAM		*p_param	= p_param_adrs;
 	BR_CORE_WORK							*p_wk			= p_wk_adrs;
 	const BR_MENU_PROC_PARAM	*cp_menu_param	= cp_pre_param;
+  SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_gamedata );
 
 	//メニュー以外から来ない
 	GF_ASSERT_MSG( preID == BR_PROCID_MENU, "メニュー以外からは来ない %d", preID );
@@ -740,7 +743,7 @@ static void BR_BTLSUBWAY_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, c
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
-  p_param->p_subway   = SaveControl_DataPtrGet( SaveControl_GetPointer(), GMDATA_ID_BSUBWAY_SCOREDATA );
+  p_param->p_subway   = SaveControl_DataPtrGet( p_sv_ctrl, GMDATA_ID_BSUBWAY_SCOREDATA );
 }
 //----------------------------------------------------------------------------
 /**
@@ -770,6 +773,7 @@ static void BR_RNDMATCH_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, co
 	BR_RNDMATCH_PROC_PARAM		*p_param	= p_param_adrs;
 	BR_CORE_WORK							*p_wk			= p_wk_adrs;
 	const BR_MENU_PROC_PARAM	*cp_menu_param	= cp_pre_param;
+  SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_gamedata );
 
 	//メニュー以外から来ない
 	GF_ASSERT_MSG( preID == BR_PROCID_MENU, "メニュー以外からは来ない %d", preID );
@@ -778,7 +782,7 @@ static void BR_RNDMATCH_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, co
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
-  p_param->p_rndmatch = SaveData_GetRndMatch( SaveControl_GetPointer() );
+  p_param->p_rndmatch = SaveData_GetRndMatch( p_sv_ctrl );
 }
 //----------------------------------------------------------------------------
 /**

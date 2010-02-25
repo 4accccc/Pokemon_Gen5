@@ -407,7 +407,7 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
     GMEVENT_Change( event,EVENT_IrcBattleMain, sizeof(EVENT_IRCBATTLE_WORK) );
   }
   dbw = GMEVENT_GetEventWork(event);
-  dbw->ctrl =  GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(gsys) );  //SaveControl_GetPointer();
+  dbw->ctrl =  GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(gsys) ); 
   dbw->gamedata = GAMESYSTEM_GetGameData(gsys);
   dbw->gsys = gsys;
 
