@@ -42,6 +42,7 @@
 
 #include "gamesystem/game_beacon.h"
 #include "field/party_select_list.h"
+#include "field/scrcmd.h"
 
 
 //==============================================================================
@@ -2113,7 +2114,9 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
     break;
   case 1:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      return TRUE;
+      if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
+        return TRUE;
+      }
     }
     break;
   }
