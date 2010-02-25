@@ -9,14 +9,35 @@
 //============================================================================================
 
 ///コマンド選択タッチパネル領域設定
-static const GFL_UI_TP_HITTBL BattleMenuTouchData[] = {
+static const GFL_UI_TP_HITTBL BattleMenuTouchDataHitTbl[] = {
   //UP      DOWN    LEFT    RIGHT
-  { 0x03*8, 0x12*8, 0x00*8, 255},      //たたかう
-  { 0x12*8, 0x18*8, 0x00*8, 0x0a*8},   //バッグ
-  { 0x12*8, 0x18*8, 0x16*8, 255},  //ポケモン
+  { 0x03*8, 0x12*8, 0x00*8, 255},     //たたかう
+  { 0x12*8, 0x18*8, 0x00*8, 0x0a*8},  //バッグ
+  { 0x12*8, 0x18*8, 0x16*8, 255},     //ポケモン
   { 0x13*8, 0x18*8, 0x0b*8, 0x15*8},  //にげる
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },   
 };
+
+static  const BOOL  BattleMenuTouchDataCancel[] = { 
+  FALSE,  //たたかう
+  FALSE,  //バッグ
+  FALSE,  //ポケモン
+  FALSE,  //にげる
+};
+
+static  const int  BattleMenuTouchDataPltt[] = { 
+   3 | 0x10000,   //たたかう
+   1 << 2,        //バッグ
+   1 << 3,        //ポケモン
+   1 << 4,        //にげる
+};
+
+static const BTLV_INPUT_HITTBL BattleMenuTouchData = {
+  BattleMenuTouchDataHitTbl,
+  BattleMenuTouchDataCancel,
+  BattleMenuTouchDataPltt,
+};
+
 static const BTLV_INPUT_KEYTBL  BattleMenuKeyData[] = { 
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R   A   B
   { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  -1, 1,  2,  0,  BTLV_INPUT_NOMOVE },                  //たたかう
@@ -32,15 +53,38 @@ static const BTLV_INPUT_KEYTBL  BattleMenuKeyData[] = {
 };
 
 ///技選択タッチパネル領域設定
-static const GFL_UI_TP_HITTBL SkillMenuTouchDataNormal[] = {
+static const GFL_UI_TP_HITTBL SkillMenuTouchDataNormalHitTbl[] = {
   //UP      DOWN    LEFT    RIGHT
-  { 0x04*8, 0x0a*8, 0x00*8, 0x10*8},   //技1
-  { 0x04*8, 0x0a*8, 0x10*8, 255},      //技2
-  { 0x0a*8, 0x10*8, 0x00*8, 0x10*8},   //技3
-  { 0x0a*8, 0x10*8, 0x10*8, 255},      //技4
-  { 0x12*8, 0x18*8, 0x16*8, 255},      //キャンセル
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+  { 0x04*8, 0x0a*8, 0x00*8, 0x10*8},  //技1
+  { 0x04*8, 0x0a*8, 0x10*8, 255},     //技2
+  { 0x0a*8, 0x10*8, 0x00*8, 0x10*8},  //技3
+  { 0x0a*8, 0x10*8, 0x10*8, 255},     //技4
+  { 0x12*8, 0x18*8, 0x16*8, 255},     //キャンセル
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },   
 };
+
+static const BOOL SkillMenuTouchDataNormalCancel[] = {
+  FALSE,  //技1
+  FALSE,  //技2
+  FALSE,  //技3
+  FALSE,  //技4
+  TRUE,   //キャンセル
+};
+
+static const int SkillMenuTouchDataNormalPltt[] = {
+  1 <<  9,  //技1
+  1 << 10,  //技2
+  1 << 11,  //技3
+  1 << 12,  //技4
+  1 <<  4,  //キャンセル
+};
+
+static const BTLV_INPUT_HITTBL SkillMenuTouchDataNormal = {
+  SkillMenuTouchDataNormalHitTbl,
+  SkillMenuTouchDataNormalCancel,
+  SkillMenuTouchDataNormalPltt,
+};
+
 static const BTLV_INPUT_KEYTBL  SkillMenuKeyDataNormal[] = { 
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
   { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  0,  4 },                  //技1
@@ -59,16 +103,40 @@ static const BTLV_INPUT_KEYTBL  SkillMenuKeyDataNormal[] = {
 };
 
 ///技選択タッチパネル領域設定
-static const GFL_UI_TP_HITTBL SkillMenuTouchData3vs3[] = {
+static const GFL_UI_TP_HITTBL SkillMenuTouchData3vs3HitTbl[] = {
   //UP    DOWN    LEFT    RIGHT
-  { 0x04*8, 0x0a*8, 0x00*8, 0x10*8},   //技1
-  { 0x04*8, 0x0a*8, 0x10*8, 255},      //技2
-  { 0x0a*8, 0x10*8, 0x00*8, 0x10*8},   //技3
-  { 0x0a*8, 0x10*8, 0x10*8, 255},      //技4
-  {0x12*8, 0x18*8, 0x16*8, 255},      //キャンセル
-  {0x12*8, 0x18*8, 0x00*8, 0x0a*8},   //移動
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+  { 0x04*8, 0x0a*8, 0x00*8, 0x10*8},  //技1
+  { 0x04*8, 0x0a*8, 0x10*8, 255},     //技2
+  { 0x0a*8, 0x10*8, 0x00*8, 0x10*8},  //技3
+  { 0x0a*8, 0x10*8, 0x10*8, 255},     //技4
+  { 0x12*8, 0x18*8, 0x16*8, 255},     //キャンセル
+  { 0x12*8, 0x18*8, 0x00*8, 0x0a*8},  //移動
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },   
 };
+
+static const BOOL SkillMenuTouchData3vs3Cancel[] = {
+  FALSE,  //技1
+  FALSE,  //技2
+  FALSE,  //技3
+  FALSE,  //技4
+  TRUE,   //キャンセル
+  FALSE,  //移動
+};
+
+static const int SkillMenuTouchData3vs3Pltt[] = {
+   9,  //技1
+  10,  //技2
+  11,  //技3
+  12,  //技4
+   4,  //キャンセル
+   2,  //移動
+};
+
+static const BTLV_INPUT_HITTBL SkillMenuTouchData3vs3 = {
+  SkillMenuTouchData3vs3HitTbl,
+  SkillMenuTouchData3vs3Cancel,
+};
+
 static const BTLV_INPUT_KEYTBL  SkillMenuKeyData3vs3[] = { 
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
   { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  0,  4 },  //技1

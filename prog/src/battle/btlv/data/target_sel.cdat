@@ -8,14 +8,36 @@
  */
 //============================================================================================
 
-static const GFL_UI_TP_HITTBL PokeSeleMenuTouch4Data[] = {
+static const GFL_UI_TP_HITTBL PokeSeleMenuTouch4DataHitTbl[] = {
   //UP      DOWN    LEFT    RIGHT
-  { 11 * 8, 16 * 8,  0 * 8, 16 * 8 }, //ターゲットA
-  {  4 * 8, 11 * 8, 16 * 8, 255 },    //ターゲットB
-  { 11 * 8, 16 * 8, 16 * 8, 255 },    //ターゲットC
-  {  4 * 8, 11 * 8,  0 * 8, 16 * 8 }, //ターゲットD
-  { 18 * 8, 24 * 8, 22 * 8, 255},     //キャンセル
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+  { 11 * 8, 16 * 8,  0 * 8, 16 * 8 },  //ターゲットA
+  {  4 * 8, 11 * 8, 16 * 8, 255 },     //ターゲットB
+  { 11 * 8, 16 * 8, 16 * 8, 255 },     //ターゲットC
+  {  4 * 8, 11 * 8,  0 * 8, 16 * 8 },  //ターゲットD
+  { 18 * 8, 24 * 8, 22 * 8, 255},      //キャンセル
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },    
+};
+
+static const BOOL PokeSeleMenuTouch4DataCancel[] = {
+  FALSE,  //ターゲットA
+  FALSE,  //ターゲットB
+  FALSE,  //ターゲットC
+  FALSE,  //ターゲットD
+  TRUE,   //キャンセル
+};
+
+static const int PokeSeleMenuTouch4DataPltt[] = {
+  1 << 6,  //ターゲットA
+  1 << 6,  //ターゲットB
+  1 << 6,  //ターゲットC
+  1 << 6,  //ターゲットD
+  1 << 4,   //キャンセル
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch4Data = {
+  PokeSeleMenuTouch4DataHitTbl,
+  PokeSeleMenuTouch4DataCancel,
+  PokeSeleMenuTouch4DataPltt,
 };
 
 ///< 自分以外１体（選択）& 自分以外１体（遠距離）
@@ -147,16 +169,42 @@ static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey4Data[ 2 ][ 14 ] = {
   },
 };
 
-static const GFL_UI_TP_HITTBL PokeSeleMenuTouch6Data[] = {
+static const GFL_UI_TP_HITTBL PokeSeleMenuTouch6DataHitTbl[] = {
   //UP      DOWN    LEFT    RIGHT
-  { 11 * 8, 16 * 8,  1 * 8, 11 * 8 }, //ターゲットA
-  {  4 * 8, 11 * 8, 21 * 8, 31 * 8 }, //ターゲットB
-  { 11 * 8, 16 * 8, 11 * 8, 21 * 8 }, //ターゲットC
-  {  4 * 8, 11 * 8, 11 * 8, 21 * 8 }, //ターゲットD
-  { 11 * 8, 16 * 8, 21 * 8, 31 * 8 }, //ターゲットE
-  {  4 * 8, 11 * 8,  1 * 8, 11 * 8 }, //ターゲットF
+  { 11 * 8, 16 * 8,  1 * 8, 11 * 8 },  //ターゲットA
+  {  4 * 8, 11 * 8, 21 * 8, 31 * 8 },  //ターゲットB
+  { 11 * 8, 16 * 8, 11 * 8, 21 * 8 },  //ターゲットC
+  {  4 * 8, 11 * 8, 11 * 8, 21 * 8 },  //ターゲットD
+  { 11 * 8, 16 * 8, 21 * 8, 31 * 8 },  //ターゲットE
+  {  4 * 8, 11 * 8,  1 * 8, 11 * 8 },  //ターゲットF
   { 18 * 8, 24 * 8, 22 * 8, 255},      //キャンセル
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },
+};
+
+static const BOOL PokeSeleMenuTouch6DataCancel[] = {
+  FALSE,  //ターゲットA
+  FALSE,  //ターゲットB
+  FALSE,  //ターゲットC
+  FALSE,  //ターゲットD
+  FALSE,  //ターゲットE
+  FALSE,  //ターゲットF
+  TRUE,   //キャンセル
+};
+
+static const BOOL PokeSeleMenuTouch6DataPltt[] = {
+  1 << 6,  //ターゲットA
+  1 << 6,  //ターゲットB
+  1 << 6,  //ターゲットC
+  1 << 6,  //ターゲットD
+  1 << 6,  //ターゲットE
+  1 << 6,  //ターゲットF
+  1 << 4,   //キャンセル
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6Data = {
+  PokeSeleMenuTouch6DataHitTbl,
+  PokeSeleMenuTouch6DataCancel,
+  PokeSeleMenuTouch6DataPltt,
 };
 
 ///< 自分以外１体（選択）

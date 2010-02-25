@@ -9,11 +9,27 @@
 //============================================================================================
 
 ///2択タッチパネル領域設定
-static const GFL_UI_TP_HITTBL YesNoTouchData[] = {
+static const GFL_UI_TP_HITTBL YesNoTouchDataHitTbl[] = {
   //UP      DOWN    LEFT    RIGHT
   { 0x04*8, 0x0a*8, 0x01*8, 0x1e*8},   //はい
   { 0x0a*8, 0x10*8, 0x00*8, 0x1e*8},   //いいえ
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
+static const BOOL YesNoTouchDataCancel[] = {
+  FALSE,   //はい
+  FALSE,   //いいえ
+};
+
+static const int YesNoTouchDataPltt[] = {
+  1 << 2,   //はい
+  1 << 3,   //いいえ
+};
+
+static const BTLV_INPUT_HITTBL YesNoTouchData = {
+  YesNoTouchDataHitTbl,
+  YesNoTouchDataCancel,
+  YesNoTouchDataPltt,
 };
 
 static const BTLV_INPUT_KEYTBL  YesNoKeyData[] = { 
