@@ -12,6 +12,12 @@
 #define ZONE_R16_EVC_H
 
 #define DUMMY_R16_TREE_01                  0
+#define TR_BACKPACKERM_11                  1
+#define TR_BACKPACKERM_12                  2
+#define TR_BACKPACKERW_09                  3
+#define TR_CYCLINGM_01                     4
+#define TR_CYCLINGW_01                     5
+#define TR_POLICE_02                       6
 
 #endif //ZONE_R16_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r16.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
