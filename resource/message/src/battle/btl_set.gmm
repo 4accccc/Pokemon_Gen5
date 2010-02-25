@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-24T03:28:55"/>
+	<create user="taya" host="W00146" date="2010-02-25T00:30:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -478,6 +478,126 @@
 げんきを　とりもどした！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 元気を　取り戻した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AffGood_1" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+		<comment>ポケモン名指定版　こうかはバツグン（１体）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]に
+こうかは　ばつぐんだ！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に
+効果は　バツグンだ！</language>
+	</row>
+	<row id="BTL_STRID_SET_AffGood_1_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]に
+こうかは　ばつぐんだ！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]に
+効果は　バツグンだ！</language>
+	</row>
+	<row id="BTL_STRID_SET_AffGood_1_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]に
+こうかは　ばつぐんだ！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]に
+効果は　バツグンだ！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AffGood_2" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+		<comment>ポケモン名指定版　こうかはバツグン（２体）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+こうかは　ばつぐんだ！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+効果は　バツグンだ！</language>
+	</row>
+	<row id="BTL_STRID_SET_AffGood_2_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+こうかは　ばつぐんだ！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+効果は　バツグンだ！</language>
+	</row>
+	<row id="BTL_STRID_SET_AffGood_2_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+こうかは　ばつぐんだ！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+効果は　バツグンだ！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AffGood_3" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+		<comment>ポケモン名指定版　こうかはバツグン（３体）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　こうかは　ばつぐんだ！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　効果は　バツグンだ！</language>
+	</row>
+	<row id="BTL_STRID_SET_AffGood_3_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　こうかは　ばつぐんだ！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　効果は　バツグンだ！</language>
+	</row>
+	<row id="BTL_STRID_SET_AffGood_3_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　こうかは　ばつぐんだ！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　効果は　バツグンだ！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AffBad_1" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+		<comment>ポケモン名指定版　こうかはいまひとつ（１体）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]に
+こうかは　いまひとつだ</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に
+効果は　いまひとつだ</language>
+	</row>
+	<row id="BTL_STRID_SET_AffBad_1_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]に
+こうかは　いまひとつだ</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]に
+効果は　いまひとつだ</language>
+	</row>
+	<row id="BTL_STRID_SET_AffBad_1_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]に
+こうかは　いまひとつだ</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]に
+効果は　いまひとつだ</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AffBad_2" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+		<comment>ポケモン名指定版　こうかはいまひとつ（２体）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+こうかは　いまひとつだ</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+効果は　いまひとつだ</language>
+	</row>
+	<row id="BTL_STRID_SET_AffBad_2_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+こうかは　いまひとつだ</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+効果は　いまひとつだ</language>
+	</row>
+	<row id="BTL_STRID_SET_AffBad_2_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+こうかは　いまひとつだ</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]に
+効果は　いまひとつだ</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AffBad_3" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+		<comment>ポケモン名指定版　こうかはいまひとつ（３体）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　こうかは　いまひとつだ</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　効果は　いまひとつだ</language>
+	</row>
+	<row id="BTL_STRID_SET_AffBad_3_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　こうかは　いまひとつだ</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　効果は　いまひとつだ</language>
+	</row>
+	<row id="BTL_STRID_SET_AffBad_3_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　こうかは　いまひとつだ</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]と
+[1:02:ポケモンニックネーム:2]に　効果は　いまひとつだ</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_ATK" back-color=",,,#ffff00,#00ff00,,,,,,,,,,,,,,">
