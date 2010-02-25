@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T17:40:48"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T15:45:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="384" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -357,7 +357,7 @@
 
 	<row id="msg_r08_backpackerm_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・削除ラベル</comment>
 		<attribute name="キャラ指定">BACKPACKERM
 バックパッカー♂</attribute>
 		<language name="JPN" width="256">ゆくてに　そびえる
@@ -370,8 +370,7 @@
 
 	<row id="msg_r08_cameraman_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
-・仮メッセージ
-・上記モデルと隣接</comment>
+・削除ラベル</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">てつどうマニアに　とって
 シリンダーブリッジは[BE:00:ページ切り替え（行送り）]
@@ -411,12 +410,14 @@
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 バッグに　しまっている
-どうぐの　ばしょを　いれかえるには[BE:00:ページ切り替え（行送り）]
-セレクトボタンを　おしましょう！</language>
+どうぐの　ばしょを　いれかえるには[BE:01:ページ切り替え（クリア）]
+セレクトボタンを　おしましょう！
+ポチッとな！</language>
 		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 バッグに　しまっている
-道具の　場所を　入れ替えるには[BE:00:ページ切り替え（行送り）]
-セレクトボタンを　押しましょう！</language>
+道具の　場所を　入れ替えるには[BE:01:ページ切り替え（クリア）]
+セレクトボタンを　押しましょう！
+ポチッとな！</language>
 	</row>
 
 	<row id="msg_r08_sign4_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
