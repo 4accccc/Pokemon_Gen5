@@ -176,7 +176,7 @@ static void _CemRecv_EntryOK(const int netID, const int size, const void* pData,
 {
   COMM_ENTRY_MENU_PTR em = pWork;
 
-  OS_TPrintf("Recv : EntryOK\n");
+  OS_TPrintf("Recv : EntryOK = %d\n", netID);
   CommEntryMenu_SetEntryAnswer(em, ENTRY_PARENT_ANSWER_OK);
 }
 
@@ -340,13 +340,14 @@ static void _CemRecv_MemberInfo(const int netID, const int size, const void* pDa
 {
   COMM_ENTRY_MENU_PTR em = pWork;
   const ENTRYMENU_MEMBER_INFO *recv_member_info = pData;
+
+  OS_TPrintf("Recv:参加者情報\n");
   
   if(GFL_NET_IsParentMachine() == TRUE){
     CommEntyrMenu_MemberInfoReserveUpdate(em);
     return; //親機は受け取らない
   }
   
-  OS_TPrintf("Recv:参加者情報\n");
   //巨大データ受信バッファに_RecvMemberInfoで直接代入先のアドレスを渡しているのでコピーの必要は
   //無いが、受信した事を知らせる為、セット関数を呼び出す
   CommEntryMenu_RecvMemberInfo(em, recv_member_info);

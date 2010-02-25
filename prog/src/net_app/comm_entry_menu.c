@@ -19,10 +19,12 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
-///IDのSTRBUFサイズ
-#define ID_STRBUF_SIZE          (5)   //5桁表示の為
 ///EXPANDで展開するメッセージバッファのサイズ
 #define EXPAND_STRBUF_SIZE      (100)
+///LIST EXPANDで展開するメッセージバッファのサイズ
+#define LIST_EXPAND_STRBUF_SIZE      (64)
+///NUM EXPANDで展開するメッセージバッファのサイズ
+#define NUM_EXPAND_STRBUF_SIZE      (32)
 
 ///ユーザーステータス
 enum{
@@ -39,23 +41,16 @@ enum{
   LISTBMP_POS_LEFT = 2,
   LISTBMP_POS_RIGHT = 20,
   LISTBMP_POS_TOP = 6,
-  LISTBMP_POS_BOTTOM = LISTBMP_POS_TOP + 8,
+  LISTBMP_POS_BOTTOM_PARENT = LISTBMP_POS_TOP + 10,   //親の時のYサイズ
+  LISTBMP_POS_BOTTOM_CHILD = LISTBMP_POS_TOP + 8,     //子の時のYサイズ
 };
 
 ///エントリーリストのBMP書き込み位置(ドット単位)
 enum{
   LISTBMP_START_NAME_X = 0,
   LISTBMP_START_NAME_Y = 0,
-  LISTBMP_START_ID_X = (LISTBMP_POS_RIGHT - 8) * 8,
-  LISTBMP_START_ID_Y = LISTBMP_START_NAME_Y,
-};
-
-///「あと○にん」BMPサイズ(キャラ単位)
-enum{
-  NUMBMP_POS_LEFT = 22,
-  NUMBMP_POS_RIGHT = 30,
-  NUMBMP_POS_TOP = 6,
-  NUMBMP_POS_BOTTOM = NUMBMP_POS_TOP + 4,
+  LISTBMP_START_NUM_X = 0,
+  LISTBMP_START_NUM_Y = 2*4*8,
 };
 
 ///タイトルBMPサイズ(キャラ単位)
@@ -119,10 +114,7 @@ struct _ENTRYMENU_MEMBER_INFO{
 
 ///エントリー者のデータ
 typedef struct{
-  STRBUF *strbuf_name;   ///<エントリー者の名前
-  STRBUF *strbuf_id;     ///<エントリー者のID(トレーナーカードのID)
   MYSTATUS mystatus;
-  u8 sex;
   u8 status;
   u8 force_entry;        ///<TRUE:強制的に受け入れる
   u8 send_flag;          ///<TRUE:返事送信済み(外側から立てる)
@@ -168,10 +160,13 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   WORDSET *wordset;
   GFL_MSGDATA *msgdata;
   FLDMSGWIN *fldmsgwin_list;
-  FLDMSGWIN *fldmsgwin_num;
   FLDMSGWIN *fldmsgwin_title;
   FLDMSGWIN_STREAM *fld_stream;
   STRBUF *strbuf_expand;
+  STRBUF *strbuf_list_template;         ///<エントリー者のExpand元になるmsg
+  STRBUF *strbuf_list_expand;           ///<エントリー者のExpand用バッファ
+  STRBUF *strbuf_num_template;          ///<残り人数のExpand元になるmsg
+  STRBUF *strbuf_num_expand;            ///<残り人数のExpand用バッファ
   
   COMM_ENTRY_RESULT entry_result;       ///<最終結果
   MYSTATUS mine_mystatus;
@@ -206,6 +201,9 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   u8 parent_mac_address[6];       ///<modeがCOMM_ENTRY_MODE_CHILD_PARENT_DESIGNATE時のみ
   
   u8 draw_mac[COMM_ENTRY_USER_MAX][6];  ///<リストに名前が書かれているプレイヤーのMacAddress
+  
+  s8 draw_player_num;             ///<残り人数」の現在
+  s8 padding[3];
 }COMM_ENTRY_MENU_SYSTEM;
 
 
@@ -229,9 +227,10 @@ static BREAKUP_TYPE CommEntryMenu_BreakupUpdate(COMM_ENTRY_MENU_PTR em);
 static BOOL CommEntryMenu_InterruptCheck(COMM_ENTRY_MENU_PTR em);
 static void _MemberInfo_Setup(COMM_ENTRY_MENU_PTR em);
 static void _MemberInfo_Exit(COMM_ENTRY_MENU_PTR em);
+static void _ParentEntry_NumDraw(COMM_ENTRY_MENU_PTR em, int player_num);
 static void _ParentEntry_NameDraw(COMM_ENTRY_MENU_PTR em, COMM_ENTRY_USER *user, int netID);
 static void _ParentEntry_NameErase(COMM_ENTRY_MENU_PTR em, COMM_ENTRY_USER *user, int netID);
-static void _MemberInfo_NameDraw(COMM_ENTRY_MENU_PTR em, STRBUF *strbuf_name, STRBUF *strbuf_id, NetID netID);
+static void _MemberInfo_NameDraw(COMM_ENTRY_MENU_PTR em, const MYSTATUS *myst, NetID netID);
 static void _MemberInfo_NameErase(COMM_ENTRY_MENU_PTR em, int netID);
 static void _ChildEntryMember_ListRewriteUpdate(COMM_ENTRY_MENU_PTR em);
 static void _StreamMsgSet(COMM_ENTRY_MENU_PTR em, u32 msg_id);
@@ -330,7 +329,6 @@ COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fie
 {
   COMM_ENTRY_MENU_PTR em;
   FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
-  int i;
   
   OS_TPrintf("CommEntryMenu_Setup\n");
   GF_ASSERT(max_num <= COMM_ENTRY_USER_MAX);
@@ -339,29 +337,24 @@ COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fie
   
   em->wordset = WORDSET_Create( heap_id );
   em->msgdata = FLDMSGBG_CreateMSGDATA( fldmsg_bg, NARC_message_connect_dat );
-  if(entry_mode == COMM_ENTRY_MODE_PARENT){
-    em->fldmsgwin_num = FLDMSGWIN_Add( fldmsg_bg, em->msgdata, 
-      NUMBMP_POS_LEFT, NUMBMP_POS_TOP, 
-      NUMBMP_POS_RIGHT - NUMBMP_POS_LEFT, NUMBMP_POS_BOTTOM - NUMBMP_POS_TOP);
-  }
   em->fld_stream = FLDMSGWIN_STREAM_AddTalkWin(fldmsg_bg, em->msgdata);
   em->strbuf_expand = GFL_STR_CreateBuffer(EXPAND_STRBUF_SIZE, heap_id);
+  em->strbuf_list_template = GFL_MSG_CreateString( em->msgdata, msg_connect_01_04_4 );
+  em->strbuf_list_expand = GFL_STR_CreateBuffer(LIST_EXPAND_STRBUF_SIZE, heap_id);
+  em->strbuf_num_template = GFL_MSG_CreateString( em->msgdata, msg_connect_01_03 );
+  em->strbuf_num_expand = GFL_STR_CreateBuffer(NUM_EXPAND_STRBUF_SIZE, heap_id);
   em->min_num = min_num;
   em->max_num = max_num;
   em->fieldWork = fieldWork;
   em->entry_mode = entry_mode;
   em->game_type = game_type;
   em->heap_id = heap_id;
+  em->draw_player_num = -1;   //最初は必ず描画されるように-1を設定しておく
   MyStatus_Copy(myst, &em->mine_mystatus);
   if(parent_mac_address != NULL){
     GFL_STD_MemCopy(parent_mac_address, em->parent_mac_address, 6);
   }
   
-  for(i = 0; i < COMM_ENTRY_USER_MAX; i++){
-    em->user[i].strbuf_name = GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, heap_id);
-    em->user[i].strbuf_id = GFL_STR_CreateBuffer(ID_STRBUF_SIZE + EOM_SIZE, heap_id);
-  }
-
   GFL_NET_SetNoChildErrorCheck(FALSE);  //子機が勝手にいなくなってもエラーとしない
   CommEntryMenu_AddCommandTable(em);
   
@@ -381,18 +374,13 @@ COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fie
 //==================================================================
 void CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em)
 {
-  int i;
-  
-  for(i = 0; i < COMM_ENTRY_USER_MAX; i++){
-    GFL_STR_DeleteBuffer(em->user[i].strbuf_name);
-    GFL_STR_DeleteBuffer(em->user[i].strbuf_id);
-  }
+  GFL_STR_DeleteBuffer(em->strbuf_num_expand);
+  GFL_STR_DeleteBuffer(em->strbuf_num_template);
+  GFL_STR_DeleteBuffer(em->strbuf_list_expand);
+  GFL_STR_DeleteBuffer(em->strbuf_list_template);
   GFL_STR_DeleteBuffer(em->strbuf_expand);
   
   FLDMSGWIN_STREAM_Delete(em->fld_stream);
-  if(em->fldmsgwin_num != NULL){
-    FLDMSGWIN_Delete(em->fldmsgwin_num);
-  }
   FLDMSGBG_DeleteMSGDATA(em->msgdata);
   WORDSET_Delete( em->wordset );
   
@@ -408,7 +396,6 @@ void CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em)
  * @param   netID		      ネットID
  * @param   name		      名前
  * @param   id		        ID(トレーナーカードのID)
- * @param   sex           性別
  * @param   force_entry		TRUE:強制受け入れ。　FALSE:受け入れるか選択する
  * @param   mac_address   MACアドレス
  */
@@ -420,10 +407,6 @@ void CommEntryMenu_Entry(COMM_ENTRY_MENU_PTR em, int netID, const MYSTATUS *myst
   GF_ASSERT(netID <= COMM_ENTRY_USER_MAX);
   
   MyStatus_Copy(myst, &p_user->mystatus);
-  MyStatus_CopyNameString( myst, p_user->strbuf_name );
-  STRTOOL_SetNumber(p_user->strbuf_id, MyStatus_GetID_Low(myst), ID_STRBUF_SIZE, 
-    STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU);
-  p_user->sex = MyStatus_GetMySex(myst);
   p_user->status = USER_STATUS_READY;
   p_user->force_entry = force_entry;
   GFL_STD_MemCopy(mac_address, p_user->mac_address, 6);
@@ -970,6 +953,7 @@ static void _SendUpdate_Parent(COMM_ENTRY_MENU_PTR em)
       if(CemSend_MemberInfo(&em->member_info, send_bit, em->mp_mode) == TRUE){
         em->update_member_info = FALSE;
         em->member_info_sending = TRUE;
+        OS_TPrintf("aaa 0 %d, %d\n", em->update_member_info, em->member_info_sending);
       }
     }
   }
@@ -996,7 +980,7 @@ static u8 _MemberInfoSendBufCreate(COMM_ENTRY_MENU_PTR em)
     }
   }
   em->member_info.member_bit = send_bit;
-  return send_bit;
+  return (send_bit | 1);  //送信bitに親機の情報は必ず含める
 }
 
 //--------------------------------------------------------------
@@ -1029,16 +1013,22 @@ static void CommEntryMenu_LeaveUserUpdate(COMM_ENTRY_MENU_PTR em)
 //--------------------------------------------------------------
 static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
 {
-  int net_id;
+  int net_id, player_num = 0;
 
   //リストの名前描画
   for(net_id = 0; net_id < COMM_ENTRY_USER_MAX; net_id++){
     if(em->user[net_id].status != USER_STATUS_NULL){
       _ParentEntry_NameDraw(em,  &em->user[net_id], net_id);
+      player_num++;
     }
     else{
       _ParentEntry_NameErase(em, &em->user[net_id], net_id);
     }
+  }
+  
+  if(em->draw_player_num != player_num){
+    _ParentEntry_NumDraw(em, player_num);
+    em->draw_player_num = player_num;
   }
 }
 
@@ -1130,7 +1120,7 @@ static void CommEntryMenu_ExaminationUpdate(COMM_ENTRY_MENU_PTR em)
   
   switch(yesno->seq){
   case 0:
-    WORDSET_RegisterWord(em->wordset, 0, user->strbuf_name, user->sex, TRUE, PM_LANG);
+    WORDSET_RegisterPlayerName( em->wordset, 0, &user->mystatus );
     _StreamMsgSet(em, msg_connect_02_02);
     yesno->seq++;
     break;
@@ -1458,13 +1448,21 @@ static BOOL CommEntryMenu_InterruptCheck(COMM_ENTRY_MENU_PTR em)
 static void _MemberInfo_Setup(COMM_ENTRY_MENU_PTR em)
 {
   FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(em->fieldWork);
+  int bmpwin_y_size;
   
   GF_ASSERT(em->fldmsgwin_list == NULL);
   GF_ASSERT(em->fldmsgwin_title == NULL);
   
+  if(em->entry_mode == COMM_ENTRY_MODE_PARENT){
+    bmpwin_y_size = LISTBMP_POS_BOTTOM_PARENT;
+  }
+  else{
+    bmpwin_y_size = LISTBMP_POS_BOTTOM_CHILD;
+  }
+  
   em->fldmsgwin_list = FLDMSGWIN_Add( fldmsg_bg, em->msgdata, 
     LISTBMP_POS_LEFT, LISTBMP_POS_TOP, 
-    LISTBMP_POS_RIGHT - LISTBMP_POS_LEFT, LISTBMP_POS_BOTTOM - LISTBMP_POS_TOP);
+    LISTBMP_POS_RIGHT - LISTBMP_POS_LEFT, bmpwin_y_size - LISTBMP_POS_TOP);
   em->fldmsgwin_title = FLDMSGWIN_Add( fldmsg_bg, em->msgdata, 
     TITLEBMP_POS_LEFT, TITLEBMP_POS_TOP, 
     TITLEBMP_POS_RIGHT - TITLEBMP_POS_LEFT, TITLEBMP_POS_BOTTOM - TITLEBMP_POS_TOP);
@@ -1493,6 +1491,28 @@ static void _MemberInfo_Exit(COMM_ENTRY_MENU_PTR em)
 
 //--------------------------------------------------------------
 /**
+ * 残り参加人数描画
+ *
+ * @param   em		
+ * @param   netID		
+ */
+//--------------------------------------------------------------
+static void _ParentEntry_NumDraw(COMM_ENTRY_MENU_PTR em, int player_num)
+{
+  if(em->fldmsgwin_list != NULL){
+    FLDMSGWIN_FillClearWindow(em->fldmsgwin_list, 
+      LISTBMP_START_NUM_X, LISTBMP_START_NUM_Y, 
+      (LISTBMP_POS_RIGHT - LISTBMP_POS_LEFT) * 8, LISTBMP_START_NUM_Y + 8*2);
+
+    WORDSET_RegisterNumber( em->wordset, 0, em->max_num - player_num, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_ExpandStr( em->wordset, em->strbuf_num_expand, em->strbuf_num_template );
+    FLDMSGWIN_PrintStrBuf(em->fldmsgwin_list, 
+      LISTBMP_START_NUM_X, LISTBMP_START_NUM_Y, em->strbuf_num_expand);
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * 名前描画
  *
  * @param   em		
@@ -1508,7 +1528,7 @@ static void _ParentEntry_NameDraw(COMM_ENTRY_MENU_PTR em, COMM_ENTRY_USER *user,
   
   _ParentEntry_NameErase(em, user, netID); //まず既に書かれている名前を消去
   
-  _MemberInfo_NameDraw(em, user->strbuf_name, user->strbuf_id, netID);
+  _MemberInfo_NameDraw(em, &user->mystatus, netID);
 
   GFL_STD_MemCopy(user->mac_address, em->draw_mac[netID], 6);
 }
@@ -1540,17 +1560,17 @@ static void _ParentEntry_NameErase(COMM_ENTRY_MENU_PTR em, COMM_ENTRY_USER *user
  * 名前描画
  *
  * @param   em		
- * @param   strbuf_name		
- * @param   strbuf_id		
+ * @param   myst
  */
 //--------------------------------------------------------------
-static void _MemberInfo_NameDraw(COMM_ENTRY_MENU_PTR em, STRBUF *strbuf_name, STRBUF *strbuf_id, NetID netID)
+static void _MemberInfo_NameDraw(COMM_ENTRY_MENU_PTR em, const MYSTATUS *myst, NetID netID)
 {
   if(em->fldmsgwin_list != NULL){
+    WORDSET_RegisterPlayerName( em->wordset, 0, myst );
+    WORDSET_RegisterNumber( em->wordset, 1, MyStatus_GetID_Low(myst), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_ExpandStr( em->wordset, em->strbuf_list_expand, em->strbuf_list_template );
     FLDMSGWIN_PrintStrBuf(em->fldmsgwin_list, 
-      LISTBMP_START_NAME_X, LISTBMP_START_NAME_Y + netID*8*2, strbuf_name);
-    FLDMSGWIN_PrintStrBuf(em->fldmsgwin_list, 
-      LISTBMP_START_ID_X, LISTBMP_START_ID_Y + netID*8*2, strbuf_id);
+      LISTBMP_START_NAME_X, LISTBMP_START_NAME_Y + netID*8*2, em->strbuf_list_expand);
   }
   else{
     GF_ASSERT(0);
@@ -1584,28 +1604,18 @@ static void _MemberInfo_NameErase(COMM_ENTRY_MENU_PTR em, int netID)
 static void _ChildEntryMember_ListRewriteUpdate(COMM_ENTRY_MENU_PTR em)
 {
   int net_id;
-  STRBUF *strbuf_name, *strbuf_id;
   
   if(em->member_info_recv == FALSE){
     return;
   }
   em->member_info_recv = FALSE;
   
-  strbuf_name = GFL_STR_CreateBuffer(32, em->heap_id);
-  strbuf_id = GFL_STR_CreateBuffer(32, em->heap_id);
-
   for(net_id = 0; net_id < COMM_ENTRY_USER_MAX; net_id++){
     _ParentEntry_NameErase(em, &em->user[net_id], net_id);
     if(em->member_info.member_bit & (1 << net_id)){
-      MyStatus_CopyNameString( &em->member_info.mystatus[net_id], strbuf_name );
-      STRTOOL_SetNumber( strbuf_id, MyStatus_GetID_Low(&em->member_info.mystatus[net_id]), 
-        5, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU);
-      _MemberInfo_NameDraw(em, strbuf_name, strbuf_id, net_id);
+      _MemberInfo_NameDraw(em, &em->member_info.mystatus[net_id], net_id);
     }
   }
-  
-  GFL_STR_DeleteBuffer(strbuf_name);
-  GFL_STR_DeleteBuffer(strbuf_id);
 }
 
 //--------------------------------------------------------------
@@ -1693,10 +1703,12 @@ static void _Req_SendMemberInfo(COMM_ENTRY_MENU_PTR em)
     //巨大データの為、既に送信リクエストがかかっている場合は、
     //送信中である、という事を考慮して予約という形でリクエストをかけておく
     em->update_member_info_reserve = TRUE;
+    OS_TPrintf("aaa 5 %d, %d\n", em->update_member_info, em->member_info_sending);
   }
   else{
     em->update_member_info = TRUE;
     em->update_member_info_reserve = FALSE;
+    OS_TPrintf("aaa 6 %d, %d\n", em->update_member_info, em->member_info_sending);
   }
 }
 
@@ -1713,6 +1725,7 @@ void CommEntyrMenu_MemberInfoReserveUpdate(COMM_ENTRY_MENU_PTR em)
   em->member_info_sending = FALSE;
   em->update_member_info = em->update_member_info_reserve;
   em->update_member_info_reserve = FALSE;
+  OS_TPrintf("aaa 1 %d, %d\n", em->update_member_info, em->member_info_sending);
 }
 
 //==================================================================
@@ -2012,12 +2025,12 @@ static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em)
 	
   GFL_MSG_GetString( em->msgdata, msg_connect_search_000, strbuf_src );
 	for( i = 0; i < PARENT_LIST_MAX; i++ ){
-    WORDSET_RegisterNumber( em->wordset, 0, i, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( em->wordset, 0, i, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     if(em->parentsearch.parentuser[i].occ == TRUE){
       WORDSET_RegisterPlayerName( em->wordset, 1, &em->parentsearch.parentuser[i].mystatus );
       WORDSET_RegisterNumber( em->wordset, 2, 
         MyStatus_GetID_Low(&em->parentsearch.parentuser[i].mystatus), 
-        5, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+        5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     }
     else{
     	GFL_STR_SetStringCode(strbuf_eom, &str_eom);
