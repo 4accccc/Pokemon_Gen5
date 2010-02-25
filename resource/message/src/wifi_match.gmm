@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:46:39"/>
+	<create user="shimoyamada" host="W00184" date="2010-02-25T22:05:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="136" right="1280" bottom="534" visible="yes"/>
+	<dialog left="1197" top="585" right="1902" bottom="1213" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="136" right="1024" bottom="534" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -423,9 +423,10 @@
 		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0][2:03:４桁:0].[2:01:２桁:1].[2:01:２桁:2]－[2:03:４桁:3].[2:01:２桁:4].[2:01:２桁:5]</language>
 	</row>
 
-	<row id="WIFIMATCH_STR_017">
-		<language name="JPN" width="256">とうろく　ポケモン（ロックちゅう）</language>
-		<language name="JPN_KANJI" width="256">登録　ポケモン（ロック中）</language>
+	<row id="WIFIMATCH_STR_017" back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>ロック中</comment>
+		<language name="JPN" width="256">とうろく　ポケモン</language>
+		<language name="JPN_KANJI" width="256">登録　ポケモン</language>
 	</row>
 
 	<row id="WIFIMATCH_STR_017_01">
@@ -433,9 +434,10 @@
 		<language name="JPN_KANJI" width="256">登録　ポケモン</language>
 	</row>
 
-	<row id="WIFIMATCH_STR_017_02">
-		<language name="JPN" width="256">とうろく　ポケモン（みとうろく）</language>
-		<language name="JPN_KANJI" width="256">登録　ポケモン（未登録）</language>
+	<row id="WIFIMATCH_STR_017_02" back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>未登録</comment>
+		<language name="JPN" width="256">とうろく　ポケモン</language>
+		<language name="JPN_KANJI" width="256">登録　ポケモン</language>
 	</row>
 
 	<row id="WIFIMATCH_STR_018">
@@ -600,18 +602,19 @@
 
 	<row id="WIFIMATCH_WIFI_STR_02">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">Ｗｉ－Ｆｉバトル大会は
+		<language name="JPN" width="256">Ｗｉ－Ｆｉバトルたいかいは
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
-登録することで　参加できます[BE:01:ページ切り替え（クリア）]
-大会の　ルールや　開催期間は
-大好きクラブ　ホームページで[BE:00:ページ切り替え（行送り）]
-確認してください[BE:01:ページ切り替え（クリア）]</language>
+とうろく　すると　さんか　できます[BE:01:ページ切り替え（クリア）]
+たいかいの　ルールや
+かいさい　きかんは[BE:00:ページ切り替え（行送り）]
+ＧＰＦ　ホームページで[BE:00:ページ切り替え（行送り）]
+かくにん　してください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉバトル大会は
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
-登録することで　参加できます[BE:01:ページ切り替え（クリア）]
+登録　すると　参加できます[BE:01:ページ切り替え（クリア）]
 大会の　ルールや　開催期間は
-大好きクラブ　ホームページで[BE:00:ページ切り替え（行送り）]
-確認してください[BE:01:ページ切り替え（クリア）]</language>
+ＧＰＦ　ホームページで[BE:00:ページ切り替え（行送り）]
+確認　してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_03">
@@ -648,17 +651,19 @@
 だいすきクラブ　ホームページで
 とうろくを　おこなってください</language>
 		<language name="JPN_KANJI" width="256">ゲームシンク設定を　行い
-大好きクラブ　ホームページで[BE:00:ページ切り替え（行送り）]
+だいすきクラブ　ホームページで[BE:00:ページ切り替え（行送り）]
 登録を　おこなってください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_06">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">さんか　できる　たいかいが　ありません[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">さんか　できる　たいかいが
+ありません[BE:01:ページ切り替え（クリア）]
 バトルたいかいは　
 いぜん　さんかした　たいかいには[BE:00:ページ切り替え（行送り）]
 さんか　できません[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">参加できる　大会が　ありません[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">参加できる　大会が
+ありません[BE:01:ページ切り替え（クリア）]
 バトル大会は　
 以前　参加した　大会には[BE:00:ページ切り替え（行送り）]
 参加できません[BE:01:ページ切り替え（クリア）]</language>
@@ -699,14 +704,20 @@
 		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいに　さんかするため
 デジタルせんしゅしょうを[BE:00:ページ切り替え（行送り）]
 ロックします[BE:01:ページ切り替え（クリア）]
-ロックすると　バトルボックスへ　
-ポケモンを　だしいれ　できなくなります[BE:01:ページ切り替え（クリア）]
+ちゅうい！
+いちど　ロックすると[BE:00:ページ切り替え（行送り）]
+さんかを　かいじょ　するまで[BE:00:ページ切り替え（行送り）]
+バトルボックスへ　ポケモンを[BE:00:ページ切り替え（行送り）]
+だしいれ　できなくなります[BE:01:ページ切り替え（クリア）]
 ロックしても　よろしい　ですか？</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会に　参加するため
 デジタル選手証を[BE:00:ページ切り替え（行送り）]
 ロックします[BE:01:ページ切り替え（クリア）]
-ロックすると　バトルボックスへ　
-ポケモンを　だしいれ　できなくなります[BE:01:ページ切り替え（クリア）]
+注意！
+一度　ロックすると[BE:00:ページ切り替え（行送り）]
+参加を　解除するまで[BE:00:ページ切り替え（行送り）]
+バトルボックスへ　ポケモンを[BE:00:ページ切り替え（行送り）]
+出し入れ　できなくなります[BE:01:ページ切り替え（クリア）]
 ロックしても　よろしい　ですか？</language>
 	</row>
 
