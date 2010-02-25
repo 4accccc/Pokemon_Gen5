@@ -203,7 +203,10 @@ static void LIGHT_STATUS_GetTimeColor( LIGHT_DATA* p_wk, u32 num, int time, FIEL
     if( (start_time <= time) && (p_wk[i].endtime > time) )
     {
       // ‚±‚ÌF‚ðÝ’è
-      p_color->light = p_wk[i].light_color[0];
+      p_color->light  = p_wk[i].light_color[0];
+      p_color->light1 = p_wk[i].light_color[1];
+      p_color->light2 = p_wk[i].light_color[2];
+      p_color->light3 = p_wk[i].light_color[3];
       p_color->diffuse = p_wk[i].diffuse;
       p_color->ambient = p_wk[i].ambient;
       p_color->specular = p_wk[i].specular;

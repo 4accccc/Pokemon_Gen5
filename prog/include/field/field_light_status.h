@@ -35,6 +35,9 @@ extern "C"{
 //=====================================
 typedef struct {
   GXRgb   light;
+  GXRgb   light1;
+  GXRgb   light2;
+  GXRgb   light3;
   GXRgb   diffuse;
   GXRgb   ambient;
   GXRgb   specular;
