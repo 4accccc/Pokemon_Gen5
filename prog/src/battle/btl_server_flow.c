@@ -5622,6 +5622,7 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
       for(j=i; j<(poke_cnt-1); ++j){
         bpp[j] = bpp[j+1];
         dmg[j] = dmg[j+1];
+        affAry[j] = affAry[j+1];
       }
       --i;
       --poke_cnt;
@@ -9323,11 +9324,11 @@ static void scPut_WazaAffinityMsg( BTL_SVFLOW_WORK* wk, u32 poke_cnt, const BtlT
 
   affGoodCnt = affBadCnt = 0;
 
-  // HP減少コマンド生成＆効果音用の相性判定
+  // 効果音用の相性判定
   for(i=0; i<poke_cnt; ++i)
   {
     if( aff[i] > BTL_TYPEAFF_100 ){ ++affGoodCnt; }
-    if( aff[i] > BTL_TYPEAFF_100 ){ ++affBadCnt; }
+    if( aff[i] < BTL_TYPEAFF_100 ){ ++affBadCnt; }
   }
 
   // 相性メッセージコマンド生成
@@ -9336,11 +9337,15 @@ static void scPut_WazaAffinityMsg( BTL_SVFLOW_WORK* wk, u32 poke_cnt, const BtlT
     u8 pokeID[ BTL_POSIDX_MAX ];
     u8 c;
 
+    TAYA_Printf("AffInfo : TotalPoke=%d, AfGood=%d, AfBad=%d\n", poke_cnt, affGoodCnt, affBadCnt );
+
     if( affGoodCnt )
     {
-      for(i=0, c=0; i<affGoodCnt; ++i){
+      for(i=0, c=0; i<poke_cnt; ++i)
+      {
         if( aff[i] > BTL_TYPEAFF_100 ){
           pokeID[c++] = BPP_GetID( bpp[i] );
+          TAYA_Printf("  GoodPokeID=%d\n", pokeID[c-1]);
         }
       }
       switch( affGoodCnt ){
@@ -9351,12 +9356,14 @@ static void scPut_WazaAffinityMsg( BTL_SVFLOW_WORK* wk, u32 poke_cnt, const BtlT
     }
     if( affBadCnt )
     {
-      for(i=0, c=0; i<affBadCnt; ++i){
+      for(i=0, c=0; i<poke_cnt; ++i)
+      {
         if( aff[i] < BTL_TYPEAFF_100 ){
           pokeID[c++] = BPP_GetID( bpp[i] );
+          TAYA_Printf("  BadPokeID=%d\n", pokeID[c-1]);
         }
       }
-      switch( affGoodCnt ){
+      switch( affBadCnt ){
       case 1: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_AffBad_1, pokeID[0] ); break;
       case 2: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_AffBad_2, pokeID[0], pokeID[1] ); break;
       case 3: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_AffBad_3, pokeID[0], pokeID[1], pokeID[2] ); break;

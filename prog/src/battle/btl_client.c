@@ -3601,6 +3601,8 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     SEQ_LVUP_EFFECT_WAIT,
     SEQ_LVUP_INFO_START,
     SEQ_LVUP_INFO_MSG_WAIT,
+    SEQ_LVUP_INFO_PARAM_SEQ1,
+    SEQ_LVUP_INFO_PARAM_SEQ2,
     SEQ_LVUP_WAZAOBOE_WAIT,
     SEQ_END,
   };
@@ -3612,7 +3614,6 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
   u8 pokeID = args[0];
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
   BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, pokeID );
-
 
   switch( *seq ){
   case SEQ_INIT:
@@ -3707,8 +3708,12 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     }
     if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
       subSeq = 0;
-      (*seq) = SEQ_LVUP_WAZAOBOE_WAIT;
+      (*seq) = SEQ_LVUP_INFO_PARAM_SEQ1;
     }
+    break;
+
+  case SEQ_LVUP_INFO_PARAM_SEQ1:
+
     break;
 
   case SEQ_LVUP_WAZAOBOE_WAIT:

@@ -455,6 +455,11 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_Narikiri,             ms_set_default          },  // なりきりも
     { BTL_STRID_SET_MeromeroAct,          ms_set_default          },  // メロメロ
     { BTL_STRID_SET_SideChange,           ms_set_default          },  // サイドチェンジ
+    { BTL_STRID_SET_AffGood_2,            ms_set_default          },  // 効果バツグン２体同時
+    { BTL_STRID_SET_AffGood_3,            ms_set_default          },  // 効果バツグン３体同時
+    { BTL_STRID_SET_AffBad_2,             ms_set_default          },  // 効果イマイチ２体同時
+    { BTL_STRID_SET_AffBad_3,             ms_set_default          },  // 効果イマイチ３体同時
+
   };
 
   int i;
