@@ -637,12 +637,12 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  上画面：表示／非表示 
+ *  @brief  上画面：表示／非表示 
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	on_off 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
+ *  @param  on_off 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_upMessageSetDispVBlank( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
@@ -757,8 +757,8 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  上画面：非表示
- *	@retval none
+ *  @brief  上画面：非表示
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_upMessageClean(FIELD_ITEMMENU_WORK* pWork)
@@ -918,11 +918,11 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテムアイコン 削除
+ *  @brief  アイテムアイコン 削除
  *
- *	@param	FIELD_ITEMMENU_WORK * pWork 
+ *  @param  FIELD_ITEMMENU_WORK * pWork 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void _itemiconDelete( FIELD_ITEMMENU_WORK * pWork )
@@ -931,7 +931,7 @@ static void _itemiconDelete( FIELD_ITEMMENU_WORK * pWork )
     GFL_CLACT_WK_Remove( pWork->cellicon );
     GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
     GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
-		pWork->cellicon = NULL;
+    pWork->cellicon = NULL;
   }
 }
 
@@ -1682,9 +1682,9 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->appitem[i].str);
     pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
-		pWork->appitem[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+    pWork->appitem[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
   }
-	pWork->appitem[i-1].type = APP_TASKMENU_WIN_TYPE_RETURN;
+  pWork->appitem[i-1].type = APP_TASKMENU_WIN_TYPE_RETURN;
   pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   for(i=0;i<num;i++){
     GFL_STR_DeleteBuffer(pWork->appitem[i].str);
@@ -1956,6 +1956,7 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
   if(pWork->pStream)
   {
     int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
+    APP_KEYCURSOR_Main( pWork->MsgCursorWork, pWork->pStream, pWork->itemInfoDispWin );
     switch(state)
     {
     case PRINTSTREAM_STATE_DONE: // 終了

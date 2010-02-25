@@ -33,6 +33,7 @@
 #include "itemmenu.h"
 #include "app/itemuse.h"
 #include "app/app_taskmenu.h"
+#include "app/app_keycursor.h"  // APP_KEYCURSOR_WORK
 
 // SE再定義
 enum
@@ -162,6 +163,8 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_BMPWIN* pocketNameWin;
   PRINT_UTIL  SysMsgPrintUtil;      ///< システムウインドウPrintUtil
   PRINT_QUE*  SysMsgQue;
+  PRINT_STREAM* pStream;
+  APP_KEYCURSOR_WORK *MsgCursorWork;///< メッセージキー待ちカーソル表示ワーク
   GFL_MSGDATA* MsgManager;          ///< 名前入力メッセージデータマネージャー
   GFL_MSGDATA* MsgManagerItemInfo;  ///< 名前入力メッセージデータマネージャー
   GFL_MSGDATA* MsgManagerPocket;
@@ -199,7 +202,6 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_CLWK  *clwkBarIcon[ BAR_ICON_MAX ];
   GFL_CLWK  *clwkSort;
   GFL_TCBLSYS *pMsgTcblSys;
-  PRINT_STREAM* pStream;
   TOUCH_SW_SYS* pTouchSWSys;
   GFL_BMPWIN* winWaza;
   GFL_BMPWIN* winItemName;

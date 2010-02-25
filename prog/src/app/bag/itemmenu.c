@@ -41,8 +41,8 @@
 
 #include "system/main.h"      //GFL_HEAPID_APPŽQÆ
 
-#include "../../field/eventwork.h"
-#include "../../../resource/fldmapdata/flagwork/work_define.h"
+#include "../../field/eventwork.h"  // GAMEDATA_GetEventWork
+#include "../../../resource/fldmapdata/flagwork/work_define.h"  // WK_SYS_N01R0502_ITEMUSE
 
 //============================================================================================
 //============================================================================================
@@ -3466,6 +3466,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->pItemNameBuf = GFL_STR_CreateBuffer(64,pWork->heapID);
   pWork->WordSet    = WORDSET_Create( pWork->heapID );
   pWork->SysMsgQue  = PRINTSYS_QUE_Create( pWork->heapID );
+  pWork->MsgCursorWork =  APP_KEYCURSOR_Create( 15, TRUE, TRUE, pWork->heapID );
   pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
                                        GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
  
@@ -3601,6 +3602,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   GFL_BG_FillCharacterRelease(GFL_BG_FRAME3_M,1,0);
 
   GFL_FONT_Delete(pWork->fontHandle);
+  APP_KEYCURSOR_Delete(pWork->MsgCursorWork);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
   GFL_BMN_Delete(pWork->pButton);
