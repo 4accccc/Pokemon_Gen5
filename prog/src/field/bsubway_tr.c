@@ -544,15 +544,17 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   case BSWAY_MODE_S_MULTI: //ペアデータをセット
     //トレーナーデータ確保
     dst->tr_data[BTL_CLIENT_PARTNER] = create_BSP_TRAINER_DATA( HEAPID_PROC );
-    make_TrainerData( dst, &wk->tr_data[0],
+    make_TrainerData( dst, &(wk->five_data[wk->partner]),
         wk->member_num, BTL_CLIENT_PARTNER, wk->heapID );
     //↓ここは共通処理で流れていい
   case BSWAY_MODE_COMM_MULTI:
   case BSWAY_MODE_S_COMM_MULTI: //トレーナーデータ(enemy2)をセット
+#if 0
     //トレーナーデータ確保
     dst->tr_data[BTL_CLIENT_ENEMY2] = create_BSP_TRAINER_DATA( HEAPID_PROC );
     make_TrainerData( dst, &wk->tr_data[1],
         wk->member_num, BTL_CLIENT_ENEMY2, wk->heapID );
+#endif
     break;
   default:
     break;
@@ -1352,6 +1354,12 @@ static void  make_TrainerData(
   
   //トレーナーデータをセット
   bp->tr_data[client_no]->tr_type = tr_data->bt_trd.tr_type;
+  
+  //GSデータからの移植による処理
+  //wbでは存在していないタイプを書き換え
+  if( check_TrainerType(bp->tr_data[client_no]->tr_type) == FALSE ){
+    bp->tr_data[client_no]->tr_type = TRTYPE_TANPAN;
+  }
   
 //PM_strcpy( bp->tr_data[client_no].name, &tr_data->bt_trd.name[0] );
   GFL_STR_SetStringCode( bp->tr_data[client_no]->name, tr_data->bt_trd.name );

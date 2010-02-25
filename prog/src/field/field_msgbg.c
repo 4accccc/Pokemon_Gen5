@@ -134,7 +134,7 @@ struct _TAG_FLDMSGBG
 {
 	HEAPID heapID; //u16
 	u16 bgFrame;
-  
+   
   u16 bgFrameBld;
 	u16 deriveWin_plttNo;
   
@@ -148,7 +148,7 @@ struct _TAG_FLDMSGBG
   
   GFL_TCBLSYS *printTCBLSys;
   GFL_G3D_CAMERA *g3Dcamera;
-
+  
 #ifdef DEBUG_FLDMSGBG
   int d_printTCBcount;
 #endif
@@ -4405,7 +4405,7 @@ static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin )
 //--------------------------------------------------------------
 static void setBGResource( FLDMSGBG *fmb )
 {
-	fmb->bgFrame = FLDMSGBG_BGFRAME;
+	fmb->bgFrame = FLDMSGBG_BGFRAME; //不透明BG
 
 	{	//BG初期化
 		GFL_BG_BGCNT_HEADER bgcntText = {
@@ -4423,7 +4423,28 @@ static void setBGResource( FLDMSGBG *fmb )
 		
 		GFL_BG_LoadScreenReq( fmb->bgFrame );
 	}
-	
+
+#if 0  
+  fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD; //半透明BG
+  
+  {	//BG初期化
+		GFL_BG_BGCNT_HEADER bgcntText = {
+			0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
+			GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_MSG_COLORMODE,
+			FLDBG_MFRM_EFF1_SCRBASE, FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+			GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
+		};
+		
+		GFL_BG_SetBGControl( fmb->bgFrameBld, &bgcntText, GFL_BG_MODE_TEXT );
+		
+		GFL_BG_FillCharacter( fmb->bgFrameBld, CHARNO_CLEAR, 1, 0 );
+		GFL_BG_FillScreen( fmb->bgFrameBld,
+			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		
+		GFL_BG_LoadScreenReq( fmb->bgFrameBld );
+	}
+#endif
+
 	{	//フォントパレット
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_FONT, NARC_font_default_nclr, //黒
@@ -4471,6 +4492,7 @@ static void setBGResource( FLDMSGBG *fmb )
 //--------------------------------------------------------------
 static void setBlendAlpha( BOOL on )
 {
+#if 1
   if( on == TRUE ){
     int plane1 = GX_BLEND_PLANEMASK_BG1; 
   	int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
@@ -4481,6 +4503,18 @@ static void setBlendAlpha( BOOL on )
     int plane2 = GX_BLEND_PLANEMASK_NONE; 
   	G2_SetBlendAlpha( plane1, plane2, 0, 0 );
   }
+#else
+  if( on == TRUE ){
+    int plane1 = GX_BLEND_PLANEMASK_BG2; 
+  	int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
+      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
+  	G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+  }else{
+    int plane1 = GX_BLEND_PLANEMASK_NONE; 
+    int plane2 = GX_BLEND_PLANEMASK_NONE; 
+  	G2_SetBlendAlpha( plane1, plane2, 0, 0 );
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -4514,7 +4548,15 @@ void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
 		
 		GFL_BG_LoadScreenReq( fmb->bgFrame );
 	}
-	
+  
+#if 0
+	{
+		GFL_BG_FillScreen( fmb->bgFrameBld,
+			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_LoadScreenReq( fmb->bgFrameBld );
+	}
+#endif
+
 	{	//フォントパレット
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_FONT, NARC_font_default_nclr, //黒

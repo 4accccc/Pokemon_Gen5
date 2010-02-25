@@ -500,6 +500,9 @@ sub_receipt_challenge_multi_ai:
   
   _AB_KEYWAIT()
   
+  //パートナーロード
+  _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_SEVEN, BSW_NULL, BSW_NULL, BSW_NULL )
+  
   //トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
   

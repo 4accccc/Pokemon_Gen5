@@ -1358,17 +1358,17 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 }
 #endif
 
-#if 0 //wb null
-void TowerScr_ChoiceBtlSeven(BTOWER_SCRWORK* wk)
+void BSUBWAY_SCRWORK_ChoiceBtlSeven( BSUBWAY_SCRWORK *wk )
 {
   int i;
 
   for(i = 0;i < BSWAY_FIVE_NUM;i++){
-    wk->five_item[i] = (u8)RomBattleTowerTrainerDataMake(wk,&(wk->five_data[i]),
-      TOWER_FIVE_FIRST+i,wk->member_num,wk->mem_poke,wk->mem_item,&(wk->five_poke[i]),wk->heapID);
+    wk->five_item[i] = BSUBWAY_SCRWORK_MakeRomTrainerData(
+        wk, &(wk->five_data[i]),
+        BSUBWAY_FIVE_FIRST + i, wk->member_num,
+        wk->mem_poke, wk->mem_item, &(wk->five_poke[i]), wk->heapID );
   }
 }
-#endif
 
 // @brief  AIマルチペアポケモン抽選
 #if 0 //wb

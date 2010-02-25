@@ -805,6 +805,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       }
     }
     break;
+  //パートナーデータロード
+  case BSWSUB_CHOICE_BTL_SEVEN:
+    {
+      BSUBWAY_SCRWORK_ChoiceBtlSeven( bsw_scr );
+    }
+    break;
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:
