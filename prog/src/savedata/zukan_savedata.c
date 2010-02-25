@@ -120,9 +120,8 @@ static const u16 FormTable[][2] =
 struct ZUKAN_SAVEDATA {
   u32 zukan_magic;					///< マジックナンバー
 
-	u32	zukan_get:1;					///< ずかん取得フラグ
 	u32	zenkoku_flag:1;				///< 全国図鑑保持フラグ
-	u32	ver_up_flg:9;					///< バーションアップフラグ
+	u32	ver_up_flg:10;				///< バーションアップフラグ
 	u32	zukan_mode:1;					///< 閲覧中の図鑑モード
 	u32	defaultMonsNo:10;			///< 閲覧中のポケモン番号
 	u32	shortcutMonsNo:10;		///< Ｙ登録されたポケモン番号
@@ -1517,18 +1516,37 @@ static BOOL check_LocalCompMonsno( u16 monsno )
 //  セーブデータ取得のための関数
 //
 //============================================================================================
+
 //----------------------------------------------------------
 /**
- * @brief 自分状態データへのポインタ取得
- * @param sv      セーブデータ保持ワークへのポインタ
- * @return  ZUKAN_SAVEDATA  ずかんワークへのポインタ
+ * @brief		図鑑セーブデータ取得（セーブデータから）
+ *
+ * @param		sv      セーブデータ保持ワークへのポインタ
+ *
+ * @return  図鑑セーブデータ
+ *
+ * @li	通常は使用しないでください！
+ */
+//----------------------------------------------------------
+ZUKAN_SAVEDATA * ZUKAN_SAVEDATA_GetZukanSave( SAVE_CONTROL_WORK * sv )
+{
+	return SaveControl_DataPtrGet( sv, GMDATA_ID_ZUKAN );
+}
+
+//----------------------------------------------------------
+/**
+ * @brief		図鑑セーブデータ取得（GAMEDETAから）
+ *
+ * @param		gamedata		GAMEDATA
+ *
+ * @return  図鑑セーブデータ
+ *
+ * @li	ゲーム中はこちらを使用してください
  */
 //----------------------------------------------------------
 ZUKAN_SAVEDATA * GAMEDATA_GetZukanSave( GAMEDATA * gamedata )
 {
-  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
-  ZUKAN_SAVEDATA * zs = SaveControl_DataPtrGet( sv, GMDATA_ID_ZUKAN );
-	return zs;
+	return ZUKAN_SAVEDATA_GetZukanSave( GAMEDATA_GetSaveControlWork(gamedata) );
 }
 
 //----------------------------------------------------------
@@ -1541,37 +1559,6 @@ void ZUKANSAVE_Init( ZUKAN_SAVEDATA * zw )
 {
 	GFL_STD_MemClear( zw, sizeof(ZUKAN_SAVEDATA) );
   zw->zukan_magic = MAGIC_NUMBER;
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  図鑑保持フラグ設定
- *
- *  @param  zw  図鑑ワーク
- *
- *  @return none
- */
-//-----------------------------------------------------------------------------
-void ZUKANSAVE_SetZukanGetFlag( ZUKAN_SAVEDATA * zw )
-{
-  zukan_incorrect(zw);
-  zw->zukan_get = TRUE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  図鑑保持フラグ取得
- *
- *  @param  zw  図鑑ワークへのポインタ
- *
- *  @retval TRUE  保持
- *  @retval FALSE 保持していない
- */
-//-----------------------------------------------------------------------------
-BOOL ZUKANSAVE_GetZukanGetFlag( const ZUKAN_SAVEDATA * zw )
-{
-  zukan_incorrect(zw);
-  return zw->zukan_get;
 }
 
 //----------------------------------------------------------

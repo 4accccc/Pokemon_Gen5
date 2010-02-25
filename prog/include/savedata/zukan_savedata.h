@@ -78,6 +78,19 @@ enum{
 typedef struct ZUKAN_SAVEDATA ZUKAN_SAVEDATA;
 
 //----------------------------------------------------------
+/**
+ * @brief		図鑑セーブデータ取得（セーブデータから）
+ *
+ * @param		sv      セーブデータ保持ワークへのポインタ
+ *
+ * @return  図鑑セーブデータ
+ *
+ * @li	通常は使用しないでください！
+ */
+//----------------------------------------------------------
+extern ZUKAN_SAVEDATA * ZUKAN_SAVEDATA_GetZukanSave( SAVE_CONTROL_WORK * sv );
+
+//----------------------------------------------------------
 //  セーブデータ取得のための関数（GAMEDATA経由）
 //----------------------------------------------------------
 extern ZUKAN_SAVEDATA * GAMEDATA_GetZukanSave( GAMEDATA * gamedata );
@@ -139,8 +152,6 @@ extern u32 ZUKANSAVE_GetPokeDeokisisuFormSeeNum(const ZUKAN_SAVEDATA * zs);
 extern u32 ZUKANSAVE_GetPokeForm( const ZUKAN_SAVEDATA* zs, int monsno, int count );
 extern u32 ZUKANSAVE_GetPokeFormNum( const ZUKAN_SAVEDATA* zs, int monsno );
 
-extern BOOL ZUKANSAVE_GetZukanGetFlag(const ZUKAN_SAVEDATA * zs);
-extern void ZUKANSAVE_SetZukanGetFlag(ZUKAN_SAVEDATA * zs);
 
 extern BOOL ZUKANSAVE_GetZenkokuZukanFlag(const ZUKAN_SAVEDATA * zs);
 extern void ZUKANSAVE_SetZenkokuZukanFlag(ZUKAN_SAVEDATA * zs);
