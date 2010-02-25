@@ -16,9 +16,9 @@
  *					ŠO•”ŒöŠJ
 */
 //=============================================================================
-extern GFL_PROC_RESULT MicTestProc_Init( GFL_PROC *proc,int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT MicTestProc_Exit( GFL_PROC *proc,int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT MicTestProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *mywk );
+FS_EXTERN_OVERLAY(mictest);
+extern const GFL_PROC_DATA TitleMicTestProcData;
+
 
 
 #endif		// __MICTEST_H__

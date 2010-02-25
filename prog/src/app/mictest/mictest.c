@@ -320,21 +320,17 @@ typedef struct {
 	int	heap_id;
 }MICTEST_MAIN_WORK;
 
-//オーバーレイプロセス定義データ
-const GFL_PROC_DATA TitleMicTestProcData = {
-	MicTestProc_Init,
-	MicTestProc_Main,
-	MicTestProc_Exit,
-//	FS_OVERLAY_ID(mictest),
-//	NO_OVERLAY_ID,
-};
-
 
 //=============================================================================
 /**
  *					プロトタイプ宣言
 */
 //=============================================================================
+
+static GFL_PROC_RESULT MicTestProc_Init( GFL_PROC *proc,int *seq, void *pwk, void *mywk );
+static GFL_PROC_RESULT MicTestProc_Exit( GFL_PROC *proc,int *seq, void *pwk, void *mywk );
+static GFL_PROC_RESULT MicTestProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *mywk );
+
 //-------------------------------------
 ///		アプリケーション
 //=====================================
@@ -419,6 +415,16 @@ static BOOL IsProcEndTrg( void );
  *					データ領域
 */
 //=============================================================================
+
+//オーバーレイプロセス定義データ
+const GFL_PROC_DATA TitleMicTestProcData = {
+	MicTestProc_Init,
+	MicTestProc_Main,
+	MicTestProc_Exit,
+//	FS_OVERLAY_ID(mictest),
+//	NO_OVERLAY_ID,
+};
+
 //-------------------------------------
 ///		BG面設定データ	（本来MicTest_BG_Init内部におく方がよいが
 //							MicTest_BG_Exitで解放に使うため外部におく）
@@ -501,7 +507,7 @@ static const GFL_DISP_VRAM c_vram_bank = {
  *	@return	プロック状態
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT MicTestProc_Init( GFL_PROC *proc,int *seq, void *pwk, void *mywk )
+static GFL_PROC_RESULT MicTestProc_Init( GFL_PROC *proc,int *seq, void *pwk, void *mywk )
 {
 	MICTEST_MAIN_WORK *p_wk;
 
@@ -561,7 +567,7 @@ FS_EXTERN_OVERLAY( title );
  *	@return	プロック状態
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT MicTestProc_Exit( GFL_PROC *proc,int *seq, void *pwk, void *mywk )
+static GFL_PROC_RESULT MicTestProc_Exit( GFL_PROC *proc,int *seq, void *pwk, void *mywk )
 {
 	MICTEST_MAIN_WORK* p_wk = mywk;
 
@@ -612,7 +618,7 @@ GFL_PROC_RESULT MicTestProc_Exit( GFL_PROC *proc,int *seq, void *pwk, void *mywk
  *	@return	プロック状態
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT MicTestProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *mywk )
+static GFL_PROC_RESULT MicTestProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *mywk )
 {
 	MICTEST_MAIN_WORK* p_wk = mywk;
 

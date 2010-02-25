@@ -11,10 +11,22 @@
 #define NARC_STARTMENU_NAIX_
 
 enum {
-	NARC_startmenu_title_cursor_NCLR = 0,
-	NARC_startmenu_title_cursor_NCGR = 1,
-	NARC_startmenu_title_cursor_NCER = 2,
-	NARC_startmenu_title_cursor_NANR = 3
+	NARC_startmenu_base_bgd_lz_NSCR = 0,
+	NARC_startmenu_bgd_lz_NCGR = 1,
+	NARC_startmenu_base_bgu_lz_NSCR = 2,
+	NARC_startmenu_bgu_lz_NCGR = 3,
+	NARC_startmenu_bgu_NCLR = 4,
+	NARC_startmenu_bgd_NCLR = 5,
+	NARC_startmenu_list_frame1_lz_NSCR = 6,
+	NARC_startmenu_list_frame2_lz_NSCR = 7,
+	NARC_startmenu_obj_u_lz_NCGR = 8,
+	NARC_startmenu_obj_u_NCLR = 9,
+	NARC_startmenu_obj_u_NCER = 10,
+	NARC_startmenu_obj_u_NANR = 11,
+	NARC_startmenu_title_cursor_NCGR = 12,
+	NARC_startmenu_title_cursor_NCLR = 13,
+	NARC_startmenu_title_cursor_NCER = 14,
+	NARC_startmenu_title_cursor_NANR = 15
 };
 
 /* NARC_STARTMENU_NAIX_ */

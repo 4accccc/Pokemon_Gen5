@@ -540,8 +540,7 @@ static BOOL TESTMODE_ITEM_SelectPmsDouble( TESTMODE_WORK *work , const int idx )
 
 
 // マイクテスト
-FS_EXTERN_OVERLAY(mictest);
-extern const GFL_PROC_DATA TitleMicTestProcData;
+#include "app/mictest.h"
 static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx )
 {
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(mictest), &TitleMicTestProcData, NULL );

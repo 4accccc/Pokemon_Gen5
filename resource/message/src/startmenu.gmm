@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T16:03:36"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-02-25T21:57:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,7 +342,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1396" top="229" right="2101" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -411,6 +411,11 @@
 		<language name="JPN_KANJI" width="256">転送マシンを　使う</language>
 	</row>
 
+	<row id="START_MENU_STR_ITEM_08">
+		<language name="JPN" width="256">マイクテスト</language>
+		<language name="JPN_KANJI" width="256">マイクテスト</language>
+	</row>
+
 	<row id="START_MENU_STR_ITEM_01_02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>プレイヤーの名前の項目名（つづきから　はじめる用）</comment>
 		<language name="JPN" width="256">しゅじんこう</language>
@@ -425,17 +430,17 @@
 
 	<row id="START_MENU_STR_ITEM_01_04">
 		<comment>ポケモン図鑑の数の項目名（つづきから　はじめる用）</comment>
-		<language name="JPN" width="256">ポケモンずかん　[2:02:３桁:0]ひき</language>
-		<language name="JPN_KANJI" width="256">ポケモン図鑑　[2:02:３桁:0]匹</language>
+		<language name="JPN" width="256">ずかん　[2:02:３桁:0]ひき</language>
+		<language name="JPN_KANJI" width="256">図鑑　[2:02:３桁:0]匹</language>
 	</row>
 
 	<row id="START_MENU_STR_ITEM_01_05">
 		<comment>バッジの数の項目名（つづきから　はじめる用）</comment>
-		<language name="JPN" width="256">もっているバッジ　[2:01:２桁:0]こ</language>
-		<language name="JPN_KANJI" width="256">持っているバッジ　[2:01:２桁:0]個</language>
+		<language name="JPN" width="256">バッジ　[2:01:２桁:0]こ</language>
+		<language name="JPN_KANJI" width="256">バッジ　[2:01:２桁:0]個</language>
 	</row>
 
-	<row id="START_MENU_STR_ITEM_01_06" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+	<row id="START_MENU_STR_ITEM_01_06">
 		<comment>主人公の名前（つづきから　はじめる用）</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]</language>
