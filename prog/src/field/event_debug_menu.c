@@ -1,4 +1,4 @@
-
+//======================================================================
 /**
  *
  * @file  event_debug_menu.c
@@ -229,6 +229,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
 
 static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -245,6 +246,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },   //ゾーン選択ジャンプ
   { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},  //四季ジャンプ
   { DEBUG_FIELD_STR05_b,   debugMenuCallProc_DebugZoneJump }, //ゾーンジャンプ
+  { DEBUG_FIELD_STR09, debugMenuCallProc_AllMapCheck }, //オールマップチェック
 
   { DEBUG_FIELD_TITLE_02, (void*)BMPMENULIST_LABEL },       //○フィールド
   { DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },    //座標をみる
@@ -5390,6 +5392,119 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
   }
 
   return FALSE;
+}
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef struct {
+  int check_zone_id;
+  GAMESYS_WORK * gsys;
+}ALL_MAP_CHECK_WORK;
+
+static const u16 ng_zone_table[] = {
+  ZONE_ID_UNION,
+  ZONE_ID_PALACE01,
+  ZONE_ID_PALACE02,
+  ZONE_ID_PALACE03,
+  ZONE_ID_PALACE04,
+  ZONE_ID_PALACE05,
+  ZONE_ID_PALACE06,
+  ZONE_ID_PALACE07,
+  ZONE_ID_PALACE08,
+  ZONE_ID_PALACE09,
+  ZONE_ID_PALACE10,
+  ZONE_ID_PALACE01,
+  ZONE_ID_PALACE02,
+  ZONE_ID_PALACETEST,
+  ZONE_ID_CLOSSEUM,
+  ZONE_ID_CLOSSEUM02,
+  ZONE_ID_BCWFTEST,
+};
+
+#include "arc/fieldmap/map_matrix.naix"
+static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk );
+//--------------------------------------------------------------
+/// デバッグメニュー：全マップチェック
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk )
+{
+  GMEVENT * new_event;
+  ALL_MAP_CHECK_WORK * amcw;
+  new_event = GMEVENT_Create( p_wk->gmSys, NULL, allMapCheckEvent, sizeof(ALL_MAP_CHECK_WORK) );
+  amcw = GMEVENT_GetEventWork( new_event );
+  amcw->check_zone_id = -1;
+  amcw->gsys = p_wk->gmSys;
+  GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL checkNGZoneID( zone_id )
+{
+  int i;
+  for ( i = 0; i < NELEMS(ng_zone_table); i++ )
+  {
+    if (ng_zone_table[i] == zone_id )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+static int getNextZoneID( ALL_MAP_CHECK_WORK* amcw )
+{
+  int zone_id = amcw->check_zone_id;
+  while (TRUE)
+  {
+    zone_id ++;
+    if ( zone_id >= ZONE_ID_MAX) break;
+    if ( checkNGZoneID( zone_id ) == TRUE ) continue;
+    if ( ZONEDATA_GetMatrixID(zone_id) == NARC_map_matrix_palacefield_mat_bin )
+    {
+      continue;
+    }
+    break;
+  }
+  amcw->check_zone_id = zone_id;
+  return zone_id;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
+{
+  ALL_MAP_CHECK_WORK * amcw = wk;
+  FIELDMAP_WORK * fieldmap;
+  u16 zone_id;
+
+  switch ( *seq )
+  {
+  case 0:
+    zone_id = getNextZoneID( amcw );
+    if ( zone_id >= ZONE_ID_MAX )
+    {
+      return GMEVENT_RES_FINISH;
+    }
+    {
+      char buf[ZONEDATA_NAME_LENGTH];
+      ZONEDATA_DEBUG_GetZoneName(buf, zone_id);
+      OS_TPrintf( "\tALL MAP CHECK ZONE:%s\n", buf );
+    }
+    fieldmap = GAMESYSTEM_GetFieldMapWork( amcw->gsys );
+    GMEVENT_CallEvent( event,
+        DEBUG_EVENT_ChangeMapDefaultPos( amcw->gsys, fieldmap, zone_id ) );
+    (*seq) ++;
+    break;
+  default:
+    (*seq) ++;
+    if ( *seq > 120 ) *seq = 0;
+    break;
+  }
+
+  return GMEVENT_RES_CONTINUE;
 }
 
 //======================================================================
