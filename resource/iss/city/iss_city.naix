@@ -14,7 +14,8 @@ enum {
 	NARC_iss_city_iss_city_unit_zone_id_c02_bin = 0,
 	NARC_iss_city_iss_city_unit_zone_id_c05gym0101_bin = 1,
 	NARC_iss_city_iss_city_unit_zone_id_c07_bin = 2,
-	NARC_iss_city_iss_city_unit_zone_id_c08_bin = 3
+	NARC_iss_city_iss_city_unit_zone_id_c08_bin = 3,
+	NARC_iss_city_iss_city_unit_zone_id_t05_bin = 4
 };
 
 /* NARC_ISS_CITY_NAIX_ */
