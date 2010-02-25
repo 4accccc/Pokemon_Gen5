@@ -153,7 +153,8 @@ enum {
 	NARC_battgra_wb_finger_cursor_NCGR = 139,
 	NARC_battgra_wb_finger_cursor_NCLR = 140,
 	NARC_battgra_wb_finger_cursor_NCER = 141,
-	NARC_battgra_wb_finger_cursor_NANR = 142
+	NARC_battgra_wb_finger_cursor_NANR = 142,
+	NARC_battgra_wb_lvup_w_NCGR = 143
 };
 
 /* NARC_BATTGRA_WB_NAIX_ */
