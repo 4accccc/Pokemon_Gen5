@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T16:39:26"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T16:56:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -948,10 +948,10 @@
 ・GRIDX=87、GRIDZ=41、右向き
 ・c04到達時点で削除</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">うーむ……
-かんじるのお……</language>
-		<language name="JPN_KANJI" width="256">うーむ……
-感じるのお……</language>
+		<language name="JPN" width="256">うーむ……　かんじるのお……
+てごわい　ポケモンの　そんざいを</language>
+		<language name="JPN_KANJI" width="256">うーむ……　感じるのお……
+手強い　ポケモンの　存在を</language>
 	</row>
 
 	<row id="msg_d02r0101_stone_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
