@@ -110,6 +110,8 @@ static void cmd_store_clear( INTRO_CMD_WORK* wk, u8 id );
 // コマンド
 //=============================================================================
 
+static BOOL CMD_NONE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+
 // 特殊コマンド
 static BOOL CMD_SET_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_START_SCENE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
@@ -217,6 +219,8 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_SAVE_RESUME,
   CMD_SAVE_MYSTATUS,
   CMD_SAVE_CHECK_ALL_END,
+  
+  CMD_NONE,
 
   NULL, // end
 };
@@ -248,6 +252,16 @@ static void (*c_cmdtbl_wordset[ INTRO_WORDSET_MAX ])() =
 { 
   CMD_WORDSET_TRAINER,
 };
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  何もしないコマンド
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_NONE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  return TRUE;
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -924,12 +938,12 @@ static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  指定MCSSにプリント中メパチをさせる
+ *  @brief  指定MCSSにプリント中メパチをさせる
  *
- *	@param	param[0] メッセージID
- *	@param	param[1] MCSS_ID
+ *  @param  param[0] メッセージID
+ *  @param  param[1] MCSS_ID
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_MCSS_TALK_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )

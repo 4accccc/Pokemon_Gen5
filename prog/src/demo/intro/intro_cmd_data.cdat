@@ -61,6 +61,14 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
   { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 30, 0, -16 }, CMD_READ_NEXT }, // ブラックからフェードイン
   { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 } }, // BGM切替
 
+#ifdef PM_DEBUG
+  // デモを飛ばす？
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_demoskip_01 } }, // デモをとばす？
+  { INTRO_CMD_TYPE_YESNO, { msg_intro_yesno_01, msg_intro_yesno_02, TRUE }, },
+    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_05 },  // はい	デモとばす
+    { INTRO_CMD_TYPE_NONE }, 			      // いいえ 何もしない
+#endif
+
   // ↑ROMアクセスはここまで↑
 #ifdef CMD_SAVE_ON
   { INTRO_CMD_TYPE_SAVE_INIT }, // セーブ開始
