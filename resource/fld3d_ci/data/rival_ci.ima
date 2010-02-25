@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-01-19T18:06:09" source="rival_ci01.mb"/>
+	<create user="unno" host="W00199" date="2010-02-25T10:36:13" source="rival_ci01.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,16 +11,16 @@
 <body>
 
 <mat_color_info
-	frame_size="181"
+	frame_size="111"
 	tool_start_frame="0"
-	tool_end_frame="180"
+	tool_end_frame="110"
 	interpolation="frame"
 	compress_material="off" material_size="8 8"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="364">
+<mat_color_data size="224">
 	25 0 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -34,13 +34,6 @@
 	31 31 31 28 25 22 19 15 12 9
 	6 3 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -50,13 +43,6 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0
 </mat_color_data>
 
@@ -74,7 +60,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="181" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="111" data_head="2"/>
 	</mat_color_anm>
 	<mat_color_anm index="1" material_name="face_up">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -89,7 +75,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="181" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="111" data_head="2"/>
 	</mat_color_anm>
 	<mat_color_anm index="2" material_name="name_dw">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -104,7 +90,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="181" data_head="183"/>
+		<polygon_alpha frame_step="1" data_size="111" data_head="113"/>
 	</mat_color_anm>
 	<mat_color_anm index="3" material_name="name_up">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -119,7 +105,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="181" data_head="183"/>
+		<polygon_alpha frame_step="1" data_size="111" data_head="113"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 

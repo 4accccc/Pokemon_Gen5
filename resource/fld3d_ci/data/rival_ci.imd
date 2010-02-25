@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-01-19T18:06:09" source="rival_ci01.mb"/>
+	<create user="unno" host="W00199" date="2010-02-25T10:36:13" source="rival_ci01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-01-19T18:06:09" source="rival_ci01.mb"/>
+<original_create user="unno" host="W00199" date="2010-02-25T10:36:13" source="rival_ci01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -635,7 +635,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			9700 324d ab56 c8e1 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
@@ -716,7 +716,7 @@
 	<tex_image index="4" name="trwb_face001"
 		width="128" height="128" original_width="128" original_height="128"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="trwb_face001_pl"
 		path="C:/0_WB/cut_in/mb/rival/tex/trwb_face001.tga"
 	>
@@ -1238,7 +1238,7 @@
 	<tex_image index="5" name="trwb_hero_ine"
 		width="128" height="128" original_width="128" original_height="128"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="trwb_hero_ine_pl"
 		path="C:/0_WB/cut_in/mb/rival/tex/trwb_hero_ine.tga"
 	>
@@ -1924,7 +1924,7 @@
 	</tex_palette>
 	<tex_palette index="2" name="name_down_pl" color_size="16">
 		3ad7 5ebf 737f 5e5f 7c1f 7dc0 76ef 7f60
-		5ef5 3a80 0f45 47b3 296b 02ff 089d 3ad7
+		5ef5 3a80 0f45 47b3 296b 02ff 089d 7fff
 	</tex_palette>
 	<tex_palette index="3" name="name_up_pl" color_size="16">
 		3ad7 5ebf 737f 5e5f 7c1f 7dc0 76ef 7f60
