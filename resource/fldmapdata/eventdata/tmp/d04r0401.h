@@ -10,6 +10,8 @@
 #ifndef ZONE_D04R0401_EVC_H
 #define ZONE_D04R0401_EVC_H
 
+#define D04R0401_FLD_ITEM_01               0
+#define D04R0401_FLD_ITEM_02               1
 
 #endif //ZONE_D04R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

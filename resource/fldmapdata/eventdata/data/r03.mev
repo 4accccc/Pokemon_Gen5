@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/25 20:06:20
+#save date:2010/02/25 22:38:03
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #hold event type:
 1
 #hold event number:
-26
+28
 #event number: 0
 #type
 1
@@ -598,7 +598,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 16 -168
+152 16 24
 #event number: 19
 #type
 1
@@ -816,6 +816,68 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 1064 16 104
+#event number: 26
+#type
+1
+#ID name
+R03_FLD_ITEM_04
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_43
+#Event Script Name
+SCRID_FLD_ITEM_43
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -360
+#event number: 27
+#type
+1
+#ID name
+R03_FLD_ITEM_05
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_44
+#Event Script Name
+SCRID_FLD_ITEM_44
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 16 -184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

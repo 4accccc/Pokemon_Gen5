@@ -21,12 +21,18 @@
 #define TR_WORKER2_03                      6
 #define TR_BACKPACKERW_03                  7
 #define TR_BACKPACKERW_01                  8
-#define R04_FLD_ITEM_02                    9
-#define R04_FLD_ITEM_01                   10
+#define R04_FLD_ITEM_07                    9
+#define R04_FLD_ITEM_08                   10
 #define R04_STOP_01                       11
 #define R04_WOMAN2_01                     12
 #define R04_MAN2_01                       13
 #define R04_RIVAL_01                      14
+#define R04_FLD_ITEM_01                   15
+#define R04_FLD_ITEM_02                   16
+#define R04_FLD_ITEM_03                   17
+#define R04_FLD_ITEM_04                   18
+#define R04_FLD_ITEM_05                   19
+#define R04_FLD_ITEM_06                   20
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

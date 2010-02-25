@@ -126,7 +126,12 @@ EVENT_START   ev_pos_r02_mama_01
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_bikkuri_mark)
 	_OBJ_ANIME_WAIT()
 	
-	_SYSWIN_MSG_ALLPUT( msg_r02_tvt_01, POS_DOWN )
+//	_SYSWIN_MSG_ALLPUT( , POS_DOWN )
+//	_SYSWIN_CLOSE()
+	
+	//TVトランシーバーをつなげた
+//	_SYSWIN_MSG_DOWN(msg_r02_tvt_01)
+	_SYSWIN_MSG(msg_r02_tvt_01,POS_DOWN)
 	_SYSWIN_CLOSE()
 	
 	_CALL_TVT_DEMO( 2 )

@@ -38,6 +38,8 @@
 #define R03_RIVAL_03                      23
 #define R03_POKE3_01                      24
 #define R03_POKE4_01                      25
+#define R03_FLD_ITEM_04                   26
+#define R03_FLD_ITEM_05                   27
 
 #endif //ZONE_R03_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

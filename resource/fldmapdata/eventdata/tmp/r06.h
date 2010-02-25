@@ -21,6 +21,9 @@
 #define TR_SCIENTISTM_01                   7
 #define TR_SCIENTISTW_04                   8
 #define R06_OLDMAN1_01                     9
+#define R06_FLD_ITEM_01                   10
+#define R06_FLD_ITEM_02                   11
+#define R06_FLD_ITEM_03                   12
 
 #endif //ZONE_R06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

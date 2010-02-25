@@ -27,6 +27,9 @@
 #define D01R0101_HAKAIM_01                12
 #define D01R0101_ITEM_01                  13
 #define D01R0101_ROCK_01                  14
+#define D01_FLD_ITEM_05                   15
+#define D01_FLD_ITEM_06                   16
+#define D01_FLD_ITEM_07                   17
 
 #endif //ZONE_D01R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d01r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

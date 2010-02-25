@@ -20,6 +20,10 @@
 #define TR_TANPAN_08                       6
 #define R07_FIGHTREW_01                    7
 #define R07_CHAMPION_01                    8
+#define R07_FLD_ITEM_01                    9
+#define R07_FLD_ITEM_02                   10
+#define R07_FLD_ITEM_03                   11
+#define R07_FLD_ITEM_04                   12
 
 #endif //ZONE_R07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

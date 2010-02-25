@@ -19,6 +19,7 @@
   .include  "c02.h"
   .include  "d06.h"
   .include  "d06r0101.h"
+  .include  "d08r0901.h"
 
   .include "c08r0401_def.h"
   .include "t01.h"
@@ -563,6 +564,9 @@ EVENT_START   ev_debug_murakami
 		ELSIF $SCWK_TEMP1 == 4 THEN
 		
 			$WK_SCENE_D08_LEGEND  = 8
+			_FLAG_RESET(FV_D08R0901_BOSS_01)
+			_FLAG_RESET(FV_D08_HAKASE1_01)
+			_OBJ_ADD(D08R0901_BOSS_01)
 			_MAP_CHANGE( ZONE_ID_D08R0901, 16, 24, DIR_UP )
 		
 		//ƒŠƒ…ƒEƒ‰ƒZƒ“/6F/“ƒ—h‚ê‚éƒfƒ‚	

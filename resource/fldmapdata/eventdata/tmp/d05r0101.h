@@ -20,6 +20,7 @@
 #define TR_WORKER1_02                      7
 #define TR_WORKER1_03                      8
 #define TR_WORKER1_04                      9
+#define D05R0101_FLD_ITEM_03              10
 
 #endif //ZONE_D05R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d05r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
