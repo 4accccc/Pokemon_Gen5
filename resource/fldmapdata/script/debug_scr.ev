@@ -118,7 +118,7 @@ EVENT_START ev_debug_masafumi
 	$SCWK_TEMP0 = 0
 	$SCWK_TEMP1 = 0
 	
-	WHILE $SCWK_TEMP0 != 555
+//	WHILE $SCWK_TEMP0 != 555
 
 		//メニュー作成
 		_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP1 )
@@ -137,9 +137,13 @@ EVENT_START ev_debug_masafumi
 			_CALL	ev_bigfour_menu
 			$SCWK_TEMP0 = 555
 		ELSIF $SCWK_TEMP1 == 1 THEN
+			_FLAG_SET( FE_C09_FORBIDDEN )
 			//育て屋じいさんを表示＆タマゴイベントを発生
 			_FLAG_RESET( FV_R03_SODATEYA_01 )
 			$WK_OTHER_DISCOVER_EGG = 1
+			
+			//R05のライバル戦POSイベントを有効
+			$WK_SCENE_R05 = 1
 			
 			//研究所の博士を表示
 			_FLAG_RESET( FV_T01R0401_HAKASE1 )
@@ -147,19 +151,23 @@ EVENT_START ev_debug_masafumi
 			
 		ELSIF $SCWK_TEMP1 == 2 THEN
 			
-			//移動ポケモンの天候スクリプト
-			_WEATHER_CHANGE( WEATHER_NO_RAIKAMI )
+			//マルチ戦闘呼び出しテスト
+			_TRAINER_MULTI_BTL_SET( TRID_RIVAL_13, TRID_KINDERGARTENM_04, TRID_KINDERGARTENM_03 )
+			//勝敗チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()		//勝利
+			ELSE
+				_TRAINER_LOSE()		//負け
+			ENDIF
 			
 			$SCWK_TEMP0 = 555
 		ELSIF $SCWK_TEMP1 == 3 THEN
 			$SCWK_TEMP0 = 555
-			_MAP_CHANGE( ZONE_ID_T01R0102, 4, 5, DIR_DOWN )
 			
-			//R05ライバルPOSイベント有効
-//			$WK_SCENE_R05 = 1
-//			_FLAG_RESET( FV_R05_RIVAL )
-//			_FLAG_RESET( FV_R05_LEADER4 )
-//			_MAP_CHANGE( ZONE_ID_R05, 374, 438, DIR_DOWN )
+			$WK_SCENE_C04P01 = 0
+			_FLAG_RESET( FV_C04P01_BOSS_01 )
+			_MAP_CHANGE( ZONE_ID_C04P01, 17, 13, DIR_DOWN )
 			
 		ELSIF $SCWK_TEMP1 == 4 THEN
 			_CALL	ev_event_off
@@ -173,7 +181,7 @@ EVENT_START ev_debug_masafumi
 			$SCWK_TEMP0 = 555
 		ENDIF
 	
-	ENDWHILE
+//	ENDWHILE
 	
 EVENT_END
 
