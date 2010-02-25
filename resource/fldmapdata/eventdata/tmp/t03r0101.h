@@ -9,11 +9,13 @@
 #ifndef ZONE_T03R0101_EVC_H
 #define ZONE_T03R0101_EVC_H
 
+#define T03R0101_OLDMAN1_01                0
 
 #endif //ZONE_T03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_T03R0101_EVB_H
 #define ZONE_T03R0101_EVB_H
 
+#define BG_T03R0101_BOARD_01              0
 
 #endif //ZONE_T03R0101_EVB_H
