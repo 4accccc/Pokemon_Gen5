@@ -40,12 +40,6 @@ _EVENT_DATA    ev_pos_c02gym0101_leader_01
 _EVENT_DATA    ev_init_c02gym0101
 _EVENT_DATA_END
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_c02gym0101:
-//  _END
-
 
 /**************************************************************/
 /*            FIELD_INIT_LABEL                              　 */
@@ -480,12 +474,12 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_CAMERA_MOVE(9688,0,970752,823296,139183,1093632,30)
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
     
-    //【仮】煙幕の処理が後から入る予定
+    
+    //[100224斉藤マ修正 けむり演出を組み込みました]
+    //ホワイトアウト中にＯＢＪを消す---------------------
 	_WHITE_OUT()
-	_TIME_WAIT  ( 45 )
+	_DISP_FADE_END_CHECK()
 
-	//==============フラグワーク操作==============//
-	
 	_FLAG_SET( FV_C02GYM0101_HAKAI )  //プラズマ団を非表示にする
 	_OBJ_DEL( C02GYM0101_HAKAIM_01 )
 	_OBJ_DEL( C02GYM0101_HAKAIM_02 )
@@ -500,9 +494,19 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_FLAG_SET( FV_MUSEUM_STONE )	//博物館内の石がなくなる
 	_OBJ_DEL( C02GYM0101_BLACKSTONE_01 )
 	
-	//============================================//
+	//ローカル変数定義
+	DEFINE_LOCAL	BM_ANIME_ID1
+	//けむり演出のアニメコントローラを作成
+	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_EVENT, 8, 1 )
+	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
 	
 	_WHITE_IN()
+	_DISP_FADE_END_CHECK()
+	//ホワイトアウト終了---------------------------------
+	
+	//けむりが晴れるの待ち
+	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
+	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
 	
 	_TIME_WAIT  ( 40 )
    	_CAMERA_RECV_MOVE( 50 )
@@ -527,10 +531,10 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	
 	//==============フラグワーク操作==============//
-		
+	
 		//アロエが博物館を飛び出すイベントを無効にする
 		$WK_SCENE_C02GYM0101 = 3
-		
+	
 	//============================================//
 	
 EVENT_END
