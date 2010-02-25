@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="WBROM" host="W00218" date="2010-02-25T22:16:46"/>
+	<create user="WBROM" host="W00218" date="2010-02-25T22:40:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -390,18 +390,18 @@
 
 	<row id="msg_connect_01_04">
 		<comment>募集中に表示するタイトル</comment>
-		<language name="JPN">マルチバトル　ぼしゅうちゅう！</language>
-		<language name="JPN_KANJI">マルチバトル　ぼしゅうちゅう！</language>
+		<language name="JPN" width="224">マルチバトル　ぼしゅうちゅう！</language>
+		<language name="JPN_KANJI" width="224">マルチバトル　ぼしゅうちゅう！</language>
 	</row>
 
 	<row id="msg_connect_01_04_2">
-		<language name="JPN">ミュージカル　ぼしゅうちゅう！</language>
-		<language name="JPN_KANJI">ミュージカル　ぼしゅうちゅう！</language>
+		<language name="JPN" width="224">ミュージカル　ぼしゅうちゅう！</language>
+		<language name="JPN_KANJI" width="224">ミュージカル　ぼしゅうちゅう！</language>
 	</row>
 
 	<row id="msg_connect_01_04_3">
-		<language name="JPN">ちかてつバトル　ぼしゅうちゅう！</language>
-		<language name="JPN_KANJI">ちかてつバトル　ぼしゅうちゅう！</language>
+		<language name="JPN" width="224">バトルサブウェイ　ぼしゅうちゅう！</language>
+		<language name="JPN_KANJI" width="224">バトルサブウェイ　ぼしゅうちゅう！</language>
 	</row>
 
 	<row id="msg_connect_01_04_4">
@@ -459,8 +459,8 @@
 	</row>
 
 	<row id="msg_connect_03_01_3">
-		<language name="JPN">ちかてつバトルを　やめますか？</language>
-		<language name="JPN_KANJI">ちかてつバトルを　やめますか？</language>
+		<language name="JPN">バトルサブウェイを　やめますか？</language>
+		<language name="JPN_KANJI">バトルサブウェイを　やめますか？</language>
 	</row>
 
 	<row id="msg_connect_04_01">
@@ -495,9 +495,9 @@
 	</row>
 
 	<row id="msg_connect_05_01_3">
-		<language name="JPN">それでは　ちかてつバトルを
+		<language name="JPN">それでは　バトルサブウェイを
 ちゅうし　します</language>
-		<language name="JPN_KANJI">それでは　ちかてつバトルを
+		<language name="JPN_KANJI">それでは　バトルサブウェイを
 ちゅうし　します</language>
 	</row>
 
@@ -561,10 +561,10 @@
 	<row id="msg_connect_09_01_3">
 		<language name="JPN">つごうが　わるくなってしまった
 メンバーが　います[BE:01:ページ切り替え（クリア）]
-ちかてつバトルを　ちゅうし　します</language>
+バトルサブウェイを　ちゅうし　します</language>
 		<language name="JPN_KANJI">つごうが　わるくなってしまった
 メンバーが　います[BE:01:ページ切り替え（クリア）]
-ちかてつバトルを　ちゅうし　します</language>
+バトルサブウェイを　ちゅうし　します</language>
 	</row>
 
 	<row id="msg_connect_search_000">
@@ -581,9 +581,9 @@
 	</row>
 
 	<row id="msg_child_00_01">
-		<language name="JPN">ちかてつバトルをする　ともだちを
+		<language name="JPN">バトルサブウェイをする　ともだちを
 えらんでください</language>
-		<language name="JPN_KANJI">ちかてつバトルをする　ともだちを
+		<language name="JPN_KANJI">バトルサブウェイをする　ともだちを
 えらんでください</language>
 	</row>
 
