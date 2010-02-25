@@ -22,18 +22,17 @@
 #include "scrcmd_enviroments.h"
 
 #include "system/rtc_tool.h"  //GFL_RTC_GetTimeZone
-#include "field/zonedata.h"   //ZONEDATA_GetMessageArcID
 #include "savedata/mystatus.h"  //MyStatus_～
 #include "savedata/config.h" // CONFIG
 #include "savedata/box_savedata.h"  //BOX_MANAGER
-#include "savedata/trainercard_data.h" // TR_CARD_SV_PTR
-
+#include "savedata/trainercard_data.h" // TR_CARD_SV_PTR 
 #include "savedata/save_control.h"
-#include "savedata/zukan_savedata.h"
-
+#include "savedata/zukan_savedata.h" 
+#include "field/zonedata.h"   //ZONEDATA_GetMessageArcID
 #include "field/map_matrix.h"   //MAP_MATRIX
-#include "map_replace.h"    //MAPREPLACE_ChangeFlag
 #include "field/field_const.h"  //GRID_TO_FX32
+#include "net_app/union/union_beacon_tool.h" // UnionView_xxxx
+#include "map_replace.h"    //MAPREPLACE_ChangeFlag
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //for SYS_FLAG_
 #include "report.h" //REPORT_SAVE_TYPE_VAL
@@ -726,9 +725,11 @@ VMCMD_RESULT EvCmdCheckPlayerViewChange( VMHANDLE * core, void * wk ) {
   MYSTATUS*    mystatus   = &( player->mystatus );
   SAVE_CONTROL_WORK* saveWork   = GAMEDATA_GetSaveControlWork( gameData );
   TR_CARD_SV_PTR     trCardSave = TRCSave_GetSaveDataPtr( saveWork );
+  u8 unionViewIdx;
 
   // 自身のトレーナータイプを取得
-  *retWk_type = MyStatus_GetTrainerView( mystatus );
+  unionViewIdx = MyStatus_GetTrainerView( mystatus );
+  *retWk_type  = UnionView_GetTrType( unionViewIdx );
 
   // 表示されているかどうかを取得
   *retWk_disp = TRCSave_GetTrainerViewChange( trCardSave );
