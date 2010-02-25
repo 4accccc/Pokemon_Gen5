@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-02-25T15:55:09"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T16:03:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,7 +342,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1396" top="229" right="2101" bottom="849" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -373,13 +373,13 @@
 	<row id="START_MENU_STR_ITEM_01_01">
 		<comment>セーブデータを読み込んで、続きからゲームを開始します</comment>
 		<language name="JPN" width="256">つづきから　はじめる</language>
-		<language name="JPN_KANJI" width="256">続きから　始める</language>
+		<language name="JPN_KANJI" width="256">続きから　はじめる</language>
 	</row>
 
 	<row id="START_MENU_STR_ITEM_02">
 		<comment>オープニングからゲームを開始します</comment>
 		<language name="JPN" width="256">さいしょから　はじめる</language>
-		<language name="JPN_KANJI" width="256">最初から　始める</language>
+		<language name="JPN_KANJI" width="256">最初から　はじめる</language>
 	</row>
 
 	<row id="START_MENU_STR_ITEM_03">
@@ -396,8 +396,8 @@
 
 	<row id="START_MENU_STR_ITEM_05">
 		<comment>世界大会参加用メニューです</comment>
-		<language name="JPN" width="256">バトル　たいかい</language>
-		<language name="JPN_KANJI" width="256">バトル　大会</language>
+		<language name="JPN" width="256">バトルたいかい</language>
+		<language name="JPN_KANJI" width="256">バトル大会</language>
 	</row>
 
 	<row id="START_MENU_STR_ITEM_06">
