@@ -1398,8 +1398,6 @@ static BOOL selact_Finish( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTLV_EFFECT_Stop();
-    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
     if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE )
     {
       wk->commWaitInfoOn = TRUE;
